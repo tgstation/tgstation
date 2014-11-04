@@ -79,12 +79,14 @@
 /*
  * Wrapping Paper
  */
-/obj/item/weapon/wrapping_paper
+/obj/item/stack/wrapping_paper
 	name = "wrapping paper"
 	desc = "You can use this to wrap items in."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "wrap_paper"
+	flags = NOBLUDGEON
+	amount = 25
+	max_amount = 25
 
-
-/obj/item/weapon/wrapping_paper/attack_self(mob/user)
+/obj/item/stack/wrapping_paper/attack_self(mob/user)
 	user << "<span class='notice'>You need to use it on a package that has already been wrapped!</span>"

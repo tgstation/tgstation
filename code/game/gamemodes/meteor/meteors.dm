@@ -8,6 +8,8 @@
 
 /var/list/meteorsC = list(/obj/effect/meteor/dust) //for space dust event
 
+/var/list/meteorsSPOOKY = list(/obj/effect/meteor/pumpkin)
+
 /proc/spawn_meteors(var/number = 10, var/list/meteortypes)
 	for(var/i = 0; i < number; i++)
 		spawn_meteor(meteortypes)
@@ -83,7 +85,7 @@
 	pass_flags = PASSTABLE
 	var/heavy = 0
 	var/meteorsound = 'sound/effects/meteorimpact.ogg'
-	var/z_original
+	var/z_original = 1
 
 	var/meteordrop = /obj/item/weapon/ore/iron
 	var/dropamt = 2
@@ -91,6 +93,7 @@
 /obj/effect/meteor/Move()
 	if(z != z_original || loc == dest)
 		qdel(src)
+		return
 	return ..()
 
 /obj/effect/meteor/Destroy()
@@ -131,6 +134,23 @@
 	hits = 4
 	heavy = 1
 	meteordrop = /obj/item/weapon/ore/uranium
+
+//////////////////////////
+//Spookoween meteors
+/obj/effect/meteor/pumpkin
+	name = "PUMPKING"
+	desc = "THE PUMPKING'S COMING!"
+	icon = 'icons/obj/meteor_spooky.dmi'
+	icon_state = "pumpkin"
+	hits = 10
+	heavy = 1
+	dropamt = 1
+
+/obj/effect/meteor/pumpkin/New()
+	..()
+	meteordrop = pick(/obj/item/clothing/head/hardhat/pumpkinhead, /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin)
+	meteorsound = pick('sound/hallucinations/im_here1.ogg','sound/hallucinations/im_here2.ogg')
+//////////////////////////
 
 /obj/effect/meteor/meaty
 	name = "meaty ore"

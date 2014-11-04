@@ -42,11 +42,13 @@ datum/preferences
 
 	//character preferences
 	var/real_name						//our character's name
-	var/be_random_name = 0				//whether we are a random name every round
+	var/be_random_name = 0				//whether we'll have a random name every round
+	var/be_random_body = 0				//whether we'll have a random body every round
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
 	var/blood_type = "A+"				//blood type (not-chooseable)
 	var/underwear = "Nude"				//underwear type
+	var/undershirt = "Nude"				//undershirt type
 	var/backbag = 2						//backpack type
 	var/hair_style = "Bald"				//Hair type
 	var/hair_color = "000"				//Hair color
@@ -162,7 +164,8 @@ datum/preferences
 				dat += "</td></tr></table>"
 
 				dat += "<h2>Body</h2>"
-				dat += "<a href='?_src_=prefs;preference=all;task=random'>Random Body</A><br>"
+				dat += "<a href='?_src_=prefs;preference=all;task=random'>Random Body</A> "
+				dat += "<a href='?_src_=prefs;preference=all'>Always Random Body: [be_random_body ? "Yes" : "No"]</A><br>"
 
 				dat += "<table width='100%'><tr><td width='24%' valign='top'>"
 
@@ -174,6 +177,7 @@ datum/preferences
 				dat += "<b>Blood Type:</b> [blood_type]<BR>"
 				dat += "<b>Skin Tone:</b><BR><a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
 				dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
+				dat += "<b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><BR>"
 				dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><BR>"
 
 
@@ -268,7 +272,7 @@ datum/preferences
 		dat += "</center>"
 
 		//user << browse(dat, "window=preferences;size=560x560")
-		var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 580, 600)
+		var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 580, 620)
 		popup.set_content(dat)
 		popup.open(0)
 
@@ -531,7 +535,10 @@ datum/preferences
 					ResetJobs()
 					SetChoices(user)
 				if("random")
-					userandomjob = !userandomjob
+					if(jobban_isbanned(user, "Assistant"))
+						userandomjob = 1
+					else
+						userandomjob = !userandomjob
 					SetChoices(user)
 				if("setJobLevel")
 					UpdateJobPreference(user, href_list["text"], text2num(href_list["level"]))
@@ -556,6 +563,8 @@ datum/preferences
 						facial_hair_style = random_facial_hair_style(gender)
 					if("underwear")
 						underwear = random_underwear(gender)
+					if("undershirt")
+						undershirt = random_undershirt(gender)
 					if("eyes")
 						eye_color = random_eye_color()
 					if("s_tone")
@@ -651,6 +660,15 @@ datum/preferences
 						if(new_underwear)
 							underwear = new_underwear
 
+					if("undershirt")
+						var/new_undershirt
+						if(gender == MALE)
+							new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in undershirt_m
+						else
+							new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in undershirt_f
+						if(new_undershirt)
+							undershirt = new_undershirt
+
 					if("eyes")
 						var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference") as color|null
 						if(new_eyes)
@@ -705,6 +723,7 @@ datum/preferences
 						else
 							gender = MALE
 						underwear = random_underwear(gender)
+						undershirt = random_undershirt(gender)
 						facial_hair_style = random_facial_hair_style(gender)
 						hair_style = random_hair_style(gender)
 
@@ -726,6 +745,9 @@ datum/preferences
 
 					if("name")
 						be_random_name = !be_random_name
+
+					if("all")
+						be_random_body = !be_random_body
 
 					if("hear_midis")
 						toggles ^= SOUND_MIDI
@@ -774,6 +796,9 @@ datum/preferences
 		if(be_random_name)
 			real_name = random_name(gender)
 
+		if(be_random_body)
+			random_character(gender)
+
 		if(config.humans_need_surnames)
 			var/firstspace = findtext(real_name, " ")
 			var/name_length = length(real_name)
@@ -806,6 +831,7 @@ datum/preferences
 		character.hair_style = hair_style
 		character.facial_hair_style = facial_hair_style
 		character.underwear = underwear
+		character.undershirt = undershirt
 
 		if(backbag > 3 || backbag < 1)
 			backbag = 1 //Same as above

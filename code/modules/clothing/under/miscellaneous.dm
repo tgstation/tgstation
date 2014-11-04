@@ -14,14 +14,6 @@
 	item_state = "w_suit"
 	can_adjust = 0
 
-/obj/item/clothing/under/scratch
-	name = "white suit"
-	desc = "A white suit, suitable for an excellent host"
-	icon_state = "scratch"
-	item_state = "scratch"
-	item_color = "scratch"
-	can_adjust = 0
-
 /obj/item/clothing/under/sl_suit
 	desc = "It's a very amish looking suit."
 	name = "amish suit"
@@ -46,12 +38,28 @@
 	item_color = "waiter"
 	can_adjust = 0
 
+/obj/item/clothing/under/rank/prisoner
+	name = "prison jumpsuit"
+	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
+	icon_state = "prisoner"
+	item_state = "o_suit"
+	item_color = "prisoner"
+	has_sensor = 2
+	sensor_mode = 3
+
 /obj/item/clothing/under/rank/mailman
 	name = "mailman's jumpsuit"
 	desc = "<i>'Special delivery!'</i>"
 	icon_state = "mailman"
 	item_state = "b_suit"
 	item_color = "mailman"
+
+/obj/item/clothing/under/rank/psyche
+	name = "psychedelic jumpsuit"
+	desc = "Groovy!"
+	icon_state = "psyche"
+	item_state = "p_suit"
+	item_color = "psyche"
 
 /obj/item/clothing/under/sexyclown
 	name = "sexy-clown suit"

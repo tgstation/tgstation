@@ -21,7 +21,8 @@
 	var/datum/dna/chosen_dna = changeling.get_dna(chosen_name)
 	if(!chosen_dna)
 		return
-
+	if(!user || user.notransform)
+		return 0
 	user << "<span class='notice'>We transform our appearance.</span>"
 	user.dna = chosen_dna
 

@@ -127,6 +127,9 @@
 			if("void")
 				dat += "<div class='statusDisplay'>Error: No growns inside.<BR>Please, put growns into reactor.</div>"
 				menustat = "menu"
+			if("nobeakerspace")
+				dat += "<div class='statusDisplay'>Not enough space left in container. Unable to create product.</div>"
+				menustat = "menu"
 		if(beaker)
 			dat += "<div class='statusDisplay'>Biomass: [points] units.</div><BR>"
 			dat += "<A href='?src=\ref[src];activate=1'>Activate</A><A href='?src=\ref[src];detach=1'>Detach Container</A>"
@@ -151,6 +154,7 @@
 			dat += "Botanical gloves: <A href='?src=\ref[src];create=gloves;amount=1'>Make</A> ([250/efficiency])<BR>"
 			dat += "Utility belt: <A href='?src=\ref[src];create=tbelt;amount=1'>Make</A> ([300/efficiency])<BR>"
 			dat += "Leather Satchel: <A href='?src=\ref[src];create=satchel;amount=1'>Make</A> ([400/efficiency])<BR>"
+			dat += "Leather Jacket: <A href='?src=\ref[src];create=jacket;amount=1'>Make</A> ([500/efficiency])<BR>"
 			dat += "</div>"
 		else
 			dat += "<div class='statusDisplay'>No container inside, please insert container.</div>"
@@ -202,13 +206,20 @@
 		updateUsrDialog()
 		return 0
 
+/obj/machinery/biogenerator/proc/check_container_volume(var/reagent_amount)
+	if(beaker.reagents.total_volume + reagent_amount > beaker.reagents.maximum_volume)
+		menustat = "nobeakerspace"
+		return 1
+
 /obj/machinery/biogenerator/proc/create_product(var/create)
 	switch(create)
 		if("milk")
-			if (check_cost(20/efficiency)) return 0
+			if(check_container_volume(10)) return 0
+			else if (check_cost(20/efficiency)) return 0
 			else beaker.reagents.add_reagent("milk",10)
 		if("cream")
-			if (check_cost(30/efficiency)) return 0
+			if(check_container_volume(10)) return 0
+			else if (check_cost(30/efficiency)) return 0
 			else beaker.reagents.add_reagent("cream",10)
 		if("meat")
 			if (check_cost(250/efficiency)) return 0
@@ -243,6 +254,9 @@
 		if("satchel")
 			if (check_cost(400/efficiency)) return 0
 			else new/obj/item/weapon/storage/backpack/satchel(src.loc)
+		if("jacket")
+			if (check_cost(500/efficiency)) return 0
+			else new/obj/item/clothing/suit/jacket/leather(src.loc)
 		//if("monkey")
 		//	if (check_cost(500)) return 0
 		//	else new/mob/living/carbon/monkey(src.loc)
@@ -274,12 +288,11 @@
 	else if(href_list["create"])
 		var/amount = (text2num(href_list["amount"]))
 		var/i = amount
-		var/cost = (text2num(href_list["cost"]))
 		var/C = href_list["create"]
 		if(i <= 0)
 			return
 		while(i >= 1)
-			create_product(C, cost, i)
+			create_product(C)
 			i--
 		updateUsrDialog()
 

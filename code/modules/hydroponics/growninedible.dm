@@ -264,7 +264,14 @@
 		var/stun = Clamp(potency / 10, 1, 10)
 		var/weaken = Clamp(potency / 20, 0.5, 5)
 		M.slip(stun, weaken, src)
+		return 1
 
+/obj/item/weapon/grown/bananapeel/specialpeel     //used by /obj/item/clothing/shoes/clown_shoes/banana_shoes
+	name = "synthesized banana peel"
+	desc = "A synthetic banana peel."
+
+/obj/item/weapon/grown/bananapeel/specialpeel/Crossed(AM)
+	if(..())	qdel(src)
 
 /obj/item/weapon/grown/corncob
 	name = "corn cob"

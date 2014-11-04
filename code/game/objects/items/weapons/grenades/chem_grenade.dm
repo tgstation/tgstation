@@ -332,6 +332,26 @@
 	beakers += B2
 	icon_state = "grenade"
 
+
+/obj/item/weapon/grenade/chem_grenade/pacid
+	name = "acid grenade"
+	desc = "Used for melting armoured opponents."
+	stage = READY
+
+/obj/item/weapon/grenade/chem_grenade/pacid/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+
+	B1.reagents.add_reagent("pacid", 100)
+	B1.reagents.add_reagent("potassium", 25)
+	B2.reagents.add_reagent("phosphorus", 25)
+	B2.reagents.add_reagent("sugar", 25)
+
+	beakers += B1
+	beakers += B2
+	icon_state = "grenade"
+
 #undef EMPTY
 #undef WIRED
 #undef READY

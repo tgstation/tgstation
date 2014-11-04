@@ -397,29 +397,30 @@
 		return
 
 	if (istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
+		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/weapon/weldingtool/WT = W
 		if (src == user)
 			user << "<span class='warning'>You lack the reach to be able to repair yourself.</span>"
-			return
+			return 1
 		if (src.health >= src.maxHealth)
 			user << "<span class='warning'>[src] is already in good condition.</span>"
-			return
-		if (WT.remove_fuel(0))
+			return 1
+		if (WT.remove_fuel(0, user))
 			adjustBruteLoss(-30)
 			updatehealth()
 			add_fingerprint(user)
-			for(var/mob/O in viewers(user, null))
-				O.show_message(text("<span class='danger'>[user] has fixed some of the dents on [src]!</span>"), 1)
+			visible_message("<span class='notice'>[user] has fixed some of the dents on [src].</span>")
+			return 0
 		else
-			return
+			user << "<span class='warning'>The welder must be on for this task.</span>"
+			return 1
 
 	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.use(1))
 			adjustFireLoss(-30)
 			updatehealth()
-			for(var/mob/O in viewers(user, null))
-				O.show_message(text("<span class='danger'>[user] has fixed some of the burnt wires on [src]!</span>"), 1)
+			visible_message("<span class='notice'>[user] has fixed some of the burnt wires on [src].</span>")
 		else
 			user << "<span class='warning'>You need one length of cable to repair [src].</span>"
 
@@ -478,6 +479,23 @@
 				user.visible_message("<span class='danger'>[user] deconstructs [src]!</span>", "<span class='notice'>You unfasten the securing bolts, and [src] falls to pieces!</span>")
 				deconstruct()
 
+	else if(istype(W, /obj/item/weapon/aiModule))
+		var/obj/item/weapon/aiModule/MOD = W
+		if(!opened)
+			user << "You need access to the robot's insides to do that."
+			return
+		if(wiresexposed)
+			user << "You need to close the wire panel to do that."
+			return
+		if(!cell)
+			user << "You need to install a power cell to do that."
+			return
+		if(emagged || (connected_ai && lawupdate)) //Can't be sure which, metagamers
+			emote("buzz-[user.name]")
+			return
+		MOD.install(src, user) //Proc includes a success mesage so we don't need another one
+		return
+
 	else if(istype(W, /obj/item/device/encryptionkey/) && opened)
 		if(radio)//sanityyyyyy
 			radio.attackby(W,user)//GTFO, you have your own procs
@@ -521,6 +539,7 @@
 					sleep(6)
 					if(prob(50))
 						SetEmagged(1)
+						SetLockdown(1) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
 						lawupdate = 0
 						connected_ai = null
 						user << "You emag [src]'s interface."
@@ -548,6 +567,7 @@
 						src << "<b>Obey these laws:</b>"
 						laws.show_laws(src)
 						src << "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</span>"
+						SetLockdown(0)
 						updateicon()
 					else
 						user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
@@ -581,7 +601,7 @@
 			usr << "You fill the toner level of [src] to it's max capacity"
 
 	else
-		if(W.force)
+		if(W.force && W.damtype != STAMINA) //only sparks if real damage is dealt.
 			spark_system.start()
 		return ..()
 
@@ -773,8 +793,8 @@
 	else if(istype(M, /mob/living/carbon/monkey))
 		var/mob/living/carbon/monkey/george = M
 		//they can only hold things :(
-		if(george.get_active_hand() && istype(george.get_active_hand(), /obj/item/weapon/card/id) && check_access(george.get_active_hand()))
-			return 1
+		if(istype(george.get_active_hand(), /obj/item))
+			return check_access(george.get_active_hand())
 	return 0
 
 /mob/living/silicon/robot/proc/check_access(obj/item/weapon/card/id/I)
@@ -784,7 +804,11 @@
 	var/list/L = req_access
 	if(!L.len) //no requirements
 		return 1
-	if(!I || !istype(I, /obj/item/weapon/card/id) || !I.access) //not ID or no access
+
+	if(!istype(I, /obj/item/weapon/card/id) && istype(I, /obj/item))
+		I = I.GetID()
+
+	if(!I || !I.access) //not ID or no access
 		return 0
 	for(var/req in req_access)
 		if(!(req in I.access)) //doesn't have this access
@@ -1077,7 +1101,7 @@
 		new /obj/item/robot_parts/head(T)
 		var/b
 		for(b=0, b!=2, b++)
-			var/obj/item/device/flash/F = new /obj/item/device/flash(T)
+			var/obj/item/device/flash/handheld/F = new /obj/item/device/flash/handheld(T)
 			F.burn_out()
 	if (cell) //Sanity check.
 		cell.loc = T

@@ -17,6 +17,7 @@
 <A href='?src=\ref[src];make=0;dir=1'>Pipe</A><BR>
 <A href='?src=\ref[src];make=1;dir=5'>Bent Pipe</A><BR>
 <A href='?src=\ref[src];make=5;dir=1'>Manifold</A><BR>
+<A href='?src=\ref[src];make=19;dir=1'>4-Way Manifold</A><BR>
 <A href='?src=\ref[src];make=8;dir=1'>Manual Valve</A><BR>
 <A href='?src=\ref[src];make=18;dir=1'>Digital Valve</A><BR>
 <b>Devices:</b><BR>

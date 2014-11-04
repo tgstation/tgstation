@@ -1,4 +1,6 @@
 /obj/machinery/atmospherics/unary
+	icon = 'icons/obj/atmospherics/unary_devices.dmi'
+
 	dir = SOUTH
 	initialize_directions = SOUTH
 	layer = TURF_LAYER+0.1
@@ -9,6 +11,8 @@
 
 	var/datum/pipe_network/network
 
+	var/showpipe = 0
+
 /obj/machinery/atmospherics/unary/New()
 	..()
 	initialize_directions = dir
@@ -16,7 +20,40 @@
 
 	air_contents.volume = 200
 
-// Housekeeping and pipe network stuff below
+/*
+Iconnery
+*/
+//Separate this because we don't need to update pipe icons if we just are going to change the state
+/obj/machinery/atmospherics/unary/proc/update_icon_nopipes()
+	return
+
+/obj/machinery/atmospherics/unary/update_icon()
+	update_icon_nopipes()
+
+	//This code might be a bit specific to scrubber, vents and injectors, but honestly they are basically the only ones used in the unary branch.
+
+	underlays.Cut()
+
+	if(showpipe)
+		var/state
+		var/col
+		if(node)
+			state = "pipe_intact"
+			col = node.pipe_color
+		else
+			state = "pipe_exposed"
+
+		underlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', state, initialize_directions, col)
+
+/obj/machinery/atmospherics/unary/hide(var/intact)
+	showpipe = !intact
+	update_icon()
+
+	..(intact)
+
+/*
+Housekeeping and pipe network stuff below
+*/
 /obj/machinery/atmospherics/unary/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	if(reference == node)
 		network = new_network
@@ -49,7 +86,10 @@
 			if(!infiniteloop)
 				target.initialize(1)
 			break
-	//build_network()
+	//build_network() might need this
+
+	if(level == 2)
+		showpipe = 1
 
 	update_icon()
 
@@ -95,6 +135,8 @@
 		node = null
 		reference.disconnect(src)
 		del(network)
+
+	update_icon()
 
 	return null
 

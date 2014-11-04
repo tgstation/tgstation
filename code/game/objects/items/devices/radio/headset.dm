@@ -20,16 +20,25 @@
 	keyslot1 = new /obj/item/device/encryptionkey/
 	recalculateChannels()
 
+/obj/item/device/radio/headset/Destroy()
+	qdel(keyslot1)
+	qdel(keyslot2)
+	keyslot1 = null
+	keyslot2 = null
+	..()
+
 /obj/item/device/radio/headset/talk_into(mob/living/M as mob, message, channel)
 	if (!listening)
 		return
 	..()
 
-/obj/item/device/radio/headset/receive_range(freq, level)
+/obj/item/device/radio/headset/receive_range(freq, level, var/AIuser)
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc
 		if(H.ears == src)
 			return ..(freq, level)
+	else if(AIuser)
+		return ..(freq, level)
 	return -1
 
 /obj/item/device/radio/headset/syndicate
@@ -179,6 +188,13 @@
 	icon_state = "cent_headset"
 	item_state = "headset"
 	keyslot2 = new /obj/item/device/encryptionkey/heads/captain
+
+/obj/item/device/radio/headset/ai
+	name = "\proper Integrated Subspace Transceiver "
+	keyslot2 = new /obj/item/device/encryptionkey/ai
+
+/obj/item/device/radio/headset/ai/receive_range(freq, level)
+	return ..(freq, level, 1)
 
 /obj/item/device/radio/headset/attackby(obj/item/weapon/W as obj, mob/user as mob)
 //	..()

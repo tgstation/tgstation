@@ -108,7 +108,7 @@
 	new /obj/item/weapon/reagent_containers/pill/bicaridine( src )
 	new /obj/item/weapon/reagent_containers/pill/dermaline( src )
 	new /obj/item/weapon/reagent_containers/syringe/lethal/choral( src )
-	new /obj/item/clothing/glasses/hud/health( src )
+	new /obj/item/clothing/glasses/hud/health/night( src )
 	return
 
 
@@ -130,7 +130,7 @@
 
 	if (ishuman(usr) || ismonkey(usr)) //Can monkeys even place items in the pocket slots? Leaving this in just in case~
 		var/mob/M = usr
-		if (!( istype(over_object, /obj/screen) ))
+		if (!istype(over_object, /obj/screen) || !Adjacent(M))
 			return ..()
 		if ((!( M.restrained() ) && !( M.stat ) /*&& M.pocket == src*/))
 			switch(over_object.name)

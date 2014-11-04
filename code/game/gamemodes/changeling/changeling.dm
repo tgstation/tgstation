@@ -43,6 +43,9 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
+	if(config.protect_assistant_from_antagonist)
+		restricted_jobs += "Assistant"
+
 	var/num_changelings = 1
 
 	if(config.changeling_scaling_coeff)

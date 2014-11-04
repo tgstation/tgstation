@@ -113,7 +113,7 @@
 	damage = 15
 	damage_type = BRUTE
 	flag = "bomb"
-	var/range = 2
+	var/range = 3
 
 obj/item/projectile/kinetic/New()
 	var/turf/proj_turf = get_turf(src)

@@ -5,7 +5,13 @@
 	item_state = "balaclava"
 	flags = BLOCKHAIR
 	flags_inv = HIDEFACE
+	visor_flags_inv = HIDEFACE
 	w_class = 2
+	action_button_name = "Adjust Balaclava"
+	ignore_maskadjust = 0
+
+/obj/item/clothing/mask/balaclava/attack_self()
+	adjustmask()
 
 /obj/item/clothing/mask/luchador
 	name = "Luchador Mask"

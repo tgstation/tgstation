@@ -21,6 +21,7 @@ Buildable meters
 #define PIPE_VOLUME_PUMP        16
 #define PIPE_HEAT_EXCHANGE      17
 #define PIPE_DVALVE             18
+#define PIPE_4WAYMANIFOLD       19
 
 /obj/item/pipe
 	name = "pipe"
@@ -34,6 +35,7 @@ Buildable meters
 	item_state = "buildpipe"
 	w_class = 3
 	level = 2
+	var/flipped = 0
 
 /obj/item/pipe/New(var/loc, var/pipe_type as num, var/dir as num, var/obj/machinery/atmospherics/make_from = null)
 	..()
@@ -77,6 +79,14 @@ Buildable meters
 			src.pipe_type = PIPE_VOLUME_PUMP
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/heat_exchanger))
 			src.pipe_type = PIPE_HEAT_EXCHANGE
+		else if(istype(make_from, /obj/machinery/atmospherics/pipe/manifold4w))
+			src.pipe_type = PIPE_4WAYMANIFOLD
+
+		var/obj/machinery/atmospherics/trinary/triP = make_from
+		if(istype(triP) && triP.flipped)
+			src.flipped = 1
+			src.dir = turn(src.dir, -45)
+
 	else
 		src.pipe_type = pipe_type
 		src.dir = dir
@@ -108,6 +118,7 @@ Buildable meters
 		"volume pump", \
 		"heat exchanger", \
 		"digital valve", \
+		"4-way manifold", \
 	)
 	name = nlist[pipe_type+1] + " fitting"
 	var/list/islist = list( \
@@ -130,6 +141,7 @@ Buildable meters
 		"volumepump", \
 		"heunary", \
 		"dvalve", \
+		"manifold4w", \
 	)
 	icon_state = islist[pipe_type + 1]
 
@@ -143,17 +155,32 @@ Buildable meters
 	set name = "Rotate Pipe"
 	set src in view(1)
 
-	if ( usr.stat || usr.restrained() )
+	if ( usr.stat || usr.restrained() || !usr.canmove )
 		return
 
 	src.dir = turn(src.dir, -90)
 
-	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE))
-		if(dir==2)
-			dir = 1
-		else if(dir==8)
-			dir = 4
-	//src.pipe_dir = get_pipe_dir()
+	fixdir()
+
+	return
+
+/obj/item/pipe/verb/flip()
+	set category = "Object"
+	set name = "Flip Pipe"
+	set src in view(1)
+
+	if ( usr.stat || usr.restrained() || !usr.canmove )
+		return
+
+	if (pipe_type in list(PIPE_GAS_FILTER, PIPE_GAS_MIXER))
+		src.dir = turn(src.dir, flipped ? 45 : -45)
+		flipped = !flipped
+		return
+
+	src.dir = turn(src.dir, -180)
+
+	fixdir()
+
 	return
 
 /obj/item/pipe/Move()
@@ -161,6 +188,8 @@ Buildable meters
 	if ((pipe_type in list (PIPE_SIMPLE_BENT, PIPE_HE_BENT, PIPE_INSULATED_BENT)) \
 		&& (src.dir in cardinal))
 		src.dir = src.dir|turn(src.dir, 90)
+	else if ((pipe_type in list(PIPE_GAS_FILTER, PIPE_GAS_MIXER)) && flipped)
+		src.dir = turn(src.dir, 45+90)
 	else if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE))
 		if(dir==2)
 			dir = 1
@@ -173,9 +202,14 @@ Buildable meters
 /obj/item/pipe/proc/get_pipe_dir()
 	if (!dir)
 		return 0
-	var/flip = turn(dir, 180)
-	var/cw = turn(dir, -90)
-	var/acw = turn(dir, 90)
+
+	var/direct = dir
+	if(flipped)
+		direct = turn(dir, 45)
+
+	var/flip = turn(direct, 180)
+	var/cw = turn(direct, -90)
+	var/acw = turn(direct, 90)
 
 	switch(pipe_type)
 		if(	PIPE_SIMPLE_STRAIGHT, \
@@ -188,15 +222,17 @@ Buildable meters
 			PIPE_MVALVE, \
 			PIPE_DVALVE \
 		)
-			return dir|flip
+			return direct|flip
 		if(PIPE_SIMPLE_BENT, PIPE_INSULATED_BENT, PIPE_HE_BENT)
-			return dir //dir|acw
+			return direct //dir|acw
 		if(PIPE_CONNECTOR,PIPE_UVENT,PIPE_SCRUBBER,PIPE_HEAT_EXCHANGE)
-			return dir
+			return direct
 		if(PIPE_MANIFOLD)
 			return flip|cw|acw
+		if(PIPE_4WAYMANIFOLD)
+			return NORTH|SOUTH|EAST|WEST
 		if(PIPE_GAS_FILTER, PIPE_GAS_MIXER)
-			return dir|flip|cw
+			return direct|flip|cw
 	return 0
 
 /obj/item/pipe/proc/get_pdir() //endpoints for regular pipes
@@ -231,6 +267,20 @@ Buildable meters
 		else
 			return 0
 
+/obj/item/pipe/proc/unflip(var/direction)
+	if(!(direction in cardinal))
+		return turn(direction, 45)
+
+	return direction
+
+//Helper to clean up dir
+/obj/item/pipe/proc/fixdir()
+	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE))
+		if(dir==2)
+			dir = 1
+		else if(dir==8)
+			dir = 4
+
 /obj/item/pipe/attack_self(mob/user as mob)
 	return rotate()
 
@@ -241,11 +291,9 @@ Buildable meters
 		return ..()
 	if (!isturf(src.loc))
 		return 1
-	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE))
-		if(dir==2)
-			dir = 1
-		else if(dir==8)
-			dir = 4
+
+	fixdir()
+
 	var/pipe_dir = get_pipe_dir()
 
 	for(var/obj/machinery/atmospherics/M in src.loc)
@@ -317,6 +365,26 @@ Buildable meters
 			if (M.node3)
 				M.node3.initialize()
 				M.node3.addMember(M)
+			M.build_network()
+
+		if(PIPE_4WAYMANIFOLD)		//manifold
+			var/obj/machinery/atmospherics/pipe/manifold4w/M = new( src.loc )
+
+			var/turf/T = M.loc
+			M.level = T.intact ? 2 : 1
+			M.initialize()
+			if (M.node1)
+				M.node1.initialize()
+				M.node1.addMember(M)
+			if (M.node2)
+				M.node2.initialize()
+				M.node2.addMember(M)
+			if (M.node3)
+				M.node3.initialize()
+				M.node3.addMember(M)
+			if (M.node4)
+				M.node4.initialize()
+				M.node4.addMember(M)
 			M.build_network()
 
 		if(PIPE_JUNCTION)
@@ -403,29 +471,16 @@ Buildable meters
 				P.node2.initialize()
 				P.node2.build_network()
 
-		if(PIPE_GAS_FILTER)		//gas filter
-			var/obj/machinery/atmospherics/trinary/filter/P = new(src.loc)
-			P.dir = dir
-			P.initialize_directions = pipe_dir
-			if (pipename)
-				P.name = pipename
-			var/turf/T = P.loc
-			P.level = T.intact ? 2 : 1
-			P.initialize()
-			P.build_network()
-			if (P.node1)
-				P.node1.initialize()
-				P.node1.build_network()
-			if (P.node2)
-				P.node2.initialize()
-				P.node2.build_network()
-			if (P.node3)
-				P.node3.initialize()
-				P.node3.build_network()
+		if(PIPE_GAS_FILTER, PIPE_GAS_MIXER)		//Trinary stuff
 
-		if(PIPE_GAS_MIXER)		//gas filter
-			var/obj/machinery/atmospherics/trinary/mixer/P = new(src.loc)
-			P.dir = dir
+			var/obj/machinery/atmospherics/trinary/P
+			if(pipe_type == PIPE_GAS_FILTER)
+				P = new /obj/machinery/atmospherics/trinary/filter(src.loc)
+			else if(pipe_type == PIPE_GAS_MIXER)
+				P = new /obj/machinery/atmospherics/trinary/mixer(src.loc)
+
+			P.flipped = flipped
+			P.dir = unflip(dir)
 			P.initialize_directions = pipe_dir
 			if (pipename)
 				P.name = pipename
@@ -574,3 +629,4 @@ Buildable meters
 #undef PIPE_VOLUME_PUMP
 #undef PIPE_OUTLET_INJECT
 #undef PIPE_DVALVE
+#undef PIPE_4WAYMANIFOLD

@@ -384,6 +384,9 @@
 					else
 						dir = SOUTH
 
+					if(!Adjacent(movement_target)) //can't reach food through windows.
+						return
+
 					if(isturf(movement_target.loc) )
 						movement_target.attack_animal(src)
 					else if(ishuman(movement_target.loc) )
@@ -474,6 +477,7 @@
 	icon_state = "puppy"
 	icon_living = "puppy"
 	icon_dead = "puppy_dead"
+	mob_size = 0
 
 //puppies cannot wear anything.
 /mob/living/simple_animal/corgi/puppy/Topic(href, href_list)

@@ -198,7 +198,7 @@
 	..()
 
 /obj/structure/flora/kirbyplants
-	name = "Potted plant"
+	name = "potted plant"
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-01"
 

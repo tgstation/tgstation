@@ -84,6 +84,8 @@ Class Procs:
    process()                  'game/machinery/machine.dm'
       Called by the 'master_controller' once per game tick for each machine that is listed in the 'machines' list.
 
+	is_operational()
+		Returns 0 if the machine is unpowered, broken or undergoing maintenance, 1 if not
 
 	Compiled by Aygar
 */
@@ -209,6 +211,11 @@ Class Procs:
 	add_fingerprint(usr)
 	return 0
 
+/obj/machinery/proc/is_operational()
+	return !(stat & (NOPOWER|BROKEN|MAINT))
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
 /mob/proc/canUseTopic() //TODO: once finished, place these procs on the respective mob files
 	return
 
@@ -302,7 +309,7 @@ Class Procs:
 		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 		M.state = 2
 		M.icon_state = "box_1"
-		for(var/obj/I in component_parts)
+		for(var/obj/item/I in component_parts)
 			if(I.reliability != 100 && crit_fail)
 				I.crit_fail = 1
 			I.loc = src.loc

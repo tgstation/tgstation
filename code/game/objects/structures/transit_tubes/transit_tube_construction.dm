@@ -41,21 +41,31 @@
 
 // disposals-style flip and rotate verbs
 /obj/structure/c_transit_tube/verb/rotate()
-	set name = "Rotate Tube"
+	set name = "Rotate Tube CW"
 	set category = "Object"
 	set src in view(1)
 
-	if(usr.canUseTopic())
+	if(!usr.canUseTopic(src))
 		return
 
 	tube_turn(-90)
+
+/obj/structure/c_transit_tube/verb/rotate_ccw()
+	set name = "Rotate Tube CCW"
+	set category = "Object"
+	set src in view(1)
+
+	if(!usr.canUseTopic(src))
+		return
+
+	tube_turn(90)
 
 /obj/structure/c_transit_tube/verb/flip()
 	set name = "Flip"
 	set category = "Object"
 	set src in view(1)
 
-	if(usr.canUseTopic())
+	if(!usr.canUseTopic(src))
 		return
 
 	tube_flip()

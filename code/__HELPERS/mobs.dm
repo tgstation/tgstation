@@ -16,7 +16,13 @@
 	switch(gender)
 		if(MALE)	return pick(underwear_m)
 		if(FEMALE)	return pick(underwear_f)
-		else		return pick(underwear_all)
+		else		return pick(underwear_list)
+
+/proc/random_undershirt(gender)
+	switch(gender)
+		if(MALE)	return pick(undershirt_m)
+		if(FEMALE)	return pick(undershirt_f)
+		else		return pick(undershirt_list)
 
 /proc/random_hair_style(gender)
 	switch(gender)

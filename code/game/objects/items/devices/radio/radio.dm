@@ -50,7 +50,10 @@
 		initialize()
 
 /obj/item/device/radio/Destroy()
-	remove_radio_all(src) //Just to be sure.
+	qdel(wires)
+	wires = null
+	remove_radio_all(src) //Just to be sure
+	..()
 
 /obj/item/device/radio/MouseDrop(obj/over_object as obj, src_location, over_location)
 	var/mob/M = usr
@@ -218,7 +221,7 @@
 		the signal gets processed and logged, and an audible transmission gets sent
 		to each individual headset.
 	*/
-		
+
 	/*
 		be prepared to disregard any comments in all of tcomms code. i tried my best to keep them somewhat up-to-date, but eh
 	*/
