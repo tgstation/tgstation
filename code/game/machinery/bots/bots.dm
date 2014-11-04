@@ -84,7 +84,6 @@
 	"Waiting for clear path","Calculating navigation path","Pinging beacon network","Unable to reach destination")
 	//This holds text for what the bot is mode doing, reported on the AI's bot control interface.
 
-
 /obj/machinery/bot/proc/turn_on()
 	if(stat)	return 0
 	on = 1
@@ -98,10 +97,12 @@
 
 /obj/machinery/bot/New()
 	..()
+	aibots += src //Global bot list
 	botcard = new /obj/item/weapon/card/id(src)
 	set_custom_texts()
 	Radio = new /obj/item/device/radio(src)
 	Radio.listening = 0 //Makes bot radios transmit only so no one hears things while adjacent to one.
+
 
 /obj/machinery/bot/proc/add_to_beacons(bot_filter) //Master filter control for bots. Must be placed in the bot's local New() to support map spawned bots.
 	if(radio_controller)
@@ -110,6 +111,7 @@
 			radio_controller.add_object(src, control_freq, filter = bot_filter)
 
 /obj/machinery/bot/proc/explode()
+	aibots -= src
 	qdel(src)
 
 /obj/machinery/bot/proc/healthcheck()
@@ -210,7 +212,7 @@
 	else
 		return 0
 
-/obj/machinery/bot/process() //Master process which handles code common across most bots.
+/obj/machinery/bot/proc/bot_process() //Master process which handles code common across most bots.
 
 	set background = BACKGROUND_ENABLED
 
