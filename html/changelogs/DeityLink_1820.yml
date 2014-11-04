@@ -1,9 +1,0 @@
-author: Deity Link
-delete-after: True
-changes:
-  - tweak: Added a bunch of changes to slime generated foods and drinks (silver slime extract reactions)
-  - bugfix: Rabid slimes don't spawn from gold slime extract reactions anymore
-  - bugfix: Hell monsters don't spawn from gold slime extract reactions anymore (their non-hell versions still do)
-  - bugfix: Hivebot beacons don't spawn from gold slime+blood reactions anymore, since it summons a bunch of hostile monsters
-  - bugfix: Mining drones don't spawn from gold slime extract reactions anymore, I mean...come on...
-  - tweak: Rabid slimes and gold slime monsters do not attack slimes or humanoid slimes anymore. monsterstation13 incoming.

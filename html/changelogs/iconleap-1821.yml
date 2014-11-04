@@ -1,6 +1,0 @@
-author: iconleap
-
-delete-after: True
-
-changes: 
-  - tgs: Removed stringsplit and dd_list2text procs. Optimized and refactored list2text, text2list, and replacetext (github.com/tgstation/-tg-station/pull/2283).

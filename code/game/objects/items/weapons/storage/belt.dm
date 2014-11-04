@@ -258,6 +258,7 @@
 	desc = "For the pokemo- mining master, holds your lazarus capsules."
 	icon_state = "lazarusbelt"
 	item_state = "lazbelt"
+	storage_slots = 6
 	w_class = 4
 	max_w_class = 4
 	max_combined_w_class = 28
@@ -273,4 +274,5 @@
 		var/mob/living/simple_animal/hostile/NM = new chosen(MC)
 		NM.faction = "lazarus \ref[user]"
 		NM.friends += user
+		MC.contained_mob = NM
 	..()
