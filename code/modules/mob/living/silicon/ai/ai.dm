@@ -762,3 +762,6 @@ var/list/ai_list = list()
 	src << "Accessing Subspace Transceiver control..."
 	if (radio)
 		radio.interact(src)
+/mob/living/silicon/ai/proc/set_syndie_radio()
+	qdel(radio)
+	radio = new /obj/item/device/radio/headset/ai/syndie(src)

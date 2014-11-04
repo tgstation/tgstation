@@ -195,6 +195,8 @@
 	killer.set_zeroth_law(law, law_borg)
 	killer << "New law: 0. [law]"
 	give_codewords(killer)
+	killer.set_syndie_radio()
+	killer << "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!"
 
 
 /datum/game_mode/proc/auto_declare_completion_traitor()

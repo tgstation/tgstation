@@ -48,6 +48,9 @@
 
 /obj/item/device/radio/headset/syndicate/New()
 	..()
+	make_syndie()
+
+/obj/item/device/radio/headset/proc/make_syndie()
 	qdel(keyslot1)
 	keyslot1 = new /obj/item/device/encryptionkey/syndicate
 	syndie = 1
@@ -192,6 +195,13 @@
 /obj/item/device/radio/headset/ai
 	name = "\proper Integrated Subspace Transceiver "
 	keyslot2 = new /obj/item/device/encryptionkey/ai
+
+/obj/item/device/radio/headset/ai/syndie
+	name = "\proper Syndicate Subspace Intercepter"
+
+/obj/item/device/radio/headset/ai/syndie/New()
+	..()
+	make_syndie()
 
 /obj/item/device/radio/headset/ai/receive_range(freq, level)
 	return ..(freq, level, 1)
