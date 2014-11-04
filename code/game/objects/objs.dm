@@ -139,7 +139,8 @@
 	if(anchored)
 		if(current_size >= STAGE_FIVE)
 			anchored = 0
-			step_towards(src,S)	else step_towards(src,S)
+			step_towards(src,S)
+	else step_towards(src,S)
 
 /obj/proc/Deconstruct()
 	qdel(src)
