@@ -423,12 +423,13 @@
 /obj/machinery/r_n_d/fabricator/proc/getTopicDesign(var/stringinput = "")
 	var/final_digit = 0
 	for(var/i = 1, i <= length(stringinput), i++)
-		if(!text2num(copytext(stringinput, i, i++)))
+		if(!text2num(copytext(stringinput, i)))
+			//message_admins("Breaking on [copytext(stringinput, i)] and [i]")
 			final_digit = i
 			break
-	var/part_list = part_sets[copytext(stringinput, final_digit + 1)]
-	var/index = text2num(copytext(stringinput, 1, final_digit + 1))
-	//message_admins("From [stringinput] we have [index]")
+	var/part_list = part_sets[copytext(stringinput, final_digit)]
+	var/index = text2num(copytext(stringinput, 1, final_digit))
+	//message_admins("From [stringinput] we have [index] and [copytext(stringinput, final_digit)]")
 	return part_list[index]
 
 /obj/machinery/r_n_d/fabricator/Topic(href, href_list)
