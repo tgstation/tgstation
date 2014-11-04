@@ -232,6 +232,7 @@
 	w_class = 4
 	max_w_class = 4
 	max_combined_w_class = 28
+	storage_slots = 6
 	can_hold = list("/obj/item/device/mobcapsule")
 
 /obj/item/weapon/storage/belt/lazarus/New()
