@@ -378,5 +378,9 @@ var/list/blood_splatter_icons = list()
 	return
 /atom/proc/singularity_act()
 	return
+
 /atom/proc/singularity_pull()
+	return
+
+/atom/proc/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
 	return
