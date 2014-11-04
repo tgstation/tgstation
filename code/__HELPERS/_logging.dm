@@ -71,3 +71,7 @@
 /proc/log_pda(text)
 	if (config.log_pda)
 		diary << "\[[time_stamp()]]PDA: [text]"
+
+/proc/log_chat(text)
+	if (config.log_pda) //reusing this for now, can change if needed
+		diary << "\[[time_stamp()]]CHAT: [text]"
