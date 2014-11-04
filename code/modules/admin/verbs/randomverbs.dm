@@ -779,7 +779,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		var/datum/TCS_Compiler/C = S.Compiler
 		S.rawcode = ""
 		C.Compile("")
-	for(var/obj/machinery/computer/telecomms/traffic/T in world)
+	for(var/obj/machinery/computer/telecomms/traffic/T in machines)
 		T.storedcode = ""
 	log_admin("[key_name(usr)] blanked all telecomms scripts.")
 	message_admins("[key_name_admin(usr)] blanked all telecomms scripts.")
