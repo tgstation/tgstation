@@ -337,3 +337,5 @@
 		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
 		user << "<span class='notice'>You successfully break out of [src]!</span>"
 		open()
+	else
+		user << "<span class='warning'>You fail to break out of [src]!</span>"
