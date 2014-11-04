@@ -29,7 +29,11 @@
 	if(buckled_mob)
 		..()
 	else
-		rotate()
+		if(!usr || !isturf(usr.loc))
+			return
+		if(usr.stat || usr.restrained())
+			return
+		spin()
 	return
 
 /obj/structure/stool/bed/chair/proc/handle_rotation(direction)
@@ -54,19 +58,14 @@
 	if(buckled_mob)
 		buckled_mob.dir = dir
 
-/obj/structure/stool/bed/chair/verb/rotate()
-	set name = "Rotate Chair"
-	set category = "Object"
-	set src in oview(1)
-
-	if(config.ghost_interaction)
-		spin()
-	else
-		if(!usr || !isturf(usr.loc))
-			return
-		if(usr.stat || usr.restrained() || !usr.canmove)
-			return
-		spin()
+/obj/structure/stool/bed/chair/MouseDrop(over,src_loc,over_loc)
+	..()
+	var/d = get_drop_dir(usr,src_loc,over_loc)
+	if(d && d in cardinal)
+		dir = d
+		handle_layer()
+		if(buckled_mob)
+			buckled_mob.dir = dir
 
 /obj/structure/stool/bed/chair/MouseDrop_T(mob/M as mob, mob/user as mob)
 	if(!istype(M)) return

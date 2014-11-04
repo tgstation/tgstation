@@ -88,31 +88,15 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	return
 
 
-/obj/structure/particle_accelerator/verb/rotate()
-	set name = "Rotate Clockwise"
-	set category = "Object"
-	set src in oview(1)
-
-	if(usr.stat || !usr.canmove || usr.restrained())
-		return
-	if (src.anchored)
+/obj/structure/particle_accelerator/MouseDrop(over,src_loc,over_loc)
+	..()
+	if (anchored)
 		usr << "It is fastened to the floor!"
-		return 0
-	src.dir = turn(src.dir, 270)
-	return 1
-
-/obj/structure/particle_accelerator/verb/rotateccw()
-	set name = "Rotate Counter Clockwise"
-	set category = "Object"
-	set src in oview(1)
-
-	if(usr.stat || !usr.canmove || usr.restrained())
 		return
-	if (src.anchored)
-		usr << "It is fastened to the floor!"
-		return 0
-	src.dir = turn(src.dir, 90)
-	return 1
+	var/d = get_drop_dir(usr,src_loc,over_loc)
+	if(d && d in cardinal)
+		dir = d
+
 
 /obj/structure/particle_accelerator/examine(mob/user)
 	switch(src.construction_state)
@@ -281,31 +265,14 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	var/desc_holder = null
 
 
-/obj/machinery/particle_accelerator/verb/rotate()
-	set name = "Rotate Clockwise"
-	set category = "Object"
-	set src in oview(1)
-
-	if(usr.stat || !usr.canmove || usr.restrained())
-		return
-	if (src.anchored)
+/obj/machinery/particle_accelerator/MouseDrop(over,src_loc,over_loc)
+	..()
+	if (anchored)
 		usr << "It is fastened to the floor!"
-		return 0
-	src.dir = turn(src.dir, 270)
-	return 1
-
-/obj/machinery/particle_accelerator/verb/rotateccw()
-	set name = "Rotate Counter-Clockwise"
-	set category = "Object"
-	set src in oview(1)
-
-	if(usr.stat || !usr.canmove || usr.restrained())
 		return
-	if (src.anchored)
-		usr << "It is fastened to the floor!"
-		return 0
-	src.dir = turn(src.dir, 90)
-	return 1
+	var/d = get_drop_dir(usr,src_loc,over_loc)
+	if(d && d in cardinal)
+		dir = d
 
 /obj/machinery/particle_accelerator/update_icon()
 	return

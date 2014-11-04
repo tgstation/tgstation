@@ -22,7 +22,7 @@
 		return
 	return
 
-/obj/structure/stool/bed/chair/e_chair/rotate()
+/obj/structure/stool/bed/chair/e_chair/handle_layer() //override this to fix both spin() and MouseDrop()
 	..()
 	overlays.Cut()
 	overlays += image('icons/obj/objects.dmi', src, "echair_over", MOB_LAYER + 1, dir)	//there's probably a better way of handling this, but eh. -Pete

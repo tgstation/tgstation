@@ -22,18 +22,14 @@
 	var/locked = 0
 
 
-/obj/machinery/power/emitter/verb/rotate()
-	set name = "Rotate"
-	set category = "Object"
-	set src in oview(1)
-
-	if(usr.stat || !usr.canmove || usr.restrained())
-		return
+/obj/machinery/power/emitter/MouseDrop(over,src_loc,over_loc)
+	..()
 	if (src.anchored)
 		usr << "It is fastened to the floor!"
 		return 0
-	src.dir = turn(src.dir, 90)
-	return 1
+	var/d = get_drop_dir(usr,src_loc,over_loc)
+	if(d && d in cardinal)
+		dir = d
 
 /obj/machinery/power/emitter/initialize()
 	..()

@@ -81,45 +81,28 @@
 	update()
 
 
-// flip and rotate verbs
-/obj/structure/disposalconstruct/verb/rotate()
-	set name = "Rotate Pipe"
-	set category = "Object"
-	set src in view(1)
-
-	if(usr.stat || !usr.canmove || usr.restrained())
-		return
-
+// flip and rotate
+/obj/structure/disposalconstruct/MouseDrop(over,src_loc,over_loc)
+	..()
 	if(anchored)
 		usr << "You must unfasten the pipe before rotating it."
 		return
-
-	dir = turn(dir, -90)
-	update()
-
-/obj/structure/disposalconstruct/verb/flip()
-	set name = "Flip Pipe"
-	set category = "Object"
-	set src in view(1)
-	if(usr.stat || !usr.canmove || usr.restrained())
-		return
-
-	if(anchored)
-		usr << "You must unfasten the pipe before flipping it."
-		return
-
-	dir = turn(dir, 180)
-	switch(ptype)
-		if(2)
-			ptype = 3
-		if(3)
-			ptype = 2
-		if(9)
-			ptype = 10
-		if(10)
-			ptype = 9
-
-	update()
+	var/d = get_drop_dir(usr,src_loc,over_loc)
+	if(d && d in cardinal)
+		if(d == dir) //flip
+			dir = turn(dir, 180)
+			switch(ptype)
+				if(2)
+					ptype = 3
+				if(3)
+					ptype = 2
+				if(9)
+					ptype = 10
+				if(10)
+					ptype = 9
+		else
+			dir = d
+		update()
 
 // returns the type path of disposalpipe corresponding to this item dtype
 /obj/structure/disposalconstruct/proc/dpipetype()

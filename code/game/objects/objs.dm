@@ -129,6 +129,14 @@
 		var/obj/Loc=loc
 		Loc.on_log()
 
+//the following proc is used as a wrapper for get_dir in the MouseDrop() proc for rotate/flip
+/obj/proc/get_drop_dir(mob/user as mob, source, target)
+	if(!user || !isturf(user.loc) || !(src in view(1)))
+		return 0
+	if(user.stat || !user.canmove || user.restrained())
+		return 0
+	return get_dir(source,target)
+
 /obj/singularity_act()
 	ex_act(1.0)
 	if(src && isnull(gc_destroyed))

@@ -234,60 +234,17 @@
 		var/newrods = new /obj/item/stack/rods(loc)
 		transfer_fingerprints_to(newrods)
 
-/obj/structure/window/verb/rotate()
-	set name = "Rotate Window Counter-Clockwise"
-	set category = "Object"
-	set src in oview(1)
-
-	if(usr.stat || !usr.canmove || usr.restrained())
-		return
-
+/obj/structure/window/MouseDrop(over,src_loc,over_loc)
+	..()
 	if(anchored)
-		usr << "It is fastened to the floor therefore you can't rotate it!"
+		usr << "It is fastened to the floor, therefore you can't rotate it!"
 		return 0
-
-	dir = turn(dir, 90)
-//	updateSilicate()
-	air_update_turf(1)
-	ini_dir = dir
-	add_fingerprint(usr)
-	return
-
-
-/obj/structure/window/verb/revrotate()
-	set name = "Rotate Window Clockwise"
-	set category = "Object"
-	set src in oview(1)
-
-	if(usr.stat || !usr.canmove || usr.restrained())
-		return
-
-	if(anchored)
-		usr << "It is fastened to the floor therefore you can't rotate it!"
-		return 0
-
-	dir = turn(dir, 270)
-//	updateSilicate()
-	air_update_turf(1)
-	ini_dir = dir
-	add_fingerprint(usr)
-	return
-
-
-/*
-/obj/structure/window/proc/updateSilicate()
-	if(silicateIcon && silicate)
-		icon = initial(icon)
-
-		var/icon/I = icon(icon,icon_state,dir)
-
-		var/r = (silicate / 100) + 1
-		var/g = (silicate / 70) + 1
-		var/b = (silicate / 50) + 1
-		I.SetIntensity(r,g,b)
-		icon = I
-		silicateIcon = I
-*/
+	var/d = get_drop_dir(usr,src_loc,over_loc)
+	if(d && d in cardinal)
+		dir = d
+		air_update_turf(1)
+		ini_dir = dir
+		add_fingerprint(usr)
 
 
 /obj/structure/window/New(Loc,re=0)

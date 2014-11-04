@@ -40,35 +40,19 @@
 	icon_state = list2text(split_text, "-")
 
 // disposals-style flip and rotate verbs
-/obj/structure/c_transit_tube/verb/rotate()
-	set name = "Rotate Tube CW"
-	set category = "Object"
-	set src in view(1)
-
-	if(!usr.canUseTopic(src))
-		return
-
-	tube_turn(-90)
-
-/obj/structure/c_transit_tube/verb/rotate_ccw()
-	set name = "Rotate Tube CCW"
-	set category = "Object"
-	set src in view(1)
-
-	if(!usr.canUseTopic(src))
-		return
-
-	tube_turn(90)
-
-/obj/structure/c_transit_tube/verb/flip()
-	set name = "Flip"
-	set category = "Object"
-	set src in view(1)
-
-	if(!usr.canUseTopic(src))
-		return
-
-	tube_flip()
+/obj/structure/c_transit_tube/MouseDrop(over,src_loc,over_loc)
+	..()
+	var/list/split_text = text2list(icon_state, "-")
+	var/main_angle = dir2angle(text2dir_extended(split_text[1]))
+	var/d = get_drop_dir(usr,src_loc,over_loc)
+	if(d && d in cardinal)
+		var/new_angle = dir2angle(d)
+		if(new_angle == main_angle)
+			tube_flip() //same angle
+		else if (length(split_text[1]) > 1)
+			tube_turn(90) //diagonal pipe, I know this isn't technically right but it makes my life easier
+		else
+			tube_turn(main_angle-new_angle) //different angle and non-diagonal
 
 /obj/structure/c_transit_tube/proc/buildtube()
 	var/obj/structure/transit_tube/R = new/obj/structure/transit_tube(src.loc)
@@ -94,6 +78,12 @@
 	name = "unattached through station"
 	icon = 'icons/obj/pipes/transit_tube_station.dmi'
 	icon_state = "closed"
+
+/obj/structure/c_transit_tube/MouseDrop(over,src_loc,over_loc)
+	..()
+	var/d = get_drop_dir(usr,src_loc,over_loc)
+	if(d && d in cardinal)
+		dir = d
 
 /obj/structure/c_transit_tube/station/tube_turn(var/angle)
 	src.dir = turn(src.dir, angle)

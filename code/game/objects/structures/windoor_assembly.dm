@@ -299,42 +299,17 @@ obj/structure/windoor_assembly/Destroy()
 	update_icon()
 
 
-//Rotates the windoor assembly clockwise
-/obj/structure/windoor_assembly/verb/revrotate()
-	set name = "Rotate Windoor Assembly"
-	set category = "Object"
-	set src in oview(1)
-	if(usr.stat || !usr.canmove || usr.restrained())
-		return
-	if (src.anchored)
-		usr << "It is fastened to the floor; therefore, you can't rotate it!"
+/obj/structure/windoor_assembly/MouseDrop(over,src_loc,over_loc)
+	..()
+	if(anchored)
+		usr << "It is fastened to the floor, therefore you can't rotate it!"
 		return 0
-	//if(src.state != "01")
-		//update_nearby_tiles(need_rebuild=1) //Compel updates before
-
-	src.dir = turn(src.dir, 270)
-
-	//if(src.state != "01")
-		//update_nearby_tiles(need_rebuild=1)
-
-	src.ini_dir = src.dir
-	update_icon()
-	return
-
-//Flips the windoor assembly, determines whather the door opens to the left or the right
-/obj/structure/windoor_assembly/verb/flip()
-	set name = "Flip Windoor Assembly"
-	set category = "Object"
-	set src in oview(1)
-	if(usr.stat || !usr.canmove || usr.restrained())
-		return
-
-	if(src.facing == "l")
-		usr << "The windoor will now slide to the right."
-		src.facing = "r"
-	else
-		src.facing = "l"
-		usr << "The windoor will now slide to the left."
-
-	update_icon()
-	return
+	var/d = get_drop_dir(usr,src_loc,over_loc)
+	if(d && d in cardinal)
+		if(d == dir)
+			facing = (facing == "r") ? "l" : "r" //flips the facing
+			usr << "The windoor will now slide to the [(facing == "r") ? "right" : "left"]."
+		else
+			dir = d
+			ini_dir = dir
+		update_icon()
