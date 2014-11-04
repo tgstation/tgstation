@@ -73,7 +73,7 @@
 
 	var/n_name = copytext(sanitize(input(usr, "What would you like to label the photo?", "Photo Labelling", null)  as text), 1, MAX_NAME_LEN)
 	//loc.loc check is for making possible renaming photos in clipboards
-	if((loc == usr || loc.loc && loc.loc == usr) && usr.stat == 0)
+	if((loc == usr || loc.loc && loc.loc == usr) && usr.stat == 0 && usr.canmove && !usr.restrained())
 		name = "photo[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
 
@@ -186,7 +186,7 @@
 
 		res.Blend(img, blendMode2iconMode(A.blend_mode), offX, offY)
 
-		if(istype(A, /obj/item/blueprints))
+		if(istype(A, /obj/item/areaeditor/blueprints))
 			blueprints = 1
 
 	for(var/turf/T in turfs)

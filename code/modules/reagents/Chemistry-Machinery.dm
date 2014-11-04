@@ -708,7 +708,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		if(!R.total_volume||!R.reagent_list.len)
 			dat += "The beaker is empty<BR>"
 		else if(!Blood)
-			dat += "No blood sample found in beaker"
+			dat += "No blood sample found in beaker."
 		else if(!Blood.data)
 			dat += "No blood data found in beaker."
 		else
@@ -749,6 +749,10 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 									english_symptoms += S.name
 								dat += english_list(english_symptoms)
 
+						else
+							dat += "No detectable virus in the sample."
+			else
+				dat += "No detectable virus in the sample."
 
 			dat += "<BR><b>Contains antibodies to:</b> "
 			if(Blood.data["resistances"])

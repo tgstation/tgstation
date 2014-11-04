@@ -33,6 +33,9 @@
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
+	if(config.protect_assistant_from_antagonist)
+		restricted_jobs += "Assistant"
+
 	for(var/datum/mind/player in antag_candidates)
 		for(var/job in restricted_jobs)//Removing heads and such from the list
 			if(player.assigned_role == job)
@@ -45,12 +48,6 @@
 
 	if(!A_bosses.len || !B_bosses.len)
 		return 0
-
-//Set a temporary special_role so the job controller doesn't hand out invalid jobs for these antags
-	for(var/datum/mind/boss_mind in A_bosses)
-		boss_mind.special_role = "Gang member"
-	for(var/datum/mind/boss_mind in B_bosses)
-		boss_mind.special_role = "Gang member"
 
 	return 1
 

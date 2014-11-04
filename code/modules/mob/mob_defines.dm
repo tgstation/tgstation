@@ -30,6 +30,7 @@
 	Changing this around would probably require a good look-over the pre-existing code.
 	*/
 	var/obj/screen/zone_sel/zone_sel = null
+	var/obj/screen/leap_icon = null
 
 	var/damageoverlaytemp = 0
 	var/computer_id = null
@@ -104,8 +105,6 @@
 	var/in_throw_mode = 0
 
 	var/coughedtime = null
-
-	var/inertia_dir = 0
 
 	var/music_lastplayed = "null"
 

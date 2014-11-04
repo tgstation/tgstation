@@ -1,4 +1,5 @@
 /obj/machinery/atmospherics/trinary
+	icon = 'icons/obj/atmospherics/trinary_devices.dmi'
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH|WEST
 	use_power = 1
@@ -14,6 +15,8 @@
 	var/datum/pipe_network/network1
 	var/datum/pipe_network/network2
 	var/datum/pipe_network/network3
+
+	var/flipped = 0
 
 /obj/machinery/atmospherics/trinary/New()
 	..()
@@ -34,7 +37,46 @@
 	air2.volume = 200
 	air3.volume = 200
 
-// Housekeeping and pipe network stuff below
+/*
+Iconnery
+*/
+/obj/machinery/atmospherics/trinary/proc/update_icon_nopipes()
+	return
+
+/obj/machinery/atmospherics/trinary/icon_addintact(var/obj/machinery/atmospherics/node, var/connected)
+	var/image/img = getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "intact", get_dir(src,node), node.pipe_color)
+	overlays += img
+
+	return connected | img.dir
+
+/obj/machinery/atmospherics/trinary/icon_addbroken(var/connected)
+	var/unconnected = (~connected) & initialize_directions
+	for(var/direction in cardinal)
+		if(unconnected & direction)
+			overlays += getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "intact", direction)
+
+/obj/machinery/atmospherics/trinary/update_icon()
+	update_icon_nopipes()
+
+	var/connected = 0
+	overlays.Cut()
+
+	//Add non-broken pieces
+	if(node1)
+		connected = icon_addintact(node1, connected)
+
+	if(node2)
+		connected = icon_addintact(node2, connected)
+
+	if(node3)
+		connected = icon_addintact(node3, connected)
+
+	//Add broken pieces
+	icon_addbroken(connected)
+
+/*
+Housekeeping and pipe network stuff below
+*/
 /obj/machinery/atmospherics/trinary/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	if(reference == node1)
 		network1 = new_network
@@ -72,9 +114,24 @@
 /obj/machinery/atmospherics/trinary/initialize()
 	src.disconnect(src)
 
+	//Mixer:
+	//1 and 2 is input
+	//Node 3 is output
+	//If we flip the mixer, 1 and 3 shall exchange positions
+
+	//Filter:
+	//Node 1 is input
+	//Node 2 is filtered output
+	//Node 3 is rest output
+	//If we flip the filter, 1 and 3 shall exchange positions
+
 	var/node1_connect = turn(dir, -180)
 	var/node2_connect = turn(dir, -90)
 	var/node3_connect = dir
+
+	if(flipped)
+		node1_connect = turn(node1_connect, 180)
+		node3_connect = turn(node3_connect, 180)
 
 	for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
 		if(target.initialize_directions & get_dir(target,src))
@@ -158,6 +215,8 @@
 	else if(reference==node3)
 		del(network3)
 		node3 = null
+
+	update_icon()
 
 	return null
 

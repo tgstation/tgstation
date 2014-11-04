@@ -141,3 +141,9 @@
 /obj/effect/glowshroom/proc/CheckEndurance()
 	if(endurance <= 0)
 		qdel(src)
+
+/obj/effect/glowshroom/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
+	visible_message("<span class='danger'>[src] melts away!</span>")
+	var/obj/effect/decal/cleanable/molten_item/I = new (get_turf(src))
+	I.desc = "Looks like this was \an [src] some time ago."
+	qdel(src)

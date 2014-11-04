@@ -7,7 +7,6 @@
 	var/fingerprintslast = null
 	var/list/blood_DNA
 	var/last_bumped = 0
-	var/pass_flags = 0
 	var/throwpass = 0
 
 	///Chemistry.
@@ -203,7 +202,7 @@ its easier to just keep the beam vertical.
 /atom/proc/examine(mob/user)
 	//This reformat names to get a/an properly working on item descriptions when they are bloody
 	var/f_name = "\a [src]."
-	if(src.blood_DNA)
+	if(src.blood_DNA && !istype(src, /obj/effect/decal))
 		if(gender == PLURAL)
 			f_name = "some "
 		else
@@ -366,9 +365,6 @@ var/list/blood_splatter_icons = list()
 	else
 		return 0
 
-/atom/proc/checkpass(passflag)
-	return pass_flags&passflag
-
 /atom/proc/isinspace()
 	if(istype(get_turf(src), /turf/space))
 		return 1
@@ -379,4 +375,12 @@ var/list/blood_splatter_icons = list()
 	return
 
 /atom/proc/handle_slip()
+	return
+/atom/proc/singularity_act()
+	return
+
+/atom/proc/singularity_pull()
+	return
+
+/atom/proc/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
 	return

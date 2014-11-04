@@ -16,7 +16,6 @@ var/list/blob_nodes = list()
 	recommended_enemies = 1
 
 	restricted_jobs = list("Cyborg", "AI")
-	pre_setup_before_jobs = 1
 
 	var/declared = 0
 

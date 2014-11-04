@@ -89,7 +89,7 @@
 			title+= "[R.title]"
 		title+= " ([R.req_amount] [src.singular_name]\s)"
 		if (can_build)
-			t1 += text("<A href='?src=\ref[];make=[]'>[]</A>  ", src, i, title)
+			t1 += text("<A href='?src=\ref[];make=[];multiplier=1'>[]</A>  ", src, i, title)
 		else
 			t1 += text("[]", title)
 			continue
@@ -117,7 +117,8 @@
 
 		var/datum/stack_recipe/R = recipes[text2num(href_list["make"])]
 		var/multiplier = text2num(href_list["multiplier"])
-		if (!multiplier) multiplier = 1
+		if (!multiplier ||(multiplier <= 0)) //href protection
+			return
 		if (src.get_amount() < R.req_amount*multiplier)
 			if (R.req_amount*multiplier>1)
 				usr << "<span class='danger'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>"
@@ -227,7 +228,7 @@
 				spawn(0) src.interact(usr)
 		else
 			if (S.amount >= max_amount)
-				return 1
+				return
 			var/to_transfer as num
 			if (user.get_inactive_hand()==src)
 				to_transfer = 1

@@ -10,7 +10,7 @@
 	move_self = 1 //Do we move on our own?
 	grav_pull = 5 //How many tiles out do we pull?
 	consume_range = 6 //How many tiles out do we eat
-	uneatable = list(/turf/space, /obj/effect/overlay, /mob/living/simple_animal/construct)
+	var/uneatable = list(/turf/space, /obj/effect/overlay, /mob/living/simple_animal/construct)
 
 /obj/machinery/singularity/narsie/large
 	name = "Nar-Sie"
@@ -32,12 +32,17 @@
 	if(A)
 		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.")
 
+	narsie_spawn_animation()
+
 	sleep(70)
 	if(emergency_shuttle)
 		emergency_shuttle.incall(0.3) // Cannot recall
 
 
 /obj/machinery/singularity/narsie/large/attack_ghost(mob/dead/observer/user as mob)
+	if(!(src in view()))
+		user << "Your soul is too far away."
+		return
 	makeNewConstruct(/mob/living/simple_animal/construct/harvester, user, null, 1)
 	new /obj/effect/effect/sleep_smoke(user.loc)
 
@@ -160,3 +165,14 @@
 //	if(defer_powernet_rebuild != 2)
 //		defer_powernet_rebuild = 0
 	return
+
+
+/obj/machinery/singularity/narsie/proc/narsie_spawn_animation()
+	icon = 'icons/obj/narsie_spawn_anim.dmi'
+	dir = SOUTH
+	move_self = 0
+	flick("narsie_spawn_anim",src)
+	sleep(11)
+	move_self = 1
+	icon = initial(icon)
+

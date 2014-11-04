@@ -134,7 +134,8 @@ Code:
 	if(signal.encryption != code)	return 0
 	if(!(src.wires & WIRE_RADIO_RECEIVE))	return 0
 	pulse(1)
-	src.loc.audible_message("\icon[src] *beep* *beep*", null, 1)
+	if(src.loc)
+		src.loc.audible_message("\icon[src] *beep* *beep*", null, 1)
 	return
 
 
@@ -177,7 +178,10 @@ Code:
 	item_state = "electronic"
 
 /obj/item/device/assembly/signaler/anomaly/receive_signal(datum/signal/signal)
-	..()
+	if(!signal)
+		return 0
+	if(signal.encryption != code)
+		return 0
 	for(var/obj/effect/anomaly/A in orange(0, src))
 		A.anomalyNeutralize()
 

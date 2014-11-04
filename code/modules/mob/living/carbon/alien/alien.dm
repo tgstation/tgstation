@@ -30,7 +30,7 @@
 	var/fire_alert = 0
 
 	var/heat_protection = 0.5
-
+	var/leaping = 0
 
 /mob/living/carbon/alien/New()
 	verbs += /mob/living/proc/mob_sleep
@@ -157,9 +157,6 @@
 
 /mob/living/carbon/alien/SpeciesCanConsume()
 	return 1 // Aliens can eat, and they can be fed food/drink
-
-/mob/living/carbon/alien/Process_Spaceslipping()
-	return 0 // Don't slip in space.
 
 /mob/living/carbon/alien/Stat()
 

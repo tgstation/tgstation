@@ -275,12 +275,11 @@ var/round_start_time = 0
 /datum/controller/gameticker/proc/equip_characters()
 	var/captainless=1
 	for(var/mob/living/carbon/human/player in player_list)
-		if(!player.mind.need_job_assign)
-			continue
 		if(player && player.mind && player.mind.assigned_role)
 			if(player.mind.assigned_role == "Captain")
 				captainless=0
-			job_master.EquipRank(player, player.mind.assigned_role, 0)
+			if(player.mind.assigned_role != "MODE")
+				job_master.EquipRank(player, player.mind.assigned_role, 0)
 	if(captainless)
 		for(var/mob/M in player_list)
 			if(!istype(M,/mob/new_player))

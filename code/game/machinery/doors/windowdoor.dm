@@ -71,11 +71,10 @@
 		flick(text("[]deny", src.base_state), src)
 	return
 
-/obj/machinery/door/window/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/machinery/door/window/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
-		if(air_group) return 0
 		return !density
 	else
 		return 1
@@ -238,6 +237,7 @@
 		src.operating = -1
 		flick("[src.base_state]spark", src)
 		sleep(6)
+		desc += "<BR><span class='warning'>Its access panel is smoking slightly.</span>"
 		if(istype(I, /obj/item/weapon/melee/energy/blade))
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)

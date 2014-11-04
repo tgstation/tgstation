@@ -11,125 +11,6 @@
  * Tables
  */
 
-/datum/table_recipe
-	var/name = ""
-	var/reqs[] = list()
-	var/result_path
-	var/tools[] = list()
-	var/time = 0
-	var/parts[] = list()
-	var/chem_catalists[] = list()
-
-/datum/table_recipe/IED
-	name = "IED"
-	result_path = /obj/item/weapon/grenade/iedcasing
-	reqs = list(/obj/item/weapon/restraints/handcuffs/cable = 1,
-				/obj/item/stack/cable_coil = 1,
-				/obj/item/device/assembly/igniter = 1,
-				/obj/item/weapon/reagent_containers/food/drinks/soda_cans = 1,
-				/datum/reagent/fuel = 10)
-	time = 80
-
-/datum/table_recipe/stunprod
-	name = "Stunprod"
-	result_path = /obj/item/weapon/melee/baton/cattleprod
-	reqs = list(/obj/item/weapon/restraints/handcuffs/cable = 1,
-				/obj/item/stack/rods = 1,
-				/obj/item/weapon/wirecutters = 1,
-				/obj/item/weapon/stock_parts/cell = 1)
-	time = 80
-	parts = list(/obj/item/weapon/stock_parts/cell = 1)
-
-/datum/table_recipe/ed209
-	name = "ED209"
-	result_path = /obj/machinery/bot/ed209
-	reqs = list(/obj/item/robot_parts/robot_suit = 1,
-				/obj/item/clothing/head/helmet = 1,
-				/obj/item/clothing/suit/armor/vest = 1,
-				/obj/item/robot_parts/l_leg = 1,
-				/obj/item/robot_parts/r_leg = 1,
-				/obj/item/stack/sheet/metal = 5,
-				/obj/item/stack/cable_coil = 5,
-				/obj/item/weapon/gun/energy/taser = 1,
-				/obj/item/weapon/stock_parts/cell = 1,
-				/obj/item/device/assembly/prox_sensor = 1,
-				/obj/item/robot_parts/r_arm = 1)
-	tools = list(/obj/item/weapon/weldingtool, /obj/item/weapon/screwdriver)
-	time = 120
-
-/datum/table_recipe/secbot
-	name = "Secbot"
-	result_path = /obj/machinery/bot/secbot
-	reqs = list(/obj/item/device/assembly/signaler = 1,
-				/obj/item/clothing/head/helmet = 1,
-				/obj/item/weapon/melee/baton = 1,
-				/obj/item/device/assembly/prox_sensor = 1,
-				/obj/item/robot_parts/r_arm = 1)
-	tools = list(/obj/item/weapon/weldingtool)
-	time = 120
-
-/datum/table_recipe/cleanbot
-	name = "Cleanbot"
-	result_path = /obj/machinery/bot/cleanbot
-	reqs = list(/obj/item/weapon/reagent_containers/glass/bucket = 1,
-				/obj/item/device/assembly/prox_sensor = 1,
-				/obj/item/robot_parts/r_arm = 1)
-	time = 80
-
-/datum/table_recipe/floorbot
-	name = "Floorbot"
-	result_path = /obj/machinery/bot/floorbot
-	reqs = list(/obj/item/weapon/storage/toolbox/mechanical = 1,
-				/obj/item/stack/tile/plasteel = 1,
-				/obj/item/device/assembly/prox_sensor = 1,
-				/obj/item/robot_parts/r_arm = 1)
-	time = 80
-
-/datum/table_recipe/medbot
-	name = "Medbot"
-	result_path = /obj/machinery/bot/medbot
-	reqs = list(/obj/item/device/healthanalyzer = 1,
-				/obj/item/weapon/storage/firstaid = 1,
-				/obj/item/device/assembly/prox_sensor = 1,
-				/obj/item/robot_parts/r_arm = 1)
-	time = 80
-
-/datum/table_recipe/flamethrower
-	name = "Flamethrower"
-	result_path = /obj/item/weapon/flamethrower
-	reqs = list(/obj/item/weapon/weldingtool = 1,
-				/obj/item/device/assembly/igniter = 1,
-				/obj/item/stack/rods = 2)
-	tools = list(/obj/item/weapon/screwdriver)
-	time = 20
-
-/datum/table_recipe/meteorshot
-	name = "Meteorshot Shell"
-	result_path = /obj/item/ammo_casing/shotgun/meteorshot
-	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
-				/obj/item/weapon/rcd_ammo = 1,
-				/obj/item/weapon/stock_parts/manipulator = 2)
-	tools = list(/obj/item/weapon/screwdriver)
-	time = 5
-
-/datum/table_recipe/pulseslug
-	name = "Pulse Slug Shell"
-	result_path = /obj/item/ammo_casing/shotgun/pulseslug
-	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
-				/obj/item/weapon/stock_parts/capacitor/adv = 2,
-				/obj/item/weapon/stock_parts/micro_laser/ultra = 1)
-	tools = list(/obj/item/weapon/screwdriver)
-	time = 5
-
-/datum/table_recipe/dragonsbreath
-	name = "Dragonsbreath Shell"
-	result_path = /obj/item/ammo_casing/shotgun/incendiary/dragonsbreath
-	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
-				/datum/reagent/phosphorus = 5,)
-	tools = list(/obj/item/weapon/screwdriver)
-	time = 5
-
-
 /obj/structure/table
 	name = "table"
 	desc = "A square piece of metal standing on four metal legs. It can not move."
@@ -140,7 +21,6 @@
 	layer = 2.8
 	throwpass = 1	//You can throw objects over this, despite it's density.")
 	var/parts = /obj/item/weapon/table_parts
-	var/list/table_contents = list()
 	var/busy = 0
 
 /obj/structure/table/New()
@@ -160,168 +40,6 @@
 			var/obj/structure/table/T = locate(/obj/structure/table,get_step(src,direction))
 			T.update_icon()
 	..()
-
-/obj/structure/table/MouseDrop(atom/over)
-	if(usr.stat || usr.lying || !Adjacent(usr) || (over != usr))
-		return
-	interact(usr)
-
-/obj/structure/table/proc/check_contents(datum/table_recipe/R)
-	check_table()
-	main_loop:
-		for(var/A in R.reqs)
-			for(var/B in table_contents)
-				if(ispath(B, A))
-					if(table_contents[B] >= R.reqs[A])
-						continue main_loop
-			return 0
-	for(var/A in R.chem_catalists)
-		if(table_contents[A] < R.chem_catalists[A])
-			return 0
-	return 1
-
-/obj/structure/table/proc/check_table()
-	table_contents = list()
-	for(var/obj/item/I in loc)
-		if(istype(I, /obj/item/stack))
-			var/obj/item/stack/S = I
-			table_contents[I.type] += S.amount
-		else
-			if(istype(I, /obj/item/weapon/reagent_containers))
-				for(var/datum/reagent/R in I.reagents.reagent_list)
-					table_contents[R.type] += R.volume
-
-			table_contents[I.type] += 1
-
-/obj/structure/table/proc/check_tools(mob/user, datum/table_recipe/R)
-	if(!R.tools.len)
-		return 1
-	var/list/possible_tools = list()
-	for(var/obj/item/I in user.contents)
-		if(istype(I, /obj/item/weapon/storage))
-			for(var/obj/item/SI in I.contents)
-				possible_tools += SI.type
-		else
-			possible_tools += I.type
-	possible_tools += table_contents
-	var/i = R.tools.len
-	var/I
-	for(var/A in R.tools)
-		I = possible_tools.Find(A)
-		if(I)
-			possible_tools.Cut(I, I+1)
-			i--
-		else
-			break
-	return !i
-
-/obj/structure/table/proc/construct_item(mob/user, datum/table_recipe/R)
-	check_table()
-	if(check_contents(R) && check_tools(user, R))
-		if(do_after(user, R.time))
-			if(!check_contents(R) || !check_tools(user, R))
-				return 0
-			var/list/parts = del_reqs(R)
-			var/atom/movable/I = new R.result_path
-			for(var/A in parts)
-				if(istype(A, /obj/item))
-					var/atom/movable/B = A
-					B.loc = I
-				else
-					if(!I.reagents)
-						I.reagents = new /datum/reagents()
-					I.reagents.reagent_list.Add(A)
-			I.CheckParts()
-			I.loc = loc
-			return 1
-	return 0
-
-/obj/structure/table/proc/del_reqs(datum/table_recipe/R)
-	var/list/Deletion = list()
-	var/amt
-	for(var/A in R.reqs)
-		amt = R.reqs[A]
-		if(ispath(A, /obj/item/stack))
-			var/obj/item/stack/S
-			stack_loop:
-				for(var/B in table_contents)
-					if(ispath(B, A))
-						while(amt > 0)
-							S = locate(B) in loc
-							if(S.amount >= amt)
-								S.use(amt)
-								break stack_loop
-							else
-								amt -= S.amount
-								qdel(S)
-		else if(ispath(A, /obj/item))
-			var/obj/item/I
-			item_loop:
-				for(var/B in table_contents)
-					if(ispath(B, A))
-						while(amt > 0)
-							I = locate(B) in loc
-							Deletion.Add(I)
-							I.loc = null //remove it from the table loc so that we don't locate the same item every time (will be relocated inside the crafted item in construct_item())
-							amt--
-						break item_loop
-		else
-			var/datum/reagent/RG = new A
-			reagent_loop:
-				for(var/B in table_contents)
-					if(ispath(B, /obj/item/weapon/reagent_containers))
-						var/obj/item/RC = locate(B) in loc
-						if(RC.reagents.has_reagent(RG.id, amt))
-							RC.reagents.remove_reagent(RG.id, amt)
-							RG.volume = amt
-							Deletion.Add(RG)
-							break reagent_loop
-						else if(RC.reagents.has_reagent(RG.id))
-							Deletion.Add(RG)
-							RG.volume += RC.reagents.get_reagent_amount(RG.id)
-							amt -= RC.reagents.get_reagent_amount(RG.id)
-							RC.reagents.del_reagent(RG.id)
-
-	for(var/A in R.parts)
-		for(var/B in Deletion)
-			if(!istype(B, A))
-				Deletion.Remove(B)
-				qdel(B)
-
-	return Deletion
-
-/obj/structure/table/interact(mob/user)
-	check_table()
-	if(!table_contents.len)
-		return
-	var/dat = "<h3>Construction menu</h3>"
-	dat += "<div class='statusDisplay'>"
-	if(busy)
-		dat += "Construction in progress...</div>"
-	else
-		for(var/datum/table_recipe/R in table_recipes)
-			if(check_contents(R))
-				dat += "<A href='?src=\ref[src];make=\ref[R]'>[R.name]</A><BR>"
-		dat += "</div>"
-
-	var/datum/browser/popup = new(user, "table", "Table", 300, 300)
-	popup.set_content(dat)
-	popup.open()
-	return
-
-/obj/structure/table/Topic(href, href_list)
-	if(usr.stat || !Adjacent(usr) || usr.lying)
-		return
-	if(href_list["make"])
-		var/datum/table_recipe/TR = locate(href_list["make"])
-		busy = 1
-		interact(usr)
-		if(construct_item(usr, TR))
-			usr << "<span class='notice'>[TR.name] constructed.</span>"
-		else
-			usr << "<span class ='warning'>Construction failed.</span>"
-		busy = 0
-	attack_hand(usr)
 
 /obj/structure/table/update_icon()
 	spawn(2) //So it properly updates when deleting
@@ -544,8 +262,8 @@
 /obj/structure/table/attack_tk() // no telehulk sorry
 	return
 
-/obj/structure/table/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
+/obj/structure/table/CanPass(atom/movable/mover, turf/target, height=0)
+	if(height==0) return 1
 
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
@@ -750,8 +468,8 @@ Destroy type values:
 		qdel(src)
 		return
 
-/obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
+/obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=0)
+	if(height==0) return 1
 	if(src.density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
 		return 1
 	if(istype(mover) && mover.checkpass(PASSTABLE))

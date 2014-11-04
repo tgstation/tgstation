@@ -46,11 +46,6 @@ var/global/datum/controller/occupations/job_master
 		if(!job)	return 0
 		if(jobban_isbanned(player, rank))	return 0
 		if(!job.player_old_enough(player.client)) return 0
-		if(player.mind.special_role && ticker && ticker.mode)
-			if(job.title in ticker.mode.restricted_jobs)
-				return 0
-		if(!player.mind.need_job_assign)
-			return 0
 		var/position_limit = job.total_positions
 		if(!latejoin)
 			position_limit = job.spawn_positions
@@ -82,14 +77,6 @@ var/global/datum/controller/occupations/job_master
 			Debug("FOC non-human failed, Player: [player]")
 			continue
 
-		if(player.mind.special_role && ticker && ticker.mode)
-			if(job.title in ticker.mode.restricted_jobs)
-				Debug("FOC player has a special role and this job is blocked from this special role")
-				continue
-
-		if(!player.mind.need_job_assign)
-			continue
-
 		if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
 			Debug("FOC pass, Player: [player], Level:[level]")
 			candidates += player
@@ -119,13 +106,6 @@ var/global/datum/controller/occupations/job_master
 			Debug("GRJ non-human failed, Player: [player]")
 			continue
 
-		if(player.mind.special_role && ticker && ticker.mode)
-			if(job.title in ticker.mode.restricted_jobs)
-				Debug("GRJ player has a special role and this job is blocked from this special role")
-				continue
-
-		if(!player.mind.need_job_assign)
-			continue
 
 		if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
 			Debug("GRJ Random job given, Player: [player], Job: [job]")
@@ -143,7 +123,7 @@ var/global/datum/controller/occupations/job_master
 	return
 
 
-//This proc is called before the level loop of DivideOccupations() and will try to select a head, ignoring ALL non-head preferences for every level until�
+//This proc is called before the level loop of DivideOccupations() and will try to select a head, ignoring ALL non-head preferences for every level until
 //it locates a head or runs out of levels to check
 //This is basically to ensure that there's atleast a few heads in the round
 /datum/controller/occupations/proc/FillHeadPosition()
@@ -282,13 +262,6 @@ var/global/datum/controller/occupations/job_master
 					Debug("DO non-human failed, Player: [player], Job:[job.title]")
 					continue
 
-				if(player.mind.special_role && ticker && ticker.mode)
-					if(job.title in ticker.mode.restricted_jobs)
-						Debug("DO player has a special role and this job is blocked from that special role")
-						continue
-
-				if(!player.mind.need_job_assign)
-					continue
 
 				// If the player wants that job on this level, then try give it to him.
 				if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
@@ -302,6 +275,10 @@ var/global/datum/controller/occupations/job_master
 
 	// Hand out random jobs to the people who didn't get any in the last check
 	// Also makes sure that they got their preference correct
+	for(var/mob/new_player/player in unassigned)
+		if(jobban_isbanned(player, "Assistant"))
+			GiveRandomJob(player) //you get to roll for random before everyone else just to be sure you don't get assistant. you're so speshul
+
 	for(var/mob/new_player/player in unassigned)
 		if(player.client.prefs.userandomjob)
 			GiveRandomJob(player)
@@ -318,8 +295,6 @@ var/global/datum/controller/occupations/job_master
 
 //Gives the player the stuff he should have with his rank
 /datum/controller/occupations/proc/EquipRank(var/mob/living/H, var/rank, var/joined_late = 0)
-	if(!H.mind.need_job_assign)
-		return 0
 
 	var/datum/job/job = GetJob(rank)
 

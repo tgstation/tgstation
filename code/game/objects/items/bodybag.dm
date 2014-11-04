@@ -5,10 +5,11 @@
 	desc = "A folded bag designed for the storage and transportation of cadavers."
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "bodybag_folded"
+	var/unfoldedbag_path = /obj/structure/closet/body_bag
 	w_class = 2
 
 /obj/item/bodybag/attack_self(mob/user)
-		var/obj/structure/closet/body_bag/R = new /obj/structure/closet/body_bag(user.loc)
+		var/obj/structure/closet/body_bag/R = new unfoldedbag_path(user.loc)
 		R.add_fingerprint(user)
 		qdel(src)
 
@@ -36,7 +37,9 @@
 	icon_state = "bodybag_closed"
 	icon_closed = "bodybag_closed"
 	icon_opened = "bodybag_open"
+	var/foldedbag_path = /obj/item/bodybag
 	density = 0
+	mob_storage_capacity = 2
 
 
 /obj/structure/closet/body_bag/attackby(obj/item/I, mob/user)
@@ -69,7 +72,7 @@
 
 /obj/structure/closet/body_bag/MouseDrop(over_object, src_location, over_location)
 	..()
-	if(over_object == usr && (in_range(src, usr) || usr.contents.Find(src)))
+	if(over_object == usr && Adjacent(usr) && (in_range(src, usr) || usr.contents.Find(src)))
 		if(!ishuman(usr))
 			return 0
 		if(opened)
@@ -77,13 +80,36 @@
 		if(contents.len)
 			return 0
 		visible_message("<span class='notice'>[usr] folds up [src].</span>")
-		var/obj/item/bodybag/B = new /obj/item/bodybag(get_turf(src))
+		var/obj/item/bodybag/B = new foldedbag_path(get_turf(src))
 		usr.put_in_hands(B)
 		qdel(src)
 
 
-/obj/structure/closet/bodybag/update_icon()
+/obj/structure/closet/body_bag/update_icon()
 	if(!opened)
 		icon_state = icon_closed
 	else
 		icon_state = icon_opened
+
+
+// Bluespace bodybag
+
+/obj/item/bodybag/bluespace
+	name = "bluespace body bag"
+	desc = "A folded bluespace body bag designed for the storage and transportation of cadavers."
+	icon = 'icons/obj/bodybag.dmi'
+	icon_state = "bluebodybag_folded"
+	unfoldedbag_path = /obj/structure/closet/body_bag/bluespace
+	w_class = 2
+
+/obj/structure/closet/body_bag/bluespace
+	name = "bluespace body bag"
+	desc = "A bluespace body bag designed for the storage and transportation of cadavers."
+	icon = 'icons/obj/bodybag.dmi'
+	icon_state = "bluebodybag_closed"
+	icon_closed = "bluebodybag_closed"
+	icon_opened = "bluebodybag_open"
+	foldedbag_path = /obj/item/bodybag/bluespace
+	density = 0
+	mob_storage_capacity = 15
+	max_mob_size = 2

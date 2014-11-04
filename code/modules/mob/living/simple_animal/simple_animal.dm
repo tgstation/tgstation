@@ -115,8 +115,10 @@
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				if(!(stop_automated_movement_when_pulled && pulledby)) //Soma animals don't move when pulled
-					Move(get_step(src,pick(cardinal)))
-					turns_since_move = 0
+					var/anydir = pick(cardinal)
+					if(Process_Spacemove(anydir))
+						Move(get_step(src, anydir), anydir)
+						turns_since_move = 0
 
 	//Speaking
 	if(!client && speak_chance)
@@ -551,10 +553,16 @@
 	gib()
 	return
 
-/mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who)
-	src << "<span class='warning'>You don't have the dexterity to do this!</span>"
-	return
+/mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where, child_override)
+	if(!child_override)
+		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		return
+	else
+		..()
 
-/mob/living/simple_animal/stripPanelEquip(obj/item/what, mob/who)
-	src << "<span class='warning'>You don't have the dexterity to do this!</span>"
-	return
+/mob/living/simple_animal/stripPanelEquip(obj/item/what, mob/who, where, child_override)
+	if(!child_override)
+		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		return
+	else
+		..()

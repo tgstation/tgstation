@@ -80,6 +80,9 @@
 	set category = "Object"
 	set src in oview(1)
 
+	if(usr.stat || usr.restrained() || !usr.canmove)
+		return
+
 	if(storedpda)
 		storedpda.loc = get_turf(src.loc)
 		storedpda = null

@@ -381,6 +381,12 @@ var/list/uplink_items = list()
 	cost = 9
 	gamemodes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/badass/syndiecigs
+	name = "Syndicate Smokes"
+	desc = "Strong flavor, dense smoke, infused with Doctor's Delight."
+	item = /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
+	cost = 4
+
 /datum/uplink_item/device_tools/space_suit
 	name = "Syndicate Space Suit"
 	desc = "The red and black syndicate space suit is less encumbering than Nanotrasen variants, fits inside bags, and has a weapon slot. Nanotrasen crewmembers are trained to report red space suit sightings."
@@ -399,7 +405,14 @@ var/list/uplink_items = list()
 	name = "Binary Translator Key"
 	desc = "A key, that when inserted into a radio headset, allows you to listen to and talk with artificial intelligences and cybernetic organisms in binary. "
 	item = /obj/item/device/encryptionkey/binary
-	cost = 6
+	cost = 5
+	surplus = 75
+
+/datum/uplink_item/device_tools/encryptionkey
+	name = "Syndicate Encryption Key"
+	desc = "A key, that when inserted into a radio headset, allows you to listen to all station department channels as well as talk on an encrypted Syndicate channel."
+	item = /obj/item/device/encryptionkey/syndicate
+	cost = 5
 	surplus = 75
 
 /datum/uplink_item/device_tools/ai_detector
@@ -577,6 +590,7 @@ var/list/uplink_items = list()
 		buyable_items += temp_uplink_list[category]
 	var/list/bought_items = list()
 	U.uses -= cost
+	U.used_TC = 20
 	var/remaining_TC = 50
 
 	var/datum/uplink_item/I
@@ -591,5 +605,7 @@ var/list/uplink_items = list()
 		bought_items += I.item
 		remaining_TC -= I.cost
 
+	U.purchase_log += "<BIG>\icon[C]</BIG>"
 	for(var/item in bought_items)
 		new item(C)
+		U.purchase_log += "<BIG>\icon[item]</BIG>"

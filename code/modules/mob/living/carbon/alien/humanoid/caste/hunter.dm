@@ -8,7 +8,6 @@
 	icon_state = "alienh_s"
 	plasma_rate = 5
 
-
 /mob/living/carbon/alien/humanoid/hunter/New()
 	create_reagents(100)
 	if(name == "alien hunter")
@@ -50,26 +49,105 @@
 
 
 //Hunter verbs
-/*
-/mob/living/carbon/alien/humanoid/hunter/verb/invis()
-	set name = "Invisibility (50)"
-	set desc = "Makes you invisible for 15 seconds"
-	set category = "Alien"
 
-	if(alien_invis)
-		update_icons()
+/mob/living/carbon/alien/humanoid/hunter/proc/toggle_leap()
+	leap_on_click = !leap_on_click
+	leap_icon.icon_state = "leap_[leap_on_click ? "on":"off"]"
+	src << "<span class='noticealien'>You will now [leap_on_click ? "leap at":"slash at"] enemies!</span>"
+
+/mob/living/carbon/alien/humanoid/hunter/ClickOn(var/atom/A, var/params)
+	face_atom(A)
+	if(leap_on_click)
+		leap_at(A)
 	else
-		if(powerc(50))
-			adjustToxLoss(-50)
-			alien_invis = 1.0
-			update_icons()
-			src << "\green You are now invisible."
-			for(var/mob/O in oviewers(src, null))
-				O.show_message(text("\red <B>[src] fades into the surroundings!</B>"), 1)
-			spawn(250)
-				if(!isnull(src))//Don't want the game to runtime error when the mob no-longer exists.
-					alien_invis = 0.0
-					update_icons()
-					src << "\green You are no longer invisible."
-	return
-*/
+		..()
+
+
+#define MAX_ALIEN_LEAP_DIST 7
+
+/mob/living/carbon/alien/humanoid/hunter/proc/leap_at(var/atom/A)
+	if(leaping) //Leap while you leap, so you can leap while you leap
+		return
+
+	if(!has_gravity(src) || !has_gravity(A))
+		src << "<span class='alertalien'>It is unsafe to leap without gravity!</span>"
+		//It's also extremely buggy visually, so it's balance+bugfix
+		return
+	if(lying)
+		return
+
+	leaping = 1
+	update_icons()
+	throw_at(A,MAX_ALIEN_LEAP_DIST,1)
+	leaping = 0
+	update_icons()
+
+/mob/living/carbon/alien/humanoid/throw_impact(A)
+	var/msg = ""
+
+	if(A)
+		if(istype(A, /mob/living))
+			var/mob/living/L = A
+			msg = "<span class ='alertalien'>[src] pounces on [A]!</span>"
+			L.Weaken(5)
+			sleep(2)//Runtime prevention (infinite bump() calls on hulks)
+			step_towards(src,L)
+		else
+			msg = "<span class ='alertalien'>[src] smashes into [A]!</span>"
+			weakened = 2
+
+		if(leaping)
+			leaping = 0
+			update_canmove()
+			visible_message(msg)
+
+
+/mob/living/carbon/alien/humanoid/float(on)
+	if(leaping)
+		return
+	..()
+
+
+//Modified throw_at() that will use diagonal dirs where appropriate
+//instead of locking it to cardinal dirs
+/mob/living/carbon/alien/humanoid/throw_at(atom/target, range, speed)
+	if(!target || !src || (flags & NODROP))	return 0
+
+	src.throwing = 1
+
+	var/dist_x = abs(target.x - src.x)
+	var/dist_y = abs(target.y - src.y)
+	var/dist_travelled = 0
+	var/dist_since_sleep = 0
+
+	var/tdist_x = dist_x;
+	var/tdist_y = dist_y;
+
+	if(dist_x <= dist_y)
+		tdist_x = dist_y;
+		tdist_y = dist_x;
+
+	var/error = tdist_x/2 - tdist_y
+	while(target && (((((dist_x > dist_y) && ((src.x < target.x) || (src.x > target.x))) || ((dist_x <= dist_y) && ((src.y < target.y) || (src.y > target.y))) || (src.x > target.x)) && dist_travelled < range) || !has_gravity(src)))
+
+		if(!src.throwing) break
+		if(!istype(src.loc, /turf)) break
+
+		var/atom/step = get_step(src, get_dir(src,target))
+		if(!step)
+			break
+		src.Move(step, get_dir(src, step))
+		hit_check()
+		error += (error < 0) ? tdist_x : -tdist_y;
+		dist_travelled++
+		dist_since_sleep++
+		if(dist_since_sleep >= speed)
+			dist_since_sleep = 0
+			sleep(1)
+
+
+	src.throwing = 0
+	if(isobj(src))
+		src.throw_impact(get_turf(src))
+
+	return 1

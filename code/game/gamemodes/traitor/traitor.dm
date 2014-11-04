@@ -15,7 +15,6 @@
 	required_players = 0
 	required_enemies = 1
 	recommended_enemies = 4
-	pre_setup_before_jobs = 1
 
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
 	var/num_modifier = 0 // Used for gamemodes, that are a child of traitor, that need more than the usual.
@@ -30,6 +29,9 @@
 
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
+
+	if(config.protect_assistant_from_antagonist)
+		restricted_jobs += "Assistant"
 
 	var/num_traitors = 1
 

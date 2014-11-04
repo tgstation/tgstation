@@ -38,20 +38,36 @@
 	icon_state = "cart-e"
 	access_engine = 1
 
+	/obj/item/weapon/cartridge/engineering/New()
+		..()
+		radio = new /obj/item/radio/integrated/floorbot(src)
+
 /obj/item/weapon/cartridge/atmos
 	name = "\improper BreatheDeep cartridge"
 	icon_state = "cart-a"
 	access_atmos = 1
+
+	/obj/item/weapon/cartridge/atmos/New()
+		..()
+		radio = new /obj/item/radio/integrated/floorbot(src)
 
 /obj/item/weapon/cartridge/medical
 	name = "\improper Med-U cartridge"
 	icon_state = "cart-m"
 	access_medical = 1
 
+	/obj/item/weapon/cartridge/medical/New()
+		..()
+		radio = new /obj/item/radio/integrated/medbot(src)
+
 /obj/item/weapon/cartridge/chemistry
 	name = "\improper ChemWhiz cartridge"
 	icon_state = "cart-chem"
 	access_reagent_scanner = 1
+
+	/obj/item/weapon/cartridge/chemistry/New()
+		..()
+		radio = new /obj/item/radio/integrated/medbot(src)
 
 /obj/item/weapon/cartridge/security
 	name = "\improper R.O.B.U.S.T. cartridge"
@@ -78,6 +94,10 @@
 	desc = "The ultimate in clean-room design."
 	icon_state = "cart-j"
 	access_janitor = 1
+
+/obj/item/weapon/cartridge/janitor/New()
+	..()
+	radio = new /obj/item/radio/integrated/cleanbot(src)
 
 /obj/item/weapon/cartridge/lawyer
 	name = "\improper P.R.O.V.E. cartridge"
@@ -167,6 +187,10 @@
 	access_engine = 1
 	access_atmos = 1
 
+/obj/item/weapon/cartridge/ce/New()
+	..()
+	radio = new /obj/item/radio/integrated/floorbot(src)
+
 /obj/item/weapon/cartridge/cmo
 	name = "\improper Med-U DELUXE cartridge"
 	icon_state = "cart-cmo"
@@ -174,6 +198,10 @@
 	access_status_display = 1
 	access_reagent_scanner = 1
 	access_medical = 1
+
+/obj/item/weapon/cartridge/cmo/New()
+	..()
+	radio = new /obj/item/radio/integrated/medbot(src)
 
 /obj/item/weapon/cartridge/rd
 	name = "\improper Signal Ace DELUXE cartridge"
@@ -248,6 +276,67 @@
 			status_signal.data["picture_state"] = data1
 
 	frequency.post_signal(src, status_signal)
+
+/obj/item/weapon/cartridge/proc/bot_control(var/obj/item/radio/integrated/SC)
+
+
+	if(!SC)
+		menu = "Interlink Error - Please reinsert cartridge."
+		return
+
+	if(!SC.active)
+		// list of bots
+		if(!SC.botlist || (SC.botlist && SC.botlist.len==0))
+			menu += "No bots found.<BR>"
+
+		else
+			for(var/obj/machinery/bot/B in SC.botlist)
+				menu += "<A href='byond://?src=\ref[SC];op=control;bot=\ref[B]'>[B] at [get_area(B)]</A><BR>"
+
+		menu += "<BR><A href='byond://?src=\ref[SC];op=scanbots'><img src=pda_scanner.png> Scan for active bots</A><BR>"
+
+	else	// bot selected, control it
+
+		menu += "<B>[SC.active]</B><BR> Status: (<A href='byond://?src=\ref[SC];op=control;bot=\ref[SC.active]'><img src=pda_refresh.png><i>refresh</i></A>)<BR>"
+
+		if(!SC.botstatus)
+			menu += "Waiting for response...<BR>"
+		else
+
+			menu += "Location: [SC.botstatus["loca"] ]<BR>"
+			menu += "Mode: "
+
+			switch(SC.botstatus["mode"])
+				if(BOT_IDLE)
+					menu += "Ready"
+				if(BOT_HUNT)
+					menu += "Apprehending target"
+				if(BOT_PREP_ARREST,BOT_ARREST)
+					menu += "Arresting target"
+				if(BOT_START_PATROL)
+					menu += "Starting patrol"
+				if(BOT_PATROL)
+					menu += "On patrol"
+				if(BOT_SUMMON)
+					menu += "Responding to summons"
+				if(BOT_CLEANING)
+					menu += "Cleaning"
+				if(BOT_MOVING)
+					menu += "Proceeding to work site"
+				if(BOT_REPAIRING)
+					menu += "Performing repairs"
+				if(BOT_HEALING)
+					menu += "Medicating patient"
+				if(BOT_RESPONDING)
+					menu += "Proceeding to AI waypoint"
+
+			menu += "<BR>\[<A href='byond://?src=\ref[SC];op=stop'>Stop Patrol</A>\] "
+			menu += "\[<A href='byond://?src=\ref[SC];op=go'>Start Patrol</A>\] "
+			menu += "\[<A href='byond://?src=\ref[SC];op=summon'>Summon Bot</A>\]<BR>"
+			menu += "<HR><A href='byond://?src=\ref[SC];op=botlist'><img src=pda_back.png>Return to bot list</A><BR>"
+			menu += "Keep an ID inserted to upload access codes upon summoning."
+	return menu
+
 
 /obj/item/weapon/cartridge/proc/generate_menu()
 	switch(mode)
@@ -457,52 +546,8 @@ Code:
 			menu += "<br>"
 		if (46) //beepsky control
 			var/obj/item/radio/integrated/beepsky/SC = radio
-			if(!SC)
-				menu = "Interlink Error - Please reinsert cartridge."
-				return
-
 			menu = "<h4><img src=pda_cuffs.png> Securitron Interlink</h4>"
-
-			if(!SC.active)
-				// list of bots
-				if(!SC.botlist || (SC.botlist && SC.botlist.len==0))
-					menu += "No bots found.<BR>"
-
-				else
-					for(var/obj/machinery/bot/secbot/B in SC.botlist)
-						menu += "<A href='byond://?src=\ref[SC];op=control;bot=\ref[B]'>[B] at [B.loc.loc]</A><BR>"
-
-				menu += "<BR><A href='byond://?src=\ref[SC];op=scanbots'><img src=pda_scanner.png> Scan for active bots</A><BR>"
-
-			else	// bot selected, control it
-
-				menu += "<B>[SC.active]</B><BR> Status: (<A href='byond://?src=\ref[SC];op=control;bot=\ref[SC.active]'><img src=pda_refresh.png><i>refresh</i></A>)<BR>"
-
-				if(!SC.botstatus)
-					menu += "Waiting for response...<BR>"
-				else
-
-					menu += "Location: [SC.botstatus["loca"] ]<BR>"
-					menu += "Mode: "
-
-					switch(SC.botstatus["mode"])
-						if(0)
-							menu += "Ready"
-						if(1)
-							menu += "Apprehending target"
-						if(2,3)
-							menu += "Arresting target"
-						if(4)
-							menu += "Starting patrol"
-						if(5)
-							menu += "On patrol"
-						if(6)
-							menu += "Responding to summons"
-
-					menu += "<BR>\[<A href='byond://?src=\ref[SC];op=stop'>Stop Patrol</A>\] "
-					menu += "\[<A href='byond://?src=\ref[SC];op=go'>Start Patrol</A>\] "
-					menu += "\[<A href='byond://?src=\ref[SC];op=summon'>Summon Bot</A>\]<BR>"
-					menu += "<HR><A href='byond://?src=\ref[SC];op=botlist'><img src=pda_back.png>Return to bot list</A>"
+			bot_control(SC)
 
 		if (47) //quartermaster order records
 			menu = "<h4><img src=pda_crate.png> Supply Record Interlink</h4>"
@@ -526,7 +571,6 @@ Code:
 			if(!QC)
 				menu = "Interlink Error - Please reinsert cartridge."
 				return
-
 			menu = "<h4><img src=pda_mule.png> M.U.L.E. bot Interlink V0.8</h4>"
 
 			if(!QC.active)
@@ -552,19 +596,19 @@ Code:
 					menu += "Mode: "
 
 					switch(QC.botstatus["mode"])
-						if(0)
+						if(BOT_IDLE)
 							menu += "Ready"
-						if(1)
+						if(BOT_LOADING)
 							menu += "Loading/Unloading"
-						if(2)
+						if(BOT_DELIVER)
 							menu += "Navigating to Delivery Location"
-						if(3)
+						if(BOT_GO_HOME)
 							menu += "Navigating to Home"
-						if(4)
+						if(BOT_BLOCKED)
 							menu += "Waiting for clear path"
-						if(5,6)
+						if(BOT_NAV,BOT_WAIT_FOR_NAV)
 							menu += "Calculating navigation path"
-						if(7)
+						if(BOT_NO_ROUTE)
 							menu += "Unable to locate destination"
 					var/obj/structure/closet/crate/C = QC.botstatus["load"]
 					menu += "<BR>Current Load: [ !C ? "<i>none</i>" : "[C.name] (<A href='byond://?src=\ref[QC];op=unload'><i>unload</i></A>)" ]<BR>"
@@ -641,6 +685,20 @@ Code:
 				menu += "ERROR: Unable to determine current location."
 			menu += "<br><br><A href='byond://?src=\ref[src];choice=49'>Refresh GPS Locator</a>"
 
+		if (50) //Cleanbot control
+			menu = "<br><h4><img src=pda_cleanbot.png> Cleanbot Interlink</h4>"
+			var/obj/item/radio/integrated/cleanbot/SC = radio
+			bot_control(SC)
+
+		if (51) //floorbot control
+			menu = "<h4><img src=pda_floorbot.png> Floorbot Interlink</h4>"
+			var/obj/item/radio/integrated/floorbot/SC = radio
+			bot_control(SC)
+
+		if (52) //Medibot control
+			menu = "<h4><img src=pda_medbot.png> Medibot Interlink</h4>"
+			var/obj/item/radio/integrated/medbot/SC = radio
+			bot_control(SC)
 
 /obj/item/weapon/cartridge/Topic(href, href_list)
 	..()
