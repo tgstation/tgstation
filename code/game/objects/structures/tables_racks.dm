@@ -279,10 +279,10 @@
 		if(istype(src, /obj/structure/table/reinforced))
 			var/obj/structure/table/reinforced/RT = src
 			if(RT.status == 1)
-				table_destroy(2)
+				table_destroy(2, user)
 				return
 		else
-			table_destroy(2)
+			table_destroy(2, user)
 			return
 
 	if (istype(I, /obj/item/weapon/storage/bag/tray))
@@ -322,15 +322,13 @@
 
 
 /*
-Destroy type values:
-1 = Destruction, Actually destroyed
-2 = Deconstruction.
-*/
+ * TABLE DESTRUCTION/DECONSTRUCTION
+ */
 
 #define TBL_DESTROY 1
 #define TBL_DECONSTRUCT 2
 
-/obj/structure/table/proc/table_destroy(var/destroy_type, var/mob/user as mob)
+/obj/structure/table/proc/table_destroy(var/destroy_type, var/mob/user)
 
 	if(destroy_type == TBL_DESTROY)
 		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
@@ -342,7 +340,7 @@ Destroy type values:
 	if(destroy_type == TBL_DECONSTRUCT)
 		user << "<span class='notice'>Now disassembling [src].</span>"
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if (do_after(user, 30))
+		if(do_after(user, 30))
 			new frame(src.loc)
 			new buildstack(src.loc)
 			qdel(src)
@@ -402,6 +400,24 @@ Destroy type values:
 		new /obj/item/weapon/shard(src.loc)
 		qdel(src)
 	qdel(I)
+
+/obj/structure/table/glass/climb_table(mob/user)
+	src.add_fingerprint(user)
+	user.visible_message("<span class='warning'>[user] starts climbing onto [src].</span>", \
+								"<span class='notice'>[user] starts climbing onto [src].</span>")
+	if(do_mob(user, user, 20))
+		user.pass_flags += PASSTABLE
+		step(user,get_dir(user,src.loc))
+		user.pass_flags -= PASSTABLE
+		user.visible_message("<span class='warning'>[user] climbs onto [src], and it breaks!.</span>", \
+									"<span class='notice'>[user] climbs onto [src], and it breaks!.</span>")
+		add_logs(user, src, "climbed onto")
+		playsound(src.loc, "shatter", 50, 1)
+		new frame(src.loc)
+		new /obj/item/weapon/shard(src.loc)
+		new /obj/item/weapon/shard(src.loc)
+		qdel(src)
+		user.Weaken(5)
 
 /*
  * Wooden tables
