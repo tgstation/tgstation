@@ -617,6 +617,7 @@ datum/reagent/ryetalyn/on_mob_life(var/mob/living/M as mob)
 	M.mutations = list()
 	M.disabilities = 0
 	M.sdisabilities = 0
+	M.jitteriness = 0
 
 	// Might need to update appearance for hulk etc.
 	if(needs_update && ishuman(M))
@@ -1088,7 +1089,7 @@ datum/reagent/alkysine/on_mob_life(var/mob/living/M as mob)
 datum/reagent/imidazoline
 	name = "Imidazoline"
 	id = "imidazoline"
-	description = "Heals eye damage"
+	description = "Heals eye damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
@@ -1099,6 +1100,20 @@ datum/reagent/imidazoline/on_mob_life(var/mob/living/M as mob)
 	M.disabilities &= ~NEARSIGHTED
 	M.eye_stat = max(M.eye_stat-5, 0)
 //	M.sdisabilities &= ~1		Replaced by eye surgery
+	..()
+	return
+
+datum/reagent/inacusiate
+	name = "Inacusiate"
+	id = "inacusiate"
+	description = "Heals ear damage."
+	reagent_state = LIQUID
+	color = "#6600FF" // rgb: 100, 165, 255
+
+datum/reagent/inacusiate/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	M.ear_damage = 0
+	M.ear_deaf = 0
 	..()
 	return
 
