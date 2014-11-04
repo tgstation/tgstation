@@ -25,7 +25,6 @@
 	var/framestack = /obj/item/stack/rods
 	var/buildstack = /obj/item/stack/sheet/metal
 	var/busy = 0
-	var/health = 15
 
 /obj/structure/table/New()
 	..()
@@ -204,11 +203,13 @@
 		return
 
 /obj/structure/table/attack_alien(mob/user)
+	playsound(src.loc, 'sound/weapons/bladeslice.ogg', 50, 1)
 	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
 	table_destroy(1)
 
 /obj/structure/table/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash)
+		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		table_destroy(1)
 
@@ -219,14 +220,10 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(HULK in user.mutations)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
+		playsound(src.loc, 'sound/effects/bang.ogg', 50, 1)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		table_destroy(1)
-	else
-		playsound(loc, 'sound/items/dodgeball.ogg', 80, 1)
-		user.visible_message("<span class='warning'>[user] kicks [src].</span>", \
-							 "<span class='warning'>You kick [src].</span>")
-		health -= rand(1,2)
-	healthcheck()
+		return
 
 /obj/structure/table/attack_tk() // no telehulk sorry
 	return
@@ -315,11 +312,6 @@
 		if(user.drop_item())
 			I.Move(loc)
 
-/obj/structure/table/proc/healthcheck()
-	if(health <= 0)
-		table_destroy(1)
-	return
-
 
 /*
  * TABLE DESTRUCTION/DECONSTRUCTION
@@ -331,7 +323,6 @@
 /obj/structure/table/proc/table_destroy(var/destroy_type, var/mob/user)
 
 	if(destroy_type == TBL_DESTROY)
-		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
 		new framestack(src.loc)
 		new buildstack(src.loc)
 		qdel(src)
@@ -377,7 +368,6 @@
 	desc = "What did I say about leaning on the glass tables? Now you need surgery."
 	icon_state = "glass_table"
 	buildstack = /obj/item/stack/sheet/glass
-	health = 8
 
 /obj/structure/table/glass/tablepush(obj/item/I, mob/user)
 	if(get_dist(src, user) < 2)
@@ -468,18 +458,22 @@
 			return
 	..()
 
-
 /obj/structure/table/reinforced/attack_paw(mob/user)
 	attack_hand(user)
 
-/obj/structure/table/reinforced/attack_hand(mob/user)
-	if(HULK in user.mutations)
-		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
-		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-		table_destroy(1)
-	else
-		return
-
+/obj/structure/table/reinforced/attack_hand(mob/user as mob)
+	user.changeNext_move(CLICK_CD_MELEE)
+	if ((HULK in user.mutations))
+		if (prob(75))
+			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+			usr << text("<span class='notice'>You kick [src] into pieces.</span>")
+			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+			table_destroy(1)
+			return
+		else
+			playsound(src, 'sound/effects/bang.ogg', 50, 1)
+			usr << text("<span class='notice'>You kick [src].</span>")
+			return
 
 /*
  * Racks

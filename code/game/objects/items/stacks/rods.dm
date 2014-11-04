@@ -46,17 +46,6 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 		return
 	..()
 
-/obj/item/stack/rods/attack(var/obj/structure/grille/G, mob/user)
-	..()
-	if(istype(G, /obj/structure/grille))
-		if (G.destroyed)
-			user << "<span class='notice'>You rebuild the broken grille.</span>"
-			G.health = 10
-			G.density = 1
-			G.destroyed = 0
-			G.icon_state = "grille"
-			use(1)
-
 /obj/item/stack/rods/cyborg/
 	m_amt = 0
 	is_cyborg = 1
