@@ -276,8 +276,7 @@
 	LE.current = T
 	LE.yo = U.y - T.y
 	LE.xo = U.x - T.x
-	spawn( 1 )
-		LE.process()
+	LE.fire()
 
 /mob/living/carbon/human/LaserEyes()
 	if(nutrition>0)
