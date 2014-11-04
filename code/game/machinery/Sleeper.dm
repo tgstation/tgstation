@@ -11,8 +11,9 @@
 	icon_state = "sleeper-open"
 	density = 0
 	anchored = 1
-	var/efficiency
+	interact_offline = 1
 	state_open = 1
+	var/efficiency
 	var/initial_bin_rating = 1
 	var/min_health = 25
 	var/list/injection_chems = list() //list of injectable chems except inaprovaline, coz inaprovaline is always avalible
@@ -133,11 +134,17 @@
 	open_machine()
 
 /obj/machinery/sleeper/attack_hand(mob/user)
-	if(stat & (BROKEN|NOPOWER))
+	if(..())
+		return
+
+	//powerless interaction
+	if(!is_operational())
+		user.unset_machine()//essential to prevent infinite loops of opening/closing the machine
 		if(state_open)
 			close_machine()
 		else
 			open_machine()
+
 	else
 		sleeperUI(user)
 
@@ -234,6 +241,8 @@
 		..(target)
 
 /obj/machinery/sleeper/proc/inject_chem(mob/user, chem)
+	if(!is_operational())
+		return
 	if(occupant && occupant.reagents)
 		if(chem in injection_chems + "inaprovaline")
 			if(occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency)

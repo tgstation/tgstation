@@ -230,3 +230,16 @@
 			health -= 1
 			healthcheck()
 	..()
+
+/obj/structure/grille/hitby(AM as mob|obj)
+	..()
+	visible_message("<span class='danger'>[src] was hit by [AM].</span>")
+	var/tforce = 0
+	if(ismob(AM))
+		tforce = 5
+	else if(isobj(AM))
+		var/obj/item/I = AM
+		tforce = I.throwforce - 5
+	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
+	health = max(0, health - tforce)
+	healthcheck()

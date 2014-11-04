@@ -236,6 +236,9 @@
 /mob/living/carbon/slime/unEquip(obj/item/W as obj)
 	return
 
+/mob/living/carbon/slime/start_pulling(var/atom/movable/AM)
+	return
+
 /mob/living/carbon/slime/attack_ui(slot)
 	return
 

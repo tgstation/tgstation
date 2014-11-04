@@ -410,3 +410,16 @@
 
 /mob/living/carbon/monkey/SpeciesCanConsume()
 	return 1 // Monkeys can eat, drink, and be forced to do so
+
+
+/mob/living/carbon/monkey/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
+	if(wear_mask)
+		if(!wear_mask.unacidable)
+			wear_mask.acid_act(acidpwr)
+			update_inv_wear_mask()
+		else
+			src << "<span class='warning'>Your mask protects you from the acid.</span>"
+		return
+
+	if(!unacidable)
+		take_organ_damage(min(6*toxpwr, acid_volume * toxpwr))

@@ -229,3 +229,95 @@ emp_act
 					L.take_damage(0,5)
 					src.Stun(5)
 	..()
+
+
+/mob/living/carbon/human/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
+	var/list/damaged = list()
+
+	if(head)
+		if(!head.unacidable)
+			head.acid_act(acidpwr)
+			update_inv_head()
+		else
+			src << "<span class='warning'>Your [head.name] protects your head from the acid!</span>"
+	else
+		if(wear_mask)
+			if(!wear_mask.unacidable)
+				wear_mask.acid_act(acidpwr)
+				update_inv_wear_mask()
+			else
+				src << "<span class='warning'>Your [wear_mask.name] protects your head from the acid!</span>"
+		else
+			if(glasses)
+				if(!glasses.unacidable)
+					glasses.acid_act(acidpwr)
+					update_inv_glasses()
+				else
+					src << "<span class='warning'>Your [glasses.name] protects your head from the acid!</span>"
+			else
+				. = get_organ("head")
+				if(.)
+					damaged += .
+
+	if(wear_suit)
+		if(!wear_suit.unacidable)
+			wear_suit.acid_act(acidpwr)
+			update_inv_wear_suit()
+		else
+			src << "<span class='warning'>Your [wear_suit.name] protects your body from the acid!</span>"
+	else
+		if(w_uniform)
+			if(!w_uniform.unacidable)
+				w_uniform.acid_act(acidpwr)
+				update_inv_w_uniform()
+			else
+				src << "<span class='warning'>Your [w_uniform.name] protects your body from the acid!</span>"
+		else
+			. = get_organ("chest")
+			if(.)
+				damaged += .
+
+	if(gloves)
+		if(!gloves.unacidable)
+			gloves.acid_act(acidpwr)
+			update_inv_gloves()
+		else
+			src << "<span class='warning'>Your [gloves.name] protects your arms from the acid!</span>"
+	else
+		. = get_organ("r_arm")
+		if(.)
+			damaged += .
+		. = get_organ("l_arm")
+		if(.)
+			damaged += .
+
+
+	if(shoes)
+		if(!shoes.unacidable)
+			shoes.acid_act(acidpwr)
+			update_inv_shoes()
+		else
+			src << "<span class='warning'>Your [shoes.name] protects your legs from the acid!</span>"
+	else
+		. = get_organ("r_leg")
+		if(.)
+			damaged += .
+		. = get_organ("l_leg")
+		if(.)
+			damaged += .
+
+
+	for(var/obj/item/organ/limb/affecting in damaged)
+		affecting.take_damage(4*toxpwr, 2*toxpwr)
+
+		if(affecting.name == "head")
+			affecting.take_damage(4*toxpwr, 2*toxpwr)
+			if(prob(2*acidpwr)) //Applies disfigurement
+				emote("scream")
+				facial_hair_style = "Shaved"
+				hair_style = "Bald"
+				update_hair()
+				status_flags |= DISFIGURED
+
+		update_damage_overlays()
+
