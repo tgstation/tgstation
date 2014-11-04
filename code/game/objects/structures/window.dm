@@ -239,6 +239,9 @@
 	set category = "Object"
 	set src in oview(1)
 
+	if(usr.stat || !usr.canmove || usr.restrained())
+		return
+
 	if(anchored)
 		usr << "It is fastened to the floor therefore you can't rotate it!"
 		return 0
@@ -255,6 +258,9 @@
 	set name = "Rotate Window Clockwise"
 	set category = "Object"
 	set src in oview(1)
+
+	if(usr.stat || !usr.canmove || usr.restrained())
+		return
 
 	if(anchored)
 		usr << "It is fastened to the floor therefore you can't rotate it!"

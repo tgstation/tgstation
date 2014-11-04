@@ -27,7 +27,9 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if (src.anchored || usr:stat)
+	if(usr.stat || !usr.canmove || usr.restrained())
+		return
+	if (src.anchored)
 		usr << "It is fastened to the floor!"
 		return 0
 	src.dir = turn(src.dir, 90)

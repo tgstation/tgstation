@@ -34,7 +34,12 @@
 	var/reflect_chance = 0 //This var dictates what % of a time an object will reflect an energy based weapon's shot
 	var/strip_delay = 40
 	var/put_on_delay = 20
+	var/m_amt = 0	// metal
+	var/g_amt = 0	// glass
+	var/reliability = 100	//Used by SOME devices to determine how reliable they are.
+	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 
+	var/list/attack_verb = list() //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = list()	// even if a species cannot put items in a certain slot, if the species id is in the item's exception list, it will be able to wear that item
 
 /obj/item/device
@@ -80,7 +85,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(!istype(src.loc, /turf) || usr.stat || usr.restrained() )
+	if(!istype(src.loc, /turf) || usr.stat || usr.restrained() || !usr.canmove)
 		return
 
 	var/turf/T = src.loc
@@ -376,3 +381,9 @@
 	if(.)
 		transfer_blood = 0
 		bloody_hands_mob = null
+
+/obj/item/singularity_pull(S, current_size)
+	spawn(0) //this is needed or multiple items will be thrown sequentially and not simultaneously
+		if(current_size >= 7)
+			throw_at(S,14,3)
+		else ..()

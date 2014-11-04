@@ -539,8 +539,9 @@ obj/structure/cable/proc/avail()
 	set category = "Object"
 	var/mob/M = usr
 
-	if(ishuman(M) && !M.restrained() && !M.stat && !M.paralysis && ! M.stunned)
-		if(!istype(usr.loc,/turf)) return
+	if(ishuman(M) && !M.restrained() && !M.stat && M.canmove)
+		if(!istype(usr.loc,/turf))
+			return
 		if(src.amount <= 14)
 			usr << "<span class='danger'>You need at least 15 lengths to make restraints!</span>"
 			return

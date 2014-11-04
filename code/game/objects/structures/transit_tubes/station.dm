@@ -47,6 +47,8 @@
 		return
 	if (!istype(R) || get_dist(user, src) > 1 || get_dist(src,R) > 1)
 		return
+	for(var/obj/structure/transit_tube_pod/pod in loc)
+		return //no fun allowed
 	var/obj/structure/transit_tube_pod/T = new/obj/structure/transit_tube_pod(src)
 	R.transfer_fingerprints_to(T)
 	T.add_fingerprint(user)
