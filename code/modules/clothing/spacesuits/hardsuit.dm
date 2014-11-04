@@ -6,6 +6,7 @@
 	item_state = "eng_helm"
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75)
 	allowed = list(/obj/item/device/flashlight)
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	var/brightness_on = 4 //luminosity when on
 	var/on = 0
 	item_color = "engineering" //Determines used sprites: hardsuit[on]-[color] and hardsuit[on]-[color]2 (lying down sprite)
@@ -162,6 +163,7 @@
 	icon_state = "hardsuit0-medical"
 	item_state = "medical_helm"
 	item_color = "medical"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 50)
 
 /obj/item/clothing/suit/space/hardsuit/medical
