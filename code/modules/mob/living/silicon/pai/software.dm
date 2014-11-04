@@ -9,6 +9,7 @@
 /mob/living/silicon/pai/var/list/available_software = list(
 															"crew manifest" = 5,
 															"digital messenger" = 5,
+															"chatroom client" = 5,
 															"medical records" = 15,
 															"security records" = 15,
 															//"camera jack" = 10,
@@ -66,6 +67,8 @@
 				left_part = src.softwareCamera()
 			if("signaller")
 				left_part = src.softwareSignal()
+			if("chatroom")
+				src.chatroom() //snowflake? maybe, but it's less effort this way
 
 	//usr << browse_rsc('windowbak.png')		// This has been moved to the mob's Login() proc
 
@@ -276,6 +279,8 @@
 	for(var/s in src.software)
 		if(s == "digital messenger")
 			dat += "<a href='byond://?src=\ref[src];software=pdamessage;sub=0'>Digital Messenger</a> <br>"
+		if(s == "chatroom client")
+			dat += "<a href='byond://?src=\ref[src];software=chatroom;sub=0'>Chatroom Client</a> <br>"
 		if(s == "crew manifest")
 			dat += "<a href='byond://?src=\ref[src];software=manifest;sub=0'>Crew Manifest</a> <br>"
 		if(s == "medical records")
@@ -632,3 +637,8 @@
 	dat += "<br><br>"
 	dat += "Messages: <hr> [pda.tnote]"
 	return dat
+
+/mob/living/silicon/pai/proc/chatroom()
+
+	pda.mode = 5
+	pda.attack_self()

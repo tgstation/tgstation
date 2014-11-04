@@ -35,7 +35,7 @@
 	desc = "A wall with bananium plating. Honk!"
 	icon_state = "clown0"
 	walltype = "clown"
-	mineral = "clown"
+	mineral = "bananium"
 
 /turf/simulated/wall/mineral/sandstone
 	name = "sandstone wall"

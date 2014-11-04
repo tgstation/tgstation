@@ -120,6 +120,8 @@
 			observer.loc = O.loc
 			if(client.prefs.be_random_name)
 				client.prefs.real_name = random_name(gender)
+			if(client.prefs.be_random_body)
+				client.prefs.random_character(gender)
 			observer.real_name = client.prefs.real_name
 			observer.name = observer.real_name
 			observer.key = key
