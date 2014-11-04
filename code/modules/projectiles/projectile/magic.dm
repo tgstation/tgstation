@@ -240,7 +240,7 @@ proc/wabbajack(mob/living/M)
 	flag = "magic"
 
 /obj/item/projectile/magic/animate/Bump(var/atom/change)
-	. = ..()
+	..()
 	if(istype(change, /obj/item) || istype(change, /obj/structure) && !is_type_in_list(change, protected_objects))
 		if(istype(change, /obj/structure/closet/statue))
 			for(var/mob/living/carbon/human/H in change.contents)
