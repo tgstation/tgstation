@@ -30,6 +30,7 @@ Pipelines + Other Objects -> Pipe network
 */
 
 /obj/machinery/atmospherics/New()
+	..()
 	if(can_unwrench)
 		stored = new(src, make_from=src)
 
