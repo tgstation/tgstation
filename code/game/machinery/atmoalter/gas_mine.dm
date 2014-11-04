@@ -7,6 +7,7 @@
 
 	m_amt=10*CC_PER_SHEET_METAL
 	w_type = RECYK_METAL
+	melt_temperature = MELTPOINT_STEEL
 
 	var/datum/gas_mixture/air_contents
 

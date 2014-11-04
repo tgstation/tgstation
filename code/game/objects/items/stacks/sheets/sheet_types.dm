@@ -87,6 +87,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	throwforce = 14.0
 	flags = FPRINT | TABLEPASS | CONDUCT
 	origin_tech = "materials=1"
+	melt_temperature = MELTPOINT_STEEL
 
 /obj/item/stack/sheet/metal/recycle(var/datum/materials/rec)
 	rec.addAmount("iron",1*amount)
@@ -123,6 +124,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	flags = FPRINT | TABLEPASS | CONDUCT
 	origin_tech = "materials=2"
 	w_type = RECYK_METAL
+	melt_temperature = MELTPOINT_STEEL+500
 
 /obj/item/stack/sheet/plasteel/New(var/loc, var/amount=null)
 		recipes = plasteel_recipes
@@ -154,6 +156,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	singular_name = "wood plank"
 	icon_state = "sheet-wood"
 	origin_tech = "materials=1;biotech=1"
+	autoignition_temperature=AUTOIGNITION_WOOD
 
 /obj/item/stack/sheet/wood/cultify()
 	return
@@ -211,6 +214,7 @@ var/global/list/datum/stack_recipe/charcoal_recipes = list ()
 	icon_state = "sheet-charcoal"
 	flags = FPRINT | TABLEPASS
 	origin_tech = "materials=1"
+	autoignition_temperature=AUTOIGNITION_WOOD
 
 /obj/item/stack/sheet/charcoal/New(var/loc, var/amount=null)
 		recipes = charcoal_recipes

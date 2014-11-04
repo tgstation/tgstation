@@ -380,7 +380,7 @@
 		var/o_do = (O.gender == PLURAL) ? "don't" : "doesn't"
 
 		if(target.species.has_organ[O.organ_tag])
-		
+
 			if(!O.health)
 				user << "<span class='warning'>\The [O.organ_tag] [o_is] in no state to be transplanted.</span>"
 				return 0

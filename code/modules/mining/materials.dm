@@ -27,6 +27,26 @@
 	mat.stored += amount
 	storage[mat_id]=mat
 
+/datum/materials/proc/removeFrom(var/datum/materials/mats)
+	src.addFrom(mats,zero_after=1)
+
+/datum/materials/proc/addFrom(var/datum/materials/mats, var/zero_after=0)
+	if(mats == null)
+		return
+	for(var/mat_id in storage)
+		var/datum/material/myMat=mats.storage[mat_id]
+		var/datum/material/theirMat=mats.storage[mat_id]
+		myMat.stored += theirMat.stored
+		if(zero_after)
+			theirMat.stored = 0
+
+/datum/materials/proc/getVolume()
+	var/volume=0
+	for(var/mat_id in storage)
+		var/datum/material/mat = storage[mat_id]
+		volume += mat.stored
+	return volume
+
 /datum/materials/proc/removeAmount(var/mat_id,var/amount)
 	if(!(mat_id in storage))
 		warning("removeAmount(): Unknown material [mat_id]!")

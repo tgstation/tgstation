@@ -26,6 +26,7 @@ var/global/list/moneytypes=list(
 	var/worth = 1 // Per chip
 	var/amount = 1 // number of chips
 	var/stack_color = "#4E054F"
+	autoignition_temperature=AUTOIGNITION_PAPER
 
 /obj/item/weapon/spacecash/New(var/new_loc,var/new_amount=1)
 	. = ..(new_loc)

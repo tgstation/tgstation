@@ -1,6 +1,6 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
-
+#define OXYCONCEN_PLASMEN_IGNITION 0.01 //1% is all it takes.
 var/global/list/unconscious_overlays = list("1" = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage1"),\
 	"2" = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage2"),\
 	"3" = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage3"),\
@@ -475,10 +475,12 @@ var/global/list/organ_damage_overlays = list(
 				// OH FUCK HE LEAKIN'.
 				// This was OP.
 				//environment.adjust(tx = environment.total_moles()*BREATH_PERCENTAGE) // About one breath's worth. (I know we aren't breathing it out, but this should be about the right amount)
-				if(!on_fire)
-					src << "<span class='warning'>Your body reacts with the atmosphere and bursts into flame!</span>"
-				adjust_fire_stacks(0.5)
-				IgniteMob()
+				if(environment)
+					if((environment.oxygen / environment.total_moles()) >= OXYCONCEN_PLASMEN_IGNITION) //how's the concentration doing?
+						if(!on_fire)
+							src << "<span class='warning'>Your body reacts with the atmosphere and bursts into flame!</span>"
+						adjust_fire_stacks(0.5)
+						IgniteMob()
 			else
 				if(fire_stacks)
 					var/obj/item/clothing/suit/space/plasmaman/PS=wear_suit

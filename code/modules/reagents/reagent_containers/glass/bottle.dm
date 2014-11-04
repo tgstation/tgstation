@@ -13,6 +13,7 @@
 	volume = 30
 	g_amt = 1000 // Half of a circuit board
 	w_type = RECYK_GLASS
+	melt_temperature = MELTPOINT_GLASS
 
 	New()
 		..()

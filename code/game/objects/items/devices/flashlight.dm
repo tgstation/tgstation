@@ -10,6 +10,7 @@
 	m_amt = 50
 	g_amt = 20
 	w_type = RECYK_ELECTRONIC
+	melt_temperature = MELTPOINT_STEEL // Assuming big beefy fucking maglite.
 	action_button_name = "Toggle Light"
 	var/on = 0
 	var/brightness_on = 4 //luminosity when on

@@ -1,6 +1,0 @@
-author: Comic
-
-delete-after: True
-
-changes: 
-  - rscadd: Added a jail cell for mechs. Only works if your target is cuffed in some way, and takes 2 people at a time.
