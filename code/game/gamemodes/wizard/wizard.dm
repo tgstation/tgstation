@@ -12,6 +12,9 @@
 
 	var/finished = 0
 
+/proc/iswizard(mob/living/M as mob)
+	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.wizards)
+
 /datum/game_mode/wizard/announce()
 	world << "<B>The current game mode is - Wizard!</B>"
 	world << "<B>There is a <span class='danger'>SPACE WIZARD</span>\black on the station. You can't let him achieve his objective!</B>"
