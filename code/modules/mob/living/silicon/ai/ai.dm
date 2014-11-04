@@ -59,6 +59,12 @@ var/list/ai_list = list()
 	var/turf/waypoint //Holds the turf of the currently selected waypoint.
 	var/waypoint_mode = 0 //Waypoint mode is for selecting a turf via clicking.
 
+
+	var/mob/camera/aiEye/eyeobj = new()
+	var/sprint = 10
+	var/cooldown = 0
+	var/acceleration = 1
+
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
 	var/list/possibleNames = ai_names
 
@@ -125,6 +131,11 @@ var/list/ai_list = list()
 			job = "AI"
 	ai_list += src
 	shuttle_caller_list += src
+
+	eyeobj.ai = src
+	eyeobj.name = "[src.name] (AI Eye)" // Give it a name
+	eyeobj.loc = src.loc
+
 	..()
 	return
 
@@ -132,6 +143,7 @@ var/list/ai_list = list()
 	ai_list -= src
 	shuttle_caller_list -= src
 	emergency_shuttle.autoshuttlecall()
+	qdel(eyeobj) // No AI, no Eye
 	..()
 
 
