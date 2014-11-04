@@ -48,9 +48,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		/obj/machinery/r_n_d/fabricator/protolathe,
 		/obj/machinery/r_n_d/destructive_analyzer,
 		/obj/machinery/r_n_d/fabricator/circuit_imprinter,
-		/obj/machinery/r_n_d/fabricator/mech
+		/obj/machinery/r_n_d/fabricator/mech,
+		/obj/machinery/r_n_d/fabricator/pod
 		)
-
 	var/screen = 1.0	//Which screen is currently showing.
 	var/id = 0			//ID of the computer (for server restrictions).
 	var/sync = 1		//If sync = 0, it doesn't show up on Server Control Console
