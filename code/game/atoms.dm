@@ -7,7 +7,6 @@
 	var/fingerprintslast = null
 	var/list/blood_DNA
 	var/last_bumped = 0
-	var/pass_flags = 0
 	var/throwpass = 0
 
 	///Chemistry.
@@ -365,9 +364,6 @@ var/list/blood_splatter_icons = list()
 		return list("x"=cur_x,"y"=cur_y)
 	else
 		return 0
-
-/atom/proc/checkpass(passflag)
-	return pass_flags&passflag
 
 /atom/proc/isinspace()
 	if(istype(get_turf(src), /turf/space))

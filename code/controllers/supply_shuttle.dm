@@ -32,7 +32,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	layer = 4
 	explosion_resistance = 5
 
-/obj/structure/plasticflaps/CanPass(atom/A, turf/T)
+/obj/structure/plasticflaps/CanPass(atom/movable/A, turf/T)
 	if(istype(A) && A.checkpass(PASSGLASS))
 		return prob(60)
 
