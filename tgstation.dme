@@ -703,7 +703,6 @@
 #include "code\game\turfs\unsimulated\beach.dm"
 #include "code\game\turfs\unsimulated\floor.dm"
 #include "code\game\turfs\unsimulated\walls.dm"
-#include "code\game\verbs\atom_verbs.dm"
 #include "code\game\verbs\ooc.dm"
 #include "code\game\verbs\suicide.dm"
 #include "code\game\verbs\who.dm"
