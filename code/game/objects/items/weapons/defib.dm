@@ -126,22 +126,20 @@
 /obj/item/weapon/defibrillator/verb/toggle_paddles()
 	set name = "Toggle Paddles"
 	set category = "Object"
-	on = !on
 
 	var/mob/living/carbon/human/user = usr
-	if(on)
+	if(!on)
 		//Detach the paddles into the user's hands
-		var/list/L = list("left hand" = slot_l_hand,"right hand" = slot_r_hand)
-		if(!user.equip_in_one_of_slots(paddles, L))
+		if(!usr.put_in_hands(paddles))
 			on = 0
 			user << "<span class='warning'>You need a free hand to hold the paddles!</span>"
 			update_icon()
 			return
+		on = 1
 		paddles.loc = user
 	else
 		//Remove from their hands and back onto the defib unit
 		remove_paddles(user)
-
 	update_icon()
 	return
 
@@ -241,7 +239,7 @@
 /obj/item/weapon/twohanded/shockpaddles/proc/check_defib_exists(mainunit, var/mob/living/carbon/human/M, var/obj/O)
 	if (!mainunit || !istype(mainunit, /obj/item/weapon/defibrillator))	//To avoid weird issues from admin spawns
 		M.unEquip(O)
-		qdel(0)
+		qdel(O)
 		return 0
 	else
 		return 1
@@ -287,26 +285,30 @@
 			busy = 1
 			update_icon()
 			if(do_after(user, 30)) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
+				for(var/obj/item/carried_item in H.contents)
+					if((istype(carried_item, /obj/item/clothing/suit/armor)) || (istype(carried_item, /obj/item/clothing/suit/space)))
+						user.visible_message("<span class='notice'>[defib] buzzes: Patient's chest is obscured. Operation aborted.</span>")
+						playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 0)
+						busy = 0
+						update_icon()
+						return
 				user.visible_message("<span class='notice'>[user] places [src] on [M.name]'s chest.</span>", "<span class='warning'>You place [src] on [M.name]'s chest.</span>")
 				playsound(get_turf(src), 'sound/weapons/flash.ogg', 50, 0)
 				var/isghosted = !H.key && H.mind
 				var/tplus = world.time - H.timeofdeath
-				var/tlimit = 1500 //past this much time the subject is unrecoverable
-				var/tloss = 900 //but brain damage starts setting in after some time
+				var/tlimit = 1800 //past this much time the subject is unrecoverable, currently 3m
+				var/tloss = 900 //brain damage starts setting in after some time, currently 1m30s
 				if(do_after(user, 20)) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
 					if(H.stat == 2)
 						var/health = H.health
-						var/chance = 90
-						for(var/obj/item/carried_item in H.contents)
-							if(istype(carried_item, /obj/item/clothing/suit/armor))
-								chance = 25
 						M.visible_message("<span class='warning'>[M]'s body convulses a bit.")
 						playsound(get_turf(src), "bodyfall", 50, 1)
 						playsound(get_turf(src), 'sound/weapons/Egloves.ogg', 50, 1, -1)
-						if(H.health <= -100 && !H.suiciding && prob(chance) && !isghosted && tplus < tlimit && !NOCLONE in H.mutations)
+						if(H.health <= -100 && !H.suiciding && !isghosted && (tplus < tlimit) && (!NOCLONE in H.mutations))
 							tobehealed = health + threshold
-							tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabilizers
+							tobehealed -= 5 //They get oxy/tox loss healed to give some time to stabilize crit patient.
 							H.adjustOxyLoss(tobehealed)
+							H.adjustToxLoss(tobehealed)
 							user.visible_message("<span class='boldnotice'>[defib] pings: Resuscitation successful.</span>")
 							playsound(get_turf(src), 'sound/machines/ping.ogg', 50, 0)
 							H.stat = 1
