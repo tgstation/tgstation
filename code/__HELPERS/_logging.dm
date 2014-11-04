@@ -75,3 +75,9 @@
 /proc/log_chat(text)
 	if (config.log_pda) //reusing this for now, can change if needed
 		diary << "\[[time_stamp()]]CHAT: [text]"
+
+/proc/log_comment(text)
+	if (config.log_pda)
+		//reusing the PDA option because I really don't think news comments are worth a config option
+		diary << "\[[time_stamp()]]COMMENT: [text]"
+
