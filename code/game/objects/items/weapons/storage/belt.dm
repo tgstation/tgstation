@@ -266,7 +266,7 @@
 /obj/item/weapon/storage/belt/lazarus/antag/New(loc, mob/user)
 	var/list/critters = typesof(/mob/living/simple_animal/hostile) - /mob/living/simple_animal/hostile
 	critters = shuffle(critters)
-	while(contents.len <=6)
+	while(contents.len < 6)
 		var/obj/item/device/mobcapsule/MC = new /obj/item/device/mobcapsule(src)
 		var/chosen = pick(critters)
 		critters -= chosen
