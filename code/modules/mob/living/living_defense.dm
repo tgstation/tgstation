@@ -89,7 +89,7 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 		M.occupant_message("<span class='danger'>You hit [src].</span>")
 		visible_message("<span class='danger'>[src] has been hit by [M.name].</span>", \
 						"<span class='userdanger'>[src] has been hit by [M.name].</span>")
-		add_logs(M.occupant, src, "attacked", object=src, addition="(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYE: [uppertext(M.damtype)])")
+		add_logs(M.occupant, src, "attacked", object=M, addition="(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 	else
 		step_away(src,M)
 		M.occupant_message("<span class='warning'>You push [src] out of the way.</span>")
@@ -136,3 +136,8 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 	IgniteMob()
 
 //Mobs on Fire end
+
+
+/mob/living/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
+	if(!unacidable)
+		take_organ_damage(min(6*toxpwr, acid_volume * toxpwr))

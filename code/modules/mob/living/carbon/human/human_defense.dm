@@ -228,6 +228,96 @@ emp_act
 					src.Stun(5)
 	..()
 
+/mob/living/carbon/human/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
+	var/list/damaged = list()
+
+	if(head)
+		if(!head.unacidable)
+			head.acid_act(acidpwr)
+			update_inv_head()
+		else
+			src << "<span class='warning'>Your [head.name] protects your head from the acid!</span>"
+	else
+		if(wear_mask)
+			if(!wear_mask.unacidable)
+				wear_mask.acid_act(acidpwr)
+				update_inv_wear_mask()
+			else
+				src << "<span class='warning'>Your [wear_mask.name] protects your head from the acid!</span>"
+		else
+			if(glasses)
+				if(!glasses.unacidable)
+					glasses.acid_act(acidpwr)
+					update_inv_glasses()
+				else
+					src << "<span class='warning'>Your [glasses.name] protects your head from the acid!</span>"
+			else
+				. = get_organ("head")
+				if(.)
+					damaged += .
+
+	if(wear_suit)
+		if(!wear_suit.unacidable)
+			wear_suit.acid_act(acidpwr)
+			update_inv_wear_suit()
+		else
+			src << "<span class='warning'>Your [wear_suit.name] protects your body from the acid!</span>"
+	else
+		if(w_uniform)
+			if(!w_uniform.unacidable)
+				w_uniform.acid_act(acidpwr)
+				update_inv_w_uniform()
+			else
+				src << "<span class='warning'>Your [w_uniform.name] protects your body from the acid!</span>"
+		else
+			. = get_organ("chest")
+			if(.)
+				damaged += .
+
+	if(gloves)
+		if(!gloves.unacidable)
+			gloves.acid_act(acidpwr)
+			update_inv_gloves()
+		else
+			src << "<span class='warning'>Your [gloves.name] protects your arms from the acid!</span>"
+	else
+		. = get_organ("r_arm")
+		if(.)
+			damaged += .
+		. = get_organ("l_arm")
+		if(.)
+			damaged += .
+
+
+	if(shoes)
+		if(!shoes.unacidable)
+			shoes.acid_act(acidpwr)
+			update_inv_shoes()
+		else
+			src << "<span class='warning'>Your [shoes.name] protects your legs from the acid!</span>"
+	else
+		. = get_organ("r_leg")
+		if(.)
+			damaged += .
+		. = get_organ("l_leg")
+		if(.)
+			damaged += .
+
+
+	for(var/obj/item/organ/limb/affecting in damaged)
+		affecting.take_damage(4*toxpwr, 2*toxpwr)
+
+		if(affecting.name == "head")
+			affecting.take_damage(4*toxpwr, 2*toxpwr)
+			if(prob(2*acidpwr)) //Applies disfigurement
+				emote("scream")
+				facial_hair_style = "Shaved"
+				hair_style = "Bald"
+				update_hair()
+				status_flags |= DISFIGURED
+
+		update_damage_overlays()
+
 /mob/living/carbon/human/mech_melee_attack(obj/mecha/M)
 
 	if(M.occupant.a_intent == "harm")
@@ -238,7 +328,8 @@ emp_act
 			var/update = 0
 			switch(M.damtype)
 				if("brute")
-					Paralyse(1)
+					if(M.force > 20)
+						Paralyse(1)
 					update |= temp.take_damage(rand(M.force/2, M.force), 0)
 					playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
 				if("fire")
@@ -255,7 +346,7 @@ emp_act
 		M.occupant_message("<span class='danger'>You hit [src].</span>")
 		visible_message("<span class='danger'>[src] has been hit by [M.name].</span>", \
 								"<span class='userdanger'>[src] has been hit by [M.name].</span>")
-		add_logs(M.occupant, M, "attacked", object=src, addition="(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYE: [uppertext(M.damtype)])")
+		add_logs(M.occupant, src, "attacked", object=M, addition="(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 
 	else
 		..()

@@ -169,6 +169,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["OOC_Notes"]			>> metadata
 	S["real_name"]			>> real_name
 	S["name_is_always_random"] >> be_random_name
+	S["body_is_always_random"] >> be_random_body
 	S["gender"]				>> gender
 	S["age"]				>> age
 	S["hair_color"]			>> hair_color
@@ -205,6 +206,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		mutant_color = "#FFF"
 	if(!real_name)	real_name = random_name(gender)
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
+	be_random_body	= sanitize_integer(be_random_body, 0, 1, initial(be_random_body))
 	gender			= sanitize_gender(gender)
 	if(gender == MALE)
 		hair_style			= sanitize_inlist(hair_style, hair_styles_male_list)
@@ -250,6 +252,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["OOC_Notes"]			<< metadata
 	S["real_name"]			<< real_name
 	S["name_is_always_random"] << be_random_name
+	S["body_is_always_random"] << be_random_body
 	S["gender"]				<< gender
 	S["age"]				<< age
 	S["hair_color"]			<< hair_color
