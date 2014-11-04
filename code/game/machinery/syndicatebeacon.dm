@@ -100,6 +100,9 @@
 	selfdestructing = 1
 	spawn() explosion(src.loc, rand(3,8), rand(1,3), 1, 10)
 
+////////////////////////////////////////
+//Singularity beacon
+////////////////////////////////////////
 /obj/machinery/power/singularity_beacon
 	name = "ominous beacon"
 	desc = "This looks suspicious..."
@@ -111,7 +114,7 @@
 	layer = MOB_LAYER - 0.1 //so people can't hide it and it's REALLY OBVIOUS
 	stat = 0
 
-	var/active = 0 //It doesn't use up power, so use_power wouldn't really suit it
+	var/active = 0
 	var/icontype = "beacon"
 
 
@@ -124,7 +127,9 @@
 			singulo.target = src
 	icon_state = "[icontype]1"
 	active = 1
-	if(user) user << "<span class='notice'>You activate the beacon.</span>"
+	machines |= src
+	if(user)
+		user << "<span class='notice'>You activate the beacon.</span>"
 
 
 /obj/machinery/power/singularity_beacon/proc/Deactivate(mob/user = null)
@@ -133,7 +138,8 @@
 			singulo.target = null
 	icon_state = "[icontype]0"
 	active = 0
-	if(user) user << "<span class='notice'>You deactivate the beacon.</span>"
+	if(user)
+		user << "<span class='notice'>You deactivate the beacon.</span>"
 
 
 /obj/machinery/power/singularity_beacon/attack_ai(mob/user as mob)
@@ -175,13 +181,15 @@
 		Deactivate()
 	..()
 
+//stealth direct power usage
 /obj/machinery/power/singularity_beacon/process()
 	if(!active)
-		return
+		return PROCESS_KILL
 	else
-		if(surplus() < 1500)
+		if(surplus() > 1500)
+			add_load(1500)
+		else
 			Deactivate()
-	return
 
 
 /obj/machinery/power/singularity_beacon/syndicate
