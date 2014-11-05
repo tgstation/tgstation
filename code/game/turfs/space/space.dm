@@ -41,7 +41,7 @@
 				qdel(L)
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 				user << "<span class='notice'>You build a floor.</span>"
-				S.build(src)
+				ChangeTurf(/turf/simulated/floor/plating)
 			else
 				user << "<span class='warning'>You need one floor tile to build a floor.</span>"
 		else

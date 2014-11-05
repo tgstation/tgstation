@@ -110,7 +110,7 @@
 	set name = "empty gibber"
 	set src in oview(1)
 
-	if (usr.stat != 0)
+	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 	src.go_out()
 	add_fingerprint(usr)

@@ -623,7 +623,7 @@ spideros = text2num(return_to)//Maximum length here is 6. Use (return_to, X) to 
 	var/mob/living/carbon/human/U = loc
 	if(candrain&&!draining)
 		var/turf/T = U.loc
-		if(isturf(T) && T.is_plating())
+		if(isturf(T) && istype(T, /turf/simulated/floor/plating)
 			attached = locate() in T
 			if(!attached)
 				U << "\red Warning: no exposed cable available."
