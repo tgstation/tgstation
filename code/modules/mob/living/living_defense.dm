@@ -132,3 +132,34 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 
 	playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 	visible_message("<span class='warning'>[user] has grabbed [src] passively!</span>")
+
+
+/mob/living/carbon/attack_slime(mob/living/carbon/slime/M as mob)
+	if (!ticker)
+		M << "You cannot attack people before the game has started."
+		return
+
+	if(M.Victim)
+		return // can't attack while eating!
+
+	if (stat != DEAD)
+
+		visible_message("<span class='danger'>The [M.name] glomps [src]!</span>", \
+				"<span class='userdanger'>The [M.name] glomps [src]!</span>")
+
+		if(M.powerlevel > 0)
+			var/stunprob = M.powerlevel * 7 + 10  // 17 at level 1, 80 at level 10
+			if(prob(stunprob))
+				M.powerlevel -= 3
+				if(M.powerlevel < 0)
+					M.powerlevel = 0
+
+				visible_message("<span class='danger'>The [M.name] has shocked [src]!</span>", \
+				"<span class='userdanger'>The [M.name] has shocked [src]!</span>")
+
+				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				s.set_up(5, 1, src)
+				s.start()
+				return 1
+	add_logs(M, src, "attacked", admin=0)
+	return

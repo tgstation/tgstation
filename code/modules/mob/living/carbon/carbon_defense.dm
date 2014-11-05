@@ -10,3 +10,16 @@
 						throw_mode_off()
 						return
 	..()
+
+/mob/living/carbon/attack_slime(mob/living/carbon/slime/M)
+	if(..())
+		var/power = M.powerlevel + rand(0,3)
+		Weaken(power)
+		if (stuttering < power)
+			stuttering = power
+		Stun(power)
+		var/stunprob = M.powerlevel * 7 + 10
+		if (prob(stunprob) && M.powerlevel >= 8)
+			adjustFireLoss(M.powerlevel * rand(6,10))
+			updatehealth()
+		return 1

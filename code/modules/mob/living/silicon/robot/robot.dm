@@ -626,125 +626,50 @@
 		return
 
 	switch(M.a_intent)
-
-		if ("help")
-			visible_message("<span class='notice'>[M] caresses [src]'s plating with its scythe like arm.</span>")
-
+		if ("disarm")
+			if(!(lying))
+				if (prob(85))
+					Stun(7)
+					step(src,get_dir(M,src))
+					spawn(5)
+						step(src,get_dir(M,src))
+					add_logs(M, src, "pushed", admin=0)
+					playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
+					visible_message("<span class='danger'>[M] has forced back [src]!</span>", \
+									"<span class='userdanger'>[M] has forced back [src]!</span>")
+				else
+					playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
+					visible_message("<span class='danger'>[M] attempted to force back [src]!</span>", \
+									"<span class='userdanger'>[M] attempted to force back [src]!</span>")
 		if ("grab")
 			grabbedby(M)
 
-		if ("harm")
-			var/damage = rand(10, 20)
-			if (prob(90))
-				/*
-				if (M.class == "combat")
-					damage += 15
-					if(prob(20))
-						weakened = max(weakened,4)
-						stunned = max(stunned,4)
-				What is this?*/
+		else
+			..()
 
-				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
-				visible_message("<span class='userdanger'>[M] has slashed at [src]!</span>")
-				if(prob(8))
-					flick("noise", flash)
-				adjustBruteLoss(damage)
-				updatehealth()
-			else
-				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='userdanger'>[] took a swipe at []!</span>", M, src), 1)
-
-		if ("disarm")
-			if(!(lying))
-				if (rand(1,100) <= 85)
-					Stun(7)
-					step(src,get_dir(M,src))
-					spawn(5) step(src,get_dir(M,src))
-					playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("<span class='userdanger'>[] has forced back []!</span>", M, src), 1)
-				else
-					playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("<span class='userdanger'>[] attempted to force back []!</span>", M, src), 1)
 	return
 
 
 
 /mob/living/silicon/robot/attack_slime(mob/living/carbon/slime/M as mob)
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
-		return
+	if(..())
+		flick("noise", flash)
+		var/stunprob = M.powerlevel * 7 + 10
+		if(prob(stunprob) && M.powerlevel >= 8)
+			adjustBruteLoss(M.powerlevel * rand(6,10))
 
-	if(M.Victim) return // can't attack while eating!
+	var/damage = rand(1, 3)
 
-	if (health > -100)
+	if(M.is_adult)
+		damage = rand(20, 40)
+	else
+		damage = rand(5, 35)
 
-		for(var/mob/O in viewers(src, null))
-			if ((O.client && !( O.blinded )))
-				O.show_message(text("<span class='userdanger'>The [M.name] glomps []!</span>", src), 1)
-
-		var/damage = rand(1, 3)
-
-		if(M.is_adult)
-			damage = rand(20, 40)
-		else
-			damage = rand(5, 35)
-
-		damage = round(damage / 2) // borgs recieve half damage
-		adjustBruteLoss(damage)
-
-
-		if(M.powerlevel > 0)
-			var/stunprob = 10
-
-			switch(M.powerlevel)
-				if(1 to 2) stunprob = 20
-				if(3 to 4) stunprob = 30
-				if(5 to 6) stunprob = 40
-				if(7 to 8) stunprob = 60
-				if(9) 	   stunprob = 70
-				if(10) 	   stunprob = 95
-
-			if(prob(stunprob))
-				M.powerlevel -= 3
-				if(M.powerlevel < 0)
-					M.powerlevel = 0
-
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='userdanger'>The [M.name] has electrified []!</span>", src), 1)
-
-				flick("noise", flash)
-
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-				s.set_up(5, 1, src)
-				s.start()
-
-				if (prob(stunprob) && M.powerlevel >= 8)
-					adjustBruteLoss(M.powerlevel * rand(6,10))
-
-
-		updatehealth()
+	damage = round(damage / 2) // borgs recieve half damage
+	adjustBruteLoss(damage)
+	updatehealth()
 
 	return
-
-/mob/living/silicon/robot/attack_animal(mob/living/simple_animal/M as mob)
-	if(M.melee_damage_upper == 0)
-		M.emote("[M.friendly] [src]")
-	else
-		if(M.attack_sound)
-			playsound(loc, M.attack_sound, 50, 1, 1)
-		visible_message("<span class='danger'><B>[M]</B> [M.attacktext] [src]!</span>")
-		add_logs(M, src, "attacked", admin=0)
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		adjustBruteLoss(damage)
-		updatehealth()
-
 
 /mob/living/silicon/robot/attack_hand(mob/user)
 
