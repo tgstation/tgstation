@@ -11049,7 +11049,7 @@
 "eey" = (/obj/structure/window/reinforced{dir = 8},/turf/unsimulated/floor/airless{icon_state = "asteroidplating"},/area/research_outpost/gearstore)
 "eez" = (/turf/unsimulated/floor/airless{icon_state = "asteroidplating"},/area/research_outpost/gearstore)
 "eeA" = (/obj/machinery/recharger{pixel_x = 29},/obj/machinery/atmospherics/binary/dp_vent_pump/high_volume{dir = 4; frequency = 1331; id_tag = "anom_airlock_pump"},/turf/simulated/floor,/area/research_outpost/gearstore)
-"eeB" = (/obj/structure/closet/walllocker/emerglocker/west,/obj/machinery/airlock_sensor{frequency = 1331; id_tag = "anom_airlock_sensor"; master_tag = "inc_airlock_control"; pixel_x = -24; step_y = 21},/obj/machinery/atmospherics/binary/dp_vent_pump/high_volume{dir = 4; frequency = 1331; id_tag = "anom_airlock_pump"},/turf/simulated/floor{icon_state = "warning"},/area/research_outpost/gearstore)
+"eeB" = (/obj/structure/closet/walllocker/emerglocker/west,/obj/machinery/airlock_sensor{frequency = 1331; id_tag = "anom_airlock_sensor"; master_tag = "inc_airlock_control"; pixel_x = -24; pixel_y = 21},/obj/machinery/atmospherics/binary/dp_vent_pump/high_volume{dir = 4; frequency = 1331; id_tag = "anom_airlock_pump"},/turf/simulated/floor{icon_state = "warning"},/area/research_outpost/gearstore)
 "eeC" = (/obj/structure/transit_tube{icon_state = "D-SW"},/turf/simulated/wall/r_wall,/area/mine/explored)
 "eeD" = (/obj/effect/glowshroom,/turf/unsimulated/floor/asteroid,/area/mine/unexplored)
 "eeE" = (/turf/unsimulated/floor/asteroid,/area/mine/unexplored)
