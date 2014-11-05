@@ -472,8 +472,6 @@
 		qdel(src)
 		return
 
-	loc = target.loc
-
 	switch(target_strength - ticks)
 		if(6)
 			visible_message("<span class='warning'>[target] is holding up against the acid!</span>")
