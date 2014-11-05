@@ -691,6 +691,7 @@ datum/mind
 						special_role = null
 						current.spellremove(current, config.feature_object_spell_system? "object":"verb")
 						current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a wizard!</B></FONT>"
+						ticker.mode.update_wizard_icons_removed(src)
 						log_admin("[key_name_admin(usr)] has de-wizard'ed [current].")
 				if("wizard")
 					if(!(src in ticker.mode.wizards))
@@ -698,6 +699,7 @@ datum/mind
 						special_role = "Wizard"
 						//ticker.mode.learn_basic_spells(current)
 						current << "<B>\red You are the Space Wizard!</B>"
+						ticker.mode.update_wizard_icons_added(src)
 						log_admin("[key_name_admin(usr)] has wizard'ed [current].")
 				if("lair")
 					current.loc = pick(wizardstart)
@@ -708,6 +710,7 @@ datum/mind
 				if("autoobjectives")
 					ticker.mode.forge_wizard_objectives(src)
 					usr << "\blue The objectives for wizard [key] have been generated. You can edit them and anounce manually."
+			ticker.mode.update_all_wizard_icons()
 
 		else if (href_list["changeling"])
 			switch(href_list["changeling"])
@@ -1126,6 +1129,7 @@ datum/mind
 			special_role = "Wizard"
 			assigned_role = "MODE"
 			//ticker.mode.learn_basic_spells(current)
+			ticker.mode.update_wizard_icons_added(src)
 			if(!wizardstart.len)
 				current.loc = pick(latejoin)
 				current << "HOT INSERTION, GO GO GO"
@@ -1138,6 +1142,7 @@ datum/mind
 			ticker.mode.name_wizard(current)
 			ticker.mode.forge_wizard_objectives(src)
 			ticker.mode.greet_wizard(src)
+			ticker.mode.update_all_wizard_icons()
 
 
 	proc/make_Cultist()
