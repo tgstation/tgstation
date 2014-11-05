@@ -648,9 +648,16 @@
 	product_ads = "Probably not bad for you!;Don't believe the scientists!;It's good for you!;Don't quit, buy more!;Smoke!;Nicotine heaven.;Best cigarettes since 2150.;Award-winning cigs."
 	vend_delay = 34
 	icon_state = "cigs"
-	products = list(/obj/item/weapon/storage/fancy/cigarettes = 10,/obj/item/weapon/storage/box/matches = 10,/obj/item/weapon/lighter/random = 4,/obj/item/weapon/storage/fancy/rollingpapers = 5)
+	products = list(/obj/item/weapon/storage/fancy/cigarettes = 5,
+					/obj/item/weapon/storage/fancy/cigarettes/cigpack_uplift = 3,
+					/obj/item/weapon/storage/fancy/cigarettes/cigpack_robust = 2,
+					/obj/item/weapon/storage/fancy/cigarettes/cigpack_carp = 3,
+					/obj/item/weapon/storage/fancy/cigarettes/cigpack_midori = 1,
+					/obj/item/weapon/storage/box/matches = 10,
+					/obj/item/weapon/lighter/random = 4,
+					/obj/item/weapon/storage/fancy/rollingpapers = 5)
 	contraband = list(/obj/item/weapon/lighter/zippo = 4)
-	premium = list(/obj/item/clothing/mask/cigarette/cigar/havana = 2)
+	premium = list(/obj/item/clothing/mask/cigarette/cigar/havana = 2, /obj/item/weapon/storage/fancy/cigarettes/cigpack_robustgold = 1)
 	refill_canister = /obj/item/weapon/vending_refill/cigarette
 
 
@@ -773,8 +780,7 @@
 					/obj/item/clothing/head/helmet/gladiator = 1,/obj/item/clothing/under/gimmick/rank/captain/suit = 1,/obj/item/clothing/head/flatcap = 1,
 					/obj/item/clothing/suit/labcoat/mad = 1,/obj/item/clothing/glasses/gglasses = 1,/obj/item/clothing/shoes/jackboots = 1,
 					/obj/item/clothing/under/schoolgirl = 1,/obj/item/clothing/head/kitty = 1,/obj/item/clothing/under/blackskirt = 1,/obj/item/clothing/head/beret = 1,
-					/obj/item/clothing/tie/waistcoat = 1,/obj/item/clothing/under/suit_jacket = 1,/obj/item/clothing/head/that =1,/obj/item/clothing/head/cueball = 1,
-					/obj/item/clothing/under/scratch = 1,/obj/item/clothing/under/kilt = 1,/obj/item/clothing/head/beret = 1,/obj/item/clothing/tie/waistcoat = 1,
+					/obj/item/clothing/tie/waistcoat = 1,/obj/item/clothing/under/suit_jacket = 1,/obj/item/clothing/head/that =1,/obj/item/clothing/under/kilt = 1,/obj/item/clothing/head/beret = 1,/obj/item/clothing/tie/waistcoat = 1,
 					/obj/item/clothing/glasses/monocle =1,/obj/item/clothing/head/bowler = 1,/obj/item/weapon/cane = 1,/obj/item/clothing/under/sl_suit = 1,
 					/obj/item/clothing/mask/fakemoustache = 1,/obj/item/clothing/suit/bio_suit/plaguedoctorsuit = 1,/obj/item/clothing/head/plaguedoctorhat = 1,
 					/obj/item/clothing/under/owl = 1,/obj/item/clothing/mask/gas/owl_mask = 1,/obj/item/clothing/suit/apron = 1,/obj/item/clothing/under/waiter = 1,

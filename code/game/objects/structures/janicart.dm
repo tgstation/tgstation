@@ -77,6 +77,12 @@
 			user << "<span class='notice'>[src] can't hold any more signs.</span>"
 	else if(mybag)
 		mybag.attackby(I, user)
+	else if(istype(I, /obj/item/weapon/crowbar))
+		user.visible_message("<span class='warning'>[user] begins to empty the contents of [src].</span>")
+		if(do_after(user, 30))
+			usr << "<span class='notice'>You empty the contents of [src]'s bucket onto the floor.</span>"
+			reagents.reaction(src.loc)
+			src.reagents.clear_reagents()
 
 /obj/structure/janitorialcart/attack_hand(mob/user)
 	user.set_machine(src)
@@ -156,7 +162,7 @@
 	name = "janicart"
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "pussywagon"
-	anchored = 1
+	anchored = 0
 	density = 1
 	flags = OPENCONTAINER
 	//copypaste sorry
@@ -206,18 +212,13 @@
 	if(user.stat || user.stunned || user.weakened || user.paralysis)
 		unbuckle()
 	if(istype(user.l_hand, /obj/item/key) || istype(user.r_hand, /obj/item/key))
+		if(!Process_Spacemove(direction))
+			return
 		step(src, direction)
 		update_mob()
 		handle_rotation()
 	else
 		user << "<span class='notice'>You'll need the keys in one of your hands to drive this [callme].</span>"
-
-
-/obj/structure/stool/bed/chair/janicart/Move()
-	..()
-	if(buckled_mob)
-		if(buckled_mob.buckled == src)
-			buckled_mob.loc = loc
 
 
 /obj/structure/stool/bed/chair/janicart/buckle_mob(mob/M, mob/user)

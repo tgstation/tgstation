@@ -1,6 +1,4 @@
 
-#define PIPE_PAINTER_DELAY 10
-
 /obj/item/device/pipe_painter
 	name = "pipe painter"
 	icon = 'icons/obj/bureaucracy.dmi'
@@ -16,13 +14,13 @@
 		"purple"	= rgb(130,43,255)
 	)
 	var/mode = "grey"
-	var/on = 1
 
 	m_amt = 5000
 	g_amt = 2000
 
-/obj/item/device/pipe_painter/afterattack(atom/A, mob/user as mob)
-	if(!on)
+/obj/item/device/pipe_painter/afterattack(atom/A, mob/user as mob, proximity_flag)
+	//Make sure we only paint adjacent items
+	if(proximity_flag!= 1)
 		return
 
 	if(!istype(A,/obj/machinery/atmospherics/pipe/simple) && !istype(A,/obj/machinery/atmospherics/pipe/manifold) && !istype(A,/obj/machinery/atmospherics/pipe/manifold4w))
@@ -62,9 +60,6 @@
 		if(pipe.node4)
 			pipe.node4.update_icon()
 
-	on = 0
-	spawn(PIPE_PAINTER_DELAY)
-		on = 1
 
 /obj/item/device/pipe_painter/attack_self(mob/user as mob)
 	mode = input("Which colour do you want to use?","Pipe painter") in modes

@@ -14,7 +14,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(!usr.canmove || usr.stat || usr.restrained())
+	if(!can_use(usr))
 		return 0
 
 	open = !open
@@ -26,6 +26,12 @@
 	name = "chief medical officer's labcoat"
 	desc = "Bluer than the standard model."
 	icon_state = "labcoat_cmo"
+	item_state = "labcoat_cmo"
+
+/obj/item/clothing/suit/labcoat/emt
+	name = "EMT's jacket"
+	desc = "A dark blue jacket with reflective strips for emergency medical technicians."
+	icon_state = "labcoat_emt"
 	item_state = "labcoat_cmo"
 
 /obj/item/clothing/suit/labcoat/mad

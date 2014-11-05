@@ -7,14 +7,14 @@
 
 /obj/item/weapon/paper
 	name = "paper"
-	gender = PLURAL
+	gender = NEUTER
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
 	throwforce = 0
 	w_class = 1.0
 	throw_range = 1
 	throw_speed = 1
-	layer = 4
+	layer = 3
 	pressure_resistance = 1
 	slot_flags = SLOT_HEAD
 	body_parts_covered = HEAD
@@ -66,6 +66,8 @@
 	set category = "Object"
 	set src in usr
 
+	if(usr.stat || !usr.canmove || usr.restrained())
+		return
 	if((CLUMSY in usr.mutations) && prob(25))
 		usr << "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>"
 		usr.damageoverlaytemp = 9001

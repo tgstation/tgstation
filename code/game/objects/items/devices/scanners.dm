@@ -164,6 +164,9 @@ MASS SPECTROMETER
 	set name = "Switch Verbosity"
 	set category = "Object"
 
+	if(usr.stat || !usr.canmove || usr.restrained())
+		return
+
 	mode = !mode
 	switch (mode)
 		if(1)

@@ -94,49 +94,20 @@
 	return
 
 /obj/mecha/combat/marauder/relaymove(mob/user,direction)
-	if(user != src.occupant) //While not "realistic", this piece is player friendly.
-		user.loc = get_turf(src)
-		user << "You climb out from [src]"
-		return 0
-	if(!can_move)
-		return 0
 	if(zoom)
 		if(world.time - last_message > 20)
 			src.occupant_message("Unable to move while in zoom mode.")
 			last_message = world.time
 		return 0
-	if(connected_port)
-		if(world.time - last_message > 20)
-			src.occupant_message("Unable to move while connected to the air system port")
-			last_message = world.time
-		return 0
-	if(!thrusters && pr_inertial_movement && src.pr_inertial_movement.active())
-		return 0
-	if(state || !has_charge(step_energy_drain))
-		return 0
-	var/tmp_step_in = step_in
-	var/tmp_step_energy_drain = step_energy_drain
-	var/move_result = 0
-	if(internal_damage&MECHA_INT_CONTROL_LOST)
-		move_result = mechsteprand()
-	else if(src.dir!=direction)
-		move_result = mechturn(direction)
-	else
-		move_result	= mechstep(direction)
-	if(move_result)
-		if(istype(src.loc, /turf/space))
-			if(!src.check_for_support() && pr_inertial_movement)
-				src.pr_inertial_movement.start(list(src,direction))
-				if(thrusters)
-					src.pr_inertial_movement.set_process_args(list(src,direction))
-					tmp_step_energy_drain = step_energy_drain*2
+	return ..()
 
-		can_move = 0
-		spawn(tmp_step_in) can_move = 1
-		use_power(tmp_step_energy_drain)
+
+/obj/mecha/combat/marauder/Process_Spacemove(var/movement_dir = 0)
+	if(..())
+		return 1
+	if(thrusters && movement_dir && use_power(step_energy_drain))
 		return 1
 	return 0
-
 
 /obj/mecha/combat/marauder/verb/toggle_thrusters()
 	set category = "Exosuit Interface"

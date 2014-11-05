@@ -38,17 +38,6 @@
 	new /obj/item/clothing/head/beret/sec(src)
 	return
 
-/obj/structure/closet/wardrobe/hos
-	name = "\proper head of security's wardrobe"
-	icon_state = "red"
-	icon_closed = "red"
-
-/obj/structure/closet/wardrobe/hos/New()
-	new /obj/item/clothing/under/hosformalfem(src)
-	new /obj/item/clothing/under/hosformalmale(src)
-	new /obj/item/clothing/under/rank/head_of_security/jensen(src)
-	return
-
 /obj/structure/closet/wardrobe/pink
 	name = "pink wardrobe"
 	icon_state = "pink"
@@ -200,6 +189,22 @@
 	new /obj/item/clothing/shoes/sneakers/white(src)
 	return
 
+/obj/structure/closet/wardrobe/white/medical
+	name = "medical doctor's wardrobe"
+
+/obj/structure/closet/wardrobe/white/medical/New()
+	new /obj/item/clothing/under/rank/nursesuit (src)
+	new /obj/item/clothing/head/nursehat (src)
+	new /obj/item/clothing/suit/labcoat/emt(src)
+	new /obj/item/clothing/suit/labcoat/emt(src)
+	new /obj/item/clothing/suit/labcoat/emt(src)
+	new /obj/item/clothing/under/rank/medical/blue(src)
+	new /obj/item/clothing/under/rank/medical/green(src)
+	new /obj/item/clothing/under/rank/medical/purple(src)
+	new /obj/item/clothing/shoes/sneakers/black(src)
+	new /obj/item/clothing/shoes/sneakers/black(src)
+	new /obj/item/clothing/shoes/sneakers/black(src)
+	return
 
 /obj/structure/closet/wardrobe/pjs
 	name = "pajama wardrobe"

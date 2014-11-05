@@ -24,6 +24,8 @@
 	w_class = 1
 	flags = MASKCOVERSMOUTH
 	flags_inv = HIDEFACE
+	visor_flags = MASKCOVERSMOUTH
+	visor_flags_inv = HIDEFACE
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 25, rad = 0)

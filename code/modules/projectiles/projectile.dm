@@ -15,7 +15,6 @@
 	icon_state = "bullet"
 	density = 1
 	unacidable = 1
-	anchored = 1 //There's a reason this is here, Mport. God fucking damn it -Agouri. Find&Fix by Pete. The reason this is here is to stop the curving of emitter shots.
 	pass_flags = PASSTABLE
 	mouse_opacity = 0
 	hitsound = 'sound/weapons/pierce.ogg'
@@ -136,6 +135,9 @@
 		return prob(95)
 	else
 		return 1
+
+/obj/item/projectile/Process_Spacemove(var/movement_dir = 0)
+	return 1 //Bullets don't drift in space
 
 
 /obj/item/projectile/process()

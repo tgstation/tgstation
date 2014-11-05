@@ -784,6 +784,7 @@
 		var/mob/M = locate(href_list["boot2"])
 		if (ismob(M))
 			if(!check_if_greater_rights_than(M.client))
+				usr << "<span class='danger'>Error: They have more rights than you do.</span>"
 				return
 			M << "<span class='danger'>You have been kicked from the server.</span>"
 			log_admin("[key_name(usr)] booted [key_name(M)].")
@@ -2271,4 +2272,16 @@
 
 	else if(href_list["ac_set_signature"])
 		src.admincaster_signature = adminscrub(input(usr, "Provide your desired signature", "Network Identity Handler", ""))
+		src.access_news_network()
+
+	else if(href_list["ac_del_comment"])
+		var/datum/feed_comment/FC = locate(href_list["ac_del_comment"])
+		var/datum/feed_message/FM = locate(href_list["ac_del_comment_msg"])
+		FM.comments -= FC
+		qdel(FC)
+		src.access_news_network()
+
+	else if(href_list["ac_lock_comment"])
+		var/datum/feed_message/FM = locate(href_list["ac_lock_comment"])
+		FM.locked ^= 1
 		src.access_news_network()

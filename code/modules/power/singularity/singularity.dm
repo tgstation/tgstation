@@ -40,6 +40,15 @@
 	return
 
 
+/obj/machinery/singularity/Move(atom/newloc, direct)
+	if(current_size >= STAGE_FIVE || check_turfs_in(direct))
+		last_failed_movement = 0//Reset this because we moved
+		return ..()
+	else
+		last_failed_movement = direct
+		return 0
+
+
 /obj/machinery/singularity/attack_hand(mob/user as mob)
 	consume(user)
 	return 1
@@ -51,7 +60,7 @@
 /obj/machinery/singularity/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			if(current_size <= 3)
+			if(current_size <= STAGE_TWO)
 				investigate_log("has been destroyed by a heavy explosion.","singulo")
 				qdel(src)
 				return
@@ -83,7 +92,7 @@
 	dissipate()
 	check_energy()
 
-	if(current_size >= 3)
+	if(current_size >= STAGE_TWO)
 		move()
 		pulse()
 		if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
@@ -116,8 +125,8 @@
 	if(force_size)
 		temp_allowed_size = force_size
 	switch(temp_allowed_size)
-		if(1)
-			current_size = 1
+		if(STAGE_ONE)
+			current_size = STAGE_ONE
 			icon = 'icons/obj/singularity.dmi'
 			icon_state = "singularity_s1"
 			pixel_x = 0
@@ -127,8 +136,8 @@
 			dissipate_delay = 10
 			dissipate_track = 0
 			dissipate_strength = 1
-		if(3)//1 to 3 does not check for the turfs if you put the gens right next to a 1x1 then its going to eat them
-			current_size = 3
+		if(STAGE_TWO)//1 to 3 does not check for the turfs if you put the gens right next to a 1x1 then its going to eat them
+			current_size = STAGE_TWO
 			icon = 'icons/effects/96x96.dmi'
 			icon_state = "singularity_s3"
 			pixel_x = -32
@@ -138,9 +147,9 @@
 			dissipate_delay = 5
 			dissipate_track = 0
 			dissipate_strength = 5
-		if(5)
+		if(STAGE_THREE)
 			if((check_turfs_in(1,2))&&(check_turfs_in(2,2))&&(check_turfs_in(4,2))&&(check_turfs_in(8,2)))
-				current_size = 5
+				current_size = STAGE_THREE
 				icon = 'icons/effects/160x160.dmi'
 				icon_state = "singularity_s5"
 				pixel_x = -64
@@ -150,9 +159,9 @@
 				dissipate_delay = 4
 				dissipate_track = 0
 				dissipate_strength = 20
-		if(7)
+		if(STAGE_FOUR)
 			if((check_turfs_in(1,3))&&(check_turfs_in(2,3))&&(check_turfs_in(4,3))&&(check_turfs_in(8,3)))
-				current_size = 7
+				current_size = STAGE_FOUR
 				icon = 'icons/effects/224x224.dmi'
 				icon_state = "singularity_s7"
 				pixel_x = -96
@@ -162,8 +171,8 @@
 				dissipate_delay = 10
 				dissipate_track = 0
 				dissipate_strength = 10
-		if(9)//this one also lacks a check for gens because it eats everything
-			current_size = 9
+		if(STAGE_FIVE)//this one also lacks a check for gens because it eats everything
+			current_size = STAGE_FIVE
 			icon = 'icons/effects/288x288.dmi'
 			icon_state = "singularity_s9"
 			pixel_x = -128
@@ -187,15 +196,15 @@
 		return 0
 	switch(energy)//Some of these numbers might need to be changed up later -Mport
 		if(1 to 199)
-			allowed_size = 1
+			allowed_size = STAGE_ONE
 		if(200 to 499)
-			allowed_size = 3
+			allowed_size = STAGE_TWO
 		if(500 to 999)
-			allowed_size = 5
+			allowed_size = STAGE_THREE
 		if(1000 to 1999)
-			allowed_size = 7
+			allowed_size = STAGE_FOUR
 		if(2000 to INFINITY)
-			allowed_size = 9
+			allowed_size = STAGE_FIVE
 	if(current_size != allowed_size)
 		expand()
 	return 1
@@ -203,40 +212,13 @@
 
 /obj/machinery/singularity/proc/eat()
 	set background = BACKGROUND_ENABLED
-//	if(defer_powernet_rebuild != 2)
-//		defer_powernet_rebuild = 1
-	// Let's just make this one loop.
 	for(var/atom/X in orange(grav_pull,src))
 		var/dist = get_dist(X, src)
-		// Movable atoms only
-		if(dist > consume_range && istype(X, /atom/movable))
-			if(((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))|| (src.current_size >= 9))
-				step_towards(X,src)
-
-			else if(istype(X,/mob/living/carbon/human))
-				var/mob/living/carbon/human/H = X
-
-				if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
-					var/obj/item/clothing/shoes/magboots/M = H.shoes
-					if(!M.magpulse)
-						step_towards(H,src)
-				else
-					step_towards(H,src)
-
-				if(current_size >= 5)
-					var/list/handlist = list(H.l_hand, H.r_hand)
-					for(var/obj/item/hand in handlist)
-						if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && H.unEquip(hand))
-							step_towards(hand, src)
-							H << "<span class='warning'>\The [src] pulls \the [hand] from your grip!</span>"
-
-				H.apply_effect(current_size * 3, IRRADIATE)
-		// Turf and movable atoms
-		else if(dist <= consume_range && (isturf(X) || istype(X, /atom/movable)))
+		var/obj/machinery/singularity/S = src
+		if(dist > consume_range)
+			X.singularity_pull(S, current_size)
+		else if(dist <= consume_range)
 			consume(X)
-
-//	if(defer_powernet_rebuild != 2)
-//		defer_powernet_rebuild = 0
 	return
 
 
@@ -258,20 +240,7 @@
 	if(target && prob(60))
 		movement_dir = get_dir(src,target) //moves to a singulo beacon, if there is one
 
-	if(current_size >= 9)//The superlarge one does not care about things in its way
-		spawn(0)
-			step(src, movement_dir)
-		spawn(1)
-			step(src, movement_dir)
-		return 1
-	else if(check_turfs_in(movement_dir))
-		last_failed_movement = 0//Reset this because we moved
-		spawn(0)
-			step(src, movement_dir)
-		return 1
-	else
-		last_failed_movement = movement_dir
-	return 0
+	step(src, movement_dir)
 
 
 /obj/machinery/singularity/proc/check_turfs_in(var/direction = 0, var/step = 0)
@@ -280,15 +249,15 @@
 	var/steps = 0
 	if(!step)
 		switch(current_size)
-			if(1)
+			if(STAGE_ONE)
 				steps = 1
-			if(3)
+			if(STAGE_TWO)
 				steps = 3//Yes this is right
-			if(5)
+			if(STAGE_THREE)
 				steps = 3
-			if(7)
+			if(STAGE_FOUR)
 				steps = 4
-			if(9)
+			if(STAGE_FIVE)
 				steps = 5
 	else
 		steps = step
