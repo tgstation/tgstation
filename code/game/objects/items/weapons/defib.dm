@@ -126,20 +126,21 @@
 /obj/item/weapon/defibrillator/verb/toggle_paddles()
 	set name = "Toggle Paddles"
 	set category = "Object"
+	on = !on
 
 	var/mob/living/carbon/human/user = usr
-	if(!on)
+	if(on)
 		//Detach the paddles into the user's hands
 		if(!usr.put_in_hands(paddles))
 			on = 0
 			user << "<span class='warning'>You need a free hand to hold the paddles!</span>"
 			update_icon()
 			return
-		on = 1
 		paddles.loc = user
 	else
 		//Remove from their hands and back onto the defib unit
 		remove_paddles(user)
+
 	update_icon()
 	return
 
@@ -230,11 +231,15 @@
 	return (OXYLOSS)
 
 /obj/item/weapon/twohanded/shockpaddles/dropped(mob/user as mob)
-	..()
-	user << "<span class='notice'>The paddles snap back into the main unit.</span>"
-	defib.on = 0
-	loc = defib
-	defib.update_icon()
+	if(user)
+		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
+		if(istype(O))
+			O.unwield()
+		user << "<span class='notice'>The paddles snap back into the main unit.</span>"
+		defib.on = 0
+		loc = defib
+		defib.update_icon()
+	return	unwield()
 
 /obj/item/weapon/twohanded/shockpaddles/proc/check_defib_exists(mainunit, var/mob/living/carbon/human/M, var/obj/O)
 	if (!mainunit || !istype(mainunit, /obj/item/weapon/defibrillator))	//To avoid weird issues from admin spawns
@@ -285,30 +290,37 @@
 			busy = 1
 			update_icon()
 			if(do_after(user, 30)) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
-				for(var/obj/item/carried_item in H.contents)
-					if((istype(carried_item, /obj/item/clothing/suit/armor)) || (istype(carried_item, /obj/item/clothing/suit/space)))
-						user.visible_message("<span class='notice'>[defib] buzzes: Patient's chest is obscured. Operation aborted.</span>")
-						playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 0)
-						busy = 0
-						update_icon()
-						return
 				user.visible_message("<span class='notice'>[user] places [src] on [M.name]'s chest.</span>", "<span class='warning'>You place [src] on [M.name]'s chest.</span>")
 				playsound(get_turf(src), 'sound/weapons/flash.ogg', 50, 0)
 				var/isghosted = !H.key && H.mind
 				var/tplus = world.time - H.timeofdeath
 				var/tlimit = 1800 //past this much time the subject is unrecoverable, currently 3m
 				var/tloss = 900 //brain damage starts setting in after some time, currently 1m30s
+				var/total_burn	= 0
+				var/total_brute	= 0
 				if(do_after(user, 20)) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
+					for(var/obj/item/carried_item in H.contents)
+						if((istype(carried_item, /obj/item/clothing/suit/armor)) || (istype(carried_item, /obj/item/clothing/suit/space)))
+							user.visible_message("<span class='notice'>[defib] buzzes: Patient's chest is obscured. Operation aborted.</span>")
+							playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 0)
+							busy = 0
+							update_icon()
+							return
 					if(H.stat == 2)
 						var/health = H.health
 						M.visible_message("<span class='warning'>[M]'s body convulses a bit.")
 						playsound(get_turf(src), "bodyfall", 50, 1)
 						playsound(get_turf(src), 'sound/weapons/Egloves.ogg', 50, 1, -1)
-						if(H.health <= -100 && !H.suiciding && !isghosted && (tplus < tlimit) && (!NOCLONE in H.mutations))
+						for(var/obj/item/organ/limb/O in H.organs)
+							total_brute	+= O.brute_dam
+							total_burn	+= O.burn_dam
+						if(H.health <= -100 && total_burn <= 180 && total_brute <= 180 && !H.suiciding && !isghosted && tplus < tlimit && !(NOCLONE in H.mutations))
 							tobehealed = health + threshold
-							tobehealed -= 5 //They get oxy/tox loss healed to give some time to stabilize crit patient.
+							tobehealed -= 5 //They get 5 of each type of damage healed so excessive combined damage will not immediately kill them after they get revived
 							H.adjustOxyLoss(tobehealed)
 							H.adjustToxLoss(tobehealed)
+							H.adjustFireLoss(tobehealed)
+							H.adjustBruteLoss(tobehealed)
 							user.visible_message("<span class='boldnotice'>[defib] pings: Resuscitation successful.</span>")
 							playsound(get_turf(src), 'sound/machines/ping.ogg', 50, 0)
 							H.stat = 1
@@ -321,7 +333,9 @@
 							add_logs(user, M, "revived", object="defibrillator")
 						else
 							if(tplus > tlimit)
-								user.visible_message("<span class='boldnotice'>[defib] buzzes: Resuscitation failed. Tissue damage beyond point of no return for defibrillation.</span>")
+								user.visible_message("<span class='boldnotice'>[defib] buzzes: Resuscitation failed - Heart tissue damage beyond point of no return for defibrillation.</span>")
+							else if(total_burn >= 180 || total_brute >= 180)
+								user.visible_message("<span class='boldnotice'>[defib] buzzes: Resuscitation failed - Severe tissue damage detected.</span>")
 							else
 								user.visible_message("<span class='notice'>[defib] buzzes: Resuscitation failed.</span>")
 								if(isghosted)
