@@ -85,21 +85,10 @@
 			updatehealth()
 
 /mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M as mob)
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
-		return
-
 	if(..())	//To allow surgery to return properly.
 		return
 
 	switch(M.a_intent)
-		if("help")
-			help_shake_act(M)
-
 		if("harm")
 			if (prob(75))
 				visible_message("<span class='danger'>[M] has punched [name]!</span>", \
@@ -116,20 +105,19 @@
 									"<span class='userdanger'>[M] has knocked out [name]!</span>")
 							return
 				adjustBruteLoss(damage)
+				add_logs(M, src, "attacked", admin=0)
 				updatehealth()
 			else
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 				visible_message("<span class='danger'>[M] has attempted to punch [name]!</span>", \
 						"<span class='userdanger'>[M] has attempted to punch [name]!</span>")
 
-		if("grab")
-			grabbedby(M)
-
 		if("disarm")
 			if (!( paralysis ))
 				if (prob(25))
 					Paralyse(2)
 					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+					add_logs(M, src, "pushed", admin=0)
 					visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
 							"<span class='userdanger'>[M] has pushed down [src]!</span>")
 				else
@@ -140,19 +128,8 @@
 	return
 
 /mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
-		return
-
-	switch(M.a_intent)
-		if ("help")
-			visible_message("<span class='notice'> [M] caresses [src] with its scythe like arm.</span>")
-
-		if ("harm")
+	if(..())
+		if (M.a_intent == "harm")
 			if ((prob(95) && health > 0))
 				playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 				var/damage = rand(15, 30)
@@ -165,6 +142,7 @@
 				else
 					visible_message("<span class='danger'>[M] has slashed [name]!</span>", \
 							"<span class='userdanger'>[M] has slashed [name]!</span>")
+				add_logs(M, src, "attacked", admin=0)
 				if (stat != DEAD)
 					adjustBruteLoss(damage)
 					updatehealth()
@@ -173,10 +151,7 @@
 				visible_message("<span class='danger'>[M] has attempted to lunge at [name]!</span>", \
 						"<span class='userdanger'>[M] has attempted to lunge at [name]!</span>")
 
-		if ("grab")
-			grabbedby(M)
-
-		if ("disarm")
+		if (M.a_intent == "disarm")
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			var/damage = 5
 			if(prob(95))
@@ -187,15 +162,16 @@
 				if(drop_item())
 					visible_message("<span class='danger'>[M] has disarmed [name]!</span>", \
 							"<span class='userdanger'>[M] has disarmed [name]!</span>")
+			add_logs(M, src, "disarmed", admin=0)
 			adjustBruteLoss(damage)
 			updatehealth()
 	return
 
 /mob/living/carbon/monkey/attack_animal(mob/living/simple_animal/M as mob)
-	..()
-	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-	adjustBruteLoss(damage)
-	updatehealth()
+	if(..())
+		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		adjustBruteLoss(damage)
+		updatehealth()
 
 
 /mob/living/carbon/monkey/attack_slime(mob/living/carbon/slime/M as mob)

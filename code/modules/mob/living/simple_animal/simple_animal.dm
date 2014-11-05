@@ -254,10 +254,10 @@
 	..(act, m_type, message)
 
 /mob/living/simple_animal/attack_animal(mob/living/simple_animal/M as mob)
-	..()
-	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-	adjustBruteLoss(damage)
-	updatehealth()
+	if(..())
+		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		adjustBruteLoss(damage)
+		updatehealth()
 
 /mob/living/simple_animal/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj)
@@ -268,36 +268,23 @@
 	return 0
 
 /mob/living/simple_animal/attack_hand(mob/living/carbon/human/M as mob)
-	..()
+	if(..())
+		switch(M.a_intent)
 
-	switch(M.a_intent)
+			if("help")
+				if (health > 0)
+					visible_message("<span class='notice'> [M] [response_help] [src].</span>")
+					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
-		if("help")
-			if (health > 0)
-				visible_message("<span class='notice'> [M] [response_help] [src].</span>")
-				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+			if("grab")
+				grabbedby(M)
 
-		if("grab")
-			if (M == src || anchored)
-				return
-			if (!(status_flags & CANPUSH))
-				return
-
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
-
-			M.put_in_active_hand(G)
-
-			G.synch()
-
-			LAssailant = M
-
-			visible_message("<span class='warning'>[M] has grabbed [src] passively!</span>")
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-
-		if("harm", "disarm")
-			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>")
-			playsound(loc, "punch", 25, 1, -1)
-			adjustBruteLoss(harm_intent_damage)
+			if("harm", "disarm")
+				visible_message("<span class='danger'>[M] [response_harm] [src]!</span>")
+				playsound(loc, "punch", 25, 1, -1)
+				adjustBruteLoss(harm_intent_damage)
+				add_logs(M, src, "attacked", admin=0)
+				updatehealth()
 
 	return
 
@@ -313,21 +300,14 @@
 	return
 
 /mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
-
-	switch(M.a_intent)
-
-		if ("help")
-
-			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
-		if ("grab")
-			grabbedby(M)
-
-		if("harm", "disarm")
-			var/damage = rand(15, 30)
-			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
-					"<span class='userdanger'>[M] has slashed at [src]!</span>")
-			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
-			adjustBruteLoss(damage)
+	if(..())
+		var/damage = rand(15, 30)
+		visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
+				"<span class='userdanger'>[M] has slashed at [src]!</span>")
+		playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
+		add_logs(M, src, "attacked", admin=0)
+		adjustBruteLoss(damage)
+		updatehealth()
 
 	return
 

@@ -617,35 +617,23 @@
 				usr << "You unlock your cover."
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
-		return
-
-	switch(M.a_intent)
-		if ("disarm")
-			if(!(lying))
-				if (prob(85))
-					Stun(7)
+	if (M.a_intent =="disarm")
+		if(!(lying))
+			if (prob(85))
+				Stun(7)
+				step(src,get_dir(M,src))
+				spawn(5)
 					step(src,get_dir(M,src))
-					spawn(5)
-						step(src,get_dir(M,src))
-					add_logs(M, src, "pushed", admin=0)
-					playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
-					visible_message("<span class='danger'>[M] has forced back [src]!</span>", \
-									"<span class='userdanger'>[M] has forced back [src]!</span>")
-				else
-					playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-					visible_message("<span class='danger'>[M] attempted to force back [src]!</span>", \
-									"<span class='userdanger'>[M] attempted to force back [src]!</span>")
-		if ("grab")
-			grabbedby(M)
-
-		else
-			..()
+				add_logs(M, src, "pushed", admin=0)
+				playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
+				visible_message("<span class='danger'>[M] has forced back [src]!</span>", \
+								"<span class='userdanger'>[M] has forced back [src]!</span>")
+			else
+				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
+				visible_message("<span class='danger'>[M] attempted to force back [src]!</span>", \
+								"<span class='userdanger'>[M] attempted to force back [src]!</span>")
+	else
+		..()
 
 	return
 
@@ -671,7 +659,7 @@
 
 	return
 
-/mob/living/silicon/robot/attack_hand(mob/user)
+/mob/living/silicon/robot/attack_hand(mob/living/carbon/human/user)
 
 	add_fingerprint(user)
 
@@ -684,10 +672,13 @@
 			cell = null
 			updateicon()
 
-	if(!opened && (!istype(user, /mob/living/silicon)))
-		if (user.a_intent == "help")
-			user.visible_message("<span class='notice'>[user] pets [src]!</span>", \
-								"<span class='notice'>You pet [src]!</span>")
+	if(!opened)
+		if(..())
+			spark_system.start()
+			spawn(0)
+				step_away(src,user,15)
+				sleep(3)
+				step_away(src,user,15)
 
 
 /mob/living/silicon/robot/proc/allowed(mob/M)

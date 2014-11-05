@@ -255,11 +255,11 @@
 	return
 
 /mob/living/carbon/slime/attack_animal(mob/living/simple_animal/M as mob)
-	..()
-	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-	attacked += 10
-	adjustBruteLoss(damage)
-	updatehealth()
+	if(..())
+		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		attacked += 10
+		adjustBruteLoss(damage)
+		updatehealth()
 
 /mob/living/carbon/slime/attack_paw(mob/living/carbon/monkey/M as mob)
 	if(..())
@@ -279,16 +279,6 @@
 
 
 /mob/living/carbon/slime/attack_hand(mob/living/carbon/human/M as mob)
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
-		return
-
-	..()
-
 	if(Victim)
 		if(Victim == M)
 			if(prob(60))
@@ -342,63 +332,46 @@
 
 			return
 
-	switch(M.a_intent)
+	if(..())
+		return
 
-		if ("help")
-			help_shake_act(M)
+	var/damage = rand(1, 9)
 
-		if ("grab")
-			grabbedby(M)
-
-		else
-
-			var/damage = rand(1, 9)
-
-			attacked += 10
-			if (prob(90))
-				if (HULK in M.mutations)
-					damage += 5
-					if(Victim || Target)
-						Victim = null
-						Target = null
-						anchored = 0
-						if(prob(80) && !client)
-							Discipline++
-					spawn(0)
-
-						step_away(src,M,15)
-						sleep(3)
-						step_away(src,M,15)
+	attacked += 10
+	if (prob(90))
+		if (HULK in M.mutations)
+			damage += 5
+			if(Victim || Target)
+				Victim = null
+				Target = null
+				anchored = 0
+				if(prob(80) && !client)
+					Discipline++
+			spawn(0)
+				step_away(src,M,15)
+				sleep(3)
+				step_away(src,M,15)
 
 
-				playsound(loc, "punch", 25, 1, -1)
-				visible_message("<span class='danger'>[M] has punched [src]!</span>", \
-						"<span class='userdanger'>[M] has punched [src]!</span>")
+		playsound(loc, "punch", 25, 1, -1)
+		add_logs(M, src, "attacked", admin=0)
+		visible_message("<span class='danger'>[M] has punched [src]!</span>", \
+				"<span class='userdanger'>[M] has punched [src]!</span>")
 
-				if (health > -100)
-					adjustBruteLoss(damage)
-					updatehealth()
-			else
-				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-				visible_message("<span class='danger'>[M] has attempted to punch [src]!</span>")
+		if (stat != DEAD)
+			adjustBruteLoss(damage)
+			updatehealth()
+	else
+		playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+		visible_message("<span class='danger'>[M] has attempted to punch [src]!</span>")
 	return
 
 
 
 /mob/living/carbon/slime/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
-		return
+	if(..())
 
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
-		return
-
-	switch(M.a_intent)
-		if ("help")
-			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
-
-		if ("harm")
+		if (M.a_intent == "harm")
 
 			if (prob(95))
 				attacked += 10
@@ -412,7 +385,8 @@
 					visible_message("<span class='danger'>[M] has wounded [name]!</span>", \
 							"<span class='userdanger'>)[M] has wounded [name]!</span>")
 
-				if (health > -100)
+				add_logs(M, src, "attacked", admin=0)
+				if (health != DEAD)
 					adjustBruteLoss(damage)
 					updatehealth()
 			else
@@ -420,10 +394,7 @@
 				visible_message("<span class='danger'>[M] has attempted to lunge at [name]!</span>", \
 						"<span class='userdanger'>[M] has attempted to lunge at [name]!</span>")
 
-		if ("grab")
-			grabbedby(M)
-
-		if ("disarm")
+		if (M.a_intent == "disarm")
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			var/damage = 5
 			attacked += 10
@@ -457,6 +428,7 @@
 				drop_item()
 				visible_message("<span class='danger'>[M] has disarmed [name]!</span>",
 						"<span class='userdanger'>[M] has disarmed [name]!</span>")
+			add_logs(M, src, "disarmed", admin=0)
 			adjustBruteLoss(damage)
 			updatehealth()
 	return

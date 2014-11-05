@@ -167,12 +167,14 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 /mob/living/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)
 		M.emote("me", 1, "[M.friendly] [src]")
+		return 0
 	else
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		visible_message("<span class='danger'>\The [M] [M.attacktext] [src]!</span>", \
 						"<span class='userdanger'>\The [M] [M.attacktext] [src]!</span>")
 		add_logs(M, src, "attacked", admin=0)
+		return 1
 
 
 /mob/living/attack_paw(mob/living/carbon/monkey/M as mob)
@@ -214,3 +216,35 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 				visible_message("<span class='danger'>[L.name] has attempted to bite [src]!</span>", \
 					"<span class='userdanger'>[L.name] has attempted to bite [src]!</span>")
 	return 0
+
+/mob/living/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+	if (!ticker)
+		M << "You cannot attack people before the game has started."
+		return 0
+
+	if (istype(loc, /turf) && istype(loc.loc, /area/start))
+		M << "No attacking people at spawn, you jackass."
+		return 0
+
+	switch(M.a_intent)
+		if ("help")
+			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
+			return 0
+
+		if ("grab")
+			grabbedby(M)
+			return 0
+		else
+			return 1
+
+
+/mob/living/attack_hand(mob/living/carbon/human/M as mob)
+	if (!ticker)
+		M << "You cannot attack people before the game has started."
+		return 0
+
+	if (istype(loc, /turf) && istype(loc.loc, /area/start))
+		M << "No attacking people at spawn, you jackass."
+		return 0
+
+	return 1

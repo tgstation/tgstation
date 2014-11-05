@@ -47,28 +47,14 @@ In all, this is a lot like the monkey code. /N
 
 
 /mob/living/carbon/alien/attack_hand(mob/living/carbon/human/M as mob)
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
-		return
-
 	if(..())	//to allow surgery to return properly.
-		return
+		return 0
 
 	switch(M.a_intent)
 
-		if ("help")
-			help_shake_act(M)
-
-		if ("grab")
-			grabbedby(M)
-
-		else
+		if ("harm", "disarm")
 			return 1
-	return
+	return 0
 
 
 /mob/living/carbon/alien/attack_paw(mob/living/carbon/monkey/M as mob)
@@ -80,8 +66,8 @@ In all, this is a lot like the monkey code. /N
 
 
 /mob/living/carbon/alien/attack_animal(mob/living/simple_animal/M as mob)
-	..()
-	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-	adjustBruteLoss(damage)
-	updatehealth()
+	if(..())
+		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		adjustBruteLoss(damage)
+		updatehealth()
 

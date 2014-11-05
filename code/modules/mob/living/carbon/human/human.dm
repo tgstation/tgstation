@@ -219,14 +219,14 @@
 
 
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M as mob)
-	..()
-	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-	var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
-	var/armor = run_armor_check(affecting, "melee")
-	apply_damage(damage, BRUTE, affecting, armor)
-	updatehealth()
-/*	if(armor >= 2) //why is this here?
+	if(..())
+		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+		var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
+		var/armor = run_armor_check(affecting, "melee")
+		apply_damage(damage, BRUTE, affecting, armor)
+		updatehealth()
+/*		if(armor >= 2) //why is this here?
 		return */
 
 

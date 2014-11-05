@@ -71,8 +71,9 @@
 	else
 		..()
 
-/mob/living/carbon/attack_hand(mob/user)
-	if(!iscarbon(user)) return
+/mob/living/carbon/attack_hand(mob/living/carbon/human/user)
+	if(!iscarbon(user))
+		return
 
 	for(var/datum/disease/D in viruses)
 		if(D.spread_by_touch())
@@ -88,6 +89,13 @@
 				for(var/datum/surgery/S in surgeries)
 					if(S.next_step(user, src))
 						return 1
+	if(..())
+		switch(user.a_intent)
+			if("help")
+				help_shake_act(user)
+			if("grab")
+				grabbedby(user)
+
 	return 0
 
 

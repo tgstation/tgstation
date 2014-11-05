@@ -3,13 +3,8 @@
 		visible_message("<span class='danger'>[M] attempted to touch [src]!</span>")
 		return 0
 
-	switch(M.a_intent)
-		if ("help")
-			visible_message("<span class='warning'> [M] caresses [src] with its scythe like arm.</span>")
-		if ("grab")
-			grabbedby(M)
-
-		if("harm")
+	if(..())
+		if(M.a_intent == "harm")
 			if (w_uniform)
 				w_uniform.add_fingerprint(M)
 			var/damage = rand(15, 30)
@@ -30,13 +25,15 @@
 				visible_message("<span class='danger'>[M] has wounded [src]!</span>", \
 					"<span class='userdanger'>[M] has wounded [src]!</span>")
 				apply_effect(4, WEAKEN, armor_block)
+				add_logs(M, src, "attacked", admin=0)
 			updatehealth()
 
-		if("disarm")
+		if(M.a_intent == "disarm")
 			var/randn = rand(1, 100)
 			if (randn <= 80)
 				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 				Weaken(5)
+				add_logs(M, src, "tackled", admin=0)
 				visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
 					"<span class='userdanger'>[M] has tackled down [src]!</span>")
 			else
