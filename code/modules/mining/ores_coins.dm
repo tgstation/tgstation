@@ -81,13 +81,15 @@
 	name = "Slag"
 	desc = "Completely useless unless recycled."
 	icon_state = "slag"
+	melt_temperature=MELTPOINT_PLASTIC
 
 	var/datum/materials/mats=new
 
 /obj/item/weapon/ore/slag/recycle(var/datum/materials/rec)
-	if(mats.getVolume() > 0)
+	if(mats.getVolume() == 1)
 		return NOT_RECYCLABLE
-	rec.addFrom(mats) // NOT removeFrom.
+
+	rec.addFrom(mats) // NOT removeFrom.  Some things just check for the return value.
 	return RECYK_MISC
 
 /obj/item/weapon/ore/mauxite
