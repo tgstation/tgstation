@@ -112,3 +112,23 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 /mob/living/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
 	if(!unacidable)
 		take_organ_damage(min(6*toxpwr, acid_volume * toxpwr))
+
+/mob/living/proc/grabbedby(mob/living/carbon/user)
+	if(user == src || anchored)
+		return 0
+	if(!(status_flags & CANPUSH))
+		return 0
+
+	add_logs(user, src, "grabbed", addition="passively")
+
+	var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(user, src)
+	if(buckled)
+		user << "<span class='notice'>You cannot grab [src], \he is buckled in!</span>"
+	if(!G)	//the grab will delete itself in New if src is anchored
+		return 0
+	user.put_in_active_hand(G)
+	G.synch()
+	LAssailant = user
+
+	playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+	visible_message("<span class='warning'>[user] has grabbed [src] passively!</span>")

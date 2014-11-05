@@ -319,3 +319,8 @@ emp_act
 
 		update_damage_overlays()
 
+/mob/living/carbon/human/grabbedby(mob/living/user)
+	if(w_uniform)
+		w_uniform.add_fingerprint(user)
+	..()
+

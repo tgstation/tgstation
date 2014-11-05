@@ -120,11 +120,11 @@
 	if(..())	//To allow surgery to return properly.
 		return
 
-	if (M.a_intent == "help")
-		help_shake_act(M)
+	switch(M.a_intent)
+		if("help")
+			help_shake_act(M)
 
-	else
-		if (M.a_intent == "harm")
+		if("harm")
 			if (prob(75))
 				visible_message("<span class='danger'>[M] has punched [name]!</span>", \
 						"<span class='userdanger'>[M] has punched [name]!</span>")
@@ -145,33 +145,22 @@
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 				visible_message("<span class='danger'>[M] has attempted to punch [name]!</span>", \
 						"<span class='userdanger'>[M] has attempted to punch [name]!</span>")
-		else
-			if (M.a_intent == "grab")
-				if (M == src || anchored)
-					return
 
-				var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
+		if("grab")
+			grabbedby(M)
 
-				M.put_in_active_hand(G)
-
-				G.synch()
-
-				LAssailant = M
-
-				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-				visible_message("<span class='warning'>[M] has grabbed [name] passively!</span>")
-			else
-				if (!( paralysis ))
-					if (prob(25))
-						Paralyse(2)
+		if("disarm")
+			if (!( paralysis ))
+				if (prob(25))
+					Paralyse(2)
+					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+					visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
+							"<span class='userdanger'>[M] has pushed down [src]!</span>")
+				else
+					if(drop_item())
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-						visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
-								"<span class='userdanger'>[M] has pushed down [src]!</span>")
-					else
-						if(drop_item())
-							playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-							visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
-									"<span class='userdanger'>[M] has disarmed [src]!</span>")
+						visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
+								"<span class='userdanger'>[M] has disarmed [src]!</span>")
 	return
 
 /mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
@@ -209,18 +198,7 @@
 						"<span class='userdanger'>[M] has attempted to lunge at [name]!</span>")
 
 		if ("grab")
-			if (M == src || anchored)
-				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
-
-			M.put_in_active_hand(G)
-
-			G.synch()
-
-			LAssailant = M
-
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			visible_message("<span class='warning'>[M] has grabbed [name] passively!</span>")
+			grabbedby(M)
 
 		if ("disarm")
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
