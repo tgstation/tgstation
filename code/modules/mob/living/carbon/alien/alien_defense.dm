@@ -72,42 +72,16 @@ In all, this is a lot like the monkey code. /N
 
 
 /mob/living/carbon/alien/attack_paw(mob/living/carbon/monkey/M as mob)
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
-		return
-	..()
-
-	switch(M.a_intent)
-
-		if ("help")
-			help_shake_act(M)
-		else
-			if (M.is_muzzled())
-				return
-			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-			visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-					"<span class='userdanger'>[M.name] bites [src]!</span>")
-			add_logs(M, src, "attacked", admin=0)
-			if (stat != DEAD)
-				adjustBruteLoss(rand(1, 3))
-				updatehealth()
+	if(..())
+		if (stat != DEAD)
+			adjustBruteLoss(rand(1, 3))
+			updatehealth()
 	return
 
 
 /mob/living/carbon/alien/attack_animal(mob/living/simple_animal/M as mob)
-	if(M.melee_damage_upper == 0)
-		M.emote("[M.friendly] [src]")
-	else
-		if(M.attack_sound)
-			playsound(loc, M.attack_sound, 50, 1, 1)
-		visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>", \
-				"<span class='userdanger'>[M] [M.attacktext] [src]!</span>")
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		adjustBruteLoss(damage)
-		add_logs(M, src, "attacked", admin=0)
-		updatehealth()
+	..()
+	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+	adjustBruteLoss(damage)
+	updatehealth()
 

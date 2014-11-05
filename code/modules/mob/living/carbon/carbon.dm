@@ -91,21 +91,26 @@
 	return 0
 
 
-/mob/living/carbon/attack_paw(mob/M as mob)
-	if(!istype(M, /mob/living/carbon)) return
-
+/mob/living/carbon/attack_paw(mob/living/carbon/monkey/M as mob)
+	if(!istype(M, /mob/living/carbon))
+		return 0
 
 	for(var/datum/disease/D in viruses)
-
 		if(D.spread_by_touch())
 			M.contract_disease(D, 0, 1, CONTACT_HANDS)
 
 	for(var/datum/disease/D in M.viruses)
-
 		if(D.spread_by_touch())
 			contract_disease(D, 0, 1, CONTACT_HANDS)
 
-	return
+	if(..())
+		for(var/datum/disease/D in M.viruses)
+			contract_disease(D,1,0)
+		return 1
+
+	if(M.a_intent == "help")
+		help_shake_act(M)
+	return 0
 
 /mob/living/carbon/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0)
 	shock_damage *= siemens_coeff

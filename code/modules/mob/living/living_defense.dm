@@ -163,3 +163,54 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 				return 1
 	add_logs(M, src, "attacked", admin=0)
 	return
+
+/mob/living/attack_animal(mob/living/simple_animal/M as mob)
+	if(M.melee_damage_upper == 0)
+		M.emote("me", 1, "[M.friendly] [src]")
+	else
+		if(M.attack_sound)
+			playsound(loc, M.attack_sound, 50, 1, 1)
+		visible_message("<span class='danger'>\The [M] [M.attacktext] [src]!</span>", \
+						"<span class='userdanger'>\The [M] [M.attacktext] [src]!</span>")
+		add_logs(M, src, "attacked", admin=0)
+
+
+/mob/living/attack_paw(mob/living/carbon/monkey/M as mob)
+	if (!ticker)
+		M << "You cannot attack people before the game has started."
+		return 0
+
+	if (istype(loc, /turf) && istype(loc.loc, /area/start))
+		M << "No attacking people at spawn, you jackass."
+		return 0
+
+	if (M.a_intent == "harm" && !M.is_muzzled())
+		if (prob(75))
+			add_logs(M, src, "attacked", admin=0)
+			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+			visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
+					"<span class='userdanger'>[M.name] bites [src]!</span>")
+			return 1
+		else
+			visible_message("<span class='danger'>[M.name] has attempted to bite [src]!</span>", \
+				"<span class='userdanger'>[M.name] has attempted to bite [src]!</span>")
+	return 0
+
+/mob/living/attack_larva(mob/living/carbon/alien/larva/L as mob)
+
+	switch(L.a_intent)
+		if("help")
+			visible_message("<span class='notice'>[L] rubs its head against [src].</span>")
+			return 0
+
+		else
+			if(prob(90))
+				add_logs(L, src, "attacked", admin=0)
+				visible_message("<span class='danger'>[L] bites [src]!</span>", \
+						"<span class='userdanger'>[L] bites [src]!</span>")
+				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+				return 1
+			else
+				visible_message("<span class='danger'>[L.name] has attempted to bite [src]!</span>", \
+					"<span class='userdanger'>[L.name] has attempted to bite [src]!</span>")
+	return 0

@@ -357,13 +357,15 @@
 	return
 
 /mob/living/silicon/attack_animal(mob/living/simple_animal/M as mob)
-	if(M.melee_damage_upper == 0)
-		M.emote("[M.friendly] [src]")
-	else
-		if(M.attack_sound)
-			playsound(loc, M.attack_sound, 50, 1, 1)
-		visible_message("<span class='danger'><B>[M]</B> [M.attacktext] [src]!</span>")
-		add_logs(M, src, "attacked", admin=0)
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		adjustBruteLoss(damage)
-		updatehealth()
+	..()
+	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+	adjustBruteLoss(damage)
+	updatehealth()
+
+/mob/living/silicon/attack_paw(mob/living/user)
+	return attack_hand(user)
+
+/mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L)
+	if(L.a_intent == "help")
+		visible_message("<span class='notice'>[L] rubs its head against [src].</span>")
+	return
