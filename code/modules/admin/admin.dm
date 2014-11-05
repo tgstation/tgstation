@@ -150,7 +150,7 @@ var/global/floorIsLava = 0
 	body += "<br>"
 	body += "</body></html>"
 
-	usr << browse(body, "window=adminplayeropts;size=550x515")
+	usr << browse(body, "window=adminplayeropts-\ref[M];size=550x515")
 	feedback_add_details("admin_verb","SPP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
