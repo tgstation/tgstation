@@ -292,7 +292,7 @@
 			if(do_after(user, 30)) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
 				user.visible_message("<span class='notice'>[user] places [src] on [M.name]'s chest.</span>", "<span class='warning'>You place [src] on [M.name]'s chest.</span>")
 				playsound(get_turf(src), 'sound/weapons/flash.ogg', 50, 0)
-				var/isghosted = !H.key && H.mind
+				var/mob/dead/observer/ghost = H.get_ghost()
 				var/tplus = world.time - H.timeofdeath
 				var/tlimit = 1800 //past this much time the subject is unrecoverable, currently 3m
 				var/tloss = 900 //brain damage starts setting in after some time, currently 1m30s
@@ -314,7 +314,7 @@
 						for(var/obj/item/organ/limb/O in H.organs)
 							total_brute	+= O.brute_dam
 							total_burn	+= O.burn_dam
-						if(H.health <= -100 && total_burn <= 180 && total_brute <= 180 && !H.suiciding && !isghosted && tplus < tlimit && !(NOCLONE in H.mutations))
+						if(H.health <= config.health_threshold_dead && total_burn <= 180 && total_brute <= 180 && !H.suiciding && !ghost && tplus < tlimit && !(NOCLONE in H.mutations))
 							tobehealed = health + threshold
 							tobehealed -= 5 //They get 5 of each type of damage healed so excessive combined damage will not immediately kill them after they get revived
 							H.adjustOxyLoss(tobehealed)
@@ -338,12 +338,9 @@
 								user.visible_message("<span class='boldnotice'>[defib] buzzes: Resuscitation failed - Severe tissue damage detected.</span>")
 							else
 								user.visible_message("<span class='notice'>[defib] buzzes: Resuscitation failed.</span>")
-								if(isghosted)
-									for(var/mob/dead/observer/ghost in player_list)
-										if(ghost.mind == H.mind)
-											if(ghost.can_reenter_corpse)
-												ghost << "<span class='ghostalert'>Your heart is being defibrillated. Return to your body if you want to be revived!</span> (Verbs -> Ghost -> Re-enter corpse)"
-												ghost << sound('sound/effects/genetics.ogg')
+								if(ghost)
+									ghost << "<span class='ghostalert'>Your heart is being defibrillated. Return to your body if you want to be revived!</span> (Verbs -> Ghost -> Re-enter corpse)"
+									ghost << sound('sound/effects/genetics.ogg')
 							playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, 0)
 							defib.deductcharge(revivecost)
 						update_icon()
