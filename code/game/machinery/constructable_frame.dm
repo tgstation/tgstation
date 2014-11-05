@@ -153,7 +153,7 @@
 
 				for(var/obj/item/weapon/stock_parts/replace in replacer)
 					for(var/obj/item/weapon/stock_parts/part in added_components)
-						if(istype(replace, added_components[part]) && (replace.rating > part.rating) && (!replace.crit_fail))
+						if(istype(replace, part) && (replace.rating > part.rating) && (!replace.crit_fail))
 							replacer.remove_from_storage(replace, src)
 							replacer.handle_item_insertion(part, 1)
 							added_components[replace] = added_components[part]
