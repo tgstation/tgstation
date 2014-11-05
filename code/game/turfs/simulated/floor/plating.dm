@@ -106,7 +106,7 @@
 		playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
 		if(do_after(user, 30))
 			new /obj/item/stack/rods(src, 2)
-			make_plating()
+			make_floor(/turf/simulated/floor/plating)
 			return
 
 /turf/simulated/floor/engine/cult
