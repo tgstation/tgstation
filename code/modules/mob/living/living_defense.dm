@@ -202,14 +202,14 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 
 	switch(L.a_intent)
 		if("help")
-			visible_message("<span class='notice'>[L] rubs its head against [src].</span>")
+			visible_message("<span class='notice'>[L.name] rubs its head against [src].</span>")
 			return 0
 
 		else
 			if(prob(90))
 				add_logs(L, src, "attacked", admin=0)
-				visible_message("<span class='danger'>[L] bites [src]!</span>", \
-						"<span class='userdanger'>[L] bites [src]!</span>")
+				visible_message("<span class='danger'>[L.name] bites [src]!</span>", \
+						"<span class='userdanger'>[L.name] bites [src]!</span>")
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				return 1
 			else
