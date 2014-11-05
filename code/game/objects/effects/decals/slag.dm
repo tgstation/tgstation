@@ -6,6 +6,7 @@
 	icon_state = "slagcold"
 	anchored = 1
 	melt_temperature=0
+	l_color="#FFA500"
 
 	var/datum/materials/mats=new
 
@@ -22,6 +23,26 @@
 		if(!molten)
 			molten=1
 			icon_state="slaghot"
+			processing_objects.Add(src)
+			SetLuminosity(2)
+
+/obj/effect/decal/slag/Destroy()
+	SetLuminosity(0)
+	processing_objects.Remove(src)
+	..()
+
+/obj/effect/decal/slag/process()
+	if(!molten)
+		processing_objects.Remove(src)
+		return
+	var/turf/T=loc
+	var/datum/gas_mixture/env = T.return_air()
+	if(melt_temperature > env.temperature && molten && prob(5))
+		molten=0
+		solidify()
+		return 1
+
+
 
 /obj/effect/decal/slag/examine()
 	..()
@@ -29,21 +50,23 @@
 		usr << "<span class=\"warning\">Jesus, it's hot!</span>"
 
 	var/list/bits=list()
-	for(var/mat_id in mats)
+	for(var/mat_id in mats.storage)
 		var/datum/material/mat=mats.getMaterial(mat_id)
-		if(mat.stored>0)
+		if(mat.stored > 0)
 			bits.Add(mat.processed_name)
 
 	if(bits.len>0)
 		usr << "<span class=\"info\">It appears to contain bits of [english_list(bits)].</span>"
 	else
-		usr << "<span class=\"info\">It appears to be completely worthless.</span>"
+		usr << "<span class=\"warning\">It appears to be completely worthless.</span>"
 
 /obj/effect/decal/slag/solidify()
 	icon_state="slagcold"
+	SetLuminosity(0)
 
 /obj/effect/decal/slag/melt()
 	icon_state="slaghot"
+	SetLuminosity(2)
 
 /obj/effect/decal/slag/Crossed(M as mob)
 	..()

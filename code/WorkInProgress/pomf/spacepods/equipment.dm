@@ -89,7 +89,7 @@
 	fire_weapons()
 
 /obj/item/device/spacepod_equipment/weaponry/taser/burst
-	name = "\improper taser system"
+	name = "\improper burst taser system"
 	desc = "A weak taser system for space pods, this one fires 3 at a time."
 	icon_state = "pod_b_taser"
 	shot_cost = 20

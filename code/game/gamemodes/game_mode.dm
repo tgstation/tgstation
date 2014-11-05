@@ -31,7 +31,8 @@
 	var/uplink_welcome = "Syndicate Uplink Console:"
 	var/uplink_uses = 10
 	var/mixed = 0 // denotes whether its apart of a mixed mode or not
-
+	var/list/datum/mind/necromancer = list() //Those who use a necromancy staff OR soulstone a shade/construct
+	var/list/datum/mind/risen = list() // Those risen by necromancy or soulstone
 /datum/game_mode/proc/announce() //to be calles when round starts
 	world << "<B>Notice</B>: [src] did not define announce()"
 
@@ -427,3 +428,87 @@ proc/get_nt_opposed()
 				dudes += man
 	if(dudes.len == 0) return null
 	return pick(dudes)
+
+
+/datum/game_mode/proc/update_necro_icons_added(datum/mind/owner)
+	for(var/headref in necromancer)
+		var/datum/mind/head = locate(headref)
+		for(var/datum/mind/t_mind in necromancer[headref])
+			if(head)
+				if(head.current)
+					if(head.current.client)
+						var/I = image('icons/mob/mob.dmi', loc = t_mind.current, icon_state = "minion")
+						head.current.client.images += I
+						//world << "Adding minion overlay to [head.current]"
+				if(t_mind.current)
+					if(t_mind.current.client)
+						var/I = image('icons/mob/mob.dmi', loc = head.current, icon_state = "necromancer")
+						t_mind.current.client.images += I
+						//world << "Adding master overlay to [t_mind.current]"
+				if(t_mind.current)
+					if(t_mind.current.client)
+						var/I = image('icons/mob/mob.dmi', loc = t_mind.current, icon_state = "minion")
+						t_mind.current.client.images += I
+						//world << "Adding minion overlay to [t_mind.current]"
+
+/datum/game_mode/proc/update_necro_icons_removed(datum/mind/owner)
+	for(var/headref in necromancer)
+		var/datum/mind/head = locate(headref)
+		for(var/datum/mind/t_mind in necromancer[headref])
+			if(t_mind.current)
+				if(t_mind.current.client)
+					for(var/image/I in t_mind.current.client.images)
+						if((I.icon_state == "minion" || I.icon_state == "necromancer") && I.loc == owner.current)
+							//world << "deleting [t_mind.current] overlay"
+							del(I)
+		if(head)
+			//world.log << "found [head.name]"
+			if(head.current)
+				if(head.current.client)
+					for(var/image/I in head.current.client.images)
+						if((I.icon_state == "minion" || I.icon_state == "necromancer") && I.loc == owner.current)
+							//world << "deleting [head.current] overlay"
+							del(I)
+	if(owner.current)
+		if(owner.current.client)
+			for(var/image/I in owner.current.client.images)
+				if(I.icon_state == "minion" || I.icon_state == "necromancer")
+					//world << "deleting [owner.current] overlay"
+					del(I)
+
+/datum/game_mode/proc/update_all_necro_icons()
+	spawn(0)
+		for(var/headref in necromancer)
+			var/datum/mind/head = locate(headref)
+			if(head.current)
+				if(head.current.client)
+					for(var/image/I in head.current.client.images)
+						if(I.icon_state == "minion" || I.icon_state == "necromancer")
+							//world << "deleting [head.current] overlay"
+							del(I)
+			for(var/datum/mind/t_mind in necromancer[headref])
+				if(t_mind.current && t_mind.current.client)
+					for(var/image/I in t_mind.current.client.images)
+						if(I.icon_state == "minion" || I.icon_state == "necromancer")
+							//world << "deleting [t_mind.current] overlay"
+							del(I)
+
+		for(var/headref in necromancer)
+			var/datum/mind/head = locate(headref)
+			for(var/datum/mind/t_mind in necromancer[headref])
+				if(head)
+					if(head.current)
+						if(head.current.client)
+							var/I = image('icons/mob/mob.dmi', loc = t_mind.current, icon_state = "minion")
+							//world << "Adding minion overlay to [head.current]"
+							head.current.client.images += I
+					if(t_mind.current)
+						if(t_mind.current.client)
+							var/I = image('icons/mob/mob.dmi', loc = head.current, icon_state = "necromancer")
+							t_mind.current.client.images += I
+							//world << "Adding master overlay to [t_mind.current]"
+					if(t_mind.current)
+						if(t_mind.current.client)
+							var/I = image('icons/mob/mob.dmi', loc = t_mind.current, icon_state = "minion")
+							t_mind.current.client.images += I
+							//world << "Adding minion overlay to [t_mind.current]"

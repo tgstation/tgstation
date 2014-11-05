@@ -11,6 +11,8 @@
 	force = 5
 	smashtext = ""  //due to inconsistencies in the names of the drinks just don't say anything
 	smashname = "broken glass"
+	melt_temperature = MELTPOINT_GLASS
+	w_type=RECYK_GLASS
 
 //removed smashing - now uses smashing proc from drinks.dm - Hinaichigo
 //also now produces a broken glass when smashed instead of just a shard

@@ -1,4 +1,0 @@
-author: N3X15
-delete-after: true
-changes:
-- bugfix: "Walls now smooth properly with neighbors after being built."

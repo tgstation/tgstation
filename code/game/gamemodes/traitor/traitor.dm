@@ -338,8 +338,8 @@
 				var/I = image('icons/mob/mob.dmi', loc = traitor_mind.current, icon_state = "greytide_head")
 				traitor_mind.current.client.images += I
 	for(var/headref in implanter)
+		var/datum/mind/head = locate(headref)
 		for(var/datum/mind/t_mind in implanter[headref])
-			var/datum/mind/head = locate(headref)
 			if(head)
 				if(head.current)
 					if(head.current.client)

@@ -201,11 +201,15 @@
 					for(var/atom/atm in get_turf(W))
 						if(!W) return
 						W.reagents.reaction(atm, TOUCH)                      // Touch, since we sprayed it.
-						if(isliving(atm) && W.reagents.has_reagent("water")) // For extinguishing mobs on fire
-							var/mob/living/M = atm                           // Why isn't this handled by the reagent? - N3X
-							M.ExtinguishMob()
-						if(on_fire && W.reagents.has_reagent("water")) // For extinguishing objects on fire
-							W.extinguish()
+						if(W.reagents.has_reagent("water"))
+							if(isliving(atm)) // For extinguishing mobs on fire
+								var/mob/living/M = atm                           // Why isn't this handled by the reagent? - N3X
+								M.ExtinguishMob()
+							if(atm.on_fire) // For extinguishing objects on fire
+								atm.extinguish()
+							if(atm.molten) // Molten shit.
+								atm.molten=0
+								atm.solidify()
 					if(W.loc == my_target) break
 					sleep(2)
 
