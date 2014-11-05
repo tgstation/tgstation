@@ -35,8 +35,8 @@ AI MODULES
 		tot_laws += reciever.laws.ion.len
 		tot_laws += laws.len
 		if(tot_laws > config.silicon_max_law_amount && !bypass_law_amt_check)//allows certain boards to avoid this check, eg: reset
-			user << "<span class='caution'>You cannot upload any more laws to [reciever], they are at the limit: [tot_laws]/[tot_laws] laws."
-			message_admins("[key_name_admin(user)] tried to upload laws to [key_name_admin(reciever)] when they were already at max laws.")
+			user << "<span class='caution'>Not enough memory allocated to [reciever]'s law processor to handle this amount of laws."
+			message_admins("[key_name_admin(user)] tried to upload laws to [key_name_admin(reciever)] that would exceed the law cap.")
 			return
 
 	var/law2log = src.transmitInstructions(reciever, user) //Freeforms return something extra we need to log
