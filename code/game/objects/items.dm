@@ -726,7 +726,8 @@
 /obj/item/add_blood(mob/living/carbon/human/M as mob)
 	if (!..())
 		return 0
-
+	if(!M)
+		return
 	if(istype(src, /obj/item/weapon/melee/energy))
 		return
 
@@ -761,7 +762,7 @@
 
 /obj/item/proc/showoff(mob/user)
 	for (var/mob/M in view(user))
-		M.show_message("[user] holds up [src]. <a HREF=?src=\ref[M];lookitem=\ref[src]>Take a closer look.</a>",1)
+		M.show_message("[user] holds up [src]. <a HREF='?src=\ref[M];lookitem=\ref[src]'>Take a closer look.</a>",1)
 
 /mob/living/carbon/verb/showoff()
 	set name = "Show Held Item"

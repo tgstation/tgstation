@@ -10,6 +10,7 @@
 	throw_range = 20
 	m_amt = 500
 	w_type = RECYK_ELECTRONIC
+	melt_temperature = MELTPOINT_STEEL
 	var/obj/item/weapon/disk/nuclear/the_disk = null
 	var/active = 0
 

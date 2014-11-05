@@ -314,5 +314,5 @@
 	var/total = 0
 	for(var/matID in part.materials)
 		total += part.materials[matID]
-	log_admin("[total] for [part.name]")
+	//log_admin("[total] for [part.name]")
 	return total

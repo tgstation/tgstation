@@ -156,3 +156,4 @@
 	m_amt = 50
 	g_amt = 50
 	w_type = RECYK_ELECTRONIC
+	melt_temperature = MELTPOINT_SILICON

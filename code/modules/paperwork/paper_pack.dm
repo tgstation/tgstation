@@ -8,7 +8,7 @@
 	name = "paper pack"
 	desc = "A pack of papers, secured by some red ribbon."
 	icon = 'icons/obj/paper.dmi'
-	icon_state = "pp_ribbon"
+	icon_state = "pp_large"
 	gender = NEUTER
 	throwforce = 2
 	w_class = 3.0
@@ -58,7 +58,7 @@
 		name = "[pptype]paper pack"
 		desc = "A pack of [pptype]papers, secured by some red ribbon."
 	else
-		new/obj/item/weapon/ribbon(src.loc)
+		new/obj/item/weapon/ribbon(get_turf(src))
 		qdel(src)
 
 /obj/item/weapon/paper_pack/examine()
@@ -84,6 +84,7 @@
 /obj/item/weapon/paper_pack/nano //now in flavours!
 	papertype = /obj/item/weapon/paper/nano
 	pptype = "nano"
+	icon_state = "nanopp_large"
 
 /obj/item/weapon/ribbon //yay, pointless things
 	name = "red ribbon"

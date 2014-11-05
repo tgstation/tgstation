@@ -3,7 +3,7 @@
 	..()
 	if (monkeyizing)	return
 	if(!loc)			return	// Fixing a null error that occurs when the mob isn't found in the world -- TLE
-	if(reagents.has_reagent("bustanut"))
+	if(reagents && reagents.has_reagent("bustanut"))
 		if(!(M_HARDCORE in mutations))
 			mutations.Add(M_HARDCORE)
 			src << "<span class='notice'>You feel like you're the best around.  Nothing's going to get you down.</span>"

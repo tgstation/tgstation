@@ -138,6 +138,7 @@ var/global/list/RPD_recipes=list(
 	m_amt = 75000
 	g_amt = 37500
 	w_type = RECYK_ELECTRONIC
+	melt_temperature = MELTPOINT_STEEL
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
 	var/working = 0

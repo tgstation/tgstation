@@ -15,7 +15,7 @@
 	prosthetic_icon = "brain-prosthetic"
 	organ_tag = "brain"
 	organ_type = /datum/organ/internal/brain
-	nonplant_seed_type = /obj/item/seeds/synthbrainseed
+	//nonplant_seed_type = /obj/item/seeds/synthbrainseed
 
 	var/mob/living/carbon/brain/brainmob = null
 

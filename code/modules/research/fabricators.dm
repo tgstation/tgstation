@@ -431,8 +431,15 @@
 		ui.open()
 
 /obj/machinery/r_n_d/fabricator/proc/getTopicDesign(var/stringinput = "")
-	var/part_list = part_sets["[copytext(stringinput, 2)]"]
-	var/index = text2num(copytext(stringinput, 1, 2))
+	var/final_digit = 0
+	for(var/i = 1, i <= length(stringinput), i++)
+		if(!text2num(copytext(stringinput, i)))
+			//message_admins("Breaking on [copytext(stringinput, i)] and [i]")
+			final_digit = i
+			break
+	var/part_list = part_sets[copytext(stringinput, final_digit)]
+	var/index = text2num(copytext(stringinput, 1, final_digit))
+	//message_admins("From [stringinput] we have [index] and [copytext(stringinput, final_digit)]")
 	return part_list[index]
 
 /obj/machinery/r_n_d/fabricator/Topic(href, href_list)
@@ -526,7 +533,8 @@
 		src.visible_message("<span class='warning'>Unauthorized Access</span>: attempted by <b>[user]</b>")
 		return
 
-	ui_interact(user)
+	if(research_flags & NANOTOUCH)
+		ui_interact(user)
 
 /*
 /obj/machinery/r_n_d/fabricator/mech/Topic(href, href_list)

@@ -1218,7 +1218,7 @@
 	if(istype(user.loc,/turf/space))
 		return
 	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
-	new /obj/effect/spacevine_controller(user.loc)
+	new /obj/effect/plantsegment_controller(user.loc)
 	del(src)
 
 
@@ -1530,6 +1530,7 @@
 	w_class = 2.0
 	m_amt = 50
 	w_type = RECYK_METAL
+	melt_temperature = MELTPOINT_STEEL
 	attack_verb = list("slashed", "sliced", "cut", "clawed")
 
 // *************************************

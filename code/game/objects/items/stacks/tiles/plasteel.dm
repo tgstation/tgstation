@@ -7,6 +7,7 @@
 	force = 6.0
 	m_amt = 937.5
 	w_type = RECYK_METAL
+	melt_temperature = MELTPOINT_STEEL
 	throwforce = 15.0
 	throw_speed = 5
 	throw_range = 20

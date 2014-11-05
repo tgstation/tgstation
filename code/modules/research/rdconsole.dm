@@ -49,12 +49,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		/obj/machinery/r_n_d/destructive_analyzer,
 		/obj/machinery/r_n_d/fabricator/circuit_imprinter,
 		/obj/machinery/r_n_d/fabricator/mech,
+		/obj/machinery/r_n_d/fabricator/pod,
 		/obj/machinery/r_n_d/fabricator/mechanic_fab,
 		/obj/machinery/r_n_d/fabricator/mechanic_fab/flatpacker,
 		/obj/machinery/r_n_d/reverse_engine,
 		/obj/machinery/r_n_d/blueprinter
 		)
-
 	var/screen = 1.0	//Which screen is currently showing.
 	var/id = 0			//ID of the computer (for server restrictions).
 	var/sync = 1		//If sync = 0, it doesn't show up on Server Control Console
@@ -519,7 +519,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	if(screen!=3.4)
 		options += "<A href='?src=\ref[src];menu=3.4'>Production Queue</A> ([linked_lathe.queue.len])"
 	return {"\[<A href='?src=\ref[src];menu=1.0'>Main Menu</A>\]
-	<div class="header">[dd_list2text(options," || ")]</div><hr />"}
+	<div class="header">[list2text(options," || ")]</div><hr />"}
 
 /obj/machinery/computer/rdconsole/proc/CircuitImprinterHeader()
 	var/list/options=list()
@@ -532,7 +532,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	if(screen!=4.4)
 		options += "<A href='?src=\ref[src];menu=4.4'>Production Queue</A> ([linked_imprinter.queue.len])"
 	return {"\[<A href='?src=\ref[src];menu=1.0'>Main Menu</A>\]
-	<div class=\"header\">[dd_list2text(options," || ")]</div><hr />"}
+	<div class=\"header\">[list2text(options," || ")]</div><hr />"}
 
 /obj/machinery/computer/rdconsole/attack_hand(mob/user as mob)
 	if(stat & (BROKEN|NOPOWER))
@@ -973,7 +973,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 /obj/machinery/computer/rdconsole/mommi
 	name = "MoMMI R&D Console"
-	id = 2
+	id = 3
 	req_access = list(access_tox)
 	circuit = "/obj/item/weapon/circuitboard/rdconsole/mommi"
 
@@ -985,6 +985,15 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	req_one_access = list(access_robotics)
 	req_access=list()
 	circuit = "/obj/item/weapon/circuitboard/rdconsole/robotics"
+
+	l_color = "#CD00CD"
+
+/obj/machinery/computer/rdconsole/mechanic
+	name = "Robotics R&D Console"
+	id = 4
+	req_one_access = list(access_mechanic)
+	req_access=list()
+	circuit = "/obj/item/weapon/circuitboard/rdconsole/mechanic"
 
 	l_color = "#CD00CD"
 

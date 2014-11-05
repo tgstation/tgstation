@@ -156,12 +156,12 @@
 		H.equip_or_collect(new /obj/item/weapon/storage/belt/utility/complete(H), slot_belt)
 		if(!(H.flags&DISABILITY_FLAG_NEARSIGHTED)) //Does this work?
 			var/obj/item/clothing/glasses/welding/W = new (H)
-			W.toggle()
 			H.equip_or_collect(W, slot_glasses)
+			W.toggle()
 		else
 			var/obj/item/clothing/head/welding/W = new (H)
-			W.toggle()
 			H.equip_or_collect(W, slot_head)
+			W.toggle()
 		if(H.backbag == 1)
 			H.equip_or_collect(new /obj/item/weapon/storage/box/engineer(H), slot_r_hand)
 		else

@@ -1488,6 +1488,8 @@
 /mob/living/carbon/human/add_blood(mob/living/carbon/human/M as mob)
 	if (!..())
 		return 0
+	if(!M)
+		return
 	//if this blood isn't already in the list, add it
 	if(blood_DNA[M.dna.unique_enzymes])
 		return 0 //already bloodied with this blood. Cannot add more.

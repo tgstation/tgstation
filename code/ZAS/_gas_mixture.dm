@@ -113,6 +113,36 @@ What are the archived variables for?
 	update_values()
 	return
 
+//Takes a gas string, and the amount of moles to adjust by.  Calls update_values() if update isn't 0.
+/datum/gas_mixture/proc/adjust_gas(gasid, moles, update = 1)
+	if(moles == 0)
+		return
+	switch(gasid)
+		if("oxygen")
+			if (group_multiplier != 1)
+				oxygen += moles/group_multiplier
+			else
+				oxygen += moles
+		if("plasma")
+			if (group_multiplier != 1)
+				toxins += moles/group_multiplier
+			else
+				toxins += moles
+		if("carbon_dioxide")
+			if (group_multiplier != 1)
+				carbon_dioxide += moles/group_multiplier
+			else
+				carbon_dioxide += moles
+		if("nitrogen")
+			if (group_multiplier != 1)
+				nitrogen += moles/group_multiplier
+			else
+				nitrogen += moles
+
+
+	if(update)
+		update_values()
+
 /*
 /datum/gas_mixture/proc/create_reagents(var/max_vol)
 	aerosols = new /datum/reagents(max_vol)

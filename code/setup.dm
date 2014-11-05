@@ -514,7 +514,7 @@ var/list/liftable_structures = list(\
 
 	/obj/machinery/autolathe, \
 	/obj/machinery/constructable_frame, \
-	/obj/machinery/hydroponics, \
+	/obj/machinery/portable_atmospherics/hydroponics, \
 	/obj/machinery/computer, \
 	/obj/machinery/optable, \
 	/obj/structure/dispenser, \
@@ -884,6 +884,11 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define AUTOIGNITION_WOOD  573.15
 #define AUTOIGNITION_PAPER 519.15
 
+#define MELTPOINT_GLASS   1500+T0C
+#define MELTPOINT_STEEL   1510+T0C
+#define MELTPOINT_SILICON 1687 // KELVIN
+#define MELTPOINT_PLASTIC 180+T0C
+
 //used to define machine behaviour in attackbys and other code situations
 #define EMAGGABLE 1 //can we emag it? If this is flagged, the machine calls emag()
 #define SCREWTOGGLE 2 //does it toggle panel_open when hit by a screwdriver?
@@ -893,8 +898,8 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define EJECTNOTDEL 32 //when we destroy the machine, does it remove all its items or destroy them?
 
 //gun shit - prepare to have various things added to this
-#define SILENCECOMP 1 		//Silencer-compatible
-#define AUTOMAGDROP 2		//Does the mag drop when it's empty?
+#define SILENCECOMP  1 		//Silencer-compatible
+#define AUTOMAGDROP  2		//Does the mag drop when it's empty?
 #define EMPTYCASINGS 4		//Does the gun eject empty casings?
 
 ///////////////////////

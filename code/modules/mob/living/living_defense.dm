@@ -57,7 +57,7 @@
 		P.on_hit(src,2)
 		return 2
 	if(!P.nodamage)
-		apply_damage((P.damage/(absorb+1)), P.damage_type, def_zone, absorb, 0, P)
+		apply_damage((P.damage/(absorb+1)), P.damage_type, def_zone, absorb, 0, used_weapon = P)
 	P.on_hit(src, absorb)
 	if(istype(P, /obj/item/projectile/beam/lightning))
 		if(P.damage >= 200)
