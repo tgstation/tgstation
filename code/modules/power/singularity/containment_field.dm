@@ -60,7 +60,7 @@
 /obj/machinery/field
 	var/hasShocked = 0 //Used to add a delay between shocks. In some cases this used to crash servers by spawning hundreds of sparks every second.
 
-/obj/machinery/field/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/machinery/field/CanPass(atom/movable/mover, turf/target, height=0)
 	if(isliving(mover)) // Don't let mobs through
 		shock(mover)
 		return 0

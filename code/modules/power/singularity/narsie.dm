@@ -10,7 +10,7 @@
 	move_self = 1 //Do we move on our own?
 	grav_pull = 5 //How many tiles out do we pull?
 	consume_range = 6 //How many tiles out do we eat
-	uneatable = list(/turf/space, /obj/effect/overlay, /mob/living/simple_animal/construct)
+	var/uneatable = list(/turf/space, /obj/effect/overlay, /mob/living/simple_animal/construct)
 
 /obj/machinery/singularity/narsie/large
 	name = "Nar-Sie"
@@ -40,6 +40,9 @@
 
 
 /obj/machinery/singularity/narsie/large/attack_ghost(mob/dead/observer/user as mob)
+	if(!(src in view()))
+		user << "Your soul is too far away."
+		return
 	makeNewConstruct(/mob/living/simple_animal/construct/harvester, user, null, 1)
 	new /obj/effect/effect/sleep_smoke(user.loc)
 

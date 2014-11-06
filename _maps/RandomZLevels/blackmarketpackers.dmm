@@ -32,7 +32,7 @@
 "aF" = (/turf/simulated/shuttle/wall,/area/awaymission/BMPship/Aft)
 "aG" = (/obj/structure/stool/bed/roller,/turf/simulated/floor/plating/airless,/area/awaymission/BMPship/Aft)
 "aH" = (/turf/simulated/floor/plating/airless,/area/awaymission/BMPship/Aft)
-"aI" = (/obj/item/weapon/handcuffs,/obj/item/weapon/handcuffs,/obj/structure/closet/crate,/turf/simulated/floor/plating/airless,/area/awaymission/BMPship/Aft)
+"aI" = (/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/restraints/handcuffs,/obj/structure/closet/crate,/turf/simulated/floor/plating/airless,/area/awaymission/BMPship/Aft)
 "aJ" = (/obj/item/weapon/scalpel,/obj/structure/closet/crate,/obj/item/weapon/tank/anesthetic,/turf/simulated/floor/plating/airless,/area/awaymission/BMPship/Aft)
 "aK" = (/obj/item/bodybag,/turf/simulated/floor/plating/airless,/area/awaymission/BMPship/Aft)
 "aL" = (/obj/item/weapon/storage/box/syringes,/turf/simulated/floor/plating/airless,/area/awaymission/BMPship/Aft)

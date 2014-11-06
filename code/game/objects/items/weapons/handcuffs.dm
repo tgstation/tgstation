@@ -101,7 +101,7 @@
 		if(!C.handcuffed)
 			playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 			C.visible_message("<span class='danger'>[user] is trying to put zipties on [C]!</span>", \
-								"<span class='userdanger'>[user] is trying to put zipeties on [C]!</span>")
+								"<span class='userdanger'>[user] is trying to put zipties on [C]!</span>")
 			if(do_mob(user, C, 30))
 				if(!C.handcuffed)
 					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(C)
@@ -117,7 +117,6 @@
 	trashtype = /obj/item/weapon/restraints/handcuffs/cable/zipties/used
 
 /obj/item/weapon/restraints/handcuffs/cable/zipties/used
-	name = "used zipties"
 	desc = "A pair of broken zipties."
 	icon_state = "cuff_white_used"
 

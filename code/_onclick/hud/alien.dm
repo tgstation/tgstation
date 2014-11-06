@@ -1,3 +1,24 @@
+/obj/screen/alien
+	icon = 'icons/mob/screen_alien.dmi'
+
+/obj/screen/alien/leap
+	name = "toggle leap"
+	icon_state = "leap_off"
+
+/obj/screen/alien/leap/Click()
+	if(istype(usr, /mob/living/carbon/alien/humanoid))
+		var/mob/living/carbon/alien/humanoid/hunter/AH = usr
+		AH.toggle_leap()
+
+/obj/screen/alien/nightvision
+	name = "toggle night-vision"
+	icon_state = "nightvision1"
+
+/obj/screen/alien/nightvision/Click()
+	var/mob/living/carbon/alien/humanoid/A = usr
+	A.nightvisiontoggle()
+
+
 /datum/hud/proc/alien_hud()
 	adding = list()
 	other = list()
@@ -50,50 +71,42 @@
 	using.layer = 19
 	adding += using
 
-	using = new /obj/screen()
-	using.name = "act_intent"
+	using = new /obj/screen/act_intent()
 	using.icon = 'icons/mob/screen_alien.dmi'
 	using.icon_state = mymob.a_intent
 	using.screen_loc = ui_acti
-	using.layer = 20
 	adding += using
 	action_intent = using
 
-	using = new /obj/screen()
-	using.name = "mov_intent"
+	if(istype(mymob, /mob/living/carbon/alien/humanoid/hunter))
+		mymob.leap_icon = new /obj/screen/alien/leap()
+		mymob.leap_icon.screen_loc = ui_alien_storage_r
+		adding += mymob.leap_icon
+
+	using = new /obj/screen/mov_intent()
 	using.icon = 'icons/mob/screen_alien.dmi'
 	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
 	using.screen_loc = ui_movi
-	using.layer = 20
 	adding += using
 	move_intent = using
 
-	using = new /obj/screen()
-	using.name = "drop"
+	using = new /obj/screen/drop()
 	using.icon = 'icons/mob/screen_alien.dmi'
-	using.icon_state = "act_drop"
 	using.screen_loc = ui_drop_throw
-	using.layer = 19
 	adding += using
 
-	using = new /obj/screen()
-	using.name = "resist"
+	using = new /obj/screen/resist()
 	using.icon = 'icons/mob/screen_alien.dmi'
-	using.icon_state = "act_resist"
 	using.screen_loc = ui_pull_resist
-	using.layer = 19
 	adding += using
 
-	mymob.throw_icon = new /obj/screen()
+	mymob.throw_icon = new /obj/screen/throw_catch()
 	mymob.throw_icon.icon = 'icons/mob/screen_alien.dmi'
-	mymob.throw_icon.icon_state = "act_throw_off"
-	mymob.throw_icon.name = "throw/catch"
 	mymob.throw_icon.screen_loc = ui_drop_throw
 
-	mymob.pullin = new /obj/screen()
+	mymob.pullin = new /obj/screen/pull()
 	mymob.pullin.icon = 'icons/mob/screen_alien.dmi'
 	mymob.pullin.icon_state = "pull0"
-	mymob.pullin.name = "pull"
 	mymob.pullin.screen_loc = ui_pull_resist
 
 //begin indicators
@@ -122,10 +135,7 @@
 	mymob.healths.name = "health"
 	mymob.healths.screen_loc = ui_alien_health
 
-	nightvisionicon = new /obj/screen()
-	nightvisionicon.icon ='icons/mob/screen_alien.dmi'
-	nightvisionicon.icon_state = "nightvision1"
-	nightvisionicon.name = "nightvision"
+	nightvisionicon = new /obj/screen/alien/nightvision()
 	nightvisionicon.screen_loc = ui_alien_nightvision
 
 	alien_plasma_display = new /obj/screen()

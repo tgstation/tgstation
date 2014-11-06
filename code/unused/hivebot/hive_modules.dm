@@ -14,7 +14,7 @@
 	name = "HiveBot engineering robot module"
 
 /obj/item/weapon/hive_module/New()//Shit all the mods have
-	src.modules += new /obj/item/device/flash(src)
+	src.modules += new /obj/item/device/flash/handheld(src)
 
 
 /obj/item/weapon/hive_module/standard/New()

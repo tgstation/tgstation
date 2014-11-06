@@ -107,3 +107,8 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 	IgniteMob()
 
 //Mobs on Fire end
+
+
+/mob/living/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
+	if(!unacidable)
+		take_organ_damage(min(6*toxpwr, acid_volume * toxpwr))

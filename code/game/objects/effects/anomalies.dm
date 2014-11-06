@@ -85,7 +85,7 @@
 
 /obj/effect/anomaly/flux/New()
 	..()
-	aSignal.origin_tech = "powerstorage=5;programming=3;plasmatech=2"
+	aSignal.origin_tech = "powerstorage=6;programming=4;plasmatech=4"
 
 /////////////////////
 
@@ -97,7 +97,7 @@
 
 /obj/effect/anomaly/bluespace/New()
 	..()
-	aSignal.origin_tech = "bluespace=5;magnets=3;powerstorage=2"
+	aSignal.origin_tech = "bluespace=5;magnets=5;powerstorage=3"
 
 /obj/effect/anomaly/bluespace/Bumped(atom/A)
 	if(isliving(A))
@@ -112,7 +112,7 @@
 
 /obj/effect/anomaly/pyro/New()
 	..()
-	aSignal.origin_tech = "plasmatech=5;powerstorage=3;biotech=3"
+	aSignal.origin_tech = "plasmatech=5;powerstorage=4;biotech=6"
 
 /obj/effect/anomaly/pyro/anomalyEffect()
 	..()
@@ -129,7 +129,7 @@
 
 /obj/effect/anomaly/bhole/New()
 	..()
-	aSignal.origin_tech = "materials=5;combat=4;engineering=3"
+	aSignal.origin_tech = "materials=5;combat=4;engineering=4"
 
 /obj/effect/anomaly/bhole/anomalyEffect()
 	..()

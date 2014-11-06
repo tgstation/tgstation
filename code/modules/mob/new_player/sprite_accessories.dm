@@ -461,6 +461,18 @@
 	name = "Mega Eyebrows"
 	icon_state = "hair_megaeyebrows"
 
+/datum/sprite_accessory/hair/highponytail
+	name = "High Ponytail"
+	icon_state = "hair_highponytail"
+
+/datum/sprite_accessory/hair/longponytail
+	name = "Long Ponytail"
+	icon_state = "hair_longstraightponytail"
+
+/datum/sprite_accessory/hair/sidepartlongalt
+	name = "Long Side Part"
+	icon_state = "hair_longsidepart"
+
 /////////////////////////////
 // Facial Hair Definitions //
 /////////////////////////////
@@ -671,6 +683,15 @@
 	icon_state = "female_kinky"
 	gender = FEMALE
 
+/datum/sprite_accessory/underwear/female_whitealt
+	name = "Ladies White Sport"
+	icon_state = "female_whitealt"
+	gender = FEMALE
+
+/datum/sprite_accessory/underwear/female_blackalt
+	name = "Ladies Black Sport"
+	icon_state = "female_blackalt"
+	gender = FEMALE
 
 ////////////////////////////
 // Undershirt Definitions //

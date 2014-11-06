@@ -8,6 +8,11 @@
 /proc/warning(msg)
 	world.log << "## WARNING: [msg]"
 
+//not an error or a warning, but worth to mention on the world log, just in case.
+#define NOTICE(MSG) notice(MSG)
+/proc/notice(msg)
+	world.log << "## NOTICE: [msg]"
+
 //print a testing-mode debug message to world.log
 /proc/testing(msg)
 #ifdef TESTING
@@ -66,3 +71,13 @@
 /proc/log_pda(text)
 	if (config.log_pda)
 		diary << "\[[time_stamp()]]PDA: [text]"
+
+/proc/log_chat(text)
+	if (config.log_pda) //reusing this for now, can change if needed
+		diary << "\[[time_stamp()]]CHAT: [text]"
+
+/proc/log_comment(text)
+	if (config.log_pda)
+		//reusing the PDA option because I really don't think news comments are worth a config option
+		diary << "\[[time_stamp()]]COMMENT: [text]"
+

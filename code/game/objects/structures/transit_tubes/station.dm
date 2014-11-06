@@ -6,12 +6,11 @@
 	name = "station tube station"
 	icon = 'icons/obj/pipes/transit_tube_station.dmi'
 	icon_state = "closed"
-	exit_delay = 2
-	enter_delay = 3
+	exit_delay = 1
+	enter_delay = 2
 	tube_construction = /obj/structure/c_transit_tube/station
 	var/pod_moving = 0
-	var/automatic_launch_time = 100
-	var/cooldown_delay = 200
+	var/cooldown_delay = 50
 	var/launch_cooldown = 0
 	var/reverse_launch = 0
 
@@ -48,6 +47,8 @@
 		return
 	if (!istype(R) || get_dist(user, src) > 1 || get_dist(src,R) > 1)
 		return
+	for(var/obj/structure/transit_tube_pod/pod in loc)
+		return //no fun allowed
 	var/obj/structure/transit_tube_pod/T = new/obj/structure/transit_tube_pod(src)
 	R.transfer_fingerprints_to(T)
 	T.add_fingerprint(user)
@@ -67,7 +68,7 @@
 				else if(icon_state == "open")
 					if(pod.contents.len && user.loc != pod)
 						user.visible_message("<span class='warning'>[user] starts emptying [pod]'s contents onto the floor!</span>")
-						if(do_after(user, 40)) //So it doesn't default to close_animation() on fail
+						if(do_after(user, 10)) //So it doesn't default to close_animation() on fail
 							if(pod.loc == loc)
 								for(var/atom/movable/AM in pod)
 									AM.loc = get_turf(user)
@@ -87,7 +88,7 @@
 			var/mob/GM = G.affecting
 			for(var/obj/structure/transit_tube_pod/pod in loc)
 				pod.visible_message("<span class='warning'>[user] starts putting [GM] into the [pod]!</span>")
-				if(do_after(user, 60) && GM && G && G.affecting == GM)
+				if(do_after(user, 15) && GM && G && G.affecting == GM)
 					GM.Weaken(5)
 					src.Bumped(GM)
 					qdel(G)

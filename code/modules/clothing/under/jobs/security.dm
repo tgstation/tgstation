@@ -2,7 +2,6 @@
  * Contains:
  *		Security
  *		Detective
- *		Head of Security + Jensen cosplay gear
  *		Navy uniforms
  */
 
@@ -58,26 +57,6 @@
 	item_color = "hosred"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	strip_delay = 60
-
-/*
- * Jensen cosplay gear
- */
-/obj/item/clothing/under/rank/head_of_security/jensen
-	desc = "You never asked for anything that stylish."
-	name = "head of security's jumpsuit"
-	icon_state = "jensen"
-	item_state = "jensen"
-	item_color = "jensen"
-	can_adjust = 0
-
-/obj/item/clothing/suit/armor/hos/jensen
-	name = "armored trenchoat"
-	desc = "A trenchoat augmented with a special alloy for some protection and style"
-	icon_state = "jensencoat"
-	item_state = "jensencoat"
-	flags_inv = 0
-	strip_delay = 80
-	put_on_delay = 40
 
 
 /*
