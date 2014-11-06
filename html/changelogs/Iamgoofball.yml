@@ -1,0 +1,43 @@
+################################
+# Example Changelog File
+#
+# Note: This file, and files beginning with ".", and files that don't end in ".yml" will not be read.  If you change this file, you will look really dumb.
+#
+# Your changelog will be merged with a master changelog. (New stuff added only, and only on the date entry for the day it was merged.)
+# When it is, any changes listed below will disappear.
+#
+# Valid Prefixes: 
+#   bugfix
+#   wip (For works in progress)
+#   tweak
+#   soundadd
+#   sounddel
+#   rscdel (general adding of nice things)
+#   rscadd (general deleting of nice things)
+#   imageadd
+#   imagedel
+#   spellcheck (typo fixes)
+#   experiment
+#   tgs (TG-ported fixes?)
+#################################
+
+
+author: Iamgoofball
+
+delete-after: True
+
+changes: 
+  - rscadd: "Added 6 new machines to the kitchen!"
+  - rscadd: "Added 32 unique, customizable, and fully modular foods and drinks!"
+  - rscadd: "You can make Dough by combining Flour and an Egg in hand."
+  - rscadd: "You can use a rolling pin to roll the dough out on a table."
+  - rscadd: "You can use any food item on Flat Dough to make a Personal Pizza!"
+  - rscadd: "You can microwave a Dough and produce a Bun!"
+  - rscadd: "You can use a food item on the bun to make a Burger! You can put up to 50 items on the burger!"
+  - rscadd: "You can use a food item on a slice of bread to make a Sandwich! You can put up to 50 items on the sandwich!"
+  - rscadd: "Bluespace Tomato and Sausage sandwiches, Death Nettle personal pizzas, Egg, bread slice, and zombie meat burgers, oh my!"
+  - rscdel: "Removed the old lame boring ice cream machine."
+  - rscadd: "Added a BRAND NEW AND IMPROVED ice cream machine that ACCEPTS ANY REAGENT! Ammonia Ice Cream, Space Lube Ice Cream, Mindbreaker Toxin Ice Cream, Grog Ice Cream, Werewolf Serum Ice Cream, the possibilites are endless!"
+  - rscadd: "The Chef gets a Deep Fryer, a Grill, a Candy Machine, a Cereal Maker, and an Oven! These accept food items and will allow you to produce many products!"
+  - rscadd: "The Bartender gets a Still! It only accepts food items but will allow you to make your own brews!"
+  - experiment: "The Almighty Space Gods can adjust whether your Deep Fryer can fry everything."

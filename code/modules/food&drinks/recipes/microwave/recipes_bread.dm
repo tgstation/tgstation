@@ -76,3 +76,7 @@
 /datum/recipe/bread/baguette
 	reagents = list("sodiumchloride" = 1, "blackpepper" = 1, "flour" = 10)
 	result = /obj/item/weapon/reagent_containers/food/snacks/baguette
+
+/datum/recipe/bread/customizable_bun
+	items = list(/obj/item/weapon/reagent_containers/food/snacks/dough)
+	result = /obj/item/weapon/reagent_containers/food/snacks/bun
