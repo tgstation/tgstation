@@ -687,8 +687,10 @@
 
 			if(H.cpr_time < world.time + 30)
 				add_logs(H, M, "CPRed")
-				H.visible_message("<span class='notice'>[M] is trying to perform CPR on [H]!</span>")
+				M.visible_message("<span class='notice'>[M] is trying to perform CPR on [H]!</span>", \
+								"<span class='notice'>You try to perform CPR on [H]. Hold still!</span>")
 				if(!do_mob(M, H))
+					M << "<span class='warning'>You fail to perform CPR on [H]!</span>"
 					return 0
 				if((H.health >= -99 && H.health <= 0))
 					H.cpr_time = world.time
