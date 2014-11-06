@@ -1047,14 +1047,9 @@
 	if((H.status_flags & GODMODE))
 		return
 
-	if(!breath || (breath.total_moles() == 0) || H.suiciding)
+	if(!breath || (breath.total_moles() == 0))
 		if(H.reagents.has_reagent("inaprovaline"))
 			return
-		if(H.suiciding)
-			H.adjustOxyLoss(2)//If you are suiciding, you should die a little bit faster
-			H.failed_last_breath = 1
-			H.oxygen_alert = max(H.oxygen_alert, 1)
-			return 0
 		if(H.health >= config.health_threshold_crit)
 			if(NOBREATH in specflags)	return 1
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
