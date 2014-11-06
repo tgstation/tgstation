@@ -43,7 +43,7 @@
 			I.loc = src
 			inserted_id = I
 
-/obj/machinery/mineral/ore_redemption/proc/process_sheet(obj/item/weapon/ore/O)
+/obj/machinery/mineral/ore_redemption/proc/process_sheet(var/obj/item/weapon/ore/O)
 	var/obj/item/stack/sheet/processed_sheet = SmeltMineral(O)
 	if(processed_sheet)
 		var/datum/material/mat = materials.getMaterial(O.material)
@@ -58,6 +58,8 @@
 		if(locate(/obj/item/weapon/ore) in T)
 			for (i = 0; i < 10; i++)
 				var/obj/item/weapon/ore/O = locate() in T
+				if(istype(O,/obj/item/weapon/ore/slag))
+					continue // Skip slag for now.
 				if(O)
 					process_sheet(O)
 				else
