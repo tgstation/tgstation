@@ -497,6 +497,7 @@
 							if(R)
 								if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
 									if(setcriminal != "Cancel")
+										investigate_log("[src.key] has been set from [R.fields["criminal"]] to [setcriminal] by [usr.name] ([usr.key]).", "records")
 										R.fields["criminal"] = setcriminal
 
 										spawn()
@@ -719,7 +720,7 @@
 	return(gain)
 
 /mob/living/carbon/human/singularity_pull(S, current_size)
-	if(current_size >= 5)
+	if(current_size >= STAGE_THREE)
 		var/list/handlist = list(l_hand, r_hand)
 		for(var/obj/item/hand in handlist)
 			if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && unEquip(hand))

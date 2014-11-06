@@ -41,7 +41,6 @@
 	walltype = "bananium"
 	mineral = "bananium"
 
-
 /obj/structure/wall/mineral/sandstone
 	name = "sandstone wall"
 	desc = "A wall with sandstone plating."

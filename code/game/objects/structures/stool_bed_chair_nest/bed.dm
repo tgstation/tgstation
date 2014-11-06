@@ -129,6 +129,7 @@
 			"You are buckled in to [src] by [user.name].",\
 			"You hear metal clanking")
 	M.buckled = src
+	M.anchored = anchored
 	M.loc = src.loc
 	M.dir = src.dir
 	M.update_canmove()

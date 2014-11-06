@@ -291,11 +291,11 @@
 	return
 
 /obj/structure/wall/singularity_pull(S, current_size)
-	if(current_size >= 9)
+	if(current_size >= STAGE_FIVE)
 		if(prob(50))
 			dismantle_wall()
 		return
-	if(current_size == 7)
+	if(current_size == STAGE_FOUR)
 		if(prob(30))
 			dismantle_wall()
 
@@ -304,3 +304,4 @@
 
 /obj/structure/wall/proc/radiate() //for uranium walls
 	return
+

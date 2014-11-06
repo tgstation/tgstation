@@ -481,9 +481,9 @@
 "jm" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating/airless,/area/awaymission/spacebattle/syndicate6)
 "jn" = (/obj/structure/shuttle/engine/propulsion,/turf/space,/area/awaymission/spacebattle/syndicate6)
 "jo" = (/turf/simulated/floor/plating/asteroid/airless,/area/space)
-"jp" = (/turf/simulated/wall/mineral/plasma,/area/awaymission/spacebattle/secret)
+"jp" = (/turf/simulated/floor/plating,/obj/structure/wall/mineral/plasma,/area/awaymission/spacebattle/secret)
 "jq" = (/turf/simulated/floor{tag = "icon-alienvault"; icon_state = "alienvault"},/area/awaymission/spacebattle/secret)
-"jr" = (/obj/machinery/door/airlock/plasma,/turf/simulated/wall/mineral/plasma,/area/awaymission/spacebattle/secret)
+"jr" = (/obj/machinery/door/airlock/plasma,/turf/simulated/floor/plating,/obj/structure/wall/mineral/plasma,/area/awaymission/spacebattle/secret)
 "js" = (/obj/item/clothing/suit/space/hardsuit/wizard,/obj/item/clothing/head/helmet/space/hardsuit/wizard,/turf/simulated/floor{tag = "icon-alienvault"; icon_state = "alienvault"},/area/awaymission/spacebattle/secret)
 
 (1,1,1) = {"

@@ -44,4 +44,4 @@
 				return
 
 			if(2) //lube
-				M.slip(0, 10, null, (STEP|SLIDE|GALOSHES_DONT_HELP))
+				M.slip(0, 7, null, (STEP|SLIDE|GALOSHES_DONT_HELP))

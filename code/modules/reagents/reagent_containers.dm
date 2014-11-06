@@ -12,6 +12,8 @@
 	set name = "Set transfer amount"
 	set category = "Object"
 	set src in range(0)
+	if(usr.stat || !usr.canmove || usr.restrained())
+		return
 	var/N = input("Amount per transfer from this:","[src]") as null|anything in possible_transfer_amounts
 	if (N)
 		amount_per_transfer_from_this = N

@@ -914,6 +914,19 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containertype = /obj/structure/largecrate/mule
 	containername = "\improper MULEbot Crate"
 
+/datum/supply_packs/misc/conveyor
+	name = "Conveyor Assembly Crate"
+	contains = list(/obj/item/conveyor_construct,
+					/obj/item/conveyor_construct,
+					/obj/item/conveyor_construct,
+					/obj/item/conveyor_construct,
+					/obj/item/conveyor_construct,
+					/obj/item/conveyor_construct,
+					/obj/item/conveyor_switch_construct,
+					/obj/item/weapon/paper/conveyor)
+	cost = 15
+	containername = "conveyor assembly crate"
+
 /datum/supply_packs/misc/watertank
 	name = "Water tank crate"
 	contains = list(/obj/structure/reagent_dispensers/watertank)
@@ -1005,7 +1018,9 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/reagent_containers/glass/bucket,
 					/obj/item/weapon/reagent_containers/glass/bucket,
 					/obj/item/weapon/mop,
-					/obj/item/weapon/holosign_creator,
+					/obj/item/weapon/caution,
+					/obj/item/weapon/caution,
+					/obj/item/weapon/caution,
 					/obj/item/weapon/storage/bag/trash,
 					/obj/item/weapon/reagent_containers/spray/cleaner,
 					/obj/item/weapon/reagent_containers/glass/rag,
@@ -1038,6 +1053,13 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/storage/box/lights/mixed)
 	cost = 10
 	containername = "replacement lights"
+
+/datum/supply_packs/misc/noslipfloor
+	name = "High-traction floor tiles"
+	contains = list(/obj/item/stack/tile/noslip)
+	amount = 20
+	cost = 20
+	containername = "high-traction floor tiles"
 
 
 ///////////// Costumes
@@ -1105,7 +1127,8 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 /datum/supply_packs/misc/randomised/contraband
 	num_contained = 5
 	contains = list(/obj/item/weapon/contraband/poster,
-					/obj/item/weapon/storage/fancy/cigarettes/dromedaryco)
+					/obj/item/weapon/storage/fancy/cigarettes/dromedaryco,
+					/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims)
 	name = "Contraband crate"
 	cost = 30
 	containername = "crate"	//let's keep it subtle, eh?

@@ -267,6 +267,13 @@ silicate
 	required_reagents = list("carbon" = 1, "hydrogen" = 1, "anti_toxin" = 1)
 	result_amount = 2
 
+/datum/chemical_reaction/inacusiate
+	name = "inacusiate"
+	id = "inacusiate"
+	result = "inacusiate"
+	required_reagents = list("water" = 1, "carbon" = 1, "anti_toxin" = 1)
+	result_amount = 2
+
 /datum/chemical_reaction/ethylredoxrazine
 	name = "Ethylredoxrazine"
 	id = "ethylredoxrazine"

@@ -206,7 +206,7 @@ Auto Patrol[]"},
 		icon_state = "[lasercolor]ed209[on]"
 		set_weapon()
 
-/obj/machinery/bot/ed209/process()
+/obj/machinery/bot/ed209/bot_process()
 	if (!..())
 		return
 
@@ -351,14 +351,14 @@ Auto Patrol[]"},
 	last_found = world.time
 	frustration = 0
 	spawn(0)
-		process() //ensure bot quickly responds
+		bot_process() //ensure bot quickly responds
 
 /obj/machinery/bot/ed209/proc/back_to_hunt()
 	anchored = 0
 	frustration = 0
 	mode = BOT_HUNT
 	spawn(0)
-		process() //ensure bot quickly responds
+		bot_process() //ensure bot quickly responds
 
 // look for a criminal in view of the bot
 
@@ -387,7 +387,7 @@ Auto Patrol[]"},
 			visible_message("<b>[src]</b> points at [C.name]!")
 			mode = BOT_HUNT
 			spawn(0)
-				process()	// ensure bot quickly responds to a perp
+				bot_process()	// ensure bot quickly responds to a perp
 			break
 		else
 			continue

@@ -273,7 +273,7 @@
 	else
 		return
 
-/obj/machinery/bot/medbot/process()
+/obj/machinery/bot/medbot/bot_process()
 	if (!..())
 		return
 

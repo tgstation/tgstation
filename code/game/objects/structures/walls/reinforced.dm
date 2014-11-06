@@ -216,6 +216,7 @@
 	return 0
 
 /obj/structure/wall/r_wall/singularity_pull(S, current_size)
-	if(current_size >= 9)
+	if(current_size >= STAGE_FIVE)
 		if(prob(30))
 			dismantle_wall()
+
