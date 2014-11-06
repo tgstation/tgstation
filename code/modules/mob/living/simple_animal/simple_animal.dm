@@ -256,8 +256,7 @@
 /mob/living/simple_animal/attack_animal(mob/living/simple_animal/M as mob)
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		adjustBruteLoss(damage)
-		updatehealth()
+		attack_threshold_check(damage)
 
 /mob/living/simple_animal/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj)
@@ -268,34 +267,32 @@
 	return 0
 
 /mob/living/simple_animal/attack_hand(mob/living/carbon/human/M as mob)
-	if(..())
-		switch(M.a_intent)
+	switch(M.a_intent)
 
-			if("help")
-				if (health > 0)
-					visible_message("<span class='notice'> [M] [response_help] [src].</span>")
-					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+		if("help")
+			if (health > 0)
+				visible_message("<span class='notice'>[M] [response_help] [src].</span>")
+				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
-			if("grab")
-				grabbedby(M)
+		if("grab")
+			grabbedby(M)
 
-			if("harm", "disarm")
-				visible_message("<span class='danger'>[M] [response_harm] [src]!</span>")
-				playsound(loc, "punch", 25, 1, -1)
-				adjustBruteLoss(harm_intent_damage)
-				add_logs(M, src, "attacked", admin=0)
-				updatehealth()
-
+		if("harm", "disarm")
+			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>")
+			playsound(loc, "punch", 25, 1, -1)
+			adjustBruteLoss(harm_intent_damage)
+			add_logs(M, src, "attacked", admin=0)
+			updatehealth()
 	return
 
 /mob/living/simple_animal/attack_paw(mob/living/carbon/monkey/M as mob)
 	if(..())
 		if(stat != DEAD)
-			adjustBruteLoss(rand(1, 3))
-			updatehealth()
+			var/damage = rand(1, 3)
+			attack_threshold_check(damage)
 	if (M.a_intent == "help")
 		if (health > 0)
-			visible_message("<span class='notice'> [M.name] [response_help] [src].</span>")
+			visible_message("<span class='notice'>[M.name] [response_help] [src].</span>")
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 	return
 
@@ -306,8 +303,7 @@
 				"<span class='userdanger'>[M] has slashed at [src]!</span>")
 		playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 		add_logs(M, src, "attacked", admin=0)
-		adjustBruteLoss(damage)
-		updatehealth()
+		attack_threshold_check(damage)
 
 	return
 
@@ -316,8 +312,7 @@
 		var/damage = rand(5, 10)
 		if(stat != DEAD)
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
-			adjustBruteLoss(damage)
-			updatehealth()
+			attack_threshold_check(damage)
 
 
 /mob/living/simple_animal/attack_slime(mob/living/carbon/slime/M as mob)
@@ -328,10 +323,16 @@
 		damage = rand(20, 40)
 	else
 		damage = rand(5, 35)
-	adjustBruteLoss(damage)
-	updatehealth()
-
+	attack_threshold_check(damage)
 	return
+
+
+/mob/living/simple_animal/proc/attack_threshold_check(var/damage)
+	if(damage <= force_threshold)
+		visible_message("<span class='warning'>[src] looks unharmed.</span>")
+	else
+		adjustBruteLoss(damage)
+		updatehealth()
 
 
 /mob/living/simple_animal/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri

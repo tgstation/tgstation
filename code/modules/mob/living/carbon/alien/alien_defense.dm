@@ -51,7 +51,10 @@ In all, this is a lot like the monkey code. /N
 		return 0
 
 	switch(M.a_intent)
-
+		if("help")
+			help_shake_act(M)
+		if("grab")
+			grabbedby(M)
 		if ("harm", "disarm")
 			return 1
 	return 0

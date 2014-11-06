@@ -362,7 +362,7 @@
 
 /mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L)
 	if(L.a_intent == "help")
-		visible_message("<span class='notice'>[L] rubs its head against [src].</span>")
+		visible_message("<span class='notice'>[L.name] rubs its head against [src].</span>")
 	return
 
 /mob/living/silicon/attack_hand(mob/living/carbon/human/M)

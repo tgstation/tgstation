@@ -89,6 +89,10 @@
 		return
 
 	switch(M.a_intent)
+		if("help")
+			help_shake_act(M)
+		if("grab")
+			grabbedby(M)
 		if("harm")
 			if (prob(75))
 				visible_message("<span class='danger'>[M] has punched [name]!</span>", \

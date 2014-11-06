@@ -335,35 +335,40 @@
 	if(..())
 		return
 
-	var/damage = rand(1, 9)
+	switch(M.a_intent)
+		if("help")
+			help_shake_act(M)
+		if("grab")
+			grabbedby(M)
+		else
+			var/damage = rand(1, 9)
+			attacked += 10
+			if (prob(90))
+				if (HULK in M.mutations)
+					damage += 5
+					if(Victim || Target)
+						Victim = null
+						Target = null
+						anchored = 0
+						if(prob(80) && !client)
+							Discipline++
+					spawn(0)
+						step_away(src,M,15)
+						sleep(3)
+						step_away(src,M,15)
 
-	attacked += 10
-	if (prob(90))
-		if (HULK in M.mutations)
-			damage += 5
-			if(Victim || Target)
-				Victim = null
-				Target = null
-				anchored = 0
-				if(prob(80) && !client)
-					Discipline++
-			spawn(0)
-				step_away(src,M,15)
-				sleep(3)
-				step_away(src,M,15)
 
-
-		playsound(loc, "punch", 25, 1, -1)
-		add_logs(M, src, "attacked", admin=0)
-		visible_message("<span class='danger'>[M] has punched [src]!</span>", \
+				playsound(loc, "punch", 25, 1, -1)
+				add_logs(M, src, "attacked", admin=0)
+				visible_message("<span class='danger'>[M] has punched [src]!</span>", \
 				"<span class='userdanger'>[M] has punched [src]!</span>")
 
-		if (stat != DEAD)
-			adjustBruteLoss(damage)
-			updatehealth()
-	else
-		playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-		visible_message("<span class='danger'>[M] has attempted to punch [src]!</span>")
+				if (stat != DEAD)
+					adjustBruteLoss(damage)
+					updatehealth()
+			else
+				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+				visible_message("<span class='danger'>[M] has attempted to punch [src]!</span>")
 	return
 
 
@@ -818,39 +823,39 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		..()
 		processing_objects.Add(src)
 
-	process()
-		var/mob/dead/observer/ghost
-		for(var/mob/dead/observer/O in src.loc)
-			if(!O.client)	continue
-			if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
-			ghost = O
-			break
-		if(ghost)
-			icon_state = "golem2"
-		else
-			icon_state = "golem"
+/obj/effect/golemrune/process()
+	var/mob/dead/observer/ghost
+	for(var/mob/dead/observer/O in src.loc)
+		if(!O.client)	continue
+		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
+		ghost = O
+		break
+	if(ghost)
+		icon_state = "golem2"
+	else
+		icon_state = "golem"
 
-	attack_hand(mob/living/user as mob)
-		var/mob/dead/observer/ghost
-		for(var/mob/dead/observer/O in src.loc)
-			if(!O.client)	continue
-			if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
-			ghost = O
-			break
-		if(!ghost)
-			user << "The rune fizzles uselessly. There is no spirit nearby."
-			return
-		var/mob/living/carbon/human/G = new /mob/living/carbon/human
-		if(prob(50))	G.gender = "female"
-		hardset_dna(G, null, null, null, null, /datum/species/golem/adamantine)
+/obj/effect/golemrune/attack_hand(mob/living/user as mob)
+	var/mob/dead/observer/ghost
+	for(var/mob/dead/observer/O in src.loc)
+		if(!O.client)	continue
+		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
+		ghost = O
+		break
+	if(!ghost)
+		user << "The rune fizzles uselessly. There is no spirit nearby."
+		return
+	var/mob/living/carbon/human/G = new /mob/living/carbon/human
+	if(prob(50))	G.gender = "female"
+	hardset_dna(G, null, null, null, null, /datum/species/golem/adamantine)
 
-		G.set_cloned_appearance()
-		G.real_name = text("Adamantine Golem ([rand(1, 1000)])")
-		G.dna.species.auto_equip(G)
-		G.loc = src.loc
-		G.key = ghost.key
-		G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
-		qdel(src)
+	G.set_cloned_appearance()
+	G.real_name = text("Adamantine Golem ([rand(1, 1000)])")
+	G.dna.species.auto_equip(G)
+	G.loc = src.loc
+	G.key = ghost.key
+	G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
+	qdel(src)
 
 /mob/living/carbon/slime/getTrail()
 	return null

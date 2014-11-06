@@ -134,7 +134,7 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 	visible_message("<span class='warning'>[user] has grabbed [src] passively!</span>")
 
 
-/mob/living/carbon/attack_slime(mob/living/carbon/slime/M as mob)
+/mob/living/attack_slime(mob/living/carbon/slime/M as mob)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return
@@ -236,15 +236,3 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 			return 0
 		else
 			return 1
-
-
-/mob/living/attack_hand(mob/living/carbon/human/M as mob)
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
-		return 0
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
-		return 0
-
-	return 1
