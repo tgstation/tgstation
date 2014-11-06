@@ -128,7 +128,7 @@
 			smashed = 1
 			locked = 0
 			localopened = 1
-			update_icon()
+		update_icon()
 
 /obj/structure/closet/fireaxecabinet/blob_act()
 	if(prob(75))
