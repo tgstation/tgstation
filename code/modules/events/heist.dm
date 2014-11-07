@@ -34,7 +34,7 @@ var/global/list/datum/mind/raiders = list()  //Antags.
 	if(!..())
 		return 0
 
-	var/list/candidates = get_candidates(BE_RAIDER)
+	var/list/candidates = get_candidates(ROLE_VOXRAIDER)
 	var/raider_num = 0
 
 	//Check that we have enough vox.

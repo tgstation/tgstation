@@ -31,7 +31,7 @@
 	if(!..())
 		return 0
 
-	var/list/candidates = get_players_for_role(BE_RAIDER)
+	var/list/candidates = get_players_for_role(ROLE_VOXRAIDER)
 	var/raider_num = 0
 
 	//Check that we have enough vox.

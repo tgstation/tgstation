@@ -59,7 +59,7 @@ client/proc/one_click_antag()
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
-		if(applicant.client.prefs.be_special & BE_TRAITOR)
+		if(applicant.client.desires_role(ROLE_TRAITOR))
 			if(!applicant.stat)
 				if(applicant.mind)
 					if (!applicant.mind.special_role)
@@ -91,7 +91,7 @@ client/proc/one_click_antag()
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
-		if(applicant.client.prefs.be_special & BE_CHANGELING)
+		if(applicant.client.desires_role(ROLE_CHANGELING))
 			if(!applicant.stat)
 				if(applicant.mind)
 					if (!applicant.mind.special_role)
@@ -121,7 +121,7 @@ client/proc/one_click_antag()
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
-		if(applicant.client.prefs.be_special & BE_REV)
+		if(applicant.client.desires_role(ROLE_REV))
 			if(applicant.stat == CONSCIOUS)
 				if(applicant.mind)
 					if(!applicant.mind.special_role)
@@ -143,22 +143,10 @@ client/proc/one_click_antag()
 /datum/admins/proc/makeWizard()
 	var/list/mob/dead/observer/candidates = list()
 	var/mob/dead/observer/theghost = null
-	var/time_passed = world.time
 
-	for(var/mob/dead/observer/G in player_list)
+	for(var/mob/dead/observer/G in get_active_candidates(ROLE_WIZARD,poll="Do you wish to be considered for the Space Wizard Federation \"Ambassador\"?"))
 		if(!jobban_isbanned(G, "wizard") && !jobban_isbanned(G, "Syndicate"))
-			spawn(0)
-				switch(G.timed_alert("Do you wish to be considered for the position of Space Wizard Foundation 'diplomat'?","Please answer in 30 seconds!","No",300,"Yes","No"))//alert(G, "Do you wish to be considered for the position of Space Wizard Foundation 'diplomat'?","Please answer in 30 seconds!","Yes","No"))
-					if("Yes")
-						if((world.time-time_passed)>300)//If more than 30 game seconds passed.
-							return
-						candidates += G
-					if("No")
-						return
-					else
-						return
-
-	sleep(300)
+			candidates += G
 
 	if(candidates.len)
 		shuffle(candidates)
@@ -185,14 +173,13 @@ client/proc/one_click_antag()
 	var/list/mob/living/carbon/human/candidates = list()
 	var/mob/living/carbon/human/H = null
 
-	for(var/mob/living/carbon/human/applicant in player_list)
-		if(applicant.client.prefs.be_special & BE_CULTIST)
-			if(applicant.stat == CONSCIOUS)
-				if(applicant.mind)
-					if(!applicant.mind.special_role)
-						if(!jobban_isbanned(applicant, "cultist") && !jobban_isbanned(applicant, "Syndicate"))
-							if(!(applicant.job in temp.restricted_jobs))
-								candidates += applicant
+	for(var/mob/living/carbon/human/applicant in get_active_candidates(ROLE_CULTIST))
+		if(applicant.stat == CONSCIOUS)
+			if(applicant.mind)
+				if(!applicant.mind.special_role)
+					if(!jobban_isbanned(applicant, "cultist") && !jobban_isbanned(applicant, "Syndicate"))
+						if(!(applicant.job in temp.restricted_jobs))
+							candidates += applicant
 
 	if(candidates.len)
 		var/numCultists = min(candidates.len, 4)
@@ -214,22 +201,10 @@ client/proc/one_click_antag()
 	var/list/mob/dead/observer/candidates = list()
 	var/mob/dead/observer/theghost = null
 	var/list/mob/dead/observer/picked = list()
-	var/time_passed = world.time
 
-	for(var/mob/dead/observer/G in player_list)
+	for(var/mob/dead/observer/G in get_active_candidates(ROLE_OPERATIVE,poll="Do you wish to be considered for a nuke team being sent in?"))
 		if(!jobban_isbanned(G, "operative") && !jobban_isbanned(G, "Syndicate"))
-			spawn(0)
-				switch(alert(G,"Do you wish to be considered for a nuke team being sent in?","Please answer in 30 seconds!","Yes","No"))
-					if("Yes")
-						if((world.time-time_passed)>300)//If more than 30 game seconds passed.
-							return
-						candidates += G
-					if("No")
-						return
-					else
-						return
-
-	sleep(300)
+			candidates += G
 
 	if(candidates.len)
 		var/numagents = 5
@@ -319,7 +294,6 @@ client/proc/one_click_antag()
 /datum/admins/proc/makeDeathsquad()
 	var/list/mob/dead/observer/candidates = list()
 	var/mob/dead/observer/theghost = null
-	var/time_passed = world.time
 	var/input = "Purify the station."
 	if(prob(10))
 		input = "Save Runtime and any other cute things on the station."
@@ -327,18 +301,9 @@ client/proc/one_click_antag()
 	var/syndicate_leader_selected = 0 //when the leader is chosen. The last person spawned.
 
 	//Generates a list of commandos from active ghosts. Then the user picks which characters to respawn as the commandos.
-	for(var/mob/dead/observer/G in player_list)
-		spawn(0)
-			switch(alert(G,"Do you wish to be considered for an elite syndicate strike team being sent in?","Please answer in 30 seconds!","Yes","No"))
-				if("Yes")
-					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
-						return
-					candidates += G
-				if("No")
-					return
-				else
-					return
-	sleep(300)
+	for(var/mob/dead/observer/G in get_active_candidates(ROLE_COMMANDO, poll="Do you wish to be considered for an elite syndicate strike team being sent in?"))
+		if(!jobban_isbanned(G, "operative") && !jobban_isbanned(G, "Syndicate"))
+			candidates += G
 
 	for(var/mob/dead/observer/G in candidates)
 		if(!G.key)
@@ -434,25 +399,13 @@ client/proc/one_click_antag()
 
 	var/list/mob/dead/observer/candidates = list()
 	var/mob/dead/observer/theghost = null
-	var/time_passed = world.time
 	var/input = "Disregard shinies, acquire hardware."
 
 	var/leader_chosen = 0 //when the leader is chosen. The last person spawned.
 
 	//Generates a list of candidates from active ghosts.
-	for(var/mob/dead/observer/G in player_list)
-		spawn(0)
-			switch(alert(G,"Do you wish to be considered for a vox raiding party arriving on the station?","Please answer in 30 seconds!","Yes","No"))
-				if("Yes")
-					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
-						return
-					candidates += G
-				if("No")
-					return
-				else
-					return
-
-	sleep(300) //Debug.
+	for(var/mob/dead/observer/G in get_active_candidates(ROLE_VOXRAIDER, poll="Do you wish to be considered for a vox raiding party arriving on the station?"))
+		candidates += G
 
 	for(var/mob/dead/observer/G in candidates)
 		if(!G.key)

@@ -346,24 +346,24 @@ var/list/DummyCache = list()
 
 // Same as above but for alien candidates.
 
-/proc/get_alien_candidates()
+/proc/get_alien_candidates(var/role_id=ROLE_ALIEN)
 
 	var/list/candidates = list() //List of candidate KEYS to assume control of the new larva ~Carn
 	var/i = 0
 	while(candidates.len <= 0 && i < 5)
 		for(var/mob/dead/observer/G in player_list)
-			if(G.client.prefs.be_special & BE_ALIEN)
+			if(G.client.desires_role(role_id))
 				if(((G.client.inactivity/10)/60) <= ALIEN_SELECT_AFK_BUFFER + i) // the most active players are more likely to become an alien
 					if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
 						candidates += G.key
 		i++
 	return candidates
 
-/proc/get_candidates(be_special_flag=0)
+/proc/get_candidates(role_id=null)
 	. = list()
 	for(var/mob/dead/observer/G in player_list)
 		if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-			if(!G.client.is_afk() && (G.client.prefs.be_special & be_special_flag))
+			if(!G.client.is_afk() && (role_id==null || G.client.desires_role(role_id)))
 				. += G.client
 
 /proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7,CENTER-7", maptext_height=480, maptext_width=480)

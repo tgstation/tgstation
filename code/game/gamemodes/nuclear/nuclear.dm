@@ -31,7 +31,7 @@
 	if(!..())
 		return 0
 
-	var/list/possible_syndicates = get_players_for_role(BE_OPERATIVE)
+	var/list/possible_syndicates = get_players_for_role(ROLE_OPERATIVE)
 	var/agent_number = 0
 
 	if(possible_syndicates.len < 1)

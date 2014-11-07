@@ -226,22 +226,11 @@
 		set_security_level(SEC_LEVEL_BLUE)*/
 
 
-/datum/game_mode/proc/get_players_for_role(var/role, override_jobbans=1)
+/datum/game_mode/proc/get_players_for_role(var/role, override_jobbans=1, poll=0)
 	var/list/players = list()
 	var/list/candidates = list()
 	var/list/drafted = list()
 	var/datum/mind/applicant = null
-
-	var/roletext
-	switch(role)
-		if(BE_CHANGELING)	roletext="changeling"
-		if(BE_TRAITOR)		roletext="traitor"
-		if(BE_OPERATIVE)	roletext="operative"
-		if(BE_WIZARD)		roletext="wizard"
-		if(BE_REV)			roletext="revolutionary"
-		if(BE_CULTIST)		roletext="cultist"
-		if(BE_RAIDER)       roletext="Vox Raider"
-
 
 	// Ultimate randomizing code right here
 	for(var/mob/new_player/player in player_list)
@@ -254,10 +243,10 @@
 
 	for(var/mob/new_player/player in players)
 		if(player.client && player.ready)
-			if(player.client.prefs.be_special & role)
-				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
+			if(player.client.desires_role(role, display_to_user=poll))//if(player.client.prefs.be_special & role)
+				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
 					candidates += player.mind				// Get a list of all the people who want to be the antagonist for this round
-					log_debug("[player.key] had [roletext] enabled, so drafting them.")
+					log_debug("[player.key] had [role] enabled, so drafting them.")
 
 	if(restricted_jobs)
 		for(var/datum/mind/player in candidates)
@@ -268,8 +257,8 @@
 	if(candidates.len < recommended_enemies)
 		for(var/mob/new_player/player in players)
 			if(player.client && player.ready)
-				if(!(player.client.prefs.be_special & role)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
-					if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
+				if(player.client.desires_role(role, display_to_user=poll)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
+					if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
 						drafted += player.mind
 
 	if(restricted_jobs)
@@ -285,7 +274,7 @@
 			applicant = pick(drafted)
 			if(applicant)
 				candidates += applicant
-				log_debug("[applicant.key] was force-drafted as [roletext], because there aren't enough candidates.")
+				log_debug("[applicant.key] was force-drafted as [role], because there aren't enough candidates.")
 				drafted.Remove(applicant)
 
 		else												// Not enough scrubs, ABORT ABORT ABORT
@@ -294,7 +283,7 @@
 	if(candidates.len < recommended_enemies && override_jobbans) //If we still don't have enough people, we're going to start drafting banned people.
 		for(var/mob/new_player/player in players)
 			if (player.client && player.ready)
-				if(jobban_isbanned(player, "Syndicate") || jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
+				if(jobban_isbanned(player, "Syndicate") || jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
 					drafted += player.mind
 
 	if(restricted_jobs)
@@ -311,7 +300,7 @@
 			if(applicant)
 				candidates += applicant
 				drafted.Remove(applicant)
-				log_debug("[applicant.key] was force-drafted as [roletext], because there aren't enough candidates.")
+				log_debug("[applicant.key] was force-drafted as [role], because there aren't enough candidates.")
 
 		else												// Not enough scrubs, ABORT ABORT ABORT
 			break

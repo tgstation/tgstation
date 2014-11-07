@@ -2,22 +2,23 @@
 
 var/list/preferences_datums = list()
 
-var/global/list/special_roles = list( //keep synced with the defines BE_* in setup.dm --rastaf
-//some autodetection here.
-	"traitor" = IS_MODE_COMPILED("traitor"),             // 0
-	"operative" = IS_MODE_COMPILED("nuclear"),           // 1
-	"changeling" = IS_MODE_COMPILED("changeling"),       // 2
-	"wizard" = IS_MODE_COMPILED("wizard"),               // 3
-	"malf AI" = IS_MODE_COMPILED("malfunction"),         // 4
-	"revolutionary" = IS_MODE_COMPILED("revolution"),    // 5
-	"alien candidate" = 1, //always show                 // 6
-	"pAI candidate" = 1, // -- TLE                       // 7
-	"cultist" = IS_MODE_COMPILED("cult"),                // 8
-	"infested monkey" = IS_MODE_COMPILED("monkey"),      // 9
-	"ninja" = "true",									 // 10
-	"vox raider" = IS_MODE_COMPILED("heist"),			 // 11
-	"diona" = 1,                                         // 12
-	"vampire" = IS_MODE_COMPILED("vampire")			 // 13
+var/global/list/special_roles = list(
+	ROLE_ALIEN        = 1, //always show
+	ROLE_BLOB         = 1,
+	ROLE_BORER        = 1,
+	ROLE_CHANGELING   = IS_MODE_COMPILED("changeling"),
+	ROLE_CULTIST      = IS_MODE_COMPILED("cult"),
+	ROLE_PLANT        = 1,
+	"infested monkey" = IS_MODE_COMPILED("monkey"),
+	ROLE_MALF         = IS_MODE_COMPILED("malfunction"),
+	ROLE_NINJA        = 1,
+	ROLE_OPERATIVE    = IS_MODE_COMPILED("nuclear"),
+	ROLE_PAI          = 1, // -- TLE
+	ROLE_REV          = IS_MODE_COMPILED("revolution"),
+	ROLE_TRAITOR      = IS_MODE_COMPILED("traitor"),
+	ROLE_VAMPIRE      = IS_MODE_COMPILED("vampire"),
+	ROLE_VOXRAIDER    = IS_MODE_COMPILED("heist"),
+	ROLE_WIZARD       = 1,
 )
 
 var/const/MAX_SAVE_SLOTS = 8
@@ -28,7 +29,7 @@ var/const/MAX_SAVE_SLOTS = 8
 #define RETURN_TO_LOBBY 2
 #define POLLED_LIMIT	300
 
-datum/preferences
+/datum/preferences
 	//doohickeys for savefiles
 	var/database/db = ("players2.sqlite")
 	var/path
@@ -49,7 +50,6 @@ datum/preferences
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 	var/ooccolor = "#b82e00"
-	var/be_special = 0					//Special role selection
 	var/UI_style = "Midnight"
 	var/toggles = TOGGLES_DEFAULT
 	var/UI_style_color = "#ffffff"
@@ -127,8 +127,14 @@ datum/preferences
 
 	// jukebox volume
 	var/volume = 100
+
+	var/list/roles=list() // "role" => ROLEPREF_*
+
+	var/client/client
+
 /datum/preferences/New(client/C)
 	b_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
+	client=C
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			var/load_pref = load_preferences_sqlite(C.ckey)
@@ -338,9 +344,7 @@ datum/preferences
 		// END AUTOFIX
 		if(jobban_isbanned(user, "Syndicate"))
 			dat += "<b>You are banned from antagonist roles.</b>"
-			src.be_special = 0
 		else
-			var/n = 0
 			for (var/i in special_roles)
 				if(special_roles[i]) //if mode is available on the server
 					if(jobban_isbanned(user, i))
@@ -349,8 +353,7 @@ datum/preferences
 						if(jobban_isbanned(user, "pAI"))
 							dat += "<b>Be [i]:</b> <font color=red><b> \[BANNED]</b></font><br>"
 					else
-						dat += "<b>Be [i]:</b> <a href='?_src_=prefs;preference=be_special;num=[n]'><b>[src.be_special&(1<<n) ? "Yes" : "No"]</b></a><br>"
-				n++
+						dat += "<b>Be [i]:</b> <a href='?_src_=prefs;preference=toggle_role;role_id=[i]'><b>[roles[i] & ROLEPREF_ENABLE ? "Yes" : "No"]</b></a><br>"
 		dat += "</td></tr></table><hr><center>"
 
 		if(!IsGuestKey(user.key))
@@ -677,10 +680,43 @@ datum/preferences
 						job_engsec_low |= job.flag
 		return 1
 
-	proc/process_link(mob/user, list/href_list)
-		if(!user)	return
+	proc/SetRoles(var/mob/user, var/list/href_list)
+		// We just grab the role from the POST(?) data.
+		for(var/role_id in special_roles)
+			if(!(role_id in href_list))
+				user << "<span class='danger'>BUG: Unable to find role [role_id].</span>"
+				continue
+			var/oldval=roles[role_id]
+			roles[role_id] = text2num(href_list[role_id])
+			if(oldval!=roles[role_id])
+				user << "<span class='info'>Set role [role_id] to [get_role_desire_str(user.client.prefs.roles[role_id])]!</span>"
 
-		if(!istype(user, /mob/new_player))	return
+		save_preferences_sqlite(user, user.ckey)
+		save_character_sqlite(user.ckey, user, default_slot)
+		return 1
+
+	proc/ToggleRole(var/mob/user, var/list/href_list)
+		var/role_id = href_list["role_id"]
+		//user << "<span class='info'>Toggling role [role_id] (currently at [roles[role_id]])...</span>"
+		if(!(role_id in special_roles))
+			user << "<span class='danger'>BUG: Unable to find role [role_id].</span>"
+			return 0
+
+		if(roles[role_id] == null || roles[role_id] == "")
+			roles[role_id] = 0
+		// Always set persist.
+		roles[role_id] |= ROLEPREF_PERSIST
+		// Toggle role enable
+		roles[role_id] ^= ROLEPREF_ENABLE
+		return 1
+
+	proc/process_link(mob/user, list/href_list)
+		if(!user)
+			return
+
+		if(!istype(user, /mob/new_player))
+			return
+
 		if(href_list["preference"] == "job")
 			switch(href_list["task"])
 				if("close")
@@ -763,6 +799,12 @@ datum/preferences
 
 					gen_record = genmsg
 					SetRecords(user)
+
+		else if(href_list["preference"] == "set_roles")
+			return SetRoles(user,href_list)
+
+		else if(href_list["preference"] == "toggle_role")
+			ToggleRole(user,href_list)
 
 		switch(href_list["task"])
 			if("random")
@@ -1128,10 +1170,6 @@ datum/preferences
 						if(!UI_style_alpha_new | !(UI_style_alpha_new <= 255 && UI_style_alpha_new >= 50)) return
 						UI_style_alpha = UI_style_alpha_new
 
-					if("be_special")
-						var/num = text2num(href_list["num"])
-						be_special ^= (1<<num)
-
 					if("name")
 						be_random_name = !be_random_name
 
@@ -1330,3 +1368,66 @@ datum/preferences
 
 	proc/close_load_dialog(mob/user)
 		user << browse(null, "window=saves")
+
+	proc/configure_special_roles(var/mob/user)
+		var/html={"
+<form method="get">
+	<input type="hidden" name="src" value="\ref[src]" />
+	<input type="hidden" name="preference" value="set_roles" />
+	<h1>Special Role Preferences</h1>
+	<p>Please note that this also handles in-round polling for things like Raging Mages and Borers.</p>
+	<fieldset>
+		<legend>Legend</legend>
+		<dl>
+			<dt>Never:</dt>
+			<dd>Always answer no to this role.</dd>
+			<dt>No:</dt>
+			<dd>Answer no for this round. (Default)</dd>
+			<dt>Yes:</dt>
+			<dd>Answer yes for this round.</dd>
+			<dt>Always:</dt>
+			<dd>Always answer yes to this role.</dd>
+		</dl>
+	</fieldset>
+	<table border=\"0\">
+		<thead>
+			<tr>
+				<th>Role</th>
+				<th class="clmNever">Never</th>
+				<th class="clmNo">No</th>
+				<th class="clmYes">Yes</th>
+				<th class="clmAlways">Always</th>
+			</tr>
+		</thead>
+		<tbody>"}
+		for(var/role_id in special_roles)
+			var/desire = get_role_desire_str(roles[role_id])
+			html += {"
+			<tr>
+				<th>[role_id]</th>
+				<td class='column clmNever'><input type="radio" name="[role_id]" value="[ROLEPREF_PERSIST]" title="Never"[desire=="Never"?" checked='checked'":""]/></td>
+				<td class='column clmNo'><input type="radio" name="[role_id]" value="0" title="No"[desire=="No"?" checked='checked'":""] /></td>
+				<td class='column clmYes'><input type="radio" name="[role_id]" value="[ROLEPREF_ENABLE]" title="Yes"[desire=="Yes"?" checked='checked'":""] /></td>
+				<td class='column clmAlways'><input type="radio" name="[role_id]" value="[ROLEPREF_ENABLE|ROLEPREF_PERSIST]" title="Always"[desire=="Always"?" checked='checked'":""] /></td>
+			</tr>
+			"}
+		html += {"
+		</tbody>
+	</table>
+	<input type="submit" value="Submit" />
+	<input type="reset" value="Reset" />
+</form>"}
+		var/datum/browser/B = new /datum/browser/clean(user, "roles", "Role Selections", 300, 390)
+		B.set_content(html)
+		B.add_stylesheet("specialroles", 'html/browser/config_roles.css')
+		B.open()
+
+	Topic(href, href_list)
+		if(!usr)
+			return
+		if(client.mob!=usr)
+			usr << "YOU AREN'T ME GO AWAY"
+			return
+		switch(href_list["preference"])
+			if("set_roles")
+				return SetRoles(usr, href_list)

@@ -54,7 +54,7 @@
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
-	var/list/datum/mind/possible_vampires = get_players_for_role(BE_VAMPIRE)
+	var/list/datum/mind/possible_vampires = get_players_for_role(ROLE_VAMPIRE)
 
 	for(var/datum/mind/player in possible_vampires)
 		for(var/job in restricted_jobs)//Removing robots from the list

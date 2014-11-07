@@ -305,3 +305,21 @@
 		'icons/xenoarch_icons/chart3.jpg',
 		'icons/xenoarch_icons/chart4.jpg'
 		)
+
+
+/proc/get_role_desire_str(var/rolepref)
+	if((rolepref & (ROLEPREF_ENABLE|ROLEPREF_PERSIST)) == ROLEPREF_PERSIST)
+		return "Never"
+	if((rolepref & (ROLEPREF_ENABLE|ROLEPREF_PERSIST)) == 0)
+		return "No"
+	if((rolepref & (ROLEPREF_ENABLE|ROLEPREF_PERSIST)) == ROLEPREF_ENABLE)
+		return "Yes"
+	if((rolepref & (ROLEPREF_ENABLE|ROLEPREF_PERSIST)) == (ROLEPREF_ENABLE|ROLEPREF_PERSIST))
+		return "Always"
+	return "???"
+
+/client/proc/desires_role(var/role_id, var/display_to_user=0)
+	var/role_desired = prefs.roles[role_id]
+	if(display_to_user)
+		src << "<span style='sinister'>The game is currently looking for [role_id] candidates.  Your current answer is <a href='?src=\ref[prefs]&reset_role_pref=[role_id]'>[get_role_desire_str(role_desired)]</a>.</span>"
+	return role_desired & ROLEPREF_ENABLE
