@@ -254,7 +254,8 @@
 	..(act, m_type, message)
 
 /mob/living/simple_animal/attack_animal(mob/living/simple_animal/M as mob)
-	if(..()		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+	if(..())
+		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		attack_threshold_check(damage)
 
 /mob/living/simple_animal/bullet_act(var/obj/item/projectile/Proj)
@@ -286,7 +287,7 @@
 	return
 
 /mob/living/simple_animal/attack_paw(mob/living/carbon/monkey/M as mob)
-	if(..())
+	if(..()) //successful monkey bite.
 		if(stat != DEAD)
 			var/damage = rand(1, 3)
 			attack_threshold_check(damage)
@@ -298,7 +299,7 @@
 	return
 
 /mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
-	if(..())
+	if(..()) //if harm or disarm intent.
 		var/damage = rand(15, 30)
 		visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
 				"<span class='userdanger'>[M] has slashed at [src]!</span>")
@@ -308,7 +309,7 @@
 	return
 
 /mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L as mob)
-	if(..())
+	if(..()) //successful larva bite
 		var/damage = rand(5, 10)
 		if(stat != DEAD)
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)

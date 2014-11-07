@@ -333,7 +333,7 @@
 
 
 /mob/living/silicon/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
-	if(..())
+	if(..()) //if harm or disarm intent
 		var/damage = rand(10, 20)
 		if (prob(90))
 			add_logs(M, src, "attacked", admin=0)
@@ -366,24 +366,24 @@
 	return
 
 /mob/living/silicon/attack_hand(mob/living/carbon/human/M)
-	if(..())
-		switch(M.a_intent)
-			if ("help")
-				M.visible_message("<span class='notice'>[M] pets [src]!</span>", \
-								"<span class='notice'>You pet [src]!</span>")
-			if("grab")
-				grabbedby(M)
+	switch(M.a_intent)
+		if ("help")
+			M.visible_message("<span class='notice'>[M] pets [src]!</span>", \
+							"<span class='notice'>You pet [src]!</span>")
+		if("grab")
+			grabbedby(M)
+		else
+			M.do_attack_animation(src)
+			playsound(src.loc, 'sound/effects/bang.ogg', 10, 1)
+			if (HULK in M.mutations)
+				var/damage = rand(10,15)
+				adjustBruteLoss(damage)
+				add_logs(M, src, "attacked", admin=0)
+				playsound(loc, "punch", 25, 1, -1)
+				visible_message("<span class='danger'>[M] has punched [src]!</span>", \
+						"<span class='userdanger'>[M] has punched [src]!</span>")
+				return 1
 			else
-				playsound(src.loc, 'sound/effects/bang.ogg', 10, 1)
-				if (HULK in M.mutations)
-					var/damage = rand(10,15)
-					adjustBruteLoss(damage)
-					add_logs(M, src, "attacked", admin=0)
-					playsound(loc, "punch", 25, 1, -1)
-					visible_message("<span class='danger'>[M] has punched [src]!</span>", \
-							"<span class='userdanger'>[M] has punched [src]!</span>")
-					return 1
-				else
-					visible_message("<span class='danger'>[M] punches [src], but doesn't leave a dent.</span>", \
-							"<span class='userdanger'>[M] punches [src], but doesn't leave a dent.!</span>")
+				visible_message("<span class='danger'>[M] punches [src], but doesn't leave a dent.</span>", \
+						"<span class='userdanger'>[M] punches [src], but doesn't leave a dent.!</span>")
 	return 0

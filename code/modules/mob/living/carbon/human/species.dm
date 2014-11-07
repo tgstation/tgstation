@@ -752,6 +752,7 @@
 				H.forcesay(hit_appends)
 
 		if("disarm")
+			M.do_attack_animation(H)
 			add_logs(M, H, "disarmed")
 
 			if(H.w_uniform)

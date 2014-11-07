@@ -30,6 +30,7 @@ In all, this is a lot like the monkey code. /N
 
 		else
 			if (health > 0)
+				M.do_attack_animation(src)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				var/damage = 1
 				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
@@ -56,6 +57,7 @@ In all, this is a lot like the monkey code. /N
 		if("grab")
 			grabbedby(M)
 		if ("harm", "disarm")
+			M.do_attack_animation(src)
 			return 1
 	return 0
 

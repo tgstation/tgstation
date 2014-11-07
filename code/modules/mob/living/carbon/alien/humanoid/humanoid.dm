@@ -114,7 +114,6 @@
 	if(..())
 		switch(M.a_intent)
 			if ("harm")
-				M.do_attack_animation(src)
 				var/damage = rand(1, 9)
 				if (prob(90))
 					if (HULK in M.mutations)//HULK SMASH
@@ -139,7 +138,6 @@
 					visible_message("<span class='danger'>[M] has attempted to punch [src]!</span>")
 
 			if ("disarm")
-				M.do_attack_animation(src)
 				if (!lying)
 					if (prob(5))
 						Paralyse(2)

@@ -143,7 +143,7 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 		return // can't attack while eating!
 
 	if (stat != DEAD)
-
+		M.do_attack_animation(src)
 		visible_message("<span class='danger'>The [M.name] glomps [src]!</span>", \
 				"<span class='userdanger'>The [M.name] glomps [src]!</span>")
 
@@ -171,6 +171,7 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 	else
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
+		M.do_attack_animation(src)
 		visible_message("<span class='danger'>\The [M] [M.attacktext] [src]!</span>", \
 						"<span class='userdanger'>\The [M] [M.attacktext] [src]!</span>")
 		add_logs(M, src, "attacked", admin=0)
@@ -187,6 +188,7 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 		return 0
 
 	if (M.a_intent == "harm" && !M.is_muzzled())
+		M.do_attack_animation(src)
 		if (prob(75))
 			add_logs(M, src, "attacked", admin=0)
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
@@ -206,6 +208,7 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 			return 0
 
 		else
+			L.do_attack_animation(src)
 			if(prob(90))
 				add_logs(L, src, "attacked", admin=0)
 				visible_message("<span class='danger'>[L.name] bites [src]!</span>", \
@@ -235,4 +238,5 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 			grabbedby(M)
 			return 0
 		else
+			M.do_attack_animation(src)
 			return 1

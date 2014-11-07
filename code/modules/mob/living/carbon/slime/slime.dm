@@ -262,7 +262,7 @@
 		updatehealth()
 
 /mob/living/carbon/slime/attack_paw(mob/living/carbon/monkey/M as mob)
-	if(..())
+	if(..()) //successful monkey bite.
 		if(stat != DEAD)
 			attacked += 10
 			adjustBruteLoss(rand(1, 3))
@@ -270,7 +270,7 @@
 	return
 
 /mob/living/carbon/slime/attack_larva(mob/living/carbon/alien/larva/L as mob)
-	if(..())
+	if(..()) //successful larva bite.
 		var/damage = rand(1, 3)
 		if(stat != DEAD)
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
@@ -305,6 +305,7 @@
 			return
 
 		else
+			M.do_attack_animation(src)
 			if(prob(30))
 				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off of [Victim]!</span>")
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
@@ -332,7 +333,7 @@
 
 			return
 
-	if(..())
+	if(..()) //To allow surgery to return properly.
 		return
 
 	switch(M.a_intent)
@@ -375,10 +376,9 @@
 
 
 /mob/living/carbon/slime/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
-	if(..())
+	if(..()) //if harm or disarm intent.
 
 		if (M.a_intent == "harm")
-			M.do_attack_animation(src)
 			if (prob(95))
 				attacked += 10
 				playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
@@ -401,7 +401,6 @@
 						"<span class='userdanger'>[M] has attempted to lunge at [name]!</span>")
 
 		if (M.a_intent == "disarm")
-			M.do_attack_animation(src)
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			var/damage = 5
 			attacked += 10
@@ -440,10 +439,11 @@
 			updatehealth()
 	return
 
-/mob/living/carbon/slime/attackby(obj/item/W, mob/user)
+/mob/living/carbon/slime/attackby(obj/item/W, mob/living/user)
 	if(W.force > 0)
 		attacked += 10
 		if(prob(25))
+			user.do_attack_animation(src)
 			user << "<span class='danger'>[W] passes right through [src]!</span>"
 			return
 		if(Discipline && prob(50)) // wow, buddy, why am I getting attacked??

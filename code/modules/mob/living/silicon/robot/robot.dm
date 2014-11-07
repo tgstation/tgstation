@@ -632,14 +632,15 @@
 			else
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 				visible_message("<span class='danger'>[M] took a swipe at [src]!</span>", \
-								"<span class='userdanger'>[M] took a swipe at [src]!</span>")	else
+								"<span class='userdanger'>[M] took a swipe at [src]!</span>")
+	else
 		..()
 	return
 
 
 
 /mob/living/silicon/robot/attack_slime(mob/living/carbon/slime/M as mob)
-	if(..())
+	if(..()) //successful slime shock
 		flick("noise", flash)
 		var/stunprob = M.powerlevel * 7 + 10
 		if(prob(stunprob) && M.powerlevel >= 8)
@@ -672,7 +673,7 @@
 			updateicon()
 
 	if(!opened)
-		if(..())
+		if(..()) // hulk attack
 			spark_system.start()
 			spawn(0)
 				step_away(src,user,15)

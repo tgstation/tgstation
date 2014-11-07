@@ -410,7 +410,8 @@ var/list/ai_list = list()
 		M << "You cannot attack people before the game has started."
 		return
 
-	..()	return
+	..()
+	return
 
 /mob/living/silicon/ai/reset_view(atom/A)
 	if (camera_light_on)

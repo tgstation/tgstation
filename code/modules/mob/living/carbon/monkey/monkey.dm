@@ -69,14 +69,15 @@
 
 
 /mob/living/carbon/monkey/attack_paw(mob/living/M as mob)
-	if(..())
+	if(..()) //successful monkey bite.
 		var/damage = rand(1, 5)
 		if (stat != DEAD)
 			adjustBruteLoss(damage)
-			updatehealth()	return
+			updatehealth()
+	return
 
 /mob/living/carbon/monkey/attack_larva(mob/living/carbon/alien/larva/L as mob)
-	if(..())
+	if(..()) //successful larva bite.
 		var/damage = rand(1, 3)
 		if(stat != DEAD)
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
@@ -133,9 +134,8 @@
 	return
 
 /mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
-	if(..())
+	if(..()) //if harm or disarm intent.
 		if (M.a_intent == "harm")
-			M.do_attack_animation(src)
 			if ((prob(95) && health > 0))
 				playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 				var/damage = rand(15, 30)
@@ -158,7 +158,6 @@
 						"<span class='userdanger'>[M] has attempted to lunge at [name]!</span>")
 
 		if (M.a_intent == "disarm")
-			M.do_attack_animation(src)
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			var/damage = 5
 			if(prob(95))

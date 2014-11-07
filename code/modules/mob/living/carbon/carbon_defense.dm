@@ -55,7 +55,7 @@
 		if(D.spread_by_touch())
 			contract_disease(D, 0, 1, CONTACT_HANDS)
 
-	if(..())
+	if(..()) //successful monkey bite.
 		for(var/datum/disease/D in M.viruses)
 			contract_disease(D,1,0)
 		return 1
