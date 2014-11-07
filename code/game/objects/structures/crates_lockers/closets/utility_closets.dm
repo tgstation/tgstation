@@ -14,7 +14,7 @@
  */
 /obj/structure/closet/emcloset
 	name = "emergency closet"
-	desc = "It's a storage unit for emergency breathmasks and o2 tanks."
+	desc = "It's a storage unit for emergency breathmasks and o2/n2 tanks."
 	icon_state = "emergency"
 	icon_closed = "emergency"
 	icon_opened = "emergencyopen"
@@ -58,6 +58,15 @@
 			new /obj/structure/closet/firecloset(src.loc)
 			del(src)
 			return*/
+
+// Need to do this here so the config has enough time to load.
+/obj/structure/closet/emcloset/open()
+	if(src.type == /obj/structure/closet/emcloset)
+		if(firstopen && has_whitelist_entries("vox"))
+			new /obj/item/weapon/tank/emergency_nitrogen(src)
+			new /obj/item/clothing/mask/breath(src) //Vox can wear normal breath masks fine.
+			firstopen=0
+	return ..()
 
 /obj/structure/closet/emcloset/legacy/New()
 	new /obj/item/weapon/tank/oxygen(src)
