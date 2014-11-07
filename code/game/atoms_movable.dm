@@ -117,8 +117,9 @@
 	if(pulledby)
 		return 1
 
-	if(locate(/obj/structure/lattice) in orange(1, get_turf(src))) //Not realistic but makes pushing things in space easier
-		return 1
+	for(var/obj/structure/lattice/L in orange(1, get_turf(src))) //Not realistic but makes pushing things in space easier
+		if(L.anchored)
+			return 1
 
 	return 0
 
