@@ -341,6 +341,7 @@
 		if("grab")
 			grabbedby(M)
 		else
+			M.do_attack_animation(src)
 			var/damage = rand(1, 9)
 			attacked += 10
 			if (prob(90))
@@ -361,7 +362,7 @@
 				playsound(loc, "punch", 25, 1, -1)
 				add_logs(M, src, "attacked", admin=0)
 				visible_message("<span class='danger'>[M] has punched [src]!</span>", \
-				"<span class='userdanger'>[M] has punched [src]!</span>")
+						"<span class='userdanger'>[M] has punched [src]!</span>")
 
 				if (stat != DEAD)
 					adjustBruteLoss(damage)
@@ -377,7 +378,7 @@
 	if(..())
 
 		if (M.a_intent == "harm")
-
+			M.do_attack_animation(src)
 			if (prob(95))
 				attacked += 10
 				playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
@@ -400,6 +401,7 @@
 						"<span class='userdanger'>[M] has attempted to lunge at [name]!</span>")
 
 		if (M.a_intent == "disarm")
+			M.do_attack_animation(src)
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			var/damage = 5
 			attacked += 10

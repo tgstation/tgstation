@@ -68,13 +68,12 @@
 		now_pushing = null
 
 
-/mob/living/carbon/monkey/attack_paw(mob/M as mob)
+/mob/living/carbon/monkey/attack_paw(mob/living/M as mob)
 	if(..())
 		var/damage = rand(1, 5)
 		if (stat != DEAD)
 			adjustBruteLoss(damage)
-			updatehealth()
-	return
+			updatehealth()	return
 
 /mob/living/carbon/monkey/attack_larva(mob/living/carbon/alien/larva/L as mob)
 	if(..())
@@ -94,6 +93,7 @@
 		if("grab")
 			grabbedby(M)
 		if("harm")
+			M.do_attack_animation(src)
 			if (prob(75))
 				visible_message("<span class='danger'>[M] has punched [name]!</span>", \
 						"<span class='userdanger'>[M] has punched [name]!</span>")
@@ -118,6 +118,7 @@
 
 		if("disarm")
 			if (!( paralysis ))
+				M.do_attack_animation(src)
 				if (prob(25))
 					Paralyse(2)
 					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
@@ -134,6 +135,7 @@
 /mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if(..())
 		if (M.a_intent == "harm")
+			M.do_attack_animation(src)
 			if ((prob(95) && health > 0))
 				playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 				var/damage = rand(15, 30)
@@ -156,6 +158,7 @@
 						"<span class='userdanger'>[M] has attempted to lunge at [name]!</span>")
 
 		if (M.a_intent == "disarm")
+			M.do_attack_animation(src)
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			var/damage = 5
 			if(prob(95))

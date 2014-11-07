@@ -387,7 +387,7 @@ var/list/ai_list = list()
 		if(A && target)
 
 			A.cameraFollow = target
-			A << text("Now tracking [] on camera.", target.name)
+			A << "Now tracking [target.name] on camera."
 			if (usr.machine == null)
 				usr.machine = usr
 
@@ -410,8 +410,7 @@ var/list/ai_list = list()
 		M << "You cannot attack people before the game has started."
 		return
 
-	..()
-	return
+	..()	return
 
 /mob/living/silicon/ai/reset_view(atom/A)
 	if (camera_light_on)

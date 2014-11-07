@@ -144,6 +144,7 @@
 
 /obj/machinery/bot/attack_alien(var/mob/living/carbon/alien/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
 	health -= rand(15,30)*brute_dam_coeff
 	visible_message("<span class='danger'>[user] has slashed [src]!</span>")
 	playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
@@ -153,6 +154,7 @@
 
 
 /obj/machinery/bot/attack_animal(var/mob/living/simple_animal/M as mob)
+	M.do_attack_animation(src)
 	if(M.melee_damage_upper == 0)
 		return
 	M.changeNext_move(CLICK_CD_MELEE)

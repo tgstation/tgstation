@@ -2721,7 +2721,8 @@ It is possible to destroy the net by the occupant or someone else.
 /obj/effect/energy_net/attack_paw(mob/user)
 	return attack_hand()
 
-/obj/effect/energy_net/attack_alien(mob/user as mob)
+/obj/effect/energy_net/attack_alien(mob/living/user as mob)
+	user.do_attack_animation(src)
 	if (islarva(user))
 		return
 	playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)

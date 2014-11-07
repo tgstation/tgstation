@@ -619,6 +619,7 @@
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if (M.a_intent =="disarm")
 		if(!(lying))
+			M.do_attack_animation(src)
 			if (prob(85))
 				Stun(7)
 				step(src,get_dir(M,src))
@@ -630,11 +631,9 @@
 								"<span class='userdanger'>[M] has forced back [src]!</span>")
 			else
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-				visible_message("<span class='danger'>[M] attempted to force back [src]!</span>", \
-								"<span class='userdanger'>[M] attempted to force back [src]!</span>")
-	else
+				visible_message("<span class='danger'>[M] took a swipe at [src]!</span>", \
+								"<span class='userdanger'>[M] took a swipe at [src]!</span>")	else
 		..()
-
 	return
 
 
@@ -652,12 +651,12 @@
 		damage = rand(20, 40)
 	else
 		damage = rand(5, 35)
-
 	damage = round(damage / 2) // borgs recieve half damage
 	adjustBruteLoss(damage)
 	updatehealth()
 
 	return
+
 
 /mob/living/silicon/robot/attack_hand(mob/living/carbon/human/user)
 

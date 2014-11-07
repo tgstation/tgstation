@@ -115,6 +115,7 @@
 	return
 
 /mob/living/carbon/alien/larva/attack_slime(mob/living/carbon/slime/M as mob)
+
 	..()
 	var/damage = rand(5, 35)
 	if(M.is_adult)
@@ -122,7 +123,6 @@
 	adjustBruteLoss(damage)
 	add_logs(M, src, "attacked", admin=0)
 	updatehealth()
-
 	return
 
 /mob/living/carbon/alien/larva/attack_hand(mob/living/carbon/human/M as mob)
@@ -149,6 +149,7 @@
 			playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] has attempted to kick [src]!</span>", \
 					"<span class='userdanger'>[M] has attempted to kick [src]!</span>")
+
 	return
 
 /mob/living/carbon/alien/larva/restrained()
