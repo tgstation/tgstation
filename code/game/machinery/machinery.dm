@@ -141,18 +141,20 @@ Class Procs:
 	..()
 
 /obj/machinery/proc/open_machine()
-	var/turf/T = get_turf(src)
-	if(T)
-		state_open = 1
-		density = 0
-		T.contents += contents
-		if(occupant)
-			if(occupant.client)
-				occupant.client.eye = occupant
-				occupant.client.perspective = MOB_PERSPECTIVE
-			occupant = null
+	state_open = 1
+	density = 0
+	dropContents()
 	update_icon()
 	updateUsrDialog()
+
+/obj/machinery/proc/dropContents()
+	var/turf/T = get_turf(src)
+	T.contents += contents
+	if(occupant)
+		if(occupant.client)
+			occupant.client.eye = occupant
+			occupant.client.perspective = MOB_PERSPECTIVE
+		occupant = null
 
 /obj/machinery/proc/close_machine(mob/living/target = null)
 	state_open = 0
