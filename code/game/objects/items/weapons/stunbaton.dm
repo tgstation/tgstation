@@ -117,8 +117,7 @@
 
 	if(user.a_intent == "harm")
 		..()
-
-	if(!status)
+	else if(!status)
 		L.visible_message("<span class='warning'>[L] has been prodded with [src] by [user]. Luckily it was off.</span>")
 		return
 
