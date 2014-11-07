@@ -80,6 +80,8 @@ var/global/list/organ_damage_overlays = list(
 	var/do_deferred_species_setup=0
 	var/exposedtimenow = 0
 	var/firstexposed = 0
+	var/cycle = 0
+	var/last_processed = ""
 
 // Doing this during species init breaks shit.
 /mob/living/carbon/human/proc/DeferredSpeciesSetup()
@@ -101,16 +103,26 @@ var/global/list/organ_damage_overlays = list(
 /mob/living/carbon/human/Life()
 	set invisibility = 0
 	//set background = 1
+	if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+		src << "Starting Life() cycle [cycle]"
+		last_processed = "Started"
 
 	if (monkeyizing)	return
 	if(!loc)			return	// Fixing a null error that occurs when the mob isn't found in the world -- TLE
 
 	..()
 
+	if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+		src << "Successfully called parent."
+		last_processed = "Called Super"
+
 	if(do_deferred_species_setup)
 		DeferredSpeciesSetup()
 		do_deferred_species_setup=0
 
+	if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+		src << "Successfully setup species if necessary."
+		last_processed = "Species Setup"
 	//Apparently, the person who wrote this code designed it so that
 	//blinded get reset each cycle and then get activated later in the
 	//code. Very ugly. I dont care. Moving this stuff here so its easy
@@ -122,7 +134,9 @@ var/global/list/organ_damage_overlays = list(
 	// update the current life tick, can be used to e.g. only do something every 4 ticks
 	life_tick++
 	var/datum/gas_mixture/environment = loc.return_air()
-
+	if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+		src << "We have a location and returned air into [environment]"
+		last_processed = "Setup Enviroment"
 	in_stasis = istype(loc, /obj/structure/closet/body_bag/cryobag) && loc:opened == 0
 	if(in_stasis) loc:used++
 
@@ -130,11 +144,15 @@ var/global/list/organ_damage_overlays = list(
 	if(stat != DEAD && !in_stasis)
 		if(air_master.current_cycle%4==2 || failed_last_breath) 	//First, resolve location and get a breath
 			breathe() 				//Only try to take a breath every 4 ticks, unless suffocating
-
+			last_processed = "Breathe"
 		else //Still give containing object the chance to interact
 			if(istype(loc, /obj/))
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
+				last_processed = "Interacted with our container"
+		if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+			src << "We tried to breathe OR handled an internal object."
+			last_processed = "Handle Breathe"
 
 		if(check_mutations)
 			testing("Updating [src.real_name]'s mutations: "+english_list(mutations))
@@ -142,65 +160,164 @@ var/global/list/organ_damage_overlays = list(
 			update_mutations()
 			check_mutations=0
 
+		if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+			src << "Successfully checked mutations."
+			last_processed = "Check Mutations"
+
 		//Updates the number of stored chemicals for powers
 		handle_changeling()
+
+		if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+			src << "Successfully handled changeling datum"
+			last_processed = "Handle Ling"
 
 		//Mutations and radiation
 		handle_mutations_and_radiation()
 
+		if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+			src << "Successfully handled mutations and radiation"
+			last_processed = "Handle Mut and Rads"
+
 		//Chemicals in the body
 		handle_chemicals_in_body()
+
+		if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+			src << "Successfully handled internal chemicals"
+			last_processed = "Handle Chems"
 
 		//Disabilities
 		handle_disabilities()
 
+		if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+			src << "Successfully handled disabilities"
+			last_processed = "Handle disabilities"
+
 		//Organ failure.
 		handle_organs()
+
+		if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+			src << "Successfully handled organs"
+			last_processed = "Handle organs"
 
 		//Random events (vomiting etc)
 		handle_random_events()
 
+		if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+			src << "Successfully handled random events"
+			last_processed = "Handle random events"
+
 		handle_virus_updates()
+
+		if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+			src << "Successfully handled virus updates"
+			last_processed = "Handle Virus"
 
 		//stuff in the stomach
 		handle_stomach()
 
+		if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+			src << "Successfully handled stomach"
+			last_processed = "Handle stomach"
+
 		handle_shock()
+
+		if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+			src << "Successfully handled shock"
+			last_processed = "Handle shock"
 
 		handle_pain()
 
+		if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+			src << "Successfully handled pain"
+			last_processed = "Handle pain"
+
 		handle_medical_side_effects()
+
+		if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+			src << "Successfully handled medical side effects"
+			last_processed = "Handle side effects"
 
 		handle_equipment()
 
+		if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+			src << "Successfully handled equipment"
+			last_processed = "Handle equip"
+
 	handle_stasis_bag()
 
+	if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+		src << "Successfully handled stasis"
+		last_processed = "Handle stasis"
+
 	if(life_tick > 5 && timeofdeath && (timeofdeath < 5 || world.time - timeofdeath > 6000))	//We are long dead, or we're junk mobs spawned like the clowns on the clown shuttle
+
+		if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+			src << "We have been dead for too long, we stop here."
+			last_processed = "DEAD"
+		cycle = "DEAD"
 		return											//We go ahead and process them 5 times for HUD images and other stuff though.
 
 	//Handle temperature/pressure differences between body and environment
 	handle_environment(environment)
 
+	if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+		src << "Successfully handled enviroment"
+		last_processed = "Handle enviroment"
+
 	//Check if we're on fire
 	handle_fire()
 
+	if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+		src << "Successfully handled fire"
+		last_processed = "Handle fire"
+
 	//Status updates, death etc.
 	handle_regular_status_updates()		//Optimized a bit
+
+	if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+		src << "Successfully handled regular status updates"
+		last_processed = "Handle Regular Status Updates"
+
 	update_canmove()
+
+	if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+		src << "Successfully updated canmove"
+		last_processed = "update canmove"
 
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
+	if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+		src << "Successfully got our visible name"
+		last_processed = "get visible name"
+
 	handle_regular_hud_updates()
 
+	if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+		src << "Successfully handled hud update"
+		last_processed = "Handle HUD"
+
 	pulse = handle_pulse()
+
+	if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+		src << "Successfully handled pulse"
+		last_processed = "Handle pulse"
 
 	// Grabbing
 	for(var/obj/item/weapon/grab/G in src)
 		G.process()
 
+	if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+		src << "Successfully handled grabs"
+		last_processed = "Handle grabs"
+
 	if(mind && mind.vampire)
 		handle_vampire()
+
+	if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
+		src << "Successfully handled vampire"
+		last_processed = "Handle vampire"
+	cycle++
 
 
 
