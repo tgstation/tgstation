@@ -248,4 +248,5 @@
 		var/obj/item/I = AM
 		tforce = I.throwforce - 5
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
-	health = max(0, health - tforce)	healthcheck()
+	health = max(0, health - tforce)
+	healthcheck()
