@@ -257,6 +257,7 @@
 	if(M.melee_damage_upper == 0)
 		M.emote("me", 1, "[M.friendly] [src]")
 	else
+		M.do_attack_animation(src)
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		visible_message("<span class='danger'>\The [M] [M.attacktext] [src]!</span>", \
@@ -301,6 +302,7 @@
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 		if("harm", "disarm")
+			M.do_attack_animation(src)
 			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>")
 			playsound(loc, "punch", 25, 1, -1)
 			adjustBruteLoss(harm_intent_damage)
@@ -320,6 +322,7 @@
 				visible_message("<span class='notice'> [M] [response_help] [src].</span>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 		else
+			M.do_attack_animation(src)
 			if (M.is_muzzled())
 				return
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
@@ -353,6 +356,7 @@
 			visible_message("<span class='warning'>[M] has grabbed [src] passively!</span>")
 
 		if("harm", "disarm")
+			M.do_attack_animation(src)
 			var/damage = rand(15, 30)
 			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
 					"<span class='userdanger'>[M] has slashed at [src]!</span>")
@@ -369,7 +373,7 @@
 
 
 		else
-
+			L.do_attack_animation(src)
 			var/damage = rand(5, 10)
 			visible_message("<span class='danger'>[L] bites [src]!</span>", \
 					"<span class='userdanger'>[L] bites [src]!</span>")
@@ -388,6 +392,7 @@
 	if(M.Victim) return // can't attack while eating!
 
 	if (health > 0)
+		M.do_attack_animation(src)
 		visible_message("<span class='danger'>[M.name] glomps [src]!</span>", \
 				"<span class='userdanger'>[M.name] glomps [src]!</span>")
 
@@ -404,7 +409,7 @@
 	return
 
 
-/mob/living/simple_animal/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
+/mob/living/simple_animal/attackby(var/obj/item/O as obj, var/mob/living/user as mob)  //Marker -Agouri
 	if(O.flags & NOBLUDGEON)
 		return
 	if(istype(O, /obj/item/stack/medical))
@@ -434,6 +439,7 @@
 			harvest()
 
 	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
 	var/damage = 0
 	if(O.force)
 		if(O.force >= force_threshold)

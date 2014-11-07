@@ -124,9 +124,6 @@ var/next_mob_id = 0
 	for(var/mob/M in get_hearers_in_view(range, src))
 		M.show_message( message, 2, deaf_message, 1)
 
-
-
-
 /mob/proc/movement_delay()
 	return 0
 
