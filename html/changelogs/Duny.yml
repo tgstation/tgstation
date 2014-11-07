@@ -1,2 +1,5 @@
 author: Duny
-changes: []
+changes:
+  - tweak: Vox no longer start with a free spacesuit.
+  - tweak: Vox now start with an emergency N2 tank in their left pocket instead of a standard tank.
+  - bugfix: O2 closets are no longer magically stuffed with N2 tanks.
