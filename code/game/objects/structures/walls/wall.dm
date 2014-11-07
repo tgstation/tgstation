@@ -7,8 +7,6 @@
 	anchored = 1
 	var/thermite = 0
 	var/mineral = "metal"
-//	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
-//	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
 	var/walltype = "metal"
 	var/hardness = 40 //lower numbers are harder. Used to determine the probability of a hulk smashing through.
 	var/slicing_duration = 100  //default time taken to slice the wall
@@ -298,6 +296,9 @@
 	if(current_size == STAGE_FOUR)
 		if(prob(30))
 			dismantle_wall()
+
+/obj/structure/wall/BlockSuperconductivity()
+	return 1
 
 /obj/structure/wall/CanAtmosPass()
 	return 0

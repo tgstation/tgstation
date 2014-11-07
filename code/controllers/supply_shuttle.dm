@@ -61,18 +61,8 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	name = "airtight plastic flaps"
 	desc = "Heavy duty, airtight, plastic flaps."
 
-/obj/structure/plasticflaps/mining/New() //set the turf below the flaps to block air
-	var/turf/T = get_turf(loc)
-	if(T)
-		T.blocks_air = 1
-	..()
-
-/obj/structure/plasticflaps/mining/Destroy() //lazy hack to set the turf to allow air to pass if it's a simulated floor //wow this is terrible
-	var/turf/T = get_turf(loc)
-	if(T)
-		if(istype(T, /turf/simulated/floor))
-			T.blocks_air = 0
-	..()
+/obj/structure/plasticflaps/mining/CanAtmosPass()
+	return 0
 
 /obj/machinery/computer/supplycomp
 	name = "supply shuttle console"
