@@ -1,0 +1,7 @@
+author: Paprika
+delete-after: True
+changes: 
+  - rscadd: "Added a defibrillator and an EMT alternative clothing set for medical doctors. These defibrillators will revive the recently deceased as long as their souls are occupying their body and they have no outstanding brute or burn damage."
+  - rscadd: "Added a way for you to unload a round from a chambered projectile weapon. Simply click on the gun when it is in your active hand, and assuming it does not have a magazine, the round should pop out. You can also use this system to unload individual bullets from magazines and ammo boxes, like the detective's speed loaders."
+  - rscadd: "Added glass tables and overhauled how table construction works. Now, you need to build a frame using either metal rods or wood, and then place a top on the table."
+  - tweak: "Table deconstruction now works in two stages. Screwdriver the table to remove the top of it and reduce it back to a frame. Wrench the table to deconstruct it entirely back to parts. To deconstruct a frame, use your wrench."
