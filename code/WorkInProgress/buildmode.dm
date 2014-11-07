@@ -188,28 +188,25 @@
 
 	switch(buildmode)
 		if(1)
-			if(istype(object,/turf) && pa.Find("left") && !pa.Find("alt") && !pa.Find("ctrl") )
-				var/turf/T = object
+			if((istype(object,/turf) || istype(object,/obj/structure/wall)) && pa.Find("left") && !pa.Find("alt") && !pa.Find("ctrl") )
+				var/turf/T = get_turf(object)
 				if(istype(object,/turf/space))
 					T.ChangeTurf(/turf/simulated/floor)
 				else if(istype(object,/turf/simulated/floor))
-					T.ChangeTurf(/turf/simulated/wall)
-				else if(istype(object,/turf/simulated/wall))
-					T.ChangeTurf(/turf/simulated/wall/r_wall)
+					new /obj/structure/wall(T)
+				else if(istype(object,/obj/structure/wall))
+					qdel(object)
+					new /obj/structure/wall/r_wall(T)
 				log_admin("Build Mode: [key_name(usr)] built [T] at ([T.x],[T.y],[T.z])")
 				return
 			else if(pa.Find("right"))
 				log_admin("Build Mode: [key_name(usr)] deleted [object] at ([object.x],[object.y],[object.z])")
-				if(istype(object,/turf/simulated/wall))
-					var/turf/T = object
-					T.ChangeTurf(/turf/simulated/floor)
-				else if(istype(object,/turf/simulated/floor))
-					var/turf/T = object
+				var/turf/T = get_turf(object)
+				if(istype(object,/turf/simulated/floor))
 					T.ChangeTurf(/turf/space)
-				else if(istype(object,/turf/simulated/wall/r_wall))
-					var/turf/T = object
-					T.ChangeTurf(/turf/simulated/wall)
-				else if(istype(object,/obj))
+				if(istype(object,/obj/structure/wall/r_wall))
+					new /obj/structure/wall(T)
+				if(istype(object,/obj))
 					qdel(object)
 				return
 			else if(istype(object,/turf) && pa.Find("alt") && pa.Find("left"))

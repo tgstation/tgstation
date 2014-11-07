@@ -2,7 +2,6 @@
  *
  * Commemorative Plaque
  * Vault floor
- * Vault wall (why)
  * Blue grid
  * Green grid
  * Shuttle floor
@@ -21,9 +20,6 @@
 /turf/simulated/floor/vault
 	icon_state = "rockvault"
 
-/turf/simulated/wall/vault
-	icon_state = "rockvault"
-
 /turf/simulated/floor/bluegrid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "bcircuit"
@@ -32,12 +28,9 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "gcircuit"
 
-
 /turf/simulated/shuttle
 	name = "shuttle"
 	icon = 'icons/turf/shuttle.dmi'
-	thermal_conductivity = 0.05
-	heat_capacity = 0
 	layer = 2
 
 /turf/simulated/shuttle/wall

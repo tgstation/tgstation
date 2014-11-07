@@ -1,5 +1,5 @@
 "aa" = (/turf/space,/area/space)
-"ab" = (/turf/simulated/wall,/area/awaymission/example)
+"ab" = (/turf/simulated/floor/plating,/obj/structure/wall,/area/awaymission/example)
 "ac" = (/turf/simulated/floor,/area/awaymission/example)
 "ad" = (/obj/machinery/light{dir = 1},/turf/simulated/floor,/area/awaymission/example)
 "ae" = (/obj/machinery/power/smes{charge = 5e+006},/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/turf/simulated/floor,/area/awaymission/example)

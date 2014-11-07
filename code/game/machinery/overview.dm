@@ -64,12 +64,6 @@
 					if("/turf/simulated/floor/engine")
 						colour = rgb(128,128,128)
 
-					if("/turf/simulated/wall")
-						colour = rgb(96,96,96)
-
-					if("/turf/simulated/wall/r_wall")
-						colour = rgb(128,96,96)
-
 					if("/turf/unsimulated/floor")
 						colour  = rgb(240,240,240)
 
@@ -85,6 +79,13 @@
 				if(sense)
 
 					for(var/atom/AM in T.contents)
+
+
+						if(istype(AM, /obj/structure/wall))
+							colour = rgb(96,96,96)
+
+						if(istype(AM, /obj/structure/wall/r_wall))
+							colour = rgb(128,96,96)
 
 						if(istype(AM, /obj/machinery/door) && !istype(AM, /obj/machinery/door/window))
 							if(AM.density)
@@ -219,12 +220,6 @@
 							t1 = min(100, t1-100)
 							colour = rgb( t1*2.55, t1*2.55, 255)
 
-					if("/turf/simulated/wall")
-						colour = rgb(96,96,96)
-
-					if("/turf/simulated/wall/r_wall")
-						colour = rgb(128,96,96)
-
 					if("/turf/unsimulated/floor")
 						colour  = rgb(240,240,240)
 
@@ -238,6 +233,12 @@
 				if(sense)
 
 					for(var/atom/AM in T.contents)
+
+						if(istype(AM, /obj/structure/wall/r_wall))
+							colour = rgb(128,96,96)
+
+						else if(istype(AM, /obj/structure/wall))
+							colour = rgb(96,96,96)
 
 						if(istype(AM, /obj/machinery/door) && !istype(AM, /obj/machinery/door/window))
 							if(AM.density)

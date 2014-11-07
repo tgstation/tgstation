@@ -288,21 +288,11 @@
 
 /atom/proc/auto_turn()
 	//Automatically turns based on nearby walls.
-	var/turf/simulated/wall/T = null
-	for(var/i = 1, i <= 8; i += i)
-		T = get_ranged_target_turf(src, i, 1)
-		if(istype(T))
-			//If someone knows a better way to do this, let me know. -Giacom
-			switch(i)
-				if(NORTH)
-					src.dir = SOUTH
-				if(SOUTH)
-					src.dir = NORTH
-				if(WEST)
-					src.dir = EAST
-				if(EAST)
-					src.dir = WEST
-			break
+	for(var/obj/structure/wall/T in orange(1))
+		var/d = get_dir(T, src)
+		if(d in cardinal)
+			dir = d
+			return
 
 //Return a working camera that can see a given mob
 //or null if none

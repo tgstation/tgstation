@@ -93,7 +93,7 @@
 	var/C = target.loc	//why are these backwards? we may never know -Pete
 	if(do_after_cooldown(target))
 		if(T == chassis.loc && src == chassis.selected)
-			if(istype(target, /turf/simulated/wall/r_wall))
+			if(istype(target, /obj/structure/wall/r_wall))
 				occupant_message("<span class='danger'>[target] is too durable to drill through.</span>")
 			else if(istype(target, /turf/simulated/mineral))
 				for(var/turf/simulated/mineral/M in range(chassis,1))
@@ -167,7 +167,7 @@
 	var/C = target.loc	//why are these backwards? we may never know -Pete
 	if(do_after_cooldown(target))
 		if(T == chassis.loc && src == chassis.selected)
-			if(istype(target, /turf/simulated/wall/r_wall))
+			if(istype(target, /obj/structure/wall/r_wall))
 				if(do_after_cooldown(target))//To slow down how fast mechs can drill through the station
 					log_message("Drilled through [target]")
 					target.ex_act(3)
@@ -294,20 +294,20 @@
 		disabled = 1
 	else
 		disabled = 0
-	if(!istype(target, /turf) && !istype(target, /obj/machinery/door/airlock))
+	if(!istype(target, /turf) && !istype(target, /obj/machinery/door/airlock) && !istype(target, /obj/structure/wall))
 		target = get_turf(target)
 	if(!action_checks(target) || disabled || get_dist(chassis, target)>3) return
 	playsound(chassis, 'sound/machines/click.ogg', 50, 1)
 	//meh
 	switch(mode)
 		if(0)
-			if (istype(target, /turf/simulated/wall))
+			if (istype(target, /obj/structure/wall))
 				occupant_message("Deconstructing [target]...")
 				set_ready_state(0)
 				if(do_after_cooldown(target))
 					if(disabled) return
 					chassis.spark_system.start()
-					target:ChangeTurf(/turf/simulated/floor/plating)
+					qdel(target)
 					playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
 					chassis.use_power(energy_drain)
 			else if (istype(target, /turf/simulated/floor))
@@ -343,7 +343,7 @@
 				set_ready_state(0)
 				if(do_after_cooldown(target))
 					if(disabled) return
-					target:ChangeTurf(/turf/simulated/wall)
+					new /obj/structure/wall(target)
 					playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
 					chassis.spark_system.start()
 					chassis.use_power(energy_drain*2)
