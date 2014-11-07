@@ -643,17 +643,26 @@
 		if("rune")
 			if(isconstruct(usr))
 				var/mob/living/simple_animal/construct/harvester/C = usr
-				C.harvesterune()
+				if(!C.purge)
+					C.harvesterune()
+				else
+					C << "<span class='warning'>The nullrod's power interferes with your own!</span>"
 
 		if("breakdoor")
 			if(isconstruct(usr))
 				var/mob/living/simple_animal/construct/harvester/C = usr
-				C.harvesterknock()
+				if(!C.purge)
+					C.harvesterknock()
+				else
+					C << "<span class='warning'>The nullrod's power interferes with your own!</span>"
 
 		if("harvest")
 			if(isconstruct(usr))
 				var/mob/living/simple_animal/construct/harvester/C = usr
-				C.harvesterharvest()
+				if(!C.purge)
+					C.harvesterharvest()
+				else
+					C << "<span class='warning'>The nullrod's power interferes with your own!</span>"
 		else
 			return 0
 	return 1

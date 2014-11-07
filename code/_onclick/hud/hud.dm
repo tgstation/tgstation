@@ -199,6 +199,8 @@ datum/hud/New(mob/owner)
 		shade_hud()
 	else if(isconstruct(mymob))
 		construct_hud()
+	else if(isobserver(mymob))
+		ghost_hud()
 
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
