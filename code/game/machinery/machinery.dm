@@ -231,10 +231,13 @@ Class Procs:
 		src << "<span class='notice'>You don't have the dexterity to do this!</span>"
 	return
 
-/mob/living/carbon/human/canUseTopic(atom/movable/M)
+/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close = 0)
 	if(restrained() || lying || stat || stunned || weakened)
 		return
 	if(!in_range(M, src))
+		if((be_close == 0) && (TK in mutations))
+			if(tkMaxRangeCheck(src, M))
+				return 1
 		return
 	if(!isturf(M.loc) && M.loc != src)
 		return

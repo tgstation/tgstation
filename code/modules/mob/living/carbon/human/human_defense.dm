@@ -132,8 +132,10 @@ emp_act
 		return dna.species.spec_attacked_by(I,user,def_zone,affecting,hit_area,src.a_intent,target_limb,target_area,src)
 
 	else
-		if((user != src) && check_shields(I.force, "the [I.name]"))
-			return 0
+		if(user != src)
+			user.do_attack_animation(src)
+			if(check_shields(I.force, "the [I.name]"))
+				return 0
 
 		if(I.attack_verb && I.attack_verb.len)
 			visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I] by [user]!</span>", \

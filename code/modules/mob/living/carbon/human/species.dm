@@ -687,8 +687,10 @@
 
 			if(H.cpr_time < world.time + 30)
 				add_logs(H, M, "CPRed")
-				H.visible_message("<span class='notice'>[M] is trying to perform CPR on [H]!</span>")
+				M.visible_message("<span class='notice'>[M] is trying to perform CPR on [H]!</span>", \
+								"<span class='notice'>You try to perform CPR on [H]. Hold still!</span>")
 				if(!do_mob(M, H))
+					M << "<span class='warning'>You fail to perform CPR on [H]!</span>"
 					return 0
 				if((H.health >= -99 && H.health <= 0))
 					H.cpr_time = world.time
@@ -722,6 +724,7 @@
 
 		if("harm")
 			add_logs(M, H, "punched")
+			M.do_attack_animation(H)
 
 			var/atk_verb = "punch"
 			if(H.lying)
@@ -822,6 +825,8 @@
 
 /datum/species/proc/spec_attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone, var/obj/item/organ/limb/affecting, var/hit_area, var/intent, var/obj/item/organ/limb/target_limb, target_area, var/mob/living/carbon/human/H)
 	// Allows you to put in item-specific reactions based on species
+	if(user != src)
+		user.do_attack_animation(H)
 	if((user != H) && H.check_shields(I.force, "the [I.name]"))
 		return 0
 
@@ -914,6 +919,8 @@
 	var/showname = "."
 	if(user)
 		showname = " by [user]!"
+		if(user != src)
+			user.do_attack_animation(H)
 	if(!(user in viewers(I, null)))
 		showname = "."
 

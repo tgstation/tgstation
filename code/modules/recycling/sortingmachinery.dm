@@ -251,7 +251,8 @@
 	return
 
 /obj/machinery/disposal/deliveryChute/Bumped(var/atom/movable/AM) //Go straight into the chute
-	if(istype(AM, /obj/item/projectile))	return
+	if(!AM.disposalEnterTry())
+		return
 	switch(dir)
 		if(NORTH)
 			if(AM.loc.y != loc.y+1) return
@@ -269,6 +270,15 @@
 		var/mob/M = AM
 		M.loc = src
 	flush()
+
+/atom/movable/proc/disposalEnterTry()
+	return 1
+
+/obj/item/projectile/disposalEnterTry()
+	return
+
+/obj/mecha/disposalEnterTry()
+	return
 
 /obj/machinery/disposal/deliveryChute/flush()
 	flushing = 1

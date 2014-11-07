@@ -208,21 +208,24 @@
 				"<span class='userdanger'>[user] smashes against the [src.name].</span>")
 	take_damage(damage)
 
-/obj/machinery/door/window/attack_alien(mob/user as mob)
+/obj/machinery/door/window/attack_alien(mob/living/user as mob)
+	user.do_attack_animation(src)
 	if(islarva(user))
 		return
 	attack_generic(user, 25)
 
-/obj/machinery/door/window/attack_animal(mob/user as mob)
+/obj/machinery/door/window/attack_animal(mob/living/user as mob)
 	if(!isanimal(user))
 		return
 	var/mob/living/simple_animal/M = user
+	M.do_attack_animation(src)
 	if(M.melee_damage_upper <= 0)
 		return
 	attack_generic(M, M.melee_damage_upper)
 
 
 /obj/machinery/door/window/attack_slime(mob/living/carbon/slime/user as mob)
+	user.do_attack_animation(src)
 	if(!user.is_adult)
 		return
 	attack_generic(user, 25)
@@ -233,7 +236,7 @@
 /obj/machinery/door/window/attack_hand(mob/user as mob)
 	return src.attackby(user, user)
 
-/obj/machinery/door/window/attackby(obj/item/weapon/I as obj, mob/user as mob)
+/obj/machinery/door/window/attackby(obj/item/weapon/I as obj, mob/living/user as mob)
 
 	//If it's in the process of opening/closing, ignore the click
 	if (src.operating)
@@ -332,6 +335,7 @@
 	//If it's a weapon, smash windoor. Unless it's an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
 	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card) )
 		user.changeNext_move(CLICK_CD_MELEE)
+		user.do_attack_animation(src)
 		if( (I.flags&NOBLUDGEON) || !I.force )
 			return
 		var/aforce = I.force

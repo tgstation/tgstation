@@ -641,11 +641,10 @@
 
 			G.synch()
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("<span class='danger'>[] has grabbed [] passively!</span>", M, src), 1)
+			visible_message("<span class='danger'>[M] has grabbed [src] passively!</span>")
 
 		if ("harm")
+			M.do_attack_animation(src)
 			var/damage = rand(10, 20)
 			if (prob(90))
 				/*
@@ -657,33 +656,31 @@
 				What is this?*/
 
 				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					O.show_message(text("<span class='userdanger'>[] has slashed at []!</span>", M, src), 1)
+				visible_message("<span class='danger'>[M] has slashed at [src]!</span>",\
+								"<span class='userdanger'>[M] has slashed at [src]!</span>")
 				if(prob(8))
 					flick("noise", flash)
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='userdanger'>[] took a swipe at []!</span>", M, src), 1)
+				visible_message("<span class='danger'>[M] took a swipe at [src]!</span>", \
+								"<span class='userdanger'>[M] took a swipe at [src]!</span>")
 
 		if ("disarm")
 			if(!(lying))
+				M.do_attack_animation(src)
 				if (rand(1,100) <= 85)
 					Stun(7)
 					step(src,get_dir(M,src))
 					spawn(5) step(src,get_dir(M,src))
 					playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("<span class='userdanger'>[] has forced back []!</span>", M, src), 1)
+					visible_message("<span class='danger'>[M] has forced back [src]!</span>",\
+									"<span class='userdanger'>[M] has forced back [src]!</span>")
 				else
 					playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("<span class='userdanger'>[] attempted to force back []!</span>", M, src), 1)
+					visible_message("<span class='danger'>[M] attempted to force back [src]!</span>",\
+									"<span class='userdanger'>[M] attempted to force back [src]!</span>")
 	return
 
 
@@ -696,10 +693,9 @@
 	if(M.Victim) return // can't attack while eating!
 
 	if (health > -100)
-
-		for(var/mob/O in viewers(src, null))
-			if ((O.client && !( O.blinded )))
-				O.show_message(text("<span class='userdanger'>The [M.name] glomps []!</span>", src), 1)
+		M.do_attack_animation(src)
+		visible_message("<span class='danger'>The [M.name] glomps [src]!</span>",\
+						"<span class='userdanger'>The [M.name] glomps [src]!</span>")
 
 		var/damage = rand(1, 3)
 
@@ -750,6 +746,7 @@
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
+		M.do_attack_animation(src)
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		visible_message("<span class='danger'><B>[M]</B> [M.attacktext] [src]!</span>")
