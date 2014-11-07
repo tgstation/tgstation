@@ -92,6 +92,7 @@
 		if(M.melee_damage_upper <= 0)
 			M.emote("me", 1, "[M.friendly] \the <EM>[src]</EM>.")
 		else
+			M.do_attack_animation(src)
 			if(M.attack_sound)
 				playsound(loc, M.attack_sound, 50, 1, 1)
 			visible_message("<span class='danger'>\The <EM>[M]</EM> [M.attacktext] \the <EM>[src]</EM>!</span>", \
