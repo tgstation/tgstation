@@ -154,6 +154,9 @@
 /obj/item/weapon/circuitboard/rdconsole/robotics
 	name = "Circuit Board (Robotics R&D Console)"
 	build_path = "/obj/machinery/computer/rdconsole/robotics"
+/obj/item/weapon/circuitboard/rdconsole/mechanic
+	name = "Circuit Board (Mechanic R&D Console)"
+	build_path = "/obj/machinery/computer/rdconsole/mechanic"
 
 /obj/item/weapon/circuitboard/mecha_control
 	name = "Circuit Board (Exosuit Control Console)"

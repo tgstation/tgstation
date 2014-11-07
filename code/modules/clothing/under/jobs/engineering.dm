@@ -79,3 +79,11 @@
 	item_state = "biomech"
 	_color = "biomech"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+
+/obj/item/clothing/under/rank/mechanic
+	desc = "It's a set of blue and yellow overalls worn by station mechanics. Greaseproof, says the label."
+	name = "mechanic's overalls"
+	icon_state = "mechanic"
+	item_state = "mechanic"
+	_color = "mechanic"
+	flags = FPRINT | TABLEPASS

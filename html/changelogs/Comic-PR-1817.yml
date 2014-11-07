@@ -1,0 +1,33 @@
+# Valid Prefixes: 
+#   bugfix
+#   wip (For works in progress)
+#   tweak
+#   soundadd
+#   sounddel
+#   rscdel (general adding of nice things)
+#   rscadd (general deleting of nice things)
+#   imageadd
+#   imagedel
+#   spellcheck (typo fixes)
+#   experiment
+#   tgs (TG-ported fixes?)
+
+# Your name.  
+author: Comic
+
+# Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
+delete-after: True
+
+# Any changes you've made.  See valid prefix list above.
+# INDENT WITH TWO SPACES.  NOT TABS.  SPACES.
+# SCREW THIS UP AND IT WON'T WORK.
+# Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
+changes: 
+  - wip: Added the Mechanic job.
+  - rscadd: Added a Mechanic radio (engineering and science), and a locker
+  - rscadd: Added the Mechanic overalls.
+  - rscadd: Added the Device Analyser, capable of scanning machines, computers, and items, and producing designs
+  - rscadd: Added the Reverse Engine and Blueprint Printer, which can be used together to research and print designs
+  - rscadd: Added the General Fabricator and Flatpack Fabricator, which can be fed designs to produce new machines
+  - rscadd: Added a paper pack item, which spawns with 20 papers or nanopapers.
+  - rscadd: Added research blueprints, which can be printed by the Blueprint Printer and fed into fabricators to load them with designs of limited or unlimited uses

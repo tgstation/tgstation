@@ -41,7 +41,7 @@
 		if("Research Director","Scientist","Geneticist","Roboticist")
 			suit=/obj/item/clothing/suit/space/plasmaman/science
 			helm=/obj/item/clothing/head/helmet/space/plasmaman/science
-		if("Chief Engineer","Station Engineer")
+		if("Chief Engineer","Station Engineer", "Mechanic")
 			suit=/obj/item/clothing/suit/space/plasmaman/engineer
 			helm=/obj/item/clothing/head/helmet/space/plasmaman/engineer
 		if("Atmospheric Technician")
