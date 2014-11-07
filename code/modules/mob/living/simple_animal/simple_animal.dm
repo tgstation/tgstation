@@ -410,6 +410,8 @@
 
 
 /mob/living/simple_animal/attackby(var/obj/item/O as obj, var/mob/living/user as mob)  //Marker -Agouri
+	if(O.flags & NOBLUDGEON)
+		return
 	if(istype(O, /obj/item/stack/medical))
 
 		if(stat != DEAD)
