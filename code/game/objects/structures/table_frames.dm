@@ -22,7 +22,7 @@
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>Now disassembling [src].</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 40))
+		if(do_after(user, 30))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			new /obj/item/stack/rods(src.loc)
 			qdel(src)
@@ -65,7 +65,7 @@
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>Now disassembling [src].</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 40))
+		if(do_after(user, 30))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			new /obj/item/stack/sheet/mineral/wood(src.loc)
 			qdel(src)

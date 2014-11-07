@@ -282,6 +282,16 @@
 			table_destroy(2, user)
 			return
 
+	if (istype(I, /obj/item/weapon/wrench))
+		if(istype(src, /obj/structure/table/reinforced))
+			var/obj/structure/table/reinforced/RT = src
+			if(RT.status == 1)
+				table_destroy(3, user)
+				return
+		else
+			table_destroy(3, user)
+			return
+
 	if (istype(I, /obj/item/weapon/storage/bag/tray))
 		var/obj/item/weapon/storage/bag/tray/T = I
 		if(T.contents.len > 0) // If the tray isn't empty
@@ -318,7 +328,8 @@
  */
 
 #define TBL_DESTROY 1
-#define TBL_DECONSTRUCT 2
+#define TBL_DISASSEMBLE 2
+#define TBL_DECONSTRUCT 3
 
 /obj/structure/table/proc/table_destroy(var/destroy_type, var/mob/user)
 
@@ -328,14 +339,24 @@
 		qdel(src)
 		return
 
-	if(destroy_type == TBL_DECONSTRUCT)
+	if(destroy_type == TBL_DISASSEMBLE)
 		user << "<span class='notice'>Now disassembling [src].</span>"
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 30))
+		if(do_after(user, 20))
 			new frame(src.loc)
 			new buildstack(src.loc)
 			qdel(src)
-		return
+			return
+
+	if(destroy_type == TBL_DECONSTRUCT)
+		user << "<span class='notice'>Now deconstructing [src].</span>"
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		if(do_after(user, 40))
+			new framestack(src.loc)
+			new buildstack(src.loc)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			qdel(src)
+			return
 
 /*
  * TABLE CLIMBING
