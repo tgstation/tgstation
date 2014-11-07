@@ -111,4 +111,4 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 
 /mob/living/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
 	if(!unacidable)
-		take_organ_damage(min(6*toxpwr, acid_volume * toxpwr))
+		take_organ_damage(min(8*toxpwr, acid_volume * toxpwr))

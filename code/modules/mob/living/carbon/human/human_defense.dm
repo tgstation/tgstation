@@ -308,10 +308,10 @@ emp_act
 
 
 	for(var/obj/item/organ/limb/affecting in damaged)
-		affecting.take_damage(4*toxpwr, 2*toxpwr)
+		affecting.take_damage(2*toxpwr, 1*toxpwr)
 
 		if(affecting.name == "head")
-			affecting.take_damage(4*toxpwr, 2*toxpwr)
+			affecting.take_damage(2*toxpwr, 1*toxpwr)
 			if(prob(2*acidpwr)) //Applies disfigurement
 				emote("scream")
 				facial_hair_style = "Shaved"
