@@ -126,20 +126,20 @@
 
 
 /obj/structure/window/attack_alien(mob/living/user as mob)
-	user.do_attack_animation()
+	user.do_attack_animation(src)
 	if(islarva(user)) return
 	attack_generic(user, 15)
 
 /obj/structure/window/attack_animal(mob/living/user as mob)
 	if(!isanimal(user)) return
 	var/mob/living/simple_animal/M = user
-	M.do_attack_animation()
+	M.do_attack_animation(src)
 	if(M.melee_damage_upper <= 0) return
 	attack_generic(M, M.melee_damage_upper)
 
 
 /obj/structure/window/attack_slime(mob/living/carbon/slime/user as mob)
-	user.do_attack_animation()
+	user.do_attack_animation(src)
 	if(!user.is_adult) return
 	attack_generic(user, rand(10, 15))
 

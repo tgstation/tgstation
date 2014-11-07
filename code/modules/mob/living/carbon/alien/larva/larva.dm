@@ -118,7 +118,7 @@
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
-		M.do_attack_animation()
+		M.do_attack_animation(src)
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>", \
@@ -146,7 +146,7 @@
 		if ("help")
 			help_shake_act(M)
 		else
-			M.do_attack_animation()
+			M.do_attack_animation(src)
 			if (M.is_muzzled())
 				return
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
@@ -167,7 +167,7 @@
 		return // can't attack while eating!
 
 	if (stat != DEAD)
-		M.do_attack_animation()
+		M.do_attack_animation(src)
 		visible_message("<span class='danger'>The [M.name] glomps [src]!</span>", \
 				"<span class='userdanger'>The [M.name] glomps [src]!</span>")
 		var/damage = rand(1, 3)
@@ -214,7 +214,7 @@
 			visible_message("<span class='warning'>[M] has grabbed [src] passively!</span>")
 
 		else
-			M.do_attack_animation()
+			M.do_attack_animation(src)
 			var/damage = rand(1, 9)
 			if (prob(90))
 				if (HULK in M.mutations)
@@ -263,7 +263,7 @@
 
 		else
 			if (health > 0)
-				M.do_attack_animation()
+				M.do_attack_animation(src)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				var/damage = 1
 				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \

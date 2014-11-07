@@ -133,7 +133,7 @@ emp_act
 
 	else
 		if(user != src)
-			user.do_attack_animation()
+			user.do_attack_animation(src)
 			if(check_shields(I.force, "the [I.name]"))
 				return 0
 

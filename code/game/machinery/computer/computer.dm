@@ -111,7 +111,7 @@
 	return
 
 /obj/machinery/computer/attack_paw(mob/living/user)
-	user.do_attack_animation()
+	user.do_attack_animation(src)
 	if(circuit)
 		if(prob(10))
 			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with its paws.</span>",\
@@ -124,7 +124,7 @@
 	"<span class='danger'>You hear a clicking sound.</span>")
 
 /obj/machinery/computer/attack_alien(mob/living/user)
-	user.do_attack_animation()
+	user.do_attack_animation(src)
 	if(circuit)
 		if(prob(80))
 			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with its claws.</span>",\

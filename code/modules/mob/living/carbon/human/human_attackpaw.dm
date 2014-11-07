@@ -3,7 +3,7 @@
 	if (M.a_intent == "help")
 		help_shake_act(M)
 	else
-		M.do_attack_animation()
+		M.do_attack_animation(src)
 		if (M.is_muzzled())
 			return
 

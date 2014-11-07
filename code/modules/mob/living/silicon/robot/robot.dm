@@ -644,7 +644,7 @@
 			visible_message("<span class='danger'>[M] has grabbed [src] passively!</span>")
 
 		if ("harm")
-			M.do_attack_animation()
+			M.do_attack_animation(src)
 			var/damage = rand(10, 20)
 			if (prob(90))
 				/*
@@ -669,7 +669,7 @@
 
 		if ("disarm")
 			if(!(lying))
-				M.do_attack_animation()
+				M.do_attack_animation(src)
 				if (rand(1,100) <= 85)
 					Stun(7)
 					step(src,get_dir(M,src))
@@ -693,7 +693,7 @@
 	if(M.Victim) return // can't attack while eating!
 
 	if (health > -100)
-		M.do_attack_animation()
+		M.do_attack_animation(src)
 		visible_message("<span class='danger'>The [M.name] glomps [src]!</span>",\
 						"<span class='userdanger'>The [M.name] glomps [src]!</span>")
 
@@ -746,7 +746,7 @@
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
-		M.do_attack_animation()
+		M.do_attack_animation(src)
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		visible_message("<span class='danger'><B>[M]</B> [M.attacktext] [src]!</span>")

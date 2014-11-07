@@ -159,7 +159,7 @@
 
 /obj/structure/closet/attack_animal(mob/living/simple_animal/user as mob)
 	if(user.environment_smash)
-		user.do_attack_animation()
+		user.do_attack_animation(src)
 		visible_message("<span class='danger'>[user] destroys the [src].</span>")
 		for(var/atom/movable/A as mob|obj in src)
 			A.loc = src.loc

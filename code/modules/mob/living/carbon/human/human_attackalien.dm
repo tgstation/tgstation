@@ -22,7 +22,7 @@
 			visible_message("<span class='danger'>[M] has grabbed [src] passively!</span>")
 
 		if("harm")
-			M.do_attack_animation()
+			M.do_attack_animation(src)
 			if (w_uniform)
 				w_uniform.add_fingerprint(M)
 			var/damage = rand(15, 30)
@@ -46,7 +46,7 @@
 			updatehealth()
 
 		if("disarm")
-			M.do_attack_animation()
+			M.do_attack_animation(src)
 			var/randn = rand(1, 100)
 			if (randn <= 80)
 				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)

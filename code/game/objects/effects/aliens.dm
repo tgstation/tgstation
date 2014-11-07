@@ -111,7 +111,7 @@
 
 /obj/structure/alien/resin/attack_hand(mob/living/user)
 	if(HULK in user.mutations)
-		user.do_attack_animation()
+		user.do_attack_animation(src)
 		user.visible_message("<span class='danger'>[user] destroys [src]!</span>")
 		health = 0
 		healthcheck()
@@ -123,7 +123,7 @@
 
 /obj/structure/alien/resin/attack_alien(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation()
+	user.do_attack_animation(src)
 	if(islarva(user))
 		return
 	user.visible_message("<span class='danger'>[user] claws at the resin!</span>")
