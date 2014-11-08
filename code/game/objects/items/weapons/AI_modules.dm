@@ -20,12 +20,24 @@ AI MODULES
 	throw_range = 7
 	origin_tech = "programming=3"
 	var/list/laws = list()
+	var/bypass_law_amt_check = 0
 
 //The proc other things should be calling
 /obj/item/weapon/aiModule/proc/install(var/mob/living/silicon/reciever, var/mob/user)
 	if(!laws.len || laws[1] == "") //So we don't loop trough an empty list and end up with runtimes.
 		user << "<span class='warning'>ERROR: No laws found on board.</span>"
 		return
+
+	if(reciever.laws)
+		var/tot_laws = 0
+		tot_laws += reciever.laws.inherent.len
+		tot_laws += reciever.laws.supplied.len
+		tot_laws += reciever.laws.ion.len
+		tot_laws += laws.len
+		if(tot_laws > config.silicon_max_law_amount && !bypass_law_amt_check)//allows certain boards to avoid this check, eg: reset
+			user << "<span class='caution'>Not enough memory allocated to [reciever]'s law processor to handle this amount of laws."
+			message_admins("[key_name_admin(user)] tried to upload laws to [key_name_admin(reciever)] that would exceed the law cap.")
+			return
 
 	var/law2log = src.transmitInstructions(reciever, user) //Freeforms return something extra we need to log
 	user << "Upload complete. [reciever]'s laws have been modified."
@@ -206,6 +218,7 @@ AI MODULES
 	desc = "A 'reset' AI module: Resets back to the original core laws."
 	origin_tech = "programming=3;materials=4"
 	laws = list("This is a bug.")  //This won't give the AI a message reading "these are now your laws: 1. this is a bug" because this list is only read in aiModule's subtypes.
+	bypass_law_amt_check = 1
 
 /obj/item/weapon/aiModule/reset/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
