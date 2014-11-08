@@ -142,9 +142,14 @@
 	user << "<span class='notice'>You [amount_per_transfer_from_this == 10 ? "remove" : "fix"] the nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>"
 
 //ATMOS FIRE FIGHTING BACKPACK
+
+#define EXTINGUISHER 0
+#define NANOFROST 1
+#define METAL_FOAM 2
+
 /obj/item/weapon/watertank/atmos
 	name = "backpack firefighter tank"
-	desc = "An advanced backpack tank with extinguisher nozzle, intended to fight fires. Swaps between extinguisher, nanofrost launcher, and metal foam dispenser for breaches. Nanofrost converts plasma and oxygen in the air to nitrogen, but only if it is combusting at the time."
+	desc = "A refridgerated and pressurized backpack tank with extinguisher nozzle, intended to fight fires. Swaps between extinguisher, nanofrost launcher, and metal foam dispenser for breaches. Nanofrost converts plasma in the air to nitrogen, but only if it is combusting at the time."
 	icon_state = "waterbackpackatmos"
 	item_state = "waterbackpackatmos"
 	volume = 200
@@ -193,6 +198,8 @@
 	max_water = 200
 	power = 8
 	precision = 1
+	cooling_power = 5
+	w_class = 5
 	var/obj/item/weapon/watertank/tank
 	var/nozzle_mode = 0
 	var/metal_synthesis_cooldown = 0
@@ -212,18 +219,18 @@
 		loc = tank.loc
 
 /obj/item/weapon/extinguisher/mini/nozzle/attack_self(mob/user as mob)
-	if(nozzle_mode == 0)
-		nozzle_mode = 1
+	if(nozzle_mode == EXTINGUISHER)
+		nozzle_mode = NANOFROST
 		tank.icon_state = "waterbackpackatmos_1"
 		user << "Swapped to nanofrost launcher"
 		return
-	if(nozzle_mode == 1)
-		nozzle_mode = 2
+	if(nozzle_mode == NANOFROST)
+		nozzle_mode = METAL_FOAM
 		tank.icon_state = "waterbackpackatmos_2"
 		user << "Swapped to metal foam synthesizer"
 		return
-	if(nozzle_mode == 2)
-		nozzle_mode = 0
+	if(nozzle_mode == METAL_FOAM)
+		nozzle_mode = EXTINGUISHER
 		tank.icon_state = "waterbackpackatmos_0"
 		user << "Swapped to water extinguisher"
 		return
@@ -235,13 +242,13 @@
 	loc = tank
 
 /obj/item/weapon/extinguisher/mini/nozzle/afterattack(atom/target, mob/user)
-	if(nozzle_mode == 0)
+	if(nozzle_mode == EXTINGUISHER)
 		..()
 		return
 	var/Adj = user.Adjacent(target)
 	if(Adj)
 		AttemptRefill(target, user)
-	if(nozzle_mode == 1)
+	if(nozzle_mode == NANOFROST)
 		if(Adj)
 			return //Safety check so you don't blast yourself trying to refill your tank
 		var/datum/reagents/R = reagents
@@ -252,8 +259,9 @@
 			user << "Nanofrost launcher is still recharging"
 			return
 		nanofrost_cooldown = 1
-		R.remove_all_type(/datum/reagent/water, 100,0,1)
+		R.remove_any(100)
 		var/obj/effect/nanofrost_container/A = new /obj/effect/nanofrost_container(get_turf(src))
+		log_game("[user.ckey] ([user.name]) used Nanofrost at [get_area(user)] ([user.x], [user.y], [user.z]).")
 		playsound(src,'sound/items/syringeproj.ogg',40,1)
 		for(var/a=0, a<5, a++)
 			step_towards(A, target)
@@ -263,7 +271,7 @@
 			if(src)
 				nanofrost_cooldown = 0
 		return
-	if(nozzle_mode == 2)
+	if(nozzle_mode == METAL_FOAM)
 		if(!Adj|| !istype(target, /turf))
 			return
 		if(metal_synthesis_cooldown < 5)
@@ -331,8 +339,7 @@
 			for(var/obj/effect/hotspot/H in T)
 				H.Kill()
 				if(G.toxins)
-					G.nitrogen += (G.toxins + G.oxygen)
-					G.oxygen = 0
+					G.nitrogen += (G.toxins)
 					G.toxins = 0
 		for(var/obj/machinery/atmospherics/unary/vent_pump/V in T)
 			V.welded = 1
@@ -365,3 +372,7 @@
 				if(smoke)
 					fadeOut(smoke)
 					smoke.delete()
+
+#undef EXTINGUISHER
+#undef NANOFROST
+#undef METAL_FOAM

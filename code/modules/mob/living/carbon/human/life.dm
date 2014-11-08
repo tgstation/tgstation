@@ -149,7 +149,7 @@
 			var/x_offset = pixel_x + rand(-2,2) //Should probably be moved into the twitch emote at some point.
 			var/y_offset = pixel_y + rand(-1,1)
 			animate(src, pixel_x = pixel_x + x_offset, pixel_y = pixel_y + y_offset, time = 1)
-			animate(pixel_x = pixel_x - x_offset, pixel_y = pixel_y - y_offset, time = 1)
+			animate(pixel_x = initial(pixel_x) , pixel_y = initial(pixel_y), time = 1)
 	if (disabilities & NERVOUS)
 		if (prob(10))
 			stuttering = max(10, stuttering)
@@ -217,11 +217,10 @@
 		if(head.max_heat_protection_temperature >= FIRE_HELM_MAX_TEMP_PROTECT)
 			thermal_protection += (head.max_heat_protection_temperature*THERMAL_PROTECTION_HEAD)
 	thermal_protection = round(thermal_protection)
-	world << "[thermal_protection]"
 	if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
 		return
 	if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT)
-		bodytemperature += 15.5
+		bodytemperature += 11
 		return
 	else
 		bodytemperature += BODYTEMP_HEATING_MAX
@@ -580,7 +579,8 @@
 			var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
 
 			animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = 6)
-			animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 2)
+			animate(pixel_x = initial(pixel_x) , pixel_y = initial(pixel_y) , time = 2)
+			floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.
 			jitteriness = max(jitteriness-1, 0)
 
 		//Other

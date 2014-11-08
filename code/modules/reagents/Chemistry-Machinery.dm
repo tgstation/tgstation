@@ -723,7 +723,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 					var/i = 0
 					for(var/datum/disease/D in Blood.data["viruses"])
 						i++
-						if(!D.hidden[PANDEMIC])
+						if(!(D.visibility_flags & HIDDEN_PANDEMIC))
 
 							if(istype(D, /datum/disease/advance))
 
@@ -738,8 +738,8 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 							dat += "<b>Disease Agent:</b> [D?"[D.agent] - <A href='?src=\ref[src];create_virus_culture=[i]'>Create virus culture bottle</A>":"none"]<BR>"
 							dat += "<b>Common name:</b> [(D.name||"none")]<BR>"
 							dat += "<b>Description: </b> [(D.desc||"none")]<BR>"
-							dat += "<b>Spread:</b> [(D.spread||"none")]<BR>"
-							dat += "<b>Possible cure:</b> [(D.cure||"none")]<BR><BR>"
+							dat += "<b>Spread:</b> [(D.spread_text||"none")]<BR>"
+							dat += "<b>Possible cure:</b> [(D.cure_text||"none")]<BR><BR>"
 
 							if(istype(D, /datum/disease/advance))
 								var/datum/disease/advance/A = D

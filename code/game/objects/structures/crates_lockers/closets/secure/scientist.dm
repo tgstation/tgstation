@@ -37,8 +37,10 @@
 	sleep(2)
 	new /obj/item/clothing/suit/bio_suit/scientist(src)
 	new /obj/item/clothing/head/bio_hood/scientist(src)
-	new /obj/item/clothing/under/rank/research_director(src)
 	new /obj/item/clothing/suit/labcoat(src)
+	new /obj/item/clothing/under/rank/research_director(src)
+	new /obj/item/clothing/under/rank/research_director/alt(src)
+	new /obj/item/clothing/under/rank/research_director/turtleneck(src)
 	new /obj/item/weapon/cartridge/rd(src)
 	new /obj/item/clothing/shoes/sneakers/white(src)
 	new /obj/item/clothing/gloves/latex(src)
@@ -48,5 +50,4 @@
 	new /obj/item/clothing/suit/armor/reactive(src)
 	new /obj/item/device/flash/handheld(src)
 	new /obj/item/device/laser_pointer(src)
-	new /obj/item/clothing/under/rank/research_director/alt(src)
 	return

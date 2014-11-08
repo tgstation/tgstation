@@ -219,7 +219,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				if(centcom_message_cooldown)
 					usr << "Arrays recycling.  Please stand by."
 					return
-				var/input = stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING CORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response.", "To abort, send an empty message.", "")
+				var/input = stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING COORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response.", "To abort, send an empty message.", "")
 				if(!input || !(usr in view(1,src)))
 					return
 				Syndicate_announce(input, usr)
@@ -585,7 +585,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		user << "The emergency shuttle is already on its way."
 		return
 
-	call_reason = strip_html_simple(trim(call_reason))
+	call_reason = strip_html_properly(trim(call_reason))
 
 	if(length(call_reason) < CALL_SHUTTLE_REASON_LENGTH)
 		user << "You must provide a reason."

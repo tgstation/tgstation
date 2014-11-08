@@ -94,14 +94,14 @@ datum/reagent/blood/reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 	src = null
 	if(self.data && self.data["viruses"])
 		for(var/datum/disease/D in self.data["viruses"])
-			//var/datum/disease/virus = new D.type(0, D, 1)
-			// We don't spread.
-			if(D.spread_type == SPECIAL || D.spread_type == NON_CONTAGIOUS) continue
+
+			if(D.spread_flags & SPECIAL || D.spread_flags & NON_CONTAGIOUS)
+				continue
 
 			if(method == TOUCH)
-				M.contract_disease(D)
+				M.ContractDisease(D)
 			else //injected
-				M.contract_disease(D, 1, 0)
+				M.ForceContractDisease(D)
 
 datum/reagent/blood/on_new(var/list/data)
 	if(istype(data))
@@ -208,9 +208,11 @@ datum/reagent/water
 	description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
 	reagent_state = LIQUID
 	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
+	var/cooling_temperature = 2
 
 datum/reagent/water/reaction_turf(var/turf/simulated/T, var/volume)
 	if (!istype(T)) return
+	var/CT = cooling_temperature
 	src = null
 	if(volume >= 10)
 		T.MakeSlippery()
@@ -220,22 +222,15 @@ datum/reagent/water/reaction_turf(var/turf/simulated/T, var/volume)
 
 	var/hotspot = (locate(/obj/effect/hotspot) in T)
 	if(hotspot && !istype(T, /turf/space))
-		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
-		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
-		lowertemp.react()
-		T.assume_air(lowertemp)
-		qdel(hotspot)
+		if(T.air)
+			var/datum/gas_mixture/G = T.air
+			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),0)
+			G.react()
+			qdel(hotspot)
 	return
+
 datum/reagent/water/reaction_obj(var/obj/O, var/volume)
 	src = null
-	var/turf/T = get_turf(O)
-	var/hotspot = (locate(/obj/effect/hotspot) in T)
-	if(hotspot && !istype(T, /turf/space))
-		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
-		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
-		lowertemp.react()
-		T.assume_air(lowertemp)
-		qdel(hotspot)
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
 		if(!cube.wrapped)
@@ -349,7 +344,7 @@ datum/reagent/aslimetoxin
 
 datum/reagent/aslimetoxin/reaction_mob(var/mob/M, var/volume)
 	src = null
-	M.contract_disease(new /datum/disease/transformation/slime(0),1)
+	M.ForceContractDisease(new /datum/disease/transformation/slime(0))
 
 datum/reagent/inaprovaline
 	name = "Inaprovaline"
@@ -617,6 +612,7 @@ datum/reagent/ryetalyn/on_mob_life(var/mob/living/M as mob)
 	M.mutations = list()
 	M.disabilities = 0
 	M.sdisabilities = 0
+	M.jitteriness = 0
 
 	// Might need to update appearance for hulk etc.
 	if(needs_update && ishuman(M))
@@ -996,9 +992,9 @@ datum/reagent/adminordrazine/on_mob_life(var/mob/living/carbon/M as mob)
 	M.sleeping = 0
 	M.jitteriness = 0
 	for(var/datum/disease/D in M.viruses)
-		if(D.severity == D.non_threat)
+		if(D.severity == NONTHREAT)
 			continue
-		D.spread = "Remissive"
+		D.spread_text = "Remissive"
 		D.stage--
 		if(D.stage < 1)
 			D.cure()
@@ -1088,7 +1084,7 @@ datum/reagent/alkysine/on_mob_life(var/mob/living/M as mob)
 datum/reagent/imidazoline
 	name = "Imidazoline"
 	id = "imidazoline"
-	description = "Heals eye damage"
+	description = "Heals eye damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
@@ -1099,6 +1095,20 @@ datum/reagent/imidazoline/on_mob_life(var/mob/living/M as mob)
 	M.disabilities &= ~NEARSIGHTED
 	M.eye_stat = max(M.eye_stat-5, 0)
 //	M.sdisabilities &= ~1		Replaced by eye surgery
+	..()
+	return
+
+datum/reagent/inacusiate
+	name = "Inacusiate"
+	id = "inacusiate"
+	description = "Heals ear damage."
+	reagent_state = LIQUID
+	color = "#6600FF" // rgb: 100, 165, 255
+
+datum/reagent/inacusiate/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	M.ear_damage = 0
+	M.ear_deaf = 0
 	..()
 	return
 
@@ -1216,7 +1226,7 @@ datum/reagent/nanites
 datum/reagent/nanites/reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 	src = null
 	if( (prob(10) && method==TOUCH) || method==INGEST)
-		M.contract_disease(new /datum/disease/transformation/robot(0),1)
+		M.ForceContractDisease(new /datum/disease/transformation/robot(0))
 
 datum/reagent/xenomicrobes
 	name = "Xenomicrobes"
@@ -1228,7 +1238,7 @@ datum/reagent/xenomicrobes
 datum/reagent/xenomicrobes/reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 	src = null
 	if( (prob(10) && method==TOUCH) || method==INGEST)
-		M.contract_disease(new /datum/disease/transformation/xeno(0),1)
+		M.ContractDisease(new /datum/disease/transformation/xeno(0))
 
 datum/reagent/fluorosurfactant//foam precursor
 	name = "Fluorosurfactant"
@@ -1633,78 +1643,20 @@ datum/reagent/toxin/acid
 	reagent_state = LIQUID
 	color = "#DB5008" // rgb: 219, 80, 8
 	toxpwr = 1
-	var/meltprob = 10
+	var/acidpwr = 10 //the amount of protection removed from the armour
 
-datum/reagent/toxin/acid/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//magic numbers everywhere
-	if(!istype(M, /mob/living))
+datum/reagent/toxin/acid/reaction_mob(var/mob/living/carbon/C, var/method=TOUCH, var/volume)
+	if(!istype(C))
 		return
-	if(method == TOUCH)
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
+	if(method != TOUCH)
+		if(!C.unacidable)
+			C.take_organ_damage(min(6*toxpwr, volume * toxpwr))
+			return
 
-			if(H.head)
-				if(prob(meltprob) && !H.head.unacidable)
-					H << "<span class='danger'>Your headgear melts away but protects you from the acid!</span>"
-					qdel(H.head)
-					H.update_inv_head(0)
-					H.update_hair(0)
-				else
-					H << "<span class='warning'>Your headgear protects you from the acid.</span>"
-				return
-
-			if(H.wear_mask)
-				if(prob(meltprob) && !H.wear_mask.unacidable)
-					H << "<span class='danger'>Your mask melts away but protects you from the acid!</span>"
-					qdel(H.wear_mask)
-					H.update_inv_wear_mask(0)
-					H.update_hair(0)
-				else
-					H << "<span class='warning'>Your mask protects you from the acid.</span>"
-				return
-
-			if(H.glasses) //Doesn't protect you from the acid but can melt anyways!
-				if(prob(meltprob) && !H.glasses.unacidable)
-					H << "<span class='danger'>Your glasses melts away!</span>"
-					qdel(H.glasses)
-					H.update_inv_glasses(0)
-
-		else if(ismonkey(M))
-			var/mob/living/carbon/monkey/MK = M
-			if(MK.wear_mask)
-				if(!MK.wear_mask.unacidable)
-					MK << "<span class='danger'>Your mask melts away but protects you from the acid!</span>"
-					qdel(MK.wear_mask)
-					MK.update_inv_wear_mask(0)
-				else
-					MK << "<span class='warning'>Your mask protects you from the acid.</span>"
-				return
-
-		if(!M.unacidable)
-			if(istype(M, /mob/living/carbon/human) && volume >= 3)
-				var/mob/living/carbon/human/H = M
-				var/obj/item/organ/limb/affecting = H.get_organ("head")
-				if(affecting)
-					if(affecting.take_damage(4*toxpwr, 2*toxpwr))
-						H.update_damage_overlays(0)
-					if(prob(meltprob)) //Applies disfigurement
-						H.emote("scream")
-						H.facial_hair_style = "Shaved"
-						H.hair_style = "Bald"
-						H.update_hair(0)
-						H.status_flags |= DISFIGURED
-			else
-				M.take_organ_damage(min(6*toxpwr, volume * toxpwr)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
-	else
-		if(!M.unacidable)
-			M.take_organ_damage(min(6*toxpwr, volume * toxpwr))
+	C.acid_act(acidpwr, toxpwr, volume)
 
 datum/reagent/toxin/acid/reaction_obj(var/obj/O, var/volume)
-	if((istype(O,/obj/item) || istype(O,/obj/effect/glowshroom)) && prob(meltprob * 3))
-		if(!O.unacidable)
-			var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(get_turf(O))
-			I.desc = "Looks like this was \an [O] some time ago."
-			O.visible_message("<span class='danger'> \the [O] melts.</span>")
-			qdel(O)
+	O.acid_act(acidpwr, toxpwr, volume)
 
 datum/reagent/toxin/acid/polyacid
 	name = "Polytrinic acid"
@@ -1713,7 +1665,7 @@ datum/reagent/toxin/acid/polyacid
 	reagent_state = LIQUID
 	color = "#8E18A9" // rgb: 142, 24, 169
 	toxpwr = 2
-	meltprob = 30
+	acidpwr = 20
 
 datum/reagent/toxin/coffeepowder
 	name = "Coffee Grounds"
