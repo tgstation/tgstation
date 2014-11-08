@@ -686,7 +686,7 @@ var/const/MAX_SAVE_SLOTS = 8
 			if(!(role_id in href_list))
 				user << "<span class='danger'>BUG: Unable to find role [role_id].</span>"
 				continue
-			var/oldval=roles[role_id]
+			var/oldval=text2num(roles[role_id])
 			roles[role_id] = text2num(href_list[role_id])
 			if(oldval!=roles[role_id])
 				user << "<span class='info'>Set role [role_id] to [get_role_desire_str(user.client.prefs.roles[role_id])]!</span>"

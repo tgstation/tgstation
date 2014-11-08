@@ -331,35 +331,41 @@ var/list/DummyCache = list()
 	DummyCache.Add(D)
 	return 1
 
+// Comment out when done testing shit.
+#define DEBUG_ROLESELECT
+
+#ifdef DEBUG_ROLESELECT
+# define roleselect_debug(x) testing(x)
+# warning DEBUG_ROLESELECT is defined!
+#else
+# define roleselect_debug(x)
+#endif
+
 // Will return a list of active candidates. It increases the buffer 5 times until it finds a candidate which is active within the buffer.
-/proc/get_active_candidates(var/buffer = 1)
-
-	var/list/candidates = list() //List of candidate KEYS to assume control of the new larva ~Carn
+/proc/get_active_candidates(var/role_id=null, var/buffer=ROLE_SELECT_AFK_BUFFER, var/poll=0)
+	var/list/candidates = list() //List of candidate mobs to assume control of the new larva ~fuck you
 	var/i = 0
 	while(candidates.len <= 0 && i < 5)
+		roleselect_debug("get_active_candidates(role_id=[role_id], buffer=[buffer], poll=[poll]): Player list is [player_list.len] items long.")
 		for(var/mob/dead/observer/G in player_list)
-			if(((G.client.inactivity/10)/60) <= buffer + i) // the most active players are more likely to become an alien
-				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-					candidates += G.key
+			if(!G.mind || (G.mind.current && G.mind.current.stat != DEAD))
+				roleselect_debug("get_active_candidates(role_id=[role_id], buffer=[buffer], poll=[poll]): Skipping [G]  - Shitty candidate.")
+				continue
+
+			if(!G.client.desires_role(role_id,display_to_user=(poll && i==0))) // Only ask once.
+				roleselect_debug("get_active_candidates(role_id=[role_id], buffer=[buffer], poll=[poll]): Skipping [G]  - Doesn't want role.")
+				continue
+
+			if(((G.client.inactivity/10)/60) > buffer + i) // the most active players are more likely to become an alien
+				roleselect_debug("get_active_candidates(role_id=[role_id], buffer=[buffer], poll=[poll]): Skipping [G]  - Inactive.")
+				continue
+
+			roleselect_debug("get_active_candidates(role_id=[role_id], buffer=[buffer], poll=[poll]): Selected [G] as candidate.")
+			candidates += G
 		i++
 	return candidates
 
-// Same as above but for alien candidates.
-
-/proc/get_alien_candidates(var/role_id=ROLE_ALIEN)
-
-	var/list/candidates = list() //List of candidate KEYS to assume control of the new larva ~Carn
-	var/i = 0
-	while(candidates.len <= 0 && i < 5)
-		for(var/mob/dead/observer/G in player_list)
-			if(G.client.desires_role(role_id))
-				if(((G.client.inactivity/10)/60) <= ALIEN_SELECT_AFK_BUFFER + i) // the most active players are more likely to become an alien
-					if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-						candidates += G.key
-		i++
-	return candidates
-
-/proc/get_candidates(role_id=null)
+/proc/get_candidates(var/role_id=null)
 	. = list()
 	for(var/mob/dead/observer/G in player_list)
 		if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))

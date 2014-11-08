@@ -68,8 +68,8 @@
 
 				//if(host.brainloss > 100)
 
-/mob/living/simple_animal/borer/New(var/by_gamemode=0)
-	..()
+/mob/living/simple_animal/borer/New(var/loc,var/by_gamemode=0)
+	..(loc)
 	truename = "[pick("Primary","Secondary","Tertiary","Quaternary")] [rand(1000,9999)]"
 	host_brain = new/mob/living/captive_brain(src)
 
@@ -229,9 +229,9 @@
 
 		src << "You wiggle out of [host]'s ear and plop to the ground."
 
-		detatch()
+		detach()
 
-mob/living/simple_animal/borer/proc/detatch()
+mob/living/simple_animal/borer/proc/detach()
 
 	if(!host) return
 
@@ -397,11 +397,21 @@ mob/living/simple_animal/borer/proc/detatch()
 //Procs for grabbing players.
 mob/living/simple_animal/borer/proc/request_player()
 	var/list/candidates=list()
-
+	testing("Polling for borers.")
 	for(var/mob/dead/observer/G in get_active_candidates(ROLE_BORER, poll="HEY KID, YOU WANNA BE A BORER?"))
-		if(G.client && !G.client.holder)
-			if(!jobban_isbanned(G, "Syndicate"))
-				candidates += G
+		if(!G.client)
+			testing("Client of [G] inexistent")
+			continue
+
+		if(G.client.holder)
+			testing("Client of [G] is admin.")
+			continue
+
+		if(jobban_isbanned(G, "Syndicate"))
+			testing("Jobbanned.")
+			continue
+
+		candidates += G
 
 	if(!candidates.len)
 		message_admins("Unable to find a mind for [src.name]")

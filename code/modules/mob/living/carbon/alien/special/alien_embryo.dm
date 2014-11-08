@@ -123,7 +123,7 @@
 			continue
 		break
 	if(!ghostpicked || !istype(ghostpicked))
-		var/list/candidates = get_alien_candidates()
+		var/list/candidates = get_active_candidates(ROLE_ALIEN, buffer=ALIEN_SELECT_AFK_BUFFER, poll=1)
 		if(!candidates.len)
 			picked = affected_mob.key
 		else

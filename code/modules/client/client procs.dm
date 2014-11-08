@@ -321,5 +321,5 @@
 /client/proc/desires_role(var/role_id, var/display_to_user=0)
 	var/role_desired = prefs.roles[role_id]
 	if(display_to_user)
-		src << "<span style='sinister'>The game is currently looking for [role_id] candidates.  Your current answer is <a href='?src=\ref[prefs]&reset_role_pref=[role_id]'>[get_role_desire_str(role_desired)]</a>.</span>"
+		src << "<span style='recruit'>The game is currently looking for [role_id] candidates.  Your current answer is <a href='?src=\ref[prefs]&reset_role_pref=[role_id]'>[get_role_desire_str(role_desired)]</a>.</span>"
 	return role_desired & ROLEPREF_ENABLE

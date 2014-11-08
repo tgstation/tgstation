@@ -571,7 +571,7 @@
 			H << "\red <B>With an immense exertion of will, you regain control of your body!</B>"
 			B.host << "\red <B>You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you.</b>"
 
-			B.detatch()
+			B.detach()
 
 			verbs -= /mob/living/carbon/proc/release_control
 			verbs -= /mob/living/carbon/proc/punish_host
