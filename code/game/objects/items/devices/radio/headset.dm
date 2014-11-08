@@ -32,15 +32,6 @@
 		return
 	..()
 
-/obj/item/device/radio/headset/receive_range(freq, level, var/AIuser)
-	if(ishuman(src.loc))
-		var/mob/living/carbon/human/H = src.loc
-		if(H.ears == src)
-			return ..(freq, level)
-	else if(AIuser)
-		return ..(freq, level)
-	return -1
-
 /obj/item/device/radio/headset/syndicate
 	origin_tech = "syndicate=3"
 	icon_state = "syndie_headset"
@@ -190,11 +181,8 @@
 	keyslot2 = new /obj/item/device/encryptionkey/heads/captain
 
 /obj/item/device/radio/headset/ai
-	name = "\proper Integrated Subspace Transceiver "
+	name = "\improper Integrated Subspace Transceiver "
 	keyslot2 = new /obj/item/device/encryptionkey/ai
-
-/obj/item/device/radio/headset/ai/receive_range(freq, level)
-	return ..(freq, level, 1)
 
 /obj/item/device/radio/headset/attackby(obj/item/weapon/W as obj, mob/user as mob)
 //	..()
