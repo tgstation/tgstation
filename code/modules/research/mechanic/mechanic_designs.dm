@@ -8,7 +8,6 @@
 	req_tech = list() //the origin tech of either the item, or the board in the machine
 	var/obj/item/weapon/circuitboard/connected_circuit //used to store the type of the circuit in a scanned machine. Empty for items
 	category = ""
-	var/uses = 0 //counter of how many times you can make this design before it disappears!
 
 /datum/design/mechanic_design/New(var/obj/O) //sets the name, type, design, origin_tech, and circuit, all by itself
 	if(!istype(O))

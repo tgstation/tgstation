@@ -80,9 +80,11 @@ obj/machinery/r_n_d/fabricator/mechanic_fab/flatpacker/build_part(var/datum/desi
 		src.being_built = null
 
 		//blueprint stuff
-		part.uses--
-		if(part.uses == 0)
-			remove_part_from_set(part.category, part)
+		if(uses_list[part] > 0)
+			uses_list[part]--
+			if(uses_list[part] == 0)
+				uses_list -= part
+				remove_part_from_set(part.category, part)
 	src.updateUsrDialog()
 	src.busy = 0
 	return 1

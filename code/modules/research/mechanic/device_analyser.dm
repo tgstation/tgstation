@@ -34,15 +34,18 @@
 				return
 
 		if(O.origin_tech || istype(O, /obj/machinery)) //two requirements: items have origin_tech, machines are checked in...
-			if(CanCreateDesign(O)) //this proc. Checks to see if there's anything illegal in the thing before scanning it
-				if(max_designs && !(max_designs <= loaded_designs.len))
-					loaded_designs += new /datum/design/mechanic_design(O)
-					user.visible_message("[user] scans \the [O].", "<span class='notice'>You successfully scan \the [O].</span>")
-					return 1
-				else
-					user << "\icon [src] \The [src] flashes a message on-screen: \"Too many designs loaded.\""
-			else
-				user <<"<span class='rose'>\icon [src] \The [src]'s safety features prevent you from scanning that item.</span>"
+			switch(CanCreateDesign(O)) //this proc. Checks to see if there's anything illegal or bad in the thing before scanning it
+				if(1)
+					if(max_designs && !(max_designs <= loaded_designs.len))
+						loaded_designs += new /datum/design/mechanic_design(O)
+						user.visible_message("[user] scans \the [O].", "<span class='notice'>You successfully scan \the [O].</span>")
+						return 1
+					else
+						user << "\icon [src] \The [src] flashes a message on-screen: \"Too many designs loaded.\""
+				if(-1)
+					user <<"<span class='rose'>\icon [src] \The [src]'s safety features prevent you from scanning that item.</span>"
+				else //no origin_tech, no scans.
+					user <<"<span class='rose'>\The [src] can't seem to scan \the [O]!</span>"
 		else //no origin_tech, no scans.
 			user <<"<span class='rose'>\The [src] can't seem to scan \the [O]!</span>"
 	else
@@ -77,5 +80,5 @@
 	if(!techlist) //this don't fly
 		return 0
 	if(techlist && techlist["syndicate"] && src.syndi_filter)
-		return 0
+		return -1 //special negative return case
 	return 1
