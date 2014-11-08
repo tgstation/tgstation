@@ -252,13 +252,13 @@
 				var/type = href_list["vir"]
 				var/datum/disease/Dis = new type(0)
 				var/AfS = ""
-				for(var/Str in Dis.affected_species)
-					AfS += " [Str];"
+				for(var/mob/M in Dis.viable_mobtypes)
+					AfS += " [initial(M.name)];"
 				src.temp = {"<b>Name:</b> [Dis.name]
 <BR><b>Number of stages:</b> [Dis.max_stages]
-<BR><b>Spread:</b> [Dis.spread] Transmission
-<BR><b>Possible Cure:</b> [(Dis.cure||"none")]
-<BR><b>Affected Species:</b>[AfS]
+<BR><b>Spread:</b> [Dis.spread_text] Transmission
+<BR><b>Possible Cure:</b> [(Dis.cure_text||"none")]
+<BR><b>Affected Lifeforms:</b>[AfS]
 <BR>
 <BR><b>Notes:</b> [Dis.desc]
 <BR>

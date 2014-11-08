@@ -27,12 +27,12 @@
 		return
 
 	for(var/datum/disease/D in viruses)
-		if(D.spread_by_touch())
-			user.contract_disease(D, 0, 1, CONTACT_HANDS)
+		if(D.IsSpreadByTouch())
+			user.ContractDisease(D)
 
 	for(var/datum/disease/D in user.viruses)
-		if(D.spread_by_touch())
-			contract_disease(D, 0, 1, CONTACT_HANDS)
+		if(D.IsSpreadByTouch())
+			ContractDisease(D)
 
 	if(lying || isslime(src))
 		if(user.a_intent == "help")
@@ -48,16 +48,16 @@
 		return 0
 
 	for(var/datum/disease/D in viruses)
-		if(D.spread_by_touch())
-			M.contract_disease(D, 0, 1, CONTACT_HANDS)
+		if(D.IsSpreadByTouch())
+			M.ContractDisease(D)
 
 	for(var/datum/disease/D in M.viruses)
-		if(D.spread_by_touch())
-			contract_disease(D, 0, 1, CONTACT_HANDS)
+		if(D.IsSpreadByTouch())
+			ContractDisease(D)
 
 	if(..()) //successful monkey bite.
 		for(var/datum/disease/D in M.viruses)
-			contract_disease(D,1,0)
+			ForceContractDisease(D)
 		return 1
 
 	if(M.a_intent == "help")

@@ -1,17 +1,17 @@
 /datum/disease/dnaspread
 	name = "Space Retrovirus"
 	max_stages = 4
-	spread = "On contact"
-	spread_type = CONTACT_GENERAL
-	cure = "Ryetalyn"
-	cure_id = "ryetalyn"
-	curable = 0
+	spread_text = "On contact"
+	spread_flags = CONTACT_GENERAL
+	cure_text = "Ryetalyn"
+	cures = list("ryetalyn")
+	disease_flags = CAN_CARRY|CAN_RESIST
 	agent = "S4E1 retrovirus"
-	affected_species = list("Human")
+	viable_mobtypes = list(/mob/living/carbon/human)
 	var/list/original_dna = list()
 	var/transformed = 0
 	desc = "This disease transplants the genetic code of the intial vector into new hosts."
-	severity = "Medium"
+	severity = MEDIUM
 
 
 /datum/disease/dnaspread/stage_act()
