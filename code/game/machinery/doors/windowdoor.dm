@@ -43,13 +43,13 @@
 			if(src.check_access(bot.botcard))
 				open_and_close()
 			else
-				flick(text("[]deny", src.base_state), src)
+				flick("[src.base_state]deny", src)
 		else if(istype(AM, /obj/mecha))
 			var/obj/mecha/mecha = AM
 			if(mecha.occupant && src.allowed(mecha.occupant))
 				open_and_close()
 			else
-				flick(text("[]deny", src.base_state), src)
+				flick("[src.base_state]deny", src)
 		return
 	if (!( ticker ))
 		return
@@ -68,7 +68,7 @@
 	if(allowed(user))
 		open_and_close()
 	else
-		flick(text("[]deny", src.base_state), src)
+		flick("[src.base_state]deny", src)
 	return
 
 /obj/machinery/door/window/CanPass(atom/movable/mover, turf/target, height=0)
@@ -110,9 +110,9 @@
 			return 0
 	if(!src.operating) //in case of emag
 		src.operating = 1
-	flick(text("[]opening", src.base_state), src)
+	flick("[src.base_state]opening", src)
 	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
-	src.icon_state = text("[]open", src.base_state)
+	src.icon_state ="[src.base_state]open"
 	sleep(10)
 
 	explosion_resistance = 0
@@ -135,7 +135,7 @@
 		if(emagged)
 			return 0
 	src.operating = 1
-	flick(text("[]closing", src.base_state), src)
+	flick("[src.base_state]closing", src)
 	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
 	src.icon_state = src.base_state
 
@@ -164,6 +164,19 @@
 		src.density = 0
 		qdel(src)
 		return
+
+/obj/machinery/door/window/ex_act(severity)
+	switch(severity)
+		if(1.0)
+			qdel(src)
+		if(2.0)
+			if(prob(25))
+				qdel(src)
+			else
+				take_damage(120)
+		if(3.0)
+			take_damage(60)
+
 
 /obj/machinery/door/window/bullet_act(var/obj/item/projectile/Proj)
 	if(Proj.damage)
@@ -347,7 +360,7 @@
 			close()
 
 	else if (src.density)
-		flick(text("[]deny", src.base_state), src)
+		flick("[src.base_state]deny", src)
 
 	return
 
