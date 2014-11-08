@@ -277,6 +277,7 @@
 			H.Weaken(5)
 			H.updatehealth() //forces health update before next life tick
 			playsound(get_turf(src), 'sound/weapons/Egloves.ogg', 50, 1, -1)
+			H.emote("gasp")
 			add_logs(user, M, "stunned", object="defibrillator")
 			defib.deductcharge(revivecost)
 			cooldown = 1
