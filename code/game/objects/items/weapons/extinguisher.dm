@@ -18,6 +18,7 @@
 	var/safety = 1
 	var/sprite_name = "fire_extinguisher"
 	var/power = 5
+	var/precision = 0
 
 /obj/item/weapon/extinguisher/mini
 	name = "pocket fire extinguisher"
@@ -107,11 +108,15 @@
 		var/turf/T2 = get_step(T,turn(direction, -90))
 
 		var/list/the_targets = list(T,T1,T2)
+		if(precision)
+			the_targets = list(T,T1,T1,T2,T2)
 
 		for(var/a=0, a<5, a++)
 			spawn(0)
 				var/obj/effect/effect/water/W = new /obj/effect/effect/water( get_turf(src) )
 				var/turf/my_target = pick(the_targets)
+				if(precision)
+					the_targets -= my_target
 				var/datum/reagents/R = new/datum/reagents(5)
 				if(!W) return
 				W.reagents = R

@@ -57,7 +57,7 @@
 /obj/item/weapon/watertank/proc/remove_noz(mob/user)
 	var/mob/living/carbon/human/M = user
 	if(noz in get_both_hands(M))
-		M.unEquip(noz)
+		M.unEquip(noz, 1)
 	return
 
 /obj/item/weapon/watertank/Destroy()
@@ -107,6 +107,11 @@
 		return 0
 	else
 		return 1
+
+/obj/item/weapon/reagent_containers/spray/mister/Move()
+	..()
+	if(loc != tank.loc)
+		loc = tank.loc
 
 //Janitor tank
 /obj/item/weapon/watertank/janitor
@@ -187,6 +192,7 @@
 	safety = 0
 	max_water = 200
 	power = 8
+	precision = 1
 	var/obj/item/weapon/watertank/tank
 	var/nozzle_mode = 0
 	var/metal_synthesis_cooldown = 0
@@ -199,6 +205,11 @@
 		max_water = tank.volume
 		loc = tank
 	return
+
+/obj/item/weapon/extinguisher/mini/nozzle/Move()
+	..()
+	if(loc != tank.loc)
+		loc = tank.loc
 
 /obj/item/weapon/extinguisher/mini/nozzle/attack_self(mob/user as mob)
 	if(nozzle_mode == 0)
@@ -278,7 +289,7 @@
 	new /obj/effect/effect/freezing_smoke(src.loc, 6, 1)
 	var/obj/effect/decal/cleanable/flour/F = new /obj/effect/decal/cleanable/flour(src.loc)
 	F.color = "#B2FFFF"
-	F.name = "freezing smoke residue"
+	F.name = "nanofrost residue"
 	F.desc = "Residue left behind from a nanofrost detonation. Perhaps there was a fire here?"
 	playsound(src,'sound/effects/bamf.ogg',100,1)
 	qdel(src)
@@ -323,6 +334,10 @@
 					G.nitrogen += (G.toxins + G.oxygen)
 					G.oxygen = 0
 					G.toxins = 0
+		for(var/obj/machinery/atmospherics/unary/vent_pump/V in T)
+			V.welded = 1
+			V.update_icon()
+			V.visible_message("<span class='danger'>[V] was frozen shut!</span>")
 		for(var/mob/living/L in T)
 			L.ExtinguishMob()
 	return

@@ -128,9 +128,11 @@
 /obj/structure/closet/secure_closet/atmospherics/New()
 	..()
 	sleep(2)
-	new /obj/item/weapon/watertank/atmos(src)
 	new /obj/item/device/radio/headset/headset_eng(src)
 	new /obj/item/weapon/storage/toolbox/mechanical(src)
 	new /obj/item/weapon/storage/backpack/satchel_norm(src)
 	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
+	new /obj/item/weapon/watertank/atmos(src)
+	new /obj/item/clothing/suit/fire/atmos(src)
+	new /obj/item/clothing/head/hardhat/atmos(src)
 	return
