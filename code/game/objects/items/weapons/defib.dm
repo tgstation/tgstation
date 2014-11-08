@@ -274,8 +274,7 @@
 			busy = 1
 			H.visible_message("<span class='danger'>[M.name] has been touched with [src] by [user]!</span>")
 			H.adjustStaminaLoss(50)
-			H.adjustFireLoss(10)
-			H.Stun(3)
+			H.Weaken(5)
 			H.updatehealth() //forces health update before next life tick
 			playsound(get_turf(src), 'sound/weapons/Egloves.ogg', 50, 1, -1)
 			add_logs(user, M, "stunned", object="defibrillator")
