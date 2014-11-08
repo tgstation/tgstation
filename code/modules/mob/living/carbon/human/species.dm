@@ -701,25 +701,7 @@
 					H << "<span class='unconscious'>You feel a breath of fresh air enter your lungs. It feels good.</span>"
 
 		if("grab")
-			if(M == H || H.anchored)
-				return 0
-
-			add_logs(M, H, "grabbed", addition="passively")
-
-			if(H.w_uniform)
-				H.w_uniform.add_fingerprint(M)
-
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, H)
-			if(H.buckled)
-				M << "<span class='notice'>You cannot grab [H], \he is buckled in!</span>"
-			if(!G)	//the grab will delete itself in New if affecting is anchored
-				return
-			M.put_in_active_hand(G)
-			G.synch()
-			H.LAssailant = M
-
-			playsound(H.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			H.visible_message("<span class='warning'>[M] has grabbed [H] passively!</span>")
+			H.grabbedby(M)
 			return 1
 
 		if("harm")
@@ -770,6 +752,7 @@
 				H.forcesay(hit_appends)
 
 		if("disarm")
+			M.do_attack_animation(H)
 			add_logs(M, H, "disarmed")
 
 			if(H.w_uniform)
