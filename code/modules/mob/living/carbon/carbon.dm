@@ -71,21 +71,7 @@
 	else
 		..()
 
-	if(!iscarbon(user)) 
-		return
-		if(D.spread_by_touch())
-			user.ContractDisease(D)
-		if(D.spread_by_touch())
-			ContractDisease(D)
-	if(!istype(M, /mob/living/carbon)) 
-		return
 
-	for(var/datum/disease/D in viruses)
-		if(D.spread_by_touch())
-			M.ContractDisease(D)
-	for(var/datum/disease/D in M.viruses)
-		if(D.spread_by_touch())
-			ContractDisease(D)
 /mob/living/carbon/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0)
 	shock_damage *= siemens_coeff
 	if (shock_damage<1)
