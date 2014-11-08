@@ -99,8 +99,8 @@ proc/med_hud_suit_sensors(var/mob/living/carbon/human/patient)
 
 proc/med_hud_find_virus(var/mob/living/carbon/human/patient)
 	for(var/datum/disease/D in patient.viruses)
-		if(!D.hidden[SCANNER])
-			if(D.severity != D.non_threat)
+		if(!(D.visibility_flags & HIDDEN_SCANNER))
+			if(D.severity != NONTHREAT)
 				return 1
 
 proc/med_hud_get_health(var/mob/living/carbon/human/patient)

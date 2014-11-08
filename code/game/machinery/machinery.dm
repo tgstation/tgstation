@@ -141,18 +141,20 @@ Class Procs:
 	..()
 
 /obj/machinery/proc/open_machine()
-	var/turf/T = get_turf(src)
-	if(T)
-		state_open = 1
-		density = 0
-		T.contents += contents
-		if(occupant)
-			if(occupant.client)
-				occupant.client.eye = occupant
-				occupant.client.perspective = MOB_PERSPECTIVE
-			occupant = null
+	state_open = 1
+	density = 0
+	dropContents()
 	update_icon()
 	updateUsrDialog()
+
+/obj/machinery/proc/dropContents()
+	var/turf/T = get_turf(src)
+	T.contents += contents
+	if(occupant)
+		if(occupant.client)
+			occupant.client.eye = occupant
+			occupant.client.perspective = MOB_PERSPECTIVE
+		occupant = null
 
 /obj/machinery/proc/close_machine(mob/living/target = null)
 	state_open = 0
@@ -231,10 +233,13 @@ Class Procs:
 		src << "<span class='notice'>You don't have the dexterity to do this!</span>"
 	return
 
-/mob/living/carbon/human/canUseTopic(atom/movable/M)
+/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close = 0)
 	if(restrained() || lying || stat || stunned || weakened)
 		return
 	if(!in_range(M, src))
+		if((be_close == 0) && (TK in mutations))
+			if(tkMaxRangeCheck(src, M))
+				return 1
 		return
 	if(!isturf(M.loc) && M.loc != src)
 		return
@@ -309,7 +314,7 @@ Class Procs:
 		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 		M.state = 2
 		M.icon_state = "box_1"
-		for(var/obj/I in component_parts)
+		for(var/obj/item/I in component_parts)
 			if(I.reliability != 100 && crit_fail)
 				I.crit_fail = 1
 			I.loc = src.loc

@@ -2,13 +2,13 @@
 	name = "Severe Anxiety"
 	form = "Infection"
 	max_stages = 4
-	spread = "Airborne"
-	cure = "Alcohol"
-	cure_id = "ethanol"
+	spread_text = "On contact"
+	spread_flags = CONTACT_GENERAL
+	cures = list("ethanol")
 	agent = "Excess Lepidopticides"
-	affected_species = list("Human","Monkey")
+	viable_mobtypes = list(/mob/living/carbon/human,/mob/living/carbon/monkey)
 	desc = "If left untreated subject will regurgitate butterflies."
-	severity = "Medium"
+	severity = MEDIUM
 
 /datum/disease/anxiety/stage_act()
 	..()

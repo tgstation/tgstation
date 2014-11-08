@@ -1,15 +1,12 @@
-/mob/living/simple_animal/hostile/giant_spider/bees
+/mob/living/simple_animal/hostile/poison/bees
 	name = "space bee swarm"
-	desc = "A buzzy ."
+	desc = ""
 	icon_state = "bee_1"
-	butcher_state = 0
 	icon_living = "bee"
 	icon_dead = ""
 	speak_emote = list("buzzes")
 	emote_hear = list("buzzes")
 	turns_per_move = 0
-	meat_type = ""
-	meat_amount = 0
 	melee_damage_lower = 1
 	melee_damage_upper = 1
 	attacktext = "stings"
@@ -22,6 +19,8 @@
 	faction = list("hostile")
 	move_to_delay = 0
 	environment_smash = 0
+	mouse_opacity = 2
+	pass_flags = PASSTABLE
 
 	//Spaceborn beings don't get hurt by space
 	min_oxy = 0
@@ -34,26 +33,23 @@
 	max_n2 = 0
 	minbodytemp = 0
 
-/mob/living/simple_animal/hostile/giant_spider/bees/Process_Spacemove(var/movement_dir = 0)
+/mob/living/simple_animal/hostile/poison/bees/Process_Spacemove(var/movement_dir = 0)
 	return 1
 
-/mob/living/simple_animal/hostile/giant_spider/bees/New()
+/mob/living/simple_animal/hostile/poison/bees/New()
 	..()
 	update_bees()
 
-/mob/living/simple_animal/hostile/giant_spider/bees/Die()
+/mob/living/simple_animal/hostile/poison/bees/Die()
 	..()
 	qdel(src)
 	return
 
-/mob/living/simple_animal/hostile/giant_spider/bees/Web()
-	return
-
-/mob/living/simple_animal/hostile/giant_spider/bees/Life()
+/mob/living/simple_animal/hostile/poison/bees/Life()
 	..()
 	update_bees()
 
-/mob/living/simple_animal/hostile/giant_spider/bees/proc/update_bees()
+/mob/living/simple_animal/hostile/poison/bees/proc/update_bees()
 	while(overlays.len != health-1) //how many bees do we have in the swarm?
 		var/N = rand(1, 4)
 		var/image/I = image(icon='icons/mob/animal.dmi',icon_state="bee_[N]", pixel_x = rand(-8, 8), pixel_y = rand(-8, 8))

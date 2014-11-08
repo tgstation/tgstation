@@ -5,6 +5,7 @@
 	icon_state = "larva_dead"
 
 	if(!gibbed)
+		visible_message("<span class='name'>[src]</span> lets out a waning high-pitched cry.")
 		update_canmove()
 		if(client)	blind.layer = 0
 

@@ -29,6 +29,6 @@
 		var/obj/vent = pick(vents)
 		var/obj/effect/spider/spiderling/S = new(vent.loc)
 		if(prob(66))
-			S.grow_as = /mob/living/simple_animal/hostile/giant_spider/nurse
+			S.grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/nurse
 		vents -= vent
 		spawncount--

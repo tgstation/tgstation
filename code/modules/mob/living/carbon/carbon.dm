@@ -71,41 +71,6 @@
 	else
 		..()
 
-/mob/living/carbon/attack_hand(mob/user)
-	if(!iscarbon(user)) return
-
-	for(var/datum/disease/D in viruses)
-		if(D.spread_by_touch())
-			user.contract_disease(D, 0, 1, CONTACT_HANDS)
-
-	for(var/datum/disease/D in user.viruses)
-		if(D.spread_by_touch())
-			contract_disease(D, 0, 1, CONTACT_HANDS)
-
-	if(lying || isslime(src))
-		if(user.a_intent == "help")
-			if(surgeries.len)
-				for(var/datum/surgery/S in surgeries)
-					if(S.next_step(user, src))
-						return 1
-	return 0
-
-
-/mob/living/carbon/attack_paw(mob/M as mob)
-	if(!istype(M, /mob/living/carbon)) return
-
-
-	for(var/datum/disease/D in viruses)
-
-		if(D.spread_by_touch())
-			M.contract_disease(D, 0, 1, CONTACT_HANDS)
-
-	for(var/datum/disease/D in M.viruses)
-
-		if(D.spread_by_touch())
-			contract_disease(D, 0, 1, CONTACT_HANDS)
-
-	return
 
 /mob/living/carbon/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0)
 	shock_damage *= siemens_coeff
@@ -426,16 +391,6 @@
 					visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>", \
 									"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>")
 
-
-/mob/living/carbon/attackby(obj/item/I, mob/user)
-	if(lying || isslime(src))
-		if(surgeries.len)
-			if(user.a_intent == "help")
-				for(var/datum/surgery/S in surgeries)
-					if(S.next_step(user, src))
-						return 1
-
-	..()
 
 
 /mob/living/carbon/getTrail()

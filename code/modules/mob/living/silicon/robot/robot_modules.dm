@@ -161,6 +161,7 @@
 	modules += new /obj/item/weapon/storage/bag/trash/cyborg(src)
 	modules += new /obj/item/weapon/mop/cyborg(src)
 	modules += new /obj/item/device/lightreplacer/cyborg(src)
+	modules += new /obj/item/weapon/holosign_creator(src)
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
 
 	emag.reagents.add_reagent("lube", 250)

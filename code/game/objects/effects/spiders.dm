@@ -61,7 +61,7 @@
 
 /obj/effect/spider/stickyweb/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0) return 1
-	if(istype(mover, /mob/living/simple_animal/hostile/giant_spider))
+	if(istype(mover, /mob/living/simple_animal/hostile/poison/giant_spider))
 		return 1
 	else if(istype(mover, /mob/living))
 		if(prob(50))
@@ -189,8 +189,8 @@
 		amount_grown += rand(0,2)
 		if(amount_grown >= 100)
 			if(!grow_as)
-				grow_as = pick(typesof(/mob/living/simple_animal/hostile/giant_spider))
-			var/mob/living/simple_animal/hostile/giant_spider/S = new grow_as(src.loc)
+				grow_as = pick(typesof(/mob/living/simple_animal/hostile/poison/giant_spider))
+			var/mob/living/simple_animal/hostile/poison/giant_spider/S = new grow_as(src.loc)
 			if(player_spiders)
 				var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
 				var/client/C = null
@@ -213,7 +213,7 @@
 	var/mob/living/user = usr
 	var/breakout_time = 2
 	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT 
+	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user << "<span class='notice'>You struggle against the tight bonds! (This will take about [breakout_time] minutes.)</span>"
 	visible_message("You see something struggling and writhing in the [src]!")
 	if(do_after(user,(breakout_time*60*10)))

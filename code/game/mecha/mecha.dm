@@ -32,7 +32,7 @@
 	var/list/log = new
 	var/last_message = 0
 	var/add_req_access = 1
-	var/maint_access = 1
+	var/maint_access = 0
 	var/dna	//dna-locking the mech
 	var/list/proc_res = list() //stores proc owners, like proc_res["functionname"] = owner reference
 	var/datum/effect/effect/system/spark_spread/spark_system = new
@@ -85,7 +85,6 @@
 	add_cell()
 	add_iterators()
 	removeVerb(/obj/mecha/verb/disconnect_from_port)
-	removeVerb(/atom/movable/verb/pull)
 	log_message("[src.name] created.")
 	mechas_list += src //global mech list
 	return
@@ -456,8 +455,9 @@ obj/mecha/proc/can_use(mob/user)
 	else
 		qdel(src)
 
-/obj/mecha/attack_hand(mob/user as mob)
+/obj/mecha/attack_hand(mob/living/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
+	user.do_attack_animation(src)
 	src.log_message("Attack by hand/paw. Attacker - [user].",1)
 
 	if ((HULK in user.mutations) && !prob(src.deflect_chance))
@@ -474,9 +474,10 @@ obj/mecha/proc/can_use(mob/user)
 	return src.attack_hand(user)
 
 
-/obj/mecha/attack_alien(mob/user as mob)
+/obj/mecha/attack_alien(mob/living/user as mob)
 	src.log_message("Attack by alien. Attacker - [user].",1)
 	user.changeNext_move(CLICK_CD_MELEE) //Now stompy alien killer mechs are actually scary to aliens!
+	user.do_attack_animation(src)
 	if(!prob(src.deflect_chance))
 		src.take_damage(15)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
@@ -495,9 +496,11 @@ obj/mecha/proc/can_use(mob/user)
 
 /obj/mecha/attack_animal(mob/living/simple_animal/user as mob)
 	src.log_message("Attack by simple animal. Attacker - [user].",1)
+	user.changeNext_move(CLICK_CD_MELEE)
 	if(user.melee_damage_upper == 0)
 		user.emote("[user.friendly] [src]")
 	else
+		user.do_attack_animation(src)
 		if(!prob(src.deflect_chance))
 			var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 			src.take_damage(damage)
@@ -632,9 +635,9 @@ obj/mecha/proc/can_use(mob/user)
 		src.check_for_internal_damage(list(MECHA_INT_FIRE, MECHA_INT_TEMP_CONTROL))
 	return
 
-/obj/mecha/proc/dynattackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/mecha/proc/dynattackby(obj/item/weapon/W as obj, mob/living/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
-
+	user.do_attack_animation(src)
 	src.log_message("Attacked by [W]. Attacker - [user]")
 	if(prob(src.deflect_chance))
 		user << "<span class='danger'>The [W] bounces off [src.name] armor.</span>"
@@ -677,7 +680,7 @@ obj/mecha/proc/can_use(mob/user)
 		return
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(add_req_access || maint_access)
-			if(internals_access_allowed(usr))
+			if(internals_access_allowed(user))
 				var/obj/item/weapon/card/id/id_card
 				if(istype(W, /obj/item/weapon/card/id))
 					id_card = W
@@ -687,9 +690,9 @@ obj/mecha/proc/can_use(mob/user)
 				output_maintenance_dialog(id_card, user)
 				return
 			else
-				user << "<span class='danger'>Invalid ID: Access denied.</span>"
+				user << "<span class='warning'>Invalid ID: Access denied.</span>"
 		else
-			user << "<span class='danger'>Maintenance protocols disabled by operator.</span>"
+			user << "<span class='warning'>Maintenance protocols disabled by operator.</span>"
 	else if(istype(W, /obj/item/weapon/wrench))
 		if(state==1)
 			state = 2
@@ -1021,7 +1024,7 @@ obj/mecha/proc/can_use(mob/user)
 	//Added a message here since people assume their first click failed or something./N
 //	user << "Installing MMI, please stand by."
 
-	visible_message("<span class='notice'>[usr] starts to insert an MMI into [src.name]</span>")
+	visible_message("<span class='notice'>[user] starts to insert an MMI into [src.name]</span>")
 
 	if(enter_after(40,user))
 		if(!occupant)
@@ -1162,39 +1165,15 @@ obj/mecha/proc/can_use(mob/user)
 ////// Access stuff /////
 /////////////////////////
 
-/obj/mecha/proc/operation_allowed(mob/living/carbon/human/H)
-	for(var/ID in list(H.get_active_hand(), H.wear_id, H.belt))
-		if(src.check_access(ID,src.operation_req_access))
-			return 1
-	return 0
+/obj/mecha/proc/operation_allowed(mob/M)
+	req_access = operation_req_access
+	req_one_access = list()
+	return allowed(M)
 
-
-/obj/mecha/proc/internals_access_allowed(mob/living/carbon/human/H)
-	for(var/atom/ID in list(H.get_active_hand(), H.wear_id, H.belt))
-		if(src.check_access(ID,src.internals_req_access))
-			return 1
-	return 0
-
-
-/obj/mecha/check_access(obj/item/weapon/card/id/I, list/access_list)
-	if(!istype(access_list))
-		return 1
-	if(!access_list.len) //no requirements
-		return 1
-	if(istype(I, /obj/item/device/pda))
-		var/obj/item/device/pda/pda = I
-		I = pda.id
-	if(!istype(I) || !I.access) //not ID or no access
-		return 0
-	if(access_list==src.operation_req_access)
-		for(var/req in access_list)
-			if(!(req in I.access)) //doesn't have this access
-				return 0
-	else if(access_list==src.internals_req_access)
-		for(var/req in access_list)
-			if(req in I.access)
-				return 1
-	return 1
+/obj/mecha/proc/internals_access_allowed(mob/M)
+	req_one_access = internals_req_access
+	req_access = list()
+	return allowed(M)
 
 
 ////////////////////////////////////
@@ -1432,6 +1411,8 @@ var/year_integer = text2num(year) // = 2013???
 
 /obj/mecha/Topic(href, href_list)
 	..()
+	if(!usr.canUseTopic(src))
+		return
 	if(href_list["update_content"])
 		if(usr != src.occupant)	return
 		send_byjax(src.occupant,"exosuit.browser","content",src.get_stats_part())
@@ -1495,7 +1476,7 @@ var/year_integer = text2num(year) // = 2013???
 		return
 	if (href_list["change_name"])
 		if(usr != src.occupant)	return
-		var/newname = strip_html_simple(input(occupant,"Choose new exosuit name","Rename exosuit",initial(name)) as text, MAX_NAME_LEN)
+		var/newname = stripped_input(occupant,"Choose new exosuit name","Rename exosuit",initial(name), MAX_NAME_LEN)
 		if(newname && trim(newname))
 			name = newname
 		else
