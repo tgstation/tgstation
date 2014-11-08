@@ -5,7 +5,8 @@
 	desc = "Lost prototype of advanced clown tech. Powered by bananium, these shoes leave a trail of chaos in their wake."
 	icon_state = "clown_prototype_off"
 	var/on = 0
-	var/bananium = 0 //maximum should be 200000, or 100 sheets of bananium
+	var/bananium = 0
+	var/const/bananium_max = 200000 //maximum should be 200000, or 100 sheets of bananium
 	action_button_name = "Toggle Shoes"
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/step_action()
@@ -43,7 +44,7 @@
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/attackby(obj/item/O, mob/user) //inserts bananium into shoes
 	if(istype(O,/obj/item/stack/sheet/mineral/bananium))
-		if(bananium <= 200000) //100 sheets worth of bananium max
+		if(bananium <= bananium_max)
 			var/obj/item/stack/sheet/mineral/bananium/M = O
 			var/amount = round(100 - (bananium/2000))
 			if(amount > 0)
