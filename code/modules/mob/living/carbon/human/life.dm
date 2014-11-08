@@ -174,29 +174,6 @@
 
 	return
 
-
-/mob/living/carbon/human/proc/get_breath_from_internal(volume_needed)
-	if(internal)
-		if (!contents.Find(internal))
-			internal = null
-		if (!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
-			internal = null
-		if(internal)
-			return internal.remove_air_volume(volume_needed)
-		else if(internals)
-			internals.icon_state = "internal0"
-	return null
-
-
-	/*proc/handle_breath(datum/gas_mixture/breath)
-		if((status_flags & GODMODE))
-			return
-
-		if(dna)
-			dna.species.handle_breath(breath)
-
-		return 1*/
-
 /mob/living/carbon/human/proc/handle_environment(datum/gas_mixture/environment)
 	if(dna)
 		dna.species.handle_environment(environment, src)
