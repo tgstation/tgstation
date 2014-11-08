@@ -657,167 +657,145 @@ var/list/sacrificed = list()
 /////////////////////////////////////////FIFTEENTH RUNE
 
 /obj/effect/rune/proc/sacrifice()
-	var/list/mob/living/carbon/human/cultsinrange = list()
-	var/list/mob/living/carbon/human/victims = list()
-	for(var/mob/living/carbon/human/V in src.loc)//Checks for non-cultist humans to sacrifice
-		if(ishuman(V))
-			if(!(iscultist(V)))
-				victims += V//Checks for cult status and mob type
-	for(var/obj/item/I in src.loc)//Checks for MMIs/brains/Intellicards
-		if(istype(I,/obj/item/organ/brain))
-			var/obj/item/organ/brain/B = I
-			victims += B.brainmob
-		else if(istype(I,/obj/item/device/mmi))
-			var/obj/item/device/mmi/B = I
-			victims += B.brainmob
-		else if(istype(I,/obj/item/device/aicard))
-			for(var/mob/living/silicon/ai/A in I)
-				victims += A
+	var/list/mob/living/cultsinrange = list()
+	var/ritualresponse = ""
+	var/sacrificedone = 0
+
+	//how many cultists do we have near the rune
 	for(var/mob/living/C in orange(1,src))
 		if(iscultist(C) && !C.stat)
 			cultsinrange += C
 			C.say("Barhah hra zar[pick("'","`")]garis!")
-	for(var/mob/H in victims)
-		nullblock = 0
-		for(var/turf/T in range(H,1))
-			findNullRod(T)
-		if(nullblock)
-			usr << "<span class='warning'>The presence of a null rod is perturbing the ritual.</span>"
-			return
-		if (ticker.mode.name == "cult")
-			if(H.mind == ticker.mode:sacrifice_target)
-				if(cultsinrange.len >= 3)
-					sacrificed += H.mind
-					if(isrobot(H))
-						H.dust()//To prevent the MMI from remaining
-					else
-						H.gib()
-					invocation("rune_sac")
-					usr << "<span class='warning'>The Geometer of Blood accepts this sacrifice, your objective is now complete.</span>"
-				else
-					usr << "<span class='warning'>Your target's earthly bonds are too strong. You need more cultists to succeed in this ritual.</span>"
-			else
-				if(cultsinrange.len >= 3)
-					if(H.stat !=2)
-						invocation("rune_sac")
-						if(prob(80))
-							usr << "<span class='warning'>The Geometer of Blood accepts this sacrifice.</span>"
-							ticker.mode:grant_runeword(usr)
-						else
-							usr << "<span class='warning'>The Geometer of blood accepts this sacrifice.</span>"
-							usr << "<span class='warning'>However, this soul was not enough to gain His favor.</span>"
-						if(isrobot(H))
-							H.dust()//To prevent the MMI from remaining
-						else
-							H.gib()
-					else
-						invocation("rune_sac")
-						if(prob(40))
-							usr << "<span class='warning'>The Geometer of blood accepts this sacrifice.</span>"
-							ticker.mode:grant_runeword(usr)
-						else
-							usr << "<span class='warning'>The Geometer of blood accepts this sacrifice.</span>"
-							usr << "<span class='warning'>However, a mere dead body is not enough to satisfy Him.</span>"
-						if(isrobot(H))
-							H.dust()//To prevent the MMI from remaining
-						else
-							H.gib()
-				else
-					if(H.stat !=2)
-						usr << "<span class='warning'>The victim is still alive, you will need more cultists chanting for the sacrifice to succeed.</span>"
-					else
-						invocation("rune_sac")
-						if(prob(40))
-							usr << "<span class='warning'>The Geometer of blood accepts this sacrifice.</span>"
-							ticker.mode:grant_runeword(usr)
-						else
-							usr << "<span class='warning'>The Geometer of blood accepts this sacrifice.</span>"
-							usr << "<span class='warning'>However, a mere dead body is not enough to satisfy Him.</span>"
-						if(isrobot(H))
-							H.dust()//To prevent the MMI from remaining
-						else
-							H.gib()
-		else
-			if(cultsinrange.len >= 3)
-				if(H.stat !=2)
-					invocation("rune_sac")
-					if(prob(80))
-						usr << "<span class='warning'>The Geometer of Blood accepts this sacrifice.</span>"
-						ticker.mode:grant_runeword(usr)
-					else
-						usr << "<span class='warning'>The Geometer of blood accepts this sacrifice.</span>"
-						usr << "<span class='warning'>However, this soul was not enough to gain His favor.</span>"
-					if(isrobot(H))
-						H.dust()//To prevent the MMI from remaining
-					else
-						H.gib()
-				else
-					invocation("rune_sac")
-					if(prob(40))
-						usr << "<span class='warning'>The Geometer of blood accepts this sacrifice.</span>"
-						ticker.mode:grant_runeword(usr)
-					else
-						usr << "<span class='warning'>The Geometer of blood accepts this sacrifice.</span>"
-						usr << "<span class='warning'>However, a mere dead body is not enough to satisfy Him.</span>"
-					if(isrobot(H))
-						H.dust()//To prevent the MMI from remaining
-					else
-						H.gib()
-			else
-				if(H.stat !=2)
-					usr << "<span class='warning'>The victim is still alive, you will need more cultists chanting for the sacrifice to succeed.</span>"
-				else
-					invocation("rune_sac")
-					if(prob(40))
-						usr << "<span class='warning'>The Geometer of blood accepts this sacrifice.</span>"
-						ticker.mode:grant_runeword(usr)
-					else
-						usr << "<span class='warning'>The Geometer of blood accepts this sacrifice.</span>"
-						usr << "<span class='warning'>However, a mere dead body is not enough to satisfy Him.</span>"
-					if(isrobot(H))
-						H.dust()//To prevent the MMI from remaining
-					else
-						H.gib()
-	for(var/mob/living/carbon/monkey/M in src.loc)
-		if (ticker.mode.name == "cult")
-			if(M.mind == ticker.mode:sacrifice_target)
+
+	//checking for null rods
+	nullblock = 0
+	for(var/turf/T in range(src,1))
+		findNullRod(T)
+	if(nullblock)
+		usr << "<span class='warning'>The presence of a null rod is perturbing the ritual.</span>"
+		return
+
+	for(var/atom/A in loc)
+		if(iscultist(A))
+			continue
+		var/satisfaction = 0
+//Humans and Animals
+		if(istype(A,/mob/living/carbon) || istype(A,/mob/living/simple_animal))//carbon mobs and simple animals
+			var/mob/living/M = A
+			if ((ticker.mode.name == "cult") && (M.mind == ticker.mode:sacrifice_target))
 				if(cultsinrange.len >= 3)
 					sacrificed += M.mind
+					M.gib()
+					sacrificedone = 1
 					invocation("rune_sac")
-					usr << "<span class='warning'>The Geometer of Blood accepts this sacrifice, your objective is now complete.</span>"
+					ritualresponse += "The Geometer of Blood gladly accepts this sacrifice, your objective is now complete."
 				else
-					usr << "<span class='warning'>Your target's earthly bonds are too strong. You need more cultists to succeed in this ritual.</span>"
-					continue
+					ritualresponse += "You need more cultists to perform the ritual and complete your objective."
 			else
+				if(M.stat != DEAD)
+					if(cultsinrange.len >= 3)
+						if(M.mind)				//living players
+							ritualresponse += "The Geometer of Blood gladly accepts this sacrifice."
+							satisfaction = 100
+						else					//living NPCs
+							ritualresponse += "The Geometer of Blood accepts this being in sacrifice. Somehow you get the feeling that beings with souls would make a better offering."
+							satisfaction = 50
+						sacrificedone = 1
+						invocation("rune_sac")
+						M.gib()
+					else
+						ritualresponse += "The victim is still alive, you will need more cultists chanting for the sacrifice to succeed."
+				else
+					if(M.mind)					//dead players
+						ritualresponse += "The Geometer of Blood accepts this sacrifice."
+						satisfaction = 50
+					else						//dead NPCs
+						ritualresponse += "The Geometer of Blood accepts your meager sacrifice."
+						satisfaction = 10
+					sacrificedone = 1
+					invocation("rune_sac")
+					M.gib()
+//Borgs and MoMMis
+		else if(istype(A, /mob/living/silicon/robot))
+			var/mob/living/silicon/robot/B = A
+			var/obj/item/device/mmi/O = locate() in B
+			if(O)
+				if((ticker.mode.name == "cult") && (O.brainmob.mind == ticker.mode:sacrifice_target))
+					if(cultsinrange.len >= 3)
+						ritualresponse += "The Geometer of Blood accepts this sacrifice, your objective is now complete."
+						sacrificedone = 1
+						invocation("rune_sac")
+						B.dust()
+					else
+						ritualresponse += "You need more cultists to perform the ritual and complete your objective."
+				else
+					if(B.stat != DEAD)
+						if(cultsinrange.len >= 3)
+							ritualresponse += "The Geometer of Blood accepts to destroy that pile of machinery."
+							sacrificedone = 1
+							invocation("rune_sac")
+							B.dust()
+						else
+							ritualresponse += "That machine is still working, you will need more cultists chanting for the sacrifice to destroy it."
+					else
+						ritualresponse += "The Geometer of Blood accepts to destroy that pile of machinery."
+						sacrificedone = 1
+						invocation("rune_sac")
+						B.dust()
+//MMI
+		else if(istype(A, /obj/item/device/mmi))
+			var/obj/item/device/mmi/I = A
+			var/mob/living/carbon/brain/N = I.brainmob
+			if(N)//the MMI has a player's brain in it
+				if((ticker.mode.name == "cult") && (N.mind == ticker.mode:sacrifice_target))
+					ritualresponse += "You need to place that brain back inside a body before you can complete your objective."
+				else
+					ritualresponse += "The Geometer of Blood accepts to destroy that pile of machinery."
+					sacrificedone = 1
+					invocation("rune_sac")
+					I.on_fire = 1
+					I.ashify()
+//Brain
+		else if(istype(A, /obj/item/organ/brain))
+			var/obj/item/organ/brain/R = A
+			var/mob/living/carbon/brain/N = R.brainmob
+			if(N)//the brain is a player's
+				if((ticker.mode.name == "cult") && (N.mind == ticker.mode:sacrifice_target))
+					ritualresponse += "You need to place that brain back inside a body before you can complete your objective."
+				else
+					ritualresponse += "The Geometer of Blood accepts to destroy that brain."
+					sacrificedone = 1
+					invocation("rune_sac")
+					R.on_fire = 1
+					R.ashify()
+//Carded AIs
+		else if(istype(A, /obj/item/device/aicard))
+			var/obj/item/device/aicard/D = A
+			var/mob/living/silicon/ai/T = locate() in D
+			if(T)//there is an AI on the card
+				if((ticker.mode.name == "cult") && (T.mind == ticker.mode:sacrifice_target))//what are the odds this ever happens?
+					sacrificed += T.mind
+					ritualresponse += "With a sigh, the Geometer of Blood accepts this sacrifice, your objective is now complete."//since you cannot debrain an AI.
+				else
+					ritualresponse += "The Geometer of Blood accepts to destroy that piece of technological garbage."
+				sacrificedone = 1
 				invocation("rune_sac")
-				if(prob(20))
-					usr << "<span class='warning'>The Geometer of Blood accepts your meager sacrifice.</span>"
-					ticker.mode:grant_runeword(usr)
-				else
-					usr << "<span class='warning'>The Geometer of blood accepts this sacrifice.</span>"
-					usr << "<span class='warning'>However, a mere monkey is not enough to satisfy Him.</span>"
+				D.on_fire = 1
+				D.ashify()
+
 		else
-			invocation("rune_sac")
-			usr << "<span class='warning'>The Geometer of Blood accepts your meager sacrifice.</span>"
-			if(prob(20))
-				ticker.mode.grant_runeword(usr)
-		M.gib()
-/*	for(var/mob/living/carbon/alien/A)
-		for(var/mob/K in cultsinrange)
-			K.say("Barhah hra zar'garis!")
-		A.dust()      /// A.gib() doesnt work for some reason, and dust() leaves that skull and bones thingy which we dont really need.
-		if (ticker.mode.name == "cult")
-			invocation("rune_sac")
-			if(prob(75))
-				usr << "<span class='warning'>The Geometer of Blood accepts your exotic sacrifice.</span>"
-				ticker.mode:grant_runeword(usr)
-			else
-				usr << "<span class='warning'>The Geometer of Blood accepts your exotic sacrifice.</span>"
-				usr << "<span class='warning'>However, this alien is not enough to gain His favor.</span>"
-		else
-			usr << "<span class='warning'>The Geometer of Blood accepts your exotic sacrifice.</span>"
-		return
-	return fizzle() */
+			continue
+
+//feedback
+		for(var/mob/living/C in cultsinrange)
+			if(ritualresponse != "")
+				C << "<span class='sinister'>[ritualresponse]</span>"
+				if(prob(satisfaction))
+					ticker.mode:grant_runeword(C)
+
+	if(!sacrificedone)
+		for(var/mob/living/C in cultsinrange)
+			C << "<span class='warning'>There is nothing fit for sacrifice on the rune.</span>"
 
 /////////////////////////////////////////SIXTEENTH RUNE
 
