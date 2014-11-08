@@ -496,6 +496,7 @@ obj/mecha/proc/can_use(mob/user)
 
 /obj/mecha/attack_animal(mob/living/simple_animal/user as mob)
 	src.log_message("Attack by simple animal. Attacker - [user].",1)
+	user.changeNext_move(CLICK_CD_MELEE)
 	if(user.melee_damage_upper == 0)
 		user.emote("[user.friendly] [src]")
 	else
