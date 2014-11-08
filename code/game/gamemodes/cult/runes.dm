@@ -167,9 +167,17 @@ var/list/sacrificed = list()
 /obj/effect/rune/proc/convert()
 	for(var/mob/living/carbon/M in src.loc)
 		if(iscultist(M))
-			continue
-		if(M.stat==2)
-			continue
+			usr << "<span class='warning'>You cannot convert what is already a follower of Nar-Sie.</span>"
+			return 0
+		if(M.stat==DEAD)
+			usr << "<span class='warning'>You cannot convert the dead.</span>"
+			return 0
+		if(!M.mind)
+			usr << "<span class='warning'>You cannot convert that which has no soul</span>"
+			return 0
+		if(ticker.mode.name == "cult" && M.mind == ticker.mode:sacrifice_target)
+			usr << "<span class='warning'>The Geometer of blood wants this mortal for himself.</span>"
+			return 0
 		usr.say("Mah[pick("'","`")]weyh pleggh at e'ntrath!")
 		nullblock = 0
 		for(var/turf/T in range(M,1))
