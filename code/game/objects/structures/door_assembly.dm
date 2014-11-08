@@ -267,7 +267,7 @@ obj/structure/door_assembly/New()
 	anchored = 1
 	density = 1
 	state = 1
-	mineral = "clown"
+	mineral = "bananium"
 
 /obj/structure/door_assembly/door_assembly_sandstone
 	name = "sandstone airlock assembly"
@@ -335,7 +335,7 @@ obj/structure/door_assembly/New()
 
 /obj/structure/door_assembly/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/pen))
-		var/t = copytext(stripped_input(user, "Enter the name for the door.", src.name, src.created_name),1,MAX_NAME_LEN)
+		var/t = stripped_input(user, "Enter the name for the door.", src.name, src.created_name,MAX_NAME_LEN)
 		if(!t)
 			return
 		if(!in_range(src, usr) && src.loc != usr)

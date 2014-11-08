@@ -7,6 +7,7 @@
 	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 20, bio = 20, rad = 20)
 	strip_delay = 50
 	put_on_delay = 50
+	unacidable = 1
 
 /obj/item/clothing/head/wizard/red
 	name = "red wizard hat"
@@ -51,6 +52,7 @@
 	flags_inv = HIDEJUMPSUIT
 	strip_delay = 50
 	put_on_delay = 50
+	unacidable = 1
 
 
 /obj/item/clothing/suit/wizrobe/red
@@ -92,6 +94,7 @@
 	gas_transfer_coefficient = 1
 	permeability_coefficient = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	unacidable = 0
 
 /obj/item/clothing/head/wizard/marisa/fake
 	name = "witch hat"
@@ -100,6 +103,7 @@
 	gas_transfer_coefficient = 1
 	permeability_coefficient = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	unacidable = 0
 
 /obj/item/clothing/suit/wizrobe/marisa/fake
 	name = "witch robe"
@@ -109,3 +113,4 @@
 	gas_transfer_coefficient = 1
 	permeability_coefficient = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	unacidable = 0

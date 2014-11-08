@@ -117,6 +117,7 @@
 		dat += "Make pieces of metal into tiles when empty: <A href='?src=\ref[src];operation=make'>[maketiles ? "Yes" : "No"]</A><BR>"
 		dat += "Transmit notice when empty: <A href='?src=\ref[src];operation=emptynag'>[nag_on_empty ? "Yes" : "No"]</A><BR>"
 		dat += "Repair damaged tiles and platings: <A href='?src=\ref[src];operation=fix'>[fixfloors ? "Yes" : "No"]</A><BR>"
+		dat += "Traction Magnets: <A href='?src=\ref[src];operation=anchor'>[anchored ? "Engaged" : "Disengaged"]</A><BR>"
 		dat += "Patrol Station: <A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A><BR>"
 		var/bmode
 		if (targetdirection)
@@ -181,6 +182,8 @@
 			autotile = !autotile
 		if("emptynag")
 			nag_on_empty = !nag_on_empty
+		if("anchor")
+			anchored = !anchored
 
 		if("bridgemode")
 			var/setdir = input("Select construction direction:") as null|anything in list("north","east","south","west","disable")
@@ -197,7 +200,7 @@
 					targetdirection = null
 	updateUsrDialog()
 
-/obj/machinery/bot/floorbot/process()
+/obj/machinery/bot/floorbot/bot_process()
 	if (!..())
 		return
 
@@ -230,30 +233,23 @@
 
 			else //Find a space tile farther way!
 				target = scan(/turf/space, oldtarget)
-				anchored = 1
 			process_type = BRIDGE_MODE
-			return
 
 		if(!target)
 			process_type = HULL_BREACH //Ensures the floorbot does not try to "fix" space areas or shuttle docking zones.
 			target = scan(/turf/space, oldtarget)
-			anchored = 1 //Prevent the floorbot being blown off-course while trying to reach a hull breach.
-			return
 
 		if(!target && replacetiles) //Finds a floor without a tile and gives it one.
 			process_type = REPLACE_TILE //The target must be the floor and not a tile. The floor must not already have a floortile.
-			//target = scan(/turf/simulated/floor, oldtarget)
-			return
+			target = scan(/turf/simulated/floor, oldtarget)
 
 		if(!target && fixfloors) //Repairs damaged floors and tiles.
 			process_type = FIX_TILE
 			target = scan(/turf/simulated/floor, oldtarget)
-			return
 
 	if(!target && emagged == 2) //We are emagged! Time to rip up the floors!
 		process_type = TILE_EMAG
 		target = scan(/turf/simulated/floor, oldtarget)
-		return
 
 
 	if(!target)
@@ -336,12 +332,14 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 		if(HULL_BREACH) //The most common job, patching breaches in the station's hull.
 			if(is_hull_breach(scan_target)) //Ensure that the targeted space turf is actually part of the station, and not random space.
 				result = scan_target
+				anchored = 1 //Prevent the floorbot being blown off-course while trying to reach a hull breach.
 		if(BRIDGE_MODE) //Only space turfs in our chosen direction are considered.
 			if(get_dir(src, scan_target) == targetdirection)
 				result = scan_target
+				anchored = 1
 		if(REPLACE_TILE)
 			F = scan_target
-			if(F.is_plating()) //The floor must not already have a tile.
+			if(istype(F, /turf/simulated/floor/plating)) //The floor must not already have a tile.
 				result = F
 		if(FIX_TILE)	//Selects only damaged floors.
 			F = scan_target
@@ -349,7 +347,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 				result = F
 		if(TILE_EMAG) //Emag mode! Rip up the floor and cause breaches to space!
 			F = scan_target
-			if(!F.is_plating())
+			if(!istype(F, /turf/simulated/floor/plating))
 				result = F
 		else //If no special processing is needed, simply return the result.
 			result = scan_target
@@ -368,8 +366,6 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 		mode = BOT_IDLE
 		target = null
 		return
-	var/turf/simulated/floor/F
-	var/obj/item/stack/tile/plasteel/T = new /obj/item/stack/tile/plasteel
 	anchored = 1
 	icon_state = "floorbot-c"
 	if(istype(target_turf, /turf/space/)) //If we are fixing an area not part of pure space, it is
@@ -378,23 +374,21 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 		spawn(50)
 			if(mode == BOT_REPAIRING)
 				if(autotile) //Build the floor and include a tile.
-					F = target_turf.ChangeTurf(/turf/simulated/floor)
+					target_turf.ChangeTurf(/turf/simulated/floor)
 				else //Build a hull plating without a floor tile.
-					T.build(loc)
+					target_turf.ChangeTurf(/turf/simulated/floor/plating)
 				mode = BOT_IDLE
 				amount -= 1
 				updateicon()
 				anchored = 0
 				target = null
 	else
-		F = target_turf
-
+		var/turf/simulated/floor/F = target_turf
 		mode = BOT_REPAIRING
 		visible_message("<span class='notice'> [src] begins repairing the floor.</span>")
 		spawn(50)
 			if(mode == BOT_REPAIRING)
-				F = target_turf
-				F.make_plasteel_floor(T)
+				F.make_floor(/turf/simulated/floor)
 				mode = BOT_IDLE
 				amount -= 1
 				updateicon()
@@ -509,7 +503,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 		qdel(src)
 
 	else if (istype(W, /obj/item/weapon/pen))
-		var/t = copytext(stripped_input(user, "Enter new robot name", name, created_name),1,MAX_NAME_LEN)
+		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
 		if (!t)
 			return
 		if (!in_range(src, usr) && loc != usr)
@@ -528,8 +522,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 		user.unEquip(src, 1)
 		qdel(src)
 	else if (istype(W, /obj/item/weapon/pen))
-		var/t = stripped_input(user, "Enter new robot name", name, created_name)
-
+		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
 		if (!t)
 			return
 		if (!in_range(src, usr) && loc != usr)

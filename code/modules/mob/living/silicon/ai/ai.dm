@@ -28,6 +28,7 @@ var/list/ai_list = list()
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 	var/viewalerts = 0
 	var/icon/holo_icon//Default is assigned when AI is created.
+	var/radio_enabled = 1 //Determins if a carded AI can speak with its built in radio or not.
 	var/obj/item/device/pda/ai/aiPDA = null
 	var/obj/item/device/multitool/aiMulti = null
 	var/obj/item/device/camera/siliconcam/aicamera = null
@@ -92,12 +93,14 @@ var/list/ai_list = list()
 	aiPDA.name = name + " (" + aiPDA.ownjob + ")"
 
 	aiMulti = new(src)
+	radio = new /obj/item/device/radio/headset/ai(src)
 	aicamera = new/obj/item/device/camera/siliconcam/ai_camera(src)
 
 	if (istype(loc, /turf))
 		verbs.Add(/mob/living/silicon/ai/proc/ai_network_change, \
 		/mob/living/silicon/ai/proc/ai_statuschange, /mob/living/silicon/ai/proc/ai_hologram_change, \
-		/mob/living/silicon/ai/proc/toggle_camera_light, /mob/living/silicon/ai/proc/botcall)
+		/mob/living/silicon/ai/proc/toggle_camera_light, /mob/living/silicon/ai/proc/botcall,\
+		/mob/living/silicon/ai/proc/control_integrated_radio)
 
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
 		if (!B)//If there is no player/brain inside.
@@ -113,6 +116,8 @@ var/list/ai_list = list()
 			src << "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>"
 			src << "To use something, simply click on it."
 			src << "Use say :b to speak to your cyborgs through binary."
+			src << "For department channels, use the following say commands:"
+			src << ":o - AI Private, :c - Command, :s - Security, :e - Engineering, :u - Supply, :v - Service, :m - Medical, :n - Science."
 			if (!(ticker && ticker.mode && (mind in ticker.mode.malf_ai)))
 				show_laws()
 				src << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
@@ -359,7 +364,7 @@ var/list/ai_list = list()
 		return
 
 	if (href_list["callbot"]) //Command a bot to move to a selected location.
-		Bot = locate(href_list["callbot"]) in machines
+		Bot = locate(href_list["callbot"]) in aibots
 		if(!Bot || Bot.remote_disabled || src.control_disabled)
 			return //True if there is no bot found, the bot is manually emagged, or the AI is carded with wireless off.
 		waypoint_mode = 1
@@ -367,7 +372,7 @@ var/list/ai_list = list()
 		return
 
 	if (href_list["interface"]) //Remotely connect to a bot!
-		Bot = locate(href_list["interface"]) in machines
+		Bot = locate(href_list["interface"]) in aibots
 		if(!Bot || Bot.remote_disabled || src.control_disabled)
 			return
 		Bot.attack_ai(src)
@@ -382,7 +387,7 @@ var/list/ai_list = list()
 		if(A && target)
 
 			A.cameraFollow = target
-			A << text("Now tracking [] on camera.", target.name)
+			A << "Now tracking [target.name] on camera."
 			if (usr.machine == null)
 				usr.machine = usr
 
@@ -405,46 +410,8 @@ var/list/ai_list = list()
 		M << "You cannot attack people before the game has started."
 		return
 
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
-		return
-
-	switch(M.a_intent)
-
-		if ("help")
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("<span class='notice'>[M] caresses [src]'s plating with its scythe like arm.</span>"), 1)
-
-		else //harm
-			var/damage = rand(10, 20)
-			if (prob(90))
-				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='userdanger'>[] has slashed at []!</span>", M, src), 1)
-				if(prob(8))
-					flick("noise", flash)
-				adjustBruteLoss(damage)
-				updatehealth()
-			else
-				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='userdanger'>[] took a swipe at []!</span>", M, src), 1)
+	..()
 	return
-
-/mob/living/silicon/ai/attack_animal(mob/living/simple_animal/M as mob)
-	if(M.melee_damage_upper == 0)
-		M.emote("[M.friendly] [src]")
-	else
-		if(M.attack_sound)
-			playsound(loc, M.attack_sound, 50, 1, 1)
-		visible_message("<span class='danger'><B>[M]</B> [M.attacktext] [src]!")
-		add_logs(M, src, "attacked", admin=0)
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		adjustBruteLoss(damage)
-		updatehealth()
 
 /mob/living/silicon/ai/reset_view(atom/A)
 	if (camera_light_on)
@@ -488,7 +455,7 @@ var/list/ai_list = list()
 	d += "<A HREF=?src=\ref[src];botrefresh=\ref[Bot]>Query network status</A><br>"
 	d += "<table width='100%'><tr><td width='40%'><h3>Name</h3></td><td width='30%'><h3>Status</h3></td><td width='30%'><h3>Location</h3></td><td width='10%'><h3>Control</h3></td></tr>"
 
-	for (Bot in machines)
+	for (Bot in aibots)
 		if(Bot.z == ai_Zlevel && !Bot.remote_disabled) //Only non-emagged bots on the same Z-level are detected!
 			bot_area = get_area(Bot)
 			d += "<tr><td width='30%'>[Bot.hacked ? "<span class='bad'>(!) </span>[Bot.name]" : Bot.name]</td>"
@@ -748,3 +715,19 @@ var/list/ai_list = list()
 	for (var/obj/machinery/camera/C in add)
 		C.SetLuminosity(AI_CAMERA_LUMINOSITY)
 		lit_cameras |= C
+
+/mob/living/silicon/ai/proc/control_integrated_radio()
+	set name = "Transceiver Settings"
+	set desc = "Allows you to change settings of your radio."
+	set category = "AI Commands"
+
+	src << "Accessing Subspace Transceiver control..."
+	if (radio)
+		radio.interact(src)
+
+/mob/living/silicon/ai/attack_slime(mob/living/carbon/slime/user)
+	return
+
+/mob/living/silicon/ai/grabbedby(mob/living/user)
+	return
+

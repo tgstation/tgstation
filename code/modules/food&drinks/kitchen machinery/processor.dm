@@ -157,7 +157,7 @@
 	set name = "Eject Contents"
 	set src in oview(1)
 
-	if (usr.stat != 0)
+	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 	src.empty()
 	add_fingerprint(usr)

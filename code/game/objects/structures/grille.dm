@@ -25,8 +25,9 @@
 /obj/structure/grille/attack_paw(mob/user as mob)
 	attack_hand(user)
 
-/obj/structure/grille/attack_hand(mob/user as mob)
+/obj/structure/grille/attack_hand(mob/living/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	user.visible_message("<span class='warning'>[user] hits [src].</span>", \
 						 "<span class='warning'>You hit [src].</span>", \
@@ -40,7 +41,8 @@
 		health -= rand(1,2)
 	healthcheck()
 
-/obj/structure/grille/attack_alien(mob/user as mob)
+/obj/structure/grille/attack_alien(mob/living/user as mob)
+	user.do_attack_animation(src)
 	if(istype(user, /mob/living/carbon/alien/larva))	return
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
@@ -55,6 +57,7 @@
 
 /obj/structure/grille/attack_slime(mob/living/carbon/slime/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
 	if(!user.is_adult)	return
 
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
@@ -69,7 +72,7 @@
 /obj/structure/grille/attack_animal(var/mob/living/simple_animal/M as mob)
 	M.changeNext_move(CLICK_CD_MELEE)
 	if(M.melee_damage_upper == 0)	return
-
+	M.do_attack_animation(src)
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	M.visible_message("<span class='warning'>[M] smashes against [src].</span>", \
 					  "<span class='warning'>You smash against [src].</span>", \
@@ -227,3 +230,16 @@
 			health -= 1
 			healthcheck()
 	..()
+
+/obj/structure/grille/hitby(AM as mob|obj)
+	..()
+	visible_message("<span class='danger'>[src] was hit by [AM].</span>")
+	var/tforce = 0
+	if(ismob(AM))
+		tforce = 5
+	else if(isobj(AM))
+		var/obj/item/I = AM
+		tforce = I.throwforce - 5
+	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
+	health = max(0, health - tforce)
+	healthcheck()

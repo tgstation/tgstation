@@ -54,12 +54,12 @@
 		// Try to find a scanner in that direction
 		scannerf = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
 
-		// If found, then we break, and return the scanner
-		if (!isnull(scannerf))
-			break
+		// If found and operational, return the scanner
+		if (!isnull(scannerf) && scannerf.is_operational())
+			return scannerf
 
 	// If no scanner was found, it will return null
-	return scannerf
+	return null
 
 /obj/machinery/computer/cloning/proc/findcloner()
 	var/obj/machinery/clonepod/podf = null
@@ -68,10 +68,10 @@
 
 		podf = locate(/obj/machinery/clonepod, get_step(src, dir))
 
-		if (!isnull(podf))
-			break
+		if (!isnull(podf) && podf.is_operational())
+			return podf
 
-	return podf
+	return null
 
 /obj/machinery/computer/cloning/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
@@ -233,25 +233,25 @@
 			if("stopautoprocess")
 				autoprocess = 0
 
-	else if ((href_list["scan"]) && (!isnull(src.scanner)))
+	else if ((href_list["scan"]) && !isnull(scanner) && scanner.is_operational())
 		scantemp = ""
 
 		loading = 1
 		src.updateUsrDialog()
 
 		spawn(20)
-			src.scan_mob(src.scanner.occupant)
+			src.scan_mob(scanner.occupant)
 
 			loading = 0
 			src.updateUsrDialog()
 
 
 		//No locking an open scanner.
-	else if ((href_list["lock"]) && (!isnull(src.scanner)))
-		if ((!src.scanner.locked) && (src.scanner.occupant))
-			src.scanner.locked = 1
+	else if ((href_list["lock"]) && !isnull(scanner) && scanner.is_operational())
+		if ((!scanner.locked) && (scanner.occupant))
+			scanner.locked = 1
 		else
-			src.scanner.locked = 0
+			scanner.locked = 0
 
 	else if(href_list["view_rec"])
 		src.active_record = find_record("id", href_list["view_rec"], records)

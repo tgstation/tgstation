@@ -51,6 +51,8 @@
 		else
 			src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
 	if ((message && src.stat == 0))
+		if(client)
+			log_emote("[name]/[key] : [message]")
 		if (m_type & 1)
 			visible_message(message)
 		else

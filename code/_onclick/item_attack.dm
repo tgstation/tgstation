@@ -6,7 +6,8 @@
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user)
 	return
-/atom/movable/attackby(obj/item/W, mob/user)
+/atom/movable/attackby(obj/item/W, mob/living/user)
+	user.do_attack_animation(src)
 	if(W && !(W.flags&NOBLUDGEON))
 		visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
 
@@ -25,9 +26,9 @@
 	var/showname = "."
 	if(user)
 		showname = " by [user]!"
+		user.do_attack_animation(src)
 	if(!(user in viewers(src, null)))
 		showname = "."
-
 	if(I.attack_verb && I.attack_verb.len)
 		src.visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] with [I][showname]</span>",
 		"<span class='userdanger'>[src] has been [pick(I.attack_verb)] with [I][showname]</span>")

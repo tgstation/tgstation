@@ -10,7 +10,7 @@
 		return
 
 
-	message = trim(copytext(strip_html_simple(message), 1, MAX_MESSAGE_LEN))
+	message = trim(strip_html_properly(message))
 	if(!can_speak(message))
 		return
 
