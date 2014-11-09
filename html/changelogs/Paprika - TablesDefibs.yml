@@ -6,3 +6,5 @@ changes:
   - rscadd: "Added a way for you to unload a round from a chambered projectile weapon. Simply click on the gun when it is in your active hand, and assuming it does not have a magazine, the round should pop out. You can also use this system to unload individual bullets from magazines and ammo boxes, like the detective's speed loaders."
   - rscadd: "Added glass tables and overhauled how table construction works. Now, you need to build a frame using either metal rods or wood planks, and then place a top on the table."
   - tweak: "Table disassembly now works in two stages. Screwdriver the table to remove the top of it and reduce it back to a frame. Frames can be moved around and walked on top of. Wrench the table to deconstruct it entirely back to parts, this is quicker and much more like the old fashion. To deconstruct a frame, use your wrench on it as well."
+  - bugfix: "Fixed traitor med analyzers not fitting in medical belts."
+  - bugfix: "Fixed syringe box bug with medipens."
