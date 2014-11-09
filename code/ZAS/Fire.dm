@@ -269,6 +269,8 @@ turf/simulated/apply_fire_protection()
 
 
 datum/gas_mixture/proc/zburn(var/turf/T, force_burn)
+	// NOTE: zburn is also called from canisters and in tanks/pipes (via react()).  Do NOT assume T is always a turf.
+	//  In the aforementioned cases, it's null. - N3X.
 	var/value = 0
 
 	if((temperature > PLASMA_MINIMUM_BURN_TEMPERATURE || force_burn) && check_recombustability(T))
@@ -281,12 +283,14 @@ datum/gas_mixture/proc/zburn(var/turf/T, force_burn)
 		//Volatile Fuel
 			total_fuel += fuel.moles
 
-		for(var/atom/A in T)
-			if(!A) continue
-			total_fuel += A.getFireFuel()
+		var/can_use_turf=(T && istype(T))
+		if(can_use_turf)
+			for(var/atom/A in T)
+				if(!A) continue
+				total_fuel += A.getFireFuel()
 
 		if (0 == total_fuel) // Fix zburn /0 runtime
-			testing("zburn: No fuel left.")
+			//testing("zburn: No fuel left.")
 			return 0
 
 		//Calculate the firelevel.
@@ -321,11 +325,12 @@ datum/gas_mixture/proc/zburn(var/turf/T, force_burn)
 			fuel.moles -= (fuel.moles * used_fuel_ratio * used_reactants_ratio) * 5 //Fuel burns 5 times as quick
 			if(fuel.moles <= 0) del fuel
 
-		if(T.getFireFuel()>0)
-			T.burnFireFuel(used_fuel_ratio, used_reactants_ratio)
-		for(var/atom/A in T)
-			if(A.getFireFuel()>0)
-				A.burnFireFuel(used_fuel_ratio, used_reactants_ratio)
+		if(can_use_turf)
+			if(T.getFireFuel()>0)
+				T.burnFireFuel(used_fuel_ratio, used_reactants_ratio)
+			for(var/atom/A in T)
+				if(A.getFireFuel()>0)
+					A.burnFireFuel(used_fuel_ratio, used_reactants_ratio)
 
 		//calculate the energy produced by the reaction and then set the new temperature of the mix
 		temperature = (starting_energy + zas_settings.Get(/datum/ZAS_Setting/fire_fuel_energy_release) * total_fuel) / heat_capacity()
@@ -334,14 +339,8 @@ datum/gas_mixture/proc/zburn(var/turf/T, force_burn)
 		value = total_reactants * used_reactants_ratio
 	return value
 
-datum/gas_mixture/proc/check_recombustability(var/turf/T)
+/datum/gas_mixture/proc/check_recombustability(var/turf/T)
 	//this is a copy proc to continue a fire after its been started.
-	if(!T)
-		return 0
-
-	if(!istype(T))
-		warning("check_recombustability being asked to check a [T.type] instead of /turf.")
-		return 0
 
 	var/datum/gas/volatile_fuel/fuel = locate() in trace_gases
 
@@ -350,6 +349,15 @@ datum/gas_mixture/proc/check_recombustability(var/turf/T)
 			return 1
 		if(fuel && QUANTIZE(fuel.moles * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= 0.1)
 			return 1
+
+	// Check if we're actually in a turf or not before trying to check object fires.
+	// Moved here to unbreak tankbombs - N3X
+	if(!T)
+		return 0
+
+	if(!istype(T))
+		warning("check_recombustability being asked to check a [T.type] instead of /turf.")
+		return 0
 
 	// We have to check all objects in order to extinguish object fires.
 	var/still_burning=0
@@ -367,9 +375,12 @@ datum/gas_mixture/proc/check_recombustability(var/turf/T)
 
 datum/gas_mixture/proc/check_combustability(var/turf/T, var/objects)
 	//this check comes up very often and is thus centralized here to ease adding stuff
+	// zburn is used in tank fires, as well. This check, among others, broke tankbombs. - N3X
+	/*
 	if(!istype(T))
 		warning("check_combustability being asked to check a [T.type] instead of /turf.")
 		return 0
+	*/
 
 	var/datum/gas/volatile_fuel/fuel = locate() in trace_gases
 
@@ -379,7 +390,7 @@ datum/gas_mixture/proc/check_combustability(var/turf/T, var/objects)
 		if(fuel && QUANTIZE(fuel.moles * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= 0.1)
 			return 1
 
-	if(objects)
+	if(objects && istype(T))
 		for(var/atom/A in T)
 			if(!A || !oxygen || A.autoignition_temperature > temperature) continue
 			if(QUANTIZE(A.getFireFuel() * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= 0.1)
@@ -398,11 +409,12 @@ datum/gas_mixture/proc/calculate_firelevel(var/turf/T)
 
 		total_fuel += toxins
 
-		total_fuel += T.getFireFuel()
+		if(T && istype(T))
+			total_fuel += T.getFireFuel()
 
-		for(var/atom/A in T)
-			if(A)
-				total_fuel += A.getFireFuel()
+			for(var/atom/A in T)
+				if(A)
+					total_fuel += A.getFireFuel()
 
 		if(fuel)
 			total_fuel += fuel.moles
