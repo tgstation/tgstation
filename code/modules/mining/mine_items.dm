@@ -54,7 +54,12 @@
 	name = "lantern"
 	icon_state = "lantern"
 	desc = "A mining lantern."
-	brightness_on = 6			// luminosity when on
+	brightness_on = 6			//luminosity when on
+
+/obj/item/device/flashlight/lantern/cyborg
+	name = "mining floodlight"
+	desc = "An extremely powerful lantern that feeds directly from a cyborg's power supply."
+	brightness_on = 7			//as powerful as a flare
 
 /*****************************Pickaxe********************************/
 
