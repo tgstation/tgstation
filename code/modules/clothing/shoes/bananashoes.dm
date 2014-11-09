@@ -6,6 +6,7 @@
 	icon_state = "clown_prototype_off"
 	var/on = 0
 	var/bananium = 0
+	var/const/bananium_max = 200000 //maximum should be 200000, or 100 sheets of bananium
 	action_button_name = "Toggle Shoes"
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/step_action()
@@ -25,21 +26,37 @@
 	else
 		..()
 
-/obj/item/clothing/shoes/clown_shoes/banana_shoes/attack_self(mob/user)
+/obj/item/clothing/shoes/clown_shoes/banana_shoes/attack_self(mob/user) //retrieves bananium from shoes
 	if(bananium > 0)
 		var/sheet_amount = round(bananium / 2000)
 		if(sheet_amount > 0)
 			var/obj/item/stack/sheet/mineral/bananium/M = new/obj/item/stack/sheet/mineral/bananium(get_turf(loc))
+			user << "<span class='notice'>You retrieve [sheet_amount] sheets of bananium.</span>"
+			if(sheet_amount > 50)
+				M.amount = 50
+				bananium -= 50 * 2000
+				sheet_amount -= 50
+				M = new/obj/item/stack/sheet/mineral/bananium(get_turf(loc))
 			M.amount = sheet_amount
 			bananium -= sheet_amount * 2000
-			user << "<span class='notice'>You retrieve [sheet_amount] sheets of bananium.</span>"
+		else
+			user << "<span class='notice'>You cannot retrieve any bananium from the prototype shoes.</span>"
 
-/obj/item/clothing/shoes/clown_shoes/banana_shoes/attackby(obj/item/O, mob/user)
+/obj/item/clothing/shoes/clown_shoes/banana_shoes/attackby(obj/item/O, mob/user) //inserts bananium into shoes
 	if(istype(O,/obj/item/stack/sheet/mineral/bananium))
-		var/obj/item/stack/sheet/mineral/bananium/M = O
-		bananium += 2000 * M.amount
-		user << "<span class='notice'>You insert [M.amount] bananium sheets into the prototype shoes.</span>"
-		M.use(M.amount)
+		if(bananium <= bananium_max)
+			var/obj/item/stack/sheet/mineral/bananium/M = O
+			var/amount = round(100 - (bananium/2000))
+			if(amount > 0)
+				if(amount > M.amount)
+					amount = M.amount
+				bananium += 2000 * amount
+				user << "<span class='notice'>You insert [amount] bananium sheets into the prototype shoes.</span>"
+
+				M.use(amount)
+				return
+
+		user << "<span class='notice'>You cannot insert more bananium into the prototype shoes.</span>"
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/examine(mob/user)
 	..()
