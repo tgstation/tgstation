@@ -1265,6 +1265,7 @@
 #include "code\modules\research\designs\comp_board_designs.dm"
 #include "code\modules\research\designs\machine_designs.dm"
 #include "code\modules\research\designs\mecha_designs.dm"
+#include "code\modules\research\designs\mechfabricator_designs.dm"
 #include "code\modules\research\designs\medical_designs.dm"
 #include "code\modules\research\designs\power_designs.dm"
 #include "code\modules\research\designs\stock_parts_designs.dm"
