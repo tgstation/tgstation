@@ -21,17 +21,19 @@
 	var/attempting = 0 //One clone attempt at a time thanks
 	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
 	var/biomass = CLONE_BIOMASS // * 3 - N3X
-	var/opened = 0
 	var/time_coeff = 1 //Upgraded via part upgrading
 	var/resource_efficiency = 1
 
+	machine_flags = EMAGGABLE | SCREWTOGGLE | CROWDESTROY
+
 	l_color = "#7BF9FF"
-	power_change()
-		..()
-		if(!(stat & (BROKEN|NOPOWER)) && attempting)
-			SetLuminosity(2)
-		else
-			SetLuminosity(0)
+
+/obj/machinery/clonepod/power_change()
+	..()
+	if(!(stat & (BROKEN|NOPOWER)) && attempting)
+		SetLuminosity(2)
+	else
+		SetLuminosity(0)
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
@@ -111,12 +113,12 @@
 		return
 
 	var/mob/selected = null
-	for(var/mob/M in player_list)
+	for(var/mob/living/M in player_list)
 		//Dead people only thanks!
 		if ((M.stat != 2) || (!M.client))
 			continue
 		//They need a brain!
-		if ((istype(M, /mob/living/carbon/human)) && (M:brain_op_stage >= 4.0))
+		if ((istype(M, /mob/living/carbon/human)) && !M.has_brain())
 			continue
 
 		if (M.ckey == find_key)
@@ -229,6 +231,10 @@
 	if (H.mind in ticker.mode.cult)
 		ticker.mode.add_cultist(src.occupant.mind)
 		ticker.mode.update_all_cult_icons() //So the icon actually appears
+	if(H.mind in ticker.mode.wizards)
+		ticker.mode.update_all_wizard_icons()
+	if(("\ref[H.mind]" in ticker.mode.necromancer) || (H.mind in ticker.mode.risen))
+		ticker.mode.update_all_necro_icons()
 	if(("\ref[H.mind]" in ticker.mode.implanter) || (H.mind in ticker.mode.implanted))
 		ticker.mode.update_traitor_icons_added(H.mind) //So the icon actually appears
 	if(("\ref[H.mind]" in ticker.mode.thralls) || (H.mind in ticker.mode.enthralled))
@@ -237,8 +243,9 @@
 	// -- End mode specific stuff
 
 	H.UpdateAppearance()
-	H.set_species()
+	H.set_species(R.dna.species)
 	randmutb(H) // sometimes the clones come out wrong.
+	H.dna.mutantrace = R.dna.mutantrace
 	H.update_mutantrace()
 	H.real_name = H.dna.real_name
 
@@ -303,6 +310,20 @@
 
 	return
 
+/obj/machinery/clonepod/emag(mob/user as mob)
+	if (isnull(src.occupant))
+		return
+	user << "You force an emergency ejection."
+	src.locked = 0
+	src.go_out()
+	return
+
+/obj/machinery/clonepod/crowbarDestroy(mob/user)
+	if (occupant)
+		user << "\red You cannot disassemble this [src], it's occupado."
+		return
+	..()
+
 //Let's unlock this early I guess.  Might be too early, needs tweaking.
 /obj/machinery/clonepod/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
@@ -317,38 +338,6 @@
 		else
 			src.locked = 0
 			user << "System unlocked."
-	else if (istype(W, /obj/item/weapon/card/emag))
-		if (isnull(src.occupant))
-			return
-		user << "You force an emergency ejection."
-		src.locked = 0
-		src.go_out()
-		return
-	else if (istype(W, /obj/item/weapon/screwdriver))
-		if (!opened)
-			src.opened = 1
-			user << "You open the maintenance hatch of [src]."
-			//src.icon_state = "autolathe_t"
-		else
-			src.opened = 0
-			user << "You close the maintenance hatch of [src]."
-			//src.icon_state = "autolathe"
-			return 1
-	else if(istype(W, /obj/item/weapon/crowbar))
-		if (occupant)
-			user << "\red You cannot disassemble this [src], it's occupado."
-			return 1
-		if (opened)
-			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			M.state = 2
-			M.icon_state = "box_1"
-			for(var/obj/I in component_parts)
-				if(I.reliability != 100 && crit_fail)
-					I.crit_fail = 1
-				I.loc = src.loc
-			del(src)
-			return
 	else if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
 		user << "\blue \The [src] processes \the [W]."
 		biomass += 50

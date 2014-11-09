@@ -3,14 +3,42 @@
  *
  * Concept stolen from D2K5
  *
- * Rewritten (except for player HTML) by N3X15
+ * Rewritten by N3X15
  ***********************/
 
 // Uncomment to test the mediaplayer
 //#define DEBUG_MEDIAPLAYER
 
-// Open up WMP and play musique.
-// TODO: Convert to VLC for cross-platform and ogg support. - N3X
+// Open up VLC and play musique.
+// Converted to VLC for cross-platform and ogg support. - N3X
+var/const/PLAYER_HTML={"
+<embed type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" />
+<object classid="clsid:9BE31822-FDAD-461B-AD51-BE1D1C159921" codebase="http://download.videolan.org/pub/videolan/vlc/last/win32/axvlc.cab" id="player"></object>
+	<script>
+function noErrorMessages () { return true; }
+window.onerror = noErrorMessages;
+function SetMusic(url, time, volume) {
+	var vlc = document.getElementById('player');
+
+	// Stop playing
+	vlc.playlist.stop();
+
+	// Clear playlist
+	vlc.playlist.items.clear();
+
+	// Add new playlist item.
+	var id = vlc.playlist.add(url);
+
+	// Play playlist item
+	vlc.playlist.playItem(id);
+
+	vlc.input.time = time*1000; // VLC takes milliseconds.
+	vlc.audio.volume = volume*100; // \[0-200]
+}
+	</script>
+"}
+
+/* OLD, DO NOT USE.  CONTROLS.CURRENTPOSITION IS BROKEN.
 var/const/PLAYER_HTML={"
 	<OBJECT id='player' CLASSID='CLSID:6BF52A52-394A-11d3-B153-00C04F79FAA6' type='application/x-oleobject'></OBJECT>
 	<script>
@@ -23,6 +51,7 @@ function SetMusic(url, time, volume) {
 	player.Settings.volume = volume;
 }
 	</script>"}
+*/
 
 // Hook into the events we desire.
 /hook_handler/soundmanager
@@ -111,9 +140,9 @@ function SetMusic(url, time, volume) {
 
 	// Tell the player to play something via JS.
 	proc/send_update()
-		if(!(owner.prefs.toggles & SOUND_STREAMING))
+		if(!(owner.prefs.toggles & SOUND_STREAMING) && url != "")
 			return // Nope.
-		MP_DEBUG("\green Sending update to WMP ([url])...")
+		MP_DEBUG("\green Sending update to VLC ([url])...")
 		owner << output(list2params(list(url, (world.time - start_time) / 10, volume*source_volume)), "[window]:SetMusic")
 
 	proc/push_music(var/targetURL,var/targetStartTime,var/targetVolume)

@@ -59,3 +59,23 @@ ANIMAL_DELAY 0
 # Define how large an explosion can be.
 ## DEFAULT: 14
 MAX_EXPLOSION_RANGE 14
+
+#################
+### EMAG SHIT ###
+#################
+
+# Max energy an emag can hold.
+## DEFAULT: -1 (infinite)
+EMAG_ENERGY -1
+
+# Whether an emag starts charged (1), or uncharged (0).
+## DEFAULT: 1 (charged)
+EMAG_STARTS_CHARGED 1
+
+# Amount of energy to add per recharge cycle.
+## DEFAULT: 0
+EMAG_RECHARGE_RATE 0
+
+# Number of ticks per recharge cycle
+## DEFAULT: 0 (no recharging)
+EMAG_RECHARGE_TICKS 0

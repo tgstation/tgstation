@@ -47,49 +47,49 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","clu
 	var/changetype=null
 	var/next_changetype=0
 
-	New()
-		..()
-		processing_objects.Add(src)
+/obj/item/weapon/gun/energy/staff/New()
+	..()
+	processing_objects.Add(src)
 
 
-	Destroy()
-		processing_objects.Remove(src)
-		..()
+/obj/item/weapon/gun/energy/staff/Destroy()
+	processing_objects.Remove(src)
+	..()
 
 
-	process()
-		charge_tick++
-		if(charge_tick < 4) return 0
-		charge_tick = 0
-		if(!power_supply) return 0
-		power_supply.give(200)
-		return 1
+/obj/item/weapon/gun/energy/staff/process()
+	charge_tick++
+	if(charge_tick < 4) return 0
+	charge_tick = 0
+	if(!power_supply) return 0
+	power_supply.give(200)
+	return 1
 
-	update_icon()
+/obj/item/weapon/gun/energy/staff/update_icon()
+	return
+
+/obj/item/weapon/gun/energy/staff/process_chambered()
+	if(!..()) return 0
+	var/obj/item/projectile/change/P=in_chamber
+	if(P && istype(P))
+		P.changetype=changetype
+	return 1
+
+/obj/item/weapon/gun/energy/staff/attack_self(var/mob/living/user)
+	if(world.time < next_changetype)
+		user << "<span class='warning'>[src] is still recharging.</span>"
+		return
+	var/selected = input("Select a form for your next victim","Staff of Change") as null|anything in list("random")+available_staff_transforms
+	if(!selected)
 		return
 
-	load_into_chamber()
-		if(!..()) return 0
-		var/obj/item/projectile/change/P=in_chamber
-		if(P && istype(P))
-			P.changetype=changetype
-		return 1
-
-	attack_self(var/mob/living/user)
-		if(world.time < next_changetype)
-			user << "<span class='warning'>[src] is still recharging.</span>"
-			return
-		var/selected = input("Select a form for your next victim","Staff of Change") as null|anything in list("random")+available_staff_transforms
-		if(!selected)
-			return
-
-		switch(selected)
-			if("random")
-				changetype=null
-			else
-				changetype=selected
-		user << "You have selected to make your next victim have a [selected] form."
-		next_changetype=world.time+SOC_CHANGETYPE_COOLDOWN
+	switch(selected)
+		if("random")
+			changetype=null
+		else
+			changetype=selected
+	user << "You have selected to make your next victim have a [selected] form."
+	next_changetype=world.time+SOC_CHANGETYPE_COOLDOWN
 
 /obj/item/weapon/gun/energy/staff/animate
 	name = "staff of animation"
@@ -110,41 +110,51 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","clu
 	var/charge_tick = 0
 	var/mode = 0 //0 = mutate, 1 = yield boost
 
-	New()
-		..()
-		processing_objects.Add(src)
+/obj/item/weapon/gun/energy/floragun/New()
+	..()
+	processing_objects.Add(src)
 
 
-	Destroy()
-		processing_objects.Remove(src)
-		..()
+/obj/item/weapon/gun/energy/floragun/Destroy()
+	processing_objects.Remove(src)
+	..()
 
 
-	process()
-		charge_tick++
-		if(charge_tick < 4) return 0
-		charge_tick = 0
-		if(!power_supply) return 0
-		power_supply.give(100)
-		update_icon()
-		return 1
+/obj/item/weapon/gun/energy/floragun/process()
+	charge_tick++
+	if(charge_tick < 4) return 0
+	charge_tick = 0
+	if(!power_supply) return 0
+	power_supply.give(100)
+	update_icon()
+	return 1
 
-	attack_self(mob/living/user as mob)
-		switch(mode)
-			if(0)
-				mode = 1
-				charge_cost = 100
-				user << "\red The [src.name] is now set to increase yield."
-				projectile_type = "/obj/item/projectile/energy/florayield"
-				modifystate = "florayield"
-			if(1)
-				mode = 0
-				charge_cost = 100
-				user << "\red The [src.name] is now set to induce mutations."
-				projectile_type = "/obj/item/projectile/energy/floramut"
-				modifystate = "floramut"
-		update_icon()
+/obj/item/weapon/gun/energy/floragun/attack_self(mob/living/user as mob)
+	switch(mode)
+		if(0)
+			mode = 1
+			charge_cost = 100
+			user << "\red The [src.name] is now set to increase yield."
+			projectile_type = "/obj/item/projectile/energy/florayield"
+			modifystate = "florayield"
+		if(1)
+			mode = 0
+			charge_cost = 100
+			user << "\red The [src.name] is now set to induce mutations."
+			projectile_type = "/obj/item/projectile/energy/floramut"
+			modifystate = "floramut"
+	update_icon()
+	return
+
+/obj/item/weapon/gun/energy/floragun/afterattack(obj/target, mob/user, flag)
+	if(flag && istype(target,/obj/machinery/portable_atmospherics/hydroponics))
+		var/obj/machinery/portable_atmospherics/hydroponics/tray = target
+		if(process_chambered())
+			user.visible_message("\red <b> \The [user] fires \the [src] into \the [tray]!</b>")
+			Fire(target,user)
 		return
+
+	..()
 
 /obj/item/weapon/gun/energy/meteorgun
 	name = "meteor gun"
@@ -159,24 +169,24 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","clu
 	var/charge_tick = 0
 	var/recharge_time = 5 //Time it takes for shots to recharge (in ticks)
 
-	New()
-		..()
-		processing_objects.Add(src)
+/obj/item/weapon/gun/energy/meteorgun/New()
+	..()
+	processing_objects.Add(src)
 
 
-	Destroy()
-		processing_objects.Remove(src)
-		..()
+/obj/item/weapon/gun/energy/meteorgun/Destroy()
+	processing_objects.Remove(src)
+	..()
 
-	process()
-		charge_tick++
-		if(charge_tick < recharge_time) return 0
-		charge_tick = 0
-		if(!power_supply) return 0
-		power_supply.give(100)
+/obj/item/weapon/gun/energy/meteorgun/process()
+	charge_tick++
+	if(charge_tick < recharge_time) return 0
+	charge_tick = 0
+	if(!power_supply) return 0
+	power_supply.give(100)
 
-	update_icon()
-		return
+/obj/item/weapon/gun/energy/meteorgun/update_icon()
+	return
 
 
 /obj/item/weapon/gun/energy/meteorgun/pen
@@ -204,15 +214,15 @@ obj/item/weapon/gun/energy/staff/focus
 	projectile_type = "/obj/item/projectile/forcebolt"
 	charge_cost = 100
 
-	attack_self(mob/living/user as mob)
-		if(projectile_type == "/obj/item/projectile/forcebolt")
-			charge_cost = 250
-			user << "\red The [src.name] will now strike a small area."
-			projectile_type = "/obj/item/projectile/forcebolt/strong"
-		else
-			charge_cost = 100
-			user << "\red The [src.name] will now strike only a single person."
-			projectile_type = "/obj/item/projectile/forcebolt"
+obj/item/weapon/gun/energy/staff/focus/attack_self(mob/living/user as mob)
+	if(projectile_type == "/obj/item/projectile/forcebolt")
+		charge_cost = 250
+		user << "\red The [src.name] will now strike a small area."
+		projectile_type = "/obj/item/projectile/forcebolt/strong"
+	else
+		charge_cost = 100
+		user << "\red The [src.name] will now strike only a single person."
+		projectile_type = "/obj/item/projectile/forcebolt"
 
 /obj/item/weapon/gun/energy/kinetic_accelerator
 	name = "proto-kinetic accelerator"
@@ -245,6 +255,40 @@ obj/item/weapon/gun/energy/staff/focus
 /obj/item/weapon/gun/energy/kinetic_accelerator/update_icon()
 	return
 
+/obj/item/weapon/gun/energy/kinetic_accelerator/cyborg
+	name = "proto-kinetic accelerator"
+	desc = "According to Nanotrasen accounting, this is mining equipment. It's been modified for extreme power output to crush rocks, but often serves as a miner's first defense against hostile alien life; it's not very powerful unless used in a low pressure environment."
+	icon_state = "kineticgun"
+	item_state = "kineticgun"
+	projectile_type = "/obj/item/projectile/kinetic"
+	cell_type = "/obj/item/weapon/cell/miningborg"
+	charge_cost = 50
+	var/charge_tick = 0
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/cyborg/New()
+	..()
+	processing_objects.Add(src)
+
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/cyborg/Destroy()
+	processing_objects.Remove(src)
+	..()
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/cyborg/process() //Every [recharge_time] ticks, recharge a shot for the cyborg
+	charge_tick++
+	if(charge_tick < 3) return 0
+	charge_tick = 0
+
+	if(!power_supply) return 0 //sanity
+	if(isrobot(src.loc))
+		var/mob/living/silicon/robot/R = src.loc
+		if(R && R.cell)
+			R.cell.use(charge_cost) 		//Take power from the borg...
+			power_supply.give(charge_cost)	//... to recharge the shot
+
+	update_icon()
+	return 1
+
 
 /obj/item/weapon/gun/energy/radgun
 	name = "radgun"
@@ -255,20 +299,20 @@ obj/item/weapon/gun/energy/staff/focus
 	var/charge_tick = 0
 	projectile_type = "/obj/item/projectile/energy/rad"
 
-	New()
-		..()
-		processing_objects.Add(src)
+/obj/item/weapon/gun/energy/radgun/New()
+	..()
+	processing_objects.Add(src)
 
 
-	Destroy()
-		processing_objects.Remove(src)
-		..()
+/obj/item/weapon/gun/energy/radgun/Destroy()
+	processing_objects.Remove(src)
+	..()
 
-	process()
-		charge_tick++
-		if(charge_tick < 4) return 0
-		charge_tick = 0
-		if(!power_supply) return 0
-		power_supply.give(100)
-		update_icon()
-		return 1
+/obj/item/weapon/gun/energy/radgun/process()
+	charge_tick++
+	if(charge_tick < 4) return 0
+	charge_tick = 0
+	if(!power_supply) return 0
+	power_supply.give(100)
+	update_icon()
+	return 1

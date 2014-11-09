@@ -21,6 +21,8 @@
 	var/list/holdingitems = list()
 	var/limit = 100
 
+	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE
+
 // see code/modules/food/recipes_microwave.dm for recipes
 //Cannot use tools - screwdriver and crowbar for recipes. Or at least fix things before you do
 //TODO - Get a maint panel sprite and J-J-Jam it in.
@@ -117,29 +119,11 @@
 		else //Otherwise bad luck!!
 			user << "\red It's dirty!"
 			return 1
-	else if (istype(O, /obj/item/weapon/screwdriver))
-		if (!opened)
-			src.opened = 1
-			user << "You open the maintenance hatch of [src]."
-			//src.icon_state = "autolathe_t"
-		else
-			src.opened = 0
-			user << "You close the maintenance hatch of [src]."
-			//src.icon_state = "autolathe"
-			return 1
-	else if(istype(O, /obj/item/weapon/crowbar))
-		if (opened)
-			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			M.state = 2
-			M.icon_state = "box_1"
-			for(var/obj/I in component_parts)
-				if(I.reliability != 100 && crit_fail)
-					I.crit_fail = 1
-				I.loc = src.loc
-			del(src)
-			return 1
-	else if(holdingitems && holdingitems.len >= limit)
+
+	if(..())
+		return 1
+
+	if(holdingitems && holdingitems.len >= limit)
 		usr << "The machine cannot hold anymore items."
 		return 1
 	else if(istype(O, /obj/item/weapon/storage/bag/plants))

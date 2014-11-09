@@ -37,6 +37,9 @@ LOG_SAY
 ## log admin actions
 LOG_ADMIN
 
+## log admin actions at a single log file
+LOG_ADMIN_ONLY
+
 ## log client access (logon/logoff)
 LOG_ACCESS
 
@@ -253,3 +256,14 @@ RESPAWN_AS_MOMMI
 ## The base URL of your media library.  DO NOT ADD A SLASH AT THE END!
 ## NOTE that this must be publically-accessible.
 #MEDIA_BASE_URL http://yoursite.tld/media
+
+
+##  Media Server 2 requires a secret key in order to tell the jukebox
+## where the music files are. It's set in config with MEDIA_SECRET_KEY
+## and MUST be the same as the media server's.
+##
+##  If you're using older code that doesn't require a password, just 
+## leave this blank.
+##
+##  Do NOT share this, it's like a password.
+#MEDIA_SECRET_KEY youshouldchangethisbro

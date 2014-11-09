@@ -41,6 +41,7 @@
 
 	var/nonplant_seed_type
 
+
 /obj/item/Destroy()
 	if(istype(src.loc, /mob))
 		var/mob/H = src.loc
@@ -51,6 +52,12 @@
 	if(hasvar(src, "my_atom"))
 		src:my_atom = null*/
 	..()
+
+
+	/* Species-specific sprite sheets for inventory sprites
+	Works similarly to worn sprite_sheets, except the alternate sprites are used when the clothing/refit_for_species() proc is called.
+	*/
+	//var/list/sprite_sheets_obj = null
 
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
@@ -233,6 +240,7 @@
 
 /obj/item/proc/dropped(mob/user as mob)
 	..()
+	layer = initial(layer) //nothing bad can come from this right?
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -645,8 +653,8 @@
 		user << "\red You're going to need to remove that mask/helmet/glasses first."
 		return
 
-	if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/slime))//Aliens don't have eyes./N     slimes also don't have eyes!
-		user << "\red You cannot locate any eyes on this creature!"
+	if(!M.has_eyes())
+		user << "\red You cannot locate any eyes on [M]!"
 		return
 
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
@@ -667,18 +675,22 @@
 		M.weakened += 4
 		M.adjustBruteLoss(10)
 		*/
-	if(M != user)
-		for(var/mob/O in (viewers(M) - user - M))
-			O.show_message("\red [M] has been stabbed in the eye with [src] by [user].", 1)
-		M << "\red [user] stabs you in the eye with [src]!"
-		user << "\red You stab [M] in the eye with [src]!"
-	else
-		user.visible_message( \
-			"\red [user] has stabbed themself with [src]!", \
-			"\red You stab yourself in the eyes with [src]!" \
-		)
+
 	if(istype(M, /mob/living/carbon/human))
-		var/datum/organ/internal/eyes/eyes = H.internal_organs["eyes"]
+
+		var/datum/organ/internal/eyes/eyes = H.internal_organs_by_name["eyes"]
+
+		if(M != user)
+			for(var/mob/O in (viewers(M) - user - M))
+				O.show_message("\red [M] has been stabbed in the eye with [src] by [user].", 1)
+			M << "\red [user] stabs you in the eye with [src]!"
+			user << "\red You stab [M] in the eye with [src]!"
+		else
+			user.visible_message( \
+				"\red [user] has stabbed themself with [src]!", \
+				"\red You stab yourself in the eyes with [src]!" \
+			)
+
 		eyes.damage += rand(3,4)
 		if(eyes.damage >= eyes.min_bruised_damage)
 			if(M.stat != 2)
@@ -714,7 +726,8 @@
 /obj/item/add_blood(mob/living/carbon/human/M as mob)
 	if (!..())
 		return 0
-
+	if(!M)
+		return
 	if(istype(src, /obj/item/weapon/melee/energy))
 		return
 
@@ -749,7 +762,7 @@
 
 /obj/item/proc/showoff(mob/user)
 	for (var/mob/M in view(user))
-		M.show_message("[user] holds up [src]. <a HREF=?src=\ref[M];lookitem=\ref[src]>Take a closer look.</a>",1)
+		M.show_message("[user] holds up [src]. <a HREF='?src=\ref[M];lookitem=\ref[src]'>Take a closer look.</a>",1)
 
 /mob/living/carbon/verb/showoff()
 	set name = "Show Held Item"

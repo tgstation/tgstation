@@ -82,7 +82,8 @@
 		return(BRUTELOSS)
 
 /obj/item/weapon/sord/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	playsound(get_turf(src), 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	user.adjustBruteLoss(0.5)
 	return ..()
 
 /obj/item/weapon/claymore
@@ -104,6 +105,10 @@
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b>"
 		return(BRUTELOSS)
+
+/obj/item/weapon/claymore/cultify()
+	new /obj/item/weapon/melee/cultblade(loc)
+	..()
 
 /obj/item/weapon/claymore/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	playsound(loc, 'sound/weapons/bloodyslice.ogg', 50, 1, -1)

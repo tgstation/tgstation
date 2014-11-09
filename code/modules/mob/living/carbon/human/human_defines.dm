@@ -39,6 +39,8 @@
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/obj/item/s_store = null
+	var/obj/item/l_ear	 = null
+	var/obj/item/r_ear	 = null
 
 	var/used_skillpoints = 0
 	var/skill_specialization = null
@@ -66,6 +68,8 @@
 	var/check_mutations=0 // Check mutations on next life tick
 
 	var/lastFart = 0 // Toxic fart cooldown.
+	var/lastScream = 0 // Prevent scream spam in some situations
+
 
 	fire_dmi = 'icons/mob/OnFire.dmi'
 	fire_sprite = "Standing"

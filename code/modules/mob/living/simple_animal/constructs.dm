@@ -24,7 +24,13 @@
 	max_n2 = 0
 	minbodytemp = 0
 	faction = "cult"
+	supernatural = 1
+	var/nullblock = 0
+
 	var/list/construct_spells = list()
+
+/mob/living/simple_animal/construct/cultify()
+	return
 
 /mob/living/simple_animal/construct/New()
 	..()
@@ -119,6 +125,9 @@
 		var/damage = O.force
 		if (O.damtype == HALLOSS)
 			damage = 0
+		if(istype(O,/obj/item/weapon/nullrod))
+			damage *= 2
+			purge = 3
 		adjustBruteLoss(damage)
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
@@ -128,6 +137,7 @@
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
 				M.show_message("\red [user] gently taps [src] with [O]. ")
+
 
 /mob/living/simple_animal/construct/airflow_stun()
 	return
@@ -225,6 +235,7 @@
 	melee_damage_upper = 25
 	attacktext = "slashes"
 	speed = -1
+	environment_smash = 1
 	see_in_dark = 7
 	attack_sound = 'sound/weapons/rapidslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
@@ -256,6 +267,7 @@
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone,
+							/obj/effect/proc_holder/spell/aoe_turf/conjure/pylon,
 							///obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser
 							)
 
@@ -305,6 +317,33 @@
 				M.show_message("\red [user] gently taps [src] with [O]. ")
 
 
+////////////////////////Harvester////////////////////////////////
+
+
+
+/mob/living/simple_animal/construct/harvester
+	name = "Harvester"
+	real_name = "Harvester"
+	desc = "The promised reward of the livings who follow narsie. Obtained by offering their bodies to the geometer of blood"
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "harvester"
+	icon_living = "harvester"
+	maxHealth = 150
+	health = 150
+	melee_damage_lower = 25
+	melee_damage_upper = 25
+	attacktext = "violently stabs"
+	speed = -1
+	environment_smash = 1
+	see_in_dark = 7
+	attack_sound = 'sound/weapons/pierce.ogg'
+	var/doorcooldown = 10
+	var/runecooldown = 10
+
+/mob/living/simple_animal/construct/harvester/New()
+	..()
+	sight |= SEE_MOBS
+
 ////////////////Glow//////////////////
 /mob/living/simple_animal/construct/proc/updateicon()
 	overlays = 0
@@ -350,57 +389,209 @@
 	. = ..()
 	if(.)
 		if(fire)
-			if(fire_alert)							fire.icon_state = "fire1" //fire_alert is either 0 if no alert, 1 for cold and 2 for heat.
+			if(fire_alert)							fire.icon_state = "fire1"
 			else									fire.icon_state = "fire0"
 		if(pullin)
 			if(pulling)								pullin.icon_state = "pull1"
 			else									pullin.icon_state = "pull0"
 
+		if(purged)
+			if(purge > 0)							purged.icon_state = "purge1"
+			else									purged.icon_state = "purge0"
+
+		if(construct_spell1)
+			construct_spell1.overlays = 0
+			if(purge)
+				construct_spell1.overlays += "silence"
+
+		if(construct_spell2)
+			construct_spell2.overlays = 0
+			if(purge)
+				construct_spell2.overlays += "silence"
+
+		if(construct_spell3)
+			construct_spell3.overlays = 0
+			if(purge)
+				construct_spell3.overlays += "silence"
+
+		if(construct_spell4)
+			construct_spell4.overlays = 0
+			if(purge)
+				construct_spell4.overlays += "silence"
+
+		if(construct_spell5)
+			construct_spell5.overlays = 0
+			if(purge)
+				construct_spell5.overlays += "silence"
+
 /mob/living/simple_animal/construct/armoured/Life()
 	..()
-	switch(health)
-		if(250 to INFINITY)		healths.icon_state = "juggernaut_health0"
-		if(208 to 249)			healths.icon_state = "juggernaut_health1"
-		if(167 to 207)			healths.icon_state = "juggernaut_health2"
-		if(125 to 166)			healths.icon_state = "juggernaut_health3"
-		if(84 to 124)			healths.icon_state = "juggernaut_health4"
-		if(42 to 83)			healths.icon_state = "juggernaut_health5"
-		if(1 to 41)				healths.icon_state = "juggernaut_health6"
-		else					healths.icon_state = "juggernaut_health7"
+	if(healths)
+		switch(health)
+			if(250 to INFINITY)		healths.icon_state = "juggernaut_health0"
+			if(208 to 249)			healths.icon_state = "juggernaut_health1"
+			if(167 to 207)			healths.icon_state = "juggernaut_health2"
+			if(125 to 166)			healths.icon_state = "juggernaut_health3"
+			if(84 to 124)			healths.icon_state = "juggernaut_health4"
+			if(42 to 83)			healths.icon_state = "juggernaut_health5"
+			if(1 to 41)				healths.icon_state = "juggernaut_health6"
+			else					healths.icon_state = "juggernaut_health7"
+
+		var/obj/effect/proc_holder/spell/S = null
+		for(var/datum/D in spell_list)
+			if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall))
+				S = D
+				break
+		if(S)
+			if(S.charge_counter < S.charge_max)
+				construct_spell1.icon_state = "spell_juggerwall-off"
+			else
+				construct_spell1.icon_state = "spell_juggerwall"
 
 
 /mob/living/simple_animal/construct/behemoth/Life()
 	..()
-	switch(health)
-		if(750 to INFINITY)		healths.icon_state = "juggernaut_health0"
-		if(625 to 749)			healths.icon_state = "juggernaut_health1"
-		if(500 to 624)			healths.icon_state = "juggernaut_health2"
-		if(375 to 499)			healths.icon_state = "juggernaut_health3"
-		if(250 to 374)			healths.icon_state = "juggernaut_health4"
-		if(125 to 249)			healths.icon_state = "juggernaut_health5"
-		if(1 to 124)			healths.icon_state = "juggernaut_health6"
-		else					healths.icon_state = "juggernaut_health7"
+	if(healths)
+		switch(health)
+			if(750 to INFINITY)		healths.icon_state = "juggernaut_health0"
+			if(625 to 749)			healths.icon_state = "juggernaut_health1"
+			if(500 to 624)			healths.icon_state = "juggernaut_health2"
+			if(375 to 499)			healths.icon_state = "juggernaut_health3"
+			if(250 to 374)			healths.icon_state = "juggernaut_health4"
+			if(125 to 249)			healths.icon_state = "juggernaut_health5"
+			if(1 to 124)			healths.icon_state = "juggernaut_health6"
+			else					healths.icon_state = "juggernaut_health7"
 
 /mob/living/simple_animal/construct/builder/Life()
 	..()
-	switch(health)
-		if(50 to INFINITY)		healths.icon_state = "artificer_health0"
-		if(42 to 49)			healths.icon_state = "artificer_health1"
-		if(34 to 41)			healths.icon_state = "artificer_health2"
-		if(26 to 33)			healths.icon_state = "artificer_health3"
-		if(18 to 25)			healths.icon_state = "artificer_health4"
-		if(10 to 17)			healths.icon_state = "artificer_health5"
-		if(1 to 9)				healths.icon_state = "artificer_health6"
-		else					healths.icon_state = "artificer_health7"
+	if(healths)
+		switch(health)
+			if(50 to INFINITY)		healths.icon_state = "artificer_health0"
+			if(42 to 49)			healths.icon_state = "artificer_health1"
+			if(34 to 41)			healths.icon_state = "artificer_health2"
+			if(26 to 33)			healths.icon_state = "artificer_health3"
+			if(18 to 25)			healths.icon_state = "artificer_health4"
+			if(10 to 17)			healths.icon_state = "artificer_health5"
+			if(1 to 9)				healths.icon_state = "artificer_health6"
+			else					healths.icon_state = "artificer_health7"
+
+	if(construct_spell1)
+		var/obj/effect/proc_holder/spell/S = null
+		for(var/datum/D in spell_list)
+			if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/wall))
+				S = D
+				break
+		if(S)
+			if(S.charge_counter < S.charge_max)
+				construct_spell1.icon_state = "spell_wall-off"
+			else
+				construct_spell1.icon_state = "spell_wall"
+
+
+	if(construct_spell2)
+		var/obj/effect/proc_holder/spell/S = null
+		for(var/datum/D in spell_list)
+			if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone))
+				S = D
+				break
+		if(S)
+			if(S.charge_counter < S.charge_max)
+				construct_spell2.icon_state = "spell_soulstone-off"
+			else
+				construct_spell2.icon_state = "spell_soulstone"
+
+
+	if(construct_spell3)
+		var/obj/effect/proc_holder/spell/S = null
+		for(var/datum/D in spell_list)
+			if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/floor))
+				S = D
+				break
+		if(S)
+			if(S.charge_counter < S.charge_max)
+				construct_spell3.icon_state = "spell_floor-off"
+			else
+				construct_spell3.icon_state = "spell_floor"
+
+
+	if(construct_spell4)
+		var/obj/effect/proc_holder/spell/S = null
+		for(var/datum/D in spell_list)
+			if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser))
+				S = D
+				break
+		if(S)
+			if(S.charge_counter < S.charge_max)
+				construct_spell4.icon_state = "spell_shell-off"
+			else
+				construct_spell4.icon_state = "spell_shell"
+
+
+	if(construct_spell5)
+		var/obj/effect/proc_holder/spell/S = null
+		for(var/datum/D in spell_list)
+			if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/pylon))
+				S = D
+				break
+		if(S)
+			if(S.charge_counter < S.charge_max)
+				construct_spell5.icon_state = "spell_pylon-off"
+			else
+				construct_spell5.icon_state = "spell_pylon"
+
 
 /mob/living/simple_animal/construct/wraith/Life()
 	..()
-	switch(health)
-		if(75 to INFINITY)		healths.icon_state = "wraith_health0"
-		if(62 to 74)			healths.icon_state = "wraith_health1"
-		if(50 to 61)			healths.icon_state = "wraith_health2"
-		if(37 to 49)			healths.icon_state = "wraith_health3"
-		if(25 to 36)			healths.icon_state = "wraith_health4"
-		if(12 to 24)			healths.icon_state = "wraith_health5"
-		if(1 to 11)				healths.icon_state = "wraith_health6"
-		else					healths.icon_state = "wraith_health7"
+	if(healths)
+		switch(health)
+			if(75 to INFINITY)		healths.icon_state = "wraith_health0"
+			if(62 to 74)			healths.icon_state = "wraith_health1"
+			if(50 to 61)			healths.icon_state = "wraith_health2"
+			if(37 to 49)			healths.icon_state = "wraith_health3"
+			if(25 to 36)			healths.icon_state = "wraith_health4"
+			if(12 to 24)			healths.icon_state = "wraith_health5"
+			if(1 to 11)				healths.icon_state = "wraith_health6"
+			else					healths.icon_state = "wraith_health7"
+
+	if(construct_spell1)
+		var/obj/effect/proc_holder/spell/S = null
+		for(var/datum/D in spell_list)
+			if(istype(D, /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift))
+				S = D
+				break
+		if(S)
+			if(S.charge_counter < S.charge_max)
+				construct_spell1.icon_state = "spell_shift-off"
+			else
+				construct_spell1.icon_state = "spell_shift"
+
+
+/mob/living/simple_animal/construct/harvester/Life()
+	..()
+	if(healths)
+		switch(health)
+			if(150 to INFINITY)		healths.icon_state = "harvester_health0"
+			if(125 to 149)			healths.icon_state = "harvester_health1"
+			if(100 to 124)			healths.icon_state = "harvester_health2"
+			if(75 to 99)			healths.icon_state = "harvester_health3"
+			if(50 to 74)			healths.icon_state = "harvester_health4"
+			if(25 to 49)			healths.icon_state = "harvester_health5"
+			if(1 to 24)				healths.icon_state = "harvester_health6"
+			else					healths.icon_state = "harvester_health7"
+
+	if(construct_spell1)
+		if(runecooldown < 10)
+			construct_spell1.icon_state = "spell_rune-off"
+		else
+			construct_spell1.icon_state = "spell_rune"
+
+	if(construct_spell2)
+		if(doorcooldown < 10)
+			construct_spell2.icon_state = "spell_breakdoor-off"
+		else
+			construct_spell2.icon_state = "spell_breakdoor"
+
+	if(runecooldown < 10)
+		runecooldown++
+	if(doorcooldown < 10)
+		doorcooldown++

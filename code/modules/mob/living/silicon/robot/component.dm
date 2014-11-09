@@ -130,8 +130,6 @@
 /obj/item/robot_parts/robot_component
 	icon = 'icons/robot_component.dmi'
 	icon_state = "working"
-	construction_time = 200
-	construction_cost = list("metal"=5000)
 
 /obj/item/robot_parts/robot_component/binary_communication_device
 	name = "binary communication device"

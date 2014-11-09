@@ -44,6 +44,8 @@
 #define ui_inv3 "8:16,1:5"			//borgs
 #define ui_borg_store "9:16,1:5"	//borgs
 
+#define ui_monkey_uniform "3:14,1:5"//monkey
+#define ui_monkey_hat "4:14,1:5"	//monkey
 #define ui_monkey_mask "5:14,1:5"	//monkey
 #define ui_monkey_back "6:14,1:5"	//monkey
 
@@ -86,8 +88,16 @@
 #define ui_alien_health "14:28,6:13" //aliens have the health display where humans have the pressure damage indicator.
 
 #define ui_construct_health "15:00,7:15" //same height as humans, hugging the right border
+#define ui_construct_purge "15:00,6:15"
 #define ui_construct_fire "14:16,8:13" //above health, slightly to the left
 #define ui_construct_pull "14:28,2:10" //above the zone_sel icon
+
+#define ui_construct_spell1 "7:16,1:5"
+#define ui_construct_spell2 "6:16,1:5"
+#define ui_construct_spell3 "8:16,1:5"
+#define ui_construct_spell4 "5:16,1:5"
+#define ui_construct_spell5 "9:16,1:5"
+
 //Pop-up inventory
 #define ui_shoes "2:8,1:5"
 

@@ -183,7 +183,7 @@
 				out += " have been detected "
 
 				//how the artifact does it's effect
-				switch(A.my_effect.effect_type)
+				switch(A.my_effect.effect)
 					if(1)
 						out += " emitting in an ambient energy field."
 					if(2)
@@ -201,7 +201,7 @@
 					out += " Unable to determine any data about activation trigger."
 
 			//secondary:
-			if(A.secondary_effect && A.secondary_effect.activated)
+			if(A.secondary_effect)
 				//sciencey words go!
 				out += "<br><br>Warning, internal scans indicate ongoing [pick("subluminous","subcutaneous","superstructural")] activity operating \
 				independantly from primary systems. Auxiliary activity involves "
@@ -226,7 +226,7 @@
 						out += "low level radiation"
 
 				//how the artifact does it's effect
-				switch(A.secondary_effect.effect_type)
+				switch(A.secondary_effect.effect)
 					if(1)
 						out += " emitting in an ambient energy field."
 					if(2)

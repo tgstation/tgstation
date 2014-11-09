@@ -135,7 +135,7 @@
 		if(M.health <= -70)
 			M.canmove = 0
 			if(!client)
-				if(Victim && !rabid && !attacked)
+				if(Victim && !attacked)
 					if(Victim.LAssailant && Victim.LAssailant != Victim)
 						if(prob(50))
 							if(!(Victim.LAssailant in Friends))
@@ -143,7 +143,7 @@
 
 			if(M.client && istype(src, /mob/living/carbon/human))
 				if(prob(85))
-					rabid = 1 // UUUNNBGHHHH GONNA EAT JUUUUUU
+					rabid() // UUUNNBGHHHH GONNA EAT JUUUUUU
 
 			if(client) src << "<i>This subject does not have a strong enough life energy anymore...</i>"
 		else

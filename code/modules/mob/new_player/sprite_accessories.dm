@@ -229,10 +229,6 @@
 		icon_state = "hair_hitop"
 		gender = MALE
 
-	mohawk
-		name = "Mohawk"
-		icon_state = "hair_d"
-		species_allowed = list("Human","Unathi")
 	jensen
 		name = "Adam Jensen Hair"
 		icon_state = "hair_jensen"
@@ -647,6 +643,42 @@
 		species_allowed = list("Vox")
 		do_colouration = 0
 
+	vox_quills_kingly
+		name = "Kingly"
+		icon_state = "vox_kingly"
+		species_allowed = list("Vox")
+		do_colouration = 0
+
+	vox_quills_afro
+		name = "Afro"
+		icon_state = "vox_afro"
+		species_allowed = list("Vox")
+		do_colouration = 0
+
+	vox_quills_mohawk
+		name = "Mohawk"
+		icon_state = "vox_mohawk"
+		species_allowed = list("Vox")
+		do_colouration = 0
+
+	vox_quills_yasu
+		name = "Yasuhiro"
+		icon_state = "vox_yasu"
+		species_allowed = list("Vox")
+		do_colouration = 0
+
+	vox_quills_horns
+		name = "Quorns"
+		icon_state = "vox_horns"
+		species_allowed = list("Vox")
+		do_colouration = 0
+
+	vox_quills_nights
+		name = "Nights"
+		icon_state = "vox_nights"
+		species_allowed = list("Vox")
+		do_colouration = 0
+
 /datum/sprite_accessory/facial_hair
 
 	taj_sideburns
@@ -685,6 +717,30 @@
 		species_allowed = list("Tajaran")
 		do_colouration = 0
 
+	vox_face_colonel
+		name = "Colonel"
+		icon_state = "vox_colonel"
+		species_allowed = list("Vox")
+		do_colouration = 0
+
+	vox_face_fu
+		name = "Fu"
+		icon_state = "vox_fu"
+		species_allowed = list("Vox")
+		do_colouration = 0
+
+	vox_face_neck
+		name = "Neck Quills"
+		icon_state = "vox_neck"
+		species_allowed = list("Vox")
+		do_colouration = 0
+
+	vox_face_beard
+		name = "Quill Beard"
+		icon_state = "vox_beard"
+		species_allowed = list("Vox")
+		do_colouration = 0
+
 //skin styles - WIP
 //going to have to re-integrate this with surgery
 //let the icon_state hold an icon preview for now
@@ -718,3 +774,7 @@
 		icon_state = "default"
 		icon = 'icons/mob/human_races/r_skrell.dmi'
 		species_allowed = list("Skrell")
+
+/datum/sprite_accessory/hair/mohawk
+	name = "Mohawk"
+	icon_state = "mohawk"

@@ -354,9 +354,13 @@
 	var/turf/mobloc = get_turf(mob)
 
 	switch(mob.incorporeal_move)
-		if(1 || isobserver(mob))
-			mob.loc = get_step(mob, direct)
-			mob.dir = direct
+		if(1)
+			var/turf/T = get_step(mob, direct)
+			if(T.holy && isobserver(mob) && ((mob.invisibility == 0) || (mob.mind in ticker.mode.cult)))
+				mob << "<span class='warning'>You cannot get past holy grounds while you are in this plane of existence!</span>"
+			else
+				mob.loc = get_step(mob, direct)
+				mob.dir = direct
 		if(2)
 			if(prob(50))
 				var/locx

@@ -16,6 +16,8 @@
 			ticker.mode.update_cult_icons_added(src.mind)
 		if(mind in ticker.mode:syndicates)
 			ticker.mode.update_all_synd_icons()
+		if(mind in ticker.mode.wizards)
+			ticker.mode.update_all_wizard_icons()
 		var/ref = "\ref[mind]"
 		if(ref in ticker.mode.implanter)
 			ticker.mode.update_traitor_icons_added(mind)

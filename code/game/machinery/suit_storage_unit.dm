@@ -29,6 +29,8 @@
 	var/safetieson = 1
 	var/cycletime_left = 0
 
+	machine_flags = SCREWTOGGLE
+
 
 //The units themselves/////////////////
 
@@ -419,11 +421,11 @@
 			if(src.issuperUV)
 				var/burndamage = rand(28,35)
 				OCCUPANT.take_organ_damage(0,burndamage)
-				OCCUPANT.emote("scream")
+				OCCUPANT.emote("scream",,, 1)
 			else
 				var/burndamage = rand(6,10)
 				OCCUPANT.take_organ_damage(0,burndamage)
-				OCCUPANT.emote("scream")
+				OCCUPANT.emote("scream",,, 1)
 		if(i==3) //End of the cycle
 			if(!src.issuperUV)
 				if(src.HELMET)
@@ -559,16 +561,15 @@
 		src.OCCUPANT = null //Testing this as a backup sanity test
 	return
 
+/obj/machinery/suit_storage_unit/togglePanelOpen(var/obj/toggleitem, mob/user)
+	..()
+	src.updateUsrDialog()
 
 /obj/machinery/suit_storage_unit/attackby(obj/item/I as obj, mob/user as mob)
 	if(!src.ispowered)
 		return
-	if(istype(I, /obj/item/weapon/screwdriver))
-		src.panelopen = !src.panelopen
-		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 100, 1)
-		user << text("<font color='blue'>You [] the unit's maintenance panel.</font>",(src.panelopen ? "open up" : "close") )
-		src.updateUsrDialog()
-		return
+	if(..())
+		return 1
 	if ( istype(I, /obj/item/weapon/grab) )
 		var/obj/item/weapon/grab/G = I
 		if( !(ismob(G.affecting)) )

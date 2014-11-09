@@ -7,14 +7,14 @@
 		if(istype(src, /mob/living/carbon/slime/adult))
 			//ghostize() - Messes up making momma slime a baby
 			var/mob/living/carbon/slime/M1 = new primarytype(loc)
-			M1.rabid = 1
 			M1.universal_speak = universal_speak
 			if(src.mind)
 				src.mind.transfer_to(M1)
 			else
 				M1.key = src.key
+				M1.rabid()
 			var/mob/living/carbon/slime/M2 = new primarytype(loc)
-			M2.rabid = 1
+			M2.rabid()
 			if(src)	del(src)
 		else
 			for(var/mob/O in viewers(src, null))

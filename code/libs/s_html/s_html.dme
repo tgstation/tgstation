@@ -1,0 +1,19 @@
+// BEGIN_INTERNALS
+/*
+FILE: inverthtml.dm
+DIR:
+MAP_ICON_TYPE: 0
+AUTO_FILE_DIR: ON
+*/
+// END_INTERNALS
+// BEGIN_FILE_DIR
+#define FILE_DIR .
+// END_FILE_DIR
+// BEGIN_PREFERENCES
+#define DEBUG
+// END_PREFERENCES
+// BEGIN_INCLUDE
+#include "colour2html.dm"
+#include "hexadecimal.dm"
+#include "inverthtml.dm"
+// END_INCLUDE

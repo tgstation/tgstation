@@ -7,6 +7,7 @@
 	var/throwforce = 1
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/sharp = 0 // whether this object cuts
+	var/edge = 0
 	var/in_use = 0 // If we have a user using us, this will be set on. We will check if the user has stopped using us, and thus stop updating and LAGGING EVERYTHING!
 
 	var/damtype = "brute"
@@ -47,6 +48,12 @@
 	rec.addAmount("iron",src.m_amt/CC_PER_SHEET_METAL)
 	rec.addAmount("glass",src.g_amt/CC_PER_SHEET_GLASS)
 	return w_type
+
+/obj/melt()
+	var/obj/effect/decal/slag/slag=locate(/obj/effect/decal/slag) in get_turf(src)
+	if(!slag)
+		slag = new(get_turf(src))
+	slag.slaggify(src)
 
 /obj/proc/process()
 	processing_objects.Remove(src)

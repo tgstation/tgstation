@@ -17,7 +17,7 @@
 	name = "Circuit board"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
-	item_state = "electronic"
+	item_state = "circuitboard"
 	origin_tech = "programming=2"
 	g_amt=2000 // Recycle glass only
 	w_type = RECYK_ELECTRONIC
@@ -95,6 +95,9 @@
 /obj/item/weapon/circuitboard/air_management
 	name = "Circuit board (Atmospheric General Monitor)"
 	build_path = "/obj/machinery/computer/general_air_control"
+/obj/item/weapon/circuitboard/atmos_automation
+	name = "Circuit board (Atmospherics Automation)"
+	build_path = "/obj/machinery/computer/general_air_control/atmos_automation"
 /obj/item/weapon/circuitboard/large_tank_control
 	name = "Circuit board (Atmospheric Tank Control)"
 	build_path = "/obj/machinery/computer/general_air_control/large_tank_control"
@@ -151,6 +154,9 @@
 /obj/item/weapon/circuitboard/rdconsole/robotics
 	name = "Circuit Board (Robotics R&D Console)"
 	build_path = "/obj/machinery/computer/rdconsole/robotics"
+/obj/item/weapon/circuitboard/rdconsole/mechanic
+	name = "Circuit Board (Mechanic R&D Console)"
+	build_path = "/obj/machinery/computer/rdconsole/mechanic"
 
 /obj/item/weapon/circuitboard/mecha_control
 	name = "Circuit Board (Exosuit Control Console)"

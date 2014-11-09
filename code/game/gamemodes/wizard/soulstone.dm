@@ -2,7 +2,7 @@
 	name = "Soul Stone Shard"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "soulstone"
-	item_state = "electronic"
+	item_state = "shard-soulstone"
 	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefacts power."
 	w_class = 1.0
 	flags = FPRINT | TABLEPASS
@@ -10,14 +10,14 @@
 	origin_tech = "bluespace=4;materials=4"
 	var/imprinted = "empty"
 
-
 //////////////////////////////Capturing////////////////////////////////////////////////////////
 
 	attack(mob/living/carbon/human/M as mob, mob/user as mob)
 		if(!istype(M, /mob/living/carbon/human))//If target is not a human.
 			return ..()
-		if(istype(M, /mob/living/carbon/human/dummy))
-			return..()
+		if(istype(M, /mob/living/carbon/human/manifested))
+			user << "The soul stone shard seems unable to pull the soul out of that poor manifested ghost back onto our plane."
+			return
 		add_logs(user, M, "captured [M.name]'s soul", object=src)
 
 		transfer_soul("VICTIM", M, user)
@@ -73,15 +73,26 @@
 					A.loc = U.loc
 					A.cancel_camera()
 					src.icon_state = "soulstone"
+
 		attack_self(U)
+
+/obj/item/device/soulstone/cultify()
+	return
 
 ///////////////////////////Transferring to constructs/////////////////////////////////////////////////////
 /obj/structure/constructshell
 	name = "empty shell"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "construct"
-	desc = "A wicked machine used by those skilled in magical arts. It is inactive"
+	desc = "A wicked machine used by those skilled in magical arts. It is inactive."
 	flags = FPRINT | TABLEPASS
+
+/obj/structure/constructshell/cultify()
+	return
+
+/obj/structure/constructshell/cult
+	icon_state = "construct-cult"
+	desc = "This eerie contraption looks like it would come alive if supplied with a missing ingredient."
 
 /obj/structure/constructshell/attackby(obj/item/O as obj, mob/user as mob)
 	if(istype(O, /obj/item/device/soulstone))
@@ -91,7 +102,8 @@
 ////////////////////////////Proc for moving soul in and out off stone//////////////////////////////////////
 
 
-/obj/item/proc/transfer_soul(var/choice as text, var/target, var/mob/U as mob).
+/obj/item/proc/transfer_soul(var/choice as text, var/target, var/mob/U as mob)
+	var/deleteafter = 0
 	switch(choice)
 		if("VICTIM")
 			var/mob/living/carbon/human/T = target
@@ -133,6 +145,16 @@
 							U << "\blue <b>Capture successful!</b>: \black [T.real_name]'s soul has been ripped from their body and stored within the soul stone."
 							U << "The soulstone has been imprinted with [S.real_name]'s mind, it will no longer react to other souls."
 							C.imprinted = "[S.name]"
+							var/ref = "\ref[U.mind]"
+							var/list/necromancers
+							if(!(U.mind in ticker.mode.necromancer))
+								ticker.mode:necromancer[ref] = list()
+							necromancers = ticker.mode:necromancer[ref]
+							necromancers.Add(S.mind)
+							ticker.mode:necromancer[ref] = necromancers
+							ticker.mode.update_necro_icons_added(U.mind)
+							ticker.mode.update_necro_icons_added(S.mind)
+							ticker.mode.risen.Add(S.mind)
 							del T
 		if("SHADE")
 			var/mob/living/simple_animal/shade/T = target
@@ -157,11 +179,13 @@
 			var/obj/structure/constructshell/T = target
 			var/obj/item/device/soulstone/C = src
 			var/mob/living/simple_animal/shade/A = locate() in C
+			var/mob/living/simple_animal/construct/Z
 			if(A)
 				var/construct_class = alert(U, "Please choose which type of construct you wish to create.",,"Juggernaut","Wraith","Artificer")
+				ticker.mode.update_necro_icons_removed(A.mind)
 				switch(construct_class)
 					if("Juggernaut")
-						var/mob/living/simple_animal/construct/armoured/Z = new /mob/living/simple_animal/construct/armoured (get_turf(T.loc))
+						Z = new /mob/living/simple_animal/construct/armoured (get_turf(T.loc))
 						Z.key = A.key
 						if(iscultist(U))
 							if(ticker.mode.name == "cult")
@@ -174,10 +198,10 @@
 						Z << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
 						Z.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall(Z)
 						Z.cancel_camera()
-						del(C)
+						deleteafter = 1
 
 					if("Wraith")
-						var/mob/living/simple_animal/construct/wraith/Z = new /mob/living/simple_animal/construct/wraith (get_turf(T.loc))
+						Z = new /mob/living/simple_animal/construct/wraith (get_turf(T.loc))
 						Z.key = A.key
 						if(iscultist(U))
 							if(ticker.mode.name == "cult")
@@ -190,10 +214,10 @@
 						Z << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
 						Z.spell_list += new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift(Z)
 						Z.cancel_camera()
-						del(C)
+						deleteafter = 1
 
 					if("Artificer")
-						var/mob/living/simple_animal/construct/builder/Z = new /mob/living/simple_animal/construct/builder (get_turf(T.loc))
+						Z = new /mob/living/simple_animal/construct/builder (get_turf(T.loc))
 						Z.key = A.key
 						if(iscultist(U))
 							if(ticker.mode.name == "cult")
@@ -209,7 +233,21 @@
 						Z.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/floor(Z)
 						Z.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone(Z)
 						Z.cancel_camera()
-						del(C)
+						deleteafter = 1
+				if(Z && Z.mind && !iscultist(Z))
+					var/ref = "\ref[U.mind]"
+					var/list/necromancers
+					if(!(U.mind in ticker.mode.necromancer))
+						ticker.mode:necromancer[ref] = list()
+					necromancers = ticker.mode:necromancer[ref]
+					necromancers.Add(Z.mind)
+					ticker.mode:necromancer[ref] = necromancers
+					ticker.mode.update_necro_icons_added(U.mind)
+					ticker.mode.update_necro_icons_added(Z.mind)
+					ticker.mode.risen.Add(Z.mind)
 			else
 				U << "\red <b>Creation failed!</b>: \black The soul stone is empty! Go kill someone!"
+	ticker.mode.update_all_necro_icons()
+	if(deleteafter)
+		del(src)
 	return

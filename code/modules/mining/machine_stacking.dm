@@ -114,9 +114,9 @@
 				stacks["[O.type]"]=stack
 				qdel(O)
 				continue
-			if (istype(O,/obj/item/weapon/ore/slag))
-				qdel(O)
-				continue
+			//if (istype(O,/obj/item/weapon/ore/slag))
+			//	qdel(O)
+			//	continue
 			O.loc = src.output.loc
 		for(var/typepath in stacks)
 			stack=stacks[typepath]

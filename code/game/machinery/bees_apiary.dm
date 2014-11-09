@@ -22,7 +22,9 @@
 
 	var/bees_in_hive = 0
 	var/list/owned_bee_swarms = list()
-	var/hydrotray_type = /obj/machinery/hydroponics
+	var/hydrotray_type = /obj/machinery/portable_atmospherics/hydroponics
+
+	machine_flags = FIXED2WORK | WRENCHMOVE
 
 //overwrite this after it's created if the apiary needs a custom machinery sprite
 /obj/machinery/apiary/New()
@@ -44,6 +46,8 @@
 		return
 
 /obj/machinery/apiary/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if(..())
+		return
 	if(istype(O, /obj/item/queen_bee))
 		if(health > 0)
 			user << "\red There is already a queen in there."
@@ -70,7 +74,15 @@
 		else
 			user << "\blue You begin to dislodge the dead apiary from the tray."
 		if(do_after(user, 50))
-			new hydrotray_type(src.loc)
+			var/obj/machinery/created_tray = new hydrotray_type(src.loc)
+			created_tray.component_parts = list()
+			for(var/obj/I in src.component_parts)
+				created_tray.component_parts += I
+				I.loc = created_tray
+				component_parts -= I
+			for(var/obj/I in src.contents)
+				I.loc = created_tray
+				contents -= I
 			new /obj/item/apiary(src.loc)
 			user << "\red You dislodge the apiary from the tray."
 			del(src)
@@ -98,7 +110,6 @@
 			user << "\blue There is no honey left to harvest."
 	else
 		angry_swarm(user)
-		..()
 
 /obj/machinery/apiary/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(air_group || (height==0)) return 1
@@ -169,14 +180,14 @@
 			bees_in_hive -= 1
 
 		//find some plants, harvest
-		for(var/obj/machinery/hydroponics/H in view(7, src))
-			if(H.planted && !H.dead && H.myseed && prob(owned_bee_swarms.len * 10))
+		for(var/obj/machinery/portable_atmospherics/hydroponics/H in view(7, src))
+			if(H.seed && !H.dead && prob(owned_bee_swarms.len * 10))
 				src.nutrilevel++
 				H.nutrilevel++
-				if(mut < H.mutmod - 1)
-					mut = H.mutmod - 1
-				else if(mut > H.mutmod - 1)
-					H.mutmod = mut
+				if(mut < H.mutation_mod - 1)
+					mut = H.mutation_mod - 1
+				else if(mut > H.mutation_mod - 1)
+					H.mutation_mod = mut
 
 				//flowers give us pollen (nutrients)
 /* - All plants should be giving nutrients to the hive.
@@ -188,11 +199,11 @@
 				if(prob(10))
 					H.lastcycle -= 5
 				if(prob(10))
-					H.myseed.lifespan = max(initial(H.myseed.lifespan) * 1.5, H.myseed.lifespan + 1)
+					H.seed.lifespan = max(initial(H.seed.lifespan) * 1.5, H.seed.lifespan + 1)
 				if(prob(10))
-					H.myseed.endurance = max(initial(H.myseed.endurance) * 1.5, H.myseed.endurance + 1)
-				if(H.toxic && prob(10))
-					H.toxic = min(0, H.toxic - 1)
+					H.seed.endurance = max(initial(H.seed.endurance) * 1.5, H.seed.endurance + 1)
+				if(H.toxins && prob(10))
+					H.toxins = min(0, H.toxins - 1)
 					toxic++
 
 /obj/machinery/apiary/proc/die()

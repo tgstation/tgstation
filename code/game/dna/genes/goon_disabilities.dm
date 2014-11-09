@@ -259,7 +259,7 @@
 				suffix = copytext(cword,length(cword)-1,length(cword)  )
 			if(length(cword))
 				rearranged += cword
-		return "[prefix][uppertext(dd_list2text(rearranged," "))]!!"
+		return "[prefix][uppertext(list2text(rearranged," "))]!!"
 
 // WAS: /datum/bioEffect/toxic_farts
 /datum/dna/gene/disability/toxic_farts
@@ -409,10 +409,12 @@
 		//playsound(H.loc, 'bubbles.ogg', 50, 0)
 		//playsound(H.loc, 'loudcrunch2.ogg', 50, 0)
 		var/mob/living/carbon/human/skellington/nH = new /mob/living/carbon/human/skellington(H.loc, delay_ready_dna=1)
+		if(nH.has_brain())
+			var/datum/organ/internal/brain/skellBrain = nH.internal_organs_by_name["brain"]
+			del(skellBrain)
 		nH.real_name = H.real_name
 		nH.name = "[H.name]'s skeleton"
 		//H.decomp_stage = 4
-		nH.brain_op_stage = 4
 		H.gib(1)
 	else
 		usr.visible_message("\red <b>[usr.name] melts into a pile of bloody viscera!</b>")

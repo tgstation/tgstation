@@ -11,10 +11,10 @@
 
 // Globals /////////////////////////////////////////////////////
 
-var/global/deepFriedEverything = 1
-var/global/deepFriedNutriment = 1
-var/global/foodNesting = 1
-var/global/ingredientLimit = 30
+var/global/deepFriedEverything = 0
+var/global/deepFriedNutriment = 0
+var/global/foodNesting = 0
+var/global/ingredientLimit = 10
 
 /client/proc/configFood()
 	set name = "Configure Food"
@@ -59,11 +59,17 @@ var/global/ingredientLimit = 30
 	idle_power_usage = 20
 	active_power_usage = 500
 
+	machine_flags = WRENCHMOVE | FIXED2WORK //need to add circuits before the other flags get in
+
 	var/active				=	0 //Currently cooking?
 	var/cookSound			=	'sound/machines/ding.ogg'
 	var/cookTime			=	100	//In ticks
 	var/obj/item/ingredient	=	null //Current ingredient
 	var/list/foodChoices	=	list() //Null if not offered
+
+/obj/machinery/cooking/cultify()
+	new /obj/structure/cult/talisman(loc)
+	..()
 
 /obj/machinery/cooking/New()
 	if(src.foodChoices)
@@ -104,16 +110,17 @@ var/global/ingredientLimit = 30
 	return
 
 /obj/machinery/cooking/attackby(obj/item/I,mob/user)
-	if(istype(user,/mob/living/silicon)) user << "<span class='warning'>That's a terrible idea.</span>"
-	else if(src.active) user << "<span class='warning'>[src.name] is currently busy.</span>"
-	else if(istype(I,/obj/item/weapon/wrench))
-		playsound(loc,'sound/items/Ratchet.ogg',50,1)
-		if(do_after(user,30))
-			src.anchored = !src.anchored
-			playsound(loc,'sound/items/Ratchet.ogg',50,1)
-			user << "<span class='notice'>You [src.anchored ? "bolt down" : "unbolt"] the [src.name]</span>"
-	else if(!src.anchored) user << "<span class='warning'>The [src.name] must be bolted down first!</span>"
-	else src.takeIngredient(I,user)
+	if(src.active)
+		user << "<span class='warning'>[src.name] is currently busy.</span>"
+		return
+	else if(..())
+		return 1
+	else if(istype(user,/mob/living/silicon))
+		user << "<span class='warning'>That's a terrible idea.</span>"
+		return
+	else
+
+		src.takeIngredient(I,user)
 	return
 
 // Food Processing /////////////////////////////////////////////
@@ -123,6 +130,10 @@ var/global/ingredientLimit = 30
 	if(istype(I,/obj/item/weapon/grab) || istype(I,/obj/item/tk_grab)) . = "It won't fit."
 	else if(istype(I,/obj/item/weapon/disk/nuclear)) . = "It's the fucking nuke disk!"
 	else if(istype(I,/obj/item/weapon/reagent_containers/food/snacks) || deepFriedEverything) . = "valid"
+	else if(istype(I,/obj/item/organ))
+		var/obj/item/organ/organ = I
+		if(organ.robotic) . = "That's a prosthetic. It wouldn't taste very good."
+		else . = "valid"
 	else . = "It's not edible food."
 	return
 

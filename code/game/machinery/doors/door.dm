@@ -16,11 +16,12 @@
 
 	var/secondsElectrified = 0
 	var/visible = 1
-	var/p_open = 0
 	var/operating = 0
 	var/autoclose = 0
 	var/glass = 0
 	var/normalspeed = 1
+
+	machine_flags = SCREWTOGGLE
 
 	// for glass airlocks/opacity firedoors
 	var/heat_proof = 0
@@ -41,6 +42,9 @@
 	// TODO: refactor to best :(
 	var/animation_delay = 12
 	var/animation_delay_2 = null
+
+	// cultification animation
+	var/atom/movable/overlay/c_animation = null
 
 /obj/machinery/door/Bumped(atom/AM)
 	if (ismob(AM))
@@ -142,6 +146,9 @@
 
 
 /obj/machinery/door/attackby(obj/item/I as obj, mob/user as mob)
+	if(..())
+		return 1
+
 	if (istype(I, /obj/item/device/detective_scanner))
 		return
 
@@ -295,6 +302,22 @@
 			bound_height = width * world.icon_size
 
 	update_nearby_tiles()
+
+/obj/machinery/door/cultify()
+	icon_state = "null"
+	density = 0
+	c_animation = new /atom/movable/overlay(src.loc)
+	c_animation.name = "cultification"
+	c_animation.density = 0
+	c_animation.anchored = 1
+	c_animation.icon = 'icons/effects/effects.dmi'
+	c_animation.layer = 5
+	c_animation.master = src.loc
+	c_animation.icon_state = "breakdoor"
+	flick("cultification",c_animation)
+	spawn(10)
+		del(c_animation)
+		qdel(src)
 
 /obj/machinery/door/Destroy()
 	update_nearby_tiles()

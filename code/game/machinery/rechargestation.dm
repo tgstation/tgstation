@@ -8,7 +8,8 @@
 	idle_power_usage = 5
 	active_power_usage = 1000
 	var/mob/occupant = null
-	var/opened = 0.0
+
+	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE
 
 	New()
 		. = ..()
@@ -45,90 +46,6 @@
 					src.build_icon()
 			else
 		return
-
-
-	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-		// Wrench to toggle anchor
-		if (istype(W, /obj/item/weapon/wrench))
-			if (occupant)
-				user << "\red You cannot unwrench this [src], it's occupado."
-				return 1
-				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-			if(anchored)
-				user << "\blue You begin to unfasten \the [src]..."
-				if (do_after(user, 40))
-					user.visible_message( \
-						"[user] unfastens \the [src].", \
-						"\blue You have unfastened \the [src].", \
-						"You hear a ratchet.")
-					anchored=0
-			else
-				user << "\blue You begin to fasten \the [src]..."
-				if (do_after(user, 20))
-					user.visible_message( \
-						"[user] fastens \the [src].", \
-						"\blue You have fastened \the [src].", \
-						"You hear a ratchet.")
-					anchored=1
-			src.build_icon()
-			return 1
-			/*// Weld to disassemble.
-		else if(istype(W, /obj/item/weapon/weldingtool))
-			if (occupant)
-				user << "\red You cannot disassemble this [src], it's occupado."
-				return 1
-			if (!anchored)
-				user << "\red \The [src] is too unstable to weld!  The anchoring bolts need to be tightened."
-				return 1
-			playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
-			user << "\blue You begin to cut \the [src] into pieces..."
-			if (do_after(user, 40))
-				user.visible_message( \
-					"[user] disassembles \the [src].", \
-					"\blue You have disassembled \the [src].", \
-					"You hear welding.")
-				anchored=0
-				new /obj/item/weapon/circuitboard/recharge_station(src.loc)
-				var/obj/item/weapon/wire/wire = new (src.loc)
-				wire.amount=4
-				new /obj/item/weapon/stock_parts/manipulator(src.loc)
-				new /obj/item/weapon/stock_parts/manipulator(src.loc)
-				new /obj/item/weapon/stock_parts/matter_bin(src.loc)
-				new /obj/item/weapon/stock_parts/matter_bin(src.loc)
-				new /obj/item/stack/sheet/metal(src.loc,amount=5)
-				del(src)
-				return
-			src.build_icon()
-			return 1 */ //Inconsistent with other methods and unintuitive so I'm commenting this out
-		else if (istype(W, /obj/item/weapon/screwdriver))
-			if (!opened)
-				src.opened = 1
-				user << "You open the maintenance hatch of [src]."
-				//src.icon_state = "autolathe_t"
-			else
-				src.opened = 0
-				user << "You close the maintenance hatch of [src]."
-				//src.icon_state = "autolathe"
-				return 1
-		else if(istype(W, /obj/item/weapon/crowbar))
-			if (occupant)
-				user << "\red You cannot disassemble this [src], it's occupado."
-				return 1
-			if(anchored)
-				user << "You have to unanchor the [src] first!"
-				return
-			if (opened)
-				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-				var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-				M.state = 2
-				M.icon_state = "box_1"
-				for(var/obj/I in component_parts)
-					if(I.reliability != 100 && crit_fail)
-						I.crit_fail = 1
-					I.loc = src.loc
-				del(src)
-				return
-		return ..()
 
 	process()
 		if(stat & (NOPOWER|BROKEN) || !anchored)
@@ -227,16 +144,36 @@
 								var/obj/item/weapon/melee/baton/B = O
 								if(B.bcell)
 									B.bcell.charge = B.bcell.maxcharge
+							//Combat
+							if(istype(O,/obj/item/weapon/gun/energy/laser/cyborg))
+								if(O:power_supply.charge < O:power_supply.maxcharge)
+									O:power_supply.give(O:charge_cost)
+									O:update_icon()
+								else
+									O:charge_tick = 0
+							if(istype(O,/obj/item/weapon/gun/energy/lasercannon/cyborg))
+								if(O:power_supply.charge < O:power_supply.maxcharge)
+									O:power_supply.give(O:charge_cost)
+									O:update_icon()
+								else
+									O:charge_tick = 0
+							//Mining
+							if(istype(O,/obj/item/weapon/gun/energy/kinetic_accelerator/cyborg))
+								if(O:power_supply.charge < O:power_supply.maxcharge)
+									O:power_supply.give(O:charge_cost)
+									O:update_icon()
+								else
+									O:charge_tick = 0
 							//Service
 							if(istype(O,/obj/item/weapon/reagent_containers/food/condiment/enzyme))
 								if(O.reagents.get_reagent_amount("enzyme") < 50)
 									O.reagents.add_reagent("enzyme", 2)
-							//Medical
+							//Medical & Standard
 							if(istype(O,/obj/item/weapon/reagent_containers/glass/bottle/robot))
 								var/obj/item/weapon/reagent_containers/glass/bottle/robot/B = O
 								if(B.reagent && (B.reagents.get_reagent_amount(B.reagent) < B.volume))
 									B.reagents.add_reagent(B.reagent, 2)
-							if(istype(O,/obj/item/stack/medical/bruise_pack) || istype(O,/obj/item/stack/medical/ointment))
+							if(istype(O,/obj/item/stack/medical/bruise_pack) || istype(O,/obj/item/stack/medical/ointment) || istype(O,/obj/item/stack/medical/advanced/bruise_pack) || istype(O,/obj/item/stack/medical/advanced/ointment) || istype(O,/obj/item/stack/medical/splint))
 								if(O:amount < O:max_amount)
 									O:amount += 2
 								if(O:amount > O:max_amount)
@@ -305,7 +242,17 @@
 			src.use_power = 2
 			return
 
+/obj/machinery/recharge_station/togglePanelOpen(var/obj/toggleitem, mob/user)
+	if(occupant)
+		user <<"<span class='notice'>You can't do that while this charger is occupied.</span>"
+		return -1
+	return ..()
 
+/obj/machinery/recharge_station/crowbarDestroy(mob/user)
+	if(occupant)
+		user <<"<span class='notice'>You can't do that while this charger is occupied.</span>"
+		return -1
+	return ..()
 
 
 

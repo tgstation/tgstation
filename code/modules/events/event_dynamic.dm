@@ -1,25 +1,3 @@
-
-/*
-/proc/start_events()
-	//changed to a while(1) loop since they are more efficient.
-	//Moved the spawn in here to allow it to be called with advance proc call if it crashes.
-	//and also to stop spawn copying variables from the game ticker
-	spawn(3000)
-		while(1)
-			/*if(prob(50))//Every 120 seconds and prob 50 2-4 weak spacedusts will hit the station
-				spawn(1)
-					dust_swarm("weak")*/
-			if(!event)
-				//CARN: checks to see if random events are enabled.
-				if(config.allow_random_events)
-					hadevent = event()
-				else
-					Holiday_Random_Event()
-			else
-				event = 0
-			sleep(2400)
-			*/
-
 var/list/event_last_fired = list()
 
 //Always triggers an event when called, dynamically chooses events based on job population
@@ -28,13 +6,13 @@ var/list/event_last_fired = list()
 		return
 
 	var/minutes_passed = world.time/600
+	var/roundstart_delay = 50
+
+	if(minutes_passed < roundstart_delay) //Self-explanatory
+		message_admins("Too early to trigger random event, aborting.")
+		return
 
 	var/list/active_with_role = number_active_with_role()
-	//var/engineer_count = number_active_with_role("Engineer")
-	//var/security_count = number_active_with_role("Security")
-	//var/medical_count = number_active_with_role("Medical")
-	//var/AI_count = number_active_with_role("AI")
-	//var/janitor_count = number_active_with_role("Janitor")
 
 	// Maps event names to event chances
 	// For each chance, 100 represents "normal likelihood", anything below 100 is "reduced likelihood", anything above 100 is "increased likelihood"
@@ -44,55 +22,59 @@ var/list/event_last_fired = list()
 	//see:
 	// Code/WorkInProgress/Cael_Aislinn/Economy/Economy_Events.dm
 	// Code/WorkInProgress/Cael_Aislinn/Economy/Economy_Events_Mundane.dm
-	possibleEvents[/datum/event/economic_event] = 200
-	possibleEvents[/datum/event/trivial_news] = 300
-	possibleEvents[/datum/event/mundane_news] = 200
+	//Commented out for now. Let's be honest, a string of text on PDA is not worth a meteor shower or ion storm
+	//possibleEvents[/datum/event/economic_event] = 100
+	//possibleEvents[/datum/event/trivial_news] = 150
+	//possibleEvents[/datum/event/mundane_news] = 100
 
-	possibleEvents[/datum/event/pda_spam] = max(min(25, player_list.len) * 4, 200)
-	possibleEvents[/datum/event/money_lotto] = max(min(5, player_list.len), 50)
+	//It is this coder's thought that weighting events on job counts is dumb and predictable as hell. 10 Engies ? Hope you like Meteors
+	//Instead, weighting goes from 100 (boring and common) to 10 (exceptional)
+
+	possibleEvents[/datum/event/pda_spam] = 50
+	possibleEvents[/datum/event/money_lotto] = 20
 	if(account_hack_attempted)
-		possibleEvents[/datum/event/money_hacker] = max(min(25, player_list.len) * 4, 200)
+		possibleEvents[/datum/event/money_hacker] = 30
 
-	possibleEvents[/datum/event/carp_migration] = 50 + 50 * active_with_role["Engineer"]
-	possibleEvents[/datum/event/brand_intelligence] = 50 + 25 * active_with_role["Janitor"]
+	possibleEvents[/datum/event/carp_migration] = 40
+	possibleEvents[/datum/event/brand_intelligence] = 30
+	possibleEvents[/datum/event/rogue_drone] = 25
+	possibleEvents[/datum/event/infestation] = 50
+	possibleEvents[/datum/event/communications_blackout] = 25
 
-	possibleEvents[/datum/event/rogue_drone] = 25 + 25 * active_with_role["Engineer"] + 25 * active_with_role["Security"]
-	possibleEvents[/datum/event/infestation] = 50 + 25 * active_with_role["Janitor"]
-
-	possibleEvents[/datum/event/communications_blackout] = 50 + 25 * active_with_role["AI"] + active_with_role["Scientist"] * 25
-	possibleEvents[/datum/event/ionstorm] = active_with_role["AI"] * 25 + active_with_role["Cyborg"] * 25 + active_with_role["Engineer"] * 10 + active_with_role["Scientist"] * 5
-	possibleEvents[/datum/event/grid_check] = 25 + 20 * active_with_role["Engineer"]
-	possibleEvents[/datum/event/electrical_storm] = 10 * active_with_role["Janitor"] + 5 * active_with_role["Engineer"]
-	possibleEvents[/datum/event/wallrot] = 30 * active_with_role["Engineer"] + 50 * active_with_role["Botanist"]
+	if(active_with_role["AI"] > 0 || active_with_role["Cyborg"] > 0)
+		possibleEvents[/datum/event/ionstorm] = 30
+	//possibleEvents[/datum/event/grid_check] = 20 //May cause lag
+	possibleEvents[/datum/event/electrical_storm] = 10
+	possibleEvents[/datum/event/wallrot] = 30
 
 	if(!spacevines_spawned)
-		possibleEvents[/datum/event/spacevine] = 5 + 5 * active_with_role["Engineer"]
-	if(minutes_passed >= 30) // Give engineers time to set up engine
-		possibleEvents[/datum/event/meteor_wave] = 10 * active_with_role["Engineer"]
-		possibleEvents[/datum/event/meteor_shower] = 40 * active_with_role["Engineer"]
-		possibleEvents[/datum/event/blob] = 20 * active_with_role["Engineer"]
+		possibleEvents[/datum/event/spacevine] = 15
+	if(minutes_passed >= 30 && active_with_role["Engineer"] > 1) // Give engineers time to not set up the engine
+		possibleEvents[/datum/event/meteor_wave] = 15
+		possibleEvents[/datum/event/meteor_shower] = 40
+		possibleEvents[/datum/event/blob] = 10
 
-	possibleEvents[/datum/event/viral_infection] = 25 + active_with_role["Medical"] * 100
-	if(active_with_role["Medical"] > 0)
-		possibleEvents[/datum/event/radiation_storm] = active_with_role["Medical"] * 50
-		possibleEvents[/datum/event/spontaneous_appendicitis] = active_with_role["Medical"] * 150
-		possibleEvents[/datum/event/viral_outbreak] = active_with_role["Medical"] * 10
-		possibleEvents[/datum/event/organ_failure] = active_with_role["Medical"] * 50
+	possibleEvents[/datum/event/radiation_storm] = 50
+	if(active_with_role["Medical"] > 1)
+		possibleEvents[/datum/event/viral_infection] = 30
+		possibleEvents[/datum/event/spontaneous_appendicitis] = 50
+		possibleEvents[/datum/event/viral_outbreak] = 20
+		possibleEvents[/datum/event/organ_failure] = 30
 
-	possibleEvents[/datum/event/prison_break] = active_with_role["Security"] * 50
-	if(active_with_role["Security"] > 0)
+	possibleEvents[/datum/event/prison_break] = 25
+	if(active_with_role["Security"] > 1)
 		if(!sent_spiders_to_station)
-			possibleEvents[/datum/event/spider_infestation] = max(active_with_role["Security"], 5) + 5
+			possibleEvents[/datum/event/spider_infestation] = 15
 		if(aliens_allowed && !sent_aliens_to_station)
-			possibleEvents[/datum/event/alien_infestation] = max(active_with_role["Security"], 5) + 2.5
+			possibleEvents[/datum/event/alien_infestation] = 10
 		if(!sent_ninja_to_station && toggle_space_ninja)
-			possibleEvents[/datum/event/space_ninja] = max(active_with_role["Security"], 5)
+			possibleEvents[/datum/event/space_ninja] = 0 //Fix the ninja code first
 
 	for(var/event_type in event_last_fired) if(possibleEvents[event_type])
 		var/time_passed = world.time - event_last_fired[event_type]
-		var/full_recharge_after = 60 * 60 * 10 * 3 // 3 hours
+		var/full_recharge_after = 60 * 60 * 10 // Was 3 hours, changed to 1 hour since rounds rarely last that long anyways
 		var/weight_modifier = max(0, (full_recharge_after - time_passed) / 300)
-		
+
 		possibleEvents[event_type] = max(possibleEvents[event_type] - weight_modifier, 0)
 
 	var/picked_event = pickweight(possibleEvents)
@@ -115,66 +97,7 @@ var/list/event_last_fired = list()
 	//and start working via the constructor.
 	new picked_event
 
-	//moved this to proc/check_event()
-	/*var/chance = possibleEvents[picked_event]
-	var/base_chance = 0.4
-	switch(player_list.len)
-		if(5 to 10)
-			base_chance = 0.6
-		if(11 to 15)
-			base_chance = 0.7
-		if(16 to 20)
-			base_chance = 0.8
-		if(21 to 25)
-			base_chance = 0.9
-		if(26 to 30)
-			base_chance = 1.0
-		if(30 to 100000)
-			base_chance = 1.1
-
-	// Trigger the event based on how likely it currently is.
-	if(!prob(chance * eventchance * base_chance / 100))
-		return 0*/
-
-	/*switch(picked_event)
-		if("Meteor")
-			command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
-			for(var/mob/M in player_list)
-				if(!istype(M,/mob/new_player))
-					M << sound('sound/AI/meteors.ogg')
-			spawn(100)
-				meteor_wave(10)
-				spawn_meteors()
-			spawn(700)
-				meteor_wave(10)
-				spawn_meteors()
-		if("Space Ninja")
-			//Handled in space_ninja.dm. Doesn't announce arrival, all sneaky-like.
-			space_ninja_arrival()
-		if("Radiation")
-			high_radiation_event()
-		if("Virus")
-			viral_outbreak()
-		if("Alien")
-			alien_infestation()
-		if("Prison Break")
-			prison_break()
-		if("Carp")
-			carp_migration()
-		if("Lights")
-			lightsout(1,2)
-		if("Appendicitis")
-			appendicitis()
-		if("Ion Storm")
-			IonStorm()
-		if("Spacevine")
-			spacevine_infestation()
-		if("Communications")
-			communications_blackout()
-		if("Grid Check")
-			grid_check()
-		if("Meteor")
-			meteor_shower()*/
+	message_admins("[picked_event] firing. Time to have fun.")
 
 	return 1
 

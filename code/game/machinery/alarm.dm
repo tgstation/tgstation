@@ -476,20 +476,6 @@
 /obj/machinery/alarm/proc/air_doors_open(manual)
 	areaMaster.OpenFirelocks()
 
-
-
-/obj/machinery/alarm/proc/shock(mob/user, prb)
-	if((stat & (NOPOWER)))		// unpowered, no shock
-		return 0
-	if(!prob(prb))
-		return 0 //you lucked out, no shock for you
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-	s.set_up(5, 1, src)
-	s.start() //sparks always.
-	if (electrocute_mob(user, get_area(src), src))
-		return 1
-	else
-		return 0
 ///////////////
 //END HACKING//
 ///////////////
@@ -941,6 +927,7 @@ Code shamelessly copied from apc_frame
 	icon_state = "alarm_bitem"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	m_amt = 2*CC_PER_SHEET_METAL
+	melt_temperature = MELTPOINT_STEEL
 	w_type = RECYK_METAL
 
 /obj/item/alarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -1254,6 +1241,7 @@ Code shamelessly copied from apc_frame
 	icon_state = "fire_bitem"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	m_amt=2*CC_PER_SHEET_METAL
+	melt_temperature = MELTPOINT_STEEL
 	w_type = RECYK_METAL
 
 /obj/item/firealarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)

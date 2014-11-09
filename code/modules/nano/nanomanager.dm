@@ -27,7 +27,8 @@
 		filenames = flist(path)
 		for(var/filename in filenames)
 			if(copytext(filename, length(filename)) != "/") // filenames which end in "/" are actually directories, which we want to ignore
-				asset_files.Add(file(path + filename)) // add this file to asset_files for sending to clients when they connect
+				if(fexists(path + filename))
+					asset_files.Add(fcopy_rsc(path + filename)) // add this file to asset_files for sending to clients when they connect
 
 	return
 
@@ -217,6 +218,8 @@
   * @return nothing
   */
 /datum/nanomanager/proc/user_transferred(var/mob/oldMob, var/mob/newMob)
+	if(!istype(oldMob))
+		return 0 // no mob, no uis
 	//testing("nanomanager/user_transferred from mob [oldMob.name] to mob [newMob.name]")
 	if (isnull(oldMob.open_uis) || !istype(oldMob.open_uis, /list) || open_uis.len == 0)
 		//testing("nanomanager/user_transferred mob [oldMob.name] has no open uis")

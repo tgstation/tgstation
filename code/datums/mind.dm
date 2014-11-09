@@ -135,7 +135,7 @@ datum/mind
 		)
 		var/text = ""
 
-		if (istype(current, /mob/living/carbon/human) || istype(current, /mob/living/carbon/monkey))
+		if (istype(current, /mob/living/carbon/human) || istype(current, /mob/living/carbon/monkey) || istype(current, /mob/living/simple_animal/construct))
 			/** REVOLUTION ***/
 			text = "revolution"
 			if (ticker.mode.config_tag=="revolution")
@@ -531,18 +531,22 @@ datum/mind
 			if (objective)
 				objectives -= objective
 				objectives.Insert(objective_pos, new_objective)
+				log_admin("[usr.key]/([usr.name]) changed [key]/([name])'s objective from [objective.explanation_text] to [new_objective.explanation_text]")
 			else
 				objectives += new_objective
+				log_admin("[usr.key]/([usr.name]) gave [key]/([name]) the objective: [new_objective.explanation_text]")
 
 		else if (href_list["obj_delete"])
 			var/datum/objective/objective = locate(href_list["obj_delete"])
 			if(!istype(objective))	return
 			objectives -= objective
+			log_admin("[usr.key]/([usr.name]) removed [key]/([name])'s objective ([objective.explanation_text])")
 
 		else if(href_list["obj_completed"])
 			var/datum/objective/objective = locate(href_list["obj_completed"])
 			if(!istype(objective))	return
 			objective.completed = !objective.completed
+			log_admin("[usr.key]/([usr.name]) toggled [key]/([name]) [objective.explanation_text] to [objective.completed ? "completed" : "incomplete"]")
 
 		else if (href_list["revolution"])
 			switch(href_list["revolution"])
@@ -687,6 +691,7 @@ datum/mind
 						special_role = null
 						current.spellremove(current, config.feature_object_spell_system? "object":"verb")
 						current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a wizard!</B></FONT>"
+						ticker.mode.update_wizard_icons_removed(src)
 						log_admin("[key_name_admin(usr)] has de-wizard'ed [current].")
 				if("wizard")
 					if(!(src in ticker.mode.wizards))
@@ -694,6 +699,7 @@ datum/mind
 						special_role = "Wizard"
 						//ticker.mode.learn_basic_spells(current)
 						current << "<B>\red You are the Space Wizard!</B>"
+						ticker.mode.update_wizard_icons_added(src)
 						log_admin("[key_name_admin(usr)] has wizard'ed [current].")
 				if("lair")
 					current.loc = pick(wizardstart)
@@ -704,6 +710,7 @@ datum/mind
 				if("autoobjectives")
 					ticker.mode.forge_wizard_objectives(src)
 					usr << "\blue The objectives for wizard [key] have been generated. You can edit them and anounce manually."
+			ticker.mode.update_all_wizard_icons()
 
 		else if (href_list["changeling"])
 			switch(href_list["changeling"])
@@ -1122,6 +1129,7 @@ datum/mind
 			special_role = "Wizard"
 			assigned_role = "MODE"
 			//ticker.mode.learn_basic_spells(current)
+			ticker.mode.update_wizard_icons_added(src)
 			if(!wizardstart.len)
 				current.loc = pick(latejoin)
 				current << "HOT INSERTION, GO GO GO"
@@ -1134,6 +1142,7 @@ datum/mind
 			ticker.mode.name_wizard(current)
 			ticker.mode.forge_wizard_objectives(src)
 			ticker.mode.greet_wizard(src)
+			ticker.mode.update_all_wizard_icons()
 
 
 	proc/make_Cultist()

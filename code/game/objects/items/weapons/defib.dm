@@ -17,9 +17,7 @@
 	var/datum/effect/effect/system/spark_spread/sparks = new
 	var/charges = 10
 	var/ready = 0
-	var/nextShock
 	var/emagged = 0
-	var/revivedelay = 50 //I hope those are ticks
 
 /obj/item/weapon/melee/defibrillator/New()
 	src.sparks.set_up(5,0,src)
@@ -79,7 +77,6 @@
 	if(!ishuman(M)) user << "<span class='warning'>You can't defibrilate [M]. You don't even know where to put the paddles!</span>"
 	else if(!src.charges) user << "<span class='warning'>[src] is out of charges.</span>"
 	else if(!src.ready) user << "<span class='notice'>Take the paddles out first.</span>"
-	else if(world.time < src.nextShock) user << "<span class='warning'>[src] is still charging back up.</span>"
 	else
 		var/mob/living/carbon/human/target = M
 		if(!(target.stat == 2 || target.stat == DEAD))
@@ -89,12 +86,12 @@
 	return
 
 /obj/item/weapon/melee/defibrillator/proc/shockAttack(mob/living/carbon/human/target,mob/user)
-	var/datum/organ/internal/heart/heart = target.internal_organs["heart"]
+	var/datum/organ/internal/heart/heart = target.internal_organs_by_name["heart"]
 	target.visible_message("<span class='danger'>[target.name] has been shocked in the chest with the [src] by [user]!</span>")
 	target.Weaken(rand(6,12))
 	target.apply_damage(rand(30,60),BURN,"chest")
 	heart.damage += rand(5,60)
-	target.emote("scream") //If we're going this route, it kinda hurts
+	target.emote("scream",,, 1) //If we're going this route, it kinda hurts
 	target.updatehealth()
 	spawn() //Logging
 		user.attack_log += "\[[time_stamp()]\]<font color='red'> Shocked [target.name] ([target.ckey]) with an emagged [src.name]</font>"
@@ -106,7 +103,6 @@
 	playsound(get_turf(src),'sound/items/defib.ogg',50,1)
 	src.charges--
 	src.update_icon()
-	src.nextShock = world.timeofday + revivedelay*0.2
 	return
 
 /obj/item/weapon/melee/defibrillator/proc/attemptDefib(mob/living/carbon/human/target,mob/user)
@@ -132,7 +128,7 @@
 		else if(target.w_uniform && istype(target.w_uniform,/obj/item/clothing/under && prob(50)))
 			user << "<span class='warning'>[src] buzzes: Defibrillation failed. Please apply on bare skin.</span>"
 		else
-			var/datum/organ/internal/heart/heart = target.internal_organs["heart"]
+			var/datum/organ/internal/heart/heart = target.internal_organs_by_name["heart"]
 			if(prob(25)) heart.damage += 5 //Allow the defibrilator to possibly worsen heart damage. Still rare enough to just be the "clone damage" of the defib
 			target.apply_damage(-target.getOxyLoss(),OXY)
 			target.updatehealth()
@@ -141,14 +137,15 @@
 			if((target.health > config.health_threshold_dead)\
 			&&(!(head.status & ORGAN_DESTROYED))\
 			&&(!(M_NOCLONE in target.mutations))\
-			&&(target.brain_op_stage < 4))
+			&&(target.has_brain()))
+				target.timeofdeath = 0
 				target.visible_message("<span class='notice'>[src] beeps: Defibrillation successful.</span>")
 				dead_mob_list -= target
-				living_mob_list += target
+				living_mob_list |= list(target)
 				target.tod = null
-				target.stat = CONSCIOUS
+				target.stat = UNCONSCIOUS
 				target.regenerate_icons()
-				//target.update_canmove()
+				target.update_canmove()
 				flick("e_flash",target.flash)
 				target.apply_effect(10, EYE_BLUR) //I'll still put this back in to avoid dumd "pounce back up" behavior
 				target.apply_effect(10, PARALYZE)
@@ -157,5 +154,4 @@
 			else
 				target.visible_message("<span class='notice'>[src] buzzes: Defibrillation failed. Patient's condition does not allow reviving.</span>")
 		target.apply_damage(rand(1,5),BURN,"chest") //Better not try too much times
-		src.nextShock = world.timeofday + revivedelay
 		return

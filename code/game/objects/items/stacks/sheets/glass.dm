@@ -17,6 +17,7 @@
 	icon_state = "sheet-glass"
 	g_amt = 3750
 	w_type = RECYK_GLASS
+	melt_temperature = MELTPOINT_GLASS
 	origin_tech = "materials=1"
 	var/created_window = /obj/structure/window/basic
 	var/full_window = /obj/structure/window/full/basic
@@ -126,6 +127,7 @@
 	g_amt = 3750
 	m_amt = 1875
 	w_type = RECYK_GLASS
+	melt_temperature = MELTPOINT_GLASS
 	origin_tech = "materials=2"
 
 /obj/item/stack/sheet/rglass/cyborg
@@ -326,6 +328,9 @@
 	created_window = /obj/structure/window/plasmabasic
 	full_window = /obj/structure/window/full/plasmabasic
 
+	perunit = 2875 //average of plasma and glass
+	melt_temperature = MELTPOINT_STEEL+500
+
 /obj/item/stack/sheet/glass/plasmaglass/recycle(var/datum/materials/rec)
 	rec.addAmount("plasma",1*src.amount)
 	rec.addAmount("glass", 1*src.amount)
@@ -361,9 +366,11 @@
 	g_amt=CC_PER_SHEET_GLASS
 	m_amt = 1875
 	w_type = RECYK_GLASS
+	melt_temperature = MELTPOINT_STEEL+500 // I guess...?
 	origin_tech = "materials=4;plasmatech=2"
 	created_window = /obj/structure/window/plasmareinforced
 	full_window = /obj/structure/window/full/plasmareinforced
+	perunit = 2875
 
 /obj/item/stack/sheet/glass/plasmarglass/recycle(var/datum/materials/rec)
 	rec.addAmount("plasma",1*src.amount)

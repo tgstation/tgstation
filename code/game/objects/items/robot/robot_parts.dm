@@ -6,13 +6,12 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
 	w_type=RECYK_ELECTRONIC
-	var/construction_time = 100
-	var/list/construction_cost = list("metal"=20000,"glass"=5000)
 	var/list/part = null
 	var/sabotaged = 0 //Emagging limbs can have repercussions when installed as prosthetics.
 
+/*
 /obj/item/robot_parts/recycle(var/datum/materials/rec)
-	for(var/material in construction_cost)
+	for(var/material in materials)
 		var/rec_mat=material
 		var/CCPS=CC_PER_SHEET_MISC
 		if(rec_mat=="metal")
@@ -20,47 +19,38 @@
 			CCPS=CC_PER_SHEET_METAL
 		if(rec_mat=="glass")
 			CCPS=CC_PER_SHEET_GLASS
-		rec.addAmount(material,construction_cost[material]/CCPS)
+		rec.addAmount(material,materials[material]/CCPS)
 	return 1
+*/
 
 /obj/item/robot_parts/l_arm
 	name = "robot left arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "l_arm"
-	construction_time = 200
-	construction_cost = list("metal"=18000)
 	part = list("l_arm","l_hand")
 
 /obj/item/robot_parts/r_arm
 	name = "robot right arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "r_arm"
-	construction_time = 200
-	construction_cost = list("metal"=18000)
 	part = list("r_arm","r_hand")
 
 /obj/item/robot_parts/l_leg
 	name = "robot left leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "l_leg"
-	construction_time = 200
-	construction_cost = list("metal"=15000)
 	part = list("l_leg","l_foot")
 
 /obj/item/robot_parts/r_leg
 	name = "robot right leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "r_leg"
-	construction_time = 200
-	construction_cost = list("metal"=15000)
 	part = list("r_leg","r_foot")
 
 /obj/item/robot_parts/chest
 	name = "robot torso"
 	desc = "A heavily reinforced case containing cyborg logic boards, with space for a standard power cell."
 	icon_state = "chest"
-	construction_time = 350
-	construction_cost = list("metal"=40000)
 	var/wires = 0.0
 	var/obj/item/weapon/cell/cell = null
 
@@ -68,8 +58,6 @@
 	name = "robot head"
 	desc = "A standard reinforced braincase, with spine-plugged neural socket and sensor gimbals."
 	icon_state = "head"
-	construction_time = 350
-	construction_cost = list("metal"=25000)
 	var/obj/item/device/flash/flash1 = null
 	var/obj/item/device/flash/flash2 = null
 
@@ -77,8 +65,6 @@
 	name = "robot endoskeleton"
 	desc = "A complex metal backbone with standard limb sockets and pseudomuscle anchors."
 	icon_state = "robo_suit"
-	construction_time = 500
-	construction_cost = list("metal"=50000)
 	var/obj/item/robot_parts/l_arm/l_arm = null
 	var/obj/item/robot_parts/r_arm/r_arm = null
 	var/obj/item/robot_parts/l_leg/l_leg = null

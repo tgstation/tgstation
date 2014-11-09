@@ -34,6 +34,8 @@
 	ghost_read=0
 	ghost_write=0
 
+	machine_flags = EMAGGABLE
+
 /obj/machinery/door_control/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
 	if(wires & 2)
@@ -44,7 +46,14 @@
 /obj/machinery/door_control/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
+/obj/machinery/door_control/emag(mob/user)
+	req_access = list()
+	req_one_access = list()
+	playsound(get_turf(src), "sparks", 100, 1)
+
 /obj/machinery/door_control/attackby(obj/item/weapon/W, mob/user as mob)
+	..()
+	..()
 	/* For later implementation
 	if (istype(W, /obj/item/weapon/screwdriver))
 	{
@@ -61,10 +70,6 @@
 	*/
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
-	if(istype(W, /obj/item/weapon/card/emag))
-		req_access = list()
-		req_one_access = list()
-		playsound(get_turf(src), "sparks", 100, 1)
 	return src.attack_hand(user)
 
 /obj/machinery/door_control/attack_hand(mob/user as mob)

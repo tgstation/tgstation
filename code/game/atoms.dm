@@ -266,8 +266,11 @@ its easier to just keep the beam vertical.
 
 	if (!( usr ))
 		return
+
+	usr.face_atom(src)
 	usr << "That's \a [src]." //changed to "That's" from "This is" because "This is some metal sheets" sounds dumb compared to "That's some metal sheets" ~Carn
 	usr << desc
+
 	if(on_fire)
 		usr << "\red OH SHIT! IT'S ON FIRE!"
 	// *****RM
@@ -482,6 +485,11 @@ its easier to just keep the beam vertical.
 //returns 1 if made bloody, returns 0 otherwise
 /atom/proc/add_blood(mob/living/carbon/human/M as mob)
 	.=1
+	if(!M)//if the blood is of non-human source
+		if(!blood_DNA || !istype(blood_DNA, /list))
+			blood_DNA = list()
+		blood_color = "#A10808"
+		return 1
 	if (!( istype(M, /mob/living/carbon/human) ))
 		return 0
 	if (!istype(M.dna, /datum/dna))

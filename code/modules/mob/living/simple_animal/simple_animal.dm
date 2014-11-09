@@ -35,6 +35,8 @@
 	var/heat_damage_per_tick = 3	//amount of damage applied if animal's body temperature is higher than maxbodytemp
 	var/cold_damage_per_tick = 2	//same as heat_damage_per_tick, only if the bodytemperature it's lower than minbodytemp
 	var/fire_alert = 0
+	var/oxygen_alert = 0
+	var/toxins_alert = 0
 
 	//Atmos effect - Yes, you can make creatures that require plasma or co2 to survive. N2O is a trace gas and handled separately, hence why it isn't here. It'd be hard to add it. Hard and me don't mix (Yes, yes make all the dick jokes you want with that.) - Errorage
 	var/min_oxy = 5
@@ -62,6 +64,10 @@
 	var/childtype = null
 	var/scan_ready = 1
 	var/species //Sorry, no spider+corgi buttbabies.
+
+	//Null rod stuff
+	var/supernatural = 0
+	var/purge = 0
 
 /mob/living/simple_animal/New()
 	..()
@@ -104,8 +110,11 @@
 	if(paralysis)
 		AdjustParalysis(-1)
 
+	if(purge)
+		purge -= 1
+
 	//Movement
-	if((!client||deny_client_move) && !stop_automated_movement && wander && !anchored)
+	if((!client||deny_client_move) && !stop_automated_movement && wander && !anchored && (ckey == null))
 		if(isturf(src.loc) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
@@ -114,7 +123,7 @@
 					turns_since_move = 0
 
 	//Speaking
-	if(!client && speak_chance)
+	if(!client && speak_chance && (ckey == null))
 		if(rand(0,200) < speak_chance)
 			if(speak && speak.len)
 				if((emote_hear && emote_hear.len) || (emote_see && emote_see.len))
@@ -164,6 +173,9 @@
 			if(min_oxy)
 				if(Environment.oxygen < min_oxy)
 					atmos_suitable = 0
+					oxygen_alert = 1
+				else
+					oxygen_alert = 0
 
 			if(max_oxy)
 				if(Environment.oxygen > max_oxy)
@@ -176,6 +188,9 @@
 			if(max_tox)
 				if(Environment.toxins > max_tox)
 					atmos_suitable = 0
+					toxins_alert = 1
+				else
+					toxins_alert = 0
 
 			if(min_n2)
 				if(Environment.nitrogen < min_n2)
@@ -195,6 +210,7 @@
 
 	//Atmos effect
 	if(bodytemperature < minbodytemp)
+		fire_alert = 2
 		adjustBruteLoss(cold_damage_per_tick)
 	else if(bodytemperature > maxbodytemp)
 		fire_alert = 1
@@ -411,6 +427,9 @@
 			var/damage = O.force
 			if (O.damtype == HALLOSS)
 				damage = 0
+			if(supernatural && istype(O,/obj/item/weapon/nullrod))
+				damage *= 2
+				purge = 3
 			adjustBruteLoss(damage)
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
@@ -421,12 +440,15 @@
 				if ((M.client && !( M.blinded )))
 					M.show_message("\red [user] gently taps [src] with the [O]. ")
 
-
-
 /mob/living/simple_animal/movement_delay()
 	var/tally = 0 //Incase I need to add stuff other than "speed" later
 
 	tally = speed
+
+	if(purge)//Purged creatures will move more slowly. The more time before their purge stops, the slower they'll move. (muh dotuh)
+		if(tally <= 0)
+			tally = 1
+		tally *= purge
 
 	return tally+config.animal_delay
 

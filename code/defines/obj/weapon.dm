@@ -102,7 +102,6 @@
 	throw_speed = 4
 	throw_range = 5
 
-
 /obj/item/weapon/cane
 	name = "cane"
 	desc = "A cane used by a true gentlemen. Or a clown."
@@ -115,6 +114,7 @@
 	w_class = 2.0
 	m_amt = 50
 	w_type = RECYK_MISC
+	melt_temperature = MELTPOINT_STEEL
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
 
 /obj/item/weapon/disk
@@ -504,6 +504,7 @@
 	flags = FPRINT | TABLEPASS| CONDUCT
 	m_amt = 3750
 	w_type = RECYK_METAL
+	melt_temperature=MELTPOINT_STEEL
 
 /obj/item/weapon/shard
 	name = "shard"
@@ -514,9 +515,10 @@
 	w_class = 1.0
 	force = 5.0
 	throwforce = 15.0
-	item_state = "shard-glass"
+	item_state = "shard-glassnew"
 	g_amt = 3750
 	w_type = RECYK_GLASS
+	melt_temperature = MELTPOINT_GLASS
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
 
 	suicide_act(mob/user)
@@ -552,6 +554,9 @@
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "shrapnellarge"
 	desc = "A bunch of tiny bits of shattered metal."
+	m_amt=5
+	w_type=RECYK_METAL
+	melt_temperature=MELTPOINT_STEEL
 
 /obj/item/weapon/shard/shrapnel/New()
 
@@ -588,6 +593,7 @@
 	throw_range = 20
 	m_amt = 100
 	w_type = RECYK_ELECTRONIC
+	melt_temperature=MELTPOINT_SILICON
 	origin_tech = "magnets=1"
 
 /obj/item/weapon/staff
@@ -630,8 +636,13 @@
 	icon_state = "table_parts"
 	m_amt = 3750
 	w_type = RECYK_METAL
+	melt_temperature=MELTPOINT_STEEL
 	flags = FPRINT | TABLEPASS| CONDUCT
 	attack_verb = list("slammed", "bashed", "battered", "bludgeoned", "thrashed", "whacked")
+
+/obj/item/weapon/table_parts/cultify()
+	new /obj/item/weapon/table_parts/wood(loc)
+	..()
 
 /obj/item/weapon/table_parts/reinforced
 	name = "reinforced table parts"
@@ -640,6 +651,7 @@
 	icon_state = "reinf_tableparts"
 	m_amt = 7500
 	w_type = RECYK_METAL
+	melt_temperature=MELTPOINT_STEEL
 	flags = FPRINT | TABLEPASS| CONDUCT
 
 /obj/item/weapon/table_parts/wood
@@ -647,6 +659,9 @@
 	desc = "Keep away from fire."
 	icon_state = "wood_tableparts"
 	flags = null
+
+/obj/item/weapon/table_parts/wood/cultify()
+	return
 
 /obj/item/weapon/wire
 	desc = "This is just a simple piece of regular insulated wire."
@@ -658,6 +673,7 @@
 	var/old_lay = null
 	m_amt = 40
 	w_type = RECYK_METAL
+	melt_temperature=MELTPOINT_STEEL
 	attack_verb = list("whipped", "lashed", "disciplined", "tickled")
 
 	suicide_act(mob/user)
@@ -756,6 +772,7 @@
 	throw_range = 4
 	m_amt = 15000
 	w_type = RECYK_METAL
+	melt_temperature=MELTPOINT_STEEL
 	origin_tech = "materials=2;combat=1"
 	attack_verb = list("chopped", "torn", "cut")
 
@@ -787,8 +804,8 @@
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 
 /obj/item/weapon/scythe/afterattack(atom/A, mob/user as mob)
-	if(istype(A, /obj/effect/spacevine))
-		for(var/obj/effect/spacevine/B in orange(A,1))
+	if(istype(A, /obj/effect/plantsegment))
+		for(var/obj/effect/plantsegment/B in orange(A,1))
 			if(prob(80))
 				del B
 		del A
@@ -822,6 +839,7 @@
 	icon = 'icons/obj/stock_parts.dmi'
 	w_class = 2.0
 	var/rating = 1
+	melt_temperature=MELTPOINT_STEEL
 
 /obj/item/weapon/stock_parts/New()
 	. = ..()

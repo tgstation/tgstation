@@ -1,3 +1,4 @@
+#define MAX_DESIGNS 10
 
 //The advanced pea-green monochrome lcd of tomorrow.
 
@@ -21,7 +22,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/mode = 0 //Controls what menu the PDA will display. 0 is hub; the rest are either built in or based on cartridge.
 
 	//Secondary variables
-	var/scanmode = 0 //1 is medical scanner, 2 is forensics, 3 is reagent scanner.
+	var/scanmode = 0 //1 is medical scanner, 2 is forensics, 3 is reagent scanner, 4 is halogen counter, 5 is gas scanner, 6 is device analyser -- keep this list updated if you add one
 	var/fon = 0 //Is the flashlight function on?
 	var/f_lum = 4 //Luminosity for the flashlight function
 	var/silent = 0 //To beep or not to beep, that is the question
@@ -43,6 +44,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/ownjob = null //related to above
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
+	var/obj/item/device/device_analyser/dev_analys = null
 
 	var/MM = null
 	var/DD = null
@@ -285,6 +287,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	default_cartridge = /obj/item/weapon/cartridge/atmos
 	icon_state = "pda-atmo"
 
+/obj/item/device/pda/mechanic
+	default_cartridge = /obj/item/weapon/cartridge/mechanic
+	icon_state = "pda-atmo"
+
 /obj/item/device/pda/chemist
 	default_cartridge = /obj/item/weapon/cartridge/chemistry
 	icon_state = "pda-chem"
@@ -345,6 +351,23 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/selected = plist[c]
 	src.aiPDA.create_message(src, selected)
 
+//AI verb and proc for sending PDA messages.
+/obj/item/device/pda/ai/verb/cmd_send_pdamesg()
+	set category = "AI Commands"
+	set name = "Send Message"
+	set src in usr
+	if(usr.stat == 2)
+		usr << "You can't send PDA messages because you are dead!"
+		return
+	var/list/plist = available_pdas()
+	if (plist)
+		var/c = input(usr, "Please select a PDA") as null|anything in sortList(plist)
+		if (!c) // if the user hasn't selected a PDA file we can't send a message
+			return
+		var/selected = plist[c]
+		create_message(usr, selected)
+
+
 /obj/item/device/pda/ai/verb/cmd_toggle_pda_receiver()
 	set category = "AI Commands"
 	set name = "Toggle Sender/Receiver"
@@ -365,6 +388,17 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		return
 	silent=!silent
 	usr << "<span class='notice'>PDA ringer toggled [(silent ? "Off" : "On")]!</span>"
+
+
+/obj/item/device/pda/ai/verb/cmd_show_message_log()
+	set category = "AI Commands"
+	set name = "Show Message Log"
+	set src in usr
+	if(usr.stat == 2)
+		usr << "You can't do that because you are dead!"
+		return
+	var/HTML = "<html><head><title>AI PDA Message Log</title></head><body>[tnote]</body></html>"
+	usr << browse(HTML, "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
 
 /mob/living/silicon/ai/proc/cmd_show_message_log()
 	if(usr.stat == 2)
@@ -503,7 +537,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += "<li><a href='byond://?src=\ref[src];choice=42'><img src=pda_status.png> Set Status Display</a></li>"
 					dat += "</ul>"
 					if (cartridge.access_engine)
-
 						// AUTOFIXED BY fix_string_idiocy.py
 						// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:355: dat += "<h4>Engineering Functions</h4>"
 						dat += {"<h4>Engineering Functions</h4>
@@ -511,6 +544,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 							<li><a href='byond://?src=\ref[src];choice=43'><img src=pda_power.png> Power Monitor</a></li>
 							</ul>"}
 						// END AUTOFIX
+
+					if (cartridge.access_mechanic)
+						dat += {"<h4>Mechanic Functions</h4>
+							<ul>
+							<li><a href='byond://?src=\ref[src];choice=Device Analyser'><img src=pda_scanner.png> [scanmode == 6 ? "Disable" : "Enable" ] Device Analyser</a></li>
+							</ul>"}
+
 					if (cartridge.access_medical)
 
 						// AUTOFIXED BY fix_string_idiocy.py
@@ -824,6 +864,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					scanmode = 0
 				else if((!isnull(cartridge)) && (cartridge.access_atmos))
 					scanmode = 5
+			if("Device Analyser")
+				if(scanmode == 6)
+					scanmode = 0
+				else if((!isnull(cartridge)) && (cartridge.access_mechanic))
+					if(!dev_analys)
+						dev_analys = new //let's create that device analyser
+					scanmode = 6
 
 //MESSENGER/NOTE FUNCTIONS===================================
 
@@ -1038,7 +1085,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
 		P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[owner]</a> ([ownjob]):</b></i><br>[t]<br>"
 		for(var/mob/dead/observer/M in player_list)
-			if(M.stat == DEAD && M.client && (M.client.prefs.toggles & CHAT_GHOSTEARS)) // src.client is so that ghosts don't have to listen to mice
+			if(M.stat == DEAD && M.client && (M.client.prefs.toggles & CHAT_GHOSTPDA)) // src.client is so that ghosts don't have to listen to mice
 				M.show_message("<span class='game say'>PDA Message - <span class='name'>[owner]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[t]</span></span>")
 
 
@@ -1309,6 +1356,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					user << "\blue Temperature: [round(T.parent.air.temperature-T0C)]&deg;C"
 				else
 					user << "\blue Tank is empty!"
+
+		if (6)
+			if(dev_analys) //let's use this instead. Much neater
+				dev_analys.afterattack(A, user)
+				A.attackby(src, user)
 
 	if (!scanmode && istype(A, /obj/item/weapon/paper) && owner)
 		note = A:info

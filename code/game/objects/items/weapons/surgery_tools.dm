@@ -18,11 +18,12 @@
 	icon_state = "retractor"
 	m_amt = 10000
 	g_amt = 5000 // OH COME ON, WHERE THE FUCK IS THERE ANY GLASS IN A GODDAMN RETRACTOR
+	melt_temperature = MELTPOINT_STEEL
 	w_type = RECYK_METAL
 	flags = FPRINT | TABLEPASS | CONDUCT
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
-	
+
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is pulling \his eyes out with the [src.name]! It looks like \he's  trying to commit suicide!</b>"
 		return (BRUTELOSS)
@@ -143,7 +144,7 @@ LOOK FOR SURGERY.DM*/
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "pinched")
-	
+
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is pulling \his eyes out with the [src.name]! It looks like \he's  trying to commit suicide!</b>"
 		return (BRUTELOSS)
@@ -284,7 +285,7 @@ LOOK FOR SURGERY.DM*/
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("burnt")
-	
+
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is burning \his eyes out with the [src.name]! It looks like \he's  trying to commit suicide!</b>"
 		return (BRUTELOSS)
@@ -641,6 +642,37 @@ LOOK FOR SURGERY.DM*/
 */
 
 /*
+
+ * Researchable Scalpels
+
+*/
+/obj/item/weapon/scalpel/laser1
+	name = "laser scalpel"
+	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field. This one looks basic and could be improved."
+	icon_state = "scalpel_laser1_on"
+	damtype = "fire"
+
+/obj/item/weapon/scalpel/laser2
+	name = "laser scalpel"
+	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field. This one looks somewhat advanced."
+	icon_state = "scalpel_laser2_on"
+	damtype = "fire"
+	force = 12.0
+
+/obj/item/weapon/scalpel/laser3
+	name = "laser scalpel"
+	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field. This one looks to be the pinnacle of precision energy cutlery!"
+	icon_state = "scalpel_laser3_on"
+	damtype = "fire"
+	force = 15.0
+
+/obj/item/weapon/scalpel/manager
+	name = "incision management system"
+	desc = "A true extension of the surgeon's body, this marvel instantly and completely prepares an incision allowing for the immediate commencement of therapeutic steps."
+	icon_state = "scalpel_manager_on"
+	force = 7.5
+
+/*
  * Circular Saw
  */
 /obj/item/weapon/circular_saw
@@ -660,7 +692,7 @@ LOOK FOR SURGERY.DM*/
 	w_type = RECYK_ELECTRONIC
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
-	
+
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is sawing \his head in two with the [src.name]! It looks like \he's  trying to commit suicide!</b>"
 		return (BRUTELOSS)
@@ -772,7 +804,7 @@ LOOK FOR SURGERY.DM*/
 				log_attack("<font color='red'>[user.name] ([user.ckey]) debrained [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 
 
-				var/obj/item/brain/B = new(M.loc)
+				var/obj/item/organ/brain/B = new(M.loc)
 				B.transfer_identity(M)
 
 				M:brain_op_stage = 4.0
@@ -824,7 +856,7 @@ LOOK FOR SURGERY.DM*/
 	icon_state = "bone-gel"
 	force = 0
 	throwforce = 1.0
-	
+
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is eating the [src.name]! It looks like \he's  trying to commit suicide!</b>" //Don't eat glue kids.
 		return (TOXLOSS)

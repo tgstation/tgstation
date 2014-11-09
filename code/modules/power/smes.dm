@@ -12,7 +12,6 @@
 	anchored = 1
 	use_power = 0
 	var/output = 50000
-	var/opened = 0
 	var/lastout = 0
 	var/loaddemand = 0
 	var/capacity = 5e6
@@ -28,6 +27,8 @@
 	var/last_output = 0
 	var/last_charge = 0
 	var/last_online = 0
+
+	machine_flags = SCREWTOGGLE | CROWDESTROY
 
 /obj/machinery/power/smes/New()
 	. = ..()
@@ -67,19 +68,19 @@
 	if (user.loc == loc)
 		user << "<span class='warning'>You must not be on the same tile with SMES.</span>"
 		return 1
-		
+
 	var/userdir = get_dir(user, src)
-		
+
 	for(var/dirs in cardinal)	//there shouldn't be any diagonal terminals
 		if(userdir == dirs)
 			var/turf/T = get_turf(user)
 			if(T.intact)
 				user << "<span class='warning'>The floor plating must be removed first.</span>"
 				return 1
-		
+
 			user << "<span class='notice'>You start adding cable to the SMES.</span>"
 			playsound(get_turf(src), 'sound/items/zip.ogg', 100, 1)
-			if(do_after(user,100))		
+			if(do_after(user,100))
 				terminal = new /obj/machinery/power/terminal(user.loc)
 				terminal.dir = user.dir
 				terminal.master = src
@@ -87,33 +88,15 @@
 			else
 				user << "<span class='warning'>You moved!</span>"
 				return 1
-	
+
 	user << "<span class='warning'>You can't wire the SMES like that!</span>"
 	return 1
 
 /obj/machinery/power/smes/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob) //these can only be moved by being reconstructed, solves having to remake the powernet.
-	if(istype(W, /obj/item/weapon/screwdriver))
-		if(!opened)
-			src.opened = 1
-			//src.icon_state = "smes_t"
-			user << "You open the maintenance hatch of [src]"
-		else
-			src.opened = 0
-			//src.icon_state = "smes"
-			user << "You close the maintenance hatch of [src]"
-	if(opened)
-		if(istype(W, /obj/item/weapon/crowbar))
-			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			M.state = 2
-			M.icon_state = "box_1"
-			for(var/obj/I in component_parts)
-				if(I.reliability != 100 && crit_fail)
-					I.crit_fail = 1
-				I.loc = src.loc
-			del(src)
-			return 1
-		else if(istype(W, /obj/item/weapon/cable_coil) && !terminal)
+	if(..())
+		return 1
+	if(panel_open)
+		if(istype(W, /obj/item/weapon/cable_coil) && !terminal)
 			var/obj/item/weapon/cable_coil/CC = W
 
 			if (CC.amount < 10)
@@ -130,7 +113,7 @@
 			terminal.connect_to_network()
 			src.stat = 0
 		else if(istype(W, /obj/item/weapon/wirecutters) && terminal)
-			var/turf/T = get_turf(terminal) 
+			var/turf/T = get_turf(terminal)
 			if(T.intact)
 				user << "<span class='warning'>You must remove the floor plating in front of the SMES first.</span>"
 				return

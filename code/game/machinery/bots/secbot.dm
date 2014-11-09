@@ -650,7 +650,7 @@ Auto Patrol: []"},
 			if(M.stat == DEAD)
 				continue
 			// Ignore lazarus-injected mobs.
-			if(M.faction == "lazarus")
+			if(dd_hasprefix(C.faction, "lazarus"))
 				continue
 			// Minebots only, I hope.
 			if(M.faction == "neutral")

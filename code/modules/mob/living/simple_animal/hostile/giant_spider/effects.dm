@@ -23,7 +23,7 @@
 
 /obj/effect/spider/attackby(var/obj/item/weapon/W, var/mob/user)
 	user.changeNext_move(10)
-	if(W.attack_verb.len)
+	if(W.attack_verb && W.attack_verb.len)
 		visible_message("\red <B>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
 	else
 		visible_message("\red <B>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]")

@@ -448,6 +448,7 @@
 		C.traumatic_shock = 0
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C
+			H.timeofdeath = 0
 			H.vessel.reagent_list = list()
 			H.vessel.add_reagent("blood",560)
 			H.shock_stage = 0
@@ -474,10 +475,13 @@
 				O.trace_chemicals = list()
 				O.wounds = list()
 				O.wound_update_accuracy = 1
-			for(var/organ_name in H.internal_organs)
-				var/datum/organ/internal/IO = H.internal_organs[organ_name]
+			for(var/organ_name in H.internal_organs_by_name)
+				var/datum/organ/internal/IO = H.internal_organs_by_name[organ_name]
 				IO.damage = 0
-				IO.trace_chemicals = list()
+				IO.trace_chemicals.len = 0
+				IO.germ_level = 0
+				IO.status = 0
+				IO.robotic = 0
 			H.updatehealth()
 		C << "<span class='notice'>We have regenerated.</span>"
 		C.visible_message("<span class='warning'>[src] appears to wake from the dead, having healed all wounds.</span>")

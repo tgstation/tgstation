@@ -2,7 +2,7 @@
 
 
 /datum/event/bluespace_anomaly
-	announceWhen	= 20
+	announceWhen	= 5
 
 	var/area/impact_area
 
@@ -34,7 +34,7 @@
 
 
 /datum/event/bluespace_anomaly/announce()
-	command_alert("Bluespace anomaly detected in the vicinity of [station_name()]. [impact_area.name] has gone missing.", "Anomaly Alert")
+	command_alert("Bluespace anomaly detected in the vicinity of [station_name()]. [impact_area.name] has been affected.", "Anomaly Alert")
 
 
 /datum/event/bluespace_anomaly/start()

@@ -34,6 +34,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	g_amt = 25
 	m_amt = 75
 	w_type = RECYK_ELECTRONIC
+	melt_temperature = MELTPOINT_PLASTIC
 
 	var/const/TRANSMISSION_DELAY = 5 // only 2/second/radio
 	var/const/FREQ_LISTENING = 1

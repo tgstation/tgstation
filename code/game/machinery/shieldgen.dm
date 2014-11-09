@@ -1,14 +1,15 @@
 /obj/machinery/shield
-		name = "Emergency energy shield"
-		desc = "An energy shield used to contain hull breaches."
-		icon = 'icons/effects/effects.dmi'
-		icon_state = "shield-old"
-		density = 1
-		opacity = 0
-		anchored = 1
-		unacidable = 1
-		var/const/max_health = 200
-		var/health = max_health //The shield can only take so much beating (prevents perma-prisons)
+	name = "Emergency energy shield"
+	desc = "An energy shield used to contain hull breaches."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shield-old"
+	density = 1
+	opacity = 0
+	anchored = 1
+	unacidable = 1
+
+	var/const/max_health = 200
+	var/health = max_health //The shield can only take so much beating (prevents perma-prisons)
 
 /obj/machinery/shield/New()
 	src.dir = pick(1,2,3,4)
@@ -56,8 +57,6 @@
 
 	opacity = 1
 	spawn(20) if(src) opacity = 0
-
-	..()
 
 /obj/machinery/shield/meteorhit()
 	src.health -= max_health*0.75 //3/4 health as damage
@@ -152,8 +151,9 @@
 		var/active = 0
 		var/malfunction = 0 //Malfunction causes parts of the shield to slowly dissapate
 		var/list/deployed_shields = list()
-		var/is_open = 0 //Whether or not the wires are exposed
 		var/locked = 0
+
+		machine_flags = EMAGGABLE | WRENCHMOVE | FIXED2WORK | SCREWTOGGLE
 
 /obj/machinery/shieldgen/Destroy()
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
@@ -238,7 +238,7 @@
 	if(locked)
 		user << "The machine is locked, you are unable to use it."
 		return
-	if(is_open)
+	if(panel_open)
 		user << "The panel must be closed before operating this machine."
 		return
 
@@ -254,24 +254,32 @@
 				"You hear heavy droning.")
 			src.shields_up()
 		else
-			user << "The device must first be secured to the floor."
+			user << "The [src] must first be secured to the floor."
 	return
 
-/obj/machinery/shieldgen/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/card/emag))
+/obj/machinery/shieldgen/emag(mob/user)
+	if(!emagged)
 		malfunction = 1
 		update_icon()
+		return 1
+	return
 
-	else if(istype(W, /obj/item/weapon/screwdriver))
-		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 100, 1)
-		if(is_open)
-			user << "\blue You close the panel."
-			is_open = 0
-		else
-			user << "\blue You open the panel and expose the wiring."
-			is_open = 1
+/obj/machinery/shieldgen/wrenchAnchor(mob/user)
+	if(locked)
+		user << "The bolts are covered, unlocking this would retract the covers."
+		return
+	if(active)
+		user << "Turn \the [src] off first!"
+	if(panel_open)
+		user << "You have to close \the [src]'s maintenance panel before you can do that."
+		return
+	return ..()
 
-	else if(istype(W, /obj/item/weapon/cable_coil) && malfunction && is_open)
+/obj/machinery/shieldgen/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(..())
+		return 1
+
+	if(istype(W, /obj/item/weapon/cable_coil) && malfunction && panel_open)
 		var/obj/item/weapon/cable_coil/coil = W
 		user << "\blue You begin to replace the wires."
 		//if(do_after(user, min(60, round( ((maxhealth/health)*10)+(malfunction*10) ))) //Take longer to repair heavier damage
@@ -282,34 +290,15 @@
 			malfunction = 0
 			user << "\blue You repair the [src]!"
 			update_icon()
+		return
 
-	else if(istype(W, /obj/item/weapon/wrench))
-		if(locked)
-			user << "The bolts are covered, unlocking this would retract the covers."
-			return
-		if(anchored)
-			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
-			user << "\blue You unsecure the [src] from the floor!"
-			if(active)
-				user << "\blue The [src] shuts off!"
-				src.shields_down()
-			anchored = 0
-		else
-			if(istype(get_turf(src), /turf/space)) return //No wrenching these in space!
-			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
-			user << "\blue You secure the [src] to the floor!"
-			anchored = 1
-
-
-	else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
+	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
 		if(src.allowed(user))
 			src.locked = !src.locked
 			user << "The controls are now [src.locked ? "locked." : "unlocked."]"
 		else
 			user << "\red Access denied."
-
-	else
-		..()
+		return
 
 
 /obj/machinery/shieldgen/update_icon()
@@ -331,7 +320,6 @@
 		req_access = list(access_teleporter)
 		var/active = 0
 		var/power = 0
-		var/state = 0
 		var/steps = 0
 		var/last_check = 0
 		var/check_delay = 10
@@ -344,6 +332,8 @@
 		var/storedpower = 0
 		flags = FPRINT | CONDUCT
 		use_power = 0
+
+		machine_flags = WRENCHMOVE | FIXED2WORK
 
 /obj/machinery/shieldwallgen/proc/power()
 	if(!anchored)
@@ -373,7 +363,7 @@
 //		use_power(250) //uses APC power
 
 /obj/machinery/shieldwallgen/attack_hand(mob/user as mob)
-	if(state != 1)
+	if(!anchored)
 		user << "\red The shield generator needs to be firmly secured to the floor first."
 		return 1
 	if(src.locked && !istype(user, /mob/living/silicon))
@@ -383,7 +373,7 @@
 		user << "\red The shield generator needs to be powered by wire underneath."
 		return 1
 
-	if(src.active >= 1)
+	if(src.active)
 		src.active = 0
 		icon_state = "Shield_Gen"
 
@@ -412,7 +402,7 @@
 //		shieldload = maxshieldload
 
 	if(src.active == 1)
-		if(!src.state == 1)
+		if(!anchored)
 			src.active = 0
 			return
 		spawn(1)
@@ -424,7 +414,7 @@
 		spawn(4)
 			setup_field(8)
 		src.active = 2
-	if(src.active >= 1)
+	if(src.active == 1)
 		if(src.power == 0)
 			src.visible_message("\red The [src.name] shuts down due to lack of power!", \
 				"You hear heavy droning fade out")
@@ -483,26 +473,18 @@
 		CF.loc = T
 		CF.dir = field_dir
 
+/obj/machinery/shieldwallgen/wrenchAnchor(mob/user)
+	if(active)
+		user << "Turn off the field generator first."
+		return
+	if(..())
+		power()
+		return 1
+	return
 
 /obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
-		if(active)
-			user << "Turn off the field generator first."
-			return
-
-		else if(state == 0)
-			state = 1
-			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
-			user << "You secure the external reinforcing bolts to the floor."
-			src.anchored = 1
-			return
-
-		else if(state == 1)
-			state = 0
-			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
-			user << "You undo the external reinforcing bolts."
-			src.anchored = 0
-			return
+	if(..())
+		return 1
 
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (src.allowed(user))
@@ -633,6 +615,9 @@
 
 /obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(air_group || (height==0)) return 1
+
+	if(!mover)
+		return
 
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return prob(20)

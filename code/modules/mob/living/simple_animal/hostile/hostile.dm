@@ -30,8 +30,9 @@
 	var/attack_faction = null //Put a faction string here to have a mob only ever attack a specific faction
 
 /mob/living/simple_animal/hostile/Life()
-
 	. = ..()
+	if(istype(loc, /obj/item/device/mobcapsule))
+		return 0
 	if(!.)
 		walk(src, 0)
 		return 0
@@ -116,6 +117,15 @@
 			return 0
 		if(L.faction == src.faction && !attack_same || L.faction != src.faction && attack_same == 2 || L.faction != attack_faction && attack_faction)
 			return 0
+		if(iscultist(L) && (faction == "cult"))
+			return 0
+		if(isslime(L) && (faction == "slimesummon"))
+			return 0
+		if(ishuman(L))
+			var/mob/living/carbon/human/H = L
+			if(H.dna)
+				if((H.dna.mutantrace == "slime") && (faction == "slimesummon"))
+					return 0
 		if(L in friends)
 			return 0
 		return 1

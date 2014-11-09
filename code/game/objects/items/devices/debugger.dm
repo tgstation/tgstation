@@ -19,6 +19,7 @@
 	m_amt = 50
 	g_amt = 20
 	w_type = RECYK_ELECTRONIC
+	melt_temperature = MELTPOINT_SILICON
 	origin_tech = "magnets=1;engineering=1"
 	var/obj/machinery/telecomms/buffer // simple machine buffer for device linkage
 

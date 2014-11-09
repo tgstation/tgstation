@@ -13,8 +13,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	var/obj/item/weapon/loaded_item = null
 	var/decon_mod = 1
 
-	takes_material_input = 0
-	has_output = 0
+	research_flags = CONSOLECONTROL
 
 /obj/machinery/r_n_d/destructive_analyzer/New()
 	. = ..()
@@ -45,8 +44,22 @@ Note: Must be placed within 3 tiles of the R&D Console
 		temp_list[O] = text2num(temp_list[O])
 	return temp_list
 
+/obj/machinery/r_n_d/destructive_analyzer/togglePanelOpen(var/obj/toggleitem, mob/user)
+	if(loaded_item)
+		user << "<span class='rose'>You can't open the maintenance panel while an item is loaded!</span>"
+		return -1
+	return ..()
+
+/obj/machinery/r_n_d/destructive_analyzer/crowbarDestroy(mob/user)
+	if(..() == 1)
+		if(loaded_item)
+			loaded_item.loc = src.loc
+		return 1
+	return -1
+
 /obj/machinery/r_n_d/destructive_analyzer/attackby(var/obj/O as obj, var/mob/user as mob)
-	..()
+	if(..())
+		return 1
 	if (istype(O, /obj/item) && !loaded_item)
 		if(isrobot(user)) //Don't put your module items in there!
 			if(isMoMMI(user))

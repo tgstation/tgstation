@@ -16,6 +16,12 @@
 
 /datum/disease/appendicitis/stage_act()
 	..()
+
+	if(istype(affected_mob,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = affected_mob
+		if(!H.internal_organs_by_name["appendix"])
+			src.cure()
+
 	if(stage == 1)
 		if(affected_mob.op_stage.appendix == 2.0)
 			// appendix is removed, can't get infected again
@@ -45,7 +51,7 @@
 			H.op_stage.appendix = 2.0
 
 			var/datum/organ/external/groin = H.get_organ("groin")
-			var/datum/wound/W = new /datum/wound/internal_bleeding(25)
+			var/datum/wound/W = new /datum/wound/internal_bleeding(20)
 			H.adjustToxLoss(25)
 			groin.wounds += W
 			src.cure()

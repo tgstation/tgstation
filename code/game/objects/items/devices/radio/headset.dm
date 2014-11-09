@@ -6,6 +6,7 @@
 	g_amt = 0
 	m_amt = 75
 	w_type = RECYK_ELECTRONIC
+	melt_temperature = MELTPOINT_PLASTIC
 	subspace_transmission = 1
 	canhear_range = 0 // can't hear headsets from very far away
 
@@ -149,6 +150,13 @@
 	icon_state = "service_headset"
 	item_state = "headset"
 	keyslot2 = new /obj/item/device/encryptionkey/headset_service
+
+/obj/item/device/radio/headset/headset_engsci
+	name = "research engineering radio headset"
+	desc = "A headset used to gossip about engineering to the science crew, and about science to the engineering crew. To access the engineering channel, use :e. For science, use :n."
+	icon_state = "eng_headset"
+	item_state = "headset"
+	keyslot2 = new /obj/item/device/encryptionkey/headset_engsci
 
 /obj/item/device/radio/headset/ert
 	name = "CentCom Response Team headset"

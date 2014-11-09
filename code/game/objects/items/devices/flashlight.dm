@@ -10,6 +10,7 @@
 	m_amt = 50
 	g_amt = 20
 	w_type = RECYK_ELECTRONIC
+	melt_temperature = MELTPOINT_STEEL // Assuming big beefy fucking maglite.
 	action_button_name = "Toggle Light"
 	var/on = 0
 	var/brightness_on = 4 //luminosity when on
@@ -123,6 +124,9 @@
 	g_amt = 0
 	on = 1
 
+/obj/item/device/flashlight/lamp/cultify()
+	new /obj/structure/cult/pylon(loc)
+	qdel(src)
 
 // green-shaded desk lamp
 /obj/item/device/flashlight/lamp/green
@@ -218,3 +222,66 @@
 /obj/item/device/flashlight/flare/dropped(mob/user)
 	..()
 	user.l_color = initial(user.l_color)
+
+
+// SLIME LAMP
+/obj/item/device/flashlight/lamp/slime
+	name = "slime lamp"
+	desc = "A lamp powered by a slime core. You can adjust its brightness by touching it."
+	icon_state = "slimelamp"
+	item_state = ""
+	l_color = "#333300"
+	on = 0
+	luminosity = 2
+	var/brightness_max = 6
+	var/brightness_min = 2
+
+/obj/item/device/flashlight/lamp/slime/initialize()
+	..()
+	if(on)
+		icon_state = "[initial(icon_state)]-on"
+		SetLuminosity(brightness_max)
+	else
+		icon_state = initial(icon_state)
+		SetLuminosity(brightness_min)
+
+/obj/item/device/flashlight/lamp/slime/proc/slime_brightness(var/mob/user = null)
+	if(on)
+		icon_state = "[initial(icon_state)]-on"
+		if(user && loc == user)
+			user.SetLuminosity(user.luminosity + brightness_max - brightness_min)
+		else if(isturf(loc))
+			SetLuminosity(brightness_max)
+	else
+		icon_state = initial(icon_state)
+		if(user && loc == user)
+			user.SetLuminosity(user.luminosity - brightness_max + brightness_min)
+		else if(isturf(loc))
+			SetLuminosity(brightness_min)
+
+/obj/item/device/flashlight/lamp/slime/attack_self(mob/user)
+	if(!isturf(user.loc))
+		user << "You cannot turn the light on while in this [user.loc]."
+		return 0
+	on = !on
+	slime_brightness(user)
+	return 1
+
+/obj/item/device/flashlight/lamp/slime/pickup(mob/user)
+	user.l_color = l_color
+	if(on)
+		user.SetLuminosity(user.luminosity + brightness_max)
+		SetLuminosity(0)
+	else
+		user.SetLuminosity(user.luminosity + brightness_min)
+		SetLuminosity(0)
+
+
+/obj/item/device/flashlight/lamp/slime/dropped(mob/user)
+	user.l_color = initial(user.l_color)
+	if(on)
+		user.SetLuminosity(user.luminosity - brightness_max)
+		SetLuminosity(brightness_max)
+	else
+		user.SetLuminosity(user.luminosity - brightness_min)
+		SetLuminosity(brightness_min)

@@ -10,7 +10,7 @@ Refactored AI modules by N3X15
 	name = "AI Module"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_mod"
-	item_state = "electronic"
+	item_state = "circuitboard"
 	desc = "An AI Module for transmitting encrypted instructions to the AI."
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 5.0
@@ -25,6 +25,7 @@ Refactored AI modules by N3X15
 	var/gold_amt=0
 	var/diamond_amt=0
 	w_type=RECYK_ELECTRONIC
+	melt_temperature = MELTPOINT_SILICON
 	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
 
 	var/law // Cached law

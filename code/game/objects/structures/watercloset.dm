@@ -129,9 +129,16 @@
 	var/ismist = 0				//needs a var so we can make it linger~
 	var/watertemp = "normal"	//freezing, normal, or boiling
 	var/mobpresent = 0		//true if there is a mob on the shower's loc, this is to ease process()
+	var/obj/item/weapon/reagent_containers/glass/beaker/water/watersource = null
 
 	ghost_read=0
 	ghost_write=0
+
+
+/obj/machinery/shower/New()//our showers actually wet people and floors now
+	..()
+	watersource = new /obj/item/weapon/reagent_containers/glass/beaker/water()
+
 
 //add heat controls? when emagged, you can freeze to death in it?
 
@@ -284,9 +291,19 @@
 				del(E)
 
 /obj/machinery/shower/process()
-	if(!on || !mobpresent) return
-	for(var/mob/living/carbon/C in loc)
-		check_heat(C)
+	if(!on) return
+	for(var/atom/movable/O in loc)
+		if(iscarbon(O))
+			var/mob/living/carbon/C
+			check_heat(C)
+		wash(O)
+		O.clean_blood()
+		watersource.reagents.reaction(O, TOUCH)
+		if(istype(O, /obj/item/weapon/reagent_containers/glass))
+			var/obj/item/weapon/reagent_containers/glass/G = O
+			G.reagents.add_reagent("water", 5)
+	watersource.reagents.reaction(loc, TOUCH)
+
 
 /obj/machinery/shower/proc/check_heat(mob/M as mob)
 	if(!on || watertemp == "normal") return

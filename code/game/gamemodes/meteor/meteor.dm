@@ -6,14 +6,14 @@
 	var/const/meteorannouncedelay_l = 6000 //Lower bound on announcement, here 10 minutes
 	var/const/meteorannouncedelay_h = 9000 //Upper bound on announcement, here 15 minutes
 	var/meteorannouncedelay = 7500 //Final announcement delay, this is a failsafe value
-	var/const/supplydelay = 100 //Delay before meteor supplies are spawned in tenth of seconds
+	var/const/supplydelay = 300 //Delay before meteor supplies are spawned in tenth of seconds
 	var/const/meteordelay_l = 1800 //Lower bound to meteor arrival, here 3 minutes
 	var/const/meteordelay_h = 3000 //Higher bound to meteor arrival, here 5 minutes
-	var/const/meteorshuttlemultiplier = 4 //How much more will we need to hold out ? Here 40 minutes until shuttle arrives. 1 is 10 minutes
+	var/const/meteorshuttlemultiplier = 6 //How much more will we need to hold out ? Here a full hour until the shuttle arrives. 1 is 10 minutes
 	var/meteordelay = 2400 //Final meteor delay, failsafe as above
 	var/nometeors = 1 //Can we send the meteors ?
 	var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread
-	required_players = 0
+	required_players = 20
 
 	uplink_welcome = "EVIL METEOR Uplink Console:"
 	uplink_uses = 10
@@ -41,7 +41,7 @@
 	meteordelay = rand((meteordelay_l/600), (meteordelay_h/600))*600 //Ditto above
 	spawn(450) //Give everything 45 seconds to initialize, this does not delay the rest of post_setup() nor the game and ensures deadmins aren't aware in advance and the admins are
 
-		message_admins("Meteor storm confirmed by Space Weather Incorporated. Announcement arrives in [round((meteorannouncedelay-450)/600)] minutes, actual meteors in [round((meteordelay+meteorannouncedelay-450)/600)] minutes. Shuttle will take [10*meteorshuttlemultiplier] minutes to arrive when and supplies will be dispatched in the Bar.")
+		message_admins("Meteor storm confirmed by Space Weather Incorporated. Announcement arrives in [round((meteorannouncedelay-450)/600)] minutes, actual meteors in [round((meteordelay+meteorannouncedelay-450)/600)] minutes. Shuttle will take [10*meteorshuttlemultiplier] minutes to arrive and supplies will be dispatched in the Bar.")
 
 
 	spawn(rand(waittime_l, waittime_h))
@@ -276,7 +276,7 @@
 
 /datum/game_mode/meteor/process()
 	if(!nometeors)
-		meteors_in_wave = (rand(2,20))*5 //Between 10 and 100 meteors in 5 intervals, figures
+		meteors_in_wave = (rand(4,10))*5 //Between 20 and 50 meteors in intervals of 5, figures
 		meteor_wave(meteors_in_wave)
 	return
 

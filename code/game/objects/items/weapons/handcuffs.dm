@@ -12,6 +12,7 @@
 	throw_range = 5
 	m_amt = 500
 	w_type = RECYK_METAL
+	melt_temperature = MELTPOINT_STEEL
 	origin_tech = "materials=1"
 	var/dispenser = 0
 	var/breakouttime = 1200 //Deciseconds = 120s = 2 minutes

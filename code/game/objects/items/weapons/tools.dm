@@ -28,6 +28,7 @@
 	w_class = 2.0
 	m_amt = 150
 	w_type = RECYK_METAL
+	melt_temperature = MELTPOINT_STEEL
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
@@ -51,6 +52,7 @@
 	g_amt = 0
 	m_amt = 75
 	w_type = RECYK_METAL
+	melt_temperature = MELTPOINT_STEEL
 	attack_verb = list("stabbed")
 
 	suicide_act(mob/user)
@@ -133,6 +135,7 @@
 	w_class = 2.0
 	m_amt = 80
 	w_type = RECYK_METAL
+	melt_temperature = MELTPOINT_STEEL
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("pinched", "nipped")
 
@@ -177,6 +180,7 @@
 	m_amt = 70
 	g_amt = 30
 	w_type = RECYK_MISC
+	melt_temperature = MELTPOINT_PLASTIC
 
 	//R&D tech level
 	origin_tech = "engineering=1"
@@ -394,7 +398,11 @@
 	var/safety = user:eyecheck()
 	if(istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
-		var/datum/organ/internal/eyes/E = H.internal_organs["eyes"]
+		var/datum/organ/internal/eyes/E = H.internal_organs_by_name["eyes"]
+		if(!E)
+			return
+		if(H.species.flags & IS_SYNTHETIC)
+			return
 		switch(safety)
 			if(1)
 				usr << "\red Your eyes sting a little."
@@ -476,6 +484,7 @@
 	w_class = 2.0
 	m_amt = 50
 	w_type = RECYK_METAL
+	melt_temperature = MELTPOINT_STEEL
 	origin_tech = "engineering=1"
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 

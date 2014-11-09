@@ -259,6 +259,9 @@
 				new/obj/item/stack/sheet/wood(get_turf(src))
 		del(src)
 
+/obj/structure/mineral_door/wood/cultify()
+	return
+
 /obj/structure/mineral_door/resin
 	mineralType = "resin"
 	hardness = 1.5

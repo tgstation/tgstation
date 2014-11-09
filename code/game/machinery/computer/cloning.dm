@@ -357,10 +357,10 @@
 	return
 
 /obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject as mob)
-	if ((isnull(subject)) || (!(ishuman(subject))) || (!subject.dna))
+	if ((isnull(subject)) || (!(ishuman(subject))) || (!subject.dna) || (istype(subject, /mob/living/carbon/human/manifested)))
 		scantemp = "Error: Unable to locate valid genetic data."
 		return
-	if (subject.brain_op_stage == 4.0)
+	if (!subject.has_brain())
 		scantemp = "Error: No signs of intelligence detected."
 		return
 	if (subject.suiciding == 1)

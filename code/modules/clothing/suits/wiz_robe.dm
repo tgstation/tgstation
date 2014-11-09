@@ -44,6 +44,13 @@
 	icon_state = "amp"
 	siemens_coefficient = 0.8
 
+/obj/item/clothing/head/wizard/necro
+	name = "Hood of Necromancy"
+	desc = "An elegant hood woven with the souls of the undying."
+	icon_state = "necromancer"
+	item_state = "necrohood"
+	siemens_coefficient = 0.8
+
 /obj/item/clothing/suit/wizrobe
 	name = "wizard robe"
 	desc = "A magnificant, gem-lined robe that seems to radiate power."
@@ -103,6 +110,12 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 1.0
+
+/obj/item/clothing/suit/wizrobe/necro
+	name = "Robe of Necromancy"
+	desc = "An elegant robe woven with the souls of the undying."
+	icon_state = "necromancer"
+	item_state = "necrorobe"
 
 /obj/item/clothing/head/wizard/marisa/fake
 	name = "Witch Hat"

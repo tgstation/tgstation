@@ -248,3 +248,6 @@
 		if ("Disable")
 			sensor_mode = 0
 			src << "Sensor augmentations disabled."
+
+/mob/living/silicon/put_in_hand_check(var/obj/item/W)
+	return 0

@@ -6,8 +6,6 @@
 	w_class = 3
 	origin_tech = "engineering=4;materials=4;bluespace=2;programming=4"
 
-	construction_cost = list("metal"=500,"glass"=500,"silver"=200,"gold"=200,"plasma"=100,"diamond"=10)
-	construction_time = 75
 	var/searching = 0
 	var/askDelay = 10 * 60 * 1
 	//var/mob/living/carbon/brain/brainmob = null
@@ -163,7 +161,6 @@
 	src.brainmob.robot_talk_understand = 0
 	src.brainmob.stat = 0
 	src.brainmob.silent = 0
-	src.brainmob.brain_op_stage = 4.0
 	dead_mob_list -= src.brainmob
 
 	..()

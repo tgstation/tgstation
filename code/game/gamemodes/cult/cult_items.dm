@@ -9,6 +9,8 @@
 	throwforce = 10
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
+/obj/item/weapon/melee/cultblade/cultify()
+	return
 
 /obj/item/weapon/melee/cultblade/attack(mob/living/target as mob, mob/living/carbon/human/user as mob)
 	if(iscultist(user))
@@ -40,6 +42,8 @@
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECITON_TEMPERATURE
 	siemens_coefficient = 0
 
+/obj/item/clothing/head/culthood/cultify()
+	return
 
 /obj/item/clothing/head/culthood/alt
 	icon_state = "cult_hoodalt"
@@ -60,6 +64,9 @@
 	armor = list(melee = 50, bullet = 30, laser = 50,energy = 20, bomb = 25, bio = 10, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 	siemens_coefficient = 0
+
+/obj/item/clothing/suit/cultrobes/cultify()
+	return
 
 /obj/item/clothing/head/magus
 	name = "magus helm"

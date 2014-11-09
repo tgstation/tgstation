@@ -3,7 +3,7 @@ Injecting a pod person with a blood sample will grow a pod person with the memor
 Growing it to term with nothing injected will grab a ghost from the observers. */
 #define DIONA_COOLDOWN 18000 // 30 minutes between being diona
 var/global/list/hasbeendiona = list() // Stores ckeys and a timestamp for ghost dionas to be picked again, removes the same guy being diona 5 times in 10 minutes.
-/obj/item/seeds/replicapod
+/*/obj/item/seeds/replicapod
 	name = "pack of dionaea-replicant seeds"
 	desc = "These seeds grow into 'replica pods' or 'dionaea', a form of strange sapient plantlife."
 	icon_state = "seed-replicapod"
@@ -26,7 +26,7 @@ var/global/list/hasbeendiona = list() // Stores ckeys and a timestamp for ghost 
 	gender = MALE
 	var/obj/machinery/hydroponics/parent = null
 	var/list/found_player = list()
-	var/beingharvested = 0
+	var/beingharvested = 0*/
 
 /obj/item/seeds/replicapod/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
@@ -111,28 +111,30 @@ var/global/list/hasbeendiona = list() // Stores ckeys and a timestamp for ghost 
 	parent.update_tray()
 
 /obj/item/seeds/replicapod/proc/request_player()
-	for(var/mob/dead/observer/O in player_list)
-		if(O.key in hasbeendiona)
-			if(world.time + DIONA_COOLDOWN < hasbeendiona[O.key])
-				continue
-		if(jobban_isbanned(O, "Dionaea"))
+	for(var/mob/dead/observer/observer in dead_mob_list)
+		if(jobban_isbanned(observer, "Dionaea"))
 			continue
-		if(O.client)
-			if(O.client.prefs.be_special & BE_PLANT)
-				question(O.client)
 
-/obj/item/seeds/replicapod/proc/question(var/client/C)
-	spawn(0)
-		if(!C)	return
-		var/response = alert(C, "Someone is harvesting a replica pod. Would you like to play as a Dionaea? (Please answer within 30 seconds)", "Replica pod harvest", "Yes", "No", "Never for this round.")
-		if(!C || ckey)
-			return
-		if(response == "Yes")
-			//transfer_personality(C)
-			if(!(C in found_player))
-				found_player.Add(C)
-		else if (response == "Never for this round")
-			C.prefs.be_special ^= BE_PLANT
+		if(observer.key)
+			if(!isnull(hasbeendiona[observer.key]))
+				if((world.time + DIONA_COOLDOWN) < hasbeendiona[observer.key])
+					continue
+
+		if(observer.client && observer.client.prefs && observer.client.prefs.be_special & BE_PLANT)
+			spawn()
+				switch(observer.timed_alert( \
+						300, \
+						"Someone is harvesting a replica pod. Would you like to play as a Dionaea? (Please answer within 30 seconds)", \
+						"Replica pod harvest", \
+						"Yes", \
+						"No", \
+						"Never for this round" \
+					))
+					if("Yes")
+						if(!(observer.client in found_player))
+							found_player.Add(observer.client)
+					if("Never for this round")
+						observer.client.prefs.be_special &= ~BE_PLANT
 
 /obj/item/seeds/replicapod/proc/transfer_personality(var/client/player, var/ghost = 0)
 

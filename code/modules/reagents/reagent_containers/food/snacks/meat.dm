@@ -12,7 +12,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh
 	name = "synthetic meat"
 	desc = "A synthetic slab of flesh."
-	nonplant_seed_type = /obj/item/seeds/synthmeatseed
+	//nonplant_seed_type = /obj/item/seeds/synthmeatseed
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/human
 	name = "-meat"

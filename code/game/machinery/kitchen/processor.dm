@@ -9,6 +9,9 @@
 	var/broken = 0
 	var/processing = 0
 	var/opened = 0.0
+
+	machine_flags = SCREWTOGGLE | CROWDESTROY
+
 	use_power = 1
 	idle_power_usage = 20
 	active_power_usage = 500
@@ -129,26 +132,19 @@
 		return P
 	return 0
 
+/obj/machinery/processor/crowbarDestroy(mob/user)
+	if(contents.len)
+		user << "You can't do that while something is loaded in \the [src]."
+		return -1
+	return ..()
+
 /obj/machinery/processor/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(src.processing)
 		user << "<span class='warning'>[src] is already processing!</span>"
 		return 1
-	if(istype(O,/obj/item/weapon/wrench))
-		if(!anchored)
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if(do_after(user, 30))
-				anchored = 1
-				user << "You wrench [src] in place."
-			return
-		else
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if(do_after(user, 30))
-				anchored = 0
-				user << "You unwrench [src]."
-			return
-	if(!anchored)
-		user << "<span class='warning'>[src] must be anchored first!</span>"
-		return
+
+	if(..())
+		return 1
 	if(src.contents.len > 0) //TODO: several items at once? several different items?
 		user << "<span class='warning'>Something is already in [src]</span>."
 		return 1
@@ -156,27 +152,6 @@
 	if (istype(O, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
 		what = G.affecting
-	else if (istype(O, /obj/item/weapon/screwdriver))
-		if (!opened)
-			user << "You open the maintenance hatch of [src]."
-			//src.icon_state = "autolathe_t"
-		else
-			user << "You close the maintenance hatch of [src]."
-			//src.icon_state = "autolathe"
-		opened = !opened
-		return 1
-	else if(istype(O, /obj/item/weapon/crowbar))
-		if (opened)
-			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			M.state = 2
-			M.icon_state = "box_1"
-			for(var/obj/I in component_parts)
-				if(I.reliability != 100 && crit_fail)
-					I.crit_fail = 1
-				I.loc = src.loc
-			del(src)
-			return 1
 
 	var/datum/food_processor_process/P = select_recipe(what)
 	if (!P)
@@ -217,4 +192,5 @@
 	src.visible_message("<span class='notice'>[src] is done.</span>", \
 		"You hear [src] stop")
 
-
+/obj/machinery/processor/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+	attackby(O,user)

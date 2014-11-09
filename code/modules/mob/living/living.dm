@@ -3,7 +3,7 @@
 	..()
 	if (monkeyizing)	return
 	if(!loc)			return	// Fixing a null error that occurs when the mob isn't found in the world -- TLE
-	if(reagents.has_reagent("bustanut"))
+	if(reagents && reagents.has_reagent("bustanut"))
 		if(!(M_HARDCORE in mutations))
 			mutations.Add(M_HARDCORE)
 			src << "<span class='notice'>You feel like you're the best around.  Nothing's going to get you down.</span>"
@@ -29,6 +29,33 @@
 					special_role = null
 					current << "\red <FONT size = 3><B>The fog clouding your mind clears. You remember nothing from the moment you were implanted until now..(You don't remember who enslaved you)</B></FONT>"
 				*/
+
+/mob/living/cultify()
+	if(iscultist(src) && client)
+		var/mob/living/simple_animal/construct/harvester/C = new /mob/living/simple_animal/construct/harvester(get_turf(src))
+		mind.transfer_to(C)
+		C << "<span class='sinister'>The Geometer of Blood is overjoyed to be reunited with its followers, and accepts your body in sacrifice. As reward, you have been gifted with the shell of an Harvester.<br>Your tendrils can use and draw runes without need for a tome, your eyes can see beings through walls, and your mind can open any door. Use these assets to serve Nar-Sie and bring him any remaining living human in the world.<br>You can teleport yourself back to Nar-Sie along with any being under yourself at any time using your \"Harvest\" spell.</span>"
+		dust()
+	else if(client)
+		var/mob/dead/G = (ghostize())
+		G.icon = 'icons/mob/mob.dmi'
+		G.icon_state = "ghost-narsie"
+		G.overlays = 0
+		if(istype(G.mind.current, /mob/living/carbon/human/))
+			var/mob/living/carbon/human/H = G.mind.current
+			G.overlays += H.overlays_standing[6]//ID
+			G.overlays += H.overlays_standing[9]//Ears
+			G.overlays += H.overlays_standing[10]//Suit
+			G.overlays += H.overlays_standing[11]//Glasses
+			G.overlays += H.overlays_standing[12]//Belt
+			G.overlays += H.overlays_standing[14]//Back
+			G.overlays += H.overlays_standing[18]//Head
+			G.overlays += H.overlays_standing[19]//Handcuffs
+		G.invisibility = 0
+		G << "<span class='sinister'>You feel relieved as what's left of your soul finally escapes its prison of flesh.</span>"
+	else
+		dust()
+
 /mob/living/verb/succumb()
 	set hidden = 1
 	if ((src.health < 0 && src.health > -95.0))
@@ -236,6 +263,9 @@
 	return 0
 
 
+/mob/living/proc/can_inject()
+	return 1
+
 /mob/living/proc/electrocute_act(const/shock_damage, const/obj/source, const/siemens_coeff = 1.0)
 	  return 0 // only carbon liveforms have this proc
 				// now with silicons
@@ -291,7 +321,16 @@
 	buckled = initial(src.buckled)
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
+
+		if (C.handcuffed && !initial(C.handcuffed))
+			C.drop_from_inventory(C.handcuffed)
 		C.handcuffed = initial(C.handcuffed)
+
+		if (C.legcuffed && !initial(C.legcuffed))
+			C.drop_from_inventory(C.legcuffed)
+		C.legcuffed = initial(C.legcuffed)
+	hud_updateflag |= 1 << HEALTH_HUD
+	hud_updateflag |= 1 << STATUS_HUD
 
 /mob/living/proc/rejuvenate()
 
@@ -325,6 +364,7 @@
 	buckled = initial(src.buckled)
 	if(istype(src, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = src
+		H.timeofdeath = 0
 		H.vessel.reagent_list = list()
 		H.vessel.add_reagent("blood",560)
 		H.shock_stage = 0
@@ -351,10 +391,13 @@
 			O.trace_chemicals = list()
 			O.wounds = list()
 			O.wound_update_accuracy = 1
-		for(var/organ_name in H.internal_organs)
-			var/datum/organ/internal/IO = H.internal_organs[organ_name]
+		for(var/organ_name in H.internal_organs_by_name)
+			var/datum/organ/internal/IO = H.internal_organs_by_name[organ_name]
 			IO.damage = 0
-			IO.trace_chemicals = list()
+			IO.trace_chemicals.len = 0
+			IO.germ_level = 0
+			IO.status = 0
+			IO.robotic = 0
 		H.updatehealth()
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
@@ -373,6 +416,9 @@
 	regenerate_icons()
 	update_canmove()
 	..()
+
+	hud_updateflag |= 1 << HEALTH_HUD
+	hud_updateflag |= 1 << STATUS_HUD
 	return
 
 /mob/living/proc/UpdateDamageIcon()
@@ -525,14 +571,8 @@
 			B.host.adjustBrainLoss(rand(5,10))
 			H << "\red <B>With an immense exertion of will, you regain control of your body!</B>"
 			B.host << "\red <B>You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you.</b>"
-			B.controlling = 0
 
-			B.ckey = B.host.ckey
-			B.host.ckey = H.ckey
-
-			H.ckey = null
-			H.name = "host brain"
-			H.real_name = "host brain"
+			B.detatch()
 
 			verbs -= /mob/living/carbon/proc/release_control
 			verbs -= /mob/living/carbon/proc/punish_host
@@ -761,4 +801,10 @@
 	set category = "IC"
 
 	resting = !resting
-	src << "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>"
+	src << "\blue You are now [resting ? "resting" : "getting up"]"
+
+/mob/living/proc/has_brain()
+	return 1
+
+/mob/living/proc/has_eyes()
+	return 1
