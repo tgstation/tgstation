@@ -1,0 +1,8 @@
+author: Perakp
+
+delete-after: True
+
+changes: 
+  - rscadd: "Added escape-with-identity objective for changelings. Completion requires the changeling to have transformed to their target and be wearing an ID card with the target's name on it when escaping."
+  - tweak: "Changelings can absorb someone even if they have that DNA in storage already."
+  - bugfix: "Fixes hivemind being lost when readapting evolutions."
