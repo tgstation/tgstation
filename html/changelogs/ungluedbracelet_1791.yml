@@ -1,4 +1,0 @@
-author: ungluedbracelet
-delete-after: True
-changes: 
-  - rscadd: Added new traitor item: a bug detector disguised as a multitool. Detects if the AI can see you, as well as nearby pAIs, tape recorders, and voice analyzers.
