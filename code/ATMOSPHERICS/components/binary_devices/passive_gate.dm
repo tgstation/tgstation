@@ -22,6 +22,11 @@ Passive gate is similar to the regular pump except:
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
+/obj/machinery/atmospherics/binary/passive_gate/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src,frequency)
+	..()
+
 /obj/machinery/atmospherics/binary/passive_gate/update_icon_nopipes()
 	overlays.Cut()
 	if(on & !(stat & NOPOWER))

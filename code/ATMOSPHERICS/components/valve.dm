@@ -83,3 +83,9 @@
 		overlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "dvalve_[open][!open]")
 	else if(open)
 		overlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "dvalve_on")
+
+//Radio remote control
+/obj/machinery/atmospherics/binary/valve/digital/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src,frequency)
+	..()
