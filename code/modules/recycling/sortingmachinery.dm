@@ -24,17 +24,20 @@
 
 			if(src.sortTag != O.currTag)
 				var/tag = uppertext(TAGGERLOCATIONS[O.currTag])
-				user << "\blue *[tag]*"
+				user << "\<span class='notice'>*[tag]*</span>"
 				src.sortTag = O.currTag
 				playsound(get_turf(src), 'sound/machines/twobeep.ogg', 100, 1)
+				overlays = 0
+				overlays += "deliverytag"
+				src.desc = "A big wrapped package. It has a label reading [tag]"
 
 		else if(istype(W, /obj/item/weapon/pen))
 			var/str = copytext(sanitize(input(usr,"Label text?","Set label","")),1,MAX_NAME_LEN)
 			if(!str || !length(str))
-				usr << "\red Invalid text."
+				usr << "<span class='warning'>Invalid text.</span>"
 				return
 			for(var/mob/M in viewers())
-				M << "\blue [user] labels [src] as [str]."
+				M << "<span class='notice'>[user] labels [src] as [str].</span>"
 			src.name = "[src.name] ([str])"
 		return
 
@@ -65,17 +68,20 @@
 
 			if(src.sortTag != O.currTag)
 				var/tag = uppertext(TAGGERLOCATIONS[O.currTag])
-				user << "\blue *[tag]*"
+				user << "<span class='notice'>*[tag]*</span>"
 				src.sortTag = O.currTag
 				playsound(get_turf(src), 'sound/machines/twobeep.ogg', 100, 1)
+				overlays = 0
+				overlays += "deliverytag"
+				src.desc = "A small wrapped package. It has a label reading [tag]"
 
 		else if(istype(W, /obj/item/weapon/pen))
 			var/str = copytext(sanitize(input(usr,"Label text?","Set label","")),1,MAX_NAME_LEN)
 			if(!str || !length(str))
-				usr << "\red Invalid text."
+				usr << "<span class='warning'>Invalid text.</span>"
 				return
 			for(var/mob/M in viewers())
-				M << "\blue [user] labels [src] as [str]."
+				M << "<span class='notice'>[user] labels [src] as [str].</span>"
 			src.name = "[src.name] ([str])"
 		return
 
@@ -126,9 +132,12 @@
 				P.icon_state = "deliverycrate"
 				P.wrapped = O
 				O.loc = P
+				P.add_fingerprint(usr)
+				O.add_fingerprint(usr)
+				src.add_fingerprint(usr)
 				src.amount -= 3
 			else if(src.amount < 3)
-				user << "\blue You need more paper."
+				user << "<span class='notice'>You need more paper.</span>"
 		else if (istype (target, /obj/structure/closet))
 			var/obj/structure/closet/O = target
 			if (src.amount > 3 && !O.opened)
@@ -136,9 +145,34 @@
 				P.wrapped = O
 				O.welded = 1
 				O.loc = P
+				P.add_fingerprint(usr)
+				O.add_fingerprint(usr)
+				src.add_fingerprint(usr)
 				src.amount -= 3
 			else if(src.amount < 3)
-				user << "\blue You need more paper."
+				user << "<span class='notice'>You need more paper.</span>"
+		else if (istype(target, /obj/structure/vendomatpack))
+			var/obj/structure/vendomatpack/O = target
+			if (src.amount > 1)
+				var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
+				P.icon_state = "deliverypack"
+				P.wrapped = O
+				O.loc = P
+				P.add_fingerprint(usr)
+				O.add_fingerprint(usr)
+				src.add_fingerprint(usr)
+				src.amount -= 1
+		else if (istype(target, /obj/structure/stackopacks))
+			var/obj/structure/stackopacks/O = target
+			if (src.amount > 1)
+				var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
+				P.icon_state = "deliverystack"
+				P.wrapped = O
+				O.loc = P
+				P.add_fingerprint(usr)
+				O.add_fingerprint(usr)
+				src.add_fingerprint(usr)
+				src.amount -= 1
 		else
 			user << "\blue The object you are trying to wrap is unsuitable for the sorting machinery!"
 		if (src.amount <= 0)

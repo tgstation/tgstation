@@ -5,7 +5,7 @@
 //BIG NOTE: Don't add living things to crates, that's bad, it will break the shuttle.
 //NEW NOTE: Do NOT set the price of any crates below 7 points. Doing so allows infinite points.
 
-var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality","Engineering","Medical","Science","Hydroponics")
+var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality","Engineering","Medical","Science","Hydroponics","Vending Machine packs")
 
 /datum/supply_packs
 	var/name = null
@@ -1145,3 +1145,108 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	containername = "Supermatter Shard Crate"
 	group = "Engineering"
 	access = access_ce
+
+/////VENDING MACHINES PACKS////////
+
+/datum/supply_packs/snackmachines
+	name = "Snacks n Cigs stack of packs"
+	contains = list(/obj/structure/vendomatpack/snack,
+					/obj/structure/vendomatpack/snack,
+					/obj/structure/vendomatpack/snack,
+					/obj/structure/vendomatpack/cola,
+					/obj/structure/vendomatpack/coffee,
+					/obj/structure/vendomatpack/cigarette)
+	cost = 30
+	containertype = /obj/structure/stackopacks
+	containername = "Snacks n Cigs  stack of packs"
+	group = "Vending Machine packs"
+
+/datum/supply_packs/snackmachinesalt
+	name = "Groans n Dan stack of packs"
+	contains = list(/obj/structure/vendomatpack/discount,
+					/obj/structure/vendomatpack/discount,
+					/obj/structure/vendomatpack/groans,
+					/obj/structure/vendomatpack/groans)
+	cost = 20
+	containertype = /obj/structure/stackopacks
+	containername = "Groans n Dan stack of packs"
+	group = "Vending Machine packs"
+
+/datum/supply_packs/hospitalitymachines
+	name = "Theatre, Bar n Kitchen stack of packs"
+	contains = list(/obj/structure/vendomatpack/boozeomat,
+					/obj/structure/vendomatpack/dinnerware,
+					/obj/structure/vendomatpack/autodrobe)
+	cost = 15
+	containertype = /obj/structure/stackopacks
+	containername = "Theatre, Bar n Kitchen stack of packs"
+	group = "Vending Machine packs"
+
+/datum/supply_packs/securitymachines
+	name = "Security stack of packs"
+	contains = list(/obj/structure/vendomatpack/security,
+					/obj/structure/vendomatpack/security)
+	cost = 10
+	containertype = /obj/structure/stackopacks
+	containername = "Security stack of packs"
+	group = "Vending Machine packs"
+
+/datum/supply_packs/medbaymachines
+	name = "Medbay stack of packs"
+	contains = list(/obj/structure/vendomatpack/medical,
+					/obj/structure/vendomatpack/medical)
+	cost = 10
+	containertype = /obj/structure/stackopacks
+	containername = "Medbay stack of packs"
+	group = "Vending Machine packs"
+
+/datum/supply_packs/botanymachines
+	name = "Hydroponics stack of packs"
+	contains = list(/obj/structure/vendomatpack/hydronutrients,
+					/obj/structure/vendomatpack/hydroseeds)
+	cost = 10
+	containertype = /obj/structure/stackopacks
+	containername = "Hydroponics stack of packs"
+	group = "Vending Machine packs"
+
+/datum/supply_packs/toolsmachines
+	name = "Tools n Engineering stack of packs"
+	contains = list(/obj/structure/vendomatpack/tool,
+					/obj/structure/vendomatpack/tool,
+					/obj/structure/vendomatpack/assist,
+					/obj/structure/vendomatpack/engivend)
+	cost = 20
+	containertype = /obj/structure/stackopacks
+	containername = "Tools n Engineering stack of packs"
+	group = "Vending Machine packs"
+
+/datum/supply_packs/clothesmachines
+	name = "Clothing stack of packs"
+	contains = list(/obj/structure/vendomatpack/hatdispenser,
+					/obj/structure/vendomatpack/suitdispenser,
+					/obj/structure/vendomatpack/shoedispenser)
+	cost = 15
+	containertype = /obj/structure/stackopacks
+	containername = "Clothing stack of packs"
+	group = "Vending Machine packs"
+
+/datum/supply_packs/sovietmachines
+	name = "Old and Forgotten stack of packs"
+	contains = list(/obj/structure/vendomatpack/sovietsoda,
+					/obj/structure/vendomatpack/sovietsoda,
+					/obj/structure/vendomatpack/nazivend,
+					/obj/structure/vendomatpack/sovietvend)
+	cost = 20
+	containertype = /obj/structure/stackopacks
+	containername = "Old and Forgotten stack of packs"
+	group = "Vending Machine packs"
+	hidden = 1
+
+/datum/supply_packs/magimachines
+	name = "Strange and Bright stack of packs"
+	contains = list(/obj/structure/vendomatpack/magivend)
+	cost = 80
+	containertype = /obj/structure/stackopacks
+	containername = "Strange and Bright stack of packs"
+	group = "Vending Machine packs"
+	hidden = 1
