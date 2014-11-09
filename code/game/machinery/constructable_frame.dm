@@ -141,7 +141,7 @@
 					qdel(src)
 
 			if(istype(P, /obj/item/weapon/storage/part_replacer) && P.contents.len && get_req_components_amt())
-				var/obj/item/weapon/storage/replacer = P
+				var/obj/item/weapon/storage/part_replacer/replacer = P
 				var/list/added_components = list()
 				var/list/part_list = list()
 
@@ -163,6 +163,7 @@
 				for(var/obj/item/weapon/stock_parts/part in added_components)
 					components += part
 					user << "<span class='notice'>[part.name] applied.</span>"
+				replacer.play_rped_sound()
 
 				update_req_desc()
 				return
