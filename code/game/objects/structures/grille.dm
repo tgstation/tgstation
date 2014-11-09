@@ -11,6 +11,11 @@
 	explosion_resistance = 5
 	var/health = 10
 	var/destroyed = 0
+	var/obj/item/stack/rods/stored
+
+/obj/structure/grille/New()
+	stored = new/obj/item/stack/rods(src)
+	stored.amount = 2
 
 /obj/structure/grille/ex_act(severity)
 	qdel(src)
@@ -102,17 +107,27 @@
 		healthcheck()
 	return
 
+/obj/structure/grille/Deconstruct()
+	transfer_fingerprints_to(stored)
+	var/turf/T = loc
+	stored.loc = T
+	..()
+
+/obj/structure/grille/proc/Break()
+	icon_state = "brokengrille"
+	density = 0
+	destroyed = 1
+	stored.amount = 1
+	var/obj/item/stack/rods/newrods = new(loc)
+	transfer_fingerprints_to(newrods)
+
 /obj/structure/grille/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/weapon/wirecutters))
 		if(!shock(user, 100))
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			var/obj/item/stack/rods/newrods = new(loc)
-			transfer_fingerprints_to(newrods)
-			if(!destroyed)
-				newrods.amount = 2
-			qdel(src)
+			Deconstruct()
 	else if((istype(W, /obj/item/weapon/screwdriver)) && (istype(loc, /turf/simulated) || anchored))
 		if(!shock(user, 90))
 			playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
@@ -190,16 +205,10 @@
 /obj/structure/grille/proc/healthcheck()
 	if(health <= 0)
 		if(!destroyed)
-			icon_state = "brokengrille"
-			density = 0
-			destroyed = 1
-			var/obj/item/stack/rods/newrods = new(loc)
-			transfer_fingerprints_to(newrods)
-
+			Break()
 		else
 			if(health <= -6)
-				qdel(src)
-				return
+				Deconstruct()
 	return
 
 // shock user with probability prb (if all connections & power are working)
