@@ -336,7 +336,7 @@
 
 /obj/item/clothing/under/captainformal
 	name = "captain's formal uniform"
-	desc = "A captain's formal-wear, for special occasions."
+	desc = "A captain's formal wear, for special occasions."
 	icon_state = "captain_formal"
 	item_state = "by_suit"
 	item_color = "captain_formal"
@@ -344,15 +344,20 @@
 
 /obj/item/clothing/under/hosformalmale
 	name = "head of security's formal uniform"
-	desc = "A male head of security's formal-wear, for special occasions."
+	desc = "A male head of security's formal wear, for special occasions."
 	icon_state = "hos_formal_male"
 	item_state = "r_suit"
 	item_color = "hos_formal_male"
+	fitted = 0
 	can_adjust = 0
+
+/obj/item/clothing/under/hosformalmale/New()
+	..()
+	attachTie(new /obj/item/clothing/tie/red(src))
 
 /obj/item/clothing/under/hosformalfem
 	name = "head of security's formal uniform"
-	desc = "A female head of security's formal-wear, for special occasions."
+	desc = "A female head of security's formal wear, for special occasions."
 	icon_state = "hos_formal_fem"
 	item_state = "r_suit"
 	item_color = "hos_formal_fem"
@@ -361,7 +366,7 @@
 
 /obj/item/clothing/under/assistantformal
 	name = "assistant's formal uniform"
-	desc = "An assistant's formal wear. Why an assistant needs formal-wear is still unknown."
+	desc = "An assistant's formal wear. Why an assistant needs formal wear is still unknown."
 	icon_state = "assistant_formal"
 	item_state = "gy_suit"
 	item_color = "assistant_formal"

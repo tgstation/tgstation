@@ -236,7 +236,7 @@
 
 /obj/structure/statue/bananium
 	hardness = 3
-	mineralType = "clown"
+	mineralType = "bananium"
 	desc = "A bananium statue with a small engraving:'HOOOOOOONK'."
 
 /obj/structure/statue/bananium/clown

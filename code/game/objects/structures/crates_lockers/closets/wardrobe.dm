@@ -189,6 +189,22 @@
 	new /obj/item/clothing/shoes/sneakers/white(src)
 	return
 
+/obj/structure/closet/wardrobe/white/medical
+	name = "medical doctor's wardrobe"
+
+/obj/structure/closet/wardrobe/white/medical/New()
+	new /obj/item/clothing/under/rank/nursesuit (src)
+	new /obj/item/clothing/head/nursehat (src)
+	new /obj/item/clothing/suit/labcoat/emt(src)
+	new /obj/item/clothing/suit/labcoat/emt(src)
+	new /obj/item/clothing/suit/labcoat/emt(src)
+	new /obj/item/clothing/under/rank/medical/blue(src)
+	new /obj/item/clothing/under/rank/medical/green(src)
+	new /obj/item/clothing/under/rank/medical/purple(src)
+	new /obj/item/clothing/shoes/sneakers/black(src)
+	new /obj/item/clothing/shoes/sneakers/black(src)
+	new /obj/item/clothing/shoes/sneakers/black(src)
+	return
 
 /obj/structure/closet/wardrobe/pjs
 	name = "pajama wardrobe"

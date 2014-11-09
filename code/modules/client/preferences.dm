@@ -42,7 +42,8 @@ datum/preferences
 
 	//character preferences
 	var/real_name						//our character's name
-	var/be_random_name = 0				//whether we are a random name every round
+	var/be_random_name = 0				//whether we'll have a random name every round
+	var/be_random_body = 0				//whether we'll have a random body every round
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
 	var/blood_type = "A+"				//blood type (not-chooseable)
@@ -163,7 +164,8 @@ datum/preferences
 				dat += "</td></tr></table>"
 
 				dat += "<h2>Body</h2>"
-				dat += "<a href='?_src_=prefs;preference=all;task=random'>Random Body</A><br>"
+				dat += "<a href='?_src_=prefs;preference=all;task=random'>Random Body</A> "
+				dat += "<a href='?_src_=prefs;preference=all'>Always Random Body: [be_random_body ? "Yes" : "No"]</A><br>"
 
 				dat += "<table width='100%'><tr><td width='24%' valign='top'>"
 
@@ -744,6 +746,9 @@ datum/preferences
 					if("name")
 						be_random_name = !be_random_name
 
+					if("all")
+						be_random_body = !be_random_body
+
 					if("hear_midis")
 						toggles ^= SOUND_MIDI
 
@@ -790,6 +795,9 @@ datum/preferences
 	proc/copy_to(mob/living/carbon/human/character)
 		if(be_random_name)
 			real_name = random_name(gender)
+
+		if(be_random_body)
+			random_character(gender)
 
 		if(config.humans_need_surnames)
 			var/firstspace = findtext(real_name, " ")

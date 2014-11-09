@@ -78,9 +78,6 @@ var/global/mulebot_count = 0
 		name = "\improper Mulebot ([suffix])"
 
 
-	verbs -= /atom/movable/verb/pull
-
-
 
 // attack by item
 // emag : lock/unlock,
@@ -496,7 +493,7 @@ var/global/mulebot_count = 0
 		pathset = 1 //Indicates the AI's custom path is initialized.
 		start()
 
-/obj/machinery/bot/mulebot/process()
+/obj/machinery/bot/mulebot/bot_process()
 	if(!has_power())
 		on = 0
 		return

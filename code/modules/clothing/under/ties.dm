@@ -153,7 +153,7 @@
 
 /obj/item/clothing/tie/armband
 	name = "red armband"
-	desc = "An fancy red armband!"
+	desc = "A fancy red armband."
 	icon_state = "red"
 	item_color = "red"
 

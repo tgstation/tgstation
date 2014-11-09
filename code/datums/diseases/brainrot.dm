@@ -1,18 +1,16 @@
 /datum/disease/brainrot
 	name = "Brainrot"
 	max_stages = 4
-	spread = "On contact"
-	spread_type = CONTACT_GENERAL
-	cure = "Alkysine"
-	cure_id = list("alkysine")
+	spread_text = "On contact"
+	spread_flags = CONTACT_GENERAL
+	cures = list("alkysine")
 	agent = "Cryptococcus Cosmosis"
-	affected_species = list("Human")
-	curable = 0
+	viable_mobtypes = list(/mob/living/carbon/human)
+	disease_flags = CAN_CARRY|CAN_RESIST
 	cure_chance = 15//higher chance to cure, since two reagents are required
 	desc = "This disease destroys the braincells, causing brain fever, brain necrosis and general intoxication."
-	severity = "Dangerous!"
-	requires = 1
-	required_limb = list(/obj/item/organ/limb/head)
+	required_organs = list(/obj/item/organ/limb/head)
+	severity = DANGEROUS
 
 /datum/disease/brainrot/stage_act() //Removed toxloss because damaging diseases are pretty horrible. Last round it killed the entire station because the cure didn't work -- Urist -ACTUALLY Removed rather than commented out, I don't see it returning - RR
 	..()
