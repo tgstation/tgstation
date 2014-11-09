@@ -28,7 +28,6 @@
 /obj/item/clothing/mask/gas/welding/attack_self()
 	toggle()
 
-
 /obj/item/clothing/mask/gas/welding/verb/toggle()
 	set category = "Object"
 	set name = "Adjust welding mask"
@@ -45,18 +44,13 @@
 	name = "security gas mask"
 	desc = "A standard issue Security gas mask with integrated 'Compli-o-nator 3000' device, plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you taze them. Do not tamper with the device."
 	action_button_name = "HALT!"
-	icon_state = "officermask"
+	icon_state = "sechailer"
 	var/cooldown = 0
 	var/aggressiveness = 2
-
-/obj/item/clothing/mask/gas/sechailer/warden
-	icon_state = "wardenmask"
-
-/obj/item/clothing/mask/gas/sechailer/hos
-	icon_state = "hosmask"
+	ignore_maskadjust = 0
 
 /obj/item/clothing/mask/gas/sechailer/cyborg
-	icon_state = "hosmask"
+	icon_state = "sechailer"
 	aggressiveness = 1 //Borgs are nicecurity!
 
 /obj/item/clothing/mask/gas/sechailer/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -79,6 +73,11 @@
 			aggressiveness = 4
 	else
 		..()
+
+/obj/item/clothing/mask/gas/sechailer/verb/adjust(var/mob/user)
+	set category = "Object"
+	set name = "Adjust Mask"
+	adjustmask(user)
 
 /obj/item/clothing/mask/gas/sechailer/attack_self()
 	halt()
