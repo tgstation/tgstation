@@ -1,4 +1,4 @@
 author: N3X15
 delete-after: true
 changes:
-- rscadd: "Atmos-based bombs (tank bombs, single-tank bombs, etc) work again."
+- bugfix: "Atmos-based bombs (tank bombs, single-tank bombs, etc) work again."
