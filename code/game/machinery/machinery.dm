@@ -348,8 +348,8 @@ Class Procs:
 			var/P
 			for(var/obj/item/weapon/stock_parts/A in component_parts)
 				for(var/D in CB.req_components)
-					if(ispath(A.type, text2path(D)))
-						P = text2path(D)
+					if(ispath(A.type, D))
+						P = D
 						break
 				for(var/obj/item/weapon/stock_parts/B in W.contents)
 					if(istype(B, P) && istype(A, P))

@@ -282,6 +282,11 @@
 	max_w_class = 3
 	max_combined_w_class = 100
 
+//Sorts stock parts inside an RPED by their rating.
+//Only use /obj/item/weapon/stock_parts/ with this sort proc!
+/proc/cmp_rped_sort(var/obj/item/weapon/stock_parts/A, var/obj/item/weapon/stock_parts/B)
+	return B.rating - A.rating
+
 /obj/item/weapon/stock_parts
 	name = "stock part"
 	desc = "What?"
