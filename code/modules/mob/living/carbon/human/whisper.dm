@@ -14,7 +14,7 @@
 	if(!can_speak(message))
 		return
 
-	message = "<i>[message]</i>"
+	message = "[message]"
 	log_whisper("[src.name]/[src.key] : [message]")
 
 	if (src.client)
@@ -49,9 +49,9 @@
 		if(M.stat == DEAD && ((M.client.prefs.toggles & CHAT_GHOSTWHISPER) || (get_dist(M, src) <= 7)))
 			listening_dead |= M
 
-	var/list/listening = get_hear(1, src)
+	var/list/listening = get_hearers_in_view(1, src)
 	listening |= listening_dead
-	var/list/eavesdropping = hearers(2, src)
+	var/list/eavesdropping = get_hearers_in_view(2, src)
 	eavesdropping -= listening
 	var/list/watching  = hearers(5, src)
 	watching  -= listening
@@ -63,13 +63,13 @@
 	for(var/mob/M in watching)
 		M.show_message(rendered, 2)
 
-	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"[message]\"</span></span>"
+	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"<i>[message]</i>\"</span></span>"
 
 	for(var/mob/M in listening)
 		M.Hear(rendered, src, languages, message)
 
 	message = stars(message)
-	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"[message]\"</span></span>"
+	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"<i>[message]</i>\"</span></span>"
 	for(var/mob/M in eavesdropping)
 		M.Hear(rendered, src, languages, message)
 

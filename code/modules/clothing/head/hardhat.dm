@@ -70,6 +70,7 @@
 	icon_state = "hardhat0_atmos"
 	item_state = "hardhat0_atmos"
 	item_color = "atmos"
+	name = "atmospheric technician's firefighting helmet"
 	desc = "A firefighter's helmet, able to keep the user cool in any situation."
 	flags = STOPSPRESSUREDMAGE
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE

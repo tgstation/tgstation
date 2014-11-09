@@ -200,6 +200,7 @@
 	precision = 1
 	cooling_power = 5
 	w_class = 5
+	flags = NODROP //Necessary to ensure that the nozzle and tank never seperate
 	var/obj/item/weapon/watertank/tank
 	var/nozzle_mode = 0
 	var/metal_synthesis_cooldown = 0
@@ -216,24 +217,26 @@
 /obj/item/weapon/extinguisher/mini/nozzle/Move()
 	..()
 	if(loc != tank.loc)
-		loc = tank.loc
+		loc = tank
+	return
 
 /obj/item/weapon/extinguisher/mini/nozzle/attack_self(mob/user as mob)
-	if(nozzle_mode == EXTINGUISHER)
-		nozzle_mode = NANOFROST
-		tank.icon_state = "waterbackpackatmos_1"
-		user << "Swapped to nanofrost launcher"
-		return
-	if(nozzle_mode == NANOFROST)
-		nozzle_mode = METAL_FOAM
-		tank.icon_state = "waterbackpackatmos_2"
-		user << "Swapped to metal foam synthesizer"
-		return
-	if(nozzle_mode == METAL_FOAM)
-		nozzle_mode = EXTINGUISHER
-		tank.icon_state = "waterbackpackatmos_0"
-		user << "Swapped to water extinguisher"
-		return
+	switch(nozzle_mode)
+		if(EXTINGUISHER)
+			nozzle_mode = NANOFROST
+			tank.icon_state = "waterbackpackatmos_1"
+			user << "Swapped to nanofrost launcher"
+			return
+		if(NANOFROST)
+			nozzle_mode = METAL_FOAM
+			tank.icon_state = "waterbackpackatmos_2"
+			user << "Swapped to metal foam synthesizer"
+			return
+		if(METAL_FOAM)
+			nozzle_mode = EXTINGUISHER
+			tank.icon_state = "waterbackpackatmos_0"
+			user << "Swapped to water extinguisher"
+			return
 	return
 
 /obj/item/weapon/extinguisher/mini/nozzle/dropped(mob/user as mob)
