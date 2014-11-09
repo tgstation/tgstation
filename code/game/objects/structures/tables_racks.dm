@@ -202,7 +202,7 @@
 		qdel(src)
 		return
 
-/obj/structure/table/attack_alien(mob/user)
+/obj/structure/table/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
 	playsound(src.loc, 'sound/weapons/bladeslice.ogg', 50, 1)
 	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
@@ -218,7 +218,7 @@
 /obj/structure/table/attack_paw(mob/user)
 	attack_hand(user)
 
-/obj/structure/table/attack_hand(mob/user)
+/obj/structure/table/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(HULK in user.mutations)
 		user.do_attack_animation(src)
@@ -571,10 +571,10 @@
 	return 1
 
 
-/obj/structure/rack/attack_paw(mob/user as mob)
+/obj/structure/rack/attack_paw(mob/living/user)
 	attack_hand(user)
 
-/obj/structure/rack/attack_hand(mob/user as mob)
+/obj/structure/rack/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	playsound(loc, 'sound/items/dodgeball.ogg', 80, 1)
@@ -588,7 +588,7 @@
 	healthcheck()
 
 
-/obj/structure/rack/attack_alien(mob/user)
+/obj/structure/rack/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
 	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
 	new /obj/item/weapon/rack_parts(loc)
