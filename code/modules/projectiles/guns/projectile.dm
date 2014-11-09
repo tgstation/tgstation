@@ -57,12 +57,18 @@
 	return 0
 
 /obj/item/weapon/gun/projectile/attack_self(mob/living/user as mob)
+	var/obj/item/ammo_casing/AC = chambered //Find chambered round
 	if (magazine)
 		magazine.loc = get_turf(src.loc)
 		user.put_in_hands(magazine)
 		magazine.update_icon()
 		magazine = null
 		user << "<span class='notice'>You pull the magazine out of \the [src].</span>"
+	else if(chambered)
+		AC.loc = get_turf(src)
+		AC.SpinAnimation(10, 1)
+		chambered = null
+		user << "<span class='notice'>You unload the round from \the [src]'s chamber.</span>"
 	else
 		user << "<span class='notice'>There's no magazine in \the [src].</span>"
 	update_icon()

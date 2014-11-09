@@ -27,7 +27,7 @@
 
 /datum/changeling/proc/select_dna(var/prompt, var/title)
 	var/list/names = list()
-	for(var/datum/dna/DNA in absorbed_dna)
+	for(var/datum/dna/DNA in (absorbed_dna+protected_dna))
 		names += "[DNA.real_name]"
 
 	var/chosen_name = input(prompt, title, null) as null|anything in names

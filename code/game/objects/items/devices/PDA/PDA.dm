@@ -635,40 +635,26 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				var/t = stripped_input(U, "Please enter channel", name, (chat_channel)) as text
 
 				if(t)
-					ntrclog[chat_channel] = "<hr>" + ntrclog[chat_channel]
 					var/datum/chatroom/C = chatchannels[chat_channel]
-					if(!findtext(t,"#",1,2))
-						t = "#" + t
-					chat_channel = t
-					C.parse_msg(src, nick, "/join [chat_channel]")
+					var/ret = C.parse_msg(src, nick, "/join [t]")
+					if((ret in chatchannels) && (ret != chat_channel))
+						ntrclog[chat_channel] = "<hr>" + ntrclog[chat_channel]
+						chat_channel = ret
 
 			if("NTRC Message")
 				var/t = msg_input(U) as text
 				var/datum/chatroom/C = chatchannels[chat_channel]
 				if(C)
-					var/lt = text2list(t, " ")
-					if(lt[1] == "/join")
-						if(!findtext(lt[2],"#",1,2))
-							lt[2] = "#" + lt[2]
 					var/ret = C.parse_msg(src,nick,t)
-					if(findtextEx(ret,"ERR_",1,5))
+					if(findtextEx(ret,"BAD_",1,5))
 						ntrclog[chat_channel] = "[ret]<br>" + ntrclog[chat_channel]
-					else
-						if(ret == 0)
-							ntrclog[chat_channel] = "Failure<br>" + ntrclog[chat_channel]
-						else
-							if(lt[1] == "/join")
-								chat_channel = lt[2]
+					else if(ret in chatchannels)
+						chat_channel = ret
 
 			if("NTRC Help")
-				var/helptext = "<b>NTRC reference:</b><br><br>"
-				helptext += "<i>General commands</i><br>"
-				helptext += "/join #channel<br>/part<br>/log amountoflines<br>/who<br>/topic<br>/register<br><br>"
-				helptext += "<i>Moderation commands</i><br>"
-				helptext += "/ban targetnick<br>/unban targetnick<br>/kick targetnick<br>/mute targetnick<br><br>"
-				helptext += "<i>Management commands</i><br>"
-				helptext += "/topic topictext<br>/op targetnick<br>/deop targetnick<br>/delchannel"
-				usr << browse(helptext, "window=ntrchelp;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
+				var/helptext = "<b>NTRC Commands:</b><br><br>"
+				helptext += "/join #channel<br>/register<br>/log amountoflines<br><br>"
+				usr << browse(helptext, "window=ntrchelp;size=200x200;border=1;can_resize=1;can_close=1;can_minimize=1")
 
 
 
@@ -1161,7 +1147,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			ntrclog[C] = msg + ntrclog[C]
 	else
 		ntrclog[channel] = msg + ntrclog[channel]
-	if (!silent)
+	if (findtext(message, nick) && !silent)
 		loc.audible_message("\icon[src] *[ttone]*", null, 3)
 
 /proc/get_viewable_pdas()
