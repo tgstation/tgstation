@@ -8,7 +8,7 @@
 	var/poison_per_bite = 5
 	var/poison_type = "toxin"
 
-/mob/living/simple_animal/hostile/poison/giant_spider/AttackingTarget()
+/mob/living/simple_animal/hostile/poison/AttackingTarget()
 	..()
 	if(isliving(target))
 		var/mob/living/L = target
