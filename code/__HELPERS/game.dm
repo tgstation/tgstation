@@ -332,7 +332,7 @@ var/list/DummyCache = list()
 	return 1
 
 // Comment out when done testing shit.
-#define DEBUG_ROLESELECT
+//#define DEBUG_ROLESELECT
 
 #ifdef DEBUG_ROLESELECT
 # define roleselect_debug(x) testing(x)
@@ -352,7 +352,7 @@ var/list/DummyCache = list()
 				roleselect_debug("get_active_candidates(role_id=[role_id], buffer=[buffer], poll=[poll]): Skipping [G]  - Shitty candidate.")
 				continue
 
-			if(!G.client.desires_role(role_id,display_to_user=(poll && i==0))) // Only ask once.
+			if(!G.client.desires_role(role_id,display_to_user=(poll!=0 && i==0) ? poll : 0)) // Only ask once.
 				roleselect_debug("get_active_candidates(role_id=[role_id], buffer=[buffer], poll=[poll]): Skipping [G]  - Doesn't want role.")
 				continue
 

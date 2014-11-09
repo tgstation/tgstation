@@ -397,18 +397,18 @@ mob/living/simple_animal/borer/proc/detach()
 //Procs for grabbing players.
 mob/living/simple_animal/borer/proc/request_player()
 	var/list/candidates=list()
-	testing("Polling for borers.")
+	//testing("Polling for borers.")
 	for(var/mob/dead/observer/G in get_active_candidates(ROLE_BORER, poll="HEY KID, YOU WANNA BE A BORER?"))
 		if(!G.client)
-			testing("Client of [G] inexistent")
+			//testing("Client of [G] inexistent")
 			continue
 
 		if(G.client.holder)
-			testing("Client of [G] is admin.")
+			//testing("Client of [G] is admin.")
 			continue
 
 		if(jobban_isbanned(G, "Syndicate"))
-			testing("Jobbanned.")
+			//testing("[G] is jobbanned.")
 			continue
 
 		candidates += G

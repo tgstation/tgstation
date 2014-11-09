@@ -710,6 +710,40 @@ var/const/MAX_SAVE_SLOTS = 8
 		roles[role_id] ^= ROLEPREF_ENABLE
 		return 1
 
+	proc/SetRole(var/mob/user, var/list/href_list)
+		var/role_id = href_list["role_id"]
+		//user << "<span class='info'>Toggling role [role_id] (currently at [roles[role_id]])...</span>"
+		if(!(role_id in special_roles))
+			user << "<span class='danger'>BUG: Unable to find role [role_id].</span>"
+			return 0
+
+		if(roles[role_id] == null || roles[role_id] == "")
+			roles[role_id] = 0
+
+		var/question={"Would you like to be \a [role_id] this round?
+
+No/Yes:  Only affects this round.
+Never/Always: Saved for later rounds.
+
+NOTE:  The change will take effect AFTER any current recruiting periods."}
+		var/answer = alert(question,"Role Preference", "Never", "No", "Yes", "Always")
+		var/newval=0
+		switch(answer)
+			if("Never")
+				newval = ROLEPREF_NEVER
+			if("No")
+				newval = ROLEPREF_NO
+			if("Yes")
+				newval = ROLEPREF_YES
+			if("Always")
+				newval = ROLEPREF_ALWAYS
+		roles[role_id] = (roles[role_id] & ~ROLEPREF_VALMASK) | newval // We only set the lower 2 bits, leaving polled and friends untouched.
+
+		save_preferences_sqlite(user, user.ckey)
+		save_character_sqlite(user.ckey, user, default_slot)
+
+		return 1
+
 	proc/process_link(mob/user, list/href_list)
 		if(!user)
 			return
@@ -1431,3 +1465,5 @@ var/const/MAX_SAVE_SLOTS = 8
 		switch(href_list["preference"])
 			if("set_roles")
 				return SetRoles(usr, href_list)
+			if("set_role")
+				return SetRole(usr, href_list)
