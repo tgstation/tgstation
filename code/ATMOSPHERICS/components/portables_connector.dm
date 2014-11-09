@@ -153,6 +153,6 @@ This should ideally have /unary/ as parent, why doesn't it? //Donkie
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (connected_device)
-		user << "<span class='danger'>You cannot unwrench this [src], dettach [connected_device] first.</span>"
+		user << "<span class='danger'>You cannot unwrench this [src], detach [connected_device] first.</span>"
 		return 1
 	return ..()

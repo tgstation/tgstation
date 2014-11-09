@@ -4,18 +4,14 @@
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
 
-	using = new /obj/screen()
-	using.name = "drop"
+	using = new /obj/screen/drop()
 	using.icon = ui_style
-	using.icon_state = "act_drop"
 	using.screen_loc = ui_drone_drop
-	using.layer = 19
 	adding += using
 
-	mymob.pullin = new /obj/screen()
+	mymob.pullin = new /obj/screen/pull()
 	mymob.pullin.icon = ui_style
 	mymob.pullin.icon_state = "pull0"
-	mymob.pullin.name = "pull"
 	mymob.pullin.screen_loc = ui_drone_pull
 	adding += mymob.pullin
 

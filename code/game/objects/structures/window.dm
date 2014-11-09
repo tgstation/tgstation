@@ -12,6 +12,8 @@
 	var/state = 0
 	var/reinf = 0
 	var/disassembled = 0
+	var/obj/item/stack/rods/storedrods
+	var/obj/item/weapon/shard/storedshard
 //	var/silicate = 0 // number of units of silicate
 //	var/icon/silicateIcon = null // the silicated icon
 
@@ -21,9 +23,7 @@
 		health -= Proj.damage
 	..()
 	if(health <= 0)
-		new /obj/item/weapon/shard(loc)
-		new /obj/item/stack/rods(loc)
-		qdel(src)
+		spawnfragments()
 	return
 
 
@@ -33,23 +33,20 @@
 			qdel(src)
 			return
 		if(2.0)
-			new /obj/item/weapon/shard(loc)
-			if(reinf) new /obj/item/stack/rods(loc)
-			qdel(src)
+			spawnfragments()
 			return
 		if(3.0)
 			if(prob(50))
-				new /obj/item/weapon/shard(loc)
-				if(reinf) new /obj/item/stack/rods(loc)
-				qdel(src)
+				spawnfragments()
 				return
 
 
 /obj/structure/window/blob_act()
-	new /obj/item/weapon/shard(loc)
-	if(reinf) new /obj/item/stack/rods(loc)
-	qdel(src)
+	spawnfragments()
 
+/obj/structure/window/singularity_pull(S, current_size)
+	if(current_size >= STAGE_FIVE)
+		spawnfragments()
 
 /obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
@@ -87,9 +84,7 @@
 		update_nearby_icons()
 		step(src, get_dir(AM, src))
 	if(health <= 0)
-		new /obj/item/weapon/shard(loc)
-		if(reinf) new /obj/item/stack/rods(loc)
-		qdel(src)
+		spawnfragments()
 
 /obj/structure/window/attack_tk(mob/user as mob)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
@@ -102,12 +97,10 @@
 	if(HULK in user.mutations)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!"))
 		user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
-		var/obj/item/weapon/shard/S = new (loc)
-		S.add_fingerprint(user)
-		if(reinf)
-			var/obj/item/stack/rods/R = new (loc)
-			R.add_fingerprint(user)
-		qdel(src)
+		storedshard.add_fingerprint(user)
+		if(storedrods)
+			storedrods.add_fingerprint(user)
+		spawnfragments()
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
 		user.visible_message("<span class='notice'>[user] knocks on [src].</span>")
@@ -126,31 +119,32 @@
 	health -= damage
 	if(health <= 0)
 		user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
-		new /obj/item/weapon/shard(loc)
-		if(reinf) new /obj/item/stack/rods(loc)
-		qdel(src)
+		spawnfragments()
 	else	//for nicer text~
 		user.visible_message("<span class='danger'>[user] smashes into [src]!</span>")
 		playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
 
 
-/obj/structure/window/attack_alien(mob/user as mob)
+/obj/structure/window/attack_alien(mob/living/user as mob)
+	user.do_attack_animation(src)
 	if(islarva(user)) return
 	attack_generic(user, 15)
 
-/obj/structure/window/attack_animal(mob/user as mob)
+/obj/structure/window/attack_animal(mob/living/user as mob)
 	if(!isanimal(user)) return
 	var/mob/living/simple_animal/M = user
+	M.do_attack_animation(src)
 	if(M.melee_damage_upper <= 0) return
 	attack_generic(M, M.melee_damage_upper)
 
 
 /obj/structure/window/attack_slime(mob/living/carbon/slime/user as mob)
+	user.do_attack_animation(src)
 	if(!user.is_adult) return
 	attack_generic(user, rand(10, 15))
 
 
-/obj/structure/window/attackby(obj/item/I, mob/user)
+/obj/structure/window/attackby(obj/item/I, mob/living/user)
 	if(!can_be_reached(user))
 		return 1 //returning 1 will skip the afterattack()
 	add_fingerprint(user)
@@ -224,15 +218,16 @@
 				index++
 		else
 			spawnfragments()
-		qdel(src)
 		return
 
 /obj/structure/window/proc/spawnfragments()
-	var/newshard = new /obj/item/weapon/shard(loc)
-	transfer_fingerprints_to(newshard)
-	if(reinf)
-		var/newrods = new /obj/item/stack/rods(loc)
-		transfer_fingerprints_to(newrods)
+	var/turf/T = loc
+	storedshard.loc = T
+	transfer_fingerprints_to(storedshard)
+	if(storedrods)
+		storedrods.loc = T
+		transfer_fingerprints_to(storedrods)
+	qdel(src)
 
 /obj/structure/window/verb/rotate()
 	set name = "Rotate Window Counter-Clockwise"
@@ -294,7 +289,7 @@
 	..()
 
 	if(re)	reinf = re
-
+	storedshard = new/obj/item/weapon/shard(src)
 	ini_dir = dir
 	if(reinf)
 		icon_state = "rwindow"
@@ -304,6 +299,7 @@
 		health = 40
 		if(opacity)
 			icon_state = "twindow"
+		storedrods = new/obj/item/stack/rods(src)
 	else
 		icon_state = "window"
 

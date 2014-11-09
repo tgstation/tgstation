@@ -10,6 +10,7 @@
  * Ocean
  * Iron Sand
  * Snow
+ * High-traction
  */
 
 /turf/simulated/floor/goonplaque
@@ -90,4 +91,14 @@
 	icon_state = "snow"
 
 /turf/simulated/floor/plating/snow/ex_act(severity)
+	return
+
+/turf/simulated/floor/noslip
+	name = "high-traction floor"
+	icon_state = "noslip"
+	floor_tile = /obj/item/stack/tile/noslip
+	broken_states = list("noslip-damaged1","noslip-damaged2","noslip-damaged3")
+	burnt_states = list("noslip-scorched1","noslip-scorched2")
+
+/turf/simulated/floor/noslip/MakeSlippery()
 	return

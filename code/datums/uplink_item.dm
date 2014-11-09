@@ -381,6 +381,12 @@ var/list/uplink_items = list()
 	cost = 9
 	gamemodes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/badass/syndiecigs
+	name = "Syndicate Smokes"
+	desc = "Strong flavor, dense smoke, infused with Doctor's Delight."
+	item = /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
+	cost = 4
+
 /datum/uplink_item/device_tools/space_suit
 	name = "Syndicate Space Suit"
 	desc = "The red and black syndicate space suit is less encumbering than Nanotrasen variants, fits inside bags, and has a weapon slot. Nanotrasen crewmembers are trained to report red space suit sightings."

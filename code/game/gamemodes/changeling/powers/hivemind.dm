@@ -31,7 +31,7 @@ var/list/datum/dna/hivemind_bank = list()
 /obj/effect/proc_holder/changeling/hivemind_upload/sting_action(var/mob/user)
 	var/datum/changeling/changeling = user.mind.changeling
 	var/list/names = list()
-	for(var/datum/dna/DNA in changeling.absorbed_dna)
+	for(var/datum/dna/DNA in (changeling.absorbed_dna+changeling.protected_dna))
 		if(!(DNA in hivemind_bank))
 			names += DNA.real_name
 
@@ -86,7 +86,7 @@ var/list/datum/dna/hivemind_bank = list()
 
 	if(changeling.absorbed_dna.len)
 		changeling.absorbed_dna.Cut(1,2)
-	changeling.absorbed_dna |= chosen_dna
+	changeling.store_dna(chosen_dna, user)
 	user << "<span class='notice'>We absorb the DNA of [S] from the air.</span>"
 	feedback_add_details("changeling_powers","HD")
 	return 1

@@ -89,7 +89,7 @@
 	if(isturf(usr.loc) && src.loc == usr)
 		usr << "<span class='notice'>You empty \the [src] onto the floor.</span>"
 		reagents.reaction(usr.loc)
-		spawn(5) src.reagents.clear_reagents()
+		src.reagents.clear_reagents()
 
 //space cleaner
 /obj/item/weapon/reagent_containers/spray/cleaner
