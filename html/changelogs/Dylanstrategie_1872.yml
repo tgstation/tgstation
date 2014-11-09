@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - rscadd: PDA flashlight now has a range of 2 instead of 4 and a green to cyan tint. Better pack a flashlight next time
