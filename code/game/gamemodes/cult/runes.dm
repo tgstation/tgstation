@@ -175,7 +175,7 @@ var/list/sacrificed = list()
 		if(!M.mind)
 			usr << "<span class='warning'>You cannot convert that which has no soul</span>"
 			return 0
-		if(ticker.mode.name == "cult" && M.mind == ticker.mode:sacrifice_target)
+		if((ticker.mode.name == "cult") && (M.mind == ticker.mode:sacrifice_target))
 			usr << "<span class='warning'>The Geometer of blood wants this mortal for himself.</span>"
 			return 0
 		usr.say("Mah[pick("'","`")]weyh pleggh at e'ntrath!")
@@ -324,7 +324,7 @@ var/list/sacrificed = list()
 	var/is_sacrifice_target = 0
 	for(var/mob/living/carbon/human/M in src.loc)
 		if(M.stat == DEAD)
-			if(ticker.mode.name == "cult" && M.mind == ticker.mode:sacrifice_target)
+			if((ticker.mode.name == "cult") && (M.mind == ticker.mode:sacrifice_target))
 				is_sacrifice_target = 1
 			else
 				corpse_to_raise = M
@@ -342,7 +342,7 @@ var/list/sacrificed = list()
 		for(var/obj/effect/rune/R in world)
 			if(R.word1==cultwords["blood"] && R.word2==cultwords["join"] && R.word3==cultwords["hell"])
 				for(var/mob/living/carbon/human/N in R.loc)
-					if(ticker.mode.name == "cult" && N.mind && N.mind == ticker.mode:sacrifice_target)
+					if((ticker.mode.name == "cult") && (N.mind) && (N.mind == ticker.mode:sacrifice_target))
 						is_sacrifice_target = 1
 					else
 						if(N.stat!= DEAD)
