@@ -272,7 +272,9 @@
 	queue.Cut(index,++index)
 	return 1
 
+/* This is what process() is for you nerd - N3X
 /obj/machinery/r_n_d/fabricator/proc/process_queue()
+
 	if(!queue.len)
 		return
 
@@ -292,9 +294,11 @@
 		if(!queue.len)
 			return
 		else
-			part = src.queue[1]
+			if(!isnull(src.queue[1]))
+				part = src.queue[1]
 	src.visible_message("\icon[src] <b>[src]</b> beeps, \"Queue processing finished successfully\".")
 	return 1
+*/
 
 
 /obj/machinery/r_n_d/fabricator/proc/convert_designs()
@@ -374,6 +378,13 @@
 		temp = "Unable to connect to local R&D Database.<br>Please check your connections and try again.<br><a href='?src=\ref[src];clear_temp=1'>Return</a>"
 		src.updateUsrDialog()
 
+// Tell the machine to start processing the queue on the next process().
+/obj/machinery/r_n_d/fabricator/proc/start_processing_queue()
+	stopped=0
+
+// Stop processing queue (currently-executing ticks will finish first).
+/obj/machinery/r_n_d/fabricator/proc/stop_processing_queue()
+	stopped=1
 
 /obj/machinery/r_n_d/fabricator/proc/get_resource_cost_w_coeff(var/datum/design/part as obj,var/resource as text, var/roundto=1)
 	return round(part.materials[resource]*resource_coeff, roundto)
@@ -487,6 +498,7 @@
 		return 1
 
 	if(href_list["clear_queue"])
+		stop_processing_queue()
 		queue = list()
 		return 1
 
@@ -499,13 +511,10 @@
 		return 1
 
 	if(href_list["process_queue"])
-		spawn(-1)
-			if(processing_queue || being_built)
-				return 0
-			processing_queue = 1
-			process_queue()
-			processing_queue = 0
-			return 1
+		if(!stopped)
+			return 0
+		start_processing_queue()
+		return 1
 
 
 	if(href_list["screen"])
