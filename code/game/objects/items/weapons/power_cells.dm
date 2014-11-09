@@ -16,6 +16,7 @@
 	m_amt = 700
 	g_amt = 50
 	w_type = RECYK_ELECTRONIC
+	melt_temperature = MELTPOINT_STEEL // Rugged
 	var/rigged = 0		// true if rigged to explode
 	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
 

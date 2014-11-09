@@ -20,6 +20,7 @@ RCD
 	w_class = 3.0
 	m_amt = 50000
 	w_type = RECYK_ELECTRONIC
+	melt_temperature = MELTPOINT_STEEL // Lots of metal
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
 	var/matter = 0
@@ -30,7 +31,7 @@ RCD
 
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is using the deconstruct function on the [src.name] on \himself! It looks like \he's  trying to commit suicide!</b>"
-		return (user.death(1)) 
+		return (user.death(1))
 
 	New()
 		desc = "A RCD. It currently holds [matter]/30 matter-units."

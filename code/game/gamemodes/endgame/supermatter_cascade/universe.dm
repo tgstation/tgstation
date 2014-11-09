@@ -131,6 +131,7 @@
 			M.special_role = null
 			M.current.spellremove(M.current, config.feature_object_spell_system? "object":"verb")
 			M.current << "\red <FONT size = 3><B>Your powers ebb and you feel weak. You are no longer a wizard.</B></FONT>"
+			ticker.mode.update_wizard_icons_removed(M)
 
 		if(M in ticker.mode.changelings)
 			ticker.mode.changelings -= M

@@ -34,47 +34,6 @@
 
 /obj/machinery/constructable_frame/machine_frame
 
-	proc/find_square()
-		// This is fucking stupid but what the hell.
-
-		// This corresponds to indicies from alldirs.
-		//                         1      2      3     4     5          6          7          8
-		// var/list/alldirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
-		var/valid_patterns=list(
-			list(1,3,5), //SW - NORTH,EAST,NORTHEAST
-			list(2,3,7), //NW - SOUTH,EAST,SOUTHEAST
-			list(1,4,6), //SE - NORTH,WEST,NORTHWEST
-			list(2,4,8)  //NE - SOUTH,WEST,SOUTHWEST
-		)
-		var/detected_parts[8]
-		var/tally=0
-		var/turf/T
-		var/obj/machinery/constructable_frame/machine_frame/friend
-		for(var/i=1;i<=8;i++)
-			T=get_step(src.loc,alldirs[i])
-			friend = locate() in T
-			if(friend)
-				detected_parts[i]=friend
-				tally++
-		// Need at least 3 connections to make a square
-		if(tally<3)
-			return
-		// Find stuff in the patterns indicated
-		for(var/i=1;i<=4;i++)
-			var/list/scanidxs=valid_patterns[i]
-			var/list/new_connected=list()
-			var/allfound=1
-			for(var/diridx in scanidxs)
-				if(detected_parts[diridx]==null)
-					allfound=0
-					break
-				new_connected.Add(detected_parts[diridx])
-			if(allfound)
-				connected_parts=new_connected
-				pattern_idx=i
-				return 1
-		return 0
-
 	attackby(obj/item/P as obj, mob/user as mob)
 		if(P.crit_fail)
 			user << "\red This part is faulty, you cannot add this to the machine!"
@@ -102,35 +61,6 @@
 					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 					new /obj/structure/displaycase_frame(src.loc)
 					del(src)
-					return
-				else if(istype(P, /obj/item/stack/rods))
-					var/obj/item/stack/rods/R=P
-					if(R.amount<10)
-						user << "\red You need 10 rods to assemble a pod frame."
-						return
-					if(!find_square())
-						user << "\red You cannot assemble a pod frame without a 2x2 square of machine frames."
-						return
-
-					R.use(10)
-
-					for(var/obj/machinery/constructable_frame/machine_frame/F in connected_parts)
-						qdel(F)
-
-					var/turf/T=get_turf(src)
-					// Offset frame (if needed) so it doesn't look wonky when it spawns.
-					switch(pattern_idx)
-						if(2)
-							T=get_step(T,SOUTH)
-						if(3)
-							T=get_step(T,WEST)
-						if(4)
-							T=get_step(T,SOUTHWEST)
-
-					new /obj/structure/spacepod_frame(T)
-					user << "\blue You assemble the pod frame."
-					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-					qdel(src)
 					return
 				else
 					if(istype(P, /obj/item/weapon/wrench))
@@ -382,6 +312,17 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/manipulator" = 1,
 							"/obj/item/weapon/stock_parts/micro_laser" = 1,
 							"/obj/item/weapon/stock_parts/console_screen" = 1)
+
+/obj/item/weapon/circuitboard/podfab
+	name = "Circuit board (Spacepod Fabricator)"
+	build_path = "/obj/machinery/r_n_d/fabricator/pod"
+	board_type = "machine"
+	origin_tech = "programming=3;engineering=3"
+	frame_desc = "Requires 3 Matter Bins, 2 Manipulators, and 2 Micro-Lasers."
+	req_components = list(
+							"/obj/item/weapon/stock_parts/matter_bin" = 3,
+							"/obj/item/weapon/stock_parts/manipulator" = 2,
+							"/obj/item/weapon/stock_parts/micro_laser" = 2)
 
 /obj/item/weapon/circuitboard/defib_recharger
 	name = "Circuit Board (Defib Recharger)"
@@ -836,8 +777,51 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/scanning_module" = 2,
 							"/obj/item/weapon/stock_parts/console_screen" = 1)
 
+/obj/item/weapon/circuitboard/reverse_engine
+	name = "Circuit Board (Reverse Engine)"
+	build_path = "/obj/machinery/r_n_d/reverse_engine"
+	board_type = "machine"
+	origin_tech = "materials=6;programming=4;engineering=3;bluespace=3;power=4"
+	frame_desc = "Requires 2 Scanning Modules, 2 Capacitors, 1 Manipulator, and 1 Console Screen."
+	req_components = list(
+							"/obj/item/weapon/stock_parts/scanning_module" = 2,
+							"/obj/item/weapon/stock_parts/capacitor" = 2,
+							"/obj/item/weapon/stock_parts/manipulator" = 1,
+							"/obj/item/weapon/stock_parts/console_screen" = 1)
 
+/obj/item/weapon/circuitboard/generalfab
+	name = "Circuit Board (General Fabricator)"
+	build_path = "/obj/machinery/r_n_d/fabricator/mechanic_fab"
+	board_type = "machine"
+	origin_tech = "materials=3;engineering=2;programming=2"
+	frame_desc = "Requires 2 Manipulators, 2 Matter Bins, and 2 Micro-Lasers."
+	req_components = list(
+							"/obj/item/weapon/stock_parts/manipulator" = 2,
+							"/obj/item/weapon/stock_parts/micro_laser" = 2,
+							"/obj/item/weapon/stock_parts/matter_bin" = 2)
 
+/obj/item/weapon/circuitboard/flatpacker
+	name = "Circuit Board (Flatpack Fabricator)"
+	build_path = "/obj/machinery/r_n_d/fabricator/mechanic_fab/flatpacker"
+	board_type = "machine"
+	origin_tech = "materials=5;engineering=4;power=3;programming=3"
+	frame_desc = "Requires 2 Manipulators, 2 Matter Bins, 2 Micro-Lasers, 2 Scanning Modules, and 1 Beaker."
+	req_components = list(
+							"/obj/item/weapon/stock_parts/manipulator" = 2,
+							"/obj/item/weapon/stock_parts/micro_laser" = 2,
+							"/obj/item/weapon/stock_parts/matter_bin" = 2,
+							"/obj/item/weapon/stock_parts/scanning_module" = 2,
+							"/obj/item/weapon/reagent_containers/glass/beaker" = 1)
 
+/obj/item/weapon/circuitboard/blueprinter
+	name = "Circuit Board (Blueprint Printer)"
+	build_path = "/obj/machinery/r_n_d/blueprinter"
+	board_type = "machine"
+	origin_tech = "engineering=3;programming=3"
+	frame_desc = "Requires 2 Matter Bins, 1 Scanning Module, and 1 Manipulator."
+	req_components = list(
+							"/obj/item/weapon/stock_parts/matter_bin" = 2,
+							"/obj/item/weapon/stock_parts/manipulator" = 1,
+							"/obj/item/weapon/stock_parts/scanning_module" = 1)
 
 

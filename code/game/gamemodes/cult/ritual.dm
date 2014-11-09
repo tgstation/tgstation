@@ -353,12 +353,6 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	else
 		M.LAssailant = user
 
-	if(istype(M,/mob/dead))
-		M.invisibility = 0
-		user.visible_message( \
-			"<span class='warning'>[user] drags the ghost to our plan of reality!</span>", \
-			"<span class='warning'>You drag the ghost to our plan of reality!</span>" \
-		)
 		return
 	if(!istype(M))
 		return

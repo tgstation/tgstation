@@ -2,6 +2,18 @@
 	icon_state = "paper_talisman"
 	var/imbue = null
 	var/uses = 0
+	var/nullblock = 0
+
+/obj/item/weapon/paper/talisman/proc/findNullRod(var/atom/target)
+	if(istype(target,/obj/item/weapon/nullrod))
+		var/turf/T = get_turf(target)
+		nullblock = 1
+		T.nullding()
+		return 1
+	else if(target.contents)
+		for(var/atom/A in target.contents)
+			findNullRod(A)
+	return 0
 
 
 /obj/item/weapon/paper/talisman/examine()
@@ -39,9 +51,11 @@
 				//If the user cancels the talisman this var will be set to 0
 				delete = call(/obj/effect/rune/proc/communicate)()
 			if("deafen")
-				call(/obj/effect/rune/proc/deafen)()
+				deafen()
+				del(src)
 			if("blind")
-				call(/obj/effect/rune/proc/blind)()
+				blind()
+				del(src)
 			if("runestun")
 				user << "\red To use this talisman, attack your target directly."
 				return
@@ -61,7 +75,7 @@
 	if(iscultist(user))
 		if(imbue == "runestun")
 			user.take_organ_damage(5, 0)
-			call(/obj/effect/rune/proc/runestun)(T)
+			runestun(T)
 			del(src)
 		else
 			..()   ///If its some other talisman, use the generic attack code, is this supposed to work this way?
@@ -134,3 +148,68 @@
 /obj/item/weapon/paper/talisman/supply
 	imbue = "supply"
 	uses = 5
+
+
+//imbued talismans invocation for a few runes, since calling the proc causes a runtime error due to src = null
+/obj/item/weapon/paper/talisman/proc/runestun(var/mob/living/T as mob)//When invoked as talisman, stun and mute the target mob.
+	usr.say("Dream sign ''Evil sealing talisman'[pick("'","`")]!")
+	nullblock = 0
+	for(var/turf/TU in range(T,1))
+		findNullRod(TU)
+	if(nullblock)
+		usr.visible_message("<span class='danger'>[usr] invokes a talisman at [T], but they are unaffected!</span>")
+	else
+		usr.visible_message("<span class='danger'>[usr] invokes a talisman at [T]</span>")
+
+		if(issilicon(T))
+			T.Weaken(15)
+
+		else if(iscarbon(T))
+			var/mob/living/carbon/C = T
+			flick("e_flash", C.flash)
+			if (!(M_HULK in C.mutations))
+				C.silent += 15
+			C.Weaken(25)
+			C.Stun(25)
+	return
+
+/obj/item/weapon/paper/talisman/proc/blind()
+	var/affected = 0
+	for(var/mob/living/carbon/C in view(2,usr))
+		if (iscultist(C))
+			continue
+		nullblock = 0
+		for(var/turf/T in range(C,1))
+			findNullRod(T)
+		if(nullblock)
+			continue
+		C.eye_blurry += 30
+		C.eye_blind += 10
+		//talismans is weaker.
+		affected++
+		C << "<span class='warning'>You feel a sharp pain in your eyes, and the world disappears into darkness..</span>"
+	if(affected)
+		usr.whisper("Sti[pick("'","`")] kaliesin!")
+		usr << "<span class='warning'>Your talisman turns into gray dust, blinding those who not follow the Nar-Sie.</span>"
+
+
+/obj/item/weapon/paper/talisman/proc/deafen()
+	var/affected = 0
+	for(var/mob/living/carbon/C in range(7,usr))
+		if (iscultist(C))
+			continue
+		nullblock = 0
+		for(var/turf/T in range(C,1))
+			findNullRod(T)
+		if(nullblock)
+			continue
+		C.ear_deaf += 30
+		//talismans is weaker.
+		C.show_message("\<span class='warning'>The world around you suddenly becomes quiet.</span>", 3)
+		affected++
+	if(affected)
+		usr.whisper("Sti[pick("'","`")] kaliedir!")
+		usr << "<span class='warning'>Your talisman turns into gray dust, deafening everyone around.</span>"
+		for (var/mob/V in orange(1,src))
+			if(!(iscultist(V)))
+				V.show_message("<span class='warning'>Dust flows from [usr]'s hands for a moment, and the world suddenly becomes quiet..</span>", 3)

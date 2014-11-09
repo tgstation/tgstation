@@ -24,10 +24,11 @@ In short:
 	*/
 
 /datum/universal_state/hell/DecayTurf(var/turf/T)
-	T.cultify()
-	for(var/obj/machinery/light/L in T.contents)
-		new /obj/structure/cult/pylon(L.loc)
-		qdel(L)
+	if(!T.holy)
+		T.cultify()
+		for(var/obj/machinery/light/L in T.contents)
+			new /obj/structure/cult/pylon(L.loc)
+			qdel(L)
 	return
 
 
@@ -81,7 +82,7 @@ In short:
 		spess.overlays += "hell01"
 
 	for(var/turf/T in world)
-		if(istype(T,/turf/simulated/floor) && prob(1))
+		if(!T.holy && istype(T,/turf/simulated/floor) && prob(1))
 			new /obj/effect/gateway/active/cult(T)
 
 	for (var/obj/machinery/firealarm/alm in world)

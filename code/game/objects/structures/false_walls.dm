@@ -83,8 +83,9 @@
 	)
 
 /obj/structure/falsewall/New()
-	relativewall_neighbours()
 	..()
+	relativewall()
+	relativewall_neighbours()
 
 /obj/structure/falsewall/Destroy()
 

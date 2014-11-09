@@ -69,6 +69,8 @@
 	var/shuttletarget = null
 	var/enroute = 0
 
+	supernatural = 1
+
 /mob/living/simple_animal/hostile/scarybat/cult/cultify()
 	return
 

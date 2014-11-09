@@ -312,6 +312,7 @@ var/global/list/paint_variants = list(
 	m_amt = 15000
 	g_amt = 7500
 	w_type = RECYK_ELECTRONIC
+	melt_temperature = MELTPOINT_STEEL
 	origin_tech = "engineering=2;materials=1"
 	var/working = 0
 	var/datum/paint_info/selected

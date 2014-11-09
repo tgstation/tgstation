@@ -29,6 +29,7 @@ Mineral Sheets
 	throw_range = 5
 	origin_tech = "materials=1"
 	sheettype = "sandstone"
+	melt_temperature = MELTPOINT_GLASS
 
 var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 	new/datum/stack_recipe("pile of dirt", /obj/machinery/portable_atmospherics/hydroponics/soil, 3, time = 10, one_per_turf = 1, on_floor = 1), \
@@ -59,6 +60,7 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 	origin_tech = "materials=6"
 	perunit = 1750
 	sheettype = "diamond"
+	melt_temperature = 3820 // In a vacuum, but fuck dat
 
 var/global/list/datum/stack_recipe/diamond_recipes = list ( \
 	new/datum/stack_recipe("diamond door", /obj/structure/mineral_door/transparent/diamond, 10, one_per_turf = 1, on_floor = 1), \
@@ -88,6 +90,7 @@ var/global/list/datum/stack_recipe/diamond_recipes = list ( \
 	origin_tech = "materials=5"
 	perunit = 2000
 	sheettype = "uranium"
+	melt_temperature = 1132+T0C
 
 var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 	new/datum/stack_recipe("uranium door", /obj/structure/mineral_door/uranium, 10, one_per_turf = 1, on_floor = 1), \
@@ -117,6 +120,7 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 	origin_tech = "plasmatech=2;materials=2"
 	perunit = 2000
 	sheettype = "plasma"
+	melt_temperature = MELTPOINT_STEEL+500
 
 var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 	new/datum/stack_recipe("plasma door", /obj/structure/mineral_door/transparent/plasma, 10, one_per_turf = 1, on_floor = 1), \
@@ -142,6 +146,7 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 	throw_range = 3
 	origin_tech = "materials=3"
 	perunit = 2000
+	melt_temperature = MELTPOINT_PLASTIC
 	sheettype = "plastic"
 
 var/global/list/datum/stack_recipe/plastic_recipes = list ( \
@@ -177,6 +182,7 @@ var/global/list/datum/stack_recipe/plastic_recipes = list ( \
 	throw_range = 3
 	origin_tech = "materials=4"
 	perunit = 2000
+	melt_temperature = 1064+T0C
 	sheettype = "gold"
 
 var/global/list/datum/stack_recipe/gold_recipes = list ( \
@@ -206,6 +212,7 @@ var/global/list/datum/stack_recipe/phazon_recipes = list()
 	icon_state = "sheet-phazon"
 	item_state = "sheet-phazon"
 	perunit = 1500
+	melt_temperature = MELTPOINT_PLASTIC
 	throwforce = 15.0
 	flags = FPRINT | TABLEPASS | CONDUCT
 	origin_tech = "materials=9"

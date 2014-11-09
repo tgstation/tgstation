@@ -1,7 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - rscadd: You can now wear grown cherries on your ears.
-  - rscadd: You can now wear a bucket on your head.
-  - rscadd: If there were any reagents inside the bucket, they'll spill on yourself, the floor, and any items on your tile.
-  - tweak: Splashing someone with blood will now actually make them all bloody (of course if the blood comes from a human being, DNA is preserved.)

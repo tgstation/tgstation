@@ -1,6 +1,0 @@
-author: iconleap 
-
-delete-after: True
-
-changes: 
-  - experiment: Copy admin only log system of NSS-Phoenix (https://github.com/emmanuelbassil/NSS-Phoenix/commit/3262a93a5e66117d290132c2852544a7a29be14a#diff-36).

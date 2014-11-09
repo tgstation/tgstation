@@ -225,13 +225,15 @@ a.notsmelting {
 					// Turn off
 					on=0
 
-					// Take one of every ore selected
+					// Spawn slag
+					var/obj/item/weapon/ore/slag/slag = new /obj/item/weapon/ore/slag(output.loc)
+
+					// Take one of every ore selected and give it to the slag.
 					for(var/ore_id in ore.storage)
 						if(ore.getAmount(ore_id)>0 && ore_id in selected)
 							ore.removeAmount(ore_id,1)
+							slag.mats.addAmount(ore_id,1)
 
-					// Spawn slag
-					new /obj/item/weapon/ore/slag(output.loc)
 					break
 
 		// Collect ore even if not on.
@@ -294,19 +296,21 @@ a.notsmelting {
 					// Turn off
 					on=0
 
-					// Take one of every ore selected
-					for(var/ore_id in ore.storage)
-						var/amount=ore.getAmount(ore_id)
-						if(amount>0 && ore_id in selected)
-							ore.removeAmount(ore_id,1)
 					// Spawn slag
-					new /obj/item/weapon/ore/slag(output.loc)
+					var/obj/item/weapon/ore/slag/slag = new /obj/item/weapon/ore/slag(output.loc)
+
+					// Take one of every ore selected and give it to the slag.
+					for(var/ore_id in ore.storage)
+						if(ore.getAmount(ore_id)>0 && ore_id in selected)
+							ore.removeAmount(ore_id,1)
+							slag.mats.addAmount(ore_id,1)
+
 					break
 
 		for (i = 0; i < 10; i++)
 			var/atom/movable/O
 			for(O in input.loc.contents)
-				if(O && O.w_type!=NOT_RECYCLABLE && O.w_type!=RECYK_BIOLOGICAL)
+				if(O && O.w_type != NOT_RECYCLABLE && O.w_type!=RECYK_BIOLOGICAL)
 					if (O.recycle(ore))
 						qdel(O)
 						break

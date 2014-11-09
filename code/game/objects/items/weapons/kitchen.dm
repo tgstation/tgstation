@@ -40,12 +40,14 @@
 	desc = "SPOON!"
 	icon_state = "spoon"
 	attack_verb = list("attacked", "poked")
+	melt_temperature = MELTPOINT_STEEL
 
 /obj/item/weapon/kitchen/utensil/pspoon
 	name = "plastic spoon"
 	desc = "Super dull action!"
 	icon_state = "pspoon"
 	attack_verb = list("attacked", "poked")
+	melt_temperature = MELTPOINT_STEEL
 
 /*
  * Forks
@@ -54,6 +56,7 @@
 	name = "fork"
 	desc = "Pointy."
 	icon_state = "fork"
+	melt_temperature = MELTPOINT_STEEL
 
 /obj/item/weapon/kitchen/utensil/fork/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
@@ -82,6 +85,7 @@
 	name = "plastic fork"
 	desc = "Yay, no washing up to do."
 	icon_state = "pfork"
+	melt_temperature = MELTPOINT_PLASTIC
 
 /obj/item/weapon/kitchen/utensil/pfork/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
@@ -115,6 +119,7 @@
 	icon_state = "knife"
 	force = 10.0
 	throwforce = 10.0
+	melt_temperature = MELTPOINT_STEEL
 
 	suicide_act(mob/user)
 		viewers(user) << pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
@@ -136,6 +141,7 @@
 	icon_state = "pknife"
 	force = 10.0
 	throwforce = 10.0
+	melt_temperature = MELTPOINT_PLASTIC
 
 /obj/item/weapon/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
 	if ((M_CLUMSY in user.mutations) && prob(50))
@@ -161,6 +167,7 @@
 	throw_range = 6
 	m_amt = 12000
 	w_type = RECYK_METAL
+	melt_temperature = MELTPOINT_STEEL
 	origin_tech = "materials=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
@@ -193,6 +200,7 @@
 	throw_range = 6
 	m_amt = 12000
 	w_type = RECYK_METAL
+	melt_temperature = MELTPOINT_STEEL
 	origin_tech = "materials=1"
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
@@ -230,6 +238,7 @@
 	throw_speed = 2
 	throw_range = 7
 	w_class = 3.0
+	autoignition_temperature=AUTOIGNITION_WOOD
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked") //I think the rollingpin attackby will end up ignoring this anyway.
 
 /obj/item/weapon/kitchen/rollingpin/attack(mob/living/M as mob, mob/living/user as mob)
@@ -285,6 +294,7 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	m_amt = 3000
 	w_type = RECYK_METAL
+	melt_temperature = MELTPOINT_STEEL
 	var/list/carrying = list() // List of things on the tray. - Doohl
 	var/max_carry = 10 // w_class = 1 -- takes up 1
 					   // w_class = 2 -- takes up 3

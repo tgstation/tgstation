@@ -3,7 +3,15 @@
 	return
 
 /datum/hud/proc/ghost_hud()
-	return
+	mymob.visible = new /obj/screen()
+	mymob.visible.icon = 'icons/mob/screen1_ghost.dmi'
+	mymob.visible.icon_state = "visible0"
+	mymob.visible.name = "visible"
+	mymob.visible.screen_loc = ui_health
+
+	mymob.client.screen = null
+
+	mymob.client.screen += list(mymob.visible)
 
 /datum/hud/proc/corgi_hud(u)
 	mymob.fire = new /obj/screen()
@@ -80,6 +88,12 @@
 	mymob.pullin.name = "pull"
 	mymob.pullin.screen_loc = ui_construct_pull
 
+	mymob.purged = new /obj/screen()
+	mymob.purged.icon = 'icons/mob/screen1_shade.dmi'
+	mymob.purged.icon_state = "purge0"
+	mymob.purged.name = "purged"
+	mymob.purged.screen_loc = ui_construct_purge
+
 	mymob.zone_sel = new /obj/screen/zone_sel()
 	mymob.zone_sel.icon = 'icons/mob/screen1_shade.dmi'
 	mymob.zone_sel.overlays.Cut()
@@ -87,7 +101,7 @@
 
 	mymob.client.screen = null
 
-	mymob.client.screen += list(mymob.healths, mymob.pullin, mymob.zone_sel)
+	mymob.client.screen += list(mymob.healths, mymob.pullin, mymob.zone_sel, mymob.purged)
 
 /datum/hud/proc/construct_hud()
 	var/constructtype
@@ -125,9 +139,15 @@
 		mymob.zone_sel.overlays.Cut()
 		mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
 
+		mymob.purged = new /obj/screen()
+		mymob.purged.icon = 'icons/mob/screen1_construct.dmi'
+		mymob.purged.icon_state = "purge0"
+		mymob.purged.name = "purged"
+		mymob.purged.screen_loc = ui_construct_purge
+
 	mymob.client.screen = null
 
-	mymob.client.screen += list(mymob.fire, mymob.healths, mymob.pullin, mymob.zone_sel)
+	mymob.client.screen += list(mymob.fire, mymob.healths, mymob.pullin, mymob.zone_sel, mymob.purged)
 
 	switch(constructtype)
 		if("artificer")

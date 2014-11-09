@@ -32,7 +32,7 @@
 	if(!is_open_container())
 		user << "<span  class='rose'>You can't; [src] is closed.</span>"  //Added this here and elsewhere to prevent drinking, etc. from closed drink containers. - Hinaichigo
 		return 0
-		
+
 	else if(!src.reagents.total_volume || !src)
 		user << "<span  class='rose'>None of [src] left, oh no!<span>"
 		return 0
@@ -49,24 +49,24 @@
 	if(user.a_intent == "hurt" && isGlass && molotov != 1)  //to smash on someone, must be harm intent, breakable glass, and have no rag inside
 		if(!M)
 			return
-	
+
 		force = 15 //Smashing bottles over someoen's head hurts. //todo: check that this isn't overwriting anything it shouldn't be
-	
+
 		var/datum/organ/external/affecting = user.zone_sel.selecting //Find what the player is aiming at
-	
+
 		var/armor_block = 0 //Get the target's armour values for normal attack damage.
 		var/armor_duration = 0 //The more force the bottle has, the longer the duration.
-	
+
 		//Calculating duration and calculating damage.
 		if(ishuman(M))
-	
+
 			var/mob/living/carbon/human/H = M
 			var/headarmor = 0 // Target's head armour
 			armor_block = H.run_armor_check(affecting, "melee") // For normal attack damage
-	
+
 			//If they have a hat/helmet and the user is targeting their head.
 			if(istype(H.head, /obj/item/clothing/head) && affecting == "head")
-	
+
 				// If their head has an armour value, assign headarmor to it, else give it 0.
 				if(H.head.armor["melee"])
 					headarmor = H.head.armor["melee"]
@@ -74,24 +74,24 @@
 					headarmor = 0
 			else
 				headarmor = 0
-	
+
 			//Calculate the weakening duration for the target.
 			armor_duration = (duration - headarmor) + force
-	
+
 		else
 			//Only humans can have armour, right?
 			armor_block = M.run_armor_check(affecting, "melee")
 			if(affecting == "head")
 				armor_duration = duration + force
 		armor_duration /= 10
-	
+
 		//Apply the damage!
 		M.apply_damage(force, BRUTE, affecting, armor_block)
-	
+
 		// You are going to knock someone out for longer if they are not wearing a helmet.
 		// For drinking glass
 		if(affecting == "head" && istype(M, /mob/living/carbon/))
-	
+
 			//Display an attack message.
 			for(var/mob/O in viewers(user, null))
 				if(M != user) O.show_message(text("\red <B>[M] has been hit over the head with a [smashtext][src.name], by [user]!</B>"), 1)
@@ -99,13 +99,13 @@
 			//Weaken the target for the duration that we calculated and divide it by 5.
 			if(armor_duration)
 				M.apply_effect(min(armor_duration, 10) , WEAKEN) // Never weaken more than a flash!
-	
+
 		else
 			//Default attack message and don't weaken the target.
 			for(var/mob/O in viewers(user, null))
 				if(M != user) O.show_message(text("\red <B>[M] has been attacked with a [smashtext][src.name], by [user]!</B>"), 1)
 				else O.show_message(text("\red <B>[M] has attacked himself with a [smashtext][src.name]!</B>"), 1)
-	
+
 		//Attack logs
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has attacked [M.name] ([M.ckey]) with a bottle!</font>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been smashed with a bottle by [user.name] ([user.ckey])</font>")
@@ -114,22 +114,22 @@
 			M.LAssailant = null
 		else
 			M.LAssailant = user
-	
+
 		//The reagents in the bottle splash all over the target, thanks for the idea Nodrak
 		if(src.reagents)
 			for(var/mob/O in viewers(user, null))
 				O.show_message(text("\blue <B>The contents of \the [smashtext][src] splashes all over [M]!</B>"), 1)
 			src.reagents.reaction(M, TOUCH)
-	
+
 		//Finally, smash the bottle. This kills (del) the bottle.
 		src.smash(M, user)
-	
+
 		return
 
 	else if(!is_open_container())
 		user << "<span  class='rose'>You can't; [src] is closed.</span>"  //Added this here and elsewhere to prevent drinking, etc. from closed drink containers. - Hinaichigo
 		return 0
-		
+
 	else if(!R.total_volume || !R)
 		user << "<span  class='rose'>None of [src] left, oh no!<span>"
 		return 0
@@ -243,7 +243,7 @@
 		usr << "<span  class='notice'>\The [src] is almost full!</span>"
 	else
 		usr << "<span  class='notice'>\The [src] is full!</span>"
-	
+
 /obj/item/weapon/reagent_containers/food/drinks/proc/imbibe(mob/user) //drink the liquid within
 	user << "<span  class='notice'>You swallow a gulp of [src].</span>"
 	if(reagents.total_volume)
@@ -253,7 +253,7 @@
 
 	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	return 1
-		
+
 
 /obj/item/weapon/reagent_containers/food/drinks/New()
 	..()
@@ -733,6 +733,8 @@
 	volume = 100
 	g_amt = 500
 	bottleheight = 31
+	melt_temperature = MELTPOINT_GLASS
+	w_type=RECYK_GLASS
 
 //Keeping this here for now, I'll ask if I should keep it here.
 /obj/item/weapon/broken_bottle
@@ -749,6 +751,8 @@
 	attack_verb = list("stabbed", "slashed", "attacked")
 	var/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
 	g_amt=500
+	melt_temperature = MELTPOINT_GLASS
+	w_type=RECYK_GLASS
 
 /obj/item/weapon/broken_bottle/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
@@ -837,9 +841,92 @@
 	isGlass = 1
 	smashtext = ""
 	smashname = "broken flask"
-	New()
-		..()
-		reagents.add_reagent("holywater", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/New()
+	..()
+	reagents.add_reagent("holywater", 100)
+
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/attack(mob/living/M as mob, mob/user as mob, def_zone)
+	return
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/afterattack(obj/target, mob/user , flag)//copied from glass.dm, only way to have it only dispense 5u of its content
+	..()
+	if(ismob(target) && target.reagents && reagents.total_volume)
+		user << "\blue You splash some the flask's content onto [target]."
+
+		var/mob/living/M = target
+		var/list/injected = list()
+		for(var/datum/reagent/R in src.reagents.reagent_list)
+			injected += R.name
+		var/contained = english_list(injected)
+		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been splashed with [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
+		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to splash [M.name] ([M.key]). Reagents: [contained]</font>")
+		msg_admin_attack("[user.name] ([user.ckey]) splashed [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+		if(!iscarbon(user))
+			M.LAssailant = null
+		else
+			M.LAssailant = user
+
+		for(var/mob/O in viewers(world.view, user))
+			O.show_message(text("<span class='warning'>[] has been splashed with something by []!</span>", target, user), 1)
+		src.reagents.reaction(target, TOUCH)
+		spawn(5) src.reagents.remove_any(5)
+		return
+	else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+
+		if(!target.reagents.total_volume && target.reagents)
+			user << "<span class='warning'>[target] is empty.</span>"
+			return
+
+		if(reagents.total_volume >= reagents.maximum_volume)
+			user << "<span class='warning'>[src] is full.</span>"
+			return
+
+		var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
+		user << "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>"
+
+	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
+		if(!reagents.total_volume)
+			user << "<span class='warning'>[src] is empty.</span>"
+			return
+
+		if(target.reagents.total_volume >= target.reagents.maximum_volume)
+			user << "<span class='warning'>[target] is full.</span>"
+			return
+
+		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+		user << "<span class='notice'>You transfer [trans] units of the solution to [target].</span>"
+
+		// /vg/: Logging transfers of bad things
+		if(target.reagents_to_log.len)
+			var/list/badshit=list()
+			for(var/bad_reagent in target.reagents_to_log)
+				if(reagents.has_reagent(bad_reagent))
+					badshit += reagents_to_log[bad_reagent]
+			if(badshit.len)
+				var/hl="\red <b>([english_list(badshit)])</b> \black"
+				message_admins("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+				log_game("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].")
+
+	//Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.
+	else if(istype(target, /obj/item/clothing/suit/space/space_ninja))
+		return
+
+	else if(istype(target, /obj/machinery/bunsen_burner))
+		return
+
+	else if(istype(target, /obj/machinery/anomaly))
+		return
+
+	else if(reagents.total_volume)
+		user << "<span class='notice'>You splash some the flask's content onto [target].</span>"
+		if(reagents.has_reagent("fuel"))
+			message_admins("[user.name] ([user.ckey]) poured Welder Fuel onto [target]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+			log_game("[user.name] ([user.ckey]) poured Welder Fuel onto [target]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+		src.reagents.reaction(target, TOUCH)
+		spawn(5) src.reagents.remove_any(5)
+		return
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth
 	name = "Goldeneye Vermouth"
@@ -979,7 +1066,7 @@
 	playsound(src, "shatter", 70, 1)
 
 	del(src)
-	
+
 //smashing when thrown
 /obj/item/weapon/reagent_containers/food/drinks/throw_impact(atom/hit_atom)
 	..()
@@ -1001,7 +1088,7 @@
 					loca.hotspot_expose(700, 1000,surfaces=istype(loc,/turf))
 			else
 				new /obj/item/weapon/reagent_containers/glass/rag(get_turf(src))
-				
+
 
 		//create new broken bottle
 		var/obj/item/weapon/broken_bottle/B = new /obj/item/weapon/broken_bottle(loc)

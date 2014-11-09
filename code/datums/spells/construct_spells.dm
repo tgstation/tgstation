@@ -174,6 +174,16 @@
 	proj_lifespan = 10
 	max_targets = 6
 
+/mob/living/simple_animal/construct/proc/findNullRod(var/atom/target)
+	if(istype(target,/obj/item/weapon/nullrod))
+		var/turf/T = get_turf(target)
+		nullblock = 1
+		T.nullding()
+		return 1
+	else if(target.contents)
+		for(var/atom/A in target.contents)
+			findNullRod(A)
+	return 0
 
 /mob/living/simple_animal/construct/harvester/verb/harvesterharvest()//because harvest is already a proc
 	set name = "Harvest"
@@ -184,25 +194,34 @@
 		destination = N.loc
 		break
 	if(destination)
+		var/prey = 0
 		for(var/mob/living/M in src.loc)
+			nullblock = 0
 			if(M != src)//to ensure that the harvester travels last
-				var/obj/item/weapon/nullrod/N = locate() in M
-				if(!N)
+				for(var/turf/T in range(M,1))
+					findNullRod(T)
+				if(!nullblock)
 					M.loc = destination
-		var/atom/movable/overlay/c_animation = new /atom/movable/overlay(src.loc)
-		c_animation.name = "harvesting"
-		c_animation.density = 0
-		c_animation.anchored = 1
-		c_animation.icon = 'icons/effects/effects.dmi'
-		c_animation.layer = 5
-		c_animation.master = src.loc
-		c_animation.icon_state = "rune_teleport"
-		flick("harvesting",c_animation)
-		spawn(10)
-			del(c_animation)
-		src.loc = destination
+					prey = 1
+		if(!nullblock)
+			var/atom/movable/overlay/c_animation = new /atom/movable/overlay(src.loc)
+			c_animation.name = "harvesting"
+			c_animation.density = 0
+			c_animation.anchored = 1
+			c_animation.icon = 'icons/effects/effects.dmi'
+			c_animation.layer = 5
+			c_animation.master = src.loc
+			c_animation.icon_state = "rune_teleport"
+			flick("harvesting",c_animation)
+			spawn(10)
+				del(c_animation)
+			src.loc = destination
+			src << "<span class='warning'>You warp back to Nar-Sie[prey ? " along with your prey":""].</span>"
+		else
+			src << "<span class='warning'>Something is blocking the harvest.</span>"
+			nullblock = 0
 	else
-		src << "<span class='danger'>...something's wrong!</span>"
+		src << "<span class='danger'>...something's wrong!</span>"//There shouldn't be an instance of Harvesters when Nar-Sie isn't in the world.
 
 /mob/living/simple_animal/construct/harvester/verb/harvesterknock()
 	set name = "Disintegrate Doors"

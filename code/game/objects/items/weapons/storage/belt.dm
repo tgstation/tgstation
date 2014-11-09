@@ -232,6 +232,7 @@
 	w_class = 4
 	max_w_class = 4
 	max_combined_w_class = 28
+	storage_slots = 6
 	can_hold = list("/obj/item/device/mobcapsule")
 
 /obj/item/weapon/storage/belt/lazarus/New()
@@ -258,6 +259,7 @@
 	desc = "For the pokemo- mining master, holds your lazarus capsules."
 	icon_state = "lazarusbelt"
 	item_state = "lazbelt"
+	storage_slots = 6
 	w_class = 4
 	max_w_class = 4
 	max_combined_w_class = 28
@@ -266,11 +268,12 @@
 /obj/item/weapon/storage/belt/lazarus/antag/New(loc, mob/user)
 	var/list/critters = typesof(/mob/living/simple_animal/hostile) - /mob/living/simple_animal/hostile
 	critters = shuffle(critters)
-	while(contents.len <=6)
+	while(contents.len < 6)
 		var/obj/item/device/mobcapsule/MC = new /obj/item/device/mobcapsule(src)
 		var/chosen = pick(critters)
 		critters -= chosen
 		var/mob/living/simple_animal/hostile/NM = new chosen(MC)
 		NM.faction = "lazarus \ref[user]"
 		NM.friends += user
+		MC.contained_mob = NM
 	..()
