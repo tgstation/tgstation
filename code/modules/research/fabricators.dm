@@ -230,6 +230,7 @@
 			var/obj/item/weapon/storage/lockbox/L
 			if(research_flags &TRUELOCKS)
 				L = new/obj/item/weapon/storage/lockbox(src) //Make a lockbox
+				L.req_access = part.req_lock_access //we set the access from the design
 			else
 				L = new /obj/item/weapon/storage/lockbox/unlockable(src) //Make an unlockable lockbox
 			being_built.loc = L //Put the thing in the lockbox
