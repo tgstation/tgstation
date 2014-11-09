@@ -25,7 +25,9 @@
 	loadone = !loadone
 	usr <<"<span class='notice'> You set the Device Analyzer to [loadone ? "transfer one design" : "transfer all designs"] on use.</span>"
 
-/obj/item/device/device_analyser/afterattack(var/atom/A, var/mob/user) //Hurrah for after-attack
+/obj/item/device/device_analyser/afterattack(var/atom/A, mob/user, proximity_flag) //Hurrah for after-attack
+	if(proximity_flag != 1)
+		return
 	if(istype(A, /obj)) //don't want to scan mobs or anything like that
 		var/obj/O = A
 		for(var/datum/design/mechanic_design/current_design in loaded_designs)

@@ -64,7 +64,7 @@
 /obj/item/weapon/paper_pack/examine()
 	if(amount)
 		..()
-		usr << "<span class='notice'>There are [amount] sheets in the pack.</span>"
+		usr << "There are [amount] sheets in the pack."
 	else
 		..()
 

@@ -90,9 +90,16 @@
 	if(!istype(design))
 		design_list -= design //lets just brush that under the rug
 		return
-	if(design in research_queue || design in ready_queue) //if it's already loaded to be researched or has been researched
-		user <<"<span class='notice'>The [design.name] is already loaded onto the [src]!</span>"
-		return
+	for(var/datum/design/mechanic_design/MD in research_queue)
+		if(MD.build_path == design.build_path)
+			design_list -= design
+			user <<"<span class='notice'>The [design.name] is already loaded onto \the [src]!</span>"
+			return
+	for(var/datum/design/mechanic_design/MD in ready_queue)
+		if(MD.build_path == design.build_path)
+			design_list -= design
+			user <<"<span class='notice'>The [design.name] has already been researched by \the [src]!</span>"
+			return
 	if(research_queue.len >= max_queue_len)
 		user <<"<span class='notice'>The [src]'s research queue is full. Research some designs first before adding more.</span>"
 		return
