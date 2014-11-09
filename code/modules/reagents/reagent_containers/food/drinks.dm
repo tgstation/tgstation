@@ -841,9 +841,92 @@
 	isGlass = 1
 	smashtext = ""
 	smashname = "broken flask"
-	New()
-		..()
-		reagents.add_reagent("holywater", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/New()
+	..()
+	reagents.add_reagent("holywater", 100)
+
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/attack(mob/living/M as mob, mob/user as mob, def_zone)
+	return
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/afterattack(obj/target, mob/user , flag)//copied from glass.dm, only way to have it only dispense 5u of its content
+	..()
+	if(ismob(target) && target.reagents && reagents.total_volume)
+		user << "\blue You splash some the flask's content onto [target]."
+
+		var/mob/living/M = target
+		var/list/injected = list()
+		for(var/datum/reagent/R in src.reagents.reagent_list)
+			injected += R.name
+		var/contained = english_list(injected)
+		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been splashed with [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
+		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to splash [M.name] ([M.key]). Reagents: [contained]</font>")
+		msg_admin_attack("[user.name] ([user.ckey]) splashed [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+		if(!iscarbon(user))
+			M.LAssailant = null
+		else
+			M.LAssailant = user
+
+		for(var/mob/O in viewers(world.view, user))
+			O.show_message(text("<span class='warning'>[] has been splashed with something by []!</span>", target, user), 1)
+		src.reagents.reaction(target, TOUCH)
+		spawn(5) src.reagents.remove_any(5)
+		return
+	else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+
+		if(!target.reagents.total_volume && target.reagents)
+			user << "<span class='warning'>[target] is empty.</span>"
+			return
+
+		if(reagents.total_volume >= reagents.maximum_volume)
+			user << "<span class='warning'>[src] is full.</span>"
+			return
+
+		var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
+		user << "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>"
+
+	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
+		if(!reagents.total_volume)
+			user << "<span class='warning'>[src] is empty.</span>"
+			return
+
+		if(target.reagents.total_volume >= target.reagents.maximum_volume)
+			user << "<span class='warning'>[target] is full.</span>"
+			return
+
+		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+		user << "<span class='notice'>You transfer [trans] units of the solution to [target].</span>"
+
+		// /vg/: Logging transfers of bad things
+		if(target.reagents_to_log.len)
+			var/list/badshit=list()
+			for(var/bad_reagent in target.reagents_to_log)
+				if(reagents.has_reagent(bad_reagent))
+					badshit += reagents_to_log[bad_reagent]
+			if(badshit.len)
+				var/hl="\red <b>([english_list(badshit)])</b> \black"
+				message_admins("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+				log_game("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].")
+
+	//Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.
+	else if(istype(target, /obj/item/clothing/suit/space/space_ninja))
+		return
+
+	else if(istype(target, /obj/machinery/bunsen_burner))
+		return
+
+	else if(istype(target, /obj/machinery/anomaly))
+		return
+
+	else if(reagents.total_volume)
+		user << "<span class='notice'>You splash some the flask's content onto [target].</span>"
+		if(reagents.has_reagent("fuel"))
+			message_admins("[user.name] ([user.ckey]) poured Welder Fuel onto [target]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+			log_game("[user.name] ([user.ckey]) poured Welder Fuel onto [target]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+		src.reagents.reaction(target, TOUCH)
+		spawn(5) src.reagents.remove_any(5)
+		return
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth
 	name = "Goldeneye Vermouth"

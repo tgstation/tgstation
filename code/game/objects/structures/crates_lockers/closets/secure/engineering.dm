@@ -150,6 +150,36 @@
 		new /obj/item/device/analyzer(src)
 		return
 
+/obj/structure/closet/secure_closet/engineering_mechanic
+	name = "Mechanic's Locker"
+	req_access = list(access_mechanic)
+	icon_state = "securemechni1"
+	icon_closed = "securemechni"
+	icon_locked = "securemechni1"
+	icon_opened = "securemechniopen"
+	icon_broken = "securemechnibroken"
+	icon_off = "securemechnioff"
+
+	New()
+		..()
+		sleep(2)
+		if(prob(50))
+			new /obj/item/weapon/storage/backpack/industrial(src)
+		else
+			new /obj/item/weapon/storage/backpack/satchel_eng(src)
+		new /obj/item/clothing/under/rank/mechanic(src)
+		new /obj/item/clothing/shoes/white(src)
+		new /obj/item/weapon/storage/toolbox/mechanical(src)
+		new /obj/item/device/radio/headset/headset_engsci(src)
+		new /obj/item/clothing/suit/storage/hazardvest(src)
+		new /obj/item/device/device_analyser(src)
+		new /obj/item/weapon/soap/nanotrasen(src)
+		new /obj/item/clothing/gloves/black(src)
+		if(prob(50))
+			new /obj/item/clothing/head/welding(src)
+		else
+			new /obj/item/clothing/glasses/welding(src)
+		return
 
 /obj/structure/closet/secure_closet/engineering_general
 	name = "Engineering Locker"

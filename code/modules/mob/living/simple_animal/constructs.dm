@@ -24,6 +24,9 @@
 	max_n2 = 0
 	minbodytemp = 0
 	faction = "cult"
+	supernatural = 1
+	var/nullblock = 0
+
 	var/list/construct_spells = list()
 
 /mob/living/simple_animal/construct/cultify()
@@ -122,6 +125,9 @@
 		var/damage = O.force
 		if (O.damtype == HALLOSS)
 			damage = 0
+		if(istype(O,/obj/item/weapon/nullrod))
+			damage *= 2
+			purge = 3
 		adjustBruteLoss(damage)
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
@@ -131,6 +137,7 @@
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
 				M.show_message("\red [user] gently taps [src] with [O]. ")
+
 
 /mob/living/simple_animal/construct/airflow_stun()
 	return
@@ -388,6 +395,35 @@
 			if(pulling)								pullin.icon_state = "pull1"
 			else									pullin.icon_state = "pull0"
 
+		if(purged)
+			if(purge > 0)							purged.icon_state = "purge1"
+			else									purged.icon_state = "purge0"
+
+		if(construct_spell1)
+			construct_spell1.overlays = 0
+			if(purge)
+				construct_spell1.overlays += "silence"
+
+		if(construct_spell2)
+			construct_spell2.overlays = 0
+			if(purge)
+				construct_spell2.overlays += "silence"
+
+		if(construct_spell3)
+			construct_spell3.overlays = 0
+			if(purge)
+				construct_spell3.overlays += "silence"
+
+		if(construct_spell4)
+			construct_spell4.overlays = 0
+			if(purge)
+				construct_spell4.overlays += "silence"
+
+		if(construct_spell5)
+			construct_spell5.overlays = 0
+			if(purge)
+				construct_spell5.overlays += "silence"
+
 /mob/living/simple_animal/construct/armoured/Life()
 	..()
 	if(healths)
@@ -401,7 +437,6 @@
 			if(1 to 41)				healths.icon_state = "juggernaut_health6"
 			else					healths.icon_state = "juggernaut_health7"
 
-	if(construct_spell1)
 		var/obj/effect/proc_holder/spell/S = null
 		for(var/datum/D in spell_list)
 			if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall))

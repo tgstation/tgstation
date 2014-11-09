@@ -26,6 +26,7 @@
 	status_flags = 0
 	faction = "cult"
 	status_flags = CANPUSH
+	supernatural = 1
 
 
 /mob/living/simple_animal/shade/cultify()
@@ -51,6 +52,9 @@
 			var/damage = O.force
 			if (O.damtype == HALLOSS)
 				damage = 0
+			if(istype(O,/obj/item/weapon/nullrod))
+				damage *= 2
+				purge = 3
 			health -= damage
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
@@ -66,7 +70,14 @@
 
 /mob/living/simple_animal/shade/Life()
 	. = ..()
-	pullin.icon_state = "pull1"
+
+	if(pullin)
+		pullin.icon_state = "pull1"
+
+	if(purged)
+		if(purge > 0)							purged.icon_state = "purge1"
+		else									purged.icon_state = "purge0"
+
 	switch(health)
 		if(50 to INFINITY)		healths.icon_state = "shade_health0"
 		if(41 to 49)			healths.icon_state = "shade_health1"

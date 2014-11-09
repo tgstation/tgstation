@@ -218,10 +218,11 @@
 	for(var/turf/T in turfs)
 		atoms.Add(T)
 		for(var/atom/movable/A in T)
-			if(A.invisibility)
-				if(!istype(A, /mob/))
-					continue
-			atoms.Add(A)
+			if(A.invisibility != 0)
+				if(istype(A, /mob/))
+					atoms.Add(A)
+			else
+				atoms.Add(A)
 
 	var/list/sorted = list()
 	var/j
@@ -277,6 +278,48 @@
 			mob_detail = "You can see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."]. "
 		else
 			mob_detail += "You can also see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."]."
+	for(var/mob/living/simple_animal/S in the_turf)
+		if(S.invisibility != 0) continue
+		if(!mob_detail)
+			mob_detail = "You can see [S] on the photo[S.health < (S.maxHealth/2) ? " - [S] looks hurt":""]."
+		else
+			mob_detail += "You can also see [S] on the photo[S.health < (S.maxHealth/2) ? " - [S] looks hurt":""]."
+	for(var/mob/dead/observer/O in the_turf)//in case ghosts have been made visible
+		if(O.invisibility != 0) continue
+		if(!mob_detail)
+			mob_detail = "Wait...is that [O] on the photo? "
+		else
+			mob_detail += "...wait a minute...isn't that [O] on the photo?"
+	return mob_detail
+
+
+/obj/item/device/camera/sepia/camera_get_mobs(turf/the_turf)
+	var/mob_detail
+	for(var/mob/living/carbon/A in the_turf)
+		var/holding = null
+		if(A.l_hand || A.r_hand)
+			if(A.l_hand) holding = "They are holding \a [A.l_hand]"
+			if(A.r_hand)
+				if(holding)
+					holding += " and \a [A.r_hand]"
+				else
+					holding = "They are holding \a [A.r_hand]"
+
+		if(!mob_detail)
+			mob_detail = "You can see [A] on the photo[A.health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."]. "
+		else
+			mob_detail += "You can also see [A] on the photo[A.health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."]."
+	for(var/mob/living/simple_animal/S in the_turf)
+		if(!mob_detail)
+			mob_detail = "You can see [S] on the photo[S.health < (S.maxHealth/2) ? " - [S] looks hurt":""]."
+		else
+			mob_detail += "You can also see [S] on the photo[S.health < (S.maxHealth/2) ? " - [S] looks hurt":""]."
+	for(var/mob/dead/observer/O in the_turf)
+		if(!mob_detail)
+			mob_detail = "Wait...is that [O] on the photo? "
+		else
+			mob_detail += "...wait a minute...isn't that [O] on the photo?"
+
 	return mob_detail
 
 

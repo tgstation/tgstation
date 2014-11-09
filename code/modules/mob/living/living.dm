@@ -364,6 +364,7 @@
 	buckled = initial(src.buckled)
 	if(istype(src, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = src
+		H.timeofdeath = 0
 		H.vessel.reagent_list = list()
 		H.vessel.add_reagent("blood",560)
 		H.shock_stage = 0

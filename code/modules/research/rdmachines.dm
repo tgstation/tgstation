@@ -25,7 +25,6 @@
 
 	var/nano_file = ""
 
-	var/list/datum/rnd_queue_item/production_queue = list()
 	var/list/datum/materials/materials = list()
 	var/max_material_storage = 0
 	var/list/allowed_materials[0]
@@ -49,6 +48,7 @@
 	w -= src.disable_wire
 
 	base_state = icon_state
+	icon_state_open = "[base_state]_t"
 
 	for(var/oredata in typesof(/datum/material) - /datum/material)
 		var/datum/material/ore_datum = new oredata
@@ -90,7 +90,7 @@
 		dat += text("The blue light is [src.hacked ? "off" : "on"].<BR>")
 		user << browse("<HTML><HEAD><TITLE>[src.name] Hacking</TITLE></HEAD><BODY>[dat]</BODY></HTML>","window=hack_win")
 	else if (research_flags & NANOTOUCH)
-		ui_interact()
+		ui_interact(user)
 	return
 
 
@@ -309,6 +309,7 @@
 	return total
 
 //sum of the required materials of a design
+//do not confuse this with Total_Materials. That gets the machine's materials, this gets design materials
 /obj/machinery/r_n_d/proc/MatTotal(var/datum/design/part)
 	var/total = 0
 	for(var/matID in part.materials)

@@ -45,6 +45,10 @@
 		user.drop_item()
 		O.loc = src
 		update_icon()
+	else if(istype(O, /obj/item/weapon/storage/bible))
+		user.drop_item()
+		O.loc = src
+		update_icon()
 	else if(istype(O, /obj/item/weapon/wrench))
 		user << "<span class='notice'> Now disassembling bookcase</span>"
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
