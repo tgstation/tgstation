@@ -1,0 +1,4 @@
+author: N3X15
+delete-after: true
+changes:
+- bugfix: "Atmos-based bombs (tank bombs, single-tank bombs, etc) work again."
