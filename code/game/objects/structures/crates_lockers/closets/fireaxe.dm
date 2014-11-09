@@ -8,20 +8,21 @@
 	icon_opened = "fireaxe1100"
 	anchored = 1
 	density = 0
+	wall_mounted = 1
 	var/localopened = 0 //Setting this to keep it from behaviouring like a normal closet and obstructing movement in the map. -Agouri
 	opened = 1
 	var/hitstaken = 0
 	locked = 1
 	var/smashed = 0
 
-/obj/structure/closet/fireaxecabinet/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
+/obj/structure/closet/fireaxecabinet/attackby(var/obj/item/O as obj, var/mob/living/user as mob)  //Marker -Agouri
 	//..() //That's very useful, Erro
 
 	var/hasaxe = 0       //gonna come in handy later~
 	if(fireaxe)
 		hasaxe = 1
 
-	if (isrobot(usr) || src.locked)
+	if (isrobot(user) || src.locked)
 		if(istype(O, /obj/item/device/multitool))
 			user << "<span class = 'caution'> Resetting circuitry...</span>"
 			playsound(user, 'sound/machines/lockreset.ogg', 50, 1)
@@ -40,6 +41,7 @@
 					spawn(10) update_icon()
 				return
 			else
+				user.do_attack_animation(src)
 				playsound(user, 'sound/effects/Glasshit.ogg', 100, 1) //We don't want this playing every time
 			if(W.force < 15)
 				user << "<span class = 'warning'> The cabinet's protective glass glances off the hit.</span>"

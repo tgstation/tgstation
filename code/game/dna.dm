@@ -340,6 +340,7 @@
 	var/locked = 0
 	var/open = 0
 	anchored = 1
+	interact_offline = 1
 	use_power = 1
 	idle_power_usage = 50
 	active_power_usage = 300
@@ -370,6 +371,29 @@
 		precision_coeff = P.rating
 	for(var/obj/item/weapon/stock_parts/micro_laser/P in component_parts)
 		damage_coeff = P.rating
+
+/obj/machinery/dna_scannernew/update_icon()
+
+	//no power or maintenance
+	if(stat & (NOPOWER|BROKEN))
+		icon_state = initial(icon_state)+ (open ? "_open" : "") + "_unpowered"
+		return
+
+	if((stat & MAINT) || panel_open)
+		icon_state = initial(icon_state)+ (open ? "_open" : "") + "_maintenance"
+		return
+
+	//running and someone in there
+	if(occupant)
+		icon_state = initial(icon_state)+ "_occupied"
+		return
+
+	//running
+	icon_state = initial(icon_state)+ (open ? "_open" : "")
+
+/obj/machinery/dna_scannernew/power_change()
+	..()
+	update_icon()
 
 /obj/machinery/dna_scannernew/proc/toggle_open(mob/user=usr)
 	if(!user)
@@ -414,7 +438,7 @@
 			C.loc = src
 			C.stop_pulling()
 			break
-		icon_state = initial(icon_state) + (occupant ? "_occupied" : "")
+		update_icon()
 
 		// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
 		if(occupant)
@@ -451,7 +475,7 @@
 					occupant.client.eye = occupant
 					occupant.client.perspective = MOB_PERSPECTIVE
 				occupant = null
-			icon_state = "[initial(icon_state)]_open"
+			update_icon()
 		return 1
 
 /obj/machinery/dna_scannernew/relaymove(mob/user as mob)
@@ -462,7 +486,8 @@
 
 /obj/machinery/dna_scannernew/attackby(obj/item/weapon/grab/G, mob/user)
 
-	if(!occupant && default_deconstruction_screwdriver(user, "[initial(icon_state)]_open", "[initial(icon_state)]", G))
+	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, G))//sent icon_state is irrelevant...
+		update_icon()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
 		return
 
 	if(exchange_parts(user, G))
@@ -486,6 +511,8 @@
 	qdel(G)
 
 /obj/machinery/dna_scannernew/attack_hand(mob/user)
+	if(..())
+		return
 	toggle_open(user)
 	add_fingerprint(user)
 
@@ -578,7 +605,7 @@
 	var/occupant_status = "<div class='line'><div class='statusLabel'>Subject Status:</div><div class='statusValue'>"
 	var/scanner_status
 	var/temp_html
-	if(connected)
+	if(connected && connected.is_operational())
 		if(connected.occupant)	//set occupant_status message
 			viable_occupant = connected.occupant
 			if(check_dna_integrity(viable_occupant) && (!(NOCLONE in viable_occupant.mutations) || (connected.scan_level == 3)))	//occupent is viable for dna modification

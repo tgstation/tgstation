@@ -26,6 +26,7 @@ var/global/pipe_processing_killed = 0
 	var/mobs_cost		= 0
 	var/diseases_cost	= 0
 	var/machines_cost	= 0
+	var/aibots_cost		= 0
 	var/objects_cost	= 0
 	var/networks_cost	= 0
 	var/powernets_cost	= 0
@@ -166,6 +167,13 @@ var/global/pipe_processing_killed = 0
 
 				sleep(breather_ticks)
 
+				//BOTS
+				timer = world.timeofday
+				process_bots()
+				aibots_cost = (world.timeofday - timer) / 10
+
+				sleep(breather_ticks)
+
 				//OBJECTS
 				timer = world.timeofday
 				process_objects()
@@ -212,7 +220,7 @@ var/global/pipe_processing_killed = 0
 				gc_cost = (world.timeofday - timer) / 10
 
 				//TIMING
-				total_cost = air_cost + sun_cost + mobs_cost + diseases_cost + machines_cost + objects_cost + networks_cost + powernets_cost + nano_cost + events_cost + ticker_cost + gc_cost
+				total_cost = air_cost + sun_cost + mobs_cost + diseases_cost + machines_cost + aibots_cost + objects_cost + networks_cost + powernets_cost + nano_cost + events_cost + ticker_cost + gc_cost
 
 				var/end_time = world.timeofday
 				if(end_time < start_time)
@@ -257,6 +265,15 @@ var/global/pipe_processing_killed = 0
 						Machine.auto_use_power()
 					continue
 		machines -= Machine
+
+/datum/controller/game_controller/proc/process_bots()
+	for(var/obj/machinery/bot/Bot in aibots)
+		if(!Bot.gc_destroyed)
+			last_thing_processed = Bot.type
+			spawn(0)
+				Bot.bot_process()
+			continue
+		aibots -= Bot
 
 /datum/controller/game_controller/proc/process_objects()
 	for(var/obj/Object in processing_objects)

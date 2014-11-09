@@ -222,7 +222,7 @@ obj/structure/windoor_assembly/Destroy()
 					ae.loc = src.loc
 
 			else if(istype(W, /obj/item/weapon/pen))
-				var/t = copytext(stripped_input(user, "Enter the name for the door.", src.name, src.created_name),1,MAX_NAME_LEN)
+				var/t = stripped_input(user, "Enter the name for the door.", src.name, src.created_name,MAX_NAME_LEN)
 				if(!t)
 					return
 				if(!in_range(src, usr) && src.loc != usr)
@@ -304,7 +304,8 @@ obj/structure/windoor_assembly/Destroy()
 	set name = "Rotate Windoor Assembly"
 	set category = "Object"
 	set src in oview(1)
-
+	if(usr.stat || !usr.canmove || usr.restrained())
+		return
 	if (src.anchored)
 		usr << "It is fastened to the floor; therefore, you can't rotate it!"
 		return 0
@@ -325,6 +326,8 @@ obj/structure/windoor_assembly/Destroy()
 	set name = "Flip Windoor Assembly"
 	set category = "Object"
 	set src in oview(1)
+	if(usr.stat || !usr.canmove || usr.restrained())
+		return
 
 	if(src.facing == "l")
 		usr << "The windoor will now slide to the right."

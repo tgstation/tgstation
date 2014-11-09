@@ -46,7 +46,7 @@
 
 
 	if (src.health <= 0)
-		visible_message("<span class='notice'>The [src] dissapates.</span>")
+		visible_message("<span class='notice'>[src] dissipates.</span>")
 		qdel(src)
 		return
 
@@ -58,7 +58,7 @@
 	health -= Proj.damage
 	..()
 	if(health <=0)
-		visible_message("<span class='notice'>The [src] dissapates.</span>")
+		visible_message("<span class='notice'>The [src] dissipates.</span>")
 		qdel(src)
 		return
 	opacity = 1
@@ -107,7 +107,7 @@
 
 	//Handle the destruction of the shield
 	if (src.health <= 0)
-		visible_message("<span class='notice'>The [src] dissapates.</span>")
+		visible_message("<span class='notice'>[src] dissipates.</span>")
 		qdel(src)
 		return
 
@@ -475,8 +475,8 @@
 			user << "<span class='danger'>Access denied.</span>"
 
 	else
-		src.add_fingerprint(user)
-		visible_message("<span class='danger'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
+		add_fingerprint(user)
+		..()
 
 /obj/machinery/shieldwallgen/proc/cleanup(var/NSEW)
 	var/obj/machinery/shieldwall/F

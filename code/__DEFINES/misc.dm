@@ -44,3 +44,10 @@
 #define BE_CLOSE 1		//in the case of a silicon, to select if they need to be next to the atom
 #define NO_DEXTERY 1	//if other mobs (monkeys, aliens, etc) can use this
 //used by canUseTopic()
+
+//singularity defines
+#define STAGE_ONE 1
+#define STAGE_TWO 3
+#define STAGE_THREE 5
+#define STAGE_FOUR 7
+#define STAGE_FIVE 9
