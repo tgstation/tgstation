@@ -170,7 +170,7 @@
 
 	for(var/datum/design/D in part_set)
 		if(D.build_path == part.build_path)
-			del part
+			// del part
 			return 0
 	part_set[++part_set.len] = part
 	return 1
