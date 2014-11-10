@@ -1065,51 +1065,52 @@ proc/process_ghost_teleport_locs()
 //Engineering
 
 /area/engineering
-	engine_smes
-		name = "\improper Engineering SMES"
-		icon_state = "engine_smes"
-		requires_power = 0//This area only covers the batteries and they deal with their own power
 
-	engine
-		name = "Engineering"
-		icon_state = "engine"
+/area/engineering/engine_smes
+	name = "\improper Engineering SMES"
+	icon_state = "engine_smes"
+	requires_power = 0//This area only covers the batteries and they deal with their own power
 
-	engine_storage
-		name = "Engineering Secure Storage"
-		icon_state = "engine_storage"
+/area/engineering/engine
+	name = "Engineering"
+	icon_state = "engine"
 
-	break_room
-		name = "\improper Engineering Foyer"
-		icon_state = "engine_lobby"
+/area/engineering/engine_storage
+	name = "Engineering Secure Storage"
+	icon_state = "engine_storage"
 
-	ce
-		name = "\improper Chief Engineer's Office"
-		icon_state = "head_quarters"
-		jammed=1
+/area/engineering/break_room
+	name = "\improper Engineering Foyer"
+	icon_state = "engine_lobby"
 
-	burn_chamber
-		name = "Burn Chamber"
-		icon_state = "thermo_engine"
+/area/engineering/ce
+	name = "\improper Chief Engineer's Office"
+	icon_state = "head_quarters"
+	jammed=1
 
-	atmos
-		name = "Atmospherics"
-		icon_state = "atmos"
+/area/engineering/burn_chamber
+	name = "Burn Chamber"
+	icon_state = "thermo_engine"
 
-	atmos_control
-		name = "Atmospherics Monitoring"
-		icon_state = "atmos_monitor"
+/area/engineering/atmos
+	name = "Atmospherics"
+	icon_state = "atmos"
 
-	supermatter_room
-		name = "Supermatter Room"
-		icon_state = "supermatter"
+/area/engineering/atmos_control
+	name = "Atmospherics Monitoring"
+	icon_state = "atmos_monitor"
 
-	antimatter_room
-		name = "Antimatter Engine Room"
-		icon_state = "antimatter"
+/area/engineering/supermatter_room
+	name = "Supermatter Room"
+	icon_state = "supermatter"
 
-	engineering_auxiliary
-		name = "Auxiliary Engineering"
-		icon_state = "engiaux"
+/area/engineering/antimatter_room
+	name = "Antimatter Engine Room"
+	icon_state = "antimatter"
+
+/area/engineering/engineering_auxiliary
+	name = "Auxiliary Engineering"
+	icon_state = "engiaux"
 
 //Solars
 
@@ -1118,29 +1119,45 @@ proc/process_ghost_teleport_locs()
 	luminosity = 1
 	lighting_use_dynamic = 0
 
-	fport
-		name = "\improper Fore Port Solar Array"
-		icon_state = "panelsA"
+/area/solar/fport
+	name = "\improper Fore Port Solar Array"
+	icon_state = "panelsA"
 
-	fstarboard
-		name = "\improper Fore Starboard Solar Array"
-		icon_state = "panelsA"
+/area/solar/fstarboard
+	name = "\improper Fore Starboard Solar Array"
+	icon_state = "panelsA"
 
-	fore
-		name = "\improper Fore Solar Array"
-		icon_state = "yellow"
+/area/solar/fore
+	name = "\improper Fore Solar Array"
+	icon_state = "yellow"
 
-	aft
-		name = "\improper Aft Solar Array"
-		icon_state = "aft"
+/area/solar/aft
+	name = "\improper Aft Solar Array"
+	icon_state = "aft"
 
-	astarboard
-		name = "\improper Aft Starboard Solar Array"
-		icon_state = "panelsS"
+/area/solar/astarboard
+	name = "\improper Aft Starboard Solar Array"
+	icon_state = "panelsS"
 
-	aport
-		name = "\improper Aft Port Solar Array"
-		icon_state = "panelsP"
+/area/solar/auxstarboard
+	name = "\improper Auxillary Starboard Solar Array"
+	icon_state = "panelsS"
+
+/area/solar/aport
+	name = "\improper Aft Port Solar Array"
+	icon_state = "panelsP"
+
+/area/solar/auxport
+	name = "\improper Auxillary Port Solar Array"
+	icon_state = "panelsP"
+
+/area/maintenance/auxsolarstarboard
+	name = "Auxillary Starboard Solar Maintenance"
+	icon_state = "SolarcontrolS"
+
+/area/maintenance/auxsolarport
+	name = "Auxillary Port Solar Maintenance"
+	icon_state = "SolarcontrolP"
 
 /area/maintenance/fportsolar
 	name = "Fore Port Solar Maintenance"
@@ -1321,6 +1338,10 @@ proc/process_ghost_teleport_locs()
 
 /area/security/interrogation
 	name = "\improper Interrogation Room"
+	icon_state = "interrog"
+
+/area/security/processing
+	name = "\improper Prisoner Education Chamber"
 	icon_state = "interrog"
 
 /obj/item/weapon/paper/Gaschamber

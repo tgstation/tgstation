@@ -81,6 +81,16 @@
 	desc = "A framed picture of the station."
 	icon_state = "map_efficiency"
 
+/obj/structure/sign/map/meta/left
+	name = "station map"
+	desc = "A framed picture of the station."
+	icon_state = "map-left-MS"
+
+/obj/structure/sign/map/meta/right
+	name = "station map"
+	desc = "A framed picture of the station."
+	icon_state = "map-right-MS"
+
 /obj/structure/sign/securearea
 	name = "\improper SECURE AREA"
 	desc = "A warning sign which reads 'SECURE AREA'."
