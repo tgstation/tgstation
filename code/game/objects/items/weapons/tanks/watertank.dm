@@ -41,7 +41,7 @@
 	
 	var/mob/living/carbon/human/user = usr
 	if(on)
-		if(noz == null || noz.gc_destroyed)
+		if(noz == null)
 			noz = make_noz()
 			
 		//Detach the nozzle into the user's hands
@@ -73,6 +73,8 @@
 	if (on)
 		var/M = get(noz, /mob)
 		remove_noz(M)
+		qdel(noz)
+		noz = null
 	..()
 	return
 
