@@ -12,7 +12,6 @@
 
 /obj/structure/closet/secure_closet/medical1/New()
 	..()
-	sleep(2)
 	new /obj/item/weapon/storage/box/syringes(src)
 	new /obj/item/weapon/reagent_containers/dropper(src)
 	new /obj/item/weapon/reagent_containers/dropper(src)
@@ -40,7 +39,6 @@
 
 /obj/structure/closet/secure_closet/medical2/New()
 	..()
-	sleep(2)
 	new /obj/item/weapon/tank/anesthetic(src)
 	new /obj/item/weapon/tank/anesthetic(src)
 	new /obj/item/weapon/tank/anesthetic(src)
@@ -63,7 +61,6 @@
 
 /obj/structure/closet/secure_closet/medical3/New()
 	..()
-	sleep(2)
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack/medic(src)
 	else
@@ -92,7 +89,6 @@
 
 /obj/structure/closet/secure_closet/CMO/New()
 	..()
-	sleep(2)
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack/medic(src)
 	else
@@ -120,7 +116,6 @@
 
 /obj/structure/closet/secure_closet/animal/New()
 	..()
-	sleep(2)
 	new /obj/item/device/assembly/signaler(src)
 	new /obj/item/device/electropack(src)
 	new /obj/item/device/electropack(src)
@@ -143,7 +138,6 @@
 
 /obj/structure/closet/secure_closet/chemical/New()
 	..()
-	sleep(2)
 	new /obj/item/weapon/storage/box/pillbottles(src)
 	new /obj/item/weapon/storage/box/pillbottles(src)
 	return

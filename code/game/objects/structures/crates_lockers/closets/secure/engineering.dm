@@ -11,7 +11,6 @@
 
 /obj/structure/closet/secure_closet/engineering_chief/New()
 	..()
-	sleep(2)
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack/industrial(src)
 	else
@@ -46,7 +45,6 @@
 
 /obj/structure/closet/secure_closet/engineering_electrical/New()
 	..()
-	sleep(2)
 	new /obj/item/clothing/gloves/yellow(src)
 	new /obj/item/clothing/gloves/yellow(src)
 	new /obj/item/weapon/storage/toolbox/electrical(src)
@@ -75,7 +73,6 @@
 
 /obj/structure/closet/secure_closet/engineering_welding/New()
 	..()
-	sleep(2)
 	new /obj/item/clothing/head/welding(src)
 	new /obj/item/clothing/head/welding(src)
 	new /obj/item/clothing/head/welding(src)
@@ -99,7 +96,6 @@
 
 /obj/structure/closet/secure_closet/engineering_personal/New()
 	..()
-	sleep(2)
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack/industrial(src)
 	else
