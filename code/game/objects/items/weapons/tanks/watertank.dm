@@ -41,9 +41,12 @@
 	
 	var/mob/living/carbon/human/user = usr
 	if(on)
+		if(noz == null)
+			noz = make_noz()
+			
 		//Detach the nozzle into the user's hands
 		var/list/L = list("left hand" = slot_l_hand,"right hand" = slot_r_hand)
-		if(!user.equip_in_one_of_slots(noz, L))
+		if(!user.equip_in_one_of_slots(noz, L, 0))
 			on = 0
 			user << "<span class='notice'>You need a free hand to hold the mister!</span>"
 			return
