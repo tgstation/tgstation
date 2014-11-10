@@ -114,6 +114,7 @@ CREATE TABLE client_roles (
     slot       INTEGER,
     role       TEXT    NOT NULL,
     preference INTEGER NOT NULL,
-    PRIMARY KEY ( ckey, slot ) 
+    PRIMARY KEY ( ckey, slot ),
+    FOREIGN KEY ( ckey, slot ) REFERENCES players ( player_ckey, player_slot ) ON DELETE CASCADE 
 );
 
