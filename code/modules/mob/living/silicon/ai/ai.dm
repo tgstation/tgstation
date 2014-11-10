@@ -725,9 +725,6 @@ var/list/ai_list = list()
 	if (radio)
 		radio.interact(src)
 
-/mob/living/silicon/ai/proc/set_syndie_radio()
-	if(radio)
-		radio.make_syndie()
 /mob/living/silicon/ai/attack_slime(mob/living/carbon/slime/user)
 	return
 

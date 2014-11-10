@@ -152,7 +152,6 @@
 		src.eject_wait = 0
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
-	H.silent = 20 //Prevents an extreme edge case where clones could speak if they said something at exactly the right moment.
 	occupant = H
 
 	if(!clonename)	//to prevent null names
@@ -168,6 +167,7 @@
 	//Here let's calculate their health so the pod doesn't immediately eject them!!!
 	H.updatehealth()
 
+	H.silent = 5 //Prevents an extreme edge case where clones could speak if they said something at exactly the right moment.
 	clonemind.transfer_to(H)
 	H.ckey = ckey
 	H << "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>"

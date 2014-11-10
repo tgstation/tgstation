@@ -23,7 +23,7 @@
 	assailant = user
 	affecting = victim
 
-	if(affecting.anchored || !user.Adjacent(victim))
+	if(affecting.anchored)
 		qdel(src)
 		return
 

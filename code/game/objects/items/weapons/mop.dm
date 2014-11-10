@@ -69,7 +69,6 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 	name = "advanced mop"
 	mopcap = 10
 	icon_state = "advmop"
-	item_state = "mop"
 	force = 6
 	throwforce = 8
 	throw_range = 4

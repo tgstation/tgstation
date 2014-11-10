@@ -71,10 +71,10 @@
 	flags_inv = HIDEEARS
 	strip_delay = 80
 
-/obj/item/clothing/head/HoS/drill
-	name = "head of security drill hat"
-	desc = "A robust drill hat for the Head of Security. For keeping the officers in line."
-	icon_state = "hosdrill"
+/obj/item/clothing/head/HoS/beret
+	name = "head of security beret"
+	desc = "A robust beret for the Head of Security, for looking stylish while not sacrificing protection."
+	icon_state = "hosberetblack"
 
 /obj/item/clothing/head/warden
 	name = "warden's police hat"

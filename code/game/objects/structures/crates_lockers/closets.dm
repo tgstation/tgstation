@@ -152,7 +152,8 @@
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		health -= Proj.damage
 		if(health <= 0)
-			dump_contents()
+			for(var/atom/movable/A as mob|obj in src)
+				A.loc = src.loc
 			qdel(src)
 	return
 
@@ -160,12 +161,15 @@
 	if(user.environment_smash)
 		user.do_attack_animation(src)
 		visible_message("<span class='danger'>[user] destroys the [src].</span>")
-		dump_contents()
+		for(var/atom/movable/A as mob|obj in src)
+			A.loc = src.loc
 		qdel(src)
 
+// this should probably use dump_contents()
 /obj/structure/closet/blob_act()
 	if(prob(75))
-		dump_contents()
+		for(var/atom/movable/A as mob|obj in src)
+			A.loc = src.loc
 		qdel(src)
 
 

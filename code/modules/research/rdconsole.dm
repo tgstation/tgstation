@@ -186,13 +186,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			griefProtection() //Update centcom too
 
 	else if(href_list["clear_tech"]) //Erase data on the technology disk.
-		if(t_disk)
-			t_disk.stored = null
+		t_disk.stored = null
 
 	else if(href_list["eject_tech"]) //Eject the technology disk.
-		if(t_disk)
-			t_disk.loc = src.loc
-			t_disk = null
+		t_disk:loc = src.loc
+		t_disk = null
 		screen = 1.0
 
 	else if(href_list["copy_tech"]) //Copys some technology data from the research holder to the disk.
@@ -211,13 +209,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			griefProtection() //Update centcom too
 
 	else if(href_list["clear_design"]) //Erases data on the design disk.
-		if(d_disk)
-			d_disk.blueprint = null
+		d_disk.blueprint = null
 
 	else if(href_list["eject_design"]) //Eject the design disk.
-		if(d_disk)
-			d_disk.loc = src.loc
-			d_disk = null
+		d_disk:loc = src.loc
+		d_disk = null
 		screen = 1.0
 
 	else if(href_list["copy_design"]) //Copy design data from the research holder to the design disk.

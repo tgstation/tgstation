@@ -73,7 +73,7 @@
 	new /obj/item/clothing/under/hosformalfem(src)
 	new /obj/item/clothing/under/hosformalmale(src)
 	new /obj/item/clothing/suit/armor/hos/trenchcoat(src)
-	new /obj/item/clothing/head/HoS/drill(src)
+	new /obj/item/clothing/head/HoS/beret(src)
 	new /obj/item/weapon/cartridge/hos(src)
 	new /obj/item/device/radio/headset/heads/hos/alt(src)
 	new /obj/item/clothing/glasses/hud/security/eyepatch(src)

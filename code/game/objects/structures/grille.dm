@@ -135,17 +135,6 @@
 			user.visible_message("<span class='notice'>[user] [anchored ? "fastens" : "unfastens"] the [src].</span>", \
 								 "<span class='notice'>You have [anchored ? "fastened the [src] to" : "unfastened the [src] from"] the floor.</span>")
 			return
-	else if(istype(W, /obj/item/stack/rods) && destroyed)
-		var/obj/item/stack/rods/R = W
-		if(!shock(user, 90))
-			user.visible_message("<span class='notice'>[user] rebuilds the broken grille.</span>", \
-								 "<span class='notice'>You rebuild the broken grille.</span>")
-			health = 10
-			density = 1
-			destroyed = 0
-			icon_state = "grille"
-			R.use(1)
-			return
 
 //window placing begin
 	else if(istype(W, /obj/item/stack/sheet/rglass) || istype(W, /obj/item/stack/sheet/glass))

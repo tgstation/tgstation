@@ -16,11 +16,8 @@
 	var/b_stat = 0
 	var/broadcasting = 0
 	var/listening = 1
-	var/translate_binary = 0
-	var/translate_hive = 0
 	var/freerange = 0 // 0 - Sanitize frequencies, 1 - Full range
 	var/list/channels = list() //see communications.dm for full list. First channes is a "default" for :h
-	var/obj/item/device/encryptionkey/keyslot //To allow the radio to accept encryption keys.
 	var/subspace_transmission = 0
 	var/syndie = 0//Holder to see if it's a syndicate encrpyed radio
 	var/maxf = 1499
@@ -51,38 +48,6 @@
 	..()
 	if(radio_controller)
 		initialize()
-
-
-/obj/item/device/radio/proc/recalculateChannels()
-	channels = list()
-	translate_binary = 0
-	translate_hive = 0
-	syndie = 0
-
-	if(keyslot)
-		for(var/ch_name in keyslot.channels)
-			if(ch_name in src.channels)
-				continue
-			channels += ch_name
-			channels[ch_name] = keyslot.channels[ch_name]
-
-		if(keyslot.translate_binary)
-			translate_binary = 1
-
-		if(keyslot.translate_hive)
-			translate_hive = 1
-
-		if(keyslot.syndie)
-			syndie = 1
-
-	for(var/ch_name in channels)
-		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
-
-/obj/item/device/radio/proc/make_syndie() //Turns normal radios into Syndicate radios!
-	qdel(keyslot)
-	keyslot = new /obj/item/device/encryptionkey/syndicate
-	syndie = 1
-	recalculateChannels()
 
 /obj/item/device/radio/Destroy()
 	qdel(wires)
@@ -528,6 +493,7 @@
 //Giving borgs their own radio to have some more room to work with -Sieve
 
 /obj/item/device/radio/borg
+	var/obj/item/device/encryptionkey/keyslot = null//Borg radios can handle a single encryption key
 
 /obj/item/device/radio/borg/syndicate
 	syndie = 1
@@ -574,6 +540,32 @@
 			keyslot = W
 
 		recalculateChannels()
+
+	return
+
+/obj/item/device/radio/borg/proc/recalculateChannels()
+	src.channels = list()
+	src.syndie = 0
+
+	if(keyslot)
+		for(var/ch_name in keyslot.channels)
+			if(ch_name in src.channels)
+				continue
+			src.channels += ch_name
+			src.channels[ch_name] = keyslot.channels[ch_name]
+
+		if(keyslot.syndie)
+			src.syndie = 1
+
+
+	for (var/ch_name in channels)
+		if(!radio_controller)
+			sleep(30) // Waiting for the radio_controller to be created.
+		if(!radio_controller)
+			src.name = "broken radio"
+			return
+
+		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
 
 	return
 

@@ -255,17 +255,17 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	recalculateChannels()
 
 /obj/item/device/radio/headset/headset_sec/department/engi
-	keyslot = new /obj/item/device/encryptionkey/headset_sec
+	keyslot1 = new /obj/item/device/encryptionkey/headset_sec
 	keyslot2 = new /obj/item/device/encryptionkey/headset_eng
 
 /obj/item/device/radio/headset/headset_sec/department/supply
-	keyslot = new /obj/item/device/encryptionkey/headset_sec
+	keyslot1 = new /obj/item/device/encryptionkey/headset_sec
 	keyslot2 = new /obj/item/device/encryptionkey/headset_cargo
 
 /obj/item/device/radio/headset/headset_sec/department/med
-	keyslot = new /obj/item/device/encryptionkey/headset_sec
+	keyslot1 = new /obj/item/device/encryptionkey/headset_sec
 	keyslot2 = new /obj/item/device/encryptionkey/headset_med
 
 /obj/item/device/radio/headset/headset_sec/department/sci
-	keyslot = new /obj/item/device/encryptionkey/headset_sec
+	keyslot1 = new /obj/item/device/encryptionkey/headset_sec
 	keyslot2 = new /obj/item/device/encryptionkey/headset_sci

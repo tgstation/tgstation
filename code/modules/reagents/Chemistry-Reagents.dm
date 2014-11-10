@@ -208,11 +208,9 @@ datum/reagent/water
 	description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
 	reagent_state = LIQUID
 	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
-	var/cooling_temperature = 2
 
 datum/reagent/water/reaction_turf(var/turf/simulated/T, var/volume)
 	if (!istype(T)) return
-	var/CT = cooling_temperature
 	src = null
 	if(volume >= 10)
 		T.MakeSlippery()
@@ -222,15 +220,22 @@ datum/reagent/water/reaction_turf(var/turf/simulated/T, var/volume)
 
 	var/hotspot = (locate(/obj/effect/hotspot) in T)
 	if(hotspot && !istype(T, /turf/space))
-		if(T.air)
-			var/datum/gas_mixture/G = T.air
-			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),0)
-			G.react()
-			qdel(hotspot)
+		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
+		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
+		lowertemp.react()
+		T.assume_air(lowertemp)
+		qdel(hotspot)
 	return
-
 datum/reagent/water/reaction_obj(var/obj/O, var/volume)
 	src = null
+	var/turf/T = get_turf(O)
+	var/hotspot = (locate(/obj/effect/hotspot) in T)
+	if(hotspot && !istype(T, /turf/space))
+		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
+		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
+		lowertemp.react()
+		T.assume_air(lowertemp)
+		qdel(hotspot)
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
 		if(!cube.wrapped)

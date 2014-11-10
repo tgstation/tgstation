@@ -330,8 +330,6 @@ emp_act
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M as mob)
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		if(check_shields(damage, "the [M.name]"))
-			return 0
 		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 		var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
 		var/armor = run_armor_check(affecting, "melee")
@@ -345,8 +343,6 @@ emp_act
 
 	if(..()) //successful larva bite.
 		var/damage = rand(1, 3)
-		if(check_shields(damage, "the [L.name]"))
-			return 0
 		if(stat != DEAD)
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
 			var/obj/item/organ/limb/affecting = get_organ(ran_zone(L.zone_sel.selecting))
@@ -363,9 +359,6 @@ emp_act
 		damage = rand(10, 35)
 	else
 		damage = rand(5, 25)
-
-	if(check_shields(damage, "the [M.name]"))
-		return 0
 
 	var/dam_zone = pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg", "groin")
 

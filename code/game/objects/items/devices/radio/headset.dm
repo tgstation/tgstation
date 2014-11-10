@@ -9,18 +9,21 @@
 	canhear_range = 0 // can't hear headsets from very far away
 
 	slot_flags = SLOT_EARS
+	var/translate_binary = 0
+	var/translate_hive = 0
+	var/obj/item/device/encryptionkey/keyslot1 = null
 	var/obj/item/device/encryptionkey/keyslot2 = null
 	maxf = 1489
 
 /obj/item/device/radio/headset/New()
 	..()
-	keyslot = new /obj/item/device/encryptionkey/
+	keyslot1 = new /obj/item/device/encryptionkey/
 	recalculateChannels()
 
 /obj/item/device/radio/headset/Destroy()
-	qdel(keyslot)
+	qdel(keyslot1)
 	qdel(keyslot2)
-	keyslot = null
+	keyslot1 = null
 	keyslot2 = null
 	..()
 
@@ -45,14 +48,17 @@
 
 /obj/item/device/radio/headset/syndicate/New()
 	..()
-	make_syndie()
+	qdel(keyslot1)
+	keyslot1 = new /obj/item/device/encryptionkey/syndicate
+	syndie = 1
+	recalculateChannels()
 
 /obj/item/device/radio/headset/binary
 	origin_tech = "syndicate=3"
 /obj/item/device/radio/headset/binary/New()
 	..()
-	qdel(keyslot)
-	keyslot = new /obj/item/device/encryptionkey/binary
+	qdel(keyslot1)
+	keyslot1 = new /obj/item/device/encryptionkey/binary
 	recalculateChannels()
 
 /obj/item/device/radio/headset/headset_sec
@@ -197,7 +203,7 @@
 		return
 
 	if(istype(W, /obj/item/weapon/screwdriver))
-		if(keyslot || keyslot2)
+		if(keyslot1 || keyslot2)
 
 
 			for(var/ch_name in channels)
@@ -205,11 +211,11 @@
 				secure_radio_connections[ch_name] = null
 
 
-			if(keyslot)
+			if(keyslot1)
 				var/turf/T = get_turf(user)
 				if(T)
-					keyslot.loc = T
-					keyslot = null
+					keyslot1.loc = T
+					keyslot1 = null
 
 
 
@@ -226,14 +232,14 @@
 			user << "This headset doesn't have any encryption keys!  How useless..."
 
 	if(istype(W, /obj/item/device/encryptionkey/))
-		if(keyslot && keyslot2)
+		if(keyslot1 && keyslot2)
 			user << "The headset can't hold another key!"
 			return
 
-		if(!keyslot)
+		if(!keyslot1)
 			user.drop_item()
 			W.loc = src
-			keyslot = W
+			keyslot1 = W
 
 		else
 			user.drop_item()
@@ -246,8 +252,28 @@
 	return
 
 
-/obj/item/device/radio/headset/recalculateChannels()
-	..()
+/obj/item/device/radio/headset/proc/recalculateChannels()
+	src.channels = list()
+	src.translate_binary = 0
+	src.translate_hive = 0
+	src.syndie = 0
+
+	if(keyslot1)
+		for(var/ch_name in keyslot1.channels)
+			if(ch_name in src.channels)
+				continue
+			src.channels += ch_name
+			src.channels[ch_name] = keyslot1.channels[ch_name]
+
+		if(keyslot1.translate_binary)
+			src.translate_binary = 1
+
+		if(keyslot1.translate_hive)
+			src.translate_hive = 1
+
+		if(keyslot1.syndie)
+			src.syndie = 1
+
 	if(keyslot2)
 		for(var/ch_name in keyslot2.channels)
 			if(ch_name in src.channels)

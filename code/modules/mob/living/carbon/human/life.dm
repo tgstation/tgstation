@@ -207,22 +207,11 @@
 /mob/living/carbon/human/handle_fire()
 	if(dna)
 		dna.species.handle_fire(src)
+
 	if(..())
 		return
-	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
-	if(wear_suit)
-		if(wear_suit.max_heat_protection_temperature >= FIRE_SUIT_MAX_TEMP_PROTECT)
-			thermal_protection += (wear_suit.max_heat_protection_temperature*0.7)
-	if(head)
-		if(head.max_heat_protection_temperature >= FIRE_HELM_MAX_TEMP_PROTECT)
-			thermal_protection += (head.max_heat_protection_temperature*THERMAL_PROTECTION_HEAD)
-	thermal_protection = round(thermal_protection)
-	if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
-		return
-	if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT)
-		bodytemperature += 11
-		return
-	else
+	var/thermal_protection = get_heat_protection(30000) //If you don't have fire suit level protection, you get a temperature increase
+	if((1 - thermal_protection) > 0.0001)
 		bodytemperature += BODYTEMP_HEATING_MAX
 	return
 

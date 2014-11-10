@@ -135,6 +135,42 @@
 	w_class = 2.0
 	flags = NOSHIELD
 
+/obj/item/weapon/table_parts
+	name = "table parts"
+	desc = "Parts of a table. Poor table."
+	gender = PLURAL
+	icon = 'icons/obj/items.dmi'
+	icon_state = "table_parts"
+	var/table_type = /obj/structure/table
+	var/construct_delay = 50
+	m_amt = 3750
+	flags = CONDUCT
+	attack_verb = list("slammed", "bashed", "battered", "bludgeoned", "thrashed", "whacked")
+
+/obj/item/weapon/table_parts/reinforced
+	name = "reinforced table parts"
+	desc = "Hard table parts. Well...harder..."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "reinf_tableparts"
+	table_type = /obj/structure/table/reinforced
+	construct_delay = 100
+	m_amt = 7500
+	flags = CONDUCT
+
+/obj/item/weapon/table_parts/wood
+	name = "wooden table parts"
+	desc = "Keep away from fire."
+	icon_state = "wood_tableparts"
+	table_type = /obj/structure/table/woodentable
+	flags = null
+
+/obj/item/weapon/table_parts/wood/poker
+	name = "poker table parts"
+	desc = "Keep away from fire, and keep near seedy dealers."
+	icon_state = "poker_tableparts"
+	table_type = /obj/structure/table/woodentable/poker
+	flags = null
+
 /obj/item/weapon/module
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
