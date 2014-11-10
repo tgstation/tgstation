@@ -305,3 +305,37 @@
 		'icons/xenoarch_icons/chart3.jpg',
 		'icons/xenoarch_icons/chart4.jpg'
 		)
+
+
+/proc/get_role_desire_str(var/rolepref)
+	switch(rolepref & ROLEPREF_VALMASK)
+		if(ROLEPREF_NEVER)
+			return "Never"
+		if(ROLEPREF_NO)
+			return "No"
+		if(ROLEPREF_YES)
+			return "Yes"
+		if(ROLEPREF_ALWAYS)
+			return "Always"
+	return "???"
+
+/client/proc/desires_role(var/role_id, var/display_to_user=0)
+	var/role_desired = prefs.roles[role_id]
+	if(display_to_user && !(role_desired & ROLEPREF_PERSIST))
+		if(!(role_desired & ROLEPREF_POLLED))
+			spawn
+				var/answer = alert(src,"[display_to_user]\n\nNOTE:  You will only be polled about this role once per round. To change your choice, use Preferences > Setup Special Roles.  The change will take place AFTER this recruiting period.","Role Recruitment", "Yes","No","Never")
+				switch(answer)
+					if("Never")
+						prefs.roles[role_id] = ROLEPREF_NEVER
+					if("No")
+						prefs.roles[role_id] = ROLEPREF_NO
+					if("Yes")
+						prefs.roles[role_id] = ROLEPREF_YES
+					//if("Always")
+					//	prefs.roles[role_id] = ROLEPREF_ALWAYS
+				//testing("Client [src] answered [answer] to [role_id] poll.")
+				prefs.roles[role_id] |= ROLEPREF_POLLED
+		else
+			src << "<span style='recruit'>The game is currently looking for [role_id] candidates.  Your current answer is <a href='?src=\ref[prefs]&preference=set_role&role_id=[role_id]'>[get_role_desire_str(role_desired)]</a>.</span>"
+	return role_desired & ROLEPREF_ENABLE

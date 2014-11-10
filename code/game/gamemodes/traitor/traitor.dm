@@ -34,7 +34,7 @@
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
-	var/list/possible_traitors = get_players_for_role(BE_TRAITOR)
+	var/list/possible_traitors = get_players_for_role(ROLE_TRAITOR)
 
 	// stop setup if no possible traitors
 	if(!possible_traitors.len)

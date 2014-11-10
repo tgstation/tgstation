@@ -200,11 +200,12 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 		user << browse(dat, "window=findPai")
 
 	proc/requestRecruits()
-		for(var/mob/dead/observer/O in player_list)
-			if(O.client && O.client.prefs.be_special & BE_PAI)
+		for(var/mob/dead/observer/O in get_active_candidates(ROLE_PAI)) // We handle polling ourselves.
+			if(O.client)
 				if(check_recruit(O))
 					O << "<span class=\"recruit\">A pAI card is looking for personalities. (<a href='?src=\ref[src];signup=\ref[O]'>Sign Up</a>)</span>"
 					//question(O.client)
+
 	proc/check_recruit(var/mob/dead/observer/O)
 		if(jobban_isbanned(O, "pAI"))
 			return 0

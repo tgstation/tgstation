@@ -157,6 +157,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define HUMAN_STRIP_DELAY 40 //takes 40ds = 4s to strip someone.
 
 #define ALIEN_SELECT_AFK_BUFFER 1 // How many minutes that a person can be AFK before not being allowed to be an alien.
+#define ROLE_SELECT_AFK_BUFFER  1 // Default value.
 
 #define NORMPIPERATE 30					//pipe-insulation rate divisor
 #define HEATPIPERATE 8					//heat-exch pipe insulation
@@ -701,37 +702,44 @@ var/list/TAGGERLOCATIONS = list(
 
 #define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO|CHAT_ATTACKLOGS|CHAT_LOOC|SOUND_STREAMING)
 
-#define BE_TRAITOR		1
-#define BE_OPERATIVE	2
-#define BE_CHANGELING	4
-#define BE_WIZARD		8
-#define BE_MALF			16
-#define BE_REV			32
-#define BE_ALIEN		64
-#define BE_PAI			128
-#define BE_CULTIST		256
-#define BE_MONKEY		512
-#define BE_NINJA		1024
-#define BE_RAIDER		2048
-#define BE_PLANT		4096
-#define BE_VAMPIRE		8192
+//////////////////////////////////
+// ROLES 2.0
+//////////////////////////////////
+// First bit is no/yes.
+// Second bit is persistence (save to char prefs).
+// Third bit is whether we polled for that role yet.
+#define ROLEPREF_ENABLE         1 // Enable role for this character.
+#define ROLEPREF_PERSIST        2 // Save preference.
+#define ROLEPREF_POLLED         4 // Have we polled this guy?
 
-var/list/be_special_flags = list(
-	"Traitor" = BE_TRAITOR,
-	"Operative" = BE_OPERATIVE,
-	"Changeling" = BE_CHANGELING,
-	"Wizard" = BE_WIZARD,
-	"Malf AI" = BE_MALF,
-	"Revolutionary" = BE_REV,
-	"Xenomorph" = BE_ALIEN,
-	"pAI" = BE_PAI,
-	"Cultist" = BE_CULTIST,
-	"Monkey" = BE_MONKEY,
-	"Ninja" = BE_NINJA,
-	"Raider" = BE_RAIDER,
-	"Diona" = BE_PLANT,
-	"Vampire" = BE_VAMPIRE
-	)
+#define ROLEPREF_NEVER   ROLEPREF_PERSIST
+#define ROLEPREF_NO      0
+#define ROLEPREF_YES     ROLEPREF_ENABLE
+#define ROLEPREF_ALWAYS  (ROLEPREF_ENABLE|ROLEPREF_PERSIST)
+
+// Masks.
+#define ROLEPREF_SAVEMASK 1 // 0b00000001 - For saving shit.
+#define ROLEPREF_VALMASK  3 // 0b00000011 - For a lot of things.
+
+// Should correspond to jobbans, too.
+#define ROLE_ALIEN      "alien"
+#define ROLE_BLOB       "blob"      // New!
+#define ROLE_BORER      "borer"     // New!
+#define ROLE_CHANGELING "changeling"
+#define ROLE_COMMANDO   "commando"  // New!
+#define ROLE_CULTIST    "cultist"
+#define ROLE_MALF       "malf AI"
+#define ROLE_NINJA      "ninja"
+#define ROLE_OPERATIVE  "operative" // New!
+#define ROLE_PAI        "pAI"
+#define ROLE_PLANT      "Dionaea"
+#define ROLE_POSIBRAIN  "posibrain"
+#define ROLE_REV        "revolutionary"
+#define ROLE_TRAITOR    "traitor"
+#define ROLE_VAMPIRE    "vampire"
+#define ROLE_VOXRAIDER  "vox raider"
+#define ROLE_WIZARD     "wizard"
+
 
 #define AGE_MIN 17			//youngest a character can be
 #define AGE_MAX 85			//oldest a character can be

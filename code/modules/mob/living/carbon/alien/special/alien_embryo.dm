@@ -16,10 +16,11 @@
 		affected_mob = loc
 		processing_objects.Add(src)
 
-		for(var/mob/dead/observer/O in player_list)
-			if(O.client && O.client.prefs.be_special & BE_ALIEN)
+		for(var/mob/dead/observer/O in get_active_candidates(ROLE_ALIEN,poll="[affected_mob] has been infected by \a [src]!"))
+			if(O.client && O.client.desires_role(ROLE_ALIEN))
 				if(check_observer(O))
-					O << "<span class=\"recruit\">[affected_mob] has been infected by \a [src]!. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign Up</a>)</span>"
+					O << "<span class=\"recruit\">You are a possible candidate for \a [src]. Get ready. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Retract</a>)</span>"
+					ghost_volunteers += O
 		spawn(0)
 			AddInfectionImages(affected_mob)
 	else
@@ -122,7 +123,7 @@
 			continue
 		break
 	if(!ghostpicked || !istype(ghostpicked))
-		var/list/candidates = get_alien_candidates()
+		var/list/candidates = get_active_candidates(ROLE_ALIEN, buffer=ALIEN_SELECT_AFK_BUFFER, poll=1)
 		if(!candidates.len)
 			picked = affected_mob.key
 		else

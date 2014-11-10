@@ -1,0 +1,27 @@
+html, body {
+    font-family: sans-serif, verdana;
+    font-size: smaller;
+    color: #666;
+}
+h1 {
+    border-bottom: 1px solid maroon;
+}
+table {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+td, th {
+    margin: 0;
+    font-size: small;
+    border-bottom: 1px solid #ccc;
+    padding: 3px;
+}
+
+tr:nth-child(even) {
+    background: #efefef;
+}
+
+dt {
+    font-weight: bold;
+}
+
