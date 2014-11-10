@@ -401,7 +401,7 @@ var/global/mulebot_count = 0
 
 // called to load a crate
 /obj/machinery/bot/mulebot/proc/load(var/atom/movable/C)
-	if(wires.LoadCheck() && !istype(C,/obj/structure/closet/crate))
+	if(wires.LoadCheck() && !istype(C,/obj/structure/closet/crate) && !istype(C,/obj/structure/vendomatpack) && !istype(C,/obj/structure/stackopacks))
 		src.visible_message("[src] makes a sighing buzz.", "You hear an electronic buzzing sound.")
 		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 0)
 		return		// if not emagged, only allow crates to be loaded
@@ -420,7 +420,7 @@ var/global/mulebot_count = 0
 			return
 	mode = 1
 
-	// if a create, close before loading
+	// if a crate, close before loading
 	var/obj/structure/closet/crate/crate = C
 	if(istype(crate))
 		crate.close()
@@ -696,8 +696,16 @@ var/global/mulebot_count = 0
 							break
 				else			// otherwise, look for crates only
 					AM = locate(/obj/structure/closet/crate) in get_step(loc,loaddir)
-				if(AM)
-					load(AM)
+					if(AM)
+						load(AM)
+					else
+						AM = locate(/obj/structure/vendomatpack) in get_step(loc,loaddir)
+						if(AM)
+							load(AM)
+						else
+							AM = locate(/obj/structure/stackopacks) in get_step(loc,loaddir)
+							if(AM)
+								load(AM)
 		// whatever happened, check to see if we return home
 
 		if(auto_return && destination != home_destination)

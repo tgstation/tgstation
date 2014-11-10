@@ -1,0 +1,24 @@
+author: Deity Link
+delete-after: true
+changes:
+  - rscadd: Vending machines and nanomeds can now be deconstructed (doing so will destroy all their remaining articles!).
+  - rscadd: Vending machines Circuit Boards can now be printed at R&D (mat=1,eng=1,pow=1 TL;DR: at round start!).
+  - rscadd: Vending machines can be built from machine frames, with a circuit board, a matter bin, a scanning module, and a manipulator.
+  - rscadd: Constructed vending machines are empty by default.
+  - rscadd: Cargo has a new Order category: "Vending Machine packs"
+  - rscadd: Those packs arrive in the supply shuttle coiled together in a stack. Use a wirecutter on it to spawn the packs and the supply manifest.
+  - rscadd: Stacks of packs and the packs themselves can be package-wrapped and tagged for the delivery sorting machine.
+  - rscadd: Stacks and packs can as well be placed on MULEbots.
+  - rscadd: Packs have density, so they must be pulled just like crate.
+  - rscadd: Packs can be drag-n-dropped onto a matching vending machine to refill its content, or onto an empty vending machine to set its contents and appearance.
+  - rscadd: Once used, the packs no longer have density and can be picked up, and folded into cardboard.
+  - rscadd: There are currently packs for all the vending machines on the station (except the wall-mounted nanomeds, for now...)
+  - rscadd: Some savvy and adequatly equipped cargoneers might as well order packs for machines that aren't naturally found anywhere on the station...
+  - imageadd: Packages now have a visible and examinable label once they've been tagged.
+  - rscadd: NanoMeds frames can now be built with 3 sheets of metal. They only require a Circuit Board and 5 coil pieces (and of course a NanoMed recharge pack).
+  - tweak: Removed the access restriction on NanoMeds (NanoMed Plus are still restricted to doctors).
+  - bugfix: Fixed a runtime error caused by trying to Jump To Mob as a Ghost.
+  - bugfix: The syndicate shuttle and pirate ship's consoles no longer appear unpowered.
+  - bugfix: Fixed vending machines wire-panel not appearing when the panel is open.
+  - rscadd: Nazivends and Sovietvends can now be emagged to replace them with their DANGERMODE counterpart (they still require to be hacked to access their new content).
+  - imageadd: Nazivends and Sovietvends now emit a distinctive pulsating glow when emagged.
