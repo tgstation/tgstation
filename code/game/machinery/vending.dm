@@ -64,6 +64,7 @@
 	var/scan_id = 1
 	var/obj/item/weapon/coin/coin
 	var/datum/wires/vending/wires = null
+	var/list/overlays_vending[2]//1 is the panel layer, 2 is the dangermode layer
 
 	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY
 
@@ -76,6 +77,8 @@
 
 /obj/machinery/vending/New()
 	..()
+
+	overlays_vending[1] = "[icon_state]-panel"
 
 	component_parts = newlist(\
 		/obj/item/weapon/circuitboard/vendomat,\
@@ -146,6 +149,8 @@
 				emptypack.icon_state = P.icon_state
 				emptypack.overlays += image('icons/obj/vending_pack.dmi',"emptypack")
 				qdel(P)
+				if(user.machine==src)
+					newmachine.attack_hand(user)
 				component_parts = 0
 				qdel(src)
 		else
@@ -168,6 +173,8 @@
 					emptypack.icon_state = P.icon_state
 					emptypack.overlays += image('icons/obj/vending_pack.dmi',"emptypack")
 					qdel(P)
+					if(user.machine==src)
+						src.attack_hand(user)
 			else
 				user << "<span class='warning'>This recharge pack isn't meant for this kind of vending machines.</span>"
 
@@ -646,6 +653,18 @@
 		throw_item.throw_at(target, 16, 3)
 	src.visible_message("\red <b>[src] launches [throw_item.name] at [target.name]!</b>")
 	return 1
+
+/obj/machinery/vending/update_icon()
+	if(panel_open)
+		overlays += overlays_vending[1]
+	else
+		overlays -= overlays_vending[1]
+
+	overlays -= overlays_vending[2]
+	if(emagged)
+		overlays += overlays_vending[2]
+
+
 /*
  * Vending machine types
  */
@@ -1290,6 +1309,26 @@
 
 	pack = /obj/structure/vendomatpack/nazivend
 
+/obj/machinery/vending/nazivend/New()
+	..()
+	machine_flags |= EMAGGABLE
+
+/obj/machinery/vending/nazivend/emag(mob/user)
+	if(!emagged)
+		user << "<span class='warning'>As you slide the emag on the machine, you can hear something unlocking inside, and the machine starts emitting an evil glow.</span>"
+		message_admins("[key_name_admin(user)] unlocked a Nazivend's DANGERMODE")
+		var/obj/machinery/vending/nazivendDANGERMODE/newmachine = new /obj/machinery/vending/nazivendDANGERMODE(loc)
+		if(user.machine==src)
+			spawn(1)
+			newmachine.attack_hand(user)
+		newmachine.anchored = anchored
+		newmachine.panel_open = panel_open
+		newmachine.extended_inventory = extended_inventory
+		component_parts = 0
+		qdel(src)
+		return 1
+	return
+
 //MOTHERBUSLAND
 /obj/machinery/vending/sovietvend
 	name = "KomradeVendtink"
@@ -1302,6 +1341,26 @@
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool = 4, /obj/item/clothing/mask/balaclava = 4, /obj/item/clothing/suit/russofurcoat = 4, /obj/item/clothing/head/russofurhat = 4)
 
 	pack = /obj/structure/vendomatpack/sovietvend
+
+/obj/machinery/vending/sovietvend/New()
+	..()
+	machine_flags |= EMAGGABLE
+
+/obj/machinery/vending/sovietvend/emag(mob/user)
+	if(!emagged)
+		user << "<span class='warning'>As you slide the emag on the machine, you can hear something unlocking inside, and the machine starts emitting an evil glow.</span>"
+		message_admins("[key_name_admin(user)] unlocked a Sovietvend's DANGERMODE")
+		var/obj/machinery/vending/sovietvendDANGERMODE/newmachine = new /obj/machinery/vending/sovietvendDANGERMODE(loc)
+		if(user.machine==src)
+			spawn(1)
+			newmachine.attack_hand(user)
+		newmachine.anchored = anchored
+		newmachine.panel_open = panel_open
+		newmachine.extended_inventory = extended_inventory
+		component_parts = 0
+		qdel(src)
+		return 1
+	return
 
 /*These next machines are the same adminbus machines,
 but have theme fitting contraband hardsuits and weapons.
@@ -1320,6 +1379,14 @@ Do NOT spawn unless you want all out war, extermination, or murderbone.**/
 
 	pack = /obj/structure/vendomatpack/nazivend//can be reloaded with the same packs as the regular one
 
+/obj/machinery/vending/nazivendDANGERMODE/New()
+	..()
+	emagged = 1
+	overlays = 0
+	var/image/dangerlay = image(icon,"[icon_state]-dangermode",LIGHTING_LAYER+1)
+	overlays_vending[2] = dangerlay
+	update_icon()
+
 //SovietVend++
 /obj/machinery/vending/sovietvendDANGERMODE
 	name = "KomradeVendtink"
@@ -1332,6 +1399,14 @@ Do NOT spawn unless you want all out war, extermination, or murderbone.**/
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool = 4, /obj/item/clothing/mask/balaclava = 4, /obj/item/clothing/suit/russofurcoat = 4, /obj/item/clothing/head/russofurhat = 4, /obj/item/clothing/head/helmet/space/rig/soviet = 3, /obj/item/clothing/suit/space/rig/soviet = 3, /obj/item/weapon/gun/energy/laser/LaserAK = 4)
 
 	pack = /obj/structure/vendomatpack/sovietvend//can be reloaded with the same packs as the regular one
+
+/obj/machinery/vending/sovietvendDANGERMODE/New()
+	..()
+	emagged = 1
+	overlays = 0
+	var/image/dangerlay = image(icon,"[icon_state]-dangermode",LIGHTING_LAYER+1)
+	overlays_vending[2] = dangerlay
+	update_icon()
 
 /obj/machinery/vending/discount
 	name = "Discount Dan's"

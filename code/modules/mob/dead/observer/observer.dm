@@ -510,7 +510,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			return
 		else
 			var/turf/targetloc = get_turf(target)
-			if(targetloc.holy && ((src.invisibility == 0) || (src.mind in ticker.mode.cult)))
+			if(targetloc && targetloc.holy && ((src.invisibility == 0) || (src.mind in ticker.mode.cult)))
 				usr << "<span class='warning'>The mob that you are trying to follow is standing on holy grounds, you cannot reach him!</span>"
 				return
 			var/mob/M = dest[target] //Destination mob

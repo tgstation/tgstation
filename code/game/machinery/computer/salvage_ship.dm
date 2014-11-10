@@ -15,6 +15,9 @@
 /obj/machinery/computer/salvage_ship/New()
 	curr_location= locate(/area/shuttle/salvage/start)
 
+/obj/machinery/computer/update_icon()
+	..()
+	icon_state = "syndishuttle"
 
 /obj/machinery/computer/salvage_ship/proc/salvage_move_to(area/destination as area)
 	if(moving)	return
