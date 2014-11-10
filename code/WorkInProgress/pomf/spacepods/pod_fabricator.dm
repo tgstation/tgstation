@@ -9,8 +9,6 @@
 	icon_state = "fab"
 	build_number = 32
 	nano_file = "podfab.tmpl"
-	req_one_access = list(access_engine, access_research, access_robotics, access_eva)
-	req_access = list()
 	part_sets = list( //set names must be unique
 	"Pod_Frame" = list(
 						/obj/item/pod_parts/pod_frame/fore_port,
