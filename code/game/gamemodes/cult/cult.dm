@@ -171,7 +171,7 @@
 	if (!word)
 		word=pick(allwords)
 	var/wordexp = "[cultwords[word]] is [word]..."
-	cult_mob << "\red You remember one thing from the dark teachings of your master... [wordexp]"
+	cult_mob << "<span class='sinister'>You remember one thing from the dark teachings of your master... [wordexp]</span>"
 	cult_mob.mind.store_memory("<B>You remember that</B> [wordexp]", 0, 0)
 
 
