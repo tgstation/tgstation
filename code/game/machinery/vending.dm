@@ -828,7 +828,9 @@
 	products = list(/obj/item/stack/medical/bruise_pack = 2,/obj/item/stack/medical/ointment = 2,/obj/item/weapon/reagent_containers/syringe/inaprovaline = 4,/obj/item/device/healthanalyzer = 1)
 	contraband = list(/obj/item/weapon/reagent_containers/syringe/antitoxin = 4,/obj/item/weapon/reagent_containers/syringe/antiviral = 4,/obj/item/weapon/reagent_containers/pill/tox = 1)
 
-	pack = /obj/structure/vendomatpack/undefined
+	pack = /obj/structure/vendomatpack/medical//can be reloaded with NanoMed Plus packs
+
+	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK//cannot be deconstructed
 
 /obj/machinery/vending/wallmed2
 	name = "NanoMed"
@@ -841,7 +843,9 @@
 					/obj/item/stack/medical/ointment =3,/obj/item/device/healthanalyzer = 3)
 	contraband = list(/obj/item/weapon/reagent_containers/pill/tox = 3)
 
-	pack = /obj/structure/vendomatpack/undefined
+	pack = /obj/structure/vendomatpack/medical//can be reloaded with NanoMed Plus packs
+
+	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK//cannot be deconstructed
 
 /obj/machinery/vending/security
 	name = "SecTech"
@@ -1103,7 +1107,7 @@ Do NOT spawn unless you want all out war, extermination, or murderbone.**/
 	products = list(/obj/item/clothing/head/stalhelm = 20, /obj/item/clothing/head/panzer = 20, /obj/item/clothing/suit/soldiercoat = 20, /obj/item/clothing/under/soldieruniform = 20, /obj/item/clothing/shoes/jackboots = 20)
 	contraband = list(/obj/item/clothing/head/naziofficer = 10, /obj/item/clothing/suit/officercoat = 10, /obj/item/clothing/under/officeruniform = 10, /obj/item/clothing/head/helmet/space/rig/nazi = 3, /obj/item/clothing/suit/space/rig/nazi = 3, /obj/item/weapon/gun/energy/plasma/MP40k = 4)
 
-	pack = /obj/structure/vendomatpack/undefined
+	pack = /obj/structure/vendomatpack/nazivend//can be reloaded with the same packs as the regular one
 
 //SovietVend++
 /obj/machinery/vending/sovietvendDANGERMODE
@@ -1116,7 +1120,7 @@ Do NOT spawn unless you want all out war, extermination, or murderbone.**/
 	products = list(/obj/item/clothing/under/soviet = 20, /obj/item/clothing/head/ushanka = 20, /obj/item/clothing/shoes/jackboots = 20, /obj/item/clothing/head/squatter_hat = 20, /obj/item/clothing/under/squatter_outfit = 20, /obj/item/clothing/under/russobluecamooutfit = 20, /obj/item/clothing/head/russobluecamohat = 20)
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool = 4, /obj/item/clothing/mask/balaclava = 4, /obj/item/clothing/suit/russofurcoat = 4, /obj/item/clothing/head/russofurhat = 4, /obj/item/clothing/head/helmet/space/rig/soviet = 3, /obj/item/clothing/suit/space/rig/soviet = 3, /obj/item/weapon/gun/energy/laser/LaserAK = 4)
 
-	pack = /obj/structure/vendomatpack/undefined
+	pack = /obj/structure/vendomatpack/sovietvend//can be reloaded with the same packs as the regular one
 
 /obj/machinery/vending/discount
 	name = "Discount Dan's"

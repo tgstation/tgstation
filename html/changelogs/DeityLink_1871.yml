@@ -1,7 +1,7 @@
 author: Deity Link
 delete-after: true
 changes:
-  - rscadd: Vending machines can now be deconstructed (doing so will destroy all their remaining articles!)
+  - rscadd: Vending machines can now be deconstructed (doing so will destroy all their remaining articles!) except wall-mounted NanoMeds
   - rscadd: Vending machines Circuit Boards can now be printed at R&D (mat=1,eng=1,pow=1 TL;DR: at round start!)
   - rscadd: Vending machines can be built from machine frames, with a circuit board, a matter bin, a scanning module, and a manipulator.
   - rscadd: Constructed vending machines are empty by default.
