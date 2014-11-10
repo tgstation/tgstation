@@ -446,8 +446,8 @@
 	mode = SYRINGE_INJECT
 	update_icon()
 
-/obj/item/weapon/reagent_containers/ld50_syringe/choral
-/obj/item/weapon/reagent_containers/ld50_syringe/choral/New()
+/obj/item/weapon/reagent_containers/ld50_syringe/chloral
+/obj/item/weapon/reagent_containers/ld50_syringe/chloral/New()
 	..()
 	reagents.add_reagent("chloralhydrate", 50)
 	mode = SYRINGE_INJECT
