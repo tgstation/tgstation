@@ -438,7 +438,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/list/L = list()
 	var/holyblock = 0
 
-	if((usr.invisibility == 0) || (usr.mind in ticker.mode.cult))
+	if((usr.invisibility == 0) || ((ticker.mode.name == "cult") && (usr.mind in ticker.mode.cult)))
 		for(var/turf/T in get_area_turfs(thearea.type))
 			if(!T.holy)
 				L+=T
