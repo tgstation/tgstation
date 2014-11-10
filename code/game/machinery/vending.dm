@@ -823,29 +823,240 @@
 	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?"
 	icon_state = "wallmed"
 	icon_deny = "wallmed-deny"
-	req_access_txt = "5"
+	//req_access_txt = "5"
 	density = 0 //It is wall-mounted, and thus, not dense. --Superxpdude
 	products = list(/obj/item/stack/medical/bruise_pack = 2,/obj/item/stack/medical/ointment = 2,/obj/item/weapon/reagent_containers/syringe/inaprovaline = 4,/obj/item/device/healthanalyzer = 1)
 	contraband = list(/obj/item/weapon/reagent_containers/syringe/antitoxin = 4,/obj/item/weapon/reagent_containers/syringe/antiviral = 4,/obj/item/weapon/reagent_containers/pill/tox = 1)
 
 	pack = /obj/structure/vendomatpack/medical//can be reloaded with NanoMed Plus packs
-
-	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK//cannot be deconstructed
+	component_parts = 0
 
 /obj/machinery/vending/wallmed2
 	name = "NanoMed"
 	desc = "Wall-mounted Medical Equipment dispenser."
 	icon_state = "wallmed"
 	icon_deny = "wallmed-deny"
-	req_access_txt = "5"
+	//req_access_txt = "5"
 	density = 0 //It is wall-mounted, and thus, not dense. --Superxpdude
 	products = list(/obj/item/weapon/reagent_containers/syringe/inaprovaline = 5,/obj/item/weapon/reagent_containers/syringe/antitoxin = 3,/obj/item/stack/medical/bruise_pack = 3,
 					/obj/item/stack/medical/ointment =3,/obj/item/device/healthanalyzer = 3)
 	contraband = list(/obj/item/weapon/reagent_containers/pill/tox = 3)
+	component_parts = 0
 
 	pack = /obj/structure/vendomatpack/medical//can be reloaded with NanoMed Plus packs
 
-	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK//cannot be deconstructed
+////////WALL-MOUNTED NANOMED FRAME//////
+/obj/item/wallmed_frame
+	name = "NanoMed frame"
+	desc = "Wall-mounted Medical Equipment dispenser."
+	icon = 'icons/obj/vending.dmi'
+	icon_state = "wallmed_frame0"
+	flags = FPRINT | TABLEPASS | CONDUCT
+
+/obj/item/wallmed_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
+	if (istype(W, /obj/item/weapon/wrench))
+		new /obj/item/stack/sheet/metal( get_turf(src.loc), 3 )
+		del(src)
+
+/obj/item/wallmed_frame/proc/try_build(turf/on_wall)
+	if (get_dist(on_wall,usr)>1)
+		return
+	var/ndir = get_dir(usr,on_wall)
+	if (!(ndir in cardinal))
+		return
+	var/turf/loc = get_turf(usr)
+	if (!istype(loc, /turf/simulated/floor))
+		usr << "<span class='warning'>[src] cannot be placed on this spot.</span>"
+		return
+	new /obj/machinery/wallmed_frame(loc, ndir)
+	del(src)
+
+/obj/machinery/vending/wallmed1/New(turf/loc)
+	..()
+	component_parts = 0
+
+/obj/machinery/vending/wallmed2/New(turf/loc)
+	..()
+	component_parts = 0
+
+/obj/machinery/vending/wallmed1/crowbarDestroy(mob/user)
+	user.visible_message(	"[user] begins to pry out the NanoMed from the wall.",
+							"You begin to pry out the NanoMed from the wall...")
+	if(do_after(user, 40))
+		user.visible_message(	"[user] detaches the NanoMed from the wall.",
+								"You detach the NanoMed from the wall.")
+		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
+		new /obj/item/wallmed_frame(src.loc)
+
+		for(var/obj/I in src)
+			qdel(I)
+
+		new /obj/item/weapon/circuitboard/vendomat(src.loc)
+		new /obj/item/weapon/cable_coil(loc,5)
+
+		return 1
+	return -1
+
+/obj/machinery/vending/wallmed2/crowbarDestroy(mob/user)
+	user.visible_message(	"[user] begins to pry out the NanoMed from the wall.",
+							"You begin to pry out the NanoMed from the wall...")
+	if(do_after(user, 40))
+		user.visible_message(	"[user] detaches the NanoMed from the wall.",
+								"You detach the NanoMed from the wall.")
+		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
+		new /obj/item/wallmed_frame(src.loc)
+
+		for(var/obj/I in src)
+			qdel(I)
+
+		new /obj/item/weapon/circuitboard/vendomat(src.loc)
+		new /obj/item/weapon/cable_coil(loc,5)
+
+		return 1
+	return -1
+
+/obj/machinery/wallmed_frame
+	name = "NanoMed frame"
+	desc = "Wall-mounted Medical Equipment dispenser."
+	icon = 'icons/obj/vending.dmi'
+	icon_state = "wallmed_frame0"
+	anchored = 1
+
+	var/on = 1
+
+	var/build = 0        // Build state
+	var/boardtype=/obj/item/weapon/circuitboard/vendomat
+	var/obj/item/weapon/circuitboard/_circuitboard
+
+/obj/machinery/wallmed_frame/New(turf/loc, var/ndir)
+	..()
+	// offset 32 pixels in direction of dir
+	// this allows the NanoMed to be embedded in a wall, yet still inside an area
+	dir = ndir
+	pixel_x = (dir & 3)? 0 : (dir == 4 ? 30 : -30)
+	pixel_y = (dir & 3)? (dir ==1 ? 30 : -30) : 0
+
+/obj/machinery/wallmed_frame/update_icon()
+	icon_state = "wallmed_frame[build]"
+
+/obj/machinery/wallmed_frame/attackby(var/obj/item/W as obj, var/mob/user as mob)
+	switch(build)
+		if(0) // Empty hull
+			if(istype(W, /obj/item/weapon/screwdriver))
+				usr << "You begin removing screws from \the [src] backplate..."
+				if(do_after(user, 50))
+					usr << "<span class='notice'>You unscrew \the [src] from the wall.</span>"
+					playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
+					new /obj/item/wallmed_frame(get_turf(src))
+					del(src)
+				return 1
+			if(istype(W, /obj/item/weapon/circuitboard))
+				var/obj/item/weapon/circuitboard/C=W
+				if(!(istype(C,/obj/item/weapon/circuitboard/vendomat)))
+					user << "<span class='warning'>You cannot install this type of board into a NanoMed frame.</span>"
+					return
+				usr << "You begin to insert \the [C] into \the [src]."
+				if(do_after(user, 10))
+					usr << "<span class='notice'>You secure \the [C]!</span>"
+					user.drop_item()
+					_circuitboard=C
+					C.loc=src
+					playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
+					build++
+					update_icon()
+				return 1
+		if(1) // Circuitboard installed
+			if(istype(W, /obj/item/weapon/crowbar))
+				usr << "You begin to pry out \the [W] into \the [src]."
+				if(do_after(user, 10))
+					playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
+					build--
+					update_icon()
+					var/obj/item/weapon/circuitboard/C
+					if(_circuitboard)
+						_circuitboard.loc=get_turf(src)
+						C=_circuitboard
+						_circuitboard=null
+					else
+						C=new boardtype(get_turf(src))
+					user.visible_message(\
+						"<span class='warning'>[user.name] has removed \the [C]!</span>",\
+						"You remove \the [C].")
+				return 1
+			if(istype(W, /obj/item/weapon/cable_coil))
+				var/obj/item/weapon/cable_coil/C=W
+				user << "You start adding cables to \the [src]..."
+				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+				if(do_after(user, 20) && C.amount >= 5)
+					C.use(5)
+					build++
+					update_icon()
+					user.visible_message(\
+						"<span class='warning'>[user.name] has added cables to \the [src]!</span>",\
+						"You add cables to \the [src].")
+		if(2) // Circuitboard installed, wired.
+			if(istype(W, /obj/item/weapon/wirecutters))
+				usr << "You begin to remove the wiring from \the [src]."
+				if(do_after(user, 50))
+					new /obj/item/weapon/cable_coil(loc,5)
+					user.visible_message(\
+						"<span class='warning'>[user.name] cut the cables.</span>",\
+						"You cut the cables.")
+					build--
+					update_icon()
+				return 1
+			if(istype(W, /obj/item/weapon/screwdriver))
+				user << "You begin to complete \the [src]..."
+				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
+				if(do_after(user, 20))
+					if(!_circuitboard)
+						_circuitboard=new boardtype(src)
+					build++
+					update_icon()
+					user.visible_message(\
+						"<span class='warning'>[user.name] has finished \the [src]!</span>",\
+						"You finish \the [src].")
+				return 1
+		if(3) // Waiting for a recharge pack
+			if(istype(W, /obj/item/weapon/screwdriver))
+				user << "You begin to unscrew \the [src]..."
+				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
+				if(do_after(user, 30))
+					build--
+					update_icon()
+				return 1
+	..()
+
+/obj/machinery/wallmed_frame/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+	if(build==3)
+		if(istype(O,/obj/structure/vendomatpack))
+			if(istype(O,/obj/structure/vendomatpack/medical))
+				user << "<span class='notice'>You start refilling the vending machine with the recharge pack's materials.</span>"
+				var/user_loc = user.loc
+				var/pack_loc = O.loc
+				var/self_loc = src.loc
+				sleep(30)
+				if(!user || !O || !src)
+					return
+				if (user.loc == user_loc && O.loc == pack_loc && anchored && self_loc == src.loc && !(user.stat) && (!user.stunned && !user.weakened && !user.paralysis && !user.lying))
+					user << "<span class='notice'>\icon[src] You finish refilling the vending machine.</span>"
+					playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+					var/obj/machinery/vending/wallmed1/newnanomed = new /obj/machinery/vending/wallmed1(src.loc)
+					newnanomed.name = "Emergency NanoMed"
+					newnanomed.pixel_x = pixel_x
+					newnanomed.pixel_y = pixel_y
+					var/obj/item/emptyvendomatpack/emptypack = new /obj/item/emptyvendomatpack(O.loc)
+					emptypack.icon_state = O.icon_state
+					emptypack.overlays += image('icons/obj/vending_pack.dmi',"emptypack")
+					qdel(O)
+					contents = 0
+					qdel(src)
+			else
+				user << "<span class='warning'>This recharge pack isn't meant for this kind of vending machines.</span>"
+
+////////////////////////////////////////
+
 
 /obj/machinery/vending/security
 	name = "SecTech"

@@ -41,7 +41,7 @@
 	icon_state = "cigs"
 
 /obj/structure/vendomatpack/medical
-	name = "NanoMed Plus recharge pack"
+	name = "NanoMed recharge pack"
 	targetvendomat = /obj/machinery/vending/medical
 	icon_state = "med"
 

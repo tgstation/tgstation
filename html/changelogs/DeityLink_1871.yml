@@ -1,7 +1,7 @@
 author: Deity Link
 delete-after: true
 changes:
-  - rscadd: Vending machines can now be deconstructed (doing so will destroy all their remaining articles!) except wall-mounted NanoMeds
+  - rscadd: Vending machines and nanomeds can now be deconstructed (doing so will destroy all their remaining articles!)
   - rscadd: Vending machines Circuit Boards can now be printed at R&D (mat=1,eng=1,pow=1 TL;DR: at round start!)
   - rscadd: Vending machines can be built from machine frames, with a circuit board, a matter bin, a scanning module, and a manipulator.
   - rscadd: Constructed vending machines are empty by default.
@@ -15,3 +15,5 @@ changes:
   - rscadd: There are currently packs for all the vending machines on the station (except the wall-mounted nanomeds, for now...)
   - rscadd: Some savvy and adequatly equipped cargoneers might as well order packs for machines that aren't naturally found anywhere on the station...
   - imageadd: Packages now have a visible and examinable label once they've been tagged
+  - rscadd: NanoMeds frames can now be built with 3 sheets of metal. They only require a Circuit Board and 5 coil pieces (and of course a NanoMed recharge pack)
+  - tweak: Removed the access restriction on NanoMeds (NanoMed Plus are still restricted to doctors)

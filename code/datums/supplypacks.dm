@@ -1192,12 +1192,12 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	group = "Vending Machine packs"
 
 /datum/supply_packs/medbaymachines
-	name = "Medbay stack of packs"
+	name = "Medical stack of packs"
 	contains = list(/obj/structure/vendomatpack/medical,
 					/obj/structure/vendomatpack/medical)
 	cost = 10
 	containertype = /obj/structure/stackopacks
-	containername = "Medbay stack of packs"
+	containername = "Medical stack of packs"
 	group = "Vending Machine packs"
 
 /datum/supply_packs/botanymachines
