@@ -1112,6 +1112,11 @@ proc/process_ghost_teleport_locs()
 	name = "Auxiliary Engineering"
 	icon_state = "engiaux"
 
+	mechanics
+		name = "Mechanics"
+		icon_state = "mechanics"
+
+
 //Solars
 
 /area/solar
