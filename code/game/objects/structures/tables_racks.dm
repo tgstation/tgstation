@@ -567,7 +567,7 @@
 	if(!user.drop_item())
 		user << "<span class='notice'>\The [W] is stuck to your hand, you cannot put it in the rack!</span>"
 		return
-	if(W && W.loc)	W.loc = src.loc
+	W.Move(loc)
 	return 1
 
 

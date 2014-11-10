@@ -5400,7 +5400,7 @@
 "bZR" = (/obj/structure/disposalpipe/segment{dir = 1; icon_state = "pipe-c"},/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/manifold/supply/hidden{tag = "icon-manifold-b-f (WEST)"; dir = 8},/turf/simulated/floor/plating,/area/maintenance/asmaint)
 "bZS" = (/obj/structure/disposalpipe/segment{dir = 2; icon_state = "pipe-c"},/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 10},/turf/simulated/floor/plating,/area/maintenance/asmaint)
 "bZT" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/wall,/area/maintenance/disposal)
-"bZU" = (/obj/structure/closet/firecloset,/turf/simulated/floor{dir = 8; icon_state = "warning"},/area/atmos)
+"bZU" = (/obj/structure/closet/secure_closet/atmospherics,/turf/simulated/floor{dir = 8; icon_state = "warning"},/area/atmos)
 "bZV" = (/obj/structure/sign/nosmoking_2,/turf/simulated/wall,/area/atmos)
 "bZW" = (/obj/machinery/atmospherics/pipe/manifold/general/visible{dir = 4; initialize_directions = 11},/obj/machinery/meter,/turf/simulated/floor,/area/atmos)
 "bZX" = (/obj/machinery/computer/general_air_control/large_tank_control{frequency = 1441; input_tag = "tox_in"; name = "Toxin Supply Control"; output_tag = "tox_out"; sensors = list("tox_sensor" = "Tank")},/turf/simulated/floor{dir = 4; icon_state = "warning"},/area/atmos)
