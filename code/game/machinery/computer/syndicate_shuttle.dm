@@ -15,7 +15,7 @@
 /obj/machinery/computer/syndicate_station/New()
 	curr_location= locate(/area/syndicate_station/start)
 
-/obj/machinery/computer/update_icon()
+/obj/machinery/computer/salvage_ship/update_icon()
 	..()
 	icon_state = "syndishuttle"
 
