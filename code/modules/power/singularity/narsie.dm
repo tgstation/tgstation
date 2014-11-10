@@ -162,6 +162,8 @@ var/global/narsie_behaviour = "CultStation13"
 
 			if (dist <= consume_range && !istype(A, /turf/space))
 				var/turf/T = A
+				if(T.holy)
+					T.holy = 0 //Nar-Sie doesn't give a shit about sacred grounds.
 				T.cultify()
 
 //OLD BEHAVIOUR

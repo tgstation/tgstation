@@ -448,6 +448,7 @@
 		C.traumatic_shock = 0
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C
+			H.timeofdeath = 0
 			H.vessel.reagent_list = list()
 			H.vessel.add_reagent("blood",560)
 			H.shock_stage = 0

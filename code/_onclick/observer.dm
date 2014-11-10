@@ -13,7 +13,11 @@
 
 	// Otherwise jump
 	else
-		loc = get_turf(A)
+		var/turf/targetloc = get_turf(A)
+		if(targetloc.holy && ((src.invisibility == 0) || (src.mind in ticker.mode.cult)))
+			usr << "<span class='warning'>These are sacred grounds, you cannot go there!</span>"
+		else
+			loc = targetloc
 
 /mob/dead/observer/ClickOn(var/atom/A, var/params)
 	if(client.buildmode)

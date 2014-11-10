@@ -10,6 +10,7 @@
 	var/access_security = 0
 	var/access_engine = 0
 	var/access_atmos = 0
+	var/access_mechanic = 0
 	var/access_medical = 0
 	var/access_manifest = 1 // Make all jobs able to access the manifest
 	var/access_clown = 0
@@ -42,6 +43,12 @@
 		name = "BreatheDeep Cartridge"
 		icon_state = "cart-a"
 		access_atmos = 1
+
+	mechanic
+		name = "Screw-E Cartridge"
+		icon_state = "cart-mech"
+		access_mechanic = 1
+		access_engine = 1 //for the power monitor, but may remove later
 
 	medical
 		name = "Med-U Cartridge"
@@ -170,6 +177,7 @@
 		name = "Power-On DELUXE"
 		icon_state = "cart-ce"
 		access_manifest = 1
+		access_mechanic = 1
 		access_status_display = 1
 		access_engine = 1
 		access_atmos = 1
@@ -201,6 +209,7 @@
 		icon_state = "cart-c"
 		access_manifest = 1
 		access_engine = 1
+		access_mechanic = 1
 		access_security = 1
 		access_medical = 1
 		access_reagent_scanner = 1

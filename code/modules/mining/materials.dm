@@ -34,11 +34,12 @@
 	if(mats == null)
 		return
 	for(var/mat_id in storage)
-		var/datum/material/myMat=mats.storage[mat_id]
+		var/datum/material/myMat=storage[mat_id]
 		var/datum/material/theirMat=mats.storage[mat_id]
-		myMat.stored += theirMat.stored
-		if(zero_after)
-			theirMat.stored = 0
+		if(theirMat.stored>0)
+			myMat.stored += theirMat.stored
+			if(zero_after)
+				theirMat.stored = 0
 
 /datum/materials/proc/getVolume()
 	var/volume=0
@@ -46,6 +47,13 @@
 		var/datum/material/mat = storage[mat_id]
 		volume += mat.stored
 	return volume
+
+/datum/materials/proc/getValue()
+	var/value=0
+	for(var/mat_id in storage)
+		var/datum/material/mat = storage[mat_id]
+		value += mat.value
+	return value
 
 /datum/materials/proc/removeAmount(var/mat_id,var/amount)
 	if(!(mat_id in storage))

@@ -12,6 +12,7 @@ var/const/ROBOTICIST		=(1<<8)
 var/const/AI				=(1<<9)
 var/const/CYBORG			=(1<<10)
 var/const/MOMMI				=(1<<11)
+var/const/MECHANIC			=(1<<12)
 
 
 var/const/MEDSCI			=(1<<1)
@@ -63,6 +64,7 @@ var/list/engineering_positions = list(
 	"Chief Engineer",
 	"Station Engineer",
 	"Atmospheric Technician",
+	"Mechanic"
 )
 
 
@@ -80,7 +82,8 @@ var/list/science_positions = list(
 	"Research Director",
 	"Scientist",
 	"Geneticist",	//Part of both medical and science
-	"Roboticist"
+	"Roboticist",
+	"Mechanic"
 )
 
 //BS12 EDIT

@@ -33,7 +33,7 @@
 			user << "<span class='notice'>You attach the tank to the transfer valve.</span>"
 
 		update_icon()
-//TODO: Have this take an assemblyholder
+	//TODO: Have this take an assemblyholder
 	else if(isassembly(item))
 		var/obj/item/device/assembly/A = item
 		if(A.secured)

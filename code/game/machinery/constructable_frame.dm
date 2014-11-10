@@ -777,8 +777,51 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/scanning_module" = 2,
 							"/obj/item/weapon/stock_parts/console_screen" = 1)
 
+/obj/item/weapon/circuitboard/reverse_engine
+	name = "Circuit Board (Reverse Engine)"
+	build_path = "/obj/machinery/r_n_d/reverse_engine"
+	board_type = "machine"
+	origin_tech = "materials=6;programming=4;engineering=3;bluespace=3;power=4"
+	frame_desc = "Requires 2 Scanning Modules, 2 Capacitors, 1 Manipulator, and 1 Console Screen."
+	req_components = list(
+							"/obj/item/weapon/stock_parts/scanning_module" = 2,
+							"/obj/item/weapon/stock_parts/capacitor" = 2,
+							"/obj/item/weapon/stock_parts/manipulator" = 1,
+							"/obj/item/weapon/stock_parts/console_screen" = 1)
 
+/obj/item/weapon/circuitboard/generalfab
+	name = "Circuit Board (General Fabricator)"
+	build_path = "/obj/machinery/r_n_d/fabricator/mechanic_fab"
+	board_type = "machine"
+	origin_tech = "materials=3;engineering=2;programming=2"
+	frame_desc = "Requires 2 Manipulators, 2 Matter Bins, and 2 Micro-Lasers."
+	req_components = list(
+							"/obj/item/weapon/stock_parts/manipulator" = 2,
+							"/obj/item/weapon/stock_parts/micro_laser" = 2,
+							"/obj/item/weapon/stock_parts/matter_bin" = 2)
 
+/obj/item/weapon/circuitboard/flatpacker
+	name = "Circuit Board (Flatpack Fabricator)"
+	build_path = "/obj/machinery/r_n_d/fabricator/mechanic_fab/flatpacker"
+	board_type = "machine"
+	origin_tech = "materials=5;engineering=4;power=3;programming=3"
+	frame_desc = "Requires 2 Manipulators, 2 Matter Bins, 2 Micro-Lasers, 2 Scanning Modules, and 1 Beaker."
+	req_components = list(
+							"/obj/item/weapon/stock_parts/manipulator" = 2,
+							"/obj/item/weapon/stock_parts/micro_laser" = 2,
+							"/obj/item/weapon/stock_parts/matter_bin" = 2,
+							"/obj/item/weapon/stock_parts/scanning_module" = 2,
+							"/obj/item/weapon/reagent_containers/glass/beaker" = 1)
 
+/obj/item/weapon/circuitboard/blueprinter
+	name = "Circuit Board (Blueprint Printer)"
+	build_path = "/obj/machinery/r_n_d/blueprinter"
+	board_type = "machine"
+	origin_tech = "engineering=3;programming=3"
+	frame_desc = "Requires 2 Matter Bins, 1 Scanning Module, and 1 Manipulator."
+	req_components = list(
+							"/obj/item/weapon/stock_parts/matter_bin" = 2,
+							"/obj/item/weapon/stock_parts/manipulator" = 1,
+							"/obj/item/weapon/stock_parts/scanning_module" = 1)
 
 

@@ -29,6 +29,8 @@
 	max_n2 = 0
 	minbodytemp = 0
 
+	supernatural = 1
+
 /mob/living/simple_animal/hostile/creature/cult/cultify()
 	return
 
