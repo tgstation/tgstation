@@ -48,6 +48,9 @@
 	var/cooldown = 0
 	var/aggressiveness = 2
 	ignore_maskadjust = 0
+	flags = MASKCOVERSMOUTH | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	flags_inv = HIDEFACE
+
 
 /obj/item/clothing/mask/gas/sechailer/cyborg
 	icon_state = "sechailer"
