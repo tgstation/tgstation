@@ -53,7 +53,8 @@
 
 
 /obj/item/clothing/mask/gas/sechailer/cyborg
-	icon_state = "sechailer"
+	icon = 'icons/obj/device.dmi'
+	icon_state = "taperecorder_idle"
 	aggressiveness = 1 //Borgs are nicecurity!
 
 /obj/item/clothing/mask/gas/sechailer/attackby(obj/item/weapon/W as obj, mob/user as mob)
