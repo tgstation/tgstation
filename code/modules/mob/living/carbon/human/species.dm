@@ -621,12 +621,12 @@
 		mspeed -= 1
 
 	if(!has_gravity(H))
-		mspeed += 2 //Carefully propelling yourself along the walls is actually quite slow
+		mspeed += 1.5 //Carefully propelling yourself along the walls is actually quite slow
 
 		if(istype(H.back, /obj/item/weapon/tank/jetpack))
 			var/obj/item/weapon/tank/jetpack/J = H.back
 			if(J.allow_thrust(0.01, H))
-				mspeed -= 3
+				mspeed -= 2.5
 
 		if(H.l_hand) //Having your hands full makes movement harder when you're weightless. You try climbing around while holding a gun!
 			mspeed += 0.5
