@@ -446,7 +446,7 @@
 	// what the range is in which mobs will hear the radio
 	// returns: -1 if can't receive, range otherwise
 
-	if (isWireCut(WIRE_RECEIVE))
+	if(isWireCut(WIRE_RECEIVE))
 		return -1
 	if(!listening)
 		return -1
@@ -455,23 +455,24 @@
 		if(!position || !(position.z in level))
 			return -1
 	if(freq == SYND_FREQ)
-		if(!(src.syndie)) //Checks to see if it's allowed on that frequency, based on the encryption keys
+		if(!syndie) //Checks to see if it's allowed on that frequency, based on the encryption keys
 			return -1
-	if (!on)
+	if(!on)
 		return -1
-	if (!freq) //received on main frequency
-		if (!listening)
+	if(!freq) //received on main frequency
+		if(!listening)
 			return -1
 	else
-		var/accept = (freq==frequency && listening)
-		if (!accept)
+		var/accept = (freq == frequency && listening)
+		if(!accept)
 			for(var/ch_name in channels)
 				if(channels[ch_name] & FREQ_LISTENING)
 					if(radiochannels[ch_name] == text2num(freq) || syndie) //the radiochannels list is located in communications.dm
 						accept = 1
 						break
-		if (!accept)
+		if(!accept)
 			return -1
+
 	return canhear_range
 
 /obj/item/device/radio/proc/send_hear(freq, level)
