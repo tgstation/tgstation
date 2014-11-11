@@ -256,6 +256,8 @@
 				else if(isanimal(M)) //simple animals
 					if(iscorgi(M))
 						M_job = "Corgi"
+					else if(isborer(M))
+						M_job = "Borer"
 					else
 						M_job = "Animal"
 
@@ -354,6 +356,8 @@
 			dat += "<td>Monkey</td>"
 		else if(isalien(M))
 			dat += "<td>Alien</td>"
+		else if(isborer(M))
+			dat += "<td>Borer</td>"
 		else
 			dat += "<td>Unknown</td>"
 
