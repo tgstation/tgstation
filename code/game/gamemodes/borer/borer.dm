@@ -70,7 +70,6 @@
 /datum/game_mode/borer/pre_setup()
 	return 1
 
-
 /datum/game_mode/borer/post_setup()
 	// create a borer and enter it
 	for(var/datum/mind/borer in borers)
