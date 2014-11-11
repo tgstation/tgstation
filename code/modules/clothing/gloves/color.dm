@@ -122,3 +122,10 @@
 
 	cargo
 		item_color = "cargo"				//Exists for washing machines. Is not different from brown gloves in any way.
+
+/obj/item/clothing/gloves/white
+	name = "white gloves"
+	desc = "A pair of gloves, they don't look special in any way."
+	icon_state = "white"
+	item_state = "whitegloves"
+	item_color="white"

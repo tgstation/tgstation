@@ -222,6 +222,7 @@
 	desc = "Pompadour not included."
 	icon_state = "leatherjacket"
 
+
 //Blue suit jacket toggle
 /obj/item/clothing/suit/suit/verb/toggle()
 	set name = "Toggle Jacket Buttons"
@@ -243,6 +244,34 @@
 		usr << "You button-up some imaginary buttons on your [src]."
 		return
 	usr.update_inv_wear_suit()
+
+//Scratch jacket toggle
+/obj/item/clothing/suit/scratchjacket/verb/toggle()
+	set name = "Toggle Jacket Buttons"
+	set category = "Object"
+	set src in usr
+
+	if(!can_use(usr))
+		return 0
+
+	if(src.icon_state == "scratchjacket_open")	//no god no
+		src.icon_state = "scratchjacket"
+		src.item_state = "scratchjacket"
+		usr << "You button up the suit jacket."
+	else if(src.icon_state == "scratchjacket")
+		src.icon_state = "scratchjacket_open"
+		src.item_state = "scratchjacket_open"
+		usr << "You unbutton the suit jacket."
+	else
+		usr << "You button-up some imaginary buttons on your [src]."
+		return
+	usr.update_inv_wear_suit()
+
+/obj/item/clothing/suit/scratchjacket
+	name = "scratch jacket"
+	desc = "Looking fly Glowing high."
+	icon_state = "scratchjacket"
+	item_state = "scratchjacket"
 
 /obj/item/clothing/suit/xenos
 	name = "xenos suit"

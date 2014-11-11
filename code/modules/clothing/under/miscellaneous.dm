@@ -14,6 +14,14 @@
 	item_state = "w_suit"
 	can_adjust = 0
 
+/obj/item/clothing/under/scratch
+	name = "white suit"
+	desc = "A white suit, suitable for an excellent host"
+	icon_state = "scratch"
+	item_state = "scratch"
+	item_color = "scratch"
+	can_adjust = 0
+
 /obj/item/clothing/under/sl_suit
 	desc = "It's a very amish looking suit."
 	name = "amish suit"
@@ -373,5 +381,35 @@
 	icon_state = "black_tango"
 	item_state = "wcoat"
 	item_color = "black_tango"
-	fitted = 0
+	fitted = 1
 	can_adjust = 0
+
+/obj/item/clothing/under/sailordress
+	name = "sailor dress"
+	desc = "Professional and fashionable for any lead lady"
+	icon_state = "sailor_dress"
+	item_state = "sailor_dress"
+	item_color = "sailor_dress"
+	body_parts_covered = CHEST|GROIN|LEGS
+	fitted = 1
+	can_adjust = 0
+
+/obj/item/clothing/under/stripeddress
+	name = "striped dress"
+	desc = "Date night in spess"
+	icon_state = "striped_dress"
+	item_state = "striped_dress"
+	item_color = "striped_dress"
+	body_parts_covered = CHEST|GROIN|LEGS
+	fitted = 1
+	can_adjust = 0
+
+/obj/item/clothing/suit/redeveninggown
+	name = "red evening gown"
+	desc = "Getting fancy in spess"
+	icon_state = "red_evening_gown"
+	item_state = "red_evening_gown"
+	item_color = "red_evening_gown"
+	flags_inv = HIDESHOES
+
+
