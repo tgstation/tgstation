@@ -132,11 +132,11 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 
 /mob/living/simple_animal/borer/proc/update_verbs(var/attached)
 	if(attached)
-		client.verbs += borer_attached_verbs
-		client.verbs -= borer_detached_verbs
+		verbs += borer_attached_verbs
+		verbs -= borer_detached_verbs
 	else
-		client.verbs -= borer_attached_verbs
-		client.verbs += borer_detached_verbs
+		verbs -= borer_attached_verbs
+		verbs += borer_detached_verbs
 
 /mob/living/simple_animal/borer/player_panel_controls(var/mob/user)
 	var/html="<h2>[src] Controls</h2>"
@@ -146,17 +146,16 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 		html += "<em>No host</em>"
 	html += "<ul>"
 	if(check_rights(R_FUN))
-		if(host)
-			html += "<li><a href=\"?src=\ref[src]&act=add_chem\"Give Chem</a></li>" // PARTY SLUG
-	if(check_rights(R_ADMIN|R_MOD))
-		if(host)
-			html += "<li><a href=\"?src=\ref[src]&act=detach\">Detach</a></li>"
-			if(controlling)
-				html += "<li><a href=\"?src=\ref[src]&act=release\">Release Control</a></li>"
+		html += "<li><a href=\"?src=\ref[src]&act=add_chem\"Give Chem</a></li>" // PARTY SLUG
+	if(check_rights(R_ADMIN|R_MOD|R_DEBUG))
+		html += "<li><a href=\"?src=\ref[src]&act=detach\">Detach</a></li>"
+		html += "<li><a href=\"?src=\ref[src]&act=verbs\">Resend Verbs</a></li>"
+		if(controlling)
+			html += "<li><a href=\"?src=\ref[src]&act=release\">Release Control</a></li>"
 	return html + "</ul>"
 
 /mob/living/simple_animal/borer/Topic(href, href_list)
-	if(!check_rights(R_ADMIN|R_MOD))
+	if(!check_rights(R_ADMIN|R_MOD|R_DEBUG))
 		usr << "<span class='danger'>Hell no.</span>"
 		return
 
@@ -169,6 +168,8 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 		if("release")
 			if(host && controlling)
 				host.release_control()
+		if("verbs")
+			update_verbs(!isnull(host))
 		if("add_chem")
 			var/chemID = input("Chem name (ex: creatine):","Chemicals") as text|null
 			if(isnull(chemID))
@@ -612,9 +613,9 @@ mob/living/simple_animal/borer/proc/request_player()
 			continue
 
 		//#warning Uncomment me.
-		if(G.client.holder)
+		/*if(G.client.holder)
 			//testing("Client of [G] is admin.")
-			continue
+			continue*/
 
 		if(jobban_isbanned(G, "Syndicate"))
 			//testing("[G] is jobbanned.")
