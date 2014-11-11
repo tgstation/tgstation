@@ -25,7 +25,7 @@
 				var/controls = "<a href='byond://?src=\ref[M];follow2=\ref[M];follow=\ref[src]'>Follow</a>"
 				if(M.client.holder)
 					controls+= " | <A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>"
-				var/rendered="<span class='thoughtspeech'>Thought-speech, <b>[src.name]</b> ([controls]) -> <b>[B.truename]:</b> [copytext(message, 2)]</span>"
+				var/rendered="<span class='thoughtspeech'>Thought-speech, <b>[src.name]</b> ([controls]) -> <b>[B.truename]:</b> [message]</span>"
 				M.show_message(rendered, 2) //Takes into account blindness and such.
 
 /mob/living/captive_brain/emote(var/message)
@@ -223,7 +223,7 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 			var/controls = "<a href='byond://?src=\ref[M];follow2=\ref[M];follow=\ref[src]'>Follow</a>"
 			if(M.client.holder)
 				controls+= " | <A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>"
-			var/rendered="<span class='thoughtspeech'>Thought-speech, <b>[truename]</b> ([controls]) -> <b>[host]:</b> [copytext(message, 2)]</span>"
+			var/rendered="<span class='thoughtspeech'>Thought-speech, <b>[truename]</b> ([controls]) -> <b>[host]:</b> [message]</span>"
 			M.show_message(rendered, 2) //Takes into account blindness and such.
 
 	/*
@@ -261,7 +261,7 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 				if(M.client.holder)
 					controls+= " | <A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>"
 				controls += ") in [host]"
-			M << "<i>Cortical link, <b>[truename]</b>[controls]: [copytext(message, 2)]</i>"
+			M << "<i>Cortical link, <b>[truename]</b>[controls]: [message]</i>"
 
 /mob/living/simple_animal/borer/proc/bond_brain()
 	set category = "Alien"
@@ -611,10 +611,10 @@ mob/living/simple_animal/borer/proc/request_player()
 			//testing("Client of [G] inexistent")
 			continue
 
-		#warning Uncomment me.
-		//if(G.client.holder)
+		//#warning Uncomment me.
+		if(G.client.holder)
 			//testing("Client of [G] is admin.")
-			//continue
+			continue
 
 		if(jobban_isbanned(G, "Syndicate"))
 			//testing("[G] is jobbanned.")
