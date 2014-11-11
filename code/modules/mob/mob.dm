@@ -24,6 +24,12 @@
 /mob/proc/generate_name()
 	return name
 
+/**
+ * Player panel controls for this mob.
+ */
+/mob/proc/player_panel_controls(var/mob/user)
+	return ""
+
 /mob/proc/Cell()
 	set category = "Admin"
 	set hidden = 1

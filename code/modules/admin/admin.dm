@@ -95,6 +95,9 @@ var/global/floorIsLava = 0
 		<A href='?src=\ref[src];subtlemessage=\ref[M]'>Subtle message</A>
 	"}
 
+	// Mob-specific controls.
+	body += M.player_panel_controls(usr)
+
 	if (M.client)
 		if(!istype(M, /mob/new_player))
 
@@ -1024,6 +1027,10 @@ var/global/floorIsLava = 0
 		return 1
 	if(M.mind in ticker.mode.changelings)
 		if (ticker.mode.config_tag == "changeling")
+			return 2
+		return 1
+	if(M.mind in ticker.mode.borers)
+		if (ticker.mode.config_tag == "borer")
 			return 2
 		return 1
 
