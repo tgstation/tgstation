@@ -8,7 +8,7 @@ obj/machinery/atmospherics/tvalve
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH|WEST
 
-	var/state = 0 // 0 = go straight, 1 = go to side
+	state = 0 // 0 = go straight, 1 = go to side
 
 	// like a trinary component, node1 is input, node2 is side output, node3 is straight output
 	var/obj/machinery/atmospherics/node1
