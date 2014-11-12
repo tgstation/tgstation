@@ -245,7 +245,7 @@
 	name = "bananium airlock"
 	desc = "Honkhonkhonk"
 	icon = 'icons/obj/doors/Doorbananium.dmi'
-	var/mineral = "clown"
+	var/mineral = "bananium"
 	doortype = /obj/structure/door_assembly/door_assembly_clown
 
 /obj/machinery/door/airlock/sandstone

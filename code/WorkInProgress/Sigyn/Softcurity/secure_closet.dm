@@ -9,7 +9,6 @@
 	icon_off = "capsecureoff"
 
 	New()
-		sleep(2)
 		if(prob(50))
 			new /obj/item/weapon/storage/backpack/captain(src)
 		else
@@ -40,7 +39,6 @@
 	icon_off = "hopsecureoff"
 
 	New()
-		sleep(2)
 		new /obj/item/clothing/under/rank/head_of_personnel(src)
 		new /obj/item/clothing/suit/armor/vest(src)
 		new /obj/item/clothing/head/helmet(src)
@@ -66,7 +64,6 @@
 	icon_off = "hossecureoff"
 
 	New()
-		sleep(2)
 		new /obj/item/weapon/storage/backpack/satchel_sec(src)
 		new /obj/item/weapon/cartridge/hos(src)
 		new /obj/item/device/radio/headset/heads/hos(src)
@@ -93,7 +90,6 @@
 
 
 	New()
-		sleep(2)
 		new /obj/item/weapon/storage/backpack/satchel_sec(src)
 		new /obj/item/clothing/under/rank/advisor(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
@@ -118,7 +114,6 @@
 	icon_off = "secoff"
 
 	New()
-		sleep(2)
 		new /obj/item/weapon/storage/backpack/satchel_sec(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
 		new /obj/item/weapon/storage/belt/security(src)
@@ -141,7 +136,6 @@
 	icon_off = "cabinetdetective_broken"
 
 	New()
-		sleep(2)
 		new /obj/item/clothing/under/rank/det(src)
 		new /obj/item/clothing/suit/armor/det_suit(src)
 		new /obj/item/clothing/suit/det_suit(src)
@@ -173,7 +167,6 @@
 
 
 	New()
-		sleep(2)
 		new /obj/item/weapon/reagent_containers/ld50_syringe/choral(src)
 		new /obj/item/weapon/reagent_containers/ld50_syringe/choral(src)
 		return
@@ -197,7 +190,6 @@
 	req_access = list(access_court)
 
 	New()
-		sleep(2)
 		new /obj/item/clothing/shoes/brown(src)
 		new /obj/item/weapon/paper/Court (src)
 		new /obj/item/weapon/paper/Court (src)

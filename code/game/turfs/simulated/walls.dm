@@ -70,9 +70,10 @@
 	if(prob(50))
 		dismantle_wall()
 
-/turf/simulated/wall/attack_paw(mob/user as mob)
+/turf/simulated/wall/attack_paw(mob/living/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if ((HULK in user.mutations))
+		user.do_attack_animation(src)
 		if (prob(hardness))
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 			usr << text("<span class='notice'>You smash through the wall.</span>")
@@ -89,6 +90,7 @@
 
 /turf/simulated/wall/attack_animal(var/mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
+	M.do_attack_animation(src)
 	if(M.environment_smash >= 2)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 		M << "<span class='notice'>You smash through the wall.</span>"
@@ -264,10 +266,10 @@
 	return
 
 /turf/simulated/wall/singularity_pull(S, current_size)
-	if(current_size >= 9)
+	if(current_size >= STAGE_FIVE)
 		if(prob(50))
 			dismantle_wall()
 		return
-	if(current_size == 7)
+	if(current_size == STAGE_FOUR)
 		if(prob(30))
 			dismantle_wall()

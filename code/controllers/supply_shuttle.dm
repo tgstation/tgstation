@@ -32,7 +32,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	layer = 4
 	explosion_resistance = 5
 
-/obj/structure/plasticflaps/CanPass(atom/A, turf/T)
+/obj/structure/plasticflaps/CanPass(atom/movable/A, turf/T)
 	if(istype(A) && A.checkpass(PASSGLASS))
 		return prob(60)
 
@@ -141,6 +141,8 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	var/eta
 	//shuttle loan
 	var/datum/round_event/shuttle_loan/shuttle_loan
+	//for logging
+	var/sold_atoms = ""
 
 /datum/controller/supply_shuttle/New()
 	ordernum = rand(1,9000)
@@ -194,7 +196,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	var/area/shuttle = locate(/area/supply/station)
 	if(!shuttle) return 0
 
-	if(forbidden_atoms_check(shuttle))
+	if(forbidden_atoms_check(shuttle) && at_station)
 		return 0
 
 	return 1
@@ -235,17 +237,20 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	centcom_message = ""
 
 	for(var/atom/movable/MA in shuttle)
+		sold_atoms += " [MA.name]"
 		if(MA.anchored)	continue
 
 
 		// Must be in a crate (or a critter crate)!
 		if(istype(MA,/obj/structure/closet/crate) || istype(MA,/obj/structure/closet/critter))
+			sold_atoms += ":"
 			crate_count++
 			var/find_slip = 1
 
 			for(var/atom in MA)
 				// Sell manifests
 				var/atom/A = atom
+				sold_atoms += " [A.name]"
 				if(find_slip && istype(A,/obj/item/weapon/paper/manifest))
 					var/obj/item/weapon/paper/manifest/slip = A
 					// TODO: Check for a signature, too.
@@ -310,6 +315,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 						centcom_message += "<font color=green>+[S.rarity]</font>: New species discovered: \"[capitalize(S.species)]\".  Excellent work.<BR>"
 						points += S.rarity // That's right, no bonus for potency.  Send a crappy sample first to "show improvement" later
 		qdel(MA)
+		sold_atoms += "."
 
 	if(plasma_count)
 		centcom_message += "<font color=green>+[round(plasma_count/plasma_per_point)]</font>: Received [plasma_count] unit(s) of exotic material.<BR>"
@@ -613,7 +619,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 				supply_shuttle.moving = -1
 				supply_shuttle.sell()
 				supply_shuttle.send()
-
+				investigate_log("[usr.key] has sent the supply shuttle away. Remaining points: [supply_shuttle.points]. Shuttle contents:[supply_shuttle.sold_atoms].", "cargo")
 		else
 			if(href_list["loan"] && supply_shuttle.shuttle_loan)
 				if(!supply_shuttle.shuttle_loan.dispatched)
@@ -727,6 +733,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 					supply_shuttle.points -= P.cost
 					supply_shuttle.shoppinglist += O
 					temp = "Thanks for your order."
+					investigate_log("[usr.key] has authorized an order for [P.name]. Remaining points: [supply_shuttle.points].", "cargo")
 				else
 					temp = "Not enough supply points."
 				break

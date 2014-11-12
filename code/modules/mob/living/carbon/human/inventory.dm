@@ -247,6 +247,8 @@
 		if(s_store)
 			unEquip(s_store, 1) //It makes no sense for your suit storage to stay on you if you drop your suit.
 		wear_suit = null
+		if(I.flags_inv & HIDEJUMPSUIT)
+			update_inv_w_uniform()
 		update_inv_wear_suit(0)
 	else if(I == w_uniform)
 		if(r_store)
@@ -366,6 +368,8 @@
 			update_inv_shoes(redraw_mob)
 		if(slot_wear_suit)
 			wear_suit = I
+			if(I.flags_inv & HIDEJUMPSUIT)
+				update_inv_w_uniform()
 			update_inv_wear_suit(redraw_mob)
 		if(slot_w_uniform)
 			w_uniform = I

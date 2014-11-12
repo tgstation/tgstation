@@ -10,8 +10,8 @@
  */
 
 /obj/item/clothing/suit/fire
-	name = "firesuit"
-	desc = "A suit that protects against fire and heat."
+	name = "emergency firesuit"
+	desc = "A suit that helps protect against fire and heat."
 	icon_state = "fire"
 	item_state = "fire_suit"
 	w_class = 4
@@ -40,6 +40,13 @@
 	icon_state = "thermal"
 	item_state = "ro_suit"
 	slowdown = 1.5
+
+/obj/item/clothing/suit/fire/atmos
+	name = "firesuit"
+	desc = "An expensive firesuit that protects against even the most deadly of station fires. Designed to protect even if the wearer is set aflame."
+	icon_state = "atmos_firesuit"
+	item_state = "firesuit_atmos"
+	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 
 /*
  * Bomb protection

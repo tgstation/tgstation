@@ -84,7 +84,6 @@
 	"Waiting for clear path","Calculating navigation path","Pinging beacon network","Unable to reach destination")
 	//This holds text for what the bot is mode doing, reported on the AI's bot control interface.
 
-
 /obj/machinery/bot/proc/turn_on()
 	if(stat)	return 0
 	on = 1
@@ -98,10 +97,12 @@
 
 /obj/machinery/bot/New()
 	..()
+	aibots += src //Global bot list
 	botcard = new /obj/item/weapon/card/id(src)
 	set_custom_texts()
 	Radio = new /obj/item/device/radio(src)
 	Radio.listening = 0 //Makes bot radios transmit only so no one hears things while adjacent to one.
+
 
 /obj/machinery/bot/proc/add_to_beacons(bot_filter) //Master filter control for bots. Must be placed in the bot's local New() to support map spawned bots.
 	if(radio_controller)
@@ -110,6 +111,7 @@
 			radio_controller.add_object(src, control_freq, filter = bot_filter)
 
 /obj/machinery/bot/proc/explode()
+	aibots -= src
 	qdel(src)
 
 /obj/machinery/bot/proc/healthcheck()
@@ -142,8 +144,9 @@
 
 /obj/machinery/bot/attack_alien(var/mob/living/carbon/alien/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
 	health -= rand(15,30)*brute_dam_coeff
-	visible_message("<span class='userdanger'>[user] has slashed [src]!</span>")
+	visible_message("<span class='danger'>[user] has slashed [src]!</span>")
 	playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 	if(prob(10))
 		new /obj/effect/decal/cleanable/oil(loc)
@@ -151,11 +154,12 @@
 
 
 /obj/machinery/bot/attack_animal(var/mob/living/simple_animal/M as mob)
+	M.do_attack_animation(src)
 	if(M.melee_damage_upper == 0)
 		return
 	M.changeNext_move(CLICK_CD_MELEE)
 	health -= M.melee_damage_upper
-	visible_message("<span class='userdanger'>[M] has [M.attacktext] [src]!</span>")
+	visible_message("<span class='danger'>[M] has [M.attacktext] [src]!</span>")
 	add_logs(M, src, "attacked", admin=0)
 	if(prob(10))
 		new /obj/effect/decal/cleanable/oil(loc)
@@ -210,7 +214,7 @@
 	else
 		return 0
 
-/obj/machinery/bot/process() //Master process which handles code common across most bots.
+/obj/machinery/bot/proc/bot_process() //Master process which handles code common across most bots.
 
 	set background = BACKGROUND_ENABLED
 
@@ -234,34 +238,36 @@
 			user << "<span class='notice'>Maintenance panel is now [open ? "opened" : "closed"].</span>"
 		else
 			user << "<span class='warning'>Maintenance panel is locked.</span>"
-	else if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
-		if(health < maxhealth)
-			if(open)
-				var/obj/item/weapon/weldingtool/WT = W
-				if(!WT.isOn())
-					user << "<span class='warning'>The welder must be on for this task.</span>"
-				health = min(maxhealth, health+10)
-				user.visible_message("<span class='danger'>[user] repairs [src]!</span>","<span class='notice'>You repair [src]!</span>")
-			else
-				user << "<span class='notice'>Unable to repair with the maintenance panel closed.</span>"
-		else
-			user << "<span class='notice'>[src] does not need a repair.</span>"
 	else if (istype(W, /obj/item/weapon/card/emag) && emagged < 2)
 		Emag(user)
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
-		if(W.force) //if force is non-zero
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-			s.set_up(5, 1, src)
-			switch(W.damtype)
-				if("fire")
-					health -= W.force * fire_dam_coeff
-					s.start()
-				if("brute")
-					health -= W.force * brute_dam_coeff
-					s.start()
-			..()
-			healthcheck()
+		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
+			if(health >= maxhealth)
+				user << "<span class='warning'>[src] does not need a repair.</span>"
+				return
+			if(!open)
+				user << "<span class='warning'>Unable to repair with the maintenance panel closed.</span>"
+				return
+			var/obj/item/weapon/weldingtool/WT = W
+			if(WT.remove_fuel(0, user))
+				health = min(maxhealth, health+10)
+				user.visible_message("<span class='notice'>[user] repairs [src]!</span>","<span class='notice'>You repair [src]!</span>")
+			else
+				user << "<span class='warning'>The welder must be on for this task.</span>"
+		else
+			if(W.force) //if force is non-zero
+				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				s.set_up(5, 1, src)
+				switch(W.damtype)
+					if("fire")
+						health -= W.force * fire_dam_coeff
+						s.start()
+					if("brute")
+						health -= W.force * brute_dam_coeff
+						s.start()
+				..()
+				healthcheck()
 
 
 /obj/machinery/bot/bullet_act(var/obj/item/projectile/Proj)

@@ -8,20 +8,21 @@
 	icon_opened = "fireaxe1100"
 	anchored = 1
 	density = 0
+	wall_mounted = 1
 	var/localopened = 0 //Setting this to keep it from behaviouring like a normal closet and obstructing movement in the map. -Agouri
 	opened = 1
 	var/hitstaken = 0
 	locked = 1
 	var/smashed = 0
 
-/obj/structure/closet/fireaxecabinet/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
+/obj/structure/closet/fireaxecabinet/attackby(var/obj/item/O as obj, var/mob/living/user as mob)  //Marker -Agouri
 	//..() //That's very useful, Erro
 
 	var/hasaxe = 0       //gonna come in handy later~
 	if(fireaxe)
 		hasaxe = 1
 
-	if (isrobot(usr) || src.locked)
+	if (isrobot(user) || src.locked)
 		if(istype(O, /obj/item/device/multitool))
 			user << "<span class = 'caution'> Resetting circuitry...</span>"
 			playsound(user, 'sound/machines/lockreset.ogg', 50, 1)
@@ -36,10 +37,11 @@
 			if(src.smashed || src.localopened)
 				if(localopened)
 					localopened = 0
-					icon_state = text("fireaxe[][][][]closing",hasaxe,src.localopened,src.hitstaken,src.smashed)
+					icon_state = "fireaxe[hasaxe][src.localopened][src.hitstaken][src.smashed]closing"
 					spawn(10) update_icon()
 				return
 			else
+				user.do_attack_animation(src)
 				playsound(user, 'sound/effects/Glasshit.ogg', 100, 1) //We don't want this playing every time
 			if(W.force < 15)
 				user << "<span class = 'warning'> The cabinet's protective glass glances off the hit.</span>"
@@ -68,10 +70,10 @@
 			else
 				localopened = !localopened
 				if(localopened)
-					icon_state = text("fireaxe[][][][]opening",hasaxe,src.localopened,src.hitstaken,src.smashed)
+					icon_state = "fireaxe[hasaxe][src.localopened][src.hitstaken][src.smashed]opening"
 					spawn(10) update_icon()
 				else
-					icon_state = text("fireaxe[][][][]closing",hasaxe,src.localopened,src.hitstaken,src.smashed)
+					icon_state = "fireaxe[hasaxe][src.localopened][src.hitstaken][src.smashed]closing"
 					spawn(10) update_icon()
 	else
 		if(src.smashed)
@@ -79,7 +81,7 @@
 		if(istype(O, /obj/item/device/multitool))
 			if(localopened)
 				localopened = 0
-				icon_state = text("fireaxe[][][][]closing",hasaxe,src.localopened,src.hitstaken,src.smashed)
+				icon_state = "fireaxe[hasaxe][src.localopened][src.hitstaken][src.smashed]closing"
 				spawn(10) update_icon()
 				return
 			else
@@ -92,17 +94,52 @@
 		else
 			localopened = !localopened
 			if(localopened)
-				icon_state = text("fireaxe[][][][]opening",hasaxe,src.localopened,src.hitstaken,src.smashed)
+				icon_state = "fireaxe[hasaxe][src.localopened][src.hitstaken][src.smashed]opening"
 				spawn(10) update_icon()
 			else
-				icon_state = text("fireaxe[][][][]closing",hasaxe,src.localopened,src.hitstaken,src.smashed)
+				icon_state = "fireaxe[hasaxe][src.localopened][src.hitstaken][src.smashed]closing"
 				spawn(10) update_icon()
 
 
+/obj/structure/closet/fireaxecabinet/ex_act(severity)
+	switch(severity)
+		if(1.0)
+			qdel(src)
+			return
+		if(2.0)
+			if(prob(50))
+				if(fireaxe)
+					fireaxe.loc = src.loc
+				qdel(src)
+				return
+		if(3.0)
+			return
+
+/obj/structure/closet/fireaxecabinet/bullet_act(var/obj/item/projectile/Proj)
+	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+		health -= Proj.damage
+		if(Proj.damage >= 15 && !smashed && !localopened)
+			hitstaken++
+		if(health <= 0)
+			if(fireaxe)
+				fireaxe.loc = src.loc
+			qdel(src)
+			return
+		if(hitstaken >= 4)
+			playsound(src, 'sound/effects/Glassbr3.ogg', 100, 1)
+			smashed = 1
+			locked = 0
+			localopened = 1
+		update_icon()
+
+/obj/structure/closet/fireaxecabinet/blob_act()
+	if(prob(75))
+		if(fireaxe)
+			fireaxe.loc = src.loc
+			qdel(src)
 
 
 /obj/structure/closet/fireaxecabinet/attack_hand(mob/user as mob)
-
 	var/hasaxe = 0
 	if(fireaxe)
 		hasaxe = 1
@@ -123,19 +160,19 @@
 			else
 				localopened = !localopened
 				if(localopened)
-					src.icon_state = text("fireaxe[][][][]opening",hasaxe,src.localopened,src.hitstaken,src.smashed)
+					src.icon_state = "fireaxe[hasaxe][src.localopened][src.hitstaken][src.smashed]opening"
 					spawn(10) update_icon()
 				else
-					src.icon_state = text("fireaxe[][][][]closing",hasaxe,src.localopened,src.hitstaken,src.smashed)
+					src.icon_state = "fireaxe[hasaxe][src.localopened][src.hitstaken][src.smashed]closing"
 					spawn(10) update_icon()
 
 	else
 		localopened = !localopened //I'm pretty sure we don't need an if(src.smashed) in here. In case I'm wrong and it fucks up teh cabinet, **MARKER**. -Agouri
 		if(localopened)
-			src.icon_state = text("fireaxe[][][][]opening",hasaxe,src.localopened,src.hitstaken,src.smashed)
+			src.icon_state = "fireaxe[hasaxe][src.localopened][src.hitstaken][src.smashed]opening"
 			spawn(10) update_icon()
 		else
-			src.icon_state = text("fireaxe[][][][]closing",hasaxe,src.localopened,src.hitstaken,src.smashed)
+			src.icon_state = "fireaxe[hasaxe][src.localopened][src.hitstaken][src.smashed]closing"
 			spawn(10) update_icon()
 
 /obj/structure/closet/fireaxecabinet/attack_tk(mob/user as mob)
@@ -199,7 +236,7 @@
 	var/hasaxe = 0
 	if(fireaxe)
 		hasaxe = 1
-	icon_state = text("fireaxe[][][][]",hasaxe,src.localopened,src.hitstaken,src.smashed)
+	icon_state = "fireaxe[hasaxe][src.localopened][src.hitstaken][src.smashed]"
 
 /obj/structure/closet/fireaxecabinet/open()
 	return

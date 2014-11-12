@@ -38,7 +38,7 @@
 
 /obj/structure/closet/proc/can_close()
 	for(var/obj/structure/closet/closet in get_turf(src))
-		if(closet != src)
+		if(closet != src && !closet.wall_mounted)
 			return 0
 	return 1
 
@@ -152,23 +152,20 @@
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		health -= Proj.damage
 		if(health <= 0)
-			for(var/atom/movable/A as mob|obj in src)
-				A.loc = src.loc
+			dump_contents()
 			qdel(src)
 	return
 
 /obj/structure/closet/attack_animal(mob/living/simple_animal/user as mob)
 	if(user.environment_smash)
+		user.do_attack_animation(src)
 		visible_message("<span class='danger'>[user] destroys the [src].</span>")
-		for(var/atom/movable/A as mob|obj in src)
-			A.loc = src.loc
+		dump_contents()
 		qdel(src)
 
-// this should probably use dump_contents()
 /obj/structure/closet/blob_act()
 	if(prob(75))
-		for(var/atom/movable/A as mob|obj in src)
-			A.loc = src.loc
+		dump_contents()
 		qdel(src)
 
 
@@ -337,3 +334,5 @@
 		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
 		user << "<span class='notice'>You successfully break out of [src]!</span>"
 		open()
+	else
+		user << "<span class='warning'>You fail to break out of [src]!</span>"

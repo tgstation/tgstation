@@ -79,7 +79,7 @@
 	B.data["donor"] = O
 
 	for(var/datum/disease/D in O.viruses)
-		if(D.spread_type != SPECIAL)
+		if(!(D.spread_flags & SPECIAL))
 			B.data["viruses"] += D.Copy()
 	if(check_dna_integrity(O))
 		B.data["blood_DNA"] = copytext(O.dna.unique_enzymes,1,0)
@@ -157,7 +157,7 @@
 	set name = "Eject Contents"
 	set src in oview(1)
 
-	if (usr.stat != 0)
+	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 	src.empty()
 	add_fingerprint(usr)

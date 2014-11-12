@@ -106,7 +106,7 @@
 		playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
 		if(do_after(user, 30))
 			new /obj/item/stack/rods(src, 2)
-			make_plating()
+			make_floor(/turf/simulated/floor/plating)
 			return
 
 /turf/simulated/floor/engine/cult
@@ -125,7 +125,7 @@
 	assume_air(adding)
 
 /turf/simulated/floor/engine/singularity_pull(S, current_size)
-	if(current_size >= 9)
+	if(current_size >= STAGE_FIVE)
 		if(builtin_tile)
 			if(prob(30))
 				builtin_tile.loc = src

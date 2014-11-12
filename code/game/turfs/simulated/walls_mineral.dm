@@ -45,7 +45,6 @@
 	walltype = "bananium"
 	mineral = "bananium"
 
-
 /turf/simulated/wall/mineral/sandstone
 	name = "sandstone wall"
 	desc = "A wall with sandstone plating."

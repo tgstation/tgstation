@@ -4,8 +4,6 @@
 	icon_state = "chair"
 
 /obj/structure/stool/bed/chair/New()
-	if(anchored)
-		src.verbs -= /atom/movable/verb/pull
 	..()
 	spawn(3)	//sorry. i don't think there's a better way to do this.
 		handle_layer()
@@ -66,7 +64,7 @@
 	else
 		if(!usr || !isturf(usr.loc))
 			return
-		if(usr.stat || usr.restrained())
+		if(usr.stat || usr.restrained() || !usr.canmove)
 			return
 		spin()
 
