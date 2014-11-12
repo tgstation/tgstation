@@ -382,6 +382,7 @@
 #include "code\game\machinery\transformer.dm"
 #include "code\game\machinery\turrets.dm"
 #include "code\game\machinery\vending.dm"
+#include "code\game\machinery\vending_packs.dm"
 #include "code\game\machinery\washing_machine.dm"
 #include "code\game\machinery\wishgranter.dm"
 #include "code\game\machinery\atmoalter\area_atmos_computer.dm"

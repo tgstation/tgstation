@@ -2726,3 +2726,15 @@ other types of metals and chemistry for reagents).
 	category = "Pod_Weaponry"
 	materials = list("$iron" = 15000)
 	locked = 1
+
+//////////////////////////////////////////
+//////VENDING MACHINES////////////////////
+//////////////////////////////////////////
+/datum/design/vendomat
+	name = "Circuit Design (Vending Machine)"
+	desc = "Allows for the construction of circuit boards used to build vending machines."
+	id = "vendomat"
+	req_tech = list("materials" = 1, "engineering" = 1, "powerstorage" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/vendomat

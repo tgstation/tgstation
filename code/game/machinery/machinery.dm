@@ -441,6 +441,7 @@ Class Procs:
 	user << "<span class='notice'>\icon[src] You [panel_open ? "open" : "close"] the maintenance hatch of \the [src].</span>"
 	if(istype(toggleitem, /obj/item/weapon/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+	update_icon()
 	return 1
 
 /obj/machinery/proc/wrenchAnchor(var/mob/user)
