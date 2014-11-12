@@ -111,7 +111,7 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 			message_admins("[src.name] self-deleting due to lack of appropriate ghosts.")
 			del(src)
 		transfer_personality(O.client)
-		update_verbs(0)
+	update_verbs(0)
 
 	for(var/datum/borer_chem/chemtype in borer_chem_types)
 		var/datum/borer_chem/C = new chemtype()
@@ -145,9 +145,8 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 	else
 		html += "<em>No host</em>"
 	html += "<ul>"
-	if(check_rights(R_FUN))
+	if(user.check_rights(R_ADMIN))
 		html += "<li><a href=\"?src=\ref[src]&act=add_chem\"Give Chem</a></li>" // PARTY SLUG
-	if(check_rights(R_ADMIN|R_MOD|R_DEBUG))
 		html += "<li><a href=\"?src=\ref[src]&act=detach\">Detach</a></li>"
 		html += "<li><a href=\"?src=\ref[src]&act=verbs\">Resend Verbs</a></li>"
 		if(controlling)
@@ -155,7 +154,7 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 	return html + "</ul>"
 
 /mob/living/simple_animal/borer/Topic(href, href_list)
-	if(!check_rights(R_ADMIN|R_MOD|R_DEBUG))
+	if(!check_rights(R_ADMIN))
 		usr << "<span class='danger'>Hell no.</span>"
 		return
 
