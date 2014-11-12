@@ -75,4 +75,5 @@ var/const/SURROUND_CAP = 7
 			if ("hiss") soundin = pick('sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg')
 			if ("pageturn") soundin = pick('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')
 			if ("gunshot") soundin = pick('sound/weapons/Gunshot.ogg', 'sound/weapons/Gunshot2.ogg','sound/weapons/Gunshot3.ogg','sound/weapons/Gunshot4.ogg')
+			if ("krotchy") soundin = pick('sound/krotchy/daddysaidonly.wav', 'sound/krotchy/donttouchme.wav','sound/krotchy/mommysaiddont.wav')
 	return soundin

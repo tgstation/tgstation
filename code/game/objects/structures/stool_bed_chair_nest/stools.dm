@@ -4,6 +4,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "stool"
 	anchored = 1.0
+	pixel_y = -2
 	pressure_resistance = 15
 
 /obj/structure/stool/ex_act(severity)

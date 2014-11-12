@@ -274,3 +274,21 @@
 	..()
 	for(var/i = 1 to storage_slots)
 		new /obj/item/weapon/rollingpaper(src)
+
+/*
+ * Krotchy Box
+ */
+
+/obj/item/weapon/storage/fancy/krotchy_box
+	icon = 'icons/obj/krotchy.dmi'
+	icon_state = "krotchybox1"
+	icon_type = "krotchy"
+	name = "krotchy doll box"
+	storage_slots = 1
+	can_hold = list(/obj/item/weapon/krotchy)
+
+/obj/item/weapon/storage/fancy/krotchy_box/New()
+	..()
+	for(var/i=1; i <= storage_slots; i++)
+		new /obj/item/weapon/krotchy(src)
+	return

@@ -1,5 +1,3 @@
-
-
 //This is a list of words which are ignored by the parser when comparing message contents for names. MUST BE IN LOWER CASE!
 var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","alien","as")
 
@@ -8,20 +6,22 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	set name = "Adminhelp"
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
+		usr << "\red Speech is currently admin-disabled."
 		return
 
 	//handle muting and automuting
 	if(prefs.muted & MUTE_ADMINHELP)
-		src << "<span class='danger'>Error: Admin-PM: You cannot send adminhelps (Muted).</span>"
+		src << "<font color='red'>Error: Admin-PM: You cannot send adminhelps (Muted).</font>"
 		return
 	if(src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
 
-	//remove out adminhelp verb temporarily to prevent spamming of admins.
-	src.verbs -= /client/verb/adminhelp
+	/**src.verbs -= /client/verb/adminhelp
+
 	spawn(1200)
 		src.verbs += /client/verb/adminhelp	// 2 minute cool-down for adminhelps
+		src.verbs += /client/verb/adminhelp	// 2 minute cool-down for adminhelps//Go to hell
+	**/
 
 	//clean the input msg
 	if(!msg)	return
@@ -63,29 +63,29 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	var/list/mobs_found = list()
 	for(var/original_word in msglist)
 		var/word = ckey(original_word)
-		if(word)
-			if(!(word in adminhelp_ignored_words))
-				if(word == "ai")
-					ai_found = 1
-				else
-					var/mob/found = ckeys[word]
+		//if(word)
+		if(!(word in adminhelp_ignored_words))
+			if(word == "ai")
+				ai_found = 1
+			else
+				var/mob/found = ckeys[word]
+				if(!found)
+					found = surnames[word]
 					if(!found)
-						found = surnames[word]
-						if(!found)
-							found = forenames[word]
-					if(found)
-						if(!(found in mobs_found))
-							mobs_found += found
-							if(!ai_found && isAI(found))
-								ai_found = 1
-							msg += "<b><font color='black'>[original_word] (<A HREF='?_src_=holder;adminmoreinfo=\ref[found]'>?</A>)</font></b> "
-							continue
-			msg += "[original_word] "
+						found = forenames[word]
+				if(found)
+					if(!(found in mobs_found))
+						mobs_found += found
+						if(!ai_found && isAI(found))
+							ai_found = 1
+						msg += "<b><font color='black'>[original_word] (<A HREF='?_src_=holder;adminmoreinfo=\ref[found]'>?</A>)</font></b> "
+						continue
+		msg += "[original_word] "
 
 	if(!mob)	return						//this doesn't happen
 
 	var/ref_mob = "\ref[mob]"
-	msg = "<span class='adminnotice'><b><font color=red>HELP: </font>[key_name(src, 1)] (<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=vars;Vars=[ref_mob]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=[ref_mob]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=[ref_mob]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) [ai_found ? " (<A HREF='?_src_=holder;adminchecklaws=[ref_mob]'>CL</A>)" : ""]:</b> [msg]</span>"
+	msg = "\blue <b><font color=red>HELP: </font>[key_name(src, 1)] (<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=vars;Vars=[ref_mob]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=[ref_mob]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=[ref_mob]'>JMP</A>) (<A HREF='?_src_=holder;check_antagonist=1'>CA</A>) [ai_found ? " (<A HREF='?_src_=holder;adminchecklaws=[ref_mob]'>CL</A>)" : ""]:</b> [msg]"
 
 	//send this msg to all admins
 	var/admin_number_total = 0		//Total number of admins
@@ -108,18 +108,19 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 		X << msg
 
 	//show it to the person adminhelping too
-	src << "<span class='adminnotice'>PM to-<b>Admins</b>: [original_msg]</span>"
+	src << "<font color='blue'>PM to-<b>Admins</b>: [original_msg]</font>"
 
-	var/admin_number_present = admin_number_total - admin_number_decrease	//Number of admins who are neither afk nor invalid
-	log_admin("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins who have +BAN.")
+	var/admin_number_present = admins.len - admin_number_afk
+	log_admin("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins.")
 	if(admin_number_present <= 0)
-		if(!admin_number_afk && !admin_number_ignored)
-			send2irc(ckey, "[original_msg] - No admins online")
+		if(!admin_number_afk)
+			send2irc("ADMINHELP from [key_name(src)]: [html_decode(original_msg)] - !!No admins online!!")
 		else
-			send2irc(ckey, "[original_msg] - All admins AFK ([admin_number_afk]/[admin_number_total]) or skipped ([admin_number_ignored]/[admin_number_total])")
+			send2irc("ADMINHELP from [key_name(src)]: [html_decode(original_msg)] - !!All admins AFK ([admin_number_afk])!!")
+	else
+		send2irc("ADMINHELP from [key_name(src)]: [html_decode(original_msg)]")
 	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
-
 proc/send2irc(msg,msg2)
 	if(config.useircbot)
 		shell("python nudge.py [msg] [msg2]")

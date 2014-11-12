@@ -1,24 +1,24 @@
 client/script = {"<style>
-body					{font-family: Verdana, sans-serif;}
+body					{font-family: "Courier New", Courier, monospace;}
 
-h1, h2, h3, h4, h5, h6	{color: #0000ff;	font-family: Georgia, Verdana, sans-serif;}
+h1, h2, h3, h4, h5, h6	{color: #0000ff;	font-family: "Courier New", Courier, monospace;}
 
 em						{font-style: normal;	font-weight: bold;}
 
-.motd					{color: #638500;	font-family: Verdana, sans-serif;}
+.motd					{color: #08457e;	font-family: "Courier New", Courier, monospace}
 .motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6
-	{color: #638500;	text-decoration: underline;}
+	{color: #226b4e;	text-decoration: underline;}
 .motd a, .motd a:link, .motd a:visited, .motd a:active, .motd a:hover
-	{color: #638500;}
+	{color: #226b4e;}
 
 .prefix					{					font-weight: bold;}
 
 .ooc					{					font-weight: bold;}
-.adminobserverooc		{color: #0099cc;	font-weight: bold;}
-.adminooc				{color: #b82e00;	font-weight: bold;}
+.adminobserverooc		{color: #920034;	font-weight: bold;}
+.adminooc				{color: #226b4e;	font-weight: bold;}
 
-.adminobserver			{color: #996600;	font-weight: bold;}
-.admin					{color: #386aff;	font-weight: bold;}
+.adminobserver			{color: #669966;	font-weight: bold;}
+.admin					{color: #006666;	font-weight: bold;}
 
 .name					{					font-weight: bold;}
 

@@ -47,7 +47,17 @@
 
 //Runs byond's sanitization proc along-side sanitize_simple
 /proc/sanitize(var/t,var/list/repl_chars = null)
-	return html_encode(sanitize_simple(t,repl_chars))
+	t =  (sanitize_simple(t,repl_chars))
+	var/index = findtext(t, "ÿ")
+	while(index)
+		t = copytext(t, 1, index) + "____255_" + copytext(t, index + 1)
+		index = findtext(t, "ÿ")
+	t = html_encode(t)
+	index = findtext(t, "____255_")
+	while(index)
+		t = copytext(t, 1, index) + "&#255;" + copytext(t, index + 8)
+		index = findtext(t, "____255_")
+	return t
 
 //Runs sanitize and strip_html_simple
 //I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' after sanitize() calls byond's html_encode()
@@ -340,6 +350,27 @@ var/list/binary = list("0","1")
 //     returns"Seeya World"
 //The returned text is always the same length as into
 //This was coded to handle DNA gene-splicing.
+proc/checkhtml(var/t)
+	t = sanitize_simple(t, list("&#"="."))
+	var/index = findtext(t, "ÿ")
+	while(index)
+		t = copytext(t, 1, index) + "____255_" + copytext(t, index + 1)
+		index = findtext(t, "ÿ")
+	index = findtext(t, "____255_")
+	while(index)
+		t = copytext(t, 1, index) + "&#1103;" + copytext(t, index + 8)
+		index = findtext(t, "____255_")
+	var/p = findtext(t,"<",1)
+	while (p)	//going through all the tags
+		var/start = p++
+		var/tag = copytext(t,p, p+1)
+		if (tag != "/")
+			while (reject_bad_text(copytext(t, p, p+1), 1))
+				tag = copytext(t,start, p)
+				p++
+			tag = copytext(t,start+1, p)
+		p = findtext(t,"<",p)
+	return t
 /proc/merge_text(into, from, null_char="_")
 	. = ""
 	if(!istext(into))	into = ""

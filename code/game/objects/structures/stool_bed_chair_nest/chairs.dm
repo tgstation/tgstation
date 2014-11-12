@@ -2,6 +2,7 @@
 	name = "chair"
 	desc = "You sit in this. Either by will or force."
 	icon_state = "chair"
+	pixel_y = 2
 
 /obj/structure/stool/bed/chair/New()
 	..()

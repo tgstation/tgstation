@@ -70,12 +70,12 @@
 
 	if(C.holder)
 		if(holder)	//both are admins
-			C << "<font color='red'>Admin PM from-<b>[key_name(src, C, 1)]</b>: [msg]</font>"
-			src << "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>: [msg]</font>"
+			C << "<font color='red'>Admin PM from-<b>[key_name(src, C, 1)]</b>: [sanitize(msg)]</font>"
+			src << "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>: [sanitize(msg)]</font>"
 
 		else		//recipient is an admin but sender is not
-			C << "<font color='red'>Reply PM from-<b>[key_name(src, C, 1)]</b>: [msg]</font>"
-			src << "<font color='blue'>PM to-<b>Admins</b>: [msg]</font>"
+			C << "<font color='red'>Reply PM from-<b>[key_name(src, C, 1)]</b>: [sanitize(msg)]</font>"
+			src << "<font color='blue'>PM to-<b>Admins</b>: [sanitize(msg)]</font>"
 
 		//play the recieving admin the adminhelp sound (if they have them enabled)
 		if(C.prefs.toggles & SOUND_ADMINHELP)
@@ -84,9 +84,9 @@
 	else
 		if(holder)	//sender is an admin but recipient is not. Do BIG RED TEXT
 			C << "<font color='red' size='4'><b>-- Administrator private message --</b></font>"
-			C << "<font color='red'>Admin PM from-<b>[key_name(src, C, 0)]</b>: [msg]</font>"
+			C << "<font color='red'>Admin PM from-<b>[key_name(src, C, 0)]</b>: [sanitize(msg)]</font>"
 			C << "<font color='red'><i>Click on the administrator's name to reply.</i></font>"
-			src << "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>: [msg]</font>"
+			src << "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>: [sanitize(msg)]</font>"
 
 			//always play non-admin recipients the adminhelp sound
 			C << 'sound/effects/adminhelp.ogg'
@@ -108,7 +108,7 @@
 			src << "<font color='red'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</font>"
 			return
 
-	log_admin("PM: [key_name(src)]->[key_name(C)]: [msg]")
+	log_admin("PM: [key_name(src)]->[key_name(C)]: [sanitize(msg)]")
 
 	//we don't use message_admins here because the sender/receiver might get it too
 	for(var/client/X in admins)
