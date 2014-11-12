@@ -1184,7 +1184,7 @@ proc/process_ghost_teleport_locs()
 	name = "Virology Maintenance"
 	icon_state = "asmaint"
 
-/area/assembly/showroom
+/area/science/showroom
 	name = "\improper Robotics Showroom"
 	icon_state = "showroom"
 
