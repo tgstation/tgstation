@@ -142,15 +142,18 @@
 		message_admins("We couldn't find something in part checking, how did this happen?")
 		return 0
 
+/*
 	var/datum/design/part_design = FindDesign(O)
 	if(part_design)
 		part_design = new part_design
 		design.materials = part_design.materials
 		del(part_design)
 		return 1
-
+*/
 	if(!design.materials.len)
 		return 0
+
+	return 1
 		/* Yes, because making diamond sheets out of fucking metal makes sense. - N3X
 		var/techtotal = TechTotal(design)
 		design.materials["$iron"] = techtotal * round(rand(500, 1500), 100)

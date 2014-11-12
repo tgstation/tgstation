@@ -32,10 +32,15 @@
 		if(connected_circuit) //our tech is the circuit's requirement
 			req_tech = ConvertReqString2List(initial(connected_circuit.origin_tech))
 	else if(istype(O, /obj/item))
-		var/obj/item/I = O
-		category = "Items"
-		design_type = "item"
-		req_tech = ConvertReqString2List(I.origin_tech) //our tech is simply the item requirement
+		var/found_design = FindDesign(O)
+		if(found_design)
+			var/datum/design/D = new found_design
+			//message_admins("Found the [D]")
+			category = "Items"
+			design_type = "item"
+			req_tech = D.req_tech //our tech is simply the item requirement
+			materials = D.materials
+			del(D)
 	if(!category)
 		category = "Misc"
 
