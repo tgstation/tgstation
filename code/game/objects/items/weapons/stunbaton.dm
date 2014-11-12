@@ -102,7 +102,7 @@
 
 /obj/item/weapon/melee/baton/attack(mob/M, mob/user)
 	if(status && (CLUMSY in user.mutations) && prob(50))
-		user << "<span class='danger'>You accidentally hit yourself with [src]!</span>"
+		user << "<span class='userdanger'>You accidentally hit yourself with [src]!</span>"
 		user.Weaken(stunforce*3)
 		deductcharge(hitcost)
 		return
@@ -117,8 +117,7 @@
 
 	if(user.a_intent == "harm")
 		..()
-
-	if(!status)
+	else if(!status)
 		L.visible_message("<span class='warning'>[L] has been prodded with [src] by [user]. Luckily it was off.</span>")
 		return
 
@@ -130,7 +129,7 @@
 		L.Weaken(stunforce)
 		L.apply_effect(STUTTER, stunforce)
 
-		L.visible_message("<span class='danger'>[L] has been stunned with [src] by [user]!</span>")
+		L.visible_message("<span class='userdanger'>[L] has been stunned with [src] by [user]!</span>")
 		playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 
 		if(isrobot(loc))
