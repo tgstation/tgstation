@@ -1,7 +1,0 @@
-author: N3X15
-delete-after: true
-changes:
-- tweak: "Device Analyzers can no longer scan some items.  Other items can only be scanned with the traitor variant of the scanner."
-- tweak: "Flatpacks take 10-20 seconds to open."
-- bugfix: "Meccha machines will no longer generate random designs if one cannot be found. (Fixes building diamond sheets with metal.)"
-- bugfix: "Flatpacks hit multiple times by a crowbar will only open once."

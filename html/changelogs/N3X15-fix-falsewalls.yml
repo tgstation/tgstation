@@ -1,4 +1,0 @@
-author: N3X15
-delete-after: true
-changes:
-- bugfix: Falsewalls now properly smooth with their neighbors after closing.
