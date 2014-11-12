@@ -5,12 +5,12 @@
 	name = "Zero-point laser"
 	desc = "A super-powerful laser"
 	var/visible = 1
-	var/state = 1.0
 	//var/obj/beam/e_beam/first
 	var/power = 500
 	icon = 'icons/obj/engine.dmi'
 	icon_state = "laser"
 	anchored = 1
+	state = 1.0
 	var/id
 	var/on = 0
 	var/freq = 50000

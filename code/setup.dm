@@ -898,12 +898,13 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define MELTPOINT_PLASTIC 180+T0C
 
 //used to define machine behaviour in attackbys and other code situations
-#define EMAGGABLE 1 //can we emag it? If this is flagged, the machine calls emag()
-#define SCREWTOGGLE 2 //does it toggle panel_open when hit by a screwdriver?
-#define CROWDESTROY 4 //does hitting a panel_open machine with a crowbar disassemble it?
-#define WRENCHMOVE 8 //does hitting it with a wrench toggle its anchored state?
-#define FIXED2WORK 16 //does it need to be anchored to work? Try to use this with WRENCHMOVE
-#define EJECTNOTDEL 32 //when we destroy the machine, does it remove all its items or destroy them?
+#define EMAGGABLE		1 //can we emag it? If this is flagged, the machine calls emag()
+#define SCREWTOGGLE		2 //does it toggle panel_open when hit by a screwdriver?
+#define CROWDESTROY		4 //does hitting a panel_open machine with a crowbar disassemble it?
+#define WRENCHMOVE		8 //does hitting it with a wrench toggle its anchored state?
+#define FIXED2WORK		16 //does it need to be anchored to work? Try to use this with WRENCHMOVE
+#define EJECTNOTDEL		32 //when we destroy the machine, does it remove all its items or destroy them?
+#define WELD_FIXED		64 //if it is attacked by a welder and is anchored, it'll toggle between welded and unwelded to the floor
 
 //gun shit - prepare to have various things added to this
 #define SILENCECOMP  1 		//Silencer-compatible

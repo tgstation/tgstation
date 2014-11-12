@@ -18,10 +18,9 @@
 	var/fire_delay = 100
 	var/last_shot = 0
 	var/shot_number = 0
-	var/state = 0
 	var/locked = 0
 
-	machine_flags = EMAGGABLE | WRENCHMOVE | FIXED2WORK
+	machine_flags = EMAGGABLE | WRENCHMOVE | FIXED2WORK | WELD_FIXED
 
 /obj/machinery/power/emitter/verb/rotate()
 	set name = "Rotate"
@@ -151,57 +150,23 @@
 	if(active)
 		user << "Turn off the [src] first."
 		return
-	if(state == 2)
-		user << "\red The [src.name] needs to be unwelded from the floor."
-		return
+	return ..()
+
+/obj/machinery/power/emitter/weldToFloor()
 	if(..() == 1)
-		if(state == 1)
-			state = 0
-		else if(state == 0)
-			state = 1
+		switch(state)
+			if(1)
+				disconnect_from_network()
+				src.directwired = 0
+			if(2)
+				connect_to_network()
+				src.directwired = 1
 		return 1
 	return -1
 
 /obj/machinery/power/emitter/attackby(obj/item/W, mob/user)
 	if(..())
-		return
-	if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
-		if(active)
-			user << "Turn off the [src] first."
-			return
-		switch(state)
-			if(0)
-				user << "\red The [src.name] needs to be wrenched to the floor."
-			if(1)
-				if (WT.remove_fuel(0,user))
-					playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
-					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
-						"You start to weld the [src] to the floor.", \
-						"You hear welding")
-					if (do_after(user,20))
-						if(!src || !WT.isOn()) return
-						state = 2
-						user << "You weld the [src] to the floor."
-						connect_to_network()
-						src.directwired = 1
-				else
-					user << "\red You need more welding fuel to complete this task."
-			if(2)
-				if (WT.remove_fuel(0,user))
-					playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
-					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
-						"You start to cut the [src] free from the floor.", \
-						"You hear welding")
-					if (do_after(user,20))
-						if(!src || !WT.isOn()) return
-						state = 1
-						user << "You cut the [src] free from the floor."
-						disconnect_from_network()
-						src.directwired = 0
-				else
-					user << "\red You need more welding fuel to complete this task."
-		return
+		return 1
 
 	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
 		if(emagged)

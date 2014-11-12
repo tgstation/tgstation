@@ -4,7 +4,7 @@
 	icon_state = "wm_10"
 	density = 1
 	anchored = 1.0
-	var/state = 1
+	state = 1
 	//1 = empty, open door
 	//2 = empty, closed door
 	//3 = full, open door
