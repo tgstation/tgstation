@@ -610,6 +610,7 @@
 	if(health <= 0)
 		density = 0
 		var/obj/item/weapon/rack_parts/newparts = new(loc)
+		qdel(src)
 		transfer_fingerprints_to(newparts)
 	return
 
