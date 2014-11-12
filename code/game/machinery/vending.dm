@@ -549,7 +549,7 @@
 	product_ads = "Only the finest!;Have some tools.;The most robust equipment.;The finest gear in space!"
 
 /obj/machinery/vending/coffee
-	name = "hot drinks machine"
+	name = "\improper Solar's Best Hot Drinks"
 	desc = "A vending machine which dispenses hot drinks."
 	product_ads = "Have a drink!;Drink up!;It's good for you!;Would you like a hot joe?;I'd kill for some coffee!;The best beans in the galaxy.;Only the finest brew for you.;Mmmm. Nothing like a coffee.;I like coffee, don't you?;Coffee helps you work!;Try some tea.;We hope you like the best!;Try our new chocolate!;Admin conspiracies"
 	icon_state = "coffee"
@@ -642,7 +642,7 @@
 
 
 /obj/machinery/vending/cigarette
-	name = "cigarette machine" //OCD had to be uppercase to look nice with the new formating
+	name = "\improper ShadyCigs Deluxe"
 	desc = "If you want to get cancer, might as well do it in style"
 	product_slogans = "Space cigs taste good like a cigarette should.;I'd rather toolbox than switch.;Smoke!;Don't believe the reports - smoke today!"
 	product_ads = "Probably not bad for you!;Don't believe the scientists!;It's good for you!;Don't quit, buy more!;Smoke!;Nicotine heaven.;Best cigarettes since 2150.;Award-winning cigs."
@@ -738,7 +738,7 @@
 	contraband = list(/obj/item/weapon/reagent_containers/glass/bottle/ammonia = 10,/obj/item/weapon/reagent_containers/glass/bottle/diethylamine = 5)
 
 /obj/machinery/vending/hydroseeds
-	name = "\improper MegaSeed Servitor"
+	name = "\improper MegaSeed servitor"
 	desc = "When you need seeds fast!"
 	product_slogans = "THIS'S WHERE TH' SEEDS LIVE! GIT YOU SOME!;Hands down the best seed selection on the station!;Also certain mushroom varieties available, more for experts! Get certified today!"
 	product_ads = "We like plants!;Grow some crops!;Grow, baby, growww!;Aw h'yeah son!"
@@ -807,7 +807,7 @@
 	component_parts += new /obj/item/weapon/vending_refill/autodrobe(0)
 
 /obj/machinery/vending/dinnerware
-	name = "dinnerware"
+	name = "\improper Plasteel Chef's Dinnerware Vendor"
 	desc = "A kitchen and restaurant equipment vendor"
 	product_ads = "Mm, food stuffs!;Food and food accessories.;Get your plates!;You like forks?;I like forks.;Woo, utensils.;You don't really need these..."
 	icon_state = "dinnerware"
