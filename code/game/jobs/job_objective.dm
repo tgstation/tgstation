@@ -1,6 +1,7 @@
 /datum/mind/var/list/job_objectives=list()
 
 #define FINDJOBTASK_DEFAULT_NEW 1 // Make a new task of this type if one can't be found.
+
 /datum/mind/proc/findJobTask(var/typepath,var/options=0)
 	var/datum/job_objective/task = locate(typepath) in src.job_objectives
 	if(!istype(task,typepath))

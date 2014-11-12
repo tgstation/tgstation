@@ -925,3 +925,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define ACCESS_EMAG			32	//does it lose all its access when smacked by an emag? incompatible with CONSOLECONTROl, for obvious reasons
 #define LOCKBOXES			64	//does it spawn a lockbox around a design which is said to be locked? - for fabricators
 #define TRUELOCKS			128 //does it make a truly locked lockbox? If not set, the lockboxes made are unlockable by any crew with an ID
+
+// Mecca scanner flags
+#define MECH_SCAN_FAIL     1 // Cannot be scanned at all.
+#define MECH_SCAN_ILLEGAL  2 // Can only be scanned by the antag scanner.

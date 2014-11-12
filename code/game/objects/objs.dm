@@ -24,6 +24,9 @@
 
 	var/list/mob/_using // All mobs dicking with us.
 
+	// Shit for mechanics. (MECH_*)
+	var/mech_flags=0
+
 /obj/Destroy()
 	if(_using)
 		for(var/mob/mob in _using)

@@ -62,6 +62,14 @@
 	if(!istype(O))
 		return 0
 
+	// Objects that cannot be scanned
+	if((O.mech_flags & MECH_SCAN_FAIL)==MECH_SCAN_FAIL)
+		return 0
+
+	// Objects that can only be scanned with the syndi-scanner.
+	if(syndi_filter && (O.mech_flags & MECH_SCAN_ILLEGAL)==MECH_SCAN_ILLEGAL)
+		return 0
+
 	var/list/techlist
 	if(istype(O, /obj/machinery))
 		var/obj/machinery/M = O
