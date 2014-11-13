@@ -113,9 +113,10 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 		transfer_personality(O.client)
 	update_verbs(0)
 
-	for(var/datum/borer_chem/chemtype in borer_chem_types)
+	for(var/chemtype in borer_chem_types)
 		var/datum/borer_chem/C = new chemtype()
 		avail_chems[C.name]=C
+		//testing("Added [C.name] to borer.")
 
 /mob/living/simple_animal/borer/Life()
 	..()
@@ -146,38 +147,39 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 		html += "<em>No host</em>"
 	html += "<ul>"
 	if(user.check_rights(R_ADMIN))
-		html += "<li><a href=\"?src=\ref[src]&act=add_chem\"Give Chem</a></li>" // PARTY SLUG
+		html += "<li><a href=\"?src=\ref[src]&act=add_chem\">Give Chem</a></li>" // PARTY SLUG
 		html += "<li><a href=\"?src=\ref[src]&act=detach\">Detach</a></li>"
 		html += "<li><a href=\"?src=\ref[src]&act=verbs\">Resend Verbs</a></li>"
-		if(controlling)
+		if(host)
 			html += "<li><a href=\"?src=\ref[src]&act=release\">Release Control</a></li>"
 	return html + "</ul>"
 
 /mob/living/simple_animal/borer/Topic(href, href_list)
-	if(!check_rights(R_ADMIN))
+	if(!usr.check_rights(R_ADMIN))
 		usr << "<span class='danger'>Hell no.</span>"
 		return
 
-	switch(href["act"])
+	switch(href_list["act"])
 		if("detach")
 			src << "<span class='danger'>You feel dazed, and then appear outside of your host!</span>"
 			if(host)
 				host << "<span class='info'>You no longer feel the presence in your mind!</span>"
 			detach()
 		if("release")
-			if(host && controlling)
-				host.release_control()
+			if(host)
+				host.do_release_control()
 		if("verbs")
 			update_verbs(!isnull(host))
 		if("add_chem")
 			var/chemID = input("Chem name (ex: creatine):","Chemicals") as text|null
 			if(isnull(chemID))
 				return
-			var/datum/borer_chem/C = new
+			var/datum/borer_chem/C = new /datum/borer_chem()
 			C.name=chemID
-			C.cost=1
+			C.cost=0
 			avail_chems[C.name]=C
 			usr << "ADDED!"
+			src << "<span class='info'>You learned how to secrete [C.name]!</span>"
 
 
 /mob/living/simple_animal/borer/say(var/message)
@@ -371,7 +373,10 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 		src << "<span class='warning'>You're too busy controlling your host.</span>"
 		return
 
-	var/chemID = input("Select a chemical to secrete.", "Chemicals") in list("bicaridine","tramadol","hyperzine","alkysine")
+	var/chemID = input("Select a chemical to secrete.", "Chemicals") in avail_chems|null
+	if(!chemID)
+		return
+
 	var/datum/borer_chem/chem = avail_chems[chemID]
 
 	var/max_amount = 50
@@ -568,7 +573,7 @@ mob/living/simple_animal/borer/proc/detach()
 				vents.Add(temp_vent)
 			var/list/choices = list()
 			for(var/obj/machinery/atmospherics/unary/vent_pump/vent in vents)
-				if(vent.loc.z != loc.z)
+				if(vent.loc.z != loc.z || vent.welded)
 					continue
 				var/atom/a = get_turf(vent)
 				choices.Add(a.loc)
