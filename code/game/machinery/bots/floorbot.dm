@@ -60,12 +60,16 @@
 	#define REPLACE_TILE	5
 	#define TILE_EMAG		6
 
+#define KIWATA 1
+
 /obj/machinery/bot/floorbot/New()
 	..()
 	updateicon()
 	var/datum/job/engineer/J = new/datum/job/engineer
 	botcard.access = J.get_access()
 	prev_access = botcard.access
+	if(target == KIWATA)
+		return
 
 	spawn(5)
 		add_to_beacons(bot_filter)
@@ -270,9 +274,11 @@
 		if(path.len == 0)
 			if(!istype(target, /turf/))
 				var/turf/TL = get_turf(target)
-				path = AStar(loc, TL, /turf/proc/AdjacentTurfsSpace, /turf/proc/Distance, 0, 30, id=botcard)
+				path = get_path_to(loc, TL, /turf/proc/AdjacentTurfsSpace, /turf/proc/Distance, 0, 30, id=botcard)
 			else
-				path = AStar(loc, target, /turf/proc/AdjacentTurfsSpace, /turf/proc/Distance, 0, 30, id=botcard)
+				path = get_path_to(loc, target, /turf/proc/AdjacentTurfsSpace, /turf/proc/Distance, 0, 30, id=botcard)
+
+			world << "A* path length : [path.len] to [target] at [target.x], [target.y], [target.z]"
 
 			if(!bot_move(target))
 				add_to_ignore(target)
@@ -307,7 +313,7 @@
 					anchored = 0
 					mode = BOT_IDLE
 					target = null
-			path = new()
+			path = list()
 			return
 
 	oldloc = loc
@@ -352,7 +358,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 		else //If no special processing is needed, simply return the result.
 			result = scan_target
 	return result
-
+view
 /obj/machinery/bot/floorbot/proc/repair(var/turf/target_turf)
 
 	if(istype(target_turf, /turf/space/))
@@ -369,7 +375,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 	anchored = 1
 	icon_state = "floorbot-c"
 	if(istype(target_turf, /turf/space/)) //If we are fixing an area not part of pure space, it is
-		visible_message("<span class='notice'> [targetdirection ? "[src] begins installing a bridge plating." : "[src] begins to repair the hole."] </span>")
+		visible_message("<span class='notice'>[targetdirection ? "[src] begins installing a bridge plating." : "[src] begins to repair the hole."] </span>")
 		mode = BOT_REPAIRING
 		spawn(50)
 			if(mode == BOT_REPAIRING)
@@ -385,7 +391,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 	else
 		var/turf/simulated/floor/F = target_turf
 		mode = BOT_REPAIRING
-		visible_message("<span class='notice'> [src] begins repairing the floor.</span>")
+		visible_message("<span class='notice'>[src] begins repairing the floor.</span>")
 		spawn(50)
 			if(mode == BOT_REPAIRING)
 				F.broken = 0
