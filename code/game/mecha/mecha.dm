@@ -947,6 +947,8 @@ obj/mecha/proc/can_use(mob/user)
 /obj/mecha/MouseDrop_T(mob/M as mob, mob/user as mob)
 	if (!user.canUseTopic(src) || (user != M))
 		return
+	if(!ishuman(user)) // no silicons or drones in mechas.
+		return
 	src.log_message("[user] tries to move in.")
 	if (src.occupant)
 		usr << "<span class='warning'>The [src.name] is already occupied!</span>"
@@ -1411,8 +1413,6 @@ var/year_integer = text2num(year) // = 2013???
 
 /obj/mecha/Topic(href, href_list)
 	..()
-	if(!usr.canUseTopic(src))
-		return
 	if(href_list["update_content"])
 		if(usr != src.occupant)	return
 		send_byjax(src.occupant,"exosuit.browser","content",src.get_stats_part())
