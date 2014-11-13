@@ -10,7 +10,6 @@
 
 /obj/structure/closet/secure_closet/scientist/New()
 	..()
-	sleep(2)
 	new /obj/item/clothing/under/rank/scientist(src)
 	new /obj/item/clothing/suit/labcoat/science(src)
 	new /obj/item/clothing/shoes/sneakers/white(src)
@@ -34,7 +33,6 @@
 
 /obj/structure/closet/secure_closet/RD/New()
 	..()
-	sleep(2)
 	new /obj/item/clothing/suit/bio_suit/scientist(src)
 	new /obj/item/clothing/head/bio_hood/scientist(src)
 	new /obj/item/clothing/suit/labcoat(src)

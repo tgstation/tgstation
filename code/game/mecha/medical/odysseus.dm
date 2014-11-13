@@ -84,8 +84,8 @@
 			continue
 		var/foundVirus = 0
 		for(var/datum/disease/D in patient.viruses)
-			if(!D.hidden[SCANNER])
-				if(D.severity != D.non_threat)
+			if(!(D.visibility_flags & HIDDEN_SCANNER))
+				if(D.severity != NONTHREAT)
 					foundVirus++
 		//if(patient.virus2)
 		//	foundVirus++

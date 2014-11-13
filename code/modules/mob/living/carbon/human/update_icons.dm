@@ -272,6 +272,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 				w_uniform.screen_loc = ui_iclothing //...draw the item in the inventory screen
 			client.screen += w_uniform				//Either way, add the item to the HUD
 
+		if(wear_suit && (wear_suit.flags_inv & HIDEJUMPSUIT))
+			return
+
 		var/t_color = w_uniform.item_color
 		if(!t_color)		t_color = icon_state
 		var/image/standing	= image("icon"='icons/mob/uniform.dmi', "icon_state"="[t_color]_s", "layer"=-UNIFORM_LAYER)

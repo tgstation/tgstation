@@ -194,7 +194,7 @@ turf/simulated/proc/share_temperature_mutual_solid(turf/simulated/sharer, conduc
 		/******************* GROUP HANDLING FINISH *********************************************************************/
 
 		else
-			if(!air.check_turf(enemy_tile))
+			if(!air.check_turf(enemy_tile, atmos_adjacent_turfs_amount))
 				var/difference = air.mimic(enemy_tile,,atmos_adjacent_turfs_amount)
 				if(difference)
 					if(difference > 0)
