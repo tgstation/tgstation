@@ -388,6 +388,8 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 		visible_message("<span class='notice'> [src] begins repairing the floor.</span>")
 		spawn(50)
 			if(mode == BOT_REPAIRING)
+				F.broken = 0
+				F.burnt = 0
 				F.make_floor(/turf/simulated/floor)
 				mode = BOT_IDLE
 				amount -= 1
