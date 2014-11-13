@@ -406,7 +406,6 @@
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
-		G.affecting.adjustBruteLoss(10)
 		G.affecting.visible_message("<span class='danger'>[G.assailant] smashes [G.affecting] into [src].</span>", \
 									"<span class='userdanger'>[G.assailant] smashes [G.affecting] into [src].</span>")
 		playsound(src.loc, "shatter", 50, 1)
@@ -431,7 +430,6 @@
 		new /obj/item/weapon/shard(src.loc)
 		qdel(src)
 		user.Weaken(5)
-		user.adjustBruteLoss(10)
 
 /*
  * Wooden tables
