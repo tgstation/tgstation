@@ -149,7 +149,7 @@
 
 //Bananalamp
 obj/item/device/flashlight/lamp/bananalamp
-	name = "banana bamp"
+	name = "banana lamp"
 	desc = "Only a clown would think to make a ghetto banana-shaped lamp. Even has a goofy pullstring."
 	icon_state = "bananalamp"
 	item_state = "bananalamp"
