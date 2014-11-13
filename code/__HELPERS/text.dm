@@ -59,6 +59,21 @@
 		index = findtext(t, "____255_")
 	return t
 
+/proc/htmldetag(var/t,var/list/repl_chars = null)
+	t =  (sanitize_simple(t,repl_chars))
+	var/index = findtext(t, "<br>")
+	while(index)
+		t = copytext(t, 1, index) + "{BR}" + copytext(t, index + 1)
+		index = findtext(t, "<br>")
+	return t
+
+/proc/htmltag(var/t,var/list/repl_chars = null)
+	t = (sanitize_simple(t, repl_chars))
+	var/index = findtext(t, "{BR}")
+	while(index)
+		t = copytext(t, 1, index) + "<br>" + copytext(t, index + 1)
+		index = findtext(t, "{BR}")
+	return t
 //Runs sanitize and strip_html_simple
 //I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' after sanitize() calls byond's html_encode()
 /proc/strip_html(var/t,var/limit=MAX_MESSAGE_LEN)

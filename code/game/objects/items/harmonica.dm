@@ -14,14 +14,19 @@
 	if(!istype(M) || M != user)
 		return ..()
 
-	if(user.zone_sel.selecting == "mouth")
-		play(user)
-
+	if(spam_flag == 0)
+		if(user.zone_sel.selecting == "mouth")
+			spam_flag = 1
+			playsound(src.loc, "harmonica", 50)
+			src.add_fingerprint(user)
+			spawn(40)
+			spam_flag = 0
+	return
 
 /obj/item/device/harmonica/New()
 	harmonica_channel = rand(1000, 1024)
 
-/obj/item/device/harmonica/proc/play(mob/living/carbon/user as mob)
+/*/obj/item/device/harmonica/proc/play(mob/living/carbon/user as mob)
 	if(spam_flag) return
 
 	spam_flag = 1
@@ -37,7 +42,7 @@
 	spawn(cooldown)
 		spam_flag = 0
 
-	return
+	return */
 
 /obj/item/device/harmonica/dropped(mob/user)
 

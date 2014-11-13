@@ -76,4 +76,5 @@ var/const/SURROUND_CAP = 7
 			if ("pageturn") soundin = pick('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')
 			if ("gunshot") soundin = pick('sound/weapons/Gunshot.ogg', 'sound/weapons/Gunshot2.ogg','sound/weapons/Gunshot3.ogg','sound/weapons/Gunshot4.ogg')
 			if ("krotchy") soundin = pick('sound/krotchy/daddysaidonly.wav', 'sound/krotchy/donttouchme.wav','sound/krotchy/mommysaiddont.wav')
+			if ("harmonica") soundin = pick('sound/harmonica/fharp1.ogg','sound/harmonica/fharp2.ogg','sound/harmonica/fharp3.ogg','sound/harmonica/fharp4.ogg','sound/harmonica/fharp5.ogg','sound/harmonica/fharp6.ogg','sound/harmonica/fharp7.ogg','sound/harmonica/fharp8.ogg')
 	return soundin

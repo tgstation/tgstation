@@ -230,6 +230,9 @@
 
 /world/proc/load_motd()
 	join_motd = file2text("config/motd.txt")
+/*	join_motd = htmldetag(join_motd)
+	join_motd = sanitize(join_motd)
+	join_motd = htmltag(join_motd) */
 
 /world/proc/load_configuration()
 	config = new /datum/configuration()

@@ -372,11 +372,11 @@
 	if(prob(50))
 		name = "grand piano"
 		desc = "Like a regular space piano, but way more grand!"
-		icon_state = "piano"
+		icon_state = "old"
 	else
-		name = "grand minimoog"
-		desc = "Like a regular space synth, but way more grand!"
-		icon_state = "minimoog"
+		name = "grand piano"
+		desc = "Like a regular space piano, but way more grand!"
+		icon_state = "old"
 
 /obj/structure/royal/Destroy()
 	qdel(song)
