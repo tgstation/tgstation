@@ -115,8 +115,8 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 
 	for(var/chemtype in borer_chem_types)
 		var/datum/borer_chem/C = new chemtype()
-		src.avail_chems[C.name]=C
-		testing("Added [C.name] to borer.")
+		avail_chems[C.name]=C
+		//testing("Added [C.name] to borer.")
 
 /mob/living/simple_animal/borer/Life()
 	..()
