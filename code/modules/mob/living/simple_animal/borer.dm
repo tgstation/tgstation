@@ -146,7 +146,7 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 		html += "<em>No host</em>"
 	html += "<ul>"
 	if(user.check_rights(R_ADMIN))
-		html += "<li><a href=\"?src=\ref[src]&act=add_chem\"Give Chem</a></li>" // PARTY SLUG
+		html += "<li><a href=\"?src=\ref[src]&act=add_chem\">Give Chem</a></li>" // PARTY SLUG
 		html += "<li><a href=\"?src=\ref[src]&act=detach\">Detach</a></li>"
 		html += "<li><a href=\"?src=\ref[src]&act=verbs\">Resend Verbs</a></li>"
 		if(controlling)
