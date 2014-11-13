@@ -374,7 +374,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 		spawn(50)
 			if(mode == BOT_REPAIRING)
 				if(autotile) //Build the floor and include a tile.
-					target_turf.ChangeTurf(/turf/simulated/floor)
+					target_turf.ChangeTurf(/turf/simulated/floor/plasteel)
 				else //Build a hull plating without a floor tile.
 					target_turf.ChangeTurf(/turf/simulated/floor/plating)
 				mode = BOT_IDLE
@@ -388,7 +388,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 		visible_message("<span class='notice'> [src] begins repairing the floor.</span>")
 		spawn(50)
 			if(mode == BOT_REPAIRING)
-				F.make_floor(/turf/simulated/floor)
+				F.ChangeTurf(/turf/simulated/floor/plasteel)
 				mode = BOT_IDLE
 				amount -= 1
 				updateicon()

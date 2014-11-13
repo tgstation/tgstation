@@ -191,7 +191,7 @@
 			if(istype(object,/turf) && pa.Find("left") && !pa.Find("alt") && !pa.Find("ctrl") )
 				var/turf/T = object
 				if(istype(object,/turf/space))
-					T.ChangeTurf(/turf/simulated/floor)
+					T.ChangeTurf(/turf/simulated/floor/plasteel)
 				else if(istype(object,/turf/simulated/floor))
 					T.ChangeTurf(/turf/simulated/wall)
 				else if(istype(object,/turf/simulated/wall))
@@ -202,7 +202,7 @@
 				log_admin("Build Mode: [key_name(usr)] deleted [object] at ([object.x],[object.y],[object.z])")
 				if(istype(object,/turf/simulated/wall))
 					var/turf/T = object
-					T.ChangeTurf(/turf/simulated/floor)
+					T.ChangeTurf(/turf/simulated/floor/plasteel)
 				else if(istype(object,/turf/simulated/floor))
 					var/turf/T = object
 					T.ChangeTurf(/turf/space)

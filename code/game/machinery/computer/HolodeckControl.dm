@@ -284,23 +284,18 @@
 /turf/simulated/floor/holofloor
 	thermal_conductivity = 0
 
-/turf/simulated/floor/holofloor/grass
-	gender = PLURAL
-	name = "lush grass"
-	icon_state = "grass1"
-	floor_tile = /obj/item/stack/tile/grass
-
-/turf/simulated/floor/holofloor/grass/New()
-	..()
-	icon_state = "grass[pick("1","2","3","4")]"
-	spawn(1)
-		if(src)
-			update_icon()
-			fancy_update(type)
-
 /turf/simulated/floor/holofloor/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	return
 	// HOLOFLOOR DOES NOT GIVE A FUCK
+
+/turf/simulated/floor/fancy/grass/holo
+	thermal_conductivity = 0
+	gender = PLURAL
+	name = "lush grass"
+
+/turf/simulated/floor/fancy/grass/holo/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	return
+	// HOLOGRASS DOES NOT GIVE A FUCK
 
 /obj/structure/table/holotable
 	name = "table"
