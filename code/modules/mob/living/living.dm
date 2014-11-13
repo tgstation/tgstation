@@ -1,6 +1,8 @@
 
 /mob/living/Life()
 	..()
+	if (isolated)
+		bodytemperature = initial(bodytemperature)
 	if (monkeyizing)	return
 	if(!loc)			return	// Fixing a null error that occurs when the mob isn't found in the world -- TLE
 	if(reagents && reagents.has_reagent("bustanut"))
@@ -69,7 +71,7 @@
 	if(status_flags & GODMODE)
 		health = maxHealth
 		stat = CONSCIOUS
-	else
+	else if(!isolated)
 		health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss() - halloss
 
 

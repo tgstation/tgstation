@@ -294,7 +294,7 @@
 		return null
 
 	proc/handle_breath(datum/gas_mixture/breath)
-		if(status_flags & GODMODE)
+		if((status_flags & GODMODE) || isolated)
 			return
 
 		if(!breath || (breath.total_moles == 0))
@@ -399,7 +399,7 @@
 		return 1
 
 	proc/handle_environment(datum/gas_mixture/environment)
-		if(!environment)
+		if(!environment || isolated)
 			return
 		var/environment_heat_capacity = environment.heat_capacity()
 		if(istype(get_turf(src), /turf/space))

@@ -632,7 +632,7 @@ var/global/list/organ_damage_overlays = list(
 		return health <= config.health_threshold_crit && stat != 2
 
 	proc/handle_breath(var/datum/gas_mixture/breath)
-		if(status_flags & GODMODE)
+		if((status_flags & GODMODE) || isolated)
 			return 0
 
 		if(!breath || (breath.total_moles() == 0) || suiciding)
@@ -657,7 +657,7 @@ var/global/list/organ_damage_overlays = list(
 		return species.handle_breath(breath, src)
 
 	proc/handle_environment(datum/gas_mixture/environment)
-		if(!environment)
+		if(!environment || isolated)
 			return
 		var/loc_temp = T0C
 		if(istype(loc, /obj/mecha))

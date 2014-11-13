@@ -151,6 +151,9 @@
 	//world << "AI proc ended."
 
 /mob/living/carbon/slime/proc/handle_environment(datum/gas_mixture/environment)
+	if(isolated)
+		return
+
 	if(!environment)
 		adjustToxLoss(rand(10,20))
 		return

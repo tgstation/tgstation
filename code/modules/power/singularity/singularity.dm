@@ -5,7 +5,10 @@ var/global/list/uneatable = list(
 	/obj/effect/overlay,
 	/mob/dead,
 	/mob/camera,
-	/mob/new_player
+	/mob/new_player,
+	/obj/structure/stool/bed/chair/vehicle/adminbus,
+	/obj/structure/singulo_chain,
+	/obj/structure/hookshot,
 	)
 
 /obj/machinery/singularity/
@@ -35,6 +38,8 @@ var/global/list/uneatable = list(
 	var/target = null // Its target. Moves towards the target if it has one.
 	var/last_failed_movement = 0 // Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing.
 	var/last_warning
+
+	var/obj/structure/singulo_chain/anchor/captured = null//Adminbus chain-grab
 
 /obj/machinery/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
 	// CARN: admin-alert for chuckle-fuckery.
@@ -133,6 +138,9 @@ var/global/list/uneatable = list(
 			dissipate_delay = 10
 			dissipate_track = 0
 			dissipate_strength = 1
+			overlays = 0
+			if(captured)
+				overlays += image('icons/obj/singularity.dmi',"chain_s1")
 		if (3) // 1 to 3 does not check for the turfs if you put the gens right next to a 1x1 then its going to eat them.
 			current_size = 3
 			icon = 'icons/effects/96x96.dmi'
@@ -144,6 +152,9 @@ var/global/list/uneatable = list(
 			dissipate_delay = 5
 			dissipate_track = 0
 			dissipate_strength = 5
+			overlays = 0
+			if(captured)
+				overlays += image('icons/effects/96x96.dmi',"chain_s3")
 		if (5)
 			if ((check_turfs_in(1, 2)) && (check_turfs_in(2, 2)) && (check_turfs_in(4, 2)) && (check_turfs_in(8, 2)))
 				current_size = 5
@@ -156,6 +167,9 @@ var/global/list/uneatable = list(
 				dissipate_delay = 4
 				dissipate_track = 0
 				dissipate_strength = 20
+				overlays = 0
+				if(captured)
+					overlays += image('icons/effects/160x160.dmi',"chain_s5")
 		if(7)
 			if ((check_turfs_in(1, 3)) && (check_turfs_in(2, 3)) && (check_turfs_in(4, 3)) && (check_turfs_in(8, 3)))
 				current_size = 7
@@ -168,6 +182,9 @@ var/global/list/uneatable = list(
 				dissipate_delay = 10
 				dissipate_track = 0
 				dissipate_strength = 10
+				overlays = 0
+				if(captured)
+					overlays += image('icons/effects/224x224.dmi',"chain_s7")
 		if(9) // This one also lacks a check for gens because it eats everything.
 			current_size = 9
 			icon = 'icons/effects/288x288.dmi'
@@ -177,6 +194,9 @@ var/global/list/uneatable = list(
 			grav_pull = 10
 			consume_range = 4
 			dissipate = 0 // It cant go smaller due to e loss.
+			overlays = 0
+			if(captured)
+				overlays += image('icons/effects/288x288.dmi',"chain_s9")
 
 	if (current_size == allowed_size)
 		investigate_log("<font color='red'>grew to size [current_size].</font>", "singulo")
@@ -243,6 +263,10 @@ var/global/list/uneatable = list(
 
 	if (istype(A, /mob/living)) // Mobs get gibbed.
 		var/mob/living/M = A
+
+		if(M.isolated)
+			return 0
+
 		gain = 20
 
 		if (istype(M,/mob/living/carbon/human))
@@ -458,3 +482,21 @@ var/global/list/uneatable = list(
 		if (get_dist(R, src) <= 15) // Better than using orange() every process.
 			R.receive_pulse(energy)
 
+/obj/machinery/singularity/proc/on_capture()
+	overlays = 0
+	move_self = 0
+	switch (current_size)
+		if (1)
+			overlays += image('icons/obj/singularity.dmi',"chain_s1")
+		if (3)
+			overlays += image('icons/effects/96x96.dmi',"chain_s3")
+		if (5)
+			overlays += image('icons/effects/160x160.dmi',"chain_s5")
+		if(7)
+			overlays += image('icons/effects/224x224.dmi',"chain_s7")
+		if(9)
+			overlays += image('icons/effects/288x288.dmi',"chain_s9")
+
+/obj/machinery/singularity/proc/on_release()
+	overlays = 0
+	move_self = 1

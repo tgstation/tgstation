@@ -318,6 +318,7 @@
 		EquipCustomItems(character)
 		character.loc = pick(latejoin)
 		character.lastarea = get_area(loc)
+		character.store_position()
 
 		ticker.mode.latespawn(character)
 

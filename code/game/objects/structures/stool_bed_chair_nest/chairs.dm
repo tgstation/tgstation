@@ -66,8 +66,10 @@
 
 /obj/structure/stool/bed/chair/MouseDrop_T(mob/M as mob, mob/user as mob)
 	if(!istype(M)) return
-	var/mob/living/carbon/human/target = M
-	if(target.op_stage.butt == 4) //Butt surgery is at stage 4
+	var/mob/living/carbon/human/target = null
+	if(ishuman(M))
+		target = M
+	if((target) && (target.op_stage.butt == 4)) //Butt surgery is at stage 4
 		if(!M.weakened)	//Spam prevention
 			if(M == usr)
 				M.visible_message(\

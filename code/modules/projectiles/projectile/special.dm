@@ -72,6 +72,8 @@
 	on_hit(var/atom/target, var/blocked = 0)//These two could likely check temp protection on the mob
 		if(istype(target, /mob/living))
 			var/mob/living/M = target
+			if(M.isolated)
+				return 0
 			M.bodytemperature = temperature
 			if(temperature > 500)//emagged
 				M.adjust_fire_stacks(0.5)

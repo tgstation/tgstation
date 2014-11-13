@@ -158,6 +158,9 @@
 
 
 	//Atmos
+	if(isolated)
+		return 1
+
 	var/atmos_suitable = 1
 
 	var/atom/A = loc

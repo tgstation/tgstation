@@ -137,6 +137,10 @@ var/global/narsie_behaviour = "CultStation13"
 	//MOB PROCESSING
 		if (istype(A, /mob/) && (get_dist(A, src) <= 7))
 			var/mob/M = A
+
+			if(M.isolated)
+				return 0
+
 			M.cultify()
 
 	//ITEM PROCESSING
@@ -173,6 +177,10 @@ var/global/narsie_behaviour = "CultStation13"
 
 		if (istype(A, /mob/living/))
 			var/mob/living/C2 = A
+
+			if(C2.isolated)
+				return 0
+
 			C2.dust() // Changed from gib(), just for less lag.
 
 		else if (istype(A, /obj/))
@@ -338,12 +346,17 @@ var/global/mr_clean_targets = list(
 		return 0
 
 	if (istype(A, /mob/living/))
-		if (isrobot(A))
-			var/mob/living/silicon/robot/R = A
+
+		var/mob/living/L = A
+		if(L.isolated)
+			return 0
+
+		if (isrobot(L))
+			var/mob/living/silicon/robot/R = L
 
 			if (R.mmi)
 				del(R.mmi) // Nuke MMI.
-		qdel(A) // Just delete it.
+		qdel(L) // Just delete it.
 	else if (is_type_in_list(A, mr_clean_targets))
 		qdel(A)
 	else if (isturf(A))

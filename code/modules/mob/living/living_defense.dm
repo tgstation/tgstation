@@ -153,6 +153,8 @@
     fire_stacks = Clamp(fire_stacks + add_fire_stacks, min = -20, max = 20)
 
 /mob/living/proc/handle_fire()
+	if(isolated && on_fire)
+		extinguish()
 	if(fire_stacks < 0)
 		fire_stacks++ //If we've doused ourselves in water to avoid fire, dry off slowly
 		fire_stacks = min(0, fire_stacks)//So we dry ourselves back to default, nonflammable.

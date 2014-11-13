@@ -21,6 +21,18 @@
 	else
 		living_mob_list += src
 
+	store_position()
+
+/mob/proc/store_position()
+	origin_x = x
+	origin_y = y
+	origin_z = z
+
+/mob/proc/send_back()
+	x = origin_x
+	y = origin_y
+	z = origin_z
+
 /mob/proc/generate_name()
 	return name
 
@@ -1202,7 +1214,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	var/old_x = pixel_x
 	var/old_y = pixel_y
 	is_jittery = 1
-	while(jitteriness > 100)
+	while((jitteriness > 100) && !isolated)
 //		var/amplitude = jitteriness*(sin(jitteriness * 0.044 * world.time) + 1) / 70
 //		pixel_x = amplitude * sin(0.008 * jitteriness * world.time)
 //		pixel_y = amplitude * cos(0.008 * jitteriness * world.time)
