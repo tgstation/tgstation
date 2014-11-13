@@ -35,9 +35,8 @@
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/lizard
 
 /datum/species/lizard/handle_speech(message)
-	// jesus christ why
 	if(copytext(message, 1, 2) != "*")
-		message = replacetext(message, "s", stutter("ss"))
+		message = replacetext(message, "s","sss")
 
 	return message
 
