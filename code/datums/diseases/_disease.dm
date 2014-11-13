@@ -9,13 +9,13 @@
 #define CAN_RESIST	3
 
 //Spread Flags
-#define SPECIAL -1
-#define NON_CONTAGIOUS 0
-#define BLOOD 1
-#define CONTACT_FEET 2
-#define CONTACT_HANDS 3
-#define CONTACT_GENERAL 4
-#define AIRBORNE 5
+#define SPECIAL 1
+#define NON_CONTAGIOUS 2
+#define BLOOD 4
+#define CONTACT_FEET 8
+#define CONTACT_HANDS 16
+#define CONTACT_GENERAL 32
+#define AIRBORNE 64
 
 
 //Severity Defines
