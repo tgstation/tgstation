@@ -568,7 +568,7 @@ mob/living/simple_animal/borer/proc/detach()
 				vents.Add(temp_vent)
 			var/list/choices = list()
 			for(var/obj/machinery/atmospherics/unary/vent_pump/vent in vents)
-				if(vent.loc.z != loc.z)
+				if(vent.loc.z != loc.z || v.welded)
 					continue
 				var/atom/a = get_turf(vent)
 				choices.Add(a.loc)
