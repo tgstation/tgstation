@@ -136,7 +136,7 @@
 	desc = "A classic green-shaded desk lamp."
 	icon_state = "lampgreen"
 	item_state = "lampgreen"
-	brightness_on = 5
+
 
 
 /obj/item/device/flashlight/lamp/verb/toggle_light()
@@ -146,6 +146,13 @@
 
 	if(!usr.stat)
 		attack_self(usr)
+
+//Bananalamp
+obj/item/device/flashlight/lamp/bananalamp
+	name = "banana bamp"
+	desc = "Only a clown would think to make a ghetto banana-shaped lamp. Even has a goofy pullstring."
+	icon_state = "bananalamp"
+	item_state = "bananalamp"
 
 // FLARES
 
