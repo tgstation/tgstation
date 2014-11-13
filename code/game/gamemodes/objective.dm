@@ -274,6 +274,32 @@ datum/objective/escape/check_completion()
 	else
 		return 0
 
+datum/objective/escape/escape_with_identity
+	dangerrating = 10
+	var/target_real_name // Has to be stored because the target's real_name can change over the course of the round
+
+datum/objective/escape/escape_with_identity/find_target()
+	target = ..()
+	update_explanation_text()
+
+datum/objective/escape/escape_with_identity/update_explanation_text()
+	if(target && target.current)
+		target_real_name = target.current.real_name
+		explanation_text = "Escape on the shuttle or an escape pod with the identity of [target_real_name], the [target.assigned_role]."
+	else
+		explanation_text = "Free Objective."
+
+datum/objective/escape/escape_with_identity/check_completion()
+	if(!target_real_name)
+		return 1
+	if(!ishuman(owner.current))
+		return 0
+	var/mob/living/carbon/human/H = owner.current
+	if(..())
+		if(H.dna.real_name == target_real_name)
+			if(H.get_id_name()== target_real_name)
+				return 1
+	return 0
 
 
 datum/objective/survive

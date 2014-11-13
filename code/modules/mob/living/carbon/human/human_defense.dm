@@ -320,6 +320,59 @@ emp_act
 
 		update_damage_overlays()
 
+/mob/living/carbon/human/grabbedby(mob/living/user)
+	if(w_uniform)
+		w_uniform.add_fingerprint(user)
+	..()
+
+
+/mob/living/carbon/human/attack_animal(mob/living/simple_animal/M as mob)
+	if(..())
+		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		if(check_shields(damage, "the [M.name]"))
+			return 0
+		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+		var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
+		var/armor = run_armor_check(affecting, "melee")
+		apply_damage(damage, BRUTE, affecting, armor)
+		updatehealth()
+/*		if(armor >= 2) //why is this here?
+		return */
+
+
+/mob/living/carbon/human/attack_larva(mob/living/carbon/alien/larva/L as mob)
+
+	if(..()) //successful larva bite.
+		var/damage = rand(1, 3)
+		if(check_shields(damage, "the [L.name]"))
+			return 0
+		if(stat != DEAD)
+			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
+			var/obj/item/organ/limb/affecting = get_organ(ran_zone(L.zone_sel.selecting))
+			var/armor_block = run_armor_check(affecting, "melee")
+			apply_damage(damage, BRUTE, affecting, armor_block)
+			updatehealth()
+
+
+/mob/living/carbon/human/attack_slime(mob/living/carbon/slime/M as mob)
+	..()
+	var/damage = rand(1, 3)
+
+	if(M.is_adult)
+		damage = rand(10, 35)
+	else
+		damage = rand(5, 25)
+
+	if(check_shields(damage, "the [M.name]"))
+		return 0
+
+	var/dam_zone = pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg", "groin")
+
+	var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
+	var/armor_block = run_armor_check(affecting, "melee")
+	apply_damage(damage, BRUTE, affecting, armor_block)
+
+	return
 /mob/living/carbon/human/mech_melee_attack(obj/mecha/M)
 
 	if(M.occupant.a_intent == "harm")

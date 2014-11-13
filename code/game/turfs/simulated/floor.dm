@@ -124,7 +124,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		return
 	if(is_plasteel_floor())
 		icon_state = "floorscorched[pick(1,2)]"
-	else if(!burnt_states.len)
+	else if(burnt_states.len)
 		icon_state = pick(burnt_states)
 	else
 		icon_state = pick(broken_states)

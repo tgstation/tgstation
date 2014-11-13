@@ -332,7 +332,7 @@
 	M.do_attack_animation(src)
 	if(!(stat & BROKEN))
 		playsound(src.loc, 'sound/weapons/slash.ogg', 25, 1, -1)
-		visible_message("<span class='userdanger'>[M] has slashed at [src]!</span>")
+		visible_message("<span class='danger'>[M] has slashed at [src]!</span>")
 		src.health -= 15
 		if (src.health <= 0)
 			src.die()
@@ -416,7 +416,7 @@
 /obj/machinery/gun_turret/attack_alien(mob/living/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-	user.visible_message("[user] slashes at [src]", "You slash at [src]")
+	user.visible_message("<span class='danger'>[user] slashes at [src]</span>", "<span class='danger'>You slash at [src]</span>")
 	take_damage(15)
 	return
 

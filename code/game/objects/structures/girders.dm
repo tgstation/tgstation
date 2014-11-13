@@ -204,18 +204,17 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(30))
+			if (prob(70))
 				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
 				new remains(loc)
 				qdel(src)
 			return
 		if(3.0)
-			if (prob(5))
+			if (prob(15))
 				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
 				new remains(loc)
 				qdel(src)
 			return
-		else
 	return
 
 /obj/structure/girder/displaced
@@ -229,6 +228,25 @@
 	icon_state = "reinforced"
 	state = 2
 	girderpasschance = 0
+
+/obj/structure/girder/reinforced/ex_act(severity)
+	switch(severity)
+		if(1.0)
+			qdel(src)
+			return
+		if(2.0)
+			if (prob(30))
+				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
+				new remains(loc)
+				qdel(src)
+			return
+		if(3.0)
+			if (prob(5))
+				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
+				new remains(loc)
+				qdel(src)
+			return
+	return
 
 /obj/structure/cultgirder
 	icon= 'icons/obj/cult.dmi'
