@@ -302,17 +302,17 @@
 	return
 
 //sum of the required tech of a design
-/obj/machinery/r_n_d/proc/TechTotal(var/datum/design/part)
+/datum/design/proc/TechTotal()
 	var/total = 0
-	for(var/tech in part.req_tech)
-		total += part.req_tech[tech]
+	for(var/tech in src.req_tech)
+		total += src.req_tech[tech]
 	return total
 
 //sum of the required materials of a design
 //do not confuse this with Total_Materials. That gets the machine's materials, this gets design materials
-/obj/machinery/r_n_d/proc/MatTotal(var/datum/design/part)
+/datum/design/proc/MatTotal()
 	var/total = 0
-	for(var/matID in part.materials)
-		total += part.materials[matID]
+	for(var/matID in src.materials)
+		total += src.materials[matID]
 	//log_admin("[total] for [part.name]")
 	return total
