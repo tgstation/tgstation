@@ -291,7 +291,7 @@
 //if it gets passed an object, it makes it into a type
 //it then finds the design which has a buildpath of that type
 //confirmed to work by Comic
-/obj/machinery/r_n_d/proc/FindDesign(var/part as anything)
+/datum/proc/FindDesign(var/part as anything)
 	if(!ispath(part))
 		var/obj/thispart = part
 		part = thispart.type
