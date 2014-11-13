@@ -366,7 +366,7 @@ steam.start() -- spawns the effect
 				M.coughedtime = 1
 				M.emote("cough")
 				spawn(20)
-					if(M.loc)
+					if(M && M.loc)
 						M.coughedtime = 0
 	return
 
@@ -391,7 +391,7 @@ steam.start() -- spawns the effect
 				M.coughedtime = 1
 				M.emote("cough")
 				spawn(20)
-					if(M.loc)
+					if(M && M.loc)
 						M.coughedtime = 0
 	return
 
@@ -605,7 +605,7 @@ steam.start() -- spawns the effect
 				M.coughedtime = 1
 				M.emote("cough")
 				spawn(20)
-					if(M.loc)
+					if(M && M.loc)
 						M.coughedtime = 0
 	return
 
@@ -622,7 +622,7 @@ steam.start() -- spawns the effect
 				M.coughedtime = 1
 				M.emote("cough")
 				spawn(20)
-					if(M.loc)
+					if(M && M.loc)
 						M.coughedtime = 0
 	return
 
