@@ -95,7 +95,8 @@
 		/obj/item/stack/medical,
 		/obj/item/device/flashlight/pen,
 		/obj/item/weapon/extinguisher/mini,
-		/obj/item/weapon/reagent_containers/hypospray
+		/obj/item/weapon/reagent_containers/hypospray,
+		/obj/item/device/rad_laser
 		)
 
 

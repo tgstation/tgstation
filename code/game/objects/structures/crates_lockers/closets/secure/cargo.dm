@@ -10,7 +10,6 @@
 
 /obj/structure/closet/secure_closet/cargotech/New()
 	..()
-	sleep(2)
 	new /obj/item/clothing/under/rank/cargotech(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/device/radio/headset/headset_cargo(src)
@@ -31,7 +30,6 @@
 
 /obj/structure/closet/secure_closet/quartermaster/New()
 	..()
-	sleep(2)
 	new /obj/item/clothing/under/rank/cargo(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
 	new /obj/item/device/radio/headset/headset_cargo(src)

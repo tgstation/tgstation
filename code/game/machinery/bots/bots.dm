@@ -146,7 +146,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	health -= rand(15,30)*brute_dam_coeff
-	visible_message("<span class='userdanger'>[user] has slashed [src]!</span>")
+	visible_message("<span class='danger'>[user] has slashed [src]!</span>")
 	playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 	if(prob(10))
 		new /obj/effect/decal/cleanable/oil(loc)
@@ -159,7 +159,7 @@
 		return
 	M.changeNext_move(CLICK_CD_MELEE)
 	health -= M.melee_damage_upper
-	visible_message("<span class='userdanger'>[M] has [M.attacktext] [src]!</span>")
+	visible_message("<span class='danger'>[M] has [M.attacktext] [src]!</span>")
 	add_logs(M, src, "attacked", admin=0)
 	if(prob(10))
 		new /obj/effect/decal/cleanable/oil(loc)

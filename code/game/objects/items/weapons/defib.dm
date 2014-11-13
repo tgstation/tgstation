@@ -131,8 +131,7 @@
 	var/mob/living/carbon/human/user = usr
 	if(on)
 		//Detach the paddles into the user's hands
-		var/list/L = list("left hand" = slot_l_hand,"right hand" = slot_r_hand)
-		if(!user.equip_in_one_of_slots(paddles, L))
+		if(!usr.put_in_hands(paddles))
 			on = 0
 			user << "<span class='warning'>You need a free hand to hold the paddles!</span>"
 			update_icon()
@@ -232,16 +231,20 @@
 	return (OXYLOSS)
 
 /obj/item/weapon/twohanded/shockpaddles/dropped(mob/user as mob)
-	..()
-	user << "<span class='notice'>The paddles snap back into the main unit.</span>"
-	defib.on = 0
-	loc = defib
-	defib.update_icon()
+	if(user)
+		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
+		if(istype(O))
+			O.unwield()
+		user << "<span class='notice'>The paddles snap back into the main unit.</span>"
+		defib.on = 0
+		loc = defib
+		defib.update_icon()
+	return	unwield()
 
 /obj/item/weapon/twohanded/shockpaddles/proc/check_defib_exists(mainunit, var/mob/living/carbon/human/M, var/obj/O)
 	if (!mainunit || !istype(mainunit, /obj/item/weapon/defibrillator))	//To avoid weird issues from admin spawns
 		M.unEquip(O)
-		qdel(0)
+		qdel(O)
 		return 0
 	else
 		return 1
@@ -271,10 +274,10 @@
 			busy = 1
 			H.visible_message("<span class='danger'>[M.name] has been touched with [src] by [user]!</span>")
 			H.adjustStaminaLoss(50)
-			H.adjustFireLoss(10)
-			H.Stun(3)
+			H.Weaken(5)
 			H.updatehealth() //forces health update before next life tick
 			playsound(get_turf(src), 'sound/weapons/Egloves.ogg', 50, 1, -1)
+			H.emote("gasp")
 			add_logs(user, M, "stunned", object="defibrillator")
 			defib.deductcharge(revivecost)
 			cooldown = 1
@@ -289,24 +292,35 @@
 			if(do_after(user, 30)) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
 				user.visible_message("<span class='notice'>[user] places [src] on [M.name]'s chest.</span>", "<span class='warning'>You place [src] on [M.name]'s chest.</span>")
 				playsound(get_turf(src), 'sound/weapons/flash.ogg', 50, 0)
-				var/isghosted = !H.key && H.mind
+				var/mob/dead/observer/ghost = H.get_ghost()
 				var/tplus = world.time - H.timeofdeath
-				var/tlimit = 1500 //past this much time the subject is unrecoverable
-				var/tloss = 900 //but brain damage starts setting in after some time
+				var/tlimit = 1800 //past this much time the subject is unrecoverable, currently 3m
+				var/tloss = 900 //brain damage starts setting in after some time, currently 1m30s
+				var/total_burn	= 0
+				var/total_brute	= 0
 				if(do_after(user, 20)) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
+					for(var/obj/item/carried_item in H.contents)
+						if((istype(carried_item, /obj/item/clothing/suit/armor)) || (istype(carried_item, /obj/item/clothing/suit/space)))
+							user.visible_message("<span class='notice'>[defib] buzzes: Patient's chest is obscured. Operation aborted.</span>")
+							playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 0)
+							busy = 0
+							update_icon()
+							return
 					if(H.stat == 2)
 						var/health = H.health
-						var/chance = 90
-						for(var/obj/item/carried_item in H.contents)
-							if(istype(carried_item, /obj/item/clothing/suit/armor))
-								chance = 25
 						M.visible_message("<span class='warning'>[M]'s body convulses a bit.")
 						playsound(get_turf(src), "bodyfall", 50, 1)
 						playsound(get_turf(src), 'sound/weapons/Egloves.ogg', 50, 1, -1)
-						if(H.health <= -100 && !H.suiciding && prob(chance) && !isghosted && tplus < tlimit && !NOCLONE in H.mutations)
+						for(var/obj/item/organ/limb/O in H.organs)
+							total_brute	+= O.brute_dam
+							total_burn	+= O.burn_dam
+						if(H.health <= config.health_threshold_dead && total_burn <= 180 && total_brute <= 180 && !H.suiciding && !ghost && tplus < tlimit && !(NOCLONE in H.mutations))
 							tobehealed = health + threshold
-							tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabilizers
+							tobehealed -= 5 //They get 5 of each type of damage healed so excessive combined damage will not immediately kill them after they get revived
 							H.adjustOxyLoss(tobehealed)
+							H.adjustToxLoss(tobehealed)
+							H.adjustFireLoss(tobehealed)
+							H.adjustBruteLoss(tobehealed)
 							user.visible_message("<span class='boldnotice'>[defib] pings: Resuscitation successful.</span>")
 							playsound(get_turf(src), 'sound/machines/ping.ogg', 50, 0)
 							H.stat = 1
@@ -319,15 +333,14 @@
 							add_logs(user, M, "revived", object="defibrillator")
 						else
 							if(tplus > tlimit)
-								user.visible_message("<span class='boldnotice'>[defib] buzzes: Resuscitation failed. Tissue damage beyond point of no return for defibrillation.</span>")
+								user.visible_message("<span class='boldnotice'>[defib] buzzes: Resuscitation failed - Heart tissue damage beyond point of no return for defibrillation.</span>")
+							else if(total_burn >= 180 || total_brute >= 180)
+								user.visible_message("<span class='boldnotice'>[defib] buzzes: Resuscitation failed - Severe tissue damage detected.</span>")
 							else
 								user.visible_message("<span class='notice'>[defib] buzzes: Resuscitation failed.</span>")
-								if(isghosted)
-									for(var/mob/dead/observer/ghost in player_list)
-										if(ghost.mind == H.mind)
-											if(ghost.can_reenter_corpse)
-												ghost << "<span class='ghostalert'>Your heart is being defibrillated. Return to your body if you want to be revived!</span> (Verbs -> Ghost -> Re-enter corpse)"
-												ghost << sound('sound/effects/genetics.ogg')
+								if(ghost)
+									ghost << "<span class='ghostalert'>Your heart is being defibrillated. Return to your body if you want to be revived!</span> (Verbs -> Ghost -> Re-enter corpse)"
+									ghost << sound('sound/effects/genetics.ogg')
 							playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, 0)
 							defib.deductcharge(revivecost)
 						update_icon()

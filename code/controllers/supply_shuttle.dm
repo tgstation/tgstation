@@ -196,7 +196,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	var/area/shuttle = locate(/area/supply/station)
 	if(!shuttle) return 0
 
-	if(forbidden_atoms_check(shuttle))
+	if(forbidden_atoms_check(shuttle) && at_station)
 		return 0
 
 	return 1

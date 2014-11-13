@@ -621,12 +621,12 @@
 		mspeed -= 1
 
 	if(!has_gravity(H))
-		mspeed += 2 //Carefully propelling yourself along the walls is actually quite slow
+		mspeed += 1.5 //Carefully propelling yourself along the walls is actually quite slow
 
 		if(istype(H.back, /obj/item/weapon/tank/jetpack))
 			var/obj/item/weapon/tank/jetpack/J = H.back
 			if(J.allow_thrust(0.01, H))
-				mspeed -= 3
+				mspeed -= 2.5
 
 		if(H.l_hand) //Having your hands full makes movement harder when you're weightless. You try climbing around while holding a gun!
 			mspeed += 0.5
@@ -701,25 +701,7 @@
 					H << "<span class='unconscious'>You feel a breath of fresh air enter your lungs. It feels good.</span>"
 
 		if("grab")
-			if(M == H || H.anchored)
-				return 0
-
-			add_logs(M, H, "grabbed", addition="passively")
-
-			if(H.w_uniform)
-				H.w_uniform.add_fingerprint(M)
-
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, H)
-			if(H.buckled)
-				M << "<span class='notice'>You cannot grab [H], \he is buckled in!</span>"
-			if(!G)	//the grab will delete itself in New if affecting is anchored
-				return
-			M.put_in_active_hand(G)
-			G.synch()
-			H.LAssailant = M
-
-			playsound(H.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			H.visible_message("<span class='warning'>[M] has grabbed [H] passively!</span>")
+			H.grabbedby(M)
 			return 1
 
 		if("harm")
@@ -770,6 +752,7 @@
 				H.forcesay(hit_appends)
 
 		if("disarm")
+			M.do_attack_animation(H)
 			add_logs(M, H, "disarmed")
 
 			if(H.w_uniform)
@@ -1054,14 +1037,9 @@
 	if((H.status_flags & GODMODE))
 		return
 
-	if(!breath || (breath.total_moles() == 0) || H.suiciding)
+	if(!breath || (breath.total_moles() == 0))
 		if(H.reagents.has_reagent("inaprovaline"))
 			return
-		if(H.suiciding)
-			H.adjustOxyLoss(2)//If you are suiciding, you should die a little bit faster
-			H.failed_last_breath = 1
-			H.oxygen_alert = max(H.oxygen_alert, 1)
-			return 0
 		if(H.health >= config.health_threshold_crit)
 			if(NOBREATH in specflags)	return 1
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
