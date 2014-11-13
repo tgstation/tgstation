@@ -45,6 +45,7 @@
 #include "code\__HELPERS\time.dm"
 #include "code\__HELPERS\type2type.dm"
 #include "code\__HELPERS\unsorted.dm"
+#include "code\__HELPERS\bygex\bygex.dm"
 #include "code\__HELPERS\sorts\__main.dm"
 #include "code\__HELPERS\sorts\InsertSort.dm"
 #include "code\__HELPERS\sorts\MergeSort.dm"
