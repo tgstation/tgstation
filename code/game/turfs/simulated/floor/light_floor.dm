@@ -42,7 +42,7 @@
 		SetLuminosity(0)
 		icon_state = "light_off"
 
-/turf/simulated/floor/light/ChangeTurf(turf/simulated/floor/T as turf)
+/turf/simulated/floor/light/ChangeTurf(turf/T as turf)
 	SetLuminosity(0)
 	..()
 

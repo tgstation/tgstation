@@ -282,6 +282,7 @@
 // Holographic Items!
 
 /turf/simulated/floor/holofloor
+	icon_state = "floor"
 	thermal_conductivity = 0
 
 /turf/simulated/floor/holofloor/attackby(obj/item/weapon/W as obj, mob/user as mob)
