@@ -172,7 +172,7 @@ proc/AStar(start,end,adjacent,dist,maxnodes,maxnodedepth = 30,mintargetdist,minn
 	//then run the main loop
 	while(!open.IsEmpty() && !path)
 	{
-			//get the lower f node on the open list
+		//get the lower f node on the open list
 		cur = open.Dequeue() //get the lower f turf in the open list
 		closed.Add(cur.source) //and tell we've processed it
 
@@ -235,4 +235,11 @@ proc/AStar(start,end,adjacent,dist,maxnodes,maxnodedepth = 30,mintargetdist,minn
 		for(var/i = 1; i <= path.len/2; i++)
 			path.Swap(i,path.len-i+1)
 
+	return path
+
+//wrapper that returns an empty list if A* failed to find a path
+/proc/get_path_to(var/start,var/end,var/adjacent,var/dist,var/maxnodes,var/maxnodedepth = 30,var/mintargetdist,var/minnodedist,id=null, var/turf/exclude=null)
+	var/list/path = AStar(start, end, adjacent, dist, maxnodes, maxnodedepth, mintargetdist, minnodedist,id, exclude)
+	if(!path)
+		path = list()
 	return path
