@@ -1,5 +1,0 @@
-author: N3X15
-delete-after: true
-changes:
-- bugfix: "Borers are now properly blocked by welded vents."
-- bugfix: "Borer chem synthesis works properly now."
