@@ -12,6 +12,32 @@
 
 	return text
 
+/proc/get_maps(root="maps/voting/")
+	var/list/maps = list()
+	var/recursion_limit = 20 //lots of maps waiting to be played, feels like TF2
+	//Get our potential maps
+	//testing("starting in [root]")
+	for(var/potential in flist(root))
+		if(copytext(potential,-1,0 != "/")) continue // Not a directory, ignore it.
+		//testing("Inside [root + potential]")
+		if(!recursion_limit) break
+		//our current working directory
+		var/path = root + potential
+		//The DMB that has the map we want.
+		var/binary
+		//Looking for a binary
+		for(var/binaries in flist(path))
+			//testing("Checking file [binaries]")
+			if(copytext(binaries,-4,0) == ".dmb")
+				binary = binaries
+				break
+		if(!binary)
+			warning("Map folder [path] does not contain a valid byond binary, skipping.")
+		else
+			maps[potential] = path + binary
+		recursion_limit--
+	return maps
+
 //Sends resource files to client cache
 /client/proc/getFiles()
 	for(var/file in args)
