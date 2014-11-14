@@ -87,14 +87,13 @@
 		var/datum/gas_mixture/removed2 = air2.remove(transfer_moles2)
 		air3.merge(removed2)
 
-	if(network1 && transfer_moles1)
-		network1.update = 1
+	if(transfer_moles1)
+		parent1.update = 1
 
-	if(network2 && transfer_moles2)
-		network2.update = 1
+	if(transfer_moles2)
+		parent2.update = 1
 
-	if(network3)
-		network3.update = 1
+	parent3.update = 1
 
 	return 1
 

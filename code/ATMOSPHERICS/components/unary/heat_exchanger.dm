@@ -57,12 +57,10 @@
 		air_contents.temperature = new_temperature
 		partner.air_contents.temperature = new_temperature
 
-	if(network)
-		if(abs(old_temperature-air_contents.temperature) > 1)
-			network.update = 1
+	if(abs(old_temperature-air_contents.temperature) > 1)
+		parent.update = 1
 
-	if(partner.network)
-		if(abs(other_old_temperature-partner.air_contents.temperature) > 1)
-			partner.network.update = 1
+	if(abs(other_old_temperature-partner.air_contents.temperature) > 1)
+		partner.parent.update = 1
 
 	return 1

@@ -122,14 +122,11 @@ Filter types:
 		air2.merge(filtered_out)
 		air3.merge(removed)
 
-	if(network2)
-		network2.update = 1
+	parent2.update = 1
 
-	if(network3)
-		network3.update = 1
+	parent3.update = 1
 
-	if(network1)
-		network1.update = 1
+	parent1.update = 1
 
 	return 1
 

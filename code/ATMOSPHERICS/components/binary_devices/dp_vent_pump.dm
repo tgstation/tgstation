@@ -74,8 +74,7 @@
 				loc.assume_air(removed)
 				air_update_turf()
 
-				if(network1)
-					network1.update = 1
+				parent1.update = 1
 
 	else //external -> output
 		var/pressure_delta = 10000
@@ -94,8 +93,7 @@
 				air2.merge(removed)
 				air_update_turf()
 
-				if(network2)
-					network2.update = 1
+				parent2.update = 1
 
 	return 1
 
