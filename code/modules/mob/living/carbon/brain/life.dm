@@ -34,6 +34,8 @@
 
 /mob/living/carbon/brain/
 	proc/handle_mutations_and_radiation()
+		if(isolated)
+			return
 
 		if (radiation)
 			if (radiation > 100)
@@ -269,6 +271,10 @@
 
 
 /*/mob/living/carbon/brain/emp_act(severity)
+	if(isolated)
+		src << "The bus' robustness protects you from the EMP."
+		return
+
 	if(!(container && istype(container, /obj/item/device/mmi)))
 		return
 	else

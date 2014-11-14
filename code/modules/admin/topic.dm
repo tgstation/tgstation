@@ -2491,8 +2491,26 @@
 					new /turf/unsimulated/wall/supermatter(get_turf(usr))
 					SetUniversalState(/datum/universal_state/supermatter_cascade)
 					message_admins("[key_name_admin(usr)] has managed to destroy the universe with a supermatter cascade. Good job, [key_name_admin(usr)]")
-
-
+			if("spawnadminbus")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","AB")
+				var/obj/structure/stool/bed/chair/vehicle/adminbus/A = new /obj/structure/stool/bed/chair/vehicle/adminbus(get_turf(usr))
+				A.dir = EAST
+				message_admins("[key_name_admin(usr)] has spawned an Adminbus. Who gave him the keys?")
+			if("spawnselfdummy")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","TD")
+				var/mob/living/carbon/human/dummy/D = new /mob/living/carbon/human/dummy(get_turf(usr))
+				usr.client.cmd_assume_direct_control(D)
+				D.name = "Admin"
+				D.real_name = "Admin"
+				var/newname = ""
+				newname = copytext(sanitize(input(D, "Before you step out as an embodied god, what name do you wish for?", "Choose your name.", "Admin") as null|text),1,MAX_NAME_LEN)
+				if (!newname)
+					newname = "Admin"
+				D.name = newname
+				D.real_name = newname
+				message_admins("[key_name_admin(usr)] spawned himself as a Test Dummy.")
 		if(usr)
 			log_admin("[key_name(usr)] used secret [href_list["secretsfun"]]")
 			if (ok)

@@ -273,6 +273,10 @@
 				// now with silicons
 
 /mob/living/emp_act(severity)
+	if(isolated)
+		src << "The bus' robustness protects you from the EMP."
+		return
+
 	var/list/L = src.get_contents()
 	for(var/obj/O in L)
 		O.emp_act(severity)
@@ -296,6 +300,7 @@
 // damage ONE external organ, organ gets randomly selected from damaged ones.
 /mob/living/proc/take_organ_damage(var/brute, var/burn)
 	if(status_flags & GODMODE)	return 0	//godmode
+	if(isolated)	return 0
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)
 	src.updatehealth()
@@ -309,6 +314,7 @@
 // damage MANY external organs, in random order
 /mob/living/proc/take_overall_damage(var/brute, var/burn, var/used_weapon = null)
 	if(status_flags & GODMODE)	return 0	//godmode
+	if(isolated)	return 0
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)
 	src.updatehealth()
@@ -320,7 +326,9 @@
 
 /mob/living/proc/revive()
 	rejuvenate()
+	/*
 	buckled = initial(src.buckled)
+	*/
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
 
@@ -335,6 +343,9 @@
 	hud_updateflag |= 1 << STATUS_HUD
 
 /mob/living/proc/rejuvenate()
+
+	var/turf/T = get_turf(src)
+	T.rejuv()
 
 	// shut down various types of badness
 	setToxLoss(0)
@@ -361,9 +372,11 @@
 	heal_overall_damage(1000, 1000)
 	ExtinguishMob()
 	fire_stacks = 0
+	/*
 	if(buckled)
 		buckled.unbuckle()
 	buckled = initial(src.buckled)
+	*/
 	if(istype(src, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = src
 		H.timeofdeath = 0

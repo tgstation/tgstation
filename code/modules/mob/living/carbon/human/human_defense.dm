@@ -131,6 +131,10 @@ emp_act
 	return 0
 
 /mob/living/carbon/human/emp_act(severity)
+	if(isolated)
+		src << "The bus' robustness protects you from the EMP."
+		return
+
 	for(var/obj/O in src)
 		if(!O)	continue
 		O.emp_act(severity)
@@ -273,6 +277,10 @@ emp_act
 		update_inv_w_uniform(0)
 
 /mob/living/carbon/human/ex_act(severity)
+	if(isolated)
+		src << "The bus' robustness protects you from the explosion."
+		return
+
 	if(!blinded)
 		flick("flash", flash)
 
@@ -366,6 +374,8 @@ emp_act
 
 
 /mob/living/carbon/human/blob_act()
+	if(isolated)
+		return
 	if(stat == 2)	return
 	show_message("\red The blob attacks you!")
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
@@ -374,6 +384,8 @@ emp_act
 	return
 
 /mob/living/carbon/human/meteorhit(O as obj)
+	if(isolated)
+		return
 	for(var/mob/M in viewers(src, null))
 		if ((M.client && !( M.blinded )))
 			M.show_message("\red [src] has been hit by [O]", 1)

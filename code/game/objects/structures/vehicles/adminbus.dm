@@ -1,3 +1,5 @@
+//Deity Link, giving a new meaning to the Adminbus since 2014
+
 /obj/structure/stool/bed/chair/vehicle/adminbus
 	name = "\improper Adminbus"
 	desc = "Shit just got fucking real."
@@ -11,6 +13,7 @@
 	var/list/overlays_bus[3]//1=underlay 2=roadlights 3=ad
 	var/list/passengers[16]
 	var/occupied_seats = 0
+	var/unloading = 0
 	var/capture_mode = 1//1=capture mobs 2=roll over mobs(deals light brute damage and push them down) 3=gib mobs
 	var/spawned_mobs[] = list()//keeps track of every mobs spawned by the bus, so we can remove them all with the push of a button in needed
 	var/hook = 1
@@ -18,6 +21,7 @@
 	var/obj/structure/singulo_chain/chain_base = null
 	var/chain[] = list()
 	var/obj/machinery/singularity/singulo = null
+	var/roadlights = 0
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/New()
 	..()
@@ -28,9 +32,9 @@
 	overlays_bus[2] = roadlights
 	overlays_bus[3] = advertisement
 	overlays += overlays_bus[1]
-	overlays += overlays_bus[2]
 	overlays += overlays_bus[3]
-	dir = 4
+	src.dir = 4
+	playsound(src, 'sound/misc/adminbus.ogg', 50, 0, 0)
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/update_mob()
 	if(buckled_mob)
@@ -128,6 +132,11 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/Move()
 	var/turf/T = get_turf(src)
+	var/turf/S = get_step(src,src.dir)
+	for(var/mob/living/M in S)
+		capture_mob(M)
+	for(var/obj/machinery/bot/B in S)
+		capture_mob(B)
 	..()
 	if(chain_base)
 		chain_base.move_child(T)
@@ -136,6 +145,9 @@
 		if(isliving(A))
 			var/mob/living/M = A
 			M.loc = src.loc
+		else if(isbot(A))
+			var/obj/machinery/bot/B = A
+			B.loc = src.loc
 	for(var/obj/structure/hookshot/H in hookshot)
 		H.forceMove(get_step(H,src.dir))
 
@@ -169,6 +181,8 @@
 	return
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/capture_mob(atom/A)
+	if(unloading)
+		return
 	if(isliving(A))
 		var/mob/living/M = A
 		if(M.faction == "admin")
@@ -183,7 +197,17 @@
 		M.update_canmove()
 		passengers[occupied_seats] = M
 		src.add_fingerprint(M)
-	//else if(isbot(A))
+	else if(isbot(A))
+		var/obj/machinery/bot/B = A
+		if(B.isolated)
+			return
+		occupied_seats++
+		B.turn_off()
+		B.isolated = 1
+		B.anchored = 1
+		B.loc = src.loc
+		B.dir = src.dir
+		passengers[occupied_seats] = B
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/buckle_mob(mob/M, mob/user)
 	if(M != user || !ismob(M) || get_dist(src, user) > 1 || user.restrained() || user.lying || user.stat || M.buckled || istype(user, /mob/living/silicon) || destroyed)
@@ -204,6 +228,10 @@
 		buckled_mob = user
 		update_mob()
 		add_fingerprint(user)
+		if(!roadlights)
+			overlays += overlays_bus[2]
+			roadlights = 1
+		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 	return
 
 
@@ -225,6 +253,9 @@
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
 		buckled_mob = null
+		if(roadlights)
+			overlays -= overlays_bus[2]
+			roadlights = 0
 	return
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/emp_act(severity)
@@ -307,6 +338,9 @@
 	sleep(2)
 	returnin()
 
+/obj/structure/hookshot/ex_act(severity)
+	return
+
 /obj/structure/hookshot/cultify()
 	return
 
@@ -323,6 +357,9 @@
 /obj/structure/singulo_chain/anchor
 	icon_state = ""
 	var/obj/machinery/singularity/target = null
+
+/obj/structure/singulo_chain/ex_act(severity)
+	return
 
 /obj/structure/singulo_chain/proc/move_child(var/turf/parent)
 	var/turf/T = get_turf(src)

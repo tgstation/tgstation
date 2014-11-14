@@ -122,6 +122,11 @@
 	return
 
 /mob/proc/see_narsie(var/obj/machinery/singularity/narsie/large/N)
+	if(N.bus_captured)
+		if(narsimage)
+			del(narsimage)
+			del(narglow)
+		return
 	if((N.z == src.z)&&(get_dist(N,src) <= (N.consume_range+10)))
 		if(!narsimage)
 			narsimage = image('icons/obj/narsie.dmi',src.loc,"narsie",9,1)

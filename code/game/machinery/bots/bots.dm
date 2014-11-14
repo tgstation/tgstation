@@ -21,6 +21,7 @@
 	#define CLEAN_BOT 4 // Cleanbots
 	#define MED_BOT 5 // Medibots
 	//var/emagged = 0 //Urist: Moving that var to the general /bot tree as it's used by most bots
+	var/isolated = 0
 
 /obj/machinery/bot/proc/turn_on()
 	if(stat)	return 0
@@ -58,6 +59,8 @@
 	return
 
 /obj/machinery/bot/attack_alien(var/mob/living/carbon/alien/user as mob)
+	if(isolated)
+		return
 	src.health -= rand(15,30)*brute_dam_coeff
 	src.visible_message("\red <B>[user] has slashed [src]!</B>")
 	playsound(get_turf(src), 'sound/weapons/slice.ogg', 25, 1, -1)
@@ -67,6 +70,8 @@
 
 
 /obj/machinery/bot/attack_animal(var/mob/living/simple_animal/M as mob)
+	if(isolated)
+		return
 	if(M.melee_damage_upper == 0)	return
 	src.health -= M.melee_damage_upper
 	src.visible_message("\red <B>[M] has [M.attacktext] [src]!</B>")
@@ -90,6 +95,8 @@
 
 
 /obj/machinery/bot/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(isolated)
+		return
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(!locked)
 			open = !open
@@ -118,20 +125,28 @@
 			..()
 
 /obj/machinery/bot/bullet_act(var/obj/item/projectile/Proj)
+	if(isolated)
+		return
 	health -= Proj.damage
 	..()
 	healthcheck()
 
 /obj/machinery/bot/meteorhit()
+	if(isolated)
+		return
 	src.explode()
 	return
 
 /obj/machinery/bot/blob_act()
+	if(isolated)
+		return
 	src.health -= rand(20,40)*fire_dam_coeff
 	healthcheck()
 	return
 
 /obj/machinery/bot/ex_act(severity)
+	if(isolated)
+		return
 	switch(severity)
 		if(1.0)
 			src.explode()
@@ -150,6 +165,8 @@
 	return
 
 /obj/machinery/bot/emp_act(severity)
+	if(isolated)
+		return
 	var/was_on = on
 	stat |= EMPED
 	var/obj/effect/overlay/pulse2 = new/obj/effect/overlay ( src.loc )
@@ -239,3 +256,10 @@
 			//if((dir & EAST ) && (D.dir & (NORTH|SOUTH)))	return !D.check_access(ID)
 		else return !D.check_access(ID)	// it's a real, air blocking door
 	return 0
+
+
+/obj/machinery/bot/cultify()
+	if(src.isolated)
+		return
+	else
+		qdel(src)

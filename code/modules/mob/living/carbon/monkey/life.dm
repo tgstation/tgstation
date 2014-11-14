@@ -112,6 +112,8 @@
 				stuttering = max(10, stuttering)
 
 	proc/handle_mutations_and_radiation()
+		if(isolated)
+			return
 
 		if(getFireLoss())
 			if((M_RESIST_HEAT in mutations) || prob(50))
@@ -221,8 +223,10 @@
 		return
 
 	proc/breathe()
-		if(reagents)
+		if(isolated)
+			return
 
+		if(reagents)
 			if(reagents.has_reagent("lexorin")) return
 
 		if(!loc) return //probably ought to make a proper fix for this, but :effort: --NeoFite

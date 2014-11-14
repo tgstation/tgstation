@@ -61,6 +61,10 @@
 ///mob/living/carbon/alien/humanoid/bullet_act(var/obj/item/projectile/Proj) taken care of in living
 
 /mob/living/carbon/alien/humanoid/emp_act(severity)
+	if(isolated)
+		src << "The bus' robustness protects you from the EMP."
+		return
+
 	if(wear_suit) wear_suit.emp_act(severity)
 	if(head) head.emp_act(severity)
 	if(r_store) r_store.emp_act(severity)
@@ -68,6 +72,10 @@
 	..()
 
 /mob/living/carbon/alien/humanoid/ex_act(severity)
+	if(isolated)
+		src << "The bus' robustness protects you from the explosion."
+		return
+
 	if(!blinded)
 		flick("flash", flash)
 
@@ -103,6 +111,8 @@
 	updatehealth()
 
 /mob/living/carbon/alien/humanoid/blob_act()
+	if(isolated)
+		return
 	if (stat == 2)
 		return
 	var/shielded = 0
@@ -122,6 +132,8 @@
 
 
 /mob/living/carbon/alien/humanoid/meteorhit(O as obj)
+	if(isolated)
+		return
 	for(var/mob/M in viewers(src, null))
 		if ((M.client && !( M.blinded )))
 			M.show_message(text("\red [] has been hit by []", src, O), 1)

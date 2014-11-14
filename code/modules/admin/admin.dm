@@ -647,6 +647,15 @@ var/global/floorIsLava = 0
 
 	var/dat = "<B>The first rule of adminbuse is: you don't talk about the adminbuse.</B><HR>"
 
+	if(check_rights(R_FUN,0))
+		dat += {"
+			<B>Fourth-Wall Demolition</B><BR>
+			<BR>
+			<A href='?src=\ref[src];secretsfun=spawnadminbus'>Spawn an Adminbus</A><BR>
+			<A href='?src=\ref[src];secretsfun=spawnselfdummy'>Spawn yourself as a Test Dummy</A><BR>
+			<BR>
+			"}
+
 	if(check_rights(R_ADMIN,0))
 		dat += {"
 			<B>Admin Secrets</B><BR>

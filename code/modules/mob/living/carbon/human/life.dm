@@ -441,6 +441,8 @@ var/global/list/organ_damage_overlays = list(
 			adjustCloneLoss(0.1)
 
 	proc/handle_mutations_and_radiation()
+		if(isolated)
+			return
 		if(getFireLoss())
 			if((M_RESIST_HEAT in mutations) || (prob(1)))
 				heal_organ_damage(0,1)
@@ -509,6 +511,8 @@ var/global/list/organ_damage_overlays = list(
 					if(istype(O)) O.add_autopsy_data("Radiation Poisoning", damage)
 
 	proc/breathe()
+		if(isolated)
+			return
 		if(reagents.has_reagent("lexorin")) return
 		if(M_NO_BREATH in mutations) return // No breath mutation means no breathing.
 		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return

@@ -103,6 +103,10 @@
 	return
 
 /mob/living/silicon/emp_act(severity)
+	if(isolated)
+		src << "The bus' robustness protects you from the EMP."
+		return
+
 	switch(severity)
 		if(1)
 			src.take_organ_damage(20)

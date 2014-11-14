@@ -152,6 +152,10 @@
 
 //ion rifle!
 /mob/living/simple_animal/hostile/retaliate/malf_drone/emp_act(severity)
+	if(isolated)
+		src << "The bus' robustness protects you from the EMP."
+		return
+
 	health -= rand(3,15) * (severity + 1)
 	disabled = rand(150, 600)
 	hostile_drone = 0

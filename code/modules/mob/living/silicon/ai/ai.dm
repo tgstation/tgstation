@@ -284,6 +284,8 @@ var/list/ai_list = list()
 	return 1
 
 /mob/living/silicon/ai/blob_act()
+	if(isolated)
+		return
 	if (stat != 2)
 		adjustBruteLoss(60)
 		updatehealth()
@@ -294,6 +296,10 @@ var/list/ai_list = list()
 	return 0
 
 /mob/living/silicon/ai/emp_act(severity)
+	if(isolated)
+		src << "The bus' robustness protects you from the EMP."
+		return
+
 	if (prob(30))
 		switch(pick(1,2))
 			if(1)
@@ -303,6 +309,10 @@ var/list/ai_list = list()
 	..()
 
 /mob/living/silicon/ai/ex_act(severity)
+	if(isolated)
+		src << "The bus' robustness protects you from the explosion."
+		return
+
 	if(!blinded)
 		flick("flash", flash)
 
@@ -399,6 +409,8 @@ var/list/ai_list = list()
 	return
 
 /mob/living/silicon/ai/meteorhit(obj/O as obj)
+	if(isolated)
+		return
 	for(var/mob/M in viewers(src, null))
 		M.show_message(text("\red [] has been hit by []", src, O), 1)
 		//Foreach goto(19)

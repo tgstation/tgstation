@@ -10,52 +10,52 @@
 		usr << "Nice try."
 		return
 
-	switch(dir)
-		if(SOUTH)
-			for(var/i=1;i<=passengers.len;i++)
-				var/atom/A = passengers[i]
-				if(isliving(A))
-					var/mob/living/L = A
-					freed(L)
+	unloading = 1
+
+	for(var/i=occupied_seats;i>0;i--)
+		var/atom/A = passengers[i]
+		if(isliving(A))
+			var/mob/living/L = A
+			switch(dir)
+				if(SOUTH)
 					L.x = x-1
-				sleep(3)
-		if(WEST)
-			for(var/i=1;i<=passengers.len;i++)
-				var/atom/A = passengers[i]
-				if(isliving(A))
-					var/mob/living/L = A
-					freed(L)
+				if(WEST)
 					L.y = y+1
-				sleep(3)
-		if(NORTH)
-			for(var/i=1;i<=passengers.len;i++)
-				var/atom/A = passengers[i]
-				if(isliving(A))
-					var/mob/living/L = A
-					freed(L)
+				if(NORTH)
 					L.x = x+1
-				sleep(3)
-		if(EAST)
-			for(var/i=1;i<=passengers.len;i++)
-				var/atom/A = passengers[i]
-				if(isliving(A))
-					var/mob/living/L = A
-					freed(L)
+				if(EAST)
 					L.y = y-1
-				sleep(3)
-	for(var/i=1;i<=passengers.len;i++)
+			freed(L)
+		else if(isbot(A))
+			var/obj/machinery/bot/B = A
+			switch(dir)
+				if(SOUTH)
+					B.x = x-1
+				if(WEST)
+					B.y = y+1
+				if(NORTH)
+					B.x = x+1
+				if(EAST)
+					B.y = y-1
+			B.turn_on()
+			B.isolated = 0
+			B.anchored = 0
 		passengers[i] = null
-	occupied_seats = 0
+		occupied_seats--
+		sleep(3)
+
+	unloading = 0
+
 	return
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/freed(var/mob/living/L)
 	L.buckled = null
 	L.anchored = 0
-	L.update_canmove()
 	L.isolated = 0
 	L.captured = 0
 	L.pixel_x = 0
 	L.pixel_y = 0
+	L.update_canmove()
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/verb/spawn_clowns()
 	set name = "Spawn Clowns"
@@ -233,10 +233,14 @@
 	spawned_mobs.len = 0
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/capture_singulo(var/obj/machinery/singularity/S)
+	for(var/atom/A in hookshot)																//first we remove the hookshot and its chain
+		qdel(A)
+	hookshot.len = 0
+
 	singulo = S
 	S.on_capture()
 	var/obj/structure/singulo_chain/parentchain = null
-	var/obj/structure/singulo_chain/anchor/A = new /obj/structure/singulo_chain/anchor(loc)	//the anchor spawns first, on top of the bus,
+	var/obj/structure/singulo_chain/anchor/A = new /obj/structure/singulo_chain/anchor(loc)	//then we spawn the invisible anchor on top of the bus,
 	while(get_dist(A,S) > 0)																//it then travels toward the singulo while creating chains on its path,
 		A.forceMove(get_step_towards(A,S))													//and parenting them together
 		var/obj/structure/singulo_chain/C = new /obj/structure/singulo_chain(A.loc)
@@ -251,8 +255,8 @@
 		chain_base = A
 	else
 		parentchain.child = A
-	chain += A
-	A.target = singulo
+	chain += A																				//once the anchor has reached the singulo, it parents itself to the last element in the chain
+	A.target = singulo																		//and stays on top of the singulo.
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/verb/throw_hookshot()
 	set name = "Throw Hookshot"
@@ -270,19 +274,16 @@
 
 	hook = 0
 
-	var/obj/structure/hookshot/claw/C = new/obj/structure/hookshot/claw(get_step(src,src.dir))
+	var/obj/structure/hookshot/claw/C = new/obj/structure/hookshot/claw(get_step(src,src.dir))	//First we spawn the claw
 	hookshot += C
 	C.abus = src
 
-	var/obj/machinery/singularity/S = C.launchin(src.dir)
+	var/obj/machinery/singularity/S = C.launchin(src.dir)							//The claw moves forward, spawning hookshot-chains on its path
 	if(S)
-		for(var/atom/A in hookshot)
-			qdel(A)
-		hookshot.len = 0
-		capture_singulo(S)
+		capture_singulo(S)															//If the claw hits a singulo, we remove the hookshot-chains and replace them with singulo-chains
 	else
-		for(var/obj/structure/hookshot/A in hookshot)
-			spawn()//so they all return at once
+		for(var/obj/structure/hookshot/A in hookshot)								//If it doesn't hit anything, all the elements of the chain come back toward the bus,
+			spawn()//so they all return at once										//deleting themselves when they reach it.
 				A.returnin()
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/verb/release_singulo()
@@ -296,32 +297,55 @@
 		usr << "Nice try."
 		return
 
-	if(singulo)
-		var/obj/structure/hookshot/claw/A = new /obj/structure/hookshot/claw(loc)
-		hookshot += A
-		A.abus = src
-		A.dropped = 1 //so it doesn't try to grab the singulo again as soon as it drops it.
-		while(get_dist(A,singulo) > 0)
-			A.forceMove(get_step_towards(A,singulo))
-			var/obj/structure/hookshot/H = new /obj/structure/hookshot(A.loc)
-			hookshot += H
-			H.abus = src
-			var/obj/structure/singulo_chain/C = locate(/obj/structure/singulo_chain) in H.loc
-			if(C)
-				H.dir = C.dir
-		for(var/obj/structure/singulo_chain/N in chain)
+	if(chain_base)
+		var/obj/structure/singulo_chain/anchor/A = locate(/obj/structure/singulo_chain/anchor) in chain
+		if(A)
+			del(A)//so we don't drag the singulo back to us along with the rest of the chain.
+		if(singulo)
+			singulo.on_release()
+			singulo = null
+		while(chain_base)
+			var/obj/structure/singulo_chain/C = chain_base
+			C.move_child(get_turf(src))
+			chain_base = C.child
+			del(C)
+			sleep(2)
+
+		for(var/obj/structure/singulo_chain/N in chain)//Just in case some bits of the chain were detached from the bus for whatever reason
 			del(N)
 		chain.len = 0
-		for(var/obj/structure/hookshot/T in hookshot)
-			spawn()//so they all return at once
-				T.returnin()
-		singulo.on_release()
-		singulo = null
 
+		hook = 1
+
+/obj/structure/stool/bed/chair/vehicle/adminbus/verb/mass_rejuvinate()
+	set name = "Mass Rejuvinate"
+	set category = "Adminbus"
+	set src = view(0)
+	set popup_menu = 0
+	set hidden = 0
+
+	for(var/mob/living/M in orange(src,3))
+		M.revive()
+		M << "<span class='notice'>THE ADMINBUS IS LOVE. THE ADMINBUS IS LIFE.</span>"
+		sleep(2)
+
+/obj/structure/stool/bed/chair/vehicle/adminbus/verb/toggle_lights()
+	set name = "Toggle Roadlights"
+	set category = "Adminbus"
+	set src = view(0)
+	set popup_menu = 0
+	set hidden = 0
+
+	if(roadlights)
+		roadlights = 0
+		overlays -= overlays_bus[2]
+	else
+		roadlights = 1
+		overlays += overlays_bus[2]
+
+/*WIP
 /obj/item/key/teleportback
 
 /obj/item/key/teleportback/attack_self(mob/user as mob)
 	user.send_back()
-
-
-
+*/

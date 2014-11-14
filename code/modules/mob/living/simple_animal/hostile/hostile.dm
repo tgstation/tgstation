@@ -47,12 +47,14 @@
 				GiveTarget(new_target)
 
 			if(HOSTILE_STANCE_ATTACK)
-				MoveToTarget()
-				DestroySurroundings()
+				if(!isolated)
+					MoveToTarget()
+					DestroySurroundings()
 
 			if(HOSTILE_STANCE_ATTACKING)
-				AttackTarget()
-				DestroySurroundings()
+				if(!isolated)
+					AttackTarget()
+					DestroySurroundings()
 
 		if(ranged)
 			ranged_cooldown--

@@ -307,6 +307,8 @@
 	return
 
 /mob/living/carbon/monkey/meteorhit(obj/O as obj)
+	if(isolated)
+		return
 	for(var/mob/M in viewers(src, null))
 		M.show_message(text("\red [] has been hit by []", src, O), 1)
 	if (health > 0)
@@ -599,10 +601,18 @@
 /mob/living/carbon/monkey/var/temperature_resistance = T0C+75
 
 /mob/living/carbon/monkey/emp_act(severity)
+	if(isolated)
+		src << "The bus' robustness protects you from the EMP."
+		return
+
 	if(wear_id) wear_id.emp_act(severity)
 	..()
 
 /mob/living/carbon/monkey/ex_act(severity)
+	if(isolated)
+		src << "The bus' robustness protects you from the explosion."
+		return
+
 	if(!blinded)
 		flick("flash", flash)
 
@@ -626,6 +636,8 @@
 	return
 
 /mob/living/carbon/monkey/blob_act()
+	if(isolated)
+		return
 	if (stat != 2)
 		adjustFireLoss(60)
 		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
