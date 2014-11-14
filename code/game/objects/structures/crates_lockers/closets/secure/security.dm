@@ -79,7 +79,7 @@
 	new /obj/item/clothing/glasses/hud/security/eyepatch(src)
 	new /obj/item/weapon/storage/lockbox/loyalty(src)
 	new /obj/item/weapon/shield/riot/tele(src)
-	new /obj/item/clothing/mask/gas/sechailer(src)
+	new /obj/item/clothing/mask/gas/sechailer/swat(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/device/flash/handheld(src)
 	new /obj/item/weapon/melee/baton/loaded(src)

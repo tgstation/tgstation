@@ -15,7 +15,7 @@
 	item_color = "mime"
 
 /obj/item/clothing/shoes/swat
-	name = "\improper SWAT shoes"
+	name = "\improper SWAT boots"
 	desc = "When you want to turn up the heat."
 	icon_state = "jackboots"
 	item_state = "jackboots"
