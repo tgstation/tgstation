@@ -611,6 +611,7 @@
 		density = 0
 		var/obj/item/weapon/rack_parts/newparts = new(loc)
 		transfer_fingerprints_to(newparts)
+		qdel(src)
 	return
 
 /*
