@@ -966,7 +966,7 @@
 					log_admin("[key_name(usr)] has traitor'ed [current].")
 					if(isAI(current))
 						var/mob/living/silicon/ai/A = current
-						call(/datum/game_mode/proc/add_law_zero)(A)
+						ticker.mode.add_law_zero(A)
 						A.show_laws()
 
 			if("autoobjectives")
