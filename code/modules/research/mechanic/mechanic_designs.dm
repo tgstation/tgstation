@@ -31,7 +31,7 @@
 				connected_circuit = text2path(C.circuit)
 		if(connected_circuit) //our tech is the circuit's requirement
 			req_tech = ConvertReqString2List(initial(connected_circuit.origin_tech))
-		Gen_Mach_Reqs(M.type)
+		Gen_Mach_Reqs()
 		Gen_Tech_Mats(1.5)//consider using M.component_parts.len for this in the future
 	else if(istype(O, /obj/item))
 		var/obj/item/I = O
@@ -56,25 +56,27 @@
 	if(modifier < 0) //fuck off
 		return
 	var/techtotal = src.TechTotal() / 2
-	materials["$iron"] = techtotal * round(rand(300, 1500), 100) * modifier
-	materials["$glass"] = techtotal * round(rand(150, 300), 50) * modifier
-	materials["$plastic"] = techtotal * 1000 * modifier //pretty much a sheet of plastic per two tech levels
+	materials["$iron"] += techtotal * round(rand(300, 1500), 100) * modifier
+	materials["$glass"] += techtotal * round(rand(150, 300), 50) * modifier
 	if(prob(techtotal * 15)) //let's add an extra cost of some medium-rare material - sure a lot of items
-		materials[pick("$plasma", "$uranium", "$gold", "$silver")] = techtotal * round(rand(50, 250), 10) * modifier
-	if(prob(techtotal * 5))//and another cost, because we can - can proc for some items
-		materials[pick("$plasma", "$uranium", "$gold", "$silver")] = techtotal * round(rand(50, 250), 10) * modifier
-	if(techtotal >= 6) //let's add something REALLY rare - bananium and phazon removed for now
-		materials[/*pick(*/"$diamond"/*, "$clown", "$phazon")*/] = techtotal * round(rand(10, 150), 10) * modifier
+		materials[pick("$plasma", "$uranium", "$gold", "$silver")] += techtotal * round(rand(50, 250), 10) * modifier
+	if(prob(techtotal * 8))//and another cost, because we can - can proc for some items
+		materials[pick("$plasma", "$uranium", "$gold", "$silver")] += techtotal * round(rand(50, 250), 10) * modifier
+	if(techtotal >= 7) //let's add something REALLY rare - bananium and phazon removed for now
+		materials[/*pick(*/"$diamond"/*, "$clown", "$phazon")*/] += techtotal * round(rand(10, 150), 10) * modifier
+
+	for(var/matID in materials)
+		materials[matID] -= (materials[matID] % 10) //clean up the numbers
+
+	materials["$plastic"] += 0.1 * src.MatTotal() * modifier //100% materials, extra 10% plastic cost
 
 //returns the required materials for the parts of a machine design
-/datum/design/mechanic_design/proc/Gen_Mach_Reqs(var/obj/machinery/machine)
-	if(!machine)
-		message_admins("We couldn't find something in part checking, how did this happen?")
-		return
+/datum/design/mechanic_design/proc/Gen_Mach_Reqs()
 
-	materials["$iron"] += 15000 //base costs, the best costs
+	materials["$iron"] += 20000 //base costs, the best costs
+	materials["$glass"] += 2000
 
-	if(istype(machine, /obj/machinery/computer))
+	if(istype(build_path, /obj/machinery/computer))
 		var/datum/design/circuit_design = FindDesign(connected_circuit)
 		if(circuit_design)
 			//message_admins("Found the circuit design")
@@ -90,7 +92,7 @@
 
 	else
 
-		var/obj/machinery/test_machine = new machine
+		var/obj/machinery/test_machine = new build_path
 		//why do we instance?
 		//because components are generated in New()
 
