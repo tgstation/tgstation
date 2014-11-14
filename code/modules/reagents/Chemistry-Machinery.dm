@@ -1015,26 +1015,26 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 						dat += "<A href='?src=\ref[src];action=detach'>Detach the beaker</a><BR>"
 		else
 				dat += "Please wait..."
-		user << browse("<HEAD><TITLE>All-In-One Grinder</TITLE></HEAD><TT>[dat]</TT>", "window=reagentgrinder")
-		onclose(user, "reagentgrinder")
-		return
 
+		var/datum/browser/popup = new(user, "reagentgrinder", "All-In-One Grinder")
+		popup.set_content(dat)
+		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+		popup.open(1)
+		return
 
 /obj/machinery/reagentgrinder/Topic(href, href_list)
-		if(..())
-				return
-		usr.set_machine(src)
-		switch(href_list["action"])
-				if ("grind")
-						grind()
-				if("juice")
-						juice()
-				if("eject")
-						eject()
-				if ("detach")
-						detach()
-		src.updateUsrDialog()
+	if(..())
 		return
+	usr.set_machine(src)
+	switch(href_list["action"])
+		if ("grind")
+			grind()
+		if("juice")
+			juice()
+		if("eject")
+			eject()
+		if ("detach")
+			detach()
 
 /obj/machinery/reagentgrinder/proc/detach()
 
@@ -1045,6 +1045,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		beaker.loc = src.loc
 		beaker = null
 		update_icon()
+		updateUsrDialog()
 
 /obj/machinery/reagentgrinder/proc/eject()
 
@@ -1057,6 +1058,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				O.loc = src.loc
 				holdingitems -= O
 		holdingitems = list()
+		updateUsrDialog()
 
 /obj/machinery/reagentgrinder/proc/is_allowed(var/obj/item/weapon/reagent_containers/O)
 		for (var/i in blend_items)
@@ -1109,7 +1111,8 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		inuse = 1
 		spawn(50)
 				inuse = 0
-				interact(usr)
+				updateUsrDialog()
+
 		//Snacks
 		for (var/obj/item/weapon/reagent_containers/food/snacks/O in holdingitems)
 				if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
@@ -1142,7 +1145,8 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		inuse = 1
 		spawn(60)
 				inuse = 0
-				interact(usr)
+				updateUsrDialog()
+
 		//Snacks and Plants
 		for (var/obj/item/weapon/reagent_containers/food/snacks/O in holdingitems)
 				if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
