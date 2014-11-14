@@ -220,6 +220,8 @@
 
 //Throwing stuff
 /mob/living/carbon/proc/toggle_throw_mode()
+	if(stat)
+		return
 	if(in_throw_mode)
 		throw_mode_off()
 	else
@@ -240,9 +242,9 @@
 
 /mob/living/carbon/throw_item(atom/target)
 	throw_mode_off()
-	if(usr.stat || !target)
+	if(!target || !isturf(loc))
 		return
-	if(target.type == /obj/screen) return
+	if(istype(target, /obj/screen)) return
 
 	var/atom/movable/item = src.get_active_hand()
 
@@ -260,7 +262,7 @@
 				var/start_T_descriptor = "<font color='#6b5d00'>tile at [start_T.x], [start_T.y], [start_T.z] in area [get_area(start_T)]</font>"
 				var/end_T_descriptor = "<font color='#6b4400'>tile at [end_T.x], [end_T.y], [end_T.z] in area [get_area(end_T)]</font>"
 
-				add_logs(usr, M, "thrown", admin=0, addition="from [start_T_descriptor] with the target [end_T_descriptor]")
+				add_logs(src, M, "thrown", admin=0, addition="from [start_T_descriptor] with the target [end_T_descriptor]")
 
 	if(!item) return //Grab processing has a chance of returning null
 

@@ -220,7 +220,7 @@
 	icon_state = "act_throw_off"
 
 /obj/screen/throw_catch/Click()
-	if(iscarbon(usr) && !usr.stat && isturf(usr.loc) && !usr.restrained())
+	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		C.toggle_throw_mode()
 
