@@ -28,6 +28,7 @@ Attach to transfer valve and open. BOOM.
 /atom/proc/burnFireFuel(var/used_fuel_ratio,var/used_reactants_ratio)
 	fire_fuel -= (fire_fuel * used_fuel_ratio * used_reactants_ratio) //* 5
 	if(fire_fuel<=0.1)
+		testing("[src] ashifying (BFF)!")
 		ashify()
 
 /atom/proc/ashify()

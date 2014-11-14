@@ -1,6 +1,8 @@
 /mob/recycle(var/datum/materials)
 	return RECYK_BIOLOGICAL
 
+/mob/burnFireFuel(var/used_fuel_ratio,var/used_reactants_ratio)
+
 /mob/Destroy() // This makes sure that mobs with clients/keys are not just deleted from the game.
 	unset_machine()
 	mob_list.Remove(src)
