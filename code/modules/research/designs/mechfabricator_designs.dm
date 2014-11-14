@@ -368,8 +368,8 @@
 	materials = list("$metal"=20000,"$plasma"=10000)
 	category = "Phazon"
 
-/datum/design/phazon_chassis
-	id = "phazon_chassis"
+/datum/design/phazon_armor
+	id = "phazon_armor"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/phazon_armor
 	materials = list("$metal"=45000,"$plasma"=30000)
