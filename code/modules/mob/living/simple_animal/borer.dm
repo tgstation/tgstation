@@ -1,6 +1,7 @@
 /mob/living/captive_brain
 	name = "host brain"
 	real_name = "host brain"
+	universal_understand=1
 
 /mob/living/captive_brain/say(var/message)
 
@@ -88,12 +89,15 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 	wander = 0
 	pass_flags = PASSTABLE
 
+	universal_understand=1
+
 	var/chemicals = 10                      // Chemicals used for reproduction and spitting neurotoxin.
 	var/mob/living/carbon/human/host        // Human host for the brain worm.
 	var/truename                            // Name used for brainworm-speak.
 	var/mob/living/captive_brain/host_brain // Used for swapping control of the body back and forth.
 	var/controlling                         // Used in human death check.
 	var/list/avail_chems=list()
+	var/numChildren=0
 
 /mob/living/simple_animal/borer/New(var/loc,var/by_gamemode=0)
 	..(loc)
@@ -253,17 +257,23 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 	if(!message)
 		return
 
+	message = copytext(message,2)
 	log_say("CORTICAL: [key_name(src)]: [message]")
 
 	for(var/mob/M in mob_list)
-		if(M.mind && (istype(M, /mob/living/simple_animal/borer) || istype(M, /mob/dead/observer)))
+		if(istype(M, /mob/new_player))
+			continue
+
+		if( (istype(M,/mob/dead/observer) && M.client && !(M.client.prefs.toggles & CHAT_GHOSTEARS)) \
+			|| isborer(M))
 			var/controls = ""
 			if(isobserver(M))
 				controls = " (<a href='byond://?src=\ref[M];follow2=\ref[M];follow=\ref[src]'>Follow</a>"
 				if(M.client.holder)
 					controls+= " | <A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>"
 				controls += ") in [host]"
-			M << "<i>Cortical link, <b>[truename]</b>[controls]: [message]</i>"
+
+			M << "<span class='cortical'>Cortical link, <b>[truename]</b>[controls]: [message]</span>"
 
 /mob/living/simple_animal/borer/proc/bond_brain()
 	set category = "Alien"
@@ -278,6 +288,10 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 		src << "You cannot do that in your current state."
 		return
 
+	if(host.stat==DEAD)
+		src << "You cannot do that in your host's current state."
+		return
+
 	src << "You begin delicately adjusting your connection to the host brain..."
 
 	spawn(300+(host.brainloss*5))
@@ -288,7 +302,7 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 			do_bonding(rptext=1)
 
 /mob/living/simple_animal/borer/proc/do_bonding(var/rptext=0)
-	if(!host || !src || controlling)
+	if(!host || host.stat==DEAD || !src || controlling)
 		return
 
 	src << "\red <B>You plunge your probosci deep into the cortex of the host brain, interfacing directly with their nervous system.</B>"
@@ -316,6 +330,10 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 
 	if(stat)
 		src << "You cannot secrete chemicals in your current state."
+		return
+
+	if(host.stat==DEAD)
+		src << "You cannot do that in your host's current state."
 		return
 
 	var/reason = sanitize(input(usr,"Please enter a brief reason for killing the host, or press cancel.\n\nThis will be logged, and presented to the host.","Oh snap") as null|text, MAX_MESSAGE_LEN)
@@ -350,6 +368,10 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 		src << "You cannot secrete chemicals in your current state."
 		return
 
+	if(host.stat==DEAD)
+		src << "You cannot do that in your host's current state."
+		return
+
 	src << "<span class='danger'>You twitch your probosci.</span>"
 	host << "<span class='sinister'>You feel something twitch, and get a headache.</span>"
 
@@ -371,6 +393,10 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 
 	if(controlling)
 		src << "<span class='warning'>You're too busy controlling your host.</span>"
+		return
+
+	if(host.stat==DEAD)
+		src << "<span class='warning'>You cannot do that in your host's current state.</span>"
 		return
 
 	var/chemID = input("Select a chemical to secrete.", "Chemicals") in avail_chems|null
@@ -553,46 +579,8 @@ mob/living/simple_animal/borer/proc/detach()
 	set name = "Crawl through Vent"
 	set desc = "Enter an air vent and crawl through the pipe system."
 	set category = "Alien"
-
-//	if(!istype(V,/obj/machinery/atmoalter/siphs/fullairsiphon/air_vent))
-//		return
-	var/obj/machinery/atmospherics/unary/vent_pump/vent_found
-	var/welded = 0
-	for(var/obj/machinery/atmospherics/unary/vent_pump/v in range(1,src))
-		if(!v.welded)
-			vent_found = v
-			break
-		else
-			welded = 1
-	if(vent_found)
-		if(vent_found.network&&vent_found.network.normal_members.len)
-			var/list/vents = list()
-			for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in vent_found.network.normal_members)
-				if(temp_vent.loc == loc)
-					continue
-				vents.Add(temp_vent)
-			var/list/choices = list()
-			for(var/obj/machinery/atmospherics/unary/vent_pump/vent in vents)
-				if(vent.loc.z != loc.z || vent.welded)
-					continue
-				var/atom/a = get_turf(vent)
-				choices.Add(a.loc)
-			var/turf/startloc = loc
-			var/obj/selection = input("Select a destination.", "Duct System") in choices
-			var/selection_position = choices.Find(selection)
-			if(loc==startloc)
-				var/obj/target_vent = vents[selection_position]
-				if(target_vent)
-					loc = target_vent.loc
-			else
-				src << "\blue You need to remain still while entering a vent."
-		else
-			src << "\blue This vent is not connected to anything."
-	else if(welded)
-		src << "\red That vent is welded."
-	else
-		src << "\blue You must be standing on or beside an air vent to enter it."
-	return
+	if(src.canmove)
+		handle_ventcrawl()
 
 //copy paste from alien/larva, if that func is updated please update this one alsoghost
 /mob/living/simple_animal/borer/proc/hide()
@@ -647,3 +635,31 @@ mob/living/simple_animal/borer/proc/transfer_personality(var/client/candidate)
 	src.ckey = candidate.ckey
 	if(src.mind)
 		src.mind.assigned_role = "Cortical Borer"
+
+		// Tell gamemode about us.
+		if(src.mind in ticker.mode.borers)
+			ticker.mode.borers.Add(src.mind)
+
+		// Assign objectives
+		forge_objectives()
+
+		// tl;dr
+		src << "<span class='danger'>You are a Cortical Borer!</span>"
+		src << "<span class='info'>You are a small slug-like parasite that attaches to your host's brain and can control every aspect of their lives.  Your only goals are to survive and procreate, so being as low-key as possible is best.</span>"
+		src << "<span class='info'>Borers can speak with other borers over the Cortical Link.  To do so, release control and use <code>say \";message\"</code>.  To communicate with your host only, speak normally.</span>"
+		src << "<span class='info'><b>Important:</b> While you receive full control at the start, <em>it is asked that you release control at some point so your host has a chance to play.</em>  If they misbehave, you are permitted to kill them.</span>"
+
+		var/obj_count = 1
+		for(var/datum/objective/objective in mind.objectives)
+			src << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+			obj_count++
+
+mob/living/simple_animal/borer/proc/forge_objectives()
+	var/datum/objective/survive/survive_objective = new
+	survive_objective.owner = mind
+	mind.objectives += survive_objective
+
+	var/datum/objective/multiply/multiply_objective = new
+	multiply_objective.owner = mind
+	mind.objectives += multiply_objective
+

@@ -414,6 +414,25 @@ datum/objective/survive
 			return 0
 		return 1
 
+
+
+datum/objective/multiply
+	explanation_text = "Procreate, and protect your spawn."
+	var/already_completed=0
+	check_completion()
+		if(blocked) return 0
+		if(already_completed)
+			return 1
+		if(!owner.current)
+			return 0
+		var/mob/living/simple_animal/borer/B=owner.current
+		if(!istype(B))
+			return 0
+		if(B.numChildren>0)
+			already_completed=1
+			return 1
+		return 0
+
 // Similar to the anti-rev objective, but for traitors
 datum/objective/brig
 	var/already_completed = 0
