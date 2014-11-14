@@ -331,7 +331,6 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 	if(stat)
 		src << "You cannot secrete chemicals in your current state."
 		return
-		return
 
 	if(host.stat==DEAD)
 		src << "You cannot do that in your host's current state."
@@ -368,7 +367,6 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 	if(stat)
 		src << "You cannot secrete chemicals in your current state."
 		return
-		return
 
 	if(host.stat==DEAD)
 		src << "You cannot do that in your host's current state."
@@ -395,7 +393,6 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 
 	if(controlling)
 		src << "<span class='warning'>You're too busy controlling your host.</span>"
-		return
 		return
 
 	if(host.stat==DEAD)
