@@ -53,20 +53,25 @@
 /mob/living/carbon/human/Stat()
 	..()
 	statpanel("Status")
-
-	stat(null, "Intent: [a_intent]")
-	stat(null, "Move Mode: [m_intent]")
-	if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")
-		var/datum/game_mode/malfunction/malf = ticker.mode
-		if(malf.malf_mode_declared && (malf.apcs > 0))
-			stat(null, "Time left: [max(malf.AI_win_timeleft/malf.apcs, 0)]")
-	if(emergency_shuttle)
-		if(emergency_shuttle.online && emergency_shuttle.location < 2)
-			var/timeleft = emergency_shuttle.timeleft()
-			if (timeleft)
-				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
-
 	if (client.statpanel == "Status")
+		stat(null, "Intent: [a_intent]")
+		stat(null, "Move Mode: [m_intent]")
+		if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")
+			var/datum/game_mode/malfunction/malf = ticker.mode
+			if(malf.malf_mode_declared && (malf.apcs > 0))
+				stat(null, "Time left: [max(malf.AI_win_timeleft/malf.apcs, 0)]")
+
+		var/ETA
+		switch(SSshuttle.emergency.mode)
+			if(SHUTTLE_CALL)
+				ETA = "ETA"
+			if(SHUTTLE_DOCKED)
+				ETA = "ETD"
+		if(ETA)
+			var/timeleft = SSshuttle.emergency.timeLeft()
+			stat(null, "[ETA]-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+
+
 		if (internal)
 			if (!internal.air_contents)
 				qdel(internal)

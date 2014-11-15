@@ -8,7 +8,7 @@
 #define TINT_BLIND 3
 
 #define HUMAN_MAX_OXYLOSS 3
-#define HUMAN_CRIT_MAX_OXYLOSS ( (last_tick_duration) /3)
+#define HUMAN_CRIT_MAX_OXYLOSS (SSmob.wait/3)
 
 #define HEAT_DAMAGE_LEVEL_1 2
 #define HEAT_DAMAGE_LEVEL_2 3
