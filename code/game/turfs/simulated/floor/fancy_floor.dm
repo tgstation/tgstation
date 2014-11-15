@@ -113,3 +113,61 @@
 					diagonalconnect |= 8
 
 		icon_state = "carpet[connectdir]-[diagonalconnect]"
+
+/turf/simulated/floor/bluecarpet
+	name = "Blue carpet"
+	icon_state = "bluecarpet"
+	floor_tile = /obj/item/stack/tile/bluecarpet
+	broken_states = list("bluecarpet-broken")
+
+/turf/simulated/floor/bluecarpet/New()
+	..()
+	spawn(1)
+		if(src)
+			update_icon()
+			fancy_update(type)
+
+/turf/simulated/floor/bluecarpet/update_icon()
+	if(!broken && !burnt)
+		if(icon_state == "bluecarpetsymbol") //le snowflake :^)
+			return
+
+		var/connectdir = 0
+		for(var/direction in cardinal)
+			if(istype(get_step(src,direction),/turf/simulated/floor/bluecarpet))
+				var/turf/simulated/floor/bluecarpet/FF = get_step(src,direction)
+				if(istype(FF, /turf/simulated/floor/bluecarpet))
+					connectdir |= direction
+
+		//Check the diagonal connections for corners, where you have, for example, connections both north and east. In this case it checks for a north-east connection to determine whether to add a corner marker or not.
+		var/diagonalconnect = 0 //1 = NE; 2 = SE; 4 = NW; 8 = SW
+
+		//Northeast
+		if(connectdir & NORTH && connectdir & EAST)
+			if(istype(get_step(src,NORTHEAST),/turf/simulated/floor))
+				var/turf/simulated/floor/FF = get_step(src,NORTHEAST)
+				if(istype(FF, /turf/simulated/floor/bluecarpet))
+					diagonalconnect |= 1
+
+		//Southeast
+		if(connectdir & SOUTH && connectdir & EAST)
+			if(istype(get_step(src,SOUTHEAST),/turf/simulated/floor))
+				var/turf/simulated/floor/FF = get_step(src,SOUTHEAST)
+				if(istype(FF, /turf/simulated/floor/bluecarpet))
+					diagonalconnect |= 2
+
+		//Northwest
+		if(connectdir & NORTH && connectdir & WEST)
+			if(istype(get_step(src,NORTHWEST),/turf/simulated/floor))
+				var/turf/simulated/floor/FF = get_step(src,NORTHWEST)
+				if(istype(FF, /turf/simulated/floor/bluecarpet))
+					diagonalconnect |= 4
+
+		//Southwest
+		if(connectdir & SOUTH && connectdir & WEST)
+			if(istype(get_step(src,SOUTHWEST),/turf/simulated/floor))
+				var/turf/simulated/floor/FF = get_step(src,SOUTHWEST)
+				if(istype(FF, /turf/simulated/floor/bluecarpet))
+					diagonalconnect |= 8
+
+		icon_state = "bluecarpet[connectdir]-[diagonalconnect]"

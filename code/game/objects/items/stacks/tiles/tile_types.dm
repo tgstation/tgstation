@@ -66,6 +66,23 @@
 	turf_type = /turf/simulated/floor/carpet
 
 /*
+ * Blue carpets
+ */
+/obj/item/stack/tile/bluecarpet
+	name = "blue carpet"
+	singular_name = "blue carpet"
+	desc = "A piece of carpet. It is the same size as a floor tile."
+	icon_state = "tile-bluecarpet"
+	w_class = 3.0
+	force = 1.0
+	throwforce = 1.0
+	throw_speed = 3
+	throw_range = 7
+	max_amount = 60
+	turf_type = /turf/simulated/floor/bluecarpet
+
+
+/*
  * High-traction
  */
 /obj/item/stack/tile/noslip

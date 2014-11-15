@@ -93,9 +93,7 @@
 	else
 		..()
 
-/obj/structure/stool/bed/chair/shuttle
-	icon_state = "schair"
-	name = "shuttle chair"
+
 
 /obj/structure/stool/bed/chair/comfy
 	name = "comfy chair"
@@ -115,7 +113,9 @@
 		overlays += armrest
 	else
 		overlays -= armrest
-
+/obj/structure/stool/bed/chair/comfry/shuttle
+	icon_state = "schair"
+	name = "shuttle chair"
 /obj/structure/stool/bed/chair/comfy/brown
 	color = rgb(255,113,0)
 

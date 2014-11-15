@@ -19,7 +19,7 @@
 			spam_flag = 1
 			playsound(src.loc, "harmonica", 50)
 			src.add_fingerprint(user)
-			spawn(40)
+			spawn(55)
 			spam_flag = 0
 	return
 
