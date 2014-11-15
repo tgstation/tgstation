@@ -1,6 +1,6 @@
 //Deity Link, giving a new meaning to the Adminbus since 2014
 
-/obj/structure/stool/bed/chair/vehicle/adminbus
+/obj/structure/stool/bed/chair/vehicle/adminbus//Fucking release the passengers and unbuckle yourself from the bus before you delete it.
 	name = "\improper Adminbus"
 	desc = "Shit just got fucking real."
 	icon = 'icons/obj/bus.dmi'
@@ -10,11 +10,11 @@
 	layer = FLY_LAYER
 	pixel_x = -32
 	pixel_y = -32
-	var/list/overlays_bus[3]//1=underlay 2=roadlights 3=ad
-	var/list/passengers[16]
-	var/occupied_seats = 0
+	var/list/overlays_bus[4]//1=underlay 2=roadlights 3=ad 4=door
+	var/list/passengers[] = list()
 	var/unloading = 0
 	var/capture_mode = 1//1=capture mobs 2=roll over mobs(deals light brute damage and push them down) 3=gib mobs
+	var/door_mode = 0//0=closed door, players cannot climb or leave on their own 1=openned door, players can climb and leave on their own
 	var/spawned_mobs[] = list()//keeps track of every mobs spawned by the bus, so we can remove them all with the push of a button in needed
 	var/hook = 1
 	var/hookshot[] = list()
@@ -22,19 +22,26 @@
 	var/chain[] = list()
 	var/obj/machinery/singularity/singulo = null
 	var/roadlights = 0
+	var/obj/structure/buslight/lightsource = null
+	var/spawnedbombs[] = list()
+	var/spawnedlasers[] = list()
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/New()
 	..()
 	var/image/underbus = image(icon,"underbus",MOB_LAYER-1)
 	var/image/roadlights = image(icon,"roadlights",LIGHTING_LAYER+1)
 	var/image/advertisement = image(icon,"ad")
+	var/image/opendoor = image(icon,"opendoor")
 	overlays_bus[1] = underbus
 	overlays_bus[2] = roadlights
 	overlays_bus[3] = advertisement
+	overlays_bus[4] = opendoor
 	overlays += overlays_bus[1]
 	overlays += overlays_bus[3]
 	src.dir = 4
 	playsound(src, 'sound/misc/adminbus.ogg', 50, 0, 0)
+	lightsource = new/obj/structure/buslight(src.loc)
+	lightsource.x += 2
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/update_mob()
 	if(buckled_mob)
@@ -68,7 +75,7 @@
 					buckled_mob.pixel_x = 25
 					buckled_mob.pixel_y = 1
 
-	for(var/i=1;i<=occupied_seats;i++)
+	for(var/i=1;i<=passengers.len;i++)
 		var/atom/A = passengers[i]
 		if(isliving(A))
 			var/mob/living/L = A
@@ -132,15 +139,12 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/Move()
 	var/turf/T = get_turf(src)
-	var/turf/S = get_step(src,src.dir)
-	for(var/mob/living/M in S)
-		capture_mob(M)
-	for(var/obj/machinery/bot/B in S)
-		capture_mob(B)
 	..()
+	update_lightsource()
+	handle_mob_bumping()
 	if(chain_base)
 		chain_base.move_child(T)
-	for(var/i=1;i<=occupied_seats;i++)
+	for(var/i=1;i<=passengers.len;i++)
 		var/atom/A = passengers[i]
 		if(isliving(A))
 			var/mob/living/M = A
@@ -151,6 +155,63 @@
 	for(var/obj/structure/hookshot/H in hookshot)
 		H.forceMove(get_step(H,src.dir))
 
+/obj/structure/stool/bed/chair/vehicle/adminbus/proc/update_lightsource()
+	lightsource.z = z
+	switch(dir)
+		if(SOUTH)
+			lightsource.x = x
+			lightsource.y = y-2
+		if(WEST)
+			lightsource.x = x-2
+			lightsource.y = y
+		if(NORTH)
+			lightsource.x = x
+			lightsource.y = y+2
+		if(EAST)
+			lightsource.x = x+2
+			lightsource.y = y
+
+/obj/structure/stool/bed/chair/vehicle/adminbus/proc/handle_mob_bumping()
+	var/turf/S = get_turf(src)
+	switch(capture_mode)
+		if(1)
+			if(passengers.len >= 16)
+				buckled_mob << "<span class='warning'>There is no place in the bus for any additional passenger.</span>"
+				return
+			for(var/mob/living/L in S)
+				if(L.isolated)
+					continue
+				if(passengers.len < 16)
+					capture_mob(L)
+					buckled_mob << "[L.name] captured!"
+			for(var/obj/machinery/bot/B in S)
+				if(B.isolated)
+					continue
+				if(passengers.len < 16)
+					capture_mob(B)
+					buckled_mob << "[B.name] captured!"
+		if(2)
+			var/hit_sound = list('sound/weapons/genhit1.ogg','sound/weapons/genhit2.ogg','sound/weapons/genhit3.ogg')
+			for(var/mob/living/L in S)
+				if(L.isolated)
+					continue
+				L.take_overall_damage(5,0)
+				if(L.buckled)
+					L.buckled = 0
+				L.Stun(5)
+				L.Weaken(5)
+				L.apply_effect(STUTTER, 5)
+				playsound(src, pick(hit_sound), 50, 0, 0)
+		if(3)
+			for(var/mob/living/L in S)
+				if(L.isolated)
+					continue
+				L.gib()
+				playsound(src, 'sound/weapons/bloodyslice.ogg', 50, 0, 0)
+			for(var/obj/machinery/bot/B in S)
+				if(B.isolated)
+					continue
+				B.explode()
 /obj/structure/stool/bed/chair/vehicle/adminbus/handle_rotation()
 	layer = FLY_LAYER
 
@@ -165,8 +226,6 @@
 	health = 100//THE ADMINBUS HAS NO BRAKES
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/Bump(var/atom/obstacle)
-	if((occupied_seats < 16) && (capture_mode == 1) && (isliving(obstacle) || isbot(obstacle)))
-		capture_mob(obstacle)
 	if(can_move)
 		can_move = 0
 		forceMove(get_step(src,src.dir))
@@ -180,7 +239,10 @@
 		. = ..()
 	return
 
-/obj/structure/stool/bed/chair/vehicle/adminbus/proc/capture_mob(atom/A)
+/obj/structure/stool/bed/chair/vehicle/adminbus/proc/capture_mob(atom/A, var/selfclimb=0)
+	if(passengers.len >= 16)
+		A << "<span class='warning'>The bus is full!</span>"
+		return
 	if(unloading)
 		return
 	if(isliving(A))
@@ -189,60 +251,98 @@
 			return
 		if(M.isolated)
 			return
-		occupied_seats++
 		M.captured = 1
 		M.isolated = 1
 		M.loc = src.loc
 		M.dir = src.dir
 		M.update_canmove()
-		passengers[occupied_seats] = M
+		passengers += M
+		if(!selfclimb)
+			M << "<span class='warning'>The Adminbus picks you up!</span>"
+		M << "<span class='notice'>Welcome aboard the Adminbus. Please keep your hands and arms inside the bus at all times.</span>"
 		src.add_fingerprint(M)
 	else if(isbot(A))
 		var/obj/machinery/bot/B = A
 		if(B.isolated)
 			return
-		occupied_seats++
 		B.turn_off()
 		B.isolated = 1
 		B.anchored = 1
 		B.loc = src.loc
 		B.dir = src.dir
-		passengers[occupied_seats] = B
+		passengers += B
+	update_mob()
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/buckle_mob(mob/M, mob/user)
 	if(M != user || !ismob(M) || get_dist(src, user) > 1 || user.restrained() || user.lying || user.stat || M.buckled || istype(user, /mob/living/silicon) || destroyed)
 		return
 
 	if(!(istype(user,/mob/living/carbon/human/dummy) || istype(user,/mob/living/simple_animal/corgi/Ian)))
-		user << "<span class='warning'>Only the gods have the power to drive this monstrosity.</span>"//Yes, Ian is a god. He doesn't have his own religion for nothing.
-		return
+		if(!buckled_mob)
+			user << "<span class='warning'>Only the gods have the power to drive this monstrosity.</span>"//Yes, Ian is a god. He doesn't have his own religion for nothing.
+			return
+		else
+			if(door_mode)
+				capture_mob(usr,1)
+				return
+			else
+				usr << "<span class='notice'>You may not climb into the Adminbus while its door is closed.</span>"
+				return
 	else
-		user.visible_message(\
-			"<span class='notice'>[user] climbs onto the Adminbus!</span>",\
-			"<span class='notice'>You climb onto the Adminbus!</span>")
-		user.buckled = src
-		user.loc = loc
-		user.dir = dir
-		user.update_canmove()
-		user.isolated = 1
-		buckled_mob = user
-		update_mob()
-		add_fingerprint(user)
-		if(!roadlights)
-			overlays += overlays_bus[2]
-			roadlights = 1
-		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
-	return
+		if(buckled_mob)//if you are a Test Dummy and there is already a driver, you'll climb in as a passenger.
+			capture_mob(M,1)
+			return
+		else
+			user.visible_message(\
+				"<span class='notice'>[user] climbs onto the Adminbus!</span>",\
+				"<span class='notice'>You climb onto the Adminbus!</span>")
+			user.buckled = src
+			user.loc = loc
+			user.dir = dir
+			user.update_canmove()
+			user.isolated = 1
+			buckled_mob = user
+			update_mob()
+			add_fingerprint(user)
+			if(!roadlights)
+				overlays += overlays_bus[2]
+				roadlights = 1
+				lightsource.SetLuminosity(2)
+			playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+			return
 
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/manual_unbuckle(mob/user as mob)
-	if((buckled_mob) && (buckled_mob == user))
+	if((buckled_mob) && (buckled_mob == user))	//Are you the driver?
 		buckled_mob.visible_message(\
 			"<span class='notice'>[buckled_mob.name] unbuckled \himself!</span>",\
 			"You unbuckle yourself from the Adminbus.")
 		unbuckle()
 		src.add_fingerprint(user)
-	return
+		return
+	else
+		if(door_mode)
+			if(locate(usr) in passengers)
+				freed(usr)
+				return
+			else
+				capture_mob(usr,1)
+				return
+		else
+			if(istype(user,/mob/living/carbon/human/dummy) || istype(user,/mob/living/simple_animal/corgi/Ian))
+				if(locate(usr) in passengers)
+					freed(usr)
+					return
+				else
+					capture_mob(usr,1)
+					return
+			else
+				if(locate(usr) in passengers)
+					usr << "<span class='notice'>You may not leave the Adminbus at the current time.</span>"
+					return
+				else
+					usr << "<span class='notice'>You may not climb into the Adminbus while its door is closed.</span>"
+					return
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/unbuckle()
 	if(buckled_mob)
@@ -256,6 +356,7 @@
 		if(roadlights)
 			overlays -= overlays_bus[2]
 			roadlights = 0
+			lightsource.SetLuminosity(0)
 	return
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/emp_act(severity)
@@ -273,7 +374,7 @@
 	return
 
 /obj/structure/hookshot
-	name = "Admin chain"
+	name = "\improper admin chain"
 	desc = "You might want to dodge that."
 	icon = 'icons/obj/singulo_chain.dmi'
 	icon_state = "chain"
@@ -286,7 +387,7 @@
 	var/dropped = 0
 
 /obj/structure/hookshot/claw
-	name = "Admin claw"
+	name = "\improper admin claw"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "singulo_catcher"
 	pixel_x = -32
@@ -345,7 +446,7 @@
 	return
 
 /obj/structure/singulo_chain
-	name = "Singularity chain"
+	name = "\improper singularity chain"
 	desc = "Admins are above all logic"
 	icon = 'icons/obj/singulo_chain.dmi'
 	icon_state = "chain"
@@ -382,4 +483,16 @@
 		target.loc = src.loc
 
 /obj/structure/singulo_chain/cultify()
+	return
+
+/obj/structure/buslight//the things you have to do to pretend that your bus has directional lights...
+	name = ""
+	desc = ""
+	anchored = 1
+	density = 0
+
+/obj/structure/buslight/ex_act(severity)
+	return
+
+/obj/structure/buslight/cultify()
 	return

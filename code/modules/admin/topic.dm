@@ -2500,6 +2500,7 @@
 			if("spawnselfdummy")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","TD")
+				message_admins("[key_name_admin(usr)] spawned himself as a Test Dummy.")
 				var/mob/living/carbon/human/dummy/D = new /mob/living/carbon/human/dummy(get_turf(usr))
 				usr.client.cmd_assume_direct_control(D)
 				D.name = "Admin"
@@ -2510,7 +2511,6 @@
 					newname = "Admin"
 				D.name = newname
 				D.real_name = newname
-				message_admins("[key_name_admin(usr)] spawned himself as a Test Dummy.")
 		if(usr)
 			log_admin("[key_name(usr)] used secret [href_list["secretsfun"]]")
 			if (ok)

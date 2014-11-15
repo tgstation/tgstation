@@ -30,6 +30,16 @@
 	projectile_type = /obj/item/projectile/beam
 	charge_cost = 50
 
+/obj/item/weapon/gun/energy/laser/admin
+	name = "\improper Infinite Laser Gun"
+	desc = "Spray and /pray."
+	icon_state = "laseradmin"
+	projectile_type = /obj/item/projectile/beam
+	charge_cost = 0
+
+/obj/item/weapon/gun/energy/laser/admin/update_icon()
+	return
+
 obj/item/weapon/gun/energy/laser/retro
 	name ="retro laser"
 	icon_state = "retro"

@@ -204,6 +204,10 @@ var/global/narsie_behaviour = "CultStation13"
 			C2.dust() // Changed from gib(), just for less lag.
 
 		else if (istype(A, /obj/))
+			if (isbot(A))
+				var/obj/machinery/bot/B = A
+				if(B.isolated)
+					return
 			A.ex_act(1)
 
 			if (A)
@@ -247,6 +251,10 @@ var/global/narsie_behaviour = "CultStation13"
 		C2.dust() // Changed from gib(), just for less lag.
 
 	else if (istype(A, /obj/))
+		if (isbot(A))
+			var/obj/machinery/bot/B = A
+			if(B.isolated)
+				return
 		A.ex_act(1)
 
 		if (A)
