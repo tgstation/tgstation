@@ -84,7 +84,7 @@
 	inturf = get_step(src, dir)
 
 	spawn(5)
-		turbine = locate() in get_step(src, get_dir(inturf, src))
+		locate_machinery()
 		if(!turbine)
 			stat |= BROKEN
 
@@ -97,6 +97,13 @@
 // OLD FIX - explanation given down below.
 // /obj/machinery/power/compressor/CanPass(atom/movable/mover, turf/target, height=0)
 // 		return !density
+
+/obj/machinery/power/compressor/locate_machinery()
+	if(turbine)
+		return
+	turbine = locate() in get_step(src, get_dir(inturf, src))
+	if(turbine)
+		turbine.locate_machinery()
 
 /obj/machinery/power/compressor/RefreshParts()
 	var/E = 0
@@ -111,7 +118,7 @@
 	if(default_change_direction_wrench(user, I))
 		turbine = null
 		inturf = get_step(src, dir)
-		turbine = locate() in get_step(src, get_dir(inturf, src))
+		locate_machinery()
 		if(turbine)
 			user << "<span class='notice'>Turbine connected.</span>"
 			stat &= ~BROKEN
@@ -129,14 +136,13 @@
 	return !density
 
 /obj/machinery/power/compressor/process()
+	stat = (!turbine || panel_open)
+	if(stat & BROKEN)
+		return
 	if(!starter)
 		return
 	overlays.Cut()
-	if(stat & BROKEN)
-		return
-	if(!turbine)
-		stat |= BROKEN
-		return
+
 	rpm = 0.9* rpm + 0.1 * rpmtarget
 	var/datum/gas_mixture/environment = inturf.return_air()
 
@@ -199,7 +205,7 @@
 
 // compressor is found in the opposite direction
 
-		compressor = locate() in get_step(src, get_dir(outturf, src))
+		locate_machinery()
 		if(!compressor)
 			stat |= BROKEN
 
@@ -218,15 +224,19 @@
 		P += C.rating
 	productivity = P / 6
 
+/obj/machinery/power/turbine/locate_machinery()
+	if(compressor)
+		return
+	compressor = locate() in get_step(src, get_dir(outturf, src))
+	if(compressor)
+		compressor.locate_machinery()
+
 /obj/machinery/power/turbine/CanAtmosPass(var/turf/T)
 	return !density
 
 /obj/machinery/power/turbine/process()
-
+	stat = (!compressor || panel_open)
 	if(stat & BROKEN)
-		return
-	if(!compressor)
-		stat |= BROKEN
 		return
 	if(!compressor.starter)
 		return
@@ -274,7 +284,7 @@
 	if(default_change_direction_wrench(user, I))
 		compressor = null
 		outturf = get_step(src, dir)
-		compressor = locate() in get_step(src, get_dir(outturf, src))
+		locate_machinery()
 		if(compressor)
 			user << "<span class='notice'>Compressor connected.</span>"
 			stat &= ~BROKEN
@@ -341,9 +351,9 @@
 /obj/machinery/computer/turbine_computer/New()
 	..()
 	spawn(5)
-		search_turbine()
+		locate_machinery()
 
-/obj/machinery/computer/turbine_computer/proc/search_turbine()
+/obj/machinery/computer/turbine_computer/locate_machinery()
 	compressor = locate(/obj/machinery/power/compressor) in range(5)
 
 /obj/machinery/computer/turbine_computer/attack_hand(var/mob/user as mob)
@@ -356,17 +366,21 @@
 
 	var/dat
 	if(compressor && compressor.turbine)
-		dat += {"<BR><B>Gas turbine remote control system</B><HR>
-		\nTurbine status: [ src.compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]
-		\n<BR>
-		\nTurbine speed: [src.compressor.rpm]rpm<BR>
-		\nPower currently being generated: [src.compressor.turbine.lastgen]W<BR>
-		\nInternal gas temperature: [src.compressor.gas_contained.temperature]K<BR>
-		\n</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>
-		\n<BR>
-		\n"}
+		dat += "<BR><B>Gas turbine remote control system</B><HR>"
+		if(compressor.stat || compressor.turbine.stat)
+			dat += "[compressor.stat ? "<B>Compressor is inoperable</B><BR>" : ""]"
+			dat += "[compressor.turbine.stat ? "<B>Turbine is inoperable</B>" : ""]"
+		else
+			dat += {"Turbine status: [ src.compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]
+			\n<BR>
+			\nTurbine speed: [src.compressor.rpm]rpm<BR>
+			\nPower currently being generated: [src.compressor.turbine.lastgen]W<BR>
+			\nInternal gas temperature: [src.compressor.gas_contained.temperature]K<BR>
+			\n</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>
+			\n<BR>
+			\n"}
 	else
-		dat += "<B>There is [!compressor ? "no compressor" : " compressor[!compressor.turbine ? " and no turbine" : ""]"].</B><BR>"
+		dat += "<B>There is [!compressor ? "no compressor" : " compressor[!compressor.turbine ? " but no turbine" : ""]"].</B><BR>"
 		if(!compressor)
 			dat += "<A href='?src=\ref[src];search=1'>Search for compressor</A>"
 
@@ -380,14 +394,14 @@
 		return
 
 	else if( href_list["str"] )
-		if(compressor)
+		if(compressor && compressor.turbine)
 			compressor.starter = !compressor.starter
 	else if( href_list["close"] )
 		usr << browse(null, "window=turbinecomputer")
 		usr.unset_machine(src)
 		return
 	else if(href_list["search"])
-		search_turbine()
+		locate_machinery()
 
 	src.updateUsrDialog()
 	return
