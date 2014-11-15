@@ -222,6 +222,7 @@
 	desc = "Pompadour not included."
 	icon_state = "leatherjacket"
 
+
 //Blue suit jacket toggle
 /obj/item/clothing/suit/suit/verb/toggle()
 	set name = "Toggle Jacket Buttons"
@@ -243,6 +244,7 @@
 		usr << "You button-up some imaginary buttons on your [src]."
 		return
 	usr.update_inv_wear_suit()
+
 
 /obj/item/clothing/suit/xenos
 	name = "xenos suit"

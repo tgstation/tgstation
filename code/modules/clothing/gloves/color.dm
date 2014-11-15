@@ -122,3 +122,4 @@
 
 	cargo
 		item_color = "cargo"				//Exists for washing machines. Is not different from brown gloves in any way.
+
