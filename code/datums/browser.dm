@@ -78,7 +78,7 @@
 			[title ? "<div class='uiTitleWrapper'><div [title_attributes]><tt>[title]</tt></div></div>" : ""]
 			<div class='uiContent'>
 	"}
-
+//" This is here because else the rest of the file looks like a string in notepad++.
 /datum/browser/proc/get_footer()
 	return {"
 			</div>
