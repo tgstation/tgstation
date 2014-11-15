@@ -97,7 +97,6 @@
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
-	handle_regular_hud_updates()
 
 	if(dna)
 		dna.species.spec_life(src) // for mutantraces
@@ -582,8 +581,6 @@
 
 /mob/living/carbon/human/proc/handle_regular_hud_updates()
 	if(!client)	return 0
-
-	regular_hud_updates() //For MED/SEC HUD icon deletion
 
 	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
 

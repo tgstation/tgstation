@@ -1068,7 +1068,6 @@
 #include "code\modules\mob\living\carbon\slime\death.dm"
 #include "code\modules\mob\living\carbon\slime\emote.dm"
 #include "code\modules\mob\living\carbon\slime\examine.dm"
-#include "code\modules\mob\living\carbon\slime\hud.dm"
 #include "code\modules\mob\living\carbon\slime\life.dm"
 #include "code\modules\mob\living\carbon\slime\login.dm"
 #include "code\modules\mob\living\carbon\slime\powers.dm"

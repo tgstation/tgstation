@@ -238,10 +238,18 @@
 					temp = "Unable to locate requested security record. Record may have been deleted, or never have existed."
 		if("securityhud")
 			if(href_list["toggle"])
-				src.secHUD = !src.secHUD
+				if(secHUD)
+					reset_all_data_huds()
+				else
+					add_data_hud(DATA_HUD_SECURITY,sensor_level)
+				secHUD = !secHUD
 		if("medicalhud")
 			if(href_list["toggle"])
-				src.medHUD = !src.medHUD
+				if(medHUD)
+					reset_all_data_huds()
+				else
+					add_data_hud(DATA_HUD_MEDICAL,sensor_level)
+				medHUD = !medHUD
 		if("translator")
 			if(href_list["toggle"])
 				languages = languages == ALL ? HUMAN & ROBOT : ALL

@@ -106,7 +106,7 @@ var/list/advance_cures = 	list(
 		var/id = "[GetDiseaseID()]"
 		if(resistance && !(id in affected_mob.resistances))
 			affected_mob.resistances[id] = id
-		affected_mob.viruses -= src		//remove the datum from the list
+		remove_virus()
 	del(src)	//delete the datum to stop it processing
 
 // Returns the advance disease with a different reference memory.

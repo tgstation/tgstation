@@ -1,21 +1,91 @@
-/* Using the HUD procs is simple. Call these procs in the life.dm of the intended mob.
-Use the regular_hud_updates() proc before process_med_hud(mob) or process_sec_hud(mob) so
-the HUD updates properly! */
+/*
+ * Data HUDs are now passive in order to reduce lag.
+ * Add then to a mob using add_data_hud.
+ * Update them when needed with the appropriate proc. (see below)
+ */
 
-//Deletes the current HUD images so they can be refreshed with new ones.
-mob/proc/regular_hud_updates() //Used in the life.dm of mobs that can use HUDs.
+var/list/basic_med_hud_users = list() //yes, this is, in fact, needed
+
+/*
+ * GENERIC HUD PROCS
+ */
+
+//Deletes all current HUD images
+/mob/proc/reset_all_data_huds()
 	if(client)
 		for(var/image/hud in client.images)
-			if(copytext(hud.icon_state,1,4) == "hud")
+			if(findtext(hud.icon_state,"hud",1,4))
 				client.images -= hud
-	med_hud_users -= src
-	sec_hud_users -= src
+	basic_med_hud_users -= src
+
+//Adds one set of data hud images
+/mob/proc/add_data_hud(var/hud_type, var/hud_mode)
+	if(!client)
+		return
+
+	for(var/mob/living/carbon/human/H in mob_list)
+		switch(hud_type)
+			if(DATA_HUD_MEDICAL)
+				if(hud_mode == DATA_HUD_BASIC)
+					basic_med_hud_users += src
+				add_med_hud(hud_mode,H)
+			if(DATA_HUD_SECURITY)
+				add_sec_hud(hud_mode,H)
 
 
-//Medical HUD procs
+/***********************************************
+ Medical HUD! Basic mode needs suit sensors on.
+************************************************/
 
-proc/RoundHealth(health)
+/*
+ * THESE SHOULD BE CALLED BY THE MOB SEEING THE HUD
+ */
 
+/mob/proc/add_med_hud(var/mode, var/mob/living/carbon/human/patient)
+	if(mode == DATA_HUD_BASIC) //Used for the AI's MedHUD, only works if the patient has activated suit sensors.
+		if(!patient.w_uniform)	return
+		var/obj/item/clothing/under/U = patient.w_uniform
+		if(U.sensor_mode <= 2)	return
+	add_single_med_hud(patient)
+
+//Adds a single mob's med HUD to view
+/mob/proc/add_single_med_hud(var/mob/living/carbon/human/H)
+	if(client)
+		client.images += H.hud_list[HEALTH_HUD]
+		client.images += H.hud_list[STATUS_HUD]
+
+//Deletes a single mob's med HUD from view
+/mob/proc/remove_single_med_hud(var/mob/living/carbon/human/H)
+	if(client)
+		client.images -= H.hud_list[HEALTH_HUD]
+		client.images -= H.hud_list[STATUS_HUD]
+
+
+/*
+ * THESE SHOULD BE CALLED BY THE MOB SHOWING THE HUD
+ */
+
+//called when a human changes suit sensors
+/mob/living/carbon/human/proc/update_suit_sensors(var/obj/item/clothing/under/w_uniform)
+	var/sensor_level = 0
+	if(w_uniform)	sensor_level = w_uniform.sensor_mode
+	update_med_hud_suit_sensors(sensor_level)
+	..()
+
+//called when a human changes suit sensors
+/mob/living/carbon/human/proc/update_med_hud_suit_sensors(sensor_level)
+	for(var/mob/M in basic_med_hud_users)
+		sensor_level > 2 ? M.add_single_med_hud(src) : M.remove_single_med_hud(src)
+
+//called when a human changes virus
+/mob/living/carbon/human/proc/check_virus()
+	for(var/datum/disease/D in viruses)
+		if((!(D.visibility_flags & HIDDEN_SCANNER)) && (D.severity != NONTHREAT))
+			return 1
+	return 0
+
+//helper for getting the appropriate health status
+/proc/RoundHealth(health)
 	switch(health)
 		if(100 to INFINITY)
 			return "health100"
@@ -37,146 +107,94 @@ proc/RoundHealth(health)
 			return "health-100"
 	return "0"
 
-/*Called by the Life() proc of the mob using it, usually. Items can call it as well.
-Called with this syntax: (The user mob, the type of hud in use, the advanced or basic version of the hud,eye object in the case of an AI) */
-
-proc/process_data_hud(var/mob/M, var/hud_type, var/hud_mode, var/mob/eye)
-	#define DATA_HUD_MEDICAL	1
-	#define DATA_HUD_SECURITY	2
-
-	#define DATA_HUD_BASIC		1
-	#define DATA_HUD_ADVANCED	2
-
-	if(!M)
-		return
-	if(!M.client)
-		return
-
-	var/turf/T
-	if(eye)
-		T = get_turf(eye)
-	else
-		T = get_turf(M)
-
-
-	for(var/mob/living/carbon/human/H in mob_list)
-		if(get_dist(H, T) > M.client.view) //Ignores any humans outside of the user's view distance.
-			continue
-
-		switch(hud_type)
-			if(DATA_HUD_MEDICAL)
-				med_hud_users |= M
-				process_med_hud(M,hud_mode,T,H)
-
-			if(DATA_HUD_SECURITY)
-				sec_hud_users |= M //Used for Security HUD alerts.
-				process_sec_hud(M,hud_mode,T,H)
-
-/***********************************************
-Medical HUD outputs! Advanced mode ignores suit sensors.
-************************************************/
-proc/process_med_hud(var/mob/M, var/mode, var/turf/T, var/mob/living/carbon/human/patient)
-
-	var/client/C = M.client
-
-	if(mode == DATA_HUD_BASIC && !med_hud_suit_sensors(patient)) //Used for the AI's MedHUD, only works if the patient has activated suit sensors.
-		return
-
-
-	var/foundVirus = med_hud_find_virus(patient) //Detects non-hidden diseases in a patient, returns as a binary value.
-
-	C.images += med_hud_get_health(patient) //Generates a patient's health bar.
-	C.images += med_hud_get_status(patient, foundVirus) //Determines the type of status icon to show.
-
-
-proc/med_hud_suit_sensors(var/mob/living/carbon/human/patient)
-	if(istype(patient.w_uniform, /obj/item/clothing/under))
-		var/obj/item/clothing/under/U = patient.w_uniform
-		if(U.sensor_mode > 2)
-			return 1
-	else
-		return 0
-
-proc/med_hud_find_virus(var/mob/living/carbon/human/patient)
-	for(var/datum/disease/D in patient.viruses)
-		if(!(D.visibility_flags & HIDDEN_SCANNER))
-			if(D.severity != NONTHREAT)
-				return 1
-
-proc/med_hud_get_health(var/mob/living/carbon/human/patient)
-	var/image/holder = patient.hud_list[HEALTH_HUD]
-	if(patient.stat == 2)
+//called when a human changes health
+/mob/living/carbon/human/proc/med_hud_set_health()
+	var/image/holder = hud_list[HEALTH_HUD]
+	if(stat == 2)
 		holder.icon_state = "hudhealth-100"
 	else
-		holder.icon_state = "hud[RoundHealth(patient.health)]"
-	return holder
+		holder.icon_state = "hud[RoundHealth(health)]"
 
-proc/med_hud_get_status(var/mob/living/carbon/human/patient, var/foundVirus)
-	var/image/holder = patient.hud_list[STATUS_HUD]
-	if(patient.stat == 2)
+//called when a human changes stat, virus or XENO_HOST
+/mob/living/carbon/human/proc/med_hud_set_status()
+	var/image/holder = hud_list[STATUS_HUD]
+	if(stat == 2)
 		holder.icon_state = "huddead"
-	else if(patient.status_flags & XENO_HOST)
+	else if(status_flags & XENO_HOST)
 		holder.icon_state = "hudxeno"
-	else if(foundVirus)
+	else if(check_virus())
 		holder.icon_state = "hudill"
 	else
 		holder.icon_state = "hudhealthy"
-	return holder
 
 
 /***********************************************
- Security HUDs.
- Pass a value for the second argument to enable implant viewing or other special features.
+ Security HUDs! Basic mode shows only the job.
 ************************************************/
-proc/process_sec_hud(var/mob/M, var/mode, var/turf/T, var/mob/living/carbon/human/perp)
 
-	var/client/C = M.client
+/*
+ * THESE SHOULD BE CALLED BY THE MOB SEEING THE HUD
+ */
 
-	sec_hud_get_ID(C, perp) //Provides the perp's job icon.
+/mob/proc/add_sec_hud(var/mode, var/mob/living/carbon/human/perp)
+	add_single_sec_hud_basic(perp)
 
-	if(mode == DATA_HUD_ADVANCED) //If not set to "DATA_HUD_ADVANCED, the Sec HUD will only display the job.
-		sec_hud_get_implants(C, perp) //Returns the perp's implants, if any.
-		sec_hud_get_security_status(C, perp) //Gives the perp's arrest record, if there is one.
+	if(mode == DATA_HUD_ADVANCED) //If not set to DATA_HUD_ADVANCED, the Sec HUD will only display the job.
+		add_single_sec_hud_advanced(perp)
 
+//Adds a single mob's basic sec HUD to view
+/mob/proc/add_single_sec_hud_basic(var/mob/living/carbon/human/H)
+	if(client)
+		client.images += H.hud_list[ID_HUD]
 
-proc/sec_hud_get_ID(var/client/C, var/mob/living/carbon/human/perp)
-	var/image/holder
-	holder = perp.hud_list[ID_HUD]
+//Adds a single mob's advanced sec HUD to view
+/mob/proc/add_single_sec_hud_advanced(var/mob/living/carbon/human/H)
+	if(client)
+		client.images += H.hud_list[IMPTRACK_HUD]
+		client.images += H.hud_list[IMPLOYAL_HUD]
+		client.images += H.hud_list[IMPCHEM_HUD]
+		client.images += H.hud_list[WANTED_HUD]
+
+/*
+ * THESE SHOULD BE CALLED BY THE MOB SHOWING THE HUD
+ */
+
+//These should only be called when necessary in order to reduce lag
+/mob/living/carbon/human/proc/sec_hud_set_ID()
+	var/image/holder = hud_list[ID_HUD]
 	holder.icon_state = "hudno_id"
-	if(perp.wear_id)
-		holder.icon_state = "hud[ckey(perp.wear_id.GetJobName())]"
-	C.images += holder
+	if(wear_id)
+		holder.icon_state = "hud[ckey(wear_id.GetJobName())]"
 
-proc/sec_hud_get_implants(var/client/C, var/mob/living/carbon/human/perp)
+/mob/living/carbon/human/proc/sec_hud_set_implants()
 	var/image/holder
-	for(var/obj/item/weapon/implant/I in perp)
+	for(var/I in list(IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD))
+		holder = hud_list[I]
+		holder.icon_state = null
+	for(var/obj/item/weapon/implant/I in src)
 		if(I.implanted)
 			if(istype(I,/obj/item/weapon/implant/tracking))
-				holder = perp.hud_list[IMPTRACK_HUD]
+				holder = hud_list[IMPTRACK_HUD]
 				holder.icon_state = "hud_imp_tracking"
 			else if(istype(I,/obj/item/weapon/implant/loyalty))
-				holder = perp.hud_list[IMPLOYAL_HUD]
+				holder = hud_list[IMPLOYAL_HUD]
 				holder.icon_state = "hud_imp_loyal"
 			else if(istype(I,/obj/item/weapon/implant/chem))
-				holder = perp.hud_list[IMPCHEM_HUD]
+				holder = hud_list[IMPCHEM_HUD]
 				holder.icon_state = "hud_imp_chem"
 			else
 				continue
-			C.images += holder
-			break
 
-proc/sec_hud_get_security_status(var/client/C, var/mob/living/carbon/human/perp)
+/mob/living/carbon/human/proc/sec_hud_set_security_status()
 	var/image/holder
-	var/perpname = perp.get_face_name(perp.get_id_name(""))
+	var/perpname = get_face_name(get_id_name(""))
 	if(perpname)
 		var/datum/data/record/R = find_record("name", perpname, data_core.security)
 		if(R)
-			holder = perp.hud_list[WANTED_HUD]
+			holder = hud_list[WANTED_HUD]
 			switch(R.fields["criminal"])
 				if("*Arrest*")		holder.icon_state = "hudwanted"
 				if("Incarcerated")	holder.icon_state = "hudincarcerated"
 				if("Parolled")		holder.icon_state = "hudparolled"
-				if("Discharged")		holder.icon_state = "huddischarged"
-				else
-					return
-			C.images += holder
+				if("Discharged")	holder.icon_state = "huddischarged"
+				else				holder.icon_state = null

@@ -28,7 +28,13 @@
 	internal_organs += new /obj/item/organ/brain
 
 	for(var/i=0;i<7;i++) // 2 for medHUDs and 5 for secHUDs
-		hud_list += image('icons/mob/hud.dmi', src, "hudunknown")
+		hud_list += image('icons/mob/hud.dmi', src, "")
+	
+	med_hud_set_health()
+	med_hud_set_status()
+	sec_hud_set_ID()
+	sec_hud_set_implants()
+	sec_hud_set_security_status()
 
 	// for spawned humans; overwritten by other code
 	create_dna(src)
@@ -400,9 +406,7 @@
 									if(setcriminal != "Cancel")
 										investigate_log("[src.key] has been set from [R.fields["criminal"]] to [setcriminal] by [usr.name] ([usr.key]).", "records")
 										R.fields["criminal"] = setcriminal
-
-										spawn()
-										H.handle_regular_hud_updates()
+										sec_hud_set_security_status()
 								return
 
 						if(href_list["view"])

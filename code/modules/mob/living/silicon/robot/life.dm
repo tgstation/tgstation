@@ -166,11 +166,6 @@
 		if(see_override)
 			see_invisible = see_override
 
-	regular_hud_updates() //Handles MED/SEC HUDs for borgs.
-
-	if(sensor_mode)
-		process_data_hud(src,sensor_mode,DATA_HUD_ADVANCED)
-
 	if (src.healths)
 		if (src.stat != 2)
 			switch(health)

@@ -153,7 +153,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 		if(disease_flags & CAN_RESIST)
 			if(!(type in affected_mob.resistances))
 				affected_mob.resistances += type
-			affected_mob.viruses -= src
+				remove_virus()
 	del(src)
 
 
@@ -193,3 +193,10 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	if(spread_flags & CONTACT_FEET || spread_flags & CONTACT_HANDS || spread_flags & CONTACT_GENERAL)
 		return 1
 	return 0
+
+//don't use this proc directly. this should only ever be called by cure()
+/datum/disease/proc/remove_virus()
+	affected_mob.viruses -= src		//remove the datum from the list
+	if(istype(affected_mob, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = affected_mob
+		H.med_hud_set_status()

@@ -51,3 +51,10 @@
 #define STAGE_THREE 5
 #define STAGE_FOUR 7
 #define STAGE_FIVE 9
+
+//data HUD (medhud, sechud) defines
+#define DATA_HUD_MEDICAL	1
+#define DATA_HUD_SECURITY	2
+
+#define DATA_HUD_BASIC		1
+#define DATA_HUD_ADVANCED	2

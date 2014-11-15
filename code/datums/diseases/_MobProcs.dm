@@ -37,8 +37,11 @@
 	DD.affected_mob = src
 	DD.holder = src
 	if(DD.disease_flags & CAN_CARRY && prob(5))
-		DD.carrier++
+		DD.carrier = 1
 
+/mob/living/carbon/human/AddDisease(var/datum/disease/D)
+	..()
+	med_hud_set_status()
 
 /mob/living/carbon/ContractDisease(var/datum/disease/D)
 	if(!CanContractDisease(D))
