@@ -278,8 +278,6 @@
 			else
 				path = get_path_to(loc, target, /turf/proc/AdjacentTurfsSpace, /turf/proc/Distance, 0, 30, id=botcard)
 
-			world << "A* path length : [path.len] to [target] at [target.x], [target.y], [target.z]"
-
 			if(!bot_move(target))
 				add_to_ignore(target)
 				oldtarget = target
