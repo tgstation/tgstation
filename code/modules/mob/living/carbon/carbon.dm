@@ -583,14 +583,18 @@
 	set name = "Release Control"
 	set desc = "Release control of your host's body."
 
+	do_release_control(0)
+
+/mob/living/carbon/proc/do_release_control(var/rptext=1)
 	var/mob/living/simple_animal/borer/B = has_brain_worms()
 
 	if(!B)
 		return
 
 	if(B.controlling)
-		src << "\red <B>You withdraw your probosci, releasing control of [B.host_brain]</B>"
-		B.host_brain << "\red <B>Your vision swims as the alien parasite releases control of your body.</B>"
+		if(rptext)
+			src << "\red <B>You withdraw your probosci, releasing control of [B.host_brain]</B>"
+			B.host_brain << "\red <B>Your vision swims as the alien parasite releases control of your body.</B>"
 		B.ckey = ckey
 		B.controlling = 0
 	if(B.host_brain.ckey)
@@ -647,6 +651,8 @@
 			src << "\red <B>Your host twitches and quivers as you rapidly excrete several larvae from your sluglike body.</B>"
 			visible_message("\red <B>[src] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</B>")
 			B.chemicals -= 100
+
+			B.numChildren++
 
 			new /obj/effect/decal/cleanable/vomit(get_turf(src))
 			playsound(loc, 'sound/effects/splat.ogg', 50, 1)

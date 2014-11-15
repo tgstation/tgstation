@@ -80,6 +80,83 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 		-->
 
 		<div class="commit sansserif">
+			<h2 class="date">2014.11.14</h2>
+			<h3 class="author">N3X15 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Borers are now properly blocked by welded vents.</li>
+				<li class="bugfix">Borer chem synthesis works properly now.</li>
+			</ul>
+			<h3 class="author">Pomf123 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Increased the maturation rate of botany plants by approximately 160%</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.11.12</h2>
+			<h3 class="author">N3X15 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Falsewalls now properly smooth with their neighbors after closing.</li>
+				<li class="tweak">Device Analyzers can no longer scan some items.  Other items can only be scanned with the traitor variant of the scanner.</li>
+				<li class="tweak">Flatpacks take 10-20 seconds to open.</li>
+				<li class="bugfix">Meccha machines will no longer generate random designs if one cannot be found. (Fixes building diamond sheets with metal.)</li>
+				<li class="bugfix">Flatpacks hit multiple times by a crowbar will only open once.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.11.11</h2>
+			<h3 class="author">Deity Link updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Vending machines and nanomeds can now be deconstructed (doing so will destroy all their remaining articles!).</li>
+				<li class="rscadd">Vending machines Circuit Boards can now be printed at R&D (mat=1,eng=1,pow=1 TL;DR at round start!).</li>
+				<li class="rscadd">Vending machines can be built from machine frames, with a circuit board, a matter bin, a scanning module, and a manipulator.</li>
+				<li class="rscadd">Constructed vending machines are empty by default.</li>
+				<li class="rscadd">Cargo has a new Order category "Vending Machine packs"</li>
+				<li class="rscadd">Those packs arrive in the supply shuttle coiled together in a stack. Use a wirecutter on it to spawn the packs and the supply manifest.</li>
+				<li class="rscadd">Stacks of packs and the packs themselves can be package-wrapped and tagged for the delivery sorting machine.</li>
+				<li class="rscadd">Stacks and packs can as well be placed on MULEbots.</li>
+				<li class="rscadd">Packs have density, so they must be pulled just like crate.</li>
+				<li class="rscadd">Packs can be drag-n-dropped onto a matching vending machine to refill its content, or onto an empty vending machine to set its contents and appearance.</li>
+				<li class="rscadd">Once used, the packs no longer have density and can be picked up, and folded into cardboard.</li>
+				<li class="rscadd">There are currently packs for all the vending machines on the station (except the wall-mounted nanomeds, for now...)</li>
+				<li class="rscadd">Some savvy and adequatly equipped cargoneers might as well order packs for machines that aren't naturally found anywhere on the station...</li>
+				<li class="imageadd">Packages now have a visible and examinable label once they've been tagged.</li>
+				<li class="rscadd">NanoMeds frames can now be built with 3 sheets of metal. They only require a Circuit Board and 5 coil pieces (and of course a NanoMed recharge pack).</li>
+				<li class="tweak">Removed the access restriction on NanoMeds (NanoMed Plus are still restricted to doctors).</li>
+				<li class="bugfix">Fixed a runtime error caused by trying to Jump To Mob as a Ghost.</li>
+				<li class="bugfix">The syndicate shuttle and pirate ship's consoles no longer appear unpowered.</li>
+				<li class="bugfix">Fixed vending machines wire-panel not appearing when the panel is open.</li>
+				<li class="rscadd">Nazivends and Sovietvends can now be emagged to replace them with their DANGERMODE counterpart (they still require to be hacked to access their new content).</li>
+				<li class="imageadd">Nazivends and Sovietvends now emit a distinctive pulsating glow when emagged.</li>
+			</ul>
+			<h3 class="author">Dylanstrategie updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">PDA flashlight now has a range of 2 instead of 4 and a green to cyan tint. Better pack a flashlight next time</li>
+			</ul>
+			<h3 class="author">IratePirate updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Addition of a new Janitor's closet, Mechanics workshop and changes elsewhere.</li>
+			</ul>
+			<h3 class="author">N3X15 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Borers start with full control after infesting their host.</li>
+				<li class="rscadd">'Kill Host' verb added to borers.  A reason is required to kill the host, and is logged and sent to the host.</li>
+				<li class="rscadd">'Punish Host' verb added to borers: adds brain damage.</li>
+				<li class="rscadd">Ghosts can see who a borer's host is.</li>
+				<li class="rscadd">Borer chat and thoughtspeak is now logged and presented to admins.</li>
+				<li class="rscadd">Borers are easier to manage with admin tools (Player Panel).</li>
+				<li class="rscadd">Borers can be safely detached from a host by admins.</li>
+				<li class="rscadd">Borers have more control over what dosage of chems they use.</li>
+				<li class="bugfix">More reliable detaching, with several failover checks in case of problems.</li>
+				<li class="bugfix">Only verbs you can use are presented when attached or detached</li>
+				<li class="tweak">'Release Host' renamed to 'Abandon Host' for clarity.</li>
+				<li class="tweak">Borers are no longer completely ejected after failing to maintain control of their hosts.</li>
+				<li class="tweak">Borers: Alkysine is now free to use.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
 			<h2 class="date">2014.11.09</h2>
 			<h3 class="author">ungluedbracelet updated:</h3>
 			<ul class="changes bgimages16">

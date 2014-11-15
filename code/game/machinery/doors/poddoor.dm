@@ -11,6 +11,11 @@
 	animation_delay = 18
 	animation_delay_2 = 5
 
+/obj/machinery/door/poddoor/preopen
+	icon_state = "open"
+	density = 0
+	opacity = 0
+
 /obj/machinery/door/poddoor/New()
 	. = ..()
 	if(density)

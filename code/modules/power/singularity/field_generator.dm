@@ -26,13 +26,12 @@ field_generator power level display
 	var/Varpower = 0
 	var/active = 0
 	var/power = 20  // Current amount of power
-	var/state = 0
 	var/warming_up = 0
 	var/list/obj/machinery/containment_field/fields
 	var/list/obj/machinery/field_generator/connected_gens
 	var/clean_up = 0
 
-	machine_flags = WRENCHMOVE | FIXED2WORK
+	machine_flags = WRENCHMOVE | FIXED2WORK | WELD_FIXED
 
 
 /obj/machinery/field_generator/update_icon()
@@ -102,10 +101,7 @@ field_generator power level display
 /obj/machinery/field_generator/wrenchAnchor(mob/user)
 	if(active)
 		user << "Turn off the [src] first."
-		return
-	if(state == 2)
-		user << "\red The [src.name] needs to be unwelded from the floor."
-		return
+		return -1
 	return ..()
 
 
@@ -114,37 +110,7 @@ field_generator power level display
 		user << "The [src] needs to be off."
 		return
 	else if(..())
-		return
-	else if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
-		switch(state)
-			if(0)
-				user << "\red The [src.name] needs to be wrenched to the floor."
-				return
-			if(1)
-				if (WT.remove_fuel(0,user))
-					playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
-					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
-						"You start to weld the [src] to the floor.", \
-						"You hear welding")
-					if (do_after(user,20))
-						if(!src || !WT.isOn()) return
-						state = 2
-						user << "You weld the field generator to the floor."
-				else
-					return
-			if(2)
-				if (WT.remove_fuel(0,user))
-					playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
-					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
-						"You start to cut the [src] free from the floor.", \
-						"You hear welding")
-					if (do_after(user,20))
-						if(!src || !WT.isOn()) return
-						state = 1
-						user << "You cut the [src] free from the floor."
-				else
-					return
+		return 1
 	return
 
 

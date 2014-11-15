@@ -62,8 +62,15 @@
 	if(!istype(O))
 		return 0
 
+	// Objects that cannot be scanned
+	if((O.mech_flags & MECH_SCAN_FAIL)==MECH_SCAN_FAIL)
+		return 0
+
 	var/list/techlist
 	if(istype(O, /obj/machinery))
+		// Objects that can only be scanned with the syndi-scanner.
+		if(syndi_filter && (O.mech_flags & MECH_SCAN_ILLEGAL)==MECH_SCAN_ILLEGAL)
+			return -1 //safety response
 		var/obj/machinery/M = O
 		if(M.component_parts)
 			for(var/obj/item/weapon/circuitboard/CB in M.component_parts) //fetching the circuit by looking in the parts
@@ -76,8 +83,17 @@
 				techlist = ConvertReqString2List(initial(comp_circuit.origin_tech))
 
 	else if(istype(O, /obj/item))
+		if(FindDesign(O)) //prioritizes the fail message over the illegal message
+			// Objects that can only be scanned with the syndi-scanner.
+			if(syndi_filter && (O.mech_flags & MECH_SCAN_ILLEGAL)==MECH_SCAN_ILLEGAL)
+				return -1 //safety response
+			return 1
+		else
+			return 0
+		/*
 		var/obj/item/I = O
 		techlist = ConvertReqString2List(I.origin_tech) //our tech is simply the item requirement
+		*/
 
 	if(!techlist) //this don't fly
 		return 0

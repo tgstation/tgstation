@@ -28,7 +28,7 @@
 
 	var/damage = 0
 	var/damage_archived = 0
-	var/safe_alert = "Crystaline hyperstructure returning to safe operating levels."
+	var/safe_alert = "Crystalline hyperstructure returning to safe operating levels."
 	var/warning_point = 100
 	var/warning_alert = "Danger! Crystal hyperstructure instability!"
 	var/emergency_point = 700

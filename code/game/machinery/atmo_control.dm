@@ -5,8 +5,6 @@
 
 	anchored = 1
 
-	var/state = 0
-
 	var/id_tag
 	var/frequency = 1439
 
@@ -21,83 +19,76 @@
 	// 16 for nitrogen concentration
 	// 32 for carbon dioxide concentration
 
+	machine_flags = WRENCHMOVE
+
 	var/datum/radio_frequency/radio_connection
 
-	update_icon()
-		icon_state = "gsensor[on]"
+/obj/machinery/air_sensor/update_icon()
+	icon_state = "gsensor[on]"
 
-	multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
-		return {"
-		<b>Main</b>
-		<ul>
-			<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[initial(frequency)]">Reset</a>)</li>
-			<li>[format_tag("ID Tag","id_tag")]</li>
-		</ul>"}
+/obj/machinery/air_sensor/multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
+	return {"
+	<b>Main</b>
+	<ul>
+		<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[initial(frequency)]">Reset</a>)</li>
+		<li>[format_tag("ID Tag","id_tag")]</li>
+	</ul>"}
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
-		if(istype(W, /obj/item/device/multitool))
-			update_multitool_menu(user)
-			return 1
-		if(istype(W, /obj/item/weapon/wrench))
-			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-			user << "\blue You begin to unfasten \the [src]..."
-			if (do_after(user, 40))
-				user.visible_message( \
-					"[user] unfastens \the [src].", \
-					"\blue You have unfastened \the [src].", \
-					"You hear a ratchet.")
-				new /obj/item/pipe_gsensor(src.loc)
-				del(src)
-		..()
+/obj/machinery/air_sensor/attackby(var/obj/item/W as obj, var/mob/user as mob)
+	if(istype(W, /obj/item/device/multitool))
+		update_multitool_menu(user)
+		return 1
+	if(..())
+		return 1
 
-	process()
-		if(on)
-			var/datum/signal/signal = new
-			signal.transmission_method = 1 //radio signal
-			signal.data["tag"] = id_tag
-			signal.data["timestamp"] = world.time
+/obj/machinery/air_sensor/process()
+	if(on)
+		var/datum/signal/signal = new
+		signal.transmission_method = 1 //radio signal
+		signal.data["tag"] = id_tag
+		signal.data["timestamp"] = world.time
 
-			var/datum/gas_mixture/air_sample = return_air()
+		var/datum/gas_mixture/air_sample = return_air()
 
-			if(output&1)
-				// Fucking why do we need num2text
-				//signal.data["pressure"] = num2text(round(air_sample.return_pressure(),0.1),)
-				signal.data["pressure"] =round(air_sample.return_pressure(),0.1)
-			if(output&2)
-				signal.data["temperature"] = round(air_sample.temperature,0.1)
+		if(output&1)
+			// Fucking why do we need num2text
+			//signal.data["pressure"] = num2text(round(air_sample.return_pressure(),0.1),)
+			signal.data["pressure"] =round(air_sample.return_pressure(),0.1)
+		if(output&2)
+			signal.data["temperature"] = round(air_sample.temperature,0.1)
 
-			if(output>4)
-				var/total_moles = air_sample.total_moles()
-				if(total_moles > 0)
-					if(output&4)
-						signal.data["oxygen"] = round(100*air_sample.oxygen/total_moles,0.1)
-					if(output&8)
-						signal.data["toxins"] = round(100*air_sample.toxins/total_moles,0.1)
-					if(output&16)
-						signal.data["nitrogen"] = round(100*air_sample.nitrogen/total_moles,0.1)
-					if(output&32)
-						signal.data["carbon_dioxide"] = round(100*air_sample.carbon_dioxide/total_moles,0.1)
-				else
-					signal.data["oxygen"] = 0
-					signal.data["toxins"] = 0
-					signal.data["nitrogen"] = 0
-					signal.data["carbon_dioxide"] = 0
-			signal.data["sigtype"]="status"
-			radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
-	proc
-		set_frequency(new_frequency)
-			radio_controller.remove_object(src, frequency)
-			frequency = new_frequency
-			radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
+		if(output>4)
+			var/total_moles = air_sample.total_moles()
+			if(total_moles > 0)
+				if(output&4)
+					signal.data["oxygen"] = round(100*air_sample.oxygen/total_moles,0.1)
+				if(output&8)
+					signal.data["toxins"] = round(100*air_sample.toxins/total_moles,0.1)
+				if(output&16)
+					signal.data["nitrogen"] = round(100*air_sample.nitrogen/total_moles,0.1)
+				if(output&32)
+					signal.data["carbon_dioxide"] = round(100*air_sample.carbon_dioxide/total_moles,0.1)
+			else
+				signal.data["oxygen"] = 0
+				signal.data["toxins"] = 0
+				signal.data["nitrogen"] = 0
+				signal.data["carbon_dioxide"] = 0
+		signal.data["sigtype"]="status"
+		radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
-	initialize()
+/obj/machinery/air_sensor/proc/set_frequency(new_frequency)
+	radio_controller.remove_object(src, frequency)
+	frequency = new_frequency
+	radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
+
+/obj/machinery/air_sensor/initialize()
+	set_frequency(frequency)
+
+/obj/machinery/air_sensor/New()
+	..()
+
+	if(radio_controller)
 		set_frequency(frequency)
-
-	New()
-		..()
-
-		if(radio_controller)
-			set_frequency(frequency)
 
 /obj/machinery/computer/general_air_control
 	icon = 'icons/obj/computer.dmi'

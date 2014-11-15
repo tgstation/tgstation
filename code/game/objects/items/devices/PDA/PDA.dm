@@ -24,7 +24,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	//Secondary variables
 	var/scanmode = 0 //1 is medical scanner, 2 is forensics, 3 is reagent scanner, 4 is halogen counter, 5 is gas scanner, 6 is device analyser -- keep this list updated if you add one
 	var/fon = 0 //Is the flashlight function on?
-	var/f_lum = 4 //Luminosity for the flashlight function
+	l_color = "#D8FFF2" //Related to the flashlight function. We Fallout now
+	var/f_lum = 2 //Luminosity for the flashlight function
 	var/silent = 0 //To beep or not to beep, that is the question
 	var/toff = 0 //If 1, messenger disabled
 	var/tnote = null //Current Texts

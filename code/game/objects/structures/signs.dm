@@ -176,6 +176,11 @@
 	desc = "A warning sign which reads 'CHEMISTRY'"
 	icon_state = "chemistry1"
 
+/obj/structure/sign/chemtable
+	name = "\improper The Periodic Table"
+	desc = "A very colorful and detailed table of all the chemical elements you could blow up or burn down a chemistry laboratory with, titled 'The Space Periodic Table - To be continued'. Just the mere sight of it makes you feel smarter."
+	icon_state = "periodic"
+
 /obj/structure/sign/botany
 	name = "\improper HYDROPONICS"
 	desc = "A warning sign which reads 'HYDROPONICS'"
