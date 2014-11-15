@@ -83,6 +83,11 @@
 	user.s_active = src
 
 
+/obj/item/weapon/storage/throw_at(atom/target, range, speed)
+	close_all()
+	return ..()
+
+
 /obj/item/weapon/storage/proc/hide_from(mob/user)
 	if(!user.client)
 		return
@@ -362,6 +367,9 @@
 	set name = "Switch Gathering Method"
 	set category = "Object"
 
+	if(usr.stat || !usr.canmove || usr.restrained())
+		return
+
 	collection_mode = (collection_mode+1)%3
 	switch (collection_mode)
 		if(2)
@@ -376,7 +384,7 @@
 	set name = "Empty Contents"
 	set category = "Object"
 
-	if((!ishuman(usr) && (loc != usr)) || usr.stat || usr.restrained())
+	if((!ishuman(usr) && (loc != usr)) || usr.stat || usr.restrained() ||!usr.canmove)
 		return
 
 	do_quick_empty()

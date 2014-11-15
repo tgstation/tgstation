@@ -2,14 +2,13 @@
 	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
 	var/datum/pipeline/parent
 	var/volume = 0
-	force = 20
 	layer = 2.4 //under wires with their 2.44
 	use_power = 0
 	can_unwrench = 1
 	var/alert_pressure = 80*ONE_ATMOSPHERE
 		//minimum pressure before check_pressure(...) should be called
 
-/obj/machinery/atmospherics/pipe/proc/pipeline_expansion()
+/obj/machinery/atmospherics/proc/pipeline_expansion()
 	return null
 
 /obj/machinery/atmospherics/pipe/proc/check_pressure(pressure)
@@ -24,32 +23,12 @@
 		air_update_turf()
 
 /obj/machinery/atmospherics/pipe/return_air()
-	if(!parent)
-		parent = new /datum/pipeline()
-		parent.build_pipeline(src)
 	return parent.air
 
 /obj/machinery/atmospherics/pipe/build_network()
 	if(!parent)
 		parent = new /datum/pipeline()
 		parent.build_pipeline(src)
-	return parent.return_network()
-
-/obj/machinery/atmospherics/pipe/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
-	if(!parent)
-		parent = new /datum/pipeline()
-		parent.build_pipeline(src)
-	return parent.network_expand(new_network, reference)
-
-/obj/machinery/atmospherics/pipe/return_network(obj/machinery/atmospherics/reference)
-	if(!parent)
-		parent = new /datum/pipeline()
-		parent.build_pipeline(src)
-	return parent.return_network(reference)
-
-/obj/machinery/atmospherics/pipe/Destroy()
-	del(parent)
-	..()
 
 /obj/machinery/atmospherics/pipe/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/device/analyzer))
@@ -59,3 +38,6 @@
 		return
 
 	return ..()
+
+/obj/machinery/atmospherics/pipe/setPipenet(datum/pipeline/P)
+	parent = P

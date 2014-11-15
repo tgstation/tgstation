@@ -2,7 +2,6 @@
 	icon = 'icons/turf/floors.dmi'
 	level = 1.0
 
-	//for floors, use is_plating(), is_plasteel_floor() and is_light_floor()
 	var/intact = 1
 
 	//Properties for open tiles (/floor)
@@ -19,7 +18,6 @@
 	var/temperature = T20C
 
 	var/blocks_air = 0
-	var/icon_old = null
 
 	var/PathNode/PNode = null //associated PathNode in the A* algorithm
 
@@ -94,31 +92,7 @@
 		loopsanity--
 		A.HasProximity(M, 1)
 
-/turf/proc/is_plating()
-	return 0
-/turf/proc/is_asteroid_floor()
-	return 0
 /turf/proc/is_plasteel_floor()
-	return 0
-/turf/proc/is_light_floor()
-	return 0
-/turf/proc/is_grass_floor()
-	return 0
-/turf/proc/is_wood_floor()
-	return 0
-/turf/proc/is_gold_floor()
-	return 0
-/turf/proc/is_silver_floor()
-	return 0
-/turf/proc/is_plasma_floor()
-	return 0
-/turf/proc/is_uranium_floor()
-	return 0
-/turf/proc/is_bananium_floor()
-	return 0
-/turf/proc/is_diamond_floor()
-	return 0
-/turf/proc/is_carpet_floor()
 	return 0
 /turf/proc/return_siding_icon_state()		//used for grass floors, which have siding.
 	return 0
@@ -328,7 +302,7 @@
 		var/mob/living/carbon/M = slipper
 		if (M.m_intent=="walk" && (lube&NO_SLIP_WHEN_WALKING))
 			return 0
-		if(!M.lying)
+		if(!M.lying && (M.status_flags & CANWEAKEN)) // we slip those who are standing and can fall.
 			var/olddir = M.dir
 			M.Stun(s_amount)
 			M.Weaken(w_amount)

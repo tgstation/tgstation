@@ -132,8 +132,10 @@ emp_act
 		return dna.species.spec_attacked_by(I,user,def_zone,affecting,hit_area,src.a_intent,target_limb,target_area,src)
 
 	else
-		if((user != src) && check_shields(I.force, "the [I.name]"))
-			return 0
+		if(user != src)
+			user.do_attack_animation(src)
+			if(check_shields(I.force, "the [I.name]"))
+				return 0
 
 		if(I.attack_verb && I.attack_verb.len)
 			visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I] by [user]!</span>", \
@@ -151,7 +153,7 @@ emp_act
 		apply_damage(I.force, I.damtype, affecting, armor , I)
 
 		var/bloody = 0
-		if(((I.damtype == BRUTE) && prob(25 + (I.force * 2))))
+		if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
 			if(affecting.status == ORGAN_ORGANIC)
 				I.add_blood(src)	//Make the weapon bloody, not the person.
 				if(prob(I.force * 2))	//blood spatter!
@@ -196,7 +198,7 @@ emp_act
 							update_inv_glasses(0)
 
 				if("chest")	//Easier to score a stun but lasts less time
-					if(stat == CONSCIOUS && prob(I.force + 10))
+					if(stat == CONSCIOUS && I.force && prob(I.force + 10))
 						visible_message("<span class='danger'>[src] has been knocked down!</span>", \
 										"<span class='userdanger'>[src] has been knocked down!</span>")
 						apply_effect(5, WEAKEN, armor)
@@ -227,3 +229,148 @@ emp_act
 					L.take_damage(0,5)
 					src.Stun(5)
 	..()
+
+
+/mob/living/carbon/human/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
+	var/list/damaged = list()
+
+	if(head)
+		if(!head.unacidable)
+			head.acid_act(acidpwr)
+			update_inv_head()
+		else
+			src << "<span class='warning'>Your [head.name] protects your head from the acid!</span>"
+	else
+		if(wear_mask)
+			if(!wear_mask.unacidable)
+				wear_mask.acid_act(acidpwr)
+				update_inv_wear_mask()
+			else
+				src << "<span class='warning'>Your [wear_mask.name] protects your head from the acid!</span>"
+		else
+			if(glasses)
+				if(!glasses.unacidable)
+					glasses.acid_act(acidpwr)
+					update_inv_glasses()
+				else
+					src << "<span class='warning'>Your [glasses.name] protects your head from the acid!</span>"
+			else
+				. = get_organ("head")
+				if(.)
+					damaged += .
+
+	if(wear_suit)
+		if(!wear_suit.unacidable)
+			wear_suit.acid_act(acidpwr)
+			update_inv_wear_suit()
+		else
+			src << "<span class='warning'>Your [wear_suit.name] protects your body from the acid!</span>"
+	else
+		if(w_uniform)
+			if(!w_uniform.unacidable)
+				w_uniform.acid_act(acidpwr)
+				update_inv_w_uniform()
+			else
+				src << "<span class='warning'>Your [w_uniform.name] protects your body from the acid!</span>"
+		else
+			. = get_organ("chest")
+			if(.)
+				damaged += .
+
+	if(gloves)
+		if(!gloves.unacidable)
+			gloves.acid_act(acidpwr)
+			update_inv_gloves()
+		else
+			src << "<span class='warning'>Your [gloves.name] protects your arms from the acid!</span>"
+	else
+		. = get_organ("r_arm")
+		if(.)
+			damaged += .
+		. = get_organ("l_arm")
+		if(.)
+			damaged += .
+
+
+	if(shoes)
+		if(!shoes.unacidable)
+			shoes.acid_act(acidpwr)
+			update_inv_shoes()
+		else
+			src << "<span class='warning'>Your [shoes.name] protects your legs from the acid!</span>"
+	else
+		. = get_organ("r_leg")
+		if(.)
+			damaged += .
+		. = get_organ("l_leg")
+		if(.)
+			damaged += .
+
+
+	for(var/obj/item/organ/limb/affecting in damaged)
+		affecting.take_damage(4*toxpwr, 2*toxpwr)
+
+		if(affecting.name == "head")
+			affecting.take_damage(4*toxpwr, 2*toxpwr)
+			if(prob(2*acidpwr)) //Applies disfigurement
+				emote("scream")
+				facial_hair_style = "Shaved"
+				hair_style = "Bald"
+				update_hair()
+				status_flags |= DISFIGURED
+
+		update_damage_overlays()
+
+/mob/living/carbon/human/grabbedby(mob/living/user)
+	if(w_uniform)
+		w_uniform.add_fingerprint(user)
+	..()
+
+
+/mob/living/carbon/human/attack_animal(mob/living/simple_animal/M as mob)
+	if(..())
+		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		if(check_shields(damage, "the [M.name]"))
+			return 0
+		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+		var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
+		var/armor = run_armor_check(affecting, "melee")
+		apply_damage(damage, BRUTE, affecting, armor)
+		updatehealth()
+/*		if(armor >= 2) //why is this here?
+		return */
+
+
+/mob/living/carbon/human/attack_larva(mob/living/carbon/alien/larva/L as mob)
+
+	if(..()) //successful larva bite.
+		var/damage = rand(1, 3)
+		if(check_shields(damage, "the [L.name]"))
+			return 0
+		if(stat != DEAD)
+			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
+			var/obj/item/organ/limb/affecting = get_organ(ran_zone(L.zone_sel.selecting))
+			var/armor_block = run_armor_check(affecting, "melee")
+			apply_damage(damage, BRUTE, affecting, armor_block)
+			updatehealth()
+
+
+/mob/living/carbon/human/attack_slime(mob/living/carbon/slime/M as mob)
+	..()
+	var/damage = rand(1, 3)
+
+	if(M.is_adult)
+		damage = rand(10, 35)
+	else
+		damage = rand(5, 25)
+
+	if(check_shields(damage, "the [M.name]"))
+		return 0
+
+	var/dam_zone = pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg", "groin")
+
+	var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
+	var/armor_block = run_armor_check(affecting, "melee")
+	apply_damage(damage, BRUTE, affecting, armor_block)
+
+	return

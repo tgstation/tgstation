@@ -99,7 +99,7 @@
 					new/turf/simulated/floor/plating/asteroid/airless/cave(src)
 				if("Gibtonite")
 					M = new/turf/simulated/mineral/gibtonite(src)
-				if("Clown")
+				if("Bananium")
 					M = new/turf/simulated/mineral/clown(src)
 				/*if("Adamantine")
 					M = new/turf/simulated/mineral/adamantine(src)*/
@@ -178,7 +178,7 @@
 /turf/simulated/mineral/clown
 	name = "bananium deposit"
 	icon_state = "rock_Clown"
-	mineralName = "Clown"
+	mineralName = "Bananium"
 	mineralAmt = 3
 	spreadChance = 0
 	spread = 0
@@ -416,7 +416,7 @@
 				new /obj/item/weapon/ore/plasma(src)
 			if (src.mineralName == "Diamond")
 				new /obj/item/weapon/ore/diamond(src)
-			if (src.mineralName == "Clown")
+			if (src.mineralName == "Bananium")
 				new /obj/item/weapon/ore/bananium(src)
 	var/turf/simulated/floor/plating/asteroid/airless/N = ChangeTurf(/turf/simulated/floor/plating/asteroid/airless)
 	N.fullUpdateMineralOverlays()
@@ -489,6 +489,9 @@
 		icon_state = "asteroid[rand(0,12)]"
 //	spawn(2)
 //O		updateMineralOverlays()
+
+/turf/simulated/floor/plating/asteroid/burn_tile()
+	return
 
 /turf/simulated/floor/plating/asteroid/ex_act(severity)
 	switch(severity)

@@ -143,8 +143,7 @@
 			loc.assume_air(removed)
 			air_update_turf()
 
-			if(network)
-				network.update = 1
+			parent.update = 1
 
 	else //Just siphoning all air
 		if (air_contents.return_pressure()>=50*ONE_ATMOSPHERE)
@@ -157,8 +156,7 @@
 		air_contents.merge(removed)
 		air_update_turf()
 
-		if(network)
-			network.update = 1
+		parent.update = 1
 
 	return 1
 

@@ -10,11 +10,11 @@
 	var/mob/pulledby = null
 	var/languages = 0 //For say() and Hear()
 	var/inertia_dir = 0
+	var/pass_flags = 0
 	glide_size = 8
 
 /atom/movable/Move(atom/newloc, direct = 0)
 	if(!loc || !newloc) return 0
-	last_move = direct
 	var/atom/oldloc = loc
 
 	if(loc != newloc)
@@ -49,6 +49,7 @@
 		last_move = 0
 		return
 
+	last_move = direct
 	src.move_speed = world.timeofday - src.l_move_time
 	src.l_move_time = world.timeofday
 
@@ -136,6 +137,8 @@
 	. = step(src, direction)
 	dir = old_dir
 
+/atom/movable/proc/checkpass(passflag)
+	return pass_flags&passflag
 
 /atom/movable/proc/hit_check() // todo: this is partly obsolete due to passflags already, add throwing stuff to mob CanPass and finish it
 	if(src.throwing)
