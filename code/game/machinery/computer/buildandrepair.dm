@@ -204,7 +204,8 @@
 /obj/item/weapon/circuitboard/shuttle
 	name = "circuit board (Shuttle)"
 	build_path = /obj/machinery/computer/shuttle
-	id = "1"
+	id = ""
+	var/possible_destinations = ""
 /obj/item/weapon/circuitboard/labor_shuttle
 	name = "circuit Board (Labor Shuttle)"
 	build_path = /obj/machinery/computer/shuttle/labor
@@ -276,9 +277,11 @@
 
 /obj/item/weapon/circuitboard/shuttle/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/device/multitool))
-		var/chosen_id = round(input(usr, "Choose an ID number:", "Input an Integer", null) as num|null)
+		var/chosen_id = round(input(usr, "Choose an ID number (-1 for reset):", "Input an Integer", null) as num|null)
 		if(chosen_id >= 0)
 			id = chosen_id
+		else
+			id = initial(id)
 	return
 
 /obj/structure/computerframe/attackby(obj/item/P as obj, mob/user as mob)
@@ -394,5 +397,6 @@
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "<span class='notice'>You connect the monitor.</span>"
 				var/obj/B = new src.circuit.build_path (src.loc, circuit)
+				B.possible_destinations = C.possible_destinations
 				transfer_fingerprints_to(B)
 				qdel(src)

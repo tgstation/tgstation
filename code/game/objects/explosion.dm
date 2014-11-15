@@ -72,13 +72,8 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 						far_volume += (dist <= far_dist * 0.5 ? 50 : 0) // add 50 volume if the mob is pretty close to the explosion
 						M.playsound_local(epicenter, 'sound/effects/explosionfar.ogg', far_volume, 1, frequency, falloff = 5)
 
-
-
-		var/lighting_controller_was_processing = lighting_controller.processing	//Pause the lighting updates for a bit
-		lighting_controller.processing = 0
-//		var/powernet_rebuild_was_deferred_already = defer_powernet_rebuild
-//		if(defer_powernet_rebuild != 2)
-//			defer_powernet_rebuild = 1
+		//postpone light processing for a bit
+		SSlighting.postpone()
 
 		if(heavy_impact_range > 1)
 			var/datum/effect/system/explosion/E = new/datum/effect/system/explosion()
@@ -120,13 +115,6 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 			var/obj/machinery/doppler_array/Array = doppler_arrays[i]
 			if(Array)
 				Array.sense_explosion(x0,y0,z0,devastation_range,heavy_impact_range,light_impact_range,took,orig_dev_range,orig_heavy_range,orig_light_range)
-
-		sleep(8)
-
-		if(!lighting_controller.processing)	lighting_controller.processing = lighting_controller_was_processing
-//		if(!powernet_rebuild_was_deferred_already)
-//			if(defer_powernet_rebuild != 2)
-//				defer_powernet_rebuild = 0
 
 	return 1
 

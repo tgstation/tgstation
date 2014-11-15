@@ -24,11 +24,11 @@
 
 /obj/item/weapon/gun/energy/gun/nuclear/New()
 	..()
-	processing_objects.Add(src)
+	SSobj.processing.Add(src)
 
 
 /obj/item/weapon/gun/energy/gun/nuclear/Destroy()
-	processing_objects.Remove(src)
+	SSobj.processing.Remove(src)
 	..()
 
 
@@ -62,7 +62,7 @@
 			M << "<span class='danger'>You feel a wave of heat wash over you.</span>"
 			M.apply_effect(300, IRRADIATE)
 		crit_fail = 1 //break the gun so it stops recharging
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 		update_icon()
 	return 0
 

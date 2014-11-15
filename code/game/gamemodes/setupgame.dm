@@ -1,9 +1,4 @@
-/proc/setupgenetics()
-//	if (prob(50))
-//		BLOCKADD = rand(-300,300)
-//	if (prob(75))
-//		DIFFMUT = rand(0,20)
-
+/datum/subsystem/ticker/proc/setupGenetics()
 	var/list/avnums = new /list(DNA_STRUC_ENZYMES_BLOCKS)
 	for(var/i=1, i<=DNA_STRUC_ENZYMES_BLOCKS, i++)
 		avnums[i] = i
@@ -53,18 +48,17 @@
 */
 
 
-/proc/setupfactions()
-
+/datum/subsystem/ticker/proc/setupFactions()
 	// Populate the factions list:
-	for(var/x in typesof(/datum/faction))
-		var/datum/faction/F = new x
+	for(var/typepath in typesof(/datum/faction))
+		var/datum/faction/F = new typepath()
 		if(!F.name)
-			del(F)
+			qdel(F)
 			continue
 		else
-			ticker.factions.Add(F)
-			ticker.availablefactions.Add(F)
+			factions.Add(F)
+			availablefactions.Add(F)
 
 	// Populate the syndicate coalition:
-	for(var/datum/faction/syndicate/S in ticker.factions)
-		ticker.syndicate_coalition.Add(S)
+	for(var/datum/faction/syndicate/S in factions)
+		syndicate_coalition.Add(S)
