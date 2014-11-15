@@ -12,3 +12,4 @@ changes:
   - tweak: Made rare materials more common as part of mechanic costs.
   - tweak: Added plastic cost to all mechanic designs. You can get more from cargo or botany.
   - tweak: Reverted to the old system of item scanning temporarily. Guns are still unscannable except by traitors, but the old system is in place for balance testing.
+  - rscadd: Flatpacks now come with instructions and a step list. They have a rare chance of a misprint, but this shouldn't be a major issue.
