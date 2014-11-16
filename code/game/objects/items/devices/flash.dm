@@ -63,6 +63,7 @@
 	var/safety = M:eyecheck()
 	if(safety <= 0)
 		M.confused += power
+		M.Stun(1)
 		flick("e_flash", M.flash)
 		if(user && convert)
 			terrible_conversion_proc(M, user)
