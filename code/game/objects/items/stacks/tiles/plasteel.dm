@@ -11,7 +11,7 @@
 	throw_range = 7
 	flags = CONDUCT
 	max_amount = 60
-	turf_type = /turf/simulated/floor
+	turf_type = /turf/simulated/floor/plasteel
 
 /obj/item/stack/tile/plasteel/cyborg
 	desc = "The ground you walk on" //Not the usual floor tile desc as that refers to throwing, Cyborgs can't do that - RR

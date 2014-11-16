@@ -8,6 +8,8 @@
 /obj/item/weapon/grenade/flashbang/prime()
 	update_mob()
 	var/flashbang_turf = get_turf(src)
+	if(!flashbang_turf)
+		return
 	for(var/mob/living/M in get_hearers_in_view(7, flashbang_turf))
 		bang(get_turf(M), M)
 

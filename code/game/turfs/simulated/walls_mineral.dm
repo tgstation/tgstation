@@ -102,7 +102,7 @@
 
 /turf/simulated/wall/mineral/plasma/proc/PlasmaBurn(temperature)
 	new /obj/structure/girder(src)
-	src.ChangeTurf(/turf/simulated/floor)
+	src.ChangeTurf(/turf/simulated/floor/plasteel)
 	atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 400)
 
 /turf/simulated/wall/mineral/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)//Doesn't fucking work because walls don't interact with air :(

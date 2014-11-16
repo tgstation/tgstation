@@ -24,43 +24,30 @@ Pipelines + Other Objects -> Pipe network
 	var/global/list/iconsetids = list()
 	var/global/list/pipeimages = list()
 
-/*
-/obj/machinery/atmospherics/process()
-	//build_network()
-*/
-
 /obj/machinery/atmospherics/New()
 	..()
 	if(can_unwrench)
 		stored = new(src, make_from=src)
 
-/obj/machinery/atmospherics/proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
-	// Check to see if should be added to network. Add self if so and adjust variables appropriately.
-	// Note don't forget to have neighbors look as well!
 
-	return null
+/obj/machinery/atmospherics/proc/returnPipenet()
+	return
+
+/obj/machinery/atmospherics/proc/returnPipenetAir()
+	return
+
+/obj/machinery/atmospherics/proc/setPipenet()
+	return
+
+/obj/machinery/atmospherics/proc/replacePipenet()
+	return
 
 /obj/machinery/atmospherics/proc/build_network()
 	// Called to build a network from this node
-
-	return null
-
-/obj/machinery/atmospherics/proc/return_network(obj/machinery/atmospherics/reference)
-	// Returns pipe_network associated with connection to reference
-	// Notes: should create network if necessary
-	// Should never return null
-
-	return null
-
-/obj/machinery/atmospherics/proc/reassign_network(datum/pipe_network/old_network, datum/pipe_network/new_network)
-	// Used when two pipe_networks are combining
-
-/obj/machinery/atmospherics/proc/return_network_air(datum/network/reference)
-	// Return a list of gas_mixture(s) in the object
-	//		associated with reference pipe_network for use in rebuilding the networks gases list
-	// Is permitted to return null
+	return
 
 /obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/reference)
+	return
 
 /obj/machinery/atmospherics/proc/icon_addintact(var/obj/machinery/atmospherics/node, var/connected)
 	var/image/img = getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "pipe_intact", get_dir(src,node), node.pipe_color)
@@ -86,7 +73,7 @@ Pipelines + Other Objects -> Pipe network
 		var/datum/gas_mixture/int_air = return_air()
 		var/datum/gas_mixture/env_air = loc.return_air()
 		if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
-			user << "<span class='danger'>You cannot unwrench [src], it is too exerted due to internal pressure.</span>"
+			user << "<span class='danger'>You cannot unwrench this [src], it is too exerted due to internal pressure.</span>"
 			add_fingerprint(user)
 			return 1
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
@@ -113,8 +100,8 @@ Pipelines + Other Objects -> Pipe network
 					qdel(meter)
 		qdel(src)
 
-/obj/machinery/atmospherics/proc/nullifyPipenetwork()
-	return
+/obj/machinery/atmospherics/proc/nullifyPipenet(datum/pipeline/P)
+	P.other_atmosmch -= src
 
 /obj/machinery/atmospherics/proc/getpipeimage(var/iconset, var/iconstate, var/direction, var/col=rgb(255,255,255))
 
@@ -136,6 +123,18 @@ Pipelines + Other Objects -> Pipe network
 		img = pipeimages[identifier]
 
 	return img
+
+/obj/machinery/atmospherics/proc/construction(D, P)
+	dir = D
+	initialize_directions = P
+	var/turf/T = loc
+	level = T.intact ? 2 : 1
+	initialize()
+	var/list/nodes = pipeline_expansion()
+	for(var/obj/machinery/atmospherics/A in nodes)
+		A.initialize()
+		A.addMember(src)
+	build_network()
 
 /obj/machinery/atmospherics/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)

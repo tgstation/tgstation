@@ -1,28 +1,23 @@
 /obj/machinery/atmospherics/unary
 	icon = 'icons/obj/atmospherics/unary_devices.dmi'
-
 	dir = SOUTH
 	initialize_directions = SOUTH
 	layer = TURF_LAYER+0.1
-
 	var/datum/gas_mixture/air_contents
-
 	var/obj/machinery/atmospherics/node
-
-	var/datum/pipe_network/network
-
+	var/datum/pipeline/parent
 	var/showpipe = 0
 
 /obj/machinery/atmospherics/unary/New()
 	..()
 	initialize_directions = dir
 	air_contents = new
-
 	air_contents.volume = 200
 
 /*
 Iconnery
 */
+
 //Separate this because we don't need to update pipe icons if we just are going to change the state
 /obj/machinery/atmospherics/unary/proc/update_icon_nopipes()
 	return
@@ -54,91 +49,67 @@ Iconnery
 /*
 Housekeeping and pipe network stuff below
 */
-/obj/machinery/atmospherics/unary/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
-	if(reference == node)
-		network = new_network
-
-	if(new_network.normal_members.Find(src))
-		return 0
-
-	new_network.normal_members += src
-
-	return null
 
 /obj/machinery/atmospherics/unary/Destroy()
 	if(node)
 		node.disconnect(src)
-		del(network)
-
-	node = null
-
+		node = null
+		nullifyPipenet(parent)
 	..()
 
-/obj/machinery/atmospherics/unary/initialize(infiniteloop = 0)
-	if(!infiniteloop)
-		src.disconnect(src)
 
-	var/node_connect = dir
-
-	for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
+/obj/machinery/atmospherics/unary/initialize()
+	for(var/obj/machinery/atmospherics/target in get_step(src, dir))
 		if(target.initialize_directions & get_dir(target,src))
 			node = target
-			if(!infiniteloop)
-				target.initialize(1)
 			break
-	//build_network() might need this
-
 	if(level == 2)
 		showpipe = 1
-
 	update_icon()
 
 /obj/machinery/atmospherics/unary/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
 	if(..())
 		initialize_directions = dir
 		if(node)
-			disconnect(node)
+			node.disconnect(src)
+		node = null
+		nullifyPipenet(parent)
 		initialize()
+		if(node)
+			node.initialize()
+			node.addMember(src)
+		build_network()
 		. = 1
 
 /obj/machinery/atmospherics/unary/build_network()
-	if(!network && node)
-		network = new /datum/pipe_network()
-		network.normal_members += src
-		network.build_network(node, src)
-
-
-/obj/machinery/atmospherics/unary/return_network(obj/machinery/atmospherics/reference)
-	build_network()
-
-	if(reference==node)
-		return network
-
-	return null
-
-/obj/machinery/atmospherics/unary/reassign_network(datum/pipe_network/old_network, datum/pipe_network/new_network)
-	if(network == old_network)
-		network = new_network
-
-	return 1
-
-/obj/machinery/atmospherics/unary/return_network_air(datum/pipe_network/reference)
-	var/list/results = list()
-
-	if(network == reference)
-		results += air_contents
-
-	return results
+	if(!parent)
+		parent = new /datum/pipeline()
+		parent.build_pipeline(src)
 
 /obj/machinery/atmospherics/unary/disconnect(obj/machinery/atmospherics/reference)
-	if(reference==node)
+	if(reference == node)
+		if(istype(node, /obj/machinery/atmospherics/pipe))
+			qdel(parent)
 		node = null
-		reference.disconnect(src)
-		del(network)
-
 	update_icon()
 
-	return null
+/obj/machinery/atmospherics/unary/nullifyPipenet()
+	..()
+	parent.other_airs -= air_contents
+	parent = null
 
-/obj/machinery/atmospherics/unary/nullifyPipenetwork()
-	network = null
+/obj/machinery/atmospherics/unary/returnPipenetAir()
+	return air_contents
+
+/obj/machinery/atmospherics/unary/pipeline_expansion()
+	return list(node)
+
+/obj/machinery/atmospherics/unary/setPipenet(datum/pipeline/P)
+	parent = P
+
+/obj/machinery/atmospherics/unary/returnPipenet()
+	return parent
+
+/obj/machinery/atmospherics/unary/replacePipenet(datum/pipeline/Old, datum/pipeline/New)
+	if(Old == parent)
+		parent = New

@@ -396,7 +396,7 @@ obj/machinery/hydroponics/proc/mutatepest()
 		visible_message("The pests seem to behave oddly...")
 		for(var/i=0, i<3, i++)
 			var/obj/effect/spider/spiderling/S = new(src.loc)
-			S.grow_as = /mob/living/simple_animal/hostile/giant_spider/hunter
+			S.grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/hunter
 	else
 		usr << "The pests seem to behave oddly, but quickly settle down..."
 
