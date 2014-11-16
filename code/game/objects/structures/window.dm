@@ -12,6 +12,7 @@
 	var/state = 0
 	var/reinf = 0
 	var/disassembled = 0
+	var/shuttlew = 0
 	var/obj/item/stack/rods/storedrods
 	var/obj/item/weapon/shard/storedshard
 //	var/silicate = 0 // number of units of silicate
@@ -362,7 +363,9 @@
 		if(opacity)
 			icon_state = "twindow[junction]"
 		else
-			if(reinf)
+			if(shuttlew)
+				icon_state = "swindow[junction]"
+			else if(reinf)
 				icon_state = "rwindow[junction]"
 			else
 				icon_state = "window[junction]"
@@ -392,3 +395,11 @@
 /obj/structure/window/reinforced/tinted/frosted
 	name = "frosted window"
 	icon_state = "fwindow"
+
+/obj/structure/window/shuttle
+	name = "shuttle window"
+	desc = "A strong, air-locked pod window that is extremely difficult to destroy."
+	icon_state = "swindow"
+	dir = 5
+	health = 80
+	shuttlew = 1
