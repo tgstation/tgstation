@@ -94,9 +94,9 @@ BLIND     // can't see anything
 	return message
 
 //Proc that moves gas/breath masks out of the way, disabling them and allowing pill/food consumption
-/obj/item/clothing/mask/proc/adjustmask()
+/obj/item/clothing/mask/proc/adjustmask(var/mob/user)
 	if(!ignore_maskadjust)
-		if(!usr.canmove || usr.stat || usr.restrained())
+		if(!user.canmove || user.stat || user.restrained())
 			return
 		if(src.mask_adjusted == 1)
 			src.icon_state = initial(icon_state)
@@ -104,11 +104,11 @@ BLIND     // can't see anything
 			permeability_coefficient = initial(permeability_coefficient)
 			flags |= visor_flags
 			flags_inv |= visor_flags_inv
-			usr << "You push \the [src] back into place."
+			user << "You push \the [src] back into place."
 			src.mask_adjusted = 0
 		else
 			src.icon_state += "_up"
-			usr << "You push \the [src] out of the way."
+			user << "You push \the [src] out of the way."
 			gas_transfer_coefficient = null
 			permeability_coefficient = null
 			flags &= ~visor_flags
