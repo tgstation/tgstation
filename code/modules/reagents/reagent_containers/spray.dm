@@ -15,6 +15,7 @@
 	amount_per_transfer_from_this = 5
 	volume = 250
 	possible_transfer_amounts = null
+	banned_reagents = list("pacid","sacid")
 
 
 /obj/item/weapon/reagent_containers/spray/afterattack(atom/A as mob|obj, mob/user as mob)
@@ -42,22 +43,10 @@
 		user << "<span class='notice'>\The [src] is empty!</span>"
 		return
 
-	var/obj/effect/decal/chempuff/D = new/obj/effect/decal/chempuff(get_turf(src))
-	D.create_reagents(amount_per_transfer_from_this)
-
-	reagents.trans_to(D, amount_per_transfer_from_this, 1/spray_currentrange)
-	D.color = mix_color_from_reagents(D.reagents.reagent_list)
-	spawn(0)
-		for(var/i=0, i<spray_currentrange, i++)
-			step_towards(D,A)
-			D.reagents.reaction(get_turf(D))
-			for(var/atom/T in get_turf(D))
-				D.reagents.reaction(T)
-			sleep(3)
-		qdel(D)
+	spray(A)
 
 	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
-	user.changeNext_move(CLICK_CD_RANGE)
+	user.changeNext_move(CLICK_CD_RANGE*2)
 	user.newtonian_move(get_dir(A, user))
 
 	if(reagents.has_reagent("sacid"))
@@ -70,6 +59,22 @@
 		message_admins("[key_name_admin(user)] fired Space lube from \a [src].")
 		log_game("[key_name(user)] fired Space lube from \a [src].")
 	return
+
+
+/obj/item/weapon/reagent_containers/spray/proc/spray(var/atom/A)
+	var/obj/effect/decal/chempuff/D = new /obj/effect/decal/chempuff(get_turf(src))
+	D.create_reagents(amount_per_transfer_from_this)
+	reagents.trans_to(D, amount_per_transfer_from_this, 1/spray_currentrange)
+	D.color = mix_color_from_reagents(D.reagents.reagent_list)
+	spawn(0)
+		for(var/i=0, i<spray_currentrange, i++)
+			step_towards(D,A)
+			D.reagents.reaction(get_turf(D))
+			for(var/atom/T in get_turf(D))
+				D.reagents.reaction(T)
+			sleep(3)
+		qdel(D)
+
 
 /obj/item/weapon/reagent_containers/spray/attack_self(var/mob/user)
 
@@ -150,32 +155,7 @@
 	origin_tech = "combat=3;materials=3;engineering=3"
 
 
-//this is a big copypasta clusterfuck, but it's still better than it used to be!
-/obj/item/weapon/reagent_containers/spray/chemsprayer/afterattack(atom/A as mob|obj, mob/user as mob)
-	if(istype(A, /obj/item/weapon/storage) || istype(A, /obj/structure/table) || istype(A, /obj/structure/rack) || istype(A, /obj/structure/closet) \
-	|| istype(A, /obj/item/weapon/reagent_containers) || istype(A, /obj/structure/sink))
-		return
-
-	if(istype(A, /obj/effect/proc_holder/spell))
-		return
-
-	if(istype(A, /obj/structure/reagent_dispensers) && get_dist(src,A) <= 1) //this block copypasted from reagent_containers/glass, for lack of a better solution
-		if(!A.reagents.total_volume && A.reagents)
-			user << "<span class='notice'>\The [A] is empty.</span>"
-			return
-
-		if(reagents.total_volume >= reagents.maximum_volume)
-			user << "<span class='notice'>\The [src] is full.</span>"
-			return
-
-		var/trans = A.reagents.trans_to(src, A:amount_per_transfer_from_this)
-		user << "<span class='notice'>You fill \the [src] with [trans] units of the contents of \the [A].</span>"
-		return
-
-	if(reagents.total_volume < amount_per_transfer_from_this)
-		user << "<span class='notice'>\The [src] is empty!</span>"
-		return
-
+/obj/item/weapon/reagent_containers/spray/chemsprayer/spray(var/atom/A)
 	var/Sprays[3]
 	for(var/i=1, i<=3, i++) // intialize sprays
 		if(src.reagents.total_volume < 1) break
@@ -210,19 +190,7 @@
 				sleep(2)
 			qdel(D)
 
-	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
-	user.changeNext_move(CLICK_CD_RANGE)
 
-	if(reagents.has_reagent("sacid"))
-		message_admins("[key_name_admin(user)] fired sulphuric acid from a chem sprayer.")
-		log_game("[key_name(user)] fired sulphuric acid from a chem sprayer.")
-	if(reagents.has_reagent("pacid"))
-		message_admins("[key_name_admin(user)] fired Polyacid from a chem sprayer.")
-		log_game("[key_name(user)] fired Polyacid from a chem sprayer.")
-	if(reagents.has_reagent("lube"))
-		message_admins("[key_name_admin(user)] fired Space lube from a chem sprayer.")
-		log_game("[key_name(user)] fired Space lube from a chem sprayer.")
-	return
 
 /obj/item/weapon/reagent_containers/spray/chemsprayer/attack_self(var/mob/user)
 
