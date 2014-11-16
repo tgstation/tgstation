@@ -29,6 +29,11 @@ Pipelines + Other Objects -> Pipe network
 	if(can_unwrench)
 		stored = new(src, make_from=src)
 
+/obj/machinery/atmospherics/proc/safe_input(var/title, var/text, var/default_set)
+	var/new_value = input(usr,"Enter new output pressure (0-4500kPa)","Pressure control",default_set) as num
+	if(usr.canUseTopic(src))
+		return new_value
+	return default_set
 
 /obj/machinery/atmospherics/proc/returnPipenet()
 	return
