@@ -14,19 +14,20 @@
 	icon_state = "mime"
 	item_color = "mime"
 
-/obj/item/clothing/shoes/swat
-	name = "\improper SWAT shoes"
-	desc = "When you want to turn up the heat."
+/obj/item/clothing/shoes/combat //basic syndicate combat boots for nuke ops and mob corpses
+	name = "combat boots"
+	desc = "High speed, low drag combat boots."
 	icon_state = "jackboots"
 	item_state = "jackboots"
-	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
-	flags = NOSLIP
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 10, rad = 0)
 	strip_delay = 70
 
-/obj/item/clothing/shoes/swat/combat
-	name = "combat boots"
-	desc = "When you REALLY want to turn up the heat"
-
+/obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
+	name = "\improper SWAT boots"
+	desc = "High speed, no drag combat boots."
+	permeability_coefficient = 0.01
+	flags = NOSLIP
+	armor = list(melee = 80, bullet = 60, laser = 50, energy = 50, bomb = 50, bio = 30, rad = 30)
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET
