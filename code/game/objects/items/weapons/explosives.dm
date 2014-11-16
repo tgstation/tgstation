@@ -81,27 +81,22 @@
 		target.overlays += image_overlay
 		user << "Bomb has been planted. Timer counting down from [timer]."
 		spawn(timer*10)
-			explode(get_turf(target))
+			if(target && !target.gc_destroyed)
+				explode(get_turf(target))
+			qdel(src)
 
 /obj/item/weapon/c4/proc/explode(var/location)
-	if(!target)
-		target = get_atom_on_turf(src)
-	if(!target)
-		target = src
-	if(location)
-		explosion(location, -1, -1, 4, 4)
-
-	if(target)
-		if (istype(target, /turf/simulated/wall))
-			var/turf/simulated/wall/W = target
-			W.dismantle_wall(1)
-		else if(istype(target, /mob/living))
-			target.ex_act(2) // c4 can't gib mobs anymore.
-		else
-			target.ex_act(1)
+	var/atom/movable/processing = target
+	var/atom/movable/temp
+	while(!isarea(processing))
+		for(var/atom/movable/A in processing.contents)
+			A.ex_act(2)
+		temp = processing
+		processing = processing.loc
+		temp.ex_act(1)
+	explosion(location, -1, 0, 4)
 	if(target)
 		target.overlays -= image_overlay
-	qdel(src)
 
 /obj/item/weapon/c4/attack(mob/M as mob, mob/user as mob, def_zone)
 	return
