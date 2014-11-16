@@ -158,6 +158,13 @@
 	item_state = "headset"
 	keyslot2 = new /obj/item/device/encryptionkey/headset_engsci
 
+/obj/item/device/radio/headset/headset_servsci
+	name = "research service radio headset"
+	desc = "A headset used to talk to botanists and scientists. To access the science channel, use :n. For service, use :d."
+	icon_state = "com_headset"
+	item_state = "headset"
+	keyslot2 = new /obj/item/device/encryptionkey/headset_servsci
+
 /obj/item/device/radio/headset/ert
 	name = "CentCom Response Team headset"
 	desc = "The headset of the boss's boss. Channels are as follows: :h - Response Team :c - command, :s - security, :e - engineering, :d - mining, :q - cargo, :m - medical, :n - science."

@@ -50,14 +50,17 @@
 	idtype = /obj/item/weapon/card/id/research
 	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology)
 	minimal_access = list(access_tox, access_tox_storage, access_research, access_xenobiology)
-	alt_titles = list("Xenoarcheologist", "Anomalist", "Plasma Researcher", "Xenobiologist")
+	alt_titles = list("Xenoarcheologist", "Anomalist", "Plasma Researcher", "Xenobiologist", "Research Botanist")
 
 	pdaslot=slot_belt
 	pdatype=/obj/item/device/pda/toxins
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
-		H.equip_or_collect(new /obj/item/device/radio/headset/headset_sci(H), slot_ears)
+		if("Research Botanist")
+			H.equip_or_collect(new /obj/item/device/radio/headset/headset_servsci(H), slot_ears)
+		else
+			H.equip_or_collect(new /obj/item/device/radio/headset/headset_sci(H), slot_ears)
 		switch(H.mind.role_alt_title)
 			if("Scientist")
 				H.equip_or_collect(new /obj/item/clothing/under/rank/scientist(H), slot_w_uniform)
@@ -69,6 +72,10 @@
 				H.equip_or_collect(new /obj/item/clothing/under/rank/anomalist(H), slot_w_uniform)
 			if("Xenoarcheologist")
 				H.equip_or_collect(new /obj/item/clothing/under/rank/xenoarch(H), slot_w_uniform)
+			if("Research Botanist")
+				H.equip_or_collect(new /obj/item/clothing/under/rank/scientist(H), slot_w_uniform)
+				H.equip_or_collect(new /obj/item/device/analyzer/plant_analyzer(H), slot_s_store)
+				H.equip_or_collect(new /obj/item/clothing/gloves/botanic_leather(H), slot_gloves)
 		H.equip_or_collect(new /obj/item/clothing/shoes/white(H), slot_shoes)
 		//H.equip_or_collect(new /obj/item/device/pda/toxins(H), slot_belt)
 		H.equip_or_collect(new /obj/item/clothing/suit/storage/labcoat/science(H), slot_wear_suit)
