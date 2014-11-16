@@ -1,6 +1,6 @@
 /obj/machinery/computer/arcade
 	name = "arcade machine"
-	desc = "Does not support Pinball."
+	desc = "Does not support pinball."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "arcade"
 	circuit = "/obj/item/weapon/circuitboard/arcade"
