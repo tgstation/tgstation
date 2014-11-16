@@ -111,7 +111,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	src.LL = autolathe_recipes_hidden
 
 /obj/machinery/autolathe/interact(mob/user)
-	if(shocked && (stat & NOPOWER))
+	if(shocked && !(stat & NOPOWER))
 		shock(user,50)
 	regular_win(user)
 	return

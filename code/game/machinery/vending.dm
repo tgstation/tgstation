@@ -256,7 +256,7 @@
 			else
 				dat += "<i>No coin</i>&nbsp;&nbsp;<span class='linkOff'>Remove</span>"
 	user.set_machine(src)
-	if(seconds_electrified && (stat & NOPOWER))
+	if(seconds_electrified && !(stat & NOPOWER))
 		if(shock(user, 100))
 			return
 
