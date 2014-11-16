@@ -35,6 +35,7 @@
 	sec_hud_set_ID()
 	sec_hud_set_implants()
 	sec_hud_set_security_status()
+	add_to_all_data_huds()
 
 	// for spawned humans; overwritten by other code
 	create_dna(src)
@@ -46,6 +47,7 @@
 /mob/living/carbon/human/Destroy()
 	for(var/atom/movable/organelle in organs)
 		qdel(organelle)
+	remove_from_all_data_huds()
 	return ..()
 
 /mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)

@@ -4,10 +4,15 @@
  * Update them when needed with the appropriate proc. (see below)
  */
 
-var/list/basic_med_hud_users = list() //yes, this is, in fact, needed
+var/list/med_hud_users = list()
+var/list/sec_hud_users = list()
+
+/***********************************************
+ GENERIC HUD PROCS: These apply to all data HUDs
+************************************************/
 
 /*
- * GENERIC HUD PROCS
+ * THESE SHOULD BE CALLED BY THE MOB SEEING THE HUD
  */
 
 //Deletes all current HUD images
@@ -16,7 +21,8 @@ var/list/basic_med_hud_users = list() //yes, this is, in fact, needed
 		for(var/image/hud in client.images)
 			if(findtext(hud.icon_state,"hud",1,4))
 				client.images -= hud
-	basic_med_hud_users -= src
+	med_hud_users -= src
+	sec_hud_users -= src
 
 //Adds one set of data hud images
 /mob/proc/add_data_hud(var/hud_type, var/hud_mode)
@@ -26,12 +32,43 @@ var/list/basic_med_hud_users = list() //yes, this is, in fact, needed
 	for(var/mob/living/carbon/human/H in mob_list)
 		switch(hud_type)
 			if(DATA_HUD_MEDICAL)
-				if(hud_mode == DATA_HUD_BASIC)
-					basic_med_hud_users += src
-				add_med_hud(hud_mode,H)
+				med_hud_users[src] = hud_mode
+				add_single_med_hud(H)
 			if(DATA_HUD_SECURITY)
-				add_sec_hud(hud_mode,H)
+				sec_hud_users[src] = hud_mode
+				add_single_sec_hud(H)
 
+/*
+ * THESE SHOULD BE CALLED BY THE MOB SHOWING THE HUD
+ */
+
+/mob/living/carbon/human/proc/add_to_all_data_huds()
+	add_to_data_hud(DATA_HUD_MEDICAL)
+	add_to_data_hud(DATA_HUD_SECURITY)
+
+//Add a mob's HUD to all HUD users
+/mob/living/carbon/human/proc/add_to_data_hud(var/hud_type)
+	switch(hud_type)
+		if(DATA_HUD_MEDICAL)
+			for(var/mob/M in med_hud_users)
+				M.add_single_med_hud(src)
+		if(DATA_HUD_SECURITY)
+			for(var/mob/M in sec_hud_users)
+				M.add_single_sec_hud(src)
+
+/mob/living/carbon/human/proc/remove_from_all_data_huds()
+	remove_from_data_hud(DATA_HUD_MEDICAL)
+	remove_from_data_hud(DATA_HUD_SECURITY)
+
+//Removes a mob's HUD from all HUD users
+/mob/living/carbon/human/proc/remove_from_data_hud(var/hud_type)
+	switch(hud_type)
+		if(DATA_HUD_MEDICAL)
+			for(var/mob/M in med_hud_users)
+				M.remove_single_med_hud(src)
+		if(DATA_HUD_SECURITY)
+			for(var/mob/M in sec_hud_users)
+				M.remove_single_sec_hud(src)
 
 /***********************************************
  Medical HUD! Basic mode needs suit sensors on.
@@ -41,24 +78,24 @@ var/list/basic_med_hud_users = list() //yes, this is, in fact, needed
  * THESE SHOULD BE CALLED BY THE MOB SEEING THE HUD
  */
 
-/mob/proc/add_med_hud(var/mode, var/mob/living/carbon/human/patient)
-	if(mode == DATA_HUD_BASIC) //Used for the AI's MedHUD, only works if the patient has activated suit sensors.
-		if(!patient.w_uniform)	return
-		var/obj/item/clothing/under/U = patient.w_uniform
-		if(U.sensor_mode <= 2)	return
-	add_single_med_hud(patient)
-
 //Adds a single mob's med HUD to view
 /mob/proc/add_single_med_hud(var/mob/living/carbon/human/H)
-	if(client)
-		client.images += H.hud_list[HEALTH_HUD]
-		client.images += H.hud_list[STATUS_HUD]
+	var/mode = med_hud_users[src]
+	if(!mode || !client)
+		return
+	if(mode == DATA_HUD_BASIC) //Used for the AI's MedHUD, only works if the patient has activated suit sensors.
+		if(!H.w_uniform)	return
+		var/obj/item/clothing/under/U = H.w_uniform
+		if(U.sensor_mode <= 2)	return
+	client.images += H.hud_list[HEALTH_HUD]
+	client.images += H.hud_list[STATUS_HUD]
 
 //Deletes a single mob's med HUD from view
 /mob/proc/remove_single_med_hud(var/mob/living/carbon/human/H)
-	if(client)
-		client.images -= H.hud_list[HEALTH_HUD]
-		client.images -= H.hud_list[STATUS_HUD]
+	if(!client)
+		return
+	client.images -= H.hud_list[HEALTH_HUD]
+	client.images -= H.hud_list[STATUS_HUD]
 
 
 /*
@@ -74,8 +111,9 @@ var/list/basic_med_hud_users = list() //yes, this is, in fact, needed
 
 //called when a human changes suit sensors
 /mob/living/carbon/human/proc/update_med_hud_suit_sensors(sensor_level)
-	for(var/mob/M in basic_med_hud_users)
-		sensor_level > 2 ? M.add_single_med_hud(src) : M.remove_single_med_hud(src)
+	for(var/mob/M in med_hud_users)
+		if(med_hud_users[M] == DATA_HUD_BASIC)
+			sensor_level > 2 ? M.add_single_med_hud(src) : M.remove_single_med_hud(src)
 
 //called when a human changes virus
 /mob/living/carbon/human/proc/check_virus()
@@ -135,25 +173,27 @@ var/list/basic_med_hud_users = list() //yes, this is, in fact, needed
 /*
  * THESE SHOULD BE CALLED BY THE MOB SEEING THE HUD
  */
-
-/mob/proc/add_sec_hud(var/mode, var/mob/living/carbon/human/perp)
-	add_single_sec_hud_basic(perp)
-
+//Adds a single mob's sec HUD to view
+/mob/proc/add_single_sec_hud(var/mob/living/carbon/human/H)
+	var/mode = sec_hud_users[src]
+	if(!mode || !client)
+		return
+	client.images += H.hud_list[ID_HUD]
 	if(mode == DATA_HUD_ADVANCED) //If not set to DATA_HUD_ADVANCED, the Sec HUD will only display the job.
-		add_single_sec_hud_advanced(perp)
-
-//Adds a single mob's basic sec HUD to view
-/mob/proc/add_single_sec_hud_basic(var/mob/living/carbon/human/H)
-	if(client)
-		client.images += H.hud_list[ID_HUD]
-
-//Adds a single mob's advanced sec HUD to view
-/mob/proc/add_single_sec_hud_advanced(var/mob/living/carbon/human/H)
-	if(client)
 		client.images += H.hud_list[IMPTRACK_HUD]
 		client.images += H.hud_list[IMPLOYAL_HUD]
 		client.images += H.hud_list[IMPCHEM_HUD]
 		client.images += H.hud_list[WANTED_HUD]
+
+//Deletes a single mob's sec HUD from view
+/mob/proc/remove_single_sec_hud(var/mob/living/carbon/human/H)
+	if(!client)
+		return
+	client.images -= H.hud_list[ID_HUD]
+	client.images -= H.hud_list[IMPTRACK_HUD]
+	client.images -= H.hud_list[IMPLOYAL_HUD]
+	client.images -= H.hud_list[IMPCHEM_HUD]
+	client.images -= H.hud_list[WANTED_HUD]
 
 /*
  * THESE SHOULD BE CALLED BY THE MOB SHOWING THE HUD
@@ -197,4 +237,5 @@ var/list/basic_med_hud_users = list() //yes, this is, in fact, needed
 				if("Incarcerated")	holder.icon_state = "hudincarcerated"
 				if("Parolled")		holder.icon_state = "hudparolled"
 				if("Discharged")	holder.icon_state = "huddischarged"
-				else				holder.icon_state = null
+				else			holder.icon_state = null
+
