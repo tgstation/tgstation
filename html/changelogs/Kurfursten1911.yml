@@ -1,0 +1,4 @@
+author: Kurfursten
+#delete-after: True
+changes: 
+  - rscadd: Added a new scientist role, Research Botanist.

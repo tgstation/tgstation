@@ -57,7 +57,7 @@
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
-		if("Research Botanist")
+		if(H.mind.role_alt_title == "Research Botanist")
 			H.equip_or_collect(new /obj/item/device/radio/headset/headset_servsci(H), slot_ears)
 		else
 			H.equip_or_collect(new /obj/item/device/radio/headset/headset_sci(H), slot_ears)
