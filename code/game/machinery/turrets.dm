@@ -311,6 +311,7 @@
 
 /obj/machinery/turret/attack_animal(mob/living/simple_animal/M as mob)
 	M.changeNext_move(CLICK_CD_MELEE)
+	M.do_attack_animation(src)
 	if(M.melee_damage_upper == 0)	return
 	if(!(stat & BROKEN))
 		visible_message("<span class='userdanger'>[M] [M.attacktext] [src]!</span>")
@@ -328,9 +329,10 @@
 
 /obj/machinery/turret/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	M.changeNext_move(CLICK_CD_MELEE)
+	M.do_attack_animation(src)
 	if(!(stat & BROKEN))
 		playsound(src.loc, 'sound/weapons/slash.ogg', 25, 1, -1)
-		visible_message("<span class='userdanger'>[] has slashed at []!</span>", M, src)
+		visible_message("<span class='danger'>[M] has slashed at [src]!</span>")
 		src.health -= 15
 		if (src.health <= 0)
 			src.die()
@@ -411,9 +413,10 @@
 	return attack_hand(user)
 
 
-/obj/machinery/gun_turret/attack_alien(mob/user as mob)
+/obj/machinery/gun_turret/attack_alien(mob/living/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
-	user.visible_message("[user] slashes at [src]", "You slash at [src]")
+	user.do_attack_animation(src)
+	user.visible_message("<span class='danger'>[user] slashes at [src]</span>", "<span class='danger'>You slash at [src]</span>")
 	take_damage(15)
 	return
 

@@ -959,7 +959,7 @@
 					log_admin("[key_name(usr)] has traitor'ed [current].")
 					if(isAI(current))
 						var/mob/living/silicon/ai/A = current
-						call(/datum/game_mode/proc/add_law_zero)(A)
+						ticker.mode.add_law_zero(A)
 						A.show_laws()
 
 			if("autoobjectives")
@@ -996,9 +996,9 @@
 						src = null
 						M = H.monkeyize()
 						src = M.mind
-						current.contract_disease(new /datum/disease/transformation/jungle_fever,1,0)
+						current.ForceContractDisease(new /datum/disease/transformation/jungle_fever)
 					else if (istype(M))
-						current.contract_disease(new /datum/disease/transformation/jungle_fever,1,0)
+						current.ForceContractDisease(new /datum/disease/transformation/jungle_fever)
 			if("human")
 				if (check_rights(R_ADMIN, 0))
 					var/mob/living/carbon/human/H = current

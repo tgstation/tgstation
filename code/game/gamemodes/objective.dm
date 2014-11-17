@@ -63,7 +63,7 @@ datum/objective/assassinate/check_completion()
 datum/objective/assassinate/update_explanation_text()
 	..()
 	if(target && target.current)
-		explanation_text = "Assassinate [target.current.real_name], the [!target_role_type ? target.assigned_role : target.special_role]."
+		explanation_text = "Assassinate [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
 	else
 		explanation_text = "Free Objective"
 
@@ -90,7 +90,7 @@ datum/objective/mutiny/check_completion()
 datum/objective/mutiny/update_explanation_text()
 	..()
 	if(target && target.current)
-		explanation_text = "Assassinate or exile [target.current.real_name], the [!target_role_type ? target.assigned_role : target.special_role]."
+		explanation_text = "Assassinate or exile [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
 	else
 		explanation_text = "Free Objective"
 
@@ -126,7 +126,7 @@ datum/objective/maroon/check_completion()
 
 datum/objective/maroon/update_explanation_text()
 	if(target && target.current)
-		explanation_text = "Prevent [target.current.real_name], the [!target_role_type ? target.assigned_role : target.special_role], from escaping alive."
+		explanation_text = "Prevent [target.name], the [!target_role_type ? target.assigned_role : target.special_role], from escaping alive."
 	else
 		explanation_text = "Free Objective"
 
@@ -158,7 +158,7 @@ datum/objective/debrain/check_completion()
 datum/objective/debrain/update_explanation_text()
 	..()
 	if(target && target.current)
-		explanation_text = "Steal the brain of [target.current.real_name], the [!target_role_type ? target.assigned_role : target.special_role]."
+		explanation_text = "Steal the brain of [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
 	else
 		explanation_text = "Free Objective"
 
@@ -185,7 +185,7 @@ datum/objective/protect/check_completion()
 datum/objective/protect/update_explanation_text()
 	..()
 	if(target && target.current)
-		explanation_text = "Protect [target.current.real_name], the [!target_role_type ? target.assigned_role : target.special_role]."
+		explanation_text = "Protect [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
 	else
 		explanation_text = "Free Objective"
 
@@ -274,6 +274,32 @@ datum/objective/escape/check_completion()
 	else
 		return 0
 
+datum/objective/escape/escape_with_identity
+	dangerrating = 10
+	var/target_real_name // Has to be stored because the target's real_name can change over the course of the round
+
+datum/objective/escape/escape_with_identity/find_target()
+	target = ..()
+	update_explanation_text()
+
+datum/objective/escape/escape_with_identity/update_explanation_text()
+	if(target && target.current)
+		target_real_name = target.current.real_name
+		explanation_text = "Escape on the shuttle or an escape pod with the identity of [target_real_name], the [target.assigned_role]."
+	else
+		explanation_text = "Free Objective."
+
+datum/objective/escape/escape_with_identity/check_completion()
+	if(!target_real_name)
+		return 1
+	if(!ishuman(owner.current))
+		return 0
+	var/mob/living/carbon/human/H = owner.current
+	if(..())
+		if(H.dna.real_name == target_real_name)
+			if(H.get_id_name()== target_real_name)
+				return 1
+	return 0
 
 
 datum/objective/survive
@@ -382,7 +408,7 @@ datum/objective/steal/exchange/proc/set_faction(var/faction,var/otheragent)
 datum/objective/steal/exchange/update_explanation_text()
 	..()
 	if(target && target.current)
-		explanation_text = "Acquire [targetinfo.name] held by [target.current.real_name], the [target.assigned_role] and syndicate agent"
+		explanation_text = "Acquire [targetinfo.name] held by [target.name], the [target.assigned_role] and syndicate agent"
 	else
 		explanation_text = "Free Objective"
 
@@ -448,6 +474,6 @@ datum/objective/destroy/check_completion()
 datum/objective/destroy/update_explanation_text()
 	..()
 	if(target && target.current)
-		explanation_text = "Destroy [target.current.real_name], the experimental AI."
+		explanation_text = "Destroy [target.name], the experimental AI."
 	else
 		explanation_text = "Free Objective"

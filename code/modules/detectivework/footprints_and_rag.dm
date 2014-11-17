@@ -43,7 +43,7 @@
 	if(ismob(target) && target.reagents && reagents.total_volume)
 		user.visible_message("<span class='danger'>\The [target] has been smothered with \the [src] by \the [user]!</span>", "<span class='danger'>You smother \the [target] with \the [src]!</span>", "You hear some struggling and muffled cries of surprise")
 		src.reagents.reaction(target, TOUCH)
-		spawn(5) src.reagents.clear_reagents()
+		src.reagents.clear_reagents()
 		return
 	else
 		..()

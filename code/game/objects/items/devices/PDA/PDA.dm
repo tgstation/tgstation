@@ -44,6 +44,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
+	var/chat_channel = "#ss13" //name of our current NTRC channel
+	var/nick = "" //our NTRC nick
+	var/list/ntrclog = list() //NTRC message log
+
+	var/noreturn = 0 //whether the PDA can use the Return button, used for the aiPDA chatroom
+
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-medical"
@@ -186,13 +192,15 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/ai
 	icon_state = "NONE"
 	ttone = "data"
+	mode = 5
+	noreturn = 1
 	detonate = 0
 
 /obj/item/device/pda/ai/attack_self(mob/user as mob)
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
 		playsound(loc, 'sound/items/bikehorn.ogg', 30, 1)
-	return
+	..()
 
 /obj/item/device/pda/ai/pai
 	ttone = "assist"
@@ -257,7 +265,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	if ((!isnull(cartridge)) && (mode == 0))
 		dat += " | <a href='byond://?src=\ref[src];choice=Eject'><img src=pda_eject.png> Eject [cartridge]</a>"
-	if (mode)
+	if (mode && !noreturn)
 		dat += " | <a href='byond://?src=\ref[src];choice=Return'><img src=pda_menu.png> Return</a>"
 	dat += " | <a href='byond://?src=\ref[src];choice=Refresh'><img src=pda_refresh.png> Refresh</a>"
 
@@ -283,7 +291,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += "<ul>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=1'><img src=pda_notes.png> Notekeeper</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=2'><img src=pda_mail.png> Messenger</a></li>"
-				//dat += "<li><a href='byond://?src=\red[src];choice=chatroom'><img src=pda_chatroom.png> Nanotrasen Relay Chat</a></li>"
+				dat += "<li><a href='byond://?src=\ref[src];choice=5'><img src=pda_chatroom.png> Nanotrasen Relay Chat</a></li>"
 
 				if (cartridge)
 					if (cartridge.access_clown)
@@ -297,12 +305,18 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += "<h4>Engineering Functions</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=43'><img src=pda_power.png> Power Monitor</a></li>"
+						if(istype(cartridge.radio, /obj/item/radio/integrated/floorbot))
+							dat += "<li><a href='byond://?src=\ref[src];choice=51'><img src=pda_floorbot.png> Floorbot Access</a></li>"
 						dat += "</ul>"
 					if (cartridge.access_medical)
 						dat += "<h4>Medical Functions</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=44'><img src=pda_medical.png> Medical Records</a></li>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=Medical Scan'><img src=pda_scanner.png> [scanmode == 1 ? "Disable" : "Enable"] Medical Scanner</a></li>"
+					if(istype(cartridge.radio, /obj/item/radio/integrated/medbot))
+						dat += "<li><a href='byond://?src=\ref[src];choice=52'><img src=pda_medbot.png> Medibot Access</a></li>"
+						dat += "</ul>"
+					else
 						dat += "</ul>"
 					if (cartridge.access_security)
 						dat += "<h4>Security Functions</h4>"
@@ -325,6 +339,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if (cartridge)
 					if (cartridge.access_janitor)
 						dat += "<li><a href='byond://?src=\ref[src];choice=49'><img src=pda_bucket.png> Custodial Locator</a></li>"
+						if(istype(cartridge.radio, /obj/item/radio/integrated/cleanbot))
+							dat += "<li><a href='byond://?src=\ref[src];choice=50'><img src=pda_cleanbot.png> Cleanbot Access</a></li>"
 					if (istype(cartridge.radio, /obj/item/radio/integrated/signal))
 						dat += "<li><a href='byond://?src=\ref[src];choice=40'><img src=pda_signaler.png> Signaler System</a></li>"
 					if (cartridge.access_reagent_scanner)
@@ -425,16 +441,18 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += "<br>"
 
 			if (5)
-				dat += "<h4><img src=pda_chatroom.png> Nanotrasen Relay Chat</h4>"
+				if(!nick) //first time join
+					nick = copytext(sanitize(owner), 1, 9)
+					var/datum/chatroom/C = chatchannels[chat_channel]
+					C.parse_msg(src, nick, "/join [chat_channel]")
+				dat += "<h4><img src=pda_chatroom.png> SS13 Nanotrasen Relay Chat Network</h4>"
 
-				dat += "<h4><img src=pda_menu.png> Detected Channels</h4>: <li>"
-				for(var/datum/chatroom/C in chatrooms)
-					dat += "<a href='byond://?src=\ref[src];pdachannel=[C.name]'>#[html_encode(lowertext(C.name))]"
-					if(C.password != "")
-						dat += " <img src=pda_locked.png>"
-					dat += "</li>"
-
-
+				dat += "<a href='byond://?src=\ref[src];choice=Set Nick'>[nick]</a> | "
+				dat += "<a href='byond://?src=\ref[src];choice=Set Channel'>[chat_channel]</a> | "
+				dat += "<a href='byond://?src=\ref[src];choice=NTRC Message'>Write message</a> | "
+				dat += "<a href='byond://?src=\ref[src];choice=NTRC Help'>Help</a><br>"
+				if(chat_channel)
+					dat += ntrclog[chat_channel]
 
 			else//Else it links to the cart menu proc. Although, it really uses menu hub 4--menu 4 doesn't really exist as it simply redirects to hub.
 				dat += cart
@@ -467,9 +485,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					mode = 0
 				else
 					mode = round(mode/10)
-					if(mode==4)//Fix for cartridges. Redirects to hub.
+					if(mode==4 || mode == 5)//Fix for cartridges. Redirects to hub.
 						mode = 0
-					else if(mode >= 40 && mode <= 49)//Fix for cartridges. Redirects to refresh the menu.
+					else if(mode >= 40 && mode <= 59)//Fix for cartridges. Redirects to refresh the menu.
 						cartridge.mode = mode
 						cartridge.unlock()
 			if ("Authenticate")//Checks for ID
@@ -502,7 +520,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				mode = 3
 			if("4")//Redirects to hub
 				mode = 0
-			if("chatroom") // chatroom hub
+			if("5")//Chatroom
 				mode = 5
 
 
@@ -607,6 +625,39 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					return
 
 
+//CHATROOM FUNCTIONS====================================
+
+			if("Set Nick")
+				var/t = stripped_input(U, "Please enter nickname", name, null) as text
+				nick = copytext(sanitize(t), 1, 9)
+
+			if("Set Channel")
+				var/t = stripped_input(U, "Please enter channel", name, (chat_channel)) as text
+
+				if(t)
+					var/datum/chatroom/C = chatchannels[chat_channel]
+					var/ret = C.parse_msg(src, nick, "/join [t]")
+					if((ret in chatchannels) && (ret != chat_channel))
+						ntrclog[chat_channel] = "<hr>" + ntrclog[chat_channel]
+						chat_channel = ret
+
+			if("NTRC Message")
+				var/t = msg_input(U) as text
+				var/datum/chatroom/C = chatchannels[chat_channel]
+				if(C)
+					var/ret = C.parse_msg(src,nick,t)
+					if(findtextEx(ret,"BAD_",1,5))
+						ntrclog[chat_channel] = "[ret]<br>" + ntrclog[chat_channel]
+					else if(ret in chatchannels)
+						chat_channel = ret
+
+			if("NTRC Help")
+				var/helptext = "<b>NTRC Commands:</b><br><br>"
+				helptext += "/join #channel<br>/register<br>/log amountoflines<br><br>"
+				usr << browse(helptext, "window=ntrchelp;size=200x200;border=1;can_resize=1;can_close=1;can_minimize=1")
+
+
+
 //SYNDICATE FUNCTIONS===================================
 
 			if("Toggle Door")
@@ -667,8 +718,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 			else//Cartridge menu linking
 				mode = text2num(href_list["choice"])
-				cartridge.mode = mode
-				cartridge.unlock()
+				if(cartridge)
+					cartridge.mode = mode
+					cartridge.unlock()
 	else//If not in range, can't interact or not using the pda.
 		U.unset_machine()
 		U << browse(null, "window=pda")
@@ -700,39 +752,38 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			id.loc = get_turf(src)
 		id = null
 
-/obj/item/device/pda/proc/create_message(var/mob/living/U = usr, var/obj/item/device/pda/P)
-
+/obj/item/device/pda/proc/msg_input(var/mob/living/U = usr)
 	var/t = input(U, "Please enter message", name, null) as text
 	t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
-	if (!t || !istype(P))
+	if (!t || toff)
 		return
 	if (!in_range(src, U) && loc != U)
 		return
-
-	if (isnull(P)||P.toff || toff)
+	if(!can_use(U))
 		return
+	if(emped)
+		t = Gibberish(t, 100)
+	return t
+
+/obj/item/device/pda/proc/create_message(var/mob/living/U = usr, var/obj/item/device/pda/P)
+
+	var/t = msg_input(U)
 
 	if (last_text && world.time < last_text + 5)
 		return
 
-	if(!can_use(U))
+	if (isnull(P) || P.toff || !istype(P))
 		return
 
 	last_text = world.time
-	// check if telecomms I/O route 1459 is stable
-	//var/telecomms_intact = telecomms_process(P.owner, owner, t)
 	var/obj/machinery/message_server/useMS = null
 	if(message_servers)
 		for (var/obj/machinery/message_server/MS in message_servers)
 		//PDAs are now dependant on the Message Server.
 			if(MS.active)
 				useMS = MS
-				break
 
 	var/datum/signal/signal = src.telecomms_process()
-
-	if(emped)
-		t = Gibberish(t, 100)
 
 	var/useTC = 0
 	if(signal)
@@ -755,7 +806,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[owner]</a> ([ownjob]):</b></i><br>[t]<br>"
 
 		if (!P.silent)
-			P.loc.audible_message("\icon[P] *[P.ttone]*", null, 3)
+			playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
+		P.loc.audible_message("\icon[P] *[P.ttone]*", null, 3)
 		//Search for holder of the PDA.
 		var/mob/living/L = null
 		if(P.loc && isliving(P.loc))
@@ -772,7 +824,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		P.overlays += image('icons/obj/pda.dmi', "pda-r")
 	else
 		U << "<span class='notice'>ERROR: Server isn't responding.</span>"
-
 
 /obj/item/device/pda/verb/verb_remove_id()
 	set category = "Object"
@@ -1036,6 +1087,18 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	else
 		usr << "You do not have a PDA. You should make an issue report about this."
 
+/mob/living/silicon/ai/verb/cmd_use_chatroom()
+	set category = "AI Commands"
+	set name = "PDA - Chatrooms"
+	if(usr.stat == 2)
+		usr << "You can't do that because you are dead!"
+		return
+	if(!isnull(aiPDA))
+		aiPDA.mode = 5
+		aiPDA.attack_self(src)
+	else
+		usr << "You do not have a PDA. You should make an issue report about this."
+
 /mob/living/silicon/ai/proc/cmd_show_message_log(mob/user as mob)
 	if(user.stat == 2)
 		user << "You can't do that because you are dead!"
@@ -1075,6 +1138,17 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	emped += 1
 	spawn(200 * severity)
 		emped -= 1
+
+//ntrc handler proc
+/obj/item/device/pda/proc/msg_chat(channel as text, sender as text, message as text)
+	var/msg = "<b>[strip_html_properly(sender)]</b>| [strip_html_properly(message)]<br>"
+	if(!channel)
+		for(var/C in ntrclog)
+			ntrclog[C] = msg + ntrclog[C]
+	else
+		ntrclog[channel] = msg + ntrclog[channel]
+	if (findtext(message, nick) && !silent)
+		loc.audible_message("\icon[src] *[ttone]*", null, 3)
 
 /proc/get_viewable_pdas()
 	. = list()

@@ -3,8 +3,8 @@
 	var/flash_protect = 0		//Malk: What level of bright light protection item has. 1 = Flashers, Flashes, & Flashbangs | 2 = Welding | -1 = OH GOD WELDING BURNT OUT MY RETINAS
 	var/tint = 0				//Malk: Sets the item's level of visual impairment tint, normally set to the same as flash_protect
 	var/up = 0					//	   but seperated to allow items to protect but not impair vision, like space helmets
-	var/visor_flags = null
-	var/visor_flags_inv = null
+	var/visor_flags = 0			// flags that are added/removed when an item is adjusted up/down
+	var/visor_flags_inv = 0		// same as visor_flags, but for flags_inv
 
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
@@ -94,25 +94,25 @@ BLIND     // can't see anything
 	return message
 
 //Proc that moves gas/breath masks out of the way, disabling them and allowing pill/food consumption
-/obj/item/clothing/mask/proc/adjustmask()
+/obj/item/clothing/mask/proc/adjustmask(var/mob/user)
 	if(!ignore_maskadjust)
-		if(!usr.canmove || usr.stat || usr.restrained())
+		if(!user.canmove || user.stat || user.restrained())
 			return
 		if(src.mask_adjusted == 1)
 			src.icon_state = initial(icon_state)
 			gas_transfer_coefficient = initial(gas_transfer_coefficient)
 			permeability_coefficient = initial(permeability_coefficient)
-			flags = initial(flags)
-			flags_inv = initial(flags_inv)
-			usr << "You push \the [src] back into place."
+			flags |= visor_flags
+			flags_inv |= visor_flags_inv
+			user << "You push \the [src] back into place."
 			src.mask_adjusted = 0
 		else
 			src.icon_state += "_up"
-			usr << "You push \the [src] out of the way."
+			user << "You push \the [src] out of the way."
 			gas_transfer_coefficient = null
 			permeability_coefficient = null
-			flags = null
-			flags_inv = null
+			flags &= ~visor_flags
+			flags_inv &= ~visor_flags_inv
 			src.mask_adjusted = 1
 		usr.update_inv_wear_mask()
 
@@ -266,8 +266,10 @@ atom/proc/generate_female_clothing(index,t_color,icon)
 	set category = "Object"
 	set src in usr
 	var/mob/M = usr
-	if (istype(M, /mob/dead/)) return
-	if (usr.stat) return
+	if (istype(M, /mob/dead/))
+		return
+	if (!can_use(usr))
+		return
 	if(src.has_sensor >= 2)
 		usr << "The controls are locked."
 		return 0
@@ -292,7 +294,7 @@ atom/proc/generate_female_clothing(index,t_color,icon)
 	set name = "Adjust Jumpsuit Style"
 	set category = "Object"
 	set src in usr
-	if(usr.stat)
+	if(!can_use(usr))
 		return
 	if(!can_adjust)
 		usr << "You cannot wear this suit any differently."
@@ -313,8 +315,10 @@ atom/proc/generate_female_clothing(index,t_color,icon)
 	set name = "Remove Accessory"
 	set category = "Object"
 	set src in usr
-	if(!istype(usr, /mob/living)) return
-	if(usr.stat) return
+	if(!istype(usr, /mob/living))
+		return
+	if(!can_use(usr))
+		return
 
 	if(hastie)
 		hastie.transform *= 2
@@ -336,7 +340,7 @@ atom/proc/generate_female_clothing(index,t_color,icon)
 	..()
 
 /obj/item/clothing/proc/weldingvisortoggle()			//Malk: proc to toggle welding visors on helmets, masks, goggles, etc.
-	if(usr.canmove && !usr.stat && !usr.restrained())
+	if(can_use(usr))
 		if(up)
 			up = !up
 			flags |= (visor_flags)
@@ -360,3 +364,9 @@ atom/proc/generate_female_clothing(index,t_color,icon)
 		usr.update_inv_glasses(0)
 	if(istype(src, /obj/item/clothing/mask))
 		usr.update_inv_wear_mask(0)
+
+/obj/item/clothing/proc/can_use(mob/user)
+	if(user && ismob(user))
+		if(!user.stat && user.canmove && !user.restrained())
+			return 1
+	return 0

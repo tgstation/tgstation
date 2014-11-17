@@ -51,7 +51,7 @@
 				R += num2text(A.volume) + "),"
 		add_logs(user, M, "splashed", object="[R]")
 		reagents.reaction(target, TOUCH)
-		spawn(5) reagents.clear_reagents()
+		reagents.clear_reagents()
 		return
 
 	else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
@@ -82,8 +82,7 @@
 	else if(reagents.total_volume)
 		user << "<span class='notice'>You splash the solution onto [target].</span>"
 		reagents.reaction(target, TOUCH)
-		spawn(5)
-			reagents.clear_reagents()
+		reagents.clear_reagents()
 
 
 /obj/item/weapon/reagent_containers/glass/beaker

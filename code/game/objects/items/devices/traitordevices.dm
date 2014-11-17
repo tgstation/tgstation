@@ -141,6 +141,6 @@ effective or pretty fucking useless.
 		amount += wavelength
 		wavelength = max(1,(min(120,amount)))
 
-	updateUsrDialog()
+	attack_self(usr)
 	add_fingerprint(usr)
 	return

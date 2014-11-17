@@ -21,6 +21,26 @@
 	armor = list(melee = 82, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	strip_delay = 80
+	action_button_name = "Toggle Helmet Visor"
+	visor_flags = HEADCOVERSEYES | HEADCOVERSMOUTH
+	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE
+
+/obj/item/clothing/head/helmet/riot/attack_self()
+	if(usr.canmove && !usr.stat && !usr.restrained())
+		if(up)
+			up = !up
+			flags |= (visor_flags)
+			flags_inv |= (visor_flags_inv)
+			icon_state = initial(icon_state)
+			usr << "You pull the [src] down."
+			usr.update_inv_head(0)
+		else
+			up = !up
+			flags &= ~(visor_flags)
+			flags_inv &= ~(visor_flags_inv)
+			icon_state = "[initial(icon_state)]up"
+			usr << "You push the [src] up."
+			usr.update_inv_head(0)
 
 /obj/item/clothing/head/helmet/swat
 	name = "\improper SWAT helmet"

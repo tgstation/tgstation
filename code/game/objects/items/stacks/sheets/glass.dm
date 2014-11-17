@@ -309,10 +309,10 @@
 			var/obj/item/organ/limb/affecting = H.get_organ(organ)
 			if(affecting.take_damage(force / 2))
 				H.update_damage_overlays(0)
-	else if(isliving(user))
-		var/mob/living/L = user
-		L << "<span class='warning'>[src] cuts into your hand!</span>"
-		L.adjustBruteLoss(force / 2)
+	else if(ismonkey(user))
+		var/mob/living/carbon/monkey/M = user
+		M << "<span class='warning'>[src] cuts into your hand!</span>"
+		M.adjustBruteLoss(force / 2)
 
 
 /obj/item/weapon/shard/attackby(obj/item/I, mob/user)

@@ -119,8 +119,6 @@ var/global/list/autolathe_recipes_hidden = list( \
 	return
 
 /obj/machinery/autolathe/attackby(obj/item/O, mob/user)
-	if (stat)
-		return 1
 	if (busy)
 		user << "<span class=\"alert\">The autolathe is busy. Please wait for completion of previous operation.</span>"
 		return 1
@@ -145,6 +143,8 @@ var/global/list/autolathe_recipes_hidden = list( \
 		else
 			attack_hand(user)
 			return 1
+	if (stat)
+		return 1
 
 	if (src.m_amount + O.m_amt > max_m_amount)
 		user << "<span class=\"alert\">The autolathe is full. Please remove metal from the autolathe in order to insert more.</span>"
@@ -247,13 +247,13 @@ var/global/list/autolathe_recipes_hidden = list( \
 					if(istype(template, /obj/item/stack))
 						src.m_amount -= template.m_amt*multiplier
 						src.g_amount -= template.g_amt*multiplier
-						var/obj/new_item = new template.type(T)
+						var/obj/item/new_item = new template.type(T)
 						var/obj/item/stack/S = new_item
 						S.amount = multiplier
 					else
 						src.m_amount -= template.m_amt/coeff
 						src.g_amount -= template.g_amt/coeff
-						var/obj/new_item = new template.type(T)
+						var/obj/item/new_item = new template.type(T)
 						new_item.m_amt /= coeff
 						new_item.g_amt /= coeff
 					if(src.m_amount < 0)
@@ -287,7 +287,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 		objs += src.L
 		if(src.hacked)
 			objs += src.LL
-		for(var/obj/t in objs)
+		for(var/obj/item/t in objs)
 			if(disabled || m_amount<t.m_amt || g_amount<t.g_amt)
 				dat += replacetext("<span class='linkOff'>[t]</span>", "The ", "")
 			else

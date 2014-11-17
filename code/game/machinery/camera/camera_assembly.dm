@@ -80,7 +80,7 @@
 			if(istype(W, /obj/item/weapon/screwdriver))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 
-				var/input = strip_html(input(usr, "Which networks would you like to connect this camera to? Seperate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Set Network", "SS13"))
+				var/input = stripped_input(usr, "Which networks would you like to connect this camera to? Seperate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Set Network", "SS13")
 				if(!input)
 					usr << "No input found please hang up and try your call again."
 					return
@@ -99,7 +99,7 @@
 
 				C.network = tempnetwork
 				var/area/A = get_area_master(src)
-				C.c_tag = "[A.name] ([rand(1, 999)]"
+				C.c_tag = "[A.name] ([rand(1, 999)])"
 
 				for(var/i = 5; i >= 0; i -= 1)
 					var/direct = input(user, "Direction?", "Assembling Camera", null) in list("LEAVE IT", "NORTH", "EAST", "SOUTH", "WEST" )

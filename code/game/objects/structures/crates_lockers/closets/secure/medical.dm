@@ -12,7 +12,6 @@
 
 /obj/structure/closet/secure_closet/medical1/New()
 	..()
-	sleep(2)
 	new /obj/item/weapon/storage/box/syringes(src)
 	new /obj/item/weapon/reagent_containers/dropper(src)
 	new /obj/item/weapon/reagent_containers/dropper(src)
@@ -40,7 +39,6 @@
 
 /obj/structure/closet/secure_closet/medical2/New()
 	..()
-	sleep(2)
 	new /obj/item/weapon/tank/anesthetic(src)
 	new /obj/item/weapon/tank/anesthetic(src)
 	new /obj/item/weapon/tank/anesthetic(src)
@@ -63,33 +61,18 @@
 
 /obj/structure/closet/secure_closet/medical3/New()
 	..()
-	sleep(2)
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack/medic(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel_med(src)
-	new /obj/item/clothing/under/rank/nursesuit (src)
-	new /obj/item/clothing/head/nursehat (src)
-	switch(pick("blue", "green", "purple"))
-		if ("blue")
-			new /obj/item/clothing/under/rank/medical/blue(src)
-		if ("green")
-			new /obj/item/clothing/under/rank/medical/green(src)
-		if ("purple")
-			new /obj/item/clothing/under/rank/medical/purple(src)
-	switch(pick("blue", "green", "purple"))
-		if ("blue")
-			new /obj/item/clothing/under/rank/medical/blue(src)
-		if ("green")
-			new /obj/item/clothing/under/rank/medical/green(src)
-		if ("purple")
-			new /obj/item/clothing/under/rank/medical/purple(src)
 	new /obj/item/clothing/under/rank/medical(src)
 	new /obj/item/clothing/suit/labcoat(src)
 	new /obj/item/clothing/shoes/sneakers/white(src)
-//	new /obj/item/weapon/cartridge/medical(src)
 	new /obj/item/device/radio/headset/headset_med(src)
+	new /obj/item/clothing/gloves/latex(src)
+	new /obj/item/weapon/defibrillator/loaded(src)
 	new /obj/item/weapon/storage/belt/medical(src)
+	new /obj/item/clothing/glasses/hud/health(src)
 	return
 
 
@@ -106,19 +89,19 @@
 
 /obj/structure/closet/secure_closet/CMO/New()
 	..()
-	sleep(2)
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack/medic(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel_med(src)
 	new /obj/item/clothing/suit/bio_suit/cmo(src)
 	new /obj/item/clothing/head/bio_hood/cmo(src)
-	new /obj/item/clothing/under/rank/chief_medical_officer(src)
 	new /obj/item/clothing/suit/labcoat/cmo(src)
-	new /obj/item/weapon/cartridge/cmo(src)
-	new /obj/item/clothing/gloves/latex(src)
+	new /obj/item/clothing/under/rank/chief_medical_officer(src)
 	new /obj/item/clothing/shoes/sneakers/brown	(src)
+	new /obj/item/weapon/cartridge/cmo(src)
 	new /obj/item/device/radio/headset/heads/cmo(src)
+	new /obj/item/clothing/gloves/latex(src)
+	new /obj/item/weapon/defibrillator/loaded(src)
 	new /obj/item/weapon/storage/belt/medical(src)
 	new /obj/item/device/flash/handheld(src)
 	new /obj/item/weapon/reagent_containers/hypospray/CMO(src)
@@ -133,7 +116,6 @@
 
 /obj/structure/closet/secure_closet/animal/New()
 	..()
-	sleep(2)
 	new /obj/item/device/assembly/signaler(src)
 	new /obj/item/device/electropack(src)
 	new /obj/item/device/electropack(src)
@@ -156,7 +138,6 @@
 
 /obj/structure/closet/secure_closet/chemical/New()
 	..()
-	sleep(2)
 	new /obj/item/weapon/storage/box/pillbottles(src)
 	new /obj/item/weapon/storage/box/pillbottles(src)
 	return

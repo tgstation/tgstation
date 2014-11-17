@@ -233,6 +233,7 @@ That prevents a few funky behaviors.
 							new /obj/structure/AIcore/deactivated(T.loc)//Spawns a deactivated terminal at AI location.
 							T.aiRestorePowerRoutine = 0//So the AI initially has power.
 							T.control_disabled = 1//Can't control things remotely if you're stuck in a card!
+							T.radio_enabled = 0 	//No talking on the built-in radio for you either!
 							T.loc = C//Throw AI into the card.
 							C.name = "inteliCard - [T.name]"
 							if (T.stat == 2)
@@ -251,6 +252,7 @@ That prevents a few funky behaviors.
 						var/mob/living/silicon/ai/A = locate() in C//I love locate(). Best proc ever.
 						if(A)//If AI exists on the card. Else nothing since both are empty.
 							A.control_disabled = 0
+							A.radio_enabled = 1
 							A.loc = T.loc//To replace the terminal.
 							C.icon_state = "aicard"
 							C.name = "inteliCard"
@@ -274,6 +276,7 @@ That prevents a few funky behaviors.
 								A.loc = T
 								T.occupier = A
 								A.control_disabled = 1
+								A.radio_enabled = 0
 								if (A.stat == 2)
 									T.overlays += image('icons/obj/computer.dmi', "ai-fixer-404")
 								else

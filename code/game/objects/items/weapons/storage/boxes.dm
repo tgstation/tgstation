@@ -50,13 +50,17 @@
 	user.update_inv_r_hand()
 	qdel(src)
 
+/obj/item/weapon/storage/box/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/stack/packageWrap))
+		return 0
+	..()
+
 
 /obj/item/weapon/storage/box/survival
 
 /obj/item/weapon/storage/box/survival/New()
 	..()
 	contents = list()
-	sleep(1)
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/emergency_oxygen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
@@ -67,7 +71,6 @@
 /obj/item/weapon/storage/box/engineer/New()
 	..()
 	contents = list()
-	sleep(1)
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
@@ -133,6 +136,19 @@
 	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
 	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
 	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
+
+/obj/item/weapon/storage/box/medipens/utility
+	name = "medipens kit"
+	desc = "A box with several utility medipens for the economical miner."
+	icon_state = "syringe"
+
+/obj/item/weapon/storage/box/medipens/utility/New()
+	..()
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/leporazine( src )
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/leporazine( src )
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack( src )
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack( src )
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack( src )
 
 /obj/item/weapon/storage/box/beakers
 	name = "box of beakers"

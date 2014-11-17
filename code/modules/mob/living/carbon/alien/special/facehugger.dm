@@ -33,11 +33,9 @@ var/const/MAX_ACTIVE_TIME = 400
 
 /obj/item/clothing/mask/facehugger/attack_hand(user as mob)
 	if((stat == CONSCIOUS && !sterile) && !isalien(user))
-		Attach(user)
-		return
-	else
-		..()
-		return
+		if(Attach(user))
+			return
+	..()
 
 /obj/item/clothing/mask/facehugger/attack(mob/living/M as mob, mob/user as mob)
 	..()
@@ -228,6 +226,10 @@ var/const/MAX_ACTIVE_TIME = 400
 	return
 
 /proc/CanHug(var/mob/M)
+	if(!M)
+		return 0
+	if(M.stat == DEAD)
+		return 0
 
 	if(iscorgi(M) || ismonkey(M))
 		return 1
