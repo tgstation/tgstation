@@ -9,6 +9,8 @@ var/global/list/uneatable = list(
 	/obj/structure/stool/bed/chair/vehicle/adminbus,
 	/obj/structure/singulo_chain,
 	/obj/structure/hookshot,
+	/obj/structure/buslight,
+	/obj/structure/teleportwarp,
 	)
 
 /obj/machinery/singularity/

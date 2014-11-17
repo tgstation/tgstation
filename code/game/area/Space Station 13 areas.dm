@@ -109,6 +109,30 @@ proc/process_ghost_teleport_locs()
 				not_in_order = 1
 	while(not_in_order)
 
+var/list/adminbusteleportlocs = list()
+
+proc/process_adminbus_teleport_locs()
+	for(var/area/AR in world)
+		if(adminbusteleportlocs.Find(AR.name)) continue
+		if(istype(AR, /area/turret_protected/aisat) || istype(AR, /area/derelict) || istype(AR, /area/tdome))
+			adminbusteleportlocs += AR.name
+			adminbusteleportlocs[AR.name] = AR
+		var/turf/picked = pick(get_area_turfs(AR.type))
+		if (picked.z == 1 || picked.z == 5 || picked.z == 3)
+			adminbusteleportlocs += AR.name
+			adminbusteleportlocs[AR.name] = AR
+
+	var/not_in_order = 0
+	do
+		not_in_order = 0
+		if(adminbusteleportlocs.len <= 1)
+			break
+		for(var/i = 1, i <= (adminbusteleportlocs.len - 1), i++)
+			if(sorttext(adminbusteleportlocs[i], adminbusteleportlocs[i+1]) == -1)
+				adminbusteleportlocs.Swap(i, i+1)
+				not_in_order = 1
+	while(not_in_order)
+
 
 /*-----------------------------------------------------------------------------*/
 

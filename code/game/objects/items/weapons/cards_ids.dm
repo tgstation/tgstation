@@ -326,6 +326,16 @@
 		access = J.get_access()
 		..()
 
+/obj/item/weapon/card/id/admin
+	name = "Admin ID"
+	icon_state = "admin"
+	item_state = "gold_id"
+	registered_name = "Admin"
+	assignment = "Testing Shit"
+	New()
+		access = get_absolutely_all_accesses()
+		..()
+
 /obj/item/weapon/card/id/centcom
 	name = "\improper CentCom. ID"
 	desc = "An ID awarded only to the best brown nosers."
@@ -416,10 +426,23 @@
 	desc = "Even looking at the card strikes you with deep fear."
 	access = list(access_clown, access_theatre, access_maint_tunnels)
 
-
 /obj/item/weapon/card/id/mime
 	name = "Black and White ID"
 	registered_name = "..."
 	icon_state = "mime"
 	desc = "..."
 	access = list(access_clown, access_theatre, access_maint_tunnels)
+
+/obj/item/weapon/card/id/thunderdome/red
+	name = "Thunderdome Red ID"
+	registered_name = "Red Team Fighter"
+	assignment = "Red Team Fighter"
+	icon_state = "TDred"
+	desc = "This ID card is given to those who fought inside the thunderdome for the Red Team. Not many have lived to see one of those, even fewer lived to keep it."
+
+/obj/item/weapon/card/id/thunderdome/green
+	name = "Thunderdome Green ID"
+	registered_name = "Green Team Fighter"
+	assignment = "Green Team Fighter"
+	icon_state = "TDgreen"
+	desc = "This ID card is given to those who fought inside the thunderdome for the Green Team. Not many have lived to see one of those, even fewer lived to keep it."

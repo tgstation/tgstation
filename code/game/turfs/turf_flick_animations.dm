@@ -55,7 +55,11 @@
 
 
 /turf/proc/beamin(var/color)
-	playsound(src, 'sound/weapons/emitter2.ogg', 50, 1)
+	if(color == "admin")
+		playsound(src, 'sound/misc/adminspawn.ogg', 50, 1)
+		color = ""
+	else
+		playsound(src, 'sound/weapons/emitter2.ogg', 50, 1)
 	if(!c_animation)
 		c_animation = new /atom/movable/overlay(src)
 		c_animation.name = "beamin"
@@ -86,5 +90,24 @@
 		c_animation.icon_state = "rejuvinate"
 		c_animation.pixel_x = -16
 		flick("rejuvinate",c_animation)
+		spawn(10)
+			del(c_animation)
+
+
+/turf/proc/busteleport(var/tpsound=1)
+	if(tpsound)
+		playsound(src, 'sound/effects/busteleport.ogg', 50, 1)
+	if(!c_animation)
+		c_animation = new /atom/movable/overlay(src)
+		c_animation.name = "busteleport"
+		c_animation.density = 0
+		c_animation.anchored = 1
+		c_animation.icon = 'icons/effects/160x160.dmi'
+		c_animation.layer = 5
+		c_animation.master = src
+		c_animation.pixel_x = -64
+		c_animation.pixel_y = -32
+		c_animation.icon_state = "busteleport"
+		flick("busteleport",c_animation)
 		spawn(10)
 			del(c_animation)

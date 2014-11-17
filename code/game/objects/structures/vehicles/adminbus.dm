@@ -1,5 +1,6 @@
-//Deity Link, giving a new meaning to the Adminbus since 2014
-
+///////////////////////////////////////////////////////////////
+//Deity Link, giving a new meaning to the Adminbus since 2014//
+///////////////////////////////////////////////////////////////
 /obj/structure/stool/bed/chair/vehicle/adminbus//Fucking release the passengers and unbuckle yourself from the bus before you delete it.
 	name = "\improper Adminbus"
 	desc = "Shit just got fucking real."
@@ -25,9 +26,12 @@
 	var/obj/structure/buslight/lightsource = null
 	var/spawnedbombs[] = list()
 	var/spawnedlasers[] = list()
+	var/obj/structure/teleportwarp/warp = null
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/New()
 	..()
+	var/turf/T = get_turf(src)
+	T.busteleport(0)
 	var/image/underbus = image(icon,"underbus",MOB_LAYER-1)
 	var/image/roadlights = image(icon,"roadlights",LIGHTING_LAYER+1)
 	var/image/advertisement = image(icon,"ad")
@@ -42,6 +46,7 @@
 	playsound(src, 'sound/misc/adminbus.ogg', 50, 0, 0)
 	lightsource = new/obj/structure/buslight(src.loc)
 	lightsource.x += 2
+	warp = new/obj/structure/teleportwarp(src.loc)
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/update_mob()
 	if(buckled_mob)
@@ -142,6 +147,8 @@
 	..()
 	update_lightsource()
 	handle_mob_bumping()
+	if(warp)
+		warp.loc = src.loc
 	if(chain_base)
 		chain_base.move_child(T)
 	for(var/i=1;i<=passengers.len;i++)
@@ -175,21 +182,18 @@
 	var/turf/S = get_turf(src)
 	switch(capture_mode)
 		if(1)
-			if(passengers.len >= 16)
-				buckled_mob << "<span class='warning'>There is no place in the bus for any additional passenger.</span>"
-				return
 			for(var/mob/living/L in S)
 				if(L.isolated)
 					continue
 				if(passengers.len < 16)
 					capture_mob(L)
-					buckled_mob << "[L.name] captured!"
+				else
+					buckled_mob << "<span class='warning'>There is no place in the bus for any additional passenger.</span>"
 			for(var/obj/machinery/bot/B in S)
 				if(B.isolated)
 					continue
 				if(passengers.len < 16)
 					capture_mob(B)
-					buckled_mob << "[B.name] captured!"
 		if(2)
 			var/hit_sound = list('sound/weapons/genhit1.ogg','sound/weapons/genhit2.ogg','sound/weapons/genhit3.ogg')
 			for(var/mob/living/L in S)
@@ -226,6 +230,13 @@
 	health = 100//THE ADMINBUS HAS NO BRAKES
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/Bump(var/atom/obstacle)
+	if(istype(obstacle,/obj/machinery/teleport/hub))
+		var/obj/machinery/teleport/hub/H = obstacle
+		spawn()
+			if (H.icon_state == "tele1")
+				H.teleport(src)
+				H.use_power(5000)
+				src.Move()
 	if(can_move)
 		can_move = 0
 		forceMove(get_step(src,src.dir))
@@ -259,6 +270,8 @@
 		passengers += M
 		if(!selfclimb)
 			M << "<span class='warning'>The Adminbus picks you up!</span>"
+			if(buckled_mob)
+				buckled_mob << "[M.name] captured!"
 		M << "<span class='notice'>Welcome aboard the Adminbus. Please keep your hands and arms inside the bus at all times.</span>"
 		src.add_fingerprint(M)
 	else if(isbot(A))
@@ -373,9 +386,11 @@
 /obj/structure/stool/bed/chair/vehicle/adminbus/cultify()
 	return
 
+/////HOOKSHOT/////////
+
 /obj/structure/hookshot
 	name = "\improper admin chain"
-	desc = "You might want to dodge that."
+	desc = "Who knows what these chains can hold..."
 	icon = 'icons/obj/singulo_chain.dmi'
 	icon_state = "chain"
 	pixel_x = -32
@@ -445,6 +460,8 @@
 /obj/structure/hookshot/cultify()
 	return
 
+/////SINGULO CHAIN/////////
+
 /obj/structure/singulo_chain
 	name = "\improper singularity chain"
 	desc = "Admins are above all logic"
@@ -485,6 +502,8 @@
 /obj/structure/singulo_chain/cultify()
 	return
 
+/////ROADLIGHTS/////////
+
 /obj/structure/buslight//the things you have to do to pretend that your bus has directional lights...
 	name = ""
 	desc = ""
@@ -495,4 +514,23 @@
 	return
 
 /obj/structure/buslight/cultify()
+	return
+
+/////TELEPORT WARP/////////
+
+/obj/structure/teleportwarp
+	name = "\improper teleportation warp"
+	desc = "The bus is about to jump..."
+	icon = 'icons/effects/160x160.dmi'
+	icon_state = ""
+	pixel_x = -64
+	pixel_y = -64
+	layer = MOB_LAYER-1
+	anchored = 1
+	density = 0
+
+/obj/structure/teleportwarp/ex_act(severity)
+	return
+
+/obj/structure/teleportwarp/cultify()
 	return

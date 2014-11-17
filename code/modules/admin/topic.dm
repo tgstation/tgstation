@@ -1216,18 +1216,71 @@
 			usr << "This cannot be used on instances of type /mob/living/silicon/ai"
 			return
 
+		var/obj/item/packobelongings/green/pack = new /obj/item/packobelongings/green(M.loc)
+		pack.z = 2
+		pack.y = 69
+		pack.x = 130
+		pack.name = "[M.real_name]'s belongings"
+
 		for(var/obj/item/I in M)
+			if(istype(I,/obj/item/clothing/glasses))
+				var/obj/item/clothing/glasses/G = I
+				if(G.prescription)
+					continue
 			M.u_equip(I)
 			if(I)
 				I.loc = M.loc
 				I.layer = initial(I.layer)
 				I.dropped(M)
+				I.loc = pack
+
+		var/obj/item/weapon/card/id/thunderdome/green/ident = new /obj/item/weapon/card/id/thunderdome/green(M)
+		ident.name = "[M.real_name]'s Thunderdome Green ID"
+		if(!iscarbon(M))
+			qdel(ident)
+
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.equip_to_slot_or_del(new /obj/item/clothing/under/color/green(H), slot_w_uniform)
+			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
+			H.equip_to_slot_or_del(ident, slot_wear_id)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/thunderdome/green(H), slot_belt)
+			H.regenerate_icons()
+		else if(ismonkey(M))
+			var/mob/living/carbon/monkey/K = M
+			var/obj/item/clothing/monkeyclothes/jumpsuit_green/JS = new /obj/item/clothing/monkeyclothes/jumpsuit_green(K)
+			var/obj/item/clothing/monkeyclothes/olduniform = null
+			var/obj/item/clothing/monkeyclothes/oldhat = null
+			if(K.uniform)
+				olduniform = K.uniform
+				K.uniform = null
+				olduniform.loc = pack
+			K.uniform = JS
+			K.uniform.loc = K
+			if(K.hat)
+				oldhat = K.hat
+				K.hat = null
+				oldhat.loc = pack
+			K.equip_to_slot_or_del(ident, slot_r_hand)
+			K.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/thunderdome/green(K), slot_l_hand)
+			K.regenerate_icons()
+
+		if(pack.contents.len == 0)
+			qdel(pack)
+
 
 		M.Paralyse(5)
 		sleep(5)
 		M.loc = pick(tdome1)
 		spawn(50)
-			M << "\blue You have been sent to the Thunderdome."
+			M << "<span class='danger'>You have been chosen to fight for the Green Team. [pick(\
+			"The wheel of fate is turning!",\
+			"Heaven or Hell!",\
+			"Set Spell Card!",\
+			"Hologram Summer Again!",\
+			"Get ready for the next battle!",\
+			"Fight for your life!",\
+			)]</span>"
 		log_admin("[key_name(usr)] has sent [key_name(M)] to the thunderdome. (Team 1)")
 		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Team 1)", 1)
 
@@ -1245,18 +1298,69 @@
 			usr << "This cannot be used on instances of type /mob/living/silicon/ai"
 			return
 
+		var/obj/item/packobelongings/red/pack = new /obj/item/packobelongings/red(M.loc)
+		pack.z = 2
+		pack.y = 69
+		pack.x = 126
+		pack.name = "[M.real_name]'s belongings"
+
 		for(var/obj/item/I in M)
+			if(istype(I,/obj/item/clothing/glasses))
+				var/obj/item/clothing/glasses/G = I
+				if(G.prescription)
+					continue
 			M.u_equip(I)
 			if(I)
 				I.loc = M.loc
 				I.layer = initial(I.layer)
 				I.dropped(M)
 
+		var/obj/item/weapon/card/id/thunderdome/red/ident = new /obj/item/weapon/card/id/thunderdome/red(M)
+		ident.name = "[M.real_name]'s Thunderdome Red ID"
+		if(!iscarbon(M))
+			qdel(ident)
+
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.equip_to_slot_or_del(new /obj/item/clothing/under/color/red(H), slot_w_uniform)
+			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
+			H.equip_to_slot_or_del(ident, slot_wear_id)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/thunderdome/red(H), slot_belt)
+			H.regenerate_icons()
+		else if(ismonkey(M))
+			var/mob/living/carbon/monkey/K = M
+			var/obj/item/clothing/monkeyclothes/jumpsuit_red/JS = new /obj/item/clothing/monkeyclothes/jumpsuit_red(K)
+			var/obj/item/clothing/monkeyclothes/olduniform = null
+			var/obj/item/clothing/monkeyclothes/oldhat = null
+			if(K.uniform)
+				olduniform = K.uniform
+				K.uniform = null
+				olduniform.loc = pack
+			K.uniform = JS
+			K.uniform.loc = K
+			if(K.hat)
+				oldhat = K.hat
+				K.hat = null
+				oldhat.loc = pack
+			K.equip_to_slot_or_del(ident, slot_r_hand)
+			K.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/thunderdome/red(K), slot_l_hand)
+			K.regenerate_icons()
+
+		if(pack.contents.len == 0)
+			qdel(pack)
+
 		M.Paralyse(5)
 		sleep(5)
 		M.loc = pick(tdome2)
 		spawn(50)
-			M << "\blue You have been sent to the Thunderdome."
+			M << "<span class='danger'>You have been chosen to fight for the Red Team. [pick(\
+			"The wheel of fate is turning!",\
+			"Heaven or Hell!",\
+			"Set Spell Card!",\
+			"Hologram Summer Again!",\
+			"Get ready for the next battle!",\
+			"Fight for your life!",\
+			)]</span>"
 		log_admin("[key_name(usr)] has sent [key_name(M)] to the thunderdome. (Team 2)")
 		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Team 2)", 1)
 
@@ -2501,8 +2605,16 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","TD")
 				message_admins("[key_name_admin(usr)] spawned himself as a Test Dummy.")
-				var/mob/living/carbon/human/dummy/D = new /mob/living/carbon/human/dummy(get_turf(usr))
+				var/turf/T = get_turf(usr)
+				var/mob/living/carbon/human/dummy/D = new /mob/living/carbon/human/dummy(T)
 				usr.client.cmd_assume_direct_control(D)
+				D.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(D), slot_w_uniform)
+				D.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(D), slot_shoes)
+				D.equip_to_slot_or_del(new /obj/item/weapon/card/id/admin(D), slot_wear_id)
+				D.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(D), slot_ears)
+				D.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(D), slot_back)
+				D.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(D.back), slot_in_backpack)
+				T.beamin("admin")
 				D.name = "Admin"
 				D.real_name = "Admin"
 				var/newname = ""

@@ -277,3 +277,16 @@
 		NM.friends += user
 		MC.contained_mob = NM
 	..()
+
+/obj/item/weapon/storage/belt/thunderdome
+	name = "Thunderdome Belt"
+	desc = "Can hold the thunderdome IDs of your fallen foes."
+	item_state = ""
+	storage_slots = 30
+	can_hold = list("/obj/item/weapon/card/id/thunderdome")
+
+/obj/item/weapon/storage/belt/thunderdome/green
+	icon_state = "td_belt-green"
+
+/obj/item/weapon/storage/belt/thunderdome/red
+	icon_state = "td_belt-red"

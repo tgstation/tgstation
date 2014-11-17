@@ -1,3 +1,8 @@
+///////////////////////////////////////////////////////////////
+//Deity Link, giving a new meaning to the Adminbus since 2014//
+///////////////////////////////////////////////////////////////
+
+//RELEASE PASSENGERS
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/verb/release_passengers()
 	set name = "Release Passengers"
@@ -57,6 +62,8 @@
 	L.update_canmove()
 	L << "<span class='notice'>Thank you for riding with the Adminbus, have a secure day.</span>"
 	passengers -= L
+
+//MOB SPAWNING
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/verb/spawn_clowns()
 	set name = "Spawn Clowns"
@@ -233,6 +240,8 @@
 		del(M)
 	spawned_mobs.len = 0
 
+//SINGULARITY/NARSIE HOOK&CHAIN
+
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/capture_singulo(var/obj/machinery/singularity/S)
 	for(var/atom/A in hookshot)																//first we remove the hookshot and its chain
 		qdel(A)
@@ -318,6 +327,8 @@
 
 		hook = 1
 
+/////////////////
+
 /obj/structure/stool/bed/chair/vehicle/adminbus/verb/mass_rejuvinate()
 	set name = "Mass Rejuvinate"
 	set category = "Adminbus"
@@ -383,6 +394,7 @@
 		usr << "Nice try."
 		return
 
+	visible_message("<span class='notice'>All Access for Everyone!</span>")
 	var/joy_sound = list('sound/voice/SC4Mayor1.ogg','sound/voice/SC4Mayor2.ogg','sound/voice/SC4Mayor3.ogg')
 	playsound(src, pick(joy_sound), 50, 0, 0)
 	var/throwzone[] = list()
@@ -392,7 +404,6 @@
 			throwzone += T
 		var/obj/item/weapon/card/id/captains_spare/S = new/obj/item/weapon/card/id/captains_spare(src.loc)
 		S.throw_at(pick(throwzone),rand(2,5),0)
-	visible_message("<span class='notice'>All Access for Everyone!</span>")
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/verb/Loadsa_Money()
 	set name = "Loadsa Money"
@@ -405,6 +416,7 @@
 		usr << "Nice try."
 		return
 
+	visible_message("<span class='notice'>Loads of Money!</span>")
 	var/joy_sound = list('sound/voice/SC4Mayor1.ogg','sound/voice/SC4Mayor2.ogg','sound/voice/SC4Mayor3.ogg')
 	playsound(src, pick(joy_sound), 50, 0, 0)
 	var/obj/item/fuckingmoney = null
@@ -430,7 +442,6 @@
 		300;/obj/item/weapon/spacecash/c1000)
 		var/obj/item/C = new fuckingmoney(src.loc)
 		C.throw_at(pick(throwzone),rand(2,5),0)
-	visible_message("<span class='notice'>Loads of Money!</span>")
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/verb/give_bombs()
 	set name = "Give Bombs"
@@ -574,11 +585,519 @@
 
 	usr << "Deleted all [distributed] laser guns.</span>"
 
+/obj/structure/stool/bed/chair/vehicle/adminbus/verb/Mass_Repair()
+	set name = "Mass Repair"
+	set category = "Adminbus"
+	set src = view(0)
+	set popup_menu = 0
+	set hidden = 0
 
+	if(!(istype(usr,/mob/living/carbon/human/dummy) || istype(usr,/mob/living/simple_animal/corgi/Ian)))
+		usr << "Nice try."
+		return
 
-/*WIP
-/obj/item/key/teleportback
+	visible_message("<span class='notice'>WE BUILD!</span>")
 
-/obj/item/key/teleportback/attack_self(mob/user as mob)
-	user.send_back()
+	for(var/obj/machinery/M in range(src,3))
+		M.stat = 0
+		M.update_icon()
+
+	for(var/turf/T in range(src,3))
+		if(istype(T, /turf/space/))
+			if(T.loc.name == "Space")
+				continue
+			var/obj/item/stack/tile/plasteel/P = new /obj/item/stack/tile/plasteel
+			P.build(T)
+		else if(istype(T,/turf/simulated/floor))
+			var/turf/simulated/floor/F = T
+			if(F.broken || F.burnt)
+				if(F.is_plating())
+					F.icon_state = "plating"
+					F.burnt = 0
+					F.broken = 0
+				else
+					F.make_plating()
+
+	for(var/obj/structure/cultgirder/G in range(src,3))
+		var/turf/T = get_turf(G)
+		T.ChangeTurf(/turf/simulated/wall/cult)
+		del(G)
+
+	for(var/obj/structure/girder/G in range(src,3))
+		var/turf/T = get_turf(G)
+		if(istype(G,/obj/structure/girder/reinforced))
+			T.ChangeTurf(/turf/simulated/wall/r_wall)
+		else
+			T.ChangeTurf(/turf/simulated/wall)
+		del(G)
+
+	for(var/obj/item/weapon/shard/S in range(src,3))
+		if(istype(S,/obj/item/weapon/shard/plasma))
+			new/obj/item/stack/sheet/glass/plasmaglass(S.loc)
+		else
+			new/obj/item/stack/sheet/glass(S.loc)
+		del(S)
+
+/obj/structure/stool/bed/chair/vehicle/adminbus/verb/Teleportation()
+	set name = "Teleportation"
+	set category = "Adminbus"
+	set src = view(0)
+	set popup_menu = 0
+	set hidden = 0
+
+	if(!(istype(usr,/mob/living/carbon/human/dummy) || istype(usr,/mob/living/simple_animal/corgi/Ian)))
+		usr << "Nice try."
+		return
+
+	warp.icon_state = "warp_activated"
+
+	var/A
+	A = input(usr, "Area to jump to", "Teleportation Warp", A) as null|anything in adminbusteleportlocs
+	var/area/thearea = adminbusteleportlocs[A]
+	if(!thearea)
+		warp.icon_state = ""
+		return
+
+	var/list/L = list()
+
+	for(var/turf/T in get_area_turfs(thearea.type))
+		L+=T
+
+	if(!L || !L.len)
+		usr << "No area available."
+		warp.icon_state = ""
+		return
+
+	var/turf/T1 = get_turf(src)
+	var/turf/T2 = pick(L)
+	warp.icon_state = ""
+	src.loc = T2
+	src.Move()
+	T1.busteleport()
+	T2.busteleport()
+
+/obj/structure/stool/bed/chair/vehicle/adminbus/verb/Sendto_Thunderdome_Obs()
+	set name = "Send Passengers to Thunderdome as Observers"
+	set category = "Adminbus"
+	set src = view(0)
+	set popup_menu = 0
+	set hidden = 0
+
+	if(!(istype(usr,/mob/living/carbon/human/dummy) || istype(usr,/mob/living/simple_animal/corgi/Ian)))
+		usr << "Nice try."
+		return
+
+	if(passengers.len == 0)
+		usr << "<span class='warning'>There are no passengers to send.</span>"
+		return
+
+	if(alert(usr, "Send all passengers to the thunderdome's spectating area?", "Adminbus", "Yes", "No") != "Yes")
+		return
+
+	var/turf/T = get_turf(src)
+	if(T)
+		T.beamin("")
+
+	for(var/i=passengers.len;i>0;i--)
+		var/atom/A = passengers[i]
+		if(isliving(A))
+			var/mob/living/M = A
+			freed(M)
+
+/*									//We let the observers keep their belongings
+			for(var/obj/item/I in M)
+				M.u_equip(I)
+				if(I)
+					I.loc = M.loc
+					I.layer = initial(I.layer)
+					I.dropped(M)
+					I.z = 2
+					I.y = 68
+					I.x = (thunderdomefightercount % 15) + 121
+
 */
+
+			M.loc = pick(tdomeobserve)
+			M << "<span class='notice'>You have been sent to the Thunderdome. Thank you for riding with us and enjoy your games.</span>"
+
+		else if(isbot(A))
+			var/obj/machinery/bot/B = A
+			switch(dir)
+				if(SOUTH)
+					B.x = x-1
+				if(WEST)
+					B.y = y+1
+				if(NORTH)
+					B.x = x+1
+				if(EAST)
+					B.y = y-1
+			B.turn_on()
+			B.isolated = 0
+			B.anchored = 0
+			passengers -= B
+			B.loc = pick(tdomeobserve)
+
+		var/turf/TD = get_turf(A)
+		if(TD)
+			TD.beamin("")
+
+		sleep(1)
+
+/obj/structure/stool/bed/chair/vehicle/adminbus/verb/Sendto_Thunderdome_Arena()//this one sends an equal number of fighter to each side.
+	set name = "Send Passengers to Thunderdome Arena"
+	set category = "Adminbus"
+	set src = view(0)
+	set popup_menu = 0
+	set hidden = 0
+
+	if(!(istype(usr,/mob/living/carbon/human/dummy) || istype(usr,/mob/living/simple_animal/corgi/Ian)))
+		usr << "Nice try."
+		return
+
+	if(passengers.len == 0)
+		usr << "<span class='warning'>There are no passengers to send.</span>"
+		return
+
+	if(alert(usr, "Split passengers between the two thunderdome teams?", "Adminbus", "Yes", "No") != "Yes")
+		return
+
+	var/turf/T = get_turf(src)
+	if(T)
+		T.beamin("")
+
+	var/alternate = 1
+
+	for(var/i=passengers.len;i>0;i--)
+		var/atom/A = passengers[i]
+		if(alternate)
+			red_team(A)
+			alternate = 0
+		else
+			green_team(A)
+			alternate = 1
+
+	usr << "The passengers' belongings were stored inside the Thunderdome's admin lodge."
+
+/obj/structure/stool/bed/chair/vehicle/adminbus/verb/Sendto_Thunderdome_Arena_Green()
+	set name = "Send Passengers to Thunderdome Arena Green"
+	set category = "Adminbus"
+	set src = view(0)
+	set popup_menu = 0
+	set hidden = 0
+
+	if(!(istype(usr,/mob/living/carbon/human/dummy) || istype(usr,/mob/living/simple_animal/corgi/Ian)))
+		usr << "Nice try."
+		return
+
+	if(passengers.len == 0)
+		usr << "<span class='warning'>There are no passengers to send.</span>"
+		return
+
+	if(alert(usr, "Send all passengers to the thunderdome's Green Team?", "Adminbus", "Yes", "No") != "Yes")
+		return
+
+	var/turf/T = get_turf(src)
+	if(T)
+		T.beamin("")
+
+	for(var/i=passengers.len;i>0;i--)
+		var/atom/A = passengers[i]
+		green_team(A)
+
+	usr << "The passengers' belongings were stored inside the Thunderdome's admin lodge."
+
+/obj/structure/stool/bed/chair/vehicle/adminbus/verb/Sendto_Thunderdome_Arena_Red()
+	set name = "Send Passengers to Thunderdome Arena Red"
+	set category = "Adminbus"
+	set src = view(0)
+	set popup_menu = 0
+	set hidden = 0
+
+	if(!(istype(usr,/mob/living/carbon/human/dummy) || istype(usr,/mob/living/simple_animal/corgi/Ian)))
+		usr << "Nice try."
+		return
+
+	if(passengers.len == 0)
+		usr << "<span class='warning'>There are no passengers to send.</span>"
+		return
+
+	if(alert(usr, "Send all passengers to the thunderdome's Red Team?", "Adminbus", "Yes", "No") != "Yes")
+		return
+
+	var/turf/T = get_turf(src)
+	if(T)
+		T.beamin("")
+
+	for(var/i=passengers.len;i>0;i--)
+		var/atom/A = passengers[i]
+		red_team(A)
+
+	usr << "The passengers' belongings were stored inside the Thunderdome's admin lodge."
+
+/obj/structure/stool/bed/chair/vehicle/adminbus/proc/green_team(var/atom/A)
+	if(isliving(A))
+		var/mob/living/M = A
+		freed(M)
+
+		var/obj/item/packobelongings/green/pack = new /obj/item/packobelongings/green(src.loc)
+		pack.z = 2
+		pack.y = 69
+		pack.x = 130
+		pack.name = "[M.real_name]'s belongings"
+
+		for(var/obj/item/I in M)
+			if(istype(I,/obj/item/clothing/glasses))
+				var/obj/item/clothing/glasses/G = I
+				if(G.prescription)
+					continue
+			M.u_equip(I)
+			if(I)
+				I.loc = M.loc
+				I.layer = initial(I.layer)
+				I.dropped(M)
+				I.loc = pack
+
+		var/obj/item/weapon/card/id/thunderdome/green/ident = new /obj/item/weapon/card/id/thunderdome/green(M)
+		ident.name = "[M.real_name]'s Thunderdome Green ID"
+		if(!iscarbon(M))
+			qdel(ident)
+
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.equip_to_slot_or_del(new /obj/item/clothing/under/color/green(H), slot_w_uniform)
+			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
+			H.equip_to_slot_or_del(ident, slot_wear_id)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/thunderdome/green(H), slot_belt)
+			H.regenerate_icons()
+		else if(ismonkey(M))
+			var/mob/living/carbon/monkey/K = M
+			var/obj/item/clothing/monkeyclothes/jumpsuit_green/JS = new /obj/item/clothing/monkeyclothes/jumpsuit_green(K)
+			var/obj/item/clothing/monkeyclothes/olduniform = null
+			var/obj/item/clothing/monkeyclothes/oldhat = null
+			if(K.uniform)
+				olduniform = K.uniform
+				K.uniform = null
+				olduniform.loc = pack
+			K.uniform = JS
+			K.uniform.loc = K
+			if(K.hat)
+				oldhat = K.hat
+				K.hat = null
+				oldhat.loc = pack
+			K.equip_to_slot_or_del(ident, slot_r_hand)
+			K.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/thunderdome/green(K), slot_l_hand)
+			K.regenerate_icons()
+
+		if(pack.contents.len == 0)
+			qdel(pack)
+
+		M.loc = pick(tdome1)
+		M << "<span class='danger'>You have been chosen to fight for the Green Team. [pick(\
+		"The wheel of fate is turning!",\
+		"Heaven or Hell!",\
+		"Set Spell Card!",\
+		"Hologram Summer Again!",\
+		"Get ready for the next battle!",\
+		"Fight for your life!",\
+		)]</span>"
+
+	else if(isbot(A))
+		var/obj/machinery/bot/B = A
+		switch(dir)
+			if(SOUTH)
+				B.x = x-1
+			if(WEST)
+				B.y = y+1
+			if(NORTH)
+				B.x = x+1
+			if(EAST)
+				B.y = y-1
+		B.turn_on()
+		B.isolated = 0
+		B.anchored = 0
+		passengers -= B
+		B.loc = pick(tdome1)
+
+	var/turf/T = get_turf(A)
+	if(T)
+		T.beamin("green")
+
+	sleep(1)
+
+/obj/structure/stool/bed/chair/vehicle/adminbus/proc/red_team(var/atom/A)
+	if(isliving(A))
+		var/mob/living/M = A
+		freed(M)
+
+		var/obj/item/packobelongings/red/pack = new /obj/item/packobelongings/red(src.loc)
+		pack.z = 2
+		pack.y = 69
+		pack.x = 126
+		pack.name = "[M.real_name]'s belongings"
+
+		for(var/obj/item/I in M)
+			if(istype(I,/obj/item/clothing/glasses))
+				var/obj/item/clothing/glasses/G = I
+				if(G.prescription)
+					continue
+			M.u_equip(I)
+			if(I)
+				I.loc = M.loc
+				I.layer = initial(I.layer)
+				I.dropped(M)
+				I.loc = pack
+
+		var/obj/item/weapon/card/id/thunderdome/red/ident = new /obj/item/weapon/card/id/thunderdome/red(M)
+		ident.name = "[M.real_name]'s Thunderdome Red ID"
+		if(!iscarbon(M))
+			qdel(ident)
+
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.equip_to_slot_or_del(new /obj/item/clothing/under/color/red(H), slot_w_uniform)
+			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
+			H.equip_to_slot_or_del(ident, slot_wear_id)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/thunderdome/red(H), slot_belt)
+			H.regenerate_icons()
+		else if(ismonkey(M))
+			var/mob/living/carbon/monkey/K = M
+			var/obj/item/clothing/monkeyclothes/jumpsuit_red/JS = new /obj/item/clothing/monkeyclothes/jumpsuit_red(K)
+			var/obj/item/clothing/monkeyclothes/olduniform = null
+			var/obj/item/clothing/monkeyclothes/oldhat = null
+			if(K.uniform)
+				olduniform = K.uniform
+				K.uniform = null
+				olduniform.loc = pack
+			K.uniform = JS
+			K.uniform.loc = K
+			if(K.hat)
+				oldhat = K.hat
+				K.hat = null
+				oldhat.loc = pack
+			K.equip_to_slot_or_del(ident, slot_r_hand)
+			K.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/thunderdome/red(K), slot_l_hand)
+			K.regenerate_icons()
+
+		if(pack.contents.len == 0)
+			qdel(pack)
+
+		M.loc = pick(tdome2)
+		M << "<span class='danger'>You have been chosen to fight for the Red Team. [pick(\
+		"The wheel of fate is turning!",\
+		"Heaven or Hell!",\
+		"Set Spell Card!",\
+		"Hologram Summer Again!",\
+		"Get ready for the next battle!",\
+		"Fight for your life!",\
+		)]</span>"
+
+	else if(isbot(A))
+		var/obj/machinery/bot/B = A
+		switch(dir)
+			if(SOUTH)
+				B.x = x-1
+			if(WEST)
+				B.y = y+1
+			if(NORTH)
+				B.x = x+1
+			if(EAST)
+				B.y = y-1
+		B.turn_on()
+		B.isolated = 0
+		B.anchored = 0
+		passengers -= B
+		B.loc = pick(tdome2)
+
+	var/turf/T = get_turf(A)
+	if(T)
+		T.beamin("red")
+
+	sleep(1)
+
+/obj/item/packobelongings
+	name = "Unknown's belongings"
+	desc = "Full of stuff."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "belongings"
+	w_class = 3.0
+
+/obj/item/packobelongings/New()
+	..()
+	src.pixel_x = rand(-5.0, 5)
+	src.pixel_y = rand(-5.0, 5)
+
+/obj/item/packobelongings/attack_self(mob/user as mob)
+	var/turf/T = get_turf(user)
+	for(var/obj/O in src)
+		O.loc = T
+	qdel(src)
+
+/obj/item/packobelongings/green
+	icon_state = "belongings-green"
+	desc = "Items belonging to one of the Thunderdome contestants."
+
+/obj/item/packobelongings/red
+	icon_state = "belongings-red"
+	desc = "Items belonging to one of the Thunderdome contestants."
+
+/obj/structure/stool/bed/chair/vehicle/adminbus/verb/Send_Home()
+	set name = "Send Back Home"
+	set category = "Adminbus"
+	set src = view(0)
+	set popup_menu = 0
+	set hidden = 0
+
+	if(!(istype(usr,/mob/living/carbon/human/dummy) || istype(usr,/mob/living/simple_animal/corgi/Ian)))
+		usr << "Nice try."
+		return
+
+	if(alert(usr, "Send all mobs among the passengers back where they first appeared? (Risky: This sends them back where their \"object\" was created. If they were cloned they will teleport back at genetics, If they had their species changed they'll spawn back where it happenned, etc...)", "Adminbus", "Yes", "No") != "Yes")
+		return
+
+	if(passengers.len == 0)
+		usr << "<span class='warning'>There are no passengers to send.</span>"
+		return
+
+	var/turf/T1 = get_turf(src)
+	if(T1)
+		T1.beamin("")
+
+	for(var/mob/M in passengers)
+		freed(M)
+		M.send_back()
+
+		var/turf/T2 = get_turf(M)
+		if(T2)
+			T2.beamin("")
+
+/obj/structure/stool/bed/chair/vehicle/adminbus/verb/Make_Antag()
+	set name = "Make all passengers antags (20 seconds delay)"
+	set category = "Adminbus"
+	set src = view(0)
+	set popup_menu = 0
+	set hidden = 0
+
+	if(!(istype(usr,/mob/living/carbon/human/dummy) || istype(usr,/mob/living/simple_animal/corgi/Ian)))
+		usr << "Nice try."
+		return
+
+	if(alert(usr, "Try to make all the passengers antag? They will automatically be equipped with gear fitting their role. Among traitor, changeling, vampire, head rev, cult, blob, infected", "Adminbus", "Yes", "No") != "Yes")
+		return
+
+	if(passengers.len == 0)
+		usr << "<span class='warning'>There are no passengers to send.</span>"
+		return
+
+	usr << "<span class='danger'>All humans (and monkeys) among the passengers will become antags in 20 seconds. You might want to send them home now or spread them accross the station before it happens.</span>"
+
+	var/turf/T1 = get_turf(src)
+	if(T1)
+		T1.beamin("")
+
+	for(var/mob/M in passengers)
+		freed(M)
+		M.send_back()
+
+		var/turf/T2 = get_turf(M)
+		if(T2)
+			T2.beamin("")
