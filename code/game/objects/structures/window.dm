@@ -196,14 +196,17 @@
 		user << (state ? "<span class='notice'>You have pried the window into the frame.</span>" : "<span class='notice'>You have pried the window out of the frame.</span>")
 	else if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = I
-		if(WT.remove_fuel(0,user))
-			user << "<span class='notice'>You begin repairing the [src].</span>"
-			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-			if(do_after(user,40,5,1))
-				health = maxhealth
-				playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+		if(user.a_intent == "help") //so you can still break windows with welding tools
+			if(health < maxhealth)
+				if(WT.remove_fuel(0,user))
+					user << "<span class='notice'>You begin repairing [src].</span>"
+					playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+					if(do_after(user, 40))
+						health = maxhealth
+						playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+			else
+				user << "<span class='notice'>[src] is already in good condition.</span>"
 		update_nearby_icons()
-		return
 	else if(istype(I, /obj/item/weapon/wrench) && !anchored)
 		if(reinf)
 			var/obj/item/stack/sheet/rglass/RG = new (user.loc)
