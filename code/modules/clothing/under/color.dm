@@ -78,6 +78,7 @@
 	desc = "Groovy!"
 	icon_state = "psyche"
 	_color = "psyche"
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
 /obj/item/clothing/under/lightblue
 	name = "lightblue jumpsuit"
@@ -89,62 +90,62 @@
 	name = "aqua jumpsuit"
 	icon_state = "aqua"
 	_color = "aqua"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
 /obj/item/clothing/under/purple
 	name = "purple jumpsuit"
 	icon_state = "purple"
 	item_state = "p_suit"
 	_color = "purple"
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
 /obj/item/clothing/under/lightpurple
 	name = "lightpurple jumpsuit"
 	icon_state = "lightpurple"
 	_color = "lightpurple"
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
 /obj/item/clothing/under/lightgreen
 	name = "lightgreen jumpsuit"
 	icon_state = "lightgreen"
 	_color = "lightgreen"
-
-/obj/item/clothing/under/lightblue
-	name = "lightblue jumpsuit"
-	icon_state = "lightblue"
-	_color = "lightblue"
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
 /obj/item/clothing/under/lightbrown
 	name = "lightbrown jumpsuit"
 	icon_state = "lightbrown"
 	_color = "lightbrown"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
 /obj/item/clothing/under/brown
 	name = "brown jumpsuit"
 	icon_state = "brown"
 	_color = "brown"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
 /obj/item/clothing/under/yellowgreen
 	name = "yellowgreen jumpsuit"
 	icon_state = "yellowgreen"
 	_color = "yellowgreen"
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
 /obj/item/clothing/under/darkblue
 	name = "darkblue jumpsuit"
 	icon_state = "darkblue"
 	_color = "darkblue"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
 /obj/item/clothing/under/lightred
 	name = "lightred jumpsuit"
 	icon_state = "lightred"
 	_color = "lightred"
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
 /obj/item/clothing/under/darkred
 	name = "darkred jumpsuit"
 	icon_state = "darkred"
 	_color = "darkred"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
 /obj/item/clothing/under/blackpants
 	name = "black pants"
