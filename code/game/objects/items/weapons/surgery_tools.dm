@@ -905,5 +905,5 @@ LOOK FOR SURGERY.DM*/
 			"<span class='notice'>[user] prods [target] trying to wake \him up!</span>",
 			"<span class='notice'>You prod [target] trying to wake \him up!</span>",
 			)
-		else
-			return ..()
+	else
+		return ..()
