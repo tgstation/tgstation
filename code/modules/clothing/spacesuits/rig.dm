@@ -115,13 +115,37 @@
 
 /obj/item/clothing/suit/space/rig/syndi
 	icon_state = "rig-syndi"
-	name = "blood-red hardsuit"
-	desc = "An advanced suit that protects against injuries during special operations. Property of Gorlex Marauders."
+	name = "blood-red boarding armor"
+	desc = "A hefty piece of composite boarding armor. There is a wrist-mounted dial that can switch modes, but it cannot be worn whilst doing so. The dial is set to Pressurized."
 	item_state = "syndie_hardsuit"
 	slowdown = 1
 	w_class = 3
-	armor = list(melee = 60, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
+	armor = list(melee = 30, bullet = 50, laser = 30, energy = 15, bomb = 50, bio = 100, rad = 50)
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
+	var/on = 0 //Pressurized mode (0) and combat mode (1)
+
+/obj/item/clothing/suit/space/rig/syndi/attack_self(mob/user as mob) //Suit must be in your hand to switch modes; this is to prevent easy switching
+	on = !on
+	if(on)
+		icon_state = "rig-syndicombat"
+		user << "<span class='notice'>You switch the mode on your boarding suit to Combat.</span>"
+		armor = list(melee = 80, bullet = 100, laser = 50, energy = 25, bomb = 35, bio = 25, rad = 25) //Increased damage protection and bullet immunity
+		slowdown = 0 //No slowdown
+		cold_protection = CHEST
+		name = "blood-red boarding armor (combat)"
+		desc = "A hefty piece of composite boarding armor. There is a wrist-mounted dial that can switch modes, but it cannot be worn whilst doing so. The dial is set to Combat."
+		flags_inv = HIDESHOES
+	else
+		icon_state = "rig-syndi"
+		user << "<span class='notice'>You switch the mode on your boarding suit to Pressurized.</span>"
+		armor = list(melee = 30, bullet = 50, laser = 30, energy = 15, bomb = 50, bio = 100, rad = 50) //Decreased protection but completely spaceworthy
+		slowdown = 1
+		cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
+		name = "blood-red boarding armor (pressurized)"
+		desc = "A hefty piece of composite boarding armor. There is a wrist-mounted dial that can switch modes, but it cannot be worn whilst doing so. The dial is set to Pressurized."
+		flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+
+	playsound(src.loc, 'sound/effects/suitswitch.ogg', 50, 1)
 
 //Wizard Rig
 /obj/item/clothing/head/helmet/space/rig/wizard
