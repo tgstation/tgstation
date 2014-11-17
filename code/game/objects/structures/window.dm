@@ -194,6 +194,16 @@
 		state = 1 - state
 		playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
 		user << (state ? "<span class='notice'>You have pried the window into the frame.</span>" : "<span class='notice'>You have pried the window out of the frame.</span>")
+	else if(istype(I, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = I
+		if(WT.remove_fuel(0,user))
+			user << "<span class='notice'>You begin repairing the [src].</span>"
+			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+			if(do_after(user,40,5,1))
+				health = maxhealth
+				playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+		update_nearby_icons()
+		return
 	else if(istype(I, /obj/item/weapon/wrench) && !anchored)
 		if(reinf)
 			var/obj/item/stack/sheet/rglass/RG = new (user.loc)
