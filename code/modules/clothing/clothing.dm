@@ -287,7 +287,7 @@ atom/proc/generate_female_clothing(index,t_color,icon)
 	if(istype(M,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		if(H.w_uniform == src)
-			H.update_suit_sensors(src)
+			H.update_suit_sensors()
 	..()
 
 /obj/item/clothing/under/verb/rolldown()

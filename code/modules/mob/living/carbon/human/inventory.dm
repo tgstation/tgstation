@@ -260,7 +260,7 @@
 		if(belt)
 			unEquip(belt)
 		w_uniform = null
-		update_suit_sensors(w_uniform)
+		update_suit_sensors()
 		update_inv_w_uniform(0)
 	else if(I == gloves)
 		gloves = null
@@ -378,7 +378,7 @@
 			update_inv_wear_suit(redraw_mob)
 		if(slot_w_uniform)
 			w_uniform = I
-			update_suit_sensors(w_uniform)
+			update_suit_sensors()
 			update_inv_w_uniform(redraw_mob)
 		if(slot_l_store)
 			l_store = I
@@ -396,5 +396,4 @@
 		else
 			src << "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>"
 			return
-		update_action_buttons()
 

@@ -54,12 +54,6 @@
 
 //data HUD (medhud, sechud) defines
 //Don't forget to update human/New() if you change these!
-#define DATA_HUD_SECURITY	1
-#define DATA_HUD_MEDICAL	2
-
-#define DATA_HUD_BASIC		1
-#define DATA_HUD_ADVANCED	2
-
 #define DATA_HUD_SECURITY_BASIC		1
 #define DATA_HUD_SECURITY_ADVANCED	2
 #define DATA_HUD_MEDICAL_BASIC		3
