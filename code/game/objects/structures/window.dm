@@ -8,7 +8,7 @@
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = 1.0
 	flags = ON_BORDER
-	var/maxhealth = 14.0
+	var/maxhealth = 15
 	var/health = 0
 	var/ini_dir = null
 	var/state = 0
@@ -412,7 +412,7 @@
 
 /obj/structure/window/fulltile
 	dir = 5
-	maxhealth = 28
+	maxhealth = 30
 	fulltile = 1
 
 /obj/structure/window/reinforced/fulltile
