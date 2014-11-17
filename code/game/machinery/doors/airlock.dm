@@ -1033,8 +1033,6 @@ About the new airlock wires panel:
 				autoclose()
 			return
 
-	crush()
-
 	if(forced < 2)
 		if(emagged)
 			return
@@ -1052,7 +1050,22 @@ About the new airlock wires panel:
 	if(killthis)
 		killthis.ex_act(2)//Smashin windows
 
-	..()
+	if(density)
+		return 1
+	operating = 1
+	do_animate("closing")
+	explosion_resistance = initial(explosion_resistance)
+	src.layer = 3.1
+	sleep(10)
+	crush()
+	src.density = 1
+	update_icon()
+	if(visible && !glass)
+		SetOpacity(1)	//caaaaarn!
+	operating = 0
+	air_update_turf(1)
+	update_freelook_sight()
+	return
 
 
 /obj/machinery/door/airlock/New()
