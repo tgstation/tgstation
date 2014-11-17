@@ -4,7 +4,6 @@
 	voice_name = "Unknown"
 	icon = 'icons/mob/human.dmi'
 	icon_state = "caucasian1_m_s"
-	var/list/hud_list = list()
 
 
 
@@ -27,15 +26,7 @@
 	internal_organs += new /obj/item/organ/heart
 	internal_organs += new /obj/item/organ/brain
 
-	for(var/i=0;i<7;i++) // 2 for medHUDs and 5 for secHUDs
-		hud_list += image('icons/mob/hud.dmi', src, "")
-	
-	med_hud_set_health()
-	med_hud_set_status()
-	sec_hud_set_ID()
-	sec_hud_set_implants()
-	sec_hud_set_security_status()
-	add_to_all_data_huds()
+	prepare_data_huds()
 
 	// for spawned humans; overwritten by other code
 	create_dna(src)
@@ -44,10 +35,31 @@
 
 	..()
 
+/mob/living/carbon/human/proc/prepare_data_huds()
+	//Populates the human hud_list
+	for(var/i=1;i<=2;i++) // Humans have 2 sets of data hud icons
+		hud_list[i] = list()
+
+	for(var/i=1;i<=2;i++) // 2 icons for medHUDs...
+		hud_list[DATA_HUD_MEDICAL] += image('icons/mob/hud.dmi', src, "")
+
+	for(var/i=1;i<=5;i++) // ...and 5 for secHUDs
+		hud_list[DATA_HUD_SECURITY] += image('icons/mob/hud.dmi', src, "")
+	
+	//Update all our hud images...
+	med_hud_set_health()
+	med_hud_set_status()
+	sec_hud_set_ID()
+	sec_hud_set_implants()
+	sec_hud_set_security_status()
+	//...and display them
+	add_to_all_huds()
+
+
 /mob/living/carbon/human/Destroy()
 	for(var/atom/movable/organelle in organs)
 		qdel(organelle)
-	remove_from_all_data_huds()
+	remove_from_all_huds()
 	return ..()
 
 /mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)

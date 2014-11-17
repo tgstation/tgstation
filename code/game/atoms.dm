@@ -12,6 +12,9 @@
 	///Chemistry.
 	var/datum/reagents/reagents = null
 
+	//This atom's HUDs. associative list, e.g. hud_list[DATA_HUD_SECURITY] = list(sec_hud_images)
+	var/list/image/hud_list = list()
+
 	//var/chem_is_open_container = 0
 	// replaced by OPENCONTAINER flags and atom/proc/is_open_container()
 	///Chemistry.

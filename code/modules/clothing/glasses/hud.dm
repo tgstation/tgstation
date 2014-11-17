@@ -7,10 +7,12 @@
 
 /obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
 	if(slot == slot_glasses)
-		user.add_data_hud(hud_type,DATA_HUD_ADVANCED)
+		var/datum/hud/H = huds[hud_type]
+		H.add_hud_to(user)
 
 /obj/item/clothing/glasses/hud/dropped(mob/living/carbon/human/user)
-	user.reset_all_data_huds()
+	var/datum/hud/H = huds[hud_type]
+	H.remove_hud_from(user)
 
 /obj/item/clothing/glasses/hud/emp_act(severity)
 	if(emagged == 0)
@@ -21,7 +23,7 @@
 	name = "Health Scanner HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
 	icon_state = "healthhud"
-	hud_type = DATA_HUD_MEDICAL
+	hud_type = DATA_HUD_MEDICAL_ADVANCED
 
 /obj/item/clothing/glasses/hud/health/night
 	name = "Night Vision Health Scanner HUD"
@@ -35,7 +37,7 @@
 	name = "Security HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and security records."
 	icon_state = "securityhud"
-	hud_type = DATA_HUD_SECURITY
+	hud_type = DATA_HUD_SECURITY_ADVANCED
 
 /obj/item/clothing/glasses/hud/security/eyepatch
 	name = "Eyepatch HUD"

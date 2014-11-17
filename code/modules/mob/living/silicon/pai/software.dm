@@ -239,11 +239,11 @@
 		if("securityhud")
 			if(href_list["toggle"])
 				secHUD = !secHUD
-				secHUD ? add_data_hud(DATA_HUD_SECURITY,sensor_level) : reset_all_data_huds()
+				secHUD ? access_data_hud(DATA_HUD_SECURITY,sensor_level) : reset_data_hud(DATA_HUD_SECURITY,sensor_level)
 		if("medicalhud")
 			if(href_list["toggle"])
 				medHUD = !medHUD
-				medHUD ? add_data_hud(DATA_HUD_MEDICAL,sensor_level) : reset_all_data_huds()
+				medHUD ? access_data_hud(DATA_HUD_MEDICAL,sensor_level) : reset_data_hud(DATA_HUD_MEDICAL,sensor_level)
 		if("translator")
 			if(href_list["toggle"])
 				languages = languages == ALL ? HUMAN & ROBOT : ALL

@@ -320,13 +320,14 @@
 /mob/living/silicon/verb/sensor_mode()
 	set name = "Set Sensor Augmentation"
 	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical","Disable")
-	reset_all_data_huds()
+	reset_data_hud(DATA_HUD_SECURITY, sensor_level)
+	reset_data_hud(DATA_HUD_MEDICAL, sensor_level)
 	switch(sensor_type)
 		if ("Security")
-			add_data_hud(DATA_HUD_SECURITY,sensor_level)
+			access_data_hud(DATA_HUD_SECURITY,sensor_level)
 			src << "<span class='notice'>Security records overlay enabled.</span>"
 		if ("Medical")
-			add_data_hud(DATA_HUD_MEDICAL,sensor_level)
+			access_data_hud(DATA_HUD_MEDICAL,sensor_level)
 			src << "<span class='notice'>Life signs monitor overlay enabled.</span>"
 		if ("Disable")
 			src << "Sensor augmentations disabled."
