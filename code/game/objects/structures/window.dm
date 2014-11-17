@@ -2,6 +2,7 @@
 	name = "window"
 	desc = "A window."
 	icon = 'icons/obj/structures.dmi'
+	icon_state = "window"
 	density = 1
 	layer = 3.2//Just above doors
 	pressure_resistance = 4*ONE_ATMOSPHERE
