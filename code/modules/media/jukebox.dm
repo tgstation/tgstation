@@ -74,6 +74,8 @@ var/global/loopModeNames=list(
 	anchored = 1
 	luminosity = 4 // Why was this 16
 
+	custom_aghost_alerts=1 // We handle our own logging.
+
 	playing=0
 
 	var/loop_mode = JUKEMODE_SHUFFLE
@@ -356,11 +358,17 @@ var/global/loopModeNames=list(
 		update_icon()
 
 	if("screen" in href_list)
+		if(isobserver(usr) && !canGhostWrite(usr,src,""))
+			usr << "\red You can't do that."
+			return
 		screen=text2num(href_list["screen"])
 
 	if("act" in href_list)
 		switch(href_list["act"])
 			if("Save Settings")
+				if(isobserver(usr) && !canGhostWrite(usr,src,"saved settings for"))
+					usr << "\red You can't do that."
+					return
 				var/datum/money_account/new_linked_account = get_money_account(text2num(href_list["payableto"]),z)
 				if(!new_linked_account)
 					usr << "\red Unable to link new account. Aborting."
@@ -376,10 +384,15 @@ var/global/loopModeNames=list(
 				screen=POS_SCREEN_SETTINGS
 
 	if (href_list["playlist"])
+		if(isobserver(usr) && !canGhostWrite(usr,src,""))
+			usr << "\red You can't do that."
+			return
 		if(!check_reload())
 			usr << "\red You must wait 60 seconds between playlist reloads."
 			return
 		playlist_id=href_list["playlist"]
+		if(isAdminGhost(usr))
+			message_admins("[key_name_admin(usr)] changed [src] playlist to [playlist_id] at [formatJumpTo(src)]")
 		last_reload=world.time
 		playlist=null
 		current_song = 0
@@ -389,8 +402,13 @@ var/global/loopModeNames=list(
 		update_icon()
 
 	if (href_list["song"])
+		if(isobserver(usr) && !canGhostWrite(usr,src,""))
+			usr << "\red You can't do that."
+			return
 		selected_song=Clamp(text2num(href_list["song"]),1,playlist.len)
-		if(!change_cost)
+		if(isAdminGhost(usr))
+			log_adminghost("[key_name_admin(usr)] changed [src] playlist to [playlist_id] at [formatJumpTo(src)]")
+		if(!change_cost || isAdminGhost(usr))
 			next_song = selected_song
 			selected_song = 0
 			if(!current_song)
