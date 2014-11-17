@@ -1068,6 +1068,12 @@ About the new airlock wires panel:
 	return
 
 
+/obj/machinery/door/airlock/crush()
+	if(safe)
+		open()
+		return
+	..()
+
 /obj/machinery/door/airlock/New()
 	..()
 	wires = new(src)
