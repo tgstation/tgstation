@@ -1124,10 +1124,16 @@ var/list/slot_equipment_priority = list( \
 	src.pulling = AM
 	AM.pulledby = src
 
-	if(ishuman(AM))
-		var/mob/living/carbon/human/H = AM
-		if(H.pull_damage())
-			src << "\red <B>Pulling \the [H] in their current condition would probably be a bad idea.</B>"
+	if(ismob(AM))
+		world << "\[[time_stamp()]\] <span class='warning'>Has been pulled by [src.name] ([src.ckey])</span>"
+		world << "\[[time_stamp()]\] <span class='warning'>Pulled [M.name] ([M.ckey])</span>"
+		M.attack_log += text("\[[time_stamp()]\] <span class='warning'>Has been pulled by [src.name] ([src.ckey])</span>")
+		src.attack_log += text("\[[time_stamp()]\] <span class='warning'>Pulled [M.name] ([M.ckey])</span>")
+
+		if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			if(H.pull_damage())
+				src << "\red <B>Pulling \the [H] in their current condition would probably be a bad idea.</B>"
 
 	//Attempted fix for people flying away through space when cuffed and dragged.
 	if(ismob(AM))
