@@ -71,14 +71,14 @@
 var/global/list/paint_variants = list(
 	"Decals" = list(
 		// Stripes
-		new /datum/paint_info/decal(DIR_ALL,   "old"),
+		new /datum/paint_info/decal(DIR_ALL,   "warning"),
 		new /datum/paint_info/decal(DIR_ONE,   "all"),
 
 		// Loading areas (TODO: colorable)
-		new /datum/paint_info/decal(DIR_ORTHO, "corner"),
+		new /datum/paint_info/decal(DIR_ORTHO, "warning_corner"),
 		new /datum/paint_info/decal(DIR_ONE,   "unloading"),
 		new /datum/paint_info/decal(DIR_ONE,   "bot"),
-		new /datum/paint_info/decal(DIR_ORTHO, "loadingarea"),
+		new /datum/paint_info/decal(DIR_ORTHO, "loading_area"),
 		new /datum/paint_info/decal(DIR_ONE,   "no"),
 
 		// Atmos lettering
