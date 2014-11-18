@@ -202,3 +202,10 @@
 	throw_range = 5
 	w_class = 2.0
 	attack_verb = list("warned", "cautioned", "smashed")
+
+/obj/item/clothing/head/fez
+	name = "fez"
+	desc = "While most fez's are crafted with a decent quality in the Middle East, Nanotrasen hats are essentially cloth covered plastic cups. At least it has a tassle."
+	icon = 'icons/obj/clothing/hats.dmi'
+	icon_state = "fez"
+	item_state = "fez"
