@@ -1,2 +1,5 @@
 author: Duny
-changes: []
+changes: 
+  - imageadd: Added new tileset for reinforced floors. Replaces the old one.
+  - bugfix: Defficiency - Fixed and improved hydrophonics/SME. Also fixed windoors.
+  - tweak: Defficiency - Added a turret in AI upload. Made AI upload and core slightly less vulnerable to thermite. Added two additional cyborg recharging stations in front of the core. Removed anti-powergaming viscerator. Nerfed Chase a little bit.
