@@ -6,18 +6,16 @@ def Namecheck_allinone(name, against, sender=None):
 
     if isinstance(against, dict): 
         for key, value in against.iteritems():
-            if i.lower() in name.lower() and (sender and sender.lower() not in name.lower()):
-                return True
+            if value.lower() in name.lower() and (sender and sender.lower() not in name.lower()):
+                return True, key  # Not sure why you need the index with the result.
     for item in against:
-        if i.lower() in name.lower() and sender.lower() not in name.lower():
+        if item.lower() in name.lower() and sender.lower() not in name.lower():
             return True
             
     return False
 
 def Namecheck(name,against,sender):
     __doc__ = "False = No match, True = Match"
-    for item in against:
-        
     for i in against:
         if i.lower() in name.lower() and sender.lower() not in name.lower():
             return True
