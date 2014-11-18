@@ -4024,7 +4024,7 @@
 "bzt" = (/obj/machinery/computer/secure_data,/turf/simulated/floor{dir = 9; icon_state = "blue"},/area/crew_quarters/hop)
 "bzu" = (/obj/structure/table,/obj/item/weapon/hand_labeler,/obj/item/weapon/packageWrap,/obj/machinery/newscaster/security_unit{pixel_y = 32},/obj/item/device/eftpos{eftpos_name = "HoP EFTPOS scanner"},/turf/simulated/floor,/area/crew_quarters/hop)
 "bzv" = (/obj/machinery/disposal,/obj/structure/disposalpipe/trunk,/turf/simulated/floor,/area/crew_quarters/hop)
-"bzw" = (/obj/machinery/power/apc{dir = 1; pixel_y = 24},/obj/structure/cable{icon_state = "0-4"; d2 = 4},/obj/structure/flora/pottedplant/random,/turf/simulated/floor,/area/crew_quarters/hop)
+"bzw" = (/obj/machinery/power/apc{dir = 1; pixel_y = 24},/obj/structure/cable{icon_state = "0-4"; d2 = 4},/obj/machinery/pdapainter,/turf/simulated/floor,/area/crew_quarters/hop)
 "bzx" = (/obj/machinery/light{dir = 4},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/disposalpipe/segment,/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor,/area/crew_quarters/hop)
 "bzy" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area/turret_protected/ai_upload)
 "bzz" = (/obj/structure/table,/obj/item/weapon/aiModule/core/nanotrasen,/turf/simulated/floor/bluegrid,/area/turret_protected/ai_upload)
