@@ -52,17 +52,11 @@
 	dispensable_reagents = sortList(dispensable_reagents)
 
 /obj/machinery/chem_dispenser/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
-				return
+	if((severity < 3) && prob(100 / (2 ** (severity - 1))))
+		qdel(src)
 
 /obj/machinery/chem_dispenser/blob_act()
-	if (prob(50))
+	if(prob(50))
 		qdel(src)
 
  /**
@@ -261,14 +255,8 @@
 	overlays += "waitlight"
 
 /obj/machinery/chem_master/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
-				return
+	if(severity < 3 && prob(100 / 2 ** (severity - 1)))
+		qdel(src)
 
 /obj/machinery/chem_master/blob_act()
 	if (prob(50))

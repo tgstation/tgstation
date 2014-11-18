@@ -175,17 +175,12 @@ By design, d1 is the smallest direction and d2 is the highest
 
 //explosion handling
 /obj/structure/cable/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-		if(2.0)
-			if (prob(50))
-				Deconstruct()
 
-		if(3.0)
-			if (prob(25))
-				Deconstruct()
-	return
+	if(severity == 1)
+		qdel()
+	else
+		if(prob(100 / (2 ** (severity - 1))))
+			Deconstruct()
 
 /obj/structure/cable/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)

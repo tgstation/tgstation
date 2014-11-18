@@ -47,6 +47,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	return ..()
 
 /obj/structure/plasticflaps/ex_act(severity)
+	..()
 	switch(severity)
 		if (1)
 			qdel(src)

@@ -227,8 +227,8 @@ its easier to just keep the beam vertical.
 /atom/proc/relaymove()
 	return
 
-/atom/proc/ex_act()
-	return
+/atom/proc/ex_act(severity, specialty)
+	contents_explosion(src, severity, specialty)
 
 /atom/proc/blob_act()
 	return

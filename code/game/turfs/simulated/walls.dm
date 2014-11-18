@@ -66,23 +66,20 @@
 			O.loc = src
 	ChangeTurf(/turf/simulated/floor/plating)
 
-/turf/simulated/wall/ex_act(severity)
+/turf/simulated/wall/ex_act(severity, specialty)
+	..()
+	if(specialty)
+		dismantle_wall(1,1)
+		return
 	switch(severity)
 		if(1.0)
 			//SN src = null
 			src.ChangeTurf(/turf/space)
 			return
 		if(2.0)
-			if (prob(50))
-				dismantle_wall(0,1)
-			else
-				dismantle_wall(1,1)
+			dismantle_wall(pick(1,0),1)
 		if(3.0)
-			var/proba
-			if (istype(src, /turf/simulated/wall/r_wall))
-				proba = 15
-			else
-				proba = 40
+			var/proba = (istype(src, /turf/simulated/wall/r_wall) * 15)
 			if (prob(proba))
 				dismantle_wall(0,1)
 		else

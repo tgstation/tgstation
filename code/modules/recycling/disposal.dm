@@ -798,8 +798,7 @@
 	//pass on ex_act to our contents before calling it on ourself
 	var/obj/structure/disposalholder/H = locate() in src
 	if(H)
-		for(var/atom/movable/AM in H)
-			AM.ex_act(severity)
+		contents_explosion(H, severity)
 
 	switch(severity)
 		if(1.0)

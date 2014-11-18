@@ -19,6 +19,7 @@
 	var/hidden = 1
 
 /turf/simulated/mineral/ex_act(severity)
+	..()
 	switch(severity)
 		if(3.0)
 			if (prob(75))
@@ -494,6 +495,7 @@
 	return
 
 /turf/simulated/floor/plating/asteroid/ex_act(severity)
+	..()
 	switch(severity)
 		if(3.0)
 			return

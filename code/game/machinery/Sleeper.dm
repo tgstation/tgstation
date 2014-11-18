@@ -85,27 +85,11 @@
 	default_deconstruction_crowbar(I)
 
 /obj/machinery/sleeper/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			for(var/atom/movable/A in src)
-				A.loc = loc
-				A.ex_act(severity)
-			qdel(src)
-			return
-		if(2.0)
-			if(prob(50))
-				for(var/atom/movable/A in src)
-					A.loc = loc
-					A.ex_act(severity)
-				qdel(src)
-				return
-		if(3.0)
-			if(prob(25))
-				for(var/atom/movable/A in src)
-					A.loc = loc
-					A.ex_act(severity)
-				qdel(src)
-
+	..()
+	if(prob(100 / (2 * severity)))
+		for(var/atom/movable/A in src)
+			A.loc = loc
+		qdel(src)
 
 /obj/machinery/sleeper/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))

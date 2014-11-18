@@ -92,6 +92,7 @@ for reference:
 		..()
 
 /obj/structure/barricade/wooden/ex_act(severity)
+	..()
 	switch(severity)
 		if(1.0)
 			visible_message("<span class='danger'>The barricade is blown apart!</span>")
@@ -211,6 +212,7 @@ for reference:
 		..()
 
 /obj/machinery/deployable/barrier/ex_act(severity)
+	..()
 	switch(severity)
 		if(1.0)
 			src.explode()

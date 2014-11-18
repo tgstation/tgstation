@@ -523,6 +523,7 @@
 
 
 /obj/machinery/dna_scannernew/ex_act(severity)
+	..()
 	switch(severity)
 		if(1.0)
 			qdel(src)

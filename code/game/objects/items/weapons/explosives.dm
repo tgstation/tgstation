@@ -85,16 +85,10 @@
 				explode(get_turf(target))
 			qdel(src)
 
-/obj/item/weapon/c4/proc/explode(var/location)
-	var/atom/movable/processing = target
-	var/atom/movable/temp
-	while(!isarea(processing))
-		for(var/atom/movable/A in processing.contents)
-			A.ex_act(2)
-		temp = processing
-		processing = processing.loc
-		temp.ex_act(1)
-	explosion(location, -1, 0, 4)
+
+/obj/item/weapon/c4/proc/explode(var/turf/location)
+	location.ex_act(2, isturf(target) ? 1 : 2)
+	explosion(location,0,0,3)
 	if(target)
 		target.overlays -= image_overlay
 

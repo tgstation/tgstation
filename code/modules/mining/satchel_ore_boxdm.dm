@@ -84,19 +84,5 @@
 	return
 
 obj/structure/ore_box/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			for(var/obj/item/weapon/ore/O in contents)
-				O.loc = src.loc
-				O.ex_act(severity++)
-			qdel(src)
-			return
-		if(2.0)
-			if(prob(50))
-				for(var/obj/item/weapon/ore/O in contents)
-					O.loc = src.loc
-					O.ex_act(severity++)
-				qdel(src)
-				return
-		if(3.0)
-			return
+	if(prob(100 / severity) && severity < 3)
+		qdel(src) //nothing but ores can get inside unless its a bug and ores just return nothing on ex_act, not point in calling it on them
