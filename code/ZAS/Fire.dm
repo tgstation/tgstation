@@ -28,7 +28,7 @@ Attach to transfer valve and open. BOOM.
 /atom/proc/burnFireFuel(var/used_fuel_ratio,var/used_reactants_ratio)
 	fire_fuel -= (fire_fuel * used_fuel_ratio * used_reactants_ratio) //* 5
 	if(fire_fuel<=0.1)
-		testing("[src] ashifying (BFF)!")
+		//testing("[src] ashifying (BFF)!")
 		ashify()
 
 /atom/proc/ashify()
@@ -367,9 +367,12 @@ datum/gas_mixture/proc/zburn(var/turf/T, force_burn)
 		if(!oxygen/* || A.autoignition_temperature > temperature*/)
 			A.extinguish()
 			continue
+		if(!A.autoignition_temperature)
+			continue // Don't fuck with things that don't burn.
 		if(QUANTIZE(A.getFireFuel() * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= 0.1)
 			still_burning=1
-		else
+		else if(A.on_fire)
+			A.extinguish()
 			A.ashify()
 
 	return still_burning
