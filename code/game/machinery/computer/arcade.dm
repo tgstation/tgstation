@@ -1,10 +1,10 @@
 /obj/machinery/computer/arcade
 	name = "arcade machine"
-	desc = "Does not support Pin ball."
+	desc = "Does not support pinball."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "arcade"
 	circuit = "/obj/item/weapon/circuitboard/arcade"
-	var/enemy_name = "Space Villian"
+	var/enemy_name = "Space Villain"
 	var/temp = "Winners Don't Use Spacedrugs" //Temporary message, for attack messages, etc
 	var/player_hp = 30 //Player health/attack points
 	var/player_mp = 10

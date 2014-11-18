@@ -110,6 +110,7 @@
 		src.modules += new /obj/item/weapon/bonesetter
 		src.modules += new /obj/item/weapon/FixOVein
 		src.modules += new /obj/item/weapon/surgicaldrill
+		src.modules += new /obj/item/weapon/revivalprod
 		src.emag = new /obj/item/weapon/reagent_containers/spray(src)
 
 		src.emag.reagents.add_reagent("pacid", 250)

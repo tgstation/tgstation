@@ -41,8 +41,8 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 	if(!cell)
 		cell = new /obj/item/weapon/cell(src)
-		cell.maxcharge = 15000
-		cell.charge = 15000
+		cell.maxcharge = 7500
+		cell.charge = 7500
 	..(loc,startup_sound='sound/misc/interference.ogg')
 	module = new /obj/item/weapon/robot_module/mommi(src)
 	laws = new mommi_base_law_type
@@ -154,7 +154,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	real_name = changed_name
 	name = real_name
 
-/mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/mob/living/silicon/robot/mommi/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
 		return
 
@@ -232,7 +232,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			radio.attackby(W,user)//GTFO, you have your own procs
 		else
 			user << "Unable to locate a radio."
-
+/*
 	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
 		if(emagged)//still allow them to open the cover
 			user << "The interface seems slightly damaged"
@@ -245,7 +245,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 				updateicon()
 			else
 				user << "\red Access denied."
-
+*/
 	else if(istype(W, /obj/item/weapon/card/emag))		// trying to unlock with an emag card
 		if(!opened)//Cover is closed
 			if(locked)
