@@ -5,8 +5,12 @@
 	desc = "Lost prototype of advanced clown tech. Powered by bananium, these shoes leave a trail of chaos in their wake."
 	icon_state = "clown_prototype_off"
 	var/on = 0
-	var/bananium = 0
+	var/datum/mineral_container/bananium
 	action_button_name = "Toggle Shoes"
+
+/obj/item/clothing/shoes/clown_shoes/banana_shoes/New()
+	..()
+	bananium = new/datum/mineral_container(loc,/obj/item/stack/sheet/mineral/bananium,200000)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/step_action()
 	if(on)
@@ -17,8 +21,8 @@
 			footstep++
 
 		new/obj/item/weapon/grown/bananapeel/specialpeel(get_step(src,turn(usr.dir, 180)), 5) //honk
-		bananium -= 100
-		if(bananium < 100)
+		bananium.use(100)
+		if(bananium.getAmount() < 100)
 			on = !on
 			update_icon()
 			usr << "<span class='danger'>You ran out of bananium!</span>"
@@ -26,27 +30,30 @@
 		..()
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/attack_self(mob/user)
-	if(bananium > 0)
-		var/sheet_amount = round(bananium / 2000)
-		if(sheet_amount > 0)
-			var/obj/item/stack/sheet/mineral/bananium/M = new/obj/item/stack/sheet/mineral/bananium(get_turf(loc))
-			M.amount = sheet_amount
-			bananium -= sheet_amount * 2000
-			user << "<span class='notice'>You retrieve [sheet_amount] sheets of bananium.</span>"
+	bananium.modLoc(src)
+	var/sheet_amount = bananium.retrieve_all()
+	if(sheet_amount)
+		user << "<span class='notice'>You retrieve [sheet_amount] sheets of bananium from the prototype shoes.</span>"
+	else
+		user << "<span class='notice'>You cannot retrieve any bananium from the prototype shoes.</span>"
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/attackby(obj/item/O, mob/user)
-	if(istype(O,/obj/item/stack/sheet/mineral/bananium))
-		var/obj/item/stack/sheet/mineral/bananium/M = O
-		bananium += 2000 * M.amount
-		user << "<span class='notice'>You insert [M.amount] bananium sheets into the prototype shoes.</span>"
-		M.use(M.amount)
+	var/sheet_amount = bananium.insert_sheet(O)
+	if(sheet_amount > 0)
+		user << "<span class='notice'>You insert [sheet_amount] bananium sheets into the prototype shoes.</span>"
+		var/obj/item/stack/sheet/S = O
+		S.use(sheet_amount)
+	else if(sheet_amount < 0)
+		user << "<span class='notice'>You can only fit bananium sheets into these shoes!</span>"
+	else
+		user << "<span class='notice'>You cannot insert more bananium into the prototype shoes.</span>"
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/examine(mob/user)
 	..()
-	user << "<span class='notice'>The shoes are [on ? "enabled" : "disabled"]. There is [bananium] bananium left.</span>"
+	user << "<span class='notice'>The shoes are [on ? "enabled" : "disabled"]. There is [bananium.getAmount()] bananium left.</span>"
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/ui_action_click()
-	if(bananium > 0)
+	if(bananium.getAmount() > 0)
 		on = !on
 		update_icon()
 		usr << "You [on ? "activate" : "deactivate"] the prototype shoes."
