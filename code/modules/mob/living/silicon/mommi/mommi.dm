@@ -249,7 +249,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	else if(istype(W, /obj/item/weapon/card/emag))		// trying to unlock with an emag card
 		if(user == src && !emagged)//fucking MoMMI is trying to emag itself, stop it and alert the admins
 			user << "<span class='warning'>The fuck are you doing? Are you retarded? Stop trying to get around your laws and be productive, you little shit.</span>"
-			message_admins("[key_name(M)] is a smartass MoMMI that's trying to emag itself. ([formatJumpTo(M)])")
+			message_admins("[key_name(src)] is a smartass MoMMI that's trying to emag itself. ([formatJumpTo(src)])")
 			return
 		if(!opened)//Cover is closed
 			if(locked)
