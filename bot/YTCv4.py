@@ -79,7 +79,7 @@ def YTCV4(youtube_url,cache=1,debug=0):
                     tiedosto = open(directory+"YTCache/"+first_two+".tcc","w") #This is a Just In Case
                     pickle.dump(prev_dict,tiedosto)
                     tiedosto.close()
-            return "Reflex: Incorrect link start"
+            #return "Reflex: Incorrect link start"
     if "?feature=player_embedded&" in youtube_url:
         youtube_url = youtube_url.replace("?feature=player_embedded&","?")
     try:

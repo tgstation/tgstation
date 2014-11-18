@@ -30,7 +30,7 @@ def YTCV2(youtube_url,cache=1,debug=0):
         return "Reflex: Video cannot exist"
     else:
         if youtube_url[0:7].lower() != "http://":
-            return "Reflex: Incorrect link start"
+            #return "Reflex: Incorrect link start"
     try:
         website = urlopen(youtube_url)
     except:
