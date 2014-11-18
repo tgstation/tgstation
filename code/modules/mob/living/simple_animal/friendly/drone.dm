@@ -361,7 +361,9 @@
 		src << "<span class='userdanger'>HeAV% DA%^MMA+G TO I/O CIR!%UUT!</span>"
 
 
-/mob/living/simple_animal/drone/proc/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
+/mob/living/simple_animal/drone/proc/triggerAlarm(var/class, area/A, var/O, var/obj/alarmsource)
+	if(alarmsource.z != z)
+		return
 	if(stat != DEAD)
 		var/list/L = src.alarms[class]
 		for (var/I in L)
