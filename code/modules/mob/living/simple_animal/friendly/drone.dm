@@ -78,7 +78,7 @@
 					switch(d_input)
 						if("Reactivate")
 							var/mob/dead/observer/G = get_ghost()
-							if(!client && !G)
+							if(!client && (!G || !G.client))
 								var/list/faux_gadgets = list("hypertext inflator","failsafe directory","DRM switch","stack initializer",\
 															 "anti-freeze capacitor","data stream diode","TCP bottleneck","supercharged I/O bolt",\
 															 "tradewind stablizer","radiated XML cable","registry fluid tank","open-source debunker")
