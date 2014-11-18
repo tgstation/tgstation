@@ -1071,7 +1071,7 @@
 			T2.beamin("")
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/verb/Make_Antag()
-	set name = "Make all passengers antags (20 seconds delay)"
+	set name = "Make all passengers antags after a delay"
 	set category = "Adminbus"
 	set src = view(0)
 	set popup_menu = 0
@@ -1081,23 +1081,58 @@
 		usr << "Nice try."
 		return
 
-	if(alert(usr, "Try to make all the passengers antag? They will automatically be equipped with gear fitting their role. Among traitor, changeling, vampire, head rev, cult, blob, infected", "Adminbus", "Yes", "No") != "Yes")
-		return
-
 	if(passengers.len == 0)
-		usr << "<span class='warning'>There are no passengers to send.</span>"
+		usr << "<span class='warning'>There are no make antag.</span>"
 		return
 
-	usr << "<span class='danger'>All humans (and monkeys) among the passengers will become antags in 20 seconds. You might want to send them home now or spread them accross the station before it happens.</span>"
 
-	var/turf/T1 = get_turf(src)
-	if(T1)
-		T1.beamin("")
+	var/list/delays = list("CANCEL", "No Delay", "10 seconds", "30 seconds", "1 minute", "5 minutes", "15 minutes")
+	var/delay = input("How much delay before the transformation occurs?", "Antag Madness") in delays
 
-	for(var/mob/M in passengers)
-		freed(M)
-		M.send_back()
+	switch(delay)
+		if("CANCEL")
+			return
+		if("No Delay")
+			for(var/mob/M in passengers)
+				spawn()
+					M << "<span class='danger'>YOU JUST REMEMBERED SOMETHING IMPORTANT!</span>"
+					sleep(20)
+					antag_madness_adminbus(M)
+		if("10 seconds")
+			for(var/mob/M in passengers)
+				spawn()
+					Delay_Antag(M,100)
+		if("30 seconds")
+			for(var/mob/M in passengers)
+				spawn()
+					Delay_Antag(M,300)
+		if("1 minute")
+			for(var/mob/M in passengers)
+				spawn()
+					Delay_Antag(M,600)
+		if("5 minutes")
+			for(var/mob/M in passengers)
+				spawn()
+					Delay_Antag(M,3000)
+		if("15 minutes")
+			for(var/mob/M in passengers)
+				spawn()
+					Delay_Antag(M,9000)
 
-		var/turf/T2 = get_turf(M)
-		if(T2)
-			T2.beamin("")
+/obj/structure/stool/bed/chair/vehicle/adminbus/proc/Delay_Antag(var/mob/M,var/delay=100)
+	if(!M.mind)	return
+	if(!ishuman(M) && !ismonkey(M))	return
+
+	M << "<span class='rose'>You feel like you forgot something important!</span>"
+
+	sleep(delay/2)
+
+	M << "<span class='rose'>You're starting to remember...</span>"
+
+	sleep(delay/2)
+
+	M << "<span class='danger'>OH THAT'S RIGHT!</span>"
+
+	sleep(20)
+
+	antag_madness_adminbus(M)

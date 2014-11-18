@@ -94,6 +94,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/drop_bomb,
 	/client/proc/cinematic,
 	/client/proc/one_click_antag,
+	/client/proc/antag_madness,
 	/datum/admins/proc/toggle_aliens,
 	/datum/admins/proc/toggle_space_ninja,
 	/client/proc/send_space_ninja,
