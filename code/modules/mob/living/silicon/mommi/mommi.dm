@@ -247,6 +247,10 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 				user << "\red Access denied."
 */
 	else if(istype(W, /obj/item/weapon/card/emag))		// trying to unlock with an emag card
+		if(user == src && !emagged)//fucking MoMMI is trying to emag itself, stop it and alert the admins
+			user << "<span class='warning'>The fuck are you doing? Are you retarded? Stop trying to get around your laws and be productive, you little shit.</span>"
+			message_admins("[key_name(M)] is a smartass MoMMI that's trying to emag itself. ([formatJumpTo(M)])")
+			return
 		if(!opened)//Cover is closed
 			if(locked)
 				if(prob(90))
@@ -255,7 +259,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 				else
 					user << "You fail to emag the cover lock."
 					if(prob(25))
-						src << "Hack attempt detected."
+						src << "<span class='warning'>Hack attempt detected.</span>"
 			else
 				user << "The cover is already unlocked."
 			return
@@ -284,7 +288,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 					sleep(5)
 					src << "\red Initiating diagnostics..."
 					sleep(20)
-					src << "\red SynBorg v1.7 loaded."
+					src << "\red SynBorg v1.7m loaded."
 					sleep(5)
 					src << "\red LAW SYNCHRONIZATION ERROR"
 					sleep(5)
@@ -299,7 +303,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 				else
 					user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
 					if(prob(25))
-						src << "Hack attempt detected."
+						src << "<span class='warning'>Hack attempt detected.</span>"
 			return
 
 	else if(istype(W, /obj/item/borg/upgrade/))
