@@ -51,9 +51,17 @@
 			user << "<span class='notice'>You manage to open the pod.</span>"
 			src.empty()
 
-/obj/structure/transit_tube_pod/proc/empty()
-	for(var/atom/movable/M in src.contents)
-		M.loc = src.loc
+/obj/structure/transit_tube_pod/proc/empty(newloc = null, clientless_only = 0, weaken = 1)
+	if(!newloc)
+		newloc = get_turf(src)
+	for(var/atom/movable/AM in src.contents)
+		if(ismob(AM))
+			var/mob/M = AM
+			if(clientless_only && M.client)
+				continue
+			if(weaken)
+				M.Weaken(5)
+		AM.Move(newloc)
 
 /obj/structure/transit_tube_pod/Process_Spacemove()
 	if(moving) //No drifting while moving in the tubes
