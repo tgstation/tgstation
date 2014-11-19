@@ -7,7 +7,6 @@
 	var/open = 0
 	var/frequency = 0
 	var/id = null
-	var/datum/radio_frequency/radio_connection
 
 /obj/machinery/atmospherics/binary/valve/open
 	open = 1

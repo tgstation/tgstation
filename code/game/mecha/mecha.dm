@@ -18,6 +18,7 @@
 	unacidable = 1 //and no deleting hoomans inside
 	layer = MOB_LAYER //icon draw layer
 	infra_luminosity = 15 //byond implementation is bugged.
+	force = 5
 	var/can_move = 1
 	var/mob/living/carbon/occupant = null
 	var/step_in = 10 //make a step in step_in/10 sec.
@@ -69,6 +70,9 @@
 
 	var/stepsound = 'sound/mecha/mechstep.ogg'
 	var/turnsound = 'sound/mecha/mechturn.ogg'
+
+	var/melee_cooldown = 10
+	var/melee_can_hit = 1
 
 
 /obj/mecha/New()
@@ -265,12 +269,15 @@ obj/mecha/proc/can_use(mob/user)
 
 /obj/mecha/proc/click_action(atom/target,mob/user)
 	if(!src.occupant || src.occupant != user ) return
-	if(user.stat) return
-	if(state)
-		occupant_message("<span class='danger'>Maintenance protocols in effect</span>")
+	if(user.stat || !user.canmove)
 		return
-	if(!get_charge()) return
-	if(src == target) return
+	if(state)
+		occupant_message("<span class='warning'>Maintenance protocols in effect.</span>")
+		return
+	if(!get_charge())
+		return
+	if(src == target)
+		return
 	var/dir_to_target = get_dir(src,target)
 	if(dir_to_target && !(dir_to_target & src.dir))//wrong direction
 		return
@@ -284,11 +291,39 @@ obj/mecha/proc/can_use(mob/user)
 	else if(selected && selected.is_melee())
 		selected.action(target)
 	else
-		src.melee_action(target)
+		if(internal_damage&MECHA_INT_CONTROL_LOST)
+			target = safepick(oview(1,src))
+		if(!melee_can_hit || !istype(target, /atom))
+			return
+		target.mech_melee_attack(src)
+		melee_can_hit = 0
+		if(do_after(melee_cooldown))
+			melee_can_hit = 1
 	return
 
+/obj/mecha/proc/mech_toxin_damage(mob/living/target)
+	playsound(src, 'sound/effects/spray2.ogg', 50, 1)
+	if(target.reagents)
+		if(target.reagents.get_reagent_amount("cryptobiolin") + force < force*2)
+			target.reagents.add_reagent("cryptobiolin", force/2)
+		if(target.reagents.get_reagent_amount("toxin") + force < force*2)
+			target.reagents.add_reagent("toxin", force/2.5)
 
-/obj/mecha/proc/melee_action(atom/target)
+
+/atom/proc/mech_melee_attack(obj/mecha/M)
+	return
+
+/obj/mecha/mech_melee_attack(obj/mecha/M)
+	if(M.damtype =="brute")
+		playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
+	else if(M.damtype == "fire")
+		playsound(src, 'sound/items/Welder.ogg', 50, 1)
+	else
+		return
+	M.occupant_message("<span class='danger'>You hit [src].</span>")
+	visible_message("<span class='danger'>[src] has been hit by [M.name].</span>")
+	take_damage(M.force, damtype)
+	add_logs(M.occupant, src, "attacked", object=M, addition="(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 	return
 
 /obj/mecha/proc/range_action(atom/target)

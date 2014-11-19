@@ -103,12 +103,19 @@
 	Radio = new /obj/item/device/radio(src)
 	Radio.listening = 0 //Makes bot radios transmit only so no one hears things while adjacent to one.
 
+/obj/machinery/bot/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src,beacon_freq)
+		if(bot_filter)
+			radio_controller.remove_object(src,control_freq)
+	..()
 
 /obj/machinery/bot/proc/add_to_beacons(bot_filter) //Master filter control for bots. Must be placed in the bot's local New() to support map spawned bots.
 	if(radio_controller)
 		radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
 		if(bot_filter)
 			radio_controller.add_object(src, control_freq, filter = bot_filter)
+
 
 /obj/machinery/bot/proc/explode()
 	aibots -= src

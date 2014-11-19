@@ -88,6 +88,13 @@
 	return
 
 
+/obj/structure/grille/mech_melee_attack(obj/mecha/M)
+	if(..())
+		playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
+		health -= M.force * 0.5
+		healthcheck()
+
+
 /obj/structure/grille/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0) return 1
 	if(istype(mover) && mover.checkpass(PASSGRILLE))
