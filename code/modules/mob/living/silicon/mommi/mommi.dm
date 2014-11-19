@@ -247,6 +247,10 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 				user << "\red Access denied."
 */
 	else if(istype(W, /obj/item/weapon/card/emag))		// trying to unlock with an emag card
+		if(user == src && !emagged)//fucking MoMMI is trying to emag itself, stop it and alert the admins
+			user << "<span class='warning'>The fuck are you doing? Are you retarded? Stop trying to get around your laws and be productive, you little shit.</span>"
+			message_admins("[key_name(src)] is a smartass MoMMI that's trying to emag itself. ([formatJumpTo(src)])")
+			return
 		if(!opened)//Cover is closed
 			if(locked)
 				if(prob(90))
@@ -255,7 +259,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 				else
 					user << "You fail to emag the cover lock."
 					if(prob(25))
-						src << "Hack attempt detected."
+						src << "<span class='warning'>Hack attempt detected.</span>"
 			else
 				user << "The cover is already unlocked."
 			return
@@ -280,26 +284,26 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 					var/time = time2text(world.realtime,"hh:mm:ss")
 					lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
 					set_zeroth_law("Only [user.real_name] and people they designate as being such are syndicate agents.")
-					src << "\red ALERT: Foreign software detected."
+					src << "<span class='warning'>ALERT: Foreign software detected.</span>"
 					sleep(5)
-					src << "\red Initiating diagnostics..."
+					src << "<span class='warning'>Initiating diagnostics...</span>"
 					sleep(20)
-					src << "\red SynBorg v1.7 loaded."
+					src << "<span class='warning'>SynBorg v1.7m loaded.</span>"
 					sleep(5)
-					src << "\red LAW SYNCHRONIZATION ERROR"
+					src << "<span class='warning'>LAW SYNCHRONIZATION ERROR</span>"
 					sleep(5)
-					src << "\red Would you like to send a report to NanoTraSoft? Y/N"
+					src << "<span class='warning'>Would you like to send a report to NanoTraSoft? Y/N</span>"
 					sleep(10)
-					src << "\red > N"
+					src << "<span class='warning'>> N</span>"
 					sleep(20)
-					src << "\red ERRORERRORERROR"
+					src << "<span class='warning'>ERRORERRORERROR</span>"
 					src << "<b>Obey these laws:</b>"
 					laws.show_laws(src)
-					src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and their commands."
+					src << "<span class='warning'><b>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</b></span>"
 				else
 					user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
 					if(prob(25))
-						src << "Hack attempt detected."
+						src << "<span class='warning'>Hack attempt detected.</span>"
 			return
 
 	else if(istype(W, /obj/item/borg/upgrade/))
