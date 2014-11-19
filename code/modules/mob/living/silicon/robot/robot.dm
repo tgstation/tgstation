@@ -1430,3 +1430,9 @@
 	if(istype(module, /obj/item/weapon/robot_module/engineering))
 		return 0
 	..()
+
+/mob/living/silicon/robot/put_in_inactive_hand(var/obj/item/W)
+	return 0
+
+/mob/living/silicon/robot/get_inactive_hand(var/obj/item/W)
+	return 0
