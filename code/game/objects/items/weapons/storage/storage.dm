@@ -11,6 +11,7 @@
 	w_class = 3.0
 	var/list/can_hold = new/list() //List of objects which this item can store (if set, it can't store anything else)
 	var/list/cant_hold = new/list() //List of objects which this item can't store (in effect only if can_hold isn't set)
+	var/list/is_seeing = new/list() //List of mobs which are currently seeing the contents of this item's storage
 	var/max_w_class = 2 //Max size of objects that this object can store (in effect only if can_hold isn't set)
 	var/max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
 	var/storage_slots = 7 //The number of storage slots in this container.
@@ -81,6 +82,7 @@
 	user.client.screen += closer
 	user.client.screen += contents
 	user.s_active = src
+	is_seeing |= user
 
 
 /obj/item/weapon/storage/throw_at(atom/target, range, speed)
@@ -96,6 +98,17 @@
 	user.client.screen -= contents
 	if(user.s_active == src)
 		user.s_active = null
+	is_seeing -= user
+
+
+/obj/item/weapon/storage/proc/can_see_contents()
+	var/list/cansee = list()
+	for(var/mob/M in is_seeing)
+		if(M.s_active == src)
+			cansee |= M
+		else
+			is_seeing -= M
+	return cansee
 
 
 /obj/item/weapon/storage/proc/close(mob/user)
@@ -103,13 +116,11 @@
 	user.s_active = null
 
 
-/obj/item/weapon/storage/proc/close_all() //returns 1 if any mobs actually got a close(M) call
-	var/actually_closed = 0
-	for(var/mob/M in range(1))
-		if(M.s_active == src)
-			close(M)
-			actually_closed = 1
-	return actually_closed
+/obj/item/weapon/storage/proc/close_all()
+	for(var/mob/M in can_see_contents())
+		close(M)
+		. = 1 //returns 1 if any mobs actually got a close(M) call
+
 
 //This proc draws out the inventory and places the items on it. tx and ty are the upper left tile and mx, my are the bottm right.
 //The numbers are calculated from the bottom-left The bottom-left slot being 1,1.
@@ -275,8 +286,8 @@
 					M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>", 1)
 
 		orient2hud(usr)
-		if(usr.s_active)
-			usr.s_active.show_to(usr)
+		for(var/mob/M in can_see_contents())
+			show_to(M)
 	update_icon()
 	return 1
 
@@ -289,10 +300,9 @@
 		var/obj/item/weapon/storage/fancy/F = src
 		F.update_icon(1)
 
-	for(var/mob/M in range(1, loc))
-		if(M.s_active == src)
-			if(M.client)
-				M.client.screen -= W
+	for(var/mob/M in can_see_contents())
+		if(M.client)
+			M.client.screen -= W
 
 	if(new_location)
 		if(ismob(loc))
