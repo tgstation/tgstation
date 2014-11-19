@@ -1351,7 +1351,7 @@
 "azY" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/effect/landmark{name = "blobstart"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating,/area/maintenance/fpmaint)
 "azZ" = (/obj/structure/closet/secure_closet/freezer/money,/turf/simulated/floor{icon_state = "dark-markings"},/area/storage/nuke_storage)
 "aAa" = (/obj/machinery/navbeacon{codes_txt = "delivery;dir=8"; freq = 1400; location = "Tool Storage"},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor,/area/storage/primary)
-"aAb" = (/obj/structure/table,/obj/item/weapon/screwdriver{pixel_y = 6},/turf/simulated/floor{icon_state = "dark"},/area/science/podbay)
+"aAb" = (/obj/structure/table,/obj/item/weapon/screwdriver{pixel_y = 6},/obj/machinery/light_switch{pixel_x = -28},/turf/simulated/floor{icon_state = "dark"},/area/science/podbay)
 "aAc" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden{dir = 8},/obj/effect/decal/warning_stripes{tag = "icon-warning (EAST)"; icon_state = "warning"; dir = 4},/turf/simulated/floor/engine,/area/science/podbay)
 "aAd" = (/obj/structure/safe,/obj/item/clothing/under/color/yellow,/obj/item/key,/obj/item/toy/katana,/obj/item/clothing/glasses/kaminaglasses,/turf/simulated/floor{icon_state = "dark-markings"; dir = 1},/area/storage/nuke_storage)
 "aAe" = (/obj/structure/table/reinforced,/obj/item/weapon/folder{pixel_x = -4},/obj/item/weapon/folder/red{pixel_y = 3},/obj/item/weapon/folder/blue{pixel_x = 5},/turf/simulated/floor{icon_state = "cult"},/area/lawoffice)
