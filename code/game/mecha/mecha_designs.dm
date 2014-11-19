@@ -307,7 +307,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_armour
 	category = "Durand"
-	materials = list("$iron"=50000,"uranium"=10000)
+	materials = list("$iron"=50000,"$uranium"=10000)
 
 ////////////////
 ////HONK////////
