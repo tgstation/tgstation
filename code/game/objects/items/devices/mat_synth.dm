@@ -1,5 +1,5 @@
 #define MAX_MATSYNTH_MATTER 60
-#define MAT_SYNTH_ROBO 100
+#define MAT_SYNTH_ROBO 50
 
 #define MAT_COST_COMMON		1
 #define MAT_COST_MEDIUM		5
@@ -131,6 +131,11 @@
 	usr <<"<span class='notice'>You successfully toggle \the [src]'s state to [mode ? "synthesis" : "scanning"].</span>"
 	update_icon()
 	return 1
+
+//mommis matter synth lacks the capability to scan new materials.
+obj/item/device/material_synth/cyborg/afterattack(/obj/target, mob/user)
+	user << "<span class='notice'>Your [src.name] does not contain this functionality.</span>"
+	return 0
 
 /obj/item/device/material_synth/cyborg/TakeCost(var/spawned, var/modifier, mob/user)
 	if(isrobot(user))
