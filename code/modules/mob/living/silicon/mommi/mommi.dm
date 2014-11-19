@@ -16,7 +16,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	var/picked = 0
 	var/subtype="keeper"
 	var/obj/screen/inv_tool = null
-	var/obj/screen/inv_sight = null
+	//var/obj/screen/inv_sight = null
 
 //one tool and one sightmod can be activated at any one time.
 	var/tool_state = null
@@ -461,7 +461,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			contents += O
 			sight_mode |= sight_state:sight_mode
 
-			inv_sight.icon_state = "sight+a"
+			//inv_sight.icon_state = "sight+a"
 			inv_tool.icon_state = "inv1"
 			module_active=sight_state
 		else
@@ -474,7 +474,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			O.layer = 20
 			contents += O
 
-			inv_sight.icon_state = "sight"
+			//inv_sight.icon_state = "sight"
 			inv_tool.icon_state = "inv1 +a"
 			module_active=tool_state
 		if(TS && istype(TS))

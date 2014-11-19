@@ -1,4 +1,4 @@
-//These procs handle putting stuff in your hand. It's probably best to use these rather than setting stuff manually 
+//These procs handle putting stuff in your hand. It's probably best to use these rather than setting stuff manually
 //as they handle all relevant stuff like adding it to the player's screen and such
 
 //Returns the thing in our active hand (whatever is in our active module-slot, in this case)
@@ -45,7 +45,7 @@
 	// Make crap we pick up active so there's less clicking and carpal. - N3X
 	module_active=tool_state
 	inv_tool.icon_state = "inv1 +a"
-	inv_sight.icon_state = "sight"
+	//inv_sight.icon_state = "sight"
 
 	update_items()
 	return 1
@@ -136,7 +136,7 @@
 		contents -= sight_state
 		module_active = null
 		sight_state = null
-		inv_sight.icon_state = "sight"
+		//inv_sight.icon_state = "sight"
 	if(tool_state == module_active)
 		//var/obj/item/found = locate(tool_state) in src.module.modules
 		TS = tool_state
@@ -170,7 +170,7 @@
 			client.screen -= sight_state
 		contents -= sight_state
 		sight_state = null
-		inv_sight.icon_state = "sight"
+		//inv_sight.icon_state = "sight"
 
 // Unequips an object from the MoMMI's head
 /mob/living/silicon/robot/mommi/proc/unequip_head()
@@ -178,7 +178,7 @@
 	if(head_state)
 		// Select the MoMMI's claw
 		select_module(INV_SLOT_TOOL)
-		
+
 		// Put the hat in the MoMMI's claw
 		put_in_active_hand(head_state)
 
@@ -186,14 +186,14 @@
 		if(istype(head_state,/obj/item/borg/sight))
 			sight_mode &= ~head_state:sight_mode
 		contents -= head_state
-			
+
 		// Remove the head_state icon from the client's screen
 		if (client)
 			client.screen -= head_state
-			
+
 		// Delete the hat from the head
 		head_state = null
-		
+
 		// Update the MoMMI's head inventory icons
 		update_inv_head()
 
@@ -264,13 +264,13 @@
 		if(INV_SLOT_TOOL)
 			if(module_active != tool_state)
 				inv_tool.icon_state = "inv1 +a"
-				inv_sight.icon_state = "sight"
+				//inv_sight.icon_state = "sight"
 				module_active = tool_state
 				return
 		if(INV_SLOT_SIGHT)
 			if(module_active != sight_state)
 				inv_tool.icon_state = "inv1"
-				inv_sight.icon_state = "sight+a"
+				//inv_sight.icon_state = "sight+a"
 				module_active = sight_state
 				return
 	return
@@ -288,7 +288,7 @@
 				return
 		if(INV_SLOT_SIGHT)
 			if(module_active == sight_state)
-				inv_sight.icon_state = "sight"
+				//inv_sight.icon_state = "sight"
 				module_active = null
 				return
 	return
