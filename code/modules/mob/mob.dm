@@ -1125,8 +1125,6 @@ var/list/slot_equipment_priority = list( \
 	AM.pulledby = src
 
 	if(ismob(AM))
-		world << "\[[time_stamp()]\] <span class='warning'>Has been pulled by [src.name] ([src.ckey])</span>"
-		world << "\[[time_stamp()]\] <span class='warning'>Pulled [M.name] ([M.ckey])</span>"
 		M.attack_log += text("\[[time_stamp()]\] <span class='warning'>Has been pulled by [src.name] ([src.ckey])</span>")
 		src.attack_log += text("\[[time_stamp()]\] <span class='warning'>Pulled [M.name] ([M.ckey])</span>")
 
