@@ -372,7 +372,7 @@ datum/gas_mixture/proc/zburn(var/turf/T, force_burn)
 		if(QUANTIZE(A.getFireFuel() * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= 0.1)
 			still_burning=1
 		else if(A.on_fire)
-			A.extinguish()
+			//A.extinguish()
 			A.ashify()
 
 	return still_burning
