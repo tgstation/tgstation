@@ -1423,3 +1423,10 @@
 		component.electronics_damage = 0
 		component.brute_damage = 0
 		component.installed = 1
+
+
+/mob/living/silicon/robot/Process_Spaceslipping(var/prob_slip=5)
+	//Engineering borgs have the magic of magnets.
+	if(istype(module, /obj/item/weapon/robot_module/engineering))
+		return 0
+	..()

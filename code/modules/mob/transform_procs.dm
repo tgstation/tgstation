@@ -233,8 +233,8 @@
 
 	// MoMMIs produced by Robotize get an automatic power cell
 	O.cell = new(O)
-	O.cell.maxcharge = (round_start ? 7500 : 15000)
-	O.cell.charge = (round_start ? 7500 : 15000)
+	O.cell.maxcharge = (round_start ? 10000 : 15000)
+	O.cell.charge = (round_start ? 10000 : 15000)
 
 
 	O.gender = gender

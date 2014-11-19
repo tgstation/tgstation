@@ -515,3 +515,11 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 		src.verbs -= /mob/living/silicon/robot/mommi/proc/ActivateKeeper
 */
+
+/mob/living/silicon/robot/mommi/sensor_mode()
+	if(sensor_mode)
+		sensor_mode = 0
+		src << "<span class='notice'>Meson Vision augmentation disabled.</span>"
+	else
+		sensor_mode = MESON_VISION
+		src << "<span class='notice'>Meson Vison augmentation enabled.</span>"
