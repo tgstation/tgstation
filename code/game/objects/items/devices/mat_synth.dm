@@ -25,6 +25,14 @@
 										"plasteel" = /obj/item/stack/sheet/plasteel)
 	var/matter = 0
 
+/obj/item/device/material_synth/cyborg
+	materials_scanned = list(	"plasma glass" = /obj/item/stack/sheet/glass/plasmaglass,
+								"reinforced plasma glass" = /obj/item/stack/sheet/glass/plasmarglass,
+								"metal" = /obj/item/stack/sheet/metal,
+								"glass" = /obj/item/stack/sheet/glass,
+								"reinforced glass" = /obj/item/stack/sheet/rglass,
+								"plasteel" = /obj/item/stack/sheet/plasteel)
+
 /obj/item/device/material_synth/update_icon()
 	icon_state = "mat_synth[mode ? "on" : "off"]"
 
