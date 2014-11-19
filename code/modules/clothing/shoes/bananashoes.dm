@@ -21,7 +21,7 @@
 			footstep++
 
 		new/obj/item/weapon/grown/bananapeel/specialpeel(get_step(src,turn(usr.dir, 180)), 5) //honk
-		bananium.use(100)
+		bananium.use_amount(100)
 		if(bananium.getAmount() < 100)
 			on = !on
 			update_icon()
