@@ -81,6 +81,8 @@
 			occupant:cell:charge = occupant:cell.maxcharge // its been in a recharger so it makes sense
 			upgrading = 0
 			upgrade_finished = -1
+			occupant << "<span class='notice'>Upgrade completed.</span>"
+			playsound(get_turf(src), 'sound/machines/ping.ogg', 50, 0)
 
 /obj/machinery/recharge_station/attackby(var/obj/item/W, var/mob/user)
 	if(is_type_in_list(W, acceptable_upgradeables))
@@ -113,10 +115,11 @@
 				upgrade_finished = -1
 				return 0
 			else if(upgrade_holder.len)
-				var/upgrade = input(user, "Choose an item to swap out.","Upgradeables") as null|anything in upgrade_holder
-				if(!upgrade)
-					upgrade = 0
-				if(alert(user, "You have chosen [upgrade], is this correct?", , "Yes", "No") == "Yes")
+				upgrading = input(user, "Choose an item to swap out.","Upgradeables") as null|anything in upgrade_holder
+				if(!upgrading)
+					upgrading = 0
+					return
+				if(alert(user, "You have chosen [upgrading], is this correct?", , "Yes", "No") == "Yes")
 					upgrade_finished = world.timeofday + 600
 					user << "The upgrade should complete in approximately 60 seconds, you will be unable to exit \the [src] during this unless you cancel the process."
 					return
@@ -129,10 +132,11 @@
 				upgrade_finished = -1
 				return 0
 			else if(upgrade_holder.len)
-				var/upgrade = input(user, "Choose an item to swap out.","Upgradeables") as null|anything in upgrade_holder
-				if(!upgrade)
-					upgrade = 0
-				if(alert(user, "You have chosen [upgrade], is this correct?", , "Yes", "No") == "Yes")
+				upgrading = input(user, "Choose an item to swap out.","Upgradeables") as null|anything in upgrade_holder
+				if(!upgrading)
+					upgrading = 0
+					return
+				if(alert(user, "You have chosen [upgrading], is this correct?", , "Yes", "No") == "Yes")
 					upgrade_finished = world.timeofday + 600
 					user << "The upgrade should complete in approximately 60 seconds, you will be unable to exit \the [src] during this unless you cancel the process."
 					return
