@@ -9,6 +9,7 @@
 	active_power_usage = 1000
 	var/mob/occupant = null
 	var/list/acceptable_upgradeables = list(/obj/item/weapon/cell) // battery for now
+	var/list/upgrade_holder = list()
 	var/upgrading = 0 // are we upgrading a nigga?
 	var/upgrade_finished = -1 // time the upgrade should finish
 	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE
@@ -74,6 +75,7 @@
 		if(istype(upgrading, /obj/item/weapon/cell))
 			if(occupant:cell)
 				occupant:cell.loc = get_turf(src)
+			upgrade_holder -= upgrading
 			upgrading:loc = occupant
 			occupant:cell = upgrading
 			occupant:cell:charge = occupant:cell.maxcharge // its been in a recharger so it makes sense
@@ -82,9 +84,13 @@
 
 /obj/machinery/recharge_station/attackby(var/obj/item/W, var/mob/user)
 	if(is_type_in_list(W, acceptable_upgradeables))
-		if(!(locate(W.type) in contents))
-			user:drop_item(W)
+		if(!(locate(W.type) in upgrade_holder))
+			if(!isMoMMI(user))
+				user:drop_item(W)
+			else
+				user:drop_item_v()
 			W.loc = src
+			upgrade_holder.Add(W)
 			user << "<span class='notice'>You add \the [W] to \the [src].</span>"
 			return
 		else
@@ -95,6 +101,9 @@
 		return
 	return
 
+/obj/machinery/recharge_station/attack_ai(var/mob/user)
+	attack_hand(user)
+
 /obj/machinery/recharge_station/attack_hand(var/mob/user)
 	if(!Adjacent(user))
 		if(user == occupant)
@@ -103,8 +112,8 @@
 				upgrading = 0
 				upgrade_finished = -1
 				return 0
-			else if(contents.len)
-				var/upgrade = input(user, "Choose an item to swap out.","Upgradeables") as null|anything in contents
+			else if(upgrade_holder.len)
+				var/upgrade = input(user, "Choose an item to swap out.","Upgradeables") as null|anything in upgrade_holder
 				if(!upgrade)
 					upgrade = 0
 				if(alert(user, "You have chosen [upgrade], is this correct?", , "Yes", "No") == "Yes")
@@ -113,13 +122,28 @@
 					return
 		return
 	else
-		if(contents.len)
-			var/obj/removed = input(user, "Choose an item to remove.",contents[1]) as null|anything in contents
+		if(user == occupant)
+			if(upgrading)
+				user << "<span class='notice'>You interrupt the upgrade process.</span>"
+				upgrading = 0
+				upgrade_finished = -1
+				return 0
+			else if(upgrade_holder.len)
+				var/upgrade = input(user, "Choose an item to swap out.","Upgradeables") as null|anything in upgrade_holder
+				if(!upgrade)
+					upgrade = 0
+				if(alert(user, "You have chosen [upgrade], is this correct?", , "Yes", "No") == "Yes")
+					upgrade_finished = world.timeofday + 600
+					user << "The upgrade should complete in approximately 60 seconds, you will be unable to exit \the [src] during this unless you cancel the process."
+					return
+		else if(upgrade_holder.len)
+			var/obj/removed = input(user, "Choose an item to remove.",upgrade_holder[1]) as null|anything in upgrade_holder
 			if(!removed)
 				return
 			user.put_in_hands(removed)
 			if(removed.loc == src)
 				removed.loc = get_turf(src)
+			upgrade_holder -= removed
 
 /obj/machinery/recharge_station/allow_drop()
 	return 0
@@ -312,7 +336,7 @@
 	src.add_fingerprint(usr)
 	build_icon()
 	src.use_power = 2
-	for(var/obj/O in contents)
+	for(var/obj/O in upgrade_holder)
 		if(istype(O, /obj/item/weapon/cell))
 			if(!usr:cell)
 				usr << "<big><span class='notice'>Power Cell replacement available.</span></big>"
