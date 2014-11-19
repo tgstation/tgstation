@@ -1,40 +1,47 @@
 /*
- * Data HUDs are now passive in order to reduce lag.
- * Add then to a mob using add_data_hud.
- * Update them when needed with the appropriate proc. (see below)
+ * Data HUDs have been rewritten in a more generic way.
+ * In short, they now use an observer-listener pattern.
+ * See code/datum/hud.dm for the generic hud datum.
+ * Update the HUD icons when needed with the appropriate hook. (see below)
  */
 
-//see code/datum/hud.dm for the generic hud datum
+/* DATA HUD DATUMS */
 
-/datum/hud/data
+/atom/proc/add_to_all_data_huds()
+	for(var/datum/atom_hud/data/hud in huds) hud.add_to_hud(src)
 
-/datum/hud/data/medical
+/atom/proc/remove_from_all_data_huds()
+	for(var/datum/atom_hud/data/hud in huds) hud.remove_from_hud(src)
+
+/datum/atom_hud/data
+
+/datum/atom_hud/data/medical
 	hud_icons = list(HEALTH_HUD, STATUS_HUD)
 
-/datum/hud/data/medical/basic
+/datum/atom_hud/data/medical/basic
 
-/datum/hud/data/medical/basic/proc/check_sensors(var/mob/living/carbon/human/H)
+/datum/atom_hud/data/medical/basic/proc/check_sensors(var/mob/living/carbon/human/H)
 	if(!istype(H)) return 0
 	var/obj/item/clothing/under/U = H.w_uniform
 	if(!istype(U)) return 0
 	if(U.sensor_mode <= 2) return 0
 	return 1
 
-/datum/hud/data/medical/basic/add_to_single_hud(var/mob/M, var/mob/living/carbon/human/H)
+/datum/atom_hud/data/medical/basic/add_to_single_hud(var/mob/M, var/mob/living/carbon/human/H)
 	if(check_sensors(H))
 		..()
 
-/datum/hud/data/medical/basic/proc/update_suit_sensors(var/mob/living/carbon/human/H)
+/datum/atom_hud/data/medical/basic/proc/update_suit_sensors(var/mob/living/carbon/human/H)
 	check_sensors(H) ? add_to_hud(H) : remove_from_hud(H)
 
-/datum/hud/data/medical/advanced
+/datum/atom_hud/data/medical/advanced
 
-/datum/hud/data/security
+/datum/atom_hud/data/security
 
-/datum/hud/data/security/basic
+/datum/atom_hud/data/security/basic
 	hud_icons = list(ID_HUD)
 
-/datum/hud/data/security/advanced
+/datum/atom_hud/data/security/advanced
 	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, WANTED_HUD)
 
 /* MED/SEC HUD HOOKS */
@@ -83,7 +90,7 @@
 
 //called when a human changes suit sensors
 /mob/living/carbon/human/proc/update_suit_sensors()
-	var/datum/hud/data/medical/basic/B = huds[DATA_HUD_MEDICAL_BASIC]
+	var/datum/atom_hud/data/medical/basic/B = huds[DATA_HUD_MEDICAL_BASIC]
 	B.update_suit_sensors(src)
 
 //called when a human changes health

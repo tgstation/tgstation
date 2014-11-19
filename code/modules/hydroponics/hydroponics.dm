@@ -812,29 +812,12 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			podman.real_name = realName
 		else
 			podman.real_name = "Pod Person [rand(0,999)]"
+		podman.refresh_huds(mind.current)
 		var/oldactive = mind.active
 		mind.active = 1
 		mind.transfer_to(podman)
 		mind.active = oldactive
-			// -- Mode/mind specific stuff goes here. TODO! Broken :( Should be merged into mob/living/Login
-		if((podman.mind in ticker.mode.A_bosses) || (podman.mind in ticker.mode.A_gangsters) || (podman.mind in ticker.mode.B_bosses) || (podman.mind in ticker.mode.B_gangsters))
-			ticker.mode.update_all_gang_icons()
-		if(podman.mind in ticker.mode:revolutionaries)
-			ticker.mode.add_revolutionary(podman.mind)
-			ticker.mode.update_all_rev_icons() //So the icon actually appears
-		if(podman.mind in ticker.mode:head_revolutionaries)
-			ticker.mode.add_revolutionary(podman.mind)
-			ticker.mode.update_all_rev_icons()
-		if(podman.mind in ticker.mode:syndicates)
-			ticker.mode:update_all_synd_icons()
-		if(podman.mind in ticker.mode:cult)
-			ticker.mode:add_cultist(podman.mind)
-			ticker.mode:update_all_cult_icons() //So the icon actually appears
-
-			// -- End mode specific stuff
-
 		podman.gender = ghost.gender
-
 		//dna stuff
 		hardset_dna(podman, ui, se, null, null, null, !prob(potency) ? /datum/species/plant/pod : null, "#59CE00")	//makes sure podman has dna and sets the dna's ui/se/mutantrace/real_name etc variables
 

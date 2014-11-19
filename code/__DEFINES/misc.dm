@@ -51,11 +51,3 @@
 #define STAGE_THREE 5
 #define STAGE_FOUR 7
 #define STAGE_FIVE 9
-
-//data HUD (medhud, sechud) defines
-//Don't forget to update human/New() if you change these!
-#define DATA_HUD_SECURITY_BASIC		1
-#define DATA_HUD_SECURITY_ADVANCED	2
-#define DATA_HUD_MEDICAL_BASIC		3
-#define DATA_HUD_MEDICAL_ADVANCED	4
-

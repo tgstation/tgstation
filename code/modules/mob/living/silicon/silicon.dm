@@ -319,17 +319,17 @@
 	return -10
 
 /mob/living/silicon/proc/remove_med_sec_hud()
-	var/datum/hud/secsensor = huds[sec_hud]
-	var/datum/hud/medsensor = huds[med_hud]
+	var/datum/atom_hud/secsensor = huds[sec_hud]
+	var/datum/atom_hud/medsensor = huds[med_hud]
 	secsensor.remove_hud_from(src)
 	medsensor.remove_hud_from(src)
 
 /mob/living/silicon/proc/add_sec_hud()
-	var/datum/hud/secsensor = huds[sec_hud]
+	var/datum/atom_hud/secsensor = huds[sec_hud]
 	secsensor.add_hud_to(src)
 
 /mob/living/silicon/proc/add_med_hud()
-	var/datum/hud/medsensor = huds[med_hud]
+	var/datum/atom_hud/medsensor = huds[med_hud]
 	medsensor.add_hud_to(src)
 
 /mob/living/silicon/verb/sensor_mode()
