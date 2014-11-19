@@ -318,7 +318,7 @@
 	if(!istype(W)) return 0
 
 	// If this item does not equip to this slot type, return
-	if (0 == W.mob_can_equip(src, slot, 0, 0))
+	if( !(W.slot_flags & SLOT_HEAD) )
 		return 0
 
 	// If the item is in the MoMMI's claw, handle removing the item from the MoMMI's claw
@@ -364,6 +364,14 @@
 	update_inv_head()
 	return 1
 
+/mob/living/silicon/robot/mommi/attack_ui(slot)
+	var/obj/item/W = tool_state
+	if(istype(W))
+		if(equip_to_slot(W, slot))
+			update_items()
+		else
+			M << "<span class='warning'>You are unable to equip that.</span>"
+
 // Quickly equip a hat by pressing "e"
 /mob/living/silicon/robot/mommi/verb/quick_equip()
 	set name = "quick-equip"
@@ -386,5 +394,5 @@
 		if(M.equip_to_slot(I, slot_head))
 			update_items()
 		else
-			M << "\red You are unable to equip that."
+			M << "<span class='warning'>You are unable to equip that.</span>"
 
