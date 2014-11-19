@@ -930,3 +930,8 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 // Mecca scanner flags
 #define MECH_SCAN_FAIL     1 // Cannot be scanned at all.
 #define MECH_SCAN_ILLEGAL  2 // Can only be scanned by the antag scanner.
+
+
+// EMOTES!
+#define VISIBLE 1
+#define HEARABLE 2
