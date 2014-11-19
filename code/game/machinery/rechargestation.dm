@@ -8,7 +8,9 @@
 	idle_power_usage = 5
 	active_power_usage = 1000
 	var/mob/occupant = null
-
+	var/list/acceptable_upgradeables = list(/obj/item/weapon/cell) // battery for now
+	var/upgrading = 0 // are we upgrading a nigga?
+	var/upgrade_finished = -1 // time the upgrade should finish
 	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE
 
 /obj/machinery/recharge_station/New()
@@ -48,6 +50,7 @@
 	return
 
 /obj/machinery/recharge_station/process()
+	process_upgrade()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		return
 
@@ -55,6 +58,68 @@
 		process_occupant()
 	return 1
 
+/obj/machinery/recharge_station/proc/process_upgrade()
+	if(!upgrading)
+		return
+	if(!occupant || !isrobot(occupant)) // Something happened so stop the upgrade.
+		upgrading = 0
+		upgrade_finished = -1
+		return
+	if(stat & (NOPOWER|BROKEN) || !anchored)
+		occupant << "<span class='warning'>Upgrade interrupted due to power failure, movement lock is released.</span>"
+		upgrading = 0
+		upgrade_finished = -1
+		return
+	if(world.timeofday >= upgrade_finished && upgrade_finished != -1)
+		if(istype(upgrading, /obj/item/weapon/cell))
+			if(occupant:cell)
+				occupant:cell.loc = get_turf(src)
+			upgrading:loc = occupant
+			occupant:cell = upgrading
+			occupant:cell:charge = occupant:cell.maxcharge // its been in a recharger so it makes sense
+			upgrading = 0
+			upgrade_finished = -1
+
+/obj/machinery/recharge_station/attackby(var/obj/item/W, var/mob/user)
+	if(is_type_in_list(W, acceptable_upgradeables))
+		if(!(locate(W.type) in contents))
+			user:drop_item(W)
+			W.loc = src
+			user << "<span class='notice'>You add \the [W] to \the [src].</span>"
+			return
+		else
+			user << "<span class='notice'>\The [src] already contains something resembling a [W.name].</span>"
+			return
+	else
+		..()
+		return
+	return
+
+/obj/machinery/recharge_station/attack_hand(var/mob/user)
+	if(!Adjacent(user))
+		if(user == occupant)
+			if(upgrading)
+				user << "<span class='notice'>You interrupt the upgrade process.</span>"
+				upgrading = 0
+				upgrade_finished = -1
+				return 0
+			else if(contents.len)
+				var/upgrade = input(user, "Choose an item to swap out.","Upgradeables") as null|anything in contents
+				if(!upgrade)
+					upgrade = 0
+				if(alert(user, "You have chosen [upgrade], is this correct?", , "Yes", "No") == "Yes")
+					upgrade_finished = world.timeofday + 600
+					user << "The upgrade should complete in approximately 60 seconds, you will be unable to exit \the [src] during this unless you cancel the process."
+					return
+		return
+	else
+		if(contents.len)
+			var/obj/removed = input(user, "Choose an item to remove.",contents[1]) as null|anything in contents
+			if(!removed)
+				return
+			user.put_in_hands(removed)
+			if(removed.loc == src)
+				removed.loc = get_turf(src)
 
 /obj/machinery/recharge_station/allow_drop()
 	return 0
@@ -102,6 +167,9 @@
 
 /obj/machinery/recharge_station/proc/go_out()
 	if(!( src.occupant ))
+		return
+	if(upgrading)
+		occupant << "<span class='notice'>The upgrade hasn't completed yet, interface with \the [src] again to halt the process.</span>"
 		return
 	//for(var/obj/O in src)
 	//	O.loc = src.loc
@@ -229,10 +297,10 @@
 	if (src.occupant)
 		usr << "\blue <B>The cell is already occupied!</B>"
 		return
-	if (!usr:cell)
+	/*if (!usr:cell)
 		usr<<"\blue Without a powercell, you can't be recharged."
 		//Make sure they actually HAVE a cell, now that they can get in while powerless. --NEO
-		return
+		return*/
 	usr.stop_pulling()
 	if(usr && usr.client)
 		usr.client.perspective = EYE_PERSPECTIVE
@@ -244,6 +312,13 @@
 	src.add_fingerprint(usr)
 	build_icon()
 	src.use_power = 2
+	for(var/obj/O in contents)
+		if(istype(O, /obj/item/weapon/cell))
+			if(!usr:cell)
+				usr << "<big><span class='notice'>Power Cell replacement available.</span></big>"
+			else
+				if(O:maxcharge > usr:cell:maxcharge)
+					usr << "<span class='notice'>Power Cell upgrade available.</span></big>"
 	return
 
 /obj/machinery/recharge_station/togglePanelOpen(var/obj/toggleitem, mob/user)
