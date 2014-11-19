@@ -347,39 +347,11 @@
 					nodes.Remove(S)
 
 /datum/powernet/proc/get_electrocute_damage()
-	switch(avail)/*
-		if (1300000 to INFINITY)
-			return min(rand(70,150),rand(70,150))
-		if (750000 to 1300000)
-			return min(rand(50,115),rand(50,115))
-		if (100000 to 750000-1)
-			return min(rand(35,101),rand(35,101))
-		if (75000 to 100000-1)
-			return min(rand(30,95),rand(30,95))
-		if (50000 to 75000-1)
-			return min(rand(25,80),rand(25,80))
-		if (25000 to 50000-1)
-			return min(rand(20,70),rand(20,70))
-		if (10000 to 25000-1)
-			return min(rand(20,65),rand(20,65))
-		if (1000 to 10000-1)
-			return min(rand(10,20),rand(10,20))*/
-		if (5000000 to INFINITY)
-			return min(rand(100,180),rand(100,180))
-		if (4500000 to 5000000)
-			return min(rand(80,160),rand(80,160))
-		if (1000000 to 4500000)
-			return min(rand(50,140),rand(50,140))
-		if (200000 to 1000000)
-			return min(rand(25,80),rand(25,80))
-		if (100000 to 200000)//Ave powernet
-			return min(rand(20,60),rand(20,60))
-		if (50000 to 100000)
-			return min(rand(15,40),rand(15,40))
-		if (1000 to 50000)
-			return min(rand(10,20),rand(10,20))
-		else
-			return 0
+	//Average grid charge 25k W. Max output average 60k W. Wired to grid 100k-5M W
+	if(avail < 5000) //Basically fucking nothing
+		return 0
+	else
+		return max(avail/rand(4000,6000), 500) //Caps at 2.5 million watts right now for 500 DAMAGE
 
 //The powernet that calls this proc will consume the other powernet - Rockdtben
 //TODO: rewrite so the larger net absorbs the smaller net
