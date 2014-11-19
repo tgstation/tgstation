@@ -209,3 +209,4 @@
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "fez"
 	item_state = "fez"
+	
