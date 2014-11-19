@@ -284,22 +284,22 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 					var/time = time2text(world.realtime,"hh:mm:ss")
 					lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
 					set_zeroth_law("Only [user.real_name] and people they designate as being such are syndicate agents.")
-					src << "\red ALERT: Foreign software detected."
+					src << "<span class='warning'>ALERT: Foreign software detected.</span>"
 					sleep(5)
-					src << "\red Initiating diagnostics..."
+					src << "<span class='warning'>Initiating diagnostics...</span>"
 					sleep(20)
-					src << "\red SynBorg v1.7m loaded."
+					src << "<span class='warning'>SynBorg v1.7m loaded.</span>"
 					sleep(5)
-					src << "\red LAW SYNCHRONIZATION ERROR"
+					src << "<span class='warning'>LAW SYNCHRONIZATION ERROR</span>"
 					sleep(5)
-					src << "\red Would you like to send a report to NanoTraSoft? Y/N"
+					src << "<span class='warning'>Would you like to send a report to NanoTraSoft? Y/N</span>"
 					sleep(10)
-					src << "\red > N"
+					src << "<span class='warning'>> N</span>"
 					sleep(20)
-					src << "\red ERRORERRORERROR"
+					src << "<span class='warning'>ERRORERRORERROR</span>"
 					src << "<b>Obey these laws:</b>"
 					laws.show_laws(src)
-					src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and their commands."
+					src << "<span class='warning'><b>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</b></span>"
 				else
 					user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
 					if(prob(25))
