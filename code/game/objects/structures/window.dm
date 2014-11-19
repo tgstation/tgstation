@@ -8,7 +8,7 @@
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = 1.0
 	flags = ON_BORDER
-	var/maxhealth = 15
+	var/maxhealth = 25
 	var/health = 0
 	var/ini_dir = null
 	var/state = 0
@@ -177,24 +177,24 @@
 		return 1 //returning 1 will skip the afterattack()
 	add_fingerprint(user)
 	if(istype(I, /obj/item/weapon/screwdriver))
-		if(reinf && state >= 1)
-			state = 3 - state
-			playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
-			user << (state == 1 ? "<span class='notice'>You have unfastened the window from the frame.</span>" : "<span class='notice'>You have fastened the window to the frame.</span>")
-		else if(reinf && state == 0)
-			anchored = !anchored
-			update_nearby_icons()
-			playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
-			user << (anchored ? "<span class='notice'>You have fastened the frame to the floor.</span>" : "<span class='notice'>You have unfastened the frame from the floor.</span>")
-		else if(!reinf)
-			anchored = !anchored
-			update_nearby_icons()
-			playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
-			user << (anchored ? "<span class='notice'>You have fastened the window to the floor.</span>" : "<span class='notice'>You have unfastened the window.</span>")
+		playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
+		if(do_after(user, 40))
+			if(reinf && state >= 1)
+				state = 3 - state
+				user << (state == 1 ? "<span class='notice'>You have unfastened the window from the frame.</span>" : "<span class='notice'>You have fastened the window to the frame.</span>")
+			else if(reinf && state == 0)
+				anchored = !anchored
+				update_nearby_icons()
+				user << (anchored ? "<span class='notice'>You have fastened the frame to the floor.</span>" : "<span class='notice'>You have unfastened the frame from the floor.</span>")
+			else if(!reinf)
+				anchored = !anchored
+				update_nearby_icons()
+				user << (anchored ? "<span class='notice'>You have fastened the window to the floor.</span>" : "<span class='notice'>You have unfastened the window.</span>")
 	else if(istype(I, /obj/item/weapon/crowbar) && reinf && state <= 1)
-		state = 1 - state
 		playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
-		user << (state ? "<span class='notice'>You have pried the window into the frame.</span>" : "<span class='notice'>You have pried the window out of the frame.</span>")
+		if(do_after(user, 40))
+			state = 1 - state
+			user << (state ? "<span class='notice'>You have pried the window into the frame.</span>" : "<span class='notice'>You have pried the window out of the frame.</span>")
 	else if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(user.a_intent == "help") //so you can still break windows with welding tools
@@ -209,21 +209,23 @@
 				user << "<span class='notice'>[src] is already in good condition.</span>"
 		update_nearby_icons()
 	else if(istype(I, /obj/item/weapon/wrench) && !anchored)
-		if(reinf)
-			var/obj/item/stack/sheet/rglass/RG = new (user.loc)
-			RG.add_fingerprint(user)
-			if(fulltile) //fulltiles drop two panes
-				RG = new (user.loc)
+		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
+		if(do_after(user, 40))
+			if(reinf)
+				var/obj/item/stack/sheet/rglass/RG = new (user.loc)
 				RG.add_fingerprint(user)
-		else
-			var/obj/item/stack/sheet/glass/G = new (user.loc)
-			G.add_fingerprint(user)
-			if(fulltile)
-				G = new (user.loc)
+				if(fulltile) //fulltiles drop two panes
+					RG = new (user.loc)
+					RG.add_fingerprint(user)
+			else
+				var/obj/item/stack/sheet/glass/G = new (user.loc)
 				G.add_fingerprint(user)
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		disassembled = 1
-		qdel(src)
+				if(fulltile)
+					G = new (user.loc)
+					G.add_fingerprint(user)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			disassembled = 1
+			qdel(src)
 	else
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			user.changeNext_move(CLICK_CD_MELEE)
@@ -397,6 +399,7 @@
 	name = "reinforced window"
 	icon_state = "rwindow"
 	reinf = 1
+	maxhealth = 50
 
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"
@@ -412,12 +415,16 @@
 
 /obj/structure/window/fulltile
 	dir = 5
-	maxhealth = 30
+	maxhealth = 50
 	fulltile = 1
 
 /obj/structure/window/reinforced/fulltile
 	dir = 5
-	maxhealth = 80
+	maxhealth = 100
+	fulltile = 1
+
+/obj/structure/window/reinforced/tinted/fulltile
+	dir = 5
 	fulltile = 1
 
 /obj/structure/window/shuttle
@@ -425,6 +432,6 @@
 	desc = "A strong, air-locked pod window that is extremely difficult to destroy."
 	icon_state = "swindow"
 	dir = 5
-	maxhealth = 80
+	maxhealth = 100
 	shuttlew = 1
 	fulltile = 1
