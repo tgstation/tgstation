@@ -121,6 +121,18 @@ var/list/department_radio_keys = list(
 	if(radio_return & REDUCE_RANGE)
 		message_range = 1
 
+	if(message_range != 1)
+		//No screams in space, unless you're next to someone.
+		var/turf/T = get_turf(src)
+		var/datum/gas_mixture/environment = T.return_air()
+		var/pressure = (environment)? environment.return_pressure() : 0
+		if(pressure < SOUND_MINIMUM_PRESSURE)
+			message_range = 1
+
+		if(pressure < ONE_ATMOSPHERE*0.4) //Thin air, let's italicise the message
+			if(!findtextEx(message,"<i>"))
+				message = "<i>[message]</i>"
+
 	send_speech(message, message_range, src, bubble_type)
 
 	log_say("[name]/[key] : [message]")
