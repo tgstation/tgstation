@@ -370,7 +370,7 @@
 		if(equip_to_slot(W, slot))
 			update_items()
 		else
-			M << "<span class='warning'>You are unable to equip that.</span>"
+			src << "<span class='warning'>You are unable to equip that.</span>"
 
 // Quickly equip a hat by pressing "e"
 /mob/living/silicon/robot/mommi/verb/quick_equip()
