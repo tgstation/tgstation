@@ -467,6 +467,7 @@
 #include "code\game\objects\explosion_recursive.dm"
 #include "code\game\objects\items.dm"
 #include "code\game\objects\objs.dm"
+#include "code\game\objects\structures.dm
 #include "code\game\objects\weapons.dm"
 #include "code\game\objects\effects\aliens.dm"
 #include "code\game\objects\effects\anomalies.dm"
