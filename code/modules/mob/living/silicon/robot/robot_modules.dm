@@ -227,11 +227,11 @@
 	return
 
 /obj/item/weapon/robot_module/engineering/recharge_consumable(var/mob/living/silicon/robot/R)
-	respawn_consumable(R)
 	recharge_tick++
 	if(recharge_tick < recharge_time) return 0
 	recharge_tick = 0
 	if(R && R.cell)
+		respawn_consumable(R)
 		var/list/um = R.contents|R.module.modules
 		// ^ makes sinle list of active (R.contents) and inactive modules (R.module.modules)
 		for(var/obj/O in um)
