@@ -339,7 +339,7 @@
 	if(PN)
 		available = PN.avail
 		L.damage = PN.get_electrocute_damage()
-		if(available >= 5000000)
+		if(available >= 1000000)
 			L.damage = 205
 		if(L.damage >= 200)
 			apply_damage(15, BURN, (hand ? "l_hand" : "r_hand"))
