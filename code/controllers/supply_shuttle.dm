@@ -46,7 +46,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 			return 0
 	return ..()
 
-/obj/structure/plasticflaps/ex_act(severity)
+/obj/structure/plasticflaps/ex_act(severity, specialty)
 	..()
 	switch(severity)
 		if (1)

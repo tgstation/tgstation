@@ -412,7 +412,7 @@
 
 	Die()
 
-/mob/living/simple_animal/ex_act(severity)
+/mob/living/simple_animal/ex_act(severity, specialty)
 	..()
 	switch (severity)
 		if (1.0)

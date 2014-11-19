@@ -572,12 +572,16 @@
 // explosion effect
 // destroy the whole light fixture or just shatter it
 
-/obj/machinery/light/ex_act(severity)
-	if(severity == 1)
-		qdel(src)
-	else
-		if(prob(100 - 25 * (severity - 1)))
-			broken()
+/obj/machinery/light/ex_act(severity, specialty)
+	..()
+	if(!gc_destroyed)
+		switch(severity)
+			if(2)
+				if(prob(50))
+					broken()
+			if(3)
+				if(prob(25))
+					broken()
 
 //blob effect
 

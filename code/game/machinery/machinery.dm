@@ -176,9 +176,18 @@ Class Procs:
 	update_icon()
 
 /obj/machinery/ex_act(severity, specialty = 0)
-	..()
-	if(prob(100 / (2 ** severity - 1) + 25 * specialty))
-		qdel(src)
+	switch(severity)
+		if(1)
+			qdel(src)
+		if(2)
+			if(prob(50))
+				qdel(src)
+		if(3)
+			if(prob(25))
+				qdel(src)
+	if(!gc_destroyed)
+		contents_explosion(src, severity, specialty)
+
 
 /obj/machinery/blob_act()
 	if(prob(50))

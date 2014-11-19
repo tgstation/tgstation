@@ -51,12 +51,6 @@
 		m.unEquip(src, 1)
 	return ..()
 
-/obj/item/ex_act(severity, specialty = 0)
-	if(prob(100 / (2 ** severity - 1) + 25 * specialty))
-		qdel(src)
-	else
-		..(severity, specialty)
-
 /obj/item/blob_act()
 	qdel(src)
 

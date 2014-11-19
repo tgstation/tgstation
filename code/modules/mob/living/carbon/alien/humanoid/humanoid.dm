@@ -51,7 +51,7 @@
 	if(l_store) l_store.emp_act(severity)
 	..()
 
-/mob/living/carbon/alien/humanoid/ex_act(severity)
+/mob/living/carbon/alien/humanoid/ex_act(severity, specialty)
 	..()
 
 	var/shielded = 0

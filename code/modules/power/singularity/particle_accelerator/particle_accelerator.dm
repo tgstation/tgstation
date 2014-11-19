@@ -143,10 +143,6 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 		master.toggle_power()
 		investigate_log("was moved whilst active; it <font color='red'>powered down</font>.","singulo")
 
-/obj/structure/particle_accelerator/ex_act(severity)
-	if(prob(100 / (2 ** (severity - 1))))
-		qdel(src)
-
 /obj/structure/particle_accelerator/blob_act()
 	if(prob(50))
 		qdel(src)
@@ -318,10 +314,6 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 			return
 	..()
 	return
-
-/obj/machinery/particle_accelerator/ex_act(severity)
-	if(prob(100 / (2 ** (severity - 1))))
-		qdel(src)
 
 /obj/machinery/particle_accelerator/blob_act()
 	if(prob(50))

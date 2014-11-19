@@ -44,7 +44,7 @@
 /mob/living/proc/InCritical()
 	return (src.health < 0 && src.health > -95.0 && stat == UNCONSCIOUS)
 
-/mob/living/ex_act(severity)
+/mob/living/ex_act(severity, specialty)
 	..()
 	if(client && !blinded)
 		flick("flash", src.flash)

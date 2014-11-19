@@ -146,7 +146,7 @@
 			stat("Energy Charge", round(wear_suit:cell:charge/100))
 
 
-/mob/living/carbon/human/ex_act(severity)
+/mob/living/carbon/human/ex_act(severity, specialty)
 	..()
 
 	var/shielded = 0

@@ -118,12 +118,17 @@
 		reliability -= 10 / severity
 	..()
 
-/obj/item/weapon/stock_parts/cell/ex_act(severity)
-	if(prob(100 / (2 ** (severity - 1))))
-		qdel(src)
-	else
-		if(prob(100 / (2 ** (severity - 1))))
-			corrupt()
+/obj/item/weapon/stock_parts/cell/ex_act(severity, specialty)
+	..()
+	if(!gc_destroyed)
+		switch(severity)
+			if(2)
+				if(prob(50))
+					corrupt()
+			if(3)
+				if(prob(25))
+					corrupt()
+
 
 /obj/item/weapon/stock_parts/cell/blob_act()
 	ex_act(1)

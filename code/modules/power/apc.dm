@@ -1183,13 +1183,16 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 		environ = 3
 	..()
 
-/obj/machinery/power/apc/ex_act(severity)
-	if(severity == 1)
-		qdel(src)
-	else
-		if(prob(100/ (2 ** (severity - 1))))
-			set_broken()
-			cell.ex_act(severity)
+/obj/machinery/power/apc/ex_act(severity, specialty)
+	..()
+	if(!gc_destroyed)
+		switch(severity)
+			if(2)
+				if(prob(50))
+					set_broken()
+			if(3)
+				if(prob(25))
+					set_broken()
 
 /obj/machinery/power/apc/blob_act()
 	if (prob(75))

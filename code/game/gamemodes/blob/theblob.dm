@@ -126,7 +126,7 @@
 		A.blob_act()
 	return 1
 
-/obj/effect/blob/ex_act(severity)
+/obj/effect/blob/ex_act(severity, specialty)
 	..()
 	var/damage = 150
 	health -= ((damage/brute_resist) - (severity * 5))

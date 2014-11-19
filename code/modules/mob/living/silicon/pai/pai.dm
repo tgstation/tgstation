@@ -137,7 +137,7 @@
 		if(3)
 			src << "<span class='notice'>You feel an electric surge run through your circuitry and become acutely aware at how lucky you are that you can still feel at all.</span>"
 
-/mob/living/silicon/pai/ex_act(severity)
+/mob/living/silicon/pai/ex_act(severity, specialty)
 	..()
 
 	switch(severity)

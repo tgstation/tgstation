@@ -370,8 +370,7 @@
 
 	..()
 
-/obj/machinery/porta_turret/ex_act(severity)
-	..()
+/obj/machinery/porta_turret/ex_act(severity, specialty)
 	if(severity >= 3)	//turret dies if an explosion touches it!
 		qdel(src)
 	else

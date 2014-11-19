@@ -292,7 +292,7 @@
 			power_change()
 	..()
 
-/obj/machinery/turret/ex_act(severity)
+/obj/machinery/turret/ex_act(severity, specialty)
 	if(severity < 3)
 		src.die()
 
@@ -362,7 +362,7 @@
 	..()
 	take_damage(0) //check your health
 
-/obj/machinery/gun_turret/ex_act(severity)
+/obj/machinery/gun_turret/ex_act(severity, specialty)
 	switch(severity)
 		if(1)
 			die()

@@ -25,11 +25,12 @@
 	return !density
 
 // When destroyed by explosions, properly handle contents.
-obj/structure/transit_tube/ex_act(severity)
+obj/structure/transit_tube/ex_act(severity, specialty)
 	if(3 - severity >= 0)
+		var/oldloc = loc
 		..(severity + 1)
 		for(var/atom/movable/AM in contents)
-			AM.loc = loc
+			AM.loc = oldloc
 
 /obj/structure/transit_tube/New(loc)
 	..(loc)

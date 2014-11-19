@@ -127,10 +127,9 @@
 	return src.open()
 
 // this should probably use dump_contents()
-/obj/structure/closet/ex_act(severity)
-	contents_explosion(src, severity)
+/obj/structure/closet/ex_act(severity, specialty)
+	open()
 	..()
-	return
 
 /obj/structure/closet/bullet_act(var/obj/item/projectile/Proj)
 	..()

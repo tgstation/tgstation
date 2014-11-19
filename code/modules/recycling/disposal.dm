@@ -793,7 +793,7 @@
 
 
 // pipe affected by explosion
-/obj/structure/disposalpipe/ex_act(severity)
+/obj/structure/disposalpipe/ex_act(severity, specialty)
 
 	//pass on ex_act to our contents before calling it on ourself
 	var/obj/structure/disposalholder/H = locate() in src

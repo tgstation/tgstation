@@ -361,12 +361,10 @@
 	if(prob(100/(severity*efficiency))) malfunction()
 	..()
 
-/obj/machinery/clonepod/ex_act(severity)
+/obj/machinery/clonepod/ex_act(severity, specialty)
 	..()
-	if(prob(100 / (2 ** (severity - 1))))
-		for(var/atom/movable/A as mob|obj in src)
-			A.loc = src.loc
-		qdel(src)
+	if(!gc_destroyed)
+		go_out()
 
 /*
  *	Diskette Box
