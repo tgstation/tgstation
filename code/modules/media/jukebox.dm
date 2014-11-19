@@ -407,7 +407,8 @@ var/global/loopModeNames=list(
 			return
 		selected_song=Clamp(text2num(href_list["song"]),1,playlist.len)
 		if(isAdminGhost(usr))
-			log_adminghost("[key_name_admin(usr)] changed [src] playlist to [playlist_id] at [formatJumpTo(src)]")
+			var/datum/song_info/song=playlist[selected_song]
+			log_adminghost("[key_name_admin(usr)] changed [src] next song to #[selected_song] ([song.display()]) at [formatJumpTo(src)]")
 		if(!change_cost || isAdminGhost(usr))
 			next_song = selected_song
 			selected_song = 0
