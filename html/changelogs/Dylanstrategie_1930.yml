@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - tweak: Radiation collectors now deplete five times faster and produce ten times more power. No more easy, maintenance-free power
