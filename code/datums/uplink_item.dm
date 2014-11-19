@@ -497,7 +497,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/implants/uplink
 	name = "Uplink Implant"
-	desc = "An implant injected into the body, and later activated using a bodily gesture to open an uplink with 5 telecrystals. \
+	desc = "An implant injected into the body, and later activated using a bodily gesture to open an uplink with 10 telecrystals. \
 	The ability for an agent to open an uplink after their posessions have been stripped from them makes this implant excellent for escaping confinement."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_uplink
 	cost = 20
