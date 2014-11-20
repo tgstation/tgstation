@@ -230,7 +230,6 @@ emp_act
 					src.Stun(5)
 	..()
 
-
 /mob/living/carbon/human/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
 	var/list/damaged = list()
 
@@ -372,5 +371,39 @@ emp_act
 	var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
 	var/armor_block = run_armor_check(affecting, "melee")
 	apply_damage(damage, BRUTE, affecting, armor_block)
+
+	return
+/mob/living/carbon/human/mech_melee_attack(obj/mecha/M)
+
+	if(M.occupant.a_intent == "harm")
+		if(M.damtype == "brute")
+			step_away(src,M,15)
+		var/obj/item/organ/limb/temp = get_organ(pick("chest", "chest", "chest", "head"))
+		if(temp)
+			var/update = 0
+			switch(M.damtype)
+				if("brute")
+					if(M.force > 20)
+						Paralyse(1)
+					update |= temp.take_damage(rand(M.force/2, M.force), 0)
+					playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
+				if("fire")
+					update |= temp.take_damage(0, rand(M.force/2, M.force))
+					playsound(src, 'sound/items/Welder.ogg', 50, 1)
+				if("tox")
+					M.mech_toxin_damage(src)
+				else
+					return
+			if(update)
+				update_damage_overlays(0)
+			updatehealth()
+
+		M.occupant_message("<span class='danger'>You hit [src].</span>")
+		visible_message("<span class='danger'>[src] has been hit by [M.name].</span>", \
+								"<span class='userdanger'>[src] has been hit by [M.name].</span>")
+		add_logs(M.occupant, src, "attacked", object=M, addition="(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
+
+	else
+		..()
 
 	return

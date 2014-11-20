@@ -249,8 +249,9 @@
 
 
 /obj/item/device/camera/proc/printpicture(mob/user, icon/temp, mobs, flag) //Normal camera proc for creating photos
-	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
-	user.put_in_hands(P)
+	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo(get_turf(src))
+	if(Adjacent(user)) //needed because of TK
+		user.put_in_hands(P)
 	var/icon/small_img = icon(temp)
 	var/icon/ic = icon('icons/obj/items.dmi',"photo")
 	small_img.Scale(8, 8)

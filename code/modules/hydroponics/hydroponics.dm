@@ -772,9 +772,10 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
 	var/t_amount = 0
 	var/list/result = list()
+	var/output_loc = Adjacent(user) ? user.loc : parent.loc //needed for TK
 
 	while(t_amount < getYield())
-		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new product(user.loc, potency)
+		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, potency)
 		result.Add(t_prod) // User gets a consumable
 		if(!t_prod)	return
 		t_prod.lifespan = lifespan
