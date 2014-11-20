@@ -193,7 +193,7 @@
 		popup.open()
 		refresh_all()
 
-	if(panel_open && (!istype(user, /mob/living/silicon)))
+	if(panel_open && (!istype(user, /mob/living/silicon/ai)))
 		wires.Interact(user)
 
 	return
