@@ -1,2 +1,3 @@
 author: Duny
-changes: []
+changes: 
+  - bugfix: Efficiency - Fixed all the broken windoors I could find.
