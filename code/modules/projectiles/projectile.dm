@@ -54,7 +54,9 @@
 	// Garbage collect the projectiles
 	loc = null
 
-
+/obj/item/projectile/Crossed(atom/A)
+	if(!A.CanPass(src, loc))
+		Bump(A)
 
 /obj/item/projectile/proc/on_hit(var/atom/target, var/blocked = 0, var/hit_zone)
 	if(!isliving(target))	return 0
