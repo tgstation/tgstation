@@ -32,7 +32,7 @@
 
 
 /mob/proc/AddDisease(var/datum/disease/D)
-	var/datum/disease/DD = new D.type()
+	var/datum/disease/DD = new D.type(1, D, 0)
 	viruses += DD
 	DD.affected_mob = src
 	DD.holder = src
