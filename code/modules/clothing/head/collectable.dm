@@ -7,7 +7,7 @@
 
 /obj/item/clothing/head/collectable/petehat
 	name = "ultra rare Pete's hat!"
-	desc = "It smells faintly of plasma"
+	desc = "It smells faintly of plasma."
 	icon_state = "petehat"
 
 /obj/item/clothing/head/collectable/slime
@@ -28,7 +28,7 @@
 
 /obj/item/clothing/head/collectable/paper
 	name = "collectable paper hat"
-	desc = "What looks like an ordinary paper hat, is actually a rare and valuable collector's edition paper hat. Keep away from water, fire and Librarians."
+	desc = "What looks like an ordinary paper hat, is actually a rare and valuable collector's edition paper hat. Keep away from water, fire, and Librarians."
 	icon_state = "paper"
 
 /obj/item/clothing/head/collectable/tophat
@@ -50,7 +50,7 @@
 
 /obj/item/clothing/head/collectable/beret
 	name = "collectable beret"
-	desc = "A Collectable red Beret. It smells faintly of Garlic."
+	desc = "A Collectable red Beret. It smells faintly of garlic."
 	icon_state = "beret"
 
 /obj/item/clothing/head/collectable/welding
@@ -79,7 +79,7 @@
 
 /obj/item/clothing/head/collectable/kitty
 	name = "collectable kitty ears"
-	desc = "The fur feels.....a bit too realistic."
+	desc = "The fur feels... a bit too realistic."
 	icon_state = "kitty"
 	item_state = "kitty"
 
@@ -91,18 +91,18 @@
 
 /obj/item/clothing/head/collectable/wizard
 	name = "collectable wizard's hat"
-	desc = "NOTE:Any magical powers gained from wearing this hat are purely coincidental."
+	desc = "NOTE: Any magical powers gained from wearing this hat are purely coincidental."
 	icon_state = "wizard"
 
 /obj/item/clothing/head/collectable/hardhat
 	name = "collectable hard hat"
-	desc = "WARNING! Offers no real protection, or luminosity, but it is damn fancy!"
+	desc = "WARNING! Offers no real protection, or luminosity, but damn, is it fancy!"
 	icon_state = "hardhat0_yellow"
 	item_state = "hardhat0_yellow"
 
 /obj/item/clothing/head/collectable/HoS
 	name = "collectable HoS hat"
-	desc = "Now you can beat prisoners, set silly sentences and arrest for no reason too!"
+	desc = "Now you too can beat prisoners, set silly sentences, and arrest for no reason!"
 	icon_state = "hoscap"
 
 /obj/item/clothing/head/collectable/thunderdome
@@ -113,6 +113,6 @@
 
 /obj/item/clothing/head/collectable/swat
 	name = "collectable SWAT helmet"
-	desc = "Now you can be in the Deathsquad too!"
+	desc = "That's not real blood. That's red paint." //Reference to the actual description
 	icon_state = "swat"
 	item_state = "swat"

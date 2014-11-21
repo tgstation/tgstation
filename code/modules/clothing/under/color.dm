@@ -19,6 +19,7 @@
 
 /obj/item/clothing/under/color/grey
 	name = "grey jumpsuit"
+	desc = "Grey tide, station-wide." //We must not let the assistants' legacy die off.
 	icon_state = "grey"
 	item_state = "gy_suit"
 	item_color = "grey"
@@ -45,6 +46,7 @@
 /obj/item/clothing/under/color/pink
 	name = "pink jumpsuit"
 	icon_state = "pink"
+	desc = "Just looking at this makes you feel <i>fabulous</i>".
 	item_state = "p_suit"
 	item_color = "pink"
 
