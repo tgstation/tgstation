@@ -152,20 +152,6 @@
 		explode()
 
 /obj/item/weapon/cell/proc/get_electrocute_damage()
-	switch (charge)
-		if (1000001 to INFINITY)
-			return rand(150,180)
-		if (400001 to 750000)
-			return rand(125,150)
-		if (200001 to 400000)
-			return rand(80,125)
-		if (100001 to 200000)
-			return rand(60,80)
-		if (50001 to 100000) //Average powernet
-			return rand(40,60)
-		if (10001 to 50000)
-			return rand(20,40)
-		if (1001 to 10000)
-			return rand(10,20)
-		else
-			return 0
+	return round(charge**(1/3)*(rand(15,20)/10)) //Cube root of power times 1,5 to 2 in increments of 10^-1
+	//For instance, gives an average of 81 damage for 100k W and 175 for 1M W
+	//Best you're getting with BYOND's mathematical funcs. Not even a fucking exponential or neperian logarithm

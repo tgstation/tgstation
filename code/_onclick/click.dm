@@ -334,13 +334,9 @@
 	"<span class='warning'>You fire an arc of electricity!</span>", \
 	"You hear the loud crackle of electricity!")
 	var/datum/powernet/PN = cable.get_powernet()
-	var/available = 0
 	var/obj/item/projectile/beam/lightning/L = getFromPool(/obj/item/projectile/beam/lightning, loc)
 	if(PN)
-		available = PN.avail
 		L.damage = PN.get_electrocute_damage()
-		if(available >= 1000000)
-			L.damage = 205
 		if(L.damage >= 200)
 			apply_damage(15, BURN, (hand ? "l_hand" : "r_hand"))
 			//usr:Stun(15)
@@ -348,7 +344,7 @@
 			//if(usr:status_flags & CANSTUN) // stun is usually associated with stutter
 			//	usr:stuttering += 20
 			time = 200
-			src << "<span class='warning'>[G] overload from the massive current shocking you in the process!"
+			src << "<span class='warning'>[G] overloads from the massive current, shocking you in the process!"
 		else if(L.damage >= 100)
 			apply_damage(5, BURN, (hand ? "l_hand" : "r_hand"))
 			//usr:Stun(10)
@@ -356,7 +352,7 @@
 			//if(usr:status_flags & CANSTUN) // stun is usually associated with stutter
 			//	usr:stuttering += 10
 			time = 150
-			src << "<span class='warning'>[G] overload from the massive current shocking you in the process!"
+			src << "<span class='warning'>[G] overloads from the massive current, shocking you in the process!"
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
