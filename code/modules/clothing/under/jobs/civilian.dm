@@ -42,7 +42,7 @@
 
 
 /obj/item/clothing/under/rank/chef
-	desc = "It's an apron which is given only to the most <b>hardcore</b> chefs in space."
+	desc = "It's an apron which is given only to the most <b>hardcore</b> chefs in space. And you, too." //Let's be honest, SS13 chefs aren't very sane
 	name = "chef's uniform"
 	icon_state = "chef"
 	item_color = "chef"
@@ -116,7 +116,7 @@
 
 /obj/item/clothing/under/lawyer/bluesuit
 	name = "blue suit"
-	desc = "A classy suit and tie"
+	desc = "A classy suit and tie."
 	icon_state = "bluesuit"
 	item_state = "bluesuit"
 	item_color = "bluesuit"
