@@ -42,8 +42,7 @@
 
 
 /obj/item/clothing/under/rank/chef
-	desc = "It's an apron which is given only to the most <b>hardcore</b> chefs in space. And you, too." //Let's be honest, SS13 chefs aren't very sane
-	name = "chef's uniform"
+	desc = "It's an apron which is given only to the most <b>hardcore</b> chefs in space."
 	icon_state = "chef"
 	item_color = "chef"
 
