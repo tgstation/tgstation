@@ -396,7 +396,7 @@
 //build_time is a var unique to each fabricator. It's mostly one, but bigger machines get higher build_time
 //time_coeff is set by the machine components
 /obj/machinery/r_n_d/fabricator/proc/get_construction_time_w_coeff(var/datum/design/part as obj, var/roundto=1)
-	return round(/*TechTotal(part)*/(MatTotal(part)/FAB_MAT_BASEMOD)*build_time*time_coeff, roundto)
+	return round(/*TechTotal(part)*/(part.MatTotal()/FAB_MAT_BASEMOD)*build_time*time_coeff, roundto)
 
 /obj/machinery/r_n_d/fabricator/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(stat & (BROKEN|NOPOWER))

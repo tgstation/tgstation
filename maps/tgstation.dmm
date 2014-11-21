@@ -4804,7 +4804,7 @@
 "bOt" = (/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor,/area/hallway/primary/central)
 "bOu" = (/obj/structure/disposalpipe/segment{dir = 4},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 5},/turf/simulated/floor,/area/hallway/primary/central)
 "bOv" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/disposalpipe/segment{dir = 8; icon_state = "pipe-c"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor,/area/hallway/primary/central)
-"bOw" = (/obj/structure/table,/obj/item/stack/sheet/metal{amount = 50},/obj/item/stack/sheet/glass{amount = 50},/turf/simulated/floor{icon_state = "dark vault full"},/area/engineering/mechanics)
+"bOw" = (/obj/structure/table,/obj/item/stack/sheet/metal{amount = 50},/obj/item/stack/sheet/glass{amount = 50},/obj/item/stack/sheet/mineral/plastic{amount = 20},/turf/simulated/floor{icon_state = "dark vault full"},/area/engineering/mechanics)
 "bOx" = (/obj/structure/disposalpipe/segment,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 5},/turf/simulated/floor,/area/hallway/primary/central)
 "bOy" = (/obj/structure/stool/bed/chair,/obj/structure/sign/nosmoking_2{pixel_x = -28},/obj/machinery/atmospherics/unary/vent_scrubber{on = 1},/turf/simulated/floor{icon_state = "dark"},/area/medical/surgery)
 "bOz" = (/obj/structure/stool/bed/chair,/turf/simulated/floor{icon_state = "dark"},/area/medical/surgery)
