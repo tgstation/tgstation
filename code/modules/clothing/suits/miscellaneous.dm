@@ -10,7 +10,7 @@
  */
 /obj/item/clothing/suit/bluetag
 	name = "blue laser tag armor"
-	desc = "Blue pride, station-wide."
+	desc = "A plastic piece of armor. It contains sensors that react to the Red Team's lasers."
 	icon_state = "bluetag"
 	item_state = "bluetag"
 	blood_overlay_type = "armor"
@@ -19,7 +19,7 @@
 
 /obj/item/clothing/suit/redtag
 	name = "red laser tag armor"
-	desc = "Red pride, station-wide."
+	desc = "A plastic piece of armor. It contains sensors that react to the Red Team's lasers."
 	icon_state = "redtag"
 	item_state = "redtag"
 	blood_overlay_type = "armor"
@@ -55,7 +55,7 @@
 
 
 /obj/item/clothing/suit/greatcoat
-	name = "great coat"
+	name = "greatcoat"
 	desc = "A Nazi greatcoat."
 	icon_state = "nazi"
 	item_state = "nazi"
