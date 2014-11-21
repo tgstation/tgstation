@@ -20,31 +20,31 @@
 
 	mymob.adminbus_spclowns = new /obj/screen()
 	mymob.adminbus_spclowns.icon = 'icons/adminbus/32x32.dmi'
-	mymob.adminbus_spclowns.icon_state = "icon_spclowns"
+	mymob.adminbus_spclowns.icon_state = "icon_spclown"
 	mymob.adminbus_spclowns.name = "Spawn Clowns"
 	mymob.adminbus_spclowns.screen_loc = ui_adminbus_spclowns
 
 	mymob.adminbus_spcarps = new /obj/screen()
 	mymob.adminbus_spcarps.icon = 'icons/adminbus/32x32.dmi'
-	mymob.adminbus_spcarps.icon_state = "icon_spcarps"
+	mymob.adminbus_spcarps.icon_state = "icon_spcarp"
 	mymob.adminbus_spcarps.name = "Spawn Carps"
 	mymob.adminbus_spcarps.screen_loc = ui_adminbus_spcarps
 
 	mymob.adminbus_spbears = new /obj/screen()
 	mymob.adminbus_spbears.icon = 'icons/adminbus/32x32.dmi'
-	mymob.adminbus_spbears.icon_state = "icon_spbears"
+	mymob.adminbus_spbears.icon_state = "icon_spbear"
 	mymob.adminbus_spbears.name = "Spawn Bears"
 	mymob.adminbus_spbears.screen_loc = ui_adminbus_spbears
 
 	mymob.adminbus_sptrees = new /obj/screen()
 	mymob.adminbus_sptrees.icon = 'icons/adminbus/32x32.dmi'
-	mymob.adminbus_sptrees.icon_state = "icon_sptrees"
+	mymob.adminbus_sptrees.icon_state = "icon_sptree"
 	mymob.adminbus_sptrees.name = "Spawn Trees"
 	mymob.adminbus_sptrees.screen_loc = ui_adminbus_sptrees
 
 	mymob.adminbus_spspiders = new /obj/screen()
 	mymob.adminbus_spspiders.icon = 'icons/adminbus/32x32.dmi'
-	mymob.adminbus_spspiders.icon_state = "icon_spspiders"
+	mymob.adminbus_spspiders.icon_state = "icon_spspider"
 	mymob.adminbus_spspiders.name = "Spawn Spiders"
 	mymob.adminbus_spspiders.screen_loc = ui_adminbus_spspiders
 
@@ -86,61 +86,61 @@
 
 	mymob.adminbus_juke = new /obj/screen()
 	mymob.adminbus_juke.icon = 'icons/adminbus/32x32.dmi'
-	mymob.adminbus_juke.icon_state = "icon_teleport"
+	mymob.adminbus_juke.icon_state = "icon_jukebox"
 	mymob.adminbus_juke.name = "Adminbus-mounted Jukebox"
 	mymob.adminbus_juke.screen_loc = ui_adminbus_juke
 
 	mymob.adminbus_tele = new /obj/screen()
 	mymob.adminbus_tele.icon = 'icons/adminbus/32x32.dmi'
-	mymob.adminbus_tele.icon_state = "icon_jukebox"
+	mymob.adminbus_tele.icon_state = "icon_teleport"
 	mymob.adminbus_tele.name = "Teleportation"
 	mymob.adminbus_tele.screen_loc = ui_adminbus_tele
 
 	mymob.adminbus_bumpers_1 = new /obj/screen()
 	mymob.adminbus_bumpers_1.icon = 'icons/adminbus/32x32.dmi'
-	mymob.adminbus_bumpers_1.icon_state = "icon_stickleft"
+	mymob.adminbus_bumpers_1.icon_state = "icon_bumpers_1-on"
 	mymob.adminbus_bumpers_1.name = "Capture Mobs"
 	mymob.adminbus_bumpers_1.screen_loc = ui_adminbus_bumpers_1
 
 	mymob.adminbus_bumpers_2 = new /obj/screen()
 	mymob.adminbus_bumpers_2.icon = 'icons/adminbus/32x32.dmi'
-	mymob.adminbus_bumpers_2.icon_state = ""
+	mymob.adminbus_bumpers_2.icon_state = "icon_bumpers_2-off"
 	mymob.adminbus_bumpers_2.name = "Hit Mobs"
 	mymob.adminbus_bumpers_2.screen_loc = ui_adminbus_bumpers_2
 
 	mymob.adminbus_bumpers_3 = new /obj/screen()
 	mymob.adminbus_bumpers_3.icon = 'icons/adminbus/32x32.dmi'
-	mymob.adminbus_bumpers_3.icon_state = ""
+	mymob.adminbus_bumpers_3.icon_state = "icon_bumpers_3-off"
 	mymob.adminbus_bumpers_3.name = "Gib Mobs"
 	mymob.adminbus_bumpers_3.screen_loc = ui_adminbus_bumpers_3
 
 	mymob.adminbus_door_0 = new /obj/screen()
 	mymob.adminbus_door_0.icon = 'icons/adminbus/32x32.dmi'
-	mymob.adminbus_door_0.icon_state = "icon_stickleft"
+	mymob.adminbus_door_0.icon_state = "icon_door_0-on"
 	mymob.adminbus_door_0.name = "Close Door"
 	mymob.adminbus_door_0.screen_loc = ui_adminbus_door_0
 
 	mymob.adminbus_door_1 = new /obj/screen()
 	mymob.adminbus_door_1.icon = 'icons/adminbus/32x32.dmi'
-	mymob.adminbus_door_1.icon_state = ""
+	mymob.adminbus_door_1.icon_state = "icon_door_1-off"
 	mymob.adminbus_door_1.name = "Open Door"
 	mymob.adminbus_door_1.screen_loc = ui_adminbus_door_1
 
 	mymob.adminbus_roadlights_0 = new /obj/screen()
 	mymob.adminbus_roadlights_0.icon = 'icons/adminbus/32x32.dmi'
-	mymob.adminbus_roadlights_0.icon_state = "icon_stickleft"
+	mymob.adminbus_roadlights_0.icon_state = "icon_lights_0-on"
 	mymob.adminbus_roadlights_0.name = "Turn Off Headlights"
 	mymob.adminbus_roadlights_0.screen_loc = ui_adminbus_roadlights_0
 
 	mymob.adminbus_roadlights_1 = new /obj/screen()
 	mymob.adminbus_roadlights_1.icon = 'icons/adminbus/32x32.dmi'
-	mymob.adminbus_roadlights_1.icon_state = ""
+	mymob.adminbus_roadlights_1.icon_state = "icon_lights_1-off"
 	mymob.adminbus_roadlights_1.name = "Dipped Headlights"
 	mymob.adminbus_roadlights_1.screen_loc = ui_adminbus_roadlights_1
 
 	mymob.adminbus_roadlights_2 = new /obj/screen()
 	mymob.adminbus_roadlights_2.icon = 'icons/adminbus/32x32.dmi'
-	mymob.adminbus_roadlights_2.icon_state = ""
+	mymob.adminbus_roadlights_2.icon_state = "icon_lights_2-off"
 	mymob.adminbus_roadlights_2.name = "Main Headlights"
 	mymob.adminbus_roadlights_2.screen_loc = ui_adminbus_roadlights_2
 

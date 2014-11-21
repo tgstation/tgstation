@@ -69,7 +69,7 @@
 		bususer << "Nice try."
 		return
 
-	flick("icon_spclowns-push",bususer.adminbus_spclowns)
+	flick("icon_spclown-push",bususer.adminbus_spclowns)
 
 	var/turflist[] = list()
 	for(var/turf/T in orange(src,1))
@@ -92,7 +92,7 @@
 		bususer << "Nice try."
 		return
 
-	flick("icon_spcarps-push",bususer.adminbus_spcarps)
+	flick("icon_spcarp-push",bususer.adminbus_spcarps)
 
 	var/turflist[] = list()
 	for(var/turf/T in orange(src,1))
@@ -115,7 +115,7 @@
 		bususer << "Nice try."
 		return
 
-	flick("icon_spbears-push",bususer.adminbus_spbears)
+	flick("icon_spbear-push",bususer.adminbus_spbears)
 
 	var/turflist[] = list()
 	for(var/turf/T in orange(src,1))
@@ -142,7 +142,7 @@
 		bususer << "Nice try."
 		return
 
-	flick("icon_sptrees-push",bususer.adminbus_sptrees)
+	flick("icon_sptree-push",bususer.adminbus_sptrees)
 
 	var/turflist[] = list()
 	for(var/turf/T in range(src,1))
@@ -165,7 +165,7 @@
 		bususer << "Nice try."
 		return
 
-	flick("icon_spspiders-push",bususer.adminbus_spspiders)
+	flick("icon_spspider-push",bususer.adminbus_spspiders)
 
 	var/turflist[] = list()
 	for(var/turf/T in orange(src,1))
@@ -254,23 +254,7 @@
 	if(!hook && !singulo)
 		return
 
-	if(hook)
-		bususer.adminbus_hook.icon_state = "icon_hook-push"
-		hook = 0
-
-		var/obj/structure/hookshot/claw/C = new/obj/structure/hookshot/claw(get_step(src,src.dir))	//First we spawn the claw
-		hookshot += C
-		C.abus = src
-
-		var/obj/machinery/singularity/S = C.launchin(src.dir)							//The claw moves forward, spawning hookshot-chains on its path
-		if(S)
-			bususer.adminbus_hook.icon_state = "icon_singulo"
-			capture_singulo(S)															//If the claw hits a singulo, we remove the hookshot-chains and replace them with singulo-chains
-		else
-			for(var/obj/structure/hookshot/A in hookshot)								//If it doesn't hit anything, all the elements of the chain come back toward the bus,
-				spawn()//so they all return at once										//deleting themselves when they reach it.
-					A.returnin()
-	else if(singulo)
+	if(singulo)
 		bususer.adminbus_hook.icon_state = "icon_hook-push"
 		var/obj/structure/singulo_chain/anchor/A = locate(/obj/structure/singulo_chain/anchor) in chain
 		if(A)
@@ -288,8 +272,25 @@
 			del(N)
 		chain.len = 0
 
-		bususer.adminbus_hook.icon_state = "icon_hook"
-		hook = 1
+		if(!singulo)
+			bususer.adminbus_hook.icon_state = "icon_hook"
+			hook = 1
+	else if(hook)
+		bususer.adminbus_hook.icon_state = "icon_hook-push"
+		hook = 0
+
+		var/obj/structure/hookshot/claw/C = new/obj/structure/hookshot/claw(get_step(src,src.dir))	//First we spawn the claw
+		hookshot += C
+		C.abus = src
+
+		var/obj/machinery/singularity/S = C.launchin(src.dir)							//The claw moves forward, spawning hookshot-chains on its path
+		if(S)
+			bususer.adminbus_hook.icon_state = "icon_singulo"
+			capture_singulo(S)															//If the claw hits a singulo, we remove the hookshot-chains and replace them with singulo-chains
+		else
+			for(var/obj/structure/hookshot/A in hookshot)								//If it doesn't hit anything, all the elements of the chain come back toward the bus,
+				spawn()//so they all return at once										//deleting themselves when they reach it.
+					A.returnin()
 
 /////////////////
 
@@ -318,25 +319,25 @@
 
 	switch(lightpower)
 		if(0)
-			bususer.adminbus_roadlights_0.icon_state = "icon_stickleft"
-			bususer.adminbus_roadlights_1.icon_state = ""
-			bususer.adminbus_roadlights_2.icon_state = ""
+			bususer.adminbus_roadlights_0.icon_state = "icon_lights_0-on"
+			bususer.adminbus_roadlights_1.icon_state = "icon_lights_1-off"
+			bususer.adminbus_roadlights_2.icon_state = "icon_lights_2-off"
 			lightsource.SetLuminosity(0)
 			if(roadlights == 1 || roadlights == 2)
 				overlays -= overlays_bus[2]
 			roadlights = 0
 		if(1)
-			bususer.adminbus_roadlights_0.icon_state = ""
-			bususer.adminbus_roadlights_1.icon_state = "icon_stickcenter"
-			bususer.adminbus_roadlights_2.icon_state = ""
+			bususer.adminbus_roadlights_0.icon_state = "icon_lights_0-off"
+			bususer.adminbus_roadlights_1.icon_state = "icon_lights_1-on"
+			bususer.adminbus_roadlights_2.icon_state = "icon_lights_2-off"
 			lightsource.SetLuminosity(2)
 			if(roadlights == 0)
 				overlays += overlays_bus[2]
 			roadlights = 1
 		if(2)
-			bususer.adminbus_roadlights_0.icon_state = ""
-			bususer.adminbus_roadlights_1.icon_state = ""
-			bususer.adminbus_roadlights_2.icon_state = "icon_stickright"
+			bususer.adminbus_roadlights_0.icon_state = "icon_lights_0-off"
+			bususer.adminbus_roadlights_1.icon_state = "icon_lights_1-off"
+			bususer.adminbus_roadlights_2.icon_state = "icon_lights_2-on"
 			lightsource.SetLuminosity(3)
 			if(roadlights == 0)
 				overlays += overlays_bus[2]
@@ -353,19 +354,19 @@
 
 	switch(bumperpower)
 		if(1)
-			bususer.adminbus_bumpers_1.icon_state = "icon_stickleft"
-			bususer.adminbus_bumpers_2.icon_state = ""
-			bususer.adminbus_bumpers_3.icon_state = ""
+			bususer.adminbus_bumpers_1.icon_state = "icon_bumpers_1-on"
+			bususer.adminbus_bumpers_2.icon_state = "icon_bumpers_2-off"
+			bususer.adminbus_bumpers_3.icon_state = "icon_bumpers_3-off"
 			bumpers = 1
 		if(2)
-			bususer.adminbus_bumpers_1.icon_state = ""
-			bususer.adminbus_bumpers_2.icon_state = "icon_stickcenter"
-			bususer.adminbus_bumpers_3.icon_state = ""
+			bususer.adminbus_bumpers_1.icon_state = "icon_bumpers_1-off"
+			bususer.adminbus_bumpers_2.icon_state = "icon_bumpers_2-on"
+			bususer.adminbus_bumpers_3.icon_state = "icon_bumpers_3-off"
 			bumpers = 2
 		if(3)
-			bususer.adminbus_bumpers_1.icon_state = ""
-			bususer.adminbus_bumpers_2.icon_state = ""
-			bususer.adminbus_bumpers_3.icon_state = "icon_stickright"
+			bususer.adminbus_bumpers_1.icon_state = "icon_bumpers_1-off"
+			bususer.adminbus_bumpers_2.icon_state = "icon_bumpers_2-off"
+			bususer.adminbus_bumpers_3.icon_state = "icon_bumpers_3-on"
 			bumpers = 3
 
 
@@ -380,13 +381,13 @@
 
 	switch(doorstate)
 		if(0)
-			bususer.adminbus_door_0.icon_state = "icon_stickleft"
-			bususer.adminbus_door_1.icon_state = ""
+			bususer.adminbus_door_0.icon_state = "icon_door_0-on"
+			bususer.adminbus_door_1.icon_state = "icon_door_1-off"
 			door_mode = 0
 			overlays -= overlays_bus[4]
 		if(1)
-			bususer.adminbus_door_0.icon_state = ""
-			bususer.adminbus_door_1.icon_state = "icon_stickright"
+			bususer.adminbus_door_0.icon_state = "icon_door_0-off"
+			bususer.adminbus_door_1.icon_state = "icon_door_1-on"
 			door_mode = 1
 			overlays += overlays_bus[4]
 
@@ -491,7 +492,7 @@
 		bususer << "Nice try."
 		return
 
-	flick("icon_delbombs-push",bususer.adminbus_delbombs)
+	flick("icon_delgiven-push",bususer.adminbus_delbombs)
 
 	if(spawnedbombs.len == 0)
 		bususer << "No bombs to delete.</span>"
@@ -558,7 +559,7 @@
 		bususer << "Nice try."
 		return
 
-	flick("icon_dellasers-push",bususer.adminbus_dellasers)
+	flick("icon_delgiven-push",bususer.adminbus_dellasers)
 
 	if(spawnedlasers.len == 0)
 		bususer << "No laser guns to delete.</span>"
@@ -569,7 +570,12 @@
 	for(var/i=spawnedlasers.len;i>0;i--)
 		var/obj/item/weapon/gun/energy/laser/admin/L = spawnedlasers[i]
 		if(L)
-			del(L)
+			if(istype(L.loc,/mob/living/carbon))
+				var/mob/living/carbon/C = L.loc
+				del(L)
+				C.regenerate_icons()
+			else
+				del(L)
 			distributed++
 		spawnedlasers -= spawnedlasers[i]
 
@@ -673,7 +679,7 @@
 		return
 
 	if(passengers.len == 0)
-		flick("icon_tdobs-push",bususer.adminbus_tdobs)
+		flick("icon_tdobs-flick",bususer.adminbus_tdobs)
 		bususer << "<span class='warning'>There are no passengers to send.</span>"
 		return
 
@@ -739,7 +745,7 @@
 		return
 
 	if(passengers.len == 0)
-		flick("icon_tdarena-push",bususer.adminbus_tdarena)
+		flick("icon_tdarena-flick",bususer.adminbus_tdarena)
 		bususer << "<span class='warning'>There are no passengers to send.</span>"
 		return
 
@@ -773,7 +779,7 @@
 		return
 
 	if(passengers.len == 0)
-		flick("icon_tdgreen-push",bususer.adminbus_tdgreen)
+		flick("icon_tdgreen-flick",bususer.adminbus_tdgreen)
 		bususer << "<span class='warning'>There are no passengers to send.</span>"
 		return
 
@@ -800,7 +806,7 @@
 		return
 
 	if(passengers.len == 0)
-		flick("icon_tdred-push",bususer.adminbus_tdred)
+		flick("icon_tdred-flick",bususer.adminbus_tdred)
 		bususer << "<span class='warning'>There are no passengers to send.</span>"
 		return
 
@@ -1033,7 +1039,7 @@
 		return
 
 	if(passengers.len == 0)
-		flick("icon_home-push",bususer.adminbus_home)
+		flick("icon_home-flick",bususer.adminbus_home)
 		bususer << "<span class='warning'>There are no passengers to send.</span>"
 		return
 
@@ -1062,7 +1068,7 @@
 		return
 
 	if(passengers.len == 0)
-		flick("icon_antag-push",bususer.adminbus_antag)
+		flick("icon_antag-flick",bususer.adminbus_antag)
 		bususer << "<span class='warning'>There are no passengers to make antag.</span>"
 		return
 
@@ -1138,7 +1144,7 @@
 		return
 
 	bususer.adminbus_delete.icon_state = "icon_delete-push"
-	if(alert(bususer, "This will free all passengers, remove any spawned mobs/laserguns/bombs, [singulo ? "free the captured singularity" : ""], and remove all the entities associated with the bus(chains, roadlights, jukebox,...)<BR>Are you sure?", "Adminbus Deletion", "Yes", "No") != "Yes")
+	if(alert(bususer, "This will free all passengers, remove any spawned mobs/laserguns/bombs, [singulo ? "free the captured singularity" : ""], and remove all the entities associated with the bus(chains, roadlights, jukebox,...) Are you sure?", "Adminbus Deletion", "Yes", "No") != "Yes")
 		bususer.adminbus_delete.icon_state = "icon_delete"
 		return
 
@@ -1179,7 +1185,6 @@
 	busjuke.disconnect_media_source()
 	del(busjuke)
 	del(warp)
-	lightsource.SetLuminosity(0)
 	del(lightsource)
 
 	var/turf/T = get_turf(src)

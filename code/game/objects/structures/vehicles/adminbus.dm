@@ -325,10 +325,6 @@
 			buckled_mob = user
 			update_mob()
 			add_fingerprint(user)
-			if(!roadlights)
-				overlays += overlays_bus[2]
-				roadlights = 1
-				lightsource.SetLuminosity(2)
 			playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 			add_HUD(user)
 			return
@@ -376,10 +372,6 @@
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
 		buckled_mob = null
-		if(roadlights)
-			overlays -= overlays_bus[2]
-			roadlights = 0
-			lightsource.SetLuminosity(0)
 	return
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/add_HUD(var/mob/M)
@@ -428,7 +420,7 @@
 /////HOOKSHOT/////////
 
 /obj/structure/hookshot
-	name = "\improper admin chain"
+	name = "admin chain"
 	desc = "Who knows what these chains can hold..."
 	icon = 'icons/obj/singulo_chain.dmi'
 	icon_state = "chain"
@@ -441,7 +433,7 @@
 	var/dropped = 0
 
 /obj/structure/hookshot/claw
-	name = "\improper admin claw"
+	name = "admin claw"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "singulo_catcher"
 	pixel_x = -32
@@ -486,6 +478,7 @@
 			if(abus.buckled_mob)
 				abus.buckled_mob.adminbus_hook.icon_state = "icon_singulo"
 			abus.capture_singulo(S)
+			return
 	forceMove(get_step_towards(src,abus))
 	max_distance++
 	if(max_distance >= 7)
@@ -506,7 +499,7 @@
 /////SINGULO CHAIN/////////
 
 /obj/structure/singulo_chain
-	name = "\improper singularity chain"
+	name = "singularity chain"
 	desc = "Admins are above all logic"
 	icon = 'icons/obj/singulo_chain.dmi'
 	icon_state = "chain"
@@ -562,7 +555,7 @@
 /////TELEPORT WARP/////////
 
 /obj/structure/teleportwarp
-	name = "\improper teleportation warp"
+	name = "teleportation warp"
 	desc = "The bus is about to jump..."
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = ""
