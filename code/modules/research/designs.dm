@@ -1674,6 +1674,15 @@ other types of metals and chemistry for reagents).
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mechfab
 
+/datum/design/pdapainter
+	name = "PDA Painter Board"
+	desc = "The circuit board for a PDA Painter."
+	id = "pdapainter"
+	req_tech = list("programming" = 2, "engineering" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/pdapainter
+
 
 /////////////////////////////////////////
 ////////////Power Stuff//////////////////

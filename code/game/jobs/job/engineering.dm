@@ -12,11 +12,11 @@
 	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 			            access_teleporter, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
 			            access_heads, access_construction, access_sec_doors,
-			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_ai_upload)
+			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_ai_upload, access_mechanic)
 	minimal_access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 			            access_teleporter, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
 			            access_heads, access_construction, access_sec_doors,
-			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_ai_upload)
+			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_ai_upload, access_mechanic)
 	minimal_player_age = 7
 
 	pdaslot=slot_l_store

@@ -11,6 +11,7 @@
 	var/sensor_mode = 0 //Determines the current HUD.
 	#define SEC_HUD 1 //Security HUD mode
 	#define MED_HUD 2 //Medical HUD mode
+	#define MESON_VISION 3 // Engineering borg and mommis
 	var/list/alarm_types_show = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
 	var/list/alarm_types_clear = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
 
@@ -238,7 +239,8 @@
 
 /mob/living/silicon/verb/sensor_mode()
 	set name = "Set Sensor Augmentation"
-	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical"/*,"Light Amplification"*/,"Disable")
+	set category = "Robot Commands"
+	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical"/*,"Light Amplification"*/,"Mesons", "Disable")
 	switch(sensor_type)
 		if ("Security")
 			sensor_mode = SEC_HUD
@@ -249,9 +251,12 @@
 		if ("Light Amplification")
 			src.sensor_mode = NIGHT
 			src << "<span class='notice'>Light amplification mode enabled.</span>"*/
+		if ("Mesons")
+			sensor_mode = MESON_VISION
+			src << "<span class='notice'>Meson Vison augmentation enabled.</span>"
 		if ("Disable")
 			sensor_mode = 0
-			src << "Sensor augmentations disabled."
+			src << "<span class='notice'>Sensor augmentations disabled.</span>"
 
 /mob/living/silicon/put_in_hand_check(var/obj/item/W)
 	return 0

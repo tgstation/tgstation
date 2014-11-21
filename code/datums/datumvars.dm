@@ -13,12 +13,13 @@ client
 		if(istype(D, /atom))
 			var/atom/A = D
 			var/reagentDatum = input(usr,"Reagent","Insert Reagent","") as text|null
-			var/reagentAmount = input(usr, "Amount", "Insert Amount", "") as num
-			if(A.reagents.add_reagent(reagentDatum, reagentAmount))
-				usr << "<span class='warning'>[reagentDatum] doesn't exist.</span>"
-				return
-			log_admin("[key_name(usr)] added [reagentDatum] with [reagentAmount] units to [A] ")
-			message_admins("[key_name(usr)] added [reagentDatum] with [reagentAmount] units to [A] ")
+			if(reagentDatum)
+				var/reagentAmount = input(usr, "Amount", "Insert Amount", "") as num
+				if(A.reagents.add_reagent(reagentDatum, reagentAmount))
+					usr << "<span class='warning'>[reagentDatum] doesn't exist.</span>"
+					return
+				log_admin("[key_name(usr)] added [reagentDatum] with [reagentAmount] units to [A] ")
+				message_admins("[key_name(usr)] added [reagentDatum] with [reagentAmount] units to [A] ")
 
 	proc/debug_variables(datum/D in world)
 		set category = "Debug"

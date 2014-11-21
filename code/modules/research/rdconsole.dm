@@ -989,7 +989,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	l_color = "#CD00CD"
 
 /obj/machinery/computer/rdconsole/mechanic
-	name = "Robotics R&D Console"
+	name = "Mechanics R&D Console"
 	id = 4
 	req_one_access = list(access_mechanic)
 	req_access=list()

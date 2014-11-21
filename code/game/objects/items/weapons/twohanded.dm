@@ -112,6 +112,9 @@
 		return
 
 	else //Trying to wield it
+		if(user.get_inactive_hand() == 0)
+			user << "<span class='warning'>You can't seem to wield it properly.</span>"
+			return
 		if(user.get_inactive_hand())
 			user << "<span class='warning'>You need your other hand to be empty</span>"
 			return
@@ -119,6 +122,7 @@
 		user << "<span class='notice'>You grab the [initial(name)] with both hands.</span>"
 		if (src.wieldsound)
 			playsound(get_turf(src), wieldsound, 50, 1)
+
 
 		var/obj/item/weapon/twohanded/offhand/O = new(user) ////Let's reserve his other hand~
 		O.name = "[initial(name)] - offhand"

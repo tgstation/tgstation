@@ -184,16 +184,16 @@
 /obj/item/borg/upgrade/jetpack/action(var/mob/living/silicon/robot/R)
 	if(..()) return 0
 
-	if(!istype(R.module, /obj/item/weapon/robot_module/miner)&&!isMoMMI(R))
-		R << "Upgrade mounting error!  No suitable hardpoint detected!"
-		usr << "There's no mounting point for the module!"
-		return 0
-	else
+	if(istype(R.module, /obj/item/weapon/robot_module/miner) || istype(R.module, /obj/item/weapon/robot_module/engineering) || isMoMMI(R))
 		R.module.modules += new/obj/item/weapon/tank/jetpack/carbondioxide
 		for(var/obj/item/weapon/tank/jetpack/carbondioxide in R.module.modules)
 			R.internals = src
 		//R.icon_state="Miner+j"
 		return 1
+	else
+		R << "<span class='warning'>Upgrade mounting error!  No suitable hardpoint detected!</span>"
+		usr << "<span class='warning'>There's no mounting point for the module!</span>"
+		return 0
 
 
 /obj/item/borg/upgrade/syndicate/

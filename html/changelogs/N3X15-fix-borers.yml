@@ -1,8 +1,0 @@
-author: N3X15
-delete-after: true
-changes:
-- rscadd: "Borers receive a brief instructional greeting and receive objectives."
-- bugfix: "Borers and host brains can communicate properly now."
-- bugfix: "Borer chat is propagated to ghosts and fellow borers properly."
-- bugfix: "Borer chat is stripped of the beginning ;."
-- bugfix: "Standardized borer vent-crawling, now uses same system as other vent-crawling mobs."
