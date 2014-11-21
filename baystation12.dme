@@ -53,6 +53,7 @@
 #include "code\_onclick\overmind.dm"
 #include "code\_onclick\telekinesis.dm"
 #include "code\_onclick\hud\_defines.dm"
+#include "code\_onclick\hud\adminbus.dm"
 #include "code\_onclick\hud\ai.dm"
 #include "code\_onclick\hud\alien.dm"
 #include "code\_onclick\hud\alien_larva.dm"

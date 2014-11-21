@@ -18,29 +18,46 @@ client/proc/antag_madness(var/mob/M in mob_list)
 		usr << "<span class='warning'>Only humans and monkeys can become overpowered antags.</span>"
 		return
 
-	var/list/role_list = list("traitor", "changeling", "vampire", "cult", "rev", "nuke", "deathsquad", "wizard")//"monkey"
+	var/list/role_list = list("traitor", "changeling", "vampire", "cult", "rev", "nuke", "deathsquad", "wizard", "monkey")
 	var/got_a_job = 0
 
 	if(ismonkey(M))
 		role_list = list("cult", "monkey")
 
-	while(role_list.len > 0)
-		var/choice = pick(role_list)
-		if(create_madness(M,choice))
-			got_a_job = 1
-			break
-		else
-			role_list -= choice
+	var/list/input_list = list("RANDOM")
+	input_list += role_list
+	input_list += "CANCEL"
+	var/procedure = input("Choose antag type.", "Antag Madness") in input_list
 
-	if(!got_a_job)//aka: if the mob already is every single type of antag.
-		usr << "<span class='danger'>The mob is already every type of antag at once holy shit stop that.</span>"
+	if(procedure == "CANCEL")
 		return
+
+	else if(procedure == "RANDOM")
+		while(role_list.len > 0)
+			var/choice = pick(role_list)
+			if(create_madness(M,choice))
+				log_admin("[key_name(usr)] turned [key_name(M)] into an overpowered [choice]")
+				message_admins("[key_name_admin(usr)] turned [key_name_admin(M)]into an overpowered [choice]", 1)
+				got_a_job = 1
+				break
+			else
+				role_list -= choice
+
+		if(!got_a_job)//aka: the mob failed all the antag creation checks
+			usr << "<span class='danger'>The mob is already every type of antag at once holy shit stop that.</span>"
+			return
+
+	else
+		if(create_madness(M,procedure))
+			log_admin("[key_name(usr)] turned [key_name(M)] into an overpowered [procedure]")
+			message_admins("[key_name_admin(usr)] turned [key_name_admin(M)]into an overpowered [procedure]", 1)
+		else
+			usr << "<span class='danger'>The mob is already a [procedure].</span>"
+			return
 
 	var/turf/T = get_turf(M)
 	T.beamin("")
 
-	log_admin("[key_name(usr)] turned [key_name(M)] into an overpowered ")
-	message_admins("[key_name_admin(usr)] turned [key_name_admin(M)]into an overpowered", 1)
 	feedback_add_details("admin_verb","AM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/antag_madness_adminbus(var/mob/M)
@@ -158,6 +175,7 @@ client/proc/antag_madness(var/mob/M in mob_list)
 			M.equip_to_slot_or_del(new/obj/item/clothing/under/batmansuit, slot_w_uniform)
 			M.equip_to_slot_or_del(new/obj/item/weapon/storage/backpack/satchel, slot_back)
 			M.equip_to_slot_or_del(new/obj/item/clothing/shoes/jackboots, slot_shoes)
+			M.equip_to_slot_or_del(new/obj/item/clothing/gloves/batmangloves, slot_gloves)
 			M.equip_to_slot_or_del(new/obj/item/clothing/mask/gas/death_commando, slot_wear_mask)
 			M.equip_to_slot_or_del(new/obj/item/clothing/suit/hgpirate, slot_wear_suit)
 			M.equip_to_slot_or_del(new/obj/item/clothing/head/chaplain_hood, slot_head)
@@ -224,13 +242,16 @@ client/proc/antag_madness(var/mob/M in mob_list)
 				M.equip_to_slot_or_del(pack, slot_in_backpack)
 				M.equip_to_slot_or_del(T, slot_in_backpack)
 				M.equip_to_slot_or_del(A, slot_in_backpack)
+				M.equip_to_slot_or_del(new /obj/item/weapon/melee/cultblade, slot_r_hand)
 			else if(istype(M, /mob/living/carbon/monkey))
 				var/mob/living/carbon/monkey/K = M
+				var/obj/item/weapon/storage/backpack/cultpack/P = new/obj/item/weapon/storage/backpack/cultpack(K)
 				K.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/death_commando(K), slot_wear_mask)
-				K.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(K), slot_back)
-				pack.loc = get_turf(K)
-				K.equip_to_slot_or_del(T, slot_r_hand)
-				K.equip_to_slot_or_del(A, slot_l_hand)
+				K.equip_to_slot_or_del(P, slot_back)
+				pack.loc = P
+				T.loc = P
+				A.loc = P
+				K.equip_to_slot_or_del(new /obj/item/weapon/melee/cultblade(K), slot_r_hand)
 				var/obj/item/clothing/monkeyclothes/cultrobes/JS = new /obj/item/clothing/monkeyclothes/cultrobes(K)
 				var/obj/item/clothing/head/culthood/alt/CH = new /obj/item/clothing/head/culthood/alt(K)
 				var/obj/item/clothing/monkeyclothes/olduniform = null

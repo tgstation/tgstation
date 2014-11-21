@@ -11,6 +11,7 @@ var/global/list/uneatable = list(
 	/obj/structure/hookshot,
 	/obj/structure/buslight,
 	/obj/structure/teleportwarp,
+	/obj/machinery/media/jukebox/superjuke/adminbus,
 	)
 
 /obj/machinery/singularity/

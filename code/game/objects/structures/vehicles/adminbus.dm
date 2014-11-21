@@ -14,7 +14,7 @@
 	var/list/overlays_bus[4]//1=underlay 2=roadlights 3=ad 4=door
 	var/list/passengers[] = list()
 	var/unloading = 0
-	var/capture_mode = 1//1=capture mobs 2=roll over mobs(deals light brute damage and push them down) 3=gib mobs
+	var/bumpers = 1//1=capture mobs 2=roll over mobs(deals light brute damage and push them down) 3=gib mobs
 	var/door_mode = 0//0=closed door, players cannot climb or leave on their own 1=openned door, players can climb and leave on their own
 	var/spawned_mobs[] = list()//keeps track of every mobs spawned by the bus, so we can remove them all with the push of a button in needed
 	var/hook = 1
@@ -27,6 +27,7 @@
 	var/spawnedbombs[] = list()
 	var/spawnedlasers[] = list()
 	var/obj/structure/teleportwarp/warp = null
+	var/obj/machinery/media/jukebox/superjuke/adminbus/busjuke = null
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/New()
 	..()
@@ -47,6 +48,7 @@
 	lightsource = new/obj/structure/buslight(src.loc)
 	lightsource.x += 2
 	warp = new/obj/structure/teleportwarp(src.loc)
+	busjuke = new/obj/machinery/media/jukebox/superjuke/adminbus(src.loc)
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/update_mob()
 	if(buckled_mob)
@@ -149,6 +151,11 @@
 	handle_mob_bumping()
 	if(warp)
 		warp.loc = src.loc
+	if(busjuke)
+		busjuke.loc = src.loc
+		busjuke.dir = dir
+		if((busjuke.icon_state != null) && (busjuke.icon_state != ""))
+			busjuke.repack()
 	if(chain_base)
 		chain_base.move_child(T)
 	for(var/i=1;i<=passengers.len;i++)
@@ -180,7 +187,7 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/handle_mob_bumping()
 	var/turf/S = get_turf(src)
-	switch(capture_mode)
+	switch(bumpers)
 		if(1)
 			for(var/mob/living/L in S)
 				if(L.isolated)
@@ -285,6 +292,7 @@
 		B.dir = src.dir
 		passengers += B
 	update_mob()
+	update_rearview()
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/buckle_mob(mob/M, mob/user)
 	if(M != user || !ismob(M) || get_dist(src, user) > 1 || user.restrained() || user.lying || user.stat || M.buckled || istype(user, /mob/living/silicon) || destroyed)
@@ -322,6 +330,7 @@
 				roadlights = 1
 				lightsource.SetLuminosity(2)
 			playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+			add_HUD(user)
 			return
 
 
@@ -359,6 +368,7 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/unbuckle()
 	if(buckled_mob)
+		remove_HUD(buckled_mob)
 		buckled_mob.buckled = null
 		buckled_mob.anchored = initial(buckled_mob.anchored)
 		buckled_mob.update_canmove()
@@ -371,6 +381,35 @@
 			roadlights = 0
 			lightsource.SetLuminosity(0)
 	return
+
+/obj/structure/stool/bed/chair/vehicle/adminbus/proc/add_HUD(var/mob/M)
+	if(!M || !(M.hud_used))	return
+
+	M.hud_used.adminbus_hud()
+	update_rearview()
+
+/obj/structure/stool/bed/chair/vehicle/adminbus/proc/remove_HUD(var/mob/M)
+	if(!M || !(M.hud_used))	return
+
+	M.hud_used.remove_adminbus_hud()
+
+/obj/structure/stool/bed/chair/vehicle/adminbus/proc/update_rearview()
+	if(buckled_mob)
+		for(var/i=1;i<=16;i++)
+			buckled_mob.client.screen -= buckled_mob.rearviews[i]
+			var/obj/screen/S = buckled_mob.rearviews[i]
+			var/icon/img = null
+			var/atom/A = null
+			if(i<=passengers.len)
+				A = passengers[i]
+			if(!A)
+				S.icon = 'icons/adminbus/32x32.dmi'
+				S.icon_state = ""
+			else
+				img = getFlatIcon(A,SOUTH,0)
+				S.icon = img
+				buckled_mob.rearviews[i] = S
+				buckled_mob.client.screen += buckled_mob.rearviews[i]
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/emp_act(severity)
 	return
@@ -444,10 +483,14 @@
 	if(!dropped)
 		var/obj/machinery/singularity/S = locate(/obj/machinery/singularity) in src.loc
 		if(S)
+			if(abus.buckled_mob)
+				abus.buckled_mob.adminbus_hook.icon_state = "icon_singulo"
 			abus.capture_singulo(S)
 	forceMove(get_step_towards(src,abus))
 	max_distance++
 	if(max_distance >= 7)
+		if(abus.buckled_mob)
+			abus.buckled_mob.adminbus_hook.icon_state = "icon_hook"
 		abus.hook = 1
 		del(src)
 		return

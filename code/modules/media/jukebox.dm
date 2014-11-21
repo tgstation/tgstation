@@ -531,6 +531,8 @@ var/global/loopModeNames=list(
 	desc = "The ultimate jukebox. Your brain begins to liquify from simply looking at it."
 
 	state_base = "superjuke"
+	icon_state = "superjuke"
+
 	change_cost = 0
 
 	playlist_id="bar"
@@ -543,7 +545,7 @@ var/global/loopModeNames=list(
 
 		"emagged" = "Syndie Mix",
 		"shuttle" = "Shuttle",
-		"endgame" = "Apocalypse"
+		"endgame" = "Apocalypse",
 	)
 
 /obj/machinery/media/jukebox/superjuke/attackby(obj/item/W, mob/user)
@@ -577,3 +579,70 @@ var/global/loopModeNames=list(
 	for(var/mob/M in mob_list)
 		if(M && M.client)
 			M.force_music(media_url,media_start_time,volume)
+
+/obj/machinery/media/jukebox/superjuke/adminbus
+	name = "adminbus-mounted Jukebox"
+	desc = "It really doesn't get any better."
+	icon = 'icons/obj/bus.dmi'
+	icon_state = ""
+	l_color = "#000066"
+	luminosity = 0
+	layer = FLY_LAYER+1
+	pixel_x = -32
+	pixel_y = -32
+
+	var/datum/browser/popup = null
+	req_access = list()
+	playlist_id="endgame"
+
+/obj/machinery/media/jukebox/superjuke/adminbus/New()
+	..()
+	return
+
+/obj/machinery/media/jukebox/superjuke/adminbus/attack_hand(var/mob/user)
+	var/t = "<div class=\"navbar\">"
+	t += "<a href=\"?src=\ref[src];screen=[JUKEBOX_SCREEN_MAIN]\">Main</a>"
+	t += "</div>"
+	t += ScreenMain(user)
+
+	user.set_machine(src)
+	popup = new (user,"jukebox",name,420,700)
+	popup.set_content(t)
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
+	popup.open()
+
+	if(icon_state != "jukebox")
+		deploy()
+
+/obj/machinery/media/jukebox/superjuke/adminbus/proc/deploy()
+	update_media_source()
+	icon_state = "jukebox"
+	SetLuminosity(4)
+	flick("deploying",src)
+
+/obj/machinery/media/jukebox/superjuke/adminbus/proc/repack()
+	if(playing)
+		for(var/mob/M in range (src,1))
+			M << "<span class='notice'>The jukebox turns itself off to protect itself from any cahot induced damage.</span>"
+	if(popup)
+		popup.close()
+	playing = 0
+	SetLuminosity(0)
+	icon_state = ""
+	flick("repacking",src)
+	update_music()
+	disconnect_media_source()
+	update_icon()
+
+/obj/machinery/media/jukebox/superjuke/adminbus/update_icon()
+	if(playing)
+		overlays += "beats"
+	else
+		overlays = 0
+	return
+
+/obj/machinery/media/jukebox/superjuke/adminbus/ex_act(severity)
+	return
+
+/obj/machinery/media/jukebox/superjuke/adminbus/cultify()
+	return
