@@ -310,16 +310,18 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	src.updateUsrDialog()
 
 /obj/machinery/computer/communications/attackby(var/obj/I as obj, var/mob/user as mob)
-	if((istype(I,/obj/item/weapon/card/emag/)) && (!src.emagged))
-		src.emagged = 1
-		if(authenticated == 1)
-			authenticated = 2
-		user << "You scramble the communication routing circuits!"
-	else if(istype(I, /obj/item/weapon/card/id))
+	if(istype(I, /obj/item/weapon/card/id))
 		attack_hand(user)
 	else
 		..()
 	return
+
+/obj/machinery/computer/communications/emag_act(mob/user as mob)
+	if(!emagged)
+		src.emagged = 1
+		if(authenticated == 1)
+			authenticated = 2
+		user << "You scramble the communication routing circuits!"
 
 /obj/machinery/computer/communications/attack_hand(var/mob/user as mob)
 	if(..())

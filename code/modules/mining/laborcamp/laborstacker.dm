@@ -55,15 +55,14 @@
 
 
 /obj/machinery/mineral/labor_claim_console/attackby(obj/item/I as obj, mob/user as mob)
-	if(istype(I, /obj/item/weapon/card/emag))
-		emagged = 1
-		user << "<span class='warning'>PZZTTPFFFT</span>"
-		return
-	else if(istype(I, /obj/item/weapon/card/id))
+	if(istype(I, /obj/item/weapon/card/id))
 		return attack_hand(user)
 	..()
 
-
+/obj/machinery/mineral/labor_claim_console/emag_act(mob/user as mob)
+	if(!emagged)
+		emagged = 1
+		user << "<span class='warning'>PZZTTPFFFT</span>"
 
 
 

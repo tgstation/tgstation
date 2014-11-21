@@ -274,15 +274,15 @@
 		else
 			src.locked = 0
 			user << "System unlocked."
-	else if (istype(W, /obj/item/weapon/card/emag))
-		if (isnull(src.occupant))
-			return
-		user << "You force an emergency ejection."
-		src.locked = 0
-		src.go_out()
-		return
 	else
 		..()
+
+/obj/machinery/clonepod/emag_act(user as mob)
+	if (isnull(src.occupant))
+		return
+	user << "You force an emergency ejection."
+	src.locked = 0
+	src.go_out()
 
 //Put messages in the connected computer's temp var for display.
 /obj/machinery/clonepod/proc/connected_message(var/message)

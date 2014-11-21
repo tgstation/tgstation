@@ -86,16 +86,11 @@ datum/shuttle_manager/proc/move_shuttle(var/override_delay)
 		else
 			usr << "<span class='warning'>Invalid shuttle requested.</span>"
 
-
-/obj/machinery/computer/shuttle/attackby(I as obj, user as mob)
-
-	if (istype(I, /obj/item/weapon/card/emag))
+/obj/machinery/computer/shuttle/emag_act(mob/user as mob)
+	if(!emagged)
 		src.req_access = list()
 		emagged = 1
-		usr << "You fried the consoles ID checking system."
-	else
-		..()
-	return
+		user << "<span class='notice'> You fried the consoles ID checking system.</span>"
 
 /obj/machinery/computer/shuttle/ferry
 	name = "transport ferry console"

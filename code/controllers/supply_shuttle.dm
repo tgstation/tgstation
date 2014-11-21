@@ -578,14 +578,10 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	popup.open()
 	return
 
-/obj/machinery/computer/supplycomp/attackby(I as obj, user as mob)
-	if(istype(I,/obj/item/weapon/card/emag) && !hacked)
+/obj/machinery/computer/supplycomp/emag_act(user as mob)
+	if(!hacked)
 		user << "<span class='notice'>Special supplies unlocked.</span>"
 		hacked = 1
-		return
-	else
-		..()
-	return
 
 /obj/machinery/computer/supplycomp/Topic(href, href_list)
 	if(!supply_shuttle)

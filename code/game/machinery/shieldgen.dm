@@ -232,11 +232,7 @@
 	return
 
 /obj/machinery/shieldgen/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/card/emag))
-		malfunction = 1
-		update_icon()
-
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/weapon/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		if(is_open)
 			user << "<span class='notice'>You close the panel.</span>"
@@ -287,6 +283,10 @@
 	else
 		..()
 
+/obj/machinery/shieldgen/emag_act()
+	if(!malfunction)
+		malfunction = 1
+		update_icon()
 
 /obj/machinery/shieldgen/update_icon()
 	if(active)

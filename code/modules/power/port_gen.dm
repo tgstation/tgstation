@@ -206,9 +206,6 @@ display round(lastgen) and plasmatank amount
 		addstack.use(amount)
 		updateUsrDialog()
 		return
-	else if (istype(O, /obj/item/weapon/card/emag))
-		emagged = 1
-		emp_act(1)
 	else if(!active)
 
 		if(exchange_parts(user, O))
@@ -236,6 +233,11 @@ display round(lastgen) and plasmatank amount
 				user << "<span class='notice'>You close the access panel.</span>"
 		else if(istype(O, /obj/item/weapon/crowbar) && panel_open)
 			default_deconstruction_crowbar(O)
+
+/obj/machinery/power/port_gen/pacman/emag_act(mob/user as mob)
+	if(!emagged)
+		emagged = 1
+		emp_act(1)
 
 /obj/machinery/power/port_gen/pacman/attack_hand(mob/user as mob)
 	..()

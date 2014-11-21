@@ -39,24 +39,6 @@
 		return
 	if(!istype(user))
 		return
-	if(istype(O,/obj/item/weapon/card/emag/))
-		// Will create sparks and print out the console's password. You will then have to wait a while for the console to be back online.
-		// It'll take more time if there's more characters in the password..
-		if(!emag)
-			if(!isnull(src.linkedServer))
-				icon_state = hack_icon // An error screen I made in the computers.dmi
-				emag = 1
-				screen = 2
-				spark_system.set_up(5, 0, src)
-				src.spark_system.start()
-				var/obj/item/weapon/paper/monitorkey/MK = new/obj/item/weapon/paper/monitorkey
-				MK.loc = src.loc
-				// Will help make emagging the console not so easy to get away with.
-				MK.info += "<br><br><font color='red'>£%@%(*$%&(£&?*(%&£/{}</font>"
-				spawn(100*length(src.linkedServer.decryptkey)) UnmagConsole()
-				message = rebootmsg
-			else
-				user << "<span class='notice'>A no server error appears on the screen.</span>"
 	if(istype(O, /obj/item/weapon/screwdriver) && emag)
 		//Stops people from just unscrewing the monitor and putting it back to get the console working again.
 		user << "<span class='warning'>It is too hot to mess with!</span>"
@@ -64,6 +46,23 @@
 
 	..()
 	return
+
+/obj/machinery/computer/message_monitor/emag_act(user as mob)
+	if(!emag)
+		if(!isnull(src.linkedServer))
+			icon_state = hack_icon // An error screen I made in the computers.dmi
+			emag = 1
+			screen = 2
+			spark_system.set_up(5, 0, src)
+			src.spark_system.start()
+			var/obj/item/weapon/paper/monitorkey/MK = new/obj/item/weapon/paper/monitorkey
+			MK.loc = src.loc
+			// Will help make emagging the console not so easy to get away with.
+			MK.info += "<br><br><font color='red'>£%@%(*$%&(£&?*(%&£/{}</font>"
+			spawn(100*length(src.linkedServer.decryptkey)) UnmagConsole()
+			message = rebootmsg
+		else
+			user << "<span class='notice'>A no server error appears on the screen.</span>"
 
 /obj/machinery/computer/message_monitor/update_icon()
 	..()

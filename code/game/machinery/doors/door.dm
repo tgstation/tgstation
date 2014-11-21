@@ -129,7 +129,18 @@
 		user = null
 	if(!src.requiresID())
 		user = null
-	if(src.density && hasPower() && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
+	if(src.allowed(user) || src.emergency == 1)
+		if(src.density)
+			open()
+		else
+			close()
+		return
+	if(src.density)
+		flick("door_deny", src)
+	return
+
+/obj/machinery/door/emag_act(mob/user as mob)
+	if(density && hasPower() && !emagged)
 		flick("door_spark", src)
 		sleep(6)
 		open()
@@ -142,17 +153,6 @@
 			A.loseMainPower()
 			A.loseBackupPower()
 			A.update_icon()
-		return 1
-	if(src.allowed(user) || src.emergency == 1)
-		if(src.density)
-			open()
-		else
-			close()
-		return
-	if(src.density)
-		flick("door_deny", src)
-	return
-
 
 /obj/machinery/door/blob_act()
 	if(prob(40))

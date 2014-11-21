@@ -85,12 +85,7 @@ var/global/mulebot_count = 0
 // cell: insert it
 // other: chance to knock rider off bot
 /obj/machinery/bot/mulebot/attackby(var/obj/item/I, var/mob/user)
-	if(istype(I,/obj/item/weapon/card/emag))
-		locked = !locked
-		user << "<span class='notice'>You [locked ? "lock" : "unlock"] the mulebot's controls!</span>"
-		flick("mulebot-emagged", src)
-		playsound(loc, 'sound/effects/sparks1.ogg', 100, 0)
-	else if(istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda))
+	if(istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda))
 		if(toggle_lock(user))
 			user << "<span class='notice'>Controls [(locked ? "locked" : "unlocked")].</span>"
 
@@ -137,6 +132,11 @@ var/global/mulebot_count = 0
 		..()
 	return
 
+/obj/machinery/bot/mulebot/emag_act(mob/user as mob)
+	locked = !locked
+	user << "<span class='notice'>You [locked ? "lock" : "unlock"] the mulebot's controls!</span>"
+	flick("mulebot-emagged", src)
+	playsound(loc, 'sound/effects/sparks1.ogg', 100, 0)
 
 /obj/machinery/bot/mulebot/ex_act(var/severity)
 	unload(0)

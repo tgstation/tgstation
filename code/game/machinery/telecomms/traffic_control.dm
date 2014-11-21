@@ -273,15 +273,16 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/computer/telecomms/traffic/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
-	if(istype(D, /obj/item/weapon/card/emag) && !emagged)
+/obj/machinery/computer/telecomms/traffic/attackby()
+	..()
+	src.updateUsrDialog()
+	return
+
+/obj/machinery/computer/telecomms/traffic/emag_act(mob/user as mob)
+	if(!emagged)
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
 		user << "<span class='notice'>You you disable the security protocols.</span>"
-	else
-		..()
-	src.updateUsrDialog()
-	return
 
 /obj/machinery/computer/telecomms/traffic/proc/canAccess(var/mob/user)
 	if(issilicon(user) || in_range(user, src))

@@ -157,14 +157,16 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		user.drop_item()
 		D.loc = src
 		user << "<span class='notice'> You add the disk to the machine!</span>"
-	else if(istype(D, /obj/item/weapon/card/emag) && !emagged)
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
-		emagged = 1
-		user << "<span class='notice'> You you disable the security protocols</span>"
 	else
 		..()
 	src.updateUsrDialog()
 	return
+
+/obj/machinery/computer/rdconsole/emag_act(mob/user as mob)
+	if(!emagged)
+		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
+		emagged = 1
+		user << "<span class='notice'> You you disable the security protocols</span>"
 
 /obj/machinery/computer/rdconsole/Topic(href, href_list)
 	if(..())
