@@ -219,10 +219,7 @@
 
 /obj/item/clothing/suit/jacket/leather
 	name = "leather jacket"
-	if(prob(50))
-		desc = "Pompadour not included." // http://tunnelsnakes.com/
-	else
-		desc = "Tunnel Snakes rule."
+	desc = "Pompadour not included."
 	icon_state = "leatherjacket"
 
 //Blue suit jacket toggle
