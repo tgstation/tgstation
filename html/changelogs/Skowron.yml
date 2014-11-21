@@ -1,2 +1,5 @@
 author: Skowron
-changes: []
+delete-after: true
+changes: 
+
+  - rscdel: Miners no longer spawn as "dwarves". Enjoy the full head of hair. Prevent cancer.
