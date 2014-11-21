@@ -294,8 +294,8 @@
 				playsound(get_turf(src), 'sound/weapons/flash.ogg', 50, 0)
 				var/mob/dead/observer/ghost = H.get_ghost()
 				var/tplus = world.time - H.timeofdeath
-				var/tlimit = 1800 //past this much time the subject is unrecoverable, currently 3m
-				var/tloss = 900 //brain damage starts setting in after some time, currently 1m30s
+				var/tlimit = 3000 //past this much time the patient is unrecoverable (in deciseconds)
+				var/tloss = 900 //brain damage starts setting in on the patient after some time left rotting
 				var/total_burn	= 0
 				var/total_brute	= 0
 				if(do_after(user, 20)) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
