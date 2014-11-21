@@ -63,11 +63,10 @@
 	var/safety = M:eyecheck()
 	if(safety <= 0)
 		M.confused += power
-		M.Stun(1)
 		flick("e_flash", M.flash)
 		if(user && convert)
 			terrible_conversion_proc(M, user)
-
+			M.Stun(1)
 
 /obj/item/device/flash/attack(mob/living/M, mob/user)
 	if(!try_use_flash(user))
