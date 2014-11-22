@@ -411,7 +411,6 @@
 		playsound(src.loc, "shatter", 50, 1)
 		new frame(src.loc)
 		new /obj/item/weapon/shard(src.loc)
-		new /obj/item/weapon/shard(src.loc)
 		qdel(src)
 	qdel(I)
 
@@ -428,7 +427,6 @@
 		add_logs(user, src, "climbed onto")
 		playsound(src.loc, "shatter", 50, 1)
 		new frame(src.loc)
-		new /obj/item/weapon/shard(src.loc)
 		new /obj/item/weapon/shard(src.loc)
 		qdel(src)
 		user.Weaken(5)
@@ -611,6 +609,7 @@
 		density = 0
 		var/obj/item/weapon/rack_parts/newparts = new(loc)
 		transfer_fingerprints_to(newparts)
+		qdel(src)
 	return
 
 /*

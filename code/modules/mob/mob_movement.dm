@@ -61,16 +61,6 @@
 	return
 
 
-/client/verb/toggle_throw_mode()
-	set hidden = 1
-	if(!istype(mob, /mob/living/carbon))
-		return
-	if (!mob.stat && isturf(mob.loc) && !mob.restrained())
-		mob:toggle_throw_mode()
-	else
-		return
-
-
 /client/verb/drop_item()
 	set hidden = 1
 	if(!isrobot(mob))

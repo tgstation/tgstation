@@ -18,6 +18,7 @@
 	unacidable = 1 //and no deleting hoomans inside
 	layer = MOB_LAYER //icon draw layer
 	infra_luminosity = 15 //byond implementation is bugged.
+	force = 5
 	var/can_move = 1
 	var/mob/living/carbon/occupant = null
 	var/step_in = 10 //make a step in step_in/10 sec.
@@ -45,7 +46,7 @@
 	var/internal_tank_valve = ONE_ATMOSPHERE
 	var/obj/machinery/portable_atmospherics/canister/internal_tank
 	var/datum/gas_mixture/cabin_air
-	var/obj/machinery/atmospherics/portables_connector/connected_port = null
+	var/obj/machinery/atmospherics/unary/portables_connector/connected_port = null
 
 	var/obj/item/device/radio/radio = null
 
@@ -69,6 +70,9 @@
 
 	var/stepsound = 'sound/mecha/mechstep.ogg'
 	var/turnsound = 'sound/mecha/mechturn.ogg'
+
+	var/melee_cooldown = 10
+	var/melee_can_hit = 1
 
 
 /obj/mecha/New()
@@ -265,12 +269,15 @@ obj/mecha/proc/can_use(mob/user)
 
 /obj/mecha/proc/click_action(atom/target,mob/user)
 	if(!src.occupant || src.occupant != user ) return
-	if(user.stat) return
-	if(state)
-		occupant_message("<span class='danger'>Maintenance protocols in effect</span>")
+	if(user.stat || !user.canmove)
 		return
-	if(!get_charge()) return
-	if(src == target) return
+	if(state)
+		occupant_message("<span class='warning'>Maintenance protocols in effect.</span>")
+		return
+	if(!get_charge())
+		return
+	if(src == target)
+		return
 	var/dir_to_target = get_dir(src,target)
 	if(dir_to_target && !(dir_to_target & src.dir))//wrong direction
 		return
@@ -284,11 +291,39 @@ obj/mecha/proc/can_use(mob/user)
 	else if(selected && selected.is_melee())
 		selected.action(target)
 	else
-		src.melee_action(target)
+		if(internal_damage&MECHA_INT_CONTROL_LOST)
+			target = safepick(oview(1,src))
+		if(!melee_can_hit || !istype(target, /atom))
+			return
+		target.mech_melee_attack(src)
+		melee_can_hit = 0
+		if(do_after(melee_cooldown))
+			melee_can_hit = 1
 	return
 
+/obj/mecha/proc/mech_toxin_damage(mob/living/target)
+	playsound(src, 'sound/effects/spray2.ogg', 50, 1)
+	if(target.reagents)
+		if(target.reagents.get_reagent_amount("cryptobiolin") + force < force*2)
+			target.reagents.add_reagent("cryptobiolin", force/2)
+		if(target.reagents.get_reagent_amount("toxin") + force < force*2)
+			target.reagents.add_reagent("toxin", force/2.5)
 
-/obj/mecha/proc/melee_action(atom/target)
+
+/atom/proc/mech_melee_attack(obj/mecha/M)
+	return
+
+/obj/mecha/mech_melee_attack(obj/mecha/M)
+	if(M.damtype =="brute")
+		playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
+	else if(M.damtype == "fire")
+		playsound(src, 'sound/items/Welder.ogg', 50, 1)
+	else
+		return
+	M.occupant_message("<span class='danger'>You hit [src].</span>")
+	visible_message("<span class='danger'>[src] has been hit by [M.name].</span>")
+	take_damage(M.force, damtype)
+	add_logs(M.occupant, src, "attacked", object=M, addition="(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 	return
 
 /obj/mecha/proc/range_action(atom/target)
@@ -833,7 +868,7 @@ obj/mecha/proc/can_use(mob/user)
 		. = t_air.return_temperature()
 	return
 
-/obj/mecha/proc/connect(obj/machinery/atmospherics/portables_connector/new_port)
+/obj/mecha/proc/connect(obj/machinery/atmospherics/unary/portables_connector/new_port)
 	//Make sure not already connected to something else
 	if(connected_port || !new_port || new_port.connected_device)
 		return 0
@@ -845,12 +880,8 @@ obj/mecha/proc/can_use(mob/user)
 	//Perform the connection
 	connected_port = new_port
 	connected_port.connected_device = src
+	connected_port.parent.reconcile_air()
 
-	//Actually enforce the air sharing
-	var/datum/pipe_network/network = connected_port.return_network(src)
-	if(network && !(internal_tank.return_air() in network.gases))
-		network.gases += internal_tank.return_air()
-		network.update = 1
 	log_message("Connected to gas port.")
 	return 1
 
@@ -858,15 +889,13 @@ obj/mecha/proc/can_use(mob/user)
 	if(!connected_port)
 		return 0
 
-	var/datum/pipe_network/network = connected_port.return_network(src)
-	if(network)
-		network.gases -= internal_tank.return_air()
-
 	connected_port.connected_device = null
 	connected_port = null
 	src.log_message("Disconnected from gas port.")
 	return 1
 
+/obj/mecha/portableConnectorReturnAir()
+	return internal_tank.return_air()
 
 /////////////////////////
 ////////  Verbs  ////////
@@ -882,7 +911,7 @@ obj/mecha/proc/can_use(mob/user)
 	if(!can_use(usr))
 		return
 
-	var/obj/machinery/atmospherics/portables_connector/possible_port = locate(/obj/machinery/atmospherics/portables_connector/) in loc
+	var/obj/machinery/atmospherics/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/unary/portables_connector/) in loc
 	if(possible_port)
 		if(connect(possible_port))
 			src.occupant_message("<span class='notice'>[name] connects to the port.</span>")
@@ -946,6 +975,8 @@ obj/mecha/proc/can_use(mob/user)
 
 /obj/mecha/MouseDrop_T(mob/M as mob, mob/user as mob)
 	if (!user.canUseTopic(src) || (user != M))
+		return
+	if(!ishuman(user)) // no silicons or drones in mechas.
 		return
 	src.log_message("[user] tries to move in.")
 	if (src.occupant)
@@ -1411,8 +1442,6 @@ var/year_integer = text2num(year) // = 2013???
 
 /obj/mecha/Topic(href, href_list)
 	..()
-	if(!usr.canUseTopic(src))
-		return
 	if(href_list["update_content"])
 		if(usr != src.occupant)	return
 		send_byjax(src.occupant,"exosuit.browser","content",src.get_stats_part())

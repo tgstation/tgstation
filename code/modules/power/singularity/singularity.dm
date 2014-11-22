@@ -33,7 +33,7 @@
 
 	src.energy = starting_energy
 	..()
-	for(var/obj/machinery/singularity_beacon/singubeacon in world)
+	for(var/obj/machinery/power/singularity_beacon/singubeacon in world)
 		if(singubeacon.active)
 			target = singubeacon
 			break

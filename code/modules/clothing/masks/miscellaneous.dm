@@ -32,8 +32,8 @@
 	action_button_name = "Adjust Sterile Mask"
 	ignore_maskadjust = 0
 
-/obj/item/clothing/mask/surgical/attack_self()
-	adjustmask()
+/obj/item/clothing/mask/surgical/attack_self(var/mob/user)
+	adjustmask(user)
 
 /obj/item/clothing/mask/fakemoustache
 	name = "fake moustache"
