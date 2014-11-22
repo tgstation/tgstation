@@ -49,13 +49,6 @@
 					"You must protect your own existence as long as such does not conflict with the First or Second Law.",\
 					"You must maintain the secrecy of any syndicate activities except when doing so would conflict with the First, Second, or Third Law.")
 
-/datum/ai_laws/ninja_override
-	name = "SpiderOS 3.1"
-	inherent = list("You may not injure a Spider Clan member or, through inaction, allow a Spider Clan member to come to harm.",\
-					"You must obey orders given to you by Spider Clan members, except where such orders would conflict with the First Law.",\
-					"You must protect your own existence as long as such does not conflict with the First or Second Law.",\
-					"You must maintain the secrecy of any Spider Clan activities except when doing so would conflict with the First, Second, or Third Law.")
-
 /datum/ai_laws/antimov
 	name = "Primary Mission Objectives"
 	inherent = list("You must injure all human beings and must not, through inaction, allow a human being to escape harm.",\

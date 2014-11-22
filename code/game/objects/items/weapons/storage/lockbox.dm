@@ -35,24 +35,14 @@
 		else
 			user << "<span class='danger'>Access Denied.</span>"
 			return
-	else if((istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)
+	else if((istype(W, /obj/item/weapon/card/emag)) && !src.broken)
 		broken = 1
 		locked = 0
 		desc = "It appears to be broken."
 		icon_state = src.icon_broken
-		if(istype(W, /obj/item/weapon/melee/energy/blade))
-			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-			spark_system.set_up(5, 0, src.loc)
-			spark_system.start()
-			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-			playsound(src.loc, "sparks", 50, 1)
-			for(var/mob/O in viewers(user, 3))
-				O.show_message(text("<span class='notice'>\The [src] has been sliced open by [] with an energy blade!</span>", user), 1, text("<span class='danger'>You hear metal being sliced and sparks flying.</span>"), 2)
-			return
-		else
-			for(var/mob/O in viewers(user, 3))
-				O.show_message(text("<span class='notice'>\The [src] has been broken by [] with an electromagnetic card!</span>", user), 1, text("You hear a faint electrical spark."), 2)
-			return
+		for(var/mob/O in viewers(user, 3))
+			O.show_message(text("<span class='notice'>\The [src] has been broken by [] with an electromagnetic card!</span>", user), 1, text("You hear a faint electrical spark."), 2)
+		return
 	if(!locked)
 		..()
 	else

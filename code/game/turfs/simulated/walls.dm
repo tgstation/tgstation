@@ -170,15 +170,6 @@
 	if( thermite )
 		if(is_hot(W))
 			thermitemelt(user)
-
-		if( istype(W, /obj/item/weapon/melee/energy/blade) )
-			var/obj/item/weapon/melee/energy/blade/EB = W
-
-			EB.spark_system.start()
-			user << "<span class='notice'>You slash \the [src] with \the [EB]; the thermite ignites!</span>"
-			playsound(src, "sparks", 50, 1)
-			playsound(src, 'sound/weapons/blade1.ogg', 50, 1)
-
 		return
 
 
@@ -233,25 +224,6 @@
 				user << "<span class='notice'>Your drill tears though the last of the reinforced plating.</span>"
 				dismantle_wall()
 				visible_message("<span class='warning'>The wall was drilled through by [user]!</span>", "<span class='warning'>You hear the grinding of metal.</span>")
-		return
-
-	else if( istype(W, /obj/item/weapon/melee/energy/blade) )
-		var/obj/item/weapon/melee/energy/blade/EB = W
-
-		EB.spark_system.start()
-		user << "<span class='notice'>You stab \the [EB] into the wall and begin to slice it apart.</span>"
-		playsound(src, "sparks", 50, 1)
-
-		if(do_after(user, slicing_duration*0.7))  //energy blade slicing is faster than welding tool slicing
-			if( !istype(src, /turf/simulated/wall) || !user || !EB || !T )
-				return
-
-			if( user.loc == T && user.get_active_hand() == W )
-				EB.spark_system.start()
-				playsound(src, "sparks", 50, 1)
-				playsound(src, 'sound/weapons/blade1.ogg', 50, 1)
-				dismantle_wall(1)
-				visible_message("<span class='warning'>The wall was sliced apart by [user]!</span>", "<span class='warning'>You hear metal being sliced apart and sparks flying.</span>")
 		return
 
 	else if(istype(W,/obj/item/apc_frame))

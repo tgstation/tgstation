@@ -25,20 +25,6 @@
 		if( is_hot(W) )
 			thermitemelt(user)
 
-		if( istype(W, /obj/item/weapon/melee/energy/blade) )
-			var/obj/item/weapon/melee/energy/blade/EB = W
-
-			EB.spark_system.start()
-			user << "<span class='notice'>You slash \the [src] with \the [EB]; the thermite ignites!</span>"
-			playsound(src, "sparks", 50, 1)
-			playsound(src, 'sound/weapons/blade1.ogg', 50, 1)
-
-		return
-
-	else if(istype(W, /obj/item/weapon/melee/energy/blade))
-		user << "<span class='notice'>This wall is too thick to slice through. You will need to find a different path.</span>"
-		return
-
 	var/turf/T = user.loc	//get user's location for delay checks
 
 	//DECONSTRUCTION

@@ -311,16 +311,6 @@
 	if(isrobot(user))
 		return
 
-	if(istype(I, /obj/item/weapon/melee/energy/blade))
-		var/datum/effect/effect/system/spark_spread/SS = new /datum/effect/effect/system/spark_spread()
-		SS.set_up(5, 0, src.loc)
-		SS.start()
-		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-		playsound(src.loc, "sparks", 50, 1)
-		user.visible_message("<span class='notice'>The [src.name] was sliced apart by [user]!</span>")
-		table_destroy(1)
-		return
-
 	if(!(I.flags & ABSTRACT)) //rip more parems rip in peace ;_;
 		if(user.drop_item())
 			I.Move(loc)

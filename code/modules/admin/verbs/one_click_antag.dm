@@ -314,10 +314,6 @@ client/proc/one_click_antag()
 	new /datum/round_event/alien_infestation{spawncount=3}()
 	return 1
 
-/datum/admins/proc/makeSpaceNinja()
-	new /datum/round_event/ninja()
-	return 1
-
 // DEATH SQUADS
 /datum/admins/proc/makeDeathsquad()
 	var/list/mob/dead/observer/candidates = list()

@@ -44,24 +44,20 @@
 				if(!src.makeNukeTeam())
 					usr << "<span class='danger'>Unfortunatly there were not enough candidates available.</span>"
 			if("8")
-				message_admins("[key_name(usr)] spawned a ninja.")
-				log_admin("[key_name(usr)] spawned a ninja.")
-				src.makeSpaceNinja()
-			if("9")
 				message_admins("[key_name(usr)] started an alien infestation.")
 				log_admin("[key_name(usr)] started an alien infestation.")
 				src.makeAliens()
-			if("10")
+			if("9")
 				message_admins("[key_name(usr)] created a death squad.")
 				log_admin("[key_name(usr)] created a death squad.")
 				if(!src.makeDeathsquad())
 					usr << "<span class='danger'>Unfortunatly there were not enough candidates available.</span>"
-			if("11")
+			if("10")
 				var/strength = input("Set Blob Strength (1=Weak, 2=Strong, 3=Full)","Set Strength",1) as num
 				message_admins("[key_name(usr)] spawned a blob with strength [strength].")
 				log_admin("[key_name(usr)] spawned a blob with strength [strength].")
 				new/datum/round_event/blob(strength)
-			if("12")
+			if("11")
 				message_admins("[key_name(usr)] started a gang war.")
 				log_admin("[key_name(usr)] started a gang war.")
 				if(!src.makeGangsters())
@@ -1526,10 +1522,6 @@
 				removed_paths += dirty_path
 				continue
 			else if(ispath(path, /obj/item/weapon/gun/energy/pulse_rifle))
-				if(!check_rights(R_FUN,0))
-					removed_paths += dirty_path
-					continue
-			else if(ispath(path, /obj/item/weapon/melee/energy/blade))//Not an item one should be able to spawn./N
 				if(!check_rights(R_FUN,0))
 					removed_paths += dirty_path
 					continue
