@@ -13,7 +13,13 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/throw_impact(atom/hit_atom)
 	..()
-	new/obj/effect/decal/cleanable/pie_smudge(src.loc)
+	if(ishuman(hit_atom))
+		var/mob/living/carbon/human/H = hit_atom
+		H.lip_style = "pie"
+		H.update_body()
+	else
+		new/obj/effect/decal/cleanable/pie_smudge(src.loc)
+	playsound(loc, 'sound/items/splat2.ogg', 20, 1)
 	reagents.reaction(hit_atom, TOUCH)
 	del(src) // Not qdel, because it'll hit other mobs then the floor for runtimes.
 
