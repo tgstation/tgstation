@@ -495,7 +495,7 @@ var/global/list/uneatable = list(
 					return
 				else
 					H << "<span class=\"warning\">You look directly into The [src.name], but your eyewear does absolutely nothing to protect you from it!</span>"
-		M << "\red You look directly into The [src.name] and feel [current_size == 11 ? helpless : weak]."
+		M << "\red You look directly into The [src.name] and feel [current_size == 11 ? "helpless" : "weak"]."
 		M.apply_effect(3, STUN)
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("\red <B>[] stares blankly at The []!</B>", M, src), 1)
