@@ -194,7 +194,7 @@ var/global/list/uneatable = list(
 			consume_range = 4
 			dissipate = 0 // It cant go smaller due to e loss.
 			if(growing)
-				src.visible_message("<span class='danger'>The singularity has grown out of control!</span>")
+				src.visible_message("<span class='danger'><font size='2'>The singularity has grown out of control!</font></span>")
 			else
 				src.visible_message("<span class='warning'>The singularity miraculously reduces in size and loses its supermatter properties.</span>")
 		if(11)//SUPERSINGULO
@@ -209,7 +209,7 @@ var/global/list/uneatable = list(
 			consume_range = 5
 			dissipate = 0 //It cant go smaller due to e loss
 			event_chance = 25 //Events will fire off more often.
-			src.visible_message("<span class='sinister'>You witness the creation of a destructive force that cannot possibly be stopped by human hands.</span>")
+			src.visible_message("<span class='sinister'><font size='3'>You witness the creation of a destructive force that cannot possibly be stopped by human hands.</font></span>")
 
 	if (current_size == allowed_size)
 		investigate_log("<font color='red'>grew to size [current_size].</font>", "singulo")
@@ -232,6 +232,8 @@ var/global/list/uneatable = list(
 			allowed_size = 3
 		if (500 to 999)
 			allowed_size = 5
+		if (1000 to 1999)
+			allowed_size = 7
 		if(2000 to 14999)
 			allowed_size = 9
 		if(15000 to INFINITY)
@@ -488,24 +490,31 @@ var/global/list/uneatable = list(
 		if(M.stat == CONSCIOUS)
 			if (istype(M,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
-				if(istype(H.glasses,/obj/item/clothing/glasses/meson))
-					H << "\blue You look directly into The [src.name], good thing you had your protective eyewear on!"
+				if(istype(H.glasses,/obj/item/clothing/glasses/meson) && current_size != 11)
+					H << "<span class=\"notice\">You look directly into The [src.name], good thing you had your protective eyewear on!</span>"
 					return
-		M << "\red You look directly into The [src.name] and feel weak."
+				else
+					H << "<span class=\"warning\">You look directly into The [src.name], but your eyewear does absolutely nothing to protect you from it!</span>"
+		M << "\red You look directly into The [src.name] and feel [current_size == 11 ? helpless : weak]."
 		M.apply_effect(3, STUN)
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("\red <B>[] stares blankly at The []!</B>", M, src), 1)
 
 /obj/machinery/singularity/proc/emp_area()
-	empulse(src, 8, 10)
+	if(current_size != 11)
+		empulse(src, 8, 10)
+	else
+		empulse(src, 12, 16)
 
 /obj/machinery/singularity/proc/smwave()
 	for(var/mob/living/M in view(10, src.loc))
-		if(rand(1,100) > 33)
+		if(prob(67))
 			M.apply_effect(rand(energy), IRRADIATE)
-			M << "<span class=\"warning\">You hear an uneartly ringing, then what sounds like a shrilling kettle as you are washed with a wave of heat. Miraculously, it fails to kill you.</span>"
+			M << "<span class=\"warning\">You hear an uneartly ringing, then what sounds like a shrilling kettle as you are washed with a wave of heat.</span>
+			M << "<span class=\"notice\">Miraculously, it fails to kill you.</span>"
 		else
-			M << "<span class=\"warning\">You hear an uneartly ringing, then what sounds like a shrilling kettle as you are washed with a wave of heat.</span>"
+			M << "<span class=\"danger\">You hear an uneartly ringing, then what sounds like a shrilling kettle as you are washed with a wave of heat.</span>"
+			M << "<span class=\"danger\">You don't even have a moment to react as you are reduced to ashes by the intense radiation.</span>"
 			M.dust()
 	return
 
