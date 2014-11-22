@@ -1790,7 +1790,7 @@
 "aIv" = (/turf/simulated/floor/plasteel{dir = 4; icon_state = "bluecorner"},/area/hallway/primary/central)
 "aIw" = (/turf/simulated/floor/plasteel{dir = 1; icon_state = "blue"},/area/hallway/primary/central)
 "aIx" = (/turf/simulated/floor/plasteel{dir = 5; icon_state = "blue"},/area/hallway/primary/central)
-"aIy" = (/obj/structure/shuttle/engine/heater,/turf/simulated/floor/plating/airless,/area/shuttle/mining/station)
+"aIy" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/plating/airless,/area/shuttle/mining/station)
 "aIz" = (/obj/machinery/vending/cola,/turf/simulated/floor/plasteel{icon_state = "dark"},/area/hallway/primary/central)
 "aIA" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/wall/r_wall,/area/bridge/meeting_room)
 "aIB" = (/obj/structure/extinguisher_cabinet{pixel_x = 27; pixel_y = 0},/obj/machinery/light{dir = 4; icon_state = "tube1"},/turf/simulated/floor/plasteel{icon_state = "neutral"; dir = 4},/area/hallway/primary/central)
