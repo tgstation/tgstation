@@ -52,28 +52,33 @@
 	if(!parent)
 		return ..()
 
-	var/datum/gas_mixture/environment = loc.return_air()
+	// Get gas from pipenet
 	var/datum/gas_mixture/internal = return_air()
-
 	var/internal_transfer_moles = 0.25 * internal.total_moles()
 	var/datum/gas_mixture/internal_removed = internal.remove(internal_transfer_moles)
 
 	//Get processable air sample and thermal info from environment
-
+	var/datum/gas_mixture/environment = loc.return_air()
 	var/transfer_moles = 0.25 * environment.total_moles()
 	var/datum/gas_mixture/external_removed = environment.remove(transfer_moles)
 
+	// No environmental gas?  We radiate it, then.
 	if (!external_removed)
+		if(internal_removed)
+			internal.merge(internal_removed)
 		return radiate()
 
 	if (external_removed.total_moles() < 10)
+		if(internal_removed)
+			internal.merge(internal_removed)
+		environment.merge(external_removed)
 		return radiate()
 
-	//Get same info from connected gas
 	if (!internal_removed)
 		environment.merge(external_removed)
 		return 1
 
+	//Get same info from connected gas
 	var/combined_heat_capacity = internal_removed.heat_capacity() + external_removed.heat_capacity()
 	var/combined_energy = internal_removed.temperature * internal_removed.heat_capacity() + external_removed.heat_capacity() * external_removed.temperature
 
@@ -87,7 +92,7 @@
 	internal_removed.temperature = final_temperature
 	internal.merge(internal_removed)
 
-	//network.update = 1
+	parent.network.update = 1
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/proc/radiate()
 	var/datum/gas_mixture/internal = return_air()
@@ -105,8 +110,7 @@
 	internal_removed.temperature = final_temperature
 	internal.merge(internal_removed)
 
-	//if (network)
-	//	network.update = 1
+	parent.network.update = 1
 
 	return 1
 
