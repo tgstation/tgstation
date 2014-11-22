@@ -347,7 +347,7 @@
 					nodes.Remove(S)
 
 /datum/powernet/proc/get_electrocute_damage()
-	return round(avail**(1/3)*(rand(15,20)/10)) //Cube root of power times 1,5 to 2 in increments of 10^-1
+	return round(avail**(1/3)*(rand(100,125)/100)) //Cube root of power times 1,5 to 2 in increments of 10^-1
 	//For instance, gives an average of 38 damage for 10k W, 81 damage for 100k W and 175 for 1M W
 	//Best you're getting with BYOND's mathematical funcs. Not even a fucking exponential or neperian logarithm
 
