@@ -115,7 +115,7 @@ var/global/list/uneatable = list(
 	else
 		dissipate_track++
 
-/obj/machinery/singularity/proc/expand(var/force_size = 0)
+/obj/machinery/singularity/proc/expand(var/force_size = 0, var/growing = 1)
 	var/temp_allowed_size = allowed_size
 
 	if (force_size)
@@ -123,6 +123,7 @@ var/global/list/uneatable = list(
 
 	switch (temp_allowed_size)
 		if (1)
+			desc = "A Gravitational Singularity."
 			current_size = 1
 			icon = 'icons/obj/singularity.dmi'
 			icon_state = "singularity_s1"
@@ -133,7 +134,9 @@ var/global/list/uneatable = list(
 			dissipate_delay = 10
 			dissipate_track = 0
 			dissipate_strength = 1
+			src.visible_message("<span class='notice'>The singularity has shrunk to a rather pitiful size.</span>")
 		if (3) // 1 to 3 does not check for the turfs if you put the gens right next to a 1x1 then its going to eat them.
+			desc = "A Gravitational Singularity."
 			current_size = 3
 			icon = 'icons/effects/96x96.dmi'
 			icon_state = "singularity_s3"
@@ -144,8 +147,13 @@ var/global/list/uneatable = list(
 			dissipate_delay = 5
 			dissipate_track = 0
 			dissipate_strength = 5
+			if(growing)
+				src.visible_message("<span class='notice'>The singularity noticeably grows in size.</span>")
+			else
+				src.visible_message("<span class='notice'>The singularity has shrunk to a less powerful size.</span>")
 		if (5)
 			if ((check_turfs_in(1, 2)) && (check_turfs_in(2, 2)) && (check_turfs_in(4, 2)) && (check_turfs_in(8, 2)))
+				desc = "A Gravitational Singularity."
 				current_size = 5
 				icon = 'icons/effects/160x160.dmi'
 				icon_state = "singularity_s5"
@@ -156,6 +164,10 @@ var/global/list/uneatable = list(
 				dissipate_delay = 4
 				dissipate_track = 0
 				dissipate_strength = 20
+				if(growing)
+					src.visible_message("<span class='notice'>The singularity expands to a reasonable size.</span>")
+				else
+					src.visible_message("<span class='notice'>The singularity has returned to a safe size.</span>")
 		if(7)
 			if ((check_turfs_in(1, 3)) && (check_turfs_in(2, 3)) && (check_turfs_in(4, 3)) && (check_turfs_in(8, 3)))
 				current_size = 7
@@ -168,6 +180,10 @@ var/global/list/uneatable = list(
 				dissipate_delay = 10
 				dissipate_track = 0
 				dissipate_strength = 10
+				if(growing)
+					src.visible_message("<span class='warning'>The singularity expands to a dangerous size.</span>")
+				else
+					src.visible_message("<span class='notice'>Miraculously, the singularity reduces in size, and can be contained.</span>")
 		if(9) // This one also lacks a check for gens because it eats everything.
 			current_size = 9
 			icon = 'icons/effects/288x288.dmi'
@@ -177,6 +193,23 @@ var/global/list/uneatable = list(
 			grav_pull = 10
 			consume_range = 4
 			dissipate = 0 // It cant go smaller due to e loss.
+			if(growing)
+				src.visible_message("<span class='danger'>The singularity has grown out of control!</span>")
+			else
+				src.visible_message("<span class='warning'>The singularity miraculously reduces in size and loses its supermatter properties.</span>")
+		if(11)//SUPERSINGULO
+			name = "Super Gravitational Singularity"
+			desc = "A Gravitational Singularity with the properties of supermatter. <b>It has the power to destroy worlds.</b>"
+			current_size = 11
+			icon = 'icons/effects/352x352.dmi'
+			icon_state = "singularity_s11"
+			pixel_x = -160
+			pixel_y = -160
+			grav_pull = 16
+			consume_range = 5
+			dissipate = 0 //It cant go smaller due to e loss
+			event_chance = 25 //Events will fire off more often.
+			src.visible_message("<span class='sinister'>You witness the creation of a destructive force that cannot possibly be stopped by human hands.</span>")
 
 	if (current_size == allowed_size)
 		investigate_log("<font color='red'>grew to size [current_size].</font>", "singulo")
@@ -199,13 +232,16 @@ var/global/list/uneatable = list(
 			allowed_size = 3
 		if (500 to 999)
 			allowed_size = 5
-		if (1000 to 1999)
-			allowed_size = 7
-		if (2000 to INFINITY)
+		if(2000 to 14999)
 			allowed_size = 9
+		if(15000 to INFINITY)
+			allowed_size = 11
 
 	if (current_size != allowed_size)
-		expand()
+		if(current_size > allowed_size)
+			expand(null, 0)
+		else
+			expand(null, 1)
 	return 1
 
 /obj/machinery/singularity/proc/eat()
@@ -267,6 +303,14 @@ var/global/list/uneatable = list(
 			qdel(S)
 			var/dist = max((current_size - 2), 1)
 			explosion(get_turf(src), dist, dist * 2, dist * 4)
+			return
+
+		if(istype(A, /obj/machinery/power/supermatter))//NOW YOU REALLY FUCKED UP
+			if(istype(A, /obj/machinery/power/supermatter/shard))
+				src.energy += 15000//Instantly sends it to max size
+			else
+				src.energy += 20000//Instantly sends it to max size
+			del(A)
 			return
 
 		A.ex_act(1)
@@ -415,6 +459,8 @@ var/global/list/uneatable = list(
 			mezzer()
 		else
 			return 0
+	if(current_size == 11)
+		smwave()
 	return 1
 
 
@@ -452,6 +498,16 @@ var/global/list/uneatable = list(
 
 /obj/machinery/singularity/proc/emp_area()
 	empulse(src, 8, 10)
+
+/obj/machinery/singularity/proc/smwave()
+	for(var/mob/living/M in view(10, src.loc))
+		if(rand(1,100) > 33)
+			M.apply_effect(rand(energy), IRRADIATE)
+			M << "<span class=\"warning\">You hear an uneartly ringing, then what sounds like a shrilling kettle as you are washed with a wave of heat. Miraculously, it fails to kill you.</span>"
+		else
+			M << "<span class=\"warning\">You hear an uneartly ringing, then what sounds like a shrilling kettle as you are washed with a wave of heat.</span>"
+			M.dust()
+	return
 
 /obj/machinery/singularity/proc/pulse()
 	for(var/obj/machinery/power/rad_collector/R in rad_collectors)
