@@ -510,7 +510,7 @@ var/global/list/uneatable = list(
 	for(var/mob/living/M in view(10, src.loc))
 		if(prob(67))
 			M.apply_effect(rand(energy), IRRADIATE)
-			M << "<span class=\"warning\">You hear an uneartly ringing, then what sounds like a shrilling kettle as you are washed with a wave of heat.</span>
+			M << "<span class=\"warning\">You hear an uneartly ringing, then what sounds like a shrilling kettle as you are washed with a wave of heat.</span>"
 			M << "<span class=\"notice\">Miraculously, it fails to kill you.</span>"
 		else
 			M << "<span class=\"danger\">You hear an uneartly ringing, then what sounds like a shrilling kettle as you are washed with a wave of heat.</span>"
