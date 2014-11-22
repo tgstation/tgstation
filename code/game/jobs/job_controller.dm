@@ -77,7 +77,7 @@ var/global/datum/controller/occupations/job_master
 			Debug("FOC non-human failed, Player: [player]")
 			continue
 
-		if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
+		if(player.client && player.client.prefs.GetJobDepartment(job, level) & job.flag)
 			Debug("FOC pass, Player: [player], Level:[level]")
 			candidates += player
 	return candidates
