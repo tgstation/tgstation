@@ -1,7 +1,7 @@
 
 /mob/proc/HasDisease(var/datum/disease/D)
 	for(var/datum/disease/DD in viruses)
-		if(D.IsSame(D))
+		if(D.IsSame(DD))
 			return 1
 	return 0
 
