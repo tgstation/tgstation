@@ -123,6 +123,7 @@ var/global/list/uneatable = list(
 
 	switch (temp_allowed_size)
 		if (1)
+			name = "Gravitational Singularity"
 			desc = "A Gravitational Singularity."
 			current_size = 1
 			icon = 'icons/obj/singularity.dmi'
@@ -134,8 +135,9 @@ var/global/list/uneatable = list(
 			dissipate_delay = 10
 			dissipate_track = 0
 			dissipate_strength = 1
-			src.visible_message("<span class='notice'>The singularity has shrunk to a rather pitiful size.</span>")
+			visible_message("<span class='notice'>The singularity has shrunk to a rather pitiful size.</span>")
 		if (3) // 1 to 3 does not check for the turfs if you put the gens right next to a 1x1 then its going to eat them.
+			name = "Gravitational Singularity"
 			desc = "A Gravitational Singularity."
 			current_size = 3
 			icon = 'icons/effects/96x96.dmi'
@@ -148,11 +150,12 @@ var/global/list/uneatable = list(
 			dissipate_track = 0
 			dissipate_strength = 5
 			if(growing)
-				src.visible_message("<span class='notice'>The singularity noticeably grows in size.</span>")
+				visible_message("<span class='notice'>The singularity noticeably grows in size.</span>")
 			else
-				src.visible_message("<span class='notice'>The singularity has shrunk to a less powerful size.</span>")
+				visible_message("<span class='notice'>The singularity has shrunk to a less powerful size.</span>")
 		if (5)
 			if ((check_turfs_in(1, 2)) && (check_turfs_in(2, 2)) && (check_turfs_in(4, 2)) && (check_turfs_in(8, 2)))
+				name = "Gravitational Singularity"
 				desc = "A Gravitational Singularity."
 				current_size = 5
 				icon = 'icons/effects/160x160.dmi'
@@ -165,11 +168,13 @@ var/global/list/uneatable = list(
 				dissipate_track = 0
 				dissipate_strength = 20
 				if(growing)
-					src.visible_message("<span class='notice'>The singularity expands to a reasonable size.</span>")
+					visible_message("<span class='notice'>The singularity expands to a reasonable size.</span>")
 				else
-					src.visible_message("<span class='notice'>The singularity has returned to a safe size.</span>")
+					visible_message("<span class='notice'>The singularity has returned to a safe size.</span>")
 		if(7)
 			if ((check_turfs_in(1, 3)) && (check_turfs_in(2, 3)) && (check_turfs_in(4, 3)) && (check_turfs_in(8, 3)))
+				name = "Gravitational Singularity"
+				desc = "A Gravitational Singularity."
 				current_size = 7
 				icon = 'icons/effects/224x224.dmi'
 				icon_state = "singularity_s7"
@@ -181,10 +186,12 @@ var/global/list/uneatable = list(
 				dissipate_track = 0
 				dissipate_strength = 10
 				if(growing)
-					src.visible_message("<span class='warning'>The singularity expands to a dangerous size.</span>")
+					visible_message("<span class='warning'>The singularity expands to a dangerous size.</span>")
 				else
-					src.visible_message("<span class='notice'>Miraculously, the singularity reduces in size, and can be contained.</span>")
+					visible_message("<span class='notice'>Miraculously, the singularity reduces in size, and can be contained.</span>")
 		if(9) // This one also lacks a check for gens because it eats everything.
+			name = "Gravitational Singularity"
+			desc = "A Gravitational Singularity."
 			current_size = 9
 			icon = 'icons/effects/288x288.dmi'
 			icon_state = "singularity_s9"
@@ -194,9 +201,9 @@ var/global/list/uneatable = list(
 			consume_range = 4
 			dissipate = 0 // It cant go smaller due to e loss.
 			if(growing)
-				src.visible_message("<span class='danger'><font size='2'>The singularity has grown out of control!</font></span>")
+				visible_message("<span class='danger'><font size='2'>The singularity has grown out of control!</font></span>")
 			else
-				src.visible_message("<span class='warning'>The singularity miraculously reduces in size and loses its supermatter properties.</span>")
+				visible_message("<span class='warning'>The singularity miraculously reduces in size and loses its supermatter properties.</span>")
 		if(11)//SUPERSINGULO
 			name = "Super Gravitational Singularity"
 			desc = "A Gravitational Singularity with the properties of supermatter. <b>It has the power to destroy worlds.</b>"
@@ -209,7 +216,7 @@ var/global/list/uneatable = list(
 			consume_range = 5
 			dissipate = 0 //It cant go smaller due to e loss
 			event_chance = 25 //Events will fire off more often.
-			src.visible_message("<span class='sinister'><font size='3'>You witness the creation of a destructive force that cannot possibly be stopped by human hands.</font></span>")
+			visible_message("<span class='sinister'><font size='3'>You witness the creation of a destructive force that cannot possibly be stopped by human hands.</font></span>")
 
 	if (current_size == allowed_size)
 		investigate_log("<font color='red'>grew to size [current_size].</font>", "singulo")
@@ -395,6 +402,8 @@ var/global/list/uneatable = list(
 				steps = 4
 			if(9)
 				steps = 5
+			if(11)
+				steps = 6
 	else
 		steps = step
 	var/list/turfs = list()
