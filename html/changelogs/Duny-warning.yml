@@ -1,0 +1,4 @@
+author: Duny
+delete-after: True
+changes: 
+  - tweak: Adjusted the color of the new warning stripes to actually look good.
