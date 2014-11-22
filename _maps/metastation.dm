@@ -4,7 +4,7 @@
         #include "map_files\MetaStation\z2.dmm"
         #include "map_files\generic\z3.dmm"
         #include "map_files\generic\z4.dmm"
-        #include "map_files\MetaStation\z5.dmm"
+        #include "map_files\generic\z5.dmm"
         #include "map_files\generic\z6.dmm"
         #include "map_files\generic\z7.dmm"
 
