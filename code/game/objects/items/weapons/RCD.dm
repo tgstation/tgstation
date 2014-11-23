@@ -169,7 +169,39 @@ RCD
 						activate()
 						A:ChangeTurf(/turf/simulated/wall)
 						return 1
-				return 0
+					return 0
+
+				if(istype(A, /turf/simulated/floor))
+					if(checkResource(3, user))
+						user << "Building Wall ..."
+						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+						if(do_after(user, 20))
+							if(!useResource(3, user)) return 0
+							activate()
+							A:ChangeTurf(/turf/simulated/wall)
+							return 1
+					return 0
+
+			if(2)
+				if(istype(A, /turf/simulated/floor))
+					if(checkResource(10, user) && !working)
+						if(!locate(/obj/machinery/door) in A)
+							working = 1
+							user << "Building Airlock..."
+							playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+							if(do_after(user, 50))
+								working = 0
+								if(!useResource(10, user)) return 0
+								activate()
+								var/obj/machinery/door/airlock/T = new airlock_type( A )
+								T.autoclose = 1
+								return 1
+							working = 0
+							return 0
+						else
+							user << "There is another door here!"
+							return 0
+					return 0
 
 		if(2)
 			if(istype(A, /turf/simulated/floor))
