@@ -47,7 +47,7 @@
 	name = "Safecode hint spawner"
 
 /obj/effect/landmark/sc_bible_spawner/New()
-	var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible/booze(src.loc)
+	var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible/booze(src.loc)
 	B.name = "The Holy book of the Geometer"
 	B.deity_name = "Narsie"
 	B.icon_state = "melted"
@@ -67,11 +67,11 @@ obj/item/weapon/gun/energy/laser/retro/sc_retro
 //	projectile_type = "/obj/item/projectile/practice"
 	clumsy_check = 0 //No sense in having a harmless gun blow up in the clowns face
 
-//Syndicate silenced pistol. This definition is not necessary, it's just habit.
-/obj/item/weapon/gun/projectile/automatic/silenced/sc_silenced
+//Syndicate suppressed pistol. This definition is not necessary, it's just habit.
+/obj/item/weapon/gun/projectile/automatic/suppressed/sc_suppressed
 
 //Make it so that these guns only spawn with a couple bullets... if any
-/obj/item/weapon/gun/projectile/automatic/silenced/sc_silenced/New()
+/obj/item/weapon/gun/projectile/automatic/suppressed/sc_suppressed/New()
 	for(var/ammo in magazine.stored_ammo)
 		if(prob(95)) //95% chance
 			magazine.stored_ammo -= ammo

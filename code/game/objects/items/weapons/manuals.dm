@@ -665,7 +665,7 @@
 			<li>Try to get a fingerprint card of your perp, as if used in the computer, the prints will be completed on their dossier.</li>
 			<li>Assuming you have enough of a print to see it, grab the biggest complete piece of the print and search the security records for it. </li>
 			<li>Since you now have both your dossier and the name of the person, print both out as evidence, and get security to nab your baddie.</li>
-			<li>Give yourself a pat on the back and a bottle of the ships finest vodka, you did it!. </li>
+			<li>Give yourself a pat on the back and a bottle of the ships finest vodka, you did it!</li>
 			</ol>
 			<p>
 			It really is that easy! Good luck!
@@ -713,7 +713,7 @@
 // A book that links to the wiki
 /obj/item/weapon/book/manual/wiki
 	var/page_link = ""
-	window_size = "800x600"
+	window_size = "970x710"
 
 /obj/item/weapon/book/manual/wiki/attack_self()
 	if(!dat)
@@ -725,10 +725,21 @@
 		dat = {"
 
 			<html><head>
+			<style>
+				iframe {
+					display: none;
+				}
+			</style>
 			</head>
-
 			<body>
-			<iframe width='100%' height='97%' src="[config.wikiurl]/index.php?title=[page_link]&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+			<script type="text/javascript">
+				function pageloaded(myframe) {
+					document.getElementById("loading").style.display = "none";
+					myframe.style.display = "inline";
+    			}
+			</script>
+			<p id='loading'>You start skimming through the manual...</p>
+			<iframe width='100%' height='97%' onload="pageloaded(this)" src="[config.wikiurl]/[page_link]?printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
 			</body>
 
 			</html>
@@ -769,7 +780,7 @@
 	icon_state = "book7"
 	author = "University of Bluespace"
 	title = "Teleportation Science - Bluespace for dummies!"
-	page_link = "Telescience"
+	page_link = "Guide_to_telescience"
 
 /obj/item/weapon/book/manual/wiki/engineering_hacking
 	name = "Hacking"

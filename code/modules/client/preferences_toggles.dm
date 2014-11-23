@@ -17,6 +17,15 @@
 	prefs.save_preferences()
 	feedback_add_details("admin_verb","TGS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/verb/toggle_ghost_whispers()
+	set name = "Show/Hide GhostWhispers"
+	set category = "Preferences"
+	set desc = ".Toggle between hearing all whispers, and only whispers of nearby mobs"
+	prefs.toggles ^= CHAT_GHOSTWHISPER
+	src << "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTWHISPER) ? "see all whispers in the world" : "only see whispers from nearby mobs"]."
+	prefs.save_preferences()
+	feedback_add_details("admin_verb","TGW") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/proc/toggle_hear_radio()
 	set name = "Show/Hide RadioChatter"
 	set category = "Preferences"
@@ -54,6 +63,15 @@
 	prefs.save_preferences()
 	src << "You will [(prefs.toggles & CHAT_PRAYER) ? "now" : "no longer"] see prayerchat."
 	feedback_add_details("admin_verb","TP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/verb/togglePRs()
+	set name = "Show/Hide Pull Request Announcements"
+	set category = "Preferences"
+	set desc = "Toggles receiving a notification when new pull requests are created."
+	prefs.toggles ^= CHAT_PULLR
+	prefs.save_preferences()
+	src << "You will [(prefs.toggles & CHAT_PULLR) ? "now" : "no longer"] see new pull request announcements."
+	feedback_add_details("admin_verb","TPullR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/toggletitlemusic()
 	set name = "Hear/Silence LobbyMusic"
@@ -147,3 +165,12 @@ var/list/ghost_forms = list("ghost","ghostking","ghostian2","ghost_red","ghost_b
 		prefs.save_preferences()
 		if(istype(mob,/mob/dead/observer))
 			mob.icon_state = new_form
+
+/client/verb/toggle_intent_style()
+	set name = "Toggle Intent Selection Style"
+	set category = "Preferences"
+	set desc = "Toggle between directly clicking the desired intent or clicking to rotate through."
+	prefs.toggles ^= INTENT_STYLE
+	src << "[(prefs.toggles & INTENT_STYLE) ? "Clicking directly on intents selects them." : "Clicking on intents rotates selection clockwise."]"
+	prefs.save_preferences()
+	feedback_add_details("admin_verb","ITENTS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

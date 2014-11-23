@@ -6,6 +6,7 @@
 	flags = MASKCOVERSMOUTH
 	w_class = 2
 	gas_transfer_coefficient = 0.90
+	put_on_delay = 20
 
 /obj/item/clothing/mask/muzzle/attack_paw(mob/user)
 	if(iscarbon(user))
@@ -22,9 +23,17 @@
 	item_state = "sterile"
 	w_class = 1
 	flags = MASKCOVERSMOUTH
+	flags_inv = HIDEFACE
+	visor_flags = MASKCOVERSMOUTH
+	visor_flags_inv = HIDEFACE
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 25, rad = 0)
+	action_button_name = "Adjust Sterile Mask"
+	ignore_maskadjust = 0
+
+/obj/item/clothing/mask/surgical/attack_self(var/mob/user)
+	adjustmask(user)
 
 /obj/item/clothing/mask/fakemoustache
 	name = "fake moustache"
@@ -53,6 +62,5 @@
 
 /obj/item/clothing/mask/horsehead/speechModification(message)
 	if(voicechange)
-		if(!(copytext(message, 1, 2) == "*" || (usr.mind && usr.mind.changeling && (copytext(message, 1, 3) == ":g" || copytext(message, 1, 3) == ":G" || copytext(message, 1, 3) == ":ï"))))
-			message = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
+		message = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
 	return message

@@ -40,25 +40,28 @@
 	name = "pulse"
 	icon_state = "u_laser"
 	damage = 50
-	on_hit(var/atom/target, var/blocked = 0)
-		if(istype(target,/turf/)||istype(target,/obj/structure/))
-			target.ex_act(2)
-		..()
 
+/obj/item/projectile/beam/pulse/on_hit(var/atom/target, var/blocked = 0)
+	if(istype(target,/turf/)||istype(target,/obj/structure/))
+		target.ex_act(2)
+	..()
 
-/obj/item/projectile/beam/deathlaser
-	name = "death laser"
-	icon_state = "heavylaser"
-	damage = 60
+/obj/item/projectile/beam/pulse/shot
+	damage = 40
 
 /obj/item/projectile/beam/emitter
 	name = "emitter beam"
 	icon_state = "emitter"
 	damage = 30
 
+/obj/item/projectile/beam/emitter/singularity_pull()
+	return //don't want the emitters to miss
+
+/obj/item/projectile/beam/emitter/delete() //what projectiles use to set loc = null
+	PlaceInPool(src)
 
 /obj/item/projectile/lasertag
-	name = "lasertag beam"
+	name = "laser tag beam"
 	icon_state = "omnilaser"
 	hitsound = null
 	damage = 0

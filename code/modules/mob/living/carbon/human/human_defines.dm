@@ -1,4 +1,5 @@
 /mob/living/carbon/human
+	languages = HUMAN
 	//Hair colour and style
 	var/hair_color = "000"
 	var/hair_style = "Bald"
@@ -18,6 +19,7 @@
 	var/blood_type = "A+"	//Player's bloodtype (Not currently used, just character fluff)
 
 	var/underwear = "Nude"	//Which underwear the player wants
+	var/undershirt = "Nude" //Which undershirt the player wants
 	var/backbag = 2		//Which backpack type the player has chosen. Nothing, Satchel or Backpack.
 
 	//Equipment slots
@@ -34,7 +36,7 @@
 	var/obj/item/l_store = null
 	var/obj/item/s_store = null
 
-	var/base_icon_state = "caucasian1_m"
+	var/icon/base_icon_state = "caucasian1_m"
 
 	var/list/organs = list() //Gets filled up in the constructor (human.dm, New() proc, line 24. I'm sick and tired of missing comments. -Agouri
 

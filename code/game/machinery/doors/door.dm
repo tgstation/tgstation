@@ -7,6 +7,7 @@
 	opacity = 1
 	density = 1
 	layer = 2.7
+	power_channel = ENVIRON
 
 	var/secondsElectrified = 0
 	var/visible = 1
@@ -27,6 +28,7 @@
 		explosion_resistance = 0
 	update_freelook_sight()
 	air_update_turf(1)
+	airlocks += src
 	return
 
 
@@ -34,6 +36,7 @@
 	density = 0
 	air_update_turf(1)
 	update_freelook_sight()
+	airlocks -= src
 	..()
 	return
 
@@ -72,8 +75,7 @@
 	..()
 	move_update_air(T)
 
-/obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group) return 0
+/obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return !opacity
 	return !density
@@ -81,19 +83,22 @@
 /obj/machinery/door/CanAtmosPass()
 	return !density
 
+//used in the AStar algorithm to determinate if the turf the door is on is passable
+/obj/machinery/door/proc/CanAStarPass(var/obj/item/weapon/card/id/ID)
+	return !density || check_access(ID)
+
 /obj/machinery/door/proc/bumpopen(mob/user as mob)
-	if(operating)	return
+	if(operating)
+		return
 	src.add_fingerprint(user)
 	if(!src.requiresID())
 		user = null
 
 	if(density && !emagged)
-		if(allowed(user) || src.emergency == 1)	open()
-		else				flick("door_deny", src)
-	return
-
-/obj/machinery/door/meteorhit(obj/M as obj)
-	src.open()
+		if(allowed(user) || src.emergency == 1)
+			open()
+		else
+			flick("door_deny", src)
 	return
 
 
@@ -124,11 +129,12 @@
 		user = null
 	if(!src.requiresID())
 		user = null
-	if(src.density && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
+	if(src.density && hasPower() && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
 		flick("door_spark", src)
 		sleep(6)
 		open()
 		emagged = 1
+		desc = "<span class='warning'>Its access panel is smoking slightly.</span>"
 		if(istype(src, /obj/machinery/door/airlock))
 			var/obj/machinery/door/airlock/A = src
 			A.lights = 0
@@ -266,6 +272,9 @@
 
 /obj/machinery/door/proc/requiresID()
 	return 1
+
+/obj/machinery/door/proc/hasPower()
+	return !(stat & NOPOWER)
 
 /obj/machinery/door/BlockSuperconductivity()
 	if(opacity || heat_proof)

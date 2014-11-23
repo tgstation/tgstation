@@ -9,7 +9,6 @@
 	icon_state = "off"
 	density = 1
 	anchored = 0
-	directwired = 0
 	var/t_status = 0
 	var/t_per = 5000
 	var/filter = 1
@@ -32,7 +31,7 @@ tank [un]loading stuff
 /obj/machinery/power/port_gen/attack_hand(mob/user)
 turn on/off
 
-/obj/machinery/power/port_gen/examine()
+/obj/machinery/power/port_gen/examine(mob/user)
 display round(lastgen) and plasmatank amount
 
 */
@@ -48,7 +47,6 @@ display round(lastgen) and plasmatank amount
 	icon_state = "portgen0"
 	density = 1
 	anchored = 0
-	directwired = 0
 	use_power = 0
 
 	var/active = 0
@@ -86,13 +84,9 @@ display round(lastgen) and plasmatank amount
 	if(!anchored)
 		return
 
-/obj/machinery/power/port_gen/examine()
-	set src in oview(1)
+/obj/machinery/power/port_gen/examine(mob/user)
 	..()
-	if(active)
-		usr << "It is running."
-	else
-		usr << "It isn't running."
+	user << "It is[!active?"n't":""] running."
 
 /obj/machinery/power/port_gen/pacman
 	name = "\improper P.A.C.M.A.N.-type portable generator"
@@ -129,7 +123,6 @@ display round(lastgen) and plasmatank amount
 
 /obj/machinery/power/port_gen/pacman/RefreshParts()
 	var/temp_rating = 0
-	var/temp_reliability = 0
 	var/consumption_coeff = 0
 	for(var/obj/item/weapon/stock_parts/SP in component_parts)
 		if(istype(SP, /obj/item/weapon/stock_parts/matter_bin))
@@ -138,16 +131,13 @@ display round(lastgen) and plasmatank amount
 			temp_rating += SP.rating
 		else
 			consumption_coeff += SP.rating
-	for(var/obj/item/weapon/CP in component_parts)
-		temp_reliability += CP.reliability
-	reliability = min(round(temp_reliability / 4), 100)
 	power_gen = round(initial(power_gen) * temp_rating * 2)
 	consumption = consumption_coeff
 
-/obj/machinery/power/port_gen/pacman/examine()
+/obj/machinery/power/port_gen/pacman/examine(mob/user)
 	..()
-	usr << "\blue The generator has [sheets] units of [sheet_name] fuel left, producing [power_gen] per cycle."
-	if(crit_fail) usr << "\red The generator seems to have broken down."
+	user << "<span class='notice'>The generator has [sheets] units of [sheet_name] fuel left, producing [power_gen] per cycle.</span>"
+	if(crit_fail) user << "<span class='danger'>The generator seems to have broken down.</span>"
 
 /obj/machinery/power/port_gen/pacman/HasFuel()
 	if(sheets >= 1 / (time_per_sheet / power_output) - sheet_left)
@@ -209,9 +199,9 @@ display round(lastgen) and plasmatank amount
 		var/obj/item/stack/addstack = O
 		var/amount = min((max_sheets - sheets), addstack.amount)
 		if(amount < 1)
-			user << "\blue The [src.name] is full!"
+			user << "<span class='notice'>The [src.name] is full!</span>"
 			return
-		user << "\blue You add [amount] sheets to the [src.name]."
+		user << "<span class='notice'>You add [amount] sheets to the [src.name].</span>"
 		sheets += amount
 		addstack.use(amount)
 		updateUsrDialog()
@@ -228,11 +218,11 @@ display round(lastgen) and plasmatank amount
 
 			if(!anchored && !isinspace())
 				connect_to_network()
-				user << "\blue You secure the generator to the floor."
+				user << "<span class='notice'>You secure the generator to the floor.</span>"
 				anchored = 1
 			else if(anchored)
 				disconnect_from_network()
-				user << "\blue You unsecure the generator from the floor."
+				user << "<span class='notice'>You unsecure the generator from the floor.</span>"
 				anchored = 0
 
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -241,9 +231,9 @@ display round(lastgen) and plasmatank amount
 			panel_open = !panel_open
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			if(panel_open)
-				user << "\blue You open the access panel."
+				user << "<span class='notice'>You open the access panel.</span>"
 			else
-				user << "\blue You close the access panel."
+				user << "<span class='notice'>You close the access panel.</span>"
 		else if(istype(O, /obj/item/weapon/crowbar) && panel_open)
 			default_deconstruction_crowbar(O)
 

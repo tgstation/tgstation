@@ -8,7 +8,18 @@
 	//facial hair
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/facial_hair, facial_hair_styles_list, facial_hair_styles_male_list, facial_hair_styles_female_list)
 	//underwear
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, underwear_all, underwear_m, underwear_f)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, underwear_list, underwear_m, underwear_f)
+	//undershirt
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, undershirt_list, undershirt_m, undershirt_f)
+
+	//Species
+	for(var/spath in typesof(/datum/species))
+		if(spath == /datum/species)
+			continue
+		var/datum/species/S = new spath()
+		if(S.roundstart)
+			roundstart_species[S.name] = S.type
+		species_list[S.id] = S.type
 
 	//Surgeries
 	for(var/path in typesof(/datum/surgery))

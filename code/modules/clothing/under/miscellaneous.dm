@@ -4,6 +4,7 @@
 	icon_state = "red_pyjamas"
 	item_color = "red_pyjamas"
 	item_state = "w_suit"
+	can_adjust = 0
 
 /obj/item/clothing/under/pj/blue
 	name = "blue pj's"
@@ -11,19 +12,14 @@
 	icon_state = "blue_pyjamas"
 	item_color = "blue_pyjamas"
 	item_state = "w_suit"
-
-/obj/item/clothing/under/scratch
-	name = "white suit"
-	desc = "A white suit, suitable for an excellent host"
-	icon_state = "scratch"
-	item_state = "scratch"
-	item_color = "scratch"
+	can_adjust = 0
 
 /obj/item/clothing/under/sl_suit
 	desc = "It's a very amish looking suit."
 	name = "amish suit"
 	icon_state = "sl_suit"
 	item_color = "sl_suit"
+	can_adjust = 0
 
 /obj/item/clothing/under/roman
 	name = "roman armor"
@@ -31,7 +27,8 @@
 	icon_state = "roman"
 	item_color = "roman"
 	item_state = "armor"
-	armor = list(melee = 25, bullet = 0, laser = 25, energy = 10, bomb = 10, bio = 0, rad = 0)
+	can_adjust = 0
+	strip_delay = 100
 
 /obj/item/clothing/under/waiter
 	name = "waiter's outfit"
@@ -39,6 +36,16 @@
 	icon_state = "waiter"
 	item_state = "waiter"
 	item_color = "waiter"
+	can_adjust = 0
+
+/obj/item/clothing/under/rank/prisoner
+	name = "prison jumpsuit"
+	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
+	icon_state = "prisoner"
+	item_state = "o_suit"
+	item_color = "prisoner"
+	has_sensor = 2
+	sensor_mode = 3
 
 /obj/item/clothing/under/rank/mailman
 	name = "mailman's jumpsuit"
@@ -47,6 +54,13 @@
 	item_state = "b_suit"
 	item_color = "mailman"
 
+/obj/item/clothing/under/rank/psyche
+	name = "psychedelic jumpsuit"
+	desc = "Groovy!"
+	icon_state = "psyche"
+	item_state = "p_suit"
+	item_color = "psyche"
+
 /obj/item/clothing/under/sexyclown
 	name = "sexy-clown suit"
 	desc = "It makes you look HONKable!"
@@ -54,6 +68,7 @@
 	item_state = "sexyclown"
 	item_color = "sexyclown"
 	fitted = 0
+	can_adjust = 0
 
 /obj/item/clothing/under/rank/vice
 	name = "vice officer's jumpsuit"
@@ -61,6 +76,7 @@
 	icon_state = "vice"
 	item_state = "gy_suit"
 	item_color = "vice"
+	can_adjust = 0
 
 /obj/item/clothing/under/rank/centcom_officer
 	desc = "It's a jumpsuit worn by Centcom Officers."
@@ -68,6 +84,7 @@
 	icon_state = "officer"
 	item_state = "g_suit"
 	item_color = "officer"
+	can_adjust = 0
 
 /obj/item/clothing/under/rank/centcom_commander
 	desc = "It's a jumpsuit worn by Centcom's highest-tier Commanders."
@@ -75,6 +92,7 @@
 	icon_state = "centcom"
 	item_state = "dg_suit"
 	item_color = "centcom"
+	can_adjust = 0
 
 /obj/item/clothing/under/space
 	name = "\improper NASA jumpsuit"
@@ -90,6 +108,7 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
+	can_adjust = 0
 
 /obj/item/clothing/under/acj
 	name = "administrative cybernetic jumpsuit"
@@ -105,6 +124,7 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
+	can_adjust = 0
 
 /obj/item/clothing/under/owl
 	name = "owl uniform"
@@ -112,12 +132,14 @@
 	icon_state = "owl"
 	item_color = "owl"
 	fitted = 0
+	can_adjust = 0
 
 /obj/item/clothing/under/johnny
 	name = "johnny~~ jumpsuit"
 	desc = "Johnny~~"
 	icon_state = "johnny"
 	item_color = "johnny"
+	can_adjust = 0
 
 /obj/item/clothing/under/rainbow
 	name = "rainbow"
@@ -125,12 +147,14 @@
 	icon_state = "rainbow"
 	item_state = "rainbow"
 	item_color = "rainbow"
+	can_adjust = 0
 
 /obj/item/clothing/under/cloud
 	name = "cloud"
 	desc = "cloud"
 	icon_state = "cloud"
 	item_color = "cloud"
+	can_adjust = 0
 
 /obj/item/clothing/under/gimmick/rank/captain/suit
 	name = "captain's suit"
@@ -138,6 +162,7 @@
 	icon_state = "green_suit"
 	item_state = "dg_suit"
 	item_color = "green_suit"
+	can_adjust = 0
 
 /obj/item/clothing/under/gimmick/rank/head_of_personnel/suit
 	name = "head of personnel's suit"
@@ -145,6 +170,7 @@
 	icon_state = "teal_suit"
 	item_state = "g_suit"
 	item_color = "teal_suit"
+	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket
 	name = "black suit"
@@ -152,6 +178,7 @@
 	icon_state = "black_suit"
 	item_state = "bl_suit"
 	item_color = "black_suit"
+	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket/really_black
 	name = "executive suit"
@@ -159,6 +186,7 @@
 	icon_state = "really_black_suit"
 	item_state = "bl_suit"
 	item_color = "black_suit"
+	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket/female
 	name = "executive suit"
@@ -173,6 +201,7 @@
 	icon_state = "red_suit"
 	item_state = "r_suit"
 	item_color = "red_suit"
+	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket/charcoal
 	name = "charcoal suit"
@@ -180,6 +209,7 @@
 	icon_state = "charcoal_suit"
 	item_state = "charcoal_suit"
 	item_color = "charcoal_suit"
+	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket/navy
 	name = "navy suit"
@@ -187,6 +217,7 @@
 	icon_state = "navy_suit"
 	item_state = "navy_suit"
 	item_color = "navy_suit"
+	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket/burgundy
 	name = "burgundy suit"
@@ -194,6 +225,7 @@
 	icon_state = "burgundy_suit"
 	item_state = "burgundy_suit"
 	item_color = "burgundy_suit"
+	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket/checkered
 	name = "checkered suit"
@@ -201,6 +233,7 @@
 	icon_state = "checkered_suit"
 	item_state = "checkered_suit"
 	item_color = "checkered_suit"
+	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket/tan
 	name = "tan suit"
@@ -208,6 +241,7 @@
 	icon_state = "tan_suit"
 	item_state = "tan_suit"
 	item_color = "tan_suit"
+	can_adjust = 0
 
 /obj/item/clothing/under/blackskirt
 	name = "black skirt"
@@ -216,6 +250,7 @@
 	item_color = "blackskirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = 0
+	can_adjust = 0
 
 /obj/item/clothing/under/schoolgirl
 	name = "schoolgirl uniform"
@@ -225,6 +260,7 @@
 	item_color = "schoolgirl"
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = 0
+	can_adjust = 0
 
 /obj/item/clothing/under/overalls
 	name = "laborer's overalls"
@@ -232,6 +268,7 @@
 	icon_state = "overalls"
 	item_state = "lb_suit"
 	item_color = "overalls"
+	can_adjust = 0
 
 /obj/item/clothing/under/pirate
 	name = "pirate outfit"
@@ -239,6 +276,7 @@
 	icon_state = "pirate"
 	item_state = "pirate"
 	item_color = "pirate"
+	can_adjust = 0
 
 /obj/item/clothing/under/soviet
 	name = "soviet uniform"
@@ -246,6 +284,7 @@
 	icon_state = "soviet"
 	item_state = "soviet"
 	item_color = "soviet"
+	can_adjust = 0
 
 /obj/item/clothing/under/redcoat
 	name = "redcoat uniform"
@@ -253,6 +292,7 @@
 	icon_state = "redcoat"
 	item_state = "redcoat"
 	item_color = "redcoat"
+	can_adjust = 0
 
 /obj/item/clothing/under/kilt
 	name = "kilt"
@@ -262,6 +302,7 @@
 	item_color = "kilt"
 	body_parts_covered = CHEST|GROIN|FEET
 	fitted = 0
+	can_adjust = 0
 
 /obj/item/clothing/under/sexymime
 	name = "sexy mime outfit"
@@ -271,6 +312,7 @@
 	item_color = "sexymime"
 	body_parts_covered = CHEST|GROIN|LEGS
 	fitted = 0
+	can_adjust = 0
 
 /obj/item/clothing/under/gladiator
 	name = "gladiator uniform"
@@ -280,6 +322,7 @@
 	item_color = "gladiator"
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = 0
+	can_adjust = 0
 
 /obj/item/clothing/under/sundress
 	name = "sundress"
@@ -289,6 +332,7 @@
 	item_color = "sundress"
 	body_parts_covered = CHEST|GROIN
 	fitted = 0
+	can_adjust = 0
 
 /obj/item/clothing/under/captainformal
 	name = "captain's formal uniform"
@@ -296,6 +340,7 @@
 	icon_state = "captain_formal"
 	item_state = "by_suit"
 	item_color = "captain_formal"
+	can_adjust = 0
 
 /obj/item/clothing/under/hosformalmale
 	name = "head of security's formal uniform"
@@ -303,6 +348,7 @@
 	icon_state = "hos_formal_male"
 	item_state = "r_suit"
 	item_color = "hos_formal_male"
+	can_adjust = 0
 
 /obj/item/clothing/under/hosformalfem
 	name = "head of security's formal uniform"
@@ -311,6 +357,7 @@
 	item_state = "r_suit"
 	item_color = "hos_formal_fem"
 	fitted = 0
+	can_adjust = 0
 
 /obj/item/clothing/under/assistantformal
 	name = "assistant's formal uniform"
@@ -318,6 +365,7 @@
 	icon_state = "assistant_formal"
 	item_state = "gy_suit"
 	item_color = "assistant_formal"
+	can_adjust = 0
 
 /obj/item/clothing/under/blacktango
 	name = "black tango dress"
@@ -326,3 +374,4 @@
 	item_state = "wcoat"
 	item_color = "black_tango"
 	fitted = 0
+	can_adjust = 0

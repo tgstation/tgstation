@@ -17,7 +17,7 @@ datum/controller/air_system
 
 /datum/controller/air_system/proc/setup()
 	set background = BACKGROUND_ENABLED
-	world << "\red \b Processing Geometry..."
+	world << "<span class='userdanger'>Processing Geometry...</span>"
 	sleep(1)
 
 	var/start_time = world.timeofday
@@ -26,7 +26,7 @@ datum/controller/air_system
 
 	global_activeturfs = active_turfs.len
 
-	world << "\red \b Geometry processed in [(world.timeofday-start_time)/10] seconds!"
+	world << "<span class='userdanger'>Geometry processed in [(world.timeofday-start_time)/10] seconds!</span>"
 
 /datum/controller/air_system/proc/process()
 	if(kill_air)
@@ -42,11 +42,25 @@ datum/controller/air_system
 
 /datum/controller/air_system/proc/process_air()
 	current_cycle++
+	var/timer = world.timeofday
 	process_active_turfs()
+	master_controller.air_turfs = (world.timeofday - timer) / 10
+
+	timer = world.timeofday
 	process_excited_groups()
+	master_controller.air_groups = (world.timeofday - timer) / 10
+
+	timer = world.timeofday
 	process_high_pressure_delta()
+	master_controller.air_highpressure = (world.timeofday - timer) / 10
+
+	timer = world.timeofday
 	process_hotspots()
+	master_controller.air_hotspots = (world.timeofday - timer) / 10
+
+	timer = world.timeofday
 	process_super_conductivity()
+	master_controller.air_superconductivity = (world.timeofday - timer) / 10
 
 /datum/controller/air_system/proc/process_hotspots()
 	for(var/obj/effect/hotspot/H in hotspots)
@@ -104,7 +118,7 @@ datum/controller/air_system
 						active_turfs |= T
 						break
 				else
-					if(!T.air.check_turf(enemy_tile))
+					if(!T.air.check_turf_total(enemy_tile))
 						T.excited = 1
 						active_turfs |= T
 
@@ -154,10 +168,10 @@ datum/controller/air_system
 atom/movable/proc/CanAtmosPass()
 	return 1
 
-atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
-	return (!density || !height || air_group)
+atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5)
+	return (!density || !height)
 
-turf/CanPass(atom/movable/mover, turf/target, height=1.5,air_group=0)
+turf/CanPass(atom/movable/mover, turf/target, height=1.5)
 	if(!target) return 0
 
 	if(istype(mover)) // turf/Enter(...) will perform more advanced checks
@@ -168,10 +182,10 @@ turf/CanPass(atom/movable/mover, turf/target, height=1.5,air_group=0)
 			return 0
 
 		for(var/obj/obstacle in src)
-			if(!obstacle.CanPass(mover, target, height, air_group))
+			if(!obstacle.CanPass(mover, target, height))
 				return 0
 		for(var/obj/obstacle in target)
-			if(!obstacle.CanPass(mover, src, height, air_group))
+			if(!obstacle.CanPass(mover, src, height))
 				return 0
 
 		return 1
@@ -222,7 +236,7 @@ turf/CanPass(atom/movable/mover, turf/target, height=1.5,air_group=0)
 	T.atmos_spawn_air(text, amount)
 
 var/const/SPAWN_HEAT = 1
-
+var/const/SPAWN_20C = 2
 var/const/SPAWN_TOXINS = 4
 var/const/SPAWN_OXYGEN = 8
 var/const/SPAWN_CO2 = 16
@@ -237,6 +251,9 @@ var/const/SPAWN_AIR = 256
 		return
 
 	var/datum/gas_mixture/G = new
+
+	if(flag & SPAWN_20C)
+		G.temperature = T20C
 
 	if(flag & SPAWN_HEAT)
 		G.temperature += 1000

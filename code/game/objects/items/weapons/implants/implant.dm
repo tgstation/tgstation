@@ -1,7 +1,9 @@
 /obj/item/weapon/implant
 	name = "implant"
-	icon = 'icons/obj/stock_parts.dmi'
-	icon_state = "rom"//Normally, you shouldn't see these. However, they can show up in the game via certain sources, like soul-stoning.
+	icon = 'icons/obj/implants.dmi'
+	icon_state = "generic" //Shows up as the action button icon
+	action_button_is_hands_free = 1
+	var/activated = 1 //1 for implant types that can be activated, 0 for ones that are "always on" like loyalty implants
 	var/implanted = null
 	var/mob/imp_in = null
 	item_color = "b"
@@ -15,11 +17,16 @@
 /obj/item/weapon/implant/proc/activate()
 	return
 
+/obj/item/weapon/implant/ui_action_click()
+	activate("action_button")
+
 
 //What does the implant do upon injection?
 //return 0 if the implant fails (ex. Revhead and loyalty implant.)
 //return 1 if the implant succeeds (ex. Nonrevhead and loyalty implant.)
 /obj/item/weapon/implant/proc/implanted(var/mob/source)
+	if(activated)
+		action_button_name = "Activate [src.name]"
 	return 1
 
 
@@ -34,6 +41,7 @@
 /obj/item/weapon/implant/tracking
 	name = "tracking implant"
 	desc = "Track with this."
+	activated = 0
 	var/id = 1.0
 
 /obj/item/weapon/implant/tracking/get_data()
@@ -58,6 +66,7 @@
 /obj/item/weapon/implant/explosive
 	name = "explosive implant"
 	desc = "And boom goes the weasel."
+	icon_state = "explosive"
 
 /obj/item/weapon/implant/explosive/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -77,6 +86,8 @@
 
 /obj/item/weapon/implant/explosive/activate(var/cause)
 	if(!cause || !imp_in)	return 0
+	if(cause == "action_button" && alert(imp_in, "Are you sure you want to activate your explosive implant? This will cause you to explode and gib!", "Explosive Implant Confirmation", "Yes", "No") != "Yes")
+		return 0
 	explosion(src, -1, 0, 2, 3, 0)	//This might be a bit much, dono will have to see.
 	if(imp_in)
 		imp_in.gib()
@@ -85,6 +96,7 @@
 /obj/item/weapon/implant/chem
 	name = "chem implant"
 	desc = "Injects things."
+	icon_state = "reagents"
 	allow_reagents = 1
 
 /obj/item/weapon/implant/chem/get_data()
@@ -125,6 +137,7 @@
 /obj/item/weapon/implant/loyalty
 	name = "loyalty implant"
 	desc = "Makes you loyal or such."
+	activated = 0
 
 /obj/item/weapon/implant/loyalty/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -139,21 +152,21 @@
 	return dat
 
 
-/obj/item/weapon/implant/loyalty/implanted(mob/M)
-	if(!ishuman(M))	return 0
-	var/mob/living/carbon/human/H = M
-	if(H.mind in ticker.mode.head_revolutionaries)
-		H.visible_message("<span class='warning'>[H] seems to resist the implant!</span>", "<span class='warning'>You feel the corporate tendrils of Nanotrasen try to invade your mind!</span>")
+/obj/item/weapon/implant/loyalty/implanted(mob/target)
+	..()
+	if(target.mind in ticker.mode.head_revolutionaries)
+		target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel the corporate tendrils of Nanotrasen try to invade your mind!</span>")
 		return 0
-	else if(H.mind in ticker.mode:revolutionaries)
-		ticker.mode:remove_revolutionary(H.mind)
-	H << "<span class='notice'>You feel a surge of loyalty towards Nanotrasen.</span>"
+	if(target.mind in ticker.mode.revolutionaries)
+		ticker.mode.remove_revolutionary(target.mind)
+	target << "<span class='notice'>You feel a surge of loyalty towards Nanotrasen.</span>"
 	return 1
 
 
 /obj/item/weapon/implant/adrenalin
 	name = "adrenal implant"
 	desc = "Removes all stuns and knockdowns."
+	icon_state = "adrenal"
 	var/uses = 3
 
 /obj/item/weapon/implant/adrenalin/get_data()
@@ -167,47 +180,29 @@
 				<b>Integrity:</b> Implant can only be used three times before reserves are depleted."}
 	return dat
 
-/obj/item/weapon/implant/adrenalin/trigger(emote, mob/source)
+/obj/item/weapon/implant/adrenalin/activate()
 	if(uses < 1)	return 0
-	if(emote == "scream")
-		uses--
-		source << "<span class='notice'>You feel a sudden surge of energy!</span>"
-		source.SetStunned(0)
-		source.SetWeakened(0)
-		source.SetParalysis(0)
-		source.lying = 0
-		source.update_canmove()
+	uses--
+	imp_in << "<span class='notice'>You feel a sudden surge of energy!</span>"
+	imp_in.SetStunned(0)
+	imp_in.SetWeakened(0)
+	imp_in.SetParalysis(0)
+	imp_in.lying = 0
+	imp_in.update_canmove()
 
-		source.reagents.add_reagent("synaptizine", 10)
-		source.reagents.add_reagent("tricordrazine", 10)
-		source.reagents.add_reagent("hyperzine", 10)
-
-/obj/item/weapon/implant/adrenalin/implanted(mob/source)
-	source.mind.store_memory("An adrenal implant can be activated [uses] time\s by using the scream emote, <B>say *scream</B> to attempt to activate.", 0, 0)
-	source << "<span class='notice'>The implanted adrenaline implant can be activated [uses] time\s by using the scream emote, <B>say *scream</B> to attempt to activate.</span>"
-	return 1
+	imp_in.reagents.add_reagent("synaptizine", 10)
+	imp_in.reagents.add_reagent("tricordrazine", 10)
+	imp_in.reagents.add_reagent("hyperzine", 10)
 
 
 /obj/item/weapon/implant/emp
 	name = "emp implant"
 	desc = "Triggers an EMP."
+	icon_state = "emp"
 
-	var/activation_emote = "chuckle"
 	var/uses = 2
 
-/obj/item/weapon/implant/emp/New()
-	activation_emote = pick("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "smile", "pale", "sniff", "whimper", "wink")
-	..()
-	return
-
-/obj/item/weapon/implant/emp/trigger(emote, mob/living/carbon/source as mob)
+/obj/item/weapon/implant/emp/activate()
 	if (src.uses < 1)	return 0
-	if (emote == src.activation_emote)
-		src.uses--
-		empulse(source, 3, 5)
-	return
-
-/obj/item/weapon/implant/emp/implanted(mob/living/carbon/source)
-		source.mind.store_memory("EMP implant can be activated [uses] time\s by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
-		source << "The implanted EMP implant can be activated [uses] time\s by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
-		return 1
+	src.uses--
+	empulse(imp_in, 3, 5)

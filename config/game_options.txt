@@ -20,8 +20,12 @@ REVIVAL_BRAIN_LIFE -1
 
 ### RENAMING ###
 
-# Whether cyborgs can rename themselves at roundstart or when built.  Has no effect on roboticists renaming cyborgs the normal way.  Set to 0 to disable self-renaming.
+#Uncomment to allow cyborgs to rename themselves at roundstart.  Has no effect on roboticists renaming cyborgs the normal way.
 #RENAME_CYBORG
+
+### OOC DURING ROUND ###
+#Comment this out if you want OOC to be automatically disabled during the round, it will be enabled during the lobby and after the round end results.
+OOC_DURING_ROUND
 
 ### MOB MOVEMENT ###
 
@@ -83,11 +87,13 @@ PROBABILITY TRAITORCHAN 4
 PROBABILITY DOUBLE_AGENTS 3
 PROBABILITY NUCLEAR 2
 PROBABILITY REVOLUTION 2
+PROBABILITY GANG 0
 PROBABILITY CULT 2
 PROBABILITY CHANGELING 2
 PROBABILITY WIZARD 4
 PROBABILITY MALFUNCTION 1
 PROBABILITY BLOB 2
+PROBABILITY MONKEY 1
 PROBABILITY METEOR 0
 PROBABILITY EXTENDED 0
 
@@ -101,16 +107,33 @@ PROBABILITY SANDBOX 0
 #CONTINUOUS_ROUND_WIZ
 #CONTINUOUS_ROUND_MALF
 
+## The amount of time it takes for the emergency shuttle to be called, from round start.
+SHUTTLE_REFUEL_DELAY 12000
 
 ## Variables calculate how number of antagonists will scale to population.
 ## Used as (Antagonists = Population / Coeff)
 ## Set to 0 to disable scaling and use default numbers instead.
 TRAITOR_SCALING_COEFF 6
-CHANGELING_SCALING_COEFF 7
+CHANGELING_SCALING_COEFF 6
+
+## Variables calculate how number of open security officer positions will scale to population.
+## Used as (Officers = Population / Coeff)
+## Set to 0 to disable scaling and use default numbers instead.
+SECURITY_SCALING_COEFF 8
+
+# The number of objectives traitors get.
+# Not including escaping/hijacking.
+TRAITOR_OBJECTIVES_AMOUNT 2
 
 ## Uncomment to prohibit jobs that start with loyalty
 ## implants from being most antagonists.
 #PROTECT_ROLES_FROM_ANTAGONIST
+
+## Uncomment to prohibit assistants from becoming most antagonists.
+#PROTECT_ASSISTANT_FROM_ANTAGONIST
+
+## If non-human species are barred from joining as a head of staff
+#ENFORCE_HUMAN_AUTHORITY
 
 ## If late-joining players have a chance to become a traitor/changeling
 ALLOW_LATEJOIN_ANTAGONISTS
@@ -180,3 +203,15 @@ SEC_START_BRIG
 ## Set to 1 for "custom", silicons will start with the custom laws defined in silicon_laws.txt. (If silicon_laws.txt is empty, the AI will spawn with asimov and Custom boards will auto-delete.)
 ## Set to 2 for "random", silicons will start with a random lawset picked from (at the time of writing): P.A.L.A.D.I.N., Corporate, Asimov. More can be added by changing the law datum paths in ai_laws.dm.
 DEFAULT_LAWS 1
+
+### SILICON LAW MAX AMOUNT ###
+## The maximum number of laws a silicon can have
+## Attempting to upload laws past this point will fail unless the AI is reset
+SILICON_MAX_LAW_AMOUNT 12
+
+## Uncoment to give players the choice of their species before they join the game
+#JOIN_WITH_MUTANT_RACE
+
+## Uncomment to allow certain species to have custom colors
+
+#MUTANT_COLORS

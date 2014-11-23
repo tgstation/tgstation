@@ -3,6 +3,8 @@
 	icon = 'icons/turf/floors.dmi'                          //		  That are set in stone to check the west turf for recharge port
 	icon_state = "recharge_floor"                           //        Some people just want to watch the world burn i guess
 
+/turf/simulated/floor/mech_bay_recharge_floor/break_tile()
+	src.ChangeTurf(/turf/simulated/floor/plating)
 
 /turf/simulated/floor/mech_bay_recharge_floor/airless
 	icon_state = "recharge_floor_asteroid"
@@ -78,6 +80,7 @@
 
 /obj/machinery/computer/mech_bay_power_console
 	name = "mech bay power control console"
+	desc = "Used to control mechbay power ports."
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/computer.dmi'

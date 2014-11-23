@@ -32,9 +32,6 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	if(severity == 1) // Very sturdy.
 		set_broken()
 
-/obj/machinery/gravity_generator/meteorhit()
-	return
-
 /obj/machinery/gravity_generator/update_icon()
 	..()
 	icon_state = "[get_status()]_[sprite_number]"
@@ -139,7 +136,10 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		var/obj/machinery/gravity_generator/part/part = new(T)
 		if(count == 5) // Middle
 			middle = part
-		part.sprite_number = count;
+		if(count <= 3) // Their sprite is the top part of the generator
+			part.density = 0
+			part.layer = MOB_LAYER + 0.1
+		part.sprite_number = count
 		part.main_part = src
 		parts += part
 		part.update_icon()
@@ -186,6 +186,8 @@ var/const/GRAV_NEEDS_WRENCH = 3
 					user << "<span class='notice'>You mend the damaged framework.</span>"
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					broken_state++
+				else if(WT.isOn())
+					user << "<span class='notice'>You don't have enough fuel to mend the damaged framework.</span>"
 		if(GRAV_NEEDS_PLASTEEL)
 			if(istype(I, /obj/item/stack/sheet/plasteel))
 				var/obj/item/stack/sheet/plasteel/PS = I
@@ -316,7 +318,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 				charge_count -= 2
 
 			if(charge_count % 4 == 0 && prob(75)) // Let them know it is charging/discharging.
-				playsound(src.loc, 'sound/effects/EMPulse.ogg', 75, 1)
+				playsound(src.loc, 'sound/effects/EMPulse.ogg', 100, 1)
 
 			updateDialog()
 			if(prob(25)) // To help stop "Your clothes feel warm" spam.
@@ -350,11 +352,13 @@ var/const/GRAV_NEEDS_WRENCH = 3
 // Shake everyone on the z level to let them know that gravity was enagaged/disenagaged.
 /obj/machinery/gravity_generator/main/proc/shake_everyone()
 	var/turf/our_turf = get_turf(src)
-	for(var/mob/M in player_list)
+	for(var/mob/M in mob_list)
 		var/turf/their_turf = get_turf(M)
-		if(M.client && their_turf.z == our_turf.z)
-			shake_camera(M, 15, 1)
-			M.playsound_local(our_turf, 'sound/machines/signal.ogg', 100)
+		if(their_turf.z == our_turf.z)
+			M.update_gravity(M.mob_has_gravity())
+			if(M.client)
+				shake_camera(M, 15, 1)
+				M.playsound_local(our_turf, 'sound/effects/alert.ogg', 100, 1, 0.5)
 
 /obj/machinery/gravity_generator/main/proc/gravity_in_level()
 	var/turf/T = get_turf(src)

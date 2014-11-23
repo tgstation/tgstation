@@ -1,6 +1,8 @@
-/mob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
+/mob/CanPass(atom/movable/mover, turf/target, height=0)
+	if(height==0) return 1
 
+	if(istype(mover) && mover.checkpass(PASSMOB))
+		return 1
 	if(ismob(mover))
 		var/mob/moving_mob = mover
 		if ((other_mobs && moving_mob.other_mobs))
@@ -26,56 +28,37 @@
 		var/mob/living/carbon/C = usr
 		C.toggle_throw_mode()
 	else
-		usr << "\red This mob type cannot throw items."
+		usr << "<span class='danger'>This mob type cannot throw items.</span>"
 	return
 
 
 /client/Northwest()
-	if(iscarbon(usr))
-		var/mob/living/carbon/C = usr
-		if(!C.get_active_hand())
-			usr << "\red You have nothing to drop in your hand."
-			return
-		drop_item()
-	else
-		usr << "\red This mob type cannot drop items."
-	return
+	if(!usr.get_active_hand())
+		usr << "<span class='warning'>You have nothing to drop in your hand!</span>"
+		return
+	usr.drop_item()
 
 //This gets called when you press the delete button.
 /client/verb/delete_key_pressed()
 	set hidden = 1
 
 	if(!usr.pulling)
-		usr << "\blue You are not pulling anything."
+		usr << "<span class='notice'>You are not pulling anything.</span>"
 		return
 	usr.stop_pulling()
 
 /client/verb/swap_hand()
-	set hidden = 1
-	if(istype(mob, /mob/living/carbon))
-		mob:swap_hand()
-	if(istype(mob,/mob/living/silicon/robot))
-		var/mob/living/silicon/robot/R = mob
-		R.cycle_modules()
-	return
+	set category = "IC"
+	set name = "Swap hands"
 
-
+	if(mob)
+		mob.swap_hand()
 
 /client/verb/attack_self()
 	set hidden = 1
 	if(mob)
 		mob.mode()
 	return
-
-
-/client/verb/toggle_throw_mode()
-	set hidden = 1
-	if(!istype(mob, /mob/living/carbon))
-		return
-	if (!mob.stat && isturf(mob.loc) && !mob.restrained())
-		mob:toggle_throw_mode()
-	else
-		return
 
 
 /client/verb/drop_item()
@@ -90,42 +73,6 @@
 		var/obj/O = mob.loc
 		if (mob.canmove)
 			return O.relaymove(mob, 16)
-	return
-
-
-/atom/movable/Move(NewLoc, direct)
-	if (direct & (direct - 1))
-		if (direct & 1)
-			if (direct & 4)
-				if (step(src, NORTH))
-					step(src, EAST)
-				else
-					if (step(src, EAST))
-						step(src, NORTH)
-			else
-				if (direct & 8)
-					if (step(src, NORTH))
-						step(src, WEST)
-					else
-						if (step(src, WEST))
-							step(src, NORTH)
-		else
-			if (direct & 2)
-				if (direct & 4)
-					if (step(src, SOUTH))
-						step(src, EAST)
-					else
-						if (step(src, EAST))
-							step(src, SOUTH)
-				else
-					if (direct & 8)
-						if (step(src, SOUTH))
-							step(src, WEST)
-						else
-							if (step(src, WEST))
-								step(src, SOUTH)
-	else
-		. = ..()
 	return
 
 
@@ -174,14 +121,13 @@
 	if(!mob.lastarea)
 		mob.lastarea = get_area(mob.loc)
 
-	if(!has_gravity(mob))
-		if(!mob.Process_Spacemove(0))
-			return 0
-
 
 	if(isobj(mob.loc) || ismob(mob.loc))	//Inside an object, tell it we moved
 		var/atom/O = mob.loc
 		return O.relaymove(mob, direct)
+
+	if(!mob.Process_Spacemove(direct))
+		return 0
 
 	if(isturf(mob.loc))
 
@@ -189,7 +135,7 @@
 			for(var/mob/M in range(mob, 1))
 				if(M.pulling == mob)
 					if(!M.restrained() && M.stat == 0 && M.canmove && mob.Adjacent(M))
-						src << "\blue You're restrained! You can't move!"
+						src << "<span class='notice'>You're restrained! You can't move!</span>"
 						return 0
 					else
 						M.stop_pulling()
@@ -251,6 +197,8 @@
 			. = ..()
 
 		moving = 0
+		if(mob && .)
+			mob.throwing = 0
 
 		return .
 
@@ -349,68 +297,52 @@
 ///Called by /client/Move()
 ///For moving in space
 ///Return 1 for movement 0 for none
-/mob/proc/Process_Spacemove(var/check_drift = 0)
-	//First check to see if we can do things
-	if(restrained())
-		return 0
+/mob/Process_Spacemove(var/movement_dir = 0)
 
-	if(!isturf(loc))	//if they're in a disposal unit, for example
+	if(..())
 		return 1
 
-	var/dense_object = 0
-	for(var/turf/turf in oview(1,src))
-		if(istype(turf,/turf/space))
+	var/atom/movable/dense_object_backup
+	for(var/atom/A in orange(1, get_turf(src)))
+		if(isarea(A))
 			continue
 
-		if(istype(src,/mob/living/carbon/human/))  // Only humans can wear magboots, so we give them a chance to.
-			if((istype(turf,/turf/simulated/floor)) && (!has_gravity(src)) && !(istype(src:shoes, /obj/item/clothing/shoes/magboots) && (src:shoes:flags & NOSLIP)))
+		else if(isturf(A))
+			var/turf/turf = A
+			if(istype(turf,/turf/space))
 				continue
 
+			if(!turf.density && !mob_negates_gravity())
+				continue
+
+			return 1
 
 		else
-			if((istype(turf,/turf/simulated/floor)) && (!has_gravity(src))) // No one else gets a chance.
+			var/atom/movable/AM = A
+			if(AM == buckled) //Kind of unnecessary but let's just be sure
 				continue
+			if(AM.density)
+				if(AM.anchored)
+					if(istype(AM, /obj/item/projectile)) //"You grab the bullet and push off of it!" No
+						continue
+					return 1
+				if(pulling == AM)
+					continue
+				dense_object_backup = AM
 
-		dense_object++
-		break
-
-	if(!dense_object && (locate(/obj/structure/lattice) in oview(1, src)))
-		dense_object++
-
-	//Lastly attempt to locate any dense objects we could push off of
-	//TODO: If we implement objects drifing in space this needs to really push them
-	//Due to a few issues only anchored and dense objects will now work.
-	if(!dense_object)
-		for(var/obj/O in oview(1, src))
-			if((O) && (O.density) && (O.anchored))
-				dense_object++
-				break
-
-	//Nothing to push off of so end here
-	if(!dense_object)
-		return 0
+	if(movement_dir && dense_object_backup)
+		if(dense_object_backup.newtonian_move(turn(movement_dir, 180))) //You're pushing off something movable, so it moves
+			src << "<span class='info'>You push off of [dense_object_backup] to propel yourself.</span>"
 
 
+		return 1
+	return 0
 
-	//Check to see if we slipped
-	if(prob(Process_Spaceslipping(5)))
-		src << "\blue <B>You slipped!</B>"
-		src.inertia_dir = src.last_move
-		step(src, src.inertia_dir)
-		return 0
-	//If not then we can reset inertia and move
-	inertia_dir = 0
-	return 1
+/mob/proc/mob_has_gravity(turf/T)
+	return has_gravity(src, T)
 
-
-/mob/proc/Process_Spaceslipping(var/prob_slip = 5)
-	//Setup slipage
-	//If knocked out we might just hit it and stop.  This makes it possible to get dead bodies and such.
-	if(stat)
-		prob_slip = 0  // Changing this to zero to make it line up with the comment.
-
-	prob_slip = round(prob_slip)
-	return(prob_slip)
+/mob/proc/mob_negates_gravity()
+	return 0
 
 /mob/proc/Move_Pulled(var/atom/A)
 	if (!canmove || restrained() || !pulling)
@@ -418,6 +350,10 @@
 	if (pulling.anchored)
 		return
 	if (!pulling.Adjacent(src))
+		return
+	if (A == loc && pulling.density)
+		return
+	if (!Process_Spacemove(get_dir(pulling.loc, A)))
 		return
 	if (ismob(pulling))
 		var/mob/M = pulling
@@ -431,4 +367,7 @@
 	return
 
 /mob/proc/slip(var/s_amount, var/w_amount, var/obj/O, var/lube)
+	return
+
+/mob/proc/update_gravity()
 	return

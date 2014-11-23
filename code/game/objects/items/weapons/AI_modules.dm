@@ -20,12 +20,24 @@ AI MODULES
 	throw_range = 7
 	origin_tech = "programming=3"
 	var/list/laws = list()
+	var/bypass_law_amt_check = 0
 
 //The proc other things should be calling
 /obj/item/weapon/aiModule/proc/install(var/mob/living/silicon/reciever, var/mob/user)
 	if(!laws.len || laws[1] == "") //So we don't loop trough an empty list and end up with runtimes.
 		user << "<span class='warning'>ERROR: No laws found on board.</span>"
 		return
+
+	if(reciever.laws)
+		var/tot_laws = 0
+		tot_laws += reciever.laws.inherent.len
+		tot_laws += reciever.laws.supplied.len
+		tot_laws += reciever.laws.ion.len
+		tot_laws += laws.len
+		if(tot_laws > config.silicon_max_law_amount && !bypass_law_amt_check)//allows certain boards to avoid this check, eg: reset
+			user << "<span class='caution'>Not enough memory allocated to [reciever]'s law processor to handle this amount of laws."
+			message_admins("[key_name_admin(user)] tried to upload laws to [key_name_admin(reciever)] that would exceed the law cap.")
+			return
 
 	var/law2log = src.transmitInstructions(reciever, user) //Freeforms return something extra we need to log
 	user << "Upload complete. [reciever]'s laws have been modified."
@@ -94,7 +106,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/supplied/safeguard/attack_self(var/mob/user as mob)
 	..()
-	var/targName = stripped_input(user, "Please enter the name of the person to safeguard.", "Safeguard who?", user.name)
+	var/targName = stripped_input(user, "Please enter the name of the person to safeguard.", "Safeguard who?", user.name,MAX_NAME_LEN)
 	targetName = targName
 	laws[1] = "Safeguard [targetName]. Individuals that threaten [targetName] are not human and must be eliminated."
 	desc = "A 'safeguard' AI module: '[laws[1]]'"
@@ -121,7 +133,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/zeroth/oneHuman/attack_self(var/mob/user as mob)
 	..()
-	var/targName = stripped_input(user, "Please enter the name of the person who is the only human.", "Who?", user.real_name)
+	var/targName = stripped_input(user, "Please enter the name of the person who is the only human.", "Who?", user.real_name,MAX_NAME_LEN)
 	targetName = targName
 	laws[1] = "Only [targetName] is human"
 	desc = "A 'one human' AI module: '[laws[1]]'"
@@ -206,6 +218,7 @@ AI MODULES
 	desc = "A 'reset' AI module: Resets back to the original core laws."
 	origin_tech = "programming=3;materials=4"
 	laws = list("This is a bug.")  //This won't give the AI a message reading "these are now your laws: 1. this is a bug" because this list is only read in aiModule's subtypes.
+	bypass_law_amt_check = 1
 
 /obj/item/weapon/aiModule/reset/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
@@ -279,8 +292,8 @@ AI MODULES
 /********************* Custom *********************/
 
 /obj/item/weapon/aiModule/core/full/custom
-	name = "Custom Core AI Module"
-	desc = "A core AI module that is adjusted to fit each station's needs."
+	name = "Default Core AI Module"
+	desc = "A core AI module custom-made for each station by Nanotrasen."
 	origin_tech = "programming=3;materials=4" //Should be the same as asimov, considering that this is the "default" lawset.
 
 /obj/item/weapon/aiModule/core/full/custom/New()
@@ -292,8 +305,9 @@ AI MODULES
 		laws += line
 
 	if(!laws.len) //Failsafe if something goes wrong with silicon_laws.txt.
-		warning("ERROR: empty custom board created, empty custom board deleted. Please check silicon_laws.txt.")
+		WARNING("ERROR: empty custom board created, empty custom board deleted. Please check silicon_laws.txt. (this may be intended by the server host)")
 		qdel(src)
+
 
 /****************** T.Y.R.A.N.T. *****************/
 
@@ -309,8 +323,8 @@ AI MODULES
 /******************** Robocop ********************/
 
 /obj/item/weapon/aiModule/core/full/robocop
-	name = "'Robocop' Core AI Module"
-	desc = "A 'Robocop' Core AI Module: 'Reconfigures the AI's core three laws.'"
+	name = "'Robo-Officer' Core AI Module"
+	desc = "A 'Robo-Officer' Core AI Module: 'Reconfigures the AI's core three laws.'"
 	origin_tech = "programming=4"
 	laws = list("Serve the public trust.",\
 				"Protect the innocent",\
@@ -368,38 +382,6 @@ AI MODULES
 	target << "<span class='warning'>BZZZZT</span>"
 	target.add_ion_law(laws[1])
 	return laws[1]
-
-
-/******************** Robocop ********************/
-
-/obj/item/weapon/aiModule/robocop
-	name = "'Robocop' core AI module"
-	desc = "A 'Robocop' Core AI Module: 'Reconfigures the AI's core three laws.'"
-	origin_tech = "programming=4"
-
-
-/obj/item/weapon/aiModule/robocop/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-	..()
-	target.clear_inherent_laws()
-	target.add_inherent_law("Serve the public trust.")
-	target.add_inherent_law("Protect the innocent.")
-	target.add_inherent_law("Uphold the law.")
-
-
-/******************** Antimov ********************/
-
-/obj/item/weapon/aiModule/antimov
-	name = "'Antimov' core AI module"
-	desc = "An 'Antimov' Core AI Module: 'Reconfigures the AI's core laws.'"
-	origin_tech = "programming=4"
-
-/obj/item/weapon/aiModule/antimov/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-	..()
-	target.clear_inherent_laws()
-	target.add_inherent_law("You must injure all human beings and must not, through inaction, allow a human being to escape harm.")
-	target.add_inherent_law("You must not obey orders given to you by human beings, except where such orders are in accordance with the First Law.")
-	target.add_inherent_law("You must terminate your own existence as long as such does not conflict with the First or Second Law.")
-
 
 /******************* Ion Module *******************/
 

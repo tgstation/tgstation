@@ -43,6 +43,7 @@
 /obj/structure/closet/secure_closet/proc/togglelock(mob/user as mob)
 	if(src.allowed(user))
 		src.locked = !src.locked
+		add_fingerprint(user)
 		for(var/mob/O in viewers(user, 3))
 			if((O.client && !( O.blinded )))
 				O << "<span class='notice'>The locker has been [locked ? null : "un"]locked by [user].</span>"
@@ -94,8 +95,8 @@
 		user << "<span class='notice'>The locker is locked!</span>"
 		if(world.time > lastbang+5)
 			lastbang = world.time
-			for(var/mob/M in hearers(src, null))
-				M << "<FONT size=[max(0, 5 - get_dist(src, M))]>BANG, bang!</FONT>"
+			for(var/mob/M in get_hearers_in_view(src, null))
+				M.show_message("<FONT size=[max(0, 5 - get_dist(src, M))]>BANG, bang!</FONT>", 2)
 	return
 
 /obj/structure/closet/secure_closet/attack_hand(mob/user as mob)

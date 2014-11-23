@@ -10,21 +10,67 @@
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
+	strip_delay = 60
 
-/obj/item/clothing/head/helmet/HoS
-	name = "head of security hat"
-	desc = "The hat of the Head of Security. For showing the officers who's in charge."
-	icon_state = "hoscap"
-	flags = HEADCOVERSEYES
+/obj/item/clothing/head/helmet/riot
+	name = "riot helmet"
+	desc = "It's a helmet specifically designed to protect against close range attacks."
+	icon_state = "riot"
+	item_state = "helmet"
+	flags = HEADCOVERSEYES | HEADCOVERSMOUTH
+	armor = list(melee = 82, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	strip_delay = 80
+	action_button_name = "Toggle Helmet Visor"
+	visor_flags = HEADCOVERSEYES | HEADCOVERSMOUTH
+	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE
+
+/obj/item/clothing/head/helmet/riot/attack_self()
+	if(usr.canmove && !usr.stat && !usr.restrained())
+		if(up)
+			up = !up
+			flags |= (visor_flags)
+			flags_inv |= (visor_flags_inv)
+			icon_state = initial(icon_state)
+			usr << "You pull the [src] down."
+			usr.update_inv_head(0)
+		else
+			up = !up
+			flags &= ~(visor_flags)
+			flags_inv &= ~(visor_flags_inv)
+			icon_state = "[initial(icon_state)]up"
+			usr << "You push the [src] up."
+			usr.update_inv_head(0)
+
+/obj/item/clothing/head/helmet/swat
+	name = "\improper SWAT helmet"
+	desc = "An extremely robust, space-worthy helmet with a nanotrasen logo on the top."
+	icon_state = "swat"
+	item_state = "swat"
+	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
+	cold_protection = HEAD
+	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
+	heat_protection = HEAD
+	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
+	strip_delay = 80
+
+/obj/item/clothing/head/helmet/swat/syndicate
+	name = "blood-red helmet"
+	desc = "An extremely robust, space-worthy helmet without a visor to allow for goggle usage underneath. Property of Gorlex Marauders."
+	icon_state = "helmetsyndi"
+	item_state = "helmet"
+
+/obj/item/clothing/head/helmet/thunderdome
+	name = "\improper Thunderdome helmet"
+	desc = "<i>'Let the battle commence!'</i>"
+	icon_state = "thunderdome"
+	item_state = "thunderdome"
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
-	flags_inv = 0
-	flags_inv = HIDEEARS
-
-/obj/item/clothing/head/helmet/HoS/dermal
-	name = "Dermal Armour Patch"
-	desc = "You're not quite sure how you manage to take it on and off, but it implants nicely in your head."
-	icon_state = "dermal"
-	item_state = "dermal"
+	cold_protection = HEAD
+	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
+	heat_protection = HEAD
+	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
+	strip_delay = 80
 
 /obj/item/clothing/head/helmet/roman
 	name = "roman helmet"
@@ -32,6 +78,7 @@
 	armor = list(melee = 25, bullet = 0, laser = 25, energy = 10, bomb = 10, bio = 0, rad = 0)
 	icon_state = "roman"
 	item_state = "roman"
+	strip_delay = 100
 
 /obj/item/clothing/head/helmet/roman/legionaire
 	name = "roman legionaire helmet"
@@ -39,56 +86,16 @@
 	icon_state = "roman_c"
 	item_state = "roman_c"
 
-/obj/item/clothing/head/helmet/warden
-	name = "warden's hat"
-	desc = "It's a special helmet issued to the Warden of a securiy force. Protects the head from impacts."
-	icon_state = "policehelm"
-	flags_inv = 0
-
-/obj/item/clothing/head/helmet/riot
-	name = "riot helmet"
-	desc = "It's a helmet specifically designed to protect against close range attacks."
-	icon_state = "riot"
-	item_state = "helmet"
-	flags = HEADCOVERSEYES
-	armor = list(melee = 82, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
-	flags_inv = HIDEEARS
-
-/obj/item/clothing/head/helmet/swat
-	name = "\improper SWAT helmet"
-	desc = "They're often used by highly trained Swat Members."
-	icon_state = "swat"
-	flags = HEADCOVERSEYES
-	item_state = "swat"
-	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
-	flags_inv = HIDEEARS|HIDEEYES
-	cold_protection = HEAD
-	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
-	heat_protection = HEAD
-	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
-
-/obj/item/clothing/head/helmet/thunderdome
-	name = "\improper Thunderdome helmet"
-	desc = "<i>'Let the battle commence!'</i>"
-	icon_state = "thunderdome"
-	flags = HEADCOVERSEYES
-	item_state = "thunderdome"
-	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
-	cold_protection = HEAD
-	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
-	heat_protection = HEAD
-	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
-
 /obj/item/clothing/head/helmet/gladiator
 	name = "gladiator helmet"
 	desc = "Ave, Imperator, morituri te salutant."
 	icon_state = "gladiator"
-	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+	flags = HEADCOVERSEYES|BLOCKHAIR
 	item_state = "gladiator"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 
 obj/item/clothing/head/helmet/redtaghelm
-	name = "Red LaserTag Helmet"
+	name = "red laser tag helmet"
 	desc = "They have chosen their own end."
 	icon_state = "redtaghelm"
 	flags = HEADCOVERSEYES
@@ -98,7 +105,7 @@ obj/item/clothing/head/helmet/redtaghelm
 	flags_inv = HIDEEARS|HIDEEYES
 
 obj/item/clothing/head/helmet/bluetaghelm
-	name = "Blue LaserTag Helmet"
+	name = "blue laser tag helmet"
 	desc = "They'll need more men."
 	icon_state = "bluetaghelm"
 	flags = HEADCOVERSEYES

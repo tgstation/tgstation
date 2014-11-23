@@ -30,8 +30,8 @@
 	..()
 
 
-/obj/effect/blob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0))	return 1
+/obj/effect/blob/CanPass(atom/movable/mover, turf/target, height=0)
+	if(height==0)	return 1
 	if(istype(mover) && mover.checkpass(PASSBLOB))	return 1
 	return 0
 
@@ -149,10 +149,11 @@
 	L.blob_act()
 
 
-/obj/effect/blob/attackby(var/obj/item/weapon/W, var/mob/user)
-	user.changeNext_move(8)
+/obj/effect/blob/attackby(var/obj/item/weapon/W, var/mob/living/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
-	src.visible_message("<span class='danger'>The [src.name] has been attacked with \the [W][(user ? " by [user]." : ".")]!</span>")
+	src.visible_message("<span class='danger'>The [src.name] has been attacked with \the [W][(user ? " by [user]" : "")]!</span>")
 	var/damage = 0
 	switch(W.damtype)
 		if("fire")
@@ -167,7 +168,8 @@
 	return
 
 /obj/effect/blob/attack_animal(mob/living/simple_animal/M as mob)
-	M.changeNext_move(8)
+	M.changeNext_move(CLICK_CD_MELEE)
+	M.do_attack_animation(src)
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
 	src.visible_message("<span class='danger'>The [src.name] has been attacked by \the [M]!</span>")
 	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -180,7 +182,7 @@
 
 /obj/effect/blob/proc/change_to(var/type)
 	if(!ispath(type))
-		error("[type] is an invalid type for the blob.")
+		ERROR("[type] is an invalid type for the blob.")
 	new type(src.loc)
 	qdel(src)
 

@@ -42,9 +42,15 @@
 		return //sanity check as AStar is still throwing insane stunts
 	if(!AStar(user.loc, target.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, user.mind.changeling.sting_range))
 		return //hope this ancient magic still works
+	if(target.mind && target.mind.changeling)
+		sting_feedback(user,target)
+		take_chemical_cost(user.mind.changeling)
+		return
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/sting_feedback(var/mob/user, var/mob/target)
+	if(!target)
+		return
 	user << "<span class='notice'>We stealthily sting [target.name].</span>"
 	if(target.mind && target.mind.changeling)
 		target << "<span class='warning'>You feel a tiny prick.</span>"
@@ -58,12 +64,15 @@
 	helptext = "Does not provide a warning to others. The victim will transform much like a changeling would."
 	sting_icon = "sting_transform"
 	chemical_cost = 40
-	dna_cost = 1
+	dna_cost = 2
 	var/datum/dna/selected_dna = null
 
 /obj/effect/proc_holder/changeling/sting/transformation/Click()
 	var/mob/user = usr
 	var/datum/changeling/changeling = user.mind.changeling
+	if(changeling.chosen_sting)
+		unset_sting(user)
+		return
 	selected_dna = changeling.select_dna("Select the target DNA: ", "Target DNA")
 	if(!selected_dna)
 		return
@@ -80,7 +89,9 @@
 /obj/effect/proc_holder/changeling/sting/transformation/sting_action(var/mob/user, var/mob/target)
 	add_logs(user, target, "stung", object="transformation sting", addition=" new identity is [selected_dna.real_name]")
 	var/datum/dna/NewDNA = selected_dna
-	hardset_dna(target, NewDNA.uni_identity, NewDNA.struc_enzymes, NewDNA.real_name, NewDNA.mutantrace, NewDNA.blood_type)
+	if(ismonkey(target))
+		user << "<span class='notice'>We stealthily sting [target.name].</span>"
+	hardset_dna(target, NewDNA.uni_identity, NewDNA.struc_enzymes, NewDNA.real_name, NewDNA.blood_type, NewDNA.species.type, NewDNA.mutant_color)
 	updateappearance(target)
 	feedback_add_details("changeling_powers","TS")
 	return 1
@@ -97,9 +108,10 @@ obj/effect/proc_holder/changeling/sting/extract_dna
 	if(..())
 		return user.mind.changeling.can_absorb_dna(user, target)
 
-/obj/effect/proc_holder/changeling/sting/extract_dna/sting_action(var/mob/user, var/mob/target)
+/obj/effect/proc_holder/changeling/sting/extract_dna/sting_action(var/mob/user, var/mob/living/carbon/human/target)
 	add_logs(user, target, "stung", object="extraction sting")
-	user.mind.changeling.absorb_dna(target, user)
+	if(!(user.mind.changeling.has_dna(target.dna)))
+		user.mind.changeling.absorb_dna(target, user)
 	feedback_add_details("changeling_powers","ED")
 	return 1
 
@@ -109,7 +121,7 @@ obj/effect/proc_holder/changeling/sting/mute
 	helptext = "Does not provide a warning to the victim that they have been stung, until they try to speak and cannot."
 	sting_icon = "sting_mute"
 	chemical_cost = 20
-	dna_cost = 1
+	dna_cost = 2
 
 /obj/effect/proc_holder/changeling/sting/mute/sting_action(var/mob/user, var/mob/living/carbon/target)
 	add_logs(user, target, "stung", object="mute sting")
@@ -120,7 +132,7 @@ obj/effect/proc_holder/changeling/sting/mute
 obj/effect/proc_holder/changeling/sting/blind
 	name = "Blind Sting"
 	desc = "Temporarily blinds the target."
-	helptext = "This sting completely blinds a target for a short time. The target does not notice they have been stung."
+	helptext = "This sting completely blinds a target for a short time."
 	sting_icon = "sting_blind"
 	chemical_cost = 25
 	dna_cost = 1
@@ -137,16 +149,16 @@ obj/effect/proc_holder/changeling/sting/blind
 obj/effect/proc_holder/changeling/sting/LSD
 	name = "Hallucination Sting"
 	desc = "Causes terror in the target."
-	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung.  The effect occurs after 30 to 60 seconds."
+	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung, and the effect occurs after 30 to 60 seconds."
 	sting_icon = "sting_lsd"
-	chemical_cost = 5
+	chemical_cost = 10
 	dna_cost = 1
 
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(var/mob/user, var/mob/living/carbon/target)
 	add_logs(user, target, "stung", object="LSD sting")
 	spawn(rand(300,600))
 		if(target)
-			target.hallucination += 400
+			target.hallucination = max(400, target.hallucination)
 	feedback_add_details("changeling_powers","HS")
 	return 1
 
@@ -156,7 +168,7 @@ obj/effect/proc_holder/changeling/sting/cryo
 	helptext = "Does not provide a warning to the victim, though they will likely realize they are suddenly freezing."
 	sting_icon = "sting_cryo"
 	chemical_cost = 15
-	dna_cost = 1
+	dna_cost = 2
 
 /obj/effect/proc_holder/changeling/sting/cryo/sting_action(var/mob/user, var/mob/target)
 	add_logs(user, target, "stung", object="cryo sting")

@@ -14,11 +14,14 @@
 	maxHealth = 5
 	health = 5
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	meat_amount = 1
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
 	density = 0
 	ventcrawler = 2
+	pass_flags = PASSTABLE | PASSGRILLE
+	mob_size = 0
 	var/body_color //brown, gray and white, leave blank for random
 
 /mob/living/simple_animal/mouse/New()
@@ -46,7 +49,7 @@
 	if( ishuman(AM) )
 		if(!stat)
 			var/mob/M = AM
-			M << "\blue \icon[src] Squeek!"
+			M << "<span class='notice'>\icon[src] Squeek!</span>"
 			playsound(src, 'sound/effects/mousesqueek.ogg', 100, 1)
 	..()
 

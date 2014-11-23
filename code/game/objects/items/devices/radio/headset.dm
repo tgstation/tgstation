@@ -9,44 +9,50 @@
 	canhear_range = 0 // can't hear headsets from very far away
 
 	slot_flags = SLOT_EARS
-	var/translate_binary = 0
-	var/translate_hive = 0
-	var/obj/item/device/encryptionkey/keyslot1 = null
 	var/obj/item/device/encryptionkey/keyslot2 = null
 	maxf = 1489
 
 /obj/item/device/radio/headset/New()
 	..()
-	keyslot1 = new /obj/item/device/encryptionkey/
+	keyslot = new /obj/item/device/encryptionkey/
 	recalculateChannels()
+
+/obj/item/device/radio/headset/Destroy()
+	qdel(keyslot)
+	qdel(keyslot2)
+	keyslot = null
+	keyslot2 = null
+	..()
 
 /obj/item/device/radio/headset/talk_into(mob/living/M as mob, message, channel)
 	if (!listening)
 		return
 	..()
 
-/obj/item/device/radio/headset/receive_range(freq, level)
+/obj/item/device/radio/headset/receive_range(freq, level, var/AIuser)
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc
 		if(H.ears == src)
 			return ..(freq, level)
+	else if(AIuser)
+		return ..(freq, level)
 	return -1
 
 /obj/item/device/radio/headset/syndicate
 	origin_tech = "syndicate=3"
+	icon_state = "syndie_headset"
+	item_state = "syndie_headset"
+
 /obj/item/device/radio/headset/syndicate/New()
 	..()
-	qdel(keyslot1)
-	keyslot1 = new /obj/item/device/encryptionkey/syndicate
-	syndie = 1
-	recalculateChannels()
+	make_syndie()
 
 /obj/item/device/radio/headset/binary
 	origin_tech = "syndicate=3"
 /obj/item/device/radio/headset/binary/New()
 	..()
-	qdel(keyslot1)
-	keyslot1 = new /obj/item/device/encryptionkey/binary
+	qdel(keyslot)
+	keyslot = new /obj/item/device/encryptionkey/binary
 	recalculateChannels()
 
 /obj/item/device/radio/headset/headset_sec
@@ -55,6 +61,11 @@
 	icon_state = "sec_headset"
 	item_state = "headset"
 	keyslot2 = new /obj/item/device/encryptionkey/headset_sec
+
+/obj/item/device/radio/headset/headset_sec/alt
+	name = "security bowman headset"
+	icon_state = "sec_headset_alt"
+	item_state = "sec_headset_alt"
 
 /obj/item/device/radio/headset/headset_eng
 	name = "engineering radio headset"
@@ -100,10 +111,16 @@
 
 /obj/item/device/radio/headset/heads/captain
 	name = "\proper the captain's headset"
-	desc = "The headset of the boss. Channels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
+	desc = "The headset of the king. Channels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
 	icon_state = "com_headset"
 	item_state = "headset"
 	keyslot2 = new /obj/item/device/encryptionkey/heads/captain
+
+/obj/item/device/radio/headset/heads/captain/alt
+	name = "\proper the captain's bowman headset"
+	desc = "The headset of the boss. Channels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
+	icon_state = "com_headset_alt"
+	item_state = "com_headset_alt"
 
 /obj/item/device/radio/headset/heads/rd
 	name = "\proper the research director's headset"
@@ -118,6 +135,11 @@
 	icon_state = "com_headset"
 	item_state = "headset"
 	keyslot2 = new /obj/item/device/encryptionkey/heads/hos
+
+/obj/item/device/radio/headset/heads/hos/alt
+	name = "\proper the head of security's bowman headset"
+	icon_state = "com_headset_alt"
+	item_state = "com_headset_alt"
 
 /obj/item/device/radio/headset/heads/ce
 	name = "\proper the chief engineer's headset"
@@ -155,11 +177,18 @@
 	keyslot2 = new /obj/item/device/encryptionkey/headset_service
 
 /obj/item/device/radio/headset/headset_cent
-	name = "centcom headset"
+	name = "\improper Centcom headset"
 	desc = "A headset used by the upper echelons of Nanotrasen. Channels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
 	icon_state = "cent_headset"
 	item_state = "headset"
 	keyslot2 = new /obj/item/device/encryptionkey/heads/captain
+
+/obj/item/device/radio/headset/ai
+	name = "\proper Integrated Subspace Transceiver "
+	keyslot2 = new /obj/item/device/encryptionkey/ai
+
+/obj/item/device/radio/headset/ai/receive_range(freq, level)
+	return ..(freq, level, 1)
 
 /obj/item/device/radio/headset/attackby(obj/item/weapon/W as obj, mob/user as mob)
 //	..()
@@ -168,7 +197,7 @@
 		return
 
 	if(istype(W, /obj/item/weapon/screwdriver))
-		if(keyslot1 || keyslot2)
+		if(keyslot || keyslot2)
 
 
 			for(var/ch_name in channels)
@@ -176,11 +205,11 @@
 				secure_radio_connections[ch_name] = null
 
 
-			if(keyslot1)
+			if(keyslot)
 				var/turf/T = get_turf(user)
 				if(T)
-					keyslot1.loc = T
-					keyslot1 = null
+					keyslot.loc = T
+					keyslot = null
 
 
 
@@ -197,14 +226,14 @@
 			user << "This headset doesn't have any encryption keys!  How useless..."
 
 	if(istype(W, /obj/item/device/encryptionkey/))
-		if(keyslot1 && keyslot2)
+		if(keyslot && keyslot2)
 			user << "The headset can't hold another key!"
 			return
 
-		if(!keyslot1)
+		if(!keyslot)
 			user.drop_item()
 			W.loc = src
-			keyslot1 = W
+			keyslot = W
 
 		else
 			user.drop_item()
@@ -217,28 +246,8 @@
 	return
 
 
-/obj/item/device/radio/headset/proc/recalculateChannels()
-	src.channels = list()
-	src.translate_binary = 0
-	src.translate_hive = 0
-	src.syndie = 0
-
-	if(keyslot1)
-		for(var/ch_name in keyslot1.channels)
-			if(ch_name in src.channels)
-				continue
-			src.channels += ch_name
-			src.channels[ch_name] = keyslot1.channels[ch_name]
-
-		if(keyslot1.translate_binary)
-			src.translate_binary = 1
-
-		if(keyslot1.translate_hive)
-			src.translate_hive = 1
-
-		if(keyslot1.syndie)
-			src.syndie = 1
-
+/obj/item/device/radio/headset/recalculateChannels()
+	..()
 	if(keyslot2)
 		for(var/ch_name in keyslot2.channels)
 			if(ch_name in src.channels)
@@ -256,13 +265,16 @@
 			src.syndie = 1
 
 
-	for (var/ch_name in channels)
+	for(var/ch_name in channels)
+		//this is the most hilarious piece of code i have seen this week, so im not going to remove it
+		/*
 		if(!radio_controller)
 			sleep(30) // Waiting for the radio_controller to be created.
 		if(!radio_controller)
 			src.name = "broken radio headset"
 			return
+		*/
 
-		secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
+		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
 
 	return

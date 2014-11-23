@@ -20,11 +20,9 @@
 	var/struc_enzymes
 	var/uni_identity
 	var/blood_type
-	var/mutantrace = null  //The type of mutant race the player is if applicable (i.e. potato-man)
+	var/datum/species/species = new /datum/species/human() //The type of mutant race the player is if applicable (i.e. potato-man)
+	var/mutant_color = "FFF"		 // What color you are if you have certain speciess
 	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
-
-/datum/dna/New()
-	if(!blood_type)	blood_type = random_blood_type()
 
 /datum/dna/proc/generate_uni_identity(mob/living/carbon/character)
 	. = ""
@@ -33,8 +31,14 @@
 		L[DNA_GENDER_BLOCK] = construct_block((character.gender!=MALE)+1, 2)
 		if(istype(character, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = character
+			if(!H.dna.species)
+				H.dna.species = new /datum/species/human()
+			if(!hair_styles_list.len)
+				init_sprite_accessory_subtypes(/datum/sprite_accessory/hair, hair_styles_list, hair_styles_male_list, hair_styles_female_list)
 			L[DNA_HAIR_STYLE_BLOCK] = construct_block(hair_styles_list.Find(H.hair_style), hair_styles_list.len)
 			L[DNA_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.hair_color)
+			if(!facial_hair_styles_list.len)
+				init_sprite_accessory_subtypes(/datum/sprite_accessory/facial_hair, facial_hair_styles_list, facial_hair_styles_male_list, facial_hair_styles_female_list)
 			L[DNA_FACIAL_HAIR_STYLE_BLOCK] = construct_block(facial_hair_styles_list.Find(H.facial_hair_style), facial_hair_styles_list.len)
 			L[DNA_FACIAL_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.facial_hair_color)
 			L[DNA_SKIN_TONE_BLOCK] = construct_block(skin_tones.Find(H.skin_tone), skin_tones.len)
@@ -65,11 +69,17 @@
 		. += repeat_string(DNA_UNIQUE_ENZYMES_LEN, "0")
 	return .
 
-/proc/hardset_dna(mob/living/carbon/owner, ui, se, real_name, mutantrace, blood_type)
+/proc/hardset_dna(mob/living/carbon/owner, ui, se, real_name, blood_type, datum/species/mrace, mcolor)
 	if(!istype(owner, /mob/living/carbon/monkey) && !istype(owner, /mob/living/carbon/human))
 		return
 	if(!owner.dna)
-		owner.dna = new /datum/dna()
+		create_dna(owner, mrace)
+
+	if(mrace)
+		owner.dna.species = new mrace()
+
+	if(mcolor)
+		owner.dna.mutant_color = mcolor
 
 	if(real_name)
 		owner.real_name = real_name
@@ -82,18 +92,13 @@
 		owner.dna.uni_identity = ui
 		updateappearance(owner)
 
-	var/update_mutantrace = (mutantrace != owner.dna.mutantrace)
-	owner.dna.mutantrace = mutantrace
-	if(update_mutantrace && istype(owner, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = owner
-		H.update_body()
-		H.update_hair()
-
 	if(se)
 		owner.dna.struc_enzymes = se
 		domutcheck(owner)
 
 	check_dna_integrity(owner)
+
+	owner.regenerate_icons()
 	return
 
 /proc/check_dna_integrity(mob/living/carbon/character)
@@ -116,7 +121,7 @@
 	if(!istype(character, /mob/living/carbon/monkey) && !istype(character, /mob/living/carbon/human))
 		return
 	if(!character.dna)
-		character.dna = new /datum/dna()
+		create_dna(character)
 	if(blood_type)
 		character.dna.blood_type = blood_type
 		character.dna.real_name = character.real_name
@@ -124,6 +129,10 @@
 	character.dna.struc_enzymes = character.dna.generate_struc_enzymes(character)
 	character.dna.unique_enzymes = character.dna.generate_unique_enzymes(character)
 	return character.dna
+
+/proc/create_dna(mob/living/carbon/C, datum/species/S) //don't use this unless you're about to use hardset_dna or ready_dna
+	C.dna = new /datum/dna()
+	if(S)	C.dna.species = new S()	// do not remove; this is here to prevent runtimes
 
 /////////////////////////// DNA DATUM
 
@@ -335,6 +344,7 @@
 	var/locked = 0
 	var/open = 0
 	anchored = 1
+	interact_offline = 1
 	use_power = 1
 	idle_power_usage = 50
 	active_power_usage = 300
@@ -366,6 +376,29 @@
 	for(var/obj/item/weapon/stock_parts/micro_laser/P in component_parts)
 		damage_coeff = P.rating
 
+/obj/machinery/dna_scannernew/update_icon()
+
+	//no power or maintenance
+	if(stat & (NOPOWER|BROKEN))
+		icon_state = initial(icon_state)+ (open ? "_open" : "") + "_unpowered"
+		return
+
+	if((stat & MAINT) || panel_open)
+		icon_state = initial(icon_state)+ (open ? "_open" : "") + "_maintenance"
+		return
+
+	//running and someone in there
+	if(occupant)
+		icon_state = initial(icon_state)+ "_occupied"
+		return
+
+	//running
+	icon_state = initial(icon_state)+ (open ? "_open" : "")
+
+/obj/machinery/dna_scannernew/power_change()
+	..()
+	update_icon()
+
 /obj/machinery/dna_scannernew/proc/toggle_open(mob/user=usr)
 	if(!user)
 		return
@@ -378,8 +411,8 @@
 	if(open || !locked)	//Open and unlocked, no need to escape
 		open = 1
 		return
-	user.changeNext_move(100)
-	user.last_special = world.time + 100
+	user.changeNext_move(CLICK_CD_BREAKOUT)
+	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>"
 	user.visible_message("<span class='warning'>You hear a metallic creaking from [src]!</span>")
 
@@ -409,7 +442,7 @@
 			C.loc = src
 			C.stop_pulling()
 			break
-		icon_state = initial(icon_state) + (occupant ? "_occupied" : "")
+		update_icon()
 
 		// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
 		if(occupant)
@@ -422,7 +455,8 @@
 					for(var/mob/dead/observer/ghost in player_list)
 						if(ghost.mind == occupant.mind)
 							if(ghost.can_reenter_corpse)
-								ghost << "<b><font color = #330033><font size = 3>Your corpse has been placed into a cloning scanner. Return to your body if you want to be resurrected/cloned!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>"
+								ghost << "<span class='ghostalert'>Your corpse has been placed into a cloning scanner. Return to your body if you want to be cloned!</span> (Verbs -> Ghost -> Re-enter corpse)"
+								ghost << sound('sound/effects/genetics.ogg')
 							break
 
 		return 1
@@ -445,7 +479,7 @@
 					occupant.client.eye = occupant
 					occupant.client.perspective = MOB_PERSPECTIVE
 				occupant = null
-			icon_state = "[initial(icon_state)]_open"
+			update_icon()
 		return 1
 
 /obj/machinery/dna_scannernew/relaymove(mob/user as mob)
@@ -456,7 +490,8 @@
 
 /obj/machinery/dna_scannernew/attackby(obj/item/weapon/grab/G, mob/user)
 
-	if(!occupant && default_deconstruction_screwdriver(user, "[initial(icon_state)]_open", "[initial(icon_state)]", G))
+	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, G))//sent icon_state is irrelevant...
+		update_icon()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
 		return
 
 	if(exchange_parts(user, G))
@@ -574,7 +609,7 @@
 	var/occupant_status = "<div class='line'><div class='statusLabel'>Subject Status:</div><div class='statusValue'>"
 	var/scanner_status
 	var/temp_html
-	if(connected)
+	if(connected && connected.is_operational())
 		if(connected.occupant)	//set occupant_status message
 			viable_occupant = connected.occupant
 			if(check_dna_integrity(viable_occupant) && (!(NOCLONE in viable_occupant.mutations) || (connected.scan_level == 3)))	//occupent is viable for dna modification
@@ -981,7 +1016,7 @@ proc/deconstruct_block(value, values, blocksize=DNA_BLOCK_SIZE)
 
 /datum/dna/proc/is_same_as(var/datum/dna/D)
 	if(uni_identity == D.uni_identity && struc_enzymes == D.struc_enzymes && real_name == D.real_name)
-		if(mutantrace == D.mutantrace && blood_type == D.blood_type)
+		if(species == D.species && mutant_color == D.mutant_color && blood_type == D.blood_type)
 			return 1
 	return 0
 

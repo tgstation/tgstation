@@ -27,3 +27,27 @@
 //1 = standard hud
 //2 = reduced hud (just hands and intent switcher)
 //3 = no hud (for screenshots)
+
+#define MINERAL_MATERIAL_AMOUNT 2000
+//The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
+
+
+#define CLICK_CD_MELEE 8
+#define CLICK_CD_RANGE 4
+#define CLICK_CD_BREAKOUT 100
+#define CLICK_CD_HANDCUFFED 10
+#define CLICK_CD_TKSTRANGLE 10
+#define CLICK_CD_RESIST 20
+//click cooldowns, in tenths of a second
+
+
+#define BE_CLOSE 1		//in the case of a silicon, to select if they need to be next to the atom
+#define NO_DEXTERY 1	//if other mobs (monkeys, aliens, etc) can use this
+//used by canUseTopic()
+
+//singularity defines
+#define STAGE_ONE 1
+#define STAGE_TWO 3
+#define STAGE_THREE 5
+#define STAGE_FOUR 7
+#define STAGE_FIVE 9

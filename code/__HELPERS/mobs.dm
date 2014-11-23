@@ -13,24 +13,34 @@
 		else			return "000"
 
 /proc/random_underwear(gender)
+	if(!underwear_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, underwear_list, underwear_m, underwear_f)
 	switch(gender)
 		if(MALE)	return pick(underwear_m)
 		if(FEMALE)	return pick(underwear_f)
-		else		return pick(underwear_all)
+		else		return pick(underwear_list)
 
-proc/random_hair_style(gender)
+/proc/random_undershirt(gender)
+	if(!undershirt_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, undershirt_list, undershirt_m, undershirt_f)
+	switch(gender)
+		if(MALE)	return pick(undershirt_m)
+		if(FEMALE)	return pick(undershirt_f)
+		else		return pick(undershirt_list)
+
+/proc/random_hair_style(gender)
 	switch(gender)
 		if(MALE)	return pick(hair_styles_male_list)
 		if(FEMALE)	return pick(hair_styles_female_list)
 		else		return pick(hair_styles_list)
 
-proc/random_facial_hair_style(gender)
+/proc/random_facial_hair_style(gender)
 	switch(gender)
 		if(MALE)	return pick(facial_hair_styles_male_list)
 		if(FEMALE)	return pick(facial_hair_styles_female_list)
 		else		return pick(facial_hair_styles_list)
 
-proc/random_name(gender, attempts_to_find_unique_name=10)
+/proc/random_name(gender, attempts_to_find_unique_name=10)
 	for(var/i=1, i<=attempts_to_find_unique_name, i++)
 		if(gender==FEMALE)	. = capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
 		else				. = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
@@ -38,7 +48,7 @@ proc/random_name(gender, attempts_to_find_unique_name=10)
 		if(i != attempts_to_find_unique_name && !findname(.))
 			break
 
-proc/random_skin_tone()
+/proc/random_skin_tone()
 	return pick(skin_tones)
 
 var/list/skin_tones = list(
@@ -56,7 +66,10 @@ var/list/skin_tones = list(
 	"african2"
 	)
 
-proc/age2agedescription(age)
+var/global/list/species_list[0]
+var/global/list/roundstart_species[0]
+
+/proc/age2agedescription(age)
 	switch(age)
 		if(0 to 1)			return "infant"
 		if(1 to 3)			return "toddler"
@@ -79,7 +92,7 @@ Proc for attack log creation, because really why not
 6 is additional information, anything that needs to be added
 */
 
-proc/add_logs(mob/user, mob/target, what_done, var/admin=1, var/object=null, var/addition=null)
+/proc/add_logs(mob/user, mob/target, what_done, var/admin=1, var/object=null, var/addition=null)
 	if(user && ismob(user))
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has [what_done] [target ? "[target.name][(ismob(target) && target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition]</font>")
 	if(target && ismob(target))

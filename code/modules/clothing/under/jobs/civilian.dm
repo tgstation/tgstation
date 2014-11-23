@@ -38,6 +38,7 @@
 	icon_state = "chaplain"
 	item_state = "bl_suit"
 	item_color = "chapblack"
+	can_adjust = 0
 
 
 /obj/item/clothing/under/rank/chef
@@ -54,6 +55,7 @@
 	item_state = "clown"
 	item_color = "clown"
 	fitted = 0
+	can_adjust = 0
 
 
 /obj/item/clothing/under/rank/head_of_personnel
@@ -62,6 +64,7 @@
 	icon_state = "hop"
 	item_state = "b_suit"
 	item_color = "hop"
+	can_adjust = 0
 
 
 /obj/item/clothing/under/rank/hydroponics
@@ -84,6 +87,7 @@
 /obj/item/clothing/under/lawyer
 	desc = "Slick threads."
 	name = "Lawyer suit"
+	can_adjust = 0
 
 
 /obj/item/clothing/under/lawyer/black
@@ -116,6 +120,7 @@
 	icon_state = "bluesuit"
 	item_state = "bluesuit"
 	item_color = "bluesuit"
+	can_adjust = 1
 
 
 /obj/item/clothing/under/lawyer/purpsuit
@@ -124,6 +129,8 @@
 	item_state = "lawyer_purp"
 	item_color = "lawyer_purp"
 	fitted = 0
+	can_adjust = 1
+
 
 /obj/item/clothing/under/lawyer/blacksuit
 	name = "black suit"
@@ -131,20 +138,25 @@
 	icon_state = "blacksuit"
 	item_state = "ba_suit"
 	item_color = "blacksuit"
+	can_adjust = 1
 
-/obj/item/clothing/under/librarian
+
+/obj/item/clothing/under/rank/librarian
 	name = "sensible suit"
 	desc = "It's very... sensible."
 	icon_state = "red_suit"
 	item_state = "red_suit"
 	item_color = "red_suit"
+	can_adjust = 0
 
-/obj/item/clothing/under/mime
+
+/obj/item/clothing/under/rank/mime
 	name = "mime's outfit"
 	desc = "It's not very colourful."
 	icon_state = "mime"
 	item_state = "mime"
 	item_color = "mime"
+
 
 /obj/item/clothing/under/rank/miner
 	desc = "It's a snappy jumpsuit with a sturdy set of overalls. It is very dirty."

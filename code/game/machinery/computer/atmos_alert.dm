@@ -17,7 +17,8 @@
 	set_frequency(receive_frequency)
 
 /obj/machinery/computer/atmos_alert/Destroy()
-	radio_controller.remove_object(src, receive_frequency)
+	if(radio_controller)
+		radio_controller.remove_object(src, receive_frequency)
 	..()
 
 /obj/machinery/computer/atmos_alert/receive_signal(datum/signal/signal)
@@ -47,9 +48,9 @@
 /obj/machinery/computer/atmos_alert/attack_hand(mob/user)
 	if(..(user))
 		return
-	user.set_machine(src)
-	//user << browse(return_text(),"window=computer")
-	//onclose(user, "computer")
+	interact(user) //UpdateDialog() is calling /interact each tick, not attack_hand()
+
+/obj/machinery/computer/atmos_alert/interact(mob/user)
 	var/datum/browser/popup = new(user, "computer", name)
 	popup.set_content(return_text())
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -112,14 +113,14 @@
 		var/removing_zone = href_list["priority_clear"]
 		for(var/zone in priority_alarms)
 			if(ckey(zone) == removing_zone)
-				usr << "\green Priority Alert for area [] cleared."
+				usr << "\green Priority Alert for [format_text(zone)] cleared."
 				priority_alarms -= zone
 
 	if(href_list["minor_clear"])
 		var/removing_zone = href_list["minor_clear"]
 		for(var/zone in minor_alarms)
 			if(ckey(zone) == removing_zone)
-				usr << "\green Minor Alert for area [] cleared."
+				usr << "\green Minor Alert for [format_text(zone)] cleared."
 				minor_alarms -= zone
 	update_icon()
 	return

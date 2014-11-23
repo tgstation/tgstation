@@ -3,12 +3,13 @@
 
 /obj/machinery/door/firedoor
 	name = "firelock"
-	desc = "Apply crowbar"
-	icon = 'icons/obj/doors/Doorfire.dmi'
+	desc = "Apply crowbar."
+	icon = 'icons/obj/doors/Doorfireglass.dmi'
 	icon_state = "door_open"
 	opacity = 0
 	density = 0
-	power_channel = ENVIRON
+	heat_proof = 1
+	glass = 1
 	var/blocked = 0
 	var/nextstate = null
 
@@ -35,7 +36,7 @@
 		var/obj/item/weapon/weldingtool/W = C
 		if(W.remove_fuel(0, user))
 			blocked = !blocked
-			user << text("\red You [blocked?"welded":"unwelded"] the [src]")
+			user << text("<span class='danger'>You [blocked?"welded":"unwelded"] the [src]</span>")
 			update_icon()
 			return
 
@@ -105,17 +106,12 @@
 
 /obj/machinery/door/firedoor/border_only
 	icon = 'icons/obj/doors/edge_Doorfire.dmi'
-	glass = 1 //There is a glass window so you can see through the door
-			  //This is needed due to BYOND limitations in controlling visibility
-	heat_proof = 1
-
 	flags = ON_BORDER
 
-/obj/machinery/door/firedoor/border_only/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/machinery/door/firedoor/border_only/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
-		if(air_group) return 0
 		return !density
 	else
 		return 1
@@ -133,3 +129,14 @@
 		return !density
 	else
 		return 1
+
+
+/obj/machinery/door/firedoor/heavy
+	name = "heavy firelock"
+	icon = 'icons/obj/doors/Doorfire.dmi'
+	glass = 0
+
+
+//used in the AStar algorithm to determinate if the turf the door is on is passable
+/obj/machinery/door/firedoor/CanAStarPass()
+	return !density

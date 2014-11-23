@@ -12,7 +12,7 @@
 
 		var/datum/objective/steal/steal_objective = new
 		steal_objective.owner = H.mind
-		steal_objective.set_target("nuclear authentication disk")
+		steal_objective.set_target(new /datum/objective_item/steal/nukedisc)
 		H.mind.objectives += steal_objective
 
 		var/datum/objective/hijack/hijack_objective = new
@@ -34,17 +34,17 @@
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(H), slot_ears)
 		H.equip_to_slot_or_del(new /obj/item/clothing/head/beret(H), slot_head)
 		H.equip_to_slot_or_del(new /obj/item/weapon/claymore(H), slot_l_hand)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/swat/combat(H), slot_shoes)
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(H), slot_shoes)
 		H.equip_to_slot_or_del(new /obj/item/weapon/pinpointer(H.loc), slot_l_store)
 
 		var/obj/item/weapon/card/id/W = new(H)
-		W.name = "[H.real_name]'s ID Card"
 		W.icon_state = "centcom"
 		W.access = get_all_accesses()
 		W.access += get_all_centcom_access()
 		W.assignment = "Highlander"
 		W.registered_name = H.real_name
+		W.update_label(H.real_name)
 		H.equip_to_slot_or_del(W, slot_wear_id)
 
-	message_admins("\blue [key_name_admin(usr)] used THERE CAN BE ONLY ONE!", 1)
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] used THERE CAN BE ONLY ONE!</span>")
 	log_admin("[key_name(usr)] used there can be only one.")

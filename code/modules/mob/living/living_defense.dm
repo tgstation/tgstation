@@ -16,6 +16,8 @@
 /mob/living/proc/getarmor(var/def_zone, var/type)
 	return 0
 
+/mob/living/proc/on_hit(var/obj/item/projectile/proj_type)
+	return
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
 	var/armor = run_armor_check(def_zone, P.flag)
@@ -67,6 +69,36 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 			var/mob/M = assailant.mob
 			add_logs(M, src, "hit", object="[I]")
 
+/mob/living/mech_melee_attack(obj/mecha/M)
+	if(M.occupant.a_intent == "harm")
+		if(M.damtype == "brute")
+			step_away(src,M,15)
+		switch(M.damtype)
+			if("brute")
+				Paralyse(1)
+				take_overall_damage(rand(M.force/2, M.force))
+				playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
+			if("fire")
+				take_overall_damage(0, rand(M.force/2, M.force))
+				playsound(src, 'sound/items/Welder.ogg', 50, 1)
+			if("tox")
+				M.mech_toxin_damage(src)
+			else
+				return
+		updatehealth()
+		M.occupant_message("<span class='danger'>You hit [src].</span>")
+		visible_message("<span class='danger'>[src] has been hit by [M.name].</span>", \
+						"<span class='userdanger'>[src] has been hit by [M.name].</span>")
+		add_logs(M.occupant, src, "attacked", object=M, addition="(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
+	else
+		step_away(src,M)
+		add_logs(M.occupant, src, "pushed", object=M, admin=0)
+		M.occupant_message("<span class='warning'>You push [src] out of the way.</span>")
+		visible_message("<span class='warning'>[M] pushes [src] out of the way.</span>")
+
+		return
+
+
 //Mobs on Fire
 /mob/living/proc/IgniteMob()
 	if(fire_stacks > 0 && !on_fire)
@@ -105,3 +137,135 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 	IgniteMob()
 
 //Mobs on Fire end
+
+
+/mob/living/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
+	if(!unacidable)		take_organ_damage(min(6*toxpwr, acid_volume * toxpwr))
+
+/mob/living/proc/grabbedby(mob/living/carbon/user)
+	if(user == src || anchored)
+		return 0
+	if(!(status_flags & CANPUSH))
+		return 0
+
+	add_logs(user, src, "grabbed", addition="passively")
+
+	var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(user, src)
+	if(buckled)
+		user << "<span class='notice'>You cannot grab [src], \he is buckled in!</span>"
+	if(!G)	//the grab will delete itself in New if src is anchored
+		return 0
+	user.put_in_active_hand(G)
+	G.synch()
+	LAssailant = user
+
+	playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+	visible_message("<span class='warning'>[user] has grabbed [src] passively!</span>")
+
+
+/mob/living/attack_slime(mob/living/carbon/slime/M as mob)
+	if (!ticker)
+		M << "You cannot attack people before the game has started."
+		return
+
+	if(M.Victim)
+		return // can't attack while eating!
+
+	if (stat != DEAD)
+		M.do_attack_animation(src)
+		visible_message("<span class='danger'>The [M.name] glomps [src]!</span>", \
+				"<span class='userdanger'>The [M.name] glomps [src]!</span>")
+
+		if(M.powerlevel > 0)
+			var/stunprob = M.powerlevel * 7 + 10  // 17 at level 1, 80 at level 10
+			if(prob(stunprob))
+				M.powerlevel -= 3
+				if(M.powerlevel < 0)
+					M.powerlevel = 0
+
+				visible_message("<span class='danger'>The [M.name] has shocked [src]!</span>", \
+				"<span class='userdanger'>The [M.name] has shocked [src]!</span>")
+
+				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				s.set_up(5, 1, src)
+				s.start()
+				return 1
+	add_logs(M, src, "attacked", admin=0)
+	return
+
+/mob/living/attack_animal(mob/living/simple_animal/M as mob)
+	if(M.melee_damage_upper == 0)
+		M.emote("me", 1, "[M.friendly] [src]")
+		return 0
+	else
+		if(M.attack_sound)
+			playsound(loc, M.attack_sound, 50, 1, 1)
+		M.do_attack_animation(src)
+		visible_message("<span class='danger'>\The [M] [M.attacktext] [src]!</span>", \
+						"<span class='userdanger'>\The [M] [M.attacktext] [src]!</span>")
+		add_logs(M, src, "attacked", admin=0)
+		return 1
+
+
+/mob/living/attack_paw(mob/living/carbon/monkey/M as mob)
+	if (!ticker)
+		M << "You cannot attack people before the game has started."
+		return 0
+
+	if (istype(loc, /turf) && istype(loc.loc, /area/start))
+		M << "No attacking people at spawn, you jackass."
+		return 0
+
+	if (M.a_intent == "harm" && !M.is_muzzled())
+		M.do_attack_animation(src)
+		if (prob(75))
+			add_logs(M, src, "attacked", admin=0)
+			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+			visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
+					"<span class='userdanger'>[M.name] bites [src]!</span>")
+			return 1
+		else
+			visible_message("<span class='danger'>[M.name] has attempted to bite [src]!</span>", \
+				"<span class='userdanger'>[M.name] has attempted to bite [src]!</span>")
+	return 0
+
+/mob/living/attack_larva(mob/living/carbon/alien/larva/L as mob)
+
+	switch(L.a_intent)
+		if("help")
+			visible_message("<span class='notice'>[L.name] rubs its head against [src].</span>")
+			return 0
+
+		else
+			L.do_attack_animation(src)
+			if(prob(90))
+				add_logs(L, src, "attacked", admin=0)
+				visible_message("<span class='danger'>[L.name] bites [src]!</span>", \
+						"<span class='userdanger'>[L.name] bites [src]!</span>")
+				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+				return 1
+			else
+				visible_message("<span class='danger'>[L.name] has attempted to bite [src]!</span>", \
+					"<span class='userdanger'>[L.name] has attempted to bite [src]!</span>")
+	return 0
+
+/mob/living/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+	if (!ticker)
+		M << "You cannot attack people before the game has started."
+		return 0
+
+	if (istype(loc, /turf) && istype(loc.loc, /area/start))
+		M << "No attacking people at spawn, you jackass."
+		return 0
+
+	switch(M.a_intent)
+		if ("help")
+			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
+			return 0
+
+		if ("grab")
+			grabbedby(M)
+			return 0
+		else
+			M.do_attack_animation(src)
+			return 1

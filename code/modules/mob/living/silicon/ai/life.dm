@@ -14,7 +14,7 @@
 
 		if (src.malfhack)
 			if (src.malfhack.aidisabled)
-				src << "\red ERROR: APC access disabled, hack attempt canceled."
+				src << "<span class='danger'>ERROR: APC access disabled, hack attempt canceled.</span>"
 				src.malfhacking = 0
 				src.malfhack = null
 
@@ -162,6 +162,11 @@
 									src.show_laws()
 							sleep(50)
 							theAPC = null
+
+	regular_hud_updates()
+
+	if(sensor_mode) //Data HUDs, such as Security or Medical HUDS. Passes the AI's eye since it seems from that instead of itself.
+		process_data_hud(src,sensor_mode,DATA_HUD_BASIC,src.eyeobj)
 
 /mob/living/silicon/ai/updatehealth()
 	if(status_flags & GODMODE)

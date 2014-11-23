@@ -29,8 +29,8 @@
 	max_co2 = 5
 	min_n2 = 0
 	max_n2 = 0
-	unsuitable_atoms_damage = 15
-	faction = "russian"
+	unsuitable_atmos_damage = 15
+	faction = list("russian")
 	status_flags = CANPUSH
 
 

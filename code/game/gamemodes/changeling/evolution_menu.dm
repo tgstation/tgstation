@@ -91,7 +91,7 @@ var/list/sting_paths
 
 					body += "<font size='2'><b>"+desc+"</b></font> <BR>"
 
-					body += "<font size='2'><font color = 'red'><b>"+helptext+"</b></font> <BR>"
+					body += "<font size='2'><span class='danger'>"+helptext+"</span></font> <BR>"
 
 					if(!ownsthis)
 					{
@@ -156,7 +156,7 @@ var/list/sting_paths
 						return;
 					locked_tabs.push(id);
 					var notice_span = document.getElementById(notice_span_id);
-					notice_span.innerHTML = "<font color='red'>Locked</font> ";
+					notice_span.innerHTML = "<span class='danger'>Locked</span> ";
 					//link.setAttribute("onClick","attempt('"+id+"','"+link_id+"','"+notice_span_id+"');");
 					//document.write("removeFromLocked('"+id+"','"+link_id+"','"+notice_span_id+"')");
 					//document.write("aa - "+link.getAttribute("onClick"));
@@ -259,7 +259,7 @@ var/list/sting_paths
 					<a id='link[i]'
 					onmouseover='expand("item[i]","[P.name]","[P.desc]","[P.helptext]","[P]",[ownsthis])'
 					>
-					<b id='search[i]'>Evolve [P][ownsthis ? " - Purchased" : ((P.dna_cost > 1) ? " - Cost: [P.dna_cost]" : "")]</b>
+					<b id='search[i]'>Evolve [P][ownsthis ? " - Purchased" : (P.req_dna>changeling.absorbedcount ? " - Requires [P.req_dna] absorptions" : " - Cost: [P.dna_cost]")]</b>
 					</a>
 					<br><span id='item[i]'></span>
 				</td>
@@ -312,8 +312,16 @@ var/list/sting_paths
 		user << "This is awkward. Changeling power purchase failed, please report this bug to a coder!"
 		return
 
+	if(absorbedcount < thepower.req_dna)
+		user << "We lack the energy to evolve this ability!"
+		return
+
 	if(has_sting(thepower))
 		user << "We have already evolved this ability!"
+		return
+
+	if(thepower.dna_cost < 0)
+		user << "We cannot evolve this ability."
 		return
 
 	if(geneticpoints < thepower.dna_cost)
@@ -330,14 +338,17 @@ var/list/sting_paths
 
 //Reselect powers
 /datum/changeling/proc/lingRespec(var/mob/user)
+	if(!ishuman(user))
+		user << "<span class='danger'>We can't remove our evolutions in this form!</span>"
+		return
 	if(canrespec)
-		user << "We have removed our evolutions from this form, and are now ready to readapt."
+		user << "<span class='notice'>We have removed our evolutions from this form, and are now ready to readapt.</span>"
 		user.remove_changeling_powers(1)
 		canrespec = 0
 		user.make_changeling()
 		return 1
 	else
-		user << "You lack the power to readapt your evolutions!"
+		user << "<span class='danger'>You lack the power to readapt your evolutions!</span>"
 		return 0
 
 /mob/proc/make_changeling()
@@ -357,7 +368,7 @@ var/list/sting_paths
 		if(!S.dna_cost)
 			if(!mind.changeling.has_sting(S))
 				mind.changeling.purchasedpowers+=S
-				S.on_purchase(src)
+			S.on_purchase(src)
 
 	var/mob/living/carbon/C = src		//only carbons have dna now, so we have to typecaste
 	mind.changeling.absorbed_dna |= C.dna
@@ -370,12 +381,14 @@ var/list/sting_paths
 	chem_storage = initial(chem_storage)
 	chem_recharge_rate = initial(chem_recharge_rate)
 	chem_charges = min(chem_charges, chem_storage)
+	chem_recharge_slowdown = initial(chem_recharge_slowdown)
 	mimicing = ""
 
 /mob/proc/remove_changeling_powers(var/keep_free_powers=0)
 	if(ishuman(src) || ismonkey(src))
 		if(mind && mind.changeling)
 			digitalcamo = 0
+			mind.changeling.changeling_speak = 0
 			mind.changeling.reset()
 			for(var/obj/effect/proc_holder/changeling/p in mind.changeling.purchasedpowers)
 				if(!(p.dna_cost == 0 && keep_free_powers))

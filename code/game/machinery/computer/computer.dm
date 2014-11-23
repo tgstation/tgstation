@@ -21,15 +21,6 @@
 		return 0
 	return 1
 
-/obj/machinery/computer/meteorhit(var/obj/O as obj)
-	verbs.Cut()
-	set_broken()
-	var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
-	smoke.set_up(5, 0, src)
-	smoke.start()
-	return
-
-
 /obj/machinery/computer/emp_act(severity)
 	if(prob(20/severity)) set_broken()
 	..()
@@ -95,6 +86,7 @@
 /obj/machinery/computer/attackby(I as obj, user as mob)
 	if(istype(I, /obj/item/weapon/screwdriver) && circuit)
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		user << "<span class='notice'> You start to disconnect the monitor.</span>"
 		if(do_after(user, 20))
 			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 			var/obj/item/weapon/circuitboard/M = new circuit( A )
@@ -103,12 +95,12 @@
 			for (var/obj/C in src)
 				C.loc = src.loc
 			if (src.stat & BROKEN)
-				user << "\blue The broken glass falls out."
+				user << "<span class='notice'> The broken glass falls out.</span>"
 				new /obj/item/weapon/shard( src.loc )
 				A.state = 3
 				A.icon_state = "3"
 			else
-				user << "\blue You disconnect the monitor."
+				user << "<span class='notice'> You disconnect the monitor.</span>"
 				A.state = 4
 				A.icon_state = "4"
 			qdel(src)
@@ -118,7 +110,8 @@
 	. = ..()
 	return
 
-/obj/machinery/computer/attack_paw(mob/user)
+/obj/machinery/computer/attack_paw(mob/living/user)
+	user.do_attack_animation(src)
 	if(circuit)
 		if(prob(10))
 			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with its paws.</span>",\
@@ -130,7 +123,8 @@
 	"<span class='danger'>You smash against the [src.name] with your paws.</span>",\
 	"<span class='danger'>You hear a clicking sound.</span>")
 
-/obj/machinery/computer/attack_alien(mob/user)
+/obj/machinery/computer/attack_alien(mob/living/user)
+	user.do_attack_animation(src)
 	if(circuit)
 		if(prob(80))
 			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with its claws.</span>",\

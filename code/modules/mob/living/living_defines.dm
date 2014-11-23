@@ -1,5 +1,6 @@
 /mob/living
 	see_invisible = SEE_INVISIBLE_LIVING
+	languages = HUMAN
 
 	//Health and life related vars
 	var/maxHealth = 100 //Maximum health that should be possible.
@@ -37,3 +38,6 @@
 	var/fire_stacks = 0 //Tracks how many stacks of fire we have on, max is usually 20
 
 	var/ventcrawler = 0 //0 No vent crawling, 1 vent crawling in the nude, 2 vent crawling always
+	var/floating = 0
+	var/nightvision = 0
+	var/mob_size = 1  //size of the mob. 0 is small, 1 is human sized, and 2 is large.

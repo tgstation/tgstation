@@ -23,8 +23,11 @@
 							/obj/item/toy/prize/mauler						= 1,
 							/obj/item/toy/prize/odysseus					= 1,
 							/obj/item/toy/prize/phazon						= 1,
+							/obj/item/toy/prize/reticence					= 1,
 							/obj/item/toy/cards/deck						= 2,
-							/obj/item/toy/nuke								= 2
+							/obj/item/toy/nuke								= 2,
+							/obj/item/toy/minimeteor						= 2,
+							/obj/item/toy/carpplushie						= 2
 							)
 
 /obj/machinery/computer/arcade/New()
@@ -49,9 +52,11 @@
 		prize.loc = src.loc
 
 /obj/machinery/computer/arcade/emp_act(severity)
+	..(severity)
+
 	if(stat & (NOPOWER|BROKEN))
-		..(severity)
 		return
+
 	var/empprize = null
 	var/num_of_prizes = 0
 	switch(severity)
@@ -59,11 +64,10 @@
 			num_of_prizes = rand(1,4)
 		if(2)
 			num_of_prizes = rand(0,2)
-	for(num_of_prizes; num_of_prizes > 0; num_of_prizes--)
+	for(var/i = num_of_prizes; i > 0; i--)
 		empprize = pickweight(prizes)
 		new empprize(src.loc)
-
-	..(severity)
+	explosion(src.loc, -1, 0, 1+num_of_prizes, flame_range = 1+num_of_prizes)
 
 
 /obj/machinery/computer/arcade/battle
@@ -73,7 +77,7 @@
 	icon_state = "arcade"
 	circuit = /obj/item/weapon/circuitboard/arcade/battle
 	var/enemy_name = "Space Villian"
-	var/temp = "Winners Don't Use Spacedrugs" //Temporary message, for attack messages, etc
+	var/temp = "Winners don't use space drugs" //Temporary message, for attack messages, etc
 	var/player_hp = 30 //Player health/attack points
 	var/player_mp = 10
 	var/enemy_hp = 45 //Enemy health/attack points
@@ -306,15 +310,15 @@
 	// Sets up the main trail
 	stops = list("Pluto","Asteroid Belt","Proxima Centauri","Dead Space","Rigel Prime","Tau Ceti Beta","Black Hole","Space Outpost Beta-9","Orion Prime")
 	stopblurbs = list(
-		"Pluto, long since occupied with long-range sensors and scanners stands ready to, and indeed continues to, probe the far reaches of the galaxy.",
-		"At the edge of the Sol system lies a treacherous asteroid belt, many have been crushed by stray asteroids and miss-guided judgement.",
-		"The nearest star system to Sol, in ages past it stood as a reminder of the boundaries of sub-light travel, now it is a low-population sanctuary for adventureres and traders.",
+		"Pluto, long since occupied with long-range sensors and scanners, stands ready to, and indeed continues to probe the far reaches of the galaxy.",
+		"At the edge of the Sol system lies a treacherous asteroid belt. Many have been crushed by stray asteroids and misguided judgement.",
+		"The nearest star system to Sol, in ages past it stood as a reminder of the boundaries of sub-light travel, now a low-population sanctuary for adventurers and traders.",
 		"This region of space is particularly devoid of matter. Such low-density pockets are known to exist, but the vastness of it is astounding.",
-		"Rigel Prime, the center of the Rigel system, burns hot, basking it's planetary bodies in warmth and radiation.",
-		"Tau Ceti Beta has recently become a way-point for colonists headed towards Orion. There are many ships and makeshift stations in the viscinity.",
-		"Sensors indicate a black-hole's gravitational field is affecting the region of space we were headed through. We could stay the course, but risk being over-come by it's gravity; or we could change course to go around, which will take longer.",
-		"You have come into range of the first man-made structure in this region of space. It has been constructed, not by travellers from Sol, but by colonists from Orion. It stands as a monument to the colonist's success.",
-		"You have made it to Orion! Congratulations! Your crew is one of the few to start a new foothold for man-kind!"
+		"Rigel Prime, the center of the Rigel system, burns hot, basking its planetary bodies in warmth and radiation.",
+		"Tau Ceti Beta has recently become a waypoint for colonists headed towards Orion. There are many ships and makeshift stations in the vicinity.",
+		"Sensors indicate that a black hole's gravitational field is affecting the region of space we were headed through. We could stay of course, but risk of being overcome by its gravity, or we could change course to go around, which will take longer.",
+		"You have come into range of the first man-made structure in this region of space. It has been constructed not by travellers from Sol, but by colonists from Orion. It stands as a monument to the colonists' success.",
+		"You have made it to Orion! Congratulations! Your crew is one of the few to start a new foothold for mankind!"
 		)
 
 /obj/machinery/computer/arcade/orion_trail/proc/newgame()
@@ -341,6 +345,8 @@
 	gameover = 0
 
 /obj/machinery/computer/arcade/orion_trail/attack_hand(mob/user as mob)
+	if(..())
+		return
 	if(fuel <= 0 || food <=0 || settlers.len == 0)
 		gameover = 1
 		event = null
@@ -503,7 +509,7 @@
 
 	else if(event == "Breakdown")
 		eventdat += "Oh no! The engine has broken down!"
-		eventdat += "<br>You can repair it with an engine part, or you can make reapirs for 3 days."
+		eventdat += "<br>You can repair it with an engine part, or you can make repairs for 3 days."
 		if(engine >= 1)
 			eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];useengine=1'>Use Part</a><a href='byond://?src=\ref[src];wait=1'>Wait</a></P>"
 		else

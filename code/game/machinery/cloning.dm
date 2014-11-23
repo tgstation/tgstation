@@ -85,16 +85,15 @@
 	read_only = !read_only
 	user << "You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"]."
 
-/obj/item/weapon/disk/data/examine()
-	set src in oview(5)
+/obj/item/weapon/disk/data/examine(mob/user)
 	..()
-	usr << "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."
-	return
+	user << "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."
 
 //Health Tracker Implant
 
 /obj/item/weapon/implant/health
 	name = "health implant"
+	activated = 0
 	var/healthstring = ""
 
 /obj/item/weapon/implant/health/proc/sensehealth()
@@ -113,7 +112,7 @@
 /obj/machinery/clonepod/attack_paw(mob/user as mob)
 	return attack_hand(user)
 /obj/machinery/clonepod/attack_hand(mob/user as mob)
-	if ((isnull(src.occupant)) || (stat & NOPOWER))
+	if (isnull(src.occupant) || !is_operational())
 		return
 	if ((!isnull(src.occupant)) && (src.occupant.stat != 2))
 		var/completion = (100 * ((src.occupant.health + 100) / (src.heal_level + 100)))
@@ -123,13 +122,13 @@
 //Clonepod
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/mrace)
+/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/datum/species/mrace, var/mcolor)
 	if(panel_open)
 		return 0
 	if(mess || attempting)
 		return 0
 	var/datum/mind/clonemind = locate(mindref)
-	if(!istype(clonemind,/datum/mind))	//not a mind
+	if(!istype(clonemind))	//not a mind
 		return 0
 	if( clonemind.current && clonemind.current.stat != DEAD )	//mind is associated with a non-dead body
 		return 0
@@ -137,13 +136,13 @@
 		if( ckey(clonemind.key)!=ckey )
 			return 0
 	else
-		for(var/mob/dead/observer/G in player_list)
-			if(G.ckey == ckey)
-				if(G.can_reenter_corpse)
-					break
-				else
-					return 0
-
+		for(var/mob/M in player_list)
+			if(M.ckey == ckey)
+				if(istype(M, /mob/dead/observer))
+					var/mob/dead/observer/G = M
+					if(G.can_reenter_corpse)
+						break
+				return 0
 
 	src.attempting = 1 //One at a time!!
 	src.locked = 1
@@ -153,6 +152,7 @@
 		src.eject_wait = 0
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
+	H.silent = 20 //Prevents an extreme edge case where clones could speak if they said something at exactly the right moment.
 	occupant = H
 
 	if(!clonename)	//to prevent null names
@@ -161,8 +161,8 @@
 
 	src.icon_state = "pod_1"
 	//Get the clone body ready
-	H.adjustCloneLoss(CLONE_INITIAL_DAMAGE )     //Yeah, clones start with very low health, not with random, because why would they start with random health
-	H.adjustBrainLoss(CLONE_INITIAL_DAMAGE )
+	H.adjustCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
+	H.adjustBrainLoss(CLONE_INITIAL_DAMAGE)
 	H.Paralyse(4)
 
 	//Here let's calculate their health so the pod doesn't immediately eject them!!!
@@ -174,21 +174,20 @@
 
 	// -- Mode/mind specific stuff goes here
 
-	switch(ticker.mode.name)
-		if("revolution")
-			if((H.mind in ticker.mode:revolutionaries) || (H.mind in ticker.mode:head_revolutionaries))
-				ticker.mode.update_all_rev_icons() //So the icon actually appears
-		if("nuclear emergency")
-			if(H.mind in ticker.mode.syndicates)
-				ticker.mode.update_all_synd_icons()
-		if("cult")
-			if (H.mind in ticker.mode.cult)
-				ticker.mode.add_cultist(src.occupant.mind)
-				ticker.mode.update_all_cult_icons() //So the icon actually appears
+	if((H.mind in ticker.mode.revolutionaries) || (H.mind in ticker.mode.head_revolutionaries))
+		ticker.mode.update_all_rev_icons() //So the icon actually appears
+	if((H.mind in ticker.mode.A_bosses) || ((H.mind in ticker.mode.A_gangsters) || (H.mind in ticker.mode.B_bosses)) || (H.mind in ticker.mode.B_gangsters))
+		ticker.mode.update_all_gang_icons()
+	if(H.mind in ticker.mode.syndicates)
+		ticker.mode.update_all_synd_icons()
+	if (H.mind in ticker.mode.cult)
+		ticker.mode.add_cultist(src.occupant.mind)
+		ticker.mode.update_all_cult_icons() //So the icon actually appears
 
 	// -- End mode specific stuff
 
-	hardset_dna(H, ui, se, null, mrace)
+	hardset_dna(H, ui, se, null, null, mrace, mcolor)
+
 	if(efficiency > 2)
 		for(var/A in bad_se_blocks)
 			setblock(H.dna.struc_enzymes, A, construct_block(0,2))
@@ -197,11 +196,7 @@
 	if(efficiency < 3 && prob(50))
 		randmutb(H)
 
-	if(H.gender == MALE)
-		H.facial_hair_style = "Full Beard"
-	else
-		H.facial_hair_style = "Shaved"
-	H.hair_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
+	H.set_cloned_appearance()
 
 	H.suiciding = 0
 	src.attempting = 0
@@ -210,7 +205,7 @@
 //Grow clones to maturity then kick them out.  FREELOADERS
 /obj/machinery/clonepod/process()
 
-	if(stat & NOPOWER) //Autoeject if power is lost
+	if(!is_operational()) //Autoeject if power is lost
 		if (src.occupant)
 			src.locked = 0
 			src.go_out()
@@ -307,7 +302,7 @@
 
 	if(!usr)
 		return
-	if (usr.stat != 0)
+	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 	src.go_out()
 	add_fingerprint(usr)

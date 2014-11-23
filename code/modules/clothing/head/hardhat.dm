@@ -17,6 +17,7 @@
 		on = !on
 		icon_state = "hardhat[on]_[item_color]"
 		item_state = "hardhat[on]_[item_color]"
+		user.update_inv_head()	//so our mob-overlays update
 
 		if(on)	user.AddLuminosity(brightness_on)
 		else	user.AddLuminosity(-brightness_on)
@@ -65,3 +66,15 @@
 	item_state = "hardhat0_dblue"
 	item_color = "dblue"
 
+/obj/item/clothing/head/hardhat/atmos
+	icon_state = "hardhat0_atmos"
+	item_state = "hardhat0_atmos"
+	item_color = "atmos"
+	name = "atmospheric technician's firefighting helmet"
+	desc = "A firefighter's helmet, able to keep the user cool in any situation."
+	flags = STOPSPRESSUREDMAGE
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	heat_protection = HEAD
+	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	cold_protection = HEAD
+	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT

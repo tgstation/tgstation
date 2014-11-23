@@ -9,6 +9,7 @@
 	maxHealth = 10
 	health = 10
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice
+	meat_amount = 1
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "whacks"
@@ -17,7 +18,7 @@
 	melee_damage_upper = 1
 	attack_same = 2
 	attacktext = "chomps"
-	faction = "mushroom"
+	faction = list("mushroom")
 	environment_smash = 0
 	stat_attack = 2
 	mouse_opacity = 1
@@ -30,12 +31,12 @@
 	var/image/cap_living = null //Where we store our cap icons so we dont generate them constantly to update our icon
 	var/image/cap_dead = null
 
-/mob/living/simple_animal/hostile/mushroom/examine()
+/mob/living/simple_animal/hostile/mushroom/examine(mob/user)
 	..()
 	if(health >= maxHealth)
-		usr << "<span class='info'>It looks healthy.</span>"
+		user << "<span class='info'>It looks healthy.</span>"
 	else
-		usr << "<span class='info'>It looks like it's been roughed up.</span>"
+		user << "<span class='info'>It looks like it's been roughed up.</span>"
 
 /mob/living/simple_animal/hostile/mushroom/Life()
 	..()

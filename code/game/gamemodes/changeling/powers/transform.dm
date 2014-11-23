@@ -8,16 +8,17 @@
 	max_genetic_damage = 3
 
 //Change our DNA to that of somebody we've absorbed.
-/obj/effect/proc_holder/changeling/transform/sting_action(var/mob/living/carbon/user)
+/obj/effect/proc_holder/changeling/transform/sting_action(var/mob/living/carbon/human/user)
 	var/datum/changeling/changeling = user.mind.changeling
 	var/datum/dna/chosen_dna = changeling.select_dna("Select the target DNA: ", "Target DNA")
 
 	if(!chosen_dna)
 		return
 
-
 	user.dna = chosen_dna
 	user.real_name = chosen_dna.real_name
+	user.dna.species = new chosen_dna.species.type(user)
+	user.dna.mutant_color = chosen_dna.mutant_color
 	updateappearance(user)
 	domutcheck(user, null)
 
@@ -26,7 +27,7 @@
 
 /datum/changeling/proc/select_dna(var/prompt, var/title)
 	var/list/names = list()
-	for(var/datum/dna/DNA in absorbed_dna)
+	for(var/datum/dna/DNA in (absorbed_dna+protected_dna))
 		names += "[DNA.real_name]"
 
 	var/chosen_name = input(prompt, title, null) as null|anything in names

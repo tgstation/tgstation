@@ -1,82 +1,81 @@
-datum/pipeline
+var/global/list/datum/pipeline/pipe_networks = list()
+
+/datum/pipeline
 	var/datum/gas_mixture/air
+	var/list/datum/gas_mixture/other_airs = list()
 
-	var/list/obj/machinery/atmospherics/pipe/members
-	var/list/obj/machinery/atmospherics/pipe/edges //Used for building networks
+	var/list/obj/machinery/atmospherics/pipe/members = list()
+	var/list/obj/machinery/atmospherics/other_atmosmch = list()
 
-	var/datum/pipe_network/network
+	var/update = 1
 
 	var/alert_pressure = 0
 
-	Del()
-		if(network)
-			del(network)
+/datum/pipeline/New()
+	pipe_networks += src
 
-		if(air && air.volume)
-			temporarily_store_air()
-			del(air)
+/datum/pipeline/Destroy()
+	pipe_networks -= src
+	if(air && air.volume)
+		temporarily_store_air()
+	for(var/obj/machinery/atmospherics/pipe/P in members)
+		P.parent = null
+	for(var/obj/machinery/atmospherics/A in other_atmosmch)
+		A.nullifyPipenet(src)
+	..()
 
-		..()
-
-	proc/process()//This use to be called called from the pipe networks
-
-		//Check to see if pressure is within acceptable limits
-		var/pressure = air.return_pressure()
-		if(pressure > alert_pressure)
-			for(var/obj/machinery/atmospherics/pipe/member in members)
-				if(!member.check_pressure(pressure))
-					break //Only delete 1 pipe per process
-
-		//Allow for reactions
-		//air.react() //Should be handled by pipe_network now
-
-	proc/temporarily_store_air()
-		//Update individual gas_mixtures by volume ratio
-
+/datum/pipeline/proc/process()//This use to be called called from the pipe networks
+	if(update)
+		update = 0
+		reconcile_air()
+	return
+	/*
+	//Check to see if pressure is within acceptable limits
+	var/pressure = air.return_pressure()
+	if(pressure > alert_pressure)
 		for(var/obj/machinery/atmospherics/pipe/member in members)
-			member.air_temporary = new
-			member.air_temporary.volume = member.volume
+			if(!member.check_pressure(pressure))
+				break //Only delete 1 pipe per process
+	//Allow for reactions
+	//air.react() //Should be handled by pipe_network now
+	*/
 
-			member.air_temporary.oxygen = air.oxygen*member.volume/air.volume
-			member.air_temporary.nitrogen = air.nitrogen*member.volume/air.volume
-			member.air_temporary.toxins = air.toxins*member.volume/air.volume
-			member.air_temporary.carbon_dioxide = air.carbon_dioxide*member.volume/air.volume
 
-			member.air_temporary.temperature = air.temperature
+var/pipenetwarnings = 10
 
-			if(air.trace_gases.len)
-				for(var/datum/gas/trace_gas in air.trace_gases)
-					var/datum/gas/corresponding = new trace_gas.type()
-					member.air_temporary.trace_gases += corresponding
-
-					corresponding.moles = trace_gas.moles*member.volume/air.volume
-
-	proc/build_pipeline(obj/machinery/atmospherics/pipe/base)
+/datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/base)
+	base.setPipenet(src)
+	var/volume = 0
+	if(istype(base, /obj/machinery/atmospherics/pipe))
+		var/obj/machinery/atmospherics/pipe/E = base
+		volume = E.volume
+		alert_pressure = E.alert_pressure
+		members += E
+		if(E.air_temporary)
+			air = E.air_temporary
+			E.air_temporary = null
+	else
+		addMachineryMember(base)
+	if(!air)
 		air = new
+	var/list/possible_expansions = list(base)
+	while(possible_expansions.len>0)
+		for(var/obj/machinery/atmospherics/borderline in possible_expansions)
 
-		var/list/possible_expansions = list(base)
-		members = list(base)
-		edges = list()
+			var/list/result = borderline.pipeline_expansion(src)
 
-		var/volume = base.volume
-		base.parent = src
-		alert_pressure = base.alert_pressure
-
-		if(base.air_temporary)
-			air = base.air_temporary
-			base.air_temporary = null
-		else
-			air = new
-
-		while(possible_expansions.len>0)
-			for(var/obj/machinery/atmospherics/pipe/borderline in possible_expansions)
-
-				var/list/result = borderline.pipeline_expansion()
-				var/edge_check = result.len
-
-				if(result.len>0)
-					for(var/obj/machinery/atmospherics/pipe/item in result)
+			if(result.len>0)
+				for(var/obj/machinery/atmospherics/P in result)
+					if(istype(P, /obj/machinery/atmospherics/pipe))
+						var/obj/machinery/atmospherics/pipe/item = P
 						if(!members.Find(item))
+
+							if(item.parent)
+								if(pipenetwarnings > 0)
+									error("[item.type] added to a pipenet while still having one. ([item.x], [item.y], [item.z])")
+									pipenetwarnings -= 1
+									if(pipenetwarnings == 0)
+										error("further messages about pipenets will be supressed")
 							members += item
 							possible_expansions += item
 
@@ -87,108 +86,341 @@ datum/pipeline
 
 							if(item.air_temporary)
 								air.merge(item.air_temporary)
+								item.air_temporary = null
+					else
+						P.setPipenet(src, borderline)
+						addMachineryMember(P)
 
-						edge_check--
+			possible_expansions -= borderline
 
-				if(edge_check>0)
-					edges += borderline
+	air.volume = volume
 
-				possible_expansions -= borderline
+/datum/pipeline/proc/addMachineryMember(obj/machinery/atmospherics/A)
+	other_atmosmch |= A
+	var/datum/gas_mixture/G = A.returnPipenetAir(src)
+	other_airs |= G
 
-		air.volume = volume
+/datum/pipeline/proc/addMember(obj/machinery/atmospherics/A, obj/machinery/atmospherics/N)
+	if(istype(A, /obj/machinery/atmospherics/pipe))
+		var/obj/machinery/atmospherics/pipe/P = A
+		P.parent = src
+		var/list/adjacent = P.pipeline_expansion()
+		for(var/obj/machinery/atmospherics/pipe/I in adjacent)
+			if(I.parent == src)
+				continue
+			var/datum/pipeline/E = I.parent
+			merge(E)
+			if(!members.Find(P))
+				members += P
+				air.volume += P.volume
+	else
+		A.setPipenet(src, N)
+		addMachineryMember(A)
 
-	proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
+/datum/pipeline/proc/merge(datum/pipeline/E)
+	air.volume += E.air.volume
+	members.Add(E.members)
+	for(var/obj/machinery/atmospherics/pipe/S in E.members)
+		S.parent = src
+	air.merge(E.air)
+	for(var/obj/machinery/atmospherics/A in E.other_atmosmch)
+		A.replacePipenet(E, src)
+	other_atmosmch.Add(E.other_atmosmch)
+	other_airs.Add(E.other_airs)
+	E.members.Cut()
+	E.other_atmosmch.Cut()
+	qdel(E)
 
-		if(new_network.line_members.Find(src))
-			return 0
+/obj/machinery/atmospherics/proc/addMember(obj/machinery/atmospherics/A)
+	return
 
-		new_network.line_members += src
+/obj/machinery/atmospherics/pipe/addMember(obj/machinery/atmospherics/A)
+	parent.addMember(A, src)
 
-		network = new_network
+/obj/machinery/atmospherics/addMember(obj/machinery/atmospherics/A)
+	var/datum/pipeline/P = returnPipenet(A)
+	P.addMember(A, src)
 
-		for(var/obj/machinery/atmospherics/pipe/edge in edges)
-			for(var/obj/machinery/atmospherics/result in edge.pipeline_expansion())
-				if(!istype(result,/obj/machinery/atmospherics/pipe) && (result!=reference))
-					result.network_expand(new_network, edge)
+/datum/pipeline/proc/temporarily_store_air()
+	//Update individual gas_mixtures by volume ratio
 
-		return 1
+	for(var/obj/machinery/atmospherics/pipe/member in members)
+		member.air_temporary = new
+		member.air_temporary.volume = member.volume
 
-	proc/return_network(obj/machinery/atmospherics/reference)
-		if(!network)
-			network = new /datum/pipe_network()
-			network.build_network(src, null)
-				//technically passing these parameters should not be allowed
-				//however pipe_network.build_network(..) and pipeline.network_extend(...)
-				//		were setup to properly handle this case
+		member.air_temporary.oxygen = air.oxygen*member.volume/air.volume
+		member.air_temporary.nitrogen = air.nitrogen*member.volume/air.volume
+		member.air_temporary.toxins = air.toxins*member.volume/air.volume
+		member.air_temporary.carbon_dioxide = air.carbon_dioxide*member.volume/air.volume
 
-		return network
+		member.air_temporary.temperature = air.temperature
 
-	proc/mingle_with_turf(turf/simulated/target, mingle_volume)
-		var/datum/gas_mixture/air_sample = air.remove_ratio(mingle_volume/air.volume)
-		air_sample.volume = mingle_volume
+		if(air.trace_gases.len)
+			for(var/datum/gas/trace_gas in air.trace_gases)
+				var/datum/gas/corresponding = new trace_gas.type()
+				member.air_temporary.trace_gases += corresponding
 
-		var/datum/gas_mixture/turf_air = target.return_air()
+				corresponding.moles = trace_gas.moles*member.volume/air.volume
 
-		equalize_gases(list(air_sample, turf_air))
-		air.merge(air_sample)
-		//turf_air already modified by equalize_gases()
+/datum/pipeline/proc/temperature_interact(turf/target, share_volume, thermal_conductivity)
+	var/total_heat_capacity = air.heat_capacity()
+	var/partial_heat_capacity = total_heat_capacity*(share_volume/air.volume)
 
-		if(istype(target))
-			if(target.air)
-				if(target.air.check_tile_graphic())
-					target.update_visuals(target.air)
-		if(network)
-			network.update = 1
+	if(istype(target, /turf/simulated))
+		var/turf/simulated/modeled_location = target
 
-	proc/temperature_interact(turf/target, share_volume, thermal_conductivity)
-		var/total_heat_capacity = air.heat_capacity()
-		var/partial_heat_capacity = total_heat_capacity*(share_volume/air.volume)
+		if(modeled_location.blocks_air)
 
-		if(istype(target, /turf/simulated))
-			var/turf/simulated/modeled_location = target
-
-			if(modeled_location.blocks_air)
-
-				if((modeled_location.heat_capacity>0) && (partial_heat_capacity>0))
-					var/delta_temperature = air.temperature - modeled_location.temperature
-
-					var/heat = thermal_conductivity*delta_temperature* \
-						(partial_heat_capacity*modeled_location.heat_capacity/(partial_heat_capacity+modeled_location.heat_capacity))
-
-					air.temperature -= heat/total_heat_capacity
-					modeled_location.temperature += heat/modeled_location.heat_capacity
-
-			else
-				var/delta_temperature = 0
-				var/sharer_heat_capacity = 0
-
-				delta_temperature = (air.temperature - modeled_location.air.temperature)
-				sharer_heat_capacity = modeled_location.air.heat_capacity()
-
-				var/self_temperature_delta = 0
-				var/sharer_temperature_delta = 0
-
-				if((sharer_heat_capacity>0) && (partial_heat_capacity>0))
-					var/heat = thermal_conductivity*delta_temperature* \
-						(partial_heat_capacity*sharer_heat_capacity/(partial_heat_capacity+sharer_heat_capacity))
-
-					self_temperature_delta = -heat/total_heat_capacity
-					sharer_temperature_delta = heat/sharer_heat_capacity
-				else
-					return 1
-
-				air.temperature += self_temperature_delta
-
-				modeled_location.air.temperature += sharer_temperature_delta
-
-
-		else
-			if((target.heat_capacity>0) && (partial_heat_capacity>0))
-				var/delta_temperature = air.temperature - target.temperature
+			if((modeled_location.heat_capacity>0) && (partial_heat_capacity>0))
+				var/delta_temperature = air.temperature - modeled_location.temperature
 
 				var/heat = thermal_conductivity*delta_temperature* \
-					(partial_heat_capacity*target.heat_capacity/(partial_heat_capacity+target.heat_capacity))
+					(partial_heat_capacity*modeled_location.heat_capacity/(partial_heat_capacity+modeled_location.heat_capacity))
 
 				air.temperature -= heat/total_heat_capacity
-		if(network)
-			network.update = 1
+				modeled_location.temperature += heat/modeled_location.heat_capacity
+
+		else
+			var/delta_temperature = 0
+			var/sharer_heat_capacity = 0
+
+			delta_temperature = (air.temperature - modeled_location.air.temperature)
+			sharer_heat_capacity = modeled_location.air.heat_capacity()
+
+			var/self_temperature_delta = 0
+			var/sharer_temperature_delta = 0
+
+			if((sharer_heat_capacity>0) && (partial_heat_capacity>0))
+				var/heat = thermal_conductivity*delta_temperature* \
+					(partial_heat_capacity*sharer_heat_capacity/(partial_heat_capacity+sharer_heat_capacity))
+
+				self_temperature_delta = -heat/total_heat_capacity
+				sharer_temperature_delta = heat/sharer_heat_capacity
+			else
+				return 1
+
+			air.temperature += self_temperature_delta
+
+			modeled_location.air.temperature += sharer_temperature_delta
+
+
+	else
+		if((target.heat_capacity>0) && (partial_heat_capacity>0))
+			var/delta_temperature = air.temperature - target.temperature
+
+			var/heat = thermal_conductivity*delta_temperature* \
+				(partial_heat_capacity*target.heat_capacity/(partial_heat_capacity+target.heat_capacity))
+
+			air.temperature -= heat/total_heat_capacity
+	update = 1
+
+/datum/pipeline/proc/reconcile_air()
+	var/list/datum/gas_mixture/GL = list()
+	var/list/datum/pipeline/PL = list()
+	PL += src
+
+	for(var/i=1;i<=PL.len;i++)
+		var/datum/pipeline/P = PL[i]
+		GL += P.air
+		GL += P.other_airs
+		for(var/obj/machinery/atmospherics/binary/valve/V in P.other_atmosmch)
+			if(V.open)
+				PL |= V.parent1
+				PL |= V.parent2
+		for(var/obj/machinery/atmospherics/unary/portables_connector/C in P.other_atmosmch)
+			if(C.connected_device)
+				GL += C.portableConnectorReturnAir()
+
+	var/total_volume = 0
+	var/total_thermal_energy = 0
+	var/total_heat_capacity = 0
+	var/total_oxygen = 0
+	var/total_nitrogen = 0
+	var/total_toxins = 0
+	var/total_carbon_dioxide = 0
+	var/list/total_trace_gases = list()
+
+	for(var/datum/gas_mixture/G in GL)
+		total_volume += G.volume
+		total_thermal_energy += G.thermal_energy()
+		total_heat_capacity += G.heat_capacity()
+
+		total_oxygen += G.oxygen
+		total_nitrogen += G.nitrogen
+		total_toxins += G.toxins
+		total_carbon_dioxide += G.carbon_dioxide
+
+		if(G.trace_gases.len)
+			for(var/datum/gas/trace_gas in G.trace_gases)
+				var/datum/gas/corresponding = locate(trace_gas.type) in total_trace_gases
+				if(!corresponding)
+					corresponding = new trace_gas.type()
+					total_trace_gases += corresponding
+
+				corresponding.moles += trace_gas.moles
+
+	if(total_volume > 0)
+
+		//Calculate temperature
+		var/temperature = 0
+
+		if(total_heat_capacity > 0)
+			temperature = total_thermal_energy/total_heat_capacity
+
+		//Update individual gas_mixtures by volume ratio
+		for(var/datum/gas_mixture/G in GL)
+			G.oxygen = total_oxygen*G.volume/total_volume
+			G.nitrogen = total_nitrogen*G.volume/total_volume
+			G.toxins = total_toxins*G.volume/total_volume
+			G.carbon_dioxide = total_carbon_dioxide*G.volume/total_volume
+
+			G.temperature = temperature
+
+			if(total_trace_gases.len)
+				for(var/datum/gas/trace_gas in total_trace_gases)
+					var/datum/gas/corresponding = locate(trace_gas.type) in G.trace_gases
+					if(!corresponding)
+						corresponding = new trace_gas.type()
+						G.trace_gases += corresponding
+
+					corresponding.moles = trace_gas.moles*G.volume/total_volume
+
+
+/*
+/datum/pipeline/proc/mingle_with_turf(turf/simulated/target, mingle_volume)
+	var/datum/gas_mixture/air_sample = air.remove_ratio(mingle_volume/air.volume)
+	air_sample.volume = mingle_volume
+
+	var/datum/gas_mixture/turf_air = target.return_air()
+
+	equalize_gases(list(air_sample, turf_air))
+	air.merge(air_sample)
+	//turf_air already modified by equalize_gases()
+
+	if(istype(target))
+		if(target.air)
+			if(target.air.check_tile_graphic())
+				target.update_visuals(target.air)
+	update = 1
+
+/datum/pipeline/proc/reconcile_air()
+	//Perfectly equalize all gases members instantly
+
+	//Calculate totals from individual components
+	var/total_thermal_energy = 0
+	var/total_heat_capacity = 0
+	var/datum/gas_mixture/air_transient = new()
+	var/list/gases = list(air)
+	gases.Add(other_airs)
+	for(var/datum/gas_mixture/gas in gases)
+		air_transient.volume += gas.volume
+		total_thermal_energy += gas.thermal_energy()
+		total_heat_capacity += gas.heat_capacity()
+
+		air_transient.oxygen += gas.oxygen
+		air_transient.nitrogen += gas.nitrogen
+		air_transient.toxins += gas.toxins
+		air_transient.carbon_dioxide += gas.carbon_dioxide
+
+		if(gas.trace_gases.len)
+			for(var/datum/gas/trace_gas in gas.trace_gases)
+				var/datum/gas/corresponding = locate(trace_gas.type) in air_transient.trace_gases
+				if(!corresponding)
+					corresponding = new trace_gas.type()
+					air_transient.trace_gases += corresponding
+
+				corresponding.moles += trace_gas.moles
+
+	if(air_transient.volume > 0)
+
+		if(total_heat_capacity > 0)
+			air_transient.temperature = total_thermal_energy/total_heat_capacity
+
+			//Allow air mixture to react
+			if(air_transient.react())
+				update = 1
+
+		else
+			air_transient.temperature = 0
+
+		//Update individual gas_mixtures by volume ratio
+		for(var/datum/gas_mixture/gas in gases)
+			gas.oxygen = air_transient.oxygen*gas.volume/air_transient.volume
+			gas.nitrogen = air_transient.nitrogen*gas.volume/air_transient.volume
+			gas.toxins = air_transient.toxins*gas.volume/air_transient.volume
+			gas.carbon_dioxide = air_transient.carbon_dioxide*gas.volume/air_transient.volume
+
+			gas.temperature = air_transient.temperature
+
+			if(air_transient.trace_gases.len)
+				for(var/datum/gas/trace_gas in air_transient.trace_gases)
+					var/datum/gas/corresponding = locate(trace_gas.type) in gas.trace_gases
+					if(!corresponding)
+						corresponding = new trace_gas.type()
+						gas.trace_gases += corresponding
+
+					corresponding.moles = trace_gas.moles*gas.volume/air_transient.volume
+	return 1
+
+proc/equalize_gases(datum/gas_mixture/list/gases)
+	//Perfectly equalize all gases members instantly
+
+	//Calculate totals from individual components
+	var/total_volume = 0
+	var/total_thermal_energy = 0
+	var/total_heat_capacity = 0
+
+	var/total_oxygen = 0
+	var/total_nitrogen = 0
+	var/total_toxins = 0
+	var/total_carbon_dioxide = 0
+
+	var/list/total_trace_gases = list()
+
+	for(var/datum/gas_mixture/gas in gases)
+		total_volume += gas.volume
+		total_thermal_energy += gas.thermal_energy()
+		total_heat_capacity += gas.heat_capacity()
+
+		total_oxygen += gas.oxygen
+		total_nitrogen += gas.nitrogen
+		total_toxins += gas.toxins
+		total_carbon_dioxide += gas.carbon_dioxide
+
+		if(gas.trace_gases.len)
+			for(var/datum/gas/trace_gas in gas.trace_gases)
+				var/datum/gas/corresponding = locate(trace_gas.type) in total_trace_gases
+				if(!corresponding)
+					corresponding = new trace_gas.type()
+					total_trace_gases += corresponding
+
+				corresponding.moles += trace_gas.moles
+
+	if(total_volume > 0)
+
+		//Calculate temperature
+		var/temperature = 0
+
+		if(total_heat_capacity > 0)
+			temperature = total_thermal_energy/total_heat_capacity
+
+		//Update individual gas_mixtures by volume ratio
+		for(var/datum/gas_mixture/gas in gases)
+			gas.oxygen = total_oxygen*gas.volume/total_volume
+			gas.nitrogen = total_nitrogen*gas.volume/total_volume
+			gas.toxins = total_toxins*gas.volume/total_volume
+			gas.carbon_dioxide = total_carbon_dioxide*gas.volume/total_volume
+
+			gas.temperature = temperature
+
+			if(total_trace_gases.len)
+				for(var/datum/gas/trace_gas in total_trace_gases)
+					var/datum/gas/corresponding = locate(trace_gas.type) in gas.trace_gases
+					if(!corresponding)
+						corresponding = new trace_gas.type()
+						gas.trace_gases += corresponding
+
+					corresponding.moles = trace_gas.moles*gas.volume/total_volume
+
+	return 1
+*/

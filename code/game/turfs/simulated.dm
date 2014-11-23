@@ -33,25 +33,10 @@
 			overlays -= wet_overlay
 
 /turf/simulated/Entered(atom/A, atom/OL)
-	if(movement_disabled && usr.ckey != movement_disabled_exception)
-		usr << "\red Movement is admin-disabled." //This is to identify lag problems
-		return
-
+	..()
 	if (istype(A,/mob/living/carbon))
 		var/mob/living/carbon/M = A
 		if(M.lying)	return
-		if(istype(M, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = M
-			if(istype(H.shoes, /obj/item/clothing/shoes/clown_shoes))
-				var/obj/item/clothing/shoes/clown_shoes/O = H.shoes
-				if(H.m_intent == "run")
-					if(O.footstep >= 2)
-						O.footstep = 0
-						playsound(src, "clownstep", 50, 1) // this will get annoying very fast.
-					else
-						O.footstep++
-				else
-					playsound(src, "clownstep", 20, 1)
 
 		switch (src.wet)
 			if(1) //wet floor
@@ -60,7 +45,4 @@
 				return
 
 			if(2) //lube
-				M.slip(0, 10, null, (STEP|SLIDE|GALOSHES_DONT_HELP))
-
-
-	..()
+				M.slip(0, 7, null, (STEP|SLIDE|GALOSHES_DONT_HELP))

@@ -20,12 +20,6 @@
 	create_reagents(100)
 
 
-/obj/structure/janitorialcart/examine()
-	set src in usr
-	..()
-	usr << "It contains [reagents.total_volume] unit\s of liquid!"
-	//everything else is visible, so doesn't need to be mentioned
-
 /obj/structure/janitorialcart/proc/wet_mop(obj/item/weapon/mop, mob/user)
 	if(reagents.total_volume < 1)
 		user << "[src] is out of water!</span>"
@@ -83,6 +77,12 @@
 			user << "<span class='notice'>[src] can't hold any more signs.</span>"
 	else if(mybag)
 		mybag.attackby(I, user)
+	else if(istype(I, /obj/item/weapon/crowbar))
+		user.visible_message("<span class='warning'>[user] begins to empty the contents of [src].</span>")
+		if(do_after(user, 30))
+			usr << "<span class='notice'>You empty the contents of [src]'s bucket onto the floor.</span>"
+			reagents.reaction(src.loc)
+			src.reagents.clear_reagents()
 
 /obj/structure/janitorialcart/attack_hand(mob/user)
 	user.set_machine(src)
@@ -136,7 +136,7 @@
 				user << "<span class='notice'>You take \a [Sign] from [src].</span>"
 				signs--
 			else
-				warning("[src] signs ([signs]) didn't match contents")
+				WARNING("Signs ([signs]) didn't match contents")
 				signs = 0
 
 	update_icon()
@@ -162,7 +162,7 @@
 	name = "janicart"
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "pussywagon"
-	anchored = 1
+	anchored = 0
 	density = 1
 	flags = OPENCONTAINER
 	//copypaste sorry
@@ -176,12 +176,10 @@
 	create_reagents(100)
 
 
-/obj/structure/stool/bed/chair/janicart/examine()
-	set src in usr
+/obj/structure/stool/bed/chair/janicart/examine(mob/user)
 	..()
-	usr << "It contains [reagents.total_volume] unit\s of water!"
 	if(mybag)
-		usr << "\A [mybag] is hanging on the [callme]."
+		user << "\A [mybag] is hanging on \the [callme]."
 
 
 /obj/structure/stool/bed/chair/janicart/attackby(obj/item/I, mob/user)
@@ -214,18 +212,13 @@
 	if(user.stat || user.stunned || user.weakened || user.paralysis)
 		unbuckle()
 	if(istype(user.l_hand, /obj/item/key) || istype(user.r_hand, /obj/item/key))
+		if(!Process_Spacemove(direction))
+			return
 		step(src, direction)
 		update_mob()
 		handle_rotation()
 	else
 		user << "<span class='notice'>You'll need the keys in one of your hands to drive this [callme].</span>"
-
-
-/obj/structure/stool/bed/chair/janicart/Move()
-	..()
-	if(buckled_mob)
-		if(buckled_mob.buckled == src)
-			buckled_mob.loc = loc
 
 
 /obj/structure/stool/bed/chair/janicart/buckle_mob(mob/M, mob/user)

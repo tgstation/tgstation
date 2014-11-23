@@ -6,7 +6,7 @@ DNA Saboteur
 	Very noticable.
 	Lowers resistance tremendously.
 	No changes to stage speed.
-	Decreases transmittablity temrendously.
+	Decreases transmittablity tremendously.
 	Fatal Level.
 
 Bonus
@@ -23,12 +23,13 @@ Bonus
 	stage_speed = 0
 	transmittable = -3
 	level = 6
+	severity = 3
 	var/good_mutations = 0
 	var/archived_dna = null
 
 /datum/symptom/genetic_mutation/Activate(var/datum/disease/advance/A)
 	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB))
+	if(prob(SYMPTOM_ACTIVATION_PROB * 5)) // 15% chance
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(4, 5)
@@ -58,10 +59,10 @@ Bonus
 
 DNA Aide
 
-	Very very noticable.
+	Very very very very noticable.
 	Lowers resistance tremendously.
-	No changes to stage speed.
-	Decreases transmittablity temrendously.
+	Decreases stage speed tremendously.
+	Decreases transmittablity tremendously.
 	Fatal Level.
 
 Bonus
@@ -73,9 +74,10 @@ Bonus
 /datum/symptom/genetic_mutation/powers
 
 	name = "Deoxyribonucleic Acid Aide"
-	stealth = -3
-	resistance = -4
-	stage_speed = 0
-	transmittable = -4
+	stealth = -7
+	resistance = -7
+	stage_speed = -7
+	transmittable = -7
 	level = 6
 	good_mutations = 1
+	severity = 0

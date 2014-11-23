@@ -18,7 +18,7 @@ RCD
 	throw_speed = 3
 	throw_range = 5
 	w_class = 3.0
-	m_amt = 50000
+	m_amt = 30000
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
 	var/matter = 0
@@ -29,134 +29,145 @@ RCD
 	var/airlock_type = /obj/machinery/door/airlock
 	var/advanced_airlock_setting = 1 //Set to 1 if you want more paintjobs available
 
-	verb/change_airlock_setting()
-		set name = "Change Airlock Setting"
-		set category = "Object"
-		set src in usr
+/obj/item/weapon/rcd/verb/change_airlock_setting()
+	set name = "Change Airlock Setting"
+	set category = "Object"
+	set src in usr
 
-		var airlockcat = input(usr, "Select whether the airlock is solid or glass.") in list("Solid", "Glass")
-		switch(airlockcat)
-			if("Solid")
-				if(advanced_airlock_setting == 1)
-					var airlockpaint = input(usr, "Select the paintjob of the airlock.") in list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
-					switch(airlockpaint)
-						if("Default")
-							airlock_type = /obj/machinery/door/airlock
-						if("Engineering")
-							airlock_type = /obj/machinery/door/airlock/engineering
-						if("Atmospherics")
-							airlock_type = /obj/machinery/door/airlock/atmos
-						if("Security")
-							airlock_type = /obj/machinery/door/airlock/security
-						if("Command")
-							airlock_type = /obj/machinery/door/airlock/command
-						if("Medical")
-							airlock_type = /obj/machinery/door/airlock/medical
-						if("Research")
-							airlock_type = /obj/machinery/door/airlock/research
-						if("Mining")
-							airlock_type = /obj/machinery/door/airlock/mining
-						if("Maintenance")
-							airlock_type = /obj/machinery/door/airlock/maintenance
-						if("External")
-							airlock_type = /obj/machinery/door/airlock/external
-						if("High Security")
-							airlock_type = /obj/machinery/door/airlock/highsecurity
-				else
-					airlock_type = /obj/machinery/door/airlock
-
-			if("Glass")
-				if(advanced_airlock_setting == 1)
-					var airlockpaint = input(usr, "Select the paintjob of the airlock.") in list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining")
-					switch(airlockpaint)
-						if("Default")
-							airlock_type = /obj/machinery/door/airlock/glass
-						if("Engineering")
-							airlock_type = /obj/machinery/door/airlock/glass_engineering
-						if("Atmospherics")
-							airlock_type = /obj/machinery/door/airlock/glass_atmos
-						if("Security")
-							airlock_type = /obj/machinery/door/airlock/glass_security
-						if("Command")
-							airlock_type = /obj/machinery/door/airlock/glass_command
-						if("Medical")
-							airlock_type = /obj/machinery/door/airlock/glass_medical
-						if("Research")
-							airlock_type = /obj/machinery/door/airlock/glass_research
-						if("Mining")
-							airlock_type = /obj/machinery/door/airlock/glass_mining
-				else
-					airlock_type = /obj/machinery/door/airlock/glass
+	var airlockcat = input(usr, "Select whether the airlock is solid or glass.") in list("Solid", "Glass")
+	switch(airlockcat)
+		if("Solid")
+			if(advanced_airlock_setting == 1)
+				var airlockpaint = input(usr, "Select the paintjob of the airlock.") in list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
+				switch(airlockpaint)
+					if("Default")
+						airlock_type = /obj/machinery/door/airlock
+					if("Engineering")
+						airlock_type = /obj/machinery/door/airlock/engineering
+					if("Atmospherics")
+						airlock_type = /obj/machinery/door/airlock/atmos
+					if("Security")
+						airlock_type = /obj/machinery/door/airlock/security
+					if("Command")
+						airlock_type = /obj/machinery/door/airlock/command
+					if("Medical")
+						airlock_type = /obj/machinery/door/airlock/medical
+					if("Research")
+						airlock_type = /obj/machinery/door/airlock/research
+					if("Mining")
+						airlock_type = /obj/machinery/door/airlock/mining
+					if("Maintenance")
+						airlock_type = /obj/machinery/door/airlock/maintenance
+					if("External")
+						airlock_type = /obj/machinery/door/airlock/external
+					if("High Security")
+						airlock_type = /obj/machinery/door/airlock/highsecurity
 			else
 				airlock_type = /obj/machinery/door/airlock
 
+		if("Glass")
+			if(advanced_airlock_setting == 1)
+				var airlockpaint = input(usr, "Select the paintjob of the airlock.") in list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining")
+				switch(airlockpaint)
+					if("Default")
+						airlock_type = /obj/machinery/door/airlock/glass
+					if("Engineering")
+						airlock_type = /obj/machinery/door/airlock/glass_engineering
+					if("Atmospherics")
+						airlock_type = /obj/machinery/door/airlock/glass_atmos
+					if("Security")
+						airlock_type = /obj/machinery/door/airlock/glass_security
+					if("Command")
+						airlock_type = /obj/machinery/door/airlock/glass_command
+					if("Medical")
+						airlock_type = /obj/machinery/door/airlock/glass_medical
+					if("Research")
+						airlock_type = /obj/machinery/door/airlock/glass_research
+					if("Mining")
+						airlock_type = /obj/machinery/door/airlock/glass_mining
+			else
+				airlock_type = /obj/machinery/door/airlock/glass
+		else
+			airlock_type = /obj/machinery/door/airlock
 
-	New()
+
+/obj/item/weapon/rcd/New()
+	desc = "A RCD. It currently holds [matter]/30 matter-units."
+	src.spark_system = new /datum/effect/effect/system/spark_spread
+	spark_system.set_up(5, 0, src)
+	spark_system.attach(src)
+	return
+
+
+/obj/item/weapon/rcd/attackby(obj/item/weapon/W, mob/user)
+	..()
+	if(istype(W, /obj/item/weapon/rcd_ammo))
+		if((matter + 10) > 30)
+			user << "<span class='notice'>The RCD cant hold any more matter-units.</span>"
+			return
+		user.drop_item()
+		qdel(W)
+		matter += 10
+		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		user << "<span class='notice'>The RCD now holds [matter]/30 matter-units.</span>"
 		desc = "A RCD. It currently holds [matter]/30 matter-units."
-		src.spark_system = new /datum/effect/effect/system/spark_spread
-		spark_system.set_up(5, 0, src)
-		spark_system.attach(src)
 		return
 
 
-	attackby(obj/item/weapon/W, mob/user)
-		..()
-		if(istype(W, /obj/item/weapon/rcd_ammo))
-			if((matter + 10) > 30)
-				user << "<span class='notice'>The RCD cant hold any more matter-units.</span>"
-				return
-			user.drop_item()
-			qdel(W)
-			matter += 10
-			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-			user << "<span class='notice'>The RCD now holds [matter]/30 matter-units.</span>"
-			desc = "A RCD. It currently holds [matter]/30 matter-units."
+/obj/item/weapon/rcd/attack_self(mob/user)
+	//Change the mode
+	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
+	switch(mode)
+		if(1)
+			mode = 2
+			user << "<span class='notice'>Changed mode to 'Airlock'</span>"
+			if(prob(20))
+				src.spark_system.start()
+			return
+		if(2)
+			mode = 3
+			user << "<span class='notice'>Changed mode to 'Deconstruct'</span>"
+			if(prob(20))
+				src.spark_system.start()
+			return
+		if(3)
+			mode = 1
+			user << "<span class='notice'>Changed mode to 'Floor & Walls'</span>"
+			if(prob(20))
+				src.spark_system.start()
 			return
 
-
-	attack_self(mob/user)
-		//Change the mode
-		playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
-		switch(mode)
-			if(1)
-				mode = 2
-				user << "<span class='notice'>Changed mode to 'Airlock'</span>"
-				if(prob(20))
-					src.spark_system.start()
-				return
-			if(2)
-				mode = 3
-				user << "<span class='notice'>Changed mode to 'Deconstruct'</span>"
-				if(prob(20))
-					src.spark_system.start()
-				return
-			if(3)
-				mode = 1
-				user << "<span class='notice'>Changed mode to 'Floor & Walls'</span>"
-				if(prob(20))
-					src.spark_system.start()
-				return
-
-	proc/activate()
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+/obj/item/weapon/rcd/proc/activate()
+	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 
-	afterattack(atom/A, mob/user, proximity)
-		if(!proximity) return 0
-		if(disabled && !isrobot(user))
-			return 0
-		if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))
-			return 0
-		if(!(istype(A, /turf) || istype(A, /obj/machinery/door/airlock)))
-			return 0
+/obj/item/weapon/rcd/afterattack(atom/A, mob/user, proximity)
+	if(!proximity) return 0
+	if(disabled && !isrobot(user))
+		return 0
+	if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))
+		return 0
+	if(!(istype(A, /turf) || istype(A, /obj/machinery/door/airlock)))
+		return 0
 
-		switch(mode)
-			if(1)
-				if(istype(A, /turf/space))
-					if(useResource(1, user))
-						user << "Building Floor..."
+	switch(mode)
+		if(1)
+			if(istype(A, /turf/space))
+				if(useResource(1, user))
+					user << "Building Floor..."
+					activate()
+					A:ChangeTurf(/turf/simulated/floor/plating)
+					return 1
+				return 0
+
+			if(istype(A, /turf/simulated/floor))
+				if(checkResource(3, user))
+					user << "Building Wall ..."
+					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					if(do_after(user, 20))
+						if(!useResource(3, user)) return 0
 						activate()
-						A:ChangeTurf(/turf/simulated/floor/plating)
+						A:ChangeTurf(/turf/simulated/wall)
 						return 1
 					return 0
 
@@ -192,45 +203,59 @@ RCD
 							return 0
 					return 0
 
-			if(3)
-				if(istype(A, /turf/simulated/wall))
-					if(istype(A, /turf/simulated/wall/r_wall) && !canRwall)
-						return 0
-					if(checkResource(5, user))
-						user << "Deconstructing Wall..."
-						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-						if(do_after(user, 40))
-							if(!useResource(5, user)) return 0
-							activate()
-							A:ChangeTurf(/turf/simulated/floor/plating)
-							return 1
+		if(2)
+			if(istype(A, /turf/simulated/floor))
+				if(checkResource(10, user))
+					user << "Building Airlock..."
+					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					if(do_after(user, 50))
+						if(!useResource(10, user)) return 0
+						activate()
+						var/obj/machinery/door/airlock/T = new airlock_type( A )
+						T.autoclose = 1
+						return 1
 					return 0
+				return 0
 
-				if(istype(A, /turf/simulated/floor))
-					if(checkResource(5, user))
-						user << "Deconstructing Floor..."
-						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-						if(do_after(user, 50))
-							if(!useResource(5, user)) return 0
-							activate()
-							A:ChangeTurf(/turf/space)
-							return 1
+		if(3)
+			if(istype(A, /turf/simulated/wall))
+				if(istype(A, /turf/simulated/wall/r_wall) && !canRwall)
 					return 0
+				if(checkResource(5, user))
+					user << "Deconstructing Wall..."
+					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					if(do_after(user, 40))
+						if(!useResource(5, user)) return 0
+						activate()
+						A:ChangeTurf(/turf/simulated/floor/plating)
+						return 1
+				return 0
 
-				if(istype(A, /obj/machinery/door/airlock))
-					if(checkResource(10, user))
-						user << "Deconstructing Airlock..."
-						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-						if(do_after(user, 50))
-							if(!useResource(10, user)) return 0
-							activate()
-							qdel(A)
-							return 1
-					return	0
+			if(istype(A, /turf/simulated/floor))
+				if(checkResource(5, user))
+					user << "Deconstructing Floor..."
+					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					if(do_after(user, 50))
+						if(!useResource(5, user)) return 0
+						activate()
+						A:ChangeTurf(/turf/space)
+						return 1
 				return 0
-			else
-				user << "ERROR: RCD in MODE: [mode] attempted use by [user]. Send this text #coderbus or an admin."
-				return 0
+
+			if(istype(A, /obj/machinery/door/airlock))
+				if(checkResource(10, user))
+					user << "Deconstructing Airlock..."
+					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					if(do_after(user, 50))
+						if(!useResource(10, user)) return 0
+						activate()
+						qdel(A)
+						return 1
+				return	0
+			return 0
+		else
+			user << "ERROR: RCD in MODE: [mode] attempted use by [user]. Send this text #coderbus or an admin."
+			return 0
 
 /obj/item/weapon/rcd/proc/useResource(var/amount, var/mob/user)
 	if(matter < amount)
@@ -267,5 +292,5 @@ RCD
 	density = 0
 	anchored = 0.0
 	origin_tech = "materials=2"
-	m_amt = 30000
-	g_amt = 15000
+	m_amt = 16000
+	g_amt = 8000

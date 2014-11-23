@@ -66,13 +66,13 @@ proc/cardinalrange(var/center)
 /obj/machinery/am_shielding/Destroy()
 	if(control_unit)	control_unit.remove_shielding(src)
 	if(processing)	shutdown_core()
-	visible_message("\red The [src.name] melts!")
+	visible_message("<span class='danger'>The [src.name] melts!</span>")
 	//Might want to have it leave a mess on the floor but no sprites for now
 	..()
 
 
-/obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0))	return 1
+/obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target, height=0)
+	if(height==0)	return 1
 	return 0
 
 

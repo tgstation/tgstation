@@ -28,11 +28,11 @@
 	max_co2 = 5
 	min_n2 = 0
 	max_n2 = 0
-	unsuitable_atoms_damage = 15
+	unsuitable_atmos_damage = 15
 	var/corpse = /obj/effect/landmark/mobcorpse/pirate
 	var/weapon1 = /obj/item/weapon/melee/energy/sword/pirate
 
-	faction = "pirate"
+	faction = list("pirate")
 
 /mob/living/simple_animal/hostile/pirate/ranged
 	name = "Pirate Gunner"

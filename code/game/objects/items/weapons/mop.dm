@@ -11,10 +11,11 @@
 	attack_verb = list("mopped", "bashed", "bludgeoned", "whacked")
 	var/mopping = 0
 	var/mopcount = 0
-
+	var/mopcap = 5
+	var/mopspeed = 40
 
 /obj/item/weapon/mop/New()
-	create_reagents(5)
+	create_reagents(mopcap)
 
 
 obj/item/weapon/mop/proc/clean(turf/simulated/A)
@@ -29,16 +30,21 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 
 /obj/item/weapon/mop/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
-	if(istype(A, /obj/effect/rune) ||istype(A, /turf/simulated) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
-		if(reagents.total_volume < 1)
-			user << "<span class='notice'>Your mop is dry!</span>"
-			return
 
-		user.visible_message("<span class='warning'>[user] begins to clean \the [get_turf(A)].</span>")
+	if(reagents.total_volume < 1)
+		user << "<span class='notice'>Your mop is dry!</span>"
+		return
 
-		if(do_after(user, 40))
-			if(A)
-				clean(get_turf(A))
+	var/turf/simulated/turf = A
+	if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
+		turf = A.loc
+	A = null
+
+	if(istype(turf))
+		user.visible_message("<span class='warning'>[user] begins to clean \the [turf] with [src].</span>")
+
+		if(do_after(user, mopspeed))
+			clean(turf)
 			user << "<span class='notice'>You have finished mopping!</span>"
 
 
@@ -58,4 +64,13 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 /obj/item/weapon/mop/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	return
 
-
+/obj/item/weapon/mop/advanced
+	desc = "The most advanced tool in a custodian's arsenal. Just think of all the viscera you will clean up with this!"
+	name = "advanced mop"
+	mopcap = 10
+	icon_state = "advmop"
+	item_state = "mop"
+	force = 6
+	throwforce = 8
+	throw_range = 4
+	mopspeed = 20

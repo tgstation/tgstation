@@ -11,6 +11,9 @@ var/datum/controller/garbage_collector/garbage = new()
 								// refID's are associated with the time at which they time out and need to be manually del()
 								// we do this so we aren't constantly locating them and preventing them from being gc'd
 
+	var/list/logging = list()	// list of all types that have failed to GC associated with the number of times that's happened.
+								// the types are stored as strings
+
 /datum/controller/garbage_collector/proc/AddTrash(var/datum/A)
 	if(!istype(A) || !isnull(A.gc_destroyed))
 		return
@@ -37,6 +40,7 @@ var/datum/controller/garbage_collector/garbage = new()
 		if(A && A.gc_destroyed == GCd_at_time) // So if something else coincidently gets the same ref, it's not deleted by mistake
 			// Something's still referring to the qdel'd object.  Kill it.
 			testing("GC: -- \ref[A] | [A.type] was unable to be GC'd and was deleted --")
+			logging["[A.type]"]++
 			del(A)
 			dels++
 //		else
@@ -66,7 +70,8 @@ var/datum/controller/garbage_collector/garbage = new()
 // This should be overridden to remove all references pointing to the object being destroyed.
 // Return true if the the GC controller should allow the object to continue existing. (Useful if pooling objects.)
 /datum/proc/Destroy()
-	del(src)
+	//del(src)
+	return
 
 /datum/var/gc_destroyed //Time when this object was destroyed.
 

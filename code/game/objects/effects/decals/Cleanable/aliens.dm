@@ -13,10 +13,10 @@
 	var/list/viruses = list()
 	blood_DNA = list()
 
-	Destroy()
-		for(var/datum/disease/D in viruses)
-			D.cure(0)
-		..()
+/obj/effect/decal/cleanable/xenoblood/Destroy()
+	for(var/datum/disease/D in viruses)
+		D.cure(0)
+	..()
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/proc/streak(var/list/directions)
 	spawn (0)

@@ -32,70 +32,61 @@
 		/mob/living/simple_animal/hostile/retaliate/goat
 	)
 
-	examine()
-		set src in view()
-		..()
-		if(!(usr in view(2)) && usr != loc)
-			return
-		if(reagents && reagents.reagent_list.len)
-			usr << "It contains:"
-			for(var/datum/reagent/R in reagents.reagent_list)
-				usr << "[R.volume] units of [R.name]"
 
-	afterattack(obj/target, mob/user, proximity)
-		if(!proximity) return // not adjacent
-		for(var/type in can_be_placed_into)
-			if(istype(target, type))
-				return
 
-		if(ismob(target) && target.reagents && reagents.total_volume)
-			var/mob/M = target
-			var/R
-			target.visible_message("<span class='danger'>[target] has been splashed with something by [user]!</span>", \
-							"<span class='userdanger'>[target] has been splashed with something by [user]!</span>")
-			if(reagents)
-				for(var/datum/reagent/A in reagents.reagent_list)
-					R += A.id + " ("
-					R += num2text(A.volume) + "),"
-			add_logs(user, M, "splashed", object="[R]")
-			reagents.reaction(target, TOUCH)
-			spawn(5) reagents.clear_reagents()
+/obj/item/weapon/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
+	if(!proximity) return // not adjacent
+	for(var/type in can_be_placed_into)
+		if(istype(target, type))
 			return
 
-		else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+	if(ismob(target) && target.reagents && reagents.total_volume)
+		var/mob/M = target
+		var/R
+		target.visible_message("<span class='danger'>[target] has been splashed with something by [user]!</span>", \
+						"<span class='userdanger'>[target] has been splashed with something by [user]!</span>")
+		if(reagents)
+			for(var/datum/reagent/A in reagents.reagent_list)
+				R += A.id + " ("
+				R += num2text(A.volume) + "),"
+		add_logs(user, M, "splashed", object="[R]")
+		reagents.reaction(target, TOUCH)
+		reagents.clear_reagents()
+		return
 
-			if(!target.reagents.total_volume && target.reagents)
-				user << "<span class='notice'>[target] is empty.</span>"
-				return
+	else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
-			if(reagents.total_volume >= reagents.maximum_volume)
-				user << "<span class='notice'>[src] is full.</span>"
-				return
-
-			var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
-			user << "<span class='notice'>You fill [src] with [trans] unit\s of the contents of [target].</span>"
-
-		else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
-			if(!reagents.total_volume)
-				user << "<span class='notice'>[src] is empty.</span>"
-				return
-
-			if(target.reagents.total_volume >= target.reagents.maximum_volume)
-				user << "<span class='notice'>[target] is full.</span>"
-				return
-
-			var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
-			user << "<span class='notice'>You transfer [trans] unit\s of the solution to [target].</span>"
-
-		//Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.	//gee thanks noize
-		else if(istype(target, /obj/item/clothing/suit/space/space_ninja))
+		if(!target.reagents.total_volume && target.reagents)
+			user << "<span class='notice'>[target] is empty.</span>"
 			return
 
-		else if(reagents.total_volume)
-			user << "<span class='notice'>You splash the solution onto [target].</span>"
-			reagents.reaction(target, TOUCH)
-			spawn(5)
-				reagents.clear_reagents()
+		if(reagents.total_volume >= reagents.maximum_volume)
+			user << "<span class='notice'>[src] is full.</span>"
+			return
+
+		var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
+		user << "<span class='notice'>You fill [src] with [trans] unit\s of the contents of [target].</span>"
+
+	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
+		if(!reagents.total_volume)
+			user << "<span class='notice'>[src] is empty.</span>"
+			return
+
+		if(target.reagents.total_volume >= target.reagents.maximum_volume)
+			user << "<span class='notice'>[target] is full.</span>"
+			return
+
+		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
+		user << "<span class='notice'>You transfer [trans] unit\s of the solution to [target].</span>"
+
+	//Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.	//gee thanks noize
+	else if(istype(target, /obj/item/clothing/suit/space/space_ninja))
+		return
+
+	else if(reagents.total_volume)
+		user << "<span class='notice'>You splash the solution onto [target].</span>"
+		reagents.reaction(target, TOUCH)
+		reagents.clear_reagents()
 
 
 /obj/item/weapon/reagent_containers/glass/beaker
@@ -107,45 +98,45 @@
 	m_amt = 0
 	g_amt = 500
 
-	on_reagent_change()
-		update_icon()
-
-	pickup(mob/user)
-		..()
-		update_icon()
-
-	dropped(mob/user)
-		..()
-		update_icon()
-
-	attack_hand()
-		..()
-		update_icon()
-
+/obj/item/weapon/reagent_containers/glass/beaker/on_reagent_change()
 	update_icon()
-		overlays.Cut()
 
-		if(reagents.total_volume)
-			var/image/filling = image('icons/obj/reagentfillings.dmi', src, "[icon_state]10")
+/obj/item/weapon/reagent_containers/glass/beaker/pickup(mob/user)
+	..()
+	update_icon()
 
-			var/percent = round((reagents.total_volume / volume) * 100)
-			switch(percent)
-				if(0 to 9)		filling.icon_state = "[icon_state]-10"
-				if(10 to 24) 	filling.icon_state = "[icon_state]10"
-				if(25 to 49)	filling.icon_state = "[icon_state]25"
-				if(50 to 74)	filling.icon_state = "[icon_state]50"
-				if(75 to 79)	filling.icon_state = "[icon_state]75"
-				if(80 to 90)	filling.icon_state = "[icon_state]80"
-				if(91 to INFINITY)	filling.icon_state = "[icon_state]100"
+/obj/item/weapon/reagent_containers/glass/beaker/dropped(mob/user)
+	..()
+	update_icon()
 
-			filling.color = mix_color_from_reagents(reagents.reagent_list)
-			overlays += filling
+/obj/item/weapon/reagent_containers/glass/beaker/attack_hand()
+	..()
+	update_icon()
+
+/obj/item/weapon/reagent_containers/glass/beaker/update_icon()
+	overlays.Cut()
+
+	if(reagents.total_volume)
+		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "[icon_state]10")
+
+		var/percent = round((reagents.total_volume / volume) * 100)
+		switch(percent)
+			if(0 to 9)		filling.icon_state = "[icon_state]-10"
+			if(10 to 24) 	filling.icon_state = "[icon_state]10"
+			if(25 to 49)	filling.icon_state = "[icon_state]25"
+			if(50 to 74)	filling.icon_state = "[icon_state]50"
+			if(75 to 79)	filling.icon_state = "[icon_state]75"
+			if(80 to 90)	filling.icon_state = "[icon_state]80"
+			if(91 to INFINITY)	filling.icon_state = "[icon_state]100"
+
+		filling.color = mix_color_from_reagents(reagents.reagent_list)
+		overlays += filling
 
 /obj/item/weapon/reagent_containers/glass/beaker/large
 	name = "large beaker"
 	desc = "A large beaker. Can hold up to 100 units."
 	icon_state = "beakerlarge"
-	g_amt = 5000
+	g_amt = 2500
 	volume = 100
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30,50,100)
@@ -202,13 +193,13 @@
 	volume = 70
 	flags = OPENCONTAINER
 
-	attackby(var/obj/D, mob/user as mob)
-		if(isprox(D))
-			user << "<span class='notice'>You add [D] to [src].</span>"
-			qdel(D)
-			user.put_in_hands(new /obj/item/weapon/bucket_sensor)
-			user.unEquip(src)
-			qdel(src)
+/obj/item/weapon/reagent_containers/glass/bucket/attackby(var/obj/D, mob/user as mob)
+	if(isprox(D))
+		user << "<span class='notice'>You add [D] to [src].</span>"
+		qdel(D)
+		user.put_in_hands(new /obj/item/weapon/bucket_sensor)
+		user.unEquip(src)
+		qdel(src)
 
 /*
 /obj/item/weapon/reagent_containers/glass/blender_jug
@@ -218,14 +209,14 @@
 	icon_state = "blender_jug_e"
 	volume = 100
 
-	on_reagent_change()
-		switch(src.reagents.total_volume)
-			if(0)
-				icon_state = "blender_jug_e"
-			if(1 to 75)
-				icon_state = "blender_jug_h"
-			if(76 to 100)
-				icon_state = "blender_jug_f"
+/obj/item/weapon/reagent_containers/glass/blender_jug/on_reagent_change()
+	switch(src.reagents.total_volume)
+		if(0)
+			icon_state = "blender_jug_e"
+		if(1 to 75)
+			icon_state = "blender_jug_h"
+		if(76 to 100)
+			icon_state = "blender_jug_f"
 
 /obj/item/weapon/reagent_containers/glass/canister		//not used apparantly
 	desc = "It's a canister. Mainly used for transporting fuel."

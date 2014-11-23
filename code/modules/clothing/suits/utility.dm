@@ -10,8 +10,8 @@
  */
 
 /obj/item/clothing/suit/fire
-	name = "firesuit"
-	desc = "A suit that protects against fire and heat."
+	name = "emergency firesuit"
+	desc = "A suit that helps protect against fire and heat."
 	icon_state = "fire"
 	item_state = "fire_suit"
 	w_class = 4
@@ -26,7 +26,8 @@
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-
+	strip_delay = 60
+	put_on_delay = 60
 
 /obj/item/clothing/suit/fire/firefighter
 	icon_state = "firesuit"
@@ -39,6 +40,13 @@
 	icon_state = "thermal"
 	item_state = "ro_suit"
 	slowdown = 1.5
+
+/obj/item/clothing/suit/fire/atmos
+	name = "firesuit"
+	desc = "An expensive firesuit that protects against even the most deadly of station fires. Designed to protect even if the wearer is set aflame."
+	icon_state = "atmos_firesuit"
+	item_state = "firesuit_atmos"
+	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 
 /*
  * Bomb protection
@@ -54,6 +62,8 @@
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
+	strip_delay = 70
+	put_on_delay = 70
 
 
 /obj/item/clothing/suit/bomb_suit
@@ -73,6 +83,8 @@
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
+	strip_delay = 70
+	put_on_delay = 70
 
 
 
@@ -84,7 +96,7 @@
 /obj/item/clothing/suit/bomb_suit/security
 	icon_state = "bombsuitsec"
 	item_state = "bombsuitsec"
-	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs)
+	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs)
 
 /*
  * Radiation protection
@@ -95,6 +107,8 @@
 	desc = "A hood with radiation protective properties. Label: Made with lead, do not eat insulation"
 	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR|THICKMATERIAL
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 60, rad = 100)
+	strip_delay = 60
+	put_on_delay = 60
 
 
 /obj/item/clothing/suit/radiation
@@ -110,4 +124,6 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1.5
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 60, rad = 100)
+	strip_delay = 60
+	put_on_delay = 60
 	flags_inv = HIDEJUMPSUIT

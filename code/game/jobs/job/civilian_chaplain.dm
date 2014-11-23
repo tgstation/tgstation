@@ -1,13 +1,20 @@
 //Due to how large this one is it gets its own file
+/*
+Chaplain
+*/
 /datum/job/chaplain
 	title = "Chaplain"
 	flag = CHAPLAIN
+	department_head = list("Head of Personnel")
 	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+
+	default_pda = /obj/item/device/pda/chaplain
+
 	access = list(access_morgue, access_chapel_office, access_crematorium, access_maint_tunnels)
 	minimal_access = list(access_morgue, access_chapel_office, access_crematorium)
 
@@ -20,7 +27,7 @@
 	//Bible itemstates
 	var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "bible", "bible", "syringe_kit", "syringe_kit", "syringe_kit", "syringe_kit", "syringe_kit", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon")
 
-/datum/job/chaplain/proc/setupbiblespecifics(var/obj/item/weapon/storage/bible/B, var/mob/living/carbon/human/H)
+/datum/job/chaplain/proc/setupbiblespecifics(var/obj/item/weapon/storage/book/bible/B, var/mob/living/carbon/human/H)
 	switch(B.icon_state)
 		if("honk1","honk2")
 			new /obj/item/weapon/grown/bananapeel(B)
@@ -55,7 +62,7 @@
 		var/iconi = text2num(href_list["seticon"])
 
 		var/biblename = biblenames[iconi]
-		var/obj/item/weapon/storage/bible/B = locate(href_list["bible"])
+		var/obj/item/weapon/storage/book/bible/B = locate(href_list["bible"])
 
 		B.icon_state = biblestates[iconi]
 		B.item_state = bibleitemstates[iconi]
@@ -73,14 +80,11 @@
 
 		usr << browse(null, "window=editicon") // Close window
 
-/datum/job/chaplain/equip(var/mob/living/carbon/human/H)
-	if(!H)	return 0
-
+/datum/job/chaplain/equip_items(var/mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chaplain(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/chaplain(H), slot_belt)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
 
-	var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible/booze(H)
+	var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible/booze(H)
 	spawn(0)
 		var/religion_name = "Christianity"
 		var/new_religion = copytext(sanitize(input(H, "You are the Chaplain. Would you like to change your religion? Default is Christianity, in SPACE.", "Name change", religion_name)),1,MAX_NAME_LEN)
@@ -142,4 +146,3 @@
 		dat += "</table></body></html>"
 
 		H << browse(dat, "window=editicon;can_close=0;can_minimize=0;size=250x650")
-	return 1

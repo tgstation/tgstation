@@ -29,15 +29,15 @@
 	max_n2 = 0
 	minbodytemp = 0
 
-	faction = "faithless"
+	faction = list("faithless")
 
-/mob/living/simple_animal/hostile/faithless/Process_Spacemove(var/check_drift = 0)
+/mob/living/simple_animal/hostile/faithless/Process_Spacemove(var/movement_dir = 0)
 	return 1
 
 /mob/living/simple_animal/hostile/faithless/FindTarget()
 	. = ..()
 	if(.)
-		emote("wails at [.]")
+		emote("me", 1, "wails at [.]!")
 
 /mob/living/simple_animal/hostile/faithless/AttackingTarget()
 	. =..()

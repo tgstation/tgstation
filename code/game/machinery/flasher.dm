@@ -5,7 +5,7 @@
 	desc = "A wall-mounted flashbulb device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mflash1"
-	var/obj/item/device/flash/bulb = null
+	var/obj/item/device/flash/handheld/bulb = null
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
 	var/last_flash = 0 //Don't want it getting spammed like regular flashes
@@ -23,7 +23,7 @@
 	density = 1
 
 /obj/machinery/flasher/New()
-	bulb = new /obj/item/device/flash(src)
+	bulb = new /obj/item/device/flash/handheld(src)
 
 /obj/machinery/flasher/power_change()
 	if (powered() && anchored && bulb)
@@ -40,13 +40,15 @@
 /obj/machinery/flasher/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/wirecutters))
 		if (bulb)
+			user.visible_message("<span class='warning'>[user] begins to disconnect [src]'s flashbulb.</span>", "<span class='warning'>You begin to disconnect [src]'s flashbulb.</span>")
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			user.visible_message("<span class='warning'>[user] has disconnected [src]'s flashbulb!</span>", "<span class='notice'>You disconnect [src]'s flashbulb!</span>")
-			bulb.loc = src.loc
-			bulb = null
-			power_change()
+			if(do_after(user, 30) && bulb)
+				user.visible_message("<span class='warning'>[user] has disconnected [src]'s flashbulb!</span>", "<span class='notice'>You disconnect [src]'s flashbulb!</span>")
+				bulb.loc = src.loc
+				bulb = null
+				power_change()
 
-	else if (istype(W, /obj/item/device/flash))
+	else if (istype(W, /obj/item/device/flash/handheld))
 		if (!bulb)
 			user.visible_message("<span class='notice'>[user] installs [W] into [src].</span>", "<span class='notice'>You install [W] into [src].</span>")
 			user.drop_item()

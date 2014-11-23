@@ -1,3 +1,5 @@
+//Hyposprays
+
 /obj/item/weapon/reagent_containers/hypospray
 	name = "hypospray"
 	desc = "The DeForest Medical Corporation hypospray is a sterile, air-needle autoinjector for rapid administration of drugs to patients."
@@ -13,12 +15,6 @@
 
 /obj/item/weapon/reagent_containers/hypospray/attack_paw(mob/user)
 	return attack_hand(user)
-
-
-/obj/item/weapon/reagent_containers/hypospray/New()	//comment this to make hypos start off empty
-	..()
-	reagents.add_reagent("doctorsdelight", 30)
-
 
 /obj/item/weapon/reagent_containers/hypospray/attack(mob/living/M, mob/user)
 	if(!reagents.total_volume)
@@ -44,9 +40,13 @@
 
 			add_logs(user, M, "injected", object="[src.name]", addition="([contained])")
 
+/obj/item/weapon/reagent_containers/hypospray/CMO/New()
+	..()
+	reagents.add_reagent("doctorsdelight", 30)
+
 /obj/item/weapon/reagent_containers/hypospray/combat
 	name = "combat stimulant injector"
-	desc = "A modified air-needle autoinjector, used by operatives trained in medical practices to quickly heal injuries in the field."
+	desc = "A modified air-needle autoinjector, used by support operatives to quickly heal injuries in combat."
 	amount_per_transfer_from_this = 10
 	icon_state = "combat_hypo"
 	volume = 60
@@ -55,3 +55,69 @@
 /obj/item/weapon/reagent_containers/hypospray/combat/New()
 	..()
 	reagents.add_reagent("synaptizine", 30)
+
+
+
+//MediPens
+
+/obj/item/weapon/reagent_containers/hypospray/medipen
+	name = "inaprovaline medipen" //lol epipen is copyrighted
+	desc = "A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge."
+	icon_state = "medipen"
+	item_state = "medipen"
+	amount_per_transfer_from_this = 10
+	volume = 10
+	ignore_flags = 1 //so you can medipen through hardsuits
+	flags = null
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/New()
+	..()
+	reagents.add_reagent("inaprovaline", 10)
+	update_icon()
+	return
+
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/attack(mob/M as mob, mob/user as mob)
+	..()
+	update_icon()
+	return
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/update_icon()
+	if(reagents.total_volume > 0)
+		icon_state = "[initial(icon_state)]1"
+	else
+		icon_state = "[initial(icon_state)]0"
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/examine()
+	..()
+	if(reagents && reagents.reagent_list.len)
+		usr << "<span class='notice'>It is currently loaded.</span>"
+	else
+		usr << "<span class='notice'>It is spent.</span>"
+
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/leporazine //basilisks
+	name = "leporazine medipen"
+	desc = "A rapid way to regulate your body's temperature in the event of a hardsuit malfunction at the cost of some shortness of breath."
+	icon_state = "lepopen"
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/leporazine/New()
+	..()
+	reagents.remove_reagent("inaprovaline", 10)
+	reagents.add_reagent("leporazine", 9)
+	reagents.add_reagent("lexorin", 1)
+	update_icon()
+	return
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack //goliath kiting
+	name = "stimpack medipen"
+	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in restrictive armor at the cost of some shortness of breath."
+	icon_state = "stimpen"
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack/New()
+	..()
+	reagents.remove_reagent("inaprovaline", 10)
+	reagents.add_reagent("hyperzine", 9)
+	reagents.add_reagent("lexorin", 1)
+	update_icon()
+	return

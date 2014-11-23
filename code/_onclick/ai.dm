@@ -58,6 +58,10 @@
 		aicamera.camera_mode_off()
 		aicamera.captureimage(A, usr)
 		return
+	if(waypoint_mode)
+		set_waypoint(A)
+		waypoint_mode = 0
+		return
 
 	/*
 		AI restrained() currently does nothing
@@ -138,10 +142,12 @@
 
 /obj/machinery/power/apc/AICtrlClick() // turns off/on APCs.
 	toggle_breaker()
+	add_fingerprint(usr)
 
 /obj/machinery/turretid/AICtrlClick() //turns off/on Turrets
-	src.enabled = !src.enabled
-	src.updateTurrets()
+	if(can_be_used_by(usr))
+		toggle_on()
+	add_fingerprint(usr)
 
 
 /atom/proc/AIAltClick(var/mob/living/silicon/ai/user)
@@ -160,8 +166,9 @@
 	return
 
 /obj/machinery/turretid/AIAltClick() //toggles lethal on turrets
-	src.lethal = !src.lethal
-	src.updateTurrets()
+	if(can_be_used_by(usr))
+		toggle_lethal()
+	add_fingerprint(usr)
 
 //
 // Override TurfAdjacent for AltClicking

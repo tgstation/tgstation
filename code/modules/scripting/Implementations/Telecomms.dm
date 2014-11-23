@@ -97,16 +97,34 @@
 		interpreter.SetVar("$sign"   ,	signal)
 		interpreter.SetVar("$pass"	 ,  !(signal.data["reject"])) // if the signal isn't rejected, pass = 1; if the signal IS rejected, pass = 0
 
-		// Set up the script procs
+		//Language bitflags
+		interpreter.SetVar("HUMAN"   ,	HUMAN)
+		interpreter.SetVar("MONKEY"   ,	MONKEY)
+		interpreter.SetVar("ALIEN"   ,	ALIEN)
+		interpreter.SetVar("ROBOT"   ,	ROBOT)
+		interpreter.SetVar("SLIME"   ,	SLIME)
+		interpreter.SetVar("DRONE"   ,	DRONE)
+
+		var/curlang = HUMAN
+		if(istype(signal.data["mob"], /atom/movable))
+			var/atom/movable/M = signal.data["mob"]
+			curlang = M.languages
+
+		interpreter.SetVar("$language", curlang)
+
+
+		/*
+		Telecomms procs
+		*/
 
 		/*
 			-> Send another signal to a server
-					@format: broadcast(content, frequency, source, job)
+					@format: broadcast(content, frequency, source, job, lang)
 
 					@param content:		Message to broadcast
 					@param frequency:	Frequency to broadcast to
 					@param source:		The name of the source you wish to imitate. Must be stored in stored_names list.
-					@param job:			The name of the job.
+					@param job:				The name of the job.
 		*/
 		interpreter.SetProc("broadcast", "tcombroadcast", signal, list("message", "freq", "source", "job"))
 
@@ -128,49 +146,12 @@
 		*/
 		interpreter.SetProc("mem", "mem", signal, list("address", "value"))
 
-		/*
-			-> Delay code for a given amount of deciseconds
-					@format: sleep(time)
-
-					@param time: 		time to sleep in deciseconds (1/10th second)
-		*/
-		interpreter.SetProc("sleep", /proc/delay)
 
 		/*
-			-> Replaces a string with another string
-					@format: replace(string, substring, replacestring)
-
-					@param string: 			the string to search for substrings (best used with $content$ constant)
-					@param substring: 		the substring to search for
-					@param replacestring: 	the string to replace the substring with
-
+		General NTSL procs
+		Should probably be moved to its own place
 		*/
-		interpreter.SetProc("replace", /proc/string_replacetext)
-
-		/*
-			-> Locates an element/substring inside of a list or string
-					@format: find(haystack, needle, start = 1, end = 0)
-
-					@param haystack:	the container to search
-					@param needle:		the element to search for
-					@param start:		the position to start in
-					@param end:			the position to end in
-
-		*/
-		interpreter.SetProc("find", /proc/smartfind)
-
-		/*
-			-> Finds the length of a string or list
-					@format: length(container)
-
-					@param container: the list or container to measure
-
-		*/
-		interpreter.SetProc("length", /proc/smartlength)
-
-		/* -- Clone functions, carried from default BYOND procs --- */
-
-		// vector namespace
+		// Vector
 		interpreter.SetProc("vector", /proc/n_list)
 		interpreter.SetProc("at", /proc/n_listpos)
 		interpreter.SetProc("copy", /proc/n_listcopy)
@@ -179,19 +160,22 @@
 		interpreter.SetProc("cut", /proc/n_listcut)
 		interpreter.SetProc("swap", /proc/n_listswap)
 		interpreter.SetProc("insert", /proc/n_listinsert)
-
 		interpreter.SetProc("pick", /proc/n_pick)
-		interpreter.SetProc("prob", /proc/prob_chance)
-		interpreter.SetProc("substr", /proc/docopytext)
+		interpreter.SetProc("prob", /proc/n_prob)
+		interpreter.SetProc("substr", /proc/n_substr)
+		interpreter.SetProc("find", /proc/n_smartfind)
+		interpreter.SetProc("length", /proc/n_smartlength)
 
-		// Donkie~
 		// Strings
 		interpreter.SetProc("lower", /proc/n_lower)
 		interpreter.SetProc("upper", /proc/n_upper)
-		interpreter.SetProc("explode", /proc/string_explode)
+		interpreter.SetProc("explode", /proc/n_explode)
+		interpreter.SetProc("implode", /proc/n_implode)
 		interpreter.SetProc("repeat", /proc/n_repeat)
 		interpreter.SetProc("reverse", /proc/n_reverse)
 		interpreter.SetProc("tonum", /proc/n_str2num)
+		interpreter.SetProc("replace", /proc/n_replace)
+		interpreter.SetProc("proper", /proc/n_proper)
 
 		// Numbers
 		interpreter.SetProc("tostring", /proc/n_num2str)
@@ -202,11 +186,14 @@
 		interpreter.SetProc("round", /proc/n_round)
 		interpreter.SetProc("clamp", /proc/n_clamp)
 		interpreter.SetProc("inrange", /proc/n_inrange)
-		interpreter.SetProc("rand", /proc/rand_chance)
-		// End of Donkie~
+		interpreter.SetProc("rand", /proc/n_rand)
+		interpreter.SetProc("randseed", /proc/n_randseed)
+		interpreter.SetProc("min", /proc/n_min)
+		interpreter.SetProc("max", /proc/n_max)
 
 		// Time
-		interpreter.SetProc("time", /proc/time)
+		interpreter.SetProc("time", /proc/n_time)
+		interpreter.SetProc("sleep", /proc/n_delay)
 		interpreter.SetProc("timestamp", /proc/gameTimestamp)
 
 		// Run the compiled code
@@ -286,7 +273,7 @@ datum/signal
 		var/obj/item/device/radio/hradio = S.server_radio
 
 		if(!hradio)
-			error("[src] has no radio.")
+			ERROR("[src] has no radio.")
 			return
 
 		if((!message || message == "") && message != 0)
@@ -300,9 +287,18 @@ datum/signal
 			freq *= 10 // shift the decimal one place
 
 		if(!job)
-			job = "?"
+			job = "Unknown"
 
-		newsign.data["mob"] = null
+		//SAY REWRITE RELATED CODE.
+		//This code is a little hacky, but it *should* work. Even though it'll result in a virtual speaker referencing another virtual speaker. vOv
+		var/atom/movable/virtualspeaker/virt = PoolOrNew(/atom/movable/virtualspeaker,null)
+		virt.name = source
+		virt.job = job
+		virt.faketrack = 1
+		virt.languages = HUMAN
+		//END SAY REWRITE RELATED CODE.
+
+		newsign.data["mob"] = virt
 		newsign.data["mobtype"] = /mob/living/carbon/human
 		newsign.data["name"] = source
 		newsign.data["realname"] = newsign.data["name"]
@@ -314,15 +310,12 @@ datum/signal
 			freq = text2num(freq)
 		newsign.frequency = freq
 
-		var/datum/radio_frequency/connection = radio_controller.return_frequency(freq)
-		newsign.data["connection"] = connection
-
 
 		newsign.data["radio"] = hradio
 		newsign.data["vmessage"] = message
 		newsign.data["vname"] = source
 		newsign.data["vmask"] = 0
-		newsign.data["level"] = list()
+		newsign.data["level"] = data["level"]
 
 		newsign.sanitize_data()
 

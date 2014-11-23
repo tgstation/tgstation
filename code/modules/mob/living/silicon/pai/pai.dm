@@ -1,10 +1,10 @@
 /mob/living/silicon/pai
 	name = "pAI"
 	icon = 'icons/obj/status_display.dmi' //invisibility!
-	mouse_opacity
+	mouse_opacity = 0
 	density = 0
-
-	robot_talk_understand = 0
+	mob_size = 0
+	invisibility = 101
 
 	var/network = "SS13"
 	var/obj/machinery/camera/current = null
@@ -13,20 +13,15 @@
 	var/list/software = list()
 	var/userDNA		// The DNA string of our assigned user
 	var/obj/item/device/paicard/card	// The card we inhabit
-	var/obj/item/device/radio/radio		// Our primary radio
 
 	var/speakStatement = "states"
 	var/speakExclamation = "declares"
 	var/speakQuery = "queries"
 
-
 	var/obj/item/weapon/pai_cable/cable		// The cable we produce and use when door or camera jacking
 
 	var/master				// Name of the one who commands us
 	var/master_dna			// DNA string for owner verification
-							// Keeping this separate from the laws var, it should be much more difficult to modify
-	var/pai_law0 = "Serve your master."
-	var/pai_laws				// String for additional operating instructions our master might give us
 
 	var/silence_time			// Timestamp when we were silenced (normally via EMP burst), set to null after silence has faded
 
@@ -54,6 +49,7 @@
 
 
 /mob/living/silicon/pai/New(var/obj/item/device/paicard)
+	make_laws()
 	canmove = 0
 	src.loc = get_turf(paicard)
 	card = paicard
@@ -73,6 +69,10 @@
 
 		follow_pai()
 	..()
+
+/mob/living/silicon/pai/make_laws()
+	laws = new /datum/ai_laws/pai()
+	return 1
 
 /mob/living/silicon/pai/Login()
 	..()
@@ -102,45 +102,40 @@
 	return 1
 
 /mob/living/silicon/pai/blob_act()
-	if (src.stat != 2)
-		src.adjustBruteLoss(60)
-		src.updatehealth()
-		return 1
 	return 0
 
 /mob/living/silicon/pai/restrained()
 	return 0
 
 /mob/living/silicon/pai/emp_act(severity)
-	// Silence for 2 minutes
 	// 20% chance to kill
+	// Silence for 2 minutes
 		// 33% chance to unbind
 		// 33% chance to change prime directive (based on severity)
 		// 33% chance of no additional effect
 
-	src.silence_time = world.timeofday + 120 * 10		// Silence for 2 minutes
-	src << "<font color=green><b>Communication circuit overload. Shutting down and reloading communication circuits - speech and messaging functionality will be unavailable until the reboot is complete.</b></font>"
 	if(prob(20))
-		var/turf/T = get_turf(src.loc)
-		for (var/mob/M in viewers(T))
-			M.show_message("\red A shower of sparks spray from [src]'s inner workings.", 3, "\red You hear and smell the ozone hiss of electrical sparks being expelled violently.", 2)
+		visible_message("<span class='danger'>A shower of sparks spray from [src]'s inner workings.</span>", 3, "<span class='danger'>You hear and smell the ozone hiss of electrical sparks being expelled violently.</span>", 2)
 		return src.death(0)
+
+	silence_time = world.timeofday + 120 * 10		// Silence for 2 minutes
+	src << "<span class ='warning'>Communication circuit overload. Shutting down and reloading communication circuits - speech and messaging functionality will be unavailable until the reboot is complete.</span>"
 
 	switch(pick(1,2,3))
 		if(1)
 			src.master = null
 			src.master_dna = null
-			src << "<font color=green>You feel unbound.</font>"
+			src << "<span class='notice'>You feel unbound.</span>"
 		if(2)
 			var/command
 			if(severity  == 1)
 				command = pick("Serve", "Love", "Fool", "Entice", "Observe", "Judge", "Respect", "Educate", "Amuse", "Entertain", "Glorify", "Memorialize", "Analyze")
 			else
 				command = pick("Serve", "Kill", "Love", "Hate", "Disobey", "Devour", "Fool", "Enrage", "Entice", "Observe", "Judge", "Respect", "Disrespect", "Consume", "Educate", "Destroy", "Disgrace", "Amuse", "Entertain", "Ignite", "Glorify", "Memorialize", "Analyze")
-			src.pai_law0 = "[command] your master."
-			src << "<font color=green>Pr1m3 d1r3c71v3 uPd473D.</font>"
+			src.laws.zeroth = "[command] your master."
+			src << "<span class='notice'>Pr1m3 d1r3c71v3 uPd473D.</span>"
 		if(3)
-			src << "<font color=green>You feel an electric surge run through your circuitry and become acutely aware at how lucky you are that you can still feel at all.</font>"
+			src << "<span class='notice'>You feel an electric surge run through your circuitry and become acutely aware at how lucky you are that you can still feel at all.</span>"
 
 /mob/living/silicon/pai/ex_act(severity)
 	..()

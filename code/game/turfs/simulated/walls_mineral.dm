@@ -5,6 +5,10 @@
 	var/last_event = 0
 	var/active = null
 
+/turf/simulated/wall/mineral/New()
+	sheet_type = text2path("/obj/item/stack/sheet/mineral/[mineral]")
+	..()
+
 /turf/simulated/wall/mineral/gold
 	name = "gold wall"
 	desc = "A wall with gold plating. Swag!"
@@ -29,13 +33,17 @@
 	icon_state = "diamond0"
 	walltype = "diamond"
 	mineral = "diamond"
+	slicing_duration = 200   //diamond wall takes twice as much time to slice
+
+/turf/simulated/wall/mineral/diamond/thermitemelt(mob/user as mob)
+	return
 
 /turf/simulated/wall/mineral/clown
 	name = "bananium wall"
 	desc = "A wall with bananium plating. Honk!"
-	icon_state = "clown0"
-	walltype = "clown"
-	mineral = "clown"
+	icon_state = "bananium0"
+	walltype = "bananium"
+	mineral = "bananium"
 
 /turf/simulated/wall/mineral/sandstone
 	name = "sandstone wall"
@@ -86,14 +94,15 @@
 
 /turf/simulated/wall/mineral/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(is_hot(W) > 300)//If the temperature of the object is over 300, then ignite
+		message_admins("Plasma wall ignited by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+		log_game("Plasma wall ignited by [user.ckey]([user]) in ([x],[y],[z])")
 		ignite(is_hot(W))
 		return
 	..()
 
 /turf/simulated/wall/mineral/plasma/proc/PlasmaBurn(temperature)
-	spawn(2)
 	new /obj/structure/girder(src)
-	src.ChangeTurf(/turf/simulated/floor)
+	src.ChangeTurf(/turf/simulated/floor/plasteel)
 	atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 400)
 
 /turf/simulated/wall/mineral/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)//Doesn't fucking work because walls don't interact with air :(
@@ -126,3 +135,11 @@
 		if(shocked)
 			shock()
 */
+
+/turf/simulated/wall/mineral/wood
+	name = "wooden wall"
+	desc = "A wall with wooden plating."
+	icon_state = "wood0"
+	walltype = "wood"
+	mineral = "wood"
+	hardness = 70

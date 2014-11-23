@@ -28,7 +28,7 @@
 #define AGE_MIN				17	//youngest a character can be
 #define AGE_MAX				85	//oldest a character can be
 #define SHOES_SLOWDOWN		0	//How much shoes slow you down by default. Negative values speed you up
-#define STRIP_DELAY			40	//time taken (in deciseconds) to strip somebody
+#define POCKET_STRIP_DELAY			40	//time taken (in deciseconds) to search somebody's pockets
 #define DOOR_CRUSH_DAMAGE	10	//the amount of damage that airlocks deal when they crush you
 
 #define	HUNGER_FACTOR		0.1	//factor at which mob nutrition decreases
@@ -42,7 +42,6 @@
 // AI Toggles
 #define AI_CAMERA_LUMINOSITY	5
 #define AI_VOX 1 // Comment out if you don't want VOX to be enabled and have players download the voice sounds.
-
 
 //Additional code for the above flags.
 #ifdef dellogging
@@ -64,3 +63,5 @@ var/list/del_counter = list()
 #define USE_DYNAMIC_LIGHTING	//Enables the dynamic lighting system
 #define USE_DYNAMIC_ATMOS		//Enables the dynamic atmos system
 */
+
+#define USE_BYGEX

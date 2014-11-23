@@ -9,20 +9,23 @@
 /datum/round_event/blob
 	announceWhen	= 12
 	endWhen			= 120
-
+	var/new_rate = 2
 	var/obj/effect/blob/core/Blob
 
+/datum/round_event/blob/New(var/strength)
+	..()
+	if(strength)
+		new_rate = strength
 
 /datum/round_event/blob/announce()
-	command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-	world << sound('sound/AI/outbreak5.ogg')
+	priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/AI/outbreak5.ogg')
 
 
 /datum/round_event/blob/start()
 	var/turf/T = pick(blobstart)
 	if(!T)
 		return kill()
-	Blob = new /obj/effect/blob/core(T, 200)
+	Blob = new /obj/effect/blob/core(T, 200, null, new_rate)
 	for(var/i = 1; i < rand(3, 6), i++)
 		Blob.process()
 

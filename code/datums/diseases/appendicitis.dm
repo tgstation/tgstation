@@ -2,18 +2,18 @@
 	form = "Condition"
 	name = "Appendicitis"
 	max_stages = 3
-	spread = "Acute"
-	cure = "Surgery"
+	cure_text = "Surgery"
 	agent = "Shitty Appendix"
-	affected_species = list("Human")
+	viable_mobtypes = list(/mob/living/carbon/human)
 	permeability_mod = 1
-	contagious_period = 9001 //slightly hacky, but hey! whatever works, right?
 	desc = "If left untreated the subject will become very weak, and may vomit often."
-	severity = "Medium"
+	severity = "Dangerous!"
 	longevity = 1000
-	hidden = list(0, 1)
-	requires = 1
-	required_limb = list(/obj/item/organ/limb/chest)
+	disease_flags = CAN_CARRY|CAN_RESIST
+	spread_flags = NON_CONTAGIOUS
+	visibility_flags = HIDDEN_PANDEMIC
+	required_organs = list(/obj/item/organ/limb/chest)
+
 
 /datum/disease/appendicitis/stage_act()
 	..()
@@ -35,7 +35,8 @@
 			if(prob(1))
 				if (affected_mob.nutrition > 100)
 					affected_mob.Stun(rand(4,6))
-					affected_mob.visible_message("<span class='warning'>[affected_mob] throws up!</span>")
+					affected_mob.visible_message("<span class='danger'>[affected_mob] throws up!</span>", \
+												"<span class='userdanger'>[affected_mob] throws up!</span>")
 					playsound(affected_mob.loc, 'sound/effects/splat.ogg', 50, 1)
 					var/turf/location = affected_mob.loc
 					if(istype(location, /turf/simulated))
@@ -43,7 +44,7 @@
 					affected_mob.nutrition -= 95
 					affected_mob.adjustToxLoss(-1)
 				else
-					affected_mob << "<span class='warning'>You gag as you want to throw up, but there's nothing in your stomach!</span>"
+					affected_mob << "<span class='userdanger'>You gag as you want to throw up, but there's nothing in your stomach!</span>"
 					affected_mob.Weaken(10)
 					affected_mob.adjustToxLoss(3)
 

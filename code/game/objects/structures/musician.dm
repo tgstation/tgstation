@@ -19,6 +19,10 @@
 	instrumentDir = dir
 	instrumentObj = obj
 
+/datum/song/Destroy()
+	instrumentObj = null
+	..()
+
 // note is a number from 1-7 for A-G
 // acc is either "b", "n", or "#"
 // oct is 1-8 (or 9 for C)
@@ -47,10 +51,14 @@
 
 	// now generate name
 	var/soundfile = "sound/[instrumentDir]/[ascii2text(note+64)][acc][oct].[instrumentExt]"
+	soundfile = file(soundfile)
+	// make sure the note exists
+	if(!fexists(soundfile))
+		return
 	// and play
 	var/turf/source = get_turf(instrumentObj)
-	for(var/mob/M in hearers(15, source))
-		M.playsound_local(source, file(soundfile), 100, falloff = 5)
+	for(var/mob/M in get_hearers_in_view(15, source))
+		M.playsound_local(source, soundfile, 100, falloff = 5)
 
 /datum/song/proc/updateDialog(mob/user as mob)
 	instrumentObj.updateDialog()		// assumes it's an object in world, override if otherwise
@@ -166,7 +174,7 @@
 
 
 /datum/song/Topic(href, href_list)
-	if(!in_range(instrumentObj, usr) || (issilicon(usr) && instrumentObj.loc != usr) || !isliving(usr) || !usr.canmove || usr.restrained())
+	if(!usr.canUseTopic(instrumentObj))
 		usr << browse(null, "window=instrument")
 		usr.unset_machine()
 		return
@@ -308,6 +316,11 @@
 		name = "space piano"
 		desc = "This is a space piano, like a regular piano, but always in tune! Even if the musician isn't."
 		icon_state = "piano"
+
+/obj/structure/piano/Destroy()
+	qdel(song)
+	song = null
+	..()
 
 /obj/structure/piano/attack_hand(mob/user as mob)
 	interact(user)

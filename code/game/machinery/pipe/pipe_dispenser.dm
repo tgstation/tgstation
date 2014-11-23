@@ -11,12 +11,13 @@
 
 /obj/machinery/pipedispenser/attack_hand(user as mob)
 	if(..())
-		return
+		return 1
 	var/dat = {"
 <b>Regular pipes:</b><BR>
 <A href='?src=\ref[src];make=0;dir=1'>Pipe</A><BR>
 <A href='?src=\ref[src];make=1;dir=5'>Bent Pipe</A><BR>
 <A href='?src=\ref[src];make=5;dir=1'>Manifold</A><BR>
+<A href='?src=\ref[src];make=19;dir=1'>4-Way Manifold</A><BR>
 <A href='?src=\ref[src];make=8;dir=1'>Manual Valve</A><BR>
 <A href='?src=\ref[src];make=18;dir=1'>Digital Valve</A><BR>
 <b>Devices:</b><BR>
@@ -46,10 +47,10 @@
 
 /obj/machinery/pipedispenser/Topic(href, href_list)
 	if(..())
-		return
+		return 1
 	if(!anchored|| !usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
 		usr << browse(null, "window=pipedispenser")
-		return
+		return 1
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["make"])
@@ -82,6 +83,7 @@
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "<span class='notice'>You begin to fasten \the [src] to the floor...</span>"
 			if (do_after(user, 40))
+				add_fingerprint(user)
 				user.visible_message( \
 					"[user] fastens \the [src].", \
 					"<span class='notice'>You have fastened \the [src]. Now it can dispense pipes.</span>", \
@@ -94,6 +96,7 @@
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "<span class='notice'>You begin to unfasten \the [src] from the floor...</span>"
 			if (do_after(user, 20))
+				add_fingerprint(user)
 				user.visible_message( \
 					"[user] unfastens \the [src].", \
 					"<span class='notice'>You have unfastened \the [src]. Now it can be pulled somewhere else.</span>", \
@@ -121,12 +124,15 @@
 Nah
 */
 
-//Allow you to drag-drop disposal pipes into it
-/obj/machinery/pipedispenser/disposal/MouseDrop_T(var/obj/structure/disposalconstruct/pipe as obj, mob/usr as mob)
+//Allow you to drag-drop disposal pipes and transit tubes into it
+/obj/machinery/pipedispenser/disposal/MouseDrop_T(var/obj/structure/pipe as obj, mob/usr as mob)
 	if(!usr.canmove || usr.stat || usr.restrained())
 		return
 
-	if (!istype(pipe) || get_dist(usr, src) > 1 || get_dist(src,pipe) > 1 )
+	if (!istype(pipe, /obj/structure/disposalconstruct) && !istype(pipe, /obj/structure/c_transit_tube) && !istype(pipe, /obj/structure/c_transit_tube_pod))
+		return
+
+	if (get_dist(usr, src) > 1 || get_dist(src,pipe) > 1 )
 		return
 
 	if (pipe.anchored)
@@ -136,7 +142,7 @@ Nah
 
 /obj/machinery/pipedispenser/disposal/attack_hand(user as mob)
 	if(..())
-		return
+		return 1
 
 	var/dat = {"<b>Disposal Pipes</b><br><br>
 <A href='?src=\ref[src];dmake=0'>Pipe</A><BR>
@@ -147,6 +153,7 @@ Nah
 <A href='?src=\ref[src];dmake=5'>Bin</A><BR>
 <A href='?src=\ref[src];dmake=6'>Outlet</A><BR>
 <A href='?src=\ref[src];dmake=7'>Chute</A><BR>
+<A href='?src=\ref[src];dmake=8'>Sort Junction</A><BR>
 "}
 
 	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
@@ -157,13 +164,10 @@ Nah
 
 /obj/machinery/pipedispenser/disposal/Topic(href, href_list)
 	if(..())
-		return
+		return 1
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["dmake"])
-		if(!anchored || !usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
-			usr << browse(null, "window=pipedispenser")
-			return
 		if(!wait)
 			var/p_type = text2num(href_list["dmake"])
 			var/obj/structure/disposalconstruct/C = new (src.loc)
@@ -187,6 +191,8 @@ Nah
 				if(7)
 					C.ptype = 8
 					C.density = 1
+				if(8)
+					C.ptype = 9
 			C.add_fingerprint(usr)
 			C.update()
 			wait = 1
@@ -194,3 +200,73 @@ Nah
 				wait = 0
 	return
 
+//transit tube dispenser
+//inherit disposal for the dragging proc
+/obj/machinery/pipedispenser/disposal/transit_tube
+	name = "transit tube dispenser"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "pipe_d"
+	density = 1
+	anchored = 1.0
+
+/obj/machinery/pipedispenser/disposal/transit_tube/attack_hand(user as mob)
+	if(..())
+		return 1
+
+	var/dat = {"<B>Transit Tubes:</B><BR>
+<A href='?src=\ref[src];tube=0'>Straight Tube</A><BR>
+<A href='?src=\ref[src];tube=1'>Straight Tube with Crossing</A><BR>
+<A href='?src=\ref[src];tube=2'>Curved Tube</A><BR>
+<A href='?src=\ref[src];tube=3'>Diagonal Tube</A><BR>
+<A href='?src=\ref[src];tube=4'>Junction</A><BR>
+<b>Station Equipment:</b><BR>
+<A href='?src=\ref[src];tube=5'>Through Tube Station</A><BR>
+<A href='?src=\ref[src];tube=6'>Terminus Tube Station</A><BR>
+<A href='?src=\ref[src];tube=7'>Tube Blocker</A><BR>
+<A href='?src=\ref[src];tube=8'>Transit Tube Pod</A><BR>
+"}
+
+	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
+	return
+
+
+/obj/machinery/pipedispenser/disposal/transit_tube/Topic(href, href_list)
+	if(..())
+		return 1
+	usr.set_machine(src)
+	src.add_fingerprint(usr)
+	if(!wait)
+		if(href_list["tube"])
+			var/tube_type = text2num(href_list["tube"])
+			if(tube_type <= 4)
+				var/obj/structure/c_transit_tube/C = new/obj/structure/c_transit_tube(src.loc)
+				switch(tube_type)
+					if(0)
+						C.icon_state = "E-W"
+					if(1)
+						C.icon_state = "E-W-Pass"
+					if(2)
+						C.icon_state = "S-NE"
+					if(3)
+						C.icon_state = "NE-SW"
+					if(4)
+						C.icon_state = "W-NE-SE"
+				C.add_fingerprint(usr)
+			else
+				switch(tube_type)
+					if(5)
+						var/obj/structure/c_transit_tube/station/C = new/obj/structure/c_transit_tube/station(src.loc)
+						C.add_fingerprint(usr)
+					if(6)
+						var/obj/structure/c_transit_tube/station/reverse/C = new/obj/structure/c_transit_tube/station/reverse(src.loc)
+						C.add_fingerprint(usr)
+					if(7)
+						var/obj/structure/c_transit_tube/station/block/C = new/obj/structure/c_transit_tube/station/block(src.loc)
+						C.add_fingerprint(usr)
+					if(8)
+						var/obj/structure/c_transit_tube_pod/C = new/obj/structure/c_transit_tube_pod(src.loc)
+						C.add_fingerprint(usr)
+			wait = 1
+			spawn(15)
+				wait = 0
+	return

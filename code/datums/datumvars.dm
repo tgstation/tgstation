@@ -1,402 +1,400 @@
 // reference: /client/proc/modify_variables(var/atom/O, var/param_var_name = null, var/autodetect_class = 0)
 
-client
-	proc/debug_variables(datum/D in world)
-		set category = "Debug"
-		set name = "View Variables"
-		//set src in world
+/client/proc/debug_variables(datum/D in world)
+	set category = "Debug"
+	set name = "View Variables"
+	//set src in world
 
 
-		if(!usr.client || !usr.client.holder)
-			usr << "\red You need to be an administrator to access this."
-			return
-
-
-		var/title = ""
-		var/body = ""
-
-		if(!D)	return
-		if(istype(D, /atom))
-			var/atom/A = D
-			title = "[A.name] (\ref[A]) = [A.type]"
-
-			#ifdef VARSICON
-			if (A.icon)
-				body += debug_variable("icon", new/icon(A.icon, A.icon_state, A.dir), 0)
-			#endif
-
-		var/icon/sprite
-
-		if(istype(D,/atom))
-			var/atom/AT = D
-			if(AT.icon && AT.icon_state)
-				sprite = new /icon(AT.icon, AT.icon_state)
-				usr << browse_rsc(sprite, "view_vars_sprite.png")
-
-		title = "[D] (\ref[D]) = [D.type]"
-
-		body += {"<script type="text/javascript">
-
-					function updateSearch(){
-						var filter_text = document.getElementById('filter');
-						var filter = filter_text.value.toLowerCase();
-
-						if(event.keyCode == 13){	//Enter / return
-							var vars_ol = document.getElementById('vars');
-							var lis = vars_ol.getElementsByTagName("li");
-							for ( var i = 0; i < lis.length; ++i )
-							{
-								try{
-									var li = lis\[i\];
-									if ( li.style.backgroundColor == "#ffee88" )
-									{
-										alist = lis\[i\].getElementsByTagName("a")
-										if(alist.length > 0){
-											location.href=alist\[0\].href;
-										}
-									}
-								}catch(err) {   }
-							}
-							return
-						}
-
-						if(event.keyCode == 38){	//Up arrow
-							var vars_ol = document.getElementById('vars');
-							var lis = vars_ol.getElementsByTagName("li");
-							for ( var i = 0; i < lis.length; ++i )
-							{
-								try{
-									var li = lis\[i\];
-									if ( li.style.backgroundColor == "#ffee88" )
-									{
-										if( (i-1) >= 0){
-											var li_new = lis\[i-1\];
-											li.style.backgroundColor = "white";
-											li_new.style.backgroundColor = "#ffee88";
-											return
-										}
-									}
-								}catch(err) {  }
-							}
-							return
-						}
-
-						if(event.keyCode == 40){	//Down arrow
-							var vars_ol = document.getElementById('vars');
-							var lis = vars_ol.getElementsByTagName("li");
-							for ( var i = 0; i < lis.length; ++i )
-							{
-								try{
-									var li = lis\[i\];
-									if ( li.style.backgroundColor == "#ffee88" )
-									{
-										if( (i+1) < lis.length){
-											var li_new = lis\[i+1\];
-											li.style.backgroundColor = "white";
-											li_new.style.backgroundColor = "#ffee88";
-											return
-										}
-									}
-								}catch(err) {  }
-							}
-							return
-						}
-
-						//This part here resets everything to how it was at the start so the filter is applied to the complete list. Screw efficiency, it's client-side anyway and it only looks through 200 or so variables at maximum anyway (mobs).
-						if(complete_list != null && complete_list != ""){
-							var vars_ol1 = document.getElementById("vars");
-							vars_ol1.innerHTML = complete_list
-						}
-
-						if(filter.value == ""){
-							return;
-						}else{
-							var vars_ol = document.getElementById('vars');
-							var lis = vars_ol.getElementsByTagName("li");
-
-							for ( var i = 0; i < lis.length; ++i )
-							{
-								try{
-									var li = lis\[i\];
-									if ( li.innerText.toLowerCase().indexOf(filter) == -1 )
-									{
-										vars_ol.removeChild(li);
-										i--;
-									}
-								}catch(err) {   }
-							}
-						}
-						var lis_new = vars_ol.getElementsByTagName("li");
-						for ( var j = 0; j < lis_new.length; ++j )
-						{
-							var li1 = lis\[j\];
-							if (j == 0){
-								li1.style.backgroundColor = "#ffee88";
-							}else{
-								li1.style.backgroundColor = "white";
-							}
-						}
-					}
-
-
-
-					function selectTextField(){
-						var filter_text = document.getElementById('filter');
-						filter_text.focus();
-						filter_text.select();
-
-					}
-
-					function loadPage(list) {
-
-						if(list.options\[list.selectedIndex\].value == ""){
-							return;
-						}
-
-						location.href=list.options\[list.selectedIndex\].value;
-
-					}
-				</script> "}
-
-		body += "<body onload='selectTextField(); updateSearch()' onkeyup='updateSearch()'>"
-
-		body += "<div align='center'><table width='100%'><tr><td width='50%'>"
-
-		if(sprite)
-			body += "<table align='center' width='100%'><tr><td><img src='view_vars_sprite.png'></td><td>"
-		else
-			body += "<table align='center' width='100%'><tr><td>"
-
-		body += "<div align='center'>"
-
-		if(istype(D,/atom))
-			var/atom/A = D
-			if(isliving(A))
-				body += "<a href='?_src_=vars;rename=\ref[D]'><b>[D]</b></a>"
-				if(A.dir)
-					body += "<br><font size='1'><a href='?_src_=vars;rotatedatum=\ref[D];rotatedir=left'><<</a> <a href='?_src_=vars;datumedit=\ref[D];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;rotatedatum=\ref[D];rotatedir=right'>>></a></font>"
-				var/mob/living/M = A
-				body += "<br><font size='1'><a href='?_src_=vars;datumedit=\ref[D];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='?_src_=vars;datumedit=\ref[D];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>"
-				body += {"
-				<br><font size='1'>
-				BRUTE:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brute'>[M.getBruteLoss()]</a>
-				FIRE:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=fire'>[M.getFireLoss()]</a>
-				TOXIN:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=toxin'>[M.getToxLoss()]</a>
-				OXY:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=oxygen'>[M.getOxyLoss()]</a>
-				CLONE:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=clone'>[M.getCloneLoss()]</a>
-				BRAIN:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brain'>[M.getBrainLoss()]</a>
-				</font>
-
-
-				"}
-			else
-				body += "<a href='?_src_=vars;datumedit=\ref[D];varnameedit=name'><b>[D]</b></a>"
-				if(A.dir)
-					body += "<br><font size='1'><a href='?_src_=vars;rotatedatum=\ref[D];rotatedir=left'><<</a> <a href='?_src_=vars;datumedit=\ref[D];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;rotatedatum=\ref[D];rotatedir=right'>>></a></font>"
-		else
-			body += "<b>[D]</b>"
-
-		body += "</div>"
-
-		body += "</tr></td></table>"
-
-		var/formatted_type = text("[D.type]")
-		if(length(formatted_type) > 25)
-			var/middle_point = length(formatted_type) / 2
-			var/splitpoint = findtext(formatted_type,"/",middle_point)
-			if(splitpoint)
-				formatted_type = "[copytext(formatted_type,1,splitpoint)]<br>[copytext(formatted_type,splitpoint)]"
-			else
-				formatted_type = "Type too long" //No suitable splitpoint (/) found.
-
-		body += "<div align='center'><b><font size='1'>[formatted_type]</font></b>"
-
-		if(src.holder && src.holder.marked_datum && src.holder.marked_datum == D)
-			body += "<br><font size='1' color='red'><b>Marked Object</b></font>"
-
-		body += "</div>"
-
-		body += "</div></td>"
-
-		body += "<td width='50%'><div align='center'><a href='?_src_=vars;datumrefresh=\ref[D]'>Refresh</a>"
-
-		//if(ismob(D))
-		//	body += "<br><a href='?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</a></div></td></tr></table></div><hr>"
-
-		body += {"	<form>
-					<select name="file" size="1"
-					onchange="loadPage(this.form.elements\[0\])"
-					target="_parent._top"
-					onmouseclick="this.focus()"
-					style="background-color:#ffffff">
-				"}
-
-		body += {"	<option value>Select option</option>
-  					<option value> </option>
-				"}
-
-
-		body += "<option value='?_src_=vars;mark_object=\ref[D]'>Mark Object</option>"
-		if(ismob(D))
-			body += "<option value='?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</option>"
-
-		body += "<option value>---</option>"
-
-		if(ismob(D))
-			body += "<option value='?_src_=vars;give_spell=\ref[D]'>Give Spell</option>"
-			body += "<option value='?_src_=vars;give_disease=\ref[D]'>Give Disease</option>"
-			body += "<option value='?_src_=vars;ninja=\ref[D]'>Make Space Ninja</option>"
-			body += "<option value='?_src_=vars;godmode=\ref[D]'>Toggle Godmode</option>"
-			body += "<option value='?_src_=vars;build_mode=\ref[D]'>Toggle Build Mode</option>"
-			body += "<option value='?_src_=vars;direct_control=\ref[D]'>Assume Direct Control</option>"
-			body += "<option value='?_src_=vars;make_skeleton=\ref[D]'>Make 2spooky</option>"
-			body += "<option value='?_src_=vars;drop_everything=\ref[D]'>Drop Everything</option>"
-			body += "<option value='?_src_=vars;regenerateicons=\ref[D]'>Regenerate Icons</option>"
-			if(ishuman(D))
-				body += "<option value>---</option>"
-				body += "<option value='?_src_=vars;setmutantrace=\ref[D]'>Set Mutantrace</option>"
-				body += "<option value='?_src_=vars;makeai=\ref[D]'>Make AI</option>"
-				body += "<option value='?_src_=vars;makerobot=\ref[D]'>Make cyborg</option>"
-				body += "<option value='?_src_=vars;makemonkey=\ref[D]'>Make monkey</option>"
-				body += "<option value='?_src_=vars;makealien=\ref[D]'>Make alien</option>"
-				body += "<option value='?_src_=vars;makeslime=\ref[D]'>Make slime</option>"
-			body += "<option value>---</option>"
-			body += "<option value='?_src_=vars;gib=\ref[D]'>Gib</option>"
-		if(isobj(D))
-			body += "<option value='?_src_=vars;delall=\ref[D]'>Delete all of type</option>"
-		if(isobj(D) || ismob(D) || isturf(D))
-			body += "<option value='?_src_=vars;addreagent=\ref[D]'>Add reagent</option>"
-			body += "<option value='?_src_=vars;explode=\ref[D]'>Trigger explosion</option>"
-			body += "<option value='?_src_=vars;emp=\ref[D]'>Trigger EM pulse</option>"
-
-		body += "</select></form>"
-
-		body += "</div></td></tr></table></div><hr>"
-
-		body += "<font size='1'><b>E</b> - Edit, tries to determine the variable type by itself.<br>"
-		body += "<b>C</b> - Change, asks you for the var type first.<br>"
-		body += "<b>M</b> - Mass modify: changes this variable for all objects of this type.</font><br>"
-
-		body += "<hr><table width='100%'><tr><td width='20%'><div align='center'><b>Search:</b></div></td><td width='80%'><input type='text' id='filter' name='filter_text' value='' style='width:100%;'></td></tr></table><hr>"
-
-		body += "<ol id='vars'>"
-
-		var/list/names = list()
-		for (var/V in D.vars)
-			names += V
-
-		names = sortList(names)
-
-		for (var/V in names)
-			body += debug_variable(V, D.vars[V], 0, D)
-
-		body += "</ol>"
-
-		var/html = "<html><head>"
-		if (title)
-			html += "<title>[title]</title>"
-		html += {"<style>
-	body
-	{
-		font-family: Verdana, sans-serif;
-		font-size: 9pt;
-	}
-	.value
-	{
-		font-family: "Courier New", monospace;
-		font-size: 8pt;
-	}
-	</style>"}
-		html += "</head><body>"
-		html += body
-
-		html += {"
-			<script type='text/javascript'>
-				var vars_ol = document.getElementById("vars");
-				var complete_list = vars_ol.innerHTML;
-			</script>
-		"}
-
-		html += "</body></html>"
-
-		usr << browse(html, "window=variables\ref[D];size=475x650")
-
+	if(!usr.client || !usr.client.holder)
+		usr << "<span class='danger'>You need to be an administrator to access this.</span>"
 		return
 
-	proc/debug_variable(name, value, level, var/datum/DA = null)
-		var/html = ""
 
-		if(DA)
-			html += "<li style='backgroundColor:white'>(<a href='?_src_=vars;datumedit=\ref[DA];varnameedit=[name]'>E</a>) (<a href='?_src_=vars;datumchange=\ref[DA];varnamechange=[name]'>C</a>) (<a href='?_src_=vars;datummass=\ref[DA];varnamemass=[name]'>M</a>) "
+	var/title = ""
+	var/body = ""
+
+	if(!D)	return
+	if(istype(D, /atom))
+		var/atom/A = D
+		title = "[A.name] (\ref[A]) = [A.type]"
+
+		#ifdef VARSICON
+		if (A.icon)
+			body += debug_variable("icon", new/icon(A.icon, A.icon_state, A.dir), 0)
+		#endif
+
+	var/icon/sprite
+
+	if(istype(D,/atom))
+		var/atom/AT = D
+		if(AT.icon && AT.icon_state)
+			sprite = new /icon(AT.icon, AT.icon_state)
+			usr << browse_rsc(sprite, "view_vars_sprite.png")
+
+	title = "[D] (\ref[D]) = [D.type]"
+
+	body += {"<script type="text/javascript">
+
+				function updateSearch(){
+					var filter_text = document.getElementById('filter');
+					var filter = filter_text.value.toLowerCase();
+
+					if(event.keyCode == 13){	//Enter / return
+						var vars_ol = document.getElementById('vars');
+						var lis = vars_ol.getElementsByTagName("li");
+						for ( var i = 0; i < lis.length; ++i )
+						{
+							try{
+								var li = lis\[i\];
+								if ( li.style.backgroundColor == "#ffee88" )
+								{
+									alist = lis\[i\].getElementsByTagName("a")
+									if(alist.length > 0){
+										location.href=alist\[0\].href;
+									}
+								}
+							}catch(err) {   }
+						}
+						return
+					}
+
+					if(event.keyCode == 38){	//Up arrow
+						var vars_ol = document.getElementById('vars');
+						var lis = vars_ol.getElementsByTagName("li");
+						for ( var i = 0; i < lis.length; ++i )
+						{
+							try{
+								var li = lis\[i\];
+								if ( li.style.backgroundColor == "#ffee88" )
+								{
+									if( (i-1) >= 0){
+										var li_new = lis\[i-1\];
+										li.style.backgroundColor = "white";
+										li_new.style.backgroundColor = "#ffee88";
+										return
+									}
+								}
+							}catch(err) {  }
+						}
+						return
+					}
+
+					if(event.keyCode == 40){	//Down arrow
+						var vars_ol = document.getElementById('vars');
+						var lis = vars_ol.getElementsByTagName("li");
+						for ( var i = 0; i < lis.length; ++i )
+						{
+							try{
+								var li = lis\[i\];
+								if ( li.style.backgroundColor == "#ffee88" )
+								{
+									if( (i+1) < lis.length){
+										var li_new = lis\[i+1\];
+										li.style.backgroundColor = "white";
+										li_new.style.backgroundColor = "#ffee88";
+										return
+									}
+								}
+							}catch(err) {  }
+						}
+						return
+					}
+
+					//This part here resets everything to how it was at the start so the filter is applied to the complete list. Screw efficiency, it's client-side anyway and it only looks through 200 or so variables at maximum anyway (mobs).
+					if(complete_list != null && complete_list != ""){
+						var vars_ol1 = document.getElementById("vars");
+						vars_ol1.innerHTML = complete_list
+					}
+
+					if(filter.value == ""){
+						return;
+					}else{
+						var vars_ol = document.getElementById('vars');
+						var lis = vars_ol.getElementsByTagName("li");
+
+						for ( var i = 0; i < lis.length; ++i )
+						{
+							try{
+								var li = lis\[i\];
+								if ( li.innerText.toLowerCase().indexOf(filter) == -1 )
+								{
+									vars_ol.removeChild(li);
+									i--;
+								}
+							}catch(err) {   }
+						}
+					}
+					var lis_new = vars_ol.getElementsByTagName("li");
+					for ( var j = 0; j < lis_new.length; ++j )
+					{
+						var li1 = lis\[j\];
+						if (j == 0){
+							li1.style.backgroundColor = "#ffee88";
+						}else{
+							li1.style.backgroundColor = "white";
+						}
+					}
+				}
+
+
+
+				function selectTextField(){
+					var filter_text = document.getElementById('filter');
+					filter_text.focus();
+					filter_text.select();
+
+				}
+
+				function loadPage(list) {
+
+					if(list.options\[list.selectedIndex\].value == ""){
+						return;
+					}
+
+					location.href=list.options\[list.selectedIndex\].value;
+
+				}
+			</script> "}
+
+	body += "<body onload='selectTextField(); updateSearch()' onkeyup='updateSearch()'>"
+
+	body += "<div align='center'><table width='100%'><tr><td width='50%'>"
+
+	if(sprite)
+		body += "<table align='center' width='100%'><tr><td><img src='view_vars_sprite.png'></td><td>"
+	else
+		body += "<table align='center' width='100%'><tr><td>"
+
+	body += "<div align='center'>"
+
+	if(istype(D,/atom))
+		var/atom/A = D
+		if(isliving(A))
+			body += "<a href='?_src_=vars;rename=\ref[D]'><b>[D]</b></a>"
+			if(A.dir)
+				body += "<br><font size='1'><a href='?_src_=vars;rotatedatum=\ref[D];rotatedir=left'><<</a> <a href='?_src_=vars;datumedit=\ref[D];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;rotatedatum=\ref[D];rotatedir=right'>>></a></font>"
+			var/mob/living/M = A
+			body += "<br><font size='1'><a href='?_src_=vars;datumedit=\ref[D];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='?_src_=vars;datumedit=\ref[D];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>"
+			body += {"
+			<br><font size='1'>
+			BRUTE:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brute'>[M.getBruteLoss()]</a>
+			FIRE:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=fire'>[M.getFireLoss()]</a>
+			TOXIN:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=toxin'>[M.getToxLoss()]</a>
+			OXY:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=oxygen'>[M.getOxyLoss()]</a>
+			CLONE:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=clone'>[M.getCloneLoss()]</a>
+			BRAIN:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brain'>[M.getBrainLoss()]</a>
+			</font>
+
+
+			"}
 		else
-			html += "<li>"
+			body += "<a href='?_src_=vars;datumedit=\ref[D];varnameedit=name'><b>[D]</b></a>"
+			if(A.dir)
+				body += "<br><font size='1'><a href='?_src_=vars;rotatedatum=\ref[D];rotatedir=left'><<</a> <a href='?_src_=vars;datumedit=\ref[D];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;rotatedatum=\ref[D];rotatedir=right'>>></a></font>"
+	else
+		body += "<b>[D]</b>"
 
-		if (isnull(value))
-			html += "[name] = <span class='value'>null</span>"
+	body += "</div>"
 
-		else if (istext(value))
-			html += "[name] = <span class='value'>\"[value]\"</span>"
+	body += "</tr></td></table>"
 
-		else if (isicon(value))
-			#ifdef VARSICON
-			var/icon/I = new/icon(value)
-			var/rnd = rand(1,10000)
-			var/rname = "tmp\ref[I][rnd].png"
-			usr << browse_rsc(I, rname)
-			html += "[name] = (<span class='value'>[value]</span>) <img class=icon src=\"[rname]\">"
-			#else
-			html += "[name] = /icon (<span class='value'>[value]</span>)"
-			#endif
+	var/formatted_type = text("[D.type]")
+	if(length(formatted_type) > 25)
+		var/middle_point = length(formatted_type) / 2
+		var/splitpoint = findtext(formatted_type,"/",middle_point)
+		if(splitpoint)
+			formatted_type = "[copytext(formatted_type,1,splitpoint)]<br>[copytext(formatted_type,splitpoint)]"
+		else
+			formatted_type = "Type too long" //No suitable splitpoint (/) found.
+
+	body += "<div align='center'><b><font size='1'>[formatted_type]</font></b>"
+
+	if(src.holder && src.holder.marked_datum && src.holder.marked_datum == D)
+		body += "<br><font size='1' color='red'><b>Marked Object</b></font>"
+
+	body += "</div>"
+
+	body += "</div></td>"
+
+	body += "<td width='50%'><div align='center'><a href='?_src_=vars;datumrefresh=\ref[D]'>Refresh</a>"
+
+	//if(ismob(D))
+	//	body += "<br><a href='?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</a></div></td></tr></table></div><hr>"
+
+	body += {"	<form>
+				<select name="file" size="1"
+				onchange="loadPage(this.form.elements\[0\])"
+				target="_parent._top"
+				onmouseclick="this.focus()"
+				style="background-color:#ffffff">
+			"}
+
+	body += {"	<option value>Select option</option>
+				<option value> </option>
+			"}
+
+
+	body += "<option value='?_src_=vars;mark_object=\ref[D]'>Mark Object</option>"
+	if(ismob(D))
+		body += "<option value='?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</option>"
+
+	body += "<option value>---</option>"
+
+	if(ismob(D))
+		body += "<option value='?_src_=vars;give_spell=\ref[D]'>Give Spell</option>"
+		body += "<option value='?_src_=vars;give_disease=\ref[D]'>Give Disease</option>"
+		body += "<option value='?_src_=vars;ninja=\ref[D]'>Make Space Ninja</option>"
+		body += "<option value='?_src_=vars;godmode=\ref[D]'>Toggle Godmode</option>"
+		body += "<option value='?_src_=vars;build_mode=\ref[D]'>Toggle Build Mode</option>"
+		body += "<option value='?_src_=vars;direct_control=\ref[D]'>Assume Direct Control</option>"
+		body += "<option value='?_src_=vars;drop_everything=\ref[D]'>Drop Everything</option>"
+		body += "<option value='?_src_=vars;regenerateicons=\ref[D]'>Regenerate Icons</option>"
+		if(ishuman(D))
+			body += "<option value>---</option>"
+			body += "<option value='?_src_=vars;setspecies=\ref[D]'>Set Species</option>"
+			body += "<option value='?_src_=vars;makeai=\ref[D]'>Make AI</option>"
+			body += "<option value='?_src_=vars;makerobot=\ref[D]'>Make cyborg</option>"
+			body += "<option value='?_src_=vars;makemonkey=\ref[D]'>Make monkey</option>"
+			body += "<option value='?_src_=vars;makealien=\ref[D]'>Make alien</option>"
+			body += "<option value='?_src_=vars;makeslime=\ref[D]'>Make slime</option>"
+		body += "<option value>---</option>"
+		body += "<option value='?_src_=vars;gib=\ref[D]'>Gib</option>"
+	if(isobj(D))
+		body += "<option value='?_src_=vars;delall=\ref[D]'>Delete all of type</option>"
+	if(isobj(D) || ismob(D) || isturf(D))
+		body += "<option value='?_src_=vars;addreagent=\ref[D]'>Add reagent</option>"
+		body += "<option value='?_src_=vars;explode=\ref[D]'>Trigger explosion</option>"
+		body += "<option value='?_src_=vars;emp=\ref[D]'>Trigger EM pulse</option>"
+
+	body += "</select></form>"
+
+	body += "</div></td></tr></table></div><hr>"
+
+	body += "<font size='1'><b>E</b> - Edit, tries to determine the variable type by itself.<br>"
+	body += "<b>C</b> - Change, asks you for the var type first.<br>"
+	body += "<b>M</b> - Mass modify: changes this variable for all objects of this type.</font><br>"
+
+	body += "<hr><table width='100%'><tr><td width='20%'><div align='center'><b>Search:</b></div></td><td width='80%'><input type='text' id='filter' name='filter_text' value='' style='width:100%;'></td></tr></table><hr>"
+
+	body += "<ol id='vars'>"
+
+	var/list/names = list()
+	for (var/V in D.vars)
+		names += V
+
+	names = sortList(names)
+
+	for (var/V in names)
+		body += debug_variable(V, D.vars[V], 0, D)
+
+	body += "</ol>"
+
+	var/html = "<html><head>"
+	if (title)
+		html += "<title>[title]</title>"
+	html += {"<style>
+body
+{
+	font-family: Verdana, sans-serif;
+	font-size: 9pt;
+}
+.value
+{
+	font-family: "Courier New", monospace;
+	font-size: 8pt;
+}
+</style>"}
+	html += "</head><body>"
+	html += body
+
+	html += {"
+		<script type='text/javascript'>
+			var vars_ol = document.getElementById("vars");
+			var complete_list = vars_ol.innerHTML;
+		</script>
+	"}
+
+	html += "</body></html>"
+
+	usr << browse(html, "window=variables\ref[D];size=475x650")
+
+	return
+
+/client/proc/debug_variable(name, value, level, var/datum/DA = null)
+	var/html = ""
+
+	if(DA)
+		html += "<li style='backgroundColor:white'>(<a href='?_src_=vars;datumedit=\ref[DA];varnameedit=[name]'>E</a>) (<a href='?_src_=vars;datumchange=\ref[DA];varnamechange=[name]'>C</a>) (<a href='?_src_=vars;datummass=\ref[DA];varnamemass=[name]'>M</a>) "
+	else
+		html += "<li>"
+
+	if (isnull(value))
+		html += "[name] = <span class='value'>null</span>"
+
+	else if (istext(value))
+		html += "[name] = <span class='value'>\"[value]\"</span>"
+
+	else if (isicon(value))
+		#ifdef VARSICON
+		var/icon/I = new/icon(value)
+		var/rnd = rand(1,10000)
+		var/rname = "tmp\ref[I][rnd].png"
+		usr << browse_rsc(I, rname)
+		html += "[name] = (<span class='value'>[value]</span>) <img class=icon src=\"[rname]\">"
+		#else
+		html += "[name] = /icon (<span class='value'>[value]</span>)"
+		#endif
 
 /*		else if (istype(value, /image))
-			#ifdef VARSICON
-			var/rnd = rand(1, 10000)
-			var/image/I = value
+		#ifdef VARSICON
+		var/rnd = rand(1, 10000)
+		var/image/I = value
 
-			src << browse_rsc(I.icon, "tmp\ref[value][rnd].png")
-			html += "[name] = <img src=\"tmp\ref[value][rnd].png\">"
-			#else
-			html += "[name] = /image (<span class='value'>[value]</span>)"
-			#endif
+		src << browse_rsc(I.icon, "tmp\ref[value][rnd].png")
+		html += "[name] = <img src=\"tmp\ref[value][rnd].png\">"
+		#else
+		html += "[name] = /image (<span class='value'>[value]</span>)"
+		#endif
 */
-		else if (isfile(value))
-			html += "[name] = <span class='value'>'[value]'</span>"
+	else if (isfile(value))
+		html += "[name] = <span class='value'>'[value]'</span>"
 
-		else if (istype(value, /datum))
-			var/datum/D = value
-			html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [D.type]"
+	else if (istype(value, /datum))
+		var/datum/D = value
+		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [D.type]"
 
-		else if (istype(value, /client))
-			var/client/C = value
-			html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [C] [C.type]"
-	//
-		else if (istype(value, /list))
-			var/list/L = value
-			html += "[name] = /list ([L.len])"
+	else if (istype(value, /client))
+		var/client/C = value
+		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [C] [C.type]"
+//
+	else if (istype(value, /list))
+		var/list/L = value
+		html += "[name] = /list ([L.len])"
 
-			if (L.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || L.len > 500))
-				// not sure if this is completely right...
-				if(0)   //(L.vars.len > 0)
-					html += "<ol>"
-					html += "</ol>"
-				else
-					html += "<ul>"
-					var/index = 1
-					for (var/entry in L)
-						if(istext(entry))
-							html += debug_variable(entry, L[entry], level + 1)
-						//html += debug_variable("[index]", L[index], level + 1)
-						else
-							html += debug_variable(index, L[index], level + 1)
-						index++
-					html += "</ul>"
+		if (L.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || L.len > 500))
+			// not sure if this is completely right...
+			if(0)   //(L.vars.len > 0)
+				html += "<ol>"
+				html += "</ol>"
+			else
+				html += "<ul>"
+				var/index = 1
+				for (var/entry in L)
+					if(istext(entry))
+						html += debug_variable(entry, L[entry], level + 1)
+					//html += debug_variable("[index]", L[index], level + 1)
+					else
+						html += debug_variable(index, L[index], level + 1)
+					index++
+				html += "</ul>"
 
-		else
-			html += "[name] = <span class='value'>[value]</span>"
+	else
+		html += "[name] = <span class='value'>[value]</span>"
 
-		html += "</li>"
+	html += "</li>"
 
-		return html
+	return html
 
 /client/proc/view_var_Topic(href, href_list, hsrc)
 	//This should all be moved over to datum/admins/Topic() or something ~Carn
@@ -405,7 +403,7 @@ client
 	if(href_list["Vars"])
 		debug_variables(locate(href_list["Vars"]))
 
-	if(href_list["datumrefresh"])
+	else if(href_list["datumrefresh"])
 		var/datum/DAT = locate(href_list["datumrefresh"])
 		if(!istype(DAT, /datum))
 			return
@@ -581,17 +579,6 @@ client
 			if(usr.client)
 				usr.client.cmd_assume_direct_control(M)
 
-		else if(href_list["make_skeleton"])
-			if(!check_rights(R_FUN))	return
-
-			var/mob/living/carbon/human/H = locate(href_list["make_skeleton"])
-			if(!istype(H))
-				usr << "This can only be used on instances of type /mob/living/carbon/human"
-				return
-
-			H.makeSkeleton()
-			href_list["datumrefresh"] = href_list["make_skeleton"]
-
 		else if(href_list["delall"])
 			if(!check_rights(R_DEBUG|R_SERVER))	return
 
@@ -622,7 +609,7 @@ client
 						usr << "No objects of this type exist"
 						return
 					log_admin("[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) ")
-					message_admins("\blue [key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) ")
+					message_admins("<span class='notice'>[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) </span>")
 				if("Type and subtypes")
 					var/i = 0
 					for(var/obj/Obj in world)
@@ -633,7 +620,7 @@ client
 						usr << "No objects of this type exist"
 						return
 					log_admin("[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) ")
-					message_admins("\blue [key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) ")
+					message_admins("<span class='notice'>[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) </span>")
 
 		else if(href_list["addreagent"])
 			if(!check_rights(0))	return
@@ -652,7 +639,7 @@ client
 					reagent_options[R.name] = r_id
 
 				if(reagent_options.len)
-					reagent_options = sortAssoc(reagent_options)
+					sortList(reagent_options)
 					reagent_options.Insert(1, "CANCEL")
 
 					var/chosen = input(usr, "Choose a reagent to add.", "Choose a reagent.") in reagent_options
@@ -663,7 +650,7 @@ client
 						if(amount)
 							A.reagents.add_reagent(chosen_id, amount)
 							log_admin("[key_name(usr)] has added [amount] units of [chosen] to \the [A]")
-							message_admins("\blue [key_name(usr)] has added [amount] units of [chosen] to \the [A]")
+							message_admins("<span class='notice'>[key_name(usr)] has added [amount] units of [chosen] to \the [A]</span>")
 
 			href_list["datumrefresh"] = href_list["addreagent"]
 
@@ -786,25 +773,24 @@ client
 				return
 			holder.Topic(href, list("makeai"=href_list["makeai"]))
 
-		else if(href_list["setmutantrace"])
+		else if(href_list["setspecies"])
 			if(!check_rights(R_SPAWN))	return
 
-			var/mob/living/carbon/human/H = locate(href_list["setmutantrace"])
+			var/mob/living/carbon/human/H = locate(href_list["setspecies"])
 			if(!istype(H))
 				usr << "This can only be done to instances of type /mob/living/carbon/human"
 				return
 
-			var/new_mutantrace = input("Please choose a new mutantrace","Mutantrace",null) as null|anything in list("NONE","golem","lizard","slime","plant","shadow", "fly", "skeleton")
-			switch(new_mutantrace)
-				if(null)		return
-				if("NONE")		new_mutantrace = ""
+			var/result = input(usr, "Please choose a new species","Species") as null|anything in species_list
+
 			if(!H)
 				usr << "Mob doesn't exist anymore"
 				return
-			if(H.dna)
-				H.dna.mutantrace = new_mutantrace
-				H.update_body()
-				H.update_hair()
+
+			if(result)
+				var/newtype = species_list[result]
+				H.dna.species = new newtype()
+				H.regenerate_icons()
 
 		else if(href_list["adjustDamage"] && href_list["mobToDamage"])
 			if(!check_rights(0))	return
@@ -833,7 +819,7 @@ client
 
 			if(amount != 0)
 				log_admin("[key_name(usr)] dealt [amount] amount of [Text] damage to [L] ")
-				message_admins("\blue [key_name(usr)] dealt [amount] amount of [Text] damage to [L] ")
+				message_admins("<span class='notice'>[key_name(usr)] dealt [amount] amount of [Text] damage to [L] </span>")
 				href_list["datumrefresh"] = href_list["mobToDamage"]
 
 

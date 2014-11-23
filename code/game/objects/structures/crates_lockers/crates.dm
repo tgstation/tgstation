@@ -17,7 +17,7 @@
 
 /obj/structure/closet/crate/internals
 	desc = "A internals crate."
-	name = "Internals crate"
+	name = "internals crate"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "o2crate"
 	density = 1
@@ -26,7 +26,7 @@
 
 /obj/structure/closet/crate/trashcart
 	desc = "A heavy, metal trashcart with wheels."
-	name = "Trash Cart"
+	name = "trash cart"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "trashcart"
 	density = 1
@@ -55,7 +55,7 @@
 
 /obj/structure/closet/crate/medical
 	desc = "A medical crate."
-	name = "Medical crate"
+	name = "medical crate"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "medicalcrate"
 	density = 1
@@ -64,7 +64,7 @@
 
 /obj/structure/closet/crate/rcd
 	desc = "A crate for the storage of the RCD."
-	name = "RCD crate"
+	name = "\improper RCD crate"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "crate"
 	density = 1
@@ -73,7 +73,7 @@
 
 /obj/structure/closet/crate/freezer
 	desc = "A freezer."
-	name = "Freezer"
+	name = "freezer"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "freezer"
 	density = 1
@@ -82,28 +82,28 @@
 	var/target_temp = T0C - 40
 	var/cooling_power = 40
 
-	return_air()
-		var/datum/gas_mixture/gas = (..())
-		if(!gas)	return null
-		var/datum/gas_mixture/newgas = new/datum/gas_mixture()
-		newgas.oxygen = gas.oxygen
-		newgas.carbon_dioxide = gas.carbon_dioxide
-		newgas.nitrogen = gas.nitrogen
-		newgas.toxins = gas.toxins
-		newgas.volume = gas.volume
-		newgas.temperature = gas.temperature
-		if(newgas.temperature <= target_temp)	return
+/obj/structure/closet/crate/freezer/return_air()
+	var/datum/gas_mixture/gas = (..())
+	if(!gas)	return null
+	var/datum/gas_mixture/newgas = new/datum/gas_mixture()
+	newgas.oxygen = gas.oxygen
+	newgas.carbon_dioxide = gas.carbon_dioxide
+	newgas.nitrogen = gas.nitrogen
+	newgas.toxins = gas.toxins
+	newgas.volume = gas.volume
+	newgas.temperature = gas.temperature
+	if(newgas.temperature <= target_temp)	return
 
-		if((newgas.temperature - cooling_power) > target_temp)
-			newgas.temperature -= cooling_power
-		else
-			newgas.temperature = target_temp
-		return newgas
+	if((newgas.temperature - cooling_power) > target_temp)
+		newgas.temperature -= cooling_power
+	else
+		newgas.temperature = target_temp
+	return newgas
 
 
 /obj/structure/closet/crate/radiation
 	desc = "A crate with a radiation sign on it."
-	name = "Radioactive gear crate"
+	name = "radioactive gear crate"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "radiation"
 	density = 1
@@ -112,7 +112,7 @@
 
 /obj/structure/closet/crate/secure/weapon
 	desc = "A secure weapons crate."
-	name = "Weapons crate"
+	name = "weapons crate"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "weaponcrate"
 	density = 1
@@ -121,7 +121,7 @@
 
 /obj/structure/closet/crate/secure/plasma
 	desc = "A secure plasma crate."
-	name = "Plasma crate"
+	name = "plasma crate"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "plasmacrate"
 	density = 1
@@ -130,7 +130,7 @@
 
 /obj/structure/closet/crate/secure/gear
 	desc = "A secure gear crate."
-	name = "Gear crate"
+	name = "gear crate"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "secgearcrate"
 	density = 1
@@ -148,7 +148,7 @@
 
 /obj/structure/closet/crate/secure/bin
 	desc = "A secure bin."
-	name = "Secure bin"
+	name = "secure bin"
 	icon_state = "largebins"
 	icon_opened = "largebinsopen"
 	icon_closed = "largebins"
@@ -159,7 +159,7 @@
 
 /obj/structure/closet/crate/secure
 	desc = "A secure crate."
-	name = "Secure crate"
+	name = "secure crate"
 	icon_state = "securecrate"
 	icon_opened = "securecrateopen"
 	icon_closed = "securecrate"
@@ -172,7 +172,7 @@
 	health = 1000
 
 /obj/structure/closet/crate/hydroponics
-	name = "Hydroponics crate"
+	name = "hydroponics crate"
 	desc = "All you need to destroy those pesky weeds and pests."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "hydrocrate"
@@ -189,11 +189,12 @@
 	icon_opened = "hydrocrateopen"
 	icon_closed = "hydrocrate"
 	density = 1*/
-	New()
-		..()
-		new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
-		new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
-		new /obj/item/weapon/minihoe(src)
+
+/obj/structure/closet/crate/hydroponics/prespawned/New()
+	..()
+	new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
+	new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
+	new /obj/item/weapon/minihoe(src)
 //		new /obj/item/weapon/reagent_containers/spray/weedspray(src)
 //		new /obj/item/weapon/reagent_containers/spray/weedspray(src)
 //		new /obj/item/weapon/reagent_containers/spray/pestspray(src)
@@ -250,7 +251,6 @@
 
 	if(contents.len >= storage_capacity)
 		return -1
-
 	if(include_mobs && isliving(AM))
 		var/mob/living/L = AM
 		if(L.buckled)
@@ -273,7 +273,7 @@
 	if(opened)
 		close()
 	else
-		if(rigged && locate(/obj/item/device/radio/electropack) in src)
+		if(rigged && locate(/obj/item/device/electropack) in src)
 			if(isliving(user))
 				var/mob/living/L = user
 				if(L.electrocute_act(17, src))
@@ -291,6 +291,7 @@
 			src.locked = 0
 			overlays.Cut()
 			overlays += greenlight
+			add_fingerprint(user)
 			return
 		else
 			user << "<span class='notice'>[src] is locked.</span>"
@@ -304,6 +305,7 @@
 		src.locked = 1
 		overlays.Cut()
 		overlays += redlight
+		add_fingerprint(user)
 		return
 	else if ( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && locked &&!broken)
 		overlays.Cut()
@@ -314,6 +316,7 @@
 		src.locked = 0
 		src.broken = 1
 		user << "<span class='notice'>You unlock \the [src].</span>"
+		add_fingerprint(user)
 		return
 
 	return ..()
@@ -325,21 +328,25 @@
 	if(opened)
 		if(isrobot(user))
 			return
-		user.drop_item()
+		if(!user.drop_item()) //couldn't drop the item
+			user << "<span class='notice'>\The [W] is stuck to your hand, you cannot put it in \the [src]!</span>"
+			return
 		if(W)
 			W.loc = src.loc
-	else if(istype(W, /obj/item/weapon/packageWrap))
+	else if(istype(W, /obj/item/stack/packageWrap))
 		return
 	else if(istype(W, /obj/item/stack/cable_coil))
 		if(rigged)
 			user << "<span class='notice'>[src] is already rigged!</span>"
 			return
-		user  << "<span class='notice'>You rig [src].</span>"
-		user.drop_item()
-		qdel(W)
-		rigged = 1
+		var/obj/item/stack/cable_coil/C = W
+		if (C.use(5))
+			user << "<span class='notice'>You rig [src].</span>"
+			rigged = 1
+		else
+			user << "<span class='warning'>You need 5 lengths of cable to rig [src].</span>"
 		return
-	else if(istype(W, /obj/item/device/radio/electropack))
+	else if(istype(W, /obj/item/device/electropack))
 		if(rigged)
 			user  << "<span class='notice'>You attach [W] to [src].</span>"
 			user.drop_item()

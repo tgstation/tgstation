@@ -26,7 +26,7 @@
 		//Holopad
 		if(istype(ai.current, /obj/machinery/hologram/holopad))
 			var/obj/machinery/hologram/holopad/H = ai.current
-			H.move_hologram()
+			H.move_hologram(ai)
 
 /mob/camera/aiEye/Move()
 	return 0
@@ -61,7 +61,8 @@
 		var/mob/living/silicon/ai/AI = usr
 		if(AI.eyeobj && AI.client.eye == AI.eyeobj)
 			AI.cameraFollow = null
-			AI.eyeobj.setLoc(src)
+			if (isturf(src.loc) || isturf(src))
+				AI.eyeobj.setLoc(src)
 
 // This will move the AIEye. It will also cause lights near the eye to light up, if toggled.
 // This is handled in the proc below this one.
@@ -89,17 +90,11 @@
 
 	//user.unset_machine() //Uncomment this if it causes problems.
 	//user.lightNearbyCamera()
+	if (user.camera_light_on)
+		user.light_cameras()
 
 
 // Return to the Core.
-
-/mob/living/silicon/ai/verb/core()
-	set category = "AI Commands"
-	set name = "AI Core"
-
-	view_core()
-
-
 /mob/living/silicon/ai/proc/view_core()
 
 	current = null

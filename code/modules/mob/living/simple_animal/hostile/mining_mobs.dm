@@ -8,8 +8,8 @@
 	max_co2 = 0
 	min_n2 = 0
 	max_n2 = 0
-	unsuitable_atoms_damage = 15
-	faction = "mining"
+	unsuitable_atmos_damage = 15
+	faction = list("mining")
 	environment_smash = 2
 	minbodytemp = 0
 	heat_damage_per_tick = 20
@@ -32,7 +32,7 @@
 /mob/living/simple_animal/hostile/asteroid/bullet_act(var/obj/item/projectile/P)//Reduces damage from most projectiles to curb off-screen kills
 	if(!stat)
 		Aggro()
-	if(P.damage < 30)
+	if(P.damage < 30 && P.damage_type != BRUTE)
 		P.damage = (P.damage / 3)
 		visible_message("<span class='danger'>[P] has a reduced effect on [src]!</span>")
 	..()
@@ -76,6 +76,7 @@
 	ranged_cooldown_cap = 4
 	aggro_vision_range = 9
 	idle_vision_range = 2
+	turns_per_move = 5
 
 /obj/item/projectile/temp/basilisk
 	name = "freezing blast"
@@ -346,12 +347,23 @@
 	throw_message = "does nothing to the rocky hide of the"
 	aggro_vision_range = 9
 	idle_vision_range = 5
+	anchored = 1 //Stays anchored until death as to be unpullable
+	mob_size = 2
+
+/mob/living/simple_animal/hostile/asteroid/goliath/revive()
+	anchored = 1
+	..()
+
+/mob/living/simple_animal/hostile/asteroid/goliath/Die()
+	anchored = 0
+	..()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
-	visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
 	var/tturf = get_turf(target)
-	new /obj/effect/goliath_tentacle/original(tturf)
-	ranged_cooldown = ranged_cooldown_cap
+	if(get_dist(src, target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
+		visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
+		new /obj/effect/goliath_tentacle/original(tturf)
+		ranged_cooldown = ranged_cooldown_cap
 	return
 
 /mob/living/simple_animal/hostile/asteroid/goliath/adjustBruteLoss(var/damage)
@@ -405,18 +417,40 @@
 	desc = "Pieces of a goliath's rocky hide, these might be able to make your suit a bit more durable to attack from the local fauna."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "goliath_hide"
+	flags = NOBLUDGEON
 	w_class = 3
 	layer = 4
 
 /obj/item/asteroid/goliath_hide/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
-		if(istype(target, /obj/item/clothing/suit/space/rig/mining) || istype(target, /obj/item/clothing/head/helmet/space/rig/mining))
+		if(istype(target, /obj/item/clothing/suit/space/hardsuit/mining) || istype(target, /obj/item/clothing/head/helmet/space/hardsuit/mining))
 			var/obj/item/clothing/C = target
-			var/current_armor = C.armor
-			if(current_armor.["melee"] < 90)
-				current_armor.["melee"] = min(current_armor.["melee"] + 10, 90)
+			var/list/current_armor = C.armor
+			if(current_armor.["melee"] < 80)
+				current_armor.["melee"] = min(current_armor.["melee"] + 10, 80)
 				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
 				qdel(src)
 			else
 				user << "<span class='info'>You can't improve [C] any further.</span>"
-	return
+				return
+		if(istype(target, /obj/mecha/working/ripley))
+			var/obj/mecha/D = target
+			var/list/damage_absorption = D.damage_absorption
+			if(damage_absorption.["brute"] > 0.3)
+				damage_absorption.["brute"] = max(damage_absorption.["brute"] - 0.1, 0.3)
+				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
+				qdel(src)
+				if(D.icon_state == "ripley-open")
+					D.overlays += image("icon"="mecha.dmi", "icon_state"="ripley-g-open")
+					D.desc = "Autonomous Power Loader Unit. Its armour is enhanced with some goliath hide plates."
+				else
+					user << "<span class='info'>You can't add armour onto the mech while someone is inside!</span>"
+				if(damage_absorption.["brute"] == 0.3)
+					if(D.icon_state == "ripley-open")
+						D.overlays += image("icon"="mecha.dmi", "icon_state"="ripley-g-full-open")
+						D.desc = "Autonomous Power Loader Unit. It's wearing a fearsome carapace entirely composed of goliath hide plates - the pilot must be an experienced monster hunter."
+					else
+						user << "<span class='info'>You can't add armour onto the mech while someone is inside!</span>"
+			else
+				user << "<span class='info'>You can't improve [D] any further.</span>"
+				return

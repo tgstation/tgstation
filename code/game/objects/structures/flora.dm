@@ -44,6 +44,7 @@
 	name = "grass"
 	icon = 'icons/obj/flora/snowflora.dmi'
 	anchored = 1
+	gender = PLURAL	//"this is grass" not "this is a grass"
 
 /obj/structure/flora/grass/brown
 	icon_state = "snowgrass1bb"
@@ -197,7 +198,7 @@
 	..()
 
 /obj/structure/flora/kirbyplants
-	name = "Potted plant"
+	name = "potted plant"
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-01"
 

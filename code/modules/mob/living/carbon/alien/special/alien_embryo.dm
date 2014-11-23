@@ -40,7 +40,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	if(stage < 5 && prob(3))
 		stage++
 		spawn(0)
-			RefreshInfectionImage(affected_mob)
+			RefreshInfectionImage()
 
 	switch(stage)
 		if(2, 3)
@@ -49,25 +49,25 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				affected_mob << "\red Your throat feels sore."
+				affected_mob << "<span class='danger'>Your throat feels sore.</span>"
 			if(prob(1))
-				affected_mob << "\red Mucous runs down the back of your throat."
+				affected_mob << "<span class='danger'>Mucous runs down the back of your throat.</span>"
 		if(4)
 			if(prob(1))
 				affected_mob.emote("sneeze")
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(2))
-				affected_mob << "\red Your muscles ache."
+				affected_mob << "<span class='danger'>Your muscles ache.</span>"
 				if(prob(20))
 					affected_mob.take_organ_damage(1)
 			if(prob(2))
-				affected_mob << "\red Your stomach hurts."
+				affected_mob << "<span class='danger'>Your stomach hurts.</span>"
 				if(prob(20))
 					affected_mob.adjustToxLoss(1)
 					affected_mob.updatehealth()
 		if(5)
-			affected_mob << "\red You feel something tearing its way out of your stomach..."
+			affected_mob << "<span class='danger'>You feel something tearing its way out of your stomach...</span>"
 			affected_mob.adjustToxLoss(10)
 			affected_mob.updatehealth()
 			if(prob(50))
@@ -107,42 +107,29 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 
 /*----------------------------------------
 Proc: RefreshInfectionImage()
-Des: Removes all infection images from aliens and places an infection image on all infected mobs for aliens.
+Des: Removes the current icons located in the infected mob adds the current stage
 ----------------------------------------*/
 /obj/item/alien_embryo/proc/RefreshInfectionImage()
-	for(var/mob/living/carbon/alien/alien in player_list)
-		if(alien.client)
-			for(var/image/I in alien.client.images)
-				if(dd_hasprefix_case(I.icon_state, "infected"))
-					qdel(I)
-			for(var/mob/living/L in mob_list)
-				if(iscorgi(L) || iscarbon(L))
-					if(L.status_flags & XENO_HOST)
-						var/I = image('icons/mob/alien.dmi', loc = L, icon_state = "infected[stage]")
-						alien.client.images += I
+	RemoveInfectionImages()
+	AddInfectionImages()
 
 /*----------------------------------------
 Proc: AddInfectionImages(C)
-Des: Checks if the passed mob (C) is infected with the alien egg, then gives each alien client an infected image at C.
+Des: Adds the infection image to all aliens for this embryo
 ----------------------------------------*/
-/obj/item/alien_embryo/proc/AddInfectionImages(var/mob/living/C)
-	if(C)
-		for(var/mob/living/carbon/alien/alien in player_list)
-			if(alien.client)
-				if(C.status_flags & XENO_HOST)
-					var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[stage]")
-					alien.client.images += I
+/obj/item/alien_embryo/proc/AddInfectionImages()
+	for(var/mob/living/carbon/alien/alien in player_list)
+		if(alien.client)
+			var/I = image('icons/mob/alien.dmi', loc = affected_mob, icon_state = "infected[stage]")
+			alien.client.images += I
 
 /*----------------------------------------
 Proc: RemoveInfectionImage(C)
-Des: Removes the alien infection image from all aliens in the world located in passed mob (C).
+Des: Removes all images from the mob infected by this embryo
 ----------------------------------------*/
-
-/obj/item/alien_embryo/proc/RemoveInfectionImages(var/mob/living/C)
-	if(C)
-		for(var/mob/living/carbon/alien/alien in player_list)
-			if(alien.client)
-				for(var/image/I in alien.client.images)
-					if(I.loc == C)
-						if(dd_hasprefix_case(I.icon_state, "infected"))
-							qdel(I)
+/obj/item/alien_embryo/proc/RemoveInfectionImages()
+	for(var/mob/living/carbon/alien/alien in player_list)
+		if(alien.client)
+			for(var/image/I in alien.client.images)
+				if(dd_hasprefix_case(I.icon_state, "infected") && I.loc == affected_mob)
+					qdel(I)

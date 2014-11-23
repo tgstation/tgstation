@@ -3,56 +3,43 @@
 /obj/item/weapon/implant/freedom
 	name = "freedom implant"
 	desc = "Use this to escape from those evil Red Shirts."
+	icon_state = "freedom"
 	item_color = "r"
-	var/activation_emote = "chuckle"
-	var/uses = 1.0
+	var/uses = 4.0
 
 
-	New()
-		src.activation_emote = "shrug"
-		src.uses = 4
-		..()
-		return
-
-
-	trigger(emote, mob/living/carbon/source as mob)
-		if (src.uses < 1)	return 0
-		if (emote == src.activation_emote)
-			src.uses--
-			source << "You feel a faint click."
-			if (source.handcuffed)
-				var/obj/item/weapon/W = source.handcuffed
-				source.handcuffed = null
-				source.update_inv_handcuffed(0)
-				if (source.client)
-					source.client.screen -= W
+/obj/item/weapon/implant/freedom/activate()
+	if (src.uses < 1)	return 0
+	src.uses--
+	imp_in << "You feel a faint click."
+	if(iscarbon(imp_in))
+		var/mob/living/carbon/C_imp_in = imp_in
+		if (C_imp_in.handcuffed)
+			var/obj/item/weapon/W = C_imp_in.handcuffed
+			C_imp_in.handcuffed = null
+			C_imp_in.update_inv_handcuffed(0)
+			if (C_imp_in.client)
+				C_imp_in.client.screen -= W
+			if (W)
+				W.loc = C_imp_in.loc
+				W.dropped(C_imp_in)
 				if (W)
-					W.loc = source.loc
-					dropped(source)
-					if (W)
-						W.layer = initial(W.layer)
-			if (source.legcuffed)
-				var/obj/item/weapon/W = source.legcuffed
-				source.legcuffed = null
-				source.update_inv_legcuffed(0)
-				if (source.client)
-					source.client.screen -= W
+					W.layer = initial(W.layer)
+		if (C_imp_in.legcuffed)
+			var/obj/item/weapon/W = C_imp_in.legcuffed
+			C_imp_in.legcuffed = null
+			C_imp_in.update_inv_legcuffed(0)
+			if (C_imp_in.client)
+				C_imp_in.client.screen -= W
+			if (W)
+				W.loc = C_imp_in.loc
+				W.dropped(C_imp_in)
 				if (W)
-					W.loc = source.loc
-					dropped(source)
-					if (W)
-						W.layer = initial(W.layer)
-		return
+					W.layer = initial(W.layer)
 
 
-	implanted(mob/living/carbon/source)
-		source.mind.store_memory("Freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
-		source << "The implanted freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
-		return 1
-
-
-	get_data()
-		var/dat = {"
+/obj/item/weapon/implant/freedom/get_data()
+	var/dat = {"
 <b>Implant Specifications:</b><BR>
 <b>Name:</b> Freedom Beacon<BR>
 <b>Life:</b> optimum 5 uses<BR>
@@ -66,6 +53,6 @@ mechanisms<BR>
 <b>Integrity:</b> The battery is extremely weak and commonly after injection its
 life can drive down to only 1 use.<HR>
 No Implant Specifics"}
-		return dat
+	return dat
 
 

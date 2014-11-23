@@ -17,11 +17,15 @@
 	anchored = 1
 
 /obj/effect/decal/cleanable/greenglow
+	name = "green glow"
 
-	New()
-		..()
-		spawn(1200)// 2 minutes
-			qdel(src)
+/obj/effect/decal/cleanable/greenglow/New()
+	..()
+	spawn(1200)// 2 minutes
+		qdel(src)
+
+/obj/effect/decal/cleanable/greenglow/ex_act()
+	return
 
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
@@ -95,10 +99,10 @@
 	random_icon_states = list("vomit_1", "vomit_2", "vomit_3", "vomit_4")
 	var/list/viruses = list()
 
-	Destroy()
-		for(var/datum/disease/D in viruses)
-			D.cure(0)
-		..()
+/obj/effect/decal/cleanable/vomit/Destroy()
+	for(var/datum/disease/D in viruses)
+		D.cure(0)
+	..()
 
 /obj/effect/decal/cleanable/tomato_smudge
 	name = "tomato smudge"

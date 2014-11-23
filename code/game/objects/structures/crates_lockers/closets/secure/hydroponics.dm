@@ -1,5 +1,5 @@
 /obj/structure/closet/secure_closet/hydroponics
-	name = "Botanist's locker"
+	name = "botanist's locker"
 	req_access = list(access_hydroponics)
 	icon_state = "hydrosecure1"
 	icon_closed = "hydrosecure"
@@ -11,7 +11,6 @@
 
 	New()
 		..()
-		sleep(2)
 		switch(rand(1,2))
 			if(1)
 				new /obj/item/clothing/suit/apron(src)

@@ -50,8 +50,9 @@
 		/obj/item/device/flashlight,
 		/obj/item/stack/cable_coil,
 		/obj/item/device/t_scanner,
-		/obj/item/device/analyzer)
-
+		/obj/item/device/analyzer,
+		/obj/item/weapon/extinguisher/mini
+		)
 
 /obj/item/weapon/storage/belt/utility/full/New()
 	..()
@@ -71,6 +72,7 @@
 	new /obj/item/weapon/crowbar(src)
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/t_scanner(src)
+	new /obj/item/weapon/extinguisher/mini(src)
 
 
 
@@ -91,8 +93,11 @@
 		/obj/item/weapon/storage/fancy/cigarettes,
 		/obj/item/weapon/storage/pill_bottle,
 		/obj/item/stack/medical,
-		/obj/item/device/flashlight/pen
-	)
+		/obj/item/device/flashlight/pen,
+		/obj/item/weapon/extinguisher/mini,
+		/obj/item/weapon/reagent_containers/hypospray,
+		/obj/item/device/rad_laser
+		)
 
 
 /obj/item/weapon/storage/belt/security
@@ -106,15 +111,17 @@
 		/obj/item/weapon/melee/baton,
 		/obj/item/weapon/melee/classic_baton,
 		/obj/item/weapon/grenade/flashbang,
+		/obj/item/weapon/grenade/chem_grenade/teargas,
 		/obj/item/weapon/reagent_containers/spray/pepper,
-		/obj/item/weapon/handcuffs,
-		/obj/item/device/flash,
+		/obj/item/weapon/restraints/handcuffs,
+		/obj/item/device/flash/handheld,
 		/obj/item/clothing/glasses,
 		/obj/item/ammo_casing/shotgun,
 		/obj/item/ammo_box,
 		/obj/item/weapon/reagent_containers/food/snacks/donut/normal,
 		/obj/item/weapon/reagent_containers/food/snacks/donut/jelly,
-		/obj/item/device/flashlight/seclite
+		/obj/item/device/flashlight/seclite,
+		/obj/item/weapon/melee/telebaton
 		)
 
 /obj/item/weapon/storage/belt/security/New()
@@ -179,3 +186,19 @@
 	for(var/obj/item/weapon/gun/magic/wand/W in contents) //All wands in this pack come in the best possible condition
 		W.max_charges = initial(W.max_charges)
 		W.charges = W.max_charges
+
+/obj/item/weapon/storage/belt/janitor
+	name = "janibelt"
+	desc = "A belt used to hold most janitorial supplies."
+	icon_state = "janibelt"
+	item_state = "janibelt"
+	storage_slots = 6
+	max_w_class = 4 // Set to this so the  light replacer can fit.
+	can_hold = list(
+		/obj/item/weapon/grenade/chem_grenade/cleaner,
+		/obj/item/device/lightreplacer,
+		/obj/item/device/flashlight,
+		/obj/item/weapon/reagent_containers/spray,
+		/obj/item/weapon/soap,
+		/obj/item/weapon/holosign_creator
+		)

@@ -1,8 +1,8 @@
 #if !defined(MAP_FILE)
 
-        #include "map_files\MetaStation.v39I.dmm"
+        #include "map_files\MetaStation.v39K.dmm"
 
-        #define MAP_FILE "MetaStation.v39I.dmm"
+        #define MAP_FILE "MetaStation.v39K.dmm"
         #define MAP_NAME "MetaStation"
 
 #elif !defined(MAP_OVERRIDE)

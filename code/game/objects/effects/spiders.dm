@@ -22,9 +22,9 @@
 
 /obj/effect/spider/attackby(var/obj/item/weapon/W, var/mob/user)
 	if(W.attack_verb.len)
-		visible_message("<span class='danger'>\The [src] has been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]!</span>")
+		visible_message("<span class='danger'>\The [src] has been [pick(W.attack_verb)] with \the [W][(user ? " by [user]" : "")]!</span>")
 	else
-		visible_message("<span class='danger'>\The [src] has been attacked with \the [W][(user ? " by [user]." : ".")]!</span>")
+		visible_message("<span class='danger'>\The [src] has been attacked with \the [W][(user ? " by [user]" : "")]!</span>")
 
 	var/damage = W.force / 4.0
 
@@ -54,17 +54,18 @@
 
 /obj/effect/spider/stickyweb
 	icon_state = "stickyweb1"
-	New()
-		if(prob(50))
-			icon_state = "stickyweb2"
 
-/obj/effect/spider/stickyweb/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
-	if(istype(mover, /mob/living/simple_animal/hostile/giant_spider))
+/obj/effect/spider/stickyweb/New()
+	if(prob(50))
+		icon_state = "stickyweb2"
+
+/obj/effect/spider/stickyweb/CanPass(atom/movable/mover, turf/target, height=0)
+	if(height==0) return 1
+	if(istype(mover, /mob/living/simple_animal/hostile/poison/giant_spider))
 		return 1
 	else if(istype(mover, /mob/living))
 		if(prob(50))
-			mover << "\red You get stuck in \the [src] for a moment."
+			mover << "<span class='danger'>You get stuck in \the [src] for a moment.</span>"
 			return 0
 	else if(istype(mover, /obj/item/projectile))
 		return prob(30)
@@ -75,17 +76,21 @@
 	desc = "They seem to pulse slightly with an inner life"
 	icon_state = "eggs"
 	var/amount_grown = 0
-	New()
-		pixel_x = rand(3,-3)
-		pixel_y = rand(3,-3)
-		processing_objects.Add(src)
+	var/player_spiders = 0
+
+/obj/effect/spider/eggcluster/New()
+	pixel_x = rand(3,-3)
+	pixel_y = rand(3,-3)
+	processing_objects.Add(src)
 
 /obj/effect/spider/eggcluster/process()
 	amount_grown += rand(0,2)
 	if(amount_grown >= 100)
 		var/num = rand(3,12)
 		for(var/i=0, i<num, i++)
-			new /obj/effect/spider/spiderling(src.loc)
+			var/obj/effect/spider/spiderling/S = new /obj/effect/spider/spiderling(src.loc)
+			if(player_spiders)
+				S.player_spiders = 1
 		qdel(src)
 
 /obj/effect/spider/spiderling
@@ -99,10 +104,12 @@
 	var/grow_as = null
 	var/obj/machinery/atmospherics/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
-	New()
-		pixel_x = rand(6,-6)
-		pixel_y = rand(6,-6)
-		processing_objects.Add(src)
+	var/player_spiders = 0
+
+/obj/effect/spider/spiderling/New()
+	pixel_x = rand(6,-6)
+	pixel_y = rand(6,-6)
+	processing_objects.Add(src)
 
 /obj/effect/spider/spiderling/Bump(atom/user)
 	if(istype(user, /obj/structure/table))
@@ -125,42 +132,40 @@
 			entry_vent = null
 	else if(entry_vent)
 		if(get_dist(src, entry_vent) <= 1)
-			if(entry_vent.network && entry_vent.network.normal_members.len)
-				var/list/vents = list()
-				for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in entry_vent.network.normal_members)
-					vents.Add(temp_vent)
-				if(!vents.len)
-					entry_vent = null
-					return
-				var/obj/machinery/atmospherics/unary/vent_pump/exit_vent = pick(vents)
-				if(prob(50))
-					src.visible_message("<B>[src] scrambles into the ventillation ducts!</B>")
-
-				spawn(rand(20,60))
-					loc = exit_vent
-					var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
-					spawn(travel_time)
-
-						if(!exit_vent || exit_vent.welded)
-							loc = entry_vent
-							entry_vent = null
-							return
-
-						if(prob(50))
-							src.visible_message("\blue You hear something squeezing through the ventilation ducts.",2)
-						sleep(travel_time)
-
-						if(!exit_vent || exit_vent.welded)
-							loc = entry_vent
-							entry_vent = null
-							return
-						loc = exit_vent.loc
-						entry_vent = null
-						var/area/new_area = get_area(loc)
-						if(new_area)
-							new_area.Entered(src)
-			else
+			var/list/vents = list()
+			for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in entry_vent.parent.other_atmosmch)
+				vents.Add(temp_vent)
+			if(!vents.len)
 				entry_vent = null
+				return
+			var/obj/machinery/atmospherics/unary/vent_pump/exit_vent = pick(vents)
+			if(prob(50))
+				visible_message("<B>[src] scrambles into the ventillation ducts!</B>", \
+								"<span class='notice'>You hear something squeezing through the ventilation ducts.</span>")
+
+			spawn(rand(20,60))
+				loc = exit_vent
+				var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
+				spawn(travel_time)
+
+					if(!exit_vent || exit_vent.welded)
+						loc = entry_vent
+						entry_vent = null
+						return
+
+					if(prob(50))
+						audible_message("<span class='notice'>You hear something squeezing through the ventilation ducts.</span>")
+					sleep(travel_time)
+
+					if(!exit_vent || exit_vent.welded)
+						loc = entry_vent
+						entry_vent = null
+						return
+					loc = exit_vent.loc
+					entry_vent = null
+					var/area/new_area = get_area(loc)
+					if(new_area)
+						new_area.Entered(src)
 	//=================
 
 	else if(prob(33))
@@ -169,7 +174,7 @@
 			var/target_atom = pick(nearby)
 			walk_to(src, target_atom)
 			if(prob(40))
-				src.visible_message("\blue \The [src] skitters[pick(" away"," around","")].")
+				src.visible_message("<span class='notice'>\The [src] skitters[pick(" away"," around","")].</span>")
 	else if(prob(10))
 		//ventcrawl!
 		for(var/obj/machinery/atmospherics/unary/vent_pump/v in view(7,src))
@@ -181,8 +186,15 @@
 		amount_grown += rand(0,2)
 		if(amount_grown >= 100)
 			if(!grow_as)
-				grow_as = pick(typesof(/mob/living/simple_animal/hostile/giant_spider))
-			new grow_as(src.loc)
+				grow_as = pick(typesof(/mob/living/simple_animal/hostile/poison/giant_spider))
+			var/mob/living/simple_animal/hostile/poison/giant_spider/S = new grow_as(src.loc)
+			if(player_spiders)
+				var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
+				var/client/C = null
+
+				if(candidates.len)
+					C = pick(candidates)
+					S.key = C.key
 			qdel(src)
 
 /obj/effect/spider/cocoon
@@ -197,8 +209,8 @@
 /obj/effect/spider/cocoon/container_resist()
 	var/mob/living/user = usr
 	var/breakout_time = 2
-	user.changeNext_move(100)
-	user.last_special = world.time + 100
+	user.changeNext_move(CLICK_CD_BREAKOUT)
+	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user << "<span class='notice'>You struggle against the tight bonds! (This will take about [breakout_time] minutes.)</span>"
 	visible_message("You see something struggling and writhing in the [src]!")
 	if(do_after(user,(breakout_time*60*10)))
@@ -209,7 +221,7 @@
 
 
 /obj/effect/spider/cocoon/Destroy()
-	src.visible_message("\red \The [src] splits open.")
+	src.visible_message("<span class='danger'>\The [src] splits open.</span>")
 	for(var/atom/movable/A in contents)
 		A.loc = src.loc
 	..()

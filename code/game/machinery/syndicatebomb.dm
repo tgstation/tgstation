@@ -41,9 +41,9 @@
 	..()
 
 
-/obj/machinery/syndicatebomb/examine()
+/obj/machinery/syndicatebomb/examine(mob/user)
 	..()
-	usr << "A digital display on it reads \"[timer]\"."
+	user << "A digital display on it reads \"[timer]\"."
 
 /obj/machinery/syndicatebomb/update_icon()
 	icon_state = "[initial(icon_state)][active ? "-active" : "-inactive"][open_panel ? "-wires" : ""]"
@@ -110,8 +110,9 @@
 		wires.Interact(user)
 	if(!open_panel)
 		if(!active)
-			settings(user)
-			return
+			spawn()
+				settings(user)
+				return
 		else if(anchored)
 			user << "<span class='notice'>The bomb is bolted to the floor!</span>"
 			return
@@ -121,14 +122,14 @@
 	newtime = Clamp(newtime, 60, 60000)
 	if(in_range(src, user) && isliving(user)) //No running off and setting bombs from across the station
 		timer = newtime
-		src.loc.visible_message("\blue \icon[src] timer set for [timer] seconds.")
+		src.loc.visible_message("<span class='notice'>\icon[src] timer set for [timer] seconds.</span>")
 	if(alert(user,"Would you like to start the countdown now?",,"Yes","No") == "Yes" && in_range(src, user) && isliving(user))
 		if(defused || active)
 			if(defused)
-				src.loc.visible_message("\blue \icon[src] Device error: User intervention required")
+				src.loc.visible_message("<span class='notice'>\icon[src] Device error: User intervention required.</span>")
 			return
 		else
-			src.loc.visible_message("\red \icon[src] [timer] seconds until detonation, please clear the area.")
+			src.loc.visible_message("<span class='danger'>\icon[src] [timer] seconds until detonation, please clear the area.</span>")
 			playsound(loc, 'sound/machines/click.ogg', 30, 1)
 			active = 1
 			update_icon()
@@ -205,10 +206,10 @@
 /obj/item/weapon/bombcore/training/proc/reset()
 	var/obj/machinery/syndicatebomb/holder = src.loc
 	if(istype(holder))
-		holder.open_panel = 0
 		if(holder.wires)
 			holder.wires.Shuffle()
 		holder.defused = 0
+		holder.open_panel = 0
 		holder.update_icon()
 		holder.updateDialog()
 
@@ -216,7 +217,7 @@
 	var/obj/machinery/syndicatebomb/holder = src.loc
 	if(istype(holder))
 		attempts++
-		holder.loc.visible_message("\red \icon[holder] Alert: Bomb has detonated. Your score is now [defusals] for [attempts]. Resetting wires...")
+		holder.loc.visible_message("<span class='danger'>\icon[holder] Alert: Bomb has detonated. Your score is now [defusals] for [attempts]. Resetting wires...</span>")
 		reset()
 	else
 		qdel(src)
@@ -226,8 +227,10 @@
 	if(istype(holder))
 		attempts++
 		defusals++
-		holder.loc.visible_message("\blue \icon[holder] Alert: Bomb has been defused. Your score is now [defusals] for [attempts]! Resetting wires...")
-		reset()
+		holder.loc.visible_message("<span class='notice'>\icon[holder] Alert: Bomb has been defused. Your score is now [defusals] for [attempts]! Resetting wires in 5 seconds...</span>")
+		sleep(50)	//Just in case someone is trying to remove the bomb core this gives them a little window to crowbar it out
+		if(istype(holder))
+			reset()
 
 /obj/item/weapon/bombcore/badmin
 	name = "badmin payload"

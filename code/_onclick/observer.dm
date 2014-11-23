@@ -6,9 +6,9 @@
 	if(!client) return
 	client.inquisitive_ghost = !client.inquisitive_ghost
 	if(client.inquisitive_ghost)
-		src << "\blue You will now examine everything you click on."
+		src << "<span class='notice'>You will now examine everything you click on.</span>"
 	else
-		src << "\blue You will no longer examine things you click on."
+		src << "<span class='notice'>You will no longer examine things you click on.</span>"
 
 /mob/dead/observer/DblClickOn(var/atom/A, var/params)
 	if(client.buildmode)
@@ -24,7 +24,7 @@
 		ManualFollow(A)
 
 	// Otherwise jump
-	else
+	else if(A.loc)
 		loc = get_turf(A)
 
 /mob/dead/observer/ClickOn(var/atom/A, var/params)
@@ -55,7 +55,7 @@
 // Oh by the way this didn't work with old click code which is why clicking shit didn't spam you
 /atom/proc/attack_ghost(mob/dead/observer/user as mob)
 	if(user.client && user.client.inquisitive_ghost)
-		examine()
+		user.examinate(src)
 	return
 
 // ---------------------------------------
@@ -83,6 +83,10 @@
 		user.loc = stationgate.loc
 	else
 		user << "[src] has no destination."
+
+/obj/item/weapon/storage/attack_ghost(mob/user as mob)
+	orient2hud(user)
+	show_to(user)
 
 // -------------------------------------------
 // This was supposed to be used by adminghosts

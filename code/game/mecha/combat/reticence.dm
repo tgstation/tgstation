@@ -16,6 +16,7 @@
 	step_energy_drain = 3
 	color = "#87878715"
 	stepsound = null
+	turnsound = null
 
 /obj/mecha/combat/reticence/loaded/New()
 	..()

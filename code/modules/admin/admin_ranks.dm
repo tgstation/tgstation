@@ -10,7 +10,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	name = init_name
 	switch(name)
 		if("Removed",null,"")
-			error("invalid admin-rank name. datum deleted")
+			ERROR("invalid admin-rank name. datum deleted")
 			del(src)
 	if(init_rights)	rights = init_rights
 	if(!init_adds)	init_adds = list()
@@ -85,7 +85,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			load_admin_ranks()
 			return
 
-		var/DBQuery/query = dbcon.NewQuery("SELECT rank, flags FROM erro_admin_ranks")
+		var/DBQuery/query = dbcon.NewQuery("SELECT rank, flags FROM [format_table_name("admin_ranks")]")
 		query.Execute()
 		while(query.NextRow())
 			var/rank_name = ckeyEx(query.item[1])
@@ -153,7 +153,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			load_admins()
 			return
 
-		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, rank FROM erro_admin")
+		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, rank FROM [format_table_name("admin")]")
 		query.Execute()
 		while(query.NextRow())
 			var/ckey = ckey(query.item[1])
@@ -222,6 +222,10 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 		if("remove")
 			if(alert("Are you sure you want to remove [adm_ckey]?","Message","Yes","Cancel") == "Yes")
 				if(!D)	return
+				if(!check_if_greater_rights_than_holder(D))
+					message_admins("[key_name_admin(usr)] attempted to remove [adm_ckey] from the admins list without sufficient rights.")
+					log_admin("[key_name(usr)] attempted to remove [adm_ckey] from the admins list without sufficient rights.")
+					return
 				admin_datums -= adm_ckey
 				D.disassociate()
 
@@ -243,6 +247,12 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 				if("*New Rank*")
 					new_rank = ckeyEx(input("Please input a new rank", "New custom rank", null, null) as null|text)
 					if(!new_rank)	return
+
+			if(D)
+				if(!check_if_greater_rights_than_holder(D))
+					message_admins("[key_name_admin(usr)] attempted to change the rank of [adm_ckey] to [new_rank] without sufficient rights.")
+					log_admin("[key_name(usr)] attempted to change the rank of [adm_ckey] to [new_rank] without sufficient rights.")
+					return
 
 			R = rank_names[new_rank]
 			if(!R)	//rank with that name doesn't exist yet - make it
@@ -268,6 +278,11 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 
 			var/keyword = input("Input permission keyword (one at a time):\ne.g. +BAN or -FUN or +/client/proc/someverb", "Permission toggle", null, null) as null|text
 			if(!keyword)	return
+
+			if(!check_if_greater_rights_than_holder(D))
+				message_admins("[key_name_admin(usr)] attempted to give [adm_ckey] the keyword [keyword] without sufficient rights.")
+				log_admin("[key_name(usr)] attempted to give [adm_ckey] the keyword [keyword] without sufficient rights.")
+				return
 
 			D.disassociate()
 

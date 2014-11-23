@@ -2,8 +2,8 @@
 	name = "Fleshmend"
 	desc = "Our flesh rapidly regenerates, healing our wounds."
 	helptext = "Heals a moderate amount of damage over a short period of time. Can be used while unconscious."
-	chemical_cost = 30
-	dna_cost = 1
+	chemical_cost = 25
+	dna_cost = 2
 	req_stat = UNCONSCIOUS
 
 //Starts healing you every second for 10 seconds. Can be used whilst unconscious.

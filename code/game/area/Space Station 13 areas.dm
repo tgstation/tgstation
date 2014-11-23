@@ -41,6 +41,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/used_equip = 0
 	var/used_light = 0
 	var/used_environ = 0
+	var/static_equip
+	var/static_light = 0
+	var/static_environ
 
 	var/has_gravity = 0
 
@@ -117,12 +120,14 @@ proc/process_ghost_teleport_locs()
 	icon_state = "start"
 
 /area/space
+	icon_state = "space"
 	requires_power = 1
 	always_unpowered = 1
 	lighting_use_dynamic = 0
 	power_light = 0
 	power_equip = 0
 	power_environ = 0
+	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg',)
 
 
 
@@ -375,9 +380,17 @@ proc/process_ghost_teleport_locs()
 
 /area/tdome
 	name = "\improper Thunderdome"
-	icon_state = "thunder"
+	icon_state = "yellow"
 	requires_power = 0
 	has_gravity = 1
+
+/area/tdome/arena
+	name = "\improper Thunderdome Arena"
+	icon_state = "thunder"
+
+/area/tdome/arena_source
+	name = "\improper Thunderdome Arena Template"
+	icon_state = "thunder"
 
 /area/tdome/tdome1
 	name = "\improper Thunderdome (Team 1)"
@@ -385,7 +398,7 @@ proc/process_ghost_teleport_locs()
 
 /area/tdome/tdome2
 	name = "\improper Thunderdome (Team 2)"
-	icon_state = "yellow"
+	icon_state = "green"
 
 /area/tdome/tdomeadmin
 	name = "\improper Thunderdome (Admin.)"
@@ -500,6 +513,7 @@ proc/process_ghost_teleport_locs()
 /area/prison/morgue
 	name = "\improper Prison Morgue"
 	icon_state = "morgue"
+	ambientsounds = list('sound/ambience/ambimo1.ogg','sound/ambience/ambimo2.ogg')
 
 /area/prison/medical_research
 	name = "\improper Prison Genetic Research"
@@ -545,6 +559,8 @@ proc/process_ghost_teleport_locs()
  	icon_state = "atmos"
 
 //Maintenance
+/area/maintenance
+	ambientsounds = list('sound/ambience/ambimaint1.ogg', 'sound/ambience/ambimaint2.ogg', 'sound/ambience/ambimaint3.ogg', 'sound/ambience/ambimaint4.ogg', 'sound/ambience/ambimaint5.ogg')
 
 /area/maintenance/atmos_control
 	name = "Atmospherics Maintenance"
@@ -757,6 +773,7 @@ proc/process_ghost_teleport_locs()
 /area/chapel/main
 	name = "\improper Chapel"
 	icon_state = "chapel"
+	ambientsounds = list('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg')
 
 /area/chapel/office
 	name = "\improper Chapel Office"
@@ -821,27 +838,31 @@ proc/process_ghost_teleport_locs()
 //Engineering
 
 /area/engine
-	engine_smes
-		name = "\improper Engineering SMES"
-		icon_state = "engine_smes"
-		requires_power = 0//This area only covers the batteries and they deal with their own power
+	ambientsounds = list('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg')
 
-	engineering
-		name = "Engineering"
-		icon_state = "engine_smes"
+/area/engine/engine_smes
+	name = "\improper Engineering SMES"
+	icon_state = "engine_smes"
 
-	break_room
-		name = "\improper Engineering Foyer"
-		icon_state = "engine"
+/area/engine/engineering
+	name = "Engineering"
+	icon_state = "engine"
 
-	chiefs_office
-		name = "\improper Chief Engineer's office"
-		icon_state = "engine_control"
+/area/engine/break_room
+	name = "\improper Engineering Foyer"
+	icon_state = "engine"
 
-	gravity_generator
-		name = "Gravity Generator Room"
-		icon_state = "blue"
+/area/engine/chiefs_office
+	name = "\improper Chief Engineer's office"
+	icon_state = "engine_control"
 
+/area/engine/secure_construction
+	name = "\improper Secure Construction Area"
+	icon_state = "engine"
+
+/area/engine/gravity_generator
+	name = "Gravity Generator Room"
+	icon_state = "blue"
 
 //Solars
 
@@ -923,9 +944,10 @@ proc/process_ghost_teleport_locs()
 	music = "signal"
 
 /area/AIsattele
-	name = "\improper AI Satellite Teleporter Room"
+	name = "\improper Abandoned Teleporter"
 	icon_state = "teleporter"
 	music = "signal"
+	ambientsounds = list('sound/ambience/ambimalf.ogg')
 
 //MedBay
 
@@ -968,6 +990,7 @@ proc/process_ghost_teleport_locs()
 /area/medical/morgue
 	name = "\improper Morgue"
 	icon_state = "morgue"
+	ambientsounds = list('sound/ambience/ambimo1.ogg','sound/ambience/ambimo2.ogg')
 
 /area/medical/chemistry
 	name = "Chemistry"
@@ -1035,6 +1058,10 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Firing Range"
 	icon_state = "firingrange"
 
+/area/security/transfer
+	name = "\improper Transfer Centre"
+	icon_state = "armory"
+
 /*
 	New()
 		..()
@@ -1053,6 +1080,10 @@ proc/process_ghost_teleport_locs()
 */
 
 /area/security/nuke_storage
+	name = "\improper Vault"
+	icon_state = "nuke_storage"
+
+/area/ai_monitored/nuke_storage
 	name = "\improper Vault"
 	icon_state = "nuke_storage"
 
@@ -1155,7 +1186,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "toxmix"
 
 /area/toxins/misc_lab
-	name = "\improper Miscellaneous Research"
+	name = "\improper Testing Lab"
 	icon_state = "toxmisc"
 
 /area/toxins/server
@@ -1348,6 +1379,9 @@ proc/process_ghost_teleport_locs()
 	icon_state = "yellow"
 
 //AI
+/area/ai_monitored/security/armory
+	name = "\improper Armory"
+	icon_state = "armory"
 
 /area/ai_monitored/storage/eva
 	name = "EVA Storage"
@@ -1360,6 +1394,14 @@ proc/process_ghost_teleport_locs()
 /area/ai_monitored/storage/emergency
 	name = "Emergency Storage"
 	icon_state = "storage"
+
+/area/ai_monitored/storage/satellite
+	name = "\improper AI Satellite Maint"
+	icon_state = "storage"
+
+
+/area/turret_protected/
+	ambientsounds = list('sound/ambience/ambimalf.ogg')
 
 /area/turret_protected/ai_upload
 	name = "\improper AI Upload Chamber"
@@ -1377,8 +1419,12 @@ proc/process_ghost_teleport_locs()
 	name = "\improper AI Satellite"
 	icon_state = "ai"
 
+/area/aisat
+	name = "\improper AI Satellite Exterior"
+	icon_state = "yellow"
+
 /area/turret_protected/aisat_interior
-	name = "\improper AI Satellite"
+	name = "\improper AI Satellite Antechamber"
 	icon_state = "ai"
 
 /area/turret_protected/AIsatextFP
@@ -1439,6 +1485,9 @@ proc/process_ghost_teleport_locs()
 
 // Telecommunications Satellite
 
+/area/tcommsat
+	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
+
 /area/tcommsat/entrance
 	name = "\improper Telecoms Teleporter"
 	icon_state = "tcomsatentrance"
@@ -1450,18 +1499,22 @@ proc/process_ghost_teleport_locs()
 /area/turret_protected/tcomsat
 	name = "\improper Telecoms Satellite"
 	icon_state = "tcomsatlob"
+	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
 /area/turret_protected/tcomfoyer
 	name = "\improper Telecoms Foyer"
 	icon_state = "tcomsatentrance"
+	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
 /area/turret_protected/tcomwest
 	name = "\improper Telecommunications Satellite West Wing"
 	icon_state = "tcomsatwest"
+	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
 /area/turret_protected/tcomeast
 	name = "\improper Telecommunications Satellite East Wing"
 	icon_state = "tcomsateast"
+	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
 /area/tcommsat/computer
 	name = "\improper Telecoms Control Room"
@@ -1498,56 +1551,205 @@ proc/process_ghost_teleport_locs()
 
 /area/awaymission/beach
 	name = "Beach"
-	icon_state = "null"
+	icon_state = "away"
 	luminosity = 1
 	lighting_use_dynamic = 0
 	requires_power = 0
-	var/sound/mysound = null
+	has_gravity = 1
+	ambientsounds = list('sound/ambience/shore.ogg', 'sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag2.ogg')
 
-	New()
-		..()
-		var/sound/S = new/sound()
-		mysound = S
-		S.file = 'sound/ambience/shore.ogg'
-		S.repeat = 1
-		S.wait = 0
-		S.channel = 123
-		S.volume = 100
-		S.priority = 255
-		S.status = SOUND_UPDATE
-		process()
+/area/spacecontent
+	name = "space"
 
-	Entered(atom/movable/Obj,atom/OldLoc)
-		if(ismob(Obj))
-			if(Obj:client)
-				mysound.status = SOUND_UPDATE
-				Obj << mysound
-		return
+/area/spacecontent/a1
+	icon_state = "spacecontent1"
 
-	Exited(atom/movable/Obj)
-		if(ismob(Obj))
-			if(Obj:client)
-				mysound.status = SOUND_PAUSED | SOUND_UPDATE
-				Obj << mysound
+/area/spacecontent/a2
+	icon_state = "spacecontent2"
 
-	proc/process()
-		set background = BACKGROUND_ENABLED
+/area/spacecontent/a3
+	icon_state = "spacecontent3"
 
-		var/sound/S = null
-		var/sound_delay = 0
-		if(prob(25))
-			S = sound(file=pick('sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag3.ogg'), volume=100)
-			sound_delay = rand(0, 50)
+/area/spacecontent/a4
+	icon_state = "spacecontent4"
 
-		for(var/mob/living/carbon/human/H in src)
-			if(H.client)
-				mysound.status = SOUND_UPDATE
-				H << mysound
-				if(S)
-					spawn(sound_delay)
-						H << S
+/area/spacecontent/a5
+	icon_state = "spacecontent5"
 
-		spawn(60) .()
+/area/spacecontent/a6
+	icon_state = "spacecontent6"
+
+/area/spacecontent/a7
+	icon_state = "spacecontent7"
+
+/area/spacecontent/a8
+	icon_state = "spacecontent8"
+
+/area/spacecontent/a9
+	icon_state = "spacecontent9"
+
+/area/spacecontent/a10
+	icon_state = "spacecontent10"
+
+/area/spacecontent/a11
+	icon_state = "spacecontent11"
+
+/area/spacecontent/a11
+	icon_state = "spacecontent12"
+
+/area/spacecontent/a12
+	icon_state = "spacecontent13"
+
+/area/spacecontent/a13
+	icon_state = "spacecontent14"
+
+/area/spacecontent/a14
+	icon_state = "spacecontent14"
+
+/area/spacecontent/a15
+	icon_state = "spacecontent15"
+
+/area/spacecontent/a16
+	icon_state = "spacecontent16"
+
+/area/spacecontent/a17
+	icon_state = "spacecontent17"
+
+/area/spacecontent/a18
+	icon_state = "spacecontent18"
+
+/area/spacecontent/a19
+	icon_state = "spacecontent19"
+
+/area/spacecontent/a20
+	icon_state = "spacecontent20"
+
+/area/spacecontent/a21
+	icon_state = "spacecontent21"
+
+/area/spacecontent/a22
+	icon_state = "spacecontent22"
+
+/area/spacecontent/a23
+	icon_state = "spacecontent23"
+
+/area/spacecontent/a24
+	icon_state = "spacecontent24"
+
+/area/spacecontent/a25
+	icon_state = "spacecontent25"
+
+/area/spacecontent/a26
+	icon_state = "spacecontent26"
+
+/area/spacecontent/a27
+	icon_state = "spacecontent27"
+
+/area/spacecontent/a28
+	icon_state = "spacecontent28"
+
+/area/spacecontent/a29
+	icon_state = "spacecontent29"
+
+/area/spacecontent/a30
+	icon_state = "spacecontent30"
+
+/area/awaycontent
+	name = "space"
+
+/area/awaycontent/a1
+	icon_state = "awaycontent1"
+
+/area/awaycontent/a2
+	icon_state = "awaycontent2"
+
+/area/awaycontent/a3
+	icon_state = "awaycontent3"
+
+/area/awaycontent/a4
+	icon_state = "awaycontent4"
+
+/area/awaycontent/a5
+	icon_state = "awaycontent5"
+
+/area/awaycontent/a6
+	icon_state = "awaycontent6"
+
+/area/awaycontent/a7
+	icon_state = "awaycontent7"
+
+/area/awaycontent/a8
+	icon_state = "awaycontent8"
+
+/area/awaycontent/a9
+	icon_state = "awaycontent9"
+
+/area/awaycontent/a10
+	icon_state = "awaycontent10"
+
+/area/awaycontent/a11
+	icon_state = "awaycontent11"
+
+/area/awaycontent/a11
+	icon_state = "awaycontent12"
+
+/area/awaycontent/a12
+	icon_state = "awaycontent13"
+
+/area/awaycontent/a13
+	icon_state = "awaycontent14"
+
+/area/awaycontent/a14
+	icon_state = "awaycontent14"
+
+/area/awaycontent/a15
+	icon_state = "awaycontent15"
+
+/area/awaycontent/a16
+	icon_state = "awaycontent16"
+
+/area/awaycontent/a17
+	icon_state = "awaycontent17"
+
+/area/awaycontent/a18
+	icon_state = "awaycontent18"
+
+/area/awaycontent/a19
+	icon_state = "awaycontent19"
+
+/area/awaycontent/a20
+	icon_state = "awaycontent20"
+
+/area/awaycontent/a21
+	icon_state = "awaycontent21"
+
+/area/awaycontent/a22
+	icon_state = "awaycontent22"
+
+/area/awaycontent/a23
+	icon_state = "awaycontent23"
+
+/area/awaycontent/a24
+	icon_state = "awaycontent24"
+
+/area/awaycontent/a25
+	icon_state = "awaycontent25"
+
+/area/awaycontent/a26
+	icon_state = "awaycontent26"
+
+/area/awaycontent/a27
+	icon_state = "awaycontent27"
+
+/area/awaycontent/a28
+	icon_state = "awaycontent28"
+
+/area/awaycontent/a29
+	icon_state = "awaycontent29"
+
+/area/awaycontent/a30
+	icon_state = "awaycontent30"
+
 
 /////////////////////////////////////////////////////////////////////
 /*

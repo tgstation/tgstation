@@ -66,6 +66,11 @@
 	open_machine()
 	..(severity)
 
+/obj/machinery/recharge_station/ex_act(severity)
+	if(occupier)
+		open_machine()
+	..(severity)
+
 /obj/machinery/recharge_station/attack_paw(user as mob)
 	return attack_hand(user)
 
@@ -150,20 +155,19 @@
 /obj/machinery/recharge_station/proc/restock_modules()
 	if(occupier)
 		if(occupier.module && occupier.module.modules)
-			var/list/um = occupier.contents|occupier.module.modules
-			// ^ makes sinle list of active (occupier.contents) and inactive modules (occupier.module.modules)
+			var/list/um = occupier.contents|occupier.module.modules // Makes single list of active (occupier.contents) and inactive (occupier.module.modules) modules
 			var/coeff = recharge_speed / 200
+			for (var/datum/robot_energy_storage/st in occupier.module.storages)
+				st.energy = min(st.max_energy, st.energy + coeff * st.recharge_rate)
 			for(var/obj/O in um)
-				// Engineering
-				if(istype(O,/obj/item/stack/sheet/metal) || istype(O,/obj/item/stack/sheet/rglass) || istype(O,/obj/item/stack/rods) || istype(O,/obj/item/stack/cable_coil)|| istype(O,/obj/item/stack/tile/plasteel))
-					if(O:amount < 50)
-						O:amount += coeff
-				// Security
+				//General
 				if(istype(O,/obj/item/device/flash))
 					if(O:broken)
 						O:broken = 0
 						O:times_used = 0
 						O:icon_state = "flash"
+				// Engineering
+				// Security
 				if(istype(O,/obj/item/weapon/gun/energy/taser/cyborg))
 					if(O:power_supply.charge < O:power_supply.maxcharge)
 						var/obj/item/weapon/gun/energy/G = O

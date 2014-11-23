@@ -24,19 +24,14 @@
 	src.icon_state = "[src.icon_type]box[total_contents]"
 	return
 
-/obj/item/weapon/storage/fancy/examine()
-	set src in oview(1)
+/obj/item/weapon/storage/fancy/examine(mob/user)
 	..()
 	if(contents.len <= 0)
-		usr << "There are no [src.icon_type]s left in the box."
+		user << "There are no [src.icon_type]s left in the box."
 	else if(contents.len == 1)
-		usr << "There is one [src.icon_type] left in the box."
+		user << "There is one [src.icon_type] left in the box."
 	else
-		usr << "There are [src.contents.len] [src.icon_type]s in the box."
-
-	return
-
-
+		user << "There are [src.contents.len] [src.icon_type]s in the box."
 
 /*
  * Donut Box
@@ -110,7 +105,7 @@
 	storage_slots = 6
 	icon_type = "crayon"
 	can_hold = list(
-		"/obj/item/toy/crayon"
+		/obj/item/toy/crayon
 	)
 
 /obj/item/weapon/storage/fancy/crayons/New()
@@ -144,8 +139,8 @@
 //CIG PACK//
 ////////////
 /obj/item/weapon/storage/fancy/cigarettes
-	name = "cigarette packet"
-	desc = "The most popular brand of Space Cigarettes, sponsors of the Space Olympics."
+	name = "\improper Space Cigarettes packet"
+	desc = "The most popular brand of cigarettes, sponsors of the Space Olympics."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigpacket"
 	item_state = "cigpacket"
@@ -153,7 +148,7 @@
 	throwforce = 0
 	slot_flags = SLOT_BELT
 	storage_slots = 6
-	can_hold = list(/obj/item/clothing/mask/cigarette)
+	can_hold = list(/obj/item/clothing/mask/cigarette,/obj/item/weapon/lighter)
 	icon_type = "cigarette"
 
 /obj/item/weapon/storage/fancy/cigarettes/New()
@@ -168,27 +163,114 @@
 	desc = "There are [contents.len] cig\s left!"
 	return
 
-/obj/item/weapon/storage/fancy/cigarettes/remove_from_storage(obj/item/W as obj, atom/new_location)
-		var/obj/item/clothing/mask/cigarette/C = W
-		if(!istype(C)) return // what
-		reagents.trans_to(C, (reagents.total_volume/contents.len))
-		..()
+/obj/item/weapon/storage/fancy/cigarettes/remove_from_storage(obj/item/W, atom/new_location)
+	if(istype(W,/obj/item/clothing/mask/cigarette))
+		reagents.trans_to(W,(reagents.total_volume/contents.len))
+	..()
 
 /obj/item/weapon/storage/fancy/cigarettes/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M, /mob))
 		return
-
-	if(M == user && user.zone_sel.selecting == "mouth" && contents.len > 0 && !user.wear_mask)
-		var/obj/item/clothing/mask/cigarette/W = contents[1]
-		remove_from_storage(W, M)
-		M.equip_to_slot_if_possible(W, slot_wear_mask)
-		contents -= W
-		user << "<span class='notice'>You take a cigarette out of the pack.</span>"
+	var/obj/item/clothing/mask/cigarette/cig = locate(/obj/item/clothing/mask/cigarette) in contents
+	if(cig)
+		if(M == user && user.zone_sel.selecting == "mouth" && contents.len > 0 && !user.wear_mask)
+			var/obj/item/clothing/mask/cigarette/W = cig
+			remove_from_storage(W, M)
+			M.equip_to_slot_if_possible(W, slot_wear_mask)
+			contents -= W
+			user << "<span class='notice'>You take a cigarette out of the pack.</span>"
+		else
+			..()
 	else
-		..()
+		user << "<span class='notice'>There are no cigarettes left in the pack.</span>"
 
 /obj/item/weapon/storage/fancy/cigarettes/dromedaryco
 	name = "\improper DromedaryCo packet"
 	desc = "A packet of six imported DromedaryCo cancer sticks. A label on the packaging reads, \"Wouldn't a slow death make a change?\""
 	icon_state = "Dpacket"
 	item_state = "Dpacket"
+
+/obj/item/weapon/storage/fancy/cigarettes/cigpack_uplift
+	name = "\improper Uplift Smooth packet"
+	desc = "Your favorite brand, now menthol flavored."
+	icon_state = "upliftpacket"
+	item_state = "upliftpacket"
+
+/obj/item/weapon/storage/fancy/cigarettes/cigpack_robust
+	name = "\improper Robust packet"
+	desc = "Smoked by the robust."
+	icon_state = "robustpacket"
+	item_state = "robustpacket"
+
+/obj/item/weapon/storage/fancy/cigarettes/cigpack_robustgold
+	name = "\improper Robust Gold packet"
+	desc = "Smoked by the truly robust."
+	icon_state = "robustgpacket"
+	item_state = "robustgpacket"
+
+/obj/item/weapon/storage/fancy/cigarettes/cigpack_robustgold/New()
+	..()
+	for(var/i = 1 to storage_slots)
+		reagents.add_reagent("gold",1)
+
+/obj/item/weapon/storage/fancy/cigarettes/cigpack_carp
+	name = "\improper Carp Classic packet"
+	desc = "Since 2313."
+	icon_state = "carppacket"
+	item_state = "carppacket"
+
+/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
+	name = "cigarette packet"
+	desc = "An obscure brand of cigarettes."
+	icon_state = "syndiepacket"
+	item_state = "syndiepacket"
+
+/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate/New()
+	..()
+	for(var/i = 1 to storage_slots)
+		reagents.add_reagent("doctorsdelight",15)
+
+
+/obj/item/weapon/storage/fancy/cigarettes/cigpack_midori
+	name = "\improper Midori Tabako packet"
+	desc = "You can't understand the runes, but the packet smells funny."
+	icon_state = "midoripacket"
+	item_state = "midoripacket"
+
+/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims
+	name ="\improper Shady Jim's Super Slims"
+	desc = "Is your weight slowing you down? Having trouble running away from gravitational singularities? Can't stop stuffing your mouth? Smoke Shady Jim's Super Slims and watch all that fat burn away. Guaranteed results!"
+	icon_state = "shadyjimpacket"
+	item_state = "shadyjimpacket"
+
+/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims/New()
+	..()
+	for(var/i = 1 to storage_slots)
+		reagents.add_reagent("lipozine",4)
+		reagents.add_reagent("ammonia",2)
+		reagents.add_reagent("plantbgone",1)
+		reagents.add_reagent("toxin",1.5)
+
+/obj/item/weapon/storage/fancy/rollingpapers
+	name = "rolling paper pack"
+	desc = "A pack of NanoTrasen brand rolling papers."
+	w_class = 1
+	icon = 'icons/obj/cigarettes.dmi'
+	icon_state = "cig_paper_pack"
+	storage_slots = 10
+	icon_type = "rolling papers"
+	can_hold = list(/obj/item/weapon/rollingpaper)
+
+/obj/item/weapon/storage/fancy/rollingpapers/update_icon()
+	if(!contents.len)
+		icon_state = "[initial(icon_state)]0"
+	else
+		icon_state = initial(icon_state)
+
+	desc = "There are [contents.len] papers\s left!"
+	return
+
+/obj/item/weapon/storage/fancy/rollingpapers/New()
+	..()
+	for(var/i = 1 to storage_slots)
+		new /obj/item/weapon/rollingpaper(src)

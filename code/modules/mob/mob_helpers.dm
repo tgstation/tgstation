@@ -110,8 +110,18 @@ proc/isobserver(A)
 		return 1
 	return 0
 
+proc/isnewplayer(A)
+	if(istype(A, /mob/new_player))
+		return 1
+	return 0
+
 proc/isovermind(A)
 	if(istype(A, /mob/camera/blob))
+		return 1
+	return 0
+
+proc/isdrone(A)
+	if(istype(A, /mob/living/simple_animal/drone))
 		return 1
 	return 0
 
@@ -172,6 +182,7 @@ proc/isorgan(A)
 		return 0
 
 /proc/stars(n, pr)
+	n = strip_html_properly(n)
 	if (pr == null)
 		pr = 25
 	if (pr <= 0)
@@ -190,7 +201,7 @@ proc/isorgan(A)
 		else
 			t = text("[]*", t)
 		p++
-	return t
+	return sanitize(t)
 
 
 /proc/stutter(n)
@@ -407,7 +418,7 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 				if(M.mind in ticker.mode.wizards)
 					return 2
 			if("monkey")
-				if(M.viruses && (locate(/datum/disease/jungle_fever) in M.viruses))
+				if(M.viruses && (locate(/datum/disease/transformation/jungle_fever) in M.viruses))
 					return 2
 		return 1
 	return 0
@@ -418,3 +429,45 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 /proc/get_both_hands(mob/living/carbon/M)
 	var/list/hands = list(M.l_hand, M.r_hand)
 	return hands
+
+/mob/proc/reagent_check(var/datum/reagent/R) // utilized in the species code
+	return 1
+
+/proc/notify_ghosts(var/message, var/ghost_sound = null) //Easy notification of ghosts.
+	for(var/mob/dead/observer/O in player_list)
+		if(O.client)
+			O << "<span class='ghostalert'>[message]<span>"
+			if(ghost_sound)
+				O << sound(ghost_sound)
+
+/proc/item_heal_robotic(var/mob/living/carbon/human/H, var/mob/user, var/brute, var/burn)
+	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
+
+	var/dam //changes repair text based on how much brute/burn was supplied
+
+	if(brute > burn)
+		dam = 1
+	else
+		dam = 0
+
+	if(affecting.status == ORGAN_ROBOTIC)
+		if(brute > 0 && affecting.brute_dam > 0 || burn > 0 && affecting.burn_dam > 0)
+			affecting.heal_damage(brute,burn,1)
+			H.update_damage_overlays(0)
+			H.updatehealth()
+			user.visible_message("<span class='notice'>[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.getDisplayName()]!</span>")
+			return
+		else
+			user << "<span class='notice'>[H]'s [affecting.getDisplayName()] is already in good condition</span>"
+			return
+	else
+		return
+
+/proc/broadcast_hud_message(var/message, var/broadcast_source)
+	var/turf/sourceturf = get_turf(broadcast_source)
+	var/user_list = sec_hud_users //A local var is used for easy addition of other HUD types.
+	var/hud_icon = /obj/item/weapon/restraints/handcuffs //Icon displayed when the HUD triggered. Handcuffs for Sec HUDs.
+	for(var/mob/hud_user in user_list)
+		var/turf/userturf = get_turf(hud_user)
+		if(userturf.z == sourceturf.z) //Must have same z-level.
+			hud_user.show_message("<span class='info'>\icon[hud_icon] [message]</span>", 1)

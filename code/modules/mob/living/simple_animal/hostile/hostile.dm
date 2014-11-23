@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile
-	faction = "hostile"
+	faction = list("hostile")
 	stop_automated_movement_when_pulled = 0
 	environment_smash = 1 //Set to 1 to break closets,tables,racks, etc; 2 for walls; 3 for rwalls
 	var/stance = HOSTILE_STANCE_IDLE	//Used to determine behavior
@@ -25,7 +25,6 @@
 	var/list/wanted_objects = list() //A list of objects that will be checked against to attack, should we have search_objects enabled
 	var/stat_attack = 0 //Mobs with stat_attack to 1 will attempt to attack things that are unconscious, Mobs with stat_attack set to 2 will attempt to attack the dead.
 	var/stat_exclusive = 0 //Mobs with this set to 1 will exclusively attack things defined by stat_attack, stat_attack 2 means they will only attack corpses
-	var/attack_faction = null //Put a faction string here to have a mob only ever attack a specific faction
 
 /mob/living/simple_animal/hostile/Life()
 
@@ -33,6 +32,8 @@
 	if(!.)
 		walk(src, 0)
 		return 0
+	if(ranged)
+		ranged_cooldown--
 	if(client)
 		return 0
 	if(!stat)
@@ -51,8 +52,6 @@
 				AttackTarget()
 				DestroySurroundings()
 
-		if(ranged)
-			ranged_cooldown--
 
 //////////////HOSTILE MOB TARGETTING AND AGGRESSION////////////
 
@@ -107,10 +106,20 @@
 		var/mob/living/L = the_target
 		if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive == 1)
 			return 0
-		if(L.faction == src.faction && !attack_same || L.faction != src.faction && attack_same == 2 || L.faction != attack_faction && attack_faction)
+		var/faction_check = 0
+		for(var/F in faction)
+			if(F in L.faction)
+				faction_check = 1
+				break
+		if(faction_check && !attack_same || !faction_check && attack_same == 2)
 			return 0
 		if(L in friends)
 			return 0
+		if(ishuman(L))
+			var/mob/living/carbon/human/H = L
+			if(H.dna)
+				if(src.type in H.dna.species.ignored_by)
+					return 0
 		return 1
 	if(isobj(the_target))
 		if(the_target.type in wanted_objects)
@@ -222,7 +231,7 @@
 /mob/living/simple_animal/hostile/proc/OpenFire(var/the_target)
 
 	var/target = the_target
-	visible_message("\red <b>[src]</b> [ranged_message] at [target]!", 1)
+	visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [target]!</span>")
 
 	var/tturf = get_turf(target)
 	if(rapid)
@@ -257,6 +266,7 @@
 		qdel(A)
 		return
 	A.current = target
+	A.firer = src
 	A.yo = target:y - start:y
 	A.xo = target:x - start:x
 	spawn( 0 )
@@ -293,3 +303,8 @@
 		if(A.Adjacent(src))
 			A.attack_animal(src)
 		return 1
+
+/mob/living/simple_animal/hostile/RangedAttack(var/atom/A, var/params) //Player firing
+	if(ranged && ranged_cooldown <= 0)
+		OpenFire(A)
+	..()

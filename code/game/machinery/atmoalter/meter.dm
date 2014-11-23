@@ -80,20 +80,19 @@
 		t += "The connect error light is blinking."
 	return t
 
-/obj/machinery/meter/examine()
-	set src in view(3)
+/obj/machinery/meter/examine(mob/user)
 	..()
-	usr << status()
+	user << status()
 
 
 /obj/machinery/meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		user << "\blue You begin to unfasten \the [src]..."
+		user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
 		if (do_after(user, 40))
 			user.visible_message( \
 				"[user] unfastens \the [src].", \
-				"\blue You have unfastened \the [src].", \
+				"<span class='notice'>You have unfastened \the [src].</span>", \
 				"You hear ratchet.")
 			new /obj/item/pipe_meter(src.loc)
 			qdel(src)
