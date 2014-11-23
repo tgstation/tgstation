@@ -2600,6 +2600,7 @@
 				feedback_add_details("admin_secrets_fun_used","AB")
 				var/obj/structure/stool/bed/chair/vehicle/adminbus/A = new /obj/structure/stool/bed/chair/vehicle/adminbus(get_turf(usr))
 				A.dir = EAST
+				A.update_lightsource()
 				A.busjuke.dir = EAST
 				message_admins("[key_name_admin(usr)] has spawned an Adminbus. Who gave him the keys?")
 			if("spawnselfdummy")

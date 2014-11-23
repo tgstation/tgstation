@@ -302,6 +302,8 @@
 				overlays += overlays_bus[2]
 			roadlights = 2
 
+	update_lightsource()
+
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/toggle_bumpers(mob/bususer as mob,var/bumperpower=1)
 
 	if(bumperpower == bumpers)

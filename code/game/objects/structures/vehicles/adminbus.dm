@@ -49,7 +49,7 @@
 	src.dir = 4
 	playsound(src, 'sound/misc/adminbus.ogg', 50, 0, 0)
 	lightsource = new/obj/structure/buslight(src.loc)
-	lightsource.x += 2
+	update_lightsource()
 	warp = new/obj/structure/teleportwarp(src.loc)
 	busjuke = new/obj/machinery/media/jukebox/superjuke/adminbus(src.loc)
 
@@ -173,20 +173,43 @@
 		H.forceMove(get_step(H,src.dir))
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/update_lightsource()
-	lightsource.z = z
-	switch(dir)
-		if(SOUTH)
-			lightsource.x = x
-			lightsource.y = y-2
-		if(WEST)
-			lightsource.x = x-2
-			lightsource.y = y
-		if(NORTH)
-			lightsource.x = x
-			lightsource.y = y+2
-		if(EAST)
-			lightsource.x = x+2
-			lightsource.y = y
+	var/turf/T = get_step(src,src.dir)
+	if(T.opacity)
+		lightsource.loc = T
+		switch(roadlights)							//if the bus is right against a wall, only the wall's tile is lit
+			if(0)
+				if(lightsource.luminosity != 0)
+					lightsource.SetLuminosity(0)
+			if(1,2)
+				if(lightsource.luminosity != 1)
+					lightsource.SetLuminosity(1)
+	else
+		T = get_step(T,src.dir)						//if there is a wall two tiles in front of the bus, the lightsource is right in front of the bus, though weaker
+		if(T.opacity)
+			lightsource.loc = get_step(src,src.dir)
+			switch(roadlights)
+				if(0)
+					if(lightsource.luminosity != 0)
+						lightsource.SetLuminosity(0)
+				if(1)
+					if(lightsource.luminosity != 1)
+						lightsource.SetLuminosity(1)
+				if(2)
+					if(lightsource.luminosity != 2)
+						lightsource.SetLuminosity(2)
+		else
+			lightsource.loc = T
+			switch(roadlights)						//otherwise, the lightsource position itself two tiles in front of the bus and with regular luminosity
+				if(0)
+					if(lightsource.luminosity != 0)
+						lightsource.SetLuminosity(0)
+				if(1)
+					if(lightsource.luminosity != 2)
+						lightsource.SetLuminosity(2)
+				if(2)
+					if(lightsource.luminosity != 3)
+						lightsource.SetLuminosity(3)
+
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/handle_mob_bumping()
 	var/turf/S = get_turf(src)
