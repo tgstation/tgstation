@@ -23,9 +23,6 @@
 	icon_state = "rockvault"
 	floor_tile = /obj/item/stack/tile/plasteel
 
-/turf/simulated/wall/vault
-	icon_state = "rockvault"
-
 /turf/simulated/floor/bluegrid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "bcircuit"
