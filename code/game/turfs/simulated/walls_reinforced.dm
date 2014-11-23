@@ -9,38 +9,61 @@
 
 	var/d_state = 0
 	hardness = 10
+	sheet_type = /obj/item/stack/sheet/plasteel
 
-/turf/simulated/wall/r_wall/attackby(obj/item/W as obj, mob/user as mob)
+/turf/simulated/wall/r_wall/break_wall()
+	builtin_sheet.loc = src
+	return (new /obj/structure/girder/reinforced(src))
 
-	if (!user.IsAdvancedToolUser())
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
-		return
+/turf/simulated/wall/r_wall/devastate_wall()
+	builtin_sheet.loc = src
+	new /obj/item/stack/sheet/metal(src, 2)
 
-	//get the user's location
-	if( !istype(user.loc, /turf) )	return	//can't do this stuff whilst inside objects and such
+/turf/simulated/wall/r_wall/attack_animal(var/mob/living/simple_animal/M)
+	M.changeNext_move(CLICK_CD_MELEE)
+	if(M.environment_smash == 3)
+		dismantle_wall(1)
+		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+		M << "<span class='notice'>You smash through the wall.</span>"
+	else
+		M << "<span class='warning'>This wall is far too strong for you to destroy.</span>"
 
+/turf/simulated/wall/r_wall/attack_hand(mob/user as mob)
+	//this is ugly
+	if ((HULK in user.mutations) || !d_state)
+		..()
 
-	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
-	if( thermite )
-		if( is_hot(W) )
-			thermitemelt(user)
-
-		if( istype(W, /obj/item/weapon/melee/energy/blade) )
-			var/obj/item/weapon/melee/energy/blade/EB = W
-
-			EB.spark_system.start()
-			user << "<span class='notice'>You slash \the [src] with \the [EB]; the thermite ignites!</span>"
-			playsound(src, "sparks", 50, 1)
-			playsound(src, 'sound/weapons/blade1.ogg', 50, 1)
-
-		return
-
-	else if(istype(W, /obj/item/weapon/melee/energy/blade))
+/turf/simulated/wall/r_wall/try_destroy(obj/item/weapon/W as obj, mob/user as mob, turf/T as turf)
+	if(istype(W, /obj/item/weapon/melee/energy/blade))
 		user << "<span class='notice'>This wall is too thick to slice through. You will need to find a different path.</span>"
-		return
+		return 1
+	else if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+		user << "<span class='notice'>You begin to drill though the wall.</span>"
+		if(do_after(user, 200))
+			if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )
+				return 1
+			if( user.loc == T && user.get_active_hand() == W )
+				user << "<span class='notice'>Your drill tears though the last of the reinforced plating.</span>"
+				dismantle_wall()
+				return 1
+	else if(istype(W, /obj/item/stack/sheet/metal) && d_state)
+		var/obj/item/stack/sheet/metal/MS = W
+		if (MS.get_amount() < 1)
+			user << "<span class='warning'>You need one sheet of metal to repair the wall.</span>"
+			return 1
+		user << "<span class='notice'>You begin patching-up the wall with \a [MS].</span>"
+		if (do_after(user, max(20*d_state,100)))//time taken to repair is proportional to the damage! (max 10 seconds)
+			if(loc == null || MS.get_amount() < 1)
+				return 1
+			MS.use(1)
+			src.d_state = 0
+			src.icon_state = "r_wall"
+			relativewall_neighbours()	//call smoothwall stuff
+			user << "<span class='notice'>You repair the last of the damage.</span>"
+			return 1
+	return 0
 
-	var/turf/T = user.loc	//get user's location for delay checks
-
+/turf/simulated/wall/r_wall/try_decon(obj/item/weapon/W as obj, mob/user as mob, turf/T as turf)
 	//DECONSTRUCTION
 	switch(d_state)
 		if(0)
@@ -50,7 +73,7 @@
 				src.icon_state = "r_wall-1"
 				new /obj/item/stack/rods( src )
 				user << "<span class='notice'>You cut the outer grille.</span>"
-				return
+				return 1
 
 		if(1)
 			if (istype(W, /obj/item/weapon/screwdriver))
@@ -59,13 +82,13 @@
 
 				if(do_after(user, 40))
 					if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )
-						return
+						return 1
 
 					if( d_state == 1 && user.loc == T && user.get_active_hand() == W )
 						src.d_state = 2
 						src.icon_state = "r_wall-2"
 						user << "<span class='notice'>You remove the support lines.</span>"
-				return
+				return 1
 
 			//REPAIRING (replacing the outer grille for cosmetic damage)
 			else if(istype(W, /obj/item/stack/rods))
@@ -77,8 +100,8 @@
 					user << "<span class='notice'>You replace the outer grille.</span>"
 				else
 					user << "<span class='warning'>You need one rod to repair the wall.</span>"
-					return
-				return
+					return 1
+				return 1
 
 		if(2)
 			if( istype(W, /obj/item/weapon/weldingtool) )
@@ -90,13 +113,13 @@
 
 					if(do_after(user, 60))
 						if( !istype(src, /turf/simulated/wall/r_wall) || !user || !WT || !WT.isOn() || !T )
-							return
+							return 0
 
 						if( d_state == 2 && user.loc == T && user.get_active_hand() == WT )
 							src.d_state = 3
 							src.icon_state = "r_wall-3"
 							user << "<span class='notice'>You press firmly on the cover, dislodging it.</span>"
-				return
+				return 1
 
 			if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
 
@@ -105,13 +128,13 @@
 
 				if(do_after(user, 60))
 					if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )
-						return
+						return 1
 
 					if( d_state == 2 && user.loc == T && user.get_active_hand() == W )
 						src.d_state = 3
 						src.icon_state = "r_wall-3"
 						user << "<span class='notice'>You press firmly on the cover, dislodging it.</span>"
-				return
+				return 1
 
 		if(3)
 			if (istype(W, /obj/item/weapon/crowbar))
@@ -121,13 +144,13 @@
 
 				if(do_after(user, 100))
 					if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )
-						return
+						return 1
 
 					if( d_state == 3 && user.loc == T && user.get_active_hand() == W )
 						src.d_state = 4
 						src.icon_state = "r_wall-4"
 						user << "<span class='notice'>You pry off the cover.</span>"
-				return
+				return 1
 
 		if(4)
 			if (istype(W, /obj/item/weapon/wrench))
@@ -137,13 +160,13 @@
 
 				if(do_after(user, 40))
 					if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )
-						return
+						return 1
 
 					if( d_state == 4 && user.loc == T && user.get_active_hand() == W )
 						src.d_state = 5
 						src.icon_state = "r_wall-5"
 						user << "<span class='notice'>You remove the bolts anchoring the support rods.</span>"
-				return
+				return 1
 
 		if(5)
 			if( istype(W, /obj/item/weapon/weldingtool) )
@@ -155,14 +178,14 @@
 
 					if(do_after(user, 100))
 						if( !istype(src, /turf/simulated/wall/r_wall) || !user || !WT || !WT.isOn() || !T )
-							return
+							return 1
 
 						if( d_state == 5 && user.loc == T && user.get_active_hand() == WT )
 							src.d_state = 6
 							src.icon_state = "r_wall-6"
 							new /obj/item/stack/rods( src )
 							user << "<span class='notice'>The support rods drop out as you cut them loose from the frame.</span>"
-				return
+				return 1
 
 			if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
 
@@ -171,14 +194,14 @@
 
 				if(do_after(user, 70))
 					if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )
-						return
+						return 1
 
 					if( d_state == 5 && user.loc == T && user.get_active_hand() == W )
 						src.d_state = 6
 						src.icon_state = "r_wall-6"
 						new /obj/item/stack/rods( src )
 						user << "<span class='notice'>The support rods drop out as you cut them loose from the frame.</span>"
-				return
+				return 1
 
 		if(6)
 			if( istype(W, /obj/item/weapon/crowbar) )
@@ -188,86 +211,13 @@
 
 				if(do_after(user, 100))
 					if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )
-						return
+						return 1
 
 					if( user.loc == T && user.get_active_hand() == W )
 						user << "<span class='notice'>You pry off the outer sheath.</span>"
 						dismantle_wall()
-				return
-
-//vv OK, we weren't performing a valid deconstruction step or igniting thermite,let's check the other possibilities vv
-
-	//DRILLING
-	if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
-
-		user << "<span class='notice'>You begin to drill though the wall.</span>"
-
-		if(do_after(user, 200))
-			if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )
-				return
-
-			if( user.loc == T && user.get_active_hand() == W )
-				user << "<span class='notice'>Your drill tears though the last of the reinforced plating.</span>"
-				dismantle_wall()
-
-	//REPAIRING
-	else if(istype(W, /obj/item/stack/sheet/metal) && d_state)
-		var/obj/item/stack/sheet/metal/MS = W
-
-		if (MS.get_amount() < 1)
-			user << "<span class='warning'>You need one sheet of metal to repair the wall.</span>"
-			return
-
-		user << "<span class='notice'>You begin patching-up the wall with \a [MS].</span>"
-
-		if (do_after(user, max(20*d_state,100)))//time taken to repair is proportional to the damage! (max 10 seconds)
-			if(loc == null || MS.get_amount() < 1)
-				return
-			MS.use(1)
-			src.d_state = 0
-			src.icon_state = "r_wall"
-			relativewall_neighbours()	//call smoothwall stuff
-			user << "<span class='notice'>You repair the last of the damage.</span>"
-
-
-	//APC
-	else if( istype(W,/obj/item/apc_frame) )
-		var/obj/item/apc_frame/AH = W
-		AH.try_build(src)
-
-	else if(istype(W,/obj/item/newscaster_frame))     //Be damned the man who thought only mobs need attack() and walls dont need inheritance, hitler incarnate
-		var/obj/item/newscaster_frame/AH = W
-		AH.try_build(src)
-		return
-
-	else if( istype(W,/obj/item/alarm_frame) )
-		var/obj/item/alarm_frame/AH = W
-		AH.try_build(src)
-
-	else if(istype(W,/obj/item/firealarm_frame))
-		var/obj/item/firealarm_frame/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/light_fixture_frame))
-		var/obj/item/light_fixture_frame/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/light_fixture_frame/small))
-		var/obj/item/light_fixture_frame/small/AH = W
-		AH.try_build(src)
-		return
-
-	//Poster stuff
-	else if(istype(W,/obj/item/weapon/contraband/poster))
-		place_poster(W,user)
-		return
-
-	//Finally, CHECKING FOR FALSE WALLS if it isn't damaged
-	else if(!d_state)
-		return attack_hand(user)
-	return
+				return 1
+	return 0
 
 /turf/simulated/wall/r_wall/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
