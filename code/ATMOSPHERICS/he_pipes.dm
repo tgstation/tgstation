@@ -68,12 +68,14 @@
 			internal.merge(internal_removed)
 		return radiate()
 
+	// Not enough gas in the air around us to care about.  Radiate.
 	if (external_removed.total_moles() < 10)
 		if(internal_removed)
 			internal.merge(internal_removed)
 		environment.merge(external_removed)
 		return radiate()
 
+	// No internal gas.  Screw this, we're out.
 	if (!internal_removed)
 		environment.merge(external_removed)
 		return 1
