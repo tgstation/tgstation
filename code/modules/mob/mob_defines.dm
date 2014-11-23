@@ -54,44 +54,6 @@
 	var/image/narsimage = null
 	var/image/narglow = null
 
-	//Adminbus HUD stuff
-	var/list/rearviews[16]
-	var/obj/screen/adminbus_bg = null
-	var/obj/screen/adminbus_delete = null
-	var/obj/screen/adminbus_delmobs = null
-	var/obj/screen/adminbus_spclowns = null
-	var/obj/screen/adminbus_spcarps = null
-	var/obj/screen/adminbus_spbears = null
-	var/obj/screen/adminbus_sptrees = null
-	var/obj/screen/adminbus_spspiders = null
-	var/obj/screen/adminbus_spalien = null
-	var/obj/screen/adminbus_loadsids = null
-	var/obj/screen/adminbus_loadsmoney = null
-	var/obj/screen/adminbus_massrepair = null
-	var/obj/screen/adminbus_massrejuv = null
-	var/obj/screen/adminbus_hook = null
-	var/obj/screen/adminbus_juke = null
-	var/obj/screen/adminbus_tele = null
-	var/obj/screen/adminbus_bumpers_1 = null
-	var/obj/screen/adminbus_bumpers_2 = null
-	var/obj/screen/adminbus_bumpers_3 = null
-	var/obj/screen/adminbus_door_0 = null
-	var/obj/screen/adminbus_door_1 = null
-	var/obj/screen/adminbus_roadlights_0
-	var/obj/screen/adminbus_roadlights_1
-	var/obj/screen/adminbus_roadlights_2
-	var/obj/screen/adminbus_free = null
-	var/obj/screen/adminbus_home = null
-	var/obj/screen/adminbus_antag = null
-	var/obj/screen/adminbus_dellasers = null
-	var/obj/screen/adminbus_givelasers = null
-	var/obj/screen/adminbus_delbombs = null
-	var/obj/screen/adminbus_givebombs = null
-	var/obj/screen/adminbus_tdred = null
-	var/obj/screen/adminbus_tdarena = null
-	var/obj/screen/adminbus_tdgreen = null
-	var/obj/screen/adminbus_tdobs = null
-
 	/*A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
 	A variable should only be globally attached to turfs/objects/whatever, when it is in fact needed as such.
 	The current method unnecessarily clusters up the variable list, especially for humans (although rearranging won't really clean it up a lot but the difference will be noticable for other mobs).
@@ -189,6 +151,7 @@
 	var/seer = 0 //for cult//Carbon, probably Human
 
 	var/datum/hud/hud_used = null
+	var/datum/ui_icons/gui_icons = null
 
 	var/list/grabbed_by = list(  )
 	var/list/requests = list(  )

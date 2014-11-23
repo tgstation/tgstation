@@ -1,6 +1,9 @@
 ///////////////////////////////////////////////////////////////
 //Deity Link, giving a new meaning to the Adminbus since 2014//
 ///////////////////////////////////////////////////////////////
+
+#define MAX_CAPACITY 16
+
 /obj/structure/stool/bed/chair/vehicle/adminbus//Fucking release the passengers and unbuckle yourself from the bus before you delete it.
 	name = "\improper Adminbus"
 	desc = "Shit just got fucking real."
@@ -192,14 +195,14 @@
 			for(var/mob/living/L in S)
 				if(L.isolated)
 					continue
-				if(passengers.len < 16)
+				if(passengers.len < MAX_CAPACITY)
 					capture_mob(L)
 				else
 					buckled_mob << "<span class='warning'>There is no place in the bus for any additional passenger.</span>"
 			for(var/obj/machinery/bot/B in S)
 				if(B.isolated)
 					continue
-				if(passengers.len < 16)
+				if(passengers.len < MAX_CAPACITY)
 					capture_mob(B)
 		if(2)
 			var/hit_sound = list('sound/weapons/genhit1.ogg','sound/weapons/genhit2.ogg','sound/weapons/genhit3.ogg')
@@ -258,7 +261,7 @@
 	return
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/capture_mob(atom/A, var/selfclimb=0)
-	if(passengers.len >= 16)
+	if(passengers.len >= MAX_CAPACITY)
 		A << "<span class='warning'>The bus is full!</span>"
 		return
 	if(unloading)
@@ -387,9 +390,9 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/update_rearview()
 	if(buckled_mob)
-		for(var/i=1;i<=16;i++)
-			buckled_mob.client.screen -= buckled_mob.rearviews[i]
-			var/obj/screen/S = buckled_mob.rearviews[i]
+		for(var/i=1;i<=MAX_CAPACITY;i++)
+			buckled_mob.client.screen -= buckled_mob.gui_icons.rearviews[i]
+			var/obj/screen/S = buckled_mob.gui_icons.rearviews[i]
 			var/icon/img = null
 			var/atom/A = null
 			if(i<=passengers.len)
@@ -400,8 +403,8 @@
 			else
 				img = getFlatIcon(A,SOUTH,0)
 				S.icon = img
-				buckled_mob.rearviews[i] = S
-				buckled_mob.client.screen += buckled_mob.rearviews[i]
+				buckled_mob.gui_icons.rearviews[i] = S
+				buckled_mob.client.screen += buckled_mob.gui_icons.rearviews[i]
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/emp_act(severity)
 	return
@@ -479,14 +482,14 @@
 		var/obj/machinery/singularity/S = locate(/obj/machinery/singularity) in src.loc
 		if(S)
 			if(abus.buckled_mob)
-				abus.buckled_mob.adminbus_hook.icon_state = "icon_singulo"
+				abus.buckled_mob.gui_icons.adminbus_hook.icon_state = "icon_singulo"
 			abus.capture_singulo(S)
 			return
 	forceMove(get_step_towards(src,abus))
 	max_distance++
 	if(max_distance >= 7)
 		if(abus.buckled_mob)
-			abus.buckled_mob.adminbus_hook.icon_state = "icon_hook"
+			abus.buckled_mob.gui_icons.adminbus_hook.icon_state = "icon_hook"
 		abus.hook = 1
 		del(src)
 		return
@@ -554,6 +557,8 @@
 	desc = ""
 	anchored = 1
 	density = 0
+	opacity = 0
+	mouse_opacity = 0
 
 /obj/structure/buslight/ex_act(severity)
 	return
@@ -576,6 +581,7 @@
 	layer = MOB_LAYER-1
 	anchored = 1
 	density = 0
+	mouse_opacity = 0
 
 /obj/structure/teleportwarp/ex_act(severity)
 	return
@@ -585,3 +591,5 @@
 
 /obj/structure/teleportwarp/singuloCanEat()
 	return 0
+
+#undef MAX_CAPACITY

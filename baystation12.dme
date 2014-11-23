@@ -117,6 +117,7 @@
 #include "code\datums\spell.dm"
 #include "code\datums\sun.dm"
 #include "code\datums\supplypacks.dm"
+#include "code\datums\ui_icons.dm"
 #include "code\datums\uplink_item.dm"
 #include "code\datums\diseases\appendicitis.dm"
 #include "code\datums\diseases\beesease.dm"

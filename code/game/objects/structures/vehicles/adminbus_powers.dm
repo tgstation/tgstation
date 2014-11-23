@@ -6,12 +6,8 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/release_passengers(mob/bususer as mob)
 
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
-
 	unloading = 1
-	flick("icon_free-push",bususer.adminbus_free)
+	flick("icon_free-push",bususer.gui_icons.adminbus_free)
 
 	for(var/i=passengers.len;i>0;i--)
 		var/atom/A = passengers[i]
@@ -65,11 +61,7 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/spawn_clowns(mob/bususer as mob)
 
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
-
-	flick("icon_spclown-push",bususer.adminbus_spclowns)
+	flick("icon_spclown-push",bususer.gui_icons.adminbus_spclowns)
 
 	var/turflist[] = list()
 	for(var/turf/T in orange(src,1))
@@ -88,11 +80,7 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/spawn_carps(mob/bususer as mob)
 
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
-
-	flick("icon_spcarp-push",bususer.adminbus_spcarps)
+	flick("icon_spcarp-push",bususer.gui_icons.adminbus_spcarps)
 
 	var/turflist[] = list()
 	for(var/turf/T in orange(src,1))
@@ -111,11 +99,7 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/spawn_bears(mob/bususer as mob)
 
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
-
-	flick("icon_spbear-push",bususer.adminbus_spbears)
+	flick("icon_spbear-push",bususer.gui_icons.adminbus_spbears)
 
 	var/turflist[] = list()
 	for(var/turf/T in orange(src,1))
@@ -138,11 +122,7 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/spawn_trees(mob/bususer as mob)
 
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
-
-	flick("icon_sptree-push",bususer.adminbus_sptrees)
+	flick("icon_sptree-push",bususer.gui_icons.adminbus_sptrees)
 
 	var/turflist[] = list()
 	for(var/turf/T in range(src,1))
@@ -161,11 +141,7 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/spawn_spiders(mob/bususer as mob)
 
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
-
-	flick("icon_spspider-push",bususer.adminbus_spspiders)
+	flick("icon_spspider-push",bususer.gui_icons.adminbus_spspiders)
 
 	var/turflist[] = list()
 	for(var/turf/T in orange(src,1))
@@ -184,11 +160,7 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/spawn_alien(mob/bususer as mob)
 
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
-
-	flick("icon_spalien-push",bususer.adminbus_spalien)
+	flick("icon_spalien-push",bususer.gui_icons.adminbus_spalien)
 
 	var/turflist[] = list()
 	for(var/turf/T in orange(src,1))
@@ -204,11 +176,7 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/remove_mobs(mob/bususer as mob)
 
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
-
-	flick("icon_delmobs-push",bususer.adminbus_delmobs)
+	flick("icon_delmobs-push",bususer.gui_icons.adminbus_delmobs)
 
 	for(var/mob/M in spawned_mobs)
 		var/xoffset = -32
@@ -250,15 +218,11 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/throw_hookshot(mob/bususer as mob)
 
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
-
 	if(!hook && !singulo)
 		return
 
 	if(singulo)
-		bususer.adminbus_hook.icon_state = "icon_hook-push"
+		bususer.gui_icons.adminbus_hook.icon_state = "icon_hook-push"
 		var/obj/structure/singulo_chain/anchor/A = locate(/obj/structure/singulo_chain/anchor) in chain
 		if(A)
 			del(A)//so we don't drag the singulo back to us along with the rest of the chain.
@@ -276,10 +240,10 @@
 		chain.len = 0
 
 		if(!singulo)
-			bususer.adminbus_hook.icon_state = "icon_hook"
+			bususer.gui_icons.adminbus_hook.icon_state = "icon_hook"
 			hook = 1
 	else if(hook)
-		bususer.adminbus_hook.icon_state = "icon_hook-push"
+		bususer.gui_icons.adminbus_hook.icon_state = "icon_hook-push"
 		hook = 0
 
 		var/obj/structure/hookshot/claw/C = new/obj/structure/hookshot/claw(get_step(src,src.dir))	//First we spawn the claw
@@ -288,7 +252,7 @@
 
 		var/obj/machinery/singularity/S = C.launchin(src.dir)							//The claw moves forward, spawning hookshot-chains on its path
 		if(S)
-			bususer.adminbus_hook.icon_state = "icon_singulo"
+			bususer.gui_icons.adminbus_hook.icon_state = "icon_singulo"
 			capture_singulo(S)															//If the claw hits a singulo, we remove the hookshot-chains and replace them with singulo-chains
 		else
 			for(var/obj/structure/hookshot/A in hookshot)								//If it doesn't hit anything, all the elements of the chain come back toward the bus,
@@ -299,11 +263,7 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/mass_rejuvinate(mob/bususer as mob)
 
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
-
-	flick("icon_massrejuv-push",bususer.adminbus_massrejuv)
+	flick("icon_massrejuv-push",bususer.gui_icons.adminbus_massrejuv)
 
 	for(var/mob/living/M in orange(src,3))
 		M.revive()
@@ -313,34 +273,30 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/toggle_lights(mob/bususer as mob,var/lightpower=0)
 
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
-
 	if(lightpower == roadlights)
 		return
 
 	switch(lightpower)
 		if(0)
-			bususer.adminbus_roadlights_0.icon_state = "icon_lights_0-on"
-			bususer.adminbus_roadlights_1.icon_state = "icon_lights_1-off"
-			bususer.adminbus_roadlights_2.icon_state = "icon_lights_2-off"
+			bususer.gui_icons.adminbus_roadlights_0.icon_state = "icon_lights_0-on"
+			bususer.gui_icons.adminbus_roadlights_1.icon_state = "icon_lights_1-off"
+			bususer.gui_icons.adminbus_roadlights_2.icon_state = "icon_lights_2-off"
 			lightsource.SetLuminosity(0)
 			if(roadlights == 1 || roadlights == 2)
 				overlays -= overlays_bus[2]
 			roadlights = 0
 		if(1)
-			bususer.adminbus_roadlights_0.icon_state = "icon_lights_0-off"
-			bususer.adminbus_roadlights_1.icon_state = "icon_lights_1-on"
-			bususer.adminbus_roadlights_2.icon_state = "icon_lights_2-off"
+			bususer.gui_icons.adminbus_roadlights_0.icon_state = "icon_lights_0-off"
+			bususer.gui_icons.adminbus_roadlights_1.icon_state = "icon_lights_1-on"
+			bususer.gui_icons.adminbus_roadlights_2.icon_state = "icon_lights_2-off"
 			lightsource.SetLuminosity(2)
 			if(roadlights == 0)
 				overlays += overlays_bus[2]
 			roadlights = 1
 		if(2)
-			bususer.adminbus_roadlights_0.icon_state = "icon_lights_0-off"
-			bususer.adminbus_roadlights_1.icon_state = "icon_lights_1-off"
-			bususer.adminbus_roadlights_2.icon_state = "icon_lights_2-on"
+			bususer.gui_icons.adminbus_roadlights_0.icon_state = "icon_lights_0-off"
+			bususer.gui_icons.adminbus_roadlights_1.icon_state = "icon_lights_1-off"
+			bususer.gui_icons.adminbus_roadlights_2.icon_state = "icon_lights_2-on"
 			lightsource.SetLuminosity(3)
 			if(roadlights == 0)
 				overlays += overlays_bus[2]
@@ -348,59 +304,47 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/toggle_bumpers(mob/bususer as mob,var/bumperpower=1)
 
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
-
 	if(bumperpower == bumpers)
 		return
 
 	switch(bumperpower)
 		if(1)
-			bususer.adminbus_bumpers_1.icon_state = "icon_bumpers_1-on"
-			bususer.adminbus_bumpers_2.icon_state = "icon_bumpers_2-off"
-			bususer.adminbus_bumpers_3.icon_state = "icon_bumpers_3-off"
+			bususer.gui_icons.adminbus_bumpers_1.icon_state = "icon_bumpers_1-on"
+			bususer.gui_icons.adminbus_bumpers_2.icon_state = "icon_bumpers_2-off"
+			bususer.gui_icons.adminbus_bumpers_3.icon_state = "icon_bumpers_3-off"
 			bumpers = 1
 		if(2)
-			bususer.adminbus_bumpers_1.icon_state = "icon_bumpers_1-off"
-			bususer.adminbus_bumpers_2.icon_state = "icon_bumpers_2-on"
-			bususer.adminbus_bumpers_3.icon_state = "icon_bumpers_3-off"
+			bususer.gui_icons.adminbus_bumpers_1.icon_state = "icon_bumpers_1-off"
+			bususer.gui_icons.adminbus_bumpers_2.icon_state = "icon_bumpers_2-on"
+			bususer.gui_icons.adminbus_bumpers_3.icon_state = "icon_bumpers_3-off"
 			bumpers = 2
 		if(3)
-			bususer.adminbus_bumpers_1.icon_state = "icon_bumpers_1-off"
-			bususer.adminbus_bumpers_2.icon_state = "icon_bumpers_2-off"
-			bususer.adminbus_bumpers_3.icon_state = "icon_bumpers_3-on"
+			bususer.gui_icons.adminbus_bumpers_1.icon_state = "icon_bumpers_1-off"
+			bususer.gui_icons.adminbus_bumpers_2.icon_state = "icon_bumpers_2-off"
+			bususer.gui_icons.adminbus_bumpers_3.icon_state = "icon_bumpers_3-on"
 			bumpers = 3
 
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/toggle_door(mob/bususer as mob,var/doorstate=0)
-
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
 
 	if(doorstate == door_mode)
 		return
 
 	switch(doorstate)
 		if(0)
-			bususer.adminbus_door_0.icon_state = "icon_door_0-on"
-			bususer.adminbus_door_1.icon_state = "icon_door_1-off"
+			bususer.gui_icons.adminbus_door_0.icon_state = "icon_door_0-on"
+			bususer.gui_icons.adminbus_door_1.icon_state = "icon_door_1-off"
 			door_mode = 0
 			overlays -= overlays_bus[4]
 		if(1)
-			bususer.adminbus_door_0.icon_state = "icon_door_0-off"
-			bususer.adminbus_door_1.icon_state = "icon_door_1-on"
+			bususer.gui_icons.adminbus_door_0.icon_state = "icon_door_0-off"
+			bususer.gui_icons.adminbus_door_1.icon_state = "icon_door_1-on"
 			door_mode = 1
 			overlays += overlays_bus[4]
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/Loadsa_Captains_Spares(mob/bususer as mob)
 
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
-
-	flick("icon_loadsids-push",bususer.adminbus_loadsids)
+	flick("icon_loadsids-push",bususer.gui_icons.adminbus_loadsids)
 
 	visible_message("<span class='notice'>All Access for Everyone!</span>")
 	var/joy_sound = list('sound/voice/SC4Mayor1.ogg','sound/voice/SC4Mayor2.ogg','sound/voice/SC4Mayor3.ogg')
@@ -415,11 +359,7 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/Loadsa_Money(mob/bususer as mob)
 
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
-
-	flick("icon_loadsmone-push",buckled_mob.adminbus_loadsmoney)
+	flick("icon_loadsmone-push",bususer.gui_icons.adminbus_loadsmoney)
 
 	visible_message("<span class='notice'>Loads of Money!</span>")
 	var/joy_sound = list('sound/voice/SC4Mayor1.ogg','sound/voice/SC4Mayor2.ogg','sound/voice/SC4Mayor3.ogg')
@@ -450,11 +390,7 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/give_bombs(mob/bususer as mob)
 
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
-
-	flick("icon_givebombs-push",bususer.adminbus_givebombs)
+	flick("icon_givebombs-push",bususer.gui_icons.adminbus_givebombs)
 
 	var/distributed = 0
 
@@ -491,11 +427,7 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/delete_bombs(mob/bususer as mob)
 
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
-
-	flick("icon_delgiven-push",bususer.adminbus_delbombs)
+	flick("icon_delgiven-push",bususer.gui_icons.adminbus_delbombs)
 
 	if(spawnedbombs.len == 0)
 		bususer << "No bombs to delete.</span>"
@@ -515,11 +447,7 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/give_lasers(mob/bususer as mob)
 
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
-
-	flick("icon_givelasers-push",bususer.adminbus_givelasers)
+	flick("icon_givelasers-push",bususer.gui_icons.adminbus_givelasers)
 
 	var/distributed = 0
 
@@ -558,11 +486,7 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/delete_lasers(mob/bususer as mob)
 
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
-
-	flick("icon_delgiven-push",bususer.adminbus_dellasers)
+	flick("icon_delgiven-push",bususer.gui_icons.adminbus_dellasers)
 
 	if(spawnedlasers.len == 0)
 		bususer << "No laser guns to delete.</span>"
@@ -587,11 +511,7 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/Mass_Repair(mob/bususer as mob)
 
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
-
-	flick("icon_massrepair-push",bususer.adminbus_massrepair)
+	flick("icon_massrepair-push",bususer.gui_icons.adminbus_massrepair)
 
 	visible_message("<span class='notice'>WE BUILD!</span>")
 
@@ -643,21 +563,17 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/Teleportation(mob/bususer as mob)
 
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
-
 	if(warp.icon_state == "warp_activated")
 		return
 
-	bususer.adminbus_tele.icon_state = "icon_teleport-push"
+	bususer.gui_icons.adminbus_tele.icon_state = "icon_teleport-push"
 	warp.icon_state = "warp_activated"
 
 	var/A
 	A = input(bususer, "Area to jump to", "Teleportation Warp", A) as null|anything in adminbusteleportlocs
 	var/area/thearea = adminbusteleportlocs[A]
 	if(!thearea)
-		bususer.adminbus_tele.icon_state = "icon_teleport"
+		bususer.gui_icons.adminbus_tele.icon_state = "icon_teleport"
 		warp.icon_state = ""
 		return
 
@@ -668,13 +584,13 @@
 
 	if(!L || !L.len)
 		bususer << "No area available."
-		bususer.adminbus_tele.icon_state = "icon_teleport"
+		bususer.gui_icons.adminbus_tele.icon_state = "icon_teleport"
 		warp.icon_state = ""
 		return
 
 	var/turf/T1 = get_turf(src)
 	var/turf/T2 = pick(L)
-	bususer.adminbus_tele.icon_state = "icon_teleport"
+	bususer.gui_icons.adminbus_tele.icon_state = "icon_teleport"
 	warp.icon_state = ""
 	src.loc = T2
 	src.Move()
@@ -683,20 +599,16 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/Sendto_Thunderdome_Obs(mob/bususer as mob)
 
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
-
 	if(passengers.len == 0)
-		flick("icon_tdobs-flick",bususer.adminbus_tdobs)
+		flick("icon_tdobs-flick",bususer.gui_icons.adminbus_tdobs)
 		bususer << "<span class='warning'>There are no passengers to send.</span>"
 		return
 
-	bususer.adminbus_tdobs.icon_state = "icon_tdobs-push"
+	bususer.gui_icons.adminbus_tdobs.icon_state = "icon_tdobs-push"
 	if(alert(bususer, "Send all passengers to the thunderdome's spectating area?", "Adminbus", "Yes", "No") != "Yes")
-		bususer.adminbus_tdobs.icon_state = "icon_tdobs"
+		bususer.gui_icons.adminbus_tdobs.icon_state = "icon_tdobs"
 		return
-	bususer.adminbus_tdobs.icon_state = "icon_tdobs"
+	bususer.gui_icons.adminbus_tdobs.icon_state = "icon_tdobs"
 
 	var/turf/T = get_turf(src)
 	if(T)
@@ -749,20 +661,16 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/Sendto_Thunderdome_Arena(mob/bususer as mob)//this one sends an equal number of fighter to each side.
 
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
-
 	if(passengers.len == 0)
-		flick("icon_tdarena-flick",bususer.adminbus_tdarena)
+		flick("icon_tdarena-flick",bususer.gui_icons.adminbus_tdarena)
 		bususer << "<span class='warning'>There are no passengers to send.</span>"
 		return
 
-	bususer.adminbus_tdarena.icon_state = "icon_tdarena-push"
+	bususer.gui_icons.adminbus_tdarena.icon_state = "icon_tdarena-push"
 	if(alert(bususer, "Split passengers between the two thunderdome teams?", "Adminbus", "Yes", "No") != "Yes")
-		bususer.adminbus_tdarena.icon_state = "icon_tdarena"
+		bususer.gui_icons.adminbus_tdarena.icon_state = "icon_tdarena"
 		return
-	bususer.adminbus_tdarena.icon_state = "icon_tdarena"
+	bususer.gui_icons.adminbus_tdarena.icon_state = "icon_tdarena"
 
 	var/turf/T = get_turf(src)
 	if(T)
@@ -783,20 +691,16 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/Sendto_Thunderdome_Arena_Green(mob/bususer as mob)
 
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
-
 	if(passengers.len == 0)
-		flick("icon_tdgreen-flick",bususer.adminbus_tdgreen)
+		flick("icon_tdgreen-flick",bususer.gui_icons.adminbus_tdgreen)
 		bususer << "<span class='warning'>There are no passengers to send.</span>"
 		return
 
-	bususer.adminbus_tdgreen.icon_state = "icon_tdgreen-push"
+	bususer.gui_icons.adminbus_tdgreen.icon_state = "icon_tdgreen-push"
 	if(alert(bususer, "Send all passengers to the thunderdome's Green Team?", "Adminbus", "Yes", "No") != "Yes")
-		bususer.adminbus_tdgreen.icon_state = "icon_tdgreen"
+		bususer.gui_icons.adminbus_tdgreen.icon_state = "icon_tdgreen"
 		return
-	bususer.adminbus_tdgreen.icon_state = "icon_tdgreen"
+	bususer.gui_icons.adminbus_tdgreen.icon_state = "icon_tdgreen"
 
 	var/turf/T = get_turf(src)
 	if(T)
@@ -810,20 +714,16 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/Sendto_Thunderdome_Arena_Red(mob/bususer as mob)
 
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
-
 	if(passengers.len == 0)
-		flick("icon_tdred-flick",bususer.adminbus_tdred)
+		flick("icon_tdred-flick",bususer.gui_icons.adminbus_tdred)
 		bususer << "<span class='warning'>There are no passengers to send.</span>"
 		return
 
-	bususer.adminbus_tdred.icon_state = "icon_tdred-push"
+	bususer.gui_icons.adminbus_tdred.icon_state = "icon_tdred-push"
 	if(alert(bususer, "Send all passengers to the thunderdome's Red Team?", "Adminbus", "Yes", "No") != "Yes")
-		bususer.adminbus_tdred.icon_state = "icon_tdred"
+		bususer.gui_icons.adminbus_tdred.icon_state = "icon_tdred"
 		return
-	bususer.adminbus_tdred.icon_state = "icon_tdred"
+	bususer.gui_icons.adminbus_tdred.icon_state = "icon_tdred"
 
 	var/turf/T = get_turf(src)
 	if(T)
@@ -1043,20 +943,16 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/Send_Home(mob/bususer as mob)
 
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
-
 	if(passengers.len == 0)
-		flick("icon_home-flick",bususer.adminbus_home)
+		flick("icon_home-flick",bususer.gui_icons.adminbus_home)
 		bususer << "<span class='warning'>There are no passengers to send.</span>"
 		return
 
-	bususer.adminbus_home.icon_state = "icon_home-push"
+	bususer.gui_icons.adminbus_home.icon_state = "icon_home-push"
 	if(alert(bususer, "Send all mobs among the passengers back where they first appeared? (Risky: This sends them back where their \"object\" was created. If they were cloned they will teleport back at genetics, If they had their species changed they'll spawn back where it happenned, etc...)", "Adminbus", "Yes", "No") != "Yes")
-		bususer.adminbus_home.icon_state = "icon_home"
+		bususer.gui_icons.adminbus_home.icon_state = "icon_home"
 		return
-	bususer.adminbus_home.icon_state = "icon_home"
+	bususer.gui_icons.adminbus_home.icon_state = "icon_home"
 
 	var/turf/T1 = get_turf(src)
 	if(T1)
@@ -1072,25 +968,21 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/Make_Antag(mob/bususer as mob)
 
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
-
 	if(passengers.len == 0)
-		flick("icon_antag-flick",bususer.adminbus_antag)
+		flick("icon_antag-flick",bususer.gui_icons.adminbus_antag)
 		bususer << "<span class='warning'>There are no passengers to make antag.</span>"
 		return
 
-	bususer.adminbus_antag.icon_state = "icon_antag-push"
+	bususer.gui_icons.adminbus_antag.icon_state = "icon_antag-push"
 	var/list/delays = list("CANCEL", "No Delay", "10 seconds", "30 seconds", "1 minute", "5 minutes", "15 minutes")
 	var/delay = input("How much delay before the transformation occurs?", "Antag Madness") in delays
 
 	switch(delay)
 		if("CANCEL")
-			bususer.adminbus_antag.icon_state = "icon_antag"
+			bususer.gui_icons.adminbus_antag.icon_state = "icon_antag"
 			return
 		if("No Delay")
-			bususer.adminbus_antag.icon_state = "icon_antag"
+			bususer.gui_icons.adminbus_antag.icon_state = "icon_antag"
 			for(var/mob/M in passengers)
 				spawn()
 					M << "<span class='danger'>YOU JUST REMEMBERED SOMETHING IMPORTANT!</span>"
@@ -1116,7 +1008,7 @@
 			for(var/mob/M in passengers)
 				spawn()
 					Delay_Antag(M,9000)
-	bususer.adminbus_antag.icon_state = "icon_antag"
+	bususer.gui_icons.adminbus_antag.icon_state = "icon_antag"
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/Delay_Antag(var/mob/M,var/delay=100)
 	if(!M.mind)	return
@@ -1138,23 +1030,15 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/Mounted_Jukebox(mob/bususer as mob)
 
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
-
-	flick("icon_jukebox-push",bususer.adminbus_juke)
+	flick("icon_jukebox-push",bususer.gui_icons.adminbus_juke)
 
 	busjuke.attack_hand(bususer)
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/Adminbus_Deletion(mob/bususer as mob)//make sure to always use this proc when deleting an adminbus
 
-	if(!(istype(bususer,/mob/living/carbon/human/dummy) || istype(bususer,/mob/living/simple_animal/corgi/Ian)))
-		bususer << "Nice try."
-		return
-
-	bususer.adminbus_delete.icon_state = "icon_delete-push"
+	bususer.gui_icons.adminbus_delete.icon_state = "icon_delete-push"
 	if(alert(bususer, "This will free all passengers, remove any spawned mobs/laserguns/bombs, [singulo ? "free the captured singularity" : ""], and remove all the entities associated with the bus(chains, roadlights, jukebox,...) Are you sure?", "Adminbus Deletion", "Yes", "No") != "Yes")
-		bususer.adminbus_delete.icon_state = "icon_delete"
+		bususer.gui_icons.adminbus_delete.icon_state = "icon_delete"
 		return
 
 	for(var/i=passengers.len;i>0;i--)

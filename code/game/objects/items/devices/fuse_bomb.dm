@@ -53,14 +53,13 @@
 		var/mob/living/carbon/C = user
 		C.throw_mode_on()
 	update_icon()
-	sleep(10)
 	fuse_burn()
 
 /obj/item/device/fuse_bomb/proc/fuse_burn()
 	set waitfor = 0
-	sleep(10)
 	if(src && src.fuse_lit)
 		if(src.seconds_left)
+			sleep(10)
 			src.seconds_left--
 			src.update_icon()
 			.()
