@@ -720,12 +720,12 @@
 	gender = NEUTER
 
 /datum/sprite_accessory/undershirt/tank_white
-	name = "White Tank-Top"
+	name = "White Tank Top"
 	icon_state = "tank_white"
 	gender = NEUTER
 
 /datum/sprite_accessory/undershirt/tank_black
-	name = "Black Tank-Top"
+	name = "Black Tank Top"
 	icon_state = "tank_black"
 	gender = NEUTER
 
@@ -737,4 +737,214 @@
 /datum/sprite_accessory/undershirt/female_midriff
 	name = "Midriff Tank Top"
 	icon_state = "tank_midriff"
+	gender = FEMALE
+
+/datum/sprite_accessory/undershirt/lover
+	name = "Lover shirt"
+	icon_state = "lover"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/ian
+	name = "Blue Ian Shirt"
+	icon_state = "ian"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/uk
+	name = "UK Shirt"
+	icon_state = "uk"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/ilovent
+	name = "I Love NT Shirt"
+	icon_state = "ilovent"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/peace
+	name = "Peace Shirt"
+	icon_state = "peace"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/mondmondjaja
+	name = "Band Shirt"
+	icon_state = "band"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/pacman
+	name = "Pogoman Shirt"
+	icon_state = "pogoman"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/matroska
+	name = "Matroska Shirt"
+	icon_state = "matroska"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/whiteshortsleeve
+	name = "White Short-sleeved Shirt"
+	icon_state = "whiteshortsleeve"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/purpleshortsleeve
+	name = "Purple Short-sleeved Shirt"
+	icon_state = "purpleshortsleeve"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/blueshortsleeve
+	name = "Blue Short-sleeved Shirt"
+	icon_state = "blueshortsleeve"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/greenshortsleeve
+	name = "Green Short-sleeved Shirt"
+	icon_state = "greenshortsleeve"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/blackshortsleeve
+	name = "Black Short-sleeved Shirt"
+	icon_state = "blackshortsleeve"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/blueshirt
+	name = "Blue T-Shirt"
+	icon_state = "blueshirt"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/redshirt
+	name = "Red T-Shirt"
+	icon_state = "redshirt"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/yellowshirt
+	name = "Yellow T-Shirt"
+	icon_state = "yellowshirt"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/greenshirt
+	name = "Green T-Shirt"
+	icon_state = "greenshirt"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/bluepolo
+	name = "Blue Polo Shirt"
+	icon_state = "bluepolo"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/redpolo
+	name = "Red Polo Shirt"
+	icon_state = "redpolo"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/whitepolo
+	name = "White Polo Shirt"
+	icon_state = "whitepolo"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/grayyellowpolo
+	name = "Gray-Yellow Polo Shirt"
+	icon_state = "grayyellowpolo"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/redtop
+	name = "Red Top"
+	icon_state = "redtop"
+	gender = FEMALE
+
+/datum/sprite_accessory/undershirt/whitetop
+	name = "White Top"
+	icon_state = "whitetop"
+	gender = FEMALE
+
+/datum/sprite_accessory/undershirt/greenshirtsport
+	name = "Green Sports Shirt"
+	icon_state = "greenshirtsport"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/redshirtsport
+	name = "Red Sports Shirt"
+	icon_state = "redshirtsport"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/blueshirtsport
+	name = "Blue Sports Shirt"
+	icon_state = "blueshirtsport"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/ss13
+	name = "SS13 Shirt"
+	icon_state = "shirt_ss13"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/tankfire
+	name = "Fire Tank Top"
+	icon_state = "tank_fire"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/question
+	name = "Question Shirt"
+	icon_state = "shirt_question"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirtian
+	name = "White Ian Shirt"
+	icon_state = "shirt_ian"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/skull
+	name = "Skull Shirt"
+	icon_state = "shirt_skull"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/commie
+	name = "Commie Shirt"
+	icon_state = "shirt_commie"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/nano
+	name = "Nanotransen Shirt"
+	icon_state = "shirt_nano"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/stripe
+	name = "Striped Shirt"
+	icon_state = "shirt_stripes"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/blueshirt
+	name = "Blue Shirt"
+	icon_state = "shirt_blue"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/redshirt
+	name = "Red Shirt"
+	icon_state = "shirt_red"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/greenshirt
+	name = "Green Shirt"
+	icon_state = "shirt_green"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/meat
+	name = "Meat Shirt"
+	icon_state = "shirt_meat"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/tiedye
+	name = "Tie-dye Shirt"
+	icon_state = "shirt_tiedye"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/redjersey
+	name = "Red Jersey"
+	icon_state = "shirt_redjersey"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/bluejersey
+	name = "Blue Jersey"
+	icon_state = "shirt_bluejersey"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/tankstripe
+	name = "Striped Tank Top"
+	icon_state = "tank_stripes"
 	gender = FEMALE
