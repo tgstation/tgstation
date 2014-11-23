@@ -286,33 +286,3 @@
 			if (reagents.has_reagent(M, being_built.materials[M]))
 				return n
 	return 0
-
-//give it an object or a type
-//if it gets passed an object, it makes it into a type
-//it then finds the design which has a buildpath of that type
-//confirmed to work by Comic
-/datum/proc/FindDesign(var/part as anything)
-	if(!ispath(part))
-		var/obj/thispart = part
-		part = thispart.type
-	for(var/thisdesign in typesof(/datum/design))
-		var/datum/design/D = thisdesign
-		if(initial(D.build_path) == part)
-			return D
-	return
-
-//sum of the required tech of a design
-/obj/machinery/r_n_d/proc/TechTotal(var/datum/design/part)
-	var/total = 0
-	for(var/tech in part.req_tech)
-		total += part.req_tech[tech]
-	return total
-
-//sum of the required materials of a design
-//do not confuse this with Total_Materials. That gets the machine's materials, this gets design materials
-/obj/machinery/r_n_d/proc/MatTotal(var/datum/design/part)
-	var/total = 0
-	for(var/matID in part.materials)
-		total += part.materials[matID]
-	//log_admin("[total] for [part.name]")
-	return total
