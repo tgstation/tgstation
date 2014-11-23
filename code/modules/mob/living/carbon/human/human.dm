@@ -1332,13 +1332,13 @@
 
 	visible_message("\blue \The [src] morphs and changes [get_visible_gender() == MALE ? "his" : get_visible_gender() == FEMALE ? "her" : "their"] appearance!", "\blue You change your appearance!", "\red Oh, god!  What the hell was that?  It sounded like flesh getting squished and bone ground into a different shape!")
 /mob/living/carbon/human/proc/can_mind_interact(mob/M)
-		if(!ishuman(M)) return 0 //Can't see non humans with your fancy human mind.
-		var/turf/temp_turf = get_turf(M)
-		if((temp_turf.z != 1 && temp_turf.z != 5) || h.stat!=CONSCIOUS) //Not on mining or the station. Or dead
-			return 0
-		if(M_PSY_RESIST in M.mutations)
-			return 0
-		return 1
+	if(!ishuman(M)) return 0 //Can't see non humans with your fancy human mind.
+	var/turf/temp_turf = get_turf(M)
+	if((temp_turf.z != 1 && temp_turf.z != 5) || h.stat!=CONSCIOUS) //Not on mining or the station. Or dead
+		return 0
+	if(M_PSY_RESIST in M.mutations)
+		return 0
+	return 1
 
 /mob/living/carbon/human/proc/remotesay()
 	set name = "Project mind"
