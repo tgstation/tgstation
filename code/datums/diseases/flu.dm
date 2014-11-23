@@ -2,6 +2,7 @@
 	name = "The Flu"
 	max_stages = 3
 	spread_text = "Airborne"
+	cure_text = "Spaceacillin"
 	cures = list("spaceacillin")
 	cure_chance = 10
 	agent = "H13N1 flu virion"

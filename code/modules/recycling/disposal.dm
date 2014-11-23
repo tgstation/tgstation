@@ -27,7 +27,7 @@
 	// find the attached trunk (if present) and init gas resvr.
 /obj/machinery/disposal/New()
 	..()
-	stored = new /obj/structure/disposalconstruct(src)
+	stored = new /obj/structure/disposalconstruct(0,0,0)
 	trunk_check()
 
 	air_contents = new/datum/gas_mixture()
@@ -458,7 +458,7 @@
 		stored.loc = T
 		src.transfer_fingerprints_to(stored)
 		stored.ptype = 6 // 6 = disposal unit
-		stored.anchored = 1
+		stored.anchored = 0
 		stored.density = 1
 		stored.update()
 	..()
@@ -592,7 +592,8 @@
 
 // called to vent all gas in holder to a location
 /obj/structure/disposalholder/proc/vent_gas(var/atom/location)
-	location.assume_air(gas)  // vent all gas to turf
+	if(location)
+		location.assume_air(gas)  // vent all gas to turf
 	air_update_turf()
 	return
 

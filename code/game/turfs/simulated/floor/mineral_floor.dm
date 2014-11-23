@@ -18,6 +18,8 @@
 	broken_states = list("[initial(icon_state)]_dam")
 
 /turf/simulated/floor/mineral/update_icon()
+	if(!..())
+		return 0
 	if(!broken && !burnt)
 		if( !(icon_state in icons) )
 			icon_state = initial(icon_state)

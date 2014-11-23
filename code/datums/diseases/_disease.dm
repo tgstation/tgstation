@@ -76,10 +76,10 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 
 	if(!cure)
 		if(prob(stage_prob))
-			stage = min(stage++,max_stages)
+			stage = min(stage + 1,max_stages)
 	else
 		if(prob(cure_chance))
-			stage = max(stage--, 1)
+			stage = max(stage - 1, 1)
 
 	if(disease_flags & CURABLE)
 		if(cure && prob(cure_chance))
@@ -91,9 +91,8 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 		return 0
 
 	. = 1
-
 	for(var/C_id in cures)
-		if(!affected_mob.reagents.has_reagent(C_id in cures))
+		if(!affected_mob.reagents.has_reagent(C_id))
 			.--
 			break //One missing cure is enough to fail
 
