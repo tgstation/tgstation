@@ -156,19 +156,19 @@
 		return 1
 	return 0
 
+/mob/living/silicon/proc/system_integrity()
+	return round((health / maxHealth) * 100)
 
-// this function shows the health of the pAI in the Status panel
+// this function shows the health of a silicon in the Status panel
 /mob/living/silicon/proc/show_system_integrity()
-	if(!src.stat)
-		stat(null, text("System integrity: [round((health / maxHealth) * 100)]%"))
+	if(stat == CONSCIOUS)
+		stat(null, text("System integrity: [system_integrity()]%"))
 	else
 		stat(null, text("Systems nonfunctional"))
-
 
 // This is a pure virtual function, it should be overwritten by all subclasses
 /mob/living/silicon/proc/show_malf_ai()
 	return 0
-
 
 // this function displays the station time in the status panel
 /mob/living/silicon/proc/show_station_time()
