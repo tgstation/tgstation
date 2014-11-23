@@ -1334,7 +1334,7 @@
 /mob/living/carbon/human/proc/can_mind_interact(mob/M)
 	if(!ishuman(M)) return 0 //Can't see non humans with your fancy human mind.
 	var/turf/temp_turf = get_turf(M)
-	if((temp_turf.z != 1 && temp_turf.z != 5) || h.stat!=CONSCIOUS) //Not on mining or the station. Or dead
+	if((temp_turf.z != 1 && temp_turf.z != 5) || M.stat!=CONSCIOUS) //Not on mining or the station. Or dead
 		return 0
 	if(M_PSY_RESIST in M.mutations)
 		return 0
