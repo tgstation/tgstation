@@ -120,7 +120,7 @@
 	else
 		dissipate_track++
 
-/obj/machinery/singularity/proc/expand(var/force_size = 0)
+/obj/machinery/singularity/proc/expand(var/force_size = 0, var/growing = 1)
 	var/temp_allowed_size = allowed_size
 
 	if (force_size)
@@ -128,6 +128,8 @@
 
 	switch (temp_allowed_size)
 		if (1)
+			name = "Gravitational Singularity"
+			desc = "A Gravitational Singularity."
 			current_size = 1
 			icon = 'icons/obj/singularity.dmi'
 			icon_state = "singularity_s1"
@@ -141,7 +143,10 @@
 			overlays = 0
 			if(bus_captured)
 				overlays += image('icons/obj/singularity.dmi',"chain_s1")
+			visible_message("<span class='notice'>The singularity has shrunk to a rather pitiful size.</span>")
 		if (3) // 1 to 3 does not check for the turfs if you put the gens right next to a 1x1 then its going to eat them.
+			name = "Gravitational Singularity"
+			desc = "A Gravitational Singularity."
 			current_size = 3
 			icon = 'icons/effects/96x96.dmi'
 			icon_state = "singularity_s3"
@@ -155,8 +160,14 @@
 			overlays = 0
 			if(bus_captured)
 				overlays += image('icons/effects/96x96.dmi',"chain_s3")
+			if(growing)
+				visible_message("<span class='notice'>The singularity noticeably grows in size.</span>")
+			else
+				visible_message("<span class='notice'>The singularity has shrunk to a less powerful size.</span>")
 		if (5)
 			if ((check_turfs_in(1, 2)) && (check_turfs_in(2, 2)) && (check_turfs_in(4, 2)) && (check_turfs_in(8, 2)))
+				name = "Gravitational Singularity"
+				desc = "A Gravitational Singularity."
 				current_size = 5
 				icon = 'icons/effects/160x160.dmi'
 				icon_state = "singularity_s5"
@@ -170,8 +181,14 @@
 				overlays = 0
 				if(bus_captured)
 					overlays += image('icons/effects/160x160.dmi',"chain_s5")
+				if(growing)
+					visible_message("<span class='notice'>The singularity expands to a reasonable size.</span>")
+				else
+					visible_message("<span class='notice'>The singularity has returned to a safe size.</span>")
 		if(7)
 			if ((check_turfs_in(1, 3)) && (check_turfs_in(2, 3)) && (check_turfs_in(4, 3)) && (check_turfs_in(8, 3)))
+				name = "Gravitational Singularity"
+				desc = "A Gravitational Singularity."
 				current_size = 7
 				icon = 'icons/effects/224x224.dmi'
 				icon_state = "singularity_s7"
@@ -185,7 +202,13 @@
 				overlays = 0
 				if(bus_captured)
 					overlays += image('icons/effects/224x224.dmi',"chain_s7")
+				if(growing)
+					visible_message("<span class='warning'>The singularity expands to a dangerous size.</span>")
+				else
+					visible_message("<span class='notice'>Miraculously, the singularity reduces in size, and can be contained.</span>")
 		if(9) // This one also lacks a check for gens because it eats everything.
+			name = "Gravitational Singularity"
+			desc = "A Gravitational Singularity."
 			current_size = 9
 			icon = 'icons/effects/288x288.dmi'
 			icon_state = "singularity_s9"
@@ -197,6 +220,23 @@
 			overlays = 0
 			if(bus_captured)
 				overlays += image('icons/effects/288x288.dmi',"chain_s9")
+			if(growing)
+				visible_message("<span class='danger'><font size='2'>The singularity has grown out of control!</font></span>")
+			else
+				visible_message("<span class='warning'>The singularity miraculously reduces in size and loses its supermatter properties.</span>")
+		if(11)//SUPERSINGULO
+			name = "Super Gravitational Singularity"
+			desc = "A Gravitational Singularity with the properties of supermatter. <b>It has the power to destroy worlds.</b>"
+			current_size = 11
+			icon = 'icons/effects/352x352.dmi'
+			icon_state = "singularity_s11"
+			pixel_x = -160
+			pixel_y = -160
+			grav_pull = 16
+			consume_range = 5
+			dissipate = 0 //It cant go smaller due to e loss
+			event_chance = 25 //Events will fire off more often.
+			visible_message("<span class='sinister'><font size='3'>You witness the creation of a destructive force that cannot possibly be stopped by human hands.</font></span>")
 
 	if (current_size == allowed_size)
 		investigate_log("<font color='red'>grew to size [current_size].</font>", "singulo")
@@ -221,11 +261,16 @@
 			allowed_size = 5
 		if (1000 to 1999)
 			allowed_size = 7
-		if (2000 to INFINITY)
+		if(2000 to 14999)
 			allowed_size = 9
+		if(15000 to INFINITY)
+			allowed_size = 11
 
 	if (current_size != allowed_size)
-		expand()
+		if(current_size > allowed_size)
+			expand(null, 0)
+		else
+			expand(null, 1)
 	return 1
 
 /obj/machinery/singularity/proc/eat()
@@ -297,6 +342,14 @@
 			var/obj/machinery/bot/B = A
 			if(B.isolated)
 				return
+
+		if(istype(A, /obj/machinery/power/supermatter))//NOW YOU REALLY FUCKED UP
+			if(istype(A, /obj/machinery/power/supermatter/shard))
+				src.energy += 15000//Instantly sends it to max size
+			else
+				src.energy += 20000//Instantly sends it to max size 	;wait, 15000 for a shard and only 20000 for a full singularity? and not even a supermatter cascade out of that?
+			del(A)
+			return
 
 		A.ex_act(1)
 
@@ -378,6 +431,8 @@
 				steps = 4
 			if(9)
 				steps = 5
+			if(11)
+				steps = 6
 	else
 		steps = step
 	var/list/turfs = list()
@@ -444,6 +499,8 @@
 			mezzer()
 		else
 			return 0
+	if(current_size == 11)
+		smwave()
 	return 1
 
 
@@ -474,16 +531,33 @@
 		if(M.stat == CONSCIOUS)
 			if (istype(M,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
-				if(istype(H.glasses,/obj/item/clothing/glasses/meson))
-					H << "\blue You look directly into The [src.name], good thing you had your protective eyewear on!"
+				if(istype(H.glasses,/obj/item/clothing/glasses/meson) && current_size != 11)
+					H << "<span class=\"notice\">You look directly into The [src.name], good thing you had your protective eyewear on!</span>"
 					return
-		M << "\red You look directly into The [src.name] and feel weak."
+				else
+					H << "<span class=\"warning\">You look directly into The [src.name], but your eyewear does absolutely nothing to protect you from it!</span>"
+		M << "\red You look directly into The [src.name] and feel [current_size == 11 ? "helpless" : "weak"]."
 		M.apply_effect(3, STUN)
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("\red <B>[] stares blankly at The []!</B>", M, src), 1)
 
 /obj/machinery/singularity/proc/emp_area()
-	empulse(src, 8, 10)
+	if(current_size != 11)
+		empulse(src, 8, 10)
+	else
+		empulse(src, 12, 16)
+
+/obj/machinery/singularity/proc/smwave()
+	for(var/mob/living/M in view(10, src.loc))
+		if(prob(67))
+			M.apply_effect(rand(energy), IRRADIATE)
+			M << "<span class=\"warning\">You hear an uneartly ringing, then what sounds like a shrilling kettle as you are washed with a wave of heat.</span>"
+			M << "<span class=\"notice\">Miraculously, it fails to kill you.</span>"
+		else
+			M << "<span class=\"danger\">You hear an uneartly ringing, then what sounds like a shrilling kettle as you are washed with a wave of heat.</span>"
+			M << "<span class=\"danger\">You don't even have a moment to react as you are reduced to ashes by the intense radiation.</span>"
+			M.dust()
+	return
 
 /obj/machinery/singularity/proc/pulse()
 	for(var/obj/machinery/power/rad_collector/R in rad_collectors)

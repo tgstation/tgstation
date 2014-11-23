@@ -1,0 +1,5 @@
+author: Velard Amakar and Skowron
+delete-after: true
+changes:
+- rscadd: "Adds the Super Gravitational Singularity."
+- tweak: "Adds flavor text for examining singularities and observing them change in size."

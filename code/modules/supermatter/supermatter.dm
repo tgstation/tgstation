@@ -21,6 +21,8 @@
 	density = 1
 	anchored = 0
 	luminosity = 4
+	
+	l_color = "#ffcc00"
 
 	var/gasefficency = 0.25
 
