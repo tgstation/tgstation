@@ -95,6 +95,7 @@
 	usr.set_machine(src)
 	if (href_list["start"])
 		src.on = !src.on
+		use_power = 1 + src.on
 		update_icon()
 	if(href_list["temp"])
 		var/amount = text2num(href_list["temp"])
@@ -102,6 +103,7 @@
 			src.current_temperature = min(T20C, src.current_temperature+amount)
 		else
 			src.current_temperature = max(min_temperature, src.current_temperature+amount)
+		active_power_usage = (current_heat_capacity * (T20C - current_temperature) / 100) + idle_power_usage
 	src.updateUsrDialog()
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/process()
@@ -204,7 +206,7 @@
 
 	//user << browse(dat, "window=freezer;size=400x500")
 	//onclose(user, "freezer")
-	var/datum/browser/popup = new(user, "freezer", "Cryo Gas Cooling System", 400, 240) // Set up the popup browser window
+	var/datum/browser/popup = new(user, "freezer", "Pyro Gas Heating System", 400, 240) // Set up the popup browser window
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.set_content(dat)
 	popup.open()
@@ -215,13 +217,15 @@
 	usr.set_machine(src)
 	if (href_list["start"])
 		src.on = !src.on
+		use_power = 1 + src.on
 		update_icon()
 	if(href_list["temp"])
 		var/amount = text2num(href_list["temp"])
 		if(amount > 0)
-			src.current_temperature = min((T20C+max_temperature), src.current_temperature+amount)
+			src.current_temperature = min((max_temperature), src.current_temperature+amount)
 		else
 			src.current_temperature = max(T20C, src.current_temperature+amount)
+		active_power_usage = (current_heat_capacity * (current_temperature - T20C) / 100) + idle_power_usage
 	src.updateUsrDialog()
 	src.add_fingerprint(usr)
 	return
