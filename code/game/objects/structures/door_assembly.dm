@@ -429,15 +429,18 @@ obj/structure/door_assembly
 			user << "\blue You need more welding fuel to dissassemble the airlock assembly."
 			return
 
-	else if(istype(W, /obj/item/weapon/wrench) && !anchored )
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-		user.visible_message("[user] secures the airlock assembly to the floor.", "You start to secure the airlock assembly to the floor.")
+	else if(istype(W, /obj/item/weapon/wrench) && !anchored)
+		if(!locate(/obj/machinery/door) in loc)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+			user.visible_message("[user] secures the airlock assembly to the floor.", "You start to secure the airlock assembly to the floor.")
 
-		if(do_after(user, 40))
-			if(!src) return
-			user << "\blue You've secured the airlock assembly."
-			src.name = "Secured Airlock Assembly"
-			src.anchored = 1
+			if(do_after(user, 40))
+				if(!src) return
+				user << "\blue You've secured the airlock assembly."
+				src.name = "Secured Airlock Assembly"
+				src.anchored = 1
+		else
+			user << "There is another door here!"
 
 	else if(istype(W, /obj/item/weapon/wrench) && anchored )
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
