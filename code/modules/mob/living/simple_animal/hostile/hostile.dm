@@ -125,7 +125,7 @@
 			return 0
 		if(isslime(L) && (faction == "slimesummon"))
 			return 0
-		if((istype(L,/mob/living/simple_animal/corgi/Ian) || istype(L,/mob/living/carbon/human/dummy)) && (faction == "admin"))
+		if((istype(L,/mob/living/simple_animal/corgi/Ian) || istype(L,/mob/living/carbon/human/dummy)) && (faction == "adminbus mob"))
 			return 0
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L

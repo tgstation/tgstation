@@ -57,4 +57,4 @@
 	return
 
 /mob/living/simple_animal/hostile/russian/admin
-	faction = "admin"
+	faction = "adminbus mob"

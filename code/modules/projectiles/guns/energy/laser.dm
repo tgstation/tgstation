@@ -31,7 +31,7 @@
 	charge_cost = 50
 
 /obj/item/weapon/gun/energy/laser/admin
-	name = "\improper Infinite Laser Gun"
+	name = "infinite laser gun"
 	desc = "Spray and /pray."
 	icon_state = "laseradmin"
 	projectile_type = /obj/item/projectile/beam

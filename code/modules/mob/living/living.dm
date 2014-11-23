@@ -345,7 +345,7 @@
 /mob/living/proc/rejuvenate()
 
 	var/turf/T = get_turf(src)
-	T.rejuv()
+	T.turf_animation('icons/effects/64x64.dmi',"rejuvinate",-16,0,MOB_LAYER+1,'sound/effects/rejuvinate.ogg')
 
 	// shut down various types of badness
 	setToxLoss(0)

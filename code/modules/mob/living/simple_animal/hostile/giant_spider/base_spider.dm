@@ -190,4 +190,4 @@ var/global/list/spider_types = typesof(/mob/living/simple_animal/hostile/giant_s
 		icon_state = icon_living
 
 /mob/living/simple_animal/hostile/giant_spider/admin
-	faction = "admin"
+	faction = "adminbus mob"

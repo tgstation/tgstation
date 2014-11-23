@@ -84,7 +84,7 @@
 	health = 400
 
 /mob/living/simple_animal/hostile/alien/queen/large/admin
-	faction = "admin"
+	faction = "adminbus mob"
 
 /obj/item/projectile/neurotox
 	damage = 30

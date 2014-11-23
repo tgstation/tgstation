@@ -653,6 +653,9 @@ var/global/loopModeNames=list(
 	disconnect_media_source()
 	update_icon()
 
+/obj/machinery/media/jukebox/superjuke/adminbus/update_media_source()
+
+
 /obj/machinery/media/jukebox/superjuke/adminbus/update_icon()
 	if(playing)
 		overlays += "beats"
@@ -665,3 +668,6 @@ var/global/loopModeNames=list(
 
 /obj/machinery/media/jukebox/superjuke/adminbus/cultify()
 	return
+
+/obj/machinery/media/jukebox/superjuke/adminbus/singuloCanEat()
+	return 0

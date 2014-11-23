@@ -32,7 +32,7 @@
 /obj/structure/stool/bed/chair/vehicle/adminbus/New()
 	..()
 	var/turf/T = get_turf(src)
-	T.busteleport(0)
+	T.turf_animation('icons/effects/160x160.dmi',"busteleport",-64,-32,MOB_LAYER+1,'sound/effects/busteleport.ogg')
 	var/image/underbus = image(icon,"underbus",MOB_LAYER-1)
 	var/image/roadlights = image(icon,"roadlights",LIGHTING_LAYER+1)
 	var/image/advertisement = image(icon,"ad")
@@ -265,7 +265,7 @@
 		return
 	if(isliving(A))
 		var/mob/living/M = A
-		if(M.faction == "admin")
+		if(M.faction == "adminbus mob")
 			return
 		if(M.isolated)
 			return
@@ -417,6 +417,9 @@
 /obj/structure/stool/bed/chair/vehicle/adminbus/cultify()
 	return
 
+/obj/structure/stool/bed/chair/vehicle/adminbus/singuloCanEat()
+	return 0
+
 /////HOOKSHOT/////////
 
 /obj/structure/hookshot
@@ -496,6 +499,9 @@
 /obj/structure/hookshot/cultify()
 	return
 
+/obj/structure/hookshot/singuloCanEat()
+	return 0
+
 /////SINGULO CHAIN/////////
 
 /obj/structure/singulo_chain
@@ -538,6 +544,9 @@
 /obj/structure/singulo_chain/cultify()
 	return
 
+/obj/structure/singulo_chain/singuloCanEat()
+	return 0
+
 /////ROADLIGHTS/////////
 
 /obj/structure/buslight//the things you have to do to pretend that your bus has directional lights...
@@ -551,6 +560,9 @@
 
 /obj/structure/buslight/cultify()
 	return
+
+/obj/structure/buslight/singuloCanEat()
+	return 0
 
 /////TELEPORT WARP/////////
 
@@ -570,3 +582,6 @@
 
 /obj/structure/teleportwarp/cultify()
 	return
+
+/obj/structure/teleportwarp/singuloCanEat()
+	return 0

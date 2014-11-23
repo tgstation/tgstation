@@ -18,7 +18,17 @@ client/proc/antag_madness(var/mob/M in mob_list)
 		usr << "<span class='warning'>Only humans and monkeys can become overpowered antags.</span>"
 		return
 
-	var/list/role_list = list("traitor", "changeling", "vampire", "cult", "rev", "nuke", "deathsquad", "wizard", "monkey")
+	var/list/role_list = list(
+		"traitor",
+		"changeling",
+		"vampire",
+		"cult",
+		"rev",
+		"nuke",
+		"deathsquad",
+		"wizard",
+		"monkey",
+		)
 	var/got_a_job = 0
 
 	if(ismonkey(M))
@@ -56,7 +66,7 @@ client/proc/antag_madness(var/mob/M in mob_list)
 			return
 
 	var/turf/T = get_turf(M)
-	T.beamin("")
+	T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg')
 
 	feedback_add_details("admin_verb","AM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -67,7 +77,17 @@ client/proc/antag_madness(var/mob/M in mob_list)
 	if(!ishuman(M) && !ismonkey(M))
 		return
 
-	var/list/role_list = list("traitor", "changeling", "vampire", "cult", "rev", "nuke", "deathsquad", "wizard", "monkey")
+	var/list/role_list = list(
+		"traitor",
+		"changeling",
+		"vampire",
+		"cult",
+		"rev",
+		"nuke",
+		"deathsquad",
+		"wizard",
+		"monkey",
+		)
 	var/got_a_job = 0
 	if(ismonkey(M))//OOK
 		role_list = list("cult", "monkey")//monkeys in cult robes ftw
@@ -85,7 +105,7 @@ client/proc/antag_madness(var/mob/M in mob_list)
 		return
 
 	var/turf/T = get_turf(M)
-	T.beamin("")
+	T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg')
 
 	M << "<span class='danger'>You get the feeling that you're not the only one who remembered his true origin. Will they be your allies or your foes? That is for you to decide.</span>"
 

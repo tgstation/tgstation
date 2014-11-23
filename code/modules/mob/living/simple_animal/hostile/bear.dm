@@ -148,4 +148,4 @@
 		return M
 
 /mob/living/simple_animal/hostile/bear/admin
-	faction = "admin"
+	faction = "adminbus mob"

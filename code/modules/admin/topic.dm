@@ -1273,13 +1273,13 @@
 		sleep(5)
 		M.loc = pick(tdome1)
 		spawn(50)
-			M << "<span class='danger'>You have been chosen to fight for the Green Team. [pick(\
-			"The wheel of fate is turning!",\
-			"Heaven or Hell!",\
-			"Set Spell Card!",\
-			"Hologram Summer Again!",\
-			"Get ready for the next battle!",\
-			"Fight for your life!",\
+			M << "<span class='danger'>You have been chosen to fight for the Green Team. [pick(
+			"The wheel of fate is turning!",
+			"Heaven or Hell!",
+			"Set Spell Card!",
+			"Hologram Summer Again!",
+			"Get ready for the next battle!",
+			"Fight for your life!",
 			)]</span>"
 		log_admin("[key_name(usr)] has sent [key_name(M)] to the thunderdome. (Team 1)")
 		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Team 1)", 1)
@@ -1353,13 +1353,13 @@
 		sleep(5)
 		M.loc = pick(tdome2)
 		spawn(50)
-			M << "<span class='danger'>You have been chosen to fight for the Red Team. [pick(\
-			"The wheel of fate is turning!",\
-			"Heaven or Hell!",\
-			"Set Spell Card!",\
-			"Hologram Summer Again!",\
-			"Get ready for the next battle!",\
-			"Fight for your life!",\
+			M << "<span class='danger'>You have been chosen to fight for the Red Team. [pick(
+			"The wheel of fate is turning!",
+			"Heaven or Hell!",
+			"Set Spell Card!",
+			"Hologram Summer Again!",
+			"Get ready for the next battle!",
+			"Fight for your life!",
 			)]</span>"
 		log_admin("[key_name(usr)] has sent [key_name(M)] to the thunderdome. (Team 2)")
 		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Team 2)", 1)
@@ -2615,7 +2615,7 @@
 				D.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(D), slot_ears)
 				D.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(D), slot_back)
 				D.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(D.back), slot_in_backpack)
-				T.beamin("admin")
+				T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/misc/adminspawn.ogg')
 				D.name = "Admin"
 				D.real_name = "Admin"
 				var/newname = ""

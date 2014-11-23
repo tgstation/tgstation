@@ -99,7 +99,8 @@
 
 /obj/machinery/media/New()
 	..()
-	if(istype(src, /obj/machinery/media/jukebox/superjuke/adminbus))	return//ugly but necessary
+	if(istype(src, /obj/machinery/media/jukebox/superjuke/adminbus))//the point here is to have update_media_source() not proc on adminbus/New(), without affecting the rest of its inheritance.
+		return
 	update_media_source()
 
 /obj/machinery/media/Destroy()

@@ -192,7 +192,7 @@ var/global/narsie_behaviour = "CultStation13"
 
 //OLD BEHAVIOUR
 	else if(narsie_behaviour == "Nar-Singulo")
-		if (is_type_in_list(A, uneatable))
+		if(!(A.singuloCanEat()))
 			return 0
 
 		if (istype(A, /mob/living/))
@@ -224,7 +224,7 @@ var/global/narsie_behaviour = "CultStation13"
 					continue
 
 				if (dist > consume_range && canPull(AM2))
-					if (is_type_in_list(AM2, uneatable))
+					if(!(AM2.singuloCanEat()))
 						continue
 
 					if (101 == AM2.invisibility)
@@ -239,7 +239,7 @@ var/global/narsie_behaviour = "CultStation13"
 
 
 /obj/machinery/singularity/narsie/consume(const/atom/A) //This one is for the small ones.
-	if (is_type_in_list(A, uneatable))
+	if(!(A.singuloCanEat()))
 		return 0
 
 	if (istype(A, /mob/living/))
@@ -271,7 +271,7 @@ var/global/narsie_behaviour = "CultStation13"
 				continue
 
 			if (dist > consume_range && canPull(AM2))
-				if (is_type_in_list(AM2, uneatable))
+				if(!(AM2.singuloCanEat()))
 					continue
 
 				if (101 == AM2.invisibility)
@@ -440,7 +440,7 @@ var/global/mr_clean_targets = list(
 	update_icon()
 
 /obj/machinery/singularity/narsie/large/clean/consume(const/atom/A)
-	if (is_type_in_list(A, uneatable))
+	if(!(A.singuloCanEat()))
 		return 0
 
 	if (istype(A, /mob/living/))
@@ -471,7 +471,7 @@ var/global/mr_clean_targets = list(
 				continue
 
 			if (dist > consume_range && canPull(AM))
-				if (is_type_in_list(AM, uneatable))
+				if(!(AM.singuloCanEat()))
 					continue
 
 				if (101 == AM.invisibility)

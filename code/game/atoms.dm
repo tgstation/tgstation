@@ -133,6 +133,9 @@
 /atom/proc/emp_act(var/severity)
 	return
 
+/atom/proc/singuloCanEat()
+	return 1
+
 /atom/proc/bullet_act(var/obj/item/projectile/Proj)
 	return 0
 

@@ -321,10 +321,11 @@
 	item_state = "gold_id"
 	registered_name = "Captain"
 	assignment = "Captain"
-	New()
-		var/datum/job/captain/J = new/datum/job/captain
-		access = J.get_access()
-		..()
+
+/obj/item/weapon/card/id/captains_spare/New()
+	var/datum/job/captain/J = new/datum/job/captain
+	access = J.get_access()
+	..()
 
 /obj/item/weapon/card/id/admin
 	name = "Admin ID"
@@ -332,9 +333,10 @@
 	item_state = "gold_id"
 	registered_name = "Admin"
 	assignment = "Testing Shit"
-	New()
-		access = get_absolutely_all_accesses()
-		..()
+
+/obj/item/weapon/card/id/admin/New()
+	access = get_absolutely_all_accesses()
+	..()
 
 /obj/item/weapon/card/id/centcom
 	name = "\improper CentCom. ID"
@@ -342,9 +344,10 @@
 	icon_state = "centcom"
 	registered_name = "Central Command"
 	assignment = "General"
-	New()
-		access = get_all_centcom_access()
-		..()
+
+/obj/item/weapon/card/id/centcom/New()
+	access = get_all_centcom_access()
+	..()
 
 /obj/item/weapon/card/id/salvage_captain
 	name = "Captain's ID"
@@ -353,15 +356,12 @@
 	desc = "Finders, keepers."
 	access = list(access_salvage_captain)
 
-
-
 /obj/item/weapon/card/id/medical
 	name = "Medical ID"
 	registered_name = "Medic"
 	icon_state = "medical"
 	desc = "A card covered in the blood stains of the wild ride."
 	access = list(access_medical, access_genetics, access_morgue, access_chemistry, access_paramedic, access_virology, access_surgery, access_cmo)
-
 
 /obj/item/weapon/card/id/security
 	name = "Security ID"

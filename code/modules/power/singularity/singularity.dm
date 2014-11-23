@@ -1,18 +1,15 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 // Added spess ghoasts/cameras to this so they don't add to the lag. - N3X.
-var/global/list/uneatable = list(
-	/obj/effect/overlay,
-	/mob/dead,
-	/mob/camera,
-	/mob/new_player,
-	/obj/structure/stool/bed/chair/vehicle/adminbus,
-	/obj/structure/singulo_chain,
-	/obj/structure/hookshot,
-	/obj/structure/buslight,
-	/obj/structure/teleportwarp,
-	/obj/machinery/media/jukebox/superjuke/adminbus,
-	)
+
+//Added a singuloCanEat proc to atoms. This list is now kinda obsolete.
+//var/global/list/uneatable = list(
+//	/obj/effect/overlay,
+//	/mob/dead,
+//	/mob/camera,
+//	/mob/new_player,
+//	)
+
 
 /obj/machinery/singularity/
 	name = "Gravitational Singularity"
@@ -259,7 +256,7 @@ var/global/list/uneatable = list(
 	return 0
 
 /obj/machinery/singularity/proc/consume(const/atom/A)
-	if (is_type_in_list(A, uneatable))
+	if(!(A.singuloCanEat()))
 		return 0
 
 	var/gain = 0
@@ -319,7 +316,7 @@ var/global/list/uneatable = list(
 				continue
 
 			if (dist > consume_range && canPull(AM))
-				if (is_type_in_list(AM, uneatable))
+				if(!(AM.singuloCanEat()))
 					continue
 
 				if (101 == AM.invisibility)

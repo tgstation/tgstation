@@ -39,4 +39,4 @@
 	unsuitable_atoms_damage = 10
 
 /mob/living/simple_animal/hostile/retaliate/clown/admin
-	faction = "admin"
+	faction = "adminbus mob"

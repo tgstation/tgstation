@@ -101,6 +101,9 @@
 		explosion(location, -1, -1, 2, 3)
 
 	if(target)
+		if(!(target.singuloCanEat()))//mostly adminbus objects. It'd make sense though that C4 can't destroy what even a singulo can't eat.
+			del(src)
+			return
 		if (istype(target, /turf/simulated/wall))
 			target:dismantle_wall(1)
 		else

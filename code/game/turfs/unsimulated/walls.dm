@@ -31,7 +31,7 @@ turf/unsimulated/wall/splashscreen
 
 /turf/unsimulated/wall/cultify()
 	ChangeTurf(/turf/unsimulated/wall/cult)
-	cultification()
+	turf_animation('icons/effects/effects.dmi',"cultwall",0,0,MOB_LAYER-1)
 	return
 
 /turf/unsimulated/wall/cult/cultify()

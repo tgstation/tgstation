@@ -109,7 +109,7 @@ proc/process_ghost_teleport_locs()
 				not_in_order = 1
 	while(not_in_order)
 
-var/list/adminbusteleportlocs = list()
+var/global/list/adminbusteleportlocs = list()
 
 proc/process_adminbus_teleport_locs()
 	for(var/area/AR in world)

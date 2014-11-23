@@ -1,5 +1,5 @@
 /obj/item/device/codebreaker
-	name = "\improper code breaker"
+	name = "code breaker"
 	desc = "Can be used to decipher a Nuclear Bomb's activation code"
 	icon_state = "codebreaker"
 	item_state = "electronic"
@@ -18,18 +18,18 @@
 	var/operation = 0
 
 /obj/item/device/codebreaker/afterattack(obj/machinery/nuclearbomb/O, mob/living/carbon/user)
-	if(istype(O) && (operation == 0))
+	if(istype(O) && !operation)
 		operation = 1
 		icon_state = "codebreaker-working"
-		user << "<span class='notice'>Stand still and keep the code breaker in your hands while it cracks the Nuclear Device's activation code.</span>"
-		var/turf/T1 = get_turf(user)
-		var/turf/T2 = get_turf(O)
+		user << "<span class='notice'>Stand still and keep the [src] in your hands while it cracks the [O]'s activation code.</span>"
+		var/turf/loc_user = get_turf(user)
+		var/turf/loc_nuke = get_turf(O)
 		var/crackduration = rand(100,300)
 		var/delayfraction = round(crackduration/6)
 
 		for(var/i = 0, i<6, i++)
 			sleep(delayfraction)
-			if(!user || user.stat || user.weakened || user.stunned || !(user.loc == T1) || !(O.loc == T2) || (!(user.l_hand == src) && !(user.r_hand == src)))
+			if(!user || user.stat || user.weakened || user.stunned || !(user.loc == loc_user) || !(O.loc == loc_nuke) || (!(user.l_hand == src) && !(user.r_hand == src)))
 				user << "<span class='warning'>You need to stand still for the whole duration of the code breaking for the device to work, and keep it in one of your hands.</span>"
 				icon_state = "codebreaker"
 				operation = 0
@@ -38,6 +38,8 @@
 		icon_state = "codebreaker-found"
 		playsound(src, 'sound/machines/info.ogg', 50, 1)
 		user << "It worked! The code is \"[O.r_code]\"."
-		spawn(20)
-			icon_state = "codebreaker"
-			operation = 0
+		sleep(20)
+		icon_state = "codebreaker"
+		operation = 0
+	else
+		return ..()

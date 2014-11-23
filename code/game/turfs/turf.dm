@@ -27,7 +27,7 @@
 	// Decal shit.
 	var/list/decals
 
-	// cultification animation
+	// Flick animation shit
 	var/atom/movable/overlay/c_animation = null
 
 	// holy water

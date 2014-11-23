@@ -83,7 +83,7 @@
 		turflist -= T
 		var/mob/living/simple_animal/hostile/retaliate/clown/admin/M = new /mob/living/simple_animal/hostile/retaliate/clown/admin(T)
 		spawned_mobs += M
-		T.beamin("clown")
+		T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg',"#FFC0FF")
 		sleep(5)
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/spawn_carps(mob/bususer as mob)
@@ -106,7 +106,7 @@
 		turflist -= T
 		var/mob/living/simple_animal/hostile/carp/admin/M = new /mob/living/simple_animal/hostile/carp/admin(T)
 		spawned_mobs += M
-		T.beamin("carp")
+		T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg',"#C70AF5")
 		sleep(5)
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/spawn_bears(mob/bususer as mob)
@@ -133,7 +133,7 @@
 		else
 			var/mob/living/simple_animal/hostile/bear/admin/M = new /mob/living/simple_animal/hostile/bear/admin(T)
 			spawned_mobs += M
-		T.beamin("bear")
+		T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg',"#454545")
 		sleep(5)
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/spawn_trees(mob/bususer as mob)
@@ -156,7 +156,7 @@
 		turflist -= T
 		var/mob/living/simple_animal/hostile/tree/admin/M = new /mob/living/simple_animal/hostile/tree/admin(T)
 		spawned_mobs += M
-		T.beamin("tree")
+		T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg',"#232B2C")
 		sleep(5)
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/spawn_spiders(mob/bususer as mob)
@@ -179,7 +179,7 @@
 		turflist -= T
 		var/mob/living/simple_animal/hostile/giant_spider/admin/M = new /mob/living/simple_animal/hostile/giant_spider/admin(T)
 		spawned_mobs += M
-		T.beamin("spider")
+		T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg',"#3B2D1C")
 		sleep(5)
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/spawn_alien(mob/bususer as mob)
@@ -200,7 +200,7 @@
 		turflist -= T
 		var/mob/living/simple_animal/hostile/alien/queen/large/admin/M = new /mob/living/simple_animal/hostile/alien/queen/large/admin(T)
 		spawned_mobs += M
-		T.beamin("alien")
+		T.turf_animation('icons/effects/96x96.dmi',"beamin",-16,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg',"#525288")
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/remove_mobs(mob/bususer as mob)
 
@@ -211,9 +211,12 @@
 	flick("icon_delmobs-push",bususer.adminbus_delmobs)
 
 	for(var/mob/M in spawned_mobs)
+		var/xoffset = -32
+		if(istype(M,/mob/living/simple_animal/hostile/alien/queen/large))
+			xoffset = -16
 		var/turf/T = get_turf(M)
 		if(T)
-			T.beamin("")
+			T.turf_animation('icons/effects/96x96.dmi',"beamin",xoffset,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg')
 		del(M)
 	spawned_mobs.len = 0
 
@@ -525,13 +528,13 @@
 			var/obj/item/weapon/gun/energy/laser/admin/L = new /obj/item/weapon/gun/energy/laser/admin(buckled_mob)
 			spawnedlasers += L
 			buckled_mob.equip_to_slot_or_del(L, slot_r_hand)
-			buckled_mob << "<span class='notice'>Spray and /pray!</span>"
+			buckled_mob << "<span class='warning'>Spray and /pray!</span>"
 			buckled_mob.update_inv_r_hand()
 		else if(!(buckled_mob.l_hand))
 			var/obj/item/weapon/gun/energy/laser/admin/L = new /obj/item/weapon/gun/energy/laser/admin(buckled_mob)
 			spawnedlasers += L
 			buckled_mob.equip_to_slot_or_del(L, slot_l_hand)
-			buckled_mob << "<span class='notice'>Spray and /pray!</span>"
+			buckled_mob << "<span class='warning'>Spray and /pray!</span>"
 			buckled_mob.update_inv_l_hand()
 
 	for(var/mob/living/carbon/C in passengers)
@@ -539,14 +542,14 @@
 			var/obj/item/weapon/gun/energy/laser/admin/L = new /obj/item/weapon/gun/energy/laser/admin(C)
 			spawnedlasers += L
 			C.equip_to_slot_or_del(L, slot_r_hand)
-			C << "<span class='notice'>Our benefactors have provided you with an infinite laser gun. Spray and /pray!</span>"
+			C << "<span class='warning'>Our benefactors have provided you with an infinite laser gun. Spray and /pray!</span>"
 			distributed++
 			C.update_inv_r_hand()
 		else if(!(C.l_hand))
 			var/obj/item/weapon/gun/energy/laser/admin/L = new /obj/item/weapon/gun/energy/laser/admin(C)
 			spawnedlasers += L
 			C.equip_to_slot_or_del(L, slot_l_hand)
-			C << "<span class='notice'>Our benefactors have provided you with an infinite laser gun. Spray and /pray!</span>"
+			C << "<span class='warning'>Our benefactors have provided you with an infinite laser gun. Spray and /pray!</span>"
 			distributed++
 			C.update_inv_l_hand()
 
@@ -593,6 +596,12 @@
 	visible_message("<span class='notice'>WE BUILD!</span>")
 
 	for(var/obj/machinery/M in range(src,3))
+		if(istype(M,/obj/machinery/door/window))//for some reason it makes the windoors' sprite disapear (until you bump into it)
+			continue
+		if(istype(M,/obj/machinery/light))
+			var/obj/machinery/light/L = M
+			L.fix()
+			continue
 		M.stat = 0
 		M.update_icon()
 
@@ -669,8 +678,8 @@
 	warp.icon_state = ""
 	src.loc = T2
 	src.Move()
-	T1.busteleport()
-	T2.busteleport()
+	T1.turf_animation('icons/effects/160x160.dmi',"busteleport",-64,-32,MOB_LAYER+1,'sound/effects/busteleport.ogg')
+	T2.turf_animation('icons/effects/160x160.dmi',"busteleport",-64,-32,MOB_LAYER+1,'sound/effects/busteleport.ogg')
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/Sendto_Thunderdome_Obs(mob/bususer as mob)
 
@@ -691,7 +700,7 @@
 
 	var/turf/T = get_turf(src)
 	if(T)
-		T.beamin("")
+		T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg')
 
 	for(var/i=passengers.len;i>0;i--)
 		var/atom/A = passengers[i]
@@ -734,7 +743,7 @@
 
 		var/turf/TD = get_turf(A)
 		if(TD)
-			TD.beamin("")
+			TD.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg')
 
 		sleep(1)
 
@@ -757,7 +766,7 @@
 
 	var/turf/T = get_turf(src)
 	if(T)
-		T.beamin("")
+		T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg')
 
 	var/alternate = 1
 
@@ -791,7 +800,7 @@
 
 	var/turf/T = get_turf(src)
 	if(T)
-		T.beamin("")
+		T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg')
 
 	for(var/i=passengers.len;i>0;i--)
 		var/atom/A = passengers[i]
@@ -818,7 +827,7 @@
 
 	var/turf/T = get_turf(src)
 	if(T)
-		T.beamin("")
+		T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg')
 
 	for(var/i=passengers.len;i>0;i--)
 		var/atom/A = passengers[i]
@@ -912,7 +921,7 @@
 
 	var/turf/T = get_turf(A)
 	if(T)
-		T.beamin("green")
+		T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg', "#00FF00")
 
 	sleep(1)
 
@@ -1002,7 +1011,7 @@
 
 	var/turf/T = get_turf(A)
 	if(T)
-		T.beamin("red")
+		T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg', "#FF0000")
 
 	sleep(1)
 
@@ -1051,7 +1060,7 @@
 
 	var/turf/T1 = get_turf(src)
 	if(T1)
-		T1.beamin("")
+		T1.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg')
 
 	for(var/mob/M in passengers)
 		freed(M)
@@ -1059,7 +1068,7 @@
 
 		var/turf/T2 = get_turf(M)
 		if(T2)
-			T2.beamin("")
+			T2.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg')
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/Make_Antag(mob/bususer as mob)
 
@@ -1188,7 +1197,7 @@
 	del(lightsource)
 
 	var/turf/T = get_turf(src)
-	T.busteleport()
+	T.turf_animation('icons/effects/160x160.dmi',"busteleport",-64,-32,MOB_LAYER+1,'sound/effects/busteleport.ogg')
 
 	if(buckled_mob)
 		buckled_mob.hud_used.remove_adminbus_hud()

@@ -70,4 +70,4 @@
 	del(src)
 
 /mob/living/simple_animal/hostile/tree/admin
-	faction = "admin"
+	faction = "adminbus mob"
