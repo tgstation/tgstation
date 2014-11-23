@@ -145,16 +145,20 @@ proc/wabbajack(mob/living/M)
 					new_mob = new /mob/living/carbon/monkey(M.loc)
 					new_mob.languages |= HUMAN
 				if("robot")
-					if(prob(30))
-						new_mob = new /mob/living/silicon/robot/syndicate(M.loc)
+					var/robot = pick("cyborg","syndiborg","drone")
+					switch(robot)
+						if("cyborg")		new_mob = new /mob/living/silicon/robot(M.loc)
+						if("syndiborg")		new_mob = new /mob/living/silicon/robot/syndicate(M.loc)
+						if("drone")			new_mob = new /mob/living/simple_animal/drone(M.loc)
+					if(issilicon(new_mob))
+						new_mob.gender = M.gender
+						new_mob.invisibility = 0
+						new_mob.job = "Cyborg"
+						var/mob/living/silicon/robot/Robot = new_mob
+						Robot.mmi = new /obj/item/device/mmi(new_mob)
+						Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
 					else
-						new_mob = new /mob/living/silicon/robot(M.loc)
-					new_mob.gender = M.gender
-					new_mob.invisibility = 0
-					new_mob.job = "Cyborg"
-					var/mob/living/silicon/robot/Robot = new_mob
-					Robot.mmi = new /obj/item/device/mmi(new_mob)
-					Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
+						new_mob.languages |= HUMAN
 				if("slime")
 					new_mob = new /mob/living/carbon/slime(M.loc)
 					if(prob(50))
@@ -177,7 +181,7 @@ proc/wabbajack(mob/living/M)
 					new_mob.languages |= HUMAN*/
 				if("animal")
 					if(prob(50))
-						var/beast = pick("carp","bear","mushroom","statue", "bat", "goat","killertomato", "spiderbase", "spiderhunter")
+						var/beast = pick("carp","bear","mushroom","statue", "bat", "goat","killertomato", "spiderbase", "spiderhunter", "blobbernaut", "magicarp", "chaosmagicarp")
 						switch(beast)
 							if("carp")		new_mob = new /mob/living/simple_animal/hostile/carp(M.loc)
 							if("bear")		new_mob = new /mob/living/simple_animal/hostile/bear(M.loc)
@@ -188,6 +192,9 @@ proc/wabbajack(mob/living/M)
 							if("killertomato")	new_mob = new /mob/living/simple_animal/hostile/killertomato(M.loc)
 							if("spiderbase")	new_mob = new /mob/living/simple_animal/hostile/poison/giant_spider(M.loc)
 							if("spiderhunter")	new_mob = new /mob/living/simple_animal/hostile/poison/giant_spider/hunter(M.loc)
+							if("blobbernaut")	new_mob = new /mob/living/simple_animal/hostile/blobbernaut(M.loc)
+							if("magicarp")		new_mob = new /mob/living/simple_animal/hostile/carp/ranged(M.loc)
+							if("chaosmagicarp")	new_mob = new /mob/living/simple_animal/hostile/carp/ranged/chaos(M.loc)
 					else
 						var/animal = pick("parrot","corgi","crab","pug","cat","mouse","chicken","cow","lizard","chick")
 						switch(animal)
@@ -228,7 +235,7 @@ proc/wabbajack(mob/living/M)
 
 			new_mob << "<B>Your form morphs into that of a [randomize].</B>"
 
-			qdel(M)
+			del(M)
 			return new_mob
 
 /obj/item/projectile/magic/animate

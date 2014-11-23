@@ -1124,12 +1124,18 @@ Status: []<BR>"},
 			usr << "Control panel is locked!"
 			return
 	if (href_list["toggleOn"])
-		src.enabled = !src.enabled
-		src.updateTurrets()
+		toggle_on()
 	else if (href_list["toggleLethal"])
-		src.lethal = !src.lethal
-		src.updateTurrets()
+		toggle_lethal()
 	src.attack_hand(usr)
+
+/obj/machinery/turretid/proc/toggle_lethal()
+	lethal = !lethal
+	updateTurrets()
+
+/obj/machinery/turretid/proc/toggle_on()
+	enabled = !enabled
+	updateTurrets()
 
 /obj/machinery/turretid/proc/updateTurrets()
 	if(control_area)

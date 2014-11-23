@@ -21,9 +21,6 @@
 /turf/simulated/floor/vault
 	icon_state = "rockvault"
 
-/turf/simulated/wall/vault
-	icon_state = "rockvault"
-
 /turf/simulated/floor/bluegrid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "bcircuit"
@@ -31,7 +28,6 @@
 /turf/simulated/floor/greengrid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "gcircuit"
-
 
 /turf/simulated/shuttle
 	name = "shuttle"
