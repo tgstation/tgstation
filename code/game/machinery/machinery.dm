@@ -115,6 +115,7 @@ Class Procs:
 /obj/machinery/New()
 	..()
 	machines += src
+	auto_use_power()
 
 /obj/machinery/Destroy()
 	machines.Remove(src)
@@ -276,8 +277,10 @@ Class Procs:
 /obj/machinery/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
-/obj/machinery/attack_hand(mob/user as mob)
-	if(!interact_offline && stat & (NOPOWER|BROKEN|MAINT))
+/obj/machinery/attack_hand(mob/user as mob, var/check_power = 1)
+	if(check_power && stat & NOPOWER)
+		return 1
+	if(!interact_offline && stat & (BROKEN|MAINT))
 		return 1
 	if(user.lying || user.stat)
 		return 1
