@@ -88,8 +88,8 @@ effective or pretty fucking useless.
 
 /obj/item/device/rad_laser/attack(mob/living/M as mob, mob/living/user as mob)
 	if(!used)
-		..()
-		user.visible_message(text("<span class='notice'>[] has analyzed []'s vitals.</span>", user, M))
+		add_logs(user, M, "irradiated", object="[src.name]")
+		user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.</span>")
 		var/cooldown = round(max(100,(((intensity*8)-(wavelength/2))+(intensity*2))*10))
 		used = 1
 		icon_state = "health1"
@@ -100,7 +100,7 @@ effective or pretty fucking useless.
 					M.apply_effect(round(intensity/1.5), PARALYZE)
 				M.apply_effect(intensity*10, IRRADIATE)
 	else
-		user << "<span class='danger'>The radioactive microlaser is still recharging.</span>"
+		user << "<span class='warning'>The radioactive microlaser is still recharging.</span>"
 
 /obj/item/device/rad_laser/proc/handle_cooldown(var/cooldown)
 	spawn(cooldown)
