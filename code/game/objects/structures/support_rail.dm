@@ -11,9 +11,9 @@
 	explosion_resistance = 5
 	var/health = 10
 	var/destroyed = 0
-	var/mob/living/supported_mob
+	var/mob/living/carbon/human/supported_mob
 
-/obj/structure/support_rail/attackby(obj/item/weapon/W, mob/user as mob)
+/obj/structure/support_rail/attackby(obj/item/weapon/W, mob/living/carbon/human/user as mob)
 	if(istype(W, /obj/item/weapon/wrench))
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		new /obj/item/stack/sheet/metal(src.loc)
@@ -29,24 +29,23 @@
 
 /obj/structure/support_rail/proc/letgo()
 	supported_mob.update_canmove()
-	supported_mob.shoes.flags &= ~NOSLIP
+	user.anchored = 0
 	supported_mob.visible_message(
 		"<span class='notice'>[supported_mob.name] let go.</span>")
 	src.supported_mob = null
 	return
 
-/obj/structure/support_rail/attack_hand(mob/user as mob) //I just realized, you could put on shoes and gain noslip, then take them off.
+/obj/structure/support_rail/attack_hand(mob/user as mob)
 	if(supported_mob) //Anyone can force you to let go
 		letgo()
 		add_fingerprint(user)
 	else
-		if(user.shoes)
-			supported_mob = user
-			user.visible_message(
-					"<span class='notice'>[supported_mob.name] grabbed the rail.</span>")
-			user.shoes.flags |= NOSLIP
-			user.loc = src.loc
-			user.dir = src.dir
-			user.update_canmove()
-			add_fingerprint(user)
+		supported_mob = user
+		user.visible_message(
+				"<span class='notice'>[supported_mob.name] grabbed the rail.</span>")
+		user.anchored = 1
+		user.loc = src.loc
+		user.dir = src.dir
+		user.update_canmove()
+		add_fingerprint(user)
 	return
