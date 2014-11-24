@@ -182,7 +182,6 @@ RCD
 							activate()
 							var/obj/machinery/door/airlock/T = new airlock_type( A )
 							if(!T.checkForMultipleDoors())
-								world << "Door found!"
 								qdel(T)
 								useResource(-10, user)
 								return 0
