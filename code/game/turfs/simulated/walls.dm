@@ -82,21 +82,7 @@
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 
 /turf/simulated/wall/attack_paw(mob/living/user as mob)
-	user.changeNext_move(CLICK_CD_MELEE)
-	if ((HULK in user.mutations))
-		user.do_attack_animation(src)
-		if (prob(hardness))
-			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-			user << "<span class='notice'>You smash through the wall.</span>"
-			user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-			dismantle_wall(1)
-			return
-		else
-			playsound(src, 'sound/effects/bang.ogg', 50, 1)
-			usr << text("<span class='notice'>You punch the wall.</span>")
-			return
-
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 
 /turf/simulated/wall/attack_animal(var/mob/living/simple_animal/M)
@@ -109,9 +95,10 @@
 		return
 
 
-/turf/simulated/wall/attack_hand(mob/user as mob)
+/turf/simulated/wall/attack_hand(mob/living/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if (HULK in user.mutations)
+	if ((HULK in user.mutations) && (user in range(1,src))) //needed because of TK
+		user.do_attack_animation(src)
 		if (prob(hardness))
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 			usr << text("<span class='notice'>You smash through the wall.</span>")
