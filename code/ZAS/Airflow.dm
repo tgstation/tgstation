@@ -292,7 +292,7 @@ proc/AirflowSpace(zone/A)
 				airflow_dest = locate(Clamp(x + xo, 1, world.maxx), Clamp(y + yo, 1, world.maxy), z)
 			if ((src.x == 1 || src.x == world.maxx || src.y == 1 || src.y == world.maxy))
 				break
-			if(!istype(loc, /turf))
+			if(!isturf(loc))
 				break
 			step_towards(src, src.airflow_dest)
 			if(ismob(src) && src:client)
