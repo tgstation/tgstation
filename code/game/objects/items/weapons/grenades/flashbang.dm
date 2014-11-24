@@ -35,7 +35,7 @@
 			takes_eye_damage = 1
 			var/mob/living/carbon/human/H = C
 			ear_safety = 0
-			if(istype(H.ears, /obj/item/clothing/ears/earmuffs) || istype(H.head, /obj/item/clothing/head/helmet))
+			if((H.ears.flags & EARBANGPROTECT) || (H.head.flags & HEADBANGPROTECT))
 				ear_safety++
 		if(ismonkey(C))
 			ear_safety = 0
