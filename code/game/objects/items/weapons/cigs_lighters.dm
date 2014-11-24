@@ -70,6 +70,22 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	matchburnout()
 	return ..()
 
+/obj/item/weapon/match/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	if(!isliving(M))
+		return
+	M.IgniteMob()
+	if(!istype(M,/mob/living/carbon))
+		return
+	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && user.zone_sel.selecting == "mouth" && lit)
+		var/obj/item/clothing/mask/cigarette/cig = M.wear_mask
+		if(M == user)
+			cig.attackby(src, user)
+		else
+			cig.light("<span class='notice'>[user] holds the [name] out for [M], and lights the [cig.name].</span>")
+	else
+		..()
+
+
 //////////////////
 //FINE SMOKABLES//
 //////////////////
