@@ -780,6 +780,12 @@
 		if(pack.contents.len == 0)
 			qdel(pack)
 
+		switch(team)
+			if("Green")
+				M.loc = pick(tdome1)
+			if("Red")
+				M.loc = pick(tdome2)
+
 		M << "<span class='danger'>You have been chosen to fight for the [team] Team. [pick(\
 		"The wheel of fate is turning!",\
 		"Heaven or Hell!",\
@@ -805,11 +811,11 @@
 		B.anchored = 0
 		passengers -= B
 
-	switch(team)
-		if("Green")
-			A.loc = pick(tdome1)
-		if("Red")
-			A.loc = pick(tdome2)
+		switch(team)
+			if("Green")
+				B.loc = pick(tdome1)
+			if("Red")
+				B.loc = pick(tdome2)
 
 	var/turf/T = get_turf(A)
 	if(T)
