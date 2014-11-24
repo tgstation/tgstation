@@ -676,35 +676,35 @@
 		if("Spawn Clowns")
 			if(usr.buckled && istype(usr.buckled, /obj/structure/stool/bed/chair/vehicle/adminbus))
 				var/obj/structure/stool/bed/chair/vehicle/adminbus/A = usr.buckled
-				A.spawn_clowns(usr)
+				A.spawn_mob(usr,1,5)
 		if("Spawn Carps")
 			if(usr.buckled && istype(usr.buckled, /obj/structure/stool/bed/chair/vehicle/adminbus))
 				var/obj/structure/stool/bed/chair/vehicle/adminbus/A = usr.buckled
-				A.spawn_carps(usr)
+				A.spawn_mob(usr,2,5)
 		if("Spawn Bears")
 			if(usr.buckled && istype(usr.buckled, /obj/structure/stool/bed/chair/vehicle/adminbus))
 				var/obj/structure/stool/bed/chair/vehicle/adminbus/A = usr.buckled
-				A.spawn_bears(usr)
+				A.spawn_mob(usr,3,5)
 		if("Spawn Trees")
 			if(usr.buckled && istype(usr.buckled, /obj/structure/stool/bed/chair/vehicle/adminbus))
 				var/obj/structure/stool/bed/chair/vehicle/adminbus/A = usr.buckled
-				A.spawn_trees(usr)
+				A.spawn_mob(usr,4,5)
 		if("Spawn Spiders")
 			if(usr.buckled && istype(usr.buckled, /obj/structure/stool/bed/chair/vehicle/adminbus))
 				var/obj/structure/stool/bed/chair/vehicle/adminbus/A = usr.buckled
-				A.spawn_spiders(usr)
+				A.spawn_mob(usr,5,5)
 		if("Spawn Large Alien Queen")
 			if(usr.buckled && istype(usr.buckled, /obj/structure/stool/bed/chair/vehicle/adminbus))
 				var/obj/structure/stool/bed/chair/vehicle/adminbus/A = usr.buckled
-				A.spawn_alien(usr)
+				A.spawn_mob(usr,6,1)
 		if("Spawn Loads of Captain Spare IDs")
 			if(usr.buckled && istype(usr.buckled, /obj/structure/stool/bed/chair/vehicle/adminbus))
 				var/obj/structure/stool/bed/chair/vehicle/adminbus/A = usr.buckled
-				A.Loadsa_Captains_Spares(usr)
+				A.loadsa_goodies(usr,1)
 		if("Spawn Loads of Money")
 			if(usr.buckled && istype(usr.buckled, /obj/structure/stool/bed/chair/vehicle/adminbus))
 				var/obj/structure/stool/bed/chair/vehicle/adminbus/A = usr.buckled
-				A.Loadsa_Money(usr)
+				A.loadsa_goodies(usr,2)
 		if("Repair Surroundings")
 			if(usr.buckled && istype(usr.buckled, /obj/structure/stool/bed/chair/vehicle/adminbus))
 				var/obj/structure/stool/bed/chair/vehicle/adminbus/A = usr.buckled
