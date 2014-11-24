@@ -67,7 +67,6 @@
 	desc = "The robust standard-issue cap of the Head of Security. For showing the officers who's in charge."
 	icon_state = "hoscap"
 	armor = list(melee = 80, bullet = 60, laser = 50, energy = 10, bomb = 25, bio = 10, rad = 0)
-	flags = HEADBANGPROTECT
 	strip_delay = 80
 
 /obj/item/clothing/head/HoS/beret
@@ -80,7 +79,6 @@
 	desc = "It's a special armored hat issued to the Warden of a security force. Protects the head from impacts."
 	icon_state = "policehelm"
 	armor = list(melee = 60, bullet = 5, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
-	flags = HEADBANGPROTECT
 	strip_delay = 60
 
 /obj/item/clothing/head/warden/drill
@@ -93,7 +91,6 @@
 	desc = "A robust beret with the security insignia emblazoned on it. For officers that are more inclined towards style than safety."
 	icon_state = "beret_badge"
 	armor = list(melee = 30, bullet = 5, laser = 15, energy = 10, bomb = 0, bio = 0, rad = 0)
-	flags = HEADBANGPROTECT
 	strip_delay = 60
 
 /obj/item/clothing/head/beret/sec/navyhos

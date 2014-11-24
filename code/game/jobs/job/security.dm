@@ -22,7 +22,7 @@ Head of Security
 
 	default_id = /obj/item/weapon/card/id/silver
 	default_pda = /obj/item/device/pda/heads/hos
-	default_headset = /obj/item/device/radio/headset/heads/hos
+	default_headset = /obj/item/device/radio/headset/heads/hos/alt
 	default_backpack = /obj/item/weapon/storage/backpack/security
 	default_satchel = /obj/item/weapon/storage/backpack/satchel_sec
 
@@ -70,7 +70,7 @@ Warden
 	minimal_player_age = 7
 
 	default_pda = /obj/item/device/pda/warden
-	default_headset = /obj/item/device/radio/headset/headset_sec
+	default_headset = /obj/item/device/radio/headset/headset_sec/alt
 	default_backpack = /obj/item/weapon/storage/backpack/security
 	default_satchel = /obj/item/weapon/storage/backpack/satchel_sec
 
