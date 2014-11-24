@@ -371,8 +371,8 @@
 			damage = O.force
 			if (O.damtype == STAMINA)
 				damage = 0
-			visible_message("<span class='danger'>[src] has been [O.attack_verb.len ? "[pick(O.attack_verb)]": "attacked"] with [O] by [user]!</span>",\
-							"<span class='userdanger'>[src] has been attacked with [O] by [user]!</span>")
+			visible_message("<span class='danger'>[user] has [O.attack_verb.len ? "[pick(O.attack_verb)]": "attacked"] [src] with [O]!</span>",\
+							"<span class='userdanger'>[user] has [O.attack_verb.len ? "[pick(O.attack_verb)]": "attacked"] you with [O]!</span>")
 		else
 			visible_message("<span class='danger'>[O] bounces harmlessly off of [src].</span>",\
 							"<span class='userdanger'>[O] bounces harmlessly off of [src].</span>")

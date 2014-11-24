@@ -43,8 +43,8 @@
 	if(ismob(target) && target.reagents && reagents.total_volume)
 		var/mob/M = target
 		var/R
-		target.visible_message("<span class='danger'>[target] has been splashed with something by [user]!</span>", \
-						"<span class='userdanger'>[target] has been splashed with something by [user]!</span>")
+		target.visible_message("<span class='danger'>[user] has splashed [target] with something!</span>", \
+						"<span class='userdanger'>[user] has splashed [target] with something!</span>")
 		if(reagents)
 			for(var/datum/reagent/A in reagents.reagent_list)
 				R += A.id + " ("

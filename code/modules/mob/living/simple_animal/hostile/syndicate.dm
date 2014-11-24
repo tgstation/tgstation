@@ -64,7 +64,7 @@
 			if (O.damtype == STAMINA)
 				damage = 0
 			health -= damage
-			visible_message("<span class='danger'>[src] has been attacked with [O] by [user]!</span>")
+			visible_message("<span class='danger'>[user] has attacked [src] with [O]!</span>")
 		else
 			visible_message("<span class='danger'>[src] blocks [O] with its shield!</span>")
 		playsound(loc, O.hitsound, 25, 1, -1)

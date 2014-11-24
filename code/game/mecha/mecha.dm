@@ -321,7 +321,7 @@ obj/mecha/proc/can_use(mob/user)
 	else
 		return
 	M.occupant_message("<span class='danger'>You hit [src].</span>")
-	visible_message("<span class='danger'>[src] has been hit by [M.name].</span>")
+	visible_message("<span class='danger'>[M.name] has hit [src].</span>")
 	take_damage(M.force, damtype)
 	add_logs(M.occupant, src, "attacked", object=M, addition="(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 	return

@@ -80,21 +80,20 @@
 	target.apply_damage(force, BRUTE, affecting, armor_block)
 
 	// You are going to knock someone out for longer if they are not wearing a helmet.
+	var/head_attack_message = ""
 	if(affecting == "head" && istype(target, /mob/living/carbon/))
-
-		//Display an attack message.
-		for(var/mob/O in viewers(user, null))
-			if(target != user) O.show_message(text("<span class='danger'>[target] has been hit over the head with a bottle of [src.name], by [user]!</span>"), 1)
-			else O.show_message(text("<span class='danger'>[target] hits himself with a bottle of [src.name] on the head!</span>"), 1)
+		head_attack_message = " on the head"
 		//Weaken the target for the duration that we calculated and divide it by 5.
 		if(armor_duration)
 			target.apply_effect(min(armor_duration, 10) , WEAKEN) // Never weaken more than a flash!
 
+	//Display an attack message.
+	if(target != user)
+		target.visible_message("<span class='danger'>[user] has hit [target][head_attack_message] with a bottle of [src.name]!</span>", \
+				"<span class='userdanger'>[user] has hit [target][head_attack_message] with a bottle of [src.name]!</span>")
 	else
-		//Default attack message and don't weaken the target.
-		for(var/mob/O in viewers(user, null))
-			if(target != user) O.show_message(text("<span class='danger'>[target] has been attacked with a bottle of [src.name], by [user]!</span>"), 1)
-			else O.show_message(text("<span class='danger'>[target] has attacked himself with a bottle of [src.name]!</span>"), 1)
+		user.visible_message("<span class='danger'>[target] hits himself with a bottle of [src.name][head_attack_message]!</span>", \
+				"<span class='userdanger'>[target] hits himself with a bottle of [src.name][head_attack_message]!</span>")
 
 	//Attack logs
 	add_logs(user, target, "attacked", object="bottle")
