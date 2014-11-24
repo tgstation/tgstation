@@ -29,7 +29,7 @@
 
 /obj/structure/support_rail/proc/letgo()
 	supported_mob.update_canmove()
-	user.anchored = 0
+	supported_mob.anchored = 0
 	supported_mob.visible_message(
 		"<span class='notice'>[supported_mob.name] let go.</span>")
 	src.supported_mob = null
