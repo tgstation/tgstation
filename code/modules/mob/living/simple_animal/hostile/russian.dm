@@ -55,6 +55,3 @@
 		new weapon1 (src.loc)
 	del src
 	return
-
-/mob/living/simple_animal/hostile/russian/admin
-	faction = "adminbus mob"

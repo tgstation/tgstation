@@ -146,6 +146,3 @@
 		var/obj/mecha/M = target
 		M.attack_animal(src)
 		return M
-
-/mob/living/simple_animal/hostile/bear/admin
-	faction = "adminbus mob"

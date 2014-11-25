@@ -188,6 +188,3 @@ var/global/list/spider_types = typesof(/mob/living/simple_animal/hostile/giant_s
 	..()
 	if(icon_aggro)
 		icon_state = icon_living
-
-/mob/living/simple_animal/hostile/giant_spider/admin
-	faction = "adminbus mob"

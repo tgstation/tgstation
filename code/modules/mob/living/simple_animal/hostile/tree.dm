@@ -68,6 +68,3 @@
 	visible_message("\red <b>[src]</b> is hacked into pieces!")
 	new /obj/item/weapon/nullrod(loc)
 	del(src)
-
-/mob/living/simple_animal/hostile/tree/admin
-	faction = "adminbus mob"

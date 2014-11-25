@@ -59,6 +59,3 @@
 /mob/living/simple_animal/hostile/carp/holocarp/Die()
 	del(src)
 	return
-
-/mob/living/simple_animal/hostile/carp/admin
-	faction = "adminbus mob"
