@@ -60,6 +60,9 @@
 
 	if(in_contents_of(/obj/machinery/recharge_station))//exit the recharge station
 		var/obj/machinery/recharge_station/RC = loc
+		if(RC.upgrading)
+			RC.upgrading = 0
+			RC.upgrade_finished = -1
 		RC.go_out()
 
 	if(blind)	blind.layer = 0

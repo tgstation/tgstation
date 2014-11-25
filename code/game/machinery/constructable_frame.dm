@@ -12,7 +12,7 @@
 	var/list/req_components = null
 	var/list/req_component_names = null
 	var/list/components_in_use = null
-	var/state = 1
+	state = 1
 
 	// For pods
 	var/list/connected_parts = list()
@@ -835,4 +835,14 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/manipulator" = 1,
 							"/obj/item/weapon/stock_parts/scanning_module" = 1)
 
-
+/obj/item/weapon/circuitboard/pdapainter
+	name = "Circuit Board (PDA Painter)"
+	build_path = "/obj/machinery/pdapainter"
+	board_type = "machine"
+	origin_tech = "programming=2;engineering=2"
+	frame_desc = "Requires 1 Manipulator, 2 Micro-Lasers, 2 Scanning Modules, and a Console Screen. "
+	req_components = list(
+							"/obj/item/weapon/stock_parts/manipulator" = 1,
+							"/obj/item/weapon/stock_parts/micro_laser" = 2,
+							"/obj/item/weapon/stock_parts/scanning_module" = 2,
+							"/obj/item/weapon/stock_parts/console_screen" = 1)

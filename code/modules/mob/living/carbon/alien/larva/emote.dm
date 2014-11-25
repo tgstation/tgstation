@@ -31,85 +31,85 @@
 		if("sign")
 			if (!src.restrained())
 				message = text("<B>The alien</B> signs[].", (text2num(param) ? text(" the number []", text2num(param)) : null))
-				m_type = 1
+				m_type = VISIBLE
 		if ("burp")
 			if (!muzzled)
 				message = "<B>[src]</B> burps."
-				m_type = 2
+				m_type = HEARABLE
 		if("scratch")
 			if (!src.restrained())
 				message = "<B>The [src.name]</B> scratches."
-				m_type = 1
+				m_type = VISIBLE
 		if("whimper")
 			if (!muzzled)
 				message = "<B>The [src.name]</B> whimpers."
-				m_type = 2
+				m_type = HEARABLE
 //		if("roar")
 //			if (!muzzled)
 //				message = "<B>The [src.name]</B> roars." Commenting out since larva shouldn't roar /N
-//				m_type = 2
+//				m_type = HEARABLE
 		if("tail")
 			message = "<B>The [src.name]</B> waves its tail."
-			m_type = 1
+			m_type = VISIBLE
 		if("gasp")
 			message = "<B>The [src.name]</B> gasps."
-			m_type = 2
+			m_type = HEARABLE
 		if("shiver")
 			message = "<B>The [src.name]</B> shivers."
-			m_type = 2
+			m_type = HEARABLE
 		if("drool")
 			message = "<B>The [src.name]</B> drools."
-			m_type = 1
+			m_type = VISIBLE
 		if("scretch")
 			if (!muzzled)
 				message = "<B>The [src.name]</B> scretches."
-				m_type = 2
+				m_type = HEARABLE
 		if("choke")
 			message = "<B>The [src.name]</B> chokes."
-			m_type = 2
+			m_type = HEARABLE
 		if("moan")
 			message = "<B>The [src.name]</B> moans!"
-			m_type = 2
+			m_type = HEARABLE
 		if("nod")
 			message = "<B>The [src.name]</B> nods its head."
-			m_type = 1
+			m_type = VISIBLE
 //		if("sit")
 //			message = "<B>The [src.name]</B> sits down." //Larvan can't sit down, /N
-//			m_type = 1
+//			m_type = VISIBLE
 		if("sway")
 			message = "<B>The [src.name]</B> sways around dizzily."
-			m_type = 1
+			m_type = VISIBLE
 		if("sulk")
 			message = "<B>The [src.name]</B> sulks down sadly."
-			m_type = 1
+			m_type = VISIBLE
 		if("twitch")
 			message = "<B>The [src.name]</B> twitches violently."
-			m_type = 1
+			m_type = VISIBLE
 		if("dance")
 			if (!src.restrained())
 				message = "<B>The [src.name]</B> dances around happily."
-				m_type = 1
+				m_type = VISIBLE
 		if("roll")
 			if (!src.restrained())
 				message = "<B>The [src.name]</B> rolls."
-				m_type = 1
+				m_type = VISIBLE
 		if("shake")
 			message = "<B>The [src.name]</B> shakes its head."
-			m_type = 1
+			m_type = VISIBLE
 		if("gnarl")
 			if (!muzzled)
 				message = "<B>The [src.name]</B> gnarls and shows its teeth.."
-				m_type = 2
+				m_type = HEARABLE
 		if("jump")
 			message = "<B>The [src.name]</B> jumps!"
-			m_type = 1
+			m_type = VISIBLE
 		if("hiss_")
 			message = "<B>The [src.name]</B> hisses softly."
-			m_type = 1
+			m_type = VISIBLE
 		if("collapse")
 			Paralyse(2)
 			message = text("<B>[]</B> collapses!", src)
-			m_type = 2
+			m_type = HEARABLE
 		if("help")
 			src << "burp, choke, collapse, dance, drool, gasp, shiver, gnarl, jump, moan, nod, roll, scratch,\nscretch, shake, sign-#, sulk, sway, tail, twitch, whimper"
 		else

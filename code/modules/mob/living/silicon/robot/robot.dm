@@ -266,6 +266,7 @@
 			module = new /obj/item/weapon/robot_module/combat(src)
 			module_sprites["Combat Android"] = "droid-combat"
 			module_sprites["Bladewolf"] = "bladewolf"
+			module_sprites["Mr. Gutsy"] = "mrgutsy"
 			channels = list("Security" = 1)
 
 	//Custom_sprite check and entry
@@ -1422,3 +1423,16 @@
 		component.electronics_damage = 0
 		component.brute_damage = 0
 		component.installed = 1
+
+
+/mob/living/silicon/robot/Process_Spaceslipping(var/prob_slip=5)
+	//Engineering borgs have the magic of magnets.
+	if(istype(module, /obj/item/weapon/robot_module/engineering))
+		return 0
+	..()
+
+/mob/living/silicon/robot/put_in_inactive_hand(var/obj/item/W)
+	return 0
+
+/mob/living/silicon/robot/get_inactive_hand(var/obj/item/W)
+	return 0

@@ -71,7 +71,7 @@
 
 /datum/robot_component/actuator
 	name = "actuator"
-	energy_consumption = 2
+	energy_consumption = 0 // seeing as we can move without any charge...
 	external_type = /obj/item/robot_parts/robot_component/actuator
 	max_damage = 50
 
@@ -103,7 +103,7 @@
 
 /datum/robot_component/diagnosis_unit
 	name = "self-diagnosis unit"
-	energy_consumption = 1
+	energy_consumption = 0
 	external_type = /obj/item/robot_parts/robot_component/diagnosis_unit
 	max_damage = 30
 

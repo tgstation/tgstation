@@ -377,7 +377,7 @@ var/global/datum/controller/occupations/job_master
 					H.Robotize()
 					return 1
 				if("Mobile MMI")
-					H.MoMMIfy()
+					H.MoMMIfy(1)
 					return 1
 				if("AI","Clown")	//don't need bag preference stuff!
 					if(rank=="Clown") // Clowns DO need to breathe, though - N3X

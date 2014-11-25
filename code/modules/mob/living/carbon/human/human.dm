@@ -161,6 +161,25 @@
 		return
 	return
 
+/mob/living/carbon/human/player_panel_controls()
+	var/html=""
+
+	// TODO: Loop through contents and call parasite_panel or something.
+	var/mob/living/simple_animal/borer/B = has_brain_worms()
+	if(B)
+		html +="<h2>Cortical Borer:</h2> [B] ("
+		if(B.controlling)
+			html += "<a style='color:red;font-weight:bold;' href='?src=\ref[B]&act=release'>Controlling</a>"
+		else if(B.host_brain.ckey)
+			html += "<a style='color:red;font-weight:bold;' href='?src=\ref[B]&act=release'>!HOST BRAIN BUGGED!</a>"
+		else
+			html += "Not Controlling"
+		html += " | <a href='?src=\ref[B]&act=detach'>Detach</a>"
+		html += " | <a href='?_src_=holder;adminmoreinfo=\ref[B]'>?</a> | <a href='?_src_=vars;mob_player_panel=\ref[B]'>PP</a>"
+		html += ")"
+
+	return html
+
 /mob/living/carbon/human/Stat()
 	..()
 	statpanel("Status")
@@ -1312,6 +1331,14 @@
 	check_dna()
 
 	visible_message("\blue \The [src] morphs and changes [get_visible_gender() == MALE ? "his" : get_visible_gender() == FEMALE ? "her" : "their"] appearance!", "\blue You change your appearance!", "\red Oh, god!  What the hell was that?  It sounded like flesh getting squished and bone ground into a different shape!")
+/mob/living/carbon/human/proc/can_mind_interact(mob/M)
+	if(!ishuman(M)) return 0 //Can't see non humans with your fancy human mind.
+	var/turf/temp_turf = get_turf(M)
+	if((temp_turf.z != 1 && temp_turf.z != 5) || M.stat!=CONSCIOUS) //Not on mining or the station. Or dead
+		return 0
+	if(M_PSY_RESIST in M.mutations)
+		return 0
+	return 1
 
 /mob/living/carbon/human/proc/remotesay()
 	set name = "Project mind"
@@ -1327,6 +1354,7 @@
 		return
 	var/list/creatures = list()
 	for(var/mob/living/carbon/h in world)
+		if(!can_mind_interact(h)) continue
 		creatures += h
 	var/mob/target = input ("Who do you want to project your mind to ?") as null|anything in creatures
 	if (isnull(target))
@@ -1370,12 +1398,7 @@
 	var/list/mob/creatures = list()
 
 	for(var/mob/living/carbon/h in world)
-		if(!ishuman(h)) continue //Can't see non humans with your fancy human mind.
-		var/turf/temp_turf = get_turf(h)
-		if((temp_turf.z != 1 && temp_turf.z != 5) || h.stat!=CONSCIOUS) //Not on mining or the station. Or dead
-			continue
-		if(M_PSY_RESIST in h.mutations)
-			continue
+		if(!can_mind_interact(h)) continue
 		creatures += h
 
 	var/mob/target = input ("Who do you want to project your mind to ?") as mob in creatures

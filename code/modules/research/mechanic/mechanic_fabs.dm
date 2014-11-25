@@ -47,12 +47,12 @@
 			return 0
 		else if(RB.stored_design && design_types[RB.design_type])
 			if(src.AddBlueprint(RB, user))
-				src.AddMechanicDesign(RB.stored_design, user)
-				overlays += "[base_state]-bp"
-				user <<"<span class='notice'>You successfully load \the [RB.name] into \the [src].</span>"
-				if(RB.delete_on_use)	qdel(RB) //we delete if the thing is set to delete. Always set to 1 right now
-				spawn(10)
-					overlays -= "[base_state]-bp"
+				if(src.AddMechanicDesign(RB.stored_design, user))
+					overlays += "[base_state]-bp"
+					user <<"<span class='notice'>You successfully load \the [RB.name] into \the [src].</span>"
+					if(RB.delete_on_use)	qdel(RB) //we delete if the thing is set to delete. Always set to 1 right now
+					spawn(10)
+						overlays -= "[base_state]-bp"
 
 /obj/machinery/r_n_d/fabricator/mechanic_fab/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(stat & (BROKEN|NOPOWER))
@@ -130,33 +130,10 @@
 /obj/machinery/r_n_d/fabricator/mechanic_fab/proc/AddMechanicDesign(var/datum/design/mechanic_design/design)
 	if(istype(design))
 		if(!design.materials.len)
-			Gen_Mat_Reqs(design.build_path, design) //makes the material cost for the design. Weird to have here, I know, but it's the best place
+			return 0
 		add_part_to_set(design.category, design)
 		return 1
-	return
-
-//returns the required materials for the parts of a machine design
-/obj/machinery/r_n_d/fabricator/mechanic_fab/proc/Gen_Mat_Reqs(var/obj/O, var/datum/design/mechanic_design/design)
-	if(!O)
-		message_admins("We couldn't find something in part checking, how did this happen?")
-		return
-
-	var/datum/design/part_design = FindDesign(O)
-	if(part_design)
-		part_design = new part_design
-		design.materials = part_design.materials
-		del(part_design)
-
-	if(!design.materials.len) //let's make something up! complain about the RNG some other time
-		var/techtotal = TechTotal(design)
-		design.materials["$iron"] = techtotal * round(rand(500, 1500), 100)
-		design.materials["$glass"] = techtotal * round(rand(250, 1000), 50)
-		if(prob(techtotal * 5)) //let's add an extra cost of some medium-rare material
-			design.materials[pick("$plasma", "$uranium", "$gold", "$silver")] = techtotal * round(rand(100, 500), 10)
-		if(prob(techtotal * 2)) //and another cost, because we can
-			design.materials[pick("$plasma", "$uranium", "$gold", "$silver")] = techtotal * round(rand(50, 250), 10)
-		if(techtotal >= 15  && prob(techtotal)) //let's add something REALLY rare
-			design.materials[pick("$diamond", "$clown", "$phazon")] = techtotal * round(rand(10, 150), 10)
+	return 0
 
 /obj/machinery/r_n_d/fabricator/mechanic_fab/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	..()

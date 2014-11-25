@@ -652,6 +652,8 @@
 			visible_message("\red <B>[src] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</B>")
 			B.chemicals -= 100
 
+			B.numChildren++
+
 			new /obj/effect/decal/cleanable/vomit(get_turf(src))
 			playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 

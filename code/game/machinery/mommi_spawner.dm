@@ -157,6 +157,8 @@
 	metal=0
 	building=0
 	update_icon()
+	M.cell.maxcharge = 15000
+	M.cell.charge = 15000
 
 /obj/machinery/mommi_spawner/update_icon()
 	if(stat & NOPOWER)

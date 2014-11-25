@@ -1,4 +1,4 @@
-// Process the MoMMI's visual HuD 
+// Process the MoMMI's visual HuD
 /datum/hud/proc/mommi_hud()
 	// Typecast the mymob to a MoMMI type
 	var/mob/living/silicon/robot/mommi/M=mymob
@@ -28,7 +28,7 @@
 	using.layer = 20
 	src.adding += using			// Place using in our adding list
 	M.inv_tool = using			// Save this using as our MoMMI's inv_sight
-
+	/*
 	using = new /obj/screen()
 	using.name = INV_SLOT_SIGHT
 	using.dir = SOUTHWEST
@@ -37,7 +37,7 @@
 	using.screen_loc = ui_inv1
 	using.layer = 20
 	src.adding += using
-	M.inv_sight = using
+	M.inv_sight = using*/
 	// End of module select
 
 	// Head

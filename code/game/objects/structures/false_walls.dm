@@ -109,7 +109,7 @@
 		icon_state = "[mineral]fwall_open"
 		return
 
-	var/junction=findSmoothingNeighbors(check_minerals=1)
+	var/junction=findSmoothingNeighbors()
 	icon_state = "[mineral][junction]"
 
 /obj/structure/falsewall/attack_ai(mob/user as mob)

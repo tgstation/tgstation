@@ -1,6 +1,8 @@
 /mob/recycle(var/datum/materials)
 	return RECYK_BIOLOGICAL
 
+/mob/burnFireFuel(var/used_fuel_ratio,var/used_reactants_ratio)
+
 /mob/Destroy() // This makes sure that mobs with clients/keys are not just deleted from the game.
 	unset_machine()
 	mob_list.Remove(src)
@@ -38,18 +40,18 @@
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
-	var/t = "\blue Coordinates: [x],[y] \n"
+	var/t = "<span class='notice'> Coordinates: [x],[y] \n</span>"
 
 	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\mob.dm:25: t+= "\red Temperature: [environment.temperature] \n"
-	t += {"\red Temperature: [environment.temperature] \n
-\blue Nitrogen: [environment.nitrogen] \n
-\blue Oxygen: [environment.oxygen] \n
-\blue Plasma : [environment.toxins] \n
-\blue Carbon Dioxide: [environment.carbon_dioxide] \n"}
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\mob.dm:25: t+= "<span class='warning'> Temperature: [environment.temperature] \n"
+	t += {"<span class='warning'> Temperature: [environment.temperature] \n</span>
+<span class='notice'> Nitrogen: [environment.nitrogen] \n</span>
+<span class='notice'> Oxygen: [environment.oxygen] \n</span>
+<span class='notice'> Plasma : [environment.toxins] \n</span>
+<span class='notice'> Carbon Dioxide: [environment.carbon_dioxide] \n</span>"}
 	// END AUTOFIX
 	for(var/datum/gas/trace_gas in environment.trace_gases)
-		usr << "\blue [trace_gas.type]: [trace_gas.moles] \n"
+		usr << "<span class='notice'> [trace_gas.type]: [trace_gas.moles] \n</span>"
 
 	usr.show_message(t, 1)
 
@@ -182,7 +184,7 @@
 						W.loc=get_turf(src) // I think.
 					else
 						if(!disable_warning)
-							src << "\red You are unable to equip that." //Only print if act_on_fail is NOTHING
+							src << "<span class='warning'> You are unable to equip that.</span>" //Only print if act_on_fail is NOTHING
 				return 0
 			if(1)
 				equip_to_slot(W, slot, redraw_mob)
@@ -417,7 +419,7 @@
 					W.loc=get_turf(src) // I think.
 				else
 					if(!disable_warning)
-						src << "\red You are unable to equip that." //Only print if act_on_fail is NOTHING
+						src << "<span class='warning'> You are unable to equip that.</span>" //Only print if act_on_fail is NOTHING
 			return 0
 
 		equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
@@ -553,7 +555,7 @@ var/list/slot_equipment_priority = list( \
 			if(slot_belt)
 				if(!H.w_uniform)
 					if(!disable_warning)
-						H << "\red You need a jumpsuit before you can attach this [name]."
+						H << "<span class='warning'> You need a jumpsuit before you can attach this [name].</span>"
 					return 0
 				if( !(slot_flags & SLOT_BELT) )
 					return 0
@@ -604,7 +606,7 @@ var/list/slot_equipment_priority = list( \
 			if(slot_wear_id)
 				if(!H.w_uniform)
 					if(!disable_warning)
-						H << "\red You need a jumpsuit before you can attach this [name]."
+						H << "<span class='warning'> You need a jumpsuit before you can attach this [name].</span>"
 					return 0
 				if( !(slot_flags & SLOT_ID) )
 					return 0
@@ -619,7 +621,7 @@ var/list/slot_equipment_priority = list( \
 					return 0
 				if(!H.w_uniform)
 					if(!disable_warning)
-						H << "\red You need a jumpsuit before you can attach this [name]."
+						H << "<span class='warning'> You need a jumpsuit before you can attach this [name].</span>"
 					return 0
 				if(slot_flags & SLOT_DENYPOCKET)
 					return
@@ -630,7 +632,7 @@ var/list/slot_equipment_priority = list( \
 					return 0
 				if(!H.w_uniform)
 					if(!disable_warning)
-						H << "\red You need a jumpsuit before you can attach this [name]."
+						H << "<span class='warning'> You need a jumpsuit before you can attach this [name].</span>"
 					return 0
 				if(slot_flags & SLOT_DENYPOCKET)
 					return 0
@@ -640,7 +642,7 @@ var/list/slot_equipment_priority = list( \
 			if(slot_s_store)
 				if(!H.wear_suit)
 					if(!disable_warning)
-						H << "\red You need a suit before you can attach this [name]."
+						H << "<span class='warning'> You need a suit before you can attach this [name].</span>"
 					return 0
 				if(!H.wear_suit.allowed)
 					if(!disable_warning)
@@ -881,20 +883,20 @@ var/list/slot_equipment_priority = list( \
 	set category = "OOC"
 
 	if (!( abandon_allowed ))
-		usr << "\blue Respawn is disabled."
+		usr << "<span class='notice'> Respawn is disabled.</span>"
 		return
 	if ((stat != 2 || !( ticker )))
-		usr << "\blue <B>You must be dead to use this!</B>"
+		usr << "<span class='notice'> <B>You must be dead to use this!</B></span>"
 		return
 	if (ticker.mode.name == "meteor" || ticker.mode.name == "epidemic") //BS12 EDIT
-		usr << "\blue Respawn is disabled."
+		usr << "<span class='notice'> Respawn is disabled.</span>"
 		return
 	else
 		var/deathtime = world.time - src.timeofdeath
 		if(istype(src,/mob/dead/observer))
 			var/mob/dead/observer/G = src
 			if(G.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
-				usr << "\blue <B>Upon using the antagHUD you forfeighted the ability to join the round.</B>"
+				usr << "<span class='notice'> <B>Upon using the antagHUD you forfeighted the ability to join the round.</B></span>"
 				return
 		var/deathtimeminutes = round(deathtime / 600)
 		var/pluralcheck = "minute"
@@ -914,7 +916,7 @@ var/list/slot_equipment_priority = list( \
 
 	log_game("[usr.name]/[usr.key] used abandon mob.")
 
-	usr << "\blue <B>Make sure to play a different character, and please roleplay correctly!</B>"
+	usr << "<span class='notice'> <B>Make sure to play a different character, and please roleplay correctly!</B></span>"
 
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
@@ -972,7 +974,7 @@ var/list/slot_equipment_priority = list( \
 	if(client.holder && (client.holder.rights & R_ADMIN))
 		is_admin = 1
 	else if(stat != DEAD || istype(src, /mob/new_player))
-		usr << "\blue You must be observing to use this!"
+		usr << "<span class='notice'> You must be observing to use this!</span>"
 		return
 
 	if(is_admin && stat == DEAD)
@@ -1124,10 +1126,14 @@ var/list/slot_equipment_priority = list( \
 	src.pulling = AM
 	AM.pulledby = src
 
-	if(ishuman(AM))
-		var/mob/living/carbon/human/H = AM
-		if(H.pull_damage())
-			src << "\red <B>Pulling \the [H] in their current condition would probably be a bad idea.</B>"
+	if(ismob(AM))
+		M.attack_log += text("\[[time_stamp()]\] <span class='warning'>Has been pulled by [src.name] ([src.ckey])</span>")
+		src.attack_log += text("\[[time_stamp()]\] <span class='warning'>Pulled [M.name] ([M.ckey])</span>")
+
+		if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			if(H.pull_damage())
+				src << "<span class='warning'> <B>Pulling \the [H] in their current condition would probably be a bad idea.</B></span>"
 
 	//Attempted fix for people flying away through space when cuffed and dragged.
 	if(ismob(AM))
@@ -1502,7 +1508,7 @@ mob/proc/yank_out_object()
 	var/obj/item/weapon/selection = input("What do you want to yank out?", "Embedded objects") in valid_objects
 
 	if(self)
-		src << "<span class='warning'>You attempt to get a good grip on the [selection] in your body.</span>"
+		src << "<span class='warning'>You attempt to get a good grip on the [selection] in your body.</span></span>"
 	else
 		U << "<span class='warning'>You attempt to get a good grip on the [selection] in [S]'s body.</span>"
 

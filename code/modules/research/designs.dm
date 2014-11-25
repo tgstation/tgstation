@@ -74,6 +74,36 @@ other types of metals and chemistry for reagents).
 	reliability = new_reliability
 	return
 
+//give it an object or a type
+//if it gets passed an object, it makes it into a type
+//it then finds the design which has a buildpath of that type
+//confirmed to work by Comic
+/datum/proc/FindDesign(var/part as anything)
+	if(!ispath(part))
+		var/obj/thispart = part
+		part = thispart.type
+	for(var/thisdesign in typesof(/datum/design))
+		var/datum/design/D = thisdesign
+		if(initial(D.build_path) == part)
+			return D
+	return
+
+//sum of the required tech of a design
+/datum/design/proc/TechTotal()
+	var/total = 0
+	for(var/tech in src.req_tech)
+		total += src.req_tech[tech]
+	return total
+
+//sum of the required materials of a design
+//do not confuse this with Total_Materials. That gets the machine's materials, this gets design materials
+/datum/design/proc/MatTotal()
+	var/total = 0
+	for(var/matID in src.materials)
+		total += src.materials[matID]
+	//log_admin("[total] for [part.name]")
+	return total
+
 
 ///////////////////Computer Boards///////////////////////////////////
 
@@ -1673,6 +1703,15 @@ other types of metals and chemistry for reagents).
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mechfab
+
+/datum/design/pdapainter
+	name = "PDA Painter Board"
+	desc = "The circuit board for a PDA Painter."
+	id = "pdapainter"
+	req_tech = list("programming" = 2, "engineering" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/pdapainter
 
 
 /////////////////////////////////////////

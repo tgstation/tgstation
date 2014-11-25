@@ -26,35 +26,35 @@
 			return custom_emote(m_type, message)
 		if("bounce")
 			message = "<B>The [src.name]</B> bounces in place."
-			m_type = 1
+			m_type = VISIBLE
 
 		if("jiggle")
 			message = "<B>The [src.name]</B> jiggles!"
-			m_type = 1
+			m_type = VISIBLE
 
 		if("light")
 			message = "<B>The [src.name]</B> lights up for a bit, then stops."
-			m_type = 1
+			m_type = VISIBLE
 
 		if("moan")
 			message = "<B>The [src.name]</B> moans."
-			m_type = 2
+			m_type = HEARABLE
 
 		if("shiver")
 			message = "<B>The [src.name]</B> shivers."
-			m_type = 2
+			m_type = HEARABLE
 
 		if("sway")
 			message = "<B>The [src.name]</B> sways around dizzily."
-			m_type = 1
+			m_type = VISIBLE
 
 		if("twitch")
 			message = "<B>The [src.name]</B> twitches."
-			m_type = 1
+			m_type = VISIBLE
 
 		if("vibrate")
 			message = "<B>The [src.name]</B> vibrates!"
-			m_type = 1
+			m_type = VISIBLE
 
 		if ("help") //This is an exception
 			src << "Help for slime emotes. You can use these emotes with say \"*emote\":\n\nbounce, jiggle, light, moan, shiver, sway, twitch, vibrate"
