@@ -130,7 +130,7 @@
 	return
 
 /mob/proc/see_narsie(var/obj/machinery/singularity/narsie/large/N)
-	if(N.bus_captured)
+	if(N.chained)
 		if(narsimage)
 			del(narsimage)
 			del(narglow)

@@ -256,7 +256,7 @@
 
 	var/isolated = 0//for when inside something like the Adminbus. So they completely ignore the external pressure/temperature/pressure/gases etc
 
-	//Keeps track of where the mob was spawned.
+	//Keeps track of where the mob was spawned. Mostly for teleportation purposes. and no, using initial() doesn't work.
 	var/origin_x = 0
 	var/origin_y = 0
 	var/origin_z = 0

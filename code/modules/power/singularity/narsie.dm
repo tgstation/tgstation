@@ -337,17 +337,17 @@ var/global/narsie_behaviour = "CultStation13"
 		target << "<span class='danger'>[capname] HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL.</span>"
 
 /obj/machinery/singularity/narsie/on_capture()
-	bus_captured = 1
+	chained = 1
 	move_self = 0
 	icon_state ="narsie-small-chains"
 
 /obj/machinery/singularity/narsie/on_release()
-	bus_captured = 0
+	chained = 0
 	move_self = 1
 	icon_state ="narsie-small"
 
 /obj/machinery/singularity/narsie/large/on_capture()
-	bus_captured = 1
+	chained = 1
 	move_self = 0
 	icon_state ="narsie-chains"
 	for(var/mob/M in mob_list)//removing the client image of nar-sie while it is chained
@@ -355,7 +355,7 @@ var/global/narsie_behaviour = "CultStation13"
 			M.see_narsie(src)
 
 /obj/machinery/singularity/narsie/large/on_release()
-	bus_captured = 0
+	chained = 0
 	move_self = 1
 	icon_state ="narsie"
 
@@ -511,9 +511,9 @@ var/global/mr_clean_targets = list(
 	return 1
 
 /obj/machinery/singularity/narsie/large/clean/on_capture()
-	bus_captured = 1
+	chained = 1
 	move_self = 0
 
 /obj/machinery/singularity/narsie/large/clean/on_release()
-	bus_captured = 0
+	chained = 0
 	move_self = 1

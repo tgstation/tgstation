@@ -39,7 +39,7 @@
 	var/last_failed_movement = 0 // Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing.
 	var/last_warning
 
-	var/bus_captured = 0//Adminbus chain-grab
+	var/chained = 0//Adminbus chain-grab
 
 /obj/machinery/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
 	// CARN: admin-alert for chuckle-fuckery.
@@ -141,8 +141,8 @@
 			dissipate_track = 0
 			dissipate_strength = 1
 			overlays = 0
-			if(bus_captured)
-				overlays += image('icons/obj/singularity.dmi',"chain_s1")
+			if(chained)
+				overlays = "chain_s1"
 			visible_message("<span class='notice'>The singularity has shrunk to a rather pitiful size.</span>")
 		if (3) // 1 to 3 does not check for the turfs if you put the gens right next to a 1x1 then its going to eat them.
 			name = "Gravitational Singularity"
@@ -158,8 +158,8 @@
 			dissipate_track = 0
 			dissipate_strength = 5
 			overlays = 0
-			if(bus_captured)
-				overlays += image('icons/effects/96x96.dmi',"chain_s3")
+			if(chained)
+				overlays = "chain_s3"
 			if(growing)
 				visible_message("<span class='notice'>The singularity noticeably grows in size.</span>")
 			else
@@ -179,8 +179,8 @@
 				dissipate_track = 0
 				dissipate_strength = 20
 				overlays = 0
-				if(bus_captured)
-					overlays += image('icons/effects/160x160.dmi',"chain_s5")
+				if(chained)
+					overlays = "chain_s5"
 				if(growing)
 					visible_message("<span class='notice'>The singularity expands to a reasonable size.</span>")
 				else
@@ -200,8 +200,8 @@
 				dissipate_track = 0
 				dissipate_strength = 10
 				overlays = 0
-				if(bus_captured)
-					overlays += image('icons/effects/224x224.dmi',"chain_s7")
+				if(chained)
+					overlays = "chain_s7"
 				if(growing)
 					visible_message("<span class='warning'>The singularity expands to a dangerous size.</span>")
 				else
@@ -218,8 +218,8 @@
 			consume_range = 4
 			dissipate = 0 // It cant go smaller due to e loss.
 			overlays = 0
-			if(bus_captured)
-				overlays += image('icons/effects/288x288.dmi',"chain_s9")
+			if(chained)
+				overlays = "chain_s9"
 			if(growing)
 				visible_message("<span class='danger'><font size='2'>The singularity has grown out of control!</font></span>")
 			else
@@ -229,13 +229,15 @@
 			desc = "A Gravitational Singularity with the properties of supermatter. <b>It has the power to destroy worlds.</b>"
 			current_size = 11
 			icon = 'icons/effects/352x352.dmi'
-			icon_state = "singularity_s11"
+			icon_state = "singularity_s11"//uh, whoever drew that, you know that black holes are supposed to look dark right? What's this, the clown's singulo?
 			pixel_x = -160
 			pixel_y = -160
 			grav_pull = 16
 			consume_range = 5
 			dissipate = 0 //It cant go smaller due to e loss
 			event_chance = 25 //Events will fire off more often.
+			if(chained)
+				overlays = "chain_s9"
 			visible_message("<span class='sinister'><font size='3'>You witness the creation of a destructive force that cannot possibly be stopped by human hands.</font></span>")
 
 	if (current_size == allowed_size)
@@ -565,15 +567,15 @@
 			R.receive_pulse(energy)
 
 /obj/machinery/singularity/proc/on_capture()
-	bus_captured = 1
+	chained = 1
 	overlays = 0
 	move_self = 0
 	switch (current_size)
-		if (1)
+		if(1)
 			overlays += image('icons/obj/singularity.dmi',"chain_s1")
-		if (3)
+		if(3)
 			overlays += image('icons/effects/96x96.dmi',"chain_s3")
-		if (5)
+		if(5)
 			overlays += image('icons/effects/160x160.dmi',"chain_s5")
 		if(7)
 			overlays += image('icons/effects/224x224.dmi',"chain_s7")
@@ -581,7 +583,7 @@
 			overlays += image('icons/effects/288x288.dmi',"chain_s9")
 
 /obj/machinery/singularity/proc/on_release()
-	bus_captured = 0
+	chained = 0
 	overlays = 0
 	move_self = 1
 
