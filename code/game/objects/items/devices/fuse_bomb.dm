@@ -3,6 +3,7 @@
 	desc = "fshhhhhhhh BOOM!"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "fuse_bomb_5"
+	item_state = "fuse_bomb"
 	flags = FPRINT | TABLEPASS
 	var/fuse_lit = 0
 	var/seconds_left = 5
@@ -115,6 +116,9 @@
 
 	bombers += log_str
 	log_game(log_str)
+
+/obj/item/device/fuse_bomb/ex_act(severity)//MWAHAHAHA
+	detonation()
 
 /obj/item/device/fuse_bomb/cultify()
 	return

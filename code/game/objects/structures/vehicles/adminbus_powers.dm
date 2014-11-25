@@ -351,6 +351,7 @@
 			distributed++
 			C.update_inv_l_hand()
 
+	update_rearview()
 	bususer << "[distributed] bombs distributed to passengers.</span>"
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/delete_bombs(mob/bususer)
@@ -370,6 +371,7 @@
 			distributed++
 		spawnedbombs -= spawnedbombs[i]
 
+	update_rearview()
 	bususer << "Deleted all [distributed] bombs.</span>"
 
 
