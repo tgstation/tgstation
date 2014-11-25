@@ -34,9 +34,8 @@
 		eye_safety = C.eyecheck()
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C
-			if(H.ears || H.head)
-				if((H.ears && (H.ears.flags & EARBANGPROTECT)) || (H.head && (H.head.flags & HEADBANGPROTECT)))
-					ear_safety++
+			if((H.ears && (H.ears.flags & EARBANGPROTECT)) || (H.head && (H.head.flags & HEADBANGPROTECT)))
+				ear_safety++
 
 //Flash
 	if(!eye_safety)
