@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - tweak: Unfuck the lel randumb 300 tox damage when reaching very low levels of blood. Make blood loss a bit mroe forgiving overall. Blood regen now drains nturients instead of nutrition (which should be just more forgiving if shit was coded right)
