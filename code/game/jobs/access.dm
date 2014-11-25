@@ -221,7 +221,7 @@
 	            access_keycard_auth, access_tcomsat, access_gateway, /*vg paramedic*/, access_paramedic, access_mechanic, access_taxi)
 
 /proc/get_absolutely_all_accesses()
-	return (get_all_accesses() + get_all_centcom_access() + get_all_syndicate_access() + access_salvage_captain)
+	return ((get_all_accesses() | get_all_centcom_access() | get_all_syndicate_access()) + access_salvage_captain)
 
 /proc/get_all_centcom_access()
 	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_creed, access_cent_captain)
