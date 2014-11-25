@@ -6,8 +6,8 @@ Names of z-level do not matter, but order does greatly, for instances such as ch
 current as of 2014/11/24
 z1 = station
 z2 = centcomm
-z3 = derelict station
-z4 = derelict telecomms satellite
+z3 = derelict telecomms satellite
+z4 = derelict station
 z5 = mining
 z6 = empty space
 z7 = empty space
