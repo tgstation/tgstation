@@ -639,6 +639,5 @@
 	return dat
 
 /mob/living/silicon/pai/proc/chatroom()
-
 	pda.mode = 5
-	pda.attack_self()
+	pda.attack_self(src)
