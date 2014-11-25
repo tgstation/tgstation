@@ -132,8 +132,10 @@ emp_act
 		return dna.species.spec_attacked_by(I,user,def_zone,affecting,hit_area,src.a_intent,target_limb,target_area,src)
 
 	else
-		if((user != src) && check_shields(I.force, "the [I.name]"))
-			return 0
+		if(user != src)
+			user.do_attack_animation(src)
+			if(check_shields(I.force, "the [I.name]"))
+				return 0
 
 		if(I.attack_verb && I.attack_verb.len)
 			visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I] by [user]!</span>", \
@@ -228,7 +230,6 @@ emp_act
 					src.Stun(5)
 	..()
 
-
 /mob/living/carbon/human/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
 	var/list/damaged = list()
 
@@ -319,3 +320,90 @@ emp_act
 
 		update_damage_overlays()
 
+/mob/living/carbon/human/grabbedby(mob/living/user)
+	if(w_uniform)
+		w_uniform.add_fingerprint(user)
+	..()
+
+
+/mob/living/carbon/human/attack_animal(mob/living/simple_animal/M as mob)
+	if(..())
+		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		if(check_shields(damage, "the [M.name]"))
+			return 0
+		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+		var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
+		var/armor = run_armor_check(affecting, "melee")
+		apply_damage(damage, BRUTE, affecting, armor)
+		updatehealth()
+/*		if(armor >= 2) //why is this here?
+		return */
+
+
+/mob/living/carbon/human/attack_larva(mob/living/carbon/alien/larva/L as mob)
+
+	if(..()) //successful larva bite.
+		var/damage = rand(1, 3)
+		if(check_shields(damage, "the [L.name]"))
+			return 0
+		if(stat != DEAD)
+			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
+			var/obj/item/organ/limb/affecting = get_organ(ran_zone(L.zone_sel.selecting))
+			var/armor_block = run_armor_check(affecting, "melee")
+			apply_damage(damage, BRUTE, affecting, armor_block)
+			updatehealth()
+
+
+/mob/living/carbon/human/attack_slime(mob/living/carbon/slime/M as mob)
+	..()
+	var/damage = rand(1, 3)
+
+	if(M.is_adult)
+		damage = rand(10, 35)
+	else
+		damage = rand(5, 25)
+
+	if(check_shields(damage, "the [M.name]"))
+		return 0
+
+	var/dam_zone = pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg", "groin")
+
+	var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
+	var/armor_block = run_armor_check(affecting, "melee")
+	apply_damage(damage, BRUTE, affecting, armor_block)
+
+	return
+/mob/living/carbon/human/mech_melee_attack(obj/mecha/M)
+
+	if(M.occupant.a_intent == "harm")
+		if(M.damtype == "brute")
+			step_away(src,M,15)
+		var/obj/item/organ/limb/temp = get_organ(pick("chest", "chest", "chest", "head"))
+		if(temp)
+			var/update = 0
+			switch(M.damtype)
+				if("brute")
+					if(M.force > 20)
+						Paralyse(1)
+					update |= temp.take_damage(rand(M.force/2, M.force), 0)
+					playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
+				if("fire")
+					update |= temp.take_damage(0, rand(M.force/2, M.force))
+					playsound(src, 'sound/items/Welder.ogg', 50, 1)
+				if("tox")
+					M.mech_toxin_damage(src)
+				else
+					return
+			if(update)
+				update_damage_overlays(0)
+			updatehealth()
+
+		M.occupant_message("<span class='danger'>You hit [src].</span>")
+		visible_message("<span class='danger'>[src] has been hit by [M.name].</span>", \
+								"<span class='userdanger'>[src] has been hit by [M.name].</span>")
+		add_logs(M.occupant, src, "attacked", object=M, addition="(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
+
+	else
+		..()
+
+	return

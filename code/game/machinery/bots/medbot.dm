@@ -324,9 +324,7 @@
 
 	if(!stationary_mode && patient && path.len == 0 && (get_dist(src,patient) > 1))
 		spawn(0)
-			path = AStar(loc, get_turf(patient), /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 30,id=botcard)
-			if(!path)
-				path = list()
+			path = get_path_to(loc, get_turf(patient), /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 30,id=botcard)
 
 	if(path.len > 0 && patient)
 		if(!bot_move(patient))
@@ -383,11 +381,12 @@
 
 	if(treat_virus)
 		for(var/datum/disease/D in C.viruses)
-			if((D.hidden[SCANNER]) || (D.hidden[PANDEMIC])) //the medibot can't detect viruses that are undetectable to Health Analyzers or Pandemic machines.
+			//the medibot can't detect viruses that are undetectable to Health Analyzers or Pandemic machines.
+			if(D.visibility_flags & HIDDEN_SCANNER || D.visibility_flags & HIDDEN_PANDEMIC)
 				return 0
-			if(D.severity == D.non_threat) // medibot doesn't try to heal truly harmless viruses
+			if(D.severity == NONTHREAT) // medibot doesn't try to heal truly harmless viruses
 				return 0
-			if((D.stage > 1) || (D.spread_type == AIRBORNE)) // medibot can't detect a virus in its initial stage unless it spreads airborne.
+			if((D.stage > 1) || (D.spread_flags & AIRBORNE)) // medibot can't detect a virus in its initial stage unless it spreads airborne.
 
 				if (!C.reagents.has_reagent(treatment_virus))
 					return 1 //STOP DISEASE FOREVER
@@ -423,9 +422,10 @@
 		if(treat_virus)
 			var/virus = 0
 			for(var/datum/disease/D in C.viruses)
-				if((!D.hidden[SCANNER]) && (!D.hidden[PANDEMIC]))    //detectable virus
-					if(D.severity != D.non_threat)      //virus is harmful
-						if((D.stage > 1) || (D.spread_type == AIRBORNE))
+				//detectable virus
+				if((!(D.visibility_flags & HIDDEN_SCANNER)) || (!(D.visibility_flags & HIDDEN_PANDEMIC)))
+					if(D.severity != NONTHREAT)      //virus is harmful
+						if((D.stage > 1) || (D.spread_flags & AIRBORNE))
 							virus = 1
 
 			if (!reagent_id && (virus))
@@ -557,7 +557,7 @@
 /obj/item/weapon/firstaid_arm_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/weapon/pen))
-		var/t = copytext(stripped_input(user, "Enter new robot name", name, created_name),1,MAX_NAME_LEN)
+		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
 		if (!t)
 			return
 		if (!in_range(src, usr) && loc != usr)

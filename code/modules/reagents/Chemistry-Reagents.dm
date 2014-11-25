@@ -94,14 +94,14 @@ datum/reagent/blood/reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 	src = null
 	if(self.data && self.data["viruses"])
 		for(var/datum/disease/D in self.data["viruses"])
-			//var/datum/disease/virus = new D.type(0, D, 1)
-			// We don't spread.
-			if(D.spread_type == SPECIAL || D.spread_type == NON_CONTAGIOUS) continue
+
+			if(D.spread_flags & SPECIAL || D.spread_flags & NON_CONTAGIOUS)
+				continue
 
 			if(method == TOUCH)
-				M.contract_disease(D)
+				M.ContractDisease(D)
 			else //injected
-				M.contract_disease(D, 1, 0)
+				M.ForceContractDisease(D)
 
 datum/reagent/blood/on_new(var/list/data)
 	if(istype(data))
@@ -208,9 +208,11 @@ datum/reagent/water
 	description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
 	reagent_state = LIQUID
 	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
+	var/cooling_temperature = 2
 
 datum/reagent/water/reaction_turf(var/turf/simulated/T, var/volume)
 	if (!istype(T)) return
+	var/CT = cooling_temperature
 	src = null
 	if(volume >= 10)
 		T.MakeSlippery()
@@ -220,22 +222,15 @@ datum/reagent/water/reaction_turf(var/turf/simulated/T, var/volume)
 
 	var/hotspot = (locate(/obj/effect/hotspot) in T)
 	if(hotspot && !istype(T, /turf/space))
-		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
-		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
-		lowertemp.react()
-		T.assume_air(lowertemp)
-		qdel(hotspot)
+		if(T.air)
+			var/datum/gas_mixture/G = T.air
+			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),0)
+			G.react()
+			qdel(hotspot)
 	return
+
 datum/reagent/water/reaction_obj(var/obj/O, var/volume)
 	src = null
-	var/turf/T = get_turf(O)
-	var/hotspot = (locate(/obj/effect/hotspot) in T)
-	if(hotspot && !istype(T, /turf/space))
-		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
-		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
-		lowertemp.react()
-		T.assume_air(lowertemp)
-		qdel(hotspot)
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
 		if(!cube.wrapped)
@@ -349,7 +344,7 @@ datum/reagent/aslimetoxin
 
 datum/reagent/aslimetoxin/reaction_mob(var/mob/M, var/volume)
 	src = null
-	M.contract_disease(new /datum/disease/transformation/slime(0),1)
+	M.ForceContractDisease(new /datum/disease/transformation/slime(0))
 
 datum/reagent/inaprovaline
 	name = "Inaprovaline"
@@ -997,9 +992,9 @@ datum/reagent/adminordrazine/on_mob_life(var/mob/living/carbon/M as mob)
 	M.sleeping = 0
 	M.jitteriness = 0
 	for(var/datum/disease/D in M.viruses)
-		if(D.severity == D.non_threat)
+		if(D.severity == NONTHREAT)
 			continue
-		D.spread = "Remissive"
+		D.spread_text = "Remissive"
 		D.stage--
 		if(D.stage < 1)
 			D.cure()
@@ -1231,7 +1226,7 @@ datum/reagent/nanites
 datum/reagent/nanites/reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 	src = null
 	if( (prob(10) && method==TOUCH) || method==INGEST)
-		M.contract_disease(new /datum/disease/transformation/robot(0),1)
+		M.ForceContractDisease(new /datum/disease/transformation/robot(0))
 
 datum/reagent/xenomicrobes
 	name = "Xenomicrobes"
@@ -1243,7 +1238,7 @@ datum/reagent/xenomicrobes
 datum/reagent/xenomicrobes/reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 	src = null
 	if( (prob(10) && method==TOUCH) || method==INGEST)
-		M.contract_disease(new /datum/disease/transformation/xeno(0),1)
+		M.ContractDisease(new /datum/disease/transformation/xeno(0))
 
 datum/reagent/fluorosurfactant//foam precursor
 	name = "Fluorosurfactant"

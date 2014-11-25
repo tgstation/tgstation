@@ -1,14 +1,14 @@
 /datum/disease/rhumba_beat
 	name = "The Rhumba Beat"
 	max_stages = 5
-	spread = "On contact"
-	spread_type = CONTACT_GENERAL
-	cure = "Chick Chicky Boom!"
-	cure_id = list("plasma")
+	spread_text = "On contact"
+	spread_flags = CONTACT_GENERAL
+	cure_text = "Chick Chicky Boom!"
+	cures = list("plasma")
 	agent = "Unknown"
-	affected_species = list("Human")
+	viable_mobtypes = list(/mob/living/carbon/human)
 	permeability_mod = 1
-	severity = "BIOHAZARD THREAT!"
+	severity = BIOHAZARD
 
 /datum/disease/rhumba_beat/stage_act()
 	..()

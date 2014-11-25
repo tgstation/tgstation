@@ -115,6 +115,7 @@ Class Procs:
 /obj/machinery/New()
 	..()
 	machines += src
+	auto_use_power()
 
 /obj/machinery/Destroy()
 	machines.Remove(src)
@@ -141,18 +142,20 @@ Class Procs:
 	..()
 
 /obj/machinery/proc/open_machine()
-	var/turf/T = get_turf(src)
-	if(T)
-		state_open = 1
-		density = 0
-		T.contents += contents
-		if(occupant)
-			if(occupant.client)
-				occupant.client.eye = occupant
-				occupant.client.perspective = MOB_PERSPECTIVE
-			occupant = null
+	state_open = 1
+	density = 0
+	dropContents()
 	update_icon()
 	updateUsrDialog()
+
+/obj/machinery/proc/dropContents()
+	var/turf/T = get_turf(src)
+	T.contents += contents
+	if(occupant)
+		if(occupant.client)
+			occupant.client.eye = occupant
+			occupant.client.perspective = MOB_PERSPECTIVE
+		occupant = null
 
 /obj/machinery/proc/close_machine(mob/living/target = null)
 	state_open = 0
@@ -204,12 +207,17 @@ Class Procs:
 
 /obj/machinery/Topic(href, href_list)
 	..()
-	if(!interact_offline && stat & (NOPOWER|BROKEN))
-		return 1
-	if(!usr.canUseTopic(src))
+	if(!can_be_used_by(usr))
 		return 1
 	add_fingerprint(usr)
 	return 0
+
+/obj/machinery/proc/can_be_used_by(mob/user)
+	if(!interact_offline && stat & (NOPOWER|BROKEN))
+		return 0
+	if(!user.canUseTopic(src))
+		return 0
+	return 1
 
 /obj/machinery/proc/is_operational()
 	return !(stat & (NOPOWER|BROKEN|MAINT))
@@ -231,10 +239,13 @@ Class Procs:
 		src << "<span class='notice'>You don't have the dexterity to do this!</span>"
 	return
 
-/mob/living/carbon/human/canUseTopic(atom/movable/M)
+/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close = 0)
 	if(restrained() || lying || stat || stunned || weakened)
 		return
 	if(!in_range(M, src))
+		if((be_close == 0) && (TK in mutations))
+			if(tkMaxRangeCheck(src, M))
+				return 1
 		return
 	if(!isturf(M.loc) && M.loc != src)
 		return
@@ -266,8 +277,10 @@ Class Procs:
 /obj/machinery/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
-/obj/machinery/attack_hand(mob/user as mob)
-	if(!interact_offline && stat & (NOPOWER|BROKEN|MAINT))
+/obj/machinery/attack_hand(mob/user as mob, var/check_power = 1)
+	if(check_power && stat & NOPOWER)
+		return 1
+	if(!interact_offline && stat & (BROKEN|MAINT))
 		return 1
 	if(user.lying || user.stat)
 		return 1
@@ -304,7 +317,8 @@ Class Procs:
 	gl_uid++
 
 /obj/machinery/proc/default_deconstruction_crowbar(var/obj/item/weapon/crowbar/C, var/ignore_panel = 0)
-	if(istype(C) && (panel_open || ignore_panel))
+	. = istype(C) && (panel_open || ignore_panel)
+	if(.)
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 		M.state = 2
@@ -349,14 +363,15 @@ Class Procs:
 	return 0
 
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/weapon/storage/part_replacer/W)
+	var/shouldplaysound = 0
 	if(istype(W) && component_parts)
 		if(panel_open)
 			var/obj/item/weapon/circuitboard/CB = locate(/obj/item/weapon/circuitboard) in component_parts
 			var/P
 			for(var/obj/item/weapon/stock_parts/A in component_parts)
 				for(var/D in CB.req_components)
-					if(ispath(A.type, text2path(D)))
-						P = text2path(D)
+					if(ispath(A.type, D))
+						P = D
 						break
 				for(var/obj/item/weapon/stock_parts/B in W.contents)
 					if(istype(B, P) && istype(A, P))
@@ -367,11 +382,14 @@ Class Procs:
 							component_parts += B
 							B.loc = null
 							user << "<span class='notice'>[A.name] replaced with [B.name].</span>"
+							shouldplaysound = 1 //Only play the sound when parts are actually replaced!
 							break
 			RefreshParts()
 		else
 			user << "<span class='notice'>Following parts detected in the machine:</span>"
 			for(var/var/obj/item/C in component_parts)
 				user << "<span class='notice'>    [C.name]</span>"
+		if(shouldplaysound)
+			W.play_rped_sound()
 		return 1
 	return 0

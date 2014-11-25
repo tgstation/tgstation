@@ -8,8 +8,6 @@
 	origin_tech = "magnets=1"
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
 
-	secured = 1
-
 	var/code = 30
 	var/frequency = 1457
 	var/delay = 0
@@ -22,6 +20,10 @@
 		set_frequency(frequency)
 	return
 
+/obj/item/device/assembly/signaler/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src,frequency)
+	..()
 
 /obj/item/device/assembly/signaler/activate()
 	if(cooldown > 0)	return 0
@@ -38,12 +40,13 @@
 	return
 
 /obj/item/device/assembly/signaler/interact(mob/user as mob, flag1)
-	var/t1 = "-------"
-//	if ((src.b_stat && !( flag1 )))
-//		t1 = text("-------<BR>\nGreen Wire: []<BR>\nRed Wire:   []<BR>\nBlue Wire:  []<BR>\n", (src.wires & 4 ? text("<A href='?src=\ref[];wires=4'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=4'>Mend Wire</A>", src)), (src.wires & 2 ? text("<A href='?src=\ref[];wires=2'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=2'>Mend Wire</A>", src)), (src.wires & 1 ? text("<A href='?src=\ref[];wires=1'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=1'>Mend Wire</A>", src)))
-//	else
-//		t1 = "-------"	Speaker: [src.listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>
-	var/dat = {"
+	if(is_secured(user))
+		var/t1 = "-------"
+	//	if ((src.b_stat && !( flag1 )))
+	//		t1 = text("-------<BR>\nGreen Wire: []<BR>\nRed Wire:   []<BR>\nBlue Wire:  []<BR>\n", (src.wires & 4 ? text("<A href='?src=\ref[];wires=4'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=4'>Mend Wire</A>", src)), (src.wires & 2 ? text("<A href='?src=\ref[];wires=2'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=2'>Mend Wire</A>", src)), (src.wires & 1 ? text("<A href='?src=\ref[];wires=1'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=1'>Mend Wire</A>", src)))
+	//	else
+	//		t1 = "-------"	Speaker: [src.listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>
+		var/dat = {"
 <TT>
 
 <A href='byond://?src=\ref[src];send=1'>Send Signal</A><BR>
@@ -63,9 +66,9 @@ Code:
 <A href='byond://?src=\ref[src];code=5'>+</A><BR>
 [t1]
 </TT>"}
-	user << browse(dat, "window=radio")
-	onclose(user, "radio")
-	return
+		user << browse(dat, "window=radio")
+		onclose(user, "radio")
+		return
 
 
 /obj/item/device/assembly/signaler/Topic(href, href_list)
@@ -109,7 +112,9 @@ Code:
 
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	var/turf/T = get_turf(src)
-	lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
+	if(usr)
+		lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
+
 
 	return
 /*

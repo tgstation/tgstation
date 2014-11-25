@@ -10,8 +10,8 @@
  */
 
 /obj/item/clothing/suit/fire
-	name = "firesuit"
-	desc = "A suit that protects against fire and heat."
+	name = "emergency firesuit"
+	desc = "A suit that helps protect against fire and heat."
 	icon_state = "fire"
 	item_state = "fire_suit"
 	w_class = 4
@@ -40,6 +40,13 @@
 	icon_state = "thermal"
 	item_state = "ro_suit"
 	slowdown = 1.5
+
+/obj/item/clothing/suit/fire/atmos
+	name = "firesuit"
+	desc = "An expensive firesuit that protects against even the most deadly of station fires. Designed to protect even if the wearer is set aflame."
+	icon_state = "atmos_firesuit"
+	item_state = "firesuit_atmos"
+	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 
 /*
  * Bomb protection
@@ -97,7 +104,7 @@
 /obj/item/clothing/head/radiation
 	name = "radiation hood"
 	icon_state = "rad"
-	desc = "A hood with radiation protective properties. Label: Made with lead, do not eat insulation"
+	desc = "A hood with radiation protective properties. The label reads, 'Made with lead. Please do not consume insulation.'"
 	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR|THICKMATERIAL
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 60, rad = 100)
 	strip_delay = 60
@@ -106,7 +113,7 @@
 
 /obj/item/clothing/suit/radiation
 	name = "radiation suit"
-	desc = "A suit that protects against radiation. Label: Made with lead, do not eat insulation."
+	desc = "A suit that protects against radiation. The label reads, 'Made with lead. Please do not consume insulation.'"
 	icon_state = "rad"
 	item_state = "rad_suit"
 	w_class = 4//bulky item

@@ -61,6 +61,7 @@
 	if(magazine.caliber == initial(magazine.caliber))
 		return 1
 	if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
+		playsound(M, fire_sound, 50, 1)
 		M << "<span class='danger'>[src] blows up in your face!</span>"
 		M.take_organ_damage(0,20)
 		M.drop_item()

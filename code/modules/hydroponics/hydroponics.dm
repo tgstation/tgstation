@@ -396,7 +396,7 @@ obj/machinery/hydroponics/proc/mutatepest()
 		visible_message("The pests seem to behave oddly...")
 		for(var/i=0, i<3, i++)
 			var/obj/effect/spider/spiderling/S = new(src.loc)
-			S.grow_as = /mob/living/simple_animal/hostile/giant_spider/hunter
+			S.grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/hunter
 	else
 		usr << "The pests seem to behave oddly, but quickly settle down..."
 
@@ -738,8 +738,6 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(user, /mob/living/silicon))		//How does AI know what plant is?
 		return
 	if(harvest)
-		if(!user in range(1,src))
-			return
 		myseed.harvest()
 	else if(dead)
 		planted = 0
@@ -772,9 +770,10 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
 	var/t_amount = 0
 	var/list/result = list()
+	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
 
 	while(t_amount < getYield())
-		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new product(user.loc, potency)
+		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, potency)
 		result.Add(t_prod) // User gets a consumable
 		if(!t_prod)	return
 		t_prod.lifespan = lifespan

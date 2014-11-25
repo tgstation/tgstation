@@ -349,7 +349,9 @@
 	if(prob(75) && Proj.damage > 0) spark_system.start()
 	return 2
 
-/mob/living/silicon/robot/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
+/mob/living/silicon/robot/triggerAlarm(var/class, area/A, var/O, var/obj/alarmsource)
+	if(alarmsource.z != z)
+		return
 	if (stat == 2)
 		return 1
 	var/list/L = alarms[class]
@@ -617,149 +619,49 @@
 				usr << "You unlock your cover."
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
-		return
-
-	switch(M.a_intent)
-
-		if ("help")
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("<span class='notice'>[M] caresses [src]'s plating with its scythe like arm.</span>"), 1)
-
-		if ("grab")
-			if (M == src || anchored)
-				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
-
-			M.put_in_active_hand(G)
-
-			G.synch()
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("<span class='danger'>[] has grabbed [] passively!</span>", M, src), 1)
-
-		if ("harm")
-			var/damage = rand(10, 20)
-			if (prob(90))
-				/*
-				if (M.class == "combat")
-					damage += 15
-					if(prob(20))
-						weakened = max(weakened,4)
-						stunned = max(stunned,4)
-				What is this?*/
-
-				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					O.show_message(text("<span class='userdanger'>[] has slashed at []!</span>", M, src), 1)
-				if(prob(8))
-					flick("noise", flash)
-				adjustBruteLoss(damage)
-				updatehealth()
+	if (M.a_intent =="disarm")
+		if(!(lying))
+			M.do_attack_animation(src)
+			if (prob(85))
+				Stun(7)
+				step(src,get_dir(M,src))
+				spawn(5)
+					step(src,get_dir(M,src))
+				add_logs(M, src, "pushed", admin=0)
+				playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
+				visible_message("<span class='danger'>[M] has forced back [src]!</span>", \
+								"<span class='userdanger'>[M] has forced back [src]!</span>")
 			else
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='userdanger'>[] took a swipe at []!</span>", M, src), 1)
-
-		if ("disarm")
-			if(!(lying))
-				if (rand(1,100) <= 85)
-					Stun(7)
-					step(src,get_dir(M,src))
-					spawn(5) step(src,get_dir(M,src))
-					playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("<span class='userdanger'>[] has forced back []!</span>", M, src), 1)
-				else
-					playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("<span class='userdanger'>[] attempted to force back []!</span>", M, src), 1)
+				visible_message("<span class='danger'>[M] took a swipe at [src]!</span>", \
+								"<span class='userdanger'>[M] took a swipe at [src]!</span>")
+	else
+		..()
 	return
 
 
 
 /mob/living/silicon/robot/attack_slime(mob/living/carbon/slime/M as mob)
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
-		return
+	if(..()) //successful slime shock
+		flick("noise", flash)
+		var/stunprob = M.powerlevel * 7 + 10
+		if(prob(stunprob) && M.powerlevel >= 8)
+			adjustBruteLoss(M.powerlevel * rand(6,10))
 
-	if(M.Victim) return // can't attack while eating!
+	var/damage = rand(1, 3)
 
-	if (health > -100)
-
-		for(var/mob/O in viewers(src, null))
-			if ((O.client && !( O.blinded )))
-				O.show_message(text("<span class='userdanger'>The [M.name] glomps []!</span>", src), 1)
-
-		var/damage = rand(1, 3)
-
-		if(M.is_adult)
-			damage = rand(20, 40)
-		else
-			damage = rand(5, 35)
-
-		damage = round(damage / 2) // borgs recieve half damage
-		adjustBruteLoss(damage)
-
-
-		if(M.powerlevel > 0)
-			var/stunprob = 10
-
-			switch(M.powerlevel)
-				if(1 to 2) stunprob = 20
-				if(3 to 4) stunprob = 30
-				if(5 to 6) stunprob = 40
-				if(7 to 8) stunprob = 60
-				if(9) 	   stunprob = 70
-				if(10) 	   stunprob = 95
-
-			if(prob(stunprob))
-				M.powerlevel -= 3
-				if(M.powerlevel < 0)
-					M.powerlevel = 0
-
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='userdanger'>The [M.name] has electrified []!</span>", src), 1)
-
-				flick("noise", flash)
-
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-				s.set_up(5, 1, src)
-				s.start()
-
-				if (prob(stunprob) && M.powerlevel >= 8)
-					adjustBruteLoss(M.powerlevel * rand(6,10))
-
-
-		updatehealth()
+	if(M.is_adult)
+		damage = rand(20, 40)
+	else
+		damage = rand(5, 35)
+	damage = round(damage / 2) // borgs recieve half damage
+	adjustBruteLoss(damage)
+	updatehealth()
 
 	return
 
-/mob/living/silicon/robot/attack_animal(mob/living/simple_animal/M as mob)
-	if(M.melee_damage_upper == 0)
-		M.emote("[M.friendly] [src]")
-	else
-		if(M.attack_sound)
-			playsound(loc, M.attack_sound, 50, 1, 1)
-		visible_message("<span class='danger'><B>[M]</B> [M.attacktext] [src]!</span>")
-		add_logs(M, src, "attacked", admin=0)
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		adjustBruteLoss(damage)
-		updatehealth()
 
-
-/mob/living/silicon/robot/attack_hand(mob/user)
+/mob/living/silicon/robot/attack_hand(mob/living/carbon/human/user)
 
 	add_fingerprint(user)
 
@@ -772,14 +674,14 @@
 			cell = null
 			updateicon()
 
-	if(!opened && (!istype(user, /mob/living/silicon)))
-		if (user.a_intent == "help")
-			user.visible_message("<span class='notice'>[user] pets [src]!</span>", \
-								"<span class='notice'>You pet [src]!</span>")
+	if(!opened)
+		if(..()) // hulk attack
+			spark_system.start()
+			spawn(0)
+				step_away(src,user,15)
+				sleep(3)
+				step_away(src,user,15)
 
-/mob/living/silicon/robot/attack_paw(mob/user)
-
-	return attack_hand(user)
 
 /mob/living/silicon/robot/proc/allowed(mob/M)
 	//check if it doesn't require any access at all

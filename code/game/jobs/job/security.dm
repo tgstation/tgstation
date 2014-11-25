@@ -250,22 +250,21 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	wires = new(src)
 	secure_radio_connections = new
 
-	if(radio_controller)
-		initialize()
+	initialize()
 	recalculateChannels()
 
 /obj/item/device/radio/headset/headset_sec/department/engi
-	keyslot1 = new /obj/item/device/encryptionkey/headset_sec
+	keyslot = new /obj/item/device/encryptionkey/headset_sec
 	keyslot2 = new /obj/item/device/encryptionkey/headset_eng
 
 /obj/item/device/radio/headset/headset_sec/department/supply
-	keyslot1 = new /obj/item/device/encryptionkey/headset_sec
+	keyslot = new /obj/item/device/encryptionkey/headset_sec
 	keyslot2 = new /obj/item/device/encryptionkey/headset_cargo
 
 /obj/item/device/radio/headset/headset_sec/department/med
-	keyslot1 = new /obj/item/device/encryptionkey/headset_sec
+	keyslot = new /obj/item/device/encryptionkey/headset_sec
 	keyslot2 = new /obj/item/device/encryptionkey/headset_med
 
 /obj/item/device/radio/headset/headset_sec/department/sci
-	keyslot1 = new /obj/item/device/encryptionkey/headset_sec
+	keyslot = new /obj/item/device/encryptionkey/headset_sec
 	keyslot2 = new /obj/item/device/encryptionkey/headset_sci

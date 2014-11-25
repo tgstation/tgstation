@@ -518,7 +518,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
 		usr.set_machine(src)
 		if(href_list["set_channel_name"])
-			src.channel_name = strip_html_simple(input(usr, "Provide a Feed Channel Name", "Network Channel Handler", ""))
+			src.channel_name = stripped_input(usr, "Provide a Feed Channel Name", "Network Channel Handler", "", MAX_NAME_LEN)
 			while (findtext(src.channel_name," ") == 1)
 				src.channel_name = copytext(src.channel_name,2,lentext(src.channel_name)+1)
 			src.updateUsrDialog()
@@ -563,9 +563,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.updateUsrDialog()
 
 		else if(href_list["set_new_message"])
-			src.msg = strip_html(input(usr, "Write your Feed story", "Network Channel Handler", ""))
-			while (findtext(src.msg," ") == 1)
-				src.msg = copytext(src.msg,2,lentext(src.msg)+1)
+			src.msg = trim(stripped_input(usr, "Write your Feed story", "Network Channel Handler"))
 			src.updateUsrDialog()
 
 		else if(href_list["set_attachment"])
@@ -620,15 +618,11 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.updateUsrDialog()
 
 		else if(href_list["set_wanted_name"])
-			src.channel_name = strip_html(input(usr, "Provide the name of the Wanted person", "Network Security Handler", ""))
-			while (findtext(src.channel_name," ") == 1)
-				src.channel_name = copytext(src.channel_name,2,lentext(src.channel_name)+1)
+			src.channel_name = trim(stripped_input(usr, "Provide the name of the Wanted person", "Network Security Handler"))
 			src.updateUsrDialog()
 
 		else if(href_list["set_wanted_desc"])
-			src.msg = strip_html(input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler", ""))
-			while (findtext(src.msg," ") == 1)
-				src.msg = copytext(src.msg,2,lentext(src.msg)+1)
+			src.msg = trim(stripped_input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler"))
 			src.updateUsrDialog()
 
 		else if(href_list["submit_wanted"])
@@ -786,7 +780,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.updateUsrDialog()
 
 
-/obj/machinery/newscaster/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/newscaster/attackby(obj/item/I as obj, mob/living/user as mob)
 
 /*	if (istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda) ) //Name verification for channels or messages
 		if(src.screen == 4 || src.screen == 5)
@@ -812,24 +806,25 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	if (src.isbroken)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 100, 1)
 		for (var/mob/O in hearers(5, src.loc))
-			O.show_message("<EM>[user.name]</EM> further abuses the shattered [src.name].")
+			O.show_message("<span class='danger'>[user.name] further abuses the shattered [src.name].</span>")
 	else
 		if(istype(I, /obj/item/weapon) )
+			user.do_attack_animation(src)
 			var/obj/item/weapon/W = I
 			if(W.force <15)
 				for (var/mob/O in hearers(5, src.loc))
-					O.show_message("[user.name] hits the [src.name] with the [W.name] with no visible effect." )
+					O.show_message("<span class='danger'>[user.name] hits the [src.name] with the [W.name] with no visible effect.</span>" )
 					playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
 			else
 				src.hitstaken++
 				if(src.hitstaken==3)
 					for (var/mob/O in hearers(5, src.loc))
-						O.show_message("[user.name] smashes the [src.name]!" )
+						O.show_message("<span class='danger'>[user.name] smashes the [src.name]!</span>" )
 					src.isbroken=1
 					playsound(src.loc, 'sound/effects/Glassbr3.ogg', 100, 1)
 				else
 					for (var/mob/O in hearers(5, src.loc))
-						O.show_message("[user.name] forcefully slams the [src.name] with the [I.name]!" )
+						O.show_message("<span class='danger'>[user.name] forcefully slams the [src.name] with the [I.name]!</span>" )
 					playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
 		else
 			user << "<FONT COLOR='blue'>This does nothing.</FONT>"
@@ -1026,10 +1021,9 @@ obj/item/weapon/newspaper/Topic(href, href_list)
 obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/pen))
 		if(src.scribble_page == src.curr_page)
-			user << "<FONT COLOR='blue'>There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?</FONT>"
+			user << "<span class='notice'>There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?</span>"
 		else
-			var/s = strip_html( input(user, "Write something", "Newspaper", "") )
-			s = copytext(sanitize(s), 1, MAX_MESSAGE_LEN)
+			var/s = stripped_input(user, "Write something", "Newspaper")
 			if (!s)
 				return
 			if (!in_range(src, usr) && src.loc != usr)

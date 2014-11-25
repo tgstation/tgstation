@@ -79,7 +79,7 @@
 	if(user && user.buckled)
 		user.buckled.unbuckle()
 
-	var/list/tempL = L
+	var/list/tempL = L.Copy()
 	var/attempt = null
 	var/success = 0
 	while(tempL.len)

@@ -1,6 +1,6 @@
 /obj/item/clothing/mask/gas
 	name = "gas mask"
-	desc = "A face-covering mask that can be connected to an air supply."
+	desc = "A face-covering mask that can be connected to an air supply. While good for concealing your identity, it isn't good for blocking gas flow." //More accurate
 	icon_state = "gas_alt"
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
@@ -13,7 +13,7 @@
 
 /obj/item/clothing/mask/gas/welding
 	name = "welding mask"
-	desc = "A gas mask with built in welding goggles and face shield. Looks like a skull, clearly designed by a nerd."
+	desc = "A gas mask with built-in welding goggles and a face shield. Looks like a skull - clearly designed by a nerd."
 	icon_state = "weldingmask"
 	m_amt = 4000
 	g_amt = 2000
@@ -27,7 +27,6 @@
 
 /obj/item/clothing/mask/gas/welding/attack_self()
 	toggle()
-
 
 /obj/item/clothing/mask/gas/welding/verb/toggle()
 	set category = "Object"
@@ -43,20 +42,30 @@
 
 /obj/item/clothing/mask/gas/sechailer
 	name = "security gas mask"
-	desc = "A standard issue Security gas mask with integrated 'Compli-o-nator 3000' device, plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you taze them. Do not tamper with the device."
+	desc = "A standard issue Security gas mask with integrated 'Compli-o-nator 3000' device. Plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you taze them. Do not tamper with the device."
 	action_button_name = "HALT!"
-	icon_state = "officermask"
+	icon_state = "sechailer"
 	var/cooldown = 0
 	var/aggressiveness = 2
+	ignore_maskadjust = 0
+	flags = MASKCOVERSMOUTH | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	flags_inv = HIDEFACE
+	visor_flags = MASKCOVERSMOUTH | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	visor_flags_inv = HIDEFACE
 
-/obj/item/clothing/mask/gas/sechailer/warden
-	icon_state = "wardenmask"
-
-/obj/item/clothing/mask/gas/sechailer/hos
-	icon_state = "hosmask"
+/obj/item/clothing/mask/gas/sechailer/swat
+	name = "\improper SWAT mask"
+	desc = "A close-fitting tactical mask with an especially aggressive Compli-o-nator 3000."
+	action_button_name = "HALT!"
+	icon_state = "swat"
+	aggressiveness = 3
+	ignore_maskadjust = 1
 
 /obj/item/clothing/mask/gas/sechailer/cyborg
-	icon_state = "hosmask"
+	name = "security hailer"
+	desc = "A set of recognizable pre-recorded messages for cyborgs to use when apprehending criminals."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "taperecorder_idle"
 	aggressiveness = 1 //Borgs are nicecurity!
 
 /obj/item/clothing/mask/gas/sechailer/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -79,6 +88,11 @@
 			aggressiveness = 4
 	else
 		..()
+
+/obj/item/clothing/mask/gas/sechailer/verb/adjust(var/mob/user)
+	set category = "Object"
+	set name = "Adjust Mask"
+	adjustmask(user)
 
 /obj/item/clothing/mask/gas/sechailer/attack_self()
 	halt()
@@ -181,16 +195,10 @@
 	item_state = "gas_mask"
 	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 75, rad = 0)
 
-/obj/item/clothing/mask/gas/swat
-	name = "\improper SWAT mask"
-	desc = "A close-fitting tactical mask that can be connected to an air supply."
-	icon_state = "swat"
-	strip_delay = 60
-
 /obj/item/clothing/mask/gas/syndicate
 	name = "syndicate mask"
 	desc = "A close-fitting tactical mask that can be connected to an air supply."
-	icon_state = "swat"
+	icon_state = "syndicate"
 	strip_delay = 60
 
 /obj/item/clothing/mask/gas/voice
@@ -294,7 +302,7 @@ obj/item/clothing/mask/gas/clown_hat/attack_self(mob/user)
 
 /obj/item/clothing/mask/gas/cyborg
 	name = "cyborg visor"
-	desc = "Beep boop"
+	desc = "Beep boop."
 	icon_state = "death"
 
 /obj/item/clothing/mask/gas/owl_mask

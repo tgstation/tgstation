@@ -103,12 +103,19 @@
 	Radio = new /obj/item/device/radio(src)
 	Radio.listening = 0 //Makes bot radios transmit only so no one hears things while adjacent to one.
 
+/obj/machinery/bot/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src,beacon_freq)
+		if(bot_filter)
+			radio_controller.remove_object(src,control_freq)
+	..()
 
 /obj/machinery/bot/proc/add_to_beacons(bot_filter) //Master filter control for bots. Must be placed in the bot's local New() to support map spawned bots.
 	if(radio_controller)
 		radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
 		if(bot_filter)
 			radio_controller.add_object(src, control_freq, filter = bot_filter)
+
 
 /obj/machinery/bot/proc/explode()
 	aibots -= src
@@ -144,8 +151,9 @@
 
 /obj/machinery/bot/attack_alien(var/mob/living/carbon/alien/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
 	health -= rand(15,30)*brute_dam_coeff
-	visible_message("<span class='userdanger'>[user] has slashed [src]!</span>")
+	visible_message("<span class='danger'>[user] has slashed [src]!</span>")
 	playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 	if(prob(10))
 		new /obj/effect/decal/cleanable/oil(loc)
@@ -153,11 +161,12 @@
 
 
 /obj/machinery/bot/attack_animal(var/mob/living/simple_animal/M as mob)
+	M.do_attack_animation(src)
 	if(M.melee_damage_upper == 0)
 		return
 	M.changeNext_move(CLICK_CD_MELEE)
 	health -= M.melee_damage_upper
-	visible_message("<span class='userdanger'>[M] has [M.attacktext] [src]!</span>")
+	visible_message("<span class='danger'>[M] has [M.attacktext] [src]!</span>")
 	add_logs(M, src, "attacked", admin=0)
 	if(prob(10))
 		new /obj/effect/decal/cleanable/oil(loc)
@@ -360,12 +369,12 @@ Example usage: patient = scan(/mob/living/carbon/human, oldpatient, 1)
 The proc would return a human next to the bot to be set to the patient var.
 Pass the desired type path itself, declaring a temporary var beforehand is not required.
 */
-obj/machinery/bot/proc/scan(var/scan_type, var/old_target, var/scan_range)
+obj/machinery/bot/proc/scan(var/scan_type, var/old_target, var/scan_range = DEFAULT_SCAN_RANGE)
 	var/final_result
-	for (var/scan in view (scan_range ? scan_range : DEFAULT_SCAN_RANGE, src) ) //Search for something in range!
+	for (var/scan in view (scan_range, src) ) //Search for something in range!
 		if(!istype(scan, scan_type)) //Check that the thing we found is the type we want!
 			continue //If not, keep searching!
-		if( !(scan in ignore_list) && !(scan in old_target) ) //Filter for blacklisted elements, usually unreachable or previously processed oness
+		if( !(scan in ignore_list) && (scan != old_target) ) //Filter for blacklisted elements, usually unreachable or previously processed oness
 			var/scan_result = process_scan(scan) //Some bots may require additional processing when a result is selected.
 			if( scan_result )
 				final_result = scan_result
@@ -438,7 +447,7 @@ obj/machinery/bot/proc/bot_step(var/dest)
 	var/datum/job/captain/All = new/datum/job/captain
 	all_access.access = All.get_access()
 
-	path = AStar(src, waypoint, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 200, id=all_access)
+	path = get_path_to(src, waypoint, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 200, id=all_access)
 	calling_ai = caller //Link the AI to the bot!
 	ai_waypoint = waypoint
 
@@ -732,14 +741,12 @@ obj/machinery/bot/proc/bot_summon()
 // given an optional turf to avoid
 /obj/machinery/bot/proc/calc_path(var/turf/avoid)
 	check_bot_access()
-	path = AStar(loc, patrol_target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 120, id=botcard, exclude=avoid)
-	if(!path)
-		path = list()
+	path = get_path_to(loc, patrol_target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 120, id=botcard, exclude=avoid)
 
 /obj/machinery/bot/proc/calc_summon_path(var/turf/avoid)
 	check_bot_access()
-	path = AStar(loc, summon_target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 150, id=botcard, exclude=avoid)
-	if(!path || tries >= 5) //Cannot reach target. Give up and announce the issue.
+	path = get_path_to(loc, summon_target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 150, id=botcard, exclude=avoid)
+	if(!path.len || tries >= 5) //Cannot reach target. Give up and announce the issue.
 		speak("Summon command failed, destination unreachable.",radio_frequency)
 		bot_reset()
 

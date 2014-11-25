@@ -196,7 +196,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	var/area/shuttle = locate(/area/supply/station)
 	if(!shuttle) return 0
 
-	if(forbidden_atoms_check(shuttle))
+	if(forbidden_atoms_check(shuttle) && at_station)
 		return 0
 
 	return 1
@@ -479,10 +479,11 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 
 		//Find the correct supply_pack datum
 		var/datum/supply_packs/P = supply_shuttle.supply_packs[href_list["doorder"]]
-		if(!istype(P))	return
+		if(!istype(P) || P.hidden  || P.contraband) //href protection
+			return
 
 		var/timeout = world.time + 600
-		var/reason = copytext(sanitize(input(usr,"Reason:","Why do you require this item?","") as null|text),1,MAX_MESSAGE_LEN)
+		var/reason = stripped_input(usr,"Reason:","Why do you require this item?","")
 		if(world.time > timeout)	return
 		if(!reason)	return
 
@@ -550,7 +551,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 
 /obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
 	if(!allowed(user))
-		user << "<span class='warning'> Access Denied.</span>"
+		user << "<span class='warning'>Access Denied.</span>"
 		return
 
 	if(..())
@@ -579,7 +580,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 
 /obj/machinery/computer/supplycomp/attackby(I as obj, user as mob)
 	if(istype(I,/obj/item/weapon/card/emag) && !hacked)
-		user << "<span class='notice'> Special supplies unlocked.</span>"
+		user << "<span class='notice'>Special supplies unlocked.</span>"
 		hacked = 1
 		return
 	else
@@ -654,8 +655,9 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 			temp += "<b>Request from: [get_supply_group_name(cat)]</b><BR><BR>"
 			for(var/supply_name in supply_shuttle.supply_packs )
 				var/datum/supply_packs/N = supply_shuttle.supply_packs[supply_name]
-				if((N.hidden && !hacked) || (N.contraband && !can_order_contraband) || N.group != cat) continue		//Have to send the type instead of a reference to
-				temp += "<A href='?src=\ref[src];doorder=[supply_name]'>[supply_name]</A> Cost: [N.cost]<BR>"		//the obj because it would get caught by the garbage
+				if((N.hidden && !hacked) || (N.contraband && !can_order_contraband) || N.group != cat)	//Have to send the type instead of a reference to
+					continue																			//the obj because it would get caught by the garbage
+				temp += "<A href='?src=\ref[src];doorder=[supply_name]'>[supply_name]</A> Cost: [N.cost]<BR>"
 
 		/*temp = "Supply points: [supply_shuttle.points]<BR><HR><BR>Request what?<BR><BR>"
 
@@ -673,10 +675,11 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 
 		//Find the correct supply_pack datum
 		var/datum/supply_packs/P = supply_shuttle.supply_packs[href_list["doorder"]]
-		if(!istype(P))	return
+		if(!istype(P) || (P.hidden && !hacked) || (P.contraband && !can_order_contraband)) //href exploit protection
+			return
 
 		var/timeout = world.time + 600
-		var/reason = copytext(sanitize(input(usr,"Reason:","Why do you require this item?","") as null|text),1,MAX_MESSAGE_LEN)
+		var/reason = stripped_input(usr,"Reason:","Why do you require this item?","")
 		if(world.time > timeout)	return
 //		if(!reason)	return
 

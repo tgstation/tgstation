@@ -211,7 +211,7 @@
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_robustgold/New()
 	..()
 	for(var/i = 1 to storage_slots)
-		reagents.add_reagent("gold",0.2)
+		reagents.add_reagent("gold",1)
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_carp
 	name = "\improper Carp Classic packet"
