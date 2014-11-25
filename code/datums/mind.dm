@@ -75,6 +75,7 @@
 	if(new_character.mind)								//disassociate any mind currently in our new body's mind variable
 		new_character.mind.current = null
 
+	new_character.refresh_huds(current)					//inherit the HUDs from the old body
 	current = new_character								//associate ourself with our new body
 	new_character.mind = src							//and associate our new body with ourself
 

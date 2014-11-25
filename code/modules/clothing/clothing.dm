@@ -33,13 +33,9 @@
 	var/darkness_view = 2//Base human is 2
 	var/invis_view = SEE_INVISIBLE_LIVING
 	var/emagged = 0
-	var/hud = null
 	var/list/icon/current = list() //the current hud icons
 	strip_delay = 20
 	put_on_delay = 25
-
-/obj/item/clothing/glasses/proc/process_hud(var/mob/M)
-	return
 
 /*
 SEE_SELF  // can see self, no matter what
@@ -268,7 +264,7 @@ atom/proc/generate_female_clothing(index,t_color,icon)
 	var/mob/M = usr
 	if (istype(M, /mob/dead/))
 		return
-	if (!can_use(usr))
+	if (!can_use(M))
 		return
 	if(src.has_sensor >= 2)
 		usr << "The controls are locked."
@@ -281,13 +277,17 @@ atom/proc/generate_female_clothing(index,t_color,icon)
 		src.sensor_mode = 0
 	switch(src.sensor_mode)
 		if(0)
-			usr << "You disable your suit's remote sensing equipment."
+			M << "You disable your suit's remote sensing equipment."
 		if(1)
-			usr << "Your suit will now report whether you are live or dead."
+			M << "Your suit will now report whether you are live or dead."
 		if(2)
-			usr << "Your suit will now report your vital lifesigns."
+			M << "Your suit will now report your vital lifesigns."
 		if(3)
-			usr << "Your suit will now report your vital lifesigns as well as your coordinate position."
+			M << "Your suit will now report your vital lifesigns as well as your coordinate position."
+	if(istype(M,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = M
+		if(H.w_uniform == src)
+			H.update_suit_sensors()
 	..()
 
 /obj/item/clothing/under/verb/rolldown()

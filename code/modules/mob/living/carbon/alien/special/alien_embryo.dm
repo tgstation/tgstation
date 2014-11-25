@@ -14,6 +14,9 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	if(istype(loc, /mob/living))
 		affected_mob = loc
 		affected_mob.status_flags |= XENO_HOST
+		if(istype(affected_mob,/mob/living/carbon/human))
+			var/mob/living/carbon/human/H = affected_mob
+			H.med_hud_set_status()
 		processing_objects.Add(src)
 		spawn(0)
 			AddInfectionImages(affected_mob)
@@ -23,6 +26,9 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 /obj/item/alien_embryo/Destroy()
 	if(affected_mob)
 		affected_mob.status_flags &= ~(XENO_HOST)
+		if(istype(affected_mob,/mob/living/carbon/human))
+			var/mob/living/carbon/human/H = affected_mob
+			H.med_hud_set_status()
 		spawn(0)
 			RemoveInfectionImages(affected_mob)
 	..()
@@ -31,6 +37,9 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	if(!affected_mob)	return
 	if(loc != affected_mob)
 		affected_mob.status_flags &= ~(XENO_HOST)
+		if(istype(affected_mob,/mob/living/carbon/human))
+			var/mob/living/carbon/human/H = affected_mob
+			H.med_hud_set_status()
 		processing_objects.Remove(src)
 		spawn(0)
 			RemoveInfectionImages(affected_mob)
