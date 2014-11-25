@@ -17,7 +17,8 @@ var/datum/atom_hud/huds = list( \
 	var/mob/seek_for = (inherited_from) ? inherited_from : src
 	var/image/oldantagicon = seek_for.hud_list[ANTAG_HUD]
 	var/image/newantagicon = hud_list[ANTAG_HUD]
-	newantagicon.icon_state = oldantagicon.icon_state
+	if(oldantagicon && oldantagicon.icon_state)
+		newantagicon.icon_state = oldantagicon.icon_state
 	if(istype(inherited_from, /mob/dead/observer))
 		var/mob/dead/observer/G = inherited_from
 		for(var/datum/atom_hud/hud in G.oldhuds)
