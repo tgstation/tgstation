@@ -69,37 +69,37 @@
 		turflist -= T
 		switch(mob_type)
 			if(1)
-				var/mob/living/simple_animal/hostile/retaliate/clown/admin/M = new /mob/living/simple_animal/hostile/retaliate/clown/admin(T)
+				var/mob/living/simple_animal/hostile/retaliate/clown/M = new /mob/living/simple_animal/hostile/retaliate/clown(T)
 				M.faction = "adminbus mob"
 				spawned_mobs += M
 				T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg',"#FFC0FF")
 			if(2)
-				var/mob/living/simple_animal/hostile/carp/admin/M = new /mob/living/simple_animal/hostile/carp/admin(T)
+				var/mob/living/simple_animal/hostile/carp/M = new /mob/living/simple_animal/hostile/carp(T)
 				M.faction = "adminbus mob"
 				spawned_mobs += M
 				T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg',"#C70AF5")
 			if(3)
 				if(prob(10))
-					var/mob/living/simple_animal/hostile/russian/admin/M = new /mob/living/simple_animal/hostile/russian/admin(T)
+					var/mob/living/simple_animal/hostile/russian/M = new /mob/living/simple_animal/hostile/russian(T)
 					M.faction = "adminbus mob"
 					spawned_mobs += M
 				else
-					var/mob/living/simple_animal/hostile/bear/admin/M = new /mob/living/simple_animal/hostile/bear/admin(T)
+					var/mob/living/simple_animal/hostile/bear/M = new /mob/living/simple_animal/hostile/bear(T)
 					M.faction = "adminbus mob"
 					spawned_mobs += M
 				T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg',"#454545")
 			if(4)
-				var/mob/living/simple_animal/hostile/tree/admin/M = new /mob/living/simple_animal/hostile/tree/admin(T)
+				var/mob/living/simple_animal/hostile/tree/M = new /mob/living/simple_animal/hostile/tree(T)
 				M.faction = "adminbus mob"
 				spawned_mobs += M
 				T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg',"#232B2C")
 			if(5)
-				var/mob/living/simple_animal/hostile/giant_spider/admin/M = new /mob/living/simple_animal/hostile/giant_spider/admin(T)
+				var/mob/living/simple_animal/hostile/giant_spider/M = new /mob/living/simple_animal/hostile/giant_spider(T)
 				M.faction = "adminbus mob"
 				spawned_mobs += M
 				T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg',"#3B2D1C")
 			if(6)
-				var/mob/living/simple_animal/hostile/alien/queen/large/admin/M = new /mob/living/simple_animal/hostile/alien/queen/large/admin(T)
+				var/mob/living/simple_animal/hostile/alien/queen/large/M = new /mob/living/simple_animal/hostile/alien/queen/large(T)
 				M.faction = "adminbus mob"
 				spawned_mobs += M
 				T.turf_animation('icons/effects/96x96.dmi',"beamin",-16,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg',"#525288")
