@@ -16,15 +16,7 @@
 			freed(L)
 		else if(isbot(A))
 			var/obj/machinery/bot/B = A
-			switch(dir)
-				if(SOUTH)
-					B.x = x-1
-				if(WEST)
-					B.y = y+1
-				if(NORTH)
-					B.x = x+1
-				if(EAST)
-					B.y = y-1
+			B.loc = get_step(src,turn(src.dir,-90))
 			B.turn_on()
 			B.isolated = 0
 			B.anchored = 0
@@ -37,15 +29,7 @@
 	return
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/freed(var/mob/living/L)
-	switch(dir)
-		if(SOUTH)
-			L.x = x-1
-		if(WEST)
-			L.y = y+1
-		if(NORTH)
-			L.x = x+1
-		if(EAST)
-			L.y = y-1
+	L.loc = get_step(src,turn(src.dir,-90))
 	L.buckled = null
 	L.anchored = 0
 	L.isolated = 0
@@ -382,7 +366,7 @@
 	for(var/i=spawnedbombs.len;i>0;i--)
 		var/obj/item/device/fuse_bomb/B = spawnedbombs[i]
 		if(B)
-			del(B)
+			qdel(B)
 			distributed++
 		spawnedbombs -= spawnedbombs[i]
 
@@ -443,23 +427,27 @@
 		if(L)
 			if(istype(L.loc,/mob/living/carbon))
 				var/mob/living/carbon/C = L.loc
-				del(L)
+				qdel(L)
 				C.regenerate_icons()
 			else
-				del(L)
+				qdel(L)
 			distributed++
 		spawnedlasers -= spawnedlasers[i]
 
 	update_rearview()
 	bususer << "Deleted all [distributed] laser guns.</span>"
 
-/obj/structure/stool/bed/chair/vehicle/adminbus/proc/Mass_Repair(mob/bususer)
+/obj/structure/stool/bed/chair/vehicle/adminbus/proc/Mass_Repair(mob/bususer,var/turf/centerloc=null,var/repair_range=3)//the proc can be called by others, doing (null, <center of the area you want to repair>, <radius of the area you want to repair>)
 
-	flick("icon_massrepair-push",bususer.gui_icons.adminbus_massrepair)
+	if(bususer)
+		flick("icon_massrepair-push",bususer.gui_icons.adminbus_massrepair)
 
 	visible_message("<span class='notice'>WE BUILD!</span>")
 
-	for(var/obj/machinery/M in range(src,3))
+	if(!centerloc)
+		centerloc = src.loc
+
+	for(var/obj/machinery/M in range(centerloc,repair_range))
 		if(istype(M,/obj/machinery/door/window))//for some reason it makes the windoors' sprite disapear (until you bump into it)
 			continue
 		if(istype(M,/obj/machinery/light))
@@ -469,7 +457,7 @@
 		M.stat = 0
 		M.update_icon()
 
-	for(var/turf/T in range(src,3))
+	for(var/turf/T in range(centerloc,repair_range))
 		if(istype(T, /turf/space/))
 			if(T.loc.name == "Space")
 				continue
@@ -485,25 +473,25 @@
 				else
 					F.make_plating()
 
-	for(var/obj/structure/cultgirder/G in range(src,3))
+	for(var/obj/structure/cultgirder/G in range(centerloc,repair_range))
 		var/turf/T = get_turf(G)
 		T.ChangeTurf(/turf/simulated/wall/cult)
-		del(G)
+		qdel(G)
 
-	for(var/obj/structure/girder/G in range(src,3))
+	for(var/obj/structure/girder/G in range(centerloc,repair_range))
 		var/turf/T = get_turf(G)
 		if(istype(G,/obj/structure/girder/reinforced))
 			T.ChangeTurf(/turf/simulated/wall/r_wall)
 		else
 			T.ChangeTurf(/turf/simulated/wall)
-		del(G)
+		qdel(G)
 
-	for(var/obj/item/weapon/shard/S in range(src,3))
+	for(var/obj/item/weapon/shard/S in range(centerloc,repair_range))
 		if(istype(S,/obj/item/weapon/shard/plasma))
 			new/obj/item/stack/sheet/glass/plasmaglass(S.loc)
 		else
 			new/obj/item/stack/sheet/glass(S.loc)
-		del(S)
+		qdel(S)
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/Teleportation(mob/bususer)
 
@@ -582,15 +570,7 @@
 
 		else if(isbot(A))
 			var/obj/machinery/bot/B = A
-			switch(dir)
-				if(SOUTH)
-					B.x = x-1
-				if(WEST)
-					B.y = y+1
-				if(NORTH)
-					B.x = x+1
-				if(EAST)
-					B.y = y-1
+			B.loc = get_step(src,turn(src.dir,-90))
 			B.turn_on()
 			B.isolated = 0
 			B.anchored = 0
@@ -689,12 +669,14 @@
 		switch(team)
 			if("Green")
 				pack = new /obj/item/packobelongings/green(src.loc)
+				pack.x = 130
 			if("Red")
 				pack = new /obj/item/packobelongings/red(src.loc)
+				pack.x = 126
 
-		pack.z = 2
+		pack.z = 2			//the players' belongings are stored there, in the Thunderdome Admin lodge.
 		pack.y = 69
-		pack.x = 130
+
 		pack.name = "[M.real_name]'s belongings"
 
 		for(var/obj/item/I in M)
@@ -797,15 +779,7 @@
 
 	else if(isbot(A))
 		var/obj/machinery/bot/B = A
-		switch(dir)
-			if(SOUTH)
-				B.x = x-1
-			if(WEST)
-				B.y = y+1
-			if(NORTH)
-				B.x = x+1
-			if(EAST)
-				B.y = y-1
+		B.loc = get_step(src,turn(src.dir,-90))
 		B.turn_on()
 		B.isolated = 0
 		B.anchored = 0
@@ -897,26 +871,22 @@
 					sleep(20)
 					antag_madness_adminbus(M)
 		if("10 seconds")
-			for(var/mob/M in passengers)
-				spawn()
-					Delay_Antag(M,100)
+			antagify_passengers(100)
 		if("30 seconds")
-			for(var/mob/M in passengers)
-				spawn()
-					Delay_Antag(M,300)
+			antagify_passengers(300)
 		if("1 minute")
-			for(var/mob/M in passengers)
-				spawn()
-					Delay_Antag(M,600)
+			antagify_passengers(600)
 		if("5 minutes")
-			for(var/mob/M in passengers)
-				spawn()
-					Delay_Antag(M,3000)
+			antagify_passengers(3000)
 		if("15 minutes")
-			for(var/mob/M in passengers)
-				spawn()
-					Delay_Antag(M,9000)
+			antagify_passengers(9000)
+
 	bususer.gui_icons.adminbus_antag.icon_state = "icon_antag"
+
+/obj/structure/stool/bed/chair/vehicle/adminbus/proc/antagify_passengers(var/delay)
+	for(var/mob/M in passengers)
+		spawn()
+			Delay_Antag(M, delay)
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/Delay_Antag(var/mob/M,var/delay=100)
 	if(!M.mind)	return
