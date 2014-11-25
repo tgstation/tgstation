@@ -599,7 +599,7 @@ obj/structure/door_assembly/New()
 							 "You start finishing the airlock.")
 
 		if(do_after(user, 40))
-			if(state == 2)
+			if(src.loc && state == 2)
 				user << "<span class='notice'> You've finished the airlock.</span>"
 				var/obj/machinery/door/airlock/door
 				if(mineral == "glass")
