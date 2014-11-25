@@ -1,6 +1,6 @@
 /obj/item/device/radio/headset
 	name = "radio headset"
-	desc = "An updated, modular intercom that fits over the head. Takes encryption keys"
+	desc = "An updated, modular intercom that fits over the head. Takes encryption keys. \nTo speak on the general radio frequency, use ; before speaking."
 	icon_state = "headset"
 	item_state = "headset"
 	g_amt = 0
@@ -38,7 +38,13 @@
 		return ..(freq, level)
 	return -1
 
-/obj/item/device/radio/headset/syndicate
+/obj/item/device/radio/headset/syndicate //disguised to look like a normal headset for stealth ops
+	origin_tech = "syndicate=3"
+
+/obj/item/device/radio/headset/syndicate/alt //undisguised bowman with flash protection
+	name = "syndicate headset"
+	desc = "A syndicate headset that can be used to hear all radio frequencies. Protects ears from flashbangs. \nTo access the syndicate channel, use ; before speaking."
+	flags = EARBANGPROTECT
 	origin_tech = "syndicate=3"
 	icon_state = "syndie_headset"
 	item_state = "syndie_headset"
