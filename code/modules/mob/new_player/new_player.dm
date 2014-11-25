@@ -318,6 +318,7 @@
 	EquipCustomItems(character)
 	character.loc = pick(latejoin)
 	character.lastarea = get_area(loc)
+	character.store_position()
 
 	ticker.mode.latespawn(character)
 
@@ -458,6 +459,9 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 /mob/new_player/proc/close_spawn_windows()
 	src << browse(null, "window=latechoices") //closes late choices window
 	src << browse(null, "window=playersetup") //closes the player setup window
+
+/mob/new_player/cultify()
+	return
 
 /mob/new_player/singuloCanEat()
 	return 0
