@@ -367,7 +367,12 @@
 	for(var/i=spawnedbombs.len;i>0;i--)
 		var/obj/item/device/fuse_bomb/B = spawnedbombs[i]
 		if(B)
-			qdel(B)
+			if(istype(B.loc,/mob/living/carbon))
+				var/mob/living/carbon/C = B.loc
+				qdel(B)
+				C.regenerate_icons()
+			else
+				qdel(B)
 			distributed++
 		spawnedbombs -= spawnedbombs[i]
 
