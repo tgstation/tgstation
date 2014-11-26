@@ -1033,8 +1033,6 @@ About the new airlock wires panel:
 				autoclose()
 			return
 
-	crush()
-
 	if(forced < 2)
 		if(emagged)
 			return
@@ -1053,7 +1051,13 @@ About the new airlock wires panel:
 		killthis.ex_act(2)//Smashin windows
 
 	..()
-
+	if(locate(/mob/living) in get_turf(src))
+		if(!safe)
+			crush()
+		else
+			open()
+			return
+	return
 
 /obj/machinery/door/airlock/New()
 	..()
