@@ -75,7 +75,7 @@
 
 // Used to get a properly sanitized input, of max_length
 /proc/stripped_input(var/mob/user, var/message = "", var/title = "", var/default = "", var/max_length=MAX_MESSAGE_LEN)
-	var/name = input(user, message, title, default)
+	var/name = input(user, message, title, default) as text|null
 	return strip_html_properly(name, max_length)
 
 //Filters out undesirable characters from names
@@ -146,6 +146,8 @@
 //this means that it doesn't just remove < and > and call it a day. seriously, who the fuck thought that would be useful.
 //also limit the size of the input, if specified to
 /proc/strip_html_properly(var/input,var/max_length=MAX_MESSAGE_LEN)
+	if(!input)
+		return
 	var/opentag = 1 //These store the position of < and > respectively.
 	var/closetag = 1
 	while(1)
@@ -194,11 +196,14 @@
 /*
  * Text modification
  */
+// See bygex.dm
+#ifndef USE_BYGEX
 /proc/replacetext(text, find, replacement)
 	return list2text(text2list(text, find), replacement)
 
 /proc/replacetextEx(text, find, replacement)
 	return list2text(text2listEx(text, find), replacement)
+#endif
 
 //Adds 'u' number of zeros ahead of the text 't'
 /proc/add_zero(t, u)

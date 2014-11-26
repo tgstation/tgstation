@@ -76,10 +76,10 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 
 	if(!cure)
 		if(prob(stage_prob))
-			stage = min(stage++,max_stages)
+			stage = min(stage + 1,max_stages)
 	else
 		if(prob(cure_chance))
-			stage = max(stage--, 1)
+			stage = max(stage - 1, 1)
 
 	if(disease_flags & CURABLE)
 		if(cure && prob(cure_chance))
@@ -91,9 +91,8 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 		return 0
 
 	. = 1
-
 	for(var/C_id in cures)
-		if(!affected_mob.reagents.has_reagent(C_id in cures))
+		if(!affected_mob.reagents.has_reagent(C_id))
 			.--
 			break //One missing cure is enough to fail
 
@@ -153,7 +152,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 		if(disease_flags & CAN_RESIST)
 			if(!(type in affected_mob.resistances))
 				affected_mob.resistances += type
-			affected_mob.viruses -= src
+				remove_virus()
 	del(src)
 
 
@@ -193,3 +192,10 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	if(spread_flags & CONTACT_FEET || spread_flags & CONTACT_HANDS || spread_flags & CONTACT_GENERAL)
 		return 1
 	return 0
+
+//don't use this proc directly. this should only ever be called by cure()
+/datum/disease/proc/remove_virus()
+	affected_mob.viruses -= src		//remove the datum from the list
+	if(istype(affected_mob, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = affected_mob
+		H.med_hud_set_status()

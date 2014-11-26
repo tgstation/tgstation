@@ -163,11 +163,6 @@
 							sleep(50)
 							theAPC = null
 
-	regular_hud_updates()
-
-	if(sensor_mode) //Data HUDs, such as Security or Medical HUDS. Passes the AI's eye since it seems from that instead of itself.
-		process_data_hud(src,sensor_mode,DATA_HUD_BASIC,src.eyeobj)
-
 /mob/living/silicon/ai/updatehealth()
 	if(status_flags & GODMODE)
 		health = maxHealth

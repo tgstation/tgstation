@@ -115,6 +115,7 @@ Class Procs:
 /obj/machinery/New()
 	..()
 	machines += src
+	auto_use_power()
 
 /obj/machinery/Destroy()
 	machines.Remove(src)
@@ -206,12 +207,17 @@ Class Procs:
 
 /obj/machinery/Topic(href, href_list)
 	..()
-	if(!interact_offline && stat & (NOPOWER|BROKEN))
-		return 1
-	if(!usr.canUseTopic(src))
+	if(!can_be_used_by(usr))
 		return 1
 	add_fingerprint(usr)
 	return 0
+
+/obj/machinery/proc/can_be_used_by(mob/user)
+	if(!interact_offline && stat & (NOPOWER|BROKEN))
+		return 0
+	if(!user.canUseTopic(src))
+		return 0
+	return 1
 
 /obj/machinery/proc/is_operational()
 	return !(stat & (NOPOWER|BROKEN|MAINT))
@@ -271,8 +277,10 @@ Class Procs:
 /obj/machinery/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
-/obj/machinery/attack_hand(mob/user as mob)
-	if(!interact_offline && stat & (NOPOWER|BROKEN|MAINT))
+/obj/machinery/attack_hand(mob/user as mob, var/check_power = 1)
+	if(check_power && stat & NOPOWER)
+		return 1
+	if(!interact_offline && stat & (BROKEN|MAINT))
 		return 1
 	if(user.lying || user.stat)
 		return 1
@@ -309,7 +317,8 @@ Class Procs:
 	gl_uid++
 
 /obj/machinery/proc/default_deconstruction_crowbar(var/obj/item/weapon/crowbar/C, var/ignore_panel = 0)
-	if(istype(C) && (panel_open || ignore_panel))
+	. = istype(C) && (panel_open || ignore_panel)
+	if(.)
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 		M.state = 2

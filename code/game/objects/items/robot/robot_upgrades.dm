@@ -157,6 +157,7 @@
 		for(var/obj/item/weapon/tank/jetpack/carbondioxide in R.module.modules)
 			R.internals = src
 		R.icon_state="Miner+j"
+		R.module.rebuild()
 		return 1
 
 

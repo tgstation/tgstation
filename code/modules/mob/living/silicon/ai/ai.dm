@@ -20,6 +20,8 @@ var/list/ai_list = list()
 	density = 1
 	status_flags = CANSTUN|CANPARALYSE|CANPUSH
 	force_compose = 1 //This ensures that the AI always composes it's own hear message. Needed for hrefs and job display.
+	med_hud = DATA_HUD_MEDICAL_BASIC
+	sec_hud = DATA_HUD_SECURITY_BASIC
 	var/list/network = list("SS13")
 	var/obj/machinery/camera/current = null
 	var/list/connected_robots = list()
@@ -492,7 +494,9 @@ var/list/ai_list = list()
 
 	Bot.call_bot(src, waypoint)
 
-/mob/living/silicon/ai/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
+/mob/living/silicon/ai/triggerAlarm(var/class, area/A, var/O, var/obj/alarmsource)
+	if(alarmsource.z != z)
+		return
 	if (stat == 2)
 		return 1
 	var/list/L = alarms[class]

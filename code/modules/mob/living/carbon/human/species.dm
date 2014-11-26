@@ -457,9 +457,6 @@
 				H.sight |= G.vision_flags
 				H.see_in_dark = G.darkness_view
 				H.see_invisible = G.invis_view
-				if(G.hud)
-					G.process_hud(H)
-
 		if(H.druggy)	//Override for druggy
 			H.see_invisible = see_temp
 

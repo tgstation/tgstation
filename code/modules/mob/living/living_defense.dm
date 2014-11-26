@@ -69,6 +69,36 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 			var/mob/M = assailant.mob
 			add_logs(M, src, "hit", object="[I]")
 
+/mob/living/mech_melee_attack(obj/mecha/M)
+	if(M.occupant.a_intent == "harm")
+		if(M.damtype == "brute")
+			step_away(src,M,15)
+		switch(M.damtype)
+			if("brute")
+				Paralyse(1)
+				take_overall_damage(rand(M.force/2, M.force))
+				playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
+			if("fire")
+				take_overall_damage(0, rand(M.force/2, M.force))
+				playsound(src, 'sound/items/Welder.ogg', 50, 1)
+			if("tox")
+				M.mech_toxin_damage(src)
+			else
+				return
+		updatehealth()
+		M.occupant_message("<span class='danger'>You hit [src].</span>")
+		visible_message("<span class='danger'>[src] has been hit by [M.name].</span>", \
+						"<span class='userdanger'>[src] has been hit by [M.name].</span>")
+		add_logs(M.occupant, src, "attacked", object=M, addition="(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
+	else
+		step_away(src,M)
+		add_logs(M.occupant, src, "pushed", object=M, admin=0)
+		M.occupant_message("<span class='warning'>You push [src] out of the way.</span>")
+		visible_message("<span class='warning'>[M] pushes [src] out of the way.</span>")
+
+		return
+
+
 //Mobs on Fire
 /mob/living/proc/IgniteMob()
 	if(fire_stacks > 0 && !on_fire)

@@ -29,6 +29,9 @@
 	if(!C || !user)
 		return
 	if(istype(C, /obj/item/stack/rods))
+		if(broken || burnt)
+			user << "<span class='warning'>Repair the plating first.</span>"
+			return
 		var/obj/item/stack/rods/R = C
 		if (R.get_amount() < 2)
 			user << "<span class='warning'>You need two rods to make a reinforced floor.</span>"

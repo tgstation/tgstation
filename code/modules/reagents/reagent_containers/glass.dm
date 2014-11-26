@@ -56,8 +56,8 @@
 
 	else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
-		if(!target.reagents.total_volume && target.reagents)
-			user << "<span class='notice'>[target] is empty.</span>"
+		if(target.reagents && !target.reagents.total_volume)
+			user << "<span class='notice'>[target] is empty and can't be refilled.</span>"
 			return
 
 		if(reagents.total_volume >= reagents.maximum_volume)
