@@ -70,12 +70,7 @@
 						user.visible_message("<span class='warning'>[user] starts emptying [pod]'s contents onto the floor!</span>")
 						if(do_after(user, 10)) //So it doesn't default to close_animation() on fail
 							if(pod.loc == loc)
-								for(var/atom/movable/AM in pod)
-									AM.loc = get_turf(user)
-									if(ismob(AM))
-										var/mob/M = AM
-										M.Weaken(5)
-
+								pod.empty(get_turf(user))
 					else
 						close_animation()
 			break
@@ -144,6 +139,7 @@
 
 /obj/structure/transit_tube/station/pod_stopped(obj/structure/transit_tube_pod/pod, from_dir)
 	pod_moving = 1
+	pod.empty(get_step(src,dir), clientless_only=1, weaken=0)
 	spawn(5)
 		launch_cooldown = world.time + cooldown_delay
 		open_animation()
