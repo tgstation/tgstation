@@ -1,8 +1,0 @@
-author: Dylanstrategie
-delete-after: True
-changes:
-  - tweak: Virology Distribution separated from the station again. No-one cares about the Xenomorph's feelings, I don't want Gibbingtons in the air tank
-  - tweak: Outpost (Z-5) external airlocks standardized. They should now simulate atmos correctly
-  - tweak: DJ Station solars should now be fully functional. The SMES starts charged for hours, so no need to hurry (no longer a disguised magical SMES)
-  - tweak: The Telecommunications Waste Loop has been isolated and goes into space. Something something heat exchange plates fire into waste access air cycling cooling loop fried radios
-  - tweak: Engineering Access standardized. Atmospherics Technicians should no longer be persona non grata, and will only be locked from the PA and the Supermatter CHAMBER

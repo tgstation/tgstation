@@ -420,7 +420,7 @@ ________________________________________________________________________________
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\gamemodes\events\ninja_equipment.dm:416: dat += "Stored AI: <b>[A.name]</b><br>"
 				dat += {"Stored AI: <b>[A.name]</b><br>
-					System integrity: [(A.health+100)/2]%<br>"}
+					System integrity: [A.system_integrity()]%<br>"}
 				// END AUTOFIX
 				//I personally think this makes things a little more fun. Ninjas can override all but law 0.
 				//if (A.laws.zeroth)

@@ -3,6 +3,7 @@
 var/cultwords = list()
 var/global/runedec = 0
 var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", "self", "see", "other", "hide")
+var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE WORLD WHEN AN AI LOGS IN
 
 /client/proc/check_words() // -- Urist
 	set category = "Special Verbs"
@@ -67,6 +68,11 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	blood.override = 1
 	for(var/mob/living/silicon/ai/AI in player_list)
 		AI.client.images += blood
+	rune_list.Add(src)
+
+/obj/effect/rune/Destroy()
+	rune_list.Remove(src)
+	..()
 
 /obj/effect/rune/examine()
 	set src in view(2)
@@ -93,11 +99,11 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 /obj/effect/rune/attackby(I as obj, user as mob)
 	if(istype(I, /obj/item/weapon/tome) && iscultist(user))
 		user << "You retrace your steps, carefully undoing the lines of the rune."
-		del(src)
+		qdel(src)
 		return
 	else if(istype(I, /obj/item/weapon/nullrod))
 		user << "<span class='notice'>You disrupt the vile magic with the deadening field of the null rod!</span>"
-		del(src)
+		qdel(src)
 		return
 	return
 
@@ -374,9 +380,6 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	if(!cultwords["travel"])
 		runerandom()
 	if(iscultist(user))
-		var/C = 0
-		for(var/obj/effect/rune/N in world)
-			C++
 		if (!istype(user.loc,/turf))
 			user << "<span class='warning'>You do not have enough space to write a proper rune.</span>"
 			return
@@ -384,7 +387,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 
 
 
-		if (C>=26+runedec+ticker.mode.cult.len) //including the useless rune at the secret room, shouldn't count against the limit of 25 runes - Urist
+		if (rune_list.len >= 26+runedec+ticker.mode.cult.len) //including the useless rune at the secret room, shouldn't count against the limit of 25 runes - Urist
 			alert("The cloth of reality can't take that much of a strain. Remove some runes first!")
 			return
 		else
