@@ -5838,7 +5838,7 @@
 "cin" = (/obj/machinery/atmospherics/pipe/simple/insulated/hidden{dir = 4},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/effect/decal/warning_stripes{tag = "icon-warning (EAST)"; icon_state = "warning"; dir = 4},/turf/simulated/floor{icon_state = "white"},/area/turret_protected/tcomms_control_room)
 "cio" = (/obj/machinery/atmospherics/unary/vent_scrubber{dir = 8; on = 1},/turf/simulated/floor,/area/engineering/atmos)
 "cip" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/machinery/door/firedoor/border_only,/obj/machinery/door/airlock/glass_engineering{name = "Auxiliary Engineering"; req_access_txt = "0"; req_one_access_txt = "11;24"},/turf/simulated/floor/plating,/area/engineering/engine)
-"ciq" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 5},/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor,/area/engineering/engine)
+"ciq" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 5},/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor,/area/engineering/engine)
 "cir" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area/engineering/atmos)
 "cis" = (/obj/machinery/atmospherics/binary/volume_pump{dir = 8; name = "Filter to Waste"},/turf/simulated/floor,/area/engineering/atmos)
 "cit" = (/obj/machinery/atmospherics/pipe/simple/filtering/visible{dir = 4},/turf/simulated/floor,/area/engineering/atmos)
