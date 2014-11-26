@@ -1014,7 +1014,7 @@ Pressure: [env.return_pressure()]"}
 			if(!Rad.P)
 				var/obj/item/weapon/tank/plasma/Plasma = new/obj/item/weapon/tank/plasma(Rad)
 				Plasma.air_contents.toxins = 70
-				Rad.drainratio = 0
+				Rad.drain_ratio = 0
 				Rad.P = Plasma
 				Plasma.loc = Rad
 
