@@ -74,14 +74,13 @@
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
 			user << "<span class='warning'>[target] is full.</span>"
 			return
-
+		var/refill = reagents.get_master_reagent_id()
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 		user << "<span class='notice'> You transfer [trans] units of the solution to [target].</span>"
 
 		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user
 			bro.cell.use(30)
-			var/refill = reagents.get_master_reagent_id()
 			spawn(600)
 				reagents.add_reagent(refill, trans)
 
