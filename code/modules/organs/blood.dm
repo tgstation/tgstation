@@ -119,8 +119,9 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				if(!pale) //Somehow
 					pale = 1
 					update_body()
-				oxyloss += 10
-				toxloss += 3
+				oxyloss += 8
+				toxloss += 2
+				cloneloss += 1
 				Paralyse(5) //Keep them on the ground, that'll teach them
 
 		// Without enough blood you slowly go hungry.
