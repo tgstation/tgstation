@@ -128,7 +128,7 @@
 "acx" = (/turf/simulated/wall,/area/maintenance/fsmaint)
 "acy" = (/obj/machinery/door/airlock/external{name = "Security External Airlock"; req_access_txt = "63; 13"},/turf/simulated/floor/plating,/area/maintenance/fsmaint)
 "acz" = (/obj/structure/cable{icon_state = "0-2"; d2 = 2},/obj/machinery/power/tracker,/turf/simulated/floor/plating/airless,/area/solar/auxport)
-"acA" = (/obj/structure/stool/bed/chair{dir = 1},/obj/machinery/power/apc{dir = 8; name = "Prisioner Transfer Centre"; pixel_x = -30},/obj/structure/cable{icon_state = "0-4"; d2 = 4},/obj/machinery/light{icon_state = "tube1"; dir = 8},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 5},/turf/simulated/floor/plasteel,/area/security/transfer)
+"acA" = (/obj/structure/stool/bed/chair{dir = 1},/obj/machinery/power/apc{dir = 8; name = "Prisoner Transfer Centre"; pixel_x = -30},/obj/structure/cable{icon_state = "0-4"; d2 = 4},/obj/machinery/light{icon_state = "tube1"; dir = 8},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 5},/turf/simulated/floor/plasteel,/area/security/transfer)
 "acB" = (/obj/structure/stool/bed/chair{dir = 1},/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/floor/plasteel,/area/security/transfer)
 "acC" = (/obj/structure/stool/bed/chair{dir = 1},/obj/machinery/light{dir = 4; icon_state = "tube1"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 10},/turf/simulated/floor/plasteel,/area/security/transfer)
 "acD" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor/plating,/area/security/prison)
