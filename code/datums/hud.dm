@@ -29,7 +29,7 @@ var/datum/atom_hud/huds = list( \
 				readd_hud(hud)
 
 /mob/proc/readd_hud(var/datum/atom_hud/hud)
-	hud.add_hud_to(src)
+	hud.readd_hud(src)
 
 /mob/dead/observer/readd_hud(var/datum/atom_hud/hud)
 	oldhuds |= hud
@@ -70,3 +70,7 @@ var/datum/atom_hud/huds = list( \
 		return
 	for(var/i in hud_icons)
 		M.client.images |= A.hud_list[i]
+
+/datum/atom_hud/proc/readd_hud(var/mob/M)
+	add_hud_to(M)
+

@@ -26,6 +26,13 @@
 
 	..()
 
+/mob/living/carbon/monkey/prepare_data_huds()
+	//Prepare our med HUD...
+	..()
+	//...and display it.
+	for(var/datum/atom_hud/data/medical/hud in huds)
+		hud.add_to_hud(src)
+
 /mob/living/carbon/monkey/movement_delay()
 	var/tally = 0
 	if(reagents)

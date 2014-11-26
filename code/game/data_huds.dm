@@ -27,11 +27,11 @@
 	if(U.sensor_mode <= 2) return 0
 	return 1
 
-/datum/atom_hud/data/medical/basic/add_to_single_hud(var/mob/M, var/mob/living/carbon/human/H)
+/datum/atom_hud/data/medical/basic/add_to_single_hud(var/mob/M, var/mob/living/carbon/H)
 	if(check_sensors(H))
 		..()
 
-/datum/atom_hud/data/medical/basic/proc/update_suit_sensors(var/mob/living/carbon/human/H)
+/datum/atom_hud/data/medical/basic/proc/update_suit_sensors(var/mob/living/carbon/H)
 	check_sensors(H) ? add_to_hud(H) : remove_from_hud(H)
 
 /datum/atom_hud/data/medical/advanced
@@ -56,8 +56,8 @@
 
 //HELPERS
 
-//called when a human changes virus
-/mob/living/carbon/human/proc/check_virus()
+//called when a carbon changes virus
+/mob/living/carbon/proc/check_virus()
 	for(var/datum/disease/D in viruses)
 		if((!(D.visibility_flags & HIDDEN_SCANNER)) && (D.severity != NONTHREAT))
 			return 1
@@ -89,20 +89,20 @@
 //HOOKS
 
 //called when a human changes suit sensors
-/mob/living/carbon/human/proc/update_suit_sensors()
+/mob/living/carbon/proc/update_suit_sensors()
 	var/datum/atom_hud/data/medical/basic/B = huds[DATA_HUD_MEDICAL_BASIC]
 	B.update_suit_sensors(src)
 
-//called when a human changes health
-/mob/living/carbon/human/proc/med_hud_set_health()
+//called when a carbon changes health
+/mob/living/carbon/proc/med_hud_set_health()
 	var/image/holder = hud_list[HEALTH_HUD]
 	if(stat == 2)
 		holder.icon_state = "hudhealth-100"
 	else
 		holder.icon_state = "hud[RoundHealth(health)]"
 
-//called when a human changes stat, virus or XENO_HOST
-/mob/living/carbon/human/proc/med_hud_set_status()
+//called when a carbon changes stat, virus or XENO_HOST
+/mob/living/carbon/proc/med_hud_set_status()
 	var/image/holder = hud_list[STATUS_HUD]
 	if(stat == 2)
 		holder.icon_state = "huddead"
