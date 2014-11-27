@@ -15,6 +15,7 @@
 	new /obj/item/clothing/suit/armor/vest(src)
 	new /obj/item/clothing/head/helmet/swat/syndicate(src)
 	new /obj/item/ammo_box/magazine/m10mm(src)
+	new /obj/item/device/radio/headset/syndicate(src)
 	new /obj/item/weapon/storage/belt/military(src)
 	new /obj/item/weapon/crowbar/red(src)
 	new /obj/item/clothing/glasses/night(src)
