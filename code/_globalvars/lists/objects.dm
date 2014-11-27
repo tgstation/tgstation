@@ -8,10 +8,9 @@ var/global/list/shuttle_caller_list = list()  		//list of all communication cons
 var/global/list/machines = list()
 var/global/list/processing_objects = list()
 var/global/list/active_diseases = list()
+var/global/list/aibots = list()
 
 var/global/list/chemical_reactions_list				//list of all /datum/chemical_reaction datums. Used during chemical reactions
 var/global/list/chemical_reagents_list				//list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff
 var/global/list/surgeries_list = list()				//list of all surgeries by name, associated with their path.
 var/global/list/table_recipes = list()				//list of all table craft recipes
-var/global/list/med_hud_users = list()				//list of all entities using a medical HUD.
-var/global/list/sec_hud_users = list()				//list of all entities using a security HUD.

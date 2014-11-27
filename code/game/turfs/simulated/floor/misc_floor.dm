@@ -10,27 +10,28 @@
  * Ocean
  * Iron Sand
  * Snow
+ * High-traction
  */
 
 /turf/simulated/floor/goonplaque
 	name = "Commemorative Plaque"
 	icon_state = "plaque"
 	desc = "\"This is a plaque in honour of our comrades on the G4407 Stations. Hopefully TG4407 model can live up to your fame and fortune.\" Scratched in beneath that is a crude image of a meteor and a spaceman. The spaceman is laughing. The meteor is exploding."
+	floor_tile = /obj/item/stack/tile/plasteel
 
 /turf/simulated/floor/vault
 	icon_state = "rockvault"
-
-/turf/simulated/wall/vault
-	icon_state = "rockvault"
+	floor_tile = /obj/item/stack/tile/plasteel
 
 /turf/simulated/floor/bluegrid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "bcircuit"
+	floor_tile = /obj/item/stack/tile/plasteel
 
 /turf/simulated/floor/greengrid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "gcircuit"
-
+	floor_tile = /obj/item/stack/tile/plasteel
 
 /turf/simulated/shuttle
 	name = "shuttle"
@@ -90,4 +91,14 @@
 	icon_state = "snow"
 
 /turf/simulated/floor/plating/snow/ex_act(severity)
+	return
+
+/turf/simulated/floor/noslip
+	name = "high-traction floor"
+	icon_state = "noslip"
+	floor_tile = /obj/item/stack/tile/noslip
+	broken_states = list("noslip-damaged1","noslip-damaged2","noslip-damaged3")
+	burnt_states = list("noslip-scorched1","noslip-scorched2")
+
+/turf/simulated/floor/noslip/MakeSlippery()
 	return

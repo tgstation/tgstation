@@ -38,7 +38,7 @@
 
 /obj/structure/closet/proc/can_close()
 	for(var/obj/structure/closet/closet in get_turf(src))
-		if(closet != src)
+		if(closet != src && !closet.wall_mounted)
 			return 0
 	return 1
 
@@ -152,23 +152,20 @@
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		health -= Proj.damage
 		if(health <= 0)
-			for(var/atom/movable/A as mob|obj in src)
-				A.loc = src.loc
+			dump_contents()
 			qdel(src)
 	return
 
 /obj/structure/closet/attack_animal(mob/living/simple_animal/user as mob)
 	if(user.environment_smash)
+		user.do_attack_animation(src)
 		visible_message("<span class='danger'>[user] destroys the [src].</span>")
-		for(var/atom/movable/A as mob|obj in src)
-			A.loc = src.loc
+		dump_contents()
 		qdel(src)
 
-// this should probably use dump_contents()
 /obj/structure/closet/blob_act()
 	if(prob(75))
-		for(var/atom/movable/A as mob|obj in src)
-			A.loc = src.loc
+		dump_contents()
 		qdel(src)
 
 
@@ -325,9 +322,8 @@
 	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>"
 	for(var/mob/O in viewers(src))
 		O << "<span class='warning'>[src] begins to shake violently!</span>"
-	var/turf/T = get_turf(src)	//Check for moved locker
 	if(do_after(user,(breakout_time*60*10))) //minutes * 60seconds * 10deciseconds
-		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded) || T != get_turf(src))
+		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded))
 			return
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
 
@@ -337,3 +333,5 @@
 		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
 		user << "<span class='notice'>You successfully break out of [src]!</span>"
 		open()
+	else
+		user << "<span class='warning'>You fail to break out of [src]!</span>"

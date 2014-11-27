@@ -10,6 +10,7 @@
 	var/mob/pulledby = null
 	var/languages = 0 //For say() and Hear()
 	var/inertia_dir = 0
+	var/pass_flags = 0
 	glide_size = 8
 
 /atom/movable/Move(atom/newloc, direct = 0)
@@ -136,6 +137,8 @@
 	. = step(src, direction)
 	dir = old_dir
 
+/atom/movable/proc/checkpass(passflag)
+	return pass_flags&passflag
 
 /atom/movable/proc/hit_check() // todo: this is partly obsolete due to passflags already, add throwing stuff to mob CanPass and finish it
 	if(src.throwing)

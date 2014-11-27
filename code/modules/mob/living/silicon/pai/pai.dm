@@ -1,9 +1,10 @@
 /mob/living/silicon/pai
 	name = "pAI"
 	icon = 'icons/obj/status_display.dmi' //invisibility!
-	mouse_opacity
+	mouse_opacity = 0
 	density = 0
 	mob_size = 0
+	invisibility = 101
 
 	var/network = "SS13"
 	var/obj/machinery/camera/current = null
@@ -64,7 +65,6 @@
 		pda.ownjob = "Personal Assistant"
 		pda.owner = text("[]", src)
 		pda.name = pda.owner + " (" + pda.ownjob + ")"
-		pda.toff = 1
 
 		follow_pai()
 	..()

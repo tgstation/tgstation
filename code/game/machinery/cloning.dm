@@ -112,7 +112,7 @@
 /obj/machinery/clonepod/attack_paw(mob/user as mob)
 	return attack_hand(user)
 /obj/machinery/clonepod/attack_hand(mob/user as mob)
-	if ((isnull(src.occupant)) || (stat & NOPOWER))
+	if (isnull(src.occupant) || !is_operational())
 		return
 	if ((!isnull(src.occupant)) && (src.occupant.stat != 2))
 		var/completion = (100 * ((src.occupant.health + 100) / (src.heal_level + 100)))
@@ -152,6 +152,7 @@
 		src.eject_wait = 0
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
+	H.silent = 20 //Prevents an extreme edge case where clones could speak if they said something at exactly the right moment.
 	occupant = H
 
 	if(!clonename)	//to prevent null names
@@ -167,24 +168,10 @@
 	//Here let's calculate their health so the pod doesn't immediately eject them!!!
 	H.updatehealth()
 
-	H.silent = 5 //Prevents an extreme edge case where clones could speak if they said something at exactly the right moment.
+	H.refresh_huds(clonemind.current)
 	clonemind.transfer_to(H)
 	H.ckey = ckey
 	H << "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>"
-
-	// -- Mode/mind specific stuff goes here
-
-	if((H.mind in ticker.mode.revolutionaries) || (H.mind in ticker.mode.head_revolutionaries))
-		ticker.mode.update_all_rev_icons() //So the icon actually appears
-	if((H.mind in ticker.mode.A_bosses) || ((H.mind in ticker.mode.A_gangsters) || (H.mind in ticker.mode.B_bosses)) || (H.mind in ticker.mode.B_gangsters))
-		ticker.mode.update_all_gang_icons()
-	if(H.mind in ticker.mode.syndicates)
-		ticker.mode.update_all_synd_icons()
-	if (H.mind in ticker.mode.cult)
-		ticker.mode.add_cultist(src.occupant.mind)
-		ticker.mode.update_all_cult_icons() //So the icon actually appears
-
-	// -- End mode specific stuff
 
 	hardset_dna(H, ui, se, null, null, mrace, mcolor)
 
@@ -205,7 +192,7 @@
 //Grow clones to maturity then kick them out.  FREELOADERS
 /obj/machinery/clonepod/process()
 
-	if(stat & NOPOWER) //Autoeject if power is lost
+	if(!is_operational()) //Autoeject if power is lost
 		if (src.occupant)
 			src.locked = 0
 			src.go_out()
@@ -302,7 +289,7 @@
 
 	if(!usr)
 		return
-	if (usr.stat != 0)
+	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 	src.go_out()
 	add_fingerprint(usr)

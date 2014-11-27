@@ -144,7 +144,7 @@
 		return
 	if(istype(target, /obj/structure/table))
 		var/obj/structure/table/T = target
-		T.table_destroy(1, user)
+		T.table_destroy(1)
 
 	else if(istype(target, /obj/machinery/computer))
 		var/obj/machinery/computer/C = target

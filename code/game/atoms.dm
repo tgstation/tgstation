@@ -7,11 +7,15 @@
 	var/fingerprintslast = null
 	var/list/blood_DNA
 	var/last_bumped = 0
-	var/pass_flags = 0
 	var/throwpass = 0
 
 	///Chemistry.
 	var/datum/reagents/reagents = null
+
+	//This atom's HUD (med/sec, etc) images. Associative list.
+	var/list/image/hud_list = list()
+	//HUD images that this atom can provide.
+	var/list/hud_possible
 
 	//var/chem_is_open_container = 0
 	// replaced by OPENCONTAINER flags and atom/proc/is_open_container()
@@ -366,9 +370,6 @@ var/list/blood_splatter_icons = list()
 	else
 		return 0
 
-/atom/proc/checkpass(passflag)
-	return pass_flags&passflag
-
 /atom/proc/isinspace()
 	if(istype(get_turf(src), /turf/space))
 		return 1
@@ -382,5 +383,9 @@ var/list/blood_splatter_icons = list()
 	return
 /atom/proc/singularity_act()
 	return
+
 /atom/proc/singularity_pull()
+	return
+
+/atom/proc/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
 	return

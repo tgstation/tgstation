@@ -1,15 +1,15 @@
 /datum/disease/magnitis
 	name = "Magnitis"
 	max_stages = 4
-	spread = "Airborne"
-	cure = "Iron"
-	cure_id = "iron"
+	spread_text = "Airborne"
+	cure_text = "Iron"
+	cures = list("iron")
 	agent = "Fukkos Miracos"
-	affected_species = list("Human")
-	curable = 0
+	viable_mobtypes = list(/mob/living/carbon/human)
+	disease_flags = CAN_CARRY|CAN_RESIST
 	permeability_mod = 0.75
 	desc = "This disease disrupts the magnetic field of your body, making it act as if a powerful magnet. Injections of iron help stabilize the field."
-	severity = "Medium"
+	severity = MEDIUM
 
 /datum/disease/magnitis/stage_act()
 	..()

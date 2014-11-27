@@ -35,7 +35,7 @@
 	charges = 46//of 138
 
 /obj/item/weapon/vending_refill/coffee
-	machine_name = "hot drinks"
+	machine_name = "Solar's Best Hot Drinks"
 	icon_state = "refill_joe"
 	charges = 28//of 85
 
@@ -49,7 +49,7 @@
 	charges = 21//of 65
 
 /obj/item/weapon/vending_refill/cigarette
-	machine_name = "cigarette"
+	machine_name = "ShadyCigs Deluxe"
 	icon_state = "refill_smoke"
 	charges = 9// of 29
 

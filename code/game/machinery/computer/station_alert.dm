@@ -51,7 +51,9 @@
 	return
 
 
-/obj/machinery/computer/station_alert/proc/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
+/obj/machinery/computer/station_alert/proc/triggerAlarm(var/class, area/A, var/O, var/obj/alarmsource)
+	if(alarmsource.z != z)
+		return
 	if(stat & (BROKEN))
 		return
 	var/list/L = src.alarms[class]
@@ -70,7 +72,7 @@
 			C = CL[1]
 	else if (O && istype(O, /obj/machinery/camera))
 		C = O
-	L[A.name] = list(A, (C) ? C : O, list(alarmsource))
+	L[A.name] = list(A, (C ? C : O), list(alarmsource))
 	return 1
 
 

@@ -1122,7 +1122,7 @@ This could be a lot better but I'm too tired atm.*/
 			A.yo = targloc.y - curloc.y
 			A.xo = targloc.x - curloc.x
 			cell.charge-=(C*10)
-			A.process()
+			A.fire()
 		else
 			U << "<span class='danger'>There are no targets in view.</span>"
 	return
@@ -1636,7 +1636,7 @@ ________________________________________________________________________________
 			dat += "Body Temperature: [U.bodytemperature-T0C]&deg;C ([U.bodytemperature*1.8-459.67]&deg;F)<br>"
 
 			for(var/datum/disease/D in U.viruses)
-				dat += "Warning: Virus Detected. Name: [D.name].Type: [D.spread]. Stage: [D.stage]/[D.max_stages]. Possible Cure: [D.cure].<br>"
+				dat += "Warning: Virus Detected. Name: [D.name].Type: [D.spread_text]. Stage: [D.stage]/[D.max_stages]. Possible Cure: [D.cure_text].<br>"
 			dat += "<ul>"
 			for(var/datum/reagent/R in reagents.reagent_list)
 				if(R.id=="radium"&&s_control)//Can only directly inject radium when AI is in control.
@@ -2721,7 +2721,8 @@ It is possible to destroy the net by the occupant or someone else.
 /obj/effect/energy_net/attack_paw(mob/user)
 	return attack_hand()
 
-/obj/effect/energy_net/attack_alien(mob/user as mob)
+/obj/effect/energy_net/attack_alien(mob/living/user as mob)
+	user.do_attack_animation(src)
 	if (islarva(user))
 		return
 	playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)

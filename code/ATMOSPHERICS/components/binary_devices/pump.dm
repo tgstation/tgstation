@@ -26,6 +26,11 @@ Thus, the two variables affect pump operation are set in New():
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
+/obj/machinery/atmospherics/binary/pump/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src,frequency)
+	..()
+
 /obj/machinery/atmospherics/binary/pump/on
 	on = 1
 
@@ -58,11 +63,10 @@ Thus, the two variables affect pump operation are set in New():
 		var/datum/gas_mixture/removed = air1.remove(transfer_moles)
 		air2.merge(removed)
 
-		if(network1)
-			network1.update = 1
+		parent1.update = 1
 
-		if(network2)
-			network2.update = 1
+
+		parent2.update = 1
 
 	return 1
 
@@ -152,8 +156,7 @@ Thus, the two variables affect pump operation are set in New():
 	if(href_list["power"])
 		on = !on
 	if(href_list["set_press"])
-		var/new_pressure = input(usr,"Enter new output pressure (0-4500kPa)","Pressure control",src.target_pressure) as num
-		src.target_pressure = max(0, min(4500, new_pressure))
+		target_pressure = max(0, min(4500, safe_input("Pressure control", "Enter new output pressure (0-4500kPa)", target_pressure)))
 	usr.set_machine(src)
 	src.update_icon()
 	src.updateUsrDialog()

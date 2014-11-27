@@ -176,16 +176,22 @@
 	user.visible_message("<span class='suicide'>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	return (BRUTELOSS|TOXLOSS)
 
-/obj/item/weapon/grown/nettle/pickup(mob/living/carbon/human/user as mob)
-	if(!user.gloves)
-		user << "<span class='danger'>The nettle burns your bare hand!</span>"
-		if(istype(user, /mob/living/carbon/human))
-			var/organ = ((user.hand ? "l_":"r_") + "arm")
-			var/obj/item/organ/limb/affecting = user.get_organ(organ)
-			if(affecting.take_damage(0, force))
-				user.update_damage_overlays(0)
-		else
-			user.take_organ_damage(0,force)
+/obj/item/weapon/grown/nettle/pickup(mob/living/user as mob)
+	if(!iscarbon(user))
+		return 0
+	var/mob/living/carbon/C = user
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = C
+		if(H.gloves)
+			return 0
+		var/organ = ((H.hand ? "l_":"r_") + "arm")
+		var/obj/item/organ/limb/affecting = H.get_organ(organ)
+		if(affecting.take_damage(0, force))
+			H.update_damage_overlays(0)
+	else
+		C.take_organ_damage(0,force)
+	C << "<span class='userdanger'>The nettle burns your bare hand!</span>"
+	return 1
 
 /obj/item/weapon/grown/nettle/afterattack(atom/A as mob|obj, mob/user as mob,proximity)
 	if(!proximity) return
@@ -221,18 +227,11 @@
 	reagents.add_reagent("pacid", round((potency / 2), 1))
 	force = round((5 + potency / 2.5), 1)
 
-/obj/item/weapon/grown/nettle/death/pickup(mob/living/carbon/human/user as mob)
-	if(!user.gloves)
-		if(istype(user, /mob/living/carbon/human))
-			var/organ = ((user.hand ? "l_":"r_") + "arm")
-			var/obj/item/organ/limb/affecting = user.get_organ(organ)
-			if(affecting.take_damage(0, force))
-				user.update_damage_overlays(0)
-		else
-			user.take_organ_damage(0, force)
+/obj/item/weapon/grown/nettle/death/pickup(mob/living/carbon/user as mob)
+	if(..())
 		if(prob(50))
 			user.Paralyse(5)
-			user << "<span class='danger'>You are stunned by the Deathnettle when you try picking it up!</span>"
+			user << "<span class='userdanger'>You are stunned by the Deathnettle when you try picking it up!</span>"
 
 /obj/item/weapon/grown/nettle/death/attack(mob/living/carbon/M as mob, mob/user as mob)
 	if(!..()) return
