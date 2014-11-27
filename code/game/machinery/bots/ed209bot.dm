@@ -504,10 +504,7 @@ Auto Patrol[]"},
 	A.current = U
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
-	spawn( 0 )
-		A.process()
-		return
-	return
+	A.fire()
 
 /obj/machinery/bot/ed209/attack_alien(var/mob/living/carbon/alien/user as mob)
 	..()
