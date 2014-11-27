@@ -288,7 +288,7 @@
 		loc.clean_blood()
 		for(var/obj/effect/E in tile)
 			if(istype(E,/obj/effect/rune) || istype(E,/obj/effect/decal/cleanable) || istype(E,/obj/effect/overlay))
-				del(E)
+				qdel(E)
 
 /obj/machinery/shower/process()
 	if(!on) return

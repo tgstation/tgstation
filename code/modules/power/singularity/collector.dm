@@ -10,12 +10,11 @@ var/global/list/rad_collectors = list()
 	density = 1
 	directwired = 1
 	req_access = list(access_engine_equip)
-//	use_power = 0
 	var/obj/item/weapon/tank/plasma/P = null
 	var/last_power = 0
 	var/active = 0
 	var/locked = 0
-	var/drainratio = 1
+	var/drain_ratio = 5 //Quintupled. Maintain them you lazy fucks
 	ghost_read=0
 	ghost_write=0
 
@@ -37,18 +36,18 @@ var/global/list/rad_collectors = list()
 			P.air_contents.toxins = 0
 			eject()
 		else
-			P.air_contents.toxins -= (0.001 * drainratio)
+			P.air_contents.toxins -= (0.001 * drain_ratio)
 
 /obj/machinery/power/rad_collector/attack_hand(mob/user as mob)
 	if(anchored)
 		if(!src.locked)
 			toggle_power()
-			user.visible_message("[user.name] turns the [src.name] [active? "on":"off"].", \
-			"You turn the [src.name] [active? "on":"off"].")
+			user.visible_message("<span class='notice'>[user] turns the [src] [active? "on":"off"].</span>", \
+			"<span class='notice'>You turn the [src] [active? "on":"off"].</span>")
 			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [P?"Fuel: [round(P.air_contents.toxins/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
 			return
 		else
-			user << "\red The controls are locked!"
+			user << "<span class='warning'>The controls are locked!</span>"
 			return
 ..()
 
@@ -56,14 +55,14 @@ var/global/list/rad_collectors = list()
 	if(..())
 		return 1
 	else if(istype(W, /obj/item/device/analyzer))
-		user << "\blue The [W.name] detects that [last_power]W were recently produced."
+		user << "<span class='notice'>\The [W] registers that [last_power] W is being produced every cycle.</span>"
 		return 1
 	else if(istype(W, /obj/item/weapon/tank/plasma))
 		if(!src.anchored)
-			user << "\red The [src] needs to be secured to the floor first."
+			user << "<span class='warning'>\The [src] needs to be secured to the floor first.</span>"
 			return 1
 		if(src.P)
-			user << "\red There's already a plasma tank loaded."
+			user << "<span class='warning'>A plasma tank is already loaded.</span>"
 			return 1
 		user.drop_item()
 		src.P = W
@@ -77,19 +76,19 @@ var/global/list/rad_collectors = list()
 		if (src.allowed(user))
 			if(active)
 				src.locked = !src.locked
-				user << "The controls are now [src.locked ? "locked." : "unlocked."]"
+				user << "<span class='notice'>The controls are now [src.locked ? "locked." : "unlocked."]</span>"
 			else
 				src.locked = 0 //just in case it somehow gets locked
-				user << "\red The controls can only be locked when the [src] is active"
+				user << "<span class='warning'>The controls can only be locked when \the [src] is active</span>"
 		else
-			user << "\red Access denied!"
+			user << "<span class='warning'>Access denied!</span>"
 			return 1
 	else
 		return
 
 /obj/machinery/power/rad_collector/wrenchAnchor(mob/user)
 	if(P)
-		user << "\blue Remove the plasma tank first."
+		user << "<span class='notice'>Remove the plasma tank first.</span>"
 		return
 	if(..() == 1)
 		if(anchored)
@@ -123,7 +122,7 @@ var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector/proc/receive_pulse(const/pulse_strength)
 	if (P && active)
-		var/power_produced = P.air_contents.toxins * pulse_strength * 20
+		var/power_produced = P.air_contents.toxins * pulse_strength * 2 // 10 times less now. Fully set Singularity now goes from 3 million watts to 300.000 W
 		add_avail(power_produced)
 		last_power = power_produced
 
