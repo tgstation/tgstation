@@ -8,7 +8,6 @@
 	flags = CONDUCT
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = 2.9
-	explosion_resistance = 5
 	var/health = 10
 	var/destroyed = 0
 	var/obj/item/stack/rods/stored
