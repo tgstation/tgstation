@@ -75,8 +75,10 @@
 	soundout = isfile(asoundout) ? asoundout : null
 	return 1
 
-//placeholder
+//must succeed
 /datum/teleport/proc/teleportChecks()
+	if(istype(teleatom, /mob) && !istype(teleatom, /mob/living))
+		return 0
 	return 1
 
 /datum/teleport/proc/playSpecials(atom/location,datum/effect/effect/system/effect,sound)
