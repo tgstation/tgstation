@@ -29,8 +29,8 @@
 		if(istype(I, /obj/item/weapon/implant/loyalty))
 			target << "<span class='notice'>You feel a sense of liberation as Nanotrasen's grip on your mind fades away.</span>"
 		qdel(I)
-		if(istype(user, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = user
+		if(istype(target, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = target
 			H.sec_hud_set_implants()
 	else
 		user.visible_message("<span class='notice'>[user] can't find anything in [target]'s [target_zone].</span>")

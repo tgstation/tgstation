@@ -196,6 +196,4 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 //don't use this proc directly. this should only ever be called by cure()
 /datum/disease/proc/remove_virus()
 	affected_mob.viruses -= src		//remove the datum from the list
-	if(istype(affected_mob, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = affected_mob
-		H.med_hud_set_status()
+	affected_mob.med_hud_set_status()
