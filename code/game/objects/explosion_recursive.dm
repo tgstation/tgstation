@@ -59,8 +59,9 @@ proc/explosion_rec(turf/epicenter, power)
 		T.ex_act(severity)
 		if(!T)
 			T = locate(x,y,z)
-		for(var/atom/A in T)
-			A.ex_act(severity)
+		if(!(istype(T, /turf/simulated/wall)))
+			for(var/atom/A in T)
+				A.ex_act(severity)
 
 	explosion_in_progress = 0
 
