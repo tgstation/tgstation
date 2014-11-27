@@ -2,7 +2,7 @@
 	name = "helmet"
 	desc = "Standard Security gear. Protects the head from impacts."
 	icon_state = "helmet"
-	flags = HEADCOVERSEYES
+	flags = HEADCOVERSEYES | HEADBANGPROTECT
 	item_state = "helmet"
 	armor = list(melee = 50, bullet = 15, laser = 50,energy = 10, bomb = 25, bio = 0, rad = 0)
 	flags_inv = HIDEEARS|HIDEEYES
@@ -17,12 +17,12 @@
 	desc = "It's a helmet specifically designed to protect against close range attacks."
 	icon_state = "riot"
 	item_state = "helmet"
-	flags = HEADCOVERSEYES | HEADCOVERSMOUTH
+	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|HEADBANGPROTECT
 	armor = list(melee = 82, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	strip_delay = 80
 	action_button_name = "Toggle Helmet Visor"
-	visor_flags = HEADCOVERSEYES | HEADCOVERSMOUTH
+	visor_flags = HEADCOVERSEYES|HEADCOVERSMOUTH
 	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE
 
 /obj/item/clothing/head/helmet/riot/attack_self()
@@ -75,6 +75,7 @@
 /obj/item/clothing/head/helmet/roman
 	name = "roman helmet"
 	desc = "An ancient helmet made of bronze and leather."
+	flags = HEADCOVERSEYES
 	armor = list(melee = 25, bullet = 0, laser = 25, energy = 10, bomb = 10, bio = 0, rad = 0)
 	icon_state = "roman"
 	item_state = "roman"
