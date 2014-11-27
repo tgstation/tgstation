@@ -10,3 +10,4 @@ changes:
   - bugfix: Hopefully fixed some issues with air alarms and power alarms
   - bugfix: More windoors fixed, mostly on the research outpost
   - wip: Still didn't fix the brig timers because I have no clue why the fuck they're being cunts
+  - tweak: Removed the nazivend from the abandoned areas

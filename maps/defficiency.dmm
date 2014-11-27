@@ -4937,7 +4937,7 @@
 "bQW" = (/obj/effect/decal/remains/robot{icon_state = "gib7"},/obj/item/weapon/stock_parts/matter_bin,/turf/simulated/floor/plating{icon_state = "platingdmg3"},/area/maintenance/apmaint)
 "bQX" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/grille,/obj/machinery/atmospherics/pipe/simple/supply/hidden{req_access_txt = 1},/turf/simulated/floor/plating,/area/maintenance/apmaint)
 "bQY" = (/obj/effect/decal/cleanable/cobweb,/obj/machinery/light_construct/small{dir = 1},/turf/simulated/floor/plating,/area/maintenance/apmaint)
-"bQZ" = (/obj/machinery/vending/nazivend,/turf/simulated/floor/plating{icon_state = "panelscorched"},/area/maintenance/apmaint)
+"bQZ" = (/mob/living/simple_animal/hostile/retaliate/cluwne,/turf/simulated/floor/plating{icon_state = "panelscorched"},/area/maintenance/apmaint)
 "bRa" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/item/weapon/crowbar,/turf/simulated/floor/plating{icon_state = "platingdmg3"},/area/maintenance/apmaint)
 "bRb" = (/turf/simulated/floor/plating,/area/medical/medbay3)
 "bRc" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/medical/medbay3)
