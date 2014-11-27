@@ -614,10 +614,6 @@ var/global/loopModeNames=list(
 	req_access = list()
 	playlist_id="endgame"
 
-/obj/machinery/media/jukebox/superjuke/adminbus/New()
-	..()
-	return
-
 /obj/machinery/media/jukebox/superjuke/adminbus/attack_hand(var/mob/user)
 	var/t = "<div class=\"navbar\">"
 	t += "<a href=\"?src=\ref[src];screen=[JUKEBOX_SCREEN_MAIN]\">Main</a>"
@@ -652,9 +648,6 @@ var/global/loopModeNames=list(
 	update_music()
 	disconnect_media_source()
 	update_icon()
-
-/obj/machinery/media/jukebox/superjuke/adminbus/update_media_source()
-
 
 /obj/machinery/media/jukebox/superjuke/adminbus/update_icon()
 	if(playing)
