@@ -55,10 +55,10 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 				B.volume += 0.1 // regenerate blood VERY slowly
 				if (reagents.has_reagent("nutriment"))	//Getting food speeds it up
-					B.volume += 0.4
+					B.volume += 0.6
 					reagents.remove_reagent("nutriment", 0.5)
 				if (reagents.has_reagent("iron"))	//Hematogen candy anyone?
-					B.volume += 0.8
+					B.volume += 1.2
 					reagents.remove_reagent("iron", 0.5)
 
 		// Damaged heart virtually reduces the blood volume, as the blood isn't
