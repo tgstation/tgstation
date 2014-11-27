@@ -254,7 +254,7 @@ var/list/slot_equipment_priority = list( \
 
 /mob/proc/reset_view(atom/A)
 	if (client)
-		if (istype(A, /atom/movable))
+		if (istype(A, /atom/movable) && A != src)
 			client.perspective = EYE_PERSPECTIVE
 			client.eye = A
 		else
@@ -264,7 +264,6 @@ var/list/slot_equipment_priority = list( \
 			else
 				client.perspective = EYE_PERSPECTIVE
 				client.eye = loc
-	return
 
 
 /mob/proc/show_inv(mob/user)

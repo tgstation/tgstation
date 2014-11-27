@@ -39,7 +39,7 @@ obj/structure/windoor_assembly/Destroy()
 
 /obj/structure/windoor_assembly/Move()
 	var/turf/T = loc
-	..()
+	. = ..()
 	move_update_air(T)
 
 /obj/structure/windoor_assembly/update_icon()

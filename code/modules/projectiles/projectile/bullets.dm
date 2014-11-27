@@ -79,7 +79,7 @@
 	damage = 20
 
 /obj/item/projectile/bullet/incendiary/shell/Move()
-	..()
+	. = ..()
 	var/turf/location = get_turf(src)
 	new/obj/effect/hotspot(location)
 	location.hotspot_expose(700, 50, 1)

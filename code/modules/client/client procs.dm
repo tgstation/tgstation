@@ -147,6 +147,8 @@ var/next_external_rsc = 0
 	if(prefs.lastchangelog != changelog_hash) //bolds the changelog button on the interface so we know there are updates.
 		winset(src, "rpane.changelog", "background-color=#eaeaea;font-style=bold")
 
+	winset_focus_to("map")
+
 
 	//////////////
 	//DISCONNECT//
@@ -307,3 +309,10 @@ var/next_external_rsc = 0
 		'icons/stamp_icons/large_stamp-qm.png',
 		'icons/stamp_icons/large_stamp-law.png'
 		)
+
+/client/proc/winset_focus_to(thing)
+	switch(thing)
+		if("map")
+			winset(src, null, "mapwindow.map.focus=true;input.background-color=#F0F0F0")
+		if("input")
+			winset(src, null, "mainwindow.input.focus=true;input.background-color=#D3B5B5")

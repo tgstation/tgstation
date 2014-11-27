@@ -9,7 +9,7 @@
 	var/obj/item/target/pinned_target // the current pinned target
 
 /obj/structure/target_stake/Move()
-	..()
+	. = ..()
 	// Move the pinned target along with the stake
 	if(pinned_target in view(3, src))
 		pinned_target.loc = loc

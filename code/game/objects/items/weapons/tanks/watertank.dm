@@ -113,7 +113,7 @@
 		return 1
 
 /obj/item/weapon/reagent_containers/spray/mister/Move()
-	..()
+	. = ..()
 	if(loc != tank.loc)
 		loc = tank.loc
 
@@ -219,7 +219,7 @@
 	return
 
 /obj/item/weapon/extinguisher/mini/nozzle/Move()
-	..()
+	. = ..()
 	if(loc != tank.loc)
 		loc = tank
 	return

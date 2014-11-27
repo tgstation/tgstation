@@ -174,7 +174,7 @@ steam.start() -- spawns the effect
 	return
 
 /obj/effect/effect/sparks/Move()
-	..()
+	. = ..()
 	var/turf/T = src.loc
 	if (istype(T, /turf))
 		T.hotspot_expose(1000,100)
@@ -286,10 +286,6 @@ steam.start() -- spawns the effect
 		delete()
 	return
 
-/obj/effect/effect/harmless_smoke/Move()
-	..()
-	return
-
 /datum/effect/effect/system/harmless_smoke_spread
 	var/total_smoke = 0 // To stop it being spammed and lagging!
 	var/direction
@@ -356,7 +352,7 @@ steam.start() -- spawns the effect
 	return
 
 /obj/effect/effect/bad_smoke/Move()
-	..()
+	. = ..()
 	for(var/mob/living/carbon/M in get_turf(src))
 		if (M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
 		else
@@ -462,7 +458,7 @@ steam.start() -- spawns the effect
 	return
 
 /obj/effect/effect/chem_smoke/Move()
-	..()
+	. = ..()
 	for(var/atom/A in view(1, src))
 		if(reagents.has_reagent("radium")||reagents.has_reagent("uranium")||reagents.has_reagent("carbon")||reagents.has_reagent("thermite"))//Prevents unholy radium spam by reducing the number of 'greenglows' down to something reasonable -Sieve
 			if(prob(5))
@@ -594,7 +590,7 @@ steam.start() -- spawns the effect
 	return
 
 /obj/effect/effect/sleep_smoke/Move()
-	..()
+	. = ..()
 	for(var/mob/living/carbon/M in get_turf(src))
 		if (M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
 //		if (M.wear_suit, /obj/item/clothing/suit/wizrobe && (M.hat, /obj/item/clothing/head/wizard) && (M.shoes, /obj/item/clothing/shoes/sandal))  // I'll work on it later
@@ -934,7 +930,7 @@ steam.start() -- spawns the effect
 
 /obj/structure/foamedmetal/Move()
 	var/turf/T = loc
-	..()
+	. = ..()
 	move_update_air(T)
 
 /obj/structure/foamedmetal/proc/updateicon()

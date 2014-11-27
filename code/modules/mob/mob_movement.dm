@@ -13,87 +13,17 @@
 	return
 
 
-/client/Northeast()
-	swap_hand()
-	return
-
-
-/client/Southeast()
-	attack_self()
-	return
-
-
-/client/Southwest()
-	if(iscarbon(usr))
-		var/mob/living/carbon/C = usr
-		C.toggle_throw_mode()
-	else
-		usr << "<span class='danger'>This mob type cannot throw items.</span>"
-	return
-
-
-/client/Northwest()
-	if(!usr.get_active_hand())
-		usr << "<span class='warning'>You have nothing to drop in your hand!</span>"
-		return
-	usr.drop_item()
-
-//This gets called when you press the delete button.
-/client/verb/delete_key_pressed()
-	set hidden = 1
-
-	if(!usr.pulling)
-		usr << "<span class='notice'>You are not pulling anything.</span>"
-		return
-	usr.stop_pulling()
-
-/client/verb/swap_hand()
-	set category = "IC"
-	set name = "Swap hands"
-
-	if(mob)
-		mob.swap_hand()
-
-/client/verb/attack_self()
-	set hidden = 1
-	if(mob)
-		mob.mode()
-	return
-
-
 /client/verb/drop_item()
 	set hidden = 1
 	if(!isrobot(mob))
 		mob.drop_item_v()
 	return
 
-
-/client/Center()
-	if (isobj(mob.loc))
-		var/obj/O = mob.loc
-		if (mob.canmove)
-			return O.relaymove(mob, 16)
-	return
-
-
-/client/proc/Move_object(direct)
-	if(mob && mob.control_object)
-		if(mob.control_object.density)
-			step(mob.control_object,direct)
-			if(!mob.control_object)	return
-			mob.control_object.dir = direct
-		else
-			mob.control_object.loc = get_step(mob.control_object,direct)
-	return
-
-
 /client/Move(n, direct)
 	if(!mob)
 		return 0
 	if(mob.notransform)
 		return 0	//This is sota the goto stop mobs from moving var
-	if(mob.control_object)
-		return Move_object(direct)
 	if(world.time < move_delay)
 		return 0
 	if(isAI(mob))
@@ -140,22 +70,6 @@
 					else
 						M.stop_pulling()
 
-		move_delay = world.time//set move delay
-
-		switch(mob.m_intent)
-			if("run")
-				if(mob.drowsyness > 0)
-					move_delay += 6
-				move_delay += config.run_speed
-			if("walk")
-				move_delay += config.walk_speed
-		move_delay += mob.movement_delay()
-
-		if(config.Tickcomp)
-			move_delay -= 1.3
-			var/tickcomp = (1 / (world.tick_lag)) * 1.3
-			move_delay = move_delay + tickcomp
-
 		//We are now going to move
 		moving = 1
 		//Something with pulling things
@@ -192,16 +106,37 @@
 							return
 
 		if(mob.confused && IsEven(world.time))
-			step(mob, pick(cardinal))
+			. = step(mob, pick(cardinal))
 		else
 			. = ..()
 
 		moving = 0
-		if(mob && .)
+
+		if(.)
 			mob.throwing = 0
 
-		return .
+			move_delay = 0
 
+			switch(mob.m_intent)
+				if("run")
+					if(mob.drowsyness > 0)
+						move_delay += 6
+					move_delay += config.run_speed
+				if("walk")
+					move_delay += config.walk_speed
+
+			move_delay += mob.movement_delay()
+
+			if(config.Tickcomp)
+				move_delay -= 1.3
+				var/tickcomp = (1 / (world.tick_lag)) * 1.3
+				move_delay = move_delay + tickcomp
+
+			if(direct & direct-1 && mob.loc == n) // Diagonal moves take longer to do
+				move_delay *= 2
+
+//			src << "move delay: [move_delay] direct: [direct]"
+			move_delay += world.time
 
 ///Process_Grab()
 ///Called by client/Move()

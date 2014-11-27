@@ -84,7 +84,7 @@
 		a_right.on_found(finder)
 
 /obj/item/device/assembly_holder/Move()
-	..()
+	. = ..()
 	if(a_left && a_right)
 		a_left.holder_movement()
 		a_right.holder_movement()

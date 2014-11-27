@@ -75,7 +75,7 @@
 
 /obj/item/device/assembly/infra/Move()
 	var/t = dir
-	..()
+	. = ..()
 	dir = t
 	qdel(first)
 	return

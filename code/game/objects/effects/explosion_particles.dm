@@ -12,10 +12,6 @@
 		qdel(src)
 	return
 
-/obj/effect/expl_particles/Move()
-	..()
-	return
-
 /datum/effect/system/expl_particles
 	var/number = 10
 	var/turf/location

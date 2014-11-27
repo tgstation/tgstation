@@ -37,7 +37,7 @@
 
 /obj/structure/alien/resin/Move()
 	var/turf/T = loc
-	..()
+	. = ..()
 	move_update_air(T)
 
 /obj/structure/alien/resin/CanAtmosPass()

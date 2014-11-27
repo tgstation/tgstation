@@ -34,7 +34,7 @@
 	return shoes && shoes.negates_gravity()
 
 /mob/living/carbon/human/Move(NewLoc, direct)
-	..()
+	. = ..()
 	if(shoes)
 		if(loc == NewLoc)
 			var/obj/item/clothing/shoes/S = shoes

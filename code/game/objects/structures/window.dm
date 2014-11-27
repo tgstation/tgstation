@@ -320,7 +320,7 @@
 
 /obj/structure/window/Move()
 	var/turf/T = loc
-	..()
+	. = ..()
 	dir = ini_dir
 	move_update_air(T)
 

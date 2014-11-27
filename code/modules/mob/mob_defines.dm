@@ -157,6 +157,4 @@
 
 	var/force_compose = 0 //If this is nonzero, the mob will always compose it's own hear message instead of using the one given in the arguments.
 
-	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
-
 	var/turf/listed_turf = null	//the current turf being examined in the stat panel

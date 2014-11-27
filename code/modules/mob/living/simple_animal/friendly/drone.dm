@@ -167,7 +167,7 @@
 			pullin.icon_state = "pull"
 		else
 			pullin.icon_state = "pull0"
-	..()
+	. = ..()
 
 /mob/living/simple_animal/drone/IsAdvancedToolUser()
 	return 1
