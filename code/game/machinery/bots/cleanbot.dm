@@ -141,7 +141,7 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 		if(istype(D, T))
 			return D
 
-/obj/machinery/bot/cleanbot/process()
+/obj/machinery/bot/cleanbot/bot_process()
 	if (!..())
 		return
 
@@ -182,7 +182,7 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 	if(target)
 		if(!path || path.len == 0) //No path, need a new one
 			//Try to produce a path to the target, and ignore airlocks to which it has access.
-			path = AStar(loc, target.loc, /turf/proc/AdjacentTurfsWithAccess, /turf/proc/Distance, 0, 30, id=botcard)
+			path = get_path_to(loc, target.loc, /turf/proc/AdjacentTurfsWithAccess, /turf/proc/Distance, 0, 30, id=botcard)
 			if (!bot_move(target))
 				add_to_ignore(target)
 				target = null
@@ -268,7 +268,7 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 		qdel(src)
 
 	else if (istype(W, /obj/item/weapon/pen))
-		var/t = copytext(stripped_input(user, "Enter new robot name", name, created_name),1,MAX_NAME_LEN)
+		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
 		if (!t)
 			return
 		if (!in_range(src, usr) && loc != usr)

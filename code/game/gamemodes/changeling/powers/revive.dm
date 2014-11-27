@@ -25,5 +25,9 @@
 	user.status_flags &= ~(FAKEDEATH)
 	user.update_canmove()
 	user.mind.changeling.purchasedpowers -= src
+	if(istype(user, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = user
+		H.med_hud_set_status()
+		H.med_hud_set_health()
 	feedback_add_details("changeling_powers","CR")
 	return 1

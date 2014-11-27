@@ -36,7 +36,7 @@
 	radio_frequency = SEC_FREQ
 	bot_type = SEC_BOT
 	bot_filter = RADIO_SECBOT
-/
+
 	//List of weapons that secbots will not arrest for
 	var/safe_weapons = list(\
 		/obj/item/weapon/gun/energy/laser/bluetag,\
@@ -206,7 +206,7 @@ Auto Patrol[]"},
 		icon_state = "[lasercolor]ed209[on]"
 		set_weapon()
 
-/obj/machinery/bot/ed209/process()
+/obj/machinery/bot/ed209/bot_process()
 	if (!..())
 		return
 
@@ -351,14 +351,14 @@ Auto Patrol[]"},
 	last_found = world.time
 	frustration = 0
 	spawn(0)
-		process() //ensure bot quickly responds
+		bot_process() //ensure bot quickly responds
 
 /obj/machinery/bot/ed209/proc/back_to_hunt()
 	anchored = 0
 	frustration = 0
 	mode = BOT_HUNT
 	spawn(0)
-		process() //ensure bot quickly responds
+		bot_process() //ensure bot quickly responds
 
 // look for a criminal in view of the bot
 
@@ -387,7 +387,7 @@ Auto Patrol[]"},
 			visible_message("<b>[src]</b> points at [C.name]!")
 			mode = BOT_HUNT
 			spawn(0)
-				process()	// ensure bot quickly responds to a perp
+				bot_process()	// ensure bot quickly responds to a perp
 			break
 		else
 			continue
@@ -504,10 +504,7 @@ Auto Patrol[]"},
 	A.current = U
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
-	spawn( 0 )
-		A.process()
-		return
-	return
+	A.fire()
 
 /obj/machinery/bot/ed209/attack_alien(var/mob/living/carbon/alien/user as mob)
 	..()
@@ -560,7 +557,7 @@ Auto Patrol[]"},
 	..()
 
 	if(istype(W, /obj/item/weapon/pen))
-		var/t = copytext(stripped_input(user, "Enter new robot name", name, created_name),1,MAX_NAME_LEN)
+		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
 		if(!t)	return
 		if(!in_range(src, usr) && loc != usr)	return
 		created_name = t

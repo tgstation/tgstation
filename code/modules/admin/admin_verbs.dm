@@ -57,7 +57,8 @@ var/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_direct_narrate,	/*send text directly to a player with no padding. Useful for narratives and fluff-text*/
 	/client/proc/cmd_admin_world_narrate,	/*sends text to all players with no padding*/
 	/client/proc/cmd_admin_create_centcom_report,
-	/client/proc/check_words			/*displays cult-words*/
+	/client/proc/check_words,			/*displays cult-words*/
+	/client/proc/reset_all_tcs			/*resets all telecomms scripts*/
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -186,7 +187,8 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/enable_debug_verbs,
 	/proc/possess,
 	/proc/release,
-	/client/proc/reload_admins
+	/client/proc/reload_admins,
+	/client/proc/reset_all_tcs
 	)
 
 /client/proc/add_admin_verbs()
@@ -447,7 +449,7 @@ var/list/admin_verbs_hideable = list(
 	set desc = "Gives a Disease to a mob."
 	var/datum/disease/D = input("Choose the disease to give to that guy", "ACHOO") as null|anything in diseases
 	if(!D) return
-	T.contract_disease(new D, 1)
+	T.ForceContractDisease(new D)
 	feedback_add_details("admin_verb","GD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the disease [D].")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] gave [key_name(T)] the disease [D].</span>")

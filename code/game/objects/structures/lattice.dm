@@ -6,6 +6,7 @@
 	density = 0
 	anchored = 1.0
 	layer = 2.3 //under pipes
+	var/obj/item/stack/rods/stored
 	//	flags = CONDUCT
 
 /obj/structure/lattice/New()
@@ -15,6 +16,7 @@
 	for(var/obj/structure/lattice/LAT in src.loc)
 		if(LAT != src)
 			qdel(LAT)
+	stored = new/obj/item/stack/rods(src)
 	icon = 'icons/obj/smoothlattice.dmi'
 	icon_state = "latticeblank"
 	updateOverlays()
@@ -59,8 +61,7 @@
 		var/obj/item/weapon/weldingtool/WT = C
 		if(WT.remove_fuel(0, user))
 			user << "<span class='notice'>Slicing lattice joints ...</span>"
-			new /obj/item/stack/rods(src.loc)
-			qdel(src)
+			Deconstruct()
 	return
 
 /obj/structure/lattice/proc/updateOverlays()
@@ -79,3 +80,12 @@
 
 	icon_state = "lattice[dir_sum]"
 	return
+
+/obj/structure/lattice/Deconstruct()
+	var/turf/T = loc
+	stored.loc = T
+	..()
+
+/obj/structure/lattice/singularity_pull(S, current_size)
+	if(current_size >= STAGE_FOUR)
+		Deconstruct()

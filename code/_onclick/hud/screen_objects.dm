@@ -68,6 +68,15 @@
 	return
 
 
+/obj/screen/drop
+	name = "drop"
+	icon = 'icons/mob/screen_midnight.dmi'
+	icon_state = "act_drop"
+	layer = 19
+
+/obj/screen/drop/Click()
+	usr.drop_item_v()
+
 /obj/screen/grab
 	name = "grab"
 
@@ -82,6 +91,112 @@
 /obj/screen/grab/attackby()
 	return
 
+/obj/screen/act_intent
+	name = "intent"
+	icon_state = "help"
+
+/obj/screen/act_intent/Click(location, control, params)
+	if(ishuman(usr) && (usr.client.prefs.toggles & INTENT_STYLE))
+
+		var/_x = text2num(params2list(params)["icon-x"])
+		var/_y = text2num(params2list(params)["icon-y"])
+
+		if(_x<=16 && _y<=16)
+			usr.a_intent_change("harm")
+
+		else if(_x<=16 && _y>=17)
+			usr.a_intent_change("help")
+
+		else if(_x>=17 && _y<=16)
+			usr.a_intent_change("grab")
+
+		else if(_x>=17 && _y>=17)
+			usr.a_intent_change("disarm")
+
+	else
+		usr.a_intent_change("right")
+
+/obj/screen/internals
+	name = "toggle internals"
+	icon_state = "internal0"
+
+/obj/screen/internals/Click()
+	if(iscarbon(usr))
+		var/mob/living/carbon/C = usr
+		if(!C.stat && !C.stunned && !C.paralysis && !C.restrained())
+			if(C.internal)
+				C.internal = null
+				C << "<span class='notice'>No longer running on internals.</span>"
+				icon_state = "internal0"
+			else
+				if(!istype(C.wear_mask, /obj/item/clothing/mask))
+					C << "<span class='notice'>You are not wearing a mask.</span>"
+					return 1
+				else
+					if(istype(C.l_hand, /obj/item/weapon/tank))
+						C << "<span class='notice'>You are now running on internals from the [C.l_hand] on your left hand.</span>"
+						C.internal = C.l_hand
+					else if(istype(C.r_hand, /obj/item/weapon/tank))
+						C << "<span class='notice'>You are now running on internals from the [C.r_hand] on your right hand.</span>"
+						C.internal = C.r_hand
+					else if(ishuman(C))
+						var/mob/living/carbon/human/H = C
+						if(istype(H.s_store, /obj/item/weapon/tank))
+							H << "<span class='notice'>You are now running on internals from the [H.s_store] on your [H.wear_suit].</span>"
+							H.internal = H.s_store
+						else if(istype(H.belt, /obj/item/weapon/tank))
+							H << "<span class='notice'>You are now running on internals from the [H.belt] on your belt.</span>"
+							H.internal = H.belt
+						else if(istype(H.l_store, /obj/item/weapon/tank))
+							H << "<span class='notice'>You are now running on internals from the [H.l_store] in your left pocket.</span>"
+							H.internal = H.l_store
+						else if(istype(H.r_store, /obj/item/weapon/tank))
+							H << "<span class='notice'>You are now running on internals from the [H.r_store] in your right pocket.</span>"
+							H.internal = H.r_store
+
+					//Seperate so CO2 jetpacks are a little less cumbersome.
+					if(!C.internal && istype(C.back, /obj/item/weapon/tank))
+						C << "<span class='notice'>You are now running on internals from the [C.back] on your back.</span>"
+						C.internal = C.back
+
+					if(C.internal)
+						icon_state = "internal1"
+					else
+						C << "<span class='notice'>You don't have an oxygen tank.</span>"
+
+/obj/screen/mov_intent
+	name = "run/walk toggle"
+	icon = 'icons/mob/screen_midnight.dmi'
+	icon_state = "running"
+
+/obj/screen/mov_intent/Click()
+	switch(usr.m_intent)
+		if("run")
+			usr.m_intent = "walk"
+			icon_state = "walking"
+		if("walk")
+			usr.m_intent = "run"
+			icon_state = "running"
+	usr.update_icons()
+
+/obj/screen/pull
+	name = "stop pulling"
+	icon = 'icons/mob/screen_midnight.dmi'
+	icon_state = "pull"
+
+/obj/screen/pull/Click()
+	usr.stop_pulling()
+
+/obj/screen/resist
+	name = "resist"
+	icon = 'icons/mob/screen_midnight.dmi'
+	icon_state = "act_resist"
+	layer = 19
+
+/obj/screen/resist/Click()
+	if(isliving(usr))
+		var/mob/living/L = usr
+		L.resist()
 
 /obj/screen/storage
 	name = "storage"
@@ -98,6 +213,16 @@
 		if(I)
 			master.attackby(I, usr)
 	return 1
+
+/obj/screen/throw_catch
+	name = "throw/catch"
+	icon = 'icons/mob/screen_midnight.dmi'
+	icon_state = "act_throw_off"
+
+/obj/screen/throw_catch/Click()
+	if(iscarbon(usr))
+		var/mob/living/carbon/C = usr
+		C.toggle_throw_mode()
 
 /obj/screen/zone_sel
 	name = "damage zone"
@@ -166,243 +291,11 @@
 /obj/screen/Click(location, control, params)
 	if(!usr)	return 1
 
-	switch(name)
-		if("toggle")
-			if(usr.hud_used.inventory_shown)
-				usr.hud_used.inventory_shown = 0
-				usr.client.screen -= usr.hud_used.other
-			else
-				usr.hud_used.inventory_shown = 1
-				usr.client.screen += usr.hud_used.other
+	if(name == "Reset Machine") //I don't know what this is, CTRL+F has the only entry right here in this file, so I'm going to leave it in case it is something important
+		usr.unset_machine()
+	else
+		return 0
 
-			usr.hud_used.hidden_inventory_update()
-
-		if("equip")
-			if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
-				return 1
-			if(ishuman(usr))
-				var/mob/living/carbon/human/H = usr
-				H.quick_equip()
-
-		if("current sting")
-			var/mob/living/carbon/U = usr
-			U.unset_sting()
-
-		if("resist")
-			if(isliving(usr))
-				var/mob/living/L = usr
-				L.resist()
-
-		if("mov_intent")
-			switch(usr.m_intent)
-				if("run")
-					usr.m_intent = "walk"
-					usr.hud_used.move_intent.icon_state = "walking"
-				if("walk")
-					usr.m_intent = "run"
-					usr.hud_used.move_intent.icon_state = "running"
-			if(istype(usr,/mob/living/carbon/alien/humanoid))
-				usr.update_icons()
-		if("Reset Machine")
-			usr.unset_machine()
-		if("internal")
-			if(iscarbon(usr))
-				var/mob/living/carbon/C = usr
-				if(!C.stat && !C.stunned && !C.paralysis && !C.restrained())
-					if(C.internal)
-						C.internal = null
-						C << "<span class='notice'>No longer running on internals.</span>"
-						if(C.internals)
-							C.internals.icon_state = "internal0"
-					else
-						if(!istype(C.wear_mask, /obj/item/clothing/mask))
-							C << "<span class='notice'>You are not wearing a mask.</span>"
-							return 1
-						else
-							if(istype(C.l_hand, /obj/item/weapon/tank))
-								C << "<span class='notice'>You are now running on internals from the [C.l_hand] on your left hand.</span>"
-								C.internal = C.l_hand
-							else if(istype(C.r_hand, /obj/item/weapon/tank))
-								C << "<span class='notice'>You are now running on internals from the [C.r_hand] on your right hand.</span>"
-								C.internal = C.r_hand
-							else if(ishuman(C))
-								var/mob/living/carbon/human/H = C
-								if(istype(H.s_store, /obj/item/weapon/tank))
-									H << "<span class='notice'>You are now running on internals from the [H.s_store] on your [H.wear_suit].</span>"
-									H.internal = H.s_store
-								else if(istype(H.belt, /obj/item/weapon/tank))
-									H << "<span class='notice'>You are now running on internals from the [H.belt] on your belt.</span>"
-									H.internal = H.belt
-								else if(istype(H.l_store, /obj/item/weapon/tank))
-									H << "<span class='notice'>You are now running on internals from the [H.l_store] in your left pocket.</span>"
-									H.internal = H.l_store
-								else if(istype(H.r_store, /obj/item/weapon/tank))
-									H << "<span class='notice'>You are now running on internals from the [H.r_store] in your right pocket.</span>"
-									H.internal = H.r_store
-
-							//Seperate so CO2 jetpacks are a little less cumbersome.
-							if(!C.internal && istype(C.back, /obj/item/weapon/tank))
-								C << "<span class='notice'>You are now running on internals from the [C.back] on your back.</span>"
-								C.internal = C.back
-
-							if(C.internal)
-								if(C.internals)
-									C.internals.icon_state = "internal1"
-							else
-								C << "<span class='notice'>You don't have an oxygen tank.</span>"
-
-		if("act_intent")
-			if(ishuman(usr) && (usr.client.prefs.toggles & INTENT_STYLE))
-
-				var/_x = text2num(params2list(params)["icon-x"])
-				var/_y = text2num(params2list(params)["icon-y"])
-
-				if(_x<=16 && _y<=16)
-					usr.a_intent_change("harm")
-
-				else if(_x<=16 && _y>=17)
-					usr.a_intent_change("help")
-
-				else if(_x>=17 && _y<=16)
-					usr.a_intent_change("grab")
-
-				else if(_x>=17 && _y>=17)
-					usr.a_intent_change("disarm")
-
-			else
-				usr.a_intent_change("right")
-
-		if("pull")
-			usr.stop_pulling()
-		if("throw/catch")
-			if(!usr.stat && isturf(usr.loc) && !usr.restrained())
-				usr:toggle_throw_mode()
-		if("drop")
-			usr.drop_item_v()
-
-		if("module")
-			if(isrobot(usr))
-				var/mob/living/silicon/robot/R = usr
-				if(R.module)
-					R.hud_used.toggle_show_robot_modules()
-					return 1
-				R.pick_module()
-
-		if("radio")
-			if(issilicon(usr))
-				usr:radio_menu()
-		if("panel")
-			if(issilicon(usr))
-				usr:installed_modules()
-
-		if("store")
-			if(isrobot(usr))
-				var/mob/living/silicon/robot/R = usr
-				R.uneq_active()
-
-		if("module1")
-			if(istype(usr, /mob/living/silicon/robot))
-				usr:toggle_module(1)
-
-		if("module2")
-			if(istype(usr, /mob/living/silicon/robot))
-				usr:toggle_module(2)
-
-		if("module3")
-			if(istype(usr, /mob/living/silicon/robot))
-				usr:toggle_module(3)
-
-		if("AI Core")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				AI.view_core()
-
-		if("Show Camera List")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				var/camera = input(AI, "Choose which camera you want to view", "Cameras") as null|anything in AI.get_camera_list()
-				AI.ai_camera_list(camera)
-
-		if("Track With Camera")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				var/target_name = input(AI, "Choose who you want to track", "Tracking") as null|anything in AI.trackable_mobs()
-				AI.ai_camera_track(target_name)
-
-		if("Toggle Camera Light")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				AI.toggle_camera_light()
-
-		if("Crew Monitorting")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				crewmonitor(AI,AI)
-
-		if("Show Crew Manifest")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				AI.ai_roster()
-
-		if("Show Alerts")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				AI.ai_alerts()
-
-		if("Announcement")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				AI.announcement()
-
-		if("Call Emergency Shuttle")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				AI.ai_call_shuttle()
-
-		if("State Laws")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				AI.checklaws()
-
-		if("PDA - Send Message")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				AI.cmd_send_pdamesg(usr)
-
-		if("PDA - Show Message Log")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				AI.cmd_show_message_log(usr)
-
-		if("Take Image")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				AI.aicamera.toggle_camera_mode()
-			else if(isrobot(usr))
-				var/mob/living/silicon/robot/R = usr
-				R.aicamera.toggle_camera_mode()
-
-		if("View Images")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				AI.aicamera.viewpictures()
-			else if(isrobot(usr))
-				var/mob/living/silicon/robot/R = usr
-				R.aicamera.viewpictures()
-		if("nightvision")
-			if(isalien(usr))
-				var/mob/living/carbon/alien/humanoid/A = usr
-				A.nightvisiontoggle()
-		if("Sensor Augmentation")
-			if(issilicon(usr))
-				var/mob/living/silicon/S = usr
-				S.sensor_mode()
-		if("leap")
-			if(istype(usr, /mob/living/carbon/alien/humanoid))
-				var/mob/living/carbon/alien/humanoid/hunter/AH = usr
-				AH.toggle_leap()
-		else
-			return 0
 	return 1
 
 /obj/screen/inventory/Click()

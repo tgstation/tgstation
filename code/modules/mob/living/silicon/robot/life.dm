@@ -153,7 +153,8 @@
 			src.see_invisible = SEE_INVISIBLE_MINIMUM
 		else if (src.sight_mode & BORGMESON)
 			src.sight |= SEE_TURFS
-			see_invisible = SEE_INVISIBLE_MINIMUM
+			src.see_invisible = SEE_INVISIBLE_MINIMUM
+			src.see_in_dark = 1
 		else if (src.sight_mode & BORGTHERM)
 			src.sight |= SEE_MOBS
 			src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
@@ -164,11 +165,6 @@
 			src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 		if(see_override)
 			see_invisible = see_override
-
-	regular_hud_updates() //Handles MED/SEC HUDs for borgs.
-
-	if(sensor_mode)
-		process_data_hud(src,sensor_mode,DATA_HUD_ADVANCED)
 
 	if (src.healths)
 		if (src.stat != 2)

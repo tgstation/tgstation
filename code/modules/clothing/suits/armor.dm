@@ -20,7 +20,7 @@
 	name = "armored greatcoat"
 	desc = "A greatcoat enchanced with a special alloy for some protection and style for those with a commanding presence."
 	icon_state = "hos"
-	item_state = "hos"
+	item_state = "greatcoat"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	armor = list(melee = 65, bullet = 30, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
@@ -32,8 +32,8 @@
 /obj/item/clothing/suit/armor/hos/trenchcoat
 	name = "armored trenchoat"
 	desc = "A trenchcoat enchanced with a special lightweight kevlar. The epitome of tactical plainclothes."
-	icon_state = "jensencoat"
-	item_state = "jensencoat"
+	icon_state = "hostrench"
+	item_state = "hostrench"
 	flags_inv = 0
 	strip_delay = 80
 	put_on_delay = 40
@@ -120,6 +120,7 @@
 	slowdown = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	action_button_name = "Toggle Armor"
+	unacidable = 1
 
 /obj/item/clothing/suit/armor/reactive/IsShield()
 	if(active)

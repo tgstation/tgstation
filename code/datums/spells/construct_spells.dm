@@ -40,7 +40,6 @@
 	invocation_type = "none"
 	range = 0
 	centcom_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
-	delay = 50
 
 	summon_type = list(/turf/simulated/wall/r_wall)
 

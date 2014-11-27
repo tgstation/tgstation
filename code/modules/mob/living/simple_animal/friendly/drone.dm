@@ -142,6 +142,10 @@
 
 	..()
 
+/mob/living/simple_animal/drone/Destroy()
+	qdel(access_card) //Otherwise it ends up on the floor!
+	..()
+
 /mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/screwdriver) && stat != DEAD)
 		if(health < health_repair_max)
@@ -361,7 +365,9 @@
 		src << "<span class='userdanger'>HeAV% DA%^MMA+G TO I/O CIR!%UUT!</span>"
 
 
-/mob/living/simple_animal/drone/proc/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
+/mob/living/simple_animal/drone/proc/triggerAlarm(var/class, area/A, var/O, var/obj/alarmsource)
+	if(alarmsource.z != z)
+		return
 	if(stat != DEAD)
 		var/list/L = src.alarms[class]
 		for (var/I in L)
@@ -547,10 +553,9 @@
 	if(istype(loc, /mob/living))
 		var/mob/living/L = loc
 		L.show_message("<span class='notice'>[drone] is trying to escape!</span>")
-		if(do_after(L, 50))
-			L.unEquip(src)
-		else
+		if(!do_after(L, 50) || loc != L)
 			return
+		L.unEquip(src)
 
 	contents -= drone
 	drone.loc = get_turf(src)

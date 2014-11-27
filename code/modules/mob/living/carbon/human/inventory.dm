@@ -247,6 +247,8 @@
 		if(s_store)
 			unEquip(s_store, 1) //It makes no sense for your suit storage to stay on you if you drop your suit.
 		wear_suit = null
+		if(I.flags_inv & HIDEJUMPSUIT)
+			update_inv_w_uniform()
 		update_inv_wear_suit(0)
 	else if(I == w_uniform)
 		if(r_store)
@@ -258,6 +260,7 @@
 		if(belt)
 			unEquip(belt)
 		w_uniform = null
+		update_suit_sensors()
 		update_inv_w_uniform(0)
 	else if(I == gloves)
 		gloves = null
@@ -287,9 +290,11 @@
 			if(internals)
 				internals.icon_state = "internal0"
 			internal = null
+		sec_hud_set_ID()
 		update_inv_wear_mask(0)
 	else if(I == wear_id)
 		wear_id = null
+		sec_hud_set_ID()
 		update_inv_wear_id(0)
 	else if(I == r_store)
 		r_store = null
@@ -328,6 +333,7 @@
 			wear_mask = I
 			if(wear_mask.flags & BLOCKHAIR)
 				update_hair(redraw_mob)	//rebuild hair
+			sec_hud_set_ID()
 			update_inv_wear_mask(redraw_mob)
 		if(slot_handcuffed)
 			handcuffed = I
@@ -346,6 +352,7 @@
 			update_inv_belt(redraw_mob)
 		if(slot_wear_id)
 			wear_id = I
+			sec_hud_set_ID()
 			update_inv_wear_id(redraw_mob)
 		if(slot_ears)
 			ears = I
@@ -366,9 +373,12 @@
 			update_inv_shoes(redraw_mob)
 		if(slot_wear_suit)
 			wear_suit = I
+			if(I.flags_inv & HIDEJUMPSUIT)
+				update_inv_w_uniform()
 			update_inv_wear_suit(redraw_mob)
 		if(slot_w_uniform)
 			w_uniform = I
+			update_suit_sensors()
 			update_inv_w_uniform(redraw_mob)
 		if(slot_l_store)
 			l_store = I
@@ -383,7 +393,7 @@
 			if(get_active_hand() == I)
 				unEquip(I)
 			I.loc = back
-			return
 		else
 			src << "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>"
 			return
+

@@ -19,6 +19,10 @@
 	//  this continues to work.
 	var/global/list/tube_dir_list = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
 
+/obj/structure/transit_tube/CanPass(atom/movable/mover, turf/target)
+	if(istype(mover) && mover.checkpass(PASSGLASS))
+		return 1
+	return !density
 
 // When destroyed by explosions, properly handle contents.
 obj/structure/transit_tube/ex_act(severity)

@@ -7,6 +7,7 @@
 	anchored = 1
 	icon = 'icons/turf/walls.dmi'
 	var/mineral = "metal"
+	var/walltype = "metal"
 	var/opening = 0
 	density = 1
 	opacity = 1
@@ -31,20 +32,20 @@
 /obj/structure/falsewall/relativewall()
 
 	if(!density)
-		icon_state = "[mineral]fwall_open"
+		icon_state = "[walltype]fwall_open"
 		return
 
 	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
 
 	for(var/turf/simulated/wall/W in orange(src,1))
 		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(src.mineral == W.mineral)//Only 'like' walls connect -Sieve
+			if(walltype == W.walltype)//Only 'like' walls connect -Sieve
 				junction |= get_dir(src,W)
 	for(var/obj/structure/falsewall/W in orange(src,1))
 		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(src.mineral == W.mineral)
+			if(walltype == W.walltype)
 				junction |= get_dir(src,W)
-	icon_state = "[mineral][junction]"
+	icon_state = "[walltype][junction]"
 	return
 
 /obj/structure/falsewall/attack_hand(mob/user)
@@ -72,24 +73,24 @@
 
 /obj/structure/falsewall/proc/do_the_flick()
 	if(density)
-		flick("[mineral]fwall_opening", src)
+		flick("[walltype]fwall_opening", src)
 	else
-		flick("[mineral]fwall_closing", src)
+		flick("[walltype]fwall_closing", src)
 
 /obj/structure/falsewall/update_icon(relativewall = 1)//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	if(density)
-		icon_state = "[mineral]0"
+		icon_state = "[walltype]0"
 		if(relativewall)
 			relativewall()
 	else
-		icon_state = "[mineral]fwall_open"
+		icon_state = "[walltype]fwall_open"
 
 /obj/structure/falsewall/proc/ChangeToWall(delete = 1)
 	var/turf/T = get_turf(src)
-	if(!mineral || mineral == "metal")
+	if(!walltype || walltype == "metal")
 		T.ChangeTurf(/turf/simulated/wall)
 	else
-		T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
+		T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[walltype]"))
 	if(delete)
 		qdel(src)
 	return T
@@ -176,11 +177,11 @@
 
 	for(var/turf/simulated/wall/W in orange(src,1))
 		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(src.mineral == W.mineral)//Only 'like' walls connect -Sieve
+			if(src.walltype == W.walltype)//Only 'like' walls connect -Sieve
 				junction |= get_dir(src,W)
 	for(var/obj/structure/falsewall/W in orange(src,1))
 		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(src.mineral == W.mineral)
+			if(src.walltype == W.walltype)
 				junction |= get_dir(src,W)
 	icon_state = "rwall[junction]"
 	return
@@ -194,6 +195,7 @@
 	desc = "A wall with uranium plating. This is probably a bad idea."
 	icon_state = ""
 	mineral = "uranium"
+	walltype = "uranium"
 	var/active = null
 	var/last_event = 0
 
@@ -226,24 +228,28 @@
 	desc = "A wall with gold plating. Swag!"
 	icon_state = ""
 	mineral = "gold"
+	walltype = "gold"
 
 /obj/structure/falsewall/silver
 	name = "silver wall"
 	desc = "A wall with silver plating. Shiny."
 	icon_state = ""
 	mineral = "silver"
+	walltype = "silver"
 
 /obj/structure/falsewall/diamond
 	name = "diamond wall"
 	desc = "A wall with diamond plating. You monster."
 	icon_state = ""
 	mineral = "diamond"
+	walltype = "diamond"
 
 /obj/structure/falsewall/plasma
 	name = "plasma wall"
 	desc = "A wall with plasma plating. This is definately a bad idea."
 	icon_state = ""
 	mineral = "plasma"
+	walltype = "plasma"
 
 /obj/structure/falsewall/plasma/attackby(obj/item/weapon/W, mob/user)
 	if(is_hot(W) > 300)
@@ -268,13 +274,16 @@
 	name = "bananium wall"
 	desc = "A wall with bananium plating. Honk!"
 	icon_state = ""
-	mineral = "clown"
+	mineral = "bananium"
+	walltype = "bananium"
+
 
 /obj/structure/falsewall/sandstone
 	name = "sandstone wall"
 	desc = "A wall with sandstone plating."
 	icon_state = ""
 	mineral = "sandstone"
+	walltype = "sandstone"
 //------------wtf?------------end
 
 /obj/structure/falsewall/wood
@@ -282,3 +291,4 @@
 	desc = "A wall with wooden plating."
 	icon_state = ""
 	mineral = "wood"
+	walltype = "wood"

@@ -33,8 +33,11 @@
 	set category = "Object"
 	set src in usr
 
+	if(usr.stat || !usr.canmove || usr.restrained())
+		return
+
 	if (t)
-		src.name = text("data disk- '[]'", t)
+		src.name = "data disk- '[t]'"
 	else
 		src.name = "data disk"
 	src.add_fingerprint(usr)
@@ -74,8 +77,8 @@
 	var/dorm = 0		// determines if this ID has claimed a dorm already
 
 /obj/item/weapon/card/id/attack_self(mob/user as mob)
-	for(var/mob/O in viewers(user, null))
-		O.show_message(text("[] shows you: \icon[] []: assignment: []", user, src, src.name, src.assignment), 1)
+	user.visible_message("<span class='notice'>[user] shows you: \icon[src] [src.name].</span>", \
+					"<span class='notice'>You show \the [src.name].</span>")
 	src.add_fingerprint(user)
 	return
 
@@ -100,25 +103,10 @@ update_label("John Doe", "Clowny")
 */
 /obj/item/weapon/card/id/proc/update_label(var/newname, var/newjob)
 	if(newname || newjob)
-		name = text("[][]",
-			(!newname)	? "identification card"	: "[newname]'s ID Card",
-			(!newjob)		? ""										: " ([newjob])"
-		)
+		name = "[(!newname)	? "identification card"	: "[newname]'s ID Card"][(!newjob) ? "" : " ([newjob])"]"
 		return
 
-	name = text("[][]",
-		(!registered_name)	? "identification card"	: "[registered_name]'s ID Card",
-		(!assignment)				? ""										: " ([assignment])"
-	)
-
-/obj/item/weapon/card/id/verb/read()
-	set name = "Read ID Card"
-	set category = "Object"
-	set src in usr
-
-	usr << text("\icon[] []: The current assignment on the card is [].", src, src.name, src.assignment)
-	return
-
+	name = "[(!registered_name)	? "identification card"	: "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
 
 /obj/item/weapon/card/id/silver
 	desc = "A silver card which shows honour and dedication."

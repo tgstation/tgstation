@@ -49,10 +49,11 @@
 		if(1)
 			if(istype(I, /obj/item/stack/sheet/mineral/wood))
 				var/obj/item/stack/sheet/mineral/wood/W = I
-				W.use(2)
-				user << "<span class='notice'>You add a shelf.</span>"
-				state = 2
-				icon_state = "book-0"
+				if(W.get_amount() >= 2)
+					W.use(2)
+					user << "<span class='notice'>You add a shelf.</span>"
+					state = 2
+					icon_state = "book-0"
 			if(istype(I, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
 				user << "<span class='notice'>You unwrench the frame.</span>"
@@ -83,7 +84,7 @@
 				else
 					playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 					user << "<span class='notice'>You pry the shelf out.</span>"
-					new /obj/item/stack/sheet/mineral/wood(loc, 1)
+					new /obj/item/stack/sheet/mineral/wood(loc, 2)
 					state = 1
 					icon_state = "bookempty"
 			else
@@ -212,7 +213,7 @@
 					name = newtitle
 					title = newtitle
 			if("Contents")
-				var/content = strip_html(input(usr, "Write your book's contents (HTML NOT allowed):"),8192) as message|null
+				var/content = stripped_input(usr, "Write your book's contents (HTML NOT allowed):","","",8192)
 				if(!content)
 					usr << "The content is invalid."
 					return
