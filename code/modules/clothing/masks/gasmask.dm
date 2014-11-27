@@ -1,6 +1,6 @@
 /obj/item/clothing/mask/gas
 	name = "gas mask"
-	desc = "A face-covering mask that can be connected to an air supply."
+	desc = "A face-covering mask that can be connected to an air supply. While good for concealing your identity, it isn't good for blocking gas flow." //More accurate
 	icon_state = "gas_alt"
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
@@ -13,7 +13,7 @@
 
 /obj/item/clothing/mask/gas/welding
 	name = "welding mask"
-	desc = "A gas mask with built in welding goggles and face shield. Looks like a skull, clearly designed by a nerd."
+	desc = "A gas mask with built-in welding goggles and a face shield. Looks like a skull - clearly designed by a nerd."
 	icon_state = "weldingmask"
 	m_amt = 4000
 	g_amt = 2000
@@ -42,7 +42,7 @@
 
 /obj/item/clothing/mask/gas/sechailer
 	name = "security gas mask"
-	desc = "A standard issue Security gas mask with integrated 'Compli-o-nator 3000' device, plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you taze them. Do not tamper with the device."
+	desc = "A standard issue Security gas mask with integrated 'Compli-o-nator 3000' device. Plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you taze them. Do not tamper with the device."
 	action_button_name = "HALT!"
 	icon_state = "sechailer"
 	var/cooldown = 0
@@ -50,6 +50,8 @@
 	ignore_maskadjust = 0
 	flags = MASKCOVERSMOUTH | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEFACE
+	visor_flags = MASKCOVERSMOUTH | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	visor_flags_inv = HIDEFACE
 
 /obj/item/clothing/mask/gas/sechailer/swat
 	name = "\improper SWAT mask"
@@ -300,7 +302,7 @@ obj/item/clothing/mask/gas/clown_hat/attack_self(mob/user)
 
 /obj/item/clothing/mask/gas/cyborg
 	name = "cyborg visor"
-	desc = "Beep boop"
+	desc = "Beep boop."
 	icon_state = "death"
 
 /obj/item/clothing/mask/gas/owl_mask

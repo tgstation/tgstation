@@ -110,9 +110,9 @@ var/pipenetwarnings = 10
 				continue
 			var/datum/pipeline/E = I.parent
 			merge(E)
-			if(!members.Find(P))
-				members += P
-				air.volume += P.volume
+		if(!members.Find(P))
+			members += P
+			air.volume += P.volume
 	else
 		A.setPipenet(src, N)
 		addMachineryMember(A)

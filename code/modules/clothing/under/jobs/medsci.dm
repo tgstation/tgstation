@@ -124,7 +124,7 @@
  * Medsci, unused (i think) stuff
  */
 /obj/item/clothing/under/rank/geneticist_new
-	desc = "It's made of a special fiber which provides minor protection against biohazards."
+	desc = "It's made of a special fiber that provides minor protection against biohazards."
 	name = "geneticist's jumpsuit"
 	icon_state = "genetics_new"
 	item_state = "w_suit"
@@ -134,7 +134,7 @@
 	can_adjust = 0
 
 /obj/item/clothing/under/rank/chemist_new
-	desc = "It's made of a special fiber which provides minor protection against biohazards."
+	desc = "It's made of a special fiber that provides minor protection against biohazards."
 	name = "chemist's jumpsuit"
 	icon_state = "chemist_new"
 	item_state = "w_suit"

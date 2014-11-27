@@ -269,8 +269,7 @@
 	A.firer = src
 	A.yo = target:y - start:y
 	A.xo = target:x - start:x
-	spawn( 0 )
-		A.process()
+	A.fire()
 	return
 
 /mob/living/simple_animal/hostile/proc/DestroySurroundings()

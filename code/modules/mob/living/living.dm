@@ -441,8 +441,8 @@
 	if(HULK in usr.mutations)
 		C.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 
-	C.visible_message("<span class='danger'>[C] manages to break [I]!</span>", \
-				"<span class='notice'>You successfully break [I].</span>")
+	C.visible_message("<span class='danger'>[C] manages to break [I]!</span>")
+	C << "<span class='notice'>You successfully break [I].</span>"
 	qdel(I)
 
 	if(C.handcuffed)
@@ -465,8 +465,8 @@
 	displaytime = breakouttime / 600
 
 	if(isalienadult(C) || HULK in usr.mutations)
-		C.visible_message("<span class='warning'>[C] is trying to break [I]!</span>", \
-				"<span class='warning'>You attempt to break [I]. (This will take around 5 seconds and you need to stand still.)</span>")
+		C.visible_message("<span class='warning'>[C] is trying to break [I]!</span>")
+		C << "<span class='notice'>You attempt to break [I]. (This will take around 5 seconds and you need to stand still.)</span>"
 		spawn(0)
 			if(do_after(C, 50))
 				if(!I || C.buckled)
@@ -476,14 +476,14 @@
 				C << "<span class='warning'>You fail to break [I]!</span>"
 	else
 
-		C.visible_message("<span class='warning'>[C] attempts to remove [I]!</span>", \
-				"<span class='notice'>You attempt to remove [I]. (This will take around [displaytime] minutes and you need to stand still.)</span>")
+		C.visible_message("<span class='warning'>[C] attempts to remove [I]!</span>")
+		C << "<span class='notice'>You attempt to remove [I]. (This will take around [displaytime] minutes and you need to stand still.)</span>"
 		spawn(0)
 			if(do_after(C, breakouttime))
 				if(!I || C.buckled)
 					return
-				C.visible_message("<span class='danger'>[C] manages to remove [I]!</span>", \
-						"<span class='notice'>You successfully remove [I].</span>")
+				C.visible_message("<span class='danger'>[C] manages to remove [I]!</span>")
+				C << "<span class='notice'>You successfully remove [I].</span>"
 
 				if(C.handcuffed)
 					C.handcuffed.loc = usr.loc

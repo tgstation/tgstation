@@ -208,24 +208,15 @@
 
 
 /obj/machinery/vending/attack_hand(mob/user)
-	if(stat & (BROKEN|NOPOWER))
-		return
-	user.set_machine(src)
-
-	if(seconds_electrified != 0)
-		if(shock(user, 100))
+	var/dat = ""
+	if(panel_open)
+		dat += wires()
+		if(product_slogans != "")
+			dat += "The speaker switch is [shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"
+	else
+		if(stat & (BROKEN|NOPOWER))
 			return
 
-	var/dat = ""
-
-	if(premium.len > 0)
-		dat += "<b>Coin slot:</b> "
-		if (coin)
-			dat += "[coin]&nbsp;&nbsp;<a href='byond://?src=\ref[src];remove_coin=1'>Remove</a>"
-		else
-			dat += "<i>No coin</i>&nbsp;&nbsp;<span class='linkOff'>Remove</span>"
-
-	if(!panel_open)//Vending machines do not dispense items when they are unscrewed
 		dat += "<h3>Select an item</h3>"
 		dat += "<div class='statusDisplay'>"
 		if(product_records.len == 0)
@@ -250,12 +241,16 @@
 				dat += "</li>"
 			dat += "</ul>"
 		dat += "</div>"
-
-	if(panel_open)
-		dat += wires()
-
-		if(product_slogans != "")
-			dat += "The speaker switch is [shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"
+		if(premium.len > 0)
+			dat += "<b>Coin slot:</b> "
+			if (coin)
+				dat += "[coin]&nbsp;&nbsp;<a href='byond://?src=\ref[src];remove_coin=1'>Remove</a>"
+			else
+				dat += "<i>No coin</i>&nbsp;&nbsp;<span class='linkOff'>Remove</span>"
+	user.set_machine(src)
+	if(seconds_electrified && !(stat & NOPOWER))
+		if(shock(user, 100))
+			return
 
 	//user << browse(dat, "window=vending")
 	//onclose(user, "")

@@ -234,10 +234,10 @@
 	operating = 1
 
 	do_animate("closing")
-	src.density = 1
 	explosion_resistance = initial(explosion_resistance)
 	src.layer = 3.1
 	sleep(10)
+	src.density = 1
 	update_icon()
 	if(visible && !glass)
 		SetOpacity(1)	//caaaaarn!

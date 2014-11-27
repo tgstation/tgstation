@@ -8,12 +8,6 @@
 				M.show_message("<span class='danger'>[src.cable] rapidly retracts back into its spool.</span>", 3, "<span class='danger'>You hear a click and the sound of wire spooling rapidly.</span>", 2)
 			qdel(src.cable)
 			cable = null
-
-	regular_hud_updates()
-	if(secHUD == 1)
-		process_data_hud(src, DATA_HUD_SECURITY,DATA_HUD_ADVANCED)
-	if(medHUD == 1)
-		process_data_hud(src, DATA_HUD_MEDICAL,DATA_HUD_ADVANCED)
 	if(silence_time)
 		if(world.timeofday >= silence_time)
 			silence_time = null
