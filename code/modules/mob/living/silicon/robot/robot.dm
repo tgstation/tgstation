@@ -240,6 +240,7 @@
 			module_sprites["Bloodhound"] = "bloodhound"
 			module_sprites["Securitron"] = "securitron"
 			module_sprites["Marina-SC"] = "marinaSC"
+			src << "<span class='warning'><big><b>Just a reminder, by default you do not follow space law, you follow your lawset</b></big></span>"
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)

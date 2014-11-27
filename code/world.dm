@@ -201,6 +201,7 @@
 				//testing("Fcopy failed, deleting and copying")
 				fdel(filename)
 				fcopy(vote.chosen_map, filename)
+			sleep(60)
 	spawn(0)
 		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/slugmissioncomplete.ogg')) // random end sounds!! - LastyBatsy
 

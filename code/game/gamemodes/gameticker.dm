@@ -365,7 +365,7 @@ var/global/datum/controller/gameticker/ticker
 		spawn
 			declare_completion()
 			if(config.map_voting)
-				vote.initiate_vote("map","The Server")
+				vote.initiate_vote("map","The Server", popup = 1)
 
 		spawn(50)
 			if (mode.station_was_nuked)
