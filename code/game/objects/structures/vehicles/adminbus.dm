@@ -208,21 +208,21 @@
 	switch(bumpers)
 		if(1)
 			for(var/mob/living/L in S)
-				if(L.isolated)
+				if(L.flags & INVULNERABLE)
 					continue
 				if(passengers.len < MAX_CAPACITY)
 					capture_mob(L)
 				else
 					buckled_mob << "<span class='warning'>There is no place in the bus for any additional passenger.</span>"
 			for(var/obj/machinery/bot/B in S)
-				if(B.isolated)
+				if(B.flags & INVULNERABLE)
 					continue
 				if(passengers.len < MAX_CAPACITY)
 					capture_mob(B)
 		if(2)
 			var/hit_sound = list('sound/weapons/genhit1.ogg','sound/weapons/genhit2.ogg','sound/weapons/genhit3.ogg')
 			for(var/mob/living/L in S)
-				if(L.isolated)
+				if(L.flags & INVULNERABLE)
 					continue
 				L.take_overall_damage(5,0)
 				if(L.buckled)
@@ -233,12 +233,12 @@
 				playsound(src, pick(hit_sound), 50, 0, 0)
 		if(3)
 			for(var/mob/living/L in S)
-				if(L.isolated)
+				if(L.flags & INVULNERABLE)
 					continue
 				L.gib()
 				playsound(src, 'sound/weapons/bloodyslice.ogg', 50, 0, 0)
 			for(var/obj/machinery/bot/B in S)
-				if(B.isolated)
+				if(B.flags & INVULNERABLE)
 					continue
 				B.explode()
 
@@ -285,10 +285,10 @@
 		var/mob/living/M = A
 		if(M.faction == "adminbus mob")
 			return
-		if(M.isolated)
+		if(M.flags & INVULNERABLE)
 			return
 		M.captured = 1
-		M.isolated = 1
+		M.flags |= INVULNERABLE
 		M.loc = src.loc
 		M.dir = src.dir
 		M.update_canmove()
@@ -301,10 +301,10 @@
 		src.add_fingerprint(M)
 	else if(isbot(A))
 		var/obj/machinery/bot/B = A
-		if(B.isolated)
+		if(B.flags & INVULNERABLE)
 			return
 		B.turn_off()
-		B.isolated = 1
+		B.flags |= INVULNERABLE
 		B.anchored = 1
 		B.loc = src.loc
 		B.dir = src.dir
@@ -339,7 +339,7 @@
 			user.loc = loc
 			user.dir = dir
 			user.update_canmove()
-			user.isolated = 1
+			user.flags |= INVULNERABLE
 			buckled_mob = user
 			update_mob()
 			add_fingerprint(user)
@@ -386,7 +386,7 @@
 		buckled_mob.buckled = null
 		buckled_mob.anchored = initial(buckled_mob.anchored)
 		buckled_mob.update_canmove()
-		buckled_mob.isolated = 0
+		buckled_mob.flags &= ~INVULNERABLE
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
 		buckled_mob = null

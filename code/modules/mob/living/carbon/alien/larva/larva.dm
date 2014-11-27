@@ -68,8 +68,7 @@
 
 
 /mob/living/carbon/alien/larva/ex_act(severity)
-	if(isolated)
-		src << "The bus' robustness protects you from the explosion."
+	if(flags & INVULNERABLE)
 		return
 
 	if(!blinded)
@@ -107,7 +106,7 @@
 
 
 /mob/living/carbon/alien/larva/blob_act()
-	if(isolated)
+	if(flags & INVULNERABLE)
 		return
 	if (stat == 2)
 		return
@@ -135,7 +134,7 @@
 	return
 
 /mob/living/carbon/alien/larva/meteorhit(O as obj)
-	if(isolated)
+	if(flags & INVULNERABLE)
 		return
 	for(var/mob/M in viewers(src, null))
 		if ((M.client && !( M.blinded )))

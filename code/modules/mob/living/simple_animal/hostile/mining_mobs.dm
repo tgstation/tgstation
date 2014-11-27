@@ -99,8 +99,7 @@
 	return
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity)
-	if(isolated)
-		src << "The bus' robustness protects you from the explosion."
+	if(flags & INVULNERABLE)
 		return
 
 	switch(severity)

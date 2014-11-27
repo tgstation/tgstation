@@ -47,12 +47,12 @@
 				GiveTarget(new_target)
 
 			if(HOSTILE_STANCE_ATTACK)
-				if(!isolated)
+				if(!(flags & INVULNERABLE))
 					MoveToTarget()
 					DestroySurroundings()
 
 			if(HOSTILE_STANCE_ATTACKING)
-				if(!isolated)
+				if(!(flags & INVULNERABLE))
 					AttackTarget()
 					DestroySurroundings()
 
@@ -117,7 +117,7 @@
 		var/mob/living/L = the_target
 		if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive == 1)
 			return 0
-		if(L.isolated)
+		if(L.flags & INVULNERABLE)
 			return 0
 		if(L.faction == src.faction && !attack_same || L.faction != src.faction && attack_same == 2 || L.faction != attack_faction && attack_faction)
 			return 0

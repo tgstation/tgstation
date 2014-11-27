@@ -220,6 +220,8 @@ var/MAX_EXPLOSION_RANGE = 14
 #define BLOCKHEADHAIR 4             // temporarily removes the user's hair overlay. Leaves facial hair.
 #define BLOCKHAIR	32768			// temporarily removes the user's hair, facial and otherwise.
 
+#define INVULNERABLE 128
+
 //flags for pass_flags
 #define PASSTABLE	1
 #define PASSGLASS	2

@@ -104,8 +104,7 @@
 	return
 
 /mob/living/silicon/emp_act(severity)
-	if(isolated)
-		src << "The bus' robustness protects you from the EMP."
+	if(flags & INVULNERABLE)
 		return
 
 	switch(severity)

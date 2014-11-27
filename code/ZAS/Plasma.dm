@@ -43,7 +43,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 /mob/living/carbon/human/pl_effects()
 	//Handles all the bad things plasma can do.
 
-	if(isolated)
+	if(flags & INVULNERABLE)
 		return
 
 	//Contamination

@@ -114,7 +114,7 @@
 		purge -= 1
 
 	//Movement
-	if((!client||deny_client_move) && !stop_automated_movement && wander && !anchored && (ckey == null) && !isolated)
+	if((!client||deny_client_move) && !stop_automated_movement && wander && !anchored && (ckey == null) && !(flags & INVULNERABLE))
 		if(isturf(src.loc) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
@@ -158,7 +158,7 @@
 
 
 	//Atmos
-	if(isolated)
+	if(flags & INVULNERABLE)
 		return 1
 
 	var/atmos_suitable = 1
@@ -480,8 +480,7 @@
 	Die()
 
 /mob/living/simple_animal/ex_act(severity)
-	if(isolated)
-		src << "The bus' robustness protects you from the explosion."
+	if(flags & INVULNERABLE)
 		return
 
 	..()

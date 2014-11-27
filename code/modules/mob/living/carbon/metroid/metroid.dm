@@ -211,16 +211,14 @@
 
 
 /mob/living/carbon/slime/emp_act(severity)
-	if(isolated)
-		src << "The bus' robustness protects you from the EMP."
+	if(flags & INVULNERABLE)
 		return
 
 	powerlevel = 0 // oh no, the power!
 	..()
 
 /mob/living/carbon/slime/ex_act(severity)
-	if(isolated)
-		src << "The bus' robustness protects you from the explosion."
+	if(flags & INVULNERABLE)
 		return
 
 
@@ -254,7 +252,7 @@
 
 
 /mob/living/carbon/slime/blob_act()
-	if(isolated)
+	if(flags & INVULNERABLE)
 		return
 	if (stat == 2)
 		return
@@ -285,7 +283,7 @@
 	return
 
 /mob/living/carbon/slime/meteorhit(O as obj)
-	if(isolated)
+	if(flags & INVULNERABLE)
 		return
 	for(var/mob/M in viewers(src, null))
 		if ((M.client && !( M.blinded )))

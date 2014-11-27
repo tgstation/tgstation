@@ -314,7 +314,7 @@
 	if (istype(A, /mob/living)) // Mobs get gibbed.
 		var/mob/living/M = A
 
-		if(M.isolated)
+		if(M.flags & INVULNERABLE)
 			return 0
 
 		gain = 20
@@ -345,7 +345,7 @@
 
 		if (isbot(A))
 			var/obj/machinery/bot/B = A
-			if(B.isolated)
+			if(B.flags & INVULNERABLE)
 				return
 
 		if(istype(A, /obj/machinery/power/supermatter))//NOW YOU REALLY FUCKED UP
@@ -520,7 +520,7 @@
 		radiation = round(((src.energy-150)/50)*5,1)
 		radiationmin = round((radiation/5),1)//
 	for(var/mob/living/M in view(toxrange, src.loc))
-		if(M.isolated)
+		if(M.flags & INVULNERABLE)
 			continue
 		M.apply_effect(rand(radiationmin,radiation), IRRADIATE)
 		toxdamage = (toxdamage - (toxdamage*M.getarmor(null, "rad")))
@@ -532,7 +532,7 @@
 	for(var/mob/living/carbon/M in oviewers(8, src))
 		if(istype(M, /mob/living/carbon/brain)) //Ignore brains
 			continue
-		if(M.isolated)
+		if(M.flags & INVULNERABLE)
 			continue
 		if(M.stat == CONSCIOUS)
 			if (istype(M,/mob/living/carbon/human))

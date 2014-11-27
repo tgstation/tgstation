@@ -1,7 +1,7 @@
 
 /mob/living/Life()
 	..()
-	if (isolated)
+	if (flags & INVULNERABLE)
 		bodytemperature = initial(bodytemperature)
 	if (monkeyizing)	return
 	if(!loc)			return	// Fixing a null error that occurs when the mob isn't found in the world -- TLE
@@ -71,7 +71,7 @@
 	if(status_flags & GODMODE)
 		health = maxHealth
 		stat = CONSCIOUS
-	else if(!isolated)
+	else if(!(flags & INVULNERABLE))
 		health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss() - halloss
 
 
@@ -273,7 +273,7 @@
 				// now with silicons
 
 /mob/living/emp_act(severity)
-	if(isolated)
+	if(flags & INVULNERABLE)
 		src << "The bus' robustness protects you from the EMP."
 		return
 
@@ -300,7 +300,7 @@
 // damage ONE external organ, organ gets randomly selected from damaged ones.
 /mob/living/proc/take_organ_damage(var/brute, var/burn)
 	if(status_flags & GODMODE)	return 0	//godmode
-	if(isolated)	return 0
+	if(flags & INVULNERABLE)	return 0
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)
 	src.updatehealth()
@@ -314,7 +314,7 @@
 // damage MANY external organs, in random order
 /mob/living/proc/take_overall_damage(var/brute, var/burn, var/used_weapon = null)
 	if(status_flags & GODMODE)	return 0	//godmode
-	if(isolated)	return 0
+	if(flags & INVULNERABLE)	return 0
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)
 	src.updatehealth()

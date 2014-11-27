@@ -131,8 +131,7 @@ emp_act
 	return 0
 
 /mob/living/carbon/human/emp_act(severity)
-	if(isolated)
-		src << "The bus' robustness protects you from the EMP."
+	if(flags & INVULNERABLE)
 		return
 
 	for(var/obj/O in src)
@@ -277,8 +276,7 @@ emp_act
 		update_inv_w_uniform(0)
 
 /mob/living/carbon/human/ex_act(severity)
-	if(isolated)
-		src << "The bus' robustness protects you from the explosion."
+	if(flags & INVULNERABLE)
 		return
 
 	if(!blinded)
@@ -374,7 +372,7 @@ emp_act
 
 
 /mob/living/carbon/human/blob_act()
-	if(isolated)
+	if(flags & INVULNERABLE)
 		return
 	if(stat == 2)	return
 	show_message("\red The blob attacks you!")
@@ -384,7 +382,7 @@ emp_act
 	return
 
 /mob/living/carbon/human/meteorhit(O as obj)
-	if(isolated)
+	if(flags & INVULNERABLE)
 		return
 	for(var/mob/M in viewers(src, null))
 		if ((M.client && !( M.blinded )))

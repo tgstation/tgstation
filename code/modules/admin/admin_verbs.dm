@@ -106,6 +106,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/set_ooc,
 	/client/proc/editappear,
 	/client/proc/commandname,
+	/client/proc/delete_all_adminbus,
 	/client/proc/gib_money // /vg/
 	)
 var/list/admin_verbs_spawn = list(
@@ -156,6 +157,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/disable_bloodvirii,       // /vg/
 	/client/proc/configFood,
 	/client/proc/debug_reagents,
+	/client/proc/make_invulnerable,
 #ifdef PROFILE_MACHINES
 	/client/proc/cmd_admin_dump_macprofile,
 #endif

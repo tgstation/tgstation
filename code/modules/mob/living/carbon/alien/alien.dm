@@ -83,7 +83,7 @@
 			adjustFireLoss(-heal_rate)
 			adjustOxyLoss(-heal_rate)
 
-	if(!environment || isolated)
+	if(!environment || (flags & INVULNERABLE))
 		return
 	var/loc_temp = T0C
 	if(istype(loc, /obj/mecha))

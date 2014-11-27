@@ -284,7 +284,7 @@ var/list/ai_list = list()
 	return 1
 
 /mob/living/silicon/ai/blob_act()
-	if(isolated)
+	if(flags & INVULNERABLE)
 		return
 	if (stat != 2)
 		adjustBruteLoss(60)
@@ -296,8 +296,7 @@ var/list/ai_list = list()
 	return 0
 
 /mob/living/silicon/ai/emp_act(severity)
-	if(isolated)
-		src << "The bus' robustness protects you from the EMP."
+	if(flags & INVULNERABLE)
 		return
 
 	if (prob(30))
@@ -309,8 +308,7 @@ var/list/ai_list = list()
 	..()
 
 /mob/living/silicon/ai/ex_act(severity)
-	if(isolated)
-		src << "The bus' robustness protects you from the explosion."
+	if(flags & INVULNERABLE)
 		return
 
 	if(!blinded)
@@ -409,7 +407,7 @@ var/list/ai_list = list()
 	return
 
 /mob/living/silicon/ai/meteorhit(obj/O as obj)
-	if(isolated)
+	if(flags & INVULNERABLE)
 		return
 	for(var/mob/M in viewers(src, null))
 		M.show_message(text("\red [] has been hit by []", src, O), 1)

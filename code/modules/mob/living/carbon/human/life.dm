@@ -441,7 +441,7 @@ var/global/list/organ_damage_overlays = list(
 			adjustCloneLoss(0.1)
 
 	proc/handle_mutations_and_radiation()
-		if(isolated)
+		if(flags & INVULNERABLE)
 			return
 		if(getFireLoss())
 			if((M_RESIST_HEAT in mutations) || (prob(1)))
@@ -511,7 +511,7 @@ var/global/list/organ_damage_overlays = list(
 					if(istype(O)) O.add_autopsy_data("Radiation Poisoning", damage)
 
 	proc/breathe()
-		if(isolated)
+		if(flags & INVULNERABLE)
 			return
 		if(reagents.has_reagent("lexorin")) return
 		if(M_NO_BREATH in mutations) return // No breath mutation means no breathing.
@@ -636,7 +636,7 @@ var/global/list/organ_damage_overlays = list(
 		return health <= config.health_threshold_crit && stat != 2
 
 	proc/handle_breath(var/datum/gas_mixture/breath)
-		if((status_flags & GODMODE) || isolated)
+		if((status_flags & GODMODE) || (flags & INVULNERABLE))
 			return 0
 
 		if(!breath || (breath.total_moles() == 0) || suiciding)
@@ -661,7 +661,7 @@ var/global/list/organ_damage_overlays = list(
 		return species.handle_breath(breath, src)
 
 	proc/handle_environment(datum/gas_mixture/environment)
-		if(!environment || isolated)
+		if(!environment || (flags & INVULNERABLE))
 			return
 		var/loc_temp = T0C
 		if(istype(loc, /obj/mecha))

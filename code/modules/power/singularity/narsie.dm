@@ -69,7 +69,7 @@ var/global/narsie_behaviour = "CultStation13"
 /obj/machinery/singularity/narsie/mezzer()
 	for(var/mob/living/carbon/M in oviewers(8, src))
 		if(M.stat == CONSCIOUS)
-			if(M.isolated)
+			if(M.flags & INVULNERABLE)
 				continue
 			if(!iscultist(M))
 				M << "<span class='danger'> You feel your sanity crumble away in an instant as you gaze upon [src.name]...</span>"
@@ -158,7 +158,7 @@ var/global/narsie_behaviour = "CultStation13"
 		if (istype(A, /mob/) && (get_dist(A, src) <= 7))
 			var/mob/M = A
 
-			if(M.isolated)
+			if(M.flags & INVULNERABLE)
 				return 0
 
 			M.cultify()
@@ -198,7 +198,7 @@ var/global/narsie_behaviour = "CultStation13"
 		if (istype(A, /mob/living/))
 			var/mob/living/C2 = A
 
-			if(C2.isolated)
+			if(C2.flags & INVULNERABLE)
 				return 0
 
 			C2.dust() // Changed from gib(), just for less lag.
@@ -206,7 +206,7 @@ var/global/narsie_behaviour = "CultStation13"
 		else if (istype(A, /obj/))
 			if (isbot(A))
 				var/obj/machinery/bot/B = A
-				if(B.isolated)
+				if(B.flags & INVULNERABLE)
 					return
 			A.ex_act(1)
 
@@ -245,7 +245,7 @@ var/global/narsie_behaviour = "CultStation13"
 	if (istype(A, /mob/living/))
 		var/mob/living/C2 = A
 
-		if(C2.isolated)
+		if(C2.flags & INVULNERABLE)
 			return 0
 
 		C2.dust() // Changed from gib(), just for less lag.
@@ -253,7 +253,7 @@ var/global/narsie_behaviour = "CultStation13"
 	else if (istype(A, /obj/))
 		if (isbot(A))
 			var/obj/machinery/bot/B = A
-			if(B.isolated)
+			if(B.flags & INVULNERABLE)
 				return
 		A.ex_act(1)
 
@@ -424,7 +424,7 @@ var/global/mr_clean_targets = list(
 /obj/machinery/singularity/narsie/large/clean/mezzer()
 	for(var/mob/living/carbon/M in oviewers(8, src))
 		if(M.stat == CONSCIOUS)
-			if(M.isolated)
+			if(M.flags & INVULNERABLE)
 				continue
 			M << "<span class='warning'> You take a moment to admire [src.name] hard at work...</span>"
 			M.apply_effect(3, STUN)
@@ -446,7 +446,7 @@ var/global/mr_clean_targets = list(
 	if (istype(A, /mob/living/))
 
 		var/mob/living/L = A
-		if(L.isolated)
+		if(L.flags & INVULNERABLE)
 			return 0
 
 		if (isrobot(L))

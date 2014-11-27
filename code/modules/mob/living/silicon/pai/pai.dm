@@ -101,7 +101,7 @@
 	return 1
 
 /mob/living/silicon/pai/blob_act()
-	if(isolated)
+	if(flags & INVULNERABLE)
 		return
 	if (src.stat != 2)
 		src.adjustBruteLoss(60)
@@ -113,8 +113,7 @@
 	return 0
 
 /mob/living/silicon/pai/emp_act(severity)
-	if(isolated)
-		src << "The bus' robustness protects you from the EMP."
+	if(flags & INVULNERABLE)
 		return
 
 	// Silence for 2 minutes
@@ -148,8 +147,7 @@
 			src << "<font color=green>You feel an electric surge run through your circuitry and become acutely aware at how lucky you are that you can still feel at all.</font>"
 
 /mob/living/silicon/pai/ex_act(severity)
-	if(isolated)
-		src << "The bus' robustness protects you from the explosion."
+	if(flags & INVULNERABLE)
 		return
 
 	if(!blinded)
@@ -174,7 +172,7 @@
 // See software.dm for Topic()
 
 /mob/living/silicon/pai/meteorhit(obj/O as obj)
-	if(isolated)
+	if(flags & INVULNERABLE)
 		return
 	for(var/mob/M in viewers(src, null))
 		M.show_message(text("\red [] has been hit by []", src, O), 1)

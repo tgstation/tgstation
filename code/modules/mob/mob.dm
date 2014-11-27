@@ -1231,7 +1231,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	var/old_x = pixel_x
 	var/old_y = pixel_y
 	is_jittery = 1
-	while((jitteriness > 100) && !isolated)
+	while((jitteriness > 100) && !(flags & INVULNERABLE))
 //		var/amplitude = jitteriness*(sin(jitteriness * 0.044 * world.time) + 1) / 70
 //		pixel_x = amplitude * sin(0.008 * jitteriness * world.time)
 //		pixel_y = amplitude * cos(0.008 * jitteriness * world.time)

@@ -151,7 +151,7 @@
 	//world << "AI proc ended."
 
 /mob/living/carbon/slime/proc/handle_environment(datum/gas_mixture/environment)
-	if(isolated)
+	if(flags & INVULNERABLE)
 		return
 
 	if(!environment)

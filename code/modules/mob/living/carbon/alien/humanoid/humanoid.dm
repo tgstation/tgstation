@@ -61,8 +61,7 @@
 ///mob/living/carbon/alien/humanoid/bullet_act(var/obj/item/projectile/Proj) taken care of in living
 
 /mob/living/carbon/alien/humanoid/emp_act(severity)
-	if(isolated)
-		src << "The bus' robustness protects you from the EMP."
+	if(flags & INVULNERABLE)
 		return
 
 	if(wear_suit) wear_suit.emp_act(severity)
@@ -72,8 +71,7 @@
 	..()
 
 /mob/living/carbon/alien/humanoid/ex_act(severity)
-	if(isolated)
-		src << "The bus' robustness protects you from the explosion."
+	if(flags & INVULNERABLE)
 		return
 
 	if(!blinded)
@@ -111,7 +109,7 @@
 	updatehealth()
 
 /mob/living/carbon/alien/humanoid/blob_act()
-	if(isolated)
+	if(flags & INVULNERABLE)
 		return
 	if (stat == 2)
 		return
@@ -132,7 +130,7 @@
 
 
 /mob/living/carbon/alien/humanoid/meteorhit(O as obj)
-	if(isolated)
+	if(flags & INVULNERABLE)
 		return
 	for(var/mob/M in viewers(src, null))
 		if ((M.client && !( M.blinded )))

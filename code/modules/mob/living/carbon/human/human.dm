@@ -216,7 +216,7 @@
 		stat("Spacepod Integrity", "[!S.health ? "0" : "[(S.health / initial(S.health)) * 100]"]%")
 
 /mob/living/carbon/human/ex_act(severity)
-	if(isolated)
+	if(flags & INVULNERABLE)
 		src << "The bus' robustness protects you from the explosion."
 		return
 
@@ -303,7 +303,7 @@
 
 
 /mob/living/carbon/human/blob_act()
-	if(isolated)
+	if(flags & INVULNERABLE)
 		return
 	if(stat == DEAD)
 		return
@@ -315,7 +315,7 @@
 	return
 
 /mob/living/carbon/human/meteorhit(O as obj)
-	if(isolated)
+	if(flags & INVULNERABLE)
 		return
 	for(var/mob/M in viewers(src, null))
 		if ((M.client && !( M.blinded )))

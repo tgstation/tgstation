@@ -112,7 +112,7 @@
 				stuttering = max(10, stuttering)
 
 	proc/handle_mutations_and_radiation()
-		if(isolated)
+		if(flags & INVULNERABLE)
 			return
 
 		if(getFireLoss())
@@ -223,7 +223,7 @@
 		return
 
 	proc/breathe()
-		if(isolated)
+		if(flags & INVULNERABLE)
 			return
 
 		if(reagents)
@@ -298,7 +298,7 @@
 		return null
 
 	proc/handle_breath(datum/gas_mixture/breath)
-		if((status_flags & GODMODE) || isolated)
+		if((status_flags & GODMODE) || (flags & INVULNERABLE))
 			return
 
 		if(!breath || (breath.total_moles == 0))
@@ -403,7 +403,7 @@
 		return 1
 
 	proc/handle_environment(datum/gas_mixture/environment)
-		if(!environment || isolated)
+		if(!environment || (flags & INVULNERABLE))
 			return
 		var/environment_heat_capacity = environment.heat_capacity()
 		if(istype(get_turf(src), /turf/space))

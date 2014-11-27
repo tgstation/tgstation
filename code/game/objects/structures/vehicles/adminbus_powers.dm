@@ -18,7 +18,7 @@
 			var/obj/machinery/bot/B = A
 			B.loc = get_step(src,turn(src.dir,-90))
 			B.turn_on()
-			B.isolated = 0
+			B.flags &= ~INVULNERABLE
 			B.anchored = 0
 			passengers -= B
 			update_rearview()
@@ -32,7 +32,7 @@
 	L.loc = get_step(src,turn(src.dir,-90))
 	L.buckled = null
 	L.anchored = 0
-	L.isolated = 0
+	L.flags &= ~INVULNERABLE
 	L.captured = 0
 	L.pixel_x = 0
 	L.pixel_y = 0
@@ -579,7 +579,7 @@
 			var/obj/machinery/bot/B = A
 			B.loc = get_step(src,turn(src.dir,-90))
 			B.turn_on()
-			B.isolated = 0
+			B.flags &= ~INVULNERABLE
 			B.anchored = 0
 			passengers -= B
 			B.loc = pick(tdomeobserve)
@@ -788,7 +788,7 @@
 		var/obj/machinery/bot/B = A
 		B.loc = get_step(src,turn(src.dir,-90))
 		B.turn_on()
-		B.isolated = 0
+		B.flags &= ~INVULNERABLE
 		B.anchored = 0
 		passengers -= B
 
@@ -921,10 +921,11 @@
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/Adminbus_Deletion(mob/bususer)//make sure to always use this proc when deleting an adminbus
 
-	bususer.gui_icons.adminbus_delete.icon_state = "icon_delete-push"
-	if(alert(bususer, "This will free all passengers, remove any spawned mobs/laserguns/bombs, [singulo ? "free the captured singularity" : ""], and remove all the entities associated with the bus(chains, roadlights, jukebox,...) Are you sure?", "Adminbus Deletion", "Yes", "No") != "Yes")
-		bususer.gui_icons.adminbus_delete.icon_state = "icon_delete"
-		return
+	if(bususer)
+		bususer.gui_icons.adminbus_delete.icon_state = "icon_delete-push"
+		if(alert(bususer, "This will free all passengers, remove any spawned mobs/laserguns/bombs, [singulo ? "free the captured singularity" : ""], and remove all the entities associated with the bus(chains, roadlights, jukebox,...) Are you sure?", "Adminbus Deletion", "Yes", "No") != "Yes")
+			bususer.gui_icons.adminbus_delete.icon_state = "icon_delete"
+			return
 
 	for(var/i=passengers.len;i>0;i--)
 		var/atom/A = passengers[i]
@@ -943,7 +944,7 @@
 				if(EAST)
 					B.y = y-1
 			B.turn_on()
-			B.isolated = 0
+			B.flags &= ~INVULNERABLE
 			B.anchored = 0
 			passengers -= B
 

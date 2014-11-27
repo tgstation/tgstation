@@ -1175,3 +1175,35 @@ var/global/blood_virus_spreading_disabled = 0
 		log_admin("[key_name(src)] has cluwne-ified [M.key].")
 	else
 		alert("Invalid mob, needs to be a human.")
+
+client/proc/make_invulnerable(var/mob/M in mob_list)
+	set name = "Toggle Invulnerability"
+	set desc = "Make the target atom invulnerable to all form of damage."
+	set category = "Fun"
+
+	var/isinvuln = 0
+	if(M.flags & INVULNERABLE)
+		isinvuln = 1
+
+	switch(isinvuln)
+		if(0)
+			if(alert(usr, "Make the target atom invulnerable to all form of damage?", "Toggle Invulnerability", "Yes", "No") != "Yes")
+				return
+
+			M.flags |= INVULNERABLE
+		if(1)
+			if(alert(usr, "Make the target atom vulnerable again?", "Toggle Invulnerability", "Yes", "No") != "Yes")
+				return
+
+			M.flags &= ~INVULNERABLE
+
+client/proc/delete_all_adminbus()
+	set name = "Delete every Adminbus"
+	set desc = "When the world cannot handle them anymore."
+	set category = "Fun"
+
+	if(alert(usr, "Delete every single Adminbus in the game world?", "Delete Adminbus", "Yes", "No") != "Yes")
+		return
+
+	for(var/obj/structure/stool/bed/chair/vehicle/adminbus/AB in world)
+		AB.Adminbus_Deletion()
