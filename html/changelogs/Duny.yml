@@ -3,7 +3,7 @@ changes:
   - wip: The following changes have been made to Defficiency/Maintstation
   - bugfix: The CE and engineers now correctly spawn in engineering.
   - bugfix: IAAs now have a proper spawn in their office, mechanics now spawn with the greytide as a temporary measure.
-  - tweak: Annoying table removed to RnD
+  - tweak: Annoying table removed from RnD
   - tweak: The two doors to enter science have been replaced with a single door
   - tweak: Added a bioprinter and beds in front of surgery
   - tweak: Added rechargers on the asteroid
