@@ -352,12 +352,8 @@
 			if(istype(A, /obj/machinery/power/supermatter/shard))
 				src.energy += 15000//Instantly sends it to max size
 			else
-<<<<<<< HEAD
-				src.energy += 20000//Instantly sends it to max size 	;wait, 15000 for a shard and only 20000 for a full singularity? and not even a supermatter cascade out of that?
-=======
 				src.energy += 20000//Instantly sends it to max size
 			expand(11, 1)
->>>>>>> Bleeding-Edge
 			del(A)
 			return
 
