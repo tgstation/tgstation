@@ -64,8 +64,8 @@
 	name = "Beach"
 	icon = 'icons/misc/beach.dmi'
 
-/turf/simulated/floor/beach/ex_act(severity)
-	return
+/turf/simulated/floor/beach/ex_act(severity, specialty)
+	contents_explosion(src, severity)
 
 /turf/simulated/floor/beach/sand
 	name = "Sand"
@@ -90,8 +90,8 @@
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
 
-/turf/simulated/floor/plating/snow/ex_act(severity)
-	return
+/turf/simulated/floor/plating/snow/ex_act(severity, specialty)
+	contents_explosion(src, severity)
 
 /turf/simulated/floor/noslip
 	name = "high-traction floor"

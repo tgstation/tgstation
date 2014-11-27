@@ -112,14 +112,8 @@
 	return
 
 
-/obj/machinery/power/am_control_unit/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			stability -= 60
-		if(2.0)
-			stability -= 40
-		if(3.0)
-			stability -= 20
+/obj/machinery/power/am_control_unit/ex_act(severity, specialty)
+	stability -= (80 - (severity * 20))
 	check_stability()
 	return
 

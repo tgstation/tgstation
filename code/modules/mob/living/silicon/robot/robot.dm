@@ -325,7 +325,7 @@
 	return 0
 
 
-/mob/living/silicon/robot/ex_act(severity)
+/mob/living/silicon/robot/ex_act(severity, specialty)
 	..()
 
 	switch(severity)

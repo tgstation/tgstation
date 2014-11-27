@@ -222,7 +222,7 @@
 /mob/living/carbon/monkey/var/co2overloadtime = null
 /mob/living/carbon/monkey/var/temperature_resistance = T0C+75
 
-/mob/living/carbon/monkey/ex_act(severity)
+/mob/living/carbon/monkey/ex_act(severity, specialty)
 	..()
 	switch(severity)
 		if(1.0)

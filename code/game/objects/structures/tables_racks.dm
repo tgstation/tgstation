@@ -180,7 +180,7 @@
 		else
 			dir = 2
 
-/obj/structure/table/ex_act(severity)
+/obj/structure/table/ex_act(severity, specialty)
 	switch(severity)
 		if(1.0)
 			qdel(src)
@@ -510,7 +510,7 @@
 	throwpass = 1	//You can throw objects over this, despite it's density.
 	var/health = 5
 
-/obj/structure/rack/ex_act(severity)
+/obj/structure/rack/ex_act(severity, specialty)
 	switch(severity)
 		if(1.0)
 			qdel(src)

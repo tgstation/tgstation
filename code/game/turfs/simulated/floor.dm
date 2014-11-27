@@ -42,7 +42,13 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	if(floor_tile)
 		builtin_tile = new floor_tile
 
-/turf/simulated/floor/ex_act(severity)
+/turf/simulated/floor/ex_act(severity, specialty)
+	..()
+	if(specialty == 2)
+		return
+	if(specialty == 1)
+		src.ChangeTurf(/turf/space)
+		return
 	switch(severity)
 		if(1.0)
 			src.ChangeTurf(/turf/space)

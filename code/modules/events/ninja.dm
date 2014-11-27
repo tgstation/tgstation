@@ -2680,7 +2680,7 @@ It is possible to destroy the net by the occupant or someone else.
 	healthcheck()
 	..()
 
-/obj/effect/energy_net/ex_act(severity)
+/obj/effect/energy_net/ex_act(severity, specialty)
 	switch(severity)
 		if(1.0)
 			health-=50

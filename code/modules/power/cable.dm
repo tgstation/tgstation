@@ -82,9 +82,9 @@ By design, d1 is the smallest direction and d2 is the highest
 	cable_list += src //add it to the global cable list
 
 	if(d1)
-		stored = new/obj/item/stack/cable_coil(src,2,cable_color)
+		stored = new/obj/item/stack/cable_coil(null,2,cable_color)
 	else
-		stored = new/obj/item/stack/cable_coil(src,1,cable_color)
+		stored = new/obj/item/stack/cable_coil(null,1,cable_color)
 
 /obj/structure/cable/Destroy()					// called when a cable is deleted
 	if(powernet)
@@ -174,18 +174,16 @@ By design, d1 is the smallest direction and d2 is the highest
 		return 0
 
 //explosion handling
-/obj/structure/cable/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-		if(2.0)
-			if (prob(50))
-				Deconstruct()
-
-		if(3.0)
-			if (prob(25))
-				Deconstruct()
-	return
+/obj/structure/cable/ex_act(severity, specialty)
+	..()
+	if(!gc_destroyed)
+		switch(severity)
+			if(2)
+				if(prob(50))
+					Deconstruct()
+			if(3)
+				if(prob(25))
+					Deconstruct()
 
 /obj/structure/cable/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)

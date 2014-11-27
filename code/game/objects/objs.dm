@@ -123,6 +123,20 @@
 /obj/proc/hide(h)
 	return
 
+/obj/ex_act(severity, specialty)
+	var/survivability = specialty * 15
+	switch(severity)
+		if(1)
+			qdel(src)
+		if(2)
+			if(prob(50 + survivability))
+				qdel(src)
+		if(3)
+			if(prob(25 + survivability))
+				qdel(src)
+	if(!gc_destroyed)
+		..()
+
 //If a mob logouts/logins in side of an object you can use this proc
 /obj/proc/on_log()
 	..()

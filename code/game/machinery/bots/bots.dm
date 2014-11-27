@@ -293,7 +293,7 @@
 	healthcheck()
 	return
 
-/obj/machinery/bot/ex_act(severity)
+/obj/machinery/bot/ex_act(severity, specialty)
 	switch(severity)
 		if(1.0)
 			explode()

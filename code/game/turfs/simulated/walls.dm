@@ -37,7 +37,6 @@
 
 	ChangeTurf(/turf/simulated/floor/plating)
 
-
 /turf/simulated/wall/proc/break_wall()
 		builtin_sheet.amount = 2
 		builtin_sheet.loc = src
@@ -48,8 +47,11 @@
 		builtin_sheet.loc = src
 		new /obj/item/stack/sheet/metal(src)
 
+/turf/simulated/wall/ex_act(severity, specialty)
+	if(specialty)
+		dismantle_wall(1,1)
+		return
 
-/turf/simulated/wall/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			//SN src = null
@@ -63,7 +65,9 @@
 		if(3.0)
 			if (prob(hardness))
 				dismantle_wall(0,1)
-		else
+			else
+	if(!density)
+		..()
 	return
 
 /turf/simulated/wall/blob_act()
