@@ -71,7 +71,7 @@ var/global/normal_ooc_colour = "#002eb8"
 
 /client/proc/set_ooc(newColor as color)
 	set name = "Set Player OOC Color"
-	set desc = "Modifies player OOC Colour"
+	set desc = "Modifies player OOC Color"
 	set category = "Fun"
 	normal_ooc_colour = sanitize_ooccolor(newColor)
 
