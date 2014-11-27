@@ -1656,6 +1656,8 @@ datum/reagent/toxin/acid/reaction_mob(var/mob/living/carbon/C, var/method=TOUCH,
 	C.acid_act(acidpwr, toxpwr, volume)
 
 datum/reagent/toxin/acid/reaction_obj(var/obj/O, var/volume)
+	if(istype(O.loc, /mob)) //handled in human acid_act()
+		return
 	O.acid_act(acidpwr, toxpwr, volume)
 
 datum/reagent/toxin/acid/polyacid

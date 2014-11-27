@@ -232,6 +232,7 @@ emp_act
 
 /mob/living/carbon/human/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
 	var/list/damaged = list()
+	var/list/inventory_items_to_kill = list()
 
 	//HEAD//
 	var/obj/item/clothing/head_clothes = null
@@ -253,7 +254,8 @@ emp_act
 		. = get_organ("head")
 		if(.)
 			damaged += .
-
+		if(ears)
+			inventory_items_to_kill += ears
 
 	//CHEST//
 	var/obj/item/clothing/chest_clothes = null
@@ -272,6 +274,14 @@ emp_act
 		. = get_organ("chest")
 		if(.)
 			damaged += .
+		if(wear_id)
+			inventory_items_to_kill += wear_id
+		if(r_store)
+			inventory_items_to_kill += r_store
+		if(l_store)
+			inventory_items_to_kill += l_store
+		if(s_store)
+			inventory_items_to_kill += s_store
 
 
 	//ARMS & HANDS//
@@ -338,6 +348,20 @@ emp_act
 				status_flags |= DISFIGURED
 
 		update_damage_overlays()
+
+	//MELTING INVENTORY ITEMS//
+	//these items are all outside of armour visually, so melt regardless.
+	if(back)
+		inventory_items_to_kill += back
+	if(belt)
+		inventory_items_to_kill += belt
+	if(r_hand)
+		inventory_items_to_kill += r_hand
+	if(l_hand)
+		inventory_items_to_kill += l_hand
+
+	for(var/obj/item/I in inventory_items_to_kill)
+		I.acid_act(acidpwr)
 
 /mob/living/carbon/human/grabbedby(mob/living/user)
 	if(w_uniform)
