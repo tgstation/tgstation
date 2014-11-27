@@ -245,6 +245,14 @@
 		state = 1 - state
 		playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
 		user << (state ? "<span class='notice'>You have pried the window into the frame.</span>" : "<span class='notice'>You have pried the window out of the frame.</span>")
+	else if(istype(W, /obj/item/weapon/wrench) && !anchored && (!state || !reinf))
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
+		user << "\blue Now disassembling the girder"
+		if(do_after(user,40))
+			visible_message("<span class='notice'>[user] dismantles \the [src].</span>")
+			var/turf/T=get_turf(src)
+			new /obj/item/stack/sheet/glass(T)
+			del(src)
 	else
 		if(W.damtype == BRUTE || W.damtype == BURN)
 			user.changeNext_move(10)
