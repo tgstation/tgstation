@@ -13,7 +13,7 @@
 
 	school = "conjuration"
 	charge_max = 1200
-	clothes_req = 1
+	spell_flags = NEEDSCLOTHES
 	invocation = "NOUK FHUNMM SACP RISSKA"
 	invocation_type = "shout"
 	range = 1
@@ -26,7 +26,7 @@
 
 	school = "conjuration"
 	charge_max = 1200
-	clothes_req = 0
+	spell_flags = 0
 	invocation = "IA IA"
 	invocation_type = "shout"
 	summon_amt = 10

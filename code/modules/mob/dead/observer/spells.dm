@@ -33,11 +33,10 @@ var/global/list/boo_phrases_silicon=list(
 	name = "Boo!"
 	desc = "Fuck with the living."
 
-	ghost = 1
+	spell_flags = STATALLOWED | GHOSTCAST
 
 	school = "transmutation"
 	charge_max = 600
-	clothes_req = 0
 	invocation = ""
 	invocation_type = "none"
 	range = 1 // Or maybe 3?

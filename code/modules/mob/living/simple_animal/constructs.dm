@@ -276,6 +276,7 @@
 	attack_sound = 'sound/weapons/heavysmash.ogg'
 	var/energy = 0
 	var/max_energy = 1000
+	construct_spells = list(/atom/movable/spell/aoe_turf/conjure/forcewall/lesser)
 
 /mob/living/simple_animal/construct/behemoth/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	user.delayNextAttack(8)

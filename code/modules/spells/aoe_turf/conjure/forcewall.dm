@@ -4,7 +4,7 @@
 	summon_type = list(/obj/effect/forcefield)
 	duration = 300
 	charge_max = 100
-	clothes_req = 0
+	spell_flags = 0
 	range = 0
 	cast_sound = null
 

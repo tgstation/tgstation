@@ -4,7 +4,7 @@
 
 	school = "abjuration"
 	charge_max = 20
-	clothes_req = 1
+	spell_flags = Z2NOCAST | IGNOREDENSE | IGNORESPACE
 	invocation = "none"
 	invocation_type = "none"
 	range = 7
@@ -13,11 +13,6 @@
 
 	smoke_spread = 0
 	smoke_amt = 1
-
-	ignore_space = 1 //whether it includes space tiles in possible teleport locations
-	ignore_dense = 1
-
-	centcomm_cancast = 0 //prevent people from getting to centcomm
 
 /atom/movable/spell/aoe_turf/blink/cast(var/list/targets, mob/user)
 	if(!targets.len)

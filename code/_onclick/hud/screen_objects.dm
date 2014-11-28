@@ -577,8 +577,7 @@
 						S = D
 						break
 				if(S)
-					if(S.cast_check())
-						S.choose_targets()
+					S.perform()
 		if("floor")
 			if(isconstruct(usr))
 				var/mob/living/simple_animal/construct/builder/C = usr
@@ -588,8 +587,7 @@
 						S = D
 						break
 				if(S)
-					if(S.cast_check())
-						S.choose_targets()
+					S.perform()
 		if("soulstone")
 			if(isconstruct(usr))
 				var/mob/living/simple_animal/construct/builder/C = usr
@@ -599,8 +597,7 @@
 						S = D
 						break
 				if(S)
-					if(S.cast_check())
-						S.choose_targets()
+					S.perform()
 		if("shell")
 			if(isconstruct(usr))
 				var/mob/living/simple_animal/construct/builder/C = usr
@@ -610,8 +607,7 @@
 						S = D
 						break
 				if(S)
-					if(S.cast_check())
-						S.choose_targets()
+					S.perform()
 		if("pylon")
 			if(isconstruct(usr))
 				var/mob/living/simple_animal/construct/builder/C = usr
@@ -621,8 +617,7 @@
 						S = D
 						break
 				if(S)
-					if(S.cast_check())
-						S.choose_targets()
+					S.perform()
 		if("shift")
 			if(isconstruct(usr))
 				var/mob/living/simple_animal/construct/wraith/C = usr
@@ -632,8 +627,7 @@
 						S = D
 						break
 				if(S)
-					if(S.cast_check())
-						S.choose_targets()
+					S.perform()
 		if("juggerwall")
 			if(isconstruct(usr))
 				var/mob/living/simple_animal/construct/armoured/C = usr
@@ -643,8 +637,7 @@
 						S = D
 						break
 				if(S)
-					if(S.cast_check())
-						S.choose_targets()
+					S.perform()
 		if("rune")
 			if(isconstruct(usr))
 				var/mob/living/simple_animal/construct/harvester/C = usr

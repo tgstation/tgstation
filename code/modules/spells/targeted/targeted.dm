@@ -4,9 +4,7 @@
 
 /atom/movable/spell/targeted //can mean aoe for mobs (limited/unlimited number) or one target mob
 	var/max_targets = 1 //leave 0 for unlimited targets in range, more for limited number of casts (can all target one guy, depends on target_ignore_prev) in range
-	var/selectable = 0 //can the targets be chosen?
 	var/target_ignore_prev = 1 //only important if max_targets > 1, affects if the spell can be cast multiple times at one person from one cast
-	var/include_user = 0 //if it includes usr in the target list
 
 
 	var/amt_weakened = 0
@@ -35,13 +33,13 @@
 		for(var/mob/living/target in view_or_range(range, user, selection_type))
 			targets += target
 		if(1) //single target can be picked
-			if(range < 0 && include_user)
+			if(range < 0 && spell_flags & INCLUDEUSER)
 				targets += user
 			else
 				var/possible_targets = list()
 
 				for(var/mob/living/M in view_or_range(range, user, selection_type))
-					if(!include_user && user == M)
+					if(!(spell_flags & INCLUDEUSER) && user == M)
 						continue
 					possible_targets += M
 
@@ -55,7 +53,7 @@
 		for(var/mob/living/target in view_or_range(range, user, selection_type))
 			possible_targets += target
 
-		if(selectable)
+		if(spell_flags & SELECTABLE)
 			for(var/i = 1; i<=max_targets, i++)
 				var/mob/M = input("Choose the target for the spell.", "Targeting") as mob in possible_targets
 				if(M in view_or_range(range, user, selection_type))
@@ -72,7 +70,7 @@
 				else
 					targets += pick(possible_targets)
 
-	if(!include_user && (user in targets))
+	if(!(spell_flags & INCLUDEUSER) && (user in targets))
 		targets -= user
 
 	if(compatible_mobs.len)

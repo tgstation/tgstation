@@ -4,13 +4,11 @@
 
 	school = "transmutation"
 	charge_max = 300
-	clothes_req = 1
+	spell_flags = Z2NOCAST | NEEDSCLOTHES | INCLUDEUSER
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
 	cooldown_min = 100 //50 deciseconds reduction per rank
-	include_user = 1
-	centcomm_cancast = 0 //Prevent people from getting to centcomm
 	duration = 50 //in deciseconds
 
 /atom/movable/spell/targeted/ethereal_jaunt/cast(list/targets) //magnets, so mostly hardcoded

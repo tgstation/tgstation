@@ -4,7 +4,7 @@
 
 	school = "transmutation"
 	charge_max = 600
-	clothes_req = 0
+	spell_flags = 0
 	invocation = "GIN'YU CAPAN"
 	invocation_type = "whisper"
 	max_targets = 1

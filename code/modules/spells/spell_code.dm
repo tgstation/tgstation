@@ -16,11 +16,7 @@ var/list/spells = typesof(/atom/movable/spell) //needed for the badmin verb for 
 	var/holder_var_type = "bruteloss" //only used if charge_type equals to "holder_var"
 	var/holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used
 
-	var/spell_flags
-	var/ghost = 0					// Skip life check.
-	var/clothes_req = 1				//see if it requires clothes
-	var/human_req = 0				//spell can only be cast by humans
-	var/stat_allowed = 0			//see if it requires being conscious/alive, need to set to 1 for ghostpells
+	var/spell_flags = NEEDSCLOTHES
 	var/invocation = "HURP DURP"	//what is uttered when the wizard casts the spell
 	var/invocation_type = "none"	//can be none, whisper, shout, and emote
 	var/range = 7					//the range of the spell; outer radius for aoe spells
@@ -191,7 +187,7 @@ var/list/spells = typesof(/atom/movable/spell) //needed for the badmin verb for 
 		user << "<span class='warning'>You shouldn't have this spell! Something's wrong.</span>"
 		return 0
 
-	if(user.z == 2 && !centcomm_cancast) //Certain spells are not allowed on the centcomm zlevel
+	if(user.z == 2 && spell_flags & Z2NOCAST) //Certain spells are not allowed on the centcomm zlevel
 		return 0
 
 	if(istype(user, /mob/living/simple_animal))
@@ -203,8 +199,8 @@ var/list/spells = typesof(/atom/movable/spell) //needed for the badmin verb for 
 	if(!src.check_charge(skipcharge, user)) //sees if we can cast based on charges alone
 		return 0
 
-	if(!ghost)
-		if(user.stat && !stat_allowed)
+	if(!(spell_flags & GHOSTCAST))
+		if(user.stat && !(spell_flags & STATALLOWED))
 			usr << "Not when you're incapacitated."
 			return 0
 
@@ -214,7 +210,7 @@ var/list/spells = typesof(/atom/movable/spell) //needed for the badmin verb for 
 				return 0
 
 	var/atom/movable/spell/noclothes/spell = locate() in user.spell_list
-	if(clothes_req && !(spell && istype(spell)))//clothes check
+	if((spell_flags & NEEDSCLOTHES) && !(spell && istype(spell)))//clothes check
 		if(!user.wearing_wiz_garb())
 			return 0
 
@@ -302,6 +298,7 @@ var/list/spells = typesof(/atom/movable/spell) //needed for the badmin verb for 
 		charge_counter = charge_max
 
 	var/temp = ""
+	name = initial(name)
 	switch(level_max["speed"] - spell_levels["speed"])
 		if(3)
 			temp = "You have improved [name] into Efficient [name]."

@@ -4,7 +4,7 @@
 
 	school = "evocation"
 	charge_max = 150
-	clothes_req = 1
+	spell_flags = NEEDSCLOTHES
 	invocation = "FORTI GY AMA"
 	invocation_type = "shout"
 	range = 7

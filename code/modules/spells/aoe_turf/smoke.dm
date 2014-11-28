@@ -4,7 +4,7 @@
 
 	school = "conjuration"
 	charge_max = 120
-	clothes_req = 0
+	spell_flags = 0
 	invocation = "none"
 	invocation_type = "none"
 	range = 1

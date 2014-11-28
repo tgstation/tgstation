@@ -6,12 +6,13 @@
 
 	school = "evocation"
 	charge_max = 100
-	clothes_req = 0
+	spell_flags = 0
 	invocation = "ONI SOMA"
 	invocation_type = "shout"
 	range = 20
 	cooldown_min = 20 //10 deciseconds reduction per rank
-	include_user = 0
+
+	spell_flags = 0
 
 	duration = 200
 	proj_step_delay = 1

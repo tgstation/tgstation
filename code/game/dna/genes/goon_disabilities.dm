@@ -367,13 +367,11 @@
 	charge_type = "recharge"
 	charge_max = 600
 
-	clothes_req = 0
-	stat_allowed = 0
+	spell_flags = INCLUDEUSER
 	invocation_type = "none"
 	range = -1
 	selection_type = "range"
 	compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
-	include_user = 1
 	cast_sound = 'sound/effects/bamf.ogg'
 
 /atom/movable/spell/targeted/immolate/cast(list/targets)

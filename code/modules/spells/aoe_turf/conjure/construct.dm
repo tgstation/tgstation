@@ -6,7 +6,7 @@
 
 	school = "conjuration"
 	charge_max = 600
-	clothes_req = 0
+	spell_flags = 0
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
@@ -22,12 +22,11 @@
 	desc = "This spell constructs a cult floor"
 
 	charge_max = 20
-	clothes_req = 0
+	spell_flags = Z2NOCAST
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
 	summon_type = list(/turf/simulated/floor/engine/cult)
-	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
 
 /atom/movable/spell/aoe_turf/conjure/floor/conjure_animation(var/atom/movable/overlay/animation, var/turf/target)
 	animation.icon_state = "cultfloor"
@@ -40,12 +39,11 @@
 	desc = "This spell constructs a cult wall"
 
 	charge_max = 100
-	clothes_req = 0
+	spell_flags = Z2NOCAST
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
 	summon_type = list(/turf/simulated/wall/cult)
-	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
 
 /atom/movable/spell/aoe_turf/conjure/wall/conjure_animation(var/atom/movable/overlay/animation, var/turf/target)
 	animation.icon_state = "cultwall"
@@ -58,11 +56,10 @@
 	desc = "This spell constructs a reinforced metal wall"
 
 	charge_max = 300
-	clothes_req = 0
+	spell_flags = Z2NOCAST
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
-	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
 	cast_delay = 50
 
 	summon_type = list(/turf/simulated/wall/r_wall)
@@ -72,7 +69,7 @@
 	desc = "This spell reaches into Nar-Sie's realm, summoning one of the legendary fragments across time and space"
 
 	charge_max = 3000
-	clothes_req = 0
+	spell_flags = 0
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
@@ -84,7 +81,7 @@
 	desc = "This spell conjures a fragile crystal from Nar-Sie's realm. Makes for a convenient light source."
 
 	charge_max = 200
-	clothes_req = 0
+	spell_flags = 0
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
@@ -105,7 +102,7 @@
 	desc = "Allows you to pull up a shield to protect yourself and allies from incoming threats"
 
 	charge_max = 300
-	clothes_req = 0
+	spell_flags = 0
 	invocation = "none"
 	invocation_type = "none"
 	range = 0

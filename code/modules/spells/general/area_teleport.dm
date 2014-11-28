@@ -4,7 +4,7 @@
 
 	school = "abjuration"
 	charge_max = 600
-	clothes_req = 1
+	spell_flags = NEEDSCLOTHES
 	invocation = "SCYAR NILA"
 	invocation_type = "shout"
 	cooldown_min = 200 //100 deciseconds reduction per rank

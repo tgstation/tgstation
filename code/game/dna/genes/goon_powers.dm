@@ -124,14 +124,11 @@
 	charge_type = "recharge"
 	charge_max = 600
 
-	clothes_req = 0
-	stat_allowed = 0
+	spell_flags = Z2NOCAST | INCLUDEUSER
 	invocation_type = "none"
 	range = 1
 	max_targets = 1
 	selection_type = "range"
-	include_user = 1
-	centcomm_cancast = 0
 
 	compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 
@@ -203,8 +200,7 @@
 	charge_type = "recharge"
 	charge_max = 300
 
-	clothes_req = 0
-	stat_allowed = 0
+	spell_flags = 0
 	invocation_type = "none"
 	range = 1
 	max_targets = 1
@@ -287,13 +283,11 @@
 	desc = "Leap great distances!"
 	panel = "Mutant Powers"
 	range = -1
-	include_user = 1
 
 	charge_type = "recharge"
 	charge_max = 60
 
-	clothes_req = 0
-	stat_allowed = 0
+	spell_flags = INCLUDEUSER
 	invocation_type = "none"
 
 	duration = 10 //used for jump distance here
@@ -389,12 +383,10 @@
 	panel = "Mutant Powers"
 	charge_max = 1800
 
-	clothes_req = 0
-	stat_allowed = 0
+	spell_flags = 0
 	invocation_type = "none"
 	range = 1
 	max_targets = 1
-	include_user = 0
 	selection_type = "range"
 	compatible_mobs = (/mob/living/carbon/human)
 

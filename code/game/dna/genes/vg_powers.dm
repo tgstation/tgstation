@@ -56,15 +56,13 @@ Obviously, requires DNA2.
 	name = "Hulk Out"
 	panel = "Mutant Powers"
 	range = -1
-	include_user = 1
 
 	charge_type = "recharge"
 	charge_max = HULK_COOLDOWN
 
 	duration = HULK_DURATION
 
-	clothes_req = 0
-	stat_allowed = 0
+	spell_flags = INCLUDEUSER
 
 	invocation_type = "none"
 

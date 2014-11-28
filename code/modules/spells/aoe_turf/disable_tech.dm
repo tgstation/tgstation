@@ -2,7 +2,7 @@
 	name = "Disable Tech"
 	desc = "This spell disables all weapons, cameras and most other technology in range."
 	charge_max = 400
-	clothes_req = 1
+	spell_flags = NEEDSCLOTHES
 	invocation = "NEC CANTIO"
 	invocation_type = "shout"
 	selection_type = "range"

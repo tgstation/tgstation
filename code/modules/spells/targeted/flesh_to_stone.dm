@@ -4,7 +4,7 @@
 
 	school = "transmutation"
 	charge_max = 600
-	clothes_req = 1
+	spell_flags = NEEDSCLOTHES
 	range = 2
 	invocation = "STAUN EI"
 	invocation_type = "shout"

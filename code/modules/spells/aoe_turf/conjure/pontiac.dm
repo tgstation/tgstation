@@ -7,11 +7,10 @@
 	charge_type = "charges"
 	charge_max = 1
 	school = "conjuration"
-	clothes_req = 1
+	spell_flags = Z2NOCAST
 	invocation = "NO F'AT C'HX"
 	invocation_type = "shout"
 	range = 0
 
 	summon_type = list(/obj/structure/stool/bed/chair/vehicle/wizmobile)
 	duration = 0
-	centcomm_cancast = 0 //Stop people from getting to centcomm

@@ -4,7 +4,7 @@
 
 	school = "evocation"
 	charge_max = 500
-	clothes_req = 1
+	spell_flags = NEEDSCLOTHES
 	invocation = "ARSE NATH"
 	invocation_type = "shout"
 	range = 1

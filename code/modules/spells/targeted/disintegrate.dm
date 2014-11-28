@@ -4,11 +4,10 @@
 
 	school = "evocation"
 	charge_max = 600
-	clothes_req = 1
+	spell_flags = NEEDSCLOTHES
 	invocation = "EI NATH"
 	invocation_type = "shout"
 	range = 1
-	include_user = 0
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	sparks_spread = 1

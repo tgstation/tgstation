@@ -4,7 +4,7 @@
 
 	school = "transmutation"
 	charge_max = 300
-	clothes_req = 0
+	spell_flags = 0
 	invocation = "DII ODA BAJI"
 	invocation_type = "whisper"
 	message = "\blue You suddenly feel completely overwhelmed!"

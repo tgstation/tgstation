@@ -4,7 +4,7 @@
 
 	school = "transmutation"
 	charge_max = 100
-	clothes_req = 0
+	spell_flags = 0
 	invocation = "AULIE OXIN FIERA"
 	invocation_type = "whisper"
 	range = 3

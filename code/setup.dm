@@ -1063,6 +1063,12 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define GHOSTCAST		1
 #define NEEDSCLOTHES	2
 #define NEEDSHUMAN		4
-#define Z2CAST			8
+#define Z2NOCAST		8
 #define STATALLOWED		16
-
+//The following flags only affect different types of spell, and therefore overlap
+//Targeted spells
+#define INCLUDEUSER		32
+#define SELECTABLE		64
+//AOE spells
+#define IGNOREDENSE		32
+#define IGNORESPACE		64

@@ -40,13 +40,11 @@ code\game\dna\genes\goon_powers.dm
 
 	school = "transmutation"
 	charge_max = 400
-	clothes_req = 1
+	spell_flags = Z2NOCAST | NEEDSCLOTHES | INCLUDEUSER
 	invocation = "BIRUZ BENNAR"
 	invocation_type = "shout"
 	message = "\blue You feel strong! You feel a pressure building behind your eyes!"
 	range = -1
-	include_user = 1
-	centcomm_cancast = 0
 
 	mutations = list(M_LASER, M_HULK)
 	duration = 300

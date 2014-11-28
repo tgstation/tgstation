@@ -5,12 +5,10 @@
 	charge_type = "recharge"
 	charge_max = 150
 	charge_counter = 0
-	clothes_req = 0
-	stat_allowed = 0
+	spell_flags = 0
 	invocation = "KN'A FTAGHU, PUCK 'BTHNK!"
 	invocation_type = "shout"
 	range = 7
-	include_user = 0
 	max_targets = 1
 	cooldown_min = 30 //30 deciseconds reduction per rank
 	selection_type = "range"
