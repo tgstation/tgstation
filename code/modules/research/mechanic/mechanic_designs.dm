@@ -58,12 +58,13 @@
 	var/techtotal = src.TechTotal() / 2
 	materials["$iron"] += techtotal * round(rand(300, 1500), 100) * modifier
 	materials["$glass"] += techtotal * round(rand(150, 300), 50) * modifier
-	if(prob(techtotal * 15)) //let's add an extra cost of some medium-rare material - sure a lot of items
-		materials[pick("$plasma", "$uranium", "$gold", "$silver")] += techtotal * round(rand(50, 250), 10) * modifier
-	if(prob(techtotal * 8))//and another cost, because we can - can proc for some items
-		materials[pick("$plasma", "$uranium", "$gold", "$silver")] += techtotal * round(rand(50, 250), 10) * modifier
-	if(techtotal >= 7) //let's add something REALLY rare - bananium and phazon removed for now
-		materials[/*pick(*/"$diamond"/*, "$clown", "$phazon")*/] += techtotal * round(rand(10, 150), 10) * modifier
+	if(src.design_type == "item")
+		if(prob(techtotal * 15)) //let's add an extra cost of some medium-rare material - sure a lot of items
+			materials[pick("$plasma", "$uranium", "$gold", "$silver")] += techtotal * round(rand(50, 250), 10) * modifier
+		if(prob(techtotal * 8))//and another cost, because we can - can proc for some items
+			materials[pick("$plasma", "$uranium", "$gold", "$silver")] += techtotal * round(rand(50, 250), 10) * modifier
+		if(techtotal >= 7) //let's add something REALLY rare - bananium and phazon removed for now
+			materials[/*pick(*/"$diamond"/*, "$clown", "$phazon")*/] += techtotal * round(rand(10, 150), 10) * modifier
 
 	for(var/matID in materials)
 		materials[matID] -= (materials[matID] % 10) //clean up the numbers
