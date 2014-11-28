@@ -37,7 +37,7 @@
 	R.status_flags |= CANPUSH
 	R.designation = "Default"
 	R.notify_ai(2)
-	R.updateicon()
+	R.update_icons()
 
 	return 1
 
