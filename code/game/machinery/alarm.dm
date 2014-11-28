@@ -210,7 +210,7 @@
 		var/datum/gas_mixture/gas = location.remove_air(0.25 * environment.total_moles)
 		if(gas)
 			var/heat_capacity = gas.heat_capacity()
-			var/energy_used = max(abs(heat_capacity * (gas.temperature - target_temperature)), MAX_ENERGY_CHANGE)
+			var/energy_used = min(abs(heat_capacity * (gas.temperature - target_temperature)), MAX_ENERGY_CHANGE)
 
 			// We need to cool ourselves.
 			if (environment.temperature > target_temperature)
