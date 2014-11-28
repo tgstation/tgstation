@@ -1,4 +1,4 @@
-+author: Clusterfack
-+delete-after: true
-+changes:
-+ - bugfix: Clone Pod deconstruction no longer leaves an extra clone pod underneath.
+author: Clusterfack
+delete-after: true
+changes:
+- bugfix: Clone Pod deconstruction no longer leaves an extra clone pod underneath.
