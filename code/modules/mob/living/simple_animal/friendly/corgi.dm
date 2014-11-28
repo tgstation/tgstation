@@ -58,17 +58,25 @@
 		//helmet and armor = 100% protection
 		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
 			if( O.force )
-				usr << "<span class='danger'>[src] is wearing too much armor. You can't cause \him any damage.</span>"
-				for (var/mob/M in viewers(src, null))
-					M.show_message("\red \b [user] hits [src] with [O], however [src] is too armored.")
+				user << "<span class='warning'>[src] is wearing too much armor. You can't cause \him any damage.</span>"
+				visible_message("<span class='danger'> [user] hits [src] with [O], however [src] is too armored.</span>")
 			else
-				usr << "<span class='danger'>[src] is wearing too much armor. You can't reach \his skin.<span>"
-				for (var/mob/M in viewers(src, null))
-					M.show_message("<span class='danger'>[user] gently taps [src] with [O].</span>")
+				user << "<span class='warning'>[src] is wearing too much armor. You can't reach \his skin.<span>"
+				visible_message("<span class='notice'>[user] gently taps [src] with [O].</span>")
 			if(health>0 && prob(15))
 				emote("me", 1, "looks at [user] with [pick("an amused","an annoyed","a confused","a resentful", "a happy", "an excited")] expression.")
 			return
-	..()
+
+	if(istype(O, /obj/item/weapon/newspaper))
+		if(!stat)
+			user.visible_message("<span class='notice'>[user] baps [name] on the nose with the rolled up [O]</span>")
+			spawn(0)
+				for(var/i in list(1,2,4,8,4,2,1,2))
+					dir = i
+					sleep(1)
+	else
+		..()
+
 
 /mob/living/simple_animal/corgi/Topic(href, href_list)
 	if(usr.stat) return
@@ -426,18 +434,7 @@
 						return
 			step(AM, t)
 		now_pushing = null
-//PC stuff-Sieve
 
-/mob/living/simple_animal/corgi/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
-	if(istype(O, /obj/item/weapon/newspaper))
-		if(!stat)
-			user.visible_message("<span class='notice'>[user] baps [name] on the nose with the rolled up [O]</span>")
-			spawn(0)
-				for(var/i in list(1,2,4,8,4,2,1,2))
-					dir = i
-					sleep(1)
-	else
-		..()
 
 /mob/living/simple_animal/corgi/regenerate_icons()
 	overlays = list()
