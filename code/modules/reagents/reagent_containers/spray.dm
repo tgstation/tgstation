@@ -20,9 +20,6 @@
 	|| istype(A, /obj/item/weapon/reagent_containers) || istype(A, /obj/structure/sink))
 		return
 
-	if(istype(A, /obj/effect/proc_holder/spell))
-		return
-
 	user.delayNextAttack(8)
 
 	if(istype(A, /obj/structure/reagent_dispensers) && get_dist(src,A) <= 1) //this block copypasted from reagent_containers/glass, for lack of a better solution
@@ -144,9 +141,6 @@
 /obj/item/weapon/reagent_containers/spray/chemsprayer/afterattack(atom/A as mob|obj, mob/user as mob)
 	if(istype(A, /obj/item/weapon/storage) || istype(A, /obj/structure/table) || istype(A, /obj/structure/rack) || istype(A, /obj/structure/closet) \
 	|| istype(A, /obj/item/weapon/reagent_containers) || istype(A, /obj/structure/sink))
-		return
-
-	if(istype(A, /obj/effect/proc_holder/spell))
 		return
 
 	if(istype(A, /obj/structure/reagent_dispensers) && get_dist(src,A) <= 1) //this block copypasted from reagent_containers/glass, for lack of a better solution

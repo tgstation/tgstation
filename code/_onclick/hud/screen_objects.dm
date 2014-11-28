@@ -571,9 +571,9 @@
 		if("wall")
 			if(isconstruct(usr))
 				var/mob/living/simple_animal/construct/builder/C = usr
-				var/obj/effect/proc_holder/spell/S = null
+				var/atom/movable/spell/S = null
 				for(var/datum/D in C.spell_list)
-					if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/wall))
+					if(istype(D, /atom/movable/spell/aoe_turf/conjure/wall))
 						S = D
 						break
 				if(S)
@@ -582,9 +582,9 @@
 		if("floor")
 			if(isconstruct(usr))
 				var/mob/living/simple_animal/construct/builder/C = usr
-				var/obj/effect/proc_holder/spell/S = null
+				var/atom/movable/spell/S = null
 				for(var/datum/D in C.spell_list)
-					if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/floor ))
+					if(istype(D, /atom/movable/spell/aoe_turf/conjure/floor ))
 						S = D
 						break
 				if(S)
@@ -593,9 +593,9 @@
 		if("soulstone")
 			if(isconstruct(usr))
 				var/mob/living/simple_animal/construct/builder/C = usr
-				var/obj/effect/proc_holder/spell/S = null
+				var/atom/movable/spell/S = null
 				for(var/datum/D in C.spell_list)
-					if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone ))
+					if(istype(D, /atom/movable/spell/aoe_turf/conjure/soulstone ))
 						S = D
 						break
 				if(S)
@@ -604,9 +604,9 @@
 		if("shell")
 			if(isconstruct(usr))
 				var/mob/living/simple_animal/construct/builder/C = usr
-				var/obj/effect/proc_holder/spell/S = null
+				var/atom/movable/spell/S = null
 				for(var/datum/D in C.spell_list)
-					if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser  ))
+					if(istype(D, /atom/movable/spell/aoe_turf/conjure/construct/lesser  ))
 						S = D
 						break
 				if(S)
@@ -615,9 +615,9 @@
 		if("pylon")
 			if(isconstruct(usr))
 				var/mob/living/simple_animal/construct/builder/C = usr
-				var/obj/effect/proc_holder/spell/S = null
+				var/atom/movable/spell/S = null
 				for(var/datum/D in C.spell_list)
-					if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/pylon ))
+					if(istype(D, /atom/movable/spell/aoe_turf/conjure/pylon ))
 						S = D
 						break
 				if(S)
@@ -626,9 +626,9 @@
 		if("shift")
 			if(isconstruct(usr))
 				var/mob/living/simple_animal/construct/wraith/C = usr
-				var/obj/effect/proc_holder/spell/S = null
+				var/atom/movable/spell/S = null
 				for(var/datum/D in C.spell_list)
-					if(istype(D, /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift ))
+					if(istype(D, /atom/movable/spell/targeted/ethereal_jaunt/shift ))
 						S = D
 						break
 				if(S)
@@ -637,9 +637,9 @@
 		if("juggerwall")
 			if(isconstruct(usr))
 				var/mob/living/simple_animal/construct/armoured/C = usr
-				var/obj/effect/proc_holder/spell/S = null
+				var/atom/movable/spell/S = null
 				for(var/datum/D in C.spell_list)
-					if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall ))
+					if(istype(D, /atom/movable/spell/aoe_turf/conjure/forcewall/lesser ))
 						S = D
 						break
 				if(S)

@@ -987,6 +987,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define VISIBLE 1
 #define HEARABLE 2
 
+
 // /vg/ - Pipeline processing (enables exploding pipes and whatnot)
 // COMMENT OUT TO DISABLE
 // #define ATMOS_PIPELINE_PROCESSING 1
@@ -1053,3 +1054,15 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 
 //COMMENT IF YOUR DREAMDAEMON VERSION IS BELOW 507.1248
 #define BORDER_USE_TURF_EXIT 1
+
+////////////////////////
+////WIZARD SHIT GO//////
+////////////////////////
+
+/*		WIZARD SPELL FLAGS		*/
+#define GHOSTCAST		1
+#define NEEDSCLOTHES	2
+#define NEEDSHUMAN		4
+#define Z2CAST			8
+#define STATALLOWED		16
+

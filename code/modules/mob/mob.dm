@@ -5,13 +5,6 @@
 
 /mob/Destroy() // This makes sure that mobs with clients/keys are not just deleted from the game.
 	unset_machine()
-	if(client)
-		for(var/atom/movable/AM in client.screen)
-			qdel(AM)
-		client.screen = list()
-	qdel(hud_used)
-	if(mind && mind.current == src)
-		spellremove(src)
 	mob_list.Remove(src)
 	dead_mob_list.Remove(src)
 	living_mob_list.Remove(src)
@@ -29,21 +22,6 @@
 		dead_mob_list += src
 	else
 		living_mob_list += src
-
-	store_position()
-
-/mob/proc/is_muzzled()
-	return 0
-
-/mob/proc/store_position()
-	origin_x = x
-	origin_y = y
-	origin_z = z
-
-/mob/proc/send_back()
-	x = origin_x
-	y = origin_y
-	z = origin_z
 
 /mob/proc/generate_name()
 	return name
@@ -113,8 +91,6 @@
 
 /mob/visible_message(var/message, var/self_message, var/blind_message)
 	for(var/mob/M in viewers(src))
-		if(M.see_invisible < invisibility)
-			continue
 		var/msg = message
 		if(self_message && M==src)
 			msg = self_message
@@ -142,11 +118,6 @@
 	return
 
 /mob/proc/see_narsie(var/obj/machinery/singularity/narsie/large/N)
-	if(N.chained)
-		if(narsimage)
-			del(narsimage)
-			del(narglow)
-		return
 	if((N.z == src.z)&&(get_dist(N,src) <= (N.consume_range+10)))
 		if(!narsimage)
 			narsimage = image('icons/obj/narsie.dmi',src.loc,"narsie",9,1)
@@ -776,66 +747,37 @@ var/list/slot_equipment_priority = list( \
 				return L.container
 	return
 
-//note: ghosts can point, this is intended
-//visible_message will handle invisibility properly
-//overriden here and in /mob/dead/observer for different point span classes and sanity checks
 /mob/verb/pointed(atom/A as turf | obj | mob in view())
 	set name = "Point To"
 	set category = "Object"
 
-	if(!src || !isturf(src.loc) || !(A in view(src.loc)))
-		return 0
+	if(!src || !isturf(src.loc))
+		return
+
+	if(src.stat != CONSCIOUS || src.restrained())
+		return
+
+	if(src.status_flags & FAKEDEATH)
+		return
+
+	if(!(A in view(src.loc)))
+		return
 
 	if(istype(A, /obj/effect/decal/point))
-		return 0
+		return
 
 	var/tile = get_turf(A)
 
-	if(!tile)
-		return 0
+	if(isnull(tile))
+		return
 
 	var/obj/point = new/obj/effect/decal/point(tile)
-	point.invisibility = invisibility
+
 	spawn(20)
 		if(point)
 			qdel(point)
 
-	return 1
-
-//this and stop_pulling really ought to be /mob/living procs
-/mob/proc/start_pulling(var/atom/movable/AM)
-	if ( !AM || !src || src==AM || !isturf(src.loc) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
-		return
-	if (!( AM.anchored ))
-		AM.add_fingerprint(src)
-
-		// If we're pulling something then drop what we're currently pulling and pull this instead.
-		if(pulling)
-			// Are we trying to pull something we are already pulling? Then just stop here, no need to continue.
-			var/p = pulling
-			stop_pulling()
-			if(AM == p)
-				return
-
-		src.pulling = AM
-		AM.pulledby = src
-		if(ismob(AM))
-			var/mob/M = AM
-			if(!iscarbon(src))
-				M.LAssailant = null
-			else
-				M.LAssailant = usr
-
-/mob/verb/stop_pulling()
-
-	set name = "Stop Pulling"
-	set category = "IC"
-
-	if(pulling)
-		pulling.pulledby = null
-		pulling = null
-
-
+	usr.visible_message("<b>[src]</b> points to [A]")
 
 /mob/verb/mode()
 	set name = "Activate Held Object"
@@ -902,27 +844,6 @@ var/list/slot_equipment_priority = list( \
 
 	if (popup)
 		memory()
-
-//mob verbs are faster than object verbs. See http://www.byond.com/forum/?post=1326139&page=2#comment8198716 for why this isn't atom/verb/examine()
-/mob/verb/examination(atom/A as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
-	set name = "Examine"
-	set category = "IC"
-
-//	if( (sdisabilities & BLIND || blinded || stat) && !istype(src,/mob/dead/observer) )
-	if(is_blind(src))
-		src << "<span class='notice'>Something is there but you can't see it.</span>"
-		return
-
-	face_atom(A)
-	A.examine(src)
-
-
-/mob/living/verb/verb_pickup(obj/I in view())
-	set name = "Pick up"
-	set category = "Object"
-
-	face_atom(I)
-	I.verb_pickup(src)
 
 /mob/proc/update_flavor_text()
 	set src in usr
@@ -1000,7 +921,7 @@ var/list/slot_equipment_priority = list( \
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
 		return
-	client.screen.len = 0
+	client.screen.Cut()
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
 		return
@@ -1171,6 +1092,54 @@ var/list/slot_equipment_priority = list( \
 	show_inv(usr)
 
 
+/mob/verb/stop_pulling()
+
+	set name = "Stop Pulling"
+	set category = "IC"
+
+	if(pulling)
+		pulling.pulledby = null
+		pulling = null
+
+/mob/proc/start_pulling(var/atom/movable/AM)
+
+	if ( !AM || !usr || src==AM || !isturf(src.loc) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
+		return
+
+	if (AM.anchored)
+		return
+
+	var/mob/M = AM
+	if(ismob(AM))
+		if(!iscarbon(src))
+			M.LAssailant = null
+		else
+			M.LAssailant = usr
+
+	if(pulling)
+		var/pulling_old = pulling
+		stop_pulling()
+		// Are we pulling the same thing twice? Just stop pulling.
+		if(pulling_old == AM)
+			return
+
+	src.pulling = AM
+	AM.pulledby = src
+
+	if(ismob(AM))
+		M.attack_log += text("\[[time_stamp()]\] <span class='warning'>Has been pulled by [src.name] ([src.ckey])</span>")
+		src.attack_log += text("\[[time_stamp()]\] <span class='warning'>Pulled [M.name] ([M.ckey])</span>")
+
+		if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			if(H.pull_damage())
+				src << "<span class='warning'> <B>Pulling \the [H] in their current condition would probably be a bad idea.</B></span>"
+
+	//Attempted fix for people flying away through space when cuffed and dragged.
+	if(ismob(AM))
+		var/mob/pulled = AM
+		pulled.inertia_dir = 0
+
 /mob/proc/can_use_hands()
 	return
 
@@ -1187,18 +1156,91 @@ var/list/slot_equipment_priority = list( \
 	for(var/mob/M in viewers())
 		M.see(message)
 
+/*
+adds a dizziness amount to a mob
+use this rather than directly changing var/dizziness
+since this ensures that the dizzy_process proc is started
+currently only humans get dizzy
+
+value of dizziness ranges from 0 to 1000
+below 100 is not dizzy
+*/
+/mob/proc/make_dizzy(var/amount)
+	if(!istype(src, /mob/living/carbon/human)) // for the moment, only humans get dizzy
+		return
+
+	dizziness = min(1000, dizziness + amount)	// store what will be new value
+													// clamped to max 1000
+	if(dizziness > 100 && !is_dizzy)
+		spawn(0)
+			dizzy_process()
+
+
+/*
+dizzy process - wiggles the client's pixel offset over time
+spawned from make_dizzy(), will terminate automatically when dizziness gets <100
+note dizziness decrements automatically in the mob's Life() proc.
+*/
+/mob/proc/dizzy_process()
+	is_dizzy = 1
+	while(dizziness > 100)
+		if(client)
+			var/amplitude = dizziness*(sin(dizziness * 0.044 * world.time) + 1) / 70
+			client.pixel_x = amplitude * sin(0.008 * dizziness * world.time)
+			client.pixel_y = amplitude * cos(0.008 * dizziness * world.time)
+
+		sleep(1)
+	//endwhile - reset the pixel offsets to zero
+	is_dizzy = 0
+	if(client)
+		client.pixel_x = 0
+		client.pixel_y = 0
+
+// jitteriness - copy+paste of dizziness
+
+/mob/proc/make_jittery(var/amount)
+	if(!istype(src, /mob/living/carbon/human)) // for the moment, only humans get dizzy
+		return
+
+	jitteriness = min(1000, jitteriness + amount)	// store what will be new value
+													// clamped to max 1000
+	if(jitteriness > 100 && !is_jittery)
+		spawn(0)
+			jittery_process()
+
+
+// Typo from the oriignal coder here, below lies the jitteriness process. So make of his code what you will, the previous comment here was just a copypaste of the above.
+/mob/proc/jittery_process()
+	var/old_x = pixel_x
+	var/old_y = pixel_y
+	is_jittery = 1
+	while(jitteriness > 100)
+//		var/amplitude = jitteriness*(sin(jitteriness * 0.044 * world.time) + 1) / 70
+//		pixel_x = amplitude * sin(0.008 * jitteriness * world.time)
+//		pixel_y = amplitude * cos(0.008 * jitteriness * world.time)
+
+		var/amplitude = min(4, jitteriness / 100)
+		pixel_x = rand(-amplitude, amplitude)
+		pixel_y = rand(-amplitude/3, amplitude/3)
+
+		sleep(1)
+	//endwhile - reset the pixel offsets to zero
+	is_jittery = 0
+	pixel_x = old_x
+	pixel_y = old_y
+
 /mob/Stat()
 	..()
 
-	if(client && client.holder && client.inactivity < (1200))
+	if(client && client.holder)
 
 		if (statpanel("Status"))	//not looking at that panel
 			stat(null, "Location:\t([x], [y], [z])")
 			stat(null, "CPU:\t[world.cpu]")
 			stat(null, "Instances:\t[world.contents.len]")
 
-			if (garbageCollector)
-				/*stat(null, "MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[master_controller.iteration])")
+			if (master_controller)
+				stat(null, "MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[master_controller.iteration])")
 				stat(null, "Air-[master_controller.air_cost]")
 				stat(null, "Sun-[master_controller.sun_cost]")
 				stat(null, "Mob-[master_controller.mobs_cost]\t#[mob_list.len]")
@@ -1209,96 +1251,37 @@ var/list/slot_equipment_priority = list( \
 				stat(null, "Ponet-[master_controller.powernets_cost]\t#[powernets.len]")
 				stat(null, "NanoUI-[master_controller.nano_cost]\t#[nanomanager.processing_uis.len]")
 				stat(null, "Tick-[master_controller.ticker_cost]")
-				stat(null, "garbage collector - [master_controller.garbageCollectorCost]")*/
+				stat(null, "garbage collector - [master_controller.garbageCollectorCost]")
 				stat(null, "\tqdel - [garbageCollector.del_everything ? "off" : "on"]")
 				stat(null, "\ton queue - [garbageCollector.queue.len]")
 				stat(null, "\ttotal delete - [garbageCollector.dels_count]")
 				stat(null, "\tsoft delete - [garbageCollector.dels_count - garbageCollector.hard_dels]")
 				stat(null, "\thard delete - [garbageCollector.hard_dels]")
+				stat(null, "ALL - [master_controller.total_cost]")
 			else
-				stat(null, "Garbage Controller is not running.")
+				stat(null, "master controller - ERROR")
 
-			if(processScheduler.getIsRunning())
-				var/datum/controller/process/process
+	if(listed_turf && client)
+		if(get_dist(listed_turf,src) > 1)
+			listed_turf = null
+		else
+			statpanel(listed_turf.name, null, listed_turf)
+			for(var/atom/A in listed_turf)
+				if(A.invisibility > see_invisible)
+					continue
+				statpanel(listed_turf.name, null, A)
 
-				process = processScheduler.getProcess("vote")
-				stat(null, "VOT\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
-
-				process = processScheduler.getProcess("air")
-				stat(null, "AIR\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
-
-				process = processScheduler.getProcess("sun")
-				stat(null, "SUN\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
-
-				process = processScheduler.getProcess("ticker")
-				stat(null, "TIC\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
-
-				process = processScheduler.getProcess("garbage")
-				stat(null, "GAR\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
-
-				process = processScheduler.getProcess("lighting")
-				stat(null, "LIG\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
-
-				process = processScheduler.getProcess("supply shuttle")
-				stat(null, "SUP\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
-
-				process = processScheduler.getProcess("emergency shuttle")
-				stat(null, "EME\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
-
-				process = processScheduler.getProcess("inactivity")
-				stat(null, "IAC\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
-
-				process = processScheduler.getProcess("mob")
-				stat(null, "MOB([mob_list.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
-
-				process = processScheduler.getProcess("disease")
-				stat(null, "DIS([active_diseases.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
-
-				process = processScheduler.getProcess("machinery")
-				stat(null, "MAC([machines.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
-
-				process = processScheduler.getProcess("pow_machine")
-				stat(null, "POM([power_machines.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
-
-				process = processScheduler.getProcess("obj")
-				stat(null, "OBJ([processing_objects.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
-
-				process = processScheduler.getProcess("pipenet")
-				stat(null, "PIP([pipe_networks.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
-
-				process = processScheduler.getProcess("powernet")
-				stat(null, "POW([powernets.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
-
-				process = processScheduler.getProcess("nanoui")
-				stat(null, "NAN([nanomanager.processing_uis.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
-
-				process = processScheduler.getProcess("event")
-				stat(null, "EVE([events.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
-			else
-				stat(null, "processScheduler is not running.")
-
-	if(client && client.inactivity < (1200))
-		if(listed_turf)
-			if(get_dist(listed_turf,src) > 1)
-				listed_turf = null
-			else if(statpanel(listed_turf.name))
-				statpanel(listed_turf.name, null, listed_turf)
-				for(var/atom/A in listed_turf)
-					if(A.invisibility > see_invisible)
-						continue
-					statpanel(listed_turf.name, null, A)
-
-		if(spell_list && spell_list.len)
-			for(var/obj/effect/proc_holder/spell/S in spell_list)
-				if(istype(S, /obj/effect/proc_holder/spell/noclothes) || !statpanel(S.panel))
-					continue //Not showing the noclothes spell
-				switch(S.charge_type)
-					if("recharge")
-						statpanel(S.panel,"[S.charge_counter/10.0]/[S.charge_max/10]",S)
-					if("charges")
-						statpanel(S.panel,"[S.charge_counter]/[S.charge_max]",S)
-					if("holdervar")
-						statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S)
+	if(spell_list && spell_list.len)
+		for(var/atom/movable/spell/S in spell_list)
+			if(istype(S, /atom/movable/spell/noclothes))
+				continue //Not showing the noclothes spell
+			switch(S.charge_type)
+				if("recharge")
+					statpanel(S.panel,"[S.charge_counter/10.0]/[S.charge_max/10]", S)
+				if("charges")
+					statpanel(S.panel,"[S.charge_counter]/[S.charge_max]", S)
+				if("holdervar")
+					statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]", S)
 
 
 
@@ -1306,7 +1289,7 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/canface()
 	if(!canmove)						return 0
 	if(client.moving)					return 0
-	if(client.move_delayer.blocked())	return 0
+	if(world.time < client.move_delay)	return 0
 	if(stat==2)							return 0
 	if(anchored)						return 0
 	if(monkeyizing)						return 0
@@ -1323,7 +1306,6 @@ var/list/slot_equipment_priority = list( \
 		else
 			lying = 1
 	else if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH))
-		stop_pulling()
 		lying = 1
 		canmove = 0
 	else if( stunned )
@@ -1365,7 +1347,7 @@ var/list/slot_equipment_priority = list( \
 	if(!canface())	return 0
 	dir = EAST
 	Facing()
-	delayNextMove(movement_delay(),additive=1)
+	client.move_delay += movement_delay()
 	return 1
 
 
@@ -1374,7 +1356,7 @@ var/list/slot_equipment_priority = list( \
 	if(!canface())	return 0
 	dir = WEST
 	Facing()
-	delayNextMove(movement_delay(),additive=1)
+	client.move_delay += movement_delay()
 	return 1
 
 
@@ -1383,7 +1365,7 @@ var/list/slot_equipment_priority = list( \
 	if(!canface())	return 0
 	dir = NORTH
 	Facing()
-	delayNextMove(movement_delay(),additive=1)
+	client.move_delay += movement_delay()
 	return 1
 
 
@@ -1392,7 +1374,7 @@ var/list/slot_equipment_priority = list( \
 	if(!canface())	return 0
 	dir = SOUTH
 	Facing()
-	delayNextMove(movement_delay(),additive=1)
+	client.move_delay += movement_delay()
 	return 1
 
 
@@ -1441,13 +1423,6 @@ var/list/slot_equipment_priority = list( \
 		update_canmove()	//updates lying, canmove and icons
 	return
 
-/mob/proc/Jitter(amount)
-	jitteriness = max(jitteriness,amount,0)
-
-/mob/proc/Dizzy(amount)
-	dizziness = max(dizziness,amount,0)
-
-
 /mob/proc/Paralyse(amount)
 	if(status_flags & CANPARALYSE)
 		paralysis = max(max(paralysis,amount),0)
@@ -1493,17 +1468,15 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/flash_weak_pain()
 	flick("weak_pain",pain)
 
-/mob/proc/yank_out_object()
+mob/proc/yank_out_object()
 	set category = "Object"
 	set name = "Yank out object"
 	set desc = "Remove an embedded item at the cost of bleeding and pain."
 	set src in view(1)
 
-	if(!isliving(usr) || (usr.client && usr.client.move_delayer.blocked()))
+	if(!isliving(usr) || usr.next_move > world.time)
 		return
-
-	delayNextMove(20)
-	delayNextAttack(20)
+	usr.next_move = world.time + 20
 
 	if(usr.stat == 1)
 		usr << "You are unconcious and cannot do that!"

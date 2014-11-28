@@ -147,7 +147,7 @@
 	environment_smash = 2
 	attack_sound = 'sound/weapons/heavysmash.ogg'
 	status_flags = 0
-	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)
+	construct_spells = list(/atom/movable/spell/aoe_turf/conjure/forcewall/lesser)
 
 /mob/living/simple_animal/construct/armoured/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	user.delayNextAttack(8)
@@ -219,7 +219,7 @@
 	environment_smash = 1
 	see_in_dark = 7
 	attack_sound = 'sound/weapons/rapidslice.ogg'
-	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
+	construct_spells = list(/atom/movable/spell/targeted/ethereal_jaunt/shift)
 
 
 
@@ -244,11 +244,11 @@
 	speed = 0
 	environment_smash = 2
 	attack_sound = 'sound/weapons/rapidslice.ogg'
-	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
-							/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
-							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
-							/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone,
-							/obj/effect/proc_holder/spell/aoe_turf/conjure/pylon,
+	construct_spells = list(/atom/movable/spell/aoe_turf/conjure/construct/lesser,
+							/atom/movable/spell/aoe_turf/conjure/wall,
+							/atom/movable/spell/aoe_turf/conjure/floor,
+							/atom/movable/spell/aoe_turf/conjure/soulstone,
+							/atom/movable/spell/aoe_turf/conjure/pylon,
 							///obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser
 							)
 
@@ -419,9 +419,9 @@
 			if(1 to 41)				healths.icon_state = "juggernaut_health6"
 			else					healths.icon_state = "juggernaut_health7"
 
-		var/obj/effect/proc_holder/spell/S = null
+		var/atom/movable/spell/S = null
 		for(var/datum/D in spell_list)
-			if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall))
+			if(istype(D, /atom/movable/spell/aoe_turf/conjure/forcewall/lesser))
 				S = D
 				break
 		if(S)
@@ -458,9 +458,9 @@
 			else					healths.icon_state = "artificer_health7"
 
 	if(construct_spell1)
-		var/obj/effect/proc_holder/spell/S = null
+		var/atom/movable/spell/S = null
 		for(var/datum/D in spell_list)
-			if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/wall))
+			if(istype(D, /atom/movable/spell/aoe_turf/conjure/wall))
 				S = D
 				break
 		if(S)
@@ -471,9 +471,9 @@
 
 
 	if(construct_spell2)
-		var/obj/effect/proc_holder/spell/S = null
+		var/atom/movable/spell/S = null
 		for(var/datum/D in spell_list)
-			if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone))
+			if(istype(D, /atom/movable/spell/aoe_turf/conjure/soulstone))
 				S = D
 				break
 		if(S)
@@ -484,9 +484,9 @@
 
 
 	if(construct_spell3)
-		var/obj/effect/proc_holder/spell/S = null
+		var/atom/movable/spell/S = null
 		for(var/datum/D in spell_list)
-			if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/floor))
+			if(istype(D, /atom/movable/spell/aoe_turf/conjure/floor))
 				S = D
 				break
 		if(S)
@@ -497,9 +497,9 @@
 
 
 	if(construct_spell4)
-		var/obj/effect/proc_holder/spell/S = null
+		var/atom/movable/spell/S = null
 		for(var/datum/D in spell_list)
-			if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser))
+			if(istype(D, /atom/movable/spell/aoe_turf/conjure/construct/lesser))
 				S = D
 				break
 		if(S)
@@ -510,9 +510,9 @@
 
 
 	if(construct_spell5)
-		var/obj/effect/proc_holder/spell/S = null
+		var/atom/movable/spell/S = null
 		for(var/datum/D in spell_list)
-			if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/pylon))
+			if(istype(D, /atom/movable/spell/aoe_turf/conjure/pylon))
 				S = D
 				break
 		if(S)
@@ -536,9 +536,9 @@
 			else					healths.icon_state = "wraith_health7"
 
 	if(construct_spell1)
-		var/obj/effect/proc_holder/spell/S = null
+		var/atom/movable/spell/S = null
 		for(var/datum/D in spell_list)
-			if(istype(D, /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift))
+			if(istype(D, /atom/movable/spell/targeted/ethereal_jaunt/shift))
 				S = D
 				break
 		if(S)

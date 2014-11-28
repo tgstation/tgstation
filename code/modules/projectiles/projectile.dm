@@ -50,6 +50,8 @@
 	var/drowsy = 0
 	var/agony = 0
 
+	var/step_delay = 0 //how long it goes between moving. You should probably leave this as 0 for a lot of things
+
 	proc/on_hit(var/atom/target, var/blocked = 0)
 		if(blocked >= 2)		return 0//Full block
 		if(!isliving(target))	return 0
@@ -196,6 +198,8 @@
 		return 1
 
 	process()
+		if(step_delay)
+			sleep(step_delay)
 		if(kill_count < 1)
 			//del(src)
 			OnDeath()
