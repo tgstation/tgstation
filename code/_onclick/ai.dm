@@ -151,7 +151,6 @@
 
 
 /atom/proc/AIAltClick(var/mob/living/silicon/ai/user)
-	AltClick(user)
 	return
 
 /obj/machinery/door/airlock/AIAltClick() // Eletrifies doors.
@@ -170,9 +169,3 @@
 		toggle_lethal()
 	add_fingerprint(usr)
 
-//
-// Override TurfAdjacent for AltClicking
-//
-
-/mob/living/silicon/ai/TurfAdjacent(var/turf/T)
-	return (cameranet && cameranet.checkTurfVis(T))
