@@ -244,7 +244,7 @@
 		tforce = 5
 	else if(isobj(AM))
 		var/obj/item/I = AM
-		tforce = max(0, I.throwforce - 5)
+		tforce = max(0, I.throwforce * 0.5)
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	health = max(0, health - tforce)
 	healthcheck()
