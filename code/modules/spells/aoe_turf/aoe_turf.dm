@@ -1,5 +1,8 @@
-//Affects all the turfs in the spells range, with an excluded inner area for the wizman to be protected in
-//Should not be used for anything else, you cockwobblers
+/*
+Aoe turf spells target a ring of tiles around the user
+This ring has an outer radius (range) and an inner radius (inner_radius)
+Aoe turf spells have two useful flags: IGNOREDENSE and IGNORESPACE. These are explained in setup.dm
+*/
 
 /atom/movable/spell/aoe_turf //affects all turfs in view or range (depends)
 	spell_flags = IGNOREDENSE

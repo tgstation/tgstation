@@ -1,5 +1,7 @@
-//Targeted spells only affect mobs in the wizard's specified spell range
-//This should be their only use
+/*
+Targeted spells (with the exception of dumbfire) select from all the mobs in the defined range
+Targeted spells have two useful flags: INCLUDEUSER and SELECTABLE. These are explained in setup.dm
+*/
 
 
 /atom/movable/spell/targeted //can mean aoe for mobs (limited/unlimited number) or one target mob

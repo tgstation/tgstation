@@ -1,3 +1,8 @@
+/*
+Conjure spells spawn things (mobs, objs, turfs) in their summon_type
+How they spawn stuff is decided by behaviour vars, which are explained below
+*/
+
 /atom/movable/spell/aoe_turf/conjure
 	name = "Conjure"
 	desc = "This spell conjures objs of the specified types in range."

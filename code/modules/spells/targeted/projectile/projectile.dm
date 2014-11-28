@@ -1,3 +1,10 @@
+/*
+Projectile spells make special projectiles (obj/item/spell_projectile) and fire them at targets
+Dumbfire projectile spells fire directly ahead of the user
+spell_projectiles call their spell's (carried) prox_cast when they get in range of a target
+If the spell_projectile is seeking, it will update its target every process and follow them
+*/
+
 /atom/movable/spell/targeted/projectile
 	name = "projectile spell"
 

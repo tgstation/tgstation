@@ -1060,15 +1060,16 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 ////////////////////////
 
 /*		WIZARD SPELL FLAGS		*/
-#define GHOSTCAST		1
-#define NEEDSCLOTHES	2
-#define NEEDSHUMAN		4
-#define Z2NOCAST		8
-#define STATALLOWED		16
+#define GHOSTCAST		1	//can a ghost cast it?
+#define NEEDSCLOTHES	2	//does it need the wizard garb to cast? Nonwizard spells should not have this
+#define NEEDSHUMAN		4	//does it require the caster to be human?
+#define Z2NOCAST		8	//if this is added, the spell can't be cast at centcomm
+#define STATALLOWED		16	//if set, the user doesn't have to be conscious to cast. Required for ghost spells
 //The following flags only affect different types of spell, and therefore overlap
 //Targeted spells
-#define INCLUDEUSER		32
-#define SELECTABLE		64
+#define INCLUDEUSER		32	//does the spell include the caster in its target selection?
+#define SELECTABLE		64	//can you select each target for the spell?
 //AOE spells
-#define IGNOREDENSE		32
-#define IGNORESPACE		64
+#define IGNOREDENSE		32	//are dense turfs ignored in selection?
+#define IGNORESPACE		64	//are space turfs ignored in selection?
+
