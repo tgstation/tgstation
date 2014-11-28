@@ -515,24 +515,19 @@
 			for(var/obj/item/organ/limb/L in H.organs)
 				var/damage = L.burn_dam + L.brute_dam
 				var/comparison = (L.max_damage/5)
-				var/icon_num = 1
-
-				if(H.hallucination)
-					if(prob(30))
-						damage += rand(30,40)
-
-				switch(damage)
-					if((comparison*4) to (comparison*5))
-						icon_num = 5
-					if((comparison*3) to (comparison*4))
-						icon_num = 4
-					if((comparison*2) to (comparison*3))
-						icon_num = 3
-					if((comparison) to (comparison*2))
-						icon_num = 2
-					//if(0 to comparison)
-
-				H.healthdoll.overlays += image('icons/mob/screen_gen.dmi', "[L.name][icon_num]")
+				var/icon_num = 0
+				if(damage)
+					icon_num = 1
+				if(damage > (comparison))
+					icon_num = 2
+				if(damage > (comparison*2))
+					icon_num = 3
+				if(damage > (comparison*3))
+					icon_num = 4
+				if(damage > (comparison*4))
+					icon_num = 5
+				if(icon_num)
+					H.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[L.name][icon_num]")
 
 	if(H.nutrition_icon)
 		switch(H.nutrition)
