@@ -161,3 +161,5 @@
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
 
 	var/turf/listed_turf = null	//the current turf being examined in the stat panel
+	var/list/shouldnt_see = list() //list of objects that this mob shouldn't see. this silliness is needed because of AI alt+click and cult blood runes
+
