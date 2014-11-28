@@ -322,7 +322,7 @@
 	if (occupant)
 		user << "\red You cannot disassemble this [src], it's occupado."
 		return
-	..()
+	return..()
 
 //Let's unlock this early I guess.  Might be too early, needs tweaking.
 /obj/machinery/clonepod/attackby(obj/item/weapon/W as obj, mob/user as mob)
