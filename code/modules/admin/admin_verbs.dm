@@ -275,6 +275,7 @@ var/list/admin_verbs_mod = list(
 		if(holder.rights & R_SOUNDS)		verbs += admin_verbs_sounds
 		if(holder.rights & R_SPAWN)			verbs += admin_verbs_spawn
 		if(holder.rights & R_MOD)			verbs += admin_verbs_mod
+		if(holder.rights & R_ADMINBUS)		verbs += /client/proc/secrets
 
 /client/proc/remove_admin_verbs()
 	verbs.Remove(

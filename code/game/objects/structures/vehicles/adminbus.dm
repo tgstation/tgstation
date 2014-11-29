@@ -332,7 +332,7 @@
 			capture_mob(M,1)
 			return
 		else
-			if(!(user.check_rights(R_PERMISSIONS)))
+			if(!(user.check_rights(R_ADMINBUS)))
 				user << "<span class='notice'>Oh you are a god alright, but you don't seem to have your Adminbus driver license!</span>"
 				return
 			user.visible_message(
