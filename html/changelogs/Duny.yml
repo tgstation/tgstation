@@ -1,2 +1,9 @@
 author: Duny
-changes: []
+changes: 
+  - wip: Following changes made to Defficiency/Maintstation
+  - bugfix: Added lights to interrogation and execution rooms
+  - bugfix: Re-added lethal injection syringes to execution and trays to the brig's botany (lost to a path change)
+  - tweak: The Warden can now lockdown the front of his office if he's shitting his pants too much from watching the prisoners
+  - tweak: Added windoors to the prison kitchen
+  - tweak: The prison kitchen and botany can now only be accessed with either security, kitchen, hydrophonics, clown, or mime access.
+  - tweak: Added five additional security lockers
