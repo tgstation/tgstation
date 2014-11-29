@@ -417,16 +417,16 @@ var/list/admin_verbs_hideable = list(
 			explosion(epicenter, 3, 5, 7, 5)
 		if("Custom Bomb")
 			var/devastation_range = input("Devastation range (in tiles):") as null|num
-			if(!devastation_range)
+			if(devastation_range == null)
 				return
 			var/heavy_impact_range = input("Heavy impact range (in tiles):") as null|num
-			if(!heavy_impact_range)
+			if(heavy_impact_range == null)
 				return
 			var/light_impact_range = input("Light impact range (in tiles):") as null|num
-			if(!light_impact_range)
+			if(light_impact_range == null)
 				return
 			var/flash_range = input("Flash range (in tiles):") as null|num
-			if(!flash_range)
+			if(flash_range == null)
 				return
 			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 	message_admins("<span class='adminnotice'>[ckey] creating an admin explosion at [epicenter.loc].</span>")
