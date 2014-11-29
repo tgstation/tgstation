@@ -252,7 +252,7 @@ var/list/spells = typesof(/atom/movable/spell) //needed for the badmin verb for 
 			else
 				user.whisper(replacetext(invocation," ","`"))
 		if("emote")
-			user.visible_message(invocation)
+			user.emote("me", 1, invocation) //the 1 means it's for everyone in view, the me makes it an emote, and the invocation is written accordingly.
 
 /////////////////////
 ///UPGRADING PROCS///

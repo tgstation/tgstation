@@ -15,7 +15,7 @@
 	panel = "Mime"
 	summon_type = list(/obj/effect/forcefield/mime)
 	invocation_type = "emote"
-	invocation = "looks as if a wall is in front of them."
+	invocation = "mimes placing their hands on a flat surfacing, and pushing against it."
 	charge_max = 300
 	cast_sound = null
 

@@ -7,7 +7,7 @@
 	spell_flags = 0
 	invocation = "DII ODA BAJI"
 	invocation_type = "whisper"
-	message = "\blue You suddenly feel completely overwhelmed!"
+	message = "<span class='danger'>You suddenly feel completely overwhelmed!<span>"
 
 	max_targets = 1
 

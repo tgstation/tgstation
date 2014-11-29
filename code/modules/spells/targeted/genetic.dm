@@ -31,6 +31,17 @@ code\game\dna\genes\goon_powers.dm
 	disabilities = 1
 	duration = 300
 
+	charge_max = 300
+
+	spell_flags = 0
+	invocation = "STI KALY"
+	invocation_type = "whisper"
+	message = "<span class='danger'>Your eyes cry out in pain!</span>"
+	cooldown_min = 50
+
+	range = 7
+	max_targets = 0
+
 	amt_eye_blind = 10
 	amt_eye_blurry = 20
 
@@ -45,6 +56,7 @@ code\game\dna\genes\goon_powers.dm
 	invocation_type = "shout"
 	message = "\blue You feel strong! You feel a pressure building behind your eyes!"
 	range = -1
+	max_targets = 1
 
 	mutations = list(M_LASER, M_HULK)
 	duration = 300
