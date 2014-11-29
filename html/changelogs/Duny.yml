@@ -7,3 +7,4 @@ changes:
   - tweak: Added windoors to the prison kitchen
   - tweak: The prison kitchen and botany can now only be accessed with either security, kitchen, hydrophonics, clown, or mime access.
   - tweak: Added five additional security lockers
+  - tweak: Added a reception desk to security
