@@ -130,41 +130,10 @@
 /obj/machinery/r_n_d/fabricator/mechanic_fab/proc/AddMechanicDesign(var/datum/design/mechanic_design/design)
 	if(istype(design))
 		if(!design.materials.len)
-			if(!Gen_Mat_Reqs(design.build_path, design)) //makes the material cost for the design. Weird to have here, I know, but it's the best place
-				return 0
+			return 0
 		add_part_to_set(design.category, design)
 		return 1
 	return 0
-
-//returns the required materials for the parts of a machine design
-/obj/machinery/r_n_d/fabricator/mechanic_fab/proc/Gen_Mat_Reqs(var/obj/O, var/datum/design/mechanic_design/design)
-	if(!O)
-		message_admins("We couldn't find something in part checking, how did this happen?")
-		return 0
-
-/*
-	var/datum/design/part_design = FindDesign(O)
-	if(part_design)
-		part_design = new part_design
-		design.materials = part_design.materials
-		del(part_design)
-		return 1
-*/
-	if(!design.materials.len)
-		return 0
-
-	return 1
-		/* Yes, because making diamond sheets out of fucking metal makes sense. - N3X
-		var/techtotal = TechTotal(design)
-		design.materials["$iron"] = techtotal * round(rand(500, 1500), 100)
-		design.materials["$glass"] = techtotal * round(rand(250, 1000), 50)
-		if(prob(techtotal * 5)) //let's add an extra cost of some medium-rare material
-			design.materials[pick("$plasma", "$uranium", "$gold", "$silver")] = techtotal * round(rand(100, 500), 10)
-		if(prob(techtotal * 2)) //and another cost, because we can
-			design.materials[pick("$plasma", "$uranium", "$gold", "$silver")] = techtotal * round(rand(50, 250), 10)
-		if(techtotal >= 15  && prob(techtotal)) //let's add something REALLY rare
-			design.materials[pick("$diamond", "$clown", "$phazon")] = techtotal * round(rand(10, 150), 10)
-		*/
 
 /obj/machinery/r_n_d/fabricator/mechanic_fab/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	..()

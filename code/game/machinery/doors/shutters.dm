@@ -9,7 +9,7 @@
 	layer = 3.1
 
 /obj/machinery/door/poddoor/shutters/preopen
-	icon_state = "open"
+	icon_state = "shutter0"
 	density = 0
 	opacity = 0
 
