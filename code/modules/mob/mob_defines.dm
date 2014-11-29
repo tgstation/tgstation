@@ -3,6 +3,7 @@
 	layer = 4
 	animate_movement = 2
 	flags = NOREACT | HEAR
+	hud_possible = list(ANTAG_HUD)
 	var/datum/mind/mind
 
 	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
@@ -105,8 +106,6 @@
 	var/in_throw_mode = 0
 
 	var/coughedtime = null
-
-	var/inertia_dir = 0
 
 	var/music_lastplayed = "null"
 

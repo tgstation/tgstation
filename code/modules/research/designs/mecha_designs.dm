@@ -294,15 +294,6 @@ datum/design/mech_proj_armor
 	build_path = /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster
 	category = "Exosuit Equipment"
 
-datum/design/mech_syringe_gun
-	name = "Exosuit Module Design(Syringe Gun)"
-	desc = "Exosuit-mounted syringe gun and chemical synthesizer."
-	id = "mech_syringe_gun"
-	build_type = MECHFAB
-	req_tech = list("materials" = 3, "biotech"=4, "magnets"=4, "programming"=3)
-	build_path = /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun
-	category = "Exosuit Equipment"
-
 datum/design/mech_diamond_drill
 	name = "Exosuit Module Design (Diamond Mining Drill)"
 	desc = "An upgraded version of the standard drill."

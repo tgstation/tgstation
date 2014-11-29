@@ -102,7 +102,6 @@
 	var/obj/item/stack/sheet/s
 	var/dat
 
-	dat += text("<b>Ore Redemption Machine</b><br><br>")
 	dat += text("This machine only accepts ore. Gibtonite and Slag are not accepted.<br><br>")
 	dat += text("Current unclaimed points: [points]<br>")
 
@@ -115,6 +114,8 @@
 	for(var/O in stack_list)
 		s = stack_list[O]
 		if(s.amount > 0)
+			if(O == stack_list[1])
+				dat += "<br>"		//just looks nicer
 			dat += text("[capitalize(s.name)]: [s.amount] <A href='?src=\ref[src];release=[s.type]'>Release</A><br>")
 
 	if((/obj/item/stack/sheet/metal in stack_list) && (/obj/item/stack/sheet/mineral/plasma in stack_list))
@@ -123,10 +124,11 @@
 		if(min(metalstack.amount, plasmastack.amount))
 			dat += text("Plasteel Alloy (Metal + Plasma): <A href='?src=\ref[src];plasteel=1'>Smelt</A><BR>")
 
-	dat += text("<HR><b>Mineral Value List:</b><BR>[get_ore_values()]")
+	dat += text("<br><div class='statusDisplay'><b>Mineral Value List:</b><BR>[get_ore_values()]</div>")
 
-	user << browse("[dat]", "window=console_stacking_machine")
-
+	var/datum/browser/popup = new(user, "console_stacking_machine", "Ore Redemption Machine", 400, 500)
+	popup.set_content(dat)
+	popup.open()
 	return
 
 /obj/machinery/mineral/ore_redemption/proc/get_ore_values()
@@ -190,7 +192,7 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/mineral/ore_redemption/ex_act(severity)
+/obj/machinery/mineral/ore_redemption/ex_act(severity, specialty)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
@@ -202,7 +204,6 @@
 		if(prob(25))
 			empty_content()
 			qdel(src)
-	return
 
 //empty the redemption machine by stacks of at most max_amount (50 at this time) size
 /obj/machinery/mineral/ore_redemption/proc/empty_content()
@@ -230,17 +231,18 @@
 	var/list/prize_list = list(
 		new /datum/data/mining_equipment("Stimpack MediPen",	/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack,	    50),
 		new /datum/data/mining_equipment("Leporazine MediPen",	/obj/item/weapon/reagent_containers/hypospray/medipen/leporazine,   50),
+		new /datum/data/mining_equipment("MediPen Bundle",		/obj/item/weapon/storage/box/medipens/utility,	 				   200),
 		new /datum/data/mining_equipment("Whiskey",             /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,    100),
 		new /datum/data/mining_equipment("Cigar",               /obj/item/clothing/mask/cigarette/cigar/havana,                    150),
 		new /datum/data/mining_equipment("Soap",                /obj/item/weapon/soap/nanotrasen, 						           200),
 		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 250),
-		new /datum/data/mining_equipment("Advanced Scanner",	/obj/item/device/t_scanner/adv_mining_scanner,                     400),
+		new /datum/data/mining_equipment("Advanced Scanner",	/obj/item/device/t_scanner/adv_mining_scanner,                     300),
 		new /datum/data/mining_equipment("Laser Pointer",       /obj/item/device/laser_pointer, 				                   400),
 		new /datum/data/mining_equipment("Alien Toy",           /obj/item/clothing/mask/facehugger/toy, 		                   450),
 		new /datum/data/mining_equipment("Mining Drone",        /mob/living/simple_animal/hostile/mining_drone/,                   500),
+		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   650),
+		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   650),
 		new /datum/data/mining_equipment("Sonic Jackhammer",    /obj/item/weapon/pickaxe/jackhammer,                               800),
-		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                       1000),
-		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,                  1000),
 		new /datum/data/mining_equipment("Lazarus Injector",    /obj/item/weapon/lazarus_injector,                                1000),
 		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide/mining,               2000),
 		new /datum/data/mining_equipment("Space Cash",    		/obj/item/weapon/spacecash/c1000,                    			  5000),
@@ -274,19 +276,20 @@
 
 /obj/machinery/mineral/equipment_vendor/interact(mob/user)
 	var/dat
-	dat += text("<b>Mining Equipment vendor</b><br><br>")
-
+	dat +="<div class='statusDisplay'>"
 	if(istype(inserted_id))
 		dat += "You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];choice=eject'>Eject ID.</A><br>"
 	else
 		dat += "No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID.</A><br>"
-
-	dat += "<HR><b>Equipment point cost list:</b><BR><table border='0' width='200'>"
+	dat += "</div>"
+	dat += "<br><b>Equipment point cost list:</b><BR><table border='0' width='200'>"
 	for(var/datum/data/mining_equipment/prize in prize_list)
 		dat += "<tr><td>[prize.equipment_name]</td><td>[prize.cost]</td><td><A href='?src=\ref[src];purchase=\ref[prize]'>Purchase</A></td></tr>"
 	dat += "</table>"
 
-	user << browse("[dat]", "window=mining_equipment_vendor")
+	var/datum/browser/popup = new(user, "miningvendor", "Mining Equipment Vendor", 400, 350)
+	popup.set_content(dat)
+	popup.open()
 	return
 
 /obj/machinery/mineral/equipment_vendor/Topic(href, href_list)
@@ -354,16 +357,12 @@
 			new /obj/item/device/t_scanner/adv_mining_scanner(src.loc)
 	qdel(voucher)
 
-/obj/machinery/mineral/equipment_vendor/ex_act(severity)
+/obj/machinery/mineral/equipment_vendor/ex_act(severity, specialty)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
-	if(severity == 1)
-		if(prob(50))
-			qdel(src)
-	else if(severity == 2)
-		if(prob(25))
-			qdel(src)
+	if(prob(50 / severity) && severity < 3)
+		qdel(src)
 
 /**********************Mining Equipment Vendor Items**************************/
 
@@ -453,8 +452,7 @@
 					shake_camera(L, 20, 1)
 					spawn(20)
 						if(L)
-							L.visible_message("<span class='danger'>[L.name] vomits from travelling through the [src.name]!</span>", \
-												"<span class='userdanger'>You throw up from travelling through the [src.name]!</span>")
+							L.visible_message("<span class='danger'>[L.name] vomits from travelling through the [src.name]!</span>", "<span class='userdanger'>You throw up from travelling through the [src.name]!</span>")
 							L.nutrition -= 20
 							L.adjustToxLoss(-3)
 							var/turf/T = get_turf(L)
@@ -468,7 +466,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "resonator"
 	item_state = "resonator"
-	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It can also be activated without a target to create a field at the user's location, to act as a delayed time trap. It's more effective in a vaccuum."
+	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It can also be activated without a target to create a field at the user's location, to act as a delayed time trap. It's more effective in a vacuum."
 	w_class = 3
 	force = 10
 	throwforce = 10

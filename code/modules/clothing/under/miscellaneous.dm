@@ -14,14 +14,6 @@
 	item_state = "w_suit"
 	can_adjust = 0
 
-/obj/item/clothing/under/scratch
-	name = "white suit"
-	desc = "A white suit, suitable for an excellent host"
-	icon_state = "scratch"
-	item_state = "scratch"
-	item_color = "scratch"
-	can_adjust = 0
-
 /obj/item/clothing/under/sl_suit
 	desc = "It's a very amish looking suit."
 	name = "amish suit"
@@ -31,7 +23,7 @@
 
 /obj/item/clothing/under/roman
 	name = "roman armor"
-	desc = "An ancient Roman armor. Made of metallic strips and leather straps."
+	desc = "Ancient Roman armor. Made of metallic and leather straps."
 	icon_state = "roman"
 	item_color = "roman"
 	item_state = "armor"
@@ -123,7 +115,7 @@
 	icon_state = "syndicate"
 	item_state = "bl_suit"
 	item_color = "syndicate"
-	desc = "it's a cybernetically enhanced jumpsuit used for administrative duties."
+	desc = "A cybernetically enhanced jumpsuit used for administrative duties."
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -304,7 +296,7 @@
 
 /obj/item/clothing/under/kilt
 	name = "kilt"
-	desc = "Includes shoes and plaid"
+	desc = "Includes shoes and plaid."
 	icon_state = "kilt"
 	item_state = "kilt"
 	item_color = "kilt"
@@ -377,7 +369,7 @@
 
 /obj/item/clothing/under/blacktango
 	name = "black tango dress"
-	desc = "Filled with latin fire."
+	desc = "Filled with Latin fire."
 	icon_state = "black_tango"
 	item_state = "wcoat"
 	item_color = "black_tango"

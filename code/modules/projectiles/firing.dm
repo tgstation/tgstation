@@ -11,6 +11,7 @@
 		if(i > 1)
 			newshot()
 	user.changeNext_move(CLICK_CD_RANGE)
+	user.newtonian_move(get_dir(target, user))
 	update_icon()
 	return 1
 
@@ -49,7 +50,7 @@
 			BB.p_y = text2num(mouse_control["icon-y"])
 
 	if(BB)
-		BB.process()
+		BB.fire()
 	BB = null
 	return 1
 

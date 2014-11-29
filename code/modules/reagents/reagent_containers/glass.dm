@@ -51,13 +51,13 @@
 				R += num2text(A.volume) + "),"
 		add_logs(user, M, "splashed", object="[R]")
 		reagents.reaction(target, TOUCH)
-		spawn(5) reagents.clear_reagents()
+		reagents.clear_reagents()
 		return
 
 	else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
-		if(!target.reagents.total_volume && target.reagents)
-			user << "<span class='notice'>[target] is empty.</span>"
+		if(target.reagents && !target.reagents.total_volume)
+			user << "<span class='notice'>[target] is empty and can't be refilled.</span>"
 			return
 
 		if(reagents.total_volume >= reagents.maximum_volume)
@@ -76,6 +76,13 @@
 			user << "<span class='notice'>[target] is full.</span>"
 			return
 
+		if(istype(target, /obj/item/weapon/reagent_containers))
+			var/obj/item/weapon/reagent_containers/RC = target
+			for(var/bad_reg in RC.banned_reagents)
+				if(reagents.has_reagent(bad_reg, 1)) //Message is a bit "Game-y" but I can't think up a better one.
+					user << "<span class='warning'>A chemical in [src] is far too dangerous to transfer to [RC]!</span>"
+					return
+
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
 		user << "<span class='notice'>You transfer [trans] unit\s of the solution to [target].</span>"
 
@@ -86,8 +93,7 @@
 	else if(reagents.total_volume)
 		user << "<span class='notice'>You splash the solution onto [target].</span>"
 		reagents.reaction(target, TOUCH)
-		spawn(5)
-			reagents.clear_reagents()
+		reagents.clear_reagents()
 
 
 /obj/item/weapon/reagent_containers/glass/beaker

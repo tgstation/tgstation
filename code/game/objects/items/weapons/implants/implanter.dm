@@ -16,7 +16,7 @@
 		icon_state = "implanter0"
 
 
-/obj/item/weapon/implanter/attack(mob/M, mob/user)
+/obj/item/weapon/implanter/attack(mob/living/carbon/M, mob/user)
 	if(!iscarbon(M))
 		return
 	if(user && imp)
@@ -35,6 +35,9 @@
 
 				imp = null
 				update_icon()
+				if(istype(M, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = M
+					H.sec_hud_set_implants()
 
 
 

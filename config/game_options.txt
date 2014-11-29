@@ -66,15 +66,6 @@ ALERT_RED_DOWNTO The self-destruct mechanism has been deactivated, there is stil
 ALERT_DELTA The station's self-destruct mechanism has been engaged. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill.
 
 
-### EXPLOSIONS ###
-
-## Unhash this to use recursive explosions, keep it hashed to use normal style explosions.
-## Recursive explosions react to walls, airlocks and blast doors, making them look a lot cooler
-## than the boring old circular explosions. They require more CPU and are (as of March 2013) experimental.
-## The default map is generally designed for the old style explosions in terms of security.
-
-#USE_RECURSIVE_EXPLOSIONS
-
 
 ### GAME MODES ###
 
@@ -203,6 +194,11 @@ SEC_START_BRIG
 ## Set to 1 for "custom", silicons will start with the custom laws defined in silicon_laws.txt. (If silicon_laws.txt is empty, the AI will spawn with asimov and Custom boards will auto-delete.)
 ## Set to 2 for "random", silicons will start with a random lawset picked from (at the time of writing): P.A.L.A.D.I.N., Corporate, Asimov. More can be added by changing the law datum paths in ai_laws.dm.
 DEFAULT_LAWS 1
+
+### SILICON LAW MAX AMOUNT ###
+## The maximum number of laws a silicon can have
+## Attempting to upload laws past this point will fail unless the AI is reset
+SILICON_MAX_LAW_AMOUNT 12
 
 ## Uncoment to give players the choice of their species before they join the game
 #JOIN_WITH_MUTANT_RACE

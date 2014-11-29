@@ -89,16 +89,7 @@
 		health += 5
 		M.emote("me", 1, "mends some of \the <EM>[src]'s</EM> wounds.")
 	else if(src != M)
-		if(M.melee_damage_upper <= 0)
-			M.emote("me", 1, "[M.friendly] \the <EM>[src]</EM>.")
-		else
-			if(M.attack_sound)
-				playsound(loc, M.attack_sound, 50, 1, 1)
-			visible_message("<span class='danger'>\The <EM>[M]</EM> [M.attacktext] \the <EM>[src]</EM>!</span>", \
-					"<span class='userdanger'>\The <EM>[M]</EM> [M.attacktext] \the <EM>[src]</EM>!</span>")
-			add_logs(M, src, "attacked", admin=0)
-			var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-			adjustBruteLoss(damage)
+		..()
 
 /mob/living/simple_animal/construct/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj)
@@ -238,5 +229,5 @@
 	playstyle_string = "<B>You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \
 						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth.</B>"
 
-/mob/living/simple_animal/construct/harvester/Process_Spacemove(var/check_drift = 0)
+/mob/living/simple_animal/construct/harvester/Process_Spacemove(var/movement_dir = 0)
 	return 1

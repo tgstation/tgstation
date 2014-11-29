@@ -6,7 +6,7 @@
 	anchored = 1.0
 	pressure_resistance = 15
 
-/obj/structure/stool/ex_act(severity)
+/obj/structure/stool/ex_act(severity, specialty)
 	switch(severity)
 		if(1.0)
 			qdel(src)

@@ -151,7 +151,7 @@
 			step(AM, t)
 		now_pushing = null
 
-/mob/living/carbon/slime/Process_Spacemove()
+/mob/living/carbon/slime/Process_Spacemove(var/movement_dir = 0)
 	return 2
 
 /mob/living/carbon/slime/Stat()
@@ -186,7 +186,7 @@
 	powerlevel = 0 // oh no, the power!
 	..()
 
-/mob/living/carbon/slime/ex_act(severity)
+/mob/living/carbon/slime/ex_act(severity, specialty)
 	..()
 
 	var/b_loss = null
@@ -236,106 +236,49 @@
 /mob/living/carbon/slime/unEquip(obj/item/W as obj)
 	return
 
+/mob/living/carbon/slime/start_pulling(var/atom/movable/AM)
+	return
+
 /mob/living/carbon/slime/attack_ui(slot)
 	return
 
 /mob/living/carbon/slime/attack_slime(mob/living/carbon/slime/M as mob)
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
-		return
-
-	if (Victim) return // can't attack while eating!
-
-	visible_message("<span class='danger'> The [M.name] has glomped [src]!</span>", \
-			"<span class='userdanger'> The [M.name] has glomped [src]!</span>")
+	..()
 	var/damage = rand(1, 3)
 	attacked += 5
 	if(M.is_adult)
 		damage = rand(1, 6)
 	else
 		damage = rand(1, 3)
-	if (health > -100)
-		adjustBruteLoss(damage)
-		updatehealth()
+	adjustBruteLoss(damage)
+	updatehealth()
 	return
 
 /mob/living/carbon/slime/attack_animal(mob/living/simple_animal/M as mob)
-	if(M.melee_damage_upper == 0)
-		M.emote("[M.friendly] [src]")
-	else
-		if(M.attack_sound)
-			playsound(loc, M.attack_sound, 50, 1, 1)
-		visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>", \
-				"<span class='userdanger'>[M] [M.attacktext] [src]!</span>")
-		add_logs(M, src, "attacked", admin=0)
+	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		attacked += 10
 		adjustBruteLoss(damage)
 		updatehealth()
 
 /mob/living/carbon/slime/attack_paw(mob/living/carbon/monkey/M as mob)
-	if(!(istype(M, /mob/living/carbon/monkey)))
-		return // Fix for aliens receiving double messages when attacking slimes.
-
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
-		return
-
-	..()
-
-	switch(M.a_intent)
-
-		if ("help")
-			help_shake_act(M)
-		else
-			if (M.is_muzzled())
-				return
-
+	if(..()) //successful monkey bite.
+		if(stat != DEAD)
 			attacked += 10
-			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-			visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-					"<span class='userdanger'>[M.name] bites [src]!</span>")
-			if (health > -100)
-				adjustBruteLoss(rand(1, 3))
-				updatehealth()
+			adjustBruteLoss(rand(1, 3))
+			updatehealth()
 	return
 
 /mob/living/carbon/slime/attack_larva(mob/living/carbon/alien/larva/L as mob)
-
-	switch(L.a_intent)
-
-		if("help")
-			visible_message("<span class='notice'>[L] rubs its head against [src].</span>")
-
-
-		else
-
-			attacked += 10
-			visible_message("<span class='danger'>[L] bites [src]!</span>", \
-					"<span class='userdanger'>[L] bites [src]!</span>")
-			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-
-			if(stat != DEAD)
-				var/damage = rand(1, 3)
-				L.amount_grown = min(L.amount_grown + damage, L.max_grown)
-				adjustBruteLoss(damage)
+	if(..()) //successful larva bite.
+		var/damage = rand(1, 3)
+		if(stat != DEAD)
+			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
+			adjustBruteLoss(damage)
+			updatehealth()
 
 
 /mob/living/carbon/slime/attack_hand(mob/living/carbon/human/M as mob)
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
-		return
-
-	..()
-
 	if(Victim)
 		if(Victim == M)
 			if(prob(60))
@@ -362,6 +305,7 @@
 			return
 
 		else
+			M.do_attack_animation(src)
 			if(prob(30))
 				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off of [Victim]!</span>")
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
@@ -389,29 +333,17 @@
 
 			return
 
+	if(..()) //To allow surgery to return properly.
+		return
+
 	switch(M.a_intent)
-
-		if ("help")
+		if("help")
 			help_shake_act(M)
-
-		if ("grab")
-			if (M == src || anchored)
-				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
-
-			M.put_in_active_hand(G)
-
-			G.synch()
-
-			LAssailant = M
-
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			visible_message("<span class='warning'>[M] has grabbed [src] passively!</span>")
-
+		if("grab")
+			grabbedby(M)
 		else
-
+			M.do_attack_animation(src)
 			var/damage = rand(1, 9)
-
 			attacked += 10
 			if (prob(90))
 				if (HULK in M.mutations)
@@ -423,17 +355,17 @@
 						if(prob(80) && !client)
 							Discipline++
 					spawn(0)
-
 						step_away(src,M,15)
 						sleep(3)
 						step_away(src,M,15)
 
 
 				playsound(loc, "punch", 25, 1, -1)
+				add_logs(M, src, "attacked", admin=0)
 				visible_message("<span class='danger'>[M] has punched [src]!</span>", \
 						"<span class='userdanger'>[M] has punched [src]!</span>")
 
-				if (health > -100)
+				if (stat != DEAD)
 					adjustBruteLoss(damage)
 					updatehealth()
 			else
@@ -444,20 +376,9 @@
 
 
 /mob/living/carbon/slime/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
-		return
+	if(..()) //if harm or disarm intent.
 
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
-		return
-
-	switch(M.a_intent)
-		if ("help")
-			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
-
-		if ("harm")
-
+		if (M.a_intent == "harm")
 			if (prob(95))
 				attacked += 10
 				playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
@@ -470,7 +391,8 @@
 					visible_message("<span class='danger'>[M] has wounded [name]!</span>", \
 							"<span class='userdanger'>)[M] has wounded [name]!</span>")
 
-				if (health > -100)
+				add_logs(M, src, "attacked", admin=0)
+				if (health != DEAD)
 					adjustBruteLoss(damage)
 					updatehealth()
 			else
@@ -478,21 +400,7 @@
 				visible_message("<span class='danger'>[M] has attempted to lunge at [name]!</span>", \
 						"<span class='userdanger'>[M] has attempted to lunge at [name]!</span>")
 
-		if ("grab")
-			if (M == src || anchored)
-				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
-
-			M.put_in_active_hand(G)
-
-			G.synch()
-
-			LAssailant = M
-
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			visible_message("<span class='warning'> [M] has grabbed [name] passively!</span>")
-
-		if ("disarm")
+		if (M.a_intent == "disarm")
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			var/damage = 5
 			attacked += 10
@@ -526,14 +434,16 @@
 				drop_item()
 				visible_message("<span class='danger'>[M] has disarmed [name]!</span>",
 						"<span class='userdanger'>[M] has disarmed [name]!</span>")
+			add_logs(M, src, "disarmed", admin=0)
 			adjustBruteLoss(damage)
 			updatehealth()
 	return
 
-/mob/living/carbon/slime/attackby(obj/item/W, mob/user)
+/mob/living/carbon/slime/attackby(obj/item/W, mob/living/user)
 	if(W.force > 0)
 		attacked += 10
 		if(prob(25))
+			user.do_attack_animation(src)
 			user << "<span class='danger'>[W] passes right through [src]!</span>"
 			return
 		if(Discipline && prob(50)) // wow, buddy, why am I getting attacked??
@@ -915,39 +825,39 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		..()
 		processing_objects.Add(src)
 
-	process()
-		var/mob/dead/observer/ghost
-		for(var/mob/dead/observer/O in src.loc)
-			if(!O.client)	continue
-			if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
-			ghost = O
-			break
-		if(ghost)
-			icon_state = "golem2"
-		else
-			icon_state = "golem"
+/obj/effect/golemrune/process()
+	var/mob/dead/observer/ghost
+	for(var/mob/dead/observer/O in src.loc)
+		if(!O.client)	continue
+		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
+		ghost = O
+		break
+	if(ghost)
+		icon_state = "golem2"
+	else
+		icon_state = "golem"
 
-	attack_hand(mob/living/user as mob)
-		var/mob/dead/observer/ghost
-		for(var/mob/dead/observer/O in src.loc)
-			if(!O.client)	continue
-			if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
-			ghost = O
-			break
-		if(!ghost)
-			user << "The rune fizzles uselessly. There is no spirit nearby."
-			return
-		var/mob/living/carbon/human/G = new /mob/living/carbon/human
-		if(prob(50))	G.gender = "female"
-		hardset_dna(G, null, null, null, null, /datum/species/golem/adamantine)
+/obj/effect/golemrune/attack_hand(mob/living/user as mob)
+	var/mob/dead/observer/ghost
+	for(var/mob/dead/observer/O in src.loc)
+		if(!O.client)	continue
+		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
+		ghost = O
+		break
+	if(!ghost)
+		user << "The rune fizzles uselessly. There is no spirit nearby."
+		return
+	var/mob/living/carbon/human/G = new /mob/living/carbon/human
+	if(prob(50))	G.gender = "female"
+	hardset_dna(G, null, null, null, null, /datum/species/golem/adamantine)
 
-		G.set_cloned_appearance()
-		G.real_name = text("Adamantine Golem ([rand(1, 1000)])")
-		G.dna.species.auto_equip(G)
-		G.loc = src.loc
-		G.key = ghost.key
-		G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
-		qdel(src)
+	G.set_cloned_appearance()
+	G.real_name = text("Adamantine Golem ([rand(1, 1000)])")
+	G.dna.species.auto_equip(G)
+	G.loc = src.loc
+	G.key = ghost.key
+	G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
+	qdel(src)
 
 /mob/living/carbon/slime/getTrail()
 	return null

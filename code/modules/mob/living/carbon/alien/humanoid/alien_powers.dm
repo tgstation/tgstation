@@ -134,7 +134,7 @@ Doesn't work on other aliens/AI.*/
 		A.current = U
 		A.yo = U.y - T.y
 		A.xo = U.x - T.x
-		A.process()
+		A.fire()
 	return
 
 /mob/living/carbon/alien/humanoid/proc/resin()

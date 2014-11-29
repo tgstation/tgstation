@@ -33,13 +33,13 @@
 
 /obj/item/clothing/head/plaguedoctorhat
 	name = "plague doctor's hat"
-	desc = "These were once used by Plague doctors. They're pretty much useless."
+	desc = "These were once used by plague doctors. They're pretty much useless."
 	icon_state = "plaguedoctor"
 	permeability_coefficient = 0.01
 
 /obj/item/clothing/head/hasturhood
 	name = "hastur's hood"
-	desc = "It's unspeakably stylish"
+	desc = "It's <i>unspeakably</i> stylish."
 	icon_state = "hasturhood"
 	flags = HEADCOVERSEYES|BLOCKHAIR
 
@@ -52,17 +52,9 @@
 	name = "black space-helmet replica"
 	icon_state = "syndicate-helm-black-red"
 	item_state = "syndicate-helm-black-red"
-	desc = "A plastic replica of a syndicate agent's space helmet, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
+	desc = "A plastic replica of a Syndicate agent's space helmet. You'll look just like a real murderous Syndicate agent in this! This is a toy, it is not made for use in space!"
 	flags = BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
-
-/obj/item/clothing/head/cueball
-	name = "cueball helmet"
-	desc = "A large, featureless white orb mean to be worn on your head. How do you even see out of this thing?"
-	icon_state = "cueball"
-	flags = HEADCOVERSEYES|BLOCKHAIR
-	item_state="cueball"
-	flags_inv = 0
 
 /obj/item/clothing/head/that
 	name = "sturdy top-hat"
@@ -88,7 +80,7 @@
 
 /obj/item/clothing/head/justice
 	name = "justice hat"
-	desc = "fight for what's righteous!"
+	desc = "Fight for what's righteous!"
 	icon_state = "justicered"
 	item_state = "justicered"
 	flags = HEADCOVERSEYES|BLOCKHAIR
@@ -183,7 +175,7 @@
 	name = "sombrero"
 	icon_state = "sombrero"
 	item_state = "sombrero"
-	desc = "You feel mexican just wearing this."
+	desc = "You can practically taste the fiesta."
 
 /obj/item/clothing/head/sombrero/green
 	name = "green sombrero"

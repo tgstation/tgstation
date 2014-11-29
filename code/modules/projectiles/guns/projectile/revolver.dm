@@ -61,6 +61,7 @@
 	if(magazine.caliber == initial(magazine.caliber))
 		return 1
 	if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
+		playsound(M, fire_sound, 50, 1)
 		M << "<span class='danger'>[src] blows up in your face!</span>"
 		M.take_organ_damage(0,20)
 		M.drop_item()
@@ -76,7 +77,7 @@
 	var/mob/M = usr
 	var/input = stripped_input(M,"What do you want to name the gun?", ,"", MAX_NAME_LEN)
 
-	if(src && input && !M.stat && in_range(M,src))
+	if(src && input && !M.stat && in_range(M,src) && !M.restrained() && M.canmove)
 		name = input
 		M << "You name the gun [input]. Say hello to your new friend."
 		return 1
@@ -95,7 +96,7 @@
 	options["The Peacemaker"] = "detective_peacemaker"
 	var/choice = input(M,"What do you want to skin the gun to?","Reskin Gun") in options
 
-	if(src && choice && !M.stat && in_range(M,src))
+	if(src && choice && !M.stat && in_range(M,src) && !M.restrained() && M.canmove)
 		icon_state = options[choice]
 		M << "Your gun is now skinned as [choice]. Say hello to your new friend."
 		return 1

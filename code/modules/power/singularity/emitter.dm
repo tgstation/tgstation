@@ -27,7 +27,9 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if (src.anchored || usr:stat)
+	if(usr.stat || !usr.canmove || usr.restrained())
+		return
+	if (src.anchored)
 		usr << "It is fastened to the floor!"
 		return 0
 	src.dir = turn(src.dir, 90)
@@ -143,7 +145,7 @@
 			else // Any other
 				A.yo = -20
 				A.xo = 0
-		A.process()	//TODO: Carn: check this out
+		A.fire()
 
 
 /obj/machinery/power/emitter/attackby(obj/item/W, mob/user)

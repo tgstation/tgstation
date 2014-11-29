@@ -51,18 +51,12 @@
 	recharge()
 	dispensable_reagents = sortList(dispensable_reagents)
 
-/obj/machinery/chem_dispenser/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
-				return
+/obj/machinery/chem_dispenser/ex_act(severity, specialty)
+	if(severity < 3)
+		..()
 
 /obj/machinery/chem_dispenser/blob_act()
-	if (prob(50))
+	if(prob(50))
 		qdel(src)
 
  /**
@@ -260,15 +254,9 @@
 	create_reagents(100)
 	overlays += "waitlight"
 
-/obj/machinery/chem_master/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
-				return
+/obj/machinery/chem_master/ex_act(severity, specialty)
+	if(severity < 3)
+		..()
 
 /obj/machinery/chem_master/blob_act()
 	if (prob(50))
@@ -625,10 +613,6 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		return
 	else if (href_list["create_virus_culture"])
 		if(!wait)
-			var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
-			B.icon_state = "bottle3"
-			B.pixel_x = rand(-3, 3)
-			B.pixel_y = rand(-3, 3)
 			var/type = GetVirusTypeByIndex(text2num(href_list["create_virus_culture"]))//the path is received as string - converting
 			var/datum/disease/D = null
 			if(!ispath(type))
@@ -641,10 +625,15 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 					D = new type(0, null)
 			if(!D)
 				return
+			var/name = stripped_input(usr,"Name:","Name the culture",D.name,MAX_NAME_LEN)
+			if(name == null)
+				return
+			var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
+			B.icon_state = "bottle3"
+			B.pixel_x = rand(-3, 3)
+			B.pixel_y = rand(-3, 3)
 			replicator_cooldown(50)
 			var/list/data = list("viruses"=list(D))
-			var/name = sanitize(input(usr,"Name:","Name the culture",D.name))
-			if(!name || name == " ") name = D.name
 			B.name = "[name] culture bottle"
 			B.desc = "A small bottle. Contains [D.agent] culture in synthblood medium."
 			B.reagents.add_reagent("blood",20,data)
@@ -669,6 +658,8 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		return
 	else if(href_list["name_disease"])
 		var/new_name = stripped_input(usr, "Name the Disease", "New Name", "", MAX_NAME_LEN)
+		if(!new_name)
+			return
 		if(..())
 			return
 		var/id = GetVirusTypeByIndex(text2num(href_list["name_disease"]))
@@ -723,7 +714,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 					var/i = 0
 					for(var/datum/disease/D in Blood.data["viruses"])
 						i++
-						if(!D.hidden[PANDEMIC])
+						if(!(D.visibility_flags & HIDDEN_PANDEMIC))
 
 							if(istype(D, /datum/disease/advance))
 
@@ -738,8 +729,8 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 							dat += "<b>Disease Agent:</b> [D?"[D.agent] - <A href='?src=\ref[src];create_virus_culture=[i]'>Create virus culture bottle</A>":"none"]<BR>"
 							dat += "<b>Common name:</b> [(D.name||"none")]<BR>"
 							dat += "<b>Description: </b> [(D.desc||"none")]<BR>"
-							dat += "<b>Spread:</b> [(D.spread||"none")]<BR>"
-							dat += "<b>Possible cure:</b> [(D.cure||"none")]<BR><BR>"
+							dat += "<b>Spread:</b> [(D.spread_text||"none")]<BR>"
+							dat += "<b>Possible cure:</b> [(D.cure_text||"none")]<BR><BR>"
 
 							if(istype(D, /datum/disease/advance))
 								var/datum/disease/advance/A = D
@@ -1015,26 +1006,26 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 						dat += "<A href='?src=\ref[src];action=detach'>Detach the beaker</a><BR>"
 		else
 				dat += "Please wait..."
-		user << browse("<HEAD><TITLE>All-In-One Grinder</TITLE></HEAD><TT>[dat]</TT>", "window=reagentgrinder")
-		onclose(user, "reagentgrinder")
-		return
 
+		var/datum/browser/popup = new(user, "reagentgrinder", "All-In-One Grinder")
+		popup.set_content(dat)
+		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+		popup.open(1)
+		return
 
 /obj/machinery/reagentgrinder/Topic(href, href_list)
-		if(..())
-				return
-		usr.set_machine(src)
-		switch(href_list["action"])
-				if ("grind")
-						grind()
-				if("juice")
-						juice()
-				if("eject")
-						eject()
-				if ("detach")
-						detach()
-		src.updateUsrDialog()
+	if(..())
 		return
+	usr.set_machine(src)
+	switch(href_list["action"])
+		if ("grind")
+			grind()
+		if("juice")
+			juice()
+		if("eject")
+			eject()
+		if ("detach")
+			detach()
 
 /obj/machinery/reagentgrinder/proc/detach()
 
@@ -1045,6 +1036,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		beaker.loc = src.loc
 		beaker = null
 		update_icon()
+		updateUsrDialog()
 
 /obj/machinery/reagentgrinder/proc/eject()
 
@@ -1057,6 +1049,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				O.loc = src.loc
 				holdingitems -= O
 		holdingitems = list()
+		updateUsrDialog()
 
 /obj/machinery/reagentgrinder/proc/is_allowed(var/obj/item/weapon/reagent_containers/O)
 		for (var/i in blend_items)
@@ -1109,7 +1102,8 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		inuse = 1
 		spawn(50)
 				inuse = 0
-				interact(usr)
+				updateUsrDialog()
+
 		//Snacks
 		for (var/obj/item/weapon/reagent_containers/food/snacks/O in holdingitems)
 				if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
@@ -1142,7 +1136,8 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		inuse = 1
 		spawn(60)
 				inuse = 0
-				interact(usr)
+				updateUsrDialog()
+
 		//Snacks and Plants
 		for (var/obj/item/weapon/reagent_containers/food/snacks/O in holdingitems)
 				if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)

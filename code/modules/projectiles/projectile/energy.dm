@@ -63,7 +63,7 @@
 /obj/item/projectile/energy/disabler/Range()
 	range--
 	if(range <= 0)
-		delete()
+		qdel(src)
 
 
 

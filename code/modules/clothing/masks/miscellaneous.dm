@@ -24,14 +24,16 @@
 	w_class = 1
 	flags = MASKCOVERSMOUTH
 	flags_inv = HIDEFACE
+	visor_flags = MASKCOVERSMOUTH
+	visor_flags_inv = HIDEFACE
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 25, rad = 0)
 	action_button_name = "Adjust Sterile Mask"
 	ignore_maskadjust = 0
 
-/obj/item/clothing/mask/surgical/attack_self()
-	adjustmask()
+/obj/item/clothing/mask/surgical/attack_self(var/mob/user)
+	adjustmask(user)
 
 /obj/item/clothing/mask/fakemoustache
 	name = "fake moustache"

@@ -8,7 +8,7 @@
 	var/health = 15
 
 //similar to weeds, but only barfed out by nurses manually
-/obj/effect/spider/ex_act(severity)
+/obj/effect/spider/ex_act(severity, specialty)
 	switch(severity)
 		if(1.0)
 			qdel(src)
@@ -61,7 +61,7 @@
 
 /obj/effect/spider/stickyweb/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0) return 1
-	if(istype(mover, /mob/living/simple_animal/hostile/giant_spider))
+	if(istype(mover, /mob/living/simple_animal/hostile/poison/giant_spider))
 		return 1
 	else if(istype(mover, /mob/living))
 		if(prob(50))
@@ -132,43 +132,40 @@
 			entry_vent = null
 	else if(entry_vent)
 		if(get_dist(src, entry_vent) <= 1)
-			if(entry_vent.network && entry_vent.network.normal_members.len)
-				var/list/vents = list()
-				for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in entry_vent.network.normal_members)
-					vents.Add(temp_vent)
-				if(!vents.len)
-					entry_vent = null
-					return
-				var/obj/machinery/atmospherics/unary/vent_pump/exit_vent = pick(vents)
-				if(prob(50))
-					visible_message("<B>[src] scrambles into the ventillation ducts!</B>", \
-									"<span class='notice'>You hear something squeezing through the ventilation ducts.</span>")
-
-				spawn(rand(20,60))
-					loc = exit_vent
-					var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
-					spawn(travel_time)
-
-						if(!exit_vent || exit_vent.welded)
-							loc = entry_vent
-							entry_vent = null
-							return
-
-						if(prob(50))
-							audible_message("<span class='notice'>You hear something squeezing through the ventilation ducts.</span>")
-						sleep(travel_time)
-
-						if(!exit_vent || exit_vent.welded)
-							loc = entry_vent
-							entry_vent = null
-							return
-						loc = exit_vent.loc
-						entry_vent = null
-						var/area/new_area = get_area(loc)
-						if(new_area)
-							new_area.Entered(src)
-			else
+			var/list/vents = list()
+			for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in entry_vent.parent.other_atmosmch)
+				vents.Add(temp_vent)
+			if(!vents.len)
 				entry_vent = null
+				return
+			var/obj/machinery/atmospherics/unary/vent_pump/exit_vent = pick(vents)
+			if(prob(50))
+				visible_message("<B>[src] scrambles into the ventillation ducts!</B>", \
+								"<span class='notice'>You hear something squeezing through the ventilation ducts.</span>")
+
+			spawn(rand(20,60))
+				loc = exit_vent
+				var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
+				spawn(travel_time)
+
+					if(!exit_vent || exit_vent.welded)
+						loc = entry_vent
+						entry_vent = null
+						return
+
+					if(prob(50))
+						audible_message("<span class='notice'>You hear something squeezing through the ventilation ducts.</span>")
+					sleep(travel_time)
+
+					if(!exit_vent || exit_vent.welded)
+						loc = entry_vent
+						entry_vent = null
+						return
+					loc = exit_vent.loc
+					entry_vent = null
+					var/area/new_area = get_area(loc)
+					if(new_area)
+						new_area.Entered(src)
 	//=================
 
 	else if(prob(33))
@@ -189,8 +186,8 @@
 		amount_grown += rand(0,2)
 		if(amount_grown >= 100)
 			if(!grow_as)
-				grow_as = pick(typesof(/mob/living/simple_animal/hostile/giant_spider))
-			var/mob/living/simple_animal/hostile/giant_spider/S = new grow_as(src.loc)
+				grow_as = pick(typesof(/mob/living/simple_animal/hostile/poison/giant_spider))
+			var/mob/living/simple_animal/hostile/poison/giant_spider/S = new grow_as(src.loc)
 			if(player_spiders)
 				var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
 				var/client/C = null
@@ -213,7 +210,7 @@
 	var/mob/living/user = usr
 	var/breakout_time = 2
 	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT 
+	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user << "<span class='notice'>You struggle against the tight bonds! (This will take about [breakout_time] minutes.)</span>"
 	visible_message("You see something struggling and writhing in the [src]!")
 	if(do_after(user,(breakout_time*60*10)))

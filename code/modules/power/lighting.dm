@@ -328,7 +328,7 @@
 
 // attack with item - insert light (if right type), otherwise try to break the light
 
-/obj/machinery/light/attackby(obj/item/W, mob/user)
+/obj/machinery/light/attackby(obj/item/W, mob/living/user)
 
 	//Light replacer code
 	if(istype(W, /obj/item/device/lightreplacer))
@@ -369,7 +369,7 @@
 
 	else if(status != LIGHT_BROKEN && status != LIGHT_EMPTY)
 
-
+		user.do_attack_animation(src)
 		if(prob(1+W.force * 5))
 
 			user.visible_message("<span class='danger'>[user.name] smashed the light!</span>", \
@@ -382,7 +382,7 @@
 			broken()
 
 		else
-			user.visible_message("<span class='warning'>[user.name] hits the light.</span>")
+			user.visible_message("<span class='danger'>[user.name] hits the light.</span>")
 
 	// attempt to stick weapon into light socket
 	else if(status == LIGHT_EMPTY)
@@ -449,6 +449,7 @@
 		user << "\green That object is useless to you."
 		return
 	else if (status == LIGHT_OK||status == LIGHT_BURNED)
+		user.do_attack_animation(src)
 		visible_message("<span class='danger'>[user.name] smashed the light!</span>", "You hear a tinkle of breaking glass")
 		broken()
 	return
@@ -459,6 +460,7 @@
 		M << "<span class='danger'>That object is useless to you.</span>"
 		return
 	else if (status == LIGHT_OK||status == LIGHT_BURNED)
+		M.do_attack_animation(src)
 		visible_message("<span class='danger'>[M.name] smashed the light!</span>", "You hear a tinkle of breaking glass")
 		broken()
 	return
@@ -570,18 +572,16 @@
 // explosion effect
 // destroy the whole light fixture or just shatter it
 
-/obj/machinery/light/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(75))
-				broken()
-		if(3.0)
-			if (prob(50))
-				broken()
-	return
+/obj/machinery/light/ex_act(severity, specialty)
+	..()
+	if(!gc_destroyed)
+		switch(severity)
+			if(2)
+				if(prob(50))
+					broken()
+			if(3)
+				if(prob(25))
+					broken()
 
 //blob effect
 

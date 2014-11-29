@@ -113,7 +113,7 @@
 		M << "<span class='danger'>Your chameleon-projector deactivates.</span>"
 	master.disrupt()
 
-/obj/effect/dummy/chameleon/ex_act()
+/obj/effect/dummy/chameleon/ex_act() //ok now THATS some serious protection against explosions right here
 	for(var/mob/M in src)
 		M << "<span class='danger'>Your chameleon-projector deactivates.</span>"
 	master.disrupt()

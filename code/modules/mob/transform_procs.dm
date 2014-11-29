@@ -163,6 +163,7 @@
 		viruses = list()
 		for(var/datum/disease/D in O.viruses)
 			D.affected_mob = O
+		O.med_hud_set_status()
 
 	//keep damage?
 	if (tr_flags & TR_KEEPDAMAGE)
@@ -175,6 +176,7 @@
 	for(var/obj/item/weapon/implant/I in implants)
 		I.loc = O
 		I.implanted = O
+	O.sec_hud_set_implants()
 
 	if(mind)
 		mind.transfer_to(O)
@@ -251,6 +253,8 @@
 	O << "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>"
 	O << "To use something, simply click on it."
 	O << {"Use say ":b to speak to your cyborgs through binary."} //"
+	O << "For department channels, use the following say commands:"
+	O << ":o - AI Private, :c - Command, :s - Security, :e - Engineering, :u - Supply, :v - Service, :m - Medical, :n - Science."
 	if (!(ticker && ticker.mode && (O.mind in ticker.mode.malf_ai)))
 		O.show_laws()
 		O << "<b>These laws may be changed by other players, or by you being the traitor.</b>"

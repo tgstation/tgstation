@@ -365,8 +365,9 @@ steam.start() -- spawns the effect
 			if (M.coughedtime != 1)
 				M.coughedtime = 1
 				M.emote("cough")
-				spawn ( 20 )
-					M.coughedtime = 0
+				spawn(20)
+					if(M && M.loc)
+						M.coughedtime = 0
 	return
 
 
@@ -389,8 +390,9 @@ steam.start() -- spawns the effect
 			if (M.coughedtime != 1)
 				M.coughedtime = 1
 				M.emote("cough")
-				spawn ( 20 )
-					M.coughedtime = 0
+				spawn(20)
+					if(M && M.loc)
+						M.coughedtime = 0
 	return
 
 /datum/effect/effect/system/bad_smoke_spread
@@ -602,8 +604,9 @@ steam.start() -- spawns the effect
 			if (M.coughedtime != 1)
 				M.coughedtime = 1
 				M.emote("cough")
-				spawn ( 20 )
-					M.coughedtime = 0
+				spawn(20)
+					if(M && M.loc)
+						M.coughedtime = 0
 	return
 
 /obj/effect/effect/sleep_smoke/Crossed(mob/living/carbon/M as mob )
@@ -618,8 +621,9 @@ steam.start() -- spawns the effect
 			if (M.coughedtime != 1)
 				M.coughedtime = 1
 				M.emote("cough")
-				spawn ( 20 )
-					M.coughedtime = 0
+				spawn(20)
+					if(M && M.loc)
+						M.coughedtime = 0
 	return
 
 /datum/effect/effect/system/sleep_smoke_spread
@@ -684,9 +688,9 @@ steam.start() -- spawns the effect
 
 /datum/effect/effect/system/ion_trail_follow/set_up(atom/atom)
 	attach(atom)
-	oldposition = get_turf(atom)
 
-/datum/effect/effect/system/ion_trail_follow/start()
+
+/datum/effect/effect/system/ion_trail_follow/start() //Whoever is responsible for this abomination of code should become an hero
 	if(!src.on)
 		src.on = 1
 		src.processing = 1
@@ -696,26 +700,22 @@ steam.start() -- spawns the effect
 		if(T != src.oldposition)
 			if(!has_gravity(T))
 				var/obj/effect/effect/ion_trails/I = new /obj/effect/effect/ion_trails(src.oldposition)
-				src.oldposition = T
 				I.dir = src.holder.dir
 				flick("ion_fade", I)
 				I.icon_state = "blank"
 				spawn( 20 )
 					if(I)
 						I.delete()
-			spawn(2)
-				if(src.on)
-					src.processing = 1
-					src.start()
-		else
-			spawn(2)
-				if(src.on)
-					src.processing = 1
-					src.start()
+			src.oldposition = T
+		spawn(2)
+			if(src.on)
+				src.processing = 1
+				src.start()
 
 /datum/effect/effect/system/ion_trail_follow/proc/stop()
 	src.processing = 0
 	src.on = 0
+	oldposition = null
 
 
 
@@ -944,7 +944,7 @@ steam.start() -- spawns the effect
 		icon_state = "ironfoam"
 
 
-/obj/structure/foamedmetal/ex_act(severity)
+/obj/structure/foamedmetal/ex_act(severity, specialty)
 	qdel(src)
 
 /obj/structure/foamedmetal/blob_act()
@@ -961,6 +961,7 @@ steam.start() -- spawns the effect
 
 /obj/structure/foamedmetal/attack_animal(var/mob/living/simple_animal/M)
 	if(M.environment_smash >= 1)
+		M.do_attack_animation(src)
 		M << "<span class='notice'>You smash apart the foam wall.</span>"
 		qdel(src)
 		return

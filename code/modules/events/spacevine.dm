@@ -301,7 +301,8 @@
 	manual_unbuckle(user)
 
 
-/obj/effect/spacevine/attack_paw(mob/user as mob)
+/obj/effect/spacevine/attack_paw(mob/living/user as mob)
+	user.do_attack_animation(src)
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_hit(src, user)
 	manual_unbuckle(user)
@@ -499,7 +500,7 @@
 
 */
 
-/obj/effect/spacevine/ex_act(severity)
+/obj/effect/spacevine/ex_act(severity, specialty)
 	switch(severity)
 		if(1.0)
 			Destroy()

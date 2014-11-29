@@ -73,10 +73,10 @@
 			else			non_whitespace = 1
 	if(non_whitespace)		return text		//only accepts the text if it has some non-spaces
 
-// Used to get a sanitized input.
+// Used to get a properly sanitized input, of max_length
 /proc/stripped_input(var/mob/user, var/message = "", var/title = "", var/default = "", var/max_length=MAX_MESSAGE_LEN)
-	var/name = input(user, message, title, default)
-	return strip_html_simple(name, max_length)
+	var/name = input(user, message, title, default) as text|null
+	return strip_html_properly(name, max_length)
 
 //Filters out undesirable characters from names
 /proc/reject_bad_name(var/t_in, var/allow_numbers=0, var/max_length=MAX_NAME_LEN)
@@ -142,6 +142,23 @@
 
 	return t_out
 
+//this proc strips html properly, but it's not lazy like the other procs.
+//this means that it doesn't just remove < and > and call it a day. seriously, who the fuck thought that would be useful.
+//also limit the size of the input, if specified to
+/proc/strip_html_properly(var/input,var/max_length=MAX_MESSAGE_LEN)
+	if(!input)
+		return
+	var/opentag = 1 //These store the position of < and > respectively.
+	var/closetag = 1
+	while(1)
+		opentag = findtext(input, "<")
+		closetag = findtext(input, ">")
+		if(!closetag || !opentag)
+			break
+		input = copytext(input, 1, opentag) + copytext(input, (closetag + 1))
+	if(max_length)
+		input = copytext(input,1,max_length)
+	return input
 
 /*
  * Text searches
@@ -179,11 +196,14 @@
 /*
  * Text modification
  */
+// See bygex.dm
+#ifndef USE_BYGEX
 /proc/replacetext(text, find, replacement)
 	return list2text(text2list(text, find), replacement)
 
 /proc/replacetextEx(text, find, replacement)
 	return list2text(text2listEx(text, find), replacement)
+#endif
 
 //Adds 'u' number of zeros ahead of the text 't'
 /proc/add_zero(t, u)
@@ -363,16 +383,3 @@ var/list/binary = list("0","1")
 		temp = findtextEx(haystack, ascii2text(text2ascii(needles,i)), start, end)	//Note: ascii2text(text2ascii) is faster than copytext()
 		if(temp)	end = temp
 	return end
-
-//this proc strips html properly, but it's not lazy like the other procs.
-//this means that it doesn't just remove < and > and call it a day. seriously, who the fuck thought that would be useful.
-/proc/strip_html_properly(var/input)
-	var/opentag = 1 //These store the position of < and > respectively.
-	var/closetag = 1
-	while(1)
-		opentag = findtext(input, "<")
-		closetag = findtext(input, ">")
-		if(!closetag || !opentag)
-			break
-		input = copytext(input, 1, opentag) + copytext(input, (closetag + 1))
-	return input

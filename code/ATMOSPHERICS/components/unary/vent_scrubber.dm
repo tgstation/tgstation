@@ -40,6 +40,11 @@
 		src.initialize()
 		src.broadcast_status()
 
+/obj/machinery/atmospherics/unary/vent_scrubber/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src,frequency)
+	..()
+
 /obj/machinery/atmospherics/unary/vent_scrubber/update_icon_nopipes()
 	overlays.Cut()
 	if(showpipe)
@@ -143,8 +148,7 @@
 			loc.assume_air(removed)
 			air_update_turf()
 
-			if(network)
-				network.update = 1
+			parent.update = 1
 
 	else //Just siphoning all air
 		if (air_contents.return_pressure()>=50*ONE_ATMOSPHERE)
@@ -157,8 +161,7 @@
 		air_contents.merge(removed)
 		air_update_turf()
 
-		if(network)
-			network.update = 1
+		parent.update = 1
 
 	return 1
 

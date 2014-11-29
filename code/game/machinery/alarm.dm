@@ -144,6 +144,11 @@
 	if(ticker && ticker.current_state == 3)//if the game is running
 		src.initialize()
 
+/obj/machinery/alarm/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src, frequency)
+	..()
+
 /obj/machinery/alarm/initialize()
 	set_frequency(frequency)
 	if (!master_is_operating())
@@ -188,7 +193,7 @@
 		popup.open()
 		refresh_all()
 
-	if(panel_open && (!istype(user, /mob/living/silicon)))
+	if(panel_open && (!istype(user, /mob/living/silicon/ai)))
 		wires.Interact(user)
 
 	return
@@ -582,13 +587,13 @@ table tr:first-child th:first-child { border: none;}
 
 
 	if(href_list["atmos_alarm"])
-		if (alarm_area.atmosalert(2))
+		if (alarm_area.atmosalert(2,src))
 			post_alert(2)
 		spawn(1)
 			src.updateUsrDialog()
 		update_icon()
 	if(href_list["atmos_reset"])
-		if (alarm_area.atmosalert(0))
+		if (alarm_area.atmosalert(0,src))
 			post_alert(0)
 		spawn(1)
 			src.updateUsrDialog()
@@ -754,7 +759,7 @@ table tr:first-child th:first-child { border: none;}
 	else if (alert_level==0)
 		alert_signal.data["alert"] = "clear"
 
-	frequency.post_signal(src, alert_signal)
+	frequency.post_signal(src, alert_signal,null,-1)
 
 /obj/machinery/alarm/proc/apply_danger_level()
 	var/new_area_danger_level = 0
@@ -762,7 +767,7 @@ table tr:first-child th:first-child { border: none;}
 		for (var/obj/machinery/alarm/AA in A)
 			if (!(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
 				new_area_danger_level = max(new_area_danger_level,AA.danger_level)
-	if (alarm_area.atmosalert(new_area_danger_level)) //if area was in normal state or if area was in alert state
+	if (alarm_area.atmosalert(new_area_danger_level,src)) //if area was in normal state or if area was in alert state
 		post_alert(new_area_danger_level)
 	update_icon()
 
@@ -851,7 +856,8 @@ table tr:first-child th:first-child { border: none;}
 	else
 		stat |= NOPOWER
 	spawn(rand(0,15))
-		update_icon()
+		if(loc)
+			update_icon()
 
 /*
 AIR ALARM CIRCUIT
@@ -1084,10 +1090,10 @@ FIRE ALARM
 /obj/machinery/firealarm/power_change()
 	if(powered(ENVIRON))
 		stat &= ~NOPOWER
-		update_icon()
 	else
-		spawn(rand(0,15))
-			stat |= NOPOWER
+		stat |= NOPOWER
+	spawn(rand(0,15))
+		if(loc)
 			update_icon()
 
 /obj/machinery/firealarm/attack_hand(mob/user as mob)
@@ -1166,14 +1172,14 @@ FIRE ALARM
 	if (stat & (NOPOWER|BROKEN)) // can't reset alarm if it's unpowered or broken.
 		return
 	var/area/A = get_area(src)
-	A.firereset()
+	A.firereset(src)
 	return
 
 /obj/machinery/firealarm/proc/alarm()
 	if (stat & (NOPOWER|BROKEN))  // can't activate alarm if it's unpowered or broken.
 		return
 	var/area/A = get_area(src)
-	A.firealert()
+	A.firealert(src)
 	//playsound(src.loc, 'sound/ambience/signal.ogg', 75, 0)
 	return
 
