@@ -321,6 +321,12 @@ var/global/list/uneatable = list(
 			else
 				src.energy += 20000//Instantly sends it to max size
 			expand(11, 1)
+			var/prints=""
+			if (A.fingerprintshidden)
+				prints=", all touchers: "+A.fingerprintshidden
+
+			log_admin("New super singularity made by eating a SM crystal [prints]. Last touched by [A.fingerprintslast].")
+			message_admins("New super singularity made by eating a SM crystal [prints]. Last touched by [A.fingerprintslast].")
 			del(A)
 			return
 
