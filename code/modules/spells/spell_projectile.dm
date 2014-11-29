@@ -6,18 +6,18 @@
 
 	var/atom/movable/spell/targeted/projectile/carried
 
-	kill_count = 0 //set by the duration of the spell
+	kill_count = 10 //set by the duration of the spell
 
 	var/proj_trail = 0 //if it leaves a trail
 	var/proj_trail_lifespan = 0 //deciseconds
 	var/proj_trail_icon = 'icons/obj/wizard.dmi'
 	var/proj_trail_icon_state = "trail"
 
-/obj/item/projectile/spell_projectile/process()
+/obj/item/projectile/spell_projectile/process_step()
 	..()
-	spawn while(loc)
+	if(loc)
 		if(carried)
-			var/list/targets = carried.choose_targets()
+			var/list/targets = carried.choose_prox_targets()
 			if(targets.len)
 				src.prox_cast(targets)
 		if(proj_trail && src) //pretty trails
@@ -27,7 +27,6 @@
 			trail.density = 0
 			spawn(proj_trail_lifespan)
 				trail.loc = null
-	sleep(step_delay)
 	return
 
 /obj/item/projectile/spell_projectile/proc/prox_cast(var/list/targets)
@@ -40,7 +39,7 @@
 /obj/item/projectile/spell_projectile/seeking
 	name = "seeking spell"
 
-/obj/item/projectile/spell_projectile/seeking/process()
+/obj/item/projectile/spell_projectile/seeking/process_step()
 	if(original)
 		current = original //update the target
 	..()

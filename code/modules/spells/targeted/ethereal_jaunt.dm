@@ -8,6 +8,7 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
+	max_targets = 1
 	cooldown_min = 100 //50 deciseconds reduction per rank
 	duration = 50 //in deciseconds
 

@@ -43,7 +43,6 @@ var/list/spells = typesof(/atom/movable/spell) //needed for the badmin verb for 
 	var/smoke_amt = 0 //cropped at 10
 
 	var/critfailchance = 0
-	var/centcomm_cancast = 1 //Whether or not the spell should be allowed on z2
 
 	var/cast_delay = 1
 	var/cast_sound = ""
@@ -57,18 +56,12 @@ var/list/spells = typesof(/atom/movable/spell) //needed for the badmin verb for 
 
 	//still_recharging_msg = "<span class='notice'>[name] is still recharging.</span>"
 	charge_counter = charge_max
-	if(charge_type == "recharge")
-		processing_objects.Add(src)
-
 
 /atom/movable/spell/proc/process()
-	if(charge_type != "recharge")
-		processing_objects.Remove(src)
-		return
-
-	while(charge_counter < charge_max)
+	spawn while(charge_counter < charge_max)
 		charge_counter++
-
+		sleep(1)
+	return
 
 /atom/movable/spell/Click()
 	..()
@@ -229,7 +222,7 @@ var/list/spells = typesof(/atom/movable/spell) //needed for the badmin verb for 
 					return 0
 	return 1
 
-/atom/movable/spell/proc/take_charge(mob/user, var/skipcharge)
+/atom/movable/spell/proc/take_charge(mob/user = user, var/skipcharge)
 	if(!skipcharge)
 		switch(charge_type)
 			if("recharge")

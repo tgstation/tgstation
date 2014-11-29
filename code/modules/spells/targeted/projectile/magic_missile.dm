@@ -16,12 +16,12 @@
 	duration = 10
 	proj_step_delay = 5
 
-	amt_weakened = 5
-	amt_dam_fire = 10
-
 /atom/movable/spell/targeted/projectile/magic_missile/prox_cast(var/list/targets)
 	targets = ..()
-	cast(targets)
+	for(var/mob/living/M in targets)
+		M.Stun(5)
+		M.Weaken(5)
+		M.adjustFireLoss(10)
 	return
 
 //PROJECTILE

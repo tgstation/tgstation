@@ -22,16 +22,17 @@ If the spell_projectile is seeking, it will update its target every process and 
 		proj_type = text2path(proj_type) // sanity filters
 
 	for(var/atom/target in targets)
-		var/obj/item/projectile/projectile = new proj_type
+		var/obj/item/projectile/projectile = new proj_type(user.loc)
 
 		if(!projectile)
 			return
+
 
 		projectile.original = target
 		projectile.loc = get_turf(user)
 		projectile.starting = get_turf(user)
 		projectile.shot_from = user //fired from the user
-		projectile.current = get_turf(user)
+		projectile.current = projectile.original
 		projectile.yo = target.y - target.y
 		projectile.xo = target.x - target.x
 		projectile.kill_count = src.duration
@@ -42,6 +43,14 @@ If the spell_projectile is seeking, it will update its target every process and 
 			holder = SP
 		projectile.process()
 	return
+
+/atom/movable/spell/targeted/projectile/proc/choose_prox_targets(mob/user = usr)
+	var/list/targets = list()
+	for(var/mob/living/M in range(holder, cast_prox_range))
+		if(M == user && !(spell_flags & INCLUDEUSER))
+			continue
+		targets += M
+	return targets
 
 /atom/movable/spell/targeted/projectile/proc/prox_cast(var/list/targets)
 	if(special_prox)

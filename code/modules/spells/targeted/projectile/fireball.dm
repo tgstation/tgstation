@@ -14,7 +14,7 @@
 
 	spell_flags = 0
 
-	duration = 200
+	duration = 20
 	proj_step_delay = 1
 
 	amt_dam_brute = 20
@@ -25,9 +25,8 @@
 	var/ex_light = 2
 	var/ex_flash = 5
 
-/atom/movable/spell/targeted/projectile/dumbfire/fireball/prox_cast(var/list/targets, var/atom/movable/holder)
+/atom/movable/spell/targeted/projectile/dumbfire/fireball/prox_cast(var/list/targets)
 	targets = ..()
-	cast(targets)
 	explosion(get_turf(holder), ex_severe, ex_heavy, ex_light, ex_flash)
 
 //PROJECTILE
@@ -37,10 +36,17 @@
 	icon_state = "fireball"
 
 /obj/item/projectile/spell_projectile/fireball/prox_cast(var/list/targets)
-	carried.prox_cast(targets, src)
-	spawn(10)
-		del(src) //remove it
+	if(targets.len)
+		carried.prox_cast(targets)
+		spawn(10)
+			del(src) //remove it
+
+/obj/item/projectile/spell_projectile/fireball/Bump()
+	if(carried)
+		carried.prox_cast(carried.choose_prox_targets())
+	return
 
 /obj/item/projectile/spell_projectile/fireball/OnDeath()
-	prox_cast(carried.choose_targets())
+	if(carried)
+		carried.prox_cast(carried.choose_prox_targets())
 	return

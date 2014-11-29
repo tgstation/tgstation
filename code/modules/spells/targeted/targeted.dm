@@ -34,19 +34,19 @@ Targeted spells have two useful flags: INCLUDEUSER and SELECTABLE. These are exp
 	if(max_targets == 0) //unlimited
 		for(var/mob/living/target in view_or_range(range, user, selection_type))
 			targets += target
-		if(1) //single target can be picked
-			if(range < 0 && spell_flags & INCLUDEUSER)
-				targets += user
-			else
-				var/possible_targets = list()
+	else if(max_targets == 1) //single target can be picked
+		if(range <= 0 && spell_flags & INCLUDEUSER)
+			targets += user
+		else
+			var/possible_targets = list()
 
-				for(var/mob/living/M in view_or_range(range, user, selection_type))
-					if(!(spell_flags & INCLUDEUSER) && user == M)
-						continue
-					possible_targets += M
+			for(var/mob/living/M in view_or_range(range, user, selection_type))
+				if(!(spell_flags & INCLUDEUSER) && M == user)
+					continue
+				possible_targets += M
 
-				//targets += input("Choose the target for the spell.", "Targeting") as mob in possible_targets
-				//Adds a safety check post-input to make sure those targets are actually in range.
+			//targets += input("Choose the target for the spell.", "Targeting") as mob in possible_targets
+			//Adds a safety check post-input to make sure those targets are actually in range.
 
 
 	else

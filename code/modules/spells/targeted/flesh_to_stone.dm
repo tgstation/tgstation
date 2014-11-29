@@ -5,10 +5,11 @@
 	school = "transmutation"
 	charge_max = 600
 	spell_flags = NEEDSCLOTHES
-	range = 2
+	range = 3
+	max_targets = 1
 	invocation = "STAUN EI"
 	invocation_type = "shout"
-	amt_stunned = 2//just exists to make sure the statue "catches" them
+	amt_stunned = 5//just exists to make sure the statue "catches" them
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 /atom/movable/spell/targeted/flesh_to_stone/cast(var/list/targets, mob/user)
