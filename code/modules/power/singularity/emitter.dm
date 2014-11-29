@@ -73,13 +73,13 @@
 		if("off")
 			on=0
 
-		if("valve_set")
-			on = signal.data["state"]
+		if("set")
+			on = signal.data["state"] > 0
 
-		if("valve_toggle")
+		if("toggle")
 			on = !active
 
-	if(on!=active)
+	if(on != active)
 		active=on
 		var/statestr=on?"on":"off"
 		message_admins("Emitter turned [statestr] by radio signal ([signal.data["command"]] @ [frequency]) in [formatJumpTo(src)]",0,1)
@@ -215,6 +215,9 @@
 	if(..())
 		return 1
 
+	if(istype(W, /obj/item/device/multitool))
+		update_multitool_menu(user)
+
 	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
 		if(emagged)
 			user << "\red The lock seems to be broken"
@@ -229,4 +232,3 @@
 		else
 			user << "\red Access denied."
 		return
-	return

@@ -70,8 +70,22 @@
 			"tag" = id_tag,
 			"device" = "AM",
 			"pressure" = round(env_pressure),
+			"temperatre" = round(environment.temperature),
 			"sigtype" = "status"
 		)
+
+		var/total_moles = environment.total_moles()
+		if(total_moles > 0)
+			signal.data["oxygen"] = round(100*environment.oxygen/total_moles,0.1)
+			signal.data["toxins"] = round(100*environment.toxins/total_moles,0.1)
+			signal.data["nitrogen"] = round(100*environment.nitrogen/total_moles,0.1)
+			signal.data["carbon_dioxide"] = round(100*environment.carbon_dioxide/total_moles,0.1)
+		else
+			signal.data["oxygen"] = 0
+			signal.data["toxins"] = 0
+			signal.data["nitrogen"] = 0
+			signal.data["carbon_dioxide"] = 0
+
 		radio_connection.post_signal(src, signal)
 
 /obj/machinery/meter/proc/status()
@@ -93,10 +107,14 @@
 	t += status()
 	usr << t
 
+/obj/machinery/meter/attack_ai(var/mob/user)
+	attack_hand(user)
 
+/obj/machinery/meter/attack_ghost(var/mob/user)
+	attack_hand(user)
 
-/obj/machinery/meter/Click()
-
+// Why the FUCK was this Click()?
+/obj/machinery/meter/attack_hand(var/mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return 1
 
@@ -110,9 +128,22 @@
 	usr << t
 	return 1
 
+/obj/machinery/meter/multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
+	return {"
+	<b>Main</b>
+	<ul>
+		<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[initial(frequency)]">Reset</a>)</li>
+		<li>[format_tag("ID Tag","id_tag")]</li>
+	</ul>"}
+
 /obj/machinery/meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+	if(istype(W, /obj/item/device/multitool))
+		update_multitool_menu(user)
+		return 1
+
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
+
 	playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 	user << "\blue You begin to unfasten \the [src]..."
 	if (do_after(user, 40))
