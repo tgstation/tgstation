@@ -60,6 +60,8 @@ var/global/list/uneatable = list(
 	return
 
 /obj/machinery/singularity/ex_act(severity)
+	if(current_size == 11)//IT'S UNSTOPPABLE
+		return
 	switch(severity)
 		if(1.0)
 			if(prob(25))
@@ -116,6 +118,9 @@ var/global/list/uneatable = list(
 		dissipate_track++
 
 /obj/machinery/singularity/proc/expand(var/force_size = 0, var/growing = 1)
+	if(current_size == 11)//if this is happening, this is an error
+		message_admins("expand() was called on a super singulo. This should not happen. Contact a coder immediately!")
+		return
 	var/temp_allowed_size = allowed_size
 
 	if (force_size)
@@ -200,10 +205,8 @@ var/global/list/uneatable = list(
 			grav_pull = 10
 			consume_range = 4
 			dissipate = 0 // It cant go smaller due to e loss.
-			if(growing)
-				visible_message("<span class='danger'><font size='2'>The singularity has grown out of control!</font></span>")
-			else
-				visible_message("<span class='warning'>The singularity miraculously reduces in size and loses its supermatter properties.</span>")
+			visible_message("<span class='danger'><font size='2'>The singularity has grown out of control!</font></span>")
+
 		if(11)//SUPERSINGULO
 			name = "Super Gravitational Singularity"
 			desc = "A Gravitational Singularity with the properties of supermatter. <b>It has the power to destroy worlds.</b>"
@@ -221,7 +224,7 @@ var/global/list/uneatable = list(
 	if (current_size == allowed_size)
 		investigate_log("<font color='red'>grew to size [current_size].</font>", "singulo")
 		return 1
-	else if (current_size < (--temp_allowed_size))
+	else if (current_size < (--temp_allowed_size) && current_size != 11)
 		expand(temp_allowed_size)
 	else
 		return 0
@@ -241,12 +244,10 @@ var/global/list/uneatable = list(
 			allowed_size = 5
 		if (1000 to 1999)
 			allowed_size = 7
-		if(2000 to 14999)
+		if(2000 to INFINITY)
 			allowed_size = 9
-		if(15000 to INFINITY)
-			allowed_size = 11
 
-	if (current_size != allowed_size)
+	if (current_size != allowed_size && current_size != 11)
 		if(current_size > allowed_size)
 			expand(null, 0)
 		else
@@ -308,7 +309,7 @@ var/global/list/uneatable = list(
 
 		if (istype(A, /obj/machinery/singularity)) // Welp now you did it.
 			var/obj/machinery/singularity/S = A
-			energy += (S.energy / 2) // Absorb most of it.
+			energy += (current_size == 11 ? S.energy : S.energy / 2) // Absorb most of it, unless supersingulo, in which case LITTLE SINGULO GETS EATEN.
 			qdel(S)
 			var/dist = max((current_size - 2), 1)
 			explosion(get_turf(src), dist, dist * 2, dist * 4)
@@ -319,6 +320,7 @@ var/global/list/uneatable = list(
 				src.energy += 15000//Instantly sends it to max size
 			else
 				src.energy += 20000//Instantly sends it to max size
+			expand(11, 1)
 			del(A)
 			return
 
@@ -504,10 +506,10 @@ var/global/list/uneatable = list(
 					return
 				else
 					H << "<span class=\"warning\">You look directly into The [src.name], but your eyewear does absolutely nothing to protect you from it!</span>"
-		M << "\red You look directly into The [src.name] and feel [current_size == 11 ? "helpless" : "weak"]."
+		M << "<span class='danger'>You look directly into The [src.name] and feel [current_size == 11 ? "helpless" : "weak"].</span>"
 		M.apply_effect(3, STUN)
 		for(var/mob/O in viewers(M, null))
-			O.show_message(text("\red <B>[] stares blankly at The []!</B>", M, src), 1)
+			O.show_message(text("<span class='danger'>[] stares blankly at The []!</span>", M, src), 1)
 
 /obj/machinery/singularity/proc/emp_area()
 	if(current_size != 11)
