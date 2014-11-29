@@ -70,7 +70,7 @@
 			"tag" = id_tag,
 			"device" = "AM",
 			"pressure" = round(env_pressure),
-			"temperatre" = round(environment.temperature),
+			"temperature" = round(environment.temperature),
 			"sigtype" = "status"
 		)
 
