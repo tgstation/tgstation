@@ -1,0 +1,9 @@
+author: N3X15
+delete-after: true
+changes:
+- rscadd: "Emitters can now be radio-controlled, and have an AAC interface.
+- rscadd: "AAC now supports code import/export, based on JSON."
+- bugfix: "Removing scripts from AACs fixed."
+- bugfix: "Digital valve AAC integration fixed."
+- bugfix: "Valves no longer removed from machinery list."
+- tweak: "Vents stay on after being disconnected from pipenet."

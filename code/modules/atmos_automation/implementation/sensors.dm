@@ -10,6 +10,17 @@
 
 	returntype=AUTOM_RT_NUM
 
+	Export()
+		var/list/json = ..()
+		json["sensor"]=sensor
+		json["field"]=field
+		return json
+
+	Import(var/list/json)
+		..(json)
+		sensor = json["sensor"]
+		field = json["field"]
+
 	Evaluate()
 		if(sensor && field && sensor in parent.sensor_information)
 			return parent.sensor_information[sensor][field]

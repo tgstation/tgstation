@@ -4,6 +4,17 @@
 	var/scrubber=null
 	var/mode=1
 
+	Export()
+		var/list/json = ..()
+		json["scrubber"]=scrubber
+		json["mode"]=mode
+		return json
+
+	Import(var/list/json)
+		..(json)
+		scrubber = json["scrubber"]
+		mode = text2num(json["mode"])
+
 	New(var/obj/machinery/computer/general_air_control/atmos_automation/aa)
 		..(aa)
 		children=list(null)
@@ -35,6 +46,17 @@
 
 	var/scrubber=null
 	var/state=0
+
+	Export()
+		var/list/json = ..()
+		json["scrubber"]=scrubber
+		json["state"]=state
+		return json
+
+	Import(var/list/json)
+		..(json)
+		scrubber = json["scrubber"]
+		state = text2num(json["state"])
 
 	New(var/obj/machinery/computer/general_air_control/atmos_automation/aa)
 		..(aa)
@@ -79,6 +101,21 @@ var/global/list/gas_labels=list(
 		"o2"  = 0,
 		"n2"  = 0
 	)
+
+	Export()
+		var/list/json = ..()
+		json["scrubber"]=scrubber
+		json["gasses"]=gasses
+		return json
+
+	Import(var/list/json)
+		..(json)
+		scrubber = json["scrubber"]
+
+		var/list/newgasses=json["gasses"]
+		for(var/key in newgasses)
+			gasses[key]=newgasses[key]
+
 
 	New(var/obj/machinery/computer/general_air_control/atmos_automation/aa)
 		..(aa)
