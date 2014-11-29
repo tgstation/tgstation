@@ -13,6 +13,9 @@
 	var/result_amount = 0
 	var/secondary = 0 // set to nonzero if secondary reaction
 
+	var/required_temp = 0
+	var/mix_message = "The solution begins to bubble."
+
 /datum/chemical_reaction/proc/on_reaction(var/datum/reagents/holder, var/created_volume)
 	return
 

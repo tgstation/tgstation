@@ -19,7 +19,7 @@
 	var/recharge_delay = 15  //Time it game ticks between recharges
 	var/list/dispensable_reagents = list("hydrogen","lithium","carbon","nitrogen","oxygen","fluorine",
 	"sodium","aluminium","silicon","phosphorus","sulfur","chlorine","potassium","iron",
-	"copper","mercury","radium","water","ethanol","sugar","sacid")
+	"copper","mercury","radium","water","ethanol","sugar","sacid","sodiumchloride","fuel","silver","iodine","bromine","fluorine")
 
 /obj/machinery/chem_dispenser/proc/recharge()
 	if(stat & (BROKEN|NOPOWER)) return
@@ -1226,3 +1226,52 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				O.reagents.trans_to(beaker, amount)
 				if(!O.reagents.total_volume)
 						remove_object(O)
+
+/obj/machinery/chem_heater
+	name = "chemical heater"
+	density = 1
+	anchored = 1
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "mixer0b"
+	use_power = 1
+	idle_power_usage = 40
+	var/energy = 50
+	var/max_energy = 50
+	var/amount = 30
+	var/beaker = null
+	var/set_temp
+
+/obj/machinery/chem_heater/attackby(var/obj/item/weapon/reagent_containers/glass/B as obj, var/mob/user as mob)
+	if(isrobot(user))
+		return
+
+	if(!istype(B, /obj/item/weapon/reagent_containers/glass))
+		return
+
+	if(src.beaker)
+		user << "A beaker is already loaded into the machine."
+		return
+
+	src.beaker =  B
+	user.drop_item()
+	B.loc = src
+	user << "You add the beaker to the machine!"
+	icon_state = "mixer1b"
+
+/obj/machinery/chem_heater/attack_hand(var/mob/user as mob)
+	if(!beaker)
+		user << "Please insert a beaker."
+		return
+	var/temperature = input("Please input desired temperature between 1 and 1000.", name, set_temp) as num
+	if(temperature > 1000 || temperature < 1)
+		user << "Invalid temperature."
+		return
+	user << "Adjusting chemical temperature..."
+	sleep(50)
+	var/obj/item/weapon/reagent_containers/B = beaker
+	B.reagents.chem_temp = temperature
+	user << "Chemical adjusted to [temperature]K."
+	B.loc = get_turf(src)
+	beaker = null
+	icon_state = "mixer0b"
+	B.reagents.handle_reactions()
