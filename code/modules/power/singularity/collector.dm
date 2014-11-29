@@ -35,8 +35,11 @@ var/global/list/rad_collectors = list()
 			investigate_log("<font color='red'>out of fuel</font>.", "singulo")
 			P.air_contents.toxins = 0
 			eject()
+		else if(!active)
+			return
 		else
 			P.air_contents.toxins -= (0.001 * drain_ratio)
+			P.air_contents.update_values()
 
 /obj/machinery/power/rad_collector/attack_hand(mob/user as mob)
 	if(anchored)
@@ -54,8 +57,11 @@ var/global/list/rad_collectors = list()
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user)
 	if(..())
 		return 1
-	else if(istype(W, /obj/item/device/analyzer))
-		user << "<span class='notice'>\The [W] registers that [last_power] W is being produced every cycle.</span>"
+	else if(istype(W, /obj/item/device/analyzer) || istype(W, /obj/item/device/multitool))
+		if(active)
+			user << "<span class='notice'>\The [W] registers that [last_power] W is being produced every cycle.</span>"
+		else
+			user << "<span class='notice'>\The [W] registers that the unit is currently not producing power.</span>"
 		return 1
 	else if(istype(W, /obj/item/weapon/tank/plasma))
 		if(!src.anchored)
