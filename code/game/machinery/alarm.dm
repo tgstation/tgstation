@@ -179,7 +179,7 @@
 			return
 
 
-		else if (istype(user, /mob/living/silicon) && src.aidisabled)
+		else if (user.has_unlimited_silicon_privilege && src.aidisabled)
 			user << "AI control for this Air Alarm interface has been disabled."
 			user << browse(null, "window=air_alarm")
 			return
@@ -248,11 +248,10 @@
 
 /obj/machinery/alarm/proc/return_text()
 	var/dat = ""
-	if(!(istype(usr, /mob/living/silicon)) && locked)
-		dat += "<div class='notice icon'>Swipe ID card to unlock interface</div>"
+	dat += "<div class='notice icon'>Swipe ID card to [locked ? "unlock" : "lock"] interface.</div>"
+	if(!usr.has_unlimited_silicon_privilege && locked)
 		dat += "[return_status()]"
 	else
-		dat += "<div class='notice icon'>Swipe ID card to lock interface</div>"
 		dat += "[return_status()]<hr>[return_controls()]"
 	return dat
 
