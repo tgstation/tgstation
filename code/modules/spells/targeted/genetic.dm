@@ -55,7 +55,7 @@ code\game\dna\genes\goon_powers.dm
 	invocation = "BIRUZ BENNAR"
 	invocation_type = "shout"
 	message = "\blue You feel strong! You feel a pressure building behind your eyes!"
-	range = -1
+	range = 0
 	max_targets = 1
 
 	mutations = list(M_LASER, M_HULK)
