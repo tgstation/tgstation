@@ -16,6 +16,7 @@ datum/reagent/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob, var/meth
 	if(method == TOUCH)
 		M.adjustFireLoss((volume-(volume*2))*REM)
 		M << "You feel your burns healing!"
+		M.emote("scream")
 	if(method == INGEST)
 		M.adjustToxLoss(0.5*volume)
 		M << "You probably shouldn't of eaten that. Maybe you should of splashed it on, or used a patch?"
@@ -34,6 +35,7 @@ datum/reagent/styptic_powder/reaction_mob(var/mob/living/M as mob, var/method=TO
 	if(method == TOUCH)
 		M.heal_organ_damage(volume*REM,0)
 		M << "You feel your wounds knitting back together!"
+		M.emote("scream")
 	if(method == INGEST)
 		M.adjustToxLoss(0.5*volume)
 		M << "You probably shouldn't of eaten that. Maybe you should of splashed it on, or used a patch?"
@@ -48,7 +50,7 @@ datum/reagent/salglu_solution
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
 datum/reagent/salglu_solution/on_mob_life(var/mob/living/M as mob)
-	if(M.stat == 2.0)
+	if(M.stat == DEAD)
 		return
 	if(!M) M = holder.my_atom
 	if(M.getOxyLoss()) M.adjustOxyLoss(-1*REM)
@@ -82,9 +84,6 @@ datum/reagent/charcoal
 	new_metabolize_rate = 0.5
 datum/reagent/charcoal/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	M.reagents.remove_all_type(/datum/reagent/toxin, 1*REM, 0, 1)
-	M.drowsyness = max(M.drowsyness-2*REM, 0)
-	M.hallucination = max(0, M.hallucination - 5*REM)
 	M.adjustToxLoss(-2*REM)
 	..()
 	return
@@ -254,7 +253,9 @@ datum/reagent/salbutamol
 
 datum/reagent/salbutamol/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	M.adjustOxyLoss(6*REM)
+	M.adjustOxyLoss(-6*REM)
+	if(M.losebreath >= 4)
+		M.losebreath -= 4
 	..()
 	return
 
@@ -275,7 +276,7 @@ datum/reagent/perfluorodecalin
 
 datum/reagent/perfluorodecalin/on_mob_life(var/mob/living/carbon/human/M as mob)
 	if(!M) M = holder.my_atom
-	M.adjustOxyLoss(25*REM)
+	M.adjustOxyLoss(-25*REM)
 	M.silent = max(M.silent, 5)
 	if(prob(33))
 		M.adjustBruteLoss(-1*REM)
@@ -290,41 +291,15 @@ datum/reagent/perfluorodecalin/on_mob_life(var/mob/living/carbon/human/M as mob)
 	required_reagents = list("hydrogen" = 1, "fluorine" = 1, "oil" = 1)
 	result_amount = 3
 	required_temp = 370
-
-datum/reagent/hairgrownium
-	name = "Hairgrownium"
-	id = "hairgrownium"
-	description = "Will eventually cause the users to grow a full set of hair."
-	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
-	metabolize_rate = 0.2
-	var/cycle_count = 0
-
-datum/reagent/hairgrownium/on_mob_life(var/mob/living/carbon/human/M as mob)
-	if(!M) M = holder.my_atom
-	cycle_count++
-	if(cycle_count == 15)
-		M << "You suddenly grow a full set of hair!"
-		M.hair_style = "longest"
-		M.facial_hair_style = "vlongbeard"
-	..()
-	return
-
-/datum/chemical_reaction/hairgrownium
-	name = "Hairgrownium"
-	id = "hairgrownium"
-	result = "hairgrownium"
-	required_reagents = list("carpet" = 1, "synthflesh" = 1, "ephedrine" = 1)
-	result_amount = 3
+	mix_message = "The mixture rapidly turns into a dense pink liquid."
 
 datum/reagent/ephedrine
 	name = "Ephedrine"
 	id = "ephedrine"
-	description = "Will eventually cause the users to grow a full set of hair."
+	description = "Stun reduction per cycle, increases run speed slightly, minor stamina regeneration buff, stabilizes crit."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	metabolize_rate = 0.3
-	var/cycle_count = 0
 
 datum/reagent/ephedrine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -344,3 +319,48 @@ datum/reagent/ephedrine/on_mob_life(var/mob/living/M as mob)
 	result = "ephedrine"
 	required_reagents = list("sugar" = 1, "oil" = 1, "hydrogen" = 1, "diethylamine" = 1)
 	result_amount = 4
+	mix_message = "The solution fizzes and gives off toxic fumes."
+
+datum/reagent/diphenhydramine
+	name = "Diphenhydramine"
+	id = "diphenhydramine"
+	description = "Stun reduction per cycle, increases run speed slightly, minor stamina regeneration buff, stabilizes crit."
+	reagent_state = LIQUID
+	color = "#C8A5DC" // rgb: 200, 165, 220
+	overrides_metab = 1
+	new_metabolize_rate = 3
+datum/reagent/diphenhydramine/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	M.drowsyness -= 1
+	M.jitteriness -= 1
+	..()
+	return
+
+/datum/chemical_reaction/diphenhydramine
+	name = "Diphenhydramine"
+	id = "diphenhydramine"
+	result = "diphenhydramine"
+	required_reagents = list("oil" = 1, "carbon" = 1, "bromine" = 1, "diethylamine" = 1, "ethanol" = 1)
+	result_amount = 4
+	mix_message = "The mixture dries into a pale blue powder."
+
+datum/reagent/morphine
+	name = "Morphine"
+	id = "morphine"
+	description = "100% chance per cycle of healing 1 point each of OXY and TOX damage."
+	reagent_state = LIQUID
+	color = "#C8A5DC" // rgb: 200, 165, 220
+	var/cycle_count = 0
+
+datum/reagent/morphine/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	M.status_flags |= GOTTAGOFAST
+	if(cycle_count == 36)
+		M.sleeping += 1
+	if(volume > 20)
+		var/obj/item/I = M.get_active_hand()
+		if(I)
+			M.drop_item()
+	cycle_count++
+	..()
+	return

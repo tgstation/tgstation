@@ -11,6 +11,20 @@ datum/reagent/oil
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
+datum/reagent/compost
+	name = "Compost"
+	id = "compost"
+	description = "A slippery solution."
+	reagent_state = LIQUID
+	color = "#C8A5DC" // rgb: 200, 165, 220
+
+datum/reagent/sewage
+	name = "Sewage"
+	id = "sewage"
+	description = "A slippery solution."
+	reagent_state = LIQUID
+	color = "#C8A5DC" // rgb: 200, 165, 220
+
 datum/reagent/iodine
 	name = "Iodine"
 	id = "iodine"

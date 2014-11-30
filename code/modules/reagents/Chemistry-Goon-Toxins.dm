@@ -89,16 +89,16 @@ datum/reagent/venom/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/goon_neurotoxin
+datum/reagent/neurotoxin2
 	name = "Neurotoxin"
-	id = "goon_neurotoxin"
+	id = "neurotoxin2"
 	description = "A toxic chemical."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	var/cycle_count = 0
 	metabolize_rate = 1
 
-datum/reagent/goon_neurotoxin/on_mob_life(var/mob/living/M as mob)
+datum/reagent/neurotoxin2/on_mob_life(var/mob/living/M as mob)
 	cycle_count++
 	if(!M) M = holder.my_atom
 	if(!(M.brainloss + M.toxloss) >= 60)
@@ -109,10 +109,10 @@ datum/reagent/goon_neurotoxin/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-/datum/chemical_reaction/goon_neurotoxin
-	name = "goon_neurotoxin"
-	id = "goon_neurotoxin"
-	result = "goon_neurotoxin"
+/datum/chemical_reaction/neurotoxin2
+	name = "neurotoxin2"
+	id = "neurotoxin2"
+	result = "neurotoxin2"
 	required_reagents = list("space_drugs" = 1)
 	result_amount = 1
 	required_temp = 200
@@ -125,7 +125,7 @@ datum/reagent/cyanide
 	color = "#CF3600" // rgb: 207, 54, 0
 	metabolize_rate = 0.1
 
-datum/reagent/toxin/cyanide/on_mob_life(var/mob/living/M as mob)
+datum/reagent/cyanide/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.adjustToxLoss(1.5*REM)
 	if(prob(10))
@@ -143,3 +143,17 @@ datum/reagent/toxin/cyanide/on_mob_life(var/mob/living/M as mob)
 	required_reagents = list("oil" = 1, "ammonia" = 1, "oxygen" = 1)
 	result_amount = 3
 	required_temp = 380
+
+/datum/reagent/questionmark // food poisoning
+	name = "????"
+	id = "????"
+	description = "????"
+	reagent_state = LIQUID
+	color = "#CF3600" // rgb: 207, 54, 0
+	metabolize_rate = 0.2
+
+datum/reagent/questionmark/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	M.adjustToxLoss(1*REM)
+	..()
+	return

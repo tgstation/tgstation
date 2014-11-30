@@ -57,6 +57,16 @@
 		..()
 		reagents.add_reagent("stoxin", 30)
 
+/obj/item/weapon/reagent_containers/glass/bottle/morphine
+	name = "morphine bottle"
+	desc = "A small bottle of morphine."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle20"
+
+	New()
+		..()
+		reagents.add_reagent("morphine", 30)
+
 /obj/item/weapon/reagent_containers/glass/bottle/chloralhydrate
 	name = "Chloral Hydrate Bottle"
 	desc = "A small bottle of Choral Hydrate. Mickey's Favorite!"
@@ -331,18 +341,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
 
-	New()
-		..()
-		switch(pick(1, 2, 3, 4, 5, 6))
-			if(1)
-				reagents.add_reagent("polonium", 50)
-			if(2)
-				reagents.add_reagent("histamine", 50)
-			if(3)
-				reagents.add_reagent("formaldehyde", 50)
-			if(4)
-				reagents.add_reagent("venom", 50)
-			if(5)
-				reagents.add_reagent("goon_neurotoxin", 50)
-			if(6)
-				reagents.add_reagent("cyanide", 50)
+/obj/item/weapon/reagent_containers/glass/bottle/traitor/New()
+	..()
+	var/new_reagent = pick("polonium", "histamine", "formaldehyde", "venom", "neurotoxin2", "cyanide")
+	reagents.add_reagent(new_reagent, 50)
