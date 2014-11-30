@@ -71,7 +71,7 @@
 			parent.send_signal(list ("tag" = vent_pump, "power"=state))
 
 	GetText()
-		return  "Set vent pump <a href=\"?src=\ref[src];set_vent_pump=1\">[fmtString(vent_pump)]</a> power to <a href=\"?src=\ref[src];set_power=1\">[state ? "on" : "off"]</a>."
+		return "Set vent pump <a href=\"?src=\ref[src];set_vent_pump=1\">[fmtString(vent_pump)]</a> power to <a href=\"?src=\ref[src];set_power=1\">[state ? "on" : "off"]</a>."
 
 	Topic(href,href_list)
 		if(href_list["set_power"])

@@ -21,7 +21,7 @@
 
 	process()
 		if(scrubber)
-			parent.send_signal(list ("tag" = scrubber, mode))
+			parent.send_signal(list ("tag" = scrubber, "sigtype"="command", "scrubbing"=mode))
 		return 0
 
 	GetText()
@@ -31,6 +31,7 @@
 		if(..()) return
 		if(href_list["set_mode"])
 			mode=!mode
+			parent.updateUsrDialog()
 			return 1
 		if(href_list["set_scrubber"])
 			var/list/injector_names=list()
@@ -63,7 +64,7 @@
 
 	process()
 		if(scrubber)
-			parent.send_signal(list ("tag" = scrubber, "power"=state))
+			parent.send_signal(list ("tag" = scrubber, "sigtype"="command", "power"=state))
 
 	GetText()
 		return  "Set Scrubber <a href=\"?src=\ref[src];set_scrubber=1\">[fmtString(scrubber)]</a> power to <a href=\"?src=\ref[src];set_power=1\">[state ? "on" : "off"]</a>."
@@ -122,7 +123,7 @@ var/global/list/gas_labels=list(
 
 	process()
 		if(scrubber)
-			var/list/data = list ("tag" = scrubber)
+			var/list/data = list ("tag" = scrubber, "sigtype"="command")
 			for(var/gas in gasses)
 				data[gas+"_scrub"]=gasses[gas]
 			parent.send_signal(data)

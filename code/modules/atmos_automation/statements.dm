@@ -36,12 +36,20 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 	return 0
 
 /datum/automation/proc/Export()
-	var/list/R = list("type"=type, "label"=label, "desc"=desc)
+	var/list/R = list("type"=type)
+
+	if(initial(label)!=label)
+		R["label"]=label
+
+	if(initial(desc)!=desc)
+		R["desc"]=desc
+
 	if(children.len>0)
 		var/list/C=list()
 		for(var/datum/automation/A in children)
 			C += list(A.Export())
 		R["children"]=C
+
 	return R
 
 /datum/automation/proc/unpackChild(var/list/cData)

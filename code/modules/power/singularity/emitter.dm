@@ -79,12 +79,13 @@
 		if("toggle")
 			on = !active
 
-	if(on != active)
+	if(anchored && state == 2 && on != active)
 		active=on
 		var/statestr=on?"on":"off"
-		message_admins("Emitter turned [statestr] by radio signal ([signal.data["command"]] @ [frequency]) in [formatJumpTo(src)]",0,1)
+		// Spammy message_admins("Emitter turned [statestr] by radio signal ([signal.data["command"]] @ [frequency]) in [formatJumpTo(src)]",0,1)
 		log_game("Emitter turned [statestr] by radio signal ([signal.data["command"]] @ [frequency]) in ([x],[y],[z])")
-		investigate_log("turned <font color='red'>[statestr]</font> by radio signal ([signal.data["command"]] @ [frequency])","singulo")
+		investigate_log("turned <font color='orange'>[statestr]</font> by radio signal ([signal.data["command"]] @ [frequency])","singulo")
+		update_icon()
 
 /obj/machinery/power/emitter/Destroy()
 	message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)

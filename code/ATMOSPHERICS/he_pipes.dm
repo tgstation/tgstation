@@ -112,7 +112,8 @@
 	internal_removed.temperature = final_temperature
 	internal.merge(internal_removed)
 
-	parent.network.update = 1
+	if(parent && parent.network)
+		parent.network.update = 1
 
 	return 1
 

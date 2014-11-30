@@ -11,7 +11,7 @@
 
 	Import(var/list/json)
 		..(json)
-		emitter = json["valve"]
+		emitter = json["emitter"]
 		on = text2num(json["on"])
 
 	process()

@@ -14,7 +14,7 @@
 	Import(var/list/json)
 		..(json)
 		valve = json["valve"]
-		state = text2num(json["value"])
+		state = text2num(json["state"])
 
 	process()
 		if(valve)
