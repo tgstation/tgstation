@@ -32,6 +32,7 @@ var/list/directional = list(
 	/obj/structure/stool/bed/chair,
 	/obj/structure/table,
 	/obj/machinery/light,
+	/obj/machinery/door/airlock/multi_tile,
 	)
 
 var/list/exception = list(
