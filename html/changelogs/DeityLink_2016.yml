@@ -1,8 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - rscadd: Virology machines can now be deconstructed, and new ones can be built from R&D.
-  - rscadd: Pathogenic Incubator, machine frame, board requires materials=4 biotech=5 emp=3, also requires 1 Matter Bins, 2 Scanning Modules, 2 Micro-Lasers, and 1 Beaker.
-  - rscadd: Disease Analyser, machine frame, board requires engineering=3 biotech=3 data=3, also requires 1 Micro-Lasers, 1 Manipulator, and 3 Scanning Modules.
-  - rscadd: Disease Splicer, computer frame, board requires data=3 biotech=4
-  - rscadd: Isolation Centrifuge, computer frame,  board requires data=3 biotech=3

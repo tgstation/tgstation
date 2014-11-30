@@ -1,4 +1,0 @@
-author: Clusterfack
-delete-after: true
-changes:
-- bugfix: Fixed N2 not appearing for air alarms accessed through the Central Atmospherics computer
