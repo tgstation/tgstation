@@ -30,6 +30,17 @@ reliability_mod (starts at 0, gets improved through experimentation). Example: P
 other types of metals and chemistry for reagents).
 - Add the AUTOLATHE tag to
 
+The required techs are the following:
+- Materials Research				max=9	"materials"
+- Engineering Research				max=5	"engineering"
+- Plasma Research					max=4	"plasmatech"
+- Power Manipulation Technology		max=6	"powerstorage"
+- 'Blue-space' Research				max=10	"bluespace"
+- Biological Technology				max=5	"biotech"
+- Combat Systems Research			max=6	"combat"
+- Electromagnetic Spectrum Research	max=8	"magnets"
+- Data Theory Research				max=5	"programming"
+- Illegal Technologies Research		max=8	"syndicate"
 
 */
 #define	IMPRINTER	1	//For circuits. Uses glass/chemicals.
@@ -2790,3 +2801,42 @@ other types of metals and chemistry for reagents).
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/vendomat
+
+//////////////////////////////////////////
+//////VIROLOGY MACHINES///////////////////
+//////////////////////////////////////////
+/datum/design/incubator
+	name = "Circuit Design (Pathogenic Incubator)"
+	desc = "Allows for the construction of circuit boards used to build a pathogenic incubator."
+	id = "incubator"
+	req_tech = list("materials" = 4, "biotech" = 5, "magnets" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/incubator
+
+/datum/design/diseaseanalyser
+	name = "Circuit Design (Disease Analyser)"
+	desc = "Allows for the construction of circuit boards used to build a disease analyzer."
+	id = "diseaseanalyser"
+	req_tech = list("engineering" = 3, "biotech" = 3, "programming" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/diseaseanalyser
+
+/datum/design/splicer
+	name = "Circuit Design (Disease Splicer)"
+	desc = "Allows for the construction of circuit boards used to build a disease splicer."
+	id = "incubator"
+	req_tech = list("programming" = 3, "biotech" = 4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/splicer
+
+/datum/design/centrifuge
+	name = "Circuit Design (Isolation Centrifuge)"
+	desc = "Allows for the construction of circuit boards used to build an isolation centrifuge."
+	id = "diseaseanalyser"
+	req_tech = list("programming" = 3, "biotech" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/centrifuge

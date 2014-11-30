@@ -419,13 +419,16 @@
 		C.handcuffed = initial(C.handcuffed)
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
-	if(stat == 2)
+	if(stat == DEAD)
 		dead_mob_list -= src
 		living_mob_list += src
 		tod = null
 
 	// restore us to conciousness
 	stat = CONSCIOUS
+
+	//Snowflake fix for zombiepowder
+	status_flags &= ~FAKEDEATH
 
 	// make the icons look correct
 	regenerate_icons()

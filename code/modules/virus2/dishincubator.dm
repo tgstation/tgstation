@@ -1,9 +1,12 @@
-/obj/machinery/disease2/incubator/
+/obj/machinery/disease2/incubator
 	name = "Pathogenic incubator"
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/virology.dmi'
 	icon_state = "incubator"
+
+	machine_flags = SCREWTOGGLE | CROWDESTROY
+
 	var/obj/item/weapon/virusdish/dish
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/radiation = 0
@@ -16,7 +19,23 @@
 
 	var/virusing
 
+/obj/machinery/disease2/incubator/New()
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/incubator,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/micro_laser,
+		/obj/item/weapon/stock_parts/micro_laser,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/reagent_containers/glass/beaker,
+	)
+
+	RefreshParts()
+
 /obj/machinery/disease2/incubator/attackby(var/obj/B as obj, var/mob/user as mob)
+	..()
 	if(istype(B, /obj/item/weapon/reagent_containers/glass) || istype(B,/obj/item/weapon/reagent_containers/syringe))
 
 		if(src.beaker)

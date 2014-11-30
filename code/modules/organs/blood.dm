@@ -55,11 +55,11 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 				B.volume += 0.1 // regenerate blood VERY slowly
 				if (reagents.has_reagent("nutriment"))	//Getting food speeds it up
-					B.volume += 0.4
-					reagents.remove_reagent("nutriment", 0.1)
+					B.volume += 0.6
+					reagents.remove_reagent("nutriment", 0.5)
 				if (reagents.has_reagent("iron"))	//Hematogen candy anyone?
-					B.volume += 0.8
-					reagents.remove_reagent("iron", 0.1)
+					B.volume += 1.2
+					reagents.remove_reagent("iron", 0.5)
 
 		// Damaged heart virtually reduces the blood volume, as the blood isn't
 		// being pumped properly anymore.
@@ -91,38 +91,49 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					var/word = pick("dizzy","woosey","faint")
 					src << "\red You feel [word]"
 				if(oxyloss < 20)
-					oxyloss += 3
+					oxyloss += 2
 			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
 				if(!pale)
 					pale = 1
 					update_body()
 				eye_blurry += 6
 				if(oxyloss < 50)
-					oxyloss += 10
-				oxyloss += 1
+					oxyloss += 5
+				oxyloss += 3
 				if(prob(15))
 					Paralyse(rand(1,3))
 					var/word = pick("dizzy","woosey","faint")
 					src << "\red You feel extremely [word]"
 			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
+				if(!pale)
+					pale = 1
+					update_body()
 				oxyloss += 5
-				toxloss += 3
+				toxloss += 1
 				if(prob(15))
 					var/word = pick("dizzy","woosey","faint")
 					src << "\red You feel extremely [word]"
 			if(0 to BLOOD_VOLUME_SURVIVE)
-				// There currently is a strange bug here. If the mob is not below -100 health
-				// when death() is called, apparently they will be just fine, and this way it'll
-				// spam deathgasp. Adjusting toxloss ensures the mob will stay dead.
-				toxloss += 300 // just to be safe!
-				death()
+				// Kill then pretty fast, but don't overdo it
+				// I SAID DON'T OVERDO IT
+				if(!pale) //Somehow
+					pale = 1
+					update_body()
+				oxyloss += 8
+				toxloss += 2
+				cloneloss += 1
+				Paralyse(5) //Keep them on the ground, that'll teach them
 
 		// Without enough blood you slowly go hungry.
+		// This is supposed to synergize with nutrients being used up to boost blood regeneration
+		// No need to drain it manually, just increase the nutrient drain on regen
+		/*
 		if(blood_volume < BLOOD_VOLUME_SAFE)
 			if(nutrition >= 300)
-				nutrition -= 10
+				nutrition -= 5
 			else if(nutrition >= 200)
-				nutrition -= 3
+				nutrition -= 2
+		*/
 
 		//Bleeding out
 		var/blood_max = 0

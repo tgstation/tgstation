@@ -212,6 +212,11 @@
 /obj/item/weapon/circuitboard/splicer
 	name = "Circuit board (Disease Splicer)"
 	build_path = "/obj/machinery/computer/diseasesplicer"
+	origin_tech = "programming=3;biotech=4"
+/obj/item/weapon/circuitboard/centrifuge
+	name = "Circuit board (Disease Splicer)"
+	build_path = "/obj/machinery/computer/centrifuge"
+	origin_tech = "programming=3;biotech=3"
 
 /obj/item/weapon/circuitboard/mining_shuttle
 	name = "Circuit board (Mining Shuttle)"
