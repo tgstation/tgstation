@@ -74,7 +74,7 @@
 			<A href='byond://?src=\ref[src];spell_choice=arsenath'>Butt-Bot's Revenge</A> (50)<BR>
 			<I>Summon the power of the butt gods to remove the anus of your enemy.</I><BR>
 			[!istype(ticker.mode, /datum/game_mode/wizard/raginmages) ? "<A href='byond://?src=\ref[src];spell_choice=summonguns'>Summon Guns</A> (One time use, global spell)<BR><I>Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill eachother. Just be careful not to get hit in the crossfire!</I><BR>" : ""]
-			<A href='byond://?src=\ref[src];spell_choice=chariot'>Summon Chariot</A> (60)<BR>
+			<A href='byond://?src=\ref[src];spell_choice=chariot'>Summon Chariot</A> (1/1)<BR>
 			<I>Summon the most badass ride in all of wizardry. It can phase through walls, and is just badass.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=noclothes'>Remove Clothes Requirement</A> <b>Warning: this takes away 2 spell choices.</b><BR>
 			<HR>

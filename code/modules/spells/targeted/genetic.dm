@@ -28,6 +28,7 @@ code\game\dna\genes\goon_powers.dm
 	return
 
 /atom/movable/spell/targeted/genetic/blind
+	name = "Blind"
 	disabilities = 1
 	duration = 300
 
