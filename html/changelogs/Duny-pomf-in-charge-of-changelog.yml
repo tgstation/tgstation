@@ -10,3 +10,4 @@ changes:
   - tweak: Replaced the plastic flaps in cargo with a better-placed pair of airtight ones
   - tweak: Added an high-res forensic scanning computer
   - bugfix: Various little fixes to areas everywhere
+  - wip: Added a construction area leading to space below engineering (meant for the singularity), however the airlock is not functional for now (doors are unlocked though)
