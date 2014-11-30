@@ -1,4 +1,4 @@
-/obj/machinery/disease2/incubator/
+/obj/machinery/disease2/incubator
 	name = "Pathogenic incubator"
 	density = 1
 	anchored = 1

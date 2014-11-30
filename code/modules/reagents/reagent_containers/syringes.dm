@@ -191,7 +191,7 @@
 
 				if(isobj(target))
 					// /vg/: Logging transfers of bad things
-					if(target.reagents_to_log.len)
+					if(target.reagents_to_log && target.reagents_to_log.len)
 						var/list/badshit=list()
 						for(var/bad_reagent in target.reagents_to_log)
 							if(reagents.has_reagent(bad_reagent))
