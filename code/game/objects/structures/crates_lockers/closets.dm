@@ -297,8 +297,8 @@
 	if(istype(user.loc, /obj/structure/closet/critter) && !welded)
 		breakout_time = 0.75 //45 seconds if it's an unwelded critter crate
 
-	if(opened || (!welded && !locked))
-		return  //Door's open, not locked or welded, no point in resisting.
+	if( opened || (!welded && !locked && !istype(src.loc, /obj/mecha)) )
+		return  //Door's open, not locked or welded or inside a mech, no point in resisting.
 
 	//okay, so the closet is either welded or locked... resist!!!
 	user.changeNext_move(CLICK_CD_BREAKOUT)
@@ -307,7 +307,7 @@
 	for(var/mob/O in viewers(src))
 		O << "<span class='warning'>[src] begins to shake violently!</span>"
 	if(do_after(user,(breakout_time*60*10))) //minutes * 60seconds * 10deciseconds
-		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded))
+		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded && !istype(src.loc, /obj/mecha)) )
 			return
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
 
@@ -319,6 +319,8 @@
 		if(istype( src.loc, /obj/structure/bigDelivery))
 			var/obj/structure/bigDelivery/D = src.loc
 			qdel(D)
+		else if(istype( src.loc, /obj/mecha))
+			src.loc = get_turf(src.loc)
 		open()
 	else
 		user << "<span class='warning'>You fail to break out of [src]!</span>"
