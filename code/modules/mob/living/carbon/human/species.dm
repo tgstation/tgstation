@@ -617,19 +617,19 @@
 	if(H.status_flags & GOTTAGOFAST)
 		mspeed -= 1
 
-	if(!has_gravity(H))
+	var/hasjetpack = 0
+	if(istype(H.back, /obj/item/weapon/tank/jetpack))
+		var/obj/item/weapon/tank/jetpack/J = H.back
+		if(J.allow_thrust(0.01, H))
+			hasjetpack = 1
+
+	if(!has_gravity(H) && !hasjetpack)
 		mspeed += 1.5 //Carefully propelling yourself along the walls is actually quite slow
 
-		if(istype(H.back, /obj/item/weapon/tank/jetpack))
-			var/obj/item/weapon/tank/jetpack/J = H.back
-			if(J.allow_thrust(0.01, H))
-				mspeed -= 2.5
 
 		if(H.l_hand) //Having your hands full makes movement harder when you're weightless. You try climbing around while holding a gun!
 			mspeed += 0.5
 		if(H.r_hand)
-			mspeed += 0.5
-		if(H.r_hand && H.l_hand)
 			mspeed += 0.5
 
 	var/health_deficiency = (100 - H.health + H.staminaloss)
