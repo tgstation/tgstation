@@ -324,8 +324,8 @@
 	placed.underlays += turfs_underlays
 
 //atom creation method that preloads variables before creation
-/atom/New(atom/loc, dmm_suite/preloader/_dmm_preloader)
-	if(istype(_dmm_preloader, /dmm_suite/preloader))
+/atom/New(atom/loc, dmm_suite/preloader/_dmm_preloader = null)
+	if(_dmm_preloader)
 		_dmm_preloader.load(src)
 	. = ..()
 
