@@ -11,3 +11,4 @@ changes:
   - tweak: Added an high-res forensic scanning computer
   - bugfix: Various little fixes to areas everywhere
   - wip: Added a construction area leading to space below engineering (meant for the singularity), however the airlock is not functional for now (doors are unlocked though)
+  - tweak: Virology starts with 3 random virus samples
