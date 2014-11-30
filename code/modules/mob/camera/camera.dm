@@ -9,3 +9,9 @@
 	invisibility = 101 // No one can see us
 
 	move_on_shuttle = 0
+
+/mob/new_player/cultify()
+	return
+
+/mob/camera/singuloCanEat()
+	return 0

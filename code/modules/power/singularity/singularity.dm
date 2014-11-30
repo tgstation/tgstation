@@ -1,12 +1,15 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 // Added spess ghoasts/cameras to this so they don't add to the lag. - N3X.
-var/global/list/uneatable = list(
-	/obj/effect/overlay,
-	/mob/dead,
-	/mob/camera,
-	/mob/new_player
-	)
+
+//Added a singuloCanEat proc to atoms. This list is now kinda obsolete.
+//var/global/list/uneatable = list(
+//	/obj/effect/overlay,
+//	/mob/dead,
+//	/mob/camera,
+//	/mob/new_player,
+//	)
+
 
 /obj/machinery/singularity/
 	name = "Gravitational Singularity"
@@ -35,6 +38,8 @@ var/global/list/uneatable = list(
 	var/target = null // Its target. Moves towards the target if it has one.
 	var/last_failed_movement = 0 // Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing.
 	var/last_warning
+
+	var/chained = 0//Adminbus chain-grab
 
 /obj/machinery/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
 	// CARN: admin-alert for chuckle-fuckery.
@@ -140,6 +145,9 @@ var/global/list/uneatable = list(
 			dissipate_delay = 10
 			dissipate_track = 0
 			dissipate_strength = 1
+			overlays = 0
+			if(chained)
+				overlays = "chain_s1"
 			visible_message("<span class='notice'>The singularity has shrunk to a rather pitiful size.</span>")
 		if (3) // 1 to 3 does not check for the turfs if you put the gens right next to a 1x1 then its going to eat them.
 			name = "Gravitational Singularity"
@@ -154,6 +162,9 @@ var/global/list/uneatable = list(
 			dissipate_delay = 5
 			dissipate_track = 0
 			dissipate_strength = 5
+			overlays = 0
+			if(chained)
+				overlays = "chain_s3"
 			if(growing)
 				visible_message("<span class='notice'>The singularity noticeably grows in size.</span>")
 			else
@@ -172,6 +183,9 @@ var/global/list/uneatable = list(
 				dissipate_delay = 4
 				dissipate_track = 0
 				dissipate_strength = 20
+				overlays = 0
+				if(chained)
+					overlays = "chain_s5"
 				if(growing)
 					visible_message("<span class='notice'>The singularity expands to a reasonable size.</span>")
 				else
@@ -190,6 +204,9 @@ var/global/list/uneatable = list(
 				dissipate_delay = 10
 				dissipate_track = 0
 				dissipate_strength = 10
+				overlays = 0
+				if(chained)
+					overlays = "chain_s7"
 				if(growing)
 					visible_message("<span class='warning'>The singularity expands to a dangerous size.</span>")
 				else
@@ -205,20 +222,27 @@ var/global/list/uneatable = list(
 			grav_pull = 10
 			consume_range = 4
 			dissipate = 0 // It cant go smaller due to e loss.
-			visible_message("<span class='danger'><font size='2'>The singularity has grown out of control!</font></span>")
-
+			overlays = 0
+			if(chained)
+				overlays = "chain_s9"
+			if(growing)
+				visible_message("<span class='danger'><font size='2'>The singularity has grown out of control!</font></span>")
+			else
+				visible_message("<span class='warning'>The singularity miraculously reduces in size and loses its supermatter properties.</span>")
 		if(11)//SUPERSINGULO
 			name = "Super Gravitational Singularity"
 			desc = "A Gravitational Singularity with the properties of supermatter. <b>It has the power to destroy worlds.</b>"
 			current_size = 11
 			icon = 'icons/effects/352x352.dmi'
-			icon_state = "singularity_s11"
+			icon_state = "singularity_s11"//uh, whoever drew that, you know that black holes are supposed to look dark right? What's this, the clown's singulo?
 			pixel_x = -160
 			pixel_y = -160
 			grav_pull = 16
 			consume_range = 5
 			dissipate = 0 //It cant go smaller due to e loss
 			event_chance = 25 //Events will fire off more often.
+			if(chained)
+				overlays = "chain_s9"
 			visible_message("<span class='sinister'><font size='3'>You witness the creation of a destructive force that cannot possibly be stopped by human hands.</font></span>")
 
 	if (current_size == allowed_size)
@@ -282,13 +306,17 @@ var/global/list/uneatable = list(
 	return 0
 
 /obj/machinery/singularity/proc/consume(const/atom/A)
-	if (is_type_in_list(A, uneatable))
+	if(!(A.singuloCanEat()))
 		return 0
 
 	var/gain = 0
 
 	if (istype(A, /mob/living)) // Mobs get gibbed.
 		var/mob/living/M = A
+
+		if(M.flags & INVULNERABLE)
+			return 0
+
 		gain = 20
 
 		if (istype(M,/mob/living/carbon/human))
@@ -314,6 +342,11 @@ var/global/list/uneatable = list(
 			var/dist = max((current_size - 2), 1)
 			explosion(get_turf(src), dist, dist * 2, dist * 4)
 			return
+
+		if (isbot(A))
+			var/obj/machinery/bot/B = A
+			if(B.flags & INVULNERABLE)
+				return
 
 		if(istype(A, /obj/machinery/power/supermatter))//NOW YOU REALLY FUCKED UP
 			if(istype(A, /obj/machinery/power/supermatter/shard))
@@ -348,7 +381,7 @@ var/global/list/uneatable = list(
 				continue
 
 			if (dist > consume_range && canPull(AM))
-				if (is_type_in_list(AM, uneatable))
+				if(!(AM.singuloCanEat()))
 					continue
 
 				if (101 == AM.invisibility)
@@ -493,6 +526,8 @@ var/global/list/uneatable = list(
 		radiation = round(((src.energy-150)/50)*5,1)
 		radiationmin = round((radiation/5),1)//
 	for(var/mob/living/M in view(toxrange, src.loc))
+		if(M.flags & INVULNERABLE)
+			continue
 		M.apply_effect(rand(radiationmin,radiation), IRRADIATE)
 		toxdamage = (toxdamage - (toxdamage*M.getarmor(null, "rad")))
 		M.apply_effect(toxdamage, TOX)
@@ -503,7 +538,8 @@ var/global/list/uneatable = list(
 	for(var/mob/living/carbon/M in oviewers(8, src))
 		if(istype(M, /mob/living/carbon/brain)) //Ignore brains
 			continue
-
+		if(M.flags & INVULNERABLE)
+			continue
 		if(M.stat == CONSCIOUS)
 			if (istype(M,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
@@ -540,3 +576,28 @@ var/global/list/uneatable = list(
 		if (get_dist(R, src) <= 15) // Better than using orange() every process.
 			R.receive_pulse(energy)
 
+/obj/machinery/singularity/proc/on_capture()
+	chained = 1
+	overlays = 0
+	move_self = 0
+	switch (current_size)
+		if(1)
+			overlays += image('icons/obj/singularity.dmi',"chain_s1")
+		if(3)
+			overlays += image('icons/effects/96x96.dmi',"chain_s3")
+		if(5)
+			overlays += image('icons/effects/160x160.dmi',"chain_s5")
+		if(7)
+			overlays += image('icons/effects/224x224.dmi',"chain_s7")
+		if(9)
+			overlays += image('icons/effects/288x288.dmi',"chain_s9")
+
+/obj/machinery/singularity/proc/on_release()
+	chained = 0
+	overlays = 0
+	move_self = 1
+
+/obj/machinery/singularity/cultify()
+	var/dist = max((current_size - 2), 1)
+	explosion(get_turf(src), dist, dist * 2, dist * 4)
+	del(src)

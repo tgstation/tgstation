@@ -99,6 +99,9 @@
 	return
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity)
+	if(flags & INVULNERABLE)
+		return
+
 	switch(severity)
 		if(1.0)
 			gib()

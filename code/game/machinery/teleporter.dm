@@ -153,6 +153,7 @@
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 2000
+	var/engaged = 0
 
 	machine_flags = SCREWTOGGLE | CROWDESTROY
 
@@ -189,7 +190,7 @@
 
 /obj/machinery/teleport/hub/Bumped(M as mob|obj)
 	spawn()
-		if (src.icon_state == "tele1")
+		if (src.engaged)
 			teleport(M)
 			use_power(5000)
 	return
@@ -367,7 +368,9 @@ obj/machinery/teleport/station/New()
 	var/atom/l = src.loc
 	var/atom/com = locate(/obj/machinery/teleport/hub, locate(l.x + 1, l.y, l.z))
 	if (com)
-		com.icon_state = "tele1"
+		var/obj/machinery/teleport/hub/H = com
+		H.engaged = 1
+		H.icon_state = "tele1"
 		use_power(5000)
 		for(var/mob/O in hearers(src, null))
 			O.show_message("\blue Teleporter engaged!", 2)
@@ -382,7 +385,9 @@ obj/machinery/teleport/station/New()
 	var/atom/l = src.loc
 	var/atom/com = locate(/obj/machinery/teleport/hub, locate(l.x + 1, l.y, l.z))
 	if (com)
-		com.icon_state = "tele0"
+		var/obj/machinery/teleport/hub/H = com
+		H.engaged = 0
+		H.icon_state = "tele0"
 		for(var/mob/O in hearers(src, null))
 			O.show_message("\blue Teleporter disengaged!", 2)
 	src.add_fingerprint(usr)

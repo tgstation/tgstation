@@ -65,6 +65,8 @@
 	return absorb
 
 /mob/living/hitby(atom/movable/AM as mob|obj,var/speed = 5)//Standardization and logging -Sieve
+	if(flags & INVULNERABLE)
+		return
 	if(istype(AM,/obj/))
 		var/obj/O = AM
 		var/zone = ran_zone("chest",75)//Hits a random part of the body, geared towards the chest
@@ -153,6 +155,8 @@
     fire_stacks = Clamp(fire_stacks + add_fire_stacks, min = -20, max = 20)
 
 /mob/living/proc/handle_fire()
+	if((flags & INVULNERABLE) && on_fire)
+		extinguish()
 	if(fire_stacks < 0)
 		fire_stacks++ //If we've doused ourselves in water to avoid fire, dry off slowly
 		fire_stacks = min(0, fire_stacks)//So we dry ourselves back to default, nonflammable.

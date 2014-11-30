@@ -30,6 +30,10 @@
 	manual_unbuckle(user)
 	return
 
+/obj/structure/stool/bed/attack_animal(mob/user as mob)
+	manual_unbuckle(user)
+	return
+
 /obj/structure/stool/bed/attack_robot(mob/user as mob)
 	manual_unbuckle(user)
 	return

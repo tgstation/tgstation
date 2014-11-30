@@ -197,8 +197,8 @@ var/global/floorIsLava = 0
 			<b>Other actions:</b>
 			<br>
 			<A href='?src=\ref[src];forcespeech=\ref[M]'>Forcesay</A> |
-			<A href='?src=\ref[src];tdome1=\ref[M]'>Thunderdome 1</A> |
-			<A href='?src=\ref[src];tdome2=\ref[M]'>Thunderdome 2</A> |
+			<A href='?src=\ref[src];tdome1=\ref[M]'>Thunderdome Green</A> |
+			<A href='?src=\ref[src];tdome2=\ref[M]'>Thunderdome Red</A> |
 			<A href='?src=\ref[src];tdomeadmin=\ref[M]'>Thunderdome Admin</A> |
 			<A href='?src=\ref[src];tdomeobserve=\ref[M]'>Thunderdome Observer</A> |
 		"}
@@ -649,6 +649,21 @@ var/global/floorIsLava = 0
 	if(!check_rights(0))	return
 
 	var/dat = "<B>The first rule of adminbuse is: you don't talk about the adminbuse.</B><HR>"
+
+	if(check_rights(R_FUN,0) || check_rights(R_ADMINBUS,0))
+		dat += {"
+			<B>Fourth-Wall Demolition</B><BR>
+			<BR>
+			"}
+	if(check_rights(R_ADMINBUS,0))
+		dat += {"
+			<A href='?src=\ref[src];secretsfun=spawnadminbus'>Spawn an Adminbus</A><BR>
+			"}
+	if(check_rights(R_FUN,0))
+		dat += {"
+			<A href='?src=\ref[src];secretsfun=spawnselfdummy'>Spawn yourself as a Test Dummy</A><BR>
+			<BR>
+			"}
 
 	if(check_rights(R_ADMIN,0))
 		dat += {"

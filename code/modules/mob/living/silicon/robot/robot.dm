@@ -432,6 +432,8 @@
 		src << "\red You enable [C.name]."
 
 /mob/living/silicon/robot/blob_act()
+	if(flags & INVULNERABLE)
+		return
 	if (stat != 2)
 		adjustBruteLoss(60)
 		updatehealth()
@@ -528,6 +530,10 @@
 
 
 /mob/living/silicon/robot/ex_act(severity)
+	if(flags & INVULNERABLE)
+		src << "The bus' robustness protects you from the explosion."
+		return
+
 	if(!blinded)
 		flick("flash", flash)
 
@@ -550,6 +556,8 @@
 
 
 /mob/living/silicon/robot/meteorhit(obj/O as obj)
+	if(flags & INVULNERABLE)
+		return
 	for(var/mob/M in viewers(src, null))
 		M.show_message(text("\red [src] has been hit by [O]"), 1)
 		//Foreach goto(19)

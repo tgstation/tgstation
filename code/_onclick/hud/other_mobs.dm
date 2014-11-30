@@ -13,7 +13,7 @@
 
 	mymob.client.screen += list(mymob.visible)
 
-/datum/hud/proc/corgi_hud(u)
+/datum/hud/proc/corgi_hud()
 	mymob.fire = new /obj/screen()
 	mymob.fire.icon = 'icons/mob/screen1_corgi.dmi'
 	mymob.fire.icon_state = "fire0"

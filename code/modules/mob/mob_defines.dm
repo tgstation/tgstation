@@ -151,6 +151,7 @@
 	var/seer = 0 //for cult//Carbon, probably Human
 
 	var/datum/hud/hud_used = null
+	var/datum/ui_icons/gui_icons = null
 
 	var/list/grabbed_by = list(  )
 	var/list/requests = list(  )
@@ -252,3 +253,8 @@
 	// /vg/ - Prevent mobs from being moved by a client.
 	var/deny_client_move = 0
 	var/incorporeal_move = 0
+
+	//Keeps track of where the mob was spawned. Mostly for teleportation purposes. and no, using initial() doesn't work.
+	var/origin_x = 0
+	var/origin_y = 0
+	var/origin_z = 0

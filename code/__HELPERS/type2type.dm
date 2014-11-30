@@ -257,6 +257,7 @@ proc/tg_list2text(list/list, glue=",")
 	if(rights & R_SOUNDS)		. += "[seperator]+SOUND"
 	if(rights & R_SPAWN)		. += "[seperator]+SPAWN"
 	if(rights & R_MOD)			. += "[seperator]+MODERATOR"
+	if(rights & R_ADMINBUS)		. += "[seperator]+ADMINBUS"
 	return .
 
 /proc/ui_style2icon(ui_style)
