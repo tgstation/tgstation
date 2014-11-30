@@ -316,6 +316,9 @@
 		broken = 1 //applies to secure lockers only
 		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
 		user << "<span class='notice'>You successfully break out of [src]!</span>"
+		if(istype( src.loc, /obj/structure/bigDelivery))
+			var/obj/structure/bigDelivery/D = src.loc
+			qdel(D)
 		open()
 	else
 		user << "<span class='warning'>You fail to break out of [src]!</span>"
