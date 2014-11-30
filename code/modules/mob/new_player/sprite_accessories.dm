@@ -34,6 +34,9 @@
 	// Whether or not the accessory can be affected by colouration
 	var/do_colouration = 1
 
+	// If the hair-style has parts that aren't affected by colouration (stored on a second sprite)
+	var/additional_accessories = 0
+
 	var/flags = 0
 
 
@@ -332,10 +335,17 @@
 		icon_state = "hair_scully"
 		gender = FEMALE
 
+	marisa
+		name = "Marisa"
+		icon_state = "hair_marisa"
+		gender = FEMALE
+		additional_accessories = 1
+
 	nitori
 		name = "Nitori"
 		icon_state = "hair_nitori"
 		gender = FEMALE
+		additional_accessories = 1
 
 	joestar
 		name = "Joestar"

@@ -189,7 +189,7 @@
 		return
 
 	// Advance plant age.
-	if(prob(30)) age += 1 * HYDRO_SPEED_MULTIPLIER
+	if(prob(80)) age += 1 * HYDRO_SPEED_MULTIPLIER
 
 	//Highly mutable plants have a chance of mutating every tick.
 	if(seed.immutable == -1)

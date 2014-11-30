@@ -65,7 +65,7 @@
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
-	var/list/cultists_possible = get_players_for_role(BE_CULTIST)
+	var/list/cultists_possible = get_players_for_role(ROLE_CULTIST)
 	for(var/datum/mind/player in cultists_possible)
 		for(var/job in restricted_jobs)//Removing heads and such from the list
 			if(player.assigned_role == job)
@@ -171,7 +171,7 @@
 	if (!word)
 		word=pick(allwords)
 	var/wordexp = "[cultwords[word]] is [word]..."
-	cult_mob << "\red You remember one thing from the dark teachings of your master... [wordexp]"
+	cult_mob << "<span class='sinister'>You remember one thing from the dark teachings of your master... [wordexp]</span>"
 	cult_mob.mind.store_memory("<B>You remember that</B> [wordexp]", 0, 0)
 
 

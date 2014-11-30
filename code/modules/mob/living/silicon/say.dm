@@ -35,7 +35,7 @@
 			message = copytext(message, 3)
 			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 			/*if(istype(src, /mob/living/silicon/robot/mommi))
-				src << "Your binary communication device can only receive data, it is not meant to send any."
+				src << "Your binary communication device is set to receive only."
 				return*/
 
 			// TODO: move the component system up to silicon so we don't have to use this ugly hack..

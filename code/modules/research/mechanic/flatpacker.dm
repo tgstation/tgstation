@@ -89,49 +89,6 @@ obj/machinery/r_n_d/fabricator/mechanic_fab/flatpacker/build_part(var/datum/desi
 	src.busy = 0
 	return 1
 
-//returns the required materials for the parts of a machine design
-/obj/machinery/r_n_d/fabricator/mechanic_fab/flatpacker/Gen_Mat_Reqs(var/obj/machinery/machine, var/datum/design/mechanic_design/design)
-	if(!machine)
-		message_admins("We couldn't find something in part checking, how did this happen?")
-		return
-
-	if(machine in typesof(/obj/machinery/computer)) //istype does not work. Since it's a path, this does
-		design.materials["$iron"] += 15000
-		var/datum/design/circuit_design = FindDesign(design.connected_circuit)
-		if(circuit_design)
-			//message_admins("Found the circuit design")
-			circuit_design = new circuit_design
-			for(var/matID in circuit_design.materials)
-				if(copytext(matID,1,2) == "$")
-					design.materials[matID] += circuit_design.materials[matID]
-			del(circuit_design)
-		else
-			design.materials["$glass"] += 2000
-			//message_admins("Couldn't find the board")
-		return 1
-
-	var/obj/machinery/test_machine = new machine
-	//why do we instance?
-	//because components are generated in New()
-
-	design.materials["$iron"] += 15000 //base costs, the best costs
-	for(var/obj/item/thispart in test_machine.component_parts)
-		//message_admins("We're trying to find the design for [thispart]")
-		var/datum/design/part_design = FindDesign(thispart)
-		if(!part_design)
-			design.materials["$iron"] += rand(50, 500)
-			design.materials["$glass"] += rand(20, 300)
-			continue
-		//message_admins("We found the design!")
-		part_design = new part_design
-		var/list/fetched_materials = part_design.materials
-		for(var/matID in fetched_materials)
-			if(copytext(matID,1,2) == "$")
-				design.materials[matID] += fetched_materials[matID]
-		del(part_design)
-	qdel(test_machine)
-	return 1
-
 /obj/machinery/r_n_d/fabricator/mechanic_fab/flatpacker/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	..()
 	if (O.is_open_container())

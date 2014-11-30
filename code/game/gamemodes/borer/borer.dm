@@ -32,7 +32,7 @@
 	// also make sure that there's at least one borer and one host
 	recommended_enemies = max(src.num_players() / 20 * 2, 2)
 
-	var/list/datum/mind/possible_borers = get_players_for_role(BE_ALIEN)
+	var/list/datum/mind/possible_borers = get_players_for_role(ROLE_BORER)
 
 	if(possible_borers.len < 2)
 		log_admin("MODE FAILURE: BORER. NOT ENOUGH BORER CANDIDATES.")
@@ -70,7 +70,6 @@
 /datum/game_mode/borer/pre_setup()
 	return 1
 
-
 /datum/game_mode/borer/post_setup()
 	// create a borer and enter it
 	for(var/datum/mind/borer in borers)
@@ -98,7 +97,6 @@
 			first_hosts.Remove(first_host)
 
 		M.perform_infestation(first_host.current)
-		forge_borer_objectives(borer, first_host)
 
 		del(original)
 
@@ -107,16 +105,6 @@
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()
 	..()
-	return
-
-/datum/game_mode/proc/greet_borer(var/datum/mind/borer, var/you_are=1)
-	if (you_are)
-		borer.current << "<B>\red You are a Cortical Borer!</B>"
-
-	var/obj_count = 1
-	for(var/datum/objective/objective in borer.objectives)
-		borer.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-		obj_count++
 	return
 
 /datum/game_mode/borer/check_finished()
@@ -161,12 +149,3 @@
 			world << "<B>The borer has failed!<B>"
 			feedback_add_details("borer_success","FAIL")
 	return 1
-
-/datum/game_mode/proc/forge_borer_objectives(var/datum/mind/borer, var/datum/mind/first_host)
-	var/datum/objective/survive/survive_objective = new
-	survive_objective.owner = borer
-	borer.objectives += survive_objective
-
-	greet_borer(borer)
-
-	return

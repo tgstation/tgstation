@@ -5,6 +5,7 @@
 /datum/data/vending_product
 	var/product_name = "generic"
 	var/product_path = null
+	var/original_amount = 0
 	var/amount = 0
 	var/price = 0
 	var/display_color = "blue"
@@ -23,10 +24,11 @@
 */
 
 /obj/machinery/vending
-	name = "Vendomat"
-	desc = "A generic vending machine."
+	name = "Empty vending machine"
+	desc = "Just add some capitalism."
 	icon = 'icons/obj/vending.dmi'
-	icon_state = "generic"
+	icon_state = "empty"
+	var/obj/structure/vendomatpack/pack = null
 	layer = 2.9
 	anchored = 1
 	density = 1
@@ -62,8 +64,9 @@
 	var/scan_id = 1
 	var/obj/item/weapon/coin/coin
 	var/datum/wires/vending/wires = null
+	var/list/overlays_vending[2]//1 is the panel layer, 2 is the dangermode layer
 
-	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK // | CROWDESTROY
+	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY
 
 	var/obj/machinery/account_database/linked_db
 	var/datum/money_account/linked_account
@@ -74,6 +77,18 @@
 
 /obj/machinery/vending/New()
 	..()
+
+	overlays_vending[1] = "[icon_state]-panel"
+
+	component_parts = newlist(\
+		/obj/item/weapon/circuitboard/vendomat,\
+		/obj/item/weapon/stock_parts/matter_bin,\
+		/obj/item/weapon/stock_parts/manipulator,\
+		/obj/item/weapon/stock_parts/scanning_module\
+	)
+
+	RefreshParts()
+
 	wires = new(src)
 	spawn(4)
 		src.slogan_list = text2list(src.product_slogans, ";")
@@ -107,6 +122,61 @@
 	cvc.premium = premium
 */
 	..()
+
+/obj/machinery/vending/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+	if(stat & (BROKEN|NOPOWER))
+		return
+
+	if(istype(O,/obj/structure/vendomatpack))
+		var/obj/structure/vendomatpack/P = O
+		if(!anchored)
+			user << "<span class='warning'>You need to anchor the vending machine before you can refill it.</span>"
+			return
+		if(!pack)
+			user << "<span class='notice'>You start filling the vending machine with the recharge pack's materials.</span>"
+			var/user_loc = user.loc
+			var/pack_loc = P.loc
+			var/self_loc = src.loc
+			sleep(30)
+			if(!user || !P || !src)
+				return
+			if (user.loc == user_loc && P.loc == pack_loc && anchored && self_loc == src.loc && !(user.stat) && (!user.stunned && !user.weakened && !user.paralysis && !user.lying))
+				var/obj/machinery/vending/newmachine = new P.targetvendomat(loc)
+				user << "<span class='notice'>\icon[newmachine] You finish filling the vending machine, and use the stickers inside the pack to decorate the frame.</span>"
+				playsound(newmachine, 'sound/machines/hiss.ogg', 50, 0, 0)
+				newmachine.pack = P.type
+				var/obj/item/emptyvendomatpack/emptypack = new /obj/item/emptyvendomatpack(P.loc)
+				emptypack.icon_state = P.icon_state
+				emptypack.overlays += image('icons/obj/vending_pack.dmi',"emptypack")
+				qdel(P)
+				if(user.machine==src)
+					newmachine.attack_hand(user)
+				component_parts = 0
+				qdel(src)
+		else
+			if(istype(P,pack))
+				user << "<span class='notice'>You start refilling the vending machine with the recharge pack's materials.</span>"
+				var/user_loc = user.loc
+				var/pack_loc = P.loc
+				var/self_loc = src.loc
+				sleep(30)
+				if(!user || !P || !src)
+					return
+				if (user.loc == user_loc && P.loc == pack_loc && anchored && self_loc == src.loc && !(user.stat) && (!user.stunned && !user.weakened && !user.paralysis && !user.lying))
+					user << "<span class='notice'>\icon[src] You finish refilling the vending machine.</span>"
+					playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+					for (var/datum/data/vending_product/D in product_records)
+						D.amount = D.original_amount
+					for (var/datum/data/vending_product/D in hidden_records)
+						D.amount = D.original_amount
+					var/obj/item/emptyvendomatpack/emptypack = new /obj/item/emptyvendomatpack(P.loc)
+					emptypack.icon_state = P.icon_state
+					emptypack.overlays += image('icons/obj/vending_pack.dmi',"emptypack")
+					qdel(P)
+					if(user.machine==src)
+						src.attack_hand(user)
+			else
+				user << "<span class='warning'>This recharge pack isn't meant for this kind of vending machines.</span>"
 
 /obj/machinery/vending/proc/reconnect_database()
 	for(var/obj/machinery/account_database/DB in world)
@@ -146,6 +216,7 @@
 		var/datum/data/vending_product/R = new /datum/data/vending_product()
 		R.product_path = typepath
 		R.amount = amount
+		R.original_amount = amount
 		R.price = price
 		R.display_color = pick("red","blue","green")
 
@@ -582,6 +653,18 @@
 		throw_item.throw_at(target, 16, 3)
 	src.visible_message("\red <b>[src] launches [throw_item.name] at [target.name]!</b>")
 	return 1
+
+/obj/machinery/vending/update_icon()
+	if(panel_open)
+		overlays += overlays_vending[1]
+	else
+		overlays -= overlays_vending[1]
+
+	overlays -= overlays_vending[2]
+	if(emagged)
+		overlays += overlays_vending[2]
+
+
 /*
  * Vending machine types
  */
@@ -632,12 +715,17 @@
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"
 	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
 	req_access_txt = "25"
+	pack = /obj/structure/vendomatpack/boozeomat
 
 /obj/machinery/vending/assist
+	name = "Vendomat"
+	desc = "A generic vending machine."
+	icon_state = "generic"
 	products = list(	/obj/item/device/assembly/prox_sensor = 5,/obj/item/device/assembly/igniter = 3,/obj/item/device/assembly/signaler = 4,
 						/obj/item/weapon/wirecutters = 1, /obj/item/weapon/cartridge/signal = 4)
 	contraband = list(/obj/item/device/flashlight = 5,/obj/item/device/assembly/timer = 2)
 	product_ads = "Only the finest!;Have some tools.;The most robust equipment.;The finest gear in space!"
+	pack = /obj/structure/vendomatpack/assist
 
 /obj/machinery/vending/coffee
 	name = "Hot Drinks machine"
@@ -650,6 +738,7 @@
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/ice = 10)
 	prices = list(/obj/item/weapon/reagent_containers/food/drinks/coffee = 25, /obj/item/weapon/reagent_containers/food/drinks/tea = 25, /obj/item/weapon/reagent_containers/food/drinks/h_chocolate = 25)
 
+	pack = /obj/structure/vendomatpack/coffee
 
 
 
@@ -669,6 +758,7 @@
 					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 25,
 					/obj/item/weapon/reagent_containers/food/snacks/bustanuts = 0)
 
+	pack = /obj/structure/vendomatpack/snack
 
 
 /obj/machinery/vending/cola
@@ -685,6 +775,8 @@
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/dr_gibb = 20,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/starkist = 20,
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up = 20)
 
+	pack = /obj/structure/vendomatpack/cola
+
 //This one's from bay12
 /obj/machinery/vending/cart
 	name = "PTech"
@@ -696,6 +788,7 @@
 					/obj/item/weapon/cartridge/janitor = 10,/obj/item/weapon/cartridge/signal/toxins = 10,/obj/item/device/pda/heads = 10,
 					/obj/item/weapon/cartridge/captain = 3,/obj/item/weapon/cartridge/quartermaster = 10)
 
+	pack = /obj/structure/vendomatpack/undefined
 
 /obj/machinery/vending/cigarette
 	name = "Cigarette machine" //OCD had to be uppercase to look nice with the new formating
@@ -709,6 +802,7 @@
 	premium = list(/obj/item/clothing/mask/cigarette/cigar/havana = 2)
 	prices = list(/obj/item/weapon/storage/fancy/cigarettes = 60,/obj/item/weapon/storage/box/matches = 10,/obj/item/weapon/lighter/random = 60)
 
+	pack = /obj/structure/vendomatpack/cigarette
 
 /obj/machinery/vending/medical
 	name = "NanoMed Plus"
@@ -730,6 +824,7 @@
 		/obj/item/weapon/reagent_containers/dropper = 2)
 	contraband = list(/obj/item/weapon/reagent_containers/pill/tox = 3,/obj/item/weapon/reagent_containers/pill/stox = 4,/obj/item/weapon/reagent_containers/pill/antitox = 6)
 
+	pack = /obj/structure/vendomatpack/medical
 
 //This one's from bay12
 /obj/machinery/vending/plasmaresearch
@@ -739,27 +834,248 @@
 					/obj/item/device/transfer_valve = 6,/obj/item/device/assembly/timer = 6,/obj/item/device/assembly/signaler = 6,
 					/obj/item/device/assembly/prox_sensor = 6,/obj/item/device/assembly/igniter = 6)
 
+	pack = /obj/structure/vendomatpack/undefined
+
 /obj/machinery/vending/wallmed1
 	name = "NanoMed"
 	desc = "Wall-mounted Medical Equipment dispenser."
 	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?"
 	icon_state = "wallmed"
 	icon_deny = "wallmed-deny"
-	req_access_txt = "5"
+	//req_access_txt = "5"
 	density = 0 //It is wall-mounted, and thus, not dense. --Superxpdude
 	products = list(/obj/item/stack/medical/bruise_pack = 2,/obj/item/stack/medical/ointment = 2,/obj/item/weapon/reagent_containers/syringe/inaprovaline = 4,/obj/item/device/healthanalyzer = 1)
 	contraband = list(/obj/item/weapon/reagent_containers/syringe/antitoxin = 4,/obj/item/weapon/reagent_containers/syringe/antiviral = 4,/obj/item/weapon/reagent_containers/pill/tox = 1)
+
+	pack = /obj/structure/vendomatpack/medical//can be reloaded with NanoMed Plus packs
+	component_parts = 0
 
 /obj/machinery/vending/wallmed2
 	name = "NanoMed"
 	desc = "Wall-mounted Medical Equipment dispenser."
 	icon_state = "wallmed"
 	icon_deny = "wallmed-deny"
-	req_access_txt = "5"
+	//req_access_txt = "5"
 	density = 0 //It is wall-mounted, and thus, not dense. --Superxpdude
 	products = list(/obj/item/weapon/reagent_containers/syringe/inaprovaline = 5,/obj/item/weapon/reagent_containers/syringe/antitoxin = 3,/obj/item/stack/medical/bruise_pack = 3,
 					/obj/item/stack/medical/ointment =3,/obj/item/device/healthanalyzer = 3)
 	contraband = list(/obj/item/weapon/reagent_containers/pill/tox = 3)
+	component_parts = 0
+
+	pack = /obj/structure/vendomatpack/medical//can be reloaded with NanoMed Plus packs
+
+////////WALL-MOUNTED NANOMED FRAME//////
+/obj/item/wallmed_frame
+	name = "NanoMed frame"
+	desc = "Wall-mounted Medical Equipment dispenser."
+	icon = 'icons/obj/vending.dmi'
+	icon_state = "wallmed_frame0"
+	flags = FPRINT | TABLEPASS | CONDUCT
+
+/obj/item/wallmed_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
+	if (istype(W, /obj/item/weapon/wrench))
+		new /obj/item/stack/sheet/metal( get_turf(src.loc), 3 )
+		del(src)
+
+/obj/item/wallmed_frame/proc/try_build(turf/on_wall)
+	if (get_dist(on_wall,usr)>1)
+		return
+	var/ndir = get_dir(usr,on_wall)
+	if (!(ndir in cardinal))
+		return
+	var/turf/loc = get_turf(usr)
+	if (!istype(loc, /turf/simulated/floor))
+		usr << "<span class='warning'>[src] cannot be placed on this spot.</span>"
+		return
+	new /obj/machinery/wallmed_frame(loc, ndir)
+	del(src)
+
+/obj/machinery/vending/wallmed1/New(turf/loc)
+	..()
+	component_parts = 0
+
+/obj/machinery/vending/wallmed2/New(turf/loc)
+	..()
+	component_parts = 0
+
+/obj/machinery/vending/wallmed1/crowbarDestroy(mob/user)
+	user.visible_message(	"[user] begins to pry out the NanoMed from the wall.",
+							"You begin to pry out the NanoMed from the wall...")
+	if(do_after(user, 40))
+		user.visible_message(	"[user] detaches the NanoMed from the wall.",
+								"You detach the NanoMed from the wall.")
+		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
+		new /obj/item/wallmed_frame(src.loc)
+
+		for(var/obj/I in src)
+			qdel(I)
+
+		new /obj/item/weapon/circuitboard/vendomat(src.loc)
+		new /obj/item/weapon/cable_coil(loc,5)
+
+		return 1
+	return -1
+
+/obj/machinery/vending/wallmed2/crowbarDestroy(mob/user)
+	user.visible_message(	"[user] begins to pry out the NanoMed from the wall.",
+							"You begin to pry out the NanoMed from the wall...")
+	if(do_after(user, 40))
+		user.visible_message(	"[user] detaches the NanoMed from the wall.",
+								"You detach the NanoMed from the wall.")
+		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
+		new /obj/item/wallmed_frame(src.loc)
+
+		for(var/obj/I in src)
+			qdel(I)
+
+		new /obj/item/weapon/circuitboard/vendomat(src.loc)
+		new /obj/item/weapon/cable_coil(loc,5)
+
+		return 1
+	return -1
+
+/obj/machinery/wallmed_frame
+	name = "NanoMed frame"
+	desc = "Wall-mounted Medical Equipment dispenser."
+	icon = 'icons/obj/vending.dmi'
+	icon_state = "wallmed_frame0"
+	anchored = 1
+
+	var/on = 1
+
+	var/build = 0        // Build state
+	var/boardtype=/obj/item/weapon/circuitboard/vendomat
+	var/obj/item/weapon/circuitboard/_circuitboard
+
+/obj/machinery/wallmed_frame/New(turf/loc, var/ndir)
+	..()
+	// offset 32 pixels in direction of dir
+	// this allows the NanoMed to be embedded in a wall, yet still inside an area
+	dir = ndir
+	pixel_x = (dir & 3)? 0 : (dir == 4 ? 30 : -30)
+	pixel_y = (dir & 3)? (dir ==1 ? 30 : -30) : 0
+
+/obj/machinery/wallmed_frame/update_icon()
+	icon_state = "wallmed_frame[build]"
+
+/obj/machinery/wallmed_frame/attackby(var/obj/item/W as obj, var/mob/user as mob)
+	switch(build)
+		if(0) // Empty hull
+			if(istype(W, /obj/item/weapon/screwdriver))
+				usr << "You begin removing screws from \the [src] backplate..."
+				if(do_after(user, 50))
+					usr << "<span class='notice'>You unscrew \the [src] from the wall.</span>"
+					playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
+					new /obj/item/wallmed_frame(get_turf(src))
+					del(src)
+				return 1
+			if(istype(W, /obj/item/weapon/circuitboard))
+				var/obj/item/weapon/circuitboard/C=W
+				if(!(istype(C,/obj/item/weapon/circuitboard/vendomat)))
+					user << "<span class='warning'>You cannot install this type of board into a NanoMed frame.</span>"
+					return
+				usr << "You begin to insert \the [C] into \the [src]."
+				if(do_after(user, 10))
+					usr << "<span class='notice'>You secure \the [C]!</span>"
+					user.drop_item()
+					_circuitboard=C
+					C.loc=src
+					playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
+					build++
+					update_icon()
+				return 1
+		if(1) // Circuitboard installed
+			if(istype(W, /obj/item/weapon/crowbar))
+				usr << "You begin to pry out \the [W] into \the [src]."
+				if(do_after(user, 10))
+					playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
+					build--
+					update_icon()
+					var/obj/item/weapon/circuitboard/C
+					if(_circuitboard)
+						_circuitboard.loc=get_turf(src)
+						C=_circuitboard
+						_circuitboard=null
+					else
+						C=new boardtype(get_turf(src))
+					user.visible_message(\
+						"<span class='warning'>[user.name] has removed \the [C]!</span>",\
+						"You remove \the [C].")
+				return 1
+			if(istype(W, /obj/item/weapon/cable_coil))
+				var/obj/item/weapon/cable_coil/C=W
+				user << "You start adding cables to \the [src]..."
+				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+				if(do_after(user, 20) && C.amount >= 5)
+					C.use(5)
+					build++
+					update_icon()
+					user.visible_message(\
+						"<span class='warning'>[user.name] has added cables to \the [src]!</span>",\
+						"You add cables to \the [src].")
+		if(2) // Circuitboard installed, wired.
+			if(istype(W, /obj/item/weapon/wirecutters))
+				usr << "You begin to remove the wiring from \the [src]."
+				if(do_after(user, 50))
+					new /obj/item/weapon/cable_coil(loc,5)
+					user.visible_message(\
+						"<span class='warning'>[user.name] cut the cables.</span>",\
+						"You cut the cables.")
+					build--
+					update_icon()
+				return 1
+			if(istype(W, /obj/item/weapon/screwdriver))
+				user << "You begin to complete \the [src]..."
+				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
+				if(do_after(user, 20))
+					if(!_circuitboard)
+						_circuitboard=new boardtype(src)
+					build++
+					update_icon()
+					user.visible_message(\
+						"<span class='warning'>[user.name] has finished \the [src]!</span>",\
+						"You finish \the [src].")
+				return 1
+		if(3) // Waiting for a recharge pack
+			if(istype(W, /obj/item/weapon/screwdriver))
+				user << "You begin to unscrew \the [src]..."
+				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
+				if(do_after(user, 30))
+					build--
+					update_icon()
+				return 1
+	..()
+
+/obj/machinery/wallmed_frame/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+	if(build==3)
+		if(istype(O,/obj/structure/vendomatpack))
+			if(istype(O,/obj/structure/vendomatpack/medical))
+				user << "<span class='notice'>You start refilling the vending machine with the recharge pack's materials.</span>"
+				var/user_loc = user.loc
+				var/pack_loc = O.loc
+				var/self_loc = src.loc
+				sleep(30)
+				if(!user || !O || !src)
+					return
+				if (user.loc == user_loc && O.loc == pack_loc && anchored && self_loc == src.loc && !(user.stat) && (!user.stunned && !user.weakened && !user.paralysis && !user.lying))
+					user << "<span class='notice'>\icon[src] You finish refilling the vending machine.</span>"
+					playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+					var/obj/machinery/vending/wallmed1/newnanomed = new /obj/machinery/vending/wallmed1(src.loc)
+					newnanomed.name = "Emergency NanoMed"
+					newnanomed.pixel_x = pixel_x
+					newnanomed.pixel_y = pixel_y
+					var/obj/item/emptyvendomatpack/emptypack = new /obj/item/emptyvendomatpack(O.loc)
+					emptypack.icon_state = O.icon_state
+					emptypack.overlays += image('icons/obj/vending_pack.dmi',"emptypack")
+					qdel(O)
+					contents = 0
+					qdel(src)
+			else
+				user << "<span class='warning'>This recharge pack isn't meant for this kind of vending machines.</span>"
+
+////////////////////////////////////////
+
 
 /obj/machinery/vending/security
 	name = "SecTech"
@@ -773,6 +1089,8 @@
 					/obj/item/weapon/legcuffs/bolas = 2)
 	contraband = list(/obj/item/clothing/glasses/sunglasses = 2,/obj/item/weapon/storage/fancy/donut_box = 2)
 
+	pack = /obj/structure/vendomatpack/security
+
 /obj/machinery/vending/hydronutrients
 	name = "NutriMax"
 	desc = "A plant nutrients vendor"
@@ -783,6 +1101,8 @@
 	products = list(/obj/item/beezeez = 45,/obj/item/weapon/reagent_containers/glass/fertilizer/ez = 35,/obj/item/weapon/reagent_containers/glass/fertilizer/l4z = 25,/obj/item/weapon/reagent_containers/glass/fertilizer/rh = 15,/obj/item/weapon/plantspray/pests = 20,
 					/obj/item/weapon/reagent_containers/syringe = 5,/obj/item/weapon/storage/bag/plants = 5)
 	contraband = list(/obj/item/weapon/reagent_containers/glass/bottle/ammonia = 10,/obj/item/weapon/reagent_containers/glass/bottle/diethylamine = 5)
+
+	pack = /obj/structure/vendomatpack/hydronutrients
 
 /obj/machinery/vending/hydroseeds
 	name = "MegaSeed Servitor"
@@ -800,6 +1120,7 @@
 						/obj/item/seeds/plumpmycelium = 2,/obj/item/seeds/reishimycelium = 2,/obj/item/seeds/harebell = 3)//,/obj/item/seeds/synthbuttseed = 3)
 	premium = list(/obj/item/toy/waterflower = 1)
 
+	pack = /obj/structure/vendomatpack/hydroseeds
 
 /obj/machinery/vending/magivend
 	name = "MagiVend"
@@ -821,6 +1142,8 @@
 		/obj/item/weapon/staff = 2)
 	contraband = list(/obj/item/weapon/reagent_containers/glass/bottle/wizarditis = 1)	//No one can get to the machine to hack it anyways; for the lulz - Microwave
 
+	pack = /obj/structure/vendomatpack/magivend											//Who's laughing now? - Deity Link
+
 /obj/machinery/vending/dinnerware
 	name = "Dinnerware"
 	desc = "A kitchen and restaurant equipment vendor"
@@ -828,6 +1151,8 @@
 	icon_state = "dinnerware"
 	products = list(/obj/item/weapon/tray = 8,/obj/item/weapon/kitchen/utensil/fork = 6,/obj/item/weapon/kitchenknife = 3,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 8,/obj/item/clothing/suit/chef/classic = 2,/obj/item/trash/bowl = 20)
 	contraband = list(/obj/item/weapon/kitchen/utensil/spoon = 2,/obj/item/weapon/kitchen/utensil/knife = 2,/obj/item/weapon/kitchen/rollingpin = 2, /obj/item/weapon/butch = 2)
+
+	pack = /obj/structure/vendomatpack/dinnerware
 
 /obj/machinery/vending/sovietsoda
 	name = "BODA"
@@ -837,6 +1162,8 @@
 	product_ads = "For Tsar and Country.;Have you fulfilled your nutrition quota today?;Very nice!;We are simple people, for this is all we eat.;If there is a person, there is a problem. If there is no person, then there is no problem."
 	products = list(/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/soda = 30)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/cola = 20)
+
+	pack = /obj/structure/vendomatpack/sovietsoda
 
 /obj/machinery/vending/tool
 	name = "YouTool"
@@ -849,6 +1176,8 @@
 	contraband = list(/obj/item/weapon/weldingtool/hugetank = 2,/obj/item/clothing/gloves/fyellow = 2)
 	premium = list(/obj/item/clothing/gloves/yellow = 1)
 
+	pack = /obj/structure/vendomatpack/tool
+
 /obj/machinery/vending/engivend
 	name = "Engi-Vend"
 	desc = "Spare tool vending. What? Did you expect some witty description?"
@@ -858,6 +1187,8 @@
 	products = list(/obj/item/clothing/glasses/meson = 2,/obj/item/device/multitool = 4,/obj/item/weapon/circuitboard/airlock = 10,/obj/item/weapon/module/power_control = 10,/obj/item/weapon/circuitboard/air_alarm = 10,/obj/item/weapon/cell/high = 10)
 	contraband = list(/obj/item/weapon/cell/potato = 3)
 	premium = list(/obj/item/weapon/storage/belt/utility = 3)
+
+	pack = /obj/structure/vendomatpack/engivend
 
 //This one's from bay12
 /obj/machinery/vending/engineering
@@ -876,6 +1207,8 @@
 	// Another invalid entry, /obj/item/weapon/circuitry.  I don't even know what that would translate to, removed it.
 	// The original products list wasn't finished.  The ones without given quantities became quantity 5.  -Sayu
 
+	pack = /obj/structure/vendomatpack/undefined
+
 //This one's from bay12
 /obj/machinery/vending/robotics
 	name = "Robotech Deluxe"
@@ -888,6 +1221,8 @@
 					/obj/item/weapon/scalpel = 2,/obj/item/weapon/circular_saw = 2,/obj/item/weapon/tank/anesthetic = 2,/obj/item/clothing/mask/breath/medical = 5,
 					/obj/item/weapon/screwdriver = 5,/obj/item/weapon/crowbar = 5)
 	//everything after the power cell had no amounts, I improvised.  -Sayu
+
+	pack = /obj/structure/vendomatpack/undefined
 
 /obj/machinery/vending/autodrobe
 	name = "\improper AutoDrobe"
@@ -916,6 +1251,7 @@
 	contraband = list(/obj/item/clothing/suit/cardborg = 3,/obj/item/clothing/head/cardborg = 3,/obj/item/clothing/suit/judgerobe = 3,/obj/item/clothing/head/powdered_wig = 3)
 	premium = list(/obj/item/clothing/suit/hgpirate = 3, /obj/item/clothing/head/hgpiratecap = 3, /obj/item/clothing/head/helmet/roman = 3, /obj/item/clothing/head/helmet/roman/legionaire = 3, /obj/item/clothing/under/roman = 3, /obj/item/clothing/shoes/roman = 3, /obj/item/weapon/shield/riot/roman = 3)
 
+	pack = /obj/structure/vendomatpack/autodrobe
 
 /obj/machinery/vending/hatdispenser
 	name = "Hatlord 9000"
@@ -927,6 +1263,8 @@
 	products = list(/obj/item/clothing/head/bowlerhat = 10,/obj/item/clothing/head/beaverhat = 10,/obj/item/clothing/head/boaterhat = 10,/obj/item/clothing/head/fedora = 10,/obj/item/clothing/head/fez = 10,/obj/item/clothing/head/soft/blue = 10,/obj/item/clothing/head/soft/green = 10,/obj/item/clothing/head/soft/grey = 10,/obj/item/clothing/head/soft/orange = 10,/obj/item/clothing/head/soft/purple = 10,/obj/item/clothing/head/soft/red = 10,/obj/item/clothing/head/soft/yellow = 10)
 	contraband = list(/obj/item/clothing/head/bearpelt = 5)
 	premium = list(/obj/item/clothing/head/soft/rainbow = 1)
+
+	pack = /obj/structure/vendomatpack/hatdispenser
 
 /obj/machinery/vending/suitdispenser
 	name = "Suitlord 9000"
@@ -942,6 +1280,8 @@
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool = 5,/obj/item/clothing/under/color/orange = 5,/obj/item/clothing/under/psyche = 5)
 	premium = list(/obj/item/clothing/under/rainbow = 1)
 
+	pack = /obj/structure/vendomatpack/suitdispenser
+
 //THIS IS WHERE THE FEET LIVE, GIT YE SOME
 /obj/machinery/vending/shoedispenser
 	name = "Shoelord 9000"
@@ -954,6 +1294,7 @@
 	contraband = list(/obj/item/clothing/shoes/jackboots = 5,/obj/item/clothing/shoes/orange = 5)
 	premium = list(/obj/item/clothing/shoes/rainbow = 1)
 
+	pack = /obj/structure/vendomatpack/shoedispenser
 
 //HEIL ADMINBUS
 /obj/machinery/vending/nazivend
@@ -966,6 +1307,41 @@
 	products = list(/obj/item/clothing/head/stalhelm = 20, /obj/item/clothing/head/panzer = 20, /obj/item/clothing/suit/soldiercoat = 20, /obj/item/clothing/under/soldieruniform = 20, /obj/item/clothing/shoes/jackboots = 20)
 	contraband = list(/obj/item/clothing/head/naziofficer = 10, /obj/item/clothing/suit/officercoat = 10, /obj/item/clothing/under/officeruniform = 10)
 
+	pack = /obj/structure/vendomatpack/nazivend
+
+	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY | EMAGGABLE
+
+/obj/machinery/vending/nazivend/emag(mob/user)
+	if(!emagged)
+		user << "<span class='warning'>As you slide the emag on the machine, you can hear something unlocking inside, and the machine starts emitting an evil glow.</span>"
+		message_admins("[key_name_admin(user)] unlocked a Nazivend's DANGERMODE")
+		contraband[/obj/item/clothing/head/helmet/space/rig/nazi] = 3
+		contraband[/obj/item/clothing/suit/space/rig/nazi] = 3
+		contraband[/obj/item/weapon/gun/energy/plasma/MP40k] = 4
+		src.build_inventory(contraband, 1)
+		emagged = 1
+		overlays = 0
+		var/image/dangerlay = image(icon,"[icon_state]-dangermode",LIGHTING_LAYER+1)
+		overlays_vending[2] = dangerlay
+		update_icon()
+		return 1
+	return
+
+//NaziVend++
+/obj/machinery/vending/nazivend/DANGERMODE
+	products = list(/obj/item/clothing/head/stalhelm = 20, /obj/item/clothing/head/panzer = 20, /obj/item/clothing/suit/soldiercoat = 20, /obj/item/clothing/under/soldieruniform = 20, /obj/item/clothing/shoes/jackboots = 20)
+	contraband = list(/obj/item/clothing/head/naziofficer = 10, /obj/item/clothing/suit/officercoat = 10, /obj/item/clothing/under/officeruniform = 10, /obj/item/clothing/head/helmet/space/rig/nazi = 3, /obj/item/clothing/suit/space/rig/nazi = 3, /obj/item/weapon/gun/energy/plasma/MP40k = 4)
+
+	pack = /obj/structure/vendomatpack/nazivend //can be reloaded with the same packs as the regular one
+
+/obj/machinery/vending/nazivend/DANGERMODE/New()
+	..()
+	emagged = 1
+	overlays = 0
+	var/image/dangerlay = image(icon,"[icon_state]-dangermode",LIGHTING_LAYER+1)
+	overlays_vending[2] = dangerlay
+	update_icon()
+
 //MOTHERBUSLAND
 /obj/machinery/vending/sovietvend
 	name = "KomradeVendtink"
@@ -977,32 +1353,41 @@
 	products = list(/obj/item/clothing/under/soviet = 20, /obj/item/clothing/head/ushanka = 20, /obj/item/clothing/shoes/jackboots = 20, /obj/item/clothing/head/squatter_hat = 20, /obj/item/clothing/under/squatter_outfit = 20, /obj/item/clothing/under/russobluecamooutfit = 20, /obj/item/clothing/head/russobluecamohat = 20)
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool = 4, /obj/item/clothing/mask/balaclava = 4, /obj/item/clothing/suit/russofurcoat = 4, /obj/item/clothing/head/russofurhat = 4)
 
-/*These next machines are the same adminbus machines,
-but have theme fitting contraband hardsuits and weapons.
-Do NOT spawn unless you want all out war, extermination, or murderbone.**/
+	pack = /obj/structure/vendomatpack/sovietvend
 
-//NaziVend++
-/obj/machinery/vending/nazivendDANGERMODE
-	name = "Nazivend"
-	desc = "Remember the gorrilions lost."
-	icon_state = "nazi"
-	vend_reply = "SIEG HEIL!"
-	product_ads = "BESTRAFEN die Juden.;BESTRAFEN die Alliierten."
-	product_slogans = "Das Vierte Reich wird zuruckkehren!;ENTFERNEN JUDEN!;Billiger als die Juden jemals geben!;Rader auf dem adminbus geht rund und rund.;Warten Sie, warum wir wieder hassen Juden?- *BZZT*"
-	products = list(/obj/item/clothing/head/stalhelm = 20, /obj/item/clothing/head/panzer = 20, /obj/item/clothing/suit/soldiercoat = 20, /obj/item/clothing/under/soldieruniform = 20, /obj/item/clothing/shoes/jackboots = 20)
-	contraband = list(/obj/item/clothing/head/naziofficer = 10, /obj/item/clothing/suit/officercoat = 10, /obj/item/clothing/under/officeruniform = 10, /obj/item/clothing/head/helmet/space/rig/nazi = 3, /obj/item/clothing/suit/space/rig/nazi = 3, /obj/item/weapon/gun/energy/plasma/MP40k = 4)
+	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY | EMAGGABLE
+
+
+/obj/machinery/vending/sovietvend/emag(mob/user)
+	if(!emagged)
+		user << "<span class='warning'>As you slide the emag on the machine, you can hear something unlocking inside, and the machine starts emitting an evil glow.</span>"
+		message_admins("[key_name_admin(user)] unlocked a Sovietvend's DANGERMODE")
+		contraband[/obj/item/clothing/head/helmet/space/rig/soviet] = 3
+		contraband[/obj/item/clothing/suit/space/rig/soviet] = 3
+		contraband[/obj/item/weapon/gun/energy/laser/LaserAK] = 4
+		src.build_inventory(contraband, 1)
+		emagged = 1
+		overlays = 0
+		var/image/dangerlay = image(icon,"[icon_state]-dangermode",LIGHTING_LAYER+1)
+		overlays_vending[2] = dangerlay
+		update_icon()
+		return 1
+	return
 
 //SovietVend++
-/obj/machinery/vending/sovietvendDANGERMODE
-	name = "KomradeVendtink"
-	desc = "Rodina-mat' zovyot!"
-	icon_state = "soviet"
-	vend_reply = "The fascist and captalist svin'ya shall fall komrade!"
-	product_ads = "Quality worth waiting in line for!; Get Hammer and Sickled!; Sosvietsky soyuz above all!; With capitalist pigsky, you would have paid a fortunetink!"
-	product_slogans = "Craftink in Motherland herself!"
+/obj/machinery/vending/sovietvend/DANGERMODE
 	products = list(/obj/item/clothing/under/soviet = 20, /obj/item/clothing/head/ushanka = 20, /obj/item/clothing/shoes/jackboots = 20, /obj/item/clothing/head/squatter_hat = 20, /obj/item/clothing/under/squatter_outfit = 20, /obj/item/clothing/under/russobluecamooutfit = 20, /obj/item/clothing/head/russobluecamohat = 20)
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool = 4, /obj/item/clothing/mask/balaclava = 4, /obj/item/clothing/suit/russofurcoat = 4, /obj/item/clothing/head/russofurhat = 4, /obj/item/clothing/head/helmet/space/rig/soviet = 3, /obj/item/clothing/suit/space/rig/soviet = 3, /obj/item/weapon/gun/energy/laser/LaserAK = 4)
 
+	pack = /obj/structure/vendomatpack/sovietvend//can be reloaded with the same packs as the regular one
+
+/obj/machinery/vending/sovietvend/DANGERMODE/New()
+	..()
+	emagged = 1
+	overlays = 0
+	var/image/dangerlay = image(icon,"[icon_state]-dangermode",LIGHTING_LAYER+1)
+	overlays_vending[2] = dangerlay
+	update_icon()
 
 /obj/machinery/vending/discount
 	name = "Discount Dan's"
@@ -1016,6 +1401,7 @@ Do NOT spawn unless you want all out war, extermination, or murderbone.**/
 	prices = list(/obj/item/weapon/reagent_containers/food/snacks/discountchocolate = 10,/obj/item/weapon/reagent_containers/food/snacks/danitos = 15,
 					/obj/item/weapon/reagent_containers/food/snacks/discountburger = 20,/obj/item/weapon/reagent_containers/food/drinks/discount_ramen = 10,/obj/item/weapon/reagent_containers/food/snacks/discountburrito = 10)
 
+	pack = /obj/structure/vendomatpack/discount
 
 /obj/machinery/vending/groans
 	name = "Groans Soda"
@@ -1027,3 +1413,5 @@ Do NOT spawn unless you want all out war, extermination, or murderbone.**/
 	products = list(/obj/item/weapon/reagent_containers/food/drinks/groans = 10,/obj/item/weapon/reagent_containers/food/drinks/filk = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/grifeo = 10,/obj/item/weapon/reagent_containers/food/drinks/mannsdrink = 10)
 	prices = list(/obj/item/weapon/reagent_containers/food/drinks/groans = 20,/obj/item/weapon/reagent_containers/food/drinks/filk = 20,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/grifeo = 30,/obj/item/weapon/reagent_containers/food/drinks/mannsdrink = 10,/obj/item/weapon/reagent_containers/food/drinks/groansbanned = 50)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/groansbanned = 10)
+
+	pack = /obj/structure/vendomatpack/groans

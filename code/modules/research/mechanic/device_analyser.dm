@@ -25,7 +25,9 @@
 	loadone = !loadone
 	usr <<"<span class='notice'> You set the Device Analyzer to [loadone ? "transfer one design" : "transfer all designs"] on use.</span>"
 
-/obj/item/device/device_analyser/afterattack(var/atom/A, var/mob/user) //Hurrah for after-attack
+/obj/item/device/device_analyser/afterattack(var/atom/A, mob/user, proximity_flag) //Hurrah for after-attack
+	if(proximity_flag != 1)
+		return
 	if(istype(A, /obj)) //don't want to scan mobs or anything like that
 		var/obj/O = A
 		for(var/datum/design/mechanic_design/current_design in loaded_designs)
@@ -60,6 +62,10 @@
 	if(!istype(O))
 		return 0
 
+	// Objects that cannot be scanned
+	if((O.mech_flags & MECH_SCAN_FAIL)==MECH_SCAN_FAIL)
+		return 0
+
 	var/list/techlist
 	if(istype(O, /obj/machinery))
 		var/obj/machinery/M = O
@@ -67,6 +73,7 @@
 			for(var/obj/item/weapon/circuitboard/CB in M.component_parts) //fetching the circuit by looking in the parts
 				if(istype(CB))
 					techlist = ConvertReqString2List(CB.origin_tech)
+					break
 		else if(istype(M, /obj/machinery/computer))
 			var/obj/machinery/computer/C = M
 			if(C.circuit)
@@ -75,10 +82,14 @@
 
 	else if(istype(O, /obj/item))
 		var/obj/item/I = O
-		techlist = ConvertReqString2List(I.origin_tech) //our tech is simply the item requirement
+		if(!I.origin_tech)
+			return 0
+		techlist = ConvertReqString2List(I.origin_tech)
 
 	if(!techlist) //this don't fly
 		return 0
-	if(techlist && techlist["syndicate"] && src.syndi_filter)
-		return -1 //special negative return case
+
+	if(src.syndi_filter)
+		if((techlist && techlist["syndicate"]) || (O.mech_flags & MECH_SCAN_ILLEGAL))
+			return -1 //special negative return case
 	return 1

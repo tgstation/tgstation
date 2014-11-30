@@ -138,12 +138,12 @@
 		src.sight |= SEE_OBJS
 		src.see_in_dark = 8
 		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (src.sight_mode & BORGMESON && src.sight_mode & BORGTHERM)
+	else if ((src.sight_mode & BORGMESON || sensor_mode == MESON_VISION) && src.sight_mode & BORGTHERM)
 		src.sight |= SEE_TURFS
 		src.sight |= SEE_MOBS
 		src.see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_MINIMUM
-	else if (src.sight_mode & BORGMESON)
+	else if (src.sight_mode & BORGMESON || sensor_mode == MESON_VISION)
 		src.sight |= SEE_TURFS
 		src.see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_MINIMUM

@@ -115,6 +115,7 @@ Class Procs:
 	var/global/gl_uid = 1
 	var/custom_aghost_alerts=0
 	var/panel_open = 0
+	var/state = 0 //0 is unanchored, 1 is anchored and unwelded, 2 is anchored and welded for most things
 
 	/**
 	 * Machine construction/destruction/emag flags.
@@ -317,7 +318,7 @@ Class Procs:
 	var/ghost_flags=0
 	if(ghost_write)
 		ghost_flags |= PERMIT_ALL
-	if(!canGhostWrite(usr,src,"fucked with",ghost_flags))
+	if(!canGhostWrite(usr,src,"",ghost_flags))
 		if(usr.restrained() || usr.lying || usr.stat)
 			return 1
 		if ( ! (istype(usr, /mob/living/carbon/human) || \
@@ -441,19 +442,53 @@ Class Procs:
 	user << "<span class='notice'>\icon[src] You [panel_open ? "open" : "close"] the maintenance hatch of \the [src].</span>"
 	if(istype(toggleitem, /obj/item/weapon/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+	update_icon()
 	return 1
 
 /obj/machinery/proc/wrenchAnchor(var/mob/user)
+	if(state == 2 && src.machine_flags & WELD_FIXED)
+		user <<"\The [src] has to be unwelded from the floor first."
+		return -1 //state set to 2, can't do it
 	user.visible_message(	"[user] begins to [anchored ? "undo" : "wrench"] \the [src]'s securing bolts.",
 							"You begin to [anchored ? "undo" : "wrench"] \the [src]'s securing bolts...")
 	playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 	if(do_after(user, 30))
 		anchored = !anchored
+		state = anchored //since these values will match as long as state isn't 2, we can do this safely
 		user.visible_message(	"<span class='notice'>[user] [anchored ? "wrench" : "unwrench"]es \the [src] [anchored ? "in place" : "from its fixture"]</span>",
 								"<span class='notice'>\icon[src] You [anchored ? "wrench" : "unwrench"] \the [src] [anchored ? "in place" : "from its fixture"].</span>",
 								"<span class='notice'>You hear a ratchet.</span>")
 		return 1
 	return -1
+
+/obj/machinery/proc/weldToFloor(var/obj/item/weapon/weldingtool/WT, mob/user)
+	if(!anchored)
+		state = 0 //since this might be wrong, we go sanity
+		user << "You need to secure \the [src] before it can be welded."
+		return -1
+	if (WT.remove_fuel(0,user))
+		playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
+		user.visible_message("[user.name] starts to [state - 1 ? "unweld": "weld" ] the [src] [state - 1 ? "from" : "to"] the floor.", \
+				"You start to [state - 1 ? "unweld": "weld" ] the [src] [state - 1 ? "from" : "to"] the floor.", \
+				"You hear welding.")
+		if (do_after(user,20))
+			if(!src || !WT.isOn())
+				return -1
+			switch(state)
+				if(0)
+					user <<"You have to keep \the [src] secure before it can be welded down."
+					return -1
+				if(1)
+					state = 2
+				if(2)
+					state = 1
+			user.visible_message(	"[user.name] [state - 1 ? "weld" : "unweld"]s \the [src] [state - 1 ? "to" : "from"] the floor.",
+									"\icon [src] You [state - 1 ? "weld" : "unweld"] \the [src] [state - 1 ? "to" : "from"] the floor."
+								)
+			return 1
+	else
+		user << "<span class='rose'>You need more welding fuel to complete this task.</span>"
+		return -1
 
 /**
  * Handle emags.
@@ -488,6 +523,9 @@ Class Procs:
 
 	if(istype(O, /obj/item/weapon/screwdriver) && machine_flags & SCREWTOGGLE)
 		return togglePanelOpen(O, user)
+
+	if(istype(O, /obj/item/weapon/weldingtool) && machine_flags & WELD_FIXED)
+		return weldToFloor(O, user)
 
 	if(istype(O, /obj/item/weapon/crowbar) && machine_flags & CROWDESTROY)
 		if(panel_open)

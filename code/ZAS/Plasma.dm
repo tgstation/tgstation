@@ -43,6 +43,9 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 /mob/living/carbon/human/pl_effects()
 	//Handles all the bad things plasma can do.
 
+	if(flags & INVULNERABLE)
+		return
+
 	//Contamination
 	if(zas_settings.Get(/datum/ZAS_Setting/CLOTH_CONTAMINATION)) contaminate()
 

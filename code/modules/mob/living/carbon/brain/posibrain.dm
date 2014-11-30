@@ -31,11 +31,11 @@
 				reset_search()
 
 	proc/request_player()
-		for(var/mob/dead/observer/O in player_list)
-			if(O.client && O.client.prefs.be_special & BE_PAI)
+		for(var/mob/dead/observer/O in get_active_candidates(ROLE_POSIBRAIN,poll="\A [src] has been activated."))
+			if(O.client)
 				if(check_observer(O))
-					O << "<span class=\"recruit\">\A [src] has been activated. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign Up</a>)</span>"
-					//question(O.client)
+					O << "<span class=\"recruit\">You are a possible candidate for \a [src]. Get ready. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Retract</a>)</span>"
+					ghost_volunteers += O
 
 	proc/check_observer(var/mob/dead/observer/O)
 		if(O.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
@@ -53,8 +53,6 @@
 			if(!C || brainmob.key || 0 == searching)	return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
 			if(response == "Yes")
 				transfer_personality(C.mob)
-			else if (response == "Never for this round")
-				C.prefs.be_special ^= BE_PAI
 
 	proc/transfer_personality(var/mob/candidate)
 

@@ -43,7 +43,7 @@
 	var/animation_delay = 12
 	var/animation_delay_2 = null
 
-	// cultification animation
+	// turf animation
 	var/atom/movable/overlay/c_animation = null
 
 /obj/machinery/door/Bumped(atom/AM)

@@ -27,3 +27,15 @@
 	desc = "Adorably crazy."
 	icon_state = "cult_icon"
 	item_state = "cult_item"
+
+/obj/item/clothing/monkeyclothes/jumpsuit_red
+	name = "monkey-sized red jumpsuit"
+	desc = "They wear these at the thunderdome."
+	icon_state = "redsuit_icon"
+	item_state = "redsuit_item"
+
+/obj/item/clothing/monkeyclothes/jumpsuit_green
+	name = "monkey-sized green jumpsuit"
+	desc = "They wear these at the thunderdome."
+	icon_state = "greensuit_icon"
+	item_state = "greensuit_item"

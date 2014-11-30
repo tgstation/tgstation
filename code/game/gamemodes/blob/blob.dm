@@ -29,7 +29,7 @@ var/list/blob_nodes = list()
 
 /datum/game_mode/blob/pre_setup()
 
-	var/list/possible_blobs = get_players_for_role(BE_ALIEN)
+	var/list/possible_blobs = get_players_for_role(ROLE_BLOB)
 
 	// stop setup if no possible traitors
 	if(!possible_blobs.len)

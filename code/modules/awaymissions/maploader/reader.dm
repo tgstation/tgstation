@@ -156,24 +156,41 @@
 
 	//The next part of the code assumes there's ALWAYS an /area AND a /turf on a given tile
 
-	//first instance the /area and remove it from the members list
-	var/length = members.len
-	var/atom/instance
-	var/dmm_suite/preloader/_preloader = new(members_attributes[length])//preloader for assigning  set variables on atom creation
+	//in case of multiples turfs on one tile,
+	//will contains the images of all underlying turfs, to simulate the DMM multiple tiles piling
+	var/list/turfs_underlays = list()
 
-	instance = locate(members[length])
+	//first instance the /area and remove it from the members list
+	index = members.len
+	var/atom/instance
+	var/dmm_suite/preloader/_preloader = new(members_attributes[index])//preloader for assigning  set variables on atom creation
+
+	instance = locate(members[index])
 	instance.contents.Add(locate(xcrd,ycrd,zcrd))
 
 	if(_preloader && instance)
 		_preloader.load(instance)
 
-	members.Remove(members[length])
+	members.Remove(members[index])
 
-	//then instance the /turf and remove it from the members list
-	length = members.len
+	//then instance the /turf and, if multiple tiles are presents, simulates the DMM underlays piling effect
 
-	instance_atom(members[length],members_attributes[length],xcrd,ycrd,zcrd)
-	members.Remove(members[length])
+	var/first_turf_index = 1
+	while(!ispath(members[first_turf_index],/turf)) //find first /turf object in members
+		first_turf_index++
+
+	//instanciate the first /turf
+	var/turf/T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],xcrd,ycrd,zcrd)
+
+	//if others /turf are presents, simulates the underlays piling effect
+	index = first_turf_index + 1
+	while(index <= members.len)
+		turfs_underlays.Insert(1,image(T.icon,null,T.icon_state,T.layer,T.dir))//add the current turf image to the underlays list
+		var/turf/UT = instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd)//instance new turf
+		add_underlying_turf(UT,T,turfs_underlays)//simulates the DMM piling effect
+		T = UT
+		index++
+
 
 	//Replace the previous part of the code with this if it's unsafe to assume tiles have ALWAYS an /area AND a /turf
 	/*while(members.len > 0)
@@ -203,8 +220,8 @@
 		*/
 
 	//finally instance all remainings objects/mobs
-	for(var/k=1,k<=members.len,k++)
-		instance_atom(members[k],members_attributes[k],xcrd,ycrd,zcrd)
+	for(index=1,index < first_turf_index,index++)
+		instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd)
 
 ////////////////
 //Helpers procs
@@ -219,6 +236,8 @@
 
 	if(_preloader && instance)//second preloader pass, as some variables may have been reset/changed by New()
 		_preloader.load(instance)
+
+	return instance
 
 //text trimming (both directions) helper proc
 //optionally removes quotes before and after the text (for variable name)
@@ -265,7 +284,7 @@
 		//check if this is a simple variable (as in list(var1, var2)) or an associative one (as in list(var1="foo",var2=7))
 		var/equal_position = findtext(text,"=",old_position, position)
 
-		var/trim_left = trim_text(copytext(text,old_position,equal_position),1)//the name of the variable, must trim quotes to build a BYOND compliant associatives list
+		var/trim_left = trim_text(copytext(text,old_position,(equal_position ? equal_position : position)),1)//the name of the variable, must trim quotes to build a BYOND compliant associatives list
 		old_position = position + 1
 
 		if(equal_position)//associative var, so do the association
@@ -296,8 +315,16 @@
 
 	return to_return
 
+//simulates the DM multiple turfs on one tile underlaying
+/dmm_suite/proc/add_underlying_turf(var/turf/placed,var/turf/underturf, var/list/turfs_underlays)
+	if(underturf.density)
+		placed.density = 1
+	if(underturf.opacity)
+		placed.opacity = 1
+	placed.underlays += turfs_underlays
+
 //atom creation method that preloads variables before creation
-atom/New(atom/loc, dmm_suite/preloader/_dmm_preloader)
+/atom/New(atom/loc, dmm_suite/preloader/_dmm_preloader)
 	if(istype(_dmm_preloader, /dmm_suite/preloader))
 		_dmm_preloader.load(src)
 	. = ..()

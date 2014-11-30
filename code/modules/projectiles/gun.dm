@@ -15,6 +15,7 @@
 	force = 5.0
 	origin_tech = "combat=1"
 	attack_verb = list("struck", "hit", "bashed")
+	mech_flags = MECH_SCAN_ILLEGAL
 
 	var/fire_sound = 'sound/weapons/Gunshot.ogg'
 	var/obj/item/projectile/in_chamber = null

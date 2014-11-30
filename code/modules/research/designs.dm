@@ -75,6 +75,36 @@ other types of metals and chemistry for reagents).
 	reliability = new_reliability
 	return
 
+//give it an object or a type
+//if it gets passed an object, it makes it into a type
+//it then finds the design which has a buildpath of that type
+//confirmed to work by Comic
+/datum/proc/FindDesign(var/part as anything)
+	if(!ispath(part))
+		var/obj/thispart = part
+		part = thispart.type
+	for(var/thisdesign in typesof(/datum/design))
+		var/datum/design/D = thisdesign
+		if(initial(D.build_path) == part)
+			return D
+	return
+
+//sum of the required tech of a design
+/datum/design/proc/TechTotal()
+	var/total = 0
+	for(var/tech in src.req_tech)
+		total += src.req_tech[tech]
+	return total
+
+//sum of the required materials of a design
+//do not confuse this with Total_Materials. That gets the machine's materials, this gets design materials
+/datum/design/proc/MatTotal()
+	var/total = 0
+	for(var/matID in src.materials)
+		total += src.materials[matID]
+	//log_admin("[total] for [part.name]")
+	return total
+
 
 ///////////////////Computer Boards///////////////////////////////////
 
@@ -1687,6 +1717,15 @@ other types of metals and chemistry for reagents).
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mechfab
 
+/datum/design/pdapainter
+	name = "PDA Painter Board"
+	desc = "The circuit board for a PDA Painter."
+	id = "pdapainter"
+	req_tech = list("programming" = 2, "engineering" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/pdapainter
+
 
 /////////////////////////////////////////
 ////////////Power Stuff//////////////////
@@ -1936,7 +1975,7 @@ other types of metals and chemistry for reagents).
 	locked = 1
 
 /datum/design/xcomlaserrifle
-	name = "Laser Cannon"
+	name = "Laser Rifle"
 	desc = "A laser rifle."
 	id = "xcomlaserrifle"
 	req_tech = list("combat" = 4, "materials" = 3, "powerstorage" = 3)
@@ -2739,3 +2778,15 @@ other types of metals and chemistry for reagents).
 	category = "Pod_Weaponry"
 	materials = list("$iron" = 15000)
 	locked = 1
+
+//////////////////////////////////////////
+//////VENDING MACHINES////////////////////
+//////////////////////////////////////////
+/datum/design/vendomat
+	name = "Circuit Design (Vending Machine)"
+	desc = "Allows for the construction of circuit boards used to build vending machines."
+	id = "vendomat"
+	req_tech = list("materials" = 1, "engineering" = 1, "powerstorage" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/vendomat

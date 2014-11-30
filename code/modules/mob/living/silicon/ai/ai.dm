@@ -284,6 +284,8 @@ var/list/ai_list = list()
 	return 1
 
 /mob/living/silicon/ai/blob_act()
+	if(flags & INVULNERABLE)
+		return
 	if (stat != 2)
 		adjustBruteLoss(60)
 		updatehealth()
@@ -294,6 +296,9 @@ var/list/ai_list = list()
 	return 0
 
 /mob/living/silicon/ai/emp_act(severity)
+	if(flags & INVULNERABLE)
+		return
+
 	if (prob(30))
 		switch(pick(1,2))
 			if(1)
@@ -303,6 +308,9 @@ var/list/ai_list = list()
 	..()
 
 /mob/living/silicon/ai/ex_act(severity)
+	if(flags & INVULNERABLE)
+		return
+
 	if(!blinded)
 		flick("flash", flash)
 
@@ -399,6 +407,8 @@ var/list/ai_list = list()
 	return
 
 /mob/living/silicon/ai/meteorhit(obj/O as obj)
+	if(flags & INVULNERABLE)
+		return
 	for(var/mob/M in viewers(src, null))
 		M.show_message(text("\red [] has been hit by []", src, O), 1)
 		//Foreach goto(19)
@@ -771,3 +781,7 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/get_multitool(var/active_only=0)
 	return aiMulti
+
+// An AI doesn't become inoperable until -100% (or whatever config.health_threshold_dead is set to)
+/mob/living/silicon/ai/system_integrity()
+	return (health - config.health_threshold_dead) / 2

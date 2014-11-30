@@ -31,7 +31,7 @@
 	if(!..())
 		return 0
 
-	var/list/possible_syndicates = get_players_for_role(BE_OPERATIVE)
+	var/list/possible_syndicates = get_players_for_role(ROLE_OPERATIVE)
 	var/agent_number = 0
 
 	if(possible_syndicates.len < 1)
@@ -213,7 +213,7 @@
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/bulletproof(synd_mob), slot_wear_suit)
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(synd_mob), slot_gloves)
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/swat(synd_mob), slot_head)
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(synd_mob), slot_glasses)
+	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/prescription(synd_mob), slot_glasses)//changed to prescription sunglasses so near-sighted players aren't screwed if there aren't any admins online
 	if(istype(synd_mob.species, /datum/species/vox))
 		synd_mob.equip_or_collect(new /obj/item/clothing/mask/breath/vox(synd_mob), slot_wear_mask)
 		synd_mob.equip_to_slot_or_del(new/obj/item/weapon/tank/nitrogen(synd_mob), slot_r_hand)

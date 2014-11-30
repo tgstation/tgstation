@@ -49,7 +49,7 @@
 	if (!possible_blobs.len)
 		return
 	for(var/mob/living/G in possible_blobs)
-		if(G.client && !G.client.holder && !G.client.is_afk() && G.client.prefs.be_special & BE_ALIEN)
+		if(G.client && !G.client.holder && !G.client.is_afk() && G.client.desires_role(ROLE_BLOB))
 			var/datum/mind/blob = pick(possible_blobs)
 			infected_crew += blob
 			blob.special_role = "Blob"

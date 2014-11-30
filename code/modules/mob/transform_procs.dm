@@ -216,7 +216,7 @@
 	return O
 
 //human -> mommi
-/mob/living/carbon/human/proc/MoMMIfy()
+/mob/living/carbon/human/proc/MoMMIfy(round_start = 0)
 	if (monkeyizing)
 		return
 	for(var/obj/item/W in src)
@@ -233,8 +233,8 @@
 
 	// MoMMIs produced by Robotize get an automatic power cell
 	O.cell = new(O)
-	O.cell.maxcharge = 15000
-	O.cell.charge = 15000
+	O.cell.maxcharge = (round_start ? 10000 : 15000)
+	O.cell.charge = (round_start ? 10000 : 15000)
 
 
 	O.gender = gender

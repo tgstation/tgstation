@@ -114,7 +114,7 @@
 		purge -= 1
 
 	//Movement
-	if((!client||deny_client_move) && !stop_automated_movement && wander && !anchored && (ckey == null))
+	if((!client||deny_client_move) && !stop_automated_movement && wander && !anchored && (ckey == null) && !(flags & INVULNERABLE))
 		if(isturf(src.loc) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
@@ -158,6 +158,9 @@
 
 
 	//Atmos
+	if(flags & INVULNERABLE)
+		return 1
+
 	var/atmos_suitable = 1
 
 	var/atom/A = loc
@@ -477,6 +480,9 @@
 	Die()
 
 /mob/living/simple_animal/ex_act(severity)
+	if(flags & INVULNERABLE)
+		return
+
 	..()
 	switch (severity)
 		if (1.0)

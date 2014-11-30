@@ -240,6 +240,7 @@
 			module_sprites["Bloodhound"] = "bloodhound"
 			module_sprites["Securitron"] = "securitron"
 			module_sprites["Marina-SC"] = "marinaSC"
+			src << "<span class='warning'><big><b>Just a reminder, by default you do not follow space law, you follow your lawset</b></big></span>"
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
@@ -266,6 +267,7 @@
 			module = new /obj/item/weapon/robot_module/combat(src)
 			module_sprites["Combat Android"] = "droid-combat"
 			module_sprites["Bladewolf"] = "bladewolf"
+			module_sprites["Mr. Gutsy"] = "mrgutsy"
 			channels = list("Security" = 1)
 
 	//Custom_sprite check and entry
@@ -430,6 +432,8 @@
 		src << "\red You enable [C.name]."
 
 /mob/living/silicon/robot/blob_act()
+	if(flags & INVULNERABLE)
+		return
 	if (stat != 2)
 		adjustBruteLoss(60)
 		updatehealth()
@@ -526,6 +530,10 @@
 
 
 /mob/living/silicon/robot/ex_act(severity)
+	if(flags & INVULNERABLE)
+		src << "The bus' robustness protects you from the explosion."
+		return
+
 	if(!blinded)
 		flick("flash", flash)
 
@@ -548,6 +556,8 @@
 
 
 /mob/living/silicon/robot/meteorhit(obj/O as obj)
+	if(flags & INVULNERABLE)
+		return
 	for(var/mob/M in viewers(src, null))
 		M.show_message(text("\red [src] has been hit by [O]"), 1)
 		//Foreach goto(19)
@@ -1422,3 +1432,16 @@
 		component.electronics_damage = 0
 		component.brute_damage = 0
 		component.installed = 1
+
+
+/mob/living/silicon/robot/Process_Spaceslipping(var/prob_slip=5)
+	//Engineering borgs have the magic of magnets.
+	if(istype(module, /obj/item/weapon/robot_module/engineering))
+		return 0
+	..()
+
+/mob/living/silicon/robot/put_in_inactive_hand(var/obj/item/W)
+	return 0
+
+/mob/living/silicon/robot/get_inactive_hand(var/obj/item/W)
+	return 0

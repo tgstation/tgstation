@@ -64,9 +64,10 @@ max volume of plasma storeable by the field = the total volume of a number of ti
 	directwired = 1
 	anchored = 0
 
-	var/state = 0
 	var/locked = 1
 	var/remote_access_enabled = 1
+
+	machine_flags = WRENCHMOVE | FIXED2WORK | WELD_FIXED | EMAGGABLE
 
 /obj/machinery/power/rust_core/process()
 	if(stat & BROKEN || !powernet)
@@ -76,68 +77,35 @@ max volume of plasma storeable by the field = the total volume of a number of ti
 	//luminosity = round(owned_field.field_strength/10)
 	//luminosity = max(luminosity,1)
 
+/obj/machinery/power/rust_core/wrenchAnchor(mob/user)
+	if(owned_field)
+		user << "Turn off \the [src] first."
+		return -1
+	return ..()
+
+/obj/machinery/power/rust_core/weldToFloor(var/obj/item/weapon/weldingtool/WT, mob/user)
+	if(..() == 1)
+		switch(state)
+			if(1)
+				connect_to_network()
+				src.directwired = 1
+			if(2)
+				disconnect_from_network()
+				src.directwired = 0
+		return 1
+	return -1
+
+/obj/machinery/power/rust_core/emag(mob/user)
+	if(!emagged)
+		locked = 0
+		emagged = 1
+		user.visible_message("[user.name] emags the [src.name].","\red You short out the lock.")
+		return
+
 /obj/machinery/power/rust_core/attackby(obj/item/W, mob/user)
 
-	if(istype(W, /obj/item/weapon/wrench))
-		if(owned_field)
-			user << "Turn off [src] first."
-			return
-		switch(state)
-			if(0)
-				state = 1
-				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
-				user.visible_message("[user.name] secures [src.name] to the floor.", \
-					"You secure the external reinforcing bolts to the floor.", \
-					"You hear a ratchet")
-				src.anchored = 1
-			if(1)
-				state = 0
-				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
-				user.visible_message("[user.name] unsecures [src.name] reinforcing bolts from the floor.", \
-					"You undo the external reinforcing bolts.", \
-					"You hear a ratchet")
-				src.anchored = 0
-			if(2)
-				user << "\red The [src.name] needs to be unwelded from the floor."
-		return
-
-	if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
-		if(owned_field)
-			user << "Turn off the [src] first."
-			return
-		switch(state)
-			if(0)
-				user << "\red The [src.name] needs to be wrenched to the floor."
-			if(1)
-				if (WT.remove_fuel(0,user))
-					playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
-					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
-						"You start to weld the [src] to the floor.", \
-						"You hear welding")
-					if (do_after(user,20))
-						if(!src || !WT.isOn()) return
-						state = 2
-						user << "You weld the [src] to the floor."
-						connect_to_network()
-						src.directwired = 1
-				else
-					user << "\red You need more welding fuel to complete this task."
-			if(2)
-				if (WT.remove_fuel(0,user))
-					playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
-					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
-						"You start to cut the [src] free from the floor.", \
-						"You hear welding")
-					if (do_after(user,20))
-						if(!src || !WT.isOn()) return
-						state = 1
-						user << "You cut the [src] free from the floor."
-						disconnect_from_network()
-						src.directwired = 0
-				else
-					user << "\red You need more welding fuel to complete this task."
-		return
+	if(..())
+		return 1
 
 	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
 		if(emagged)
@@ -153,15 +121,6 @@ max volume of plasma storeable by the field = the total volume of a number of ti
 		else
 			user << "\red Access denied."
 		return
-
-	if(istype(W, /obj/item/weapon/card/emag) && !emagged)
-		locked = 0
-		emagged = 1
-		user.visible_message("[user.name] emags the [src.name].","\red You short out the lock.")
-		return
-
-	..()
-	return
 
 /obj/machinery/power/rust_core/attack_ai(mob/user)
 	attack_hand(user)

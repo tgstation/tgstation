@@ -153,6 +153,8 @@
 	var/emag_recharge_rate = 0
 	var/emag_recharge_ticks = 0
 
+	var/map_voting = 0
+
 /datum/configuration/New()
 	. = ..()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -504,6 +506,8 @@
 					media_secret_key = value
 				if("vgws_base_url")
 					vgws_base_url = value
+				if("map_voting")
+					map_voting = 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

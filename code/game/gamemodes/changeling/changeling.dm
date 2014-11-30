@@ -49,7 +49,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
-	var/list/datum/mind/possible_changelings = get_players_for_role(BE_CHANGELING)
+	var/list/datum/mind/possible_changelings = get_players_for_role(ROLE_CHANGELING)
 
 	for(var/datum/mind/player in possible_changelings)
 		for(var/job in restricted_jobs)//Removing robots from the list

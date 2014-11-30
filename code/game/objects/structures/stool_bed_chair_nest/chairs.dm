@@ -66,8 +66,10 @@
 
 /obj/structure/stool/bed/chair/MouseDrop_T(mob/M as mob, mob/user as mob)
 	if(!istype(M)) return
-	var/mob/living/carbon/human/target = M
-	if(target.op_stage.butt == 4) //Butt surgery is at stage 4
+	var/mob/living/carbon/human/target = null
+	if(ishuman(M))
+		target = M
+	if((target) && (target.op_stage.butt == 4)) //Butt surgery is at stage 4
 		if(!M.weakened)	//Spam prevention
 			if(M == usr)
 				M.visible_message(\
@@ -162,5 +164,27 @@
 /obj/structure/stool/bed/chair/office/light
 	icon_state = "officechair_white"
 
+/obj/structure/stool/bed/chair/office/light/New()
+	..()
+	overlays += image(icon,"officechair_white-overlay",FLY_LAYER)
+
 /obj/structure/stool/bed/chair/office/dark
 	icon_state = "officechair_dark"
+
+/obj/structure/stool/bed/chair/office/dark/New()
+	..()
+	overlays += image(icon,"officechair_dark-overlay",FLY_LAYER)
+
+/obj/structure/stool/bed/chair/office/handle_rotation()
+	layer = OBJ_LAYER
+
+	if(buckled_mob)
+		if(buckled_mob.loc != src.loc)
+			buckled_mob.buckled = null //Temporary, so Move() succeeds.
+			if(!buckled_mob.Move(loc))
+				unbuckle()
+				buckled_mob = null
+			else
+				buckled_mob.buckled = src //Restoring
+		if(buckled_mob)
+			buckled_mob.dir = dir

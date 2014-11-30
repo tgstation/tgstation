@@ -70,11 +70,14 @@ TYPE: /area/medical/research > /area/science/lab
 # UNKNOWN SHIT FIXME
 TYPE: /area/tcommsat/server             > /area/tcomms/chamber
 TYPE: /area/toxins/telesci              > /area/science/telescience
-TYPE: /area/crew_quarters/hor           > /area
-TYPE: /area/shuttle/escape_pod4/station > /area
-TYPE: /area/shuttle/escape_pod4/transit > /area
-TYPE: /area/shuttle/escape_pod4/centcom > /area
-TYPE: /area/centcom/prison              > /area
+TYPE: /area/crew_quarters/hor           > /area/science/rd
+TYPE: /area/shuttle/escape_pod4/station > /area/escape_pod5/station
+TYPE: /area/shuttle/escape_pod4/transit > /area/escape_pod5/transit
+TYPE: /area/shuttle/escape_pod4/centcom > /area/escape_pod5/centcom
+TYPE: /area/centcom/prison              > /area/prison/solitary
 
+# TURRETS
+
+TYPE: /obj/machinery/porta_turret       > /obj/machinery/turret
 # Vroom
 TYPE: /obj/structure/stool/bed/chair/janicart > /obj/structure/stool/bed/chair/vehicle/janicart

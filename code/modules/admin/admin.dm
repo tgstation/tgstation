@@ -95,6 +95,9 @@ var/global/floorIsLava = 0
 		<A href='?src=\ref[src];subtlemessage=\ref[M]'>Subtle message</A>
 	"}
 
+	// Mob-specific controls.
+	body += M.player_panel_controls(usr)
+
 	if (M.client)
 		if(!istype(M, /mob/new_player))
 
@@ -194,8 +197,8 @@ var/global/floorIsLava = 0
 			<b>Other actions:</b>
 			<br>
 			<A href='?src=\ref[src];forcespeech=\ref[M]'>Forcesay</A> |
-			<A href='?src=\ref[src];tdome1=\ref[M]'>Thunderdome 1</A> |
-			<A href='?src=\ref[src];tdome2=\ref[M]'>Thunderdome 2</A> |
+			<A href='?src=\ref[src];tdome1=\ref[M]'>Thunderdome Green</A> |
+			<A href='?src=\ref[src];tdome2=\ref[M]'>Thunderdome Red</A> |
 			<A href='?src=\ref[src];tdomeadmin=\ref[M]'>Thunderdome Admin</A> |
 			<A href='?src=\ref[src];tdomeobserve=\ref[M]'>Thunderdome Observer</A> |
 		"}
@@ -647,6 +650,21 @@ var/global/floorIsLava = 0
 
 	var/dat = "<B>The first rule of adminbuse is: you don't talk about the adminbuse.</B><HR>"
 
+	if(check_rights(R_FUN,0) || check_rights(R_ADMINBUS,0))
+		dat += {"
+			<B>Fourth-Wall Demolition</B><BR>
+			<BR>
+			"}
+	if(check_rights(R_ADMINBUS,0))
+		dat += {"
+			<A href='?src=\ref[src];secretsfun=spawnadminbus'>Spawn an Adminbus</A><BR>
+			"}
+	if(check_rights(R_FUN,0))
+		dat += {"
+			<A href='?src=\ref[src];secretsfun=spawnselfdummy'>Spawn yourself as a Test Dummy</A><BR>
+			<BR>
+			"}
+
 	if(check_rights(R_ADMIN,0))
 		dat += {"
 			<B>Admin Secrets</B><BR>
@@ -1024,6 +1042,10 @@ var/global/floorIsLava = 0
 		return 1
 	if(M.mind in ticker.mode.changelings)
 		if (ticker.mode.config_tag == "changeling")
+			return 2
+		return 1
+	if(M.mind in ticker.mode.borers)
+		if (ticker.mode.config_tag == "borer")
 			return 2
 		return 1
 

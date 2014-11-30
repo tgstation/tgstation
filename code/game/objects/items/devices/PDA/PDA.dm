@@ -24,7 +24,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	//Secondary variables
 	var/scanmode = 0 //1 is medical scanner, 2 is forensics, 3 is reagent scanner, 4 is halogen counter, 5 is gas scanner, 6 is device analyser -- keep this list updated if you add one
 	var/fon = 0 //Is the flashlight function on?
-	var/f_lum = 4 //Luminosity for the flashlight function
+	l_color = "#D8FFF2" //Related to the flashlight function. We Fallout now
+	var/f_lum = 2 //Luminosity for the flashlight function
 	var/silent = 0 //To beep or not to beep, that is the question
 	var/toff = 0 //If 1, messenger disabled
 	var/tnote = null //Current Texts
@@ -156,90 +157,110 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 
 /obj/item/device/pda/medical
+	name = "Medical PDA"
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-m"
 
 /obj/item/device/pda/viro
+	name = "Virology PDA"
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-v"
 
 /obj/item/device/pda/engineering
+	name = "Engineering PDA"
 	default_cartridge = /obj/item/weapon/cartridge/engineering
 	icon_state = "pda-e"
 
 /obj/item/device/pda/security
+	name = "Security PDA"
 	default_cartridge = /obj/item/weapon/cartridge/security
 	icon_state = "pda-s"
 
 /obj/item/device/pda/detective
+	name = "Detective PDA"
 	default_cartridge = /obj/item/weapon/cartridge/detective
 	icon_state = "pda-det"
 
 /obj/item/device/pda/warden
+	name = "Warden PDA"
 	default_cartridge = /obj/item/weapon/cartridge/security
 	icon_state = "pda-warden"
 
 /obj/item/device/pda/janitor
+	name = "Janitor PDA"
 	default_cartridge = /obj/item/weapon/cartridge/janitor
 	icon_state = "pda-j"
 	ttone = "slip"
 
 /obj/item/device/pda/toxins
+	name = "Science PDA"
 	default_cartridge = /obj/item/weapon/cartridge/signal/toxins
 	icon_state = "pda-tox"
 	ttone = "boom"
 
 /obj/item/device/pda/clown
+	name = "Clown PDA"
 	default_cartridge = /obj/item/weapon/cartridge/clown
 	icon_state = "pda-clown"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
 	ttone = "honk"
 
 /obj/item/device/pda/mime
+	name = "Mime PDA"
 	default_cartridge = /obj/item/weapon/cartridge/mime
 	icon_state = "pda-mime"
 	silent = 1
 	ttone = "silence"
 
 /obj/item/device/pda/heads
+	name = "Head of department PDA"
 	default_cartridge = /obj/item/weapon/cartridge/head
 	icon_state = "pda-h"
 
 /obj/item/device/pda/heads/hop
+	name = "Head of Personnel PDA"
 	default_cartridge = /obj/item/weapon/cartridge/hop
 	icon_state = "pda-hop"
 
 /obj/item/device/pda/heads/hos
+	name = "Head of Security PDA"
 	default_cartridge = /obj/item/weapon/cartridge/hos
 	icon_state = "pda-hos"
 
 /obj/item/device/pda/heads/ce
+	name = "Chief Engineer PDA"
 	default_cartridge = /obj/item/weapon/cartridge/ce
 	icon_state = "pda-ce"
 
 /obj/item/device/pda/heads/cmo
+	name = "Chief Medical Officer PDA"
 	default_cartridge = /obj/item/weapon/cartridge/cmo
 	icon_state = "pda-cmo"
 
 /obj/item/device/pda/heads/rd
+	name = "Research Director PDA"
 	default_cartridge = /obj/item/weapon/cartridge/rd
 	icon_state = "pda-rd"
 
 /obj/item/device/pda/captain
+	name = "Captain PDA"
 	default_cartridge = /obj/item/weapon/cartridge/captain
 	icon_state = "pda-c"
 	detonate = 0
 	//toff = 1
 
 /obj/item/device/pda/cargo
+	name = "Cargo PDA"
 	default_cartridge = /obj/item/weapon/cartridge/quartermaster
 	icon_state = "pda-cargo"
 
 /obj/item/device/pda/quartermaster
+	name = "Quartermaster PDA"
 	default_cartridge = /obj/item/weapon/cartridge/quartermaster
 	icon_state = "pda-q"
 
 /obj/item/device/pda/shaftminer
+	name = "Mining PDA"
 	icon_state = "pda-miner"
 
 /obj/item/device/pda/syndicate
@@ -250,22 +271,27 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	hidden = 1
 
 /obj/item/device/pda/chaplain
+	name = "Chaplain PDA"
 	icon_state = "pda-holy"
 	ttone = "holy"
 
 /obj/item/device/pda/lawyer
+	name = "Lawyer PDA"
 	default_cartridge = /obj/item/weapon/cartridge/lawyer
 	icon_state = "pda-lawyer"
 	ttone = "..."
 
 /obj/item/device/pda/botanist
+	name = "Botany PDA"
 	//default_cartridge = /obj/item/weapon/cartridge/botanist
 	icon_state = "pda-hydro"
 
 /obj/item/device/pda/roboticist
+	name = "Robotics PDA"
 	icon_state = "pda-robot"
 
 /obj/item/device/pda/librarian
+	name = "Librarian PDA"
 	icon_state = "pda-libb"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This is model is a WGW-11 series e-reader."
 	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant!"
@@ -277,25 +303,31 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	note = "Congratulations, you have chosen the Thinktronic 5230 Personal Data Assistant Deluxe Special Max Turbo Limited Edition!"
 
 /obj/item/device/pda/chef
+	name = "Chef PDA"
 	default_cartridge = /obj/item/weapon/cartridge/chef
 	icon_state = "pda-chef"
 
 /obj/item/device/pda/bar
+	name = "Bartender PDA"
 	icon_state = "pda-bar"
 
 /obj/item/device/pda/atmos
+	name = "Atmospherics PDA"
 	default_cartridge = /obj/item/weapon/cartridge/atmos
 	icon_state = "pda-atmo"
 
 /obj/item/device/pda/mechanic
+	name = "Mechanic PDA"
 	default_cartridge = /obj/item/weapon/cartridge/mechanic
 	icon_state = "pda-atmo"
 
 /obj/item/device/pda/chemist
+	name = "Chemistry PDA"
 	default_cartridge = /obj/item/weapon/cartridge/chemistry
 	icon_state = "pda-chem"
 
 /obj/item/device/pda/geneticist
+	name = "Genetics PDA"
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-gene"
 

@@ -51,6 +51,9 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		/obj/item/weapon/reagent_containers/glass/beaker
 	)
 
+	// Don't log reagent transfers.  They're just spammy.
+	reagents_to_log=0
+
 	RefreshParts()
 
 /obj/machinery/r_n_d/fabricator/circuit_imprinter/RefreshParts()

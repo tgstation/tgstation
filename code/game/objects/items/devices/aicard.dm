@@ -38,7 +38,7 @@
 		var/dat = "<TT><B>Intelicard</B><BR>"
 		var/laws
 		for(var/mob/living/silicon/ai/A in src)
-			dat += "Stored AI: [A.name]<br>System integrity: [(A.health+100)/2]%<br>"
+			dat += "Stored AI: [A.name]<br>System integrity: [A.system_integrity()]%<br>"
 
 			//AI DIDN'T KILL SOMEONE FOR ME, CARD HER TO CHECK HER LAWS
 

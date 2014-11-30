@@ -47,12 +47,14 @@
 				GiveTarget(new_target)
 
 			if(HOSTILE_STANCE_ATTACK)
-				MoveToTarget()
-				DestroySurroundings()
+				if(!(flags & INVULNERABLE))
+					MoveToTarget()
+					DestroySurroundings()
 
 			if(HOSTILE_STANCE_ATTACKING)
-				AttackTarget()
-				DestroySurroundings()
+				if(!(flags & INVULNERABLE))
+					AttackTarget()
+					DestroySurroundings()
 
 		if(ranged)
 			ranged_cooldown--
@@ -115,11 +117,15 @@
 		var/mob/living/L = the_target
 		if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive == 1)
 			return 0
+		if(L.flags & INVULNERABLE)
+			return 0
 		if(L.faction == src.faction && !attack_same || L.faction != src.faction && attack_same == 2 || L.faction != attack_faction && attack_faction)
 			return 0
 		if(iscultist(L) && (faction == "cult"))
 			return 0
 		if(isslime(L) && (faction == "slimesummon"))
+			return 0
+		if((istype(L,/mob/living/simple_animal/corgi/Ian) || istype(L,/mob/living/carbon/human/dummy)) && (faction == "adminbus mob"))
 			return 0
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L

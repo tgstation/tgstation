@@ -5,6 +5,8 @@
 	cache_lifespan = 0	//stops player uploaded stuff from being kept in the rsc past the current session
 
 #define RECOMMENDED_VERSION 501
+
+
 /world/New()
 	// Honk honk, fuck you science
 	populate_seed_list()
@@ -36,8 +38,7 @@
 	if(byond_version < RECOMMENDED_VERSION)
 		world.log << "Your server's byond version does not meet the recommended requirements for this code. Please update BYOND"
 
-	if(config && config.log_runtimes)
-		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM-DD-(hh-mm-ss)")]-runtime.log")
+
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
@@ -58,7 +59,8 @@
 	SetupHooks() // /vg/
 
 	copy_logs() // Just copy the logs.
-
+	if(config && config.log_runtimes)
+		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM-DD")]-runtime.log")
 	if(config && config.server_name != null && config.server_suffix && world.port > 0)
 		// dumb and hardcoded but I don't care~
 		config.server_name += " #[(world.port % 1000) / 100]"
@@ -111,6 +113,7 @@
 
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
+	process_adminbus_teleport_locs()	//Sets up adminbus teleport locations.
 
 	spawn(3000)		//so we aren't adding to the round-start lag
 		if(config.ToRban)
@@ -178,6 +181,27 @@
 
 
 /world/Reboot(reason)
+	if(config.map_voting)
+		//testing("we have done a map vote")
+		if(fexists(vote.chosen_map))
+			//testing("[vote.chosen_map] exists")
+			var/start = 1
+			var/pos = findtext(vote.chosen_map, "/", start)
+			var/lastpos = pos
+			//testing("First slash [lastpos]")
+			while(pos > 0)
+				lastpos = pos
+				pos = findtext(vote.chosen_map, "/", start)
+				start = pos + 1
+				//testing("Next slash [pos]")
+			var/filename = copytext(vote.chosen_map, lastpos + 1, 0)
+			//testing("Found [filename]")
+
+			if(!fcopy(vote.chosen_map, filename))
+				//testing("Fcopy failed, deleting and copying")
+				fdel(filename)
+				fcopy(vote.chosen_map, filename)
+			sleep(60)
 	spawn(0)
 		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/slugmissioncomplete.ogg')) // random end sounds!! - LastyBatsy
 
@@ -200,7 +224,7 @@
 				if(C.is_afk(INACTIVITY_KICK))
 					if(!istype(C.mob, /mob/dead))
 						log_access("AFK: [key_name(C)]")
-						C << "\red You have been inactive for more than 10 minutes and have been disconnected."
+						C << "<span class='warning'>You have been inactive for more than 10 minutes and have been disconnected.</span>"
 						del(C)
 #undef INACTIVITY_KICK
 

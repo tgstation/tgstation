@@ -109,6 +109,25 @@ proc/process_ghost_teleport_locs()
 				not_in_order = 1
 	while(not_in_order)
 
+var/global/list/adminbusteleportlocs = list()
+
+proc/process_adminbus_teleport_locs()
+	for(var/area/AR in world)
+		if(adminbusteleportlocs.Find(AR.name)) continue
+		adminbusteleportlocs += AR.name
+		adminbusteleportlocs[AR.name] = AR
+
+	var/not_in_order = 0
+	do
+		not_in_order = 0
+		if(adminbusteleportlocs.len <= 1)
+			break
+		for(var/i = 1, i <= (adminbusteleportlocs.len - 1), i++)
+			if(sorttext(adminbusteleportlocs[i], adminbusteleportlocs[i+1]) == -1)
+				adminbusteleportlocs.Swap(i, i+1)
+				not_in_order = 1
+	while(not_in_order)
+
 
 /*-----------------------------------------------------------------------------*/
 
@@ -858,30 +877,30 @@ proc/process_ghost_teleport_locs()
 	jammed=1
 
 /area/crew_quarters/heads
-	hop
-		name = "\improper Head of Personnel's Quarters"
-		icon_state = "head_quarters"
-		jammed=1
+/area/crew_quarters/heads/hop
+	name = "\improper Head of Personnel's Quarters"
+	icon_state = "head_quarters"
+	jammed=1
 
-	rd
-		name = "\improper Research Director's Quarters"
-		icon_state = "head_quarters"
-		jammed=1
+/area/crew_quarters/heads/rd
+	name = "\improper Research Director's Quarters"
+	icon_state = "head_quarters"
+	jammed=1
 
-	ce
-		name = "\improper Chief Engineer's Quarters"
-		icon_state = "head_quarters"
-		jammed=1
+/area/crew_quarters/heads/ce
+	name = "\improper Chief Engineer's Quarters"
+	icon_state = "head_quarters"
+	jammed=1
 
-	hos
-		name = "\improper Head of Security's Quarters"
-		icon_state = "head_quarters"
-		jammed=1
+/area/crew_quarters/heads/hos
+	name = "\improper Head of Security's Quarters"
+	icon_state = "head_quarters"
+	jammed=1
 
-	cmo
-		name = "\improper Chief Medical Officer's Quarters"
-		icon_state = "head_quarters"
-		jammed=1
+/area/crew_quarters/heads/cmo
+	name = "\improper Chief Medical Officer's Quarters"
+	icon_state = "head_quarters"
+	jammed=1
 
 /area/crew_quarters/courtroom
 	name = "\improper Courtroom"
@@ -1065,51 +1084,57 @@ proc/process_ghost_teleport_locs()
 //Engineering
 
 /area/engineering
-	engine_smes
-		name = "\improper Engineering SMES"
-		icon_state = "engine_smes"
-		requires_power = 0//This area only covers the batteries and they deal with their own power
 
-	engine
-		name = "Engineering"
-		icon_state = "engine"
+/area/engineering/engine_smes
+	name = "\improper Engineering SMES"
+	icon_state = "engine_smes"
+	requires_power = 0//This area only covers the batteries and they deal with their own power
 
-	engine_storage
-		name = "Engineering Secure Storage"
-		icon_state = "engine_storage"
+/area/engineering/engine
+	name = "Engineering"
+	icon_state = "engine"
 
-	break_room
-		name = "\improper Engineering Foyer"
-		icon_state = "engine_lobby"
+/area/engineering/engine_storage
+	name = "Engineering Secure Storage"
+	icon_state = "engine_storage"
 
-	ce
-		name = "\improper Chief Engineer's Office"
-		icon_state = "head_quarters"
-		jammed=1
+/area/engineering/break_room
+	name = "\improper Engineering Foyer"
+	icon_state = "engine_lobby"
 
-	burn_chamber
-		name = "Burn Chamber"
-		icon_state = "thermo_engine"
+/area/engineering/ce
+	name = "\improper Chief Engineer's Office"
+	icon_state = "head_quarters"
+	jammed=1
 
-	atmos
-		name = "Atmospherics"
-		icon_state = "atmos"
+/area/engineering/burn_chamber
+	name = "Burn Chamber"
+	icon_state = "thermo_engine"
 
-	atmos_control
-		name = "Atmospherics Monitoring"
-		icon_state = "atmos_monitor"
+/area/engineering/atmos
+	name = "Atmospherics"
+	icon_state = "atmos"
 
-	supermatter_room
-		name = "Supermatter Room"
-		icon_state = "supermatter"
+/area/engineering/atmos_control
+	name = "Atmospherics Monitoring"
+	icon_state = "atmos_monitor"
 
-	antimatter_room
-		name = "Antimatter Engine Room"
-		icon_state = "antimatter"
+/area/engineering/supermatter_room
+	name = "Supermatter Room"
+	icon_state = "supermatter"
 
-	engineering_auxiliary
-		name = "Auxiliary Engineering"
-		icon_state = "engiaux"
+/area/engineering/antimatter_room
+	name = "Antimatter Engine Room"
+	icon_state = "antimatter"
+
+/area/engineering/engineering_auxiliary
+	name = "Auxiliary Engineering"
+	icon_state = "engiaux"
+
+/area/engineering/mechanics
+	name = "Mechanics"
+	icon_state = "mechanics"
+
 
 //Solars
 
@@ -1118,29 +1143,45 @@ proc/process_ghost_teleport_locs()
 	luminosity = 1
 	lighting_use_dynamic = 0
 
-	fport
-		name = "\improper Fore Port Solar Array"
-		icon_state = "panelsA"
+/area/solar/fport
+	name = "\improper Fore Port Solar Array"
+	icon_state = "panelsA"
 
-	fstarboard
-		name = "\improper Fore Starboard Solar Array"
-		icon_state = "panelsA"
+/area/solar/fstarboard
+	name = "\improper Fore Starboard Solar Array"
+	icon_state = "panelsA"
 
-	fore
-		name = "\improper Fore Solar Array"
-		icon_state = "yellow"
+/area/solar/fore
+	name = "\improper Fore Solar Array"
+	icon_state = "yellow"
 
-	aft
-		name = "\improper Aft Solar Array"
-		icon_state = "aft"
+/area/solar/aft
+	name = "\improper Aft Solar Array"
+	icon_state = "aft"
 
-	astarboard
-		name = "\improper Aft Starboard Solar Array"
-		icon_state = "panelsS"
+/area/solar/astarboard
+	name = "\improper Aft Starboard Solar Array"
+	icon_state = "panelsS"
 
-	aport
-		name = "\improper Aft Port Solar Array"
-		icon_state = "panelsP"
+/area/solar/auxstarboard
+	name = "\improper Auxillary Starboard Solar Array"
+	icon_state = "panelsS"
+
+/area/solar/aport
+	name = "\improper Aft Port Solar Array"
+	icon_state = "panelsP"
+
+/area/solar/auxport
+	name = "\improper Auxillary Port Solar Array"
+	icon_state = "panelsP"
+
+/area/maintenance/auxsolarstarboard
+	name = "Auxillary Starboard Solar Maintenance"
+	icon_state = "SolarcontrolS"
+
+/area/maintenance/auxsolarport
+	name = "Auxillary Port Solar Maintenance"
+	icon_state = "SolarcontrolP"
 
 /area/maintenance/fportsolar
 	name = "Fore Port Solar Maintenance"
@@ -1162,7 +1203,7 @@ proc/process_ghost_teleport_locs()
 	name = "Virology Maintenance"
 	icon_state = "asmaint"
 
-/area/assembly/showroom
+/area/science/showroom
 	name = "\improper Robotics Showroom"
 	icon_state = "showroom"
 
@@ -1321,6 +1362,10 @@ proc/process_ghost_teleport_locs()
 
 /area/security/interrogation
 	name = "\improper Interrogation Room"
+	icon_state = "interrog"
+
+/area/security/processing
+	name = "\improper Prisoner Education Chamber"
 	icon_state = "interrog"
 
 /obj/item/weapon/paper/Gaschamber
@@ -2035,53 +2080,53 @@ proc/process_ghost_teleport_locs()
 	requires_power = 0
 	var/sound/mysound = null
 
-	New()
-		..()
-		var/sound/S = new/sound()
-		mysound = S
-		S.file = 'sound/ambience/shore.ogg'
-		S.repeat = 1
-		S.wait = 0
-		S.channel = 123
-		S.volume = 100
-		S.priority = 255
-		S.status = SOUND_UPDATE
-		process()
+/area/awaymission/beach/New()
+	..()
+	var/sound/S = new/sound()
+	mysound = S
+	S.file = 'sound/ambience/shore.ogg'
+	S.repeat = 1
+	S.wait = 0
+	S.channel = 123
+	S.volume = 100
+	S.priority = 255
+	S.status = SOUND_UPDATE
+	process()
 
-	Entered(atom/movable/Obj,atom/OldLoc)
-		if(ismob(Obj))
-			if(Obj:client)
-				mysound.status = SOUND_UPDATE
-				Obj << mysound
-		return
+/area/awaymission/beach/Entered(atom/movable/Obj,atom/OldLoc)
+	if(ismob(Obj))
+		if(Obj:client)
+			mysound.status = SOUND_UPDATE
+			Obj << mysound
+	return
 
-	Exited(atom/movable/Obj)
-		if(ismob(Obj))
-			if(Obj:client)
-				mysound.status = SOUND_PAUSED | SOUND_UPDATE
-				Obj << mysound
+/area/awaymission/beach/Exited(atom/movable/Obj)
+	if(ismob(Obj))
+		if(Obj:client)
+			mysound.status = SOUND_PAUSED | SOUND_UPDATE
+			Obj << mysound
 
-	proc/process()
-		//set background = 1
+/area/awaymission/beach/proc/process()
+	//set background = 1
 
-		var/sound/S = null
-		var/sound_delay = 0
-		if(prob(25))
-			S = sound(file=pick('sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag3.ogg'), volume=100)
-			sound_delay = rand(0, 50)
+	var/sound/S = null
+	var/sound_delay = 0
+	if(prob(25))
+		S = sound(file=pick('sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag3.ogg'), volume=100)
+		sound_delay = rand(0, 50)
 
-		for(var/mob/living/carbon/human/H in src)
-			if(H.s_tone > -55)
-				H.s_tone--
-				H.update_body()
-			if(H.client)
-				mysound.status = SOUND_UPDATE
-				H << mysound
-				if(S)
-					spawn(sound_delay)
-						H << S
+	for(var/mob/living/carbon/human/H in src)
+		if(H.s_tone > -55)
+			H.s_tone--
+			H.update_body()
+		if(H.client)
+			mysound.status = SOUND_UPDATE
+			H << mysound
+			if(S)
+				spawn(sound_delay)
+					H << S
 
-		spawn(60) .()
+	spawn(60) .()
 
 /////////////////////////////////////////////////////////////////////
 /*
@@ -2159,51 +2204,51 @@ var/list/the_station_areas = list (
 	requires_power = 0
 	var/sound/mysound = null
 
-	New()
-		..()
-		var/sound/S = new/sound()
-		mysound = S
-		S.file = 'sound/ambience/shore.ogg'
-		S.repeat = 1
-		S.wait = 0
-		S.channel = 123
-		S.volume = 100
-		S.priority = 255
-		S.status = SOUND_UPDATE
-		process()
+/area/beach/New()
+	..()
+	var/sound/S = new/sound()
+	mysound = S
+	S.file = 'sound/ambience/shore.ogg'
+	S.repeat = 1
+	S.wait = 0
+	S.channel = 123
+	S.volume = 100
+	S.priority = 255
+	S.status = SOUND_UPDATE
+	process()
 
-	Entered(atom/movable/Obj,atom/OldLoc)
-		if(ismob(Obj))
-			if(Obj:client)
-				mysound.status = SOUND_UPDATE
-				Obj << mysound
-		return
+/area/beach/Entered(atom/movable/Obj,atom/OldLoc)
+	if(ismob(Obj))
+		if(Obj:client)
+			mysound.status = SOUND_UPDATE
+			Obj << mysound
+	return
 
-	Exited(atom/movable/Obj)
-		if(ismob(Obj))
-			if(Obj:client)
-				mysound.status = SOUND_PAUSED | SOUND_UPDATE
-				Obj << mysound
+/area/beach/Exited(atom/movable/Obj)
+	if(ismob(Obj))
+		if(Obj:client)
+			mysound.status = SOUND_PAUSED | SOUND_UPDATE
+			Obj << mysound
 
-	proc/process()
-		//set background = 1
+/area/beach/proc/process()
+	//set background = 1
 
-		var/sound/S = null
-		var/sound_delay = 0
-		if(prob(25))
-			S = sound(file=pick('sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag3.ogg'), volume=50)
-			sound_delay = rand(0, 50)
+	var/sound/S = null
+	var/sound_delay = 0
+	if(prob(25))
+		S = sound(file=pick('sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag3.ogg'), volume=50)
+		sound_delay = rand(0, 50)
 
-		for(var/mob/living/carbon/human/H in src)
+	for(var/mob/living/carbon/human/H in src)
 //			if(H.s_tone > -55)	//ugh...nice/novel idea but please no.
 //				H.s_tone--
 //				H.update_body()
-			if(H.client)
-				mysound.status = SOUND_UPDATE
-				H << mysound
-				if(S)
-					spawn(sound_delay)
-						H << S
+		if(H.client)
+			mysound.status = SOUND_UPDATE
+			H << mysound
+			if(S)
+				spawn(sound_delay)
+					H << S
 
-		spawn(60) .()
+	spawn(60) .()
 

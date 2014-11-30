@@ -40,7 +40,7 @@
 		var/mob/living/carbon/C = usr
 		C.toggle_throw_mode()
 	else
-		usr << "\red This mob type cannot throw items."
+		usr << "<span class='warning'>This mob type cannot throw items.</span>"
 	return
 
 
@@ -48,11 +48,22 @@
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		if(!C.get_active_hand())
-			usr << "\red You have nothing to drop in your hand."
+			usr << "<span class='warning'> You have nothing to drop in your hand.</span>"
 			return
 		drop_item()
+	else if(isMoMMI(usr))
+		var/mob/living/silicon/robot/mommi/M = usr
+		if(!M.get_active_hand())
+			M << "<span class='warning'> You have nothing to drop or store.</span>"
+			return
+		M.uneq_active()
+	else if(isrobot(usr))
+		var/mob/living/silicon/robot/R = usr
+		if(!R.module_active)
+			return
+		R.uneq_active()
 	else
-		usr << "\red This mob type cannot drop items."
+		usr << "<span class='warning'> This mob type cannot drop items.</span>"
 	return
 
 //This gets called when you press the delete button.
@@ -60,7 +71,7 @@
 	set hidden = 1
 
 	if(!usr.pulling)
-		usr << "\blue You are not pulling anything."
+		usr << "<span class='notice'> You are not pulling anything.</span>"
 		return
 	usr.stop_pulling()
 
@@ -243,13 +254,13 @@
 			for(var/mob/M in range(mob, 1))
 				if(M.pulling == mob)
 					if(!M.restrained() && M.stat == 0 && M.canmove && mob.Adjacent(M))
-						src << "\blue You're restrained! You can't move!"
+						src << "<span class='notice'> You're restrained! You can't move!</span>"
 						return 0
 					else
 						M.stop_pulling()
 
 		if(mob.pinned.len)
-			src << "\blue You're pinned to a wall by [mob.pinned[1]]!"
+			src << "<span class='notice'> You're pinned to a wall by [mob.pinned[1]]!</span>"
 			return 0
 
 		move_delay = world.time//set move delay
@@ -337,12 +348,12 @@
 			if(G.state == 2)
 				move_delay = world.time + 10
 				if(!prob(25))	return 1
-				mob.visible_message("\red [mob] has broken free of [G.assailant]'s grip!")
+				mob.visible_message("<span class='warning'> [mob] has broken free of [G.assailant]'s grip!</span>")
 				del(G)
 			if(G.state == 3)
 				move_delay = world.time + 10
 				if(!prob(5))	return 1
-				mob.visible_message("\red [mob] has broken free of [G.assailant]'s headlock!")
+				mob.visible_message("<span class='warning'> [mob] has broken free of [G.assailant]'s headlock!</span>")
 				del(G)
 	return 0
 
@@ -356,7 +367,7 @@
 	switch(mob.incorporeal_move)
 		if(1)
 			var/turf/T = get_step(mob, direct)
-			if(T.holy && isobserver(mob) && ((mob.invisibility == 0) || (mob.mind in ticker.mode.cult)))
+			if(T.holy && isobserver(mob) && ((mob.invisibility == 0) || (ticker.mode && (mob.mind in ticker.mode.cult))))
 				mob << "<span class='warning'>You cannot get past holy grounds while you are in this plane of existence!</span>"
 			else
 				mob.loc = get_step(mob, direct)
@@ -470,7 +481,7 @@
 
 	//Check to see if we slipped
 	if(prob(Process_Spaceslipping(5)))
-		src << "\blue <B>You slipped!</B>"
+		src << "<span class='notice'> <B>You slipped!</B></span>"
 		src.inertia_dir = src.last_move
 		step(src, src.inertia_dir)
 		return 0

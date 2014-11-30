@@ -79,7 +79,7 @@
 
 /obj/item/weapon/reagent_containers/glass/bottle/chloralhydrate
 	name = "Chloral Hydrate Bottle"
-	desc = "A small bottle of Choral Hydrate. Mickey's Favorite!"
+	desc = "A small bottle of Chloral Hydrate. Mickey's Favorite!"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle20"
 

@@ -349,6 +349,11 @@
 		AH.try_build(src)
 		return
 
+	else if(istype(W,/obj/item/wallmed_frame))
+		var/obj/item/wallmed_frame/AH = W
+		AH.try_build(src)
+		return
+
 	//Poster stuff
 	else if(istype(W,/obj/item/weapon/contraband/poster))
 		place_poster(W,user)
@@ -444,5 +449,5 @@
 
 /turf/simulated/wall/cultify()
 	ChangeTurf(/turf/simulated/wall/cult)
-	cultification()
+	turf_animation('icons/effects/effects.dmi',"cultwall",0,0,MOB_LAYER-1)
 	return

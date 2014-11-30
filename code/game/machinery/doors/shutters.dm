@@ -8,6 +8,11 @@
 	..()
 	layer = 3.1
 
+/obj/machinery/door/poddoor/shutters/preopen
+	icon_state = "shutter0"
+	density = 0
+	opacity = 0
+
 /obj/machinery/door/poddoor/shutters/attackby(obj/item/weapon/C as obj, mob/user as mob)
 	add_fingerprint(user)
 	if(!(istype(C, /obj/item/weapon/crowbar) || (istype(C, /obj/item/weapon/twohanded/fireaxe) && C:wielded == 1) ))

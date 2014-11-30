@@ -158,19 +158,16 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 	else
 
 		var/list/candidates = list()	//list of candidate keys
-		for(var/mob/dead/observer/G in player_list)
-			if(G.client && !G.client.holder && !G.client.is_afk() && G.client.prefs.be_special & BE_NINJA)
+
+		for(var/mob/dead/observer/G in get_active_candidates(ROLE_NINJA, poll="Would you like to spawn as a space ninja?"))
+			if(G.client && !G.client.holder && !G.client.is_afk())
 				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
 					candidates += G
-		if(!candidates.len)	return
-		candidates = shuffle(candidates)//Incorporating Donkie's list shuffle
 
-		while(!ninja_key && candidates.len)
-			candidate_mob = pick(candidates)
-			if(sd_Alert(candidate_mob, "Would you like to spawn as a space ninja?", buttons = list("Yes","No"), duration = 150) == "Yes")
-				ninja_key = candidate_mob.ckey
-			else
-				candidates.Remove(candidate_mob)
+		if(!candidates.len)	return
+
+		candidate_mob = pick(candidates)
+		ninja_key=candidate_mob.ckey
 
 		if(!ninja_key)
 			return

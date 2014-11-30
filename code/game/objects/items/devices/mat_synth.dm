@@ -1,5 +1,5 @@
 #define MAX_MATSYNTH_MATTER 60
-#define MAT_SYNTH_ROBO 100
+#define MAT_SYNTH_ROBO 50
 
 #define MAT_COST_COMMON		1
 #define MAT_COST_MEDIUM		5
@@ -15,7 +15,7 @@
 	w_class = 3.0
 	origin_tech = "engineering=4;materials=5;power=3"
 
-	var/mode = 0	//0 is material selection, 1 is material production
+	var/mode = 1	//0 is material selection, 1 is material production
 	var/emagged = 0
 
 	var/obj/item/stack/sheet/active_material = /obj/item/stack/sheet/metal
@@ -24,6 +24,14 @@
 										"reinforced glass" = /obj/item/stack/sheet/rglass,
 										"plasteel" = /obj/item/stack/sheet/plasteel)
 	var/matter = 0
+
+/obj/item/device/material_synth/cyborg
+	materials_scanned = list(	"plasma glass" = /obj/item/stack/sheet/glass/plasmaglass,
+								"reinforced plasma glass" = /obj/item/stack/sheet/glass/plasmarglass,
+								"metal" = /obj/item/stack/sheet/metal,
+								"glass" = /obj/item/stack/sheet/glass,
+								"reinforced glass" = /obj/item/stack/sheet/rglass,
+								"plasteel" = /obj/item/stack/sheet/plasteel)
 
 /obj/item/device/material_synth/update_icon()
 	icon_state = "mat_synth[mode ? "on" : "off"]"
@@ -74,63 +82,75 @@
 	return ..()
 
 /obj/item/device/material_synth/attack_self(mob/user)
-	switch(mode)
-		if(0)
-			if(materials_scanned.len)
-				var/selection = materials_scanned[input("Select the material you'd like to synthesize", "Change Material Type") in materials_scanned]
-				if(selection)
-					active_material = selection
-					user << "<span class='notice'>You switch \the [src] to synthesize [initial(active_material.name)]</span>"
-		if(1)
-			var/mat_name = initial(active_material.name)
-			if(isrobot(user))
-				var/mob/living/silicon/robot/r_user = user
-				if(active_material && r_user.cell.charge)
-					var/modifier = MAT_COST_COMMON
-					if(initial(active_material.perunit) < 3750)
-						modifier = MAT_COST_MEDIUM
-					if(initial(active_material.perunit) < 2000)
-						modifier = MAT_COST_RARE
-					var/tospawn = max(0, round(input("How many sheets of [mat_name] do you want to synthesize?") as num))
-					if(tospawn)
-						if(TakeCost(tospawn, modifier, r_user))
-							var/obj/item/stack/sheet/spawned_sheet = new active_material(get_turf(src))
-							spawned_sheet.amount = tospawn
-						else
-							r_user <<"<span class='warning'>You can't make that much [mat_name] without shutting down!</span>"
-							return
-				else if(r_user.cell.charge)
-					user <<"You must select a sheet type first!"
-					return
-			else
-				if(active_material && matter)
-					var/modifier = MAT_COST_COMMON
-					if(initial(active_material.perunit) < 3750) //synthesizing is EXPENSIVE
-						modifier = MAT_COST_MEDIUM
-					if(initial(active_material.perunit) < 2000)
-						modifier = MAT_COST_RARE
-					var/tospawn = Clamp(round(input("How many sheets of [mat_name] do you want to synthesize? (0 - [matter / modifier])") as num), 0, round(matter / modifier))
-					if(tospawn)
-						var/obj/item/stack/sheet/spawned_sheet = new active_material(get_turf(src))
-						spawned_sheet.amount = tospawn
-						TakeCost(tospawn, modifier, user)
-				else if(matter)
-					user <<"You must select a sheet type first!"
-					return
+	if(materials_scanned.len)
+		var/selection = materials_scanned[input("Select the material you'd like to synthesize", "Change Material Type") as null|anything in materials_scanned]
+		if(selection)
+			active_material = selection
+			user << "<span class='notice'>You switch \the [src] to synthesize [initial(active_material.name)]</span>"
+		else
+			active_material = null
+	else
+		user << "<span class='warning'>ERROR: NO MATERIAL DATA FOUND</span>"
+		return 0
+	var/mat_name = initial(active_material.name)
+	if(isrobot(user))
+		var/mob/living/silicon/robot/r_user = user
+		if(active_material && r_user.cell.charge)
+			var/modifier = MAT_COST_COMMON
+			if(initial(active_material.perunit) < 3750)
+				modifier = MAT_COST_MEDIUM
+			if(initial(active_material.perunit) < 2000)
+				modifier = MAT_COST_RARE
+			var/tospawn = max(0, round(input("How many sheets of [mat_name] do you want to synthesize?") as num))
+			if(tospawn)
+				if(TakeCost(tospawn, modifier, r_user))
+					var/obj/item/stack/sheet/spawned_sheet = new active_material(get_turf(src))
+					spawned_sheet.amount = tospawn
 				else
-					user <<"\The [src] is empty!"
+					r_user <<"<span class='warning'>You can't make that much [mat_name] without shutting down!</span>"
+					return
+		else if(r_user.cell.charge)
+			user <<"You must select a sheet type first!"
+			return
+	else
+		if(active_material && matter)
+			var/modifier = MAT_COST_COMMON
+			if(initial(active_material.perunit) < 3750) //synthesizing is EXPENSIVE
+				modifier = MAT_COST_MEDIUM
+			if(initial(active_material.perunit) < 2000)
+				modifier = MAT_COST_RARE
+			var/tospawn = Clamp(round(input("How many sheets of [mat_name] do you want to synthesize? (0 - [matter / modifier])") as num), 0, round(matter / modifier))
+			if(tospawn)
+				var/obj/item/stack/sheet/spawned_sheet = new active_material(get_turf(src))
+				spawned_sheet.amount = tospawn
+				TakeCost(tospawn, modifier, user)
+		else if(matter)
+			user <<"You must select a sheet type first!"
+			return
+		else
+			user <<"\The [src] is empty!"
 
 /obj/item/device/material_synth/proc/TakeCost(var/spawned, var/modifier, mob/user)
 	if(spawned)
 		matter -= round(spawned * modifier)
-
+/*
 /obj/item/device/material_synth/verb/togglemode()
 	set category = "Object"
-	set name = "Toggle Mode"
-	mode = !mode
-	usr <<"<span class='notice'>You successfully toggle \the [src]'s state to [mode ? "synthesis" : "scanning"].</span>"
-	update_icon()
-	return 1
+	set name = "Choose Material Synthesis"
+	if(materials_scanned.len)
+		var/selection = materials_scanned[input("Select the material you'd like to synthesize", "Change Material Type") in materials_scanned]
+		if(selection)
+			active_material = selection
+			user << "<span class='notice'>You switch \the [src] to synthesize [initial(active_material.name)]</span>"
+	else
+		user << "<span class='warning'>ERROR: NO MATERIAL DATA FOUND</span>"
+		return 0
+	return 1*/
+
+//mommis matter synth lacks the capability to scan new materials.
+obj/item/device/material_synth/cyborg/afterattack(/obj/target, mob/user)
+	user << "<span class='notice'>Your [src.name] does not contain this functionality.</span>"
+	return 0
 
 /obj/item/device/material_synth/cyborg/TakeCost(var/spawned, var/modifier, mob/user)
 	if(isrobot(user))
