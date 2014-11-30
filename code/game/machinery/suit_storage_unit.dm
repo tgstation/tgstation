@@ -105,8 +105,16 @@
 		hassuit = 1
 	if(OCCUPANT)
 		hashuman = 1
-	icon_state = text("suitstorage[][][][][][][][][]",hashelmet,hassuit,hashuman,src.isopen,src.islocked,src.isUV,stat & NOPOWER,stat & BROKEN,src.issuperUV)
-
+	icon_state = text("suitstorage[][][][][][][][][]",
+					hashelmet,
+					hassuit,
+					hashuman,
+					src.isopen,
+					src.islocked,
+					src.isUV,
+					!(stat & NOPOWER),
+					stat & BROKEN,
+					src.issuperUV)
 
 /obj/machinery/suit_storage_unit/power_change()
 	if( powered() )
