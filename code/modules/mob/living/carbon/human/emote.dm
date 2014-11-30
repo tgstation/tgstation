@@ -568,12 +568,7 @@
 		if("fart")
 			if(src.op_stage.butt != 4)
 				if(world.time-lastFart >= 400)
-					var/list/farts = list("farts.","passes wind.","toots.","farts [pick("lightly", "tenderly", "softly", "with care")].","farts with the force of one thousand suns.")
-					if(miming)
-						farts = list("silently farts.", "acts out a fart.", "lets out a silent but deadly fart.")
-					var/fart = pick(farts)
-
-					for(var/mob/M in view(1))
+					for(var/mob/M in view(0))
 						if(M != src)
 							if(!miming)
 								visible_message("\red <b>[src]</b> farts in <b>[M]</b>'s face!")
@@ -581,6 +576,43 @@
 								visible_message("\red <b>[src]</b> silently farts in <b>[M]</b>'s face!")
 						else
 							continue
+					
+					for(var/mob/M in view(0))
+						if(M != src)
+							if(!miming)
+								visible_message("\red <b>[src]</b> farts in <b>[M]</b>'s face!")
+							else
+								visible_message("\red <b>[src]</b> silently farts in <b>[M]</b>'s face!")
+						else
+							continue
+							
+					//101 shitty fart jokes
+					var/list/farts = list(
+						"farts",
+						"passes wind",
+						"toots",
+						"farts [pick("lightly", "tenderly", "softly", "with care")]",
+						"farts with the force of one thousand suns",
+						"farts like a farting motherfucker",
+						"nearly shits themself",
+						"almost shit their pants",
+						"flatulates",
+						"lets out their anal exhaust",
+						"farts a ten second long fart",
+						"<span class = 'sans'>farts</span>",
+						"farts like an asshole",
+						"nearly fucking craps themself",
+						"doesn't fart. Just kidding",
+						"tries not to fart, but fails",
+						"burps, the burp smells like a fart",
+						"farts. Now it smells like [pick("burrito filling","Discount Dan's","Danito Burritos","The Captain's purfume","George Melon's breath","The Aristocrats","the station's toilets","a fart","a yiffe-con","The Chaplain's bible","The Captain's old pet mouse Whiskers","The Captain's cigar")] in here"
+						)
+						
+					if(miming)
+						farts = list("silently farts.", "acts out a fart.", "lets out a silent but deadly fart.")
+					
+					var/fart = pick(farts)
+					
 					if(!miming)
 						message = "<b>[src]</b> [fart]."
 						if(mind && mind.assigned_role == "Clown")
