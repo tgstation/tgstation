@@ -3,6 +3,7 @@
 	desc = "Used to separate things with different weight. Spin 'em round, round, right round."
 	icon = 'icons/obj/virology.dmi'
 	icon_state = "centrifuge"
+	circuit = "/obj/item/weapon/circuitboard/centrifuge"
 	var/curing
 	var/isolating
 
@@ -11,19 +12,17 @@
 
 	l_color = "#000000"
 
-/obj/machinery/computer/centrifuge/attackby(var/obj/I as obj, var/mob/user as mob)
-	if(istype(I, /obj/item/weapon/screwdriver))
-		return ..(I,user)
+/obj/machinery/computer/centrifuge/attackby(var/obj/item/weapon/reagent_containers/glass/beaker/vial/I, var/mob/user as mob)
+	if(!istype(I))
+		return ..()
 
-	if(istype(I,/obj/item/weapon/reagent_containers/glass/beaker/vial))
-		var/mob/living/carbon/C = user
-		if(!sample)
-			sample = I
-			C.drop_item()
-			I.loc = src
+	var/mob/living/carbon/C = user
+	if(!sample)
+		sample = I
+		C.drop_item()
+		I.loc = src
 
-	src.attack_hand(user)
-	return
+	attack_hand(user)
 
 /obj/machinery/computer/centrifuge/update_icon()
 	..()

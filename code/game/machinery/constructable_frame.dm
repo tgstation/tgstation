@@ -846,3 +846,26 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/micro_laser" = 2,
 							"/obj/item/weapon/stock_parts/scanning_module" = 2,
 							"/obj/item/weapon/stock_parts/console_screen" = 1)
+
+/obj/item/weapon/circuitboard/incubator
+	name = "Circuit Board (Pathogenic Incubator)"
+	build_path = "/obj/machinery/disease2/incubator"
+	board_type = "machine"
+	origin_tech = "materials=4;biotech=5;magnets=3"
+	frame_desc = "Requires 1 Matter Bins, 2 Scanning Modules, 2 Micro-Lasers, and 1 Beaker."
+	req_components = list(
+							"/obj/item/weapon/stock_parts/matter_bin" = 1,
+							"/obj/item/weapon/stock_parts/micro_laser" = 2,
+							"/obj/item/weapon/stock_parts/scanning_module" = 2,
+							"/obj/item/weapon/reagent_containers/glass/beaker" = 1)
+
+/obj/item/weapon/circuitboard/diseaseanalyser
+	name = "Circuit Board (Disease Analyser)"
+	build_path = "/obj/machinery/disease2/diseaseanalyser"
+	board_type = "machine"
+	origin_tech = "engineering=3;biotech=3;programming=3"
+	frame_desc = "Requires 1 Micro-Lasers, 1 Manipulator, and 3 Scanning Modules."
+	req_components = list(
+							"/obj/item/weapon/stock_parts/manipulator" = 1,
+							"/obj/item/weapon/stock_parts/micro_laser" = 1,
+							"/obj/item/weapon/stock_parts/scanning_module" = 3)
