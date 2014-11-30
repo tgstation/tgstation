@@ -1962,7 +1962,7 @@ other types of metals and chemistry for reagents).
 	locked = 1
 
 /datum/design/xcomlaserrifle
-	name = "Laser Cannon"
+	name = "Laser Rifle"
 	desc = "A laser rifle."
 	id = "xcomlaserrifle"
 	req_tech = list("combat" = 4, "materials" = 3, "powerstorage" = 3)
