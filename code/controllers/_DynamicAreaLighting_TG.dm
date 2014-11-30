@@ -92,7 +92,7 @@ datum/light_source
 		if(owner.loc && owner.luminosity > 0)
 			readrgb(owner.l_color)
 			effect = list()
-			for(var/turf/T in view(owner.get_light_range(),owner))
+			for(var/turf/T in view(owner.get_light_range(), get_turf(owner)))
 				var/delta_lumen = lum(T)
 				if(delta_lumen > 0)
 					effect[T] = delta_lumen

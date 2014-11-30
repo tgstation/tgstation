@@ -41,6 +41,7 @@
 
 	var/nonplant_seed_type
 
+	var/list/attack_verb // used in attack() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 
 /obj/item/Destroy()
 	if(istype(src.loc, /mob))

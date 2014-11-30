@@ -1,0 +1,4 @@
+author: Clusterfack
+delete-after: true
+changes:
+- bugfix: Fixed air alarms in extremely low pressures swaying between very high and low values of temperature
