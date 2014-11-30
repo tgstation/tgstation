@@ -1,0 +1,12 @@
+author: Duny
+delete-after: True
+changes: 
+  - wip: Following changes made to Defficiency/Maintstation
+  - tweak: Added a tiny medbay to security
+  - bugfix: Added an APC to the AME room
+  - tweak: Added some more lights to telecomms
+  - bugfix: Fixed disposals not routing the trash properly, resulting in an endless loop around the station
+  - bugfix: Fixed xenobiologists not having access to the shield gens in xenobiology
+  - tweak: Replaced the plastic flaps in cargo with a better-placed pair of airtight ones
+  - tweak: Added an high-res forensic scanning computer
+  - bugfix: Various little fixes to areas everywhere
