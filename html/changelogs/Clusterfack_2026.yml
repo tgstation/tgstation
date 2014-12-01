@@ -1,0 +1,4 @@
+author: Clusterfack
+delete-after: true
+changes:
+- bugfix: Added a range check for silicons trying to remove APC cells, cannot be done from anywhere in view now
