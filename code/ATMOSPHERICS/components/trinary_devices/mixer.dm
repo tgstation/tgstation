@@ -5,6 +5,8 @@ obj/machinery/atmospherics/trinary/mixer
 
 	name = "Gas mixer"
 
+	mirror = /obj/machinery/atmospherics/trinary/mixer/mirrored
+
 	var/on = 0
 
 	var/target_pressure = ONE_ATMOSPHERE
@@ -160,3 +162,26 @@ obj/machinery/atmospherics/trinary/mixer
 		src.update_icon()
 		src.updateUsrDialog()
 		return
+
+/obj/machinery/atmospherics/trinary/mixer/mirrored
+	icon_state = "intactm_off"
+
+/obj/machinery/atmospherics/trinary/mixer/mirrored/update_icon()
+	if(stat & NOPOWER)
+		icon_state = "intactm_off"
+	else if(node2 && node3 && node1)
+		icon_state = "intactm_[on?("on"):("off")]"
+	else
+		icon_state = "intactm_off"
+		on = 0
+
+	return
+
+/obj/machinery/atmospherics/trinary/mixer/mirrored/initialize()
+	if(node1 && node2 && node3) return
+
+	node1 = findConnecting(dir)
+	node2 = findConnecting(turn(dir, -90))
+	node3 = findConnecting(turn(dir, -180))
+
+	update_icon()

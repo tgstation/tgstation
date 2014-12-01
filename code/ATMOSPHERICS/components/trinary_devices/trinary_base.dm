@@ -35,6 +35,11 @@ obj/machinery/atmospherics/trinary
 		air3.volume = 200
 
 	buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
+		if(!(pipe.dir in list(NORTH, SOUTH, EAST, WEST)) && src.mirror) //because the dir isn't in the right set, we want to make the mirror kind
+			var/obj/machinery/atmospherics/trinary/mirrored_pipe = new mirror(src.loc)
+			pipe.dir = turn(pipe.dir, -45)
+			qdel(src)
+			return mirrored_pipe.buildFrom(usr, pipe)
 		dir = pipe.dir
 		initialize_directions = pipe.get_pipe_dir()
 		if (pipe.pipename)

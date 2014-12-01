@@ -4,10 +4,11 @@
 CONTAINS:
 RPD
 */
-#define PIPE_BINARY   0
-#define PIPE_BENT     1
-#define PIPE_TRINARY  2
-#define PIPE_UNARY    3
+#define PIPE_BINARY		0
+#define PIPE_BENT		1
+#define PIPE_TRINARY	2
+#define PIPE_TRIN_M		3
+#define PIPE_UNARY		4
 
 /datum/pipe_info
 	var/id=-1
@@ -59,6 +60,7 @@ var/global/list/disposalpipeID2State=list(
 	"pipe-j1s",
 	"pipe-j2s"
 )
+
 /datum/pipe_info/disposal
 	icon = 'icons/obj/pipes/disposal.dmi'
 	icon_state = "meterX"
@@ -74,51 +76,53 @@ var/global/list/disposalpipeID2State=list(
 /datum/pipe_info/disposal/Render(var/dispenser,var/label)
 	return "<li><a href='?src=\ref[dispenser];dmake=[id];type=3'>[label]</a></li>"
 
+//find these defines in code\game\machinery\pipe\consruction.dm
 var/global/list/RPD_recipes=list(
 	"Regular Pipes" = list(
-		"Pipe"           = new /datum/pipe_info(0,  1, PIPE_BINARY),
-		"Bent Pipe"      = new /datum/pipe_info(1,  5, PIPE_BENT),
-		"Manifold"       = new /datum/pipe_info(5,  1, PIPE_TRINARY),
-		"Manual Valve"   = new /datum/pipe_info(8,  1, PIPE_BINARY),
-		"Digital Valve"  = new /datum/pipe_info(18, 1, PIPE_BINARY),
-		"Pipe Cap"       = new /datum/pipe_info(21, 1, PIPE_UNARY),
-		"4-Way Manifold" = new /datum/pipe_info(20,-1, PIPE_BINARY),
-		"Manual T-Valve" = new /datum/pipe_info(19, 2, PIPE_TRINARY),
+		"Pipe"           = new /datum/pipe_info(PIPE_SIMPLE_STRAIGHT,	1, PIPE_BINARY),
+		"Bent Pipe"      = new /datum/pipe_info(PIPE_SIMPLE_BENT, 		5, PIPE_BENT),
+		"Manifold"       = new /datum/pipe_info(PIPE_MANIFOLD, 			1, PIPE_TRINARY),
+		"Manual Valve"   = new /datum/pipe_info(PIPE_MVALVE, 			1, PIPE_BINARY),
+		"Digital Valve"  = new /datum/pipe_info(PIPE_DVALVE,			1, PIPE_BINARY),
+		"Pipe Cap"       = new /datum/pipe_info(PIPE_CAP,				1, PIPE_UNARY),
+		"4-Way Manifold" = new /datum/pipe_info(PIPE_MANIFOLD4W,		-1, PIPE_BINARY),
+		"Manual T-Valve" = new /datum/pipe_info(PIPE_MTVALVE,			2, PIPE_TRIN_M),
+		"Digital T-Valve" = new /datum/pipe_info(PIPE_DTVALVE,			2, PIPE_TRIN_M),
 	),
 	"Devices"=list(
-		"Connector"      = new /datum/pipe_info(4, 1, PIPE_UNARY),
-		"Unary Vent"     = new /datum/pipe_info(7, 1, PIPE_UNARY),
-		"Passive Vent"   = new /datum/pipe_info(PIPE_PASV_VENT,    1, PIPE_UNARY),
-		"Gas Pump"       = new /datum/pipe_info(9, 1, PIPE_UNARY),
-		"Passive Gate"   = new /datum/pipe_info(15,1, PIPE_UNARY),
-		"Volume Pump"    = new /datum/pipe_info(16,1, PIPE_UNARY),
-		"Scrubber"       = new /datum/pipe_info(10,1, PIPE_UNARY),
+		"Connector"      = new /datum/pipe_info(PIPE_CONNECTOR,			1, PIPE_UNARY),
+		"Unary Vent"     = new /datum/pipe_info(PIPE_UVENT,				1, PIPE_UNARY),
+		"Passive Vent"   = new /datum/pipe_info(PIPE_PASV_VENT,			1, PIPE_UNARY),
+		"Gas Pump"       = new /datum/pipe_info(PIPE_PUMP,				1, PIPE_UNARY),
+		"Passive Gate"   = new /datum/pipe_info(PIPE_PASSIVE_GATE,		1, PIPE_UNARY),
+		"Volume Pump"    = new /datum/pipe_info(PIPE_VOLUME_PUMP,		1, PIPE_UNARY),
+		"Scrubber"       = new /datum/pipe_info(PIPE_SCRUBBER,			1, PIPE_UNARY),
 		"Meter"          = new /datum/pipe_info/meter(),
 		"Gas Sensor"     = new /datum/pipe_info/gsensor(),
-		"Gas Filter"     = new /datum/pipe_info(13,1, PIPE_TRINARY),
-		"Gas Mixer"      = new /datum/pipe_info(14,1, PIPE_TRINARY),
-		"Thermal Plate"  = new /datum/pipe_info(PIPE_THERMAL_PLATE,1, PIPE_UNARY),
-		"Injector"       = new /datum/pipe_info(PIPE_INJECTOR,     1, PIPE_UNARY),
+		"Gas Filter"     = new /datum/pipe_info(PIPE_GAS_FILTER,		1, PIPE_TRIN_M),
+		"Gas Mixer"      = new /datum/pipe_info(PIPE_GAS_MIXER,			1, PIPE_TRIN_M),
+		"Thermal Plate"  = new /datum/pipe_info(PIPE_THERMAL_PLATE,		1, PIPE_UNARY),
+		"Injector"       = new /datum/pipe_info(PIPE_INJECTOR,     		1, PIPE_UNARY),
 	),
 	"Heat Exchange" = list(
-		"Pipe"           = new /datum/pipe_info(2, 1, PIPE_BINARY),
-		"Bent Pipe"      = new /datum/pipe_info(3, 5, PIPE_BENT),
-		"Junction"       = new /datum/pipe_info(6, 1, PIPE_UNARY),
-		"Heat Exchanger" = new /datum/pipe_info(17,1, PIPE_UNARY),
+		"Pipe"           = new /datum/pipe_info(PIPE_HE_STRAIGHT,		1, PIPE_BINARY),
+		"Bent Pipe"      = new /datum/pipe_info(PIPE_HE_BENT,			5, PIPE_BENT),
+		"Junction"       = new /datum/pipe_info(PIPE_JUNCTION,			1, PIPE_UNARY),
+		"Heat Exchanger" = new /datum/pipe_info(PIPE_HEAT_EXCHANGE,		1, PIPE_UNARY),
 	),
 	"Insulated Pipes" = list(
-		"Pipe"           = new /datum/pipe_info(11,1, PIPE_BINARY),
-		"Bent Pipe"      = new /datum/pipe_info(12,5, PIPE_BENT),
+		"Pipe"           = new /datum/pipe_info(PIPE_INSULATED_STRAIGHT,1, PIPE_BINARY),
+		"Bent Pipe"      = new /datum/pipe_info(PIPE_INSULATED_BENT,	5, PIPE_BENT),
 	),
 	"Disposal Pipes" = list(
-		"Pipe"       = new /datum/pipe_info/disposal(0, PIPE_BINARY),
-		"Bent Pipe"  = new /datum/pipe_info/disposal(1, PIPE_BENT),
-		"Junction"   = new /datum/pipe_info/disposal(2, PIPE_TRINARY),
-		"Y-Junction" = new /datum/pipe_info/disposal(3, PIPE_TRINARY),
-		"Trunk"      = new /datum/pipe_info/disposal(4, PIPE_TRINARY),
-		"Bin"        = new /datum/pipe_info/disposal(5, PIPE_UNARY),
-		"Outlet"     = new /datum/pipe_info/disposal(6, PIPE_UNARY),
-		"Chute"      = new /datum/pipe_info/disposal(7, PIPE_UNARY),
+		"Pipe"       = new /datum/pipe_info/disposal(DISP_PIPE_STRAIGHT,	PIPE_BINARY),
+		"Bent Pipe"  = new /datum/pipe_info/disposal(DISP_PIPE_BENT,		PIPE_BENT),
+		"Junction"   = new /datum/pipe_info/disposal(DISP_JUNCTION,			PIPE_TRINARY),
+		"Y-Junction" = new /datum/pipe_info/disposal(DISP_YJUNCTION,		PIPE_TRINARY),
+		"Trunk"      = new /datum/pipe_info/disposal(DISP_END_TRUNK,		PIPE_TRINARY),
+		"Bin"        = new /datum/pipe_info/disposal(DISP_END_BIN,			PIPE_UNARY),
+		"Outlet"     = new /datum/pipe_info/disposal(DISP_END_OUTLET,		PIPE_UNARY),
+		"Chute"      = new /datum/pipe_info/disposal(DISP_END_CHUTE,		PIPE_UNARY),
 	)
 )
 /obj/item/weapon/pipe_dispenser
@@ -169,7 +173,7 @@ var/global/list/RPD_recipes=list(
 
 /obj/item/weapon/pipe_dispenser/proc/render_dir_img(var/_dir,var/pic,var/title)
 	var/selected=""
-	if(_dir==p_dir)
+	if(_dir == p_dir)
 		selected=" class=\"selected\""
 	return "<a href=\"?src=\ref[src];setdir=[_dir]\" title=\"[title]\"[selected]><img src=\"[pic]\" /></a>"
 
@@ -277,6 +281,40 @@ var/global/list/RPD_recipes=list(
 				dirsel += "<br />"
 				dirsel += render_dir_img(2,"n.png","East North West")
 				dirsel += render_dir_img(8,"e.png","South East North")
+				dirsel += "</p>"
+			else
+				dirsel+={"
+		<p>
+			<a href="?src=\ref[src];setdir=1" title="West, South, East">&#9574;</a>
+			<a href="?src=\ref[src];setdir=4" title="North, West, South">&#9571;</a>
+			<br />
+			<a href="?src=\ref[src];setdir=2" title="East, North, West">&#9577;</a>
+			<a href="?src=\ref[src];setdir=8" title="South, East, North">&#9568;</a>
+		</p>
+				"}
+		if(PIPE_TRIN_M) // Mirrored ones
+			if(preview)
+				user << browse_rsc(new /icon(preview, dir=NORTH), "s.png")
+				user << browse_rsc(new /icon(preview, dir=EAST),  "w.png")
+				user << browse_rsc(new /icon(preview, dir=SOUTH), "n.png")
+				user << browse_rsc(new /icon(preview, dir=WEST),  "e.png")
+				user << browse_rsc(new /icon(preview, dir=SOUTHEAST), "sm.png") //each mirror icon is 45 anticlockwise from it's real direction
+				user << browse_rsc(new /icon(preview, dir=NORTHEAST),  "wm.png")
+				user << browse_rsc(new /icon(preview, dir=NORTHWEST), "nm.png")
+				user << browse_rsc(new /icon(preview, dir=SOUTHWEST),  "em.png")
+
+				dirsel += "<p>"
+				dirsel += render_dir_img(1,"s.png","West South East")
+				dirsel += render_dir_img(4,"w.png","North West South")
+				dirsel += "<br />"
+				dirsel += render_dir_img(2,"n.png","East North West")
+				dirsel += render_dir_img(8,"e.png","South East North")
+				dirsel += "<br />"
+				dirsel += render_dir_img(6,"sm.png","West South East")
+				dirsel += render_dir_img(5,"wm.png","North West South")
+				dirsel += "<br />"
+				dirsel += render_dir_img(9,"nm.png","East North West")
+				dirsel += render_dir_img(10,"em.png","South East North")
 				dirsel += "</p>"
 			else
 				dirsel+={"

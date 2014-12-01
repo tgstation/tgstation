@@ -8,6 +8,8 @@ obj/machinery/atmospherics/tvalve
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH|WEST
 
+	mirror = /obj/machinery/atmospherics/tvalve/mirrored
+
 	state = 0 // 0 = go straight, 1 = go to side
 
 	// like a trinary component, node1 is input, node2 is side output, node3 is straight output
@@ -30,6 +32,11 @@ obj/machinery/atmospherics/tvalve
 		..()
 
 	buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
+		if(!(pipe.dir in list(NORTH, SOUTH, EAST, WEST)) && src.mirror)
+			var/obj/machinery/atmospherics/tvalve/mirrored_pipe = new mirror(src.loc)
+			pipe.dir = turn(pipe.dir, -45)
+			qdel(src)
+			return mirrored_pipe.buildFrom(usr, pipe)
 		dir = pipe.dir
 		initialize_directions = pipe.get_pipe_dir()
 		if (pipe.pipename)
@@ -272,6 +279,8 @@ obj/machinery/atmospherics/tvalve
 		desc = "A digitally controlled valve."
 		icon = 'icons/obj/atmospherics/digital_valve.dmi'
 
+		mirror = /obj/machinery/atmospherics/tvalve/mirrored/digital
+
 		attack_ai(mob/user as mob)
 			src.add_hiddenprint(user)
 			return src.attack_hand(user)
@@ -322,9 +331,6 @@ obj/machinery/atmospherics/tvalve
 	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 		if (!istype(W, /obj/item/weapon/wrench))
 			return ..()
-		if (istype(src, /obj/machinery/atmospherics/tvalve/digital))
-			user << "\red You cannot unwrench this [src], it's too complicated."
-			return 1
 		var/turf/T = src.loc
 		if (level==1 && isturf(T) && T.intact)
 			user << "\red You must remove the plating first."

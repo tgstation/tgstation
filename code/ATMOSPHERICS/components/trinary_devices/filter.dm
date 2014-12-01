@@ -5,6 +5,8 @@ obj/machinery/atmospherics/trinary/filter
 
 	name = "Gas filter"
 
+	mirror = /obj/machinery/atmospherics/trinary/filter/mirrored
+
 	var/on = 0
 	var/temp = null // -- TLE
 
@@ -235,3 +237,25 @@ obj/machinery/atmospherics/trinary/filter/Topic(href, href_list) // -- TLE
 	return
 
 
+/obj/machinery/atmospherics/trinary/filter/mirrored
+	icon_state = "intactm_off"
+
+/obj/machinery/atmospherics/trinary/filter/mirrored/initialize()
+	if(node1 && node2 && node3) return
+
+	node1 = findConnecting(dir)
+	node2 = findConnecting(turn(dir, -90))
+	node3 = findConnecting(turn(dir, -180))
+
+	update_icon()
+
+/obj/machinery/atmospherics/trinary/filter/mirrored/update_icon()
+	if(stat & NOPOWER)
+		icon_state = "intactm_off"
+	else if(node2 && node3 && node1)
+		icon_state = "intactm_[on?("on"):("off")]"
+	else
+		icon_state = "intactm_off"
+		on = 0
+
+	return
