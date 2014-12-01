@@ -220,6 +220,8 @@ var/MAX_EXPLOSION_RANGE = 14
 #define BLOCKHEADHAIR 4             // temporarily removes the user's hair overlay. Leaves facial hair.
 #define BLOCKHAIR	32768			// temporarily removes the user's hair, facial and otherwise.
 
+#define INVULNERABLE 128
+
 //flags for pass_flags
 #define PASSTABLE	1
 #define PASSGLASS	2
@@ -676,8 +678,9 @@ var/list/TAGGERLOCATIONS = list(
 #define R_SOUNDS		2048
 #define R_SPAWN			4096
 #define R_MOD			8192
+#define R_ADMINBUS		16384
 
-#define R_MAXPERMISSION 8192 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
+#define R_MAXPERMISSION 16384 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
 
 #define R_HOST			65535
 
@@ -935,3 +938,6 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 // EMOTES!
 #define VISIBLE 1
 #define HEARABLE 2
+
+// /vg/ - Pipeline processing (enables exploding pipes and whatnot)
+#define ATMOS_PIPELINE_PROCESSING 1

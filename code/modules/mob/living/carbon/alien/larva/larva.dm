@@ -68,6 +68,9 @@
 
 
 /mob/living/carbon/alien/larva/ex_act(severity)
+	if(flags & INVULNERABLE)
+		return
+
 	if(!blinded)
 		flick("flash", flash)
 
@@ -103,6 +106,8 @@
 
 
 /mob/living/carbon/alien/larva/blob_act()
+	if(flags & INVULNERABLE)
+		return
 	if (stat == 2)
 		return
 	var/shielded = 0
@@ -129,6 +134,8 @@
 	return
 
 /mob/living/carbon/alien/larva/meteorhit(O as obj)
+	if(flags & INVULNERABLE)
+		return
 	for(var/mob/M in viewers(src, null))
 		if ((M.client && !( M.blinded )))
 			M.show_message(text("\red [] has been hit by []", src, O), 1)

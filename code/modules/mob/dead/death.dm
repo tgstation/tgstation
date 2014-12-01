@@ -22,3 +22,6 @@
 				overlays += H.overlays_standing[19]//Handcuffs
 		invisibility = 0
 		src << "<span class='sinister'>Even as a non-corporal being, you can feel Nar-Sie's presence altering you. You are now visible to everyone.</span>"
+
+/mob/dead/singuloCanEat()
+	return 0

@@ -215,6 +215,14 @@
 	if(istype(step,/turf/simulated/floor))
 		var/turf/simulated/floor/F = step
 		if(!locate(/obj/effect/plantsegment,F))
+			if(locate(/obj/structure/window,F))
+				for(var/obj/structure/window/twindow in F)
+					if(get_dir(step, loc) == twindow.dir)
+						return
+			if(locate(/obj/structure/window,loc))
+				for(var/obj/structure/window/lwindow in loc)
+					if(get_dir(loc, step) == lwindow.dir)
+						return
 			if(F.Enter(src))
 				if(master)
 					master.spawn_piece( F )

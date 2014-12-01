@@ -8,6 +8,9 @@
 /obj/effect/overlay/cultify()
 	return
 
+/obj/effect/overlay/singuloCanEat()
+	return 0
+
 /obj/effect/overlay/beam//Not actually a projectile, just an effect.
 	name="beam"
 	icon='icons/effects/beam.dmi'

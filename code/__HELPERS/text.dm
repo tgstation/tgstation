@@ -67,6 +67,11 @@
 /proc/adminscrub(var/t,var/limit=MAX_MESSAGE_LEN)
 	return copytext((html_encode(strip_html_simple(t))),1,limit)
 
+/proc/reverse_text(txt)
+  var/i = length(txt)+1
+  . = ""
+  while(--i)
+    . += copytext(txt,i,i+1)
 
 /*
  * returns null if there is any bad text in the string
@@ -322,8 +327,22 @@ proc/checkhtml(var/t)
 			count++
 	return count
 
-/proc/reverse_text(var/text = "")
-	var/new_text = ""
-	for(var/i = length(text); i > 0; i--)
-		new_text += copytext(text, i, i+1)
-	return new_text
+/**
+ * Format number with thousands seperators.
+ * @param number Number to format.
+ * @param sep Seperator to use
+ */
+/proc/format_num(var/number, var/sep=",")
+	var/c="" // Current char
+	var/origtext = "[number]"
+	var/len      = length(origtext)
+	var/offset   = len % 3
+	for(var/i=1;i<=len;i++)
+		c = copytext(origtext,i,i+1)
+		if(c==".")
+			. += copytext(origtext,i) // Just paste in everything else.
+			break
+		else
+			. += c
+			if((i%3)==offset && i!=len)
+				. += sep

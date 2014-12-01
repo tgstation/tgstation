@@ -59,8 +59,9 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	ghost_write=1
 	custom_aghost_alerts=1 // We handle our own logging.
 
-	var/isbroken = 0  //1 if someone banged it with something heavy
-	var/ispowered = 1 //starts powered, changes with power_change()
+	//var/isbroken = 0  //1 if someone banged it with something heavy
+	//var/ispowered = 1 //starts powered, changes with power_change()
+	//OBSOLETE: the stat var already has BROKEN and NOPOWER flags, let's use these instead.
 	//var/list/datum/feed_channel/channel_list = list() //This list will contain the names of the feed channels. Each name will refer to a data region where the messages of the feed channels are stored.
 	//OBSOLETE: We're now using a global news network
 	var/screen = 0                  //Or maybe I'll make it into a list within a list afterwards... whichever I prefer, go fuck yourselves :3
@@ -119,9 +120,9 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	..()
 
 /obj/machinery/newscaster/update_icon()
-	if(!ispowered || isbroken)
+	if((stat & NOPOWER) || (stat & BROKEN))
 		icon_state = "newscaster_off"
-		if(isbroken) //If the thing is smashed, add crack overlay on top of the unpowered sprite.
+		if(stat & BROKEN) //If the thing is smashed, add crack overlay on top of the unpowered sprite.
 			src.overlays.Cut()
 			src.overlays += image(src.icon, "crack3")
 		return
@@ -142,15 +143,13 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	return
 
 /obj/machinery/newscaster/power_change()
-	if(isbroken) //Broken shit can't be powered.
+	if(stat & BROKEN) //Broken shit can't be powered.
 		return
 	if( src.powered() )
-		src.ispowered = 1
 		stat &= ~NOPOWER
 		src.update_icon()
 	else
 		spawn(rand(0, 15))
-			src.ispowered = 0
 			stat |= NOPOWER
 			src.update_icon()
 
@@ -161,7 +160,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			qdel(src)
 			return
 		if(2.0)
-			src.isbroken=1
+			stat |= BROKEN
 			if(prob(50))
 				qdel(src)
 			else
@@ -169,7 +168,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			return
 		else
 			if(prob(50))
-				src.isbroken=1
+				stat |= BROKEN
 			src.update_icon()
 			return
 	return
@@ -179,7 +178,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	return src.attack_hand(user)
 
 /obj/machinery/newscaster/attack_hand(mob/user as mob)            //########### THE MAIN BEEF IS HERE! And in the proc below this...############
-	if(!src.ispowered || src.isbroken)
+	if((stat & NOPOWER) || (stat & BROKEN))
 		return
 	if(istype(user, /mob/living/carbon/human) || istype(user,/mob/living/silicon) || isobserver(user))
 		var/mob/M = user
@@ -884,41 +883,37 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				src.scanned_user = text("[T.registered_name] ([T.assignment])")
 				src.screen=2*/  //Obsolete after autorecognition
 
-	if ((src.isbroken) && (istype(I, /obj/item/stack/sheet/glass)))
+	if ((stat & BROKEN) && (istype(I, /obj/item/stack/sheet/glass)))
 		var/obj/item/stack/sheet/glass/stack = I
 		if ((stack.amount - 2) < 0)
 			user << "\red You need more glass to do that."
 		else
 			stack.use(2)
 			src.hitstaken = 0
-			src.isbroken = 0
+			stat &= ~BROKEN
 			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 80, 1)
 
-	else if (src.isbroken)
+	else if (stat & BROKEN)
 		playsound(get_turf(src), 'sound/effects/hit_on_shattered_glass.ogg', 100, 1)
-		for (var/mob/O in hearers(5, src.loc))
-			O.show_message("<EM>[user.name]</EM> further abuses the shattered [src.name].")
+		visible_message("<EM>[user.name]</EM> further abuses the shattered [src].")
 
 	else
 		if(istype(I, /obj/item/weapon) )
 			var/obj/item/weapon/W = I
 			if(W.force <15)
-				for (var/mob/O in hearers(5, src.loc))
-					O.show_message("[user.name] hits the [src.name] with the [W.name] with no visible effect." )
-					playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 100, 1)
+				visible_message("[user.name] hits the [src] with the [W] with no visible effect." )
+				playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 100, 1)
 			else
 				src.hitstaken++
 				if(src.hitstaken==3)
-					for (var/mob/O in hearers(5, src.loc))
-						O.show_message("[user.name] smashes the [src.name]!" )
-					src.isbroken=1
+					visible_message("[user.name] smashes the [src]!")
+					stat |= BROKEN
 					playsound(get_turf(src), 'sound/effects/Glassbr3.ogg', 100, 1)
 				else
-					for (var/mob/O in hearers(5, src.loc))
-						O.show_message("[user.name] forcefully slams the [src.name] with the [I.name]!" )
+					visible_message("[user.name] forcefully slams the [src.name] with the [I.name]!")
 					playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 100, 1)
 		else
-			user << "<FONT COLOR='blue'>This does nothing.</FONT>"
+			user << "<span class='notice'>This does nothing.</span>"
 	src.update_icon()
 
 /obj/machinery/newscaster/attack_ai(mob/user as mob)

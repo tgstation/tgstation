@@ -1113,6 +1113,8 @@ obj/item/weapon/organ/head/New(loc, mob/living/carbon/human/H)
 			var/icon/hair = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
 			if(hair_style.do_colouration)
 				hair.Blend(rgb(H.r_hair, H.g_hair, H.b_hair), ICON_ADD)
+			if(hair_style.additional_accessories)
+				hair.Blend(icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_acc"), ICON_OVERLAY)
 
 			overlays.Add(hair) //icon.Blend(hair, ICON_OVERLAY)
 	spawn(5)

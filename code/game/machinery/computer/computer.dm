@@ -130,7 +130,7 @@
 	return
 
 /obj/machinery/computer/attackby(I as obj, user as mob)
-	if(..())
+	if(..(I,user))
 		return
 	else
 		src.attack_hand(user)

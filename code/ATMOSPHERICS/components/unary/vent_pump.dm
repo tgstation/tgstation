@@ -76,10 +76,12 @@
 	process()
 		..()
 		CHECK_DISABLED(vents)
+		if (!node)
+			return // Turning off the vent is a PITA. - N3X
 		if(stat & (NOPOWER|BROKEN))
 			return
-		if (!node)
-			on = 0
+			//on = 0
+
 		//broadcast_status() // from now air alarm/control computer should request update purposely --rastaf0
 		if(!on)
 			return 0

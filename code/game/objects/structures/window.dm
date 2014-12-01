@@ -245,6 +245,20 @@
 		state = 1 - state
 		playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
 		user << (state ? "<span class='notice'>You have pried the window into the frame.</span>" : "<span class='notice'>You have pried the window out of the frame.</span>")
+	else if(istype(W, /obj/item/weapon/weldingtool) && !anchored && (!state || !reinf))
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
+		user << "<span class='notice'>Now disassembling the window...</span>"
+		var/obj/item/weapon/weldingtool/WT = W
+		if (WT.remove_fuel(0))
+			if(do_after(user,40))
+				if(!user || !src) return
+				visible_message("<span class='notice'>[user] dismantles \the [src].</span>")
+				new /obj/item/stack/sheet/glass(get_turf(src))
+				qdel(src)
+		else
+			user << "Need more welding fuel!"
+			return
+
 	else
 		if(W.damtype == BRUTE || W.damtype == BURN)
 			user.changeNext_move(10)

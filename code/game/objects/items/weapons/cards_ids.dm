@@ -321,10 +321,22 @@
 	item_state = "gold_id"
 	registered_name = "Captain"
 	assignment = "Captain"
-	New()
-		var/datum/job/captain/J = new/datum/job/captain
-		access = J.get_access()
-		..()
+
+/obj/item/weapon/card/id/captains_spare/New()
+	var/datum/job/captain/J = new/datum/job/captain
+	access = J.get_access()
+	..()
+
+/obj/item/weapon/card/id/admin
+	name = "Admin ID"
+	icon_state = "admin"
+	item_state = "gold_id"
+	registered_name = "Admin"
+	assignment = "Testing Shit"
+
+/obj/item/weapon/card/id/admin/New()
+	access = get_absolutely_all_accesses()
+	..()
 
 /obj/item/weapon/card/id/centcom
 	name = "\improper CentCom. ID"
@@ -332,9 +344,10 @@
 	icon_state = "centcom"
 	registered_name = "Central Command"
 	assignment = "General"
-	New()
-		access = get_all_centcom_access()
-		..()
+
+/obj/item/weapon/card/id/centcom/New()
+	access = get_all_centcom_access()
+	..()
 
 /obj/item/weapon/card/id/salvage_captain
 	name = "Captain's ID"
@@ -343,15 +356,12 @@
 	desc = "Finders, keepers."
 	access = list(access_salvage_captain)
 
-
-
 /obj/item/weapon/card/id/medical
 	name = "Medical ID"
 	registered_name = "Medic"
 	icon_state = "medical"
 	desc = "A card covered in the blood stains of the wild ride."
 	access = list(access_medical, access_genetics, access_morgue, access_chemistry, access_paramedic, access_virology, access_surgery, access_cmo)
-
 
 /obj/item/weapon/card/id/security
 	name = "Security ID"
@@ -416,10 +426,23 @@
 	desc = "Even looking at the card strikes you with deep fear."
 	access = list(access_clown, access_theatre, access_maint_tunnels)
 
-
 /obj/item/weapon/card/id/mime
 	name = "Black and White ID"
 	registered_name = "..."
 	icon_state = "mime"
 	desc = "..."
 	access = list(access_clown, access_theatre, access_maint_tunnels)
+
+/obj/item/weapon/card/id/thunderdome/red
+	name = "Thunderdome Red ID"
+	registered_name = "Red Team Fighter"
+	assignment = "Red Team Fighter"
+	icon_state = "TDred"
+	desc = "This ID card is given to those who fought inside the thunderdome for the Red Team. Not many have lived to see one of those, even fewer lived to keep it."
+
+/obj/item/weapon/card/id/thunderdome/green
+	name = "Thunderdome Green ID"
+	registered_name = "Green Team Fighter"
+	assignment = "Green Team Fighter"
+	icon_state = "TDgreen"
+	desc = "This ID card is given to those who fought inside the thunderdome for the Green Team. Not many have lived to see one of those, even fewer lived to keep it."

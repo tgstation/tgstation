@@ -4,13 +4,24 @@
 	var/scrubber=null
 	var/mode=1
 
+	Export()
+		var/list/json = ..()
+		json["scrubber"]=scrubber
+		json["mode"]=mode
+		return json
+
+	Import(var/list/json)
+		..(json)
+		scrubber = json["scrubber"]
+		mode = text2num(json["mode"])
+
 	New(var/obj/machinery/computer/general_air_control/atmos_automation/aa)
 		..(aa)
 		children=list(null)
 
 	process()
 		if(scrubber)
-			parent.send_signal(list ("tag" = scrubber, mode))
+			parent.send_signal(list ("tag" = scrubber, "sigtype"="command", "scrubbing"=mode))
 		return 0
 
 	GetText()
@@ -20,6 +31,7 @@
 		if(..()) return
 		if(href_list["set_mode"])
 			mode=!mode
+			parent.updateUsrDialog()
 			return 1
 		if(href_list["set_scrubber"])
 			var/list/injector_names=list()
@@ -36,12 +48,23 @@
 	var/scrubber=null
 	var/state=0
 
+	Export()
+		var/list/json = ..()
+		json["scrubber"]=scrubber
+		json["state"]=state
+		return json
+
+	Import(var/list/json)
+		..(json)
+		scrubber = json["scrubber"]
+		state = text2num(json["state"])
+
 	New(var/obj/machinery/computer/general_air_control/atmos_automation/aa)
 		..(aa)
 
 	process()
 		if(scrubber)
-			parent.send_signal(list ("tag" = scrubber, "power"=state))
+			parent.send_signal(list ("tag" = scrubber, "sigtype"="command", "power"=state))
 
 	GetText()
 		return  "Set Scrubber <a href=\"?src=\ref[src];set_scrubber=1\">[fmtString(scrubber)]</a> power to <a href=\"?src=\ref[src];set_power=1\">[state ? "on" : "off"]</a>."
@@ -80,12 +103,27 @@ var/global/list/gas_labels=list(
 		"n2"  = 0
 	)
 
+	Export()
+		var/list/json = ..()
+		json["scrubber"]=scrubber
+		json["gasses"]=gasses
+		return json
+
+	Import(var/list/json)
+		..(json)
+		scrubber = json["scrubber"]
+
+		var/list/newgasses=json["gasses"]
+		for(var/key in newgasses)
+			gasses[key]=newgasses[key]
+
+
 	New(var/obj/machinery/computer/general_air_control/atmos_automation/aa)
 		..(aa)
 
 	process()
 		if(scrubber)
-			var/list/data = list ("tag" = scrubber)
+			var/list/data = list ("tag" = scrubber, "sigtype"="command")
 			for(var/gas in gasses)
 				data[gas+"_scrub"]=gasses[gas]
 			parent.send_signal(data)

@@ -18,6 +18,10 @@
 
 	l_color = "#B40000"
 
+/obj/machinery/computer/taxi_shuttle/update_icon()
+	..()
+	icon_state = "syndishuttle"
+
 /obj/machinery/computer/taxi_shuttle/proc/taxi_move_to(area/destination as area, area/transit as area, var/wait_time)
 	if(moving)
 		return

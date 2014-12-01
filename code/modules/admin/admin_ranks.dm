@@ -41,6 +41,7 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 				if("sound","sounds")			rights |= R_SOUNDS
 				if("spawn","create")			rights |= R_SPAWN
 				if("mod")						rights |= R_MOD
+				if("adminbus","bus")			rights |= R_ADMINBUS
 
 		admin_ranks[rank] = rights
 		previous_rights = rights

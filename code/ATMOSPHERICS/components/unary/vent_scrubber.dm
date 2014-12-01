@@ -102,7 +102,7 @@
 		if(stat & (NOPOWER|BROKEN))
 			return
 		if (!node)
-			on = 0
+			return 0 // Let's not shut it off, for now.
 		//broadcast_status()
 		if(!on)
 			return 0

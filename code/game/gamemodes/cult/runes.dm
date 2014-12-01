@@ -11,7 +11,7 @@ var/list/sacrificed = list()
 	if(istype(target,/obj/item/weapon/nullrod))
 		var/turf/T = get_turf(target)
 		nullblock = 1
-		T.nullding()
+		T.turf_animation('icons/effects/96x96.dmi',"nullding",-32,-32,MOB_LAYER+1,'sound/piano/Ab7.ogg')
 		return 1
 	else if(target.contents)
 		for(var/atom/A in target.contents)
@@ -934,7 +934,7 @@ var/list/sacrificed = list()
 			user << "<span class='warning'>You cannot summon the [cultist], for his shackles of blood are strong</span>"
 			return fizzle()
 		var/turf/T = get_turf(cultist)
-		T.invocanimation("rune_teleport")
+		T.turf_animation('icons/effects/effects.dmi',"rune_teleport")
 		cultist.loc = src.loc
 		cultist.lying = 1
 		cultist.regenerate_icons()

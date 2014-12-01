@@ -1,6 +1,6 @@
 var/global/list/datum/pipe_network/pipe_networks = list()
 
-datum/pipe_network
+/datum/pipe_network
 	var/list/datum/gas_mixture/gases = list() //All of the gas_mixtures continuously connected in this network
 
 	var/list/obj/machinery/atmospherics/normal_members = list()
@@ -21,9 +21,11 @@ datum/pipe_network
 			update = 0
 			reconcile_air() //equalize_gases(gases)
 
+#ifdef ATMOS_PIPELINE_PROCESSING
 		//Give pipelines their process call for pressure checking and what not. Have to remove pressure checks for the time being as pipes dont radiate heat - Mport
-		//for(var/datum/pipeline/line_member in line_members)
-		//	line_member.process()
+		for(var/datum/pipeline/line_member in line_members)
+			line_member.process()
+#endif
 
 	proc/build_network(obj/machinery/atmospherics/start_normal, obj/machinery/atmospherics/reference)
 		//Purpose: Generate membership roster

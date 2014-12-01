@@ -256,6 +256,9 @@
 		return
 
 	var/atom/movable/the_item = targets[1]
+	if(!the_item.Adjacent(usr))
+		revert_cast(usr)
+		return
 	if(ishuman(the_item))
 		//My gender
 		var/m_his="his"

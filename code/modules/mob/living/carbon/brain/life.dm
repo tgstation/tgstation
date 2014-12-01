@@ -34,6 +34,8 @@
 
 /mob/living/carbon/brain/
 	proc/handle_mutations_and_radiation()
+		if(flags & INVULNERABLE)
+			return
 
 		if (radiation)
 			if (radiation > 100)
@@ -68,7 +70,7 @@
 
 
 	proc/handle_environment(datum/gas_mixture/environment)
-		if(!environment)
+		if(!environment || (flags & INVULNERABLE))
 			return
 		var/environment_heat_capacity = environment.heat_capacity()
 		if(istype(get_turf(src), /turf/space))
@@ -269,6 +271,9 @@
 
 
 /*/mob/living/carbon/brain/emp_act(severity)
+	if(flags & INVULNERABLE)
+		return
+
 	if(!(container && istype(container, /obj/item/device/mmi)))
 		return
 	else

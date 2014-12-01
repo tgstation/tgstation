@@ -164,7 +164,7 @@
 		return null
 
 	proc/handle_breath(datum/gas_mixture/breath)
-		if(status_flags & GODMODE)
+		if((status_flags & GODMODE) || (flags & INVULNERABLE))
 			return
 
 		if(!breath || (breath.total_moles == 0))

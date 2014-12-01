@@ -94,6 +94,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/drop_bomb,
 	/client/proc/cinematic,
 	/client/proc/one_click_antag,
+	/client/proc/antag_madness,
 	/datum/admins/proc/toggle_aliens,
 	/datum/admins/proc/toggle_space_ninja,
 	/client/proc/send_space_ninja,
@@ -105,6 +106,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/set_ooc,
 	/client/proc/editappear,
 	/client/proc/commandname,
+	/client/proc/delete_all_adminbus,
 	/client/proc/gib_money // /vg/
 	)
 var/list/admin_verbs_spawn = list(
@@ -155,6 +157,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/disable_bloodvirii,       // /vg/
 	/client/proc/configFood,
 	/client/proc/debug_reagents,
+	/client/proc/make_invulnerable,
 #ifdef PROFILE_MACHINES
 	/client/proc/cmd_admin_dump_macprofile,
 #endif
@@ -272,6 +275,7 @@ var/list/admin_verbs_mod = list(
 		if(holder.rights & R_SOUNDS)		verbs += admin_verbs_sounds
 		if(holder.rights & R_SPAWN)			verbs += admin_verbs_spawn
 		if(holder.rights & R_MOD)			verbs += admin_verbs_mod
+		if(holder.rights & R_ADMINBUS)		verbs += /client/proc/secrets
 
 /client/proc/remove_admin_verbs()
 	verbs.Remove(

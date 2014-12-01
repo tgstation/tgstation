@@ -173,7 +173,7 @@ var/global/datum/controller/vote/vote = new()
 			return vote
 	return 0
 
-/datum/controller/vote/proc/initiate_vote(var/vote_type, var/initiator_key)
+/datum/controller/vote/proc/initiate_vote(var/vote_type, var/initiator_key, var/popup = 0)
 	if(!mode)
 		if(started_time != null && !check_rights(R_ADMIN))
 			var/next_allowed_time = (started_time + config.vote_delay)
@@ -218,7 +218,13 @@ var/global/datum/controller/vote/vote = new()
 			text += "<br>[question]"
 
 		log_vote(text)
-		world << "<font color='purple'><b>[text]</b><br>Type vote to place your votes.<br>You have [ismapvote && ismapvote.len ? "60" : config.vote_period/10] seconds to vote.</font>"
+		if(!popup)
+			world << "<font color='purple'><b>[text]</b><br>Type vote to place your votes.<br>You have [ismapvote && ismapvote.len ? "60" : config.vote_period/10] seconds to vote.</font>"
+		else
+			for(var/mob/M in player_list)
+			 if(M.client)
+				 M << browse(vote.interface(M.client),"window=vote;can_close=0")
+				 winset(M, "mapwindow.map", "focus=true") // return keyboard focus to map
 		switch(vote_type)
 			if("crew_transfer")
 				world << sound('sound/voice/Serithi/Shuttlehere.ogg')

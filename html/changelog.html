@@ -44,13 +44,13 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 					Code:
 				</dt>
 				<dd>
-					Cloroxygen, Duny, Emisune, IconLeap, N3X15, Pomf123, SarahJohnson
+					Cloroxygen, Duny, Emisune, IconLeap, N3X15, Pomf123, SarahJohnson, Deity Link
 				</dd>
 				<dt class="creditsection">
 					Sprites:
 				</dt>
 				<dd>
-					Bustatime, Cloroxygen, Cogwerks, Dbuhos, Emisune, ISaidNo, Kokuten, N3X15, Osaifh, Rei1226, Skowron
+					Bustatime, Cloroxygen, Cogwerks, Dbuhos, Emisune, ISaidNo, Kokuten, N3X15, Osaifh, Rei1226, Skowron, Deity Link
 				</dd>
 				<dt class="creditsection">
 					Sounds:
@@ -92,6 +92,112 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 				<li class="tweak">Split the MoMMI nerf, gave them 10k charge on cell.</li>
 				<li class="tweak">MoMMI now has the augmentation verb to toggle meson vision, no longer uses cell charge to use.</li>
 				<li class="tweak">Engineering borg buffs <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;They now have meson vision as a toggle, no longer is an equip. As a result does not use cell charge as well. <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;They will now generate consumables passively, albeit at a slower rate than if they were in a recharger. <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nanotrasen has finally figured out how to install magnets in Engineering borgs, no longer will they slip and slide for days in space. <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; They now have a mounting point for the jetpack upgrade available from robotics.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.11.30</h2>
+			<h3 class="author">Clusterfack updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Clone Pod deconstruction no longer leaves an extra clone pod underneath.</li>
+				<li class="bugfix">Fixed N2 not appearing for air alarms accessed through the Central Atmospherics computer</li>
+				<li class="bugfix">Fixed air alarms in extremely low pressures swaying between very high and low values of temperature</li>
+			</ul>
+			<h3 class="author">Deity Link updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">fixed Laser Rifles spawning in place of Laser Canons at R&D</li>
+				<li class="imageadd">fixed the cult shoe sprite not covering a certain pixel. a perfectionist? me?</li>
+				<li class="imageadd">office seats facing north now use an overlay so they don't hide parts of players that they shouldn't technically be hiding. (see pic)</li>
+				<li class="bugfix">fixed a sanity check that made observers unable to go accross holy turfs if (ticker.mode == null) not that it should happen normally but hey</li>
+				<li class="bugfix">added airlock/multi_tile to the get Flat Icon exception list</li>
+				<li class="bugfix">fixed the taxi shuttle consoles showing as unpowered even when they aren't</li>
+				<li class="rscadd">Virology machines can now be deconstructed, and new ones can be built from R&D.</li>
+				<li class="rscadd">Pathogenic Incubator, machine frame, board requires materials=4 biotech=5 emp=3, also requires 1 Matter Bins, 2 Scanning Modules, 2 Micro-Lasers, and 1 Beaker.</li>
+				<li class="rscadd">Disease Analyser, machine frame, board requires engineering=3 biotech=3 data=3, also requires 1 Micro-Lasers, 1 Manipulator, and 3 Scanning Modules.</li>
+				<li class="rscadd">Disease Splicer, computer frame, board requires data=3 biotech=4</li>
+				<li class="rscadd">Isolation Centrifuge, computer frame,  board requires data=3 biotech=3</li>
+			</ul>
+			<h3 class="author">Duny updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="wip">Following changes made to Defficiency/Maintstation</li>
+				<li class="tweak">Added a tiny medbay to security</li>
+				<li class="bugfix">Added an APC to the AME room</li>
+				<li class="tweak">Added some more lights to telecomms</li>
+				<li class="bugfix">Fixed disposals not routing the trash properly, resulting in an endless loop around the station</li>
+				<li class="bugfix">Fixed xenobiologists not having access to the shield gens in xenobiology</li>
+				<li class="tweak">Replaced the plastic flaps in cargo with a better-placed pair of airtight ones</li>
+				<li class="tweak">Added an high-res forensic scanning computer</li>
+				<li class="bugfix">Various little fixes to areas everywhere</li>
+				<li class="wip">Added a construction area leading to space below engineering (meant for the singularity), however the airlock is not functional for now (doors are unlocked though)</li>
+				<li class="tweak">Virology starts with 3 random virus samples</li>
+				<li class="bugfix">Added lights to interrogation and execution rooms</li>
+				<li class="bugfix">Re-added lethal injection syringes to execution and trays to the brig's botany (lost to a path change)</li>
+				<li class="tweak">The Warden can now lockdown the front of his office if he's shitting his pants too much from watching the prisoners</li>
+				<li class="tweak">Added windoors to the prison kitchen</li>
+				<li class="tweak">The prison kitchen and botany can now only be accessed with either security, kitchen, hydrophonics, clown, or mime access.</li>
+				<li class="tweak">Added five additional security lockers</li>
+				<li class="tweak">Added a reception desk to security</li>
+				<li class="wip">Extended brig hallway; moved airlock at the end of the hallway; added security lounge next to armory; added additional evidence storage next to the lounge</li>
+			</ul>
+			<h3 class="author">Dylanstrategie updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Unfuck the lel randumb 300 tox damage when reaching very low levels of blood. Make blood loss a bit mroe forgiving overall. Blood regen now drains nturients instead of lowering nutrition level directly (which should be just more forgiving if shit was coded right)</li>
+			</ul>
+			<h3 class="author">N3X15 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Emitters can now be radio-controlled, and have an AAC interface.</li>
+				<li class="rscadd">AAC now supports code import/export, based on JSON.</li>
+				<li class="rscadd">Pipe meters ban be used as sensors on the AAC.</li>
+				<li class="bugfix">Removing root-level scripts from AACs fixed.</li>
+				<li class="bugfix">Digital valve AAC integration fixed.</li>
+				<li class="bugfix">Valves no longer removed from machinery list.</li>
+				<li class="bugfix">Atmos APC correctly wired.</li>
+				<li class="bugfix">Scrubber integration with AACs fixed and working.</li>
+				<li class="tweak">Vents and scrubbers stay on after being disconnected from pipenet.</li>
+			</ul>
+			<h3 class="author">Velard Amakar updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Prevents vines from magically passing through windows.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.11.28</h2>
+			<h3 class="author">Duny updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="wip">The following changes have been made to Defficiency/Maintstation</li>
+				<li class="bugfix">The CE and engineers now correctly spawn in engineering.</li>
+				<li class="bugfix">IAAs now have a proper spawn in their office, mechanics now spawn with the greytide as a temporary measure.</li>
+				<li class="tweak">Annoying table removed from RnD</li>
+				<li class="tweak">The two doors to enter science have been replaced with a single door</li>
+				<li class="tweak">Added a bioprinter and beds in front of surgery</li>
+				<li class="tweak">Added rechargers on the asteroid</li>
+				<li class="bugfix">Hopefully fixed some issues with air alarms and power alarms</li>
+				<li class="bugfix">More windoors fixed, mostly on the research outpost</li>
+				<li class="wip">Still didn't fix the brig timers because I have no clue why the fuck they're being cunts</li>
+				<li class="tweak">Removed the nazivend from the abandoned areas</li>
+			</ul>
+			<h3 class="author">Dylanstrategie updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Radiation collectors now deplete five times faster and produce ten times less power. No more easy, maintenance-free power</li>
+			</ul>
+			<h3 class="author">Heredth updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Fully dislodged windows may now be deconstructed with a welding tool.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.11.26</h2>
+			<h3 class="author">Duny updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Adjusted the color of the new warning stripes to actually look good.</li>
+			</ul>
+			<h3 class="author">Pomf123 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added pda painter to the MetaClub</li>
+				<li class="rscadd">Added Defib lockers and rechargers to the MetaClub</li>
+				<li class="bugfix">Fixed missing cable in atmospherics on Box causing atmos' apc to never charge.</li>
 			</ul>
 		</div>
 

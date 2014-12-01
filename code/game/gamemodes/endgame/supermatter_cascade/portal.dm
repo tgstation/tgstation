@@ -25,7 +25,7 @@
 	return
 
 /obj/machinery/singularity/narsie/large/exit/consume(const/atom/A)
-	if (is_type_in_list(A, uneatable))
+	if(!(A.singuloCanEat()))
 		return 0
 
 	if (istype(A, /mob/living/))
@@ -44,7 +44,7 @@
 				continue
 
 			if (dist > consume_range && canPull(AM))
-				if (is_type_in_list(AM, uneatable))
+				if(!(AM.singuloCanEat()))
 					continue
 
 				if (101 == AM.invisibility)
