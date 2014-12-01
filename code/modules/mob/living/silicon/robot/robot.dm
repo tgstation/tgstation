@@ -1090,7 +1090,7 @@
 /mob/living/silicon/robot/proc/updateicon()
 
 	overlays.Cut()
-	if(stat == 0)
+	if(stat == 0 && cell != null)
 		overlays += image(icon,"eyes-[icon_state]",LIGHTING_LAYER+1)
 
 	if(opened)

@@ -82,7 +82,7 @@
 /datum/robot_component/cell/destroy()
 	..()
 	owner.cell = null
-	overlays -= "eyes"
+	owner.updateicon()
 
 /datum/robot_component/radio
 	name = "radio"
