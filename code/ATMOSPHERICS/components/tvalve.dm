@@ -182,9 +182,10 @@ obj/machinery/atmospherics/tvalve
 		else
 			src.go_to_side()
 
+/* Fix being removed from machine list (returns PROCESS_KILL by default now)
 	process()
 		..()
-		machines.Remove(src)
+		// No machines.Remove(src)
 
 /*		if(open && (!node1 || !node2))
 			close()
@@ -201,6 +202,7 @@ obj/machinery/atmospherics/tvalve
 */
 
 		return
+*/
 
 	initialize()
 

@@ -938,3 +938,6 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 // EMOTES!
 #define VISIBLE 1
 #define HEARABLE 2
+
+// /vg/ - Pipeline processing (enables exploding pipes and whatnot)
+#define ATMOS_PIPELINE_PROCESSING 1

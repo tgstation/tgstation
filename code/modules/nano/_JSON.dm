@@ -5,7 +5,11 @@ n_Json v11.3.21
 proc
 	json2list(json)
 		var/static/json_reader/_jsonr = new()
-		return _jsonr.ReadObject(_jsonr.ScanJson(json))
+		// N3X: Array support.
+		if(dd_hasprefix(json,"\["))
+			return _jsonr.ReadArray(_jsonr.ScanJson(json))
+		else
+			return _jsonr.ReadObject(_jsonr.ScanJson(json))
 
 	list2json(list/L)
 		var/static/json_writer/_jsonw = new()

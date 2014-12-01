@@ -8,6 +8,9 @@
 	minimum_temperature_difference = 20
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 
+	var/const/RADIATION_CAPACITY = 32000 // Radiation isn't particularly effective (TODO BALANCE)
+	                                     //  Plate value is 30000, increased it a bit because of additional surface area. - N3X
+	var/const/ENERGY_MULT        = 6.4   // Not sure what this is, keeping it the same as plates.
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/getNodeType(var/node_id)
 	return PIPE_TYPE_HE
@@ -47,20 +50,72 @@
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/process()
 	if(!parent)
-		..()
-	else
-		var/environment_temperature = 0
-		if(istype(loc, /turf/simulated/) && !iscatwalk(loc))
-			if(loc:blocks_air)
-				environment_temperature = loc:temperature
-			else
-				var/datum/gas_mixture/environment = loc.return_air()
-				environment_temperature = environment.temperature
-		else
-			environment_temperature = loc:temperature
-		var/datum/gas_mixture/pipe_air = return_air()
-		if(abs(environment_temperature-pipe_air.temperature) > minimum_temperature_difference)
-			parent.temperature_interact(loc, volume, thermal_conductivity)
+		return ..()
+
+	// Get gas from pipenet
+	var/datum/gas_mixture/internal = return_air()
+	var/internal_transfer_moles = 0.25 * internal.total_moles()
+	var/datum/gas_mixture/internal_removed = internal.remove(internal_transfer_moles)
+
+	//Get processable air sample and thermal info from environment
+	var/datum/gas_mixture/environment = loc.return_air()
+	var/transfer_moles = 0.25 * environment.total_moles()
+	var/datum/gas_mixture/external_removed = environment.remove(transfer_moles)
+
+	// No environmental gas?  We radiate it, then.
+	if (!external_removed)
+		if(internal_removed)
+			internal.merge(internal_removed)
+		return radiate()
+
+	// Not enough gas in the air around us to care about.  Radiate.
+	if (external_removed.total_moles() < 10)
+		if(internal_removed)
+			internal.merge(internal_removed)
+		environment.merge(external_removed)
+		return radiate()
+
+	// No internal gas.  Screw this, we're out.
+	if (!internal_removed)
+		environment.merge(external_removed)
+		return 1
+
+	//Get same info from connected gas
+	var/combined_heat_capacity = internal_removed.heat_capacity() + external_removed.heat_capacity()
+	var/combined_energy = internal_removed.temperature * internal_removed.heat_capacity() + external_removed.heat_capacity() * external_removed.temperature
+
+	if(!combined_heat_capacity)
+		combined_heat_capacity = 1
+	var/final_temperature = combined_energy / combined_heat_capacity
+
+	external_removed.temperature = final_temperature
+	environment.merge(external_removed)
+
+	internal_removed.temperature = final_temperature
+	internal.merge(internal_removed)
+
+	parent.network.update = 1
+
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/proc/radiate()
+	var/datum/gas_mixture/internal = return_air()
+	var/internal_transfer_moles = 0.25 * internal.total_moles()
+	var/datum/gas_mixture/internal_removed = internal.remove(internal_transfer_moles)
+
+	if (!internal_removed)
+		return 1
+
+	var/combined_heat_capacity = internal_removed.heat_capacity() + RADIATION_CAPACITY
+	var/combined_energy = internal_removed.temperature * internal_removed.heat_capacity() + (RADIATION_CAPACITY * ENERGY_MULT)
+
+	var/final_temperature = combined_energy / combined_heat_capacity
+
+	internal_removed.temperature = final_temperature
+	internal.merge(internal_removed)
+
+	if(parent && parent.network)
+		parent.network.update = 1
+
+	return 1
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/hidden
 	level=1

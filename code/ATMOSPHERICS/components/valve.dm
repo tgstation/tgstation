@@ -148,7 +148,7 @@ obj/machinery/atmospherics/valve
 			src.close()
 		else
 			src.open()
-
+/* Parent proc returns PROCESS_KILL anyway
 	process()
 		..()
 		. = PROCESS_KILL
@@ -166,8 +166,7 @@ obj/machinery/atmospherics/valve
 		else if (nodealert)
 			nodealert = 0
 */
-
-		return
+*/
 
 	initialize()
 		normalize_dir()
@@ -243,12 +242,11 @@ obj/machinery/atmospherics/valve
 
 		//Radio remote control
 
-		proc
-			set_frequency(new_frequency)
-				radio_controller.remove_object(src, frequency)
-				frequency = new_frequency
-				if(frequency)
-					radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
+		proc/set_frequency(new_frequency)
+			radio_controller.remove_object(src, frequency)
+			frequency = new_frequency
+			if(frequency)
+				radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
 
 		var/frequency = 0
 		var/id_tag = null
@@ -259,8 +257,6 @@ obj/machinery/atmospherics/valve
 			if(frequency)
 				set_frequency(frequency)
 
-
-
 		multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
 			return {"
 			<ul>
@@ -268,6 +264,10 @@ obj/machinery/atmospherics/valve
 				<li>[format_tag("ID Tag","id_tag","set_id")]</a></li>
 			</ul>
 			"}
+
+		process()
+			..()
+			return 0
 
 		Topic(href, href_list)
 			if(..())

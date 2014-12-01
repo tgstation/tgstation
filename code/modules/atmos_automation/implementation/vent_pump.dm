@@ -6,6 +6,17 @@
 
 	var/list/modes = list("stabilize","purge")
 
+	Export()
+		var/list/json = ..()
+		json["vent_pump"]=vent_pump
+		json["mode"]=mode
+		return json
+
+	Import(var/list/json)
+		..(json)
+		vent_pump = json["vent_pump"]
+		mode = json["mode"]
+
 	New(var/obj/machinery/computer/general_air_control/atmos_automation/aa)
 		..(aa)
 		children=list(null)
@@ -41,6 +52,17 @@
 	var/vent_pump=null
 	var/state=0
 
+	Export()
+		var/list/json = ..()
+		json["vent_pump"]=vent_pump
+		json["state"]=state
+		return json
+
+	Import(var/list/json)
+		..(json)
+		vent_pump = json["vent_pump"]
+		state = text2num(json["state"])
+
 	New(var/obj/machinery/computer/general_air_control/atmos_automation/aa)
 		..(aa)
 
@@ -49,7 +71,7 @@
 			parent.send_signal(list ("tag" = vent_pump, "power"=state))
 
 	GetText()
-		return  "Set vent pump <a href=\"?src=\ref[src];set_vent_pump=1\">[fmtString(vent_pump)]</a> power to <a href=\"?src=\ref[src];set_power=1\">[state ? "on" : "off"]</a>."
+		return "Set vent pump <a href=\"?src=\ref[src];set_vent_pump=1\">[fmtString(vent_pump)]</a> power to <a href=\"?src=\ref[src];set_power=1\">[state ? "on" : "off"]</a>."
 
 	Topic(href,href_list)
 		if(href_list["set_power"])
