@@ -138,6 +138,7 @@
 			var/obj/item/weapon/reagent_containers/glass/B = beaker
 			B.loc = loc
 			beaker = null
+			icon_state = "dispenser"
 
 	add_fingerprint(usr)
 	return 1 // update UIs attached to this object
@@ -158,6 +159,7 @@
 	B.loc = src
 	user << "You add the beaker to the machine!"
 	nanomanager.update_uis(src) // update all UIs attached to src
+	icon_state = "dispenser_full"
 
 /obj/machinery/chem_dispenser/attack_ai(mob/user as mob)
 	return src.attack_hand(user)
