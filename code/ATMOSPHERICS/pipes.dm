@@ -1184,7 +1184,7 @@
 									"You have vented \the [src].",
 									"You hear a ratchet.")
 				var/datum/gas_mixture/transit = new
-				transit = int_air
+				transit.add(int_air)
 				transit.divide(parent.members.len) //we get the total pressure over the number of pipes to find gas per pipe
 				env_air.add(transit) //put it in the air
 				del(transit) //remove the carrier
