@@ -27,7 +27,7 @@
 
 /obj/item/device/material_synth/cyborg
 	materials_scanned = list(	"plasma glass" = /obj/item/stack/sheet/glass/plasmaglass,
-								"reinforced plasma glass" = /obj/item/stack/sheet/glass/plasmarglass,
+								"reinforced plasma glass" = /obj/item/stack/sheet/rglass/plasmarglass,
 								"metal" = /obj/item/stack/sheet/metal,
 								"glass" = /obj/item/stack/sheet/glass,
 								"reinforced glass" = /obj/item/stack/sheet/rglass,
