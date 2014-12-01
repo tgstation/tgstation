@@ -540,7 +540,8 @@ var/global/loopModeNames=list(
 		"bar"  = "Bar Mix",
 		"jazz" = "Jazz",
 		"rock" = "Rock",
-		"muzak" = "Muzak"
+		"muzak" = "Muzak",
+		"thunderdome" = "Thunderdome", // For thunderdome I guess
 	)
 
 // So I don't have to do all this shit manually every time someone sacrifices pun-pun.
@@ -564,7 +565,11 @@ var/global/loopModeNames=list(
 
 		"emagged" = "Syndie Mix",
 		"shuttle" = "Shuttle",
+		"keygen" = "Keygen", // ONLY UNCOMMENT AFTER POMF REDUCES PLAYLIST SIZE OR YOU WILL CRASH THE ENTIRE GODDAMN SERVER.
+		
 		"endgame" = "Apocalypse",
+		"clockwork" = "Clockwork", // Unfinished new cult stuff
+		"thunderdome" = "Thunderdome", // For thunderdome I guess
 	)
 
 /obj/machinery/media/jukebox/superjuke/attackby(obj/item/W, mob/user)
