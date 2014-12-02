@@ -153,8 +153,6 @@
 
 
 /mob/living/carbon/human/ex_act(severity, specialty)
-	..()
-
 	var/shielded = 0
 	var/b_loss = null
 	var/f_loss = null
@@ -213,6 +211,8 @@
 			if("r_leg")
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
 	if(update)	update_damage_overlays(0)
+	if(!getarmor(null, "bomb"))
+		..()
 
 
 /mob/living/carbon/human/blob_act()

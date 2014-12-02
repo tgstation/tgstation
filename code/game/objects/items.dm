@@ -54,6 +54,12 @@
 /obj/item/blob_act()
 	qdel(src)
 
+/obj/item/ex_act(severity, specialty)
+	var/armour = 0
+	armour += armor["bomb"]
+	if(!armour)
+		..()
+
 //user: The mob that is suiciding
 //damagetype: The type of damage the item will inflict on the user
 //BRUTELOSS = 1

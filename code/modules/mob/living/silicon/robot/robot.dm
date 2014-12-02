@@ -324,7 +324,6 @@
 
 
 /mob/living/silicon/robot/ex_act(severity, specialty)
-	..()
 
 	switch(severity)
 		if(1.0)
