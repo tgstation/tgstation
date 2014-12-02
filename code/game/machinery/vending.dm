@@ -302,6 +302,8 @@
 					D.money -= transaction_amount
 					linked_account.money += transaction_amount
 
+					usr << "\icon[src]<span class='notice'>Remaining balance: [D.money]$</span>"
+
 					//create entries in the two account transaction logs
 					var/datum/transaction/T = new()
 					T.target_name = "[linked_account.owner_name] (via [src.name])"
@@ -876,6 +878,7 @@
 	..()
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), 3 )
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		del(src)
 
 /obj/item/wallmed_frame/proc/try_build(turf/on_wall)

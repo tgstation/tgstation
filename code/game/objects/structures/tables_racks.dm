@@ -523,6 +523,9 @@
 /obj/structure/table/reinforced/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
+		if(!(WT.welding))
+			user.drop_item(src)
+			return
 		if(WT.remove_fuel(0, user))
 			if(src.status == 2)
 				user << "\blue Now weakening the reinforced table"
@@ -543,6 +546,7 @@
 
 	if (istype(W, /obj/item/weapon/wrench))
 		if(src.status == 2)
+			user.drop_item(src)
 			return
 
 	..()

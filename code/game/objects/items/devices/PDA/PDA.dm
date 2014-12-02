@@ -7,7 +7,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda
 	name = "\improper PDA"
-	desc = "A portable microcomputer by Thinktronic Systems, LTD. Functionality determined by a preprogrammed ROM cartridge."
+	desc = "A portable microcomputer by Thinktronic Systems, LTD. Functionality determined by a preprogrammed ROM cartridge. Can download additional applications from PDA terminals."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pda"
 	item_state = "electronic"
@@ -49,6 +49,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	var/MM = null
 	var/DD = null
+
+	var/list/applications = list()
 
 	var/list/currentevents1 = list("The Prime Minister of Space Australia has announced today a new policy to hand out fake dollar bills to the poor.",
 		"The President of Space America issued a press release today stating that he is not in fact, a Tajaran in disguise.",
@@ -161,10 +163,22 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-m"
 
+/obj/item/device/pda/medical/New()
+	..()
+	var/datum/pda_app/ringer/app = new /datum/pda_app/ringer()
+	app.onInstall(src)
+	app.frequency = DESKBELL_MEDBAY
+
 /obj/item/device/pda/viro
 	name = "Virology PDA"
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-v"
+
+/obj/item/device/pda/viro/New()
+	..()
+	var/datum/pda_app/ringer/app = new /datum/pda_app/ringer()
+	app.onInstall(src)
+	app.frequency = DESKBELL_MEDBAY
 
 /obj/item/device/pda/engineering
 	name = "Engineering PDA"
@@ -176,15 +190,34 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	default_cartridge = /obj/item/weapon/cartridge/security
 	icon_state = "pda-s"
 
+/obj/item/device/pda/security/New()
+	..()
+	var/datum/pda_app/ringer/app = new /datum/pda_app/ringer()
+	app.onInstall(src)
+	app.frequency = DESKBELL_BRIG
+
 /obj/item/device/pda/detective
 	name = "Detective PDA"
 	default_cartridge = /obj/item/weapon/cartridge/detective
 	icon_state = "pda-det"
 
+/obj/item/device/pda/detective/New()
+	..()
+	var/datum/pda_app/light_upgrade/app1 = new /datum/pda_app/light_upgrade()
+	app1.onInstall(src)
+	var/datum/pda_app/balance_check/app2 = new /datum/pda_app/balance_check()
+	app2.onInstall(src)
+
 /obj/item/device/pda/warden
 	name = "Warden PDA"
 	default_cartridge = /obj/item/weapon/cartridge/security
 	icon_state = "pda-warden"
+
+/obj/item/device/pda/warden/New()
+	..()
+	var/datum/pda_app/ringer/app = new /datum/pda_app/ringer()
+	app.onInstall(src)
+	app.frequency = DESKBELL_BRIG
 
 /obj/item/device/pda/janitor
 	name = "Janitor PDA"
@@ -197,6 +230,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	default_cartridge = /obj/item/weapon/cartridge/signal/toxins
 	icon_state = "pda-tox"
 	ttone = "boom"
+
+/obj/item/device/pda/toxins/New()
+	..()
+	var/datum/pda_app/ringer/app = new /datum/pda_app/ringer()
+	app.onInstall(src)
+	app.frequency = DESKBELL_RND
 
 /obj/item/device/pda/clown
 	name = "Clown PDA"
@@ -222,10 +261,24 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	default_cartridge = /obj/item/weapon/cartridge/hop
 	icon_state = "pda-hop"
 
+/obj/item/device/pda/heads/hop/New()
+	..()
+	var/datum/pda_app/ringer/app1 = new /datum/pda_app/ringer()
+	app1.onInstall(src)
+	app1.frequency = DESKBELL_HOP
+	var/datum/pda_app/balance_check/app2 = new /datum/pda_app/balance_check()
+	app2.onInstall(src)
+
 /obj/item/device/pda/heads/hos
 	name = "Head of Security PDA"
 	default_cartridge = /obj/item/weapon/cartridge/hos
 	icon_state = "pda-hos"
+
+/obj/item/device/pda/heads/hos/New()
+	..()
+	var/datum/pda_app/ringer/app = new /datum/pda_app/ringer()
+	app.onInstall(src)
+	app.frequency = DESKBELL_BRIG
 
 /obj/item/device/pda/heads/ce
 	name = "Chief Engineer PDA"
@@ -237,10 +290,22 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	default_cartridge = /obj/item/weapon/cartridge/cmo
 	icon_state = "pda-cmo"
 
+/obj/item/device/pda/heads/cmo/New()
+	..()
+	var/datum/pda_app/ringer/app = new /datum/pda_app/ringer()
+	app.onInstall(src)
+	app.frequency = DESKBELL_MEDBAY
+
 /obj/item/device/pda/heads/rd
 	name = "Research Director PDA"
 	default_cartridge = /obj/item/weapon/cartridge/rd
 	icon_state = "pda-rd"
+
+/obj/item/device/pda/heads/rd/New()
+	..()
+	var/datum/pda_app/ringer/app = new /datum/pda_app/ringer()
+	app.onInstall(src)
+	app.frequency = DESKBELL_RND
 
 /obj/item/device/pda/captain
 	name = "Captain PDA"
@@ -248,6 +313,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	icon_state = "pda-c"
 	detonate = 0
 	//toff = 1
+
+/obj/item/device/pda/captain/New()
+	..()
+	for(var/app_type in (typesof(/datum/pda_app) - /datum/pda_app))	//yes, the captain is such a baller that his PDA has all the apps by default.
+		var/datum/pda_app/app = new app_type()						//will have to edit that when emagged/hidden apps get added.
+		app.onInstall(src)
 
 /obj/item/device/pda/cargo
 	name = "Cargo PDA"
@@ -337,6 +408,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	icon_state = "NONE"
 	ttone = "data"
 	detonate = 0
+
+/obj/item/device/pda/ai/New()
+	..()
+	var/datum/pda_app/spam_filter/app = new /datum/pda_app/spam_filter()
+	app.onInstall(src)
 
 
 /obj/item/device/pda/ai/proc/set_name_and_job(newname as text, newjob as text)
@@ -540,8 +616,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if (0)
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:331: dat += "<h2>PERSONAL DATA ASSISTANT v.1.2</h2>"
-				dat += {"<h2>PERSONAL DATA ASSISTANT v.1.2</h2>
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:331: dat += "<h2>PERSONAL DATA ASSISTANT v.1.3</h2>"
+				dat += {"<h2>PERSONAL DATA ASSISTANT v.1.3</h2>
 					Owner: [owner], [ownjob]<br>"}
 				// END AUTOFIX
 				dat += text("ID: <A href='?src=\ref[src];choice=Authenticate'>[id ? "[id.registered_name], [id.assignment]" : "----------"]")
@@ -567,7 +643,22 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += "<li><a href='byond://?src=\ref[src];choice=Honk'><img src=pda_honk.png> Honk Synthesizer</a></li>"
 					if(cartridge.access_status_display)
 						dat += "<li><a href='byond://?src=\ref[src];choice=42'><img src=pda_status.png> Set Status Display</a></li>"
-					dat += "</ul>"
+
+				dat += "</ul>"
+				dat += {"<h4>Applications</h4>"}
+
+				if(applications.len == 0)
+					dat += {"<i>No application currently installed.</i>"}
+				else
+					dat += {"<ul>"}
+					for(var/datum/pda_app/app in applications)
+						if(app.menu)
+							dat += {"<li><a href='byond://?src=\ref[src];choice=[app.menu]'>[app.name]</a></li>"}
+						else
+							dat += {"<li>[app.name]</li>"}
+					dat += {"</ul>"}
+
+				if (cartridge)
 					if (cartridge.access_engine)
 						// AUTOFIXED BY fix_string_idiocy.py
 						// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:355: dat += "<h4>Engineering Functions</h4>"
@@ -779,7 +870,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if (50) //Current events.
 				dat += {"<h4><img src=pda_clock.png> Current Events</h4>
 					Station Time: <b>[worldtime2text()]</b>.<br>
-					Empire Date: <b>[MM]/[DD]/2525</b>.<br><br>
+					Empire Date: <b>[MM]/[DD]/[game_year]</b>.<br><br>
 					<b>Current Events,</b><br>
 					<li>[currentevent1]</li<br>
 					<li>[currentevent2]</li><br>
@@ -788,6 +879,69 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					<li>[onthisday]</li><br><br>
 					<b>Did you know...</b><br>
 					<li>[didyouknow]</li><br>"}
+
+			if (101)//Ringer app
+				var/datum/pda_app/ringer/app = locate(/datum/pda_app/ringer) in applications
+				dat += {"<h4>Ringer Application</h4>"}
+				if(app)
+					dat += {"
+					Status: <a href='byond://?src=\ref[src];choice=toggleDeskRinger'>[app.state ? "On" : "Off"]</a><br>
+					Frequency:
+						<a href='byond://?src=\ref[src];choice=ringerFrequency;rfreq=-10'>-</a>
+						<a href='byond://?src=\ref[src];choice=ringerFrequency;rfreq=-2'>-</a>
+						[format_frequency(app.frequency)]
+						<a href='byond://?src=\ref[src];choice=ringerFrequency;rfreq=2'>+</a>
+						<a href='byond://?src=\ref[src];choice=ringerFrequency;rfreq=10'>+</a><br>
+						<br>
+					"}
+
+			if (102)//Spam filter app
+				var/datum/pda_app/spam_filter/app = locate(/datum/pda_app/spam_filter) in applications
+				dat += {"<h4>Spam Filtering Application</h4>"}
+				if(app)
+					dat += {"
+					<ul>
+					<li>[(app.function == 2) ? "<b>Block the spam.</b>" : "<a href='byond://?src=\ref[src];choice=setFilter;filter=2'>Block the spam.</a>"]</li>
+					<li>[(app.function == 1) ? "<b>Conceal the spam.</b>" : "<a href='byond://?src=\ref[src];choice=setFilter;filter=1'>Conceal the spam.</a>"]</li>
+					<li>[(app.function == 0) ? "<b>Do nothing.</b>" : "<a href='byond://?src=\ref[src];choice=setFilter;filter=0'>Do nothing.</a>"]</li>
+					</ul>
+					"}
+
+			if (103)//Balance check app
+				var/datum/pda_app/balance_check/app = locate(/datum/pda_app/balance_check) in applications
+				dat += {"<h4>Balance Check Application</h4>"}
+				if(app)
+					if(!id)
+						dat += {"<i>Insert an ID card linked to the account to check.</i>"}
+					else
+						if(!(app.linked_db))
+							app.reconnect_database()
+						if(app.linked_db)
+							var/datum/money_account/D = app.linked_db.attempt_account_access(id.associated_account_number, 0, 2, 0)
+							if(D)
+								dat += {"Owner: <b>[D.owner_name]</b><br>
+									Current Balance: <b>[D.money]</b>$
+									<h5>Transaction History</h5>
+									On [MM]/[DD]/[game_year]:
+									<ul>"}
+								var/list/t_log = list()
+								for(var/e in D.transaction_log)
+									t_log += e
+								for(var/datum/transaction/T in reverseRange(t_log))
+									if(T.purpose == "Account creation")//always the last element of the reverse transaction_log
+										dat += {"</ul>
+											On [(DD == 1) ? "[((MM-2)%12)+1]" : "[MM]"]/[((DD-2)%30)+1]/[(DD == MM == 1) ? "[game_year - 1]" : "[game_year]"]:
+											<ul>
+											<li>\[[T.time]\] [T.amount]$, [T.purpose] at [T.source_terminal]</li>
+											</ul>"}
+									else
+										dat += {"<li>\[[T.time]\] [T.amount]$, [T.purpose] at [T.source_terminal]</li>"}
+								if(!D.transaction_log.len)
+									dat += {"</ul>"}
+							else
+								dat += {"<i>Unable to access account. Either its security settings don't allow remote checking or the account is nonexistent.</i>"}
+						else
+							dat += {"<i>Unable to connect to accounts database. The database is either nonexistent or too far away.</i>"}
 
 			else//Else it links to the cart menu proc. Although, it really uses menu hub 4--menu 4 doesn't really exist as it simply redirects to hub.
 				dat += cart
@@ -816,7 +970,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				return
 			if("Refresh")//Refresh, goes to the end of the proc.
 			if("Return")//Return
-				if(mode<=9)
+				if((mode<=9) || (locate(mode) in pda_app_menus))
 					mode = 0
 				else
 					mode = round(mode/10)
@@ -859,6 +1013,32 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				mode = 41
 			if("chatroom") // chatroom hub
 				mode = 5
+
+//APPLICATIONS FUNCTIONS===========================
+
+			if("101")
+				mode = 101
+			if("toggleDeskRinger")
+				var/datum/pda_app/ringer/app = locate(/datum/pda_app/ringer) in applications
+				if(app)
+					app.state = !(app.state)
+			if("ringerFrequency")
+				var/datum/pda_app/ringer/app = locate(/datum/pda_app/ringer) in applications
+				if(app)
+					var/i = app.frequency + text2num(href_list["rfreq"])
+					if(i < 1200)
+						i = 1201
+					if(i > 1600)
+						i = 1599
+					app.frequency = i
+			if("102")
+				mode = 102
+			if("setFilter")
+				var/datum/pda_app/spam_filter/app = locate(/datum/pda_app/spam_filter) in applications
+				if(app)
+					app.function = text2num(href_list["filter"])
+			if("103")
+				mode = 103
 
 
 //MAIN FUNCTIONS===================================

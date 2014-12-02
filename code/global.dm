@@ -173,6 +173,12 @@ var/CHARGELEVEL = 0.001 // Cap for how fast cells charge, as a percentage-per-ti
 var/WORLD_X_OFFSET=0
 var/WORLD_Y_OFFSET=0
 
+var/list/deskbell_default_frequencies = list()
+var/DESKBELL_HOP=get_new_bellfreq()
+var/DESKBELL_MEDBAY=get_new_bellfreq()
+var/DESKBELL_BRIG=get_new_bellfreq()
+var/DESKBELL_RND=get_new_bellfreq()
+
 var/shuttle_z = 2	//default
 var/airtunnel_start = 68 // default
 var/airtunnel_stop = 68 // default

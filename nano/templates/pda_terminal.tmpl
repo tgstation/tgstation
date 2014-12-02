@@ -1,0 +1,28 @@
+{{if !data.has_pda_device}}
+  <span class='alert'><i>Please insert you PDA into the terminal to proceed.</i></span><br>
+{{/if}}
+
+<div class='item'>
+  <div class='itemLabel'>
+    Target PDA:
+  </div>
+  <div class='itemContent'>
+    {{:helper.link(data.pda_name, 'eject', {'choice' : 'pda_device'})}}
+  </div>
+</div>
+
+{{if data.has_pda_device}}
+  <div class='item'>
+    <table>
+      <th style="color: '#FFA500';">Available Downloads</th>
+      {{for data.pda_apps}}
+        <tr><td>{{:helper.link(value.app_name, '', {'choice' : 'purchase', 'chosen_app' : value.app})}}</td></tr>
+        <tr><td><i>{{:value.app_desc}}</i></td></tr>
+      {{/for}}
+     </table>
+  </div>
+{{/if}}
+<hr>
+<div class='item'>
+  {{:helper.link("Purchase a new PDA (100$)", '', {'choice' : 'new_pda'})}}
+</div>
