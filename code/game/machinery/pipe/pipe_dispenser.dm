@@ -43,7 +43,9 @@
 	<li><a href='?src=\ref[src];make=[PIPE_CAP];dir=1'>Pipe Cap</a></li>
 	<li><a href='?src=\ref[src];make=[PIPE_MANIFOLD4W];dir=1'>4-Way Manifold</a></li>
 	<li><a href='?src=\ref[src];make=[PIPE_MTVALVE];dir=1'>Manual T-Valve</a></li>
+	<li><a href='?src=\ref[src];make=[PIPE_MTVALVE];dir=9'>Manual T-Valve \[M]</a></li>
 	<li><a href='?src=\ref[src];make=[PIPE_DTVALVE];dir=1'>Digital T-Valve</a></li>
+	<li><a href='?src=\ref[src];make=[PIPE_DTVALVE];dir=9'>Digital T-Valve \[M]</a></li>
 </ul>
 <b>Devices:</b>
 <ul>
@@ -57,7 +59,9 @@
 	<li><a href='?src=\ref[src];makemeter=1'>Meter</a></li>
 	<li><a href='?src=\ref[src];makegsensor=1'>Gas Sensor</a></li>
 	<li><a href='?src=\ref[src];make=[PIPE_GAS_FILTER];dir=1'>Gas Filter</a></li>
+	<li><a href='?src=\ref[src];make=[PIPE_GAS_FILTER];dir=9'>Gas Filter \[M]</a></li>
 	<li><a href='?src=\ref[src];make=[PIPE_GAS_MIXER];dir=1'>Gas Mixer</a></li>
+	<li><a href='?src=\ref[src];make=[PIPE_GAS_MIXER];dir=9'>Gas Mixer \[M]</a></li>
 	<li><a href='?src=\ref[src];make=[PIPE_THERMAL_PLATE];dir=1'>Thermal Plate</a></li>
 	<li><a href='?src=\ref[src];make=[PIPE_INJECTOR];dir=1'>Injector</a></li>
 </ul>
@@ -72,6 +76,8 @@
 <ul>
 	<li><a href='?src=\ref[src];make=[PIPE_INSULATED_STRAIGHT];dir=1'>Pipe</a></li>
 	<li><a href='?src=\ref[src];make=[PIPE_INSULATED_BENT];dir=5'>Bent Pipe</a></li>
+	<li><a href='?src=\ref[src];make=[PIPE_INSUL_MANIFOLD];dir=1'>Manifold</a></li>
+	<li><a href='?src=\ref[src];make=[PIPE_INSUL_MANIFOLD4W];dir=1'>4-Way Manifold</a></li>
 </ul>
 "}
 //What number the make points to is in the define # at the top of construction.dm in same folder
@@ -212,7 +218,7 @@ Nah
 			var/p_type = text2num(href_list["dmake"])
 			var/obj/structure/disposalconstruct/C = new (src.loc)
 			switch(p_type)
-				if(0, 1, 2, 3, 4, 5)
+				if(0)
 					C.ptype = 0
 				if(1)
 					C.ptype = 1

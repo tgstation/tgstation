@@ -35,7 +35,7 @@ RPD
 	return
 
 /datum/pipe_info/meter/Render(var/dispenser,var/label)
-	return "<li><a href='?src=\ref[dispenser];makemeter=1;type=3'>[label]</a></li>"
+	return "<li><a href='?src=\ref[dispenser];makemeter=1;type=[PIPE_UNARY]'>[label]</a></li>" //hardcoding is no
 
 /datum/pipe_info/gsensor
 	icon = 'icons/obj/stationobjs.dmi'
@@ -45,7 +45,7 @@ RPD
 	return
 
 /datum/pipe_info/gsensor/Render(var/dispenser,var/label)
-	return "<li><a href='?src=\ref[dispenser];makegsensor=1;type=3'>[label]</a></li>"
+	return "<li><a href='?src=\ref[dispenser];makegsensor=1;type=[PIPE_UNARY]'>[label]</a></li>" //hardcoding is no
 
 var/global/list/disposalpipeID2State=list(
 	"pipe-s",
@@ -74,7 +74,7 @@ var/global/list/disposalpipeID2State=list(
 		icon_state = "con[icon_state]"
 
 /datum/pipe_info/disposal/Render(var/dispenser,var/label)
-	return "<li><a href='?src=\ref[dispenser];dmake=[id];type=3'>[label]</a></li>"
+	return "<li><a href='?src=\ref[dispenser];dmake=[id];type=[PIPE_UNARY]'>[label]</a></li>" //avoid hardcoding.
 
 //find these defines in code\game\machinery\pipe\consruction.dm
 var/global/list/RPD_recipes=list(
@@ -85,7 +85,7 @@ var/global/list/RPD_recipes=list(
 		"Manual Valve"   = new /datum/pipe_info(PIPE_MVALVE, 			1, PIPE_BINARY),
 		"Digital Valve"  = new /datum/pipe_info(PIPE_DVALVE,			1, PIPE_BINARY),
 		"Pipe Cap"       = new /datum/pipe_info(PIPE_CAP,				1, PIPE_UNARY),
-		"4-Way Manifold" = new /datum/pipe_info(PIPE_MANIFOLD4W,		-1, PIPE_BINARY),
+		"4-Way Manifold" = new /datum/pipe_info(PIPE_MANIFOLD4W,		1, PIPE_BINARY),
 		"Manual T-Valve" = new /datum/pipe_info(PIPE_MTVALVE,			2, PIPE_TRIN_M),
 		"Digital T-Valve" = new /datum/pipe_info(PIPE_DTVALVE,			2, PIPE_TRIN_M),
 	),
@@ -113,6 +113,8 @@ var/global/list/RPD_recipes=list(
 	"Insulated Pipes" = list(
 		"Pipe"           = new /datum/pipe_info(PIPE_INSULATED_STRAIGHT,1, PIPE_BINARY),
 		"Bent Pipe"      = new /datum/pipe_info(PIPE_INSULATED_BENT,	5, PIPE_BENT),
+		"Manifold"       = new /datum/pipe_info(PIPE_INSUL_MANIFOLD,	1, PIPE_TRINARY),
+		"4-Way Manifold" = new /datum/pipe_info(PIPE_INSUL_MANIFOLD4W,	1, PIPE_BINARY),
 	),
 	"Disposal Pipes" = list(
 		"Pipe"       = new /datum/pipe_info/disposal(DISP_PIPE_STRAIGHT,	PIPE_BINARY),
@@ -324,6 +326,12 @@ var/global/list/RPD_recipes=list(
 			<br />
 			<a href="?src=\ref[src];setdir=2" title="East, North, West">&#9577;</a>
 			<a href="?src=\ref[src];setdir=8" title="South, East, North">&#9568;</a>
+			<br />
+			<a href="?src=\ref[src];setdir=6" title="West, South, East">&#9574;</a>
+			<a href="?src=\ref[src];setdir=5" title="North, West, South">&#9571;</a>
+			<br />
+			<a href="?src=\ref[src];setdir=9" title="East, North, West">&#9577;</a>
+			<a href="?src=\ref[src];setdir=10" title="South, East, North">&#9568;</a>
 		</p>
 				"}
 		if(PIPE_UNARY) // Unary

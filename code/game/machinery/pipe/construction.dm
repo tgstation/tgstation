@@ -31,6 +31,8 @@ Buildable meters
 #define PIPE_DP_VENT    		24
 #define PIPE_PASV_VENT    		25
 #define PIPE_DTVALVE			26
+#define PIPE_INSUL_MANIFOLD		27
+#define PIPE_INSUL_MANIFOLD4W	28
 
 //Disposal piping numbers - do NOT hardcode these, use the defines
 #define DISP_PIPE_STRAIGHT		0
@@ -184,7 +186,9 @@ var/global/list/pipeID2State = list(
 	"injector",
 	"binary vent",
 	"passive vent",
-	"dtvalve"
+	"dtvalve",
+	"insulated_manifold",
+	"insulated_manifold4w"
 )
 /obj/item/pipe/proc/update()
 	var/list/nlist = list( \
@@ -214,7 +218,9 @@ var/global/list/pipeID2State = list(
 		"injector", \
 		"dual-port vent", \
 		"passive vent", \
-		"digital t-valve"
+		"digital t-valve", \
+		"insulated manifold", \
+		"insulated 4-way manifold"
 	)
 	name = nlist[pipe_type+1] + " fitting"
 	icon = 'icons/obj/pipe-item.dmi'
