@@ -102,6 +102,13 @@ json_reader
 
 
 		// parser
+		ReadArray(list/tokens)
+			src.tokens = tokens
+			i = 1
+			return read_array()
+
+
+		// parser
 		ReadObject(list/tokens)
 			src.tokens = tokens
 			. = new/list()

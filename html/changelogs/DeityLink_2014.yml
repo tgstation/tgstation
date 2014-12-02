@@ -1,9 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - bugfix: fixed Laser Rifles spawning in place of Laser Canons at R&D
-  - imageadd: fixed the cult shoe sprite not covering a certain pixel. a perfectionist? me?
-  - imageadd: office seats facing north now use an overlay so they don't hide parts of players that they shouldn't technically be hiding. (see pic)
-  - bugfix: fixed a sanity check that made observers unable to go accross holy turfs if (ticker.mode == null) not that it should happen normally but hey
-  - bugfix: added airlock/multi_tile to the get Flat Icon exception list
-  - bugfix: fixed the taxi shuttle consoles showing as unpowered even when they aren't

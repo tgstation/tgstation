@@ -87,6 +87,15 @@
 			<a href="?src=\ref[src];remove=*">
 				Clear
 			</a>
+			\]</p>
+			<p>\[
+			<a href="?src=\ref[src];dump=1">
+				Export
+			</a>
+			|
+			<a href="?src=\ref[src];read=1">
+				Import
+			</a>
 			\]</p>"}
 		if(automations.len==0)
 			out += "<i>No automations present.</i>"
@@ -145,7 +154,7 @@
 
 		if(href_list["remove"])
 			if(href_list["remove"]=="*")
-				var/confirm=input("Are you sure you want to remove ALL automations?","Automations","No") in list("Yes","No")
+				var/confirm=alert("Are you sure you want to remove ALL automations?","Automations","Yes","No")
 				if(confirm == "No") return 0
 				for(var/datum/automation/A in automations)
 					if(!A) continue
@@ -155,9 +164,20 @@
 				var/datum/automation/A=locate(href_list["remove"])
 				if(!A) return 1
 				A.OnRemove()
-				automations.Remove()
+				automations.Remove(A)
 			updateUsrDialog()
 			return 1
+
+		if(href_list["read"])
+			var/code = input("Input exported AAC code.","Automations","") as message|null
+			if(!code) return 0
+			ReadCode(code)
+			updateUsrDialog()
+			return 1
+
+		if(href_list["dump"])
+			input("Exported AAC code:","Automations",DumpCode()) as message|null
+			return 0
 
 	proc/MakeCompare(var/datum/automation/a, var/datum/automation/b, var/comparetype)
 		var/datum/automation/compare/compare=new(src)
@@ -176,6 +196,28 @@
 		sensor.sensor=sns_tag
 		sensor.field=field
 		return sensor
+
+	proc/DumpCode()
+		var/list/json[0]
+		for(var/datum/automation/A in automations)
+			json += list(A.Export())
+		return list2json(json)
+
+	proc/ReadCode(var/jsonStr)
+		automations.Cut()
+		var/list/json=json2list(jsonStr)
+		if(json.len>0)
+			for(var/list/cData in json)
+				if(isnull(cData) || !("type" in cData))
+					testing("AAC: Null cData in root JS array.")
+					continue
+				var/Atype=text2path(cData["type"])
+				if(!(Atype in automation_types))
+					testing("AAC: Unrecognized Atype [Atype].")
+					continue
+				var/datum/automation/A = new Atype(src)
+				A.Import(cData)
+				automations += A
 
 /obj/machinery/computer/general_air_control/atmos_automation/burnchamber
 	var/injector_tag="inc_in"
