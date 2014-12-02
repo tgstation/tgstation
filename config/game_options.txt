@@ -195,11 +195,6 @@ SEC_START_BRIG
 ## Set to 2 for "random", silicons will start with a random lawset picked from (at the time of writing): P.A.L.A.D.I.N., Corporate, Asimov. More can be added by changing the law datum paths in ai_laws.dm.
 DEFAULT_LAWS 1
 
-### SILICON LAW MAX AMOUNT ###
-## The maximum number of laws a silicon can have
-## Attempting to upload laws past this point will fail unless the AI is reset
-SILICON_MAX_LAW_AMOUNT 12
-
 ## Uncoment to give players the choice of their species before they join the game
 #JOIN_WITH_MUTANT_RACE
 
