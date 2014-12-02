@@ -31,6 +31,7 @@ var/list/ai_list = list()
 	var/viewalerts = 0
 	var/icon/holo_icon//Default is assigned when AI is created.
 	var/radio_enabled = 1 //Determins if a carded AI can speak with its built in radio or not.
+	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
 	var/obj/item/device/pda/ai/aiPDA = null
 	var/obj/item/device/multitool/aiMulti = null
 	var/obj/item/device/camera/siliconcam/aicamera = null
@@ -102,7 +103,7 @@ var/list/ai_list = list()
 		verbs.Add(/mob/living/silicon/ai/proc/ai_network_change, \
 		/mob/living/silicon/ai/proc/ai_statuschange, /mob/living/silicon/ai/proc/ai_hologram_change, \
 		/mob/living/silicon/ai/proc/toggle_camera_light, /mob/living/silicon/ai/proc/botcall,\
-		/mob/living/silicon/ai/proc/control_integrated_radio)
+		/mob/living/silicon/ai/proc/control_integrated_radio, /mob/living/silicon/ai/proc/set_automatic_say_channel)
 
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
 		if (!B)//If there is no player/brain inside.
@@ -732,6 +733,14 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/proc/set_syndie_radio()
 	if(radio)
 		radio.make_syndie()
+
+/mob/living/silicon/ai/proc/set_automatic_say_channel()
+	set name = "Set Auto Announce Mode"
+	set desc = "Modify the default radio setting for your automatic announcements."
+	set category = "AI Commands"
+
+	set_autosay()
+
 /mob/living/silicon/ai/attack_slime(mob/living/carbon/slime/user)
 	return
 
