@@ -128,6 +128,9 @@
 	m_amt = 1875
 	w_type = RECYK_GLASS
 	melt_temperature = MELTPOINT_GLASS
+	var/created_window = /obj/structure/window/reinforced
+	var/full_window = /obj/structure/window/full/reinforced
+	var/windoor = /obj/structure/windoor_assembly/
 	origin_tech = "materials=2"
 
 /obj/item/stack/sheet/rglass/cyborg
@@ -176,8 +179,7 @@
 					dir_to_set = direction
 					break
 
-			var/obj/structure/window/W
-			W = new /obj/structure/window/reinforced( user.loc, 1 )
+			var/obj/structure/window/W = new created_window( user.loc, 0 )
 			W.state = 0
 			W.dir = dir_to_set
 			W.ini_dir = W.dir
@@ -193,8 +195,7 @@
 			if(locate(/obj/structure/window/full) in user.loc)
 				user << "\red There is a window in the way."
 				return 1
-			var/obj/structure/window/W
-			W = new /obj/structure/window/reinforced( user.loc, 1 )
+			var/obj/structure/window/W = new full_window( user.loc, 0 )
 			W.state = 0
 			W.dir = SOUTHWEST
 			W.ini_dir = SOUTHWEST
@@ -202,8 +203,11 @@
 			src.use(2)
 
 		if("Windoor")
-			if(!src || src.loc != user) return 1
-
+			if(windoor==0) //Remove this check if plasma windoors are added
+				user << "\red Constructing plasma windoors is impossible currently!"
+				return 1
+			if(!src || src.loc != user) 
+				return 1
 			if(isturf(user.loc) && locate(/obj/structure/windoor_assembly/, user.loc))
 				user << "\red There is already a windoor assembly in that location."
 				return 1
@@ -215,9 +219,8 @@
 			if(src.amount < 5)
 				user << "\red You need more glass to do that."
 				return 1
-
-			var/obj/structure/windoor_assembly/WD
-			WD = new /obj/structure/windoor_assembly(user.loc)
+				
+			var/obj/structure/windoor_assembly/WD = new windoor(user.loc, 0 )
 			WD.state = "01"
 			WD.anchored = 0
 			WD.dir = user.dir
@@ -342,7 +345,7 @@
 /obj/item/stack/sheet/glass/plasmaglass/attackby(obj/item/W, mob/user)
 	if( istype(W, /obj/item/stack/rods) )
 		var/obj/item/stack/rods/V  = W
-		var/obj/item/stack/sheet/glass/plasmarglass/RG = new (user.loc)
+		var/obj/item/stack/sheet/rglass/plasmarglass/RG = new (user.loc)
 		RG.add_fingerprint(user)
 		RG.add_to_stacks(user)
 		V.use(1)
@@ -358,7 +361,7 @@
 /*
  * Reinforced plasma glass sheets
  */
-/obj/item/stack/sheet/glass/plasmarglass
+/obj/item/stack/sheet/rglass/plasmarglass
 	name = "reinforced plasma glass"
 	desc = "Plasma glass which seems to have rods or something stuck in them."
 	singular_name = "reinforced plasma glass sheet"
@@ -370,13 +373,14 @@
 	origin_tech = "materials=4;plasmatech=2"
 	created_window = /obj/structure/window/plasmareinforced
 	full_window = /obj/structure/window/full/plasmareinforced
+	windoor = 0 //If plasma windoors are added add /obj name here and remove check in construct proc earlier
 	perunit = 2875
 
-/obj/item/stack/sheet/glass/plasmarglass/recycle(var/datum/materials/rec)
+/obj/item/stack/sheet/rglass/plasmarglass/recycle(var/datum/materials/rec)
 	rec.addAmount("plasma",1*src.amount)
 	rec.addAmount("glass", 1*src.amount)
 	rec.addAmount("iron",  0.5*src.amount)
 	return 1
 
-/obj/item/stack/sheet/glass/plasmarglass/attack_self(mob/user as mob)
+/obj/item/stack/sheet/rglass/plasmarglass/attack_self(mob/user as mob)
 	construct_window(user)

@@ -1,0 +1,5 @@
+author: Clusterfack
+delete-after: true
+changes:
+- bugfix: RPglass windows no longer spawn constructed improperly
+- bugfix: RPglass no longer becomes Rglass when combined with rods
