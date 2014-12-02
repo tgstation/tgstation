@@ -353,6 +353,7 @@
 				src.energy += 15000//Instantly sends it to max size
 			else
 				src.energy += 20000//Instantly sends it to max size
+				SetUniversalState(/datum/universal_state/supermatter_cascade) //AND NOW YOU'RE FUCKED
 			expand(11, 1)
 			var/prints=""
 			if (A.fingerprintshidden)
