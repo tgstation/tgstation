@@ -1,23 +1,25 @@
 #define METEOR_TEMPERATURE
 
-/var/meteor_wave_delay = 225 //Failsafe wait between waves in tenths of seconds
+/var/meteor_wave_delay = 300 //Failsafe wait between waves in tenths of seconds
 //Set it above 100 (10s delay) if you want to minimize lag for some reason
 
 /var/meteors_in_wave = 10 //Failsafe in case a number isn't called
 /var/meteorwavecurrent = 0
+/var/chosen_dir = 1
 
 /proc/meteor_wave(var/number = meteors_in_wave) //Call above constants to change
 	if(!ticker || meteorwavecurrent)
 		return
 	meteorwavecurrent = 1
-	meteor_wave_delay = (rand(10,20))*10 //Between 10 and 20 seconds, makes everything more chaotic
+	meteor_wave_delay = (rand(30,45))*10 //Between 30 and 45 seconds, makes everything more chaotic
+	chosen_dir = pick(1, 2, 3, 4) //North, east, south or west
 	for(var/i = 0 to number)
-		spawn(rand(5,10)) //0.5 to 1 seconds between meteors
-			spawn_meteor()
+		spawn(rand(15,20)) //1.5 to 2 seconds between meteors
+			spawn_meteor(chosen_dir)
 	spawn(meteor_wave_delay)
 		meteorwavecurrent = 0
 
-/proc/spawn_meteor()
+/proc/spawn_meteor(var/dir = chosen_dir)
 
 	var/startx
 	var/starty
@@ -25,31 +27,30 @@
 	var/endy
 	var/turf/pickedstart
 	var/turf/pickedgoal
-	var/max_i = 3 //Try only three times maximum
-
+	var/max_i = 5 //Try only five times maximum
 
 	do
-		switch(pick(1,2,3,4))
-			if(1) //NORTH
-				starty = world.maxy-(TRANSITIONEDGE+1)
-				startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
-				endy = TRANSITIONEDGE
-				endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
-			if(2) //EAST
-				starty = rand((TRANSITIONEDGE+1),world.maxy-(TRANSITIONEDGE+1))
-				startx = world.maxx-(TRANSITIONEDGE+1)
-				endy = rand(TRANSITIONEDGE, world.maxy-TRANSITIONEDGE)
-				endx = TRANSITIONEDGE
-			if(3) //SOUTH
-				starty = (TRANSITIONEDGE+1)
-				startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
-				endy = world.maxy-TRANSITIONEDGE
-				endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
-			if(4) //WEST
-				starty = rand((TRANSITIONEDGE+1), world.maxy-(TRANSITIONEDGE+1))
-				startx = (TRANSITIONEDGE+1)
-				endy = rand(TRANSITIONEDGE,world.maxy-TRANSITIONEDGE)
-				endx = world.maxx-TRANSITIONEDGE
+
+		if(chosen_dir == 1) //NORTH
+			starty = world.maxy-(TRANSITIONEDGE+1)
+			startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
+			endy = TRANSITIONEDGE
+			endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
+		else if(chosen_dir == 2) //EAST
+			starty = rand((TRANSITIONEDGE+1),world.maxy-(TRANSITIONEDGE+1))
+			startx = world.maxx-(TRANSITIONEDGE+1)
+			endy = rand(TRANSITIONEDGE, world.maxy-TRANSITIONEDGE)
+			endx = TRANSITIONEDGE
+		else if(chosen_dir == 3) //SOUTH
+			starty = (TRANSITIONEDGE+1)
+			startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
+			endy = world.maxy-TRANSITIONEDGE
+			endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
+		else if(chosen_dir == 4) //WEST
+			starty = rand((TRANSITIONEDGE+1), world.maxy-(TRANSITIONEDGE+1))
+			startx = (TRANSITIONEDGE+1)
+			endy = rand(TRANSITIONEDGE,world.maxy-TRANSITIONEDGE)
+			endx = world.maxx-TRANSITIONEDGE
 
 		pickedstart = locate(startx, starty, 1)
 		pickedgoal = locate(endx, endy, 1)
@@ -63,14 +64,14 @@
 	switch(rand(1, 100))
 		if(1 to 5) //5 % chance of huge boom
 			M = new /obj/effect/meteor/big(pickedstart)
-		if(6 to 65) //60 % chance of medium boom
+		if(6 to 60) //55 % chance of medium boom
 			M = new /obj/effect/meteor(pickedstart)
-		if(66 to 100) //35 % chance of small boom
+		if(61 to 100) //40 % chance of small boom
 			M = new /obj/effect/meteor/small(pickedstart)
 
 	M.dest = pickedgoal
-	//spawn(0)
-	walk_towards(M, M.dest, 1)
+	spawn(0)
+		walk_towards(M, M.dest, 1)
 	return
 
 /obj/effect/meteor
@@ -88,9 +89,6 @@
 	pass_flags = PASSTABLE
 
 /obj/effect/meteor/Move()
-	//var/turf/T = src.loc
-	//if(istype(T, /turf))
-		//T.hotspot_expose(METEOR_TEMPERATURE, 1000, surfaces = 1)
 	..()
 	return
 
