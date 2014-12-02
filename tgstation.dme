@@ -132,6 +132,7 @@
 #include "code\datums\datacore.dm"
 #include "code\datums\datumvars.dm"
 #include "code\datums\gas_mixture.dm"
+#include "code\datums\href_proxy.dm"
 #include "code\datums\hud.dm"
 #include "code\datums\mind.dm"
 #include "code\datums\mixed.dm"

@@ -559,7 +559,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	if(key)
 		if(include_link)
-			. += "<a href='?priv_msg=[ckey]'>"
+			if(C && C.holder && C.holder.fakekey)
+				. += "<a href='?proxy_msg=\ref[C.holder.fakekey]'>"
+			else
+				. += "<a href='?priv_msg=[ckey]'>"
 
 		if(C && C.holder && C.holder.fakekey && !include_name)
 			. += "Administrator"

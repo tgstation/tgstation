@@ -34,6 +34,11 @@
 		cmd_admin_pm(href_list["priv_msg"],null)
 		return
 
+	//Hidden adminPM
+	if(href_list["proxy_msg"])
+		var/datum/href_proxy/HP = locate(href_list["proxy_msg"])
+		HP.Topic("?priv_msg=[ckey]",list("priv_msg" = ckey))
+
 	//Logs all hrefs
 	if(config && config.log_hrefs && href_logfile)
 		href_logfile << "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"

@@ -74,7 +74,7 @@
 			src << "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>: [msg]</font>"
 
 		else		//recipient is an admin but sender is not
-			C << "<font color='red'>Reply PM from-<b>[key_name(src, C, 1)]</b>: [msg]</font>"
+			C << "<font color='red'>Reply PM from-<b>[key_name(src, C, 0)]</b>: [msg]</font>"
 			src << "<font color='blue'>PM to-<b>Admins</b>: [msg]</font>"
 
 		//play the recieving admin the adminhelp sound (if they have them enabled)
