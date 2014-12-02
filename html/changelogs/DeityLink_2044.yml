@@ -1,0 +1,23 @@
+author: Deity Link
+delete-after: true
+changes:
+  - rscadd: Added Desk Bells. Built of metal, coil, and optionally a remote signalling device. You can use a pen on the assembly to name it.
+  - rscadd: Can be anchored with a wrench. Can be picked up by drag and dropping it onto yourself (like paper bins)
+  - rscadd: Clicking it will make a noise, and if has a remote signalling device, it'll emit a signal of the designated Frequency and Code.
+  - rscadd: Desk Bells have a delay of 2 seconds before you can press them again.
+  - rscadd: If the remote signalling device's code was 30 (default), the signal will only be read by the Ringer apps of PDAs.
+  - rscadd: Added PDA apps. Did all the framework so that future apps can be easily added.
+  - rscadd: Ringer app. You can toggle it on/off and change it's frequency. You'll be notified any time someone press a Desk Bell with a signaller set on the same frequency. The notification includes a noise, and the name of the Desk Bell.
+  - rscadd: Flashlight Enhancer app. Increases the PDA flashlight's luminosity from 2 to 3.
+  - rscadd: Spam Filter app. Can be set to either block the spam, conceal it (so it won't beep your PDA nor show you the message on the chat window), or do nothing.
+  - rscadd: Balance Checking app. Lets you check the current funds of the account linked to the inserted ID, as well as its transaction history.
+  - rscadd: Added a new computer. PDA Terminal. The board can be printed at R&D with data=3
+  - rscadd: PDA apps can be purchased at a PDA Terminal by inserting your PDA, and having enough funds on your ID (which can be either on yourself or inside the inserted PDA)
+  - rscadd: You can also purchase a new PDA at the terminal for 100$ (with a chance of getting a Limited Edition transparent PDA)
+  - tweak: The AI/pAI/Borg's PDAs have the Spam Filter app installed by default.
+  - tweak: The Detective's PDA has the Flashlight enhancer app by default.
+  - tweak: The HoP and the Detective's PDAs have the Balance Checking app by default.
+  - tweak: The Sec Officers, the Warden, The HoS, the Scientists, the RD, the Medical Doctors, the CMO, and the HoP, all have the Ringer app by default on their PDA, with its frequency set to that of their respective desk bells (those desk bells will be placed at roundstart whenever I can make the map changes)
+  - tweak: The captain's PDA has all the apps by default because why not.
+  - bugfix: using a wrench or an unlit welder on a reinforced (not weakened) table will now actually place the tool on it, rather than doing nothing
+  - tweak: purchasing from either a vending machine or the PDA terminal will now display his remaining balance to the purchaser.
