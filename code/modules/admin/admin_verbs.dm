@@ -416,10 +416,18 @@ var/list/admin_verbs_hideable = list(
 		if("Big Bomb")
 			explosion(epicenter, 3, 5, 7, 5)
 		if("Custom Bomb")
-			var/devastation_range = input("Devastation range (in tiles):") as num
-			var/heavy_impact_range = input("Heavy impact range (in tiles):") as num
-			var/light_impact_range = input("Light impact range (in tiles):") as num
-			var/flash_range = input("Flash range (in tiles):") as num
+			var/devastation_range = input("Devastation range (in tiles):") as null|num
+			if(devastation_range == null)
+				return
+			var/heavy_impact_range = input("Heavy impact range (in tiles):") as null|num
+			if(heavy_impact_range == null)
+				return
+			var/light_impact_range = input("Light impact range (in tiles):") as null|num
+			if(light_impact_range == null)
+				return
+			var/flash_range = input("Flash range (in tiles):") as null|num
+			if(flash_range == null)
+				return
 			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 	message_admins("<span class='adminnotice'>[ckey] creating an admin explosion at [epicenter.loc].</span>")
 	feedback_add_details("admin_verb","DB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
