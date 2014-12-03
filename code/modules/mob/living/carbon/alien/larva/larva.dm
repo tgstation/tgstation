@@ -23,27 +23,6 @@
 	regenerate_icons()
 	..()
 
-//This is fine, works the same as a human
-/mob/living/carbon/alien/larva/Bump(atom/movable/AM as mob|obj, yes)
-	if ((!( yes ) || now_pushing))
-		return
-	now_pushing = 1
-	if(ismob(AM))
-		var/mob/tmob = AM
-		tmob.LAssailant = src
-
-	now_pushing = 0
-	..()
-	if (!istype(AM, /atom/movable))
-		return
-	if (!( now_pushing ))
-		now_pushing = 1
-		if (!( AM.anchored ))
-			var/t = get_dir(src, AM)
-			step(AM, t)
-		now_pushing = null
-
-
 //This needs to be fixed
 /mob/living/carbon/alien/larva/Stat()
 	..()

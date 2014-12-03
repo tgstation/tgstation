@@ -99,16 +99,21 @@
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 40
+
 	else if(isobj(AM))
 		var/obj/item/I = AM
 		tforce = I.throwforce
-	if(reinf) tforce *= 0.25
+
+	if(reinf) 
+		tforce *= 0.25
+
 	playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
 	health = max(0, health - tforce)
 	if(health <= 7 && !reinf)
 		anchored = 0
 		update_nearby_icons()
 		step(src, get_dir(AM, src))
+
 	if(health <= 0)
 		spawnfragments()
 	update_nearby_icons()
@@ -159,28 +164,43 @@
 	update_nearby_icons()
 
 /obj/structure/window/attack_animal(mob/living/user as mob)
-	if(!isanimal(user)) return
+	if(!isanimal(user)) 
+		return
+
 	var/mob/living/simple_animal/M = user
 	M.do_attack_animation(src)
-	if(M.melee_damage_upper <= 0) return
+	if(M.melee_damage_upper <= 0) 
+		return
+
 	attack_generic(M, M.melee_damage_upper)
 	update_nearby_icons()
 
 /obj/structure/window/attack_slime(mob/living/carbon/slime/user as mob)
 	user.do_attack_animation(src)
-	if(!user.is_adult) return
+	if(!user.is_adult) 
+		return
+
 	attack_generic(user, rand(10, 15))
 	update_nearby_icons()
 
 /obj/structure/window/attackby(obj/item/I, mob/living/user)
 	if(!can_be_reached(user))
-		return 1 //returning 1 will skip the afterattack()
+		return 1 //skip the afterattack
+
 	add_fingerprint(user)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
+		if(reinf && (state == 2 || state == 1))
+			user << (state == 2 ? "<span class='notice'>You begin to unscrew the window from the frame.</span>" : "<span class='notice'>You begin to screw the window to the frame.</span>")
+		else if(reinf && state == 0)
+			user << (anchored ? "<span class='notice'>You begin to unscrew the frame from the floor.</span>" : "<span class='notice'>You begin to screw the frame to the floor.</span>")
+		else if(!reinf)
+			user << (anchored ? "<span class='notice'>You begin to unscrew the window from the floor.</span>" : "<span class='notice'>You begin to screw the window to the floor.</span>")
+			
 		if(do_after(user, 40))
-			if(reinf && state >= 1)
-				state = 3 - state
+			if(reinf && (state == 1 || state == 2))
+				//If state was unfastened, fasten it, else do the reverse
+				state = (state == 1 ? 2 : 1)
 				user << (state == 1 ? "<span class='notice'>You have unfastened the window from the frame.</span>" : "<span class='notice'>You have fastened the window to the frame.</span>")
 			else if(reinf && state == 0)
 				anchored = !anchored
@@ -190,11 +210,15 @@
 				anchored = !anchored
 				update_nearby_icons()
 				user << (anchored ? "<span class='notice'>You have fastened the window to the floor.</span>" : "<span class='notice'>You have unfastened the window.</span>")
-	else if(istype(I, /obj/item/weapon/crowbar) && reinf && state <= 1)
+
+	else if (istype(I, /obj/item/weapon/crowbar) && reinf && (state == 0 || state == 1))
+		user << (state == 0 ? "<span class='notice'>You begin to lever the window into the frame.</span>" : "<span class='notice'>You begin to lever the window out of the frame.</span>")
 		playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
 		if(do_after(user, 40))
-			state = 1 - state
-			user << (state ? "<span class='notice'>You have pried the window into the frame.</span>" : "<span class='notice'>You have pried the window out of the frame.</span>")
+			//If state was out of frame, put into frame, else do the reverse
+			state = (state == 0 ? 1 : 0)
+			user << (state == 1 ? "<span class='notice'>You have pried the window into the frame.</span>" : "<span class='notice'>You have pried the window out of the frame.</span>")
+
 	else if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(user.a_intent == "help") //so you can still break windows with welding tools
@@ -208,24 +232,33 @@
 			else
 				user << "<span class='notice'>[src] is already in good condition.</span>"
 		update_nearby_icons()
+
 	else if(istype(I, /obj/item/weapon/wrench) && !anchored)
 		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
+		user << "<span class='notice'> You begin to disassemble [src].</span>"
 		if(do_after(user, 40))
+			if(disassembled)
+				return //Prevents multiple deconstruction attempts
+
 			if(reinf)
 				var/obj/item/stack/sheet/rglass/RG = new (user.loc)
 				RG.add_fingerprint(user)
 				if(fulltile) //fulltiles drop two panes
 					RG = new (user.loc)
 					RG.add_fingerprint(user)
+
 			else
 				var/obj/item/stack/sheet/glass/G = new (user.loc)
 				G.add_fingerprint(user)
 				if(fulltile)
 					G = new (user.loc)
 					G.add_fingerprint(user)
+
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			disassembled = 1
+			user << "<span class='notice'> You successfully disassemble [src].</span>"
 			qdel(src)
+
 	else
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			user.changeNext_move(CLICK_CD_MELEE)
