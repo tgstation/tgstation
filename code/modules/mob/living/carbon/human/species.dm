@@ -622,15 +622,10 @@
 		var/obj/item/weapon/tank/jetpack/J = H.back
 		if(J.allow_thrust(0.01, H))
 			hasjetpack = 1
-
-	if(!has_gravity(H) && !hasjetpack)
-		mspeed += 1.5 //Carefully propelling yourself along the walls is actually quite slow
-
-
-		if(H.l_hand) //Having your hands full makes movement harder when you're weightless. You try climbing around while holding a gun!
-			mspeed += 0.5
-		if(H.r_hand)
-			mspeed += 0.5
+	var/grav = has_gravity(H)
+	
+	if(!grav && !hasjetpack)
+		mspeed += 1 //Slower space without jetpack
 
 	var/health_deficiency = (100 - H.health + H.staminaloss)
 	if(health_deficiency >= 40)
@@ -640,16 +635,16 @@
 	if(hungry >= 70)
 		mspeed += hungry / 50
 
-	if(H.wear_suit)
+	if(H.wear_suit && grav)
 		mspeed += H.wear_suit.slowdown
-	if(H.shoes)
+	if(H.shoes && grav)
 		mspeed += H.shoes.slowdown
-	if(H.back)
+	if(H.back && grav)
 		mspeed += H.back.slowdown
 
-	if(FAT in H.mutations)
+	if(FAT in H.mutations && grav)
 		mspeed += 1.5
-	if(H.bodytemperature < 283.222)
+	if(H.bodytemperature < 283.222 && grav)
 		mspeed += (283.222 - H.bodytemperature) / 10 * 1.75
 
 	mspeed += speedmod
