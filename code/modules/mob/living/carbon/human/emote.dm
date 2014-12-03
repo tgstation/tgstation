@@ -576,8 +576,11 @@
 								visible_message("<span class = 'warning'><b>[src]</b> silently farts in <b>[M]</b>'s face!</span>")
 						else
 							continue
+					/*
 					
-					for(var/mob/M in view(0))
+					GAY BROKEN SHIT
+					
+					for(var/mob/M in view(1))
 						if(M != src)
 							if(!miming)
 								visible_message("\red <b>[src]</b> farts in <b>[M]</b>'s face!")
@@ -585,7 +588,11 @@
 								visible_message("\red <b>[src]</b> silently farts in <b>[M]</b>'s face!")
 						else
 							continue
-							
+					
+					GAY BROKEN SHIT
+					
+					*/ 
+					
 					//101 shitty fart jokes
 					var/list/smells = list(
 						"burrito filling",
