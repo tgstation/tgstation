@@ -30,7 +30,6 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	density = 0
 	anchored = 1
 	layer = 4
-	explosion_resistance = 5
 
 /obj/structure/plasticflaps/CanPass(atom/movable/A, turf/T)
 	if(istype(A) && A.checkpass(PASSGLASS))

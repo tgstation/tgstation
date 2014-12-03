@@ -22,10 +22,8 @@
 	..()
 	if(density)
 		layer = 3.1 //Above most items if closed
-		explosion_resistance = initial(explosion_resistance)
 	else
 		layer = 2.7 //Under all objects if opened. 2.7 due to tables being at 2.6
-		explosion_resistance = 0
 	update_freelook_sight()
 	air_update_turf(1)
 	airlocks += src
@@ -217,7 +215,6 @@
 	sleep(10)
 	src.layer = 2.7
 	src.density = 0
-	explosion_resistance = 0
 	update_icon()
 	SetOpacity(0)
 	air_update_turf(1)
@@ -234,7 +231,6 @@
 	operating = 1
 
 	do_animate("closing")
-	explosion_resistance = initial(explosion_resistance)
 	src.layer = 3.1
 	sleep(10)
 	src.density = 1
