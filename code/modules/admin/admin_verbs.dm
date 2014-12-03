@@ -16,7 +16,8 @@ var/list/admin_verbs_default = list(
 	/client/proc/reload_admins,
 	/client/proc/reestablish_db_connection,/*reattempt a connection to the database*/
 	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
-	/client/proc/cmd_admin_pm_panel		/*admin-pm list*/
+	/client/proc/cmd_admin_pm_panel,		/*admin-pm list*/
+	/client/proc/stop_sounds
 	)
 var/list/admin_verbs_admin = list(
 	/client/proc/player_panel,			/*shows an interface for all players, with links to various panels (old style)*/
@@ -69,7 +70,6 @@ var/list/admin_verbs_ban = list(
 var/list/admin_verbs_sounds = list(
 	/client/proc/play_local_sound,
 	/client/proc/play_sound,
-	/client/proc/stop_sounds
 	)
 var/list/admin_verbs_fun = list(
 	/client/proc/cmd_admin_dress,
@@ -245,7 +245,6 @@ var/list/admin_verbs_hideable = list(
 		/client/proc/startSinglo,
 		/client/proc/ticklag,
 		/client/proc/cmd_admin_grantfullaccess,
-		/client/proc/kaboom,
 		/client/proc/cmd_admin_areatest
 		)
 	if(holder)
@@ -417,10 +416,18 @@ var/list/admin_verbs_hideable = list(
 		if("Big Bomb")
 			explosion(epicenter, 3, 5, 7, 5)
 		if("Custom Bomb")
-			var/devastation_range = input("Devastation range (in tiles):") as num
-			var/heavy_impact_range = input("Heavy impact range (in tiles):") as num
-			var/light_impact_range = input("Light impact range (in tiles):") as num
-			var/flash_range = input("Flash range (in tiles):") as num
+			var/devastation_range = input("Devastation range (in tiles):") as null|num
+			if(devastation_range == null)
+				return
+			var/heavy_impact_range = input("Heavy impact range (in tiles):") as null|num
+			if(heavy_impact_range == null)
+				return
+			var/light_impact_range = input("Light impact range (in tiles):") as null|num
+			if(light_impact_range == null)
+				return
+			var/flash_range = input("Flash range (in tiles):") as null|num
+			if(flash_range == null)
+				return
 			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 	message_admins("<span class='adminnotice'>[ckey] creating an admin explosion at [epicenter.loc].</span>")
 	feedback_add_details("admin_verb","DB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

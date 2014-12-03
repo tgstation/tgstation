@@ -135,3 +135,48 @@
 	item_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
 	cell_type = "/obj/item/weapon/stock_parts/cell"
+
+
+/obj/item/weapon/gun/energy/wormhole_projector
+	name = "bluespace wormhole projector"
+	desc = "A projector that emits high density quantum-coupled bluespace beams."
+	ammo_type = list(/obj/item/ammo_casing/energy/wormhole, /obj/item/ammo_casing/energy/wormhole/orange)
+	item_state = null
+	icon_state = "wormhole_projector"
+	var/obj/effect/portal/blue
+	var/obj/effect/portal/orange
+
+/obj/item/weapon/gun/energy/wormhole_projector/update_icon()
+	icon_state = "[initial(icon_state)][select]"
+	return
+
+/obj/item/weapon/gun/energy/wormhole_projector/attack_self(mob/living/user as mob)
+	select_fire(user)
+
+/obj/item/weapon/gun/energy/wormhole_projector/process_chamber()
+	..()
+	select_fire()
+
+/obj/item/weapon/gun/energy/wormhole_projector/proc/portal_destroyed(var/obj/effect/portal/P)
+	if(P.icon_state == "portal")
+		blue = null
+		if(orange)
+			orange.target = null
+	else
+		orange = null
+		if(blue)
+			blue.target = null
+
+/obj/item/weapon/gun/energy/wormhole_projector/proc/create_portal(var/obj/item/projectile/beam/wormhole/W)
+	var/obj/effect/portal/P = new /obj/effect/portal(get_turf(W), null, src)
+	P.precision = 0
+	if(W.name == "bluespace beam")
+		qdel(blue)
+		blue = P
+	else
+		qdel(orange)
+		P.icon_state = "portal1"
+		orange = P
+	if(orange && blue)
+		blue.target = get_turf(orange)
+		orange.target = get_turf(blue)

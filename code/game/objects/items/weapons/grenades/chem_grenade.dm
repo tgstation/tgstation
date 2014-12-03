@@ -186,12 +186,14 @@
 		steam.attach(src)
 		steam.start()
 
+	var/list/viewable = view(affected_area, loc)
 	var/list/accessible = can_flood_from(loc, affected_area)
 	var/list/reactable = accessible
 	var/mycontents = GetAllContents()
 	for(var/turf/T in accessible)
 		for(var/atom/A in T.GetAllContents())
 			if(A in mycontents) continue
+			if(!(A in viewable)) continue
 			reactable |= A
 	var/fraction = (reagents.total_volume/reactable.len) - reagents.total_volume
 	for(var/atom/A in reactable)

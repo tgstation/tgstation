@@ -240,6 +240,10 @@ Class Procs:
 		return
 	if(be_close && !in_range(M, src))
 		return
+	//stop AIs from leaving windows open and using then after they lose vision
+	//apc_override is needed here because AIs use their own APC when powerless
+	if(cameranet && !cameranet.checkTurfVis(get_turf(M)) && !apc_override)
+		return
 	return 1
 
 /mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close = 0)

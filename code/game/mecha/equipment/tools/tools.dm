@@ -58,6 +58,8 @@
 		if(M.stat>1) return
 		if(chassis.occupant.a_intent == "harm")
 			M.take_overall_damage(dam_force)
+			if(!M)
+				return
 			M.adjustOxyLoss(round(dam_force/2))
 			M.updatehealth()
 			occupant_message("<span class='danger'>You squeeze [target] with [src.name]. Something cracks.</span>")
@@ -142,8 +144,9 @@
 		H.update_damage_overlays(0)
 	else
 		target.take_organ_damage(drill_damage)
-	target.Paralyse(10)
-	target.updatehealth()
+	if(target)
+		target.Paralyse(10)
+		target.updatehealth()
 
 /obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill
 	name = "diamond-tipped exosuit drill"

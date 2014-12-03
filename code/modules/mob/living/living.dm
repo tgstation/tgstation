@@ -10,6 +10,96 @@
 	..()
 	del(src)
 
+//Generic Bump(). Override MobBump() and ObjBump() instead of this.
+/mob/living/Bump(atom/A, yes)
+	if (buckled || !yes || now_pushing)
+		return
+	if(ismob(A))
+		var/mob/M = A
+		if(MobBump(M))
+			return
+	..()
+	if(isobj(A))
+		var/obj/O = A
+		if(ObjBump(O))
+			return
+	if(istype(A, /atom/movable))
+		var/atom/movable/AM = A
+		if(PushAM(AM))
+			return
+
+//Called when we bump onto a mob
+/mob/living/proc/MobBump(mob/M)
+	if(now_pushing)
+		return 1
+
+	//BubbleWrap: Should stop you pushing a restrained person out of the way
+	if(istype(M, /mob/living/carbon/human))
+		for(var/mob/MM in range(M, 1))
+			if( ((MM.pulling == M && ( M.restrained() && !( MM.restrained() ) && MM.stat == CONSCIOUS)) || locate(/obj/item/weapon/grab, M.grabbed_by.len)) )
+				if ( !(world.time % 5) )
+					src << "<span class='warning'>[M] is restrained, you cannot push past.</span>"
+				return 1
+			if( M.pulling == MM && ( MM.restrained() && !( M.restrained() ) && M.stat == CONSCIOUS) )
+				if ( !(world.time % 5) )
+					src << "<span class='warning'>[M] is restraining [MM], you cannot push past.</span>"
+				return 1
+
+	//switch our position with M
+	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
+	if((M.a_intent == "help" || M.restrained()) && (a_intent == "help" || restrained()) && M.canmove && canmove) // mutual brohugs all around!
+		now_pushing = 1
+		//TODO: Make this use Move(). we're pretty much recreating it here.
+		//it could be done by setting one of the locs to null to make Move() work, then setting it back and Move() the other mob
+		var/oldloc = loc
+		loc = M.loc
+		M.loc = oldloc
+		M.LAssailant = src
+
+		for(var/mob/living/carbon/slime/slime in view(1,M))
+			if(slime.Victim == M)
+				slime.UpdateFeed()
+
+		//cross any movable atoms on either turf
+		for(var/atom/movable/AM in loc)
+			AM.Crossed(src)
+		for(var/atom/movable/AM in oldloc)
+			AM.Crossed(M)
+		now_pushing = 0
+		return 1
+
+	//okay, so we didn't switch. but should we push?
+	//not if he's not CANPUSH of course
+	if(!(M.status_flags & CANPUSH) )
+		return 1
+	//anti-riot equipment is also anti-push
+	if(M.r_hand && istype(M.r_hand, /obj/item/weapon/shield/riot))
+		return 1
+	if(M.l_hand && istype(M.l_hand, /obj/item/weapon/shield/riot))
+		return 1
+
+//Called when we bump onto an obj
+/mob/living/proc/ObjBump(obj/O)
+	return
+
+//Called when we want to push an atom/movable
+/mob/living/proc/PushAM(atom/movable/AM)
+	if(now_pushing)
+		return 1
+	if(!AM.anchored)
+		now_pushing = 1
+		var/t = get_dir(src, AM)
+		if (istype(AM, /obj/structure/window))
+			var/obj/structure/window/W = AM
+			if(W.fulltile)
+				for(var/obj/structure/window/win in get_step(W,t))
+					now_pushing = 0
+					return
+		if(pulling == AM)
+			stop_pulling()
+		step(AM, t)
+		now_pushing = 0
+
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
 /mob/living/verb/pulled(atom/movable/AM as mob|obj in oview(1))

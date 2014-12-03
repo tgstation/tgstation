@@ -14,7 +14,7 @@
 
 /obj/item/borg/upgrade/proc/action(var/mob/living/silicon/robot/R)
 	if(R.stat == DEAD)
-		usr << "/red The [src] will not function on a deceased cyborg."
+		usr << "<span class='notice'>[src] will not function on a deceased cyborg.</span>"
 		return 1
 	return 0
 
@@ -37,7 +37,7 @@
 	R.status_flags |= CANPUSH
 	R.designation = "Default"
 	R.notify_ai(2)
-	R.updateicon()
+	R.update_icons()
 
 	return 1
 
