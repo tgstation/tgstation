@@ -62,15 +62,18 @@
 /obj/machinery/mecha_part_fabricator/RefreshParts()
 	var/T = 0
 
+	//maximum stocking amount (max 412000)
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
-	res_max_amount = (187500+(T * 37500))
+	res_max_amount = (187000+(T * 37500))
 
+	//ressources adjustment coefficient (1 -> 0.88 -> 0.75)
 	T = -1
 	for(var/obj/item/weapon/stock_parts/micro_laser/Ma in component_parts)
 		T += Ma.rating
 	resource_coeff = round(initial(resource_coeff) - (initial(resource_coeff)*(T))/8,0.01)
 
+	//building time adjustment coefficient (1 -> 0.8 -> 0.6)
 	T = -1
 	for(var/obj/item/weapon/stock_parts/manipulator/Ml in component_parts)
 		T += Ml.rating
@@ -238,34 +241,27 @@
 		output += "\[<a href='?src=\ref[src];process_queue=1'>Process queue</a> | <a href='?src=\ref[src];clear_queue=1'>Clear queue</a>\]"
 	return output
 
-/*/obj/machinery/mecha_part_fabricator/proc/update_tech()
-	if(!files) return
+/obj/machinery/mecha_part_fabricator/proc/update_tech()
+	if(!files)
+		return
 	var/output
 	for(var/datum/tech/T in files.known_tech)
 		if(T && T.level > 1)
 			var/diff
-			switch(T.id) //bad, bad formulas
+			switch(T.id)
 				if("materials")
-					var/pmat = 0//Calculations to make up for the fact that these parts and tech modify the same thing
-					for(var/obj/item/weapon/stock_parts/micro_laser/Ml in component_parts)
-						pmat += Ml.rating
-					if(pmat >= 1)
-						pmat -= 1//So the equations don't have to be reworked, upgrading a single part from T1 to T2 is == to 1 tech level
-					diff = round(initial(resource_coeff_tech) - (initial(resource_coeff_tech)*(T.level+pmat))/30,0.01)
+					//one materials level is 1/32, so that max level is 0.75 coefficient
+					diff = round(initial(resource_coeff_tech) - (initial(resource_coeff_tech)*(T.level-1))/32,0.01)
 					if(resource_coeff_tech>diff)
 						resource_coeff_tech = diff
 						output+="Production efficiency increased.<br>"
 				if("programming")
-					var/ptime = 0
-					for(var/obj/item/weapon/stock_parts/manipulator/Ma in component_parts)
-						ptime += Ma.rating
-					if(ptime >= 2)
-						ptime -= 2
-					diff = round(initial(time_coeff_tech) - (initial(time_coeff_tech)*(T.level+ptime))/25,0.1)
+					//one materials level is 1/40, so that max level is 0.8 coefficient
+					diff = round(initial(time_coeff_tech) - (initial(time_coeff_tech)*(T.level-1))/40,0.1)
 					if(time_coeff_tech>diff)
 						time_coeff_tech = diff
 						output+="Production routines updated.<br>"
-	return output*/
+	return output
 
 
 /obj/machinery/mecha_part_fabricator/proc/sync()
@@ -281,13 +277,12 @@
 		for(var/datum/design/D in RDC.files.known_designs)
 			files.AddDesign2Known(D)
 		files.RefreshResearch()
-		//var/i = convert_designs() aran
-		//var/tech_output = update_tech()
 		temp = "Processed equipment designs.<br>"
-		//temp += tech_output
+		//check if the tech coefficients have changed
+		temp += update_tech()
 		temp += "<a href='?src=\ref[src];clear_temp=1'>Return</a>"
+
 		updateUsrDialog()
-		//if(i || tech_output)
 		visible_message("\icon[src] <b>\The [src]</b> beeps, \"Successfully synchronized with R&D server.\"")
 		return
 
