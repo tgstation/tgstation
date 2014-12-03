@@ -113,7 +113,7 @@
 									new /obj/effect/decal/cleanable/oil/streak(get_turf(src))
 									qdel(src)
 								else
-									D << "<span class='notice'>You need to remain still to canibalize [src].</span>"
+									D << "<span class='notice'>You need to remain still to cannibalize [src].</span>"
 							else
 								D << "<span class='notice'>You're already in perfect condition!</span>"
 						if("Nothing")
@@ -530,7 +530,7 @@
 		return
 
 	var/be_drone = alert("Become a drone? (Warning, You can no longer be cloned!)",,"Yes","No")
-	if(be_drone == "No")
+	if(be_drone == "No" || gc_destroyed)
 		return
 	var/mob/living/simple_animal/drone/D = new drone_type(get_turf(loc))
 	D.key = user.key
