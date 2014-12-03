@@ -6,7 +6,7 @@
 	endWhen			= 60
 
 /datum/event/meteor_wave/setup()
-	endWhen = rand(20,45)*2 + 10 //Goes from one minute to two minutes. Supposed to be a devastating event
+	endWhen = rand(60, 120) + 10 //Goes from one minute to two minutes. Supposed to be a devastating event
 
 /datum/event/meteor_wave/announce()
 	command_alert("A meteor storm has been detected on collision course with the station. Seek shelter within the core of the station immediately.", "Meteor Alert")
@@ -24,7 +24,7 @@
 	endWhen 		= 30
 
 /datum/event/meteor_shower/setup()
-	endWhen	= rand(15,30)*2 + 10 //From 30 seconds to one minute
+	endWhen	= rand(30, 60) + 10 //From 30 seconds to one minute
 
 /datum/event/meteor_shower/announce()
 	command_alert("The station is about to be hit by a small-intensity meteor storm. Seek shelter within the core of the station immediately", "Meteor Alert")

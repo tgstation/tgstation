@@ -9,7 +9,7 @@
 	var/const/supplydelay = 300 //Delay before meteor supplies are spawned in tenth of seconds
 	var/const/meteordelay_l = 1800 //Lower bound to meteor arrival, here 3 minutes
 	var/const/meteordelay_h = 3000 //Higher bound to meteor arrival, here 5 minutes
-	var/const/meteorshuttlemultiplier = 4.5 //How much more will we need to hold out ? Here a full hour until the shuttle arrives. 1 is 10 minutes
+	var/const/meteorshuttlemultiplier = 4.5 //How much more will we need to hold out ? Here 45 minutes until the shuttle arrives. 1 is 10 minutes
 	var/meteordelay = 2400 //Final meteor delay, failsafe as above
 	var/nometeors = 1 //Can we send the meteors ?
 	var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread
@@ -275,7 +275,7 @@
 
 /datum/game_mode/meteor/process()
 	if(!nometeors)
-		meteors_in_wave = (rand(10,20))*10 //Between 100 and 200 meteors in intervals of 10, figures
+		meteors_in_wave = rand(100,200) //Between 100 and 200 meteors per wave
 		meteor_wave(meteors_in_wave)
 	return
 

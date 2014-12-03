@@ -12,14 +12,14 @@
 		return
 	meteorwavecurrent = 1
 	meteor_wave_delay = (rand(30,45))*10 //Between 30 and 45 seconds, makes everything more chaotic
-	chosen_dir = pick(1, 2, 3, 4) //North, east, south or west
+	chosen_dir = pick(cardinal) //Pick a direction
 	for(var/i = 0 to number)
 		spawn(rand(15,20)) //1.5 to 2 seconds between meteors
 			spawn_meteor(chosen_dir)
 	spawn(meteor_wave_delay)
 		meteorwavecurrent = 0
 
-/proc/spawn_meteor(var/dir = chosen_dir)
+/proc/spawn_meteor(var/chosen_dir)
 
 	var/startx
 	var/starty
@@ -30,27 +30,27 @@
 	var/max_i = 5 //Try only five times maximum
 
 	do
-
-		if(chosen_dir == 1) //NORTH
-			starty = world.maxy-(TRANSITIONEDGE+1)
-			startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
-			endy = TRANSITIONEDGE
-			endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
-		else if(chosen_dir == 2) //EAST
-			starty = rand((TRANSITIONEDGE+1),world.maxy-(TRANSITIONEDGE+1))
-			startx = world.maxx-(TRANSITIONEDGE+1)
-			endy = rand(TRANSITIONEDGE, world.maxy-TRANSITIONEDGE)
-			endx = TRANSITIONEDGE
-		else if(chosen_dir == 3) //SOUTH
-			starty = (TRANSITIONEDGE+1)
-			startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
-			endy = world.maxy-TRANSITIONEDGE
-			endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
-		else if(chosen_dir == 4) //WEST
-			starty = rand((TRANSITIONEDGE+1), world.maxy-(TRANSITIONEDGE+1))
-			startx = (TRANSITIONEDGE+1)
-			endy = rand(TRANSITIONEDGE,world.maxy-TRANSITIONEDGE)
-			endx = world.maxx-TRANSITIONEDGE
+		switch(chosen_dir)
+			if(1) //NORTH
+				starty = world.maxy-(TRANSITIONEDGE+1)
+				startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
+				endy = TRANSITIONEDGE
+				endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
+			if(2) //SOUTH
+				starty = rand((TRANSITIONEDGE+1),world.maxy-(TRANSITIONEDGE+1))
+				startx = world.maxx-(TRANSITIONEDGE+1)
+				endy = rand(TRANSITIONEDGE, world.maxy-TRANSITIONEDGE)
+				endx = TRANSITIONEDGE
+			if(4) //EAST
+				starty = (TRANSITIONEDGE+1)
+				startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
+				endy = world.maxy-TRANSITIONEDGE
+				endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
+			if(8) //WEST
+				starty = rand((TRANSITIONEDGE+1), world.maxy-(TRANSITIONEDGE+1))
+				startx = (TRANSITIONEDGE+1)
+				endy = rand(TRANSITIONEDGE,world.maxy-TRANSITIONEDGE)
+				endx = world.maxx-TRANSITIONEDGE
 
 		pickedstart = locate(startx, starty, 1)
 		pickedgoal = locate(endx, endy, 1)
@@ -70,8 +70,7 @@
 			M = new /obj/effect/meteor/small(pickedstart)
 
 	M.dest = pickedgoal
-	spawn(0)
-		walk_towards(M, M.dest, 1)
+	walk_towards(M, M.dest, 1)
 	return
 
 /obj/effect/meteor
