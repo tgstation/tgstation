@@ -606,7 +606,8 @@
 						"a yiffe-con",
 						"The Chaplain's bible",
 						"The Captain's old pet mouse Whiskers",
-						"The Captain's cigar"
+						"The Captain's cigar",
+						"a chicken"
 						)
 					var/smell = pick(smells)
 					var/list/farts = list(
