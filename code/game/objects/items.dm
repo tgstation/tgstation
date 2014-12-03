@@ -377,11 +377,12 @@
 			break
 	if(.)
 		var/turf/T = get_turf(src)
-		T.visible_message("<span class='danger'>[src] melts away!</span>")
-		var/obj/effect/decal/cleanable/molten_item/I = new (get_turf(src))
-		I.pixel_x = rand(1,16)
-		I.pixel_y = rand(1,16)
-		I.desc = "Looks like this was \an [src] some time ago."
+		if(T)
+			T.visible_message("<span class='danger'>[src] melts away!</span>")
+			var/obj/effect/decal/cleanable/molten_item/I = new (T)
+			I.pixel_x = rand(-16,16)
+			I.pixel_y = rand(-16,16)
+			I.desc = "Looks like this was \an [src] some time ago."
 		qdel(src)
 	else
 		for(var/armour_value in armor) //but is weakened
