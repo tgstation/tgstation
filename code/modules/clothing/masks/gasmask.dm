@@ -89,10 +89,10 @@
 	else
 		..()
 
-/obj/item/clothing/mask/gas/sechailer/verb/adjust(var/mob/user)
+/obj/item/clothing/mask/gas/sechailer/verb/adjust()
 	set category = "Object"
 	set name = "Adjust Mask"
-	adjustmask(user)
+	adjustmask(usr)
 
 /obj/item/clothing/mask/gas/sechailer/attack_self()
 	halt()
