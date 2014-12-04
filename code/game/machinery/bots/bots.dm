@@ -103,12 +103,19 @@
 	Radio = new /obj/item/device/radio(src)
 	Radio.listening = 0 //Makes bot radios transmit only so no one hears things while adjacent to one.
 
+/obj/machinery/bot/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src,beacon_freq)
+		if(bot_filter)
+			radio_controller.remove_object(src,control_freq)
+	..()
 
 /obj/machinery/bot/proc/add_to_beacons(bot_filter) //Master filter control for bots. Must be placed in the bot's local New() to support map spawned bots.
 	if(radio_controller)
 		radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
 		if(bot_filter)
 			radio_controller.add_object(src, control_freq, filter = bot_filter)
+
 
 /obj/machinery/bot/proc/explode()
 	aibots -= src
@@ -286,7 +293,7 @@
 	healthcheck()
 	return
 
-/obj/machinery/bot/ex_act(severity)
+/obj/machinery/bot/ex_act(severity, specialty)
 	switch(severity)
 		if(1.0)
 			explode()
@@ -416,7 +423,7 @@ obj/machinery/bot/proc/bot_move(var/dest, var/move_speed)
 
 obj/machinery/bot/proc/bot_step(var/dest)
 	if(path && path.len > 1)
-		step_to(src, path[1])
+		step_towards(src, path[1])
 		if(get_turf(src) == path[1]) //Successful move
 			path -= path[1]
 		else

@@ -22,10 +22,8 @@
 	..()
 	if(density)
 		layer = 3.1 //Above most items if closed
-		explosion_resistance = initial(explosion_resistance)
 	else
 		layer = 2.7 //Under all objects if opened. 2.7 due to tables being at 2.6
-		explosion_resistance = 0
 	update_freelook_sight()
 	air_update_turf(1)
 	airlocks += src
@@ -85,7 +83,7 @@
 
 //used in the AStar algorithm to determinate if the turf the door is on is passable
 /obj/machinery/door/proc/CanAStarPass(var/obj/item/weapon/card/id/ID)
-	return !density || check_access(ID)
+	return !density
 
 /obj/machinery/door/proc/bumpopen(mob/user as mob)
 	if(operating)
@@ -171,20 +169,14 @@
 	..()
 
 
-/obj/machinery/door/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-		if(2.0)
-			if(prob(25))
-				qdel(src)
-		if(3.0)
-			if(prob(80))
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-				s.set_up(2, 1, src)
-				s.start()
-	return
-
+/obj/machinery/door/ex_act(severity, specialty)
+	if(severity == 3)
+		if(prob(80))
+			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			s.set_up(2, 1, src)
+			s.start()
+		return
+	..()
 
 /obj/machinery/door/update_icon()
 	if(density)
@@ -223,7 +215,6 @@
 	sleep(10)
 	src.layer = 2.7
 	src.density = 0
-	explosion_resistance = 0
 	update_icon()
 	SetOpacity(0)
 	air_update_turf(1)
@@ -240,10 +231,9 @@
 	operating = 1
 
 	do_animate("closing")
-	src.density = 1
-	explosion_resistance = initial(explosion_resistance)
 	src.layer = 3.1
 	sleep(10)
+	src.density = 1
 	update_icon()
 	if(visible && !glass)
 		SetOpacity(1)	//caaaaarn!

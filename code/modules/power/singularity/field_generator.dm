@@ -355,3 +355,7 @@ field_generator power level display
 /obj/machinery/field/generator/shock(mob/living/user as mob)
 	if(fields.len)
 		..()
+
+/obj/machinery/field/generator/bump(atom/movable/AM as mob|obj)
+	if(fields.len)
+		..()

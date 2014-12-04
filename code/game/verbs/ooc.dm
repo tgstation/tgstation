@@ -70,19 +70,19 @@
 var/global/normal_ooc_colour = "#002eb8"
 
 /client/proc/set_ooc(newColor as color)
-	set name = "Set Player OOC Colour"
-	set desc = "Set to yellow for eye burning goodness."
+	set name = "Set Player OOC Color"
+	set desc = "Modifies player OOC Color"
 	set category = "Fun"
-	normal_ooc_colour = newColor
+	normal_ooc_colour = sanitize_ooccolor(newColor)
 
 /client/verb/colorooc()
-	set name = "OOC Text Color"
+	set name = "Set Your OOC Color"
 	set category = "Preferences"
 
 	if(!holder || check_rights_for(src, R_ADMIN))
 		if(!is_content_unlocked())	return
 
-	var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour", prefs.ooccolor) as color|null
+	var/new_ooccolor = input(src, "Please select your OOC color.", "OOC color", prefs.ooccolor) as color|null
 	if(new_ooccolor)
 		prefs.ooccolor = sanitize_ooccolor(new_ooccolor)
 		prefs.save_preferences()

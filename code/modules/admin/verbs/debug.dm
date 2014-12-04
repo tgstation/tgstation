@@ -612,6 +612,8 @@ var/global/list/g_fancy_list_of_types = null
 	if (dresscode == "as job...")
 		var/jobname = input("Select job", "Robust quick dress shop") as null|anything in get_all_jobs()
 		jobdatum = job_master.GetJob(jobname)
+		if(isnull(jobname))
+			return
 
 	feedback_add_details("admin_verb","SEQ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	for (var/obj/item/I in M)

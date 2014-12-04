@@ -6,7 +6,6 @@ obj/machinery/door/airlock
 	var/frequency
 	var/shockedby = list()
 	var/datum/radio_frequency/radio_connection
-	explosion_resistance = 15
 
 
 obj/machinery/door/airlock/receive_signal(datum/signal/signal)
@@ -93,8 +92,10 @@ obj/machinery/door/airlock/New()
 	if(radio_controller)
 		set_frequency(frequency)
 
-
-
+obj/machinery/door/airlock/Destroy()
+	if(frequency && radio_controller)
+		radio_controller.remove_object(src,frequency)
+	..()
 
 obj/machinery/airlock_sensor
 	icon = 'icons/obj/airlock_machines.dmi'
@@ -164,7 +165,10 @@ obj/machinery/airlock_sensor/New()
 	if(radio_controller)
 		set_frequency(frequency)
 
-
+obj/machinery/airlock_sensor/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src,frequency)
+	..()
 
 
 obj/machinery/access_button
@@ -221,3 +225,8 @@ obj/machinery/access_button/New()
 
 	if(radio_controller)
 		set_frequency(frequency)
+
+obj/machinery/access_button/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src, frequency)
+	..()

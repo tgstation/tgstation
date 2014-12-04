@@ -9,7 +9,6 @@
 	flags = ON_BORDER
 	opacity = 0
 	var/obj/item/weapon/airlock_electronics/electronics = null
-	explosion_resistance = 5
 
 /obj/machinery/door/window/New()
 	..()
@@ -115,7 +114,6 @@
 	src.icon_state ="[src.base_state]open"
 	sleep(10)
 
-	explosion_resistance = 0
 	src.density = 0
 //	src.sd_SetOpacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
 	air_update_turf(1)
@@ -140,7 +138,6 @@
 	src.icon_state = src.base_state
 
 	src.density = 1
-	explosion_resistance = initial(explosion_resistance)
 //	if(src.visible)
 //		SetOpacity(1)	//TODO: why is this here? Opaque windoors? ~Carn
 	air_update_turf(1)
@@ -165,7 +162,7 @@
 		qdel(src)
 		return
 
-/obj/machinery/door/window/ex_act(severity)
+/obj/machinery/door/window/ex_act(severity, specialty)
 	switch(severity)
 		if(1.0)
 			qdel(src)
@@ -197,6 +194,15 @@
 	playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
 	take_damage(tforce)
 	//..() //Does this really need to be here twice? The parent proc doesn't even do anything yet. - Nodrak
+	return
+
+
+/obj/machinery/door/window/mech_melee_attack(obj/mecha/M)
+	if(M.damtype == "brute")
+		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+		M.occupant_message("<span class='danger'>You hit [src].</span>")
+		visible_message("<span class='danger'>[src] has been hit by [M.name].</span>")
+		take_damage(M.force)
 	return
 
 

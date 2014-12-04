@@ -22,7 +22,7 @@ Head of Security
 
 	default_id = /obj/item/weapon/card/id/silver
 	default_pda = /obj/item/device/pda/heads/hos
-	default_headset = /obj/item/device/radio/headset/heads/hos
+	default_headset = /obj/item/device/radio/headset/heads/hos/alt
 	default_backpack = /obj/item/weapon/storage/backpack/security
 	default_satchel = /obj/item/weapon/storage/backpack/satchel_sec
 
@@ -53,6 +53,7 @@ Head of Security
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 	L.imp_in = H
 	L.implanted = 1
+	H.sec_hud_set_implants()
 
 /*
 Warden
@@ -70,7 +71,7 @@ Warden
 	minimal_player_age = 7
 
 	default_pda = /obj/item/device/pda/warden
-	default_headset = /obj/item/device/radio/headset/headset_sec
+	default_headset = /obj/item/device/radio/headset/headset_sec/alt
 	default_backpack = /obj/item/weapon/storage/backpack/security
 	default_satchel = /obj/item/weapon/storage/backpack/satchel_sec
 
@@ -94,6 +95,7 @@ Warden
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 	L.imp_in = H
 	L.implanted = 1
+	H.sec_hud_set_implants()
 
 /datum/job/warden/get_access()
 	var/list/L = list()
@@ -143,6 +145,7 @@ Detective
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 	L.imp_in = H
 	L.implanted = 1
+	H.sec_hud_set_implants()
 
 /*
 Security Officer
@@ -187,6 +190,7 @@ Security Officer
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 	L.imp_in = H
 	L.implanted = 1
+	H.sec_hud_set_implants()
 
 /datum/job/officer/get_access()
 	var/list/L = list()
@@ -250,8 +254,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	wires = new(src)
 	secure_radio_connections = new
 
-	if(radio_controller)
-		initialize()
+	initialize()
 	recalculateChannels()
 
 /obj/item/device/radio/headset/headset_sec/department/engi

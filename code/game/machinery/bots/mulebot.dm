@@ -141,12 +141,13 @@ var/global/mulebot_count = 0
 /obj/machinery/bot/mulebot/ex_act(var/severity)
 	unload(0)
 	switch(severity)
+		if(1)
+			qdel(src)
 		if(2)
 			for(var/i = 1; i < 3; i++)
 				wires.RandomCut()
 		if(3)
 			wires.RandomCut()
-	..()
 	return
 
 /obj/machinery/bot/mulebot/bullet_act()

@@ -36,7 +36,8 @@
 /mob/living/carbon/human/Move(NewLoc, direct)
 	. = ..()
 	if(shoes)
-		if(loc == NewLoc)
-			var/obj/item/clothing/shoes/S = shoes
-			S.step_action()
+		if(!lying)
+			if(loc == NewLoc)
+				var/obj/item/clothing/shoes/S = shoes
+				S.step_action()
 

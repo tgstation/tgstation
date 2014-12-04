@@ -12,9 +12,13 @@
 	var/obj/item/weapon/card/id/prisoner/inserted_id
 	var/obj/machinery/door/airlock/release_door
 	var/door_tag = "prisonshuttle"
+	var/obj/item/device/radio/Radio //needed to send messages to sec radio
+
 
 /obj/machinery/mineral/labor_claim_console/New()
 	..()
+	Radio = new/obj/item/device/radio(src)
+	Radio.listening = 0 
 	spawn(7)
 		src.machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
 		var/t
@@ -93,7 +97,8 @@
 				if(s.location == /area/shuttle/laborcamp/outpost)
 					if(alone_in_area(get_area(loc), usr))
 						if (s.move_shuttle(0)) // No delay, to stop people from getting on while it is departing.
-							broadcast_hud_message("<B>[inserted_id.registered_name]</B> has met their quota and has returned to the station. Minerals and Prisoner ID card ready for retrieval.", src)
+							Radio.set_frequency(SEC_FREQ)
+							Radio.talk_into(src, "[inserted_id.registered_name] has returned to the station. Minerals and Prisoner ID card ready for retrieval.", SEC_FREQ)
 							usr << "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>"
 						else
 							usr << "<span class='notice'>Shuttle is already moving.</span>"

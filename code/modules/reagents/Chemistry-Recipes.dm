@@ -1036,7 +1036,8 @@ datum/chemical_reaction/pestkiller
 				/mob/living/simple_animal/hostile/asteroid/goliath,
 				/mob/living/simple_animal/hostile/asteroid/hivelord,
 				/mob/living/simple_animal/hostile/asteroid/hivelordbrood,
-				/mob/living/simple_animal/hostile/carp/holocarp
+				/mob/living/simple_animal/hostile/carp/holocarp,
+				/mob/living/simple_animal/hostile/mining_drone
 				)//exclusion list for things you don't want the reaction to create.
 			var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 
@@ -1105,7 +1106,8 @@ datum/chemical_reaction/pestkiller
 				/mob/living/simple_animal/hostile/asteroid/goliath,
 				/mob/living/simple_animal/hostile/asteroid/hivelord,
 				/mob/living/simple_animal/hostile/asteroid/hivelordbrood,
-				/mob/living/simple_animal/hostile/carp/holocarp
+				/mob/living/simple_animal/hostile/carp/holocarp,
+				/mob/living/simple_animal/hostile/mining_drone
 				)//exclusion list for things you don't want the reaction to create.
 			var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 

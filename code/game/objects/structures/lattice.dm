@@ -38,7 +38,7 @@
 	qdel(src)
 	return
 
-/obj/structure/lattice/ex_act(severity)
+/obj/structure/lattice/ex_act(severity, specialty)
 	switch(severity)
 		if(1.0)
 			qdel(src)

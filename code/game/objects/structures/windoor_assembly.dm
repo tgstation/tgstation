@@ -267,6 +267,7 @@ obj/structure/windoor_assembly/Destroy()
 							src.electronics.loc = windoor
 							if(created_name)
 								windoor.name = created_name
+							qdel(src)
 							windoor.close()
 
 
@@ -286,10 +287,8 @@ obj/structure/windoor_assembly/Destroy()
 							src.electronics.loc = windoor
 							if(created_name)
 								windoor.name = created_name
+							qdel(src)
 							windoor.close()
-
-
-					qdel(src)
 
 
 			else

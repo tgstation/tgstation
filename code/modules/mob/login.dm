@@ -43,3 +43,6 @@
 	if(isobj(loc))
 		var/obj/Loc=loc
 		Loc.on_log()
+
+	//HUD updates (antag hud, etc)
+	refresh_huds()

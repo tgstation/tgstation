@@ -8,7 +8,7 @@
 	var/health = 15
 
 //similar to weeds, but only barfed out by nurses manually
-/obj/effect/spider/ex_act(severity)
+/obj/effect/spider/ex_act(severity, specialty)
 	switch(severity)
 		if(1.0)
 			qdel(src)

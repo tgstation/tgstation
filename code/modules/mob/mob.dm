@@ -13,7 +13,6 @@
 /mob/proc/sac_act(var/obj/effect/rune/R, var/mob/victim as mob)
 	return
 
-
 var/next_mob_id = 0
 /mob/New()
 	tag = "mob_[next_mob_id++]"
@@ -22,7 +21,12 @@ var/next_mob_id = 0
 		dead_mob_list += src
 	else
 		living_mob_list += src
+	prepare_huds()
 	..()
+
+/mob/proc/prepare_huds()
+	for(var/hud in hud_possible)
+		hud_list[hud] = image('icons/mob/hud.dmi', src, "")
 
 /mob/proc/Cell()
 	set category = "Admin"
@@ -877,7 +881,7 @@ var/list/slot_equipment_priority = list( \
 
 /mob/proc/get_ghost(even_if_they_cant_reenter = 0)
 	if(mind)
-		for(var/mob/dead/observer/G in player_list)
+		for(var/mob/dead/observer/G in dead_mob_list)
 			if(G.mind == mind)
 				if(G.can_reenter_corpse || even_if_they_cant_reenter)
 					return G

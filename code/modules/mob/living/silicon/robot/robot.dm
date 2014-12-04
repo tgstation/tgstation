@@ -74,7 +74,7 @@
 
 	ident = rand(1, 999)
 	updatename()
-	updateicon()
+	update_icons()
 
 	if(!cell)
 		cell = new /obj/item/weapon/stock_parts/cell(src)
@@ -209,11 +209,9 @@
 			modtype = "Jan"
 			feedback_inc("cyborg_janitor",1)
 
-	overlays -= "eyes" //Takes off the eyes that it started with
-
 	transform_animation(animation_length)
 	notify_ai(2)
-	updateicon()
+	update_icons()
 	SetEmagged(emagged) // Update emag status and give/take emag modules.
 
 /mob/living/silicon/robot/proc/transform_animation(animation_length)
@@ -325,7 +323,7 @@
 	return 0
 
 
-/mob/living/silicon/robot/ex_act(severity)
+/mob/living/silicon/robot/ex_act(severity, specialty)
 	..()
 
 	switch(severity)
@@ -349,7 +347,9 @@
 	if(prob(75) && Proj.damage > 0) spark_system.start()
 	return 2
 
-/mob/living/silicon/robot/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
+/mob/living/silicon/robot/triggerAlarm(var/class, area/A, var/O, var/obj/alarmsource)
+	if(alarmsource.z != z)
+		return
 	if (stat == 2)
 		return 1
 	var/list/L = alarms[class]
@@ -428,14 +428,14 @@
 		if(opened)
 			user << "You close the cover."
 			opened = 0
-			updateicon()
+			update_icons()
 		else
 			if(locked)
 				user << "The cover is locked and cannot be opened."
 			else
 				user << "You open the cover."
 				opened = 1
-				updateicon()
+				update_icons()
 
 	else if (istype(W, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
 		if(wiresexposed)
@@ -448,7 +448,7 @@
 			cell = W
 			user << "You insert the power cell."
 //			chargecount = 0
-		updateicon()
+		update_icons()
 
 	else if (istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool) || istype(W, /obj/item/device/assembly/signaler))
 		if (wiresexposed)
@@ -459,14 +459,14 @@
 	else if(istype(W, /obj/item/weapon/screwdriver) && opened && !cell)	// haxing
 		wiresexposed = !wiresexposed
 		user << "The wires have been [wiresexposed ? "exposed" : "unexposed"]"
-		updateicon()
+		update_icons()
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && opened && cell)	// radio
 		if(radio)
 			radio.attackby(W,user)//Push it to the radio to let it handle everything
 		else
 			user << "Unable to locate a radio."
-		updateicon()
+		update_icons()
 
 	else if(istype(W, /obj/item/weapon/wrench) && opened && !cell) //Deconstruction. The flashes break from the fall, to prevent this from being a ghetto reset module.
 		if(!lockcharge)
@@ -511,7 +511,7 @@
 			if(allowed(usr))
 				locked = !locked
 				user << "You [ locked ? "lock" : "unlock"] [src]'s cover."
-				updateicon()
+				update_icons()
 			else
 				user << "<span class='danger'>Access denied.</span>"
 
@@ -568,7 +568,7 @@
 						laws.show_laws(src)
 						src << "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</span>"
 						SetLockdown(0)
-						updateicon()
+						update_icons()
 					else
 						user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
 						if(prob(25))
@@ -613,7 +613,7 @@
 		switch(alert("You can not lock your cover again, are you sure?\n      (You can still ask for a human to lock it)", "Unlock Own Cover", "Yes", "No"))
 			if("Yes")
 				locked = 0
-				updateicon()
+				update_icons()
 				usr << "You unlock your cover."
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
@@ -670,7 +670,7 @@
 			user.put_in_active_hand(cell)
 			user << "You remove \the [cell]."
 			cell = null
-			updateicon()
+			update_icons()
 
 	if(!opened)
 		if(..()) // hulk attack
@@ -715,34 +715,30 @@
 			return 0
 	return 1
 
-/mob/living/silicon/robot/proc/updateicon()
+/mob/living/silicon/robot/regenerate_icons()
+	return update_icons()
+
+/mob/living/silicon/robot/update_icons()
 
 	overlays.Cut()
 	if(stat == 0)
-		overlays += "eyes"
-		if(icon_state == "robot")
-			overlays.Cut()
-			overlays += "eyes-standard"
-		if(icon_state == "toiletbot")
-			overlays.Cut()
-			overlays += "eyes-toiletbot"
-		if(icon_state == "secborg")
-			overlays.Cut()
-			overlays += "eyes-secborg"
-		if(icon_state =="engiborg")
-			overlays.Cut()
-			overlays += "eyes-engiborg"
-		if(icon_state =="janiborg")
-			overlays.Cut()
-			overlays += "eyes-janiborg"
-		if(icon_state =="minerborg" || icon_state =="Miner+j")
-			overlays.Cut()
-			overlays += "eyes-minerborg"
-		if(icon_state =="syndie_bloodhound")
-			overlays.Cut()
-			overlays+= "eyes-syndie_bloodhound"
-	else
-		overlays -= "eyes"
+		switch(icon_state)
+			if("robot")
+				overlays += "eyes-standard"
+			if("toiletbot")
+				overlays += "eyes-toiletbot"
+			if("secborg")
+				overlays += "eyes-secborg"
+			if("engiborg")
+				overlays += "eyes-engiborg"
+			if("janiborg")
+				overlays += "eyes-janiborg"
+			if("minerborg" || "Miner+j")
+				overlays += "eyes-minerborg"
+			if("syndie_bloodhound")
+				overlays += "eyes-syndie_bloodhound"
+			else
+				overlays += "eyes"
 
 	if(opened)
 		if(wiresexposed)
@@ -753,7 +749,6 @@
 			overlays += "ov-opencover -c"
 
 	update_fire()
-	return
 
 
 
@@ -957,7 +952,7 @@
 			uneq_module(module.emag)
 	if(hud_used)
 		hud_used.update_robot_modules_display()	//Shows/hides the emag item if the inventory screen is already open.
-	updateicon()
+	update_icons()
 
 /mob/living/silicon/robot/verb/outputlaws()
 	set category = "Robot Commands"

@@ -49,7 +49,8 @@
 /obj/machinery/camera/proc/triggerAlarm()
 	if (!detectTime) return 0
 	for (var/mob/living/silicon/aiPlayer in player_list)
-		if (status) aiPlayer.triggerAlarm("Motion", src.loc.loc, src)
+		if (status)
+			aiPlayer.triggerAlarm("Motion", get_area(src), list(src), src)
 	detectTime = -1
 	return 1
 
