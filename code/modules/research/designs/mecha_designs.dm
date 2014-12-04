@@ -156,6 +156,7 @@ datum/design/mech_scattershot
 	id = "mech_scattershot"
 	build_type = MECHFAB
 	req_tech = list("combat" = 4)
+	materials = list("$metal" = 10000)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
 	category = "Exosuit Equipment"
 
@@ -165,6 +166,7 @@ datum/design/mech_carbine
 	id = "mech_carbine"
 	build_type = MECHFAB
 	req_tech = list("combat" = 5, "materials" = 4)
+	materials = list("$metal" = 10000)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
 	category = "Exosuit Equipment"
 
@@ -175,6 +177,7 @@ datum/design/mech_ion
 	build_type = MECHFAB
 	req_tech = list("combat" = 6, "magnets" = 5, "materials" = 5)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
+	materials = list("$metal" = 20000, "$silver" = 6000, "$Uranium" = 2000)
 	category = "Exosuit Equipment"
 
 datum/design/mech_laser
@@ -184,6 +187,7 @@ datum/design/mech_laser
 	build_type = MECHFAB
 	req_tech = list("combat" = 3, "magnets" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
+	materials = list("$metal" = 10000)
 	category = "Exosuit Equipment"
 
 datum/design/mech_laser_heavy
@@ -193,6 +197,7 @@ datum/design/mech_laser_heavy
 	build_type = MECHFAB
 	req_tech = list("combat" = 4, "magnets" = 4)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
+	materials = list("$metal" = 10000)
 	category = "Exosuit Equipment"
 
 datum/design/mech_grenade_launcher
@@ -202,6 +207,7 @@ datum/design/mech_grenade_launcher
 	build_type = MECHFAB
 	req_tech = list("combat" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang
+	materials = list("$metal" = 22000, "$silver" = 8000, "$gold" = 6000)
 	category = "Exosuit Equipment"
 
 datum/design/mech_missile_rack
@@ -211,6 +217,7 @@ datum/design/mech_missile_rack
 	build_type = MECHFAB
 	req_tech = list("combat" = 6, "materials" = 6)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
+	materials = list("$metal" = 22000, "$silver" = 8000, "$gold" = 6000)
 	category = "Exosuit Equipment"
 
 datum/design/clusterbang_launcher
@@ -220,6 +227,7 @@ datum/design/clusterbang_launcher
 	build_type = MECHFAB
 	req_tech = list("combat"= 5, "materials" = 5, "syndicate" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang
+	materials = list("$metal" = 20000, "$uranium" = 10000, "$gold" = 10000)
 	category = "Exosuit Equipment"
 
 datum/design/mech_wormhole_gen
@@ -229,6 +237,7 @@ datum/design/mech_wormhole_gen
 	build_type = MECHFAB
 	req_tech = list("bluespace" = 3, "magnets" = 2)
 	build_path = /obj/item/mecha_parts/mecha_equipment/wormhole_generator
+	materials = list("$metal" = 10000, "$silver" = 8000)
 	category = "Exosuit Equipment"
 
 datum/design/mech_teleporter
@@ -238,6 +247,7 @@ datum/design/mech_teleporter
 	build_type = MECHFAB
 	req_tech = list("bluespace" = 10, "magnets" = 5)
 	build_path = /obj/item/mecha_parts/mecha_equipment/teleporter
+	materials = list("$metal" = 10000)
 	category = "Exosuit Equipment"
 
 datum/design/mech_rcd
@@ -247,6 +257,7 @@ datum/design/mech_rcd
 	build_type = MECHFAB
 	req_tech = list("materials" = 4, "bluespace" = 3, "magnets" = 4, "powerstorage"=4, "engineering" = 4)
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/rcd
+	materials = list("$metal" = 30000, "$plasma" = 25000, "$silver" = 20000, "$gold" = 20000)
 	category = "Exosuit Equipment"
 
 datum/design/mech_gravcatapult
@@ -256,6 +267,7 @@ datum/design/mech_gravcatapult
 	build_type = MECHFAB
 	req_tech = list("bluespace" = 2, "magnets" = 3, "engineering" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/gravcatapult
+	materials = list("$metal" = 10000)
 	category = "Exosuit Equipment"
 
 datum/design/mech_repair_droid
@@ -265,6 +277,7 @@ datum/design/mech_repair_droid
 	build_type = MECHFAB
 	req_tech = list("magnets" = 3, "programming" = 3, "engineering" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/repair_droid
+	materials = list("$metal" = 10000, "$glass" = 5000, "$silver" = 2000, "$gold" = 1000)
 	category = "Exosuit Equipment"
 
 datum/design/mech_energy_relay
@@ -274,6 +287,7 @@ datum/design/mech_energy_relay
 	build_type = MECHFAB
 	req_tech = list("magnets" = 4, "powerstorage" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay
+	materials = list("$metal" = 10000, "$glass" = 2000, "$silver" = 3000, "$gold" = 2000)
 	category = "Exosuit Equipment"
 
 datum/design/mech_ccw_armor
@@ -283,6 +297,7 @@ datum/design/mech_ccw_armor
 	build_type = MECHFAB
 	req_tech = list("materials" = 5, "combat" = 4)
 	build_path = /obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster
+	materials = list("$metal" = 20000, "$silver" = 5000, "$gold" = 5000)
 	category = "Exosuit Equipment"
 
 datum/design/mech_proj_armor
@@ -292,6 +307,7 @@ datum/design/mech_proj_armor
 	build_type = MECHFAB
 	req_tech = list("materials" = 5, "combat" = 5, "engineering"=3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster
+	materials = list("$metal" = 20000, "$silver" = 5000, "$gold" = 5000)
 	category = "Exosuit Equipment"
 
 datum/design/mech_diamond_drill
@@ -301,6 +317,7 @@ datum/design/mech_diamond_drill
 	build_type = MECHFAB
 	req_tech = list("materials" = 4, "engineering" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill
+	materials = list("$metal" = 10000, "$diamond" = 6500)
 	category = "Exosuit Equipment"
 
 datum/design/mech_generator_nuclear
@@ -310,4 +327,5 @@ datum/design/mech_generator_nuclear
 	build_type = MECHFAB
 	req_tech = list("powerstorage"= 3, "engineering" = 3, "materials" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/generator/nuclear
+	materials = list("$metal" = 10000, "$glass" = 1000, "$silver" = 500)
 	category = "Exosuit Equipment"
