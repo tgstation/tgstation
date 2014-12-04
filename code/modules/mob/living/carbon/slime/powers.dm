@@ -136,7 +136,7 @@
 								Friends[Friend] = 1
 								Friends[Friend.name] = 1
 								//Friends.Add(Victim.LAssailant) // no idea why i was using the |= operator
-							else
+						else
 								Friends[Friend.name]++
 
 
