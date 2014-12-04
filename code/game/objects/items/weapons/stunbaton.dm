@@ -121,8 +121,8 @@
 			user.do_attack_animation(L)
 			baton_stun(L, user)
 		else
-			L.visible_message("<span class='warning'>[L] has been prodded with [src] by [user]. Luckily it was off.</span>", \
-							"<span class='warning'>You've been prodded with [src] by [user]. Luckily it was off</span>")
+			L.visible_message("<span class='warning'>[user] has prodded [L] with [src]. Luckily it was off.</span>", \
+							"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
 			return
 	else
 		..()
@@ -138,8 +138,8 @@
 	L.Weaken(stunforce)
 	L.apply_effect(STUTTER, stunforce)
 
-	L.visible_message("<span class='danger'>[L] has been stunned with [src] by [user]!</span>", \
-							"<span class='userdanger'>You've been stunned with [src] by [user]!</span>")
+	L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
+							"<span class='userdanger'>[user] has stunned you with [src]!</span>")
 	playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 
 	if(isrobot(loc))
