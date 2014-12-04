@@ -21,8 +21,8 @@
 	the need for hacky solutions like buckling people into a chair in the gameticker while a nuke
 	explosion goes off.
 
-	Movement is handled by having each client make a ticker that calls client.key_repeat() every game tick.
-	As above, this calls holder and focus.key_repeat(). This loop handles movement and should
+	Movement is handled by having each client make a ticker that calls client.key_loop() every game tick.
+	As above, this calls holder and focus.key_loop(). This loop handles movement and should
 	handle anything else that needs to repeat, although try to keep the calculations in this
 	proc light. It runs every tick for every client, after all!
 
