@@ -132,12 +132,11 @@
 					if(Victim.LAssailant && Victim.LAssailant != Victim)
 						if(prob(50))
 							Friend = Victim.LAssailant
-								if(!(Friend in Friends))
+							if(!(Friend in Friends))
 								Friends[Friend] = 1
 								Friends[Friend.name] = 1
 								//Friends.Add(Victim.LAssailant) // no idea why i was using the |= operator
-								else
-						else
+							else
 								Friends[Friend.name]++
 
 
