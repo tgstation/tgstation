@@ -42,9 +42,6 @@
 /turf/attack_hand(mob/user as mob)
 	user.Move_Pulled(src)
 
-/turf/ex_act(severity)
-	return 0
-
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if (!mover)
 		return 1

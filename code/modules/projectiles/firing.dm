@@ -50,7 +50,7 @@
 			BB.p_y = text2num(mouse_control["icon-y"])
 
 	if(BB)
-		BB.process()
+		BB.fire()
 	BB = null
 	return 1
 

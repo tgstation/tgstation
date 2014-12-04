@@ -2,32 +2,58 @@
 	name = "window"
 	desc = "A window."
 	icon = 'icons/obj/structures.dmi'
+	icon_state = "window"
 	density = 1
 	layer = 3.2//Just above doors
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = 1.0
 	flags = ON_BORDER
-	var/health = 14.0
+	var/maxhealth = 25
+	var/health = 0
 	var/ini_dir = null
 	var/state = 0
 	var/reinf = 0
 	var/disassembled = 0
+	var/shuttlew = 0
+	var/fulltile = 0
 	var/obj/item/stack/rods/storedrods
 	var/obj/item/weapon/shard/storedshard
 //	var/silicate = 0 // number of units of silicate
 //	var/icon/silicateIcon = null // the silicated icon
 
+/obj/structure/window/New(Loc,re=0)
+	..()
+	health = maxhealth
+	if(re)	reinf = re
+	storedshard = new/obj/item/weapon/shard(src)
+	ini_dir = dir
+	if(reinf)
+		icon_state = "rwindow"
+		desc = "A reinforced window."
+		name = "reinforced window"
+		state = 2*anchored
+		if(opacity)
+			icon_state = "twindow"
+		storedrods = new/obj/item/stack/rods(src)
+	else
+		icon_state = "window"
+
+	air_update_turf(1)
+	update_nearby_icons()
+
+	return
 
 /obj/structure/window/bullet_act(var/obj/item/projectile/Proj)
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		health -= Proj.damage
+		update_nearby_icons()
 	..()
 	if(health <= 0)
 		spawnfragments()
 	return
 
 
-/obj/structure/window/ex_act(severity)
+/obj/structure/window/ex_act(severity, specialty)
 	switch(severity)
 		if(1.0)
 			qdel(src)
@@ -73,18 +99,24 @@
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 40
+
 	else if(isobj(AM))
 		var/obj/item/I = AM
 		tforce = I.throwforce
-	if(reinf) tforce *= 0.25
+
+	if(reinf) 
+		tforce *= 0.25
+
 	playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
 	health = max(0, health - tforce)
 	if(health <= 7 && !reinf)
 		anchored = 0
 		update_nearby_icons()
 		step(src, get_dir(AM, src))
+
 	if(health <= 0)
 		spawnfragments()
+	update_nearby_icons()
 
 /obj/structure/window/attack_tk(mob/user as mob)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
@@ -129,60 +161,104 @@
 	user.do_attack_animation(src)
 	if(islarva(user)) return
 	attack_generic(user, 15)
+	update_nearby_icons()
 
 /obj/structure/window/attack_animal(mob/living/user as mob)
-	if(!isanimal(user)) return
+	if(!isanimal(user)) 
+		return
+
 	var/mob/living/simple_animal/M = user
 	M.do_attack_animation(src)
-	if(M.melee_damage_upper <= 0) return
-	attack_generic(M, M.melee_damage_upper)
+	if(M.melee_damage_upper <= 0) 
+		return
 
+	attack_generic(M, M.melee_damage_upper)
+	update_nearby_icons()
 
 /obj/structure/window/attack_slime(mob/living/carbon/slime/user as mob)
 	user.do_attack_animation(src)
-	if(!user.is_adult) return
-	attack_generic(user, rand(10, 15))
+	if(!user.is_adult) 
+		return
 
+	attack_generic(user, rand(10, 15))
+	update_nearby_icons()
 
 /obj/structure/window/attackby(obj/item/I, mob/living/user)
 	if(!can_be_reached(user))
-		return 1 //returning 1 will skip the afterattack()
+		return 1 //skip the afterattack
+
 	add_fingerprint(user)
 	if(istype(I, /obj/item/weapon/screwdriver))
-		if(reinf && state >= 1)
-			state = 3 - state
-			playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
-			user << (state == 1 ? "<span class='notice'>You have unfastened the window from the frame.</span>" : "<span class='notice'>You have fastened the window to the frame.</span>")
+		playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
+		if(reinf && (state == 2 || state == 1))
+			user << (state == 2 ? "<span class='notice'>You begin to unscrew the window from the frame.</span>" : "<span class='notice'>You begin to screw the window to the frame.</span>")
 		else if(reinf && state == 0)
-			anchored = !anchored
-			update_nearby_icons()
-			playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
-			user << (anchored ? "<span class='notice'>You have fastened the frame to the floor.</span>" : "<span class='notice'>You have unfastened the frame from the floor.</span>")
+			user << (anchored ? "<span class='notice'>You begin to unscrew the frame from the floor.</span>" : "<span class='notice'>You begin to screw the frame to the floor.</span>")
 		else if(!reinf)
-			anchored = !anchored
-			update_nearby_icons()
-			playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
-			user << (anchored ? "<span class='notice'>You have fastened the window to the floor.</span>" : "<span class='notice'>You have unfastened the window.</span>")
-	else if(istype(I, /obj/item/weapon/crowbar) && reinf && state <= 1)
-		state = 1 - state
+			user << (anchored ? "<span class='notice'>You begin to unscrew the window from the floor.</span>" : "<span class='notice'>You begin to screw the window to the floor.</span>")
+			
+		if(do_after(user, 40))
+			if(reinf && (state == 1 || state == 2))
+				//If state was unfastened, fasten it, else do the reverse
+				state = (state == 1 ? 2 : 1)
+				user << (state == 1 ? "<span class='notice'>You have unfastened the window from the frame.</span>" : "<span class='notice'>You have fastened the window to the frame.</span>")
+			else if(reinf && state == 0)
+				anchored = !anchored
+				update_nearby_icons()
+				user << (anchored ? "<span class='notice'>You have fastened the frame to the floor.</span>" : "<span class='notice'>You have unfastened the frame from the floor.</span>")
+			else if(!reinf)
+				anchored = !anchored
+				update_nearby_icons()
+				user << (anchored ? "<span class='notice'>You have fastened the window to the floor.</span>" : "<span class='notice'>You have unfastened the window.</span>")
+
+	else if (istype(I, /obj/item/weapon/crowbar) && reinf && (state == 0 || state == 1))
+		user << (state == 0 ? "<span class='notice'>You begin to lever the window into the frame.</span>" : "<span class='notice'>You begin to lever the window out of the frame.</span>")
 		playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
-		user << (state ? "<span class='notice'>You have pried the window into the frame.</span>" : "<span class='notice'>You have pried the window out of the frame.</span>")
+		if(do_after(user, 40))
+			//If state was out of frame, put into frame, else do the reverse
+			state = (state == 0 ? 1 : 0)
+			user << (state == 1 ? "<span class='notice'>You have pried the window into the frame.</span>" : "<span class='notice'>You have pried the window out of the frame.</span>")
+
+	else if(istype(I, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = I
+		if(user.a_intent == "help") //so you can still break windows with welding tools
+			if(health < maxhealth)
+				if(WT.remove_fuel(0,user))
+					user << "<span class='notice'>You begin repairing [src].</span>"
+					playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+					if(do_after(user, 40))
+						health = maxhealth
+						playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+			else
+				user << "<span class='notice'>[src] is already in good condition.</span>"
+		update_nearby_icons()
+
 	else if(istype(I, /obj/item/weapon/wrench) && !anchored)
-		if(reinf)
-			var/obj/item/stack/sheet/rglass/RG = new (user.loc)
-			RG.add_fingerprint(user)
-			if(is_fulltile()) //fulltiles drop two panes
-				RG = new (user.loc)
+		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
+		user << "<span class='notice'> You begin to disassemble [src].</span>"
+		if(do_after(user, 40))
+			if(disassembled)
+				return //Prevents multiple deconstruction attempts
+
+			if(reinf)
+				var/obj/item/stack/sheet/rglass/RG = new (user.loc)
 				RG.add_fingerprint(user)
-		else
-			var/obj/item/stack/sheet/glass/G = new (user.loc)
-			G.add_fingerprint(user)
-			if(is_fulltile())
-				G = new (user.loc)
+				if(fulltile) //fulltiles drop two panes
+					RG = new (user.loc)
+					RG.add_fingerprint(user)
+
+			else
+				var/obj/item/stack/sheet/glass/G = new (user.loc)
 				G.add_fingerprint(user)
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		disassembled = 1
-		qdel(src)
+				if(fulltile)
+					G = new (user.loc)
+					G.add_fingerprint(user)
+
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			disassembled = 1
+			user << "<span class='notice'> You successfully disassemble [src].</span>"
+			qdel(src)
+
 	else
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			user.changeNext_move(CLICK_CD_MELEE)
@@ -202,7 +278,7 @@
 
 
 /obj/structure/window/proc/can_be_reached(mob/user)
-	if(!is_fulltile())
+	if(!fulltile)
 		if(get_dir(user,src) & dir)
 			for(var/obj/O in loc)
 				if(!O.CanPass(user, user.loc, 1))
@@ -212,6 +288,7 @@
 /obj/structure/window/proc/hit(var/damage, var/sound_effect = 1)
 	if(reinf) damage *= 0.5
 	health = max(0, health - damage)
+	update_nearby_icons()
 	if(sound_effect)
 		playsound(loc, 'sound/effects/Glasshit.ogg', 75, 1)
 	if(health <= 0)
@@ -233,6 +310,7 @@
 		storedrods.loc = T
 		transfer_fingerprints_to(storedrods)
 	qdel(src)
+	update_nearby_icons()
 
 /obj/structure/window/verb/rotate()
 	set name = "Rotate Window Counter-Clockwise"
@@ -289,31 +367,6 @@
 		silicateIcon = I
 */
 
-
-/obj/structure/window/New(Loc,re=0)
-	..()
-
-	if(re)	reinf = re
-	storedshard = new/obj/item/weapon/shard(src)
-	ini_dir = dir
-	if(reinf)
-		icon_state = "rwindow"
-		desc = "A reinforced window."
-		name = "reinforced window"
-		state = 2*anchored
-		health = 40
-		if(opacity)
-			icon_state = "twindow"
-		storedrods = new/obj/item/stack/rods(src)
-	else
-		icon_state = "window"
-
-	air_update_turf(1)
-	update_nearby_icons()
-
-	return
-
-
 /obj/structure/window/Destroy()
 	density = 0
 	air_update_turf(1)
@@ -336,12 +389,6 @@
 		return !density
 	return 1
 
-//checks if this window is full-tile one
-/obj/structure/window/proc/is_fulltile()
-	if(dir in list(5,6,9,10))
-		return 1
-	return 0
-
 //This proc is used to update the icons of nearby windows.
 /obj/structure/window/proc/update_nearby_icons()
 	update_icon()
@@ -356,22 +403,28 @@
 	//This spawn is here so windows get properly updated when one gets deleted.
 	spawn(2)
 		if(!src) return
-		if(!is_fulltile())
+		if(!fulltile)
 			return
 		var/junction = 0 //will be used to determine from which side the window is connected to other windows
 		if(anchored)
 			for(var/obj/structure/window/W in orange(src,1))
-				if(W.anchored && W.density	&& W.is_fulltile()) //Only counts anchored, not-destroyed fill-tile windows.
+				if(W.anchored && W.density	&& W.fulltile) //Only counts anchored, not-destroyed fill-tile windows.
 					if(abs(x-W.x)-abs(y-W.y) ) 		//doesn't count windows, placed diagonally to src
 						junction |= get_dir(src,W)
 		if(opacity)
 			icon_state = "twindow[junction]"
 		else
-			if(reinf)
+			if(shuttlew)
+				icon_state = "swindow[junction]"
+			else if(reinf)
 				icon_state = "rwindow[junction]"
 			else
 				icon_state = "window[junction]"
 
+		overlays.Cut()
+		var/ratio = health / maxhealth
+		ratio = Ceiling(ratio*4) * 25
+		overlays += "damage[ratio]"
 		return
 
 /obj/structure/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -380,14 +433,11 @@
 	..()
 
 
-
-/obj/structure/window/basic
-	icon_state = "window"
-
 /obj/structure/window/reinforced
 	name = "reinforced window"
 	icon_state = "rwindow"
 	reinf = 1
+	maxhealth = 50
 
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"
@@ -397,3 +447,29 @@
 /obj/structure/window/reinforced/tinted/frosted
 	name = "frosted window"
 	icon_state = "fwindow"
+
+
+/* Full Tile Windows (more health) */
+
+/obj/structure/window/fulltile
+	dir = 5
+	maxhealth = 50
+	fulltile = 1
+
+/obj/structure/window/reinforced/fulltile
+	dir = 5
+	maxhealth = 100
+	fulltile = 1
+
+/obj/structure/window/reinforced/tinted/fulltile
+	dir = 5
+	fulltile = 1
+
+/obj/structure/window/shuttle
+	name = "shuttle window"
+	desc = "A strong, air-locked pod window that is extremely difficult to destroy."
+	icon_state = "swindow"
+	dir = 5
+	maxhealth = 100
+	shuttlew = 1
+	fulltile = 1

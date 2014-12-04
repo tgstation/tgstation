@@ -66,10 +66,10 @@
 	open_machine()
 	..(severity)
 
-/obj/machinery/recharge_station/ex_act(severity)
+/obj/machinery/recharge_station/ex_act(severity, specialty)
 	if(occupier)
 		open_machine()
-	..(severity)
+	..()
 
 /obj/machinery/recharge_station/attack_paw(user as mob)
 	return attack_hand(user)

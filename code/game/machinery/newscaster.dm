@@ -220,7 +220,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.update_icon()
 
 
-/obj/machinery/newscaster/ex_act(severity)
+/obj/machinery/newscaster/ex_act(severity, specialty)
 	switch(severity)
 		if(1.0)
 			qdel(src)

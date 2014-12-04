@@ -232,56 +232,74 @@ emp_act
 
 /mob/living/carbon/human/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
 	var/list/damaged = list()
+	var/list/inventory_items_to_kill = list()
 
+	//HEAD//
+	var/obj/item/clothing/head_clothes = null
+	if(glasses)
+		head_clothes = glasses
+	if(wear_mask)
+		head_clothes = wear_mask
 	if(head)
-		if(!head.unacidable)
-			head.acid_act(acidpwr)
+		head_clothes = head
+	if(head_clothes)
+		if(!head_clothes.unacidable)
+			head_clothes.acid_act(acidpwr)
+			update_inv_glasses()
+			update_inv_wear_mask()
 			update_inv_head()
 		else
-			src << "<span class='warning'>Your [head.name] protects your head from the acid!</span>"
+			src << "<span class='warning'>Your [head_clothes.name] protects your head and face from the acid!</span>"
 	else
-		if(wear_mask)
-			if(!wear_mask.unacidable)
-				wear_mask.acid_act(acidpwr)
-				update_inv_wear_mask()
-			else
-				src << "<span class='warning'>Your [wear_mask.name] protects your head from the acid!</span>"
-		else
-			if(glasses)
-				if(!glasses.unacidable)
-					glasses.acid_act(acidpwr)
-					update_inv_glasses()
-				else
-					src << "<span class='warning'>Your [glasses.name] protects your head from the acid!</span>"
-			else
-				. = get_organ("head")
-				if(.)
-					damaged += .
+		. = get_organ("head")
+		if(.)
+			damaged += .
+		if(ears)
+			inventory_items_to_kill += ears
 
+	//CHEST//
+	var/obj/item/clothing/chest_clothes = null
+	if(w_uniform)
+		chest_clothes = w_uniform
 	if(wear_suit)
-		if(!wear_suit.unacidable)
-			wear_suit.acid_act(acidpwr)
+		chest_clothes = wear_suit
+	if(chest_clothes)
+		if(!chest_clothes.unacidable)
+			chest_clothes.acid_act(acidpwr)
+			update_inv_w_uniform()
 			update_inv_wear_suit()
 		else
-			src << "<span class='warning'>Your [wear_suit.name] protects your body from the acid!</span>"
+			src << "<span class='warning'>Your [chest_clothes.name] protects your body from the acid!</span>"
 	else
-		if(w_uniform)
-			if(!w_uniform.unacidable)
-				w_uniform.acid_act(acidpwr)
-				update_inv_w_uniform()
-			else
-				src << "<span class='warning'>Your [w_uniform.name] protects your body from the acid!</span>"
-		else
-			. = get_organ("chest")
-			if(.)
-				damaged += .
+		. = get_organ("chest")
+		if(.)
+			damaged += .
+		if(wear_id)
+			inventory_items_to_kill += wear_id
+		if(r_store)
+			inventory_items_to_kill += r_store
+		if(l_store)
+			inventory_items_to_kill += l_store
+		if(s_store)
+			inventory_items_to_kill += s_store
 
+
+	//ARMS & HANDS//
+	var/obj/item/clothing/arm_clothes = null
 	if(gloves)
-		if(!gloves.unacidable)
-			gloves.acid_act(acidpwr)
+		arm_clothes = gloves
+	if(w_uniform && (w_uniform.body_parts_covered & HANDS) || w_uniform && (w_uniform.body_parts_covered & ARMS))
+		arm_clothes = w_uniform
+	if(wear_suit && (wear_suit.body_parts_covered & HANDS) || wear_suit && (wear_suit.body_parts_covered & ARMS))
+		arm_clothes = wear_suit
+	if(arm_clothes)
+		if(!arm_clothes.unacidable)
+			arm_clothes.acid_act(acidpwr)
 			update_inv_gloves()
+			update_inv_w_uniform()
+			update_inv_wear_suit()
 		else
-			src << "<span class='warning'>Your [gloves.name] protects your arms from the acid!</span>"
+			src << "<span class='warning'>Your [arm_clothes.name] protects your arms and hands from the acid!</span>"
 	else
 		. = get_organ("r_arm")
 		if(.)
@@ -291,12 +309,22 @@ emp_act
 			damaged += .
 
 
+	//LEGS & FEET//
+	var/obj/item/clothing/leg_clothes = null
 	if(shoes)
-		if(!shoes.unacidable)
-			shoes.acid_act(acidpwr)
+		leg_clothes = shoes
+	if(w_uniform && (w_uniform.body_parts_covered & FEET) || w_uniform && (w_uniform.body_parts_covered & LEGS))
+		leg_clothes = w_uniform
+	if(wear_suit && (wear_suit.body_parts_covered & FEET) || wear_suit && (wear_suit.body_parts_covered & LEGS))
+		leg_clothes = wear_suit
+	if(leg_clothes)
+		if(!leg_clothes.unacidable)
+			leg_clothes.acid_act(acidpwr)
 			update_inv_shoes()
+			update_inv_w_uniform()
+			update_inv_wear_suit()
 		else
-			src << "<span class='warning'>Your [shoes.name] protects your legs from the acid!</span>"
+			src << "<span class='warning'>Your [leg_clothes.name] protects your legs and feet from the acid!</span>"
 	else
 		. = get_organ("r_leg")
 		if(.)
@@ -306,11 +334,12 @@ emp_act
 			damaged += .
 
 
+	//DAMAGE//
 	for(var/obj/item/organ/limb/affecting in damaged)
-		affecting.take_damage(4*toxpwr, 2*toxpwr)
+		affecting.take_damage(2*toxpwr, toxpwr)
 
 		if(affecting.name == "head")
-			affecting.take_damage(4*toxpwr, 2*toxpwr)
+			affecting.take_damage(2*toxpwr, toxpwr)
 			if(prob(2*acidpwr)) //Applies disfigurement
 				emote("scream")
 				facial_hair_style = "Shaved"
@@ -319,6 +348,20 @@ emp_act
 				status_flags |= DISFIGURED
 
 		update_damage_overlays()
+
+	//MELTING INVENTORY ITEMS//
+	//these items are all outside of armour visually, so melt regardless.
+	if(back)
+		inventory_items_to_kill += back
+	if(belt)
+		inventory_items_to_kill += belt
+	if(r_hand)
+		inventory_items_to_kill += r_hand
+	if(l_hand)
+		inventory_items_to_kill += l_hand
+
+	for(var/obj/item/I in inventory_items_to_kill)
+		I.acid_act(acidpwr)
 
 /mob/living/carbon/human/grabbedby(mob/living/user)
 	if(w_uniform)

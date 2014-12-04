@@ -9,7 +9,6 @@
 	flags = ON_BORDER
 	opacity = 0
 	var/obj/item/weapon/airlock_electronics/electronics = null
-	explosion_resistance = 5
 
 /obj/machinery/door/window/New()
 	..()
@@ -115,7 +114,6 @@
 	src.icon_state ="[src.base_state]open"
 	sleep(10)
 
-	explosion_resistance = 0
 	src.density = 0
 //	src.sd_SetOpacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
 	air_update_turf(1)
@@ -140,7 +138,6 @@
 	src.icon_state = src.base_state
 
 	src.density = 1
-	explosion_resistance = initial(explosion_resistance)
 //	if(src.visible)
 //		SetOpacity(1)	//TODO: why is this here? Opaque windoors? ~Carn
 	air_update_turf(1)
@@ -165,7 +162,7 @@
 		qdel(src)
 		return
 
-/obj/machinery/door/window/ex_act(severity)
+/obj/machinery/door/window/ex_act(severity, specialty)
 	switch(severity)
 		if(1.0)
 			qdel(src)

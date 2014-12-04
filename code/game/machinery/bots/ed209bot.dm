@@ -398,17 +398,6 @@ Auto Patrol[]"},
 			return 1
 	return 0
 
-/obj/machinery/bot/ed209/Bump(M as mob|obj) //Leave no door unopened!
-	if ((istype(M, /obj/machinery/door)) && (!isnull(botcard)))
-		var/obj/machinery/door/D = M
-		if (!istype(D, /obj/machinery/door/firedoor) && D.check_access(botcard))
-			D.open()
-			frustration = 0
-	else if ((istype(M, /mob/living/)) && (!anchored))
-		loc = M:loc
-		frustration = 0
-	return
-
 /* terrible
 /obj/machinery/bot/ed209/Bumped(atom/movable/M as mob|obj)
 	spawn(0)
@@ -504,10 +493,7 @@ Auto Patrol[]"},
 	A.current = U
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
-	spawn( 0 )
-		A.process()
-		return
-	return
+	A.fire()
 
 /obj/machinery/bot/ed209/attack_alien(var/mob/living/carbon/alien/user as mob)
 	..()
