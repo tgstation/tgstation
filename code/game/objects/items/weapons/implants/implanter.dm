@@ -25,7 +25,7 @@
 		var/turf/T = get_turf(M)
 		if(T && (M == user || do_after(user, 50)))
 			if(user && M && (get_turf(M) == T) && src && imp)
-				M.visible_message("<span class='warning'>[M] has been implanted by [user].</span>")
+				M.visible_message("<span class='warning'>[user] has implanted [M].</span>")
 				add_logs(user, M, "implanted", object="[name]")
 				user << "<span class='notice'>You implanted the implant into [M].</span>"
 				if(imp.implanted(M))
