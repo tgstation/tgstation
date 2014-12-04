@@ -43,6 +43,7 @@
 
 
 /mob/living/carbon/slime/proc/Feedon(var/mob/living/M)
+	var/mob/living/Friend = null
 	Victim = M
 	src.loc = M.loc
 	canmove = 0
