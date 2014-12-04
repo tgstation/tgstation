@@ -10,7 +10,7 @@
 	var/occupied = 1
 	var/destroyed = 0
 
-/obj/structure/displaycase/ex_act(severity)
+/obj/structure/displaycase/ex_act(severity, specialty)
 	switch(severity)
 		if (1)
 			new /obj/item/weapon/shard( src.loc )

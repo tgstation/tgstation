@@ -73,13 +73,6 @@ def YTCV4(youtube_url,cache=1,debug=0):
     else:
         if "http://" in youtube_url[0:12].lower() and youtube_url[0:7].lower() != "http://":
             youtube_url = youtube_url[youtube_url.find("http://"):]
-        elif youtube_url[0:7].lower() != "http://":
-            if len(prev_dict.keys()) > 0:
-                if Do_not_open == True:
-                    tiedosto = open(directory+"YTCache/"+first_two+".tcc","w") #This is a Just In Case
-                    pickle.dump(prev_dict,tiedosto)
-                    tiedosto.close()
-            return "Reflex: Incorrect link start"
     if "?feature=player_embedded&" in youtube_url:
         youtube_url = youtube_url.replace("?feature=player_embedded&","?")
     try:

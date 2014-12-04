@@ -115,6 +115,7 @@ Class Procs:
 /obj/machinery/New()
 	..()
 	machines += src
+	auto_use_power()
 
 /obj/machinery/Destroy()
 	machines.Remove(src)
@@ -174,22 +175,6 @@ Class Procs:
 		target.stop_pulling()
 	updateUsrDialog()
 	update_icon()
-
-/obj/machinery/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
-				return
-		if(3.0)
-			if (prob(25))
-				qdel(src)
-				return
-		else
-	return
 
 /obj/machinery/blob_act()
 	if(prob(50))
@@ -255,6 +240,10 @@ Class Procs:
 		return
 	if(be_close && !in_range(M, src))
 		return
+	//stop AIs from leaving windows open and using then after they lose vision
+	//apc_override is needed here because AIs use their own APC when powerless
+	if(cameranet && !cameranet.checkTurfVis(get_turf(M)) && !apc_override)
+		return
 	return 1
 
 /mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close = 0)
@@ -276,8 +265,10 @@ Class Procs:
 /obj/machinery/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
-/obj/machinery/attack_hand(mob/user as mob)
-	if(!interact_offline && stat & (NOPOWER|BROKEN|MAINT))
+/obj/machinery/attack_hand(mob/user as mob, var/check_power = 1)
+	if(check_power && stat & NOPOWER)
+		return 1
+	if(!interact_offline && stat & (BROKEN|MAINT))
 		return 1
 	if(user.lying || user.stat)
 		return 1

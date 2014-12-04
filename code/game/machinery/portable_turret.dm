@@ -370,7 +370,7 @@
 
 	..()
 
-/obj/machinery/porta_turret/ex_act(severity)
+/obj/machinery/porta_turret/ex_act(severity, specialty)
 	if(severity >= 3)	//turret dies if an explosion touches it!
 		qdel(src)
 	else
@@ -610,8 +610,7 @@
 	A.current = T
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
-	spawn( 1 )
-		A.process()
+	A.fire()
 
 /obj/machinery/porta_turret/proc/setState(var/on, var/emagged)
 	if(controllock)

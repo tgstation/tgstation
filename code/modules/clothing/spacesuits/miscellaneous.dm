@@ -67,7 +67,7 @@
 	name = "NASA Voidsuit"
 	icon_state = "void"
 	item_state = "void"
-	desc = "An old, NASA Centcom branch designed, dark red Space suit."
+	desc = "An old, NASA Centcom branch designed, dark red space suit."
 	slowdown = 1
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/multitool)
 

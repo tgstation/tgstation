@@ -211,20 +211,6 @@
 		adjustBruteLoss(unsuitable_atmos_damage)
 	return 1
 
-/mob/living/simple_animal/Bumped(AM as mob|obj)
-	if(!AM) return
-
-	if(resting || buckled)
-		return
-
-	if(isturf(src.loc))
-		if((status_flags & CANPUSH) && ismob(AM))
-			var/newamloc = src.loc
-			src.loc = AM:loc
-			AM:loc = newamloc
-		else
-			..()
-
 /mob/living/simple_animal/gib(var/animation = 0)
 	if(icon_gib)
 		flick(icon_gib, src)
@@ -371,8 +357,8 @@
 			damage = O.force
 			if (O.damtype == STAMINA)
 				damage = 0
-			visible_message("<span class='danger'>[src] has been [O.attack_verb.len ? "[pick(O.attack_verb)]": "attacked"] with [O] by [user]!</span>",\
-							"<span class='userdanger'>[src] has been attacked with [O] by [user]!</span>")
+			visible_message("<span class='danger'>[user] has [O.attack_verb.len ? "[pick(O.attack_verb)]": "attacked"] [src] with [O]!</span>",\
+							"<span class='userdanger'>[user] has [O.attack_verb.len ? "[pick(O.attack_verb)]": "attacked"] you with [O]!</span>")
 		else
 			visible_message("<span class='danger'>[O] bounces harmlessly off of [src].</span>",\
 							"<span class='userdanger'>[O] bounces harmlessly off of [src].</span>")
@@ -412,7 +398,7 @@
 
 	Die()
 
-/mob/living/simple_animal/ex_act(severity)
+/mob/living/simple_animal/ex_act(severity, specialty)
 	..()
 	switch (severity)
 		if (1.0)

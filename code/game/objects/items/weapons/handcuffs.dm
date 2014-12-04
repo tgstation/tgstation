@@ -30,12 +30,15 @@
 		playsound(loc, cuffsound, 30, 1, -2)
 		if(do_mob(user, C, 30))
 			apply_cuffs(C,user)
+			user << "<span class='notice'>You handcuff [C].</span>"
 			if(istype(src, /obj/item/weapon/restraints/handcuffs/cable))
 				feedback_add_details("handcuffs","C")
 			else
 				feedback_add_details("handcuffs","H")
 
 			add_logs(user, C, "handcuffed")
+		else
+			user << "<span class='warning'>You fail to handcuff [C].</span>"
 
 /obj/item/weapon/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user)
 	if(!target.handcuffed)
@@ -106,13 +109,15 @@
 				if(!C.handcuffed)
 					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(C)
 					C.update_inv_handcuffed(0)
+					user << "<span class='notice'>You handcuff [C].</span>"
 					add_logs(user, C, "handcuffed")
+			else
+				user << "<span class='warning'>You fail to handcuff [C].</span>"
 
 /obj/item/weapon/restraints/handcuffs/cable/zipties
 	name = "zipties"
 	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
 	icon_state = "cuff_white"
-	item_state = "coil_white"
 	breakouttime = 450 //Deciseconds = 45s
 	trashtype = /obj/item/weapon/restraints/handcuffs/cable/zipties/used
 

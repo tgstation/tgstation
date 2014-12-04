@@ -524,6 +524,7 @@
 	storage_slots = 10
 	w_class = 1
 	slot_flags = SLOT_BELT
+	can_hold = list(/obj/item/weapon/match)
 
 /obj/item/weapon/storage/box/matches/New()
 	..()

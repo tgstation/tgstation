@@ -123,8 +123,6 @@
 	var/slime_delay = 0
 	var/animal_delay = 0
 
-	var/use_recursive_explosions //Defines whether the server uses recursive or circular explosions.
-
 	var/gateway_delay = 18000 //How long the gateway takes before it activates. Default is half an hour.
 	var/ghost_interaction = 0
 
@@ -387,8 +385,6 @@
 					config.allow_random_events		= 1
 				if("jobs_have_minimal_access")
 					config.jobs_have_minimal_access	= 1
-				if("use_recursive_explosions")
-					use_recursive_explosions		= 1
 				if("humans_need_surnames")
 					humans_need_surnames			= 1
 				if("force_random_names")

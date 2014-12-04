@@ -88,12 +88,12 @@
 
 	add_fingerprint(user)
 
-	if(!special_check(user))
-		return
 	if(chambered)
 		if(!chambered.fire(target, user, params, , suppressed))
 			shoot_with_empty_chamber(user)
 		else
+			if(!special_check(user))
+				return
 			if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
 				shoot_live_shot(user, 1, target)
 			else

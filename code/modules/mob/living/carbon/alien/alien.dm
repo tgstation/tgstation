@@ -57,13 +57,8 @@
 /mob/living/carbon/alien/eyecheck()
 	return 2
 
-/mob/living/carbon/alien/updatehealth()
-	if(status_flags & GODMODE)
-		health = maxHealth
-		stat = CONSCIOUS
-		return
-	//oxyloss is only used for suicide
-	health = maxHealth - getOxyLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
+/mob/living/carbon/alien/getToxLoss()
+	return 0
 
 /mob/living/carbon/alien/proc/handle_environment(var/datum/gas_mixture/environment)
 

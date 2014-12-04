@@ -60,16 +60,12 @@
 	#define REPLACE_TILE	5
 	#define TILE_EMAG		6
 
-#define KIWATA 1
-
 /obj/machinery/bot/floorbot/New()
 	..()
 	updateicon()
 	var/datum/job/engineer/J = new/datum/job/engineer
 	botcard.access = J.get_access()
 	prev_access = botcard.access
-	if(target == KIWATA)
-		return
 
 	spawn(5)
 		add_to_beacons(bot_filter)
@@ -356,7 +352,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 		else //If no special processing is needed, simply return the result.
 			result = scan_target
 	return result
-view
+
 /obj/machinery/bot/floorbot/proc/repair(var/turf/target_turf)
 
 	if(istype(target_turf, /turf/space/))

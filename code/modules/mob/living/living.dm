@@ -10,6 +10,96 @@
 	..()
 	del(src)
 
+//Generic Bump(). Override MobBump() and ObjBump() instead of this.
+/mob/living/Bump(atom/A, yes)
+	if (buckled || !yes || now_pushing)
+		return
+	if(ismob(A))
+		var/mob/M = A
+		if(MobBump(M))
+			return
+	..()
+	if(isobj(A))
+		var/obj/O = A
+		if(ObjBump(O))
+			return
+	if(istype(A, /atom/movable))
+		var/atom/movable/AM = A
+		if(PushAM(AM))
+			return
+
+//Called when we bump onto a mob
+/mob/living/proc/MobBump(mob/M)
+	if(now_pushing)
+		return 1
+
+	//BubbleWrap: Should stop you pushing a restrained person out of the way
+	if(istype(M, /mob/living/carbon/human))
+		for(var/mob/MM in range(M, 1))
+			if( ((MM.pulling == M && ( M.restrained() && !( MM.restrained() ) && MM.stat == CONSCIOUS)) || locate(/obj/item/weapon/grab, M.grabbed_by.len)) )
+				if ( !(world.time % 5) )
+					src << "<span class='warning'>[M] is restrained, you cannot push past.</span>"
+				return 1
+			if( M.pulling == MM && ( MM.restrained() && !( M.restrained() ) && M.stat == CONSCIOUS) )
+				if ( !(world.time % 5) )
+					src << "<span class='warning'>[M] is restraining [MM], you cannot push past.</span>"
+				return 1
+
+	//switch our position with M
+	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
+	if((M.a_intent == "help" || M.restrained()) && (a_intent == "help" || restrained()) && M.canmove && canmove) // mutual brohugs all around!
+		now_pushing = 1
+		//TODO: Make this use Move(). we're pretty much recreating it here.
+		//it could be done by setting one of the locs to null to make Move() work, then setting it back and Move() the other mob
+		var/oldloc = loc
+		loc = M.loc
+		M.loc = oldloc
+		M.LAssailant = src
+
+		for(var/mob/living/carbon/slime/slime in view(1,M))
+			if(slime.Victim == M)
+				slime.UpdateFeed()
+
+		//cross any movable atoms on either turf
+		for(var/atom/movable/AM in loc)
+			AM.Crossed(src)
+		for(var/atom/movable/AM in oldloc)
+			AM.Crossed(M)
+		now_pushing = 0
+		return 1
+
+	//okay, so we didn't switch. but should we push?
+	//not if he's not CANPUSH of course
+	if(!(M.status_flags & CANPUSH) )
+		return 1
+	//anti-riot equipment is also anti-push
+	if(M.r_hand && istype(M.r_hand, /obj/item/weapon/shield/riot))
+		return 1
+	if(M.l_hand && istype(M.l_hand, /obj/item/weapon/shield/riot))
+		return 1
+
+//Called when we bump onto an obj
+/mob/living/proc/ObjBump(obj/O)
+	return
+
+//Called when we want to push an atom/movable
+/mob/living/proc/PushAM(atom/movable/AM)
+	if(now_pushing)
+		return 1
+	if(!AM.anchored)
+		now_pushing = 1
+		var/t = get_dir(src, AM)
+		if (istype(AM, /obj/structure/window))
+			var/obj/structure/window/W = AM
+			if(W.fulltile)
+				for(var/obj/structure/window/win in get_step(W,t))
+					now_pushing = 0
+					return
+		if(pulling == AM)
+			stop_pulling()
+		step(AM, t)
+		now_pushing = 0
+
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
 /mob/living/verb/pulled(atom/movable/AM as mob|obj in oview(1))
@@ -44,7 +134,8 @@
 /mob/living/proc/InCritical()
 	return (src.health < 0 && src.health > -95.0 && stat == UNCONSCIOUS)
 
-/mob/living/ex_act(severity)
+/mob/living/ex_act(severity, specialty)
+	..()
 	if(client && !blinded)
 		flick("flash", src.flash)
 
@@ -380,8 +471,7 @@
 						if (prob(75))
 							var/obj/item/weapon/grab/G = pick(M.grabbed_by)
 							if (istype(G, /obj/item/weapon/grab))
-								for(var/mob/O in viewers(M, null))
-									O.show_message(text("<span class='danger'>[] has been pulled from []'s grip by []</span>", G.affecting, G.assailant, src), 1)
+								visible_message("<span class='danger'>[src] has pulled [G.affecting] from [G.assailant]'s grip.</span>")
 								qdel(G)
 						else
 							ok = 0
@@ -440,8 +530,8 @@
 	if(HULK in usr.mutations)
 		C.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 
-	C.visible_message("<span class='danger'>[C] manages to break [I]!</span>", \
-				"<span class='notice'>You successfully break [I].</span>")
+	C.visible_message("<span class='danger'>[C] manages to break [I]!</span>")
+	C << "<span class='notice'>You successfully break [I].</span>"
 	qdel(I)
 
 	if(C.handcuffed)
@@ -464,8 +554,8 @@
 	displaytime = breakouttime / 600
 
 	if(isalienadult(C) || HULK in usr.mutations)
-		C.visible_message("<span class='warning'>[C] is trying to break [I]!</span>", \
-				"<span class='warning'>You attempt to break [I]. (This will take around 5 seconds and you need to stand still.)</span>")
+		C.visible_message("<span class='warning'>[C] is trying to break [I]!</span>")
+		C << "<span class='notice'>You attempt to break [I]. (This will take around 5 seconds and you need to stand still.)</span>"
 		spawn(0)
 			if(do_after(C, 50))
 				if(!I || C.buckled)
@@ -475,14 +565,14 @@
 				C << "<span class='warning'>You fail to break [I]!</span>"
 	else
 
-		C.visible_message("<span class='warning'>[C] attempts to remove [I]!</span>", \
-				"<span class='notice'>You attempt to remove [I]. (This will take around [displaytime] minutes and you need to stand still.)</span>")
+		C.visible_message("<span class='warning'>[C] attempts to remove [I]!</span>")
+		C << "<span class='notice'>You attempt to remove [I]. (This will take around [displaytime] minutes and you need to stand still.)</span>"
 		spawn(0)
 			if(do_after(C, breakouttime))
 				if(!I || C.buckled)
 					return
-				C.visible_message("<span class='danger'>[C] manages to remove [I]!</span>", \
-						"<span class='notice'>You successfully remove [I].</span>")
+				C.visible_message("<span class='danger'>[C] manages to remove [I]!</span>")
+				C << "<span class='notice'>You successfully remove [I].</span>"
 
 				if(C.handcuffed)
 					C.handcuffed.loc = usr.loc

@@ -64,7 +64,7 @@
 	opacity = 1
 	spawn(20) if(src) opacity = 0
 
-/obj/machinery/shield/ex_act(severity)
+/obj/machinery/shield/ex_act(severity, specialty)
 	switch(severity)
 		if(1.0)
 			if (prob(75))
@@ -181,7 +181,7 @@
 	update_icon()
 	return
 
-/obj/machinery/shieldgen/ex_act(severity)
+/obj/machinery/shieldgen/ex_act(severity, specialty)
 	switch(severity)
 		if(1.0)
 			src.health -= 75
@@ -567,7 +567,7 @@
 	return
 
 
-/obj/machinery/shieldwall/ex_act(severity)
+/obj/machinery/shieldwall/ex_act(severity, specialty)
 	if(needs_power)
 		var/obj/machinery/shieldwallgen/G
 		switch(severity)

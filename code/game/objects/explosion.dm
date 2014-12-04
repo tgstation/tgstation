@@ -6,6 +6,10 @@
 	if(dx>=dy)	return dx + (0.5*dy)	//The longest side add half the shortest side approximates the hypotenuse
 	else		return dy + (0.5*dx)
 
+/proc/contents_explosion(var/atom/A, severity, specialty)
+	for(var/atom/B in A.contents)
+		B.ex_act(severity, specialty)
+
 
 proc/trange(var/Dist=0,var/turf/Center=null)//alternative to range (ONLY processes turfs and thus less intensive)
 	if(Center==null) return
@@ -38,15 +42,6 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 		flame_range = min (MAX_EX_FLAME_RANGE, flame_range)
 
 	spawn(0)
-		if(config.use_recursive_explosions)
-			devastation_range += 1	//Original code uses -1 as no explosion, this code uses 0 as no explosion and -1 would ruin everything
-			heavy_impact_range += 1
-			light_impact_range += 1
-			var/power = devastation_range * 3 + heavy_impact_range * 1.5 + light_impact_range * 0.75
-			//So max power is (3 * 4) + (1.5 * 8) + (0.75 * 15) = 36,25
-			explosion_rec(epicenter, power)
-			return
-
 		var/start = world.timeofday
 		if(!epicenter) return
 
@@ -103,7 +98,6 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 
 			var/dist = cheap_pythag(T.x - x0,T.y - y0)
 			var/flame_dist = 0
-			var/hotspot_exists
 
 			if(dist < flame_range)
 				flame_dist = 1
@@ -119,27 +113,8 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 			if(T)
 				if(flame_dist && prob(40) && !istype(T, /turf/space))
 					new/obj/effect/hotspot(T) //Mostly for ambience!
-					hotspot_exists = 1
-				if(dist)
-					if(T)
-						T.ex_act(dist)
-
-			//------- THINGS IN TURFS FIRES -------
-
-				for(var/atom_movable in T.contents)	//bypass type checking since only atom/movable can be contained by turfs anyway
-					var/atom/movable/AM = atom_movable
-
-					if(AM) //Something is inside T (We have already checked T exists above) - RR
-						if(flame_dist) //if it has flame distance, run this - RR
-							if(isliving(AM) && !hotspot_exists && !istype(T, /turf/space))
-								if(AM && AM.loc!=null)
-									new /obj/effect/hotspot(AM.loc)
-								//Just in case we missed a mob while they were in flame_range, but a hotspot didn't spawn on them, otherwise it looks weird when you just burst into flame out of nowhere
-						if(dist) //if no flame_dist, run this - RR
-							if(AM)
-								AM.ex_act(dist)
-
-
+				if(dist > 0)
+					T.ex_act(dist)
 
 		var/took = (world.timeofday-start)/10
 		//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes  to explosion code using this please so we can compare

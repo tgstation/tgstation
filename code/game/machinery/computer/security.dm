@@ -628,7 +628,8 @@ What a mess.*/
 								if("released")
 									active2.fields["criminal"] = "Discharged"
 							investigate_log("[active1.fields["name"]] has been set from [old_field] to [active2.fields["criminal"]] by [usr.name] ([usr.key]).", "records")
-
+							for(var/mob/living/carbon/human/H in mob_list) //thanks for forcing me to do this, whoever wrote this shitty records system
+								H.sec_hud_set_security_status()
 					if ("Delete Record (Security) Execute")
 						investigate_log("[usr.name] ([usr.key]) has deleted the security records for [active1.fields["name"]].", "records")
 						if (active2)

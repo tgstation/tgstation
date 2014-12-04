@@ -10,7 +10,7 @@
  */
 /obj/item/clothing/suit/bluetag
 	name = "blue laser tag armor"
-	desc = "Blue Pride, Station Wide"
+	desc = "A piece of plastic armor. It has sensors that react to red light." //Lasers are concentrated light
 	icon_state = "bluetag"
 	item_state = "bluetag"
 	blood_overlay_type = "armor"
@@ -19,7 +19,7 @@
 
 /obj/item/clothing/suit/redtag
 	name = "red laser tag armor"
-	desc = "Pew pew pew"
+	desc = "A piece of plastic armor. It has sensors that react to blue light."
 	icon_state = "redtag"
 	item_state = "redtag"
 	blood_overlay_type = "armor"
@@ -55,8 +55,8 @@
 
 
 /obj/item/clothing/suit/greatcoat
-	name = "great coat"
-	desc = "A Nazi great coat"
+	name = "greatcoat"
+	desc = "A Nazi greatcoat."
 	icon_state = "nazi"
 	item_state = "nazi"
 
@@ -70,7 +70,7 @@
 
 /obj/item/clothing/suit/justice
 	name = "justice suit"
-	desc = "this pretty much looks ridiculous"
+	desc = "this pretty much looks ridiculous" //Needs no fixing
 	icon_state = "justice"
 	item_state = "justice"
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
@@ -98,7 +98,7 @@
 	name = "black and red space suit replica"
 	icon_state = "syndicate-black-red"
 	item_state = "syndicate-black-red"
-	desc = "A plastic replica of the syndicate space suit, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
+	desc = "A plastic replica of the Syndicate space suit. You'll look just like a real murderous Syndicate agent in this! This is a toy, it is not made for use in space!"
 	w_class = 3
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
@@ -106,7 +106,7 @@
 
 /obj/item/clothing/suit/hastur
 	name = "\improper Hastur's robe"
-	desc = "Robes not meant to be worn by man"
+	desc = "Robes not meant to be worn by man."
 	icon_state = "hastur"
 	item_state = "hastur"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -115,7 +115,7 @@
 
 /obj/item/clothing/suit/imperium_monk
 	name = "\improper Imperium monk suit"
-	desc = "Have YOU killed a xenos today?"
+	desc = "Have YOU killed a xeno today?"
 	icon_state = "imperium_monk"
 	item_state = "imperium_monk"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -134,7 +134,7 @@
 
 /obj/item/clothing/suit/monkeysuit
 	name = "monkey suit"
-	desc = "A suit that looks like a primate"
+	desc = "A suit that looks like a primate."
 	icon_state = "monkeysuit"
 	item_state = "monkeysuit"
 	body_parts_covered = CHEST|ARMS|GROIN|LEGS|FEET|HANDS
@@ -143,7 +143,7 @@
 
 /obj/item/clothing/suit/holidaypriest
 	name = "holiday priest"
-	desc = "This is a nice holiday my son."
+	desc = "This is a nice holiday, my son."
 	icon_state = "holidaypriest"
 	item_state = "w_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -180,7 +180,7 @@
 
 /obj/item/clothing/suit/poncho/ponchoshame
 	name = "poncho of shame"
-	desc = "Forced to live on your shameful acting as a fake mexican, you and your poncho have grown inseperable. Literally."
+	desc = "Forced to live on your shameful acting as a fake Mexican, you and your poncho have grown inseperable. Literally."
 	icon_state = "ponchoshame"
 	item_state = "ponchoshame"
 	flags = NODROP
@@ -191,7 +191,7 @@
 
 /obj/item/clothing/suit/straight_jacket
 	name = "straight jacket"
-	desc = "A suit that completely restrains the wearer."
+	desc = "A suit that completely restrains the wearer. Manufactured by Antyphun Corp." //Straight jacket is antifun
 	icon_state = "straight_jacket"
 	item_state = "straight_jacket"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
@@ -200,13 +200,13 @@
 
 /obj/item/clothing/suit/ianshirt
 	name = "worn shirt"
-	desc = "A worn out, curiously comfortable t-shirt with a picture of Ian. You wouldn't go so far as to say it feels like being hugged when you wear it but it's pretty close. Good for sleeping in."
+	desc = "A worn out, curiously comfortable t-shirt with a picture of Ian. You wouldn't go so far as to say it feels like being hugged when you wear it, but it's pretty close. Good for sleeping in."
 	icon_state = "ianshirt"
 	item_state = "ianshirt"
 
 /obj/item/clothing/suit/nerdshirt
 	name = "gamer shirt"
-	desc = "A baggy shirt with vintage game character Phanic the Weasel. Why would someone wear this?"
+	desc = "A baggy shirt with vintage game character Phanic the Weasel. Why would anyone wear this?"
 	icon_state = "nerdshirt"
 	item_state = "nerdshirt"
 

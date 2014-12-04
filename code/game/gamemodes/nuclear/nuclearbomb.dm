@@ -149,7 +149,7 @@ var/bomb_set
 		if ((M.client && M.machine == src))
 			src.attack_hand(M)
 
-/obj/machinery/nuclearbomb/ex_act(severity)
+/obj/machinery/nuclearbomb/ex_act(severity, specialty)
 	return
 
 /obj/machinery/nuclearbomb/blob_act()

@@ -80,7 +80,7 @@
 	..()
 
 
-/obj/machinery/r_n_d/server/ex_act(severity)
+/obj/machinery/r_n_d/server/ex_act(severity, specialty)
 	griefProtection()
 	..()
 

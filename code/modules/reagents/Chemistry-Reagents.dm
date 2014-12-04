@@ -1656,6 +1656,8 @@ datum/reagent/toxin/acid/reaction_mob(var/mob/living/carbon/C, var/method=TOUCH,
 	C.acid_act(acidpwr, toxpwr, volume)
 
 datum/reagent/toxin/acid/reaction_obj(var/obj/O, var/volume)
+	if(istype(O.loc, /mob)) //handled in human acid_act()
+		return
 	O.acid_act(acidpwr, toxpwr, volume)
 
 datum/reagent/toxin/acid/polyacid
@@ -1869,57 +1871,66 @@ datum/reagent/condensedcapsaicin
 	color = "#B31008" // rgb: 179, 16, 8
 
 datum/reagent/condensedcapsaicin/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
-	if(!istype(M, /mob/living))
+	if(!istype(M, /mob/living/carbon/human) && !istype(M, /mob/living/carbon/monkey))
 		return
+
+	var/mob/living/carbon/victim = M
 	if(method == TOUCH)
-		if(istype(M, /mob/living/carbon/human))
-			var/mob/living/carbon/human/victim = M
-			var/mouth_covered = 0
-			var/eyes_covered = 0
-			var/obj/item/safe_thing = null
-			if( victim.wear_mask )
-				if ( victim.wear_mask.flags & MASKCOVERSEYES )
+		//check for protection
+		var/mouth_covered = 0
+		var/eyes_covered = 0
+		var/obj/item/safe_thing = null
+
+		//monkeys and humans can have masks
+		if( victim.wear_mask )
+			if ( victim.wear_mask.flags & MASKCOVERSEYES )
+				eyes_covered = 1
+				safe_thing = victim.wear_mask
+			if ( victim.wear_mask.flags & MASKCOVERSMOUTH )
+				mouth_covered = 1
+				safe_thing = victim.wear_mask
+
+		//only humans can have helmets and glasses
+		if(istype(victim, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = victim
+			if( H.head )
+				if ( H.head.flags & MASKCOVERSEYES )
 					eyes_covered = 1
-					safe_thing = victim.wear_mask
-				if ( victim.wear_mask.flags & MASKCOVERSMOUTH )
+					safe_thing = H.head
+				if ( H.head.flags & MASKCOVERSMOUTH )
 					mouth_covered = 1
-					safe_thing = victim.wear_mask
-			if( victim.head )
-				if ( victim.head.flags & MASKCOVERSEYES )
-					eyes_covered = 1
-					safe_thing = victim.head
-				if ( victim.head.flags & MASKCOVERSMOUTH )
-					mouth_covered = 1
-					safe_thing = victim.head
-			if(victim.glasses)
+					safe_thing = H.head
+			if(H.glasses)
 				eyes_covered = 1
 				if ( !safe_thing )
-					safe_thing = victim.glasses
-			if ( eyes_covered && mouth_covered )
-				return
-			else if ( mouth_covered )	// Reduced effects if partially protected
-				if(prob(5))
-					victim.emote("scream")
-				victim.eye_blurry = max(M.eye_blurry, 3)
-				victim.eye_blind = max(M.eye_blind, 1)
-				victim.confused = max(M.confused, 3)
-				victim.damageoverlaytemp = 60
-				victim.Weaken(3)
-				victim.drop_item()
-				return
-			else if ( eyes_covered ) // Eye cover is better than mouth cover
-				victim.eye_blurry = max(M.eye_blurry, 3)
-				victim.damageoverlaytemp = 30
-				return
-			else // Oh dear :D
-				if(prob(5))
-					victim.emote("scream")
-				victim.eye_blurry = max(M.eye_blurry, 5)
-				victim.eye_blind = max(M.eye_blind, 2)
-				victim.confused = max(M.confused, 6)
-				victim.damageoverlaytemp = 75
-				victim.Weaken(5)
-				victim.drop_item()
+					safe_thing = H.glasses
+
+		//actually handle the pepperspray effects
+		if ( eyes_covered && mouth_covered )
+			return
+		else if ( mouth_covered )	// Reduced effects if partially protected
+			if(prob(5))
+				victim.emote("scream")
+			victim.eye_blurry = max(M.eye_blurry, 3)
+			victim.eye_blind = max(M.eye_blind, 1)
+			victim.confused = max(M.confused, 3)
+			victim.damageoverlaytemp = 60
+			victim.Weaken(3)
+			victim.drop_item()
+			return
+		else if ( eyes_covered ) // Eye cover is better than mouth cover
+			victim.eye_blurry = max(M.eye_blurry, 3)
+			victim.damageoverlaytemp = 30
+			return
+		else // Oh dear :D
+			if(prob(5))
+				victim.emote("scream")
+			victim.eye_blurry = max(M.eye_blurry, 5)
+			victim.eye_blind = max(M.eye_blind, 2)
+			victim.confused = max(M.confused, 6)
+			victim.damageoverlaytemp = 75
+			victim.Weaken(5)
+			victim.drop_item()
 
 datum/reagent/condensedcapsaicin/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom

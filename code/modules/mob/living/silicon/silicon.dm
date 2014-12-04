@@ -15,7 +15,8 @@
 	var/lawcheck[1]
 	var/ioncheck[1]
 
-	var/sensor_mode = 0 //Determines the current HUD.
+	var/med_hud = DATA_HUD_MEDICAL_ADVANCED //Determines the med hud to use
+	var/sec_hud = DATA_HUD_SECURITY_ADVANCED //Determines the sec hud to use
 
 /mob/living/silicon/proc/cancelAlarm()
 	return
@@ -280,31 +281,6 @@
 
 	usr << browse(list, "window=laws")
 
-/mob/living/silicon/Bump(atom/movable/AM as mob|obj, yes)  //Allows the AI to bump into mobs if it's itself pushed
-	if ((!( yes ) || now_pushing))
-		return
-	now_pushing = 1
-	if(ismob(AM))
-		var/mob/tmob = AM
-		if(!(tmob.status_flags & CANPUSH))
-			now_pushing = 0
-			return
-	now_pushing = 0
-	..()
-	if (!istype(AM, /atom/movable))
-		return
-	if (!now_pushing)
-		now_pushing = 1
-		if (!AM.anchored)
-			var/t = get_dir(src, AM)
-			if (istype(AM, /obj/structure/window))
-				if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-					for(var/obj/structure/window/win in get_step(AM,t))
-						now_pushing = 0
-						return
-			step(AM, t)
-		now_pushing = null
-
 /mob/living/silicon/put_in_hand_check() // This check is for borgs being able to receive items, not put them in others' hands.
 	return 0
 
@@ -317,18 +293,32 @@
 /mob/living/silicon/assess_threat() //Secbots won't hunt silicon units
 	return -10
 
+/mob/living/silicon/proc/remove_med_sec_hud()
+	var/datum/atom_hud/secsensor = huds[sec_hud]
+	var/datum/atom_hud/medsensor = huds[med_hud]
+	secsensor.remove_hud_from(src)
+	medsensor.remove_hud_from(src)
+
+/mob/living/silicon/proc/add_sec_hud()
+	var/datum/atom_hud/secsensor = huds[sec_hud]
+	secsensor.add_hud_to(src)
+
+/mob/living/silicon/proc/add_med_hud()
+	var/datum/atom_hud/medsensor = huds[med_hud]
+	medsensor.add_hud_to(src)
+
 /mob/living/silicon/verb/sensor_mode()
 	set name = "Set Sensor Augmentation"
 	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical","Disable")
+	remove_med_sec_hud()
 	switch(sensor_type)
 		if ("Security")
-			sensor_mode = DATA_HUD_SECURITY
+			add_sec_hud()
 			src << "<span class='notice'>Security records overlay enabled.</span>"
 		if ("Medical")
-			sensor_mode = DATA_HUD_MEDICAL
+			add_med_hud()
 			src << "<span class='notice'>Life signs monitor overlay enabled.</span>"
 		if ("Disable")
-			sensor_mode = 0
 			src << "Sensor augmentations disabled."
 
 
