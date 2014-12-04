@@ -282,7 +282,7 @@ datum/reagents/proc/handle_reactions()
 						ME2.Uses--
 						if(ME2.Uses <= 0) // give the notification that the slime core is dead
 							for(var/mob/M in seen)
-								M << "<span class='notice'>\icon[my_atom] The [my_atom]'s power is consumed in the reaction.</span>"
+								M << "<span class='notice'>\icon[my_atom] \The [my_atom]'s power is consumed in the reaction.</span>"
 								ME2.name = "\improper used slime extract"
 								ME2.desc = "This extract has been used up."
 

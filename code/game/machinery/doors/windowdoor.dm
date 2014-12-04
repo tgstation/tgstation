@@ -200,7 +200,6 @@
 /obj/machinery/door/window/mech_melee_attack(obj/mecha/M)
 	if(M.damtype == "brute")
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-		M.occupant_message("<span class='danger'>You hit [src].</span>")
 		visible_message("<span class='danger'>[src] has been hit by [M.name].</span>")
 		take_damage(M.force)
 	return
