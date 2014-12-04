@@ -92,7 +92,15 @@ var/next_mob_id = 0
 		var/msg = message
 		if(self_message && M==src)
 			msg = self_message
-		M.show_message( msg, 1, blind_message, 2)
+		M.show_message( msg, 1)
+	if(blind_message)
+		var/list/atom_hearers = list()
+		for(var/atom/movable/O in get_hearers_in_view(7, src))
+			if(O in atom_viewers)
+				continue
+			atom_hearers |= O
+		for(var/mob/MOB in atom_hearers)
+			MOB.show_message(blind_message, 2)
 
 // Show a message to all mobs who sees this atom
 // Use for objects performing visible actions
@@ -104,7 +112,15 @@ var/next_mob_id = 0
 	for(var/atom/movable/A in view(src))
 		atom_viewers |= recursive_hear_check(A)
 	for(var/mob/M in atom_viewers)
-		M.show_message( message, 1, blind_message, 2)
+		M.show_message( message, 1)
+	if(blind_message)
+		var/list/atom_hearers = list()
+		for(var/atom/movable/O in get_hearers_in_view(7, src))
+			if(O in atom_viewers)
+				continue
+			atom_hearers |= O
+		for(var/mob/MOB in atom_hearers)
+			MOB.show_message(blind_message, 2)
 
 // Show a message to all mobs in earshot of this one
 // This would be for audible actions by the src mob
