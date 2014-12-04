@@ -54,6 +54,7 @@
 	a_intent = "harm" //parrots now start "aggressive" since only player parrots will nuzzle.
 	attacktext = "chomps"
 	friendly = "grooms"
+	mob_size = 0
 
 	var/parrot_damage_upper = 10
 	var/parrot_state = PARROT_WANDER //Hunt for a perch when created
@@ -260,7 +261,8 @@
 //Humans, monkeys, aliens
 /mob/living/simple_animal/parrot/attack_hand(mob/living/carbon/M as mob)
 	..()
-	if(client) return
+	if(client)
+		return
 	if(!stat && M.a_intent == "harm")
 
 		icon_state = "parrot_fly" //It is going to be flying regardless of whether it flees or attacks
@@ -281,15 +283,15 @@
 /mob/living/simple_animal/parrot/attack_paw(mob/living/carbon/monkey/M as mob)
 	attack_hand(M)
 
-/mob/living/simple_animal/parrot/attack_alien(mob/living/carbon/monkey/M as mob)
+/mob/living/simple_animal/parrot/attack_alien(mob/living/carbon/alien/M as mob)
 	attack_hand(M)
 
 //Simple animals
 /mob/living/simple_animal/parrot/attack_animal(mob/living/simple_animal/M as mob)
 	..() //goodbye immortal parrots
 
-	if(client) return
-
+	if(client)
+		return
 
 	if(parrot_state == PARROT_PERCH)
 		parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched

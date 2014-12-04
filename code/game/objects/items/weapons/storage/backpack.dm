@@ -35,10 +35,13 @@
 	max_w_class = 5
 	max_combined_w_class = 35
 
-/obj/item/weapon/storage/backpack/holding/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/storage/backpack/holding/can_be_inserted(obj/item/W, stop_messages = 0, mob/user)
 	if(crit_fail)
 		user << "<span class='danger'>The Bluespace generator isn't working.</span>"
 		return
+	return ..()
+
+/obj/item/weapon/storage/backpack/holding/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
 	if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
 		investigate_log("has become a singularity. Caused by [user.key]","singulo")
 		user << "<span class='danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>"
@@ -61,6 +64,11 @@
 			qdel(O)
 		crit_fail = 1
 		icon_state = "brokenpack"
+
+/obj/item/weapon/storage/backpack/holding/singularity_act(current_size)
+	var/dist = max((current_size - 2),1)
+	explosion(src.loc,(dist),(dist*2),(dist*4))
+	return
 
 
 /obj/item/weapon/storage/backpack/santabag

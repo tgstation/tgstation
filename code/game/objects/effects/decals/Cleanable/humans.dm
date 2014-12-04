@@ -58,7 +58,7 @@
 	icon_state = "gibbl5"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 
-/obj/effect/decal/cleanable/blood/gibs/ex_act(severity)
+/obj/effect/decal/cleanable/blood/gibs/ex_act(severity, specialty)
 	return
 
 /obj/effect/decal/cleanable/blood/gibs/remove_ex_blood()

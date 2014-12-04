@@ -267,6 +267,13 @@ silicate
 	required_reagents = list("carbon" = 1, "hydrogen" = 1, "anti_toxin" = 1)
 	result_amount = 2
 
+/datum/chemical_reaction/inacusiate
+	name = "inacusiate"
+	id = "inacusiate"
+	result = "inacusiate"
+	required_reagents = list("water" = 1, "carbon" = 1, "anti_toxin" = 1)
+	result_amount = 2
+
 /datum/chemical_reaction/ethylredoxrazine
 	name = "Ethylredoxrazine"
 	id = "ethylredoxrazine"
@@ -1029,7 +1036,8 @@ datum/chemical_reaction/pestkiller
 				/mob/living/simple_animal/hostile/asteroid/goliath,
 				/mob/living/simple_animal/hostile/asteroid/hivelord,
 				/mob/living/simple_animal/hostile/asteroid/hivelordbrood,
-				/mob/living/simple_animal/hostile/carp/holocarp
+				/mob/living/simple_animal/hostile/carp/holocarp,
+				/mob/living/simple_animal/hostile/mining_drone
 				)//exclusion list for things you don't want the reaction to create.
 			var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 
@@ -1098,7 +1106,8 @@ datum/chemical_reaction/pestkiller
 				/mob/living/simple_animal/hostile/asteroid/goliath,
 				/mob/living/simple_animal/hostile/asteroid/hivelord,
 				/mob/living/simple_animal/hostile/asteroid/hivelordbrood,
-				/mob/living/simple_animal/hostile/carp/holocarp
+				/mob/living/simple_animal/hostile/carp/holocarp,
+				/mob/living/simple_animal/hostile/mining_drone
 				)//exclusion list for things you don't want the reaction to create.
 			var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 

@@ -384,30 +384,6 @@ var/global/list/g_fancy_list_of_types = null
 			g_fancy_list_of_types[typename] = type
 	return g_fancy_list_of_types
 
-var/global/list/g_fancy_list_of_safe_types = null
-/proc/get_fancy_list_of_safe_types()
-	if (isnull(g_fancy_list_of_safe_types)) //init
-		var/blocked = list(
-			/turf,
-			/obj,
-			/mob,
-			/mob/living,
-			/mob/living/carbon,
-			/mob/living/carbon/human,
-			/mob/dead,
-			/mob/dead/observer,
-			/mob/living/silicon,
-			/mob/living/silicon/robot,
-			/mob/living/silicon/ai
-		)
-		var/list/source = get_fancy_list_of_types()
-		g_fancy_list_of_safe_types = new
-		for(var/typename in source)
-			var/type = source[typename]
-			if(!(type in blocked))
-				g_fancy_list_of_safe_types[typename] = type
-	return g_fancy_list_of_safe_types
-
 /proc/filter_fancy_list(list/L, filter as text)
 	var/list/matches = new
 	for(var/key in L)
@@ -421,8 +397,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 	set category = "Debug"
 	set name = "Del-All"
 
-	// usng "safe" to prevent REALLY stupid deletions
-	var/list/matches = get_fancy_list_of_safe_types()
+	var/list/matches = get_fancy_list_of_types()
 	if (!isnull(object) && object!="")
 		matches = filter_fancy_list(matches, object)
 
@@ -637,6 +612,8 @@ var/global/list/g_fancy_list_of_safe_types = null
 	if (dresscode == "as job...")
 		var/jobname = input("Select job", "Robust quick dress shop") as null|anything in get_all_jobs()
 		jobdatum = job_master.GetJob(jobname)
+		if(isnull(jobname))
+			return
 
 	feedback_add_details("admin_verb","SEQ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	for (var/obj/item/I in M)
@@ -872,7 +849,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 		if("centcom commander")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_commander(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/bulletproof(M), slot_wear_suit)
-			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/swat(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cent(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch(M), slot_glasses)
@@ -896,9 +873,9 @@ var/global/list/g_fancy_list_of_safe_types = null
 			R.set_frequency(1441)
 			M.equip_to_slot_or_del(R, slot_ears)
 
-			M.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate/combat(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/deathsquad/officer(M), slot_wear_suit)
-			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/swat/combat(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/cigarette/cigar/havana(M), slot_wear_mask)
@@ -954,7 +931,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 
 		if("soviet admiral")
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/hgpiratecap(M), slot_head)
-			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/swat/combat(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cent(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(M), slot_glasses)
@@ -1089,9 +1066,9 @@ var/global/list/g_fancy_list_of_safe_types = null
 
 	M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/deathsquad(M), slot_wear_suit)
 	M.equip_to_slot_or_del(new /obj/item/clothing/under/color/green(M), slot_w_uniform)
-	M.equip_to_slot_or_del(new /obj/item/clothing/shoes/swat(M), slot_shoes)
+	M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
 	M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
-	M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/swat(M), slot_wear_mask)
+	M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/sechailer/swat(M), slot_wear_mask)
 	M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal(M), slot_glasses)
 
 	M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(M), slot_back)

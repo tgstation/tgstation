@@ -10,8 +10,8 @@
 	anchored = 1.0
 	var/tube_construction = /obj/structure/c_transit_tube
 	var/list/tube_dirs = null
-	var/exit_delay = 2
-	var/enter_delay = 1
+	var/exit_delay = 1
+	var/enter_delay = 0
 
 	// alldirs in global.dm is the same list of directions, but since
 	//  the specific order matters to get a usable icon_state, it is
@@ -19,28 +19,18 @@
 	//  this continues to work.
 	var/global/list/tube_dir_list = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
 
+/obj/structure/transit_tube/CanPass(atom/movable/mover, turf/target)
+	if(istype(mover) && mover.checkpass(PASSGLASS))
+		return 1
+	return !density
 
 // When destroyed by explosions, properly handle contents.
-obj/structure/transit_tube/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			for(var/atom/movable/AM in contents)
-				AM.loc = loc
-				AM.ex_act(severity++)
-
-			qdel(src)
-			return
-		if(2.0)
-			if(prob(50))
-				for(var/atom/movable/AM in contents)
-					AM.loc = loc
-					AM.ex_act(severity++)
-
-				qdel(src)
-				return
-		if(3.0)
-			return
-
+obj/structure/transit_tube/ex_act(severity, specialty)
+	if(3 - severity >= 0)
+		var/oldloc = loc
+		..(severity + 1)
+		for(var/atom/movable/AM in contents)
+			AM.loc = oldloc
 
 /obj/structure/transit_tube/New(loc)
 	..(loc)
@@ -51,7 +41,7 @@ obj/structure/transit_tube/ex_act(severity)
 /obj/structure/transit_tube/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
 		if(copytext(icon_state, 1, 3) != "D-") //decorative diagonals cannot be unwrenched directly
-			for(var/obj/structure/transit_tube_pod/pod in loc)
+			for(var/obj/structure/transit_tube_pod/pod in src.loc)
 				user << "<span class='notice'>Remove the pod first.</span>"
 				return
 			user.visible_message("<span class='warning'>[user] starts to deattach the [src]!</span>", "<span class='notice'>You start deattaching the [name]...</span>")
@@ -64,6 +54,9 @@ obj/structure/transit_tube/ex_act(severity)
 				R.add_fingerprint(user)
 				src.destroy_diagonals()
 				qdel(src)
+	if(istype(W, /obj/item/weapon/crowbar))
+		for(var/obj/structure/transit_tube_pod/pod in src.loc)
+			pod.attackby(W, user)
 
 //destroys disconnected decorative diagonals
 /obj/structure/transit_tube/proc/destroy_diagonals()

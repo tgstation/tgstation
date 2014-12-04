@@ -26,8 +26,6 @@
 /client/proc/massmodify_variables(var/atom/O, var/var_name = "", var/method = 0)
 	if(!check_rights(R_VAREDIT))	return
 
-	var/list/locked = list("vars", "key", "ckey", "client", "unlock_content")
-
 	for(var/p in forbidden_varedit_object_types)
 		if( istype(O,p) )
 			usr << "<span class='danger'>It is forbidden to edit this object's variables.</span>"
@@ -51,8 +49,13 @@
 	var/var_value = O.vars[variable]
 	var/dir
 
-	if(variable == "holder" || (variable in locked))
+	if(variable in VVckey_edit)
+		usr << "It's forbidden to mass-modify ckeys. I'll crash everyone's client you dummy."
+		return
+	if(variable in VVlocked)
 		if(!check_rights(R_DEBUG))	return
+	if(variable in VVicon_edit_lock)
+		if(!check_rights(R_FUN|R_DEBUG)) return
 
 	if(isnull(var_value))
 		usr << "Unable to determine variable type."
@@ -371,5 +374,6 @@
 						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 
+	world.log << "### MassVarEdit by [src]: [O.type] [variable]=[html_encode("[O.vars[variable]]")]"
 	log_admin("[key_name(src)] mass modified [original_name]'s [variable] to [O.vars[variable]]")
 	message_admins("[key_name_admin(src)] mass modified [original_name]'s [variable] to [O.vars[variable]]")

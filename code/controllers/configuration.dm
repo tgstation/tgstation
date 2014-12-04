@@ -81,7 +81,8 @@
 	var/security_scaling_coeff = 8		//how much does the amount of players get divided by to determine open security officer positions
 
 	var/traitor_objectives_amount = 2
-	var/protect_roles_from_antagonist = 0// If security and such can be traitor/cult/other
+	var/protect_roles_from_antagonist = 0 //If security and such can be traitor/cult/other
+	var/protect_assistant_from_antagonist = 0 //If assistants can be traitor/cult/other
 	var/enforce_human_authority = 0		//If non-human species are barred from joining as a head of staff
 	var/allow_latejoin_antagonists = 0 	// If late-joining players can be traitor/changeling
 	var/continuous_round_rev = 0		// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
@@ -122,8 +123,6 @@
 	var/slime_delay = 0
 	var/animal_delay = 0
 
-	var/use_recursive_explosions //Defines whether the server uses recursive or circular explosions.
-
 	var/gateway_delay = 18000 //How long the gateway takes before it activates. Default is half an hour.
 	var/ghost_interaction = 0
 
@@ -133,6 +132,7 @@
 	var/sandbox_autoclose = 0 // close the sandbox panel after spawning an item, potentially reducing griff
 
 	var/default_laws = 0 //Controls what laws the AI spawns with.
+	var/silicon_max_law_amount = 0
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -375,6 +375,8 @@
 
 				if("protect_roles_from_antagonist")
 					config.protect_roles_from_antagonist	= 1
+				if("protect_assistant_from_antagonist")
+					config.protect_assistant_from_antagonist	= 1
 				if("enforce_human_authority")
 					config.enforce_human_authority	= 1
 				if("allow_latejoin_antagonists")
@@ -383,8 +385,6 @@
 					config.allow_random_events		= 1
 				if("jobs_have_minimal_access")
 					config.jobs_have_minimal_access	= 1
-				if("use_recursive_explosions")
-					use_recursive_explosions		= 1
 				if("humans_need_surnames")
 					humans_need_surnames			= 1
 				if("force_random_names")
@@ -399,6 +399,8 @@
 					config.sandbox_autoclose		= 1
 				if("default_laws")
 					config.default_laws				= text2num(value)
+				if("silicon_max_law_amount")
+					config.silicon_max_law_amount	= text2num(value)
 				if("join_with_mutant_race")
 					config.mutant_races				= 1
 				if("mutant_colors")

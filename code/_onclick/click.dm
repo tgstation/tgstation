@@ -37,7 +37,6 @@
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
-
 	if(client.buildmode)
 		build_click(src, client.buildmode, params, A)
 		return
@@ -101,11 +100,9 @@
 			if(!resolved && A && W)
 				W.afterattack(A,src,1,params) // 1 indicates adjacency
 		else
+			if(ismob(A))
+				changeNext_move(CLICK_CD_MELEE)
 			UnarmedAttack(A)
-
-		//If we click on a mob make sure we add cooldown
-		if(ismob(A))
-			changeNext_move(CLICK_CD_MELEE)
 		return
 
 	if(!isturf(loc)) // This is going to stop you from telekinesing from inside a closet, but I don't shed many tears for that
@@ -120,18 +117,15 @@
 				if(!resolved && A && W)
 					W.afterattack(A,src,1,params) // 1: clicking something Adjacent
 			else
+				if(ismob(A))
+					changeNext_move(CLICK_CD_MELEE)
 				UnarmedAttack(A, 1)
-
-			if(ismob(A))
-				changeNext_move(CLICK_CD_MELEE)
 			return
 		else // non-adjacent click
 			if(W)
 				W.afterattack(A,src,0,params) // 0: not Adjacent
 			else
 				RangedAttack(A, params)
-			if(ismob(A))
-				changeNext_move(CLICK_CD_RANGE)
 
 	return
 
@@ -154,6 +148,8 @@
 	in human click code to allow glove touches only at melee range.
 */
 /mob/proc/UnarmedAttack(var/atom/A, var/proximity_flag)
+	if(ismob(A))
+		changeNext_move(CLICK_CD_MELEE)
 	return
 
 /*
@@ -186,8 +182,13 @@
 */
 /mob/proc/MiddleClickOn(var/atom/A)
 	return
+
 /mob/living/carbon/MiddleClickOn(var/atom/A)
-	swap_hand()
+	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
+		next_click = world.time + 5
+		mind.changeling.chosen_sting.try_to_sting(src, A)
+	else
+		swap_hand()
 
 // In case of use break glass
 /*
@@ -229,6 +230,13 @@
 /mob/proc/AltClickOn(var/atom/A)
 	A.AltClick(src)
 	return
+
+/mob/living/carbon/AltClickOn(var/atom/A)
+	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
+		next_click = world.time + 5
+		mind.changeling.chosen_sting.try_to_sting(src, A)
+	else
+		..()
 
 /atom/proc/AltClick(var/mob/user)
 	var/turf/T = get_turf(src)
@@ -279,8 +287,7 @@
 	LE.current = T
 	LE.yo = U.y - T.y
 	LE.xo = U.x - T.x
-	spawn( 1 )
-		LE.process()
+	LE.fire()
 
 /mob/living/carbon/human/LaserEyes()
 	if(nutrition>0)

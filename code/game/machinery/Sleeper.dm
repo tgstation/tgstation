@@ -11,8 +11,9 @@
 	icon_state = "sleeper-open"
 	density = 0
 	anchored = 1
-	var/efficiency
+	interact_offline = 1
 	state_open = 1
+	var/efficiency
 	var/initial_bin_rating = 1
 	var/min_health = 25
 	var/list/injection_chems = list() //list of injectable chems except inaprovaline, coz inaprovaline is always avalible
@@ -65,6 +66,7 @@
 
 /obj/machinery/sleeper/attack_animal(var/mob/living/simple_animal/M)//Stop putting hostile mobs in things guise
 	if(M.environment_smash)
+		M.do_attack_animation(src)
 		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
 		qdel(src)
 	return
@@ -82,28 +84,9 @@
 
 	default_deconstruction_crowbar(I)
 
-/obj/machinery/sleeper/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			for(var/atom/movable/A in src)
-				A.loc = loc
-				A.ex_act(severity)
-			qdel(src)
-			return
-		if(2.0)
-			if(prob(50))
-				for(var/atom/movable/A in src)
-					A.loc = loc
-					A.ex_act(severity)
-				qdel(src)
-				return
-		if(3.0)
-			if(prob(25))
-				for(var/atom/movable/A in src)
-					A.loc = loc
-					A.ex_act(severity)
-				qdel(src)
-
+/obj/machinery/sleeper/ex_act(severity, specialty)
+	go_out()
+	..()
 
 /obj/machinery/sleeper/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
@@ -132,11 +115,17 @@
 	open_machine()
 
 /obj/machinery/sleeper/attack_hand(mob/user)
-	if(stat & (BROKEN|NOPOWER))
+	if(..())
+		return
+
+	//powerless interaction
+	if(!is_operational())
+		user.unset_machine()//essential to prevent infinite loops of opening/closing the machine
 		if(state_open)
 			close_machine()
 		else
 			open_machine()
+
 	else
 		sleeperUI(user)
 
@@ -233,6 +222,8 @@
 		..(target)
 
 /obj/machinery/sleeper/proc/inject_chem(mob/user, chem)
+	if(!is_operational())
+		return
 	if(occupant && occupant.reagents)
 		if(chem in injection_chems + "inaprovaline")
 			if(occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency)

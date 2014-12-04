@@ -180,7 +180,7 @@
 	origin_tech = "syndicate=6;combat=5"
 	var/adminlog = null
 
-/obj/item/weapon/bombcore/ex_act(severity) //Little boom can chain a big boom
+/obj/item/weapon/bombcore/ex_act(severity, specialty) //Little boom can chain a big boom
 	src.detonate()
 
 /obj/item/weapon/bombcore/proc/detonate()

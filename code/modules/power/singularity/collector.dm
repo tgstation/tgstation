@@ -82,7 +82,7 @@ var/global/list/rad_collectors = list()
 			user.visible_message("[user.name] secures the [src.name].", \
 				"You secure the external bolts.", \
 				"You hear a ratchet")
-			disconnect_from_network()
+			connect_to_network()
 		else if(anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			anchored = 0
@@ -106,7 +106,7 @@ var/global/list/rad_collectors = list()
 		return 1
 
 
-/obj/machinery/power/rad_collector/ex_act(severity)
+/obj/machinery/power/rad_collector/ex_act(severity, specialty)
 	switch(severity)
 		if(2, 3)
 			eject()

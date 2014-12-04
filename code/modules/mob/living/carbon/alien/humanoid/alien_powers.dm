@@ -134,7 +134,7 @@ Doesn't work on other aliens/AI.*/
 		A.current = U
 		A.yo = U.y - T.y
 		A.xo = U.x - T.x
-		A.process()
+		A.fire()
 	return
 
 /mob/living/carbon/alien/humanoid/proc/resin()
@@ -150,8 +150,7 @@ Doesn't work on other aliens/AI.*/
 		if(!choice || !powerc(55))	return
 		adjustToxLoss(-55)
 		src << "<span class='notice'>You shape a [choice].</span>"
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("<span class='notice'>[src] vomits up a thick purple substance and begins to shape it.</span>"), 1)
+		visible_message("<span class='notice'>[src] vomits up a thick purple substance and begins to shape it.</span>")
 		switch(choice)
 			if("resin wall")
 				new /obj/structure/alien/resin/wall(loc)

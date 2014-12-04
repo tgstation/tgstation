@@ -364,13 +364,13 @@
 			emagged = 1
 
 		on=0
-		sleep(rand(60,600))
-		if(!on)
-			on=1
+		spawn(rand(60,600))
+			if(!on)
+				on=1
 
 	..()
 
-/obj/machinery/porta_turret/ex_act(severity)
+/obj/machinery/porta_turret/ex_act(severity, specialty)
 	if(severity >= 3)	//turret dies if an explosion touches it!
 		qdel(src)
 	else
@@ -459,31 +459,18 @@
 
 				targets += C	//if the perp has passed all previous tests, congrats, it is now a "shoot-me!" nominee
 
-	if(targets.len > 0)	//if there are targets to shoot
-
-		var/atom/t = pick(targets)	//pick a perp from the list of targets. Targets go first because they are the most important
-
-		if(istype(t, /mob/living))	//if a mob
-			var/mob/living/M = t	//simple typecasting
-			if(M.stat != DEAD)		//if the target is not dead
-				spawn()
-					popUp()				//pop the turret up if it's not already up.
-				dir = get_dir(src, M)	//even if you can't shoot, follow the target
-				spawn()
-					shootAt(M)			//shoot the target, finally
-
-	else
-		if(secondarytargets.len > 0)	//if there are no primary targets, go for secondary targets
-			var/mob/t = pick(secondarytargets)
-			if(istype(t, /mob/living))
-				if(t.stat != DEAD)
-					spawn()
-						popUp()
-					dir=get_dir(src, t)
-					shootAt(t)
-		else
+	if(!tryToShootAt(targets))
+		if(!tryToShootAt(secondarytargets)) // if no valid targets, go for secondary targets
 			spawn()
-				popDown()
+				popDown() // no valid targets, close the cover
+
+
+/obj/machinery/porta_turret/proc/tryToShootAt(var/list/mob/living/targets)
+	while(targets.len > 0)
+		var/mob/living/M = pick(targets)
+		targets -= M
+		if(target(M))
+			return 1
 
 
 /obj/machinery/porta_turret/proc/popUp()	//pops the turret up
@@ -573,15 +560,19 @@
 	return threatcount
 
 
-/obj/machinery/porta_turret/proc/shootAt(atom/movable/target)	//shoots at a target
+/obj/machinery/porta_turret/proc/target(var/mob/living/target)
 	if(disabled)
 		return
+	if(target && (target.stat != DEAD) && (!(target.lying) || emagged))
+		spawn()
+			popUp()				//pop the turret up if it's not already up.
+		dir = get_dir(src, target)	//even if you can't shoot, follow the target
+		spawn()
+			shootAt(target)
+		return 1
+	return
 
-	if(lasercolor && istype(target,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = target
-		if(H.lying)
-			return
-
+/obj/machinery/porta_turret/proc/shootAt(var/mob/living/target)
 	if(!emagged)	//if it hasn't been emagged, it has to obey a cooldown rate
 		if(last_fired || !raised)	//prevents rapid-fire shooting, unless it's been emagged
 			return
@@ -619,8 +610,7 @@
 	A.current = T
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
-	spawn( 1 )
-		A.process()
+	A.fire()
 
 /obj/machinery/porta_turret/proc/setState(var/on, var/emagged)
 	if(controllock)
@@ -1133,12 +1123,18 @@ Status: []<BR>"},
 			usr << "Control panel is locked!"
 			return
 	if (href_list["toggleOn"])
-		src.enabled = !src.enabled
-		src.updateTurrets()
+		toggle_on()
 	else if (href_list["toggleLethal"])
-		src.lethal = !src.lethal
-		src.updateTurrets()
+		toggle_lethal()
 	src.attack_hand(usr)
+
+/obj/machinery/turretid/proc/toggle_lethal()
+	lethal = !lethal
+	updateTurrets()
+
+/obj/machinery/turretid/proc/toggle_on()
+	enabled = !enabled
+	updateTurrets()
 
 /obj/machinery/turretid/proc/updateTurrets()
 	if(control_area)

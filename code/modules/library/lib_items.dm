@@ -49,10 +49,11 @@
 		if(1)
 			if(istype(I, /obj/item/stack/sheet/mineral/wood))
 				var/obj/item/stack/sheet/mineral/wood/W = I
-				W.use(2)
-				user << "<span class='notice'>You add a shelf.</span>"
-				state = 2
-				icon_state = "book-0"
+				if(W.get_amount() >= 2)
+					W.use(2)
+					user << "<span class='notice'>You add a shelf.</span>"
+					state = 2
+					icon_state = "book-0"
 			if(istype(I, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
 				user << "<span class='notice'>You unwrench the frame.</span>"
@@ -83,7 +84,7 @@
 				else
 					playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 					user << "<span class='notice'>You pry the shelf out.</span>"
-					new /obj/item/stack/sheet/mineral/wood(loc, 1)
+					new /obj/item/stack/sheet/mineral/wood(loc, 2)
 					state = 1
 					icon_state = "bookempty"
 			else
@@ -104,25 +105,13 @@
 			update_icon()
 
 
-/obj/structure/bookcase/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			for(var/obj/item/weapon/book/b in contents)
-				qdel(b)
+/obj/structure/bookcase/ex_act(severity, specialty)
+	..()
+	if(!gc_destroyed)
+		for(var/obj/item/weapon/book/b in contents)
+			b.loc = (get_turf(src))
+		if(prob(50))
 			qdel(src)
-		if(2.0)
-			for(var/obj/item/weapon/book/b in contents)
-				if(prob(50))
-					b.loc = (get_turf(src))
-				else
-					qdel(b)
-			qdel(src)
-		if(3.0)
-			if(prob(50))
-				for(var/obj/item/weapon/book/b in contents)
-					b.loc = (get_turf(src))
-				qdel(src)
-
 
 /obj/structure/bookcase/update_icon()
 	if(contents.len < 5)
@@ -212,7 +201,7 @@
 					name = newtitle
 					title = newtitle
 			if("Contents")
-				var/content = strip_html(input(usr, "Write your book's contents (HTML NOT allowed):"),8192) as message|null
+				var/content = stripped_input(usr, "Write your book's contents (HTML NOT allowed):","","",8192)
 				if(!content)
 					usr << "The content is invalid."
 					return
@@ -265,6 +254,7 @@
 			var/obj/item/weapon/storage/book/B = new
 			B.name = src.name
 			B.title = src.title
+			B.icon_state = src.icon_state
 			if(user.l_hand == src || user.r_hand == src)
 				qdel(src)
 				user.put_in_hands(B)

@@ -252,13 +252,13 @@
 				var/type = href_list["vir"]
 				var/datum/disease/Dis = new type(0)
 				var/AfS = ""
-				for(var/Str in Dis.affected_species)
-					AfS += " [Str];"
+				for(var/mob/M in Dis.viable_mobtypes)
+					AfS += " [initial(M.name)];"
 				src.temp = {"<b>Name:</b> [Dis.name]
 <BR><b>Number of stages:</b> [Dis.max_stages]
-<BR><b>Spread:</b> [Dis.spread] Transmission
-<BR><b>Possible Cure:</b> [(Dis.cure||"none")]
-<BR><b>Affected Species:</b>[AfS]
+<BR><b>Spread:</b> [Dis.spread_text] Transmission
+<BR><b>Possible Cure:</b> [(Dis.cure_text||"none")]
+<BR><b>Affected Lifeforms:</b>[AfS]
 <BR>
 <BR><b>Notes:</b> [Dis.desc]
 <BR>
@@ -268,6 +268,7 @@
 				src.temp = text("Are you sure you wish to delete all records?<br>\n\t<A href='?src=\ref[];temp=1;del_all2=1'>Yes</A><br>\n\t<A href='?src=\ref[];temp=1'>No</A><br>", src, src)
 
 			else if (href_list["del_all2"])
+				investigate_log("[usr.name] ([usr.key]) has deleted all medical records.", "records")
 				data_core.medical.Cut()
 				src.temp = "All records deleted."
 
@@ -415,6 +416,7 @@
 					src.temp = text("Are you sure you wish to delete the record (Medical Portion Only)?<br>\n\t<A href='?src=\ref[];temp=1;del_r2=1'>Yes</A><br>\n\t<A href='?src=\ref[];temp=1'>No</A><br>", src, src)
 
 			else if (href_list["del_r2"])
+				investigate_log("[usr.name] ([usr.key]) has deleted the medical records for [active1.fields["name"]].", "records")
 				if(active2)
 					data_core.medical -= active2
 					active2 = null

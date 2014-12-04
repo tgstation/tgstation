@@ -30,8 +30,8 @@ var/list/advance_cures = 	list(
 	form = "Advance Disease" // Will let med-scanners know that this disease was engineered.
 	agent = "advance microbes"
 	max_stages = 5
-	spread = "Unknown"
-	affected_species = list("Human","Monkey")
+	spread_text = "Unknown"
+	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 
 	// NEW VARS
 
@@ -106,7 +106,7 @@ var/list/advance_cures = 	list(
 		var/id = "[GetDiseaseID()]"
 		if(resistance && !(id in affected_mob.resistances))
 			affected_mob.resistances[id] = id
-		affected_mob.viruses -= src		//remove the datum from the list
+		remove_virus()
 	del(src)	//delete the datum to stop it processing
 
 // Returns the advance disease with a different reference memory.
@@ -198,10 +198,14 @@ var/list/advance_cures = 	list(
 /datum/disease/advance/proc/AssignProperties(var/list/properties = list())
 
 	if(properties && properties.len)
+		switch(properties["stealth"])
+			if(2 to 3)
+				visibility_flags = HIDDEN_SCANNER
+			if(3 to INFINITY)
+				visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC
 
-		hidden = list( (properties["stealth"] > 2), (properties["stealth"] > 3) )
 		// The more symptoms we have, the less transmittable it is but some symptoms can make up for it.
-		SetSpread(Clamp(properties["transmittable"] - symptoms.len, BLOOD, AIRBORNE))
+		SetSpread(Clamp(2 ** (properties["transmittable"] - symptoms.len), BLOOD, AIRBORNE))
 		permeability_mod = max(Ceiling(0.4 * properties["transmittable"]), 1)
 		cure_chance = 15 - Clamp(properties["resistance"], -5, 5) // can be between 10 and 20
 		stage_prob = max(properties["stage_rate"], 2)
@@ -214,37 +218,35 @@ var/list/advance_cures = 	list(
 // Assign the spread type and give it the correct description.
 /datum/disease/advance/proc/SetSpread(var/spread_id)
 	switch(spread_id)
-
 		if(NON_CONTAGIOUS)
-			spread = "None"
+			spread_text = "None"
 		if(SPECIAL)
-			spread = "None"
+			spread_text = "None"
 		if(CONTACT_GENERAL, CONTACT_HANDS, CONTACT_FEET)
-			spread = "On contact"
+			spread_text = "On contact"
 		if(AIRBORNE)
-			spread = "Airborne"
+			spread_text = "Airborne"
 		if(BLOOD)
-			spread = "Blood"
+			spread_text = "Blood"
 
-	spread_type = spread_id
-	//world << "Setting spread type to [spread_id]/[spread]"
+	spread_flags = spread_id
 
 /datum/disease/advance/proc/SetSeverity(var/level_sev)
 
 	switch(level_sev)
 
 		if(-INFINITY to 0)
-			severity = non_threat
+			severity = NONTHREAT
 		if(1)
-			severity = "Minor"
+			severity = MINOR
 		if(2)
-			severity = "Medium"
+			severity = MEDIUM
 		if(3)
-			severity = "Harmful"
+			severity = HARMFUL
 		if(4)
-			severity = "Dangerous!"
+			severity = DANGEROUS
 		if(5 to INFINITY)
-			severity = "BIOHAZARD THREAT!"
+			severity = BIOHAZARD
 		else
 			severity = "Unknown"
 
@@ -254,11 +256,11 @@ var/list/advance_cures = 	list(
 	if(properties && properties.len)
 		var/res = Clamp(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
 		//world << "Res = [res]"
-		cure_id = advance_cures[res]
+		cures = list(advance_cures[res])
 
 		// Get the cure name from the cure_id
-		var/datum/reagent/D = chemical_reagents_list[cure_id]
-		cure = D.name
+		var/datum/reagent/D = chemical_reagents_list[cures[1]]
+		cure_text = D.name
 
 
 	return
@@ -406,8 +408,8 @@ var/list/advance_cures = 	list(
 		for(var/mob/living/carbon/human/H in shuffle(living_mob_list))
 			if(H.z != 1)
 				continue
-			if(!H.has_disease(D))
-				H.contract_disease(D, 1)
+			if(!H.HasDisease(D))
+				H.ForceContractDisease(D)
 				break
 
 		var/list/name_symptoms = list()

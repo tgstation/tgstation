@@ -10,12 +10,123 @@
 	..()
 	del(src)
 
+//Generic Bump(). Override MobBump() and ObjBump() instead of this.
+/mob/living/Bump(atom/A, yes)
+	if (buckled || !yes || now_pushing)
+		return
+	if(ismob(A))
+		var/mob/M = A
+		if(MobBump(M))
+			return
+	..()
+	if(isobj(A))
+		var/obj/O = A
+		if(ObjBump(O))
+			return
+	if(istype(A, /atom/movable))
+		var/atom/movable/AM = A
+		if(PushAM(AM))
+			return
+
+//Called when we bump onto a mob
+/mob/living/proc/MobBump(mob/M)
+	if(now_pushing)
+		return 1
+
+	//BubbleWrap: Should stop you pushing a restrained person out of the way
+	if(istype(M, /mob/living/carbon/human))
+		for(var/mob/MM in range(M, 1))
+			if( ((MM.pulling == M && ( M.restrained() && !( MM.restrained() ) && MM.stat == CONSCIOUS)) || locate(/obj/item/weapon/grab, M.grabbed_by.len)) )
+				if ( !(world.time % 5) )
+					src << "<span class='warning'>[M] is restrained, you cannot push past.</span>"
+				return 1
+			if( M.pulling == MM && ( MM.restrained() && !( M.restrained() ) && M.stat == CONSCIOUS) )
+				if ( !(world.time % 5) )
+					src << "<span class='warning'>[M] is restraining [MM], you cannot push past.</span>"
+				return 1
+
+	//switch our position with M
+	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
+	if((M.a_intent == "help" || M.restrained()) && (a_intent == "help" || restrained()) && M.canmove && canmove) // mutual brohugs all around!
+		now_pushing = 1
+		//TODO: Make this use Move(). we're pretty much recreating it here.
+		//it could be done by setting one of the locs to null to make Move() work, then setting it back and Move() the other mob
+		var/oldloc = loc
+		loc = M.loc
+		M.loc = oldloc
+		M.LAssailant = src
+
+		for(var/mob/living/carbon/slime/slime in view(1,M))
+			if(slime.Victim == M)
+				slime.UpdateFeed()
+
+		//cross any movable atoms on either turf
+		for(var/atom/movable/AM in loc)
+			AM.Crossed(src)
+		for(var/atom/movable/AM in oldloc)
+			AM.Crossed(M)
+		now_pushing = 0
+		return 1
+
+	//okay, so we didn't switch. but should we push?
+	//not if he's not CANPUSH of course
+	if(!(M.status_flags & CANPUSH) )
+		return 1
+	//anti-riot equipment is also anti-push
+	if(M.r_hand && istype(M.r_hand, /obj/item/weapon/shield/riot))
+		return 1
+	if(M.l_hand && istype(M.l_hand, /obj/item/weapon/shield/riot))
+		return 1
+
+//Called when we bump onto an obj
+/mob/living/proc/ObjBump(obj/O)
+	return
+
+//Called when we want to push an atom/movable
+/mob/living/proc/PushAM(atom/movable/AM)
+	if(now_pushing)
+		return 1
+	if(!AM.anchored)
+		now_pushing = 1
+		var/t = get_dir(src, AM)
+		if (istype(AM, /obj/structure/window))
+			var/obj/structure/window/W = AM
+			if(W.fulltile)
+				for(var/obj/structure/window/win in get_step(W,t))
+					now_pushing = 0
+					return
+		if(pulling == AM)
+			stop_pulling()
+		step(AM, t)
+		now_pushing = 0
+
+//mob verbs are a lot faster than object verbs
+//for more info on why this is not atom/pull, see examinate() in mob.dm
+/mob/living/verb/pulled(atom/movable/AM as mob|obj in oview(1))
+	set name = "Pull"
+	set category = "Object"
+
+	if(AM.Adjacent(src))
+		src.start_pulling(AM)
+	return
+
+//same as above
+/mob/living/pointed(atom/A as mob|obj|turf in view())
+	if(src.stat || !src.canmove || src.restrained())
+		return 0
+	if(src.status_flags & FAKEDEATH)
+		return 0
+	if(!..())
+		return 0
+	usr.visible_message("<b>[src]</b> points to [A]")
+	return 1
+
 /mob/living/verb/succumb(var/whispered as null)
 	set hidden = 1
 	if (InCritical())
 		src.attack_log += "[src] has [whispered ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!"
-		src.adjustOxyLoss(src.health + 200)
-		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss()
+		src.adjustOxyLoss(src.health - config.health_threshold_dead)
+		updatehealth()
 		if(!whispered)
 			src << "<span class='notice'>You have given up life and succumbed to death.</span>"
 		death()
@@ -23,7 +134,8 @@
 /mob/living/proc/InCritical()
 	return (src.health < 0 && src.health > -95.0 && stat == UNCONSCIOUS)
 
-/mob/living/ex_act(severity)
+/mob/living/ex_act(severity, specialty)
+	..()
 	if(client && !blinded)
 		flick("flash", src.flash)
 
@@ -315,9 +427,9 @@
 
 	return
 
-/mob/living/Move(a, b, flag)
-	if (buckled)
-		return
+/mob/living/Move(atom/newloc, direct)
+	if (buckled && buckled.loc != newloc && !buckled.anchored)
+		return buckled.Move(newloc, direct)
 
 	if (restrained())
 		stop_pulling()
@@ -328,7 +440,7 @@
 		for(var/mob/living/M in range(src, 1))
 			if ((M.pulling == src && M.stat == 0 && !( M.restrained() )))
 				t7 = null
-	if ((t7 && (pulling && ((get_dist(src, pulling) <= 1 || pulling.loc == loc) && (client && client.moving)))))
+	if (t7 && pulling && (get_dist(src, pulling) <= 1 || pulling.loc == loc))
 		var/turf/T = loc
 		. = ..()
 
@@ -395,12 +507,12 @@
 										if(check_dna_integrity(M)) //blood DNA
 											var/mob/living/carbon/DNA_helper = pulling
 											H.blood_DNA[DNA_helper.dna.unique_enzymes] = DNA_helper.dna.blood_type
-						pulling.Move(T)
+						pulling.Move(T, get_dir(pulling, T))
 						if(M)
 							M.start_pulling(t)
 				else
 					if (pulling)
-						pulling.Move(T)
+						pulling.Move(T, get_dir(pulling, T))
 	else
 		stop_pulling()
 		. = ..()
@@ -419,8 +531,8 @@
 	if(HULK in usr.mutations)
 		C.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 
-	C.visible_message("<span class='danger'>[C] manages to break [I]!</span>", \
-				"<span class='notice'>You successfully break [I].</span>")
+	C.visible_message("<span class='danger'>[C] manages to break [I]!</span>")
+	C << "<span class='notice'>You successfully break [I].</span>"
 	qdel(I)
 
 	if(C.handcuffed)
@@ -443,23 +555,25 @@
 	displaytime = breakouttime / 600
 
 	if(isalienadult(C) || HULK in usr.mutations)
-		C.visible_message("<span class='warning'>[C] is trying to break [I]!</span>", \
-				"<span class='warning'>You attempt to break [I]. (This will take around 5 seconds and you need to stand still.)</span>")
+		C.visible_message("<span class='warning'>[C] is trying to break [I]!</span>")
+		C << "<span class='notice'>You attempt to break [I]. (This will take around 5 seconds and you need to stand still.)</span>"
 		spawn(0)
 			if(do_after(C, 50))
 				if(!I || C.buckled)
 					return
 				cuff_break(I, C)
+			else
+				C << "<span class='warning'>You fail to break [I]!</span>"
 	else
 
-		C.visible_message("<span class='warning'>[usr] attempts to remove [I]!</span>", \
-				"<span class='notice'>You attempt to remove [I]. (This will take around [displaytime] minutes and you need to stand still.)</span>")
+		C.visible_message("<span class='warning'>[C] attempts to remove [I]!</span>")
+		C << "<span class='notice'>You attempt to remove [I]. (This will take around [displaytime] minutes and you need to stand still.)</span>"
 		spawn(0)
 			if(do_after(C, breakouttime))
 				if(!I || C.buckled)
 					return
-				C.visible_message("<span class='danger'>[C] manages to remove [I]!</span>", \
-						"<span class='notice'>You successfully remove [I].</span>")
+				C.visible_message("<span class='danger'>[C] manages to remove [I]!</span>")
+				C << "<span class='notice'>You successfully remove [I].</span>"
 
 				if(C.handcuffed)
 					C.handcuffed.loc = usr.loc
@@ -469,6 +583,8 @@
 					C.legcuffed.loc = usr.loc
 					C.legcuffed = null
 					C.update_inv_legcuffed(0)
+			else
+				C << "<span class='warning'>You fail to remove [I]!</span>"
 
 /mob/living/verb/resist()
 	set name = "Resist"
@@ -511,15 +627,17 @@
 			if(C.handcuffed)
 				C.changeNext_move(CLICK_CD_BREAKOUT)
 				C.last_special = world.time + CLICK_CD_BREAKOUT
-				C.visible_message("<span class='warning'>[usr] attempts to unbuckle themself!</span>", \
+				C.visible_message("<span class='warning'>[C] attempts to unbuckle themself!</span>", \
 							"<span class='notice'>You attempt to unbuckle yourself. (This will take around one minute and you need to stay still.)</span>")
 				spawn(0)
 					if(do_after(usr, 600))
 						if(!C.buckled)
 							return
-						C.visible_message("<span class='danger'>[usr] manages to unbuckle themself!</span>", \
+						C.visible_message("<span class='danger'>[C] manages to unbuckle themself!</span>", \
 											"<span class='notice'>You successfully unbuckle yourself.</span>")
 						C.buckled.manual_unbuckle(C)
+					else
+						C << "<span class='warning'>You fail to unbuckle yourself!</span>"
 			else
 				L.buckled.manual_unbuckle(L)
 		else
@@ -630,3 +748,41 @@
 				src.unEquip(what)
 				who.equip_to_slot_if_possible(what, where, 0, 1)
 				add_logs(src, who, "equipped", object=what)
+
+/mob/living/singularity_act()
+	var/gain = 20
+	investigate_log(" has consumed [key_name(src)].","singulo") //Oh that's where the clown ended up!
+	gib()
+	return(gain)
+
+/mob/living/singularity_pull(S)
+	step_towards(src,S)
+
+/mob/living/proc/do_attack_animation(atom/A)
+	var/pixel_x_diff = 0
+	var/pixel_y_diff = 0
+	var/direction = get_dir(src, A)
+	switch(direction)
+		if(NORTH)
+			pixel_y_diff = 8
+		if(SOUTH)
+			pixel_y_diff = -8
+		if(EAST)
+			pixel_x_diff = 8
+		if(WEST)
+			pixel_x_diff = -8
+		if(NORTHEAST)
+			pixel_x_diff = 8
+			pixel_y_diff = 8
+		if(NORTHWEST)
+			pixel_x_diff = -8
+			pixel_y_diff = 8
+		if(SOUTHEAST)
+			pixel_x_diff = 8
+			pixel_y_diff = -8
+		if(SOUTHWEST)
+			pixel_x_diff = -8
+			pixel_y_diff = -8
+	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
+	animate(pixel_x = initial(pixel_x), pixel_y = initial(pixel_y), time = 2)
+	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.

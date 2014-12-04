@@ -16,6 +16,7 @@ var/bomb_set
 	var/obj/item/weapon/disk/nuclear/auth = null
 	use_power = 0
 	var/previous_level = ""
+	var/lastentered = ""
 
 /obj/machinery/nuclearbomb/process()
 	if (src.timing)
@@ -98,9 +99,15 @@ var/bomb_set
 					src.yes_code = 0
 					src.code = null
 				else
-					src.code += text("[]", href_list["type"])
-					if (length(src.code) > 5)
-						src.code = "ERROR"
+					lastentered = text("[]", href_list["type"])
+					if (text2num(lastentered) == null)
+						var/turf/LOC = get_turf(usr)
+						message_admins("[key_name_admin(usr)] tried to exploit a nuclear bomb by entering non-numerical codes: <a href='?_src_=vars;Vars=\ref[src]'>[lastentered]</a> ! ([LOC ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[LOC.x];Y=[LOC.y];Z=[LOC.z]'>JMP</a>" : "null"])", 0)
+						log_admin("EXPLOIT : [key_name(usr)] tried to exploit a nuclear bomb by entering non-numerical codes: [lastentered] !")
+					else
+						src.code += lastentered
+						if (length(src.code) > 5)
+							src.code = "ERROR"
 		if (src.yes_code)
 			if (href_list["time"])
 				var/time = text2num(href_list["time"])
@@ -142,7 +149,7 @@ var/bomb_set
 		if ((M.client && M.machine == src))
 			src.attack_hand(M)
 
-/obj/machinery/nuclearbomb/ex_act(severity)
+/obj/machinery/nuclearbomb/ex_act(severity, specialty)
 	return
 
 /obj/machinery/nuclearbomb/blob_act()
@@ -232,8 +239,9 @@ var/bomb_set
 	if(blobstart.len > 0)
 		var/obj/item/weapon/disk/nuclear/NEWDISK = new(pick(blobstart))
 		transfer_fingerprints_to(NEWDISK)
-		message_admins("[src] has been destroyed in ([x], [y] ,[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>). Moving it to ([NEWDISK.x], [NEWDISK.y], [NEWDISK.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[NEWDISK.x];Y=[NEWDISK.y];Z=[NEWDISK.z]'>JMP</a>).")
-		log_game("[src] has been destroyed in ([x], [y] ,[z]). Moving it to ([NEWDISK.x], [NEWDISK.y], [NEWDISK.z]).")
+		var/turf/diskturf = get_turf(src)
+		message_admins("[src] has been destroyed in ([diskturf.x], [diskturf.y] ,[diskturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[diskturf.x];Y=[diskturf.y];Z=[diskturf.z]'>JMP</a>). Moving it to ([NEWDISK.x], [NEWDISK.y], [NEWDISK.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[NEWDISK.x];Y=[NEWDISK.y];Z=[NEWDISK.z]'>JMP</a>).")
+		log_game("[src] has been destroyed in ([diskturf.x], [diskturf.y] ,[diskturf.z]). Moving it to ([NEWDISK.x], [NEWDISK.y], [NEWDISK.z]).")
 		del(src) //Needed to clear all references to it
 	else
 		ERROR("[src] was supposed to be destroyed, but we were unable to locate a blobstart landmark to spawn a new one.")

@@ -1,18 +1,28 @@
 /obj/item/clothing/under/color
-	desc = "A standard issue colored jumpsuit for assistants. Variety is the spice of life!"
+	desc = "A standard issue colored jumpsuit. Variety is the spice of life!"
 
 /obj/item/clothing/under/color/random/New()
-	var/obj/item/clothing/under/color/C = pick(typesof(/obj/item/clothing/under/color) - /obj/item/clothing/under/color/random)
+	..()
+	var/list/excluded = list(/obj/item/clothing/under/color/random, /obj/item/clothing/under/color)
+	var/obj/item/clothing/under/color/C = pick(typesof(/obj/item/clothing/under/color) - excluded)
 	name = initial(C.name)
 	icon_state = initial(C.icon_state)
 	item_state = initial(C.item_state)
 	item_color = initial(C.item_color)
+	suit_color = initial(C.item_color)
 
 /obj/item/clothing/under/color/black
 	name = "black jumpsuit"
 	icon_state = "black"
 	item_state = "bl_suit"
 	item_color = "black"
+
+/obj/item/clothing/under/color/grey
+	name = "grey jumpsuit"
+	desc = "A tasteful grey jumpsuit that reminds you of the good old days."
+	icon_state = "grey"
+	item_state = "gy_suit"
+	item_color = "grey"
 
 /obj/item/clothing/under/color/blue
 	name = "blue jumpsuit"
@@ -26,12 +36,6 @@
 	item_state = "g_suit"
 	item_color = "green"
 
-/obj/item/clothing/under/color/grey
-	name = "grey jumpsuit"
-	icon_state = "grey"
-	item_state = "gy_suit"
-	item_color = "grey"
-
 /obj/item/clothing/under/color/orange
 	name = "orange jumpsuit"
 	desc = "Don't wear this near paranoid security officers."
@@ -42,6 +46,7 @@
 /obj/item/clothing/under/color/pink
 	name = "pink jumpsuit"
 	icon_state = "pink"
+	desc = "Just looking at this makes you feel <i>fabulous</i>."
 	item_state = "p_suit"
 	item_color = "pink"
 

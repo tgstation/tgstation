@@ -10,7 +10,6 @@
 	response_disarm = "flails at"
 	response_harm = "hits"
 	speak_chance = 0
-	a_intent = "harm"
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 15
 	health = 15
@@ -24,6 +23,7 @@
 	attack_sound = 'sound/weapons/bite.ogg'
 	environment_smash = 0
 	ventcrawler = 2
+	mob_size = 0
 
 
 	//Space bats need no air to fly in.

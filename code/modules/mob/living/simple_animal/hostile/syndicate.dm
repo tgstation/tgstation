@@ -99,7 +99,7 @@
 	corpse = /obj/effect/landmark/mobcorpse/syndicatecommando
 	speed = 1
 
-/mob/living/simple_animal/hostile/syndicate/melee/space/Process_Spacemove(var/check_drift = 0)
+/mob/living/simple_animal/hostile/syndicate/melee/space/Process_Spacemove(var/movement_dir = 0)
 	return
 
 /mob/living/simple_animal/hostile/syndicate/ranged
@@ -131,7 +131,7 @@
 	corpse = /obj/effect/landmark/mobcorpse/syndicatecommando
 	speed = 1
 
-/mob/living/simple_animal/hostile/syndicate/ranged/space/Process_Spacemove(var/check_drift = 0)
+/mob/living/simple_animal/hostile/syndicate/ranged/space/Process_Spacemove(var/movement_dir = 0)
 	return
 
 
@@ -158,6 +158,7 @@
 	min_n2 = 0
 	max_n2 = 0
 	minbodytemp = 0
+	mob_size = 0
 
 /mob/living/simple_animal/hostile/viscerator/Die()
 	..()

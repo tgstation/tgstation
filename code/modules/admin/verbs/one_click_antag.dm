@@ -62,6 +62,9 @@ client/proc/one_click_antag()
 	if(config.protect_roles_from_antagonist)
 		temp.restricted_jobs += temp.protected_jobs
 
+	if(config.protect_assistant_from_antagonist)
+		temp.restricted_jobs += "Assistant"
+
 	var/list/mob/living/carbon/human/candidates = list()
 	var/mob/living/carbon/human/H = null
 
@@ -94,6 +97,9 @@ client/proc/one_click_antag()
 	if(config.protect_roles_from_antagonist)
 		temp.restricted_jobs += temp.protected_jobs
 
+	if(config.protect_assistant_from_antagonist)
+		temp.restricted_jobs += "Assistant"
+
 	var/list/mob/living/carbon/human/candidates = list()
 	var/mob/living/carbon/human/H = null
 
@@ -123,6 +129,9 @@ client/proc/one_click_antag()
 	var/datum/game_mode/revolution/temp = new
 	if(config.protect_roles_from_antagonist)
 		temp.restricted_jobs += temp.protected_jobs
+
+	if(config.protect_assistant_from_antagonist)
+		temp.restricted_jobs += "Assistant"
 
 	var/list/mob/living/carbon/human/candidates = list()
 	var/mob/living/carbon/human/H = null
@@ -188,6 +197,9 @@ client/proc/one_click_antag()
 	var/datum/game_mode/cult/temp = new
 	if(config.protect_roles_from_antagonist)
 		temp.restricted_jobs += temp.protected_jobs
+
+	if(config.protect_assistant_from_antagonist)
+		temp.restricted_jobs += "Assistant"
 
 	var/list/mob/living/carbon/human/candidates = list()
 	var/mob/living/carbon/human/H = null
@@ -290,8 +302,6 @@ client/proc/one_click_antag()
 				new_character.mind.make_Nuke(synd_spawn[spawnpos],nuke_code)
 			spawnpos++
 
-		ticker.mode.update_all_synd_icons()
-
 	return 1
 
 
@@ -390,6 +400,9 @@ client/proc/one_click_antag()
 	var/datum/game_mode/gang/temp = new
 	if(config.protect_roles_from_antagonist)
 		temp.restricted_jobs += temp.protected_jobs
+
+	if(config.protect_assistant_from_antagonist)
+		temp.restricted_jobs += "Assistant"
 
 	var/list/mob/living/carbon/human/candidates = list()
 	var/mob/living/carbon/human/H = null

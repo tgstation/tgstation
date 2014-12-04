@@ -10,7 +10,7 @@
 	var/occupied = 1
 	var/destroyed = 0
 
-/obj/structure/lamarr/ex_act(severity)
+/obj/structure/lamarr/ex_act(severity, specialty)
 	switch(severity)
 		if (1)
 			new /obj/item/weapon/shard( src.loc )
@@ -75,10 +75,8 @@
 	if (src.destroyed)
 		return
 	else
-		usr << text("<span class='notice'>You kick the lab cage.</span>")
-		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
-				O << text("<span class='danger'>[] kicks the lab cage.</span>", usr)
+		user.visible_message("<span class='danger'>[user] kicks the lab cage.</span>", \
+					 		"<span class='notice'>You kick the lab cage.</span>")
 		src.health -= 2
 		healthcheck()
 		return

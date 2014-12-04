@@ -7,7 +7,6 @@
 
 /obj/structure/closet/malf/suits/New()
 	..()
-	sleep(2)
 	new /obj/item/weapon/tank/jetpack/void(src)
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/clothing/head/helmet/space/nasavoid(src)

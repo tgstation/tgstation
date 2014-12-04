@@ -1,8 +1,23 @@
+/mob/living/carbon/prepare_huds()
+	..()
+	prepare_data_huds()
+
+/mob/living/carbon/proc/prepare_data_huds()
+	..()
+	med_hud_set_health()
+	med_hud_set_status()
+
+/mob/living/carbon/updatehealth()
+	..()
+	med_hud_set_health()
+	med_hud_set_status()
+
 /mob/living/carbon/Destroy()
 	for(var/atom/movable/guts in internal_organs)
 		qdel(guts)
 	for(var/atom/movable/food in stomach_contents)
 		qdel(food)
+	remove_from_all_data_huds()
 	return ..()
 
 /mob/living/carbon/Move(NewLoc, direct)
@@ -57,55 +72,6 @@
 		visible_message("<span class='danger'>[M] bursts out of [src]!</span>")
 	. = ..()
 
-/mob/living/carbon/MiddleClickOn(var/atom/A)
-	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
-		next_click = world.time + 5
-		mind.changeling.chosen_sting.try_to_sting(src, A)
-	else
-		..()
-
-/mob/living/carbon/AltClickOn(var/atom/A)
-	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
-		next_click = world.time + 5
-		mind.changeling.chosen_sting.try_to_sting(src, A)
-	else
-		..()
-
-/mob/living/carbon/attack_hand(mob/user)
-	if(!iscarbon(user)) return
-
-	for(var/datum/disease/D in viruses)
-		if(D.spread_by_touch())
-			user.contract_disease(D, 0, 1, CONTACT_HANDS)
-
-	for(var/datum/disease/D in user.viruses)
-		if(D.spread_by_touch())
-			contract_disease(D, 0, 1, CONTACT_HANDS)
-
-	if(lying || isslime(src))
-		if(user.a_intent == "help")
-			if(surgeries.len)
-				for(var/datum/surgery/S in surgeries)
-					if(S.next_step(user, src))
-						return 1
-	return 0
-
-
-/mob/living/carbon/attack_paw(mob/M as mob)
-	if(!istype(M, /mob/living/carbon)) return
-
-
-	for(var/datum/disease/D in viruses)
-
-		if(D.spread_by_touch())
-			M.contract_disease(D, 0, 1, CONTACT_HANDS)
-
-	for(var/datum/disease/D in M.viruses)
-
-		if(D.spread_by_touch())
-			contract_disease(D, 0, 1, CONTACT_HANDS)
-
-	return
 
 /mob/living/carbon/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0)
 	shock_damage *= siemens_coeff
@@ -255,6 +221,8 @@
 
 //Throwing stuff
 /mob/living/carbon/proc/toggle_throw_mode()
+	if(stat)
+		return
 	if(in_throw_mode)
 		throw_mode_off()
 	else
@@ -275,9 +243,9 @@
 
 /mob/living/carbon/throw_item(atom/target)
 	throw_mode_off()
-	if(usr.stat || !target)
+	if(!target || !isturf(loc))
 		return
-	if(target.type == /obj/screen) return
+	if(istype(target, /obj/screen)) return
 
 	var/atom/movable/item = src.get_active_hand()
 
@@ -295,7 +263,7 @@
 				var/start_T_descriptor = "<font color='#6b5d00'>tile at [start_T.x], [start_T.y], [start_T.z] in area [get_area(start_T)]</font>"
 				var/end_T_descriptor = "<font color='#6b4400'>tile at [end_T.x], [end_T.y], [end_T.z] in area [get_area(end_T)]</font>"
 
-				add_logs(usr, M, "thrown", admin=0, addition="from [start_T_descriptor] with the target [end_T_descriptor]")
+				add_logs(src, M, "thrown", admin=0, addition="from [start_T_descriptor] with the target [end_T_descriptor]")
 
 	if(!item) return //Grab processing has a chance of returning null
 
@@ -309,20 +277,7 @@
 		item.layer = initial(item.layer)
 		src.visible_message("<span class='danger'>[src] has thrown [item].</span>")
 
-		if(!src.lastarea)
-			src.lastarea = get_area(src.loc)
-		if(!has_gravity(src))
-			src.inertia_dir = get_dir(target, src)
-			step(src, inertia_dir)
-
-
-/*
-		if(istype(src.loc, /turf/space) || (src.flags & NOGRAV)) //they're in space, move em one space in the opposite direction
-			src.inertia_dir = get_dir(target, src)
-			step(src, inertia_dir)
-*/
-
-
+		newtonian_move(get_dir(target, src))
 
 		item.throw_at(target, item.throw_range, item.throw_speed)
 
@@ -439,16 +394,6 @@
 					visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>", \
 									"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>")
 
-
-/mob/living/carbon/attackby(obj/item/I, mob/user)
-	if(lying || isslime(src))
-		if(surgeries.len)
-			if(user.a_intent == "help")
-				for(var/datum/surgery/S in surgeries)
-					if(S.next_step(user, src))
-						return 1
-
-	..()
 
 
 /mob/living/carbon/getTrail()

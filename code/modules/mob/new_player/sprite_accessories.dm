@@ -461,6 +461,18 @@
 	name = "Mega Eyebrows"
 	icon_state = "hair_megaeyebrows"
 
+/datum/sprite_accessory/hair/highponytail
+	name = "High Ponytail"
+	icon_state = "hair_highponytail"
+
+/datum/sprite_accessory/hair/longponytail
+	name = "Long Ponytail"
+	icon_state = "hair_longstraightponytail"
+
+/datum/sprite_accessory/hair/sidepartlongalt
+	name = "Long Side Part"
+	icon_state = "hair_longsidepart"
+
 /////////////////////////////
 // Facial Hair Definitions //
 /////////////////////////////

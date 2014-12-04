@@ -24,51 +24,57 @@
 	//weight = 1.0E7
 	health = 25
 	maxhealth = 25
-	var/cleaning = 0
 	var/blood = 1
 	var/list/target_types = list()
 	var/obj/effect/decal/cleanable/target
 	var/obj/effect/decal/cleanable/oldtarget
+	var/max_targets = 50 //Maximum number of targets a cleanbot can ignore.
 	var/oldloc = null
-	req_access = list(access_janitor)
-	var/path[] = new()
-	var/patrol_path[] = null
-	var/beacon_freq = 1445		// navigation beacon frequency
+	req_one_access = list(access_janitor, access_robotics)
+//	var/patrol_path[] = null
+//	var/beacon_freq = 1445		// navigation beacon frequency
 	var/closest_dist
 	var/closest_loc
 	var/failed_steps
-	var/should_patrol
 	var/next_dest
 	var/next_dest_loc
+	radio_frequency = SERV_FREQ //Service
+	bot_type = CLEAN_BOT
+	bot_filter = RADIO_CLEANBOT
 
 /obj/machinery/bot/cleanbot/New()
 	..()
-	src.get_targets()
-	src.icon_state = "cleanbot[src.on]"
+	get_targets()
+	icon_state = "cleanbot[on]"
 
-	should_patrol = 1
-
-	src.botcard = new /obj/item/weapon/card/id(src)
 	var/datum/job/janitor/J = new/datum/job/janitor
-	src.botcard.access = J.get_access()
+	botcard.access = J.get_access()
+	prev_access = botcard.access
 
-	if(radio_controller)
-		radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
-
+	spawn(5)
+		add_to_beacons(bot_filter)
 
 /obj/machinery/bot/cleanbot/turn_on()
-	. = ..()
-	src.icon_state = "cleanbot[src.on]"
-	src.updateUsrDialog()
+	..()
+	icon_state = "cleanbot[on]"
+	updateUsrDialog()
 
 /obj/machinery/bot/cleanbot/turn_off()
 	..()
-	src.target = null
-	src.oldtarget = null
-	src.oldloc = null
-	src.icon_state = "cleanbot[src.on]"
-	src.path = new()
-	src.updateUsrDialog()
+	icon_state = "cleanbot[on]"
+	updateUsrDialog()
+
+/obj/machinery/bot/cleanbot/bot_reset()
+	..()
+	ignore_list = list() //Allows the bot to clean targets it previously ignored due to being unreachable.
+	target = null
+	oldtarget = null
+	oldloc = null
+
+/obj/machinery/bot/cleanbot/set_custom_texts()
+	text_hack = "You corrupt [name]'s cleaning software."
+	text_dehack = "[name]'s software has been reset!"
+	text_dehack_fail = "[name] does not seem to respond to your repair code!"
 
 /obj/machinery/bot/cleanbot/attack_hand(mob/user as mob)
 	. = ..()
@@ -81,76 +87,39 @@
 	var/dat
 	dat += hack(user)
 	dat += text({"
-<TT><B>Automatic Station Cleaner v1.0</B></TT><BR><BR>
+<TT><B>Cleaner v1.1 controls</B></TT><BR><BR>
 Status: []<BR>
-Behaviour controls are [src.locked ? "locked" : "unlocked"]<BR>
-Maintenance panel panel is [src.open ? "opened" : "closed"]"},
-text("<A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>"))
-	if(!src.locked || issilicon(user))
-		dat += text({"<BR>Cleans Blood: []<BR>"}, text("<A href='?src=\ref[src];operation=blood'>[src.blood ? "Yes" : "No"]</A>"))
-		dat += text({"<BR>Patrol station: []<BR>"}, text("<A href='?src=\ref[src];operation=patrol'>[src.should_patrol ? "Yes" : "No"]</A>"))
-	//	dat += text({"<BR>Beacon frequency: []<BR>"}, text("<A href='?src=\ref[src];operation=freq'>[src.beacon_freq]</A>"))
-/*	if(src.open && !src.locked)
-		dat += text({"
-Odd looking screw twiddled: []<BR>
-Weird button pressed: []"},
-text("<A href='?src=\ref[src];operation=screw'>[src.screwloose ? "Yes" : "No"]</A>"),
-text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"]</A>"))*/
+Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
+Maintenance panel panel is [open ? "opened" : "closed"]"},
+text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
+	if(!locked || issilicon(user))
+		dat += text({"<BR>Cleans Blood: []<BR>"}, text("<A href='?src=\ref[src];operation=blood'>[blood ? "Yes" : "No"]</A>"))
+		dat += text({"<BR>Patrol station: []<BR>"}, text("<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A>"))
 
-	user << browse("<HEAD><TITLE>Cleaner v1.0 controls</TITLE></HEAD>[dat]", "window=autocleaner")
-	onclose(user, "autocleaner")
+	var/datum/browser/popup = new(user, "autoclean", "Automatic Station Cleaner v1.1")
+	popup.set_content(dat)
+	popup.open()
 	return
 
 /obj/machinery/bot/cleanbot/Topic(href, href_list)
-	if(..())
-		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
+
+	..()
 	switch(href_list["operation"])
-		if("start")
-			if (src.on && !src.emagged)
-				turn_off()
-			else
-				turn_on()
 		if("blood")
-			src.blood =!src.blood
-			src.get_targets()
-			src.updateUsrDialog()
-		if("patrol")
-			src.should_patrol =!src.should_patrol
-			src.patrol_path = null
-			src.updateUsrDialog()
+			blood =!blood
+			get_targets()
+			updateUsrDialog()
 		if("freq")
 			var/freq = text2num(input("Select frequency for  navigation beacons", "Frequency", num2text(beacon_freq / 10))) * 10
 			if (freq > 0)
-				src.beacon_freq = freq
-			src.updateUsrDialog()
-/*		if("screw")
-			src.screwloose = !src.screwloose
-			usr << "<span class='notice>You twiddle the screw.</span>"
-			src.updateUsrDialog()
-		if("oddbutton")
-			src.oddbutton = !src.oddbutton
-			usr << "<span class='notice'>You press the weird button.</span>"
-			src.updateUsrDialog() */
-		if("hack")
-			if(!src.emagged)
-				src.emagged = 2
-				src.hacked = 1
-				usr << "<span class='warning'>You corrupt [src]'s cleaning software.</span>"
-			else if(!src.hacked)
-				usr << "<span class='userdanger'>[src] does not seem to respond to your repair code!</span>"
-			else
-				src.hacked = 0
-				src.emagged = 0
-				usr << "<span class='notice'>[src]'s software has been reset!</span>"
-			src.updateUsrDialog()
+				beacon_freq = freq
+			updateUsrDialog()
 
 /obj/machinery/bot/cleanbot/attackby(obj/item/weapon/W, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if(src.allowed(usr) && !open && !emagged)
-			src.locked = !src.locked
-			user << "<span class='notice'>You [ src.locked ? "lock" : "unlock"] the [src] behaviour controls.</span>"
+		if(allowed(usr) && !open && !emagged)
+			locked = !locked
+			user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the [src] behaviour controls.</span>"
 		else
 			if(emagged)
 				user << "<span class='warning'>ERROR</span>"
@@ -163,135 +132,77 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 
 /obj/machinery/bot/cleanbot/Emag(mob/user as mob)
 	..()
-	if(open && !locked)
-		if(user) user << "<span class='notice'>[src] buzzes and beeps.</span>"
-		src.emagged = 2
+	if(emagged == 2)
+		if(user)
+			user << "<span class='danger'>[src] buzzes and beeps.</span>"
 
-/obj/machinery/bot/cleanbot/process()
-	set background = BACKGROUND_ENABLED
+/obj/machinery/bot/cleanbot/process_scan(var/obj/effect/decal/cleanable/D)
+	for(var/T in target_types)
+		if(istype(D, T))
+			return D
 
-	if(!src.on)
+/obj/machinery/bot/cleanbot/bot_process()
+	if (!..())
 		return
-	if(src.cleaning)
-		return
-	var/list/cleanbottargets = list()
 
-	if(!src.emagged && prob(5))
+	if(mode == BOT_CLEANING)
+		return
+
+	if(emagged == 2) //Emag functions
+		if(istype(loc,/turf/simulated))
+
+			if(prob(10)) //Wets floors randomly
+				var/turf/simulated/T = loc
+				T.MakeSlippery()
+
+			if(prob(5)) //Spawns foam!
+				visible_message("<span class='danger'>[src] whirs and bubbles violently, before releasing a plume of froth!</span>")
+				new /obj/effect/effect/foam(loc)
+
+	else if (prob(5))
 		visible_message("[src] makes an excited beeping booping sound!")
 
-	if(src.emagged && prob(10)) //Wets floors randomly
-		if(istype(loc,/turf/simulated))
-			var/turf/simulated/T = src.loc
-			T.MakeSlippery()
+	if(!target) //Search for cleanables it can see.
+		target = scan(/obj/effect/decal/cleanable/, oldtarget)
+		oldtarget = target
 
-	if(src.emagged && prob(5)) //Spawns foam!
-		visible_message("<span class='danger'>[src] whirs and bubbles violently, before releasing a plume of froth!</span>")
-		new /obj/effect/effect/foam(src.loc)
+	if(!target)
+		if(loc != oldloc)
+			oldtarget = null
 
-	if(!src.target || src.target == null)
-		for (var/obj/effect/decal/cleanable/D in view(7,src))
-			for(var/T in src.target_types)
-				if(!(D in cleanbottargets) && (D.type == T || D.parent_type == T) && D != src.oldtarget)
-					src.oldtarget = D
-					src.target = D
-					return
+		if(auto_patrol)
+			if(mode == BOT_IDLE || mode == BOT_START_PATROL)
+				start_patrol()
 
-	if(!src.target || src.target == null)
-		if(src.loc != src.oldloc)
-			src.oldtarget = null
+			if(mode == BOT_PATROL)
+				bot_patrol()
 
-		if (!should_patrol)
+		return
+
+	if(target)
+		if(!path || path.len == 0) //No path, need a new one
+			//Try to produce a path to the target, and ignore airlocks to which it has access.
+			path = get_path_to(loc, target.loc, /turf/proc/AdjacentTurfsWithAccess, /turf/proc/Distance, 0, 30, id=botcard)
+			if (!bot_move(target))
+				add_to_ignore(target)
+				target = null
+				path = list()
+				return
+			mode = BOT_MOVING
+		else if (!bot_move(target))
+			target = null
+			mode = BOT_IDLE
 			return
 
-		if (!patrol_path || patrol_path.len < 1)
-			var/datum/radio_frequency/frequency = radio_controller.return_frequency(beacon_freq)
+	if(target && loc == target.loc)
+		clean(target)
+		path = list()
+		target = null
 
-			if(!frequency) return
-
-			closest_dist = 9999
-			closest_loc = null
-			next_dest_loc = null
-
-			var/datum/signal/signal = new()
-			signal.source = src
-			signal.transmission_method = 1
-			signal.data = list("findbeacon" = "patrol")
-			frequency.post_signal(src, signal, filter = RADIO_NAVBEACONS)
-			spawn(5)
-				if (!next_dest_loc)
-					next_dest_loc = closest_loc
-				if (next_dest_loc)
-					src.patrol_path = AStar(src.loc, next_dest_loc, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 120, id=botcard, exclude=null)
-					if(!patrol_path)
-						patrol_path = list()
-		else
-			patrol_move()
-
-		return
-
-	if(target && path.len == 0)
-		spawn(0)
-			if(!src || !target) return
-			src.path = AStar(src.loc, src.target.loc, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 30)
-			if(!src.path)
-				src.path = list()
-			if(src.path.len == 0)
-				src.oldtarget = src.target
-				src.target = null
-		return
-	if(src.path.len > 0 && src.target && (src.target != null))
-		step_to(src, src.path[1])
-		src.path -= src.path[1]
-	else if(src.path.len == 1)
-		step_to(src, target)
-
-	if(src.target && (src.target != null))
-		patrol_path = null
-		if(src.loc == src.target.loc)
-			clean(src.target)
-			src.path = new()
-			src.target = null
-			return
-
-	src.oldloc = src.loc
-
-/obj/machinery/bot/cleanbot/proc/patrol_move()
-	if (src.patrol_path.len <= 0)
-		return
-
-	var/next = src.patrol_path[1]
-	src.patrol_path -= next
-	if (next == src.loc)
-		return
-
-	var/moved = step_towards(src, next)
-	if (!moved)
-		failed_steps++
-	if (failed_steps > 4)
-		patrol_path = null
-		next_dest = null
-		failed_steps = 0
-	else
-		failed_steps = 0
-
-/obj/machinery/bot/cleanbot/receive_signal(datum/signal/signal)
-	var/recv = signal.data["beacon"]
-	var/valid = signal.data["patrol"]
-	if(!recv || !valid)
-		return
-
-	var/dist = get_dist(src, signal.source.loc)
-	if (dist < closest_dist && signal.source.loc != src.loc)
-		closest_dist = dist
-		closest_loc = signal.source.loc
-		next_dest = signal.data["next_patrol"]
-
-	if (recv == next_dest)
-		next_dest_loc = signal.source.loc
-		next_dest = signal.data["next_patrol"]
+	oldloc = loc
 
 /obj/machinery/bot/cleanbot/proc/get_targets()
-	src.target_types = new/list()
+	target_types = new/list()
 
 	target_types += /obj/effect/decal/cleanable/oil
 	target_types += /obj/effect/decal/cleanable/vomit
@@ -306,7 +217,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	target_types += /obj/effect/decal/cleanable/greenglow
 	target_types += /obj/effect/decal/cleanable/dirt
 
-	if(src.blood)
+	if(blood)
 		target_types += /obj/effect/decal/cleanable/xenoblood/
 		target_types += /obj/effect/decal/cleanable/xenoblood/xgibs
 		target_types += /obj/effect/decal/cleanable/blood/
@@ -314,20 +225,21 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		target_types += /obj/effect/decal/cleanable/trail_holder
 
 /obj/machinery/bot/cleanbot/proc/clean(var/obj/effect/decal/cleanable/target)
-	src.anchored = 1
-	src.icon_state = "cleanbot-c"
-	visible_message("<span class='danger'>[src] begins to clean up [target]</span>")
-	src.cleaning = 1
+	anchored = 1
+	icon_state = "cleanbot-c"
+	visible_message("<span class='notice'>[src] begins to clean up [target]</span>")
+	mode = BOT_CLEANING
 	spawn(50)
-		src.cleaning = 0
-		qdel(target)
-		src.icon_state = "cleanbot[src.on]"
-		src.anchored = 0
-		src.target = null
+		if(mode == BOT_CLEANING)
+			qdel(target)
+			anchored = 0
+			target = null
+		mode = BOT_IDLE
+		icon_state = "cleanbot[on]"
 
 /obj/machinery/bot/cleanbot/explode()
-	src.on = 0
-	src.visible_message("<span class='userdanger'><B>[src] blows apart!</B></span>")
+	on = 0
+	visible_message("<span class='userdanger'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/weapon/reagent_containers/glass/bucket(Tsec)
@@ -348,17 +260,17 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
 		user.drop_item()
 		qdel(W)
-		var/turf/T = get_turf(src.loc)
+		var/turf/T = get_turf(loc)
 		var/obj/machinery/bot/cleanbot/A = new /obj/machinery/bot/cleanbot(T)
-		A.name = src.created_name
+		A.name = created_name
 		user << "<span class='notice'>You add the robot arm to the bucket and sensor assembly. Beep boop!</span>"
 		user.unEquip(src, 1)
 		qdel(src)
 
 	else if (istype(W, /obj/item/weapon/pen))
-		var/t = copytext(stripped_input(user, "Enter new robot name", src.name, src.created_name),1,MAX_NAME_LEN)
+		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
 		if (!t)
 			return
-		if (!in_range(src, usr) && src.loc != usr)
+		if (!in_range(src, usr) && loc != usr)
 			return
-		src.created_name = t
+		created_name = t

@@ -23,15 +23,15 @@
 	return 1
 
 
-/obj/item/device/flash/proc/burn_out(var/mob/user) //Made so you can override it if you want to have an invincible flash from R&D or something.
+/obj/item/device/flash/proc/burn_out() //Made so you can override it if you want to have an invincible flash from R&D or something.
 	broken = 1
 	icon_state = "[initial(icon_state)]burnt"
-	user.visible_message("<span class='notice'>The [src.name] burns out!</span>")
+	visible_message("<span class='notice'>The [src.name] burns out!</span>")
 
 
 /obj/item/device/flash/proc/flash_recharge(var/mob/user)
 	if(prob(times_used * 2))	//if you use it 5 times in a minute it has a 10% chance to break!
-		burn_out(user)
+		burn_out()
 		return 0
 
 	var/deciseconds_passed = world.time - last_used
@@ -66,7 +66,7 @@
 		flick("e_flash", M.flash)
 		if(user && convert)
 			terrible_conversion_proc(M, user)
-
+			M.Stun(1)
 
 /obj/item/device/flash/attack(mob/living/M, mob/user)
 	if(!try_use_flash(user))
@@ -157,3 +157,5 @@
 	desc = "If you see this, you're not likely to remember it any time soon."
 	icon_state = "memorizer"
 	item_state = "nullrod"
+
+/obj/item/device/flash/handheld //this is now the regular pocket flashes

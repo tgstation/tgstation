@@ -68,6 +68,7 @@
 	amount_per_transfer_from_this = 10
 	volume = 10
 	ignore_flags = 1 //so you can medipen through hardsuits
+	flags = null
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/New()
 	..()
@@ -75,10 +76,9 @@
 	update_icon()
 	return
 
+
 /obj/item/weapon/reagent_containers/hypospray/medipen/attack(mob/M as mob, mob/user as mob)
 	..()
-	if(reagents.total_volume <= 0) //Prevents medipens from being refilled.
-		flags &= ~OPENCONTAINER
 	update_icon()
 	return
 
@@ -96,27 +96,28 @@
 		usr << "<span class='notice'>It is spent.</span>"
 
 
-/obj/item/weapon/reagent_containers/hypospray/medipen/leporazine
+/obj/item/weapon/reagent_containers/hypospray/medipen/leporazine //basilisks
 	name = "leporazine medipen"
-	desc = "A rapid and safe way to regulate your body's temperature."
+	desc = "A rapid way to regulate your body's temperature in the event of a hardsuit malfunction at the cost of some shortness of breath."
 	icon_state = "lepopen"
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/leporazine/New()
 	..()
 	reagents.remove_reagent("inaprovaline", 10)
-	reagents.add_reagent("leporazine", 10)
+	reagents.add_reagent("leporazine", 9)
+	reagents.add_reagent("lexorin", 1)
 	update_icon()
 	return
 
-/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack
+/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack //goliath kiting
 	name = "stimpack medipen"
-	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in bulky clothing at the cost of some muscle tissue tearing."
+	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in restrictive armor at the cost of some shortness of breath."
 	icon_state = "stimpen"
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack/New()
 	..()
 	reagents.remove_reagent("inaprovaline", 10)
-	reagents.add_reagent("hyperzine", 8)
-	reagents.add_reagent("lexorin", 2)
+	reagents.add_reagent("hyperzine", 9)
+	reagents.add_reagent("lexorin", 1)
 	update_icon()
 	return

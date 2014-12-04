@@ -24,15 +24,19 @@
 	var/id = null     		// id of door it controls.
 	var/releasetime = 0		// when world.time reaches it - release the prisoneer
 	var/timelength = 0		// the length of time this door will be set for
-	var/timing = 1    		// boolean, true/1 timer is on, false/0 means it's not timing
+	var/timing = 0    		// boolean, true/1 timer is on, false/0 means it's not timing
 	var/picture_state		// icon_state of alert picture, if not displaying text/numbers
 	var/list/obj/machinery/targets = list()
+	var/obj/item/device/radio/Radio //needed to send messages to sec radio
 
 	maptext_height = 26
 	maptext_width = 32
 
 /obj/machinery/door_timer/New()
 	..()
+
+	Radio = new/obj/item/device/radio(src)
+	Radio.listening = 0
 
 	pixel_x = ((src.dir & 3)? (0) : (src.dir == 4 ? 32 : -32))
 	pixel_y = ((src.dir & 3)? (src.dir ==1 ? 24 : -32) : (0))
@@ -64,7 +68,8 @@
 	if(stat & (NOPOWER|BROKEN))	return
 	if(timing)
 		if(world.time > src.releasetime)
-			broadcast_hud_message("[src]'s timer has expired. Releasing prisoner.", src)
+			Radio.set_frequency(SEC_FREQ)
+			Radio.talk_into(src, "Timer has expired. Releasing prisoner.", SEC_FREQ)
 			src.timer_end() // open doors, reset timer, clear status screen
 			timing = 0
 			timeset(0)

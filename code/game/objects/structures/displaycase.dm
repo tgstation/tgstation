@@ -10,7 +10,7 @@
 	var/occupied = 1
 	var/destroyed = 0
 
-/obj/structure/displaycase/ex_act(severity)
+/obj/structure/displaycase/ex_act(severity, specialty)
 	switch(severity)
 		if (1)
 			new /obj/item/weapon/shard( src.loc )
@@ -85,16 +85,14 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (src.destroyed && src.occupied)
 		new /obj/item/weapon/gun/energy/laser/captain( src.loc )
-		user << "\b You deactivate the hover field built into the case."
+		user << "<span class='notice'>You deactivate the hover field built into the case.</span>"
 		src.occupied = 0
 		src.add_fingerprint(user)
 		update_icon()
 		return
 	else
-		usr << text("<span class='notice'>You kick the display case.</span>")
-		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
-				O << text("<span class='danger'>[] kicks the display case.</span>", usr)
+		user.visible_message("<span class='danger'>[user] kicks the display case.</span>", \
+						 "<span class='notice'>You kick the display case.</span>")
 		src.health -= 2
 		healthcheck()
 		return

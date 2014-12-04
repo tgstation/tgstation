@@ -124,7 +124,7 @@
 		dump_everything()
 	update_icon()
 
-/obj/machinery/suit_storage_unit/ex_act(severity)
+/obj/machinery/suit_storage_unit/ex_act(severity, specialty)
 	switch(severity)
 		if(1.0)
 			if(prob(50))

@@ -118,7 +118,7 @@ datum/controller/air_system
 						active_turfs |= T
 						break
 				else
-					if(!T.air.check_turf(enemy_tile))
+					if(!T.air.check_turf_total(enemy_tile))
 						T.excited = 1
 						active_turfs |= T
 
@@ -168,10 +168,10 @@ datum/controller/air_system
 atom/movable/proc/CanAtmosPass()
 	return 1
 
-atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
-	return (!density || !height || air_group)
+atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5)
+	return (!density || !height)
 
-turf/CanPass(atom/movable/mover, turf/target, height=1.5,air_group=0)
+turf/CanPass(atom/movable/mover, turf/target, height=1.5)
 	if(!target) return 0
 
 	if(istype(mover)) // turf/Enter(...) will perform more advanced checks
@@ -182,10 +182,10 @@ turf/CanPass(atom/movable/mover, turf/target, height=1.5,air_group=0)
 			return 0
 
 		for(var/obj/obstacle in src)
-			if(!obstacle.CanPass(mover, target, height, air_group))
+			if(!obstacle.CanPass(mover, target, height))
 				return 0
 		for(var/obj/obstacle in target)
-			if(!obstacle.CanPass(mover, src, height, air_group))
+			if(!obstacle.CanPass(mover, src, height))
 				return 0
 
 		return 1

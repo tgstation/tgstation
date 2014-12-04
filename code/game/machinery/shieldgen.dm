@@ -26,8 +26,8 @@
 	..()
 	move_update_air(T)
 
-/obj/machinery/shield/CanPass(atom/movable/mover, turf/target, height, air_group)
-	if(!height || air_group) return 0
+/obj/machinery/shield/CanPass(atom/movable/mover, turf/target, height)
+	if(!height) return 0
 	else return ..()
 
 /obj/machinery/shield/CanAtmosPass(var/turf/T)
@@ -46,7 +46,7 @@
 
 
 	if (src.health <= 0)
-		visible_message("<span class='notice'>The [src] dissapates.</span>")
+		visible_message("<span class='notice'>[src] dissipates.</span>")
 		qdel(src)
 		return
 
@@ -58,13 +58,13 @@
 	health -= Proj.damage
 	..()
 	if(health <=0)
-		visible_message("<span class='notice'>The [src] dissapates.</span>")
+		visible_message("<span class='notice'>The [src] dissipates.</span>")
 		qdel(src)
 		return
 	opacity = 1
 	spawn(20) if(src) opacity = 0
 
-/obj/machinery/shield/ex_act(severity)
+/obj/machinery/shield/ex_act(severity, specialty)
 	switch(severity)
 		if(1.0)
 			if (prob(75))
@@ -107,7 +107,7 @@
 
 	//Handle the destruction of the shield
 	if (src.health <= 0)
-		visible_message("<span class='notice'>The [src] dissapates.</span>")
+		visible_message("<span class='notice'>[src] dissipates.</span>")
 		qdel(src)
 		return
 
@@ -181,7 +181,7 @@
 	update_icon()
 	return
 
-/obj/machinery/shieldgen/ex_act(severity)
+/obj/machinery/shieldgen/ex_act(severity, specialty)
 	switch(severity)
 		if(1.0)
 			src.health -= 75
@@ -475,8 +475,8 @@
 			user << "<span class='danger'>Access denied.</span>"
 
 	else
-		src.add_fingerprint(user)
-		visible_message("<span class='danger'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
+		add_fingerprint(user)
+		..()
 
 /obj/machinery/shieldwallgen/proc/cleanup(var/NSEW)
 	var/obj/machinery/shieldwall/F
@@ -567,7 +567,7 @@
 	return
 
 
-/obj/machinery/shieldwall/ex_act(severity)
+/obj/machinery/shieldwall/ex_act(severity, specialty)
 	if(needs_power)
 		var/obj/machinery/shieldwallgen/G
 		switch(severity)
@@ -594,8 +594,8 @@
 	return
 
 
-/obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
+/obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target, height=0)
+	if(height==0) return 1
 
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return prob(20)

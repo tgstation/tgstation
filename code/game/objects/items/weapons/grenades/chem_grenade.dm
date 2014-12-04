@@ -186,10 +186,18 @@
 		steam.attach(src)
 		steam.start()
 
-	for(var/atom/A in view(affected_area, loc))
-		if(A == src)
-			continue
-		reagents.reaction(A, 1, 10)
+	var/list/viewable = view(affected_area, loc)
+	var/list/accessible = can_flood_from(loc, affected_area)
+	var/list/reactable = accessible
+	var/mycontents = GetAllContents()
+	for(var/turf/T in accessible)
+		for(var/atom/A in T.GetAllContents())
+			if(A in mycontents) continue
+			if(!(A in viewable)) continue
+			reactable |= A
+	var/fraction = (reagents.total_volume/reactable.len) - reagents.total_volume
+	for(var/atom/A in reactable)
+		reagents.reaction(A, TOUCH, fraction)
 
 	invisibility = INVISIBILITY_MAXIMUM		//Why am i doing this?
 	spawn(50)		   //To make sure all reagents can work
@@ -198,6 +206,19 @@
 /obj/item/weapon/grenade/chem_grenade/proc/mix_reagents()
 	for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
 		G.reagents.trans_to(src, G.reagents.total_volume)
+
+/obj/item/weapon/grenade/chem_grenade/proc/can_flood_from(myloc, maxrange)
+	var/list/reachable = list(myloc)
+	for(var/i=1; i<=maxrange; i++)
+		for(var/turf/T in (orange(i, myloc) - orange(i-1, myloc)))
+			if(T in reachable) continue
+			for(var/turf/NT in orange(1, T))
+				if(!(NT in reachable)) continue
+				if(!(get_dir(T,NT) in cardinal)) continue
+				if(!NT.CanAtmosPass(T)) continue
+				reachable |= T
+				break
+	return reachable
 
 //Large chem grenades accept slime cores and use the appropriately.
 /obj/item/weapon/grenade/chem_grenade/large
@@ -324,6 +345,26 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
 	B1.reagents.add_reagent("condensedcapsaicin", 25)
+	B1.reagents.add_reagent("potassium", 25)
+	B2.reagents.add_reagent("phosphorus", 25)
+	B2.reagents.add_reagent("sugar", 25)
+
+	beakers += B1
+	beakers += B2
+	icon_state = "grenade"
+
+
+/obj/item/weapon/grenade/chem_grenade/pacid
+	name = "acid grenade"
+	desc = "Used for melting armoured opponents."
+	stage = READY
+
+/obj/item/weapon/grenade/chem_grenade/pacid/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+
+	B1.reagents.add_reagent("pacid", 100)
 	B1.reagents.add_reagent("potassium", 25)
 	B2.reagents.add_reagent("phosphorus", 25)
 	B2.reagents.add_reagent("sugar", 25)

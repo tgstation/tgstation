@@ -110,25 +110,15 @@
 	set name = "empty gibber"
 	set src in oview(1)
 
-	if (usr.stat != 0)
+	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 	src.go_out()
 	add_fingerprint(usr)
 	return
 
 /obj/machinery/gibber/proc/go_out()
-	if (!src.occupant)
-		return
-	for(var/obj/O in src)
-		O.loc = src.loc
-	if (src.occupant.client)
-		src.occupant.client.eye = src.occupant.client.mob
-		src.occupant.client.perspective = MOB_PERSPECTIVE
-	src.occupant.loc = src.loc
-	src.occupant = null
+	dropContents()
 	update_icon()
-	return
-
 
 /obj/machinery/gibber/proc/startgibbing(mob/user as mob)
 	if(src.operating)

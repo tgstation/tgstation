@@ -7,14 +7,14 @@
 
 /obj/item/weapon/paper
 	name = "paper"
-	gender = PLURAL
+	gender = NEUTER
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
 	throwforce = 0
 	w_class = 1.0
 	throw_range = 1
 	throw_speed = 1
-	layer = 4
+	layer = 3
 	pressure_resistance = 1
 	slot_flags = SLOT_HEAD
 	body_parts_covered = HEAD
@@ -66,6 +66,8 @@
 	set category = "Object"
 	set src in usr
 
+	if(usr.stat || !usr.canmove || usr.restrained())
+		return
 	if((CLUMSY in usr.mutations) && prob(25))
 		usr << "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>"
 		usr.damageoverlaytemp = 9001
@@ -237,7 +239,7 @@
 
 	if(href_list["write"])
 		var/id = href_list["write"]
-		var/t =  strip_html_simple(input("Enter what you want to write:", "Write", null, null)  as message, MAX_MESSAGE_LEN)
+		var/t =  stripped_input("Enter what you want to write:", "Write")
 		var/obj/item/i = usr.get_active_hand()	//Check to see if he still got that darn pen, also check if he's using a crayon or pen.
 		var/iscrayon = 0
 		if(!istype(i, /obj/item/weapon/pen))
@@ -272,8 +274,12 @@
 		clown = 1
 
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
-		user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>", "window=[name]")
-		return
+		if(user.IsAdvancedToolUser())
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>", "window=[name]")
+			return
+		else
+			user << "<span class='notice'>You don't know how to read or write.</span>"
+			return
 
 	else if(istype(P, /obj/item/weapon/stamp))
 		if(!in_range(src, usr) && loc != user && !istype(loc, /obj/item/weapon/clipboard) && loc.loc != user && user.get_active_hand() != P)

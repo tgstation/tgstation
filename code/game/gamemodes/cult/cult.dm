@@ -62,6 +62,9 @@
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
+	if(config.protect_assistant_from_antagonist)
+		restricted_jobs += "Assistant"
+
 	for(var/datum/mind/player in antag_candidates)
 		for(var/job in restricted_jobs)//Removing heads and such from the list
 			if(player.assigned_role == job)
@@ -238,52 +241,15 @@
 			for(var/mob/M in viewers(cult_mind.current))
 				M << "<FONT size = 3>[cult_mind.current] looks like they just reverted to their old faith!</FONT>"
 
-/datum/game_mode/proc/update_all_cult_icons()
-	spawn(0)
-		for(var/datum/mind/cultist in cult)
-			if(cultist.current)
-				if(cultist.current.client)
-					for(var/image/I in cultist.current.client.images)
-						if(I.icon_state == "cult")
-							del(I)
-
-		for(var/datum/mind/cultist in cult)
-			if(cultist.current)
-				if(cultist.current.client)
-					for(var/datum/mind/cultist_1 in cult)
-						if(cultist_1.current)
-							var/I = image('icons/mob/mob.dmi', loc = cultist_1.current, icon_state = "cult")
-							cultist.current.client.images += I
-
-
 /datum/game_mode/proc/update_cult_icons_added(datum/mind/cult_mind)
-	spawn(0)
-		for(var/datum/mind/cultist in cult)
-			if(cultist.current)
-				if(cultist.current.client)
-					var/I = image('icons/mob/mob.dmi', loc = cult_mind.current, icon_state = "cult")
-					cultist.current.client.images += I
-			if(cult_mind.current)
-				if(cult_mind.current.client)
-					var/image/J = image('icons/mob/mob.dmi', loc = cultist.current, icon_state = "cult")
-					cult_mind.current.client.images += J
-
+	var/datum/atom_hud/antag/culthud = huds[ANTAG_HUD_CULT]
+	culthud.join_hud(cult_mind.current)
+	set_antag_hud(cult_mind.current, "cult")
 
 /datum/game_mode/proc/update_cult_icons_removed(datum/mind/cult_mind)
-	spawn(0)
-		for(var/datum/mind/cultist in cult)
-			if(cultist.current)
-				if(cultist.current.client)
-					for(var/image/I in cultist.current.client.images)
-						if(I.icon_state == "cult" && I.loc == cult_mind.current)
-							del(I)
-
-		if(cult_mind.current)
-			if(cult_mind.current.client)
-				for(var/image/I in cult_mind.current.client.images)
-					if(I.icon_state == "cult")
-						del(I)
-
+	var/datum/atom_hud/antag/culthud = huds[ANTAG_HUD_CULT]
+	culthud.leave_hud(cult_mind.current)
+	set_antag_hud(cult_mind.current, null)
 
 /datum/game_mode/cult/proc/get_unconvertables()
 	var/list/ucs = list()

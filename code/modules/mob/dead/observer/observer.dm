@@ -19,6 +19,7 @@
 							//Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
 	var/atom/movable/following = null
 	var/fun_verbs = 0
+	var/list/datum/atom_hud/oldhuds = null //old antag hud, gets readded in cloning/plantpodding
 
 /mob/dead/observer/New(mob/body)
 	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
@@ -56,7 +57,7 @@
 
 	..()
 
-/mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/mob/dead/CanPass(atom/movable/mover, turf/target, height=0)
 	return 1
 /*
 Transfer_mind is there to check if mob is being deleted/not going to have a body.
@@ -69,6 +70,7 @@ Works together with spawning an observer, noted above.
 			var/mob/dead/observer/ghost = new(src)	//Transfer safety to observer spawning proc.
 			ghost.can_reenter_corpse = can_reenter_corpse
 			ghost.key = key
+			ghost.refresh_huds(src) //inherit the HUDs
 			return ghost
 
 /*
@@ -293,3 +295,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	return 1
 
 
+//this is a mob verb instead of atom for performance reasons
+//see /mob/verb/examinate() in mob.dm for more info
+//overriden here and in /mob/living for different point span classes and sanity checks
+/mob/dead/observer/pointed(atom/A as mob|obj|turf in view())
+	if(!..())
+		return 0
+	usr.visible_message("<span class='deadsay'><b>[src]</b> points to [A]</span>")
+	return 1

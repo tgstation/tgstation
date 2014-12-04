@@ -42,7 +42,8 @@ datum/preferences
 
 	//character preferences
 	var/real_name						//our character's name
-	var/be_random_name = 0				//whether we are a random name every round
+	var/be_random_name = 0				//whether we'll have a random name every round
+	var/be_random_body = 0				//whether we'll have a random body every round
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
 	var/blood_type = "A+"				//blood type (not-chooseable)
@@ -163,7 +164,8 @@ datum/preferences
 				dat += "</td></tr></table>"
 
 				dat += "<h2>Body</h2>"
-				dat += "<a href='?_src_=prefs;preference=all;task=random'>Random Body</A><br>"
+				dat += "<a href='?_src_=prefs;preference=all;task=random'>Random Body</A> "
+				dat += "<a href='?_src_=prefs;preference=all'>Always Random Body: [be_random_body ? "Yes" : "No"]</A><br>"
 
 				dat += "<table width='100%'><tr><td width='24%' valign='top'>"
 
@@ -270,7 +272,7 @@ datum/preferences
 		dat += "</center>"
 
 		//user << browse(dat, "window=preferences;size=560x560")
-		var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 580, 600)
+		var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 580, 620)
 		popup.set_content(dat)
 		popup.open(0)
 
@@ -319,7 +321,7 @@ datum/preferences
 				var/available_in_days = job.available_in_days(user.client)
 				HTML += "<font color=red>[rank]</font></td><td><font color=red> \[IN [(available_in_days)] DAYS\]</font></td></tr>"
 				continue
-			if((job_civilian_low & ASSISTANT) && (rank != "Assistant"))
+			if((job_civilian_low & ASSISTANT) && (rank != "Assistant") && !jobban_isbanned(user, "Assistant"))
 				HTML += "<font color=orange>[rank]</font></td><td></td></tr>"
 				continue
 			if(config.enforce_human_authority && (rank in command_positions) && user.client.prefs.pref_species.id != "human")
@@ -533,7 +535,10 @@ datum/preferences
 					ResetJobs()
 					SetChoices(user)
 				if("random")
-					userandomjob = !userandomjob
+					if(jobban_isbanned(user, "Assistant"))
+						userandomjob = 1
+					else
+						userandomjob = !userandomjob
 					SetChoices(user)
 				if("setJobLevel")
 					UpdateJobPreference(user, href_list["text"], text2num(href_list["level"]))
@@ -741,6 +746,9 @@ datum/preferences
 					if("name")
 						be_random_name = !be_random_name
 
+					if("all")
+						be_random_body = !be_random_body
+
 					if("hear_midis")
 						toggles ^= SOUND_MIDI
 
@@ -787,6 +795,9 @@ datum/preferences
 	proc/copy_to(mob/living/carbon/human/character)
 		if(be_random_name)
 			real_name = random_name(gender)
+
+		if(be_random_body)
+			random_character(gender)
 
 		if(config.humans_need_surnames)
 			var/firstspace = findtext(real_name, " ")

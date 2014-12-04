@@ -63,35 +63,35 @@
 //Security
 
 /obj/item/clothing/head/HoS
-	name = "head of security hat"
-	desc = "The robust hat of the Head of Security. For showing the officers who's in charge."
+	name = "head of security cap"
+	desc = "The robust standard-issue cap of the Head of Security. For showing the officers who's in charge."
 	icon_state = "hoscap"
 	armor = list(melee = 80, bullet = 60, laser = 50, energy = 10, bomb = 25, bio = 10, rad = 0)
-	flags = 0
-	flags_inv = HIDEEARS
 	strip_delay = 80
 
-/obj/item/clothing/head/HoS/dermal
-	name = "Dermal Armor Patch"
-	desc = "An armored implant that automatically integrates just below the scalp for robust protection without sacrificing style."
-	icon_state = "dermal"
-	item_state = "dermal"
-	flags_inv = 0
+/obj/item/clothing/head/HoS/beret
+	name = "head of security beret"
+	desc = "A robust beret for the Head of Security, for looking stylish while not sacrificing protection."
+	icon_state = "hosberetblack"
 
 /obj/item/clothing/head/warden
-	name = "warden's hat"
+	name = "warden's police hat"
 	desc = "It's a special armored hat issued to the Warden of a security force. Protects the head from impacts."
 	icon_state = "policehelm"
 	armor = list(melee = 60, bullet = 5, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
-	flags = 0
-	flags_inv = HIDEEARS
 	strip_delay = 60
+
+/obj/item/clothing/head/warden/drill
+	name = "warden's drill hat"
+	desc = "A robust drill hat for the Warden. For keeping the officers and prisoners in line."
+	icon_state = "wardendrill"
 
 /obj/item/clothing/head/beret/sec
 	name = "security beret"
 	desc = "A robust beret with the security insignia emblazoned on it. For officers that are more inclined towards style than safety."
 	icon_state = "beret_badge"
 	armor = list(melee = 30, bullet = 5, laser = 15, energy = 10, bomb = 0, bio = 0, rad = 0)
+	strip_delay = 60
 
 /obj/item/clothing/head/beret/sec/navyhos
 	name = "head of security's beret"

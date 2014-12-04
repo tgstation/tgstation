@@ -15,7 +15,8 @@
 	var/lawcheck[1]
 	var/ioncheck[1]
 
-	var/sensor_mode = 0 //Determines the current HUD.
+	var/med_hud = DATA_HUD_MEDICAL_ADVANCED //Determines the med hud to use
+	var/sec_hud = DATA_HUD_SECURITY_ADVANCED //Determines the sec hud to use
 
 /mob/living/silicon/proc/cancelAlarm()
 	return
@@ -280,31 +281,6 @@
 
 	usr << browse(list, "window=laws")
 
-/mob/living/silicon/Bump(atom/movable/AM as mob|obj, yes)  //Allows the AI to bump into mobs if it's itself pushed
-	if ((!( yes ) || now_pushing))
-		return
-	now_pushing = 1
-	if(ismob(AM))
-		var/mob/tmob = AM
-		if(!(tmob.status_flags & CANPUSH))
-			now_pushing = 0
-			return
-	now_pushing = 0
-	..()
-	if (!istype(AM, /atom/movable))
-		return
-	if (!now_pushing)
-		now_pushing = 1
-		if (!AM.anchored)
-			var/t = get_dir(src, AM)
-			if (istype(AM, /obj/structure/window))
-				if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-					for(var/obj/structure/window/win in get_step(AM,t))
-						now_pushing = 0
-						return
-			step(AM, t)
-		now_pushing = null
-
 /mob/living/silicon/put_in_hand_check() // This check is for borgs being able to receive items, not put them in others' hands.
 	return 0
 
@@ -317,16 +293,87 @@
 /mob/living/silicon/assess_threat() //Secbots won't hunt silicon units
 	return -10
 
+/mob/living/silicon/proc/remove_med_sec_hud()
+	var/datum/atom_hud/secsensor = huds[sec_hud]
+	var/datum/atom_hud/medsensor = huds[med_hud]
+	secsensor.remove_hud_from(src)
+	medsensor.remove_hud_from(src)
+
+/mob/living/silicon/proc/add_sec_hud()
+	var/datum/atom_hud/secsensor = huds[sec_hud]
+	secsensor.add_hud_to(src)
+
+/mob/living/silicon/proc/add_med_hud()
+	var/datum/atom_hud/medsensor = huds[med_hud]
+	medsensor.add_hud_to(src)
+
 /mob/living/silicon/verb/sensor_mode()
 	set name = "Set Sensor Augmentation"
 	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical","Disable")
+	remove_med_sec_hud()
 	switch(sensor_type)
 		if ("Security")
-			sensor_mode = DATA_HUD_SECURITY
+			add_sec_hud()
 			src << "<span class='notice'>Security records overlay enabled.</span>"
 		if ("Medical")
-			sensor_mode = DATA_HUD_MEDICAL
+			add_med_hud()
 			src << "<span class='notice'>Life signs monitor overlay enabled.</span>"
 		if ("Disable")
-			sensor_mode = 0
 			src << "Sensor augmentations disabled."
+
+
+/mob/living/silicon/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+	if(..()) //if harm or disarm intent
+		var/damage = rand(10, 20)
+		if (prob(90))
+			add_logs(M, src, "attacked", admin=0)
+			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
+			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
+							"<span class='userdanger'>[M] has slashed at [src]!</span>")
+			if(prob(8))
+				flick("noise", flash)
+			add_logs(M, src, "attacked", admin=0)
+			adjustBruteLoss(damage)
+			updatehealth()
+		else
+			playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
+			visible_message("<span class='danger'>[M] took a swipe at [src]!</span>", \
+							"<span class='userdanger'>[M] took a swipe at [src]!</span>")
+	return
+
+/mob/living/silicon/attack_animal(mob/living/simple_animal/M as mob)
+	if(..())
+		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		adjustBruteLoss(damage)
+		updatehealth()
+
+/mob/living/silicon/attack_paw(mob/living/user)
+	return attack_hand(user)
+
+/mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L)
+	if(L.a_intent == "help")
+		visible_message("<span class='notice'>[L.name] rubs its head against [src].</span>")
+	return
+
+/mob/living/silicon/attack_hand(mob/living/carbon/human/M)
+	switch(M.a_intent)
+		if ("help")
+			M.visible_message("<span class='notice'>[M] pets [src]!</span>", \
+							"<span class='notice'>You pet [src]!</span>")
+		if("grab")
+			grabbedby(M)
+		else
+			M.do_attack_animation(src)
+			playsound(src.loc, 'sound/effects/bang.ogg', 10, 1)
+			if (HULK in M.mutations)
+				var/damage = rand(10,15)
+				adjustBruteLoss(damage)
+				add_logs(M, src, "attacked", admin=0)
+				playsound(loc, "punch", 25, 1, -1)
+				visible_message("<span class='danger'>[M] has punched [src]!</span>", \
+						"<span class='userdanger'>[M] has punched [src]!</span>")
+				return 1
+			else
+				visible_message("<span class='danger'>[M] punches [src], but doesn't leave a dent.</span>", \
+						"<span class='userdanger'>[M] punches [src], but doesn't leave a dent.!</span>")
+	return 0

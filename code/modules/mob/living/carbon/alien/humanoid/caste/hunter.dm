@@ -136,7 +136,7 @@
 		var/atom/step = get_step(src, get_dir(src,target))
 		if(!step)
 			break
-		src.Move(step)
+		src.Move(step, get_dir(src, step))
 		hit_check()
 		error += (error < 0) ? tdist_x : -tdist_y;
 		dist_travelled++

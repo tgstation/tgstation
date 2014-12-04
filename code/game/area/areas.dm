@@ -57,55 +57,52 @@
 			for (var/obj/machinery/camera/C in src)
 				cameras += C
 			for (var/mob/living/silicon/aiPlayer in player_list)
-				if(aiPlayer.z == source.z)
-					if (state == 1)
-						aiPlayer.cancelAlarm("Power", src, source)
-					else
-						aiPlayer.triggerAlarm("Power", src, cameras, source)
+				if (state == 1)
+					aiPlayer.cancelAlarm("Power", src, source)
+				else
+					aiPlayer.triggerAlarm("Power", src, cameras, source)
+
 			for(var/obj/machinery/computer/station_alert/a in machines)
-				if(a.z == source.z)
-					if(state == 1)
-						a.cancelAlarm("Power", src, source)
-					else
-						a.triggerAlarm("Power", src, cameras, source)
+				if(state == 1)
+					a.cancelAlarm("Power", src, source)
+				else
+					a.triggerAlarm("Power", src, cameras, source)
+
 			for(var/mob/living/simple_animal/drone/D in mob_list)
-				if(D.z == source.z)
-					if(state == 1)
-						D.cancelAlarm("Power", src, source)
-					else
-						D.triggerAlarm("Power", src, cameras, source)
+				if(state == 1)
+					D.cancelAlarm("Power", src, source)
+				else
+					D.triggerAlarm("Power", src, cameras, source)
 	return
 
-/area/proc/atmosalert(danger_level)
-//	if(src.type==/area) //No atmos alarms in space
-//		return 0 //redudant
-	if(danger_level != src.atmosalm)
-		//src.updateicon()
-		//src.mouse_opacity = 0
+/area/proc/atmosalert(var/danger_level, var/obj/source as obj)
+	if(danger_level != atmosalm)
 		if (danger_level==2)
 			var/list/cameras = list()
-			for(var/area/RA in src.related)
-				//src.updateicon()
+			for(var/area/RA in related)
 				for(var/obj/machinery/camera/C in RA)
 					cameras += C
+
 			for(var/mob/living/silicon/aiPlayer in player_list)
-				aiPlayer.triggerAlarm("Atmosphere", src, cameras, src)
+				aiPlayer.triggerAlarm("Atmosphere", src, cameras, source)
 			for(var/obj/machinery/computer/station_alert/a in machines)
-				a.triggerAlarm("Atmosphere", src, cameras, src)
+				a.triggerAlarm("Atmosphere", src, cameras, source)
 			for(var/mob/living/simple_animal/drone/D in mob_list)
-				D.triggerAlarm("Atmosphere", src, cameras, src)
+				D.triggerAlarm("Atmosphere", src, cameras, source)
+
 		else if (src.atmosalm == 2)
 			for(var/mob/living/silicon/aiPlayer in player_list)
-				aiPlayer.cancelAlarm("Atmosphere", src, src)
+				aiPlayer.cancelAlarm("Atmosphere", src, source)
 			for(var/obj/machinery/computer/station_alert/a in machines)
-				a.cancelAlarm("Atmosphere", src, src)
+				a.cancelAlarm("Atmosphere", src, source)
 			for(var/mob/living/simple_animal/drone/D in mob_list)
-				D.cancelAlarm("Atmosphere", src, src)
+				D.cancelAlarm("Atmosphere", src, source)
+
 		src.atmosalm = danger_level
 		return 1
 	return 0
 
-/area/proc/firealert()
+/area/proc/firealert(var/obj/source as obj)
 	if(always_unpowered == 1) //no fire alarms in space/asteroid
 		return
 
@@ -127,14 +124,14 @@
 			cameras += C
 
 	for (var/obj/machinery/computer/station_alert/a in machines)
-		a.triggerAlarm("Fire", src, cameras, src)
+		a.triggerAlarm("Fire", src, cameras, source)
 	for (var/mob/living/silicon/aiPlayer in player_list)
-		aiPlayer.triggerAlarm("Fire", src, cameras, src)
+		aiPlayer.triggerAlarm("Fire", src, cameras, source)
 	for (var/mob/living/simple_animal/drone/D in mob_list)
-		D.triggerAlarm("Fire", src, cameras, src)
+		D.triggerAlarm("Fire", src, cameras, source)
 	return
 
-/area/proc/firereset()
+/area/proc/firereset(var/obj/source as obj)
 	for(var/area/RA in related)
 		if (RA.fire)
 			RA.fire = 0
@@ -151,11 +148,11 @@
 				F.update_icon()
 
 	for (var/mob/living/silicon/aiPlayer in player_list)
-		aiPlayer.cancelAlarm("Fire", src, src)
+		aiPlayer.cancelAlarm("Fire", src, source)
 	for (var/obj/machinery/computer/station_alert/a in machines)
-		a.cancelAlarm("Fire", src, src)
+		a.cancelAlarm("Fire", src, source)
 	for (var/mob/living/simple_animal/drone/D in mob_list)
-		D.cancelAlarm("Fire", src, src)
+		D.cancelAlarm("Fire", src, source)
 	return
 
 /area/proc/burglaralert(var/obj/trigger)
@@ -178,11 +175,10 @@
 			cameras += C
 
 	for (var/mob/living/silicon/SILICON in player_list)
-		SILICON.triggerAlarm("Burglar", src, cameras, trigger)
-	//Cancel silicon alert after 1 minute
-	spawn(600)
-		for (var/mob/living/silicon/SILICON in player_list)
-			SILICON.cancelAlarm("Burglar", src, trigger)
+		if(SILICON.triggerAlarm("Burglar", src, cameras, trigger))
+			//Cancel silicon alert after 1 minute
+			spawn(600)
+				SILICON.cancelAlarm("Burglar", src, trigger)
 
 /area/proc/set_fire_alarm_effect()
 	fire = 1
@@ -381,19 +377,24 @@
 		// find the turf to move things to
 		var/turf/D = locate(T.x, throwy - 1, T.z)
 		for(var/atom/movable/AM as mob|obj in T)
-			//mobs take damage
-			if(istype(AM, /mob/living))
-				var/mob/living/living_mob = AM
-				living_mob.Paralyse(10)
-				living_mob.take_organ_damage(80)
-				living_mob.anchored = 0 //Unbuckle them so they can be moved
+			if(ismob(AM))
+				if(istype(AM, /mob/living))//mobs take damage
+					var/mob/living/living_mob = AM
+					living_mob.Paralyse(10)
+					living_mob.take_organ_damage(80)
+					living_mob.anchored = 0 //Unbuckle them so they can be moved
+				else
+					continue
+
 			//Anything not bolted down is moved, everything else is destroyed
 			if(!AM.anchored)
-				AM.Move(D)
+				AM.Move(D, SOUTH)
 			else
 				qdel(AM)
 		if(istype(T, /turf/simulated))
 			del(T)
 
-	for(var/atom/movable/bug in src) // If someone (or something) is somehow still in the shuttle's docking area...
-		qdel(bug)
+	/*for(var/atom/movable/bug in src) // If someone (or something) is somehow still in the shuttle's docking area...
+		if(ismob(bug))
+			continue
+		qdel(bug)*/

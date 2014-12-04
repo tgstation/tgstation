@@ -54,7 +54,7 @@
 		else
 			icon_state = "bearfloor"
 
-/mob/living/simple_animal/hostile/bear/Process_Spacemove(var/check_drift = 0)
+/mob/living/simple_animal/hostile/bear/Process_Spacemove(var/movement_dir = 0)
 	return 1	//No drifting in space for space bears!
 
 /mob/living/simple_animal/hostile/bear/FindTarget()
