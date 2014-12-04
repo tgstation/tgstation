@@ -176,7 +176,7 @@
 						return
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					new /obj/item/stack/sheet/metal(src.loc)
-					visible_message("<span class='notice'>\The [src] has been cut apart by [user] with \the [WT].</span>", "You hear welding.")
+					visible_message("<span class='notice'>[user] has cut \the [src] apart with \the [WT].</span>", "You hear welding.")
 					qdel(src)
 			return
 
@@ -198,9 +198,9 @@
 					return
 				playsound(loc, 'sound/items/welder.ogg', 50, 1)
 				welded = !welded
-				user << "<span class='notice'>You [welded ? "welded the [src] shut":"unwelded the [src]"]</span>"
+				user << "<span class='notice'>You [welded ? "welded [src] shut":"unwelded [src]"].</span>"
 				update_icon()
-				user.visible_message("<span class='warning'>[src] has been [welded? "welded shut":"unwelded"] by [user.name].</span>")
+				user.visible_message("<span class='warning'>[user.name] has [welded ? "welded [src] shut":"unwelded [src]"].</span>")
 		return
 	else if(!place(user, W))
 		src.attack_hand(user)
