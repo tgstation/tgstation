@@ -43,6 +43,7 @@
 
 
 /mob/living/carbon/slime/proc/Feedon(var/mob/living/M)
+	var/mob/living/Friend = null
 	Victim = M
 	src.loc = M.loc
 	canmove = 0
@@ -131,11 +132,13 @@
 				if(Victim && !rabid && !attacked)
 					if(Victim.LAssailant && Victim.LAssailant != Victim)
 						if(prob(50))
-							if(!(Victim.LAssailant in Friends))
-								Friends[Victim.LAssailant] = 1
+							Friend = Victim.LAssailant
+							if(!(Friend in Friends))
+								Friends[Friend] = 1
+								Friends[Friend.name] = 1
 								//Friends.Add(Victim.LAssailant) // no idea why i was using the |= operator
 							else
-								++Friends[Victim.LAssailant]
+								Friends[Friend.name]++
 
 
 			if(M.client && istype(src, /mob/living/carbon/human))
