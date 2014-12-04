@@ -131,11 +131,13 @@
 				if(Victim && !rabid && !attacked)
 					if(Victim.LAssailant && Victim.LAssailant != Victim)
 						if(prob(50))
-							if(!(Victim.LAssailant in Friends))
-								Friends[Victim.LAssailant] = 1
+							Friend = Victim.LAssailant
+								if(!(Friend in Friends))
+								Friends[Friend] = 1 //Identifies that this person is a friend
+								Friends[Friend.name] = 1 //Identifies how friendly slime is to the person
 								//Friends.Add(Victim.LAssailant) // no idea why i was using the |= operator
 							else
-								++Friends[Victim.LAssailant]
+								Friends[Friend.name]++
 
 
 			if(M.client && istype(src, /mob/living/carbon/human))

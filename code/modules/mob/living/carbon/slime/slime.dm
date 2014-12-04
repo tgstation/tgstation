@@ -35,6 +35,7 @@
 	var/mob/living/Victim = null // the person the slime is currently feeding on
 	var/mob/living/Target = null // AI variable - tells the slime to hunt this down
 	var/mob/living/Leader = null // AI variable - tells the slime to follow this person
+	var/mob/living/Friend = null // AI Variable - tells the slime who is a friend, and how friendly they are.
 
 	var/attacked = 0 // Determines if it's been attacked recently. Can be any number, is a cooloff-ish variable
 	var/rabid = 0 // If set to 1, the slime will attack and eat anything it comes in contact with
