@@ -36,7 +36,7 @@
 	damage = 25
 
 
-/obj/item/projectile/bullet/midbullet3 //Only used with the Stechkin Pistol - RobRichards
+/obj/item/projectile/bullet/midbullet3 //Only used with the Syndicate Pistol - RobRichards
 	damage = 30
 
 

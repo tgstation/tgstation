@@ -107,7 +107,7 @@ var/list/uplink_items = list()
 	surplus = 50
 
 /datum/uplink_item/dangerous/pistol
-	name = "Stechkin Pistol"
+	name = "Syndicate Pistol"
 	desc = "A small, easily concealable handgun that uses 10mm magazines and is compatible with suppressors."
 	item = /obj/item/weapon/gun/projectile/automatic/pistol
 	cost = 9
@@ -232,7 +232,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/ammo/pistol
 	name = "Ammo-10mm"
-	desc = "An additional 8-round 10mm magazine for use in the Stetchkin pistol."
+	desc = "An additional 8-round 10mm magazine for use in the syndicate pistol."
 	item = /obj/item/ammo_box/magazine/m10mm
 	cost = 1
 
@@ -293,8 +293,8 @@ var/list/uplink_items = list()
 	cost = 6
 
 /datum/uplink_item/stealthy_weapons/suppressor
-	name = "Stetchkin Suppressor"
-	desc = "Fitted for use on the Stetchkin pistol, this suppressor will make its shots quieter when equipped onto it."
+	name = "Universal Suppressor"
+	desc = "Fitted for use on any small caliber weapon with a threaded barrel, this suppressor will silence the shots of the weapon for increased stealth and superior ambushing capability."
 	item = /obj/item/weapon/suppressor
 	cost = 3
 	surplus = 10

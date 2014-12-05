@@ -67,7 +67,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/automatic/pistol
-	name = "\improper Stechkin pistol"
+	name = "pistol"
 	desc = "A small, easily concealable handgun. Uses 10mm ammo and has a threaded barrel for suppressors."
 	icon_state = "pistol"
 	w_class = 2
@@ -120,4 +120,4 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "suppressor"
 	w_class = 2
-	var/oldsound = 0 //Stores the true sound the gun made before it was suppressed
+	var/oldsound = null
