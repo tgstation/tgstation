@@ -42,6 +42,9 @@
 	var/list/attack_verb = list() //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = list()	// even if a species cannot put items in a certain slot, if the species id is in the item's exception list, it will be able to wear that item
 
+	var/suittoggled = 0
+	var/hooded = 0
+
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
 

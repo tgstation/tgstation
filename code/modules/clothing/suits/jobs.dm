@@ -23,13 +23,16 @@
 	allowed = list(/obj/item/weapon/disk, /obj/item/weapon/stamp, /obj/item/weapon/reagent_containers/food/drinks/flask, /obj/item/weapon/melee, /obj/item/weapon/storage/lockbox/medal, /obj/item/device/flash/handheld, /obj/item/weapon/storage/box/matches, /obj/item/weapon/lighter, /obj/item/clothing/mask/cigarette, /obj/item/weapon/storage/fancy/cigarettes, /obj/item/weapon/tank/emergency_oxygen)
 
 //Chaplain
-/obj/item/clothing/suit/chaplain_hoodie
+/obj/item/clothing/suit/toggle/chaplain_hoodie
 	name = "chaplain hoodie"
 	desc = "This suit says to you 'hush'!"
 	icon_state = "chaplain_hoodie"
 	item_state = "chaplain_hoodie"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/weapon/storage/book/bible, /obj/item/weapon/nullrod, /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater, /obj/item/weapon/storage/fancy/candle_box, /obj/item/candle, /obj/item/weapon/tank/emergency_oxygen)
+	hooded = 1
+	suittoggled = 0
+	action_button_name = "Toggle Hoodie"
 
 //Chaplain
 /obj/item/clothing/suit/nun
@@ -90,29 +93,44 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/device/t_scanner,)
 
 //Lawyer
-/obj/item/clothing/suit/lawyer/bluejacket
+/obj/item/clothing/suit/toggle/lawyer
 	name = "blue suit jacket"
 	desc = "A snappy dress jacket."
-	icon_state = "suitjacket_blue_open"
-	item_state = "suitjacket_blue_open"
+	icon_state = "suitjacket_blue"
+	item_state = "suitjacket_blue"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
+	action_button_name = "Toggle Suit Buttons"
 
-/obj/item/clothing/suit/lawyer/purpjacket
+/obj/item/clothing/suit/toggle/lawyer/purple
 	name = "purple suit jacket"
 	desc = "A foppish dress jacket."
 	icon_state = "suitjacket_purp"
 	item_state = "suitjacket_purp"
-	blood_overlay_type = "coat"
-	body_parts_covered = CHEST|ARMS
 
-/obj/item/clothing/suit/lawyer/blackjacket
+/obj/item/clothing/suit/toggle/lawyer/black
 	name = "black suit jacket"
 	desc = "A professional suit jacket."
 	icon_state = "suitjacket_black"
 	item_state = "ro_suit"
-	blood_overlay_type = "coat"
-	body_parts_covered = CHEST|ARMS
+
+//Toggle exosuits for different aesthetic styles (hoodies, suit jacket buttons, etc)
+
+/obj/item/clothing/suit/toggle/attack_self()
+	set src in usr
+
+	if(!can_use(usr))
+		return 0
+
+	usr << "You toggle the [src]."
+	if(src.suittoggled)
+		src.icon_state = "[initial(icon_state)]"
+		src.suittoggled = 0
+	else if(!src.suittoggled)
+		src.icon_state = "[initial(icon_state)]_t"
+		src.suittoggled = 1
+	usr.update_inv_wear_suit()
+
 
 //Mime
 /obj/item/clothing/suit/suspenders
