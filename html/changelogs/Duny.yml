@@ -1,3 +1,12 @@
 author: Duny
 changes: 
   - imageadd: Added 7 new cyborg sprites made by Sage of Light.
+  - wip: Following changes made to Defficiency/Maintstation.
+  - tweak: Added flasks and missing machinery to the bar.
+  - bugfix: Connected the observation console to the interrogation room.
+  - bugfix: Hopefully added more plastic to the plastic sheet in the mechanics workshop; whoever made plastic sheets should be shot.
+  - bugfix: Cargo belts should now behave properly.
+  - tweak: Added a camera outside xenobiology and got rid of a floating lightbulb.
+  - tweak: Added an O2 canister in mining closer to the airlock.
+  - tweak: Modified the construction area under engineering a bit.
+  - rscadd: The deathsquad should now be entirely functional, REJOICE!
