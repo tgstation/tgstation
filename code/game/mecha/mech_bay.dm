@@ -69,9 +69,9 @@
 		if(recharging_mecha.cell)
 			recharging_mecha.occupant_message("Now charging...")
 			pr_recharger.start(list(src,recharging_mecha))
-		return 1
-	else
-		return 0
+			return 1
+		else
+			return 0
 
 /obj/machinery/mech_bay_recharge_port/proc/stop_charge()
 	if(recharge_console && !recharge_console.stat)
