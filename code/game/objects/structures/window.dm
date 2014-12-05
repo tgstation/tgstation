@@ -53,7 +53,7 @@
 	return
 
 
-/obj/structure/window/ex_act(severity, specialty)
+/obj/structure/window/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			qdel(src)
@@ -104,7 +104,7 @@
 		var/obj/item/I = AM
 		tforce = I.throwforce
 
-	if(reinf) 
+	if(reinf)
 		tforce *= 0.25
 
 	playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
@@ -164,12 +164,12 @@
 	update_nearby_icons()
 
 /obj/structure/window/attack_animal(mob/living/user as mob)
-	if(!isanimal(user)) 
+	if(!isanimal(user))
 		return
 
 	var/mob/living/simple_animal/M = user
 	M.do_attack_animation(src)
-	if(M.melee_damage_upper <= 0) 
+	if(M.melee_damage_upper <= 0)
 		return
 
 	attack_generic(M, M.melee_damage_upper)
@@ -177,7 +177,7 @@
 
 /obj/structure/window/attack_slime(mob/living/carbon/slime/user as mob)
 	user.do_attack_animation(src)
-	if(!user.is_adult) 
+	if(!user.is_adult)
 		return
 
 	attack_generic(user, rand(10, 15))
@@ -196,7 +196,7 @@
 			user << (anchored ? "<span class='notice'>You begin to unscrew the frame from the floor.</span>" : "<span class='notice'>You begin to screw the frame to the floor.</span>")
 		else if(!reinf)
 			user << (anchored ? "<span class='notice'>You begin to unscrew the window from the floor.</span>" : "<span class='notice'>You begin to screw the window to the floor.</span>")
-			
+
 		if(do_after(user, 40))
 			if(reinf && (state == 1 || state == 2))
 				//If state was unfastened, fasten it, else do the reverse

@@ -112,7 +112,7 @@
 	return
 
 
-/obj/machinery/power/am_control_unit/ex_act(severity, specialty)
+/obj/machinery/power/am_control_unit/ex_act(severity, target)
 	stability -= (80 - (severity * 20))
 	check_stability()
 	return

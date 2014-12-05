@@ -31,7 +31,7 @@
 	..()
 
 
-/obj/machinery/computer/ex_act(severity, specialty)
+/obj/machinery/computer/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			qdel(src)
