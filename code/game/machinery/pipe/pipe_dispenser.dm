@@ -131,12 +131,12 @@
 /obj/machinery/pipedispenser/wrenchAnchor(mob/user)
 	if(..() == 1)
 		if(anchored)
-			src.stat |= MAINT
-			if (usr.machine==src)
-				usr << browse(null, "window=pipedispenser")
-		else
 			src.stat &= ~MAINT
 			power_change()
+		else
+			src.stat |= MAINT
+			if (user.machine==src)
+				user << browse(null, "window=pipedispenser")
 
 
 /obj/machinery/pipedispenser/disposal
