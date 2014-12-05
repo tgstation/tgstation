@@ -257,17 +257,20 @@
 	if(get_dist(src, user) < 2)
 		var/obj/item/weapon/grab/G = I
 		if(G.affecting.buckled)
-			user << "<span class='notice'>[G.affecting] is buckled to [G.affecting.buckled]!</span>"
-			return
+			user << "<span class='warning'>[G.affecting] is buckled to [G.affecting.buckled]!</span>"
+			return 0
 		if(G.state < GRAB_AGGRESSIVE)
-			user << "<span class='notice'>You need a better grip to do that!</span>"
-			return
+			user << "<span class='warning'>You need a better grip to do that!</span>"
+			return 0
 		if(!G.confirm())
-			return
+			return 0
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
 		G.affecting.visible_message("<span class='danger'>[G.assailant] pushes [G.affecting] onto [src].</span>", \
 									"<span class='userdanger'>[G.assailant] pushes [G.affecting] onto [src].</span>")
+		add_logs(G.assailant, G.affecting, "pushed")
+		qdel(I)
+		return 1
 	qdel(I)
 
 /obj/structure/table/attackby(obj/item/I, mob/user)
@@ -373,15 +376,21 @@
 /obj/structure/table/proc/climb_table(mob/user)
 	src.add_fingerprint(user)
 	user.visible_message("<span class='warning'>[user] starts climbing onto [src].</span>", \
-								"<span class='notice'>[user] starts climbing onto [src].</span>")
-	if(do_mob(user, user, 20))
-		user.pass_flags += PASSTABLE
-		step(user,get_dir(user,src.loc))
-		user.pass_flags -= PASSTABLE
-		user.visible_message("<span class='warning'>[user] climbs onto [src].</span>", \
-									"<span class='notice'>[user] climbs onto [src].</span>")
-		add_logs(user, src, "climbed onto")
-		user.Stun(2)
+								"<span class='notice'>You start climbing onto [src].</span>")
+	var/climb_time = 20
+	if(user.restrained()) //Table climbing takes twice as long when restrained.
+		climb_time *= 2
+	if(do_mob(user, user, climb_time))
+		if(src.loc) //Checking if table has been destroyed
+			user.pass_flags += PASSTABLE
+			step(user,get_dir(user,src.loc))
+			user.pass_flags -= PASSTABLE
+			user.visible_message("<span class='warning'>[user] climbs onto [src].</span>", \
+									"<span class='notice'>You climb onto [src].</span>")
+			add_logs(user, src, "climbed onto")
+			user.Stun(2)
+			return 1
+	return 0
 
 
 /*
@@ -394,37 +403,17 @@
 	buildstack = /obj/item/stack/sheet/glass
 
 /obj/structure/table/glass/tablepush(obj/item/I, mob/user)
-	if(get_dist(src, user) < 2)
-		var/obj/item/weapon/grab/G = I
-		if(G.affecting.buckled)
-			user << "<span class='notice'>[G.affecting] is buckled to [G.affecting.buckled]!</span>"
-			return
-		if(G.state < GRAB_AGGRESSIVE)
-			user << "<span class='notice'>You need a better grip to do that!</span>"
-			return
-		if(!G.confirm())
-			return
-		G.affecting.loc = src.loc
-		G.affecting.Weaken(5)
-		G.affecting.visible_message("<span class='danger'>[G.assailant] smashes [G.affecting] into [src].</span>", \
-									"<span class='userdanger'>[G.assailant] smashes [G.affecting] into [src].</span>")
+	if(..())
+		visible_message("<span class='warning'>[src] breaks!</span>")
 		playsound(src.loc, "shatter", 50, 1)
 		new frame(src.loc)
 		new /obj/item/weapon/shard(src.loc)
 		qdel(src)
-	qdel(I)
+
 
 /obj/structure/table/glass/climb_table(mob/user)
-	src.add_fingerprint(user)
-	user.visible_message("<span class='warning'>[user] starts climbing onto [src].</span>", \
-								"<span class='notice'>[user] starts climbing onto [src].</span>")
-	if(do_mob(user, user, 20))
-		user.pass_flags += PASSTABLE
-		step(user,get_dir(user,src.loc))
-		user.pass_flags -= PASSTABLE
-		user.visible_message("<span class='warning'>[user] climbs onto [src], and it breaks!.</span>", \
-									"<span class='notice'>[user] climbs onto [src], and it breaks!.</span>")
-		add_logs(user, src, "climbed onto")
+	if(..())
+		visible_message("<span class='warning'>[src] breaks!</span>")
 		playsound(src.loc, "shatter", 50, 1)
 		new frame(src.loc)
 		new /obj/item/weapon/shard(src.loc)
