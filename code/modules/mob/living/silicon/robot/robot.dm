@@ -233,7 +233,7 @@
 			module_sprites["Standard"] = "surgeon"
 			module_sprites["Marina"] = "marina"
 			module_sprites["Eve"] = "eve"
-			module_sprites["Sleek"] = "sleekmedical"
+			module_sprites["Sleek"] = "sleekmedic"
 
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
