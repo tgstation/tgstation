@@ -24,7 +24,6 @@ var/global/mulebot_count = 0
 	control_freq = 1447
 	bot_type = MULE_BOT
 	bot_filter = RADIO_MULEBOT
-	var/debug_count = 0
 
 	suffix = ""
 
@@ -78,6 +77,9 @@ var/global/mulebot_count = 0
 			suffix = "#[mulebot_count]"
 		name = "\improper Mulebot ([suffix])"
 
+obj/machinery/bot/mulebot/bot_reset()
+	..()
+	reached_target = 0
 
 
 // attack by item
@@ -516,7 +518,7 @@ var/global/mulebot_count = 0
 			process_bot()
 			num_steps--
 			for(var/i=num_steps,i>0,i--)
-				sleep(4)
+				sleep(2)
 				process_bot()
 
 	if(refresh) updateDialog()
@@ -530,8 +532,8 @@ var/global/mulebot_count = 0
 			return
 		if(BOT_LOADING)		// loading/unloading
 			return
-		if(BOT_DELIVER,BOT_GO_HOME,BOT_BLOCKED)		// navigating to deliver,home, or blocked
 
+		if(BOT_DELIVER,BOT_GO_HOME,BOT_BLOCKED)		// navigating to deliver,home, or blocked
 			if(loc == target)		// reached target
 				at_target()
 				return
@@ -649,7 +651,6 @@ var/global/mulebot_count = 0
 // given an optional turf to avoid
 /obj/machinery/bot/mulebot/calc_path(var/turf/avoid = null)
 	path = get_path_to(loc, target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 250, id=botcard, exclude=avoid)
-	world << "[src]_calc_Distance ([path.len])_to: [target]_[destination]"
 
 
 // sets the current destination
@@ -842,10 +843,7 @@ var/global/mulebot_count = 0
 			else
 				loaddir = 0
 			icon_state = "mulebot[(wires.MobAvoid() != null)]"
-			world << "[src]_RX_[debug_count]"
-			debug_count++
 			if(destination) // No need to calculate a path if you do not have a destination set!
-				world << "\red [src]_RX_CALC"
 				calc_path()
 			updateDialog()
 
