@@ -1,103 +1,141 @@
+#define VISIBLE 1
+#define VOCAL 2
 //This only assumes that the mob has a body and face with at least one mouth.
 //Things like airguitar can be done without arms, and the flap thing makes so little sense it's a keeper.
 //Intended to be called by a higher up emote proc if the requested emote isn't in the custom emotes.
 
-/mob/living/emote(var/act, var/m_type=1, var/message = null)
+/mob/living/emote_special(inputtext)
 	var/param = null
+	if(findtext(inputtext, "-", 1, null))
+		var/t1 = findtext(inputtext, "-", 1, null)
+		param = copytext(inputtext, t1 + 1, length(inputtext) + 1)
+		inputtext = copytext(inputtext, 1, t1)
 
-	if (findtext(act, "-", 1, null))
-		var/t1 = findtext(act, "-", 1, null)
-		param = copytext(act, t1 + 1, length(act) + 1)
-		act = copytext(act, 1, t1)
+	if(findtext(inputtext,"s",-1) && !findtext(inputtext,"_",-2)) //Removes ending s's unless they are prefixed with a '_'
+		inputtext = copytext(inputtext,1,length(inputtext))
 
-	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
-		act = copytext(act,1,length(act))
+	var/list/emotelist = handle_emote_special(inputtext, param)
 
-	switch(act)//Hello, how would you like to order? Alphabetically!
+	send_emote_special(emotelist[1], emotelist[2], emotelist[3])
+
+/mob/living/proc/send_emote_special(m_type, message, message_alt)
+	if(message)
+		if(m_type & 1)
+			visible_message(message)
+		else if(m_type & 2)
+			if(is_muzzled())
+				message = alt_message
+			var/turf/T = get_turf(src)
+			T.audible_message(message)
+
+		for(var/mob/M in dead_mob_list)
+			if(!M.client || istype(M, /mob/new_player))
+				continue //skip monkeys, leavers and new players
+			if(M.stat == DEAD && (M.client.prefs.toggles & CHAT_GHOSTSIGHT) && (get_dist(src, M) > 7))
+				M.show_message(message)
+
+		log_emote("[name]/[key] : [message]")
+
+/mob/living/proc/handle_emote_special(act, param)
+	var/m_type
+	var/message
+	var/message_alt
+
+	switch(act)//Hello, how would you like to order? Alphabetically! //not copypasted for each mob seperately, please.
 		if ("aflap")
-			if (!src.restrained())
-				message = "<B>[src]</B> flaps its wings ANGRILY!"
-				m_type = 2
+			if (!restrained())
+				message = "<span class='name'>[src]</span> flaps its wings ANGRILY!"
+				m_type = VISIBLE
+
+		if ("airguitar")
+			if (!restrained())
+				message = "<span class='name'>[src]</span> is strumming the air and headbanging like a safari chimp."
+				m_type = VISIBLE
 
 		if ("blush")
-			message = "<B>[src]</B> blushes."
-			m_type = 1
+			message = "<span class='name'>[src]</span> blushes."
+			m_type = VISIBLE
 
 		if ("bow")
-			if (!src.buckled)
+			if (!buckled)
 				var/M = null
 				if (param)
-					for (var/mob/A in view(1, src))
+					for (var/mob/A in view(7, src))
 						if (param == A.name)
 							M = A
 							break
 				if (!M)
 					param = null
 				if (param)
-					message = "<B>[src]</B> bows to [param]."
+					message = "<span class='name'>[src]</span> bows to [param]."
 				else
-					message = "<B>[src]</B> bows."
-			m_type = 1
+					message = "<span class='name'>[src]</span> bows."
+			m_type = VISIBLE
 
 		if ("burp")
-			message = "<B>[src]</B> burps."
-			m_type = 2
+			message = "<span class='name'>[src]</span> burps."
+			message_alt = "<B>[src]</B> makes a strong noise."
+			m_type = VOCAL
 
 		if ("choke")
-			message = "<B>[src]</B> chokes!"
-			m_type = 2
+			message = "<span class='name'>[src]</span> chokes!"
+			m_type = VOCAL
 
 		if ("chuckle")
-			message = "<B>[src]</B> chuckles."
-			m_type = 2
+			message = "<span class='name'>[src]</span> chuckles."
+			message = "<B>[src]</B> makes a noise."
+			m_type = VOCAL
 
 		if ("collapse")
 			Paralyse(2)
-			message = "<B>[src]</B> collapses!"
-			m_type = 2
+			message = "<span class='name'>[src]</span> collapses!"
+			m_type = VOCAL
 
 		if ("cough")
-			message = "<B>[src]</B> coughs!"
-			m_type = 2
+			message = "<span class='name'>[src]</span> coughs!"
+			m_type = VOCAL
 
 		if ("dance")
-			if (!src.restrained())
-				message = "<B>[src]</B> dances around happily."
-				m_type = 1
+			if (!restrained())
+				message = "<span class='name'>[src]</span> dances around happily."
+				m_type = VISIBLE
 
 		if ("deathgasp")
-			message = "<B>[src]</B> seizes up and falls limp, its eyes dead and lifeless..."
-			m_type = 1
+			message = "<span class='name'>[src]</span> seizes up and falls limp, its eyes dead and lifeless..."
+			m_type = VISIBLE
 
 		if ("drool")
-			message = "<B>[src]</B> drools."
-			m_type = 1
+			message = "<span class='name'>[src]</span> drools."
+			m_type = VISIBLE
 
 		if ("faint")
-			message = "<B>[src]</B> faints."
-			if(src.sleeping)
+			message = "<span class='name'>[src]</span> faints."
+			if(sleeping)
 				return //Can't faint while asleep
-			src.sleeping += 10 //Short-short nap
-			m_type = 1
+			sleeping += 10 //Short-short nap
+			m_type = VISIBLE
 
 		if ("flap")
-			if (!src.restrained())
-				message = "<B>[src]</B> flaps its wings."
-				m_type = 2
+			if (!restrained())
+				message = "<span class='name'>[src]</span> flaps its wings."
+				m_type = VISIBLE
 
 		if ("frown")
-			message = "<B>[src]</B> frowns."
-			m_type = 1
+			message = "<span class='name'>[src]</span> frowns."
+			m_type = VISIBLE
 
 		if ("gasp")
-			message = "<B>[src]</B> gasps!"
-			m_type = 2
+			message = "<span class='name'>[src]</span> gasps!"
+			message_alt = "<B>[src]</B> makes a weak noise."
+			m_type = VOCAL
 
 		if ("giggle")
-			message = "<B>[src]</B> giggles."
-			m_type = 2
+			message = "<span class='name'>[src]</span> giggles."
+			message_alt = "<B>[src]</B> makes a noise."
+			m_type = VOCAL
 
 		if ("glare")
+			m_type = VISIBLE
 			var/M = null
 			if (param)
 				for (var/mob/A in view(1, src))
@@ -107,57 +145,54 @@
 			if (!M)
 				param = null
 			if (param)
-				message = "<B>[src]</B> glares at [param]."
+				message = "<span class='name'>[src]</span> glares at [param]."
 			else
-				message = "<B>[src]</B> glares."
+				message = "<span class='name'>[src]</span> glares."
 
 		if ("grin")
-			message = "<B>[src]</B> grins."
-			m_type = 1
+			message = "<span class='name'>[src]</span> grins."
+			m_type = VISIBLE
 
 		if ("jump")
-			message = "<B>[src]</B> jumps!"
-			m_type = 1
+			message = "<span class='name'>[src]</span> jumps!"
+			m_type = VISIBLE
 
 		if ("laugh")
-			message = "<B>[src]</B> laughs."
-			m_type = 2
+			message = "<span class='name'>[src]</span> laughs."
+			message_alt = "<B>[src]</B> makes a noise."
+			m_type = VOCAL
 
 		if ("look")
+			m_type = VISIBLE
 			var/M = null
 			if (param)
-				for (var/mob/A in view(1, src))
+				for (var/mob/A in view(7, src))
 					if (param == A.name)
 						M = A
 						break
 			if (!M)
 				param = null
 			if (param)
-				message = "<B>[src]</B> looks at [param]."
+				message = "<span class='name'>[src]</span> looks at [param]."
 			else
-				message = "<B>[src]</B> looks."
-			m_type = 1
+				message = "<span class='name'>[src]</span> looks."
 
 		if ("me")
-			if (src.client)
+			if(src.client)
 				if(client.prefs.muted & MUTE_IC)
 					src << "You cannot send IC messages (muted)."
-					return
+					return 0
 				if (src.client.handle_spam_prevention(message,MUTE_IC))
-					return
-			if (stat)
-				return
-			if(!(message))
-				return
-			else
-				message = "<B>[src]</B> [message]"
+					return 0
+			me_verb(param)
+			return 0
 
 		if ("nod")
-			message = "<B>[src]</B> nods."
-			m_type = 1
+			message = "<span class='name'>[src]</span> nods."
+			m_type = VISIBLE
 
 		if ("point")
-			if (!src.restrained())
+			if (!restrained())
 				var/atom/M = null
 				if (param)
 					for (var/atom/A as mob|obj|turf in view())
@@ -165,44 +200,47 @@
 							M = A
 							break
 				if (!M)
-					message = "<B>[src]</B> points."
+					message = "<span class='name'>[src]</span> points."
 				else
 					pointed(M)
-			m_type = 1
+			m_type = VISIBLE
 
 		if ("scream")
-			message = "<B>[src]</B> screams!"
-			m_type = 2
+			message = "<span class='name'>[src]</span> screams!"
+			message_alt = "<span class='name'>[src]</span> lets out a muffled scream!"
+			m_type = VOCAL
 
 		if ("shake")
-			message = "<B>[src]</B> shakes its head."
-			m_type = 1
+			message = "<span class='name'>[src]</span> shakes its head."
+			m_type = VISIBLE
 
 		if ("sigh")
-			message = "<B>[src]</B> sighs."
-			m_type = 2
+			message = "<span class='name'>[src]</span> sighs."
+			m_type = VOCAL
 
 		if ("sit")
-			message = "<B>[src]</B> sits down."
-			m_type = 1
+			message = "<span class='name'>[src]</span> sits down."
+			m_type = VISIBLE
 
 		if ("smile")
-			message = "<B>[src]</B> smiles."
-			m_type = 1
+			message = "<span class='name'>[src]</span> smiles."
+			m_type = VISIBLE
 
 		if ("sneeze")
-			message = "<B>[src]</B> sneezes."
-			m_type = 2
+			message = "<span class='name'>[src]</span> sneezes."
+			message_alt = "<B>[src]</B> makes a weak noise."
+			m_type = VOCAL
 
 		if ("sniff")
-			message = "<B>[src]</B> sniffs."
-			m_type = 2
+			message = "<span class='name'>[src]</span> sniffs."
+			m_type = VOCAL
 
 		if ("snore")
-			message = "<B>[src]</B> snores."
-			m_type = 2
+			message = "<span class='name'>[src]</span> snores."
+			m_type = VOCAL
 
 		if ("stare")
+			m_type = VISIBLE
 			var/M = null
 			if (param)
 				for (var/mob/A in view(1, src))
@@ -212,66 +250,56 @@
 			if (!M)
 				param = null
 			if (param)
-				message = "<B>[src]</B> stares at [param]."
+				message = "<span class='name'>[src]</span> stares at [param]."
 			else
-				message = "<B>[src]</B> stares."
+				message = "<span class='name'>[src]</span> stares."
 
 		if ("sulk")
-			message = "<B>[src]</B> sulks down sadly."
-			m_type = 1
+			message = "<span class='name'>[src]</span> sulks down sadly."
+			m_type = VISIBLE
 
 		if ("sway")
-			message = "<B>[src]</B> sways around dizzily."
-			m_type = 1
+			message = "<span class='name'>[src]</span> sways around dizzily."
+			m_type = VISIBLE
 
 		if ("tremble")
-			message = "<B>[src]</B> trembles in fear!"
-			m_type = 1
+			message = "<span class='name'>[src]</span> trembles in fear!"
+			m_type = VISIBLE
 
 		if ("twitch")
-			message = "<B>[src]</B> twitches violently."
-			m_type = 1
+			message = "<span class='name'>[src]</span> twitches violently."
+			m_type = VISIBLE
 
 		if ("twitch_s")
-			message = "<B>[src]</B> twitches."
-			m_type = 1
+			message = "<span class='name'>[src]</span> twitches."
+			m_type = VISIBLE
 
 		if ("wave")
-			message = "<B>[src]</B> waves."
-			m_type = 1
+			message = "<span class='name'>[src]</span> waves."
+			m_type = VISIBLE
 
 		if ("whimper")
-			message = "<B>[src]</B> whimpers."
-			m_type = 2
+			message = "<span class='name'>[src]</span> whimpers."
+			message_alt = "<B>[src]</B> makes a weak noise."
+			m_type = VOCAL
+
+		if ("wink")
+			message = "<B>[src]</B> winks."
+			m_type = VISIBLE
 
 		if ("yawn")
-			message = "<B>[src]</B> yawns."
-			m_type = 2
+			message = "<span class='name'>[src]</span> yawns."
+			message_alt = "<B>[src]</B> makes a weak noise."
+			m_type = VOCAL
 
 		if ("help")
 			src << "Help for emotes. You can use these emotes with say \"*emote\":\n\naflap, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, giggle, glare-(none)/mob, grin, jump, laugh, look, me, nod, point-atom, scream, shake, sigh, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, yawn"
 
 		else
-			src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
+			src << "<span class='notice'>Unusable emote: '[act]'. Say *help for a list.</span>"
 
+		if(!message_alt)
+			message_alt = message
 
-
-
-
-	if (message)
-		log_emote("[name]/[key] : [message]")
-
- //Hearing gasp and such every five seconds is not good emotes were not global for a reason.
- // Maybe some people are okay with that.
-
-		for(var/mob/M in dead_mob_list)
-			if(!M.client || istype(M, /mob/new_player))
-				continue //skip monkeys, leavers and new players
-			if(M.stat == DEAD && (M.client.prefs.toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
-				M.show_message(message)
-
-
-		if (m_type & 1)
-			visible_message(message)
-		else if (m_type & 2)
-			src.loc.audible_message(message)
+		if(message && m_type)
+			return list(m_type, message, message_alt)

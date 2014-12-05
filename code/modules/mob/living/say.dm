@@ -209,7 +209,7 @@ var/list/department_radio_keys = list(
 
 /mob/living/proc/check_emote(message)
 	if(copytext(message, 1, 2) == "*")
-		emote(copytext(message, 2))
+		emote_special(copytext(message, 2))
 		return 1
 
 /mob/living/proc/get_message_mode(message)

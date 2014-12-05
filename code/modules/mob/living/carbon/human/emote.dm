@@ -1,20 +1,11 @@
-/mob/living/carbon/human/emote(var/act,var/m_type=1,var/message = null)
-	var/param = null
-
-	if (findtext(act, "-", 1, null))
-		var/t1 = findtext(act, "-", 1, null)
-		param = copytext(act, t1 + 1, length(act) + 1)
-		act = copytext(act, 1, t1)
-
-	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
-		act = copytext(act,1,length(act))
-
-	var/muzzled = is_muzzled()
-	//var/m_type = 1
-
-	for (var/obj/item/weapon/implant/I in src)
+/mob/living/carbon/human/handle_emote_special(act, param)
+	for(var/obj/item/weapon/implant/I in src)
 		if (I.implanted)
 			I.trigger(act, src)
+	
+	. = ..()
+	if(.)
+		return .
 
 	var/miming=0
 	if(mind)
@@ -76,6 +67,7 @@
 			var/input = copytext(sanitize(input("Choose an emote to display.") as text|null),1,MAX_MESSAGE_LEN)
 			if (!input)
 				return
+			message = "<span class='name'>[src]</span> [input]"
 			if(copytext(input,1,5) == "says")
 				src << "<span class='danger'>Invalid emote.</span>"
 				return
@@ -88,15 +80,16 @@
 			else
 				var/input2 = input("Is this a visible or hearable emote?") in list("Visible","Hearable")
 				if (input2 == "Visible")
-					m_type = 1
+					visible_message(message)
 				else if (input2 == "Hearable")
 					if(miming)
-						return
-					m_type = 2
+						return 0
+					var/turf/T = get_turf(src)
+					T.audible_message(message)
 				else
 					alert("Unable to use this emote, must be either hearable or visible.")
-					return
-				message = "<B>[src]</B> [input]"
+			return 0
+				
 
 		if ("dap")
 			m_type = 1
