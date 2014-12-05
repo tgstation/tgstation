@@ -8,6 +8,8 @@
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH|WEST
 
+	mirror = /obj/machinery/atmospherics/tvalve/mirrored
+
 	state = 0 // 0 = go straight, 1 = go to side
 
 	// like a trinary component, node1 is input, node2 is side output, node3 is straight output
@@ -27,11 +29,17 @@
 	else
 		icon_state = "tvalve[state]"
 
+
 /obj/machinery/atmospherics/tvalve/New()
 	initialize_directions()
 	..()
 
 /obj/machinery/atmospherics/tvalve/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
+	if(!(pipe.dir in list(NORTH, SOUTH, EAST, WEST)) && src.mirror)
+		var/obj/machinery/atmospherics/tvalve/mirrored_pipe = new mirror(src.loc)
+		pipe.dir = turn(pipe.dir, -45)
+		qdel(src)
+		return mirrored_pipe.buildFrom(usr, pipe)
 	dir = pipe.dir
 	initialize_directions = pipe.get_pipe_dir()
 	if (pipe.pipename)
@@ -114,7 +122,6 @@
 	node1 = null
 	node2 = null
 	node3 = null
-
 	..()
 
 /obj/machinery/atmospherics/tvalve/proc/go_to_side()
@@ -185,11 +192,32 @@
 		src.go_to_side()
 	activity_log += text("\[[time_stamp()]\] Real name: [], Key: [] - [] \the [].",user.real_name, user.key,(state ? "opened" : "closed"),src)
 
+/obj/machinery/atmospherics/tvalve/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+	if (!istype(W, /obj/item/weapon/wrench))
+		return ..()
+	var/turf/T = src.loc
+	if (level==1 && isturf(T) && T.intact)
+		user << "\red You must remove the plating first."
+		return 1
+	var/datum/gas_mixture/int_air = return_air()
+	var/datum/gas_mixture/env_air = loc.return_air()
+	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
+		user << "\red You cannot unwrench this [src], it too exerted due to internal pressure."
+		add_fingerprint(user)
+		return 1
+	playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
+	user << "\blue You begin to unfasten \the [src]..."
+	if (do_after(user, 40))
+		user.visible_message( \
+			"[user] unfastens \the [src].", \
+			"\blue You have unfastened \the [src].", \
+			"You hear ratchet.")
+		new /obj/item/pipe(loc, make_from=src)
+		del(src)
 
-/* Fix being removed from machine list (returns PROCESS_KILL by default now)
-	process()
-		..()
-		// No machines.Remove(src)
+/obj/machinery/atmospherics/tvalve/process()
+	..()
+	//machines.Remove(src)
 
 /*		if(open && (!node1 || !node2))
 			close()
@@ -204,12 +232,10 @@
 		else if (nodealert)
 			nodealert = 0
 */
+	return
 
-		return
-*/
 
 /obj/machinery/atmospherics/tvalve/initialize()
-
 	node1 = findConnecting(turn(dir, 180))
 	node2 = findConnecting(turn(dir, -90))
 	node3 = findConnecting(dir)
@@ -273,13 +299,63 @@
 
 	return null
 
+/obj/machinery/atmospherics/tvalve/mirrored
+	icon_state = "tvalvem0"
+
+/obj/machinery/atmospherics/tvalve/mirrored/initialize_directions()
+	switch(dir)
+		if(NORTH)
+			initialize_directions = SOUTH|NORTH|WEST
+		if(SOUTH)
+			initialize_directions = NORTH|SOUTH|EAST
+		if(EAST)
+			initialize_directions = WEST|EAST|NORTH
+		if(WEST)
+			initialize_directions = EAST|WEST|SOUTH
+
+/obj/machinery/atmospherics/tvalve/mirrored/initialize()
+	var/node1_dir
+	var/node2_dir
+	var/node3_dir
+
+	node1_dir = turn(dir, 180)
+	node2_dir = turn(dir, 90)
+	node3_dir = dir
+
+	for(var/obj/machinery/atmospherics/target in get_step(src,node1_dir))
+		if(target.initialize_directions & get_dir(target,src))
+			node1 = target
+			break
+	for(var/obj/machinery/atmospherics/target in get_step(src,node2_dir))
+		if(target.initialize_directions & get_dir(target,src))
+			node2 = target
+			break
+	for(var/obj/machinery/atmospherics/target in get_step(src,node3_dir))
+		if(target.initialize_directions & get_dir(target,src))
+			node3 = target
+			break
+
+/obj/machinery/atmospherics/tvalve/mirrored/update_icon(animation)
+	if(animation)
+		flick("tvalvem[src.state][!src.state]",src)
+	else
+		icon_state = "tvalvem[state]"
+
+
+////////////////////
+////DIGITAL T///////
+////////////////////
+
 /obj/machinery/atmospherics/tvalve/digital		// can be controlled by AI
 	name = "digital switching valve"
 	desc = "A digitally controlled valve."
 	icon = 'icons/obj/atmospherics/digital_valve.dmi'
+
 	var/frequency = 0
 	var/id_tag = null
 	var/datum/radio_frequency/radio_connection
+
+	mirror = /obj/machinery/atmospherics/tvalve/mirrored/digital
 
 /obj/machinery/atmospherics/tvalve/digital/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
@@ -421,6 +497,7 @@
 	..()
 	if(frequency)
 		set_frequency(frequency)
+
 
 /obj/machinery/atmospherics/tvalve/mirrored/digital/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id_tag))

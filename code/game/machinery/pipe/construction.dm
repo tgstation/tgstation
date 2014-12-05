@@ -2,6 +2,8 @@
 Buildable pipes
 Buildable meters
 */
+
+//Gas piping numbers - do NOT hardcode these, use the defines
 #define PIPE_SIMPLE_STRAIGHT	0
 #define PIPE_SIMPLE_BENT		1
 #define PIPE_HE_STRAIGHT		2
@@ -28,6 +30,19 @@ Buildable meters
 #define PIPE_INJECTOR    		23
 #define PIPE_DP_VENT    		24
 #define PIPE_PASV_VENT    		25
+#define PIPE_DTVALVE			26
+#define PIPE_INSUL_MANIFOLD		27
+#define PIPE_INSUL_MANIFOLD4W	28
+
+//Disposal piping numbers - do NOT hardcode these, use the defines
+#define DISP_PIPE_STRAIGHT		0
+#define DISP_PIPE_BENT			1
+#define DISP_JUNCTION			2
+#define DISP_YJUNCTION			3
+#define DISP_END_TRUNK			4
+#define DISP_END_BIN			5
+#define DISP_END_OUTLET			6
+#define DISP_END_CHUTE			7
 
 /obj/item/pipe_spawner
 	name = "Pipe Spawner"
@@ -101,8 +116,12 @@ Buildable meters
 			src.pipe_type = PIPE_PUMP
 		else if(istype(make_from, /obj/machinery/atmospherics/trinary/filter))
 			src.pipe_type = PIPE_GAS_FILTER
+			if(istype(make_from, /obj/machinery/atmospherics/trinary/filter/mirrored))
+				src.dir = turn(src.dir, 45) //adjust it to have the proper icon
 		else if(istype(make_from, /obj/machinery/atmospherics/trinary/mixer))
 			src.pipe_type = PIPE_GAS_MIXER
+			if(istype(make_from, /obj/machinery/atmospherics/trinary/mixer/mirrored))
+				src.dir = turn(src.dir, 45)
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/vent_scrubber))
 			src.pipe_type = PIPE_SCRUBBER
 		else if(istype(make_from, /obj/machinery/atmospherics/binary/passive_gate))
@@ -112,7 +131,12 @@ Buildable meters
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/heat_exchanger))
 			src.pipe_type = PIPE_HEAT_EXCHANGE
 		else if(istype(make_from, /obj/machinery/atmospherics/tvalve))
-			src.pipe_type = PIPE_MTVALVE
+			if(istype(make_from, /obj/machinery/atmospherics/tvalve/digital) || istype(make_from, /obj/machinery/atmospherics/tvalve/mirrored/digital))
+				src.pipe_type = PIPE_DTVALVE
+			else
+				src.pipe_type = PIPE_MTVALVE
+			if(istype(make_from, /obj/machinery/atmospherics/tvalve/mirrored))
+				src.dir = turn(src.dir, 45) //sets the angle and icon correctly
 		else if(istype(make_from, /obj/machinery/atmospherics/pipe/manifold4w))
 			src.pipe_type = PIPE_MANIFOLD4W
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/cap))
@@ -161,7 +185,10 @@ var/global/list/pipeID2State = list(
 	"thermalplate",
 	"injector",
 	"binary vent",
-	"passive vent"
+	"passive vent",
+	"dtvalve",
+	"insulated_manifold",
+	"insulated_manifold4w"
 )
 /obj/item/pipe/proc/update()
 	var/list/nlist = list( \
@@ -190,7 +217,10 @@ var/global/list/pipeID2State = list(
 		"thermal plate", \
 		"injector", \
 		"dual-port vent", \
-		"passive vent"
+		"passive vent", \
+		"digital t-valve", \
+		"insulated manifold", \
+		"insulated 4-way manifold"
 	)
 	name = nlist[pipe_type+1] + " fitting"
 	icon = 'icons/obj/pipe-item.dmi'
@@ -262,7 +292,7 @@ var/global/list/pipeID2State = list(
 			return dir|flip|cw|acw
 		if(PIPE_MANIFOLD)
 			return flip|cw|acw
-		if(PIPE_GAS_FILTER, PIPE_GAS_MIXER,PIPE_MTVALVE)
+		if(PIPE_GAS_FILTER, PIPE_GAS_MIXER,PIPE_MTVALVE,PIPE_DTVALVE)
 			return dir|flip|cw
 		if(PIPE_CAP)
 			return flip
@@ -395,6 +425,9 @@ var/global/list/pipeID2State = list(
 
 		if(PIPE_PASV_VENT)
 			P=new /obj/machinery/atmospherics/pipe/vent(src.loc)
+
+		if(PIPE_DTVALVE)
+			P=new /obj/machinery/atmospherics/tvalve/digital(src.loc)
 
 	if(P.buildFrom(usr,src))
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)

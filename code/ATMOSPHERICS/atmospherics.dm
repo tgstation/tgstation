@@ -23,6 +23,8 @@ Pipelines + Other Objects -> Pipe network
 	// Which directions can we connect with?
 	var/initialize_directions = 0
 
+	var/obj/machinery/atmospherics/mirror //not actually an object reference, but a type. The reflection of the current pipe
+
 	// Pipe painter color setting.
 	var/_color
 
