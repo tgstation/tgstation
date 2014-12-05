@@ -239,18 +239,6 @@
 	filling_color = "#125709"
 	plantname = "ambrosia"
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
-	if(istype(O, /obj/item/weapon/paper))
-		del(O)
-		user << "<span class='notice'>You roll a blunt.</span>"
-		var/obj/item/clothing/mask/cigarette/blunt/rolled/B = new/obj/item/clothing/mask/cigarette/blunt/rolled(src.loc)
-		reagents.trans_to(B, (reagents.total_volume))
-		user.put_in_hands(B)
-		user.drop_from_inventory(src)
-		del(src)
-	else
-		return ..()
-
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus
 	name = "ambrosia deus branch"
 	desc = "Eating this makes you feel immortal!"
@@ -258,18 +246,6 @@
 	potency = 10
 	filling_color = "#229E11"
 	plantname = "ambrosiadeus"
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
-	if(istype(O, /obj/item/weapon/paper))
-		del(O)
-		user << "<span class='notice'>You roll a godly blunt.</span>"
-		var/obj/item/clothing/mask/cigarette/blunt/deus/rolled/B = new/obj/item/clothing/mask/cigarette/blunt/deus/rolled(src.loc)
-		reagents.trans_to(B, (reagents.total_volume))
-		user.put_in_hands(B)
-		user.drop_from_inventory(src)
-		del(src)
-	else
-		return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/apple
 	name = "apple"
