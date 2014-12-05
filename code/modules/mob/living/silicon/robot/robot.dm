@@ -197,6 +197,7 @@
 			module_sprites["Basic"] = "robot_old"
 			module_sprites["Android"] = "droid"
 			module_sprites["Default"] = "robot"
+			module_sprites["Sleek"] = "sleekstandard"
 
 		if("Service")
 			module = new /obj/item/weapon/robot_module/butler(src)
@@ -207,6 +208,7 @@
 			module_sprites["Default"] = "Service2"
 			module_sprites["R2-D2"] = "r2d2"
 			module_sprites["Marina-SV"] = "marinaSV"
+			module_sprites["Sleek"] = "sleekservice"
 
 		if("Miner")
 			module = new /obj/item/weapon/robot_module/miner(src)
@@ -218,6 +220,7 @@
 			module_sprites["Treadhead"] = "Miner"
 			module_sprites["Wall-A"] = "wall-a"
 			module_sprites["Marina-MN"] = "marinaMN"
+			module_sprites["Sleek"] = "sleekminer"
 
 		if("Medical")
 			module = new /obj/item/weapon/robot_module/medical(src)
@@ -230,12 +233,13 @@
 			module_sprites["Standard"] = "surgeon"
 			module_sprites["Marina"] = "marina"
 			module_sprites["Eve"] = "eve"
+			module_sprites["Sleek"] = "sleekmedic"
 
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
 			channels = list("Security" = 1)
 			module_sprites["Basic"] = "secborg"
-			module_sprites["Red Knight"] = "Security"
+			module_sprites["Red Knight 2.0"] = "sleeksecurity"
 			module_sprites["Black Knight"] = "securityrobot"
 			module_sprites["Bloodhound"] = "bloodhound"
 			module_sprites["Securitron"] = "securitron"
@@ -253,6 +257,7 @@
 			module_sprites["Landmate"] = "landmate"
 			module_sprites["Wall-E"] = "wall-e"
 			module_sprites["Marina-EN"] = "marinaEN"
+			module_sprites["Sleek"] = "sleekengineer"
 
 		if("Janitor")
 			module = new /obj/item/weapon/robot_module/janitor(src)
@@ -262,6 +267,7 @@
 			module_sprites["Mechaduster"] = "mechaduster"
 			module_sprites["HAN-D"] = "han-d"
 			module_sprites["Marina-JN"] = "marinaJN"
+			module_sprites["Sleek"] = "sleekjanitor"
 
 		if("Combat")
 			module = new /obj/item/weapon/robot_module/combat(src)
