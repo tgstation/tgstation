@@ -12,6 +12,6 @@
 
 /obj/structure/mech_melee_attack(obj/mecha/M)
 	if(M.damtype == "brute")
-		visible_message("<span class='danger'>[src] has been hit by [M.name].</span>")
+		visible_message("<span class='danger'>[M.name] has hit [src].</span>")
 		return 1
 	return 0

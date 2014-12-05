@@ -248,7 +248,7 @@ proc/check_panel(mob/M)
 /obj/effect/fake_attacker/attackby(var/obj/item/weapon/P as obj, mob/user as mob)
 	step_away(src,my_target,2)
 	my_target.visible_message("<span class='danger'>[my_target] flails around wildly.</span>", \
-							"<span class='userdanger'>[src] has been attacked by [my_target] </span>")
+							"<span class='danger'>[my_target] has attacked [src]!</span>")
 
 	src.health -= P.force
 
@@ -305,7 +305,7 @@ proc/check_panel(mob/M)
 			if(prob(15))
 				if(weapon_name)
 					my_target << sound(pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg'))
-					my_target.show_message("<span class='danger'>[my_target] has been attacked with [weapon_name] by [src.name]!</span>", 1)
+					my_target.show_message("<span class='danger'>[src.name] has attacked [my_target] with [weapon_name]!</span>", 1)
 					my_target.staminaloss += 30
 					if(prob(20)) my_target.eye_blurry += 3
 					if(prob(33))

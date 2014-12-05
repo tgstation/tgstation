@@ -548,12 +548,12 @@
 			if (emagged || malfhack || (stat & BROKEN) || opened==2)
 				new /obj/item/stack/sheet/metal(loc)
 				user.visible_message(\
-					"<span class='warning'>[src] has been cut apart by [user.name] with the weldingtool.</span>",\
+					"<span class='warning'>[user.name] has cut [src] apart with [W].</span>",\
 					"<span class='notice'>You disassembled the broken APC frame.</span>")
 			else
 				new /obj/item/apc_frame(loc)
 				user.visible_message(\
-					"<span class='warning'>[src] has been cut from the wall by [user.name] with the weldingtool.</span>",\
+					"<span class='warning'>[user.name] has cut [src] from the wall with [W].</span>",\
 					"<span class='notice'>You cut the APC frame from the wall.</span>")
 			qdel(src)
 			return
@@ -588,7 +588,7 @@
 				&& W.w_class >= 3.0 \
 				&& prob(20) )
 			opened = 2
-			user.visible_message("<span class='danger'>The APC cover was knocked down with the [W.name] by [user.name]!</span>", \
+			user.visible_message("<span class='danger'>[user.name] has knocked down the APC cover  with the [W.name]!</span>", \
 				"<span class='danger'>You knock down the APC cover with your [W.name]!</span>", \
 				"You hear bang")
 			update_icon()
@@ -600,7 +600,7 @@
 				istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/assembly/signaler)))
 				return src.attack_hand(user)
 			user.do_attack_animation(src)
-			user.visible_message("<span class='danger'>The [src.name] has been hit with the [W.name] by [user.name]!</span>", \
+			user.visible_message("<span class='danger'>[user.name] has hit the [src.name] with the [W.name]!</span>", \
 				"<span class='danger'>You hit the [src.name] with your [W.name]!</span>", \
 				"You hear bang")
 

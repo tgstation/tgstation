@@ -206,7 +206,7 @@
 
 //This proc return 1 if the item can be picked up and 0 if it can't.
 //Set the stop_messages to stop it from printing messages
-/obj/item/weapon/storage/proc/can_be_inserted(obj/item/W, stop_messages = 0)
+/obj/item/weapon/storage/proc/can_be_inserted(obj/item/W, stop_messages = 0, mob/user)
 	if(!istype(W) || (W.flags & ABSTRACT)) return //Not an item
 
 	if(loc == W)
@@ -263,7 +263,7 @@
 //This proc handles items being inserted. It does not perform any checks of whether an item can or can't be inserted. That's done by can_be_inserted()
 //The stop_warning parameter will stop the insertion message from being displayed. It is intended for cases where you are inserting multiple items at once,
 //such as when picking up all the items on a tile with one click.
-/obj/item/weapon/storage/proc/handle_item_insertion(obj/item/W, prevent_warning = 0)
+/obj/item/weapon/storage/proc/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
 	if(!istype(W)) return 0
 	if(usr)
 		if(!usr.unEquip(W))
@@ -334,10 +334,10 @@
 		user << "<span class='notice'>You're a robot. No.</span>"
 		return 0	//Robots can't interact with storage items.
 
-	if(!can_be_inserted(W))
+	if(!can_be_inserted(W, 0 , user))
 		return 0
 
-	handle_item_insertion(W)
+	handle_item_insertion(W, 0 , user)
 	return 1
 
 
@@ -409,7 +409,7 @@
 
 
 /obj/item/weapon/storage/New()
-
+	..()
 	if(allow_quick_empty)
 		verbs += /obj/item/weapon/storage/verb/quick_empty
 	else

@@ -77,7 +77,7 @@
 /turf/simulated/wall/mech_melee_attack(obj/mecha/M)
 	if(M.damtype == "brute")
 		playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
-		visible_message("<span class='danger'>[src] has been hit by [M.name].</span>")
+		visible_message("<span class='danger'>[M.name] has hit [src]!</span>")
 		if(prob(5) && M.force > 20)
 			dismantle_wall(1)
 			visible_message("<span class='warning'>[src.name] smashes through the wall!</span>")
