@@ -38,6 +38,11 @@
 	icon_state = "magus"
 	item_state = "magus"
 
+/obj/item/clothing/head/wizard/santa
+	name = "Santa's hat"
+	desc = "Ho ho ho. Merrry X-mas!"
+	icon_state = "santahat"
+	flags = BLOCKHAIR
 
 /obj/item/clothing/suit/wizrobe
 	name = "wizard robe"
@@ -85,6 +90,12 @@
 	icon_state = "magusred"
 	item_state = "magusred"
 
+
+/obj/item/clothing/suit/wizrobe/santa
+	name = "Santa's suit"
+	desc = "Festive!"
+	icon_state = "santa"
+	item_state = "santa"
 
 /obj/item/clothing/suit/wizrobe/fake
 	name = "wizard robe"
