@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete-after : True
+changes:
+  - wip: Work continues on Meteors. Mostly value tweaks, the goal is to switch from 'meteors coming from everywhere always' to 'massive but localized and timely meteor waves'. Notably, meteor waves still to one 'side' now and wave delays are higher
