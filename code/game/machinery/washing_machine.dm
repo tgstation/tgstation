@@ -4,7 +4,7 @@
 	icon_state = "wm_10"
 	density = 1
 	anchored = 1.0
-	state = 1
+	var/wash_state = 1
 	//1 = empty, open door
 	//2 = empty, closed door
 	//3 = full, open door
@@ -28,14 +28,14 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if( state != 4 )
+	if( wash_state != 4 )
 		usr << "The washing machine cannot run in this state."
 		return
 
 	if( locate(/mob,contents) )
-		state = 8
+		wash_state = 8
 	else
-		state = 5
+		wash_state = 5
 	update_icon()
 	sleep(200)
 	for(var/atom/A in contents)
@@ -190,10 +190,10 @@
 
 
 	if( locate(/mob,contents) )
-		state = 7
+		wash_state = 7
 		gibs_ready = 1
 	else
-		state = 4
+		wash_state = 4
 	update_icon()
 
 /obj/machinery/washing_machine/verb/climb_out()
@@ -202,30 +202,30 @@
 	set src in usr.loc
 
 	sleep(20)
-	if(state in list(1,3,6) )
+	if(wash_state in list(1,3,6) )
 		usr.loc = src.loc
 
 
 /obj/machinery/washing_machine/update_icon()
-	icon_state = "wm_[state][panel_open]"
+	icon_state = "wm_[wash_state][panel_open]"
 
 /obj/machinery/washing_machine/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(..())
 		update_icon()
 		return 1
 	else if(istype(W,/obj/item/toy/crayon) ||istype(W,/obj/item/weapon/stamp))
-		if( state in list(	1, 3, 6 ) )
+		if( wash_state in list(	1, 3, 6 ) )
 			if(!crayon)
 				user.drop_item()
 				crayon = W
 				crayon.loc = src
 	else if(istype(W,/obj/item/weapon/grab))
-		if( (state == 1) && hacked)
+		if( (wash_state == 1) && hacked)
 			var/obj/item/weapon/grab/G = W
 			if(ishuman(G.assailant) && iscorgi(G.affecting))
 				G.affecting.loc = src
 				del(G)
-				state = 3
+				wash_state = 3
 	else if(istype(W,/obj/item/stack/sheet/hairlesshide) || \
 		istype(W,/obj/item/clothing/under) || \
 		istype(W,/obj/item/clothing/mask) || \
@@ -275,10 +275,10 @@
 			return
 
 		if(contents.len < 5)
-			if ( state in list(1, 3) )
+			if ( wash_state in list(1, 3) )
 				user.drop_item()
 				W.loc = src
-				state = 3
+				wash_state = 3
 			else
 				user << "\blue You can't put the item in right now."
 		else
@@ -286,25 +286,25 @@
 	update_icon()
 
 /obj/machinery/washing_machine/attack_hand(mob/user as mob)
-	switch(state)
+	switch(wash_state)
 		if(1)
-			state = 2
+			wash_state = 2
 		if(2)
-			state = 1
+			wash_state = 1
 			for(var/atom/movable/O in contents)
 				O.loc = src.loc
 		if(3)
-			state = 4
+			wash_state = 4
 		if(4)
-			state = 3
+			wash_state = 3
 			for(var/atom/movable/O in contents)
 				O.loc = src.loc
 			crayon = null
-			state = 1
+			wash_state = 1
 		if(5)
 			user << "\red The [src] is busy."
 		if(6)
-			state = 7
+			wash_state = 7
 		if(7)
 			if(gibs_ready)
 				gibs_ready = 0
@@ -314,7 +314,7 @@
 			for(var/atom/movable/O in contents)
 				O.loc = src.loc
 			crayon = null
-			state = 1
+			wash_state = 1
 
 
 	update_icon()
