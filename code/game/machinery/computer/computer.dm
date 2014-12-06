@@ -32,6 +32,9 @@
 
 
 /obj/machinery/computer/ex_act(severity, target)
+	if(target == src)
+		qdel(src)
+		return
 	switch(severity)
 		if(1.0)
 			qdel(src)

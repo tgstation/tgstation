@@ -181,20 +181,10 @@
 			dir = 2
 
 /obj/structure/table/ex_act(severity, target)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
-				return
-		if(3.0)
-			if (prob(25))
-				src.density = 0
-		else
-	return
-
+	..()
+	if(severity == 3)
+		if(prob(25))
+			density = 0
 
 /obj/structure/table/blob_act()
 	if(prob(75))
