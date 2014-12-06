@@ -10,8 +10,8 @@
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
-	if(src.name == "alien drone")
-		src.name = text("alien drone ([rand(1, 1000)])")
+	if(src.name == "\improper alien drone")
+		src.name = text("\improper alien drone ([rand(1, 1000)])")
 	src.real_name = src.name
 	verbs.Add(/mob/living/carbon/alien/humanoid/proc/resin,/mob/living/carbon/alien/humanoid/proc/corrosive_acid)
 	..()
