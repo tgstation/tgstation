@@ -1212,6 +1212,8 @@
 #include "code\modules\power\singularity\particle_accelerator\particle_control.dm"
 #include "code\modules\power\singularity\particle_accelerator\particle_emitter.dm"
 #include "code\modules\power\singularity\particle_accelerator\particle_power.dm"
+#include "code\modules\power\supermatter\supermatter.dm"
+#include "code\modules\power\supermatter\supermatter_crate.dm"
 #include "code\modules\projectiles\ammunition.dm"
 #include "code\modules\projectiles\firing.dm"
 #include "code\modules\projectiles\gun.dm"
