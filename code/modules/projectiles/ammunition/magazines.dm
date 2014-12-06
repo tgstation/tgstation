@@ -171,8 +171,19 @@ obj/item/ammo_box/magazine/tommygunm45
 	caliber = "a762"
 	max_ammo = 50
 
-
 /obj/item/ammo_box/magazine/m762/update_icon()
+	..()
+	icon_state = "[initial(icon_state)]-[round(ammo_count(),10)]"
+
+/obj/item/ammo_box/magazine/c90m
+	name = "C-90gl magazine (5.45mm)"
+	icon_state = "5.45m"
+	origin_tech = "combat=5;syndicate=1"
+	ammo_type = /obj/item/ammo_casing/a545
+	caliber = "a545"
+	max_ammo = 30
+
+/obj/item/ammo_box/magazine/c90m/update_icon()
 	..()
 	icon_state = "[initial(icon_state)]-[round(ammo_count(),10)]"
 

@@ -31,14 +31,14 @@
 	stun = 5
 	weaken = 5
 
-
 /obj/item/projectile/bullet/midbullet2
 	damage = 25
 
-
-/obj/item/projectile/bullet/midbullet3 //Only used with the Syndicate Pistol - RobRichards
+/obj/item/projectile/bullet/midbullet3
 	damage = 30
 
+/obj/item/projectile/bullet/heavybullet
+	damage = 35
 
 /obj/item/projectile/bullet/suffocationbullet//How does this even work?
 	name = "co bullet"
@@ -58,11 +58,6 @@
 	stun = 5
 	weaken = 5
 	stutter = 5
-
-
-/obj/item/projectile/bullet/a762
-	damage = 25
-
 
 /obj/item/projectile/bullet/incendiary
 

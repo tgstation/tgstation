@@ -1,18 +1,17 @@
-/obj/item/weapon/gun/projectile/automatic/suppressed
-	name = "suppressed pistol"
-	desc = "A small, quiet,  easily concealable handgun. Uses .45 rounds."
-	icon_state = "suppressed_pistol"
-	w_class = 3.0
-	suppressed = 1
-	origin_tech = "combat=2;materials=2;syndicate=8"
-	mag_type = /obj/item/ammo_box/magazine/sm45
-	fire_sound = 'sound/weapons/Gunshot_silenced.ogg'
+/obj/item/weapon/gun/projectile/automatic/pistol
+	name = "pistol"
+	desc = "A small, easily concealable handgun. Uses 10mm ammo and has a threaded barrel for suppressors."
+	icon_state = "pistol"
+	w_class = 2
+	suppressed = 0
+	origin_tech = "combat=2;materials=2;syndicate=2"
+	mag_type = /obj/item/ammo_box/magazine/m10mm
+	can_suppress = 1
 
-/obj/item/weapon/gun/projectile/automatic/suppressed/update_icon()
+/obj/item/weapon/gun/projectile/automatic/pistol/update_icon()
 	..()
-	icon_state = "[initial(icon_state)]"
+	icon_state = "[initial(icon_state)][suppressed ? "-suppressor" : ""][chambered ? "" : "-e"]"
 	return
-
 
 /obj/item/weapon/gun/projectile/automatic/deagle
 	name = "desert eagle"
@@ -20,7 +19,6 @@
 	icon_state = "deagle"
 	force = 14
 	mag_type = /obj/item/ammo_box/magazine/m50
-
 
 /obj/item/weapon/gun/projectile/automatic/deagle/afterattack()
 	..()
@@ -65,59 +63,3 @@
 	..()
 	icon_state = "[initial(icon_state)][magazine ? "loaded" : ""]"
 	return
-
-/obj/item/weapon/gun/projectile/automatic/pistol
-	name = "pistol"
-	desc = "A small, easily concealable handgun. Uses 10mm ammo and has a threaded barrel for suppressors."
-	icon_state = "pistol"
-	w_class = 2
-	suppressed = 0
-	origin_tech = "combat=2;materials=2;syndicate=2"
-	mag_type = /obj/item/ammo_box/magazine/m10mm
-
-/obj/item/weapon/gun/projectile/automatic/pistol/attack_hand(mob/user as mob)
-	if(loc == user)
-		if(suppressed)
-			if(user.l_hand != src && user.r_hand != src)
-				..()
-				return
-			user << "<span class='notice'>You unscrew [suppressed] from [src].</span>"
-			user.put_in_hands(suppressed)
-			var/obj/item/weapon/suppressor/S = suppressed
-			fire_sound = S.oldsound
-			suppressed = 0
-			w_class = 2
-			update_icon()
-			return
-	..()
-
-
-/obj/item/weapon/gun/projectile/automatic/pistol/attackby(obj/item/I as obj, mob/user as mob)
-	if(istype(I, /obj/item/weapon/suppressor))
-		if(user.l_hand != src && user.r_hand != src)	//if we're not in his hands
-			user << "<span class='notice'>You'll need [src] in your hands to do that.</span>"
-			return
-		user.drop_item()
-		user << "<span class='notice'>You screw [I] onto [src].</span>"
-		suppressed = I	//dodgy?
-		var/obj/item/weapon/suppressor/S = I
-		S.oldsound = fire_sound
-		fire_sound = 'sound/weapons/Gunshot_silenced.ogg'
-		w_class = 3
-		I.loc = src		//put the suppressor into the gun
-		update_icon()
-		return
-	..()
-
-/obj/item/weapon/gun/projectile/automatic/pistol/update_icon()
-	..()
-	icon_state = "[initial(icon_state)][suppressed ? "-suppressor" : ""][chambered ? "" : "-e"]"
-	return
-
-/obj/item/weapon/suppressor
-	name = "suppressor"
-	desc = "A universal syndicate small-arms suppressor."
-	icon = 'icons/obj/gun.dmi'
-	icon_state = "suppressor"
-	w_class = 2
-	var/oldsound = null

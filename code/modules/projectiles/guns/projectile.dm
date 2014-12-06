@@ -56,9 +56,25 @@
 			user << "<span class='notice'>There's already a magazine in \the [src].</span>"
 	return 0
 
+/obj/item/weapon/gun/projectile/attack_hand(mob/user as mob)
+	if(loc == user)
+		if(suppressed)
+			if(user.l_hand != src && user.r_hand != src)
+				..()
+				return
+			user << "<span class='notice'>You unscrew [suppressed] from [src].</span>"
+			user.put_in_hands(suppressed)
+			var/obj/item/weapon/suppressor/S = suppressed
+			fire_sound = S.oldsound
+			suppressed = 0
+			w_class = 2
+			update_icon()
+			return
+	..()
+
 /obj/item/weapon/gun/projectile/attack_self(mob/living/user as mob)
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
-	if (magazine)
+	if(magazine)
 		magazine.loc = get_turf(src.loc)
 		user.put_in_hands(magazine)
 		magazine.update_icon()

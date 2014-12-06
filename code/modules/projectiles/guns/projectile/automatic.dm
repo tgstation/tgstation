@@ -2,7 +2,7 @@
 	name = "submachine gun"
 	desc = "A lightweight, rapid-fire gun. Uses 9mm rounds."
 	icon_state = "saber"	//ugly
-	w_class = 3.0
+	w_class = 3
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/msmg9mm
 	var/alarmed = 0
@@ -27,7 +27,6 @@
 	name = "Uzi"
 	desc = "A lightweight, rapid-fire submachine gun, for when you really want someone dead. Uses .45 rounds."
 	icon_state = "mini-uzi"
-	w_class = 3.0
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/uzim45
 
@@ -38,11 +37,10 @@
 	desc = "A lightweight, compact bullpup SMG. Uses .45 rounds in medium-capacity magazines and has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
 	icon_state = "c20r"
 	item_state = "c20r"
-	w_class = 3.0
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/c20m
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
-
+	can_suppress = 1
 
 /obj/item/weapon/gun/projectile/automatic/c20r/New()
 	..()
@@ -56,7 +54,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/c20r/update_icon()
 	..()
-	icon_state = "c20r[magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""][chambered ? "" : "-e"]"
+	icon_state = "c20r[magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""][chambered ? "" : "-e"][suppressed ? "-suppressor" : ""]"
 	return
 
 
@@ -146,6 +144,40 @@
 	empty_alarm()
 	return
 
+
+/obj/item/weapon/gun/projectile/automatic/c90gl
+	name = "\improper C-90gl CAR"
+	desc = "A bullpup and compact assault rifle with a toploading design taken from ancient PDWs. Uses 5.45x39mm rounds in high-capacity magazines and has an attached underbarrel grenade launcher."
+	icon_state = "c90gl"
+	item_state = "c90gl"
+	origin_tech = "combat=5;materials=2;syndicate=8"
+	mag_type = /obj/item/ammo_box/magazine/c90m
+	grenade_type = /obj/item/ammo_casing/a40mm
+	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	var/select = 1 //1 for boolets, 0 for explosions.
+	action_button_name = "Toggle Grenade Launcher"
+
+/obj/item/weapon/gun/projectile/automatic/c90gl/New()
+	..()
+	update_icon()
+	return
+
+/obj/item/weapon/gun/projectile/automatic/c90gl/afterattack()
+	..()
+	empty_alarm()
+	return
+
+/obj/item/weapon/gun/projectile/automatic/c90gl/update_icon()
+	..()
+	icon_state = "c90gl[magazine ? "-[Ceiling(get_ammo(0)/6)*6]" : ""][chambered ? "" : "-e"]"
+	return
+
+/obj/item/weapon/gun/projectile/automatic/c90gl/select_fire(mob/living/user as mob)
+
+/obj/item/weapon/gun/projectile/automatic/c90gl/ui_action_click(mob/living/user as mob)
+	select_fire(user)
+	update_icon()
+
 /obj/item/weapon/gun/projectile/automatic/tommygun
 	name = "tommy gun"
 	desc = "A genuine Chicago Typewriter."
@@ -155,12 +187,3 @@
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
-
-/* The thing I found with guns in ss13 is that they don't seem to simulate the rounds in the magazine in the gun.
-   Afaik, since projectile.dm features a revolver, this would make sense since the magazine is part of the gun.
-   However, it looks like subsequent guns that use removable magazines don't take that into account and just get
-   around simulating a removable magazine by adding the casings into the loaded list and spawning an empty magazine
-   when the gun is out of rounds. Which means you can't eject magazines with rounds in them. The below is a very
-   rough and poor attempt at making that happen. -Ausops */
-
-/* Where Ausops failed, I have not. -SirBayer */
