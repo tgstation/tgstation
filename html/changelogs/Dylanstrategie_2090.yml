@@ -1,0 +1,5 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - tweak: Aliens now take 3 seconds to build with resin and can be interrupted
+  - wip: Clean up alien code in view of more profound changes
