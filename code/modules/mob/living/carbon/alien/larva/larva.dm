@@ -320,7 +320,7 @@
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
-				M << "\green <B>[name] is too injured for that.</B>"
+				M << "<span class='alien'>[name] is too injured for that.</span>"
 	return
 
 /mob/living/carbon/alien/larva/restrained()

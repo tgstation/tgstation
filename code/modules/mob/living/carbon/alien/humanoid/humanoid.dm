@@ -155,7 +155,7 @@
 
 /mob/living/carbon/alien/humanoid/attack_slime(mob/living/carbon/slime/M as mob)
 	if(!ticker)
-		M << "You cannot attack people before the game has started."
+		M << "<span class='warning'>You cannot attack people before the game has started.</span>"
 		return
 
 	if(M.Victim) return // can't attack while eating!
@@ -355,7 +355,7 @@ In all, this is a lot like the monkey code. /N
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
-				M << "\green <B>[name] is too injured for that.</B>"
+				M << "<span class='alien'>[name] is too injured for that.</span>"
 	return
 
 

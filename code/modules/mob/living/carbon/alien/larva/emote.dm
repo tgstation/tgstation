@@ -30,83 +30,83 @@
 			return custom_emote(m_type, message)
 		if("sign")
 			if(!src.restrained())
-				message = text("<B>The alien</B> signs[(text2num(param) ? text(" the number []", text2num(param)) : null)].")
+				message = text("<B>\The [src]</B> signs[(text2num(param) ? text(" the number []", text2num(param)) : null)].")
 				m_type = VISIBLE
 		if("burp")
 			if(!muzzled)
-				message = "<B>[src]</B> burps."
+				message = "<B>\The [src]</B> burps."
 				m_type = HEARABLE
 		if("scratch")
 			if(!src.restrained())
-				message = "<B>The [src.name]</B> scratches."
+				message = "<B>\The [src]</B> scratches."
 				m_type = VISIBLE
 		if("whimper")
 			if(!muzzled)
-				message = "<B>The [src.name]</B> whimpers."
+				message = "<B>\The [src]</B> whimpers."
 				m_type = HEARABLE
 		if("tail")
-			message = "<B>The [src.name]</B> waves its tail."
+			message = "<B>\The [src]</B> waves its tail."
 			m_type = VISIBLE
 		if("gasp")
-			message = "<B>The [src.name]</B> gasps."
+			message = "<B>\The [src]</B> gasps."
 			m_type = HEARABLE
 		if("shiver")
-			message = "<B>The [src.name]</B> shivers."
+			message = "<B>\The [src]</B> shivers."
 			m_type = HEARABLE
 		if("drool")
-			message = "<B>The [src.name]</B> drools."
+			message = "<B>\The [src]</B> drools."
 			m_type = VISIBLE
 		if("scretch")
 			if(!muzzled)
-				message = "<B>The [src.name]</B> scretches."
+				message = "<B>\The [src]</B> scretches."
 				m_type = HEARABLE
 		if("choke")
-			message = "<B>The [src.name]</B> chokes."
+			message = "<B>\The [src]</B> chokes."
 			m_type = HEARABLE
 		if("moan")
-			message = "<B>The [src.name]</B> moans!"
+			message = "<B>\The [src]</B> moans!"
 			m_type = HEARABLE
 		if("nod")
-			message = "<B>The [src.name]</B> nods its head."
+			message = "<B>\The [src]</B> nods its head."
 			m_type = VISIBLE
 		if("sway")
-			message = "<B>The [src.name]</B> sways around dizzily."
+			message = "<B>\The [src]</B> sways around dizzily."
 			m_type = VISIBLE
 		if("sulk")
-			message = "<B>The [src.name]</B> sulks down sadly."
+			message = "<B>\The [src]</B> sulks down sadly."
 			m_type = VISIBLE
 		if("twitch")
-			message = "<B>The [src.name]</B> twitches violently."
+			message = "<B>\The [src]</B> twitches violently."
 			m_type = VISIBLE
 		if("dance")
 			if(!src.restrained())
-				message = "<B>The [src.name]</B> dances around happily."
+				message = "<B>\The [src]</B> dances around happily."
 				m_type = VISIBLE
 		if("roll")
 			if(!src.restrained())
-				message = "<B>The [src.name]</B> rolls."
+				message = "<B>\The [src]</B> rolls."
 				m_type = VISIBLE
 		if("shake")
-			message = "<B>The [src.name]</B> shakes its head."
+			message = "<B>\The [src]</B> shakes its head."
 			m_type = VISIBLE
 		if("gnarl")
 			if(!muzzled)
-				message = "<B>The [src.name]</B> gnarls and shows its teeth.."
+				message = "<B>\The [src]</B> gnarls and shows its teeth.."
 				m_type = HEARABLE
 		if("jump")
-			message = "<B>The [src.name]</B> jumps!"
+			message = "<B>\The [src]</B> jumps!"
 			m_type = VISIBLE
 		if("hiss_")
-			message = "<B>The [src.name]</B> hisses softly."
+			message = "<B>\The [src]</B> hisses softly."
 			m_type = VISIBLE
 		if("collapse")
 			Paralyse(2)
-			message = text("<B>[src]</B> collapses!")
+			message = text("<B>\The [src]</B> collapses!")
 			m_type = HEARABLE
 		if("help")
 			src << "burp, choke, collapse, dance, drool, gasp, shiver, gnarl, jump, moan, nod, roll, scratch,\nscretch, shake, sign-#, sulk, sway, tail, twitch, whimper"
 		else
-			src << text("Invalid Emote: []", act)
+			src << text("Invalid Emote: [act]")
 	if((message && src.stat == 0))
 		log_emote("[name]/[key] : [message]")
 		if(m_type & 1)

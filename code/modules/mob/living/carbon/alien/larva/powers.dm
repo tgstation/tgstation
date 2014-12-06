@@ -9,10 +9,10 @@
 
 	if(layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
-		visible_message("<span class='danger'>[src] scurries to the ground !</span>", "\green You are now hiding.")
+		visible_message("<span class='danger'>[src] scurries to the ground !</span>", "<span class='alien'>You are now hiding.</span>")
 	else
 		layer = MOB_LAYER
-		visible_message("<span class='warning'>[src] slowly peaks up from the ground...</span>", "\green You have stopped hiding.")
+		visible_message("<span class='warning'>[src] slowly peaks up from the ground...</span>", "<span class='alien'>You have stopped hiding.</span>")
 
 /mob/living/carbon/alien/larva/verb/evolve()
 	set name = "Evolve"

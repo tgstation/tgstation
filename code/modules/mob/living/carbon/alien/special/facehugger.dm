@@ -217,7 +217,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	icon_state = "[initial(icon_state)]_dead"
 	stat = DEAD
 
-	src.visible_message("\red \b[src] curls up into a ball!")
+	src.visible_message("<span class='danger'>\The [src] curls up into a ball !</span>")
 
 	return
 
