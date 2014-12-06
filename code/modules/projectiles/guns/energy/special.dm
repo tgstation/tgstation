@@ -123,7 +123,7 @@
 	if(overheat || recent_reload)
 		return
 	power_supply.give(500)
-	playsound(src.loc, 'sound/weapons/shotgunpump.ogg', 60, 1)
+	playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 	recent_reload = 1
 	update_icon()
 	return
