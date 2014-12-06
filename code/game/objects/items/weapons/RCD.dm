@@ -6,7 +6,7 @@ RCD
 */
 /obj/item/weapon/rcd
 	name = "rapid-construction-device (RCD)"
-	desc = "A device used to rapidly build walls/floor."
+	desc = "A device used to rapidly build and deconstruct walls and floors."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "rcd"
 	opacity = 0
@@ -18,7 +18,7 @@ RCD
 	throw_speed = 3
 	throw_range = 5
 	w_class = 3.0
-	m_amt = 30000
+	m_amt = 100000
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
 	var/matter = 0
