@@ -9,6 +9,13 @@
 	anchored = 0
 	density = 0
 
+/obj/machinery/mech_bay_recharge_floor/New()
+	..()
+	component_parts = newlist(/obj/item/weapon/circuitboard/mech_bay_recharge_station,
+								/obj/item/weapon/stock_parts/scanning_module,
+								/obj/item/weapon/stock_parts/capacitor,
+								/obj/item/weapon/stock_parts/capacitor)
+
 /obj/machinery/mech_bay_recharge_floor/Crossed(var/obj/mecha/mecha)
 	. = ..()
 	if(istype(mecha))
@@ -58,6 +65,12 @@
 
 /obj/machinery/mech_bay_recharge_port/New()
 	..()
+
+	component_parts = newlist(/obj/item/weapon/circuitboard/mech_bay_power_port,
+								/obj/item/weapon/stock_parts/micro_laser,
+								/obj/item/weapon/stock_parts/scanning_module,
+								/obj/item/weapon/stock_parts/console_screen)
+
 	pr_recharger = new /datum/global_iterator/mech_bay_recharger(null,0)
 	return
 
