@@ -57,7 +57,7 @@
 
 		spawn(100) //Panic interval
 			emergency_shuttle.incall(meteorshuttlemultiplier)
-			captain_announce("A backup emergency shuttle has been called. It will arrive in [round((emergency_shuttle.timeleft())/60)] minutes.")
+			captain_announce("A backup emergency shuttle has been called. It will arrive in [round((emergency_shuttle.timeleft())/60)] minutes. Justification : '<B>Major meteor storm inbound in this sector. Evacuation procedures deferred to Space Weather Inc. THIS IS NOT A DRILL</B>'")
 			world << sound('sound/AI/shuttlecalled.ogg')
 			SetUniversalState(/datum/universal_state/meteor_storm)
 
