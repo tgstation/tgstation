@@ -155,17 +155,16 @@ Doesn't work on other aliens/AI.*/
 		var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in list("resin door","resin wall","resin membrane","resin nest") //would do it through typesof but then the player choice would have the type path and we don't want the internal workings to be exposed ICly - Urist
 		if(!choice || !powerc(75))	return
 		adjustToxLoss(-75)
-		visible_message("<span class='alien'>\The [src] vomits up a thick purple substance and begins to shape it!</span>", "<span class='alien'>You begin to shape a [choice]</span>")
-		if(do_after(src, 30))
-			switch(choice)
-				if("resin door")
-					new /obj/structure/mineral_door/resin(loc)
-				if("resin wall")
-					new /obj/effect/alien/resin/wall(loc)
-				if("resin membrane")
-					new /obj/effect/alien/resin/membrane(loc)
-				if("resin nest")
-					new /obj/structure/stool/bed/nest(loc)
+		visible_message("<span class='alien'>\The [src] vomits up a thick purple substance and shapes it into some form of resin structure!</span>", "<span class='alien'>You shape a [choice]</span>")
+		switch(choice)
+			if("resin door")
+				new /obj/structure/mineral_door/resin(loc)
+			if("resin wall")
+				new /obj/effect/alien/resin/wall(loc)
+			if("resin membrane")
+				new /obj/effect/alien/resin/membrane(loc)
+			if("resin nest")
+				new /obj/structure/stool/bed/nest(loc)
 	return
 
 /mob/living/carbon/alien/humanoid/verb/regurgitate()
