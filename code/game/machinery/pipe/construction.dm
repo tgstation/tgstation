@@ -105,7 +105,10 @@ Buildable meters
 		else if(istype(make_from, /obj/machinery/atmospherics/portables_connector))
 			src.pipe_type = PIPE_CONNECTOR
 		else if(istype(make_from, /obj/machinery/atmospherics/pipe/manifold))
-			src.pipe_type = PIPE_MANIFOLD
+			if(istype(make_from, /obj/machinery/atmospherics/pipe/manifold/insulated))
+				src.pipe_type = PIPE_INSUL_MANIFOLD
+			else
+				src.pipe_type = PIPE_MANIFOLD
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/vent_pump))
 			src.pipe_type = PIPE_UVENT
 		else if(istype(make_from, /obj/machinery/atmospherics/valve/digital))
@@ -138,7 +141,10 @@ Buildable meters
 			if(istype(make_from, /obj/machinery/atmospherics/tvalve/mirrored))
 				src.dir = turn(src.dir, 45) //sets the angle and icon correctly
 		else if(istype(make_from, /obj/machinery/atmospherics/pipe/manifold4w))
-			src.pipe_type = PIPE_MANIFOLD4W
+			if(istype(make_from, /obj/machinery/atmospherics/pipe/manifold4w/insulated))
+				src.pipe_type = PIPE_INSUL_MANIFOLD4W
+			else
+				src.pipe_type = PIPE_MANIFOLD4W
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/cap))
 			src.pipe_type = PIPE_CAP
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/thermal_plate))
@@ -246,7 +252,7 @@ var/global/list/pipeID2State = list(
 			dir = 1
 		else if(dir==8)
 			dir = 4
-	else if (pipe_type == PIPE_MANIFOLD4W)
+	else if (pipe_type in list(PIPE_MANIFOLD4W, PIPE_INSUL_MANIFOLD4W))
 		dir = 2
 	//src.pipe_dir = get_pipe_dir()
 	return
@@ -288,9 +294,9 @@ var/global/list/pipeID2State = list(
 			return dir //dir|acw
 		if(PIPE_CONNECTOR,PIPE_UVENT,PIPE_PASV_VENT,PIPE_SCRUBBER,PIPE_HEAT_EXCHANGE,PIPE_THERMAL_PLATE,PIPE_INJECTOR)
 			return dir
-		if(PIPE_MANIFOLD4W)
+		if(PIPE_MANIFOLD4W, PIPE_INSUL_MANIFOLD4W)
 			return dir|flip|cw|acw
-		if(PIPE_MANIFOLD)
+		if(PIPE_MANIFOLD, PIPE_INSUL_MANIFOLD)
 			return flip|cw|acw
 		if(PIPE_GAS_FILTER, PIPE_GAS_MIXER,PIPE_MTVALVE,PIPE_DTVALVE)
 			return dir|flip|cw
@@ -345,7 +351,7 @@ var/global/list/pipeID2State = list(
 			dir = 1
 		else if(dir==8)
 			dir = 4
-	else if (pipe_type == PIPE_MANIFOLD4W)
+	else if (pipe_type in list(PIPE_MANIFOLD4W, PIPE_INSUL_MANIFOLD4W))
 		dir = 2
 	var/pipe_dir = get_pipe_dir()
 
@@ -428,6 +434,12 @@ var/global/list/pipeID2State = list(
 
 		if(PIPE_DTVALVE)
 			P=new /obj/machinery/atmospherics/tvalve/digital(src.loc)
+
+		if(PIPE_INSUL_MANIFOLD)
+			P=new /obj/machinery/atmospherics/pipe/manifold/insulated(src.loc)
+
+		if(PIPE_INSUL_MANIFOLD4W)
+			P=new /obj/machinery/atmospherics/pipe/manifold4w/insulated(src.loc)
 
 	if(P.buildFrom(usr,src))
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
