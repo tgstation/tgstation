@@ -53,7 +53,7 @@ Doesn't work on other aliens/AI.*/
 		if(msg)
 			log_say("AlienWhisper: [key_name(src)]->[M.key] : [msg]")
 			M << "<span class='alien'>You hear a strange, alien voice in your head... \italic [msg]</span>"
-			src << "<span class='alien'>You said: "[msg]" to [M]</span>"
+			src << "<span class='alien'>You said: [msg] to [M]</span>"
 	return
 
 /mob/living/carbon/alien/humanoid/verb/transfer_plasma(mob/living/carbon/alien/M as mob in oview())
