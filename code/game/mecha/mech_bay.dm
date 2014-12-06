@@ -68,7 +68,7 @@
 	else
 		if(recharging_mecha.cell)
 			recharging_mecha.occupant_message("Now charging...")
-			pr_recharger.start(list(src,recharging_mecha))
+			pr_recharger.start(list(src, recharging_mecha))
 			return 1
 		else
 			return 0
@@ -107,21 +107,21 @@
 	var/max_charge = 45
 	check_for_null = 0 //since port.stop_charge() must be called. The checks are made in process()
 
-	process(var/obj/machinery/mech_bay_recharge_port/port, var/obj/mecha/mecha)
-		if(!port)
-			return 0
-		if(mecha && mecha in port.recharge_floor)
-			if(!mecha.cell)	return
-			var/delta = min(max_charge, mecha.cell.maxcharge - mecha.cell.charge)
-			if(delta>0)
-				mecha.give_power(delta)
-				port.use_power(delta*150)
-			else
-				mecha.occupant_message("<font color='blue'><b>Fully charged.</b></font>")
-				port.stop_charge()
+/datum/global_iterator/mech_bay_recharger/process(var/obj/machinery/mech_bay_recharge_port/port, var/obj/mecha/mecha)
+	if(!port)
+		return 0
+	if(mecha && mecha in get_turf(port.recharge_floor))
+		if(!mecha.cell)	return
+		var/delta = min(max_charge, mecha.cell.maxcharge - mecha.cell.charge)
+		if(delta>0)
+			mecha.give_power(delta)
+			port.use_power(delta*150)
 		else
+			mecha.occupant_message("<font color='blue'><b>Fully charged.</b></font>")
 			port.stop_charge()
-		return
+	else
+		port.stop_charge()
+	return
 
 
 
