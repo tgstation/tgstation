@@ -6,6 +6,9 @@
 	icon_state = "aliend_s"
 	plasma_rate = 15
 
+/mob/living/carbon/alien/humanoid/drone/movement_delay()
+	return (2 + move_delay_add + config.alien_delay) //Drones are slow
+
 /mob/living/carbon/alien/humanoid/drone/New()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R

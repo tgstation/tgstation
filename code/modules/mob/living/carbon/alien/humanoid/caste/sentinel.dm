@@ -8,6 +8,8 @@
 	icon_state = "aliens_s"
 	plasma_rate = 10
 
+//As far as movement goes, Sentinels are average
+
 /mob/living/carbon/alien/humanoid/sentinel/New()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R

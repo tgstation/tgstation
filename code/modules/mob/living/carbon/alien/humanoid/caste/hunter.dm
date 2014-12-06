@@ -8,6 +8,9 @@
 	icon_state = "alienh_s"
 	plasma_rate = 5
 
+/mob/living/carbon/alien/humanoid/hunter/movement_delay()
+	return (-2 + move_delay_add + config.alien_delay) //Hunters are fast
+
 /mob/living/carbon/alien/humanoid/hunter/New()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
@@ -18,8 +21,6 @@
 	..()
 
 /mob/living/carbon/alien/humanoid/hunter
-
-
 	handle_regular_hud_updates()
 
 		..() //-Yvarov
