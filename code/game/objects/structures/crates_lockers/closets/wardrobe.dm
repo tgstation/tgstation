@@ -256,6 +256,7 @@
 	new /obj/item/clothing/gloves/fingerless(src)
 	new /obj/item/clothing/head/soft/black(src)
 	new /obj/item/clothing/head/soft/black(src)
+	new /obj/item/clothing/suit/toggle/wintercoat/science(src)
 	return
 
 
@@ -271,6 +272,7 @@
 	new /obj/item/clothing/shoes/sneakers/white(src)
 	new /obj/item/clothing/suit/toggle/labcoat/chemist(src)
 	new /obj/item/clothing/suit/toggle/labcoat/chemist(src)
+	new /obj/item/clothing/suit/toggle/wintercoat/medical(src)
 	return
 
 
@@ -286,6 +288,7 @@
 	new /obj/item/clothing/shoes/sneakers/white(src)
 	new /obj/item/clothing/suit/toggle/labcoat/genetics(src)
 	new /obj/item/clothing/suit/toggle/labcoat/genetics(src)
+	new /obj/item/clothing/suit/toggle/wintercoat/medical(src)
 	return
 
 
@@ -303,6 +306,7 @@
 	new /obj/item/clothing/suit/toggle/labcoat/virologist(src)
 	new /obj/item/clothing/mask/surgical(src)
 	new /obj/item/clothing/mask/surgical(src)
+	new /obj/item/clothing/suit/toggle/wintercoat/medical(src)
 	return
 
 
@@ -325,6 +329,9 @@
 		new /obj/item/clothing/under/assistantformal(src)
 	if(prob(40))
 		new /obj/item/clothing/under/assistantformal(src)
+	if(prob(50))
+		new /obj/item/clothing/suit/toggle/wintercoat(src)
+		new /obj/item/clothing/shoes/winterboots(src)
 	return
 
 
@@ -347,4 +354,7 @@
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
 	new /obj/item/clothing/shoes/sneakers/white(src)
+	if(prob(50))
+		new /obj/item/clothing/suit/toggle/wintercoat(src)
+		new /obj/item/clothing/shoes/winterboots(src)
 	return

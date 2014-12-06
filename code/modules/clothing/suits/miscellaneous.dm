@@ -216,6 +216,9 @@
 	icon_state = "bomberjacket"
 	item_state = "johnny"
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter)
+	body_parts_covered = CHEST|GROIN|ARMS
+	cold_protection = CHEST|GROIN|ARMS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 /obj/item/clothing/suit/jacket/leather
 	name = "leather jacket"
@@ -238,12 +241,13 @@
 	icon_state = "coatwinter"
 	item_state = "labcoat"
 	body_parts_covered = CHEST|GROIN|ARMS|HEAD
-	cold_protection = CHEST | GROIN | ARMS | HEAD
+	cold_protection = CHEST|GROIN|ARMS|HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter)
 	hooded = 1
 	action_button_name = "Toggle Winter Hood"
+	togglename = "hood"
 
 /obj/item/clothing/suit/toggle/wintercoat/captain
 	name = "captain's winter coat"

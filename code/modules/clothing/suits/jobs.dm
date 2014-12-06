@@ -33,6 +33,7 @@
 	hooded = 1
 	suittoggled = 0
 	action_button_name = "Toggle Hoodie"
+	togglename = "hood"
 
 //Chaplain
 /obj/item/clothing/suit/nun
@@ -101,6 +102,7 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
 	action_button_name = "Toggle Suit Buttons"
+	togglename = "buttons"
 
 /obj/item/clothing/suit/toggle/lawyer/purple
 	name = "purple suit jacket"
@@ -122,7 +124,7 @@
 	if(!can_use(usr))
 		return 0
 
-	usr << "You toggle the [src]."
+	usr << "You toggle [src]'s [togglename]."
 	if(src.suittoggled)
 		src.icon_state = "[initial(icon_state)]"
 		src.suittoggled = 0
