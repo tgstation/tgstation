@@ -143,7 +143,6 @@ Please contact me on #coderbus IRC. ~Carn x
 	else
 		if(overlays.len != overlays_standing.len)
 			overlays.len = 0
-			overlays.len = overlays_standing.len
 			icon = stand_icon
 
 			for(var/overlay in overlays_standing)
