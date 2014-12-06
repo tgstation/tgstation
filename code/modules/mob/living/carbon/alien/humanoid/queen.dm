@@ -1,5 +1,5 @@
 /mob/living/carbon/alien/humanoid/queen
-	name = "\improper alien queen" //The alien queen, not Alien Queen. Even if there's only one at a time
+	name = "alien queen" //The alien queen, not Alien Queen. Even if there's only one at a time
 	caste = "q"
 	maxHealth = 300
 	health = 300
@@ -23,7 +23,7 @@
 		if(Q.stat == DEAD)
 			continue
 		if(Q.client)
-			name = "\improper alien princess ([rand(1, 999)])"	//if this is too cutesy feel free to change it/remove it.
+			name = "alien princess ([rand(1, 999)])"	//if this is too cutesy feel free to change it/remove it.
 			break
 
 	real_name = src.name

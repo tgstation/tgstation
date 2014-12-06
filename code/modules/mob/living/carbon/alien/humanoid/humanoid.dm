@@ -1,5 +1,5 @@
 /mob/living/carbon/alien/humanoid
-	name = "\the alien"
+	name = "alien"
 	icon_state = "alien_s"
 
 	var/obj/item/clothing/suit/wear_suit = null		//TODO: necessary? Are they even used? ~Carn
@@ -14,8 +14,8 @@
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
-	if(name == "\improper alien")
-		name = text("\improper alien ([rand(1, 1000)])")
+	if(name == "alien")
+		name = text("alien ([rand(1, 1000)])")
 	real_name = name
 	..()
 

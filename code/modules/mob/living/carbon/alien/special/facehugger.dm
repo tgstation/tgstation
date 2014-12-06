@@ -9,7 +9,7 @@ var/const/MIN_ACTIVE_TIME = 200 //time between being dropped and going idle
 var/const/MAX_ACTIVE_TIME = 400
 
 /obj/item/clothing/mask/facehugger
-	name = "\improper facehugger" //Let's call this 'alien' what it is. Come on Bay
+	name = "facehugger" //Let's call this 'alien' what it is. Come on Bay
 	desc = "It has some sort of a tube at the end of its tail."
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "facehugger"

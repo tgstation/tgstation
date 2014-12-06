@@ -1,5 +1,5 @@
 /mob/living/carbon/alien/humanoid/sentinel
-	name = "\improper alien sentinel" //The alien sentinel, not Alien Sentinel
+	name = "alien sentinel" //The alien sentinel, not Alien Sentinel
 	caste = "s"
 	maxHealth = 175
 	health = 125
@@ -14,8 +14,8 @@
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
-	if(name == "\improper alien sentinel")
-		name = text("\improper alien sentinel ([rand(1, 1000)])")
+	if(name == "alien sentinel")
+		name = text("alien sentinel ([rand(1, 1000)])")
 	real_name = name
 	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin)
 	..()

@@ -2,7 +2,7 @@
 // It functions almost identically (see code/datums/diseases/alien_embryo.dm)
 
 /obj/item/alien_embryo
-	name = "\improper alien embryo" //The alien embryo, not Alien Embryo
+	name = "alien embryo" //The alien embryo, not Alien Embryo
 	desc = "All slimy and yuck."
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "larva0_dead"

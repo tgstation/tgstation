@@ -1,5 +1,5 @@
 /mob/living/carbon/alien/larva
-	name = "\improper alien larva" //The alien larva, not 'Alien Larva'
+	name = "alien larva" //The alien larva, not 'Alien Larva'
 	real_name = "alien larva"
 	icon_state = "larva0"
 	pass_flags = PASSTABLE
@@ -18,8 +18,8 @@
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
-	if(name == "\improper alien larva")
-		name = "\improper alien larva ([rand(1, 1000)])"
+	if(name == "alien larva")
+		name = "alien larva ([rand(1, 1000)])"
 	real_name = name
 	regenerate_icons()
 	..()

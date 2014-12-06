@@ -1,5 +1,5 @@
 /mob/living/carbon/alien/humanoid/hunter
-	name = "\improper alien hunter" //The alien hunter, not Alien Hunter
+	name = "alien hunter" //The alien hunter, not Alien Hunter
 	caste = "h"
 	maxHealth = 250
 	health = 250
@@ -15,8 +15,8 @@
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
-	if(name == "\improper alien hunter")
-		name = text("\improper alien hunter ([rand(1, 1000)])")
+	if(name == "alien hunter")
+		name = text("alien hunter ([rand(1, 1000)])")
 	real_name = name
 	..()
 
