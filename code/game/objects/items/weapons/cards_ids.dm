@@ -203,6 +203,19 @@
 	if(format)
 		amt = "$[num2septext(amt)]"
 	return amt
+
+/obj/item/weapon/card/id/GetJobName()
+	var/jobName = src.assignment //what the card's job is called
+	var/alt_jobName = src.rank   //what the card's job ACTUALLY IS: determines access, etc.
+
+	if(jobName in get_all_job_icons()) //Check if the job name has a hud icon
+		return jobName
+	if(alt_jobName in get_all_job_icons()) //Check if the base job has a hud icon
+		return alt_jobName
+	if(jobName in get_all_centcom_jobs() || alt_jobName in get_all_centcom_jobs()) //Return with the NT logo if it is a Centcom job
+		return "Centcom"
+	return "Unknown" //Return unknown if none of the above apply
+
 // vgedit: We have different wallets.
 /*
 /obj/item/weapon/card/id/attackby(obj/item/weapon/W as obj, mob/user as mob)
