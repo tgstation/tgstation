@@ -132,7 +132,7 @@
 	var/sandbox_autoclose = 0 // close the sandbox panel after spawning an item, potentially reducing griff
 
 	var/default_laws = 0 //Controls what laws the AI spawns with.
-	var/silicon_max_law_amount = 0
+	var/silicon_max_law_amount = 12
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
