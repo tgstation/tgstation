@@ -143,7 +143,7 @@ var/shuttle_call/shuttle_calls[0]
 			if(src.authenticated)
 				var/response = alert("Are you sure you wish to call the shuttle?", "Confirm", "Yes", "No")
 				if(response == "Yes")
-					var/justification = stripped_input(usr, "Please input a concise justification for the shuttle call. Note that failure to properly justify a shuttle call may lead to recall or termination[emagged ? ".\red LINK TO NANOTRASEN LOST, JUSTIFICATION WILL BE BLANK":""]", "Nanotrasen Anti-Comdom Systems")
+					var/justification = stripped_input(usr, "Please input a concise justification for the shuttle call. Note that failure to properly justify a shuttle call may lead to recall or termination", "Nanotrasen Anti-Comdom Systems")
 					if(!justification || !(usr in view(1,src)))
 						return
 					call_shuttle_proc(usr, justification)
