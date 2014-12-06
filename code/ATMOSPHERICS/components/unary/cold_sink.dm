@@ -32,7 +32,8 @@
 
 		if(combined_heat_capacity > 0)
 			var/combined_energy = current_temperature*current_heat_capacity + air_heat_capacity*air_contents.temperature
-			air_contents.temperature = combined_energy/combined_heat_capacity
+			if(air_contents.temperature > current_temperature) //if it's hotter than we can cool it, cool it
+				air_contents.temperature = combined_energy/combined_heat_capacity
 
 		//todo: have current temperature affected. require power to bring down current temperature again
 
