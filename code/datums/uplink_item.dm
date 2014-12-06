@@ -216,6 +216,14 @@ var/list/uplink_items = list()
 	cost = 4
 	job = list("Mechanic")
 
+//IAA - Internal Affairs Agent
+/datum/uplink_item/jobspecific/briefcase_smg
+	name = "Concealed SMG"
+	desc = "A modified briefcase capable of storing and firing a gun under a false bottom. Starts with an internal SMG and 18 rounds. Use a screwdriver to pry away the false bottom and make modifications."
+	item = /obj/item/weapon/storage/briefcase/false_bottomed/smg
+	cost = 6
+	job = list("Internal Affairs Agent")
+
 // DANGEROUS WEAPONS
 
 /datum/uplink_item/dangerous
