@@ -102,12 +102,12 @@ RCD
 /obj/item/weapon/rcd/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if(istype(W, /obj/item/weapon/rcd_ammo))
-		if((matter + 10) > 30)
+		if((matter + 20) > 100)
 			user << "<span class='notice'>The RCD cant hold any more matter-units.</span>"
 			return
 		user.drop_item()
 		qdel(W)
-		matter += 10
+		matter += 20
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		user << "<span class='notice'>The RCD now holds [matter]/30 matter-units.</span>"
 		desc = "A RCD. It currently holds [matter]/30 matter-units."
