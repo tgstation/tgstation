@@ -1,7 +1,7 @@
 /mob/living/carbon/alien/larva/emote(var/act,var/m_type=1,var/message = null)
 
 	var/param = null
-	if (findtext(act, "-", 1, null))
+	if(findtext(act, "-", 1, null))
 		var/t1 = findtext(act, "-", 1, null)
 		param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
@@ -11,43 +11,39 @@
 	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
 
 	switch(act)
-		if ("me")
+		if("me")
 			if(silent)
 				return
-			if (src.client)
-				if (client.prefs.muted & MUTE_IC)
-					src << "\red You cannot send IC messages (muted)."
+			if(src.client)
+				if(client.prefs.muted & MUTE_IC)
+					src << "<span class='warning'>You cannot send IC messages (muted).</span>"
 					return
-				if (src.client.handle_spam_prevention(message,MUTE_IC))
+				if(src.client.handle_spam_prevention(message,MUTE_IC))
 					return
-			if (stat)
+			if(stat)
 				return
 			if(!(message))
 				return
 			return custom_emote(m_type, message)
 
-		if ("custom")
+		if("custom")
 			return custom_emote(m_type, message)
 		if("sign")
-			if (!src.restrained())
-				message = text("<B>The alien</B> signs[].", (text2num(param) ? text(" the number []", text2num(param)) : null))
+			if(!src.restrained())
+				message = text("<B>The alien</B> signs[(text2num(param) ? text(" the number []", text2num(param)) : null)].")
 				m_type = VISIBLE
-		if ("burp")
-			if (!muzzled)
+		if("burp")
+			if(!muzzled)
 				message = "<B>[src]</B> burps."
 				m_type = HEARABLE
 		if("scratch")
-			if (!src.restrained())
+			if(!src.restrained())
 				message = "<B>The [src.name]</B> scratches."
 				m_type = VISIBLE
 		if("whimper")
-			if (!muzzled)
+			if(!muzzled)
 				message = "<B>The [src.name]</B> whimpers."
 				m_type = HEARABLE
-//		if("roar")
-//			if (!muzzled)
-//				message = "<B>The [src.name]</B> roars." Commenting out since larva shouldn't roar /N
-//				m_type = HEARABLE
 		if("tail")
 			message = "<B>The [src.name]</B> waves its tail."
 			m_type = VISIBLE
@@ -61,7 +57,7 @@
 			message = "<B>The [src.name]</B> drools."
 			m_type = VISIBLE
 		if("scretch")
-			if (!muzzled)
+			if(!muzzled)
 				message = "<B>The [src.name]</B> scretches."
 				m_type = HEARABLE
 		if("choke")
@@ -73,9 +69,6 @@
 		if("nod")
 			message = "<B>The [src.name]</B> nods its head."
 			m_type = VISIBLE
-//		if("sit")
-//			message = "<B>The [src.name]</B> sits down." //Larvan can't sit down, /N
-//			m_type = VISIBLE
 		if("sway")
 			message = "<B>The [src.name]</B> sways around dizzily."
 			m_type = VISIBLE
@@ -86,18 +79,18 @@
 			message = "<B>The [src.name]</B> twitches violently."
 			m_type = VISIBLE
 		if("dance")
-			if (!src.restrained())
+			if(!src.restrained())
 				message = "<B>The [src.name]</B> dances around happily."
 				m_type = VISIBLE
 		if("roll")
-			if (!src.restrained())
+			if(!src.restrained())
 				message = "<B>The [src.name]</B> rolls."
 				m_type = VISIBLE
 		if("shake")
 			message = "<B>The [src.name]</B> shakes its head."
 			m_type = VISIBLE
 		if("gnarl")
-			if (!muzzled)
+			if(!muzzled)
 				message = "<B>The [src.name]</B> gnarls and shows its teeth.."
 				m_type = HEARABLE
 		if("jump")
@@ -108,20 +101,18 @@
 			m_type = VISIBLE
 		if("collapse")
 			Paralyse(2)
-			message = text("<B>[]</B> collapses!", src)
+			message = text("<B>[src]</B> collapses!")
 			m_type = HEARABLE
 		if("help")
 			src << "burp, choke, collapse, dance, drool, gasp, shiver, gnarl, jump, moan, nod, roll, scratch,\nscretch, shake, sign-#, sulk, sway, tail, twitch, whimper"
 		else
 			src << text("Invalid Emote: []", act)
-	if ((message && src.stat == 0))
+	if((message && src.stat == 0))
 		log_emote("[name]/[key] : [message]")
-		if (m_type & 1)
+		if(m_type & 1)
 			for(var/mob/O in viewers(src, null))
 				O.show_message(message, m_type)
-				//Foreach goto(703)
 		else
 			for(var/mob/O in hearers(src, null))
 				O.show_message(message, m_type)
-				//Foreach goto(746)
 	return

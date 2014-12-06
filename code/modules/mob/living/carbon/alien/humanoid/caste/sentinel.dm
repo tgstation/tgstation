@@ -1,5 +1,5 @@
 /mob/living/carbon/alien/humanoid/sentinel
-	name = "alien sentinel"
+	name = "\improper alien sentinel" //The alien sentinel, not Alien Sentinel
 	caste = "s"
 	maxHealth = 175
 	health = 125
@@ -25,8 +25,8 @@
 
 		..() //-Yvarov
 
-		if (healths)
-			if (stat != 2)
+		if(healths)
+			if(stat != 2)
 				switch(health)
 					if(175 to INFINITY)
 						healths.icon_state = "health0"

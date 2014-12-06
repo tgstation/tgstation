@@ -1,5 +1,5 @@
 /mob/living/carbon/alien/humanoid/queen
-	name = "alien queen"
+	name = "\improper alien queen" //The alien queen, not Alien Queen. Even if there's only one at a time
 	caste = "q"
 	maxHealth = 300
 	health = 300
@@ -16,8 +16,10 @@
 
 	//there should only be one queen
 	for(var/mob/living/carbon/alien/humanoid/queen/Q in living_mob_list)
-		if(Q == src)		continue
-		if(Q.stat == DEAD)	continue
+		if(Q == src)
+			continue
+		if(Q.stat == DEAD)
+			continue
 		if(Q.client)
 			name = "alien princess ([rand(1, 999)])"	//if this is too cutesy feel free to change it/remove it.
 			break
@@ -27,15 +29,14 @@
 	..()
 	verbs -= /mob/living/carbon/alien/verb/alien_ventcrawl
 
-
 /mob/living/carbon/alien/humanoid/queen
 
 	handle_regular_hud_updates()
 
 		..() //-Yvarov
 
-		if (src.healths)
-			if (src.stat != 2)
+		if(src.healths)
+			if(src.stat != 2)
 				switch(health)
 					if(300 to INFINITY)
 						src.healths.icon_state = "health0"
@@ -61,13 +62,12 @@
 	set category = "Alien"
 
 	if(locate(/obj/effect/alien/egg) in get_turf(src))
-		src << "There's already an egg here."
+		src << "<span class='warning'>There's already an egg here.</span>"
 		return
 
-	if(powerc(75,1))//Can't plant eggs on spess tiles. That's silly.
+	if(powerc(75, 1))//Can't plant eggs on spess tiles. That's silly.
 		adjustToxLoss(-75)
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\green <B>[src] has laid an egg!</B>"), 1)
+		visible_message("\green <B>[src] has laid an egg!</B>")
 		new /obj/effect/alien/egg(loc)
 	return
 

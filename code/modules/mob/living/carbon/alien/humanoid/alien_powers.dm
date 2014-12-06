@@ -71,7 +71,7 @@ Doesn't work on other aliens/AI.*/
 					M.adjustToxLoss(amount)
 					adjustToxLoss(-amount)
 					M << "\green [src] has transfered [amount] plasma to you."
-					src << {"\green You have trasferred [amount] plasma to [M]"}
+					src << "\green You have trasferred [amount] plasma to [M]"
 				else
 					src << "\green You need to be closer."
 	return
@@ -101,7 +101,7 @@ Doesn't work on other aliens/AI.*/
 				if(istype(T, /turf/simulated/floor/engine))
 					src << "\green You cannot dissolve this object."
 					return
-			else// Not a type we can acid.
+			else // Not a type we can acid.
 				return
 
 			adjustToxLoss(-200)
@@ -122,11 +122,8 @@ Doesn't work on other aliens/AI.*/
 			src << "\green Your allies are not a valid target."
 			return
 		adjustToxLoss(-50)
-		src << "\green You spit neurotoxin at [target]."
 		playsound(get_turf(src), 'sound/weapons/pierce.ogg', 30, 1)
-		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
-				O << "\red [src] spits neurotoxin at [target]!"
+		visible_message("<span class='danger'>[src] spits neurotoxin at [target] !</span>", "<span class='warning'>You spit neurotoxin at [target] !</span>")
 		//I'm not motivated enough to revise this. Prjectile code in general needs update.
 		var/turf/T = loc
 		var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
@@ -159,18 +156,17 @@ Doesn't work on other aliens/AI.*/
 		var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in list("resin door","resin wall","resin membrane","resin nest") //would do it through typesof but then the player choice would have the type path and we don't want the internal workings to be exposed ICly - Urist
 		if(!choice || !powerc(75))	return
 		adjustToxLoss(-75)
-		src << "\green You shape a [choice]."
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\red <B>[src] vomits up a thick purple substance and begins to shape it!</B>"), 1)
-		switch(choice)
-			if("resin door")
-				new /obj/structure/mineral_door/resin(loc)
-			if("resin wall")
-				new /obj/effect/alien/resin/wall(loc)
-			if("resin membrane")
-				new /obj/effect/alien/resin/membrane(loc)
-			if("resin nest")
-				new /obj/structure/stool/bed/nest(loc)
+		visible_message("<span class='danger'>[src] vomits up a thick purple substance and begins to shape it!</span>", "<span class='warning'>You begin to shape a [choice]</span>")
+		if(do_after(src, 30))
+			switch(choice)
+				if("resin door")
+					new /obj/structure/mineral_door/resin(loc)
+				if("resin wall")
+					new /obj/effect/alien/resin/wall(loc)
+				if("resin membrane")
+					new /obj/effect/alien/resin/membrane(loc)
+				if("resin nest")
+					new /obj/structure/stool/bed/nest(loc)
 	return
 
 /mob/living/carbon/alien/humanoid/verb/regurgitate()

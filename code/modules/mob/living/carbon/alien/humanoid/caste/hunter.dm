@@ -1,5 +1,5 @@
 /mob/living/carbon/alien/humanoid/hunter
-	name = "alien hunter"
+	name = "\improper alien hunter" //The alien hunter, not Alien Hunter
 	caste = "h"
 	maxHealth = 250
 	health = 250
@@ -24,8 +24,8 @@
 
 		..() //-Yvarov
 
-		if (healths)
-			if (stat != 2)
+		if(healths)
+			if(stat != 2)
 				switch(health)
 					if(250 to INFINITY)
 						healths.icon_state = "health0"
@@ -51,6 +51,7 @@
 
 
 //Hunter verbs
+//This ought to be fixed, maybe not now though
 /*
 /mob/living/carbon/alien/humanoid/hunter/verb/invis()
 	set name = "Invisibility (50)"

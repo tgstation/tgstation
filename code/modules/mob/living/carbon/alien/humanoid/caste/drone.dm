@@ -1,5 +1,5 @@
 /mob/living/carbon/alien/humanoid/drone
-	name = "alien drone"
+	name = "\improper alien drone" //The alien drone, not Alien Drone
 	caste = "d"
 	maxHealth = 100
 	health = 100
@@ -34,9 +34,8 @@
 		if(no_queen)
 			adjustToxLoss(-500)
 			src << "\green You begin to evolve!"
-			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\green <B>[src] begins to twist and contort!</B>"), 1)
-			var/mob/living/carbon/alien/humanoid/queen/new_xeno = new (loc)
+			visible_message("\green <B>[src] begins to violently twist and contort!</B>")
+			var/mob/living/carbon/alien/humanoid/queen/new_xeno = new(loc)
 			mind.transfer_to(new_xeno)
 			del(src)
 		else

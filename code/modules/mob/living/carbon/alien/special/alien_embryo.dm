@@ -2,7 +2,7 @@
 // It functions almost identically (see code/datums/diseases/alien_embryo.dm)
 
 /obj/item/alien_embryo
-	name = "alien embryo"
+	name = "\improper alien embryo" //The alien embryo, not Alien Embryo
 	desc = "All slimy and yuck."
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "larva0_dead"
@@ -19,7 +19,7 @@
 		for(var/mob/dead/observer/O in get_active_candidates(ROLE_ALIEN,poll="[affected_mob] has been infected by \a [src]!"))
 			if(O.client && O.client.desires_role(ROLE_ALIEN))
 				if(check_observer(O))
-					O << "<span class=\"recruit\">You are a possible candidate for \a [src]. Get ready. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Retract</a>)</span>"
+					O << "<span class=\"recruit\">You have automatically been signed up for \a [src]. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Retract</a>)</span>"
 					ghost_volunteers += O
 		spawn(0)
 			AddInfectionImages(affected_mob)
@@ -35,16 +35,16 @@
 
 /obj/item/alien_embryo/proc/volunteer(var/mob/dead/observer/O)
 	if(!istype(O))
-		O << "\red NO."
+		O << "<span class='danger'>NO.</span>"
 		return
 	if(O in ghost_volunteers)
-		O << "\blue Removed from registration list."
+		O << "<span class='notice'>You will no longer be considered for this [src]. Click again to volunteer.</span>"
 		ghost_volunteers.Remove(O)
 		return
 	if(!check_observer(O))
-		O << "\red You cannot be \a [src]."
+		O << "<span class='warning'>You cannot be \a [src] in your current condition.</span>"
 		return
-	O << "\blue You've been added to the list of ghosts that may become this [src].  Click again to unvolunteer."
+	O << "<span class='notice'>You have been added to the list of ghosts that may become this [src].  Click again to unvolunteer.</span>"
 	ghost_volunteers.Add(O)
 
 /obj/item/alien_embryo/proc/check_observer(var/mob/dead/observer/O)
@@ -87,25 +87,25 @@
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				affected_mob << "\red Your throat feels sore."
+				affected_mob << "<span class='warning'>Your throat feels sore.</span>"
 			if(prob(1))
-				affected_mob << "\red Mucous runs down the back of your throat."
+				affected_mob << "<span class='warning'>Mucous runs down the back of your throat.</span>"
 		if(4)
 			if(prob(1))
 				affected_mob.emote("sneeze")
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(2))
-				affected_mob << "\red Your muscles ache."
+				affected_mob << "<span class='warning'>Your muscles ache.</span>"
 				if(prob(20))
 					affected_mob.take_organ_damage(1)
 			if(prob(2))
-				affected_mob << "\red Your stomach hurts."
+				affected_mob << "<span class='warning'>Your stomach hurts.</span>"
 				if(prob(20))
 					affected_mob.adjustToxLoss(1)
 					affected_mob.updatehealth()
 		if(5)
-			affected_mob << "\red You feel something tearing its way out of your stomach..."
+			affected_mob << "<span class='danger'>You feel something tearing its way out of your stomach...</span>"
 			affected_mob.adjustToxLoss(10)
 			affected_mob.updatehealth()
 			if(prob(50))
@@ -125,7 +125,7 @@
 	if(!ghostpicked || !istype(ghostpicked))
 		var/list/candidates = get_active_candidates(ROLE_ALIEN, buffer=ALIEN_SELECT_AFK_BUFFER, poll=1)
 		if(!candidates.len)
-			picked = affected_mob.key
+			picked = affected_mob.key //Pick the person who was infected
 		else
 			for(var/mob/dead/observer/O in candidates)
 				O << "<span class=\"recruit\">[affected_mob] is about to burst from \a [src]!. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign Up</a>)</span>"

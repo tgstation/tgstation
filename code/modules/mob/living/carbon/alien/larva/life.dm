@@ -1,5 +1,8 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
+//How to copypaste human life code and pretend it won't fuck up everything for ALIEN LARVAE : The Novel : The Story : The Legend : The Epic : The Game
+//But seriously, someone's gonna have to look more in depth into this to get rid of useless shit
+
 /mob/living/carbon/alien/larva
 
 	var/temperature_alert = 0
@@ -66,8 +69,10 @@
 
 	proc/breathe()
 
-		if(reagents.has_reagent("lexorin")) return
-		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
+		if(reagents.has_reagent("lexorin"))
+			return
+		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
+			return
 
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/datum/gas_mixture/breath
@@ -168,7 +173,7 @@
 
 		if(breath.temperature > (T0C+66) && !(M_RESIST_HEAT in mutations)) // Hot air hurts :(
 			if(prob(20))
-				src << "\red You feel a searing heat in your lungs!"
+				src << "<span class='danger'>You feel a searing heat in your lungs !</span>"
 			fire_alert = max(fire_alert, 1)
 		else
 			fire_alert = 0
@@ -184,12 +189,12 @@
 		if(M_FAT in mutations)
 			if(nutrition < 100)
 				if(prob(round((50 - nutrition) / 100)))
-					src << "\blue You feel fit again!"
+					src << "<span class='notice'>You feel fit again !</span>"
 					mutations.Add(M_FAT)
 		else
 			if(nutrition > 500)
 				if(prob(5 + round((nutrition - max_grown) / 2)))
-					src << "\red You suddenly feel blubbery!"
+					src << "<span class='danger'>You suddenly feel blubbery !</span>"
 					mutations.Add(M_FAT)
 
 		if (nutrition > 0)
