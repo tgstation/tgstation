@@ -160,14 +160,17 @@
 				if(WINDOW.dir == dir_to_set)//checking this for a 2nd time to check if a window was made while we were waiting.
 					user << "<span class='notice'>There is already a window facing this way there.</span>"
 					return
-			var/obj/structure/window/WD
-
-			if(istype(W,/obj/item/stack/sheet/rglass))
-				WD = new/obj/structure/window/reinforced(loc,1) //reinforced window
-			else
+			var/obj/structure/window/WD 
+			if(istype(W,/obj/item/stack/sheet/glass)) //Creates anything under glass tree
 				var/obj/item/stack/sheet/glass/G = W
 				if(!ispath(G.created_window))
 					WD = new/obj/structure/window/basic(loc,0) //normal window
+				else
+					WD = new G.created_window(loc,0)
+			else if (istype(W,/obj/item/stack/sheet/rglass)) //Creates anything under rglass tree
+				var/obj/item/stack/sheet/rglass/G = W
+				if(!ispath(G.created_window))
+					WD = new/obj/structure/window/reinforced(loc,0) //reinforced window
 				else
 					WD = new G.created_window(loc,0)
 			WD.dir = dir_to_set

@@ -901,6 +901,8 @@
 	icon = 'icons/obj/atmospherics/insulated.dmi'
 	icon_state = "manifold"
 	alert_pressure = 900*ONE_ATMOSPHERE
+	_color = "red"
+	color=IPIPE_COLOR_RED
 	level = 2
 	available_colors = list(
 		"red"=IPIPE_COLOR_RED,

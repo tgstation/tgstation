@@ -37,22 +37,24 @@ proc/process_med_hud(var/mob/M, var/mob/eye)
 		if(!C) continue
 
 		holder = patient.hud_list[HEALTH_HUD]
-		if(patient.stat == 2)
-			holder.icon_state = "hudhealth-100"
-		else
-			holder.icon_state = "hud[RoundHealth(patient.health)]"
-		C.images += holder
+		if(holder)
+			if(patient.stat == 2)
+				holder.icon_state = "hudhealth-100"
+			else
+				holder.icon_state = "hud[RoundHealth(patient.health)]"
+			C.images += holder
 
 		holder = patient.hud_list[STATUS_HUD]
-		if(patient.stat == 2)
-			holder.icon_state = "huddead"
-		else if(patient.status_flags & XENO_HOST)
-			holder.icon_state = "hudxeno"
-		else if(foundVirus)
-			holder.icon_state = "hudill"
-		else
-			holder.icon_state = "hudhealthy"
-		C.images += holder
+		if(holder)
+			if(patient.stat == 2)
+				holder.icon_state = "huddead"
+			else if(patient.status_flags & XENO_HOST)
+				holder.icon_state = "hudxeno"
+			else if(foundVirus)
+				holder.icon_state = "hudill"
+			else
+				holder.icon_state = "hudhealthy"
+			C.images += holder
 
 
 //Security HUDs. Pass a value for the second argument to enable implant viewing or other special features.
