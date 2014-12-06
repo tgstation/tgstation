@@ -147,14 +147,13 @@
 
 /obj/item/weapon/gun/projectile/automatic/c90gl
 	name = "\improper C-90gl CAR"
-	desc = "A bullpup and compact assault rifle with a toploading design taken from ancient PDWs. Uses 5.45x39mm rounds in high-capacity magazines and has an attached underbarrel grenade launcher."
+	desc = "A bullpup and compact assault rifle with a toploading design taken from ancient PDWs. Uses 5.45x39mm rounds in high-capacity magazines and has an attached underbarrel grenade launcher which can be toggled on and off."
 	icon_state = "c90gl"
 	item_state = "c90gl"
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/c90m
-	grenade_type = /obj/item/ammo_casing/a40mm
-	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	var/select = 1 //1 for boolets, 0 for explosions.
+	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	action_button_name = "Toggle Grenade Launcher"
 
 /obj/item/weapon/gun/projectile/automatic/c90gl/New()
@@ -169,14 +168,28 @@
 
 /obj/item/weapon/gun/projectile/automatic/c90gl/update_icon()
 	..()
+	overlays.Cut()
+	if(select)
+		overlays += "c90prim"
+	else
+		overlays += "c90gren"
 	icon_state = "c90gl[magazine ? "-[Ceiling(get_ammo(0)/6)*6]" : ""][chambered ? "" : "-e"]"
 	return
 
-/obj/item/weapon/gun/projectile/automatic/c90gl/select_fire(mob/living/user as mob)
+/obj/item/weapon/gun/projectile/automatic/c90gl/proc/underbarrel_swap()
+	var/mob/living/carbon/human/user = usr
+	if(select)
+		select = 0
+		user << "<span class='notice'>You switch to grenades.</span>"
+	else
+		select = 1
+		user << "<span class='notice'>You switch to bullets.</span>"
 
-/obj/item/weapon/gun/projectile/automatic/c90gl/ui_action_click(mob/living/user as mob)
-	select_fire(user)
 	update_icon()
+	return
+
+/obj/item/weapon/gun/projectile/automatic/c90gl/ui_action_click()
+	underbarrel_swap()
 
 /obj/item/weapon/gun/projectile/automatic/tommygun
 	name = "tommy gun"

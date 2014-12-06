@@ -25,12 +25,12 @@
 
 /obj/item/projectile/bullet/a40mm
 	name ="40mm grenade"
-	description = "RUN!!!"
+	desc = "USE A WEEL GUN"
 	icon_state= "bolter"
-	damage = 50
+	damage = 60
 	flag = "bullet"
 
-/obj/item/projectile/bullet/gyro/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/a40mm/on_hit(atom/target, blocked = 0)
 	explosion(target, -1, 0, 4)
 	return 1
 

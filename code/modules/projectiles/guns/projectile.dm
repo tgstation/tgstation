@@ -41,6 +41,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/attackby(var/obj/item/A as obj, mob/user as mob)
+	..()
 	if (istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
 		if (!magazine && istype(AM, mag_type))
@@ -54,6 +55,28 @@
 			return 1
 		else if (magazine)
 			user << "<span class='notice'>There's already a magazine in \the [src].</span>"
+	if(istype(A, /obj/item/weapon/suppressor))
+		var/obj/item/weapon/suppressor/S = A
+		if(!can_suppress)
+			if(!suppressed)
+				if(user.l_hand != src && user.r_hand != src)
+					user << "<span class='notice'>You'll need [src] in your hands to do that.</span>"
+					return
+				user.drop_item()
+				user << "<span class='notice'>You screw [S] onto [src].</span>"
+				suppressed = 1	//dodgy?
+				S.oldsound = fire_sound
+				fire_sound = 'sound/weapons/Gunshot_silenced.ogg'
+				w_class = 3 //so pistols do not fit in pockets when suppressed
+				loc = src
+				update_icon()
+				return
+			else
+				user << "<span class='warning'>[src] already has a suppressor.</span>"
+				return
+		else
+			user << "<span class='warning'>You can't seem to figure out how to fit [S] on [src].</span>"
+			return
 	return 0
 
 /obj/item/weapon/gun/projectile/attack_hand(mob/user as mob)
@@ -102,3 +125,11 @@
 	if (magazine)
 		boolets += magazine.ammo_count()
 	return boolets
+
+/obj/item/weapon/suppressor
+	name = "suppressor"
+	desc = "A universal syndicate small-arms suppressor for maximum espionage."
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "suppressor"
+	w_class = 2
+	var/oldsound = null
