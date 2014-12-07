@@ -194,7 +194,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		item_state = icon_on
 		if(lit)
 			var/mob/M = loc
-			if(M && loc == M)
+			if(M && istype(M))
 				M.SetLuminosity(M.luminosity + lit_brightness)
 			else if(isturf(loc))
 				SetLuminosity(lit_brightness)
@@ -353,8 +353,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/blunt/rolled //grown.dm handles reagents for these
 
 /obj/item/clothing/mask/cigarette/blunt/cruciatus
-	name = "blunt"
-	desc = "A special homemade cigar. Light it up and pass it around."
 	chem_volume = 36
 
 /obj/item/clothing/mask/cigarette/blunt/cruciatus/New()

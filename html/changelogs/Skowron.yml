@@ -2,4 +2,4 @@ author: Skowron
 
 changes: 
   - bugfix: You can now roll blunts again.
-  - rscadd: Blunts can be rolled from most grown items. Blaze it.
+  - rscadd: Blunts can be rolled from most grown items and also emit light. Blaze it.
