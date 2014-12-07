@@ -644,14 +644,16 @@ var/list/slot_equipment_priority = list( \
 
 /mob/Stat()
 	..()
+	admin_stat_panel()
+	alt_click_stat_panel()
+	spell_sting_stat_panel()
 
+/mob/proc/admin_stat_panel()
 	if(client && client.holder)
-
 		if(statpanel("Status"))	//not looking at that panel
 			stat(null,"Location:\t([x], [y], [z])")
 			stat(null,"CPU:\t[world.cpu]")
 			stat(null,"Instances:\t[world.contents.len]")
-
 			if(master_controller)
 				stat(null,"MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[controller_iteration])")
 				stat(null,"Air-[master_controller.air_cost]\t#[global_activeturfs]")
@@ -670,6 +672,7 @@ var/list/slot_equipment_priority = list( \
 			else
 				stat(null,"MasterController-ERROR")
 
+/mob/proc/alt_click_stat_panel()
 	if(listed_turf && client)
 		if(!TurfAdjacent(listed_turf))
 			listed_turf = null
@@ -678,11 +681,9 @@ var/list/slot_equipment_priority = list( \
 			for(var/atom/A in listed_turf)
 				if(A.invisibility > see_invisible)
 					continue
-				if(is_type_in_list(A, shouldnt_see))
-					continue
 				statpanel(listed_turf.name, null, A)
 
-
+/mob/proc/spell_sting_stat_panel()
 	if(mind)
 		add_spells_to_statpanel(mind.spell_list)
 		if(mind.changeling)
