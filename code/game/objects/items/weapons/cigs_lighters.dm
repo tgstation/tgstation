@@ -47,7 +47,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		name = "burnt match"
 		desc = "A match. This one has seen better days."
 	return ..()
-	
+
 /obj/item/weapon/match/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && user.zone_sel.selecting == "mouth" && lit)
 		var/obj/item/clothing/mask/cigarette/cig = M.wear_mask
@@ -310,7 +310,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 ///////////////////
 /obj/item/clothing/mask/cigarette/blunt
 	name = "blunt"
-	desc = "A fat ambrosia vulgaris cigar. Light it up and pass it around."
+	desc = "A special homemade cigar. Light it up and pass it around."
 	icon_state = "bluntoff"
 	icon_on = "blunton"
 	icon_off = "bluntoff"
@@ -324,17 +324,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/blunt/New()
 	. = ..()
-	reagents.add_reagent("nutriment", 1)
-	reagents.add_reagent("space_drugs", 7)
-	reagents.add_reagent("kelotane", 7)
-	reagents.add_reagent("bicaridine", 5)
-	reagents.add_reagent("toxin", 5)
+	for(var/reagent in src.reagents)
+		reagents[reagent] *= 1.2
 
 /obj/item/clothing/mask/cigarette/blunt/rolled //grown.dm handles reagents for these
 
 /obj/item/clothing/mask/cigarette/blunt/cruciatus
 	name = "blunt"
-	desc = "A fat ambrosia vulgaris cigar. Light it up and pass it around."
+	desc = "A special homemade 'cigar'. Light it up and pass it around."
 	chem_volume = 36
 
 /obj/item/clothing/mask/cigarette/blunt/cruciatus/New()
