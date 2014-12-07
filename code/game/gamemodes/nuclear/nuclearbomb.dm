@@ -216,6 +216,9 @@ var/bomb_set
 				return
 	return
 
+/obj/machinery/nuclearbomb/Destroy()
+	. = respawn_obj(get_synd_spawn())
+
 
 //==========DAT FUKKEN DISK===============
 /obj/item/weapon/disk/nuclear
@@ -236,13 +239,17 @@ var/bomb_set
 		Destroy()
 
 /obj/item/weapon/disk/nuclear/Destroy()
-	if(blobstart.len > 0)
-		var/obj/item/weapon/disk/nuclear/NEWDISK = new(pick(blobstart))
+	. = respawn_obj(blobstart)
+
+//generic 'RESPAWN THIS SHIT' proc
+/obj/proc/respawn_obj(var/list/respawnlist)
+	if(respawnlist.len > 0)
+		var/obj/NEWDISK = new type(pick(respawnlist))
 		transfer_fingerprints_to(NEWDISK)
 		var/turf/diskturf = get_turf(src)
 		message_admins("[src] has been destroyed in ([diskturf.x], [diskturf.y] ,[diskturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[diskturf.x];Y=[diskturf.y];Z=[diskturf.z]'>JMP</a>). Moving it to ([NEWDISK.x], [NEWDISK.y], [NEWDISK.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[NEWDISK.x];Y=[NEWDISK.y];Z=[NEWDISK.z]'>JMP</a>).")
 		log_game("[src] has been destroyed in ([diskturf.x], [diskturf.y] ,[diskturf.z]). Moving it to ([NEWDISK.x], [NEWDISK.y], [NEWDISK.z]).")
 		del(src) //Needed to clear all references to it
 	else
-		ERROR("[src] was supposed to be destroyed, but we were unable to locate a blobstart landmark to spawn a new one.")
-	return 1 // Cancel destruction.
+		ERROR("[src] was supposed to be destroyed, but we were unable to locate an adequate landmark to spawn a new one.")
+		return 1 // Cancel destruction.

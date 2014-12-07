@@ -61,14 +61,17 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 
+var/list/turf/global_synd_spawn = list()
+
+/proc/get_synd_spawn()
+	if(!global_synd_spawn.len)
+		for(var/obj/effect/landmark/A in landmarks_list)
+			if(A.name == "Syndicate-Spawn")
+				global_synd_spawn += get_turf(A)
+	return global_synd_spawn
+
 /datum/game_mode/nuclear/post_setup()
-
-	var/list/turf/synd_spawn = list()
-
-	for(var/obj/effect/landmark/A in landmarks_list)
-		if(A.name == "Syndicate-Spawn")
-			synd_spawn += get_turf(A)
-			continue
+	var/list/synd_spawn = get_synd_spawn()
 
 	var/obj/effect/landmark/uplinklocker = locate("landmark*Syndicate-Uplink")	//i will be rewriting this shortly
 	var/obj/effect/landmark/nuke_spawn = locate("landmark*Nuclear-Bomb")
