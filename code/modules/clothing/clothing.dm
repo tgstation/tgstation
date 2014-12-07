@@ -250,7 +250,7 @@ BLIND     // can't see anything
 	slot_flags = SLOT_ICLOTHING
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	species_restricted = list("exclude","Muton")
-	var/has_sensor = 1//For the crew computer 2 = unable to change mode
+	var/has_sensor = 1 //For the crew computer 2 = unable to change mode
 	var/sensor_mode = 0
 		/*
 		1 = Report living/dead
@@ -264,7 +264,6 @@ BLIND     // can't see anything
 	for(var/obj/machinery/computer/crew/C in machines)
 		if(C && src in C.tracked)
 			C.tracked -= src
-
 	..()
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user)
@@ -274,10 +273,10 @@ BLIND     // can't see anything
 		I.loc = src
 		user << "<span class='notice'>You attach [I] to [src].</span>"
 
-		if (istype(hastie,/obj/item/clothing/tie/holster))
+		if(istype(hastie,/obj/item/clothing/tie/holster))
 			verbs += /obj/item/clothing/under/proc/holster
 
-		if (istype(hastie,/obj/item/clothing/tie/storage))
+		if(istype(hastie,/obj/item/clothing/tie/storage))
 			verbs += /obj/item/clothing/under/proc/storage
 
 		if(istype(loc, /mob/living/carbon/human))
@@ -303,31 +302,39 @@ BLIND     // can't see anything
 	if(hastie)
 		usr << "\A [hastie] is clipped to it."
 
+/obj/item/clothing/under/proc/set_sensors(mob/usr as mob)
+	var/mob/M = usr
+	if (istype(M, /mob/dead/)) return
+	if (usr.stat || usr.restrained()) return
+	if(has_sensor >= 2)
+		usr << "<span class='warning'>The controls are locked.</span>"
+		return 0
+	if(has_sensor <= 0)
+		usr << "<span class='warning'>This suit does not have any sensors.</span>"
+		return 0
+
+	var/list/modes = list("Off", "Binary sensors", "Vitals tracker", "Tracking beacon")
+	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) in modes
+	if(get_dist(usr, src) > 1)
+		usr << "<span class='warning'>You have moved too far away.</span>"
+		return
+	sensor_mode = modes.Find(switchMode) - 1
+
+	switch(sensor_mode)
+		if(0)
+			usr << "<span class='notice'>You disable your suit's remote sensing equipment.</span>"
+		if(1)
+			usr << "<span class='notice'>Your suit will now report whether you are live or dead.</span>"
+		if(2)
+			usr << "<span class='notice'>Your suit will now report your vital lifesigns.</span>"
+		if(3)
+			usr << "<span class='notice'>Your suit will now report your vital lifesigns as well as your coordinate position.</span>"
+
 /obj/item/clothing/under/verb/toggle()
 	set name = "Toggle Suit Sensors"
 	set category = "Object"
 	set src in usr
-	var/mob/M = usr
-	if (istype(M, /mob/dead/)) return
-	if (usr.stat) return
-	if(src.has_sensor >= 2)
-		usr << "The controls are locked."
-		return 0
-	if(src.has_sensor <= 0)
-		usr << "This suit does not have any sensors."
-		return 0
-	src.sensor_mode += 1
-	if(src.sensor_mode > 3)
-		src.sensor_mode = 0
-	switch(src.sensor_mode)
-		if(0)
-			usr << "You disable your suit's remote sensing equipment."
-		if(1)
-			usr << "Your suit will now report whether you are live or dead."
-		if(2)
-			usr << "Your suit will now report your vital lifesigns."
-		if(3)
-			usr << "Your suit will now report your vital lifesigns as well as your coordinate position."
+	set_sensors(usr)
 	..()
 
 /obj/item/clothing/under/verb/removetie()
