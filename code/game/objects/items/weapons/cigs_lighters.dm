@@ -76,6 +76,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/icon_off = "cigoff"
 	var/type_butt = /obj/item/weapon/cigbutt
 	var/lastHolder = null
+	var/lit_brightness = 1
 	var/smoketime = 300
 	var/chem_volume = 15
 
@@ -83,6 +84,20 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	..()
 	flags |= NOREACT // so it doesn't react until you light it
 	create_reagents(chem_volume) // making the cigarrete a chemical holder with a maximum volume of 15
+
+/obj/item/clothing/mask/cigarette/pickup(mob/user)
+	if (lit)
+		if(user && loc == user)
+			user.SetLuminosity(user.luminosity + lit_brightness)
+		else if(isturf(loc))
+			SetLuminosity(lit_brightness)
+
+/obj/item/clothing/mask/cigarette/dropped(mob/user)
+	if(lit)
+		if(user && loc == user)
+			user.SetLuminosity(user.luminosity - lit_brightness)
+		else if(isturf(loc))
+			SetLuminosity(0)
 
 /obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
@@ -322,6 +337,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime = 420
 	chem_volume = 26
 
+/obj/item/clothing/mask/cigarette/blunt/pickup(mob/user)
+
 /obj/item/clothing/mask/cigarette/blunt/New()
 	. = ..()
 	for(var/reagent in src.reagents)
@@ -352,6 +369,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "dbluntoff"
 	icon_on = "dblunton"
 	icon_off = "dbluntoff"
+	src.l_color = src.filling_color
 	overlay_on = "dbluntlit"
 
 /obj/item/clothing/mask/cigarette/blunt/deus/New()
