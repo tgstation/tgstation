@@ -58,3 +58,47 @@
 	transfer_prints = TRUE
 	strip_delay = 40
 	put_on_delay = 20
+
+/obj/item/clothing/gloves/yellow/stun
+	//these look exactly like normal yellow gloves
+	action_button_name = "Press Hidden Trigger"
+	action_button_is_hands_free = 1
+	var/obj/item/weapon/stock_parts/cell/super/cell = new()
+	var/datum/effect/effect/system/spark_spread/spark_system = new()
+	var/on = 0
+
+/obj/item/clothing/gloves/yellow/stun/attack_self(mob/user)
+	playsound(loc, "sparks", 75, 1, -1)
+	on = !on
+	user << "<span class='notice'>You push the hidden trigger inside \the [src]. [on ? "It feels tingly." : "The tingling sensation subsides."]</span>"
+
+/obj/item/clothing/gloves/yellow/stun/Touch(atom/A)
+	if(!on)
+		return
+	var/mob/living/carbon/human/user = loc
+	if(istype(A, /obj/item/weapon/stock_parts/cell))
+		var/obj/item/weapon/stock_parts/cell/tcell = A
+		if(tcell.charge && (cell.maxcharge != cell.charge))
+			playsound(loc, "sparks", 75, 1, -1)
+			spark_system.set_up(2, 0, A.loc)
+			spark_system.start()
+			user << "<span class='notice'>You feel a powerful vibration as you touch \the [tcell].</span>"
+			if(do_after(user,50))
+				var/useamt = min((cell.maxcharge-cell.charge), tcell.charge)
+				if(tcell.use(useamt))
+					cell.give(useamt)
+				user << "<span class='notice'>The vibration suddenly subsides.</span>"
+			else
+				user << "<span class='notice'>As you move away from \the [tcell], the vibration slowly subsides.</span>"
+			playsound(loc, "sparks", 75, 1, -1)
+			spark_system.start()
+		return 1
+	if(istype(A, /mob/living/carbon))
+		if(cell.use(5000)) //4 uses before recharging, with 10-20 dmg + stun
+			var/mob/living/carbon/M = A
+			playsound(loc, "sparks", 75, 1, -1)
+			spark_system.set_up(5, 0, A.loc)
+			spark_system.start()
+			M.electrocute_act(cell.get_electrocute_damage(), src, safety = 1) //no gloves will protect you
+			return 1
+	return
