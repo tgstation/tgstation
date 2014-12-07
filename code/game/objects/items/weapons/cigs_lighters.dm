@@ -192,10 +192,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		//overlays += image('icons/mob/mask.dmi',overlay_on,LIGHTING_LAYER+1)
 		icon_state = icon_on
 		item_state = icon_on
-		if(user && loc == user)
-			user.SetLuminosity(user.luminosity + lit_brightness)
-		else if(isturf(loc))
-			SetLuminosity(lit_brightness)
+		if(lit)
+			var/mob/M = loc
+			if(M && loc == M)
+				M.SetLuminosity(M.luminosity + lit_brightness)
+			else if(isturf(loc))
+				SetLuminosity(lit_brightness)
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
 		processing_objects.Add(src)
