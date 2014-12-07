@@ -341,9 +341,9 @@
 	icon_closed = "mixed"
 
 /obj/structure/closet/wardrobe/mixed/New()
-	if(prob(25))
+	if(prob(40))
 		new /obj/item/clothing/suit/jacket(src)
-	if(prob(25))
+	if(prob(40))
 		new /obj/item/clothing/suit/jacket(src)
 	new /obj/item/clothing/under/color/white(src)
 	new /obj/item/clothing/under/color/blue(src)
