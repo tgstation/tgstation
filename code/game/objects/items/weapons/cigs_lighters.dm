@@ -369,7 +369,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "dbluntoff"
 	icon_on = "dblunton"
 	icon_off = "dbluntoff"
-	src.l_color = src.filling_color
 	overlay_on = "dbluntlit"
 
 /obj/item/clothing/mask/cigarette/blunt/deus/New()

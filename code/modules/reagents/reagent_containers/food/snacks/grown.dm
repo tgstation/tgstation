@@ -266,6 +266,7 @@
 		user << "<span class='notice'>You roll a godly blunt.</span>"
 		var/obj/item/clothing/mask/cigarette/blunt/deus/rolled/B = new/obj/item/clothing/mask/cigarette/blunt/deus/rolled(src.loc)
 		reagents.trans_to(B, (reagents.total_volume))
+		B.l_color = B.filling_color
 		user.put_in_hands(B)
 		user.drop_from_inventory(src)
 		del(src)
