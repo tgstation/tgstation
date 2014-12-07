@@ -444,11 +444,18 @@
 	required_reagents = list("gargleblaster" = 1, "stoxin" = 1)
 	result_amount = 2
 
-/datum/chemical_reaction/snowwhite
-	name = "Snow White"
-	id = "snowwhite"
-	result = "snowwhite"
+/datum/chemical_reaction/shandy
+	name = "Shandy"
+	id = "shandy"
+	result = "shandy"
 	required_reagents = list("beer" = 1, "lemon_lime" = 1)
+	result_amount = 2
+	
+/datum/chemical_reaction/bittershandy
+	name = "Bitter Shandy"
+	id = "bittershandy"
+	result = "bittershandy"
+	required_reagents = list("ale" = 1, "lemon_lime" = 1)
 	result_amount = 2
 
 /datum/chemical_reaction/irishcarbomb
