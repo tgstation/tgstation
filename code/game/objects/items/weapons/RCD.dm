@@ -219,11 +219,11 @@ RCD
 				return 0
 
 			if(istype(A, /obj/machinery/door/airlock))
-				if(checkResource(10, user))
+				if(checkResource(20, user))
 					user << "Deconstructing Airlock..."
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, 50))
-						if(!useResource(10, user)) return 0
+						if(!useResource(20, user)) return 0
 						activate()
 						qdel(A)
 						return 1
