@@ -331,7 +331,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/blunt/cruciatus
 	name = "blunt"
-	desc = "A special homemade 'cigar'. Light it up and pass it around."
+	desc = "A special homemade cigar. Light it up and pass it around."
 	chem_volume = 36
 
 /obj/item/clothing/mask/cigarette/blunt/cruciatus/New()

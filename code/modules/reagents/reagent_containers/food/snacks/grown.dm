@@ -242,7 +242,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/paper))
 		del(O)
-		user << "<span class='notice'>You roll a blunt out of the [src].</span>"
+		user << "<span class='notice'>You roll a blunt out of \the [src].</span>"
 		var/obj/item/clothing/mask/cigarette/blunt/rolled/B = new/obj/item/clothing/mask/cigarette/blunt/rolled(src.loc)
 		B.name = "[src] blunt"
 		reagents.trans_to(B, (reagents.total_volume))
