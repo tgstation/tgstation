@@ -347,7 +347,7 @@
 	if(prob(100/(severity*efficiency))) malfunction()
 	..()
 
-/obj/machinery/clonepod/ex_act(severity, specialty)
+/obj/machinery/clonepod/ex_act(severity, target)
 	..()
 	if(!gc_destroyed)
 		go_out()

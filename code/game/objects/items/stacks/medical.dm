@@ -32,7 +32,7 @@
 	if (user)
 		if (M != user)
 			user.visible_message( \
-				"<span class='notice'>[M] has been applied with [src] by [user].</span>", \
+				"<span class='notice'>[user] has applied [src] on [M].</span>", \
 				"<span class='notice'>You apply \the [src] to [M].</span>" \
 			)
 		else

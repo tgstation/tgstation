@@ -79,7 +79,7 @@
 	healthcheck()
 
 
-/obj/structure/alien/resin/ex_act(severity, specialty)
+/obj/structure/alien/resin/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			health -= 150
@@ -211,16 +211,16 @@
 			new /obj/structure/alien/weeds(T, linked_node)
 
 
-/obj/structure/alien/weeds/ex_act(severity, specialty)
+/obj/structure/alien/weeds/ex_act(severity, target)
 	qdel(src)
 
 
 /obj/structure/alien/weeds/attackby(obj/item/I, mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(I.attack_verb.len)
-		visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] with [I] by [user].</span>")
+		visible_message("<span class='danger'>[user] has [pick(I.attack_verb)] [src] with [I]!</span>")
 	else
-		visible_message("<span class='danger'>[src] has been attacked with [I] by [user]!</span>")
+		visible_message("<span class='danger'>[user] has attacked [src] with [I]!</span>")
 
 	var/damage = I.force / 4.0
 	if(istype(I, /obj/item/weapon/weldingtool))
@@ -373,9 +373,9 @@
 
 /obj/structure/alien/egg/attackby(obj/item/I, mob/user)
 	if(I.attack_verb.len)
-		visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] with [I] by [user].</span>")
+		visible_message("<span class='danger'>[user] has [pick(I.attack_verb)] [src] with [I]!</span>")
 	else
-		visible_message("<span class='danger'>[src] has been attacked with [I] by [user]!</span>")
+		visible_message("<span class='danger'>[user] has attacked [src] with [I]!</span>")
 
 	var/damage = I.force / 4
 	if(istype(I, /obj/item/weapon/weldingtool))

@@ -312,7 +312,7 @@ var/list/ai_list = list()
 				ai_call_shuttle()
 	..()
 
-/mob/living/silicon/ai/ex_act(severity, specialty)
+/mob/living/silicon/ai/ex_act(severity, target)
 	..()
 
 	switch(severity)

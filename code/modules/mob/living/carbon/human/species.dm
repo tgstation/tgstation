@@ -133,6 +133,12 @@
 	if(!H.getorgan(/obj/item/organ/brain))
 		standing	+= image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained_s", "layer" = -HAIR_LAYER)
 
+	if((H.wear_suit) && (H.wear_suit.hooded) && (H.wear_suit.suittoggled == 1))
+		if(standing.len)
+			H.overlays_standing[HAIR_LAYER]    = standing
+		H.apply_overlay(HAIR_LAYER)
+		return
+
 	else if(H.hair_style && HAIR in specflags)
 		S = hair_styles_list[H.hair_style]
 		if(S)
@@ -158,7 +164,6 @@
 		H.overlays_standing[HAIR_LAYER]	= standing
 
 	H.apply_overlay(HAIR_LAYER)
-
 	return
 
 /datum/species/proc/handle_body(var/mob/living/carbon/human/H)
@@ -811,11 +816,11 @@
 		return 0
 
 	if(I.attack_verb && I.attack_verb.len)
-		H.visible_message("<span class='danger'>[H] has been [pick(I.attack_verb)] in the [hit_area] with [I] by [user]!</span>", \
-						"<span class='userdanger'>[H] has been [pick(I.attack_verb)] in the [hit_area] with [I] by [user]!</span>")
+		H.visible_message("<span class='danger'>[user] has [pick(I.attack_verb)] [H] in the [hit_area] with [I]!</span>", \
+						"<span class='userdanger'>[user] has [pick(I.attack_verb)] [H] in the [hit_area] with [I]!</span>")
 	else if(I.force)
-		H.visible_message("<span class='danger'>[H] has been attacked in the [hit_area] with [I] by [user]!</span>", \
-						"<span class='userdanger'>[H] has been attacked in the [hit_area] with [I] by [user]!</span>")
+		H.visible_message("<span class='danger'>[user] has attacked [H] in the [hit_area] with [I]!</span>", \
+						"<span class='userdanger'>[user] has attacked [H] in the [hit_area] with [I]!</span>")
 	else
 		return 0
 
@@ -896,23 +901,20 @@
 			if(istype(location, /turf/simulated))
 				location.add_blood_floor(H)
 
-	var/showname = "."
-	if(user)
-		showname = " by [user]!"
-		if(user != src)
-			user.do_attack_animation(H)
-	if(!(user in viewers(I, null)))
-		showname = "."
-
+	var/message_verb = ""
 	if(I.attack_verb && I.attack_verb.len)
-		H.visible_message("<span class='danger'>[H] has been [pick(I.attack_verb)] with [I][showname]</span>",
-		"<span class='userdanger'>[H] has been [pick(I.attack_verb)] with [I][showname]</span>")
+		message_verb = "[pick(I.attack_verb)]"
 	else if(I.force)
-		H.visible_message("<span class='danger'>[H] has been attacked with [I][showname]</span>",
-		"<span class='userdanger'>[H] has been attacked with [I][showname]</span>")
-	if(!showname && user)
-		if(user.client)
-			user << "<span class='danger'><B>You attack [H] with [I]. </B></span>"
+		message_verb = "attacked"
+
+	var/attack_message = "[H] has been [message_verb] with [I]."
+	if(user)
+		user.do_attack_animation(src)
+		if(user in viewers(src, null))
+			attack_message = "[user] has [message_verb] [H] with [I]!"
+	if(message_verb)
+		H.visible_message("<span class='danger'>[attack_message]</span>",
+		"<span class='userdanger'>[attack_message]</span>")
 
 	return
 

@@ -42,6 +42,9 @@
 	var/list/attack_verb = list() //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = list()	// even if a species cannot put items in a certain slot, if the species id is in the item's exception list, it will be able to wear that item
 
+	var/suittoggled = 0
+	var/hooded = 0
+
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
 
@@ -53,6 +56,12 @@
 
 /obj/item/blob_act()
 	qdel(src)
+
+/obj/item/ex_act(severity, target)
+	if(severity == 1 || target == src)
+		qdel(src)
+	if(!gc_destroyed)
+		contents_explosion(severity, target)
 
 //user: The mob that is suiciding
 //damagetype: The type of damage the item will inflict on the user
@@ -313,7 +322,7 @@
 		M.adjustBruteLoss(10)
 		*/
 	if(M != user)
-		M.visible_message("<span class='danger'>[M] has been stabbed in the eye with [src] by [user]!</span>", \
+		M.visible_message("<span class='danger'>[user] has stabbed [M] in the eye with [src]!</span>", \
 							"<span class='userdanger'>[user] stabs you in the eye with [src]!</span>")
 	else
 		user.visible_message( \

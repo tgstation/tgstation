@@ -8,7 +8,7 @@
 	var/health = 15
 
 //similar to weeds, but only barfed out by nurses manually
-/obj/effect/spider/ex_act(severity, specialty)
+/obj/effect/spider/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			qdel(src)
@@ -22,9 +22,9 @@
 
 /obj/effect/spider/attackby(var/obj/item/weapon/W, var/mob/user)
 	if(W.attack_verb.len)
-		visible_message("<span class='danger'>\The [src] has been [pick(W.attack_verb)] with \the [W][(user ? " by [user]" : "")]!</span>")
+		visible_message("<span class='danger'>[user] has [pick(W.attack_verb)] \the [src] with \the [W]!</span>")
 	else
-		visible_message("<span class='danger'>\The [src] has been attacked with \the [W][(user ? " by [user]" : "")]!</span>")
+		visible_message("<span class='danger'>[user] has attacked \the [src] with \the [W]!</span>")
 
 	var/damage = W.force / 4.0
 

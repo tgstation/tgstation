@@ -47,11 +47,10 @@
 		builtin_sheet.loc = src
 		new /obj/item/stack/sheet/metal(src)
 
-/turf/simulated/wall/ex_act(severity, specialty)
-	if(specialty)
+/turf/simulated/wall/ex_act(severity, target)
+	if(target == src)
 		dismantle_wall(1,1)
 		return
-
 	switch(severity)
 		if(1.0)
 			//SN src = null
@@ -78,7 +77,7 @@
 	if(M.damtype == "brute")
 		playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
 		M.occupant_message("<span class='danger'>You hit [src].</span>")
-		visible_message("<span class='danger'>[src] has been hit by [M.name].</span>")
+		visible_message("<span class='danger'>[M.name] has hit [src]!</span>")
 		if(prob(5) && M.force > 20)
 			dismantle_wall(1)
 			M.occupant_message("<span class='warning'>You smash through the wall.</span>")
