@@ -22,7 +22,11 @@
 	icon_state = "giftcrate[rand(1,5)]"
 
 /obj/item/weapon/a_gift/attack_self(mob/M as mob)
-	var/gift_type = pick(/obj/item/weapon/sord,
+	if(M && M.mind && M.mind.special_role == "Santa")
+		M << "<span class='warning'>You're supposed to be spreading gifts, not opening them yourself!</span>"
+		return
+
+	var/gift_type_list = list(/obj/item/weapon/sord,
 		/obj/item/weapon/storage/wallet,
 		/obj/item/weapon/storage/photo_album,
 		/obj/item/weapon/storage/box/snappops,
@@ -36,35 +40,28 @@
 		/obj/item/weapon/grenade/smokebomb,
 		/obj/item/weapon/grown/corncob,
 		/obj/item/weapon/contraband/poster,
+		/obj/item/weapon/contraband/poster/legit,
 		/obj/item/weapon/book/manual/barman_recipes,
 		/obj/item/weapon/book/manual/chef_recipes,
 		/obj/item/weapon/bikehorn,
 		/obj/item/weapon/beach_ball,
 		/obj/item/weapon/beach_ball/holoball,
 		/obj/item/weapon/banhammer,
-		/obj/item/toy/balloon,
-		/obj/item/toy/crossbow,
-		/obj/item/toy/gun,
-		/obj/item/toy/katana,
-		/obj/item/toy/prize/deathripley,
-		/obj/item/toy/prize/durand,
-		/obj/item/toy/prize/fireripley,
-		/obj/item/toy/prize/gygax,
-		/obj/item/toy/prize/honk,
-		/obj/item/toy/prize/marauder,
-		/obj/item/toy/prize/mauler,
-		/obj/item/toy/prize/odysseus,
-		/obj/item/toy/prize/phazon,
-		/obj/item/toy/prize/ripley,
-		/obj/item/toy/prize/seraph,
-		/obj/item/toy/spinningtoy,
-		/obj/item/toy/sword,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
 		/obj/item/device/paicard,
 		/obj/item/device/violin,
 		/obj/item/weapon/storage/belt/utility/full,
-		/obj/item/clothing/tie/horrible)
+		/obj/item/clothing/tie/horrible,
+		/obj/item/clothing/suit/jacket/leather,
+		/obj/item/clothing/suit/poncho,
+		/obj/item/clothing/suit/poncho/green,
+		/obj/item/clothing/suit/poncho/red)
+	
+	gift_type_list += typesof(/obj/item/clothing/head/collectable) - /obj/item/clothing/head/collectable
+	gift_type_list += typesof(/obj/item/toy) - (((typesof(/obj/item/toy/cards) - /obj/item/toy/cards/deck) + /obj/item/toy/ammo) + /obj/item/toy) //All toys, except for abstract types and syndicate cards.
+	
+	var/gift_type = pick(gift_type_list)
 
 	if(!ispath(gift_type,/obj/item))	return
 

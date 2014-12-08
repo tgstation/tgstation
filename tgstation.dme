@@ -209,6 +209,7 @@
 #include "code\datums\spells\mime.dm"
 #include "code\datums\spells\mind_transfer.dm"
 #include "code\datums\spells\projectile.dm"
+#include "code\datums\spells\santa.dm"
 #include "code\datums\spells\trigger.dm"
 #include "code\datums\spells\turf_teleport.dm"
 #include "code\datums\spells\wizard.dm"
