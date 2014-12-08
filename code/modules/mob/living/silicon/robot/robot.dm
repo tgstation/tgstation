@@ -197,6 +197,7 @@
 			module_sprites["Basic"] = "robot_old"
 			module_sprites["Android"] = "droid"
 			module_sprites["Default"] = "robot"
+			module_sprites["MarinaSD"] = "marinaSD"
 			module_sprites["Sleek"] = "sleekstandard"
 
 		if("Service")
@@ -274,6 +275,7 @@
 			module_sprites["Combat Android"] = "droid-combat"
 			module_sprites["Bladewolf"] = "bladewolf"
 			module_sprites["Mr. Gutsy"] = "mrgutsy"
+			module_sprites["MarinaCB"] = "marinaCB"
 			channels = list("Security" = 1)
 
 	//Custom_sprite check and entry
