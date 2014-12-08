@@ -78,7 +78,7 @@
 /obj/item/ammo_box/magazine/internal/cylinder/grenadelauncher
 	name = "grenade launcher internal magazine"
 	ammo_type = /obj/item/ammo_casing/a40mm
-	caliber = "a40mm"
+	caliber = "40mm"
 	max_ammo = 1
 
 /obj/item/ammo_box/magazine/internal/cylinder/grenadelauncher/multi

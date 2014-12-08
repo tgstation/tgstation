@@ -168,13 +168,27 @@
 /obj/item/weapon/gun/projectile/automatic/c90gl/proc/make_underbarrel()
 	return new /obj/item/weapon/gun/projectile/revolver/grenadelauncher(src)
 
-/obj/item/weapon/gun/projectile/automatic/c90gl/afterattack()
+/obj/item/weapon/gun/projectile/automatic/c90gl/afterattack(var/atom/target, var/mob/living/user, flag, params)
 	if(select)
 		..()
 		empty_alarm()
 		return
 	else
-		underbarrel.afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params)
+		underbarrel.afterattack(target, user, flag, params)
+
+/obj/item/weapon/gun/projectile/automatic/c90gl/attackby(var/obj/item/A, mob/user)
+	if(select)
+		..()
+	else
+		underbarrel.attackby(A, user)
+
+/obj/item/weapon/gun/projectile/automatic/c90gl/attack_self(var/mob/living/user)
+	if(select)
+		..()
+	else
+		underbarrel.attack_self(user)
+
+
 
 /obj/item/weapon/gun/projectile/automatic/c90gl/update_icon()
 	..()
@@ -200,6 +214,8 @@
 
 /obj/item/weapon/gun/projectile/automatic/c90gl/ui_action_click()
 	underbarrel_swap()
+
+
 
 /obj/item/weapon/gun/projectile/automatic/tommygun
 	name = "tommy gun"
