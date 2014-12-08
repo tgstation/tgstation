@@ -31,7 +31,7 @@
 	flag = "bullet"
 
 /obj/item/projectile/bullet/a40mm/on_hit(atom/target, blocked = 0)
-	explosion(target, -1, 0, 3)
+	explosion(target, -1, 0, 2, 1, 0, flame_range = 2)
 	return 1
 
 /obj/item/projectile/temp
