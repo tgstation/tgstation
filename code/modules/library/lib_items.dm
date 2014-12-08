@@ -105,7 +105,7 @@
 			update_icon()
 
 
-/obj/structure/bookcase/ex_act(severity, specialty)
+/obj/structure/bookcase/ex_act(severity, target)
 	..()
 	if(!gc_destroyed)
 		for(var/obj/item/weapon/book/b in contents)

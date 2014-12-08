@@ -127,7 +127,8 @@
 	return src.open()
 
 // this should probably use dump_contents()
-/obj/structure/closet/ex_act(severity, specialty)
+/obj/structure/closet/ex_act(severity, target)
+	contents_explosion(severity, target)
 	open()
 	..()
 

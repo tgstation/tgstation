@@ -47,11 +47,10 @@
 		builtin_sheet.loc = src
 		new /obj/item/stack/sheet/metal(src)
 
-/turf/simulated/wall/ex_act(severity, specialty)
-	if(specialty)
+/turf/simulated/wall/ex_act(severity, target)
+	if(target == src)
 		dismantle_wall(1,1)
 		return
-
 	switch(severity)
 		if(1.0)
 			//SN src = null

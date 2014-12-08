@@ -323,9 +323,7 @@
 	return 0
 
 
-/mob/living/silicon/robot/ex_act(severity, specialty)
-	..()
-
+/mob/living/silicon/robot/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			gib()
