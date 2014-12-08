@@ -2,9 +2,9 @@
 	set name = "Broken Sprite List"
 	set category = "Debug"
 
-	var/icon/IL = new('icons/mob/items_lefthand.dmi')
+	var/icon/IL = new('icons/mob/in-hand/left/items_lefthand.dmi')
 	var/list/Lstates = IL.IconStates()
-	var/icon/IR = new('icons/mob/items_righthand.dmi')
+	var/icon/IR = new('icons/mob/in-hand/right/items_righthand.dmi')
 	var/list/Rstates = IR.IconStates()
 
 
