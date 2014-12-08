@@ -92,7 +92,6 @@
 	item_state = "ushankadown"
 	flags_inv = HIDEEARS
 	var/earflaps = 1
-	flags_inv = HIDEEARS
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 

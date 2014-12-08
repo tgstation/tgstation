@@ -332,6 +332,7 @@
 	if(prob(50))
 		new /obj/item/clothing/suit/toggle/wintercoat(src)
 		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/head/santa(src)
 	return
 
 
@@ -357,4 +358,5 @@
 	if(prob(50))
 		new /obj/item/clothing/suit/toggle/wintercoat(src)
 		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/head/santa(src)
 	return

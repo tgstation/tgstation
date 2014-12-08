@@ -52,6 +52,7 @@
 	new /obj/item/weapon/storage/backpack/satchel/withwallet( src )
 	new /obj/item/device/radio/headset( src )
 	new /obj/item/clothing/suit/toggle/wintercoat(src)
+	new /obj/item/clothing/head/santa(src)
 	return
 
 /obj/structure/closet/secure_closet/personal/attackby(obj/item/W as obj, mob/user as mob)
