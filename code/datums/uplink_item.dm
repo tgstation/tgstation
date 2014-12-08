@@ -226,7 +226,7 @@ var/list/uplink_items = list()
 	surplus = 40
 
 /datum/uplink_item/ammo/pistol
-	name = "Ammo - 10mm"
+	name = "Magazine - 10mm"
 	desc = "An additional 8-round 10mm magazine for use in the syndicate pistol. These subsonic rounds are dirt cheap but are half as effective as .357 rounds."
 	item = /obj/item/ammo_box/magazine/m10mm
 	cost = 1
@@ -238,49 +238,49 @@ var/list/uplink_items = list()
 	cost = 4
 
 /datum/uplink_item/ammo/smg
-	name = "Ammo - .45"
+	name = "Magazine - .45"
 	desc = "An additional 20-round .45 magazine for use in the C-20r submachine gun. These bullets pack a lot of punch that can knock most targets down, but do limited overall damage."
 	item = /obj/item/ammo_box/magazine/c20m
 	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/car
-	name = "Ammo - 5.45x39mm"
+	name = "Magazine - 5.45x39mm"
 	desc = "An additional 30-round 5.45x39mm magazine for use in the C-90gl assault rifle. These bullets don't have the punch to knock most targets down, but dish out higher overall damage."
 	item = /obj/item/ammo_box/magazine/c90m
 	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/a40mm
-	name = "Ammo - 40mm grenades"
+	name = "Ammo Box - 40mm grenades"
 	desc = "A box of 4 additional 40mm HE grenades for use the C-90gl's underbarrel grenade launcher. Your teammates will thank you to not shoot these down small hallways."
 	item = /obj/item/ammo_box/a40mm
 	cost = 4
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/bullstun
-	name = "Ammo - 12g Stun Slug"
+	name = "Drum Magazine - 12g Stun Slug"
 	desc = "An additional 8-round stun slug magazine for use in the Bulldog shotgun. Saying that they're completely non-lethal would be lying."
 	item = /obj/item/ammo_box/magazine/m12g
 	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/bullbuck
-	name = "Ammo - 12g Buckshot"
+	name = "Drum Magazine - 12g Buckshot"
 	desc = "An alternative 8-round buckshot magazine for use in the Bulldog shotgun. Front towards enemy."
 	item = /obj/item/ammo_box/magazine/m12g/buckshot
 	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/bulldragon
-	name = "Ammo - 12g Dragon's Breath"
+	name = "Drum Magazine - 12g Dragon's Breath"
 	desc = "An alternative 8-round dragon's breath magazine for use in the Bulldog shotgun. I'm a fire starter, twisted fire starter!"
 	item = /obj/item/ammo_box/magazine/m12g/dragon
 	cost = 3
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/machinegun
-	name = "Ammo-7.62×51mm"
+	name = "Box Magazine - 7.62×51mm"
 	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW machinegun. By the time you need to use this, you'll already be on a pile of corpses."
 	item = /obj/item/ammo_box/magazine/m762
 	cost = 12
@@ -560,7 +560,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/badass/syndiecards
 	name = "Syndicate Playing Cards"
 	desc = "A special deck of space-grade playing cards with a mono-molecular edge and metal reinforcement, making them slightly more robust than a normal deck of cards. \
-	You can also play card games with them."
+	You can also play card games with them or leave them on your victims."
 	item = /obj/item/toy/cards/deck/syndicate
 	cost = 1
 	excludefrom = list(/datum/game_mode/nuclear)
