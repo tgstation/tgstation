@@ -180,21 +180,11 @@
 		else
 			dir = 2
 
-/obj/structure/table/ex_act(severity, specialty)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
-				return
-		if(3.0)
-			if (prob(25))
-				src.density = 0
-		else
-	return
-
+/obj/structure/table/ex_act(severity, target)
+	..()
+	if(severity == 3)
+		if(prob(25))
+			density = 0
 
 /obj/structure/table/blob_act()
 	if(prob(75))
@@ -499,7 +489,7 @@
 	throwpass = 1	//You can throw objects over this, despite it's density.
 	var/health = 5
 
-/obj/structure/rack/ex_act(severity, specialty)
+/obj/structure/rack/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			qdel(src)

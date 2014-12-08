@@ -99,7 +99,7 @@
 				visible_message("<span class='danger'>The [src.name]'s stare chills [L.name] to the bone!</span>")
 	return
 
-/mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, specialty)
+/mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			gib()
@@ -411,7 +411,7 @@
 /obj/effect/goliath_tentacle/original/New()
 	for(var/obj/effect/goliath_tentacle/original/O in loc)//No more GG NO RE from 2+ goliaths simultaneously tentacling you
 		if(O != src)
-			return
+			qdel(src)
 	var/list/directions = cardinal.Copy()
 	var/counter
 	for(counter = 1, counter <= 3, counter++)

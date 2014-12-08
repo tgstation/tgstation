@@ -4,10 +4,6 @@
 	if(cur_area)
 		cur_area.mob_activate(src)
 
-/mob/living/New()
-	faction += "\ref[src]"
-	..()
-
 /mob/living/Destroy()
 //	if(mind)
 //		mind.current = null
@@ -138,7 +134,7 @@
 /mob/living/proc/InCritical()
 	return (src.health < 0 && src.health > -95.0 && stat == UNCONSCIOUS)
 
-/mob/living/ex_act(severity, specialty)
+/mob/living/ex_act(severity, target)
 	..()
 	if(client && !blinded)
 		flick("flash", src.flash)

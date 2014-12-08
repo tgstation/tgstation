@@ -16,7 +16,7 @@
 	stored = new/obj/item/stack/rods(src)
 	stored.amount = 2
 
-/obj/structure/grille/ex_act(severity, specialty)
+/obj/structure/grille/ex_act(severity, target)
 	qdel(src)
 
 /obj/structure/grille/blob_act()

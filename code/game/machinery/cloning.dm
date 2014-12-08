@@ -174,7 +174,7 @@
 	H << "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>"
 
 	hardset_dna(H, ui, se, null, null, mrace, mcolor)
-	H.faction += factions
+	H.faction |= factions
 
 	if(efficiency > 2)
 		for(var/A in bad_se_blocks)
@@ -349,7 +349,7 @@
 	if(prob(100/(severity*efficiency))) malfunction()
 	..()
 
-/obj/machinery/clonepod/ex_act(severity, specialty)
+/obj/machinery/clonepod/ex_act(severity, target)
 	..()
 	if(!gc_destroyed)
 		go_out()

@@ -33,7 +33,7 @@
 	return 0
 
 
-/obj/machinery/field/containment/ex_act(severity, specialty)
+/obj/machinery/field/containment/ex_act(severity, target)
 	return 0
 
 

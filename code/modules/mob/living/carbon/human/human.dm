@@ -32,6 +32,8 @@
 	randomize_human(src)
 
 	..()
+	var/mob/M = src
+	faction |= "\ref[M]"
 
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
@@ -80,9 +82,7 @@
 			stat("Energy Charge", round(wear_suit:cell:charge/100))
 
 
-/mob/living/carbon/human/ex_act(severity, specialty)
-	..()
-
+/mob/living/carbon/human/ex_act(severity, ex_target)
 	var/shielded = 0
 	var/b_loss = null
 	var/f_loss = null
@@ -142,6 +142,7 @@
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
 	if(update)	update_damage_overlays(0)
 
+	..()
 
 /mob/living/carbon/human/blob_act()
 	if(stat == 2)	return

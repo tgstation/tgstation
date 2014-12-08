@@ -7,6 +7,7 @@
 	ventcrawler = 2
 	var/is_adult = 0
 	languages = SLIME | HUMAN
+	faction = list("slime")
 
 	layer = 5
 
@@ -158,7 +159,7 @@
 	powerlevel = 0 // oh no, the power!
 	..()
 
-/mob/living/carbon/slime/ex_act(severity, specialty)
+/mob/living/carbon/slime/ex_act(severity, target)
 	..()
 
 	var/b_loss = null
