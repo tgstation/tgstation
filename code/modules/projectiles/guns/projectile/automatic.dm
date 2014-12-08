@@ -169,9 +169,12 @@
 	return new /obj/item/weapon/gun/projectile/revolver/grenadelauncher(src)
 
 /obj/item/weapon/gun/projectile/automatic/c90gl/afterattack()
-	..()
-	empty_alarm()
-	return
+	if(select)
+		..()
+		empty_alarm()
+		return
+	else
+		underbarrel.afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params)
 
 /obj/item/weapon/gun/projectile/automatic/c90gl/update_icon()
 	..()

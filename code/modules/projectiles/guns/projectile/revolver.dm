@@ -224,10 +224,3 @@
 					user.visible_message("<span class='danger'>*click*</span>", "<span class='danger'>*click*</span>")
 					return
 	..()
-
-/obj/item/weapon/gun/projectile/revolver/grenadelauncher //this is only used for underbarrel grenade launchers at the moment, but admins can still spawn it if they feel like being assholes
-	desc = "A break-operated grenade launcher."
-	name = "grenade launcher"
-	icon_state = "dshotgun-sawn"
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/grenadelauncher
-
