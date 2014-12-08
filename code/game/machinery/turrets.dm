@@ -159,6 +159,8 @@
 		if(M.occupant)
 			new_targets += M
 	for(var/mob/living/simple_animal/M in protected_area.turretTargets)
+		if(istype(M, /var/mob/living/simple_animal/drone)
+			continue //skip drones
 		if(!M.stat)
 			new_targets += M
 	if(new_targets.len)
