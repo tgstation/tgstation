@@ -18,7 +18,6 @@
 /obj/item/device/flash/proc/clown_check(mob/user)
 	if(user && (CLUMSY in user.mutations) && prob(50))
 		flash_carbon(user, user, 15, 0)
-		user.visible_message("<span class='disarm'>[user] blinds [user] with the flash!</span>")
 		return 0
 	return 1
 
@@ -42,7 +41,7 @@
 	times_used = max(0, times_used) //sanity
 
 
-/obj/item/device/flash/proc/try_use_flash(var/mob/user)
+/obj/item/device/flash/proc/try_use_flash(var/mob/user = null)
 	flash_recharge(user)
 
 	if(broken)
@@ -67,6 +66,11 @@
 		if(user && convert)
 			terrible_conversion_proc(M, user)
 			M.Stun(1)
+		user.visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
+		return 1
+	else
+		user.visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>")
+		return 0
 
 /obj/item/device/flash/attack(mob/living/M, mob/user)
 	if(!try_use_flash(user))
@@ -74,7 +78,6 @@
 
 	if(iscarbon(M))
 		flash_carbon(M, user, 5, 1)
-		user.visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
 		return 1
 
 	else if(issilicon(M))
