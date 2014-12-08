@@ -3,14 +3,13 @@
 	desc = "A small, easily concealable handgun. Uses 10mm ammo and has a threaded barrel for suppressors."
 	icon_state = "pistol"
 	w_class = 2
-	suppressed = 0
 	origin_tech = "combat=2;materials=2;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/m10mm
 	can_suppress = 1
 
 /obj/item/weapon/gun/projectile/automatic/pistol/update_icon()
 	..()
-	icon_state = "[initial(icon_state)][suppressed ? "-suppressor" : ""][chambered ? "" : "-e"]"
+	icon_state = "[initial(icon_state)][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 	return
 
 /obj/item/weapon/gun/projectile/automatic/deagle

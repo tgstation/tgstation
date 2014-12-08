@@ -1,15 +1,16 @@
 /obj/item/weapon/gun/projectile/automatic //Hopefully someone will find a way to make these fire in bursts or something. --Superxpdude
-	name = "submachine gun"
-	desc = "A lightweight, rapid-fire gun. Uses 9mm rounds."
-	icon_state = "saber"	//ugly
+	name = "\improper SABR SMG"
+	desc = "A lightweight, prototype submachine gun. Uses 9mm rounds."
+	icon_state = "saber"
 	w_class = 3
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/msmg9mm
 	var/alarmed = 0
+	can_suppress = 1
 
 /obj/item/weapon/gun/projectile/automatic/update_icon()
 	..()
-	icon_state = "[initial(icon_state)][magazine ? "-[magazine.max_ammo]" : ""][chambered ? "" : "-e"]"
+	icon_state = "[initial(icon_state)][magazine ? "-[magazine.max_ammo]" : ""][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 	return
 
 /obj/item/weapon/gun/projectile/automatic/attackby(var/obj/item/A as obj, mob/user as mob)
@@ -29,7 +30,7 @@
 	icon_state = "mini-uzi"
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/uzim45
-
+	can_suppress = 0
 
 
 /obj/item/weapon/gun/projectile/automatic/c20r
@@ -40,7 +41,6 @@
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/c20m
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
-	can_suppress = 1
 
 /obj/item/weapon/gun/projectile/automatic/c20r/New()
 	..()
@@ -54,7 +54,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/c20r/update_icon()
 	..()
-	icon_state = "c20r[magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""][chambered ? "" : "-e"][suppressed ? "-suppressor" : ""]"
+	icon_state = "c20r[magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 	return
 
 
@@ -70,7 +70,7 @@
 	mag_type = /obj/item/ammo_box/magazine/m762
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	var/cover_open = 0
-
+	can_suppress = 0
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user as mob)
 	cover_open = !cover_open
@@ -114,13 +114,14 @@
 
 /obj/item/weapon/gun/projectile/automatic/bulldog
 	name = "\improper Bulldog shotgun"
-	desc = "A compact, mag-fed semi-automatic shotgun for combat in narrow corridors. Compatible only with specialized magazines."
+	desc = "A compact, mag-fed semi-automatic shotgun for combat in narrow corridors. The standard equipment for boarding parties. Compatible only with specialized 8-round drum magazines."
 	icon_state = "bulldog"
 	item_state = "bulldog"
 	w_class = 3.0
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m12g
 	fire_sound = 'sound/weapons/Gunshot.ogg'
+	can_suppress = 0
 
 /obj/item/weapon/gun/projectile/automatic/bulldog/New()
 	..()
@@ -152,14 +153,20 @@
 	item_state = "c90gl"
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/c90m
-	var/select = 1 //1 for boolets, 0 for explosions.
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	action_button_name = "Toggle Grenade Launcher"
+	can_suppress = 0
+	var/select = 1 //1 for boolets, 0 for explosions.
+	var/obj/item/weapon/gun/projectile/revolver/grenadelauncher/underbarrel
 
 /obj/item/weapon/gun/projectile/automatic/c90gl/New()
 	..()
+	underbarrel = make_underbarrel()
 	update_icon()
 	return
+
+/obj/item/weapon/gun/projectile/automatic/c90gl/proc/make_underbarrel()
+	return new /obj/item/weapon/gun/projectile/revolver/grenadelauncher(src)
 
 /obj/item/weapon/gun/projectile/automatic/c90gl/afterattack()
 	..()
@@ -200,3 +207,4 @@
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	can_suppress = 0

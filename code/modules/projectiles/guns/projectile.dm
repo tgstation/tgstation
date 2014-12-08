@@ -57,18 +57,19 @@
 			user << "<span class='notice'>There's already a magazine in \the [src].</span>"
 	if(istype(A, /obj/item/weapon/suppressor))
 		var/obj/item/weapon/suppressor/S = A
-		if(!can_suppress)
+		if(can_suppress)
 			if(!suppressed)
 				if(user.l_hand != src && user.r_hand != src)
 					user << "<span class='notice'>You'll need [src] in your hands to do that.</span>"
 					return
 				user.drop_item()
 				user << "<span class='notice'>You screw [S] onto [src].</span>"
-				suppressed = 1	//dodgy?
+				suppressed = A
 				S.oldsound = fire_sound
+				S.initial_w_class = w_class
 				fire_sound = 'sound/weapons/Gunshot_silenced.ogg'
 				w_class = 3 //so pistols do not fit in pockets when suppressed
-				loc = src
+				A.loc = src
 				update_icon()
 				return
 			else
@@ -82,15 +83,15 @@
 /obj/item/weapon/gun/projectile/attack_hand(mob/user as mob)
 	if(loc == user)
 		if(suppressed)
+			var/obj/item/weapon/suppressor/S = suppressed
 			if(user.l_hand != src && user.r_hand != src)
 				..()
 				return
 			user << "<span class='notice'>You unscrew [suppressed] from [src].</span>"
 			user.put_in_hands(suppressed)
-			var/obj/item/weapon/suppressor/S = suppressed
 			fire_sound = S.oldsound
+			w_class = S.initial_w_class
 			suppressed = 0
-			w_class = 2
 			update_icon()
 			return
 	..()
@@ -133,3 +134,4 @@
 	icon_state = "suppressor"
 	w_class = 2
 	var/oldsound = null
+	var/initial_w_class = null
