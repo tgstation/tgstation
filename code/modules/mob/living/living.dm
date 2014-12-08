@@ -4,6 +4,10 @@
 	if(cur_area)
 		cur_area.mob_activate(src)
 
+/mob/living/New()
+	faction += "\ref[src]"
+	..()
+
 /mob/living/Destroy()
 //	if(mind)
 //		mind.current = null

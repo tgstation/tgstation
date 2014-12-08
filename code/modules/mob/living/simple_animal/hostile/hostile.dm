@@ -4,7 +4,6 @@
 	environment_smash = 1 //Set to 1 to break closets,tables,racks, etc; 2 for walls; 3 for rwalls
 	var/stance = HOSTILE_STANCE_IDLE	//Used to determine behavior
 	var/atom/target
-	var/attack_same = 0 //Set us to 1 to allow us to attack our own faction, or 2, to only ever attack our own faction
 	var/ranged = 0
 	var/rapid = 0
 	var/projectiletype
@@ -12,19 +11,24 @@
 	var/casingtype
 	var/move_to_delay = 3 //delay for the automated movement.
 	var/list/friends = list()
-	var/vision_range = 9 //How big of an area to search for targets in, a vision of 9 attempts to find targets as soon as they walk into screen view
 
-	var/aggro_vision_range = 9 //If a mob is aggro, we search in this radius. Defaults to 9 to keep in line with original simple mob aggro radius
-	var/idle_vision_range = 9 //If a mob is just idling around, it's vision range is limited to this. Defaults to 9 to keep in line with original simple mob aggro radius
 	var/ranged_message = "fires" //Fluff text for ranged mobs
 	var/ranged_cooldown = 0 //What the starting cooldown is on ranged attacks
 	var/ranged_cooldown_cap = 3 //What ranged attacks, after being used are set to, to go back on cooldown, defaults to 3 life() ticks
 	var/retreat_distance = null //If our mob runs from players when they're too close, set in tile distance. By default, mobs do not retreat.
 	var/minimum_distance = 1 //Minimum approach distance, so ranged mobs chase targets down, but still keep their distance set in tiles to the target, set higher to make mobs keep distance
+
+
+//These vars are related to how mobs locate and target
+	var/robust_searching = 0 //By default, mobs have a simple searching method, set this to 1 for the more scrutinous searching, should be disabled on most mobs
+	var/vision_range = 9 //How big of an area to search for targets in, a vision of 9 attempts to find targets as soon as they walk into screen view
+	var/aggro_vision_range = 9 //If a mob is aggro, we search in this radius. Defaults to 9 to keep in line with original simple mob aggro radius
+	var/idle_vision_range = 9 //If a mob is just idling around, it's vision range is limited to this. Defaults to 9 to keep in line with original simple mob aggro radius
 	var/search_objects = 0 //If we want to consider objects when searching around, set this to 1. If you want to search for objects while also ignoring mobs until hurt, set it to 2. To completely ignore mobs, even when attacked, set it to 3
 	var/list/wanted_objects = list() //A list of objects that will be checked against to attack, should we have search_objects enabled
 	var/stat_attack = 0 //Mobs with stat_attack to 1 will attempt to attack things that are unconscious, Mobs with stat_attack set to 2 will attempt to attack the dead.
 	var/stat_exclusive = 0 //Mobs with this set to 1 will exclusively attack things defined by stat_attack, stat_attack 2 means they will only attack corpses
+	var/attack_same = 0 //Set us to 1 to allow us to attack our own faction, or 2, to only ever attack our own faction
 
 /mob/living/simple_animal/hostile/Life()
 
@@ -102,33 +106,33 @@
 /mob/living/simple_animal/hostile/CanAttack(var/atom/the_target)//Can we actually attack a possible target?
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
 		return 0
-	if(isliving(the_target) && search_objects < 2)
-		var/mob/living/L = the_target
-		if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive == 1)
-			return 0
-		var/faction_check = 0
-		for(var/F in faction)
-			if(F in L.faction)
-				faction_check = 1
-				break
-		if(faction_check && !attack_same || !faction_check && attack_same == 2)
-			return 0
-		if(L in friends)
-			return 0
-		if(ishuman(L))
-			var/mob/living/carbon/human/H = L
-			if(H.dna)
-				if(src.type in H.dna.species.ignored_by)
-					return 0
-		return 1
-	if(isobj(the_target))
-		if(the_target.type in wanted_objects)
-			return 1
-		if(istype(the_target, /obj/mecha) && search_objects < 2)
+	if(search_objects < 2)
+		if(istype(the_target, /obj/mecha))
 			var/obj/mecha/M = the_target
 			if(M.occupant)//Just so we don't attack empty mechs
 				if(CanAttack(M.occupant))
 					return 1
+		if(isliving(the_target))
+			var/mob/living/L = the_target
+			var/faction_check = 0
+			for(var/F in faction)
+				if(F in L.faction)
+					faction_check = 1
+					break
+			if(robust_searching)
+				if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive == 1)
+					return 0
+				if(faction_check && !attack_same || !faction_check && attack_same == 2)
+					return 0
+			else
+				if(L.stat)
+					return 0
+				if(faction_check && !attack_same)
+					return 0
+			return 1
+	if(isobj(the_target))
+		if(the_target.type in wanted_objects)
+			return 1
 	return 0
 
 /mob/living/simple_animal/hostile/proc/GiveTarget(var/new_target)//Step 4, give us our selected target

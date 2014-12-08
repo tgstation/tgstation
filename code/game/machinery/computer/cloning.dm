@@ -329,7 +329,7 @@
 				temp = "<font class='bad'>Clonepod malfunction.</font>"
 			else if(!config.revival_cloning)
 				temp = "<font class='bad'>Unable to initiate cloning cycle.</font>"
-			else if(pod1.growclone(C.fields["ckey"], C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["mcolor"]))
+			else if(pod1.growclone(C.fields["ckey"], C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["mcolor"], C.fields["factions"]))
 				temp = "[C.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
 				records.Remove(C)
 				if(active_record == C)
@@ -381,7 +381,7 @@
 	R.fields["SE"] = subject.dna.struc_enzymes
 	R.fields["blood_type"] = subject.dna.blood_type
 	R.fields["mcolor"] = subject.dna.mutant_color
-
+	R.fields["factions"] = subject.faction
 	//Add an implant if needed
 	var/obj/item/weapon/implant/health/imp = locate(/obj/item/weapon/implant/health, subject)
 	if(!imp)
