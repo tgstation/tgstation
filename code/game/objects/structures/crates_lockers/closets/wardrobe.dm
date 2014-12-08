@@ -21,8 +21,6 @@
 
 /obj/structure/closet/wardrobe/red/New()
 	new /obj/item/weapon/storage/backpack/security(src)
-	new /obj/item/weapon/storage/backpack/security(src)
-	new /obj/item/weapon/storage/backpack/satchel_sec(src)
 	new /obj/item/weapon/storage/backpack/satchel_sec(src)
 	new /obj/item/clothing/under/rank/security(src)
 	new /obj/item/clothing/under/rank/security(src)
@@ -36,6 +34,9 @@
 	new /obj/item/clothing/head/beret/sec(src)
 	new /obj/item/clothing/head/beret/sec(src)
 	new /obj/item/clothing/head/beret/sec(src)
+	new /obj/item/clothing/head/santa(src)
+	new /obj/item/clothing/head/santa(src)
+	new /obj/item/clothing/head/santa(src)
 	return
 
 /obj/structure/closet/wardrobe/pink
