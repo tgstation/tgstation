@@ -2,5 +2,4 @@ author: Dylanstrategie
 delete-after: True
 changes:
   - rscadd: Fireaxes now drop out of shredded fireaxe cabinets (if one is inside, duh)
-  - rscdel: You can no longer unlock fireaxe cabinets with a multitool, git actually gud
   - bugfix: Ghosts can no longer fuck with the lock on the fireaxe cabinets. Stop being spooky

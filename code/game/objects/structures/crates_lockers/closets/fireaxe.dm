@@ -20,6 +20,13 @@
 		hasaxe = 1
 
 	if(isrobot(usr) || src.locked)
+		if(istype(O, /obj/item/device/multitool))
+			visible_message("<span class='notice'>[user] starts to fiddle with [src]'s locking module</span>", "<span class='notice'>You start to disable [src]'s locking module</span>")
+			playsound(user, 'sound/machines/lockreset.ogg', 50, 1)
+			if(do_after(user, 50))
+				src.locked = 0
+				visible_message("<span class='notice'>[user] disables [src]'s locking module.</span>", "<span class='notice'>You disable [src]'s locking module.</span>")
+				update_icon()
 		if(istype(O, /obj/item/weapon))
 			var/obj/item/weapon/W = O
 			if(src.smashed || src.localopened)
@@ -58,6 +65,20 @@
 			if(src.smashed)
 				user << "<span class='warning'>[src]'s protective glass is broken. Cutting hazard right there!</span>"
 				return
+			if(istype(O, /obj/item/device/multitool))
+				if(localopened)
+					localopened = 0
+					icon_state = "fireaxe[hasaxe][localopened][hitstaken][smashed]closing"
+					spawn(10)
+						update_icon()
+					return
+				else
+					visible_message("<span class='notice'>[user] starts to fiddle with [src]'s locking module</span>", "<span class='notice'>You start to re-enable [src]'s locking module</span>")
+					if(do_after(user, 50))
+						src.locked = 1
+						visible_message("<span class='notice'>[user] re-enables [src]'s locking module.</span>", "<span class='notice'>You re-enable [src]'s locking module.</span>")
+						playsound(user, 'sound/machines/lockenable.ogg', 50, 1)
+						update_icon()
 			else
 				localopened = !localopened
 				if(localopened)
