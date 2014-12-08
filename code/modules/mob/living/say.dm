@@ -626,7 +626,7 @@ var/list/department_radio_keys = list(
 	if(client)
 		client.images += speech_bubble
 		spawn(30)
-			client.images -= speech_bubble
+			if(client) client.images -= speech_bubble
 
 /obj/effect/speech_bubble
 	var/mob/parent

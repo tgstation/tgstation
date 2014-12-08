@@ -513,7 +513,7 @@
 					if(!disable_warning)
 						usr << "You somehow have a suit with no defined allowed items for suit storage, stop that."
 					return 0
-				if(src.w_class > 3)
+				if(src.w_class > 3 && !H.wear_suit.allowed.len)
 					if(!disable_warning)
 						usr << "The [name] is too big to attach."
 					return 0
