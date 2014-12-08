@@ -25,7 +25,7 @@
 	return !density
 
 // When destroyed by explosions, properly handle contents.
-obj/structure/transit_tube/ex_act(severity, specialty)
+obj/structure/transit_tube/ex_act(severity, target)
 	if(3 - severity >= 0)
 		var/oldloc = loc
 		..(severity + 1)

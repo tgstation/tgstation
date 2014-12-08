@@ -146,7 +146,7 @@
 	..()
 
 
-/obj/machinery/computer/HolodeckControl/ex_act(severity, specialty)
+/obj/machinery/computer/HolodeckControl/ex_act(severity, target)
 	emergencyShutdown()
 	..()
 

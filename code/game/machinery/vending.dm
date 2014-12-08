@@ -77,7 +77,7 @@
 		for(var/obj/item/weapon/vending_refill/VR in component_parts)
 			refill_inventory(VR, product_records)
 
-/obj/machinery/vending/ex_act(severity, specialty)
+/obj/machinery/vending/ex_act(severity, target)
 	..()
 	if(!gc_destroyed)
 		if(prob(25))
