@@ -101,7 +101,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/dangerous/pistol
 	name = "Syndicate Pistol"
-	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 10-round magazines and is compatible with suppressors."
+	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible with suppressors."
 	item = /obj/item/weapon/gun/projectile/automatic/pistol
 	cost = 9
 
