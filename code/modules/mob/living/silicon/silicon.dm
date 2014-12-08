@@ -199,8 +199,8 @@
 
 /mob/living/silicon/proc/statelaws()
 
-	var/r = radiomod //Inserted before a hardcoded message to change if and how it is handled by an internal radio.
-	src.say("[r] Current Active Laws:")
+	//"radiomod" is inserted before a hardcoded message to change if and how it is handled by an internal radio.
+	src.say("[radiomod] Current Active Laws:")
 	//src.laws_sanity_check()
 	//src.laws.show_laws(world)
 	var/number = 1
@@ -210,7 +210,7 @@
 
 	if (src.laws.zeroth)
 		if (src.lawcheck[1] == "Yes")
-			src.say("[r] 0. [src.laws.zeroth]")
+			src.say("[radiomod] 0. [src.laws.zeroth]")
 			sleep(10)
 
 	for (var/index = 1, index <= src.laws.ion.len, index++)
@@ -218,7 +218,7 @@
 		var/num = ionnum()
 		if (length(law) > 0)
 			if (src.ioncheck[index] == "Yes")
-				src.say("[r] [num]. [law]")
+				src.say("[radiomod] [num]. [law]")
 				sleep(10)
 
 	for (var/index = 1, index <= src.laws.inherent.len, index++)
@@ -226,7 +226,7 @@
 
 		if (length(law) > 0)
 			if (src.lawcheck[index+1] == "Yes")
-				src.say("[r] [number]. [law]")
+				src.say("[radiomod] [number]. [law]")
 				sleep(10)
 			number++
 
@@ -237,7 +237,7 @@
 		if (length(law) > 0)
 			if(src.lawcheck.len >= number+1)
 				if (src.lawcheck[number+1] == "Yes")
-					src.say("[r] [number]. [law]")
+					src.say("[radiomod] [number]. [law]")
 					sleep(10)
 				number++
 
