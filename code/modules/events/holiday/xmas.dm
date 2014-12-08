@@ -83,15 +83,12 @@
 	name = "Santa is coming to town! (Christmas)"
 	holidayID = "Xmas"
 	typepath = /datum/round_event/santa
-	weight = 50
+	weight = 150
 	max_occurrences = 1
-	earliest_start = 9000
+	earliest_start = 20000
 
 /datum/round_event/santa
 	var/mob/living/carbon/human/santa //who is our santa?
-
-/datum/round_event/santa/Destroy()
-	world << "rip"
 
 /datum/round_event/santa/announce()
 	priority_announce("Santa is coming to town!", "Unknown Transmission")
