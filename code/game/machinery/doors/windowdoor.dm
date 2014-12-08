@@ -162,7 +162,7 @@
 		qdel(src)
 		return
 
-/obj/machinery/door/window/ex_act(severity, specialty)
+/obj/machinery/door/window/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			qdel(src)

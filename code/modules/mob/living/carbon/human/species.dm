@@ -133,6 +133,12 @@
 	if(!H.getorgan(/obj/item/organ/brain))
 		standing	+= image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained_s", "layer" = -HAIR_LAYER)
 
+	if((H.wear_suit) && (H.wear_suit.hooded) && (H.wear_suit.suittoggled == 1))
+		if(standing.len)
+			H.overlays_standing[HAIR_LAYER]    = standing
+		H.apply_overlay(HAIR_LAYER)
+		return
+
 	else if(H.hair_style && HAIR in specflags)
 		S = hair_styles_list[H.hair_style]
 		if(S)
@@ -158,7 +164,6 @@
 		H.overlays_standing[HAIR_LAYER]	= standing
 
 	H.apply_overlay(HAIR_LAYER)
-
 	return
 
 /datum/species/proc/handle_body(var/mob/living/carbon/human/H)

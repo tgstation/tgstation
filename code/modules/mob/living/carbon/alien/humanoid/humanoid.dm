@@ -26,7 +26,7 @@
 	if(l_store) l_store.emp_act(severity)
 	..()
 
-/mob/living/carbon/alien/humanoid/ex_act(severity, specialty)
+/mob/living/carbon/alien/humanoid/ex_act(severity, target)
 	..()
 
 	var/shielded = 0

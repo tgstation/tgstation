@@ -303,7 +303,7 @@ var/list/uplink_items = list()
 	name = "Stun Gloves"
 	desc = "These insulated gloves look innocent, but contain a hidden trigger. Pressing it will turn them into a formidable weapon that will shock anybody on touch."
 	item = /obj/item/clothing/gloves/yellow/stun
-	cost = 8
+	cost = 6
 
 // STEALTHY TOOLS
 

@@ -944,7 +944,7 @@ steam.start() -- spawns the effect
 		icon_state = "ironfoam"
 
 
-/obj/structure/foamedmetal/ex_act(severity, specialty)
+/obj/structure/foamedmetal/ex_act(severity, target)
 	qdel(src)
 
 /obj/structure/foamedmetal/blob_act()
