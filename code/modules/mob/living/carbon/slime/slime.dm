@@ -417,8 +417,9 @@
 			++Friends[user]
 		else
 			Friends[user] = 1
+		user << "You feed the slime the plasma. It chirps happily."
 		var/obj/item/stack/sheet/mineral/plasma/S = W
-		--S.amount
+		--S.use(1)
 		return
 	else if(W.force > 0)
 		attacked += 10
