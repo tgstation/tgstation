@@ -3,7 +3,7 @@
 
 /datum/atom_hud/antag/proc/join_hud(var/mob/living/M)
 	if(!istype(M))
-		ERROR("join_hud(): [M] ([M.type]) is not a living mob!")
+		CRASH("join_hud(): [M] ([M.type]) is not a living mob!")
 	if(M.mind.antag_hud)
 		var/datum/atom_hud/antag/oldhud = M.mind.antag_hud
 		oldhud.leave_hud(M)
@@ -13,7 +13,7 @@
 
 /datum/atom_hud/antag/proc/leave_hud(var/mob/living/M)
 	if(!istype(M))
-		ERROR("leave_hud(): [M] ([M.type]) is not a living mob!")
+		CRASH("leave_hud(): [M] ([M.type]) is not a living mob!")
 	remove_from_hud(M)
 	remove_hud_from(M)
 	M.mind.antag_hud = null
@@ -23,7 +23,7 @@
 //called to set a mob's antag icon state
 /datum/game_mode/proc/set_antag_hud(var/mob/living/M, var/new_icon_state)
 	if(!istype(M))
-		ERROR("set_antag_hud(): [M] ([M.type]) is not a living mob!")
+		CRASH("set_antag_hud(): [M] ([M.type]) is not a living mob!")
 	var/image/holder = M.hud_list[ANTAG_HUD]
 	holder.icon_state = new_icon_state
 	M.mind.antag_hud_icon_state = new_icon_state
