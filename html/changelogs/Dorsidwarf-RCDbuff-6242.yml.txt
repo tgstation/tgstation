@@ -21,9 +21,9 @@
 # tgs (TG-ported fixes?)
 #################################
 # Your name.
-author: N3X15
+author: Dorsidwarf
 # Optional: Remove this file after generating master changelog. Useful for PR changelogs that won't get used again.
-#delete-after: True
+delete-after: True
 # Any changes you've made. See valid prefix list above.
 # INDENT WITH TWO SPACES. NOT TABS. SPACES.
 # SCREW THIS UP AND IT WON'T WORK.
