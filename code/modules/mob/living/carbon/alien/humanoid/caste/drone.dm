@@ -36,7 +36,7 @@
 
 		if(no_queen)
 			adjustToxLoss(-500)
-			visible_message("<span class='alien'>[src] begins to violently twist and contort!</B>", "<span class='alien'>You begin to evolve, stand still for a few moments</span>")
+			visible_message("<span class='alien'>[src] begins to violently twist and contort!</span>", "<span class='alien'>You begin to evolve, stand still for a few moments</span>")
 			if(do_after(src, 50))
 				var/mob/living/carbon/alien/humanoid/queen/new_xeno = new(loc)
 				mind.transfer_to(new_xeno)

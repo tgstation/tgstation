@@ -112,7 +112,7 @@
 			m_type = VISIBLE
 		if("collapse")
 			Paralyse(2)
-			message = text("<B>\The [src]</B> collapses!")
+			message = "<B>\The [src]</B> collapses!"
 			m_type = HEARABLE
 		if("help")
 			src << "burp, deathgasp, choke, collapse, dance, drool, gasp, shiver, gnarl, jump, moan, nod, roar, roll, scratch,\nscretch, shake, sign-#, sit, sulk, sway, tail, twitch, whimper"

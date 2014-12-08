@@ -25,7 +25,7 @@ Doesn't work on other aliens/AI.*/
 
 	if(powerc(50,1))
 		adjustToxLoss(-50)
-		visible_message("<span class='alien'>\The [src] has planted some alien weeds!</span>")
+		visible_message("<span class='alien'>[src] has planted some alien weeds!</span>")
 		new /obj/effect/alien/weeds/node(loc)
 	return
 
@@ -118,7 +118,7 @@ Doesn't work on other aliens/AI.*/
 
 	if(powerc(50))
 		if(isalien(target))
-			src << "<span class='alien'>Your allies are not a valid target.</span>"
+			src << "<span class='alien'>Your allies are not valid targets.</span>"
 			return
 		adjustToxLoss(-50)
 		playsound(get_turf(src), 'sound/weapons/pierce.ogg', 30, 1)
