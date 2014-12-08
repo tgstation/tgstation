@@ -1,8 +1,0 @@
-author: Ergovisavi
-delete-after: True
-
-changes: 
-  - rscadd: "Allows using replica pods to clone people without bodies."
-  - tweak: "Speeds up replica pod cloning by adjusting the starting production."
-  - tweak: "Replica pods will now only create plantmen."
-  - tweak: " Mixing blood in a beaker or taking it from a suicide victim will render the blood sample useless for replica pod cloning."

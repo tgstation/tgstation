@@ -1,4 +1,0 @@
-author: Paprika
-delete-after: True
-changes: 
-  - tweak: "Changed the way flashbang protection works. Currently, only security helmets (and their derivatives like swat and riot), and some hardsuit helmets have flashbang protection. Ear items like earmuffs and 'bowman' headsets (alternative, larger headsets) have flashbang protection as well, so you're able to go hatless as security. The Head of security, warden, and detective's hat do NOT have flashbang protection, but their earpieces do, from the 'noise' part of the flashbang. The flashbang blind still works as before, with only sunglasses/hardsuit helmets protecting you."
