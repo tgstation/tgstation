@@ -38,7 +38,7 @@
 			if(7 to INFINITY)	src.icon_state += "_full"
 			if(4 to 6)			src.icon_state += "_half"
 			else				src.icon_state += "_low"
-	else src.icon_state += "empty"
+	else src.icon_state += "_empty"
 	return
 
 /obj/item/weapon/melee/defibrillator/attack_self(mob/user)
