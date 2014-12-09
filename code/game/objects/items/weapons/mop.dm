@@ -13,6 +13,7 @@
 	var/mopcount = 0
 	var/mopcap = 5
 	var/mopspeed = 40
+	var/mopsafety = 2
 
 /obj/item/weapon/mop/New()
 	create_reagents(mopcap)
@@ -21,6 +22,7 @@
 obj/item/weapon/mop/proc/clean(turf/simulated/A)
 	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1))
 		A.clean_blood()
+		A.MakeSlippery(mopsafety)
 		for(var/obj/effect/O in A)
 			if(istype(O,/obj/effect/decal/cleanable) || istype(O,/obj/effect/overlay))
 				qdel(O)
@@ -65,7 +67,7 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 	return
 
 /obj/item/weapon/mop/advanced
-	desc = "The most advanced tool in a custodian's arsenal. Just think of all the viscera you will clean up with this!"
+	desc = "The most advanced tool in a custodian's arsenal. Just think of all the viscera you will clean up with this! It even makes the floor a little less wet!"
 	name = "advanced mop"
 	mopcap = 10
 	icon_state = "advmop"
@@ -74,3 +76,4 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 	throwforce = 8
 	throw_range = 4
 	mopspeed = 20
+	mopsafety = 1

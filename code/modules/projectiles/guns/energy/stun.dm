@@ -62,7 +62,7 @@
 	origin_tech = "combat=2;magnets=2;syndicate=5"
 	suppressed = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
-	cell_type = "/obj/item/weapon/stock_parts/cell/crap"
+	cell_type = "/obj/item/weapon/stock_parts/cell"
 	var/charge_tick = 0
 
 

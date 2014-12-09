@@ -326,7 +326,7 @@ datum/reagent/lube/reaction_turf(var/turf/simulated/T, var/volume)
 	if (!istype(T)) return
 	src = null
 	if(volume >= 1)
-		T.MakeSlippery(2)
+		T.MakeSlippery(3)
 
 datum/reagent/slimetoxin
 	name = "Mutation Toxin"
@@ -2788,19 +2788,22 @@ datum/reagent/neurotoxin
 
 datum/reagent/neurotoxin/on_mob_life(var/mob/living/carbon/M as mob)
 	if(!M) M = holder.my_atom
-	M.weakened = max(M.weakened, 3)
 	if(!data) data = 1
 	data++
 	M.dizziness +=6
 	if(data >= 15 && data <45)
 		if (!M.stuttering) M.stuttering = 1
 		M.stuttering += 3
+		M.Weaken(3)
 	else if(data >= 45 && prob(50) && data <55)
 		M.confused = max(M.confused+3,0)
+		M.Weaken(3)
 	else if(data >=55)
 		M.druggy = max(M.druggy, 55)
+		M.Weaken(3)
 	else if(data >=200)
 		M.adjustToxLoss(2)
+		M.Weaken(3)
 	..()
 	return
 
@@ -3160,7 +3163,8 @@ datum/reagent/ethanol/beepsky_smash
 	boozepwr = 25
 
 datum/reagent/ethanol/beepsky_smash/on_mob_life(var/mob/living/M as mob)
-	M.Stun(2)
+	if(data >= 15)
+		M.Stun(2)
 	..()
 	return
 

@@ -10,9 +10,8 @@
 /obj/item/projectile/energy/electrode
 	name = "electrode"
 	icon_state = "spark"
-	nodamage = 1
-	stun = 5
-	weaken = 5
+	damage = 36
+	damage_type = STAMINA
 	stutter = 5
 	hitsound = "sparks"
 
@@ -22,6 +21,10 @@
 			sparks.set_up(1, 1, src)
 			sparks.start()
 		..()
+
+/obj/item/projectile/energy/electrode/turret
+	damage = 0
+	weaken = 5
 
 /obj/item/projectile/energy/declone
 	name = "radiation beam"
@@ -45,8 +48,8 @@
 	damage = 10
 	damage_type = TOX
 	nodamage = 0
-	weaken = 5
-	stutter = 5
+	stamina = 45
+	range = 7
 
 
 /obj/item/projectile/energy/bolt/large
@@ -56,14 +59,9 @@
 /obj/item/projectile/energy/disabler
 	name = "disabler beam"
 	icon_state = "omnilaser"
-	damage = 34
+	damage = 36
 	damage_type = STAMINA
-	var/range = 7
-
-/obj/item/projectile/energy/disabler/Range()
-	range--
-	if(range <= 0)
-		qdel(src)
+	range = 7
 
 
 

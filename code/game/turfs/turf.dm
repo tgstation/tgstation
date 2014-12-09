@@ -301,9 +301,17 @@
 			return 0
 		if(!M.lying && (M.status_flags & CANWEAKEN)) // we slip those who are standing and can fall.
 			var/olddir = M.dir
+			var/pre_stunned = null
+			if(M.stunned||M.weakened)
+				pre_stunned = 1
 			M.Stun(s_amount)
 			M.Weaken(w_amount)
 			M.stop_pulling()
+			if(O)
+				M << "<span class='notice'>You slipped on the [O.name]!</span>"
+			else
+				M << "<span class='notice'>You slipped!</span>"
+			playsound(M.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 			if(lube&SLIDE)
 				for(var/i=1, i<5, i++)
 					spawn (i)
@@ -311,11 +319,12 @@
 						M.spin(1,1)
 				if(M.lying) //did I fall over?
 					M.adjustBruteLoss(2)
-			if(O)
-				M << "<span class='notice'>You slipped on the [O.name]!</span>"
+				return 1
 			else
-				M << "<span class='notice'>You slipped!</span>"
-			playsound(M.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+				if(!pre_stunned && w_amount <= 1)
+					M.stunned = 0
+					M.weakened = 0
+					M.update_canmove()
 			return 1
 	return 0 // no success. Used in clown pda and wet floors
 
