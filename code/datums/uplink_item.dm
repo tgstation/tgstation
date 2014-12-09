@@ -240,22 +240,8 @@ var/list/uplink_items = list()
 /datum/uplink_item/ammo/smg
 	name = "Magazine - .45"
 	desc = "An additional 20-round .45 magazine for use in the C-20r submachine gun. These bullets pack a lot of punch that can knock most targets down, but do limited overall damage."
-	item = /obj/item/ammo_box/magazine/c20m
+	item = /obj/item/ammo_box/magazine/smgm45
 	cost = 2
-	gamemodes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/ammo/car
-	name = "Magazine - 5.45x39mm"
-	desc = "An additional 30-round 5.45x39mm magazine for use in the C-90gl assault rifle. These bullets don't have the punch to knock most targets down, but dish out higher overall damage."
-	item = /obj/item/ammo_box/magazine/c90m
-	cost = 2
-	gamemodes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/ammo/a40mm
-	name = "Ammo Box - 40mm grenades"
-	desc = "A box of 4 additional 40mm HE grenades for use the C-90gl's underbarrel grenade launcher. Your teammates will thank you to not shoot these down small hallways."
-	item = /obj/item/ammo_box/a40mm
-	cost = 4
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/bullstun
@@ -277,6 +263,20 @@ var/list/uplink_items = list()
 	desc = "An alternative 8-round dragon's breath magazine for use in the Bulldog shotgun. I'm a fire starter, twisted fire starter!"
 	item = /obj/item/ammo_box/magazine/m12g/dragon
 	cost = 3
+	gamemodes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/ammo/car
+	name = "Box Magazine - 5.45x39mm"
+	desc = "An additional 30-round 5.45x39mm magazine for use in the C-90gl assault rifle. These bullets don't have the punch to knock most targets down, but dish out higher overall damage."
+	item = /obj/item/ammo_box/magazine/m545
+	cost = 2
+	gamemodes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/ammo/a40mm
+	name = "Ammo Box - 40mm grenades"
+	desc = "A box of 4 additional 40mm HE grenades for use the C-90gl's underbarrel grenade launcher. Your teammates will thank you to not shoot these down small hallways."
+	item = /obj/item/ammo_box/a40mm
+	cost = 4
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/machinegun

@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/projectile/revolver
-	desc = "A suspicious revolver. Uses .357 ammo" //usually used by syndicates
 	name = "revolver"
+	desc = "A suspicious revolver. Uses .357 ammo." //usually used by syndicates
 	icon_state = "revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
 
@@ -50,12 +50,10 @@
 	user << "[get_ammo(0,0)] of those are live rounds."
 
 /obj/item/weapon/gun/projectile/revolver/detective
-	desc = "A cheap Martian knock-off of a Smith & Wesson Model 10. Uses .38-special rounds."
-	name = "revolver"
+	desc = "A cheap Martian knock-off of a classic law enforcement firearm. Uses .38-special rounds."
 	icon_state = "detective"
 	origin_tech = "combat=2;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
-
 
 /obj/item/weapon/gun/projectile/revolver/detective/special_check(var/mob/living/carbon/human/M)
 	if(magazine.caliber == initial(magazine.caliber))
@@ -132,19 +130,18 @@
 				user << "<span class='warning'>You remove the modifications on [src]! Now it will fire .38 rounds.</span>"
 
 
-
-
 /obj/item/weapon/gun/projectile/revolver/mateba
-	name = "mateba"
-	desc = "A retro high-powered revolver typically used by officers of the New Russia military. Uses .357 ammo."
+	name = "autorevolver"
+	desc = "A retro high-powered mateba autorevolver typically used by officers of the New Russia military. Uses .357 ammo."
 	icon_state = "mateba"
 	origin_tech = "combat=2;materials=2"
+
 
 // A gun to play Russian Roulette!
 // You can spin the chamber to randomize the position of the bullet.
 
 /obj/item/weapon/gun/projectile/revolver/russian
-	name = "Russian Revolver"
+	name = "russian revolver"
 	desc = "A Russian-made revolver for drinking games. Uses .357 ammo, and has a mechanism that spins the chamber before each trigger pull.."
 	origin_tech = "combat=2;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
