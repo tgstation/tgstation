@@ -120,4 +120,10 @@
 				break
 			if(newrange > maxjumprange) //to avoid going in an infinite loop
 				break
+
+		// Update on_moved listeners.
+		INVOKE_EVENT(on_moved,list("loc"=NewLoc))
 		return 0
+
+	// Update on_moved listeners.
+	INVOKE_EVENT(on_moved,list("loc"=NewLoc))

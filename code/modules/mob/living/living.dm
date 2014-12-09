@@ -13,6 +13,11 @@
 		if(M_HARDCORE in mutations)
 			mutations.Remove(M_HARDCORE)
 			src << "<span class='notice'>You feel like a pleb.</span>"
+
+	// New beam damage code (per-tick)
+	for(var/obj/effect/beam/B in beams)
+		apply_beam_damage(B)
+
 	if(mind)
 		if(mind in ticker.mode.implanted)
 			if(implanting) return
@@ -57,6 +62,9 @@
 		G << "<span class='sinister'>You feel relieved as what's left of your soul finally escapes its prison of flesh.</span>"
 	else
 		dust()
+
+/mob/living/proc/apply_beam_damage(var/obj/effect/beam/B)
+	apply_damage(B.get_damage(), B.damage_type, B.def_zone)
 
 /mob/living/verb/succumb()
 	set hidden = 1
@@ -555,6 +563,9 @@
 	if(update_slimes)
 		for(var/mob/living/carbon/slime/M in view(1,src))
 			M.UpdateFeed(src)
+
+	// Update on_moved listeners.
+	INVOKE_EVENT(on_moved,list("loc"=loc))
 
 /mob/living/verb/resist()
 	set name = "Resist"

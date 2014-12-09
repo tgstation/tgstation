@@ -5,24 +5,27 @@
 #define OXYGEN_RELEASE_MODIFIER 750        //Higher == less oxygen released at high temperature/power
 #define REACTION_POWER_MODIFIER 1.1                //Higher == more overall power
 
-
 //These would be what you would get at point blank, decreases with distance
 #define DETONATION_RADS 200
 #define DETONATION_HALLUCINATION 600
 
-
 #define WARNING_DELAY 30 		//seconds between warnings.
+#define AUDIO_WARNING_DELAY 30
 
 /obj/machinery/power/supermatter
-	name = "Supermatter"
+	name = "Supermatter Crystal"
 	desc = "A strangely translucent and iridescent crystal. \red You get headaches just from looking at it."
 	icon = 'icons/obj/engine.dmi'
 	icon_state = "darkmatter"
 	density = 1
 	anchored = 0
-	luminosity = 4
-	
+
+	var/max_luminosity = 8 // Now varies based on power.
+
 	l_color = "#ffcc00"
+
+	// What it's referred to in the alerts
+	var/short_name = "Crystal"
 
 	var/gasefficency = 0.25
 
@@ -30,11 +33,8 @@
 
 	var/damage = 0
 	var/damage_archived = 0
-	var/safe_alert = "Crystalline hyperstructure returning to safe operating levels."
 	var/warning_point = 100
-	var/warning_alert = "Danger! Crystal hyperstructure instability!"
 	var/emergency_point = 700
-	var/emergency_alert = "CRYSTAL DELAMINATION IMMINENT."
 	var/explosion_point = 1000
 
 	var/emergency_issued = 0
@@ -42,6 +42,7 @@
 	var/explosion_power = 8
 
 	var/lastwarning = 0                        // Time in 1/10th of seconds since the last sent warning
+	var/lastaudiowarning = 0
 	var/power = 0
 
 	var/oxygen = 0				  // Moving this up here for easier debugging.
@@ -56,19 +57,24 @@
 
 	var/obj/item/device/radio/radio
 
-	shard //Small subtype, less efficient and more sensitive, but less boom.
-		name = "Supermatter Shard"
-		desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure. \red You get headaches just from looking at it."
-		icon_state = "darkmatter_shard"
-		base_icon_state = "darkmatter_shard"
+	// Monitoring shit
+	var/frequency = 0
+	var/id_tag
 
-		warning_point = 50
-		emergency_point = 500
-		explosion_point = 900
+/obj/machinery/power/supermatter/shard //Small subtype, less efficient and more sensitive, but less boom.
+	name = "Supermatter Shard"
+	short_name = "Shard"
+	desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure. \red You get headaches just from looking at it."
+	icon_state = "darkmatter_shard"
+	base_icon_state = "darkmatter_shard"
 
-		gasefficency = 0.125
+	warning_point = 50
+	emergency_point = 500
+	explosion_point = 900
 
-		explosion_power = 8 // WAS 3 - N3X
+	gasefficency = 0.125
+
+	explosion_power = 8 // WAS 3 - N3X
 
 
 /obj/machinery/power/supermatter/New()
@@ -76,8 +82,8 @@
 	radio = new (src)
 
 
-/obj/machinery/power/supermatter/Del()
-	del radio
+/obj/machinery/power/supermatter/Destroy()
+	del(radio)
 	. = ..()
 
 /obj/machinery/power/supermatter/proc/explode()
@@ -94,7 +100,6 @@
 /obj/machinery/power/supermatter/process()
 
 	var/turf/L = loc
-
 	if(isnull(L))		// We have a null turf...something is wrong, stop processing this entity.
 		return PROCESS_KILL
 
@@ -104,22 +109,63 @@
 	if(istype(L, /turf/space))	// Stop processing this stuff if we've been ejected.
 		return
 
+	// Let's add beam energy first.
+	for(var/obj/effect/beam/emitter/B in beams)
+		power += B.get_damage() * config_bullet_energy
+
+	var/stability = num2text(round((damage / explosion_point) * 100))
 	if(damage > warning_point) // while the core is still damaged and it's still worth noting its status
+
+		var/list/audio_sounds = list('sound/AI/supermatter_integrity_before.ogg')
+		var/play_alert = 0
+		var/audio_offset = 0
 		if((world.timeofday - lastwarning) / 10 >= WARNING_DELAY)
-			var/stability = num2text(round((damage / explosion_point) * 100))
+			var/warning=""
+			var/offset = 0
 
-			if(damage > emergency_point)
+			audio_sounds += vox_num2list(stability)
+			audio_sounds += list('sound/AI/supermatter_integrity_after.ogg')
 
-				radio.autosay(addtext(emergency_alert, " Instability: ",stability,"%"), "Supermatter Monitor")
-				lastwarning = world.timeofday
+			// Damage still low.
+			if(damage >= damage_archived) // The damage is still going up
+				warning = "Danger! [short_name] hyperstructure instability detected, now at [stability]%."
+				offset=150
 
-			else if(damage >= damage_archived) // The damage is still going up
-				radio.autosay(addtext(warning_alert," Instability: ",stability,"%"), "Supermatter Monitor")
-				lastwarning = world.timeofday - 150
+				if(damage > emergency_point)
+					warning = "[uppertext(short_name)] INSTABILITY AT [stability]%. DELAMINATION IMMINENT - EVACUATE IMMEDIATELY."
+					offset=0
+					audio_sounds += list('sound/AI/supermatter_delam.ogg')
+					//audio_offset = 100
+				play_alert=1
+			else
+				warning = "[short_name] hyperstructure returning to safe operating levels. Instability: [stability]%"
+			radio.autosay(warning, "Supermatter [short_name] Monitor")
+			lastwarning = world.timeofday - offset
 
-			else                                                 // Phew, we're safe
-				radio.autosay(safe_alert, "Supermatter Monitor")
-				lastwarning = world.timeofday
+		if(play_alert && (world.timeofday - lastaudiowarning) / 10 >= AUDIO_WARNING_DELAY)
+			for(var/sf in audio_sounds)
+				var/sound/voice = sound(sf, wait = 1, channel = VOX_CHANNEL)
+				voice.status = SOUND_STREAM
+				world << voice
+			lastaudiowarning = world.timeofday - audio_offset
+
+		if(frequency)
+			var/datum/radio_frequency/radio_connection = radio_controller.return_frequency(frequency)
+
+			if(!radio_connection) return
+
+			var/datum/signal/signal = new
+			signal.source = src
+			signal.transmission_method = 1
+			signal.data = list(
+				"tag" = id_tag,
+				"device" = "SM",
+				"instability" = stability,
+				"damage" = damage,
+				"power" = power,
+				"sigtype" = "status"
+			)
+			radio_connection.post_signal(src, signal)
 
 		if(damage > explosion_point)
 			for(var/mob/living/mob in living_mob_list)
@@ -201,6 +247,14 @@
 	return 1
 
 
+/obj/machinery/power/supermatter/multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
+	return {"
+	<b>Main</b>
+	<ul>
+		<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[initial(frequency)]">Reset</a>)</li>
+		<li>[format_tag("ID Tag","id_tag")]</li>
+	</ul>"}
+
 /obj/machinery/power/supermatter/bullet_act(var/obj/item/projectile/Proj)
 	var/turf/L = loc
 	if(!istype(L))		// We don't run process() when we are in space
@@ -223,15 +277,17 @@
 	if(Adjacent(user))
 		return attack_hand(user)
 	else
-		user << "<span class = \"warning\">You attempt to interface with the control circuits but find they are not connected to your network.  Maybe in a future firmware update.</span>"
-	return
+		attack_ai(user)
 
-// /vg/: Don't let ghosts fuck with this.
 /obj/machinery/power/supermatter/attack_ghost(mob/user as mob)
-	src.examine()
+	attack_ai(user)
 
 /obj/machinery/power/supermatter/attack_ai(mob/user as mob)
-	user << "<span class = \"warning\">You attempt to interface with the control circuits but find they are not connected to your network.  Maybe in a future firmware update.</span>"
+	src.examine()
+	var/stability = num2text(round((damage / explosion_point) * 100))
+	user << "<span class = \"info\">Matrix Instability: [stability]%</span>"
+	user << "<span class = \"info\">Damage: [format_num(damage)]</span>" // idfk what units we're using.
+	user << "<span class = \"info\">Power: [format_num(power)]J</span>" // Same
 
 /obj/machinery/power/supermatter/attack_hand(mob/user as mob)
 	user.visible_message("<span class=\"warning\">\The [user] reaches out and touches \the [src], inducing a resonance... \his body starts to glow and bursts into flames before flashing into ash.</span>",\
@@ -249,6 +305,10 @@
 	return
 
 /obj/machinery/power/supermatter/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
+	if(istype(W, /obj/item/device/multitool))
+		update_multitool_menu(user)
+		return 1
+
 	user.visible_message("<span class=\"warning\">\The [user] touches \a [W] to \the [src] as a silence fills the room...</span>",\
 		"<span class=\"danger\">You touch \the [W] to \the [src] when everything suddenly goes silent.\"</span>\n<span class=\"notice\">\The [W] flashes into dust as you flinch away from \the [src].</span>",\
 		"<span class=\"warning\">Everything suddenly goes silent.</span>")

@@ -99,6 +99,9 @@
 	var/fatigue_pressure = 80 *ONE_ATMOSPHERE //  8106   kPa
 	alert_pressure       = 80 *ONE_ATMOSPHERE
 
+	// Type of burstpipe to use on burst()
+	var/burst_type = /obj/machinery/atmospherics/pipe/vent/burstpipe
+
 	level = 1
 
 /obj/machinery/atmospherics/pipe/simple/New()
@@ -188,14 +191,22 @@
 /obj/machinery/atmospherics/pipe/simple/check_pressure(pressure)
 	if(!loc)
 		return
+
+	// Note: This checks the difference between atmospheric pressure and pressure in the pipe.
+	// So, a pipe rated at 8,000 kPa in a 104kPa environment will explode at 8,104kPa.
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	var/pressure_difference = pressure - environment.return_pressure()
 
-	if(pressure_difference > maximum_pressure && prob(25))
+	// Burst check first.
+	if(pressure_difference > maximum_pressure && prob(1))
 		burst()
-	else if(pressure_difference > fatigue_pressure && prob(5))
+
+	// Groan if that check failed and we're above fatigue pressure
+	else if(pressure_difference > fatigue_pressure && prob(1)) // 5 was too often
 		groan()
+
+	// Otherwise, continue on.
 	else
 		return 1
 
@@ -217,6 +228,17 @@
 	var/area/A=get_area_master(src)
 	log_game("Pipe burst in area [A.name] ")
 
+	if(prob(50))
+		explosion(get_turf(src), -1, 1, 2, adminlog=0)
+	else
+		explosion(get_turf(src), 0, 1, 2, adminlog=0)
+
+	// Disconnect first.
+	for(var/obj/machinery/atmospherics/node in pipeline_expansion())
+		if(node)
+			node.disconnect(src)
+
+	// Now connect.
 	var/node_id=0
 	for(var/direction in cardinal)
 		if(initialize_directions & direction)
@@ -233,21 +255,14 @@
 					return
 			if(!found) continue
 			//var/node_var="node[node_id]" // For debugging.
-			var/obj/machinery/atmospherics/pipe/vent/burstpipe/BP = new (loc, setdir=direction)
+			var/obj/machinery/atmospherics/pipe/vent/burstpipe/BP = new burst_type(loc, setdir=direction)
 			BP.color=src.color
 			BP.invisibility=src.invisibility
 			BP.level=src.level
-			BP.initialize()
-			BP.update_icon()
-			BP.build_network()
-
-	if(prob(50))
-		explosion(get_turf(src), -1, 1, 2, adminlog=0)
-	else
-		explosion(get_turf(src), 0, 1, 2, adminlog=0)
+			BP.do_connect()
 
 	if(src && src.loc!=null)
-		qdel(src)
+		del(src) // NOT qdel.
 	/*
 	playsound(get_turf(src), 'sound/effects/bang.ogg', 25, 1)
 	var/datum/effect/effect/system/smoke_spread/smoke = new

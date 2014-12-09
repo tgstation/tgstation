@@ -7,6 +7,9 @@ datum/pipeline
 	var/datum/pipe_network/network
 
 	var/alert_pressure = 0
+	var/last_pressure_check=0
+
+	var/const/PRESSURE_CHECK_DELAY=5 // 5s delay between pchecks to give pipenets time to recover.
 
 	Del()
 		if(network)
@@ -19,13 +22,16 @@ datum/pipeline
 		..()
 
 	proc/process()//This use to be called called from the pipe networks
+		if((world.timeofday - last_pressure_check) / 10 >= PRESSURE_CHECK_DELAY)
+			//Check to see if pressure is within acceptable limits
+			var/pressure = air.return_pressure()
+			if(pressure > alert_pressure)
+				for(var/obj/machinery/atmospherics/pipe/member in members)
+					if(!member.check_pressure(pressure))
+						// Delay next update so we have a chance to recalculate.
+						last_pressure_check=world.timeofday
+						break //Only delete 1 pipe per process
 
-		//Check to see if pressure is within acceptable limits
-		var/pressure = air.return_pressure()
-		if(pressure > alert_pressure)
-			for(var/obj/machinery/atmospherics/pipe/member in members)
-				if(!member.check_pressure(pressure))
-					break //Only delete 1 pipe per process
 
 		//Allow for reactions
 		//air.react() //Should be handled by pipe_network now

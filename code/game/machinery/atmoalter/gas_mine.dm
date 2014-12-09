@@ -5,9 +5,8 @@
 	icon_state = "miner"
 	power_channel=ENVIRON
 
-	m_amt=10*CC_PER_SHEET_METAL
-	w_type = RECYK_METAL
-	melt_temperature = MELTPOINT_STEEL
+	m_amt = 0 // fuk u
+	w_type = NOT_RECYCLABLE
 
 	var/datum/gas_mixture/air_contents
 
@@ -156,7 +155,7 @@
 
 /obj/machinery/atmospherics/miner/air
 	name = "\improper Air Miner"
-	desc = "You fucking cheater."
+	desc = "You fucking <em>cheater</em>."
 	light_color = "#70DBDB"
 
 	on = 0

@@ -27,6 +27,19 @@
 	//Detective Work, used for the duplicate data points kept in the scanners
 	var/list/original_atom
 
+	var/list/beams=list()
+
+	// EVENTS
+	var/event/on_destroyed = new() // On Destroy()
+
+/atom/proc/beam_connect(var/obj/effect/beam/B)
+	if(!(B in beams))
+		beams.Add(B)
+	return 1
+
+/atom/proc/beam_disconnect(var/obj/effect/beam/B)
+	beams.Remove(B)
+
 /atom/proc/throw_impact(atom/hit_atom, var/speed)
 	if(istype(hit_atom,/mob/living))
 		var/mob/living/M = hit_atom
@@ -74,6 +87,8 @@
 
 	// Idea by ChuckTheSheep to make the object even more unreferencable.
 	invisibility = 101
+
+	INVOKE_EVENT(on_destroyed, list()) // No args.
 
 /atom/New()
 	. = ..()
