@@ -189,7 +189,7 @@ datum/design/techshell
 
 datum/design/suppressor
 	name = "Universal Suppressor"
-	desc = "A reverse-engineered universal suppressor that fits on most small arms with threaded barrels.."
+	desc = "A reverse-engineered universal suppressor that fits on most small arms with threaded barrels."
 	id = "suppressor"
 	req_tech = list("combat" = 6, "engineering" = 5, "syndicate" = 3)
 	build_type = PROTOLATHE

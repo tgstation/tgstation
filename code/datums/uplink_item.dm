@@ -398,7 +398,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/device_tools/medkit
 	name = "Syndicate Medical Supply Kit"
 	desc = "The syndicate medkit is a suspicious black and red. Included is a combat stimulant injector for rapid healing, a medical hud for quick identification of injured comrades, \
-	and other medical supplies helpful for a medical field operative.."
+	and other medical supplies helpful for a medical field operative."
 	item = /obj/item/weapon/storage/firstaid/tactical
 	cost = 9
 	gamemodes = list(/datum/game_mode/nuclear)

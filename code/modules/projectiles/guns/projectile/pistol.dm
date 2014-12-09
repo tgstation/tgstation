@@ -27,7 +27,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/deagle
 	name = "desert eagle"
-	desc = "A robust .50 AE handgun.."
+	desc = "A robust .50 AE handgun."
 	icon_state = "deagle"
 	force = 14
 	mag_type = /obj/item/ammo_box/magazine/m50
