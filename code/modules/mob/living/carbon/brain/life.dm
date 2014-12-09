@@ -42,14 +42,17 @@
 			else//Fluff-wise, since the brain can't detect anything itself, the MMI handles thing like that
 				src << "<span class='danger'>STATUS: CRITICAL AMOUNTS OF RADIATION DETECTED.</span>"
 
+		if (radiation < 0)
+			radiation = 0
+
 		switch(radiation)
-			if(1 to 49)
+			if(0 to 50)
 				radiation--
 				if(prob(25))
 					adjustToxLoss(1)
 					updatehealth()
 
-			if(50 to 74)
+			if(50 to 75)
 				radiation -= 2
 				adjustToxLoss(1)
 				if(prob(5))
