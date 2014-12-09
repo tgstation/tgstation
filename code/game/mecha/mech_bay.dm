@@ -107,7 +107,10 @@
 			data += "<div class='statusDisplay'>No mech detected.</div>"
 		else
 			data += "<div class='statusDisplay'>Integrity: [recharge_port.recharging_mech.health]<BR>"
-			data += "Power: [recharge_port.recharging_mech.cell.charge]/[recharge_port.recharging_mech.cell.maxcharge]</div>"
+			if(recharge_port.recharging_mech.cell.crit_fail)
+				data += "<span class='bad'>WARNING : the mech cell seems faulty!</span></div>"
+			else
+				data += "Power: [recharge_port.recharging_mech.cell.charge]/[recharge_port.recharging_mech.cell.maxcharge]</div>"
 
 	var/datum/browser/popup = new(user, "mech recharger", name, 300, 300)
 	popup.set_content(data)
