@@ -1,6 +1,6 @@
  author: as334
 
-#delete-after: True
+delete-after: True
 
 
   - rscadd: "We've discovered that slimes react to the introduction of certain chemicals in their bloodstream. Inaprovaline will decrease the slimes children's chance of mutation, and plasma will increase it."
