@@ -6,6 +6,9 @@
  * Instead of triggering a bullet_act constantly, beams just send a
  *  beam_connect(var/obj/effect/beam/B) to the "client" and a similar
  *  beam_disconnect(var/obj/effect/beam/B) when disconnected.
+ *
+ * Note: All /atoms automatically maintain a beams list, so you should
+ *  only need to fuck with that.
  */
 
 //#define BEAM_TESTING(x) testing(x) // Uncomment to spam console with debug info.
