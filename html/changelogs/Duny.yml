@@ -1,2 +1,14 @@
 author: Duny
-changes: []
+changes: 
+  - wip: Following changes made to Defficiency.
+  - tweak: Re-added missing windoor in the library, added reporter clothes and modified the private room similarly to Boxstation to suit a reporter activity.
+  - tweak: Fireaxe closets now start locked.
+  - tweak: Improved the nuke ops shuttle quite a bit.
+  - bugfix: Fixed mechanics only having one of each materials again.
+  - bugfix: Added mop buckets in the janitorial closets.
+  - bugfix: Fixed area problems in one of the janitorial closets and the mechanics workshop.
+  - tweak: The AI core turrets now start disabled.
+  - bugfix: Added missing paper to the RD's office.
+  - tweak: Made an attempt at making chemistry less cramped and added an additional pill collector.
+  - wip: Deleted every single firelock and remade their layout from scratch.
+  - bugfix: Remade all changes listed in the last changelog since they were all missing for some reason.
