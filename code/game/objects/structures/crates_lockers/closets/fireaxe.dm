@@ -21,15 +21,16 @@
 
 	if(isrobot(usr) || src.locked)
 		if(istype(O, /obj/item/device/multitool))
-			visible_message("<span class='notice'>[user] starts to fiddle with [src]'s locking module</span>", "<span class='notice'>You start to disable [src]'s locking module</span>")
+			visible_message("<span class='notice'>[user] starts to fiddle with [src]'s locking module</span>", \
+			"<span class='notice'>You start to disable [src]'s locking module</span>")
 			playsound(user, 'sound/machines/lockreset.ogg', 50, 1)
 			if(do_after(user, 50))
-				src.locked = 0
+				locked = 0
 				visible_message("<span class='notice'>[user] disables [src]'s locking module.</span>", "<span class='notice'>You disable [src]'s locking module.</span>")
 				update_icon()
 		if(istype(O, /obj/item/weapon))
 			var/obj/item/weapon/W = O
-			if(src.smashed || src.localopened)
+			if(smashed || localopened)
 				if(localopened)
 					localopened = 0
 					icon_state = "fireaxe[hasaxe][localopened][hitstaken][smashed]closing"
@@ -42,27 +43,29 @@
 				visible_message("<span class='notice'>[src]'s protective glass glances off the hit from [O].")
 			else
 				visible_message("<span class='warning'>[user] damages [src]'s protective glass with [O].")
-				src.hitstaken++
-				if(src.hitstaken == 4)
+				hitstaken++
+				if(hitstaken == 4)
 					playsound(user, 'sound/effects/Glassbr3.ogg', 100, 1) //Break cabinet, receive goodies. Cabinet's fucked for life after that.
 					visible_message("<span class='warning'>[src]'s protective glass shatters, exposing the cabinet's content.")
-					src.smashed = 1
-					src.locked = 0
-					src.localopened = 1
+					smashed = 1
+					locked = 0
+					localopened = 1
 			update_icon()
 		return
 	if(istype(O, /obj/item/weapon/twohanded/fireaxe) && src.localopened)
 		if(!fireaxe)
-			if(O:wielded)
-				user << "<span class='warning'>Unwield [O] first!</span>"
+			var/obj/item/weapon/twohanded/fireaxe/F = O
+			if(F.wielded)
+				user << "<span class='warning'>Unwield [F] first!</span>"
 				return
 			fireaxe = O
 			user.drop_item(O)
-			src.contents += O
-			visible_message("<span class='notice'>[user] places [O] back into [src].</span>", "<span class='notice'>You place [O] back into [src].</span>")
+			contents += O
+			visible_message("<span class='notice'>[user] places [F] back into [src].</span>", \
+			"<span class='notice'>You place [F] back into [src].</span>")
 			update_icon()
 		else
-			if(src.smashed)
+			if(smashed)
 				user << "<span class='warning'>[src]'s protective glass is broken. Cutting hazard right there!</span>"
 				return
 			if(istype(O, /obj/item/device/multitool))
@@ -73,10 +76,12 @@
 						update_icon()
 					return
 				else
-					visible_message("<span class='notice'>[user] starts to fiddle with [src]'s locking module</span>", "<span class='notice'>You start to re-enable [src]'s locking module</span>")
+					visible_message("<span class='notice'>[user] starts to fiddle with [src]'s locking module</span>", \
+					"<span class='notice'>You start to re-enable [src]'s locking module</span>")
 					if(do_after(user, 50))
-						src.locked = 1
-						visible_message("<span class='notice'>[user] re-enables [src]'s locking module.</span>", "<span class='notice'>You re-enable [src]'s locking module.</span>")
+						locked = 1
+						visible_message("<span class='notice'>[user] re-enables [src]'s locking module.</span>", \
+						"<span class='notice'>You re-enable [src]'s locking module.</span>")
 						playsound(user, 'sound/machines/lockenable.ogg', 50, 1)
 						update_icon()
 			else
@@ -90,7 +95,7 @@
 					spawn(10)
 						update_icon()
 	else
-		if(src.smashed)
+		if(smashed)
 			return
 		else
 			localopened = !localopened
@@ -109,18 +114,19 @@
 	if(fireaxe)
 		hasaxe = 1
 
-	if(src.locked)
+	if(locked)
 		user <<"<span class='warning'>[src] is locked tight!</span>"
 		return
 	if(localopened)
 		if(fireaxe)
 			user.put_in_hands(fireaxe)
-			visible_message("<span class='notice'>[user] takes [fireaxe] from [src].</span>", "<span class='notice'>You take [fireaxe] from [src].</span>")
+			visible_message("<span class='notice'>[user] takes [fireaxe] from [src].</span>", \
+			"<span class='notice'>You take [fireaxe] from [src].</span>")
 			fireaxe = null
-			src.add_fingerprint(user)
+			add_fingerprint(user)
 			update_icon()
 		else
-			if(src.smashed)
+			if(smashed)
 				return
 			else
 				localopened = !localopened
@@ -168,7 +174,8 @@
 	if(localopened)
 		if(fireaxe)
 			usr.put_in_hands(fireaxe)
-			visible_message("<span class='notice'>[usr] takes [fireaxe] from [src].</span>", "<span class='notice'>You take [fireaxe] from [src].</span>")
+			visible_message("<span class='notice'>[usr] takes [fireaxe] from [src].</span>", \
+			"<span class='notice'>You take [fireaxe] from [src].</span>")
 			fireaxe = null
 		else
 			usr << "<span class='notice'>[src] is empty.</span>"
@@ -183,15 +190,17 @@
 /obj/structure/closet/fireaxecabinet/attack_ai(mob/user as mob)
 	if(isobserver(user))
 		return //NO. FUCK OFF.
-	if(src.smashed)
+	if(smashed)
 		user << "<span class='warning'>[src]'s security protocols are locked. Might have to do with the smashed glass.</span>"
 		return
 	else
 		locked = !locked
 		if(locked)
-			visible_message("<span class='notice'>[user] locks [src]</span>", "<span class='notice'>You lock [src]</span>")
+			visible_message("<span class='notice'>[user] locks [src]</span>", \
+			"<span class='notice'>You lock [src]</span>")
 		else
-			visible_message("<span class='notice'>[user] unlocks [src]</span>", "<span class='notice'>You unlock [src]</span>")
+			visible_message("<span class='notice'>[user] unlocks [src]</span>", \
+			"<span class='notice'>You unlock [src]</span>")
 		return
 
 /obj/structure/closet/fireaxecabinet/update_icon() //Template: fireaxe[has fireaxe][is opened][hits taken][is smashed]. If you want the opening or closing animations, add "opening" or "closing" right after the numbers
