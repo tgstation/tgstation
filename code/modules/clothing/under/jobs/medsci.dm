@@ -118,7 +118,15 @@
 	item_color = "scrubspurple"
 	can_adjust = 0
 
-
+/obj/item/clothing/under/rank/medical/paramedic
+	name = "paramedic jumpsuit"
+	desc = "A paramedic's jumpsuit, tailored in navy and white. It's made of a special fiber that provides minor protection against biohazards."
+	icon_state = "paramedic"
+	item_state = "w_suit"
+	item_color = "paramedic"
+	permeability_coefficient = 0.50
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 11, rad = 0)
+	can_adjust = 0
 
 /*
  * Medsci, unused (i think) stuff

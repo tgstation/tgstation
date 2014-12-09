@@ -147,3 +147,30 @@ Virologist
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/labcoat/virologist(H), slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/device/flashlight/pen(H), slot_s_store)
 
+/*
+Paramedic
+*/
+/datum/job/paramedic
+	title = "Paramedic"
+	flag = PARAMEDIC
+	department_head = list("Chief Medical Officer")
+	department_flag = MEDSCI
+	faction = "Station"
+	total_positions = 2
+	spawn_positions = 2
+	supervisors = "the chief medical officer"
+	selection_color = "#ffeef0"
+
+	default_pda = /obj/item/device/pda/medical
+	default_headset = /obj/item/device/radio/headset/headset_med
+	default_backpack = /obj/item/weapon/storage/backpack/medic
+	default_satchel = /obj/item/weapon/storage/backpack/satchel_med
+
+	access = list(access_medical, access_morgue, access_maint_tunnels)
+	minimal_access = list(access_medical, access_morgue, access_maint_tunnels)
+
+/datum/job/paramedic/equip_items(var/mob/living/carbon/human/H)
+	H.equip_to_slot_or_del(new /obj/item/clothing/suit/labcoat/emt(H), slot_wear_suit)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/paramedic(H), slot_w_uniform)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/white(H), slot_shoes)
+	H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/hypospray/medipen, slot_s_store)
