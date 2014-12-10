@@ -1,2 +1,19 @@
+#   bugfix
+#   wip (For works in progress)
+#   tweak
+#   soundadd
+#   sounddel
+#   rscdel (general adding of nice things)
+#   rscadd (general deleting of nice things)
+#   imageadd
+#   imagedel
+#   spellcheck (typo fixes)
+#   experiment
 author: MrPerson
-changes: []
+changes: 
+  - rscadd: "Added a new system to handle keyboard input and movement."
+  - experiment: "You can move diagonally. Just hold two directions at the same time to do so. For example holding up-arrow and left-arrow at the same time will move you up and left."
+  - tweak: "Alien hunters move more slowly than before but still faster than humans."
+  - tweak: "There is no more hotkey vs regular key mode. Tab switches focus from the map to input and vice versa. Use this to quickly type commands and go back to the game."
+  - rscadd: "All of the keybindings from both modes should now be available at all times. WASD, arrow keys, and numpad 8426 will all move you for example."
+ 
