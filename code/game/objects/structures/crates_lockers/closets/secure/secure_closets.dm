@@ -75,8 +75,8 @@
 		spark_system.set_up(5, 0, src.loc)
 		spark_system.start()
 		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-			playsound(src.loc, "sparks", 50, 1)
-			visible_message("<span class='warning'>[user] has sliced the locker open with an energy blade!</span>", "You hear metal being sliced and sparks flying.")
+		playsound(src.loc, "sparks", 50, 1)
+		visible_message("<span class='warning'>[user] has sliced the locker open with an energy blade!</span>", "You hear metal being sliced and sparks flying.")
 	else
 		..(W, user)
 

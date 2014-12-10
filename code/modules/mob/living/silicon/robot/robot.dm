@@ -595,7 +595,7 @@
 					laws.show_laws(src)
 					src << "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</span>"
 					SetLockdown(0)
-					updateicon()
+					update_icons()
 				else
 					user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
 					if(prob(25))
