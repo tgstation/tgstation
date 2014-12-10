@@ -47,10 +47,12 @@ var/global/datum/store/centcomm_store=new
 	return 1
 
 /datum/store/proc/reconnect_database()
-	for(var/obj/machinery/account_database/DB in world)
-		if(DB.z == 1)
-			linked_db = DB
-			break
+	for(var/obj/machinery/account_database/DB in account_DBs)
+		//Checks for a database on its Z-level, else it checks for a database at the main Station.
+		if(DB.z == STATION_Z)
+			if(!(DB.stat & NOPOWER) && DB.activated )//If the database if damaged or not powered, people won't be able to use the store anymore
+				linked_db = DB
+				break
 
 /datum/store/proc/PlaceOrder(var/mob/living/usr, var/itemID)
 	// Get our item, first.

@@ -1,3 +1,5 @@
+#define NOSIGNAL_CODE 30
+
 /obj/item/device/deskbell
 	name = "desk bell"
 	desc = "ding. ding."
@@ -42,8 +44,7 @@
 		A.frequency = frequency
 		A.has_signaler = 0
 		A.build_step = 1
-		if(name != "desk bell")
-			A.final_name = name
+		A.final_name = name
 		A.update_icon()
 		qdel(src)
 		return
@@ -75,11 +76,11 @@
 
 /obj/item/device/deskbell/MouseDrop(mob/user as mob)
 	if((user == usr && (!( usr.restrained() ) && (!( usr.stat ) && (usr.contents.Find(src) || in_range(src, usr))))))
-		if(istype(usr, /mob/living/carbon/human) || istype(usr, /mob/living/carbon/monkey))
+		if(istype(user, /mob/living/carbon/human) || istype(user, /mob/living/carbon/monkey))
 			if(anchored)
 				user << "You must undo the securing bolts before you can pick it up."
 				return
-			if( !usr.get_active_hand() )		//if active hand is empty
+			if( !user.get_active_hand() )		//if active hand is empty
 				src.loc = user
 				user.put_in_hands(src)
 				user.visible_message("<span class='notice'>[user] picks up the [src].</span>", "<span class='notice'>You grab [src] from the floor!</span>")
@@ -95,15 +96,20 @@
 
 	var/datum/radio_frequency/radio_connection
 
-/obj/item/device/deskbell/signaler/New()//copied from /obj/item/device/assembly/signaler/proc/set_frequency
+/obj/item/device/deskbell/signaler/New()
 	..()
-	spawn(40)
+	spawn(40)//giving time for the radio_controller to initialize
 		if(!radio_controller)
-			sleep(20)
-		if(!radio_controller)
-			return
-		radio_controller.remove_object(src, frequency)
-		radio_connection = radio_controller.add_object(src, frequency, RADIO_CHAT)
+			spawn(20)
+				if(!radio_controller)
+					visible_message("Cannot initialize the radio_controller, this is a bug, tell a coder")
+					return
+				else
+					radio_controller.remove_object(src, frequency)
+					radio_connection = radio_controller.add_object(src, frequency, RADIO_CHAT)
+		else
+			radio_controller.remove_object(src, frequency)
+			radio_connection = radio_controller.add_object(src, frequency, RADIO_CHAT)
 
 /obj/item/device/deskbell/signaler/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/wrench))
@@ -112,9 +118,11 @@
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 30))
 			anchored = !anchored
-			user.visible_message(	"<span class='notice'>[user] [anchored ? "wrench" : "unwrench"]es \the [src] [anchored ? "in place" : "from its fixture"]</span>",
-									"<span class='notice'>\icon[src] You [anchored ? "wrench" : "unwrench"] \the [src] [anchored ? "in place" : "from its fixture"].</span>",
-									"<span class='notice'>You hear a ratchet.</span>")
+			user.visible_message(
+				"<span class='notice'>[user] [anchored ? "wrench" : "unwrench"]es \the [src] [anchored ? "in place" : "from its fixture"]</span>",
+				"<span class='notice'>\icon[src] You [anchored ? "wrench" : "unwrench"] \the [src] [anchored ? "in place" : "from its fixture"].</span>",
+				"<span class='notice'>You hear a ratchet.</span>"
+				)
 		return
 
 	if(istype(W,/obj/item/weapon/screwdriver))
@@ -137,15 +145,14 @@
 /obj/item/device/deskbell/signaler/ring()
 	if(..())
 		for(var/obj/item/device/pda/ring_pda in PDAs)
-			if(!ring_pda.owner||ring_pda == src||ring_pda.hidden)
+			if(!ring_pda.owner || (ring_pda == src) || ring_pda.hidden)
 				continue
 			var/datum/pda_app/ringer/ringerdatum = locate(/datum/pda_app/ringer) in ring_pda.applications
-			if(!ringerdatum || !(ringerdatum.state))
+			if(!ringerdatum || !(ringerdatum.status))
 				continue
 			if(frequency == ringerdatum.frequency)
 				playsound(ring_pda, 'sound/machines/notify.ogg', 50, 1)
-				for(var/mob/M in range(src,1))
-					M << "\icon[ring_pda] *[src.name]*"
+				visible_message("\icon[ring_pda] *[src.name]*")
 
 
 		if(!radio_connection) return	//the desk bell also works like a simple send-only signaler.
@@ -159,9 +166,11 @@
 		var/time = time2text(world.realtime,"hh:mm:ss")
 		var/turf/T = get_turf(src)
 		if(usr)
-			lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
+		var/mob/user = usr
+		if(user)
+			lastsignalers.Add("[time] <B>:</B> [user.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
 		else
-			lastsignalers.Add("[time] <B>:</B> (\red NO USER FOUND) used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
+			lastsignalers.Add("[time] <B>:</B> (<span class='danger'>NO USER FOUND</span>) used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
 		return
 
 //////////////////
@@ -170,29 +179,29 @@
 	name = "HoP desk bell"
 
 /obj/item/device/deskbell/signaler/hop/New()
-	..()
-	frequency = DESKBELL_HOP
+	. = ..()
+	frequency = deskbell_freq_hop
 
 /obj/item/device/deskbell/signaler/medbay
 	name = "Medbay lobby bell"
 
 /obj/item/device/deskbell/signaler/medbay/New()
-	..()
-	frequency = DESKBELL_MEDBAY
+	. = ..()
+	frequency = deskbell_freq_medbay
 
 /obj/item/device/deskbell/signaler/brig
 	name = "Brig entrance bell"
 
 /obj/item/device/deskbell/signaler/brig/New()
-	..()
-	frequency = DESKBELL_BRIG
+	. = ..()
+	frequency = deskbell_freq_brig
 
 /obj/item/device/deskbell/signaler/rnd
 	name = "R&D counter bell"
 
 /obj/item/device/deskbell/signaler/rnd/New()
-	..()
-	frequency = DESKBELL_RND
+	. = ..()
+	frequency = deskbell_freq_rnd
 
 /////ASSEMBLY/////
 
@@ -275,13 +284,13 @@
 					D.code = code
 					if(final_name)
 						D.name = final_name
-					user << "<span class='notice'>You finish the [D].</span>"
+					user << "<span class='notice'>You finish \the [D].</span>"
 					qdel(src)
 					return
 				if(istype(W,/obj/item/device/assembly/signaler) && !has_signaler)
 					var/obj/item/device/assembly/signaler/S = W
 					frequency = S.frequency
-					if(S.code == 30)	//setting a code of "30" guarantees that you'll never be triggering any remote signaling devices.
+					if(S.code == NOSIGNAL_CODE)	//setting a code of "30" guarantees that you'll never be triggering any remote signaling devices.
 						code = 0
 					else
 						code = S.code
@@ -299,7 +308,7 @@
 		if(code != 0)
 			S.code = code
 		else
-			S.code = 30
+			S.code = NOSIGNAL_CODE
 		frequency = 1457
 		code = 0
 		has_signaler = 0
@@ -307,12 +316,20 @@
 
 //////////////////
 
-proc/get_new_bellfreq()
-	var/i = rand(1200,1600)
+//these frequencies are set by default on the PDAs of the corresponding jobs
+//they are determined at roundstart, and unlike radio frequencies (yet) are randomized
+var/global/list/deskbell_default_frequencies = list()
+var/global/deskbell_freq_hop = call(/obj/item/device/deskbell/signaler/proc/get_new_bellfreq())
+var/global/deskbell_freq_medbay = call(/obj/item/device/deskbell/signaler/proc/get_new_bellfreq())
+var/global/deskbell_freq_brig = call(/obj/item/device/deskbell/signaler/proc/get_new_bellfreq())
+var/global/deskbell_freq_rnd = call(/obj/item/device/deskbell/signaler/proc/get_new_bellfreq())
+
+/obj/item/device/deskbell/signaler/proc/get_new_bellfreq()
+	var/i = rand(MINIMUM_FREQUENCY,MAXIMUM_FREQUENCY)
 	if ((i % 2) == 0) //Ensure the last digit is an odd number
 		i += 1
 	while(locate(i) in deskbell_default_frequencies)//To make sure that the round start desk bells don't ever share their frequencies
-		i = rand(1200,1600)
+		i = rand(MINIMUM_FREQUENCY,MAXIMUM_FREQUENCY)
 		if ((i % 2) == 0)
 			i += 1
 	deskbell_default_frequencies += i

@@ -20,7 +20,7 @@
 
 /obj/item/device/assembly/signaler/New()
 	..()
-	spawn(40)
+	spawn(40)//delay so the radio_controller has time to initialize
 		set_frequency(frequency)
 	return
 
@@ -55,25 +55,25 @@
 //		else
 //			t1 = "-------"	Speaker: [src.listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>
 	var/dat = {"
-<TT>
+		<TT>
 
-<A href='byond://?src=\ref[src];send=1'>Send Signal</A><BR>
-<B>Frequency/Code</B> for signaler:<BR>
-Frequency:
-<A href='byond://?src=\ref[src];freq=-10'>-</A>
-<A href='byond://?src=\ref[src];freq=-2'>-</A>
-[format_frequency(src.frequency)]
-<A href='byond://?src=\ref[src];freq=2'>+</A>
-<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
+		<A href='byond://?src=\ref[src];send=1'>Send Signal</A><BR>
+		<B>Frequency/Code</B> for signaler:<BR>
+		Frequency:
+		<A href='byond://?src=\ref[src];freq=-10'>-</A>
+		<A href='byond://?src=\ref[src];freq=-2'>-</A>
+		[format_frequency(src.frequency)]
+		<A href='byond://?src=\ref[src];freq=2'>+</A>
+		<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
 
-Code:
-<A href='byond://?src=\ref[src];code=-5'>-</A>
-<A href='byond://?src=\ref[src];code=-1'>-</A>
-[src.code]
-<A href='byond://?src=\ref[src];code=1'>+</A>
-<A href='byond://?src=\ref[src];code=5'>+</A><BR>
-[t1]
-</TT>"}
+		Code:
+		<A href='byond://?src=\ref[src];code=-5'>-</A>
+		<A href='byond://?src=\ref[src];code=-1'>-</A>
+		[src.code]
+		<A href='byond://?src=\ref[src];code=1'>+</A>
+		<A href='byond://?src=\ref[src];code=5'>+</A><BR>
+		[t1]
+		</TT>"}
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
 	return
@@ -89,7 +89,7 @@ Code:
 
 	if (href_list["freq"])
 		var/new_frequency = (frequency + text2num(href_list["freq"]))
-		if(new_frequency < 1200 || new_frequency > 1600)
+		if(new_frequency < MINIMUM_FREQUENCY || new_frequency > MAXIMUM_FREQUENCY)
 			new_frequency = sanitize_frequency(new_frequency)
 		set_frequency(new_frequency)
 
@@ -121,9 +121,11 @@ Code:
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	var/turf/T = get_turf(src)
 	if(usr)
-		lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
+	var/mob/user = user
+	if(user)
+		lastsignalers.Add("[time] <B>:</B> [user.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
 	else
-		lastsignalers.Add("[time] <B>:</B> (\red NO USER FOUND) used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
+		lastsignalers.Add("[time] <B>:</B> (<span class='danger'>NO USER FOUND</span>) used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
 	return
 /*
 	for(var/obj/item/device/assembly/signaler/S in world)
@@ -156,12 +158,18 @@ Code:
 
 /obj/item/device/assembly/signaler/proc/set_frequency(new_frequency)
 	if(!radio_controller)
-		sleep(20)
-	if(!radio_controller)
-		return
-	radio_controller.remove_object(src, frequency)
-	frequency = new_frequency
-	radio_connection = radio_controller.add_object(src, frequency, RADIO_CHAT)
+		spawn(20)
+			if(!radio_controller)
+				visible_message("Cannot initialize the radio_controller, this is a bug, tell a coder")
+				return
+			else
+				radio_controller.remove_object(src, frequency)
+				frequency = new_frequency
+				radio_connection = radio_controller.add_object(src, frequency, RADIO_CHAT)
+	else
+		radio_controller.remove_object(src, frequency)
+		frequency = new_frequency
+		radio_connection = radio_controller.add_object(src, frequency, RADIO_CHAT)
 	return
 
 /obj/item/device/assembly/signaler/process()
@@ -181,6 +189,9 @@ Code:
 	set src in usr
 	set name = "Threaten to push the button!"
 	set desc = "BOOOOM!"
-	deadman = 1
-	processing_objects.Add(src)
-	usr.visible_message("\red [usr] moves their finger over [src]'s signal button...")
+
+	if(usr)
+		var/mob/user = usr
+		deadman = 1
+		processing_objects.Add(src)
+		user.visible_message("<span class='warning'>[user] moves their finger over [src]'s signal button...</span>")

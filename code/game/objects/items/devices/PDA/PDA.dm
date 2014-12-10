@@ -167,7 +167,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	..()
 	var/datum/pda_app/ringer/app = new /datum/pda_app/ringer()
 	app.onInstall(src)
-	app.frequency = DESKBELL_MEDBAY
+	app.frequency = deskbell_freq_medbay
 
 /obj/item/device/pda/viro
 	name = "Virology PDA"
@@ -178,7 +178,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	..()
 	var/datum/pda_app/ringer/app = new /datum/pda_app/ringer()
 	app.onInstall(src)
-	app.frequency = DESKBELL_MEDBAY
+	app.frequency = deskbell_freq_medbay
 
 /obj/item/device/pda/engineering
 	name = "Engineering PDA"
@@ -194,7 +194,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	..()
 	var/datum/pda_app/ringer/app = new /datum/pda_app/ringer()
 	app.onInstall(src)
-	app.frequency = DESKBELL_BRIG
+	app.frequency = deskbell_freq_brig
 
 /obj/item/device/pda/detective
 	name = "Detective PDA"
@@ -217,7 +217,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	..()
 	var/datum/pda_app/ringer/app = new /datum/pda_app/ringer()
 	app.onInstall(src)
-	app.frequency = DESKBELL_BRIG
+	app.frequency = deskbell_freq_brig
 
 /obj/item/device/pda/janitor
 	name = "Janitor PDA"
@@ -235,7 +235,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	..()
 	var/datum/pda_app/ringer/app = new /datum/pda_app/ringer()
 	app.onInstall(src)
-	app.frequency = DESKBELL_RND
+	app.frequency = deskbell_freq_rnd
 
 /obj/item/device/pda/clown
 	name = "Clown PDA"
@@ -265,7 +265,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	..()
 	var/datum/pda_app/ringer/app1 = new /datum/pda_app/ringer()
 	app1.onInstall(src)
-	app1.frequency = DESKBELL_HOP
+	app1.frequency = deskbell_freq_hop
 	var/datum/pda_app/balance_check/app2 = new /datum/pda_app/balance_check()
 	app2.onInstall(src)
 
@@ -278,7 +278,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	..()
 	var/datum/pda_app/ringer/app = new /datum/pda_app/ringer()
 	app.onInstall(src)
-	app.frequency = DESKBELL_BRIG
+	app.frequency = deskbell_freq_brig
 
 /obj/item/device/pda/heads/ce
 	name = "Chief Engineer PDA"
@@ -294,7 +294,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	..()
 	var/datum/pda_app/ringer/app = new /datum/pda_app/ringer()
 	app.onInstall(src)
-	app.frequency = DESKBELL_MEDBAY
+	app.frequency = deskbell_freq_medbay
 
 /obj/item/device/pda/heads/rd
 	name = "Research Director PDA"
@@ -305,7 +305,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	..()
 	var/datum/pda_app/ringer/app = new /datum/pda_app/ringer()
 	app.onInstall(src)
-	app.frequency = DESKBELL_RND
+	app.frequency = deskbell_freq_rnd
 
 /obj/item/device/pda/captain
 	name = "Captain PDA"
@@ -917,31 +917,34 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						if(!(app.linked_db))
 							app.reconnect_database()
 						if(app.linked_db)
-							var/datum/money_account/D = app.linked_db.attempt_account_access(id.associated_account_number, 0, 2, 0)
-							if(D)
-								dat += {"Owner: <b>[D.owner_name]</b><br>
-									Current Balance: <b>[D.money]</b>$
-									<h5>Transaction History</h5>
-									On [MM]/[DD]/[game_year]:
-									<ul>"}
-								var/list/t_log = list()
-								for(var/e in D.transaction_log)
-									t_log += e
-								for(var/datum/transaction/T in reverseRange(t_log))
-									if(T.purpose == "Account creation")//always the last element of the reverse transaction_log
-										dat += {"</ul>
-											On [(DD == 1) ? "[((MM-2)%12)+1]" : "[MM]"]/[((DD-2)%30)+1]/[(DD == MM == 1) ? "[game_year - 1]" : "[game_year]"]:
-											<ul>
-											<li>\[[T.time]\] [T.amount]$, [T.purpose] at [T.source_terminal]</li>
-											</ul>"}
-									else
-										dat += {"<li>\[[T.time]\] [T.amount]$, [T.purpose] at [T.source_terminal]</li>"}
-								if(!D.transaction_log.len)
-									dat += {"</ul>"}
+							if(app.linked_db.activated)
+								var/datum/money_account/D = app.linked_db.attempt_account_access(id.associated_account_number, 0, 2, 0)
+								if(D)
+									dat += {"Owner: <b>[D.owner_name]</b><br>
+										Current Balance: <b>[D.money]</b>$
+										<h5>Transaction History</h5>
+										On [MM]/[DD]/[game_year]:
+										<ul>"}
+									var/list/t_log = list()
+									for(var/e in D.transaction_log)
+										t_log += e
+									for(var/datum/transaction/T in reverseRange(t_log))
+										if(T.purpose == "Account creation")//always the last element of the reverse transaction_log
+											dat += {"</ul>
+												On [(DD == 1) ? "[((MM-2)%12)+1]" : "[MM]"]/[((DD-2)%30)+1]/[(DD == MM == 1) ? "[game_year - 1]" : "[game_year]"]:
+												<ul>
+												<li>\[[T.time]\] [T.amount]$, [T.purpose] at [T.source_terminal]</li>
+												</ul>"}
+										else
+											dat += {"<li>\[[T.time]\] [T.amount]$, [T.purpose] at [T.source_terminal]</li>"}
+									if(!D.transaction_log.len)
+										dat += {"</ul>"}
+								else
+									dat += {"<i>Unable to access account. Either its security settings don't allow remote checking or the account is nonexistent.</i>"}
 							else
-								dat += {"<i>Unable to access account. Either its security settings don't allow remote checking or the account is nonexistent.</i>"}
+								dat += {"<i>Unfortunately your station's Accounts Database doesn't allow remote access. Negociate with your HoP or Captain to solve this issue.</i>"}
 						else
-							dat += {"<i>Unable to connect to accounts database. The database is either nonexistent or too far away.</i>"}
+							dat += {"<i>Unable to connect to accounts database. The database is either nonexistent, inoperative, or too far away.</i>"}
 
 			else//Else it links to the cart menu proc. Although, it really uses menu hub 4--menu 4 doesn't really exist as it simply redirects to hub.
 				dat += cart
@@ -1026,9 +1029,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				var/datum/pda_app/ringer/app = locate(/datum/pda_app/ringer) in applications
 				if(app)
 					var/i = app.frequency + text2num(href_list["rfreq"])
-					if(i < 1200)
+					if(i < MINIMUM_FREQUENCY)
 						i = 1201
-					if(i > 1600)
+					if(i > MAXIMUM_FREQUENCY)
 						i = 1599
 					app.frequency = i
 			if("102")

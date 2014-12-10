@@ -16,11 +16,12 @@
 	linked_account = vendor_account
 
 /obj/machinery/computer/pda_terminal/proc/reconnect_database()
-	for(var/obj/machinery/account_database/DB in world)
-		// FIXME: If we're on asteroid z-level, use whatever's on the station. - N3X
-		if(DB.z == src.z || (src.z == ASTEROID_Z && DB.z == STATION_Z))
-			linked_db = DB
-			break
+	for(var/obj/machinery/account_database/DB in account_DBs)
+		//Checks for a database on its Z-level, else it checks for a database at the main Station.
+		if((DB.z == src.z) || (DB.z == STATION_Z))
+			if((DB.stat == 0))//If the database if damaged or not powered, people won't be able to use the vending machines anymore.
+				linked_db = DB
+				break
 
 /obj/machinery/computer/pda_terminal/proc/format_apps(var/obj/item/device/pda/pda_hardware)//makes a list of all the apps that aren't yet installed on the PDA
 	if(!istype(pda_hardware))
@@ -53,24 +54,6 @@
 /obj/machinery/computer/pda_terminal/proc/get_display_desc(var/datum/pda_app/app)
 	return "[app.desc]"
 
-/obj/machinery/computer/pda_terminal/verb/eject_pda()
-	set category = "Object"
-	set name = "Eject PDA"
-	set src in oview(1)
-
-	if(!usr || usr.stat || usr.lying)	return
-
-	if(pda_device)
-		usr << "You remove \the [pda_device] from \the [src]."
-		pda_device.loc = get_turf(src)
-		if(!usr.get_active_hand())
-			usr.put_in_hands(pda_device)
-		pda_device = null
-		update_icon()
-	else
-		usr << "There is nothing to remove from the console."
-	return
-
 /obj/machinery/computer/pda_terminal/attackby(obj/item/device/pda/user_pda, mob/user)
 	if(!istype(user_pda))
 		return ..()
@@ -92,7 +75,18 @@
 
 /obj/machinery/computer/pda_terminal/attack_hand(var/mob/user)
 	if(..()) return
-	if(stat & (NOPOWER|BROKEN)) return
+	if(stat != 0)
+		if(pda_device)
+			usr << "You remove \the [pda_device] from \the [src]."
+			pda_device.loc = get_turf(src)
+			if(!usr.get_active_hand())
+				usr.put_in_hands(pda_device)
+			pda_device = null
+			update_icon()
+		else
+			usr << "There is nothing to remove from the console."
+		return
+
 	ui_interact(user)
 
 /obj/machinery/computer/pda_terminal/ui_interact(mob/user, ui_key="main", datum/nanoui/ui=null)
@@ -171,7 +165,7 @@
 						if(pda.id)
 							card=pda.id
 					if(card)
-						if (connect_account(card,appdatum))
+						if (connect_account(usr,card,appdatum))
 							appdatum.onInstall(pda_device)
 							usr << "\icon[pda_device]<span class='notice'>Application successfully downloaded!</span>"
 							flick("pdaterm-purchase", src)
@@ -202,7 +196,7 @@
 					if(pda.id)
 						card=pda.id
 				if(card)
-					if (connect_account(card,0))
+					if (connect_account(usr,card,0))
 						usr << "\icon[src]<span class='notice'>Enjoy your new PDA!</span>"
 						flick("pdaterm-purchase", src)
 						if(prob(10))
@@ -216,23 +210,23 @@
 					flick("pdaterm-problem", src)
 	return 1
 
-/obj/machinery/computer/pda_terminal/proc/connect_account(var/obj/item/weapon/card/W,var/appdatum)
+/obj/machinery/computer/pda_terminal/proc/connect_account(var/mob/user,var/obj/item/weapon/card/W,var/appdatum)
 	if(istype(W))
 		//attempt to connect to a new db, and if that doesn't work then fail
 		if(!linked_db)
 			reconnect_database()
 		if(linked_db)
 			if(linked_account)
-				return	scan_card(W,appdatum)
+				return	scan_card(user,W,appdatum)
 			else
-				usr << "\icon[src]<span class='warning'>Unable to connect to linked account.</span>"
+				user << "\icon[src]<span class='warning'>Unable to connect to linked account.</span>"
 		else
-			usr << "\icon[src]<span class='warning'>Unable to connect to accounts database.</span>"
+			user << "\icon[src]<span class='warning'>Unable to connect to accounts database.</span>"
 	return	0
 
-/obj/machinery/computer/pda_terminal/proc/scan_card(var/obj/item/weapon/card/id/C,var/datum/pda_app/appdatum)
+/obj/machinery/computer/pda_terminal/proc/scan_card(var/mob/user,var/obj/item/weapon/card/id/C,var/datum/pda_app/appdatum)
 	if(istype(C))
-		usr << "<span class='info'>\the [src] detects and scans the following ID: [C].</span>"
+		user << "<span class='info'>\the [src] detects and scans the following ID: [C].</span>"
 		if(linked_account)
 			var/datum/money_account/D = linked_db.attempt_account_access(C.associated_account_number, 0, 2, 0) // Pin = 0, Sec level 2, PIN not required.
 			if(D)
@@ -243,7 +237,7 @@
 					D.money -= transaction_amount
 					linked_account.money += transaction_amount
 
-					usr << "\icon[src]<span class='notice'>Remaining balance: [D.money]$</span>"
+					user << "\icon[src]<span class='notice'>Remaining balance: [D.money]$</span>"
 
 					//create entries in the two account transaction logs
 					var/datum/transaction/T = new()
@@ -267,13 +261,13 @@
 					return 1
 
 				else
-					usr << "\icon[src]<span class='warning'>You don't have that much money!</span>"
+					user << "\icon[src]<span class='warning'>You don't have that much money!</span>"
 					return 0
 			else
-				usr << "\icon[src]<span class='warning'>Unable to access account. Check security settings and try again.</span>"
+				user << "\icon[src]<span class='warning'>Unable to access account. Check security settings and try again.</span>"
 				return 0
 		else
-			usr << "\icon[src]<span class='warning'>EFTPOS is not connected to an account.</span>"
+			user << "\icon[src]<span class='warning'>EFTPOS is not connected to an account.</span>"
 			return 0
 
 /obj/machinery/computer/pda_terminal/update_icon()

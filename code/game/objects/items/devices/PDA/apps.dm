@@ -7,6 +7,9 @@ var/global/list/pda_app_menus = list(
 	103,//Balance Check
 	)
 
+
+
+
 /datum/pda_app
 	var/name = "Template Application"
 	var/desc = "Template Description"
@@ -27,7 +30,7 @@ var/global/list/pda_app_menus = list(
 	price = 10
 	menu = 101
 	var/frequency = 1457	//	1200 < frequency < 1600 , always end with an odd number.
-	var/state = 1			//	0=off 1=on
+	var/status = 1			//	0=off 1=on
 
 
 /datum/pda_app/light_upgrade
@@ -60,8 +63,9 @@ var/global/list/pda_app_menus = list(
 	reconnect_database()
 
 /datum/pda_app/balance_check/proc/reconnect_database()
-	for(var/obj/machinery/account_database/DB in world)
-		// FIXME: If we're on asteroid z-level, use whatever's on the station. - N3X
-		if(DB.z == pda_device.loc.z || (pda_device.loc.z == ASTEROID_Z && DB.z == STATION_Z))
-			linked_db = DB
-			break
+	for(var/obj/machinery/account_database/DB in account_DBs)
+		//Checks for a database on its Z-level, else it checks for a database at the main Station.
+		if((DB.z == pda_device.loc.z) || (DB.z == STATION_Z))
+			if((DB.stat == 0) && DB.activated )//If the database if damaged or not powered, people won't be able to use the app anymore.
+				linked_db = DB
+				break

@@ -941,3 +941,6 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 
 // /vg/ - Pipeline processing (enables exploding pipes and whatnot)
 #define ATMOS_PIPELINE_PROCESSING 1
+
+#define MAXIMUM_FREQUENCY 1600
+#define MINIMUM_FREQUENCY 1200

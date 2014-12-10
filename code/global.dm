@@ -13,6 +13,9 @@ var/global/list/machines = list()
 var/global/list/processing_objects = list()
 var/global/list/active_diseases = list()
 var/global/list/events = list()
+
+var/global/list/account_DBs = list()
+
 		//items that ask to be called every cycle
 
 var/global/defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
@@ -172,12 +175,6 @@ var/CHARGELEVEL = 0.001 // Cap for how fast cells charge, as a percentage-per-ti
 //  while still making it very simple to lock onto someone who is drifting in space.
 var/WORLD_X_OFFSET=0
 var/WORLD_Y_OFFSET=0
-
-var/list/deskbell_default_frequencies = list()
-var/DESKBELL_HOP=get_new_bellfreq()
-var/DESKBELL_MEDBAY=get_new_bellfreq()
-var/DESKBELL_BRIG=get_new_bellfreq()
-var/DESKBELL_RND=get_new_bellfreq()
 
 var/shuttle_z = 2	//default
 var/airtunnel_start = 68 // default

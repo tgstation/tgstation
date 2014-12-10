@@ -179,11 +179,12 @@
 				user << "<span class='warning'>This recharge pack isn't meant for this kind of vending machines.</span>"
 
 /obj/machinery/vending/proc/reconnect_database()
-	for(var/obj/machinery/account_database/DB in world)
-		// FIXME: If we're on asteroid z-level, use whatever's on the station. - N3X
-		if(DB.z == src.z || (src.z == ASTEROID_Z && DB.z == STATION_Z))
-			linked_db = DB
-			break
+	for(var/obj/machinery/account_database/DB in account_DBs)
+		//Checks for a database on its Z-level, else it checks for a database at the main Station.
+		if((DB.z == src.z) || (DB.z == STATION_Z))
+			if((DB.stat == 0))//If the database if damaged or not powered, people won't be able to use the vending machines anymore.
+				linked_db = DB
+				break
 
 /obj/machinery/vending/ex_act(severity)
 	switch(severity)

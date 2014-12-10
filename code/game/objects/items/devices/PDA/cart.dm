@@ -72,7 +72,7 @@
 
 /obj/item/weapon/cartridge/security/New()
 	..()
-	spawn(5)
+	spawn(5)//giving time for the radio_controller to initialize
 		radio = new /obj/item/radio/integrated/beepsky(src)
 
 /obj/item/weapon/cartridge/detective
@@ -125,7 +125,7 @@
 
 /obj/item/weapon/cartridge/signal/toxins/New()
 	..()
-	spawn(5)
+	spawn(5)//giving time for the radio_controller to initialize
 		radio = new /obj/item/radio/integrated/signal(src)
 
 /obj/item/weapon/cartridge/quartermaster
@@ -136,7 +136,7 @@
 
 /obj/item/weapon/cartridge/quartermaster/New()
 	..()
-	spawn(5)
+	spawn(5)//giving time for the radio_controller to initialize
 		radio = new /obj/item/radio/integrated/mule(src)
 
 /obj/item/weapon/cartridge/head
@@ -156,7 +156,7 @@
 
 /obj/item/weapon/cartridge/hop/New()
 	..()
-	spawn(5)
+	spawn(5)//giving time for the radio_controller to initialize
 		radio = new /obj/item/radio/integrated/mule(src)
 
 /obj/item/weapon/cartridge/hos
@@ -168,7 +168,7 @@
 
 /obj/item/weapon/cartridge/hos/New()
 	..()
-	spawn(5)
+	spawn(5)//giving time for the radio_controller to initialize
 		radio = new /obj/item/radio/integrated/beepsky(src)
 
 /obj/item/weapon/cartridge/ce
@@ -198,7 +198,7 @@
 
 /obj/item/weapon/cartridge/rd/New()
 	..()
-	spawn(5)
+	spawn(5)//giving time for the radio_controller to initialize
 		radio = new /obj/item/radio/integrated/signal(src)
 
 /obj/item/weapon/cartridge/captain
@@ -232,11 +232,14 @@
 /obj/item/weapon/cartridge/proc/print_to_host(var/text)
 	if (!istype(loc, /obj/item/device/pda))
 		return
-	loc:cart = text
 
-	for (var/mob/M in viewers(1, loc.loc))
-		if (M.client && M.machine == loc)
-			loc:attack_self(M)
+	var/obj/item/device/pda/pda_device = loc
+
+	pda_device.cart = text
+
+	for (var/mob/M in viewers(1, pda_device.loc))
+		if (M.client && M.machine == pda_device)
+			pda_device.attack_self(M)
 
 	return
 
