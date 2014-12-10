@@ -39,8 +39,7 @@
 
 //Xeno blood melts you
 /atom/proc/xeno_acid_blood() //Wrapper proc for blood + acid_act() interaction
-	acid_act(20, 1, 5)
-	//20 = Melt power of Pacid, 1 = Damage of Sacid, 5 abritary number
+	acid_act(10, 1, 5) //Arbitrary numbers
 
 /obj/effect/decal/cleanable/blood/gibs/xeno/Crossed(atom/movable/O)
 	O.xeno_acid_blood()
@@ -60,10 +59,11 @@
 	return //Alien blood doesn't harm aliens
 
 /mob/living/carbon/human/xeno_acid_blood()
-	//acid_act() for humans damages the whole body (trys to atleast), so unacidable shoes here just save them, it's game balance.
-	if(shoes && shoes.unacidable)
-		return
+	if(shoes)
+		if(!(shoes.acid_act(10, 1, 5)))
+			src << "<span class='noticealien'>You step in acid, but your shoes protect you!</span>"
+			return
+	update_inv_shoes()
+	apply_damage(10, BURN)
 	src << "<span class='noticealien'>You step in acid!</span>"
-	..()
-
 
