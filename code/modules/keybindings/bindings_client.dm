@@ -5,6 +5,9 @@
 	set instant = 1
 	set hidden = 1
 
+	if(keys_active[key]) // Allow hitting the same key only once per tick. Basic spam prevention.
+		return
+
 	keys_held[key] = 1
 	keys_active[key] = 1
 
@@ -41,6 +44,9 @@
 	set hidden = 1
 
 	keys_held.Remove(key)
+
+//	if(keys_active[key]) 	// Can't do this because it'll always be true. So don't add anything laggy in key_up() that people can spam, ok?
+//		return
 
 	if(holder)
 		holder.key_up(key, src)
