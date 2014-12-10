@@ -891,6 +891,9 @@
 			else
 				usr << "Upgrade error!"
 
+	else if(istype(W, /obj/item/device/camera_bug))
+		help_shake_act(user)
+		return 0
 
 	else
 		spark_system.start()
@@ -1078,8 +1081,9 @@
 		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
 			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("CYBORG",src,user:wear_suit)
 			return
-		if(user.a_intent == "help")
-			user.visible_message("\blue [user.name] pats [src.name] on the head.")
+		else
+			if (user:a_intent == "help")
+				help_shake_act(user)
 			return
 
 /mob/living/silicon/robot/proc/allowed(mob/M)
@@ -1453,3 +1457,6 @@
 
 /mob/living/silicon/robot/get_inactive_hand(var/obj/item/W)
 	return 0
+
+/mob/living/silicon/robot/proc/help_shake_act(mob/user)
+	user.visible_message("<span class='notice'>[user.name] pats [src.name] on the head.</span>")
