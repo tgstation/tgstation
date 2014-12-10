@@ -893,7 +893,7 @@
 	name = "exosuit energy relay"
 	desc = "An exosuit module that wirelessly drains energy from any available power channel in area. The performance index is quite low."
 	icon_state = "tesla"
-	origin_tech = "magnets=4;syndicate=2"
+	origin_tech = "magnets=4;"powerstorage" = 3"
 	equip_cooldown = 10
 	energy_drain = 0
 	range = 0
