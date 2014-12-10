@@ -39,8 +39,6 @@
 
 	var/list/objectives = list()
 
-	var/eldergod = 1 //for the summon god objective
-
 	var/const/acolytes_needed = 5 //for the survive objective
 	var/const/min_cultists_to_start = 3
 	var/const/max_cultists_to_start = 4
@@ -190,7 +188,7 @@
 	memoize_cult_objectives(cult_mind)
 
 
-/datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1)
+/datum/game_mode/proc/remove_cultist(var/datum/mind/cult_mind, var/show_message = 1, var/log=1)
 	if(cult_mind in cult)
 		cult -= cult_mind
 		cult_mind.current << "\red <FONT size = 3><B>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</B></FONT>"
@@ -199,7 +197,8 @@
 		if(show_message)
 			for(var/mob/M in viewers(cult_mind.current))
 				M << "<FONT size = 3>[cult_mind.current] looks like they just reverted to their old faith!</FONT>"
-		log_admin("[cult_mind.current] ([ckey(cult_mind.current.key)] has been deconverted from the cult")
+		if(log)
+			log_admin("[cult_mind.current] ([ckey(cult_mind.current.key)] has been deconverted from the cult")
 
 /datum/game_mode/proc/update_all_cult_icons()
 	spawn(0)

@@ -26,13 +26,13 @@
 		if(!F.burnt)
 			F.burn_tile()
 		else
-			F.ReplaceWithLattice()
+			if(!istype(F,/turf/simulated/floor/plating))
+				F.break_tile_to_plating()
 		return
 
 // Apply changes when entering state
 /datum/universal_state/supermatter_cascade/OnEnter()
-	world << "___________________________________________________________________"
-	world << "<span class='sinister' style='font-size:3'>You are blinded by a brilliant flash of energy.</span>"
+	world << "<span class='sinister' style='font-size:22pt'>You are blinded by a brilliant flash of energy.</span>"
 
 	if(emergency_shuttle.direction==2)
 		captain_announce("The emergency shuttle has returned due to bluespace distortion.")
@@ -77,12 +77,15 @@
 			alm.ex_act(2)
 
 	for (var/obj/machinery/power/apc/APC in world)
-		if (!(APC.stat & BROKEN) && !istype(APC.areaMaster,/area/turret_protected/ai))
+		if (!(APC.stat & BROKEN) && !APC.is_critical)
 			if(APC.cell)
 				APC.cell.charge = 0
 			APC.emagged = 1
 			APC.queue_icon_update()
 			APC.update()
+
+	// Disable Nar-Sie.
+	ticker.mode.eldergod=0
 
 	ticker.StartThematic("endgame")
 	for(var/datum/mind/M in player_list)
@@ -97,12 +100,19 @@
 			O.blocked=O.type != /datum/objective/survive
 			if(O.blocked)
 				failed_objectives=1
+
 		if(!locate(/datum/objective/survive) in M.objectives)
-			var/datum/objective/survive/live = new("Escape collapsing universe through the rift.")
+			var/datum/objective/survive/live = new("Escape collapsing universe through the rift on the research output.")
 			live.owner=M
 			M.objectives += live
+
 		if(failed_objectives)
 			M << "\red<b><font size=3>You have permitted the universe to collapse and have therefore failed your objectives.</font></b>"
+
+		// Delete all runes
+		for(var/obj/effect/rune/R in rune_list)
+			if(R)
+				qdel(R)
 
 		if(M in ticker.mode.revolutionaries)
 			ticker.mode.revolutionaries -= M
@@ -184,7 +194,7 @@
 			A.icon_state = "ai"
 
 			A << "\red <FONT size = 3><B>The massive blast of energy has fried the systems that were malfunctioning.  You are no longer malfunctioning.</B></FONT>"
-	world << "___________________________________________________________________"
+
 	new /obj/machinery/singularity/narsie/large/exit(pick(endgame_exits))
 	spawn(rand(30,60) SECONDS)
 		var/txt = {"

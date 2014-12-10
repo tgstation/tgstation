@@ -9,6 +9,8 @@
 	move_self = 0
 	announce=0
 
+	layer=LIGHTING_LAYER+1 // ITS SO BRIGHT
+
 /obj/machinery/singularity/narsie/large/exit/New()
 	..(cultspawn=0)
 
@@ -32,8 +34,9 @@
 		do_teleport(A, pick(endgame_safespawns)) //dead-on precision
 	else if (isturf(A))
 		var/turf/T = A
-		T.clean_blood()
 		var/dist = get_dist(T, src)
+		if (dist <= consume_range && !istype(T,/turf/space))
+			T.ChangeTurf(/turf/space)
 
 		for (var/atom/movable/AM in T.contents)
 			if (AM == src) // This is the snowflake.

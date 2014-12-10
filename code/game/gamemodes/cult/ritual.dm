@@ -29,6 +29,8 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 	unacidable = 1
 	layer = TURF_LAYER
 
+	var/dead=0 // For cascade and whatnot.
+
 
 	var/word1
 	var/word2
