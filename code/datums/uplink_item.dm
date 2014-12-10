@@ -299,6 +299,12 @@ var/list/uplink_items = list()
 	cost = 3
 	surplus = 10
 
+/datum/uplink_item/stealthy_weapons/stun_gloves
+	name = "Stun Gloves"
+	desc = "These insulated gloves look innocent, but contain a hidden trigger. Pressing it will turn them into a formidable weapon that will shock anybody on touch."
+	item = /obj/item/clothing/gloves/yellow/stun
+	cost = 6
+
 // STEALTHY TOOLS
 
 /datum/uplink_item/stealthy_tools
