@@ -117,6 +117,16 @@
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
 
+/datum/table_recipe/frag12
+	name = "FRAG-12 Shell"
+	result = /obj/item/ammo_casing/shotgun/frag12
+	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
+				/datum/reagent/glycerol = 5,
+				/datum/reagent/toxin/acid = 5,
+				/datum/reagent/toxin/acid/polyacid = 5,)
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 5
+
 /datum/table_recipe/ishotgun
 	name = "Improvised Shotgun"
 	result = /obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised
