@@ -174,7 +174,7 @@
 	if(Ninja.mind != Mind)			//something has gone wrong!
 		ERROR("The ninja wasn't assigned the right mind. ;ç;")
 
-	Ninja << sound('sound/effects/ninja_greeting.ogg') //so ninja you probably wouldn't even know if you were made one
+	Ninja << sound('sound/music/ninja_greeting.ogg') //so ninja you probably wouldn't even know if you were made one
 
 	success_spawn = 1
 

@@ -106,6 +106,7 @@
 //		grant_secondword(cult_mind.current)
 		update_cult_icons_added(cult_mind)
 		cult_mind.current << "<span class='notice'>You are a member of the cult!</span>"
+		cult_mind.current << sound('sound/music/cult_roundstart.ogg')
 		memorize_cult_objectives(cult_mind)
 	..()
 
