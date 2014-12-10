@@ -64,7 +64,7 @@
 	return 1
 
 
-/mob/living/proc/apply_effects(var/stun = 0, var/weaken = 0, var/paralyze = 0, var/irradiate = 0, var/stutter = 0, var/eyeblur = 0, var/drowsy = 0, var/blocked = 0)
+/mob/living/proc/apply_effects(var/stun = 0, var/weaken = 0, var/paralyze = 0, var/irradiate = 0, var/stutter = 0, var/eyeblur = 0, var/drowsy = 0, var/stamina = 0, var/blocked = 0)
 	if(blocked >= 100)	return 0
 	if(stun)		apply_effect(stun, STUN, blocked)
 	if(weaken)		apply_effect(weaken, WEAKEN, blocked)
@@ -73,4 +73,5 @@
 	if(stutter)		apply_effect(stutter, STUTTER, blocked)
 	if(eyeblur)		apply_effect(eyeblur, EYE_BLUR, blocked)
 	if(drowsy)		apply_effect(drowsy, DROWSY, blocked)
+	if(stamina)		apply_effect(stamina, STAMINA, blocked)
 	return 1

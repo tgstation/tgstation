@@ -35,7 +35,23 @@
 	var/stutter = 0
 	var/eyeblur = 0
 	var/drowsy = 0
+	var/stamina = 0
 	var/forcedodge = 0
+
+	var/range = 0
+	var/proj_hit = 0
+
+/obj/item/projectile/proc/Range()
+	if(range)
+		range--
+		if(range <= 0)
+			on_range()
+	else
+		return
+
+/obj/item/projectile/proc/on_range() //if we want there to be effects when they reach the end of their range
+	proj_hit = 1
+	qdel(src)
 
 /obj/item/projectile/proc/on_hit(atom/target, blocked = 0, hit_zone)
 	if(!isliving(target))	return 0
@@ -115,6 +131,3 @@
 						Bump(original)
 			Range()
 			sleep(1)
-
-/obj/item/projectile/proc/Range()
-	return
