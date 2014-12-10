@@ -197,6 +197,7 @@
 			module_sprites["Basic"] = "robot_old"
 			module_sprites["Android"] = "droid"
 			module_sprites["Default"] = "robot"
+			module_sprites["Marina-SD"] = "marinaSD"
 			module_sprites["Sleek"] = "sleekstandard"
 
 		if("Service")
@@ -231,7 +232,7 @@
 			module_sprites["Advanced Droid"] = "droid-medical"
 			module_sprites["Needles"] = "medicalrobot"
 			module_sprites["Standard"] = "surgeon"
-			module_sprites["Marina"] = "marina"
+			module_sprites["Marina-MD"] = "marina"
 			module_sprites["Eve"] = "eve"
 			module_sprites["Sleek"] = "sleekmedic"
 
@@ -274,6 +275,7 @@
 			module_sprites["Combat Android"] = "droid-combat"
 			module_sprites["Bladewolf"] = "bladewolf"
 			module_sprites["Mr. Gutsy"] = "mrgutsy"
+			module_sprites["Marina-CB"] = "marinaCB"
 			channels = list("Security" = 1)
 
 	//Custom_sprite check and entry
