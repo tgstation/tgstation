@@ -52,7 +52,6 @@
 	icon_state = "wizard"
 	strip_delay = 50
 	put_on_delay = 50
-	unacidable = 1
 
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic black shoes."
