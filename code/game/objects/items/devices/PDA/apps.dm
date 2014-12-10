@@ -5,6 +5,7 @@ var/global/list/pda_app_menus = list(
 	101,//Ringer
 	102,//Spam Filter
 	103,//Balance Check
+	104,//Station Map
 	)
 
 
@@ -69,3 +70,18 @@ var/global/list/pda_app_menus = list(
 			if((DB.stat == 0) && DB.activated )//If the database if damaged or not powered, people won't be able to use the app anymore.
 				linked_db = DB
 				break
+
+/datum/pda_app/station_map
+	name = "Station Map"
+	desc = "Displays a minimap of the station. You'll find a marker at your location. Place more markers using coordinates."
+	price = 50
+	menu = 104
+	var/list/markers = list()
+	var/markx = 1
+	var/marky = 1
+
+/datum/minimap_marker
+	var/name = "default marker"
+	var/x = 1
+	var/y = 1
+	var/num = 0
