@@ -166,11 +166,11 @@
 		var/time = time2text(world.realtime,"hh:mm:ss")
 		var/turf/T = get_turf(src)
 		if(usr)
-		var/mob/user = usr
-		if(user)
-			lastsignalers.Add("[time] <B>:</B> [user.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
-		else
-			lastsignalers.Add("[time] <B>:</B> (<span class='danger'>NO USER FOUND</span>) used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
+			var/mob/user = usr
+			if(user)
+				lastsignalers.Add("[time] <B>:</B> [user.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
+			else
+				lastsignalers.Add("[time] <B>:</B> (<span class='danger'>NO USER FOUND</span>) used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
 		return
 
 //////////////////
@@ -319,10 +319,10 @@
 //these frequencies are set by default on the PDAs of the corresponding jobs
 //they are determined at roundstart, and unlike radio frequencies (yet) are randomized
 var/global/list/deskbell_default_frequencies = list()
-var/global/deskbell_freq_hop = call(/obj/item/device/deskbell/signaler/proc/get_new_bellfreq())
-var/global/deskbell_freq_medbay = call(/obj/item/device/deskbell/signaler/proc/get_new_bellfreq())
-var/global/deskbell_freq_brig = call(/obj/item/device/deskbell/signaler/proc/get_new_bellfreq())
-var/global/deskbell_freq_rnd = call(/obj/item/device/deskbell/signaler/proc/get_new_bellfreq())
+var/global/deskbell_freq_hop = call(/obj/item/device/deskbell/signaler/proc/get_new_bellfreq)()
+var/global/deskbell_freq_medbay = call(/obj/item/device/deskbell/signaler/proc/get_new_bellfreq)()
+var/global/deskbell_freq_brig = call(/obj/item/device/deskbell/signaler/proc/get_new_bellfreq)()
+var/global/deskbell_freq_rnd = call(/obj/item/device/deskbell/signaler/proc/get_new_bellfreq)()
 
 /obj/item/device/deskbell/signaler/proc/get_new_bellfreq()
 	var/i = rand(MINIMUM_FREQUENCY,MAXIMUM_FREQUENCY)

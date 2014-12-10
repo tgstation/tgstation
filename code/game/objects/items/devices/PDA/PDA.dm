@@ -885,7 +885,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += {"<h4>Ringer Application</h4>"}
 				if(app)
 					dat += {"
-					Status: <a href='byond://?src=\ref[src];choice=toggleDeskRinger'>[app.state ? "On" : "Off"]</a><br>
+					Status: <a href='byond://?src=\ref[src];choice=toggleDeskRinger'>[app.status ? "On" : "Off"]</a><br>
 					Frequency:
 						<a href='byond://?src=\ref[src];choice=ringerFrequency;rfreq=-10'>-</a>
 						<a href='byond://?src=\ref[src];choice=ringerFrequency;rfreq=-2'>-</a>
@@ -1024,7 +1024,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if("toggleDeskRinger")
 				var/datum/pda_app/ringer/app = locate(/datum/pda_app/ringer) in applications
 				if(app)
-					app.state = !(app.state)
+					app.status = !(app.status)
 			if("ringerFrequency")
 				var/datum/pda_app/ringer/app = locate(/datum/pda_app/ringer) in applications
 				if(app)
