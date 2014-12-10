@@ -11,6 +11,7 @@ changes:
   - rscadd: Flashlight Enhancer app. Increases the PDA flashlight's luminosity from 2 to 3.
   - rscadd: Spam Filter app. Can be set to either block the spam, conceal it (so it won't beep your PDA nor show you the message on the chat window), or do nothing.
   - rscadd: Balance Checking app. Lets you check the current funds of the account linked to the inserted ID, as well as its transaction history.
+  - rscadd: Station Map app. Essentially a minimap. Gives your (offset) coordinates and the name of your area. Updates when you move if you have the PDA window open. You can place markers using coordinates. Only covers the station's Z-level.
   - rscadd: Added a new computer. PDA Terminal. The board can be printed at R&D with data=3
   - rscadd: PDA apps can be purchased at a PDA Terminal by inserting your PDA, and having enough funds on your ID (which can be either on yourself or inside the inserted PDA)
   - rscadd: You can also purchase a new PDA at the terminal for 100$ (with a chance of getting a Limited Edition transparent PDA)
@@ -21,3 +22,6 @@ changes:
   - tweak: The captain's PDA has all the apps by default because why not.
   - bugfix: using a wrench or an unlit welder on a reinforced (not weakened) table will now actually place the tool on it, rather than doing nothing
   - tweak: purchasing from either a vending machine or the PDA terminal will now display his remaining balance to the purchaser.
+  - tweak: fixed the Crew Monitoring Computer's coordinates being erroneous. They are now subject to the same offset as GPS, Banghometer, etc, as was intended.
+  - tweak: the PDA's signaling app (PDAs with generic signaler cartridge, Signal Ace 2 cartridge, etc) now covers the whole range of frequencies covered by Remote Signaling Devices, from (144.1 - 148.9) to (120.1 - 159.9)
+  - tweak: the PNG nanomaps of the mining asteroid and the derelict have been edited so they don't feature mineral deposits, galleries, or rooms anymore. (so people aren't anymore lead to believe that those nanomaps could let them easily reach minerals and whatnot)
