@@ -24,16 +24,29 @@
 	var/ring_delay = 20
 	var/last_ring_time = 0
 
+	var/wrenching = 0
+
 /obj/item/device/deskbell/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/wrench))
-		user.visible_message(	"[user] begins to [anchored ? "undo" : "wrench"] \the [src]'s securing bolts.",
-							"You begin to [anchored ? "undo" : "wrench"] \the [src]'s securing bolts...")
+		user.visible_message(
+			"[user] begins to [anchored ? "undo" : "wrench"] \the [src]'s securing bolts.",
+			"You begin to [anchored ? "undo" : "wrench"] \the [src]'s securing bolts..."
+			)
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+
+		if(wrenching)	return
+		wrenching = 1
 		if(do_after(user, 30))
-			anchored = !anchored
-			user.visible_message(	"<span class='notice'>[user] [anchored ? "wrench" : "unwrench"]es \the [src] [anchored ? "in place" : "from its fixture"]</span>",
-									"<span class='notice'>\icon[src] You [anchored ? "wrench" : "unwrench"] \the [src] [anchored ? "in place" : "from its fixture"].</span>",
-									"<span class='notice'>You hear a ratchet.</span>")
+			if(src)
+				anchored = !anchored
+				user.visible_message(
+					"<span class='notice'>[user] [anchored ? "wrench" : "unwrench"]es \the [src] [anchored ? "in place" : "from its fixture"]</span>",
+					"<span class='notice'>\icon[src] You [anchored ? "wrench" : "unwrench"] \the [src] [anchored ? "in place" : "from its fixture"].</span>",
+					"<span class='notice'>You hear a ratchet.</span>"
+					)
+
+		wrenching = 0
+
 		return
 
 	if(istype(W,/obj/item/weapon/screwdriver))
@@ -113,16 +126,24 @@
 
 /obj/item/device/deskbell/signaler/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/wrench))
-		user.visible_message(	"[user] begins to [anchored ? "undo" : "wrench"] \the [src]'s securing bolts.",
-							"You begin to [anchored ? "undo" : "wrench"] \the [src]'s securing bolts...")
+		user.visible_message(
+			"[user] begins to [anchored ? "undo" : "wrench"] \the [src]'s securing bolts.",
+			"You begin to [anchored ? "undo" : "wrench"] \the [src]'s securing bolts..."
+			)
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+
+		if(wrenching)	return
+		wrenching = 1
 		if(do_after(user, 30))
-			anchored = !anchored
-			user.visible_message(
-				"<span class='notice'>[user] [anchored ? "wrench" : "unwrench"]es \the [src] [anchored ? "in place" : "from its fixture"]</span>",
-				"<span class='notice'>\icon[src] You [anchored ? "wrench" : "unwrench"] \the [src] [anchored ? "in place" : "from its fixture"].</span>",
-				"<span class='notice'>You hear a ratchet.</span>"
-				)
+			if(src)
+				anchored = !anchored
+				user.visible_message(
+					"<span class='notice'>[user] [anchored ? "wrench" : "unwrench"]es \the [src] [anchored ? "in place" : "from its fixture"]</span>",
+					"<span class='notice'>\icon[src] You [anchored ? "wrench" : "unwrench"] \the [src] [anchored ? "in place" : "from its fixture"].</span>",
+					"<span class='notice'>You hear a ratchet.</span>"
+					)
+		wrenching = 0
+
 		return
 
 	if(istype(W,/obj/item/weapon/screwdriver))
