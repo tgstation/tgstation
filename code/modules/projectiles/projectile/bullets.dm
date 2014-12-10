@@ -96,17 +96,6 @@
 	SpinAnimation()
 
 
-/obj/item/projectile/bullet/frag12
-	name ="explosive slug"
-	damage = 45
-	weaken = 5
-
-
-/obj/item/projectile/bullet/frag12/on_hit(atom/target, blocked = 0)
-	explosion(target, -1, -1, 1)
-	return 1
-
-
 /obj/item/projectile/bullet/mime
 	damage = 20
 
