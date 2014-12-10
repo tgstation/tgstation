@@ -1,4 +1,0 @@
-author: Dylanstrategie
-delete-after: True
-changes:
-  - rscadd: You now use a menu for suit sensors instead of circling through the options manually. Graciously ripped from Bay

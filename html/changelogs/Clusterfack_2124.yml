@@ -1,4 +1,0 @@
-author: Clusterfack
-delete-after: true
-changes:
-- bugfix: Fixed brains disappearing when debraining a detached head while holding it
