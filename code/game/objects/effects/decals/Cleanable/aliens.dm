@@ -41,19 +41,30 @@
 /atom/proc/xeno_acid_blood() //Wrapper proc for blood + acid_act() interaction
 	acid_act(10, 1, 5) //Arbitrary numbers
 
+/atom/movable/xeno_acid_blood()
+	if(!throwing)
+		..()
+
+/obj/item/projectile/xeno_acid_blood()
+	return
+
 /obj/effect/decal/cleanable/blood/gibs/xeno/Crossed(atom/movable/O)
 	O.xeno_acid_blood()
+	qdel(src)
 
 /obj/effect/decal/cleanable/trail_holder/Crossed(atom/movable/O)
 	//This is messy but I'm not doing it with icon_states and trail_holders are awkward to work with
 	if(trail_type && trail_type == "xltrails")
 		O.xeno_acid_blood()
+		qdel(src)
 
 /obj/effect/decal/cleanable/blood/xeno/Crossed(atom/movable/O)
 	O.xeno_acid_blood()
+	qdel(src)
 
 /obj/effect/decal/cleanable/blood/tracks/xeno/Crossed(atom/movable/O)
 	O.xeno_acid_blood()
+	qdel(src)
 
 /mob/living/carbon/alien/xeno_acid_blood()
 	return //Alien blood doesn't harm aliens
@@ -61,9 +72,9 @@
 /mob/living/carbon/human/xeno_acid_blood()
 	if(shoes)
 		if(!(shoes.acid_act(10, 1, 5)))
-			src << "<span class='noticealien'>You step in acid, but your shoes protect you!</span>"
 			return
 	update_inv_shoes()
 	apply_damage(10, BURN)
 	src << "<span class='noticealien'>You step in acid!</span>"
+	qdel(src)
 
