@@ -582,10 +582,7 @@
 				(istype(W, /obj/item/device/multitool) || \
 				istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/assembly/signaler)))
 				return src.attack_hand(user)
-			user.do_attack_animation(src)
-			user.visible_message("<span class='danger'>[user.name] has hit the [src.name] with the [W.name]!</span>", \
-				"<span class='danger'>You hit the [src.name] with your [W.name]!</span>", \
-				"You hear bang")
+			..()
 
 /obj/machinery/power/apc/emag_act(mob/user as mob)
 	if(!emagged && !malfhack)

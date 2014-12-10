@@ -62,6 +62,7 @@
 	icon_state = "emag"
 	item_state = "card-id"
 	origin_tech = "magnets=2;syndicate=2"
+	flags = NOBLUDGEON
 
 /obj/item/weapon/card/emag/attack()
 	return
