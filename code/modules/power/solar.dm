@@ -147,7 +147,7 @@ var/list/solars_list = list()
 	return
 
 
-/obj/machinery/power/solar/ex_act(severity, specialty)
+/obj/machinery/power/solar/ex_act(severity, target)
 	..()
 	if(!gc_destroyed)
 		switch(severity)
@@ -513,7 +513,7 @@ var/list/solars_list = list()
 	update_icon()
 
 
-/obj/machinery/power/solar_control/ex_act(severity, specialty)
+/obj/machinery/power/solar_control/ex_act(severity, target)
 	..()
 	if(!gc_destroyed)
 		switch(severity)

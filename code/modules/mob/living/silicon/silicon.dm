@@ -7,6 +7,8 @@
 	var/list/alarms_to_show = list()
 	var/list/alarms_to_clear = list()
 	var/designation = ""
+	var/radiomod = "" //Radio character used before state laws/arrivals announce to allow department transmissions, default, or none at all.
+
 	var/obj/item/device/radio/borg/radio = null //AIs dont use this but this is at the silicon level to advoid copypasta in say()
 
 	var/list/alarm_types_show = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
@@ -17,6 +19,9 @@
 
 	var/med_hud = DATA_HUD_MEDICAL_ADVANCED //Determines the med hud to use
 	var/sec_hud = DATA_HUD_SECURITY_ADVANCED //Determines the sec hud to use
+
+/mob/living/silicon/contents_explosion(severity, target)
+	return
 
 /mob/living/silicon/proc/cancelAlarm()
 	return
@@ -197,7 +202,8 @@
 
 /mob/living/silicon/proc/statelaws()
 
-	src.say("Current Active Laws:")
+	//"radiomod" is inserted before a hardcoded message to change if and how it is handled by an internal radio.
+	src.say("[radiomod] Current Active Laws:")
 	//src.laws_sanity_check()
 	//src.laws.show_laws(world)
 	var/number = 1
@@ -207,7 +213,7 @@
 
 	if (src.laws.zeroth)
 		if (src.lawcheck[1] == "Yes")
-			src.say("0. [src.laws.zeroth]")
+			src.say("[radiomod] 0. [src.laws.zeroth]")
 			sleep(10)
 
 	for (var/index = 1, index <= src.laws.ion.len, index++)
@@ -215,7 +221,7 @@
 		var/num = ionnum()
 		if (length(law) > 0)
 			if (src.ioncheck[index] == "Yes")
-				src.say("[num]. [law]")
+				src.say("[radiomod] [num]. [law]")
 				sleep(10)
 
 	for (var/index = 1, index <= src.laws.inherent.len, index++)
@@ -223,7 +229,7 @@
 
 		if (length(law) > 0)
 			if (src.lawcheck[index+1] == "Yes")
-				src.say("[number]. [law]")
+				src.say("[radiomod] [number]. [law]")
 				sleep(10)
 			number++
 
@@ -234,7 +240,7 @@
 		if (length(law) > 0)
 			if(src.lawcheck.len >= number+1)
 				if (src.lawcheck[number+1] == "Yes")
-					src.say("[number]. [law]")
+					src.say("[radiomod] [number]. [law]")
 					sleep(10)
 				number++
 
@@ -280,6 +286,29 @@
 	list += {"<br><br><A href='byond://?src=\ref[src];laws=1'>State Laws</A>"}
 
 	usr << browse(list, "window=laws")
+
+/mob/living/silicon/proc/set_autosay() //For allowing the AI and borgs to set the radio behavior of auto announcements (state laws, arrivals).
+	if(!radio)
+		src << "Radio not detected."
+		return
+
+	//Ask the user to pick a channel from what it has available.
+	var/Autochan = input("Select a channel:") as null|anything in list("Default","None") + radio.channels
+
+	if(!Autochan)
+		return
+	if(Autochan == "Default") //Autospeak on whatever frequency to which the radio is set, usually Common.
+		radiomod = ";"
+		Autochan += " ([radio.frequency])"
+	else if(Autochan == "None") //Prevents use of the radio for automatic annoucements.
+		radiomod = ""
+	else	//For department channels, if any, given by the internal radio.
+		for(var/key in department_radio_keys)
+			if(department_radio_keys[key] == Autochan)
+				radiomod = key
+				break
+
+	src << "<span class='notice'>Automatic announcements [Autochan == "None" ? "will not use the radio." : "set to [Autochan]."]</span>"
 
 /mob/living/silicon/put_in_hand_check() // This check is for borgs being able to receive items, not put them in others' hands.
 	return 0

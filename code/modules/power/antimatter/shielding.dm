@@ -100,7 +100,7 @@ proc/cardinalrange(var/center)
 	return
 
 
-/obj/machinery/am_shielding/ex_act(severity, specialty)
+/obj/machinery/am_shielding/ex_act(severity, target)
 	stability -= (80 - (severity * 20))
 	check_stability()
 	return

@@ -323,9 +323,7 @@
 	return 0
 
 
-/mob/living/silicon/robot/ex_act(severity, specialty)
-	..()
-
+/mob/living/silicon/robot/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			gib()
@@ -959,6 +957,12 @@
 	set name = "State Laws"
 
 	checklaws()
+
+/mob/living/silicon/robot/verb/set_automatic_say_channel() //Borg version of setting the radio for autosay messages.
+	set name = "Set Auto Announce Mode"
+	set desc = "Modify the default radio setting for stating your laws."
+	set category = "Robot Commands"
+	set_autosay()
 
 /mob/living/silicon/robot/proc/deconstruct()
 	var/turf/T = get_turf(src)

@@ -314,7 +314,7 @@ obj/structure/sign/poster/attackby(obj/item/I, mob/user)
 	var/temp_loc = user.loc
 	switch(alert("Do I want to rip the poster from the wall?","You think...","Yes","No"))
 		if("Yes")
-			if(user.loc != temp_loc)
+			if( user.loc != temp_loc || ruined )
 				return
 			visible_message("<span class='warning'>[user] rips [src] in a single, decisive motion!</span>" )
 			playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, 1)
