@@ -1,44 +1,46 @@
+var/global/list/camera_bugs = list()
 /obj/item/device/handtv
 	name = "handheld tv"
 	desc = "A handheld tv meant for remote viewing."
 	icon_state = "handtv"
 	w_class = 1
-	var/obj/machinery/camera/current = null
+	var/obj/item/device/camera_bug/current
+	var/network
 
-/obj/item/device/handtv/attack_self(mob/usr as mob)
-	var/list/cameras = new/list()
-	for (var/obj/machinery/camera/C in cameranet.cameras)
-		if (C.hasbug && C.status)
-			cameras.Add(C)
-	if (length(cameras) == 0)
-		usr << "\red No bugged functioning cameras found."
+/obj/item/device/handtv/attack_self(mob/user as mob)
+	if(!network && user.mind)
+		network = "\ref[user.mind]"
+	var/list/cameras = list()
+	for(var/obj/item/device/camera_bug/C in camera_bugs)
+		if(C.network == network)
+			cameras += C
+	if(!cameras.len)
+		user << "<span class='warning'>No camera bugs found.</span>"
 		return
-
 	var/list/friendly_cameras = new/list()
 
-	for (var/obj/machinery/camera/C in cameras)
+	for (var/obj/item/device/camera_bug/C in cameras)
 		friendly_cameras.Add(C.c_tag)
-
 	var/target = input("Select the camera to observe", null) as null|anything in friendly_cameras
 	if (!target)
-		usr.unset_machine()
-		usr.reset_view(usr)
+		user.unset_machine()
+		user.reset_view(user)
 		return
-	for (var/obj/machinery/camera/C in cameras)
+	for(var/obj/item/device/camera_bug/C in cameras)
 		if (C.c_tag == target)
 			target = C
 			break
-	if (usr.stat == 2) return
+	if(user.stat) return
 	if(target)
-		usr.client.eye = target
-		usr.set_machine(src)
+		user.client.eye = target
+		user.set_machine(src)
 		src.current = target
 	else
-		usr.unset_machine()
+		user.unset_machine()
 		return
 
-/obj/item/device/handtv/check_eye(var/mob/usr as mob)
-	if ( src.loc != usr || usr.get_active_hand() != src|| !usr.canmove || usr.blinded || !current || !current.status )
+/obj/item/device/handtv/check_eye(var/mob/user as mob)
+	if ( src.loc != user || user.get_active_hand() != src || !user.canmove || user.blinded || !current || !current.active )
 		return null
-	usr.reset_view(current)
+	user.reset_view(current)
 	return 1

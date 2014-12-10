@@ -840,7 +840,7 @@ obj/item/weapon/circuitboard/rdserver
 	build_path = "/obj/machinery/pdapainter"
 	board_type = "machine"
 	origin_tech = "programming=2;engineering=2"
-	frame_desc = "Requires 1 Manipulator, 2 Micro-Lasers, 2 Scanning Modules, and a Console Screen. "
+	frame_desc = "Requires 1 Manipulator, 2 Micro-Lasers, 2 Scanning Modules, and 1 Console Screen. "
 	req_components = list(
 							"/obj/item/weapon/stock_parts/manipulator" = 1,
 							"/obj/item/weapon/stock_parts/micro_laser" = 2,
@@ -852,7 +852,7 @@ obj/item/weapon/circuitboard/rdserver
 	build_path = "/obj/machinery/disease2/incubator"
 	board_type = "machine"
 	origin_tech = "materials=4;biotech=5;magnets=3"
-	frame_desc = "Requires 1 Matter Bins, 2 Scanning Modules, 2 Micro-Lasers, and 1 Beaker."
+	frame_desc = "Requires 1 Matter Bin, 2 Scanning Modules, 2 Micro-Lasers, and 1 Beaker."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/matter_bin" = 1,
 							"/obj/item/weapon/stock_parts/micro_laser" = 2,
@@ -864,8 +864,29 @@ obj/item/weapon/circuitboard/rdserver
 	build_path = "/obj/machinery/disease2/diseaseanalyser"
 	board_type = "machine"
 	origin_tech = "engineering=3;biotech=3;programming=3"
-	frame_desc = "Requires 1 Micro-Lasers, 1 Manipulator, and 3 Scanning Modules."
+	frame_desc = "Requires 1 Micro-Laser, 1 Manipulator, and 3 Scanning Modules."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/manipulator" = 1,
 							"/obj/item/weapon/stock_parts/micro_laser" = 1,
 							"/obj/item/weapon/stock_parts/scanning_module" = 3)
+
+/obj/item/weapon/circuitboard/mech_bay_power_port
+	name = "Circuit Board (Power Port)"
+	build_path = "/obj/machinery/mech_bay_recharge_port"
+	board_type = "machine"
+	origin_tech = "engineering=2;powerstorage=3"
+	frame_desc = "Requires 1 Micro-Laser, 1 Scanning Module, and 1 Console Screen."
+	req_components = list(
+							"/obj/item/weapon/stock_parts/micro_laser" = 1,
+							"/obj/item/weapon/stock_parts/scanning_module" = 1,
+							"/obj/item/weapon/stock_parts/console_screen" = 1)
+
+/obj/item/weapon/circuitboard/mech_bay_recharge_station
+	name = "Circuit Board (Recharge Station)"
+	build_path = "/obj/machinery/mech_bay_recharge_floor"
+	board_type = "machine"
+	origin_tech = "materials=2;powerstorage=3"
+	frame_desc = "Requires 1 Scanning Module and 2 Capacitors."
+	req_components = list(
+							"/obj/item/weapon/stock_parts/scanning_module" = 1,
+							"/obj/item/weapon/stock_parts/capacitor" = 2)

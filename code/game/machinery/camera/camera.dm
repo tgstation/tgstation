@@ -3,7 +3,6 @@ var/list/camera_names=list()
 	name = "security camera"
 	desc = "It's used to monitor rooms."
 	icon = 'icons/obj/monitors.dmi'
-	var/obj/item/device/camera_bug/hasbug = null
 	icon_state = "camera"
 	use_power = 2
 	idle_power_usage = 5
@@ -163,8 +162,8 @@ var/list/camera_names=list()
 		U << "You hold \a [itemname] up to the camera ..."
 		for(var/mob/living/silicon/ai/O in living_mob_list)
 			if(!O.client) continue
-			if(U.name == "Unknown") O << "<b>[U]</b> holds \a [itemname] up to one of your cameras ..."
-			else O << "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U]'>[U]</a></b> holds \a [itemname] up to one of your cameras ..."
+			if(U.name == "Unknown") O << "<span class='name'>[U]</span> holds \a [itemname] up to one of your cameras ..."
+			else O << "<span class='name'><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U]'>[U]</a></span> holds \a [itemname] up to one of your cameras ..."
 			O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
 		for(var/mob/O in player_list)
 			if (istype(O.machine, /obj/machinery/computer/security))
@@ -172,26 +171,6 @@ var/list/camera_names=list()
 				if (S.current == src)
 					O << "[U] holds \a [itemname] up to one of the cameras ..."
 					O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
-	else if (istype(W, /obj/item/device/camera_bug) && panel_open)
-		if (!src.can_use())
-			user << "\blue Camera non-functional"
-			return
-		else
-			user << "\blue Camera bugged."
-			user.drop_item(W)
-			hasbug = W
-			contents += W
-			if(prob(15))
-				spawn(30)
-					if(src.can_use() && hasbug)
-						desc += "<br>The power light on the camera is blinking"
-						triggerCameraAlarm()
-	else if (iscrowbar(W) && panel_open && src.hasbug)
-		user << "\blue You retrieve \the [hasbug]"
-		user.put_in_hands(hasbug)
-		contents -= hasbug
-		hasbug = null
-		deactivatebug(user)
 	else if(istype(W, /obj/item/weapon/melee/energy/blade))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
 		deactivate(user,2)//Here so that you can disconnect anyone viewing the camera, regardless if it's on or off.
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
@@ -199,38 +178,30 @@ var/list/camera_names=list()
 		spark_system.start()
 		playsound(loc, 'sound/weapons/blade1.ogg', 50, 1)
 		playsound(loc, "sparks", 50, 1)
-		visible_message("\blue The camera has been sliced apart by [] with an energy blade!")
+		visible_message("<span class='notice'>The camera has been sliced apart by [] with an energy blade!</span>")
 		del(src)
 	else
 		..()
 	return
 
-/obj/machinery/camera/proc/deactivatebug(user as mob)
-	for(var/mob/O in player_list)
-		if(istype(O.machine, /obj/item/device/handtv))
-			var/obj/item/device/handtv/S = O.machine
-			if (S.current == src)
-				O.unset_machine()
-				O.reset_view(null)
-				O << "The screen bursts into static."
 /obj/machinery/camera/proc/deactivate(user as mob, var/choice = 1)
 	if(choice==1)
 		status = !( src.status )
 		if (!(src.status))
 			if(user)
-				visible_message("\red [user] has deactivated [src]!")
+				visible_message("<span class='warning'>[user] has deactivated [src]!</span>")
 				add_hiddenprint(user)
 			else
-				visible_message("\red \The [src] deactivates!")
+				visible_message("<span class='warning'> \The [src] deactivates!</span>")
 			playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 100, 1)
 			icon_state = "[initial(icon_state)]1"
 			add_hiddenprint(user)
 		else
 			if(user)
-				visible_message("\red [user] has reactivated [src]!")
+				visible_message("<span class='warning'> [user] has reactivated [src]!</span>")
 				add_hiddenprint(user)
 			else
-				visible_message("\red \the [src] reactivates!")
+				visible_message("<span class='warning'> \the [src] reactivates!</span>")
 			playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 100, 1)
 			icon_state = initial(icon_state)
 			add_hiddenprint(user)
@@ -316,7 +287,7 @@ var/list/camera_names=list()
 		return 0
 
 	// Do after stuff here
-	user << "<span class='notice'>You start to weld the [src]..</span>"
+	user << "<span class='notice'>You start to weld the [src].</span>"
 	playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
 	WT.eyecheck(user)
 	busy = 1
