@@ -63,6 +63,9 @@
 	item_state = "card-id"
 	origin_tech = "magnets=2;syndicate=2"
 
+/obj/item/weapon/card/emag/attack()
+	return
+
 /obj/item/weapon/card/emag/afterattack(atom/target, mob/user, proximity)
 	var/atom/A = target
 	if(!proximity) return
