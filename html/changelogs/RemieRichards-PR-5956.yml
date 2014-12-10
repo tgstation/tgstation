@@ -1,5 +1,6 @@
-author: Tkdrg
+author: RemieRichards
 delete-after: True
 
 changes: 
-  - tweak: Security/Medical HUDs are now more responsive and less laggy.
+  - tweak: Sounds in areas of low pressure (E.g. Space) are now much quieter
+  - tweak: To hear someone in space you need to be stood next to them, or use a radio
