@@ -56,12 +56,10 @@
 	damage = 15
 	damage_type = TOX
 	nodamage = 0
-	weaken = 3
-	stutter = 3
-	range = 7
+	weaken = 5
+	stutter = 5
+	range = 10
 
 /obj/item/projectile/energy/bolt/large
 	name = "largebolt"
 	damage = 20
-	weaken = 5
-	stutter = 5
