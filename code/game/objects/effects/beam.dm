@@ -47,7 +47,7 @@
 	var/targetDestroyKey=null // Key for the on_destroyed listener.
 	var/targetContactLoc=null // Where we hit the target (used for target_moved)
 
-	var/atom/source = null // Whoever originally fired the beam.  Used in prisms to prevent infinite loops.
+	var/list/sources = list() // Whoever served in emitting this beam. Used in prisms to prevent infinite loops.
 
 // Listener for /atom/movable/on_moved
 /obj/effect/beam/proc/target_moved(var/list/args)
@@ -134,7 +134,7 @@
 		//if(_master.next)
 		//	qdel(_master.next)
 		if(re_emit)
-			_master.emit(source)
+			_master.emit(sources)
 
 /obj/effect/beam/Crossed(atom/movable/AM as mob|obj)
 	if(!master || !AM)
@@ -148,18 +148,21 @@
 	connect_to(AM)
 	qdel(src)
 
+/obj/effect/beam/proc/HasSource(var/atom/source)
+	return source in sources
+
 /**
  * Create and emit the beam in the desired direction.
  */
-/obj/effect/beam/proc/emit(var/atom/spawn_by, var/_range=-1)
-	source=spawn_by
+/obj/effect/beam/proc/emit(var/spawn_by, var/_range=-1)
+	sources=list(spawn_by)
 
 	if(_range==-1)
 		BEAM_TESTING("\ref[src] - emit(), source=[source]")
 		_range=max_range
 
 	if(next && next.loc)
-		next.emit(source,_range-1)
+		next.emit(sources,_range-1)
 		return
 
 	if(!loc)
@@ -196,7 +199,7 @@
 	update_icon()
 
 	next = spawn_child()
-	next.emit(source,_range)
+	next.emit(sources,_range)
 
 /obj/effect/beam/proc/spawn_child()
 	var/obj/effect/beam/B = new type(src.loc)

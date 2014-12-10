@@ -45,12 +45,16 @@
 
 /obj/machinery/prism/beam_connect(var/obj/effect/beam/emitter/B)
 	if(istype(B))
+		if(B.HasSource(src))
+			return // Prevent infinite loops.
 		..()
 		powerchange_hooks[B]=B.power_change.Add(src,"on_power_change")
 		update_beams()
 
 /obj/machinery/prism/beam_disconnect(var/obj/effect/beam/emitter/B)
 	if(istype(B))
+		if(B.HasSource(src))
+			return // Prevent infinite loops.
 		..()
 		B.power_change.Remove(powerchange_hooks[B])
 		powerchange_hooks.Remove(B)
@@ -71,12 +75,16 @@
 			beam.dir=dir
 			newbeam=1
 		beam.power=0
+		var/list/spawners = list()
 		for(var/obj/effect/beam/emitter/B in beams)
+			if(B.HasSource(src))
+				continue // Prevent infinite loops.
+			spawners += B.sources
 			beam.power += B.power
 			var/beamdir=get_dir(B.loc,src)
 			overlays += image(icon=icon,icon_state="beam_arrow",dir=beamdir)
 		if(newbeam)
-			beam.emit(spawn_by=src)
+			beam.emit(spawn_by=spawners)
 		else
 			beam.set_power(beam.power)
 		icon_state = "prism_on"
