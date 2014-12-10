@@ -1081,9 +1081,9 @@
 
 /datum/recipe/aesirsalad
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/deus,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/deus,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/deus,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/goldapple,
 		)
 	result = /obj/item/weapon/reagent_containers/food/snacks/aesirsalad

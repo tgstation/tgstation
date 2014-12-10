@@ -2634,6 +2634,25 @@ The required techs are the following:
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/bhangmeter
 
+/datum/design/mechapowerport
+	name = "Circuit Design (Mech Bay Power Port)"
+	desc = "Allows for the construction of circuit boards used to build a mech bay power connector port."
+	id = "mechapowerport"
+	req_tech = list("engineering" = 2, "powerstorage" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/mech_bay_power_port
+
+
+/datum/design/mechapowerfloor
+	name = "Circuit Design (Recharge Station)"
+	desc = "Allows for the construction of circuit boards used to build a mech bay recharge station."
+	id = "mechapowerfloor"
+	req_tech = list("materials" = 2, "powerstorage" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/mech_bay_recharge_station
+
 
 //////////////////////////////////////////////////////////////////
 // EMBEDDED CONTROLLER BOARDS

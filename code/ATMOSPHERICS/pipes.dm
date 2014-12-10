@@ -901,6 +901,8 @@
 	icon = 'icons/obj/atmospherics/insulated.dmi'
 	icon_state = "manifold"
 	alert_pressure = 900*ONE_ATMOSPHERE
+	_color = "red"
+	color=IPIPE_COLOR_RED
 	level = 2
 	available_colors = list(
 		"red"=IPIPE_COLOR_RED,
@@ -1222,21 +1224,34 @@
 		return ..()
 	var/turf/T = src.loc
 	if (level==1 && isturf(T) && T.intact)
-		user << "\red You must remove the plating first."
+		user << "<span class='warning'>You must remove the plating first.</span>"
 		return 1
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
+	add_fingerprint(user)
 	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
-		user << "\red You cannot unwrench this [src], it too exerted due to internal pressure."
-		add_fingerprint(user)
-		return 1
+		if(istype(W, /obj/item/weapon/wrench/socket))
+			user << "<span class='warning'>You begin to open the pressure release valve on the pipe...</span>"
+			if(do_after(user, 50))
+				playsound(get_turf(src), 'sound/machines/hiss.ogg', 50, 1)
+				user.visible_message("[user] vents \the [src].",
+									"You have vented \the [src].",
+									"You hear a ratchet.")
+				var/datum/gas_mixture/transit = new
+				transit.add(int_air)
+				transit.divide(parent.members.len) //we get the total pressure over the number of pipes to find gas per pipe
+				env_air.add(transit) //put it in the air
+				del(transit) //remove the carrier
+		else
+			user << "<span class='warning'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>"
+			return 1
 	playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-	user << "\blue You begin to unfasten \the [src]..."
+	user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
 	if (do_after(user, 40))
 		user.visible_message( \
 			"[user] unfastens \the [src].", \
-			"\blue You have unfastened \the [src].", \
-			"You hear ratchet.")
+			"<span class='notice'>You have unfastened \the [src].</span>", \
+			"You hear a ratchet.")
 		new /obj/item/pipe(loc, make_from=src)
 		for (var/obj/machinery/meter/meter in T)
 			if (meter.target == src)

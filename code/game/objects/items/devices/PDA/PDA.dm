@@ -158,6 +158,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/didyouknow = null
 
 
+/obj/item/device/pda/GetJobName() //Used in secHUD icon generation
+	if(!src.id)
+		return "Unknown"
+
+	return src.id.GetJobName() //isn't it beautiful?
+
+
 /obj/item/device/pda/medical
 	name = "Medical PDA"
 	default_cartridge = /obj/item/weapon/cartridge/medical

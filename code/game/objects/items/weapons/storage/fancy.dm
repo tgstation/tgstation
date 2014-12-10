@@ -51,6 +51,7 @@
 	storage_slots = 6
 	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/donut")
 
+	foldable = /obj/item/stack/sheet/cardboard
 
 /obj/item/weapon/storage/fancy/donut_box/New()
 	..()
@@ -69,6 +70,8 @@
 	name = "egg box"
 	storage_slots = 12
 	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/egg")
+
+	foldable = /obj/item/stack/sheet/cardboard
 
 /obj/item/weapon/storage/fancy/egg_box/New()
 	..()
@@ -267,6 +270,8 @@
 	storage_slots = 6
 	m_amt = 15000
 	can_hold = list("/obj/item/device/flashlight/flare")
+
+	foldable = /obj/item/stack/sheet/cardboard
 
 /obj/item/weapon/storage/fancy/flares/New()
 	..()
