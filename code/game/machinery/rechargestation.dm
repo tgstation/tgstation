@@ -66,7 +66,7 @@
 	open_machine()
 	..(severity)
 
-/obj/machinery/recharge_station/ex_act(severity, specialty)
+/obj/machinery/recharge_station/ex_act(severity, target)
 	if(occupier)
 		open_machine()
 	..()

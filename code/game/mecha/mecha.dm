@@ -607,7 +607,7 @@ obj/mecha/proc/can_use(mob/user)
 	Proj.on_hit(src)
 	return
 
-/obj/mecha/ex_act(severity, specialty)
+/obj/mecha/ex_act(severity, target)
 	src.log_message("Affected by explosion of severity: [severity].",1)
 	if(prob(src.deflect_chance))
 		severity++

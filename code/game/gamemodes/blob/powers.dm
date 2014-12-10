@@ -249,6 +249,8 @@
 	if(!T)
 		return
 
+	if(!can_attack())
+		return
 	var/obj/effect/blob/B = locate() in T
 	if(B)
 		src << "There is a blob here!"
@@ -261,6 +263,7 @@
 
 	if(!can_buy(5))
 		return
+	last_attack = world.time
 	OB.expand(T, 0)
 	return
 

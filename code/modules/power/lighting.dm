@@ -572,7 +572,7 @@
 // explosion effect
 // destroy the whole light fixture or just shatter it
 
-/obj/machinery/light/ex_act(severity, specialty)
+/obj/machinery/light/ex_act(severity, target)
 	..()
 	if(!gc_destroyed)
 		switch(severity)

@@ -134,7 +134,7 @@
 /mob/living/proc/InCritical()
 	return (src.health < 0 && src.health > -95.0 && stat == UNCONSCIOUS)
 
-/mob/living/ex_act(severity, specialty)
+/mob/living/ex_act(severity, target)
 	..()
 	if(client && !blinded)
 		flick("flash", src.flash)
@@ -428,8 +428,11 @@
 	return
 
 /mob/living/Move(atom/newloc, direct)
-	if (buckled && buckled.loc != newloc && !buckled.anchored)
-		return buckled.Move(newloc, direct)
+	if (buckled && buckled.loc != newloc)
+		if (!buckled.anchored)
+			return buckled.Move(newloc, direct)
+		else
+			return 0
 
 	if (restrained())
 		stop_pulling()

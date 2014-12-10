@@ -101,7 +101,7 @@
 				spawn(10) update_icon()
 
 
-/obj/structure/closet/fireaxecabinet/ex_act(severity, specialty)
+/obj/structure/closet/fireaxecabinet/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			qdel(src)

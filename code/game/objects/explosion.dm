@@ -6,11 +6,6 @@
 	if(dx>=dy)	return dx + (0.5*dy)	//The longest side add half the shortest side approximates the hypotenuse
 	else		return dy + (0.5*dx)
 
-/proc/contents_explosion(var/atom/A, severity, specialty)
-	for(var/atom/B in A.contents)
-		B.ex_act(severity, specialty)
-
-
 proc/trange(var/Dist=0,var/turf/Center=null)//alternative to range (ONLY processes turfs and thus less intensive)
 	if(Center==null) return
 
@@ -111,7 +106,7 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 			//------- TURF FIRES -------
 
 			if(T)
-				if(flame_dist && prob(40) && !istype(T, /turf/space))
+				if(flame_dist && prob(40) && !istype(T, /turf/space) && !T.density)
 					new/obj/effect/hotspot(T) //Mostly for ambience!
 				if(dist > 0)
 					T.ex_act(dist)

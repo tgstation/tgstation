@@ -172,6 +172,12 @@
 
 	if(reagents) reagents.metabolize(src)
 
+	if (reagents.get_reagent_amount("plasma")>=5)
+		mutation_chance = min(mutation_chance + 5,50) //Prevents mutation chance going >50%
+		reagents.remove_reagent("plasma", 5)
+	if (reagents.get_reagent_amount("inaprovaline")>=5)
+		mutation_chance = max(mutation_chance - 5,0) //Prevents muation chance going <0%
+		reagents.remove_reagent("inaprovaline", 5)
 	src.updatehealth()
 
 	return //TODO: DEFERRED

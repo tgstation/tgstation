@@ -1050,13 +1050,24 @@ About the new airlock wires panel:
 	if(killthis)
 		killthis.ex_act(2)//Smashin windows
 
-	..()
+	if(density)
+		return 1
+	operating = 1
+	do_animate("closing")
+	src.layer = 3.1
+	sleep(5)
+	src.density = 1
+	if(!safe)
+		crush()
+	sleep(5)
+	update_icon()
+	if(visible && !glass)
+		SetOpacity(1)
+	operating = 0
+	air_update_turf(1)
+	update_freelook_sight()
 	if(locate(/mob/living) in get_turf(src))
-		if(!safe)
-			crush()
-		else
-			open()
-			return
+		open()
 	return
 
 /obj/machinery/door/airlock/New()

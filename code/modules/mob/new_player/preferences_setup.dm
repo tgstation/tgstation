@@ -144,7 +144,7 @@
 			if(LAWYER)
 				clothes_s = new /icon('icons/mob/uniform.dmi', "bluesuit_s")
 				clothes_s.Blend(new /icon('icons/mob/feet.dmi', "laceups"), ICON_UNDERLAY)
-				clothes_s.Blend(new /icon('icons/mob/suit.dmi', "suitjacket_blue_open"), ICON_OVERLAY)
+				clothes_s.Blend(new /icon('icons/mob/suit.dmi', "suitjacket_blue"), ICON_OVERLAY)
 				clothes_s.Blend(new /icon('icons/mob/items_lefthand.dmi', "briefcase"), ICON_OVERLAY)
 				if(backbag == 2)
 					clothes_s.Blend(new /icon('icons/mob/back.dmi', "backpack"), ICON_OVERLAY)

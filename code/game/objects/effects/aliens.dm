@@ -79,7 +79,7 @@
 	healthcheck()
 
 
-/obj/structure/alien/resin/ex_act(severity, specialty)
+/obj/structure/alien/resin/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			health -= 150
@@ -211,7 +211,7 @@
 			new /obj/structure/alien/weeds(T, linked_node)
 
 
-/obj/structure/alien/weeds/ex_act(severity, specialty)
+/obj/structure/alien/weeds/ex_act(severity, target)
 	qdel(src)
 
 
