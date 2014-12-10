@@ -474,7 +474,7 @@
 
 /obj/item/weapon/resonator/proc/CreateResonance(var/target, var/creator)
 	if(cooldown <= 0)
-		playsound(src,'sound/effects/stealthoff.ogg',50,1)
+		playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
 		var/obj/effect/resonance/R = new /obj/effect/resonance(get_turf(target))
 		R.creator = creator
 		cooldown = 1
@@ -507,7 +507,7 @@
 		return
 	if(istype(proj_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = proj_turf
-		playsound(src,'sound/effects/sparks4.ogg',50,1)
+		playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
 		M.gets_drilled()
 		spawn(5)
 			qdel(src)
@@ -518,7 +518,7 @@
 			name = "strong resonance field"
 			resonance_damage = 45
 		spawn(50)
-			playsound(src,'sound/effects/sparks4.ogg',50,1)
+			playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
 			if(creator)
 				for(var/mob/living/L in src.loc)
 					add_logs(creator, L, "used a resonator field on", object="resonator")

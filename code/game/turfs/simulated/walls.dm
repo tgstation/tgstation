@@ -225,7 +225,7 @@
 
 
 /turf/simulated/wall/proc/try_destroy(obj/item/weapon/W as obj, mob/user as mob, turf/T as turf)
-	if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+	if (istype(W, /obj/item/weapon/pickaxe/drill/diamonddrill))
 		user << "<span class='notice'>You begin to drill though the wall.</span>"
 		if(do_after(user, slicing_duration*0.6))  // diamond drill is faster than welding tool slicing
 			if( !istype(src, /turf/simulated/wall) || !user || !W || !T )

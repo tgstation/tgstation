@@ -162,7 +162,7 @@ datum/objective_item/special/aegun
 
 datum/objective_item/special/ddrill
 	name = "a diamond drill"
-	targetitem = /obj/item/weapon/pickaxe/diamonddrill
+	targetitem = /obj/item/weapon/pickaxe/drill/diamonddrill
 	difficulty = 10
 
 datum/objective_item/special/boh

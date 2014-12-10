@@ -156,7 +156,7 @@ datum/design/drill_diamond
 	build_type = PROTOLATHE
 	materials = list("$metal" = 3000, "$glass" = 1000, "$diamond" = 3750) //Yes, a whole diamond is needed.
 	reliability = 79
-	build_path = /obj/item/weapon/pickaxe/diamonddrill
+	build_path = /obj/item/weapon/pickaxe/drill/diamonddrill
 
 /////////////////////////////////////////
 //////////////Blue Space/////////////////
