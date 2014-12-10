@@ -11,9 +11,9 @@
 				movement_dir |= movement_keys[key]
 
 		// sanity checks in case you hold left and right and up to make sure you only go up
-		if((movement_dir & NORTH) && (movement_dir & SOUTH))
+		if(movement_dir & (NORTH|SOUTH))
 			movement_dir &= ~(NORTH|SOUTH)
-		if((movement_dir & EAST) && (movement_dir & WEST))
+		if(movement_dir & (EAST|WEST))
 			movement_dir &= ~(EAST|WEST)
 
 		if(movement_dir)

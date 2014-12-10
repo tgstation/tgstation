@@ -99,13 +99,3 @@ Proc for attack log creation, because really why not
 		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [what_done] by [user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition]</font>")
 	if(admin)
 		log_attack("<font color='red'>[user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] [what_done] [target ? "[target.name][(ismob(target) && target.ckey)? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition]</font>")
-
-
-// Takes a verb name as text, sets window focus to the client's input box, and then sticks the text into the input box.
-// For example, send_to_input("say") would result in the client getting |say " | in their input, ready to type a say command
-// Better than a shitty input() dialogue if you ask me.
-/mob/proc/send_to_input(text)
-	text = "!" + text
-	text += " \""
-	client.winset_focus_to("input")
-	winset(client, "input", "text=[text]")

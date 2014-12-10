@@ -18,6 +18,9 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	if(src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
 
+	if(!msg)
+		msg = input(usr, "If you need help, describe your issue in detail so an administrator can assist you.", "Admin Help") as null|text
+
 	//remove out adminhelp verb temporarily to prevent spamming of admins.
 	src.verbs -= /client/verb/adminhelp
 	spawn(1200)

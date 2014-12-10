@@ -23,7 +23,7 @@
 			a_intent_change("left")
 
 		if("t")
-			send_to_input("say")
+			say_verb()
 
 		if("north","w")
 			if(client.keys_active["ctrl"])

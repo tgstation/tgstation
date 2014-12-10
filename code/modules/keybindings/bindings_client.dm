@@ -2,8 +2,8 @@
 // Clients aren't datums so we have to define these procs indpendently.
 // These verbs are called for all key press and release events
 /client/verb/key_down(key as text)
-	set hidden = 1
 	set instant = 1
+	set hidden = 1
 
 	keys_held[key] = 1
 	keys_active[key] = 1
@@ -23,7 +23,7 @@
 			if(keys_active["ctrl"] && keys_active["shift"]) // Is this command ever used?
 				winset(src, null, "command=.options")
 			else
-				mob.send_to_input("adminhelp")
+				adminhelp()
 
 		if("F2") // Screenshot. Hold shift to choose a name and location to save in
 			winset(src, null, "command=.screenshot [!keys_active["shift"] ? "auto" : ""]")
@@ -37,8 +37,8 @@
 		mob.focus.key_down(key, src)
 
 /client/verb/key_up(key as text)
-	set hidden = 1
 	set instant = 1
+	set hidden = 1
 
 	keys_held.Remove(key)
 
