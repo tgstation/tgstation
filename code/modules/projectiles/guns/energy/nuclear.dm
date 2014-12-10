@@ -13,6 +13,12 @@
 	update_icon()
 
 
+/obj/item/weapon/gun/energy/gun/advtaser
+	name = "advanced taser"
+	desc = "A hybrid taser designed to fire both short-range high-power rounds and long-range disabler beams."
+	icon_state = "advtaser"
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/disabler)
+
 /obj/item/weapon/gun/energy/gun/nuclear
 	name = "advanced energy gun"
 	desc = "An energy gun with an experimental miniaturized nuclear reactor that automatically charges the internal power cell."
