@@ -45,8 +45,7 @@
 		spark_system.start()
 		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 		playsound(src.loc, "sparks", 50, 1)
-		for(var/mob/O in viewers(user, 3))
-			O.show_message(text("<span class='notice'>\The [src] has been sliced open by [] with an energy blade!</span>", user), 1, text("<span class='danger'>You hear metal being sliced and sparks flying.</span>"), 2)
+		visible_message("<span class='notice'>[user] has sliced open \the [src] with an energy blade!</span>", "<span class='danger'>You hear metal being sliced and sparks flying.</span>")
 		return
 	if(!locked)
 		..()

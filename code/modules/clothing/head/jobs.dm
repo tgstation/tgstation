@@ -34,13 +34,6 @@
 	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
 
 //Chaplain
-/obj/item/clothing/head/chaplain_hood
-	name = "chaplain's hood"
-	desc = "It's hood that covers the head. It keeps you warm during the space winters."
-	icon_state = "chaplain_hood"
-	flags = HEADCOVERSEYES|BLOCKHAIR
-
-//Chaplain
 /obj/item/clothing/head/nun_hood
 	name = "nun hood"
 	desc = "Maximum piety in this star system."
@@ -67,8 +60,6 @@
 	desc = "The robust standard-issue cap of the Head of Security. For showing the officers who's in charge."
 	icon_state = "hoscap"
 	armor = list(melee = 80, bullet = 60, laser = 50, energy = 10, bomb = 25, bio = 10, rad = 0)
-	flags = 0
-	flags_inv = HIDEEARS
 	strip_delay = 80
 
 /obj/item/clothing/head/HoS/beret
@@ -81,8 +72,6 @@
 	desc = "It's a special armored hat issued to the Warden of a security force. Protects the head from impacts."
 	icon_state = "policehelm"
 	armor = list(melee = 60, bullet = 5, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
-	flags = 0
-	flags_inv = HIDEEARS
 	strip_delay = 60
 
 /obj/item/clothing/head/warden/drill
@@ -95,6 +84,7 @@
 	desc = "A robust beret with the security insignia emblazoned on it. For officers that are more inclined towards style than safety."
 	icon_state = "beret_badge"
 	armor = list(melee = 30, bullet = 5, laser = 15, energy = 10, bomb = 0, bio = 0, rad = 0)
+	strip_delay = 60
 
 /obj/item/clothing/head/beret/sec/navyhos
 	name = "head of security's beret"

@@ -140,34 +140,23 @@ var/list/solars_list = list()
 			unset_control()
 
 /obj/machinery/power/solar/proc/broken()
+	. = (!(stat & BROKEN))
 	stat |= BROKEN
 	unset_control()
 	update_icon()
 	return
 
 
-/obj/machinery/power/solar/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			if(prob(15))
-				new /obj/item/weapon/shard( src.loc )
-			qdel(src)
-			return
-
-		if(2.0)
-			if (prob(25))
-				new /obj/item/weapon/shard( src.loc )
-				qdel(src)
-				return
-
-			if (prob(50))
-				broken()
-
-		if(3.0)
-			if (prob(25))
-				broken()
-	return
-
+/obj/machinery/power/solar/ex_act(severity, target)
+	..()
+	if(!gc_destroyed)
+		switch(severity)
+			if(2)
+				if(prob(50) && broken())
+					new /obj/item/weapon/shard(src.loc)
+			if(3)
+				if(prob(25) && broken())
+					new /obj/item/weapon/shard(src.loc)
 
 /obj/machinery/power/solar/blob_act()
 	if(prob(75))
@@ -524,20 +513,16 @@ var/list/solars_list = list()
 	update_icon()
 
 
-/obj/machinery/power/solar_control/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			//SN src = null
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				broken()
-		if(3.0)
-			if (prob(25))
-				broken()
-	return
-
+/obj/machinery/power/solar_control/ex_act(severity, target)
+	..()
+	if(!gc_destroyed)
+		switch(severity)
+			if(2)
+				if(prob(50))
+					broken()
+			if(3)
+				if(prob(25))
+					broken()
 
 /obj/machinery/power/solar_control/blob_act()
 	if (prob(75))

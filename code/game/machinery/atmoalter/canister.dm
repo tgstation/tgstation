@@ -204,7 +204,7 @@ update_flag
 			healthcheck()
 	..()
 
-/obj/machinery/portable_atmospherics/canister/ex_act(severity)
+/obj/machinery/portable_atmospherics/canister/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			if(destroyed || prob(30))

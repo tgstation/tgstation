@@ -49,7 +49,7 @@
 	return
 
 
-/obj/effect/accelerated_particle/ex_act(severity)
+/obj/effect/accelerated_particle/ex_act(severity, target)
 	loc = null
 	return
 

@@ -272,7 +272,8 @@
 	else
 		if(user.a_intent == "harm" && !defib.safety)
 			busy = 1
-			H.visible_message("<span class='danger'>[M.name] has been touched with [src] by [user]!</span>")
+			H.visible_message("<span class='danger'>[user] has touched [H.name] with [src]!</span>", \
+					"<span class='userdanger'>[user] has touched [H.name] with [src]!</span>")
 			H.adjustStaminaLoss(50)
 			H.Weaken(5)
 			H.updatehealth() //forces health update before next life tick
@@ -294,8 +295,8 @@
 				playsound(get_turf(src), 'sound/weapons/flash.ogg', 50, 0)
 				var/mob/dead/observer/ghost = H.get_ghost()
 				var/tplus = world.time - H.timeofdeath
-				var/tlimit = 1800 //past this much time the subject is unrecoverable, currently 3m
-				var/tloss = 900 //brain damage starts setting in after some time, currently 1m30s
+				var/tlimit = 3000 //past this much time the patient is unrecoverable (in deciseconds)
+				var/tloss = 900 //brain damage starts setting in on the patient after some time left rotting
 				var/total_burn	= 0
 				var/total_brute	= 0
 				if(do_after(user, 20)) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total

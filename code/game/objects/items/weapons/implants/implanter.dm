@@ -16,7 +16,7 @@
 		icon_state = "implanter0"
 
 
-/obj/item/weapon/implanter/attack(mob/M, mob/user)
+/obj/item/weapon/implanter/attack(mob/living/carbon/M, mob/user)
 	if(!iscarbon(M))
 		return
 	if(user && imp)
@@ -25,7 +25,7 @@
 		var/turf/T = get_turf(M)
 		if(T && (M == user || do_after(user, 50)))
 			if(user && M && (get_turf(M) == T) && src && imp)
-				M.visible_message("<span class='warning'>[M] has been implanted by [user].</span>")
+				M.visible_message("<span class='warning'>[user] has implanted [M].</span>")
 				add_logs(user, M, "implanted", object="[name]")
 				user << "<span class='notice'>You implanted the implant into [M].</span>"
 				if(imp.implanted(M))
@@ -35,6 +35,9 @@
 
 				imp = null
 				update_icon()
+				if(istype(M, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = M
+					H.sec_hud_set_implants()
 
 
 

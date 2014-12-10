@@ -738,8 +738,6 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(user, /mob/living/silicon))		//How does AI know what plant is?
 		return
 	if(harvest)
-		if(!user in range(1,src))
-			return
 		myseed.harvest()
 	else if(dead)
 		planted = 0
@@ -772,7 +770,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
 	var/t_amount = 0
 	var/list/result = list()
-	var/output_loc = Adjacent(user) ? user.loc : parent.loc //needed for TK
+	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
 
 	while(t_amount < getYield())
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, potency)
@@ -795,17 +793,16 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 /obj/item/seeds/replicapod/harvest(mob/user = usr) //now that one is fun -- Urist
 	var/obj/machinery/hydroponics/parent = loc
 	var/make_podman = 0
-	var/mob/ghost
 	if(ckey && config.revival_pod_plants)
-		ghost = find_dead_player("[ckey]")
-		if(ismob(ghost))
-			if(istype(ghost,/mob/dead/observer))
-				var/mob/dead/observer/O = ghost
-				if(istype(mind,/datum/mind))
+		for(var/mob/M in player_list)
+			if(M.ckey == ckey && M.stat == 2 && !M.suiciding)
+				if(istype(M, /mob/dead/observer))
+					var/mob/dead/observer/O = M
 					if(O.can_reenter_corpse)
 						make_podman = 1
-			else
+					break
 				make_podman = 1
+				break
 
 	if(make_podman)	//all conditions met!
 		var/mob/living/carbon/human/podman = new /mob/living/carbon/human(parent.loc)
@@ -813,32 +810,11 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			podman.real_name = realName
 		else
 			podman.real_name = "Pod Person [rand(0,999)]"
-		var/oldactive = mind.active
-		mind.active = 1
+		podman.refresh_huds(mind.current)
 		mind.transfer_to(podman)
-		mind.active = oldactive
-			// -- Mode/mind specific stuff goes here. TODO! Broken :( Should be merged into mob/living/Login
-		if((podman.mind in ticker.mode.A_bosses) || (podman.mind in ticker.mode.A_gangsters) || (podman.mind in ticker.mode.B_bosses) || (podman.mind in ticker.mode.B_gangsters))
-			ticker.mode.update_all_gang_icons()
-		if(podman.mind in ticker.mode:revolutionaries)
-			ticker.mode.add_revolutionary(podman.mind)
-			ticker.mode.update_all_rev_icons() //So the icon actually appears
-		if(podman.mind in ticker.mode:head_revolutionaries)
-			ticker.mode.add_revolutionary(podman.mind)
-			ticker.mode.update_all_rev_icons()
-		if(podman.mind in ticker.mode:syndicates)
-			ticker.mode:update_all_synd_icons()
-		if(podman.mind in ticker.mode:cult)
-			ticker.mode:add_cultist(podman.mind)
-			ticker.mode:update_all_cult_icons() //So the icon actually appears
-
-			// -- End mode specific stuff
-
-		podman.gender = ghost.gender
-
-		//dna stuff
-		hardset_dna(podman, ui, se, null, null, null, !prob(potency) ? /datum/species/plant/pod : null, "#59CE00")	//makes sure podman has dna and sets the dna's ui/se/mutantrace/real_name etc variables
-
+		podman.ckey = ckey
+		podman.gender = blood_gender
+		hardset_dna(podman,null,null,podman.real_name,blood_type,/datum/species/plant/pod,"#59CE00")//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 		podman.set_cloned_appearance()
 
 	else //else, one packet of seeds. maybe two

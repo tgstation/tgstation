@@ -97,59 +97,31 @@
 
 	return tally + config.slime_delay
 
-/mob/living/carbon/slime/Bump(atom/movable/AM as mob|obj, yes)
-	if ((!(yes) || now_pushing))
-		return
-	now_pushing = 1
+/mob/living/carbon/slime/ObjBump(obj/O)
+	if(!client && powerlevel > 0)
+		var/probab = 10
+		switch(powerlevel)
+			if(1 to 2)	probab = 20
+			if(3 to 4)	probab = 30
+			if(5 to 6)	probab = 40
+			if(7 to 8)	probab = 60
+			if(9)		probab = 70
+			if(10)		probab = 95
+		if(prob(probab))
+			if(istype(O, /obj/structure/window) || istype(O, /obj/structure/grille))
+				if(nutrition <= get_hunger_nutrition() && !Atkcool)
+					if (is_adult || prob(5))
+						O.attack_slime(src)
+						Atkcool = 1
+						spawn(45)
+							Atkcool = 0
 
-	if(isobj(AM))
-		if(!client && powerlevel > 0)
-			var/probab = 10
-			switch(powerlevel)
-				if(1 to 2)	probab = 20
-				if(3 to 4)	probab = 30
-				if(5 to 6)	probab = 40
-				if(7 to 8)	probab = 60
-				if(9)		probab = 70
-				if(10)		probab = 95
-			if(prob(probab))
-				if(istype(AM, /obj/structure/window) || istype(AM, /obj/structure/grille))
-					if(nutrition <= get_hunger_nutrition() && !Atkcool)
-						if (is_adult || prob(5))
-							AM.attack_slime(src)
-							spawn()
-								Atkcool = 1
-								sleep(45)
-								Atkcool = 0
-
-	if(ismob(AM))
-		var/mob/tmob = AM
-
-		if(is_adult)
-			if(istype(tmob, /mob/living/carbon/human))
-				if(prob(90))
-					now_pushing = 0
-					return
+/mob/living/carbon/slime/MobBump(mob/M)
+	if(istype(M, /mob/living/carbon/human)) //pushing humans
+		if(is_adult && prob(10)) //only if we're adult, and 10% of the time
+			return 0
 		else
-			if(istype(tmob, /mob/living/carbon/human))
-				now_pushing = 0
-				return
-
-	now_pushing = 0
-	..()
-	if (!istype(AM, /atom/movable))
-		return
-	if (!( now_pushing ))
-		now_pushing = 1
-		if (!( AM.anchored ))
-			var/t = get_dir(src, AM)
-			if (istype(AM, /obj/structure/window))
-				if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-					for(var/obj/structure/window/win in get_step(AM,t))
-						now_pushing = 0
-						return
-			step(AM, t)
-		now_pushing = null
+			return 1
 
 /mob/living/carbon/slime/Process_Spacemove(var/movement_dir = 0)
 	return 2
@@ -186,7 +158,7 @@
 	powerlevel = 0 // oh no, the power!
 	..()
 
-/mob/living/carbon/slime/ex_act(severity)
+/mob/living/carbon/slime/ex_act(severity, target)
 	..()
 
 	var/b_loss = null
@@ -440,7 +412,16 @@
 	return
 
 /mob/living/carbon/slime/attackby(obj/item/W, mob/living/user)
-	if(W.force > 0)
+	if(istype(W,/obj/item/stack/sheet/mineral/plasma)) //Let's you feed slimes plasma.
+		if (user in Friends)
+			++Friends[user]
+		else
+			Friends[user] = 1
+		user << "You feed the slime the plasma. It chirps happily."
+		var/obj/item/stack/sheet/mineral/plasma/S = W
+		S.use(1)
+		return
+	else if(W.force > 0)
 		attacked += 10
 		if(prob(25))
 			user.do_attack_animation(src)
@@ -448,7 +429,7 @@
 			return
 		if(Discipline && prob(50)) // wow, buddy, why am I getting attacked??
 			Discipline = 0
-	if(W.force >= 3)
+	else if(W.force >= 3)
 		if(is_adult)
 			if(prob(5 + round(W.force/2)))
 				if(Victim || Target)

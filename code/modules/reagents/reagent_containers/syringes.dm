@@ -110,7 +110,14 @@
 						temp_chem += R.name
 						temp_chem[R.name] = R.volume
 					B.data["trace_chem"] = list2params(temp_chem)
-
+					if(T.mind)
+						B.data["mind"] = T.mind
+					if(T.ckey)
+						B.data["ckey"] = T.ckey
+					if(!T.suiciding)
+						B.data["cloneable"] = 1
+					B.data["gender"] = T.gender
+					B.data["real_name"] = T.real_name
 					reagents.reagent_list += B
 					reagents.update_total()
 					on_reagent_change()

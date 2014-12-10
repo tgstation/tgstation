@@ -639,21 +639,33 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	name = "killer-tomato"
 	desc = "I say to-mah-to, you say tom-mae-to... OH GOD IT'S EATING MY LEGS!!"
 	icon_state = "killertomato"
+	var/awakening = 0
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer/attack(mob/M, mob/user, def_zone)
+	if(awakening)
+		user << "<span class='warning'>The tomato is twitching and shaking, preventing you from eating it.</span>"
+		return
+	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer/attack_self(mob/user as mob)
-	if(istype(user.loc,/turf/space))
+	if(awakening || istype(user.loc,/turf/space))
 		return
 	user << "<span class='notice'>You begin to awaken the Killer Tomato.</span>"
-	sleep(30)
-	var/mob/living/simple_animal/hostile/killertomato/K = new /mob/living/simple_animal/hostile/killertomato(get_turf(src.loc))
-	K.maxHealth += round(endurance / 3)
-	K.melee_damage_lower += round(potency / 10)
-	K.melee_damage_upper += round(potency / 10)
-	K.move_to_delay -= round(production / 50)
-	K.health = K.maxHealth
-	user.unEquip(src)
-	qdel(src)
-	K.visible_message("<span class='notice'>The Killer Tomato growls as it suddenly awakens.</span>")
+	awakening = 1
+
+	spawn(30)
+		if(!gc_destroyed)
+			var/mob/living/simple_animal/hostile/killertomato/K = new /mob/living/simple_animal/hostile/killertomato(get_turf(src.loc))
+			K.maxHealth += round(endurance / 3)
+			K.melee_damage_lower += round(potency / 10)
+			K.melee_damage_upper += round(potency / 10)
+			K.move_to_delay -= round(production / 50)
+			K.health = K.maxHealth
+			K.visible_message("<span class='notice'>The Killer Tomato growls as it suddenly awakens.</span>")
+			if(user)
+				user.unEquip(src)
+			qdel(src)
+
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blood

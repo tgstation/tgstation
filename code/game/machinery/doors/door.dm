@@ -22,10 +22,8 @@
 	..()
 	if(density)
 		layer = 3.1 //Above most items if closed
-		explosion_resistance = initial(explosion_resistance)
 	else
 		layer = 2.7 //Under all objects if opened. 2.7 due to tables being at 2.6
-		explosion_resistance = 0
 	update_freelook_sight()
 	air_update_turf(1)
 	airlocks += src
@@ -85,7 +83,7 @@
 
 //used in the AStar algorithm to determinate if the turf the door is on is passable
 /obj/machinery/door/proc/CanAStarPass(var/obj/item/weapon/card/id/ID)
-	return !density || check_access(ID)
+	return !density
 
 /obj/machinery/door/proc/bumpopen(mob/user as mob)
 	if(operating)
@@ -171,20 +169,14 @@
 	..()
 
 
-/obj/machinery/door/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-		if(2.0)
-			if(prob(25))
-				qdel(src)
-		if(3.0)
-			if(prob(80))
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-				s.set_up(2, 1, src)
-				s.start()
-	return
-
+/obj/machinery/door/ex_act(severity, target)
+	if(severity == 3)
+		if(prob(80))
+			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			s.set_up(2, 1, src)
+			s.start()
+		return
+	..()
 
 /obj/machinery/door/update_icon()
 	if(density)
@@ -212,41 +204,44 @@
 
 
 /obj/machinery/door/proc/open()
-	if(!density)		return 1
-	if(operating)		return
-	if(!ticker)			return 0
+	if(!density)
+		return 1
+	if(operating)
+		return
+	if(!ticker)
+		return 0
 	operating = 1
 
 	do_animate("opening")
 	icon_state = "door0"
 	src.SetOpacity(0)
-	sleep(10)
-	src.layer = 2.7
+	sleep(5)
 	src.density = 0
-	explosion_resistance = 0
+	sleep(5)
+	src.layer = 2.7
 	update_icon()
 	SetOpacity(0)
+	operating = 0
 	air_update_turf(1)
 	update_freelook_sight()
-
-	if(operating)	operating = 0
-
 	return 1
 
 
 /obj/machinery/door/proc/close()
-	if(density)	return 1
-	if(operating)	return
+	if(density)
+		return 1
+	if(operating)
+		return
 	operating = 1
 
 	do_animate("closing")
-	src.density = 1
-	explosion_resistance = initial(explosion_resistance)
 	src.layer = 3.1
-	sleep(10)
+	sleep(5)
+	src.density = 1
+	sleep(5)
 	update_icon()
 	if(visible && !glass)
-		SetOpacity(1)	//caaaaarn!
+		SetOpacity(1)
 	operating = 0
 	air_update_turf(1)
 	update_freelook_sight()

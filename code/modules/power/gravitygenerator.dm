@@ -28,7 +28,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	unacidable = 1
 	var/sprite_number = 0
 
-/obj/machinery/gravity_generator/ex_act(severity)
+/obj/machinery/gravity_generator/ex_act(severity, target)
 	if(severity == 1) // Very sturdy.
 		set_broken()
 

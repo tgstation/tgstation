@@ -3,11 +3,13 @@
 
 /obj/machinery/door/firedoor
 	name = "firelock"
-	desc = "Apply crowbar"
-	icon = 'icons/obj/doors/Doorfire.dmi'
+	desc = "Apply crowbar."
+	icon = 'icons/obj/doors/Doorfireglass.dmi'
 	icon_state = "door_open"
 	opacity = 0
 	density = 0
+	heat_proof = 1
+	glass = 1
 	var/blocked = 0
 	var/nextstate = null
 
@@ -86,6 +88,9 @@
 
 /obj/machinery/door/firedoor/close()
 	..()
+	if(locate(/mob/living) in get_turf(src))
+		open()
+		return
 	latetoggle()
 	return
 
@@ -104,10 +109,6 @@
 
 /obj/machinery/door/firedoor/border_only
 	icon = 'icons/obj/doors/edge_Doorfire.dmi'
-	glass = 1 //There is a glass window so you can see through the door
-			  //This is needed due to BYOND limitations in controlling visibility
-	heat_proof = 1
-
 	flags = ON_BORDER
 
 /obj/machinery/door/firedoor/border_only/CanPass(atom/movable/mover, turf/target, height=0)
@@ -132,6 +133,10 @@
 	else
 		return 1
 
-//used in the AStar algorithm to determinate if the turf the door is on is passable
-/obj/machinery/door/firedoor/CanAStarPass()
-	return !density
+
+/obj/machinery/door/firedoor/heavy
+	name = "heavy firelock"
+	icon = 'icons/obj/doors/Doorfire.dmi'
+	glass = 0
+
+

@@ -37,7 +37,6 @@
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
-
 	if(client.buildmode)
 		build_click(src, client.buildmode, params, A)
 		return
@@ -288,8 +287,7 @@
 	LE.current = T
 	LE.yo = U.y - T.y
 	LE.xo = U.x - T.x
-	spawn( 1 )
-		LE.process()
+	LE.fire()
 
 /mob/living/carbon/human/LaserEyes()
 	if(nutrition>0)

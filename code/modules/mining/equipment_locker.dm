@@ -192,7 +192,7 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/mineral/ore_redemption/ex_act(severity)
+/obj/machinery/mineral/ore_redemption/ex_act(severity, target)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
@@ -204,7 +204,6 @@
 		if(prob(25))
 			empty_content()
 			qdel(src)
-	return
 
 //empty the redemption machine by stacks of at most max_amount (50 at this time) size
 /obj/machinery/mineral/ore_redemption/proc/empty_content()
@@ -358,16 +357,12 @@
 			new /obj/item/device/t_scanner/adv_mining_scanner(src.loc)
 	qdel(voucher)
 
-/obj/machinery/mineral/equipment_vendor/ex_act(severity)
+/obj/machinery/mineral/equipment_vendor/ex_act(severity, target)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
-	if(severity == 1)
-		if(prob(50))
-			qdel(src)
-	else if(severity == 2)
-		if(prob(25))
-			qdel(src)
+	if(prob(50 / severity) && severity < 3)
+		qdel(src)
 
 /**********************Mining Equipment Vendor Items**************************/
 

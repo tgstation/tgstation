@@ -18,7 +18,8 @@
 	var/scan_state = null //Holder for the image we display when we're pinged by a mining scanner
 	var/hidden = 1
 
-/turf/simulated/mineral/ex_act(severity)
+/turf/simulated/mineral/ex_act(severity, target)
+	..()
 	switch(severity)
 		if(3.0)
 			if (prob(75))
@@ -493,7 +494,8 @@
 /turf/simulated/floor/plating/asteroid/burn_tile()
 	return
 
-/turf/simulated/floor/plating/asteroid/ex_act(severity)
+/turf/simulated/floor/plating/asteroid/ex_act(severity, target)
+	contents_explosion(severity, target)
 	switch(severity)
 		if(3.0)
 			return

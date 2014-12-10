@@ -123,6 +123,15 @@
 /obj/proc/hide(h)
 	return
 
+/obj/ex_act(severity, target)
+	if(severity == 1 || target == src)
+		qdel(src)
+	else if(severity == 2)
+		if(prob(50))
+			qdel(src)
+	if(!gc_destroyed)
+		..()
+
 //If a mob logouts/logins in side of an object you can use this proc
 /obj/proc/on_log()
 	..()

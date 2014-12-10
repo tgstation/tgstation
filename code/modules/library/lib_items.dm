@@ -49,10 +49,11 @@
 		if(1)
 			if(istype(I, /obj/item/stack/sheet/mineral/wood))
 				var/obj/item/stack/sheet/mineral/wood/W = I
-				W.use(2)
-				user << "<span class='notice'>You add a shelf.</span>"
-				state = 2
-				icon_state = "book-0"
+				if(W.get_amount() >= 2)
+					W.use(2)
+					user << "<span class='notice'>You add a shelf.</span>"
+					state = 2
+					icon_state = "book-0"
 			if(istype(I, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
 				user << "<span class='notice'>You unwrench the frame.</span>"
@@ -83,7 +84,7 @@
 				else
 					playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 					user << "<span class='notice'>You pry the shelf out.</span>"
-					new /obj/item/stack/sheet/mineral/wood(loc, 1)
+					new /obj/item/stack/sheet/mineral/wood(loc, 2)
 					state = 1
 					icon_state = "bookempty"
 			else
@@ -104,25 +105,13 @@
 			update_icon()
 
 
-/obj/structure/bookcase/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			for(var/obj/item/weapon/book/b in contents)
-				qdel(b)
+/obj/structure/bookcase/ex_act(severity, target)
+	..()
+	if(!gc_destroyed)
+		for(var/obj/item/weapon/book/b in contents)
+			b.loc = (get_turf(src))
+		if(prob(50))
 			qdel(src)
-		if(2.0)
-			for(var/obj/item/weapon/book/b in contents)
-				if(prob(50))
-					b.loc = (get_turf(src))
-				else
-					qdel(b)
-			qdel(src)
-		if(3.0)
-			if(prob(50))
-				for(var/obj/item/weapon/book/b in contents)
-					b.loc = (get_turf(src))
-				qdel(src)
-
 
 /obj/structure/bookcase/update_icon()
 	if(contents.len < 5)

@@ -294,7 +294,7 @@
 	healthcheck()
 	return
 
-/obj/machinery/bot/ex_act(severity)
+/obj/machinery/bot/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			explode()
@@ -424,7 +424,7 @@ obj/machinery/bot/proc/bot_move(var/dest, var/move_speed)
 
 obj/machinery/bot/proc/bot_step(var/dest)
 	if(path && path.len > 1)
-		step_to(src, path[1])
+		step_towards(src, path[1])
 		if(get_turf(src) == path[1]) //Successful move
 			path -= path[1]
 		else

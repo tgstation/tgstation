@@ -91,7 +91,7 @@ for reference:
 			qdel(src)
 		..()
 
-/obj/structure/barricade/wooden/ex_act(severity)
+/obj/structure/barricade/wooden/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			visible_message("<span class='danger'>The barricade is blown apart!</span>")

@@ -235,8 +235,7 @@
 	A.current = T
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
-	spawn( 0 )
-		A.process()
+	A.fire()
 	return
 
 
@@ -292,7 +291,7 @@
 			power_change()
 	..()
 
-/obj/machinery/turret/ex_act(severity)
+/obj/machinery/turret/ex_act(severity, target)
 	if(severity < 3)
 		src.die()
 
@@ -362,7 +361,7 @@
 	..()
 	take_damage(0) //check your health
 
-/obj/machinery/gun_turret/ex_act(severity)
+/obj/machinery/gun_turret/ex_act(severity, target)
 	switch(severity)
 		if(1)
 			die()
@@ -485,8 +484,7 @@
 	A.current = curloc
 	A.yo = targloc.y - curloc.y
 	A.xo = targloc.x - curloc.x
-	spawn(0)
-		A.process()
+	A.fire()
 	return
 
 
