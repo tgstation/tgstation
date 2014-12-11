@@ -123,7 +123,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/dangerous/car
 	name = "C-90gl Compact Assault Rifle"
 	desc = "A fully-loaded Zashchita Industriya toploading bullpup assault rifle that uses 30-round 5.45x39mm magazines with a togglable underslung 40mm grenade launcher."
-	item = /obj/item/weapon/gun/projectile/automatic/c20r
+	item = /obj/item/weapon/gun/projectile/automatic/c90gl
 	cost = 18
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 50
