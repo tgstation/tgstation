@@ -9,21 +9,19 @@
  * Security
  */
 /obj/item/clothing/under/rank/warden
-	desc = "It's made of a slightly sturdier material than standard jumpsuits, to allow for more robust protection. It has the word \"Warden\" written on the shoulders."
-	name = "warden's jumpsuit"
-	icon_state = "warden"
+	name = "warden's suit"
+	desc = "A security formal suit with silver shoulder pips and tan slacks, the universal sign of bureaucracy. You can't seem to fully get the blood stains out."
+	icon_state = "wardenformal"
 	item_state = "r_suit"
-	item_color = "warden"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	item_color = "wardenformal"
 	strip_delay = 50
 
 /obj/item/clothing/under/rank/security
-	name = "security officer's jumpsuit"
-	desc = "It's made of a slightly sturdier material than standard jumpsuits, to allow for robust protection."
-	icon_state = "security"
+	name = "security officer's suit"
+	desc = "A security formal suit with a striped tie, ironed black slacks, and a dry-cleaned white shirt. Complete with nanotrasen belt buckle."
+	icon_state = "secformal"
 	item_state = "r_suit"
-	item_color = "secred"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	item_color = "secformal"
 	strip_delay = 50
 
 /*
@@ -35,27 +33,24 @@
 	icon_state = "detective"
 	item_state = "det"
 	item_color = "detective"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	strip_delay = 50
 
-/obj/item/clothing/under/det/grey
+/obj/item/clothing/under/rank/det/grey
 	name = "noir suit"
 	desc = "A hard-boiled private investigator's grey suit, complete with tie clip."
 	icon_state = "greydet"
 	item_state = "greydet"
 	item_color = "greydet"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /*
  * Head of Security
  */
 /obj/item/clothing/under/rank/head_of_security
-	desc = "It's a jumpsuit worn by those few with the dedication to achieve the position of \"Head of Security\". It has additional armor to protect the wearer."
-	name = "head of security's jumpsuit"
-	icon_state = "hos"
+	name = "head of security's suit"
+	desc = "The formal suit worn by those few with the dedication to achieve the position of Head of Security."
+	icon_state = "hosformal"
 	item_state = "r_suit"
-	item_color = "hosred"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	item_color = "hosformal"
 	strip_delay = 60
 
 

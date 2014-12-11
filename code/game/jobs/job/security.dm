@@ -215,22 +215,22 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 				default_headset = /obj/item/device/radio/headset/headset_sec/department/supply
 				dep_access = list(access_mailsorting, access_mining)
 				destination = /area/security/checkpoint/supply
-				U.attachTie(new /obj/item/clothing/tie/armband/cargo())
+				U.attachTie(new /obj/item/clothing/tie/cargo())
 			if("engineering")
 				default_headset = /obj/item/device/radio/headset/headset_sec/department/engi
 				dep_access = list(access_construction, access_engine)
 				destination = /area/security/checkpoint/engineering
-				U.attachTie(new /obj/item/clothing/tie/armband/engine())
+				U.attachTie(new /obj/item/clothing/tie/engine())
 			if("medical")
 				default_headset = /obj/item/device/radio/headset/headset_sec/department/med
 				dep_access = list(access_medical)
 				destination = /area/security/checkpoint/medical
-				U.attachTie(new /obj/item/clothing/tie/armband/medblue())
+				U.attachTie(new /obj/item/clothing/tie/med())
 			if("science")
 				default_headset = /obj/item/device/radio/headset/headset_sec/department/sci
 				dep_access = list(access_research)
 				destination = /area/security/checkpoint/science
-				U.attachTie(new /obj/item/clothing/tie/armband/science())
+				U.attachTie(new /obj/item/clothing/tie/rnd())
 		H.equip_to_slot_or_del(U, slot_w_uniform)
 		var/teleport = 0
 		if(!config.sec_start_brig)
