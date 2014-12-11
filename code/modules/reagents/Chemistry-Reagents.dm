@@ -3266,10 +3266,10 @@ datum/reagent/ethanol/barefoot
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 45
 
-datum/reagent/ethanol/shandy
-	name = "Shandy"
-	id = "shandy"
-	description = "A cold and refreshing drink."
+datum/reagent/ethanol/snowwhite
+	name = "Snow White"
+	id = "snowwhite"
+	description = "A cold refreshment."
 	color = "#FFFFFF" // rgb: 255, 255, 255
 	boozepwr = 45
 	

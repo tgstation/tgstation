@@ -444,10 +444,10 @@
 	required_reagents = list("gargleblaster" = 1, "stoxin" = 1)
 	result_amount = 2
 
-/datum/chemical_reaction/shandy
-	name = "Shandy"
-	id = "shandy"
-	result = "shandy"
+/datum/chemical_reaction/snowwhite
+	name = "Snow White"
+	id = "snowwhite"
+	result = "snowwhite"
 	required_reagents = list("beer" = 1, "lemon_lime" = 1)
 	result_amount = 2
 	

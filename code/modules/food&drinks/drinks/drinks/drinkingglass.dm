@@ -322,10 +322,10 @@
 				icon_state = "booger"
 				name = "Booger"
 				desc = "Ewww..."
-			if("shandy")
-				icon_state = "shandy"
-				name = "Shandy"
-				desc = "A cold and refreshing drink."
+			if("snowwhite")
+				icon_state = "snowwhite"
+				name = "Snow White"
+				desc = "A cold refreshment."
 			if("bittershandy")
 				icon_state = "bittershandy"
 				name = "Bitter Shandy"
