@@ -40,35 +40,38 @@
 
 // **** Security gas mask ****
 
-/obj/item/clothing/mask/gas/sechailer
+/obj/item/clothing/mask/gas/security
 	name = "security gas mask"
-	desc = "A standard issue Security gas mask with integrated 'Compli-o-nator 3000' device. Plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you taze them. Do not tamper with the device."
-	action_button_name = "HALT!"
+	desc = "A standard security rebreather that can filter most harmful gasses while being easily adjustable to hang loosely around your neck."
+	action_button_name = "Adjust Mask"
 	icon_state = "sechailer"
-	var/cooldown = 0
-	var/aggressiveness = 2
 	ignore_maskadjust = 0
 	flags = MASKCOVERSMOUTH | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEFACE
 	visor_flags = MASKCOVERSMOUTH | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	visor_flags_inv = HIDEFACE
 
-/obj/item/clothing/mask/gas/sechailer/swat
+/obj/item/clothing/mask/gas/security/verb/adjust()
+	set category = "Object"
+	set name = "Adjust Mask"
+	adjustmask(usr)
+
+/obj/item/clothing/mask/gas/security/attack_self()
+	adjust()
+
+
+/obj/item/clothing/mask/gas/swat
 	name = "\improper SWAT mask"
 	desc = "A close-fitting tactical mask with an especially aggressive Compli-o-nator 3000."
 	action_button_name = "HALT!"
 	icon_state = "swat"
-	aggressiveness = 3
+	var/cooldown = 0
+	var/aggressiveness = 3
 	ignore_maskadjust = 1
+	flags = MASKCOVERSMOUTH | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	flags_inv = HIDEFACE
 
-/obj/item/clothing/mask/gas/sechailer/cyborg
-	name = "security hailer"
-	desc = "A set of recognizable pre-recorded messages for cyborgs to use when apprehending criminals."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "taperecorder_idle"
-	aggressiveness = 1 //Borgs are nicecurity!
-
-/obj/item/clothing/mask/gas/sechailer/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/clothing/mask/gas/swat/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		switch(aggressiveness)
 			if(1)
@@ -89,15 +92,7 @@
 	else
 		..()
 
-/obj/item/clothing/mask/gas/sechailer/verb/adjust()
-	set category = "Object"
-	set name = "Adjust Mask"
-	adjustmask(usr)
-
-/obj/item/clothing/mask/gas/sechailer/attack_self()
-	halt()
-
-/obj/item/clothing/mask/gas/sechailer/verb/halt()
+/obj/item/clothing/mask/gas/swat/verb/halt()
 	set category = "Object"
 	set name = "HALT"
 	set src in usr
@@ -182,6 +177,16 @@
 		playsound(src.loc, "sound/voice/complionator/[phrase_sound].ogg", 100, 0, 4)
 		cooldown = world.time
 
+/obj/item/clothing/mask/gas/swat/attack_self()
+	halt()
+
+/obj/item/clothing/mask/gas/swat/cyborg
+	name = "security hailer"
+	desc = "A set of recognizable pre-recorded messages for cyborgs to use when apprehending criminals."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "taperecorder_idle"
+	aggressiveness = 1 //Borgs are nicecurity!
+
 
 
 // ********************************************************************
@@ -235,12 +240,12 @@
 				temp_message[H] = ninjaspeak(temp_message[H])
 				pick_list -= H
 			message = list2text(temp_message, " ")
-			message = replacetext(message, "o", "¤")
-			message = replacetext(message, "p", "þ")
-			message = replacetext(message, "l", "£")
-			message = replacetext(message, "s", "§")
-			message = replacetext(message, "u", "µ")
-			message = replacetext(message, "b", "ß")
+			message = replacetext(message, "o", "?")
+			message = replacetext(message, "p", "?")
+			message = replacetext(message, "l", "?")
+			message = replacetext(message, "s", "?")
+			message = replacetext(message, "u", "?")
+			message = replacetext(message, "b", "?")
 	return message
 
 
