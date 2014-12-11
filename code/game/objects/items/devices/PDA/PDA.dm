@@ -958,20 +958,20 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if(app)
 					var/turf/T = get_turf(src.loc)
 
-					if(!fexists("icons/pda_icons/pda_minimap_[map_info.short_name].png"))
+					if(!fexists("icons/pda_icons/pda_minimap_[map.nameShort].png"))
 						dat += {"<span class='warning'>It appears that our services have yet to produce a minimap of this station. We apologize for the inconvenience.</span>"}
 
-					if(T.z == STATION_Z)
+					if(T.z == map.zMainStation)
 						dat += {"Current Location: <b>[T.loc.name] ([T.x-WORLD_X_OFFSET],[T.y-WORLD_Y_OFFSET],1)</b><br>"}	//it's a "Station Map" app, so it only gives information reguarding
 					else																									//the station's z-level
 						dat += {"Current Location: <b>Unknown</b><br>"}
 
-					if(fexists("icons/pda_icons/pda_minimap_[map_info.short_name].png"))
+					if(fexists("icons/pda_icons/pda_minimap_[map.nameShort].png"))
 						dat += {"
 						<div style="position: relative; left: 0; top: 0;">
-						<img src="pda_minimap_[map_info.short_name].png" style="position: relative; top: 0; left: 0;"/>
+						<img src="pda_minimap_[map.nameShort].png" style="position: relative; top: 0; left: 0;"/>
 						"}
-						if(T.z == STATION_Z)
+						if(T.z == map.zMainStation)
 							dat += {"<img src="pda_minimap_loc.gif" style="position: absolute; top: [(T.y * -1) + 247]px; left: [T.x-8]px;"/>"}
 						for(var/datum/minimap_marker/mkr in app.markers)
 							dat += {"<img src="pda_minimap_mkr.gif" style="position: absolute; top: [((mkr.y+WORLD_Y_OFFSET) * -1) + 247]px; left: [mkr.x+WORLD_X_OFFSET-8]px;"/>"}
@@ -982,7 +982,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						<div style="position: relative; left: 0; top: 0;">
 						<img src="pda_minimap_bg_notfound.png" style="position: relative; top: 0; left: 0;"/>
 						"}
-						if(T.z == STATION_Z)
+						if(T.z == map.zMainStation)
 							dat += {"<img src="pda_minimap_loc.gif" style="position: absolute; top: [(T.y * -1) + 247]px; left: [T.x-8]px;"/>"}
 						for(var/datum/minimap_marker/mkr in app.markers)
 							dat += {"<img src="pda_minimap_mkr.gif" style="position: absolute; top: [((mkr.y+WORLD_Y_OFFSET) * -1) + 247]px; left: [mkr.x+WORLD_X_OFFSET-8]px;"/>"}
@@ -993,7 +993,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					<div style="position: relative; left: 0; top: 0;">
 					<img src="pda_minimap_bg.png" style="position: relative; top: 0; left: 0;"/>
 					"}
-					if(T.z == STATION_Z)
+					if(T.z == map.zMainStation)
 						dat += {"<img src="pda_minimap_loc.gif" style="position: absolute; top: [(T.y * -1) + 247]px; left: [T.x-8]px;"/>"}
 					for(var/datum/minimap_marker/mkr in app.markers)
 						dat += {"<img src="pda_minimap_mkr.gif" style="position: absolute; top: [((mkr.y+WORLD_Y_OFFSET) * -1) + 247]px; left: [mkr.x+WORLD_X_OFFSET-8]px;"/>"}

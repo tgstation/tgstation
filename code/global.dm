@@ -1,30 +1,32 @@
-//#define TESTING
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 // List of types and how many instances of each type there are.
 var/global/list/type_instances[0]
 
-var/global/obj/effect/datacore/data_core = null
-var/global/obj/effect/overlay/plmaster = null
-var/global/obj/effect/overlay/slmaster = null
+/var/global/datum/map/active/map = new() //Current loaded map
+//Defined in its .dm, see maps/_map.dm for more info.
 
-
+//FIXME: These are lists of things that get called every tick.
+// All of these badly need optimizing, half of them don't
+// actually need to be called every tick, many of them busy-wait
+// (come on people we're not writing assembly), and many should 
+// be using tickers instead (eg narsie, singulo). Major target
+// for cutting down on lag and boosting overall performance.
 var/global/list/machines = list()
 var/global/list/processing_objects = list()
 var/global/list/active_diseases = list()
 var/global/list/events = list()
 
+var/global/obj/effect/datacore/data_core = null
+var/global/obj/effect/overlay/plmaster = null
+var/global/obj/effect/overlay/slmaster = null
+
 var/global/list/account_DBs = list()
-
-var/global/datum/map_data/map_info = new()//defined in each .dm file in /maps/. only include to the dme the one of the map you are about to compile. do not include the map in the .dme anymore.
-
-		//items that ask to be called every cycle
 
 var/global/defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
 
-var/global/list/global_map = null
-
-var/global/datum/universal_state/universe = new
+// Used only by space turfs. TODO: Remove.
+// The comment below is no longer accurate.
+var/global/list/global_map = null 
 
 	//list/global_map = list(list(1,5),list(4,3))//an array of map Z levels.
 	//Resulting sector map looks like
@@ -36,8 +38,8 @@ var/global/datum/universal_state/universe = new
 	//3 - AI satellite
 	//5 - empty space
 
+var/global/datum/universal_state/universe = new
 
-	//////////////
 var/list/paper_tag_whitelist = list("center","p","div","span","h1","h2","h3","h4","h5","h6","hr","pre",	\
 	"big","small","font","i","u","b","s","sub","sup","tt","br","hr","ol","ul","li","caption","col",	\
 	"table","td","th","tr")

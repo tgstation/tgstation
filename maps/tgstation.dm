@@ -1,10 +1,29 @@
+
+//**************************************************************
+// Map Datum -- Boxstation
+//**************************************************************
+
+/datum/map/active
+	nameShort = "box"
+	nameLong = "Box Station"
+	tDomeX = 128
+	tDomeY = 69
+	tDomeZ = 2
+	zLevels = list(
+		/datum/zLevel/station,
+		/datum/zLevel/centcomm,
+		/datum/zLevel/space{
+			name = "spaceOldSat" ;
+			},
+		/datum/zLevel/space{
+			name = "derelict" ;
+			},
+		/datum/zLevel/mining,
+		/datum/zLevel/space{
+			name = "spacePirateShip" ;
+			},
+		)
+
+////////////////////////////////////////////////////////////////
+
 #include "tgstation.dmm"
-
-/datum/map_data
-	var/short_name = "box"//keep it short
-	var/full_name = "Box Station"
-
-//coordinates of the middle of the Thunderdome's Admin Room, for the locations where to send the players belongings.
-var/global/thunderdome_coords_x = 128
-var/global/thunderdome_coords_y = 69
-var/global/thunderdome_coords_z = 2
