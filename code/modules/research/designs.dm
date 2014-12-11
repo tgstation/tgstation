@@ -576,6 +576,15 @@ The required techs are the following:
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/aifixer
 
+/datum/design/pda_terminal
+	name = "Circuit Design (PDA Terminal)"
+	desc = "Allows for the construction of circuit boards used to build a PDA Terminal."
+	id = "pda_terminal"
+	req_tech = list("programming" = 3, "bluespace"= 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/pda_terminal
+
 /datum/design/pipedispenser
 	name = "Circuit Design (Pipe Dispenser)"
 	desc = "Allows for the construction of circuit boards used to build a Pipe Dispenser."
@@ -593,6 +602,10 @@ The required techs are the following:
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/pipedispenser/disposal
+
+///////////////////////////////////
+////////Mechanics Machines/////////
+///////////////////////////////////
 
 /datum/design/reverse_engine
 	name = "Circuit Design (Reverse Engine)"

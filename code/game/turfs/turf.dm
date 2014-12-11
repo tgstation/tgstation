@@ -186,9 +186,11 @@
 			if((M && !(M.anchored) && !(M.pulledby) && (M.loc == src)))
 				if(M.inertia_dir)
 					step(M, M.inertia_dir)
+					call(/datum/pda_app/station_map/proc/minimap_update)(M)
 					return
 				M.inertia_dir = M.last_move
 				step(M, M.inertia_dir)
+				call(/datum/pda_app/station_map/proc/minimap_update)(M)
 	return
 
 /turf/proc/levelupdate()

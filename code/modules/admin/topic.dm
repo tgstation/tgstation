@@ -1230,13 +1230,13 @@
 		switch(team)
 			if("Green")
 				pack = new /obj/item/packobelongings/green(M.loc)
-				pack.x = 130
+				pack.x = map.tDomeX+2
 			if("Red")
 				pack = new /obj/item/packobelongings/red(M.loc)
-				pack.x = 126
+				pack.x = map.tDomeX-2
 
-		pack.z = 2			//the players' belongings are stored there, in the Thunderdome Admin lodge.
-		pack.y = 69
+		pack.z = map.tDomeZ //the players' belongings are stored there, in the Thunderdome Admin lodge.
+		pack.y = map.tDomeY
 
 		pack.name = "[M.real_name]'s belongings"
 
@@ -2364,6 +2364,12 @@
 				else
 					communications_blackout(1)
 				message_admins("[key_name_admin(usr)] triggered a communications blackout.", 1)
+
+			if("pda_spam")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","PDA")
+				new /datum/event/pda_spam
+
 			if("spaceninja")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","SN")
