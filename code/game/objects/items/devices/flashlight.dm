@@ -144,12 +144,13 @@
 		SetLuminosity(brightness_on)
 
 /obj/item/device/flashlight/process()
-	if(on)
+	if(req_cell)
 		if(bcell.charge < 50)
 			on = 0
 			update_icon()
-		update_icon()
-		bcell.use(50)
+		if(on)
+			bcell.use(50)
+			update_icon()
 
 /obj/item/device/flashlight/pen
 	name = "penlight"
