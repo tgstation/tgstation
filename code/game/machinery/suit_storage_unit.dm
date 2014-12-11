@@ -57,7 +57,7 @@
 /obj/machinery/suit_storage_unit/security
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/security
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/security
-	MASK_TYPE = /obj/item/clothing/mask/gas/sechailer
+	MASK_TYPE = /obj/item/clothing/mask/gas/security
 
 /obj/machinery/suit_storage_unit/atmos
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/atmos

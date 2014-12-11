@@ -31,6 +31,7 @@
 
 /obj/structure/closet/secure_closet/quartermaster/New()
 	..()
+	new /obj/item/weapon/storage/box/cargoband(src)
 	new /obj/item/clothing/under/rank/cargo(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
 	new /obj/item/device/radio/headset/headset_cargo(src)
