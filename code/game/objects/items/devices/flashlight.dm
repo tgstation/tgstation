@@ -12,23 +12,45 @@
 	action_button_name = "Toggle Light"
 	var/on = 0
 	var/brightness_on = 4 //luminosity when on
+	var/req_cell = 1
+	var/open = 0
+	var/obj/item/weapon/stock_parts/cell/bcell = null
+
+/obj/item/device/flashlight/New() //this one starts with a cell pre-installed.
+	..()
+	bcell = new(src)
+	update_icon()
+	return
 
 /obj/item/device/flashlight/initialize()
 	..()
+	if(open)
+		icon_state = "[initial(icon_state)]-open"
+		SetLuminosity(0)
+		return
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
 		SetLuminosity(brightness_on)
+		return
 	else
 		icon_state = initial(icon_state)
 		SetLuminosity(0)
 
 /obj/item/device/flashlight/proc/update_brightness(var/mob/user = null)
+	if(open)
+		icon_state = "[initial(icon_state)]-open"
+		if(loc == user)
+			user.AddLuminosity(-brightness_on)
+		else if(isturf(loc))
+			SetLuminosity(0)
+		return
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
 		if(loc == user)
 			user.AddLuminosity(brightness_on)
 		else if(isturf(loc))
 			SetLuminosity(brightness_on)
+		return
 	else
 		icon_state = initial(icon_state)
 		if(loc == user)
@@ -44,6 +66,29 @@
 	update_brightness(user)
 	return 1
 
+/obj/item/device/flashlight/attackby(obj/item/weapon/W, mob/user)
+	if(req_cell)
+		if(istype(W, /obj/item/weapon/stock_parts/cell))
+			if(bcell)
+				user << "<span class='notice'>[src] already has a cell.</span>"
+			else
+				user.drop_item()
+				W.loc = src
+				bcell = W
+				user << "<span class='notice'>You install [W] in [src].</span>"
+				open = 0
+				update_brightness(user)
+		else if(istype(W, /obj/item/weapon/screwdriver))
+			if(bcell)
+				bcell.updateicon()
+				bcell.loc = get_turf(src.loc)
+				bcell = null
+				user << "<span class='notice'>You remove the cell from the [src].</span>"
+				open = 1
+				update_brightness(user)
+				return
+	..()
+	return
 
 /obj/item/device/flashlight/attack(mob/living/M as mob, mob/living/user as mob)
 	add_fingerprint(user)
@@ -98,6 +143,13 @@
 		user.AddLuminosity(-brightness_on)
 		SetLuminosity(brightness_on)
 
+/obj/item/device/flashlight/process()
+	if(on)
+		if(bcell.charge < 50)
+			on = 0
+			update_icon()
+		update_icon()
+		bcell.use(50)
 
 /obj/item/device/flashlight/pen
 	name = "penlight"
@@ -106,7 +158,7 @@
 	item_state = ""
 	flags = CONDUCT
 	brightness_on = 2
-
+	req_cell = 0
 
 /obj/item/device/flashlight/seclite
 	name = "seclite"
@@ -129,7 +181,7 @@
 	m_amt = 0
 	g_amt = 0
 	on = 1
-
+	req_cell = 0
 
 // green-shaded desk lamp
 /obj/item/device/flashlight/lamp/green
@@ -160,6 +212,7 @@
 	var/fuel = 0
 	var/on_damage = 7
 	var/produce_heat = 1500
+	req_cell = 0
 
 /obj/item/device/flashlight/flare/New()
 	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
@@ -219,7 +272,6 @@
 	item_state = "torch"
 	on_damage = 10
 
-
 /obj/item/device/flashlight/slime
 	gender = PLURAL
 	name = "glowing slime extract"
@@ -239,7 +291,7 @@
 	var/emp_max_charges = 4
 	var/emp_cur_charges = 4
 	var/charge_tick = 0
-
+	req_cell = 0
 
 /obj/item/device/flashlight/emp/New()
 		..()
