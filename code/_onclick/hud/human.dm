@@ -72,8 +72,8 @@
 	inv_box.slot_id = slot_w_uniform
 	inv_box.icon_state = "uniform"
 	var/obj/item/clothing/under/U = usr.get_item_by_slot(slot_w_uniform)
-	if (U.has_sensor != 1)
-		inv_box.overlays = 0
+	if (U && U.has_sensor != 1)
+		inv_box.overlays = list()
 		inv_box.overlays += image('icons/mob/screen_gen.dmi', "suitsensor[U.sensor_mode]")
 	inv_box.screen_loc = ui_iclothing
 	inv_box.layer = 19
