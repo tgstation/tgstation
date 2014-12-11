@@ -676,13 +676,13 @@
 		switch(team)
 			if("Green")
 				pack = new /obj/item/packobelongings/green(src.loc)
-				pack.x = 130
+				pack.x = thunderdome_coords_x+2
 			if("Red")
 				pack = new /obj/item/packobelongings/red(src.loc)
-				pack.x = 126
+				pack.x = thunderdome_coords_x-2
 
-		pack.z = 2			//the players' belongings are stored there, in the Thunderdome Admin lodge.
-		pack.y = 69
+		pack.z = thunderdome_coords_z			//the players' belongings are stored there, in the Thunderdome Admin lodge.
+		pack.y = thunderdome_coords_y
 
 		pack.name = "[M.real_name]'s belongings"
 
