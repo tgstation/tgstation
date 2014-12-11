@@ -35,7 +35,8 @@
 	return
 
 /obj/structure/stool/bed/attack_robot(mob/user as mob)
-	manual_unbuckle(user)
+	if(get_dist(src,user)<=1)
+		manual_unbuckle(user)
 	return
 
 /obj/structure/stool/bed/MouseDrop(atom/over_object)

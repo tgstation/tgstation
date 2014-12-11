@@ -1,0 +1,7 @@
+author: Clusterfack
+delete-after: true
+changes:
+- bugfix: Stopped Mommis duplicating cells in rechargers.
+- bugfix: Stopped Mommis storing their modules in containers.
+- bugfix: Fixed Mommis being unable to store in coats. 
+- bugfix: Added Missing Range Check for Silicon Unbuckling.
