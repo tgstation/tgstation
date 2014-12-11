@@ -32,6 +32,7 @@
 	*/
 	var/obj/screen/zone_sel/zone_sel = null
 	var/obj/screen/leap_icon = null
+	var/obj/screen/healthdoll = null
 
 	var/damageoverlaytemp = 0
 	var/computer_id = null
