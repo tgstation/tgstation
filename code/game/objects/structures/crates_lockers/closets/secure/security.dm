@@ -15,7 +15,7 @@
 	else
 		new /obj/item/weapon/storage/backpack/satchel_cap(src)
 	new /obj/item/clothing/suit/captunic(src)
-	new /obj/item/clothing/under/captainformal(src)
+	new /obj/item/clothing/under/captainparade(src)
 	new /obj/item/clothing/head/caphat/parade(src)
 	new /obj/item/clothing/under/rank/captain(src)
 	new /obj/item/clothing/suit/armor/vest/capcarapace(src)
