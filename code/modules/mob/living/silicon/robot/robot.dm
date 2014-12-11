@@ -197,6 +197,8 @@
 			module_sprites["Basic"] = "robot_old"
 			module_sprites["Android"] = "droid"
 			module_sprites["Default"] = "robot"
+			module_sprites["Marina-SD"] = "marinaSD"
+			module_sprites["Sleek"] = "sleekstandard"
 
 		if("Service")
 			module = new /obj/item/weapon/robot_module/butler(src)
@@ -207,6 +209,7 @@
 			module_sprites["Default"] = "Service2"
 			module_sprites["R2-D2"] = "r2d2"
 			module_sprites["Marina-SV"] = "marinaSV"
+			module_sprites["Sleek"] = "sleekservice"
 
 		if("Miner")
 			module = new /obj/item/weapon/robot_module/miner(src)
@@ -218,6 +221,7 @@
 			module_sprites["Treadhead"] = "Miner"
 			module_sprites["Wall-A"] = "wall-a"
 			module_sprites["Marina-MN"] = "marinaMN"
+			module_sprites["Sleek"] = "sleekminer"
 
 		if("Medical")
 			module = new /obj/item/weapon/robot_module/medical(src)
@@ -228,14 +232,15 @@
 			module_sprites["Advanced Droid"] = "droid-medical"
 			module_sprites["Needles"] = "medicalrobot"
 			module_sprites["Standard"] = "surgeon"
-			module_sprites["Marina"] = "marina"
+			module_sprites["Marina-MD"] = "marina"
 			module_sprites["Eve"] = "eve"
+			module_sprites["Sleek"] = "sleekmedic"
 
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
 			channels = list("Security" = 1)
 			module_sprites["Basic"] = "secborg"
-			module_sprites["Red Knight"] = "Security"
+			module_sprites["Red Knight 2.0"] = "sleeksecurity"
 			module_sprites["Black Knight"] = "securityrobot"
 			module_sprites["Bloodhound"] = "bloodhound"
 			module_sprites["Securitron"] = "securitron"
@@ -253,6 +258,7 @@
 			module_sprites["Landmate"] = "landmate"
 			module_sprites["Wall-E"] = "wall-e"
 			module_sprites["Marina-EN"] = "marinaEN"
+			module_sprites["Sleek"] = "sleekengineer"
 
 		if("Janitor")
 			module = new /obj/item/weapon/robot_module/janitor(src)
@@ -262,12 +268,14 @@
 			module_sprites["Mechaduster"] = "mechaduster"
 			module_sprites["HAN-D"] = "han-d"
 			module_sprites["Marina-JN"] = "marinaJN"
+			module_sprites["Sleek"] = "sleekjanitor"
 
 		if("Combat")
 			module = new /obj/item/weapon/robot_module/combat(src)
 			module_sprites["Combat Android"] = "droid-combat"
 			module_sprites["Bladewolf"] = "bladewolf"
 			module_sprites["Mr. Gutsy"] = "mrgutsy"
+			module_sprites["Marina-CB"] = "marinaCB"
 			channels = list("Security" = 1)
 
 	//Custom_sprite check and entry
@@ -883,6 +891,9 @@
 			else
 				usr << "Upgrade error!"
 
+	else if(istype(W, /obj/item/device/camera_bug))
+		help_shake_act(user)
+		return 0
 
 	else
 		spark_system.start()
@@ -1070,8 +1081,9 @@
 		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
 			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("CYBORG",src,user:wear_suit)
 			return
-		if(user.a_intent == "help")
-			user.visible_message("\blue [user.name] pats [src.name] on the head.")
+		else
+			if (user:a_intent == "help")
+				help_shake_act(user)
 			return
 
 /mob/living/silicon/robot/proc/allowed(mob/M)
@@ -1107,7 +1119,7 @@
 /mob/living/silicon/robot/proc/updateicon()
 
 	overlays.Cut()
-	if(stat == 0)
+	if(stat == 0 && cell != null)
 		overlays += image(icon,"eyes-[icon_state]",LIGHTING_LAYER+1)
 
 	if(opened)
@@ -1445,3 +1457,6 @@
 
 /mob/living/silicon/robot/get_inactive_hand(var/obj/item/W)
 	return 0
+
+/mob/living/silicon/robot/proc/help_shake_act(mob/user)
+	user.visible_message("<span class='notice'>[user.name] pats [src.name] on the head.</span>")

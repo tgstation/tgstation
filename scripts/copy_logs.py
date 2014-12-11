@@ -11,18 +11,19 @@ REG_IP4=re.compile(r'\d+\.\d+\.\d+\.\d+') # Matches IPv4 addresses.
 REG_CONNECT=re.compile(r'from [^\|]+\|\| BYOND v([0-9]+)$') # Matches IPv4 addresses.
 
 def fix(in_file, out_file):
-	print('   {0} -> {1}'.format(in_file,out_file))
-	if os.path.isfile(out_file):
-		os.remove(out_file)
-	if not os.path.isdir(os.path.dirname(out_file)):
-		os.makedirs(os.path.dirname(out_file))
-	with open(out_file,'w') as w:
-		with open(in_file,'r') as r:
-			for line in r:
-				line=line.strip('\r\n')
-				line=REG_CONNECT.sub('from [NOPE] || BYOND v\g<1>', line)
-				line=REG_IP4.sub('[IP CENSORED]', line)
-				w.write('{0}\n'.format(line))
+	if not os.path.isfile(out_file) or os.stat(in_file).st_mtime - os.stat(out_file).st_mtime > 1:
+		print('   {0} -> {1}'.format(in_file,out_file))
+		if os.path.isfile(out_file):
+			os.remove(out_file)
+		if not os.path.isdir(os.path.dirname(out_file)):
+			os.makedirs(os.path.dirname(out_file))
+		with open(out_file,'w') as w:
+			with open(in_file,'r') as r:
+				for line in r:
+					line=line.strip('\r\n')
+					line=REG_CONNECT.sub('from [NOPE] || BYOND v\g<1>', line)
+					line=REG_IP4.sub('[IP CENSORED]', line)
+					w.write('{0}\n'.format(line))
 def replace_walk(in_dir,out_dir):
 	print(' {0} -> {1}'.format(in_dir,out_dir))
 	for root, dirnames, filenames in os.walk(in_dir):

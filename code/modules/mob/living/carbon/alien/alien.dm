@@ -3,7 +3,7 @@
 #define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
 
 /mob/living/carbon/alien
-	name = "alien"
+	name = "alien" //The alien, not Alien
 	voice_name = "alien"
 	speak_emote = list("hisses")
 	icon = 'icons/mob/alien.dmi'

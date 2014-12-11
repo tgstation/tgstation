@@ -109,7 +109,7 @@
 			*/
 
 			var/resolved = A.attackby(W,src)
-			if(ismob(A) || istype(A, /obj/mecha) || isturf(A) || istype(W, /obj/item/weapon/grab))
+			if(ismob(A) || istype(A, /obj/mecha) || istype(W, /obj/item/weapon/grab))
 				changeNext_move(10)
 			if(!resolved && A && W)
 				W.afterattack(A,src,1,params) // 1 indicates adjacency
@@ -133,7 +133,7 @@
 					next_move += 5
 				*/
 				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-				if(ismob(A) || istype(A, /obj/mecha) || isturf(A) || istype(W, /obj/item/weapon/grab))
+				if(ismob(A) || istype(A, /obj/mecha) || istype(W, /obj/item/weapon/grab))
 					changeNext_move(10)
 				var/resolved = A.attackby(W,src)
 				if(!resolved && A && W)

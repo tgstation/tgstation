@@ -325,6 +325,9 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			else
 				usr << "Upgrade error!"
 
+	else if(istype(W, /obj/item/device/camera_bug))
+		help_shake_act(user)
+		return 0
 
 	else
 		spark_system.start()
@@ -347,8 +350,9 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
 			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("CYBORG",src,user:wear_suit)
 			return
-		if(user.a_intent == "help")
-			user.visible_message("\blue [user.name] pats [src.name] on the head.")
+		else
+			if (user:a_intent == "help")
+				help_shake_act(user)
 			return
 
 	if(!istype(user, /mob/living/silicon))

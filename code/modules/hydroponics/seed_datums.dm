@@ -886,7 +886,7 @@ proc/populate_seed_list()
 	name = "ambrosiadeus"
 	seed_name = "ambrosia deus"
 	display_name = "ambrosia deus"
-	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus)
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/deus)
 	mutants = null
 	packet_icon = "seed-ambrosiadeus"
 	plant_icon = "ambrosiadeus"

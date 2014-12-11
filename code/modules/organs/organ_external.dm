@@ -1183,11 +1183,12 @@ obj/item/weapon/organ/head/attackby(obj/item/weapon/W as obj, mob/user as mob)
 				msg_admin_attack("[user] ([user.ckey]) debrained [brainmob] ([brainmob.ckey]) (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 				//TODO: ORGAN REMOVAL UPDATE.
+				var/turf/T = get_turf(src)
 				if(istype(src,/obj/item/weapon/organ/head/posi))
-					var/obj/item/device/mmi/posibrain/B = new(loc)
+					var/obj/item/device/mmi/posibrain/B = new(T)
 					B.transfer_identity(brainmob)
 				else
-					var/obj/item/organ/brain/B = new(loc)
+					var/obj/item/organ/brain/B = new(T)
 					B.transfer_identity(brainmob)
 
 				brain_op_stage = 4.0

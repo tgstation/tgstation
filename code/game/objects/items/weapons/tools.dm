@@ -32,6 +32,12 @@
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
+//we inherit a lot from wrench, so we change very little
+/obj/item/weapon/wrench/socket
+	name = "socket wrench"
+	desc = "A wrench intended to be wrenchier than other wrenches. It's the wrenchiest."
+	icon_state = "socket_wrench"
+	w_class = 4.0 //big shit, to balance its power
 
 /*
  * Screwdriver

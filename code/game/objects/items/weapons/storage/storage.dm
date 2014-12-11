@@ -326,9 +326,16 @@
 	/*if(istype(W,/obj/item/weapon/implanter/compressed))
 		return*/
 
-	if(isrobot(user) && !isMoMMI(user))
-		user << "\blue You're a robot. No."
-		return //Robots can't interact with storage items.
+	if(isrobot(user))
+		if(isMoMMI(user))
+			var/mob/living/silicon/robot/mommi/M = user
+			if(M.is_in_modules(W))
+				user << "<span class='notice'>You can't throw away something built into you.</span>"
+				return //Mommis cant give away their modules but can place other items
+		else
+			user << "<span class='notice'> You're a robot. No.</span>"
+			return //Robots can't interact with storage items.
+	
 
 	if(!can_be_inserted(W))
 		return
@@ -337,14 +344,14 @@
 		var/obj/item/weapon/tray/T = W
 		if(T.calc_carry() > 0)
 			if(prob(85))
-				user << "\red The tray won't fit in [src]."
+				user << "<span class='warning'> The tray won't fit in [src].</span>"
 				return
 			else
 				W.loc = user.loc
 				if ((user.client && user.s_active != src))
 					user.client.screen -= W
 				W.dropped(user)
-				user << "\red God damnit!"
+				user << "<span class='warning'> God damnit!</span>"
 
 	handle_item_insertion(W)
 	return
