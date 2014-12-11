@@ -1,4 +1,0 @@
-author: GunHog
-delete-after: True
-changes: 
-  - rscadd: "The Nanotrasen firmware update 12.05.14 for station AI units and cyborgs includes a patch to give them more control of their automatic speech systems. They can now chose if the message should be broadcasted with their installed radio system and any frequency available to them."
