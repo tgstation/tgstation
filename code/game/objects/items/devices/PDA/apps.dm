@@ -8,9 +8,6 @@ var/global/list/pda_app_menus = list(
 	104,//Station Map
 	)
 
-
-
-
 /datum/pda_app
 	var/name = "Template Application"
 	var/desc = "Template Description"
@@ -85,3 +82,17 @@ var/global/list/pda_app_menus = list(
 	var/x = 1
 	var/y = 1
 	var/num = 0
+
+/datum/pda_app/station_map/proc/minimap_update(var/mob/user)
+	if(istype(user,/mob/living/carbon))
+		var/mob/living/carbon/C = user
+		if(C.machine && istype(C.machine,/obj/item/device/pda))
+			var/obj/item/device/pda/pda_device = C.machine
+			var/turf/user_loc = get_turf(user)
+			var/turf/pda_loc = get_turf(pda_device)
+			if(get_dist(user_loc,pda_loc) <= 1)
+				if(pda_device.mode == 104)
+					pda_device.attack_self(C)
+			else
+				user.unset_machine()
+				user << browse(null, "window=pda")

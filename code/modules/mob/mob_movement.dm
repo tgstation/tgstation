@@ -199,6 +199,8 @@
 	if(!mob)
 		return // Moved here to avoid nullrefs below. - N3X
 
+	call(/datum/pda_app/station_map/proc/minimap_update)(mob)
+
 	// /vg/ - Deny clients from moving certain mobs. (Like cluwnes :^)
 	if(mob.deny_client_move)
 		src << "<span class='warning'>You cannot move this mob.</span>"
@@ -278,13 +280,6 @@
 			move_delay -= 1.3
 			var/tickcomp = ((1/(world.tick_lag))*1.3)
 			move_delay = move_delay + tickcomp
-
-		if(istype(mob,/mob/living/carbon))//if our mob is holding a PDA with the Station Map displayed, his location marker will update without him having to re-click the PDA.
-			var/mob/living/carbon/C = mob
-			if(C.machine && istype(C.machine,/obj/item/device/pda))
-				var/obj/item/device/pda/pda_device = C.machine
-				if(pda_device.mode == 104)
-					pda_device.attack_self(C)
 
 		//We are now going to move
 		moving = 1

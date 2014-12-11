@@ -16,6 +16,8 @@ var/global/list/events = list()
 
 var/global/list/account_DBs = list()
 
+var/global/datum/map_data/map_info = new()//defined in each .dm file in /maps/. only include to the dme the one of the map you are about to compile. do not include the map in the .dme anymore.
+
 		//items that ask to be called every cycle
 
 var/global/defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
