@@ -15,6 +15,7 @@
 		new /obj/item/weapon/storage/backpack/industrial(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel_eng(src)
+	new /obj/item/weapon/storage/box/engieband(src)
 	new /obj/item/areaeditor/blueprints(src)
 	new /obj/item/weapon/storage/box/permits(src)
 	new /obj/item/clothing/under/rank/chief_engineer(src)
