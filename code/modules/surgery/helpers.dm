@@ -14,15 +14,17 @@
 					continue
 
 				if(istype(M, /mob/living/carbon/human))
-					var/mob/living/carbon/human/H = M //So we can use get_organ and not some terriblly long Switch or something worse - RR
-
-					if(S.requires_organic_chest && H.getlimb(/obj/item/organ/limb/robot/chest)) //This a seperate case to below, see "***" in surgery.dm - RR
-						continue
-
+					var/mob/living/carbon/human/H = M
 
 					var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
 
-					if(affecting.status == ORGAN_ROBOTIC && affecting.body_part != HEAD) //Cannot operate on Robotic organs except for the head. - RR
+					if(affecting.state_flags & ORGAN_REMOVED)
+						continue
+
+					if(S.requires_organic_chest && affecting.body_part == CHEST && affecting.status == ORGAN_ROBOTIC)
+						continue
+
+					if(affecting.status == ORGAN_ROBOTIC && affecting.body_part != HEAD)
 						continue
 
 				for(var/path in S.species)

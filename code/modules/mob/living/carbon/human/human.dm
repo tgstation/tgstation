@@ -3,14 +3,11 @@
 	real_name = "Unknown"
 	voice_name = "Unknown"
 	icon = 'icons/mob/human.dmi'
-	icon_state = "caucasian1_m_s"
-
-
+	icon_state = ""
 
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
-
 
 
 /mob/living/carbon/human/New()
@@ -635,3 +632,10 @@
 	if(mob_negates_gravity())
 		return
 	..()
+
+/mob/living/carbon/human/can_use_hands()
+	if(!..())
+		return 0
+	if(!has_active_hand())
+		return 0
+	return 1

@@ -309,11 +309,13 @@ var/list/blood_splatter_icons = list()
 	B.add_blood_list(M)
 	return 1 //we bloodied the floor
 
-/mob/living/carbon/human/add_blood(mob/living/carbon/M)
+/mob/living/carbon/human/add_blood(mob/living/carbon/human/H)
 	if(..() == 0)	return 0
-	add_blood_list(M)
+	if(!H.has_active_hand())
+		return 0
+	add_blood_list(H)
 	bloody_hands = rand(2, 4)
-	bloody_hands_mob = M
+	bloody_hands_mob = H
 	update_inv_gloves()	//handles bloody hands overlays and updating
 	return 1 //we applied blood to the item
 

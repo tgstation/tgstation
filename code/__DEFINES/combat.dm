@@ -46,3 +46,6 @@
 #define HOSTILE_STANCE_ATTACKING	4
 //#define HOSTILE_STANCE_TIRED		5 //Was also only used by bears
 
+
+//Dismemberment
+#define SHARP	1

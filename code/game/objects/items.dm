@@ -1,6 +1,8 @@
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items.dmi'
+	flags = SHARP
+
 	var/item_state = null
 	var/hitsound = null
 	var/throwhitsound = null

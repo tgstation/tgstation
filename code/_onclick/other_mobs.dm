@@ -13,6 +13,10 @@
 	if(proximity && istype(G) && G.Touch(A,1))
 		return
 
+	if(!has_active_hand())
+		src << "<span class='notice'>You look at your stump and sigh.</span>"
+		return
+
 	A.attack_hand(src)
 /atom/proc/attack_hand(mob/user as mob)
 	return

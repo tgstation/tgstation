@@ -37,8 +37,6 @@
 	var/obj/item/l_store = null
 	var/obj/item/s_store = null
 
-	var/icon/base_icon_state = "caucasian1_m"
-
 	var/list/organs = list() //Gets filled up in the constructor (human.dm, New() proc, line 24. I'm sick and tired of missing comments. -Agouri
 
 	var/special_voice = "" // For changing our voice. Used by a symptom.

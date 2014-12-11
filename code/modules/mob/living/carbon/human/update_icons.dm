@@ -36,8 +36,6 @@ There are several things that need to be remembered:
 >	There are also these special cases:
 		update_mutations()			//handles updating your appearance for certain mutations.  e.g TK head-glows
 		update_damage_overlays()	//handles damage overlays for brute/burn damage
-		update_base_icon_state()	//Handles updating var/base_icon_state (WIP) This is used to update the
-									mob's icon_state easily e.g. "[base_icon_state]_s" is the standing icon_state
 		update_body()				//Handles updating your mob's icon_state (using update_base_icon_state())
 									as well as sprite-accessories that didn't really fit elsewhere (underwear, undershirts, lips, eyes)
 									//NOTE: update_mutantrace() is now merged into this!
@@ -56,10 +54,10 @@ Please contact me on #coderbus IRC. ~Carnie x
 */
 
 //Human Overlays Indexes/////////
-#define SPECIES_LAYER			23		// mutantrace colors... these are on a seperate layer in order to prvent
-#define BODY_LAYER				22		//underwear, undershirts, eyes, lips(makeup)
-#define MUTATIONS_LAYER			21		//Tk headglows etc.
-#define AUGMENTS_LAYER			20
+#define BODYPARTS_LAYER			23
+#define SPECIES_LAYER			22		// mutantrace colors... these are on a seperate layer in order to prvent
+#define BODY_LAYER				21		//underwear, undershirts, eyes, lips(makeup)
+#define MUTATIONS_LAYER			20		//Tk headglows etc.
 #define DAMAGE_LAYER			19		//damage indicators (cuts and burns)
 #define UNIFORM_LAYER			18
 #define ID_LAYER				17
@@ -84,19 +82,6 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 /mob/living/carbon/human
 	var/list/overlays_standing[TOTAL_LAYERS]
-
-/mob/living/carbon/human/proc/update_base_icon_state()
-	//var/race = dna ? dna.mutantrace : null
-	if(dna)
-		base_icon_state = dna.species.update_base_icon_state(src)
-	else
-		if(HUSK in mutations)
-			base_icon_state = "husk"
-		else
-			base_icon_state = "[skin_tone]_[(gender == FEMALE) ? "f" : "m"]"
-
-	icon_state = "[base_icon_state]_s"
-
 
 /mob/living/carbon/human/proc/apply_overlay(cache_index)
 	var/image/I = overlays_standing[cache_index]
@@ -133,6 +118,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 	overlays_standing[DAMAGE_LAYER]	= standing
 
 	for(var/obj/item/organ/limb/O in organs)
+		if(O.state_flags & ORGAN_REMOVED)
+			continue
 		if(O.brutestate)
 			standing.overlays	+= "[O.icon_state]_[O.brutestate]0"	//we're adding icon_states of the base image as overlays
 		if(O.burnstate)
@@ -181,15 +168,27 @@ Please contact me on #coderbus IRC. ~Carnie x
 /mob/living/carbon/human/proc/update_body()
 	remove_overlay(BODY_LAYER)
 
+	update_body_parts()
+
 	if(dna)
-		base_icon_state = dna.species.update_base_icon_state(src)
-	else
-		update_base_icon_state()
-
-	icon_state = "[base_icon_state]_s"
-
-	if(dna)	// didn't want to have a duplicate if(dna) here, but due to the ordering of the code this was the only way
 		dna.species.handle_body(src)
+
+
+/mob/living/carbon/human/proc/update_body_parts()
+	remove_overlay(BODYPARTS_LAYER)
+
+	var/list/new_limbs = list()
+	for(var/obj/item/organ/limb/L in organs)
+		var/image/temp = generate_icon(L)
+		if(temp)
+			new_limbs += temp
+
+	if(new_limbs.len)
+		overlays_standing[BODYPARTS_LAYER] = new_limbs
+
+	apply_overlay(BODYPARTS_LAYER)
+	update_damage_overlays()
+	update_inv_gloves()
 
 /mob/living/carbon/human/update_fire()
 
@@ -199,33 +198,6 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 	apply_overlay(FIRE_LAYER)
 
-
-/mob/living/carbon/human/proc/update_augments()
-	remove_overlay(AUGMENTS_LAYER)
-
-	var/list/standing	= list()
-	var/g = (gender == FEMALE) ? "f" : "m"
-
-
-	if(getlimb(/obj/item/organ/limb/robot/r_arm))
-		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="r_arm_s", "layer"=-AUGMENTS_LAYER)
-	if(getlimb(/obj/item/organ/limb/robot/l_arm))
-		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="l_arm_s", "layer"=-AUGMENTS_LAYER)
-
-	if(getlimb(/obj/item/organ/limb/robot/r_leg))
-		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="r_leg_s", "layer"=-AUGMENTS_LAYER)
-	if(getlimb(/obj/item/organ/limb/robot/l_leg))
-		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="l_leg_s", "layer"=-AUGMENTS_LAYER)
-
-	if(getlimb(/obj/item/organ/limb/robot/chest))
-		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="chest_[g]_s", "layer"=-AUGMENTS_LAYER)
-	if(getlimb(/obj/item/organ/limb/robot/head))
-		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="head_s", "layer"=-AUGMENTS_LAYER)
-
-	if(standing.len)
-		overlays_standing[AUGMENTS_LAYER]	= standing
-
-	apply_overlay(AUGMENTS_LAYER)
 
 /* --------------------------------------- */
 //For legacy support.
@@ -316,6 +288,10 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 /mob/living/carbon/human/update_inv_gloves()
 	remove_overlay(GLOVES_LAYER)
+
+	if(get_num_arms() <2)
+		return
+
 	if(gloves)
 		if(client && hud_used && hud_used.hud_shown)
 			if(hud_used.inventory_shown)			//if the inventory is open ...
@@ -368,6 +344,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 /mob/living/carbon/human/update_inv_shoes()
 	remove_overlay(SHOES_LAYER)
+
+	if(get_num_legs() < 2)
+		return
 
 	if(shoes)
 		if(client && hud_used && hud_used.hud_shown)

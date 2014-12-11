@@ -7,6 +7,7 @@
 	slot_flags = SLOT_BELT
 	var/construction_time = 100
 	var/list/construction_cost = list("metal"=20000,"glass"=5000)
+	var/limb_part = 0
 
 /obj/item/robot_parts/l_arm
 	name = "cyborg left arm"
@@ -14,6 +15,7 @@
 	icon_state = "l_arm"
 	construction_time = 200
 	construction_cost = list("metal"=10000)
+	limb_part = ARM_LEFT
 
 /obj/item/robot_parts/r_arm
 	name = "cyborg right arm"
@@ -21,6 +23,7 @@
 	icon_state = "r_arm"
 	construction_time = 200
 	construction_cost = list("metal"=10000)
+	limb_part = ARM_RIGHT
 
 /obj/item/robot_parts/l_leg
 	name = "cyborg left leg"
@@ -28,6 +31,7 @@
 	icon_state = "l_leg"
 	construction_time = 200
 	construction_cost = list("metal"=10000)
+	limb_part = LEG_LEFT
 
 /obj/item/robot_parts/r_leg
 	name = "cyborg right leg"
@@ -35,6 +39,7 @@
 	icon_state = "r_leg"
 	construction_time = 200
 	construction_cost = list("metal"=10000)
+	limb_part = LEG_RIGHT
 
 /obj/item/robot_parts/chest
 	name = "cyborg torso"
@@ -42,6 +47,7 @@
 	icon_state = "chest"
 	construction_time = 350
 	construction_cost = list("metal"=40000)
+	limb_part = CHEST
 	var/wires = 0.0
 	var/obj/item/weapon/stock_parts/cell/cell = null
 
@@ -51,6 +57,7 @@
 	icon_state = "head"
 	construction_time = 350
 	construction_cost = list("metal"=5000)
+	limb_part = HEAD
 	var/obj/item/device/flash/handheld/flash1 = null
 	var/obj/item/device/flash/handheld/flash2 = null
 

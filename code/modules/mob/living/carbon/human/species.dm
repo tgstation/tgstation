@@ -67,18 +67,6 @@
 	// PROCS //
 	///////////
 
-/datum/species/proc/update_base_icon_state(var/mob/living/carbon/human/H)
-	if(HUSK in H.mutations)
-		H.remove_overlay(SPECIES_LAYER) // races lose their color
-		return "husk"
-	else if(sexes)
-		if(use_skintones)
-			return "[H.skin_tone]_[(H.gender == FEMALE) ? "f" : "m"]"
-		else
-			return "[id]_[(H.gender == FEMALE) ? "f" : "m"]"
-	else
-		return "[id]"
-
 /datum/species/proc/update_color(var/mob/living/carbon/human/H)
 	H.remove_overlay(SPECIES_LAYER)
 
@@ -212,13 +200,22 @@
 		if(!(type in I.species_exception))
 			return 0
 
+	var/obj/item/organ/limb/r_arm/R = H.get_organ("r_arm")
+	var/obj/item/organ/limb/l_arm/L = H.get_organ("l_arm")
+	var/num_arms = H.get_num_arms()
+	var/num_legs = H.get_num_legs()
+
 	switch(slot)
 		if(slot_l_hand)
 			if(H.l_hand)
 				return 0
+			if(L.state_flags & ORGAN_REMOVED)
+				return 0
 			return 1
 		if(slot_r_hand)
 			if(H.r_hand)
+				return 0
+			if(R.state_flags & ORGAN_REMOVED)
 				return 0
 			return 1
 		if(slot_wear_mask)
@@ -244,11 +241,15 @@
 				return 0
 			if( !(I.slot_flags & SLOT_GLOVES) )
 				return 0
+			if(num_arms < 2)
+				return 0
 			return 1
 		if(slot_shoes)
 			if(H.shoes)
 				return 0
 			if( !(I.slot_flags & SLOT_FEET) )
+				return 0
+			if(num_legs < 2)
 				return 0
 			return 1
 		if(slot_belt)
@@ -347,11 +348,15 @@
 				return 0
 			if(!istype(I, /obj/item/weapon/restraints/handcuffs))
 				return 0
+			if(num_arms < 2)
+				return 0
 			return 1
 		if(slot_legcuffed)
 			if(H.legcuffed)
 				return 0
 			if(!istype(I, /obj/item/weapon/restraints/legcuffs))
+				return 0
+			if(num_legs < 2)
 				return 0
 			return 1
 		if(slot_in_backpack)
@@ -613,48 +618,50 @@
 ////////////////
 
 /datum/species/proc/movement_delay(var/mob/living/carbon/human/H)
-	var/mspeed = 0
+	. = 0
 	if(H.status_flags & GOTTAGOFAST)
-		mspeed -= 1
+		. -= 1
 
 	if(!has_gravity(H))
-		mspeed += 1.5 //Carefully propelling yourself along the walls is actually quite slow
+		. += 1.5 //Carefully propelling yourself along the walls is actually quite slow
 
 		if(istype(H.back, /obj/item/weapon/tank/jetpack))
 			var/obj/item/weapon/tank/jetpack/J = H.back
 			if(J.allow_thrust(0.01, H))
-				mspeed -= 2.5
+				. -= 2.5
 
 		if(H.l_hand) //Having your hands full makes movement harder when you're weightless. You try climbing around while holding a gun!
-			mspeed += 0.5
+			. += 0.5
 		if(H.r_hand)
-			mspeed += 0.5
+			. += 0.5
 		if(H.r_hand && H.l_hand)
-			mspeed += 0.5
+			. += 0.5
 
 	var/health_deficiency = (100 - H.health + H.staminaloss)
 	if(health_deficiency >= 40)
-		mspeed += (health_deficiency / 25)
+		. += (health_deficiency / 25)
 
 	var/hungry = (500 - H.nutrition) / 5	//So overeat would be 100 and default level would be 80
 	if(hungry >= 70)
-		mspeed += hungry / 50
+		. += hungry / 50
 
 	if(H.wear_suit)
-		mspeed += H.wear_suit.slowdown
+		. += H.wear_suit.slowdown
 	if(H.shoes)
-		mspeed += H.shoes.slowdown
+		. += H.shoes.slowdown
 	if(H.back)
-		mspeed += H.back.slowdown
+		. += H.back.slowdown
 
 	if(FAT in H.mutations)
-		mspeed += 1.5
+		. += 1.5
 	if(H.bodytemperature < 283.222)
-		mspeed += (283.222 - H.bodytemperature) / 10 * 1.75
+		. += (283.222 - H.bodytemperature) / 10 * 1.75
 
-	mspeed += speedmod
+	if(H.get_num_legs() < 2)
+		. += 1
 
-	return mspeed
+	. += speedmod
+
 
 //////////////////
 // ATTACK PROCS //
@@ -804,6 +811,17 @@
 	return
 
 /datum/species/proc/spec_attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone, var/obj/item/organ/limb/affecting, var/hit_area, var/intent, var/obj/item/organ/limb/target_limb, target_area, var/mob/living/carbon/human/H)
+
+	if((target_limb.state_flags & ORGAN_REMOVED) || (target_limb.state_flags & ORGAN_AUGMENTABLE))
+		if(istype(I, /obj/item/robot_parts))
+			var/obj/item/robot_parts/RP = I
+			if(RP.limb_part == target_limb.body_part)
+				target_limb.augment(RP,user)
+			else
+				user << "<span class='notice'>[RP] doesn't go there!</span>"
+		return 0
+
+
 	// Allows you to put in item-specific reactions based on species
 	if(user != src)
 		user.do_attack_animation(H)
@@ -824,6 +842,9 @@
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
 	apply_damage(I.force, I.damtype, affecting, armor, H)
+
+	if(I.flags & SHARP && prob(Iforce))
+		affecting.dismember(I)
 
 	var/bloody = 0
 	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))

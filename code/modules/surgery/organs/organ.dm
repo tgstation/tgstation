@@ -1,6 +1,7 @@
 /obj/item/organ
 	name = "organ"
 	icon = 'icons/obj/surgery.dmi'
+	origin_tech = "biotech=3"
 
 
 
@@ -37,7 +38,7 @@
 
 /obj/item/organ/limb
 	name = "limb"
-	var/mob/owner = null
+	var/mob/living/carbon/human/owner = null
 	var/body_part = null
 	var/brutestate = 0
 	var/burnstate = 0
@@ -45,6 +46,8 @@
 	var/burn_dam = 0
 	var/max_damage = 0
 	var/status = ORGAN_ORGANIC
+	var/state_flags = ORGAN_FINE
+
 
 
 
@@ -64,12 +67,14 @@
 	body_part = HEAD
 
 
+
 /obj/item/organ/limb/l_arm
 	name = "l_arm"
 	desc = "why is it detached..."
 	icon_state = "l_arm"
 	max_damage = 75
 	body_part = ARM_LEFT
+
 
 
 /obj/item/organ/limb/l_leg
@@ -80,6 +85,7 @@
 	body_part = LEG_LEFT
 
 
+
 /obj/item/organ/limb/r_arm
 	name = "r_arm"
 	desc = "why is it detached..."
@@ -88,12 +94,14 @@
 	body_part = ARM_RIGHT
 
 
+
 /obj/item/organ/limb/r_leg
 	name = "r_leg"
 	desc = "why is it detached..."
 	icon_state = "r_leg"
 	max_damage = 75
 	body_part = LEG_RIGHT
+
 
 
 
