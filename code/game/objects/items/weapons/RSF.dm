@@ -69,10 +69,10 @@ RSF
 		if (istype(A, /obj/structure/table) && matter >= 1)
 			user << "Dispensing Dosh..."
 			playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
-			new /obj/item/weapon/spacecash/c10( A.loc )
+			new /obj/item/weapon/fakecash( A.loc )
 			if (isrobot(user))
 				var/mob/living/silicon/robot/engy = user
-				engy.cell.charge -= 200 //once money becomes useful, I guess changing this to a high ammount, like 500 units a kick, till then, enjoy dosh!
+				engy.cell.charge -= 200
 			else
 				matter--
 				user << "The RSF now holds [matter]/30 fabrication-units."
@@ -83,10 +83,10 @@ RSF
 		if (istype(A, /turf/simulated/floor) && matter >= 1)
 			user << "Dispensing Dosh..."
 			playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
-			new /obj/item/weapon/spacecash/c10( A )
+			new /obj/item/weapon/fakecash( A )
 			if (isrobot(user))
 				var/mob/living/silicon/robot/engy = user
-				engy.cell.charge -= 200 //once money becomes useful, I guess changing this to a high ammount, like 500 units a kick, till then, enjoy dosh!
+				engy.cell.charge -= 200
 			else
 				matter--
 				user << "The RSF now holds [matter]/30 fabrication-units."

@@ -1,0 +1,5 @@
+author: JStheguy
+delete-after: True
+changes:
+  - rscadd: "Slot machines are now able to accept Space Cash."
+  - tweak: "Due to slot machines accepting Space Cash, service borgs now fabricate play money."
