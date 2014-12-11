@@ -4,6 +4,7 @@
  *		Fireaxe
  *		Double-Bladed Energy Swords
  *		Spears
+ *		Chainsaws
  */
 
 /*##################################################################
@@ -242,7 +243,7 @@ obj/item/weapon/twohanded/
 	if(istype(loc, /mob/living))
 		if (HULK in M.mutations)
 			loc << "<span class='warning'>You lack the grace to wield this to its full extent.</span>"
-	hitsound = 'sound/weapons/blade1.ogg' 
+	hitsound = 'sound/weapons/blade1.ogg'
 
 
 /obj/item/weapon/twohanded/dualsaber/unwield() //Specific unwield () to switch hitsounds.
@@ -297,3 +298,27 @@ obj/item/weapon/twohanded/
 	icon_state = "spearglass[wielded]"
 	return
 
+/obj/item/weapon/twohanded/required/chainsaw
+	name = "chainsaw"
+	desc = "A powered tool used by people from all walks of life for all sorts of things, from limbing trees to delimbing humans."
+	icon_state = "chainsaw_off"
+	flags = CONDUCT
+	force = 10
+	w_class = 5
+	throwforce = 5
+	throw_speed = 2
+	throw_range = 4
+	m_amt = 15000
+	origin_tech = "materials=2;engineering=2;combat=2"
+	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
+	hitsound = 'sound/weapons/circsawhit.ogg'
+	action_button_name = "Pull the starting cord"
+	var/on = 0
+
+/obj/item/weapon/twohanded/required/chainsaw/attack_self(mob/user)
+	on = !on
+	user << "As you pull the starting cord dangling from \the [src], [on ? "you hear a loud roar!" : "the chain stops moving."]"
+	force = on ? 20 : 10
+	icon_state = "chainsaw_[on ? "on" : "off"]"
+	if(src == user.get_active_hand())
+		user.update_inv_active_hand() //update item_state

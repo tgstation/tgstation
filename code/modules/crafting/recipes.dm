@@ -126,3 +126,10 @@
 				/obj/item/stack/packageWrap = 5,)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 200
+
+/datum/table_recipe/chainsaw
+	name = "Chainsaw"
+	result = /obj/item/weapon/twohanded/required/chainsaw
+	reqs = list(/obj/item/weapon/melee/chainofcommand = 1,
+				/obj/item/weapon/circular_saw = 1)
+	time = 80
