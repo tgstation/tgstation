@@ -87,8 +87,8 @@ the new version.
 /tg/station currently comes equipped with three maps.
 
 * [tgstation2 (default)](http://tgstation13.org/wiki/Boxstation)
-* [MetaStation](http://tgstation13.org/wiki/MetaStation)
 * [MiniStation](http://tgstation13.org/wiki/MiniStation)
+* [AsteroidStation](https://tgstation13.org/wiki/AsteroidStation)
 
 All maps have their own code file that is in the base of the _maps directory. Instead of loading the map directly we instead use a code file to include the map and then include any other code changes that are needed for it; for example MiniStation changes the uplink items for the map. Follow this guideline when adding your own map, to your fork, for easy compatibility.
 
