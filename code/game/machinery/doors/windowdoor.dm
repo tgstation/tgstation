@@ -176,8 +176,6 @@
 	if (src.operating)
 		return
 
-	..()
-
 	//ninja swords? You may pass.
 	if (src.density && istype(I, /obj/item/weapon/melee/energy/blade))
 		hackOpen(I, user)
@@ -203,9 +201,17 @@
 	if (!src.requiresID())
 		//don't care who they are or what they have, act as if they're NOTHING
 		user = null
+		
+	if (isrobot(user))
+		if (src.density)
+			open()
+		else
+			close()
 
 	if (!src.allowed(user) && src.density)
 		flick(text("[]deny", src.base_state), src)
+
+	..()
 
 	return
 

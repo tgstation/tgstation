@@ -7,12 +7,11 @@
 	item_state = ""
 	throw_speed = 4
 	throw_range = 20
+	flags = FPRINT | TABLEPASS | NOBLUDGEON
 	var/c_tag = ""
 	var/active = 0
 	var/network = ""
 	var/list/excludes = list(/turf/simulated/floor, /turf/space, /turf/simulated/shuttle, /mob/living/carbon, /obj/item/weapon/storage)
-	flags |= NOBLUDGEON
-
 /obj/item/device/camera_bug/attack_self(mob/user)
 	var/newtag = sanitize(input("Set camera tag") as null|text)
 	if(newtag)

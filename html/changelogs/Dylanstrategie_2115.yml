@@ -1,0 +1,5 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - rscadd: Fireaxes now drop out of shredded fireaxe cabinets (if one is inside, duh)
+  - bugfix: Ghosts can no longer fuck with the lock on the fireaxe cabinets. Stop being spooky

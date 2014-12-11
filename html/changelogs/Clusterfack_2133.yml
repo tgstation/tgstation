@@ -1,0 +1,4 @@
+author: Clusterfack
+delete-after: true
+changes:
+- bugfix: Fixed windoors not opening for silicons
