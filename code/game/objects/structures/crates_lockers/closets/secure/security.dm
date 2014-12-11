@@ -204,7 +204,7 @@
 	new /obj/item/clothing/suit/det_suit(src)
 	new /obj/item/clothing/head/det_hat(src)
 	new /obj/item/clothing/gloves/black(src)
-	new /obj/item/clothing/under/det/grey(src)
+	new /obj/item/clothing/under/rank/det/grey(src)
 	new /obj/item/clothing/suit/det_suit/grey(src)
 	new /obj/item/clothing/head/fedora(src)
 	new /obj/item/clothing/shoes/laceup(src)
