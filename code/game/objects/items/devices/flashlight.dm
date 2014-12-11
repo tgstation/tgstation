@@ -22,6 +22,13 @@
 	update_icon()
 	return
 
+/obj/item/device/flashlight/examine(mob/user)
+	..()
+	if(bcell)
+		user <<"<span class='notice'>The flashlight is [round(bcell.percent())]% charged.</span>"
+	if(!bcell)
+		user <<"<span class='warning'>The flashlight does not have a power cell installed.</span>"
+
 /obj/item/device/flashlight/initialize()
 	..()
 	if(open)
@@ -43,6 +50,8 @@
 			user.AddLuminosity(-brightness_on)
 		else if(isturf(loc))
 			SetLuminosity(0)
+		on = 0
+		processing_objects -= src
 		return
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
@@ -50,13 +59,14 @@
 			user.AddLuminosity(brightness_on)
 		else if(isturf(loc))
 			SetLuminosity(brightness_on)
-		return
+		processing_objects += src
 	else
 		icon_state = initial(icon_state)
 		if(loc == user)
 			user.AddLuminosity(-brightness_on)
 		else if(isturf(loc))
 			SetLuminosity(0)
+		processing_objects -= src
 
 /obj/item/device/flashlight/attack_self(mob/user)
 	if(!isturf(user.loc))
@@ -145,11 +155,11 @@
 
 /obj/item/device/flashlight/process()
 	if(req_cell)
-		if(bcell.charge < 50)
+		if(bcell.charge < 1)
 			on = 0
 			update_icon()
 		if(on)
-			bcell.use(50)
+			bcell.use(3)
 			update_icon()
 
 /obj/item/device/flashlight/pen

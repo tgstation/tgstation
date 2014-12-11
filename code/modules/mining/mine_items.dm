@@ -52,8 +52,53 @@
 /obj/item/device/flashlight/lantern
 	name = "lantern"
 	icon_state = "lantern"
-	desc = "A mining lantern."
-	brightness_on = 6			// luminosity when on
+	desc = "An extremely bright mining lantern. Runs on welding fuel."
+	brightness_on = 6
+	var/max_fuel = 50
+
+/obj/item/device/flashlight/lantern/examine(mob/user)
+	..()
+	user << "It contains [reagents.get_reagent_amount("fuel")] unit\s of fuel out of [max_fuel]."
+
+/obj/item/device/flashlight/lantern/New()
+	..()
+	create_reagents(max_fuel)
+	reagents.add_reagent("fuel", max_fuel)
+	update_icon()
+	return
+
+/obj/item/device/flashlight/update_icon(var/mob/user = null)
+	if(reagents.get_reagent_amount("fuel") <= 0 && on)
+		on = 0
+	if(on)
+		icon_state = "[initial(icon_state)]-on"
+		if(loc == user)
+			user.AddLuminosity(brightness_on)
+		else if(isturf(loc))
+			SetLuminosity(brightness_on)
+		processing_objects += src
+	else
+		icon_state = initial(icon_state)
+		if(loc == user)
+			user.AddLuminosity(-brightness_on)
+		else if(isturf(loc))
+			SetLuminosity(0)
+		processing_objects -= src
+
+/obj/item/device/flashlight/lantern/afterattack(atom/O, mob/user, proximity)
+	if(!proximity) return
+	if(istype(O, /obj/structure/reagent_dispensers/fueltank) && in_range(src, O))
+		O.reagents.trans_to(src, max_fuel)
+		user << "<span class='notice'>[src] refueled.</span>"
+		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
+		update_icon()
+		return
+
+/obj/item/device/flashlight/lantern/process()
+	if(on)
+		if(prob(25))
+			reagents.remove_reagent("fuel", 1)
+			update_icon()
 
 /*****************************Pickaxe********************************/
 
