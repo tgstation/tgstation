@@ -78,6 +78,7 @@
 		var/list/spawners = list()
 		for(var/obj/effect/beam/emitter/B in beams)
 			if(B.HasSource(src))
+				warning("Ignoring beam [B] due to recursion.")
 				continue // Prevent infinite loops.
 			spawners += B.sources
 			beam.power += B.power

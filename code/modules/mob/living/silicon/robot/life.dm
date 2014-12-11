@@ -22,8 +22,7 @@
 			module.recharge_consumable(src)
 	update_canmove()
 	handle_fire()
-
-
+	handle_beams()
 
 /mob/living/silicon/robot/proc/clamp_values()
 
