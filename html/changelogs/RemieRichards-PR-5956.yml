@@ -1,6 +1,0 @@
-author: RemieRichards
-delete-after: True
-
-changes: 
-  - tweak: Sounds in areas of low pressure (E.g. Space) are now much quieter
-  - tweak: To hear someone in space you need to be stood next to them, or use a radio
