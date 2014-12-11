@@ -45,9 +45,9 @@
 	flick("opening", src)
 	icon_state = "open"
 	SetOpacity(0)
-	sleep(10)
-
+	sleep(5)
 	density = 0
+	sleep(5)
 	air_update_turf(1)
 	update_freelook_sight()
 	operating = 0
@@ -74,9 +74,10 @@
 	SetOpacity(1)
 	air_update_turf(1)
 	update_freelook_sight()
-	sleep(10)
+	sleep(5)
 	crush()
 	density = 1
+	sleep(5)
 
 	operating = 0
 

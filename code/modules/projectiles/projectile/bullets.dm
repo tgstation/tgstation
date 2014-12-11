@@ -16,6 +16,8 @@
 	damage = 15
 	stamina = 50
 
+/obj/item/projectile/bullet/weakbullet3
+	damage = 20
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
@@ -28,25 +30,14 @@
 	damage = 20
 	stamina = 50
 
-
 /obj/item/projectile/bullet/midbullet2
 	damage = 25
 
-
-/obj/item/projectile/bullet/midbullet3 //Only used with the Stechkin Pistol - RobRichards
+/obj/item/projectile/bullet/midbullet3
 	damage = 30
 
-
-/obj/item/projectile/bullet/suffocationbullet//How does this even work?
-	name = "co bullet"
-	damage = 20
-	damage_type = OXY
-
-
-/obj/item/projectile/bullet/cyanideround
-	name = "poison bullet"
-	damage = 40
-	damage_type = TOX
+/obj/item/projectile/bullet/heavybullet
+	damage = 35
 
 
 /obj/item/projectile/bullet/stunshot
@@ -54,11 +45,6 @@
 	damage = 5
 	stamina = 50
 	stutter = 5
-
-
-/obj/item/projectile/bullet/a762
-	damage = 25
-
 
 /obj/item/projectile/bullet/incendiary
 

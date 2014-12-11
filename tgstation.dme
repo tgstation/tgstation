@@ -1233,6 +1233,7 @@
 #include "code\modules\projectiles\guns\magic\staff.dm"
 #include "code\modules\projectiles\guns\magic\wand.dm"
 #include "code\modules\projectiles\guns\projectile\automatic.dm"
+#include "code\modules\projectiles\guns\projectile\launchers.dm"
 #include "code\modules\projectiles\guns\projectile\pistol.dm"
 #include "code\modules\projectiles\guns\projectile\revolver.dm"
 #include "code\modules\projectiles\guns\projectile\shotgun.dm"

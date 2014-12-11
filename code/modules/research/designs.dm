@@ -141,7 +141,7 @@ datum/design/plasmacutter
 
 datum/design/pick_diamond
 	name = "Diamond Pickaxe"
-	desc = "A pickaxe with a diamond pick head, this is just like minecraft."
+	desc = "A pickaxe with a diamond pick head, this is just like minesim 2554!."
 	id = "pick_diamond"
 	req_tech = list("materials" = 6)
 	build_type = PROTOLATHE

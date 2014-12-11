@@ -954,6 +954,16 @@ datum/chemical_reaction/pestkiller
 	var/mob/living/carbon/slime/S = new /mob/living/carbon/slime
 	S.loc = get_turf(holder.my_atom)
 
+/datum/chemical_reaction/slimeinaprov
+	name = "Slime Inaprovaline"
+	id = "m_inaprov"
+	result = "inaprovaline"
+	required_reagents = list("water" = 5)
+	result_amount = 3
+	required_other = 1
+	required_container = /obj/item/slime_extract/grey
+/datum/chemical_reaction/slimeinaprov/on_reaction(var/datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 
 /datum/chemical_reaction/slimemonkey
 	name = "Slime Monkey"
