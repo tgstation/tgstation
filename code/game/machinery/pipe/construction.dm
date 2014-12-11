@@ -153,10 +153,6 @@ Buildable meters
 			src.pipe_type = PIPE_INJECTOR
 		else if(istype(make_from, /obj/machinery/atmospherics/binary/dp_vent_pump))
 			src.pipe_type = PIPE_DP_VENT
-		else if(istype(make_from, /obj/machinery/atmospherics/unary/vent/burstpipe/heat_exchanging))
-			src.pipe_type = PIPE_BURST_HPIPE
-		else if(istype(make_from, /obj/machinery/atmospherics/unary/vent/burstpipe))
-			src.pipe_type = PIPE_BURST_PIPE
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/vent))
 			src.pipe_type = PIPE_PASV_VENT
 	else
@@ -290,7 +286,7 @@ var/global/list/pipeID2State = list(
 			return dir|flip
 		if(PIPE_SIMPLE_BENT, PIPE_INSULATED_BENT, PIPE_HE_BENT)
 			return dir //dir|acw
-		if(PIPE_CONNECTOR,PIPE_UVENT,PIPE_PASV_VENT,PIPE_SCRUBBER,PIPE_HEAT_EXCHANGE,PIPE_THERMAL_PLATE,PIPE_INJECTOR,PIPE_BURST_PIPE)
+		if(PIPE_CONNECTOR,PIPE_UVENT,PIPE_PASV_VENT,PIPE_SCRUBBER,PIPE_HEAT_EXCHANGE,PIPE_THERMAL_PLATE,PIPE_INJECTOR)
 			return dir
 		if(PIPE_MANIFOLD4W, PIPE_INSUL_MANIFOLD4W)
 			return dir|flip|cw|acw
@@ -308,10 +304,10 @@ var/global/list/pipeID2State = list(
 //	var/cw = turn(dir, -90)
 //	var/acw = turn(dir, 90)
 
-	if (!(pipe_type in list(PIPE_HE_STRAIGHT, PIPE_HE_BENT, PIPE_JUNCTION,PIPE_BURST_HPIPE)))
+	if (!(pipe_type in list(PIPE_HE_STRAIGHT, PIPE_HE_BENT, PIPE_JUNCTION)))
 		return get_pipe_dir()
 	switch(pipe_type)
-		if(PIPE_HE_STRAIGHT,PIPE_HE_BENT,PIPE_BURST_HPIPE)
+		if(PIPE_HE_STRAIGHT,PIPE_HE_BENT)
 			return 0
 		if(PIPE_JUNCTION)
 			return flip

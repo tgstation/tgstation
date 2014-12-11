@@ -151,24 +151,12 @@ var/list/vox_tens=list(
 	'sound/vox_fem/ninety.ogg'
 )
 
-var/list/vox_digit_suffixes = list(
-	null,
-	null,
-	'sound/vox_fem/hundred.ogg',
-	'sound/vox_fem/thousand.ogg',
-	null,
-	'sound/vox_fem/hundred.ogg',
-	'sound/vox_fem/million.ogg',
-	null,
-	'sound/vox_fem/hundred.ogg',
-)
-
-
 // Stolen from here: http://stackoverflow.com/questions/2729752/converting-numbers-in-to-words-c-sharp
 /proc/vox_num2list(var/number)
 	if(!isnum(number))
 		warning("vox_num2list fed a non-number: [number]")
 		return list()
+	number=round(number)
 	if(number == 0)
 		return list('sound/vox_fem/zero.ogg')
 
@@ -177,19 +165,19 @@ var/list/vox_digit_suffixes = list(
 
 	var/list/words=list()
 
-	if ((number / 1000000) > 0)
+	if (round(number / 1000000) > 0)
 		words += vox_num2list(number / 1000000)
-		words += 'sound/vox_fem/million.ogg'
+		words.Add('sound/vox_fem/million.ogg')
 		number %= 1000000
 
-	if ((number / 1000) > 0)
+	if (round(number / 1000) > 0)
 		words += vox_num2list(number / 1000)
-		words += 'sound/vox_fem/thousand.ogg'
+		words.Add('sound/vox_fem/thousand.ogg')
 		number %= 1000
 
-	if ((number / 100) > 0)
+	if (round(number / 100) > 0)
 		words += vox_num2list(number / 100)
-		words += 'sound/vox_fem/hundred.ogg'
+		words.Add('sound/vox_fem/hundred.ogg')
 		number %= 100
 
 	if (number > 0)
@@ -198,11 +186,11 @@ var/list/vox_digit_suffixes = list(
 		//	words += "and "
 
 		if (number < 20)
-			words += vox_units[number]
+			words += vox_units[number+1]
 		else
-			words += vox_tens[number / 10]
+			words += vox_tens[(number / 10)+1]
 			if ((number % 10) > 0)
-				words += 'sound/vox_fem/minus.ogg' + vox_num2list[number % 10]
+				words.Add(vox_units[(number % 10)+1])
 
 	return words
 
