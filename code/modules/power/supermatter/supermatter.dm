@@ -18,7 +18,7 @@
 
 /obj/machinery/power/supermatter_shard
 	name = "supermatter shard"
-	desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure. \red You get headaches just from looking at it."
+	desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure. <span class='danger'> You get headaches just from looking at it.</span>"
 	icon = 'icons/obj/supermatter.dmi'
 	icon_state = "darkmatter_shard"
 	density = 1
