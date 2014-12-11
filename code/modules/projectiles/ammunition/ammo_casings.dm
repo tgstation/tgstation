@@ -8,18 +8,6 @@
 	caliber = ".50"
 	projectile_type = /obj/item/projectile/bullet
 
-/obj/item/ammo_casing/a418
-	desc = "A .418 bullet casing."
-	caliber = "357"
-	projectile_type = /obj/item/projectile/bullet/suffocationbullet
-
-
-/obj/item/ammo_casing/a666
-	desc = "A .666 bullet casing."
-	caliber = "357"
-	projectile_type = /obj/item/projectile/bullet/cyanideround
-
-
 /obj/item/ammo_casing/c38
 	desc = "A .38 bullet casing."
 	caliber = "38"
@@ -35,7 +23,7 @@
 /obj/item/ammo_casing/c9mm
 	desc = "A 9mm bullet casing."
 	caliber = "9mm"
-	projectile_type = /obj/item/projectile/bullet/midbullet2
+	projectile_type = /obj/item/projectile/bullet/weakbullet3
 
 
 /obj/item/ammo_casing/c45
@@ -142,6 +130,10 @@
 	caliber = "a762"
 	projectile_type = /obj/item/projectile/bullet
 
+/obj/item/ammo_casing/a545
+	desc = "A 5.45mm bullet casing."
+	caliber = "a545"
+	projectile_type = /obj/item/projectile/bullet/heavybullet
 
 /obj/item/ammo_casing/caseless
 	desc = "A caseless bullet casing."
@@ -159,3 +151,10 @@
 	desc = "A .75 bullet casing."
 	caliber = "75"
 	projectile_type = /obj/item/projectile/bullet/gyro
+
+/obj/item/ammo_casing/a40mm
+	name = "40mm HE shell"
+	desc = "A cased high explosive grenade that can only be activated once fired out of a grenade launcher."
+	caliber = "40mm"
+	icon_state = "40mmHE"
+	projectile_type = /obj/item/projectile/bullet/a40mm

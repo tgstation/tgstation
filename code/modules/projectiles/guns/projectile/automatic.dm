@@ -1,15 +1,16 @@
 /obj/item/weapon/gun/projectile/automatic //Hopefully someone will find a way to make these fire in bursts or something. --Superxpdude
-	name = "submachine gun"
-	desc = "A lightweight, rapid-fire gun. Uses 9mm rounds."
-	icon_state = "saber"	//ugly
-	w_class = 3.0
+	name = "prototype SMG"
+	desc = "A lightweight, prototype 9mm submachine gun, designated 'SABR'. Has a threaded barrel for suppressors."
+	icon_state = "saber"
+	w_class = 3
 	origin_tech = "combat=4;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/msmg9mm
+	mag_type = /obj/item/ammo_box/magazine/smgm9mm
 	var/alarmed = 0
+	can_suppress = 1
 
 /obj/item/weapon/gun/projectile/automatic/update_icon()
 	..()
-	icon_state = "[initial(icon_state)][magazine ? "-[magazine.max_ammo]" : ""][chambered ? "" : "-e"]"
+	icon_state = "[initial(icon_state)][magazine ? "-[magazine.max_ammo]" : ""][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 	return
 
 /obj/item/weapon/gun/projectile/automatic/attackby(var/obj/item/A as obj, mob/user as mob)
@@ -23,26 +24,14 @@
 		alarmed = 1
 	return
 
-/obj/item/weapon/gun/projectile/automatic/mini_uzi
-	name = "Uzi"
-	desc = "A lightweight, rapid-fire submachine gun, for when you really want someone dead. Uses .45 rounds."
-	icon_state = "mini-uzi"
-	w_class = 3.0
-	origin_tech = "combat=5;materials=2;syndicate=8"
-	mag_type = /obj/item/ammo_box/magazine/uzim45
-
-
-
 /obj/item/weapon/gun/projectile/automatic/c20r
-	name = "\improper C-20r SMG"
-	desc = "A lightweight, compact bullpup SMG. Uses .45 rounds in medium-capacity magazines and has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
+	name = "syndicate SMG"
+	desc = "A lightweight, bullpup .45 SMG, designated 'C-20r'. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
 	icon_state = "c20r"
 	item_state = "c20r"
-	w_class = 3.0
 	origin_tech = "combat=5;materials=2;syndicate=8"
-	mag_type = /obj/item/ammo_box/magazine/c20m
+	mag_type = /obj/item/ammo_box/magazine/smgm45
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
-
 
 /obj/item/weapon/gun/projectile/automatic/c20r/New()
 	..()
@@ -56,14 +45,14 @@
 
 /obj/item/weapon/gun/projectile/automatic/c20r/update_icon()
 	..()
-	icon_state = "c20r[magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""][chambered ? "" : "-e"]"
+	icon_state = "c20r[magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 	return
 
 
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw
-	name = "\improper L6 SAW"
-	desc = "A heavily modified light machine gun with a tactical plasteel frame resting on a rather traditionally-made belt-fed ballistic weapon. Has 'Aussec Armoury - 2531' engraved on the reciever."
+	name = "syndicate LMG"
+	desc = "A heavily modified 7.62 light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the reciever below the designation."
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
 	w_class = 5
@@ -72,7 +61,7 @@
 	mag_type = /obj/item/ammo_box/magazine/m762
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	var/cover_open = 0
-
+	can_suppress = 0
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user as mob)
 	cover_open = !cover_open
@@ -115,14 +104,15 @@
 	..()
 
 /obj/item/weapon/gun/projectile/automatic/bulldog
-	name = "\improper Bulldog shotgun"
-	desc = "A compact, mag-fed semi-automatic shotgun for combat in narrow corridors. Compatible only with specialized magazines."
+	name = "syndicate shotgun"
+	desc = "A compact, mag-fed semi-automatic shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines."
 	icon_state = "bulldog"
 	item_state = "bulldog"
 	w_class = 3.0
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m12g
 	fire_sound = 'sound/weapons/Gunshot.ogg'
+	can_suppress = 0
 
 /obj/item/weapon/gun/projectile/automatic/bulldog/New()
 	..()
@@ -146,21 +136,82 @@
 	empty_alarm()
 	return
 
+
+/obj/item/weapon/gun/projectile/automatic/c90gl
+	name = "syndicate assault rifle"
+	desc = "A bullpup and compact 5.45x39 assault rifle with a unique toploading design, designated 'C-90gl'. Has an attached underbarrel grenade launcher which can be toggled on and off."
+	icon_state = "c90gl"
+	item_state = "c90gl"
+	origin_tech = "combat=5;materials=2;syndicate=8"
+	mag_type = /obj/item/ammo_box/magazine/m545
+	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	action_button_name = "Toggle Grenade Launcher"
+	can_suppress = 0
+	var/select = 1 //1 for boolets, 0 for explosions.
+	var/obj/item/weapon/gun/projectile/revolver/grenadelauncher/underbarrel
+
+/obj/item/weapon/gun/projectile/automatic/c90gl/New()
+	..()
+	underbarrel = new /obj/item/weapon/gun/projectile/revolver/grenadelauncher(src)
+	update_icon()
+	return
+
+/obj/item/weapon/gun/projectile/automatic/c90gl/afterattack(var/atom/target, var/mob/living/user, flag, params)
+	if(select)
+		..()
+		empty_alarm()
+		return
+	else
+		underbarrel.afterattack(target, user, flag, params)
+
+/obj/item/weapon/gun/projectile/automatic/c90gl/attackby(var/obj/item/A, mob/user)
+	if(select)
+		..()
+	else
+		underbarrel.attackby(A, user)
+
+/obj/item/weapon/gun/projectile/automatic/c90gl/attack_self(var/mob/living/user)
+	if(select)
+		..()
+	else
+		underbarrel.attack_self(user)
+
+
+
+/obj/item/weapon/gun/projectile/automatic/c90gl/update_icon()
+	..()
+	overlays.Cut()
+	if(select)
+		overlays += "c90prim"
+	else
+		overlays += "c90gren"
+	icon_state = "c90gl[magazine ? "-[Ceiling(get_ammo(0)/6)*6]" : ""][chambered ? "" : "-e"]"
+	return
+
+/obj/item/weapon/gun/projectile/automatic/c90gl/proc/underbarrel_swap()
+	var/mob/living/carbon/human/user = usr
+	if(select)
+		select = 0
+		user << "<span class='notice'>You switch to grenades.</span>"
+	else
+		select = 1
+		user << "<span class='notice'>You switch to bullets.</span>"
+
+	update_icon()
+	return
+
+/obj/item/weapon/gun/projectile/automatic/c90gl/ui_action_click()
+	underbarrel_swap()
+
+
+
 /obj/item/weapon/gun/projectile/automatic/tommygun
 	name = "tommy gun"
-	desc = "A genuine Chicago Typewriter."
+	desc = "A genuine 'Chicago Typewriter'."
 	icon_state = "tommygun"
 	item_state = "tommygun"
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
-
-/* The thing I found with guns in ss13 is that they don't seem to simulate the rounds in the magazine in the gun.
-   Afaik, since projectile.dm features a revolver, this would make sense since the magazine is part of the gun.
-   However, it looks like subsequent guns that use removable magazines don't take that into account and just get
-   around simulating a removable magazine by adding the casings into the loaded list and spawning an empty magazine
-   when the gun is out of rounds. Which means you can't eject magazines with rounds in them. The below is a very
-   rough and poor attempt at making that happen. -Ausops */
-
-/* Where Ausops failed, I have not. -SirBayer */
+	can_suppress = 0

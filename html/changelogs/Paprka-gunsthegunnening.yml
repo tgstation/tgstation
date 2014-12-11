@@ -1,0 +1,10 @@
+author: Paprka
+
+delete-after: True
+
+
+
+changes: 
+
+  - rscadd: "Added a new weapon for syndicate boarding parties, the C-90gl assault rifle. This is a hybrid rifle with a lot of damage and a grenade launcher alt-fire. Purchasable for 18TC."
+  - tweak: "Suppressors can now be used on the protolathe SMG and the C-20r."

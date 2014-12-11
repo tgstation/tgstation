@@ -17,6 +17,7 @@
 
 	var/fire_sound = "gunshot"
 	var/suppressed = 0
+	var/can_suppress = 0
 	var/recoil = 0
 	var/clumsy_check = 1
 	var/obj/item/ammo_casing/chambered = null
