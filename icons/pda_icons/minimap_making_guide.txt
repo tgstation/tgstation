@@ -1,0 +1,21 @@
+Minimap creation guide by Deity Link. (December 11th, 2014)
+
+
+So you've finally managed to create your own station map and it has reached the point where it only needs minor tweaks and is playable.
+That's good, so if you're reading this that means you want your brand new station to have its own minimap for the Station Map PDA app (and maybe other uses).
+Here's the long yet effective prodecure to make one:
+
+1-When in game and on your station's Z-level, click "Generate NanoUI Map" under the Server tab.
+2-Watch the Dream Daemon logs until it finishes processing all the Z-level.
+2-You'll find the resulting PNG under \AppData\Roaming\BYOND\cache probably named "nanomap1.png"
+3-Open station_minimaps.xcf (requires Gimp) and drag and drop the PNG onto it.
+4-Turn it into its own layer, then resize it to 256x256 (or whatever are the dimensions of your map. 1 tile will be 1 pixel) IMPORTANT: Set "Interpolation" to "none" or the result will be blury and hard to work with.
+5-Rename the layer "background-<shortnameofyourstation>" (which you have defined in maps/<nameofyourstation>.dm)
+6-Use the colour selection tool to turn all the space tiles pitch black
+7-For the rest of the tiles, equip your pencil, and got at it manually. Look at the other background layers to understand the norms.
+
+cue 2 hours of drawing depending on how complicated your map is
+
+8-Add inner- and outter- layers, set the inner- layer's mode to "Grain merge"
+9-Add a colours-layer and start painting while following the same norms and colours as the other colours- layers. When you're done, set the colours- layer's transparency to 29,7
+10-Export the result to \icons\pda_icons, and you're done! The minimap should now properly display on the app. Remember to make a clean compile.
