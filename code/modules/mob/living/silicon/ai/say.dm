@@ -117,30 +117,38 @@ var/const/VOX_DELAY = 600
 		play_vox_word(word, src.z, null)
 
 
-var/list/vox_digits=list(
-	// First index is digit position, second is digit value.
-	list(
-		'sound/vox_fem/one.ogg',
-		'sound/vox_fem/two.ogg',
-		'sound/vox_fem/three.ogg',
-		'sound/vox_fem/four.ogg',
-		'sound/vox_fem/five.ogg',
-		'sound/vox_fem/six.ogg',
-		'sound/vox_fem/seven.ogg',
-		'sound/vox_fem/eight.ogg',
-		'sound/vox_fem/nine.ogg'
-	),
-	list(
-		'sound/vox_fem/ten.ogg',
-		'sound/vox_fem/twenty.ogg',
-		'sound/vox_fem/thirty.ogg',
-		'sound/vox_fem/fourty.ogg',
-		'sound/vox_fem/fifty.ogg',
-		'sound/vox_fem/sixty.ogg',
-		'sound/vox_fem/seventy.ogg',
-		'sound/vox_fem/eighty.ogg',
-		'sound/vox_fem/ninety.ogg'
-	)
+var/list/vox_units=list(
+	'sound/vox_fem/one.ogg',
+	'sound/vox_fem/two.ogg',
+	'sound/vox_fem/three.ogg',
+	'sound/vox_fem/four.ogg',
+	'sound/vox_fem/five.ogg',
+	'sound/vox_fem/six.ogg',
+	'sound/vox_fem/seven.ogg',
+	'sound/vox_fem/eight.ogg',
+	'sound/vox_fem/nine.ogg',
+	'sound/vox_fem/ten.ogg',
+	'sound/vox_fem/eleven.ogg',
+	'sound/vox_fem/twelve.ogg',
+	'sound/vox_fem/thirteen.ogg',
+	'sound/vox_fem/fourteen.ogg',
+	'sound/vox_fem/fifteen.ogg',
+	'sound/vox_fem/sixteen.ogg',
+	'sound/vox_fem/seventeen.ogg',
+	'sound/vox_fem/eighteen.ogg',
+	'sound/vox_fem/nineteen.ogg'
+)
+
+var/list/vox_tens=list(
+	'sound/vox_fem/ten.ogg',
+	'sound/vox_fem/twenty.ogg',
+	'sound/vox_fem/thirty.ogg',
+	'sound/vox_fem/fourty.ogg',
+	'sound/vox_fem/fifty.ogg',
+	'sound/vox_fem/sixty.ogg',
+	'sound/vox_fem/seventy.ogg',
+	'sound/vox_fem/eighty.ogg',
+	'sound/vox_fem/ninety.ogg'
 )
 
 var/list/vox_digit_suffixes = list(
@@ -154,33 +162,49 @@ var/list/vox_digit_suffixes = list(
 	null,
 	'sound/vox_fem/hundred.ogg',
 )
-/proc/vox_num2list_digit(var/digit, var/dpos)
-	var/list/out[0]
-	if(dpos <= vox_digit_suffixes.len)
-		var/sdig=1
-		for(var/i = 1;i<=dpos;i++)
-			if(!isnull(vox_digit_suffixes[i]) || dpos==1)
-				sdig = 1
-			else
-				sdig += 1
-		if(digit != 0)
-			out.Add(vox_digits[sdig][digit])
-			if(!isnull(vox_digit_suffixes[dpos]))
-				out.Add(vox_digit_suffixes[dpos])
-	return out
 
+
+// Stolen from here: http://stackoverflow.com/questions/2729752/converting-numbers-in-to-words-c-sharp
 /proc/vox_num2list(var/number)
-	var/list/generated[0]
 	if(!isnum(number))
+		warning("vox_num2list fed a non-number: [number]")
 		return list()
 	if(number == 0)
 		return list('sound/vox_fem/zero.ogg')
-	var/numtxt = reverse_text(num2text(number,9))
-	for(var/i=1;i<=length(numtxt);i++)
-		generated = vox_num2list_digit(text2num(copytext(numtxt,i,i+1)),i) + generated
-	testing("[number] => [list2text(generated," ")]")
-	return generated
 
+	if(number < 0)
+		return list('sound/vox_fem/minus.ogg') + vox_num2list(abs(number))
+
+	var/list/words=list()
+
+	if ((number / 1000000) > 0)
+		words += vox_num2list(number / 1000000)
+		words += 'sound/vox_fem/million.ogg'
+		number %= 1000000
+
+	if ((number / 1000) > 0)
+		words += vox_num2list(number / 1000)
+		words += 'sound/vox_fem/thousand.ogg'
+		number %= 1000
+
+	if ((number / 100) > 0)
+		words += vox_num2list(number / 100)
+		words += 'sound/vox_fem/hundred.ogg'
+		number %= 100
+
+	if (number > 0)
+		// Sounds fine without the and.
+		//if (words != "")
+		//	words += "and "
+
+		if (number < 20)
+			words += vox_units[number]
+		else
+			words += vox_tens[number / 10]
+			if ((number % 10) > 0)
+				words += 'sound/vox_fem/minus.ogg' + vox_num2list[number % 10]
+
+	return words
 
 /proc/play_vox_word(var/word, var/z_level, var/mob/only_listener)
 	word = lowertext(word)

@@ -12,7 +12,7 @@
 	                                     //  Plate value is 30000, increased it a bit because of additional surface area. - N3X
 	var/const/ENERGY_MULT        = 6.4   // Not sure what this is, keeping it the same as plates.
 
-	burst_type = /obj/machinery/atmospherics/pipe/vent/burstpipe/heat_exchanging
+	burst_type = /obj/machinery/atmospherics/unary/vent/burstpipe/heat_exchanging
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/getNodeType(var/node_id)
 	return PIPE_TYPE_HE

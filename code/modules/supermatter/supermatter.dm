@@ -113,7 +113,7 @@
 	for(var/obj/effect/beam/emitter/B in beams)
 		power += B.get_damage() * config_bullet_energy
 
-	var/stability = num2text(round((damage / explosion_point) * 100))
+	var/stability = round((damage / explosion_point) * 100)
 	if(damage > warning_point) // while the core is still damaged and it's still worth noting its status
 
 		var/list/audio_sounds = list('sound/AI/supermatter_integrity_before.ogg')

@@ -28,6 +28,8 @@ Buildable meters
 #define PIPE_INJECTOR    		23
 #define PIPE_DP_VENT    		24
 #define PIPE_PASV_VENT    		25
+#define PIPE_BURST_PIPE         26
+#define PIPE_BURST_HPIPE        27
 
 /obj/item/pipe_spawner
 	name = "Pipe Spawner"
@@ -123,7 +125,11 @@ Buildable meters
 			src.pipe_type = PIPE_INJECTOR
 		else if(istype(make_from, /obj/machinery/atmospherics/binary/dp_vent_pump))
 			src.pipe_type = PIPE_DP_VENT
-		else if(istype(make_from, /obj/machinery/atmospherics/pipe/vent))
+		else if(istype(make_from, /obj/machinery/atmospherics/unary/vent/burstpipe/heat_exchanging))
+			src.pipe_type = PIPE_BURST_HPIPE
+		else if(istype(make_from, /obj/machinery/atmospherics/unary/vent/burstpipe))
+			src.pipe_type = PIPE_BURST_PIPE
+		else if(istype(make_from, /obj/machinery/atmospherics/unary/vent))
 			src.pipe_type = PIPE_PASV_VENT
 	else
 		src.pipe_type = pipe_type
@@ -161,7 +167,9 @@ var/global/list/pipeID2State = list(
 	"thermalplate",
 	"injector",
 	"binary vent",
-	"passive vent"
+	"passive vent",
+	"",
+	"",
 )
 /obj/item/pipe/proc/update()
 	var/list/nlist = list( \
@@ -190,7 +198,9 @@ var/global/list/pipeID2State = list(
 		"thermal plate", \
 		"injector", \
 		"dual-port vent", \
-		"passive vent"
+		"passive vent",
+		"burst pipe",
+		"burst he pipe",
 	)
 	name = nlist[pipe_type+1] + " fitting"
 	icon = 'icons/obj/pipe-item.dmi'
@@ -212,10 +222,7 @@ var/global/list/pipeID2State = list(
 	src.dir = turn(src.dir, -90)
 
 	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE))
-		if(dir==2)
-			dir = 1
-		else if(dir==8)
-			dir = 4
+		dir=rotate_pipe_straight(dir)
 	else if (pipe_type == PIPE_MANIFOLD4W)
 		dir = 2
 	//src.pipe_dir = get_pipe_dir()
@@ -227,10 +234,7 @@ var/global/list/pipeID2State = list(
 		&& (src.dir in cardinal))
 		src.dir = src.dir|turn(src.dir, 90)
 	else if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE))
-		if(dir==2)
-			dir = 1
-		else if(dir==8)
-			dir = 4
+		dir=rotate_pipe_straight(dir)
 	return
 
 // returns all pipe's endpoints
@@ -256,7 +260,7 @@ var/global/list/pipeID2State = list(
 			return dir|flip
 		if(PIPE_SIMPLE_BENT, PIPE_INSULATED_BENT, PIPE_HE_BENT)
 			return dir //dir|acw
-		if(PIPE_CONNECTOR,PIPE_UVENT,PIPE_PASV_VENT,PIPE_SCRUBBER,PIPE_HEAT_EXCHANGE,PIPE_THERMAL_PLATE,PIPE_INJECTOR)
+		if(PIPE_CONNECTOR,PIPE_UVENT,PIPE_PASV_VENT,PIPE_SCRUBBER,PIPE_HEAT_EXCHANGE,PIPE_THERMAL_PLATE,PIPE_INJECTOR,PIPE_BURST_PIPE)
 			return dir
 		if(PIPE_MANIFOLD4W)
 			return dir|flip|cw|acw
@@ -274,10 +278,10 @@ var/global/list/pipeID2State = list(
 //	var/cw = turn(dir, -90)
 //	var/acw = turn(dir, 90)
 
-	if (!(pipe_type in list(PIPE_HE_STRAIGHT, PIPE_HE_BENT, PIPE_JUNCTION)))
+	if (!(pipe_type in list(PIPE_HE_STRAIGHT, PIPE_HE_BENT, PIPE_JUNCTION,PIPE_BURST_HPIPE)))
 		return get_pipe_dir()
 	switch(pipe_type)
-		if(PIPE_HE_STRAIGHT,PIPE_HE_BENT)
+		if(PIPE_HE_STRAIGHT,PIPE_HE_BENT,PIPE_BURST_HPIPE)
 			return 0
 		if(PIPE_JUNCTION)
 			return flip
@@ -311,10 +315,7 @@ var/global/list/pipeID2State = list(
 	if (!isturf(src.loc))
 		return 1
 	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE))
-		if(dir==2)
-			dir = 1
-		else if(dir==8)
-			dir = 4
+		dir=rotate_pipe_straight(dir)
 	else if (pipe_type == PIPE_MANIFOLD4W)
 		dir = 2
 	var/pipe_dir = get_pipe_dir()
@@ -394,7 +395,13 @@ var/global/list/pipeID2State = list(
 			P=new /obj/machinery/atmospherics/binary/dp_vent_pump(src.loc)
 
 		if(PIPE_PASV_VENT)
-			P=new /obj/machinery/atmospherics/pipe/vent(src.loc)
+			P=new /obj/machinery/atmospherics/unary/vent(src.loc)
+
+		if(PIPE_BURST_PIPE)
+			P=new /obj/machinery/atmospherics/unary/vent/burstpipe(loc)
+
+		if(PIPE_BURST_HPIPE)
+			P=new /obj/machinery/atmospherics/unary/vent/burstpipe/heat_exchanging(loc)
 
 	if(P.buildFrom(usr,src))
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
