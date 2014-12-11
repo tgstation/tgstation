@@ -19,8 +19,6 @@
 			if(T && T.z == turf_source.z)
 				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, surround)
 
-var/const/FALLOFF_SOUNDS = 1
-var/const/SURROUND_CAP = 7
 
 /mob/proc/playsound_local(var/turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1)
 	if(!src.client || ear_deaf > 0)	return
@@ -38,8 +36,31 @@ var/const/SURROUND_CAP = 7
 			S.frequency = get_rand_frequency()
 
 	if(isturf(turf_source))
-		// 3D sounds, the technology is here!
 		var/turf/T = get_turf(src)
+
+		//Atmosphere affects sound
+		var/pressure_factor = 1
+		var/datum/gas_mixture/hearer_env = T.return_air()
+		var/datum/gas_mixture/source_env = turf_source.return_air()
+
+		if(hearer_env && source_env)
+			var/pressure = min(hearer_env.return_pressure(), source_env.return_pressure())
+			if(pressure < ONE_ATMOSPHERE)
+				pressure_factor = max((pressure - SOUND_MINIMUM_PRESSURE)/(ONE_ATMOSPHERE - SOUND_MINIMUM_PRESSURE), 0)
+		else //space
+			pressure_factor = 0
+
+		var/distance = get_dist(T, turf_source)
+		if(distance <= 1)
+			pressure_factor = max(pressure_factor, 0.15) //touching the source of the sound
+
+		S.volume *= pressure_factor
+		//End Atmosphere affecting sound
+
+		if(S.volume <= 0)
+			return //No sound
+
+		// 3D sounds, the technology is here!
 		if (surround)
 			var/dx = turf_source.x - T.x // Hearing from the right/left
 			S.x = round(max(-SURROUND_CAP, min(SURROUND_CAP, dx)), 1)

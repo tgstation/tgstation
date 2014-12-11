@@ -15,7 +15,7 @@ datum/design/nuclear_gun
 
 datum/design/stunrevolver
 	name = "Stun Revolver"
-	desc = "The prize of the Head of Security."
+	desc = "A high-tech revolver that fires internal, reusable stun cartidges in a revolving cylinder. The stun cartridges can be recharged using a conventional energy weapon recharger."
 	id = "stunrevolver"
 	req_tech = list("combat" = 3, "materials" = 3, "powerstorage" = 2)
 	build_type = PROTOLATHE
@@ -112,14 +112,23 @@ datum/design/large_grenade
 	build_path = /obj/item/weapon/grenade/chem_grenade/large
 
 datum/design/smg
-	name = "Submachine Gun"
-	desc = "A lightweight, fast firing gun."
+	name = "Prototype Submachine Gun"
+	desc = "A prototype weapon made using lightweight materials on a traditional frame, designed to fire standard 9mm rounds."
 	id = "smg"
 	req_tech = list("combat" = 4, "materials" = 3)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 8000, "$silver" = 2000, "$diamond" = 1000)
 	build_path = /obj/item/weapon/gun/projectile/automatic
 	locked = 1
+
+datum/design/mag_smg
+	name = "Submachine Gun Magazine (9mm)"
+	desc = "A 20-round magazine for the prototype submachine gun."
+	id = "mag_smg"
+	req_tech = list("combat" = 4, "materials" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 2000)
+	build_path = /obj/item/ammo_box/magazine/smgm9mm
 
 datum/design/xray
 	name = "Xray Laser Gun"
@@ -160,24 +169,6 @@ datum/design/reciever
 	materials = list("$metal" = 6500, "$silver" = 500)
 	build_path = /obj/item/weaponcrafting/reciever
 
-datum/design/ammo_9mm
-	name = "Ammunition Box (9mm)"
-	desc = "A box of prototype 9mm ammunition."
-	id = "ammo_9mm"
-	req_tech = list("combat" = 4, "materials" = 3)
-	build_type = PROTOLATHE
-	materials = list("$metal" = 2000)
-	build_path = /obj/item/ammo_box/c9mm
-
-datum/design/mag_smg
-	name = "Submachine Gun Magazine (9mm)"
-	desc = "A prototype magazine for the submachine gun."
-	id = "mag_smg"
-	req_tech = list("combat" = 4, "materials" = 3)
-	build_type = PROTOLATHE
-	materials = list("$metal" = 2000)
-	build_path = /obj/item/ammo_box/magazine/msmg9mm
-
 datum/design/stunshell
 	name = "Stun Shell"
 	desc = "A stunning shell for a shotgun."
@@ -195,3 +186,12 @@ datum/design/techshell
 	build_type = PROTOLATHE
 	materials = list("$metal" = 1000, "$glass" = 200, "$silver" = 300)
 	build_path = /obj/item/ammo_casing/shotgun/techshell
+
+datum/design/suppressor
+	name = "Universal Suppressor"
+	desc = "A reverse-engineered universal suppressor that fits on most small arms with threaded barrels."
+	id = "suppressor"
+	req_tech = list("combat" = 6, "engineering" = 5, "syndicate" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 2000, "$silver" = 500)
+	build_path = /obj/item/weapon/suppressor

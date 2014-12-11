@@ -14,7 +14,7 @@ The currently supporting non-reagent materials. All material amounts are set as 
 - $gold (/obj/item/stack/gold).
 - $uranium (/obj/item/stack/uranium).
 - $diamond (/obj/item/stack/diamond).
-- $clown (/obj/item/stack/clown).
+- $bananium (/obj/item/stack/bananium).
 (Insert new ones here)
 
 Don't add new keyword/IDs if they are made from an existing one (such as rods which are made from metal). Only add raw materials.
@@ -27,15 +27,7 @@ reliability_mod (starts at 0, gets improved through experimentation). Example: P
 - A single sheet of anything is 3750 units of material. Materials besides metal/glass require help from other jobs (mining for
 other types of metals and chemistry for reagents).
 - Add the AUTOLATHE tag to
-
-
 */
-#define	IMPRINTER	1	//For circuits. Uses glass/chemicals.
-#define PROTOLATHE	2	//New stuff. Uses glass/metal/chemicals
-#define	AUTOLATHE	4	//Uses glass/metal only.
-#define CRAFTLATHE	8	//Uses fuck if I know. For use eventually.
-#define MECHFAB		16 //Remember, objects utilising this flag should have construction_time and construction_cost vars.
-//Note: More then one of these can be added to a design but imprinter and lathe designs are incompatable.
 
 datum/design						//Datum for object designs, used in construction
 	var/name = "Name"					//Name of the created object.
@@ -45,9 +37,10 @@ datum/design						//Datum for object designs, used in construction
 	var/reliability = 100				//Reliability of the device.
 	var/build_type = null				//Flag as to what kind machine the design is built in. See defines.
 	var/list/materials = list()			//List of materials. Format: "id" = amount.
+	var/construction_time				//Amount of time required for building the object
 	var/build_path = ""					//The file path of the object that gets created
 	var/locked = 0						//If true it will spawn inside a lockbox with currently sec access
-	var/category = null //Primarily used for Mech Fabricators, but can be used for anything
+	var/list/category = null 			//Primarily used for Mech Fabricators, but can be used for anything
 
 
 //A proc to calculate the reliability of a design based on tech levels and innate modifiers.
@@ -141,7 +134,7 @@ datum/design/plasmacutter
 
 datum/design/pick_diamond
 	name = "Diamond Pickaxe"
-	desc = "A pickaxe with a diamond pick head, this is just like minecraft."
+	desc = "A pickaxe with a diamond pick head, this is just like minesim 2554!."
 	id = "pick_diamond"
 	req_tech = list("materials" = 6)
 	build_type = PROTOLATHE
@@ -168,7 +161,7 @@ datum/design/beacon
 	id = "beacon"
 	req_tech = list("bluespace" = 1)
 	build_type = PROTOLATHE
-	materials = list ("$metal" = 20, "$glass" = 10)
+	materials = list("$metal" = 20, "$glass" = 10)
 	build_path = /obj/item/device/radio/beacon
 
 datum/design/bag_holding
@@ -199,7 +192,6 @@ datum/design/telesci_gps
 	build_type = PROTOLATHE
 	materials = list("$metal" = 500, "$glass" = 1000)
 	build_path = /obj/item/device/gps
-
 
 
 /////////////////////////////////////////
@@ -286,7 +278,9 @@ datum/design/borg_syndicate_module
 	build_type = MECHFAB
 	req_tech = list("combat" = 4, "syndicate" = 3)
 	build_path = /obj/item/borg/upgrade/syndicate
-	category = "Cyborg Upgrade Modules"
+	materials = list("$metal"=10000,"$glass"=15000,"$diamond" = 10000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
 
 
 /////////////////////////////////////////
@@ -336,8 +330,9 @@ datum/design/drone_shell
 	req_tech = list("programming" = 2, "biotech" = 4)
 	build_type = MECHFAB
 	materials = list("$metal" = 800, "$glass" = 350)
+	construction_time=150
 	build_path = /obj/item/drone_shell
-	category = "Misc"
+	category = list("Misc")
 
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////

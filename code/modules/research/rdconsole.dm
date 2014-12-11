@@ -387,7 +387,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 								linked_lathe.uranium_amount = max(0, (linked_lathe.uranium_amount-(being_built.materials[M]/coeff * amount)))
 							if("$diamond")
 								linked_lathe.diamond_amount = max(0, (linked_lathe.diamond_amount-(being_built.materials[M]/coeff * amount)))
-							if("$clown")
+							if("$bananium")
 								linked_lathe.clown_amount = max(0, (linked_lathe.clown_amount-(being_built.materials[M]/coeff * amount)))
 							else
 								linked_lathe.reagents.remove_reagent(M, being_built.materials[M]/coeff * amount)
