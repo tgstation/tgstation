@@ -18,36 +18,6 @@
 	icon_state = "redtie"
 	item_color = "redtie"
 
-/obj/item/clothing/tie/security
-	name = "security tie"
-	desc = "A striped red tie."
-	icon_state = "sectie"
-	item_color = "sectie"
-
-/obj/item/clothing/tie/cargo
-	name = "cargo bay officer tie"
-	desc = "A striped tie, worn by the station's security officers to display which department they're assigned to. This one is brown."
-	icon_state = "cargotie"
-	item_color = "cargotie"
-
-/obj/item/clothing/tie/engine
-	name = "engineering officer tie"
-	desc = "A striped tie, worn by the station's security officers to display which department they're assigned to. This one is orange."
-	icon_state = "engietie"
-	item_color = "engietie"
-
-/obj/item/clothing/tie/rnd
-	name = "research officer tie"
-	desc = "A striped tie, worn by the station's security officers to display which department they're assigned to. This one is purple."
-	icon_state = "rndtie"
-	item_color = "rndtie"
-
-/obj/item/clothing/tie/med
-	name = "medbay officer tie"
-	desc = "A striped tie, worn by the station's security officers to display which department they're assigned to. This one is blue."
-	icon_state = "medtie"
-	item_color = "medtie"
-
 /obj/item/clothing/tie/black
 	name = "black tie"
 	icon_state = "blacktie"
@@ -192,37 +162,37 @@
 	desc = "An armband, worn by personnel authorized to act as a deputy of station security."
 
 /obj/item/clothing/tie/armband/cargo
-	name = "cargo bay guard armband"
-	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is brown."
+	name = "cargo bay armband"
+	desc = "A department armband, worn to designate someone as temporarily assisting a department. Typically worn by security officers assigned to departments. This one is brown."
 	icon_state = "cargoband"
 	item_color = "cargoband"
 
 /obj/item/clothing/tie/armband/engine
-	name = "engineering guard armband"
-	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is orange with a reflective strip!"
+	name = "engineering armband"
+	desc = "A department armband, worn to designate someone as temporarily assisting a department. Typically worn by security officers assigned to departments. This one is orange with a reflective strip!"
 	icon_state = "engieband"
 	item_color = "engieband"
 
 /obj/item/clothing/tie/armband/science
-	name = "science guard armband"
-	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is purple."
+	name = "science armband"
+	desc = "A department armband, worn to designate someone as temporarily assisting a department. Typically worn by security officers assigned to departments. This one is purple."
 	icon_state = "rndband"
 	item_color = "rndband"
 
 /obj/item/clothing/tie/armband/hydro
-	name = "hydroponics guard armband"
-	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is green and blue."
+	name = "hydroponics armband"
+	desc = "A department armband, worn to designate someone as temporarily assisting a department. Typically worn by security officers assigned to departments. This one is green and blue."
 	icon_state = "hydroband"
 	item_color = "hydroband"
 
 /obj/item/clothing/tie/armband/med
-	name = "medical guard armband"
-	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white."
+	name = "medical armband"
+	desc = "A department armband, worn to designate someone as temporarily assisting a department. Typically worn by security officers assigned to departments. This one is white."
 	icon_state = "medband"
 	item_color = "medband"
 
 /obj/item/clothing/tie/armband/medblue
-	name = "medical guard armband"
-	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white and blue."
+	name = "medical armband"
+	desc = "A department armband, worn to designate someone as temporarily assisting a department. Typically worn by security officers assigned to departments. This one is white and blue."
 	icon_state = "medblueband"
 	item_color = "medblueband"

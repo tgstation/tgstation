@@ -34,6 +34,7 @@
 
 /obj/structure/closet/secure_closet/RD/New()
 	..()
+	new /obj/item/weapon/storage/box/scienceband(src)
 	new /obj/item/clothing/suit/bio_suit/scientist(src)
 	new /obj/item/clothing/head/bio_hood/scientist(src)
 	new /obj/item/clothing/suit/toggle/labcoat(src)

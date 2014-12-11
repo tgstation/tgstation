@@ -8,21 +8,28 @@
 /*
  * Security
  */
-/obj/item/clothing/under/rank/warden
-	name = "warden's suit"
-	desc = "A security formal suit with silver shoulder pips and tan slacks, the universal sign of bureaucracy. You can't seem to fully get the blood stains out."
-	icon_state = "wardenformal"
-	item_state = "r_suit"
-	item_color = "wardenformal"
-	strip_delay = 50
 
 /obj/item/clothing/under/rank/security
-	name = "security officer's suit"
-	desc = "A security formal suit with a striped tie, ironed black slacks, and a dry-cleaned white shirt. Complete with nanotrasen belt buckle."
-	icon_state = "secformal"
+	name = "security jumpsuit"
+	desc = "A security jumpsuit for officers complete with nanotrasen waistbuckle."
+	icon_state = "security"
 	item_state = "r_suit"
-	item_color = "secformal"
+	item_color = "security"
 	strip_delay = 50
+
+/obj/item/clothing/under/rank/warden
+	name = "warden's jumpsuit"
+	desc = "A security jumpsuit suit with decorative silver pips and 'warden' written on the shoulders."
+	icon_state = "wardenformal"
+	item_state = "r_suit"
+	item_color = "warden"
+	strip_delay = 50
+
+/obj/item/clothing/under/rank/warden/formal
+	name = "warden's formal suit"
+	desc = "A security formal suit with silver shoulder pips, a striped red tie, and tan slacks - the universal sign of bureaucracy.="
+	icon_state = "wardenformal"
+	item_color = "wardenformal"
 
 /*
  * Detective
@@ -47,12 +54,17 @@
  */
 /obj/item/clothing/under/rank/head_of_security
 	name = "head of security's suit"
-	desc = "The formal suit worn by those few with the dedication to achieve the position of Head of Security."
-	icon_state = "hosformal"
+	desc = "The jumpsuit worn by those few with the dedication to achieve the position of Head of Security."
+	icon_state = "hos"
 	item_state = "r_suit"
-	item_color = "hosformal"
+	item_color = "hos"
 	strip_delay = 60
 
+/obj/item/clothing/under/rank/head_of_security/formal
+	name = "head of security's formal suit"
+	desc = "The formal suit for a Head of Security with a superior sense of style."
+	icon_state = "hosformal"
+	item_color = "hosformal"
 
 /*
  * Navy uniforms

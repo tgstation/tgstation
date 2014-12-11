@@ -334,28 +334,28 @@
 	fitted = 0
 	can_adjust = 0
 
-/obj/item/clothing/under/captainformal
-	name = "captain's formal uniform"
-	desc = "A captain's formal-wear, for special occasions."
-	icon_state = "captain_formal"
+/obj/item/clothing/under/captainparade
+	name = "captain's parade uniform"
+	desc = "A captain's luxury-wear, for special occasions."
+	icon_state = "captain_parade"
 	item_state = "by_suit"
-	item_color = "captain_formal"
+	item_color = "captain_parade"
 	can_adjust = 0
 
-/obj/item/clothing/under/hosformalmale
-	name = "head of security's formal uniform"
-	desc = "A male head of security's formal-wear, for special occasions."
-	icon_state = "hos_formal_male"
+/obj/item/clothing/under/hosparademale
+	name = "head of security's parade uniform"
+	desc = "A male head of security's luxury-wear, for special occasions."
+	icon_state = "hos_parade_male"
 	item_state = "r_suit"
-	item_color = "hos_formal_male"
+	item_color = "hos_parade_male"
 	can_adjust = 0
 
-/obj/item/clothing/under/hosformalfem
-	name = "head of security's formal uniform"
-	desc = "A female head of security's formal-wear, for special occasions."
-	icon_state = "hos_formal_fem"
+/obj/item/clothing/under/hosparadefem
+	name = "head of security's parade uniform"
+	desc = "A female head of security's luxury-wear, for special occasions."
+	icon_state = "hos_parade_fem"
 	item_state = "r_suit"
-	item_color = "hos_formal_fem"
+	item_color = "hos_parade_fem"
 	fitted = 0
 	can_adjust = 0
 

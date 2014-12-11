@@ -587,3 +587,47 @@
 	new /obj/item/clothing/tie/armband/deputy(src)
 	new /obj/item/clothing/tie/armband/deputy(src)
 	new /obj/item/clothing/tie/armband/deputy(src)
+
+/obj/item/weapon/storage/box/scienceband
+	name = "box of science armbands"
+	desc = "For the research director to assign personnel as temporarily apart of science."
+
+/obj/item/weapon/storage/box/scienceband/New()
+	..()
+	new /obj/item/clothing/tie/armband/science(src)
+	new /obj/item/clothing/tie/armband/science(src)
+	new /obj/item/clothing/tie/armband/science(src)
+	new /obj/item/clothing/tie/armband/science(src)
+
+/obj/item/weapon/storage/box/cargoband
+	name = "box of cargo armbands"
+	desc = "For the quartermaster to assign personnel as temporarily apart of supply."
+
+/obj/item/weapon/storage/box/cargoband/New()
+	..()
+	new /obj/item/clothing/tie/armband/cargo(src)
+	new /obj/item/clothing/tie/armband/cargo(src)
+	new /obj/item/clothing/tie/armband/cargo(src)
+	new /obj/item/clothing/tie/armband/cargo(src)
+
+/obj/item/weapon/storage/box/medband
+	name = "box of medical armbands"
+	desc = "For the chief medical officer to assign personnel as temporarily apart of medical."
+
+/obj/item/weapon/storage/box/medband/New()
+	..()
+	new /obj/item/clothing/tie/armband/medblue(src)
+	new /obj/item/clothing/tie/armband/medblue(src)
+	new /obj/item/clothing/tie/armband/medblue(src)
+	new /obj/item/clothing/tie/armband/medblue(src)
+
+/obj/item/weapon/storage/box/engieband
+	name = "box of engineering armbands"
+	desc = "For the chief engineer to assign personnel as temporarily apart of engineering."
+
+/obj/item/weapon/storage/box/engieband/New()
+	..()
+	new /obj/item/clothing/tie/armband/engine(src)
+	new /obj/item/clothing/tie/armband/engine(src)
+	new /obj/item/clothing/tie/armband/engine(src)
+	new /obj/item/clothing/tie/armband/engine(src)
