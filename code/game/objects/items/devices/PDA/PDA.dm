@@ -1122,7 +1122,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						var/x_validate=new_x+WORLD_X_OFFSET
 						if(x_validate < 1 || x_validate > 255)
 							usr << "<span class='caution'>Error: Invalid X coordinate.</span>"
-							testing("new_x=[new_x] -> NOT 1 < [x_validate] < 255")
 						else
 							app.markx = new_x
 					if("y")
@@ -1130,7 +1129,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						var/y_validate=new_y+WORLD_Y_OFFSET
 						if(y_validate < 1 || y_validate > 255)
 							usr << "<span class='caution'>Error: Invalid Y coordinate.</span>"
-							testing("new_y=[new_y] -> NOT 1 < [y_validate] < 255")
 						else
 							app.marky = new_y
 					if("add")
