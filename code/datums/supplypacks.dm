@@ -697,6 +697,15 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 10
 	containername = "food crate"
 
+/datum/supply_packs/organic/pizza
+	name = "Pizza Crate"
+	contains = list(/obj/item/pizzabox/margherita,
+					/obj/item/pizzabox/mushroom,
+					/obj/item/pizzabox/meat,
+					/obj/item/pizzabox/vegetable)
+	cost = 60
+	containername = "Pizza crate"
+
 /datum/supply_packs/organic/monkey
 	name = "Monkey Crate"
 	contains = list (/obj/item/weapon/storage/box/monkeycubes)

@@ -139,6 +139,16 @@
 			total += restock
 	return total
 
+/obj/machinery/vending/snack/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/reagent_containers/food/snacks))
+		if(W.reagents.has_reagent("sugar"))
+			user << "<span class='notice'>[src]'s chef compartment does not accept sugary food.</span>"
+		else
+			user.drop_item()
+			W.loc = src
+			user << "<span class='notice'>You insert [W] into [src]'s custom compartment.</span>"
+		return
+	..()
 
 /obj/machinery/vending/attackby(obj/item/weapon/W, mob/user)
 	if(panel_open)
@@ -247,6 +257,13 @@
 				dat += "[coin]&nbsp;&nbsp;<a href='byond://?src=\ref[src];remove_coin=1'>Remove</a>"
 			else
 				dat += "<i>No coin</i>&nbsp;&nbsp;<span class='linkOff'>Remove</span>"
+		if(istype(src, /obj/machinery/vending/snack))
+			dat += "<h3>Chef's Food Selection</h3>"
+			dat += "<div class='statusDisplay'>"
+			for(var/obj/item/weapon/reagent_containers/food/snacks/S in src)
+				dat += "<a href='byond://?src=\ref[src];dispense=\ref[S]'>Dispense</a> "
+				dat += "<b>[S.name]</b><br>"
+			dat += "</div>"
 	user.set_machine(src)
 	if(seconds_electrified && !(stat & NOPOWER))
 		if(shock(user, 100))
@@ -293,6 +310,19 @@
 
 
 	usr.set_machine(src)
+
+	if((href_list["dispense"]) && (vend_ready))
+		var/obj/item/weapon/reagent_containers/food/snacks/S = locate(href_list["dispense"])
+		if(!S || !S.loc)
+			return
+		vend_ready = 0
+		use_power(5)
+		spawn(vend_delay)
+			S.loc = get_turf(src)
+			vend_ready = 1
+			updateUsrDialog()
+		return
+
 	if((href_list["vend"]) && (vend_ready))
 		if(panel_open)
 			usr << "<span class='notice'>The vending machine cannot dispense products while its service panel is open!</span>"
@@ -563,9 +593,9 @@
 	product_slogans = "Try our new nougat bar!;Twice the calories for half the price!"
 	product_ads = "The healthiest!;Award-winning chocolate bars!;Mmm! So good!;Oh my god it's so juicy!;Have a snack.;Snacks are good for you!;Have some more Getmore!;Best quality snacks straight from mars.;We love chocolate!;Try our new jerky!"
 	icon_state = "snack"
-	products = list(/obj/item/weapon/reagent_containers/food/snacks/candy = 6,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 6,/obj/item/weapon/reagent_containers/food/snacks/chips =6,
-					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 6,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 6,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 6,
-					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 6)
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/candy = 5,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 5,/obj/item/weapon/reagent_containers/food/snacks/chips =5,
+					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 5,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 5,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 5,
+					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 5)
 	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/syndicake = 6)
 	refill_canister = /obj/item/weapon/vending_refill/snack
 

@@ -49,8 +49,15 @@
 		if(!canconsume(M, user))
 			return 0
 
+		var/fullness = M.nutrition + 10
+		for(var/datum/reagent/consumable/C in M.reagents.reagent_list) //we add the nutrition value of what we're currently digesting
+			fullness += C.nutriment_factor * C.volume / C.metabolization_rate
+
 		if(M == user)								//If you're eating it yourself.
-			var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
+			if(src.reagents.has_reagent("sugar") && M.satiety < -150 && M.nutrition > 200 )
+				M << "<span class='notice'>You don't feel like eating any more sugary food at the moment.</span>"
+				return 0
+
 			if(wrapped)
 				M << "<span class='notice'>You can't eat wrapped food!</span>"
 				return 0
@@ -58,19 +65,18 @@
 				M << "<span class='notice'>You hungrily [eatverb] some of \the [src] and gobble it down!</span>"
 			else if(fullness > 50 && fullness < 150)
 				M << "<span class='notice'>You hungrily begin to [eatverb] \the [src].</span>"
-			else if(fullness > 150 && fullness < 350)
+			else if(fullness > 150 && fullness < 500)
 				M << "<span class='notice'>You [eatverb] \the [src].</span>"
-			else if(fullness > 350 && fullness < 550)
+			else if(fullness > 500 && fullness < 600)
 				M << "<span class='notice'>You unwillingly [eatverb] a bit of \the [src].</span>"
-			else if(fullness > (550 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
+			else if(fullness > (600 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
 				M << "<span class='notice'>You cannot force any more of \the [src] to go down your throat.</span>"
 				return 0
 		else
 			if(! (isslime(M) || isbrain(M)) )		//If you're feeding it to someone else.
-				var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
 				if(wrapped)
 					return 0
-				if(fullness <= (550 * (1 + M.overeatduration / 1000)))
+				if(fullness <= (600 * (1 + M.overeatduration / 1000)))
 					M.visible_message("<span class='danger'>[user] attempts to feed [M] [src].</span>", \
 										"<span class='userdanger'>[user] attempts to feed [M] [src].</span>")
 				else
@@ -78,7 +84,8 @@
 										"<span class='userdanger'>[user] cannot force anymore of [src] down [M]'s throat!</span>")
 					return 0
 
-				if(!do_mob(user, M)) return
+				if(!do_mob(user, M))
+					return
 				add_logs(user, M, "fed", object="[reagentlist(src)]")
 				M.visible_message("<span class='danger'>[user] forces [M] to eat [src].</span>", \
 									"<span class='userdanger'>[user] feeds [M] to eat [src].</span>")
@@ -253,6 +260,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesewheel/New()
 	..()
 	reagents.add_reagent("nutriment", 20)
+	reagents.add_reagent("vitamin", 5)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesewedge

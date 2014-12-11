@@ -400,16 +400,34 @@
 			H.update_inv_w_uniform(0)
 			H.update_inv_wear_suit()
 
-	// nutrition decrease
+	// nutrition decrease and satiety
 	if (H.nutrition > 0 && H.stat != 2)
-		H.nutrition = max (0, H.nutrition - HUNGER_FACTOR)
+		var/hunger_rate = HUNGER_FACTOR
+		if(H.satiety > 0)
+			H.satiety--
+		if(H.satiety < 0)
+			H.satiety++
+			hunger_rate = 5 * HUNGER_FACTOR
+		H.nutrition = max (0, H.nutrition - hunger_rate)
 
-	if (H.nutrition > 450)
+	if (H.nutrition > 550)
 		if(H.overeatduration < 600) //capped so people don't take forever to unfat
 			H.overeatduration++
 	else
 		if(H.overeatduration > 1)
 			H.overeatduration -= 2 //doubled the unfat rate
+
+	//metabolism change
+	if(H.nutrition > 600)
+		H.metabolism_efficiency = 1
+	else if(H.nutrition > 350 && H.satiety > 80)
+		if(H.metabolism_efficiency != 1.25)
+			H << "<span class='notice'>You feel full of energy.</span>"
+			H.metabolism_efficiency = 1.25
+	else if(H.nutrition < 200)
+		H.metabolism_efficiency = 0.8
+	else
+		H.metabolism_efficiency = 1
 
 	if (H.drowsyness)
 		H.drowsyness--
@@ -536,7 +554,8 @@
 
 	if(H.nutrition_icon)
 		switch(H.nutrition)
-			if(450 to INFINITY)				H.nutrition_icon.icon_state = "nutrition0"
+			if(550 to INFINITY)				H.nutrition_icon.icon_state = "nutritionFAT"
+			if(450 to 550)					H.nutrition_icon.icon_state = "nutrition0"
 			if(350 to 450)					H.nutrition_icon.icon_state = "nutrition1"
 			if(250 to 350)					H.nutrition_icon.icon_state = "nutrition2"
 			if(150 to 250)					H.nutrition_icon.icon_state = "nutrition3"

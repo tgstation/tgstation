@@ -6,6 +6,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/burger/New()
 	..()
 	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("vitamin", 1)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/human
@@ -27,6 +28,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/burger/fish/New()
 	..()
 	reagents.add_reagent("carpotoxin", 3)
+	reagents.add_reagent("vitamin", 3)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/tofu
@@ -42,6 +44,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/burger/roburger/New()
 	..()
 	reagents.add_reagent("nanites", 2)
+	reagents.add_reagent("vitamin", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/roburgerbig
 	name = "roburger"
@@ -52,6 +55,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/burger/roburgerbig/New()
 	..()
 	reagents.add_reagent("nanites", 100)
+	reagents.add_reagent("vitamin", 20)
 	bitesize = 0.1
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/xeno
@@ -81,6 +85,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/burger/brain/New()
 	..()
 	reagents.add_reagent("alkysine", 6)
+	reagents.add_reagent("vitamin", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/ghost
 	name = "ghost burger"
@@ -176,10 +181,12 @@
 /obj/item/weapon/reagent_containers/food/snacks/burger/jelly/slime/New()
 	..()
 	reagents.add_reagent("slimejelly", 5)
+	reagents.add_reagent("vitamin", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/jelly/cherry/New()
 	..()
 	reagents.add_reagent("cherryjelly", 5)
+	reagents.add_reagent("vitamin", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/superbite
 	name = "super bite burger"

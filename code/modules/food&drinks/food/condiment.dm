@@ -42,6 +42,9 @@
 		return 0
 
 	if(M == user)
+		if(src.reagents.has_reagent("sugar") && M.satiety < -150 && M.nutrition > 200 )
+			M << "<span class='notice'>You don't feel like drinking any more sugary food at the moment.</span>"
+			return 0
 		M << "<span class='notice'>You swallow some of contents of the [src].</span>"
 		if(reagents.total_volume)
 			reagents.reaction(M, INGEST)

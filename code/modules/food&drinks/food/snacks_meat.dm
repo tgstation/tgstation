@@ -12,7 +12,6 @@
 /obj/item/weapon/reagent_containers/food/snacks/cubancarp/New()
 	..()
 	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("carpotoxin", 3)
 	reagents.add_reagent("capsaicin", 3)
 	bitesize = 3
 
@@ -25,7 +24,8 @@
 	..()
 	eatverb = pick("bite","chew","choke down","gnaw","swallow","chomp")
 	reagents.add_reagent("nutriment", 3)
-	reagents.add_reagent("carpotoxin", 3)
+	reagents.add_reagent("carpotoxin", 2)
+	reagents.add_reagent("vitamin", 2)
 	bitesize = 6
 
 /obj/item/weapon/reagent_containers/food/snacks/carpmeat/imitation
@@ -40,7 +40,6 @@
 /obj/item/weapon/reagent_containers/food/snacks/fishfingers/New()
 	..()
 	reagents.add_reagent("nutriment", 4)
-	reagents.add_reagent("carpotoxin", 3)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/fishandchips
@@ -51,7 +50,6 @@
 /obj/item/weapon/reagent_containers/food/snacks/fishandchips/New()
 	..()
 	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("carpotoxin", 3)
 	bitesize = 3
 
 ////////////////////////////////////////////MEATS AND ALIKE////////////////////////////////////////////
@@ -86,6 +84,7 @@
 	..()
 	reagents.add_reagent("nutriment", 12)
 	reagents.add_reagent("hyperzine", 5)
+	reagents.add_reagent("vitamin", 2)
 	src.bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/xenomeat
@@ -96,6 +95,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/xenomeat/New()
 	..()
 	reagents.add_reagent("nutriment", 3)
+	reagents.add_reagent("vitamin", 1)
 	src.bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/spidermeat
@@ -107,6 +107,7 @@
 	..()
 	reagents.add_reagent("nutriment", 3)
 	reagents.add_reagent("toxin", 3)
+	reagents.add_reagent("vitamin", 1)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/spiderleg
@@ -139,6 +140,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/faggot/New()
 	..()
 	reagents.add_reagent("nutriment", 3)
+	reagents.add_reagent("vitamin", 1)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sausage
@@ -150,6 +152,7 @@
 	..()
 	eatverb = pick("bite","chew","nibble","deep throat","gobble","chomp")
 	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("vitamin", 1)
 	bitesize = 2
 
 
@@ -162,6 +165,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/wingfangchu/New()
 	..()
 	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("vitamin", 2)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/human/kebab
@@ -205,9 +209,10 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meatsteak/New()
 	..()
-	reagents.add_reagent("nutriment", 4)
+	reagents.add_reagent("nutriment", 6)
 	reagents.add_reagent("sodiumchloride", 1)
 	reagents.add_reagent("blackpepper", 1)
+	reagents.add_reagent("vitamin", 1)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube

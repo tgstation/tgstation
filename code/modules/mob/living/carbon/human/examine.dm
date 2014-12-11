@@ -224,7 +224,7 @@
 
 	if(nutrition < 100)
 		msg += "[t_He] [t_is] severely malnourished.\n"
-	else if(nutrition >= 500)
+	else if(nutrition >= 550)
 		if(user.nutrition < 100)
 			msg += "[t_He] [t_is] plump and delicious looking - Like a fat little piggy. A tasty piggy.\n"
 		else

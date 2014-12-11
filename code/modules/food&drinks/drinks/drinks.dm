@@ -28,6 +28,10 @@
 		return 0
 
 	if(M == user)
+		if(src.reagents.has_reagent("sugar") && M.satiety < -150 && M.nutrition > 200 )
+			M << "<span class='notice'>You don't feel like drinking any more sugary drink at the moment.</span>"
+			return 0
+
 		M << "<span class='notice'>You swallow a gulp of [src].</span>"
 		if(reagents.total_volume)
 			reagents.reaction(M, INGEST)
@@ -191,6 +195,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/h_chocolate/New()
 	..()
 	reagents.add_reagent("hot_coco", 30)
+	reagents.add_reagent("sugar", 10)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 

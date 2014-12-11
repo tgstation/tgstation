@@ -8,6 +8,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/sandwich/New()
 	..()
 	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("vitamin", 1)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/toastedsandwich
@@ -31,6 +32,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grilledcheese/New()
 	..()
 	reagents.add_reagent("nutriment", 7)
+	reagents.add_reagent("vitamin", 1)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/jellysandwich
@@ -47,10 +49,12 @@
 /obj/item/weapon/reagent_containers/food/snacks/jellysandwich/slime/New()
 	..()
 	reagents.add_reagent("slimejelly", 5)
+	reagents.add_reagent("vitamin", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/jellysandwich/cherry/New()
 	..()
 	reagents.add_reagent("cherryjelly", 5)
+	reagents.add_reagent("vitamin", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/icecreamsandwich
 	name = "icecream sandwich"
@@ -72,6 +76,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/notasandwich/New()
 	..()
 	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("vitamin", 6)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast
@@ -88,10 +93,12 @@
 /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast/cherry/New()
 	..()
 	reagents.add_reagent("cherryjelly", 5)
+	reagents.add_reagent("vitamin", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast/slime/New()
 	..()
 	reagents.add_reagent("slimejelly", 5)
+	reagents.add_reagent("vitamin", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/twobread
 	name = "two bread"
@@ -101,4 +108,5 @@
 /obj/item/weapon/reagent_containers/food/snacks/twobread/New()
 	..()
 	reagents.add_reagent("nutriment", 2)
+	reagents.add_reagent("vitamin", 2)
 	bitesize = 3

@@ -22,7 +22,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sosjerky/New()
 	..()
-	reagents.add_reagent("nutriment", 4)
+	reagents.add_reagent("nutriment", 1)
+	reagents.add_reagent("sugar", 3)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/chips
@@ -33,7 +34,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/chips/New()
 	..()
-	reagents.add_reagent("nutriment", 3)
+	reagents.add_reagent("nutriment", 1)
+	reagents.add_reagent("sugar", 3)
 	bitesize = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/no_raisin
@@ -44,7 +46,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/no_raisin/New()
 	..()
-	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("nutriment", 2)
+	reagents.add_reagent("sugar", 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/spacetwinkie
 	name = "space twinkie"
@@ -64,7 +67,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers/New()
 	..()
-	reagents.add_reagent("nutriment", 4)
+	reagents.add_reagent("nutriment", 1)
+	reagents.add_reagent("sugar", 3)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/syndicake

@@ -12,6 +12,7 @@
 	eatverb = pick("crunch","devour","nibble","gnaw","gobble","chomp")
 	reagents.add_reagent("nutriment", 8)
 	reagents.add_reagent("tricordrazine", 8)
+	reagents.add_reagent("vitamin", 6)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/herbsalad
@@ -23,6 +24,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/herbsalad/New()
 	..()
 	reagents.add_reagent("nutriment", 8)
+	reagents.add_reagent("vitamin", 2)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/validsalad
@@ -35,4 +37,5 @@
 	..()
 	reagents.add_reagent("nutriment", 8)
 	reagents.add_reagent("doctorsdelight", 5)
+	reagents.add_reagent("vitamin", 2)
 	bitesize = 3
