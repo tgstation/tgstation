@@ -3759,7 +3759,7 @@
 "buo" = (/obj/machinery/firealarm{pixel_y = 25},/turf/simulated/floor/plasteel,/area/crew_quarters/fitness)
 "bup" = (/turf/simulated/floor/plasteel,/area/crew_quarters/fitness)
 "buq" = (/obj/machinery/light{dir = 1},/obj/machinery/camera{c_tag = "Holodeck"; dir = 2},/turf/simulated/floor/plasteel{icon_state = "red"; dir = 4},/area/crew_quarters/fitness)
-"bur" = (/obj/item/clothing/suit/labcoat/chemist,/turf/simulated/floor/plating,/area/maintenance/asteroidstation/rd)
+"bur" = (/obj/item/clothing/suit/toggle/labcoat/chemist,/turf/simulated/floor/plating,/area/maintenance/asteroidstation/rd)
 "bus" = (/obj/machinery/hydroponics/constructable,/turf/simulated/floor/plating,/area/maintenance/asteroidstation/rd)
 "but" = (/obj/structure/stool/bed/chair{dir = 4},/turf/simulated/floor/plating,/area/maintenance/asteroidstation/rd)
 "buu" = (/obj/structure/disposalpipe/segment{dir = 1; icon_state = "pipe-c"},/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = ""},/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{dir = 6},/turf/simulated/floor/plating,/area/maintenance/asteroidstation/rd)
