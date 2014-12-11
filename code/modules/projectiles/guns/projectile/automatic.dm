@@ -152,12 +152,9 @@
 
 /obj/item/weapon/gun/projectile/automatic/c90gl/New()
 	..()
-	underbarrel = make_underbarrel()
+	underbarrel = new /obj/item/weapon/gun/projectile/revolver/grenadelauncher(src)
 	update_icon()
 	return
-
-/obj/item/weapon/gun/projectile/automatic/c90gl/proc/make_underbarrel()
-	return new /obj/item/weapon/gun/projectile/revolver/grenadelauncher(src)
 
 /obj/item/weapon/gun/projectile/automatic/c90gl/afterattack(var/atom/target, var/mob/living/user, flag, params)
 	if(select)
