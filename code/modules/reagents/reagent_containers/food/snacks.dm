@@ -3081,7 +3081,7 @@
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/turkeyslice
-	name = "turkey slice"
+	name = "turkey drumstick"
 	desc = "guarranted vox-free"
 	icon_state = "turkey_drumstick"
 	trash = /obj/item/trash/plate
