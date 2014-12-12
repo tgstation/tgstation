@@ -399,7 +399,7 @@ datum/reagent/consumable/doctor_delight
 	description = "A gulp a day keeps the MediBot away. That's probably for the best."
 	color = "#FF8CFF" // rgb: 255, 140, 255
 
-datum/reagent/doctor_delight/on_mob_life(var/mob/living/M as mob)
+datum/reagent/consumable/doctor_delight/on_mob_life(var/mob/living/M as mob)
 	if(M.getOxyLoss() && prob(80))
 		M.adjustOxyLoss(-2)
 	if(M.getBruteLoss() && prob(80))
