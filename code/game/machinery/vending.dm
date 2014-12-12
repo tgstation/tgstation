@@ -179,11 +179,12 @@
 				user << "<span class='warning'>This recharge pack isn't meant for this kind of vending machines.</span>"
 
 /obj/machinery/vending/proc/reconnect_database()
-	for(var/obj/machinery/account_database/DB in world)
-		// FIXME: If we're on asteroid z-level, use whatever's on the station. - N3X
-		if(DB.z == src.z || (src.z == ASTEROID_Z && DB.z == STATION_Z))
-			linked_db = DB
-			break
+	for(var/obj/machinery/account_database/DB in account_DBs)
+		//Checks for a database on its Z-level, else it checks for a database at the main Station.
+		if((DB.z == src.z) || (DB.z == STATION_Z))
+			if((DB.stat == 0))//If the database if damaged or not powered, people won't be able to use the vending machines anymore.
+				linked_db = DB
+				break
 
 /obj/machinery/vending/ex_act(severity)
 	switch(severity)
@@ -302,14 +303,13 @@
 					D.money -= transaction_amount
 					linked_account.money += transaction_amount
 
+					usr << "\icon[src]<span class='notice'>Remaining balance: [D.money]$</span>"
+
 					//create entries in the two account transaction logs
 					var/datum/transaction/T = new()
 					T.target_name = "[linked_account.owner_name] (via [src.name])"
 					T.purpose = "Purchase of [currently_vending.product_name]"
-					if(transaction_amount > 0)
-						T.amount = "([transaction_amount])"
-					else
-						T.amount = "[transaction_amount]"
+					T.amount = "[transaction_amount]"
 					T.source_terminal = src.name
 					T.date = current_date_string
 					T.time = worldtime2text()
@@ -876,6 +876,7 @@
 	..()
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), 3 )
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		del(src)
 
 /obj/item/wallmed_frame/proc/try_build(turf/on_wall)

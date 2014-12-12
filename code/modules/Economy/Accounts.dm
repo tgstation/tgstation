@@ -72,9 +72,10 @@ var/global/list/all_money_accounts = list()
 	T.amount = starting_funds
 	if(!source_db)
 		//set a random date, time and location some time over the past few decades
-		T.date = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], 25[rand(10,56)]"
-		T.time = "[rand(0,24)]:[rand(11,59)]"
-		T.source_terminal = "NTGalaxyNet Terminal #[rand(111,1111)]"
+		var/DD = text2num(time2text(world.timeofday, "DD"))											//For muh lore we'll pretend that Nanotrasen changed its account policy
+		T.date = "[(DD == 1) ? "31" : "[DD-1]"] [time2text(world.timeofday, "Month")], [game_year]"	//shortly before the events of the round,
+		T.time = "[rand(0,24)]:[rand(11,59)]"														//prompting everyone to get a new account one day prior.
+		T.source_terminal = "NTGalaxyNet Terminal #[rand(111,1111)]"								//The point being to partly to justify the transaction history being empty at the beginning of the round.
 
 		M.account_number = rand(111111, 999999)
 	else
@@ -171,9 +172,11 @@ var/global/list/all_money_accounts = list()
 		vendor_account = department_accounts["Vendor"]
 
 	if(!current_date_string)
-		current_date_string = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], 2557"
+		current_date_string = "[time2text(world.timeofday, "DD")] [time2text(world.timeofday, "Month")], [game_year]"
 
 	machine_id = "[station_name()] Acc. DB #[num_financial_terminals++]"
+
+	account_DBs += src
 
 /obj/machinery/account_database/attack_hand(mob/user as mob)
 	if(ishuman(user) && !user.stat && get_dist(src,user) <= 1)
