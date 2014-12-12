@@ -59,7 +59,7 @@
 	if(!changeling.has_dna(target.dna))
 		changeling.absorb_dna(target, user)
 
-	if(user.nutrition < 400) user.nutrition = min((user.nutrition + target.nutrition), 400)
+	if(user.nutrition < 450) user.nutrition = min((user.nutrition + target.nutrition), 450)
 
 	if(target.mind)//if the victim has got a mind
 

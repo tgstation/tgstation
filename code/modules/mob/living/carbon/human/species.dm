@@ -670,7 +670,7 @@
 		if(J.allow_thrust(0.01, H))
 			hasjetpack = 1
 	var/grav = has_gravity(H)
-	
+
 	if(!grav && !hasjetpack)
 		mspeed += 1 //Slower space without jetpack
 

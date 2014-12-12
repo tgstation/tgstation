@@ -195,7 +195,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/h_chocolate/New()
 	..()
 	reagents.add_reagent("hot_coco", 30)
-	reagents.add_reagent("sugar", 10)
+	reagents.add_reagent("sugar", 5)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 

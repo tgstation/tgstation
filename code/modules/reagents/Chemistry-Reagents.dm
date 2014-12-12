@@ -1741,7 +1741,7 @@ datum/reagent/consumable/sugar
 
 datum/reagent/consumable/sugar/on_mob_life(var/mob/living/M as mob)
 	if(M.satiety > -200)
-		M.satiety -= 20
+		M.satiety -= 20 //eating sugar makes you more hungry over time by making your hunger drop faster.
 	M.nutrition += max((400 - M.nutrition )/100, 0) * nutriment_factor // sugar doesn't help your hunger if your stomach is nearly full
 	holder.remove_reagent(src.id, metabolization_rate)
 
@@ -1931,7 +1931,7 @@ datum/reagent/consumable/hot_coco
 	name = "Hot Chocolate"
 	id = "hot_coco"
 	description = "Made with love! And coco beans."
-	nutriment_factor = 2 * REAGENTS_METABOLISM
+	nutriment_factor = 3 * REAGENTS_METABOLISM
 	color = "#403010" // rgb: 64, 48, 16
 
 datum/reagent/consumable/hot_coco/on_mob_life(var/mob/living/M as mob)
