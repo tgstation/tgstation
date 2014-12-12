@@ -116,6 +116,6 @@ Bonus
 		switch(A.stage)
 			if(4, 5)
 				M.overeatduration = 0
-				M.nutrition = 450
+				M.nutrition = 500
 
 	return
