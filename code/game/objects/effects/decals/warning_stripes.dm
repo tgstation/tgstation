@@ -5,7 +5,9 @@
 /obj/effect/decal/warning_stripes/New()
 	. = ..()
 	var/turf/T=get_turf(src)
-	T.AddDecal(image(icon, icon_state = icon_state, dir = dir))
+	var/image/I=image(icon, icon_state = icon_state, dir = dir)
+	I.color=color
+	T.AddDecal(I)
 	qdel(src)
 
 /obj/effect/decal/warning_stripes/oldstyle
@@ -22,6 +24,7 @@
 
 // Pastels
 /obj/effect/decal/warning_stripes/pathmarkers/red
-	color = "#EF9DA2"
+	color = "#af6365"
+
 /obj/effect/decal/warning_stripes/pathmarkers/blue
-	color = "#8FAEDA"
+	color = "#719eb6"

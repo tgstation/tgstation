@@ -149,24 +149,6 @@
 				world << voice
 			lastaudiowarning = world.timeofday - audio_offset
 
-		if(frequency)
-			var/datum/radio_frequency/radio_connection = radio_controller.return_frequency(frequency)
-
-			if(!radio_connection) return
-
-			var/datum/signal/signal = new
-			signal.source = src
-			signal.transmission_method = 1
-			signal.data = list(
-				"tag" = id_tag,
-				"device" = "SM",
-				"instability" = stability,
-				"damage" = damage,
-				"power" = power,
-				"sigtype" = "status"
-			)
-			radio_connection.post_signal(src, signal)
-
 		if(damage > explosion_point)
 			for(var/mob/living/mob in living_mob_list)
 				if(istype(mob, /mob/living/carbon/human))
@@ -176,6 +158,24 @@
 				mob.apply_effect(rads, IRRADIATE)
 
 			explode()
+
+	if(frequency)
+		var/datum/radio_frequency/radio_connection = radio_controller.return_frequency(frequency)
+
+		if(!radio_connection) return
+
+		var/datum/signal/signal = new
+		signal.source = src
+		signal.transmission_method = 1
+		signal.data = list(
+			"tag" = id_tag,
+			"device" = "SM",
+			"instability" = stability,
+			"damage" = damage,
+			"power" = power,
+			"sigtype" = "status"
+		)
+		radio_connection.post_signal(src, signal)
 
 	//Ok, get the air from the turf
 	var/datum/gas_mixture/env = L.return_air()
