@@ -225,7 +225,7 @@
 	..()
 
 	if (!istype(W, /obj/item/weapon/wirecutters))
-		user << "<span class='notice'>I need wirecutters for that.</span>"
+		user << "<span class='notice'>You need wirecutters for that.</span>"
 		return
 
 	user << "<span class='notice'>You cut open the present.</span>"
