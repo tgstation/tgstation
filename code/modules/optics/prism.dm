@@ -11,9 +11,25 @@
 
 	var/obj/effect/beam/emitter/beam
 
-	machine_flags = WRENCHMOVE
+	machine_flags = WRENCHMOVE | SCREWTOGGLE | CROWDESTROY
 
 	var/list/powerchange_hooks=list()
+
+/obj/machinery/prism/New()
+	..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/prism,
+		/obj/item/weapon/stock_parts/capacitor,
+		/obj/item/weapon/stock_parts/capacitor,
+		/obj/item/weapon/stock_parts/capacitor,
+		/obj/item/weapon/stock_parts/capacitor,
+		/obj/item/weapon/stock_parts/capacitor,
+		/obj/item/weapon/stock_parts/capacitor,
+		/obj/item/weapon/stock_parts/micro_laser/high,
+		/obj/item/weapon/stock_parts/micro_laser/high,
+		/obj/item/weapon/stock_parts/micro_laser/high,
+	)
 
 /obj/machinery/prism/verb/rotate_cw()
 	set name = "Rotate (Clockwise)"
