@@ -99,7 +99,7 @@
 			return
 		if(istype(target, /obj/structure/table) || istype(target, /obj/structure/rack) \
 		|| istype(target, /obj/item/smallDelivery) || istype(target,/obj/structure/bigDelivery) \
-		|| istype(target, /obj/item/weapon/gift) || istype(target, /obj/item/weapon/evidencebag))
+		|| istype(target, /obj/item/weapon/gift) || istype(target, /obj/item/weapon/a_gift) || istype(target, /obj/item/weapon/evidencebag))
 			return
 		if(target.anchored)
 			return
@@ -191,7 +191,7 @@
 /obj/item/device/destTagger
 	name = "destination tagger"
 	desc = "Used to set the destination of properly wrapped packages."
-	icon_state = "forensic0"
+	icon_state = "dest_tagger"
 	var/currTag = 0
 	//The whole system for the sorttype var is determined based on the order of this list,
 	//disposals must always be 1, since anything that's untagged will automatically go to disposals, or sorttype = 1 --Superxpdude
