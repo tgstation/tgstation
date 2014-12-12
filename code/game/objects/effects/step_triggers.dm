@@ -16,7 +16,7 @@
 		return
 	if(istype(H, /mob/dead/observer) && !affect_ghosts)
 		return
-	if(istype(H, /mob) && !mobs_only)
+	if(!istype(H, /mob) && mobs_only)
 		return
 	Trigger(H)
 
