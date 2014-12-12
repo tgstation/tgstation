@@ -44,7 +44,7 @@
 /atom/proc/attack_hulk(mob/living/carbon/human/hulk, do_attack_animation = 0)
 	if(do_attack_animation)
 		hulk.changeNext_move(CLICK_CD_MELEE)
-		add_logs(hulk, src, "punched", "hulk powers")
+		add_logs(hulk, src, "punched", "hulk powers", admin=0)
 		hulk.do_attack_animation(src)
 	return
 

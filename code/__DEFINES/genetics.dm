@@ -14,18 +14,14 @@
 
 
 // String identifiers for associative list lookup
-// mob/var/list/mutations
 
-	// Generic mutations:
-#define	TK				1
-#define COLD_RESISTANCE	2
-#define XRAY			3
-#define HULK			4
-#define CLUMSY			5
-#define FAT				6
-#define HUSK			7
-#define NOCLONE			8
+//Types of usual mutations
+#define	POSITIVE 			1
+#define	NEGATIVE			2
+#define	MINOR_NEGATIVE		3
 
+//Mutations that cant be taken from genetics and are not in SE
+#define	NON_SCANNABLE		-1
 
 	// Extra powers:
 #define LASER			9 	// harm intent - click anywhere to shoot lasers from eyes
@@ -40,13 +36,6 @@
 #define SHIELD			18 	// shielding from all projectile attacks (30%)
 #define SHOCKWAVE		19 	// attack a nearby tile and cause a massive shockwave, knocking most people on their asses (25%)
 #define ELECTRICITY		20 	// ability to shoot electric attacks (15%)
-
-//disabilities
-#define NEARSIGHT		1
-#define EPILEPSY		2
-#define COUGHING		4
-#define TOURETTES		8
-#define NERVOUS			16
 
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE				3

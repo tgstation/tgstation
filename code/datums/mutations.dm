@@ -1,10 +1,5 @@
 /var/global/list/mutations_list = list()
 
-#define		POSITIVE 			1
-#define		NEGATIVE			2
-#define		MINOR_NEGATIVE		3
-#define		NON_SCANNABLE
-
 /datum/mutation/
 
 	var/name
@@ -26,21 +21,29 @@
 	set_block(owner)
 	owner.dna.mutations |= src
 
+/datum/mutation/human/proc/set_se(se_string)
+	if(!se_string || lentext(se_string) < DNA_STRUC_ENZYMES_BLOCKS * DNA_BLOCK_SIZE)	return
+	var/before = copytext(se_string, 1, (dna_block * DNA_BLOCK_SIZE) + 1)
+	var/injection = num2hex(lowest_value + rand(1, 256 * 6))
+	var/after = copytext(se_string, (dna_block * DNA_BLOCK_SIZE) + DNA_BLOCK_SIZE + 1)
+	return before + injection + after
+
 /datum/mutation/human/proc/set_block(mob/living/carbon/human/owner)
-	var/before = copytext(owner.dna.struc_enzymes, 1, (dna_block * 3) + 1)
-	var/injection = num2hex(lowest_value + rand(1, 256))
-//	var/injection = copytext(owner.dna.struc_enzymes, (dna_bloc * 3) + 1, (dna_bloc * 3) + 4)
-	var/after = copytext(owner.dna.struc_enzymes, (dna_block * 3) + 4)
-	owner.dna.struc_enzymes = before + injection + after
+	owner.dna.struc_enzymes = set_se(owner.dna.struc_enzymes)
+
+/datum/mutation/human/proc/check_block_string(se_string)
+	if(!se_string || lentext(se_string) < DNA_STRUC_ENZYMES_BLOCKS * DNA_BLOCK_SIZE)	return 0
+	if(hex2num(getblock(se_string, dna_block)) >= lowest_value)
+		return 1
 
 /datum/mutation/human/proc/check_block(mob/living/carbon/human/owner)
-	if(hex2num(getblock(owner.dna.struc_enzymes, dna_block)) >= lowest_value)
+	if(check_block_string(owner.dna.struc_enzymes))
 		if(prob(get_chance))
-			on_aquairing(owner)
+			on_acquiring(owner)
 	else
-		on_loosing(owner)
+		on_losing(owner)
 
-/datum/mutation/human/proc/on_aquairing(mob/living/carbon/human/owner)
+/datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/owner)
 	if(src in owner.dna.mutations)
 		return 1
 	owner.dna.mutations.Add(src)
@@ -53,7 +56,7 @@
 	owner.apply_overlay(MUTATIONS_LAYER)
 	return
 */
-/datum/mutation/human/proc/loose_indication(mob/living/carbon/human/owner)
+/datum/mutation/human/proc/lose_indication(mob/living/carbon/human/owner)
 	owner.overlays.Remove(visual_indicators)
 /*
 	owner.remove_overlay(MUTATIONS_LAYER)
@@ -69,9 +72,9 @@
 /datum/mutation/human/proc/on_life(mob/living/carbon/human/owner)
 	return
 
-/datum/mutation/human/proc/on_loosing(mob/living/carbon/human/owner)
+/datum/mutation/human/proc/on_losing(mob/living/carbon/human/owner)
 	if(owner.dna.mutations.Remove(src))
-		loose_indication(owner)
+		lose_indication(owner)
 		return 0
 	return 1
 
@@ -88,7 +91,7 @@
 	visual_indicators |= image("icon"='icons/effects/genetics.dmi', "icon_state"="hulk_f_s", "layer"=-MUTATIONS_LAYER)
 	visual_indicators |= image("icon"='icons/effects/genetics.dmi', "icon_state"="hulk_m_s", "layer"=-MUTATIONS_LAYER)
 
-/datum/mutation/human/hulk/on_aquairing(mob/living/carbon/human/owner)
+/datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
 	var/status = CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH
 	owner.status_flags &= ~status
@@ -102,12 +105,12 @@
 
 /datum/mutation/human/hulk/on_life(mob/living/carbon/human/owner)
 	if(owner.health < 25)
-		on_loosing(owner)
+		on_losing(owner)
 		owner << "<span class='danger'>You suddenly feel very weak.</span>"
 		owner.Weaken(3)
 		owner.emote("collapse")
 
-/datum/mutation/human/hulk/on_loosing(mob/living/carbon/human/owner)
+/datum/mutation/human/hulk/on_losing(mob/living/carbon/human/owner)
 	..()
 	owner.status_flags |= CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH
 
@@ -163,7 +166,7 @@
 	quality = POSITIVE
 	text_indication = "The walls suddenly disappear!"
 
-/datum/mutation/human/x_ray/on_aquairing(mob/living/carbon/human/owner)
+/datum/mutation/human/x_ray/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
 	on_life(owner)
 
@@ -172,7 +175,7 @@
 	owner.see_in_dark = 8
 	owner.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
-/datum/mutation/human/x_ray/on_loosing(mob/living/carbon/human/owner)
+/datum/mutation/human/x_ray/on_losing(mob/living/carbon/human/owner)
 	if(..())	return
 	owner.see_in_dark = initial(owner.see_in_dark)
 	owner.see_invisible = initial(owner.see_invisible)
@@ -184,11 +187,11 @@
 	quality = MINOR_NEGATIVE
 	text_indication = "You cant see very well."
 
-/datum/mutation/human/nearsight/on_aquairing(mob/living/carbon/human/owner)
+/datum/mutation/human/nearsight/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
 	owner.disabilities |= NEARSIGHT
 
-/datum/mutation/human/nearsight/on_loosing(mob/living/carbon/human/owner)
+/datum/mutation/human/nearsight/on_losing(mob/living/carbon/human/owner)
 	if(..())	return
 	owner.disabilities &= ~NEARSIGHT
 
@@ -210,7 +213,7 @@
 	name = "Unstable DNA"
 	quality = NEGATIVE
 
-/datum/mutation/human/bad_dna/on_aquairing(mob/living/carbon/human/owner)
+/datum/mutation/human/bad_dna/on_acquiring(mob/living/carbon/human/owner)
 	if(prob(95))
 		if(prob(50))
 			randmutb(owner)
@@ -218,7 +221,7 @@
 			randmuti(owner)
 	else
 		randmutg(owner)
-	on_loosing(owner)
+	on_losing(owner)
 
 /datum/mutation/human/cough
 
@@ -267,11 +270,11 @@
 	name = "Deafness"
 	quality = NEGATIVE
 
-/datum/mutation/human/deaf/on_aquairing(mob/living/carbon/human/owner)
+/datum/mutation/human/deaf/on_acquiring(mob/living/carbon/human/owner)
 	..()
 	owner.disabilities |= DEAF
 
-/datum/mutation/human/deaf/on_loosing(mob/living/carbon/human/owner)
+/datum/mutation/human/deaf/on_losing(mob/living/carbon/human/owner)
 	..()
 	owner.disabilities &= ~DEAF
 
@@ -280,11 +283,11 @@
 	name = "Blindness"
 	quality = NEGATIVE
 
-/datum/mutation/human/blind/on_aquairing(mob/living/carbon/human/owner)
+/datum/mutation/human/blind/on_acquiring(mob/living/carbon/human/owner)
 	..()
 	owner.disabilities |= BLIND
 
-/datum/mutation/human/blind/on_loosing(mob/living/carbon/human/owner)
+/datum/mutation/human/blind/on_losing(mob/living/carbon/human/owner)
 	..()
 	owner.disabilities &= ~BLIND
 
@@ -293,16 +296,26 @@
 	name = "Monkified"
 	quality = NEGATIVE
 
-/datum/mutation/human/race/on_aquairing(mob/living/carbon/human/owner)
+/datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
 	owner.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
 
 /datum/mutation/human/race/gain_indication(mob/living/carbon/human/owner)
 	return
 
-/datum/mutation/human/race/loose_indication(mob/living/carbon/monkey/owner)
+/datum/mutation/human/race/lose_indication(mob/living/carbon/monkey/owner)
 	return
 
-/datum/mutation/human/race/on_loosing(mob/living/carbon/monkey/owner)
+/datum/mutation/human/race/on_losing(mob/living/carbon/monkey/owner)
 	if(..())	return
 	owner.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
+
+/datum/mutation/human/laser_eyes
+
+	name = "Laser Eyes"
+	quality = POSITIVE
+	dna_block = NON_SCANNABLE
+
+/datum/mutation/human/laser_eyes/on_ranged_attack(mob/living/carbon/human/owner, atom/target)
+	if(owner.a_intent == "harm")
+		owner.LaserEyes(target)

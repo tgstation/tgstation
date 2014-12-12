@@ -42,7 +42,7 @@
 	include_user = 1
 	centcom_cancast = 0
 
-	mutations = list(LASER, HULK)
+	mutations = list("Laser Eyes", "Hulk")
 	duration = 300
 	cooldown_min = 300 //25 deciseconds reduction per rank
 

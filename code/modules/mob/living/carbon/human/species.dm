@@ -68,7 +68,7 @@
 	///////////
 
 /datum/species/proc/update_base_icon_state(var/mob/living/carbon/human/H)
-	if(HUSK in H.mutations)
+	if(H.disabilities & HUSK)
 		H.remove_overlay(SPECIES_LAYER) // races lose their color
 		return "husk"
 	else if(sexes)
@@ -387,10 +387,10 @@
 	if(H.reagents) H.reagents.metabolize(H)
 
 	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
-	if(FAT in H.mutations)
+	if(H.disabilities & FAT)
 		if(H.overeatduration < 100)
 			H << "<span class='notice'>You feel fit again!</span>"
-			H.mutations -= FAT
+			H.disabilities &= ~FAT
 			H.update_inv_w_uniform(0)
 			H.update_inv_wear_suit()
 	else
@@ -505,29 +505,6 @@
 						if(20 to 40)			H.healths.icon_state = "health4"
 						if(0 to 20)				H.healths.icon_state = "health5"
 						else					H.healths.icon_state = "health6"
-
-	if(H.healthdoll)
-		H.healthdoll.overlays.Cut()
-		if(H.stat == DEAD)
-			H.healthdoll.icon_state = "healthdoll_DEAD"
-		else
-			H.healthdoll.icon_state = "healthdoll_OVERLAY"
-			for(var/obj/item/organ/limb/L in H.organs)
-				var/damage = L.burn_dam + L.brute_dam
-				var/comparison = (L.max_damage/5)
-				var/icon_num = 0
-				if(damage)
-					icon_num = 1
-				if(damage > (comparison))
-					icon_num = 2
-				if(damage > (comparison*2))
-					icon_num = 3
-				if(damage > (comparison*3))
-					icon_num = 4
-				if(damage > (comparison*4))
-					icon_num = 5
-				if(icon_num)
-					H.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[L.name][icon_num]")
 
 	if(H.nutrition_icon)
 		switch(H.nutrition)
@@ -655,7 +632,7 @@
 	if(H.back && grav)
 		mspeed += H.back.slowdown
 
-	if(FAT in H.mutations && grav)
+	if((H.disabilities & FAT) && grav)
 		mspeed += 1.5
 	if(H.bodytemperature < 283.222 && grav)
 		mspeed += (283.222 - H.bodytemperature) / 10 * 1.75
@@ -1246,7 +1223,7 @@
 		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
 			H.pressure_alert = -1
 		else
-			if((COLD_RESISTANCE in H.mutations) || (COLDRES in specflags))
+			if(H.dna.check_mutation("Cold Resistance", H) || (COLDRES in specflags))
 				H.pressure_alert = -1
 			else
 				H.adjustBruteLoss( LOW_PRESSURE_DAMAGE )

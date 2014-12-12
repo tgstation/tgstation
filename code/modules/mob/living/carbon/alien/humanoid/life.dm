@@ -68,21 +68,6 @@
 
 
 /mob/living/carbon/alien/humanoid/proc/handle_disabilities()
-	if (disabilities & COUGHING)
-		if ((prob(5) && paralysis <= 1))
-			drop_item()
-			spawn( 0 )
-				emote("cough")
-				return
-	if (disabilities & TOURETTES)
-		if ((prob(10) && paralysis <= 1))
-			Stun(10)
-			spawn( 0 )
-				emote("twitch")
-				return
-	if (disabilities & NERVOUS)
-		if (prob(10))
-			stuttering = max(10, stuttering)
 
 /mob/living/carbon/alien/humanoid/proc/adjust_body_temperature(current, loc_temp, boost)
 	var/temperature = current
@@ -183,7 +168,7 @@
 
 /mob/living/carbon/alien/humanoid/proc/handle_regular_hud_updates()
 
-	if (stat == 2 || (XRAY in mutations))
+	if (stat == 2)
 		sight |= SEE_TURFS
 		sight |= SEE_MOBS
 		sight |= SEE_OBJS

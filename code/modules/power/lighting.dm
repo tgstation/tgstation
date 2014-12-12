@@ -467,7 +467,7 @@
 // attack with hand - remove tube/bulb
 // if hands aren't protected and the light is on, burn the player
 
-/obj/machinery/light/attack_hand(mob/user)
+/obj/machinery/light/attack_hand(mob/living/carbon/human/user)
 
 	add_fingerprint(user)
 
@@ -489,9 +489,9 @@
 		else
 			prot = 1
 
-		if(prot > 0 || (COLD_RESISTANCE in user.mutations))
+		if(prot > 0)
 			user << "You remove the light [fitting]"
-		else if(TK in user.mutations)
+		else if(istype(user) && user.dna.check_mutation("Telekinesis", user))
 			user << "You telekinetically remove the light [fitting]."
 		else
 			user << "You try to remove the light [fitting], but you burn your hand on it!"

@@ -28,12 +28,12 @@
 /datum/dna/proc/add_mutation(mutation_name, mob/living/carbon/human/target)
 	if(!istype(target))	return
 	var/datum/mutation/human/HM = mutations_list[mutation_name]
-	HM.on_aquairing(target)
+	HM.on_acquiring(target)
 
 /datum/dna/proc/remove_mutation(mutation_name, mob/living/carbon/human/target)
 	if(!istype(target))	return
 	var/datum/mutation/human/HM = mutations_list[mutation_name]
-	HM.on_loosing(target)
+	HM.on_losing(target)
 
 /datum/dna/proc/check_mutation(mutation_name, mob/living/carbon/human/target)
 	if(!istype(target))	return
@@ -196,12 +196,12 @@
 
 /proc/randmutb(mob/living/carbon/M)
 	var/datum/mutation/human/HM = pick(bad_mutations | not_good_mutations)
-	HM.on_aquairing(M)
+	HM.on_acquiring(M)
 	return randmut(M, bad_se_blocks)
 
 /proc/randmutg(mob/living/carbon/M)
 	var/datum/mutation/human/HM = pick(good_mutations)
-	HM.on_aquairing(M)
+	HM.on_acquiring(M)
 	return randmut(M, good_se_blocks | op_se_blocks)
 
 /proc/randmuti(mob/living/carbon/M)

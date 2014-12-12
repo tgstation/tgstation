@@ -1434,7 +1434,7 @@ datum/reagent/toxin/minttoxin
 
 datum/reagent/toxin/minttoxin/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	if (FAT in M.mutations)
+	if (M.disabilities & FAT)
 		M.gib()
 	..()
 	return

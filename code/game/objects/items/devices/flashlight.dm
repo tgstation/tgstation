@@ -45,7 +45,7 @@
 	return 1
 
 
-/obj/item/device/flashlight/attack(mob/living/M as mob, mob/living/carbon/human/user as mob)
+/obj/item/device/flashlight/attack(mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
 	add_fingerprint(user)
 	if(on && user.zone_sel.selecting == "eyes")
 
@@ -77,7 +77,7 @@
 		if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))	//robots and aliens are unaffected
 			if(M.stat == DEAD || M.disabilities & BLIND)	//mob is dead or fully blind
 				user << "<span class='notice'>[M] pupils does not react to the light!</span>"
-			else if(XRAY in M.mutations)	//mob has X-RAY vision
+			else if(M.dna.check_mutation("X Ray Vision", M))	//mob has X-RAY vision
 				user << "<span class='notice'>[M] pupils give an eerie glow!</span>"
 			else	//they're okay!
 				if(!M.eye_blind)

@@ -127,22 +127,6 @@
 
 
 /mob/living/carbon/human/proc/handle_disabilities()
-	if (disabilities & EPILEPSY)
-		if ((prob(1) && paralysis < 1))
-			src << "<span class='danger'>You have a seizure!</span>"
-			for(var/mob/O in viewers(src, null))
-				if(O == src)
-					continue
-				O.show_message(text("<span class='userdanger'>[src] starts having a seizure!</span>"), 1)
-			Paralyse(10)
-			Jitter(1000)
-	if (disabilities & COUGHING)
-		if ((prob(5) && paralysis <= 1))
-			drop_item()
-			emote("cough")
-	if (disabilities & NERVOUS)
-		if (prob(10))
-			stuttering = max(10, stuttering)
 	if (getBrainLoss() >= 60 && stat != 2)
 		if (prob(3))
 			switch(pick(1,2,3))
@@ -325,7 +309,7 @@
 
 /mob/living/carbon/human/proc/get_cold_protection(temperature)
 
-	if(COLD_RESISTANCE in mutations)
+	if(dna.check_mutation("Cold Resistance", src))
 		return 1 //Fully protected from the cold.
 
 	if(dna && COLDRES in dna.species.specflags)

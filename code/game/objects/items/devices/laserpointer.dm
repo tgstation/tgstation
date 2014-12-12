@@ -78,12 +78,9 @@
 	if (!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
-	if(user.has_mutation(HULK))
-		user << "<span class='warning'>Your meaty finger is too large for the button!</span>"
-		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.dna && NOGUNS in H.dna.species.specflags)
+		if(H.dna.check_mutation("Hulk", H) && NOGUNS in H.dna.species.specflags)
 			user << "<span class='warning'>Your fingers can't press the button!</span>"
 			return
 

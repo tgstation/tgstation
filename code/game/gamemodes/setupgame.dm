@@ -10,6 +10,7 @@
 
 	for(var/A in typesof(/datum/mutation/human) - /datum/mutation/human)
 		var/datum/mutation/human/B = new A()
+		if(B.dna_block == NON_SCANNABLE)	return
 		B.dna_block = pick_n_take(avnums)
 		world << "[A] is block [B.dna_block]"
 		if(B.quality == POSITIVE)
@@ -39,10 +40,10 @@
 	bad_se_blocks = list(NEARSIGHTBLOCK,EPILEPSYBLOCK,STRANGEBLOCK,COUGHBLOCK,CLUMSYBLOCK,TOURETTESBLOCK,NERVOUSBLOCK,DEAFBLOCK,BLINDBLOCK)
 	good_se_blocks = list(FIREBLOCK,XRAYBLOCK)
 	op_se_blocks = list(HULKBLOCK,TELEBLOCK)
-
+*/
 	NULLED_SE = repeat_string(DNA_STRUC_ENZYMES_BLOCKS, repeat_string(DNA_BLOCK_SIZE, "_"))
 	NULLED_UI = repeat_string(DNA_UNI_IDENTITY_BLOCKS, repeat_string(DNA_BLOCK_SIZE, "_"))
-*/
+
 
 	// HIDDEN MUTATIONS / SUPERPOWERS INITIALIZTION
 

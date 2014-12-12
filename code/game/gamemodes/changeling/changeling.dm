@@ -286,7 +286,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		return
 	if(!target)
 		return
-	if((NOCLONE in target.disabilities) || (HUSK in target.disabilities))
+	if((target.disabilities & NOCLONE) || (target.disabilities & HUSK))
 		user << "<span class='warning'>DNA of [target] is ruined beyond usability!</span>"
 		return
 	if(!ishuman(target))//Absorbing monkeys is entirely possible, but it can cause issues with transforming. That's what lesser form is for anyway!
