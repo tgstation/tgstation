@@ -99,7 +99,7 @@
 			return
 		if(istype(target, /obj/structure/table) || istype(target, /obj/structure/rack) \
 		|| istype(target, /obj/item/smallDelivery) || istype(target,/obj/structure/bigDelivery) \
-		|| istype(target, /obj/item/weapon/gift) || istype(target, /obj/item/weapon/a_gift) || istype(target, /obj/item/weapon/evidencebag))
+		|| istype(target, /obj/item/weapon/gift) || istype(target, /obj/item/weapon/winter_gift) || istype(target, /obj/item/weapon/evidencebag))
 			return
 		if(target.anchored)
 			return

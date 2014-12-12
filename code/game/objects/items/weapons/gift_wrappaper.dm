@@ -39,7 +39,7 @@
 
 ////WINTER GIFTS////
 
-/obj/item/weapon/a_gift
+/obj/item/weapon/winter_gift
 	name = "gift"
 	desc = ""
 	icon = 'icons/obj/items.dmi'
@@ -47,43 +47,43 @@
 	item_state = "gift3"
 	w_class = 4.0
 
-/obj/item/weapon/a_gift/New()
+/obj/item/weapon/winter_gift/New()
 	..()
 	pixel_x = rand(-10,10)
 	pixel_y = rand(-10,10)
 
-/obj/item/weapon/a_gift/ex_act()
+/obj/item/weapon/winter_gift/ex_act()
 	qdel(src)
 	return
 
-/obj/item/weapon/a_gift/regular
+/obj/item/weapon/winter_gift/regular
 	desc = "What are you waiting for? Tear that paper apart!"
 	icon_state = "gift_winter-1"
 	item_state = "gift_winter-1"
 
-/obj/item/weapon/a_gift/food
+/obj/item/weapon/winter_gift/food
 	desc = "That one smells really good!"
 	icon_state = "gift_winter-2"
 	item_state = "gift_winter-2"
 
-/obj/item/weapon/a_gift/cloth
+/obj/item/weapon/winter_gift/cloth
 	desc = "That one feels warm to the touch!"
 	icon_state = "gift_winter-3"
 	item_state = "gift_winter-3"
 
-/obj/item/weapon/a_gift/special
+/obj/item/weapon/winter_gift/special
 	desc = "There is something eerie about that one...opening it might or might not be a good idea."
 	icon_state = "gift_winter-4"
 	item_state = "gift_winter-4"
 
 
-/obj/item/weapon/a_gift/attack_self(mob/M as mob)
+/obj/item/weapon/winter_gift/attack_self(mob/M as mob)
 	M << "<span class='notice'>The gift was empty!</span>"
 	M.u_equip(src)
 	qdel(src)
 	return
 
-/obj/item/weapon/a_gift/regular/attack_self(mob/M as mob)
+/obj/item/weapon/winter_gift/regular/attack_self(mob/M as mob)
 	var/gift_type = pick(
 		/obj/item/weapon/sord,
 		/obj/item/weapon/storage/wallet,
@@ -143,7 +143,7 @@
 	qdel(src)
 	return
 
-/obj/item/weapon/a_gift/food/attack_self(mob/M as mob)
+/obj/item/weapon/winter_gift/food/attack_self(mob/M as mob)
 	var/gift_type = pick(
 		/obj/item/weapon/reagent_containers/food/snacks/sliceable/birthdaycake,
 		/obj/item/weapon/reagent_containers/food/snacks/sliceable/buchedenoel,
@@ -158,7 +158,7 @@
 	qdel(src)
 	return
 
-/obj/item/weapon/a_gift/cloth/attack_self(mob/M as mob)
+/obj/item/weapon/winter_gift/cloth/attack_self(mob/M as mob)
 	var/gift_type = pick(
 		/obj/item/clothing/gloves/black,
 		/obj/item/clothing/head/ushanka,
@@ -172,7 +172,7 @@
 	qdel(src)
 	return
 
-/obj/item/weapon/a_gift/special/attack_self(mob/M as mob)
+/obj/item/weapon/winter_gift/special/attack_self(mob/M as mob)
 	var/gift_type = pick(
 		/obj/item/device/fuse_bomb,
 		/obj/item/weapon/card/emag,
@@ -337,7 +337,7 @@
 		return
 	if(istype(target, /obj/structure/table) || istype(target, /obj/structure/rack) \
 	|| istype(target, /obj/item/smallDelivery) || istype(target,/obj/structure/bigDelivery) \
-	|| istype(target, /obj/item/weapon/gift) || istype(target, /obj/item/weapon/a_gift) || istype(target, /obj/item/weapon/evidencebag))
+	|| istype(target, /obj/item/weapon/gift) || istype(target, /obj/item/weapon/winter_gift) || istype(target, /obj/item/weapon/evidencebag))
 		return
 	if(target.anchored)
 		return
