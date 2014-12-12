@@ -10,3 +10,18 @@
 
 /obj/effect/decal/warning_stripes/oldstyle
 	icon = 'icons/effects/warning_stripes_old.dmi'
+
+/obj/effect/decal/warning_stripes/pathmarkers
+	name = "Path marker"
+	desc = "Marks an important path."
+
+	icon_state="pathmarker"
+
+/obj/effect/decal/warning_stripes/pathmarkers/yellow
+	color = "#ffff00"
+
+// Pastels
+/obj/effect/decal/warning_stripes/pathmarkers/red
+	color = "#EF9DA2"
+/obj/effect/decal/warning_stripes/pathmarkers/blue
+	color = "#8FAEDA"
