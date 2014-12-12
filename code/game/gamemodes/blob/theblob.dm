@@ -61,6 +61,7 @@
 		apply_beam_damage(B)
 
 /obj/effect/blob/process()
+	process_beams()
 	Life()
 	return
 
