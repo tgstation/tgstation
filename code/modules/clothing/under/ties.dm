@@ -162,37 +162,37 @@
 	desc = "An armband, worn by personnel authorized to act as a deputy of station security."
 
 /obj/item/clothing/tie/armband/cargo
-	name = "cargo bay armband"
-	desc = "A department armband, worn to designate someone as temporarily assisting a department. Typically worn by security officers assigned to departments. This one is brown."
+	name = "cargo bay guard armband"
+	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is brown."
 	icon_state = "cargoband"
 	item_color = "cargoband"
 
 /obj/item/clothing/tie/armband/engine
-	name = "engineering armband"
-	desc = "A department armband, worn to designate someone as temporarily assisting a department. Typically worn by security officers assigned to departments. This one is orange with a reflective strip!"
+	name = "engineering guard armband"
+	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is orange with a reflective strip!"
 	icon_state = "engieband"
 	item_color = "engieband"
 
 /obj/item/clothing/tie/armband/science
-	name = "science armband"
-	desc = "A department armband, worn to designate someone as temporarily assisting a department. Typically worn by security officers assigned to departments. This one is purple."
+	name = "science guard armband"
+	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is purple."
 	icon_state = "rndband"
 	item_color = "rndband"
 
 /obj/item/clothing/tie/armband/hydro
-	name = "hydroponics armband"
-	desc = "A department armband, worn to designate someone as temporarily assisting a department. Typically worn by security officers assigned to departments. This one is green and blue."
+	name = "hydroponics guard armband"
+	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is green and blue."
 	icon_state = "hydroband"
 	item_color = "hydroband"
 
 /obj/item/clothing/tie/armband/med
-	name = "medical armband"
-	desc = "A department armband, worn to designate someone as temporarily assisting a department. Typically worn by security officers assigned to departments. This one is white."
+	name = "medical guard armband"
+	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white."
 	icon_state = "medband"
 	item_color = "medband"
 
 /obj/item/clothing/tie/armband/medblue
-	name = "medical armband"
-	desc = "A department armband, worn to designate someone as temporarily assisting a department. Typically worn by security officers assigned to departments. This one is white and blue."
+	name = "medical guard armband"
+	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white and blue."
 	icon_state = "medblueband"
 	item_color = "medblueband"
