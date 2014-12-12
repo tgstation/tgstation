@@ -20,8 +20,7 @@
 				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, surround)
 
 
-/mob/proc/playsound_local(var/turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1)
-	if(!src.client || ear_deaf > 0)	return
+/atom/proc/playsound_local(var/turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1)
 	soundin = get_sfx(soundin)
 
 	var/sound/S = sound(soundin)
@@ -73,6 +72,11 @@
 		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 
 	src << S
+
+/mob/playsound_local(var/turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1)
+	if(!client || ear_deaf > 0)
+		return
+	..()
 
 /client/proc/playtitlemusic()
 	if(!ticker || !ticker.login_music)	return
