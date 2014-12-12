@@ -44,6 +44,8 @@
 	var/obj/item/weapon/coin/coin
 	var/datum/wires/vending/wires = null
 
+	var/dish_quants = list()  //used by the snack machine's custom compartment to count dishes.
+
 	var/obj/item/weapon/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
 
 /obj/machinery/vending/New()
@@ -140,13 +142,29 @@
 	return total
 
 /obj/machinery/vending/snack/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/reagent_containers/food/snacks))
-		if(W.reagents.has_reagent("sugar"))
-			user << "<span class='notice'>[src]'s chef compartment does not accept sugary food.</span>"
-		else
-			user.drop_item()
-			W.loc = src
-			user << "<span class='notice'>You insert [W] into [src]'s custom compartment.</span>"
+	if(istype(W, /obj/item/weapon/storage/bag/tray))
+		var/obj/item/weapon/storage/T = W
+		var/loaded = 0
+		var/denied_items = 0
+		for(var/obj/item/weapon/reagent_containers/food/snacks/S in T.contents)
+			if(contents.len >= 30) // no more than 30 dishes can fit inside
+				user << "<span class='warning'>[src]'s custom compartment is full.</span>"
+				break
+			if( !(S.reagents.has_reagent("sugar")) )
+				T.remove_from_storage(S, src)
+				if(dish_quants[S.name])
+					dish_quants[S.name]++
+				else
+					dish_quants[S.name] = 1
+				sortList(dish_quants)
+				loaded++
+			else
+				denied_items++
+		if(denied_items)
+			user << "<span class='notice'>[src] refuses some items.</span>"
+		if(loaded)
+			user << "<span class='notice'>You insert [loaded] dishes into [src]'s custom compartment.</span>"
+		updateUsrDialog()
 		return
 	..()
 
@@ -164,6 +182,8 @@
 						machine_content.amount--
 						if(!machine_content.amount)
 							break
+			for(var/obj/item/weapon/reagent_containers/food/snacks/S in contents)
+				S.loc = get_turf(src)
 			default_deconstruction_crowbar(W)
 
 	if(istype(W, /obj/item/weapon/card/emag))
@@ -260,9 +280,11 @@
 		if(istype(src, /obj/machinery/vending/snack))
 			dat += "<h3>Chef's Food Selection</h3>"
 			dat += "<div class='statusDisplay'>"
-			for(var/obj/item/weapon/reagent_containers/food/snacks/S in src)
-				dat += "<a href='byond://?src=\ref[src];dispense=\ref[S]'>Dispense</a> "
-				dat += "<b>[S.name]</b><br>"
+			for (var/O in dish_quants)
+				if(dish_quants[O] > 0)
+					var/N = dish_quants[O]
+					dat += "<a href='byond://?src=\ref[src];dispense=[O]'>Dispense</A> "
+					dat += "<B>[capitalize(O)]</B>: [N]<br>"
 			dat += "</div>"
 	user.set_machine(src)
 	if(seconds_electrified && !(stat & NOPOWER))
@@ -312,13 +334,18 @@
 	usr.set_machine(src)
 
 	if((href_list["dispense"]) && (vend_ready))
-		var/obj/item/weapon/reagent_containers/food/snacks/S = locate(href_list["dispense"])
-		if(!S || !S.loc)
+		var/N = href_list["dispense"]
+		if(dish_quants[N] <= 0) // Sanity check, there are probably ways to press the button when it shouldn't be possible.
 			return
 		vend_ready = 0
 		use_power(5)
+
 		spawn(vend_delay)
-			S.loc = get_turf(src)
+			dish_quants[N] = max(dish_quants[N] - 1, 0)
+			for(var/obj/O in contents)
+				if(O.name == N)
+					O.loc = src.loc
+					break
 			vend_ready = 1
 			updateUsrDialog()
 		return

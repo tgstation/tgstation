@@ -22,6 +22,10 @@
 	if(count_by_type(viruses, /datum/disease/advance) >= 3)
 		return 0
 
+	if(satiety>0 && prob(satiety/10))
+		return 0
+
+
 	return 1
 
 

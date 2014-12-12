@@ -121,6 +121,8 @@
 		reagents.remove_reagent("nutriment", 1)
 		if(reagents.total_volume <= 0)
 			qdel(src)
+		return
+	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/benedict
 	name = "eggs benedict"
