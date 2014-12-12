@@ -109,7 +109,7 @@
 				//eye target check
 				outmsg = "<span class='notice'>You blind [C] by shining [src] in their eyes.</span>"
 				var/eye_prot = C.eyecheck()
-				if(C.blinded || eye_prot >= 2)
+				if(C.eye_blind || eye_prot >= 2)
 					eye_prot = 4
 				var/severity = 3 - eye_prot
 				if(prob(33))

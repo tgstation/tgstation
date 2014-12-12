@@ -23,6 +23,22 @@
 	var/datum/species/species = new /datum/species/human() //The type of mutant race the player is if applicable (i.e. potato-man)
 	var/mutant_color = "FFF"		 // What color you are if you have certain speciess
 	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
+	var/list/mutations = list()   //All mutations are from now on here
+
+/datum/dna/proc/add_mutation(mutation_name, mob/living/carbon/human/target)
+	if(!istype(target))	return
+	var/datum/mutation/human/HM = mutations_list[mutation_name]
+	HM.on_aquairing(target)
+
+/datum/dna/proc/remove_mutation(mutation_name, mob/living/carbon/human/target)
+	if(!istype(target))	return
+	var/datum/mutation/human/HM = mutations_list[mutation_name]
+	HM.on_loosing(target)
+
+/datum/dna/proc/check_mutation(mutation_name, mob/living/carbon/human/target)
+	if(!istype(target))	return
+	var/datum/mutation/human/HM = mutations_list[mutation_name]
+	return mutations.Find(HM)
 
 /datum/dna/proc/generate_uni_identity(mob/living/carbon/character)
 	. = ""
@@ -51,13 +67,20 @@
 
 /datum/dna/proc/generate_struc_enzymes(mob/living/carbon/character)
 	var/list/L = list("0","1","2","3","4","5","6")
-	. = ""
-	for(var/i=1, i<=DNA_STRUC_ENZYMES_BLOCKS, i++)
-		if(i == RACEBLOCK)
-			. += construct_block(istype(character,/mob/living/carbon/monkey)+1, 2)
+	var/list/sorting = list()
+	sorting.len = 14
+	var/result
+	for(var/A in mutations_list)
+		var/datum/mutation/human/M = mutations_list[A]//, i<=DNA_STRUC_ENZYMES_BLOCKS, i++)
+		if(A == "Monkified" && istype(character,/mob/living/carbon/monkey))
+			sorting[M.dna_block] = num2hex(M.lowest_value + rand(0, 256 * 6), DNA_BLOCK_SIZE)
+			character.dna.mutations.Add(mutations_list["Monkified"])
 		else
-			. += random_string(DNA_BLOCK_SIZE, L)
-	return .
+			sorting[M.dna_block] = random_string(DNA_BLOCK_SIZE, L)
+
+	for(var/B in sorting)
+		result += B
+	return result
 
 /datum/dna/proc/generate_unique_enzymes(mob/living/carbon/character)
 	. = ""
@@ -172,9 +195,13 @@
 	return
 
 /proc/randmutb(mob/living/carbon/M)
+	var/datum/mutation/human/HM = pick(bad_mutations | not_good_mutations)
+	HM.on_aquairing(M)
 	return randmut(M, bad_se_blocks)
 
 /proc/randmutg(mob/living/carbon/M)
+	var/datum/mutation/human/HM = pick(good_mutations)
+	HM.on_aquairing(M)
 	return randmut(M, good_se_blocks | op_se_blocks)
 
 /proc/randmuti(mob/living/carbon/M)
@@ -234,8 +261,11 @@
 	if(!check_dna_integrity(M))
 		return 0
 
-	M.disabilities = 0
-	M.sdisabilities = 0
+	for(var/A in mutations_list)
+		var/datum/mutation/human/HM = mutations_list[A]
+		HM.check_block(M)
+
+/*	M.disabilities = 0
 	M.mutations.Cut()
 
 	M.see_in_dark = initial(M.see_in_dark)
@@ -250,8 +280,8 @@
 	for(var/i in op_se_blocks)		//Overpowered mutations...extra difficult to obtain
 		blocks[i] = (deconstruct_block(getblock(M.dna.struc_enzymes, i), OP_MUTATION_DIFFICULTY) == OP_MUTATION_DIFFICULTY)
 
-	if(blocks[NEARSIGHTEDBLOCK])
-		M.disabilities |= NEARSIGHTED
+	if(blocks[NEARSIGHTBLOCK])
+		M.disabilities |= NEARSIGHT
 		M << "<span class='danger'>Your eyes feel strange.</span>"
 	if(blocks[EPILEPSYBLOCK])
 		M.disabilities |= EPILEPSY
@@ -275,11 +305,11 @@
 		M.disabilities |= NERVOUS
 		M << "<span class='danger'>You feel nervous.</span>"
 	if(blocks[DEAFBLOCK])
-		M.sdisabilities |= DEAF
+		M.disabilities |= DEAF
 		M.ear_deaf = 1
 		M << "<span class='danger'>You can't seem to hear anything.</span>"
 	if(blocks[BLINDBLOCK])
-		M.sdisabilities |= BLIND
+		M.disabilities |= BLIND
 		M << "<span class='danger'>You can't seem to see anything.</span>"
 	if(blocks[HULKBLOCK])
 		if(inj || prob(10))
@@ -326,7 +356,7 @@
 				O.loc = C
 				C.occupant = O
 				connected = null
-			return 1
+			return 1*/
 //////////////////////////////////////////////////////////// Monkey Block
 	if(M)
 		M.update_icon = 1	//queue a full icon update at next life() call

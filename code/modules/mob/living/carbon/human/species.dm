@@ -442,11 +442,6 @@
 		H.see_invisible = invis_sight
 		H.see_in_dark = darksight
 
-		if(XRAY in H.mutations)
-			H.sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
-			H.see_in_dark = 8
-			H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-
 		if(H.seer)
 			H.see_invisible = SEE_INVISIBLE_OBSERVER
 
@@ -472,16 +467,16 @@
 		if(H.tinttotal >= TINT_IMPAIR)
 			if(tinted_weldhelh)
 				if(H.tinttotal >= TINT_BLIND)
-					H.blinded = 1								// You get the sudden urge to learn to play keyboard
+					H.eye_blind = max(H.eye_blind, 1)								// You get the sudden urge to learn to play keyboard
 					H.client.screen += global_hud.darkMask
 				else
 					H.client.screen += global_hud.darkMask
 
 		if(H.blind)
-			if(H.blinded)		H.blind.layer = 18
+			if(H.eye_blind)		H.blind.layer = 18
 			else			H.blind.layer = 0
 
-		if( H.disabilities & NEARSIGHTED && !istype(H.glasses, /obj/item/clothing/glasses/regular) )
+		if( H.disabilities & NEARSIGHT && !istype(H.glasses, /obj/item/clothing/glasses/regular) )
 			H.client.screen += global_hud.vimpaired
 		if(H.eye_blurry)			H.client.screen += global_hud.blurry
 		if(H.druggy)				H.client.screen += global_hud.druggy
@@ -557,16 +552,6 @@
 	return 1
 
 /datum/species/proc/handle_mutations_and_radiation(var/mob/living/carbon/human/H)
-	if(H.getFireLoss())
-		if((COLD_RESISTANCE in H.mutations) || (prob(1)))
-			H.heal_organ_damage(0,1)
-
-	if ((HULK in H.mutations) && H.health <= 25)
-		H.mutations.Remove(HULK)
-		H.update_mutations()		//update our mutation overlays
-		H << "<span class='danger'>You suddenly feel very weak.</span>"
-		H.Weaken(3)
-		H.emote("collapse")
 
 	if (H.radiation && !(RADIMMUNE in specflags))
 		if (H.radiation > 100)
@@ -628,7 +613,7 @@
 		if(J.allow_thrust(0.01, H))
 			hasjetpack = 1
 	var/grav = has_gravity(H)
-	
+
 	if(!grav && !hasjetpack)
 		mspeed += 1 //Slower space without jetpack
 
@@ -726,9 +711,6 @@
 
 			var/obj/item/organ/limb/affecting = H.get_organ(ran_zone(M.zone_sel.selecting))
 			var/armor_block = H.run_armor_check(affecting, "melee")
-
-			if(HULK in M.mutations)
-				damage += 5
 
 			if(M.dna)
 				playsound(H.loc, M.dna.species.attack_sound, 25, 1, -1)
@@ -1131,7 +1113,7 @@
 	return 1
 
 /datum/species/proc/handle_temperature(datum/gas_mixture/breath, var/mob/living/carbon/human/H) // called by human/life, handles temperatures
-	if( (abs(310.15 - breath.temperature) > 50) && !(COLD_RESISTANCE in H.mutations) && !(COLDRES in specflags)) // Hot air hurts :(
+	if( (abs(310.15 - breath.temperature) > 50) && !(mutations_list["Cold Resistance"] in H.dna.mutations) && !(COLDRES in specflags)) // Hot air hurts :(
 		if(breath.temperature < 260.15)
 			if(prob(20))
 				H << "<span class='danger'>You feel your face freezing and an icicle forming in your lungs!</span>"
@@ -1139,7 +1121,7 @@
 			if(prob(20))
 				H << "<span class='danger'>You feel your face burning and a searing heat in your lungs!</span>"
 
-		if(!(COLDRES in specflags)) // COLD DAMAGE
+		if(!(mutations_list["Cold Resistance"] in H.dna.mutations)) // COLD DAMAGE
 			switch(breath.temperature)
 				if(-INFINITY to 120)
 					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head")
@@ -1208,7 +1190,7 @@
 					H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
 					H.fire_alert = max(H.fire_alert, 2)
 
-	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(COLDRES in specflags))
+	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(mutations_list["Cold Resistance"] in H.dna.mutations))
 		H.fire_alert = max(H.fire_alert, 1)
 		if(!istype(H.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			switch(H.bodytemperature)

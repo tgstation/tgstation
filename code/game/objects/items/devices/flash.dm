@@ -15,8 +15,8 @@
 	var/last_used = 0 //last world.time it was used.
 
 
-/obj/item/device/flash/proc/clown_check(mob/user)
-	if(user && (CLUMSY in user.mutations) && prob(50))
+/obj/item/device/flash/proc/clown_check(mob/living/carbon/human/user)
+	if(istype(user) && user.dna.check_mutation("Clumsiness", user) && prob(50))
 		flash_carbon(user, user, 15, 0)
 		user.visible_message("<span class='disarm'>[user] blinds [user] with the flash!</span>")
 		return 0

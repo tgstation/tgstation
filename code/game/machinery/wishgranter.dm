@@ -11,7 +11,8 @@
 	var/charges = 1
 	var/insisting = 0
 
-/obj/machinery/wish_granter/attack_hand(var/mob/user as mob)
+/obj/machinery/wish_granter/attack_hand(var/mob/living/carbon/user)
+	if(istype(user))	return
 	usr.set_machine(src)
 
 	if(charges <= 0)
@@ -36,28 +37,18 @@
 		charges--
 		insisting = 0
 
-		if (!(HULK in user.mutations))
-			user.mutations.Add(HULK)
+		user.dna.add_mutation("Hulk", user)
 
-		if (!(LASER in user.mutations))
+/*		if (!(LASER in user.mutations))
 			user.mutations.Add(LASER)
+*/
+		user.dna.add_mutation("X Ray Vision", user)
+		user.dna.add_mutation("Cold Resistance", user)
+		user.dna.add_mutation("Telekinesis", user)
 
-		if (!(XRAY in user.mutations))
-			user.mutations.Add(XRAY)
-			user.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
-			user.see_in_dark = 8
-			user.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-
-		if (!(COLD_RESISTANCE in user.mutations))
-			user.mutations.Add(COLD_RESISTANCE)
-
-		if (!(TK in user.mutations))
-			user.mutations.Add(TK)
-
-		if(!(HEAL in user.mutations))
+/*		if(!(HEAL in user.mutations))
 			user.mutations.Add(HEAL)
-
-		user.update_mutations()
+*/
 
 		ticker.mode.traitors += user.mind
 		user.mind.special_role = "Avatar of the Wish Granter"

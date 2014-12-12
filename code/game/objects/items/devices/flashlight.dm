@@ -45,11 +45,11 @@
 	return 1
 
 
-/obj/item/device/flashlight/attack(mob/living/M as mob, mob/living/user as mob)
+/obj/item/device/flashlight/attack(mob/living/M as mob, mob/living/carbon/human/user as mob)
 	add_fingerprint(user)
 	if(on && user.zone_sel.selecting == "eyes")
 
-		if(((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))	//too dumb to use flashlight properly
+		if(((istype(user) && user.dna.check_mutation("Clumsiness", user)) || user.getBrainLoss() >= 60) && prob(50))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
 
 		if(!user.IsAdvancedToolUser())
@@ -62,7 +62,7 @@
 			return
 
 		if(M == user)	//they're using it on themselves
-			if(!M.blinded)
+			if(!M.eye_blind)
 				flick("flash", M.flash)
 				M.visible_message("<span class='notice'>[M] directs [src] to \his eyes.</span>", \
 									 "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
@@ -75,12 +75,12 @@
 							 "<span class='notice'>You direct [src] to [M]'s eyes.</span>")
 
 		if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))	//robots and aliens are unaffected
-			if(M.stat == DEAD || M.sdisabilities & BLIND)	//mob is dead or fully blind
+			if(M.stat == DEAD || M.disabilities & BLIND)	//mob is dead or fully blind
 				user << "<span class='notice'>[M] pupils does not react to the light!</span>"
 			else if(XRAY in M.mutations)	//mob has X-RAY vision
 				user << "<span class='notice'>[M] pupils give an eerie glow!</span>"
 			else	//they're okay!
-				if(!M.blinded)
+				if(!M.eye_blind)
 					flick("flash", M.flash)	//flash the affected mob
 					user << "<span class='notice'>[M]'s pupils narrow.</span>"
 	else

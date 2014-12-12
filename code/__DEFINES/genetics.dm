@@ -42,16 +42,11 @@
 #define ELECTRICITY		20 	// ability to shoot electric attacks (15%)
 
 //disabilities
-#define NEARSIGHTED		1
+#define NEARSIGHT		1
 #define EPILEPSY		2
 #define COUGHING		4
 #define TOURETTES		8
 #define NERVOUS			16
-
-//sdisabilities
-#define BLIND			1
-#define MUTE			2
-#define DEAF			4
 
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE				3

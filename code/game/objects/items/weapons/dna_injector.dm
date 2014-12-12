@@ -67,28 +67,32 @@
 	desc = "Cures green skin."
 	New()
 		..()
-		fields = list("SE"=setblock(NULLED_SE, HULKBLOCK, repeat_string(DNA_BLOCK_SIZE,"0")))
+		var/datum/mutation/human/HM = mutations_list["Hulk"]
+		fields = list("SE"=setblock(NULLED_SE, HM.dna_block, repeat_string(DNA_BLOCK_SIZE,"0")))
 
 /obj/item/weapon/dnainjector/hulkmut
 	name = "\improper DNA injector (Hulk)"
 	desc = "This will make you big and strong, but give you a bad skin condition."
 	New()
 		..()
-		fields = list("SE"=setblock(NULLED_SE, HULKBLOCK, repeat_string(DNA_BLOCK_SIZE,"f")))
+		var/datum/mutation/human/HM = mutations_list["Hulk"]
+		fields = list("SE"=setblock(NULLED_SE, HM.dna_block, repeat_string(DNA_BLOCK_SIZE,"f")))
 
 /obj/item/weapon/dnainjector/xraymut
 	name = "\improper DNA injector (Xray)"
 	desc = "Finally you can see what the Captain does."
 	New()
 		..()
-		fields = list("SE"=setblock(NULLED_SE, XRAYBLOCK, repeat_string(DNA_BLOCK_SIZE,"f")))
+		var/datum/mutation/human/HM = mutations_list["X Ray Vision"]
+		fields = list("SE"=setblock(NULLED_SE, HM.dna_block, repeat_string(DNA_BLOCK_SIZE,"f")))
 
 /obj/item/weapon/dnainjector/antixray
 	name = "\improper DNA injector (Anti-Xray)"
 	desc = "It will make you see harder."
 	New()
 		..()
-		fields = list("SE"=setblock(NULLED_SE, XRAYBLOCK, repeat_string(DNA_BLOCK_SIZE,"0")))
+		var/datum/mutation/human/HM = mutations_list["X Ray Vision"]
+		fields = list("SE"=setblock(NULLED_SE, HM.dna_block, repeat_string(DNA_BLOCK_SIZE,"0")))
 
 /////////////////////////////////////
 /obj/item/weapon/dnainjector/antiglasses
@@ -96,42 +100,48 @@
 	desc = "Toss away those glasses!"
 	New()
 		..()
-		fields = list("SE"=setblock(NULLED_SE, NEARSIGHTEDBLOCK, repeat_string(DNA_BLOCK_SIZE,"0")))
+		var/datum/mutation/human/HM = mutations_list["Nearsight"]
+		fields = list("SE"=setblock(NULLED_SE, HM.dna_block, repeat_string(DNA_BLOCK_SIZE,"0")))
 
 /obj/item/weapon/dnainjector/glassesmut
 	name = "\improper DNA injector (Glasses)"
 	desc = "Will make you need dorkish glasses."
 	New()
 		..()
-		fields = list("SE"=setblock(NULLED_SE, NEARSIGHTEDBLOCK, repeat_string(DNA_BLOCK_SIZE,"f")))
+		var/datum/mutation/human/HM = mutations_list["Nearsight"]
+		fields = list("SE"=setblock(NULLED_SE, HM.dna_block, repeat_string(DNA_BLOCK_SIZE,"f")))
 
 /obj/item/weapon/dnainjector/epimut
 	name = "\improper DNA injector (Epi.)"
 	desc = "Shake shake shake the room!"
 	New()
 		..()
-		fields = list("SE"=setblock(NULLED_SE, EPILEPSYBLOCK, repeat_string(DNA_BLOCK_SIZE,"f")))
+		var/datum/mutation/human/HM = mutations_list["Epilepcy"]
+		fields = list("SE"=setblock(NULLED_SE, HM.dna_block, repeat_string(DNA_BLOCK_SIZE,"f")))
 
 /obj/item/weapon/dnainjector/antiepi
 	name = "\improper DNA injector (Anti-Epi.)"
 	desc = "Will fix you up from shaking the room."
 	New()
 		..()
-		fields = list("SE"=setblock(NULLED_SE, EPILEPSYBLOCK, repeat_string(DNA_BLOCK_SIZE,"0")))
+		var/datum/mutation/human/HM = mutations_list["Epilepcy"]
+		fields = list("SE"=setblock(NULLED_SE, HM.dna_block, repeat_string(DNA_BLOCK_SIZE,"0")))
 ////////////////////////////////////
 /obj/item/weapon/dnainjector/anticough
 	name = "\improper DNA injector (Anti-Cough)"
 	desc = "Will stop that aweful noise."
 	New()
 		..()
-		fields = list("SE"=setblock(NULLED_SE, COUGHBLOCK, repeat_string(DNA_BLOCK_SIZE,"0")))
+		var/datum/mutation/human/HM = mutations_list["Cough"]
+		fields = list("SE"=setblock(NULLED_SE, HM.dna_block, repeat_string(DNA_BLOCK_SIZE,"0")))
 
 /obj/item/weapon/dnainjector/coughmut
 	name = "\improper DNA injector (Cough)"
 	desc = "Will bring forth a sound of horror from your throat."
 	New()
 		..()
-		fields = list("SE"=setblock(NULLED_SE, COUGHBLOCK, repeat_string(DNA_BLOCK_SIZE,"f")))
+		var/datum/mutation/human/HM = mutations_list["Cough"]
+		fields = list("SE"=setblock(NULLED_SE, HM.dna_block, repeat_string(DNA_BLOCK_SIZE,"f")))
 
 
 /obj/item/weapon/dnainjector/clumsymut
@@ -139,7 +149,8 @@
 	desc = "Makes clown minions."
 	New()
 		..()
-		fields = list("SE"=setblock(NULLED_SE, CLUMSYBLOCK, repeat_string(DNA_BLOCK_SIZE,"f")))
+		var/datum/mutation/human/HM = mutations_list["Clumsiness"]
+		fields = list("SE"=setblock(NULLED_SE, 	HM.dna_block, repeat_string(DNA_BLOCK_SIZE,"f")))
 
 
 /obj/item/weapon/dnainjector/anticlumsy
@@ -147,77 +158,88 @@
 	desc = "Apply this for Security Clown."
 	New()
 		..()
-		fields = list("SE"=setblock(NULLED_SE, CLUMSYBLOCK, repeat_string(DNA_BLOCK_SIZE,"0")))
+		var/datum/mutation/human/HM = mutations_list["Clumsiness"]
+		fields = list("SE"=setblock(NULLED_SE, HM.dna_block, repeat_string(DNA_BLOCK_SIZE,"0")))
 
 /obj/item/weapon/dnainjector/antitour
 	name = "\improper DNA injector (Anti-Tour.)"
 	desc = "Will cure tourrets."
 	New()
 		..()
-		fields = list("SE"=setblock(NULLED_SE, TOURETTESBLOCK, repeat_string(DNA_BLOCK_SIZE,"0")))
+		var/datum/mutation/human/HM = mutations_list["Tourettes"]
+		fields = list("SE"=setblock(NULLED_SE, HM.dna_block, repeat_string(DNA_BLOCK_SIZE,"0")))
 
 /obj/item/weapon/dnainjector/tourmut
 	name = "\improper DNA injector (Tour.)"
 	desc = "Gives you a nasty case off tourrets."
 	New()
 		..()
-		fields = list("SE"=setblock(NULLED_SE, TOURETTESBLOCK, repeat_string(DNA_BLOCK_SIZE,"f")))
+		var/datum/mutation/human/HM = mutations_list["Tourettes"]
+		fields = list("SE"=setblock(NULLED_SE, HM.dna_block, repeat_string(DNA_BLOCK_SIZE,"f")))
 
 /obj/item/weapon/dnainjector/stuttmut
 	name = "\improper DNA injector (Stutt.)"
 	desc = "Makes you s-s-stuttterrr"
 	New()
 		..()
-		fields = list("SE"=setblock(NULLED_SE, NERVOUSBLOCK, repeat_string(DNA_BLOCK_SIZE,"f")))
+		var/datum/mutation/human/HM = mutations_list["Nervousness"]
+		fields = list("SE"=setblock(NULLED_SE, HM.dna_block, repeat_string(DNA_BLOCK_SIZE,"f")))
 
 /obj/item/weapon/dnainjector/antistutt
 	name = "\improper DNA injector (Anti-Stutt.)"
 	desc = "Fixes that speaking impairment."
 	New()
 		..()
-		fields = list("SE"=setblock(NULLED_SE, NERVOUSBLOCK, repeat_string(DNA_BLOCK_SIZE,"0")))
+		var/datum/mutation/human/HM = mutations_list["Nervousness"]
+		fields = list("SE"=setblock(NULLED_SE, HM.dna_block, repeat_string(DNA_BLOCK_SIZE,"0")))
 
 /obj/item/weapon/dnainjector/antifire
 	name = "\improper DNA injector (Anti-Fire)"
 	desc = "Cures fire."
 	New()
 		..()
-		fields = list("SE"=setblock(NULLED_SE, FIREBLOCK, repeat_string(DNA_BLOCK_SIZE,"0")))
+		var/datum/mutation/human/HM = mutations_list["Cold Resistance"]
+		fields = list("SE"=setblock(NULLED_SE, HM.dna_block, repeat_string(DNA_BLOCK_SIZE,"0")))
 
 /obj/item/weapon/dnainjector/firemut
 	name = "\improper DNA injector (Fire)"
 	desc = "Gives you fire."
 	New()
 		..()
-		fields = list("SE"=setblock(NULLED_SE, FIREBLOCK, repeat_string(DNA_BLOCK_SIZE,"0")))
+		var/datum/mutation/human/HM = mutations_list["Cold Resistance"]
+		fields = list("SE"=setblock(NULLED_SE, HM.dna_block, repeat_string(DNA_BLOCK_SIZE,"0")))
 
 /obj/item/weapon/dnainjector/blindmut
 	name = "\improper DNA injector (Blind)"
 	desc = "Makes you not see anything."
 	New()
 		..()
-		fields = list("SE"=setblock(NULLED_SE, BLINDBLOCK, repeat_string(DNA_BLOCK_SIZE,"f")))
+		var/datum/mutation/human/HM = mutations_list["Blindness"]
+		fields = list("SE"=setblock(NULLED_SE, HM.dna_block, repeat_string(DNA_BLOCK_SIZE,"f")))
 
 /obj/item/weapon/dnainjector/antiblind
 	name = "\improper DNA injector (Anti-Blind)"
 	desc = "ITS A MIRACLE!!!"
 	New()
 		..()
-		fields = list("SE"=setblock(NULLED_SE, BLINDBLOCK, repeat_string(DNA_BLOCK_SIZE,"0")))
+		var/datum/mutation/human/HM = mutations_list["Blindness"]
+		fields = list("SE"=setblock(NULLED_SE, HM.dna_block, repeat_string(DNA_BLOCK_SIZE,"0")))
 
 /obj/item/weapon/dnainjector/antitele
 	name = "\improper DNA injector (Anti-Tele.)"
 	desc = "Will make you not able to control your mind."
 	New()
 		..()
-		fields = list("SE"=setblock(NULLED_SE, TELEBLOCK, repeat_string(DNA_BLOCK_SIZE,"0")))
+		var/datum/mutation/human/HM = mutations_list["Telekinesis"]
+		fields = list("SE"=setblock(NULLED_SE, HM.dna_block, repeat_string(DNA_BLOCK_SIZE,"0")))
 
 /obj/item/weapon/dnainjector/telemut
 	name = "\improper DNA injector (Tele.)"
 	desc = "Super brain man!"
 	New()
 		..()
-		fields = list("SE"=setblock(NULLED_SE, TELEBLOCK, repeat_string(DNA_BLOCK_SIZE,"f")))
+		var/datum/mutation/human/HM = mutations_list["Telekinesis"]
+		fields = list("SE"=setblock(NULLED_SE, HM.dna_block, repeat_string(DNA_BLOCK_SIZE,"f")))
 
 /obj/item/weapon/dnainjector/telemut/darkbundle
 	name = "\improper DNA injector"
@@ -228,14 +250,16 @@
 	desc = "Sorry, what did you say?"
 	New()
 		..()
-		fields = list("SE"=setblock(NULLED_SE, DEAFBLOCK, repeat_string(DNA_BLOCK_SIZE,"f")))
+		var/datum/mutation/human/HM = mutations_list["Deafness"]
+		fields = list("SE"=setblock(NULLED_SE, HM.dna_block, repeat_string(DNA_BLOCK_SIZE,"f")))
 
 /obj/item/weapon/dnainjector/antideaf
 	name = "\improper DNA injector (Anti-Deaf)"
 	desc = "Will make you hear once more."
 	New()
 		..()
-		fields = list("SE"=setblock(NULLED_SE, DEAFBLOCK, repeat_string(DNA_BLOCK_SIZE,"0")))
+		var/datum/mutation/human/HM = mutations_list["Deafness"]
+		fields = list("SE"=setblock(NULLED_SE, HM.dna_block, repeat_string(DNA_BLOCK_SIZE,"0")))
 
 /obj/item/weapon/dnainjector/h2m
 	name = "\improper DNA injector (Human > Monkey)"

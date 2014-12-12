@@ -611,7 +611,6 @@ datum/reagent/ryetalyn/on_mob_life(var/mob/living/M as mob)
 
 	M.mutations = list()
 	M.disabilities = 0
-	M.sdisabilities = 0
 	M.jitteriness = 0
 
 	// Might need to update appearance for hulk etc.
@@ -978,7 +977,6 @@ datum/reagent/adminordrazine/on_mob_life(var/mob/living/carbon/M as mob)
 	M.hallucination = 0
 	M.setBrainLoss(0)
 	M.disabilities = 0
-	M.sdisabilities = 0
 	M.eye_blurry = 0
 	M.eye_blind = 0
 	M.SetWeakened(0)
@@ -1092,9 +1090,8 @@ datum/reagent/imidazoline/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.eye_blurry = max(M.eye_blurry-5 , 0)
 	M.eye_blind = max(M.eye_blind-5 , 0)
-	M.disabilities &= ~NEARSIGHTED
+	M.disabilities &= ~NEARSIGHT
 	M.eye_stat = max(M.eye_stat-5, 0)
-//	M.sdisabilities &= ~1		Replaced by eye surgery
 	..()
 	return
 
@@ -2263,7 +2260,7 @@ datum/reagent/carrotjuice/on_mob_life(var/mob/living/M as mob)
 			//nothing
 		if(21 to INFINITY)
 			if (prob(data-10))
-				M.disabilities &= ~NEARSIGHTED
+				M.disabilities &= ~NEARSIGHT
 	data++
 	..()
 	return

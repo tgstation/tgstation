@@ -140,7 +140,7 @@ obj/effect/proc_holder/changeling/sting/blind
 /obj/effect/proc_holder/changeling/sting/blind/sting_action(var/mob/user, var/mob/target)
 	add_logs(user, target, "stung", object="blind sting")
 	target << "<span class='danger'>Your eyes burn horrifically!</span>"
-	target.disabilities |= NEARSIGHTED
+	target.disabilities |= NEARSIGHT
 	target.eye_blind = 20
 	target.eye_blurry = 40
 	feedback_add_details("changeling_powers","BS")

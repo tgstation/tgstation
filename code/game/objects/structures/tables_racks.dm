@@ -208,15 +208,16 @@
 /obj/structure/table/attack_paw(mob/user)
 	attack_hand(user)
 
+/obj/structure/table/attack_hulk(mob/living/carbon/human/user)
+	..(user, 1)
+	visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
+	playsound(src.loc, 'sound/effects/bang.ogg', 50, 1)
+	user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+	table_destroy(1)
+	return 1
+
 /obj/structure/table/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(HULK in user.mutations)
-		user.do_attack_animation(src)
-		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
-		playsound(src.loc, 'sound/effects/bang.ogg', 50, 1)
-		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-		table_destroy(1)
-		return
 
 /obj/structure/table/attack_tk() // no telehulk sorry
 	return
@@ -462,19 +463,17 @@
 /obj/structure/table/reinforced/attack_paw(mob/user)
 	attack_hand(user)
 
-/obj/structure/table/reinforced/attack_hand(mob/user as mob)
-	user.changeNext_move(CLICK_CD_MELEE)
-	if ((HULK in user.mutations))
-		if (prob(75))
-			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-			usr << text("<span class='notice'>You kick [src] into pieces.</span>")
-			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-			table_destroy(1)
-			return
-		else
-			playsound(src, 'sound/effects/bang.ogg', 50, 1)
-			usr << text("<span class='notice'>You kick [src].</span>")
-			return
+/obj/structure/table/reinforced/attack_hulk(mob/living/carbon/human/user)
+	..(user, 1)
+	if(prob(75))
+		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+		user << text("<span class='notice'>You kick [src] into pieces.</span>")
+		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		table_destroy(1)
+	else
+		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+		user << text("<span class='notice'>You kick [src].</span>")
+	return 1
 
 /*
  * Racks
@@ -551,19 +550,20 @@
 /obj/structure/rack/attack_paw(mob/living/user)
 	attack_hand(user)
 
+/obj/structure/rack/attack_hulk(mob/living/carbon/human/user)
+	..(user, 1)
+	health -= 5
+	healthcheck()
+	return 1
+
 /obj/structure/rack/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	playsound(loc, 'sound/items/dodgeball.ogg', 80, 1)
 	user.visible_message("<span class='warning'>[user] kicks [src].</span>", \
 						 "<span class='warning'>You kick [src].</span>")
-
-	if(HULK in user.mutations)
-		health -= 5
-	else
-		health -= rand(1,2)
+	health -= rand(1,2)
 	healthcheck()
-
 
 /obj/structure/rack/attack_alien(mob/living/user)
 	user.do_attack_animation(src)

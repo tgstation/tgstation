@@ -317,7 +317,7 @@
 	//	M = user
 		/*
 		M << "\red You stab yourself in the eye."
-		M.sdisabilities |= BLIND
+		M.disabilities |= BLIND
 		M.weakened += 4
 		M.adjustBruteLoss(10)
 		*/
@@ -341,7 +341,7 @@
 	M.eye_stat += rand(2,4)
 	if (M.eye_stat >= 10)
 		M.eye_blurry += 15+(0.1*M.eye_blurry)
-		M.disabilities |= NEARSIGHTED
+		M.disabilities |= NEARSIGHT
 		if(M.stat != 2)
 			M << "<span class='danger'>Your eyes start to bleed profusely!</span>"
 		if(prob(50))
@@ -354,7 +354,7 @@
 		if (prob(M.eye_stat - 10 + 1))
 			if(M.stat != 2)
 				M << "<span class='danger'>You go blind!</span>"
-			M.sdisabilities |= BLIND
+			M.disabilities |= BLIND
 	return
 
 /obj/item/clean_blood()

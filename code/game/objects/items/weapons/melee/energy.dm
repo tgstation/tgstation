@@ -67,8 +67,8 @@
 		return 1
 	return 0
 
-/obj/item/weapon/melee/energy/sword/attack_self(mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+/obj/item/weapon/melee/energy/sword/attack_self(mob/living/carbon/human/user)
+	if (istype(user) && user.dna.check_mutation("Clumsiness", user) && prob(50))
 		user << "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>"
 		user.take_organ_damage(5,5)
 	active = !active

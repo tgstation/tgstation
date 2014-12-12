@@ -52,7 +52,7 @@
 	for(var/obj/O in contents)
 		O.emp_act(severity)
 
-/obj/item/weapon/gun/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params)//TODO: go over this
+/obj/item/weapon/gun/afterattack(atom/target as mob|obj|turf, mob/living/carbon/human/user as mob|obj, flag, params)//TODO: go over this
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(istype(target, /mob/) && target != user && !(target in user.contents)) //We make sure that it is a mob, it's not us or part of us.
 			if(user.a_intent == "harm") //Flogging action
@@ -62,27 +62,22 @@
 
 	//Exclude lasertag guns from the CLUMSY check.
 	if(clumsy_check)
-		if(istype(user, /mob/living))
-			var/mob/living/M = user
-			if ((CLUMSY in M.mutations) && prob(40))
-				M << "<span class='danger'>You shoot yourself in the foot with \the [src]!</span>"
-				afterattack(user, user)
-				M.drop_item()
-				return
+		if((istype(user) && user.dna.check_mutation("Clumsiness", user)) && prob(40))
+			user << "<span class='danger'>You shoot yourself in the foot with \the [src]!</span>"
+			afterattack(user, user)
+			user.drop_item()
+			return
 
 	if (!user.IsAdvancedToolUser())
 		user << "<span class='notice'>You don't have the dexterity to do this!</span>"
 		return
 
 	if(trigger_guard)
-		if(istype(user, /mob/living))
-			var/mob/living/M = user
-			if (HULK in M.mutations)
-				M << "<span class='notice'>Your meaty finger is much too large for the trigger guard!</span>"
+		if(istype(user))
+			if(user.dna.check_mutation("Hulk"))
+				user << "<span class='notice'>Your meaty finger is much too large for the trigger guard!</span>"
 				return
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if(H.dna && NOGUNS in H.dna.species.specflags)
+			if(NOGUNS in user.dna.species.specflags)
 				user << "<span class='notice'>Your fingers don't fit in the trigger guard!</span>"
 				return
 

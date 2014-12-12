@@ -136,7 +136,7 @@
 
 /mob/living/ex_act(severity, target)
 	..()
-	if(client && !blinded)
+	if(client && !eye_blind)
 		flick("flash", src.flash)
 
 /mob/living/proc/updatehealth()
@@ -380,9 +380,7 @@
 	radiation = 0
 	nutrition = 400
 	bodytemperature = 310
-	sdisabilities = 0
 	disabilities = 0
-	blinded = 0
 	eye_blind = 0
 	eye_blurry = 0
 	ear_deaf = 0
@@ -530,7 +528,7 @@
 
 /mob/living/proc/cuff_break(obj/item/weapon/restraints/I, mob/living/carbon/C)
 
-	if(HULK in usr.mutations)
+	if(C.dna.check_mutation("Hulk", C))
 		C.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 
 	C.visible_message("<span class='danger'>[C] manages to break [I]!</span>")
@@ -556,7 +554,7 @@
 		breakouttime = LC.breakouttime
 	displaytime = breakouttime / 600
 
-	if(isalienadult(C) || HULK in usr.mutations)
+	if(isalienadult(C) || C.dna.check_mutation("Hulk", C))
 		C.visible_message("<span class='warning'>[C] is trying to break [I]!</span>")
 		C << "<span class='notice'>You attempt to break [I]. (This will take around 5 seconds and you need to stand still.)</span>"
 		spawn(0)
