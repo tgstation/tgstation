@@ -1,0 +1,7 @@
+author: paprika
+delete-after: True
+
+
+Changes:
+ 
+  - experiment: "Stun batons and flashlights will now require power cells and slowly drain when left on. They will last about 10 minutes each and are both upgradeable. Lanterns will require welding fuel, last considerably longer, and can be refuelled at any welding fuel tank."

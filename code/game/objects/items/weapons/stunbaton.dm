@@ -44,13 +44,25 @@
 		else
 			return 0
 
+/obj/item/weapon/melee/baton/process()
+	if(bcell)
+		if(bcell.charge < 5)
+			status = 0
+			update_icon()
+		if(status)
+			bcell.use(5)
+			update_icon()
+
 /obj/item/weapon/melee/baton/update_icon()
 	if(status)
 		icon_state = "[initial(name)]_active"
+		processing_objects += src
 	else if(!bcell)
 		icon_state = "[initial(name)]_nocell"
+		processing_objects -= src
 	else
 		icon_state = "[initial(name)]"
+		processing_objects -= src
 
 /obj/item/weapon/melee/baton/examine(mob/user)
 	..()
