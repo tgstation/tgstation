@@ -317,15 +317,15 @@
 	return
 
 /obj/machinery/computer/rdservercontrol/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
-	if(istype(D, /obj/item/weapon/card/emag) && !emagged)
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
-		emagged = 1
-		user << "<span class='notice'> You you disable the security protocols.</span>"
-	else
-		..()
+	..()
 	src.updateUsrDialog()
 	return
 
+/obj/machinery/computer/rdservercontrol/emag_act(mob/user as mob)
+	if(!emagged)
+		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
+		emagged = 1
+		user << "<span class='notice'> You you disable the security protocols.</span>"
 
 /obj/machinery/r_n_d/server/robotics
 	name = "Robotics R&D Server"

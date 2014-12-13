@@ -503,10 +503,6 @@
 			user << "<span class='danger'>You can't load \the [name] while it's opened.</span>"
 			return 1
 
-	if(istype(W, /obj/item/weapon/card/emag))
-		emag()
-		return
-
 	if(istype(W, /obj/item/stack))
 		var/material
 		switch(W.type)
@@ -553,3 +549,6 @@
 
 /obj/machinery/mecha_part_fabricator/proc/material2name(var/ID)
 	return copytext(ID,2)
+
+/obj/machinery/mecha_part_fabricator/emag_act()
+	emag()
