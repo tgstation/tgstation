@@ -227,12 +227,12 @@ var/list/department_radio_keys = list(
 	switch (message_mode)
 		if ("headset")
 			if (isrobot(src) && src:radio)
-				src:radio.talk_into(src, message)
+				spawn src:radio.talk_into(src, message)
 				used_radios += src:radio
 				is_speaking_radio = 1
 
 			if (!isrobot(src) && src:ears)
-				src:ears.talk_into(src, message)
+				spawn src:ears.talk_into(src, message)
 				used_radios += src:ears
 				is_speaking_radio = 1
 
@@ -242,7 +242,7 @@ var/list/department_radio_keys = list(
 
 		if ("secure headset")
 			if (src:ears)
-				src:ears.talk_into(src, message, 1)
+				spawn src:ears.talk_into(src, message, 1)
 				used_radios += src:ears
 				is_speaking_radio = 1
 
@@ -251,7 +251,7 @@ var/list/department_radio_keys = list(
 
 		if ("right hand")
 			if (r_hand)
-				r_hand.talk_into(src, message)
+				spawn r_hand.talk_into(src, message)
 				used_radios += src:r_hand
 				is_speaking_radio = 1
 
@@ -269,7 +269,7 @@ var/list/department_radio_keys = list(
 
 		if ("intercom")
 			for (var/obj/item/device/radio/intercom/I in view(1, null))
-				I.talk_into(src, message)
+				spawn I.talk_into(src, message)
 				used_radios += I
 				is_speaking_radio = 1
 
@@ -296,19 +296,19 @@ var/list/department_radio_keys = list(
 		if ("department")
 			if(istype(src, /mob/living/carbon))
 				if (src:ears)
-					src:ears.talk_into(src, message, message_mode)
+					spawn src:ears.talk_into(src, message, message_mode)
 					used_radios += src:ears
 					is_speaking_radio = 1
 			else if(istype(src, /mob/living/silicon/robot))
 				if (src:radio)
-					src:radio.talk_into(src, message, message_mode)
+					spawn src:radio.talk_into(src, message, message_mode)
 					used_radios += src:radio
 			message_range = 1
 			italics = 1
 
 		if ("pAI")
 			if (src:radio)
-				src:radio.talk_into(src, message)
+				spawn src:radio.talk_into(src, message)
 				used_radios += src:radio
 			message_range = 1
 			italics = 1
@@ -330,11 +330,11 @@ var/list/department_radio_keys = list(
 				if(isrobot(src))//Seperates robots to prevent runtimes from the ear stuff
 					var/mob/living/silicon/robot/R = src
 					if(R.radio)//Sanityyyy
-						R.radio.talk_into(src, message, message_mode)
+						spawn R.radio.talk_into(src, message, message_mode)
 						used_radios += R.radio
 				else
 					if (src:ears)
-						src:ears.talk_into(src, message, message_mode)
+						spawn src:ears.talk_into(src, message, message_mode)
 						used_radios += src:ears
 				message_range = 1
 				italics = 1
