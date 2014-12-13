@@ -3,7 +3,7 @@
 	real_name = "Unknown"
 	voice_name = "Unknown"
 	icon = 'icons/mob/human.dmi'
-	icon_state = ""
+	icon_state = "caucasian1_m_s"
 
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"

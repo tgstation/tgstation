@@ -1,9 +1,5 @@
 // This code handles different species in the game.
 
-#define SPECIES_LAYER			23
-#define BODY_LAYER				22
-#define HAIR_LAYER				8
-
 #define TINT_IMPAIR 2
 #define TINT_BLIND 3
 
@@ -70,25 +66,20 @@
 /datum/species/proc/update_color(var/mob/living/carbon/human/H)
 	H.remove_overlay(SPECIES_LAYER)
 
-	var/image/standing
-
-	var/g = (H.gender == FEMALE) ? "f" : "m"
+	var/list/temp_limbs = list()
 
 	if(MUTCOLORS in specflags)
-		var/image/spec_base
-		if(sexes)
-			spec_base = image("icon" = 'icons/mob/human.dmi', "icon_state" = "[id]_[g]_s", "layer" = -SPECIES_LAYER)
-		else
-			spec_base = image("icon" = 'icons/mob/human.dmi', "icon_state" = "[id]_s", "layer" = -SPECIES_LAYER)
 		if(!config.mutant_colors)
 			H.dna.mutant_color = default_color
-		spec_base.color = "#[H.dna.mutant_color]"
-		standing = spec_base
 
-	if(standing)
-		H.overlays_standing[SPECIES_LAYER]	= standing
+		for(var/image/I in H.overlays_standing[BODYPARTS_LAYER])
+			I.color = "#[H.dna.mutant_color]"
+			temp_limbs += I
 
-	H.apply_overlay(SPECIES_LAYER)
+		H.remove_overlay(BODYPARTS_LAYER)
+		H.overlays_standing[BODYPARTS_LAYER] = temp_limbs
+		H.apply_overlay(BODYPARTS_LAYER)
+
 
 /datum/species/proc/handle_hair(var/mob/living/carbon/human/H)
 	H.remove_overlay(HAIR_LAYER)
@@ -1304,10 +1295,6 @@
 		H.fire_stacks = 0
 		H.AddLuminosity(-3)
 		H.update_fire()
-
-#undef SPECIES_LAYER
-#undef BODY_LAYER
-#undef HAIR_LAYER
 
 #undef HUMAN_MAX_OXYLOSS
 #undef HUMAN_CRIT_MAX_OXYLOSS

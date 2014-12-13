@@ -4,18 +4,18 @@
 	if(state_flags & ORGAN_REMOVED)
 		return
 
+	state_flags = ORGAN_REMOVED|ORGAN_AUGMENTABLE
+	drop_limb()
+	brutestate = 0
+	burnstate = 0
+
 	if(owner)
 		owner.apply_damage(30, "brute", "[src]")
 		owner.visible_message("<span class='danger'><B>[owner]'s [getDisplayName()] has been violently dismembered!</B></span>")
 		owner.drop_r_hand()
 		owner.drop_l_hand()
-		owner.regenerate_icons()
 		owner.update_canmove()
-
-	state_flags = ORGAN_REMOVED|ORGAN_AUGMENTABLE
-	drop_limb()
-	brutestate = 0
-	burnstate = 0
+		owner.regenerate_icons()
 
 /obj/item/organ/limb/head/dismember()
 	state_flags = ORGAN_AUGMENTABLE
@@ -81,8 +81,11 @@
 
 //Augment a limb
 /obj/item/organ/limb/proc/augment(var/obj/item/I, var/mob/user)
-//	if((state_flags & ~ORGAN_REMOVED) && (state_flags & ~ORGAN_AUGMENTABLE)|| !owner)
-//		return
+	if(!(state_flags & ORGAN_REMOVED) && !(state_flags & ORGAN_AUGMENTABLE))
+		return
+
+	if(!owner)
+		return
 
 	var/who = "[owner]'s"
 	if(user == owner)
@@ -92,7 +95,6 @@
 	change_organ(ORGAN_ROBOTIC)
 	user.drop_item()
 	qdel(I)
-	owner.regenerate_icons()
 	owner.update_canmove()
 
 
@@ -100,6 +102,8 @@
 /mob/living/carbon/human/proc/get_num_arms()
 	. = 0
 	for(var/obj/item/organ/limb/affecting in organs)
+		if(affecting.state_flags & ORGAN_REMOVED)
+			continue
 		switch(affecting.body_part)
 			if(ARM_RIGHT)
 				.++
@@ -109,6 +113,8 @@
 /mob/living/carbon/human/proc/get_num_legs()
 	. = 0
 	for(var/obj/item/organ/limb/affecting in organs)
+		if(affecting.state_flags & ORGAN_REMOVED)
+			continue
 		switch(affecting.body_part)
 			if(LEG_RIGHT)
 				.++
@@ -123,6 +129,7 @@
 	brute_dam = 0
 	brutestate = 0
 	burnstate = 0
+
 	if(owner)
 		owner.updatehealth()
 		owner.regenerate_icons()
@@ -189,83 +196,5 @@
 
 
 
-//simplifies species and mutations into one var
-/mob/living/carbon/human/proc/get_race()
-	var/sm_type = "human"//that's speciesist!
-	var/datum/species/race = dna ? dna.species : null
-	if(race)
-		sm_type = race.id
 
-	if(HULK in mutations)
-		sm_type = "hulk"
-	if(HUSK in mutations)
-		sm_type = "husk"
-
-	return sm_type
-
-
-//draws an icon from a limb
-/mob/living/carbon/human/proc/generate_icon(var/obj/item/organ/limb/affecting)
-	if(affecting.state_flags & ORGAN_REMOVED)
-		return 0
-
-	var/image/I
-	var/icon_gender = (gender == FEMALE) ? "f" : "m"
-
-	var/race = get_race()
-
-	if(affecting.body_part == HEAD || affecting.body_part == CHEST) //these have gender in their icons
-		if(affecting.status == ORGAN_ORGANIC)
-			if(race != "human")
-				if(stat == DEAD)
-					if(race == "plant")
-						I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[race]_[affecting.name]_[icon_gender]_dead_s", "layer"=-BODYPARTS_LAYER)
-						world << "1"
-						world << "[race]_[affecting.name]_[icon_gender]_dead_s"
-					if(race == "husk")
-						I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[race]_[affecting.name]_s", "layer"=-BODYPARTS_LAYER)
-						world << "2"
-						world << "[race]_[affecting.name]_s"
-				else
-					I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[race]_[affecting.name]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER)
-					world << "3"
-					world << "[race]_[affecting.name]_[icon_gender]_s"
-			else
-				I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[skin_tone]_[affecting.name]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER)
-				world << "4"
-				world << "[skin_tone]_[affecting.name]_[icon_gender]_s"
-		else if(affecting.status == ORGAN_ROBOTIC)
-			I = image("icon"='icons/mob/augments.dmi',"icon_state"="[affecting.name]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER)
-			world << "5"
-			world << "[affecting.name]_[icon_gender]_s"
-	else
-		if(affecting.status == ORGAN_ORGANIC) //thse do not have gender in their icons
-			if(race != "human")
-				if(stat == DEAD)
-					if(race == "plant")
-						I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[race]_[affecting.name]_dead_s", "layer"=-BODYPARTS_LAYER)
-						world << "6"
-						world << "[race]_[affecting.name]_dead_s"
-					else
-						I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[race]_[affecting.name]_s", "layer"=-BODYPARTS_LAYER)
-						world << "7"
-						world << "[race]_[affecting.name]_s"
-				else
-					I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[race]_[affecting.name]_s", "layer"=-BODYPARTS_LAYER)
-					world << "8"
-					world << "[race]_[affecting.name]_s"
-			else
-				I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[skin_tone]_[affecting.name]_s", "layer"=-BODYPARTS_LAYER)
-				world << "9"
-				world << "[skin_tone]_[affecting.name]_s"
-		else if(affecting.status == ORGAN_ROBOTIC)
-			I = image("icon"='icons/mob/augments.dmi', "icon_state"="[affecting.name]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER)
-			world << "10"
-			world << "[affecting.name]_[icon_gender]_s"
-
-	if(I)
-		world << "generate_icon() NEW ICON [I]"
-		return I
-	world << "generate_icon() FAILED TO GENERATE ICON"
-	return 0
 

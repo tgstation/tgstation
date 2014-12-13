@@ -53,32 +53,6 @@ Please contact me on #coderbus IRC. ~Carnie x
 //Carn can sometimes be hard to reach now. However IRC is still your best bet for getting help.
 */
 
-//Human Overlays Indexes/////////
-#define BODYPARTS_LAYER			23
-#define SPECIES_LAYER			22		// mutantrace colors... these are on a seperate layer in order to prvent
-#define BODY_LAYER				21		//underwear, undershirts, eyes, lips(makeup)
-#define MUTATIONS_LAYER			20		//Tk headglows etc.
-#define DAMAGE_LAYER			19		//damage indicators (cuts and burns)
-#define UNIFORM_LAYER			18
-#define ID_LAYER				17
-#define SHOES_LAYER				16
-#define GLOVES_LAYER			15
-#define EARS_LAYER				14
-#define SUIT_LAYER				13
-#define GLASSES_LAYER			12
-#define BELT_LAYER				11		//Possible make this an overlay of somethign required to wear a belt?
-#define SUIT_STORE_LAYER		10
-#define BACK_LAYER				9
-#define HAIR_LAYER				8		//TODO: make part of head layer?
-#define FACEMASK_LAYER			7
-#define HEAD_LAYER				6
-#define HANDCUFF_LAYER			5
-#define LEGCUFF_LAYER			4
-#define L_HAND_LAYER			3
-#define R_HAND_LAYER			2		//Having the two hands seperate seems rather silly, merge them together? It'll allow for code to be reused on mobs with arbitarily many hands
-#define FIRE_LAYER				1		//If you're on fire
-#define TOTAL_LAYERS			23		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
-//////////////////////////////////
 
 /mob/living/carbon/human
 	var/list/overlays_standing[TOTAL_LAYERS]
@@ -168,23 +142,39 @@ Please contact me on #coderbus IRC. ~Carnie x
 /mob/living/carbon/human/proc/update_body()
 	remove_overlay(BODY_LAYER)
 
-	update_body_parts()
-
 	if(dna)
 		dna.species.handle_body(src)
 
 
 /mob/living/carbon/human/proc/update_body_parts()
+	icon_state = ""//Reset here as apposed to having a null one due to some getFlatIcon calls at roundstart.
+
+	//CHECK FOR UPDATE
+	var/oldkey = icon_render_key
+	icon_render_key = generate_icon_render_key()
+	if(oldkey == icon_render_key)
+		return
+
 	remove_overlay(BODYPARTS_LAYER)
 
+	//LOAD ICONS
+	if(limb_icon_cache[icon_render_key])
+		load_limb_from_cache()
+		update_damage_overlays()
+		update_inv_gloves()
+		update_hair()
+		return
+
+	//GENERATE NEW LIMBS
 	var/list/new_limbs = list()
 	for(var/obj/item/organ/limb/L in organs)
-		var/image/temp = generate_icon(L)
+		var/image/temp = generate_limb_icon(L)
 		if(temp)
 			new_limbs += temp
 
 	if(new_limbs.len)
 		overlays_standing[BODYPARTS_LAYER] = new_limbs
+		limb_icon_cache[icon_render_key] = new_limbs
 
 	apply_overlay(BODYPARTS_LAYER)
 	update_damage_overlays()
@@ -205,6 +195,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 	..()
 	if(notransform)		return
 	update_body()
+	update_body_parts()
 	update_hair()
 	update_mutations()
 	update_inv_w_uniform()
@@ -570,27 +561,118 @@ Please contact me on #coderbus IRC. ~Carnie x
 	return(standing)
 
 
-//Human Overlays Indexes/////////
-#undef SPECIES_LAYER
-#undef BODY_LAYER
-#undef MUTATIONS_LAYER
-#undef DAMAGE_LAYER
-#undef UNIFORM_LAYER
-#undef ID_LAYER
-#undef SHOES_LAYER
-#undef GLOVES_LAYER
-#undef EARS_LAYER
-#undef SUIT_LAYER
-#undef GLASSES_LAYER
-#undef FACEMASK_LAYER
-#undef BELT_LAYER
-#undef SUIT_STORE_LAYER
-#undef BACK_LAYER
-#undef HAIR_LAYER
-#undef HEAD_LAYER
-#undef HANDCUFF_LAYER
-#undef LEGCUFF_LAYER
-#undef L_HAND_LAYER
-#undef R_HAND_LAYER
-#undef FIRE_LAYER
-#undef TOTAL_LAYERS
+
+
+/////////////////////
+// Limb Icon Cache //
+/////////////////////
+/*
+	Called from update_body_parts() these procs handle the limb icon cache.
+	the limb icon cache adds an icon_render_key to a human mob, it represents:
+	- skin_tone (if applicable)
+	- race (a local variable to these procs which simplifies mutantraces for these procs)
+	- gender
+	- limbs (stores as the limb name and whether it is removed/fine, organic/robotic)
+	These procs only store limbs as to increase the number of matching icon_render_keys
+	This cache exists because drawing 6/7 icons for humans constantly is quite a waste
+
+	See RemieRichards on irc.rizon.net #coderbus
+*/
+
+
+var/global/list/limb_icon_cache = list()
+
+/mob/living/carbon/human
+	var/icon_render_key = ""
+
+//simplifies species and mutations into one var
+/mob/living/carbon/human/proc/get_race()
+	var/sm_type = "human"
+	var/datum/species/race = dna ? dna.species : null
+	if(race)
+		sm_type = race.id
+
+	if(HULK in mutations)
+		sm_type = "hulk"
+	if(HUSK in mutations)
+		sm_type = "husk"
+
+	return sm_type
+
+
+//produces a key based on the human's limbs
+/mob/living/carbon/human/proc/generate_icon_render_key()
+	var/race = get_race()
+
+	. = ""
+
+	if(race == "human")
+		. += "[skin_tone]"
+	else
+		. += "[race]"
+
+	. += "-[gender]"
+
+	for(var/obj/item/organ/limb/L in organs)
+		. += "-[initial(L.name)]"
+		if(L.state_flags & ORGAN_REMOVED)
+			. += "-removed"
+		else
+			. += "-fine"
+			if(L.status == ORGAN_ORGANIC)
+				. += "-organic"
+			else
+				. += "-robotic"
+
+
+//change the human's icon to the one matching it's key
+/mob/living/carbon/human/proc/load_limb_from_cache()
+	if(limb_icon_cache[icon_render_key])
+		remove_overlay(BODYPARTS_LAYER)
+		overlays_standing[BODYPARTS_LAYER] = limb_icon_cache[icon_render_key]
+		apply_overlay(BODYPARTS_LAYER)
+
+
+//draws an icon from a limb
+/mob/living/carbon/human/proc/generate_limb_icon(var/obj/item/organ/limb/affecting)
+	if(affecting.state_flags & ORGAN_REMOVED)
+		return 0
+
+	var/image/I
+	var/icon_gender = (gender == FEMALE) ? "f" : "m"
+
+	var/race = get_race()
+
+	if(affecting.body_part == HEAD || affecting.body_part == CHEST) //these have gender in their icons
+		if(affecting.status == ORGAN_ORGANIC)
+			if(race != "human")
+				if(stat == DEAD)
+					if(race == "plant")
+						I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[race]_[affecting.name]_[icon_gender]_dead_s", "layer"=-BODYPARTS_LAYER)
+					if(race == "husk")
+						I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[race]_[affecting.name]_s", "layer"=-BODYPARTS_LAYER)
+				else
+					I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[race]_[affecting.name]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER)
+			else
+				I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[skin_tone]_[affecting.name]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER)
+		else if(affecting.status == ORGAN_ROBOTIC)
+			I = image("icon"='icons/mob/augments.dmi',"icon_state"="[affecting.name]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER)
+	else
+		if(affecting.status == ORGAN_ORGANIC) //thse do not have gender in their icons
+			if(race != "human")
+				if(stat == DEAD)
+					if(race == "plant")
+						I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[race]_[affecting.name]_dead_s", "layer"=-BODYPARTS_LAYER)
+					else
+						I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[race]_[affecting.name]_s", "layer"=-BODYPARTS_LAYER)
+				else
+					I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[race]_[affecting.name]_s", "layer"=-BODYPARTS_LAYER)
+			else
+				I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[skin_tone]_[affecting.name]_s", "layer"=-BODYPARTS_LAYER)
+		else if(affecting.status == ORGAN_ROBOTIC)
+			I = image("icon"='icons/mob/augments.dmi', "icon_state"="[affecting.name]_s", "layer"=-BODYPARTS_LAYER)
+
+	if(I)
+		return I
+	return 0
+
