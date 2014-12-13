@@ -5,8 +5,8 @@
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
-	strip_delay = 30
-	put_on_delay = 30
+	strip_delay = 60
+	put_on_delay = 40
 
 /obj/item/clothing/suit/armor/vest
 	name = "armor"
@@ -27,7 +27,6 @@
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	strip_delay = 80
-	put_on_delay = 40
 
 /obj/item/clothing/suit/armor/hos/trenchcoat
 	name = "armored trenchoat"
@@ -36,7 +35,6 @@
 	item_state = "hostrench"
 	flags_inv = 0
 	strip_delay = 80
-	put_on_delay = 40
 
 /obj/item/clothing/suit/armor/vest/warden
 	name = "warden's jacket"
@@ -46,8 +44,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS|HANDS
 	heat_protection = CHEST|GROIN|ARMS|HANDS
-	strip_delay = 40
-	put_on_delay = 40
+	strip_delay = 70
 
 /obj/item/clothing/suit/armor/vest/capcarapace
 	name = "captain's carapace"
@@ -70,7 +67,7 @@
 	armor = list(melee = 80, bullet = 10, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 	strip_delay = 80
-	put_on_delay = 40
+	put_on_delay = 60
 
 /obj/item/clothing/suit/armor/bulletproof
 	name = "tactical armor"
@@ -79,8 +76,8 @@
 	item_state = "armor"
 	blood_overlay_type = "armor"
 	armor = list(melee = 25, bullet = 60, laser = 25, energy = 10, bomb = 40, bio = 0, rad = 0)
-	strip_delay = 50
-	put_on_delay = 40
+	strip_delay = 70
+	put_on_delay = 50
 
 /obj/item/clothing/suit/armor/laserproof
 	name = "ablative armor vest"
@@ -90,8 +87,6 @@
 	blood_overlay_type = "armor"
 	armor = list(melee = 10, bullet = 10, laser = 80, energy = 50, bomb = 0, bio = 0, rad = 0)
 	reflect_chance = 40
-	strip_delay = 40
-	put_on_delay = 40
 
 /obj/item/clothing/suit/armor/laserproof/IsReflect(var/def_zone)
 	var/hit_reflect_chance = reflect_chance
