@@ -59,7 +59,7 @@ datum/reagent/consumable/sugar
 datum/reagent/consumable/sugar/on_mob_life(var/mob/living/M as mob)
 	if(M.satiety > -200)
 		M.satiety -= 20 //eating sugar makes you more hungry over time by making your hunger drop faster.
-	M.nutrition += max((400 - M.nutrition )/100, 0) * nutriment_factor // sugar doesn't help your hunger if your stomach is nearly full
+	M.nutrition += max(((NUTRITION_LEVEL_FED + 50) - M.nutrition )/100, 0) * nutriment_factor // sugar doesn't help your hunger if your stomach is nearly full
 	holder.remove_reagent(src.id, metabolization_rate)
 
 datum/reagent/consumable/virus_food
