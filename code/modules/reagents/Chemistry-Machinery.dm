@@ -940,7 +940,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = list("cherryjelly" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/plastellium = list("plasticide" = 5),
 
-		/obj/item/seeds/chiliseed = list("blackpepper" = 5),//technically not the right seeds but it'll do for now
+		/obj/item/seeds = list("blackpepper" = 5),
 
 
 		//archaeology!
