@@ -79,6 +79,11 @@
 	items = list(/obj/item/weapon/reagent_containers/food/snacks/tofu)
 	result = /obj/item/weapon/reagent_containers/food/snacks/tofuburger
 
+/datum/recipe/chickenburger
+	reagents = list("flour" = 5)
+	items = list(/obj/item/weapon/reagent_containers/food/snacks/rawchicken)
+	result = /obj/item/weapon/reagent_containers/food/snacks/chickenburger
+
 /datum/recipe/ghostburger
 	reagents = list("flour" = 5)
 	items = list(/obj/item/weapon/ectoplasm)
@@ -1196,6 +1201,21 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/orange,
 		)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/turkey
+
+/datum/recipe/chicken_nuggets
+	reagents = list("ketchup" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/rawchicken,
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/chicken_nuggets
+
+/datum/recipe/chicken_drumsticks
+	items = list(
+		/obj/item/stack/sheet/cardboard,
+		/obj/item/weapon/reagent_containers/food/snacks/rawchicken,
+		/obj/item/weapon/reagent_containers/food/snacks/rawchicken,
+		)
+	result = /obj/item/weapon/storage/fancy/chicken_bucket
 
 // Currently Disabled //////////////////////////////////////////
 
