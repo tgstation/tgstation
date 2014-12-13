@@ -83,7 +83,7 @@ datum/reagent/proc/on_update(var/atom/A)
 	return
 
 datum/reagent/blood
-			data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null)
+			data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null)
 			name = "Blood"
 			id = "blood"
 			reagent_state = LIQUID
@@ -109,7 +109,7 @@ datum/reagent/blood/on_new(var/list/data)
 
 datum/reagent/blood/on_merge(var/list/data)
 	if(src.data && data)
-
+		src.data["cloneable"] = 0 //On mix, consider the genetic sampling unviable for pod cloning, or else we won't know who's even getting cloned, etc
 		if(src.data["viruses"] || data["viruses"])
 
 			var/list/mix1 = src.data["viruses"]

@@ -14,11 +14,13 @@
 	var/obj/effect/blob/core/blob_core = null // The blob overmind's core
 	var/blob_points = 0
 	var/max_blob_points = 100
+	var/last_attack = 0
 
 /mob/camera/blob/New()
 	var/new_name = "[initial(name)] ([rand(1, 999)])"
 	name = new_name
 	real_name = new_name
+	last_attack = world.time
 	..()
 
 /mob/camera/blob/Login()
@@ -97,4 +99,6 @@
 	else
 		return 0
 
+/mob/camera/blob/proc/can_attack()
+	return (world.time > (last_attack + CLICK_CD_RANGE))
 

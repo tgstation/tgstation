@@ -88,6 +88,9 @@
 
 /obj/machinery/door/firedoor/close()
 	..()
+	if(locate(/mob/living) in get_turf(src))
+		open()
+		return
 	latetoggle()
 	return
 

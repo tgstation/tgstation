@@ -9,15 +9,19 @@
 	origin_tech = "bluespace=4;materials=3"
 	var/blink_range = 8 // The teleport range when crushed/thrown at someone.
 
+
 /obj/item/bluespace_crystal/New()
 	..()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
 
+
 /obj/item/bluespace_crystal/attack_self(var/mob/user)
+	user.visible_message("<span class='notice'>[user] crushes [src]!</span>")
+	new /obj/effect/effect/sparks(src.loc)
+	playsound(src.loc, "sparks", 50, 1)
 	blink_mob(user)
 	user.drop_item()
-	user.visible_message("<span class='notice'>[user] crushes the [src]!</span>")
 	qdel(src)
 
 /obj/item/bluespace_crystal/proc/blink_mob(var/mob/living/L)
@@ -25,6 +29,9 @@
 
 /obj/item/bluespace_crystal/throw_impact(atom/hit_atom)
 	..()
+	visible_message("<span class='notice'>[src] fizzles and disappears upon impact!</span>")
+	new /obj/effect/effect/sparks(src.loc)
+	playsound(src.loc, "sparks", 50, 1)
 	if(isliving(hit_atom))
 		blink_mob(hit_atom)
 	qdel(src)

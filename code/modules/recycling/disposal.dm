@@ -156,8 +156,8 @@
 			user.visible_message("<span class='warning'>[user] climbs into [src].</span>", \
 									"<span class='notice'>[user] climbs into [src].</span>")
 		else
-			target.visible_message("<span class='danger'>[target] has been placed in [src] by [user].</span>", \
-									"<span class='userdanger'>[target] has been placed in [src] by [user].</span>")
+			target.visible_message("<span class='danger'>[user] has placed [target] in [src].</span>", \
+									"<span class='userdanger'>[user] has placed [target] in [src].</span>")
 			add_logs(user, target, "stuffed", addition="into [src]")
 		update()
 
@@ -794,12 +794,12 @@
 
 
 // pipe affected by explosion
-/obj/structure/disposalpipe/ex_act(severity, specialty)
+/obj/structure/disposalpipe/ex_act(severity, target)
 
 	//pass on ex_act to our contents before calling it on ourself
 	var/obj/structure/disposalholder/H = locate() in src
 	if(H)
-		contents_explosion(H, severity)
+		H.contents_explosion(severity, target)
 
 	switch(severity)
 		if(1.0)

@@ -74,7 +74,7 @@ Note: Must be placed west/left of and R&D console to function.
 			A = uranium_amount
 		if("$diamond")
 			A = diamond_amount
-		if("$clown")
+		if("$bananium")
 			A = clown_amount
 		else
 			A = reagents.get_reagent_amount(M)

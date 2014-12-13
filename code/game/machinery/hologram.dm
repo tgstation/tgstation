@@ -162,7 +162,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		stat |= ~NOPOWER
 
 //Destruction procs.
-/obj/machinery/hologram/ex_act(severity, specialty)
+/obj/machinery/hologram/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			qdel(src)

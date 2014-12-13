@@ -34,7 +34,7 @@
 	..(amount)
 
 
-/mob/living/carbon/alien/larva/ex_act(severity, specialty)
+/mob/living/carbon/alien/larva/ex_act(severity, target)
 	..()
 
 	var/b_loss = null

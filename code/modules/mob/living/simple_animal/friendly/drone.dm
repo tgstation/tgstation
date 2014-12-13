@@ -521,8 +521,6 @@
 	icon = 'icons/mob/drone.dmi'
 	icon_state = "drone_item"
 	origin_tech = "programming=2;biotech=4"
-	var/construction_cost = list("metal"=800, "glass"=350)
-	var/construction_time=150
 	var/drone_type = /mob/living/simple_animal/drone //Type of drone that will be spawned
 
 /obj/item/drone_shell/attack_ghost(mob/user)

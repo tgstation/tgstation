@@ -10,7 +10,8 @@ datum/design/basic_cell
 	build_type = PROTOLATHE | AUTOLATHE |MECHFAB
 	materials = list("$metal" = 700, "$glass" = 50)
 	build_path = /obj/item/weapon/stock_parts/cell
-	category = "Misc"
+	construction_time=100
+	category = list("Misc")
 
 datum/design/high_cell
 	name = "High-Capacity Power Cell"
@@ -19,8 +20,9 @@ datum/design/high_cell
 	req_tech = list("powerstorage" = 2)
 	build_type = PROTOLATHE | AUTOLATHE | MECHFAB
 	materials = list("$metal" = 700, "$glass" = 60)
+	construction_time=100
 	build_path = /obj/item/weapon/stock_parts/cell/high
-	category = "Misc"
+	category = list("Misc")
 
 datum/design/super_cell
 	name = "Super-Capacity Power Cell"
@@ -30,8 +32,9 @@ datum/design/super_cell
 	reliability = 75
 	build_type = PROTOLATHE | MECHFAB
 	materials = list("$metal" = 700, "$glass" = 70)
+	construction_time=100
 	build_path = /obj/item/weapon/stock_parts/cell/super
-	category = "Misc"
+	category = list("Misc")
 
 datum/design/hyper_cell
 	name = "Hyper-Capacity Power Cell"
@@ -40,9 +43,10 @@ datum/design/hyper_cell
 	req_tech = list("powerstorage" = 5, "materials" = 4)
 	reliability = 70
 	build_type = PROTOLATHE | MECHFAB
-	materials = list("$metal" = 400, "$gold" = 150, "$silver" = 150, "$glass" = 70)
+	materials = list("$metal" = 400, "$gold" = 150, "$silver" = 150, "$glass" = 80)
+	construction_time=100
 	build_path = /obj/item/weapon/stock_parts/cell/hyper
-	category = "Misc"
+	category = list("Misc")
 
 datum/design/light_replacer
 	name = "Light Replacer"

@@ -30,6 +30,7 @@
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/device/multitool(src)
 	new /obj/item/device/flash/handheld(src)
+	new /obj/item/clothing/suit/toggle/wintercoat/engineering(src)
 	return
 
 /obj/structure/closet/secure_closet/engineering_electrical
@@ -108,6 +109,7 @@
 	new /obj/item/clothing/suit/hazardvest(src)
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/clothing/glasses/meson(src)
+	new /obj/item/clothing/suit/toggle/wintercoat/engineering(src)
 	return
 
 /obj/structure/closet/secure_closet/atmospherics
@@ -131,4 +133,5 @@
 	new /obj/item/weapon/watertank/atmos(src)
 	new /obj/item/clothing/suit/fire/atmos(src)
 	new /obj/item/clothing/head/hardhat/atmos(src)
+	new /obj/item/clothing/suit/toggle/wintercoat/engineering/atmos(src)
 	return

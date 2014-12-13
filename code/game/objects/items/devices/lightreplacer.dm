@@ -71,14 +71,11 @@
 	user << "It has [uses] light\s remaining."
 
 /obj/item/device/lightreplacer/attackby(obj/item/W, mob/user)
-	if(istype(W,  /obj/item/weapon/card/emag) && emagged == 0)
-		Emag()
-		return
 
 	if(istype(W, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = W
 		if(uses >= max_uses)
-			user << "span class='warning'>[src.name] is full."
+			user << "<span class='warning'>[src.name] is full.</span>"
 			return
 		else if(G.use(decrement))
 			AddUses(increment)
@@ -100,6 +97,9 @@
 			user << "You need a working light."
 			return
 
+/obj/item/device/lightreplacer/emag_act()
+	if(!emagged)
+		Emag()
 
 /obj/item/device/lightreplacer/attack_self(mob/user)
 	/* // This would probably be a bit OP. If you want it though, uncomment the code.

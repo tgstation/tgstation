@@ -34,13 +34,6 @@
 	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
 
 //Chaplain
-/obj/item/clothing/head/chaplain_hood
-	name = "chaplain's hood"
-	desc = "It's hood that covers the head. It keeps you warm during the space winters."
-	icon_state = "chaplain_hood"
-	flags = HEADCOVERSEYES|BLOCKHAIR
-
-//Chaplain
 /obj/item/clothing/head/nun_hood
 	name = "nun hood"
 	desc = "Maximum piety in this star system."

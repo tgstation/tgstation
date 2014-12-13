@@ -53,14 +53,14 @@
 			M.stuttering = 7
 		M.Stun(7)
 		M.Weaken(7)
-		M.visible_message("<span class='danger'>[M] has been beaten with [src] by [user]!</span>", \
-							"<span class='userdanger'>[M] has been beaten with [src] by [user]!</span>")
+		M.visible_message("<span class='danger'>[user] has beaten [M] with [src]!</span>", \
+							"<span class='userdanger'>[user] has beaten [M] with [src]!</span>")
 	else
 		playsound(loc, 'sound/effects/woodhit.ogg', 50, 1, -1)
 		M.Stun(7)
 		M.Weaken(7)
-		M.visible_message("<span class='danger'>[M] has been stunned with [src] by [user]!</span>", \
-							"<span class='userdanger'>[M] has been stunned with [src] by [user]!</span>")
+		M.visible_message("<span class='danger'>[user] has stunned [M] with [src]!</span>", \
+							"<span class='userdanger'>[user] has stunned [M] with [src]!</span>")
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -127,7 +127,8 @@
 				target.Weaken(3)
 				add_logs(user, target, "stunned", object="telescopic baton")
 				src.add_fingerprint(user)
-				target.visible_message("<span class ='danger'>[target] has been knocked down with \the [src] by [user]!</span>")
+				target.visible_message("<span class ='danger'>[user] has knocked down [target] with \the [src]!</span>", \
+					"<span class ='userdanger'>[user] has knocked down [target] with \the [src]!</span>")
 				if(!iscarbon(user))
 					target.LAssailant = null
 				else
