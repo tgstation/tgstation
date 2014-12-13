@@ -75,7 +75,7 @@
 	if(istype(W, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = W
 		if(uses >= max_uses)
-			user << "span class='warning'>[src.name] is full."
+			user << "<span class='warning'>[src.name] is full.</span>"
 			return
 		else if(G.use(decrement))
 			AddUses(increment)
