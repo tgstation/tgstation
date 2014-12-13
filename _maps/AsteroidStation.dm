@@ -9,7 +9,7 @@ Then tick this file, the maps and all additional files will be automatically def
 
 #if !defined(MAP_FILE)
 
-	#include "map_files\Asteroidstation\Asteroidstationv8.dmm"
+	#include "map_files\Asteroidstation\Asteroidstation.dmm"
 	#include "map_files\Asteroidstation\z2.dmm"
 	#include "map_files\Asteroidstation\z3.dmm"
 	#include "map_files\Asteroidstation\z4.dmm"
@@ -17,7 +17,7 @@ Then tick this file, the maps and all additional files will be automatically def
 	#include "map_files\Asteroidstation\z6.dmm"
 	#include "map_files\Asteroidstation\z7.dmm"
 
-	#define MAP_FILE "Asteroidstationv8.dmm"
+	#define MAP_FILE "Asteroidstation.dmm"
 	#define MAP_NAME "AsteroidStationv8"
 
 	#if !defined(MAP_OVERRIDE_FILES)
