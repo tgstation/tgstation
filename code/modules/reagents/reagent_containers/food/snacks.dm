@@ -3092,7 +3092,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/turkeyslice
 	name = "turkey drumstick"
-	desc = "guarranted vox-free"
+	desc = "Guaranteed vox-free"
 	icon_state = "turkey_drumstick"
 	trash = /obj/item/trash/plate
 	bitesize = 2
