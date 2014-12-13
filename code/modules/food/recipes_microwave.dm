@@ -1205,6 +1205,7 @@
 /datum/recipe/chicken_nuggets
 	reagents = list("ketchup" = 5)
 	items = list(
+		/obj/item/stack/sheet/cardboard,
 		/obj/item/weapon/reagent_containers/food/snacks/rawchicken,
 		)
 	result = /obj/item/weapon/reagent_containers/food/snacks/chicken_nuggets
