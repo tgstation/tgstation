@@ -899,6 +899,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define MELTPOINT_STEEL   1510+T0C
 #define MELTPOINT_SILICON 1687 // KELVIN
 #define MELTPOINT_PLASTIC 180+T0C
+#define MELTPOINT_SNOW	  304.15
 
 //used to define machine behaviour in attackbys and other code situations
 #define EMAGGABLE		1 //can we emag it? If this is flagged, the machine calls emag()
