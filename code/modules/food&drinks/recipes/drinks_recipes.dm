@@ -450,6 +450,13 @@
 	result = "snowwhite"
 	required_reagents = list("beer" = 1, "lemon_lime" = 1)
 	result_amount = 2
+	
+/datum/chemical_reaction/bittershandy
+	name = "Bitter Shandy"
+	id = "bittershandy"
+	result = "bittershandy"
+	required_reagents = list("ale" = 1, "lemon_lime" = 1)
+	result_amount = 2
 
 /datum/chemical_reaction/irishcarbomb
 	name = "Irish Car Bomb"

@@ -326,6 +326,10 @@
 				icon_state = "snowwhite"
 				name = "Snow White"
 				desc = "A cold refreshment."
+			if("bittershandy")
+				icon_state = "bittershandy"
+				name = "Bitter Shandy"
+				desc = "A tasty mix of bitter ale and refreshing fruit."
 			if("aloe")
 				icon_state = "aloe"
 				name = "Aloe"
