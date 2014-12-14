@@ -209,6 +209,13 @@ Crematorium Switch
 		usr << "<span class='danger'>Access denied.</span>"
 	return
 
+/obj/machinery/crema_switch/attackby(obj/item/W as obj, mob/user as mob)
+	if(W.GetID())
+		attack_hand(user)
+	else
+		return ..()
+
+
 /*
  * Generic Tray
  * Parent class for morguetray and crematoriumtray
