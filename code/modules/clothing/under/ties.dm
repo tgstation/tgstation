@@ -154,8 +154,8 @@
 /obj/item/clothing/tie/armband
 	name = "red armband"
 	desc = "An fancy red armband!"
-	icon_state = "red"
-	item_color = "red"
+	icon_state = "redband"
+	item_color = "redband"
 
 /obj/item/clothing/tie/armband/deputy
 	name = "security deputy armband"
@@ -164,35 +164,35 @@
 /obj/item/clothing/tie/armband/cargo
 	name = "cargo bay guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is brown."
-	icon_state = "cargo"
-	item_color = "cargo"
+	icon_state = "cargoband"
+	item_color = "cargoband"
 
 /obj/item/clothing/tie/armband/engine
 	name = "engineering guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is orange with a reflective strip!"
-	icon_state = "engie"
-	item_color = "engie"
+	icon_state = "engieband"
+	item_color = "engieband"
 
 /obj/item/clothing/tie/armband/science
 	name = "science guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is purple."
-	icon_state = "rnd"
-	item_color = "rnd"
+	icon_state = "rndband"
+	item_color = "rndband"
 
 /obj/item/clothing/tie/armband/hydro
 	name = "hydroponics guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is green and blue."
-	icon_state = "hydro"
-	item_color = "hydro"
+	icon_state = "hydroband"
+	item_color = "hydroband"
 
 /obj/item/clothing/tie/armband/med
 	name = "medical guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white."
-	icon_state = "med"
-	item_color = "med"
+	icon_state = "medband"
+	item_color = "medband"
 
 /obj/item/clothing/tie/armband/medblue
 	name = "medical guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white and blue."
-	icon_state = "medblue"
-	item_color = "medblue"
+	icon_state = "medblueband"
+	item_color = "medblueband"

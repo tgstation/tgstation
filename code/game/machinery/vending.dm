@@ -156,11 +156,7 @@
 							break
 			default_deconstruction_crowbar(W)
 
-	if(istype(W, /obj/item/weapon/card/emag))
-		emagged = 1
-		user << "You short out the product lock on [src]"
-		return
-	else if(istype(W, /obj/item/weapon/screwdriver) && anchored)
+	if(istype(W, /obj/item/weapon/screwdriver) && anchored)
 		panel_open = !panel_open
 		user << "You [panel_open ? "open" : "close"] the maintenance panel."
 		overlays.Cut()
@@ -198,6 +194,10 @@
 	else
 		..()
 
+/obj/machinery/vending/emag_act(user as mob)
+	if(!emagged)
+		emagged  = 1
+		user << "You short out the product lock on [src]."
 
 /obj/machinery/vending/attack_paw(mob/user)
 	return attack_hand(user)
