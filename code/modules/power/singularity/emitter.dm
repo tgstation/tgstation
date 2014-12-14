@@ -298,7 +298,10 @@
 	return beam
 
 /obj/effect/beam/emitter/update_icon()
-	var/visible_power=min(max(round(power/3)+1,1),3)
+	if(!master)
+		invisibility=101 // Make doubly sure
+		return
+	var/visible_power=Clamp(round(power/3)+1, 1, 3)
 	//if(!master) testing("Visible power: [visible_power]")
 	icon_state="[base_state]_[visible_power]"
 

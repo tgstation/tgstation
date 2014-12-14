@@ -91,7 +91,7 @@
 			beam.dir=dir
 			newbeam=1
 		beam.power=0
-		var/list/spawners = list()
+		var/list/spawners = list(src)
 		for(var/obj/effect/beam/emitter/B in beams)
 			if(B.HasSource(src))
 				warning("Ignoring beam [B] due to recursion.")
