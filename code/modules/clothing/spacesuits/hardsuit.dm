@@ -144,7 +144,7 @@
 
 	update_icon()
 	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
-	user.update_inv_head()	//so our mob-overlays update
+	user.update_inv_head()
 
 /obj/item/clothing/suit/space/hardsuit/syndi
 	name = "blood-red hardsuit"
@@ -183,7 +183,8 @@
 
 	update_icon()
 	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
-	user.update_inv_wear_suit()	//so our mob-overlays update
+	user.update_inv_wear_suit()
+	user.update_inv_w_uniform()
 
 	//Wizard hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/wizard
