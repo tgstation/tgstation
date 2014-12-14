@@ -294,7 +294,7 @@
 			del(src)
 
 	else if( istype(W, /obj/item/weapon/pickaxe) )
-		var/obj/item/weapon/used_pick = W
+		var/obj/item/weapon/pickaxe/used_pick = W
 		if(!(used_pick.diggables & DIG_WALLS))
 			return
 		var/turf/T = get_turf(src)
