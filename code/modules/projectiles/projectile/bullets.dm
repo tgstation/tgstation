@@ -9,7 +9,7 @@
 
 /obj/item/projectile/bullet/weakbullet
 	damage = 5
-	stamina = 30
+	stamina = 33
 
 
 /obj/item/projectile/bullet/weakbullet2
