@@ -507,7 +507,7 @@
 	return
 
 /turf/simulated/floor/plating/asteroid/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
+	//note that this proc does not call ..()
 	if(!W || !user)
 		return 0
 
@@ -569,10 +569,6 @@
 			for(var/obj/item/weapon/ore/O in src.contents)
 				O.attackby(W,user)
 				return
-
-	else
-		..(W,user)
-	return
 
 /turf/simulated/floor/plating/asteroid/proc/gets_dug()
 	if(dug)
