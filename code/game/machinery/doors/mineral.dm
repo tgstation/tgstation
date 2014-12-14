@@ -18,9 +18,22 @@
 	name = "[prefix] door"
 
 /obj/machinery/door/mineral/Bumped(atom/user)
-	if(density)
-		return TryToSwitchState(user)
+	if(operating) return
+
+	if(istype(user, /obj/mecha))
+		open()
+	else if (istype(user, /obj/machinery/bot))
+		open()
+	else if(ismob(user))
+		var/mob/M = user
+		if(M.last_airflow > world.time - zas_settings.Get(/datum/ZAS_Setting/airflow_delay)) //This is what we call blind trust
+			return
+		if(world.time - M.last_bumped <= 10) //It was 60 previously, damn thats slow
+			return
+		M.last_bumped = world.time
+		TryToSwitchState(user)
 	return
+
 
 /obj/machinery/door/mineral/attack_ai(mob/user as mob) //those aren't really machinery, they're just big fucking slabs of a mineral
 	if(isAI(user)) //so the AI can't open it
@@ -34,27 +47,12 @@
 /obj/machinery/door/mineral/attack_hand(mob/user as mob)
 	return TryToSwitchState(user)
 
-/obj/machinery/door/mineral/proc/TryToSwitchState(atom/user)
+/obj/machinery/door/mineral/proc/TryToSwitchState(mob/user as mob)
 	if(operating) return
 
-	if (ismob(user))
-		var/mob/M = user
-		if(M.last_airflow > world.time - zas_settings.Get(/datum/ZAS_Setting/airflow_delay)) //This is what we call blind trust
-			return
-		if(world.time - M.last_bumped <= 10) //It was 60 previously, damn thats slow
-			return
-		M.last_bumped = world.time
-		if(!M.restrained() && !M.small)
-			add_fingerprint(user)
-			SwitchState()
-		return
-
-	else if(istype(user, /obj/mecha))
-		open()
-
-	else if (istype(user, /obj/machinery/bot))
-		open()
-
+	if(!user.restrained() && !user.small)
+		add_fingerprint(user)
+		SwitchState()
 	return
 
 /obj/machinery/door/mineral/proc/SwitchState()
@@ -65,11 +63,11 @@
 
 /obj/machinery/door/mineral/open()
 	playsound(get_turf(src), soundeffect, 100, 1)
-	..()
+	return ..()
 
 /obj/machinery/door/mineral/close()
 	playsound(get_turf(src), soundeffect, 100, 1)
-	..()
+	return ..()
 
 /obj/machinery/door/mineral/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/pickaxe))
@@ -162,7 +160,7 @@
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			TemperatureAct(100)
-	..()
+	return ..()
 
 /obj/machinery/door/mineral/transparent/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
@@ -224,5 +222,5 @@
 
 /obj/machinery/door/mineral/resin/CheckHardness()
 	playsound(get_turf(src), soundeffect, 100, 1)
-	..()
+	return ..()
 
