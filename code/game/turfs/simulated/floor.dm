@@ -540,7 +540,7 @@ turf/simulated/floor/proc/update_icon()
 		else
 			user << "\red You must remove the plating first."
 
-	if(istype(C, /obj/item/weapon/shovel))
+	if(istype(C, /obj/item/weapon/pickaxe/shovel))
 		if(is_grass_floor())
 			new /obj/item/weapon/ore/glass(src)
 			new /obj/item/weapon/ore/glass(src) //Make some sand if you shovel grass

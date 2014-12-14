@@ -244,7 +244,7 @@
 
 /datum/theft_objective/special/diamond_drill
 	name = "diamond drill"
-	typepath = /obj/item/weapon/pickaxe/diamonddrill
+	typepath = /obj/item/weapon/pickaxe/drill/diamond
 
 /datum/theft_objective/special/boh
 	name = "bag of holding"

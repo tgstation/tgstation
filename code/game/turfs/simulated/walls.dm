@@ -249,7 +249,7 @@
 		return
 
 	//DRILLING
-	else if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond))
 
 		user << "<span class='notice'>You begin to drill though the wall.</span>"
 

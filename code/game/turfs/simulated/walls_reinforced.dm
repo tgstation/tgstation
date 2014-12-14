@@ -236,7 +236,7 @@
 //vv OK, we weren't performing a valid deconstruction step or igniting thermite,let's check the other possibilities vv
 
 	//DRILLING
-	if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+	if (istype(W, /obj/item/weapon/pickaxe/drill/diamond))
 
 		user << "<span class='notice'>You begin to drill though the wall.</span>"
 

@@ -864,9 +864,9 @@
 					laws.show_laws(src)
 					src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and their commands."
 					if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
-						for(var/obj/item/weapon/pickaxe/borgdrill/D in src.module.modules)
+						for(var/obj/item/weapon/pickaxe/drill/borg/D in src.module.modules)
 							del(D)
-						src.module.modules += new /obj/item/weapon/pickaxe/diamonddrill(src.module)
+						src.module.modules += new /obj/item/weapon/pickaxe/drill/diamond(src.module)
 						src.module.rebuild()
 					updateicon()
 				else
