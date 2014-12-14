@@ -25,7 +25,7 @@
 	processing_objects.Remove(src)
 	..()
 
-/obj/item/weapon/gun/energy/taser/cyborg/process()
+/obj/item/weapon/gun/energy/taser/cyborg/process() //Every [recharge_time] ticks, recharge a shot for the cyborg
 	charge_tick++
 	if(charge_tick < recharge_time) return 0
 	charge_tick = 0
@@ -36,7 +36,7 @@
 		if(R && R.cell)
 			var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
 			if(R.cell.use(shot.e_cost)) 		//Take power from the borg...
-				power_supply.give(shot.e_cost)	//...to print a new bullet
+				power_supply.give(shot.e_cost)	//... to recharge the shot
 
 	update_icon()
 	return 1
