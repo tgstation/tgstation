@@ -118,12 +118,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 	var/list/standing	= list()
 
-	var/g = (gender == FEMALE) ? "f" : "m"
-
 	for(var/mut in mutations)
 		switch(mut)
-			if(HULK)
-				standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="hulk_[g]_s", "layer"=-MUTATIONS_LAYER)
 			if(COLD_RESISTANCE)
 				standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="fire_s", "layer"=-MUTATIONS_LAYER)
 			if(TK)
@@ -134,10 +130,6 @@ Please contact me on #coderbus IRC. ~Carnie x
 		overlays_standing[MUTATIONS_LAYER]	= standing
 
 	apply_overlay(MUTATIONS_LAYER)
-
-/mob/living/carbon/human/proc/update_mutcolor()
-	if(dna && !(HUSK in mutations))
-		dna.species.update_color(src)
 
 /mob/living/carbon/human/proc/update_body()
 	remove_overlay(BODY_LAYER)
@@ -219,8 +211,6 @@ Please contact me on #coderbus IRC. ~Carnie x
 	update_transform()
 	//Hud Stuff
 	update_hud()
-	// Mutantrace colors
-	update_mutcolor()
 
 /* --------------------------------------- */
 //vvvvvv UPDATE_INV PROCS vvvvvv
@@ -604,12 +594,17 @@ var/global/list/limb_icon_cache = list()
 /mob/living/carbon/human/proc/generate_icon_render_key()
 	var/race = get_race()
 
-	. = ""
+	. = "[race]"
 
-	if(race == "human")
-		. += "[skin_tone]"
-	else
-		. += "[race]"
+	switch(race)
+		if("human")
+			. += "-coloured-[skin_tone]"
+		if("plant")
+			. += "-coloured"
+		if("lizard")
+			. += "-coloured"
+		else
+			. += "-not_coloured"
 
 	. += "-[gender]"
 
@@ -633,6 +628,7 @@ var/global/list/limb_icon_cache = list()
 		apply_overlay(BODYPARTS_LAYER)
 
 
+/*
 //draws an icon from a limb
 /mob/living/carbon/human/proc/generate_limb_icon(var/obj/item/organ/limb/affecting)
 	if(affecting.state_flags & ORGAN_REMOVED)
@@ -673,6 +669,115 @@ var/global/list/limb_icon_cache = list()
 			I = image("icon"='icons/mob/augments.dmi', "icon_state"="[affecting.name]_s", "layer"=-BODYPARTS_LAYER)
 
 	if(I)
+
+		//Mutant colouring
+		if(race != "husk" && race != "hulk")
+			if(dna && dna.species)
+				if(MUTCOLORS in dna.species.specflags)
+					if(!config.mutant_colors)
+						dna.mutant_color = dna.species.default_color
+					I.color = "#[dna.mutant_color]"
+		//End Mutant Colouring
+
 		return I
 	return 0
+
+*/
+
+//draws an icon from a limb
+/mob/living/carbon/human/proc/generate_limb_icon(var/obj/item/organ/limb/affecting)
+	if(affecting.state_flags & ORGAN_REMOVED)
+		return 0
+
+	var/image/I
+	var/should_draw_gender = FALSE
+	var/icon_gender = (gender == FEMALE) ? "f" : "m" //gender of the icon, if applicable
+	var/race = get_race() //simplified physical appearence of mob
+	var/should_draw_greyscale = FALSE
+
+	if(race == "adamantine") //temporary.
+		race = "golem"
+
+	if(affecting.body_part == HEAD || affecting.body_part == CHEST)
+		should_draw_gender = TRUE
+
+	if(race == "human" || race == "plant" || race == "lizard")
+		should_draw_greyscale = TRUE
+
+
+	if(affecting.status == ORGAN_ORGANIC)
+		if(should_draw_greyscale)
+			if(should_draw_gender)
+				I = image("icon"='icons/mob/human_parts_greyscale.dmi', "icon_state"="[race]_[affecting.name]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER)
+			else
+				I = image("icon"='icons/mob/human_parts_greyscale.dmi', "icon_state"="[race]_[affecting.name]_s", "layer"=-BODYPARTS_LAYER)
+		else
+			if(should_draw_gender)
+				I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[race]_[affecting.name]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER)
+			else
+				I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[race]_[affecting.name]_s", "layer"=-BODYPARTS_LAYER)
+	else
+		if(should_draw_gender)
+			I = image("icon"='icons/mob/augments.dmi', "icon_state"="[affecting.name]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER)
+		else
+			I = image("icon"='icons/mob/augments.dmi', "icon_state"="[affecting.name]_s", "layer"=-BODYPARTS_LAYER)
+		if(I)
+			return I
+		return 0
+
+
+	if(!should_draw_greyscale)
+		if(I)
+			return I //We're done here
+		return 0
+
+
+	//Greyscale Colouring
+	var/draw_color
+
+	if(dna && dna.species)
+		if(dna.species.use_skintones)
+			draw_color = skintone2hex(skin_tone)
+		else
+			if(MUTCOLORS in dna.species.specflags)
+				if(!config.mutant_colors)
+					dna.mutant_color = dna.species.default_color
+				draw_color = dna.mutant_color
+
+	if(draw_color)
+		I.color = "#[draw_color]"
+	//End Greyscale Colouring
+
+	if(I)
+		return I
+	return 0
+
+
+/proc/skintone2hex(var/skin_tone)
+	. = 0
+	switch(skin_tone)
+		if("caucasian1")
+			. = "ffe0d1"
+		if("caucasian2")
+			. = "fcccb3"
+		if("caucasian3")
+			. = "e8b59b"
+		if("latino")
+			. = "d9ae96"
+		if("mediterranean")
+			. = "c79b8b"
+		if("asian1")
+			. = "ffdeb3"
+		if("asian2")
+			. = "e3ba84"
+		if("arab")
+			. = "c4915e"
+		if("indian")
+			. = "b87840"
+		if("african1")
+			. = "754523"
+		if("african2")
+			. = "471c18"
+		if("albino")
+			. = "fff4e6"
 

@@ -26,7 +26,7 @@
 	name = "Lizardperson"
 	id = "lizard"
 	say_mod = "hisses"
-	default_color = "00FF00"
+	default_color = "40af10"
 	roundstart = 1
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
 	attack_verb = "slash"
@@ -49,7 +49,7 @@
 	// Creatures made of leaves and plant matter.
 	name = "Plant"
 	id = "plant"
-	default_color = "59CE00"
+	default_color = "8dbd8f"
 	specflags = list(MUTCOLORS,EYECOLOR)
 	attack_verb = "slice"
 	attack_sound = 'sound/weapons/slice.ogg'

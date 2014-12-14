@@ -108,8 +108,12 @@
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
-/obj/item/organ/limb/proc/take_damage(brute, burn)
+/obj/item/organ/limb/proc/take_damage(brute, burn, override=0)
 	if(owner && (owner.status_flags & GODMODE))	return 0	//godmode
+
+	if((state_flags & ORGAN_REMOVED) && !override)
+		return 0
+
 	brute	= max(brute,0)
 	burn	= max(burn,0)
 

@@ -253,6 +253,7 @@
 		if(ishuman(D))
 			body += "<option value>---</option>"
 			body += "<option value='?_src_=vars;setspecies=\ref[D]'>Set Species</option>"
+			body += "<option value='?_src_=vars;deusexmachina=\ref[D]'>Set Limbs</option>"
 			body += "<option value='?_src_=vars;makeai=\ref[D]'>Make AI</option>"
 			body += "<option value='?_src_=vars;makerobot=\ref[D]'>Make cyborg</option>"
 			body += "<option value='?_src_=vars;makemonkey=\ref[D]'>Make monkey</option>"
@@ -791,6 +792,51 @@ body
 				var/newtype = species_list[result]
 				H.dna.species = new newtype()
 				H.regenerate_icons()
+
+		else if(href_list["deusexmachina"])
+			if(!check_rights(R_SPAWN)) return
+
+			var/mob/living/carbon/human/H = locate(href_list["deusexmachina"])
+			if(!istype(H))
+				usr << "This can only be done to instances of type /mob/living/carbon/human"
+				return
+
+			var/limb = input("Please choose a limb to change", "Change Limb", null) as null|anything in list("All", "Head", "Chest", "Right arm", "Left arm", "Right leg", "Left leg")
+			if(!limb)
+				return
+
+			var/obj/item/organ/limb/L
+			switch(limb)
+				if("Head")
+					L = H.getlimb(/obj/item/organ/limb/head)
+				if("Chest")
+					L = H.getlimb(/obj/item/organ/limb/chest)
+				if("Right arm")
+					L = H.getlimb(/obj/item/organ/limb/r_arm)
+				if("Left arm")
+					L = H.getlimb(/obj/item/organ/limb/l_arm)
+				if("Right leg")
+					L = H.getlimb(/obj/item/organ/limb/r_leg)
+				if("Left leg")
+					L = H.getlimb(/obj/item/organ/limb/l_leg)
+
+			var/new_limb = input("Please choose a new type for this limb", "Limb type", null) as null|anything in list("Robotic","Organic")
+			if(!new_limb)
+				return
+
+			var/new_type
+			switch(new_limb)
+				if("Robotic")
+					new_type = ORGAN_ROBOTIC
+				if("Organic")
+					new_type = ORGAN_ORGANIC
+
+			if(limb == "All")
+				for(var/obj/item/organ/limb/LI in H.organs)
+					LI.change_organ(new_type)
+			else
+				L.change_organ(new_type)
+
 
 		else if(href_list["adjustDamage"] && href_list["mobToDamage"])
 			if(!check_rights(0))	return

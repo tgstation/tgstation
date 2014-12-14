@@ -164,9 +164,6 @@
 			else
 				var/atom/target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
 				throw_at(target, 200, 4)
-			//return
-//				var/atom/target = get_edge_target_turf(user, get_dir(src, get_step_away(user, src)))
-				//user.throw_at(target, 200, 4)
 
 		if (2.0)
 			if (!shielded)
@@ -195,7 +192,12 @@
 				Paralyse(10)
 
 	var/update = 0
+	var/dismember_chance = 50/severity //50, 25, 17~
+
 	for(var/obj/item/organ/limb/temp in organs)
+		if(prob(dismember_chance))
+			temp.dismember()
+			continue // don't damage this limb further
 		switch(temp.name)
 			if("head")
 				update |= temp.take_damage(b_loss * 0.2, f_loss * 0.2)
@@ -639,3 +641,10 @@
 	if(!has_active_hand())
 		return 0
 	return 1
+
+
+/mob/living/carbon/human/revive()
+	for(var/obj/item/organ/limb/L in organs)
+		L.change_organ(L.status)
+	..()
+	return

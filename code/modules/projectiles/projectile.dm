@@ -57,6 +57,8 @@
 	if(bumped)//Stops multihit projectiles
 		return 1
 	bumped = 1
+	var/turf/new_loc = get_turf(A)
+
 	if(isliving(A))
 		var/mob/living/M = A
 		var/reagent_note
@@ -67,6 +69,16 @@
 				reagent_note += num2text(R.volume) + ") "
 		var/distance = get_dist(get_turf(A), starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
 		def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
+
+		var/obj/item/organ/limb/affecting
+		if(ishuman(A))
+			var/mob/living/carbon/human/H = A
+			affecting = H.get_organ(check_zone(def_zone))
+		if(affecting && affecting.state_flags & ORGAN_REMOVED)
+			M.visible_message("<span class='danger'>\a [src] wizzes past [M]!</span>", "<span class='userdanger'>\a [src] wizzes past you!</span>")
+			loc = new_loc
+			return 1 //No arm, no hit
+
 		if(suppressed)
 			playsound(loc, hitsound, 5, 1, -1)
 			M << "<span class='userdanger'>You've been shot by \a [src] in \the [parse_zone(def_zone)]!</span>"
@@ -75,10 +87,9 @@
 				var/volume = vol_by_damage()
 				playsound(loc, hitsound, volume, 1, -1)
 			M.visible_message("<span class='danger'>[M] is hit by \a [src] in the [parse_zone(def_zone)]!", \
-								"<span class='userdanger'>[M] is hit by \a [src] in the [parse_zone(def_zone)]!")	//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+									"<span class='userdanger'>[M] is hit by \a [src] in the [parse_zone(def_zone)]!")	//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 		add_logs(firer, M, "shot", object="[src]", addition=reagent_note)
 
-	var/turf/new_loc = get_turf(A)
 	var/permutation = A.bullet_act(src, def_zone) // searches for return value, could be deleted after run so check A isn't null
 	if(permutation == -1 || forcedodge)// the bullet passes through a dense object!
 		bumped = 0 // reset bumped variable!

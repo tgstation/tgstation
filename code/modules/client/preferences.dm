@@ -817,7 +817,7 @@ datum/preferences
 			else
 				character.dna.species = new /datum/species/human()
 			character.dna.mutant_color = mutant_color
-			character.update_mutcolor()
+			character.update_body_parts()
 
 		character.gender = gender
 		character.age = age

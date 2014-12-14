@@ -63,24 +63,6 @@
 	// PROCS //
 	///////////
 
-/datum/species/proc/update_color(var/mob/living/carbon/human/H)
-	H.remove_overlay(SPECIES_LAYER)
-
-	var/list/temp_limbs = list()
-
-	if(MUTCOLORS in specflags)
-		if(!config.mutant_colors)
-			H.dna.mutant_color = default_color
-
-		for(var/image/I in H.overlays_standing[BODYPARTS_LAYER])
-			I.color = "#[H.dna.mutant_color]"
-			temp_limbs += I
-
-		H.remove_overlay(BODYPARTS_LAYER)
-		H.overlays_standing[BODYPARTS_LAYER] = temp_limbs
-		H.apply_overlay(BODYPARTS_LAYER)
-
-
 /datum/species/proc/handle_hair(var/mob/living/carbon/human/H)
 	H.remove_overlay(HAIR_LAYER)
 
@@ -834,8 +816,9 @@
 
 	apply_damage(I.force, I.damtype, affecting, armor, H)
 
-	if(I.flags & SHARP && prob(Iforce))
-		affecting.dismember(I)
+	if((affecting.brute_dam + Iforce) >= (affecting.max_damage / 2))
+		if(I.flags & SHARP && prob(Iforce))
+			affecting.dismember(I)
 
 	var/bloody = 0
 	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
@@ -928,7 +911,7 @@
 
 	return
 
-/datum/species/proc/apply_damage(var/damage, var/damagetype = BRUTE, var/def_zone = null, var/blocked, var/mob/living/carbon/human/H)
+/datum/species/proc/apply_damage(var/damage, var/damagetype = BRUTE, var/def_zone = null, var/blocked, var/mob/living/carbon/human/H, var/override=0)
 	blocked = (100-(blocked+armor))/100
 	if(blocked <= 0)	return 0
 
@@ -945,11 +928,11 @@
 	switch(damagetype)
 		if(BRUTE)
 			H.damageoverlaytemp = 20
-			if(organ.take_damage(damage*brutemod, 0))
+			if(organ.take_damage(damage*brutemod, 0, override))
 				H.update_damage_overlays(0)
 		if(BURN)
 			H.damageoverlaytemp = 20
-			if(organ.take_damage(0, damage*burnmod))
+			if(organ.take_damage(0, damage*burnmod, override))
 				H.update_damage_overlays(0)
 		if(TOX)
 			H.adjustToxLoss(damage * blocked)

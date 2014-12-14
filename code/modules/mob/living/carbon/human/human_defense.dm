@@ -62,10 +62,28 @@ emp_act
 
 			return -1 // complete projectile permutation
 
+	var/obj/item/organ/limb/affecting = get_organ(ran_zone(def_zone))
+	var/dismember_chance = (P.damage + rand(-10,10))
+
+	if(affecting.state_flags & ORGAN_REMOVED)
+		return 0
+
 	if(check_shields(P.damage, "the [P.name]"))
+		if(P.damage_type == BRUTE)
+			if((affecting.brute_dam + P.damage) >= (affecting.max_damage / 2))
+				if(prob(dismember_chance))
+					affecting.dismember()
 		P.on_hit(src, 100, def_zone)
 		return 2
-	return (..(P , def_zone))
+
+	if(P.damage_type == BRUTE)
+		if((affecting.brute_dam + P.damage) >= (affecting.max_damage / 2))
+			if(prob(dismember_chance))
+				affecting.dismember()
+	return (..(P, def_zone))
+
+
+
 
 /mob/living/carbon/human/proc/check_reflect(var/def_zone) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on reflect_chance var of the object
 	if(wear_suit && istype(wear_suit, /obj/item/))

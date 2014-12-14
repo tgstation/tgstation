@@ -164,9 +164,9 @@ mob/living/carbon/human/proc/hat_fall_prob()
 	return null
 
 
-/mob/living/carbon/human/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0)
+/mob/living/carbon/human/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0, var/override=0)
 	if(dna)	// if you have a species, it will run the apply_damage code there instead
-		dna.species.apply_damage(damage, damagetype, def_zone, blocked, src)
+		dna.species.apply_damage(damage, damagetype, def_zone, blocked, src, override)
 	else
 		if((damagetype != BRUTE) && (damagetype != BURN))
 			..(damage, damagetype, def_zone, blocked)
@@ -189,11 +189,11 @@ mob/living/carbon/human/proc/hat_fall_prob()
 			switch(damagetype)
 				if(BRUTE)
 					damageoverlaytemp = 20
-					if(organ.take_damage(damage, 0))
+					if(organ.take_damage(damage, 0, override))
 						update_damage_overlays(0)
 				if(BURN)
 					damageoverlaytemp = 20
-					if(organ.take_damage(0, damage))
+					if(organ.take_damage(0, damage, override))
 						update_damage_overlays(0)
 
 		// Will set our damageoverlay icon to the next level, which will then be set back to the normal level the next mob.Life().

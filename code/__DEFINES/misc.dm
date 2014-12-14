@@ -2,8 +2,7 @@
 
 
 //Human Overlays Indexes/////////
-#define BODYPARTS_LAYER			23
-#define SPECIES_LAYER			22		// mutantrace colors... these are on a seperate layer in order to prvent
+#define BODYPARTS_LAYER			22
 #define BODY_LAYER				21		//underwear, undershirts, eyes, lips(makeup)
 #define MUTATIONS_LAYER			20		//Tk headglows etc.
 #define DAMAGE_LAYER			19		//damage indicators (cuts and burns)
@@ -25,7 +24,7 @@
 #define L_HAND_LAYER			3
 #define R_HAND_LAYER			2		//Having the two hands seperate seems rather silly, merge them together? It'll allow for code to be reused on mobs with arbitarily many hands
 #define FIRE_LAYER				1		//If you're on fire
-#define TOTAL_LAYERS			23		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+#define TOTAL_LAYERS			22		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 
 //Security levels
 #define SEC_LEVEL_GREEN	0
