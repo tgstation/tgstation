@@ -162,13 +162,12 @@
 
 	if (allowed(user))
 		if (!density)
-			close()
+			return close()
 		else
-			open()
-
-		return
+			return open()
 
 	door_animate("deny")
+	return
 
 /obj/machinery/door/blob_act()
 	if(prob(BLOB_PROBABILITY))

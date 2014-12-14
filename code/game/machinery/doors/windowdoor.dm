@@ -204,16 +204,14 @@
 
 	if (isrobot(user))
 		if (src.density)
-			open()
+			return open()
 		else
-			close()
+			return close()
 
 	if (!src.allowed(user) && src.density)
 		flick(text("[]deny", src.base_state), src)
 
-	..()
-
-	return
+	return ..()
 
 /obj/machinery/door/window/emag(mob/user)
 	var used_emag = (/obj/item/weapon/card/emag in user.contents) //TODO: Find a better way of checking this

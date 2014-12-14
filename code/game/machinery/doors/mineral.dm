@@ -57,9 +57,9 @@
 
 /obj/machinery/door/mineral/proc/SwitchState()
 	if(!density)
-		close()
+		return close()
 	else
-		open()
+		return open()
 
 /obj/machinery/door/mineral/open()
 	playsound(get_turf(src), soundeffect, 100, 1)
@@ -72,43 +72,33 @@
 /obj/machinery/door/mineral/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/pickaxe))
 		var/obj/item/weapon/pickaxe/digTool = W
-		user << "You start digging the [name]."
+		user << "You start digging \the [src]."
 		if(do_after(user,digTool.digspeed*hardness) && src)
 			user << "You finished digging."
 			return Dismantle()
 	else if(istype(W, /obj/item/weapon/card))
-		user << "You swipe your card at the [name], petulantly expecting a result."
+		user << "You swipe your card at \the [src], petulantly expecting a result."
 		return
 	else
 		hardness -= W.force/100
-		user << "You hit the [name] with your [W.name]!"
+		user << "You hit \the [src] with your [W.name]!"
 		CheckHardness()
 	return
 
 /obj/machinery/door/mineral/proc/CheckHardness()
 	if(hardness <= 0)
 		Dismantle(1)
+	return
 
-/obj/machinery/door/mineral/proc/Dismantle(devastated = 0) //Rework to spawn one and edit stack quantity
-	if(!devastated)
-		if (prefix == "metal")
-			var/ore = /obj/item/stack/sheet/metal
-			for(var/i = 1, i <= oreAmount, i++)
-				new ore(get_turf(src))
-		else
-			var/ore = text2path("/obj/item/stack/sheet/mineral/[prefix]")
-			for(var/i = 1, i <= oreAmount, i++)
-				new ore(get_turf(src))
-	else
-		if (prefix == "metal")
-			var/ore = /obj/item/stack/sheet/metal
-			for(var/i = 3, i <= oreAmount, i++)
-				new ore(get_turf(src))
-		else
-			var/ore = text2path("/obj/item/stack/sheet/mineral/[prefix]")
-			for(var/i = 3, i <= oreAmount, i++)
-				new ore(get_turf(src))
-	qdel(src)
+/obj/machinery/door/mineral/proc/Dismantle(devastated = 0)
+    var/obj/item/stack/ore
+    if(src.prefix == "metal") ore = /obj/item/stack/sheet/metal
+    else ore = text2path("/obj/item/stack/sheet/mineral/[prefix]")
+    ore.amount = oreAmount
+    if(devastated) ore.amount -= 2
+    new ore(get_turf(src))
+    qdel(src)
+    return
 
 /obj/machinery/door/mineral/ex_act(severity = 1)
 	switch(severity)
@@ -169,11 +159,11 @@
 /obj/machinery/door/mineral/transparent/proc/TemperatureAct(temperature)
 	for(var/turf/simulated/floor/target_tile in range(2,loc))
 
-		var/datum/gas_mixture/napalm = new //Napalm? Whelp
+		var/datum/gas_mixture/napalm = new //Napalm? Whelp. There should be a better way for this.
 
 		var/toxinsToDeduce = temperature/10
 
-		napalm.toxins = toxinsToDeduce //Mineral walls says fix when fire_act works
+		napalm.toxins = toxinsToDeduce
 		napalm.temperature = 200+T0C
 
 		target_tile.assume_air(napalm)
@@ -181,6 +171,7 @@
 
 		hardness -= toxinsToDeduce/100
 		CheckHardness()
+	return
 
 /obj/machinery/door/mineral/transparent/diamond
 	prefix = "diamond"
@@ -192,10 +183,12 @@
 	soundeffect = 'sound/effects/doorcreaky.ogg'
 
 /obj/machinery/door/mineral/wood/Dismantle(devastated = 0)
+	var/obj/item/stack/resource = new/obj/item/stack/sheet/wood
 	if(!devastated)
-		for(var/i = 1, i <= oreAmount, i++)
-			new/obj/item/stack/sheet/wood(get_turf(src))
+		resource.amount = oreAmount
+		new resource(get_turf(src))
 	qdel(src)
+	return
 
 /obj/machinery/door/mineral/wood/cultify()
 	return
@@ -219,6 +212,7 @@
 
 /obj/machinery/door/mineral/resin/Dismantle(devastated = 0)
 	qdel(src)
+	return
 
 /obj/machinery/door/mineral/resin/CheckHardness()
 	playsound(get_turf(src), soundeffect, 100, 1)
