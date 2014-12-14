@@ -162,7 +162,7 @@
 	modules += new /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg(src)
 	modules += new /obj/item/device/detective_scanner(src)
 	modules += new /obj/item/clothing/mask/gas/sechailer/cyborg(src)
-	emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
+	emag = new /obj/item/weapon/gun/energy/revolver/cyborg(src)
 	fix_modules()
 
 
