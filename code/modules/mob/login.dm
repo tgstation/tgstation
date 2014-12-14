@@ -44,5 +44,5 @@
 		var/obj/Loc=loc
 		Loc.on_log()
 
-	//HUD updates (antag hud, etc)
-	refresh_huds()
+	//readd this mob's HUDs (antag, med, etc)
+	reload_huds()
