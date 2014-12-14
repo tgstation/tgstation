@@ -1,12 +1,14 @@
-/obj/item/weapon/gun/projectile/automatic //Hopefully someone will find a way to make these fire in bursts or something. --Superxpdude
+/obj/item/weapon/gun/projectile/automatic
 	name = "prototype SMG"
-	desc = "A lightweight, prototype 9mm submachine gun, designated 'SABR'. Has a threaded barrel for suppressors."
+	desc = "A prototype three-round burst 9mm submachine gun, designated 'SABR'. Has a threaded barrel for suppressors."
 	icon_state = "saber"
 	w_class = 3
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/smgm9mm
 	var/alarmed = 0
 	can_suppress = 1
+	burst_size = 3
+	fire_delay = 1
 
 /obj/item/weapon/gun/projectile/automatic/update_icon()
 	..()
@@ -26,12 +28,14 @@
 
 /obj/item/weapon/gun/projectile/automatic/c20r
 	name = "syndicate SMG"
-	desc = "A lightweight, bullpup .45 SMG, designated 'C-20r'. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
+	desc = "A bullpup two-round burst .45 SMG, designated 'C-20r'. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
 	icon_state = "c20r"
 	item_state = "c20r"
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/smgm45
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	fire_delay = 2
+	burst_size = 2
 
 /obj/item/weapon/gun/projectile/automatic/c20r/New()
 	..()
@@ -62,6 +66,7 @@
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	var/cover_open = 0
 	can_suppress = 0
+	burst_size = 1
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user as mob)
 	cover_open = !cover_open
@@ -103,43 +108,9 @@
 		return
 	..()
 
-/obj/item/weapon/gun/projectile/automatic/bulldog
-	name = "syndicate shotgun"
-	desc = "A compact, mag-fed semi-automatic shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines."
-	icon_state = "bulldog"
-	item_state = "bulldog"
-	w_class = 3.0
-	origin_tech = "combat=5;materials=4;syndicate=6"
-	mag_type = /obj/item/ammo_box/magazine/m12g
-	fire_sound = 'sound/weapons/Gunshot.ogg'
-	can_suppress = 0
-
-/obj/item/weapon/gun/projectile/automatic/bulldog/New()
-	..()
-	update_icon()
-	return
-
-/obj/item/weapon/gun/projectile/automatic/bulldog/proc/update_magazine()
-	if(magazine)
-		src.overlays = 0
-		overlays += "[magazine.icon_state]"
-		return
-
-/obj/item/weapon/gun/projectile/automatic/bulldog/update_icon()
-	src.overlays = 0
-	update_magazine()
-	icon_state = "bulldog[chambered ? "" : "-e"]"
-	return
-
-/obj/item/weapon/gun/projectile/automatic/bulldog/afterattack()
-	..()
-	empty_alarm()
-	return
-
-
 /obj/item/weapon/gun/projectile/automatic/c90gl
 	name = "syndicate assault rifle"
-	desc = "A bullpup and compact 5.45x39 assault rifle with a unique toploading design, designated 'C-90gl'. Has an attached underbarrel grenade launcher which can be toggled on and off."
+	desc = "A bullpup three-round burst 5.45x39 assault rifle with a unique toploading design, designated 'C-90gl'. Has an attached underbarrel grenade launcher which can be toggled on and off."
 	icon_state = "c90gl"
 	item_state = "c90gl"
 	origin_tech = "combat=5;materials=2;syndicate=8"
@@ -149,6 +120,7 @@
 	can_suppress = 0
 	var/select = 1 //1 for boolets, 0 for explosions.
 	var/obj/item/weapon/gun/projectile/revolver/grenadelauncher/underbarrel
+	burst_size = 3
 
 /obj/item/weapon/gun/projectile/automatic/c90gl/New()
 	..()
@@ -215,3 +187,4 @@
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	can_suppress = 0
+	burst_size = 4

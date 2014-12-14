@@ -6,6 +6,8 @@
 	origin_tech = "combat=2;materials=2;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/m10mm
 	can_suppress = 1
+	burst_size = 1
+	fire_delay = 0
 
 /obj/item/weapon/gun/projectile/automatic/pistol/update_icon()
 	..()
@@ -18,6 +20,8 @@
 	icon_state = "pistol"
 	w_class = 3
 	mag_type = /obj/item/ammo_box/magazine/m45
+	burst_size = 1
+	fire_delay = 0
 
 /obj/item/weapon/gun/projectile/automatic/pistol45/update_icon()
 	..()
@@ -31,6 +35,8 @@
 	icon_state = "deagle"
 	force = 14
 	mag_type = /obj/item/ammo_box/magazine/m50
+	burst_size = 1
+	fire_delay = 0
 
 /obj/item/weapon/gun/projectile/automatic/deagle/update_icon()
 	..()

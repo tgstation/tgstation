@@ -151,3 +151,37 @@
 		else
 			user << "<span class='warning'>You need at least ten lengths of cable if you want to make a sling.</span>"
 			return
+
+/obj/item/weapon/gun/projectile/automatic/bulldog
+	name = "syndicate shotgun"
+	desc = "A compact, mag-fed semi-automatic shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines."
+	icon_state = "bulldog"
+	item_state = "bulldog"
+	w_class = 3.0
+	origin_tech = "combat=5;materials=4;syndicate=6"
+	mag_type = /obj/item/ammo_box/magazine/m12g
+	fire_sound = 'sound/weapons/Gunshot.ogg'
+	can_suppress = 0
+	burst_size = 1
+
+/obj/item/weapon/gun/projectile/automatic/bulldog/New()
+	..()
+	update_icon()
+	return
+
+/obj/item/weapon/gun/projectile/automatic/bulldog/proc/update_magazine()
+	if(magazine)
+		src.overlays = 0
+		overlays += "[magazine.icon_state]"
+		return
+
+/obj/item/weapon/gun/projectile/automatic/bulldog/update_icon()
+	src.overlays = 0
+	update_magazine()
+	icon_state = "bulldog[chambered ? "" : "-e"]"
+	return
+
+/obj/item/weapon/gun/projectile/automatic/bulldog/afterattack()
+	..()
+	empty_alarm()
+	return
