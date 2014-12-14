@@ -192,8 +192,8 @@ datum/objective/protect/update_explanation_text()
 
 
 datum/objective/hijack
-	explanation_text = "Hijack the emergency shuttle by escaping alone."
-	dangerrating = 25
+	explanation_text = "Hijack an escape pod by escaping alone."
+	dangerrating = 20
 
 datum/objective/hijack/check_completion()
 	if(!owner.current || owner.current.stat)
@@ -202,9 +202,9 @@ datum/objective/hijack/check_completion()
 		return 0
 	if(issilicon(owner.current))
 		return 0
-	var/area/shuttle = locate(/area/shuttle/escape/centcom)
+	var/area/antag_pod = get_area(owner.current.loc)
 
-	if(!(get_turf(owner.current) in shuttle))
+	if(!(get_turf(owner.current) in antag_pod))
 		return 0
 
 	var/list/protected_mobs = list(/mob/living/silicon/ai, /mob/living/silicon/pai)
@@ -212,9 +212,20 @@ datum/objective/hijack/check_completion()
 		if(player.type in protected_mobs)	continue
 		if (player.mind && (player.mind != owner))
 			if(player.stat != DEAD)			//they're not dead!
-				if(get_turf(player) in shuttle)
+				if(get_turf(player) in antag_pod)
 					return 0
-	return 1
+	var/turf/location = get_turf(owner.current.loc)
+	var/area/check_area = location.loc
+	if(istype(check_area, /area/shuttle/escape/centcom)) //fails if you're on the emergency shuttle and not a pod
+		return 0
+	if(istype(check_area, /area/shuttle/escape_pod1/centcom))
+		return 1
+	if(istype(check_area, /area/shuttle/escape_pod2/centcom))
+		return 1
+	if(istype(check_area, /area/shuttle/escape_pod3/centcom))
+		return 1
+	if(istype(check_area, /area/shuttle/escape_pod4/centcom))
+		return 1
 
 
 datum/objective/block
