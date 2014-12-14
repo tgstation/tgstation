@@ -108,7 +108,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	var/spread_range = 1
 
 	if(force_spread)
-		spread_range = 5
+		spread_range = force_spread
 
 	if(spread_flags & AIRBORNE)
 		spread_range++
