@@ -182,10 +182,7 @@ proc/move_mining_shuttle()
 
 /*****************************Pickaxe********************************/
 
-#define DIG_ROCKS	1	//mining turfs - minerals, the asteroid stuff, you know
-#define DIG_SOIL	2	//dirt - this flag gives it shovel functionality
-#define DIG_WALLS	4	//metal station walls - not the mineral ones
-#define DIG_RWALLS	8	//reinforced station walls - beware
+//Dig constants defined in setup.dm
 
 /obj/item/weapon/pickaxe
 	name = "pickaxe"
@@ -212,6 +209,7 @@ proc/move_mining_shuttle()
 	name = "sledgehammer"
 	//icon_state = "sledgehammer" Waiting on sprite
 	desc = "A mining hammer made of reinforced metal. You feel like smashing your boss in the face with this."
+	drill_verb = "hammering"
 
 /obj/item/weapon/pickaxe/silver
 	name = "silver pickaxe"
@@ -228,6 +226,7 @@ proc/move_mining_shuttle()
 	digspeed = 20 //faster than drill, but cannot dig
 	origin_tech = "materials=3;powerstorage=2;engineering=2"
 	desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
+	drill_verb = "hammering"
 
 /obj/item/weapon/pickaxe/gold
 	name = "golden pickaxe"
@@ -247,6 +246,8 @@ proc/move_mining_shuttle()
 	origin_tech = "materials=4;plasmatech=3;engineering=3"
 	desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
 	diggables = DIG_ROCKS | DIG_WALLS
+	drill_verb = "cutting"
+	drill_sound = 'sound/items/Welder.ogg'
 
 /obj/item/weapon/pickaxe/diamond
 	name = "diamond pickaxe"
@@ -263,6 +264,7 @@ proc/move_mining_shuttle()
 	digspeed = 30
 	origin_tech = "materials=2;powerstorage=3;engineering=2"
 	desc = "Yours is the drill that will pierce through the rock walls."
+	drill_verb = "drilling"
 
 	diggables = DIG_ROCKS | DIG_SOIL //drills are multipurpose
 
@@ -274,7 +276,7 @@ proc/move_mining_shuttle()
 	origin_tech = "materials=6;powerstorage=4;engineering=5"
 	desc = "Yours is the drill that will pierce the heavens!"
 
-	diggables = DIG_ROCKS | DIG_SOIL | DIG_WALLS
+	diggables = DIG_ROCKS | DIG_SOIL | DIG_WALLS | DIG_RWALLS
 
 /obj/item/weapon/pickaxe/drill/borg
 	name = "cyborg mining drill"
