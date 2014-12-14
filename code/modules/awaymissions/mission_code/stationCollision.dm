@@ -67,15 +67,6 @@ obj/item/weapon/gun/energy/laser/retro/sc_retro
 //	projectile_type = "/obj/item/projectile/practice"
 	clumsy_check = 0 //No sense in having a harmless gun blow up in the clowns face
 
-//Syndicate suppressed pistol. This definition is not necessary, it's just habit.
-/obj/item/weapon/gun/projectile/automatic/suppressed/sc_suppressed
-
-//Make it so that these guns only spawn with a couple bullets... if any
-/obj/item/weapon/gun/projectile/automatic/suppressed/sc_suppressed/New()
-	for(var/ammo in magazine.stored_ammo)
-		if(prob(95)) //95% chance
-			magazine.stored_ammo -= ammo
-
 //Syndicate sub-machine guns.
 /obj/item/weapon/gun/projectile/automatic/c20r/sc_c20r
 
@@ -168,21 +159,21 @@ var/sc_safecode5 = "[rand(0,9)]"
 /*
  * Modified Nar-Sie
  */
-/obj/machinery/singularity/narsie/sc_Narsie
+/obj/singularity/narsie/sc_Narsie
 	desc = "Your body becomes weak and your feel your mind slipping away as you try to comprehend what you know can't be possible."
 	move_self = 0 //Contianed narsie does not move!
 	grav_pull = 0 //Contained narsie does not pull stuff in!
 
 //Override this to prevent no adminlog runtimes and admin warnings about a singularity without containment
-/obj/machinery/singularity/narsie/sc_Narsie/admin_investigate_setup()
+/obj/singularity/narsie/sc_Narsie/admin_investigate_setup()
 	return
 
-/obj/machinery/singularity/narsie/sc_Narsie/process()
+/obj/singularity/narsie/sc_Narsie/process()
 	eat()
 	if(prob(25))
 		mezzer()
 
-/obj/machinery/singularity/narsie/sc_Narsie/consume(var/atom/A)
+/obj/singularity/narsie/sc_Narsie/consume(var/atom/A)
 	if(is_type_in_list(A, uneatable))
 		return 0
 	if (istype(A,/mob/living))
@@ -203,5 +194,5 @@ var/sc_safecode5 = "[rand(0,9)]"
 		T.ChangeTurf(/turf/space)
 	return
 
-/obj/machinery/singularity/narsie/sc_Narsie/ex_act()
+/obj/singularity/narsie/sc_Narsie/ex_act()
 	return

@@ -75,29 +75,20 @@
 	max_ammo = 6
 	multiload = 0
 
+/obj/item/ammo_box/magazine/internal/cylinder/grenadelauncher
+	name = "grenade launcher internal magazine"
+	ammo_type = /obj/item/ammo_casing/a40mm
+	caliber = "40mm"
+	max_ammo = 1
+
+/obj/item/ammo_box/magazine/internal/cylinder/grenadelauncher/multi
+	ammo_type = /obj/item/ammo_casing/a40mm
+	max_ammo = 6
+
 ///////////EXTERNAL MAGAZINES////////////////
-/obj/item/ammo_box/magazine/m9mm
-	name = "handgun magazine (9mm)"
-	icon_state = "9x19p"
-	origin_tech = "combat=2"
-	ammo_type = /obj/item/ammo_casing/c9mm
-	caliber = "9mm"
-	max_ammo = 8
-	multiple_sprites = 2
-
-/obj/item/ammo_box/magazine/msmg9mm
-	name = "SMG magazine (9mm)"
-	icon_state = "smg9mm"
-	ammo_type = /obj/item/ammo_casing/c9mm
-	caliber = "9mm"
-	max_ammo = 18
-
-/obj/item/ammo_box/magazine/msmg9mm/update_icon()
-	..()
-	icon_state = "[initial(icon_state)]-[round(ammo_count(),3)]"
 
 /obj/item/ammo_box/magazine/m10mm
-	name = "handgun magazine (10mm)"
+	name = "pistol magazine (10mm)"
 	icon_state = "9x19p"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c10mm
@@ -105,42 +96,42 @@
 	max_ammo = 8
 	multiple_sprites = 2
 
-/obj/item/ammo_box/magazine/c20m
-	name = "C-20r magazine (.45)"
+/obj/item/ammo_box/magazine/m45
+	name = "handgun magazine (.45)"
+	icon_state = "45"
+	ammo_type = /obj/item/ammo_casing/c45
+	caliber = ".45"
+	max_ammo = 8
+
+/obj/item/ammo_box/magazine/m45/update_icon()
+	..()
+	icon_state = "[initial(icon_state)]-[ammo_count() ? "8" : "0"]"
+
+/obj/item/ammo_box/magazine/smgm9mm
+	name = "SMG magazine (9mm)"
+	icon_state = "smg9mm"
+	ammo_type = /obj/item/ammo_casing/c9mm
+	caliber = "9mm"
+	max_ammo = 20
+
+/obj/item/ammo_box/magazine/smgm9mm/update_icon()
+	..()
+	icon_state = "[initial(icon_state)]-[round(ammo_count(),5)]"
+
+/obj/item/ammo_box/magazine/smgm45
+	name = "SMG magazine (.45)"
 	icon_state = "c20r45"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c45
 	caliber = ".45"
 	max_ammo = 20
 
-/obj/item/ammo_box/magazine/c20m/update_icon()
-	..()
-	icon_state = "[initial(icon_state)]-[round(ammo_count(),2)]"
-
-/obj/item/ammo_box/magazine/sm45
-	name = "handgun magazine (.45)"
-	icon_state = "9x19p"
-	ammo_type = /obj/item/ammo_casing/c45
-	caliber = ".45"
-	max_ammo = 12
-
-/obj/item/ammo_box/magazine/sm45/update_icon()
-	..()
-	icon_state = "[initial(icon_state)]-[ammo_count() ? "8" : "0"]"
-
-/obj/item/ammo_box/magazine/uzim45
-	name = "Uzi magazine (.45)"
-	icon_state = "uzi45"
-	ammo_type = /obj/item/ammo_casing/c45
-	caliber = ".45"
-	max_ammo = 16
-
-/obj/item/ammo_box/magazine/uzim45/update_icon()
+/obj/item/ammo_box/magazine/smgm/update_icon()
 	..()
 	icon_state = "[initial(icon_state)]-[round(ammo_count(),2)]"
 
 obj/item/ammo_box/magazine/tommygunm45
-	name = "tommy gun drum (.45)"
+	name = "drum magazine (.45)"
 	icon_state = "drum45"
 	ammo_type = /obj/item/ammo_casing/c45
 	caliber = ".45"
@@ -156,12 +147,24 @@ obj/item/ammo_box/magazine/tommygunm45
 	multiple_sprites = 1
 
 /obj/item/ammo_box/magazine/m75
-	name = "magazine (.75)"
+	name = "specialized magazine (.75)"
 	icon_state = "75"
 	ammo_type = /obj/item/ammo_casing/caseless/a75
 	caliber = "75"
 	multiple_sprites = 2
 	max_ammo = 8
+
+/obj/item/ammo_box/magazine/m545
+	name = "box magazine (5.45mm)"
+	icon_state = "5.45m"
+	origin_tech = "combat=5;syndicate=1"
+	ammo_type = /obj/item/ammo_casing/a545
+	caliber = "a545"
+	max_ammo = 30
+
+/obj/item/ammo_box/magazine/m545/update_icon()
+	..()
+	icon_state = "[initial(icon_state)]-[round(ammo_count(),10)]"
 
 /obj/item/ammo_box/magazine/m762
 	name = "box magazine (7.62mm)"
@@ -170,7 +173,6 @@ obj/item/ammo_box/magazine/tommygunm45
 	ammo_type = /obj/item/ammo_casing/a762
 	caliber = "a762"
 	max_ammo = 50
-
 
 /obj/item/ammo_box/magazine/m762/update_icon()
 	..()
