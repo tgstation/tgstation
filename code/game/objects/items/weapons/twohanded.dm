@@ -153,8 +153,9 @@ obj/item/weapon/twohanded/
 	throwforce = 15
 	w_class = 4.0
 	slot_flags = SLOT_BACK
+	flags = SHARP
 	force_unwielded = 5
-	force_wielded = 24 // Was 18, Buffed - RobRichards/RR
+	force_wielded = 24
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
@@ -194,7 +195,7 @@ obj/item/weapon/twohanded/
 	wieldsound = 'sound/weapons/saberon.ogg'
 	unwieldsound = 'sound/weapons/saberoff.ogg'
 	hitsound = "swing_hit"
-	flags = NOSHIELD
+	flags = NOSHIELD | SHARP
 	origin_tech = "magnets=3;syndicate=4"
 	item_color = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -242,7 +243,7 @@ obj/item/weapon/twohanded/
 	if(istype(loc, /mob/living))
 		if (HULK in M.mutations)
 			loc << "<span class='warning'>You lack the grace to wield this to its full extent.</span>"
-	hitsound = 'sound/weapons/blade1.ogg' 
+	hitsound = 'sound/weapons/blade1.ogg'
 
 
 /obj/item/weapon/twohanded/dualsaber/unwield() //Specific unwield () to switch hitsounds.

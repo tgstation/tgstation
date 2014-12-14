@@ -628,62 +628,6 @@ var/global/list/limb_icon_cache = list()
 		apply_overlay(BODYPARTS_LAYER)
 
 
-/*
-//draws an icon from a limb
-/mob/living/carbon/human/proc/generate_limb_icon(var/obj/item/organ/limb/affecting)
-	if(affecting.state_flags & ORGAN_REMOVED)
-		return 0
-
-	var/image/I
-	var/icon_gender = (gender == FEMALE) ? "f" : "m"
-
-	var/race = get_race()
-
-	if(affecting.body_part == HEAD || affecting.body_part == CHEST) //these have gender in their icons
-		if(affecting.status == ORGAN_ORGANIC)
-			if(race != "human")
-				if(stat == DEAD)
-					if(race == "plant")
-						I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[race]_[affecting.name]_[icon_gender]_dead_s", "layer"=-BODYPARTS_LAYER)
-					if(race == "husk")
-						I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[race]_[affecting.name]_s", "layer"=-BODYPARTS_LAYER)
-				else
-					I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[race]_[affecting.name]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER)
-			else
-				I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[skin_tone]_[affecting.name]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER)
-		else if(affecting.status == ORGAN_ROBOTIC)
-			I = image("icon"='icons/mob/augments.dmi',"icon_state"="[affecting.name]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER)
-	else
-		if(affecting.status == ORGAN_ORGANIC) //thse do not have gender in their icons
-			if(race != "human")
-				if(stat == DEAD)
-					if(race == "plant")
-						I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[race]_[affecting.name]_dead_s", "layer"=-BODYPARTS_LAYER)
-					else
-						I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[race]_[affecting.name]_s", "layer"=-BODYPARTS_LAYER)
-				else
-					I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[race]_[affecting.name]_s", "layer"=-BODYPARTS_LAYER)
-			else
-				I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[skin_tone]_[affecting.name]_s", "layer"=-BODYPARTS_LAYER)
-		else if(affecting.status == ORGAN_ROBOTIC)
-			I = image("icon"='icons/mob/augments.dmi', "icon_state"="[affecting.name]_s", "layer"=-BODYPARTS_LAYER)
-
-	if(I)
-
-		//Mutant colouring
-		if(race != "husk" && race != "hulk")
-			if(dna && dna.species)
-				if(MUTCOLORS in dna.species.specflags)
-					if(!config.mutant_colors)
-						dna.mutant_color = dna.species.default_color
-					I.color = "#[dna.mutant_color]"
-		//End Mutant Colouring
-
-		return I
-	return 0
-
-*/
-
 //draws an icon from a limb
 /mob/living/carbon/human/proc/generate_limb_icon(var/obj/item/organ/limb/affecting)
 	if(affecting.state_flags & ORGAN_REMOVED)
