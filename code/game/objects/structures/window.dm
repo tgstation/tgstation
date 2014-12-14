@@ -470,6 +470,6 @@
 	desc = "A strong, air-locked pod window that is extremely difficult to destroy."
 	icon_state = "swindow"
 	dir = 5
-	maxhealth = 100
+	maxhealth = 300
 	shuttlew = 1
 	fulltile = 1
