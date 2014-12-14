@@ -62,7 +62,7 @@
 
 	var/turf/T = args["loc"]
 	BEAM_TESTING("Target now at [T.x],[T.y],[T.z]")
-	if(T != targetContactLoc)
+	if(T != targetContactLoc && T != loc)
 		BEAM_TESTING("Disconnecting: Target moved.")
 		// Disconnect and re-emit.
 		disconnect()
@@ -137,13 +137,19 @@
 			_master.emit(sources)
 
 /obj/effect/beam/Crossed(atom/movable/AM as mob|obj)
+	BEAM_TESTING("Crossed by [AM]")
 	if(!master || !AM)
+		BEAM_TESTING(" returning (!AM || !master)")
 		return
 
 	if(istype(AM, /obj/effect/beam) || !AM.density)
+		BEAM_TESTING(" returning (is beam or not dense)")
 		return
 
-	BEAM_TESTING("Crossed by [AM]")
+	if(master.target)
+		disconnect(0)
+
+	BEAM_TESTING(" Connecting!")
 	am_connector=1
 	connect_to(AM)
 	qdel(src)
@@ -161,7 +167,8 @@
 		sources.Add(spawn_by)
 
 	if(_range==-1)
-		BEAM_TESTING("\ref[src] - emit(), source=[source]")
+		//var/str_sources=text2list(sources,", ")
+		BEAM_TESTING("\ref[src] - emit(), sources=[str_sources]")
 		_range=max_range
 
 	if(next && next.loc)

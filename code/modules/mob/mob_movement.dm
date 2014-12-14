@@ -411,8 +411,10 @@
 					anim(mobloc,mob,'icons/mob/mob.dmi',,"shadow",,mob.dir)
 				mob.loc = get_step(mob, direct)
 			mob.dir = direct
-	for(var/obj/effect/step_trigger/S in mob.loc)
-		S.Crossed(src)
+	// Crossed is always a bit iffy
+	for(var/obj/S in mob.loc)
+		if(istype(S,/obj/effect/step_trigger) || istype(S,/obj/effect/beam))
+			S.Crossed(src)
 
 	var/area/A = get_area_master(mob)
 	if(A)
