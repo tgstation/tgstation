@@ -2170,7 +2170,7 @@
 "aPL" = (/obj/machinery/vending/cola,/turf/simulated/floor/plasteel,/area/crew_quarters/locker)
 "aPM" = (/obj/structure/disposalpipe/segment,/turf/simulated/floor/plasteel,/area/crew_quarters/locker)
 "aPN" = (/obj/machinery/vending/coffee,/turf/simulated/floor/plasteel,/area/crew_quarters/locker)
-"aPO" = (/obj/machinery/vending/snack,/turf/simulated/floor/plasteel,/area/crew_quarters/locker)
+"aPO" = (/obj/machinery/vending/clothing,/turf/simulated/floor/plasteel,/area/crew_quarters/locker)
 "aPP" = (/obj/machinery/vending/cigarette,/turf/simulated/floor/plasteel,/area/crew_quarters/locker)
 "aPQ" = (/obj/machinery/firealarm{dir = 2; pixel_y = 24},/turf/simulated/floor/plasteel,/area/crew_quarters/locker)
 "aPR" = (/obj/structure/closet/secure_closet/personal,/turf/simulated/floor/plasteel,/area/crew_quarters/locker)
