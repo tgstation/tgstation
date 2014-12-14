@@ -66,7 +66,7 @@
 		src.icon_state = "fork"
 		return
 	else
-		if(ishuman(user) && user.dna.check_mutation("Clumsiness", user) && prob(50))
+		if(user.disabilities & CLUMSY && prob(50))
 			M = user
 		return eyestab(M,user)
 
@@ -87,7 +87,7 @@
 	return (BRUTELOSS)
 
 /obj/item/weapon/kitchen/utensil/knife/attack(target as mob, mob/living/carbon/human/user)
-	if (istype(user) && user.dna.check_mutation("Clumsiness", user) && prob(50))
+	if (user.disabilities & CLUMSY && prob(50))
 		user << "<span class='danger'> You accidentally cut yourself with the [src].</span>"
 		user.take_organ_damage(20)
 		return

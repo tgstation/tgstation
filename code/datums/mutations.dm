@@ -238,6 +238,14 @@
 	name = "Clumsiness"
 	quality = MINOR_NEGATIVE
 
+/datum/mutation/human/clumsy/on_acquiring(mob/living/carbon/human/owner)
+	if(..())	return
+	owner.disabilities |= CLUMSY
+
+/datum/mutation/human/clumsy/on_losing(mob/living/carbon/human/owner)
+	if(..())	return
+	owner.disabilities &= ~CLUMSY
+
 /datum/mutation/human/tourettes
 
 	name = "Tourettes Syndrome"

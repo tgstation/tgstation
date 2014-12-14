@@ -13,10 +13,10 @@
 #define MUTE		2
 #define DEAF		4
 #define NEARSIGHT	8
-#define VISIONBLOCK	16
 #define FAT			32
 #define HUSK		64
 #define NOCLONE		128
+#define CLUMSY		256
 
 // bitflags for machine stat variable
 #define BROKEN		1

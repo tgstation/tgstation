@@ -86,7 +86,7 @@
 	if(!istype(M))	return ..()
 	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head")
 		return ..()
-	if(ishuman(user) && user.dna.check_mutation("Clumsiness", user) && prob(50))
+	if(user.disabilities & CLUMSY && prob(50))
 		M = user
 	return eyestab(M,user)
 

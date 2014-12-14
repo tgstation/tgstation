@@ -60,7 +60,7 @@
 		user.take_organ_damage(0,10)
 		return
 
-	if (istype(user) && user.dna.check_mutation("Clumsiness", user) && prob(50))
+	if (user.disabilities & CLUMSY && prob(50))
 		user << "<span class='danger'>The [src] slips out of your hand and hits your head.</span>"
 		user.take_organ_damage(10)
 		user.Paralyse(20)

@@ -14,7 +14,7 @@
 	var/display_timer = 1
 
 /obj/item/weapon/grenade/proc/clown_check(var/mob/living/carbon/human/user)
-	if(istype(user) && user.dna.check_mutation("Clumsiness", user) && prob(50))
+	if(user.disabilities & CLUMSY && prob(50))
 		user << "<span class='warning'>Huh? How does this thing work?</span>"
 		active = 1
 		icon_state = initial(icon_state) + "_active"

@@ -63,7 +63,7 @@
 
 	//Exclude lasertag guns from the CLUMSY check.
 	if(clumsy_check)
-		if((istype(user) && user.dna.check_mutation("Clumsiness", user)) && prob(40))
+		if(user.disabilities & CLUMSY && prob(40))
 			user << "<span class='danger'>You shoot yourself in the foot with \the [src]!</span>"
 			afterattack(user, user)
 			user.drop_item()

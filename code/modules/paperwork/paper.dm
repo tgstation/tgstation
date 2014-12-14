@@ -72,7 +72,7 @@
 	if(!ishuman(usr))
 		return
 	var/mob/living/carbon/human/H = usr
-	if(H.dna.check_mutation("Clumsiness", H) && prob(25))
+	if(H.disabilities & CLUMSY && prob(25))
 		H << "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>"
 		H.damageoverlaytemp = 9001
 		return
@@ -274,7 +274,7 @@
 		return
 
 	var/clown = 0
-	if(istype(user) && user.dna.check_mutation("Clumsiness", user))
+	if(user.disabilities & CLUMSY)
 		clown = 1
 
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))

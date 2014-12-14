@@ -29,7 +29,7 @@
 
 /obj/item/weapon/melee/classic_baton/attack(mob/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
-	if(istype(user) && user.dna.check_mutation("Clumsiness", user) && prob(50))
+	if(user.disabilities & CLUMSY && prob(50))
 		user << "<span class='warning'>You club yourself over the head!</span>"
 		user.Weaken(3 * force)
 		if(ishuman(user))
@@ -103,7 +103,7 @@
 /obj/item/weapon/melee/telebaton/attack(mob/target, mob/living/carbon/human/user)
 	if(on)
 		add_fingerprint(user)
-		if(istype(user) && user.dna.check_mutation("Clumsiness", user) && prob(50))
+		if(user.disabilities & CLUMSY && prob(50))
 			user << "<span class ='danger'>You club yourself over the head.</span>"
 			user.Weaken(3 * force)
 			if(ishuman(user))

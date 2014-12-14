@@ -16,7 +16,7 @@
 
 
 /obj/item/device/flash/proc/clown_check(mob/living/carbon/human/user)
-	if(istype(user) && user.dna.check_mutation("Clumsiness", user) && prob(50))
+	if(user.disabilities & CLUMSY && prob(50))
 		flash_carbon(user, user, 15, 0)
 		return 0
 	return 1

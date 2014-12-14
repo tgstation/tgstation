@@ -214,7 +214,7 @@ obj/item/weapon/twohanded/
 
 /obj/item/weapon/twohanded/dualsaber/attack(target as mob, mob/living/carbon/human/user as mob)
 	..()
-	if(istype(user) && user.dna.check_mutation("Clumsiness", user) && (wielded) && prob(40))
+	if(user.disabilities & CLUMSY && (wielded) && prob(40))
 		impale(user)
 		return
 	if((wielded) && prob(50))

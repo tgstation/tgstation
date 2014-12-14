@@ -57,7 +57,7 @@
 	return (active)
 
 /obj/item/weapon/shield/energy/attack_self(mob/living/carbon/human/user)
-	if(istype(user) && user.dna.check_mutation("Clumsiness", user) && prob(50))
+	if(user.disabilities & CLUMSY && prob(50))
 		user << "<span class='warning'>You beat yourself in the head with [src].</span>"
 		user.take_organ_damage(5)
 	active = !active
