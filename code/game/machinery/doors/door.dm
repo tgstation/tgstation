@@ -276,6 +276,11 @@
 	if(F)
 		qdel(F)
 
+	// copypasta!!!
+	var/obj/effect/beam/B = locate() in loc
+	if(B)
+		qdel(B)
+
 	update_nearby_tiles()
 	operating = 0
 

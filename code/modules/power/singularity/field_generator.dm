@@ -33,7 +33,6 @@ field_generator power level display
 
 	machine_flags = WRENCHMOVE | FIXED2WORK | WELD_FIXED
 
-
 /obj/machinery/field_generator/update_icon()
 	overlays.Cut()
 	if(!active)
@@ -58,8 +57,11 @@ field_generator power level display
 	connected_gens = list()
 	return
 
-
 /obj/machinery/field_generator/process()
+
+	for(var/obj/effect/beam/B in beams)
+		power += B.get_damage()
+
 	if(Varedit_start == 1)
 		if(active == 0)
 			active = 1

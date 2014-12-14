@@ -25,11 +25,6 @@
 		mouse_opacity = 0
 		unacidable = 1//Just to be sure.
 
-/obj/effect/beam
-	name = "beam"
-	unacidable = 1//Just to be sure.
-	var/def_zone
-	pass_flags = PASSTABLE
 
 
 /obj/effect/begin

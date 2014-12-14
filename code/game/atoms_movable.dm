@@ -22,6 +22,12 @@
 	var/gcDestroyed
 	var/timeDestroyed
 
+	// EVENTS
+	/////////////////////////////
+
+	// When this object moves. (args: loc)
+	var/event/on_moved=new /event()
+
 /atom/movable/New()
 	. = ..()
 	areaMaster = get_area_master(src)
@@ -44,14 +50,22 @@
 /atom/movable/proc/setLoc(var/T, var/teleported=0)
 	loc = T
 
+	// Update on_moved listeners.
+	INVOKE_EVENT(on_moved,list("loc"=loc))
+
 /atom/movable/Move(NewLoc,Dir=0,step_x=0,step_y=0)
 	var/atom/A = src.loc
 	. = ..()
+
 	src.move_speed = world.timeofday - src.l_move_time
 	src.l_move_time = world.timeofday
 	src.m_flag = 1
 	if ((A != src.loc && A && A.z == src.z))
 		src.last_move = get_dir(A, src.loc)
+
+	// Update on_moved listeners.
+	INVOKE_EVENT(on_moved,list("loc"=NewLoc))
+
 	return .
 
 /atom/movable/proc/recycle(var/datum/materials/rec)
@@ -78,10 +92,15 @@
 	if(destination)
 		if(loc)
 			loc.Exited(src)
+
 		loc = destination
 		loc.Entered(src)
+
 		for(var/atom/movable/AM in loc)
 			AM.Crossed(src)
+
+		// Update on_moved listeners.
+		INVOKE_EVENT(on_moved,list("loc"=loc))
 		return 1
 	return 0
 

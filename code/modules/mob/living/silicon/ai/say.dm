@@ -117,6 +117,83 @@ var/const/VOX_DELAY = 600
 		play_vox_word(word, src.z, null)
 
 
+var/list/vox_units=list(
+	'sound/vox_fem/one.ogg',
+	'sound/vox_fem/two.ogg',
+	'sound/vox_fem/three.ogg',
+	'sound/vox_fem/four.ogg',
+	'sound/vox_fem/five.ogg',
+	'sound/vox_fem/six.ogg',
+	'sound/vox_fem/seven.ogg',
+	'sound/vox_fem/eight.ogg',
+	'sound/vox_fem/nine.ogg',
+	'sound/vox_fem/ten.ogg',
+	'sound/vox_fem/eleven.ogg',
+	'sound/vox_fem/twelve.ogg',
+	'sound/vox_fem/thirteen.ogg',
+	'sound/vox_fem/fourteen.ogg',
+	'sound/vox_fem/fifteen.ogg',
+	'sound/vox_fem/sixteen.ogg',
+	'sound/vox_fem/seventeen.ogg',
+	'sound/vox_fem/eighteen.ogg',
+	'sound/vox_fem/nineteen.ogg'
+)
+
+var/list/vox_tens=list(
+	'sound/vox_fem/ten.ogg',
+	'sound/vox_fem/twenty.ogg',
+	'sound/vox_fem/thirty.ogg',
+	'sound/vox_fem/fourty.ogg',
+	'sound/vox_fem/fifty.ogg',
+	'sound/vox_fem/sixty.ogg',
+	'sound/vox_fem/seventy.ogg',
+	'sound/vox_fem/eighty.ogg',
+	'sound/vox_fem/ninety.ogg'
+)
+
+// Stolen from here: http://stackoverflow.com/questions/2729752/converting-numbers-in-to-words-c-sharp
+/proc/vox_num2list(var/number)
+	if(!isnum(number))
+		warning("vox_num2list fed a non-number: [number]")
+		return list()
+	number=round(number)
+	if(number == 0)
+		return list('sound/vox_fem/zero.ogg')
+
+	if(number < 0)
+		return list('sound/vox_fem/minus.ogg') + vox_num2list(abs(number))
+
+	var/list/words=list()
+
+	if (round(number / 1000000) > 0)
+		words += vox_num2list(number / 1000000)
+		words.Add('sound/vox_fem/million.ogg')
+		number %= 1000000
+
+	if (round(number / 1000) > 0)
+		words += vox_num2list(number / 1000)
+		words.Add('sound/vox_fem/thousand.ogg')
+		number %= 1000
+
+	if (round(number / 100) > 0)
+		words += vox_num2list(number / 100)
+		words.Add('sound/vox_fem/hundred.ogg')
+		number %= 100
+
+	if (number > 0)
+		// Sounds fine without the and.
+		//if (words != "")
+		//	words += "and "
+
+		if (number < 20)
+			words += vox_units[number+1]
+		else
+			words += vox_tens[(number / 10)+1]
+			if ((number % 10) > 0)
+				words.Add(vox_units[(number % 10)+1])
+
+	return words
+
 /proc/play_vox_word(var/word, var/z_level, var/mob/only_listener)
 	word = lowertext(word)
 	if(vox_sounds[word])

@@ -12,6 +12,7 @@
 	var/brute_resist = 4
 	var/fire_resist = 1
 
+	var/list/last_beamchecks=list()
 
 /obj/effect/blob/New(loc)
 	blobs += src
@@ -32,8 +33,35 @@
 	if(istype(mover) && mover.checkpass(PASSBLOB))	return 1
 	return 0
 
+/obj/effect/blob/beam_connect(var/obj/effect/beam/B)
+	..()
+	last_beamchecks["\ref[B]"]=world.time
+
+/obj/effect/blob/beam_disconnect(var/obj/effect/beam/B)
+	..()
+	apply_beam_damage(B)
+	last_beamchecks.Remove("\ref[B]") // RIP
+
+/obj/effect/blob/proc/apply_beam_damage(var/obj/effect/beam/B)
+	var/lastcheck=last_beamchecks["\ref[B]"]
+
+	// Figure out how much damage to deal.
+	// Formula: (deciseconds_since_connect/10 deciseconds)*B.get_damage()
+	var/damage = ((world.time - lastcheck)/10)  * B.get_damage()
+
+	// Actually apply damage
+	health -= damage
+
+	// Update check time.
+	last_beamchecks["\ref[B]"]=world.time
+
+/obj/effect/blob/proc/process_beams()
+	// New beam damage code (per-tick)
+	for(var/obj/effect/beam/B in beams)
+		apply_beam_damage(B)
 
 /obj/effect/blob/process()
+	process_beams()
 	Life()
 	return
 

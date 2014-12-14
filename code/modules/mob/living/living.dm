@@ -13,6 +13,9 @@
 		if(M_HARDCORE in mutations)
 			mutations.Remove(M_HARDCORE)
 			src << "<span class='notice'>You feel like a pleb.</span>"
+
+	handle_beams()
+
 	if(mind)
 		if(mind in ticker.mode.implanted)
 			if(implanting) return
@@ -31,6 +34,21 @@
 					special_role = null
 					current << "\red <FONT size = 3><B>The fog clouding your mind clears. You remember nothing from the moment you were implanted until now..(You don't remember who enslaved you)</B></FONT>"
 				*/
+
+// Apply connect damage
+/mob/living/beam_connect(var/obj/effect/beam/B)
+	..()
+	last_beamchecks["\ref[B]"]=world.time
+
+/mob/living/beam_disconnect(var/obj/effect/beam/B)
+	..()
+	apply_beam_damage(B)
+	last_beamchecks.Remove("\ref[B]") // RIP
+
+/mob/living/proc/handle_beams()
+	// New beam damage code (per-tick)
+	for(var/obj/effect/beam/B in beams)
+		apply_beam_damage(B)
 
 /mob/living/cultify()
 	if(iscultist(src) && client)
@@ -57,6 +75,19 @@
 		G << "<span class='sinister'>You feel relieved as what's left of your soul finally escapes its prison of flesh.</span>"
 	else
 		dust()
+
+/mob/living/proc/apply_beam_damage(var/obj/effect/beam/B)
+	var/lastcheck=last_beamchecks["\ref[B]"]
+
+	// Figure out how much damage to deal.
+	// Formula: (deciseconds_since_connect/10 deciseconds)*B.get_damage()
+	var/damage = ((world.time - lastcheck)/10)  * B.get_damage()
+
+	// Actually apply damage
+	apply_damage(damage, B.damage_type, B.def_zone)
+
+	// Update check time.
+	last_beamchecks["\ref[B]"]=world.time
 
 /mob/living/verb/succumb()
 	set hidden = 1
@@ -555,6 +586,9 @@
 	if(update_slimes)
 		for(var/mob/living/carbon/slime/M in view(1,src))
 			M.UpdateFeed(src)
+
+	// Update on_moved listeners.
+	INVOKE_EVENT(on_moved,list("loc"=loc))
 
 /mob/living/verb/resist()
 	set name = "Resist"
