@@ -51,21 +51,20 @@
 	origin_tech = "materials=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
-			user.show_message("<span class='notice'>You make planks out of \the [src]!</span>", 1)
-			for(var/i=0,i<2,i++)
-				var/obj/item/stack/sheet/wood/NG = new (user.loc)
-				for (var/obj/item/stack/sheet/wood/G in user.loc)
-					if(G==NG)
-						continue
-					if(G.amount>=G.max_amount)
-						continue
-					G.attackby(NG, user)
-					usr << "You add the newly-formed wood to the stack. It now contains [NG.amount] planks."
-			user.drop_item(src)
-			qdel(src)
-			return
+/obj/item/weapon/grown/log/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
+		user.show_message("<span class='notice'>You make planks out of \the [src]!</span>", 1)
+		for(var/i=0,i<2,i++)
+			var/obj/item/stack/sheet/wood/NG = new (user.loc)
+			for (var/obj/item/stack/sheet/wood/G in user.loc)
+				if(G==NG)
+					continue
+				if(G.amount>=G.max_amount)
+					continue
+				G.attackby(NG, user)
+			user << "You add the newly-formed wood to the stack. It now contains [NG.amount] planks."
+		qdel(src)
+		return
 
 /obj/item/weapon/grown/sunflower // FLOWER POWER!
 	plantname = "sunflowers"

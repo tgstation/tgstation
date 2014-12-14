@@ -15,6 +15,12 @@
 	reconnect_database()
 	linked_account = vendor_account
 
+	spawn(40)//should fix a rare occurence where a terminal placed at round start wouldn't be linked to its account and/or database.
+		if(!linked_db)
+			reconnect_database()
+		if(!linked_account)
+			linked_account = vendor_account
+
 /obj/machinery/computer/pda_terminal/proc/reconnect_database()
 	for(var/obj/machinery/account_database/DB in account_DBs)
 		//Checks for a database on its Z-level, else it checks for a database at the main Station.

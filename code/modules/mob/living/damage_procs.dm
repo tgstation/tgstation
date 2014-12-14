@@ -75,3 +75,6 @@
 	if(drowsy)		apply_effect(drowsy, DROWSY, blocked)
 	if(agony)		apply_effect(agony, AGONY, blocked)
 	return 1
+
+/mob/living/ashify()
+	return //let's not go ashy, shall we?
