@@ -39,9 +39,9 @@
 /datum/mutation/human/proc/check_block(mob/living/carbon/human/owner)
 	if(check_block_string(owner.dna.struc_enzymes))
 		if(prob(get_chance))
-			on_acquiring(owner)
+			. = on_acquiring(owner)
 	else
-		on_losing(owner)
+		. = on_losing(owner)
 
 /datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/owner)
 	if(src in owner.dna.mutations)
@@ -271,11 +271,11 @@
 	quality = NEGATIVE
 
 /datum/mutation/human/deaf/on_acquiring(mob/living/carbon/human/owner)
-	..()
+	if(..())	return
 	owner.disabilities |= DEAF
 
 /datum/mutation/human/deaf/on_losing(mob/living/carbon/human/owner)
-	..()
+	if(..())	return
 	owner.disabilities &= ~DEAF
 
 /datum/mutation/human/blind
@@ -284,11 +284,11 @@
 	quality = NEGATIVE
 
 /datum/mutation/human/blind/on_acquiring(mob/living/carbon/human/owner)
-	..()
+	if(..())	return
 	owner.disabilities |= BLIND
 
 /datum/mutation/human/blind/on_losing(mob/living/carbon/human/owner)
-	..()
+	if(..())	return
 	owner.disabilities &= ~BLIND
 
 /datum/mutation/human/race
@@ -298,7 +298,7 @@
 
 /datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
-	owner.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
+	. = owner.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
 
 /datum/mutation/human/race/gain_indication(mob/living/carbon/human/owner)
 	return
@@ -308,7 +308,7 @@
 
 /datum/mutation/human/race/on_losing(mob/living/carbon/monkey/owner)
 	if(..())	return
-	owner.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
+	. = owner.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
 
 /datum/mutation/human/laser_eyes
 

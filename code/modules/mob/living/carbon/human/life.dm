@@ -55,6 +55,8 @@
 	//TODO: seperate this out
 	var/datum/gas_mixture/environment = loc.return_air()
 
+	handle_regular_hud_updates()
+
 	//No need to update all of these procs if the guy is dead.
 	if(stat != DEAD)
 		for(var/datum/mutation/human/HM in dna.mutations)
@@ -98,8 +100,6 @@
 
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
-
-	handle_regular_hud_updates()
 
 	if(dna)
 		dna.species.spec_life(src) // for mutantraces

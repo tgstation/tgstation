@@ -20,6 +20,9 @@
 	..()
 	builtin_sheet = new sheet_type
 
+/turf/simulated/wall/attack_tk()
+	return
+
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, explode=0)
 	if(devastated)
 		devastate_wall()

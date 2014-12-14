@@ -20,17 +20,14 @@
 	stunned = 1
 	icon = null
 	invisibility = 101
+	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( loc )
+	O.invisibility = 101
+
 	var/atom/movable/overlay/animation = new /atom/movable/overlay( loc )
 	animation.icon_state = "blank"
 	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
 	flick("h2monkey", animation)
-	sleep(22)
-	//animation = null
-	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( loc )
-	qdel(animation)
-
-
 
 	// hash the original name?
 	if	(tr_flags & TR_HASHNAME)
@@ -77,13 +74,22 @@
 			O.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
 	if (tr_flags & TR_DEFAULTMSG)
 		O << "<B>You are now a monkey.</B>"
+
+	for(var/A in loc.vars)
+		if(loc.vars[A] == src)
+			loc.vars[A] = O
+
 	updateappearance(O)
 	. = O
 	if ( !(tr_flags & TR_KEEPSRC) ) //flag should be used if monkeyize() is called inside another proc of src so that one does not crash
-		qdel(src)
-	return
+		var/mob/deleted = src
+		src = O
+		qdel(deleted)
 
-
+	spawn(22)
+	//animation = null
+		O.invisibility = 0
+		qdel(animation)
 
 //////////////////////////           Humanize               //////////////////////////////
 //Could probably be merged with monkeyize but other transformations got their own procs, too
@@ -120,18 +126,13 @@
 	stunned = 1
 	icon = null
 	invisibility = 101
+	var/mob/living/carbon/human/O = new( loc )
+	O.invisibility = 101
 	var/atom/movable/overlay/animation = new( loc )
 	animation.icon_state = "blank"
 	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
 	flick("monkey2h", animation)
-	sleep(22)
-	var/mob/living/carbon/human/O = new( loc )
-	for(var/obj/item/C in O.loc)
-		O.equip_to_appropriate_slot(C)
-	qdel(animation)
-
-
 	O.gender = (deconstruct_block(getblock(dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? FEMALE : MALE
 	O.dna = dna
 
@@ -185,10 +186,31 @@
 	O.a_intent = "help"
 	if (tr_flags & TR_DEFAULTMSG)
 		O << "<B>You are now a human.</B>"
+
+	for(var/obj/item/C in O.loc)
+		O.equip_to_appropriate_slot(C)
+	qdel(animation)
+
 	updateappearance(O)
 	. = O
+
+	for(var/A in loc.vars)
+		if(loc.vars[A] == src)
+			loc.vars[A] = O
+
 	if ( !(tr_flags & TR_KEEPSRC) ) //don't delete src yet if it's needed to finish calling proc
-		qdel(src)
+		var/mob/deleted = src
+		src = O
+		qdel(deleted)
+
+	spawn(22)
+		world << "This happens"
+		O.invisibility = 0
+
+		for(var/obj/item/C in O.loc)
+			O.equip_to_appropriate_slot(C)
+		qdel(animation)
+
 	return
 
 /mob/new_player/AIize()

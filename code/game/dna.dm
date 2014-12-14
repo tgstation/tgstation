@@ -70,13 +70,13 @@
 	var/list/sorting = list()
 	sorting.len = 14
 	var/result
-	for(var/A in mutations_list)
-		var/datum/mutation/human/M = mutations_list[A]//, i<=DNA_STRUC_ENZYMES_BLOCKS, i++)
-		if(A == "Monkified" && istype(character,/mob/living/carbon/monkey))
-			sorting[M.dna_block] = num2hex(M.lowest_value + rand(0, 256 * 6), DNA_BLOCK_SIZE)
+	for(var/datum/mutation/human/A in good_mutations + bad_mutations + not_good_mutations)
+	//	var/datum/mutation/human/M = mutations_list[A]//, i<=DNA_STRUC_ENZYMES_BLOCKS, i++)
+		if(A.name == "Monkified" && istype(character,/mob/living/carbon/monkey))
+			sorting[A.dna_block] = num2hex(A.lowest_value + rand(0, 256 * 6), DNA_BLOCK_SIZE)
 			character.dna.mutations.Add(mutations_list["Monkified"])
 		else
-			sorting[M.dna_block] = random_string(DNA_BLOCK_SIZE, L)
+			sorting[A.dna_block] = random_string(DNA_BLOCK_SIZE, L)
 
 	for(var/B in sorting)
 		result += B
@@ -261,9 +261,14 @@
 	if(!check_dna_integrity(M))
 		return 0
 
+	var/mob/living/carbon/C = M
+	var/mob/living/carbon/temp
+
 	for(var/A in mutations_list)
 		var/datum/mutation/human/HM = mutations_list[A]
-		HM.check_block(M)
+		temp = HM.check_block(C)
+		if(ismob(temp))
+			C = temp
 
 /*	M.disabilities = 0
 	M.mutations.Cut()
