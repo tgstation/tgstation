@@ -35,12 +35,12 @@
 		icon_state += "paddleout"
 	else
 		icon_state += "paddlein"
-	switch(charges)
-		if(7 to INFINITY)
+	switch(charges/initial(charges))
+		if(0.7 to INFINITY) //Just in case the defib somehow gets more charges than initial
 			icon_state += "_full"
-		if(4 to 6)
+		if(0.4 to 0.6)
 			icon_state += "_half"
-		if(1 to 3)
+		if(0.01 to 0.3) //Make sure it's really empty dawg
 			icon_state += "_low"
 		else
 			icon_state += "_empty"
