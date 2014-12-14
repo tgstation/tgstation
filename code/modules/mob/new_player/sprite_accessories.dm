@@ -884,11 +884,6 @@
 	icon_state = "shirt_question"
 	gender = NEUTER
 
-/datum/sprite_accessory/undershirt/shirtian
-	name = "White Ian Shirt"
-	icon_state = "shirt_ian"
-	gender = NEUTER
-
 /datum/sprite_accessory/undershirt/skull
 	name = "Skull Shirt"
 	icon_state = "shirt_skull"
