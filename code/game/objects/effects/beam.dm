@@ -155,7 +155,10 @@
  * Create and emit the beam in the desired direction.
  */
 /obj/effect/beam/proc/emit(var/spawn_by, var/_range=-1)
-	sources=list(spawn_by)
+	if(istype(spawn_by,/list))
+		sources=spawn_by
+	else
+		sources.Add(spawn_by)
 
 	if(_range==-1)
 		BEAM_TESTING("\ref[src] - emit(), source=[source]")
