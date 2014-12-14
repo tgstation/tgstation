@@ -401,7 +401,7 @@
 /obj/machinery/r_n_d/fabricator/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(stat & (BROKEN|NOPOWER))
 		return
-	if((user.stat && !isobserver(user)) || user.restrained() || !allowed(user))
+	if(user.stat || user.restrained() || !allowed(user))
 		return
 
 	var/data[0]
@@ -527,7 +527,7 @@
 
 
 /obj/machinery/r_n_d/fabricator/attack_hand(mob/user as mob)
-	if((user.stat && !isobserver(user)) || user.restrained()) //allowed is later on, so we don't check it
+	if(user.stat || user.restrained()) //allowed is later on, so we don't check it
 		return
 
 	var/turf/exit = get_turf(output)
