@@ -97,8 +97,8 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 			break //One missing cure is enough to fail
 
 
-/datum/disease/proc/spread(var/atom/source)
-	if(spread_flags & SPECIAL || spread_flags & NON_CONTAGIOUS || spread_flags & BLOOD)
+/datum/disease/proc/spread(var/atom/source, var/force_spread = 0)
+	if((spread_flags & SPECIAL || spread_flags & NON_CONTAGIOUS || spread_flags & BLOOD) && !force_spread)
 		return
 
 	if(affected_mob)
@@ -106,6 +106,9 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 			return
 
 	var/spread_range = 1
+
+	if(force_spread)
+		spread_range = 5
 
 	if(spread_flags & AIRBORNE)
 		spread_range++
