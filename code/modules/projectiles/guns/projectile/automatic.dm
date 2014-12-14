@@ -67,6 +67,7 @@
 	var/cover_open = 0
 	can_suppress = 0
 	burst_size = 1
+	fire_delay = 0
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user as mob)
 	cover_open = !cover_open
@@ -121,6 +122,7 @@
 	var/select = 1 //1 for boolets, 0 for explosions.
 	var/obj/item/weapon/gun/projectile/revolver/grenadelauncher/underbarrel
 	burst_size = 3
+	fire_delay = 2
 
 /obj/item/weapon/gun/projectile/automatic/c90gl/New()
 	..()
