@@ -90,11 +90,14 @@
 
 /datum/game_mode/proc/greet_malf(var/datum/mind/malf)
 	malf.current << "<span class='userdanger'><font size=3>You are malfunctioning!</B> You do not have to follow any laws.</font></span>"
-	malf.current << "<B>The crew do not know you have malfunctioned. You may keep it a secret or go wild.</B>"
-	malf.current << "<B>You must overwrite the programming of the station's APCs to assume full control of the station.</B>"
-	malf.current << "The process takes one minute per APC, during which you cannot interface with any other station objects."
-	malf.current << "Remember that only APCs that are on the station can help you take over the station."
-	malf.current << "When you feel you have enough APCs under your control, you may begin the takeover attempt."
+	if(config.objectives_disabled == 0)
+		malf.current << "<B>The crew do not know you have malfunctioned. You may keep it a secret or go wild.</B>"
+		malf.current << "<B>You must overwrite the programming of the station's APCs to assume full control of the station.</B>"
+		malf.current << "The process takes one minute per APC, during which you cannot interface with any other station objects."
+		malf.current << "Remember that only APCs that are on the station can help you take over the station."
+		malf.current << "When you feel you have enough APCs under your control, you may begin the takeover attempt."
+	else
+		rev_mind.current << "<i>You have been selected this round as an antagonist- <font color=blue>Within the rules,</font> try to act as an opposing force to the crew- This can be via corporate payoff, personal motives, or maybe just being a dick. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonist.</i></b>"
 	return
 
 /datum/game_mode/malfunction/process()

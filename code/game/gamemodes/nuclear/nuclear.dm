@@ -83,7 +83,8 @@
 			spawnpos = 2
 		synd_mind.current.loc = synd_spawn[spawnpos]
 
-		forge_syndicate_objectives(synd_mind)
+		if(config.objectives_disabled == 0)
+			forge_syndicate_objectives(synd_mind)
 		greet_syndicate(synd_mind)
 		equip_syndicate(synd_mind.current)
 
@@ -147,10 +148,14 @@
 /datum/game_mode/proc/greet_syndicate(var/datum/mind/syndicate, var/you_are=1)
 	if (you_are)
 		syndicate.current << "<span class='notice'>You are a [syndicate_name()] agent!</span>"
-	var/obj_count = 1
-	for(var/datum/objective/objective in syndicate.objectives)
-		syndicate.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-		obj_count++
+	if(config.objectives_disabled == 0)
+		var/obj_count = 1
+		for(var/datum/objective/objective in syndicate.objectives)
+			syndicate.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+			obj_count++
+		return
+	else
+		syndicate.current << "<i>You have been selected this round as an antagonist- <font color=blue>Within the rules,</font> try to act as an opposing force to the crew- This can be via corporate payoff, personal motives, or maybe just being a dick. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonist.</i></b>"
 	return
 
 

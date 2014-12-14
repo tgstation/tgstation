@@ -48,12 +48,13 @@
 
 
 /datum/game_mode/cult/pre_setup()
-	if(prob(50))
-		cult_objectives += "survive"
-		cult_objectives += "sacrifice"
-	else
-		cult_objectives += "eldergod"
-		cult_objectives += "sacrifice"
+	if(config.objectives_disabled == 0)
+		if(prob(50))
+			cult_objectives += "survive"
+			cult_objectives += "sacrifice"
+		else
+			cult_objectives += "eldergod"
+			cult_objectives += "sacrifice"
 
 	if(num_players() >= 30)
 		recommended_enemies = 9	// 3+3+3 - d' magic number o' magic numbars mon
@@ -111,20 +112,24 @@
 
 
 /datum/game_mode/cult/proc/memorize_cult_objectives(var/datum/mind/cult_mind)
-	for(var/obj_count = 1,obj_count <= cult_objectives.len,obj_count++)
-		var/explanation
-		switch(cult_objectives[obj_count])
-			if("survive")
-				explanation = "Our knowledge must live on. Make sure at least [acolytes_needed] acolytes escape on the shuttle to spread their work on an another station."
-			if("sacrifice")
-				if(sacrifice_target)
-					explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. You will need the sacrifice rune (Hell blood join) and three acolytes to do so."
-				else
-					explanation = "Free objective."
-			if("eldergod")
-				explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it."
-		cult_mind.current << "<B>Objective #[obj_count]</B>: [explanation]"
-		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
+	if(config.objectives_disabled == 0)
+		for(var/obj_count = 1,obj_count <= cult_objectives.len,obj_count++)
+			var/explanation
+			switch(cult_objectives[obj_count])
+				if("survive")
+					explanation = "Our knowledge must live on. Make sure at least [acolytes_needed] acolytes escape on the shuttle to spread their work on an another station."
+				if("sacrifice")
+					if(sacrifice_target)
+						explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. You will need the sacrifice rune (Hell blood join) and three acolytes to do so."
+					else
+						explanation = "Free objective."
+				if("eldergod")
+					explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it."
+			cult_mind.current << "<B>Objective #[obj_count]</B>: [explanation]"
+			cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
+	else
+		cult_mind.current << "<i>You have been selected this round as an antagonist- <font color=blue>Within the rules,</font> try to act as an opposing force to the crew- This can be via corporate payoff, personal motives, or maybe just being a dick. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonist.</i></b>"
+	return
 	cult_mind.current << "The Geometer of Blood grants you the knowledge to sacrifice non-believers. (Hell Blood Join)"
 	cult_mind.memory += "The Geometer of Blood grants you the knowledge to sacrifice non-believers. (Hell Blood Join)<BR>"
 	for(var/startingword in startwords)

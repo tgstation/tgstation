@@ -62,7 +62,8 @@
 
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in traitors)
-		forge_traitor_objectives(traitor)
+		if(config.objectives_disabled == 0)
+			forge_traitor_objectives(traitor)
 		spawn(rand(10,100))
 			finalize_traitor(traitor)
 			greet_traitor(traitor)
@@ -157,11 +158,14 @@
 
 
 /datum/game_mode/proc/greet_traitor(var/datum/mind/traitor)
-	traitor.current << "<B><font size=3 color=red>You are the [traitor_name].</font></B>"
-	var/obj_count = 1
-	for(var/datum/objective/objective in traitor.objectives)
-		traitor.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-		obj_count++
+	traitor.current << "<B><font size=3 color=red>You are the traitor.</font></B>"
+	if(config.objectives_disabled == 0)
+		var/obj_count = 1
+		for(var/datum/objective/objective in traitor.objectives)
+			traitor.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+			obj_count++
+	else
+		traitor.current << "<i>You have been selected this round as an antagonist- <font color=blue>Within the rules,</font> try to act as an opposing force to the crew- This can be via corporate payoff, personal motives, or maybe just being a dick. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonist.</i></b>"
 	return
 
 

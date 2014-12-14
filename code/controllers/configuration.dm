@@ -134,6 +134,8 @@
 	var/default_laws = 0 //Controls what laws the AI spawns with.
 	var/silicon_max_law_amount = 12
 
+	var/objectives_disabled = 0 //if objectives are disabled or not
+
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 	for(var/T in L)
@@ -405,6 +407,8 @@
 					config.mutant_races				= 1
 				if("mutant_colors")
 					config.mutant_colors			= 1
+				if("objectives_disabled")
+					config.objectives_disabled 		= 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
