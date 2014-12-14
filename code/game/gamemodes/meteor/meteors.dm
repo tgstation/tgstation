@@ -272,7 +272,7 @@
 
 /obj/effect/meteor/meaty/xeno/ram_turf(var/turf/T)
 	if(!istype(T, /turf/space))
-		new /obj/effect/decal/cleanable/xenoblood (T)
+		new /obj/effect/decal/cleanable/blood/xeno (T)
 
 //Station buster Tunguska
 /obj/effect/meteor/tunguska

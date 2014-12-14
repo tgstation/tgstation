@@ -10,6 +10,7 @@
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 	var/list/viruses = list()
 	blood_DNA = list()
+	var/splatter_type = /obj/effect/decal/cleanable/blood/splatter
 
 /obj/effect/decal/cleanable/blood/Destroy()
 	for(var/datum/disease/D in viruses)
@@ -32,7 +33,6 @@
 /obj/effect/decal/cleanable/blood/tracks
 	icon_state = "tracks"
 	desc = "They look like tracks left by wheels."
-	gender = PLURAL
 	random_icon_states = null
 
 /obj/effect/decal/cleanable/trail_holder //not a child of blood on purpose
@@ -40,21 +40,14 @@
 	icon_state = "blank"
 	desc = "Your instincts say you shouldn't be following these."
 	gender = PLURAL
-	density = 0
-	anchored = 1
-	layer = 2
 	random_icon_states = null
 	var/list/existing_dirs = list()
 	blood_DNA = list()
+	var/trail_type = "" //Used to identify what a trail is (blood, xeno blood etc.)
 
 /obj/effect/decal/cleanable/blood/gibs
 	name = "gibs"
 	desc = "They look bloody and gruesome."
-	gender = PLURAL
-	density = 0
-	anchored = 1
-	layer = 2
-	icon = 'icons/effects/blood.dmi'
 	icon_state = "gibbl5"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 
@@ -86,7 +79,7 @@
 		for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
 			sleep(3)
 			if (i > 0)
-				var/obj/effect/decal/cleanable/blood/b = new /obj/effect/decal/cleanable/blood/splatter(src.loc)
+				var/obj/effect/decal/cleanable/blood/b = new splatter_type(src.loc)
 				for(var/datum/disease/D in src.viruses)
 					var/datum/disease/ND = D.Copy(1)
 					b.viruses += ND

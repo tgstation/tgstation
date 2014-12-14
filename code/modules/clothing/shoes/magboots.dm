@@ -8,7 +8,7 @@
 	action_button_name = "Toggle Magboots"
 	strip_delay = 70
 	put_on_delay = 70
-
+	unacidable = 1
 
 /obj/item/clothing/shoes/magboots/verb/toggle()
 	set name = "Toggle Magboots"

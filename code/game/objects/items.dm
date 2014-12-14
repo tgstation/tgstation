@@ -379,6 +379,9 @@
 		else ..()
 
 /obj/item/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
+	if(unacidable)
+		return 0
+
 	. = 1
 	for(var/V in armor)
 		if(armor[V] > 0)

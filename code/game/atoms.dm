@@ -345,7 +345,7 @@ var/list/blood_splatter_icons = list()
 			if(!B)	B = new(src)
 			B.blood_DNA[M.dna.unique_enzymes] = M.dna.blood_type
 		else if(istype(M, /mob/living/carbon/alien))
-			var/obj/effect/decal/cleanable/xenoblood/B = locate() in contents
+			var/obj/effect/decal/cleanable/blood/xeno/B = locate() in contents
 			if(!B)	B = new(src)
 			B.blood_DNA["UNKNOWN BLOOD"] = "X*"
 		else if(istype(M, /mob/living/silicon/robot))
