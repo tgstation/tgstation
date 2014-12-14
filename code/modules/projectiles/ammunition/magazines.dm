@@ -4,7 +4,7 @@
 	desc = "Oh god, this shouldn't be here"
 	ammo_type = /obj/item/ammo_casing/a357
 	caliber = "357"
-	max_ammo = 7
+	max_ammo = 0
 
 /obj/item/ammo_box/magazine/internal/cylinder/ammo_count(var/countempties = 1)
 	if (!countempties)
@@ -16,6 +16,12 @@
 		return boolets
 	else
 		return ..()
+
+/obj/item/ammo_box/magazine/proc/give(var/amount)
+	if(max_ammo < amount)	return 0
+	var/ammo_used = min(max_ammo-stored_ammo,amount)
+	stored_ammo += ammo_used
+	return ammo_used
 
 /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	name = "russian revolver cylinder"
