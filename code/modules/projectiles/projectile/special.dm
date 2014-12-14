@@ -58,7 +58,7 @@
 			if(200 to 260)
 				name = "cold beam"		//temp at which mobs start taking COLD_DAMAGE_LEVEL_1
 				icon_state = "temp_2"
-			if(120 to 260)
+			if(120 to 200)
 				name = "ice beam"		//temp at which mobs start taking COLD_DAMAGE_LEVEL_2
 				icon_state = "temp_1"
 			if(-INFINITY to 120)
@@ -78,6 +78,9 @@
 			if(temperature > 500)//emagged
 				M.adjust_fire_stacks(0.5)
 				M.on_fire = 1
+				if(M.fire_dmi && M.fire_sprite)
+					M.fire_overlay = image(M.fire_dmi,M.fire_sprite)
+					M.overlays += M.fire_overlay
 				M.update_icon = 1
 				playsound(M.loc, 'sound/effects/bamf.ogg', 50, 0)
 		return 1

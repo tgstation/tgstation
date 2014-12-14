@@ -37,6 +37,21 @@
 		r_store,
 		s_store)
 
+/mob/living/carbon/human/proc/get_cloth_slots()
+	return list(
+		back,
+		wear_mask,
+		belt,
+		wear_id,
+		ears,
+		glasses,
+		gloves,
+		head,
+		shoes,
+		wear_suit,
+		w_uniform,
+		)
+
 /mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/W, list/slots, act_on_fail = 1)
 	for (var/slot in slots)
 		if (equip_to_slot_if_possible(W, slots[slot], 0))

@@ -136,6 +136,9 @@
 /atom/proc/singuloCanEat()
 	return 1
 
+/atom/proc/freeze()
+	return
+
 /atom/proc/bullet_act(var/obj/item/projectile/Proj)
 	return 0
 

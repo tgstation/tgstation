@@ -419,6 +419,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define POWEROFF	4		// tbd
 #define MAINT		8			// under maintaince
 #define EMPED		16		// temporary broken by EMP pulse
+#define FROZEN		32		// frozen by cosmic snow
 
 //bitflags for door switches.
 #define OPEN	1

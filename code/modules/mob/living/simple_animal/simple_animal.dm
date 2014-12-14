@@ -3,6 +3,8 @@
 	icon = 'icons/mob/animal.dmi'
 	health = 20
 	maxHealth = 20
+	fire_dmi = 'icons/mob/OnFire.dmi'
+	fire_sprite = "Generic_mob_burning"
 
 	var/icon_living = ""
 	var/icon_dead = ""

@@ -38,7 +38,12 @@
 
 //scarves (fit in in mask slot)
 
-/obj/item/clothing/mask/bluescarf
+/obj/item/clothing/mask/scarf
+	name = "scarf"
+
+	cold_breath_protection = 230
+
+/obj/item/clothing/mask/scarf/blue
 	name = "blue neck scarf"
 	desc = "A blue neck scarf."
 	icon_state = "blueneckscarf"
@@ -47,7 +52,7 @@
 	w_class = 2
 	gas_transfer_coefficient = 0.90
 
-/obj/item/clothing/mask/redscarf
+/obj/item/clothing/mask/scarf/redwhite
 	name = "red scarf"
 	desc = "A red and white checkered neck scarf."
 	icon_state = "redwhite_scarf"
@@ -56,7 +61,7 @@
 	w_class = 2
 	gas_transfer_coefficient = 0.90
 
-/obj/item/clothing/mask/greenscarf
+/obj/item/clothing/mask/scarf/green
 	name = "green scarf"
 	desc = "A green neck scarf."
 	icon_state = "green_scarf"
@@ -65,7 +70,7 @@
 	w_class = 2
 	gas_transfer_coefficient = 0.90
 
-/obj/item/clothing/mask/ninjascarf
+/obj/item/clothing/mask/scarf/ninja
 	name = "ninja scarf"
 	desc = "A stealthy, dark scarf."
 	icon_state = "ninja_scarf"
@@ -113,6 +118,8 @@
 	flags_inv = HIDEFACE
 	w_class = 1
 	can_flip = 1
+
+	cold_breath_protection = 230
 
 obj/item/clothing/mask/bandana/red
 	name = "red bandana"

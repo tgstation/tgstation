@@ -133,6 +133,7 @@
 		/obj/item/clothing/tie/horrible,
 		/obj/item/device/maracas,
 		/obj/item/weapon/gun/energy/temperature,
+		/obj/item/weapon/shovel/spade,
 		)
 
 	var/obj/item/I = new gift_type(M)
@@ -143,6 +144,7 @@
 	qdel(src)
 	return
 
+//christmas and festive food
 /obj/item/weapon/winter_gift/food/attack_self(mob/M as mob)
 	var/gift_type = pick(
 		/obj/item/weapon/reagent_containers/food/snacks/sliceable/birthdaycake,
@@ -158,10 +160,18 @@
 	qdel(src)
 	return
 
+//warm clothes
 /obj/item/weapon/winter_gift/cloth/attack_self(mob/M as mob)
+	if(prob(30))
+		cloth_bundle()
+		M << "<span class='notice'>You unwrapped a bundle of clothes! Looks comfy!</span>"
+		qdel(src)
+		return
+
 	var/gift_type = pick(
 		/obj/item/clothing/gloves/black,
 		/obj/item/clothing/head/ushanka,
+		/obj/item/clothing/head/bearpelt,
 		)
 
 	var/obj/item/I = new gift_type(M)
@@ -172,6 +182,40 @@
 	qdel(src)
 	return
 
+/obj/item/weapon/winter_gift/cloth/proc/cloth_bundle()
+	var/bundle = pick(
+		3;"batman",
+		10;"russian fur",
+		10;"chicken",
+		8;"pirate captain",
+		2;"cuban pete"
+		)
+
+	switch(bundle)
+		if("batman")
+			new /obj/item/weapon/storage/belt/security/batmanbelt(get_turf(loc))
+			new /obj/item/clothing/head/batman(get_turf(loc))
+			new /obj/item/clothing/gloves/batmangloves(get_turf(loc))
+			new /obj/item/clothing/shoes/jackboots/batmanboots(get_turf(loc))
+			new /obj/item/clothing/under/batmansuit(get_turf(loc))
+		if("russian fur")
+			new /obj/item/clothing/suit/russofurcoat(get_turf(loc))
+			new /obj/item/clothing/head/russofurhat(get_turf(loc))
+		if("chicken")
+			new /obj/item/clothing/head/chicken(get_turf(loc))
+			new /obj/item/clothing/suit/chickensuit(get_turf(loc))
+		if("pirate captain")
+			new /obj/item/clothing/glasses/eyepatch(get_turf(loc))
+			new /obj/item/clothing/head/hgpiratecap(get_turf(loc))
+			new /obj/item/clothing/suit/hgpirate(get_turf(loc))
+			new /obj/item/clothing/under/captain_fly(get_turf(loc))
+			new /obj/item/clothing/shoes/jackboots(get_turf(loc))
+		if("cuban pete")
+			new /obj/item/clothing/head/collectable/petehat(get_turf(loc))
+			new /obj/item/device/maracas(get_turf(loc))
+			new /obj/item/device/maracas(get_turf(loc))
+
+//dangerous items
 /obj/item/weapon/winter_gift/special/attack_self(mob/M as mob)
 	var/gift_type = pick(
 		/obj/item/device/fuse_bomb,
@@ -204,6 +248,16 @@
 
 	qdel(src)
 	return
+
+//black gifts have 2% chance to spawn by default.
+/obj/item/weapon/winter_gift/proc/pick_a_gift(var/turf/T,var/special_chance = 2)
+	var/gift_type = pick(
+		50;/obj/item/weapon/winter_gift/regular,
+		25;/obj/item/weapon/winter_gift/food,
+		25;/obj/item/weapon/winter_gift/cloth,
+		special_chance;/obj/item/weapon/winter_gift/special,
+		)
+	new gift_type(T)
 
 ////STRANGE PRESENTS(wrapped people)////
 
