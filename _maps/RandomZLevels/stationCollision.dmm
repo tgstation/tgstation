@@ -176,7 +176,7 @@
 "dt" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"; tag = ""},/turf/simulated/floor/plasteel{icon_state = "showroomfloor"},/area/awaymission/research)
 "du" = (/obj/effect/decal/remains/human,/obj/item/clothing/suit/labcoat,/turf/simulated/floor/plasteel{icon_state = "showroomfloor"},/area/awaymission/research)
 "dv" = (/obj/machinery/door/airlock/hatch{name = "High-Security Airlock"},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/awaymission/research)
-"dw" = (/obj/machinery/singularity/narsie/sc_Narsie{pixel_x = -48; pixel_y = -51},/turf/space,/area/awaymission/research)
+"dw" = (/obj/singularity/narsie/sc_Narsie{pixel_x = -48; pixel_y = -51},/turf/space,/area/awaymission/research)
 "dx" = (/turf/simulated/floor/plasteel{dir = 0; icon_state = "blue"},/area/awaymission/northblock)
 "dy" = (/obj/machinery/message_server{stat = 1},/turf/simulated/floor/plasteel{dir = 0; icon_state = "blue"},/area/awaymission/northblock)
 "dz" = (/obj/machinery/computer/message_monitor{stat = 1},/turf/simulated/floor/plasteel{dir = 0; icon_state = "blue"},/area/awaymission/northblock)

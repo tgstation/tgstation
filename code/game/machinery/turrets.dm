@@ -528,15 +528,6 @@
 	if (istype(user, /mob/living/silicon))
 		return src.attack_hand(user)
 
-	if (istype(W, /obj/item/weapon/card/emag) && !emagged)
-		user << "<span class='danger'>You short out the turret controls' access analysis module.</span>"
-		emagged = 1
-		locked = 0
-		if(user.machine==src)
-			src.attack_hand(user)
-
-		return
-
 	else if( get_dist(src, user) == 0 )		// trying to unlock the interface
 		if (src.allowed(usr))
 			if(emagged)
@@ -554,6 +545,14 @@
 					src.attack_hand(user)
 		else
 			user << "<span class='warning'>Access denied.</span>"
+
+/obj/machinery/areaturretid/emag_act(mob/user as mob)
+	if(!emagged)
+		user << "<span class='danger'>You short out the turret controls' access analysis module.</span>"
+		emagged = 1
+		locked = 0
+		if(user.machine==src)
+			src.attack_hand(user)
 
 /obj/machinery/areaturretid/attack_ai(mob/user as mob)
 	if(!ailock)

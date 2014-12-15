@@ -810,7 +810,6 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			podman.real_name = realName
 		else
 			podman.real_name = "Pod Person [rand(0,999)]"
-		podman.refresh_huds(mind.current)
 		mind.transfer_to(podman)
 		podman.ckey = ckey
 		podman.gender = blood_gender
