@@ -381,7 +381,7 @@ var/global/list/datum/stack_recipe/snow_recipes = list (
 	var/growthlevel = 20
 
 	pixel_x = 16
-	pixel_y = 25
+	pixel_y = 21
 
 /obj/structure/snow_flora/sappling/New()
 	..()
@@ -452,7 +452,7 @@ var/global/list/datum/stack_recipe/snow_recipes = list (
 
 	var/axe_hits = 0
 
-	pixel_y = 25//regular dead trees appear slightly to the north east, so we can justify that they don't block players.
+	pixel_y = 21//regular dead trees appear slightly to the north east, so we can justify that they don't block players.
 
 /obj/structure/snow_flora/tree/New()
 	..()

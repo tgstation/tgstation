@@ -1,10 +1,11 @@
 /datum/event/cosmic_freeze
+	var/turf/starting_turf = null
 
 /datum/event/cosmic_freeze/start()
-	cosmic_freeze_event()
+	starting_turf = cosmic_freeze_event()
 
 /datum/event/cosmic_freeze/announce()
-	command_alert("Thermal scans suggest that the close approach of a comet has somehow manifested a snow storm aboard the station. Allowing that storm to propagate through the station might have unforeseen consequences.", "Cosmic freeze")
+	command_alert("Thermal scans of [starting_turf.loc] suggest that the close approach of a comet has somehow manifested a snow storm aboard the station. Allowing that storm to propagate through the station might have unforeseen consequences.", "Cosmic Snow Storm")
 
 
 

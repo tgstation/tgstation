@@ -41,7 +41,7 @@
 				Move(get_step(src,pick(4,8)))
 				turns_since_move = 0
 
-	if(enemies.len && prob(5))
+	if(!stat && enemies.len && prob(5))
 		enemies = list()
 		LoseTarget()
 		src.say("Whatever.")
