@@ -35,6 +35,7 @@
 	var/stutter = 0
 	var/eyeblur = 0
 	var/drowsy = 0
+	var/jitter = 0
 	var/forcedodge = 0
 
 /obj/item/projectile/proc/on_hit(atom/target, blocked = 0, hit_zone)
