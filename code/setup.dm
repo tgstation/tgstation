@@ -900,7 +900,20 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define MELTPOINT_STEEL   1510+T0C
 #define MELTPOINT_SILICON 1687 // KELVIN
 #define MELTPOINT_PLASTIC 180+T0C
-#define MELTPOINT_SNOW	  304.15
+#define MELTPOINT_SNOW	  304.15	//about 30°C
+
+// snow business
+#define SNOWBALL_MINIMALTEMP 265	//about -10°C, the minimal temperature at which a thrown snowball can cool you down.
+
+#define SNOWSPREAD_MAXTEMP 296.15	//23°C, the maximal temperature (in Kelvin) at which cosmic snow will spread to adjacent tiles
+#define COSMICSNOW_MINIMALTEMP 233	//-40°C, the lowest temperature at which Cosmic snow will cool down its surroundings
+
+//the following defines refer to the number of cosmic snow tiles in the world.
+#define COSMICFREEZE_LEVEL_1 200	//Cosmic snow now has a chance to spawn a sappling upon spreading.
+#define COSMICFREEZE_LEVEL_2 400	//Cosmic snow now has a chance to spawn a snowman upon spreading.
+#define COSMICFREEZE_LEVEL_3 600	//Pine Trees now has a chance to spawn a spiderling upon growing.
+#define COSMICFREEZE_LEVEL_4 800	//(triggered once per round) Space bears spawn around the station.
+#define COSMICFREEZE_LEVEL_5 1000	//Pine Trees now have a chance to spawn a Space Bear upon growing.
 
 //used to define machine behaviour in attackbys and other code situations
 #define EMAGGABLE		1 //can we emag it? If this is flagged, the machine calls emag()

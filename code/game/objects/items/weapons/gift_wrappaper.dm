@@ -276,21 +276,22 @@
 	user << "<span class='notice'>You can't move.</span>"
 
 /obj/effect/spresent/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
+	if (istype(W, /obj/item/weapon/wirecutters))
+		user << "<span class='notice'>You cut open the present.</span>"
 
-	if (!istype(W, /obj/item/weapon/wirecutters))
+		for(var/mob/M in src) //Should only be one but whatever.
+			M.loc = src.loc
+			if (M.client)
+				M.client.eye = M.client.mob
+				M.client.perspective = MOB_PERSPECTIVE
+
+		qdel(src)
+
+	else
 		user << "<span class='notice'>You need wirecutters for that.</span>"
-		return
+		return	..()
 
-	user << "<span class='notice'>You cut open the present.</span>"
 
-	for(var/mob/M in src) //Should only be one but whatever.
-		M.loc = src.loc
-		if (M.client)
-			M.client.eye = M.client.mob
-			M.client.perspective = MOB_PERSPECTIVE
-
-	del(src)
 
 /*
  * Wrapping Paper
@@ -384,7 +385,7 @@
 
 	if (src.amount <= 0)
 		new /obj/item/weapon/c_tube( src.loc )
-		del(src)
+		qdel(src)
 	return
 
 /obj/item/weapon/wrapping_paper/afterattack(var/obj/target as obj, mob/user as mob)

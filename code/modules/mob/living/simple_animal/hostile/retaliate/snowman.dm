@@ -112,5 +112,5 @@
 		playsound(A.loc, "swing_hit", 50, 1)
 		if(istype(A,/mob/living/carbon/))
 			var/mob/living/carbon/C = A
-			if(C.bodytemperature >= 265)
+			if(C.bodytemperature >= SNOWBALL_MINIMALTEMP)
 				C.bodytemperature -= 5

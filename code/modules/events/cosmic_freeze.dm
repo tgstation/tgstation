@@ -1,6 +1,3 @@
-/var/global/snow_tiles = 0
-/var/global/bear_invasion = 0
-
 /datum/event/cosmic_freeze
 
 /datum/event/cosmic_freeze/start()

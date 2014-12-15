@@ -1,5 +1,10 @@
 //////SNOW//////(winter 2014, by Deity Link)
 
+#define SNOWCOVERING_FULL 0
+#define SNOWCOVERING_MEDIUM 1
+#define SNOWCOVERING_LITTLE 2
+
+
 /obj/structure/snow
 	name = "snow"
 	layer = 2.5//above the plating and the vents, bellow most items and structures
@@ -10,7 +15,7 @@
 	density = 0
 	mouse_opacity = 1
 
-	var/dug = 0
+	var/dug = SNOWCOVERING_FULL
 
 	var/list/foliage = list(
 		"snowgrass1bb",
@@ -31,8 +36,8 @@
 
 /obj/structure/snow/attackby(obj/item/W,mob/user)
 	if(istype(W,/obj/item/weapon/shovel))//using a shovel or spade harvests some snow and let's you click on the lower layers
-		if(dug < 2)
-			dug = 2
+		if(dug != SNOWCOVERING_LITTLE)
+			dug = SNOWCOVERING_LITTLE
 			icon_state = "snow_dug"
 			mouse_opacity = 0
 			new /obj/item/stack/sheet/snow(get_turf(src), 1)
@@ -40,28 +45,28 @@
 			new /obj/item/stack/sheet/snow(get_turf(src), 1)
 			sleep(400)
 			icon_state = "snow_grabbed"
-			dug = 1
+			dug = SNOWCOVERING_MEDIUM
 			mouse_opacity = 1
 			sleep(400)
-			if(dug != 2)
+			if(dug != SNOWCOVERING_LITTLE)
 				icon_state = "snow"
-				dug = 0
+				dug = SNOWCOVERING_FULL
 		else
 			user << "There isn't much snow left to dig. It might come back later."
 
 /obj/structure/snow/attack_hand(mob/user)
-	if(dug > 0)	return
+	if(dug != SNOWCOVERING_FULL)	return
 	playsound(get_turf(src), "rustle", 50, 1)
 	user << "<span class='notice'>You start digging the snow with your hands.</span>"
 	if(do_after(user,30))
-		dug = 1
+		dug = SNOWCOVERING_MEDIUM
 		user << "<span class='notice'>You form a snowball in your hands.</span>"
 		user.put_in_hands(new /obj/item/stack/sheet/snow())
 		icon_state = "snow_grabbed"
 		sleep(400)
-		if(dug != 2)
+		if(dug != SNOWCOVERING_LITTLE)
 			icon_state = "snow"
-			dug = 0
+			dug = SNOWCOVERING_FULL
 	return
 
 //////COSMIC SNOW(the one that spreads everywhere)//////
@@ -98,16 +103,16 @@
 		if(A.density)
 			blocked = 1
 
-	if((snow_tiles >= 200) && !blocked && prob(15))
+	if((snow_tiles >= COSMICFREEZE_LEVEL_1) && !blocked && prob(15))
 		if(prob(30))
 			new/obj/structure/snow_flora/sappling/pine(get_turf(src))
 		else
 			new/obj/structure/snow_flora/sappling(get_turf(src))
 
-	if((snow_tiles >= 400) && !blocked && prob(2))
+	if((snow_tiles >= COSMICFREEZE_LEVEL_2) && !blocked && prob(2))
 		new/mob/living/simple_animal/hostile/retaliate/snowman(get_turf(src))
 
-	if(!bear_invasion && (snow_tiles >= 800))
+	if(!bear_invasion && (snow_tiles >= COSMICFREEZE_LEVEL_4))
 		bear_invasion = 1
 		for(var/obj/effect/landmark/C in landmarks_list)
 			if(C.name == "carpspawn")
@@ -135,6 +140,8 @@
 	env = TS.return_air()
 
 /obj/structure/snow/cosmic/proc/spread()
+	if(!src)	return
+
 	update_env_air()
 
 	if(!env)	return
@@ -142,12 +149,12 @@
 	if(env.temperature > MELTPOINT_SNOW)//above 30°C, the snow melts away)
 		var/turf/simulated/TS = get_turf(src)
 		if(!istype(TS))	return
-		TS.wet(800)
+		TS.wet(300)
 		snow_tiles--
 		qdel(src)
 		return
 
-	if(env.temperature < 296.15)//the cosmic snow only spreads when the temperature is bellow 23°C
+	if(env.temperature < SNOWSPREAD_MAXTEMP)//the cosmic snow only spreads when the temperature is bellow 23°C
 
 		for(var/i in cardinal)
 			var/turf/T = get_step(src,i)
@@ -200,17 +207,17 @@
 			if(can_spread && (env2.temperature < MELTPOINT_SNOW))
 				new/obj/structure/snow/cosmic(T)
 
-	spawn(5)
-		if(src)
-			spread()
+	spawn(spread_delay)
+		.()
 
 /obj/structure/snow/cosmic/proc/chill()
-	if(env.temperature > 233)//the snow will slowly lower the temperature until -40°C.
+	if(!src)	return
+
+	if(env.temperature > COSMICSNOW_FREEZETEMP)//the snow will slowly lower the temperature until -40°C.
 		env.temperature -= 0.02
 
-	spawn(20)
-		if(src)
-			chill()
+	spawn(chill_delay)
+		.()
 
 
 
@@ -237,7 +244,7 @@
 	var/turf/T = get_turf(src)
 	if(istype(T,/turf/simulated))
 		var/turf/simulated/TS = T
-		TS.wet(800)
+		TS.wet(100)
 	qdel(src)
 
 /obj/item/stack/sheet/snow/throw_at(atom/target, range, speed)
@@ -268,7 +275,7 @@
 		else
 			S.say(pick("A fight? With pleasure.","Don't forget that you're the one who started it all."))
 			S.Retaliate()
-		if(S.bodytemperature >= 232)
+		if(S.bodytemperature >= COSMICSNOW_FREEZETEMP)
 			S.bodytemperature -= 5
 	else	..()
 
@@ -371,6 +378,10 @@ var/global/list/datum/stack_recipe/snow_recipes = list (
 	icon_state = "snowbush1"
 
 	var/growth = 0
+	var/growthlevel = rand(15,25)
+
+	pixel_x = 16
+	pixel_y = 25
 
 /obj/structure/snow_flora/sappling/New()
 	..()
@@ -386,7 +397,7 @@ var/global/list/datum/stack_recipe/snow_recipes = list (
 	growing()
 
 /obj/structure/snow_flora/sappling/proc/growing()
-	if(growth > 20)
+	if(growth > growthlevel)
 		new/obj/structure/snow_flora/tree(get_turf(src))
 		qdel(src)
 
@@ -405,8 +416,14 @@ var/global/list/datum/stack_recipe/snow_recipes = list (
 	if(is_type_in_list(W,cutting))
 		qdel(src)
 
+/obj/structure/snow_flora/sappling/pine
+	pixel_x = 0
+	pixel_y = 0
+
+	growthlevel = rand(25,35)
+
 /obj/structure/snow_flora/sappling/pine/growing()
-	if(growth > 30)
+	if(growth > growthlevel)
 		if(prob(20))
 			new/obj/structure/snow_flora/tree/pine/xmas(get_turf(src))
 		else
@@ -430,6 +447,8 @@ var/global/list/datum/stack_recipe/snow_recipes = list (
 	icon_state = "tree_1"
 
 	var/axe_hits = 0
+
+	pixel_y = 25//regular dead trees appear slightly to the north east, so we can justify that they don't block players.
 
 /obj/structure/snow_flora/tree/New()
 	..()
@@ -475,6 +494,7 @@ var/global/list/datum/stack_recipe/snow_recipes = list (
 	density = 1
 
 	pixel_x = -16
+	pixel_y = 0
 
 /obj/structure/snow_flora/tree/pine/New()
 	..()
@@ -484,10 +504,10 @@ var/global/list/datum/stack_recipe/snow_recipes = list (
 		"pine_3",
 		)
 
-	if((snow_tiles >= 600) && prob(20))
+	if((snow_tiles >= COSMICFREEZE_LEVEL_3) && prob(20))
 		new /mob/living/simple_animal/hostile/giant_spider/spiderling(get_turf(src))
 
-	if((snow_tiles >= 1000) && prob(20))
+	if((snow_tiles >= COSMICFREEZE_LEVEL_5) && prob(20))
 		new /mob/living/simple_animal/hostile/bear(get_turf(src))
 
 /obj/structure/snow_flora/tree/pine/attackby(obj/item/W,mob/user)
@@ -533,3 +553,7 @@ var/global/list/datum/stack_recipe/snow_recipes = list (
 
 		for(var/i=1,i<=rand(1,3),i++)
 			call(/obj/item/weapon/winter_gift/proc/pick_a_gift)(T,5)
+
+#undef SNOWCOVERING_FULL
+#undef SNOWCOVERING_MEDIUM
+#undef SNOWCOVERING_LITTLE

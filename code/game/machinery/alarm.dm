@@ -186,8 +186,8 @@
 	var/datum/gas_mixture/environment = location.return_air()
 
 	if(stat & (FROZEN))
-		if(environment.temperature >= 300)
-			visible_message("The ice on \the [src] melts away. it should be operational once again.")
+		if(environment.temperature >= MELTPOINT_SNOW)
+			visible_message("The ice on \the [src] melts away. It should be operational once again.")
 			stat &= ~FROZEN
 		update_icon()
 		return
@@ -319,7 +319,7 @@
 	return 0
 
 /obj/machinery/alarm/update_icon()
-	overlays = 0
+	overlays = list()
 	if(stat & FROZEN)
 		overlays += image(icon,"alarmf")
 
@@ -656,7 +656,7 @@
 
 /obj/machinery/alarm/interact(mob/user)
 	if(stat & FROZEN)
-		user << "If only you could somehow melt the ice covering the alarm's interface..."
+		user << "If only you could somehow melt the ice covering \the [src]'s interface..."
 		return
 
 	user.set_machine(src)
@@ -857,7 +857,7 @@
 			playsound(get_turf(src), pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
 			if(do_after(user, 50))
 				if(!src || !WT.remove_fuel(5, user)) return
-				user << "You melt the ice. \the [src] should be operational once again."
+				user << "You melt the ice. \The [src] should be operational once again."
 				stat &= ~FROZEN
 				update_icon()
 
