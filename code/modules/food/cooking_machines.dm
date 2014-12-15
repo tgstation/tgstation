@@ -288,6 +288,8 @@ var/global/ingredientLimit = 10
 
 // Deep Fryer //////////////////////////////////////////////////
 
+#define DEEPFRY_MINOIL	50
+
 /obj/machinery/cooking/deepfryer
 	name = "deep fryer"
 	desc = "Deep fried <i>everything</i>."
@@ -305,7 +307,7 @@ var/global/ingredientLimit = 10
 
 /obj/machinery/cooking/deepfryer/proc/empty_icon() //sees if the value is empty, and changes the icon if it is
 	reagents.update_total() //make the values refresh
-	if(reagents.total_volume < 50)
+	if(reagents.total_volume < DEEPFRY_MINOIL)
 		icon_state = "fryer_empty"
 	else
 		icon_state = initial(icon_state)
@@ -315,7 +317,7 @@ var/global/ingredientLimit = 10
 	empty_icon()
 
 /obj/machinery/cooking/deepfryer/takeIngredient(var/obj/item/I, mob/user)
-	if(reagents.total_volume < 50)
+	if(reagents.total_volume < DEEPFRY_MINOIL)
 		user << "\The [src] doesn't have enough oil to fry in."
 		return
 	else
