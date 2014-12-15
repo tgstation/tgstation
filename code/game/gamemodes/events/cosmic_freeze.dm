@@ -1,10 +1,10 @@
 /proc/cosmic_freeze_event()
 
-	var/turf/simulated/floor/turfs = list()
+	var/list/turf/simulated/floor/turfs = list()
 
 	var/area/A = locate(pick(typesof(/area/hallway,/area/crew_quarters,/area/maintenance)))
-		for(var/turf/simulated/floor/F in A.contents)
-			turfs += F
+	for(var/turf/simulated/floor/F in A.contents)
+		turfs += F
 
 	if(turfs.len)
 		var/turf/simulated/floor/T = pick(turfs)

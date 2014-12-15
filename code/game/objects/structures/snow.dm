@@ -213,7 +213,7 @@
 /obj/structure/snow/cosmic/proc/chill()
 	if(!src)	return
 
-	if(env.temperature > COSMICSNOW_FREEZETEMP)//the snow will slowly lower the temperature until -40°C.
+	if(env.temperature > COSMICSNOW_MINIMALTEMP)//the snow will slowly lower the temperature until -40°C.
 		env.temperature -= 0.02
 
 	spawn(chill_delay)
@@ -275,7 +275,7 @@
 		else
 			S.say(pick("A fight? With pleasure.","Don't forget that you're the one who started it all."))
 			S.Retaliate()
-		if(S.bodytemperature >= COSMICSNOW_FREEZETEMP)
+		if(S.bodytemperature >= COSMICSNOW_MINIMALTEMP)
 			S.bodytemperature -= 5
 	else	..()
 
@@ -378,7 +378,7 @@ var/global/list/datum/stack_recipe/snow_recipes = list (
 	icon_state = "snowbush1"
 
 	var/growth = 0
-	var/growthlevel = rand(15,25)
+	var/growthlevel = 20
 
 	pixel_x = 16
 	pixel_y = 25
@@ -393,7 +393,7 @@ var/global/list/datum/stack_recipe/snow_recipes = list (
 		"snowbush5",
 		"snowbush6",
 		)
-
+	growthlevel = rand(15,25)
 	growing()
 
 /obj/structure/snow_flora/sappling/proc/growing()
@@ -420,6 +420,10 @@ var/global/list/datum/stack_recipe/snow_recipes = list (
 	pixel_x = 0
 	pixel_y = 0
 
+	growthlevel = 30
+
+/obj/structure/snow_flora/sappling/pine/New()
+	..()
 	growthlevel = rand(25,35)
 
 /obj/structure/snow_flora/sappling/pine/growing()
