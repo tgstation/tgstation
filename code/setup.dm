@@ -933,8 +933,9 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define TRUELOCKS			128 //does it make a truly locked lockbox? If not set, the lockboxes made are unlockable by any crew with an ID
 
 // Mecca scanner flags
-#define MECH_SCAN_FAIL     1 // Cannot be scanned at all.
-#define MECH_SCAN_ILLEGAL  2 // Can only be scanned by the antag scanner.
+#define MECH_SCAN_FAIL		1 // Cannot be scanned at all.
+#define MECH_SCAN_ILLEGAL	2 // Can only be scanned by the antag scanner.
+#define MECH_SCAN_ACCESS	4 // Can only be scanned with the access required for the machine
 
 
 // EMOTES!
