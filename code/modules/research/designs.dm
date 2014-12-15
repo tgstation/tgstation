@@ -2345,6 +2345,14 @@ The required techs are the following:
 	materials = list("$iron" = 700, "$glass" = 2000, "$gold" = 100)
 	build_path = /obj/item/clothing/glasses/night
 
+/datum/design/device_analyser
+	name = "Device Analyser"
+	desc = "A device for scanning other devices. Meta."
+	id = "deviceanalyser"
+	req_tech = list("magnets"=3, "engineering"=4, "materials"=4, "programming"=3)
+	build_type = PROTOLATHE
+	materials = list("$iron" = 500, "$glass" = 1000, "$gold" = 200, "$silver" = 200)
+	build_path = /obj/item/device/device_analyser
 
 /////////////////////////////////////////
 //////////////////Security///////////////
