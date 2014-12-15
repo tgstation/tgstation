@@ -14,7 +14,7 @@
 	stun = 5
 	weaken = 5
 	stutter = 5
-	jitter = 300
+	jitter = 20
 	hitsound = "sparks"
 
 	on_hit(var/atom/target, var/blocked = 0)
