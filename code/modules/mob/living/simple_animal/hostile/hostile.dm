@@ -241,9 +241,7 @@
 	..()
 	walk(src, 0)
 
-/mob/living/simple_animal/hostile/proc/OpenFire(var/the_target)
-
-	var/target = the_target
+/mob/living/simple_animal/hostile/proc/OpenFire(var/target)
 
 	var/tturf = get_turf(target)
 	if(rapid)

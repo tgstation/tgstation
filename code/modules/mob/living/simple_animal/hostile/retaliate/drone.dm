@@ -99,7 +99,7 @@
 	if(prob(disabled ? 0 : 1) && hostile == 0)
 		src.visible_message("<span class='warning'> \icon[src] [src] suddenly lights up, and additional targeting vanes slide into place.</span>")
 		hostile = 1
-		hostile_time = 30
+		hostile_time = rand(20,35)
 	else if(hostile == 1)
 		hostile_time--
 		if(hostile_time == 0)
