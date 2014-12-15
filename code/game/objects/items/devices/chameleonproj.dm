@@ -9,6 +9,7 @@
 	throw_range = 5
 	w_class = 2.0
 	origin_tech = "syndicate=4;magnets=4"
+	var/cham_proj_scan = 1 //Scanning function starts on
 	var/can_use = 1
 	var/obj/effect/dummy/chameleon/active_dummy = null
 	var/saved_item = /obj/item/weapon/cigbutt
@@ -25,11 +26,23 @@
 /obj/item/device/chameleon/attack_self()
 	toggle()
 
+/obj/item/device/chameleon/verb/toggle_scaning()
+	set name = "Toggle Chameleon Projector Scanning"
+	set category = "Object"
+
+	if(usr.stat)
+		return
+
+	cham_proj_scan = !cham_proj_scan
+	usr << "You [cham_proj_scan ? "activate":"deactivate"] [src]'s scanning function"
+
 /obj/item/device/chameleon/afterattack(atom/target, mob/user , proximity)
 	if(!proximity)
 		return
+	if(!cham_proj_scan) //Is scanning disabled ?
+		return
 	if(!active_dummy)
-		if(istype(target,/obj/item) && !istype(target, /obj/item/weapon/disk/nuclear))
+		if(istype(target, /obj/item) && !istype(target, /obj/item/weapon/disk/nuclear) || istype(target, /mob))
 			playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1, -6)
 			user << "<span class='notice'>Scanned [target].</span>"
 			saved_item = target.type
@@ -42,7 +55,7 @@
 		return
 	if(active_dummy)
 		eject_all()
-		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
+		//playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
 		del(active_dummy)
 		active_dummy = null
 		usr << "<span class='notice'>You deactivate [src].</span>"
@@ -55,7 +68,7 @@
 		spawn(20) //Stop spamming this shit
 			can_use = 1
 	else
-		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
+		//playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
 		var/obj/O = new saved_item(src)
 		if(!O)
 			return
@@ -142,19 +155,19 @@
 		can_move = 0
 		switch(user.bodytemperature)
 			if(300 to INFINITY)
-				spawn(10)
+				spawn(8)
 					can_move = 1
 			if(295 to 300)
-				spawn(13)
+				spawn(11)
 					can_move = 1
 			if(280 to 295)
-				spawn(16)
+				spawn(14)
 					can_move = 1
 			if(260 to 280)
-				spawn(20)
+				spawn(18)
 					can_move = 1
 			else
-				spawn(25)
+				spawn(23)
 					can_move = 1
 		step(src, direction)
 	return
