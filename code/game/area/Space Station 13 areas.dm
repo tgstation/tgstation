@@ -61,6 +61,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	// /vg/: No teleporting for you. 2 = SUPER JAMMED, inaccessible even to telecrystals.
 	var/jammed = 0
 
+	var/general_area = /area/station	// the highest parent bellow /area,
+	var/general_area_name = "Station"
+
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
 var/list/teleportlocs = list()
@@ -130,6 +133,9 @@ proc/process_adminbus_teleport_locs()
 
 
 /*-----------------------------------------------------------------------------*/
+
+/area/station//TODO: make every area in the MAIN station inherit from this.
+	name = "Station"
 
 /area/engineering/
 
@@ -1666,6 +1672,9 @@ proc/process_adminbus_teleport_locs()
 	name = "\improper Derelict Station"
 	icon_state = "storage"
 
+	general_area = /area/derelict
+	general_area_name = "Derelict Station"
+
 /area/derelict/hallway/primary
 	name = "\improper Derelict Primary Hallway"
 	icon_state = "hallP"
@@ -1893,6 +1902,14 @@ proc/process_adminbus_teleport_locs()
 //////////////////////////////
 // VOX TRADING POST
 //////////////////////////////
+
+/area/vox_trading_post
+	name = "\improper Vox Trade Outpost"
+	icon_state = "yellow"
+
+	general_area = /area/vox_trading_post
+	general_area_name = "Vox Trade Outpost"
+
 /area/vox_trading_post/trading_floor
 	name = "\improper Vox Trading Floor"
 	icon_state = "yellow"
@@ -1932,6 +1949,11 @@ proc/process_adminbus_teleport_locs()
 
 
 // Telecommunications Satellite
+/area/tcommsat
+	name = "Telecommunications Satellite"
+
+	general_area = /area/tcommsat
+	general_area_name = "Telecommunications Satellite"
 
 /area/tcommsat/entrance
 	name = "\improper Satellite Teleporter"
