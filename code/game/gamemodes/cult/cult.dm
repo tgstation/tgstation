@@ -46,7 +46,7 @@
 	var/const/min_cultists_to_start = 3
 	var/const/max_cultists_to_start = 4
 	var/acolytes_survived = 0
-	var/num_players = 0
+	var/ext_survivors = 0
 
 
 /datum/game_mode/cult/announce()
@@ -77,15 +77,13 @@
 		cultists_possible -= cultist
 		cult += cultist
 
-	for(var/mob/new_player/P in world)
-		if(P.client && P.ready)
-			num_players++
+	ext_survivors = round(num_players()/4)
 
 	return (cult.len > 0)
 
 
 /datum/game_mode/cult/post_setup()
-	acolytes_needed = acolytes_needed_base + num_players/4
+	acolytes_needed = acolytes_needed_base + ext_survivors
 	modePlayer += cult
 	if("sacrifice" in objectives)
 		var/list/possible_targets = get_unconvertables()
