@@ -904,6 +904,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 
 // snow business
 #define SNOWBALL_MINIMALTEMP 265	//about -10°C, the minimal temperature at which a thrown snowball can cool you down.
+#define SNOWBALL_TIMELIMIT   400	//in deciseconds, how long after being spawn does the snowball disappears if it hasn't been picked up
 
 #define SNOWSPREAD_MAXTEMP 296.15	//23°C, the maximal temperature (in Kelvin) at which cosmic snow will spread to adjacent tiles
 #define COSMICSNOW_MINIMALTEMP 233	//-40°C, the lowest temperature at which Cosmic snow will cool down its surroundings

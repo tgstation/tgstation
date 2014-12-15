@@ -1,8 +1,8 @@
 //////SNOW//////(winter 2014, by Deity Link)
 
-#define SNOWCOVERING_FULL 0
+#define SNOWCOVERING_FULL 2
 #define SNOWCOVERING_MEDIUM 1
-#define SNOWCOVERING_LITTLE 2
+#define SNOWCOVERING_LITTLE 0
 
 
 /obj/structure/snow
@@ -15,7 +15,7 @@
 	density = 0
 	mouse_opacity = 1
 
-	var/dug = SNOWCOVERING_FULL
+	var/snow_amount = SNOWCOVERING_FULL
 
 	var/list/foliage = list(
 		"snowgrass1bb",
@@ -36,8 +36,8 @@
 
 /obj/structure/snow/attackby(obj/item/W,mob/user)
 	if(istype(W,/obj/item/weapon/shovel))//using a shovel or spade harvests some snow and let's you click on the lower layers
-		if(dug != SNOWCOVERING_LITTLE)
-			dug = SNOWCOVERING_LITTLE
+		if(snow_amount != SNOWCOVERING_LITTLE)
+			snow_amount = SNOWCOVERING_LITTLE
 			icon_state = "snow_dug"
 			mouse_opacity = 0
 			new /obj/item/stack/sheet/snow(get_turf(src), 1)
@@ -45,28 +45,28 @@
 			new /obj/item/stack/sheet/snow(get_turf(src), 1)
 			sleep(400)
 			icon_state = "snow_grabbed"
-			dug = SNOWCOVERING_MEDIUM
+			snow_amount = SNOWCOVERING_MEDIUM
 			mouse_opacity = 1
 			sleep(400)
-			if(dug != SNOWCOVERING_LITTLE)
+			if(snow_amount != SNOWCOVERING_LITTLE)
 				icon_state = "snow"
-				dug = SNOWCOVERING_FULL
+				snow_amount = SNOWCOVERING_FULL
 		else
 			user << "There isn't much snow left to dig. It might come back later."
 
 /obj/structure/snow/attack_hand(mob/user)
-	if(dug != SNOWCOVERING_FULL)	return
+	if(snow_amount != SNOWCOVERING_FULL)	return
 	playsound(get_turf(src), "rustle", 50, 1)
 	user << "<span class='notice'>You start digging the snow with your hands.</span>"
 	if(do_after(user,30))
-		dug = SNOWCOVERING_MEDIUM
+		snow_amount = SNOWCOVERING_MEDIUM
 		user << "<span class='notice'>You form a snowball in your hands.</span>"
 		user.put_in_hands(new /obj/item/stack/sheet/snow())
 		icon_state = "snow_grabbed"
 		sleep(400)
-		if(dug != SNOWCOVERING_LITTLE)
+		if(snow_amount != SNOWCOVERING_LITTLE)
 			icon_state = "snow"
-			dug = SNOWCOVERING_FULL
+			snow_amount = SNOWCOVERING_FULL
 	return
 
 //////COSMIC SNOW(the one that spreads everywhere)//////
@@ -214,7 +214,7 @@
 	if(!src)	return
 
 	if(env.temperature > COSMICSNOW_MINIMALTEMP)//the snow will slowly lower the temperature until -40°C.
-		env.temperature -= 0.02
+		env.temperature -= (0.01 * snow_amount)
 
 	spawn(chill_delay)
 		.()
@@ -238,7 +238,16 @@
 	recipes = snow_recipes
 	pixel_x = rand(-13,13)
 	pixel_y = rand(-13,13)
+
+	var/spawn_loc = src.loc
+	spawn(SNOWBALL_TIMELIMIT)
+		remove_snowball()
+
 	return ..()
+
+/obj/item/stack/sheet/snow/proc/remove_snowball()
+	if(src && (src.loc == spawn_loc))
+		qdel(src)
 
 /obj/item/stack/sheet/snow/melt()
 	var/turf/T = get_turf(src)

@@ -133,7 +133,8 @@
 		/obj/item/clothing/tie/horrible,
 		/obj/item/device/maracas,
 		/obj/item/weapon/gun/energy/temperature,
-		/obj/item/weapon/shovel/spade,
+		/obj/item/weapon/shovel,
+		/obj/item/clothing/shoes/galoshes,
 		)
 
 	var/obj/item/I = new gift_type(M)
