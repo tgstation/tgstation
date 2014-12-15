@@ -35,29 +35,33 @@
 		else
 			user << "<span class='danger'>Access Denied.</span>"
 			return
-	else if((istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)
+	else if(istype(W, /obj/item/weapon/melee/energy/blade) && !src.broken)
 		broken = 1
 		locked = 0
 		desc = "It appears to be broken."
 		icon_state = src.icon_broken
-		if(istype(W, /obj/item/weapon/melee/energy/blade))
-			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-			spark_system.set_up(5, 0, src.loc)
-			spark_system.start()
-			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-			playsound(src.loc, "sparks", 50, 1)
-			visible_message("<span class='notice'>[user] has sliced open \the [src] with an energy blade!</span>", "<span class='danger'>You hear metal being sliced and sparks flying.</span>")
-			return
-		else
-			for(var/mob/O in viewers(user, 3))
-				O.show_message("<span class='notice'>[user] has broken \the [src] with an electromagnetic card!</span>", 1, "You hear a faint electrical spark.", 2)
-			return
+		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		spark_system.set_up(5, 0, src.loc)
+		spark_system.start()
+		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
+		playsound(src.loc, "sparks", 50, 1)
+		visible_message("<span class='notice'>[user] has sliced open \the [src] with an energy blade!</span>", "<span class='danger'>You hear metal being sliced and sparks flying.</span>")
+		return
 	if(!locked)
 		..()
 	else
 		user << "<span class='danger'>It's locked!</span>"
 	return
 
+/obj/item/weapon/storage/lockbox/emag_act(mob/user as mob)
+	if(!broken)
+		broken = 1
+		locked = 0
+		desc += "It appears to be broken."
+		icon_state = src.icon_broken
+		for(var/mob/O in viewers(user, 3))
+			O.show_message(text("<span class='notice'>\The [src] has been broken by [] with an electromagnetic card!</span>", user), 1, text("You hear a faint electrical spark."), 2)
+			return
 /obj/item/weapon/storage/lockbox/show_to(mob/user as mob)
 	if(locked)
 		user << "<span class='danger'>It's locked!</span>"

@@ -89,14 +89,6 @@
 			bcell = W
 			user << "<span class='notice'>You install a cell in [src].</span>"
 
-	if(istype(W, /obj/item/weapon/card/emag))
-		if(safety)
-			safety = 0
-			user << "<span class='warning'>You silently disable [src]'s safety protocols with the [W]."
-		else
-			safety = 1
-			user << "<span class='notice'>You silently enable [src]'s safety protocols with the [W]."
-
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(bcell)
 			bcell.updateicon()
@@ -106,6 +98,14 @@
 
 	update_icon()
 	return
+
+/obj/item/weapon/defibrillator/emag_act(mob/user as mob)
+	if(safety)
+		safety = 0
+		user << "<span class='warning'>You silently disable [src]'s safety protocols with the cryptographic sequencer."
+	else
+		safety = 1
+		user << "<span class='notice'>You silently enable [src]'s safety protocols with the cryptographic sequencer."
 
 /obj/item/weapon/defibrillator/emp_act(severity)
 	if(bcell)

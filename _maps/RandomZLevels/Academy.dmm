@@ -224,7 +224,7 @@
 "ep" = (/obj/structure/closet/secure_closet/freezer/fridge,/turf/simulated/floor/plasteel{icon_state = "white"},/area/awaymission/academy/classrooms)
 "eq" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/awaymission/academy/classrooms)
 "er" = (/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/plasteel{dir = 6; icon_state = "yellow"},/area/awaymission/academy/classrooms)
-"es" = (/obj/machinery/singularity/academy,/turf/space,/area/space)
+"es" = (/obj/singularity/academy,/turf/space,/area/space)
 "et" = (/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plasteel{icon_state = "yellow"; dir = 10},/area/awaymission/academy/classrooms)
 "eu" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/turf/simulated/floor/plasteel{icon_state = "grimy"},/area/awaymission/academy/classrooms)
 "ev" = (/obj/structure/mineral_door/wood,/turf/simulated/floor/plasteel,/area/awaymission/academy/classrooms)

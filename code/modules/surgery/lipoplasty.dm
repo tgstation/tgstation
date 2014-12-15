@@ -31,7 +31,7 @@
 	user.visible_message("<span class='notice'>[user] extracts [target]'s fat!</span>")
 	target.overeatduration = 0 //patient is unfatted
 	var/removednutriment = target.nutrition
-	target.nutrition = 450
+	target.nutrition = NUTRITION_LEVEL_WELL_FED
 	removednutriment -= 450 //whatever was removed goes into the meat
 	var/obj/item/weapon/reagent_containers/food/snacks/meat/human/newmeat = new
 	newmeat.name = "fatty meat"

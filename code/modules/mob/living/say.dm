@@ -112,14 +112,28 @@ var/list/department_radio_keys = list(
 	if(!message || message == "")
 		return
 
+	var/italics = 0
 	var/message_range = 7
 	var/radio_return = radio(message, message_mode)
 	if(radio_return & NOPASS) //There's a whisper() message_mode, no need to continue the proc if that is called
 		return
 	if(radio_return & ITALICS)
-		message = "<i>[message]</i>"
+		italics = 1
 	if(radio_return & REDUCE_RANGE)
 		message_range = 1
+
+	//No screams in space, unless you're next to someone.
+	var/turf/T = get_turf(src)
+	var/datum/gas_mixture/environment = T.return_air()
+	var/pressure = (environment)? environment.return_pressure() : 0
+	if(pressure < SOUND_MINIMUM_PRESSURE)
+		message_range = 1
+
+	if(pressure < ONE_ATMOSPHERE*0.4) //Thin air, let's italicise the message
+		italics = 1
+
+	if(italics)
+		message = "<i>[message]</i>"
 
 	send_speech(message, message_range, src, bubble_type)
 

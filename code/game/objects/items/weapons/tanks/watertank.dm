@@ -20,15 +20,14 @@
 	noz = make_noz()
 
 /obj/item/weapon/watertank/ui_action_click()
-	if (usr.get_item_by_slot(slot_back) == src)
-		toggle_mister()
-	else
-		usr << "<span class='notice'>The watertank needs to be on your back to use!</span>"
-	return
+	toggle_mister()
 
 /obj/item/weapon/watertank/verb/toggle_mister()
 	set name = "Toggle Mister"
 	set category = "Object"
+	if (usr.get_item_by_slot(slot_back) != src)
+		usr << "<span class='notice'>The watertank needs to be on your back to use.</span>"
+		return
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 	on = !on
@@ -37,11 +36,11 @@
 	if(on)
 		if(noz == null)
 			noz = make_noz()
-			
+
 		//Detach the nozzle into the user's hands
 		if(!user.put_in_hands(noz))
 			on = 0
-			user << "<span class='notice'>You need a free hand to hold the mister!</span>"
+			user << "<span class='notice'>You need a free hand to hold the mister.</span>"
 			return
 		noz.loc = user
 	else
@@ -97,7 +96,7 @@
 	return
 
 /obj/item/weapon/reagent_containers/spray/mister/dropped(mob/user as mob)
-	user << "<span class='notice'>The mister snaps back onto the watertank!</span>"
+	user << "<span class='notice'>The mister snaps back onto the watertank.</span>"
 	tank.on = 0
 	loc = tank
 
