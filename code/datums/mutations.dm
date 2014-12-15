@@ -53,8 +53,11 @@
 /datum/mutation/human/proc/gain_indication(mob/living/carbon/human/owner)
 	owner.overlays.Add(visual_indicators)
 /*
-	owner.apply_overlay(MUTATIONS_LAYER)
-	return
+	var/list/result_overlays = list()
+	var/list/limbs = owner_get_limbs(NON_MECHANICAL|NON_AMPUTATED)   //I dunno how its done by RR but i assume something like this, proc that returns the list of limbs based on what types of limbs to return in argument
+	for(var/obj/limb/L in limbs)
+		result_overlays[L.identificator] = visual_indicators[L.identificator]  //visual_indicators is where overlays icons are stored, they are all created on new of each mutation, i assume you will change it to linked list for easyness, but for now its just a list
+	return owner.redraw_overlays(result_overlays, MUTATION_LAYER)    //Currently mutations draw the overlays themselves but i assume if dismemberment will be overriding lots of shit like maybe clothes or something else mutations will just pass the shit to redraw proc
 */
 /datum/mutation/human/proc/lose_indication(mob/living/carbon/human/owner)
 	owner.overlays.Remove(visual_indicators)
