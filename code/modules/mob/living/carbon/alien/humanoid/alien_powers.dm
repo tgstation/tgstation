@@ -158,7 +158,7 @@ Doesn't work on other aliens/AI.*/
 		visible_message("<span class='alien'>\The [src] vomits up a thick purple substance and shapes it into some form of resin structure!</span>", "<span class='alien'>You shape a [choice]</span>")
 		switch(choice)
 			if("resin door")
-				new /obj/structure/mineral_door/resin(loc)
+				new /obj/machinery/door/mineral/resin(loc)
 			if("resin wall")
 				new /obj/effect/alien/resin/wall(loc)
 			if("resin membrane")

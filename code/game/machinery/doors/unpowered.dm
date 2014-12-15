@@ -32,5 +32,5 @@
 	animation_delay = 16
 
 /obj/machinery/door/unpowered/shuttle/cultify()
-	new /obj/structure/mineral_door/wood(loc)
+	new /obj/machinery/door/mineral/wood(loc)
 	..()

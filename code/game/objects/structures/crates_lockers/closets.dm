@@ -23,6 +23,7 @@
 	m_amt = 2*CC_PER_SHEET_METAL
 	w_type = RECYK_METAL
 
+
 /obj/structure/closet/initialize()
 	..()
 	if(!opened)		// if closed, any item at the crate's loc is put in the contents
@@ -202,6 +203,27 @@
 		del(src)
 
 	return
+
+/obj/structure/closet/beam_connect(var/obj/effect/beam/B)
+	if(!processing_objects.Find(src))
+		processing_objects.Add(src)
+		testing("Connected [src] with [B]!")
+	return ..()
+
+/obj/structure/closet/beam_disconnect(var/obj/effect/beam/B)
+	..()
+	if(beams.len==0)
+		// I hope to christ this doesn't break shit.
+		processing_objects.Remove(src)
+
+/obj/structure/closet/process()
+	//..()
+	for(var/obj/effect/beam/B in beams)
+		health -= B.get_damage()
+
+	if(health <= 0)
+		dump_contents()
+		del(src)
 
 // This is broken, see attack_ai.
 /obj/structure/closet/attack_robot(mob/living/silicon/robot/user as mob)

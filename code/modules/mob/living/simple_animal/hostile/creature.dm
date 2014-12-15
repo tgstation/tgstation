@@ -57,7 +57,7 @@
 			var/obj/machinery/door/airlock/D = A
 			if(D.density && !D.locked && !D.welded)
 				D.open()
-		else if(istype(A,/obj/structure/mineral_door))
+		else if(istype(A,/obj/machinery/door/mineral))
 			var/obj/machinery/door/D = A
 			if(D.density)
 				D.open()
