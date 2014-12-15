@@ -9,6 +9,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/meatbread/New()
 	..()
 	reagents.add_reagent("nutriment", 30)
+	reagents.add_reagent("vitamin", 5)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice
@@ -28,6 +29,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/xenomeatbread/New()
 	..()
 	reagents.add_reagent("nutriment", 30)
+	reagents.add_reagent("vitamin", 5)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/xenomeatbreadslice
@@ -48,6 +50,7 @@
 	..()
 	reagents.add_reagent("nutriment", 30)
 	reagents.add_reagent("toxin", 15)
+	reagents.add_reagent("vitamin", 5)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/spidermeatbreadslice
@@ -91,6 +94,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/tofubread/New()
 	..()
 	reagents.add_reagent("nutriment", 30)
+	reagents.add_reagent("vitamin", 5)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice
@@ -130,6 +134,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/creamcheesebread/New()
 	..()
 	reagents.add_reagent("nutriment", 20)
+	reagents.add_reagent("vitamin", 5)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/creamcheesebreadslice
@@ -149,4 +154,5 @@
 	reagents.add_reagent("nutriment", 6)
 	reagents.add_reagent("blackpepper", 1)
 	reagents.add_reagent("sodiumchloride", 1)
+	reagents.add_reagent("vitamin", 1)
 	bitesize = 3
