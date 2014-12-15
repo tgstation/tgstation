@@ -85,10 +85,10 @@
 				wizard.objectives += survive_objective
 
 		else
-			if (!(locate(/datum/objective/hijack) in wizard.objectives))
-				var/datum/objective/hijack/hijack_objective = new
-				hijack_objective.owner = wizard
-				wizard.objectives += hijack_objective
+			if (!(locate(/datum/objective/shuttlejack) in wizard.objectives))
+				var/datum/objective/shuttlejack/shuttlejack_objective = new
+				shuttlejack_objective.owner = wizard
+				wizard.objectives += shuttlejack_objective
 	return
 
 

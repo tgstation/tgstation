@@ -134,6 +134,8 @@
 	var/default_laws = 0 //Controls what laws the AI spawns with.
 	var/silicon_max_law_amount = 12
 
+	var/shuttlejack_disabled = 0 //Whether or not traitors can get shuttle hijack objective
+
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 	for(var/T in L)
@@ -404,7 +406,9 @@
 				if("join_with_mutant_race")
 					config.mutant_races				= 1
 				if("mutant_colors")
-					config.mutant_colors			= 1
+					config.mutant_colors			=
+				if("shuttlejack_disabled")
+					config.shuttlejack_disabled		= 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

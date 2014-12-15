@@ -585,8 +585,12 @@
 				new_objective = new /datum/objective/block
 				new_objective.owner = src
 
-			if ("hijack")
-				new_objective = new /datum/objective/hijack
+			if ("podjack")
+				new_objective = new /datum/objective/podjack
+				new_objective.owner = src
+
+			if ("shuttlejack")
+				new_objective = new /datum/objective/shuttlejack
 				new_objective.owner = src
 
 			if ("escape")

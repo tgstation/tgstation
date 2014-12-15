@@ -15,9 +15,9 @@
 		steal_objective.set_target(new /datum/objective_item/steal/nukedisc)
 		H.mind.objectives += steal_objective
 
-		var/datum/objective/hijack/hijack_objective = new
-		hijack_objective.owner = H.mind
-		H.mind.objectives += hijack_objective
+		var/datum/objective/shuttlejack/shuttlejack_objective = new
+		shuttlejack_objective.owner = H.mind
+		H.mind.objectives += shuttlejack_objective
 
 		H << "<B>You are the traitor.</B>"
 		var/obj_count = 1
