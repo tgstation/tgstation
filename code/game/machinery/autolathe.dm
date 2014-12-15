@@ -171,58 +171,24 @@
 
 			/////////////////
 			//href protection
-			being_built = files.FindDesignByID(href_list["make"])
+			being_built = files.FindDesignByID(href_list["make"]) //check if it's a valid design
 			if(!being_built)
 				return
 
+			//multiplier checks : only stacks can have one and its value is 1, 10 ,25 or max_multiplier
 			var/multiplier = text2num(href_list["multiplier"])
+			var/max_multiplier = min(50, being_built.materials["$metal"] ?round(m_amount/being_built.materials["$metal"]):INFINITY,being_built.materials["$glass"]?round(g_amount/being_built.materials["$glass"]):INFINITY)
 			var/is_stack = ispath(being_built.build_path, /obj/item/stack)
 
 			if(!is_stack && (multiplier > 1))
 				return
-			if (!(multiplier in list(1,10,25,50)))
+			if (!(multiplier in list(1,10,25,max_multiplier))) //"enough materials ?" is checked further down
 				return
 			/////////////////
 
 			var/coeff = (is_stack ? 1 : 2 ** prod_coeff) //stacks are unaffected by production coefficient
 			var/metal_cost = being_built.materials["$metal"]
 			var/glass_cost = being_built.materials["$glass"]
-
-
-
-
-			// critical exploit fix start -walter0o
-			/*var/obj/item/template = null
-			var/attempting_to_build = locate(href_list["make"])
-
-			if(!attempting_to_build)
-				return*/
-
-			/*if(locate(attempting_to_build, src.L) || locate(attempting_to_build, src.LL)) // see if the requested object is in one of the construction lists, if so, it is legit -walter0o
-				template = attempting_to_build*/
-
-			/*else // somebody is trying to exploit, alert admins -walter0o
-
-				var/turf/LOC = get_turf(usr)
-				message_admins("[key_name_admin(usr)] tried to exploit an autolathe to duplicate <a href='?_src_=vars;Vars=\ref[attempting_to_build]'>[attempting_to_build]</a> ! ([LOC ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[LOC.x];Y=[LOC.y];Z=[LOC.z]'>JMP</a>" : "null"])", 0)
-				log_admin("EXPLOIT : [key_name(usr)] tried to exploit an autolathe to duplicate [attempting_to_build] !")
-				return*/
-
-			// now check for legit multiplier, also only stacks should pass with one to prevent raw-materials-manipulation -walter0o
-
-
-			/*var/max_multiplier = 1
-
-			if(istype(template, /obj/item/stack)) // stacks are the only items which can have a multiplier higher than 1 -walter0o
-				var/obj/item/stack/S = template
-				max_multiplier = min(S.max_amount, S.m_amt?round(m_amount/S.m_amt):INFINITY, S.g_amt?round(g_amount/S.g_amt):INFINITY)  // pasta from regular_win() to make sure the numbers match -walter0o
-
-			if( (multiplier > max_multiplier) || (multiplier <= 0) ) // somebody is trying to exploit, alert admins-walter0o
-
-				var/turf/LOC = get_turf(usr)
-				message_admins("[key_name_admin(usr)] tried to exploit an autolathe with multiplier set to <u>[multiplier]</u> on <u>[template]</u>  ! ([LOC ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[LOC.x];Y=[LOC.y];Z=[LOC.z]'>JMP</a>" : "null"])" , 0)
-				log_admin("EXPLOIT : [key_name(usr)] tried to exploit an autolathe with multiplier set to [multiplier] on [template]  !")
-				return*/
 
 			var/power = max(2000, (metal_cost+glass_cost)*multiplier/5)
 
@@ -288,7 +254,6 @@
 	return dat
 
 /obj/machinery/autolathe/proc/category_win(mob/user,var/selected_category)
-	var/coeff = 2 ** prod_coeff
 	var/dat = "<A href='?src=\ref[src];menu=1'>Return to category screen</A>"
 	dat += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3><br>"
 	dat += "<b>Metal amount:</b> [src.m_amount] / [max_m_amount] cm<sup>3</sup><br>"
@@ -305,27 +270,29 @@
 
 		if(ispath(D.build_path, /obj/item/stack))
 			var/max_multiplier = min(50, D.materials["$metal"] ?round(m_amount/D.materials["$metal"]):INFINITY,D.materials["$glass"]?round(g_amount/D.materials["$glass"]):INFINITY)
-			if (max_multiplier>=10 && !disabled)
+			if (max_multiplier>10 && !disabled)
 				dat += " <a href='?src=\ref[src];make=[D.id];multiplier=10'>x10</a>"
-			if (max_multiplier>=25 && !disabled)
+			if (max_multiplier>25 && !disabled)
 				dat += " <a href='?src=\ref[src];make=[D.id];multiplier=25'>x25</a>"
-			if (max_multiplier>=50 && !disabled)
-				dat += " <a href='?src=\ref[src];make=[D.id];multiplier=50'>x50</a>"
-			dat += "[get_design_cost(D)]<br>"
-		else
-			dat += "[get_design_cost(D,coeff)]<br>"
+			if(max_multiplier > 0 && !disabled)
+				dat += " <a href='?src=\ref[src];make=[D.id];multiplier=[max_multiplier]'>x[max_multiplier]</a>"
+
+		dat += "[get_design_cost(D)]<br>"
 
 	dat += "</div>"
 	return dat
 
 /obj/machinery/autolathe/proc/can_build(var/datum/design/D)
-	if(D.materials["$metal"] && (m_amount < D.materials["$metal"]))
+	var/coeff = (ispath(D.build_path,/obj/item/stack) ? 1 : 2 ** prod_coeff)
+
+	if(D.materials["$metal"] && (m_amount < (D.materials["$metal"] / coeff)))
 		return 0
-	if(D.materials["$glass"] && (g_amount < D.materials["$glass"]))
+	if(D.materials["$glass"] && (g_amount < (D.materials["$glass"] / coeff)))
 		return 0
 	return 1
 
-/obj/machinery/autolathe/proc/get_design_cost(var/datum/design/D, var/coeff = 1)
+/obj/machinery/autolathe/proc/get_design_cost(var/datum/design/D)
+	var/coeff = (ispath(D.build_path,/obj/item/stack) ? 1 : 2 ** prod_coeff)
 	var/dat
 	if(D.materials["$metal"])
 		dat += "[D.materials["$metal"] / coeff] metal "
