@@ -15,6 +15,7 @@
 	var/size = 3.0
 	var/obj/item/gift = null
 	w_class = 3.0
+	autoignition_temperature=AUTOIGNITION_PAPER
 
 /obj/item/weapon/gift/small
 	icon_state = "gift-small"
@@ -37,6 +38,11 @@
 	del(src)
 	return
 
+/obj/item/weapon/gift/ashify()//so the content of player-made gifts can be recovered.
+	if(gift)
+		gift.loc = src.loc
+	..()
+
 ////WINTER GIFTS////
 
 /obj/item/weapon/winter_gift
@@ -46,6 +52,7 @@
 	icon_state = "gift"
 	item_state = "gift"
 	w_class = 4.0
+	autoignition_temperature=AUTOIGNITION_PAPER
 
 /obj/item/weapon/winter_gift/New()
 	..()

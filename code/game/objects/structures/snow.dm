@@ -379,7 +379,11 @@ var/global/list/datum/stack_recipe/snow_recipes = list (
 
 
 //////TREES//////
-
+/obj/structure/snow_flora
+	name = "snow_flora"
+	icon = 'icons/obj/flora/snowflora.dmi'
+	icon_state = "snowbush1"
+	autoignition_temperature=AUTOIGNITION_WOOD
 
 /obj/structure/snow_flora/sappling
 	name = "sappling"
@@ -560,6 +564,7 @@ var/global/list/datum/stack_recipe/snow_recipes = list (
 	icon_state = "pine_c"
 
 /obj/structure/snow_flora/tree/pine/xmas/New()
+	..()
 	for(var/turf/simulated/floor/T in orange(1,src))
 		var/blocked = 0
 		for(var/atom/A in T)
