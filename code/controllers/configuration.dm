@@ -406,7 +406,7 @@
 				if("join_with_mutant_race")
 					config.mutant_races				= 1
 				if("mutant_colors")
-					config.mutant_colors			=
+					config.mutant_colors			= 1
 				if("shuttlejack_disabled")
 					config.shuttlejack_disabled		= 1
 				else
