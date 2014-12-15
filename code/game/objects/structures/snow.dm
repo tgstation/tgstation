@@ -234,19 +234,22 @@
 	throw_speed = 3
 	throw_range = 6
 
+	var/spawn_loc = null
+
 /obj/item/stack/sheet/snow/New(var/loc, var/amount=null)
 	recipes = snow_recipes
 	pixel_x = rand(-13,13)
 	pixel_y = rand(-13,13)
 
-	var/spawn_loc = src.loc
+	spawn_loc = src.loc
+
 	spawn(SNOWBALL_TIMELIMIT)
 		remove_snowball()
 
 	return ..()
 
 /obj/item/stack/sheet/snow/proc/remove_snowball()
-	if(src && (src.loc == spawn_loc))
+	if(src && (src.loc == spawn_loc) && istype(src.loc,/turf))
 		qdel(src)
 
 /obj/item/stack/sheet/snow/melt()
