@@ -102,7 +102,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 		return
 
 	if(affected_mob)
-		if(affected_mob.reagents.has_reagent("spaceacillin"))
+		if( affected_mob.reagents.has_reagent("spaceacillin") || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)) )
 			return
 
 	var/spread_range = 1

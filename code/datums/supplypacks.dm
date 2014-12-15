@@ -250,13 +250,13 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 15
 	containername = "riot helmets crate"
 
-/datum/supply_packs/security/armory/riotsuits
-	name = "Riot Suits Crate"
+/datum/supply_packs/security/armory/riotarmor
+	name = "Riot Armor Crate"
 	contains = list(/obj/item/clothing/suit/armor/riot,
 					/obj/item/clothing/suit/armor/riot,
 					/obj/item/clothing/suit/armor/riot)
 	cost = 15
-	containername = "riot suits crate"
+	containername = "riot armor crate"
 
 /datum/supply_packs/security/armory/riotshields
 	name = "Riot Shields Crate"
@@ -266,13 +266,21 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 20
 	containername = "riot shields crate"
 
+/datum/supply_packs/security/armory/bullethelmet
+	name = "Tactical Helmets Crate"
+	contains = list(/obj/item/clothing/head/helmet/bulletproof,
+					/obj/item/clothing/head/helmet/bulletproof,
+					/obj/item/clothing/head/helmet/bulletproof)
+	cost = 15
+	containername = "tactical helmets crate"
+
 /datum/supply_packs/security/armory/bulletarmor
-	name = "Bulletproof Armor Crate"
+	name = "Tactical Armor Crate"
 	contains = list(/obj/item/clothing/suit/armor/bulletproof,
 					/obj/item/clothing/suit/armor/bulletproof,
 					/obj/item/clothing/suit/armor/bulletproof)
 	cost = 15
-	containername = "bulletproof armor crate"
+	containername = "tactical armor crate"
 
 /datum/supply_packs/security/armory/laserarmor
 	name = "Ablative Armor Crate"
@@ -696,6 +704,15 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/reagent_containers/food/snacks/grown/banana)
 	cost = 10
 	containername = "food crate"
+
+/datum/supply_packs/organic/pizza
+	name = "Pizza Crate"
+	contains = list(/obj/item/pizzabox/margherita,
+					/obj/item/pizzabox/mushroom,
+					/obj/item/pizzabox/meat,
+					/obj/item/pizzabox/vegetable)
+	cost = 60
+	containername = "Pizza crate"
 
 /datum/supply_packs/organic/monkey
 	name = "Monkey Crate"

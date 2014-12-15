@@ -126,7 +126,7 @@
 	caliber = ".45"
 	max_ammo = 20
 
-/obj/item/ammo_box/magazine/smgm/update_icon()
+/obj/item/ammo_box/magazine/smgm45/update_icon()
 	..()
 	icon_state = "[initial(icon_state)]-[round(ammo_count(),2)]"
 

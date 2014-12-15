@@ -169,7 +169,7 @@
 	if(current && current.can_use())
 		var/list/seen = current.can_see()
 		var/list/names = list()
-		for(var/obj/machinery/singularity/S in seen) // god help you if you see more than one
+		for(var/obj/singularity/S in seen) // god help you if you see more than one
 			if(S.name in names)
 				names[S.name]++
 				dat += "[S.name] ([names[S.name]])"

@@ -24,6 +24,7 @@
 	reagents.add_reagent("nutriment", 3)
 	reagents.add_reagent("sugar", 2)
 	reagents.add_reagent("coco", 2)
+	reagents.add_reagent("vitamin", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/chocolatebar/attack_self(mob/user)
 	if(wrapped)
@@ -51,6 +52,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice/New()
 	..()
 	reagents.add_reagent("nutriment", 3)
+	reagents.add_reagent("vitamin", 1)
 	src.bitesize = 3
 
 
@@ -165,6 +167,7 @@
 	..()
 	reagents.add_reagent("nutriment", 3)
 	reagents.add_reagent("imidazoline", 3)
+	reagents.add_reagent("vitamin", 2)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/candiedapple
@@ -175,6 +178,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/candiedapple/New()
 	..()
 	reagents.add_reagent("nutriment", 3)
+	reagents.add_reagent("sugar", 3)
 	bitesize = 3
 
 /*
