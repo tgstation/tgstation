@@ -144,9 +144,9 @@
 	W.source = wirestore
 	modules += W
 
-	var/obj/item/stack/tile/plasteel/cyborg/F = new /obj/item/stack/tile/plasteel/cyborg(src) //"Plasteel" is the normal metal floor tile, Don't be confused - RR
+	var/obj/item/stack/tile/plasteel/cyborg/F = new /obj/item/stack/tile/plasteel/cyborg(src) //"Plasteel" is the normal metal floor tile, Don't be confused
 	F.source = metstore
-	modules += F //'F' for floor tile - RR(src)
+	modules += F
 
 	storages += metstore
 	storages += glastore
