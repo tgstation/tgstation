@@ -352,13 +352,8 @@
 							H.adjustToxLoss(tobehealed)
 							H.adjustFireLoss(tobehealed)
 							H.adjustBruteLoss(tobehealed)
-<<<<<<< HEAD
-							user.visible_message("<span class='boldnotice'>[defib] pings: Resuscitation successful.</span>")
-							playsound(get_turf(src), 'sound/machines/defib_success.ogg', 50, 0)
-=======
 							user.visible_message("<span class='notice'>[defib] pings: Resuscitation successful.</span>")
-							playsound(get_turf(src), 'sound/machines/ping.ogg', 50, 0)
->>>>>>> remotes/upstream/master
+							playsound(get_turf(src), 'sound/machines/defib_success.ogg', 50, 0)
 							H.stat = 1
 							dead_mob_list -= H
 							living_mob_list |= list(H)
@@ -373,12 +368,7 @@
 							else if(total_burn >= 180 || total_brute >= 180)
 								user.visible_message("<span class='warning'>[defib] buzzes: Resuscitation failed - Severe tissue damage detected.</span>")
 							else
-<<<<<<< HEAD
-								user.visible_message("<span class='notice'>[defib] buzzes: Resuscitation failed.</span>")
-								playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
-=======
 								user.visible_message("<span class='warning'>[defib] buzzes: Resuscitation failed.</span>")
->>>>>>> remotes/upstream/master
 								if(ghost)
 									ghost << "<span class='ghostalert'>Your heart is being defibrillated. Return to your body if you want to be revived!</span> (Verbs -> Ghost -> Re-enter corpse)"
 									ghost << sound('sound/effects/genetics.ogg')
