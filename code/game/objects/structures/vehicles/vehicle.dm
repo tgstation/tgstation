@@ -19,7 +19,7 @@
 	name = "vehicle"
 	var/nick = null
 	icon = 'icons/obj/vehicles.dmi'
-	anchored = 0 //push it around
+	anchored = 1
 	density = 1
 	var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread
 
@@ -200,10 +200,6 @@
 
 /obj/structure/stool/bed/chair/vehicle/buckle_mob(mob/M, mob/user)
 	if(M != user || !ismob(M) || get_dist(src, user) > 1 || user.restrained() || user.lying || user.stat || M.buckled || istype(user, /mob/living/silicon) || destroyed)
-		return
-
-	if(!check_key(M))
-		M << "\red You don't have the key for this."
 		return
 
 	unbuckle()
