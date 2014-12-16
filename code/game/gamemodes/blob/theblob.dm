@@ -56,7 +56,7 @@
 	var/lastcheck=last_beamchecks["\ref[B]"]
 
 	// Standard damage formula / 2
-	var/damage = ((world.time - lastcheck)/10)  * B.get_damage()
+	var/damage = ((world.time - lastcheck)/10)  * (B.get_damage() / 2)
 
 	// Actually apply damage
 	health -= damage
