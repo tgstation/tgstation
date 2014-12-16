@@ -57,7 +57,7 @@
 /obj/machinery/suit_storage_unit/security
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/security
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/security
-	MASK_TYPE = /obj/item/clothing/mask/gas/sechailer
+	MASK_TYPE = /obj/item/clothing/mask/gas
 
 /obj/machinery/suit_storage_unit/atmos
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/atmos
@@ -124,7 +124,7 @@
 		dump_everything()
 	update_icon()
 
-/obj/machinery/suit_storage_unit/ex_act(severity, specialty)
+/obj/machinery/suit_storage_unit/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			if(prob(50))

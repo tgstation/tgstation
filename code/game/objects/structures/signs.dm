@@ -5,7 +5,7 @@
 	density = 0
 	layer = 3.5
 
-/obj/structure/sign/ex_act(severity, specialty)
+/obj/structure/sign/ex_act(severity, target)
 	qdel(src)
 
 /obj/structure/sign/blob_act()

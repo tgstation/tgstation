@@ -5,9 +5,11 @@
 	icon_state = "d6"
 	w_class = 1
 	var/sides = 6
+	var/result = null
 
 /obj/item/weapon/dice/New()
-	icon_state = "[initial(icon_state)][rand(1, sides)]"
+	result = rand(1, sides)
+	update_icon()
 
 /obj/item/weapon/dice/d2
 	name = "d2"
@@ -60,13 +62,13 @@
 	diceroll(user)
 
 /obj/item/weapon/dice/proc/diceroll(mob/user as mob)
-	var/result = rand(1, sides)
+	result = rand(1, sides)
 	var/comment = ""
 	if(sides == 20 && result == 20)
 		comment = "Nat 20!"
 	else if(sides == 20 && result == 1)
 		comment = "Ouch, bad luck."
-	icon_state = "[initial(icon_state)][result]"
+	update_icon()
 	if(initial(icon_state) == "d00")
 		result = (result - 1)*10
 	if(user != null) //Dice was rolled in someone's hand
@@ -81,3 +83,7 @@
 		H << "<span class='userdanger'>You step on the D4!</span>"
 		H.apply_damage(4,BRUTE,(pick("l_leg", "r_leg")))
 		H.Weaken(3)
+
+/obj/item/weapon/dice/update_icon()
+	overlays.Cut()
+	overlays += "[src.icon_state][src.result]"

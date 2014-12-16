@@ -64,7 +64,7 @@
 	opacity = 1
 	spawn(20) if(src) opacity = 0
 
-/obj/machinery/shield/ex_act(severity, specialty)
+/obj/machinery/shield/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			if (prob(75))
@@ -181,7 +181,7 @@
 	update_icon()
 	return
 
-/obj/machinery/shieldgen/ex_act(severity, specialty)
+/obj/machinery/shieldgen/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			src.health -= 75
@@ -232,11 +232,7 @@
 	return
 
 /obj/machinery/shieldgen/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/card/emag))
-		malfunction = 1
-		update_icon()
-
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/weapon/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		if(is_open)
 			user << "<span class='notice'>You close the panel.</span>"
@@ -287,6 +283,10 @@
 	else
 		..()
 
+/obj/machinery/shieldgen/emag_act()
+	if(!malfunction)
+		malfunction = 1
+		update_icon()
 
 /obj/machinery/shieldgen/update_icon()
 	if(active)
@@ -567,7 +567,7 @@
 	return
 
 
-/obj/machinery/shieldwall/ex_act(severity, specialty)
+/obj/machinery/shieldwall/ex_act(severity, target)
 	if(needs_power)
 		var/obj/machinery/shieldwallgen/G
 		switch(severity)

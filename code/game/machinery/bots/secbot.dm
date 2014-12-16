@@ -230,8 +230,8 @@ Auto Patrol: []"},
 					if(declare_arrests)
 						var/area/location = get_area(src)
 						speak("[arrest_type ? "Detaining" : "Arresting"] level [threatlevel] scumbag <b>[target]</b> in [location].", radio_frequency)
-					target.visible_message("<span class='danger'>[target] has been stunned by [src]!</span>",\
-											"<span class='userdanger'>[target] has been stunned by [src]!</span>")
+					target.visible_message("<span class='danger'>[src] has stunned [target]!</span>",\
+											"<span class='userdanger'>[src] has stunned [target]!</span>")
 
 					mode = BOT_PREP_ARREST
 					anchored = 1

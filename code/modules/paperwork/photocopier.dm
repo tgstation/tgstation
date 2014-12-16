@@ -269,7 +269,7 @@
 				copy = null
 			updateUsrDialog()
 
-/obj/machinery/photocopier/ex_act(severity, specialty)
+/obj/machinery/photocopier/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			qdel(src)

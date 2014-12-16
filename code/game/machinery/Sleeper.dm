@@ -84,7 +84,7 @@
 
 	default_deconstruction_crowbar(I)
 
-/obj/machinery/sleeper/ex_act(severity, specialty)
+/obj/machinery/sleeper/ex_act(severity, target)
 	go_out()
 	..()
 

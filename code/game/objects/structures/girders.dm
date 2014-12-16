@@ -198,7 +198,7 @@
 		qdel(src)
 
 
-/obj/structure/girder/ex_act(severity, specialty)
+/obj/structure/girder/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			qdel(src)
@@ -229,7 +229,7 @@
 	state = 2
 	girderpasschance = 0
 
-/obj/structure/girder/reinforced/ex_act(severity, specialty)
+/obj/structure/girder/reinforced/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			qdel(src)
@@ -285,7 +285,7 @@
 		qdel(src)
 
 
-/obj/structure/cultgirder/ex_act(severity, specialty)
+/obj/structure/cultgirder/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			qdel(src)

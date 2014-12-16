@@ -745,10 +745,9 @@ var/global/list/g_fancy_list_of_types = null
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/clown_shoes(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(M), slot_wear_mask)
-			M.equip_to_slot_or_del(new /obj/item/clothing/head/chaplain_hood(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/monocle(M), slot_glasses)
-			M.equip_to_slot_or_del(new /obj/item/clothing/suit/chaplain_hoodie(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/chaplain_hoodie(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(M), slot_l_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(M), slot_r_store)
 
@@ -848,7 +847,7 @@ var/global/list/g_fancy_list_of_types = null
 
 		if("centcom commander")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_commander(M), slot_w_uniform)
-			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/bulletproof(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cent(M), slot_ears)
@@ -990,7 +989,7 @@ var/global/list/g_fancy_list_of_types = null
 	spawn(30)
 		for(var/obj/machinery/the_singularitygen/G in world)
 			if(G.anchored)
-				var/obj/machinery/singularity/S = new /obj/machinery/singularity(get_turf(G), 50)
+				var/obj/singularity/S = new /obj/singularity(get_turf(G), 50)
 //				qdel(G)
 				S.energy = 1750
 				S.current_size = 7

@@ -58,3 +58,5 @@
 	transfer_prints = TRUE
 	strip_delay = 40
 	put_on_delay = 20
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT

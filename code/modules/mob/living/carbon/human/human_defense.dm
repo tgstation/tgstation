@@ -138,11 +138,11 @@ emp_act
 				return 0
 
 		if(I.attack_verb && I.attack_verb.len)
-			visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I] by [user]!</span>", \
-							"<span class='userdanger'>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I] by [user]!</span>")
+			visible_message("<span class='danger'>[user] has [pick(I.attack_verb)] [src] in the [hit_area] with [I]!</span>", \
+							"<span class='userdanger'>[user] has [pick(I.attack_verb)] [src] in the [hit_area] with [I]!</span>")
 		else if(I.force)
-			visible_message("<span class='danger'>[src] has been attacked in the [hit_area] with [I] by [user]!</span>", \
-							"<span class='userdanger'>[src] has been attacked in the [hit_area] with [I] by [user]!</span>")
+			visible_message("<span class='danger'>[user] has attacked [src] in the [hit_area] with [I]!</span>", \
+							"<span class='userdanger'>[user] has attacked [src] in the [hit_area] with [I]!</span>")
 		else
 			return 0
 
@@ -442,8 +442,8 @@ emp_act
 			updatehealth()
 
 		M.occupant_message("<span class='danger'>You hit [src].</span>")
-		visible_message("<span class='danger'>[src] has been hit by [M.name].</span>", \
-								"<span class='userdanger'>[src] has been hit by [M.name].</span>")
+		visible_message("<span class='danger'>[M.name] has hit [src]!</span>", \
+								"<span class='userdanger'>[M.name] has hit [src]!</span>")
 		add_logs(M.occupant, src, "attacked", object=M, addition="(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 
 	else

@@ -87,7 +87,7 @@
 
 
 /obj/item/weapon/c4/proc/explode(var/turf/location)
-	location.ex_act(2, isturf(target) ? 1 : 2)
+	location.ex_act(2, target)
 	explosion(location,0,0,3)
 	if(target)
 		target.overlays -= image_overlay

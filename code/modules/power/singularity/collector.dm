@@ -106,7 +106,7 @@ var/global/list/rad_collectors = list()
 		return 1
 
 
-/obj/machinery/power/rad_collector/ex_act(severity, specialty)
+/obj/machinery/power/rad_collector/ex_act(severity, target)
 	switch(severity)
 		if(2, 3)
 			eject()

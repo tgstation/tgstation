@@ -10,7 +10,7 @@
 	var/amount_per_transfer_from_this = 10
 	var/possible_transfer_amounts = list(10,25,50,100)
 
-/obj/structure/reagent_dispensers/ex_act(severity, specialty)
+/obj/structure/reagent_dispensers/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			qdel(src)
@@ -60,7 +60,7 @@
 		..()
 		reagents.add_reagent("water",1000)
 
-/obj/structure/reagent_dispensers/watertank/ex_act(severity, specialty)
+/obj/structure/reagent_dispensers/watertank/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			qdel(src)

@@ -33,7 +33,7 @@
 	return 0
 
 
-/obj/machinery/field/containment/ex_act(severity, specialty)
+/obj/machinery/field/containment/ex_act(severity, target)
 	return 0
 
 
@@ -74,7 +74,7 @@
 	return ..()
 
 /obj/machinery/field/CanPass(obj/mover as obj, turf/target, height=0)
-	if((istype(mover, /obj/machinery) && !istype(mover, /obj/machinery/singularity)) || \
+	if((istype(mover, /obj/machinery) && !istype(mover, /obj/singularity)) || \
 		istype(mover, /obj/structure) || \
 		istype(mover, /obj/mecha))
 		bump(mover)

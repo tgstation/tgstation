@@ -118,7 +118,7 @@
 		reliability -= 10 / severity
 	..()
 
-/obj/item/weapon/stock_parts/cell/ex_act(severity, specialty)
+/obj/item/weapon/stock_parts/cell/ex_act(severity, target)
 	..()
 	if(!gc_destroyed)
 		switch(severity)
