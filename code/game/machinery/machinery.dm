@@ -551,4 +551,4 @@ Class Procs:
 	if (electrocute_mob(user, get_area(src), src, siemenspassed))
 		return 1
 	else
-		return -1
+		return 0

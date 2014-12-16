@@ -370,9 +370,11 @@
 	if(stat & (BROKEN|NOPOWER))
 		return
 
-	if(seconds_electrified != 0)
+	if(seconds_electrified > 0)
 		if(shock(user, 100))
 			return
+	else if (seconds_electrified)
+		seconds_electrified = 0
 
 	user.set_machine(src)
 
