@@ -75,7 +75,35 @@
 		usr << "<span class='warning'>Put the defibrillator on your back first!</span>"
 	return
 
+/obj/item/weapon/defibrillator/attack_hand(mob/user as mob)
+	if(src.loc == user)
+		ui_action_click()
+		return
+	..()
+
+/obj/item/weapon/defibrillator/MouseDrop(obj/over_object)
+	if(ishuman(src.loc))
+		var/mob/living/carbon/human/H = src.loc
+		switch(over_object.name)
+			if("r_hand")
+				if(H.r_hand)
+					return
+				if(!H.unEquip(src))
+					return
+				H.put_in_r_hand(src)
+			if("l_hand")
+				if(H.l_hand)
+					return
+				if(!H.unEquip(src))
+					return
+				H.put_in_l_hand(src)
+	return
+
 /obj/item/weapon/defibrillator/attackby(obj/item/weapon/W, mob/user)
+	if(W == paddles)
+		paddles.unwield()
+		toggle_paddles()
+		return
 	if(istype(W, /obj/item/weapon/stock_parts/cell))
 		var/obj/item/weapon/stock_parts/cell/C = W
 		if(bcell)
@@ -123,7 +151,7 @@
 	update_icon()
 	..()
 
-/obj/item/weapon/defibrillator/verb/toggle_paddles()
+/obj/item/weapon/defibrillator/proc/toggle_paddles()
 	set name = "Toggle Paddles"
 	set category = "Object"
 	on = !on
@@ -139,6 +167,7 @@
 		paddles.loc = user
 	else
 		//Remove from their hands and back onto the defib unit
+		paddles.unwield()
 		remove_paddles(user)
 
 	update_icon()
@@ -155,7 +184,7 @@
 /obj/item/weapon/defibrillator/proc/remove_paddles(mob/user)
 	var/mob/living/carbon/human/M = user
 	if(paddles in get_both_hands(M))
-		M.unEquip(paddles)
+		M.unEquip(paddles,1)
 	update_icon()
 	return
 
@@ -203,6 +232,7 @@
 	force = 0
 	throwforce = 6
 	w_class = 4
+	flags = NODROP
 
 	var/revivecost = 1000
 	var/cooldown = 0
