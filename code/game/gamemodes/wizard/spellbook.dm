@@ -37,8 +37,8 @@
 		dat += "<HR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=spells'>Learn and Improve Magical Abilities</A><BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=artifacts'>Summon Magical Tools and Weapons</A><BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=oneuse'>Cast Powerful One Time Spells</A><BR>"
-
+		if(!ticker.mode == "raginmages") // we totally need summon guns x 200
+			dat += "<A href='byond://?src=\ref[src];spell_choice=oneuse'>Cast Powerful One Time Spells</A><BR>"
 		dat += "<HR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=rememorize'>Re-memorize Spells</A><BR>"
 
