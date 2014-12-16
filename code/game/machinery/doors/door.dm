@@ -268,16 +268,15 @@
 
 	if (!glass)
 		src.SetOpacity(1)
+		// Copypasta!!!
+		var/obj/effect/beam/B = locate() in loc
+		if(B)
+			qdel(B)
 
 	// TODO: rework how fire works on doors
 	var/obj/fire/F = locate() in loc
 	if(F)
 		qdel(F)
-
-	// copypasta!!!
-	var/obj/effect/beam/B = locate() in loc
-	if(B)
-		qdel(B)
 
 	update_nearby_tiles()
 	operating = 0

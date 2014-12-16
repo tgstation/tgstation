@@ -14,6 +14,9 @@
 
 	var/list/last_beamchecks=list()
 
+	// A note to the beam processing shit.
+	var/custom_process=0
+
 /obj/effect/blob/New(loc)
 	blobs += src
 	src.dir = pick(1, 2, 4, 8)
@@ -36,17 +39,23 @@
 /obj/effect/blob/beam_connect(var/obj/effect/beam/B)
 	..()
 	last_beamchecks["\ref[B]"]=world.time
+	if(!custom_process && !(src in processing_objects))
+		processing_objects.Add(src)
+
 
 /obj/effect/blob/beam_disconnect(var/obj/effect/beam/B)
 	..()
 	apply_beam_damage(B)
 	last_beamchecks.Remove("\ref[B]") // RIP
+	update_icon()
+	if(beams.len == 0)
+		if(!custom_process && src in processing_objects)
+			processing_objects.Remove(src)
 
 /obj/effect/blob/proc/apply_beam_damage(var/obj/effect/beam/B)
 	var/lastcheck=last_beamchecks["\ref[B]"]
 
-	// Figure out how much damage to deal.
-	// Formula: (deciseconds_since_connect/10 deciseconds)*B.get_damage()
+	// Standard damage formula / 2
 	var/damage = ((world.time - lastcheck)/10)  * B.get_damage()
 
 	// Actually apply damage
@@ -59,6 +68,7 @@
 	// New beam damage code (per-tick)
 	for(var/obj/effect/beam/B in beams)
 		apply_beam_damage(B)
+	update_icon()
 
 /obj/effect/blob/process()
 	process_beams()
@@ -108,8 +118,10 @@
 
 
 /obj/effect/blob/proc/expand(var/turf/T = null, var/prob = 1)
-	if(prob && !prob(health))	return
-	if(istype(T, /turf/space) && prob(75)) 	return
+	if(prob && !prob(health))
+		return
+	if(istype(T, /turf/space) && prob(75))
+		return
 	if(!T)
 		var/list/dirs = list(1,2,4,8)
 		for(var/i = 1 to 4)
@@ -190,6 +202,7 @@
 /obj/effect/blob/normal/Delete()
 	src.loc = null
 	blobs -= src
+	..()
 
 /obj/effect/blob/normal/update_icon()
 	if(health <= 0)
