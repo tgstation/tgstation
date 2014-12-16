@@ -93,13 +93,20 @@
 	w_class = 3.0
 	var/amount = 25.0
 
+	var/list/cannot_wrap = list(
+		/obj/structure/table,
+		/obj/structure/rack,
+		/obj/item/smallDelivery,
+		/obj/structure/bigDelivery,
+		/obj/item/weapon/gift,//real presents are given directly
+		/obj/item/weapon/winter_gift,
+		/obj/item/weapon/evidencebag,
+		)
 
 	afterattack(var/obj/target as obj, mob/user as mob)
 		if(!istype(target))	//this really shouldn't be necessary (but it is).	-Pete
 			return
-		if(istype(target, /obj/structure/table) || istype(target, /obj/structure/rack) \
-		|| istype(target, /obj/item/smallDelivery) || istype(target,/obj/structure/bigDelivery) \
-		|| istype(target, /obj/item/weapon/gift) || istype(target, /obj/item/weapon/evidencebag))
+		if(is_type_in_list(target, cannot_wrap))
 			return
 		if(target.anchored)
 			return
@@ -191,7 +198,7 @@
 /obj/item/device/destTagger
 	name = "destination tagger"
 	desc = "Used to set the destination of properly wrapped packages."
-	icon_state = "forensic0"
+	icon_state = "dest_tagger"
 	var/currTag = 0
 	//The whole system for the sorttype var is determined based on the order of this list,
 	//disposals must always be 1, since anything that's untagged will automatically go to disposals, or sorttype = 1 --Superxpdude

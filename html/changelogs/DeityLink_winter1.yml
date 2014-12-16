@@ -1,0 +1,10 @@
+author: Deity Link
+delete-after: true
+changes:
+  - rscadd: added raw chicken (which comes from killing chicken, sorry Pomf).
+  - rscadd: added recipes for cooked Turkey (made of chicken) and Buche de Noel (Yule log), both sliceable into Turkey drumsticks and Buche de Noel slices.
+  - rscadd: you can now grind chilli seeds into black pepper.
+  - wip: added winter gifts
+  - tweak: you can now wrap items into gifts by clicking on them with the wrapping paper, which replaces the old way of wrapping things up that nearly no one seem to have figured out
+  - imageadd: revamped the gift sprites, added sprites for the new food items.
+  - rscadd: added more chicken based recipes, chicken burger, chicken nuggets, and chicken drumsticks. the later two require a piece of cardboard for the bucket.
