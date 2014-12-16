@@ -49,7 +49,6 @@
 	flags_inv = HIDEJUMPSUIT
 	species_fit = list("Vox")
 
-	cold_speed_protection = 230
 
 /obj/item/clothing/suit/cyborg_suit
 	name = "cyborg suit"
@@ -151,8 +150,6 @@
 	body_parts_covered = UPPER_TORSO|ARMS|LOWER_TORSO|LEGS|FEET
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 	siemens_coefficient = 2.0
-
-	cold_speed_protection = 230
 
 
 /obj/item/clothing/suit/monkeysuit
@@ -383,15 +380,11 @@
 	icon_state = "officersuit"
 	item_state = "officersuit"
 
-	cold_speed_protection = 230
-
 /obj/item/clothing/suit/soldiercoat
 	name = "Soldier's Coat"
 	desc = "Ein Mantel gemacht, um die Verbündeten zu zerstören."
 	icon_state = "soldiersuit"
 	item_state = "soldiersuit"
-
-	cold_speed_protection = 230
 
 /obj/item/clothing/suit/russofurcoat
 	name = "russian fur coat"
@@ -399,5 +392,3 @@
 	icon_state = "russofurcoat"
 	item_state = "russofurcoat"
 	allowed = list(/obj/item/weapon/gun)
-
-	cold_speed_protection = 230
