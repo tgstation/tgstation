@@ -144,7 +144,7 @@
 /obj/structure/closet/attack_animal(mob/living/simple_animal/user as mob)
 	if(user.environment_smash)
 		user.do_attack_animation(src)
-		visible_message("<span class='danger'>[user] destroys the [src].</span>")
+		visible_message("<span class='danger'>[user] destroys \the [src].</span>")
 		dump_contents()
 		qdel(src)
 
@@ -170,7 +170,7 @@
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.remove_fuel(0,user))
-				user << "<span class='notice'>You begin cutting the [src] apart...</span>"
+				user << "<span class='notice'>You begin cutting \the [src] apart...</span>"
 				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 				if(do_after(user,40,5,1))
 					if( !src.opened || !istype(src, /obj/structure/closet) || !user || !WT || !WT.isOn() || !user.loc )
@@ -192,7 +192,7 @@
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
-			user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] the [src]...</span>"
+			user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] \the [src]...</span>"
 			playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
 			if(do_after(user,40,5,1))
 				if(src.opened || !istype(src, /obj/structure/closet) || !user || !WT || !WT.isOn() || !user.loc )
