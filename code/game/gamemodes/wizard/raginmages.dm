@@ -9,7 +9,7 @@
 
 /datum/game_mode/wizard/announce()
 	world << "<B>The current game mode is - Ragin' Mages!</B>"
-	world << "<B>The \red Space Wizard Federation\black is pissed, help defeat all the space wizards!</B>"
+	world << "<B>The <color=red>Space Wizard Federation</font> is pissed, help defeat all the space wizards!</B>"
 
 /datum/game_mode/wizard/raginmages/post_setup()
 	var/playercount = 0
@@ -22,7 +22,7 @@
 
 /datum/game_mode/wizard/raginmages/greet_wizard(var/datum/mind/wizard, var/you_are=1)
 	if (you_are)
-		wizard.current << "<B>\red You are the Space Wizard!</B>"
+		wizard.current << "<B><color=red>You are the Space Wizard!</font></B>"
 	wizard.current << "<B>The Space Wizards Federation has given you the following tasks:</B>"
 
 	var/obj_count = 1
@@ -43,7 +43,7 @@
 			continue
 		if(wizard.current.stat==1)
 			if(wizard.current.health < 0)
-				wizard.current << "\red <font size='4'>The Space Wizard Federation is upset with your performance and have terminated your employment.</font>"
+				wizard.current << "<color=red font size='4'>The Space Wizard Federation is upset with your performance and have terminated your employment.</font>"
 				wizard.current.stat = 2
 			continue
 		wizards_alive++
@@ -106,7 +106,7 @@
 /datum/game_mode/wizard/raginmages/declare_completion()
 	if(finished)
 		feedback_set_details("round_end_result","loss - wizard killed")
-		world << "\red <FONT size = 3><B> The crew has managed to hold off the wizard attack! The Space Wizards Federation has been taught a lesson they will not soon forget!</B></FONT>"
+		world << "<color=red FONT size=3><B> The crew has managed to hold off the wizard attack! The Space Wizards Federation has been taught a lesson they will not soon forget!</B></FONT>"
 	..(1)
 
 /datum/game_mode/wizard/raginmages/proc/makeBody(var/mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
