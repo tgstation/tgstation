@@ -194,6 +194,10 @@
 		//H.equip_or_collect(new /obj/item/device/pda/security(H), slot_belt)
 		H.equip_or_collect(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
 		H.equip_or_collect(new /obj/item/device/flash(H), slot_l_store)
+		if(H.backbag == 1)
+			H.equip_or_collect(new H.species.survival_gear(H), slot_r_hand)
+		else
+			H.equip_or_collect(new H.species.survival_gear(H.back), slot_in_backpack)
 		H.equip_or_collect(new /obj/item/clothing/gloves/black(H), slot_gloves)
 		H.equip_or_collect(new /obj/item/clothing/glasses/sunglasses/sechud(H), slot_glasses)
 		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)

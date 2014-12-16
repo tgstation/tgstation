@@ -193,7 +193,7 @@
 	force_wielded = 40
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 
-	suicide_act(mob/user)
+/obj/item/weapon/twohanded/fireaxe/suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is smashing \himself in the head with the [src.name]! It looks like \he's commit suicide!</b>"
 		return (BRUTELOSS)
 

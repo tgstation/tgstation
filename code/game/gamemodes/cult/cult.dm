@@ -39,12 +39,12 @@
 
 	var/list/objectives = list()
 
-	var/eldergod = 1 //for the summon god objective
-
-	var/const/acolytes_needed = 5 //for the survive objective
+	var/const/acolytes_needed_base = 3 //Minimum acolytes needed for survive objective. Player-scaled later, so pick with caution. Should be starting cultists logically
+	var/acolytes_needed = 3 //Scaled later on, failsafe
 	var/const/min_cultists_to_start = 3
 	var/const/max_cultists_to_start = 4
 	var/acolytes_survived = 0
+	var/ext_survivors = 0
 
 
 /datum/game_mode/cult/announce()
@@ -55,12 +55,9 @@
 /datum/game_mode/cult/pre_setup()
 	if(istype(ticker.mode, /datum/game_mode/mixed))
 		mixed = 1
-	if(prob(50))
-		objectives += "survive"
-		objectives += "sacrifice"
-	else
-		objectives += "eldergod"
-		objectives += "sacrifice"
+
+	objectives += pick("survive", "eldergod") //Either you escape, or you don't
+	objectives += "sacrifice" //This one always fire. If you want more variety, add more objectives
 
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
@@ -78,10 +75,13 @@
 		cultists_possible -= cultist
 		cult += cultist
 
-	return (cult.len>0)
+	ext_survivors = round(num_players()/4)
+
+	return (cult.len > 0)
 
 
 /datum/game_mode/cult/post_setup()
+	acolytes_needed = acolytes_needed_base + ext_survivors
 	modePlayer += cult
 	if("sacrifice" in objectives)
 		var/list/possible_targets = get_unconvertables()
@@ -102,7 +102,7 @@
 		equip_cultist(cult_mind.current)
 		grant_runeword(cult_mind.current)
 		update_cult_icons_added(cult_mind)
-		cult_mind.current << "\blue You are a member of the cult!"
+		cult_mind.current << "<span class='sinister'>You are a member of the cult!</span>"
 		memoize_cult_objectives(cult_mind)
 		cult_mind.special_role = "Cultist"
 	if(!mixed)
@@ -119,11 +119,11 @@
 				explanation = "Our knowledge must live on. Make sure at least [acolytes_needed] acolytes escape on the shuttle to spread their work on an another station."
 			if("sacrifice")
 				if(sacrifice_target)
-					explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. You will need the sacrifice rune (Hell blood join) and three acolytes to do so."
+					explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. You will need the sacrifice rune (Hell Blood Join) and three cultists to perform a sacrifice."
 				else
 					explanation = "Free objective."
 			if("eldergod")
-				explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it."
+				explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell Join Self). You will need nine cultists standing on and around the rune to summon Him."
 		cult_mind.current << "<B>Objective #[obj_count]</B>: [explanation]"
 		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
 	cult_mind.current << "The convert rune is join blood self"
@@ -150,9 +150,9 @@
 	)
 	var/where = mob.equip_in_one_of_slots(T, slots, EQUIP_FAILACTION_DROP)
 	if (!where)
-		mob << "Unfortunately, you weren't able to get a talisman. This is very bad and you should adminhelp immediately."
+		mob << "<span class='sinister'>Unfortunately, you weren't able to sneak in a talisman. Pray, and He most likely shall get you one.</span>"
 	else
-		mob << "You have a talisman in your [where], one that will help you start the cult on this station. Use it well and remember - there are others."
+		mob << "<span class='sinister'>You have a talisman in your [where], one that will help you start the cult on this station. Use it well and remember - there are others.</span>"
 		mob.update_icons()
 		return 1
 
@@ -190,7 +190,7 @@
 	memoize_cult_objectives(cult_mind)
 
 
-/datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1)
+/datum/game_mode/proc/remove_cultist(var/datum/mind/cult_mind, var/show_message = 1, var/log=1)
 	if(cult_mind in cult)
 		cult -= cult_mind
 		cult_mind.current << "\red <FONT size = 3><B>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</B></FONT>"
@@ -199,7 +199,8 @@
 		if(show_message)
 			for(var/mob/M in viewers(cult_mind.current))
 				M << "<FONT size = 3>[cult_mind.current] looks like they just reverted to their old faith!</FONT>"
-		log_admin("[cult_mind.current] ([ckey(cult_mind.current.key)] has been deconverted from the cult")
+		if(log)
+			log_admin("[cult_mind.current] ([ckey(cult_mind.current.key)] has been deconverted from the cult")
 
 /datum/game_mode/proc/update_all_cult_icons()
 	spawn(0)

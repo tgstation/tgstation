@@ -1504,6 +1504,10 @@ proc/process_adminbus_teleport_locs()
 	name = "\improper Custodial Closet"
 	icon_state = "janitor"
 
+/area/janitor2/
+	name = "\improper Custodial Closet"
+	icon_state = "janitor"
+
 /area/hydroponics
 	name = "Hydroponics"
 	icon_state = "hydro"

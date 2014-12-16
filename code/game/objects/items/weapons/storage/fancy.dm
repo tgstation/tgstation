@@ -293,3 +293,31 @@
 /obj/item/weapon/storage/fancy/flares/update_icon()
 	..()
 	m_amt = contents.len * 2500
+
+/obj/item/weapon/storage/fancy/chicken_bucket
+	name = "chicken bucket"
+	desc = "Now we're doing it!"
+	icon = 'icons/obj/food.dmi'
+	icon_state = "kfc_drumsticks"
+	item_state = "kfc_bucket"
+	icon_type = "drumsticks"
+	storage_slots = 6
+	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/chicken_drumstick")
+
+/obj/item/weapon/storage/fancy/chicken_bucket/New()
+	..()
+	for(var/i=1; i <= storage_slots; i++)
+		new /obj/item/weapon/reagent_containers/food/snacks/chicken_drumstick(src)
+	return
+
+/obj/item/weapon/storage/fancy/chicken_bucket/remove_from_storage(obj/item/W as obj, atom/new_location)
+	..()
+	if(!contents.len)
+		new/obj/item/trash/chicken_bucket(get_turf(src.loc))
+		if(istype(src.loc,/mob/living/carbon))
+			var/mob/living/carbon/C = src.loc
+			C.u_equip(src)
+		qdel(src)
+
+/obj/item/weapon/storage/fancy/chicken_bucket/update_icon(var/itemremoved = 0)
+	return

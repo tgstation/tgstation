@@ -464,8 +464,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/list/mobs = getmobs()
 	var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
 	var/mob/target = mobs[input]
-	if (/mob/living/silicon/ai == target)
-		target = target.client.eye
 	ManualFollow(target)
 
 // This is the ghost's follow verb with an argument

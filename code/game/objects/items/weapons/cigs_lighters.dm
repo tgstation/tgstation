@@ -47,7 +47,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		name = "burnt match"
 		desc = "A match. This one has seen better days."
 	return ..()
-	
+
 /obj/item/weapon/match/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && user.zone_sel.selecting == "mouth" && lit)
 		var/obj/item/clothing/mask/cigarette/cig = M.wear_mask
@@ -76,6 +76,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/icon_off = "cigoff"
 	var/type_butt = /obj/item/weapon/cigbutt
 	var/lastHolder = null
+	var/lit_brightness = 1
 	var/smoketime = 300
 	var/chem_volume = 15
 
@@ -83,6 +84,20 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	..()
 	flags |= NOREACT // so it doesn't react until you light it
 	create_reagents(chem_volume) // making the cigarrete a chemical holder with a maximum volume of 15
+
+/obj/item/clothing/mask/cigarette/pickup(mob/user)
+	if (lit)
+		if(user && loc == user)
+			user.SetLuminosity(user.luminosity + lit_brightness)
+		else if(isturf(loc))
+			SetLuminosity(lit_brightness)
+
+/obj/item/clothing/mask/cigarette/dropped(mob/user)
+	if(lit)
+		if(user && loc == user)
+			user.SetLuminosity(user.luminosity - lit_brightness)
+		else if(isturf(loc))
+			SetLuminosity(0)
 
 /obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
@@ -177,6 +192,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		//overlays += image('icons/mob/mask.dmi',overlay_on,LIGHTING_LAYER+1)
 		icon_state = icon_on
 		item_state = icon_on
+		if(lit)
+			var/mob/M = loc
+			if(M && istype(M))
+				M.SetLuminosity(M.luminosity + lit_brightness)
+			else if(isturf(loc))
+				SetLuminosity(lit_brightness)
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
 		processing_objects.Add(src)
@@ -310,7 +331,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 ///////////////////
 /obj/item/clothing/mask/cigarette/blunt
 	name = "blunt"
-	desc = "A fat ambrosia vulgaris cigar. Light it up and pass it around."
+	desc = "A special homemade cigar. Light it up and pass it around."
 	icon_state = "bluntoff"
 	icon_on = "blunton"
 	icon_off = "bluntoff"
@@ -322,19 +343,16 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime = 420
 	chem_volume = 26
 
+/obj/item/clothing/mask/cigarette/blunt/pickup(mob/user)
+
 /obj/item/clothing/mask/cigarette/blunt/New()
 	. = ..()
-	reagents.add_reagent("nutriment", 1)
-	reagents.add_reagent("space_drugs", 7)
-	reagents.add_reagent("kelotane", 7)
-	reagents.add_reagent("bicaridine", 5)
-	reagents.add_reagent("toxin", 5)
+	for(var/reagent in src.reagents)
+		reagents[reagent] *= 1.2
 
 /obj/item/clothing/mask/cigarette/blunt/rolled //grown.dm handles reagents for these
 
 /obj/item/clothing/mask/cigarette/blunt/cruciatus
-	name = "blunt"
-	desc = "A fat ambrosia vulgaris cigar. Light it up and pass it around."
 	chem_volume = 36
 
 /obj/item/clothing/mask/cigarette/blunt/cruciatus/New()

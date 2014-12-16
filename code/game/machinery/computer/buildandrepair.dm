@@ -246,6 +246,10 @@
 	name = "Circuit board (Bhangmeter)"
 	build_path = "/obj/machinery/computer/bhangmeter"
 	origin_tech = "programming=2"
+/obj/item/weapon/circuitboard/pda_terminal
+	name = "Circuit board (PDA Terminal)"
+	build_path = "/obj/machinery/computer/pda_terminal"
+	origin_tech = "programming=2"
 
 
 /obj/item/weapon/circuitboard/supplycomp/attackby(obj/item/I as obj, mob/user as mob)

@@ -43,9 +43,6 @@
 		if(PAINT_REINFORCED)
 			if(!istype(test,/turf/simulated/floor/engine))
 				return 0
-
-	if(istype(test, /turf/simulated/floor/mech_bay_recharge_floor))
-		return 0
 	return 1
 
 /datum/paint_info/proc/apply(var/turf/simulated/floor/T, var/pname, var/pdesc)

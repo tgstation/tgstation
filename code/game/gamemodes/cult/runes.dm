@@ -208,9 +208,16 @@ var/list/sacrificed = list()
 
 
 /////////////////////////////////////////FOURTH RUNE
-
+var/global/cult_tearreality_lastattempt=0
+#define CULT_TEAR_REALITY_DELAY 50 // 5s minimum delay
 /obj/effect/rune/proc/tearreality()
 	var/cultist_count = 0
+
+	// Spamming this is getting so bad that it's impossible to process ahelps.
+	//if((world.time - cult_tearreality_lastattempt) < CULT_TEAR_REALITY_DELAY)
+	//	return fizzle()
+	//cult_tearreality_lastattempt=world.time
+
 	if(universe.name == "Hell Rising")
 		for(var/mob/N in range(1,src))
 			if(iscultist(N))
@@ -221,9 +228,11 @@ var/list/sacrificed = list()
 				M.say("Tok-lyr rqa'nap g[pick("'","`")]lt-ulotf!")
 				cultist_count += 1
 		if(cultist_count >= 9)
-			new /obj/machinery/singularity/narsie/large(src.loc,cultspawn=1)
-			if(ticker.mode.name == "cult")
-				ticker.mode:eldergod = 0
+			// Sanity checks
+			// Are we permitted to spawn Nar-Sie?
+			if(ticker.mode.eldergod)
+				new /obj/machinery/singularity/narsie/large(src.loc,cultspawn=1)
+				ticker.mode.eldergod = 0
 			return
 		else
 			return fizzle()

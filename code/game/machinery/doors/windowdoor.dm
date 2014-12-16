@@ -13,11 +13,11 @@
 	explosion_resistance = 5
 	air_properties_vary_with_direction = 1
 	ghost_read=0
+	machine_flags = EMAGGABLE
 
 /obj/machinery/door/window/New()
 	..()
 
-	machine_flags |= EMAGGABLE // Why is this here?
 
 	if (src.req_access && src.req_access.len)
 		src.icon_state = "[src.icon_state]"
@@ -176,8 +176,6 @@
 	if (src.operating)
 		return
 
-	..()
-
 	//ninja swords? You may pass.
 	if (src.density && istype(I, /obj/item/weapon/melee/energy/blade))
 		hackOpen(I, user)
@@ -204,10 +202,16 @@
 		//don't care who they are or what they have, act as if they're NOTHING
 		user = null
 
+	if (isrobot(user))
+		if (src.density)
+			return open()
+		else
+			return close()
+
 	if (!src.allowed(user) && src.density)
 		flick(text("[]deny", src.base_state), src)
 
-	return
+	return ..()
 
 /obj/machinery/door/window/emag(mob/user)
 	var used_emag = (/obj/item/weapon/card/emag in user.contents) //TODO: Find a better way of checking this

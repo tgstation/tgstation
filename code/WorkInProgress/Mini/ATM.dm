@@ -80,10 +80,12 @@ log transactions
 				authenticated_account.charge(-amount,null,"Credit deposit",terminal_id=machine_id,dest_name = "Terminal")
 
 /obj/machinery/atm/proc/reconnect_database()
-	for(var/obj/machinery/account_database/DB in world) //Hotfix until someone finds out why it isn't in 'machines'
-		if( DB.z == src.z && !(DB.stat & NOPOWER) && DB.activated )
-			linked_db = DB
-			break
+	for(var/obj/machinery/account_database/DB in account_DBs)
+		//Checks for a database on its Z-level, else it checks for a database at the main Station.
+		if((DB.z == src.z) || (DB.z == STATION_Z))
+			if(!(DB.stat & NOPOWER) && DB.activated )//If the database if damaged or not powered, people won't be able to use the ATM anymore
+				linked_db = DB
+				break
 
 /obj/machinery/atm/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/card))

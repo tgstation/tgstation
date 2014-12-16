@@ -199,6 +199,8 @@
 	if(!mob)
 		return // Moved here to avoid nullrefs below. - N3X
 
+	call(/datum/pda_app/station_map/proc/minimap_update)(mob)
+
 	// /vg/ - Deny clients from moving certain mobs. (Like cluwnes :^)
 	if(mob.deny_client_move)
 		src << "<span class='warning'>You cannot move this mob.</span>"
@@ -278,9 +280,6 @@
 			move_delay -= 1.3
 			var/tickcomp = ((1/(world.tick_lag))*1.3)
 			move_delay = move_delay + tickcomp
-
-
-
 
 		//We are now going to move
 		moving = 1
@@ -412,8 +411,10 @@
 					anim(mobloc,mob,'icons/mob/mob.dmi',,"shadow",,mob.dir)
 				mob.loc = get_step(mob, direct)
 			mob.dir = direct
-	for(var/obj/effect/step_trigger/S in mob.loc)
-		S.Crossed(src)
+	// Crossed is always a bit iffy
+	for(var/obj/S in mob.loc)
+		if(istype(S,/obj/effect/step_trigger) || istype(S,/obj/effect/beam))
+			S.Crossed(src)
 
 	var/area/A = get_area_master(mob)
 	if(A)

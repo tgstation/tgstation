@@ -21,6 +21,7 @@ Attach to transfer valve and open. BOOM.
 	var/melt_temperature=0
 	var/molten = 0
 
+	var/volatility = BASE_ZAS_FUEL_REQ //the lower this is, the easier it burns with low fuel in it. Starts at the define value
 
 /atom/proc/getFireFuel()
 	return fire_fuel
@@ -311,7 +312,7 @@ datum/gas_mixture/proc/zburn(var/turf/T, force_burn)
 		var/total_reactants = total_fuel + total_oxygen
 
 		//determine the amount of reactants actually reacting
-		var/used_reactants_ratio = min( max(total_reactants * firelevel / zas_settings.Get(/datum/ZAS_Setting/fire_firelevel_multiplier), 0.2), total_reactants) / total_reactants
+		var/used_reactants_ratio = Clamp(total_reactants * firelevel / zas_settings.Get(/datum/ZAS_Setting/fire_firelevel_multiplier), 0.2, total_reactants) / total_reactants
 
 		//remove and add gasses as calculated
 		oxygen -= min(oxygen, total_oxygen * used_reactants_ratio )
@@ -346,9 +347,9 @@ datum/gas_mixture/proc/zburn(var/turf/T, force_burn)
 	var/datum/gas/volatile_fuel/fuel = locate() in trace_gases
 
 	if(oxygen && (toxins || fuel))
-		if(QUANTIZE(toxins * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= 0.1)
+		if(QUANTIZE(toxins * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= BASE_ZAS_FUEL_REQ)
 			return 1
-		if(fuel && QUANTIZE(fuel.moles * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= 0.1)
+		if(fuel && QUANTIZE(fuel.moles * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= BASE_ZAS_FUEL_REQ)
 			return 1
 
 	// Check if we're actually in a turf or not before trying to check object fires.
@@ -367,9 +368,9 @@ datum/gas_mixture/proc/zburn(var/turf/T, force_burn)
 		if(!oxygen/* || A.autoignition_temperature > temperature*/)
 			A.extinguish()
 			continue
-		if(!A.autoignition_temperature)
-			continue // Don't fuck with things that don't burn.
-		if(QUANTIZE(A.getFireFuel() * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= 0.1)
+//		if(!A.autoignition_temperature)
+//			continue // Don't fuck with things that don't burn.
+		if(QUANTIZE(A.getFireFuel() * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= A.volatility)
 			still_burning=1
 		else if(A.on_fire)
 			//A.extinguish()
@@ -389,15 +390,15 @@ datum/gas_mixture/proc/check_combustability(var/turf/T, var/objects)
 	var/datum/gas/volatile_fuel/fuel = locate() in trace_gases
 
 	if(oxygen && (toxins || fuel))
-		if(QUANTIZE(toxins * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= MOLES_PLASMA_VISIBLE)
+		if(QUANTIZE(toxins * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= BASE_ZAS_FUEL_REQ)
 			return 1
-		if(fuel && QUANTIZE(fuel.moles * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= 0.1)
+		if(fuel && QUANTIZE(fuel.moles * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= BASE_ZAS_FUEL_REQ)
 			return 1
 
 	if(objects && istype(T))
 		for(var/atom/A in T)
 			if(!A || !oxygen || A.autoignition_temperature > temperature) continue
-			if(QUANTIZE(A.getFireFuel() * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= 0.1)
+			if(QUANTIZE(A.getFireFuel() * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= A.volatility)
 				return 1
 
 	return 0

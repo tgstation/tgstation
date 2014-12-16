@@ -202,10 +202,6 @@
 	if(M != user || !ismob(M) || get_dist(src, user) > 1 || user.restrained() || user.lying || user.stat || M.buckled || istype(user, /mob/living/silicon) || destroyed)
 		return
 
-	if(!check_key(M))
-		M << "\red You don't have the key for this."
-		return
-
 	unbuckle()
 
 	M.visible_message(\

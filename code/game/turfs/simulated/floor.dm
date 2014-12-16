@@ -261,8 +261,6 @@ turf/simulated/floor/proc/update_icon()
 
 /turf/simulated/floor/proc/break_tile()
 	if(istype(src,/turf/simulated/floor/engine)) return
-	if(istype(src,/turf/simulated/floor/mech_bay_recharge_floor))
-		src.ChangeTurf(/turf/simulated/floor/plating)
 	if(broken) return
 	if(is_plasteel_floor())
 		src.icon_state = "damaged[pick(1,2,3,4,5)]"

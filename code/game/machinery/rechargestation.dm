@@ -88,9 +88,9 @@
 	if(is_type_in_list(W, acceptable_upgradeables))
 		if(!(locate(W.type) in upgrade_holder))
 			if(!isMoMMI(user))
-				user:drop_item(W)
+				user:drop_item_v(W)
 			else
-				user:drop_item_v()
+				user:drop_item()
 			W.loc = src
 			upgrade_holder.Add(W)
 			user << "<span class='notice'>You add \the [W] to \the [src].</span>"

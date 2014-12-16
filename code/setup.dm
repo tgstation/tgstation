@@ -36,6 +36,8 @@ var/global/disable_vents     = 0
 #define HUMAN_NEEDED_OXYGEN	MOLES_CELLSTANDARD*BREATH_PERCENTAGE*0.16
 	//Amount of air needed before pass out/suffocation commences
 
+#define BASE_ZAS_FUEL_REQ	0.1
+
 // Pressure limits.
 #define HAZARD_HIGH_PRESSURE 550	//This determins at what pressure the ultra-high pressure red icon is displayed. (This one is set as a constant)
 #define WARNING_HIGH_PRESSURE 325 	//This determins when the orange pressure icon is displayed (it is 0.7 * HAZARD_HIGH_PRESSURE)
@@ -929,10 +931,13 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define ACCESS_EMAG			32	//does it lose all its access when smacked by an emag? incompatible with CONSOLECONTROl, for obvious reasons
 #define LOCKBOXES			64	//does it spawn a lockbox around a design which is said to be locked? - for fabricators
 #define TRUELOCKS			128 //does it make a truly locked lockbox? If not set, the lockboxes made are unlockable by any crew with an ID
+#define IGNORE_MATS			256 //does it ignore material requirements for designs? - warning, can be OP
+#define IGNORE_CHEMS		512 //does it ignore chemical requirements for designs? - also super OP
 
 // Mecca scanner flags
-#define MECH_SCAN_FAIL     1 // Cannot be scanned at all.
-#define MECH_SCAN_ILLEGAL  2 // Can only be scanned by the antag scanner.
+#define MECH_SCAN_FAIL		1 // Cannot be scanned at all.
+#define MECH_SCAN_ILLEGAL	2 // Can only be scanned by the antag scanner.
+#define MECH_SCAN_ACCESS	4 // Can only be scanned with the access required for the machine
 
 
 // EMOTES!
@@ -940,4 +945,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define HEARABLE 2
 
 // /vg/ - Pipeline processing (enables exploding pipes and whatnot)
-#define ATMOS_PIPELINE_PROCESSING 1
+#define ATMOS_PIPELINE_PROCESSING 0
+
+#define MAXIMUM_FREQUENCY 1600
+#define MINIMUM_FREQUENCY 1200

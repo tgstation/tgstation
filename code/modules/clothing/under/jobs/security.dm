@@ -121,7 +121,7 @@
 	desc = "You never asked for anything that stylish."
 	name = "head of security's jumpsuit"
 	icon_state = "jensen"
-	item_state = "jensen"
+	item_state = "jensensuit"
 	_color = "jensen"
 	siemens_coefficient = 0.6
 

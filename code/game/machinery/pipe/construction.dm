@@ -153,7 +153,7 @@ Buildable meters
 			src.pipe_type = PIPE_INJECTOR
 		else if(istype(make_from, /obj/machinery/atmospherics/binary/dp_vent_pump))
 			src.pipe_type = PIPE_DP_VENT
-		else if(istype(make_from, /obj/machinery/atmospherics/pipe/vent))
+		else if(istype(make_from, /obj/machinery/atmospherics/unary/vent))
 			src.pipe_type = PIPE_PASV_VENT
 	else
 		src.pipe_type = pipe_type
@@ -248,10 +248,7 @@ var/global/list/pipeID2State = list(
 	src.dir = turn(src.dir, -90)
 
 	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE))
-		if(dir==2)
-			dir = 1
-		else if(dir==8)
-			dir = 4
+		dir=rotate_pipe_straight(dir)
 	else if (pipe_type in list(PIPE_MANIFOLD4W, PIPE_INSUL_MANIFOLD4W))
 		dir = 2
 	//src.pipe_dir = get_pipe_dir()
@@ -263,10 +260,7 @@ var/global/list/pipeID2State = list(
 		&& (src.dir in cardinal))
 		src.dir = src.dir|turn(src.dir, 90)
 	else if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE))
-		if(dir==2)
-			dir = 1
-		else if(dir==8)
-			dir = 4
+		dir=rotate_pipe_straight(dir)
 	return
 
 // returns all pipe's endpoints
@@ -347,10 +341,7 @@ var/global/list/pipeID2State = list(
 	if (!isturf(src.loc))
 		return 1
 	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE))
-		if(dir==2)
-			dir = 1
-		else if(dir==8)
-			dir = 4
+		dir=rotate_pipe_straight(dir)
 	else if (pipe_type in list(PIPE_MANIFOLD4W, PIPE_INSUL_MANIFOLD4W))
 		dir = 2
 	var/pipe_dir = get_pipe_dir()
@@ -430,7 +421,7 @@ var/global/list/pipeID2State = list(
 			P=new /obj/machinery/atmospherics/binary/dp_vent_pump(src.loc)
 
 		if(PIPE_PASV_VENT)
-			P=new /obj/machinery/atmospherics/pipe/vent(src.loc)
+			P=new /obj/machinery/atmospherics/unary/vent(src.loc)
 
 		if(PIPE_DTVALVE)
 			P=new /obj/machinery/atmospherics/tvalve/digital(src.loc)
