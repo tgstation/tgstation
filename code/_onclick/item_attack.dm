@@ -7,7 +7,8 @@
 /atom/proc/attackby(obj/item/W, mob/user)
 	return
 /atom/movable/attackby(obj/item/W, mob/living/user)
-	user.do_attack_animation(src)
+	if(W.loc == user) //no attack animation if using telekinesis
+		user.do_attack_animation(src)
 	if(W && !(W.flags&NOBLUDGEON))
 		visible_message("<span class='danger'>[user] has hit [src] with [W].</span>")
 
@@ -31,7 +32,8 @@
 
 	var/attack_message = "[src] has been [message_verb] with [I]."
 	if(user)
-		user.do_attack_animation(src)
+		if(I.loc == user) //no attack animation if using telekinesis
+			user.do_attack_animation(src)
 		if(user in viewers(src, null))
 			attack_message = "[user] has [message_verb] [src] with [I]!"
 	if(message_verb)
