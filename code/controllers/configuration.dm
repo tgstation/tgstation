@@ -135,7 +135,7 @@
 	var/silicon_max_law_amount = 12
 
 	var/objectives_disabled = 0 //if objectives are disabled or not
-
+	var/restricted_antag_equipment = 0 // Restricts some wizard spells, traitor equipment, and other station busting murderbone 9001 things antags have
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 	for(var/T in L)
@@ -408,7 +408,9 @@
 				if("mutant_colors")
 					config.mutant_colors			= 1
 				if("objectives_disabled")
-					config.objectives_disabled 		= 1
+					config.objectives_disabled		= 1
+				if("restricted_antag_equipment")
+					config.restricted_antag_equipment	= 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
