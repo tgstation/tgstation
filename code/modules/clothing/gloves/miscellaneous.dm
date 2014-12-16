@@ -64,11 +64,8 @@
 	item_state = "lgloves"
 	siemens_coefficient = 0.30
 	permeability_coefficient = 0.01
-	_color="white"
+	_color="medical"				//matches cmo stamp
 	species_fit = list("Vox")
-
-	cmo
-		_color = "medical"		//Exists for washing machines. Is not different from latex gloves in any way.
 
 /obj/item/clothing/gloves/botanic_leather
 	desc = "These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin."
@@ -77,6 +74,10 @@
 	item_state = "ggloves"
 	permeability_coefficient = 0.9
 	siemens_coefficient = 0.9
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECITON_TEMPERATURE
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECITON_TEMPERATURE //required to be able to remove lights in botany without turning off the switch
 	species_fit = list("Vox")
 
 /obj/item/clothing/gloves/batmangloves
