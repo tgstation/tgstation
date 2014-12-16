@@ -12,7 +12,7 @@
  */
 
 // Uncomment to spam console with debug info.
-#define BEAM_DEBUG
+//#define BEAM_DEBUG
 
 #ifdef BEAM_DEBUG
 # warning SOME ASSHOLE FORGOT TO COMMENT BEAM_DEBUG BEFORE COMMITTING
