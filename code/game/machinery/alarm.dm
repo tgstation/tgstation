@@ -181,20 +181,14 @@
 
 
 /obj/machinery/alarm/process()
-	var/turf/simulated/location = loc
-	if(!istype(location))	return//returns if loc is not simulated
-	var/datum/gas_mixture/environment = location.return_air()
-
-	if(stat & (FROZEN))
-		if(environment.temperature >= MELTPOINT_SNOW)
-			visible_message("The ice on \the [src] melts away. It should be operational once again.")
-			stat &= ~FROZEN
-		update_icon()
-		return
-
 	if((stat & (NOPOWER|BROKEN)) || shorted || buildstage != 2)
 		use_power = 0
 		return
+
+	var/turf/simulated/location = loc
+	if(!istype(location))	return//returns if loc is not simulated
+
+	var/datum/gas_mixture/environment = location.return_air()
 
 	// Handle temperature adjustment here.
 	if(environment.temperature < target_temperature - 2 || environment.temperature > target_temperature + 2 || regulating_temperature)
@@ -319,14 +313,9 @@
 	return 0
 
 /obj/machinery/alarm/update_icon()
-	overlays = list()
-	if(stat & FROZEN)
-		overlays += image(icon,"alarmf")
-
 	if(wiresexposed)
 		icon_state = "alarmx"
 		return
-
 	if((stat & (NOPOWER|BROKEN)) || shorted)
 		icon_state = "alarmp"
 		return
@@ -655,10 +644,6 @@
 
 
 /obj/machinery/alarm/interact(mob/user)
-	if(stat & FROZEN)
-		user << "If only you could somehow melt the ice covering \the [src]'s interface..."
-		return
-
 	user.set_machine(src)
 
 	if(buildstage!=2)
@@ -844,24 +829,6 @@
 		return
 */
 	src.add_fingerprint(user)
-
-	if(stat & FROZEN)
-		if(istype(W, /obj/item/weapon/weldingtool))
-			var/obj/item/weapon/weldingtool/WT = W
-			if(!WT.isOn()) return
-			if (WT.get_fuel() < 5) // uses up 5 fuel.
-				user << "<span class='warning'>You need more fuel to complete this task.</span>"
-				return
-
-			user << "You begin melting the ice on \the [src]."
-			playsound(get_turf(src), pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
-			if(do_after(user, 50))
-				if(!src || !WT.remove_fuel(5, user)) return
-				user << "You melt the ice. \The [src] should be operational once again."
-				stat &= ~FROZEN
-				update_icon()
-
-		return ..()
 
 	switch(buildstage)
 		if(2)
