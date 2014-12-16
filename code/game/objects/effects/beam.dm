@@ -11,8 +11,15 @@
  *  only need to fuck with that.
  */
 
-//#define BEAM_TESTING(x) testing(x) // Uncomment to spam console with debug info.
-#define BEAM_TESTING(x) // Uncomment to NOT spam console with debug info.
+// Uncomment to spam console with debug info.
+#define BEAM_DEBUG
+
+#ifdef BEAM_DEBUG
+# warning SOME ASSHOLE FORGOT TO COMMENT BEAM_DEBUG BEFORE COMMITTING
+# define beam_testing(x) testing(x)
+#else
+# define beam_testing(x)
+#endif
 
 /obj/effect/beam
 	name = "beam"
@@ -52,33 +59,33 @@
 // Listener for /atom/movable/on_moved
 /obj/effect/beam/proc/target_moved(var/list/args)
 	if(master)
-		BEAM_TESTING("Child got target_moved!  Feeding to master.")
+		beam_testing("Child got target_moved!  Feeding to master.")
 		master.target_moved(args)
 		return
 
 	if(!targetMoveKey)
-		BEAM_TESTING("Uh oh, got a target_moved when we weren't listening for one.")
+		beam_testing("Uh oh, got a target_moved when we weren't listening for one.")
 		return
 
 	var/turf/T = args["loc"]
-	BEAM_TESTING("Target now at [T.x],[T.y],[T.z]")
+	beam_testing("Target now at [T.x],[T.y],[T.z]")
 	if(T != targetContactLoc && T != loc)
-		BEAM_TESTING("Disconnecting: Target moved.")
+		beam_testing("Disconnecting: Target moved.")
 		// Disconnect and re-emit.
 		disconnect()
 
 // Listener for /atom/on_destroyed
 /obj/effect/beam/proc/target_destroyed(var/list/args)
 	if(master)
-		BEAM_TESTING("Child got target_destroyed!  Feeding to master.")
+		beam_testing("Child got target_destroyed!  Feeding to master.")
 		master.target_moved(args)
 		return
 
 	if(!targetDestroyKey)
-		BEAM_TESTING("Uh oh, got a target_destroyed when we weren't listening for one.")
+		beam_testing("Uh oh, got a target_destroyed when we weren't listening for one.")
 		return
 
-	BEAM_TESTING("Disconnecting: Target destroyed.")
+	beam_testing("Disconnecting: Target destroyed.")
 	// Disconnect and re-emit.
 	disconnect()
 
@@ -87,7 +94,7 @@
 		return
 	if(istype(AM, /obj/effect/beam) || !AM.density)
 		return
-	BEAM_TESTING("Bumped by [AM]")
+	beam_testing("Bumped by [AM]")
 	am_connector=1
 	connect_to(AM)
 	qdel(src)
@@ -107,14 +114,23 @@
 	if(BM.target == AM)
 		return
 	if(BM.target)
-		BEAM_TESTING("\ref[BM] - Disconnecting [BM.target]: target changed.")
+		beam_testing("\ref[BM] - Disconnecting [BM.target]: target changed.")
 		BM.disconnect(0)
 	AM.beam_connect(BM)
 	BM.target=AM
 	BM.targetMoveKey    = AM.on_moved.Add(BM,    "target_moved")
 	BM.targetDestroyKey = AM.on_destroyed.Add(BM,"target_destroyed")
 	BM.targetContactLoc = AM.loc
-	BEAM_TESTING("\ref[BM] - Connected to [AM] BM=(TMK=[BM.targetMoveKey], TCL=[BM.targetContactLoc]),src=(TMK=[src.targetMoveKey], TCL=[src.targetContactLoc])")
+	beam_testing("\ref[BM] - Connected to [AM]")
+
+/obj/effect/beam/blob_act()
+	// Act like Crossed.
+	// To do that, we need the blob.
+	// Blob calls blob_act() twice:  Once (or so) on intent to expand, and finally on New().
+	// We then use that second one to call Crossed().
+	var/obj/effect/blob/B = locate() in loc
+	if(B)
+		Crossed(B)
 
 /obj/effect/beam/proc/killKids()
 	for(var/obj/effect/beam/child in children)
@@ -137,19 +153,19 @@
 			_master.emit(sources)
 
 /obj/effect/beam/Crossed(atom/movable/AM as mob|obj)
-	BEAM_TESTING("Crossed by [AM]")
+	beam_testing("Crossed by [AM]")
 	if(!master || !AM)
-		BEAM_TESTING(" returning (!AM || !master)")
+		beam_testing(" returning (!AM || !master)")
 		return
 
-	if(istype(AM, /obj/effect/beam) || !AM.density)
-		BEAM_TESTING(" returning (is beam or not dense)")
+	if(istype(AM, /obj/effect/beam) || (!AM.density && !istype(AM, /obj/effect/blob)))
+		beam_testing(" returning (is beam or not dense)")
 		return
 
 	if(master.target)
 		disconnect(0)
 
-	BEAM_TESTING(" Connecting!")
+	beam_testing(" Connecting!")
 	am_connector=1
 	connect_to(AM)
 	qdel(src)
@@ -167,8 +183,10 @@
 		sources.Add(spawn_by)
 
 	if(_range==-1)
-		//var/str_sources=text2list(sources,", ")
-		BEAM_TESTING("\ref[src] - emit(), sources=[str_sources]")
+#ifdef BEAM_DEBUG
+		var/str_sources=text2list(sources,", ") // This will not work as an embedded statement.
+		beam_testing("\ref[src] - emit(), sources=[str_sources]")
+#endif
 		_range=max_range
 
 	if(next && next.loc)
@@ -223,14 +241,14 @@
 		return
 	bumped = 1
 	if(A)
-		BEAM_TESTING("\ref[get_master()] - Bumped [A]!")
+		beam_testing("\ref[get_master()] - Bumped [A]!")
 		connect_to(A)
 		am_connector=1 // Prevents disconnecting after stepping into target.
 	return 1
 
 /obj/effect/beam/Destroy()
 	if(!am_connector && !master)
-		BEAM_TESTING("\ref[get_master()] - Disconnecting (qdel)")
+		beam_testing("\ref[get_master()] - Disconnecting (qdel)")
 		disconnect(0)
 	if(master)
 		master.children.Remove(src)
@@ -238,5 +256,3 @@
 		qdel(next)
 		next=null
 	..()
-
-#undef BEAM_TESTING
