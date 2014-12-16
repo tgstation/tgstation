@@ -225,39 +225,21 @@
 			flick("pad-beam", telepad)
 			playsound(telepad.loc, 'sound/weapons/emitter2.ogg', 25, 1, extrarange = 3, falloff = 5)
 			for(var/atom/movable/ROI in source)
-				// if is anchored, don't let through
-				if(ROI.anchored)
-					if(isliving(ROI))
-						var/mob/living/L = ROI
-						if(L.buckled)
-							// TP people on office chairs
-							if(L.buckled.anchored)
-								continue
-
-							log_msg += "[key_name(L)] (on a chair), "
-						else
-							continue
-					else if(!isobserver(ROI))
+				if(!istype(ROI, /obj/item/device/gps)) //we only accept GPS and mobs.
+					if(!ismob(ROI))
 						continue
-				if(ismob(ROI))
-					var/mob/T = ROI
-					log_msg += "[key_name(T)], "
+					else
+						var/mob/M = ROI
+						if(M.anchored && !isobserver(M))
+							continue
+						if(M.buckled)
+							continue
+						if(isliving(M))
+							M.Stun(5)
+							M.Weaken(5)
+						log_msg += "[key_name(M)], "
 				else
-					log_msg += "[ROI.name]"
-					if (istype(ROI, /obj/structure/closet))
-						var/obj/structure/closet/C = ROI
-						log_msg += " ("
-						for(var/atom/movable/Q as mob|obj in C)
-							if(ismob(Q))
-								log_msg += "[key_name(Q)], "
-							else
-								log_msg += "[Q.name], "
-						if (dd_hassuffix(log_msg, "("))
-							log_msg += "empty)"
-						else
-							log_msg = dd_limittext(log_msg, length(log_msg) - 2)
-							log_msg += ")"
-					log_msg += ", "
+					log_msg +="[ROI.name], "
 				do_teleport(ROI, dest)
 
 			if (dd_hassuffix(log_msg, ", "))
@@ -280,9 +262,9 @@
 		telefail()
 		temp_msg = "ERROR!<BR>Elevation is less than 1 or greater than 90."
 		return
-	if(z_co == 2 || z_co < 1 || z_co > 6)
+	if(z_co != 1 && z_co != 5)
 		telefail()
-		temp_msg = "ERROR! Sector is less than 1, <BR>greater than 6, or equal to 2."
+		temp_msg = "ERROR! Sector must be 1 or 5."
 		return
 	if(teles_left > 0)
 		doteleport(user)
@@ -331,7 +313,7 @@
 		var/new_z = input("Please input desired sector.", name, z_co) as num
 		if(..())
 			return
-		z_co = Clamp(round(new_z), 1, 10)
+		z_co = Clamp(round(new_z), 1, 5)
 
 	if(href_list["ejectGPS"])
 		if(inserted_gps)
