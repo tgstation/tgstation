@@ -413,3 +413,11 @@
 /turf/proc/cultify()
 	ChangeTurf(/turf/space)
 	return
+
+/turf/proc/isDense()
+	if(src.density)
+		return 1
+	for(var/atom/A in contents)
+		if(A.density)
+			return 1
+	return 0
