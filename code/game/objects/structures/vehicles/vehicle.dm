@@ -19,7 +19,7 @@
 	name = "vehicle"
 	var/nick = null
 	icon = 'icons/obj/vehicles.dmi'
-	anchored = 1
+	anchored = 0 //push it around
 	density = 1
 	var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread
 
