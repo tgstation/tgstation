@@ -66,6 +66,10 @@
 	icon_state = "lizardmeat" //Close enough.
 	desc = "Halfway to becoming fertilizer for your garden."
 
+/obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/corgi
+	name = "-dogmeat"
+	desc = "Tastes like... well you know..."
+
 /obj/item/weapon/reagent_containers/food/snacks/meat/monkey
 	//same as plain meat
 
