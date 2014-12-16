@@ -253,3 +253,14 @@
 			message_list.Insert(insertpos, "[pick("BRAINS", "Brains", "Braaaiinnnsss", "BRAAAIIINNSSS")]...")
 
 	return list2text(message_list, " ")
+
+/*
+ CORGIPEOPLE
+*/
+
+/datum/species/corgi
+	name = "Corgiperson"
+	id = "corgi"
+	say_mod = "woofs"
+	sexes = 0
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/corgi
