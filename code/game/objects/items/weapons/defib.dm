@@ -257,7 +257,7 @@
 /obj/item/weapon/twohanded/shockpaddles/suicide_act(mob/user)
 	user.visible_message("<span class='danger'>[user] is putting the live paddles on \his chest! It looks like \he's trying to commit suicide.</span>")
 	defib.deductcharge(revivecost)
-	playsound(get_turf(src), 'sound/weapons/defib_zap.ogg', 50, 1, -1)
+	playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 	return (OXYLOSS)
 
 /obj/item/weapon/twohanded/shockpaddles/dropped(mob/user as mob)
@@ -307,7 +307,7 @@
 			H.adjustStaminaLoss(50)
 			H.Weaken(5)
 			H.updatehealth() //forces health update before next life tick
-			playsound(get_turf(src), 'sound/weapons/defib_zap.ogg', 50, 1, -1)
+			playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 			H.emote("gasp")
 			add_logs(user, M, "stunned", object="defibrillator")
 			defib.deductcharge(revivecost)
@@ -322,7 +322,7 @@
 			update_icon()
 			if(do_after(user, 30)) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
 				user.visible_message("<span class='notice'>[user] places [src] on [M.name]'s chest.</span>", "<span class='warning'>You place [src] on [M.name]'s chest.</span>")
-				playsound(get_turf(src), 'sound/weapons/defib_charge.ogg', 50, 0)
+				playsound(get_turf(src), 'sound/machines/defib_charge.ogg', 50, 0)
 				var/mob/dead/observer/ghost = H.get_ghost()
 				var/tplus = world.time - H.timeofdeath
 				var/tlimit = 3000 //past this much time the patient is unrecoverable (in deciseconds)
@@ -341,7 +341,7 @@
 						var/health = H.health
 						M.visible_message("<span class='warning'>[M]'s body convulses a bit.")
 						playsound(get_turf(src), "bodyfall", 50, 1)
-						playsound(get_turf(src), 'sound/weapons/defib_zap.ogg', 50, 1, -1)
+						playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 						for(var/obj/item/organ/limb/O in H.organs)
 							total_brute	+= O.brute_dam
 							total_burn	+= O.burn_dam
