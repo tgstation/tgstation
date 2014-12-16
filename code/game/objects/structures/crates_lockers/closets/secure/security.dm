@@ -133,6 +133,7 @@
 
 /obj/structure/closet/secure_closet/security/New()
 	..()
+	new /obj/item/clothing/under/rank/security/formal(src)
 	new /obj/item/clothing/suit/armor/vest(src)
 	new /obj/item/clothing/head/helmet(src)
 	new /obj/item/device/radio/headset/headset_sec/alt(src)
