@@ -198,22 +198,27 @@
 			output += "[output ? " | " : null][get_resource_cost_w_coeff(part,"$[matID]")] [material.processed_name]"
 	return output
 
-/obj/machinery/r_n_d/fabricator/proc/build_part(var/datum/design/part)
-	if(!part)
-		return
-
+/obj/machinery/r_n_d/fabricator/proc/remove_materials(var/datum/design/part)
 	for(var/M in part.materials)
 		if(!check_mat(part, M))
-			src.visible_message("<font color='blue'>The [src.name] beeps, \"Not enough materials to complete item.\"</font>")
-			stopped=1
 			return 0
-		if(copytext(M,1,2) == "$")
+		if(copytext(M,1,2) == "$" && !(research_flags & IGNORE_MATS))
 			var/matID=copytext(M,2)
 			var/datum/material/material=materials[matID]
 			material.stored = max(0, (material.stored-part.materials[M]))
 			materials[matID]=material
-		else
+		else if(!(research_flags & IGNORE_CHEMS))
 			reagents.remove_reagent(M, part.materials[M])
+	return 1
+
+/obj/machinery/r_n_d/fabricator/proc/build_part(var/datum/design/part)
+	if(!part)
+		return
+
+	if(!remove_materials(part))
+		stopped = 1
+		src.visible_message("<font color='blue'>The [src.name] beeps, \"Not enough materials to complete item.\"</font>")
+		return
 
 	src.being_built = new part.build_path(src)
 

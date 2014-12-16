@@ -276,12 +276,16 @@
 
 /obj/machinery/r_n_d/proc/check_mat(var/datum/design/being_built, var/M, var/num_requested=1)
 	if(copytext(M,1,2) == "$")
+		if(src.research_flags & IGNORE_MATS)
+			return num_requested
 		var/matID=copytext(M,2)
 		var/datum/material/material=materials[matID]
 		for(var/n=num_requested,n>=1,n--)
 			if ((material.stored-(being_built.materials[M]*n)) >= 0)
 				return n
 	else
+		if(src.research_flags & IGNORE_CHEMS)
+			return num_requested
 		for(var/n=num_requested,n>=1,n--)
 			if (reagents.has_reagent(M, being_built.materials[M]))
 				return n
