@@ -824,6 +824,16 @@
 		reagents.add_reagent("nutriment", 6)
 		bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/chickenburger
+	name = "chicken burger"
+	desc = "Tastes like chi...oh wait!"
+	icon_state = "mc_chicken"
+
+/obj/item/weapon/reagent_containers/food/snacks/chickenburger/New()
+	..()
+	reagents.add_reagent("nutriment", 6)
+	bitesize = 2
+
 /obj/item/weapon/reagent_containers/food/snacks/roburger
 	name = "roburger"
 	desc = "The lettuce is the only organic component. Beep."
@@ -3039,3 +3049,82 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 4)
+
+//////////////////CHRISTMAS AND WINTER FOOD//////////////////
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/buchedenoel
+	name = "\improper Buche de Noel"
+	desc = "Merry Christmas"
+	icon_state = "buche"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/bucheslice
+	slices_num = 5
+	trash = /obj/item/trash/tray
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/buchedenoel/New()
+	..()
+	reagents.add_reagent("nutriment", 20)
+	reagents.add_reagent("sugar", 9)
+	reagents.add_reagent("coco", 5)
+	bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/bucheslice
+	name = "\improper Buche de Noel slice"
+	desc = "A slice of winter magic"
+	icon_state = "buche_slice"
+	trash = /obj/item/trash/plate
+	bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/turkey
+	name = "turkey"
+	desc = "Tastes like chicken"
+	icon_state = "turkey"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/turkeyslice
+	slices_num = 2
+	trash = /obj/item/trash/tray
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/turkey/New()
+	..()
+	reagents.add_reagent("nutriment", 20)
+	reagents.add_reagent("blackpepper", 1)
+	reagents.add_reagent("sodiumchloride", 1)
+	reagents.add_reagent("cornoil", 1)
+	bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/turkeyslice
+	name = "turkey drumstick"
+	desc = "Guaranteed vox-free"
+	icon_state = "turkey_drumstick"
+	trash = /obj/item/trash/plate
+	bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/rawchicken
+	name = "raw chicken"
+	desc = "This better be delicious."
+	icon_state = "raw_chicken"
+
+/obj/item/weapon/reagent_containers/food/snacks/rawchicken/New()
+	..()
+	reagents.add_reagent("nutriment", 3)
+	bitesize = 1
+
+/obj/item/weapon/reagent_containers/food/snacks/chicken_nuggets
+	name = "Chicken Nuggets"
+	desc = "You'd rather not know how they were prepared."
+	icon_state = "kfc_nuggets"
+	item_state = "kfc_bucket"
+	trash = /obj/item/trash/chicken_bucket
+
+/obj/item/weapon/reagent_containers/food/snacks/chicken_nuggets/New()
+	..()
+	reagents.add_reagent("nutriment", 6)
+	bitesize = 1
+
+/obj/item/weapon/reagent_containers/food/snacks/chicken_drumstick
+	name = "chicken drumstick"
+	desc = "We can fry further..."
+	icon_state = "chicken_drumstick"
+
+/obj/item/weapon/reagent_containers/food/snacks/chicken_drumstick/New()
+	..()
+	reagents.add_reagent("nutriment", 3)
+	bitesize = 1

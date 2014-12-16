@@ -1,0 +1,6 @@
+author: Clusterfack
+delete-after: true
+changes:
+- bugfix: Mineral Doors are now true doors, and will allow airflow
+- bugfix: Exofabs are no longer pinged by unauthorized ghost access
+- bugfix: Windoors no longer have their 'panel' opened by screwdrivers

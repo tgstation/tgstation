@@ -1,0 +1,6 @@
+author: Clusterfack
+delete-after: true
+changes:
+- rscadd: Combat drones will now attack from a distance, and run away if you get too close
+- bugfix: Drones will properly malfunction and attack anyone nearby
+- rscadd: Drones made tweaked slightly to be a real challenge

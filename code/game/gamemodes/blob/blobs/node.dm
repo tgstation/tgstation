@@ -4,6 +4,7 @@
 	icon_state = "blob_node"
 	health = 100
 	fire_resist = 2
+	custom_process=1
 
 
 	New(loc, var/h = 100)
@@ -30,7 +31,6 @@
 			Delete()
 			return
 		return
-
 
 	run_action()
 		return 0

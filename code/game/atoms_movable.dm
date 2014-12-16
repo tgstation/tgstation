@@ -22,12 +22,6 @@
 	var/gcDestroyed
 	var/timeDestroyed
 
-	// EVENTS
-	/////////////////////////////
-
-	// When this object moves. (args: loc)
-	var/event/on_moved=new /event()
-
 /atom/movable/New()
 	. = ..()
 	areaMaster = get_area_master(src)

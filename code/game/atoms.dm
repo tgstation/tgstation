@@ -30,7 +30,12 @@
 	var/list/beams=list()
 
 	// EVENTS
-	var/event/on_destroyed = new() // On Destroy()
+	/////////////////////////////
+	// On Destroy()
+	var/event/on_destroyed = new()
+
+	// When this object moves. (args: loc)
+	var/event/on_moved = new()
 
 /atom/proc/beam_connect(var/obj/effect/beam/B)
 	if(!(B in beams))
