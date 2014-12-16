@@ -982,7 +982,7 @@
 			if("autoobjectives")
 				if(config.objectives_disabled == 0)
 					ticker.mode.forge_traitor_objectives(src)
-					usr << "\blue The objectives for traitor [key] have been generated. You can edit them and anounce manually."
+					usr << "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>"
 	else if (href_list["monkey"])
 		var/mob/living/L = current
 		if (L.notransform)
