@@ -47,6 +47,15 @@ var/list/event_last_fired = list()
 	possibleEvents[/datum/event/electrical_storm] = 10
 	possibleEvents[/datum/event/wallrot] = 30
 
+	var/current_month = text2num(time2text(world.timeofday, "MM"))
+	switch(current_month)
+		if(12,1,2)
+			if(snow_tiles <= 10)
+				possibleEvents[/datum/event/cosmic_freeze] = 30
+		if(3 to 11)
+			if(snow_tiles == 0)
+				possibleEvents[/datum/event/cosmic_freeze] = 15
+
 	if(!spacevines_spawned)
 		possibleEvents[/datum/event/spacevine] = 15
 	if(minutes_passed >= 30 && active_with_role["Engineer"] > 1) // Give engineers time to not set up the engine

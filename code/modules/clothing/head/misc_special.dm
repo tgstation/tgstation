@@ -104,6 +104,8 @@
 	item_state = "ushankadown"
 	flags_inv = HIDEEARS
 
+	cold_breath_protection = 230
+
 /obj/item/clothing/head/ushanka/attack_self(mob/user as mob)
 	if(src.icon_state == "ushankadown")
 		src.icon_state = "ushankaup"

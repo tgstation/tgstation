@@ -8,6 +8,8 @@
 	w_class = 2
 	species_fit = list("Vox")
 
+	cold_breath_protection = 230
+
 /obj/item/clothing/mask/luchador
 	name = "Luchador Mask"
 	desc = "Worn by robust fighters, flying high to defeat their foes!"

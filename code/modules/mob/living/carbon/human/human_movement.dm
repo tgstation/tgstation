@@ -53,7 +53,7 @@
 			return -1	// slimes become supercharged at high temperatures
 		if (bodytemperature < 183.222)
 			tally += (283.222 - bodytemperature) / 10 * 1.75
-	else if (bodytemperature < 283.222)
+	else if ((bodytemperature < 283.222) && !check_speed_protections())
 
 		tally += (283.222 - bodytemperature) / 10 * 1.75
 
@@ -61,6 +61,15 @@
 		tally = 0
 
 	return (tally+config.human_delay)
+
+/mob/living/carbon/human/proc/check_speed_protections()
+	var/list/human_slots = get_cloth_slots()
+
+	for(var/obj/item/clothing/C in human_slots)
+		if(C.cold_speed_protection < bodytemperature)
+			return 1
+
+	return 0
 
 /mob/living/carbon/human/Process_Spacemove(var/check_drift = 0)
 	//Can we act

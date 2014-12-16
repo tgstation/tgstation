@@ -256,14 +256,14 @@ var/global/list/whitelisted_species = list("Human")
 	if( (abs(310.15 - breath.temperature) > 50) && !(M_RESIST_HEAT in H.mutations)) // Hot air hurts :(
 		if(H.status_flags & GODMODE)	return 1	//godmode
 		if(breath.temperature < cold_level_1)
-			if(prob(20))
-				H << "\red You feel your face freezing and an icicle forming in your lungs!"
+			if(prob(20) && !check_breath_protections(H,breath.temperature))
+				H << "<span class='warning'>You feel your face freezing and an icicle forming in your lungs!</span>"
 		else if(breath.temperature > heat_level_1)
 			if(prob(20))
 				if(H.dna.mutantrace == "slime")
-					H << "\red You feel supercharged by the extreme heat!"
+					H << "<span class='warning'>You feel supercharged by the extreme heat!</span>"
 				else
-					H << "\red You feel your face burning and a searing heat in your lungs!"
+					H << "<span class='warning'>You feel your face burning and a searing heat in your lungs!</span>"
 
 		if(H.dna.mutantrace == "slime")
 			if(breath.temperature < cold_level_1)
@@ -271,31 +271,41 @@ var/global/list/whitelisted_species = list("Human")
 				H.fire_alert = max(H.fire_alert, 1)
 
 		if(H.dna.mutantrace != "slime")
-			switch(breath.temperature)
-				if(-INFINITY to cold_level_3)
-					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Cold")
-					H.fire_alert = max(H.fire_alert, 1)
+			if(!check_breath_protections(H,breath.temperature))
+				switch(breath.temperature)
+					if(-INFINITY to cold_level_3)
+						H.apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Cold")
+						H.fire_alert = max(H.fire_alert, 1)
 
-				if(cold_level_3 to cold_level_2)
-					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, "head", used_weapon = "Excessive Cold")
-					H.fire_alert = max(H.fire_alert, 1)
+					if(cold_level_3 to cold_level_2)
+						H.apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, "head", used_weapon = "Excessive Cold")
+						H.fire_alert = max(H.fire_alert, 1)
 
-				if(cold_level_2 to cold_level_1)
-					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head", used_weapon = "Excessive Cold")
-					H.fire_alert = max(H.fire_alert, 1)
+					if(cold_level_2 to cold_level_1)
+						H.apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head", used_weapon = "Excessive Cold")
+						H.fire_alert = max(H.fire_alert, 1)
 
-				if(heat_level_1 to heat_level_2)
-					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head", used_weapon = "Excessive Heat")
-					H.fire_alert = max(H.fire_alert, 2)
+					if(heat_level_1 to heat_level_2)
+						H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head", used_weapon = "Excessive Heat")
+						H.fire_alert = max(H.fire_alert, 2)
 
-				if(heat_level_2 to heat_level_3)
-					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, "head", used_weapon = "Excessive Heat")
-					H.fire_alert = max(H.fire_alert, 2)
+					if(heat_level_2 to heat_level_3)
+						H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, "head", used_weapon = "Excessive Heat")
+						H.fire_alert = max(H.fire_alert, 2)
 
-				if(heat_level_3 to INFINITY)
-					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Heat")
-					H.fire_alert = max(H.fire_alert, 2)
+					if(heat_level_3 to INFINITY)
+						H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Heat")
+						H.fire_alert = max(H.fire_alert, 2)
 	return 1
+
+/datum/species/proc/check_breath_protections(var/mob/living/carbon/human/H,var/temperature)
+	var/list/human_slots = H.get_cloth_slots()
+
+	for(var/obj/item/clothing/C in human_slots)
+		if((C.cold_breath_protection < temperature) || (C.hot_breath_protection > temperature))
+			return 1
+
+	return 0
 
 // Used for species-specific names (Vox, etc)
 /datum/species/proc/makeName(var/gender,var/mob/living/carbon/C=null)

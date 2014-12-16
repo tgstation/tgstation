@@ -8,6 +8,8 @@
 	var/plantname
 	var/potency = 1
 
+	autoignition_temperature=AUTOIGNITION_WOOD
+
 /obj/item/weapon/grown/New()
 
 	..()

@@ -3,6 +3,12 @@
 	var/list/species_restricted = null //Only these species can wear this kit.
 	var/wizard_garb = 0 // Wearing this empowers a wizard.
 
+	//temperatures in Kelvin. These default values won't affect protections in any way.
+	var/cold_breath_protection = 300 //that cloth protects its wearer's breath from cold air down to that temperature
+	var/hot_breath_protection =	300 //that cloth protects its wearer's breath from hot air up to that temperature
+
+	var/cold_speed_protection = 300 //that cloth allows its wearer to keep walking at normal speed at lower temperatures
+
 //BS12: Species-restricted clothing check.
 /obj/item/clothing/mob_can_equip(M as mob, slot)
 
@@ -220,6 +226,8 @@ BLIND     // can't see anything
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECITON_TEMPERATURE
 	siemens_coefficient = 0.9
 	species_restricted = list("exclude","Diona","Muton")
+
+	cold_breath_protection = 230
 
 /obj/item/clothing/suit/space
 	name = "Space suit"

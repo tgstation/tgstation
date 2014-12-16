@@ -235,6 +235,8 @@
 	flags = FPRINT | TABLEPASS | BLOCKHAIR
 	siemens_coefficient = 2.0
 
+	cold_breath_protection = 230
+
 /obj/item/clothing/head/bearpelt
 	name = "bear pelt hat"
 	desc = "Fuzzy."
@@ -242,6 +244,8 @@
 	item_state = "bearpelt"
 	flags = FPRINT | TABLEPASS | BLOCKHEADHAIR
 	siemens_coefficient = 2.0
+
+	cold_breath_protection = 230
 
 /obj/item/clothing/head/xenos
 	name = "xenos helmet"
@@ -297,3 +301,5 @@
 	item_state = "russofurhat"
 	flags = FPRINT | TABLEPASS | BLOCKHEADHAIR
 	flags_inv = HIDEEARS
+
+	cold_breath_protection = 230

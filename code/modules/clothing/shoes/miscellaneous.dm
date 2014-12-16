@@ -91,6 +91,8 @@
 	siemens_coefficient = 0.7
 	species_fit = list("Vox")
 
+	cold_speed_protection = 230
+
 /obj/item/clothing/shoes/jackboots/batmanboots
 	name = "batboots"
 	desc = "Criminal stomping boots for fighting crime and looking good."
