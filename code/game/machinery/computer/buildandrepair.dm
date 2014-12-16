@@ -36,10 +36,6 @@
 	name = "circuit board (Turbine Computer)"
 	build_path = /obj/machinery/computer/turbine_computer
 	origin_tech = "programming=4;engineering=4;powerstorage=4"
-/obj/item/weapon/circuitboard/telesci_console
-	name = "circuit board (Telescience Console)"
-	build_path = /obj/machinery/computer/telescience
-	origin_tech = "programming=3;bluespace=2"
 /obj/item/weapon/circuitboard/message_monitor
 	name = "circuit board (Message Monitor)"
 	build_path = /obj/machinery/computer/message_monitor

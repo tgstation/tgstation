@@ -13,7 +13,7 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
-#include "_maps\tgstation2.dm"
+#include "_maps\AsteroidStation.dm"
 #include "code\_compile_options.dm"
 #include "code\hub.dm"
 #include "code\world.dm"
@@ -505,6 +505,7 @@
 #include "code\game\objects\items\apc_frame.dm"
 #include "code\game\objects\items\blueprints.dm"
 #include "code\game\objects\items\bodybag.dm"
+#include "code\game\objects\items\bscrystal.dm"
 #include "code\game\objects\items\candle.dm"
 #include "code\game\objects\items\crayons.dm"
 #include "code\game\objects\items\documents.dm"
@@ -517,6 +518,7 @@
 #include "code\game\objects\items\devices\chameleonproj.dm"
 #include "code\game\objects\items\devices\flash.dm"
 #include "code\game\objects\items\devices\flashlight.dm"
+#include "code\game\objects\items\devices\gps.dm"
 #include "code\game\objects\items\devices\laserpointer.dm"
 #include "code\game\objects\items\devices\lightreplacer.dm"
 #include "code\game\objects\items\devices\multitool.dm"
@@ -1327,10 +1329,6 @@
 #include "code\modules\surgery\organs\augments.dm"
 #include "code\modules\surgery\organs\helpers.dm"
 #include "code\modules\surgery\organs\organ.dm"
-#include "code\modules\telesci\bscrystal.dm"
-#include "code\modules\telesci\gps.dm"
-#include "code\modules\telesci\telepad.dm"
-#include "code\modules\telesci\telesci_computer.dm"
 #include "interface\interface.dm"
 #include "interface\stylesheet.dm"
 #include "interface\skin.dmf"

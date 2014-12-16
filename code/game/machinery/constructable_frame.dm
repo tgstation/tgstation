@@ -284,17 +284,6 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/capacitor = 2,
 							/obj/item/weapon/stock_parts/console_screen = 1)
 
-/obj/item/weapon/circuitboard/telesci_pad
-	name = "circuit board (Telepad)"
-	build_path = /obj/machinery/telepad
-	board_type = "machine"
-	origin_tech = "programming=4;engineering=3;materials=3;bluespace=4"
-	req_components = list(
-							/obj/item/bluespace_crystal = 2,
-							/obj/item/weapon/stock_parts/capacitor = 1,
-							/obj/item/stack/cable_coil = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1)
-
 /obj/item/weapon/circuitboard/sleeper
 	name = "circuit board (Sleeper)"
 	build_path = /obj/machinery/sleeper
