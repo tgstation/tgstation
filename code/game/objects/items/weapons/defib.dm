@@ -261,7 +261,7 @@
 		playsound(get_turf(src), 'sound/machines/twobeep.ogg', 50, 0)
 		return
 	if(!wielded)
-		user << "<span class='boldnotice'>You need to wield the paddles in both hands before you can use them on someone!</span>"
+		user << "<span class='notice'>You need to wield the paddles in both hands before you can use them on someone!</span>"
 		return
 	if(cooldown)
 		user << "<span class='notice'>[defib] is recharging.</span>"
@@ -322,7 +322,7 @@
 							H.adjustToxLoss(tobehealed)
 							H.adjustFireLoss(tobehealed)
 							H.adjustBruteLoss(tobehealed)
-							user.visible_message("<span class='boldnotice'>[defib] pings: Resuscitation successful.</span>")
+							user.visible_message("<span class='notice'>[defib] pings: Resuscitation successful.</span>")
 							playsound(get_turf(src), 'sound/machines/ping.ogg', 50, 0)
 							H.stat = 1
 							dead_mob_list -= H
@@ -334,11 +334,11 @@
 							add_logs(user, M, "revived", object="defibrillator")
 						else
 							if(tplus > tlimit)
-								user.visible_message("<span class='boldnotice'>[defib] buzzes: Resuscitation failed - Heart tissue damage beyond point of no return for defibrillation.</span>")
+								user.visible_message("<span class='warning'>[defib] buzzes: Resuscitation failed - Heart tissue damage beyond point of no return for defibrillation.</span>")
 							else if(total_burn >= 180 || total_brute >= 180)
-								user.visible_message("<span class='boldnotice'>[defib] buzzes: Resuscitation failed - Severe tissue damage detected.</span>")
+								user.visible_message("<span class='warning'>[defib] buzzes: Resuscitation failed - Severe tissue damage detected.</span>")
 							else
-								user.visible_message("<span class='notice'>[defib] buzzes: Resuscitation failed.</span>")
+								user.visible_message("<span class='warning'>[defib] buzzes: Resuscitation failed.</span>")
 								if(ghost)
 									ghost << "<span class='ghostalert'>Your heart is being defibrillated. Return to your body if you want to be revived!</span> (Verbs -> Ghost -> Re-enter corpse)"
 									ghost << sound('sound/effects/genetics.ogg')
