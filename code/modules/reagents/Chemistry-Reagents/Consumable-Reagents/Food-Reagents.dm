@@ -12,7 +12,7 @@
 datum/reagent/consumable
 	name = "Consumable"
 	id = "consumable"
-	var/nutriment_factor = 1 * REAGENTS_METABOLISM
+	nutriment_factor = 1 * REAGENTS_METABOLISM
 
 datum/reagent/consumable/on_mob_life(var/mob/living/M as mob)
 	M.nutrition += nutriment_factor
