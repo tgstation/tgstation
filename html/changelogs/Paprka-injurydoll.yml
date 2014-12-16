@@ -1,5 +1,0 @@
-author: Paprika
-delete-after: True
-changes: 
-  - rscadd: "Added a new injury doll to go along with the overall health meter. This will show you locational overall limb-based burn/brute damage, so you can tell the difference between being hurt with burn/brute or toxins/stamina damage which does not affect limbs."
-  - tweak: "Reverted some UI icons back to their older status and changed some around for readability. Thank you for your feedback."
