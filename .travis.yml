@@ -7,7 +7,7 @@ env:
     - BYOND_MINOR="1247"
     matrix:
     - DM_MAPFILE="tgstation2"
-    - DM_MAPFILE="metastation"
+    - DM_MAPFILE="AsteroidStation"
     - DM_MAPFILE="ministation"
 
 before_install:

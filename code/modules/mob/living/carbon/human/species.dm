@@ -400,16 +400,41 @@
 			H.update_inv_w_uniform(0)
 			H.update_inv_wear_suit()
 
-	// nutrition decrease
+	// nutrition decrease and satiety
 	if (H.nutrition > 0 && H.stat != 2)
-		H.nutrition = max (0, H.nutrition - HUNGER_FACTOR)
+		var/hunger_rate = HUNGER_FACTOR
+		if(H.satiety > 0)
+			H.satiety--
+		if(H.satiety < 0)
+			H.satiety++
+			if(prob(round(-H.satiety/40)))
+				H.Jitter(5)
+			hunger_rate = 5 * HUNGER_FACTOR
+		H.nutrition = max (0, H.nutrition - hunger_rate)
 
-	if (H.nutrition > 450)
+
+	if (H.nutrition > NUTRITION_LEVEL_FULL)
 		if(H.overeatduration < 600) //capped so people don't take forever to unfat
 			H.overeatduration++
 	else
 		if(H.overeatduration > 1)
 			H.overeatduration -= 2 //doubled the unfat rate
+
+	//metabolism change
+	if(H.nutrition > NUTRITION_LEVEL_FAT)
+		H.metabolism_efficiency = 1
+	else if(H.nutrition > NUTRITION_LEVEL_FED && H.satiety > 80)
+		if(H.metabolism_efficiency != 1.25)
+			H << "<span class='notice'>You feel vigorous.</span>"
+			H.metabolism_efficiency = 1.25
+	else if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
+		if(H.metabolism_efficiency != 0.8)
+			H << "<span class='notice'>You feel sluggish.</span>"
+		H.metabolism_efficiency = 0.8
+	else
+		if(H.metabolism_efficiency == 1.25)
+			H << "<span class='notice'>You no longer feel vigorous.</span>"
+		H.metabolism_efficiency = 1
 
 	if (H.drowsyness)
 		H.drowsyness--
@@ -511,13 +536,43 @@
 						if(0 to 20)				H.healths.icon_state = "health5"
 						else					H.healths.icon_state = "health6"
 
+	if(H.healthdoll)
+		H.healthdoll.overlays.Cut()
+		if(H.stat == DEAD)
+			H.healthdoll.icon_state = "healthdoll_DEAD"
+		else
+			H.healthdoll.icon_state = "healthdoll_OVERLAY"
+			for(var/obj/item/organ/limb/L in H.organs)
+				var/damage = L.burn_dam + L.brute_dam
+				var/comparison = (L.max_damage/5)
+				var/icon_num = 0
+				if(damage)
+					icon_num = 1
+				if(damage > (comparison))
+					icon_num = 2
+				if(damage > (comparison*2))
+					icon_num = 3
+				if(damage > (comparison*3))
+					icon_num = 4
+				if(damage > (comparison*4))
+					icon_num = 5
+				if(icon_num)
+					H.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[L.name][icon_num]")
+
 	if(H.nutrition_icon)
 		switch(H.nutrition)
-			if(450 to INFINITY)				H.nutrition_icon.icon_state = "nutrition0"
-			if(350 to 450)					H.nutrition_icon.icon_state = "nutrition1"
-			if(250 to 350)					H.nutrition_icon.icon_state = "nutrition2"
-			if(150 to 250)					H.nutrition_icon.icon_state = "nutrition3"
-			else							H.nutrition_icon.icon_state = "nutrition4"
+			if(NUTRITION_LEVEL_FULL to INFINITY)
+				H.nutrition_icon.icon_state = "nutritionFAT"
+			if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
+				H.nutrition_icon.icon_state = "nutrition0"
+			if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+				H.nutrition_icon.icon_state = "nutrition1"
+			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
+				H.nutrition_icon.icon_state = "nutrition2"
+			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
+				H.nutrition_icon.icon_state = "nutrition3"
+			else
+				H.nutrition_icon.icon_state = "nutrition4"
 
 	if(H.pressure)
 		H.pressure.icon_state = "pressure[H.pressure_alert]"
@@ -622,20 +677,15 @@
 	if(H.status_flags & GOTTAGOFAST)
 		mspeed -= 1
 
-	if(!has_gravity(H))
-		mspeed += 1.5 //Carefully propelling yourself along the walls is actually quite slow
+	var/hasjetpack = 0
+	if(istype(H.back, /obj/item/weapon/tank/jetpack))
+		var/obj/item/weapon/tank/jetpack/J = H.back
+		if(J.allow_thrust(0.01, H))
+			hasjetpack = 1
+	var/grav = has_gravity(H)
 
-		if(istype(H.back, /obj/item/weapon/tank/jetpack))
-			var/obj/item/weapon/tank/jetpack/J = H.back
-			if(J.allow_thrust(0.01, H))
-				mspeed -= 2.5
-
-		if(H.l_hand) //Having your hands full makes movement harder when you're weightless. You try climbing around while holding a gun!
-			mspeed += 0.5
-		if(H.r_hand)
-			mspeed += 0.5
-		if(H.r_hand && H.l_hand)
-			mspeed += 0.5
+	if(!grav && !hasjetpack)
+		mspeed += 1 //Slower space without jetpack
 
 	var/health_deficiency = (100 - H.health + H.staminaloss)
 	if(health_deficiency >= 40)
@@ -645,16 +695,16 @@
 	if(hungry >= 70)
 		mspeed += hungry / 50
 
-	if(H.wear_suit)
+	if(H.wear_suit && grav)
 		mspeed += H.wear_suit.slowdown
-	if(H.shoes)
+	if(H.shoes && grav)
 		mspeed += H.shoes.slowdown
-	if(H.back)
+	if(H.back && grav)
 		mspeed += H.back.slowdown
 
-	if(FAT in H.mutations)
+	if(FAT in H.mutations && grav)
 		mspeed += 1.5
-	if(H.bodytemperature < 283.222)
+	if(H.bodytemperature < 283.222 && grav)
 		mspeed += (283.222 - H.bodytemperature) / 10 * 1.75
 
 	mspeed += speedmod

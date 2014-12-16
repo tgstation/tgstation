@@ -67,6 +67,9 @@
 	if(prob(15/D.permeability_mod))
 		return
 
+	if(satiety>0 && prob(satiety/10)) // positive satiety makes it harder to contract the disease.
+		return
+
 	var/target_zone = pick(head_ch;1,body_ch;2,hands_ch;3,feet_ch;4)
 
 	if(istype(src, /mob/living/carbon/human))

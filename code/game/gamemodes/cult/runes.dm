@@ -167,7 +167,7 @@ var/list/sacrificed = list()
 					M.reagents.add_reagent("hell_water", 10)
 					M << "<span class='h2.userdanger'>YOUR SOUL BURNS WITH YOUR ARROGANCE!!!</span>"
 				return
-		var/narsie_type = /obj/machinery/singularity/narsie/large
+		var/narsie_type = /obj/singularity/narsie/large
 		// Moves narsie if she was already summoned.
 		var/obj/her = locate(narsie_type, machines)
 		if(her)

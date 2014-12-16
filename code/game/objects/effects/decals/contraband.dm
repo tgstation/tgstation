@@ -174,8 +174,8 @@ obj/structure/sign/poster/New(serial,subtype)
 				name += " - D-Day Promotional Poster"
 				desc += " A promotional poster for some rapper."
 			if(28)
-				name += " - Stetchkin Pistol Advertisment"
-				desc += " A poster advertising Stetchkin pistols as being 'Classy as fuck'."
+				name += " - Syndicate Pistol Advertisment"
+				desc += " A poster advertising syndicate pistols as being 'Classy as fuck'."
 			if(29)
 				name += " - E-sword Rainbow"
 				desc += " All the colors of bloody murder rainbow."

@@ -49,7 +49,7 @@
 	damage_type = TOX
 	nodamage = 0
 	stamina = 45
-	range = 7
+	range = 9
 
 
 /obj/item/projectile/energy/bolt/large
@@ -61,7 +61,7 @@
 	icon_state = "omnilaser"
 	damage = 36
 	damage_type = STAMINA
-	range = 7
+	range = 9
 
 
 
