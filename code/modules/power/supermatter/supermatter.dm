@@ -124,23 +124,20 @@
 		power = min(power, 1600)
 		return 1
 
-	if (!removed)
-		return 1
-
 	damage_archived = damage
 	damage = max( damage + ( (removed.temperature - 800) / 150 ) , 0 )
 	//Ok, 100% oxygen atmosphere = best reaction
 	//Maxes out at 100% oxygen pressure
 	oxygen = max(min((removed.oxygen - (removed.nitrogen * NITROGEN_RETARDATION_FACTOR)) / MOLES_CELLSTANDARD, 1), 0)
 
-	var/temp_factor = 100
+	var/temp_factor = 10
 
 	if(oxygen > 0.8)
 		// with a perfect gas mix, make the power less based on heat
 		icon_state = "[base_icon_state]_glow"
 	else
 		// in normal mode, base the produced energy around the heat
-		temp_factor = 60
+		temp_factor = 6
 		icon_state = base_icon_state
 
 	power = max( (removed.temperature * temp_factor / T0C) * oxygen + power, 0) //Total laser power plus an overload
@@ -170,13 +167,13 @@
 
 	for(var/mob/living/carbon/human/l in view(src, min(7, round(power ** 0.25)))) // If they can see it without mesons on.  Bad on them.
 		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
-			l.hallucination = max(0, min(200, l.hallucination + power * config_hallucination_power * sqrt( 1 / max(1,get_dist(l, src)) ) ) )
+			l.hallucination = max(0, min(200, l.hallucination + power * config_hallucination_power * sqrt( 1 / min(1, get_dist(l, src)) ) ) )
 
 	for(var/mob/living/l in range(src, round((power / 100) ** 0.25)))
-		var/rads = (power / 10) * sqrt( 1 / get_dist(l, src) )
+		var/rads = (power / 10) * sqrt( 1 / min(get_dist(l, src),1) )
 		l.apply_effect(rads, IRRADIATE)
 
-	power -= (power/500)**3
+	power -= (power/50)**3
 
 	return 1
 
