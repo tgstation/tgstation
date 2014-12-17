@@ -1,0 +1,4 @@
+author: N3X15
+delete-after: true
+changes:
+- rscdel: "Firebird can no longer move through walls."
