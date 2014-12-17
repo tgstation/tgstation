@@ -76,7 +76,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	M.IgniteMob()
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M,user)
 	if(lit && cig)
-		cig.light("<span class='notice'>[user] holds the [name] out for [M], and lights the [cig.name].</span>")
+		if(M == user)
+			cig.attackby(src, user)
+		else
+			cig.light("<span class='notice'>[user] holds the [name] out for [M], and lights the [cig.name].</span>")
 	else
 		..()
 
@@ -85,10 +88,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return
 	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && user.zone_sel.selecting == "mouth")
 		var/obj/item/clothing/mask/cigarette/cig = M.wear_mask
-		if(M == user)
-			cig.attackby(src, user)
-		else
-			return cig
+		return cig
 
 //////////////////
 //FINE SMOKABLES//
@@ -238,7 +238,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return ..()
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M,user)
 	if(lit && cig)
-		cig.light("<span class='notice'>[user] holds the [name] out for [M], and lights the [cig.name].</span>")
+		if(M == user)
+			cig.attackby(src, user)
+		else
+			cig.light("<span class='notice'>[user] holds the [name] out for [M], and lights the [cig.name].</span>")
 	else
 		return ..()
 
@@ -493,10 +496,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	M.IgniteMob()
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M,user)
 	if(lit && cig)
-		if(istype(src, /obj/item/weapon/lighter/zippo))
-			cig.light("<span class='rose'>[user] whips the [name] out and holds it for [M]. Their arm is as steady as the unflickering flame they light \the [cig] with.</span>")
+		if(M == user)
+			cig.attackby(src, user)
 		else
-			cig.light("<span class='notice'>[user] holds the [name] out for [M], and lights the [cig.name].</span>")
+			if(istype(src, /obj/item/weapon/lighter/zippo))
+				cig.light("<span class='rose'>[user] whips the [name] out and holds it for [M]. Their arm is as steady as the unflickering flame they light \the [cig] with.</span>")
+			else
+				cig.light("<span class='notice'>[user] holds the [name] out for [M], and lights the [cig.name].</span>")
 	else
 		..()
 
