@@ -788,8 +788,6 @@ Code:
 			mode = 53
 
 		if("Newscaster Message")
-			if (!istype(loc, /obj/item/device/pda))
-				return
 			var/obj/item/device/pda/pda = loc
 			var/pda_owner_name = pda.id ? "[pda.id.registered_name] ([pda.id.assignment])" : "Unknown"
 			var/message = pda.msg_input()
@@ -806,8 +804,6 @@ Code:
 			return
 
 		if("Newscaster Switch Channel")
-			if (!istype(loc, /obj/item/device/pda))
-				return
 			var/obj/item/device/pda/pda = loc
 			current_channel = pda.msg_input()
 			pda.Topic(null,list("choice"=num2text(mode)))
