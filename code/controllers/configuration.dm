@@ -109,7 +109,7 @@
 
 	var/rename_cyborg = 0
 	var/ooc_during_round = 0
-	var/ooc_emojis = 0
+	var/emojis = 0
 
 	//Used for modifying movement speed for mobs.
 	//Unversal modifiers
@@ -301,8 +301,8 @@
 					config.rename_cyborg			= 1
 				if("ooc_during_round")
 					config.ooc_during_round			= 1
-				if("ooc_emojis")
-					config.ooc_emojis				= 1
+				if("emojis")
+					config.emojis					= 1
 				if("run_delay")
 					config.run_speed				= text2num(value)
 				if("walk_delay")
