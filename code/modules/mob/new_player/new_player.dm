@@ -81,7 +81,7 @@
 			stat("Game Mode:", "[master_mode]")
 
 		if((ticker.current_state == GAME_STATE_PREGAME) && going)
-			stat("Time To Start:", ticker.pregame_timeleft)
+			stat("Time To Start:", (ticker.pregame_timeleft - world.timeofday) / 10)
 		if((ticker.current_state == GAME_STATE_PREGAME) && !going)
 			stat("Time To Start:", "DELAYED")
 
