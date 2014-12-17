@@ -7,6 +7,7 @@ var/global/datum/controller/gameticker/ticker
 
 
 /datum/controller/gameticker
+	var/remaining_time = 0
 	var/const/restart_timeout = 600
 	var/current_state = GAME_STATE_PREGAME
 
@@ -42,7 +43,6 @@ var/global/datum/controller/gameticker/ticker
 #define LOBBY_TICKING 1
 #define LOBBY_TICKING_RESTARTED 2
 /datum/controller/gameticker/proc/pregame()
-	var/remaining_time = 0
 	login_music = pick(\
 	'sound/music/space.ogg',\
 	'sound/music/traitor.ogg',\
