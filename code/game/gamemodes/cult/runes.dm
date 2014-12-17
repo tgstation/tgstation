@@ -160,8 +160,6 @@ var/list/sacrificed = list()
 	qdel(src)
 	return
 
-
-
 /////////////////////////////////////////THIRD RUNE
 
 /obj/effect/rune/proc/convert()
@@ -214,9 +212,12 @@ var/global/cult_tearreality_lastattempt=0
 	var/cultist_count = 0
 
 	// Spamming this is getting so bad that it's impossible to process ahelps.
-	//if((world.time - cult_tearreality_lastattempt) < CULT_TEAR_REALITY_DELAY)
-	//	return fizzle()
-	//cult_tearreality_lastattempt=world.time
+	if((world.time - cult_tearreality_lastattempt) < CULT_TEAR_REALITY_DELAY)
+		for(var/mob/N in range(1,src))
+			if(iscultist(N))
+				N << "<span class='warning'>Your failed attempt threw the fabric of the universe into disarray!  You must wait five seconds before you can try again.</span>"
+		return fizzle()
+	cult_tearreality_lastattempt=world.time
 
 	if(universe.name == "Hell Rising")
 		for(var/mob/N in range(1,src))
