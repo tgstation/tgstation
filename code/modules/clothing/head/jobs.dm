@@ -81,9 +81,9 @@
 
 /obj/item/clothing/head/beret/sec
 	name = "security beret"
-	desc = "A robust beret with the security insignia emblazoned on it. For officers that are more inclined towards style than safety."
+	desc = "A robust beret with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficent protection."
 	icon_state = "beret_badge"
-	armor = list(melee = 30, bullet = 5, laser = 15, energy = 10, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 15, laser = 50,energy = 10, bomb = 25, bio = 0, rad = 0)
 	strip_delay = 60
 
 /obj/item/clothing/head/beret/sec/navyhos
