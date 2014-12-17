@@ -512,15 +512,34 @@ steam.start() -- spawns the effect
 /// and don't call start() in a loop that will be repeated otherwise it'll get spammed!
 /////////////////////////////////////////////
 
-/obj/effect/effect/ion_trails
-	name = "ion trails"
-	icon_state = "ion_trails"
+/obj/effect/effect/trails
+	name = ""
+	icon_state = ""
 	anchored = 1
 
-/datum/effect/effect/system/ion_trail_follow
+	var/base_name="ion"
+
+/obj/effect/effect/trails/New()
+	..()
+	name = "[base_name] trails"
+	icon_state = "[base_name]_trails"
+
+/obj/effect/effect/trails/proc/Play()
+	flick("[base_name]_fade", src)
+	icon_state = "blank"
+	spawn( 20 )
+		if(src)
+			qdel(src)
+
+/obj/effect/effect/trails/ion
+	base_name = "ion"
+
+/datum/effect/effect/system/trail
 	var/turf/oldposition
 	var/processing = 1
 	var/on = 1
+
+	var/trail_type=/obj/effect/effect/trails/ion
 
 	set_up(atom/atom)
 		attach(atom)
@@ -536,31 +555,24 @@ steam.start() -- spawns the effect
 				var/turf/T = get_turf(src.holder)
 				if(T != src.oldposition)
 					if(istype(T, /turf/space))
-						var/obj/effect/effect/ion_trails/I = new /obj/effect/effect/ion_trails(src.oldposition)
+						var/obj/effect/effect/trails/I = new trail_type(src.oldposition)
 						src.oldposition = T
 						I.dir = src.holder.dir
-						flick("ion_fade", I)
-						I.icon_state = "blank"
-						spawn( 20 )
-							if(I) qdel(I)
-					spawn(2)
-						if(src.on)
-							src.processing = 1
-							src.start()
-				else
-					spawn(2)
-						if(src.on)
-							src.processing = 1
-							src.start()
+						I.Play()
+				spawn(2)
+					if(src.on)
+						src.processing = 1
+						src.start()
 
 	proc/stop()
 		src.processing = 0
 		src.on = 0
 
-/datum/effect/effect/system/ion_trail_follow/space_trail
+/datum/effect/effect/system/trail/space_trail
 	var/turf/oldloc // secondary ion trail loc
 	var/turf/currloc
-/datum/effect/effect/system/ion_trail_follow/space_trail/start()
+
+/datum/effect/effect/system/trail/space_trail/start()
 	if(!src.on)
 		src.on = 1
 		src.processing = 1
@@ -591,8 +603,8 @@ steam.start() -- spawns the effect
 						src.oldloc = get_step(oldposition,NORTH)
 						//src.oldloc = get_step(oldloc,EAST)
 				if(istype(T, /turf/space))
-					var/obj/effect/effect/ion_trails/I = new /obj/effect/effect/ion_trails(src.oldposition)
-					var/obj/effect/effect/ion_trails/II = new /obj/effect/effect/ion_trails(src.oldloc)
+					var/obj/effect/effect/trails/ion/I = new /obj/effect/effect/trails/ion(src.oldposition)
+					var/obj/effect/effect/trails/ion/II = new /obj/effect/effect/trails/ion(src.oldloc)
 					//src.oldposition = T
 					I.dir = src.holder.dir
 					II.dir = src.holder.dir
@@ -603,15 +615,11 @@ steam.start() -- spawns the effect
 					spawn( 20 )
 						if(I) qdel(I)
 						if(II) qdel(II)
-				spawn(2)
-					if(src.on)
-						src.processing = 1
-						src.start()
-			else
-				spawn(2)
-					if(src.on)
-						src.processing = 1
-						src.start()
+
+			spawn(2)
+				if(src.on)
+					src.processing = 1
+					src.start()
 			currloc = T
 
 
