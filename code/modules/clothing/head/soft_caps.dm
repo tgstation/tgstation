@@ -92,3 +92,9 @@
 	item_color = "sec"
 	armor = list(melee = 30, bullet = 5, laser = 5, energy = 15, bomb = 0, bio = 0, rad = 0)
 	strip_delay = 60
+
+/obj/item/clothing/head/soft/emt
+	name = "EMT cap"
+	desc = "It's a baseball hat with a dark turquoise color and a reflective cross on the top."
+	icon_state = "emtsoft"
+	item_color = "emtsoft"

@@ -195,15 +195,18 @@
 /obj/structure/closet/wardrobe/white/medical/New()
 	new /obj/item/clothing/under/rank/nursesuit (src)
 	new /obj/item/clothing/head/nursehat (src)
-	new /obj/item/clothing/suit/toggle/labcoat/emt(src)
-	new /obj/item/clothing/suit/toggle/labcoat/emt(src)
-	new /obj/item/clothing/suit/toggle/labcoat/emt(src)
 	new /obj/item/clothing/under/rank/medical/blue(src)
 	new /obj/item/clothing/under/rank/medical/green(src)
 	new /obj/item/clothing/under/rank/medical/purple(src)
+	new /obj/item/clothing/suit/toggle/labcoat/emt(src)
+	new /obj/item/clothing/suit/toggle/labcoat/emt(src)
+	new /obj/item/clothing/suit/toggle/labcoat/emt(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
+	new /obj/item/clothing/head/soft/emt(src)
+	new /obj/item/clothing/head/soft/emt(src)
+	new /obj/item/clothing/head/soft/emt(src)
 	return
 
 /obj/structure/closet/wardrobe/pjs
