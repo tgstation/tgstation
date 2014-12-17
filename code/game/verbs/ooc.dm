@@ -43,6 +43,9 @@
 		if(prefs.toggles & MEMBER_PUBLIC)
 			keyname = "<font color='[prefs.ooccolor]'><img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=blag>[keyname]</font>"
 
+	if(config.ooc_emojis)
+		msg = emoji_parse(msg)
+
 	for(var/client/C in clients)
 		if(C.prefs.toggles & CHAT_OOC)
 			if(holder)
