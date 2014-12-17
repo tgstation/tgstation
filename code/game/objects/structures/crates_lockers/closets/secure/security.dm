@@ -137,7 +137,6 @@
 	new /obj/item/clothing/head/helmet(src)
 	new /obj/item/device/radio/headset/headset_sec/alt(src)
 	new /obj/item/weapon/reagent_containers/spray/pepper(src)
-	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/device/flash/handheld(src)
 	new /obj/item/weapon/grenade/flashbang(src)
 	new /obj/item/weapon/gun/energy/taser(src)
