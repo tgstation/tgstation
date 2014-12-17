@@ -4782,7 +4782,7 @@
 "bNX" = (/obj/structure/stool/bed/chair/office/dark{dir = 1},/turf/simulated/floor/wood,/area/library)
 "bNY" = (/obj/structure/table,/obj/machinery/recharger,/turf/simulated/floor/plating,/area/maintenance/asteroidstation/rd)
 "bNZ" = (/obj/structure/closet/crate{icon_state = "crateopen"; opened = 1},/turf/simulated/floor/plating,/area/maintenance/asteroidstation/rd)
-"bOa" = (/obj/structure/closet/body_bag,/obj/item/weapon/melee/telebaton,/turf/simulated/floor/plating,/area/maintenance/asteroidstation/rd)
+"bOa" = (/obj/structure/closet/body_bag,/obj/item/weapon/melee/classic_baton/telescopic,/turf/simulated/floor/plating,/area/maintenance/asteroidstation/rd)
 "bOb" = (/obj/structure/closet/secure_closet/chemical,/obj/machinery/light/small{dir = 4},/turf/simulated/floor/plating,/area/mine/explored)
 "bOc" = (/obj/machinery/atmospherics/unary/portables_connector/visible{dir = 4},/turf/simulated/floor/plating,/area/maintenance/asteroidstation/rd)
 "bOd" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden{dir = 1},/obj/machinery/camera{c_tag = "Research Atmospheric Control"},/obj/machinery/meter,/turf/simulated/floor/plating,/area/maintenance/asteroidstation/rd)
