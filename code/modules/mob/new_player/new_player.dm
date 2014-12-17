@@ -81,7 +81,7 @@
 			stat("Game Mode:", "[master_mode]")
 
 		if((ticker.current_state == GAME_STATE_PREGAME) && going)
-			stat("Time To Start:", (ticker.pregame_timeleft - world.timeofday) / 10)
+			stat("Time To Start:", (round(ticker.pregame_timeleft - world.timeofday) / 10)) //rounding because people freak out at decimals i guess
 		if((ticker.current_state == GAME_STATE_PREGAME) && !going)
 			stat("Time To Start:", "DELAYED")
 
