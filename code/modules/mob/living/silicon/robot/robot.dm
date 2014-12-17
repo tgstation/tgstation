@@ -846,6 +846,9 @@
 			var/turf/tile = loc
 			if(isturf(tile))
 				tile.clean_blood()
+				if (istype(tile, /turf/simulated))
+					var/turf/simulated/S = tile
+					S.dirt = 0
 				for(var/A in tile)
 					if(istype(A, /obj/effect))
 						if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
