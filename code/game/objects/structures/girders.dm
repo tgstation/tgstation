@@ -177,7 +177,7 @@
 		if (P.pipe_type in list(0, 1, 5))	//simple pipes, simple bends, and simple manifolds.
 			user.drop_item()
 			P.loc = src.loc
-			user << "<span class='notice'>You fit the pipe into the [src]!</span>"
+			user << "<span class='notice'>You fit the pipe into \the [src]!</span>"
 	else
 		..()
 
