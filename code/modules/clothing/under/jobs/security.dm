@@ -21,7 +21,7 @@
 /obj/item/clothing/under/rank/warden
 	name = "warden's suit"
 	desc = "A formal security suit for the warden with blue desginations and '/Warden/' stiched into the shoulders."
-	icon_state = "wardenformal"
+	icon_state = "warden"
 	item_state = "gy_suit"
 	item_color = "warden"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
