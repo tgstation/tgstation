@@ -196,3 +196,19 @@
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white and blue."
 	icon_state = "medblueband"
 	item_color = "medblueband"
+
+////////
+//MISC//
+////////
+
+/obj/item/clothing/tie/redscarf
+	name = "red scarf"
+	desc = "A stylish red scarf. The perfect winter accessory for those with a keen fashion sense."
+	icon_state = "redscarf"
+	item_color = "redscarf"
+
+/obj/item/clothing/tie/greenscarf
+	name = "green scarf"
+	desc = "For fashion enthusiasts, and those who just can't handle a cold breeze on their necks."
+	icon_state = "greenscarf"
+	item_color = "greenscarf"
