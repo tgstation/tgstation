@@ -183,7 +183,7 @@ datum
 			name = "Water"
 			id = "water"
 			result = "water"
-			required_reagents = list("hydrogen" = 1, "oxygen" = 2)
+			required_reagents = list("hydrogen" = 2, "oxygen" = 1)
 			result_amount = 1
 
 		thermite
