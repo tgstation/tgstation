@@ -21,7 +21,6 @@
 		point_rate = new_rate
 		..(loc, h)
 
-
 	Destroy()
 		blob_cores -= src
 		if(overmind)

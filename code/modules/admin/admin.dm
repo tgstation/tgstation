@@ -930,7 +930,8 @@ var/global/floorIsLava = 0
 	log_admin("[key_name(usr)] toggled Space Ninjas to [toggle_space_ninja].")
 	message_admins("[key_name_admin(usr)] toggled Space Ninjas [toggle_space_ninja ? "on" : "off"].", 1)
 	feedback_add_details("admin_verb","TSN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
+#define LOBBY_TICKING_STOPPED 0
+#define LOBBY_TICKING_RESTARTED 2
 /datum/admins/proc/delay()
 	set category = "Server"
 	set desc="Delay the game start/end"
@@ -942,15 +943,18 @@ var/global/floorIsLava = 0
 		log_admin("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
 		message_admins("\blue [key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].", 1)
 		return //alert("Round end delayed", null, null, null, null, null)
-	going = !( going )
 	if (!( going ))
-		world << "<b>The game start has been delayed.</b>"
-		log_admin("[key_name(usr)] delayed the game.")
-	else
+		going = LOBBY_TICKING_RESTARTED
+		ticker.pregame_timeleft = world.timeofday + ticker.remaining_time
 		world << "<b>The game will start soon.</b>"
 		log_admin("[key_name(usr)] removed the delay.")
+	else
+		going = LOBBY_TICKING_STOPPED
+		world << "<b>The game start has been delayed.</b>"
+		log_admin("[key_name(usr)] delayed the game.")
 	feedback_add_details("admin_verb","DELAY") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
+#undef LOBBY_TICKING_STOPPED
+#undef LOBBY_TICKING_RESTARTED
 /datum/admins/proc/adjump()
 	set category = "Server"
 	set desc="Toggle admin jumping"

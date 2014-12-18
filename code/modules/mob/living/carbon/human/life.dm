@@ -192,9 +192,6 @@ var/global/list/organ_damage_overlays = list(
 			src << "Successfully handled disabilities"
 			last_processed = "Handle disabilities"
 
-		//Organ failure.
-		handle_organs()
-
 		if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
 			src << "Successfully handled organs"
 			last_processed = "Handle organs"

@@ -2568,7 +2568,6 @@
 				var/choice = input("You sure you want to end the round and summon narsie at your location? Misuse of this could result in removal of flags or halarity.") in list("PRAISE SATAN", "Cancel")
 				if(choice == "PRAISE SATAN")
 					new /obj/machinery/singularity/narsie/large(get_turf(usr))
-					SetUniversalState(/datum/universal_state/hell)
 					message_admins("[key_name_admin(usr)] has summoned narsie and brought about a new realm of suffering.")
 			if("supermattercascade")
 				feedback_inc("admin_secrets_fun_used",1)

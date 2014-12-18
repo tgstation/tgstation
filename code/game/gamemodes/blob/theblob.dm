@@ -38,7 +38,8 @@
 
 /obj/effect/blob/beam_connect(var/obj/effect/beam/B)
 	..()
-	last_beamchecks["\ref[B]"]=world.time
+	last_beamchecks["\ref[B]"]=world.time+1
+	apply_beam_damage(B) // Contact damage for larger beams (deals 1/10th second of damage)
 	if(!custom_process && !(src in processing_objects))
 		processing_objects.Add(src)
 
@@ -56,7 +57,7 @@
 	var/lastcheck=last_beamchecks["\ref[B]"]
 
 	// Standard damage formula / 2
-	var/damage = ((world.time - lastcheck)/10)  * B.get_damage()
+	var/damage = ((world.time - lastcheck)/10)  * (B.get_damage() / 2)
 
 	// Actually apply damage
 	health -= damage

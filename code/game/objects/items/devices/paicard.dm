@@ -15,6 +15,12 @@
 	..()
 	overlays += "pai-off"
 
+#ifdef DEBUG_ROLESELECT
+/obj/item/device/paicard/test/New()
+	src.looking_for_personality = 1
+	paiController.findPAI(src, usr)
+#endif
+
 /obj/item/device/paicard/Destroy()
 	//Will stop people throwing friend pAIs into the singularity so they can respawn
 	if(!isnull(pai))
