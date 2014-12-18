@@ -23,7 +23,7 @@
 /obj/item/device/mmi/posibrain/attack_self(mob/user as mob)
 	if(brainmob && !brainmob.key && searching == 0)
 		//Start the process of searching for a new user.
-		user << "<span class='notice'>You carefully locate \the manual activation switch and start the positronic brain's boot process.</span>"
+		user << "<span class='notice'>You carefully locate the manual activation switch and start the [src]'s boot process.</span>"
 		search_for_candidates()
 
 /obj/item/device/mmi/posibrain/proc/search_for_candidates()
@@ -57,7 +57,7 @@
 /obj/item/device/mmi/posibrain/proc/question(var/client/C)
 	spawn(0)
 		if(!C)	return
-		var/response = alert(C, "Someone is requesting a personality for a positronic brain. Would you like to play as one?", "Positronic brain request", "Yes", "No", "Never for this round")
+		var/response = alert(C, "Someone is requesting a personality for a [src]. Would you like to play as one?", "[src] request", "Yes", "No", "Never for this round")
 		if(!C || brainmob.key || 0 == searching)	return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
 		if(response == "Yes")
 			transfer_personality(C.mob)
@@ -71,15 +71,15 @@
 	src.brainmob.stat = 0
 	src.name = "positronic brain ([src.brainmob.name])"
 
-	src.brainmob << "<b>You are a positronic brain, brought into existence on [station_name()].</b>"
-	src.brainmob << "<b>As a synthetic intelligence, you answer to all crewmembers, as well as \the AI.</b>"
+	src.brainmob << "<b>You are \a [src], brought into existence on [station_name()].</b>"
+	src.brainmob << "<b>As a synthetic intelligence, you answer to all crewmembers, as well as the AI.</b>"
 	src.brainmob << "<b>Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>"
 	src.brainmob << "<b>Use say :b to speak to other artificial intelligences.</b>"
 	src.brainmob.mind.assigned_role = "Positronic Brain"
 
 	var/turf/T = get_turf_or_move(src.loc)
 	for (var/mob/M in viewers(T))
-		M.show_message("\blue The positronic brain chimes quietly.")
+		M.show_message("<span class='notice'>The [src] chimes quietly.</span>")
 	icon_state = "posibrain-occupied"
 
 /obj/item/device/mmi/posibrain/proc/reset_search() //We give the players sixty seconds to decide, then reset the timer.
@@ -91,7 +91,7 @@
 
 	var/turf/T = get_turf_or_move(src.loc)
 	for (var/mob/M in viewers(T))
-		M.show_message("<span class='notice'>The positronic brain buzzes quietly, and \the golden lights fade away. Perhaps you could try again?</span>")
+		M.show_message("<span class='notice'>The [src] buzzes quietly, and the golden lights fade away. Perhaps you could try again?</span>")
 
 /obj/item/device/mmi/posibrain/Topic(href,href_list)
 	if("signup" in href_list)
@@ -113,7 +113,7 @@
 	if(!check_observer(O))
 		O << "<span class='warning'>You cannot be \a [src].</span>"
 		return
-	O.<< "<span class='notice'>You've been added to \the list of ghosts that may become this [src].  Click again to unvolunteer.</span>"
+	O.<< "<span class='notice'>You've been added to the list of ghosts that may become this [src].  Click again to unvolunteer.</span>"
 	ghost_volunteers.Add(O)
 
 /obj/item/device/mmi/posibrain/examine()
@@ -181,4 +181,4 @@
 	else
 		var/turf/T = get_turf_or_move(src.loc)
 		for (var/mob/M in viewers(T))
-			M.show_message("<span class='notice'>The positronic brain pings softly.</span>")
+			M.show_message("<span class='notice'>The [src] pings softly.</span>")
