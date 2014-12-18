@@ -118,19 +118,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	var/lighting_text = "<span class='notice'>[user] lights their [name] with [W].</span>"
-	switch(W.type)
-		if(/obj/item/weapon/weldingtool)
-			lighting_text = "<span class='notice'>[user] casually lights the [name] with [W], what a badass.</span>"
-		if(/obj/item/weapon/lighter/zippo)
-			lighting_text = "<span class='rose'>With a single flick of their wrist, [user] smoothly lights their [name] with [W]. Damn they're cool.</span>"
-		if(/obj/item/weapon/lighter)
-			lighting_text = "<span class='notice'>After some fiddling, [user] manages to light their [name] with [W].</span>"
-		if(/obj/item/weapon/melee/energy/sword)
-			lighting_text = "<span class='warning'>[user] swings their [W], barely missing their nose. They light their [name] in the process.</span>"
-		if(/obj/item/device/assembly/igniter)
-			lighting_text = "<span class='notice'>[user] fiddles with [W], and manages to light their [name].</span>"
-		if(/obj/item/device/flashlight/flare)
-			lighting_text = "<span class='notice'>[user] lights their [name] with [W] like a real badass.</span>"
+	if(istype(W, /obj/item/weapon/weldingtool))
+		lighting_text = "<span class='notice'>[user] casually lights the [name] with [W], what a badass.</span>"
+	else if(istype(W, /obj/item/weapon/lighter/zippo))
+		lighting_text = "<span class='rose'>With a single flick of their wrist, [user] smoothly lights their [name] with [W]. Damn they're cool.</span>"
+	else if(istype(W, /obj/item/weapon/lighter))
+		lighting_text = "<span class='notice'>After some fiddling, [user] manages to light their [name] with [W].</span>"
+	else if(istype(W, /obj/item/weapon/melee/energy))
+		lighting_text = "<span class='warning'>[user] swings their [W], barely missing their nose. They light their [name] in the process.</span>"
+	else if(istype(W, /obj/item/device/assembly/igniter))
+		lighting_text = "<span class='notice'>[user] fiddles with [W], and manages to light their [name].</span>"
+	else if(istype(W, /obj/item/device/flashlight/flare))
+		lighting_text = "<span class='notice'>[user] lights their [name] with [W] like a real badass.</span>"
 	if(is_hot(W))
 		light(lighting_text)
 	return
