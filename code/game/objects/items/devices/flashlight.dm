@@ -136,7 +136,7 @@
 	desc = "A classic green-shaded desk lamp."
 	icon_state = "lampgreen"
 	item_state = "lampgreen"
-	brightness_on = 5
+
 
 
 /obj/item/device/flashlight/lamp/verb/toggle_light()
@@ -146,6 +146,13 @@
 
 	if(!usr.stat)
 		attack_self(usr)
+
+//Bananalamp
+obj/item/device/flashlight/lamp/bananalamp
+	name = "banana lamp"
+	desc = "Only a clown would think to make a ghetto banana-shaped lamp. Even has a goofy pullstring."
+	icon_state = "bananalamp"
+	item_state = "bananalamp"
 
 // FLARES
 
@@ -205,7 +212,7 @@
 	. = ..()
 	// All good, turn it on.
 	if(.)
-		user.visible_message("<span class='notice'>[user] lights the [src].</span>", "<span class='notice'>You light the [src]!</span>")
+		user.visible_message("<span class='notice'>[user] lights \the [src].</span>", "<span class='notice'>You light \the [src]!</span>")
 		force = on_damage
 		damtype = "fire"
 		processing_objects += src

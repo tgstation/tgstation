@@ -378,7 +378,7 @@
 	SetStunned(0)
 	SetWeakened(0)
 	radiation = 0
-	nutrition = 400
+	nutrition = NUTRITION_LEVEL_FED + 50
 	bodytemperature = 310
 	sdisabilities = 0
 	disabilities = 0
