@@ -231,7 +231,7 @@ var/global/cult_tearreality_lastattempt=0
 			// Sanity checks
 			// Are we permitted to spawn Nar-Sie?
 			if(ticker.mode.eldergod)
-				new /obj/machinery/singularity/narsie/large(src.loc,cultspawn=1)
+				new /obj/machinery/singularity/narsie/large(src.loc)
 				ticker.mode.eldergod = 0
 			return
 		else
