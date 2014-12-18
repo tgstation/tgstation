@@ -38,10 +38,10 @@
 					return TRUE
 
 			if(!istype(loc,/turf))
-				user << "<span class='warning'>You can't assemble \the MoMMI, \the [src] has to be standing on the ground (or a table) to be perfectly precise.</span>"
+				user << "<span class='warning'>You can't assemble the MoMMI, \the [src] has to be standing on the ground (or a table) to be perfectly precise.</span>"
 				return TRUE
 			if(!brainmob)
-				user << "<span class='warning'>What are you doing oh god put \the brain back in.</span>"
+				user << "<span class='warning'>What are you doing oh god put the brain back in.</span>"
 				return TRUE
 			if(!brainmob.key)
 				var/ghost_can_reenter = 0
@@ -55,11 +55,11 @@
 					return TRUE
 
 			if(brainmob.stat == DEAD)
-				user << "<span class='warning'>Yeah, good idea. Give something deader than \the pizza in your fridge legs.  Mom would be so proud.</span>"
+				user << "<span class='warning'>Yeah, good idea. Give something deader than the pizza in your fridge legs.  Mom would be so proud.</span>"
 				return TRUE
 
 			if(brainmob.mind in ticker.mode.head_revolutionaries)
-				user << "<span class='warning'>\The [src]'s firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept \the brain.</span>"
+				user << "<span class='warning'>The [src]'s firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the brain.</span>"
 				return TRUE
 
 			if(jobban_isbanned(brainmob, "Cyborg"))
@@ -84,7 +84,7 @@
 			brainmob.mind.transfer_to(M)
 
 			if(M.mind && M.mind.special_role)
-				M.mind.store_memory("In case you look at this after being borged, \the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
+				M.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
 
 			M.job = "Cyborg"
 
@@ -143,7 +143,7 @@
 		if((istype(O,/obj/item/weapon/card/id)||istype(O,/obj/item/device/pda)) && brainmob)
 			if(allowed(user))
 				locked = !locked
-				user << "<span class='notice'>You [locked ? "lock" : "unlock"] \the brain holder.</span>"
+				user << "<span class='notice'>You [locked ? "lock" : "unlock"] \the [src].</span>"
 			else
 				user << "<span class='warning'>Access denied.</span>"
 			return
@@ -155,11 +155,11 @@
 	//TODO: ORGAN REMOVAL UPDATE. Make the brain remain in the MMI so it doesn't lose organ data.
 	attack_self(mob/user as mob)
 		if(!brainmob)
-			user << "<span class='warning'>You upend \the MMI, but there's nothing in it."
+			user << "<span class='warning'>You upend \the [src], but there's nothing in it."
 		else if(locked)
-			user << "<span class='warning'>You upend \the MMI, but the brain is clamped into place."
+			user << "<span class='warning'>You upend \the [src], but the brain is clamped into place."
 		else
-			user << "<span class='notice'>You upend \the MMI, spilling the brain onto \the floor.</span>"
+			user << "<span class='notice'>You upend \the [src], spilling the brain onto the floor.</span>"
 			var/obj/item/organ/brain/brain = new(user.loc)
 			brainmob.container = null//Reset brainmob mmi var.
 			brainmob.loc = brain//Throw mob into brain.
@@ -221,7 +221,7 @@
 				brainmob << "Can't do that while incapacitated or dead."
 
 			radio.listening = radio.listening==1 ? 0 : 1
-			brainmob << "<span class='notice'>Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast.</span>"
+			brainmob << "<span class='notice'>Radio is [radio] receiving broadcast.</span>"
 
 /obj/item/device/mmi/emp_act(severity)
 	if(!brainmob)
@@ -256,9 +256,9 @@
 <span class='warning'>"}
 	if(src.brainmob && src.brainmob.key)
 		switch(src.brainmob.stat)
-			if(src.brainmob.stat == CONSCIOUS)
+			if(CONSCIOUS)
 				if(!src.brainmob.client)	msg += "It appears to be lost in its own thoughts\n" //afk
-			if(src.brainmob.stat == UNCONSCIOUS)		msg += "<span class='warning'>It seems to be in a deep dream-state</span>\n"
-			if(src.brainmob.stat == DEAD)			msg += "<span class='deadsay'>It appears the brain has suffered irreversible tissue degeneration</span>\n"
+			if(UNCONSCIOUS)		msg += "<span class='warning'>It seems to be in a deep dream-state</span>\n"
+			if(DEAD)			msg += "<span class='deadsay'>It appears the brain has suffered irreversible tissue degeneration</span>\n"
 	usr << msg
 	return
