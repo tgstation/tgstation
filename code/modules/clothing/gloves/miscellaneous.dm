@@ -15,6 +15,7 @@
 	name = "captain's gloves"
 	icon_state = "captain"
 	item_state = "egloves"
+	siemens_coefficient = 0
 	_color = "captain"
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECITON_TEMPERATURE
