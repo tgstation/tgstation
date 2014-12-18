@@ -13,6 +13,9 @@
 	new /obj/effect/decal/cleanable/blood(src)
 	new /obj/effect/decal/remains/human(src)
 
+/turf/simulated/wall/cult/narsie_act()
+	return
+
 /turf/simulated/wall/vault
 	icon_state = "rockvault"
 

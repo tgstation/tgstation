@@ -110,6 +110,9 @@
 	name = "engraved floor"
 	icon_state = "cult"
 
+/turf/simulated/floor/engine/cult/narsie_act()
+	return
+
 /turf/simulated/floor/engine/n20/New()
 	..()
 	var/datum/gas_mixture/adding = new
