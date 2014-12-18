@@ -36,23 +36,22 @@ var/list/mommicomment_sound = list('sound/voice/mommi_comment1.ogg', 'sound/voic
 */
 	if(!extrarange)
 		extrarange = 0
+	if(!vol) //don't do that
+		return
 
-	if(gas_modified && !turf_source.isDense(list(source)))
+	if(gas_modified && turf_source && !turf_source.c_airblock(turf_source)) //if the sound is modified by air, and we are on an airflowing tile
 		var/atmosphere = 0
-		if(istype(turf_source, /turf/simulated))
-			var/turf/simulated/TS = turf_source
-			if(!TS.zone)
-				if(turf_source.air)
-					atmosphere = turf_source.air.return_pressure()
-			else if(TS.zone.air)
-				atmosphere = TS.zone.air.return_pressure()
-		else if(turf_source.air)
-			atmosphere = turf_source.air.return_pressure()
+		var/datum/gas_mixture/current_air = turf_source.return_air()
+		if(current_air)
+			atmosphere = current_air.return_pressure()
 		else
 			atmosphere = 0 //no air
-		//message_admins("We're starting off with [atmosphere] and [extrarange]")
-		extrarange = -7 + min ( round( (7 + extrarange) * round(atmosphere/101.325, 0.1), 1 ), (7 + extrarange) )
-		//message_admins("We've adjusted the sound of [source] at [turf_source.loc] to have a range of [7 + extrarange]")
+
+		//message_admins("We're starting off with [atmosphere], [extrarange], and [vol]")
+		var/atmos_modifier = round(atmosphere/ONE_ATMOSPHERE, 0.1)
+		extrarange = -7 + min ( round( (7 + extrarange) * sqrt(atmos_modifier), 1 ), (7 + (extrarange * 2))  ) //upper range of twice the original range. Range technically falls off with the root of pressure (see Newtonian sound)
+		vol = min( round( (vol) * atmos_modifier, 1 ), vol * 2) //upper range of twice the volume. Trust me, otherwise you get 10000 volume in a plasmafire
+		//message_admins("We've adjusted the sound of [source] at [turf_source.loc] to have a range of [7 + extrarange] and a volume of [vol]")
 
  	// Looping through the player list has the added bonus of working for mobs inside containers
 	for (var/P in player_list)
@@ -62,13 +61,33 @@ var/list/mommicomment_sound = list('sound/voice/mommi_comment1.ogg', 'sound/voic
 		if(get_dist(M, turf_source) <= world.view + extrarange)
 			var/turf/T = get_turf(M)
 			if(T && T.z == turf_source.z)
-				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff)
+				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, gas_modified)
 
 var/const/FALLOFF_SOUNDS = 1
 var/const/SURROUND_CAP = 7
 
-/mob/proc/playsound_local(var/turf/turf_source, soundin, vol as num, vary, frequency, falloff)
-	if(!src.client || ear_deaf > 0)	return
+#define MIN_SOUND_PRESSURE	2 //2 kPa of pressure required to at least hear sound
+/mob/proc/playsound_local(var/turf/turf_source, soundin, vol as num, vary, frequency, falloff, gas_modified)
+	if(!src.client || ear_deaf > 0)
+		return
+
+	if(gas_modified)
+		var/turf/current_turf = get_turf(src)
+		if(!current_turf)
+			return
+
+		var/datum/gas_mixture/environment = current_turf.return_air()
+		var/atmosphere = 0
+		if(environment)
+			atmosphere = environment.return_pressure()
+
+		/// Local sound modifications ///
+		if(atmosphere < MIN_SOUND_PRESSURE) //no sound reception in space, boyos
+			vol = 0
+		else
+			vol = min( vol * atmosphere / ONE_ATMOSPHERE, vol) //sound can't be amplified from low to high pressure, but can be reduced
+		/// end ///
+
 	soundin = get_sfx(soundin)
 
 	var/sound/S = sound(soundin)
