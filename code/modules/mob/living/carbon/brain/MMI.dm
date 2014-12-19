@@ -245,20 +245,17 @@
 
 
 /obj/item/device/mmi/examine()
-	set src in oview()
-
 	if(!usr || !src)	return
 	if( (usr.sdisabilities & BLIND || usr.blinded || usr.stat) && !istype(usr,/mob/dead/observer) )
 		usr << "<span class='notice'>Something is there but you can't see it.</span>"
 		return
 
-	var/msg = {"<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n
-<span class='warning'>"}
+	var/msg = {"<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n<span class='warning'>"}
 	if(src.brainmob && src.brainmob.key)
 		switch(src.brainmob.stat)
 			if(CONSCIOUS)
-				if(!src.brainmob.client)	msg += "It appears to be lost in its own thoughts\n" //afk
-			if(UNCONSCIOUS)		msg += "<span class='warning'>It seems to be in a deep dream-state</span>\n"
-			if(DEAD)			msg += "<span class='deadsay'>It appears the brain has suffered irreversible tissue degeneration</span>\n"
+				if(!src.brainmob.client)	msg += "It appears to be lost in its own thoughts" //afk
+			if(UNCONSCIOUS)		msg += "<span class='warning'>It seems to be in a deep dream-state</span>"
+			if(DEAD)			msg += "<span class='deadsay'>It appears the brain has suffered irreversible tissue degeneration</span>"
 	usr << msg
 	return
