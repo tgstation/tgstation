@@ -201,7 +201,7 @@
 	max_combined_w_class = 28
 	can_hold = list(
 		"/obj/item/weapon/storage/bag/ore",
-		"/obj/item/weapon/shovel",
+		"/obj/item/weapon/pickaxe/shovel",
 		"/obj/item/weapon/storage/box/samplebags",
 		"/obj/item/device/core_sampler",
 		"/obj/item/device/beacon_locator",

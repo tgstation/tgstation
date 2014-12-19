@@ -227,17 +227,20 @@
 			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 			return
 
-	else if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
+	else if( istype(W, /obj/item/weapon/pickaxe) )
+		var/obj/item/weapon/pickaxe/PK = W
+		if(!(PK.diggables & DIG_WALLS))
+			return
 
-		user << "<span class='notice'>You begin slicing through the outer plating.</span>"
-		playsound(src, 'sound/items/Welder.ogg', 100, 1)
+		user << "<span class='notice'>You begin [PK.drill_verb] through the outer plating.</span>"
+		playsound(src, PK.drill_sound, 100, 1)
 
-		sleep(60)
+		sleep(PK.digspeed * 10)
 		if(mineral == "diamond")//Oh look, it's tougher
-			sleep(60)
-		if( !istype(src, /turf/simulated/wall) || !user || !W || !T )	return
+			sleep(PK.digspeed * 10)
+		if( !istype(src, /turf/simulated/wall) || !user || !PK || !T )	return
 
-		if( user.loc == T && user.get_active_hand() == W )
+		if( user.loc == T && user.get_active_hand() == PK )
 			user << "<span class='notice'>You remove the outer plating.</span>"
 			dismantle_wall()
 			var/pdiff=performWallPressureCheck(src.loc)
@@ -245,28 +248,7 @@
 				message_admins("[user.real_name] ([formatPlayerPanel(user,user.ckey)]) dismantled with a pdiff of [pdiff] at [formatJumpTo(loc)]!")
 				log_admin("[user.real_name] ([user.ckey]) dismantled with a pdiff of [pdiff] at [loc]!")
 			for(var/mob/O in viewers(user, 5))
-				O.show_message("<span class='warning'>The wall was sliced apart by [user]!</span>", 1, "<span class='warning'>You hear metal being sliced apart.</span>", 2)
-		return
-
-	//DRILLING
-	else if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
-
-		user << "<span class='notice'>You begin to drill though the wall.</span>"
-
-		sleep(60)
-		if(mineral == "diamond")
-			sleep(60)
-		if( !istype(src, /turf/simulated/wall) || !user || !W || !T )	return
-
-		if( user.loc == T && user.get_active_hand() == W )
-			user << "<span class='notice'>Your drill tears though the last of the reinforced plating.</span>"
-			dismantle_wall()
-			var/pdiff=performWallPressureCheck(src.loc)
-			if(pdiff)
-				message_admins("[user.real_name] ([formatPlayerPanel(user,user.ckey)]) drilled a wall with a pdiff of [pdiff] at [formatJumpTo(loc)]!")
-				log_admin("[user.real_name] ([user.ckey]) drilled a wall with a pdiff of [pdiff] at [loc]!")
-			for(var/mob/O in viewers(user, 5))
-				O.show_message("<span class='warning'>The wall was drilled through by [user]!</span>", 1, "<span class='warning'>You hear the grinding of metal.</span>", 2)
+				O.show_message("<span class='warning'>The wall was taken apart by [user]!</span>", 1, "<span class='warning'>You hear metal [PK.drill_verb] apart.</span>", 2)
 		return
 
 	else if( istype(W, /obj/item/weapon/melee/energy/blade) )
