@@ -1276,6 +1276,7 @@
 #include "code\modules\research\research.dm"
 #include "code\modules\research\server.dm"
 #include "code\modules\research\designs\AI_module_designs.dm"
+#include "code\modules\research\designs\autolathe_designs.dm"
 #include "code\modules\research\designs\comp_board_designs.dm"
 #include "code\modules\research\designs\machine_designs.dm"
 #include "code\modules\research\designs\mecha_designs.dm"
