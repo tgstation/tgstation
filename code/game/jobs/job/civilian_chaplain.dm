@@ -82,7 +82,18 @@ Chaplain
 		usr << browse(null, "window=editicon") // Close window
 
 /datum/job/chaplain/equip_items(var/mob/living/carbon/human/H)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chaplain(H), slot_w_uniform)
+	if(H.mind.role_alt_clothing && H.mind.role_alt_clothing == "Default")
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chaplain(H), slot_w_uniform)
+	else if(H.mind.role_alt_clothing && H.mind.role_alt_clothing == "Hoodie")
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chaplain(H), slot_w_uniform)
+		H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/chaplain_hoodie(H), slot_wear_suit)
+	else if(H.mind.role_alt_clothing && H.mind.role_alt_clothing == "Priest")
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chaplain(H), slot_w_uniform)
+		H.equip_to_slot_or_del(new /obj/item/clothing/suit/holidaypriest(H), slot_wear_suit)
+	else if(H.mind.role_alt_clothing && H.mind.role_alt_clothing == "Nun")
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chaplain(H), slot_w_uniform)
+		H.equip_to_slot_or_del(new /obj/item/clothing/suit/nun(H), slot_wear_suit)
+		H.equip_to_slot_or_del(new /obj/item/clothing/head/nun_hood(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
 
 	var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible/booze(H)

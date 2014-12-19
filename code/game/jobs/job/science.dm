@@ -13,6 +13,7 @@ Research Director
 	selection_color = "#ffddff"
 	req_admin_notify = 1
 	minimal_player_age = 7
+	alt_clothing = list("Default","Turtleneck","Whimsy")
 
 	default_id = /obj/item/weapon/card/id/silver
 	default_pda = /obj/item/device/pda/heads/rd
@@ -30,9 +31,14 @@ Research Director
 			            access_tech_storage, access_minisat)
 
 /datum/job/rd/equip_items(var/mob/living/carbon/human/H)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/brown(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/research_director(H), slot_w_uniform)
+	if(H.mind.role_alt_clothing && H.mind.role_alt_clothing == "Default")
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/research_director(H), slot_w_uniform)
+	else if(H.mind.role_alt_clothing && H.mind.role_alt_clothing == "Turtleneck")
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/research_director/turtleneck(H), slot_w_uniform)
+	else if(H.mind.role_alt_clothing && H.mind.role_alt_clothing == "Whimsy")
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/research_director/alt(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/labcoat(H), slot_wear_suit)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/brown(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/weapon/clipboard(H), slot_l_hand)
 	H.equip_to_slot_or_del(new /obj/item/device/laser_pointer(H), slot_l_store)
 

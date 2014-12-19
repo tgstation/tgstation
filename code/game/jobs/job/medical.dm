@@ -51,7 +51,7 @@ Medical Doctor
 	spawn_positions = 3
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
-	alt_clothing = list("Default","Surgeon","Emergency Physician","Nurse")
+	alt_clothing = list("Default","Emergency Physician","Nurse")
 
 	default_pda = /obj/item/device/pda/medical
 	default_headset = /obj/item/device/radio/headset/headset_med
@@ -62,11 +62,26 @@ Medical Doctor
 	minimal_access = list(access_medical, access_morgue, access_surgery)
 
 /datum/job/doctor/equip_items(var/mob/living/carbon/human/H)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/white(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/labcoat(H), slot_wear_suit)
+	if(H.mind.role_alt_clothing && H.mind.role_alt_clothing == "Default")
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/white(H), slot_shoes)
+		H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/labcoat(H), slot_wear_suit)
+	else if(H.mind.role_alt_clothing && H.mind.role_alt_clothing == "Emergency Physician")
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
+		H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/labcoat/emt(H), slot_wear_suit)
+		H.equip_to_slot_or_del(new /obj/item/clothing/head/soft/emt(H), slot_head)
+	else if(H.mind.role_alt_clothing && H.mind.role_alt_clothing == "Nurse")
+		switch(pick("blue", "green", "purple"))
+			if ("blue")
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/blue(H), slot_w_uniform)
+			if ("green")
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/green(H), slot_w_uniform)
+			if ("purple")
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/purple(H), slot_w_uniform)
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/regular(H), slot_l_hand)
-	H.equip_to_slot_or_del(new /obj/item/device/flashlight/pen(H), slot_s_store)
+	H.equip_to_slot_or_del(new /obj/item/device/flashlight/pen(H), slot_r_store)
 
 /*
 Chemist

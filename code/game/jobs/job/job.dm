@@ -32,6 +32,8 @@
 	//Sellection screen color
 	var/selection_color = "#ffffff"
 
+	//List of alt clothing sets for a job
+	var/list/alt_clothing
 
 	//If this is set to 1, a text is printed to the player when jobs are assigned, telling him that he should let admins know that he has to disconnect.
 	var/req_admin_notify
