@@ -2,11 +2,11 @@
 
 /obj/item/weapon/defibrillator
 	name = "defibrillator"
-	desc = "A device that delivers powerful shocks to detachable paddles that resuscitate incapacitated patients."
+	desc = "A device that delivers powerful shocks through detachable paddles that resuscitate incapacitated patients."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "defibunit"
 	item_state = "defibunit"
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_BELT
 	force = 5
 	throwforce = 6
 	w_class = 4
@@ -69,10 +69,10 @@
 	update_icon()
 
 /obj/item/weapon/defibrillator/ui_action_click()
-	if(usr.get_item_by_slot(slot_back) == src)
+	if(usr.get_item_by_slot(slot_belt) == src)
 		toggle_paddles()
 	else
-		usr << "<span class='warning'>Put the defibrillator on your back first!</span>"
+		usr << "<span class='warning'>Strap the defib's belt on first!</span>"
 	return
 
 /obj/item/weapon/defibrillator/attack_hand(mob/user as mob)
