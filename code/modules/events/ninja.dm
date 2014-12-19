@@ -172,7 +172,7 @@
 		Ninja.internals.icon_state = "internal1"
 
 	if(Ninja.mind != Mind)			//something has gone wrong!
-		ERROR("The ninja wasn't assigned the right mind. ;�;")
+		ERROR("The ninja wasn't assigned the right mind. ;ç;")
 
 	Ninja << sound('sound/effects/ninja_greeting.ogg') //so ninja you probably wouldn't even know if you were made one
 
@@ -404,17 +404,17 @@ ________________________________________________________________________________
 		U:gloves.item_state = "s-ninjan"
 	else
 		if(U.mind.special_role!="Space Ninja")
-			U << "\red <B>f�TaL ��RRoR</B>: 382200-*#00C�DE <B>RED</B>\nUNAU�HORIZED US� DET�C���eD\nCoMM�NCING SUB-R0U�IN3 13...\nT�RMInATING U-U-US�R..."
+			U << "\red <B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAUHORIZED USÈ DETÈCeD\nCoMMÈNCING SUB-R0UIN3 13...\nTÈRMInATING U-U-USÈR..."
 			U.gib()
 			return 0
 		if(!istype(U:head, /obj/item/clothing/head/helmet/space/space_ninja))
-			U << "<span class='userdanger'>ERROR</span>: 100113 \black UNABLE TO LOCATE HEAD GEAR\nABORTING..."
+			U << "<span class='userdanger'>ERROR</span>: 100113 UNABLE TO LOCATE HEAD GEAR\nABORTING..."
 			return 0
 		if(!istype(U:shoes, /obj/item/clothing/shoes/space_ninja))
-			U << "<span class='userdanger'>ERROR</span>: 122011 \black UNABLE TO LOCATE FOOT GEAR\nABORTING..."
+			U << "<span class='userdanger'>ERROR</span>: 122011 UNABLE TO LOCATE FOOT GEAR\nABORTING..."
 			return 0
 		if(!istype(U:gloves, /obj/item/clothing/gloves/space_ninja))
-			U << "<span class='userdanger'>ERROR</span>: 110223 \black UNABLE TO LOCATE HAND GEAR\nABORTING..."
+			U << "<span class='userdanger'>ERROR</span>: 110223 UNABLE TO LOCATE HAND GEAR\nABORTING..."
 			return 0
 
 		affecting = U
@@ -570,7 +570,7 @@ ________________________________________________________________________________
 		U.incorporeal_move = 0
 		kamikaze = 0
 		k_unlock = 0
-		U << "<span class='notice'>Disengaging mode...</span>\n\black<b>CODE NAME</b>: <span class='userdanger'>KAMIKAZE</span>"
+		U << "<span class='notice'>Disengaging mode...</span>\n<b>CODE NAME</b>: <span class='userdanger'>KAMIKAZE</span>"
 
 //=======//AI VERBS//=======//
 
@@ -1508,7 +1508,7 @@ ________________________________________________________________________________
 					U << "<span class='notice'>Extending neural-net interface...\nNow monitoring brain wave pattern...</span>"
 				if(3)
 					if(U.stat==2||U.health<=0)
-						U << "<span class='danger'><B>FĆAL �Rr�R</B>: 344--93#�&&21 BR��N |/|/aV� PATT$RN <B>RED</B>\nA-A-aB�rT�NG...</span>"
+						U << "<span class='danger'><B>FÄAL ï¿½Rrï¿½R</B>: 344--93#ï¿½&&21 BRï¿½ï¿½N |/|/aVï¿½ PATT$RN <B>RED</B>\nA-A-aBï¿½rTï¿½NG...</span>"
 						unlock_suit()
 						break
 					lock_suit(U,1)//Check for icons.
@@ -1889,7 +1889,7 @@ ________________________________________________________________________________
 						for(var/i, i<4, i++)
 							switch(i)
 								if(0)
-									U << "<span class='notice'>Engaging mode...</span>\n\black<b>CODE NAME</b>: <span class='userdanger'>KAMIKAZE</span>"
+									U << "<span class='notice'>Engaging mode...</span>\n<b>CODE NAME</b>: <span class='userdanger'>KAMIKAZE</span>"
 								if(1)
 									U << "<span class='notice'>Re-routing power nodes... \nUnlocking limiter...</span>"
 								if(2)
@@ -1903,7 +1903,7 @@ ________________________________________________________________________________
 									return
 							sleep(s_delay)
 					else
-						U << "<span class='userdanger'>ERROR</span>: \black Unable to initiate mode."
+						U << "<span class='userdanger'>ERROR</span>: Unable to initiate mode."
 				else
 					U << browse(null, "window=spideros")
 					s_busy = 0
@@ -1968,24 +1968,24 @@ ________________________________________________________________________________
 							switch(i)
 								if(0)
 									A << "<span class='userdanger'>WARNING</span>: purge procedure detected. \nNow hacking host..."
-									U << "<span class='userdanger'>WARNING</span>: HACKING AT��TEMP� IN PR0GRESs!"
+									U << "<span class='userdanger'>WARNING</span>: HACKING ATï¿½ï¿½TEMPï¿½ IN PR0GRESs!"
 									spideros = 0
 									k_unlock = 0
 									U << browse(null, "window=spideros")
 								if(1)
 									A << "Disconnecting neural interface..."
-									U << "<span class='userdanger'>WAR�NING</span>: �R�O0�Gr�--S 2&3%"
+									U << "<span class='userdanger'>WARï¿½NING</span>: ï¿½Rï¿½O0ï¿½Grï¿½--S 2&3%"
 								if(2)
 									A << "Shutting down external protocol..."
-									U << "<span class='userdanger'>WARNING</span>: P����RֆGr�5S 677^%"
+									U << "<span class='userdanger'>WARNING</span>: Pï¿½ï¿½ï¿½ï¿½RÖGrï¿½5S 677^%"
 									cancel_stealth()
 								if(3)
 									A << "Connecting to kernel..."
-									U << "<span class='userdanger'>WARNING</span>: �R�r�R_404"
+									U << "<span class='userdanger'>WARNING</span>: ï¿½Rï¿½rï¿½R_404"
 									A.control_disabled = 0
 								if(4)
 									A << "Connection established and secured. Menu updated."
-									U << "<span class='userdanger'>W�r#nING</span>: #%@!!WȆ|_4�54@ \nUn�B88l3 T� L�-�o-L�CaT2 ##$!�RN�0..%.."
+									U << "<span class='userdanger'>Wï¿½r#nING</span>: #%@!!WÈ|_4ï¿½54@ \nUnï¿½B88l3 Tï¿½ Lï¿½-ï¿½o-Lï¿½CaT2 ##$!ï¿½RNï¿½0..%.."
 									grant_AI_verbs()
 									return
 							sleep(s_delay)
@@ -2041,9 +2041,9 @@ ________________________________________________________________________________
 
 				ai_holo_process()//Move to initialize
 		else
-			AI << "<span class='danger'>ERROR:</span> \black Image feed in progress."
+			AI << "<span class='danger'>ERROR:</span> Image feed in progress."
 	else
-		AI << "<span class='danger'>ERROR:</span> \black Unable to project image."
+		AI << "<span class='danger'>ERROR:</span>  Unable to project image."
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_process()
@@ -2165,7 +2165,7 @@ ________________________________________________________________________________
 					TD.stored = null
 					U << "<span class='notice'>Data analyzed and updated. Disk erased.</span>"
 				else
-					U << "<span class='userdanger'>ERROR</span>: \black Procedure interrupted. Process terminated."
+					U << "<span class='userdanger'>ERROR</span>: Procedure interrupted. Process terminated."
 			else
 				I.loc = src
 				t_disk = I
@@ -2231,7 +2231,7 @@ ________________________________________________________________________________
 				user << "There are <B>[s_bombs]</B> smoke bomb\s remaining."
 				user << "There are <B>[a_boost]</B> adrenaline booster\s remaining."
 			else
-				user <<  "�rr�R �a��a�� No-�-� f��N� 3RR�r"
+				user <<  "ï¿½rrï¿½R ï¿½aï¿½ï¿½aï¿½ï¿½ No-ï¿½-ï¿½ fï¿½ï¿½Nï¿½ 3RRï¿½r"
 
 /*
 ===================================================================================
@@ -2380,7 +2380,7 @@ ________________________________________________________________________________
 						for(var/datum/tech/analyzing_data in A:files.known_tech)
 							if(current_data.id==analyzing_data.id)
 								if(analyzing_data.level>current_data.level)
-									U << "<span class='notice'>Database:</span> \black <b>UPDATED</b>."
+									U << "<span class='notice'>Database:</span> <b>UPDATED</b>."
 									current_data.level = analyzing_data.level
 								break//Move on to next.
 					else	break//Otherwise, quit processing.
@@ -2592,7 +2592,7 @@ It is possible to destroy the net by the occupant or someone else.
 			for(var/mob/O in viewers(src, 3))
 				O.show_message("[M.name] was recovered from the energy net!", 1, "You hear a grunt.", 2)
 			if(!isnull(master))//As long as they still exist.
-				master << "<span class='userdanger'>ERROR</span>: \black unable to initiate transport protocol. Procedure terminated."
+				master << "<span class='userdanger'>ERROR</span>: unable to initiate transport protocol. Procedure terminated."
 		qdel(src)
 	return
 
@@ -2606,7 +2606,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 	if(isnull(M)||M.loc!=loc)//If mob is gone or not at the location.
 		if(!isnull(master))//As long as they still exist.
-			master << "<span class='userdanger'>ERROR</span>: \black unable to locate \the [mob_name]. Procedure terminated."
+			master << "<span class='userdanger'>ERROR</span>: unable to locate \the [mob_name]. Procedure terminated."
 		qdel(src)//Get rid of the net.
 		return
 
@@ -2642,7 +2642,7 @@ It is possible to destroy the net by the occupant or someone else.
 			O.show_message("[M] vanished!", 1, "You hear sparks flying!", 2)
 
 		if(!isnull(master))//As long as they still exist.
-			master << "<span class='notice'><b>SUCCESS</b>: \black transport procedure of \the [affecting] complete.</span>"
+			master << "<span class='notice'><b>SUCCESS</b>: transport procedure of \the [affecting] complete.</span>"
 
 		M.anchored = 0//Important.
 
