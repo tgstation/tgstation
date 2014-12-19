@@ -279,12 +279,11 @@ var/global/datum/controller/occupations/job_master
 
 	// Hand out random jobs to the people who didn't get any in the last check
 	// Also makes sure that they got their preference correct
-	if(player.client.prefs.alternate_option == GET_RANDOM_JOB)
-		if(jobban_isbanned(player, "Assistant"))
-			GiveRandomJob(player) //you get to roll for random before everyone else just to be sure you don't get assistant. you're so speshul
-
-	if(player.client.prefs.alternate_option == GET_RANDOM_JOB)
-		if(player.client.prefs.userandomjob)
+	for(var/mob/new_player/player in unassigned)
+		if(player.client.prefs.alternate_option == GET_RANDOM_JOB)
+			if(jobban_isbanned(player, "Assistant"))
+				GiveRandomJob(player) //you get to roll for random before everyone else just to be sure you don't get assistant. you're so speshul
+		if(player.client.prefs.alternate_option == GET_RANDOM_JOB)
 			GiveRandomJob(player)
 
 	Debug("DO, Standard Check end")
