@@ -77,7 +77,7 @@
 							GM.adjustOxyLoss(5)
 					swirlie = null
 				else
-					user.visible_message("<span class='danger'>[user] slams [GM.name] into the [src]!</span>", "<span class='notice'>You slam [GM] into [src]!</span>")
+					user.visible_message("<span class='danger'>[user] slams [GM.name] into [src]!</span>", "<span class='notice'>You slam [GM] into [src]!</span>")
 					GM.adjustBruteLoss(8)
 			else
 				user << "<span class='notice'>You need a tighter grip.</span>"
@@ -167,7 +167,7 @@
 	if(I.type == /obj/item/device/analyzer)
 		user << "<span class='notice'>The water temperature seems to be [watertemp].</span>"
 	if(istype(I, /obj/item/weapon/wrench))
-		user << "<span class='notice'>You begin to adjust the temperature valve with the [I].</span>"
+		user << "<span class='notice'>You begin to adjust the temperature valve with \the [I].</span>"
 		if(do_after(user, 50))
 			switch(watertemp)
 				if("normal")
@@ -176,7 +176,7 @@
 					watertemp = "boiling"
 				if("boiling")
 					watertemp = "normal"
-			user.visible_message("<span class='notice'>[user] adjusts the shower with the [I].</span>", "<span class='notice'>You adjust the shower with the [I] to [watertemp] temperature.</span>")
+			user.visible_message("<span class='notice'>[user] adjusts the shower with \the [I].</span>", "<span class='notice'>You adjust the shower with \the [I] to [watertemp] temperature.</span>")
 			log_game("[key_name(user)] has wrenched a shower to [watertemp] at ([x],[y],[z])")
 			add_hiddenprint(user)
 

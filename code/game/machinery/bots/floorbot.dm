@@ -343,7 +343,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 				result = F
 		if(FIX_TILE)	//Selects only damaged floors.
 			F = scan_target
-			if(F.broken || F.burnt)
+			if(istype(F) && (F.broken || F.burnt))
 				result = F
 		if(TILE_EMAG) //Emag mode! Rip up the floor and cause breaches to space!
 			F = scan_target

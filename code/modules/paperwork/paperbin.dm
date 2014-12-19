@@ -55,7 +55,7 @@
 
 		P.loc = user.loc
 		user.put_in_hands(P)
-		user << "<span class='notice'>You take [P] out of the [src].</span>"
+		user << "<span class='notice'>You take [P] out of \the [src].</span>"
 	else
 		user << "<span class='notice'>[src] is empty!</span>"
 
