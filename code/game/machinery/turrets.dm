@@ -354,16 +354,12 @@
 	var/atom/cur_target = null
 	var/scan_range = 9 //You will never see them coming
 	var/health = 200 //Because it lacks a cover, and is mostly to keep people from touching the syndie shuttle.
-	var/base_icon_state = "syndieturret"
-	var/projectile_type = /obj/item/projectile/bullet
-	var/fire_sound = 'sound/weapons/Gunshot.ogg'
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "syndieturret0"
 
 /obj/machinery/gun_turret/New()
 	..()
 	take_damage(0) //check your health
-	icon_state = "[base_icon_state]" + "0"
 
 /obj/machinery/gun_turret/ex_act(severity, target)
 	switch(severity)
@@ -381,7 +377,7 @@
 /obj/machinery/gun_turret/update_icon()
 	if(state > 2 || state < 0) //someone fucked up the vars so fix them
 		take_damage(0)
-	icon_state = "[base_icon_state]" + "[state]"
+	icon_state = "syndieturret" + "[state]"
 	return
 
 
@@ -483,8 +479,8 @@
 		return
 	if (targloc == curloc)
 		return
-	playsound(src, fire_sound, 50, 1)
-	var/obj/item/projectile/A = new projectile_type(curloc)
+	playsound(src, 'sound/weapons/Gunshot.ogg', 50, 1)
+	var/obj/item/projectile/A = new /obj/item/projectile/bullet(curloc)
 	A.current = curloc
 	A.yo = targloc.y - curloc.y
 	A.xo = targloc.x - curloc.x
