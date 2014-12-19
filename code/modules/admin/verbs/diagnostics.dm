@@ -206,3 +206,36 @@
 	for(var/t in jobban_keylist)
 		if(findtext(t, filter))
 			usr << "[t]"
+
+// For /vg/ Wiki docs
+/client/proc/dump_chemreactions()
+	set category = "Debug"
+	set name = "Dump Chemical Reactions"
+
+	var/paths = typesof(/datum/chemical_reaction) - /datum/chemical_reaction
+
+	var/str = {"
+{| class="wikitable"
+|-
+! Name
+! Reactants
+! Result"}
+	for(var/path in paths)
+		var/datum/chemical_reaction/R = new path()
+		str += {"
+|-
+! [R.name]"}
+		if(R.required_reagents)
+			str += "\n|<ul>"
+			for(var/r_id in R.required_reagents)
+				str += "<li>{{reagent|[R.required_reagents[r_id]]|[r_id]}}</li>"
+			for(var/r_id in R.required_catalysts)
+				str += "<li>{{reagent|[R.required_catalysts[r_id]]|[r_id]}}</li>"
+			str += "</ul>"
+		else
+			str += "\n|''None!''"
+		if(R.result)
+			str += "\n|{{reagent|[R.result_amount]|[R.result]}}"
+		else
+			str += "\n|''(Check [R.type]/on_reaction()!)''"
+	text2file(str+"\n|}","chemistry-recipes.wiki")
