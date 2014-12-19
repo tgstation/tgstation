@@ -137,8 +137,7 @@
 	nitrogen = 0
 	temperature = TCMB
 
-/turf/simulated/floor/airless
-	icon_state = "floor"
+/turf/simulated/floor/plasteel/airless
 	oxygen = 0
 	nitrogen = 0
 	temperature = TCMB
