@@ -64,6 +64,8 @@
 	if(state == 2 && anchored)
 		connect_to_network()
 		src.directwired = 1
+		update_icon()
+		update_beam()
 	if(frequency)
 		set_frequency(frequency)
 
