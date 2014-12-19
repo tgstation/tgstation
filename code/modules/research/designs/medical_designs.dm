@@ -92,12 +92,12 @@ datum/design/bluespacebodybag
 	category = list("Misc")
 
 datum/design/defib
-	name = "Defibrillator"
-	desc = "A device that delivers powerful shocks to detachable paddles that resuscitate incapacitated patients."
+	name = "Compact Defibrillator"
+	desc = "A defibrillator variant with a more compact power source, allowing for easier storage."
 	id = "defib"
-	req_tech = list("materials" = 7, "biotech" = 5, "powerstorage" = 5)
+	req_tech = list("materials" = 5, "biotech" = 5, "powerstorage" = 5)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 5000, "$glass" = 2000, "$silver" = 1000)
 	reliability = 76
-	build_path = /obj/item/weapon/defibrillator
+	build_path = /obj/item/weapon/defibrillator/compact
 	category = list("Misc")
