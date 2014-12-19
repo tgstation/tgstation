@@ -2,11 +2,11 @@
 //Please do not bother them with bugs from this port, however, as it has been modified quite a bit.
 //Modifications include removing the world-ending full supermatter variation, and leaving only the shard.
 
-#define NITROGEN_RETARDATION_FACTOR 4        //Higher == N2 slows reaction more
-#define THERMAL_RELEASE_MODIFIER 10                //Higher == less heat released during reaction
-#define PLASMA_RELEASE_MODIFIER 1500                //Higher == less plasma released by reaction
-#define OXYGEN_RELEASE_MODIFIER 750        //Higher == less oxygen released at high temperature/power
-#define REACTION_POWER_MODIFIER 1.1                //Higher == more overall power
+#define NITROGEN_RETARDATION_FACTOR 2        //Higher == N2 slows reaction more
+#define THERMAL_RELEASE_MODIFIER 5                //Higher == less heat released during reaction
+#define PLASMA_RELEASE_MODIFIER 750                //Higher == less plasma released by reaction
+#define OXYGEN_RELEASE_MODIFIER 325        //Higher == less oxygen released at high temperature/power
+#define REACTION_POWER_MODIFIER 0.55                //Higher == more overall power
 
 
 //These would be what you would get at point blank, decreases with distance
@@ -58,19 +58,25 @@
 
 	var/obj/item/device/radio/radio
 
+	//for logging
+	var/has_been_powered = 0
+	var/has_reached_emergency = 0
 
 /obj/machinery/power/supermatter_shard/New()
 	. = ..()
 	radio = new(src)
 	radio.listening = 0
+	investigate_log("has been created.", "supermatter")
 
 
 /obj/machinery/power/supermatter_shard/Destroy()
+	investigate_log("has been destroyed.", "supermatter")
 	qdel(radio)
 	. = ..()
 
 /obj/machinery/power/supermatter_shard/proc/explode()
-	explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
+	investigate_log("has exploded.", "supermatter")
+	explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1, 1)
 	qdel(src)
 	return
 
@@ -93,6 +99,10 @@
 			if(damage > emergency_point)
 				radio.talk_into(src, "[emergency_alert] Instability: [stability]%")
 				lastwarning = world.timeofday
+				if(!has_reached_emergency)
+					investigate_log("has reached the emergency point for the first time.", "supermatter")
+					message_admins("[src] has reached the emergency point <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
+					has_reached_emergency = 1
 
 			else if(damage >= damage_archived) // The damage is still going up
 				radio.talk_into(src, "[warning_alert] Instability: [stability]%")
@@ -130,14 +140,14 @@
 	//Maxes out at 100% oxygen pressure
 	oxygen = max(min((removed.oxygen - (removed.nitrogen * NITROGEN_RETARDATION_FACTOR)) / MOLES_CELLSTANDARD, 1), 0)
 
-	var/temp_factor = 10
+	var/temp_factor = 50
 
 	if(oxygen > 0.8)
 		// with a perfect gas mix, make the power less based on heat
 		icon_state = "[base_icon_state]_glow"
 	else
 		// in normal mode, base the produced energy around the heat
-		temp_factor = 6
+		temp_factor = 30
 		icon_state = base_icon_state
 
 	power = max( (removed.temperature * temp_factor / T0C) * oxygen + power, 0) //Total laser power plus an overload
@@ -173,7 +183,7 @@
 		var/rads = (power / 10) * sqrt( 1 / min(get_dist(l, src),1) )
 		l.apply_effect(rads, IRRADIATE)
 
-	power -= (power/50)**3
+	power -= (power/500)**3
 
 	return 1
 
@@ -187,6 +197,10 @@
 
 	if(Proj.flag != "bullet")
 		power += Proj.damage * config_bullet_energy
+		if(!has_been_powered)
+			investigate_log("has been powered for the first time.", "supermatter")
+			message_admins("[src] has been powered for the first time <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
+			has_been_powered = 1
 	else
 		damage += Proj.damage * config_bullet_energy
 	return 0
@@ -218,7 +232,7 @@
 /obj/machinery/power/supermatter_shard/proc/transfer_energy()
 	for(var/obj/machinery/power/rad_collector/R in rad_collectors)
 		if(get_dist(R, src) <= 15) // Better than using orange() every process
-			R.receive_pulse(power)
+			R.receive_pulse(power/10)
 	return
 
 /obj/machinery/power/supermatter_shard/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
@@ -252,8 +266,11 @@
 		var/mob/living/user = AM
 		user.dust()
 		power += 200
+		message_admins("[src] has consumed [key_name(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
 	else
 		qdel(AM)
+
+	investigate_log("has consumed [AM].", "supermatter")
 
 	power += 200
 
@@ -261,6 +278,7 @@
 	for(var/mob/living/L in range(10))
 		var/rads = 500 * sqrt( 1 / (get_dist(L, src) + 1) )
 		L.apply_effect(rads, IRRADIATE)
+		investigate_log("has irradiated [L] after consuming [AM].", "supermatter")
 		if(L in view())
 			L.show_message("<span class=\"warning\">As \the [src] slowly stops resonating, you find your skin covered in new radiation burns.</span>", 1,\
 				"<span class=\"warning\">The unearthly ringing subsides and you notice you have new radiation burns.</span>", 2)
