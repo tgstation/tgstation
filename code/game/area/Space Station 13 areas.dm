@@ -61,6 +61,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	// /vg/: No teleporting for you. 2 = SUPER JAMMED, inaccessible even to telecrystals.
 	var/jammed = 0
 
+	// /vg/: Prevents entities using incorporeal move from entering the area (ghosts, jaunting wizards/ninjas...)
+	var/anti_ethereal = 0
+
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
 var/list/teleportlocs = list()
@@ -1982,6 +1985,7 @@ proc/process_adminbus_teleport_locs()
 	name = "\improper Goonecode Containment"
 	icon_state = "ai_upload"
 	jammed=2
+	anti_ethereal=1
 
 
 
