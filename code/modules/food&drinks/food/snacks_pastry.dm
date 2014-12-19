@@ -14,6 +14,7 @@
 	..()
 	reagents.add_reagent("nutriment", 3)
 	reagents.add_reagent("sprinkles", 1)
+	reagents.add_reagent("sugar", 2)
 	src.bitesize = 3
 	if(prob(30))
 		src.icon_state = "donut2"
@@ -28,6 +29,7 @@
 	..()
 	reagents.add_reagent("nutriment", 2)
 	reagents.add_reagent("sprinkles", 1)
+	reagents.add_reagent("sugar", 1)
 	bitesize = 10
 	switch(rand(1,10))
 		if(1)
@@ -67,6 +69,7 @@
 	reagents.add_reagent("nutriment", 3)
 	reagents.add_reagent("sprinkles", 1)
 	reagents.add_reagent("berryjuice", 5)
+	reagents.add_reagent("vitamin", 1)
 	if(prob(30))
 		icon_state = "jdonut2"
 		name = "Frosted Jelly Donut"
@@ -83,6 +86,7 @@
 	reagents.add_reagent("nutriment", 3)
 	reagents.add_reagent("sprinkles", 1)
 	reagents.add_reagent("slimejelly", 5)
+	reagents.add_reagent("vitamin", 1)
 	bitesize = 5
 	if(prob(30))
 		icon_state = "jdonut2"
@@ -100,6 +104,7 @@
 	reagents.add_reagent("nutriment", 3)
 	reagents.add_reagent("sprinkles", 1)
 	reagents.add_reagent("cherryjelly", 5)
+	reagents.add_reagent("vitamin", 1)
 	if(prob(30))
 		icon_state = "jdonut2"
 		name = "Frosted Jelly Donut"
@@ -150,6 +155,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/waffles/New()
 	..()
 	reagents.add_reagent("nutriment", 8)
+	reagents.add_reagent("vitamin", 1)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/soylentgreen
@@ -161,6 +167,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/soylentgreen/New()
 	..()
 	reagents.add_reagent("nutriment", 10)
+	reagents.add_reagent("vitamin", 1)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/soylenviridians
@@ -172,6 +179,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/soylenviridians/New()
 	..()
 	reagents.add_reagent("nutriment", 10)
+	reagents.add_reagent("vitamin", 1)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/rofflewaffles
@@ -184,6 +192,7 @@
 	..()
 	reagents.add_reagent("nutriment", 8)
 	reagents.add_reagent("mushroomhallucinogen", 8)
+	reagents.add_reagent("vitamin", 2)
 	bitesize = 4
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
@@ -207,12 +216,14 @@
 /obj/item/weapon/reagent_containers/food/snacks/donkpocket/New()
 	..()
 	reagents.add_reagent("nutriment", 4)
+	reagents.add_reagent("sugar", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/donkpocket/proc/cooltime() //Not working, derp?
 	if(warm)
 		spawn(4200)	//ew
 			warm = 0
 			reagents.del_reagent("tricordrazine")
+			reagents.add_reagent("sugar", 5)
 			name = initial(name)
 	return
 
@@ -248,12 +259,11 @@
 	if(prob(10))
 		name = "exceptional plump helmet biscuit"
 		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump helmet biscuit!"
-		reagents.add_reagent("nutriment", 8)
+		reagents.add_reagent("nutriment", 3)
 		reagents.add_reagent("tricordrazine", 5)
-		bitesize = 2
-	else
-		reagents.add_reagent("nutriment", 5)
-		bitesize = 2
+	reagents.add_reagent("nutriment", 5)
+	reagents.add_reagent("vitamin", 1)
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/appletart
 	name = "golden apple streusel tart"
@@ -265,6 +275,7 @@
 	..()
 	reagents.add_reagent("nutriment", 8)
 	reagents.add_reagent("gold", 5)
+	reagents.add_reagent("vitamin", 4)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/cracker
@@ -285,6 +296,7 @@
 	..()
 	reagents.add_reagent("nutriment", 6)
 	reagents.add_reagent("ketchup", 3)
+	reagents.add_reagent("vitamin", 3)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/meatbun
@@ -295,6 +307,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/meatbun/New()
 	..()
 	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("vitamin", 2)
 	bitesize = 6
 
 /obj/item/weapon/reagent_containers/food/snacks/sugarcookie
@@ -304,6 +317,6 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sugarcookie/New()
 	..()
-	reagents.add_reagent("nutriment", 2)
-	reagents.add_reagent("sugar", 5)
+	reagents.add_reagent("nutriment", 3)
+	reagents.add_reagent("sugar", 3)
 	bitesize = 2

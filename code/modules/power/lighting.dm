@@ -572,7 +572,7 @@
 // explosion effect
 // destroy the whole light fixture or just shatter it
 
-/obj/machinery/light/ex_act(severity, specialty)
+/obj/machinery/light/ex_act(severity, target)
 	..()
 	if(!gc_destroyed)
 		switch(severity)
@@ -679,7 +679,7 @@
 	if(istype(I, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = I
 
-		user << "You inject the solution into the [src]."
+		user << "You inject the solution into \the [src]."
 
 		if(S.reagents.has_reagent("plasma", 5))
 

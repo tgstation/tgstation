@@ -9,7 +9,7 @@
 	var/opened = 0
 
 
-/obj/structure/extinguisher_cabinet/ex_act(severity, specialty)
+/obj/structure/extinguisher_cabinet/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			qdel(src)

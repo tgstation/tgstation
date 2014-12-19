@@ -8,7 +8,7 @@
 	var/health = 15
 
 //similar to weeds, but only barfed out by nurses manually
-/obj/effect/spider/ex_act(severity, specialty)
+/obj/effect/spider/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			qdel(src)
@@ -212,7 +212,7 @@
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user << "<span class='notice'>You struggle against the tight bonds! (This will take about [breakout_time] minutes.)</span>"
-	visible_message("You see something struggling and writhing in the [src]!")
+	visible_message("You see something struggling and writhing in \the [src]!")
 	if(do_after(user,(breakout_time*60*10)))
 		if(!user || user.stat != CONSCIOUS || user.loc != src)
 			return
