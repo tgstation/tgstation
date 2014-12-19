@@ -137,7 +137,7 @@
 	if(target.status != LIGHT_OK)
 		if(CanUse(U))
 			if(!Use(U)) return
-			U << "<span class='notice'>You replace the [target.fitting] with the [src].</span>"
+			U << "<span class='notice'>You replace the [target.fitting] with \the [src].</span>"
 
 			if(target.status != LIGHT_EMPTY)
 

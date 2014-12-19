@@ -10,7 +10,7 @@
 
 /obj/item/clothing/suit/armor/vest
 	name = "armor"
-	desc = "An armored vest that protects against most types of damage."
+	desc = "A slim armored vest that protects against most types of damage."
 	icon_state = "armor"
 	item_state = "armor"
 	blood_overlay_type = "armor"
@@ -46,13 +46,18 @@
 
 /obj/item/clothing/suit/armor/vest/warden
 	name = "warden's jacket"
-	desc = "An armored jacket with silver rank pips and livery."
+	desc = "A navy-blue armored jacket with blue shoulder designations and '/Warden/' stitched into one of the chest pockets."
 	icon_state = "warden_jacket"
 	item_state = "armor"
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS|HANDS
 	heat_protection = CHEST|GROIN|ARMS|HANDS
 	strip_delay = 70
+
+/obj/item/clothing/suit/armor/vest/warden/alt
+	name = "warden's armored jacket"
+	desc = "A red jacket with silver rank pips and body armor strapped on top."
+	icon_state = "warden_alt"
 
 /obj/item/clothing/suit/armor/vest/capcarapace
 	name = "captain's carapace"
