@@ -51,6 +51,7 @@ Medical Doctor
 	spawn_positions = 3
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
+	alt_clothing = list("Default","Surgeon","Emergency Physician","Nurse")
 
 	default_pda = /obj/item/device/pda/medical
 	default_headset = /obj/item/device/radio/headset/headset_med

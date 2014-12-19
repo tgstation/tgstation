@@ -19,6 +19,7 @@ Head of Security
 	selection_color = "#ffdddd"
 	req_admin_notify = 1
 	minimal_player_age = 14
+	alt_clothing = list("Trenchcoat","Greatcoat","Parade")
 
 	default_id = /obj/item/weapon/card/id/silver
 	default_pda = /obj/item/device/pda/heads/hos
@@ -69,6 +70,7 @@ Warden
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	minimal_player_age = 7
+	alt_clothing = list("Navy Jacket","Red Jacket")
 
 	default_pda = /obj/item/device/pda/warden
 	default_headset = /obj/item/device/radio/headset/headset_sec/alt
@@ -116,6 +118,7 @@ Detective
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	minimal_player_age = 7
+	alt_clothing = list("Default","Noir","Tactical")
 
 	default_pda = /obj/item/device/pda/detective
 	default_headset = /obj/item/device/radio/headset/headset_sec
@@ -162,6 +165,7 @@ Security Officer
 	selection_color = "#ffeeee"
 	minimal_player_age = 7
 	var/list/dep_access = null
+	alt_clothing = list("Corporate","Tactical")
 
 	default_pda = /obj/item/device/pda/security
 	default_headset = /obj/item/device/radio/headset/headset_sec/alt

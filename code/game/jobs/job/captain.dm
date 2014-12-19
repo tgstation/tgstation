@@ -13,6 +13,7 @@ Captain
 	selection_color = "#ccccff"
 	req_admin_notify = 1
 	minimal_player_age = 14
+	alt_clothing = list("Default","Parade")
 
 	default_id = /obj/item/weapon/card/id/gold
 	default_pda = /obj/item/device/pda/captain

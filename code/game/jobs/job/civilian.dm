@@ -62,6 +62,7 @@ Chef
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	alt_clothing = list("Chef","Short-Order Cook")
 
 	default_pda = /obj/item/device/pda/chef
 	default_headset = /obj/item/device/radio/headset/headset_srv
@@ -338,6 +339,7 @@ Lawyer
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	var/global/lawyers = 0 //Counts lawyer amount
+	alt_clothing = list("Blue","Purple","Black")
 
 	default_pda = /obj/item/device/pda/lawyer
 	default_headset = /obj/item/device/radio/headset/headset_sec
