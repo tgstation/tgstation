@@ -156,10 +156,15 @@ datum
 					var/mob/living/carbon/C = M
 					C.antibodies |= self.data["antibodies"]
 
-				if(istype(M, /mob/living/carbon/human))
+				if(istype(M, /mob/living/carbon/human) && (method == TOUCH))
 					var/mob/living/carbon/human/H = M
 					H.bloody_body(self.data["donor"])
-					H.bloody_hands(self.data["donor"])
+					if(self.data["donor"])
+						H.bloody_hands(self.data["donor"])
+					spawn()//bloody feet, result of the blood that fell on the floor
+						var/obj/effect/decal/cleanable/blood/B = locate() in get_turf(H)
+						B.Crossed(H)
+					H.update_icons()
 
 			on_merge(var/data)
 				if(data["blood_colour"])

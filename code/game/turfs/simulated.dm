@@ -58,10 +58,16 @@
 					H.track_blood--
 
 			if (bloodDNA)
-				src.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints,bloodDNA,H.dir,0,bloodcolor) // Coming
+				if(istype(M,/mob/living/carbon/human/vox))
+					src.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints/vox,bloodDNA,H.dir,0,bloodcolor) // Coming
+				else
+					src.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints,bloodDNA,H.dir,0,bloodcolor) // Coming
 				var/turf/simulated/from = get_step(H,reverse_direction(H.dir))
 				if(istype(from) && from)
-					from.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints,bloodDNA,0,H.dir,bloodcolor) // Going
+					if(istype(M,/mob/living/carbon/human/vox))
+						from.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints/vox,bloodDNA,0,H.dir,bloodcolor) // Going
+					else
+						from.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints,bloodDNA,0,H.dir,bloodcolor) // Going
 
 			bloodDNA = null
 
@@ -161,7 +167,7 @@
 			B.virus2 = virus_copylist(M.virus2)
 		return 1 //we bloodied the floor
 
-	blood_splatter(src,M.get_blood(M.vessel),1)
+	blood_splatter(src,M,1)
 	return 1 //we bloodied the floor
 
 
