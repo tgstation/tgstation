@@ -82,6 +82,9 @@ datum/preferences
 	// 0 = character settings, 1 = game preferences
 	var/current_tab = 0
 
+	//for alt clothing sets
+	var/list/player_alt_clothing = new()
+
 		// OOC Metadata:
 	var/metadata = ""
 
@@ -360,7 +363,6 @@ datum/preferences
 				prefUpperLevel = 3
 				prefLowerLevel = 1
 
-
 			HTML += "<a class='white' href='?_src_=prefs;preference=job;task=setJobLevel;level=[prefUpperLevel];text=[rank]' oncontextmenu='javascript:return setJobPrefRedirect([prefLowerLevel], \"[rank]\");'>"
 
 			if(rank == "Assistant")//Assistant is special
@@ -373,6 +375,9 @@ datum/preferences
 
 			HTML += "<font color=[prefLevelColor]>[prefLevelLabel]</font>"
 			HTML += "</a></td></tr>"
+
+			if(job.alt_clothing)
+				HTML += "</a><br> <a href=\"byond://?src=\ref[user];preference=job;task=alt_clothing;job=\ref[job]\">\[[GetAltClothing(job)]\]</a></td></tr>"
 
 		for(var/i = 1, i < (limit - index), i += 1) // Finish the column so it is even
 			HTML += "<tr bgcolor='[lastJob.selection_color]'><td width='60%' align='right'>&nbsp</td><td>&nbsp</td></tr>"
@@ -449,6 +454,19 @@ datum/preferences
 			return 1
 
 		return 0
+
+	proc/GetAltClothing(datum/job/job)
+		return player_alt_clothing.Find(job.clothing) > 0 \
+			? player_alt_clothing[job.clothing] \
+			: job.clothing
+
+	proc/SetPlayerAltClothing(datum/job/job, new_clothing)
+		// remove existing entry
+		if(player_alt_clothing.Find(job.clothing))
+			player_alt_clothing -= job.clothing
+		// add one if it's not default
+		if(job.clothing != new_clothing)
+			player_alt_clothing[job.clothing] = new_clothing
 
 	proc/UpdateJobPreference(mob/user, role, desiredLvl)
 		if(!job_master)
@@ -540,6 +558,14 @@ datum/preferences
 					else
 						userandomjob = !userandomjob
 					SetChoices(user)
+				if("alt_clothing")
+					var/datum/job/job = locate(href_list["job"])
+					if (job)
+						var/choices = job.alt_clothing
+						var/choice = input("Pick a spawning clothing set for [job.title].", "Character Generation", GetAltClothing(job)) as anything in choices | null
+						if(choice)
+							SetChoices(user)
+							SetPlayerAltClothing(job, choice)
 				if("setJobLevel")
 					UpdateJobPreference(user, href_list["text"], text2num(href_list["level"]))
 				else

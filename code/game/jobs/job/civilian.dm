@@ -76,7 +76,7 @@ Chef
 		H.equip_to_slot_or_del(new /obj/item/clothing/suit/chef(H), slot_wear_suit)
 		H.equip_to_slot_or_del(new /obj/item/clothing/head/chefhat(H), slot_head)
 	else if(H.mind.role_alt_clothing && H.mind.role_alt_clothing == "Short-Order Cook")
-		H.equip_to_slot_or_del(new /obj/item/clothing/suit/apron/chef(H), slot_wear_suit)
+		H.equip_to_slot_or_del(new /obj/item/clothing/suit/chef/classic(H), slot_wear_suit)
 		H.equip_to_slot_or_del(new /obj/item/clothing/head/soft/mime(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
 

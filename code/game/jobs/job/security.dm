@@ -243,10 +243,11 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 		var/department = pick(sec_departments)
 		sec_departments -= department
 		var/destination = null
+		var/obj/item/clothing/under/U
 		if(H.mind.role_alt_clothing && H.mind.role_alt_clothing == "Corporate")
-			var/obj/item/clothing/under/U = new /obj/item/clothing/under/rank/security(H)
+			U = new /obj/item/clothing/under/rank/security(H)
 		else if(H.mind.role_alt_clothing && H.mind.role_alt_clothing == "Tactical")
-			var/obj/item/clothing/under/U = new /obj/item/clothing/under/rank/security/tactical(H)
+			U = new /obj/item/clothing/under/rank/security/tactical(H)
 		switch(department)
 			if("supply")
 				default_headset = /obj/item/device/radio/headset/headset_sec/alt/department/supply

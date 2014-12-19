@@ -39,6 +39,9 @@ var/global/datum/controller/occupations/job_master
 		if(J.title == rank)	return J
 	return null
 
+/datum/controller/occupations/proc/GetAltClothing(var/mob/new_player/player, rank)
+	return player.client.prefs.GetAltClothing(GetJob(rank))
+
 /datum/controller/occupations/proc/AssignRole(var/mob/new_player/player, var/rank, var/latejoin = 0)
 	Debug("Running AR, Player: [player], Rank: [rank], LJ: [latejoin]")
 	if(player && player.mind && rank)
@@ -52,6 +55,7 @@ var/global/datum/controller/occupations/job_master
 		if((job.current_positions < position_limit) || position_limit == -1)
 			Debug("Player: [player] is now Rank: [rank], JCP:[job.current_positions], JPL:[position_limit]")
 			player.mind.assigned_role = rank
+			player.mind.role_alt_clothing = GetAltClothing(player, rank)
 			unassigned -= player
 			job.current_positions++
 			return 1
@@ -299,6 +303,9 @@ var/global/datum/controller/occupations/job_master
 	var/datum/job/job = GetJob(rank)
 
 	H.job = rank
+	if(H.mind && H.mind.assigned_role != rank)
+		H.mind.assigned_role = rank
+		H.mind.role_alt_clothing = null
 
 	//If we joined at roundstart we should be positioned at our workstation
 	if(!joined_late)

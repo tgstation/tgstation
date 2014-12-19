@@ -40,6 +40,8 @@
 	var/assigned_role
 	var/special_role
 
+	var/role_alt_clothing
+
 	var/datum/job/assigned_job
 
 	var/list/datum/objective/objectives = list()

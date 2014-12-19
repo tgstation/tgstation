@@ -26,6 +26,9 @@
 	//How many players have this job
 	var/current_positions = 0
 
+	//Clothing set, if applicable
+	var/clothing = null
+
 	//Supervisors, who this person answers to directly
 	var/supervisors = ""
 

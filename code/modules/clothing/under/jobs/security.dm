@@ -11,12 +11,19 @@
 
 /obj/item/clothing/under/rank/security
 	name = "security suit"
-	desc = "A formal security suit for officers complete with nanotrasen belt buckle."
+	desc = "A corporate security suit for officers complete with nanotrasen belt buckle and shoudler badges."
 	icon_state = "security"
 	item_state = "gy_suit"
 	item_color = "security"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	strip_delay = 50
+
+/obj/item/clothing/under/rank/security/tactical
+	name = "security jumpsuit"
+	desc = "A tactical red security jumpsuit for officers complete with nanotrasen belt buckle."
+	icon_state = "securityalt"
+	item_state = "r_suit"
+	item_color = "securityalt"
 
 /obj/item/clothing/under/rank/warden
 	name = "warden's suit"

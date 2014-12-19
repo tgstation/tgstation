@@ -32,7 +32,7 @@ Captain
 		H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest/capcarapace(H), slot_wear_suit)
 		H.equip_to_slot_or_del(new /obj/item/clothing/head/caphat(H), slot_head)
 	else if(H.mind.role_alt_clothing && H.mind.role_alt_clothing == "Parade")
-		var/obj/item/clothing/under/U = new /obj/item/clothing/under/rank/captain/parade(H)
+		var/obj/item/clothing/under/U = new /obj/item/clothing/under/captainparade(H)
 		U.attachTie(new /obj/item/clothing/tie/medal/gold/captain())
 		H.equip_to_slot_or_del(U, slot_w_uniform)
 		H.equip_to_slot_or_del(new /obj/item/clothing/suit/captunic(H), slot_wear_suit)
