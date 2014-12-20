@@ -11,7 +11,7 @@
 			else
 				stop_pulling()
 
-		if("center") //Why isn't this resist?
+		if("numpad5") //Why isn't this resist?
 			if(isobj(loc))
 				var/obj/O = loc
 				if(canmove)
@@ -25,23 +25,22 @@
 		if("t")
 			say_verb()
 
-		if("north","w")
-			if(client.keys_active["ctrl"])
-				northface()
-		if("south", "s")
-			if(client.keys_active["ctrl"])
-				southface()
-		if("west", "a")
-			if(client.keys_active["ctrl"])
-				westface()
-		if("east", "d")
-			if(client.keys_active["ctrl"])
-				eastface()
-		if("northeast", "x")
+		if("numpad9", "x")
 			swap_hand()
-		if("southeast", "y", "z") // attack_self(). No idea who came up with "mode()"
+		if("numpad3", "y", "z") // attack_self(). No idea who came up with "mode()"
 			mode()
-		//if("northwest", "q") // dropping items, in both bindings_robot.dm and bindings_carbon.dm
-		//if("soutwest", "r") //throw mode, in bindings_carbon.dm
+		//if("numpad7", "q") // dropping items, in both bindings_robot.dm and bindings_carbon.dm
+		//if("numpad1", "r") //throw mode, in bindings_carbon.dm
+
+	if(client.keys_active["ctrl"])
+		switch(movement_keys[key])
+			if(NORTH)
+				northface()
+			if(SOUTH)
+				southface()
+			if(WEST)
+				westface()
+			if(EAST)
+				eastface()
 
 	return ..()

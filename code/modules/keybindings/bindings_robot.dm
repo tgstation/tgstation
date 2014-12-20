@@ -5,7 +5,7 @@
 		if("4")
 			a_intent_change("left")
 
-		if("q", "northwest")
+		if("q", "numpad7")
 			cmd_unequip_module()
 
 	return ..()

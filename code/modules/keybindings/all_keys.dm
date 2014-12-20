@@ -1,6 +1,7 @@
 // This file contains a listing of every key and some other helpful key-related definitions
 
-#define NUMPAD "west","east","north","south","northeast","southeast","northwest","southwest","center","numpad0","numpad1","numpad2","numpad3","numpad4","numpad5","numpad6","numpad7","numpad8","numpad9","divide","multiply","subtract","add","decimal"
+#define ARROW_KEYS "north","west","south","east"
+#define NUMPAD "numpad0","numpad1","numpad2","numpad3","numpad4","numpad5","numpad6","numpad7","numpad8","numpad9","divide","multiply","subtract","add","decimal"
 #define EXTENDED "space","shift","ctrl","alt","escape","return","tab","back","delete","insert"
 #define PUNCTUATION "`","-","=","\[","]",";","'",",",".","/","\\"
 #define FUNCTION "F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12"
@@ -9,7 +10,7 @@
 
 // Technically speaking these other defines aren't truly needed, but it makes the list organized
 // The fact this works is borderline a bug
-#define ALL_KEYS NUMPAD,EXTENDED,FUNCTION,LETTERS,NUMBERS,PUNCTUATION
+#define ALL_KEYS ARROW_KEYS,NUMPAD,EXTENDED,PUNCTUATION,FUNCTION,LETTERS,NUMBERS
 
 var/list/all_keys = list(ALL_KEYS)
 
