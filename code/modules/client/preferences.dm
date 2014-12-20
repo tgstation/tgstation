@@ -83,7 +83,7 @@ datum/preferences
 	var/current_tab = 0
 
 	//for alt clothing sets
-	var/list/player_alt_clothing = new()
+	var/list/player_alt_clothing = list()
 
 		// OOC Metadata:
 	var/metadata = ""
