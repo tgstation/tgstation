@@ -1,2 +1,19 @@
 author: Duny
-changes: []
+changes: 
+  - wip: Following changes made to Defficiency.
+  - tweak: Added an additional toolbelt to robotics and one to the RD's office, superior welding goggles to the RD's office, and a cable coil to RnD.
+  - bugfix: Gave the chaplain his secure locker with all the fancy stuff.
+  - bugfix: Added the service server to telecomms.
+  - tweak: Supermatter engine: Added an airlock to space and made the starting pipes insulated.
+  - tweak: Added several entertainment monitors.
+  - bugfix: Added an oxygen canister and oxygen tanks to the research outpost. Hopefully fixed the botany crate there being empty.
+  - bugfix: The MoMMI fabricator on the derelict should now be able to produce MoMMIs.
+  - tweak: The sound system in the hallways now start off.
+  - tweak: Added a PDA painter to the HoP's office.
+  - tweak: Departmental security is now entirely gone aside from one office in medbay. The engineering one has been replaced with an auxiliary cyborg recharge station.
+  - wip: The abandoned tcomms satellite now contains a secure facility guarding the gooncode. One of the rooms is unoperational as of when I'm writing this due to BEAMS not working correctly for roundstart activated emitters (or at least I didn't find a way to make them work).
+  - wip: This facility can't be entered if you don't have a solid body (unless you double click inside as a ghost or follow/teleport to someone). The doors, however, require no access.
+  - wip: The current state of the facility is easy mode. That may change once the gooncode is acquired. 
+  - tweak: Added PDA terminals in arrivals, in front of cargo, and in front of the HoP's office.
+  - tweak: Added a merch computer to cargo.
+  - tweak: Added desk bells to the HoP, RnD, medbay and security.
