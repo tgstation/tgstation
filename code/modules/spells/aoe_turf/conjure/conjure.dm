@@ -17,7 +17,6 @@ How they spawn stuff is decided by behaviour vars, which are explained below
 
 	duration = 0 // 0=permanent, any other time in deciseconds - how long the summoned objects last for
 	var/summon_amt = 1 //amount of objects summoned
-	var/summon_ignore_prev_spawn_points = 0 //if set to 1, each new object is summoned on a new spawn point
 	var/summon_exclusive = 0 //spawn one of everything, instead of random things
 
 	var/list/newVars = list() //vars of the summoned objects will be replaced with those where they meet
@@ -28,7 +27,7 @@ How they spawn stuff is decided by behaviour vars, which are explained below
 /atom/movable/spell/aoe_turf/conjure/cast(list/targets, mob/user)
 	playsound(get_turf(user), cast_sound, 50, 1)
 
-	for(var/i=0,i<summon_amt,i++)
+	for(var/i=1,i <= summon_amt,i++)
 		if(!targets.len)
 			break
 		var/summoned_object_type
@@ -39,11 +38,19 @@ How they spawn stuff is decided by behaviour vars, which are explained below
 			summon_type -= summoned_object_type
 		else
 			summoned_object_type = pick(summon_type)
-		var/spawn_place = pick(targets)
-		if(summon_ignore_prev_spawn_points)
+		var/turf/spawn_place = pick(targets)
+		if(spell_flags & IGNOREPREV)
 			targets -= spawn_place
 
-		var/atom/summoned_object = new summoned_object_type(spawn_place)
+		var/atom/summoned_object
+		if(ispath(summoned_object_type,/turf))
+			if(istype(get_turf(user),/turf/simulated/shuttle) || istype(spawn_place, /turf/simulated/shuttle))
+				user << "<span class='warning>You can't build things on shuttles!</span>"
+				continue
+			spawn_place.ChangeTurf(summoned_object_type)
+			summoned_object = spawn_place
+		else
+			summoned_object = new summoned_object_type(spawn_place)
 		var/atom/movable/overlay/animation = new /atom/movable/overlay(spawn_place)
 		animation.name = "conjure"
 		animation.density = 0
@@ -52,22 +59,14 @@ How they spawn stuff is decided by behaviour vars, which are explained below
 		animation.layer = 3
 		animation.master = summoned_object
 
-		if(ispath(summoned_object_type,/turf))
-			if(istype(get_turf(usr),/turf/simulated/shuttle) || istype(spawn_place, /turf/simulated/shuttle))
-				user << "\red You can't build things on shuttles!"
-				continue
-			var/turf/O = spawn_place
-			var/N = summoned_object_type
-			O.ChangeTurf(N)
-		else
-			for(var/varName in newVars)
-				if(varName in summoned_object.vars)
-					summoned_object.vars[varName] = newVars[varName]
+		for(var/varName in newVars)
+			if(varName in summoned_object.vars)
+				summoned_object.vars[varName] = newVars[varName]
 
-			if(duration)
-				spawn(duration)
-					if(summoned_object)
-						qdel(summoned_object)
+		if(duration)
+			spawn(duration)
+				if(summoned_object && !istype(summoned_object, /turf))
+					qdel(summoned_object)
 		conjure_animation(animation, spawn_place)
 	return
 

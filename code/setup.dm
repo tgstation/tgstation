@@ -1065,11 +1065,12 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define NEEDSHUMAN		4	//does it require the caster to be human?
 #define Z2NOCAST		8	//if this is added, the spell can't be cast at centcomm
 #define STATALLOWED		16	//if set, the user doesn't have to be conscious to cast. Required for ghost spells
+#define IGNOREPREV		32	//if set, each new target does not overlap with the previous one
 //The following flags only affect different types of spell, and therefore overlap
 //Targeted spells
-#define INCLUDEUSER		32	//does the spell include the caster in its target selection?
-#define SELECTABLE		64	//can you select each target for the spell?
+#define INCLUDEUSER		64	//does the spell include the caster in its target selection?
+#define SELECTABLE		128	//can you select each target for the spell?
 //AOE spells
-#define IGNOREDENSE		32	//are dense turfs ignored in selection?
-#define IGNORESPACE		64	//are space turfs ignored in selection?
+#define IGNOREDENSE		64	//are dense turfs ignored in selection?
+#define IGNORESPACE		128	//are space turfs ignored in selection?
 
