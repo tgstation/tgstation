@@ -367,7 +367,7 @@
 	if(prob_clean)
 		X = new /obj/item/weapon/archaeological_find(src, new_item_type = F.find_type)
 	else
-		X = new /obj/item/weapon/ore/strangerock(src, inside_item_type = F.find_type)
+		X = new /obj/item/weapon/strangerock(src, inside_item_type = F.find_type)
 		if(!geologic_data)
 			geologic_data = new/datum/geosample(src)
 		geologic_data.UpdateNearbyArtifactInfo(src)
