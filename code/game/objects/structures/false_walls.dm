@@ -179,7 +179,10 @@
 	else
 		user << "\blue You can't reach, close it first!"
 
-	if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
+	if( istype(W, /obj/item/weapon/pickaxe) )
+		var/obj/item/weapon/pickaxe/used_pick = W
+		if(!(used_pick.diggables & DIG_WALLS))
+			return
 		var/turf/T = get_turf(src)
 		if(!mineral)
 			T.ChangeTurf(/turf/simulated/wall)
@@ -188,17 +191,6 @@
 		if(mineral != "plasma")
 			T = get_turf(src)
 			T.attackby(W,user)
-		del(src)
-
-	//DRILLING
-	else if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
-		var/turf/T = get_turf(src)
-		if(!mineral)
-			T.ChangeTurf(/turf/simulated/wall)
-		else
-			T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
-		T = get_turf(src)
-		T.attackby(W,user)
 		del(src)
 
 	else if( istype(W, /obj/item/weapon/melee/energy/blade) )
@@ -301,15 +293,10 @@
 			T.attackby(W,user)
 			del(src)
 
-	else if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
-		var/turf/T = get_turf(src)
-		T.ChangeTurf(/turf/simulated/wall)
-		T = get_turf(src)
-		T.attackby(W,user)
-		del(src)
-
-	//DRILLING
-	else if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+	else if( istype(W, /obj/item/weapon/pickaxe) )
+		var/obj/item/weapon/pickaxe/used_pick = W
+		if(!(used_pick.diggables & DIG_WALLS))
+			return
 		var/turf/T = get_turf(src)
 		T.ChangeTurf(/turf/simulated/wall)
 		T = get_turf(src)

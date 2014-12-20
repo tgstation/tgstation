@@ -278,15 +278,26 @@ proc/blood_incompatible(donor,receiver)
 	return 0
 
 proc/blood_splatter(var/target,var/datum/reagent/blood/source,var/large)
-
 	var/obj/effect/decal/cleanable/blood/B
 	var/decal_type = /obj/effect/decal/cleanable/blood/splatter
 	var/turf/T = get_turf(target)
+	var/list/drip_icons = list("1","2","3","4","5")
 
 	if(istype(source,/mob/living/carbon/human))
 		var/mob/living/carbon/human/M = source
-		source = M.get_blood(M.vessel)
-	else if(istype(source,/mob/living/carbon/monkey))
+		var/datum/reagent/blood/is_there_blood = M.get_blood(M.vessel)
+		if(!is_there_blood && M.dna && M.species)
+			is_there_blood = new /datum/reagent/blood()
+			is_there_blood.data["blood_DNA"] = M.dna.unique_enzymes
+			is_there_blood.data["blood_type"] = M.dna.b_type
+			is_there_blood.data["blood_colour"] = M.species.blood_color
+			if (!is_there_blood.data["virus2"])
+				is_there_blood.data["virus2"] = list()
+			is_there_blood.data["virus2"] |= virus_copylist(M.virus2)
+
+		source = is_there_blood
+
+	if(istype(source,/mob/living/carbon/monkey))
 		var/mob/living/carbon/monkey/donor = source
 		if(donor.dna)
 			source = new()
@@ -298,11 +309,10 @@ proc/blood_splatter(var/target,var/datum/reagent/blood/source,var/large)
 
 		// Only a certain number of drips can be on a given turf.
 		var/list/drips = list()
-		var/list/drip_icons = list("1","2","3","4","5")
 
 		for(var/obj/effect/decal/cleanable/blood/drip/drop in T)
 			drips += drop
-			drip_icons.Remove(drop.icon_state)
+			drip_icons -= drop.icon_state
 
 		// If we have too many drips, remove them and spawn a proper blood splatter.
 		if(drips.len >= 5)
@@ -314,8 +324,10 @@ proc/blood_splatter(var/target,var/datum/reagent/blood/source,var/large)
 
 	// Find a blood decal or create a new one.
 	B = locate(decal_type) in T
-	if(!B)
+	if(!B || (decal_type == /obj/effect/decal/cleanable/blood/drip))
 		B = new decal_type(T)
+		if(decal_type == /obj/effect/decal/cleanable/blood/drip)
+			B.icon_state = pick(drip_icons)
 
 	// If there's no data to copy, call it quits here.
 	if(!source)

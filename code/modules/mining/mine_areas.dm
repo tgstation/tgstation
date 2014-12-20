@@ -4,6 +4,9 @@
 	icon_state = "mining"
 	music = 'sound/ambience/song_game.ogg'
 
+	general_area = /area/mine
+	general_area_name = "Mining Station"
+
 /area/mine/explored
 	name = "Mine"
 	icon_state = "explored"
@@ -12,6 +15,7 @@
 	name = "Mine"
 	icon_state = "unexplored"
 
+//TODO: Make all these types inherit from /area/mining_outpost/ instead.
 /area/mine/lobby
 	name = "Mining station"
 

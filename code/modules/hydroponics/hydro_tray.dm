@@ -811,10 +811,10 @@
 	draw_warnings = 0
 
 /obj/machinery/portable_atmospherics/hydroponics/soil/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(istype(O, /obj/item/weapon/shovel))
+	if(istype(O, /obj/item/weapon/pickaxe/shovel))
 		user << "You clear up [src]!"
 		qdel(src)
-	else if(istype(O,/obj/item/weapon/shovel) || istype(O,/obj/item/weapon/tank))
+	else if(istype(O,/obj/item/weapon/pickaxe/shovel) || istype(O,/obj/item/weapon/tank))
 		return
 	else
 		..()

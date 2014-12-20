@@ -950,3 +950,9 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 
 #define MAXIMUM_FREQUENCY 1600
 #define MINIMUM_FREQUENCY 1200
+
+// /vg/ - Mining flags
+#define DIG_ROCKS	1	//mining turfs - minerals, the asteroid stuff, you know
+#define DIG_SOIL	2	//dirt - this flag gives it shovel functionality
+#define DIG_WALLS	4	//metal station walls - not the mineral ones
+#define DIG_RWALLS	8	//reinforced station walls - beware

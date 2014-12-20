@@ -77,12 +77,16 @@
 					else
 						aiPlayer.triggerAlarm("Power", src, cameras, source)
 			for(var/obj/machinery/computer/station_alert/a in machines)
-				if(a.z == source.z)
+				if(locate(src.type) in (a.covered_areas))
 					if(state == 1)
 						a.cancelAlarm("Power", src, source)
 					else
 						a.triggerAlarm("Power", src, cameras, source)
 	return
+
+/area/proc/send_poweralert(var/obj/machinery/computer/station_alert/a)//sending alerts to newly built Station Alert Computers.
+	if(!poweralm)
+		a.triggerAlarm("Power", src, null, src)
 
 /////////////////////////////////////////
 // BEGIN /VG/ UNFUCKING OF AIR ALARMS
@@ -118,7 +122,8 @@
 			for(var/mob/living/silicon/aiPlayer in player_list)
 				aiPlayer.triggerAlarm("Atmosphere", src, cameras, src)
 			for(var/obj/machinery/computer/station_alert/a in machines)
-				a.triggerAlarm("Atmosphere", src, cameras, src)
+				if(locate(src.type) in (a.covered_areas))
+					a.triggerAlarm("Atmosphere", src, cameras, src)
 			door_alerts |= DOORALERT_ATMOS
 			UpdateFirelocks()
 		// Dropping from danger level 2.
@@ -129,7 +134,8 @@
 			for(var/mob/living/silicon/aiPlayer in player_list)
 				aiPlayer.cancelAlarm("Atmosphere", src, src)
 			for(var/obj/machinery/computer/station_alert/a in machines)
-				a.cancelAlarm("Atmosphere", src, src)
+				if(locate(src.type) in (a.covered_areas))
+					a.cancelAlarm("Atmosphere", src, src)
 			door_alerts &= ~DOORALERT_ATMOS
 			UpdateFirelocks()
 		atmosalm = danger_level
@@ -138,6 +144,24 @@
 				AA.update_icon()
 		return 1
 	return 0
+
+/area/proc/sendDangerLevel(var/obj/machinery/computer/station_alert/a)//sending alerts to newly built Station Alert Computers.
+	var/danger_level = 0
+
+	// Determine what the highest DL reported by air alarms is
+	for (var/area/RA in related)
+		for(var/obj/machinery/alarm/AA in RA)
+			if((AA.stat & (NOPOWER|BROKEN)) || AA.shorted || AA.buildstage != 2)
+				continue
+			var/reported_danger_level=AA.local_danger_level
+			if(AA.alarmActivated)
+				reported_danger_level=2
+			if(reported_danger_level>danger_level)
+				danger_level=reported_danger_level
+
+	if (danger_level == 2)
+		a.triggerAlarm("Atmosphere", src, null, src)
+
 
 /area/proc/UpdateFirelocks()
 	if(door_alerts != 0)
@@ -191,7 +215,12 @@
 		for (var/mob/living/silicon/ai/aiPlayer in player_list)
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
 		for (var/obj/machinery/computer/station_alert/a in machines)
-			a.triggerAlarm("Fire", src, cameras, src)
+			if(locate(src.type) in (a.covered_areas))
+				a.triggerAlarm("Fire", src, cameras, src)
+
+/area/proc/send_firealert(var/obj/machinery/computer/station_alert/a)//sending alerts to newly built Station Alert Computers.
+	if(fire)
+		a.triggerAlarm("Fire", src, null, src)
 
 /area/proc/firereset()
 	if(lighting_subarea)
@@ -207,7 +236,8 @@
 		for (var/mob/living/silicon/ai/aiPlayer in player_list)
 			aiPlayer.cancelAlarm("Fire", src, src)
 		for (var/obj/machinery/computer/station_alert/a in machines)
-			a.cancelAlarm("Fire", src, src)
+			if(locate(src.type) in (a.covered_areas))
+				a.cancelAlarm("Fire", src, src)
 		door_alerts &= ~DOORALERT_FIRE
 		UpdateFirelocks()
 

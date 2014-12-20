@@ -65,6 +65,9 @@
 		else
 			S << "<b>Your laws are null.</b> Contact a coder immediately."
 		S << "____________________________________"
+		if(isAI(S))
+			var/mob/living/silicon/ai/AI=S
+			AI.notify_slaved(force_sync=1)
 
 	else if("add_law" in href_list)
 		var/mob/living/silicon/S = locate(href_list["mob"])
@@ -89,6 +92,28 @@
 
 		log_admin("[key_name(usr)] has added a law to [key_name(S)]: \"[newlaw]\"")
 		message_admins("[usr.key] has added a law to [key_name(S)]: \"[newlaw]\"")
+
+	else if("reset_laws" in href_list)
+		var/mob/living/silicon/S = locate(href_list["mob"])
+		var/lawtypes = typesof(/datum/ai_laws) - /datum/ai_laws
+		var/lawtype = input("Select a lawset.","Law Type",1) as null|anything in lawtypes
+		if(lawtype == null)
+			return
+		testing("Lawtype: [lawtype]")
+
+		var/law_zeroth=null
+		var/law_zeroth_borg=null
+		if(S.laws.zeroth || S.laws.zeroth_borg)
+			if(alert(src,"Do you also wish to clear law zero?","Yes","No") == "No")
+				law_zeroth=S.laws.zeroth
+				law_zeroth_borg=S.laws.zeroth
+
+		S.laws = new lawtype
+		S.laws.zeroth=law_zeroth
+		S.laws.zeroth_borg=law_zeroth_borg
+
+		log_admin("[key_name(usr)] has reset [key_name(S)]: [lawtype]")
+		message_admins("[usr.key] has reset [key_name(S)]: [lawtype]")
 
 	else if("clear_laws" in href_list)
 		var/mob/living/silicon/S = locate(href_list["mob"])

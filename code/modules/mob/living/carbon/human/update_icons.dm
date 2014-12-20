@@ -153,14 +153,16 @@ Please contact me on #coderbus IRC. ~Carn x
 
 var/global/list/damage_icon_parts = list()
 
-proc/get_damage_icon_part(damage_state, body_part)
-	if(damage_icon_parts["[damage_state]/[body_part]"] == null)
-		var/icon/DI = new /icon('icons/mob/dam_human.dmi', damage_state)			// the damage icon for whole human
-		DI.Blend(new /icon('icons/mob/dam_mask.dmi', body_part), ICON_MULTIPLY)		// mask with this organ's pixels
-		damage_icon_parts["[damage_state]/[body_part]"] = DI
+/mob/living/carbon/human/proc/get_damage_icon_part(damage_state, body_part,species_blood = "")
+	if(damage_icon_parts["[damage_state]/[body_part]/[species_blood]"] == null)
+		var/icon/DI = icon('icons/mob/dam_human.dmi', damage_state)			// the damage icon for whole human
+		DI.Blend(icon('icons/mob/dam_mask.dmi', body_part), ICON_MULTIPLY)	// mask with this organ's pixels
+		if(species_blood)
+			DI.Blend(species_blood, ICON_MULTIPLY)							// mask with this species's blood color
+		damage_icon_parts["[damage_state]/[body_part]/[species_blood]"] = DI
 		return DI
 	else
-		return damage_icon_parts["[damage_state]/[body_part]"]
+		return damage_icon_parts["[damage_state]/[body_part]/[species_blood]"]
 
 //DAMAGE OVERLAYS
 //constructs damage icon for each organ from mask * damage field and saves it in our overlays_ lists
@@ -179,10 +181,9 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 	previous_damage_appearance = damage_appearance
 
-	var/icon/standing = new /icon('icons/mob/dam_human.dmi', "00")
+	var/icon/standing = icon('icons/mob/dam_human.dmi', "00")
 
-	var/image/standing_image = new /image("icon" = standing)
-
+	var/image/standing_image = image("icon" = standing)
 
 	// blend the individual damage states with our icons
 	for(var/datum/organ/external/O in organs)
@@ -190,7 +191,9 @@ proc/get_damage_icon_part(damage_state, body_part)
 			O.update_icon()
 			if(O.damage_state == "00") continue
 
-			var/icon/DI = get_damage_icon_part(O.damage_state, O.icon_name)
+			var/icon/DI
+
+			DI = get_damage_icon_part(O.damage_state, O.icon_name, (species.blood_color == "#A10808" ? "" : species.blood_color))
 
 			standing_image.overlays += DI
 
