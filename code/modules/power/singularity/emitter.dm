@@ -45,7 +45,7 @@
 	if (src.anchored || usr:stat)
 		usr << "It is fastened to the floor!"
 		return 0
-	src.dir = turn(src.dir, 90)
+	src.dir = turn(src.dir, -90)
 	return 1
 
 /obj/machinery/power/emitter/verb/rotate_ccw()
@@ -56,7 +56,7 @@
 	if (src.anchored || usr:stat)
 		usr << "It is fastened to the floor!"
 		return 0
-	src.dir = turn(src.dir, -90)
+	src.dir = turn(src.dir, 90)
 	return 1
 
 /obj/machinery/power/emitter/initialize()
@@ -66,6 +66,7 @@
 		src.directwired = 1
 		update_icon()
 		update_beam()
+
 	if(frequency)
 		set_frequency(frequency)
 
