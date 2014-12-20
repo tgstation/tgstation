@@ -74,8 +74,8 @@
 			if(hitsound)
 				var/volume = vol_by_damage()
 				playsound(loc, hitsound, volume, 1, -1)
-			M.visible_message("<span class='danger'>[M] is hit by \a [src] in the [parse_zone(def_zone)]!", \
-								"<span class='userdanger'>[M] is hit by \a [src] in the [parse_zone(def_zone)]!")	//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+			M.visible_message("<span class='danger'>[M] is hit by \a [src] in the [parse_zone(def_zone)]!</span>", \
+								"<span class='userdanger'>[M] is hit by \a [src] in the [parse_zone(def_zone)]!</span>")	//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 		add_logs(firer, M, "shot", object="[src]", addition=reagent_note)
 
 	var/turf/new_loc = get_turf(A)

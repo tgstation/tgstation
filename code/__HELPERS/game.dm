@@ -210,6 +210,24 @@
 	return hear
 
 
+/proc/get_player_mob_hearers_in_view(var/range,var/atom/source)
+	//Returns a list of player controlled mobs in view(R) from source (ignoring luminosity). Used in visible_message and audible_message procs.
+	var/turf/T = get_turf(source)
+	var/list/mob_hear = list()
+
+	if(!T)
+		return mob_hear
+
+	var/lum = source.luminosity
+	source.luminosity = 6
+	for(var/mob/M in player_list)
+		var/turf/TF = get_turf(M)
+		if(source in view(range, TF))
+			mob_hear |= M
+	source.luminosity = lum
+	return mob_hear
+
+
 /proc/get_mobs_in_radio_ranges(var/list/obj/item/device/radio/radios)
 
 	set background = BACKGROUND_ENABLED
