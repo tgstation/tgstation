@@ -21,5 +21,3 @@
 /mob/living/simple_animal/fox/Renault
 	name = "Renault"
 	desc = "Renault, the Captain's trustworthy fox. I wonder what it says?"
-	var/turns_since_scan = 0
-	var/mob/living/simple_animal/mouse/movement_target
