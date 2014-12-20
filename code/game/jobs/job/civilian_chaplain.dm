@@ -12,7 +12,8 @@ Chaplain
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
-	alt_clothing = list("Default","Hoodie","Priest","Nun")
+	clothing = "Default"
+	alt_clothing = list("Hoodie","Priest","Nun")
 
 	default_pda = /obj/item/device/pda/chaplain
 

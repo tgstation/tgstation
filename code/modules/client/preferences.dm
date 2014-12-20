@@ -374,10 +374,11 @@ datum/preferences
 				continue
 
 			HTML += "<font color=[prefLevelColor]>[prefLevelLabel]</font>"
-			HTML += "</a></td></tr>"
 
 			if(job.alt_clothing)
-				HTML += "</a><br> <a href=\"byond://?src=\ref[user];preference=job;task=alt_clothing;job=\ref[job]\">\[[GetAltClothing(job)]\]</a></td></tr>"
+			HTML += "<a class='white' href='?_src_=prefs;preference=job;task=setJobLevel;level=[prefUpperLevel];text=[rank]' oncontextmenu='javascript:return setJobPrefRedirect([prefLowerLevel], \"[rank]\");'>"
+
+			HTML += "</a></td></tr>"
 
 		for(var/i = 1, i < (limit - index), i += 1) // Finish the column so it is even
 			HTML += "<tr bgcolor='[lastJob.selection_color]'><td width='60%' align='right'>&nbsp</td><td>&nbsp</td></tr>"
@@ -460,7 +461,7 @@ datum/preferences
 			? player_alt_clothing[job.clothing] \
 			: job.clothing
 
-	proc/SetPlayerAltClothing(datum/job/job, new_clothing)
+	proc/SetAltClothing(datum/job/job, new_clothing)
 		// remove existing entry
 		if(player_alt_clothing.Find(job.clothing))
 			player_alt_clothing -= job.clothing
@@ -558,14 +559,14 @@ datum/preferences
 					else
 						userandomjob = !userandomjob
 					SetChoices(user)
-				if("alt_clothing")
+				if("alt_title")
 					var/datum/job/job = locate(href_list["job"])
 					if (job)
-						var/choices = job.alt_clothing
-						var/choice = input("Pick a spawning clothing set for [job.title].", "Character Generation", GetAltClothing(job)) as anything in choices | null
+						var/choices = list(job.clothing) + job.alt_clothing
+						var/choice = input("Pick a title for [job.title].", "Character Generation", GetAltClothing(job)) as anything in choices | null
 						if(choice)
+							SetAltClothing(job, choice)
 							SetChoices(user)
-							SetPlayerAltClothing(job, choice)
 				if("setJobLevel")
 					UpdateJobPreference(user, href_list["text"], text2num(href_list["level"]))
 				else

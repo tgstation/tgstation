@@ -13,7 +13,8 @@ Research Director
 	selection_color = "#ffddff"
 	req_admin_notify = 1
 	minimal_player_age = 7
-	alt_clothing = list("Default","Turtleneck","Whimsy")
+	clothing = "Default"
+	alt_clothing = list("Turtleneck","Whimsy")
 
 	default_id = /obj/item/weapon/card/id/silver
 	default_pda = /obj/item/device/pda/heads/rd

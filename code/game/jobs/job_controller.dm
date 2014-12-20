@@ -303,9 +303,6 @@ var/global/datum/controller/occupations/job_master
 	var/datum/job/job = GetJob(rank)
 
 	H.job = rank
-	if(H.mind && H.mind.assigned_role != rank)
-		H.mind.assigned_role = rank
-		H.mind.role_alt_clothing = null
 
 	//If we joined at roundstart we should be positioned at our workstation
 	if(!joined_late)
