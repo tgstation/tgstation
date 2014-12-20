@@ -376,7 +376,7 @@ datum/preferences
 			HTML += "<font color=[prefLevelColor]>[prefLevelLabel]</font>"
 
 			if(job.alt_clothing)
-			HTML += "<a class='white' href='?_src_=prefs;preference=job;task=setJobLevel;level=[prefUpperLevel];text=[rank]' oncontextmenu='javascript:return setJobPrefRedirect([prefLowerLevel], \"[rank]\");'>"
+				HTML += "</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td><td><a href=\"byond://?src=\ref[user];preference=job;task=alt_clothings;job=\ref[job]\">\[[GetAltClothing(job)]\]</a></td></tr>"
 
 			HTML += "</a></td></tr>"
 
@@ -559,7 +559,7 @@ datum/preferences
 					else
 						userandomjob = !userandomjob
 					SetChoices(user)
-				if("alt_title")
+				if("alt_clothings")
 					var/datum/job/job = locate(href_list["job"])
 					if (job)
 						var/choices = list(job.clothing) + job.alt_clothing

@@ -320,6 +320,10 @@ var/global/datum/controller/occupations/job_master
 	if(H.mind)
 		H.mind.assigned_role = rank
 
+	var/alt_clothing = null
+	if(H.mind)
+		alt_clothing = H.mind.role_alt_clothing
+
 	if(job)
 		var/new_mob = job.equip(H)
 		if(ismob(new_mob))

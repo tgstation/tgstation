@@ -29,7 +29,7 @@ Assistant
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/color/blue(H), slot_w_uniform)
 			if("Brown")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/color/brown(H), slot_w_uniform)
-			if"Yellow")
+			if("Yellow")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/color/yellow(H), slot_w_uniform)
 			if("Black")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(H), slot_w_uniform)

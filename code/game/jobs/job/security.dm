@@ -99,7 +99,7 @@ Warden
 /datum/job/warden/equip_items(var/mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/warden(H), slot_head)\
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/warden(H), slot_head)
 	if(H.mind.role_alt_clothing)
 		switch(H.mind.role_alt_clothing)
 			if("Navy Jacket")
@@ -247,10 +247,10 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	if(!sec_departments.len)
 		if(H.mind.role_alt_clothing)
 			switch(H.mind.role_alt_clothing)
-			if("Corporate")
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security(H), slot_w_uniform)
-			if("Tactical")
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security/tactical(H), slot_w_uniform)
+				if("Corporate")
+					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security(H), slot_w_uniform)
+				if("Tactical")
+					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security/tactical(H), slot_w_uniform)
 	else
 		var/department = pick(sec_departments)
 		sec_departments -= department
