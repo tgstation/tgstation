@@ -2,4 +2,5 @@ author: Clusterfack
 delete-after: true
 changes:
 - bugfix: Fixed strange rocks being an ore type, should no longer be bugged out with mining
-- bugfix: Gives MMI some examine() text for telling the brain's state
+- rscadd: Gives MMI some examine() text for telling the brain's state
+- bugfix: Fixes the hyper-pressure bug caused by artificers
