@@ -68,6 +68,9 @@
 			freq_listening |= i
 		..()
 
+/obj/machinery/telecomms/receiver/preset_complete
+	name = "Receiver"
+	freq_listening = list()
 
 //Buses
 
@@ -100,6 +103,12 @@
 		freq_listening |= i
 	..()
 
+/obj/machinery/telecomms/bus/preset_complete
+	id = "Bus Complete"
+	network = "tcommsat"
+	freq_listening = list()
+	autolinkers = list("processor1", "common")
+
 //Processors
 
 /obj/machinery/telecomms/processor/preset_one
@@ -121,6 +130,10 @@
 	id = "Processor 4"
 	network = "tcommsat"
 	autolinkers = list("processor4")
+
+
+/obj/machinery/telecomms/processor/preset_complete
+	name = "Processor"
 
 //Servers
 
@@ -147,7 +160,7 @@
 	freq_listening = list(1347)
 	autolinkers = list("supply")
 
-//Using old mining channel frequency for a service channel for the bartender, botanist and chef. 
+//Using old mining channel frequency for a service channel for the bartender, botanist and chef.
 //Also cleaned up all the references to the mining channel I could find, it most likely will never be used again anyway. - Duny
 /obj/machinery/telecomms/server/presets/service
 	id = "Service Server"
@@ -165,6 +178,10 @@
 	for(var/i = 1441, i < 1489, i += 2)
 		freq_listening |= i
 	..()
+
+/obj/machinery/telecomms/server/presets/complete
+	id = "Master Server"
+	freq_listening = list()
 
 /obj/machinery/telecomms/server/presets/command
 	id = "Command Server"
@@ -197,3 +214,7 @@
 	id = "Broadcaster B"
 	network = "tcommsat"
 	autolinkers = list("broadcasterB")
+
+/obj/machinery/telecomms/broadcaster/preset_complete
+	name = "Broadcaster"
+	network = "tcommsat"
