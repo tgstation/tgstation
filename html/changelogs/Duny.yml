@@ -11,7 +11,7 @@ changes:
   - tweak: The sound system in the hallways now start off.
   - tweak: Added a PDA painter to the HoP's office.
   - tweak: Departmental security is now entirely gone aside from one office in medbay. The engineering one has been replaced with an auxiliary cyborg recharge station.
-  - wip: The abandoned tcomms satellite now contains a secure facility guarding the gooncode. One of the rooms is unoperational as of when I'm writing this due to BEAMS not working correctly for roundstart activated emitters (or at least I didn't find a way to make them work).
+  - wip: The abandoned tcomms satellite now contains a secure facility guarding the gooncode.
   - wip: This facility can't be entered if you don't have a solid body (unless you double click inside as a ghost or follow/teleport to someone). The doors, however, require no access.
   - wip: The current state of the facility is easy mode. That may change once the gooncode is acquired. 
   - tweak: Added PDA terminals in arrivals, in front of cargo, and in front of the HoP's office.
