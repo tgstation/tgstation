@@ -271,18 +271,18 @@
 			user << "<span class='notice'>You pull out all the tape!</span>"
 			ruin()
 
-/obj/item/device/tape/verb/reset(mob/user)
-	set name = "Reset Recorded Info"
+/obj/item/device/tape/verb/reset()
+	set name = "Reset Tape Recording"
 	set category = "Object"
 	if(!ruined)
-		user << "<span class='notice'>You begin to reset the tape.</span>"
-		if(do_after(user, 50) && !ruined)
-			user << "<span class='notice'>You reset the tape!</span>"
+		usr << "<span class='notice'>You begin to reset the tape.</span>"
+		if(do_after(usr, 50) && !ruined)
+			usr << "<span class='notice'>You reset the tape!</span>"
 			reset_tape()
 		else
-			user <M "<span class='danger'>You fail to reset the tape.</span>"
+			usr << "<span class='danger'>You fail to reset the tape.</span>"
 	else if(ruined)
-		user << "<span class='danger'>You can't reset the tape when there's no tape to reset.</span>"
+		usr << "<span class='danger'>You can't reset the tape when there's no tape to reset.</span>"
 
 /obj/item/device/tape/proc/ruin()
 	overlays += "ribbonoverlay"
