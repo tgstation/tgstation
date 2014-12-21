@@ -110,7 +110,6 @@
 
 	src << "\red If the title screen is black, resources are still downloading. Please be patient until the title screen appears."
 
-
 	clients += src
 	directory[ckey] = src
 
@@ -150,6 +149,8 @@
 
 	if(prefs.lastchangelog != changelog_hash) //bolds the changelog button on the interface so we know there are updates.
 		winset(src, "rpane.changelog", "background-color=#eaeaea;font-style=bold")
+		prefs.SetChangelog(ckey,changelog_hash)
+		src << "<span class='info'>Changelog has changed since your last visit.</span>"
 
 
 	//////////////
@@ -162,8 +163,6 @@
 	directory -= ckey
 	clients -= src
 	return ..()
-
-
 
 /client/proc/log_client_to_db()
 	if(IsGuestKey(key))

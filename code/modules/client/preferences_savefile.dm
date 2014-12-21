@@ -39,6 +39,15 @@
 	savefile_version = SAVEFILE_VERSION_MAX
 
 
+/datum/preferences/proc/SetChangelog(ckey,hash)
+	lastchangelog=hash
+	var/database/query/q = new
+	q.Add("UPDATE client SET lastchangelog=? WHERE ckey=?",lastchangelog,ckey)
+	if(!q.Execute(db))
+		message_admins("Error #: [q.Error()] - [q.ErrorMsg()]")
+		warning("Error #:[q.Error()] - [q.ErrorMsg()]")
+		return 0
+
 /datum/preferences/proc/load_preferences_sqlite(var/ckey)
 	var/list/preference_list_client = new
 	var/database/query/check = new
