@@ -50,7 +50,7 @@ What are the archived variables for?
 
 	var/list/datum/gas/trace_gases = list()
 	var/gas_reagents_parent = null
-	var/datum/reagents/gas_reagents = new(maximum=500)
+	var/datum/reagents/gas_reagents = new(maximum=AIRCHEM_SIZE)
 
 
 	var/tmp/oxygen_archived
@@ -987,7 +987,7 @@ What are the archived variables for?
 
 	if(sample.gas_reagents.total_volume)
 		if(gas_reagents.total_volume)
-			if(sample.gas_reagents.total_volume > gas_reagents.total_volume)
+			if(abs(sample.gas_reagents.total_volume - gas_reagents.total_volume) > MINIMUM_AIR_CHEM_TO_SUSPEND)
 				return 0
 
 	if(total_moles() > MINIMUM_AIR_TO_SUSPEND)

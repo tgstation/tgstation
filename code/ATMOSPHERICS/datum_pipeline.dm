@@ -244,7 +244,7 @@ var/pipenetwarnings = 10
 	var/total_toxins = 0
 	var/total_carbon_dioxide = 0
 	var/list/total_trace_gases = list()
-	var/datum/reagents/pipeline_reagents = new(maximum=9999)
+	var/datum/reagents/pipeline_reagents = new(maximum=AIRCHEM_SIZE)
 
 	for(var/datum/gas_mixture/G in GL)
 		total_volume += G.volume
@@ -263,7 +263,7 @@ var/pipenetwarnings = 10
 
 		if(G.gas_reagents.total_volume)
 			//let it flow.. a little more into the system by multiplying chems.
-			G.gas_reagents.trans_to(pipeline_reagents,G.gas_reagents.total_volume,log(GL.len))
+			G.gas_reagents.trans_to(pipeline_reagents,G.gas_reagents.total_volume,log(G.gas_reagents.total_volume*AIRCHEM_SPREAD_RATE))
 
 		if(G.trace_gases.len)
 			for(var/datum/gas/trace_gas in G.trace_gases)
