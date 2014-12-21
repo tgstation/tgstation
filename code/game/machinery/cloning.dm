@@ -219,6 +219,7 @@
 	H.updatehealth()
 
 	clonemind.transfer_to(H)
+
 	H.ckey = R.ckey
 	H << "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>"
 

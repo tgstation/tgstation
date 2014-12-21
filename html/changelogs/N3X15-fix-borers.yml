@@ -1,0 +1,9 @@
+author: N3X15
+delete-after: true
+changes:
+- bugfix: "Borers now release control when the host dies."
+- bugfix: "Sanity checks added to DNA scanners to prevent borers from becoming the cloned individual."
+- bugfix: "Resisting a borer should now work properly."
+- bugfix: "Captive brains should now have a name upon being created."
+- bugfix: "Cortical talk should now be visible to ghosts."
+- bugfix: "Changeling chat controls should work properly now."

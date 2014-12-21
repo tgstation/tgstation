@@ -264,7 +264,7 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 		if(istype(M, /mob/new_player))
 			continue
 
-		if( (istype(M,/mob/dead/observer) && M.client && !(M.client.prefs.toggles & CHAT_GHOSTEARS)) \
+		if( (istype(M,/mob/dead/observer) && M.client && M.client.prefs.toggles & CHAT_GHOSTEARS) \
 			|| isborer(M))
 			var/controls = ""
 			if(isobserver(M))
@@ -309,6 +309,7 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 	host << "\red <B>You feel a strange shifting sensation behind your eyes as an alien consciousness displaces yours.</B>"
 
 	host_brain.ckey = host.ckey
+	host_brain.name = host.real_name
 	host.ckey = src.ckey
 	controlling = 1
 
