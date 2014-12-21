@@ -31,6 +31,8 @@
 	var/radio_filter_out
 	var/radio_filter_in
 
+	var/datum/reagents/inside_vent = new(maximum=500)
+
 /obj/machinery/atmospherics/unary/vent_pump/on
 	on = 1
 	icon_state = "vent_out"
@@ -103,6 +105,9 @@
 	var/environment_pressure = environment.return_pressure()
 
 	if(pump_direction) //internal -> external
+		if(inside_vent.total_volume)
+			var/turf/simulated/T = get_turf(src)
+			inside_vent.trans_to(T.air.gas_reagents,inside_vent.total_volume)
 		var/pressure_delta = 10000
 
 		if(pressure_checks&1)
@@ -283,7 +288,7 @@
 			if(C.reagents.total_volume)
 				user.visible_message("[user] pours [C] into the [src].",
 				"You pour [C] into the [src].", "You hear a faint trickling sound.")
-				C.reagents.trans_to(parent.air.gas_reagents,C.amount_per_transfer_from_this,20) //give it a little bit of a boost
+				C.reagents.trans_to(inside_vent,C.amount_per_transfer_from_this,20) //give it a little bit of a boost
 				process() //force an update
 			return 1
 	if(istype(W, /obj/item/weapon/weldingtool))
