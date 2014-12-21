@@ -249,7 +249,7 @@
 
 /obj/item/device/tape
 	name = "tape"
-	desc = "A magnetic tape that can hold up to ten minutes of content."
+	desc = "A magnetic tape that can hold up to ten minutes of content. It has a small red button labelled RESET on the back."
 	icon_state = "tape_white"
 	item_state = "analyzer"
 	w_class = 1
@@ -266,14 +266,32 @@
 
 /obj/item/device/tape/attack_self(mob/user)
 	if(!ruined)
-		user << "<span class='notice'>You pull out all the tape!</span>"
-		ruin()
+		user << "<span class='notice'>You begin nonchalantly yanking out all the tape in fistfuls.</span>"
+		if(do_after(user, 20))
+			user << "<span class='notice'>You pull out all the tape!</span>"
+			ruin()
 
+/obj/item/device/tape/verb/reset(mob/user)
+	set name = "Reset Recorded Info"
+	set category = "Object"
+	if(!ruined)
+		user << "<span class='notice'>You begin to reset the tape.</span>"
+		if(do_after(user, 50) && !ruined)
+			user << "<span class='notice'>You reset the tape!</span>"
+			reset_tape()
+		else
+			user <M "<span class='danger'>You fail to reset the tape.</span>"
+	else if(ruined)
+		user << "<span class='danger'>You can't reset the tape when there's no tape to reset.</span>"
 
 /obj/item/device/tape/proc/ruin()
 	overlays += "ribbonoverlay"
 	ruined = 1
 
+/obj/item/device/tape/proc/reset_tape()
+	used_capacity = 0
+	storedinfo = list()
+	timestamp = list()
 
 /obj/item/device/tape/proc/fix()
 	overlays -= "ribbonoverlay"
