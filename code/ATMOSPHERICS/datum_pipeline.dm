@@ -1,5 +1,5 @@
 var/global/list/datum/pipeline/pipe_networks = list()
-var/global/dispersion_rate = 45
+var/global/dispersion_rate = 35
 
 /datum/pipeline
 	var/datum/gas_mixture/air
