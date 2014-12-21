@@ -309,6 +309,7 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 	host << "\red <B>You feel a strange shifting sensation behind your eyes as an alien consciousness displaces yours.</B>"
 
 	host_brain.ckey = host.ckey
+	host_brain.name = host.real_name
 	host.ckey = src.ckey
 	controlling = 1
 
