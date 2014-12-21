@@ -12,3 +12,9 @@
 			if (internals)
 				internals.icon_state = "internal0"
 	return
+
+/mob/living/carbon/proc/breathe()
+	//processing environment chems done here for sake of noncopypastaing
+	var/datum/gas_mixture/environment = loc.return_air()
+	if(environment.gas_reagents.total_volume)
+		environment.gas_reagents.trans_to(src,environment.gas_reagents.total_volume/BREATH_VOLUME)

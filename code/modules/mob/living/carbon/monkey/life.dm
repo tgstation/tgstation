@@ -152,7 +152,7 @@
 				updatehealth()
 
 
-/mob/living/carbon/monkey/proc/breathe()
+/mob/living/carbon/monkey/breathe()
 	if(reagents)
 
 		if(reagents.has_reagent("lexorin")) return
@@ -204,7 +204,7 @@
 			if(istype(loc, /obj/))
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
-
+	..()
 	handle_breath(breath)
 
 	if(breath)

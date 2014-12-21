@@ -134,4 +134,5 @@
 	new /obj/item/clothing/suit/fire/atmos(src)
 	new /obj/item/clothing/head/hardhat/atmos(src)
 	new /obj/item/clothing/suit/toggle/wintercoat/engineering/atmos(src)
+	new /obj/item/weapon/reagent_containers/syringe/atmospherics(src)
 	return

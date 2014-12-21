@@ -21,7 +21,7 @@
 
 	return //TODO: DEFERRED
 
-/mob/living/carbon/alien/proc/breathe()
+/mob/living/carbon/alien/breathe()
 	if(reagents)
 		if(reagents.has_reagent("lexorin")) return
 	if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
@@ -67,7 +67,7 @@
 			if(istype(loc, /obj/))
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
-
+	..()
 	handle_breath(breath)
 
 	if(breath)
