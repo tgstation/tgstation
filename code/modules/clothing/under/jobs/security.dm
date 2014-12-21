@@ -10,28 +10,22 @@
  */
 
 /obj/item/clothing/under/rank/security
-	name = "security jumpsuit"
-	desc = "A security jumpsuit for officers complete with nanotrasen waistbuckle."
+	name = "security suit"
+	desc = "A formal security suit for officers complete with nanotrasen belt buckle."
 	icon_state = "security"
-	item_state = "r_suit"
+	item_state = "gy_suit"
 	item_color = "security"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	strip_delay = 50
 
 /obj/item/clothing/under/rank/warden
-	name = "warden's jumpsuit"
-	desc = "A security jumpsuit suit with decorative silver pips and 'warden' written on the shoulders."
-	icon_state = "wardenformal"
-	item_state = "r_suit"
+	name = "warden's suit"
+	desc = "A formal security suit for the warden with blue desginations and '/Warden/' stiched into the shoulders."
+	icon_state = "warden"
+	item_state = "gy_suit"
 	item_color = "warden"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	strip_delay = 50
-
-/obj/item/clothing/under/rank/warden/formal
-	name = "warden's formal suit"
-	desc = "A security formal suit with silver shoulder pips, a striped red tie, and tan slacks - the universal sign of bureaucracy.="
-	icon_state = "wardenformal"
-	item_color = "wardenformal"
 
 /*
  * Detective
@@ -57,18 +51,12 @@
  */
 /obj/item/clothing/under/rank/head_of_security
 	name = "head of security's suit"
-	desc = "The jumpsuit worn by those few with the dedication to achieve the position of Head of Security."
+	desc = "A security suit decorated for those few with the dedication to achieve the position of Head of Security."
 	icon_state = "hos"
-	item_state = "r_suit"
+	item_state = "gy_suit"
 	item_color = "hos"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	strip_delay = 60
-
-/obj/item/clothing/under/rank/head_of_security/formal
-	name = "head of security's formal suit"
-	desc = "The formal suit for a Head of Security with a superior sense of style."
-	icon_state = "hosformal"
-	item_color = "hosformal"
 
 /*
  * Navy uniforms

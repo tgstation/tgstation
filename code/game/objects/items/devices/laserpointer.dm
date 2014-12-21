@@ -57,7 +57,7 @@
 
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(diode)
-			user << "<span class='notice'>You remove the [diode.name] from the [src].</span>"
+			user << "<span class='notice'>You remove the [diode.name] from \the [src].</span>"
 			diode.loc = get_turf(src.loc)
 			diode = null
 		return

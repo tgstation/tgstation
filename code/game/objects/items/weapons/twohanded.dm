@@ -224,7 +224,7 @@ obj/item/weapon/twohanded/
 				sleep(1)
 
 /obj/item/weapon/twohanded/dualsaber/proc/impale(mob/living/user as mob)
-	user << "<span class='warning'>You twirl around a bit before losing your balance and impaling yourself on the [src].</span>"
+	user << "<span class='warning'>You twirl around a bit before losing your balance and impaling yourself on \the [src].</span>"
 	if (force_wielded)
 		user.take_organ_damage(20,25)
 	else

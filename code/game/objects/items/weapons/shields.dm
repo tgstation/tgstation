@@ -108,7 +108,7 @@
 		throw_speed = 2
 		w_class = 4
 		slot_flags = SLOT_BACK
-		user << "<span class='notice'>You extend the [src].</span>"
+		user << "<span class='notice'>You extend \the [src].</span>"
 	else
 		force = 3
 		throwforce = 3

@@ -348,7 +348,7 @@ atom/proc/generate_female_clothing(index,t_color,icon)
 			flags |= (visor_flags)
 			flags_inv |= (visor_flags_inv)
 			icon_state = initial(icon_state)
-			usr << "You pull the [src] down."
+			usr << "You pull \the [src] down."
 			flash_protect = initial(flash_protect)
 			tint = initial(tint)
 		else
@@ -356,7 +356,7 @@ atom/proc/generate_female_clothing(index,t_color,icon)
 			flags &= ~(visor_flags)
 			flags_inv &= ~(visor_flags_inv)
 			icon_state = "[initial(icon_state)]up"
-			usr << "You push the [src] up."
+			usr << "You push \the [src] up."
 			flash_protect = 0
 			tint = 0
 
