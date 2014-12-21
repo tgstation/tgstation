@@ -1,3 +1,7 @@
+ #define SAWN_INTACT  0
+ #define SAWN_OFF     1
+ #define SAWN_SAWING -1
+
 /obj/item/weapon/gun
 	name = "gun"
 	desc = "It's a gun. It's pretty terrible, though."
@@ -23,7 +27,7 @@
 	var/obj/item/ammo_casing/chambered = null
 	var/trigger_guard = 1
 	var/sawn_desc = null
-	var/sawn_state = 0 //0 - intact, 1 - sawned off, -1 - currently sawing
+	var/sawn_state = SAWN_INTACT
 
 /obj/item/weapon/gun/proc/process_chamber()
 	return 0
