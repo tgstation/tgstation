@@ -39,7 +39,7 @@
 	if (src.anchored)
 		usr << "It is fastened to the floor!"
 		return 0
-	src.dir = turn(src.dir, 90)
+	src.dir = turn(src.dir, -90)
 	qdel(beam)
 	beam=null
 	update_beams()
@@ -53,7 +53,7 @@
 	if (src.anchored)
 		usr << "It is fastened to the floor!"
 		return 0
-	src.dir = turn(src.dir, -90)
+	src.dir = turn(src.dir, 90)
 	qdel(beam)
 	beam=null
 	update_beams()
