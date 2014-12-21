@@ -256,6 +256,11 @@ var/pipenetwarnings = 10
 		total_toxins += G.toxins
 		total_carbon_dioxide += G.carbon_dioxide
 
+		for(var/datum/reagent/R in G.gas_reagents)
+			if(R.id == "plasma")
+				G.toxins += R.volume
+				total_toxins += R.volume
+
 		if(G.gas_reagents.total_volume)
 			//let it flow.. a little more into the system by multiplying chems.
 			G.gas_reagents.trans_to(pipeline_reagents,G.gas_reagents.total_volume,log(GL.len))

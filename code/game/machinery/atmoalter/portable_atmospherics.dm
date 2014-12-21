@@ -75,13 +75,15 @@
 		return
 	if(istype(W,/obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = W
-		if(S.reagents.total_volume)
-			if(air_contents.gas_reagents.total_volume + S.reagents.total_volume > air_contents.gas_reagents.maximum_volume)
-				user << "<span class='notice'>You locate a seal and insert [S]'s needle, but the [src] has too many reagents already.</span>"
-			else
-				S.reagents.trans_to(air_contents.gas_reagents,S.amount_per_transfer_from_this)
-				S.update_icon()
-				user << "<span class='notice'>You locate a seal and inject [S]'s contents into it.</span>"
+		if(S.mode == 1)
+			if(S.reagents.total_volume)
+				if(air_contents.gas_reagents.total_volume + S.reagents.total_volume > air_contents.gas_reagents.maximum_volume)
+					user << "<span class='notice'>You locate a seal and insert [S]'s needle, but the [src] has too many reagents already.</span>"
+				else
+					S.reagents.trans_to(air_contents.gas_reagents,S.amount_per_transfer_from_this)
+					S.update_icon()
+					user << "<span class='notice'>You locate a seal and inject [S]'s contents into it.</span>"
+					S.mode = 0
 		return
 
 	else if (istype(W, /obj/item/weapon/wrench))
