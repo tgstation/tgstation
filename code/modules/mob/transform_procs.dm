@@ -128,11 +128,12 @@
 	invisibility = 101
 	var/mob/living/carbon/human/O = new( loc )
 	O.invisibility = 101
-	var/atom/movable/overlay/animation = new( loc )
+	var/atom/movable/overlay/animation = new /atom/movable/overlay( loc )
 	animation.icon_state = "blank"
 	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
 	flick("monkey2h", animation)
+
 	O.gender = (deconstruct_block(getblock(dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? FEMALE : MALE
 	O.dna = dna
 
@@ -189,7 +190,6 @@
 
 	for(var/obj/item/C in O.loc)
 		O.equip_to_appropriate_slot(C)
-	qdel(animation)
 
 	updateappearance(O)
 	. = O
@@ -204,9 +204,7 @@
 		qdel(deleted)
 
 	spawn(22)
-		world << "This happens"
 		O.invisibility = 0
-
 		for(var/obj/item/C in O.loc)
 			O.equip_to_appropriate_slot(C)
 		qdel(animation)

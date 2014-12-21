@@ -17,9 +17,9 @@
 	var/text_indication = ""
 	var/list/visual_indicators = list()
 
-/datum/mutation/human/proc/force_on(mob/living/carbon/human/owner)
+/datum/mutation/human/proc/force_give(mob/living/carbon/human/owner)
 	set_block(owner)
-	owner.dna.mutations |= src
+	on_acquiring(owner)
 
 /datum/mutation/human/proc/set_se(se_string)
 	if(!se_string || lentext(se_string) < DNA_STRUC_ENZYMES_BLOCKS * DNA_BLOCK_SIZE)	return
@@ -198,12 +198,12 @@
 	if(..())	return
 	owner.disabilities &= ~NEARSIGHT
 
-/datum/mutation/human/epilepcy
+/datum/mutation/human/epilepsy
 
-	name = "Epilepcy"
+	name = "Epilepsy"
 	quality = NEGATIVE
 
-/datum/mutation/human/epilepcy/on_life(mob/living/carbon/human/owner)
+/datum/mutation/human/epilepsy/on_life(mob/living/carbon/human/owner)
 	if ((prob(1) && owner.paralysis < 1))
 		owner << "<span class='danger'>You have a seizure!</span>"
 		for(var/mob/O in viewers(owner, null) - owner)

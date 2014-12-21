@@ -109,9 +109,10 @@
 		..(user, 1)
 		adjustBruteLoss(5 + rand(1,9))
 		Paralyse(1)
-		step_away(src,user,15)
-		sleep(1)
-		step_away(src,user,15)
+		spawn()
+			step_away(src,user,15)
+			sleep(1)
+			step_away(src,user,15)
 		return 1
 	else
 		return

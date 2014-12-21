@@ -38,9 +38,6 @@
 		//Chemicals in the body
 		handle_chemicals_in_body()
 
-		//Disabilities
-		handle_disabilities()
-
 	//Apparently, the person who wrote this code designed it so that
 	//blinded get reset each cycle and then get activated later in the
 	//code. Very ugly. I dont care. Moving this stuff here so its easy
@@ -65,9 +62,6 @@
 
 	if(client)
 		handle_regular_hud_updates()
-
-
-/mob/living/carbon/alien/humanoid/proc/handle_disabilities()
 
 /mob/living/carbon/alien/humanoid/proc/adjust_body_temperature(current, loc_temp, boost)
 	var/temperature = current
