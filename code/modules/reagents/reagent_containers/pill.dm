@@ -70,16 +70,15 @@
 			var/trans = reagents.trans_to(target, reagents.total_volume)
 
 			// /vg/: Logging transfers of bad things
-			if(target.reagents_to_log != 0) //Because something's fucked higher up and I don't know why
-				if(target.reagents_to_log.len)
-					var/list/badshit=list()
-					for(var/bad_reagent in target.reagents_to_log)
-						if(reagents.has_reagent(bad_reagent))
-							badshit += reagents_to_log[bad_reagent]
-					if(badshit.len)
-						var/hl="\red <b>([english_list(badshit)])</b> \black"
-						message_admins("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-						log_game("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].")
+			if(istype(target.reagents_to_log) && target.reagents_to_log.len)
+				var/list/badshit=list()
+				for(var/bad_reagent in target.reagents_to_log)
+					if(reagents.has_reagent(bad_reagent))
+						badshit += reagents_to_log[bad_reagent]
+				if(badshit.len)
+					var/hl="\red <b>([english_list(badshit)])</b> \black"
+					message_admins("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+					log_game("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].")
 
 			if(trans)
 				if(reagents.total_volume == 0)//Total transfer case
