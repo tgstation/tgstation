@@ -1,0 +1,6 @@
+author: N3X15
+delete-after: true
+changes:
+- bugfix: "Borers now release control when the host dies."
+- bugfix: "Sanity checks added to DNA scanners to prevent borers from becoming the cloned individual."
+- bugfix: "Resisting a borer should now work properly."
