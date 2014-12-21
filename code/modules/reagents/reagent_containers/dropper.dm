@@ -14,7 +14,7 @@
 	afterattack(obj/target, mob/user , flag)
 		if(!user.Adjacent(target))
 			return
-			
+
 		if(!target.reagents)
 			if(filled)
 				if(istype(target, /obj/machinery/artifact))
@@ -96,15 +96,16 @@
 
 			// /vg/: Logging transfers of bad things
 			if(isobj(target))
-				if(target.reagents_to_log.len)
-					var/list/badshit=list()
-					for(var/bad_reagent in target.reagents_to_log)
-						if(reagents.has_reagent(bad_reagent))
-							badshit += reagents_to_log[bad_reagent]
-					if(badshit.len)
-						var/hl="\red <b>([english_list(badshit)])</b> \black"
-						message_admins("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-						log_game("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].")
+				if(target.reagents_to_log != 0) //Because something's fucked higher up and I don't know why
+					if(target.reagents_to_log.len)
+						var/list/badshit=list()
+						for(var/bad_reagent in target.reagents_to_log)
+							if(reagents.has_reagent(bad_reagent))
+								badshit += reagents_to_log[bad_reagent]
+						if(badshit.len)
+							var/hl="\red <b>([english_list(badshit)])</b> \black"
+							message_admins("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+							log_game("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].")
 
 		else
 
