@@ -986,6 +986,12 @@ What are the archived variables for?
 		((toxins < (1-MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.toxins) || (toxins > (1+MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.toxins)))
 		return 0
 
+
+	if(sample.gas_reagents.total_volume)
+		if(gas_reagents.total_volume)
+			if(sample.gas_reagents.total_volume > gas_reagents.total_volume)
+				return 0
+
 	if(total_moles() > MINIMUM_AIR_TO_SUSPEND)
 		if((abs(temperature-sample.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND) && \
 			((temperature < (1-MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND)*sample.temperature) || (temperature > (1+MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND)*sample.temperature)))
