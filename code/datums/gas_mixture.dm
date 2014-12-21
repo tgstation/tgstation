@@ -186,10 +186,8 @@ What are the archived variables for?
 
 	for(var/datum/reagent/R in gas_reagents)
 		if(R.id == "fuel")
-			additional_fuel += R.volume
-		if(R.id == "plasma")
 			additional_fuel += R.volume*2
-		if(R.id == "thermite")
+		if(R.id == "plasma")
 			additional_fuel += R.volume*3
 
 	var/datum/gas/volatile_fuel/fuel_store = locate(/datum/gas/volatile_fuel/) in trace_gases
