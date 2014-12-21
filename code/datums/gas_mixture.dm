@@ -13,6 +13,11 @@ What are the archived variables for?
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define QUANTIZE(variable)		(round(variable,0.0001))
 
+#define TURF_COLOR_NOTHING 0
+#define TURF_COLOR_PLASMA 1
+#define TURF_COLOR_SLEEPING 2
+#define TURF_COLOR_MIXED 3
+
 /datum/gas
 	sleeping_agent
 		specific_heat = 40
@@ -113,29 +118,29 @@ What are the archived variables for?
 /datum/gas_mixture/proc/check_tile_graphic()
 	//returns 1 if graphic changed
 	graphic = null
-	var/doColor = 0 //0 = null, 1 = show plasma, 2 = show sleeping gas, 3 = show mixed color
+	var/doColor = TURF_COLOR_NOTHING
 
 	for(var/datum/reagent/R in gas_reagents.reagent_list)
 		if(R.id == "plasma")
-			doColor = 1
+			doColor = TURF_COLOR_PLASMA
 		else if(R.id == "chloralhydrate" || R.id == "stoxin")
-			doColor = 2
+			doColor = TURF_COLOR_SLEEPING
 		else if(R.volume) //not an old color, fall back on mixing
-			doColor = 3
+			doColor = TURF_COLOR_MIXED
 		else
-			doColor = 0
+			doColor = TURF_COLOR_NOTHING
 
-	if(doColor == 0)
+	if(doColor == TURF_COLOR_NOTHING)
 		graphic = null
 
-	if(doColor == 1 || toxins > MOLES_PLASMA_VISIBLE)
+	if(doColor == TURF_COLOR_PLASMA || toxins > MOLES_PLASMA_VISIBLE)
 		graphic = "plasma"
 
 	var/datum/gas/sleeping_agent = locate(/datum/gas/sleeping_agent) in trace_gases
-	if(doColor == 2 || (sleeping_agent && (sleeping_agent.moles > 1)))
+	if(doColor == TURF_COLOR_SLEEPING || (sleeping_agent && (sleeping_agent.moles > 1)))
 		graphic = "sleeping_agent"
 
-	if(doColor == 3)
+	if(doColor == TURF_COLOR_MIXED)
 		graphic = "chem_smoke"
 
 	return graphic != graphic_archived
