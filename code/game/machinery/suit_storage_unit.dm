@@ -431,7 +431,7 @@
 		user.last_special = world.time + CLICK_CD_BREAKOUT
 		var/breakout_time = 2
 		user << "<span class='notice'>You start kicking against the doors to escape! (This will take about [breakout_time] minutes.)</span>"
-		visible_message("You see [user] kicking against the doors of the [src]!")
+		visible_message("You see [user] kicking against the doors of \the [src]!")
 		if(do_after(user,(breakout_time*60*10)))
 			if(!user || user.stat != CONSCIOUS || user.loc != src || isopen || !islocked)
 				return
@@ -491,7 +491,7 @@
 		if(istype(I, /obj/item/weapon/crowbar) && !isopen)
 			if(toggle_open(user))
 				dump_everything()
-				user << text("<span class='notice'>You pry the [src] open.</span>")
+				user << text("<span class='notice'>You pry \the [src] open.</span>")
 				update_icon()
 		return
 	if(istype(I, /obj/item/weapon/screwdriver))

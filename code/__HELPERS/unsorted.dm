@@ -1260,6 +1260,18 @@ var/global/list/common_tools = list(
 			return 1000
 		else
 			return 0
+	if(istype(W, /obj/item/candle))
+		var/obj/item/candle/O = W
+		if(O.lit)
+			return 1000
+		else
+			return 0
+	if(istype(W, /obj/item/device/flashlight/flare))
+		var/obj/item/device/flashlight/flare/O = W
+		if(O.on)
+			return 1000
+		else
+			return 0
 	if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 		return 3800
 	if(istype(W, /obj/item/weapon/melee/energy))

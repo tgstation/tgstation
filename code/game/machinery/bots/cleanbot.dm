@@ -117,16 +117,16 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 
 /obj/machinery/bot/cleanbot/attackby(obj/item/weapon/W, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if(allowed(usr) && !open && !emagged)
+		if(allowed(user) && !open && !emagged)
 			locked = !locked
-			user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the [src] behaviour controls.</span>"
+			user << "<span class='notice'>You [ locked ? "lock" : "unlock"] \the [src] behaviour controls.</span>"
 		else
 			if(emagged)
 				user << "<span class='warning'>ERROR</span>"
 			if(open)
 				user << "<span class='warning'>Please close the access panel before locking it.</span>"
 			else
-				user << "<span class='notice'>This [src] doesn't seem to respect your authority.</span>"
+				user << "<span class='notice'>\The [src] doesn't seem to respect your authority.</span>"
 	else
 		return ..()
 

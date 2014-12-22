@@ -1,5 +1,5 @@
 /obj/item/device/aicard
-	name = "inteliCard"
+	name = "intelliCard"
 	desc = "A storage device for AIs. Patent pending."
 	icon = 'icons/obj/aicards.dmi'
 	icon_state = "aicard" // aicard-full
@@ -23,7 +23,7 @@
 	if (!in_range(src, user))
 		return
 	user.set_machine(src)
-	var/dat = "<TT><B>Intelicard</B><BR>"
+	var/dat = "<TT><B>Intellicard</B><BR>"
 	var/laws
 	for(var/mob/living/silicon/ai/A in src)
 		dat += "Stored AI: [A.name]<br>System integrity: [(A.health+100)/2]%<br>"
@@ -107,7 +107,7 @@
 		if ("Wireless")
 			for(var/mob/living/silicon/ai/A in src)
 				A.control_disabled = !A.control_disabled
-				A << "The intelicard's wireless port has been [A.control_disabled ? "disabled" : "enabled"]!"
+				A << "The intellicard's wireless port has been [A.control_disabled ? "disabled" : "enabled"]!"
 				if (A.control_disabled)
 					overlays -= image('icons/obj/aicards.dmi', "aicard-on")
 				else

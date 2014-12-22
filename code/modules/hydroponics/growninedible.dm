@@ -67,7 +67,7 @@
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
-		user.show_message("<span class='notice'>You make planks out of the [src]!</span>", 1)
+		user.show_message("<span class='notice'>You make planks out of \the [src]!</span>", 1)
 		for(var/i = 0,i < 2,i++)
 			var/obj/item/stack/sheet/mineral/wood/NG = new (user.loc)
 			for (var/obj/item/stack/sheet/mineral/wood/G in user.loc)
@@ -83,7 +83,7 @@
 	if(is_type_in_list(W,accepted))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/leaf = W
 		if(leaf.dry)
-			user.show_message("<span class='notice'>You wrap the [W] around the log, turning it into a torch!</span>")
+			user.show_message("<span class='notice'>You wrap \the [W] around the log, turning it into a torch!</span>")
 			var/obj/item/device/flashlight/flare/torch/T = new /obj/item/device/flashlight/flare/torch(user.loc)
 			usr.unEquip(W)
 			usr.put_in_active_hand(T)
