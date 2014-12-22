@@ -1,4 +1,8 @@
 macro "macro"
+	elem 
+		name = "TAB"
+		command = ".winset \"input.focus=true?map.focus=true input.background-color=#F0F0F0:input.focus=true input.background-color=#D3B5B5\""
+		is-disabled = false
 
 
 menu "menu"

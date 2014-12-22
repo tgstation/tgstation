@@ -10,7 +10,7 @@
 			if(movement_keys[key])
 				movement_dir |= movement_keys[key]
 
-		// sanity checks in case you hold left and right and up to make sure you only go up
+		// Sanity checks in case you hold left and right and up to make sure you only go up
 		if((movement_dir & NORTH) && (movement_dir & SOUTH))
 			movement_dir &= ~(NORTH|SOUTH)
 		if((movement_dir & EAST) && (movement_dir & WEST))
@@ -31,6 +31,8 @@
 			// This is a band-aid fix to the real problem that those things aren't getting movement delays when they should!
 			if(loc != oldloc && user.move_delay == olddelay)
 				user.move_delay += world.tick_lag
+				if(movement_dir & movement_dir-1) // Diagonals
+					user.move_delay += world.tick_lag
 
 
 	return ..()

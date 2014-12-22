@@ -22,6 +22,8 @@
 		input_loop()
 
 	for(var/key in all_keys)
+		if(!key) // In case a null slips into the list somehow
+			continue
 		var/escaped = list2params(list("[key]"))
 		winset(src, "macro[key]Down", "parent=macro;name=[escaped];command=key-down+[escaped]")
 		winset(src, "macro[key]Up", "parent=macro;name=[escaped]+UP;command=key-up+[escaped]")

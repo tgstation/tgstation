@@ -16,12 +16,6 @@
 
 	switch(key)
 
-		if("tab") // Change window focus from map to input and vice versa. You can call this one from the input too!
-			if(winget(src, null, "focus") == "mapwindow.map")
-				winset_focus_to("input")
-			else
-				winset_focus_to("map")
-
 		if("F1")
 			if(keys_active["ctrl"] && keys_active["shift"]) // Is this command ever used?
 				winset(src, null, "command=.options")

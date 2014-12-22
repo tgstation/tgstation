@@ -11,12 +11,6 @@
 			else
 				stop_pulling()
 
-		if("numpad5") //Why isn't this resist?
-			if(isobj(loc))
-				var/obj/O = loc
-				if(canmove)
-					O.relaymove(src, 16)
-
 		if("insert", "g")
 			a_intent_change("right")
 		if("f")
