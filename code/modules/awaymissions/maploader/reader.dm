@@ -273,13 +273,17 @@ var/global/dmm_suite/preloader/_preloader = null
 			else if(isnum(text2num(trim_right)))
 				trim_right = text2num(trim_right)
 
-			//Check for file
-			else if(copytext(trim_right,1,2) == "'")
-				trim_right = file(copytext(trim_right,2,length(trim_right)))
+			//Check for null
+			else if(trim_right == "null")
+				trim_right = null
 
 			//Check for list
 			else if(copytext(trim_right,1,5) == "list")
 				trim_right = text2list(copytext(trim_right,6,length(trim_right)))
+
+			//Check for file
+			else if(copytext(trim_right,1,2) == "'")
+				trim_right = file(copytext(trim_right,2,length(trim_right)))
 
 			to_return[trim_left] = trim_right
 
