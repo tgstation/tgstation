@@ -168,7 +168,7 @@ What are the archived variables for?
 		//temporarily set the my_atom to the turf of the gas_mixture for processing of reagents, and then revert it
 		//so no unintended behaviour will occur.
 		gas_reagents.my_atom = gas_reagents_parent
-	gas_reagents.handle_reactions()
+	gas_reagents.handle_reactions(show_message=0)
 	gas_reagents.my_atom = null
 	fuel_burnt = 0
 	if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)

@@ -216,7 +216,7 @@ datum/reagents/proc/conditional_update(var/atom/A)
 		R.on_update (A)
 	update_total()
 
-datum/reagents/proc/handle_reactions()
+datum/reagents/proc/handle_reactions(var/show_message=1)
 	if(!my_atom) return
 	if(my_atom.flags & NOREACT) return //Yup, no reactions here. No siree.
 
@@ -278,18 +278,20 @@ datum/reagents/proc/handle_reactions()
 
 					var/list/seen = viewers(4, get_turf(my_atom))
 
-					if(!istype(my_atom, /mob)) // No bubbling mobs
-						for(var/mob/M in seen)
-							M << "<span class='notice'>\icon[my_atom] The solution begins to bubble.</span>"
+					if(show_message)
+						if(!istype(my_atom, /mob)) // No bubbling mobs
+							for(var/mob/M in seen)
+								M << "<span class='notice'>\icon[my_atom] The solution begins to bubble.</span>"
 
 					if(istype(my_atom, /obj/item/slime_extract))
 						var/obj/item/slime_extract/ME2 = my_atom
 						ME2.Uses--
 						if(ME2.Uses <= 0) // give the notification that the slime core is dead
 							for(var/mob/M in seen)
-								M << "<span class='notice'>\icon[my_atom] The [my_atom]'s power is consumed in the reaction.</span>"
-								ME2.name = "\improper used slime extract"
-								ME2.desc = "This extract has been used up."
+								if(show_message)
+									M << "<span class='notice'>\icon[my_atom] The [my_atom]'s power is consumed in the reaction.</span>"
+									ME2.name = "\improper used slime extract"
+									ME2.desc = "This extract has been used up."
 
 					playsound(get_turf(my_atom), 'sound/effects/bubbles.ogg', 80, 1)
 
