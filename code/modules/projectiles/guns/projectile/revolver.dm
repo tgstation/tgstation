@@ -5,7 +5,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
 
 /obj/item/weapon/gun/projectile/revolver/chamber_round()
-	if (chambered || !magazine)
+	if ((chambered && chambered.BB)|| !magazine) //if there's a live ammo in the chamber or no magazine
 		return
 	else if (magazine.ammo_count())
 		chambered = magazine.get_round(1)
@@ -36,6 +36,9 @@
 		user << "<span class = 'notice'>You unload [num_unloaded] shell\s from [src].</span>"
 	else
 		user << "<span class='notice'>[src] is empty.</span>"
+
+/obj/item/weapon/gun/projectile/revolver/can_shoot()
+	return get_ammo(0,0)
 
 /obj/item/weapon/gun/projectile/revolver/get_ammo(var/countchambered = 0, var/countempties = 1)
 	var/boolets = 0 //mature var names for mature people

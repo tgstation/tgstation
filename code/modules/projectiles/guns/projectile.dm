@@ -40,6 +40,11 @@
 		chambered.loc = src
 	return
 
+/obj/item/weapon/gun/projectile/can_shoot()
+	if(!magazine || !magazine.ammo_count(0))
+		return 0
+	return 1
+
 /obj/item/weapon/gun/projectile/attackby(var/obj/item/A as obj, mob/user as mob)
 	..()
 	if (istype(A, /obj/item/ammo_box/magazine))

@@ -73,21 +73,34 @@
 			stored_ammo.Insert(1,b)
 		return b
 
-/obj/item/ammo_box/proc/give_round(var/obj/item/ammo_casing/r)
-	var/obj/item/ammo_casing/rb = r
-	if (rb)
-		if (stored_ammo.len < max_ammo && rb.caliber == caliber)
-			stored_ammo += rb
-			rb.loc = src
-			return 1
+/obj/item/ammo_box/proc/give_round(var/obj/item/ammo_casing/R, var/replace_spent = 0)
+	if(!R || (R.caliber != caliber))
+		return 0
+
+	if (stored_ammo.len < max_ammo)
+		stored_ammo += R
+		R.loc = src
+		return 1
+
+	//for accessibles magazines (e.g internal ones) when full, start replacing spent ammo
+	else if(replace_spent)
+		for(var/obj/item/ammo_casing/AC in stored_ammo)
+			if(!AC.BB)//found a spent ammo
+				stored_ammo -= AC
+				AC.loc = get_turf(src.loc)
+
+				stored_ammo += R
+				R.loc = src
+				return 1
+
 	return 0
 
-/obj/item/ammo_box/attackby(var/obj/item/A as obj, mob/user as mob, var/silent = 0)
+/obj/item/ammo_box/attackby(var/obj/item/A as obj, mob/user as mob, var/silent = 0, var/replace_spent = 0)
 	var/num_loaded = 0
 	if(istype(A, /obj/item/ammo_box))
 		var/obj/item/ammo_box/AM = A
 		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
-			var/did_load = give_round(AC)
+			var/did_load = give_round(AC, replace_spent)
 			if(did_load)
 				AM.stored_ammo -= AC
 				num_loaded++
@@ -95,17 +108,18 @@
 				break
 	if(istype(A, /obj/item/ammo_casing))
 		var/obj/item/ammo_casing/AC = A
-		if(give_round(AC))
+		if(give_round(AC, replace_spent))
 			user.drop_item()
 			AC.loc = src
 			num_loaded++
+
 	if(num_loaded)
 		if(!silent)
 			user << "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>"
 		A.update_icon()
 		update_icon()
-		return num_loaded
-	return 0
+
+	return num_loaded
 
 /obj/item/ammo_box/attack_self(mob/user as mob)
 	var/obj/item/ammo_casing/A = get_round()
