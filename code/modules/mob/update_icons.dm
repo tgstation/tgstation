@@ -66,3 +66,10 @@
 
 /mob/proc/update_inv_ears()
 	return
+
+//helper for the lazy
+/mob/proc/update_inv_active_hand()
+	if(hand)
+		update_inv_l_hand()
+	else
+		update_inv_r_hand()
