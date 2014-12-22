@@ -2,7 +2,7 @@
 	name = "flash"
 	desc = "A powerful and versatile flashbulb device, with applications ranging from disorienting attackers to acting as visual receptors in robot production."
 	icon_state = "flash"
-	item_state = "flashbang"	//looks exactly like a flash (and nothing like a flashbang)
+	item_state = "flashtool"
 	throwforce = 0
 	w_class = 1
 	throw_speed = 3
