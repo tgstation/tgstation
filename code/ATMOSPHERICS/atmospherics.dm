@@ -97,11 +97,7 @@ Pipelines + Other Objects -> Pipe network
 		var/turf/T = loc
 		stored.loc = T
 		transfer_fingerprints_to(stored)
-		if(istype(src, /obj/machinery/atmospherics/pipe))
-			for(var/obj/machinery/meter/meter in T)
-				if(meter.target == src)
-					new /obj/item/pipe_meter(T)
-					qdel(meter)
+
 	qdel(src)
 
 /obj/machinery/atmospherics/proc/nullifyPipenet(datum/pipeline/P)
