@@ -34,6 +34,7 @@
 	var/damage = 0
 	var/damage_archived = 0
 	var/warning_point = 100
+	var/audio_warning_point=500
 	var/emergency_point = 700
 	var/explosion_point = 1000
 
@@ -43,7 +44,9 @@
 
 	var/lastwarning = 0                        // Time in 1/10th of seconds since the last sent warning
 	var/lastaudiowarning = 0
+
 	var/power = 0
+	var/max_power = 2000 // Used for lighting scaling.
 
 	var/oxygen = 0				  // Moving this up here for easier debugging.
 
@@ -69,12 +72,16 @@
 	base_icon_state = "darkmatter_shard"
 
 	warning_point = 50
+	audio_warning_point=400
 	emergency_point = 500
 	explosion_point = 900
 
 	gasefficency = 0.125
 
 	explosion_power = 8 // WAS 3 - N3X
+
+	max_luminosity = 5
+	max_power=3000
 
 
 /obj/machinery/power/supermatter/New()
@@ -136,7 +143,7 @@
 					offset=0
 					audio_sounds += list('sound/AI/supermatter_delam.ogg')
 					//audio_offset = 100
-				play_alert=1
+				play_alert = (damage > audio_warning_point)
 			else
 				warning = "[short_name] hyperstructure returning to safe operating levels. Instability: [stability]%"
 			radio.autosay(warning, "Supermatter [short_name] Monitor")
@@ -243,6 +250,9 @@
 		l.apply_effect(rads, IRRADIATE)
 
 	power -= (power/500)**3
+
+	// Lighting based on power output.
+	SetLuminosity(Clamp(round(Clamp(power/max_power,0,1)*max_luminosity),0,max_luminosity))
 
 	return 1
 
