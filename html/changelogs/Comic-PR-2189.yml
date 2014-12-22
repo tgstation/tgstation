@@ -1,6 +1,0 @@
-author: Comic
-
-delete-after: True
-
-changes: 
-  - rscadd: You will no longer mine active gibtonite by walking into it with any drilling device. Borgs will deactivate it, however, if they are holding the mining scanner.

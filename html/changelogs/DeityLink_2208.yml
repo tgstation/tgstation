@@ -1,6 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - bugfix: Newly built Station Alert Computers now check for any ongoing alert. They would previously display no alert at all.
-  - tweak: Station Alert Computers built on the station's Z-level now only check for alerts on the main station.
-  - tweak: Those computers will also rename themselves upon being built to a name fitting their location (ex, Derelict Station Alert Computer, Research Outpost Alert Computer, Vox Trade Outpost Alert Computer, etc...)
