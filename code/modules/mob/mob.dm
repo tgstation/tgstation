@@ -78,55 +78,49 @@ var/next_mob_id = 0
 // Show a message to all mobs who sees the src mob and the src mob itself
 // This would be for visible actions by the src mob
 // message is the message output to anyone who can see e.g. "[src] does something!"
-// self_message (optional) is what the src mob sees  e.g. "You do something!"
-// blind_message (optional) is what blinded people will hear e.g. "You hear something!"
+// self_message (optional) is what the src mob sees e.g. "You do something!"
+// blind_message (optional) is what blind people will hear e.g. "You hear something!"
 
 /mob/visible_message(var/message, var/self_message, var/blind_message)
-	var/list/mob_viewers = list()
-	for(var/mob/M in player_list)
-		var/turf/T = get_turf(M)
-		if( (src in view(T)) || M == src)
-			mob_viewers |= M
-	for(var/mob/O in mob_viewers)
-		if(O.see_invisible < invisibility)
+	var/list/atom_viewers = list()
+	for(var/atom/movable/A in view(src))
+		atom_viewers |= recursive_hear_check(A)
+	atom_viewers |= src
+	for(var/mob/M in atom_viewers)
+		if(M.see_invisible < invisibility)
 			continue //can't view the invisible
-		if(O == src && stat != UNCONSCIOUS && !sleeping)
-			var/msg = message
-			if(self_message)
-				msg = self_message
-			O << msg
-		else
-			O.show_message( message, 1, blind_message, 2)
+		var/msg = message
+		if(self_message && M==src)
+			msg = self_message
+		M.show_message( msg, 1)
 	if(blind_message)
-		var/list/mob_hearers = list()
-		for(var/mob/MOB in get_player_mob_hearers_in_view(7, src))
-			if(MOB in mob_viewers)
-				continue //if we get the normal message, we don't get the blind_message.
-			mob_hearers |= MOB
-		for(var/mob/A in mob_hearers)
-			A.show_message( blind_message, 2)
+		var/list/atom_hearers = list()
+		for(var/atom/movable/O in get_hearers_in_view(7, src))
+			if(O in atom_viewers)
+				continue
+			atom_hearers |= O
+		for(var/mob/MOB in atom_hearers)
+			MOB.show_message(blind_message, 2)
 
 // Show a message to all mobs who sees this atom
 // Use for objects performing visible actions
 // message is output to anyone who can see, e.g. "The [src] does something!"
-// blind_message (optional) is what blinded people will hear e.g. "You hear something!"
+// blind_message (optional) is what blind people will hear e.g. "You hear something!"
 
 /atom/proc/visible_message(var/message, var/blind_message)
-	var/list/mob_viewers = list()
-	for(var/mob/M in player_list)
-		var/turf/T = get_turf(M)
-		if(src in view(T))
-			mob_viewers |= M
-	for(var/mob/O in mob_viewers)
-		O.show_message( message, 1, blind_message, 2)
+	var/list/atom_viewers = list()
+	for(var/atom/movable/A in view(src))
+		atom_viewers |= recursive_hear_check(A)
+	for(var/mob/M in atom_viewers)
+		M.show_message( message, 1)
 	if(blind_message)
-		var/list/mob_hearers = list()
-		for(var/mob/MOB in get_player_mob_hearers_in_view(7, src))
-			if(MOB in mob_viewers)
+		var/list/atom_hearers = list()
+		for(var/atom/movable/O in get_hearers_in_view(7, src))
+			if(O in atom_viewers)
 				continue
-			mob_hearers |= MOB
-		for(var/mob/A in mob_hearers)
-			A.show_message( blind_message, 2)
+			atom_hearers |= O
+		for(var/mob/MOB in atom_hearers)
+			MOB.show_message(blind_message, 2)
 
 // Show a message to all mobs in earshot of this one
 // This would be for audible actions by the src mob
@@ -140,7 +134,7 @@ var/next_mob_id = 0
 	if(hearing_distance)
 		range = hearing_distance
 	var/msg = message
-	for(var/mob/M in get_player_mob_hearers_in_view(range, src))
+	for(var/mob/M in get_hearers_in_view(range, src))
 		if(self_message && M==src)
 			msg = self_message
 		M.show_message( msg, 2, deaf_message, 1)
@@ -155,7 +149,7 @@ var/next_mob_id = 0
 	var/range = 7
 	if(hearing_distance)
 		range = hearing_distance
-	for(var/mob/M in get_player_mob_hearers_in_view(range, src))
+	for(var/mob/M in get_hearers_in_view(range, src))
 		M.show_message( message, 2, deaf_message, 1)
 
 /mob/proc/movement_delay()
