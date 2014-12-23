@@ -87,7 +87,7 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","fur
 	if (selected == "furry")
 		user << "<span class='danger'>You monster.</span>"
 	else
-		user << "<span class='info'>You have selected to make your next victim have a [selected] form.</span>
+		user << "<span class='info'>You have selected to make your next victim have a [selected] form.</span>"
 
 	switch(selected)
 		if("random")
