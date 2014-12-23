@@ -26,7 +26,7 @@
 	return "states, \"[text]\"";
 
 /mob/living/silicon/robot/mommi/proc/mommi_talk(var/message)
-	log_say("[key_name(src)] : [message]")
+	log_say("[key_name(src)] (@[src.x],[src.y],[src.z])(MoMMItalk): [message]")
 
 	message = trim(message)
 

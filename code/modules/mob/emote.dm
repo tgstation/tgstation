@@ -20,7 +20,7 @@
 
 
 	if (message)
-		log_emote("[name]/[key] : [message]")
+		log_emote("[name]/[key] (@[x],[y],[z]): [message]")
 
  //Hearing gasp and such every five seconds is not good emotes were not global for a reason.
  // Maybe some people are okay with that.
@@ -70,8 +70,6 @@
 
 
 	if(message)
-		log_emote("Ghost/[src.key] : [message]")
-
 		for(var/mob/M in player_list)
 			if(istype(M, /mob/new_player))
 				continue

@@ -77,14 +77,13 @@
 //For holopads only. Usable by AI.
 /mob/living/silicon/ai/proc/holopad_talk(var/message)
 
-	log_say("[key_name(src)] : [message]")
-
 	message = trim(message)
 
 	if (!message)
 		return
 
 	var/obj/machinery/hologram/holopad/T = src.current
+	log_say("[key_name(src)] (holopad@[T.x],[T.y],[T.z]): [message]")
 	if(istype(T) && T.hologram && T.master == src)//If there is a hologram and its master is the user.
 		var/message_a = say_quote(message)
 
@@ -110,7 +109,7 @@
 
 /mob/living/proc/robot_talk(var/message)
 
-	log_say("[key_name(src)] : [message]")
+	log_say("[key_name(src)] (@[src.x],[src.y],[src.z])(binary): [message]")
 
 	message = trim(message)
 

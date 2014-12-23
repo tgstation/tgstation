@@ -38,7 +38,7 @@ var/global/normal_ooc_colour = "#002eb8"
 			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
 			return
 
-	log_ooc("[mob.name]/[key] : [msg]")
+	log_ooc("[mob.name]/[key] (@[mob.x],[mob.y],[mob.z]): [msg]")
 
 	var/display_colour = normal_ooc_colour
 	if(holder && !holder.fakekey)
@@ -125,7 +125,7 @@ var/global/normal_ooc_colour = "#002eb8"
 			message_admins("[key_name_admin(src)] has attempted to advertise in LOOC: [msg]")
 			return
 
-	log_ooc("(LOCAL) [mob.name]/[key] : [msg]")
+	log_ooc("(LOCAL) [mob.name]/[key] (@[mob.x],[mob.y],[mob.z]): [msg]")
 	var/list/heard
 	var/mob/living/silicon/ai/AI
 	if(!isAI(src.mob))
