@@ -23,7 +23,7 @@
 		new slime.coretype(slime.loc)
 
 		if(slime.cores <= 0)
-			slime.icon_state = "[slime.colour] baby slime dead-nocore"
+			slime.icon_state = "[slime.color] baby slime dead-nocore"
 			return 1
 		else
 			return 0

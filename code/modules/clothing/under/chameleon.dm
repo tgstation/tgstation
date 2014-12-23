@@ -61,7 +61,7 @@
 	set src in usr
 
 	var/obj/item/clothing/under/A
-	A = input("Select Colour to change it to", "BOOYEA", A) in clothing_choices
+	A = input("Select Color to change it to", "BOOYEA", A) in clothing_choices
 	if(!A)
 		return
 

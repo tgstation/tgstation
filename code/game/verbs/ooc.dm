@@ -52,9 +52,9 @@
 					else
 						C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
 				else
-					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message'>[msg]</span></span></font>"
+					C << "<font color='[normal_ooc_color]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message'>[msg]</span></span></font>"
 			else
-				C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
+				C << "<font color='[normal_ooc_color]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
 
 /proc/toggle_ooc()
 	ooc_allowed = !( ooc_allowed )
@@ -67,13 +67,13 @@
 	if(!config.ooc_during_round && ooc_allowed != on)
 		toggle_ooc()
 
-var/global/normal_ooc_colour = "#002eb8"
+var/global/normal_ooc_color = "#002eb8"
 
 /client/proc/set_ooc(newColor as color)
 	set name = "Set Player OOC Color"
 	set desc = "Modifies player OOC Color"
 	set category = "Fun"
-	normal_ooc_colour = sanitize_ooccolor(newColor)
+	normal_ooc_color = sanitize_ooccolor(newColor)
 
 /client/verb/colorooc()
 	set name = "Set Your OOC Color"

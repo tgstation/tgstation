@@ -89,7 +89,7 @@ datum/preferences
 
 /datum/preferences/New(client/C)
 	blood_type = random_blood_type()
-	ooccolor = normal_ooc_colour
+	ooccolor = normal_ooc_color
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
@@ -599,7 +599,8 @@ datum/preferences
 							metadata = sanitize(copytext(new_metadata,1,MAX_MESSAGE_LEN))
 
 					if("hair")
-						var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as null|color
+						var/new_hair = input(user, "Choose your character's hair color
+						:", "Character Preference") as null|color
 						if(new_hair)
 							hair_color = sanitize_hexcolor(new_hair)
 
@@ -626,7 +627,7 @@ datum/preferences
 							hair_style = previous_list_item(hair_style, hair_styles_female_list)
 
 					if("facial")
-						var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference") as null|color
+						var/new_facial = input(user, "Choose your character's facial-hair color:", "Character Preference") as null|color
 						if(new_facial)
 							facial_hair_color = sanitize_hexcolor(new_facial)
 
@@ -670,7 +671,7 @@ datum/preferences
 							undershirt = new_undershirt
 
 					if("eyes")
-						var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference") as color|null
+						var/new_eyes = input(user, "Choose your character's eye color:", "Character Preference") as color|null
 						if(new_eyes)
 							eye_color = sanitize_hexcolor(new_eyes)
 
@@ -704,7 +705,7 @@ datum/preferences
 							skin_tone = new_s_tone
 
 					if("ooccolor")
-						var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference") as color|null
+						var/new_ooccolor = input(user, "Choose your OOC color:", "Game Preference") as color|null
 						if(new_ooccolor)
 							ooccolor = sanitize_ooccolor(new_ooccolor)
 

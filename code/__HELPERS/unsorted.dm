@@ -4,7 +4,7 @@
  * A large number of misc global procs.
  */
 
-//Inverts the colour of an HTML string
+//Inverts the color of an HTML string
 /proc/invertHTML(HTMLstring)
 
 	if (!( istext(HTMLstring) ))
@@ -1401,12 +1401,12 @@ var/list/WALLITEMS = list(
 	I've only tested this proc on APCs. Use it with care.*/
 	if(is_type_in_list(A, WALLITEMS))
 		var/stepdir = 0
-	
+
 		if(A.pixel_x > 10) stepdir |= EAST
 		if(A.pixel_x < -10) stepdir |= WEST
 		if(A.pixel_y > 10) stepdir |= NORTH
 		if(A.pixel_y < -10) stepdir |= SOUTH
-	
+
 		if(stepdir)
 			return get_step(A, stepdir)
 	return get_turf(A)

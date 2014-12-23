@@ -274,7 +274,7 @@
 	check_laws()
 
 	if(!picked)
-		pick_colour()
+		pick_color()
 
 /mob/living/simple_animal/drone/Die()
 	..()
@@ -396,10 +396,10 @@
 		if(cleared)
 			src << "--- [class] alarm in [A.name] has been cleared."
 
-/mob/living/simple_animal/drone/proc/pick_colour()
-	var/colour = input("Choose your colour!", "Colour", "grey") in list("grey", "blue", "red", "green", "pink", "orange")
-	icon_state = "drone_[colour]"
-	icon_living = "drone_[colour]"
+/mob/living/simple_animal/drone/proc/pick_color()
+	var/color = input("Choose your color!", "Color", "grey") in list("grey", "blue", "red", "green", "pink", "orange")
+	icon_state = "drone_[color]"
+	icon_living = "drone_[color]"
 	picked = TRUE
 
 /mob/living/simple_animal/drone/proc/apply_overlay(cache_index)

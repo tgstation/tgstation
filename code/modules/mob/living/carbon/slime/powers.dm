@@ -52,9 +52,9 @@
 	var/health_minimum = -70
 
 	if(is_adult)
-		icon_state = "[colour] adult slime eat"
+		icon_state = "[color] adult slime eat"
 	else
-		icon_state = "[colour] baby slime eat"
+		icon_state = "[color] baby slime eat"
 
 
 	if(istype(Victim, /mob/living/simple_animal))
@@ -113,13 +113,13 @@
 
 	if(stat == 2) //why the fuck are you doing icon updating here
 		if(!is_adult)
-			icon_state = "[colour] baby slime dead"
+			icon_state = "[color] baby slime dead"
 
 	else
 		if(is_adult)
-			icon_state = "[colour] adult slime"
+			icon_state = "[color] adult slime"
 		else
-			icon_state = "[colour] baby slime"
+			icon_state = "[color] baby slime"
 
 	canmove = 1
 	anchored = 0
@@ -179,7 +179,7 @@
 			maxHealth = 200
 			amount_grown = 0
 			regenerate_icons()
-			name = text("[colour] [is_adult ? "adult" : "baby"] slime ([number])")
+			name = text("[color] [is_adult ? "adult" : "baby"] slime ([number])")
 		else
 			src << "<i>I am not ready to evolve yet...</i>"
 	else
@@ -205,15 +205,15 @@
 			for(var/i=1,i<=4,i++)
 				var/mob/living/carbon/slime/M = new /mob/living/carbon/slime/(loc)
 				if(prob(mutation_chance))
-					M.colour = slime_mutation[rand(1,4)]
+					M.color = slime_mutation[rand(1,4)]
 				else
-					M.colour = colour
+					M.color = color
 				if(ckey)	M.nutrition = new_nutrition //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
 				M.powerlevel = new_powerlevel
 				if(i != 1) step_away(M,src)
 				M.Friends = Friends.Copy()
 				babies += M
-				feedback_add_details("slime_babies_born","slimebirth_[replacetext(M.colour," ","_")]")
+				feedback_add_details("slime_babies_born","slimebirth_[replacetext(M.color," ","_")]")
 
 			var/mob/living/carbon/slime/new_slime = pick(babies)
 			new_slime.a_intent = "harm"

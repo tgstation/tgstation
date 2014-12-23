@@ -94,7 +94,7 @@ close
 coach
 coil
 collect
-colour
+color
 comb
 command
 communicate

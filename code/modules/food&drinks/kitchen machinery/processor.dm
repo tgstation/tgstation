@@ -57,7 +57,7 @@
 		return
 	for(var/i = 1, i <= C, i++)
 		new S.coretype(loc)
-		feedback_add_details("slime_core_harvested","[replacetext(S.colour," ","_")]")
+		feedback_add_details("slime_core_harvested","[replacetext(S.color," ","_")]")
 	..()
 
 /datum/food_processor_process/mob/slime/input = /mob/living/carbon/slime

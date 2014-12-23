@@ -22,23 +22,23 @@
 	throw_range = 7
 	m_amt = 10
 	pressure_resistance = 2
-	var/colour = "black"	//what colour the ink is!
+	var/color = "black"	//what color the ink is!
 
 
 /obj/item/weapon/pen/blue
 	desc = "It's a normal blue ink pen."
 	icon_state = "pen_blue"
-	colour = "blue"
+	color = "blue"
 
 /obj/item/weapon/pen/red
 	desc = "It's a normal red ink pen."
 	icon_state = "pen_red"
-	colour = "red"
+	color = "red"
 
 /obj/item/weapon/pen/invisible
 	desc = "It's an invisble pen marker."
 	icon_state = "pen"
-	colour = "white"
+	color = "white"
 
 
 /obj/item/weapon/pen/attack(mob/living/M, mob/user)
