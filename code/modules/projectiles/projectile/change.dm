@@ -44,6 +44,10 @@
 
 		var/mob/living/new_mob
 
+		// Random chance of fucking up
+		if(changetype!=null && prob(10))
+			changetype = null
+
 		var/randomize = changetype==null?pick(available_staff_transforms):changetype
 
 		switch(randomize)
