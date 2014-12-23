@@ -1,7 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - imageadd: Fixed an idiocy that caused many potted plants to show up invisible. You will now find <a href="https://cloud.githubusercontent.com/assets/7573912/5501280/7bbc70f0-8758-11e4-8f32-aa7a684c088d.png">those plants</a> aboard the station.
-  - bugfix: Security Cameras now show up facing the correct direction in pictures.
-  - bugfix: Deep Fried food and other items that had their color altered will show as such on pictures as well now.
-  - bugfix: Added a gigantic list of exception for turfs in get flat icon that allows to <a href="https://cloud.githubusercontent.com/assets/7573912/5501281/7d33c4ba-8758-11e4-83f8-c8e5b8d0970e.png">have turfs face the right way in pictures</a>.

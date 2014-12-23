@@ -10,6 +10,7 @@
 	flags = ON_BORDER
 	opacity = 0
 	var/obj/item/weapon/circuitboard/airlock/electronics = null
+	var/dismantled = 0 // To avoid playing the glass shatter sound on Destroy()
 	explosion_resistance = 5
 	air_properties_vary_with_direction = 1
 	ghost_read=0
@@ -26,7 +27,8 @@
 
 /obj/machinery/door/window/Destroy()
 	density = 0
-	playsound(src, "shatter", 70, 1)
+	if (!dismantled)
+		playsound(src, "shatter", 70, 1)
 	..()
 
 /obj/machinery/door/window/Bumped(atom/movable/AM as mob|obj)
@@ -135,7 +137,7 @@
 /obj/machinery/door/window/hitby(AM as mob|obj)
 
 	..()
-	visible_message("\red <B>The glass door was hit by [AM].</B>", 1)
+	visible_message("<span class='warning'>The glass door was hit by [AM].</span>", 1)
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 40
@@ -157,7 +159,7 @@
 		user.changeNext_move(8)
 		src.health = max(0, src.health - 25)
 		playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 75, 1)
-		visible_message("\red <B>[user] smashes against the [src.name].</B>", 1)
+		visible_message("<span class='warning'>[user] smashes against the [src.name].</span>", 1)
 		if (src.health <= 0)
 			getFromPool(/obj/item/weapon/shard, loc)
 			var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
@@ -172,7 +174,18 @@
 	return src.attackby(user, user)
 
 /obj/machinery/door/window/attackby(obj/item/weapon/I as obj, mob/user as mob)
-	//If it's in the process of opening/closing, ignore the click
+	// Make emagged/open doors able to be deconstructed
+	if (!src.density && src.operating != 1 && istype(I, /obj/item/weapon/crowbar))
+		user.visible_message("[user] removes the electronics from the windoor assembly.", "You start to remove the electronics from the windoor assembly.")
+		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 100, 1)
+		if (do_after(user, 40) && src && !src.density && src.operating != 1)
+			user << "<span class='notice'>You removed the windoor electronics!</span>"
+			make_assembly(user)
+			src.dismantled = 1 // Don't play the glass shatter sound
+			del(src)
+		return
+
+	//If it's in the process of opening/closing or emagged, ignore the click
 	if (src.operating)
 		return
 
@@ -219,17 +232,64 @@
 
 /obj/machinery/door/window/proc/hackOpen(obj/item/I, mob/user)
 	src.operating = -1
+
+	if (src.electronics)
+		src.electronics.icon_state = "door_electronics_smoked"
+
 	if(istype(I, /obj/item/weapon/melee/energy/blade))
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, src.loc)
 		spark_system.start()
 		playsound(get_turf(src), "sparks", 50, 1)
 		playsound(get_turf(src), 'sound/weapons/blade1.ogg', 50, 1)
-		visible_message("\blue The glass door was sliced open by [user]!")
+		visible_message("<span class='warning'>The glass door was sliced open by [user]!</span>")
 	flick("[src.base_state]spark", src)
 	sleep(6)
 	open()
 	return 1
+
+/**
+ * Returns whether the door opens to the left. This is counter-clockwise
+ * w.r.t. the tile it is on.
+ */
+/obj/machinery/door/window/proc/is_left_opening()
+	return src.base_state == "left" || src.base_state == "leftsecure"
+
+/**
+ * Deconstructs a windoor properly. You probably want to delete
+ * the windoor after calling this.
+ * @return The new /obj/structure/windoor_assembly created.
+ */
+/obj/machinery/door/window/proc/make_assembly(mob/user as mob)
+	// Windoor assembly
+	var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(src.loc)
+
+	WA.name = "Near finished Windoor Assembly"
+	WA.dir = src.dir
+	WA.anchored = 1
+	WA.facing = (is_left_opening() ? "l" : "r")
+	WA.secure = ""
+	WA.state = "02"
+	WA.update_icon()
+
+	WA.fingerprints += src.fingerprints
+	WA.fingerprintshidden += src.fingerprints
+	WA.fingerprintslast = user.ckey
+
+	// Pop out electronics
+	var/obj/item/weapon/circuitboard/airlock/AE = (src.electronics ? src.electronics : new /obj/item/weapon/circuitboard/airlock(src.loc))
+	if (src.electronics)
+		src.electronics = null
+		AE.loc = src.loc
+	else
+		// Straight from /obj/machinery/door/airlock/attackby()
+		if (src.req_access && src.req_access.len > 0)
+			AE.conf_access = src.req_access
+		else if (src.req_one_access && src.req_one_access.len > 0)
+			AE.conf_access = src.req_one_access
+			AE.one_access = 1
+
+	return WA
 
 /obj/machinery/door/window/brigdoor
 	name = "Secure Door"
@@ -239,3 +299,9 @@
 	req_access = list(access_security)
 	var/id_tag = null
 	health = 300.0 //Stronger doors for prison (regular window door health is 200)
+
+/obj/machinery/door/window/brigdoor/make_assembly(mob/user as mob)
+	var/obj/structure/windoor_assembly/WA = ..(user)
+	WA.secure = "secure_"
+	WA.update_icon()
+	return WA

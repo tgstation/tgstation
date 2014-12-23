@@ -56,7 +56,7 @@
 	name = "display case"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "glassbox20"
-	desc = "A display case for prized possessions. It taunts you to kick it."
+	desc = "A display case for prized possessions. It tempts you to kick it."
 	density = 1
 	anchored = 1
 	unacidable = 1//Dissolving the case would also delete the gun.
@@ -89,9 +89,9 @@
 
 /obj/structure/displaycase/examine()
 	..()
-	usr << "\blue Peering through the glass, you see that it contains:"
+	usr << "<span class='notice'>Peering through the glass, you see that it contains:</span>"
 	if(occupant)
-		usr << "\icon[occupant] \blue \A [occupant]"
+		usr << "\icon[occupant] <span class='notice'>\A [occupant]</span>"
 	else:
 		usr << "Nothing."
 
@@ -170,19 +170,18 @@
 
 
 /obj/structure/displaycase/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/card))
+	if(istype(W, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I=W
 		if(!check_access(I))
-			user << "\red Access denied."
+			user << "<span class='rose'>Access denied.</span>"
 			return
 		locked = !locked
 		if(!locked)
-			user << "\icon[src] \blue \The [src] clicks as locks release, and it slowly opens for you."
+			user << "\icon[src] <span class='notice'>\The [src] clicks as locks release, and it slowly opens for you.</span>"
 		else
-			user << "\icon[src] \blue You close \the [src] and swipe your card, locking it."
+			user << "\icon[src] <span class='notice'>You close \the [src] and swipe your card, locking it.</span>"
 		update_icon()
-		return
-	if(istype(W,/obj/item/weapon/crowbar) && (!locked || destroyed))
+	else if(istype(W, /obj/item/weapon/crowbar) && (!locked || destroyed))
 		user.visible_message("[user.name] pries \the [src] apart.", \
 			"You pry \the [src] apart.", \
 			"You hear something pop.")
@@ -208,17 +207,16 @@
 			circuit=null
 			new /obj/machinery/constructable_frame/machine_frame(T)
 		del(src)
-	if(user.a_intent == "hurt")
+	else if(user.a_intent == "hurt")
 		user.changeNext_move(10)
 		src.health -= W.force
 		src.healthcheck()
 		..()
 	else
 		if(locked)
-			user << "\red It's locked, you can't put anything into it."
-			return
-		if(!occupant)
-			user << "\blue You insert \the [W] into \the [src], and it floats as the hoverfield activates."
+			user << "<span class='rose'>It's locked, you can't put anything into it.</span>"
+		else if(!occupant)
+			user << "<span class='notice'>You insert \the [W] into \the [src], and it floats as the hoverfield activates.</span>"
 			user.drop_item()
 			W.loc=src
 			occupant=W
@@ -234,35 +232,35 @@
 	if (destroyed)
 		if(occupant)
 			dump()
-			user << "\red You smash your fist into the delicate electronics at the bottom of the case, and deactivate the hover field permanently."
+			user << "<span class='danger'>You smash your fist into the delicate electronics at the bottom of the case, and deactivate the hoverfield permanently.</span>"
 			src.add_fingerprint(user)
 			update_icon()
 	else
 		if(user.a_intent == "hurt")
 			user.changeNext_move(10)
-			user.visible_message("\red [user.name] kicks \the [src]!", \
-				"\red You kick \the [src]!", \
+			user.visible_message("<span class='danger'>[user.name] kicks \the [src]!</span>", \
+				"<span class='danger'>You kick \the [src]!</span>", \
 				"You hear glass crack.")
 			src.health -= 2
 			healthcheck()
 		else if(!locked)
 			if(ishuman(user))
 				if(!ue)
-					user << "\blue Your press your thumb against the fingerprint scanner, registering your identity with the case."
+					user << "<span class='notice'>You press your thumb against the fingerprint scanner, registering your identity with the case.</span>"
 					ue = getPrint(user)
 					return
 				if(ue!=getPrint(user))
-					user << "\red Access denied."
+					user << "<span class='rose'>Access denied.</span>"
 					return
 
-				user << "\blue Your press your thumb against the fingerprint scanner, and deactivate the hover field built into the case."
+				user << "<span class='notice'>You press your thumb against the fingerprint scanner, and deactivate the hoverfield built into the case.</span>"
 				if(occupant)
 					dump()
 					update_icon()
 				else
-					src << "\icon[src] \red \The [src] is empty!"
+					src << "\icon[src] <span class='rose'>\The [src] is empty!</span>"
 		else
-			user.visible_message("[user.name] gently runs his hands over \the [src] in appreciation of its contents.", \
+			user.visible_message("[user.name] gently runs their hands over \the [src] in appreciation of its contents.", \
 				"You gently run your hands over \the [src] in appreciation of its contents.", \
 				"You hear someone streaking glass with their greasy hands.")
 

@@ -151,6 +151,8 @@
 		var/mob/living/carbon/human/H = AM
 		if(istype(H.get_active_hand(),/obj/item/weapon/pickaxe))
 			attackby(H.get_active_hand(), H)
+		else if(istype(H.get_inactive_hand(),/obj/item/weapon/pickaxe))
+			attackby(H.get_inactive_hand(), H)
 
 	else if(istype(AM,/mob/living/silicon/robot))
 		var/mob/living/silicon/robot/R = AM
@@ -811,7 +813,7 @@
 	var/bump_reject = 0
 	if(istype(AM,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = AM
-		if(istype(H.get_active_hand(),/obj/item/weapon/pickaxe) && src.stage == 1)
+		if((istype(H.get_active_hand(),/obj/item/weapon/pickaxe) || istype(H.get_inactive_hand(),/obj/item/weapon/pickaxe)) && src.stage == 1)
 			H << "<span class='warning'>You don't think that's a good idea...</span>"
 			bump_reject = 1
 

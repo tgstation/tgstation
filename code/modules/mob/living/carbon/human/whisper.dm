@@ -27,7 +27,7 @@
 	if (src.stat == 2)
 		return src.say_dead(message)
 
-	if (src.stat && said_last_words) // TIME TO WHISPER WHILE IN CRIT
+	if (src.stat && (said_last_words || !src.isInCrit())) // TIME TO WHISPER WHILE IN CRIT
 		return
 
 	var/alt_name = ""

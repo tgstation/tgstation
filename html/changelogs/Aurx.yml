@@ -1,5 +1,2 @@
 author: Aurx
-changes:
-  - bugfix: Bypassed a runtime error that was breaking dissolving pills
-  - bugfix: Dissolving a pill larger than the remaining space in the target no longer wastes the extra reagents
-  - tweak: You no longer need something in a beaker to dissolve a pill into it
+changes: []

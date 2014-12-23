@@ -318,10 +318,18 @@ var/list/department_radio_keys = list(
 				log_say("[key_name(src)] ([mind.changeling.changelingID])(@[src.x],[src.y],[src.z]): [message]")
 				for(var/mob/Changeling in mob_list)
 					if(istype(Changeling, /mob/living/silicon)) continue //WHY IS THIS NEEDED?
-					if((Changeling.mind && Changeling.mind.changeling) || istype(Changeling, /mob/dead/observer))
-						Changeling << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
-					else if(istype(Changeling,/mob/dead/observer)  && (Changeling.client && Changeling.client.prefs.toggles & CHAT_GHOSTEARS))
-						Changeling << "<i><font color=#800080><b>[mind.changeling.changelingID] (:</b> <a href='byond://?src=\ref[Changeling];follow2=\ref[Changeling];follow=\ref[src]'>(Follow)</a> [message]</font></i>"
+					if(!Changeling.client) continue
+					var/controls = ""
+					if(isobserver(Changeling))
+						controls = " (<a href='byond://?src=\ref[Changeling];follow2=\ref[Changeling];follow=\ref[src]'>Follow</a>"
+						if(Changeling.client.holder)
+							controls+= " | <A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>"
+							controls += " - AKA [src]"
+						controls += ")"
+					if( (Changeling.mind && Changeling.mind.changeling) \
+					  || isobserver(Changeling))
+						// TODO: needs CSS
+						Changeling << "<i><font color=#800080><b>[mind.changeling.changelingID]</b>[controls]: [message]</font></i>"
 				return
 ////SPECIAL HEADSETS START
 		else

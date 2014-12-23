@@ -25,7 +25,7 @@
 	environment_smash = 2
 	minimum_distance = 3
 	retreat_distance = 2
-	var/datum/effect/effect/system/ion_trail_follow/ion_trail
+	var/datum/effect/effect/system/trail/ion_trail
 	var/hostile_time = 0
 
 	//the drone randomly switches between hostile/retaliation only states because it's malfunctioning
