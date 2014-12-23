@@ -1,5 +1,0 @@
-author: N3X15
-delete-after: true
-changes:
-- bugfix: "Supermatter glow now scales according to power output."
-- tweak: "Supermatter audio alerts do not start playing until damage reaches dangerous levels."
