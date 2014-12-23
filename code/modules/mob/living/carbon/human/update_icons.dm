@@ -10,7 +10,7 @@ As of the time of writing there are 20 layers within this list. Please try to ke
 
 Most of the time we only wish to update one overlay:
 	e.g. - we dropped the fireaxe out of our left hand and need to remove its icon from our mob
-	e.g.2 - our hair colour has changed, so we need to update our hair icons on our mob
+	e.g.2 - our hair color has changed, so we need to update our hair icons on our mob
 In these cases, instead of updating every overlay using the old behaviour (regenerate_icons), we instead call
 the appropriate update_X proc.
 	e.g. - update_l_hand()

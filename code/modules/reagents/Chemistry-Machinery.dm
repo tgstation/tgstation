@@ -833,7 +833,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				/obj/item/weapon/grown/nettle/death = list("pacid" = 0),
 				/obj/item/weapon/grown/novaflower = list("capsaicin" = 0, "condensedcapsaicin" = 0),
 
-				//Crayons (for overriding colours)
+				//Crayons (for overriding colors)
 				/obj/item/toy/crayon/red = list("redcrayonpowder" = 10),
 				/obj/item/toy/crayon/orange = list("orangecrayonpowder" = 10),
 				/obj/item/toy/crayon/yellow = list("yellowcrayonpowder" = 10),

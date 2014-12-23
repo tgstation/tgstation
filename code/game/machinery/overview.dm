@@ -39,45 +39,45 @@
 
 			var/turf/T = locate(wx, wy, z)
 
-			var/colour
-			var/colour2
+			var/color
+			var/color2
 
 
 
 			if(!T)
-				colour = rgb(0,0,0)
+				color = rgb(0,0,0)
 
 			else
 				var/sense = 1
 				switch("[T.type]")
 					if("/turf/space")
-						colour = rgb(10,10,10)
+						color = rgb(10,10,10)
 						sense = 0
 
 					if("/turf/simulated/floor")
-						colour = rgb(150,150,150)
+						color = rgb(150,150,150)
 						var/turf/simulated/floor/TF = T
 						if(TF.burnt == 1)
 							sense = 0
-							colour = rgb(130,130,130)
+							color = rgb(130,130,130)
 
 					if("/turf/simulated/floor/engine")
-						colour = rgb(128,128,128)
+						color = rgb(128,128,128)
 
 					if("/turf/simulated/wall")
-						colour = rgb(96,96,96)
+						color = rgb(96,96,96)
 
 					if("/turf/simulated/wall/r_wall")
-						colour = rgb(128,96,96)
+						color = rgb(128,96,96)
 
 					if("/turf/unsimulated/floor")
-						colour  = rgb(240,240,240)
+						color  = rgb(240,240,240)
 
 					if("/turf/unsimulated/wall", "/turf/unsimulated/wall/other")
-						colour  = rgb(140,140,140)
+						color  = rgb(140,140,140)
 
 					else
-						colour = rgb(0,40,0)
+						color = rgb(0,40,0)
 
 
 
@@ -88,41 +88,41 @@
 
 						if(istype(AM, /obj/machinery/door) && !istype(AM, /obj/machinery/door/window))
 							if(AM.density)
-								colour = rgb(96,96,192)
-								colour2 = colour
+								color = rgb(96,96,192)
+								color2 = color
 							else
-								colour = rgb(128,192,128)
+								color = rgb(128,192,128)
 
 						if(istype(AM, /obj/machinery/alarm))
-							colour = rgb(0,255,0)
-							colour2 = colour
+							color = rgb(0,255,0)
+							color2 = color
 							if(AM.icon_state=="alarm:1")
-								colour = rgb(255,255,0)
-								colour2 = rgb(255,128,0)
+								color = rgb(255,255,0)
+								color2 = rgb(255,128,0)
 
 						if(istype(AM, /mob))
 							if(AM:client)
-								colour = rgb(255,0,0)
+								color = rgb(255,0,0)
 							else
-								colour = rgb(255,128,128)
+								color = rgb(255,128,128)
 
-							colour2 = rgb(192,0,0)
+							color2 = rgb(192,0,0)
 
 				var/area/A = T.loc
 
 				if(A.fire)
 
-					var/red = getr(colour)
-					var/green = getg(colour)
-					var/blue = getb(colour)
+					var/red = getr(color)
+					var/green = getg(color)
+					var/blue = getb(color)
 
 
 					green = min(255, green+40)
 					blue = min(255, blue+40)
 
-					colour = rgb(red, green, blue)
+					color = rgb(red, green, blue)
 
-			if(!colour2 && !T.density)
+			if(!color2 && !T.density)
 				var/datum/gas_mixture/environment = T.return_air()
 				var/turf_total = environment.total_moles()
 				//var/turf_total = T.co2 + T.oxygen + T.poison + T.sl_gas + T.n2
@@ -132,13 +132,13 @@
 
 
 				if(t1<=100)
-					colour2 = rgb(t1*2.55,0,0)
+					color2 = rgb(t1*2.55,0,0)
 				else
 					t1 = min(100, t1-100)
-					colour2 = rgb(255, t1*2.55, t1*2.55)
+					color2 = rgb(255, t1*2.55, t1*2.55)
 
-			if(!colour2)
-				colour2 = colour
+			if(!color2)
+				color2 = color
 
 			var/ix = round((wx*2+xoff)/32)
 			var/iy = round((wy*2+yoff)/32)
@@ -153,9 +153,9 @@
 
 			//world << "icon: \icon[I]"
 
-			I.DrawBox(colour, rx, ry, rx+1, ry+1)
+			I.DrawBox(color, rx, ry, rx+1, ry+1)
 
-			I2.DrawBox(colour2, rx, ry, rx+1, ry+1)
+			I2.DrawBox(color2, rx, ry, rx+1, ry+1)
 
 
 	user.clearmap()
@@ -196,16 +196,16 @@
 
 			var/turf/T = locate(wx, wy, z)
 
-			var/colour
+			var/color
 
 			if(!T)
-				colour = rgb(0,0,0)
+				color = rgb(0,0,0)
 
 			else
 				var/sense = 1
 				switch("[T.type]")
 					if("/turf/space")
-						colour = rgb(10,10,10)
+						color = rgb(10,10,10)
 						sense = 0
 
 					if("/turf/simulated/floor", "/turf/simulated/floor/engine")
@@ -214,25 +214,25 @@
 						var/t1 = turf_total / MOLES_CELLSTANDARD * 175
 
 						if(t1<=100)
-							colour = rgb(0,0,t1*2.55)
+							color = rgb(0,0,t1*2.55)
 						else
 							t1 = min(100, t1-100)
-							colour = rgb( t1*2.55, t1*2.55, 255)
+							color = rgb( t1*2.55, t1*2.55, 255)
 
 					if("/turf/simulated/wall")
-						colour = rgb(96,96,96)
+						color = rgb(96,96,96)
 
 					if("/turf/simulated/wall/r_wall")
-						colour = rgb(128,96,96)
+						color = rgb(128,96,96)
 
 					if("/turf/unsimulated/floor")
-						colour  = rgb(240,240,240)
+						color  = rgb(240,240,240)
 
 					if("/turf/unsimulated/wall", "/turf/unsimulated/wall/other")
-						colour  = rgb(140,140,140)
+						color  = rgb(140,140,140)
 
 					else
-						colour = rgb(0,40,0)
+						color = rgb(0,40,0)
 
 
 				if(sense)
@@ -241,38 +241,38 @@
 
 						if(istype(AM, /obj/machinery/door) && !istype(AM, /obj/machinery/door/window))
 							if(AM.density)
-								colour = rgb(0,96,192)
+								color = rgb(0,96,192)
 							else
-								colour = rgb(96,192,128)
+								color = rgb(96,192,128)
 
 						if(istype(AM, /obj/machinery/alarm))
-							colour = rgb(0,255,0)
+							color = rgb(0,255,0)
 
 							if(AM.icon_state=="alarm:1")
-								colour = rgb(255,255,0)
+								color = rgb(255,255,0)
 
 						if(istype(AM, /mob))
 							if(AM:client)
-								colour = rgb(255,0,0)
+								color = rgb(255,0,0)
 							else
-								colour = rgb(255,128,128)
+								color = rgb(255,128,128)
 
 						//if(istype(AM, /obj/effect/blob))
-						//	colour = rgb(255,0,255)
+						//	color = rgb(255,0,255)
 
 				var/area/A = T.loc
 
 				if(A.fire)
 
-					var/red = getr(colour)
-					var/green = getg(colour)
-					var/blue = getb(colour)
+					var/red = getr(color)
+					var/green = getg(color)
+					var/blue = getb(color)
 
 
 					green = min(255, green+40)
 					blue = min(255, blue+40)
 
-					colour = rgb(red, green, blue)
+					color = rgb(red, green, blue)
 
 			var/ix = round((wx*2+xoff)/32)
 			var/iy = round((wy*2+yoff)/32)
@@ -286,7 +286,7 @@
 
 			//world << "icon: \icon[I]"
 
-			I.DrawBox(colour, rx, ry, rx, ry)
+			I.DrawBox(color, rx, ry, rx, ry)
 
 
 	user.clearmap()

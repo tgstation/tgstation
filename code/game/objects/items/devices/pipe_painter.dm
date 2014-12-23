@@ -62,7 +62,7 @@
 
 
 /obj/item/device/pipe_painter/attack_self(mob/user as mob)
-	mode = input("Which colour do you want to use?","Pipe painter") in modes
+	mode = input("Which color do you want to use?","Pipe painter") in modes
 
 /obj/item/device/pipe_painter/examine()
 	..()

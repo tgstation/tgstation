@@ -31,6 +31,6 @@
 		explosion(get_turf(newAnomaly), -1,0,3, flame_range = 4)
 
 		var/mob/living/carbon/slime/S = new/mob/living/carbon/slime(get_turf(newAnomaly))
-		S.colour = pick("red", "orange")
+		S.color = pick("red", "orange")
 
 		qdel(newAnomaly)
