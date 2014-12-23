@@ -1226,11 +1226,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //32 - 16; 16/16 = 1, DX = 1
 //32 - 16; 15/16 = 0.9375 = 0 when round()'d, DX = 0
 
-//NOTE: this proc is held back by the speed of icon() objects
-//They're shit, so this is by extension slightly slower than
-//a specific proc for each use case
-//Now, It's Not slow, far from it, but if you stick it in a loop
-//that calls it many times, this may be the first place to check.
+//NOTE: if your atom has non-standard bounds then this proc
+//will handle it, but it'll be a bit slower.
 
 /proc/get_turf_pixel(atom/movable/AM)
 	if(AM)
@@ -1239,20 +1236,26 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		var/final_x = 0
 		var/final_y = 0
 
-		//Creates an icon so that objects with a different size
-		//to world.icon_size can still be located fine
-		var/icon/AMicon = icon(AM.icon, AM.icon_state)
+		//Assume standards
+		var/i_width = world.icon_size
+		var/i_height = world.icon_size
 
-		var/i_width = AMicon.Width()
-		var/i_height = AMicon.Height()
-		qdel(AMicon)
+		//Handle snowflake objects only if necessary
+		if(AM.bound_height != world.icon_size || AM.bound_width != world.icon_size)
+			var/icon/AMicon = icon(AM.icon, AM.icon_state)
+			i_width = AMicon.Width()
+			i_height = AMicon.Height()
+			qdel(AMicon)
 
+		//Find a value to divide pixel_ by
 		var/n_width = (world.icon_size - (i_width/2))
 		var/n_height = (world.icon_size - (i_height/2))
 
+		//DY and DX
 		rough_x = round(AM.pixel_x/n_width)
 		rough_y = round(AM.pixel_y/n_height)
 
+		//Find coordinates
 		final_x = AM.x + rough_x
 		final_y = AM.y + rough_y
 
