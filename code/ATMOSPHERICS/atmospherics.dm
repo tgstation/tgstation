@@ -124,7 +124,7 @@ Pipelines + Other Objects -> Pipe network
 
 	return img
 
-/obj/machinery/atmospherics/proc/construction(D, P)
+/obj/machinery/atmospherics/construction(D, P)
 	dir = D
 	initialize_directions = P
 	var/turf/T = loc
