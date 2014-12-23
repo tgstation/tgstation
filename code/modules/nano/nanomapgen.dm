@@ -38,6 +38,13 @@
 
 /mob/proc/nanomapgen_DumpTile(var/startX = 1, var/startY = 1, var/currentZ = 1, var/endX = -1, var/endY = -1, var/allz = 0)
 
+	if(currentZ == 2)
+		if(allz)
+			if(currentZ < world.maxz)
+				var/newz = currentZ+1
+				.(1,1,newz,-1,-1,1)
+		else
+			return 0
 	if (endX < 0 || endX > world.maxx)
 		endX = world.maxx
 
