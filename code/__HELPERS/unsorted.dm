@@ -1226,6 +1226,12 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //32 - 16; 16/16 = 1, DX = 1
 //32 - 16; 15/16 = 0.9375 = 0 when round()'d, DX = 0
 
+//NOTE: this proc is held back by the speed of icon() objects
+//They're shit, so this is by extension slightly slower than
+//a specific proc for each use case
+//Now, It's Not slow, far from it, but if you stick it in a loop
+//that calls it many times, this may be the first place to check.
+
 /proc/get_turf_pixel(atom/movable/AM)
 	if(AM)
 		var/rough_x = 0
