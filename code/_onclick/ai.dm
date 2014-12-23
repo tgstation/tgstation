@@ -176,3 +176,4 @@
 
 /mob/living/silicon/ai/TurfAdjacent(var/turf/T)
 	return (cameranet && cameranet.checkTurfVis(T))
+
