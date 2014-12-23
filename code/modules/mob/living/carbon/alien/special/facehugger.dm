@@ -228,7 +228,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	return
 
 /proc/CanHug(var/mob/M)
-	if(!M)
+	if(!istype(M))
 		return 0
 	if(M.stat == DEAD)
 		return 0

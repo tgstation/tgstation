@@ -67,11 +67,11 @@ for reference:
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (istype(W, /obj/item/stack/sheet/mineral/wood))
 		if (src.health < src.maxhealth)
-			visible_message("<span class='danger'>[user] begins to repair the [src]!</span>")
+			visible_message("<span class='danger'>[user] begins to repair \the [src]!</span>")
 			if(do_after(user,20))
 				src.health = src.maxhealth
 				W:use(1)
-				visible_message("<span class='danger'>[user] repairs the [src]!</span>")
+				visible_message("<span class='danger'>[user] repairs \the [src]!</span>")
 				return
 		else
 			return
@@ -168,35 +168,17 @@ for reference:
 				visible_message("<span class='danger'>BZZzZZzZZzZT</span>")
 				return
 		return
-	else if (istype(W, /obj/item/weapon/card/emag))
-		if (src.emagged == 0)
-			src.emagged = 1
-			src.req_access = null
-			user << "You break the ID authentication lock on the [src]."
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-			s.set_up(2, 1, src)
-			s.start()
-			visible_message("<span class='danger'>BZZzZZzZZzZT</span>")
-			return
-		else if (src.emagged == 1)
-			src.emagged = 2
-			user << "You short out the anchoring mechanism on the [src]."
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-			s.set_up(2, 1, src)
-			s.start()
-			visible_message("<span class='danger'>BZZzZZzZZzZT</span>")
-			return
 	else if (istype(W, /obj/item/weapon/wrench))
 		if (src.health < src.maxhealth)
 			src.health = src.maxhealth
 			src.emagged = 0
 			src.req_access = list(access_security)
-			visible_message("<span class='danger'>[user] repairs the [src]!</span>")
+			visible_message("<span class='danger'>[user] repairs \the [src]!</span>")
 			return
 		else if (src.emagged > 0)
 			src.emagged = 0
 			src.req_access = list(access_security)
-			visible_message("<span class='danger'>[user] repairs the [src]!</span>")
+			visible_message("<span class='danger'>[user] repairs \the [src]!</span>")
 			return
 		return
 	else
@@ -210,7 +192,26 @@ for reference:
 			src.explode()
 		..()
 
-/obj/machinery/deployable/barrier/ex_act(severity, target)
+/obj/machinery/deployable/emag_act(user as mob)
+	if (src.emagged == 0)
+		src.emagged = 1
+		src.req_access = null
+		user << "You break the ID authentication lock on \the [src]."
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		s.set_up(2, 1, src)
+		s.start()
+		visible_message("<span class='danger'>BZZzZZzZZzZT</span>")
+		return
+	else if (src.emagged == 1)
+		src.emagged = 2
+		user << "You short out the anchoring mechanism on \the [src]."
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		s.set_up(2, 1, src)
+		s.start()
+		visible_message("<span class='danger'>BZZzZZzZZzZT</span>")
+		return
+
+/obj/machinery/deployable/barrier/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			src.explode()

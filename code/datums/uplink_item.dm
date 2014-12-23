@@ -99,30 +99,38 @@ var/list/uplink_items = list()
 /datum/uplink_item/dangerous
 	category = "Conspicuous and Dangerous Weapons"
 
+/datum/uplink_item/dangerous/pistol
+	name = "Syndicate Pistol"
+	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible with suppressors."
+	item = /obj/item/weapon/gun/projectile/automatic/pistol
+	cost = 9
+
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
-	desc = "The syndicate revolver is a traditional handgun that fires .357 Magnum cartridges and has 7 chambers."
+	desc = "A brutally simple syndicate revolver that fires .357 Magnum cartridges and has 7 chambers."
 	item = /obj/item/weapon/gun/projectile/revolver
 	cost = 13
 	surplus = 50
 
-/datum/uplink_item/dangerous/pistol
-	name = "Stechkin Pistol"
-	desc = "A small, easily concealable handgun that uses 10mm magazines and is compatible with suppressors."
-	item = /obj/item/weapon/gun/projectile/automatic/pistol
-	cost = 9
-
 /datum/uplink_item/dangerous/smg
 	name = "C-20r Submachine Gun"
-	desc = "A fully-loaded Scarborough Arms-developed submachine gun that fires 12mm automatic rounds with a 20-round magazine."
+	desc = "A fully-loaded Scarborough Arms bullpup submachine gun that fires .45 rounds with a 20-round magazine and is compatible with suppressors."
 	item = /obj/item/weapon/gun/projectile/automatic/c20r
 	cost = 14
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 40
 
+/datum/uplink_item/dangerous/car
+	name = "C-90gl Compact Assault Rifle"
+	desc = "A fully-loaded Zashchita Industriya toploading bullpup assault rifle that uses 30-round 5.45x39mm magazines with a togglable underslung 40mm grenade launcher."
+	item = /obj/item/weapon/gun/projectile/automatic/c90gl
+	cost = 18
+	gamemodes = list(/datum/game_mode/nuclear)
+	surplus = 50
+
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
-	desc = "A traditionally constructed machine gun made by AA-2531. This deadly weapon has a massive 50-round magazine of 7.62×51mm ammunition."
+	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. This deadly weapon has a massive 50-round magazine of devastating 7.62x51mm ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/l6_saw
 	cost = 40
 	gamemodes = list(/datum/game_mode/nuclear)
@@ -130,7 +138,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/dangerous/crossbow
 	name = "Miniature Energy Crossbow"
-	desc = "A short bow mounted across a tiller in miniature. Small enough to fit into a pocket or slip into a bag unnoticed. It fires bolts tipped with toxin, a poison collected from an organism. \
+	desc = "A short bow mounted across a tiller in miniature. Small enough to fit into a pocket or slip into a bag unnoticed. It fires bolts tipped with a paralyzing toxin collected from a rare organism. \
 	Its bolts stun enemies for short periods, and replenish automatically."
 	item = /obj/item/weapon/gun/energy/crossbow
 	cost = 12
@@ -217,49 +225,63 @@ var/list/uplink_items = list()
 	category = "Ammunition"
 	surplus = 40
 
+/datum/uplink_item/ammo/pistol
+	name = "Magazine - 10mm"
+	desc = "An additional 8-round 10mm magazine for use in the syndicate pistol. These subsonic rounds are dirt cheap but are half as effective as .357 rounds."
+	item = /obj/item/ammo_box/magazine/m10mm
+	cost = 1
+
 /datum/uplink_item/ammo/revolver
-	name = "Ammo-357"
-	desc = "A box that contains seven additional rounds for the revolver, made using an automatic lathe."
+	name = "Speed Loader - .357"
+	desc = "A speed loader that contains seven additional .357 Magnum rounds for the syndicate revolver. For when you really need a lot of things dead."
 	item = /obj/item/ammo_box/a357
 	cost = 4
 
 /datum/uplink_item/ammo/smg
-	name = "Ammo-12mm"
-	desc = "A 20-round .45 ACP magazine for use in the C-20r submachine gun."
-	item = /obj/item/ammo_box/magazine/c20m
+	name = "Magazine - .45"
+	desc = "An additional 20-round .45 magazine for use in the C-20r submachine gun. These bullets pack a lot of punch that can knock most targets down, but do limited overall damage."
+	item = /obj/item/ammo_box/magazine/smgm45
 	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/ammo/pistol
-	name = "Ammo-10mm"
-	desc = "An additional 8-round 10mm magazine for use in the Stetchkin pistol."
-	item = /obj/item/ammo_box/magazine/m10mm
-	cost = 1
-
 /datum/uplink_item/ammo/bullstun
-	name = "Ammo-12g Stun Slug"
-	desc = "An additional 8-round stun slug magazine for use in the Bulldog shotgun. Saying that they're non-lethal would be lying."
+	name = "Drum Magazine - 12g Stun Slug"
+	desc = "An additional 8-round stun slug magazine for use in the Bulldog shotgun. Saying that they're completely non-lethal would be lying."
 	item = /obj/item/ammo_box/magazine/m12g
 	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/bullbuck
-	name = "Ammo-12g Buckshot"
+	name = "Drum Magazine - 12g Buckshot"
 	desc = "An alternative 8-round buckshot magazine for use in the Bulldog shotgun. Front towards enemy."
 	item = /obj/item/ammo_box/magazine/m12g/buckshot
 	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/bulldragon
-	name = "Ammo-12g Dragon's Breath"
+	name = "Drum Magazine - 12g Dragon's Breath"
 	desc = "An alternative 8-round dragon's breath magazine for use in the Bulldog shotgun. I'm a fire starter, twisted fire starter!"
 	item = /obj/item/ammo_box/magazine/m12g/dragon
 	cost = 3
 	gamemodes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/ammo/car
+	name = "Box Magazine - 5.45x39mm"
+	desc = "An additional 30-round 5.45x39mm magazine for use in the C-90gl assault rifle. These bullets don't have the punch to knock most targets down, but dish out higher overall damage."
+	item = /obj/item/ammo_box/magazine/m545
+	cost = 2
+	gamemodes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/ammo/a40mm
+	name = "Ammo Box - 40mm grenades"
+	desc = "A box of 4 additional 40mm HE grenades for use the C-90gl's underbarrel grenade launcher. Your teammates will thank you to not shoot these down small hallways."
+	item = /obj/item/ammo_box/a40mm
+	cost = 4
+	gamemodes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/ammo/machinegun
-	name = "Ammo-7.62×51mm"
-	desc = "A 50-round magazine of 7.62×51mm ammunition for use in the L6 SAW machinegun. By the time you need to use this, you'll already be on a pile of corpses."
+	name = "Box Magazine - 7.62×51mm"
+	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW machinegun. By the time you need to use this, you'll already be on a pile of corpses."
 	item = /obj/item/ammo_box/magazine/m762
 	cost = 12
 	gamemodes = list(/datum/game_mode/nuclear)
@@ -293,8 +315,8 @@ var/list/uplink_items = list()
 	cost = 6
 
 /datum/uplink_item/stealthy_weapons/suppressor
-	name = "Stetchkin Suppressor"
-	desc = "Fitted for use on the Stetchkin pistol, this suppressor will make its shots quieter when equipped onto it."
+	name = "Universal Suppressor"
+	desc = "Fitted for use on any small caliber weapon with a threaded barrel, this suppressor will silence the shots of the weapon for increased stealth and superior ambushing capability."
 	item = /obj/item/weapon/suppressor
 	cost = 3
 	surplus = 10
@@ -376,7 +398,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/device_tools/medkit
 	name = "Syndicate Medical Supply Kit"
 	desc = "The syndicate medkit is a suspicious black and red. Included is a combat stimulant injector for rapid healing, a medical hud for quick identification of injured comrades, \
-	and other medical supplies helpful for a medical field operative.."
+	and other medical supplies helpful for a medical field operative."
 	item = /obj/item/weapon/storage/firstaid/tactical
 	cost = 9
 	gamemodes = list(/datum/game_mode/nuclear)
@@ -538,7 +560,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/badass/syndiecards
 	name = "Syndicate Playing Cards"
 	desc = "A special deck of space-grade playing cards with a mono-molecular edge and metal reinforcement, making them slightly more robust than a normal deck of cards. \
-	You can also play card games with them."
+	You can also play card games with them or leave them on your victims."
 	item = /obj/item/toy/cards/deck/syndicate
 	cost = 1
 	excludefrom = list(/datum/game_mode/nuclear)

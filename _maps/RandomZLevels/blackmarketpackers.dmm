@@ -212,7 +212,7 @@
 "ed" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0; tag = ""},/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"; tag = ""},/turf/simulated/floor/plating,/area/awaymission/BMPship/Aft)
 "ee" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"; tag = ""},/obj/machinery/light/small{dir = 4},/turf/simulated/floor/plasteel{dir = 4; icon_state = "warning"},/area/awaymission/BMPship/Aft)
 "ef" = (/obj/item/device/multitool,/turf/simulated/floor/engine,/area/awaymission/BMPship/Aft)
-"eg" = (/obj/structure/shuttle/engine/heater{tag = "icon-heater (EAST)"; icon_state = "heater"; dir = 4},/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/airless{tag = "icon-engine"; icon_state = "engine"},/area/awaymission/BMPship/Aft)
+"eg" = (/obj/structure/shuttle/engine/heater{tag = "icon-heater (EAST)"; icon_state = "heater"; dir = 4},/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plasteel/airless{tag = "icon-engine"; icon_state = "engine"},/area/awaymission/BMPship/Aft)
 "eh" = (/obj/structure/shuttle/engine/propulsion{tag = "icon-propulsion (WEST)"; icon_state = "propulsion"; dir = 8},/turf/space,/area/awaymission/BMPship/Aft)
 "ei" = (/turf/simulated/floor/plasteel{tag = "icon-carpet15-15 (EAST)"; icon_state = "carpet15-15"; dir = 4},/area/awaymission/BMPship/Fore)
 "ej" = (/obj/structure/table,/obj/machinery/recharger,/turf/simulated/floor/plasteel{tag = "icon-carpet5-0 (EAST)"; icon_state = "carpet5-0"; dir = 4},/area/awaymission/BMPship/Fore)

@@ -8,8 +8,6 @@
 	icon_state = "mecha_equip"
 	force = 5
 	origin_tech = "materials=2"
-	construction_time = 100
-	construction_cost = list("metal"=10000)
 	var/equip_cooldown = 0
 	var/equip_ready = 1
 	var/energy_drain = 0

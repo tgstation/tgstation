@@ -127,7 +127,18 @@
 		user = null
 	if(!src.requiresID())
 		user = null
-	if(src.density && hasPower() && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
+	if(src.allowed(user) || src.emergency == 1)
+		if(src.density)
+			open()
+		else
+			close()
+		return
+	if(src.density)
+		flick("door_deny", src)
+	return
+
+/obj/machinery/door/emag_act(mob/user as mob)
+	if(density && hasPower() && !emagged)
 		flick("door_spark", src)
 		sleep(6)
 		open()
@@ -140,17 +151,6 @@
 			A.loseMainPower()
 			A.loseBackupPower()
 			A.update_icon()
-		return 1
-	if(src.allowed(user) || src.emergency == 1)
-		if(src.density)
-			open()
-		else
-			close()
-		return
-	if(src.density)
-		flick("door_deny", src)
-	return
-
 
 /obj/machinery/door/blob_act()
 	if(prob(40))
@@ -204,39 +204,44 @@
 
 
 /obj/machinery/door/proc/open()
-	if(!density)		return 1
-	if(operating)		return
-	if(!ticker)			return 0
+	if(!density)
+		return 1
+	if(operating)
+		return
+	if(!ticker)
+		return 0
 	operating = 1
 
 	do_animate("opening")
 	icon_state = "door0"
 	src.SetOpacity(0)
-	sleep(10)
-	src.layer = 2.7
+	sleep(5)
 	src.density = 0
+	sleep(5)
+	src.layer = 2.7
 	update_icon()
 	SetOpacity(0)
+	operating = 0
 	air_update_turf(1)
 	update_freelook_sight()
-
-	if(operating)	operating = 0
-
 	return 1
 
 
 /obj/machinery/door/proc/close()
-	if(density)	return 1
-	if(operating)	return
+	if(density)
+		return 1
+	if(operating)
+		return
 	operating = 1
 
 	do_animate("closing")
 	src.layer = 3.1
-	sleep(10)
+	sleep(5)
 	src.density = 1
+	sleep(5)
 	update_icon()
 	if(visible && !glass)
-		SetOpacity(1)	//caaaaarn!
+		SetOpacity(1)
 	operating = 0
 	air_update_turf(1)
 	update_freelook_sight()

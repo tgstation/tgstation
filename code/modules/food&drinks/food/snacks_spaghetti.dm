@@ -7,6 +7,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/spaghetti/New()
 	..()
 	reagents.add_reagent("nutriment", 1)
+	reagents.add_reagent("vitamin", 1)
 	bitesize = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti
@@ -18,6 +19,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti/New()
 	..()
 	reagents.add_reagent("nutriment", 2)
+	reagents.add_reagent("vitamin", 1)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/pastatomato
@@ -30,6 +32,7 @@
 	..()
 	reagents.add_reagent("nutriment", 6)
 	reagents.add_reagent("tomatojuice", 10)
+	reagents.add_reagent("vitamin", 4)
 	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/copypasta
@@ -42,7 +45,8 @@
 	..()
 	reagents.add_reagent("nutriment", 12)
 	reagents.add_reagent("tomatojuice", 20)
-	bitesize = 1
+	reagents.add_reagent("vitamin", 8)
+	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/meatballspaghetti
 	name = "spaghetti and meatballs"
@@ -53,7 +57,8 @@
 /obj/item/weapon/reagent_containers/food/snacks/meatballspaghetti/New()
 	..()
 	reagents.add_reagent("nutriment", 8)
-	bitesize = 2
+	reagents.add_reagent("vitamin", 4)
+	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/spesslaw
 	name = "spesslaw"
@@ -63,7 +68,8 @@
 /obj/item/weapon/reagent_containers/food/snacks/spesslaw/New()
 	..()
 	reagents.add_reagent("nutriment", 8)
-	bitesize = 2
+	reagents.add_reagent("vitamin", 6)
+	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/eggplantparm
 	name = "eggplant parmigiana"
@@ -74,4 +80,5 @@
 /obj/item/weapon/reagent_containers/food/snacks/eggplantparm/New()
 	..()
 	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("vitamin", 2)
 	bitesize = 2

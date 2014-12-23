@@ -38,9 +38,9 @@ Head of Security
 /datum/job/hos/equip_items(var/mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/hos(H), slot_wear_suit)
+	H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/hos/trenchcoat(H), slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/HoS(H), slot_head)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/HoS/beret(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/security/sunglasses(H), slot_glasses)
 	H.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun(H), slot_s_store)
 
@@ -164,7 +164,7 @@ Security Officer
 	var/list/dep_access = null
 
 	default_pda = /obj/item/device/pda/security
-	default_headset = /obj/item/device/radio/headset/headset_sec
+	default_headset = /obj/item/device/radio/headset/headset_sec/alt
 	default_backpack = /obj/item/weapon/storage/backpack/security
 	default_satchel = /obj/item/weapon/storage/backpack/satchel_sec
 
@@ -176,7 +176,8 @@ Security Officer
 
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(H), slot_wear_suit)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet(H), slot_head)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/sec(H), slot_head)
+	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
 	H.equip_to_slot_or_del(new /obj/item/weapon/restraints/handcuffs(H), slot_s_store)
 	H.equip_to_slot_or_del(new /obj/item/device/flash/handheld(H), slot_l_store)
 
@@ -212,22 +213,22 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 		var/obj/item/clothing/under/U = new /obj/item/clothing/under/rank/security(H)
 		switch(department)
 			if("supply")
-				default_headset = /obj/item/device/radio/headset/headset_sec/department/supply
+				default_headset = /obj/item/device/radio/headset/headset_sec/alt/department/supply
 				dep_access = list(access_mailsorting, access_mining)
 				destination = /area/security/checkpoint/supply
 				U.attachTie(new /obj/item/clothing/tie/armband/cargo())
 			if("engineering")
-				default_headset = /obj/item/device/radio/headset/headset_sec/department/engi
+				default_headset = /obj/item/device/radio/headset/headset_sec/alt/department/engi
 				dep_access = list(access_construction, access_engine)
 				destination = /area/security/checkpoint/engineering
 				U.attachTie(new /obj/item/clothing/tie/armband/engine())
 			if("medical")
-				default_headset = /obj/item/device/radio/headset/headset_sec/department/med
+				default_headset = /obj/item/device/radio/headset/headset_sec/alt/department/med
 				dep_access = list(access_medical)
 				destination = /area/security/checkpoint/medical
 				U.attachTie(new /obj/item/clothing/tie/armband/medblue())
 			if("science")
-				default_headset = /obj/item/device/radio/headset/headset_sec/department/sci
+				default_headset = /obj/item/device/radio/headset/headset_sec/alt/department/sci
 				dep_access = list(access_research)
 				destination = /area/security/checkpoint/science
 				U.attachTie(new /obj/item/clothing/tie/armband/science())
@@ -257,18 +258,18 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	initialize()
 	recalculateChannels()
 
-/obj/item/device/radio/headset/headset_sec/department/engi
+/obj/item/device/radio/headset/headset_sec/alt/department/engi
 	keyslot = new /obj/item/device/encryptionkey/headset_sec
 	keyslot2 = new /obj/item/device/encryptionkey/headset_eng
 
-/obj/item/device/radio/headset/headset_sec/department/supply
+/obj/item/device/radio/headset/headset_sec/alt/department/supply
 	keyslot = new /obj/item/device/encryptionkey/headset_sec
 	keyslot2 = new /obj/item/device/encryptionkey/headset_cargo
 
-/obj/item/device/radio/headset/headset_sec/department/med
+/obj/item/device/radio/headset/headset_sec/alt/department/med
 	keyslot = new /obj/item/device/encryptionkey/headset_sec
 	keyslot2 = new /obj/item/device/encryptionkey/headset_med
 
-/obj/item/device/radio/headset/headset_sec/department/sci
+/obj/item/device/radio/headset/headset_sec/alt/department/sci
 	keyslot = new /obj/item/device/encryptionkey/headset_sec
 	keyslot2 = new /obj/item/device/encryptionkey/headset_sci

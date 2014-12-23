@@ -64,7 +64,7 @@
 	else
 		if(!usr || !isturf(usr.loc))
 			return
-		if(usr.stat || usr.restrained() || !usr.canmove)
+		if(usr.stat || usr.restrained())
 			return
 		spin()
 

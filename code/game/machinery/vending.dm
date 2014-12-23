@@ -44,6 +44,8 @@
 	var/obj/item/weapon/coin/coin
 	var/datum/wires/vending/wires = null
 
+	var/dish_quants = list()  //used by the snack machine's custom compartment to count dishes.
+
 	var/obj/item/weapon/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
 
 /obj/machinery/vending/New()
@@ -62,6 +64,11 @@
 	wires = null
 	qdel(coin)
 	coin = null
+	..()
+
+/obj/machinery/vending/snack/Destroy()
+	for(var/obj/item/weapon/reagent_containers/food/snacks/S in contents)
+		S.loc = get_turf(src)
 	..()
 
 /obj/machinery/vending/initialize()
@@ -93,7 +100,8 @@
 /obj/machinery/vending/proc/build_inventory(list/productlist, hidden=0, req_coin=0, start_empty = null)
 	for(var/typepath in productlist)
 		var/amount = productlist[typepath]
-		if(isnull(amount)) amount = 0
+		if(isnull(amount))
+			amount = 0
 
 		var/atom/temp = new typepath(null)
 		var/datum/data/vending_product/R = new /datum/data/vending_product()
@@ -139,6 +147,70 @@
 			total += restock
 	return total
 
+/obj/machinery/vending/snack/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/reagent_containers/food/snacks))
+		if(!compartment_access_check(user))
+			return
+		if(nosugar_check(W))
+			if(!iscompartmentfull(user))
+				user.drop_item()
+				W.loc = src
+				food_load(W)
+				user << "<span class='notice'>You insert [W] into [src]'s chef compartment.</span>"
+		else
+			user << "<span class='notice'>[src]'s chef compartment does not accept sugary food.</span>"
+		return
+
+	if(istype(W, /obj/item/weapon/storage/bag/tray))
+		if(!compartment_access_check(user))
+			return
+		var/obj/item/weapon/storage/T = W
+		var/loaded = 0
+		var/denied_items = 0
+		for(var/obj/item/weapon/reagent_containers/food/snacks/S in T.contents)
+			if(iscompartmentfull(user))
+				break
+			if(nosugar_check(S))
+				T.remove_from_storage(S, src)
+				food_load(S)
+				loaded++
+			else
+				denied_items++
+		if(denied_items)
+			user << "<span class='notice'>[src] refuses some items.</span>"
+		if(loaded)
+			user << "<span class='notice'>You insert [loaded] dishes into [src]'s chef compartment.</span>"
+		updateUsrDialog()
+		return
+
+	..()
+
+/obj/machinery/vending/snack/proc/compartment_access_check(user)
+	req_access_txt = chef_compartment_access
+	if(!allowed(user) && !emagged && scan_id)
+		user << "<span class='warning'>[src]'s chef compartment blinks red: Access denied.</span>"
+		req_access_txt = "0"
+		return 0
+	req_access_txt = "0"
+	return 1
+
+/obj/machinery/vending/snack/proc/nosugar_check(obj/item/weapon/W)
+	if(W.reagents.has_reagent("sugar"))
+		return 0
+	return 1
+
+/obj/machinery/vending/snack/proc/iscompartmentfull(mob/user)
+	if(contents.len >= 30) // no more than 30 dishes can fit inside
+		user << "<span class='warning'>[src]'s chef compartment is full.</span>"
+		return 1
+	return 0
+
+/obj/machinery/vending/snack/proc/food_load(obj/item/weapon/reagent_containers/food/snacks/S)
+	if(dish_quants[S.name])
+		dish_quants[S.name]++
+	else
+		dish_quants[S.name] = 1
+	sortList(dish_quants)
 
 /obj/machinery/vending/attackby(obj/item/weapon/W, mob/user)
 	if(panel_open)
@@ -156,11 +228,7 @@
 							break
 			default_deconstruction_crowbar(W)
 
-	if(istype(W, /obj/item/weapon/card/emag))
-		emagged = 1
-		user << "You short out the product lock on [src]"
-		return
-	else if(istype(W, /obj/item/weapon/screwdriver) && anchored)
+	if(istype(W, /obj/item/weapon/screwdriver) && anchored)
 		panel_open = !panel_open
 		user << "You [panel_open ? "open" : "close"] the maintenance panel."
 		overlays.Cut()
@@ -198,6 +266,10 @@
 	else
 		..()
 
+/obj/machinery/vending/emag_act(user as mob)
+	if(!emagged)
+		emagged  = 1
+		user << "You short out the product lock on [src]."
 
 /obj/machinery/vending/attack_paw(mob/user)
 	return attack_hand(user)
@@ -247,6 +319,15 @@
 				dat += "[coin]&nbsp;&nbsp;<a href='byond://?src=\ref[src];remove_coin=1'>Remove</a>"
 			else
 				dat += "<i>No coin</i>&nbsp;&nbsp;<span class='linkOff'>Remove</span>"
+		if(istype(src, /obj/machinery/vending/snack))
+			dat += "<h3>Chef's Food Selection</h3>"
+			dat += "<div class='statusDisplay'>"
+			for (var/O in dish_quants)
+				if(dish_quants[O] > 0)
+					var/N = dish_quants[O]
+					dat += "<a href='byond://?src=\ref[src];dispense=[sanitize(O)]'>Dispense</A> "
+					dat += "<B>[capitalize(O)]: [N]</B><br>"
+			dat += "</div>"
 	user.set_machine(src)
 	if(seconds_electrified && !(stat & NOPOWER))
 		if(shock(user, 100))
@@ -293,6 +374,24 @@
 
 
 	usr.set_machine(src)
+
+	if((href_list["dispense"]) && (vend_ready))
+		var/N = href_list["dispense"]
+		if(dish_quants[N] <= 0) // Sanity check, there are probably ways to press the button when it shouldn't be possible.
+			return
+		vend_ready = 0
+		use_power(5)
+
+		spawn(vend_delay)
+			dish_quants[N] = max(dish_quants[N] - 1, 0)
+			for(var/obj/O in contents)
+				if(O.name == N)
+					O.loc = src.loc
+					break
+			vend_ready = 1
+			updateUsrDialog()
+		return
+
 	if((href_list["vend"]) && (vend_ready))
 		if(panel_open)
 			usr << "<span class='notice'>The vending machine cannot dispense products while its service panel is open!</span>"
@@ -563,12 +662,12 @@
 	product_slogans = "Try our new nougat bar!;Twice the calories for half the price!"
 	product_ads = "The healthiest!;Award-winning chocolate bars!;Mmm! So good!;Oh my god it's so juicy!;Have a snack.;Snacks are good for you!;Have some more Getmore!;Best quality snacks straight from mars.;We love chocolate!;Try our new jerky!"
 	icon_state = "snack"
-	products = list(/obj/item/weapon/reagent_containers/food/snacks/candy = 6,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 6,/obj/item/weapon/reagent_containers/food/snacks/chips =6,
-					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 6,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 6,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 6,
-					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 6)
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/candy = 5,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 5,/obj/item/weapon/reagent_containers/food/snacks/chips =5,
+					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 5,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 5,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 5,
+					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 5)
 	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/syndicake = 6)
 	refill_canister = /obj/item/weapon/vending_refill/snack
-
+	var/chef_compartment_access = "28"
 
 /obj/machinery/vending/snack/New()
 	..()
@@ -855,3 +954,41 @@
 					/obj/item/weapon/stock_parts/cell/high = 12, /obj/item/device/assembly/prox_sensor = 3,/obj/item/device/assembly/signaler = 3,/obj/item/device/healthanalyzer = 3,
 					/obj/item/weapon/scalpel = 2,/obj/item/weapon/circular_saw = 2,/obj/item/weapon/tank/anesthetic = 2,/obj/item/clothing/mask/breath/medical = 5,
 					/obj/item/weapon/screwdriver = 5,/obj/item/weapon/crowbar = 5)
+
+//This one's from NTstation
+//don't forget to change the refill size if you change the machine's contents!
+/obj/machinery/vending/clothing
+	name = "ClothesMate" //renamed to make the slogan rhyme
+	desc = "A vending machine for clothing."
+	icon_state = "clothes"
+	product_slogans = "Dress for success!;Prepare to look swagalicious!;Look at all this free swag!;Why leave style up to fate? Use the ClothesMate!"
+	vend_delay = 15
+	vend_reply = "Thank you for using the ClothesMate!"
+	products = list(/obj/item/clothing/head/that=2,/obj/item/clothing/head/fedora=1,/obj/item/clothing/glasses/monocle=1,
+	/obj/item/clothing/under/suit_jacket/navy=2,/obj/item/clothing/under/kilt=1,/obj/item/clothing/under/overalls=1,
+	/obj/item/clothing/under/suit_jacket/really_black=2,/obj/item/clothing/under/pants/jeans=3,/obj/item/clothing/under/pants/classicjeans=2,
+	/obj/item/clothing/under/pants/camo = 1,/obj/item/clothing/under/pants/blackjeans=2,/obj/item/clothing/under/pants/khaki=2,
+	/obj/item/clothing/under/pants/white=2,/obj/item/clothing/under/pants/red=1,/obj/item/clothing/under/pants/black=2,
+	/obj/item/clothing/under/pants/tan=2,/obj/item/clothing/under/pants/blue=1,/obj/item/clothing/under/pants/track=1,
+	/obj/item/clothing/tie/scarf/red=1,/obj/item/clothing/tie/scarf/green=1,/obj/item/clothing/tie/scarf/darkblue=1,
+	/obj/item/clothing/tie/scarf/purple=1,/obj/item/clothing/tie/scarf/yellow=1,/obj/item/clothing/tie/scarf/orange=1,
+	/obj/item/clothing/tie/scarf/lightblue=1,/obj/item/clothing/tie/scarf/white=1,/obj/item/clothing/tie/scarf/black=1,
+	/obj/item/clothing/tie/scarf/zebra=1,/obj/item/clothing/tie/scarf/christmas=1,/obj/item/clothing/tie/stripedredscarf=1,
+	/obj/item/clothing/tie/stripedbluescarf=1,/obj/item/clothing/tie/stripedgreenscarf=1,/obj/item/clothing/tie/waistcoat=1,
+	/obj/item/clothing/under/sundress=2,/obj/item/clothing/under/blacktango=1,/obj/item/clothing/suit/jacket=3,
+	/obj/item/clothing/glasses/regular=2,/obj/item/clothing/head/sombrero=1,/obj/item/clothing/suit/poncho=1,
+	/obj/item/clothing/suit/ianshirt=1,/obj/item/clothing/shoes/laceup=2,/obj/item/clothing/shoes/sneakers/black=4,
+	/obj/item/clothing/shoes/sandal=1)
+	contraband = list(/obj/item/clothing/under/syndicate/tacticool=1,/obj/item/clothing/mask/balaclava=1,/obj/item/clothing/head/ushanka=1,/obj/item/clothing/under/soviet=1)
+	premium = list(/obj/item/clothing/under/suit_jacket/checkered=1,/obj/item/clothing/head/mailman=1,/obj/item/clothing/under/rank/mailman=1,/obj/item/clothing/suit/jacket/leather=1,/obj/item/clothing/under/pants/mustangjeans=1)
+	refill_canister = /obj/item/weapon/vending_refill/clothing
+
+/obj/machinery/vending/clothing/New()
+	..()
+	component_parts = list()
+	var/obj/item/weapon/circuitboard/vendor/V = new(null)
+	V.set_type(type)
+	component_parts += V
+	component_parts += new /obj/item/weapon/vending_refill/clothing(0)
+	component_parts += new /obj/item/weapon/vending_refill/clothing(0)
+	component_parts += new /obj/item/weapon/vending_refill/clothing(0)
