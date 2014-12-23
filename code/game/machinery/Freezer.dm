@@ -10,7 +10,7 @@
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/New()
 	..()
-	initialize_directions = dir
+	construction(dir,dir)
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/thermomachine(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
@@ -127,7 +127,7 @@
 
 /obj/machinery/atmospherics/unary/heat_reservoir/heater/New()
 	..()
-	initialize_directions = dir
+	construction(dir,dir)
 	var/obj/item/weapon/circuitboard/thermomachine/H = new /obj/item/weapon/circuitboard/thermomachine(null)
 	H.build_path = /obj/machinery/atmospherics/unary/heat_reservoir/heater
 	H.name = "circuit board (Heater)"
@@ -204,7 +204,7 @@
 
 	//user << browse(dat, "window=freezer;size=400x500")
 	//onclose(user, "freezer")
-	var/datum/browser/popup = new(user, "freezer", "Cryo Gas Cooling System", 400, 240) // Set up the popup browser window
+	var/datum/browser/popup = new(user, "freezer", "Cryo Gas Heating System", 400, 240) // Set up the popup browser window
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.set_content(dat)
 	popup.open()
