@@ -122,7 +122,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/badrecipe
 	name = "burned mess"
-	desc = "Someone should be demoted from chef for this."
+	desc = "Someone should be demoted from cook for this."
 	icon_state = "badrecipe"
 
 /obj/item/weapon/reagent_containers/food/snacks/badrecipe/New()
