@@ -119,7 +119,7 @@
 		else
 			src << text("Invalid Emote: [act]")
 	if ((message && src.stat == 0))
-		log_emote("[name]/[key] : [message]")
+		log_emote("[name]/[key] (@[x],[y],[z]): [message]")
 		if (act == "roar")
 			playsound(get_turf(src), 'sound/voice/hiss5.ogg', 40, 1, 1)
 		if (act == "deathgasp")

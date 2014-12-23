@@ -39,7 +39,7 @@
 	if(act != "me")
 		return
 
-	log_emote("Ghost/[src.key] : [message]")
+	log_emote("Ghost/[src.key] (@[src.x],[src.y],[src.z]): [message]")
 
 	if(src.client)
 		if(src.client.prefs.muted & MUTE_DEADCHAT)
