@@ -46,6 +46,8 @@ In short:
 	emergency_shuttle.force_shutdown()
 	*/
 
+	suspend_alert = 1
+
 	for(var/area/ca in world)
 		var/area/A=get_area_master(ca)
 		if(!istype(A,/area) || A.name=="Space")
