@@ -6,6 +6,7 @@
 /datum/map/active
 	nameShort = "box"
 	nameLong = "Box Station"
+	map_dir = "boxstation"
 	tDomeX = 128
 	tDomeY = 69
 	tDomeZ = 2
@@ -25,5 +26,4 @@
 		)
 
 ////////////////////////////////////////////////////////////////
-
 #include "tgstation.dmm"
