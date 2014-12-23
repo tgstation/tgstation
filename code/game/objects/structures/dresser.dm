@@ -12,7 +12,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 
-		var/choice = input(user, "Underwear or Undershirt or Socks?", "Changing") as null|anything in list("Underwear","Undershirt","Socks")
+		var/choice = input(user, "Underwear, Undershirt, or Socks?", "Changing") as null|anything in list("Underwear","Undershirt","Socks")
 
 		if(!Adjacent(user))
 			return
