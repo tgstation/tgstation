@@ -97,7 +97,7 @@
 					return
 		if(pulling == AM)
 			stop_pulling()
-		step(AM, t)
+		AM.Move(get_step(AM, t))
 		now_pushing = 0
 
 //mob verbs are a lot faster than object verbs
