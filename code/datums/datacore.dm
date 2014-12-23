@@ -80,14 +80,14 @@
 		foundrecord.fields["rank"] = assignment
 
 /obj/effect/datacore/proc/get_manifest(monochrome, OOC)
-	var/list/heads = new()
-	var/list/sec = new()
-	var/list/eng = new()
-	var/list/med = new()
-	var/list/sci = new()
-	var/list/civ = new()
-	var/list/bot = new()
-	var/list/misc = new()
+	var/list/heads = list()
+	var/list/sec = list()
+	var/list/eng = list()
+	var/list/med = list()
+	var/list/sci = list()
+	var/list/civ = list()
+	var/list/bot = list()
+	var/list/misc = list()
 	var/dat = {"
 	<head><style>
 		.manifest {border-collapse:collapse;}
@@ -105,27 +105,26 @@
 	for(var/datum/data/record/t in data_core.general)
 		var/name = t.fields["name"]
 		var/rank = t.fields["rank"]
-		var/real_rank = t.fields["real_rank"]
 		var/department = 0
-		if(real_rank in command_positions)
+		if(rank in command_positions)
 			heads[name] = rank
 			department = 1
-		if(real_rank in security_positions)
+		if(rank in security_positions)
 			sec[name] = rank
 			department = 1
-		if(real_rank in engineering_positions)
+		if(rank in engineering_positions)
 			eng[name] = rank
 			department = 1
-		if(real_rank in medical_positions)
+		if(rank in medical_positions)
 			med[name] = rank
 			department = 1
-		if(real_rank in science_positions)
+		if(rank in science_positions)
 			sci[name] = rank
 			department = 1
-		if(real_rank in civilian_positions)
+		if(rank in civilian_positions)
 			civ[name] = rank
 			department = 1
-		if(real_rank in nonhuman_positions)
+		if(rank in nonhuman_positions)
 			bot[name] = rank
 			department = 1
 		if(!department && !(name in heads))
