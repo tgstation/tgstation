@@ -273,7 +273,7 @@
 
 /obj/item/device/tape
 	name = "tape"
-	desc = "A magnetic tape that can hold up to ten minutes of content. It has a small red button labelled REWIND on the back."
+	desc = "A magnetic tape that can hold up to ten minutes of content."
 	icon_state = "tape_white"
 	item_state = "analyzer"
 	w_class = 1
