@@ -315,7 +315,7 @@ var/list/department_radio_keys = list(
 
 		if("changeling")
 			if(mind && mind.changeling)
-				log_say("[key_name(src)] ([mind.changeling.changelingID]): [message]")
+				log_say("[key_name(src)] ([mind.changeling.changelingID])(@[src.x],[src.y],[src.z]): [message]")
 				for(var/mob/Changeling in mob_list)
 					if(istype(Changeling, /mob/living/silicon)) continue //WHY IS THIS NEEDED?
 					if((Changeling.mind && Changeling.mind.changeling) || istype(Changeling, /mob/dead/observer))
@@ -435,7 +435,7 @@ var/list/department_radio_keys = list(
 
 			if("changeling")
 				if(mind && mind.changeling)
-					log_say("[key_name(src)] ([mind.changeling.changelingID]): [message]")
+					log_say("[key_name(src)] ([mind.changeling.changelingID])(@[src.x],[src.y],[src.z]): [message]")
 					for(var/mob/Changeling in mob_list)
 						if(istype(Changeling, /mob/living/silicon)) continue //WHY IS THIS NEEDED?
 						if((Changeling.mind && Changeling.mind.changeling) || istype(Changeling, /mob/dead/observer))
@@ -620,7 +620,7 @@ var/list/department_radio_keys = list(
 		if(O.listening_to_players)
 			O.catchMessage(message, src)
 
-	log_say("[name]/[key] : [message]")
+	log_say("[name]/[key] (@[x],[y],[z]): [message]")
 
 /mob/proc/addSpeechBubble(image/speech_bubble)
 	if(client)

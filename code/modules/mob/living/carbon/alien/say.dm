@@ -31,7 +31,7 @@
 
 /mob/living/proc/alien_talk(var/message)
 
-	log_say("[key_name(src)] : [message]")
+	log_say("[key_name(src)] (@[src.x],[src.y],[src.z]): [message]")
 	message = trim(message)
 
 	if (!message)
