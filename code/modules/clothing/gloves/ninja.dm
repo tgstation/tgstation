@@ -46,65 +46,39 @@
 	if(!proximity) // todo: you could add ninja stars or computer hacking here
 		return 0
 
-	// Move an AI into and out of things
-	if(istype(A,/mob/living/silicon/ai))
-		if(suit.s_control)
-			A.add_fingerprint(H)
-			suit.transfer_ai("AICORE", "NINJASUIT", A, H)
-			return 1
-		else
-			H << "<span class='userdanger'>ERROR</span>: \black Remote access channel disabled."
-			return 0
-
-	if(istype(A,/obj/structure/AIcore/deactivated))
-		if(suit.s_control)
-			A.add_fingerprint(H)
-			suit.transfer_ai("INACTIVE","NINJASUIT",A, H)
-			return 1
-		else
-			H << "<span class='userdanger'>ERROR</span>: \black Remote access channel disabled."
-			return 0
-	if(istype(A,/obj/machinery/computer/aifixer))
-		if(suit.s_control)
-			A.add_fingerprint(H)
-			suit.transfer_ai("AIFIXER","NINJASUIT",A, H)
-			return 1
-		else
-			H << "<span class='userdanger'>ERROR</span>: \black Remote access channel disabled."
-			return 0
+	A.add_fingerprint(H)
 
 	// steal energy from powered things
 	if(istype(A,/mob/living/silicon/robot))
-		A.add_fingerprint(H)
 		drain("CYBORG",A,suit)
 		return 1
+
 	if(istype(A,/obj/machinery/power/apc))
-		A.add_fingerprint(H)
 		drain("APC",A,suit)
 		return 1
+
 	if(istype(A,/obj/structure/cable))
-		A.add_fingerprint(H)
 		drain("WIRE",A,suit)
 		return 1
+
 	if(istype(A,/obj/structure/grille))
 		var/obj/structure/cable/C = locate() in A.loc
 		if(C)
 			drain("WIRE",C,suit)
 		return 1
+
 	if(istype(A,/obj/machinery/power/smes))
-		A.add_fingerprint(H)
 		drain("SMES",A,suit)
 		return 1
+
 	if(istype(A,/obj/mecha))
-		A.add_fingerprint(H)
 		drain("MECHA",A,suit)
 		return 1
 
-	// download research
-	if(istype(A,/obj/machinery/computer/rdconsole))
-		A.add_fingerprint(H)
+	if(istype(A,/obj/machinery/computer/rdconsole)) // download research
 		drain("RESEARCH",A,suit)
 		return 1
+
 	if(istype(A,/obj/machinery/r_n_d/server))
 		A.add_fingerprint(H)
 		var/obj/machinery/r_n_d/server/S = A
@@ -116,3 +90,15 @@
 		drain("RESEARCH",A,suit)
 		return 1
 
+	//do AI transfers
+	if(istype(A,/mob/living/silicon/ai))
+		suit.NAI.transfer_ai("AICORE", "AICARD", A, H)
+		return 1
+
+	if(istype(A,/obj/structure/AIcore/deactivated))
+		suit.NAI.transfer_ai("INACTIVE","AICARD",A, H)
+		return 1
+
+	if(istype(A,/obj/machinery/computer/aifixer))
+		suit.NAI.transfer_ai("AIFIXER","AICARD",A, H)
+		return 1
