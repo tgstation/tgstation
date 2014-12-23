@@ -33,7 +33,6 @@
 		A.power_light = 0
 		A.power_equip = 0
 		A.power_environ = 0
-		A.power_change()
 
 	for(var/obj/machinery/power/apc/C in world)
 		if(C.cell && C.z == 1)
@@ -70,7 +69,6 @@
 			A.power_light = 1
 			A.power_equip = 1
 			A.power_environ = 1
-			A.power_change()
 
 /proc/power_restore_quick(var/announce = 1)
 

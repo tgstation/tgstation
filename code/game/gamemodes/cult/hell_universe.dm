@@ -95,7 +95,6 @@ In short:
 				APC.cell.charge = 0
 			APC.emagged = 1
 			APC.queue_icon_update()
-			APC.update()
 
 	for(var/mob/living/simple_animal/M in world)
 		if(M && !M.client)

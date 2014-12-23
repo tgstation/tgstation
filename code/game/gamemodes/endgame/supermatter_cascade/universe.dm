@@ -82,7 +82,6 @@
 				APC.cell.charge = 0
 			APC.emagged = 1
 			APC.queue_icon_update()
-			APC.update()
 
 	// Disable Nar-Sie.
 	ticker.mode.eldergod=0
