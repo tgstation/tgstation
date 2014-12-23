@@ -96,6 +96,7 @@
 	var/obj/effect/blob/B = locate() in range("3x3", NewLoc)
 	if(B)
 		loc = NewLoc
+		INVOKE_EVENT(on_moved,list("loc"=NewLoc))
 	else
 		return 0
 

@@ -58,6 +58,9 @@ field_generator power level display
 
 
 /obj/machinery/field/generator/process()
+	for(var/obj/effect/beam/B in beams)
+		power += B.get_damage()
+
 	if(Varedit_start == 1)
 		if(active == 0)
 			active = 1

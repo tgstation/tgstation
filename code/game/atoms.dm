@@ -17,9 +17,22 @@
 	//HUD images that this atom can provide.
 	var/list/hud_possible
 
-	//var/chem_is_open_container = 0
-	// replaced by OPENCONTAINER flags and atom/proc/is_open_container()
-	///Chemistry.
+	//BEEEEAMS
+	var/list/beams=list()
+	// EVENTS
+	var/event/on_destroyed = new() // On Destroy()
+	var/event/on_moved = new() // On Move()
+
+/atom/Destroy()
+	INVOKE_EVENT(on_destroyed, list()) // No args.
+
+/atom/proc/beam_connect(var/obj/effect/beam/B)
+	if(!(B in beams))
+		beams.Add(B)
+	return 1
+
+/atom/proc/beam_disconnect(var/obj/effect/beam/B)
+	beams.Remove(B)
 
 /atom/proc/throw_impact(atom/hit_atom)
 	if(istype(hit_atom,/mob/living))

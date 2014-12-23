@@ -4,6 +4,23 @@
 	if(cur_area)
 		cur_area.mob_activate(src)
 
+	handle_beams()
+
+// Apply connect damage
+/mob/living/beam_connect(var/obj/effect/beam/B)
+	..()
+	last_beamchecks["\ref[B]"]=world.time
+
+/mob/living/beam_disconnect(var/obj/effect/beam/B)
+	..()
+	apply_beam_damage(B)
+	last_beamchecks.Remove("\ref[B]") // RIP
+
+/mob/living/proc/handle_beams()
+	// New beam damage code (per-tick)
+	for(var/obj/effect/beam/B in beams)
+		apply_beam_damage(B)
+
 /mob/living/Destroy()
 //	if(mind)
 //		mind.current = null
@@ -130,6 +147,19 @@
 		if(!whispered)
 			src << "<span class='notice'>You have given up life and succumbed to death.</span>"
 		death()
+
+/mob/living/proc/apply_beam_damage(var/obj/effect/beam/B)
+	var/lastcheck=last_beamchecks["\ref[B]"]
+
+	// Figure out how much damage to deal.
+	// Formula: (deciseconds_since_connect/10 deciseconds)*B.get_damage()
+	var/damage = ((world.time - lastcheck)/10)  * B.get_damage()
+
+	// Actually apply damage
+	apply_damage(damage, B.damage_type, B.def_zone)
+
+	// Update check time.
+	last_beamchecks["\ref[B]"]=world.time
 
 /mob/living/proc/InCritical()
 	return (src.health < 0 && src.health > -95.0 && stat == UNCONSCIOUS)
@@ -524,6 +554,9 @@
 	if(update_slimes)
 		for(var/mob/living/carbon/slime/M in view(1,src))
 			M.UpdateFeed(src)
+
+	// Update on_moved listeners.
+	INVOKE_EVENT(on_moved,list("loc"=loc))
 
 /mob/living/proc/getTrail() //silicon and simple_animals don't get blood trails
     return null

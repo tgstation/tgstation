@@ -8,14 +8,14 @@
 
 	var/on = 0
 	var/visible = 0
-	var/obj/effect/beam/i_beam/first = null
-	var/obj/effect/beam/i_beam/last = null
+	var/obj/effect/beam/infrared/beam = null
 
 /obj/item/device/assembly/infra/describe()
 	return "The infrared trigger is [on?"on":"off"]."
 
 /obj/item/device/assembly/infra/activate()
-	if(!..())	return 0//Cooldown check
+	if(!..())
+		return 0//Cooldown check
 	on = !on
 	update_icon()
 	return 1
@@ -26,7 +26,8 @@
 		processing_objects.Add(src)
 	else
 		on = 0
-		if(first)	qdel(first)
+		if(beam)
+			qdel(beam)
 		processing_objects.Remove(src)
 	update_icon()
 	return secured
@@ -43,31 +44,30 @@
 	return
 
 /obj/item/device/assembly/infra/process()
-	if(!on)
-		if(first)
-			qdel(first)
-			return
-	if(!secured)
+	if(!on && beam)
+		qdel(beam)
 		return
-	if(first && last)
-		last.process()
+	if(beam || !secured)
 		return
-	var/turf/T = get_turf(src)
+	var/turf/T = null
+	if(istype(loc,/turf))
+		T = loc
+	else if (holder)
+		if (istype(holder.loc,/turf))
+			T = holder.loc
+		else if (istype(holder.loc.loc,/turf)) //for onetankbombs and other tertiary builds with assemblies
+			T = holder.loc.loc
+	else if(istype(loc,/obj/item/weapon/grenade) && istype(loc.loc,/turf))
+		T = loc.loc
 	if(T)
-		var/obj/effect/beam/i_beam/I = new /obj/effect/beam/i_beam(T)
-		I.master = src
-		I.density = 1
-		I.dir = dir
-		first = I
-		step(I, I.dir)
-		if(first)
-			I.density = 0
-			I.vis_spread(visible)
-			I.limit = 8
-			I.process()
+		if(!beam)
+			beam = new /obj/effect/beam/infrared(T)
+		beam.visible=visible
+		beam.emit(src)
+	return
 
 /obj/item/device/assembly/infra/attack_hand()
-	qdel(first)
+	qdel(beam)
 	..()
 	return
 
@@ -75,21 +75,21 @@
 	var/t = dir
 	..()
 	dir = t
-	qdel(first)
+	qdel(beam)
 	return
 
 /obj/item/device/assembly/infra/holder_movement()
 	if(!holder)	return 0
 //	dir = holder.dir
-	qdel(first)
+	qdel(beam)
 	return 1
 
 /obj/item/device/assembly/infra/proc/trigger_beam()
 	if((!secured)||(!on)||(cooldown > 0))
 		return 0
 	pulse(0)
-	if(src.loc)
-		src.loc.audible_message("\icon[src] *beep* *beep*", null, 3)
+	if(!holder)
+		audible_message("\icon[src] *beep* *beep*", null, 3)
 	cooldown = 2
 	spawn(10)
 		process_cooldown()
@@ -116,8 +116,8 @@
 		update_icon()
 	if(href_list["visible"])
 		visible = !(visible)
-		if(first)
-			first.vis_spread(visible)
+		if(beam)
+			beam.set_visible(visible)
 	if(href_list["close"])
 		usr << browse(null, "window=infra")
 		return
@@ -139,79 +139,37 @@
 
 /***************************IBeam*********************************/
 
-/obj/effect/beam/i_beam
+/obj/effect/beam/infrared
 	name = "i beam"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "ibeam"
-	var/obj/effect/beam/i_beam/next = null
-	var/obj/effect/beam/i_beam/previous = null
-	var/obj/item/device/assembly/infra/master = null
 	var/limit = null
 	var/visible = 0.0
 	var/left = null
 	anchored = 1.0
 
+	var/obj/item/device/assembly/infra/assembly
 
-/obj/effect/beam/i_beam/proc/hit()
-	if(master)
-		master.trigger_beam()
-	qdel(src)
-	return
+/obj/effect/beam/infrared/proc/hit()
+	if(assembly)
+		assembly.trigger_beam()
 
-/obj/effect/beam/i_beam/proc/vis_spread(v)
+/obj/effect/beam/infrared/Crossed(atom/movable/O)
+	..(O)
+	if(O && O.density && !istype(O, /obj/effect/beam))
+		hit()
+
+/obj/effect/beam/infrared/proc/set_visible(v)
 	visible = v
 	if(next)
-		next.vis_spread(v)
+		var/obj/effect/beam/infrared/B=next
+		B.set_visible(v)
 
-
-/obj/effect/beam/i_beam/process()
-	if((loc.density || !(master)))
-		qdel(src)
-		return
-	if(left > 0)
-		left--
-	if(left < 1)
-		if(!(visible))
-			invisibility = 101
-		else
-			invisibility = 0
-	else
-		invisibility = 0
-
-	if(!next && (limit > 0))
-		var/obj/effect/beam/i_beam/I = new /obj/effect/beam/i_beam(loc)
-		I.master = master
-		I.density = 1
-		I.dir = dir
-		I.previous = src
-		next = I
-		step(I, I.dir)
-		if(next)
-			I.density = 0
-			I.vis_spread(visible)
-			I.limit = limit - 1
-			master.last = I
-			I.process()
-
-/obj/effect/beam/i_beam/Bump()
-	qdel(src)
-	return
-
-/obj/effect/beam/i_beam/Bumped()
+/obj/effect/beam/infrared/Bumped()
 	hit()
-
-/obj/effect/beam/i_beam/Crossed(atom/movable/AM as mob|obj)
-	if(istype(AM, /obj/effect/beam))
-		return
-	hit()
-
-/obj/effect/beam/i_beam/Destroy()
-	if(master.first == src)
-		master.first = null
-	if(next)
-		qdel(next)
-		next = null
-	if(previous)
-		previous.next = null
-		master.last = previous
 	..()
+
+/obj/effect/beam/infrared/spawn_child()
+	var/obj/effect/beam/infrared/B = ..()
+	B.visible=visible
+	return B

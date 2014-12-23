@@ -141,6 +141,26 @@
 			qdel(src)
 	return
 
+/obj/structure/closet/beam_connect(var/obj/effect/beam/B)
+	if(!processing_objects.Find(src))
+		processing_objects.Add(src)
+	return ..()
+
+/obj/structure/closet/beam_disconnect(var/obj/effect/beam/B)
+	..()
+	if(beams.len==0)
+		// I hope to christ this doesn't break shit.
+		processing_objects.Remove(src)
+
+/obj/structure/closet/process()
+	//..()
+	for(var/obj/effect/beam/B in beams)
+		health -= B.get_damage()
+
+	if(health <= 0)
+		dump_contents()
+		qdel(src)
+
 /obj/structure/closet/attack_animal(mob/living/simple_animal/user as mob)
 	if(user.environment_smash)
 		user.do_attack_animation(src)

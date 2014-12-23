@@ -19,6 +19,7 @@
 		use_power()
 	update_canmove()
 	handle_fire()
+	handle_beams()
 
 
 

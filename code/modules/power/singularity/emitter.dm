@@ -21,6 +21,9 @@
 	var/state = 0
 	var/locked = 0
 
+	// Now uses a constant beam.
+	var/obj/effect/beam/emitter/beam = null
+
 
 /obj/machinery/power/emitter/verb/rotate()
 	set name = "Rotate"
@@ -39,8 +42,21 @@
 	..()
 	if(state == 2 && anchored)
 		connect_to_network()
+		update_icon()
+		update_beam()
+
+/obj/machinery/power/emitter/proc/update_beam()
+	if(active)
+		if(!beam)
+			beam = new (loc)
+			beam.dir=dir
+		beam.emit(spawn_by=src)
+	else
+		qdel(beam)
+		beam=null
 
 /obj/machinery/power/emitter/Destroy()
+	qdel(beam)
 	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
 		message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Emitter deleted at ([x],[y],[z])")
@@ -74,6 +90,7 @@
 				src.fire_delay = 100
 				investigate_log("turned <font color='green'>on</font> by [user.key]","singulo")
 			update_icon()
+			update_beam()
 		else
 			user << "<span class='danger'>The controls are locked!</span>"
 	else
@@ -96,6 +113,7 @@
 	if(src.state != 2 || (!powernet && active_power_usage))
 		src.active = 0
 		update_icon()
+		update_beam()
 		return
 	if(((src.last_shot + src.fire_delay) <= world.time) && (src.active == 1))
 
@@ -122,31 +140,10 @@
 			src.fire_delay = rand(20,100)
 			src.shot_number = 0
 
-		var/obj/item/projectile/beam/emitter/A = PoolOrNew(/obj/item/projectile/beam/emitter,src.loc)
-
-		A.dir = src.dir
-		playsound(src.loc, 'sound/weapons/emitter.ogg', 25, 1)
-
 		if(prob(35))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(5, 1, src)
 			s.start()
-
-		switch(dir)
-			if(NORTH)
-				A.yo = 20
-				A.xo = 0
-			if(EAST)
-				A.yo = 0
-				A.xo = 20
-			if(WEST)
-				A.yo = 0
-				A.xo = -20
-			else // Any other
-				A.yo = -20
-				A.xo = 0
-		A.fire()
-
 
 /obj/machinery/power/emitter/attackby(obj/item/W, mob/user)
 
@@ -228,3 +225,41 @@
 		locked = 0
 		emagged = 1
 		user.visible_message("[user.name] emags the [src.name].","<span class='danger'>You short out the lock.</span>")
+
+/obj/effect/beam/emitter
+	name = "emitter beam"
+	icon = 'icons/effects/beam.dmi'
+	var/base_state = "emitter"
+	icon_state = "emitter_1"
+	max_range = 20
+	var/power = 1
+	anchored = 1.0
+	damage_type=BURN
+	damage=30
+	// Notify prisms of power change.
+	var/event/power_change=new
+
+/obj/effect/beam/emitter/proc/set_power(var/newpower=1)
+	power=newpower
+	if(next)
+		var/obj/effect/beam/emitter/next_beam=next
+		next_beam.set_power(power)
+	update_icon()
+	if(!master)
+		INVOKE_EVENT(power_change,list("beam"=src))
+
+/obj/effect/beam/emitter/spawn_child()
+	var/obj/effect/beam/emitter/beam = ..()
+	beam.power=power
+	return beam
+
+/obj/effect/beam/emitter/update_icon()
+	if(!master)
+		invisibility=101 // Make doubly sure
+		return
+	var/visible_power=Clamp(round(power/3)+1, 1, 3)
+	//if(!master) testing("Visible power: [visible_power]")
+	icon_state="[base_state]_[visible_power]"
+
+/obj/effect/beam/emitter/get_damage()
+	return damage*power

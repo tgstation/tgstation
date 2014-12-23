@@ -4,6 +4,7 @@
 	icon_state = "blob_node"
 	health = 100
 	fire_resist = 2
+	custom_process=1
 
 
 /obj/effect/blob/node/New(loc, var/h = 100)
