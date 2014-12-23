@@ -86,6 +86,30 @@
 	eject(usr)
 
 
+/obj/item/device/taperecorder/verb/rewind()
+	set name = "Rewind Tape"
+	set category = "Object"
+
+	if(mytape)
+		usr << "<span class='notice'>You begin rewinding the recorder's tape.</span>"
+		if(do_after(usr, 50) && !mytape.ruined)
+			usr << "<span class='notice'>You rewind the tape's contents. New content can be recorded over it.</span>"
+			reset_tape()
+		else if(mytape.ruined)
+			usr << "<span class='danger'>The tape in the recorder seems to be broken.</span>"
+		else
+			usr << "<span class='danger'>You fail to rewind the tape.</span>"
+	else if(!mytape)
+		usr << "<span class='notice'>You can't rewind a tape when there isn't a tape.</span>"
+		return
+
+
+/obj/item/device/taperecorder/proc/reset_tape()
+	mytape.used_capacity = 0
+	mytape.storedinfo = list()
+	mytape.timestamp = list()
+
+
 /obj/item/device/taperecorder/update_icon()
 	if(!mytape)
 		icon_state = "taperecorder_empty"
@@ -249,7 +273,7 @@
 
 /obj/item/device/tape
 	name = "tape"
-	desc = "A magnetic tape that can hold up to ten minutes of content. It has a small red button labelled RESET on the back."
+	desc = "A magnetic tape that can hold up to ten minutes of content. It has a small red button labelled REWIND on the back."
 	icon_state = "tape_white"
 	item_state = "analyzer"
 	w_class = 1
@@ -271,27 +295,9 @@
 			user << "<span class='notice'>You pull out all the tape!</span>"
 			ruin()
 
-/obj/item/device/tape/verb/reset()
-	set name = "Reset Tape Recording"
-	set category = "Object"
-	if(!ruined)
-		usr << "<span class='notice'>You begin to reset the tape.</span>"
-		if(do_after(usr, 50) && !ruined)
-			usr << "<span class='notice'>You reset the tape!</span>"
-			reset_tape()
-		else
-			usr << "<span class='danger'>You fail to reset the tape.</span>"
-	else if(ruined)
-		usr << "<span class='danger'>You can't reset the tape when there's no tape to reset.</span>"
-
 /obj/item/device/tape/proc/ruin()
 	overlays += "ribbonoverlay"
 	ruined = 1
-
-/obj/item/device/tape/proc/reset_tape()
-	used_capacity = 0
-	storedinfo = list()
-	timestamp = list()
 
 /obj/item/device/tape/proc/fix()
 	overlays -= "ribbonoverlay"
