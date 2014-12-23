@@ -13,8 +13,6 @@
 	if (!message || silent || miming)
 		return
 
-	log_whisper("[src.name]/[src.key] : [message]")
-
 	if (src.client)
 		if (src.client.prefs.muted & MUTE_IC)
 			src << "\red You cannot whisper (muted)."
@@ -45,6 +43,8 @@
 	if (istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
 		return
 
+	log_whisper("[src.name]/[src.key] (@[src.x],[src.y],[src.z]): [message]")
+		
 	var/italics = 1
 	var/message_range = 1
 	//var/orig_text=message
