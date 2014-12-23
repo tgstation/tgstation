@@ -238,17 +238,17 @@ obj/item/weapon/twohanded/
 
 /obj/item/weapon/twohanded/dualsaber/attack_hulk(mob/living/carbon/human/user)
 	if(wielded)
-		user << "<span class='warning'>You cant pick up such dangerous item with your meaty hands without loosing fingers, better not to.</span>"
+		user << "<span class='warning'>You cant pick up such dangerous item with your meaty hands without losing fingers, better not to.</span>"
 		return 1
 
 /obj/item/weapon/twohanded/dualsaber/wield() //Specific wield () hulk checks due to reflect_chance var for balance issues and switches hitsounds.
-	..()
 	var/mob/living/carbon/M = loc
-	if(istype(loc, /mob/living))
+	if(istype(M))
 		if(M.dna.check_mutation("HULK", M))
 			loc << "<span class='warning'>You lack the grace to wield this to its full extent.</span>"
+			return
+	..()
 	hitsound = 'sound/weapons/blade1.ogg'
-
 
 /obj/item/weapon/twohanded/dualsaber/unwield() //Specific unwield () to switch hitsounds.
 	..()

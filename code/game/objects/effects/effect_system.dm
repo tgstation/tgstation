@@ -968,9 +968,10 @@ steam.start() -- spawns the effect
 
 /obj/structure/foamedmetal/attack_hulk(mob/living/carbon/human/user)
 	..(user, 1)
-	user.visible_message("<span class='danger'>[user] smashes through the foamed metal.</span>", \
+	if(prob(75 - metal*25))
+		user.visible_message("<span class='danger'>[user] smashes through the foamed metal.</span>", \
 						"<span class='danger'>You smash through the metal foam wall.</span>")
-	qdel(src)
+		qdel(src)
 	return 1
 
 /obj/structure/foamedmetal/attack_hand(var/mob/user)
