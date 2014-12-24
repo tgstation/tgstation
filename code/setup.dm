@@ -141,7 +141,7 @@ var/global/disable_vents     = 0
 
 #define T0C  273.15					// 0degC
 #define T20C 293.15					// 20degC
-#define TCMB 2.7					// -270.3degC
+#define TCMB 2.73					// -270.42degC
 
 var/turf/space/Space_Tile = locate(/turf/space) // A space tile to reference when atmos wants to remove excess heat.
 
