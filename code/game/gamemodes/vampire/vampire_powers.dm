@@ -395,7 +395,7 @@
 			flick("reappear",animation)
 			sleep(5)
 			if(!M.current.Move(mobloc))
-				for(var/direction in list(1,2,4,8,5,6,9,10))
+				for(var/direction in alldirs)
 					var/turf/T = get_step(mobloc, direction)
 					if(T)
 						if(M.current.Move(T))
