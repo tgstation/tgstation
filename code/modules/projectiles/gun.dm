@@ -83,23 +83,28 @@
 				M.drop_item()
 				return
 
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!can_trigger_gun(L))
+			return
+
+	process_fire(target,user,flag,params)
+
+/obj/item/weapon/gun/proc/can_trigger_gun(mob/living/user)
 	if (!user.IsAdvancedToolUser())
 		user << "<span class='notice'>You don't have the dexterity to do this!</span>"
-		return
+		return 0
 
 	if(trigger_guard)
-		if(istype(user, /mob/living))
-			var/mob/living/M = user
-			if (HULK in M.mutations)
-				M << "<span class='notice'>Your meaty finger is much too large for the trigger guard!</span>"
-				return
+		if (HULK in user.mutations)
+			user << "<span class='notice'>Your meaty finger is much too large for the trigger guard!</span>"
+			return 0
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(H.dna && NOGUNS in H.dna.species.specflags)
 				user << "<span class='notice'>Your fingers don't fit in the trigger guard!</span>"
-				return
-
-	process_fire(target,user,flag,params)
+				return 0
+	return 1
 
 /obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, var/message = 1, params)
 
