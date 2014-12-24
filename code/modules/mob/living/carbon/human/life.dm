@@ -337,13 +337,12 @@ var/global/list/organ_damage_overlays = list(
 /mob/living/carbon/human
 
 	proc/handle_disabilities()
-		if (disabilities & EPILEPSY)
-			if ((prob(1) && paralysis < 1))
-				src << "\red You have a seizure!"
-				for(var/mob/O in viewers(src, null))
-					if(O == src)
-						continue
-					O.show_message(text("\red <B>[src] starts having a seizure!"), 1)
+		if(disabilities & EPILEPSY)
+			if((prob(1)) && (paralysis < 1))
+				visible_message( \
+					"<SPAN CLASS='danger'>[src] starts having a seizure!</SPAN>", \
+					"<SPAN CLASS='warning'>You have a seizure!</SPAN>")
+
 				Paralyse(10)
 				make_jittery(1000)
 
