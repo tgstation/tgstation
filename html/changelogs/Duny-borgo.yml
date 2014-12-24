@@ -1,0 +1,4 @@
+author: Duny
+delete-after: True
+changes: 
+  - bugfix: Fixed sleek borg sprites not having lights.
