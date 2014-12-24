@@ -244,7 +244,7 @@
 		return
 	if((wielded) && prob(50))
 		spawn(0)
-			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
+			for(var/i in alldirs)
 				user.dir = i
 				sleep(1)
 

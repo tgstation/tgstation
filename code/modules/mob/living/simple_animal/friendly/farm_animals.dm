@@ -52,7 +52,7 @@
 				say("Nom")
 
 		if(!pulledby)
-			for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
+			for(var/direction in shuffle(alldirs))
 				var/step = get_step(src, direction)
 				if(step)
 					if(locate(/obj/effect/plantsegment) in step)
