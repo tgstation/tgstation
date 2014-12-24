@@ -144,9 +144,9 @@
 	W.source = wirestore
 	modules += W
 
-	var/obj/item/stack/tile/plasteel/cyborg/F = new /obj/item/stack/tile/plasteel/cyborg(src) //"Plasteel" is the normal metal floor tile, Don't be confused - RR
+	var/obj/item/stack/tile/plasteel/cyborg/F = new /obj/item/stack/tile/plasteel/cyborg(src) //"Plasteel" is the normal metal floor tile, Don't be confused
 	F.source = metstore
-	modules += F //'F' for floor tile - RR(src)
+	modules += F
 
 	storages += metstore
 	storages += glastore
@@ -154,16 +154,15 @@
 	fix_modules()
 
 /obj/item/weapon/robot_module/security
-	name = "security robot module"
+	name = "detective robot module"
 
 /obj/item/weapon/robot_module/security/New()
 	..()
 	modules += new /obj/item/device/flashlight/seclite(src)
 	modules += new /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg(src)
-	modules += new /obj/item/weapon/melee/baton/loaded(src)
-	modules += new /obj/item/weapon/gun/energy/taser/cyborg(src)
+	modules += new /obj/item/device/detective_scanner(src)
 	modules += new /obj/item/clothing/mask/gas/sechailer/cyborg(src)
-	emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
+	emag = new /obj/item/weapon/gun/energy/revolver/cyborg(src)
 	fix_modules()
 
 
