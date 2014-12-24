@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - bugfix: Fix open airlocks not being screwdriverable. This was pissing if the AI was being a shit and if some griffer opened and bolted the airlock (and somehow closed the panel)
