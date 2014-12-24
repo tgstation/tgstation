@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - bugfix: Fix Discount Dan recharge packages being invisible (discout instead of discount)
