@@ -287,3 +287,7 @@
 	if(current_size == STAGE_FOUR)
 		if(prob(30))
 			dismantle_wall()
+
+/turf/simulated/wall/narsie_act()
+	if(prob(20))
+		ChangeTurf(/turf/simulated/wall/cult)
