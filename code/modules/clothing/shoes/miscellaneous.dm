@@ -16,15 +16,15 @@
 
 /obj/item/clothing/shoes/combat //basic syndicate combat boots for nuke ops and mob corpses
 	name = "combat boots"
-	desc = "High speed, low drag combat boots."
-	icon_state = "jackboots"
+	desc = "High speed, low drag lace-up combat boots."
+	icon_state = "combat"
 	item_state = "jackboots"
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 10, rad = 0)
 	strip_delay = 70
 
 /obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
 	name = "\improper SWAT boots"
-	desc = "High speed, no drag combat boots."
+	desc = "High speed, no drag lace-up combat boots."
 	permeability_coefficient = 0.01
 	flags = NOSLIP
 	armor = list(melee = 80, bullet = 60, laser = 50, energy = 50, bomb = 50, bio = 30, rad = 30)
@@ -84,12 +84,20 @@
 
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"
-	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
+	desc = "Nanotrasen-issue Security laceless combat boots for combat scenarios or combat situations. All combat, all the time."
 	icon_state = "jackboots"
 	item_state = "jackboots"
 	item_color = "hosred"
 	strip_delay = 50
 	put_on_delay = 50
+
+/obj/item/clothing/shoes/workboots
+	name = "work boots"
+	desc = "Nanotrasen-issue Engineering lace-up work boots for the especially blue-collar."
+	icon_state = "workboots"
+	item_state = "jackboots"
+	strip_delay = 40
+	put_on_delay = 40
 
 /obj/item/clothing/shoes/winterboots
 	name = "winter boots"
