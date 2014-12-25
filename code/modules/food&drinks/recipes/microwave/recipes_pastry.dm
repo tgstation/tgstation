@@ -71,34 +71,10 @@
 /datum/recipe/donkpocket
 	reagents = list("flour" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/faggot,
+		/obj/item/weapon/reagent_containers/food/snacks/faggot
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket //SPECIAL
+	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket
 
-/datum/recipe/donkpocket/proc/warm_up(var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked)
-	being_cooked.warm = 1
-	being_cooked.reagents.add_reagent("tricordrazine", 5)
-	being_cooked.reagents.del_reagent("sugar")
-	being_cooked.bitesize = 6
-	being_cooked.name = "Warm " + being_cooked.name
-	being_cooked.cooltime()
-
-/datum/recipe/donkpocket/make_food(var/obj/container as obj)
-	var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked = ..(container)
-	warm_up(being_cooked)
-	return being_cooked
-
-/datum/recipe/donkpocket/warm
-	reagents = list() //This is necessary since this is a child object of the above recipe and we don't want donk pockets to need flour
-	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/donkpocket
-	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket //SPECIAL
-	make_food(var/obj/container as obj)
-		var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked = locate() in container
-		if(being_cooked && !being_cooked.warm)
-			warm_up(being_cooked)
-		return being_cooked
 
 ////////////////////////////////////////////////MUFFINS////////////////////////////////////////////////
 

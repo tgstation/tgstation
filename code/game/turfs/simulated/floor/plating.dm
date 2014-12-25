@@ -110,6 +110,9 @@
 	name = "engraved floor"
 	icon_state = "cult"
 
+/turf/simulated/floor/engine/cult/narsie_act()
+	return
+
 /turf/simulated/floor/engine/n20/New()
 	..()
 	var/datum/gas_mixture/adding = new
@@ -137,8 +140,7 @@
 	nitrogen = 0
 	temperature = TCMB
 
-/turf/simulated/floor/airless
-	icon_state = "floor"
+/turf/simulated/floor/plasteel/airless
 	oxygen = 0
 	nitrogen = 0
 	temperature = TCMB

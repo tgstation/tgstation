@@ -41,3 +41,12 @@
 
 /obj/machinery/atmospherics/pipe/setPipenet(datum/pipeline/P)
 	parent = P
+
+/obj/machinery/atmospherics/pipe/Destroy()
+	var/turf/T = loc
+	for(var/obj/machinery/meter/meter in T)
+		if(meter.target == src)
+			var/obj/item/pipe_meter/PM = new (T)
+			meter.transfer_fingerprints_to(PM)
+			qdel(meter)
+	..()
