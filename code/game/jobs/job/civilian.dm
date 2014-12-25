@@ -50,26 +50,26 @@ Bartender
 		H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
 
 /*
-Chef
+Cook
 */
-/datum/job/chef
-	title = "Chef"
-	flag = CHEF
+/datum/job/cook
+	title = "Cook"
+	flag = COOK
 	department_head = list("Head of Personnel")
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 1
+	total_positions = 2
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 
-	default_pda = /obj/item/device/pda/chef
+	default_pda = /obj/item/device/pda/cook
 	default_headset = /obj/item/device/radio/headset/headset_srv
 
 	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue)
 	minimal_access = list(access_kitchen, access_morgue)
 
-/datum/job/chef/equip_items(var/mob/living/carbon/human/H)
+/datum/job/cook/equip_items(var/mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chef(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/chef(H), slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
