@@ -677,6 +677,57 @@ obj/structure/cable/proc/avail()
 			if (prob(50)) //fail
 				C.Deconstruct()
 
+
+
+// called when cable_coil is clicked on a catwalk
+/obj/item/stack/cable_coil/proc/catwalk_place(var/obj/structure/lattice/catwalk/W, mob/user)
+	if(get_amount() < 1) // Out of cable
+		user << "There is no cable left."
+		return
+
+	if(get_dist(W,user) > 1) // Too far
+		user << "You can't lay cable at a place that far away."
+		return
+
+	else
+		var/dirn
+
+		if(user.loc == W)
+			dirn = user.dir			// if laying on the tile we're on, lay in the direction we're facing
+		else
+			dirn = get_dir(W, user)
+
+		for(var/obj/structure/cable/LC in W)
+			if(LC.d2 == dirn && LC.d1 == 0)
+				user << "There's already a cable at that position."
+				return
+
+		var/obj/structure/cable/C = get_new_cable (W)
+
+		//set up the new cable
+		C.d1 = 0 //it's a O-X node cable
+		C.d2 = dirn
+		C.add_fingerprint(user)
+		C.updateicon()
+
+		//create a new powernet with the cable, if needed it will be merged later
+		var/datum/powernet/PN = new()
+		PN.add_cable(C)
+
+		C.mergeConnectedNetworks(C.d2) //merge the powernet with adjacents powernets
+		C.mergeConnectedNetworksOnTurf() //merge the powernet with on turf powernets
+
+		if(C.d2 & (C.d2 - 1))// if the cable is layed diagonally, check the others 2 possible directions
+			C.mergeDiagonalsNetworks(C.d2)
+
+
+		use(1)
+
+		if (C.shock(user, 50))
+			if (prob(50)) //fail
+				C.Deconstruct()
+
+
 // called when cable_coil is click on an installed obj/cable
 // or click on a turf that already contains a "node" cable
 /obj/item/stack/cable_coil/proc/cable_join(obj/structure/cable/C, mob/user)
@@ -695,6 +746,9 @@ obj/structure/cable/proc/avail()
 
 
 	if(U == T) //if clicked on the turf we're standing on, try to put a cable in the direction we're facing
+		for(var/obj/structure/lattice/catwalk/W in src)
+			catwalk_place(W,user)
+			return
 		turf_place(T,user)
 		return
 

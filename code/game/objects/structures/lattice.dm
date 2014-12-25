@@ -1,13 +1,14 @@
 /obj/structure/lattice
-	desc = "A lightweight support lattice."
 	name = "lattice"
+	desc = "A lightweight support lattice."
 	icon = 'icons/obj/structures.dmi'
-	icon_state = "latticefull"
+	icon_state = "lattice"
 	density = 0
 	anchored = 1.0
 	layer = 2.3 //under pipes
 	var/obj/item/stack/rods/stored
 	//	flags = CONDUCT
+	var/intact = 0 //for potential cable coil errors
 
 /obj/structure/lattice/New()
 	..()
@@ -18,7 +19,6 @@
 			qdel(LAT)
 	stored = new/obj/item/stack/rods(src)
 	icon = 'icons/obj/smoothlattice.dmi'
-	icon_state = "latticeblank"
 	updateOverlays()
 	for (var/dir in cardinal)
 		var/obj/structure/lattice/L
@@ -60,7 +60,7 @@
 	if (istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = C
 		if(WT.remove_fuel(0, user))
-			user << "<span class='notice'>Slicing lattice joints ...</span>"
+			user << "<span class='notice'>Slicing [initial(icon_state)] joints ...</span>"
 			Deconstruct()
 	return
 
@@ -78,7 +78,7 @@
 			if(!(istype(get_step(src, direction), /turf/space)))
 				dir_sum += direction
 
-	icon_state = "lattice[dir_sum]"
+	icon_state = "[initial(icon_state)][dir_sum]"
 	return
 
 /obj/structure/lattice/Deconstruct()
@@ -89,3 +89,18 @@
 /obj/structure/lattice/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FOUR)
 		Deconstruct()
+
+/obj/structure/lattice/catwalk
+	name = "catwalk"
+	desc = "A catwalk for easier EVA manuevering."
+	icon_state = "catwalk"
+
+/obj/structure/lattice/catwalk/attackby(obj/item/C as obj, mob/user as mob)
+	..()
+	if(istype(C, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/coil = C
+		for(var/obj/structure/cable/LC in src)
+			if((LC.d1==0)||(LC.d2==0))
+				LC.attackby(C,user)
+				return
+		coil.catwalk_place(src, user)
