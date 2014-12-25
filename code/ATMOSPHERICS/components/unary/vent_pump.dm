@@ -345,9 +345,10 @@
 		return
 
 	var/obj/selection = input(L,"Select a destination.", "Duct System") as null|anything in sortList(vents)
-	if(!selection)	return
+	if(!selection)
+		return
 
-	if(!Adjacent(L))
+	if(!Adjacent(L) || L.stat || L.lying || !L.ventcrawler || welded)
 		return
 	if(iscarbon(L) && L.ventcrawler < 2) // lesser ventcrawlers can't bring items
 		for(var/obj/item/carried_item in L.contents)
@@ -359,11 +360,10 @@
 	if(!target_vent)
 		return
 
-	for(var/mob/O in viewers(L, null))
-		O.show_message(text("<B>[L] scrambles into the ventilation ducts!</B>"), 1)
+	L.visible_message("<span class='notice'>[L] scrambles into the ventilation ducts!</span>", \
+						"<span class='notice'>You scramble into the ventilation ducts.</span>")
 
-	for(var/mob/O in hearers(target_vent,null))
-		O.show_message("You hear something squeezing through the ventilation ducts.",2)
+	target_vent.audible_message("<span class='notice'>You hear something squeezing through the ventilation ducts.</span>")
 
 	if(target_vent.welded)		//the vent can be welded while they scrolled through the list.
 		target_vent = src

@@ -249,7 +249,7 @@
 "eO" = (/turf/simulated/floor/airless{icon_state = "damaged4"},/area/space)
 "eP" = (/obj/structure/stool/bed/chair{dir = 1},/turf/simulated/floor/plasteel,/area/derelict/arrival)
 "eQ" = (/obj/machinery/door/morgue{name = "coffin storage"; req_access_txt = "22"},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/derelict/medical/chapel)
-"eR" = (/obj/structure/morgue,/turf/simulated/floor/plasteel{icon_state = "dark"},/area/derelict/medical/chapel)
+"eR" = (/obj/structure/bodycontainer/morgue,/turf/simulated/floor/plasteel{icon_state = "dark"},/area/derelict/medical/chapel)
 "eS" = (/obj/structure/table,/turf/simulated/floor/airless{icon_state = "white"},/area/derelict/medical)
 "eT" = (/turf/simulated/floor/airless{icon_state = "white"},/area/space)
 "eU" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/airless{icon_state = "damaged2"},/area/derelict/hallway/primary)

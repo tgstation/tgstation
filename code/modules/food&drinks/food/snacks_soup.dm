@@ -10,6 +10,7 @@
 	eatverb = pick("slurp","sip","suck","inhale","drink")
 	reagents.add_reagent("nutriment", 8)
 	reagents.add_reagent("water", 5)
+	reagents.add_reagent("vitamin", 4)
 	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/slimesoup
@@ -22,6 +23,7 @@
 	eatverb = pick("slurp","sip","suck","inhale","drink")
 	reagents.add_reagent("slimejelly", 5)
 	reagents.add_reagent("water", 10)
+	reagents.add_reagent("vitamin", 5)
 	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/bloodsoup
@@ -35,6 +37,7 @@
 	reagents.add_reagent("nutriment", 2)
 	reagents.add_reagent("blood", 10)
 	reagents.add_reagent("water", 5)
+	reagents.add_reagent("vitamin", 5)
 	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/clownstears
@@ -48,6 +51,7 @@
 	reagents.add_reagent("nutriment", 4)
 	reagents.add_reagent("banana", 5)
 	reagents.add_reagent("water", 10)
+	reagents.add_reagent("vitamin", 8)
 	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/vegetablesoup
@@ -61,6 +65,7 @@
 	eatverb = pick("slurp","sip","suck","inhale","drink")
 	reagents.add_reagent("nutriment", 8)
 	reagents.add_reagent("water", 5)
+	reagents.add_reagent("vitamin", 5)
 	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/nettlesoup
@@ -75,6 +80,7 @@
 	reagents.add_reagent("nutriment", 8)
 	reagents.add_reagent("water", 5)
 	reagents.add_reagent("tricordrazine", 5)
+	reagents.add_reagent("vitamin", 5)
 	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/mysterysoup
@@ -137,6 +143,7 @@
 	if(prob(25))
 		desc = "A wish come true!"
 		reagents.add_reagent("nutriment", 8)
+		reagents.add_reagent("vitamin", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/hotchili
 	name = "hot chili"
@@ -147,9 +154,10 @@
 /obj/item/weapon/reagent_containers/food/snacks/hotchili/New()
 	..()
 	eatverb = pick("slurp","sip","suck","inhale","drink")
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("capsaicin", 3)
+	reagents.add_reagent("nutriment", 5)
+	reagents.add_reagent("capsaicin", 1)
 	reagents.add_reagent("tomatojuice", 2)
+	reagents.add_reagent("vitamin", 2)
 	bitesize = 5
 
 
@@ -162,9 +170,10 @@
 /obj/item/weapon/reagent_containers/food/snacks/coldchili/New()
 	..()
 	eatverb = pick("slurp","sip","suck","inhale","drink")
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("frostoil", 3)
+	reagents.add_reagent("nutriment", 5)
+	reagents.add_reagent("frostoil", 1)
 	reagents.add_reagent("tomatojuice", 2)
+	reagents.add_reagent("vitamin", 2)
 	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeysdelight
@@ -179,7 +188,8 @@
 	reagents.add_reagent("banana", 5)
 	reagents.add_reagent("blackpepper", 1)
 	reagents.add_reagent("sodiumchloride", 1)
-	bitesize = 6
+	reagents.add_reagent("vitamin", 5)
+	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/tomatosoup
 	name = "tomato soup"
@@ -192,6 +202,7 @@
 	eatverb = pick("slurp","sip","suck","inhale","drink")
 	reagents.add_reagent("nutriment", 5)
 	reagents.add_reagent("tomatojuice", 10)
+	reagents.add_reagent("vitamin", 3)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/milosoup
@@ -205,6 +216,7 @@
 	eatverb = pick("slurp","sip","suck","inhale","drink")
 	reagents.add_reagent("nutriment", 8)
 	reagents.add_reagent("water", 5)
+	reagents.add_reagent("vitamin", 3)
 	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/mushroomsoup
@@ -217,6 +229,7 @@
 	..()
 	eatverb = pick("slurp","sip","suck","inhale","drink")
 	reagents.add_reagent("nutriment", 8)
+	reagents.add_reagent("vitamin", 4)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/beetsoup
@@ -230,4 +243,5 @@
 	eatverb = pick("slurp","sip","suck","inhale","drink")
 	name = pick("borsch","bortsch","borstch","borsh","borshch","borscht")
 	reagents.add_reagent("nutriment", 8)
+	reagents.add_reagent("vitamin", 4)
 	bitesize = 2

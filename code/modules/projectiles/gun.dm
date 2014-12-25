@@ -1,3 +1,7 @@
+ #define SAWN_INTACT  0
+ #define SAWN_OFF     1
+ #define SAWN_SAWING -1
+
 /obj/item/weapon/gun
 	name = "gun"
 	desc = "It's a gun. It's pretty terrible, though."
@@ -23,6 +27,7 @@
 	var/obj/item/ammo_casing/chambered = null
 	var/trigger_guard = 1
 	var/sawn_desc = null
+	var/sawn_state = SAWN_INTACT
 
 /obj/item/weapon/gun/proc/process_chamber()
 	return 0
@@ -30,12 +35,17 @@
 /obj/item/weapon/gun/proc/special_check(var/mob/M) //Placeholder for any special checks, like detective's revolver.
 	return 1
 
+//check if there's enough ammo/energy/whatever to shoot one time
+//i.e if clicking would make it shoot
+/obj/item/weapon/gun/proc/can_shoot()
+	return 1
+
 /obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	user << "<span class='danger'>*click*</span>"
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	return
 
-/obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user as mob|obj, var/pointblank = 0, var/mob/pbtarget = null)
+/obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user as mob|obj, var/pointblank = 0, var/mob/pbtarget = null, var/message = 1)
 	if(recoil)
 		spawn()
 			shake_camera(user, recoil + 1, recoil)
@@ -44,6 +54,8 @@
 		playsound(user, fire_sound, 10, 1)
 	else
 		playsound(user, fire_sound, 50, 1)
+		if(!message)
+			return
 		if(pointblank)
 			user.visible_message("<span class='danger'>[user] fires [src] point blank at [pbtarget]!</span>", "<span class='danger'>You fire [src] point blank at [pbtarget]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
 		else
@@ -62,43 +74,53 @@
 			return
 
 	//Exclude lasertag guns from the CLUMSY check.
-	if(clumsy_check)
+	if(clumsy_check && can_shoot())
 		if(istype(user, /mob/living))
 			var/mob/living/M = user
 			if ((CLUMSY in M.mutations) && prob(40))
-				M << "<span class='danger'>You shoot yourself in the foot with \the [src]!</span>"
-				afterattack(user, user)
+				user << "<span class='danger'>You shoot yourself in the foot with \the [src]!</span>"
+				process_fire(user,user,0,params)
 				M.drop_item()
 				return
 
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!can_trigger_gun(L))
+			return
+
+	process_fire(target,user,flag,params)
+
+/obj/item/weapon/gun/proc/can_trigger_gun(mob/living/user)
 	if (!user.IsAdvancedToolUser())
 		user << "<span class='notice'>You don't have the dexterity to do this!</span>"
-		return
+		return 0
 
 	if(trigger_guard)
-		if(istype(user, /mob/living))
-			var/mob/living/M = user
-			if (HULK in M.mutations)
-				M << "<span class='notice'>Your meaty finger is much too large for the trigger guard!</span>"
-				return
+		if (HULK in user.mutations)
+			user << "<span class='notice'>Your meaty finger is much too large for the trigger guard!</span>"
+			return 0
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(H.dna && NOGUNS in H.dna.species.specflags)
 				user << "<span class='notice'>Your fingers don't fit in the trigger guard!</span>"
-				return
+				return 0
+	return 1
+
+/obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, var/message = 1, params)
 
 	add_fingerprint(user)
+
+	if(!special_check(user))
+		return
 
 	if(chambered)
 		if(!chambered.fire(target, user, params, , suppressed))
 			shoot_with_empty_chamber(user)
 		else
-			if(!special_check(user))
-				return
 			if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
-				shoot_live_shot(user, 1, target)
+				shoot_live_shot(user, 1, target,message)
 			else
-				shoot_live_shot(user)
+				shoot_live_shot(user,message)
 	else
 		shoot_with_empty_chamber(user)
 	process_chamber()

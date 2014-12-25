@@ -34,7 +34,7 @@ Bonus
 				M << "<span class='notice'>[pick("You feel blubbery.", "You feel full.")]</span>"
 			else
 				M.overeatduration = min(M.overeatduration + 100, 600)
-				M.nutrition = min(M.nutrition + 100, 500)
+				M.nutrition = min(M.nutrition + 100, NUTRITION_LEVEL_FULL)
 
 	return
 
@@ -116,6 +116,6 @@ Bonus
 		switch(A.stage)
 			if(4, 5)
 				M.overeatduration = 0
-				M.nutrition = 400
+				M.nutrition = NUTRITION_LEVEL_WELL_FED + 50
 
 	return

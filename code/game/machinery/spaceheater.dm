@@ -65,7 +65,7 @@
 			return
 	else if(istype(I, /obj/item/weapon/screwdriver))
 		open = !open
-		user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the hatch on the [src].</span>")
+		user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the hatch on \the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the hatch on \the [src].</span>")
 		update_icon()
 		if(!open && user.machine == src)
 			user << browse(null, "window=spaceheater")
@@ -103,7 +103,7 @@
 
 	else
 		on = !on
-		user.visible_message("<span class='notice'>[user] switches [on ? "on" : "off"] the [src].</span>","<span class='notice'>You switch [on ? "on" : "off"] the [src].</span>")
+		user.visible_message("<span class='notice'>[user] switches [on ? "on" : "off"] \the [src].</span>","<span class='notice'>You switch [on ? "on" : "off"] \the [src].</span>")
 		update_icon()
 	return
 
