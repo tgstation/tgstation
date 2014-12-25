@@ -99,8 +99,8 @@
 			var/response = alert(M, "Santa is coming to town! Do you want to be santa?", "Ho ho ho!", "Yes", "No")
 			if(response == "Yes" && M && M.client && M.stat == DEAD && !santa)
 				santa = new /mob/living/carbon/human(pick(blobstart))
-				M.mind.transfer_to(santa)
 				santa.key = M.key
+				qdel(M)
 
 				santa.real_name = "Santa Claus"
 				santa.name = "Santa Claus"
@@ -148,4 +148,4 @@
 				telespell.clothes_req = 0 //santa robes aren't actually magical.
 				santa.mind.spell_list += telespell //does the station have chimneys? WHO KNOWS!
 				
-				M << "<span class='userdanger'>You are Santa! Your objective is to bring joy to the people on this station. You can conjure more presents using a spell, and there are several presents in your bag.</span>"
+				santa << "<span class='userdanger'>You are Santa! Your objective is to bring joy to the people on this station. You can conjure more presents using a spell, and there are several presents in your bag.</span>"
