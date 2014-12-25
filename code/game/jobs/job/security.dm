@@ -86,7 +86,7 @@ Warden
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
 	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/security/sunglasses(H), slot_glasses)
 	H.equip_to_slot_or_del(new /obj/item/device/flash/handheld(H), slot_l_store)
-	H.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/taser(H), slot_s_store)
+	H.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun/advtaser(H), slot_s_store)
 
 	if(H.backbag == 1)
 		H.equip_to_slot_or_del(new /obj/item/weapon/restraints/handcuffs(H), slot_l_hand)

@@ -13,16 +13,6 @@ datum/design/nuclear_gun
 	build_path = /obj/item/weapon/gun/energy/gun/nuclear
 	locked = 1
 
-datum/design/advtaser
-	name = "Advanced Taser"
-	desc = "A hybrid taser designed to shoot both short-range electrodes and long-range disabling beams."
-	id = "advtaser"
-	req_tech = list("combat" = 2, "materials" = 3, "powerstorage" = 2)
-	build_type = PROTOLATHE
-	materials = list("$metal" = 4000)
-	build_path = /obj/item/weapon/gun/energy/gun/advtaser
-	locked = 1
-
 datum/design/stunrevolver
 	name = "Stun Revolver"
 	desc = "A high-tech revolver that fires internal, reusable stun cartidges in a revolving cylinder. The stun cartridges can be recharged using a conventional energy weapon recharger."
