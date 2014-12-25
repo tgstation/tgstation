@@ -795,10 +795,18 @@
 							"<span class='userdanger'>[M] has [atk_verb]ed [H]!</span>")
 
 			H.apply_damage(damage, BRUTE, affecting, armor_block)
-			if((H.stat != DEAD) && damage >= 9)
-				H.visible_message("<span class='danger'>[M] has weakened [H]!</span>", \
-								"<span class='userdanger'>[M] has weakened [H]!</span>")
-				H.apply_effect(4, WEAKEN, armor_block)
+			if((H.stat != DEAD) && damage >= 5)
+				H.apply_damage(10,STAMINA,affecting,armor_block)
+				if(H.staminaloss >= 20 && prob(min(H.staminaloss,35)) && !H.weakened)
+					H.visible_message("<span class='danger'>[M] lands a heavy blow to [H]!</span>", \
+							"<span class='userdanger'>You have been knocked down!</span>")
+					H.Weaken(2)
+					if(!H.anchored)
+						step_away(H,M,2)
+						H.spin(4,1)
+					sleep(8)
+					H.weakened = 0
+					H.update_canmove()
 				H.forcesay(hit_appends)
 			else if(H.lying)
 				H.forcesay(hit_appends)
@@ -809,19 +817,9 @@
 
 			if(H.w_uniform)
 				H.w_uniform.add_fingerprint(M)
-			var/obj/item/organ/limb/affecting = H.get_organ(ran_zone(M.zone_sel.selecting))
-			var/randn = rand(1, 100)
-			if(randn <= 25)
-				H.apply_effect(2, WEAKEN, H.run_armor_check(affecting, "melee"))
-				playsound(H, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-				H.visible_message("<span class='danger'>[M] has pushed [H]!</span>",
-								"<span class='userdanger'>[M] has pushed [H]!</span>")
-				H.forcesay(hit_appends)
-				return
-
 			var/talked = 0	// BubbleWrap
 
-			if(randn <= 60)
+			if(prob(60))
 				//BubbleWrap: Disarming breaks a pull
 				if(H.pulling)
 					H.visible_message("<span class='warning'>[M] has broken [H]'s grip on [H.pulling]!</span>")
@@ -905,14 +903,17 @@
 
 
 		switch(hit_area)
-			if("head")	//Harder to score a stun but if you do it lasts a bit longer
-				if(H.stat == CONSCIOUS && prob(I.force) && armor < 50)
-					H.visible_message("<span class='danger'>[H] has been knocked unconscious!</span>", \
-									"<span class='userdanger'>[H] has been knocked unconscious!</span>")
-					H.apply_effect(20, PARALYZE, armor)
-					if(H != user && I.damtype == BRUTE)
-						ticker.mode.remove_revolutionary(H.mind)
-						ticker.mode.remove_gangster(H.mind)
+			if("head")
+				if(H.stat == CONSCIOUS && armor < 50)
+					if(H.staminaloss >= 20 && prob(I.force))
+						H.visible_message("<span class='danger'>[H] has been knocked unconscious!</span>", \
+										"<span class='userdanger'>[H] has been knocked unconscious!</span>")
+						H.apply_effect(20, PARALYZE, armor)
+						if(H != user && I.damtype == BRUTE)
+							ticker.mode.remove_revolutionary(H.mind)
+							ticker.mode.remove_gangster(H.mind)
+					else
+						H.apply_damage(5, STAMINA, null, armor)
 
 				if(bloody)	//Apply blood
 					if(H.wear_mask)
@@ -925,12 +926,13 @@
 						H.glasses.add_blood(H)
 						H.update_inv_glasses(0)
 
-			if("chest")	//Easier to score a stun but lasts less time
-				if(H.stat == CONSCIOUS && I.force && prob(I.force + 10))
-					H.visible_message("<span class='danger'>[H] has been knocked down!</span>", \
-									"<span class='userdanger'>[H] has been knocked down!</span>")
-					H.apply_effect(5, WEAKEN, armor)
-
+			else
+				if(H.stat == CONSCIOUS && I.force > 5)
+					H.apply_damage(max(I.force * 0.75, 10),STAMINA,null,null)
+					if(!H.anchored && !H.lying)
+						if(H.CheckStamina())
+							step_away(H,user,2)
+							H.spin(4,1)
 				if(bloody)
 					if(H.wear_suit)
 						H.wear_suit.add_blood(H)
@@ -999,6 +1001,7 @@
 			H.adjustCloneLoss(damage * blocked)
 		if(STAMINA)
 			H.adjustStaminaLoss(damage * blocked)
+	H.updatehealth()
 
 /datum/species/proc/on_hit(var/obj/item/projectile/proj_type, var/mob/living/carbon/human/H)
 	// called when hit by a projectile

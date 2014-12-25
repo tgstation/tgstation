@@ -704,11 +704,12 @@
 		if(total_health <= config.health_threshold_crit && !stat)
 			Exhaust()
 			setStaminaLoss(health - 2)
-			return
-		setStaminaLoss(max((staminaloss - 2), 0))
+			return 1
+	return 0
 
 /mob/living/proc/Exhaust()
-	src << "<span class='notice'>You're too exhausted to keep going...</span>"
+	if(!weakened)
+		src << "<span class='notice'>You're too exhausted to keep going...</span>"
 	Weaken(5)
 
 /mob/living/update_gravity(has_gravity)

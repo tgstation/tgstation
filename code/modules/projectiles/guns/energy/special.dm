@@ -136,6 +136,33 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
 	cell_type = "/obj/item/weapon/stock_parts/cell"
 
+/obj/item/weapon/gun/energy/disabler/cyborg
+	desc = "A self-defense weapon that exhausts organic targets, weakening them until they collapse. Recharges from the Cyborg's cell."
+	var/charge_tick = 0
+	var/recharge_time = 10 //Time it takes for shots to recharge (in ticks)
+
+/obj/item/weapon/gun/energy/disabler/cyborg/New()
+	..()
+	processing_objects.Add(src)
+
+/obj/item/weapon/gun/energy/disabler/cyborg/Destroy()
+	processing_objects.Remove(src)
+	..()
+
+/obj/item/weapon/gun/energy/disabler/cyborg/process() //Every [recharge_time] ticks, recharge a shot for the cyborg
+	charge_tick++
+	if(charge_tick < recharge_time) return 0
+	charge_tick = 0
+
+	if(!power_supply) return 0 //sanity
+	if(isrobot(src.loc))
+		var/mob/living/silicon/robot/R = src.loc
+		if(R && R.cell)
+			var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+			if(R.cell.use(shot.e_cost))
+				power_supply.give(shot.e_cost)
+	update_icon()
+	return 1
 
 /obj/item/weapon/gun/energy/wormhole_projector
 	name = "bluespace wormhole projector"

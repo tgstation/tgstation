@@ -99,8 +99,8 @@
 
 
 /obj/item/borg/upgrade/tasercooler
-	name = "cyborg rapid taser cooling module"
-	desc = "Used to cool a mounted taser, increasing the potential current in it and thus its recharge rate."
+	name = "cyborg internal weapons cooling module"
+	desc = "Used to cool mounted weapons, increasing the potential current in it and thus its recharge rate."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 
@@ -113,13 +113,13 @@
 		usr << "There's no mounting point for the module!"
 		return 0
 
-	var/obj/item/weapon/gun/energy/taser/cyborg/T = locate() in R.module
+	var/obj/item/weapon/gun/energy/disabler/cyborg/T = locate() in R.module
 	if(!T)
 		T = locate() in R.module.contents
 	if(!T)
 		T = locate() in R.module.modules
 	if(!T)
-		usr << "This cyborg has had its taser removed!"
+		usr << "This cyborg has had its weapon removed!"
 		return 0
 
 	if(T.recharge_time <= 2)

@@ -48,6 +48,7 @@
 
 /obj/item/ammo_casing/energy/bolt
 	projectile_type = /obj/item/projectile/energy/bolt
+	e_cost = 50
 	select_name = "bolt"
 	fire_sound = 'sound/weapons/Genhit.ogg'
 
@@ -64,6 +65,9 @@
 	projectile_type = /obj/item/projectile/energy/electrode
 	select_name = "stun"
 	fire_sound = 'sound/weapons/taser.ogg'
+
+/obj/item/ammo_casing/energy/electrode/turret
+	projectile_type = /obj/item/projectile/energy/electrode/turret
 
 /obj/item/ammo_casing/energy/electrode/gun
 	fire_sound = 'sound/weapons/gunshot.ogg'

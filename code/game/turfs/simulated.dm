@@ -13,11 +13,11 @@
 	..()
 	levelupdate()
 
-/turf/simulated/proc/MakeSlippery(var/wet_setting = 1) // 1 = Water, 2 = Lube
+/turf/simulated/proc/MakeSlippery(var/wet_setting = 1) // 1 = Water, 2 = Mopped floor, 3 == Lube
 	if(wet >= wet_setting)
 		return
 	wet = wet_setting
-	if(wet_setting == 1)
+	if(wet_setting == 1 || wet_setting == 2)
 		if(wet_overlay)
 			overlays -= wet_overlay
 			wet_overlay = null
@@ -40,9 +40,14 @@
 
 		switch (src.wet)
 			if(1) //wet floor
+				if(!M.slip(1, 1, null, (NO_SLIP_WHEN_WALKING|STEP)))
+					M.inertia_dir = 0
+				return
+
+			if(2) //standard mopping
 				if(!M.slip(4, 2, null, (NO_SLIP_WHEN_WALKING|STEP)))
 					M.inertia_dir = 0
 				return
 
-			if(2) //lube
+			if(3) //lube
 				M.slip(0, 7, null, (STEP|SLIDE|GALOSHES_DONT_HELP))

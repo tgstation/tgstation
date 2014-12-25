@@ -9,14 +9,12 @@
 
 /obj/item/projectile/bullet/weakbullet
 	damage = 5
-	stun = 5
-	weaken = 5
+	stamina = 60
 
 
 /obj/item/projectile/bullet/weakbullet2
 	damage = 15
-	stun = 5
-	weaken = 5
+	stamina = 36
 
 /obj/item/projectile/bullet/weakbullet3
 	damage = 20
@@ -30,11 +28,11 @@
 
 /obj/item/projectile/bullet/midbullet
 	damage = 20
-	stun = 5
-	weaken = 5
+	stamina = 20
 
 /obj/item/projectile/bullet/midbullet2
 	damage = 25
+	stamina = 15
 
 /obj/item/projectile/bullet/midbullet3
 	damage = 30
@@ -46,8 +44,7 @@
 /obj/item/projectile/bullet/stunshot
 	name = "stunshot"
 	damage = 5
-	stun = 5
-	weaken = 5
+	stamina = 65
 	stutter = 5
 
 /obj/item/projectile/bullet/incendiary
@@ -146,7 +143,7 @@
 	icon_state = "neurotoxin"
 	damage = 5
 	damage_type = TOX
-	weaken = 5
+	stamina = 55
 
 /obj/item/projectile/bullet/neurotoxin/on_hit(var/atom/target, var/blocked = 0)
 	if(isalien(target))

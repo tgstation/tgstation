@@ -35,6 +35,8 @@
 	var/stutter = 0
 	var/eyeblur = 0
 	var/drowsy = 0
+	var/stamina = 0
+	var/range = -1 //Denotes how many tiles the projectile can move before calling Range(), which deletes itself by default. -1 == unlimited range
 	var/forcedodge = 0
 
 /obj/item/projectile/proc/on_hit(atom/target, blocked = 0, hit_zone)
@@ -42,7 +44,7 @@
 	if(isanimal(target))	return 0
 	var/mob/living/L = target
 	L.on_hit(type)
-	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, blocked)
+	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, blocked, stamina)
 
 /obj/item/projectile/proc/vol_by_damage()
 	if(src.damage)
@@ -117,4 +119,7 @@
 			sleep(1)
 
 /obj/item/projectile/proc/Range()
+	range--
+	if(range == 0)
+		qdel(src)
 	return

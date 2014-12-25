@@ -451,7 +451,8 @@
 		if(druggy)
 			druggy = max(druggy-1, 0)
 
-		CheckStamina()
+		if(!CheckStamina())
+			setStaminaLoss(max((staminaloss - 2), 0))
 	return 1
 
 

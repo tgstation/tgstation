@@ -230,7 +230,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/weapon/gun/energy/disabler,
 					/obj/item/weapon/gun/energy/disabler,
 					/obj/item/weapon/gun/energy/disabler)
-	cost = 10
+	cost = 15
 	containername = "disabler crate"
 
 ///// Armory stuff
