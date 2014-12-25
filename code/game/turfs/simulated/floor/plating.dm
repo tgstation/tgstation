@@ -63,7 +63,7 @@
 			if((LC.d1==0)||(LC.d2==0))
 				LC.attackby(C,user)
 				return
-		coil.turf_place(src, user)
+		coil.place(src, user)
 	else if(istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/welder = C
 		if( welder.isOn() && (broken || burnt) )
