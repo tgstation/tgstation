@@ -317,7 +317,7 @@ turf/simulated/floor/proc/update_icon()
 	else if(is_carpet_floor())
 		spawn(5)
 			if(src)
-				for(var/direction in list(1,2,4,8,5,6,9,10))
+				for(var/direction in alldirs)
 					if(istype(get_step(src,direction),/turf/simulated/floor))
 						var/turf/simulated/floor/FF = get_step(src,direction)
 						FF.update_icon() //so siding get updated properly
@@ -521,7 +521,7 @@ turf/simulated/floor/proc/update_icon()
 							var/turf/simulated/floor/FF = get_step(src,direction)
 							FF.update_icon() //so siding gets updated properly
 				else if(istype(T,/obj/item/stack/tile/carpet))
-					for(var/direction in list(1,2,4,8,5,6,9,10))
+					for(var/direction in alldirs)
 						if(istype(get_step(src,direction),/turf/simulated/floor))
 							var/turf/simulated/floor/FF = get_step(src,direction)
 							FF.update_icon() //so siding gets updated properly

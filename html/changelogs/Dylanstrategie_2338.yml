@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - bugfix: Fix hydroponics trays not being constructible (forgot the weird portable_atmospherics branching on the board build path)

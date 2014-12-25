@@ -1,7 +1,7 @@
 /mob/living/silicon/pai/regular_hud_updates()
 	if(client)
 		for(var/image/hud in client.images)
-			if(copytext(hud.icon_state,1,4) == "hud")
+			if(findtext(hud.icon_state, "hud", 1, 4))
 				client.images -= hud
 
 /mob/living/silicon/pai/proc/securityHUD()

@@ -118,7 +118,7 @@
 /obj/structure/vendomatpack/discount
 	name = "Discount Dan's recharge pack"
 	targetvendomat = /obj/machinery/vending/discount
-	icon_state = "discout"
+	icon_state = "discount"
 
 /obj/structure/vendomatpack/groans
 	name = "Groans Soda recharge pack"

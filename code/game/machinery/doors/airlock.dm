@@ -960,10 +960,9 @@ About the new airlock wires panel:
 
 	return
 
-// huehue you cannot screwdrive an operating door
-// neither closed door ;)
+//You can ALWAYS screwdriver a door. Period. Well, at least you can even if it's open
 /obj/machinery/door/airlock/togglePanelOpen(var/obj/toggleitem, mob/user)
-	if (density && !operating)
+	if(!operating)
 		panel_open = !panel_open
 		update_icon()
 		return 1
