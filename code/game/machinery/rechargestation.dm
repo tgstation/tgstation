@@ -168,7 +168,7 @@
 						O:icon_state = "flash"
 				// Engineering
 				// Security
-				if(istype(O,/obj/item/weapon/gun/energy/taser/cyborg))
+				if(istype(O,/obj/item/weapon/gun/energy/gun/advtaser/cyborg))
 					if(O:power_supply.charge < O:power_supply.maxcharge)
 						var/obj/item/weapon/gun/energy/G = O
 						var/obj/item/ammo_casing/energy/S = G.ammo_type[G.select]

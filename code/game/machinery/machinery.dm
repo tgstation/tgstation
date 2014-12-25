@@ -242,7 +242,8 @@ Class Procs:
 		return
 	//stop AIs from leaving windows open and using then after they lose vision
 	//apc_override is needed here because AIs use their own APC when powerless
-	if(cameranet && !cameranet.checkTurfVis(get_turf(M)) && !apc_override)
+	//the snowflake get_wall_mounted_turf() is because APCs in maint aren't actually in view of the inner camera
+	if(cameranet && !cameranet.checkTurfVis(get_wall_mounted_turf(M)) && !apc_override)
 		return
 	return 1
 
@@ -334,8 +335,8 @@ Class Procs:
 /obj/machinery/proc/default_change_direction_wrench(var/mob/user, var/obj/item/weapon/wrench/W)
 	if(panel_open && istype(W))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		dir = pick(WEST,EAST,SOUTH,NORTH)
-		user << "<span class='notice'>You clumsily rotate [src].</span>"
+		dir = turn(dir,-90)
+		user << "<span class='notice'>You rotate [src].</span>"
 		return 1
 	return 0
 
@@ -381,3 +382,7 @@ Class Procs:
 			W.play_rped_sound()
 		return 1
 	return 0
+
+//called on machinery construction (i.e from frame to machinery) but not on initialization
+/obj/machinery/proc/construction()
+	return

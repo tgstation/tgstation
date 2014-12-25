@@ -88,7 +88,7 @@
 
 /obj/item/weapon/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
 	if ((CLUMSY in user.mutations) && prob(50))
-		user << "<span class='danger'> You accidentally cut yourself with the [src].</span>"
+		user << "<span class='danger'> You accidentally cut yourself with \the [src].</span>"
 		user.take_organ_damage(20)
 		return
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)

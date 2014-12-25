@@ -385,7 +385,7 @@
 				cleared = 1
 				L -= I
 	if (cleared)
-		queueAlarm(text("--- [class] alarm in [A.name] has been cleared."), class, 0)
+		queueAlarm("--- [class] alarm in [A.name] has been cleared.", class, 0)
 //		if (viewalerts) robot_alerts()
 	return !cleared
 

@@ -21,6 +21,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/egg/New()
 	..()
 	reagents.add_reagent("nutriment", 1)
+	reagents.add_reagent("vitamin", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
 	..()
@@ -120,6 +121,8 @@
 		reagents.remove_reagent("nutriment", 1)
 		if(reagents.total_volume <= 0)
 			qdel(src)
+		return
+	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/benedict
 	name = "eggs benedict"
@@ -129,4 +132,5 @@
 /obj/item/weapon/reagent_containers/food/snacks/benedict/New()
 	..()
 	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("vitamin", 4)
 	bitesize = 3

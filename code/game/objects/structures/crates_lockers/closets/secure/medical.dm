@@ -129,12 +129,12 @@
 /obj/structure/closet/secure_closet/chemical
 	name = "chemical closet"
 	desc = "Store dangerous chemicals in here."
-	icon_state = "medical1"
-	icon_closed = "medical"
-	icon_locked = "medical1"
+	icon_state = "chemical1"
+	icon_closed = "chemical"
+	icon_locked = "chemical1"
 	icon_opened = "medicalopen"
-	icon_broken = "medicalbroken"
-	icon_off = "medicaloff"
+	icon_broken = "chemicalbroken"
+	icon_off = "chemicaloff"
 	req_access = list(access_chemistry)
 
 

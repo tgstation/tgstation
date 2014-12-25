@@ -48,6 +48,9 @@
 	update_icon()
 	return
 
+/obj/item/weapon/gun/projectile/automatic/can_shoot()
+	return get_ammo()
+
 /obj/item/weapon/gun/projectile/automatic/proc/empty_alarm()
 	if(!chambered && !get_ammo() && !alarmed)
 		playsound(src.loc, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
@@ -81,6 +84,8 @@
 	icon_state = "c20r[magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 	return
 
+
+
 /obj/item/weapon/gun/projectile/automatic/l6_saw
 	name = "syndicate LMG"
 	desc = "A heavily modified 7.62 light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the reciever below the designation."
@@ -98,6 +103,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/burst_select()
 	return
+
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user as mob)
 	cover_open = !cover_open
@@ -166,13 +172,11 @@
 		..()
 		empty_alarm()
 		return
-
 /obj/item/weapon/gun/projectile/automatic/c90gl/attackby(var/obj/item/A, mob/user)
 	if(select == 2)
 		underbarrel.attackby(A, user)
 	else
 		..()
-
 /obj/item/weapon/gun/projectile/automatic/c90gl/attack_self(var/mob/living/user)
 	if(select == 2)
 		underbarrel.attack_self(user)
@@ -206,11 +210,8 @@
 		burst_size = 1
 		fire_delay = 0
 		user << "<span class='notice'>You switch to semi-auto.</span>"
-
 	update_icon()
 	return
-
-
 
 /obj/item/weapon/gun/projectile/automatic/tommygun
 	name = "tommy gun"
