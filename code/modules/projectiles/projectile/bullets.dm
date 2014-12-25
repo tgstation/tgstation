@@ -9,14 +9,12 @@
 
 /obj/item/projectile/bullet/weakbullet
 	damage = 5
-	stun = 5
-	weaken = 5
+	stamina = 33
 
 
 /obj/item/projectile/bullet/weakbullet2
 	damage = 15
-	stun = 5
-	weaken = 5
+	stamina = 50
 
 /obj/item/projectile/bullet/weakbullet3
 	damage = 20
@@ -30,8 +28,7 @@
 
 /obj/item/projectile/bullet/midbullet
 	damage = 20
-	stun = 5
-	weaken = 5
+	stamina = 50
 
 /obj/item/projectile/bullet/midbullet2
 	damage = 25
@@ -46,8 +43,7 @@
 /obj/item/projectile/bullet/stunshot
 	name = "stunshot"
 	damage = 5
-	stun = 5
-	weaken = 5
+	stamina = 50
 	stutter = 5
 
 /obj/item/projectile/bullet/incendiary
