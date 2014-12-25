@@ -17,8 +17,8 @@
 /obj/item/clothing/shoes/combat //basic syndicate combat boots for nuke ops and mob corpses
 	name = "combat boots"
 	desc = "High speed, low drag combat boots."
-	icon_state = "jackboots"
-	item_state = "jackboots"
+	icon_state = "secboots"
+	item_state = "secboots"
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 10, rad = 0)
 	strip_delay = 70
 
@@ -82,11 +82,11 @@
 	else
 		footstep++
 
-/obj/item/clothing/shoes/jackboots
-	name = "jackboots"
+/obj/item/clothing/shoes/secboots
+	name = "security boots"
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
-	icon_state = "jackboots"
-	item_state = "jackboots"
+	icon_state = "secboots"
+	item_state = "secboots"
 	item_color = "hosred"
 	strip_delay = 50
 	put_on_delay = 50
