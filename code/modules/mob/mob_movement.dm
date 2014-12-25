@@ -418,7 +418,7 @@
 	// Crossed is always a bit iffy
 	for(var/obj/S in mob.loc)
 		if(istype(S,/obj/effect/step_trigger) || istype(S,/obj/effect/beam))
-			S.Crossed(src)
+			S.Crossed(mob)
 
 	var/area/A = get_area_master(mob)
 	if(A)
