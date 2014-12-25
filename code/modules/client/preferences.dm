@@ -20,10 +20,6 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"gangster" = IS_MODE_COMPILED("gang")				// 11
 )
 
-#define GET_RANDOM_JOB 0
-#define BE_ASSISTANT 1
-#define RETURN_TO_LOBBY 2
-
 datum/preferences
 	//doohickeys for savefiles
 	var/path
@@ -80,7 +76,7 @@ datum/preferences
 	var/job_engsec_low = 0
 
 	//Keeps track of preference for not getting any unwanted jobs
-	var/alternate_option = 0
+	var/alternate_option = GET_RANDOM_JOB
 
 	// 0 = character settings, 1 = game preferences
 	var/current_tab = 0
@@ -388,9 +384,9 @@ datum/preferences
 			if(GET_RANDOM_JOB)
 				HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'>Get random job if preferences unavailable</font></a></u></center><br>"
 			if(BE_ASSISTANT)
-				HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'>Be assistant if preference unavailable</font></a></u></center><br>"
+				HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'>Be assistant if preferences unavailable</font></a></u></center><br>"
 			if(RETURN_TO_LOBBY)
-				HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'>Return to lobby if preference unavailable</font></a></u></center><br>"
+				HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'>Return to lobby if preferences unavailable</font></a></u></center><br>"
 			else return;
 		HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>Reset Preferences</a></center>"
 

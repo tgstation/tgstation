@@ -57,3 +57,8 @@
 #define SOUND_MINIMUM_PRESSURE 10
 #define FALLOFF_SOUNDS	1
 #define SURROUND_CAP	7
+
+//for the job controller's preferences setup
+#define GET_RANDOM_JOB 0
+#define BE_ASSISTANT 1
+#define RETURN_TO_LOBBY 2
