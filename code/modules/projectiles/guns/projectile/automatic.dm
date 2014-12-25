@@ -17,6 +17,9 @@
 	if(..() && chambered)
 		alarmed = 0
 
+/obj/item/weapon/gun/projectile/automatic/can_shoot()
+	return get_ammo()
+
 /obj/item/weapon/gun/projectile/automatic/proc/empty_alarm()
 	if(!chambered && !get_ammo() && !alarmed)
 		playsound(src.loc, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)

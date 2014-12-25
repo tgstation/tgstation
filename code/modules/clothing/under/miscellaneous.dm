@@ -375,3 +375,30 @@
 	item_color = "black_tango"
 	fitted = 0
 	can_adjust = 0
+
+/obj/item/clothing/under/stripeddress
+	name = "striped dress"
+	desc = "Fashion in space."
+	icon_state = "striped_dress"
+	item_state = "stripeddress"
+	item_color = "striped_dress"
+	fitted = 0
+	can_adjust = 0
+
+/obj/item/clothing/under/sailordress
+	name = "sailor dress"
+	desc = "Formal wear for a leading lady."
+	icon_state = "sailor_dress"
+	item_state = "sailordress"
+	item_color = "sailor_dress"
+	fitted = 0
+	can_adjust = 0
+
+/obj/item/clothing/under/redeveninggown
+	name = "red evening gown"
+	desc = "Fancy dress for space bar singers."
+	icon_state = "red_evening_gown"
+	item_state = "redeveninggown"
+	item_color = "red_evening_gown"
+	fitted = 0
+	can_adjust = 0
