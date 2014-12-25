@@ -719,7 +719,7 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/update_canmove()
 	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
 	var/bed = !(buckled && istype(buckled, /obj/structure/stool/bed/chair))
-	if(ko || resting || stunned)
+	if(ko || resting)
 		drop_r_hand()
 		drop_l_hand()
 	else
