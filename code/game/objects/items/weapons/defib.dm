@@ -2,7 +2,7 @@
 
 /obj/item/weapon/defibrillator
 	name = "defibrillator"
-	desc = "A device that delivers powerful shocks to detachable paddles that resuscitate incapacitated patients."
+	desc = "A device that delivers powerful shocks through detachable paddles that rapidly resuscitate incapacitated patients."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "defibunit"
 	item_state = "defibunit"
@@ -49,13 +49,13 @@
 /obj/item/weapon/defibrillator/proc/update_overlays()
 	overlays.Cut()
 	if(!on)
-		overlays += "defibunit-paddles"
+		overlays += "[initial(icon_state)]-paddles"
 	if(powered)
-		overlays += "defibunit-powered"
+		overlays += "[initial(icon_state)]-powered"
 	if(!bcell)
-		overlays += "defibunit-nocell"
+		overlays += "[initial(icon_state)]-nocell"
 	if(!safety)
-		overlays += "defibunit-emagged"
+		overlays += "[initial(icon_state)]-emagged"
 
 /obj/item/weapon/defibrillator/proc/update_charge()
 	if(powered) //so it doesn't show charge if it's unpowered
@@ -220,6 +220,22 @@
 		paddles.cooldown = 0
 		paddles.update_icon()
 		update_icon()
+
+/obj/item/weapon/defibrillator/compact
+	name = "compact defibrillator"
+	desc = "An upgraded defibrillator that can be worn around one's waist. Delivers powerful shocks through detachable paddles that can rapidly resuscitate incapacitated patients."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "defibcompact"
+	item_state = "defibcompact"
+	slot_flags = SLOT_BELT
+	origin_tech = "biotech=4"
+
+/obj/item/weapon/defibrillator/ui_action_click()
+	if(usr.get_item_by_slot(slot_belt) == src)
+		toggle_paddles()
+	else
+		usr << "<span class='warning'>Strap the defibrillator's belt on first!</span>"
+	return
 
 //paddles
 
