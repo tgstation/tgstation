@@ -83,7 +83,7 @@
 		if(!beam)
 			beam = new (loc)
 			beam.dir=dir
-		beam.emit(spawn_by=src)
+			beam.emit(spawn_by=src)
 	else
 		qdel(beam)
 		beam=null

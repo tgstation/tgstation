@@ -46,6 +46,8 @@
 	last_beamchecks.Remove("\ref[B]") // RIP
 
 /mob/living/proc/handle_beams()
+	if(flags & INVULNERABLE)
+		return
 	// New beam damage code (per-tick)
 	for(var/obj/effect/beam/B in beams)
 		apply_beam_damage(B)
