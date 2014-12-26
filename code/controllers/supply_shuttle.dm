@@ -237,13 +237,15 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	centcom_message = ""
 
 	for(var/atom/movable/MA in shuttle)
-		sold_atoms += " [MA.name]"
 		if(MA.anchored)	continue
+		sold_atoms += " [MA.name]"
 
 
 		// Must be in a crate (or a critter crate)!
 		if(istype(MA,/obj/structure/closet/crate) || istype(MA,/obj/structure/closet/critter))
 			sold_atoms += ":"
+			if(!MA.contents)
+				sold_atoms += " (empty)"
 			crate_count++
 			var/find_slip = 1
 
