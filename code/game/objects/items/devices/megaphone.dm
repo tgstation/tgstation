@@ -16,7 +16,7 @@
 		if(user.client.prefs.muted & MUTE_IC)
 			src << "\red You cannot speak in IC (muted)."
 			return
-	if(!ishuman(user))
+	if(!ishuman(user) && !isrobot(user))
 		user << "\red You don't know how to use this!"
 		return
 	if(user:miming || user.silent)
@@ -119,10 +119,6 @@ And backwards
 		else
 			sound_flag=0
 			return
-/*
-This long ass as fuck shit plays the sounds. Im a huge fucking faggot.
-If you can make this smaller, please do.
-*/
 
 /obj/item/device/soundsynth/attack_self(mob/user as mob)
 	if(spam_flag + 20 < world.timeofday)
@@ -133,7 +129,6 @@ If you can make this smaller, please do.
 			else return
 		spam_flag = world.timeofday
 		playsound(get_turf(src), playing_sound, 50, 1)
-		if(sound_flag == 0) usr << "Honk!"
 
 /obj/item/device/soundsynth/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
 	if(M == user) //If you target yourself
@@ -141,9 +136,11 @@ If you can make this smaller, please do.
 		if(sound_flag > 12) sound_flag = 0
 		usr << "Sound switched to [sound_names[1+sound_flag]]!"
 	else
-		var/tmp/playing_sound
-		switch(sound_flag)
-			if(0 to 12)
-				playing_sound = sound_list[sound_flag+1]
-			else return
-		M << playing_sound
+		if(spam_flag + 20 < world.timeofday)
+			var/tmp/playing_sound
+			switch(sound_flag)
+				if(0 to 12)
+					playing_sound = sound_list[sound_flag+1]
+				else return
+			spam_flag = world.timeofday
+			M << playing_sound

@@ -56,6 +56,8 @@
 	src.modules += new /obj/item/weapon/crowbar(src)
 	src.modules += new /obj/item/device/healthanalyzer(src)
 	src.modules += new /obj/item/weapon/soap/nanotrasen(src)
+	src.modules += new /obj/item/device/taperecorder(src)
+	src.modules += new /obj/item/device/megaphone(src)
 	src.emag = new /obj/item/weapon/melee/energy/sword(src)
 
 	var/obj/item/stack/medical/bruise_pack/B = new /obj/item/stack/medical/bruise_pack(src)
