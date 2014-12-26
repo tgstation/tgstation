@@ -1,5 +1,11 @@
 /obj/item/weapon/melee/energy
 	var/active = 0
+	var/force_on = 30 //force when active
+	var/throwforce_on = 20
+	var/icon_state_on = "axe1"
+	var/attack_verb_on = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	w_class = 2
+	var/w_class_on = 4
 
 /obj/item/weapon/melee/energy/suicide_act(mob/user)
 	user.visible_message(pick("<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>", \
@@ -14,34 +20,22 @@
 	desc = "An energised battle axe."
 	icon_state = "axe0"
 	force = 40.0
-	throwforce = 25.0
+	force_on = 150
+	throwforce = 25
+	throwforce_on = 30
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	throw_speed = 3
 	throw_range = 5
-	w_class = 3.0
+	w_class = 3
+	w_class_on = 5
 	flags = CONDUCT | NOSHIELD
 	origin_tech = "combat=3"
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
+	attack_verb_on = null
 
 /obj/item/weapon/melee/energy/axe/suicide_act(mob/user)
-		user.visible_message("<span class='suicide'>[user] swings the [src.name] towards /his head! It looks like \he's trying to commit suicide.</span>")
-		return (BRUTELOSS|FIRELOSS)
-
-/obj/item/weapon/melee/energy/axe/attack_self(mob/user)
-	active = !active
-	if(active)
-		user << "<span class='notice'>[src] is now energised.</span>"
-		force = 150 //these are the drugs, friend
-		hitsound = 'sound/weapons/blade1.ogg'
-		icon_state = "axe1"
-		w_class = 5
-	else
-		user << "<span class='notice'>[src] can now be concealed.</span>"
-		force = 40
-		hitsound = 'sound/weapons/bladeslice.ogg'
-		icon_state = "axe0"
-		w_class = 3 //it goes back to three you goose
-	add_fingerprint(user)
+	user.visible_message("<span class='suicide'>[user] swings the [src.name] towards /his head! It looks like \he's trying to commit suicide.</span>")
+	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/sword
 	name = "energy sword"
@@ -52,11 +46,10 @@
 	hitsound = "swing_hit" //it starts deactivated
 	throw_speed = 3
 	throw_range = 5
-	w_class = 2.0
 	flags = NOSHIELD
+	attack_verb = null
 	origin_tech = "magnets=3;syndicate=4"
 	var/hacked = 0
-	item_color = null
 
 /obj/item/weapon/melee/energy/sword/New()
 	if(item_color == null)
@@ -67,33 +60,31 @@
 		return 1
 	return 0
 
-/obj/item/weapon/melee/energy/sword/attack_self(mob/living/user)
+/obj/item/weapon/melee/energy/attack_self(mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
 		user << "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>"
 		user.take_organ_damage(5,5)
 	active = !active
 	if (active)
-		force = 30
-		throwforce = 20
+		force = force_on
+		throwforce = throwforce_on
 		hitsound = 'sound/weapons/blade1.ogg'
-		attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
-			icon_state = "cutlass1"
+		if(attack_verb_on)
+			attack_verb = attack_verb_on
+		if(!item_color)
+			icon_state = icon_state_on
 		else
 			icon_state = "sword[item_color]"
-		w_class = 4
+		w_class = w_class_on
 		playsound(user, 'sound/weapons/saberon.ogg', 35, 1) //changed it from 50% volume to 35% because deafness
 		user << "<span class='notice'>[src] is now active.</span>"
 	else
-		force = 3
-		throwforce = 5.0
-		hitsound = "swing_hit"
-		attack_verb = null
-		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
-			icon_state = "cutlass0"
-		else
-			icon_state = "sword0"
-		w_class = 2
+		force = initial(force)
+		throwforce = initial(throwforce)
+		hitsound = initial(hitsound)
+		attack_verb = initial(attack_verb)
+		icon_state = initial(icon_state)
+		w_class = initial(w_class)
 		playsound(user, 'sound/weapons/saberoff.ogg', 35, 1)  //changed it from 50% volume to 35% because deafness
 		user << "<span class='notice'>[src] can now be concealed.</span>"
 	add_fingerprint(user)
@@ -166,6 +157,10 @@
 	name = "energy cutlass"
 	desc = "Arrrr matey."
 	icon_state = "cutlass0"
+	icon_state_on = "cutlass1"
+
+/obj/item/weapon/melee/energy/sword/pirate/New()
+	return
 
 /obj/item/weapon/melee/energy/blade
 	name = "energy blade"
@@ -173,12 +168,12 @@
 	icon_state = "blade"
 	force = 30	//Normal attacks deal esword damage
 	hitsound = 'sound/weapons/blade1.ogg'
+	active = 1
 	throwforce = 1//Throwing or dropping the item deletes it.
 	throw_speed = 3
 	throw_range = 1
 	w_class = 4.0//So you can't hide it in your pocket or some such.
 	flags = NOSHIELD
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/datum/effect/effect/system/spark_spread/spark_system
 
 //Most of the other special functions are handled in their own files. aka special snowflake code so kewl
@@ -192,3 +187,6 @@
 
 /obj/item/weapon/melee/energy/blade/proc/throw()
 	qdel(src)
+
+/obj/item/weapon/melee/energy/blade/attack_self(mob/user)
+	return

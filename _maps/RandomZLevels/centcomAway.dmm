@@ -404,7 +404,7 @@
 "hN" = (/obj/structure/rack,/obj/item/clothing/ears/earmuffs{pixel_x = -3; pixel_y = -2},/turf/simulated/floor/plating,/area/awaymission/centcomAway/hangar)
 "hO" = (/obj/structure/closet,/turf/simulated/floor/plating,/area/awaymission/centcomAway/hangar)
 "hP" = (/obj/structure/table,/obj/item/stack/sheet/metal{amount = 50},/turf/simulated/floor/plating,/area/awaymission/centcomAway/hangar)
-"hQ" = (/obj/machinery/power/solar/fake,/turf/simulated/floor/airless{icon_state = "solarpanel"},/area/awaymission/centcomAway/maint)
+"hQ" = (/obj/machinery/power/solar/fake,/turf/simulated/floor/plasteel/airless{icon_state = "solarpanel"},/area/awaymission/centcomAway/maint)
 "hR" = (/obj/structure/closet/secure_closet/medical2,/turf/simulated/floor/plasteel{icon_state = "white"},/area/awaymission/centcomAway/courtroom)
 "hS" = (/obj/structure/table/wood,/obj/item/weapon/paper_bin,/turf/simulated/floor/wood,/area/awaymission/centcomAway/courtroom)
 "hT" = (/obj/structure/table/wood,/turf/simulated/floor/wood,/area/awaymission/centcomAway/courtroom)
