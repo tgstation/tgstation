@@ -310,8 +310,19 @@
 	src.modules += L
 
 	src.modules += new /obj/item/weapon/tray/robotray(src)
+
 	src.modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
+
 	src.modules += new /obj/item/device/soundsynth(src)
+
+	var/obj/item/weapon/dice/P1 = new /obj/item/weapon/dice(src)
+	P1.name = "probability cube"
+	src.modules += P1
+
+	var/obj/item/weapon/dice/d20/P2 = new /obj/item/weapon/dice/d20(src)
+	P2.name = "probability icosahedron"
+	src.modules += P2
+
 	src.emag = new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
 
 	var/datum/reagents/R = new/datum/reagents(50)
