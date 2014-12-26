@@ -37,7 +37,7 @@ Head of Security
 
 /datum/job/hos/equip_items(var/mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/secboots(H), slot_shoes)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/hos/trenchcoat(H), slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/HoS/beret(H), slot_head)
@@ -80,7 +80,7 @@ Warden
 
 /datum/job/warden/equip_items(var/mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/secboots(H), slot_shoes)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest/warden(H), slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/warden(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
@@ -174,7 +174,7 @@ Security Officer
 /datum/job/officer/equip_items(var/mob/living/carbon/human/H)
 	assign_sec_to_department(H)
 
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/secboots(H), slot_shoes)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(H), slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/sec(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
