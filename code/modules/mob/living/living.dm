@@ -857,3 +857,12 @@
 
 /mob/living/proc/has_eyes()
 	return 1
+
+/mob/living/singularity_act()
+	var/gain = 20
+	investigate_log(" has consumed [key_name(src)].", "singulo")
+	gib()
+	return(gain)
+
+/mob/living/singularity_pull(S)
+	step_towards(src, S)

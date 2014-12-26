@@ -104,6 +104,23 @@
 		del src
 		return
 
+/obj/machinery/power/supermatter/shard/singularity_act()
+//	energy += 15000 // sets it to max size.
+//	log_admin("New super singularity made by eating a SM crystal [prints]. Last touched by [A.fingerprintslast].")
+//	message_admins("New super singularity made by eating a SM crystal [prints]. Last touched by [A.fingerprintslast].")
+	qdel(src)
+	return(15000)
+
+/obj/machinery/power/supermatter/singularity_act()
+	//energy += 20000
+	SetUniversalState(/datum/universal_state/supermatter_cascade)
+	//expand(11, 1)
+	//log_admin("New super singularity made by eating a SM crystal [prints]. Last touched by [A.fingerprintslast].")
+	//message_admins("New super singularity made by eating a SM crystal [prints]. Last touched by [A.fingerprintslast].")
+	qdel(src)
+	return(20000)
+
+
 /obj/machinery/power/supermatter/process()
 
 	var/turf/L = loc

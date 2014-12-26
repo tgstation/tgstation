@@ -136,6 +136,19 @@
 /obj/proc/interact(mob/user)
 	return
 
+/obj/singularity_act()
+	ex_act(1)
+	if(src)
+		qdel(src)
+	return 2
+
+/obj/singularity_pull(S, current_size)
+	if(anchored)
+		if(current_size >= 9)
+			anchored = 0
+			step_towards(src, S)
+		else step_towards(src, S)
+
 /obj/proc/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
 	return "<b>NO MULTITOOL_MENU!</b>"
 

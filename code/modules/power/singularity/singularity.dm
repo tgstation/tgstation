@@ -84,9 +84,11 @@
 
 /obj/machinery/singularity/Bump(atom/A)
 	consume(A)
+	return
 
 /obj/machinery/singularity/Bumped(atom/A)
 	consume(A)
+	return
 
 /obj/machinery/singularity/process()
 	eat()
@@ -281,15 +283,27 @@
 /obj/machinery/singularity/proc/eat()
 	set background = BACKGROUND_ENABLED
 
+
 	if (defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 1
 
-	for (var/turf/T in trange(grav_pull, src)) // TODO: Create a similar trange for orange to prevent snowflake of self check.
-		consume(T)
+	for(var/atom/X in orange(grav_pull, src))
+		var/dist = get_dist(X, src)
+		var/obj/machinery/singularity/S = src
+		if(!istype(src))
+			return
+		if(dist > consume_range)
+			X.singularity_pull(S, current_size)
+		else if(dist <= consume_range)
+			consume(X)
+
+	//for (var/turf/T in trange(grav_pull, src)) // TODO: Create a similar trange for orange to prevent snowflake of self check.
+	//	consume(T)
 
 	if (defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 0
 
+	return
 /*
  * Singulo optimization.
  * Jump out whenever we've made a decision.
@@ -306,51 +320,16 @@
 	return 0
 
 /obj/machinery/singularity/proc/consume(const/atom/A)
-	if(!(A.singuloCanEat()))
-		return 0
+	//if(!(A.singuloCanEat()))
+	//	return 0
 
-	var/gain = 0
-
-	if (istype(A, /mob/living)) // Mobs get gibbed.
-		var/mob/living/M = A
-
-		if(M.flags & INVULNERABLE)
-			return 0
-
-		gain = 20
-
-		if (istype(M,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = M
-
-			if (H.mind)
-				switch (H.mind.assigned_role)
-					if ("Station Engineer", "Chief Engineer")
-						gain = 100
-					if ("Clown")
-						gain = rand(-300, 300) // HONK!
-		M.gib()
-	else if (istype(A, /obj/))
-		if (istype(A, /obj/item/weapon/storage/backpack/holding))
-			var/dist = max((current_size - 2), 1)
-			explosion(get_turf(src), dist, dist * 2, dist * 4)
-			return
-
-		if (istype(A, /obj/machinery/singularity)) // Welp now you did it.
-			var/obj/machinery/singularity/S = A
-			energy += (current_size == 11 ? S.energy : S.energy / 2) // Absorb most of it, unless supersingulo, in which case LITTLE SINGULO GETS EATEN.
-			qdel(S)
-			var/dist = max((current_size - 2), 1)
-			explosion(get_turf(src), dist, dist * 2, dist * 4)
-			return
-
+	var/gain = A.singularity_act(current_size)
+	src.energy += gain
+	/*if (istype(A, /obj/))
 		if (isbot(A))
 			var/obj/machinery/bot/B = A
 			if(B.flags & INVULNERABLE)
 				return
-
-		if(istype(A, /obj/machinery/power/supermatter))//NOW YOU REALLY FUCKED UP
-			if(istype(A, /obj/machinery/power/supermatter/shard))
-				src.energy += 15000//Instantly sends it to max size
 			else
 				src.energy += 20000//Instantly sends it to max size
 				SetUniversalState(/datum/universal_state/supermatter_cascade) //AND NOW YOU'RE FUCKED
@@ -362,44 +341,8 @@
 			log_admin("New super singularity made by eating a SM crystal [prints]. Last touched by [A.fingerprintslast].")
 			message_admins("New super singularity made by eating a SM crystal [prints]. Last touched by [A.fingerprintslast].")
 			del(A)
-			return
-
-		A.ex_act(1)
-
-		if (A)
-			qdel(A)
-
-		gain = 2
-	else if (isturf(A))
-		var/dist = get_dist(A, src)
-
-		for (var/atom/movable/AM in A.contents)
-			if (AM == src) // This is the snowflake.
-				continue
-
-			if (dist <= consume_range)
-				consume(AM)
-				continue
-
-			if (dist > consume_range && canPull(AM))
-				if(!(AM.singuloCanEat()))
-					continue
-
-				if (101 == AM.invisibility)
-					continue
-
-				spawn (0)
-					step_towards(AM, src)
-
-		if (dist <= consume_range && !istype(A, /turf/space))
-			var/turf/T = A
-			if(istype(T,/turf/simulated/wall))
-				var/turf/simulated/wall/W = T
-				W.del_suppress_resmoothing=1 // Reduce lag from wallsmoothing.
-			T.ChangeTurf(/turf/space)
-			gain = 2
-
-	energy += gain
+			return*/
+	return
 
 /obj/machinery/singularity/proc/move(var/force_move = 0)
 	if(!move_self)
@@ -602,3 +545,10 @@
 	var/dist = max((current_size - 2), 1)
 	explosion(get_turf(src), dist, dist * 2, dist * 4)
 	del(src)
+
+/obj/machinery/singularity/singularity_act()
+	var/gain = (energy/2)
+	var/dist = max((current_size - 2), 1)
+	explosion(src.loc,(dist),(dist*2),(dist*4))
+	qdel(src)
+	return(gain)
