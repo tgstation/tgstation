@@ -403,6 +403,14 @@
 	build_path = /obj/item/weapon/rcd
 	category = list("hacked", "Construction")
 
+/datum/design/rpd
+	name = "Rapid pipe dispenser (RPD)"
+	id = "rpd"
+	build_type = AUTOLATHE
+	materials = list("$metal" = 75000, "$glass" = 37500)
+	build_path = /obj/item/weapon/pipe_dispenser
+	category = list("hacked", "Construction")
+
 /datum/design/electropack
 	name = "Electropack"
 	id = "electropack"
