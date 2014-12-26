@@ -92,6 +92,10 @@
 	if(istype(L, /turf/space))	// Stop processing this stuff if we've been ejected.
 		return
 
+	// Let's add beam energy first.
+	for(var/obj/effect/beam/emitter/B in beams)
+		power += B.get_damage() * config_bullet_energy
+
 	if(damage > warning_point) // while the core is still damaged and it's still worth noting its status
 		if((world.timeofday - lastwarning) / 10 >= WARNING_DELAY)
 			var/stability = num2text(round((damage / explosion_point) * 100))

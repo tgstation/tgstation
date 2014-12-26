@@ -53,6 +53,8 @@
 	src.move_speed = world.timeofday - src.l_move_time
 	src.l_move_time = world.timeofday
 
+	INVOKE_EVENT(on_moved,list("loc"=newloc))
+
 	spawn(5)	// Causes space drifting. /tg/station has no concept of speed, we just use 5
 		if(loc && direct && last_move == direct)
 			if(loc == newloc) //Remove this check and people can accelerate. Not opening that can of worms just yet.
@@ -102,6 +104,7 @@
 		loc.Entered(src)
 		for(var/atom/movable/AM in loc)
 			AM.Crossed(src)
+		INVOKE_EVENT(on_moved,list("loc"=loc))
 		return 1
 	return 0
 

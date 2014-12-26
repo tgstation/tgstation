@@ -593,3 +593,12 @@ obj/item/weapon/circuitboard/rdserver
 	req_components = list(
 							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/weapon/stock_parts/matter_bin = 3)
+
+/obj/item/weapon/circuitboard/prism
+	name = "Circuit Board (Prism)"
+	build_path = "/obj/machinery/prism"
+	board_type = "machine"
+	origin_tech = "programming=3;engineering=3;powerstorage=3"
+	req_components = list(
+							"/obj/item/weapon/stock_parts/micro_laser/high" = 3,
+							"/obj/item/weapon/stock_parts/capacitor" = 6)

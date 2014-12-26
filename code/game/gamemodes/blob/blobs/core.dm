@@ -4,6 +4,7 @@
 	icon_state = "blob_core"
 	health = 200
 	fire_resist = 2
+	custom_process=1
 	var/mob/camera/blob/overmind = null // the blob core's overmind
 	var/overmind_get_delay = 0 // we don't want to constantly try to find an overmind, do it every 30 seconds
 	var/resource_delay = 0

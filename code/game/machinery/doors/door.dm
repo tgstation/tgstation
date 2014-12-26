@@ -242,6 +242,10 @@
 	update_icon()
 	if(visible && !glass)
 		SetOpacity(1)
+		// Copypasta!!!
+		var/obj/effect/beam/B = locate() in loc
+		if(B)
+			qdel(B)
 	operating = 0
 	air_update_turf(1)
 	update_freelook_sight()
