@@ -1829,7 +1829,7 @@ mob/living/carbon/human/yank_out_object()
 			gain = rand(-300, 300)
 	investigate_log(" has consumed [key_name(src)].", "singulo")
 	gib()
-	return(gain)
+	return gain
 
 /mob/living/carbon/human/singularity_pull(S, current_size)
 	if(current_size >= 5)

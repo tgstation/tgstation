@@ -174,6 +174,11 @@
 	return 0
 
 /obj/machinery/power/emitter/process()
+	if(!anchored)
+		active = 0
+		update_icon()
+		update_beam()
+		return
 	if(stat & BROKEN)
 		return
 

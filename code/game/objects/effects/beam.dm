@@ -256,3 +256,6 @@
 		qdel(next)
 		next=null
 	..()
+
+/obj/effect/beam/singularity_pull()
+	return
