@@ -1,6 +1,6 @@
 //In this file: Summon Magic/Summon Guns/Summon Events
 
-/proc/rightandwrong(var/summon_type, var/mob/user) //0 = Summon Guns, 1 = Summon Magic
+/proc/rightandwrong(var/summon_type, var/mob/user, var/survivor_probability) //0 = Summon Guns, 1 = Summon Magic
 	var/list/gunslist 			= list("taser","egun","laser","revolver","detective","c20r","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","bulldog","mateba","sabr","uzi","crossbow","saw","car")
 	var/list/magiclist 			= list("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge","wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying", "staffdoor", "special")
 	var/list/magicspeciallist	= list("staffchange","staffanimation", "wandbelt", "contract", "staffchaos")
@@ -13,7 +13,7 @@
 		if(H.stat == 2 || !(H.client)) continue
 		if(H.mind)
 			if(H.mind.special_role == "Wizard" || H.mind.special_role == "apprentice") continue
-		if(prob(25) && !(H.mind in ticker.mode.traitors))
+		if(prob(survivor_probability) && !(H.mind in ticker.mode.traitors))
 			ticker.mode.traitors += H.mind
 			H.mind.special_role = "traitor"
 			var/datum/objective/survive/survive = new
