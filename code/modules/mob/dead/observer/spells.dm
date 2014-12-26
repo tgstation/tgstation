@@ -54,8 +54,8 @@ var/global/list/boo_phrases_silicon=list(
 
 			if(isrobot(A))
 				var/mob/living/silicon/S = A
-				if (A && A.client)
-					A << "<i>[pick(boo_phrases_silicon)]</i>"
+				if(S && S.client)
+					S << "<i>[pick(boo_phrases_silicon)]</i>"
 
 			// Blessed object? Skippit.
 			if(isobj(A) && A:blessed)
