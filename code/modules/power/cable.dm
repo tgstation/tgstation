@@ -695,9 +695,6 @@ obj/structure/cable/proc/avail()
 
 
 	if(U == T) //if clicked on the turf we're standing on, try to put a cable in the direction we're facing
-		for(var/obj/structure/lattice/catwalk/W in src)
-			catwalk_place(W,user)
-			return
 		place(T,user)
 		return
 
