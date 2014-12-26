@@ -10,6 +10,12 @@ RPD
 #define PIPE_TRIN_M		3
 #define PIPE_UNARY		4
 
+#define PAINT_MODE -2
+#define EATING_MODE -1
+#define ATMOS_MODE 0
+#define METER_MODE 1
+#define DISPOSALS_MODE 2
+
 /datum/pipe_info
 	var/id=-1
 	var/dir=SOUTH
@@ -131,7 +137,7 @@ var/global/list/RPD_recipes=list(
 	var/p_type = 0
 	var/p_conntype = 0
 	var/p_dir = 1
-	var/p_class = 0
+	var/p_class = ATMOS_MODE
 	var/p_disposal = 0
 	var/list/paint_colors = list(
 		"grey"   = "#cccccc",
@@ -175,9 +181,9 @@ var/global/list/RPD_recipes=list(
 			var/datum/pipe_info/I = cat[label]
 			var/found=0
 			if(I.id == p_type)
-				if(p_class==0 && I.type==/datum/pipe_info)
+				if(p_class==ATMOS_MODE && I.type==/datum/pipe_info)
 					found=1
-				else if(p_class==2 && I.type==/datum/pipe_info/disposal)
+				else if(p_class==DISPOSALS_MODE && I.type==/datum/pipe_info/disposal)
 					found=1
 			if(found)
 				preview=new /icon(I.icon,I.icon_state)
@@ -207,7 +213,7 @@ var/global/list/RPD_recipes=list(
 	var/dirsel="<h2>Direction</h2>"
 	switch(p_conntype)
 		if(-1)
-			if(p_class==-2)
+			if(p_class==PAINT_MODE)
 				dirsel = "<h2>Direction</h2>[color_picker]"
 
 		if(PIPE_BINARY) // Straight, N-S, W-E
@@ -391,7 +397,7 @@ var/global/list/RPD_recipes=list(
 		show_menu(usr)
 
 	if(href_list["eatpipes"])
-		p_class = -1
+		p_class = EATING_MODE
 		p_conntype=-1
 		p_dir=1
 		src.spark_system.start()
@@ -399,7 +405,7 @@ var/global/list/RPD_recipes=list(
 		show_menu(usr)
 
 	if(href_list["paintpipes"])
-		p_class = -2
+		p_class = PAINT_MODE
 		p_conntype=-1
 		p_dir=1
 		src.spark_system.start()
@@ -416,13 +422,13 @@ var/global/list/RPD_recipes=list(
 		p_type = text2num(href_list["makepipe"])
 		p_dir = text2num(href_list["dir"])
 		p_conntype = text2num(href_list["type"])
-		p_class = 0
+		p_class = ATMOS_MODE
 		src.spark_system.start()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 		show_menu(usr)
 
 	if(href_list["makemeter"])
-		p_class = 1
+		p_class = METER_MODE
 		p_conntype=-1
 		p_dir=1
 		src.spark_system.start()
@@ -433,7 +439,7 @@ var/global/list/RPD_recipes=list(
 		p_type = text2num(href_list["dmake"])
 		p_conntype = text2num(href_list["type"])
 		p_dir = 1
-		p_class = 2
+		p_class = DISPOSALS_MODE
 		src.spark_system.start()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 		show_menu(usr)
@@ -450,10 +456,10 @@ var/global/list/RPD_recipes=list(
 		return 0
 
 	switch(p_class)
-		if(-2) // Paint pipes
+		if(PAINT_MODE) // Paint pipes
 			if(!istype(A,/obj/machinery/atmospherics/pipe) || istype(A,/obj/machinery/atmospherics/pipe/simple/heat_exchanging) || istype(A,/obj/machinery/atmospherics/pipe/simple/insulated))
 				// Avoid spewing errors about invalid mode -2 when clicking on stuff that aren't pipes.
-				user << "\The [src]'s error light flickers.  Perhaps you need to only use it on pipes and pipe meters?"
+				user << "<span class='warning'>\The [src]'s error light flickers.  Perhaps you need to only use it on pipes and pipe meters?</span>"
 				return 0
 			var/obj/machinery/atmospherics/pipe/P = A
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
@@ -461,10 +467,10 @@ var/global/list/RPD_recipes=list(
 			user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
 			P.update_icon()
 			return 1
-		if(-1) // Eating pipes
+		if(EATING_MODE) // Eating pipes
 			// Must click on an actual pipe or meter.
 			if(istype(A,/obj/item/pipe) || istype(A,/obj/item/pipe_meter) || istype(A,/obj/structure/disposalconstruct))
-				user << "Destroying Pipe..."
+				user << "<span class='notice'>Destroying Pipe...</span>"
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 				if(do_after(user, 5))
 					activate()
@@ -473,13 +479,13 @@ var/global/list/RPD_recipes=list(
 				return 0
 
 			// Avoid spewing errors about invalid mode -1 when clicking on stuff that aren't pipes.
-			user << "The [src]'s error light flickers.  Perhaps you need to only use it on pipes and pipe meters?"
+			user << "<span class='warning'>The [src]'s error light flickers.  Perhaps you need to only use it on pipes and pipe meters?</span>"
 			return 0
-		if(0)
+		if(ATMOS_MODE)
 			if(!(istype(A, /turf)))
-				user << "The [src]'s error light flickers."
+				user << "<span class='warning'>The [src]'s error light flickers.</span>"
 				return 0
-			user << "Building Pipes ..."
+			user << "<span class='notice'>Building Pipes ...</span>"
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 20))
 				activate()
@@ -489,11 +495,11 @@ var/global/list/RPD_recipes=list(
 				return 1
 			return 0
 
-		if(1)
+		if(METER_MODE)
 			if(!(istype(A, /turf)))
-				user << "The [src]'s error light flickers."
+				user << "<span class='warning'>The [src]'s error light flickers.</span>"
 				return 0
-			user << "Building Meter..."
+			user << "<span class='notice'>Building Meter...</span>"
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 20))
 				activate()
@@ -501,11 +507,11 @@ var/global/list/RPD_recipes=list(
 				return 1
 			return 0
 
-		if(2)
+		if(DISPOSALS_MODE)
 			if(!(istype(A, /turf)))
-				user << "The [src]'s error light flickers."
+				user << "<span class='warning'>The [src]'s error light flickers.</span>"
 				return 0
-			user << "Building Pipes..."
+			user << "<span class='notice'>Building Pipes...</span>"
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 20))
 				activate()
