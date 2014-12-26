@@ -174,7 +174,9 @@
 /obj/item/weapon/book/attack_self(mob/user)
 	if(is_blind(user))
 		return
-
+	if(ismonkey(user))
+		user << "<span class='notice'>You skim through the book but can't comprehend any of it.</span>"
+		return
 	if(dat)
 		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 		user.visible_message("[user] opens a book titled \"[title]\" and begins reading intently.")

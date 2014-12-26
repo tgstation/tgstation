@@ -74,7 +74,7 @@
 	return ..()
 
 /obj/machinery/field/CanPass(obj/mover as obj, turf/target, height=0)
-	if((istype(mover, /obj/machinery) && !istype(mover, /obj/machinery/singularity)) || \
+	if((istype(mover, /obj/machinery) && !istype(mover, /obj/singularity)) || \
 		istype(mover, /obj/structure) || \
 		istype(mover, /obj/mecha))
 		bump(mover)

@@ -157,8 +157,8 @@
 
 ///////////Civilians//////////////////////
 
-/obj/effect/landmark/corpse/chef
-	name = "Chef"
+/obj/effect/landmark/corpse/cook
+	name = "Cook"
 	corpseuniform = /obj/item/clothing/under/rank/chef
 	corpsesuit = /obj/item/clothing/suit/chef/classic
 	corpseshoes = /obj/item/clothing/shoes/sneakers/black
@@ -166,8 +166,8 @@
 	corpseback = /obj/item/weapon/storage/backpack
 	corpseradio = /obj/item/device/radio/headset
 	corpseid = 1
-	corpseidjob = "Chef"
-	corpseidaccess = "Chef"
+	corpseidjob = "Cook"
+	corpseidaccess = "Cook"
 
 
 /obj/effect/landmark/corpse/doctor
