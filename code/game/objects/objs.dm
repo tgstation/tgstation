@@ -147,7 +147,7 @@
 		if(current_size >= 9)
 			anchored = 0
 			step_towards(src, S)
-		else step_towards(src, S)
+	else step_towards(src, S)
 
 /obj/proc/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
 	return "<b>NO MULTITOOL_MENU!</b>"
