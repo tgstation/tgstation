@@ -14,7 +14,7 @@
 
 /obj/item/projectile/bullet/weakbullet2
 	damage = 15
-	stamina = 50
+	stamina = 75 //the detective can't shoot in bursts and will get yelled at if he sinks 50 rounds into perps to stun 'em
 
 /obj/item/projectile/bullet/weakbullet3
 	damage = 20
@@ -28,7 +28,7 @@
 
 /obj/item/projectile/bullet/midbullet
 	damage = 20
-	stamina = 50
+	stamina = 50 //two round bursts from the c20r
 
 /obj/item/projectile/bullet/midbullet2
 	damage = 25
@@ -43,10 +43,7 @@
 /obj/item/projectile/bullet/stunshot
 	name = "stunshot"
 	damage = 5
-	stamina = 50
-	stutter = 5
-
-/obj/item/projectile/bullet/incendiary
+	stamina = 50 //two round bursts from the bulldog
 
 /obj/item/projectile/bullet/incendiary/on_hit(var/atom/target, var/blocked = 0)
 	..()

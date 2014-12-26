@@ -28,6 +28,8 @@
 	var/trigger_guard = 1
 	var/sawn_desc = null
 	var/sawn_state = SAWN_INTACT
+	var/burst_size = 1
+	var/fire_delay = 0
 
 /obj/item/weapon/gun/proc/process_chamber()
 	return 0
@@ -113,18 +115,26 @@
 	if(!special_check(user))
 		return
 
-	if(chambered)
-		if(!chambered.fire(target, user, params, , suppressed))
-			shoot_with_empty_chamber(user)
-		else
-			if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
-				shoot_live_shot(user, 1, target,message)
+	for(var/i = 1 to burst_size)
+		if(!(src in get_both_hands(user))) //for burst firing
+			break
+		if(chambered)
+			if(!chambered.fire(target, user, params, , suppressed))
+				shoot_with_empty_chamber(user)
+				break
 			else
-				shoot_live_shot(user,message)
-	else
-		shoot_with_empty_chamber(user)
-	process_chamber()
-	update_icon()
+				if(!special_check(user))
+					return
+				if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
+					shoot_live_shot(user, 1, target)
+				else
+					shoot_live_shot(user)
+		else
+			shoot_with_empty_chamber(user)
+			break
+		process_chamber()
+		update_icon()
+		sleep(fire_delay)
 
 	if(user.hand)
 		user.update_inv_l_hand(0)
