@@ -33,6 +33,7 @@ var/round_start_time = 0
 	var/delay_end = 0	//if set to nonzero, the round will not restart on it's own
 
 	var/triai = 0//Global holder for Triumvirate
+	var/tipped = 0 //Did we broadcast the tip of the round yet?
 
 /datum/controller/gameticker/proc/pregame()
 
@@ -54,6 +55,10 @@ var/round_start_time = 0
 			sleep(10)
 			if(going)
 				pregame_timeleft--
+
+			if((pregame_timeleft <= 30) && !tipped)
+				broadcast_random_tip()
+				tipped = 1
 
 			if(pregame_timeleft <= 0)
 				current_state = GAME_STATE_SETTING_UP
@@ -419,3 +424,8 @@ var/round_start_time = 0
 		log_game("[i]s[total_antagonists[i]].")
 
 	return 1
+
+/datum/controller/gameticker/proc/broadcast_random_tip()
+	var/list/randomtips = file2list("config/tips.txt")
+	if(randomtips.len)
+		world << "<font color='purple'><b>Tip of the round: </b>[strip_html_properly(pick(randomtips))]</font>"
