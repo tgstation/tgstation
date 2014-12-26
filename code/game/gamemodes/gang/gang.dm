@@ -56,13 +56,15 @@
 	spawn(rand(10,100))
 		for(var/datum/mind/boss_mind in A_bosses)
 			update_gang_icons_added(boss_mind, "A")
-			forge_gang_objectives(boss_mind, "A")
+			if(config.objectives_disabled == 0)
+				forge_gang_objectives(boss_mind, "A")
 			greet_gang(boss_mind)
 			equip_gang(boss_mind.current)
 
 		for(var/datum/mind/boss_mind in B_bosses)
 			update_gang_icons_added(boss_mind, "B")
-			forge_gang_objectives(boss_mind, "B")
+			if(config.objectives_disabled == 0)
+				forge_gang_objectives(boss_mind, "B")
 			greet_gang(boss_mind)
 			equip_gang(boss_mind.current)
 
@@ -103,9 +105,13 @@
 	var/obj_count = 1
 	if (you_are)
 		boss_mind.current << "<FONT size=3 color=red><B>You are a [(boss_mind in A_bosses) ? gang_name("A") : gang_name("B")] Gang Boss!</B></FONT>"
-	for(var/datum/objective/objective in boss_mind.objectives)
-		boss_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-		obj_count++
+	if(config.objectives_disabled == 0)
+		for(var/datum/objective/objective in boss_mind.objectives)
+			boss_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+			obj_count++
+	else
+		boss_mind.current << "<i>You have been selected this round as an antagonist- <font color=blue>Within the rules,</font> try to act as an opposing force to the crew- This can be via corporate payoff, personal motives, or maybe just being a dick. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonist.</i></b>"
+	return
 
 ///////////////////////////////////////////////////////////////////////////
 //This equips the bosses with their gear, and makes the clown not clumsy//

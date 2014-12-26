@@ -13,6 +13,8 @@ var/list/uplink_items = list()
 			var/datum/uplink_item/I = new item()
 			if(!I.item)
 				continue
+			if(I.restricted && config.restricted_antag_equipment)
+				continue
 			if(I.gamemodes.len && ticker && !(ticker.mode.type in I.gamemodes))
 				continue
 			if(I.excludefrom.len && ticker && (ticker.mode.type in I.excludefrom))
@@ -48,7 +50,7 @@ var/list/uplink_items = list()
 	var/list/gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
 	var/list/excludefrom = list() //Empty list does nothing. Place the name of gamemode you don't want this item to be available in here. This is so you dont have to list EVERY mode to exclude something.
 	var/surplus = 100 //Chance of being included in the surplus crate (when pick() selects it)
-
+	var/restricted = 0 // Whether the restricted_antag_items config option disables this.
 /datum/uplink_item/proc/spawn_item(var/turf/loc, var/obj/item/device/uplink/U)
 	if(item)
 		U.uses -= max(cost, 0)
@@ -170,6 +172,7 @@ var/list/uplink_items = list()
 	desc = "The Minibomb is a grenade with a five-second fuse."
 	item = /obj/item/weapon/grenade/syndieminibomb
 	cost = 6
+	restricted = 1
 
 /datum/uplink_item/dangerous/viscerators
 	name = "Viscerator Delivery Grenade"
@@ -478,7 +481,7 @@ var/list/uplink_items = list()
 	leading to an emergency evacuation. Because of its size, it cannot be carried. Ordering this sends you a small beacon that will teleport the larger beacon to your location on activation."
 	item = /obj/item/device/sbeacondrop
 	cost = 14
-
+	restricted = 1
 /datum/uplink_item/device_tools/syndicate_bomb
 	name = "Syndicate Bomb"
 	desc = "The Syndicate Bomb has an adjustable timer with a minimum setting of 60 seconds. Ordering the bomb sends you a small beacon, which will teleport the explosive to your location when you activate it. \
@@ -486,7 +489,7 @@ var/list/uplink_items = list()
 	item = /obj/item/device/sbeacondrop/bomb
 	cost = 11
 	excludefrom = list(/datum/game_mode/traitor/double_agents)
-
+	restricted = 1
 /datum/uplink_item/device_tools/rad_laser
 	name = "Radioactive Microlaser"
 	desc = "A radioactive microlaser disguised as a standard Nanotrasen health analyzer. When used, it emits a powerful burst of radiation, which, after a short delay, can incapitate all but the most protected of humanoids. \
@@ -501,7 +504,7 @@ var/list/uplink_items = list()
 	item = /obj/item/device/syndicatedetonator
 	cost = 3
 	gamemodes = list(/datum/game_mode/nuclear)
-
+	restricted = 1
 /datum/uplink_item/device_tools/teleporter
 	name = "Teleporter Circuit Board"
 	desc = "A printed circuit board that completes the teleporter onboard the mothership. Advise you test fire the teleporter before entering it, as malfunctions can occur."

@@ -35,7 +35,8 @@
 /datum/game_mode/wizard/post_setup()
 	for(var/datum/mind/wizard in wizards)
 		log_game("[wizard.key] (ckey) has been selected as a Wizard")
-		forge_wizard_objectives(wizard)
+		if(config.objectives_disabled == 0)
+			forge_wizard_objectives(wizard)
 		//learn_basic_spells(wizard.current)
 		equip_wizard(wizard.current)
 		name_wizard(wizard.current)
@@ -113,12 +114,16 @@
 /datum/game_mode/proc/greet_wizard(var/datum/mind/wizard, var/you_are=1)
 	if (you_are)
 		wizard.current << "<span class='userdanger'>You are the Space Wizard!</span>"
-	wizard.current << "<B>The Space Wizards Federation has given you the following tasks:</B>"
+	if(config.objectives_disabled == 0)
+		wizard.current << "<B>The Space Wizards Federation has given you the following tasks:</B>"
 
-	var/obj_count = 1
-	for(var/datum/objective/objective in wizard.objectives)
-		wizard.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-		obj_count++
+		var/obj_count = 1
+		for(var/datum/objective/objective in wizard.objectives)
+			wizard.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+			obj_count++
+		return
+	else
+		wizard.current << "<i>You have been selected this round as an antagonist- <font color=blue>Within the rules,</font> try to act as an opposing force to the crew- This can be via corporate payoff, personal motives, or maybe just being a dick. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonist.</i></b>"
 	return
 
 

@@ -686,6 +686,7 @@
 				special_role = "Revolutionary"
 				message_admins("[key_name_admin(usr)] has rev'ed [current].")
 				log_admin("[key_name(usr)] has rev'ed [current].")
+				current << "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>"
 
 			if("headrev")
 				if(src in ticker.mode.revolutionaries)
@@ -712,7 +713,7 @@
 				special_role = "Head Revolutionary"
 				message_admins("[key_name_admin(usr)] has head-rev'ed [current].")
 				log_admin("[key_name(usr)] has head-rev'ed [current].")
-
+				current << "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>"
 			if("autoobjectives")
 				ticker.mode.forge_revolutionary_objectives(src)
 				ticker.mode.greet_revolutionary(src,0)
@@ -762,7 +763,7 @@
 				current << "<FONT size=3 color=red><B>You are a [gang_name("A")] Gang Boss!</B></FONT>"
 				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("A")] Gang (A) leadership.")
 				log_admin("[key_name(usr)] has added [current] to the [gang_name("A")] Gang (A) leadership.")
-
+				current << "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>"
 			if("bgang")
 				if(src in ticker.mode.B_gangsters)
 					return
@@ -781,7 +782,7 @@
 				current << "<FONT size=3 color=red><B>You are a [gang_name("B")] Gang Boss!</B></FONT>"
 				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("B")] Gang (B) leadership.")
 				log_admin("[key_name(usr)] has added [current] to the [gang_name("B")] Gang (B) leadership.")
-
+				current << "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>"
 			if("autoobjective")
 				ticker.mode.forge_gang_objectives(src)
 				ticker.mode.greet_gang(src,0)
@@ -827,6 +828,7 @@
 					ticker.mode.add_cultist(src)
 					message_admins("[key_name_admin(usr)] has cult'ed [current].")
 					log_admin("[key_name(usr)] has cult'ed [current].")
+					current << "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>"
 			if("tome")
 				var/mob/living/carbon/human/H = current
 				if (istype(H))
@@ -863,6 +865,7 @@
 					current << "<span class='userdanger'>You are the Space Wizard!</span>"
 					message_admins("[key_name_admin(usr)] has wizard'ed [current].")
 					log_admin("[key_name(usr)] has wizard'ed [current].")
+					current << "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>"
 			if("lair")
 				current.loc = pick(wizardstart)
 			if("dressup")
@@ -888,6 +891,7 @@
 					current << "<span class='userdanger'>Your powers are awoken. A flash of memory returns to us...we are [changeling.changelingID], a changeling!</span>"
 					message_admins("[key_name_admin(usr)] has changeling'ed [current].")
 					log_admin("[key_name(usr)] has changeling'ed [current].")
+					current << "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>"
 			if("autoobjectives")
 				ticker.mode.forge_changeling_objectives(src)
 				usr << "<span class='notice'>The objectives for changeling [key] have been generated. You can edit them and anounce manually.</span>"
@@ -924,6 +928,7 @@
 					ticker.mode.greet_syndicate(src)
 					message_admins("[key_name_admin(usr)] has nuke op'ed [current].")
 					log_admin("[key_name(usr)] has nuke op'ed [current].")
+					current << "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>"
 			if("lair")
 				current.loc = get_turf(locate("landmark*Syndicate-Spawn"))
 			if("dressup")
@@ -967,15 +972,17 @@
 					current << "<span class='userdanger'>You are a traitor!</span>"
 					message_admins("[key_name_admin(usr)] has traitor'ed [current].")
 					log_admin("[key_name(usr)] has traitor'ed [current].")
+					if(config.objectives_disabled == 1)
+						current << "<i>You have been turned into an antagonist- <font color=blue>Within the rules,</font> try to act as an opposing force to the crew- This can be via corporate payoff, personal motives, or maybe just being a dick. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonist.</i></b>"
 					if(isAI(current))
 						var/mob/living/silicon/ai/A = current
 						ticker.mode.add_law_zero(A)
 						A.show_laws()
 
 			if("autoobjectives")
-				ticker.mode.forge_traitor_objectives(src)
-				usr << "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>"
-
+				if(config.objectives_disabled == 0)
+					ticker.mode.forge_traitor_objectives(src)
+					usr << "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>"
 	else if (href_list["monkey"])
 		var/mob/living/L = current
 		if (L.notransform)
@@ -1009,6 +1016,7 @@
 						current.ForceContractDisease(new /datum/disease/transformation/jungle_fever)
 					else if (istype(M))
 						current.ForceContractDisease(new /datum/disease/transformation/jungle_fever)
+				current << "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>"
 			if("human")
 				if (check_rights(R_ADMIN, 0))
 					var/mob/living/carbon/human/H = current
@@ -1036,7 +1044,7 @@
 				make_AI_Malf()
 				message_admins("[key_name_admin(usr)] has malf'ed [current].")
 				log_admin("[key_name(usr)] has malf'ed [current].")
-
+				current << "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>"
 			if("unemag")
 				var/mob/living/silicon/robot/R = current
 				if (istype(R))
@@ -1116,7 +1124,8 @@
 	if(!(src in ticker.mode.traitors))
 		ticker.mode.traitors += src
 		special_role = "traitor"
-		ticker.mode.forge_traitor_objectives(src)
+		if(config.objectives_disabled == 0)
+			ticker.mode.forge_traitor_objectives(src)
 		ticker.mode.finalize_traitor(src)
 		ticker.mode.greet_traitor(src)
 
@@ -1231,8 +1240,8 @@
 	ticker.mode.head_revolutionaries += src
 	ticker.mode.update_rev_icons_added(src)
 	special_role = "Head Revolutionary"
-
-	ticker.mode.forge_revolutionary_objectives(src)
+	if(config.objectives_disabled == 0)
+		ticker.mode.forge_revolutionary_objectives(src)
 	ticker.mode.greet_revolutionary(src,0)
 
 	var/list/L = current.get_contents()
@@ -1247,7 +1256,8 @@
 /datum/mind/proc/make_Gang(var/gang)
 	special_role = "[(gang=="A") ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"] Boss"
 	ticker.mode.update_gang_icons_added(src, gang)
-	ticker.mode.forge_gang_objectives(src, gang)
+	if(config.objectives_disabled == 0)
+		ticker.mode.forge_gang_objectives(src, gang)
 	ticker.mode.greet_gang(src)
 	ticker.mode.equip_gang(current)
 

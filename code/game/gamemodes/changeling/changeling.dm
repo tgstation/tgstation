@@ -74,7 +74,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		log_game("[changeling.key] (ckey) has been selected as a changeling")
 		changeling.current.make_changeling()
 		changeling.special_role = "Changeling"
-		forge_changeling_objectives(changeling)
+		if(config.objectives_disabled == 0)
+			forge_changeling_objectives(changeling)
 		greet_changeling(changeling)
 	..()
 	return
@@ -160,13 +161,15 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		if (changeling.current.mind.assigned_role == "Clown")
 			changeling.current << "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself."
 			changeling.current.mutations.Remove(CLUMSY)
-
-	var/obj_count = 1
-	for(var/datum/objective/objective in changeling.objectives)
-		changeling.current << "<b>Objective #[obj_count]</b>: [objective.explanation_text]"
-		obj_count++
+	if(config.objectives_disabled == 0)
+		var/obj_count = 1
+		for(var/datum/objective/objective in changeling.objectives)
+			changeling.current << "<b>Objective #[obj_count]</b>: [objective.explanation_text]"
+			obj_count++
+		return
+	else
+		changeling.current << "<i>You have been selected this round as an antagonist- <font color=blue>Within the rules,</font> try to act as an opposing force to the crew- This can be via corporate payoff, personal motives, or maybe just being a dick. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonist.</i></b>"
 	return
-
 /*/datum/game_mode/changeling/check_finished()
 	var/changelings_alive = 0
 	for(var/datum/mind/changeling in changelings)
