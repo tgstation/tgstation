@@ -220,7 +220,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "hoe"
 	item_state = "hoe"
-	flags = FPRINT | TABLEPASS | CONDUCT | NOBLUDGEON
+	flags = FPRINT | TABLEPASS | NOBLUDGEON
+	siemens_coefficient = 1
 	force = 5.0
 	throwforce = 7.0
 	w_class = 2.0
@@ -313,7 +314,8 @@
 	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "hatchet"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS
+	siemens_coefficient = 1
 	force = 12.0
 	w_class = 2.0
 	throwforce = 15.0

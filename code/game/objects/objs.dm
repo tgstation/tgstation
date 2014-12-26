@@ -5,6 +5,7 @@
 	var/unacidable = 0 //universal "unacidabliness" var, here so you can use it in any obj.
 	animate_movement = 2
 	var/throwforce = 1
+	var/siemens_coefficient = 0 // for electrical admittance/conductance (electrocution checks and shit) - 0 is not conductive, 1 is conductive - this is a range, not binary
 
 	var/sharp = 0 // whether this object cuts
 	var/edge = 0
@@ -50,6 +51,11 @@
 	if(!slag)
 		slag = new(get_turf(src))
 	slag.slaggify(src)
+
+/obj/proc/is_conductor(var/siemens_min = 0.5)
+	if(src.siemens_coefficient >= siemens_min)
+		return 1
+	return
 
 /obj/proc/process()
 	processing_objects.Remove(src)

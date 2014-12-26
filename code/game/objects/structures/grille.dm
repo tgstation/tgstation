@@ -5,7 +5,8 @@
 	icon_state = "grille"
 	density = 1
 	anchored = 1
-	flags = FPRINT | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = 2.9
 	explosion_resistance = 5
@@ -160,7 +161,7 @@
 				if(WINDOW.dir == dir_to_set)//checking this for a 2nd time to check if a window was made while we were waiting.
 					user << "<span class='notice'>There is already a window facing this way there.</span>"
 					return
-			var/obj/structure/window/WD 
+			var/obj/structure/window/WD
 			if(istype(W,/obj/item/stack/sheet/glass)) //Creates anything under glass tree
 				var/obj/item/stack/sheet/glass/G = W
 				if(!ispath(G.created_window))
