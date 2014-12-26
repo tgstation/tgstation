@@ -1270,8 +1270,9 @@ var/global/list/organ_damage_overlays = list(
 	proc/handle_regular_hud_updates()
 		if(!client)	return 0
 
-		regular_hud_updates()
+		sight &= ~BLIND
 
+		regular_hud_updates()
 
 		client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask/*, global_hud.nvg*/)
 
