@@ -39,7 +39,7 @@
 /obj/item/projectile/beam/disabler
 	name = "disabler beam"
 	icon_state = "omnilaser"
-	damage = 34
+	damage = 36
 	damage_type = STAMINA
 	eyeblur = 0
 
