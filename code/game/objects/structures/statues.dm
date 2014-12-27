@@ -7,24 +7,69 @@
 	icon = 'icons/obj/statue.dmi'
 	icon_state = ""
 	density = 1
-	anchored = 1
+	anchored = 0
 	var/hardness = 1
 	var/oreAmount = 7
 	var/mineralType = "metal"
 	var/last_event = 0
 	var/active = null
 	var/spam_flag = 0
+	var/state = 0
 
 /obj/structure/statue/Destroy()
 	density = 0
 	..()
 
 /obj/structure/statue/attackby(obj/item/weapon/W, mob/user)
-	hardness -= W.force/100
-	user << "You hit the [name] with your [W.name]!"
-	CheckHardness()
+	add_fingerprint(user)
+	if(istype(W, /obj/item/weapon/wrench) && state == 0)
+		if(anchored)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+			user << "<span class='notice'>Now loosening the [name]'s bolts...</span>"
+			if(do_after(user,40))
+				if(!src) return
+				user << "<span class='notice'>You loosened the [name]'s bolts!</span>"
+				anchored = 0
+		else if(!anchored)
+			if (!istype(src.loc, /turf/simulated/floor))
+				usr << "<span class='danger'>A floor must be present to secure the [name]!</span>"
+				return
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+			user << "<span class='notice'>Now securing the [name]'s bolts...</span>"
+			if(do_after(user, 40))
+				if(!src) return
+				user << "<span class='notice'>You secured the [name]'s bolts!</span>"
+				anchored = 1
+
+	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+		user << "<span class='notice'>Now slicing apart the [name]...</span>"
+		if(do_after(user,30))
+			if(!src) return
+			user << "<span class='notice'>You slice apart the [name]!</span>"
+			Dismantle(1)
+
+	else if(istype(W, /obj/item/weapon/pickaxe/drill/diamonddrill))
+		user << "<span class='notice'>You begin to drill apart the [name]!</span>"
+		if(do_after(user,5))
+			if(!src) return
+			user << "<span class='notice'>You destroy the [name]!</span>"
+			qdel(src)
+
+	else if(istype(W, /obj/item/weapon/weldingtool))
+		if(!anchored)
+			user << "<span class='notice'>Now slicing apart the [name]...</span>"
+			if(do_after(user, 40))
+				if(!src) return
+				user << "<span class='notice'>You slice apart the [name]!</span>"
+				Dismantle(1)
+
+	else
+		hardness -= W.force/100
+		user << "You hit the [name] with your [W.name]!"
+		CheckHardness()
 
 /obj/structure/statue/attack_hand(mob/user)
+	user.changeNext_move(CLICK_CD_MELEE)
 	visible_message("<span class='notice'>[user] rubs some dust off from the [name]'s surface.</span>")
 
 /obj/structure/statue/CanAtmosPass()
