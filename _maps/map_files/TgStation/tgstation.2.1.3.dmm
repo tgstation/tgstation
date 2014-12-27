@@ -4141,7 +4141,7 @@
 "bBI" = (/obj/structure/table,/obj/item/weapon/scalpel{pixel_y = 12},/obj/item/weapon/circular_saw,/turf/simulated/floor/plasteel{icon_state = "white"},/area/medical/sleeper)
 "bBJ" = (/obj/structure/table,/obj/item/weapon/retractor,/turf/simulated/floor/plasteel{icon_state = "whitehall"; dir = 2},/area/medical/sleeper)
 "bBK" = (/obj/structure/table,/obj/item/weapon/cautery{pixel_x = 4},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor/plasteel,/area/medical/sleeper)
-"bBL" = (/obj/structure/table,/obj/item/weapon/folder/white,/obj/item/weapon/gun/syringe,/obj/item/weapon/reagent_containers/dropper,/turf/simulated/floor/plasteel{icon_state = "white"},/area/medical/sleeper)
+"bBL" = (/obj/structure/table,/obj/item/weapon/folder/white,/obj/item/weapon/gun/syringe,/obj/item/weapon/reagent_containers/dropper,/obj/item/weapon/soap/nanotrasen,/turf/simulated/floor/plasteel{icon_state = "white"},/area/medical/sleeper)
 "bBM" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor/plasteel{dir = 2; icon_state = "whitebluecorner"},/area/medical/sleeper)
 "bBN" = (/obj/structure/grille,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/window/reinforced/fulltile,/turf/simulated/floor/plating,/area/medical/sleeper)
 "bBO" = (/obj/structure/closet/l3closet/general,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor/plasteel{icon_state = "white"},/area/medical/sleeper)
