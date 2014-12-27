@@ -41,7 +41,7 @@
 	icon_state = "omnilaser"
 	damage = 33
 	damage_type = STAMINA
-	hitsound = null
+	hitsound = 'sound/weapons/tap.ogg'
 	eyeblur = 0
 
 /obj/item/projectile/beam/pulse
