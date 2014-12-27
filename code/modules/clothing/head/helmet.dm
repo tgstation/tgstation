@@ -54,13 +54,6 @@
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	strip_delay = 80
 
-/obj/item/clothing/head/helmet/bulletproof
-	name = "tactical helmet"
-	desc = "An advanced helmet designed to protect against traditional projectile weaponry and explosives."
-	icon_state = "bulletproof"
-	armor = list(melee = 25, bullet = 60, laser = 25, energy = 10, bomb = 40, bio = 0, rad = 0)
-	strip_delay = 70
-
 /obj/item/clothing/head/helmet/thunderdome
 	name = "\improper Thunderdome helmet"
 	desc = "<i>'Let the battle commence!'</i>"
