@@ -1230,7 +1230,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //will handle it, but it'll be a bit slower.
 
 /proc/get_turf_pixel(atom/movable/AM)
-	if(AM)
+	if(istype(AM))
 		var/rough_x = 0
 		var/rough_y = 0
 		var/final_x = 0
