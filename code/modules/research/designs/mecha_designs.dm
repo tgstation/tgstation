@@ -10,6 +10,7 @@ datum/design/ripley_main
 	build_type = IMPRINTER
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha/ripley/main
+	category = list("Exosuit Modules")
 
 datum/design/ripley_peri
 	name = "Exosuit Module (APLU \"Ripley\" Peripherals Control module)"
@@ -19,6 +20,7 @@ datum/design/ripley_peri
 	build_type = IMPRINTER
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha/ripley/peripherals
+	category = list("Exosuit Modules")
 
 datum/design/odysseus_main
 	name = "Exosuit Module (\"Odysseus\" Central Control module)"
@@ -28,6 +30,7 @@ datum/design/odysseus_main
 	build_type = IMPRINTER
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha/odysseus/main
+	category = list("Exosuit Modules")
 
 datum/design/odysseus_peri
 	name = "Exosuit Module (\"Odysseus\" Peripherals Control module)"
@@ -37,6 +40,7 @@ datum/design/odysseus_peri
 	build_type = IMPRINTER
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha/odysseus/peripherals
+	category = list("Exosuit Modules")
 
 datum/design/gygax_main
 	name = "Exosuit Module (\"Gygax\" Central Control module)"
@@ -46,6 +50,7 @@ datum/design/gygax_main
 	build_type = IMPRINTER
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha/gygax/main
+	category = list("Exosuit Modules")
 
 datum/design/gygax_peri
 	name = "Exosuit Module (\"Gygax\" Peripherals Control module)"
@@ -55,6 +60,7 @@ datum/design/gygax_peri
 	build_type = IMPRINTER
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha/gygax/peripherals
+	category = list("Exosuit Modules")
 
 datum/design/gygax_targ
 	name = "Exosuit Module (\"Gygax\" Weapons & Targeting Control module)"
@@ -64,6 +70,7 @@ datum/design/gygax_targ
 	build_type = IMPRINTER
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha/gygax/targeting
+	category = list("Exosuit Modules")
 
 datum/design/durand_main
 	name = "Exosuit Module (\"Durand\" Central Control module)"
@@ -73,6 +80,7 @@ datum/design/durand_main
 	build_type = IMPRINTER
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha/durand/main
+	category = list("Exosuit Modules")
 
 datum/design/durand_peri
 	name = "Exosuit Module (\"Durand\" Peripherals Control module)"
@@ -82,6 +90,7 @@ datum/design/durand_peri
 	build_type = IMPRINTER
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha/durand/peripherals
+	category = list("Exosuit Modules")
 
 datum/design/durand_targ
 	name = "Exosuit Module (\"Durand\" Weapons & Targeting Control module)"
@@ -91,6 +100,7 @@ datum/design/durand_targ
 	build_type = IMPRINTER
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha/durand/targeting
+	category = list("Exosuit Modules")
 
 datum/design/honker_main
 	name = "Exosuit Module (\"H.O.N.K\" Central Control module)"
@@ -100,6 +110,7 @@ datum/design/honker_main
 	build_type = IMPRINTER
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha/honker/main
+	category = list("Exosuit Modules")
 
 datum/design/honker_peri
 	name = "Exosuit Module (\"H.O.N.K\" Peripherals Control module)"
@@ -109,6 +120,7 @@ datum/design/honker_peri
 	build_type = IMPRINTER
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha/honker/peripherals
+	category = list("Exosuit Modules")
 
 datum/design/honker_targ
 	name = "Exosuit Module (\"H.O.N.K\" Weapons & Targeting Control module)"
@@ -118,6 +130,7 @@ datum/design/honker_targ
 	build_type = IMPRINTER
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha/honker/targeting
+	category = list("Exosuit Modules")
 
 datum/design/phazon_main
 	name = "Exosuit Module (\"Phazon\" Central Control module)"
@@ -127,6 +140,7 @@ datum/design/phazon_main
 	build_type = IMPRINTER
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha/phazon/main
+	category = list("Exosuit Modules")
 
 datum/design/phazon_peri
 	name = "Exosuit Module (\"Phazon\" Peripherals Control module)"
@@ -136,6 +150,7 @@ datum/design/phazon_peri
 	build_type = IMPRINTER
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha/phazon/peripherals
+	category = list("Exosuit Modules")
 
 datum/design/phazon_targ
 	name = "Exosuit Module (\"Phazon\" Weapons & Targeting Control module)"
@@ -145,6 +160,7 @@ datum/design/phazon_targ
 	build_type = IMPRINTER
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha/phazon/targeting
+	category = list("Exosuit Modules")
 
 ////////////////////////////////////////
 /////////// Mecha Equpment /////////////

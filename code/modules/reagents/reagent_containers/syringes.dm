@@ -118,6 +118,7 @@
 						B.data["cloneable"] = 1
 					B.data["gender"] = T.gender
 					B.data["real_name"] = T.real_name
+					B.data["factions"] = T.faction
 					reagents.reagent_list += B
 					reagents.update_total()
 					on_reagent_change()
