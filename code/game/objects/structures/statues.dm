@@ -19,47 +19,59 @@
 	density = 0
 	..()
 
-/obj/structure/statue/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/statue/attackby(obj/item/weapon/W, mob/living/user as mob)
+	user.do_attack_animation(src)
 	add_fingerprint(user)
+	user.changeNext_move(CLICK_CD_MELEE)
 	if(istype(W, /obj/item/weapon/wrench))
 		if(anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-			user << "<span class='notice'>Now loosening the [name]'s bolts...</span>"
+			user.visible_message("<span class='notice'>[user] is loosening the [name]'s bolts...</span>", \
+								 "<span class='notice'>You are loosening the [name]'s bolts...</span>")
 			if(do_after(user,40))
 				if(!src) return
-				user << "<span class='notice'>You loosened the [name]'s bolts!</span>"
+				user.visible_message("<span class='notice'>[user] loosened the [name]'s bolts!</span>", \
+									 "<span class='notice'>You loosened the [name]'s bolts!</span>")
 				anchored = 0
 		else if(!anchored)
 			if (!istype(src.loc, /turf/simulated/floor))
-				usr << "<span class='danger'>A floor must be present to secure the [name]!</span>"
+				user.visible_message("<span class='danger'>A floor must be present to secure the [name]!</span>")
 				return
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-			user << "<span class='notice'>Now securing the [name]'s bolts...</span>"
+			user.visible_message("<span class='notice'>[user] is securing the [name]'s bolts...</span>", \
+								 "<span class='notice'>You are securing the [name]'s bolts...</span>")
 			if(do_after(user, 40))
 				if(!src) return
-				user << "<span class='notice'>You secured the [name]'s bolts!</span>"
+				user.visible_message("<span class='notice'>[user] has secured the [name]'s bolts!</span>", \
+									 "<span class='notice'>You have secured the [name]'s bolts!</span>")
 				anchored = 1
 
 	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
-		user << "<span class='notice'>Now slicing apart the [name]...</span>"
+		user.visible_message("<span class='notice'>[user] is slicing apart the [name]...</span>", \
+							 "<span class='notice'>You are slicing apart the [name]...</span>")
 		if(do_after(user,30))
 			if(!src) return
-			user << "<span class='notice'>You slice apart the [name]!</span>"
+			user.visible_message("<span class='notice'>[user] slices apart the [name]!</span>", \
+								 "<span class='notice'>You slice apart the [name]!</span>")
 			Dismantle(1)
 
 	else if(istype(W, /obj/item/weapon/pickaxe/drill/diamonddrill))
-		user << "<span class='notice'>You begin to drill apart the [name]!</span>"
+		user.visible_message("<span class='notice'>[name] begins to drill apart the [name]!</span>", \
+							 "<span class='notice'>You begin to drill apart the [name]!</span>")
 		if(do_after(user,5))
 			if(!src) return
-			user << "<span class='notice'>You destroy the [name]!</span>"
+			user.visible_message("<span class='notice'>[name] destroys the [name]!</span>", \
+								 "<span class='notice'>You destroy the [name]!</span>")
 			qdel(src)
 
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		if(!anchored)
-			user << "<span class='notice'>Now slicing apart the [name]...</span>"
+			user.visible_message("<span class='notice'>[name] is slicing apart the [name]...</span>", \
+								 "<span class='notice'>You are slicing apart the [name]...</span>")
 			if(do_after(user, 40))
 				if(!src) return
-				user << "<span class='notice'>You slice apart the [name]!</span>"
+				user.visible_message("<span class='notice'>[name] slices apart the [name]!</span>", \
+									 "<span class='notice'>You slice apart the [name]!</span>")
 				Dismantle(1)
 
 	else
@@ -67,10 +79,12 @@
 		user << "You hit the [name] with your [W.name]!"
 		CheckHardness()
 
-/obj/structure/statue/attack_hand(mob/user)
+/obj/structure/statue/attack_hand(mob/living/user as mob)
+	user.do_attack_animation(src)
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
-	visible_message("<span class='notice'>[user] rubs some dust off from the [name]'s surface.</span>")
+	user.visible_message("<span class='notice'>[user] rubs some dust off from the [name]'s surface.</span>", \
+						 "<span class='notice'>You rub some dust off from the [name]'s surface.</span>")
 
 /obj/structure/statue/CanAtmosPass()
 	return !density
