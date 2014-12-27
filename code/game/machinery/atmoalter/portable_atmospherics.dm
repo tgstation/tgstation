@@ -4,7 +4,7 @@
 	var/datum/gas_mixture/air_contents = new
 
 	var/obj/machinery/atmospherics/unary/portables_connector/connected_port
-	var/obj/item/weapon/tank/holding
+	var/obj/item/weapon/tank/large/holding
 
 	var/volume = 0
 	var/destroyed = 0
@@ -63,10 +63,10 @@
 	return air_contents
 
 /obj/machinery/portable_atmospherics/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-	if ((istype(W, /obj/item/weapon/tank) && !( src.destroyed )))
+	if ((istype(W, /obj/item/weapon/tank/large) && !( src.destroyed )))
 		if (src.holding)
 			return
-		var/obj/item/weapon/tank/T = W
+		var/obj/item/weapon/tank/large/T = W
 		user.drop_item()
 		T.loc = src
 		src.holding = T

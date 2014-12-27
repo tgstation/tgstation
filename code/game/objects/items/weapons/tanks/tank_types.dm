@@ -10,24 +10,24 @@
 /*
  * Oxygen
  */
-/obj/item/weapon/tank/oxygen
+/obj/item/weapon/tank/large/oxygen
 	name = "oxygen tank"
 	desc = "A tank of oxygen."
 	icon_state = "oxygen"
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
 
 
-/obj/item/weapon/tank/oxygen/New()
+/obj/item/weapon/tank/large/oxygen/New()
 	..()
 	src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
 
-/obj/item/weapon/tank/oxygen/yellow
+/obj/item/weapon/tank/large/oxygen/yellow
 	desc = "A tank of oxygen, this one is yellow."
 	icon_state = "oxygen_f"
 
-/obj/item/weapon/tank/oxygen/red
+/obj/item/weapon/tank/large/oxygen/red
 	desc = "A tank of oxygen, this one is red."
 	icon_state = "oxygen_fr"
 
@@ -35,13 +35,13 @@
 /*
  * Anesthetic
  */
-/obj/item/weapon/tank/anesthetic
+/obj/item/weapon/tank/large/anesthetic
 	name = "anesthetic tank"
 	desc = "A tank with an N2O/O2 gas mix."
 	icon_state = "anesthetic"
 	item_state = "an_tank"
 
-/obj/item/weapon/tank/anesthetic/New()
+/obj/item/weapon/tank/large/anesthetic/New()
 	..()
 
 	src.air_contents.oxygen = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
@@ -55,13 +55,13 @@
 /*
  * Air
  */
-/obj/item/weapon/tank/air
+/obj/item/weapon/tank/large/air
 	name = "air tank"
 	desc = "Mixed anyone?"
 	icon_state = "oxygen"
 
 
-/obj/item/weapon/tank/air/New()
+/obj/item/weapon/tank/large/air/New()
 	..()
 
 	src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
@@ -72,7 +72,7 @@
 /*
  * Plasma
  */
-/obj/item/weapon/tank/plasma
+/obj/item/weapon/tank/large/plasma
 	name = "plasma tank"
 	desc = "Contains dangerous plasma. Do not inhale. Warning: extremely flammable."
 	icon_state = "plasma"
@@ -80,13 +80,13 @@
 	slot_flags = null	//they have no straps!
 
 
-/obj/item/weapon/tank/plasma/New()
+/obj/item/weapon/tank/large/plasma/New()
 	..()
 
 	src.air_contents.toxins = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
-/obj/item/weapon/tank/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/tank/large/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 
 	if (istype(W, /obj/item/weapon/flamethrower))
@@ -98,7 +98,7 @@
 		src.loc = F
 	return
 
-/obj/item/weapon/tank/plasma/full/New()
+/obj/item/weapon/tank/large/plasma/full/New()
 	..()
 	src.air_contents.toxins = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return

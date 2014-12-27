@@ -89,11 +89,11 @@ datum/objective_item/steal/documents
 //Items with special checks!
 datum/objective_item/steal/plasma
 	name = "28 moles of plasma (full tank)"
-	targetitem = /obj/item/weapon/tank
+	targetitem = /obj/item/weapon/tank/large
 	difficulty = 3
 	excludefromjob = list("Chief Engineer","Research Director","Station Engineer","Scientist","Atmospheric Technician")
 
-datum/objective_item/plasma/check_special_completion(var/obj/item/weapon/tank/T)
+datum/objective_item/plasma/check_special_completion(var/obj/item/weapon/tank/large/T)
 	var/target_amount = text2num(name)
 	var/found_amount = 0
 	found_amount += T.air_contents.toxins

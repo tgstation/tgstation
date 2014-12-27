@@ -123,7 +123,7 @@
 				santa.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain, slot_ears)
 				santa.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/santabag, slot_back)
 				santa.equip_to_slot_or_del(new /obj/item/device/flashlight, slot_r_store) //most blob spawn locations are really dark.
-				
+
 				var/obj/item/weapon/card/id/gold/santacard = new(santa)
 				santacard.update_label("Santa Claus", "Santa")
 				var/datum/job/captain/J = new/datum/job/captain
@@ -147,5 +147,5 @@
 				var/obj/effect/proc_holder/spell/targeted/area_teleport/teleport/telespell = new(santa)
 				telespell.clothes_req = 0 //santa robes aren't actually magical.
 				santa.mind.spell_list += telespell //does the station have chimneys? WHO KNOWS!
-				
+
 				santa << "<span class='userdanger'>You are Santa! Your objective is to bring joy to the people on this station. You can conjure more presents using a spell, and there are several presents in your bag.</span>"

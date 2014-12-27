@@ -51,8 +51,8 @@
 	return
 
 /obj/item/latexballon/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/tank))
-		var/obj/item/weapon/tank/T = W
+	if(istype(W, /obj/item/weapon/tank/large))
+		var/obj/item/weapon/tank/large/T = W
 		blow(T, user)
 		return
 	if (is_sharp(W) || is_hot(W))
