@@ -536,14 +536,14 @@
 					"You disassembled the broken APC frame.",\
 					"\red You hear welding.")
 			else
-				new /obj/item/apc_frame(loc)
+				new /obj/item/mounted/frame/apc_frame(loc)
 				user.visible_message(\
 					"\red [src] has been cut from the wall by [user.name] with the weldingtool.",\
 					"You cut the APC frame from the wall.",\
 					"\red You hear welding.")
 			del(src)
 			return
-	else if (istype(W, /obj/item/apc_frame) && opened && emagged)
+	else if (istype(W, /obj/item/mounted/frame/apc_frame) && opened && emagged)
 		emagged = 0
 		if (opened==2)
 			opened = 1
@@ -552,7 +552,7 @@
 			"You replace the damaged APC frontal panel with a new one.")
 		del(W)
 		update_icon()
-	else if (istype(W, /obj/item/apc_frame) && opened && ((stat & BROKEN) || malfhack))
+	else if (istype(W, /obj/item/mounted/frame/apc_frame) && opened && ((stat & BROKEN) || malfhack))
 		if (has_electronics)
 			user << "You cannot repair this APC until you remove the electronics still inside."
 			return
