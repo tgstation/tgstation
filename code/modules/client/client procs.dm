@@ -21,13 +21,15 @@
 	If you have any  questions about this stuff feel free to ask. ~Carn
 	*/
 /client/Topic(href, href_list, hsrc)
+	//var/timestart = world.timeofday
+	//testing("topic call for [usr] [href]")
 	if(!usr || usr != mob)	//stops us calling Topic for somebody else's client. Also helps prevent usr=null
 		return
 
 	//Reduces spamming of links by dropping calls that happen during the delay period
-	if(next_allowed_topic_time > world.time)
-		return
-	next_allowed_topic_time = world.time + TOPIC_SPAM_DELAY
+//	if(next_allowed_topic_time > world.time)
+//		return
+	//next_allowed_topic_time = world.time + TOPIC_SPAM_DELAY
 
 	//search the href for script injection
 	if( findtext(href,"<script",1,0) )
@@ -56,6 +58,7 @@
 		if("vars")		return view_var_Topic(href,href_list,hsrc)
 
 	..()	//redirect to hsrc.Topic()
+	//testing("[usr] topic call took [(world.timeofday - timestart)/10] seconds")
 
 /client/proc/handle_spam_prevention(var/message, var/mute_type)
 	if(config.automute_on && !holder && src.last_message == message)

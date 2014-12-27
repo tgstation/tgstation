@@ -27,7 +27,7 @@
 		loc = pick(watch_locations)
 */
 	new_player_panel()
-	spawn(-1)
+	spawn(0)
 		if(client)
 			//If the changelog has changed, show it to them
 			if(client.prefs.lastchangelog != changelog_hash)

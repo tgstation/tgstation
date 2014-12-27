@@ -95,6 +95,8 @@
 				if(player.ready)totalPlayersReady++
 
 /mob/new_player/Topic(href, href_list[])
+	//var/timestart = world.timeofday
+	//testing("topic call for [usr] [href]")
 	if(usr != src)
 		return 0
 
@@ -106,6 +108,9 @@
 
 	if(href_list["ready"])
 		ready = !ready
+		new_player_panel_proc()
+		//testing("[usr] topic call took [(world.timeofday - timestart)/10] seconds")
+		return 1
 
 	if(href_list["refresh"])
 		src << browse(null, "window=playersetup") //closes the player setup window
