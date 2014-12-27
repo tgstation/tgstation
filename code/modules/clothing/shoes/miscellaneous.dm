@@ -95,7 +95,7 @@
 			else
 				footstep++
 		else
-			playsound(src, "clownstep", 20, 1)
+			playsound(H, "clownstep", 20, 1)
 
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"
