@@ -517,6 +517,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		return
 	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
 		usr.set_machine(src)
+		scan_user(usr)
 		if(href_list["set_channel_name"])
 			src.channel_name = stripped_input(usr, "Provide a Feed Channel Name", "Network Channel Handler", "", MAX_NAME_LEN)
 			while (findtext(src.channel_name," ") == 1)
@@ -547,6 +548,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			else
 				var/choice = alert("Please confirm Feed channel creation","Network Channel Handler","Confirm","Cancel")
 				if(choice=="Confirm")
+					scan_user(usr)
 					news_network.CreateFeedChannel(src.channel_name, src.scanned_user, c_locked)
 					feedback_inc("newscaster_channels",1)
 					src.screen=5
@@ -632,6 +634,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			else
 				var/choice = alert("Please confirm Wanted Issue [(input_param==1) ? ("creation.") : ("edit.")]","Network Security Handler","Confirm","Cancel")
 				if(choice=="Confirm")
+					scan_user(usr)
 					if(input_param==1)          //If input_param == 1 we're submitting a new wanted issue. At 2 we're just editing an existing one. See the else below
 						var/datum/feed_message/WANTED = new /datum/feed_message
 						WANTED.author = src.channel_name
@@ -752,6 +755,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			var/datum/feed_message/FM = locate(href_list["new_comment"])
 			var/cominput = copytext(stripped_input(usr, "Write your message:", "New comment", null),1,141)
 			if(cominput)
+				scan_user(usr)
 				var/datum/feed_comment/FC = new/datum/feed_comment
 				FC.author = scanned_user
 				FC.body = cominput
@@ -1054,9 +1058,11 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 				src.scanned_user ="Unknown"
 		else
 			src.scanned_user ="Unknown"
-	else
+	else if(istype(user,/mob/living/silicon))
 		var/mob/living/silicon/ai_user = user
 		src.scanned_user = "[ai_user.name] ([ai_user.job])"
+	else
+		ERROR("Newscaster used by non-human/silicon mob: [user.type]")
 
 
 /obj/machinery/newscaster/proc/print_paper()

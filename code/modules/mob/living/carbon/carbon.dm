@@ -83,13 +83,16 @@
 	//src.updatehealth()
 	src.visible_message(
 		"<span class='danger'>[src] was shocked by the [source]!</span>", \
-		"<span class='userdanger'>You feel a powerful shock course through your body!</span>", \
+		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
 		"<span class='danger'>You hear a heavy electrical crack.</span>" \
 	)
-//	if(src.stunned < shock_damage)	src.stunned = shock_damage
-	Stun(5)//This should work for now, more is really silly and makes you lay there forever
-//	if(src.weakened < 20*siemens_coeff)	src.weakened = 20*siemens_coeff
-	Weaken(5)
+	src.jitteriness += 1000 //High numbers for violent convulsions
+	src.stuttering += 2
+	Stun(2)
+	spawn(20)
+		src.jitteriness -= 990 //Still jittery, but vastly less
+		Stun(3)
+		Weaken(3)
 	return shock_damage
 
 
