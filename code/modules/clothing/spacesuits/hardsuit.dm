@@ -6,6 +6,7 @@
 	var/brightness_on = 4 //luminosity when on
 	var/on = 0
 	action_button_name = "Toggle Helmet Light"
+	item_color = "engineering"
 
 /obj/item/clothing/suit/space/hardsuit
 	name = "hardsuit"
@@ -84,7 +85,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 
 /obj/item/clothing/suit/space/hardsuit/atmos/New()
-	allowed = allowed + list(/obj/item/device/t_scanner, /obj/item/weapon/rcd)
+	allowed = allowed + list(/obj/item/device/t_scanner, /obj/item/weapon/pipe_dispenser)
 	. = ..()
 
 
@@ -109,7 +110,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 
 /obj/item/clothing/suit/space/hardsuit/elite/New()
-	allowed = allowed + list(/obj/item/device/t_scanner, /obj/item/weapon/rcd)
+	allowed = allowed + list(/obj/item/device/t_scanner, /obj/item/weapon/rcd, /obj/item/weapon/pipe_dispenser)
 	. = ..()
 
 
