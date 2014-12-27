@@ -17,12 +17,12 @@
 	set category = "IC"
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
+		usr << "<span class='danger'>Speech is currently admin-disabled.</span>" //but its not speech it's an emote????
 		return
 
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
-	usr.emote("me",1,message)
+	visible_message(message)
 
 /mob/proc/say_dead(var/message)
 	var/name = src.real_name
