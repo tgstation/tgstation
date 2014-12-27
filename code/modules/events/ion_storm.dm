@@ -58,6 +58,9 @@
 /datum/event/ionstorm/tick()
 	if(botEmagChance)
 		for(var/obj/machinery/bot/bot in bots)
+			if(!bot.loc)
+				bots -= bot
+				continue
 			if(prob(botEmagChance))
 				bot.Emag()
 
