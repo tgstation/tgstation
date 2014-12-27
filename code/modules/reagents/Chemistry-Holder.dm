@@ -247,7 +247,9 @@ datum/reagents/proc/handle_reactions()
 				else
 					if(my_atom.type == C.required_container)
 						matching_container = 1
-
+				if (isliving(my_atom)) //Makes it so certain chemical reactions don't occur in mobs
+					if (C.mob_react)
+						return
 				if(!C.required_other)
 					matching_other = 1
 
