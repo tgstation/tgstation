@@ -34,7 +34,7 @@
 
 			if(!marked_item)
 				if(hand_items)
-					message = "<span class='caution'>You aren't holding anything that can be marked for recalled.</span>"
+					message = "<span class='caution'>You aren't holding anything that can be marked for recall.</span>"
 				else
 					message = "<span class='notice'>You must hold the desired item in your hands to mark it for recall.</span>"
 
@@ -46,14 +46,24 @@
 
 		else	//Getting previously marked item
 			var/obj/item_to_retrive = marked_item
+			var/infinite_recursion = 0 //I don't want to know how someone could put something inside itself but these are wizards so let's be safe
+
+			while(!isturf(item_to_retrive.loc) && infinite_recursion < 10) //if it's in something you get the whole thing.
+				if(ismob(item_to_retrive.loc)) //If its on someone, properly drop it
+					var/mob/M = item_to_retrive.loc
+					M.unEquip(item_to_retrive)
+					if(iscarbon(M)) //Edge case housekeeping
+						var/mob/living/carbon/C = M
+						if(C.internal_organs && item_to_retrive in C.internal_organs) //KALIMA!
+							C.internal_organs -= item_to_retrive
+						if(C.stomach_contents && item_to_retrive in C.stomach_contents)
+							C.stomach_contents -= item_to_retrive
+				else
+					item_to_retrive = item_to_retrive.loc
+				infinite_recursion += 1
+
 			item_to_retrive.loc.visible_message("<span class='warning'>The [item_to_retrive.name] suddenly disappears!</span>")
 
-			if(isobj(marked_item.loc)) //To prevent some weird recursive item removal things if your item is stored in something else. you get the whole dang thing.
-				item_to_retrive = marked_item.loc
-
-			if(ismob(item_to_retrive.loc)) //If its on someone, properly drop it before we steal it
-				var/mob/M = item_to_retrive.loc
-				M.unEquip(item_to_retrive)
 
 			if(user.hand) //left active hand
 				if(!user.equip_to_slot_if_possible(item_to_retrive, slot_l_hand, 0, 1, 1))
