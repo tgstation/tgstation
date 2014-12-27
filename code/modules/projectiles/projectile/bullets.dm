@@ -43,7 +43,7 @@
 /obj/item/projectile/bullet/stunshot
 	name = "stunshot"
 	damage = 5
-	stamina = 50 //two round bursts from the bulldog
+	stamina = 110
 
 /obj/item/projectile/bullet/incendiary/on_hit(var/atom/target, var/blocked = 0)
 	..()
