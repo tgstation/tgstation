@@ -7,6 +7,7 @@
 	icon_state = "fuel_compressor0"
 	w_class = 4
 	flags = FPRINT | TABLEPASS| CONDUCT
+	mount_reqs = list("simfloor", "nospace")
 
 /obj/item/mounted/frame/rust_fuel_compressor/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
@@ -14,18 +15,6 @@
 		del(src)
 		return
 	..()
-
-/obj/item/mounted/frame/rust_fuel_compressor/try_build(turf/on_wall, mob/user)
-	if(..())
-		var/turf/turf_loc = get_turf(user)
-		var/area/A = turf_loc.loc
-		if (!istype(turf_loc, /turf/simulated/floor))
-			user << "\red Compressor cannot be placed on this spot."
-			return
-		if (A.requires_power == 0 || A.name == "Space")
-			user << "\red Compressor cannot be placed in this area."
-			return
-		return 1
 
 /obj/item/mounted/frame/rust_fuel_compressor/do_build(turf/on_wall, mob/user)
 	new /obj/machinery/rust_fuel_compressor(get_turf(user), get_dir(user, on_wall), 1)

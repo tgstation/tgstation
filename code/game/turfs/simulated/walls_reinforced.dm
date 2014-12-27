@@ -271,6 +271,9 @@
 			else
 				del(MS)
 
+	else if(istype(W, /obj/item/mounted))
+		return
+
 	//Finally, CHECKING FOR FALSE WALLS if it isn't damaged
 	else if(!d_state)
 		return attack_hand(user)
