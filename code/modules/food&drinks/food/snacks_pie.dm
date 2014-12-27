@@ -9,6 +9,7 @@
 	..()
 	reagents.add_reagent("nutriment", 4)
 	reagents.add_reagent("banana",5)
+	reagents.add_reagent("vitamin", 2)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/throw_impact(atom/hit_atom)
@@ -27,6 +28,7 @@
 	..()
 	reagents.add_reagent("nutriment", 4)
 	reagents.add_reagent("berryjuice", 5)
+	reagents.add_reagent("vitamin", 2)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/meatpie
@@ -38,6 +40,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/meatpie/New()
 	..()
 	reagents.add_reagent("nutriment", 10)
+	reagents.add_reagent("vitamin", 5)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/tofupie
@@ -49,6 +52,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/tofupie/New()
 	..()
 	reagents.add_reagent("nutriment", 10)
+	reagents.add_reagent("vitamin", 2)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/amanita_pie
@@ -61,7 +65,8 @@
 	reagents.add_reagent("nutriment", 5)
 	reagents.add_reagent("amatoxin", 3)
 	reagents.add_reagent("mushroomhallucinogen", 1)
-	bitesize = 3
+	reagents.add_reagent("vitamin", 4)
+	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/plump_pie
 	name = "plump pie"
@@ -73,12 +78,11 @@
 	if(prob(10))
 		name = "exceptional plump pie"
 		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump pie!"
-		reagents.add_reagent("nutriment", 8)
 		reagents.add_reagent("tricordrazine", 5)
-		bitesize = 2
-	else
-		reagents.add_reagent("nutriment", 8)
-		bitesize = 2
+
+	reagents.add_reagent("nutriment", 8)
+	reagents.add_reagent("vitamin", 4)
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/xemeatpie
 	name = "xeno-pie"
@@ -89,6 +93,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/xemeatpie/New()
 	..()
 	reagents.add_reagent("nutriment", 10)
+	reagents.add_reagent("vitamin", 5)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/applepie
@@ -99,6 +104,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/applepie/New()
 	..()
 	reagents.add_reagent("nutriment", 4)
+	reagents.add_reagent("vitamin", 2)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/cherrypie
@@ -109,6 +115,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/cherrypie/New()
 	..()
 	reagents.add_reagent("nutriment", 4)
+	reagents.add_reagent("vitamin", 2)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pumpkinpie
@@ -121,6 +128,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pumpkinpie/New()
 	..()
 	reagents.add_reagent("nutriment", 15)
+	reagents.add_reagent("vitamin", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/pumpkinpieslice
 	name = "pumpkin pie slice"

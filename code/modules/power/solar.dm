@@ -33,9 +33,10 @@ var/list/solars_list = list()
 
 //set the control of the panel to a given computer if closer than SOLAR_MAX_DIST
 /obj/machinery/power/solar/proc/set_control(var/obj/machinery/power/solar_control/SC)
-	if(SC && (get_dist(src, SC) > SOLAR_MAX_DIST))
+	if(!SC || (get_dist(src, SC) > SOLAR_MAX_DIST))
 		return 0
 	control = SC
+	SC.connected_panels |= src
 	return 1
 
 //set the control of the panel to null and removes it from the control list of the previous control computer if needed
@@ -140,34 +141,23 @@ var/list/solars_list = list()
 			unset_control()
 
 /obj/machinery/power/solar/proc/broken()
+	. = (!(stat & BROKEN))
 	stat |= BROKEN
 	unset_control()
 	update_icon()
 	return
 
 
-/obj/machinery/power/solar/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			if(prob(15))
-				new /obj/item/weapon/shard( src.loc )
-			qdel(src)
-			return
-
-		if(2.0)
-			if (prob(25))
-				new /obj/item/weapon/shard( src.loc )
-				qdel(src)
-				return
-
-			if (prob(50))
-				broken()
-
-		if(3.0)
-			if (prob(25))
-				broken()
-	return
-
+/obj/machinery/power/solar/ex_act(severity, target)
+	..()
+	if(!gc_destroyed)
+		switch(severity)
+			if(2)
+				if(prob(50) && broken())
+					new /obj/item/weapon/shard(src.loc)
+			if(3)
+				if(prob(25) && broken())
+					new /obj/item/weapon/shard(src.loc)
 
 /obj/machinery/power/solar/blob_act()
 	if(prob(75))
@@ -334,12 +324,10 @@ var/list/solars_list = list()
 				var/obj/machinery/power/solar/S = M
 				if(!S.control) //i.e unconnected
 					S.set_control(src)
-					connected_panels |= S
 			else if(istype(M, /obj/machinery/power/tracker))
 				if(!connected_tracker) //if there's already a tracker connected to the computer don't add another
 					var/obj/machinery/power/tracker/T = M
 					if(!T.control) //i.e unconnected
-						connected_tracker = T
 						T.set_control(src)
 
 //called by the sun controller, update the facing angle (either manually or via tracking) and rotates the panels accordingly
@@ -495,10 +483,10 @@ var/list/solars_list = list()
 			set_panels(targetdir)
 
 	if(href_list["search_connected"])
-		src.search_for_connected()
+		search_for_connected()
 		if(connected_tracker && track == 2)
 			connected_tracker.set_angle(sun.angle)
-		src.set_panels(cdir)
+		set_panels(cdir)
 
 	src.updateUsrDialog()
 	return
@@ -524,20 +512,16 @@ var/list/solars_list = list()
 	update_icon()
 
 
-/obj/machinery/power/solar_control/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			//SN src = null
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				broken()
-		if(3.0)
-			if (prob(25))
-				broken()
-	return
-
+/obj/machinery/power/solar_control/ex_act(severity, target)
+	..()
+	if(!gc_destroyed)
+		switch(severity)
+			if(2)
+				if(prob(50))
+					broken()
+			if(3)
+				if(prob(25))
+					broken()
 
 /obj/machinery/power/solar_control/blob_act()
 	if (prob(75))

@@ -133,11 +133,11 @@
 				O.orderedby = "Spider Clan"
 				supply_shuttle.shoppinglist += O
 
-				shuttle_spawns.Add(/mob/living/simple_animal/hostile/giant_spider)
-				shuttle_spawns.Add(/mob/living/simple_animal/hostile/giant_spider)
-				shuttle_spawns.Add(/mob/living/simple_animal/hostile/giant_spider/nurse)
+				shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider)
+				shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider)
+				shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider/nurse)
 				if(prob(50))
-					shuttle_spawns.Add(/mob/living/simple_animal/hostile/giant_spider/hunter)
+					shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider/hunter)
 
 				var/turf/T = pick(empty_shuttle_turfs)
 				empty_shuttle_turfs.Remove(T)

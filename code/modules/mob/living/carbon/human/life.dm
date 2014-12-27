@@ -149,7 +149,7 @@
 			var/x_offset = pixel_x + rand(-2,2) //Should probably be moved into the twitch emote at some point.
 			var/y_offset = pixel_y + rand(-1,1)
 			animate(src, pixel_x = pixel_x + x_offset, pixel_y = pixel_y + y_offset, time = 1)
-			animate(pixel_x = pixel_x - x_offset, pixel_y = pixel_y - y_offset, time = 1)
+			animate(pixel_x = initial(pixel_x) , pixel_y = initial(pixel_y), time = 1)
 	if (disabilities & NERVOUS)
 		if (prob(10))
 			stuttering = max(10, stuttering)
@@ -174,29 +174,6 @@
 
 	return
 
-
-/mob/living/carbon/human/proc/get_breath_from_internal(volume_needed)
-	if(internal)
-		if (!contents.Find(internal))
-			internal = null
-		if (!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
-			internal = null
-		if(internal)
-			return internal.remove_air_volume(volume_needed)
-		else if(internals)
-			internals.icon_state = "internal0"
-	return null
-
-
-	/*proc/handle_breath(datum/gas_mixture/breath)
-		if((status_flags & GODMODE))
-			return
-
-		if(dna)
-			dna.species.handle_breath(breath)
-
-		return 1*/
-
 /mob/living/carbon/human/proc/handle_environment(datum/gas_mixture/environment)
 	if(dna)
 		dna.species.handle_environment(environment, src)
@@ -207,11 +184,22 @@
 /mob/living/carbon/human/handle_fire()
 	if(dna)
 		dna.species.handle_fire(src)
-
 	if(..())
 		return
-	var/thermal_protection = get_heat_protection(30000) //If you don't have fire suit level protection, you get a temperature increase
-	if((1 - thermal_protection) > 0.0001)
+	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
+	if(wear_suit)
+		if(wear_suit.max_heat_protection_temperature >= FIRE_SUIT_MAX_TEMP_PROTECT)
+			thermal_protection += (wear_suit.max_heat_protection_temperature*0.7)
+	if(head)
+		if(head.max_heat_protection_temperature >= FIRE_HELM_MAX_TEMP_PROTECT)
+			thermal_protection += (head.max_heat_protection_temperature*THERMAL_PROTECTION_HEAD)
+	thermal_protection = round(thermal_protection)
+	if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
+		return
+	if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT)
+		bodytemperature += 11
+		return
+	else
 		bodytemperature += BODYTEMP_HEATING_MAX
 	return
 
@@ -254,10 +242,10 @@
 			if(nutrition >= 2) //If we are very, very cold we'll use up quite a bit of nutriment to heat us up.
 				nutrition -= 2
 			var/body_temperature_difference = 310.15 - bodytemperature
-			bodytemperature += max((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
+			bodytemperature += max((body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
 		if(260.15 to 360.15)
 			var/body_temperature_difference = 310.15 - bodytemperature
-			bodytemperature += body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR
+			bodytemperature += body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR
 		if(360.15 to INFINITY) //360.15 is 310.15 + 50, the temperature where you start to feel effects.
 			//We totally need a sweat system cause it totally makes sense...~
 			var/body_temperature_difference = 310.15 - bodytemperature
@@ -568,7 +556,8 @@
 			var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
 
 			animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = 6)
-			animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 2)
+			animate(pixel_x = initial(pixel_x) , pixel_y = initial(pixel_y) , time = 2)
+			floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.
 			jitteriness = max(jitteriness-1, 0)
 
 		//Other
@@ -593,8 +582,6 @@
 
 /mob/living/carbon/human/proc/handle_regular_hud_updates()
 	if(!client)	return 0
-
-	regular_hud_updates() //For MED/SEC HUD icon deletion
 
 	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
 

@@ -142,7 +142,7 @@ Nah
 
 /obj/machinery/pipedispenser/disposal/attack_hand(user as mob)
 	if(..())
-		return
+		return 1
 
 	var/dat = {"<b>Disposal Pipes</b><br><br>
 <A href='?src=\ref[src];dmake=0'>Pipe</A><BR>
@@ -164,7 +164,7 @@ Nah
 
 /obj/machinery/pipedispenser/disposal/Topic(href, href_list)
 	if(..())
-		return
+		return 1
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["dmake"])
@@ -211,7 +211,7 @@ Nah
 
 /obj/machinery/pipedispenser/disposal/transit_tube/attack_hand(user as mob)
 	if(..())
-		return
+		return 1
 
 	var/dat = {"<B>Transit Tubes:</B><BR>
 <A href='?src=\ref[src];tube=0'>Straight Tube</A><BR>
@@ -230,9 +230,9 @@ Nah
 	return
 
 
-/obj/machinery/pipedispenser/disposal/Topic(href, href_list)
+/obj/machinery/pipedispenser/disposal/transit_tube/Topic(href, href_list)
 	if(..())
-		return
+		return 1
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(!wait)

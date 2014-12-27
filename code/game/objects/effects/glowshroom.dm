@@ -117,7 +117,7 @@
 	endurance -= W.force
 	CheckEndurance()
 
-/obj/effect/glowshroom/ex_act(severity)
+/obj/effect/glowshroom/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			qdel(src)

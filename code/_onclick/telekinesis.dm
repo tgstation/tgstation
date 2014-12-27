@@ -95,7 +95,7 @@ var/const/tk_maxrange = 15
 	if(focus)
 		focus.attack_self_tk(user)
 
-/obj/item/tk_grab/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, proximity)//TODO: go over this
+/obj/item/tk_grab/afterattack(atom/target, mob/living/user, proximity)//TODO: go over this
 	if(!target || !user)	return
 	if(last_throw+3 > world.time)	return
 	if(!host || host != user)
@@ -107,12 +107,7 @@ var/const/tk_maxrange = 15
 	if(isobj(target) && !isturf(target.loc))
 		return
 
-	var/d = get_dist(user, target)
-	if(focus)
-		d = max(d,get_dist(user,focus)) // whichever is further
-
-	if(d > tk_maxrange)
-		user << "<span class ='warning'>Your mind won't reach that far.</span>"
+	if(!tkMaxRangeCheck(user, target, focus))
 		return
 
 	if(!focus)
@@ -136,6 +131,15 @@ var/const/tk_maxrange = 15
 		focus.throw_at(target, 10, 1)
 		last_throw = world.time
 	return
+
+/proc/tkMaxRangeCheck(mob/user, atom/target, atom/focus)
+	var/d = get_dist(user, target)
+	if(focus)
+		d = max(d,get_dist(user,focus)) // whichever is further
+	if(d > tk_maxrange)
+		user << "<span class ='warning'>Your mind won't reach that far.</span>"
+		return 0
+	return 1
 
 /obj/item/tk_grab/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
 	return

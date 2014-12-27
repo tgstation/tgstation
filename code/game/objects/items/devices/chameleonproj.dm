@@ -45,7 +45,7 @@
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
 		qdel(active_dummy)
 		active_dummy = null
-		usr << "<span class='notice'>You deactivate the [src].</span>"
+		usr << "<span class='notice'>You deactivate \the [src].</span>"
 		var/obj/effect/overlay/T = new/obj/effect/overlay(get_turf(src))
 		T.icon = 'icons/effects/effects.dmi'
 		flick("emppulse",T)
@@ -57,7 +57,7 @@
 		var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(usr.loc)
 		C.activate(O, usr, saved_icon, saved_icon_state, saved_overlays, saved_underlays, src)
 		qdel(O)
-		usr << "<span class='notice'>You activate the [src].</span>"
+		usr << "<span class='notice'>You activate \the [src].</span>"
 		var/obj/effect/overlay/T = new/obj/effect/overlay(get_turf(src))
 		T.icon = 'icons/effects/effects.dmi'
 		flick("emppulse",T)
@@ -113,7 +113,7 @@
 		M << "<span class='danger'>Your chameleon-projector deactivates.</span>"
 	master.disrupt()
 
-/obj/effect/dummy/chameleon/ex_act()
+/obj/effect/dummy/chameleon/ex_act() //ok now THATS some serious protection against explosions right here
 	for(var/mob/M in src)
 		M << "<span class='danger'>Your chameleon-projector deactivates.</span>"
 	master.disrupt()

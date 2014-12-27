@@ -93,7 +93,7 @@
 					break
 
 			var/obj/structure/window/W
-			W = new /obj/structure/window/basic( user.loc, 0 )
+			W = new /obj/structure/window( user.loc, 0 )
 			W.dir = dir_to_set
 			W.ini_dir = W.dir
 			W.anchored = 0
@@ -110,7 +110,7 @@
 				user << "<span class='danger'>There is a window in the way.</span>"
 				return 1
 			var/obj/structure/window/W
-			W = new /obj/structure/window/basic( user.loc, 0 )
+			W = new /obj/structure/window/fulltile( user.loc, 0 )
 			W.dir = SOUTHWEST
 			W.ini_dir = SOUTHWEST
 			W.anchored = 0
@@ -210,7 +210,7 @@
 				user << "<span class='warning'>There is a window in the way.</span>"
 				return 1
 			var/obj/structure/window/W
-			W = new /obj/structure/window/reinforced(user.loc, 1)
+			W = new /obj/structure/window/reinforced/fulltile(user.loc, 1)
 			W.state = 0
 			W.dir = SOUTHWEST
 			W.ini_dir = SOUTHWEST
@@ -309,10 +309,10 @@
 			var/obj/item/organ/limb/affecting = H.get_organ(organ)
 			if(affecting.take_damage(force / 2))
 				H.update_damage_overlays(0)
-	else if(isliving(user))
-		var/mob/living/L = user
-		L << "<span class='warning'>[src] cuts into your hand!</span>"
-		L.adjustBruteLoss(force / 2)
+	else if(ismonkey(user))
+		var/mob/living/carbon/monkey/M = user
+		M << "<span class='warning'>[src] cuts into your hand!</span>"
+		M.adjustBruteLoss(force / 2)
 
 
 /obj/item/weapon/shard/attackby(obj/item/I, mob/user)

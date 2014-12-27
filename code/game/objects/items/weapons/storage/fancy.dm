@@ -160,7 +160,6 @@
 
 /obj/item/weapon/storage/fancy/cigarettes/update_icon()
 	icon_state = "[initial(icon_state)][contents.len]"
-	desc = "There are [contents.len] cig\s left!"
 	return
 
 /obj/item/weapon/storage/fancy/cigarettes/remove_from_storage(obj/item/W, atom/new_location)
@@ -211,7 +210,7 @@
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_robustgold/New()
 	..()
 	for(var/i = 1 to storage_slots)
-		reagents.add_reagent("gold",0.2)
+		reagents.add_reagent("gold",1)
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_carp
 	name = "\improper Carp Classic packet"

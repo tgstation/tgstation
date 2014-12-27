@@ -502,11 +502,11 @@ What are the archived variables for?
 
 	return 1
 
-/datum/gas_mixture/check_turf(turf/model)
-	var/delta_oxygen = (oxygen_archived - model.oxygen)/5
-	var/delta_carbon_dioxide = (carbon_dioxide_archived - model.carbon_dioxide)/5
-	var/delta_nitrogen = (nitrogen_archived - model.nitrogen)/5
-	var/delta_toxins = (toxins_archived - model.toxins)/5
+/datum/gas_mixture/check_turf(turf/model, atmos_adjacent_turfs = 4)
+	var/delta_oxygen = (oxygen_archived - model.oxygen)/(atmos_adjacent_turfs+1)
+	var/delta_carbon_dioxide = (carbon_dioxide_archived - model.carbon_dioxide)/(atmos_adjacent_turfs+1)
+	var/delta_nitrogen = (nitrogen_archived - model.nitrogen)/(atmos_adjacent_turfs+1)
+	var/delta_toxins = (toxins_archived - model.toxins)/(atmos_adjacent_turfs+1)
 
 	var/delta_temperature = (temperature_archived - model.temperature)
 
@@ -521,6 +521,29 @@ What are the archived variables for?
 	if(trace_gases.len)
 		for(var/datum/gas/trace_gas in trace_gases)
 			if(trace_gas.moles_archived > MINIMUM_AIR_TO_SUSPEND*4)
+				return 0
+
+	return 1
+
+/datum/gas_mixture/proc/check_turf_total(turf/model)
+	var/delta_oxygen = (oxygen - model.oxygen)
+	var/delta_carbon_dioxide = (carbon_dioxide - model.carbon_dioxide)
+	var/delta_nitrogen = (nitrogen - model.nitrogen)
+	var/delta_toxins = (toxins - model.toxins)
+
+	var/delta_temperature = (temperature - model.temperature)
+
+	if(((abs(delta_oxygen) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_oxygen) >= oxygen*MINIMUM_AIR_RATIO_TO_SUSPEND)) \
+		|| ((abs(delta_carbon_dioxide) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_carbon_dioxide) >= carbon_dioxide*MINIMUM_AIR_RATIO_TO_SUSPEND)) \
+		|| ((abs(delta_nitrogen) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_nitrogen) >= nitrogen*MINIMUM_AIR_RATIO_TO_SUSPEND)) \
+		|| ((abs(delta_toxins) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_toxins) >= toxins*MINIMUM_AIR_RATIO_TO_SUSPEND)))
+		return 0
+	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
+		return 0
+
+	if(trace_gases.len)
+		for(var/datum/gas/trace_gas in trace_gases)
+			if(trace_gas.moles > MINIMUM_AIR_TO_SUSPEND*4)
 				return 0
 
 	return 1

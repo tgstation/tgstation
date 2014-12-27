@@ -233,127 +233,41 @@
 				gangster_mind.current.visible_message("[gangster_mind.current] looks like they've given up the life of crime!")
 			gangster_mind.current << "<FONT size=3 color=red><B>You have been reformed! You are no longer a gangster!</B></FONT>"
 
-	update_gang_icons_removed(gangster_mind)
+	update_gang_icons_removed(gangster_mind, gang)
 
+///////////////////////
+//Add/remove gang HUD//
+///////////////////////
+/datum/game_mode/proc/get_gang_hud(var/gang)
+	var/datum/atom_hud/antag/ganghud = null
+	switch(gang)
+		if("A") ganghud = huds[ANTAG_HUD_GANG_A]
+		if("B") ganghud = huds[ANTAG_HUD_GANG_B]
+	return ganghud
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
-//Keeps track of players having the correct icons////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////
-/datum/game_mode/proc/update_all_gang_icons()
-	spawn(0)
-		var/list/all_gangsters = A_bosses + B_bosses + A_gangsters + B_gangsters
+/datum/game_mode/proc/get_gang_bosses(var/gang)
+	var/bosses = null
+	switch(gang)
+		if("A") bosses = A_bosses
+		if("B") bosses = B_bosses
+	return bosses
 
-		//Delete all gang icons
-		for(var/datum/mind/gang_mind in all_gangsters)
-			if(gang_mind.current)
-				if(gang_mind.current.client)
-					for(var/image/I in gang_mind.current.client.images)
-						if(I.icon_state == "gangster" || I.icon_state == "gang_boss")
-							del(I)
-
-		update_gang_icons("A")
-		update_gang_icons("B")
-
-/datum/game_mode/proc/update_gang_icons(var/gang)
-	var/list/bosses
-	var/list/gangsters
-	if(gang == "A")
-		bosses = A_bosses
-		gangsters = A_gangsters
-	else if(gang == "B")
-		bosses = B_bosses
-		gangsters = B_gangsters
-	else
-		world << "ERROR: Invalid gang in update_gang_icons()"
-
-	//Update gang icons for boss' visions
-	for(var/datum/mind/boss_mind in bosses)
-		if(boss_mind.current)
-			if(boss_mind.current.client)
-				for(var/datum/mind/gangster_mind in gangsters)
-					if(gangster_mind.current)
-						var/I = image('icons/mob/mob.dmi', loc = gangster_mind.current, icon_state = "gangster")
-						boss_mind.current.client.images += I
-				for(var/datum/mind/boss2_mind in bosses)
-					if(boss2_mind.current)
-						var/I = image('icons/mob/mob.dmi', loc = boss2_mind.current, icon_state = "gang_boss")
-						boss_mind.current.client.images += I
-
-	//Update boss and self icons for gangsters' visions
-	for(var/datum/mind/gangster_mind in gangsters)
-		if(gangster_mind.current)
-			if(gangster_mind.current.client)
-				for(var/datum/mind/boss_mind in bosses)
-					if(boss_mind.current)
-						var/I = image('icons/mob/mob.dmi', loc = boss_mind.current, icon_state = "gang_boss")
-						gangster_mind.current.client.images += I
-					//Tag themselves to see
-					var/K
-					if(gangster_mind in bosses) //If the new gangster is a boss himself
-						K = image('icons/mob/mob.dmi', loc = gangster_mind.current, icon_state = "gang_boss")
-					else
-						K = image('icons/mob/mob.dmi', loc = gangster_mind.current, icon_state = "gangster")
-					gangster_mind.current.client.images += K
-
-/////////////////////////////////////////////////
-//Assigns icons when a new gangster is recruited//
-/////////////////////////////////////////////////
 /datum/game_mode/proc/update_gang_icons_added(datum/mind/recruit_mind, var/gang)
-	var/list/bosses
-	if(gang == "A")
-		bosses = A_bosses
-	else if(gang == "B")
-		bosses = B_bosses
-	if(!gang)
-		world << "ERROR: Invalid gang in update_gang_icons_added()"
+	var/datum/atom_hud/antag/ganghud = get_gang_hud(gang)
+	var/bosses = get_gang_bosses(gang)
+	if(!ganghud)
+		ERROR("Invalid gang in update_gang_icons_added(): [gang]")
 
-	spawn(0)
-		for(var/datum/mind/boss_mind in bosses)
-			//Tagging the new gangster for the bosses to see
-			if(boss_mind.current)
-				if(boss_mind.current.client)
-					var/I
-					if(recruit_mind in bosses) //If the new gangster is a boss himself
-						I = image('icons/mob/mob.dmi', loc = recruit_mind.current, icon_state = "gang_boss")
-					else
-						I = image('icons/mob/mob.dmi', loc = recruit_mind.current, icon_state = "gangster")
-					boss_mind.current.client.images += I
-			//Tagging every boss for the new gangster to see
-			if(recruit_mind.current)
-				if(recruit_mind.current.client)
-					var/image/J = image('icons/mob/mob.dmi', loc = boss_mind.current, icon_state = "gang_boss")
-					recruit_mind.current.client.images += J
-		//Tag themselves to see
-		if(recruit_mind.current)
-			if(recruit_mind.current.client)
-				var/K
-				if(recruit_mind in bosses) //If the new gangster is a boss himself
-					K = image('icons/mob/mob.dmi', loc = recruit_mind.current, icon_state = "gang_boss")
-				else
-					K = image('icons/mob/mob.dmi', loc = recruit_mind.current, icon_state = "gangster")
-				recruit_mind.current.client.images += K
+	ganghud.join_hud(recruit_mind.current)
+	set_antag_hud(recruit_mind.current, ((recruit_mind in bosses) ? "gang_boss" : "gangster"))
 
-////////////////////////////////////////
-//Keeps track of deconverted gangsters//
-////////////////////////////////////////
-/datum/game_mode/proc/update_gang_icons_removed(datum/mind/defector_mind)
-	var/list/all_gangsters = A_bosses + B_bosses + A_gangsters + B_gangsters
+/datum/game_mode/proc/update_gang_icons_removed(datum/mind/defector_mind, var/gang)
+	var/datum/atom_hud/antag/ganghud = get_gang_hud(gang)
+	if(!ganghud)
+		ERROR("Invalid gang in update_gang_icons_removed(): [gang]")
 
-	spawn(0)
-		//Remove defector's icon from gangsters' visions
-		for(var/datum/mind/boss_mind in all_gangsters)
-			if(boss_mind.current)
-				if(boss_mind.current.client)
-					for(var/image/I in boss_mind.current.client.images)
-						if((I.icon_state == "gangster" || I.icon_state == "gang_boss") && I.loc == defector_mind.current)
-							del(I)
-
-		//Remove gang icons from defector's vision
-		if(defector_mind.current)
-			if(defector_mind.current.client)
-				for(var/image/I in defector_mind.current.client.images)
-					if(I.icon_state == "gangster" || I.icon_state == "gang_boss")
-						del(I)
+	ganghud.leave_hud(defector_mind.current)
+	set_antag_hud(defector_mind.current, null)
 
 ///////////////////////////
 //Checks for gang victory//

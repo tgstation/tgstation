@@ -67,9 +67,11 @@
 			return
 		if(!in_range(src, user))
 			return
-
+		if(!storedpda)//is the pda still there?
+			return
 		storedpda.icon_state = P.icon_state
 		storedpda.desc = P.desc
+		ejectpda()
 
 	else
 		user << "<span class='notice'>The [src] is empty.</span>"

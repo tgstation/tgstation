@@ -6,11 +6,12 @@
 	req_dna = 1
 	max_genetic_damage = 3
 
+
 //Transform into a human.
 /obj/effect/proc_holder/changeling/humanform/sting_action(var/mob/living/carbon/user)
 	var/datum/changeling/changeling = user.mind.changeling
 	var/list/names = list()
-	for(var/datum/dna/DNA in changeling.absorbed_dna)
+	for(var/datum/dna/DNA in (changeling.absorbed_dna+changeling.protected_dna))
 		names += "[DNA.real_name]"
 
 	var/chosen_name = input("Select the target DNA: ", "Target DNA", null) as null|anything in names

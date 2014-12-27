@@ -2,7 +2,7 @@
 	..()
 
 	if(usr.client != src.owner || !check_rights(0))
-		world << "<span class='adminnotice'>[usr.key] has attempted to override the admin panel!</span>"
+		message_admins("[usr.key] has attempted to override the admin panel!")
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
 		return
 
@@ -1872,11 +1872,25 @@
 			if("guns")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","SG")
-				rightandwrong(0, usr)
+				var/survivor_probability = 0
+				switch(alert("Do you want this to create survivors antagonists?",,"No Antags","Some Antags","All Antags!"))
+					if("Some Antags")
+						survivor_probability = 25
+					if("All Antags!")
+						survivor_probability = 100
+
+				rightandwrong(0, usr, survivor_probability)
 			if("magic")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","SM")
-				rightandwrong(1, usr)
+				var/survivor_probability = 0
+				switch(alert("Do you want this to create survivors antagonists?",,"No Antags","Some Antags","All Antags!"))
+					if("Some Antags")
+						survivor_probability = 25
+					if("All Antags!")
+						survivor_probability = 100
+
+				rightandwrong(1, usr, survivor_probability)
 			if("events")
 				if(events && !events.wizardmode)
 					if(alert("Do you want to toggle summon events on?",,"Yes","No") == "Yes")
@@ -2077,7 +2091,7 @@
 		src.access_news_network()
 
 	else if(href_list["ac_set_channel_name"])
-		src.admincaster_feed_channel.channel_name = strip_html_simple(input(usr, "Provide a Feed Channel Name", "Network Channel Handler", ""))
+		src.admincaster_feed_channel.channel_name = stripped_input(usr, "Provide a Feed Channel Name", "Network Channel Handler", "")
 		while (findtext(src.admincaster_feed_channel.channel_name," ") == 1)
 			src.admincaster_feed_channel.channel_name = copytext(src.admincaster_feed_channel.channel_name,2,lentext(src.admincaster_feed_channel.channel_name)+1)
 		src.access_news_network()

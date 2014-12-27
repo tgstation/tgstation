@@ -30,7 +30,7 @@
 	throw_range = 7
 	max_amount = 60
 	origin_tech = "biotech=1"
-	turf_type = /turf/simulated/floor/grass
+	turf_type = /turf/simulated/floor/fancy/grass
 
 /*
  * Wood
@@ -63,7 +63,7 @@
 	throw_speed = 3
 	throw_range = 7
 	max_amount = 60
-	turf_type = /turf/simulated/floor/carpet
+	turf_type = /turf/simulated/floor/fancy/carpet
 
 /*
  * High-traction

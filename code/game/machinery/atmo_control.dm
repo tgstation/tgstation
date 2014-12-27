@@ -77,13 +77,14 @@ obj/machinery/air_sensor/New()
 	if(radio_controller)
 		set_frequency(frequency)
 
+obj/machinery/air_sensor/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src,frequency)
+	..()
+
 /////////////////////////////////////////////////////////////
 // GENERAL AIR CONTROL (a.k.a atmos computer)
 /////////////////////////////////////////////////////////////
-
-obj/machinery/computer/general_air_control/Destroy()
-		radio_controller.remove_object(src, frequency)
-		..()
 
 obj/machinery/computer/general_air_control
 	icon = 'icons/obj/computer.dmi'
@@ -177,7 +178,8 @@ obj/machinery/computer/general_air_control/proc/return_text()
 	return output
 
 obj/machinery/computer/general_air_control/Destroy()
-	radio_controller.remove_object(src, frequency)
+	if(radio_controller)
+		radio_controller.remove_object(src, frequency)
 	..()
 
 obj/machinery/computer/general_air_control/proc/set_frequency(new_frequency)

@@ -74,6 +74,12 @@
 	name = "circuit board (Communications)"
 	build_path = /obj/machinery/computer/communications
 	origin_tech = "programming=2;magnets=2"
+	var/cooldown = 0
+/obj/item/weapon/circuitboard/communications/New()
+	..()
+	processing_objects |= src
+/obj/item/weapon/circuitboard/communications/process()
+	cooldown = max(cooldown - 1, 0)
 /obj/item/weapon/circuitboard/card
 	name = "circuit board (ID Console)"
 	build_path = /obj/machinery/computer/card
@@ -317,7 +323,7 @@
 					circuit = P
 					user.drop_item()
 					circuit.add_fingerprint(user)
-					P.loc = src
+					P.loc = null
 				else
 					user << "<span class='warning'>This frame does not accept circuit boards of this type!</span>"
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
@@ -387,18 +393,6 @@
 			if(istype(P, /obj/item/weapon/screwdriver))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "<span class='notice'>You connect the monitor.</span>"
-				var/obj/B = new src.circuit.build_path (src.loc)
-				if(circuit.powernet) B:powernet = circuit.powernet
-				if(circuit.id) B:id = circuit.id
-				if(circuit.records) B:records = circuit.records
-				if(circuit.frequency) B:frequency = circuit.frequency
-				if(istype(circuit,/obj/item/weapon/circuitboard/supplycomp))
-					var/obj/machinery/computer/supplycomp/SC = B
-					var/obj/item/weapon/circuitboard/supplycomp/C = circuit
-					SC.can_order_contraband = C.contraband_enabled
-				else if(istype(circuit,/obj/item/weapon/circuitboard/shuttle))
-					var/obj/machinery/computer/shuttle/S = B
-					var/obj/item/weapon/circuitboard/shuttle/C = circuit
-					S.id = C.id
+				var/obj/B = new src.circuit.build_path (src.loc, circuit)
 				transfer_fingerprints_to(B)
 				qdel(src)

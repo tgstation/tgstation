@@ -121,14 +121,17 @@
 			src << "<span class='danger'>You feel weak.</span>"
 			emote("collapse")
 
+		if (radiation < 0)
+			radiation = 0
+
 		switch(radiation)
-			if(1 to 49)
+			if(0 to 50)
 				radiation--
 				if(prob(25))
 					adjustToxLoss(1)
 					updatehealth()
 
-			if(50 to 74)
+			if(50 to 75)
 				radiation -= 2
 				adjustToxLoss(1)
 				if(prob(5))
@@ -206,22 +209,6 @@
 
 	if(breath)
 		loc.assume_air(breath)
-
-
-/mob/living/carbon/monkey/proc/get_breath_from_internal(volume_needed)
-	if(internal)
-		if (!contents.Find(internal))
-			internal = null
-		if (!wear_mask || !(wear_mask.flags|MASKINTERNALS) )
-			internal = null
-		if(internal)
-			if (internals)
-				internals.icon_state = "internal1"
-			return internal.remove_air_volume(volume_needed)
-		else
-			if (internals)
-				internals.icon_state = "internal0"
-	return null
 
 /mob/living/carbon/monkey/proc/handle_breath(datum/gas_mixture/breath)
 	if(status_flags & GODMODE)

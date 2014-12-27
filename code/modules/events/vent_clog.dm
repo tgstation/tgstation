@@ -17,8 +17,8 @@
 /datum/round_event/vent_clog/setup()
 	endWhen = rand(25, 100)
 	for(var/obj/machinery/atmospherics/unary/vent_scrubber/temp_vent in machines)
-		if(temp_vent.loc.z == 1 && temp_vent.network)
-			if(temp_vent.network.normal_members.len > 20)
+		if(temp_vent.loc.z == 1)
+			if(temp_vent.parent.other_atmosmch.len > 20)
 				vents += temp_vent
 	if(!vents.len)
 		return kill()

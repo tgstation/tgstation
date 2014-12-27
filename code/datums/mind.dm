@@ -52,6 +52,8 @@
 	var/datum/changeling/changeling		//changeling holder
 
 	var/miming = 0 // Mime's vow of silence
+	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
+	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
 
 /datum/mind/New(var/key)
 	src.key = key
@@ -77,6 +79,7 @@
 
 	current = new_character								//associate ourself with our new body
 	new_character.mind = src							//and associate our new body with ourself
+	transfer_antag_huds(new_character)					//inherit the antag HUDs from this mind (TODO: move this to a possible antag datum)
 
 	if(active)
 		new_character.key = key		//now transfer the key to link the client to our new body
@@ -966,7 +969,7 @@
 					log_admin("[key_name(usr)] has traitor'ed [current].")
 					if(isAI(current))
 						var/mob/living/silicon/ai/A = current
-						call(/datum/game_mode/proc/add_law_zero)(A)
+						ticker.mode.add_law_zero(A)
 						A.show_laws()
 
 			if("autoobjectives")
@@ -1003,9 +1006,9 @@
 						src = null
 						M = H.monkeyize()
 						src = M.mind
-						current.contract_disease(new /datum/disease/transformation/jungle_fever,1,0)
+						current.ForceContractDisease(new /datum/disease/transformation/jungle_fever)
 					else if (istype(M))
-						current.contract_disease(new /datum/disease/transformation/jungle_fever,1,0)
+						current.ForceContractDisease(new /datum/disease/transformation/jungle_fever)
 			if("human")
 				if (check_rights(R_ADMIN, 0))
 					var/mob/living/carbon/human/H = current

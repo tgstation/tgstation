@@ -69,7 +69,7 @@
 
 /obj/item/device/taperecorder/proc/can_use(mob/user)
 	if(user && ismob(user))
-		if(user.stat && user.canmove && !user.restrained())
+		if(!user.stat && user.canmove && !user.restrained())
 			return 1
 	return 0
 

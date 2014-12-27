@@ -81,7 +81,7 @@
 	// only do this if the light is turned on and is on the map
 	if(owner.loc && owner.luminosity > 0)
 		effect = list()
-		for(var/turf/T in view(owner.get_light_range(),owner))
+		for(var/turf/T in view(owner.get_light_range(),get_turf(owner)))
 			var/delta_lumen = lum(T)
 			if(delta_lumen > 0)
 				effect[T] = delta_lumen

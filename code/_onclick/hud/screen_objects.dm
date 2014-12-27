@@ -220,7 +220,7 @@
 	icon_state = "act_throw_off"
 
 /obj/screen/throw_catch/Click()
-	if(iscarbon(usr) && !usr.stat && isturf(usr.loc) && !usr.restrained())
+	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		C.toggle_throw_mode()
 
@@ -304,7 +304,7 @@
 	if(world.time <= usr.next_move)
 		return 1
 
-	if(usr.stat || usr.paralysis || usr.stunned || usr.weakened)
+	if(usr.stat || usr.paralysis || usr.stunned || usr.weakened || usr.restrained())
 		return 1
 	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 		return 1

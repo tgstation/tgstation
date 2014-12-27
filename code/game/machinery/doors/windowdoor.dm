@@ -9,7 +9,6 @@
 	flags = ON_BORDER
 	opacity = 0
 	var/obj/item/weapon/airlock_electronics/electronics = null
-	explosion_resistance = 5
 
 /obj/machinery/door/window/New()
 	..()
@@ -43,13 +42,13 @@
 			if(src.check_access(bot.botcard))
 				open_and_close()
 			else
-				flick(text("[]deny", src.base_state), src)
+				flick("[src.base_state]deny", src)
 		else if(istype(AM, /obj/mecha))
 			var/obj/mecha/mecha = AM
 			if(mecha.occupant && src.allowed(mecha.occupant))
 				open_and_close()
 			else
-				flick(text("[]deny", src.base_state), src)
+				flick("[src.base_state]deny", src)
 		return
 	if (!( ticker ))
 		return
@@ -68,7 +67,7 @@
 	if(allowed(user))
 		open_and_close()
 	else
-		flick(text("[]deny", src.base_state), src)
+		flick("[src.base_state]deny", src)
 	return
 
 /obj/machinery/door/window/CanPass(atom/movable/mover, turf/target, height=0)
@@ -110,12 +109,11 @@
 			return 0
 	if(!src.operating) //in case of emag
 		src.operating = 1
-	flick(text("[]opening", src.base_state), src)
+	flick("[src.base_state]opening", src)
 	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
-	src.icon_state = text("[]open", src.base_state)
+	src.icon_state ="[src.base_state]open"
 	sleep(10)
 
-	explosion_resistance = 0
 	src.density = 0
 //	src.sd_SetOpacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
 	air_update_turf(1)
@@ -135,12 +133,11 @@
 		if(emagged)
 			return 0
 	src.operating = 1
-	flick(text("[]closing", src.base_state), src)
+	flick("[src.base_state]closing", src)
 	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
 	src.icon_state = src.base_state
 
 	src.density = 1
-	explosion_resistance = initial(explosion_resistance)
 //	if(src.visible)
 //		SetOpacity(1)	//TODO: why is this here? Opaque windoors? ~Carn
 	air_update_turf(1)
@@ -165,6 +162,19 @@
 		qdel(src)
 		return
 
+/obj/machinery/door/window/ex_act(severity, target)
+	switch(severity)
+		if(1.0)
+			qdel(src)
+		if(2.0)
+			if(prob(25))
+				qdel(src)
+			else
+				take_damage(120)
+		if(3.0)
+			take_damage(60)
+
+
 /obj/machinery/door/window/bullet_act(var/obj/item/projectile/Proj)
 	if(Proj.damage)
 		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
@@ -187,6 +197,15 @@
 	return
 
 
+/obj/machinery/door/window/mech_melee_attack(obj/mecha/M)
+	if(M.damtype == "brute")
+		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+		M.occupant_message("<span class='danger'>You hit [src].</span>")
+		visible_message("<span class='danger'>[M.name] has hit [src].</span>")
+		take_damage(M.force)
+	return
+
+
 /obj/machinery/door/window/attack_ai(mob/user as mob)
 	return src.attack_hand(user)
 
@@ -199,21 +218,24 @@
 				"<span class='userdanger'>[user] smashes against the [src.name].</span>")
 	take_damage(damage)
 
-/obj/machinery/door/window/attack_alien(mob/user as mob)
+/obj/machinery/door/window/attack_alien(mob/living/user as mob)
+	user.do_attack_animation(src)
 	if(islarva(user))
 		return
 	attack_generic(user, 25)
 
-/obj/machinery/door/window/attack_animal(mob/user as mob)
+/obj/machinery/door/window/attack_animal(mob/living/user as mob)
 	if(!isanimal(user))
 		return
 	var/mob/living/simple_animal/M = user
+	M.do_attack_animation(src)
 	if(M.melee_damage_upper <= 0)
 		return
 	attack_generic(M, M.melee_damage_upper)
 
 
 /obj/machinery/door/window/attack_slime(mob/living/carbon/slime/user as mob)
+	user.do_attack_animation(src)
 	if(!user.is_adult)
 		return
 	attack_generic(user, 25)
@@ -224,7 +246,16 @@
 /obj/machinery/door/window/attack_hand(mob/user as mob)
 	return src.attackby(user, user)
 
-/obj/machinery/door/window/attackby(obj/item/weapon/I as obj, mob/user as mob)
+/obj/machinery/door/window/emag_act(mob/user as mob)
+	if(density && !emagged)
+		operating = -1
+		flick("[src.base_state]spark", src)
+		sleep(6)
+		desc += "<BR><span class='warning'>Its access panel is smoking slightly.</span>"
+		open()
+		emagged = 1
+
+/obj/machinery/door/window/attackby(obj/item/weapon/I as obj, mob/living/user as mob)
 
 	//If it's in the process of opening/closing, ignore the click
 	if (src.operating)
@@ -232,23 +263,19 @@
 
 	add_fingerprint(user)
 
-	//Emags and ninja swords? You may pass.
-	if (src.density && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
+	//ninja sword garbage
+	if (src.density && istype(I, /obj/item/weapon/melee/energy/blade))
 		src.operating = -1
 		flick("[src.base_state]spark", src)
 		sleep(6)
 		desc += "<BR><span class='warning'>Its access panel is smoking slightly.</span>"
-		if(istype(I, /obj/item/weapon/melee/energy/blade))
-			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-			spark_system.set_up(5, 0, src.loc)
-			spark_system.start()
-			playsound(src.loc, "sparks", 50, 1)
-			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-			visible_message("<span class='warning'> The glass door was sliced open by [user]!</span>")
-			open(2)
-			emagged = 1
-			return 1
-		open()
+		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		spark_system.set_up(5, 0, src.loc)
+		spark_system.start()
+		playsound(src.loc, "sparks", 50, 1)
+		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
+		visible_message("<span class='warning'> The glass door was sliced open by [user]!</span>")
+		open(2)
 		emagged = 1
 		return 1
 
@@ -323,11 +350,12 @@
 	//If it's a weapon, smash windoor. Unless it's an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
 	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card) )
 		user.changeNext_move(CLICK_CD_MELEE)
+		user.do_attack_animation(src)
 		if( (I.flags&NOBLUDGEON) || !I.force )
 			return
 		var/aforce = I.force
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-		visible_message("<span class='danger'>\The [src] has been hit by [user] with [I].</span>")
+		visible_message("<span class='danger'>[user] has hit \the [src] with [I].</span>")
 		if(I.damtype == BURN || I.damtype == BRUTE)
 			take_damage(aforce)
 		return
@@ -343,7 +371,7 @@
 			close()
 
 	else if (src.density)
-		flick(text("[]deny", src.base_state), src)
+		flick("[src.base_state]deny", src)
 
 	return
 

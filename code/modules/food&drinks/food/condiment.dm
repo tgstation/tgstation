@@ -20,7 +20,7 @@
 	 "enzyme" = list("enzyme", "universal enzyme bottle", "Used in cooking various dishes"),
 	 "soysauce" = list("soysauce", "soy sauce bottle", "A salty soy-based flavoring"),
 	 "frostoil" = list("coldsauce", "coldsauce bottle", "Leaves the tongue numb in it's passage"),
-	 "sodiumchloride" = list("saltshaker", "salt shaker", "Salt. From space oceans, presumably"),
+	 "sodiumchloride" = list("saltshakersmall", "salt shaker", "Salt. From space oceans, presumably"),
 	 "blackpepper" = list("pepermillsmall", "pepper mill", "Often used to flavor food or make people sneeze"),
 	 "cornoil" = list("oliveoil", "corn oil bottle", "A delicious oil used in cooking. Made from corn"),
 	 "sugar" = list("emptycondiment", "sugar bottle", "Tasty spacey sugar!"))
@@ -42,7 +42,10 @@
 		return 0
 
 	if(M == user)
-		M << "<span class='notice'>You swallow some of contents of the [src].</span>"
+		if(src.reagents.has_reagent("sugar") && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 )
+			M << "<span class='notice'>You don't feel like drinking any more sugary food at the moment.</span>"
+			return 0
+		M << "<span class='notice'>You swallow some of contents of \the [src].</span>"
 		if(reagents.total_volume)
 			reagents.reaction(M, INGEST)
 			spawn(5)

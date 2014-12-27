@@ -69,10 +69,11 @@
 
 		// check for TK users
 
-		if (istype(usr, /mob/living/carbon/human))
-			if(istype(usr.l_hand, /obj/item/tk_grab) || istype(usr.r_hand, /obj/item/tk_grab/))
-				if(!(usr in nearby))
-					if(usr.client && usr.machine==src)
+		if(ishuman(usr))
+			var/mob/living/carbon/human/H = usr
+			if(!(usr in nearby))
+				if(usr.client && usr.machine==src)
+					if(TK in H.mutations)
 						is_in_use = 1
 						src.attack_hand(usr)
 		in_use = is_in_use
@@ -121,6 +122,15 @@
 
 /obj/proc/hide(h)
 	return
+
+/obj/ex_act(severity, target)
+	if(severity == 1 || target == src)
+		qdel(src)
+	else if(severity == 2)
+		if(prob(50))
+			qdel(src)
+	if(!gc_destroyed)
+		..()
 
 //If a mob logouts/logins in side of an object you can use this proc
 /obj/proc/on_log()

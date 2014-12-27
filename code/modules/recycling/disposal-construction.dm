@@ -215,7 +215,8 @@
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 				user << "Welding the [nicetype] in place."
 				if(do_after(user, 20))
-					if(!src || !W.isOn()) return
+					if(!src.loc || !W.isOn())
+						return
 					user << "The [nicetype] has been welded in place!"
 					update() // TODO: Make this neat
 					if(ispipe) // Pipe

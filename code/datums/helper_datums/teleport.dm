@@ -17,11 +17,11 @@
 
 
 /datum/teleport/proc/start(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null)
-	if(!Init(arglist(args)))
+	if(!initTeleport(arglist(args)))
 		return 0
 	return 1
 
-/datum/teleport/proc/Init(ateleatom,adestination,aprecision,afteleport,aeffectin,aeffectout,asoundin,asoundout)
+/datum/teleport/proc/initTeleport(ateleatom,adestination,aprecision,afteleport,aeffectin,aeffectout,asoundin,asoundout)
 	if(!setTeleatom(ateleatom))
 		return 0
 	if(!setDestination(adestination))

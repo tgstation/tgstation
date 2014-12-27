@@ -170,8 +170,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This is model is a special edition with a transparent case."
 	note = "Congratulations, you have chosen the Thinktronic 5230 Personal Data Assistant Deluxe Special Max Turbo Limited Edition!"
 
-/obj/item/device/pda/chef
-	icon_state = "pda-chef"
+/obj/item/device/pda/cook
+	icon_state = "pda-cook"
 
 /obj/item/device/pda/bar
 	icon_state = "pda-bartender"
@@ -367,7 +367,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += note
 
 			if (2)
-				dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.4</h4>"
+				dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.5</h4>"
 				dat += "<a href='byond://?src=\ref[src];choice=Toggle Ringer'><img src=pda_bell.png> Ringer: [silent == 1 ? "Off" : "On"]</a> | "
 				dat += "<a href='byond://?src=\ref[src];choice=Toggle Messenger'><img src=pda_mail.png> Send / Receive: [toff == 1 ? "Off" : "On"]</a> | "
 				dat += "<a href='byond://?src=\ref[src];choice=Ringtone'><img src=pda_bell.png> Set Ringtone</a> | "
@@ -403,7 +403,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					dat += "None detected.<br>"
 
 			if(21)
-				dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.4</h4>"
+				dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.5</h4>"
 				dat += "<a href='byond://?src=\ref[src];choice=Clear'><img src=pda_blank.png> Clear Messages</a>"
 
 				dat += "<h4><img src=pda_mail.png> Messages</h4>"
@@ -635,40 +635,26 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				var/t = stripped_input(U, "Please enter channel", name, (chat_channel)) as text
 
 				if(t)
-					ntrclog[chat_channel] = "<hr>" + ntrclog[chat_channel]
 					var/datum/chatroom/C = chatchannels[chat_channel]
-					if(!findtext(t,"#",1,2))
-						t = "#" + t
-					chat_channel = t
-					C.parse_msg(src, nick, "/join [chat_channel]")
+					var/ret = C.parse_msg(src, nick, "/join [t]")
+					if((ret in chatchannels) && (ret != chat_channel))
+						ntrclog[chat_channel] = "<hr>" + ntrclog[chat_channel]
+						chat_channel = ret
 
 			if("NTRC Message")
 				var/t = msg_input(U) as text
 				var/datum/chatroom/C = chatchannels[chat_channel]
 				if(C)
-					var/lt = text2list(t, " ")
-					if(lt[1] == "/join")
-						if(!findtext(lt[2],"#",1,2))
-							lt[2] = "#" + lt[2]
 					var/ret = C.parse_msg(src,nick,t)
-					if(findtextEx(ret,"ERR_",1,5))
+					if(findtextEx(ret,"BAD_",1,5))
 						ntrclog[chat_channel] = "[ret]<br>" + ntrclog[chat_channel]
-					else
-						if(ret == 0)
-							ntrclog[chat_channel] = "Failure<br>" + ntrclog[chat_channel]
-						else
-							if(lt[1] == "/join")
-								chat_channel = lt[2]
+					else if(ret in chatchannels)
+						chat_channel = ret
 
 			if("NTRC Help")
-				var/helptext = "<b>NTRC reference:</b><br><br>"
-				helptext += "<i>General commands</i><br>"
-				helptext += "/join #channel<br>/part<br>/log amountoflines<br>/who<br>/topic<br>/register<br><br>"
-				helptext += "<i>Moderation commands</i><br>"
-				helptext += "/ban targetnick<br>/unban targetnick<br>/kick targetnick<br>/mute targetnick<br><br>"
-				helptext += "<i>Management commands</i><br>"
-				helptext += "/topic topictext<br>/op targetnick<br>/deop targetnick<br>/delchannel"
-				usr << browse(helptext, "window=ntrchelp;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
+				var/helptext = "<b>NTRC Commands:</b><br><br>"
+				helptext += "/join #channel<br>/register<br>/log amountoflines<br><br>"
+				usr << browse(helptext, "window=ntrchelp;size=200x200;border=1;can_resize=1;can_close=1;can_minimize=1")
 
 
 
@@ -767,7 +753,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		id = null
 
 /obj/item/device/pda/proc/msg_input(var/mob/living/U = usr)
-	var/t = input(U, "Please enter message", name, null) as text
+	var/t = input(U, "Please enter message", name, null) as null|text
 	t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
 	if (!t || toff)
 		return
@@ -1161,7 +1147,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			ntrclog[C] = msg + ntrclog[C]
 	else
 		ntrclog[channel] = msg + ntrclog[channel]
-	if (!silent)
+	if (findtext(message, nick) && !silent)
 		loc.audible_message("\icon[src] *[ttone]*", null, 3)
 
 /proc/get_viewable_pdas()

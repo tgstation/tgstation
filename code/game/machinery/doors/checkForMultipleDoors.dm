@@ -2,7 +2,7 @@
 	if(!src.loc)
 		return 0
 	for(var/obj/machinery/door/D in src.loc)
-		if(!istype(D, /obj/machinery/door/window) && D.density)
+		if(!istype(D, /obj/machinery/door/window) && D.density && D != src)
 			return 0
 	return 1
 

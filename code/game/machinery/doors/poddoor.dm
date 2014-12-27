@@ -3,7 +3,6 @@
 	desc = "A heavy duty blast door that opens mechanically."
 	icon = 'icons/obj/doors/blastdoor.dmi'
 	icon_state = "closed"
-	explosion_resistance = 25
 	var/id = 1
 	var/auto_close = 0 // Time in seconds to automatically close when opened, 0 if it doesn't.
 
@@ -46,10 +45,9 @@
 	flick("opening", src)
 	icon_state = "open"
 	SetOpacity(0)
-	sleep(10)
-
+	sleep(5)
 	density = 0
-	explosion_resistance = 0
+	sleep(5)
 	air_update_turf(1)
 	update_freelook_sight()
 	operating = 0
@@ -72,14 +70,14 @@
 
 	operating = 1
 	flick("closing", src)
-	crush()
 	icon_state = "closed"
-	density = 1
-	explosion_resistance = initial(explosion_resistance)
 	SetOpacity(1)
 	air_update_turf(1)
 	update_freelook_sight()
-	sleep(10)
+	sleep(5)
+	crush()
+	density = 1
+	sleep(5)
 
 	operating = 0
 

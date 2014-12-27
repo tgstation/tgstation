@@ -238,10 +238,16 @@
 					temp = "Unable to locate requested security record. Record may have been deleted, or never have existed."
 		if("securityhud")
 			if(href_list["toggle"])
-				src.secHUD = !src.secHUD
+				secHUD = !secHUD
+				remove_med_sec_hud()
+				if(secHUD)
+					add_sec_hud()
 		if("medicalhud")
 			if(href_list["toggle"])
-				src.medHUD = !src.medHUD
+				medHUD = !medHUD
+				remove_med_sec_hud()
+				if(medHUD)
+					add_med_hud()
 		if("translator")
 			if(href_list["toggle"])
 				languages = languages == ALL ? HUMAN & ROBOT : ALL
@@ -508,9 +514,9 @@
 		for(var/datum/disease/D in M.viruses)
 			dat += {"<h4>Infection Detected.</h4><br>
 					 Name: [D.name]<br>
-					 Type: [D.spread]<br>
+					 Type: [D.spread_text]<br>
 					 Stage: [D.stage]/[D.max_stages]<br>
-					 Possible Cure: [D.cure]<br>
+					 Possible Cure: [D.cure_text]<br>
 					"}
 		dat += "<a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Visual Status Overlay</a><br>"
 	return dat
@@ -639,6 +645,5 @@
 	return dat
 
 /mob/living/silicon/pai/proc/chatroom()
-
 	pda.mode = 5
-	pda.attack_self()
+	pda.attack_self(src)

@@ -33,8 +33,12 @@
 			var/mob/living/carbon/human/H = character
 			if(!H.dna.species)
 				H.dna.species = new /datum/species/human()
+			if(!hair_styles_list.len)
+				init_sprite_accessory_subtypes(/datum/sprite_accessory/hair, hair_styles_list, hair_styles_male_list, hair_styles_female_list)
 			L[DNA_HAIR_STYLE_BLOCK] = construct_block(hair_styles_list.Find(H.hair_style), hair_styles_list.len)
 			L[DNA_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.hair_color)
+			if(!facial_hair_styles_list.len)
+				init_sprite_accessory_subtypes(/datum/sprite_accessory/facial_hair, facial_hair_styles_list, facial_hair_styles_male_list, facial_hair_styles_female_list)
 			L[DNA_FACIAL_HAIR_STYLE_BLOCK] = construct_block(facial_hair_styles_list.Find(H.facial_hair_style), facial_hair_styles_list.len)
 			L[DNA_FACIAL_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.facial_hair_color)
 			L[DNA_SKIN_TONE_BLOCK] = construct_block(skin_tones.Find(H.skin_tone), skin_tones.len)
@@ -447,14 +451,10 @@
 				|| locate(/obj/machinery/computer/cloning, get_step(src, EAST)) \
 				|| locate(/obj/machinery/computer/cloning, get_step(src, WEST)))
 
-				if(!occupant.key && occupant.mind)
-					for(var/mob/dead/observer/ghost in player_list)
-						if(ghost.mind == occupant.mind)
-							if(ghost.can_reenter_corpse)
-								ghost << "<span class='ghostalert'>Your corpse has been placed into a cloning scanner. Return to your body if you want to be cloned!</span> (Verbs -> Ghost -> Re-enter corpse)"
-								ghost << sound('sound/effects/genetics.ogg')
-							break
-
+				var/mob/dead/observer/ghost = occupant.get_ghost()
+				if(ghost)
+					ghost << "<span class='ghostalert'>Your corpse has been placed into a cloning scanner. Return to your body if you want to be cloned!</span> (Verbs -> Ghost -> Re-enter corpse)"
+					ghost << sound('sound/effects/genetics.ogg')
 		return 1
 
 /obj/machinery/dna_scannernew/proc/open(mob/user)
@@ -515,25 +515,6 @@
 		return
 	toggle_open(user)
 	add_fingerprint(user)
-
-
-
-/obj/machinery/dna_scannernew/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if(prob(50))
-				qdel(src)
-				return
-		if(3.0)
-			if(prob(25))
-				qdel(src)
-				return
-		else
-	return
-
 
 /obj/machinery/dna_scannernew/blob_act()
 	if(prob(75))

@@ -46,7 +46,7 @@
 
 
 	if (src.health <= 0)
-		visible_message("<span class='notice'>The [src] dissapates.</span>")
+		visible_message("<span class='notice'>[src] dissipates.</span>")
 		qdel(src)
 		return
 
@@ -58,13 +58,13 @@
 	health -= Proj.damage
 	..()
 	if(health <=0)
-		visible_message("<span class='notice'>The [src] dissapates.</span>")
+		visible_message("<span class='notice'>The [src] dissipates.</span>")
 		qdel(src)
 		return
 	opacity = 1
 	spawn(20) if(src) opacity = 0
 
-/obj/machinery/shield/ex_act(severity)
+/obj/machinery/shield/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			if (prob(75))
@@ -107,7 +107,7 @@
 
 	//Handle the destruction of the shield
 	if (src.health <= 0)
-		visible_message("<span class='notice'>The [src] dissapates.</span>")
+		visible_message("<span class='notice'>[src] dissipates.</span>")
 		qdel(src)
 		return
 
@@ -181,7 +181,7 @@
 	update_icon()
 	return
 
-/obj/machinery/shieldgen/ex_act(severity)
+/obj/machinery/shieldgen/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			src.health -= 75
@@ -232,11 +232,7 @@
 	return
 
 /obj/machinery/shieldgen/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/card/emag))
-		malfunction = 1
-		update_icon()
-
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/weapon/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		if(is_open)
 			user << "<span class='notice'>You close the panel.</span>"
@@ -257,7 +253,7 @@
 			coil.use(1)
 			health = max_health
 			malfunction = 0
-			user << "<span class='notice'>You repair the [src]!</span>"
+			user << "<span class='notice'>You repair \the [src]!</span>"
 			update_icon()
 
 	else if(istype(W, /obj/item/weapon/wrench))
@@ -266,13 +262,13 @@
 			return
 		if(!anchored && !isinspace())
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-			user << "<span class='notice'> You secure the [src] to the floor!</span>"
+			user << "<span class='notice'> You secure \the [src] to the floor!</span>"
 			anchored = 1
 		else if(anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-			user << "<span class='notice'> You unsecure the [src] from the floor!</span>"
+			user << "<span class='notice'> You unsecure \the [src] from the floor!</span>"
 			if(active)
-				user << "<span class='notice'> The [src] shuts off!</span>"
+				user << "<span class='notice'> \The [src] shuts off!</span>"
 				src.shields_down()
 			anchored = 0
 
@@ -287,6 +283,10 @@
 	else
 		..()
 
+/obj/machinery/shieldgen/emag_act()
+	if(!malfunction)
+		malfunction = 1
+		update_icon()
 
 /obj/machinery/shieldgen/update_icon()
 	if(active)
@@ -475,8 +475,8 @@
 			user << "<span class='danger'>Access denied.</span>"
 
 	else
-		src.add_fingerprint(user)
-		visible_message("<span class='danger'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
+		add_fingerprint(user)
+		..()
 
 /obj/machinery/shieldwallgen/proc/cleanup(var/NSEW)
 	var/obj/machinery/shieldwall/F
@@ -567,7 +567,7 @@
 	return
 
 
-/obj/machinery/shieldwall/ex_act(severity)
+/obj/machinery/shieldwall/ex_act(severity, target)
 	if(needs_power)
 		var/obj/machinery/shieldwallgen/G
 		switch(severity)

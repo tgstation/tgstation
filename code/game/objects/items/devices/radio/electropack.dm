@@ -15,11 +15,13 @@
 	var/shock_cooldown = 0
 
 /obj/item/device/electropack/initialize()
-	radio_controller.add_object(src, frequency, RADIO_CHAT)
-
-/obj/item/device/electropack/New()
 	if(radio_controller)
 		radio_controller.add_object(src, frequency, RADIO_CHAT)
+
+/obj/item/device/electropack/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src, frequency)
+	..()
 
 /obj/item/device/electropack/attack_hand(mob/user)
 	if(iscarbon(user))

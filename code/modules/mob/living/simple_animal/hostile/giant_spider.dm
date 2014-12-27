@@ -4,8 +4,24 @@
 #define MOVING_TO_TARGET 3
 #define SPINNING_COCOON 4
 
+/mob/living/simple_animal/hostile/poison
+	var/poison_per_bite = 5
+	var/poison_type = "toxin"
+
+/mob/living/simple_animal/hostile/poison/AttackingTarget()
+	..()
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.reagents)
+			L.reagents.add_reagent("toxin", poison_per_bite)
+			if(prob(poison_per_bite))
+				L << "<span class='danger'>You feel a tiny prick.</span>"
+				L.reagents.add_reagent(poison_type, poison_per_bite)
+
+
+
 //basic spider mob, these generally guard nests
-/mob/living/simple_animal/hostile/giant_spider
+/mob/living/simple_animal/hostile/poison/giant_spider
 	name = "giant spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has deep red eyes."
 	icon_state = "guard"
@@ -29,8 +45,6 @@
 	melee_damage_upper = 20
 	heat_damage_per_tick = 20
 	cold_damage_per_tick = 20
-	var/poison_per_bite = 5
-	var/poison_type = "toxin"
 	faction = list("spiders")
 	var/busy = 0
 	pass_flags = PASSTABLE
@@ -38,7 +52,7 @@
 	ventcrawler = 2
 
 //nursemaids - these create webs and eggs
-/mob/living/simple_animal/hostile/giant_spider/nurse
+/mob/living/simple_animal/hostile/poison/giant_spider/nurse
 	desc = "Furry and black, it makes you shudder to look at it. This one has brilliant green eyes."
 	icon_state = "nurse"
 	icon_living = "nurse"
@@ -55,7 +69,7 @@
 	var/fed = 0
 
 //hunters have the most poison and move the fastest, so they can find prey
-/mob/living/simple_animal/hostile/giant_spider/hunter
+/mob/living/simple_animal/hostile/poison/giant_spider/hunter
 	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes."
 	icon_state = "hunter"
 	icon_living = "hunter"
@@ -67,17 +81,7 @@
 	poison_per_bite = 5
 	move_to_delay = 5
 
-/mob/living/simple_animal/hostile/giant_spider/AttackingTarget()
-	..()
-	if(isliving(target))
-		var/mob/living/L = target
-		if(L.reagents)
-			L.reagents.add_reagent("toxin", poison_per_bite)
-			if(prob(poison_per_bite))
-				L << "<span class='danger'>You feel a tiny prick.</span>"
-				L.reagents.add_reagent(poison_type, 5)
-
-/mob/living/simple_animal/hostile/giant_spider/Life()
+/mob/living/simple_animal/hostile/poison/giant_spider/Life()
 	..()
 	if(!stat && !ckey)
 		if(stance == HOSTILE_STANCE_IDLE)
@@ -94,7 +98,7 @@
 
 // Chops off each leg with a 50/50 chance of harvesting one, until finally calling
 // default harvest action
-/mob/living/simple_animal/hostile/giant_spider/harvest()
+/mob/living/simple_animal/hostile/poison/giant_spider/harvest()
 	if(butcher_state > 0)
 		butcher_state--
 		icon_state = icon_dead + "[butcher_state]"
@@ -105,7 +109,7 @@
 	else
 		return ..()
 
-/mob/living/simple_animal/hostile/giant_spider/nurse/proc/GiveUp(var/C)
+/mob/living/simple_animal/hostile/poison/giant_spider/nurse/proc/GiveUp(var/C)
 	spawn(100)
 		if(busy == MOVING_TO_TARGET)
 			if(cocoon_target == C && get_dist(src,cocoon_target) > 1)
@@ -113,7 +117,7 @@
 			busy = 0
 			stop_automated_movement = 0
 
-/mob/living/simple_animal/hostile/giant_spider/nurse/Life()
+/mob/living/simple_animal/hostile/poison/giant_spider/nurse/Life()
 	..()
 	if(!stat && !ckey)
 		if(stance == HOSTILE_STANCE_IDLE)
@@ -122,7 +126,7 @@
 			if(!busy && prob(30))
 				//first, check for potential food nearby to cocoon
 				for(var/mob/living/C in can_see)
-					if(C.stat && !istype(C,/mob/living/simple_animal/hostile/giant_spider))
+					if(C.stat && !istype(C,/mob/living/simple_animal/hostile/poison/giant_spider))
 						cocoon_target = C
 						busy = MOVING_TO_TARGET
 						Goto(C, move_to_delay)
@@ -161,7 +165,7 @@
 			busy = 0
 			stop_automated_movement = 0
 
-/mob/living/simple_animal/hostile/giant_spider/verb/Web()
+/mob/living/simple_animal/hostile/poison/giant_spider/verb/Web()
 	set name = "Lay Web"
 	set category = "Spider"
 	set desc = "Spread a sticky web to slow down prey."
@@ -179,7 +183,7 @@
 			stop_automated_movement = 0
 
 
-/mob/living/simple_animal/hostile/giant_spider/nurse/verb/Wrap()
+/mob/living/simple_animal/hostile/poison/giant_spider/nurse/verb/Wrap()
 	set name = "Wrap"
 	set category = "Spider"
 	set desc = "Wrap up prey to feast upon and objects for safe keeping."
@@ -219,7 +223,7 @@
 							M.loc = C
 							large_cocoon = 1
 					for(var/mob/living/L in C.loc)
-						if(istype(L, /mob/living/simple_animal/hostile/giant_spider))
+						if(istype(L, /mob/living/simple_animal/hostile/poison/giant_spider))
 							continue
 						large_cocoon = 1
 						L.loc = C
@@ -235,7 +239,7 @@
 			busy = 0
 			stop_automated_movement = 0
 
-/mob/living/simple_animal/hostile/giant_spider/nurse/verb/LayEggs()
+/mob/living/simple_animal/hostile/poison/giant_spider/nurse/verb/LayEggs()
 	set name = "Lay Eggs"
 	set category = "Spider"
 	set desc = "Lay a clutch of eggs, but you must wrap a creature for feeding first."
