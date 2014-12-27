@@ -95,16 +95,21 @@
 	desc = "A catwalk for easier EVA manuevering and cable placement."
 	icon_state = "catwalkfull"
 
+/obj/structure/lattice/catwalk/New()
+	var/turf/T = loc
+	T.cancable = 1
+	..()
+
 /obj/structure/lattice/catwalk/Destroy()
 	var/turf/T = loc
-	T.intact = 1
+	T.cancable = 0
 	for(var/obj/structure/cable/C in T)
 		C.Destroy()
 	..()
 
 /obj/structure/lattice/catwalk/Deconstruct()
 	var/turf/T = loc
-	T.intact = 1
+	T.cancable = 0
 	for(var/obj/structure/cable/C in T)
 		C.Deconstruct()
 	..()

@@ -627,6 +627,10 @@ obj/structure/cable/proc/avail()
 	if(!isturf(user.loc))
 		return
 
+	if(!T.cancable)
+		user << "You can only lay cables on catwalks and plating!"
+		return
+
 	if(get_amount() < 1) // Out of cable
 		user << "There is no cable left."
 		return
@@ -636,7 +640,7 @@ obj/structure/cable/proc/avail()
 		return
 
 	if(T.intact)		// Ff floor is intact, complain
-		user << "You can only lay cables on catwalks and plating!"
+		user << "You can't lay cable there unless the floor tiles are removed."
 		return
 
 	else
@@ -702,8 +706,11 @@ obj/structure/cable/proc/avail()
 
 	// one end of the clicked cable is pointing towards us
 	if(C.d1 == dirn || C.d2 == dirn)
-		if(U.intact)						// can't place a cable if the floor is complete
+		if(!U.cancable)						//checking if it's a plating or catwalk
 			user << "You can only lay cables on catwalks and plating!"
+			return
+		if(U.intact)						//can't place a cable if it's a plating with a tile on it
+			user << "You can't lay cable there unless the floor tiles are removed."
 			return
 		else
 			// cable is pointing at us, we're standing on an open tile

@@ -3,7 +3,7 @@
 	desc = "A basic hybrid energy gun with two settings: Stun and kill."
 	icon_state = "energy"
 	item_state = null	//so the human update icon uses the icon_state instead.
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
 	origin_tech = "combat=3;magnets=2"
 	modifystate = 2
 
@@ -11,7 +11,6 @@
 /obj/item/weapon/gun/energy/gun/attack_self(mob/living/user as mob)
 	select_fire(user)
 	update_icon()
-
 
 /obj/item/weapon/gun/energy/gun/nuclear
 	name = "advanced energy gun"
@@ -21,6 +20,7 @@
 	var/lightfail = 0
 	var/charge_tick = 0
 	modifystate = 0
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
 
 /obj/item/weapon/gun/energy/gun/nuclear/New()
 	..()

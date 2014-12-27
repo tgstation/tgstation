@@ -12,6 +12,7 @@
 	name = "plating"
 	icon_state = "plating"
 	intact = 0
+	cancable = 1
 	broken_states = list("platingdmg1", "platingdmg2", "platingdmg3")
 	burnt_states = list("panelscorched")
 
