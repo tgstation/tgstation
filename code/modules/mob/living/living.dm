@@ -769,7 +769,8 @@
 	gib()
 	return
 
-/mob/living/proc/do_attack_animation(atom/A)
+
+/atom/movable/proc/do_attack_animation(atom/A)
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0
 	var/direction = get_dir(src, A)
@@ -796,4 +797,8 @@
 			pixel_y_diff = -8
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
 	animate(pixel_x = initial(pixel_x), pixel_y = initial(pixel_y), time = 2)
+
+
+/mob/living/do_attack_animation(atom/A)
+	..()
 	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.
