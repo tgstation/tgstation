@@ -88,14 +88,12 @@
 	)
 	src.jitteriness += 1000 //High numbers for violent convulsions
 	src.stuttering += 2
+	return shock_damage
 	Stun(2)
 	spawn(20)
 		src.jitteriness -= 990 //Still jittery, but vastly less
-//	if(src.stunned < shock_damage)	src.stunned = shock_damage
-		Stun(3)//This should work for now, more is really silly and makes you lay there forever
-//	if(src.weakened < 20*siemens_coeff)	src.weakened = 20*siemens_coeff
+		Stun(3)
 		Weaken(3)
-		return shock_damage
 
 
 /mob/living/carbon/swap_hand()
