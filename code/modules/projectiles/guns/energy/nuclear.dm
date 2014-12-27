@@ -105,3 +105,8 @@
 	update_charge()
 	update_reactor()
 	update_mode()
+
+/obj/item/weapon/gun/energy/gun/turret
+	name = "hybrid turret gun"
+	desc = "A basic hybrid energy gun with two settings: Stun and kill."
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
