@@ -2,7 +2,7 @@
 	var/list/buildon_types = list(/turf/simulated/wall)
 
 
-/obj/item/mounted/afterattack(var/atom/A, mob/user)
+/obj/item/mounted/afterattack(var/atom/A, mob/user, proximity_flag)
 	var/found_type = 0
 	for(var/turf_type in src.buildon_types)
 		if(istype(A, turf_type))
@@ -10,22 +10,22 @@
 			break
 
 	if(found_type)
-		if(try_build(A, user))
+		if(try_build(A, user, proximity_flag))
 			return do_build(A, user)
 	else
 		..()
 
-/obj/item/mounted/proc/try_build(turf/on_wall, mob/user) //checks
+/obj/item/mounted/proc/try_build(turf/on_wall, mob/user, proximity_flag) //checks
 	if(!on_wall || !user)
 		return
-	if (get_dist(on_wall, get_turf(src)) > 1)
+	if (proximity_flag != 1) //if we aren't next to the wall
 		return
 	if (!( get_dir(user,on_wall) in cardinal))
-		user << "You need to be standing next to a wall to place \the [src]"
+		user << "<span class='rose'>You need to be standing next to a wall to place \the [src].</span>"
 		return
 
 	if(gotwallitem(get_turf(user), get_dir(user,on_wall)))
-		user << "\red There's already an item on this wall!"
+		user << "<span class='rose'>There's already an item on this wall!</span>"
 		return
 
 	return 1

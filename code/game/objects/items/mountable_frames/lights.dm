@@ -5,13 +5,7 @@
 	icon_state = "tube-construct-item"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	var/fixture_type = "tube"
-
-/obj/item/mounted/frame/light_fixture/try_build(turf/on_wall, mob/user)
-	if(..())
-		if (!istype(get_turf(src), /turf/simulated/floor))
-			user << "\red [src.name] cannot be placed on this spot."
-			return
-		return 1
+	mount_reqs = list("simfloor")
 
 /obj/item/mounted/frame/light_fixture/do_build(turf/on_wall, mob/user)
 	user << "You begin attaching [src] to \the [on_wall]."

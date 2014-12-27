@@ -5,24 +5,18 @@
 	icon_state = "apc_frame"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	w_type=RECYK_METAL
-
+	mount_reqs = list("simfloor", "nospace")
 
 /obj/item/mounted/frame/apc_frame/try_build(turf/on_wall, mob/user)
 	if(..())
 		var/turf/turf_loc = get_turf(user)
 		var/area/area_loc = turf_loc.loc
-		if (!istype(turf_loc, /turf/simulated/floor))
-			user << "\red APC cannot be placed on this spot."
-			return
-		if (area_loc.requires_power == 0 || area_loc.name == "Space")
-			user << "\red APC cannot be placed in this area."
-			return
 		if (area_loc.get_apc())
-			user << "\red This area already has an APC."
+			user << "<span class='rose'>This area already has an APC.</span>"
 			return //only one APC per area
 		for(var/obj/machinery/power/terminal/T in turf_loc)
 			if (T.master)
-				user << "\red There is another network terminal here."
+				user << "<span class='rose'>There is another network terminal here.</span>"
 				return
 			else
 				var/obj/item/weapon/cable_coil/C = new /obj/item/weapon/cable_coil(turf_loc)
