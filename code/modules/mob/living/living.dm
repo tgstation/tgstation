@@ -762,6 +762,13 @@
 /mob/living/singularity_pull(S)
 	step_towards(src,S)
 
+/mob/living/narsie_act()
+	if(client)
+		makeNewConstruct(/mob/living/simple_animal/construct/harvester, src, null, 1)
+	spawn_dust()
+	gib()
+	return
+
 /mob/living/proc/do_attack_animation(atom/A)
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0

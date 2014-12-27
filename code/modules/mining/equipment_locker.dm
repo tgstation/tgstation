@@ -702,7 +702,8 @@
 				if(istype(target, /mob/living/simple_animal/hostile))
 					var/mob/living/simple_animal/hostile/H = M
 					if(malfunctioning)
-						M.faction = list("lazarus")
+						H.faction |= list("lazarus", "\ref[user]")
+						H.robust_searching = 1
 						H.friends += user
 						H.attack_same = 1
 						log_game("[user] has revived hostile mob [target] with a malfunctioning lazarus injector")

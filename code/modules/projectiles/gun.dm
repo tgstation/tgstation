@@ -28,6 +28,8 @@
 	var/trigger_guard = 1
 	var/sawn_desc = null
 	var/sawn_state = SAWN_INTACT
+	var/burst_size = 1
+	var/fire_delay = 0
 
 /obj/item/weapon/gun/proc/process_chamber()
 	return 0
@@ -83,23 +85,28 @@
 				M.drop_item()
 				return
 
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!can_trigger_gun(L))
+			return
+
+	process_fire(target,user,flag,params)
+
+/obj/item/weapon/gun/proc/can_trigger_gun(mob/living/user)
 	if (!user.IsAdvancedToolUser())
 		user << "<span class='notice'>You don't have the dexterity to do this!</span>"
-		return
+		return 0
 
 	if(trigger_guard)
-		if(istype(user, /mob/living))
-			var/mob/living/M = user
-			if (HULK in M.mutations)
-				M << "<span class='notice'>Your meaty finger is much too large for the trigger guard!</span>"
-				return
+		if (HULK in user.mutations)
+			user << "<span class='notice'>Your meaty finger is much too large for the trigger guard!</span>"
+			return 0
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(H.dna && NOGUNS in H.dna.species.specflags)
 				user << "<span class='notice'>Your fingers don't fit in the trigger guard!</span>"
-				return
-
-	process_fire(target,user,flag,params)
+				return 0
+	return 1
 
 /obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, var/message = 1, params)
 
@@ -108,18 +115,27 @@
 	if(!special_check(user))
 		return
 
-	if(chambered)
-		if(!chambered.fire(target, user, params, , suppressed))
-			shoot_with_empty_chamber(user)
-		else
-			if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
-				shoot_live_shot(user, 1, target,message)
+	for(var/i = 1 to burst_size)
+		if(!issilicon(user))
+			if(!(src in get_both_hands(user))) //for burst firing
+				break
+		if(chambered)
+			if(!chambered.fire(target, user, params, , suppressed))
+				shoot_with_empty_chamber(user)
+				break
 			else
-				shoot_live_shot(user,message)
-	else
-		shoot_with_empty_chamber(user)
-	process_chamber()
-	update_icon()
+				if(!special_check(user))
+					return
+				if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
+					shoot_live_shot(user, 1, target)
+				else
+					shoot_live_shot(user)
+		else
+			shoot_with_empty_chamber(user)
+			break
+		process_chamber()
+		update_icon()
+		sleep(fire_delay)
 
 	if(user.hand)
 		user.update_inv_l_hand(0)

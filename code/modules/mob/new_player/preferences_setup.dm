@@ -95,7 +95,7 @@
 					clothes_s.Blend(new /icon('icons/mob/back.dmi', "backpack"), ICON_OVERLAY)
 				else if(backbag == 3)
 					clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-norm"), ICON_OVERLAY)
-			if(CHEF)
+			if(COOK)
 				clothes_s = new /icon('icons/mob/uniform.dmi', "chef_s")
 				clothes_s.Blend(new /icon('icons/mob/feet.dmi', "black"), ICON_UNDERLAY)
 				clothes_s.Blend(new /icon('icons/mob/head.dmi', "chef"), ICON_OVERLAY)

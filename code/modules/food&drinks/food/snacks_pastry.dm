@@ -309,3 +309,14 @@
 	reagents.add_reagent("nutriment", 3)
 	reagents.add_reagent("sugar", 3)
 	bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/chococornet/
+	name = "chocolate cornet"
+	desc = "Which side's the head, the fat end or the thin end?"
+	icon_state = "chococornet"
+
+/obj/item/weapon/reagent_containers/food/snacks/chococornet/New()
+	..()
+	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("sodiumchloride", 1)
+	reagents.add_reagent("vitamin", 1)
