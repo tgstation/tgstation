@@ -13,6 +13,8 @@
 	mymob.blind.screen_loc = "CENTER-7,CENTER-7"
 	mymob.blind.layer = 0
 
+	mymob.client.mouse_pointer_icon = ui_style
+
 /datum/hud/proc/blob_hud(ui_style = 'icons/mob/screen_midnight.dmi')
 
 	blobpwrdisplay = new /obj/screen()
@@ -30,4 +32,3 @@
 	mymob.client.screen = null
 
 	mymob.client.screen += list(blobpwrdisplay, blobhealthdisplay)
-
