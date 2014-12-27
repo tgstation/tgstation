@@ -158,3 +158,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 				make_plating()
 		else if(prob(50))
 			ReplaceWithLattice()
+
+/turf/simulated/floor/narsie_act()
+	if(prob(20))
+		ChangeTurf(/turf/simulated/floor/engine/cult)

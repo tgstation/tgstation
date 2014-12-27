@@ -125,8 +125,8 @@
 
 /obj/structure/closet/secure_closet/atmospherics/New()
 	..()
-	sleep(2)
 	new /obj/item/device/radio/headset/headset_eng(src)
+	new /obj/item/weapon/pipe_dispenser(src)
 	new /obj/item/weapon/storage/toolbox/mechanical(src)
 	new /obj/item/weapon/storage/backpack/satchel_norm(src)
 	new /obj/item/weapon/tank/emergency_oxygen/engi(src)

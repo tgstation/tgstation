@@ -7,25 +7,37 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode)
 	cell_type = "/obj/item/weapon/stock_parts/cell/crap"
 
-/obj/item/weapon/gun/energy/taser/cyborg
-	name = "taser gun"
-	desc = "An integrated taser that draws directly from a cyborg's power cell. The weapon contains a limiter to prevent the cyborg's power cell from overheating."
-	icon_state = "taser"
-	fire_sound = 'sound/weapons/Taser.ogg'
+/obj/item/weapon/gun/energy/stunrevolver
+	name = "stun revolver"
+	desc = "A high-tech revolver that fires internal, reusable stun cartidges in a revolving cylinder."
+	icon_state = "stunrevolver"
+	origin_tech = "combat=3;materials=3;powerstorage=2"
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode/gun)
+	cell_type = "/obj/item/weapon/stock_parts/cell"
+
+/obj/item/weapon/gun/energy/gun/advtaser
+	name = "advanced taser"
+	desc = "A hybrid taser designed to fire both short-range high-power electrodes and long-range disabler beams."
+	icon_state = "advtaser"
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/disabler)
+
+/obj/item/weapon/gun/energy/gun/advtaser/cyborg
+	name = "advanced taser"
+	desc = "An integrated advanced taser that draws directly from a cyborg's power cell. The weapon contains a limiter to prevent the cyborg's power cell from overheating."
 	cell_type = "/obj/item/weapon/stock_parts/cell/secborg"
 	var/charge_tick = 0
-	var/recharge_time = 10 //Time it takes for shots to recharge (in ticks)
+	var/recharge_time = 10
 
-/obj/item/weapon/gun/energy/taser/cyborg/New()
+/obj/item/weapon/gun/energy/gun/advtaser/cyborg/New()
 	..()
 	processing_objects.Add(src)
 
 
-/obj/item/weapon/gun/energy/taser/cyborg/Destroy()
+/obj/item/weapon/gun/energy/gun/advtaser/cyborg/Destroy()
 	processing_objects.Remove(src)
 	..()
 
-/obj/item/weapon/gun/energy/taser/cyborg/process() //Every [recharge_time] ticks, recharge a shot for the cyborg
+/obj/item/weapon/gun/energy/gun/advtaser/cyborg/process() //Every [recharge_time] ticks, recharge a shot for the cyborg
 	charge_tick++
 	if(charge_tick < recharge_time) return 0
 	charge_tick = 0
@@ -40,16 +52,6 @@
 
 	update_icon()
 	return 1
-
-
-/obj/item/weapon/gun/energy/stunrevolver
-	name = "stun revolver"
-	desc = "A high-tech revolver that fires internal, reusable stun cartidges in a revolving cylinder."
-	icon_state = "stunrevolver"
-	origin_tech = "combat=3;materials=3;powerstorage=2"
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode/gun)
-	cell_type = "/obj/item/weapon/stock_parts/cell"
-
 
 
 /obj/item/weapon/gun/energy/crossbow

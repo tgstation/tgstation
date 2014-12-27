@@ -70,7 +70,8 @@
 	Proj.on_hit(src, 0)
 	return 0
 
-
+/mob/living/simple_animal/construct/narsie_act()
+	return
 
 /////////////////Juggernaut///////////////
 

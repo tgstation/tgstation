@@ -9,9 +9,9 @@ datum/design/basic_cell
 	req_tech = list("powerstorage" = 1)
 	build_type = PROTOLATHE | AUTOLATHE |MECHFAB
 	materials = list("$metal" = 700, "$glass" = 50)
-	build_path = /obj/item/weapon/stock_parts/cell
 	construction_time=100
-	category = list("Misc")
+	build_path = /obj/item/weapon/stock_parts/cell
+	category = list("Misc","Power Designs")
 
 datum/design/high_cell
 	name = "High-Capacity Power Cell"
@@ -22,7 +22,7 @@ datum/design/high_cell
 	materials = list("$metal" = 700, "$glass" = 60)
 	construction_time=100
 	build_path = /obj/item/weapon/stock_parts/cell/high
-	category = list("Misc")
+	category = list("Misc","Power Designs")
 
 datum/design/super_cell
 	name = "Super-Capacity Power Cell"
@@ -34,7 +34,7 @@ datum/design/super_cell
 	materials = list("$metal" = 700, "$glass" = 70)
 	construction_time=100
 	build_path = /obj/item/weapon/stock_parts/cell/super
-	category = list("Misc")
+	category = list("Misc","Power Designs")
 
 datum/design/hyper_cell
 	name = "Hyper-Capacity Power Cell"
@@ -46,7 +46,7 @@ datum/design/hyper_cell
 	materials = list("$metal" = 400, "$gold" = 150, "$silver" = 150, "$glass" = 80)
 	construction_time=100
 	build_path = /obj/item/weapon/stock_parts/cell/hyper
-	category = list("Misc")
+	category = list("Misc","Power Designs")
 
 datum/design/light_replacer
 	name = "Light Replacer"
@@ -56,6 +56,7 @@ datum/design/light_replacer
 	build_type = PROTOLATHE
 	materials = list("$metal" = 1500, "$silver" = 150, "$glass" = 3000)
 	build_path = /obj/item/device/lightreplacer
+	category = list("Power Designs")
 
 datum/design/pacman
 	name = "Machine Design (PACMAN-type Generator Board)"

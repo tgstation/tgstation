@@ -1,0 +1,13 @@
+author: Paprika
+delete-after: True
+
+
+changes:
+ 
+  - experiment: "Taser electrodes now have a limited range of 7 tiles."
+  - experiment: "The energy gun's stun mode has been replaced with a disable mode."
+  - experiment: "Security officers will now spawn with tasers."
+  - tweak: "Disabler beams now go through windows and grilles."
+  - tweak: "Disabler beams now do 33 stamina damage instead of 34. This means they will only stun in 3 hits on someone that is NOT 100% healthy."
+  - tweak: "Most ballistic projectiles now do stamina damage in addition to their regular damage instead of stunning. This includes nuke op c-20r .45, detective's revolver, etc. They are effectively better than disablers at stunning people, as well as do significant damage, but they do not stun instantly like a taser. Expect engagements to be a little longer and plan ahead for this."
+  - rscadd: "Added an advanced taser for RnD, the child of a disabler and a taser."

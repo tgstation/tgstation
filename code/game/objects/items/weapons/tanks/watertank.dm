@@ -70,6 +70,36 @@
 	..()
 	return
 
+/obj/item/weapon/watertank/attack_hand(mob/user as mob)
+	if(src.loc == user)
+		ui_action_click()
+		return
+	..()
+
+/obj/item/weapon/watertank/MouseDrop(obj/over_object)
+	if(ishuman(src.loc))
+		var/mob/living/carbon/human/H = src.loc
+		switch(over_object.name)
+			if("r_hand")
+				if(H.r_hand)
+					return
+				if(!H.unEquip(src))
+					return
+				H.put_in_r_hand(src)
+			if("l_hand")
+				if(H.l_hand)
+					return
+				if(!H.unEquip(src))
+					return
+				H.put_in_l_hand(src)
+	return
+
+/obj/item/weapon/watertank/attackby(obj/item/W, mob/user)
+	if(W == noz)
+		remove_noz(user)
+		return
+	..()
+
 // This mister item is intended as an extension of the watertank and always attached to it.
 // Therefore, it's designed to be "locked" to the player's hands or extended back onto
 // the watertank backpack. Allowing it to be placed elsewhere or created without a parent
@@ -84,6 +114,7 @@
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
+	flags = NODROP | OPENCONTAINER | NOBLUDGEON
 
 	var/obj/item/weapon/watertank/tank
 
@@ -116,6 +147,11 @@
 	if(loc != tank.loc)
 		loc = tank.loc
 
+/obj/item/weapon/reagent_containers/spray/mister/afterattack(obj/target, mob/user, proximity)
+	if(target.loc == loc || target == tank) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it putting it away
+		return
+	..()
+
 //Janitor tank
 /obj/item/weapon/watertank/janitor
 	name = "backpack water tank"
@@ -126,7 +162,6 @@
 /obj/item/weapon/watertank/janitor/New()
 	..()
 	reagents.add_reagent("cleaner", 500)
-
 
 /obj/item/weapon/reagent_containers/spray/mister/janitor
 	name = "janitor spray nozzle"
@@ -157,39 +192,14 @@
 	item_state = "waterbackpackatmos"
 	volume = 200
 
-/obj/item/weapon/watertank/atmos/attack_hand(mob/user as mob)
-	if(src.loc == user)
-		ui_action_click()
-		return
-	..()
-
-/obj/item/weapon/watertank/atmos/MouseDrop(obj/over_object)
-	if(ishuman(src.loc))
-		var/mob/living/carbon/human/H = src.loc
-		switch(over_object.name)
-			if("r_hand")
-				if(!H.unEquip(src))
-					return
-				H.put_in_r_hand(src)
-			if("l_hand")
-				if(!H.unEquip(src))
-					return
-				H.put_in_l_hand(src)
-	return
-
-/obj/item/weapon/watertank/atmos/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/extinguisher/mini/nozzle))
-		remove_noz(user)
-		return
-	..()
-
 /obj/item/weapon/watertank/atmos/make_noz()
 	return new /obj/item/weapon/extinguisher/mini/nozzle(src)
 
 /obj/item/weapon/watertank/atmos/dropped(mob/user as mob)
 	icon_state = "waterbackpackatmos"
-	var/obj/item/weapon/extinguisher/mini/nozzle/N = noz
-	N.nozzle_mode = 0
+	if(istype(noz, /obj/item/weapon/extinguisher/mini/nozzle))
+		var/obj/item/weapon/extinguisher/mini/nozzle/N = noz
+		N.nozzle_mode = 0
 
 /obj/item/weapon/extinguisher/mini/nozzle
 	name = "extinguisher nozzle"

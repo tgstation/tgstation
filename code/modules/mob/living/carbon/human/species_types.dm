@@ -82,7 +82,7 @@
 				H.adjustFireLoss(rand(5,15))
 				H.show_message("<span class='danger'>The radiation beam singes you!</span>")
 		if(/obj/item/projectile/energy/florayield)
-			H.nutrition = min(H.nutrition+30, 500)
+			H.nutrition = min(H.nutrition+30, NUTRITION_LEVEL_FULL)
 	return
 
 /*
@@ -103,14 +103,14 @@
 			if(A.lighting_use_dynamic)	light_amount = min(10,T.lighting_lumcount) - 5
 			else						light_amount =  5
 		H.nutrition += light_amount
-		if(H.nutrition > 500)
-			H.nutrition = 500
+		if(H.nutrition > NUTRITION_LEVEL_FULL)
+			H.nutrition = NUTRITION_LEVEL_FULL
 		if(light_amount > 2) //if there's enough light, heal
 			H.heal_overall_damage(1,1)
 			H.adjustToxLoss(-1)
 			H.adjustOxyLoss(-1)
 
-	if(H.nutrition < 200)
+	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
 		H.take_overall_damage(2,0)
 
 /*

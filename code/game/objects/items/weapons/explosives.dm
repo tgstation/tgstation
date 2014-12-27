@@ -83,14 +83,15 @@
 		spawn(timer*10)
 			if(target && !target.gc_destroyed)
 				explode(get_turf(target))
-			qdel(src)
-
+			else
+				qdel(src)
 
 /obj/item/weapon/c4/proc/explode(var/turf/location)
 	location.ex_act(2, target)
 	explosion(location,0,0,3)
 	if(target)
 		target.overlays -= image_overlay
+	qdel(src)
 
 /obj/item/weapon/c4/attack(mob/M as mob, mob/user as mob, def_zone)
 	return

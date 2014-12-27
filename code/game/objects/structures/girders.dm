@@ -39,7 +39,7 @@
 			new /obj/item/stack/sheet/metal(get_turf(src))
 			qdel(src)
 
-	else if(istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+	else if(istype(W, /obj/item/weapon/pickaxe/drill/diamonddrill))
 		user << "<span class='notice'>You drill through the girder!</span>"
 		new /obj/item/stack/sheet/metal(get_turf(src))
 		qdel(src)
@@ -177,7 +177,7 @@
 		if (P.pipe_type in list(0, 1, 5))	//simple pipes, simple bends, and simple manifolds.
 			user.drop_item()
 			P.loc = src.loc
-			user << "<span class='notice'>You fit the pipe into the [src]!</span>"
+			user << "<span class='notice'>You fit the pipe into \the [src]!</span>"
 	else
 		..()
 
@@ -273,7 +273,7 @@
 			transfer_fingerprints_to(R)
 			qdel(src)
 
-	else if(istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+	else if(istype(W, /obj/item/weapon/pickaxe/drill/diamonddrill))
 		user << "<span class='notice'>You drill through the girder!</span>"
 		if(do_after(user, 5))
 			var/obj/effect/decal/remains/human/R = new (get_turf(src))
