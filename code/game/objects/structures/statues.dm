@@ -14,7 +14,6 @@
 	var/last_event = 0
 	var/active = null
 	var/spam_flag = 0
-	var/state = 0
 
 /obj/structure/statue/Destroy()
 	density = 0
@@ -22,7 +21,7 @@
 
 /obj/structure/statue/attackby(obj/item/weapon/W, mob/user)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/weapon/wrench) && state == 0)
+	if(istype(W, /obj/item/weapon/wrench))
 		if(anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user << "<span class='notice'>Now loosening the [name]'s bolts...</span>"
@@ -70,6 +69,7 @@
 
 /obj/structure/statue/attack_hand(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
+	add_fingerprint(user)
 	visible_message("<span class='notice'>[user] rubs some dust off from the [name]'s surface.</span>")
 
 /obj/structure/statue/CanAtmosPass()
