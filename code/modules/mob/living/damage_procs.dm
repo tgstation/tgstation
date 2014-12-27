@@ -75,6 +75,7 @@
 	if(stutter)		apply_effect(stutter, STUTTER, blocked)
 	if(eyeblur)		apply_effect(eyeblur, EYE_BLUR, blocked)
 	if(drowsy)		apply_effect(drowsy, DROWSY, blocked)
-	if(stamina)		apply_effect(stamina, STAMINA, blocked)
+	if(stamina)		apply_damage(stamina, STAMINA, null, blocked)
 	if(jitter)		apply_effect(jitter, JITTER, blocked)
+	CheckStamina()
 	return 1
