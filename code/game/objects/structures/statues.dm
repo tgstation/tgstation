@@ -56,27 +56,28 @@
 			Dismantle(1)
 
 	else if(istype(W, /obj/item/weapon/pickaxe/drill/diamonddrill))
-		user.visible_message("<span class='notice'>[name] begins to drill apart the [name]!</span>", \
+		user.visible_message("<span class='notice'>[user] begins to drill apart the [name]!</span>", \
 							 "<span class='notice'>You begin to drill apart the [name]!</span>")
 		if(do_after(user,5))
 			if(!src) return
-			user.visible_message("<span class='notice'>[name] destroys the [name]!</span>", \
+			user.visible_message("<span class='notice'>[user] destroys the [name]!</span>", \
 								 "<span class='notice'>You destroy the [name]!</span>")
 			qdel(src)
 
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		if(!anchored)
-			user.visible_message("<span class='notice'>[name] is slicing apart the [name]...</span>", \
+			user.visible_message("<span class='notice'>[user] is slicing apart the [name]...</span>", \
 								 "<span class='notice'>You are slicing apart the [name]...</span>")
 			if(do_after(user, 40))
 				if(!src) return
-				user.visible_message("<span class='notice'>[name] slices apart the [name]!</span>", \
+				user.visible_message("<span class='notice'>[user] slices apart the [name]!</span>", \
 									 "<span class='notice'>You slice apart the [name]!</span>")
 				Dismantle(1)
 
 	else
 		hardness -= W.force/100
-		user << "You hit the [name] with your [W.name]!"
+		user.visible_message("[user] hits the [name] with their [W.name]!", \
+							 "You hit the [name] with your [W.name]!")
 		CheckHardness()
 
 /obj/structure/statue/attack_hand(mob/living/user as mob)
