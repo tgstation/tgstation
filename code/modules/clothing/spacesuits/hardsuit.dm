@@ -14,7 +14,6 @@
 	icon_state = "hardsuit-engineering"
 	item_state = "eng_hardsuit"
 	slowdown = 1
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/large,/obj/item/weapon/tank/emergency_oxygen)
 
 	//Regular (engineering) hardsuits
 /obj/item/clothing/head/helmet/space/hardsuit/engine
@@ -58,10 +57,7 @@
 	item_state = "eng_hardsuit"
 	slowdown = 2
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75)
-
-/obj/item/clothing/suit/space/hardsuit/engine/New()
-	allowed = allowed + list(/obj/item/device/t_scanner, /obj/item/weapon/rcd)
-	. = ..()
+	allowed_more = list(/obj/item/device/t_scanner, /obj/item/weapon/rcd)
 
 
 	//Atmospherics
@@ -83,10 +79,7 @@
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 0)
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS					//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
-
-/obj/item/clothing/suit/space/hardsuit/atmos/New()
-	allowed = allowed + list(/obj/item/device/t_scanner, /obj/item/weapon/pipe_dispenser)
-	. = ..()
+	allowed_more = list(/obj/item/device/t_scanner, /obj/item/weapon/pipe_dispenser)
 
 
 	//Chief Engineer's hardsuit
@@ -108,10 +101,7 @@
 	armor = list(melee = 40, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 90)
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS					//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
-
-/obj/item/clothing/suit/space/hardsuit/elite/New()
-	allowed = allowed + list(/obj/item/device/t_scanner, /obj/item/weapon/rcd, /obj/item/weapon/pipe_dispenser)
-	. = ..()
+	allowed_more = list(/obj/item/device/t_scanner, /obj/item/weapon/rcd, /obj/item/weapon/pipe_dispenser)
 
 
 	//Mining hardsuit
@@ -130,10 +120,7 @@
 	desc = "A special suit that protects against hazardous, low pressure environments. Has reinforced plating for wildlife encounters."
 	item_state = "mining_hardsuit"
 	armor = list(melee = 40, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 50)
-
-/obj/item/clothing/suit/space/hardsuit/mining/New()
-	allowed = allowed + list(/obj/item/weapon/storage/bag/ore,/obj/item/weapon/pickaxe)
-	. = ..()
+	allowed_more = list(/obj/item/weapon/storage/bag/ore,/obj/item/weapon/pickaxe)
 
 
 	//Syndicate hardsuit
@@ -187,10 +174,8 @@
 	var/on = 1
 	action_button_name = "Toggle Hardsuit Mode"
 	armor = list(melee = 60, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
+	allowed_more = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword/saber,/obj/item/weapon/restraints/handcuffs)
 
-/obj/item/clothing/suit/space/hardsuit/syndi/New()
-	allowed = allowed + list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword/saber,/obj/item/weapon/restraints/handcuffs)
-	. = ..()
 
 /obj/item/clothing/suit/space/hardsuit/syndi/update_icon()
 	icon_state = "hardsuit[on]-[item_color]"
@@ -244,10 +229,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS					//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	unacidable = 1
-
-/obj/item/clothing/suit/space/hardsuit/wizard/New()
-	allowed = allowed + list(/obj/item/weapon/teleportation_scroll)
-	. = ..()
+	allowed_more = list(/obj/item/weapon/teleportation_scroll)
 
 
 	//Medical hardsuit
@@ -266,10 +248,8 @@
 	item_state = "medical_hardsuit"
 	slowdown = 1
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 50)
+	allowed_more = list(/obj/item/weapon/storage/firstaid,/obj/item/device/healthanalyzer,/obj/item/stack/medical)
 
-/obj/item/clothing/suit/space/hardsuit/medical/New()
-	allowed = allowed + list(/obj/item/weapon/storage/firstaid,/obj/item/device/healthanalyzer,/obj/item/stack/medical)
-	. = ..()
 
 	//Security hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/security
@@ -285,9 +265,5 @@
 	name = "security hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor."
 	item_state = "sec_hardsuit"
-
 	armor = list(melee = 30, bullet = 15, laser = 30, energy = 10, bomb = 10, bio = 100, rad = 50)
-
-/obj/item/clothing/suit/space/hardsuit/security/New()
-	allowed = allowed + list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs)
-	. = ..()
+	allowed_more = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs)
