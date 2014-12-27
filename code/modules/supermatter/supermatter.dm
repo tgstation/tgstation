@@ -105,21 +105,24 @@
 		return
 
 /obj/machinery/power/supermatter/shard/singularity_act()
-//	energy += 15000 // sets it to max size.
-//	log_admin("New super singularity made by eating a SM crystal [prints]. Last touched by [A.fingerprintslast].")
-//	message_admins("New super singularity made by eating a SM crystal [prints]. Last touched by [A.fingerprintslast].")
+	var/prints = ""
+	if(src.fingerprintshidden)
+		prints = ", all touchers : " + src.fingerprintshidden
+	log_admin("New super singularity made by eating a SM crystal [prints]. Last touched by [src.fingerprintslast].")
+	message_admins("New super singularity made by eating a SM crystal [prints]. Last touched by [src.fingerprintslast].")
 	qdel(src)
-	return(15000)
+	return 15000
 
 /obj/machinery/power/supermatter/singularity_act()
-	//energy += 20000
+	var/prints = ""
+	if(src.fingerprintshidden)
+		prints = ", all touchers : " + src.fingerprintshidden
 	SetUniversalState(/datum/universal_state/supermatter_cascade)
-	//expand(11, 1)
-	//log_admin("New super singularity made by eating a SM crystal [prints]. Last touched by [A.fingerprintslast].")
-	//message_admins("New super singularity made by eating a SM crystal [prints]. Last touched by [A.fingerprintslast].")
+	//S.expand(STAGE_SUPER, 1)
+	log_admin("New super singularity made by eating a SM crystal [prints]. Last touched by [src.fingerprintslast].")
+	message_admins("New super singularity made by eating a SM crystal [prints]. Last touched by [src.fingerprintslast].")
 	qdel(src)
-	return(20000)
-
+	return 20000
 
 /obj/machinery/power/supermatter/process()
 
