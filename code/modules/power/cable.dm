@@ -622,8 +622,8 @@ obj/structure/cable/proc/avail()
 	var/path = "/obj/structure/cable" + (item_color == "red" ? "" : "/" + item_color)
 	return new path (location)
 
-// called when cable_coil is clicked on a turf/simulated/floor
-/obj/item/stack/cable_coil/proc/place(turf/simulated/floor/F, mob/user)
+// called when cable_coil is clicked on a turf
+/obj/item/stack/cable_coil/proc/place_turf(turf/T, mob/user)
 	if(!isturf(user.loc))
 		return
 
@@ -631,28 +631,28 @@ obj/structure/cable/proc/avail()
 		user << "There is no cable left."
 		return
 
-	if(get_dist(F,user) > 1) // Too far
+	if(get_dist(T,user) > 1) // Too far
 		user << "You can't lay cable at a place that far away."
 		return
 
-	if(F.intact)		// Ff floor is intact, complain
-		user << "You can't lay cable there unless the floor tiles are removed."
+	if(T.intact)		// Ff floor is intact, complain
+		user << "You can only lay cables on catwalks and plating!"
 		return
 
 	else
 		var/dirn
 
-		if(user.loc == F)
+		if(user.loc == T)
 			dirn = user.dir			// if laying on the tile we're on, lay in the direction we're facing
 		else
-			dirn = get_dir(F, user)
+			dirn = get_dir(T, user)
 
-		for(var/obj/structure/cable/LC in F)
+		for(var/obj/structure/cable/LC in T)
 			if(LC.d2 == dirn && LC.d1 == 0)
 				user << "There's already a cable at that position."
 				return
 
-		var/obj/structure/cable/C = get_new_cable (F)
+		var/obj/structure/cable/C = get_new_cable(T)
 
 		//set up the new cable
 		C.d1 = 0 //it's a O-X node cable
@@ -695,7 +695,7 @@ obj/structure/cable/proc/avail()
 
 
 	if(U == T) //if clicked on the turf we're standing on, try to put a cable in the direction we're facing
-		place(T,user)
+		place_turf(T,user)
 		return
 
 	var/dirn = get_dir(C, user)
@@ -703,7 +703,7 @@ obj/structure/cable/proc/avail()
 	// one end of the clicked cable is pointing towards us
 	if(C.d1 == dirn || C.d2 == dirn)
 		if(U.intact)						// can't place a cable if the floor is complete
-			user << "You can't lay cable there unless the floor tiles are removed."
+			user << "You can only lay cables on catwalks and plating!"
 			return
 		else
 			// cable is pointing at us, we're standing on an open tile

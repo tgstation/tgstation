@@ -8,7 +8,6 @@
 	layer = 2.3 //under pipes
 	var/obj/item/stack/rods/stored
 	//	flags = CONDUCT
-	var/intact = 0 //for potential cable coil errors
 
 /obj/structure/lattice/New()
 	..()
@@ -84,6 +83,7 @@
 /obj/structure/lattice/Deconstruct()
 	var/turf/T = loc
 	stored.loc = T
+	updateOverlays()
 	..()
 
 /obj/structure/lattice/singularity_pull(S, current_size)
@@ -92,15 +92,26 @@
 
 /obj/structure/lattice/catwalk
 	name = "catwalk"
-	desc = "A catwalk for easier EVA manuevering."
+	desc = "A catwalk for easier EVA manuevering and cable placement."
 	icon_state = "catwalkfull"
+
+/obj/structure/lattice/catwalk/Destroy()
+	var/turf/T = loc
+	T.intact = 1
+	for(var/obj/structure/cable/C in T)
+		C.Destroy()
+	..()
+
+/obj/structure/lattice/catwalk/Deconstruct()
+	var/turf/T = loc
+	T.intact = 1
+	for(var/obj/structure/cable/C in T)
+		C.Deconstruct()
+	..()
 
 /obj/structure/lattice/catwalk/attackby(obj/item/C as obj, mob/user as mob)
 	..()
 	if(istype(C, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/coil = C
-		for(var/obj/structure/cable/LC in src)
-			if((LC.d1==0)||(LC.d2==0))
-				LC.attackby(C,user)
-				return
-		coil.place(src, user)
+		var/turf/T = get_turf(src)
+		T.attackby(C, user) //catwalks 'enable' coil laying on space tiles, not the catwalks themselves
+		return
