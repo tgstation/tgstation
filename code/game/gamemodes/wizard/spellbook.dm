@@ -11,6 +11,7 @@
 	var/max_uses = 5
 	var/op = 1
 	var/activepage
+	var/list/active_challenges = list()
 
 /obj/item/weapon/spellbook/attackby(obj/item/O as obj, mob/user as mob)
 	if(istype(O, /obj/item/weapon/antag_spawner/contract))
@@ -37,7 +38,7 @@
 		dat += "<HR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=spells'>Learn and Improve Magical Abilities</A><BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=artifacts'>Summon Magical Tools and Weapons</A><BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=oneuse'>Cast Powerful One Time Spells</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=challenge'>Raise The Stakes For More Power</A><BR>"
 
 		dat += "<HR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=rememorize'>Re-memorize Spells</A><BR>"
@@ -101,22 +102,21 @@
 
 		dat += "<A href='byond://?src=\ref[src];spell_choice=return'><B>Return</B></A><BR>"
 
-	else if (activepage == "oneuse")
+	else if (activepage == "challenge")
 
-		dat += "<B>One Time Spells:</B><BR>"
-		dat += "These potent spells can only be used once and will be used automatically upon purchase.<BR>"
-		dat += "The effects are global and irreversable, these spells cannot be unlearned, but they can be bought multiple times.<BR>"
+		dat += "<B>Challenges:</B><BR>"
+		dat += "The Wizard Federation typically has hard limits on the potency and number of spells brought to the station based on risk.<BR>"
+		dat += "Arming the station against you will increases the risk, but will grant you one more charge for your spellbook.<BR>"
 
 		dat += "<HR>"
 
-		dat += "<A href='byond://?src=\ref[src];spell_choice=summonguns'>Summon Guns</A> (One time use, global spell)<BR>"
-		dat += "<I>Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill eachother. Just be careful not to get hit in the crossfire!</I><BR>"
+		if(!("summon guns" in active_challenges))
+			dat += "<A href='byond://?src=\ref[src];spell_choice=summonguns'>Summon Guns</A> (Single use only, global spell)<BR>"
+			dat += "<I>Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill you. Just be careful not to stand still too long!</I><BR>"
 
-		dat += "<A href='byond://?src=\ref[src];spell_choice=summonmagic'>Summon Magic</A> (One time use, global spell)<BR>"
-		dat += "<I>Share the wonders of magic with the crew and show them why they aren't to be trusted with it at the same time.</I><BR>"
-
-		dat += "<A href='byond://?src=\ref[src];spell_choice=summonevents'>Summon Events</A> (One time use, persistent global spell)<BR>"
-		dat += "<I>Give Murphy's law a little push and replace all events with special wizard ones that will confound and confuse everyone. Multiple castings increase the rate of these events.</I><BR>"
+		if(!("summon magic" in active_challenges))
+			dat += "<A href='byond://?src=\ref[src];spell_choice=summonmagic'>Summon Magic</A> (Single use only, global spell)<BR>"
+			dat += "<I>Share the wonders of magic with the crew and show them why they aren't to be trusted with it at the same time.</I><BR>"
 
 		dat += "<HR>"
 
@@ -196,7 +196,7 @@
 					feedback_add_details("wizard_spell_learned","UM") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 				else
 					temp = "You may only re-memorize spells whilst located inside the wizard sanctuary."
-			else if(href_list["spell_choice"] == "spells" || href_list["spell_choice"] == "artifacts" || href_list["spell_choice"] == "oneuse" || href_list["spell_choice"] == "return")
+			else if(href_list["spell_choice"] == "spells" || href_list["spell_choice"] == "artifacts" || href_list["spell_choice"] == "challenge" || href_list["spell_choice"] == "return")
 				activepage = href_list["spell_choice"]
 			else if(uses >= 1 && max_uses >=1)
 				uses--
@@ -302,14 +302,18 @@
 							temp = "You have learned instant summons."
 						if("summonguns")
 							feedback_add_details("wizard_spell_learned","SG") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							rightandwrong(0, H)
-							max_uses--
-							temp = "You have cast summon guns."
+							rightandwrong(0, H, 0)
+							uses++
+							max_uses++
+							active_challenges += "summon guns"
+							temp = "You have cast summon guns and gained an extra charge for your spellbook."
 						if("summonmagic")
 							feedback_add_details("wizard_spell_learned","SU") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							rightandwrong(1, H)
-							max_uses--
-							temp = "You have cast summon magic."
+							rightandwrong(1, H, 0)
+							uses++
+							max_uses++
+							active_challenges += "summon magic"
+							temp = "You have cast summon magic and gained an extra charge for your spellbook."
 						if("summonevents")
 							feedback_add_details("wizard_spell_learned","SE") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							summonevents()

@@ -12,7 +12,6 @@
 	include_user = 1
 
 	var/obj/marked_item
-	var/marked_item_name
 
 /obj/effect/proc_holder/spell/targeted/summonitem/cast(list/targets)
 	for(var/mob/living/user in targets)
@@ -28,7 +27,6 @@
 				if(NODROP in item.flags)
 					message += "Though it feels redundant, "
 				marked_item = 		item
-				marked_item_name = 	item.name
 				message += "You mark [item] for recall.</span>"
 				name = "Recall [item]"
 				processing_objects.Add(src)
@@ -44,7 +42,6 @@
 			message = "<span class='notice'>You remove the mark on [marked_item] to use elsewhere.</span>"
 			name = "Instant Summons"
 			marked_item = 		null
-			marked_item_name = 	null
 			processing_objects.Remove(src)
 
 		else	//Getting previously marked item
@@ -79,5 +76,4 @@
 	if(!marked_item.loc) //item was destroyed
 		name = "Instant Summons"
 		marked_item = 		null
-		marked_item_name = 	null
 		processing_objects.Remove(src)
