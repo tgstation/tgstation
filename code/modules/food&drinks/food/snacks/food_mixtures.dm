@@ -8,6 +8,7 @@
 	required_reagents = list("soymilk" = 10)
 	required_catalysts = list("enzyme" = 5)
 	result_amount = 1
+	mob_react=1
 /datum/chemical_reaction/tofu/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
@@ -32,6 +33,7 @@
 	result = null
 	required_reagents = list("milk" = 2, "coco" = 2, "sugar" = 2)
 	result_amount = 1
+	mob_react = 1
 /datum/chemical_reaction/chocolate_bar2/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
@@ -84,6 +86,7 @@
 	result = null
 	required_reagents = list("blood" = 5, "clonexadone" = 1)
 	result_amount = 1
+	mob_react = 1
 /datum/chemical_reaction/syntiflesh/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/location = get_turf(holder.my_atom)
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh(location)
