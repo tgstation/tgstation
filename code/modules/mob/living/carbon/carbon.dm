@@ -88,12 +88,12 @@
 	)
 	src.jitteriness += 1000 //High numbers for violent convulsions
 	src.stuttering += 2
-	return shock_damage
 	Stun(2)
 	spawn(20)
 		src.jitteriness -= 990 //Still jittery, but vastly less
 		Stun(3)
 		Weaken(3)
+	return shock_damage
 
 
 /mob/living/carbon/swap_hand()
