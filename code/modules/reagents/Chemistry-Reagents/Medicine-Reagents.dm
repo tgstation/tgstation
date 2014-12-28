@@ -299,7 +299,6 @@ datum/reagent/medicine/imidazoline/on_mob_life(var/mob/living/M as mob)
 	M.eye_blind = max(M.eye_blind-5 , 0)
 	M.disabilities &= ~NEARSIGHT
 	M.eye_stat = max(M.eye_stat-5, 0)
-//	M.sdisabilities &= ~1		Replaced by eye surgery
 	..()
 	return
 

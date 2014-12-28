@@ -1,5 +1,3 @@
-
-
 ///////////////////////////////////////////////////////////////////
 					//Food Reagents
 //////////////////////////////////////////////////////////////////
@@ -12,7 +10,7 @@
 datum/reagent/consumable
 	name = "Consumable"
 	id = "consumable"
-	nutriment_factor = 1 * REAGENTS_METABOLISM
+	var/nutriment_factor = 1 * REAGENTS_METABOLISM
 
 datum/reagent/consumable/on_mob_life(var/mob/living/M as mob)
 	M.nutrition += nutriment_factor
@@ -384,5 +382,4 @@ datum/reagent/consumable/cherryjelly
 	id = "cherryjelly"
 	description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
 	color = "#801E28" // rgb: 128, 30, 40
-
 
