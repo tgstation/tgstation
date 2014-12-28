@@ -137,6 +137,10 @@
 			eshot_sound = 'sound/weapons/Laser.ogg'
 			egun = 1
 
+		if(/obj/item/weapon/gun/energy/gun/turret)
+			eprojectile = /obj/item/projectile/beam	//If it has, going to copypaste mode
+			eshot_sound = 'sound/weapons/Laser.ogg'
+			egun = 1
 
 /obj/machinery/porta_turret/Destroy()
 	//deletes its own cover with it
