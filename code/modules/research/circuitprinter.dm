@@ -17,6 +17,19 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	var/efficiency_coeff
 	reagents = new()
 
+	var/list/categories = list(
+								"AI Modules",
+								"Computer Boards",
+								"Teleportation Machinery",
+								"Medical Machinery",
+								"Engineering Machinery",
+								"Exosuit Modules",
+								"Hydroponics Machinery",
+								"Subspace Telecomms",
+								"Research Machinery",
+								"Misc. Machinery"
+								)
+
 /obj/machinery/r_n_d/circuit_imprinter/New()
 	..()
 	component_parts = list()

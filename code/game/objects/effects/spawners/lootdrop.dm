@@ -26,7 +26,7 @@
 				/obj/item/weapon/gun/projectile/automatic/pistol = 8,
 				/obj/item/weapon/gun/projectile/shotgun/combat = 5,
 				/obj/item/weapon/gun/projectile/revolver/mateba,
-				/obj/item/weapon/gun/projectile/automatic/deagle
+				/obj/item/weapon/gun/projectile/automatic/pistol/deagle
 				)
 
 /obj/effect/spawner/lootdrop/maintenance
@@ -61,7 +61,7 @@
 				/obj/item/bodybag = 1,
 				/obj/item/clothing/glasses/meson = 2,
 				/obj/item/clothing/glasses/sunglasses = 1,
-				/obj/item/clothing/gloves/white{color = "yellow"; desc = "The colors are a bit dodgy."; icon_state = "yellow"; item_color = "yellow"; item_state = "ygloves"; name = "insulated gloves"} = 1,
+				/obj/item/clothing/gloves/color/white{color = "yellow"; desc = "The colors are a bit dodgy."; icon_state = "yellow"; item_color = "yellow"; item_state = "ygloves"; name = "insulated gloves"} = 1,
 				/obj/item/clothing/head/hardhat = 1,
 				/obj/item/clothing/head/hardhat/red = 1,
 				/obj/item/clothing/head/that{throwforce = 1; throwing = 1} = 1,

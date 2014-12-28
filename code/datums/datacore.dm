@@ -79,6 +79,105 @@
 	if(foundrecord)
 		foundrecord.fields["rank"] = assignment
 
+/obj/effect/datacore/proc/get_manifest(monochrome, OOC)
+	var/list/heads = list()
+	var/list/sec = list()
+	var/list/eng = list()
+	var/list/med = list()
+	var/list/sci = list()
+	var/list/civ = list()
+	var/list/bot = list()
+	var/list/misc = list()
+	var/dat = {"
+	<head><style>
+		.manifest {border-collapse:collapse;}
+		.manifest td, th {border:1px solid [monochrome?"black":"#DEF; background-color:white; color:black"]; padding:.25em}
+		.manifest th {height: 2em; [monochrome?"border-top-width: 3px":"background-color: #48C; color:white"]}
+		.manifest tr.head th { [monochrome?"border-top-width: 1px":"background-color: #488;"] }
+		.manifest td:first-child {text-align:right}
+		.manifest tr.alt td {[monochrome?"border-top-width: 2px":"background-color: #DEF"]}
+	</style></head>
+	<table class="manifest" width='350px'>
+	<tr class='head'><th>Name</th><th>Rank</th></tr>
+	"}
+	var/even = 0
+	// sort mobs
+	for(var/datum/data/record/t in data_core.general)
+		var/name = t.fields["name"]
+		var/rank = t.fields["rank"]
+		var/department = 0
+		if(rank in command_positions)
+			heads[name] = rank
+			department = 1
+		if(rank in security_positions)
+			sec[name] = rank
+			department = 1
+		if(rank in engineering_positions)
+			eng[name] = rank
+			department = 1
+		if(rank in medical_positions)
+			med[name] = rank
+			department = 1
+		if(rank in science_positions)
+			sci[name] = rank
+			department = 1
+		if(rank in civilian_positions)
+			civ[name] = rank
+			department = 1
+		if(rank in nonhuman_positions)
+			bot[name] = rank
+			department = 1
+		if(!department && !(name in heads))
+			misc[name] = rank
+	if(heads.len > 0)
+		dat += "<tr><th colspan=3>Heads</th></tr>"
+		for(name in heads)
+			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[heads[name]]</td></tr>"
+			even = !even
+	if(sec.len > 0)
+		dat += "<tr><th colspan=3>Security</th></tr>"
+		for(name in sec)
+			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[sec[name]]</td></tr>"
+			even = !even
+	if(eng.len > 0)
+		dat += "<tr><th colspan=3>Engineering</th></tr>"
+		for(name in eng)
+			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[eng[name]]</td></tr>"
+			even = !even
+	if(med.len > 0)
+		dat += "<tr><th colspan=3>Medical</th></tr>"
+		for(name in med)
+			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[med[name]]</td></tr>"
+			even = !even
+	if(sci.len > 0)
+		dat += "<tr><th colspan=3>Science</th></tr>"
+		for(name in sci)
+			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[sci[name]]</td></tr>"
+			even = !even
+	if(civ.len > 0)
+		dat += "<tr><th colspan=3>Civilian</th></tr>"
+		for(name in civ)
+			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[civ[name]]</td></tr>"
+			even = !even
+	// in case somebody is insane and added them to the manifest, why not
+	if(bot.len > 0)
+		dat += "<tr><th colspan=3>Silicon</th></tr>"
+		for(name in bot)
+			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[bot[name]]</td></tr>"
+			even = !even
+	// misc guys
+	if(misc.len > 0)
+		dat += "<tr><th colspan=3>Miscellaneous</th></tr>"
+		for(name in misc)
+			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[misc[name]]</td></tr>"
+			even = !even
+
+	dat += "</table>"
+	dat = replacetext(dat, "\n", "")
+	dat = replacetext(dat, "\t", "")
+	return dat
+
+
 var/record_id_num = 1001
 /obj/effect/datacore/proc/manifest_inject(var/mob/living/carbon/human/H)
 	if(H.mind && (H.mind.assigned_role != "MODE"))

@@ -73,7 +73,7 @@
 	item_state = "void"
 	desc = "An old, NASA Centcom branch designed, dark red space suit."
 	slowdown = 1
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/multitool)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/device/multitool)
 
 
 	//Space santa outfit suit

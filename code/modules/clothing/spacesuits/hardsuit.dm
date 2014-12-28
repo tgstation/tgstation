@@ -41,7 +41,7 @@
 	item_state = "eng_hardsuit"
 	slowdown = 2
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/t_scanner, /obj/item/weapon/rcd)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/device/t_scanner, /obj/item/weapon/rcd)
 
 
 	//Atmospherics
@@ -102,29 +102,89 @@
 	desc = "A special suit that protects against hazardous, low pressure environments. Has reinforced plating for wildlife encounters."
 	item_state = "mining_hardsuit"
 	armor = list(melee = 40, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 50)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/pickaxe)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/pickaxe)
 
 
 
 	//Syndicate hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi
 	name = "blood-red hardsuit helmet"
-	desc = "An advanced helmet designed for work in special operations. Property of Gorlex Marauders."
-	icon_state = "hardsuit0-syndi"
+	desc = "A dual-mode advanced helmet designed for work in special operations. It is in travel mode. Property of Gorlex Marauders."
+	icon_state = "hardsuit1-syndi"
 	item_state = "syndie_helm"
 	item_color = "syndi"
 	armor = list(melee = 60, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
+	on = 1
+	action_button_name = "Toggle Helmet Mode"
+
+/obj/item/clothing/head/helmet/space/hardsuit/syndi/update_icon()
+	icon_state = "hardsuit[on]-[item_color]"
+
+/obj/item/clothing/head/helmet/space/hardsuit/syndi/attack_self(mob/user)
+	if(!isturf(user.loc))
+		user << "You cannot toggle your helmet while in this [user.loc]" //To prevent some lighting anomalities.
+		return
+	on = !on
+	if(on)
+		user << "<span class='notice'>You switch your helmet to travel mode.</span>"
+		name = "blood-red hardsuit helmet"
+		desc = "A dual-mode advanced helmet designed for work in special operations. It is in travel mode. Property of Gorlex Marauders."
+		flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE | THICKMATERIAL
+		flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+		cold_protection = HEAD
+		user.AddLuminosity(brightness_on)
+	else
+		user << "<span class='notice'>You switch your helmet to combat mode.</span>"
+		name = "blood-red hardsuit helmet (combat)"
+		desc = "A dual-mode advanced helmet designed for work in special operations. It is in combat mode. Property of Gorlex Marauders."
+		flags = BLOCKHAIR
+		flags_inv = HIDEEARS
+		cold_protection = null
+		user.AddLuminosity(-brightness_on)
+
+	update_icon()
+	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
+	user.update_inv_head()
 
 /obj/item/clothing/suit/space/hardsuit/syndi
-	icon_state = "hardsuit-syndi"
 	name = "blood-red hardsuit"
-	desc = "An advanced suit that protects against injuries during special operations. Property of Gorlex Marauders."
+	desc = "A dual-mode advanced hardsuit designed for work in special operations. It is in travel mode. Property of Gorlex Marauders."
+	icon_state = "hardsuit1-syndi"
 	item_state = "syndie_hardsuit"
+	item_color = "syndi"
 	slowdown = 1
 	w_class = 3
+	var/on = 1
+	action_button_name = "Toggle Hardsuit Mode"
 	armor = list(melee = 60, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword/saber,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 
+/obj/item/clothing/suit/space/hardsuit/syndi/update_icon()
+	icon_state = "hardsuit[on]-[item_color]"
+
+/obj/item/clothing/suit/space/hardsuit/syndi/attack_self(mob/user)
+	on = !on
+	if(on)
+		user << "<span class='notice'>You switch your hardsuit to travel mode.</span>"
+		name = "blood-red hardsuit helmet"
+		desc = "A dual-mode advanced hardsuit designed for work in special operations. It is in travel mode. Property of Gorlex Marauders."
+		slowdown = 1
+		flags = STOPSPRESSUREDMAGE | THICKMATERIAL
+		flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+		cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
+	else
+		user << "<span class='notice'>You switch your hardsuit to combat mode.</span>"
+		name = "blood-red hardsuit helmet (combat)"
+		desc = "A dual-mode advanced hardsuit designed for work in special operations. It is in combat mode. Property of Gorlex Marauders."
+		slowdown = 0
+		flags = BLOCKHAIR
+		flags_inv = null
+		cold_protection = null
+
+	update_icon()
+	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
+	user.update_inv_wear_suit()
+	user.update_inv_w_uniform()
 
 	//Wizard hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/wizard
@@ -169,7 +229,7 @@
 	desc = "A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement."
 	item_state = "medical_hardsuit"
 	slowdown = 1
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/firstaid,/obj/item/device/healthanalyzer,/obj/item/stack/medical)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/storage/firstaid,/obj/item/device/healthanalyzer,/obj/item/stack/medical)
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 50)
 
 
@@ -187,5 +247,5 @@
 	name = "security hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor."
 	item_state = "sec_hardsuit"
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank, /obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen, /obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs)
 	armor = list(melee = 30, bullet = 15, laser = 30, energy = 10, bomb = 10, bio = 100, rad = 50)

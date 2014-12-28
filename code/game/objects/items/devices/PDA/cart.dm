@@ -17,6 +17,7 @@
 	var/access_janitor = 0
 //	var/access_flora = 0
 	var/access_reagent_scanner = 0
+	var/access_newscaster = 0
 	var/access_remote_door = 0 //Control some blast doors remotely!!
 	var/remote_door_id = ""
 	var/access_status_display = 0
@@ -32,6 +33,7 @@
 	var/message1	// used for status_displays
 	var/message2
 	var/list/stored_data = list()
+	var/current_channel
 
 /obj/item/weapon/cartridge/engineering
 	name = "\improper Power-ON cartridge"
@@ -115,6 +117,12 @@
 	icon_state = "cart-mi"
 	access_mime = 1
 	var/mime_charges = 5
+
+/obj/item/weapon/cartridge/librarian
+	name = "\improper Lib-Tweet cartridge"
+	icon_state = "cart-s"
+	access_newscaster = 1
+
 /*
 /obj/item/weapon/cartridge/botanist
 	name = "\improper Green Thumb v4.20 cartridge"
@@ -700,6 +708,20 @@ Code:
 			var/obj/item/radio/integrated/medbot/SC = radio
 			bot_control(SC)
 
+		if (53) // Newscaster
+			menu = "<h4><img src=pda_notes.png> Newscaster Access</h4>"
+			menu += "<br> Current Newsfeed: <A href='byond://?src=\ref[src];choice=Newscaster Switch Channel'>[current_channel ? current_channel : "None"]</a> <br>"
+			var/datum/feed_channel/current
+			for(var/datum/feed_channel/chan in news_network.network_channels)
+				if (chan.channel_name == current_channel)
+					current = chan
+			if(!current)
+				menu += "<h5> ERROR : NO CHANNEL FOUND </h5>"
+				return
+			for(var/datum/feed_message/msg in current.messages)
+				menu +="-[msg.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[msg.author]</FONT>\]</FONT><BR>"
+			menu += "<br> <A href='byond://?src=\ref[src];choice=Newscaster Message'>Post Message</a>"
+
 /obj/item/weapon/cartridge/Topic(href, href_list)
 	..()
 
@@ -761,6 +783,33 @@ Code:
 			powmonitor = powermonitors[pnum]
 			loc:mode = 433
 			mode = 433
+
+		if("Newscaster Access")
+			mode = 53
+
+		if("Newscaster Message")
+			var/obj/item/device/pda/pda = loc
+			var/pda_owner_name = pda.id ? "[pda.id.registered_name] ([pda.id.assignment])" : "Unknown"
+			var/message = pda.msg_input()
+			var/datum/feed_channel/current
+			for(var/datum/feed_channel/chan in news_network.network_channels)
+				if (chan.channel_name == current_channel)
+					current = chan
+			if(current.locked && current.author != pda_owner_name)
+				pda.cart += "<h5> ERROR : NOT AUTHORIZED [pda.id ? "" : "- ID SLOT EMPTY"] </h5>"
+				pda.Topic(null,list("choice"="Refresh"))
+				return
+			news_network.SubmitArticle(message,pda.owner,current_channel)
+			pda.Topic(null,list("choice"=num2text(mode)))
+			return
+
+		if("Newscaster Switch Channel")
+			var/obj/item/device/pda/pda = loc
+			current_channel = pda.msg_input()
+			pda.Topic(null,list("choice"=num2text(mode)))
+			return
+
+
 
 	generate_menu()
 	print_to_host(menu)

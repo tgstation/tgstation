@@ -7,6 +7,7 @@
 	ventcrawler = 2
 	var/is_adult = 0
 	languages = SLIME | HUMAN
+	faction = list("slime")
 
 	layer = 5
 

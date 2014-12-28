@@ -261,6 +261,8 @@ var/list/department_radio_keys = list(
 	if(stuttering)
 		message = stutter(message)
 
+	message = capitalize(message)
+
 	return message
 
 /mob/living/proc/radio(message, message_mode, steps)

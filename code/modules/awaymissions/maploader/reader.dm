@@ -2,6 +2,9 @@
 //SS13 Optimized Map loader
 //////////////////////////////////////////////////////////////
 
+//global datum that will preload variables on atoms instanciation
+var/global/dmm_suite/preloader/_preloader = null
+
 
 /**
  * Construct the model map and control the loading process
@@ -163,7 +166,7 @@
 	//first instance the /area and remove it from the members list
 	index = members.len
 	var/atom/instance
-	var/dmm_suite/preloader/_preloader = new(members_attributes[index])//preloader for assigning  set variables on atom creation
+	_preloader = new(members_attributes[index])//preloader for assigning  set variables on atom creation
 
 	instance = locate(members[index])
 	instance.contents.Add(locate(xcrd,ycrd,zcrd))
@@ -191,34 +194,6 @@
 		T = UT
 		index++
 
-
-	//Replace the previous part of the code with this if it's unsafe to assume tiles have ALWAYS an /area AND a /turf
-	/*while(members.len > 0)
-		var/length = members.len
-		var/member = members[length]
-
-		if(ispath(member,/area))
-			var/atom/instance
-			var/dmm_suite/preloader/_preloader = new(members_attributes[length])
-
-			instance = locate(member)
-			instance.contents.Add(locate(xcrd,ycrd,zcrd))
-
-			if(_preloader && instance)
-				_preloader.load(instance)
-
-			members.Remove(member)
-			continue
-
-		else if(ispath(member,/turf))
-			instance_atom(member,members_attributes[length],xcrd,ycrd,zcrd)
-			members.Remove(member)
-			continue
-
-		else
-			break
-		*/
-
 	//finally instance all remainings objects/mobs
 	for(index=1,index < first_turf_index,index++)
 		instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd)
@@ -230,11 +205,11 @@
 //Instance an atom at (x,y,z) and gives it the variables in attributes
 /dmm_suite/proc/instance_atom(var/path,var/list/attributes, var/x, var/y, var/z)
 	var/atom/instance
-	var/dmm_suite/preloader/_preloader = new(attributes)
+	_preloader = new(attributes, path)
 
-	instance = new path (locate(x,y,z), _preloader)//first preloader pass
+	instance = new path (locate(x,y,z))//first preloader pass
 
-	if(_preloader && instance)//second preloader pass, as some variables may have been reset/changed by New()
+	if(_preloader && instance)//second preloader pass, for those atoms that don't ..() in New()
 		_preloader.load(instance)
 
 	return instance
@@ -242,9 +217,9 @@
 //text trimming (both directions) helper proc
 //optionally removes quotes before and after the text (for variable name)
 /dmm_suite/proc/trim_text(var/what as text,var/trim_quotes=0)
-	while(length(what) && (findtext(what," ",1,2)))// || findtext(what,quote,1,2)))
+	while(length(what) && (findtext(what," ",1,2)))
 		what=copytext(what,2,0)
-	while(length(what) && (findtext(what," ",length(what),0)))// || findtext(what,quote,length(what),0)))
+	while(length(what) && (findtext(what," ",length(what),0)))
 		what=copytext(what,1,length(what))
 	if(trim_quotes)
 		while(length(what) && (findtext(what,quote,1,2)))
@@ -298,13 +273,17 @@
 			else if(isnum(text2num(trim_right)))
 				trim_right = text2num(trim_right)
 
-			//Check for file
-			else if(copytext(trim_right,1,2) == "'")
-				trim_right = file(copytext(trim_right,2,length(trim_right)))
+			//Check for null
+			else if(trim_right == "null")
+				trim_right = null
 
 			//Check for list
 			else if(copytext(trim_right,1,5) == "list")
 				trim_right = text2list(copytext(trim_right,6,length(trim_right)))
+
+			//Check for file
+			else if(copytext(trim_right,1,2) == "'")
+				trim_right = file(copytext(trim_right,2,length(trim_right)))
 
 			to_return[trim_left] = trim_right
 
@@ -323,10 +302,11 @@
 		placed.opacity = 1
 	placed.underlays += turfs_underlays
 
-//atom creation method that preloads variables before creation
-/atom/New(atom/loc, dmm_suite/preloader/_dmm_preloader)
-	if(istype(_dmm_preloader, /dmm_suite/preloader))
-		_dmm_preloader.load(src)
+//atom creation method that preloads variables at creation
+/atom/New()
+	if(_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
+		_preloader.load(src)
+
 	. = ..()
 
 //////////////////
@@ -336,12 +316,15 @@
 /dmm_suite/preloader
 	parent_type = /datum
 	var/list/attributes
+	var/target_path
 
-/dmm_suite/preloader/New(list/the_attributes)
+/dmm_suite/preloader/New(var/list/the_attributes, var/path)
 	.=..()
 	if(!the_attributes.len)
 		Del()
+		return
 	attributes = the_attributes
+	target_path = path
 
 /dmm_suite/preloader/proc/load(atom/what)
 	for(var/attribute in attributes)

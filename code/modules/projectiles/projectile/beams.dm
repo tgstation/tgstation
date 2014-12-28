@@ -36,6 +36,14 @@
 	irradiate = 30
 	forcedodge = 1
 
+/obj/item/projectile/beam/disabler
+	name = "disabler beam"
+	icon_state = "omnilaser"
+	damage = 33
+	damage_type = STAMINA
+	hitsound = 'sound/weapons/tap.ogg'
+	eyeblur = 0
+
 /obj/item/projectile/beam/pulse
 	name = "pulse"
 	icon_state = "u_laser"

@@ -25,10 +25,13 @@
 	var/output = "<center><p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
 
 	if(!ticker || ticker.current_state <= GAME_STATE_PREGAME)
-		if(!ready)	output += "<p><a href='byond://?src=\ref[src];ready=1'>Declare Ready</A></p>"
-		else	output += "<p><b>You are ready</b> <a href='byond://?src=\ref[src];ready=0'>Cancel</A></p>"
+		if(ready)
+			output += "<p>\[ <b>Ready</b> | <a href='byond://?src=\ref[src];ready=0'>Not Ready</a> \]</p>"
+		else
+			output += "<p>\[ <a href='byond://?src=\ref[src];ready=1'>Ready</a> | <b>Not Ready</b> \]</p>"
 
 	else
+		output += "<a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A><br><br>"
 		output += "<p><a href='byond://?src=\ref[src];late_join=1'>Join Game!</A></p>"
 
 	output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
@@ -55,7 +58,7 @@
 	output += "</center>"
 
 	//src << browse(output,"window=playersetup;size=210x240;can_close=0")
-	var/datum/browser/popup = new(src, "playersetup", "<div align='center'>New Player Options</div>", 210, 240)
+	var/datum/browser/popup = new(src, "playersetup", "<div align='center'>New Player Options</div>", 220, 250)
 	popup.set_window_options("can_close=0")
 	popup.set_content(output)
 	popup.open(0)
@@ -98,7 +101,10 @@
 		return 1
 
 	if(href_list["ready"])
-		ready = text2num(href_list["ready"])
+		if(!ticker || ticker.current_state <= GAME_STATE_PREGAME) // Make sure we don't ready up after the round has started
+			ready = !ready
+		else
+			ready = 0
 
 	if(href_list["refresh"])
 		src << browse(null, "window=playersetup") //closes the player setup window
@@ -135,6 +141,9 @@
 			usr << "<span class='danger'>The round is either not ready, or has already finished...</span>"
 			return
 		LateChoices()
+
+	if(href_list["manifest"])
+		ViewManifest()
 
 	if(href_list["SelectedJob"])
 
@@ -364,6 +373,12 @@
 
 	return new_character
 
+/mob/new_player/proc/ViewManifest()
+	var/dat = "<html><body>"
+	dat += "<h4>Crew Manifest</h4>"
+	dat += data_core.get_manifest(OOC = 1)
+
+	src << browse(dat, "window=manifest;size=370x420;can_close=1")
 
 /mob/new_player/Move()
 	return 0
