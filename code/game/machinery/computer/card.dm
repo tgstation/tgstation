@@ -67,6 +67,10 @@
 
 	if(!usr || usr.stat || usr.lying)	return
 
+	if (!ishuman(usr))
+		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		return
+
 	if(scan)
 		usr << "You remove \the [scan] from \the [src]."
 		scan.loc = get_turf(src)
