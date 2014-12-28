@@ -103,7 +103,7 @@ proc/process_sec_hud(var/mob/M, var/advanced_mode,var/mob/eye)
 				holder = perp.hud_list[WANTED_HUD]
 				switch(R.fields["criminal"])
 					if("*Arrest*")		holder.icon_state = "hudwanted"
-					if("Incarcerated")	holder.icon_state = "hudincarcerated"
+					if("Incarcerated")	holder.icon_state = "hudprisoner"
 					if("Parolled")		holder.icon_state = "hudparolled"
 					if("Released")		holder.icon_state = "hudreleased"
 					else
