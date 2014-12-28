@@ -31,16 +31,6 @@
 		if(M.lying)	return
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
-			if(istype(H.shoes, /obj/item/clothing/shoes/clown_shoes))
-				var/obj/item/clothing/shoes/clown_shoes/O = H.shoes
-				if(H.m_intent == "run")
-					if(O.footstep >= 2)
-						O.footstep = 0
-						playsound(src, "clownstep", 50, 1) // this will get annoying very fast.
-					else
-						O.footstep++
-				else
-					playsound(src, "clownstep", 20, 1)
 
 			// Tracking blood
 			var/list/bloodDNA = null
@@ -82,16 +72,6 @@
 						playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
 						H.Stun(4)
 						H.Weaken(5)
-		else if(iscluwne(M))
-			var/mob/living/simple_animal/hostile/retaliate/cluwne/C=M
-			if(C.m_intent == "run")
-				if(C.footstep >= 2)
-					C.footstep = 0
-					playsound(src, "clownstep", 50, 1) // this will get annoying very fast.
-				else
-					C.footstep++
-			else
-				playsound(src, "clownstep", 20, 1)
 
 		switch (src.wet)
 			if(1)

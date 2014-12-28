@@ -311,3 +311,16 @@
 	var/message=pick("quietly sobs into a dirty handkerchief","cries into [gender==MALE?"his":"her"] hands","bawls like a cow")
 	message = "<B>[src]</B> [message]"
 	return ..(message)
+
+/mob/living/simple_animal/hostile/retaliate/cluwne/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..(NewLoc, Dir, step_x, step_y)
+
+	if(.)
+		if(m_intent == "run")
+			if(footstep > 1)
+				footstep = 0
+				playsound(src, "clownstep", 50, 1) // this will get annoying very fast.
+			else
+				footstep++
+		else
+			playsound(src, "clownstep", 20, 1)
