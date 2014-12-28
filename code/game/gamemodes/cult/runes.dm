@@ -887,7 +887,7 @@ var/list/sacrificed = list()
 			C.show_message("<span class='danger'>The world around you suddenly becomes quiet.</span>", 3)
 			affected++
 			if(prob(1) && ishuman(C))
-				C.dna.add_mutation("Deafness")
+				C.dna.add_mutation(DEAFMUT)
 		if(affected)
 			usr.say("Sti[pick("'","`")] kaliedir!")
 			usr << "<span class='danger'>The world becomes quiet as the deafening rune dissipates into fine dust.</span>"

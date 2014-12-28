@@ -24,19 +24,21 @@
 	var/mutant_color = "FFF"		 // What color you are if you have certain speciess
 	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
 	var/list/mutations = list()   //All mutations are from now on here
+	var/mob/living/carbon/holder
 
-/datum/dna/proc/add_mutation(mutation_name, mob/living/carbon/human/target)
-	if(!istype(target))	return
+/datum/dna/New(mob/living/carbon/new_holder)
+	if(new_holder && istype(new_holder))
+		holder = new_holder
+
+/datum/dna/proc/add_mutation(mutation_name)
 	var/datum/mutation/human/HM = mutations_list[mutation_name]
-	HM.on_acquiring(target)
+	HM.on_acquiring(holder)
 
-/datum/dna/proc/remove_mutation(mutation_name, mob/living/carbon/human/target)
-	if(!istype(target))	return
+/datum/dna/proc/remove_mutation(mutation_name)
 	var/datum/mutation/human/HM = mutations_list[mutation_name]
-	HM.on_losing(target)
+	HM.on_losing(holder)
 
-/datum/dna/proc/check_mutation(mutation_name, mob/living/carbon/human/target)
-	if(!istype(target))	return
+/datum/dna/proc/check_mutation(mutation_name)
 	var/datum/mutation/human/HM = mutations_list[mutation_name]
 	return mutations.Find(HM)
 
@@ -71,10 +73,9 @@
 	sorting.len = 14
 	var/result
 	for(var/datum/mutation/human/A in good_mutations + bad_mutations + not_good_mutations)
-	//	var/datum/mutation/human/M = mutations_list[A]//, i<=DNA_STRUC_ENZYMES_BLOCKS, i++)
-		if(A.name == "Monkified" && istype(character,/mob/living/carbon/monkey))
+		if(A.name == RACEMUT && istype(character,/mob/living/carbon/monkey))
 			sorting[A.dna_block] = num2hex(A.lowest_value + rand(0, 256 * 6), DNA_BLOCK_SIZE)
-			character.dna.mutations.Add(mutations_list["Monkified"])
+			character.dna.mutations.Add(mutations_list[RACEMUT])
 		else
 			sorting[A.dna_block] = random_string(DNA_BLOCK_SIZE, L)
 
@@ -154,7 +155,7 @@
 	return character.dna
 
 /proc/create_dna(mob/living/carbon/C, datum/species/S) //don't use this unless you're about to use hardset_dna or ready_dna
-	C.dna = new /datum/dna()
+	C.dna = new /datum/dna(C)
 	if(S)	C.dna.species = new S()	// do not remove; this is here to prevent runtimes
 
 /////////////////////////// DNA DATUM

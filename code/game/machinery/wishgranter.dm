@@ -37,14 +37,14 @@
 		charges--
 		insisting = 0
 
-		user.dna.add_mutation("Hulk", user)
+		user.dna.add_mutation(HULK)
 
 /*		if (!(LASER in user.mutations))
 			user.mutations.Add(LASER)
 */
-		user.dna.add_mutation("X Ray Vision", user)
-		user.dna.add_mutation("Cold Resistance", user)
-		user.dna.add_mutation("Telekinesis", user)
+		user.dna.add_mutation(XRAY)
+		user.dna.add_mutation(COLDRES)
+		user.dna.add_mutation(TK)
 
 /*		if(!(HEAL in user.mutations))
 			user.mutations.Add(HEAL)

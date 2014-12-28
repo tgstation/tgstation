@@ -87,7 +87,7 @@
 	quality = POSITIVE
 	get_chance = 100
 	lowest_value = 256 * 9
-	text_indication = "Your muscules hurt!"
+	text_indication = "Your muscles hurt!"
 
 /datum/mutation/human/hulk/New()
 	..()
@@ -144,7 +144,7 @@
 
 	name = "Cold Resistance"
 	quality = POSITIVE
-	text_indication = "Your body feels farm!"
+	text_indication = "Your body feels warm!"
 
 /datum/mutation/human/cold_resistance/New()
 	..()
@@ -188,7 +188,7 @@
 
 	name = "Near Sightness"
 	quality = MINOR_NEGATIVE
-	text_indication = "You cant see very well."
+	text_indication = "You can't see very well."
 
 /datum/mutation/human/nearsight/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
@@ -202,6 +202,7 @@
 
 	name = "Epilepsy"
 	quality = NEGATIVE
+	text_indication = "You get a headache."
 
 /datum/mutation/human/epilepsy/on_life(mob/living/carbon/human/owner)
 	if ((prob(1) && owner.paralysis < 1))
@@ -215,6 +216,7 @@
 
 	name = "Unstable DNA"
 	quality = NEGATIVE
+	text_indication = "You feel strange."
 
 /datum/mutation/human/bad_dna/on_acquiring(mob/living/carbon/human/owner)
 	if(prob(95))
@@ -230,6 +232,7 @@
 
 	name = "Cough"
 	quality = MINOR_NEGATIVE
+	text_indication = "You start coughing."
 
 /datum/mutation/human/cough/on_life(mob/living/carbon/human/owner)
 	if((prob(5) && owner.paralysis <= 1))
@@ -240,6 +243,7 @@
 
 	name = "Clumsiness"
 	quality = MINOR_NEGATIVE
+	text_indication = "You feel lightheaded."
 
 /datum/mutation/human/clumsy/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
@@ -253,6 +257,7 @@
 
 	name = "Tourettes Syndrome"
 	quality = NEGATIVE
+	text_indication = "You twitch."
 
 /datum/mutation/human/tourettes/on_life(mob/living/carbon/human/owner)
 	if((prob(10) && owner.paralysis <= 1))
@@ -271,6 +276,7 @@
 
 	name = "Nervousness"
 	quality = MINOR_NEGATIVE
+	text_indication = "You feel nervous."
 
 /datum/mutation/human/nervousness/on_life(mob/living/carbon/human/owner)
 	if(prob(10))
@@ -280,6 +286,7 @@
 
 	name = "Deafness"
 	quality = NEGATIVE
+	text_indication = "You can't seem to hear anything."
 
 /datum/mutation/human/deaf/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
@@ -293,6 +300,7 @@
 
 	name = "Blindness"
 	quality = NEGATIVE
+	text_indication = "You can't seem to see anything."
 
 /datum/mutation/human/blind/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
@@ -326,6 +334,7 @@
 	name = "Laser Eyes"
 	quality = POSITIVE
 	dna_block = NON_SCANNABLE
+	text_indication = "You feel pressure building up behind your eyes."
 
 /datum/mutation/human/laser_eyes/on_ranged_attack(mob/living/carbon/human/owner, atom/target)
 	if(owner.a_intent == "harm")

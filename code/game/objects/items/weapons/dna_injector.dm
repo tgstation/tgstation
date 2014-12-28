@@ -24,7 +24,7 @@
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		for(var/datum/mutation/human/HM in remove_mutations)
-			HM.on_losing(HM)
+			HM.on_losing(M)
 		for(var/datum/mutation/human/HM in add_mutations)
 			if(HM.name == "Monkifying")
 				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
@@ -70,27 +70,27 @@
 	desc = "Cures green skin."
 	New()
 		..()
-		remove_mutations.Add(mutations_list["Hulk"])
+		remove_mutations.Add(mutations_list[HULK])
 
 /obj/item/weapon/dnainjector/hulkmut
 	name = "\improper DNA injector (Hulk)"
 	desc = "This will make you big and strong, but give you a bad skin condition."
 	New()
 		..()
-		add_mutations.Add(mutations_list["Hulk"])
+		add_mutations.Add(mutations_list[HULK])
 /obj/item/weapon/dnainjector/xraymut
 	name = "\improper DNA injector (Xray)"
 	desc = "Finally you can see what the Captain does."
 	New()
 		..()
-		add_mutations.Add(mutations_list["X Ray Vision"])
+		add_mutations.Add(mutations_list[XRAY])
 
 /obj/item/weapon/dnainjector/antixray
 	name = "\improper DNA injector (Anti-Xray)"
 	desc = "It will make you see harder."
 	New()
 		..()
-		remove_mutations.Add(mutations_list["X Ray Vision"])
+		remove_mutations.Add(mutations_list[XRAY])
 
 /////////////////////////////////////
 /obj/item/weapon/dnainjector/antiglasses
@@ -98,56 +98,56 @@
 	desc = "Toss away those glasses!"
 	New()
 		..()
-		remove_mutations.Add(mutations_list["Near Sightness"])
+		remove_mutations.Add(mutations_list[BADSIGHT])
 
 /obj/item/weapon/dnainjector/glassesmut
 	name = "\improper DNA injector (Glasses)"
 	desc = "Will make you need dorkish glasses."
 	New()
 		..()
-		add_mutations.Add(mutations_list["Near Sightness"])
+		add_mutations.Add(mutations_list[BADSIGHT])
 
 /obj/item/weapon/dnainjector/epimut
 	name = "\improper DNA injector (Epi.)"
 	desc = "Shake shake shake the room!"
 	New()
 		..()
-		add_mutations.Add(mutations_list["Epilepsy"])
+		add_mutations.Add(mutations_list[EPILEPSY])
 
 /obj/item/weapon/dnainjector/antiepi
 	name = "\improper DNA injector (Anti-Epi.)"
 	desc = "Will fix you up from shaking the room."
 	New()
 		..()
-		remove_mutations.Add(mutations_list["Epilepsy"])
+		remove_mutations.Add(mutations_list[EPILEPSY])
 ////////////////////////////////////
 /obj/item/weapon/dnainjector/anticough
 	name = "\improper DNA injector (Anti-Cough)"
 	desc = "Will stop that aweful noise."
 	New()
 		..()
-		remove_mutations.Add(mutations_list["Cough"])
+		remove_mutations.Add(mutations_list[COUGH])
 
 /obj/item/weapon/dnainjector/coughmut
 	name = "\improper DNA injector (Cough)"
 	desc = "Will bring forth a sound of horror from your throat."
 	New()
 		..()
-		add_mutations.Add(mutations_list["Cough"])
+		add_mutations.Add(mutations_list[COUGH])
 
 /obj/item/weapon/dnainjector/clumsymut
 	name = "\improper DNA injector (Clumsy)"
 	desc = "Makes clown minions."
 	New()
 		..()
-		add_mutations.Add(mutations_list["Clumsiness"])
+		add_mutations.Add(mutations_list[CLOWNMUT])
 
 /obj/item/weapon/dnainjector/anticlumsy
 	name = "\improper DNA injector (Anti-Clumy)"
 	desc = "Apply this for Security Clown."
 	New()
 		..()
-		remove_mutations.Add(mutations_list["Clumsiness"])
+		remove_mutations.Add(mutations_list[CLOWNMUT])
 
 /obj/item/weapon/dnainjector/antitour
 	name = "\improper DNA injector (Anti-Tour.)"
@@ -168,56 +168,56 @@
 	desc = "Makes you s-s-stuttterrr"
 	New()
 		..()
-		add_mutations.Add(mutations_list["Nervousness"])
+		add_mutations.Add(mutations_list[NERVOUS])
 
 /obj/item/weapon/dnainjector/antistutt
 	name = "\improper DNA injector (Anti-Stutt.)"
 	desc = "Fixes that speaking impairment."
 	New()
 		..()
-		remove_mutations.Add(mutations_list["Nervousness"])
+		remove_mutations.Add(mutations_list[NERVOUS])
 
 /obj/item/weapon/dnainjector/antifire
 	name = "\improper DNA injector (Anti-Fire)"
 	desc = "Cures fire."
 	New()
 		..()
-		remove_mutations.Add(mutations_list["Cold Resistance"])
+		remove_mutations.Add(mutations_list[COLDRES])
 
 /obj/item/weapon/dnainjector/firemut
 	name = "\improper DNA injector (Fire)"
 	desc = "Gives you fire."
 	New()
 		..()
-		add_mutations.Add(mutations_list["Cold Resistance"])
+		add_mutations.Add(mutations_list[COLDRES])
 
 /obj/item/weapon/dnainjector/blindmut
 	name = "\improper DNA injector (Blind)"
 	desc = "Makes you not see anything."
 	New()
 		..()
-		add_mutations.Add(mutations_list["Blindness"])
+		add_mutations.Add(mutations_list[BLINDMUT])
 
 /obj/item/weapon/dnainjector/antiblind
 	name = "\improper DNA injector (Anti-Blind)"
 	desc = "ITS A MIRACLE!!!"
 	New()
 		..()
-		remove_mutations.Add(mutations_list["Blindness"])
+		remove_mutations.Add(mutations_list[BLINDMUT])
 
 /obj/item/weapon/dnainjector/antitele
 	name = "\improper DNA injector (Anti-Tele.)"
 	desc = "Will make you not able to control your mind."
 	New()
 		..()
-		remove_mutations.Add(mutations_list["Telekinesis"])
+		remove_mutations.Add(mutations_list[TK])
 
 /obj/item/weapon/dnainjector/telemut
 	name = "\improper DNA injector (Tele.)"
 	desc = "Super brain man!"
 	New()
 		..()
-		add_mutations.Add(mutations_list["Telekinesis"])
+		add_mutations.Add(mutations_list[TK])
 
 /obj/item/weapon/dnainjector/telemut/darkbundle
 	name = "\improper DNA injector"
@@ -228,14 +228,14 @@
 	desc = "Sorry, what did you say?"
 	New()
 		..()
-		add_mutations.Add(mutations_list["Deafness"])
+		add_mutations.Add(mutations_list[DEAFMUT])
 
 /obj/item/weapon/dnainjector/antideaf
 	name = "\improper DNA injector (Anti-Deaf)"
 	desc = "Will make you hear once more."
 	New()
 		..()
-		remove_mutations.Add(mutations_list["Deafness"])
+		remove_mutations.Add(mutations_list[DEAFMUT])
 
 /obj/item/weapon/dnainjector/h2m
 	name = "\improper DNA injector (Human > Monkey)"

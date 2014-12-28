@@ -22,7 +22,7 @@
 	if(dna)
 		message = dna.species.handle_speech(message,src)
 
-	if (dna.check_mutation("Hulk", src))
+	if (dna.check_mutation(HULK))
 		message = "[uppertext(replacetext(message, ".", "!"))]!!" //because I don't know how to code properly in getting vars from other files -Bro
 
 	if(viruses.len)

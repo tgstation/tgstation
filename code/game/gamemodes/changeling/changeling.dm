@@ -160,7 +160,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		var/mob/living/carbon/human/H = changeling.current
 		if(H.mind.assigned_role == "Clown")
 			H << "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself."
-			H.dna.remove_mutation("Clumsiness", changeling.current)
+			H.dna.remove_mutation(CLOWNMUT)
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in changeling.objectives)

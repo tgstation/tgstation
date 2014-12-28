@@ -491,7 +491,7 @@
 
 		if(prot > 0)
 			user << "You remove the light [fitting]"
-		else if(istype(user) && user.dna.check_mutation("Telekinesis", user))
+		else if(istype(user) && user.dna.check_mutation(TK))
 			user << "You telekinetically remove the light [fitting]."
 		else
 			user << "You try to remove the light [fitting], but you burn your hand on it!"

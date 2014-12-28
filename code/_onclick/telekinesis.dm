@@ -98,7 +98,7 @@ var/const/tk_maxrange = 15
 	if(!host || host != user)
 		qdel(src)
 		return
-	if(!(user.dna.check_mutation("Telekinesis", user)))
+	if(!(user.dna.check_mutation(TK)))
 		qdel(src)
 		return
 	if(isobj(target) && !isturf(target.loc))

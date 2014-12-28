@@ -19,12 +19,12 @@
 
 	for(var/mob/living/carbon/target in targets)
 		for(var/A in mutations)
-			target.dna.add_mutation(A, target)
+			target.dna.add_mutation(A)
 		target.disabilities |= disabilities
 		spawn(duration)
 			if(target && !target.gc_destroyed)
 				for(var/A in mutations)
-					target.dna.remove_mutation(A, target)
+					target.dna.remove_mutation(A)
 				target.disabilities &= ~disabilities
 
 	return

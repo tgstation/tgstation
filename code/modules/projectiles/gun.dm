@@ -89,7 +89,7 @@
 
 	if(trigger_guard)
 		if(istype(user))
-			if(user.dna.check_mutation("Hulk"))
+			if(user.dna.check_mutation(HULK))
 				user << "<span class='notice'>Your meaty finger is much too large for the trigger guard!</span>"
 				return
 			if(NOGUNS in user.dna.species.specflags)

@@ -1,16 +1,20 @@
 
-//bitflags for mutations
-	// Extra powers:
-#define SHADOW			(1<<10)	// shadow teleportation (create in/out portals anywhere) (25%)
-#define SCREAM			(1<<11)	// supersonic screaming (25%)
-#define EXPLOSIVE		(1<<12)	// exploding on-demand (15%)
-#define REGENERATION	(1<<13)	// superhuman regeneration (30%)
-#define REPROCESSOR		(1<<14)	// eat anything (50%)
-#define SHAPESHIFTING	(1<<15)	// take on the appearance of anything (40%)
-#define PHASING			(1<<16)	// ability to phase through walls (40%)
-#define SHIELD			(1<<17)	// shielding from all projectile attacks (30%)
-#define SHOCKWAVE		(1<<18)	// attack a nearby tile and cause a massive shockwave, knocking most people on their asses (25%)
-#define ELECTRICITY		(1<<19)	// ability to shoot electric attacks (15%)
+//Defines copying names of mutations in all cases, make sure to change this if you change mutation's name
+#define HULK		"Hulk"
+#define XRAY		"X Ray Vision"
+#define COLDRES		"Cold Resistance"
+#define TK			"Telekinesis"
+#define NERVOUS		"Nervousness"
+#define EPILEPSY	"Epilepsy"
+#define MUTATE		"Unstable DNA"
+#define COUGH		"Cough"
+#define CLOWNMUT	"Clumsiness"
+#define TOURETTES	"Tourettes Syndrome"
+#define DEAFMUT		"Deafness"
+#define BLINDMUT	"Blindness"
+#define RACEMUT		"Monkified"
+#define BADSIGHT	"Near Sightness"
+#define LASEREYES	"Laser Eyes"
 
 
 // String identifiers for associative list lookup

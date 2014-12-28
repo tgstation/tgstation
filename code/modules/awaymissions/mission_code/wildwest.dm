@@ -77,9 +77,9 @@
 			if("Power")
 				user << "<B>Your wish is granted, but at a terrible cost...</B>"
 				user << "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart."
-				user.dna.add_mutation("Laser Eyes", user)
-				user.dna.add_mutation("Cold Resistance", user)
-				user.dna.add_mutation("X Ray Vision", user)
+				user.dna.add_mutation(LASEREYES)
+				user.dna.add_mutation(COLDRES)
+				user.dna.add_mutation(XRAY)
 				user.dna.species = new /datum/species/shadow()
 				user.regenerate_icons()
 			if("Wealth")

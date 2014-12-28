@@ -309,7 +309,7 @@
 
 /mob/living/carbon/human/proc/get_cold_protection(temperature)
 
-	if(dna.check_mutation("Cold Resistance", src))
+	if(dna.check_mutation(COLDRES))
 		return 1 //Fully protected from the cold.
 
 	if(dna && COLDRES in dna.species.specflags)
