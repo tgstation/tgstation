@@ -467,7 +467,13 @@
 	req_access = list( )
 	circuit = /obj/item/weapon/circuitboard/shuttle
 	var/shuttleId
-	var/possible_destinations
+	var/possible_destinations = ""
+
+/obj/machinery/computer/shuttle/New(location, obj/item/weapon/circuitboard/shuttle/C)
+	..()
+	if(istype(C))
+		possible_destinations = C.possible_destinations
+		shuttleId = C.shuttleId
 
 /obj/machinery/computer/shuttle/attack_hand(user as mob)
 	if(..(user))

@@ -18,7 +18,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 		if(istype(affected_mob,/mob/living/carbon))
 			var/mob/living/carbon/H = affected_mob
 			H.med_hud_set_status()
-		processing_objects.Add(src)
+		SSobj.processing.Add(src)
 		spawn(0)
 			AddInfectionImages(affected_mob)
 	else
@@ -42,7 +42,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 		if(istype(affected_mob,/mob/living/carbon))
 			var/mob/living/carbon/H = affected_mob
 			H.med_hud_set_status()
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 		spawn(0)
 			RemoveInfectionImages(affected_mob)
 			affected_mob = null

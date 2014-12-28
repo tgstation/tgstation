@@ -200,7 +200,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		// OMG CENTCOM LETTERHEAD
 		if("MessageCentcomm")
 			if(src.authenticated==2)
-				if(CM.cooldown)
+				if(CM.cooldownLeft())
 					usr << "Arrays recycling.  Please stand by."
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to Centcom via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response.", "To abort, send an empty message.", "")
@@ -209,13 +209,13 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				Centcomm_announce(input, usr)
 				usr << "Message transmitted."
 				log_say("[key_name(usr)] has made a Centcom announcement: [input]")
-				CM.cooldown = 55
+				CM.lastTimeUsed = world.time
 
 
 		// OMG SYNDICATE ...LETTERHEAD
 		if("MessageSyndicate")
 			if((src.authenticated==2) && (src.emagged))
-				if(CM.cooldown)
+				if(CM.cooldownLeft())
 					usr << "Arrays recycling.  Please stand by."
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING COORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response.", "To abort, send an empty message.", "")
@@ -224,7 +224,6 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				Syndicate_announce(input, usr)
 				usr << "Message transmitted."
 				log_say("[key_name(usr)] has made a Syndicate announcement: [input]")
-				CM.cooldown = 55 //about one minute
 
 		if("RestoreBackup")
 			usr << "Backup routing data restored!"

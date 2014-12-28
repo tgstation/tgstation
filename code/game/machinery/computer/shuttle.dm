@@ -61,16 +61,13 @@
 				src.authorized = list(  )
 
 /obj/machinery/computer/emergency_shuttle/emag_act(mob/user as mob)
-		if(!emagged && SSshuttle.emergency.mode == SHUTTLE_DOCKED)
-			var/time = emergency_shuttle.timeleft()
-			var/time = SSshuttle.emergency.timeLeft()
-			message_admins("[key_name(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) has emagged the emergency shuttle in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) [time] seconds before launch.",0,1)
-			log_game("[user.ckey]([user]) has emagged the emergency shuttle in ([x],[y],[z]) [time] seconds before launch.")
-			minor_announce("The emergency shuttle will launch in 10 seconds", "SYSTEM ERROR:",null,1)
-			emergency_shuttle.settimeleft( 10 )
-			SSshuttle.emergency.setTimer(100)
-			emagged = 1
-
+	if(!emagged && SSshuttle.emergency.mode == SHUTTLE_DOCKED)
+		var/time = SSshuttle.emergency.timeLeft()
+		message_admins("[key_name(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) has emagged the emergency shuttle in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) [time] seconds before launch.",0,1)
+		log_game("[user.ckey]([user]) has emagged the emergency shuttle in ([x],[y],[z]) [time] seconds before launch.")
+		minor_announce("The emergency shuttle will launch in 10 seconds", "SYSTEM ERROR:",null,1)
+		SSshuttle.emergency.setTimer(100)
+		emagged = 1
 
 /obj/structure/plasticflaps	//HOW DO YOU CALL THOSE THINGS ANYWAY
 	name = "plastic flaps"
@@ -80,7 +77,6 @@
 	density = 0
 	anchored = 1
 	layer = 4
-	explosion_resistance = 5
 
 /obj/structure/plasticflaps/CanPass(atom/movable/A, turf/T)
 	if(istype(A) && A.checkpass(PASSGLASS))

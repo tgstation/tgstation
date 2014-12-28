@@ -233,10 +233,10 @@ datum/radio_frequency/proc/remove_listener(obj/device)
 	for(var/devices_filter in devices)
 		var/list/devices_line = devices[devices_filter]
 		if(!devices_line)
-			return
+			devices -= devices_filter
 		devices_line -= device
 		if(!devices_line.len)
-			devices -= device_filter
+			devices -= devices_filter
 
 
 
