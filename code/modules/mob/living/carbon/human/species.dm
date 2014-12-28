@@ -409,7 +409,7 @@
 			H.satiety++
 			if(prob(round(-H.satiety/40)))
 				H.Jitter(5)
-			hunger_rate = 5 * HUNGER_FACTOR
+			hunger_rate = 3 * HUNGER_FACTOR
 		H.nutrition = max (0, H.nutrition - hunger_rate)
 
 
