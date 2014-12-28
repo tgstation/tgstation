@@ -76,10 +76,10 @@ Cook
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chef(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
 	if(cooks%2 != 0)
-		H.equip_to_slot_or_del(new /obj/item/clothing/suit/chef(H), slot_wear_suit)
+		H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/chef(H), slot_wear_suit)
 		H.equip_to_slot_or_del(new /obj/item/clothing/head/chefhat(H), slot_head)
 	else
-		H.equip_to_slot_or_del(new /obj/item/clothing/suit/chef/classic(H), slot_wear_suit)
+		H.equip_to_slot_or_del(new /obj/item/clothing/suit/apron/chef(H), slot_wear_suit)
 		H.equip_to_slot_or_del(new /obj/item/clothing/head/soft/mime(H), slot_head)
 
 /*
