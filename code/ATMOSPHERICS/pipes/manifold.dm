@@ -25,6 +25,8 @@
 /obj/machinery/atmospherics/pipe/manifold/New()
 	color = pipe_color
 
+	..()
+
 	switch(dir)
 		if(NORTH)
 			initialize_directions = EAST|SOUTH|WEST
@@ -34,7 +36,6 @@
 			initialize_directions = SOUTH|WEST|NORTH
 		if(WEST)
 			initialize_directions = NORTH|EAST|SOUTH
-	..()
 
 /obj/machinery/atmospherics/pipe/manifold/initialize()
 	for(var/D in cardinal)

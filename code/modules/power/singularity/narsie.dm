@@ -10,7 +10,6 @@
 	move_self = 1 //Do we move on our own?
 	grav_pull = 5 //How many tiles out do we pull?
 	consume_range = 6 //How many tiles out do we eat
-	var/uneatable = list(/turf/space, /obj/effect/overlay, /mob/living/simple_animal/construct)
 
 /obj/singularity/narsie/large
 	name = "Nar-Sie"
@@ -84,25 +83,7 @@
 
 
 /obj/singularity/narsie/consume(var/atom/A)
-	if(is_type_in_list(A, uneatable))
-		return 0
-
-	if(istype(A,/mob/living/))
-		var/mob/living/C = A
-		if(C.client)
-			makeNewConstruct(/mob/living/simple_animal/construct/harvester, C, null, 1)
-		C.spawn_dust()
-		C.gib()
-		return
-
-	if(isturf(A))
-		var/turf/T = A
-		if(istype(T, /turf/simulated/floor) && !istype(T, /turf/simulated/floor/engine/cult))
-			if(prob(20)) T.ChangeTurf(/turf/simulated/floor/engine/cult)
-
-		else if(istype(T,/turf/simulated/wall) && !istype(T, /turf/simulated/wall/cult))
-			if(prob(20)) T.ChangeTurf(/turf/simulated/wall/cult)
-	return
+	A.narsie_act()
 
 
 /obj/singularity/narsie/ex_act() //No throwing bombs at it either. --NEO

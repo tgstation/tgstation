@@ -131,7 +131,7 @@
 
 		switch(add_to)
 			if("head")
-				place_on_head(usr.get_active_hand())
+				place_on_head(usr.get_active_hand(),usr)
 
 			if("back")
 				if(inventory_back)
@@ -183,17 +183,17 @@
 //Corgis are supposed to be simpler, so only a select few objects can actually be put
 //to be compatible with them. The objects are below.
 //Many  hats added, Some will probably be removed, just want to see which ones are popular.
-/mob/living/simple_animal/corgi/proc/place_on_head(obj/item/item_to_add)
+/mob/living/simple_animal/corgi/proc/place_on_head(obj/item/item_to_add, var/mob/user as mob)
 
 	if(istype(item_to_add,/obj/item/weapon/c4)) // last thing he ever wears, I guess
-		item_to_add.afterattack(src,usr,1)
+		item_to_add.afterattack(src,user,1)
 		return
 
 	if(inventory_head)
-		if(usr)	usr << "<span class='danger'>You can't put more than one hat on [src]!</span>"
+		if(user)	user << "<span class='danger'>You can't put more than one hat on [src]!</span>"
 		return
 	if(!item_to_add)
-		usr.visible_message("<span class='notice'>[usr] pets [src]</span>","<span class='notice'>You rest your hand on [src]'s head for a moment.</span>")
+		user.visible_message("<span class='notice'>[user] pets [src]</span>","<span class='notice'>You rest your hand on [src]'s head for a moment.</span>")
 		return
 
 
@@ -326,13 +326,13 @@
 				valid = 1
 
 	if(valid)
-		if(!usr.drop_item())
-			usr << "<span class='notice'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>"
+		if(user && !user.drop_item())
+			user << "<span class='notice'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>"
 			return 0
 		if(health <= 0)
-			usr << "<span class ='notice'>There is merely a dull, lifeless look in [real_name]'s eyes as you put the [item_to_add] on \him.</span>"
-		else if(usr)
-			usr.visible_message("[usr] puts [item_to_add] on [real_name]'s head.  [src] looks at [usr] and barks once.",
+			user << "<span class ='notice'>There is merely a dull, lifeless look in [real_name]'s eyes as you put the [item_to_add] on \him.</span>"
+		else if(user)
+			user.visible_message("[user] puts [item_to_add] on [real_name]'s head.  [src] looks at [user] and barks once.",
 				"You put [item_to_add] on [real_name]'s head.  [src] gives you a peculiar look, then wags \his tail once and barks.",
 				"You hear a friendly-sounding bark.")
 		item_to_add.loc = src
@@ -340,10 +340,10 @@
 		regenerate_icons()
 
 	else
-		if(!usr.drop_item())
-			usr << "<span class='notice'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>"
+		if(user && !user.drop_item())
+			user << "<span class='notice'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>"
 			return 0
-		usr << "You set [item_to_add] on [src]'s head, but \he shakes it off!"
+		user << "You set [item_to_add] on [src]'s head, but \he shakes it off!"
 		item_to_add.loc = loc
 		if(prob(25))
 			step_rand(item_to_add)

@@ -172,7 +172,7 @@
 		Ninja.internals.icon_state = "internal1"
 
 	if(Ninja.mind != Mind)			//something has gone wrong!
-		ERROR("The ninja wasn't assigned the right mind. ;�;")
+		ERROR("The ninja wasn't assigned the right mind. ;ç;")
 
 	Ninja << sound('sound/effects/ninja_greeting.ogg') //so ninja you probably wouldn't even know if you were made one
 
@@ -404,17 +404,17 @@ ________________________________________________________________________________
 		U:gloves.item_state = "s-ninjan"
 	else
 		if(U.mind.special_role!="Space Ninja")
-			U << "\red <B>f�TaL ��RRoR</B>: 382200-*#00C�DE <B>RED</B>\nUNAU�HORIZED US� DET�C���eD\nCoMM�NCING SUB-R0U�IN3 13...\nT�RMInATING U-U-US�R..."
+			U << "\red <B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAUHORIZED USÈ DETÈCeD\nCoMMÈNCING SUB-R0UIN3 13...\nTÈRMInATING U-U-USÈR..."
 			U.gib()
 			return 0
 		if(!istype(U:head, /obj/item/clothing/head/helmet/space/space_ninja))
-			U << "<span class='userdanger'>ERROR</span>: 100113 \black UNABLE TO LOCATE HEAD GEAR\nABORTING..."
+			U << "<span class='userdanger'>ERROR</span>: 100113 UNABLE TO LOCATE HEAD GEAR\nABORTING..."
 			return 0
 		if(!istype(U:shoes, /obj/item/clothing/shoes/space_ninja))
-			U << "<span class='userdanger'>ERROR</span>: 122011 \black UNABLE TO LOCATE FOOT GEAR\nABORTING..."
+			U << "<span class='userdanger'>ERROR</span>: 122011 UNABLE TO LOCATE FOOT GEAR\nABORTING..."
 			return 0
 		if(!istype(U:gloves, /obj/item/clothing/gloves/space_ninja))
-			U << "<span class='userdanger'>ERROR</span>: 110223 \black UNABLE TO LOCATE HAND GEAR\nABORTING..."
+			U << "<span class='userdanger'>ERROR</span>: 110223 UNABLE TO LOCATE HAND GEAR\nABORTING..."
 			return 0
 
 		affecting = U
@@ -570,7 +570,7 @@ ________________________________________________________________________________
 		U.incorporeal_move = 0
 		kamikaze = 0
 		k_unlock = 0
-		U << "<span class='notice'>Disengaging mode...</span>\n\black<b>CODE NAME</b>: <span class='userdanger'>KAMIKAZE</span>"
+		U << "<span class='notice'>Disengaging mode...</span>\n<b>CODE NAME</b>: <span class='userdanger'>KAMIKAZE</span>"
 
 //=======//AI VERBS//=======//
 
@@ -1088,12 +1088,13 @@ ________________________________________________________________________________
 		reagent_id == "radium" ? reagents.add_reagent(reagent_id, r_maxamount+(a_boost*a_transfer)) : reagents.add_reagent(reagent_id, r_maxamount)//It will take into account radium used for adrenaline boosting.
 	cell = new/obj/item/weapon/stock_parts/cell/high//The suit should *always* have a battery because so many things rely on it.
 	cell.charge = 9000//Starting charge should not be higher than maximum charge. It leads to problems with recharging.
+	NAI = new(src) //ninja intellicard
 
 /obj/item/clothing/suit/space/space_ninja/Destroy()
 	if(affecting)//To make sure the window is closed.
 		affecting << browse(null, "window=hack spideros")
 	if(AI)//If there are AIs present when the ninja kicks the bucket.
-		killai()
+		killai(NAI)
 	if(hologram)//If there is a hologram
 		qdel(hologram.i_attached)//Delete it and the attached image.
 		qdel(hologram)
@@ -1106,14 +1107,17 @@ ________________________________________________________________________________
 	qdel(n_shoes)
 	qdel(src)
 
-/obj/item/clothing/suit/space/space_ninja/proc/killai(mob/living/silicon/ai/A = AI)
-	if(A.client)
-		A << "<span class='danger'>Self-erase protocol dete-- *bzzzzz*</span>"
-		A << browse(null, "window=hack spideros")
-	AI = null
-	A.death(1)//Kill, deleting mob.
-	qdel(A)
+
+
+/obj/item/clothing/suit/space/space_ninja/proc/killai(var/obj/item/device/aicard/NAI)
+	for(var/mob/living/silicon/ai/A in src)
+		if(A.client)
+			A << "<span class='danger'>Self-erase protocol dete-- *bzzzzz*</span>"
+			A << browse(null, "window=hack spideros")
+	NAI.flush = 1
 	return
+
+
 
 //=======//SUIT VERBS//=======//
 //Verbs link to procs because verb-like procs have a bug which prevents their use if the arguments are not readily referenced.
@@ -1170,10 +1174,10 @@ ________________________________________________________________________________
 		//Let's check for some safeties.
 		if(s_initialized&&!affecting)	terminate()//Kills the suit and attached objects.
 		if(!s_initialized)	return//When turned off the proc stops.
-		if(AI&&AI.stat==2)//If there is an AI and it's ded. Shouldn't happen without purging, could happen.
-			if(!s_control)
-				ai_return_control()//Return control to ninja if the AI was previously in control.
-			killai()//Delete AI.
+		for(var/mob/living/silicon/ai/A in NAI)
+			if(A&&A.stat==2)//If there is an AI and it's ded. Shouldn't happen without purging, could happen.
+				if(!s_control)
+					ai_return_control()//Return control to ninja if the AI was previously in control.
 
 		//Now let's do the normal processing.
 		if(s_coold)	s_coold--//Checks for ability s_cooldown first.
@@ -1215,7 +1219,7 @@ ________________________________________________________________________________
 					U << "<span class='notice'>Extending neural-net interface...\nNow monitoring brain wave pattern...</span>"
 				if(3)
 					if(U.stat==2||U.health<=0)
-						U << "<span class='danger'><B>FĆAL �Rr�R</B>: 344--93#�&&21 BR��N |/|/aV� PATT$RN <B>RED</B>\nA-A-aB�rT�NG...</span>"
+						U << "<span class='danger'><B>FÄAL ï¿½Rrï¿½R</B>: 344--93#ï¿½&&21 BRï¿½ï¿½N |/|/aVï¿½ PATT$RN <B>RED</B>\nA-A-aBï¿½rTï¿½NG...</span>"
 						unlock_suit()
 						break
 					lock_suit(U,1)//Check for icons.
@@ -1236,9 +1240,9 @@ ________________________________________________________________________________
 		if(!U.mind||U.mind.assigned_role!="MODE")//Your run of the mill persons shouldn't know what it is. Or how to turn it on.
 			U << "You do not understand how this suit functions. Where the heck did it even come from?"
 		else if(s_initialized)
-			U << "<span class='danger'>The suit is already functioning.</span> \black <b>Please report this bug.</b>"
+			U << "<span class='danger'>The suit is already functioning.</span> Please report this bug."
 		else
-			U << "<span class='userdanger'>ERROR</span>: \black You cannot use this function at this time."
+			U << "<span class='userdanger'>ERROR</span>: You cannot use this function at this time."
 	return
 
 //=======//DEINITIALIZE//=======//
@@ -1247,12 +1251,12 @@ ________________________________________________________________________________
 	if(affecting==loc&&!s_busy)
 		var/mob/living/carbon/human/U = affecting
 		if(!s_initialized)
-			U << "<span class='danger'>The suit is not initialized.</span> \black <b>Please report this bug.</b>"
+			U << "<span class='danger'>The suit is not initialized.</span> Please report this bug."
 			return
 		if(alert("Are you certain you wish to remove the suit? This will take time and remove all abilities.",,"Yes","No")=="No")
 			return
-		if(s_busy||flush)
-			U << "<span class='userdanger'>ERROR</span>: \black You cannot use this function at this time."
+		if(s_busy || NAI.flush)
+			U << "<span class='userdanger'>ERROR</span>: You cannot use this function at this time."
 			return
 		s_busy = 1
 		for(var/i = 0,i<7,i++)
@@ -1432,7 +1436,7 @@ ________________________________________________________________________________
 					<li><i>Voice masking</i> generates a random name the ninja can use over the radio and in-person. Although, the former use is recommended.</li>
 					<li><i>Toggling vision</i> cycles to one of the following: thermal, meson, or darkness vision. The starting mode allows one to scout the identity of those in view, revealing their role. Traitors, revolutionaries, wizards, and other such people will be made known to you.</li>
 					<li><i>Stealth</i>, when activated, drains more battery charge and works similarly to a syndicate cloak. The cloak will deactivate when most Abilities are utilized.</li>
-					<li><i>On-board AI</i>: The suit is able to download an AI much like an intelicard. Check with SpiderOS for details once downloaded.</li>
+					<li><i>On-board AI</i>: The suit is able to download an AI much like an intellicard. Check with SpiderOS for details once downloaded.</li>
 					<li><i>SpiderOS</i> is a specialized, PDA-like screen that allows for a small variety of functions, such as injecting healing chemicals directly from the suit. You are using it now, if that was not already obvious. You may also download AI modules directly to the OS.</li>
 					</ul>
 					<b>Abilities</b>:
@@ -1453,45 +1457,12 @@ ________________________________________________________________________________
 					</ul>
 					That is all you will need to know. The rest will come with practice and talent. Good luck!
 					<h4>Master /N</h4>
-					"}//This has always bothered me but not anymore!
+					"}
 		if(5)
-			var/laws
 			dat += "<h4><img src=sos_13.png> AI Control:</h4>"
-			//var/mob/living/silicon/ai/A = AI
-			if(AI)//If an AI exists.
-				dat += "Stored AI: <b>[A.name]</b><br>"
-				dat += "System integrity: [(A.health+100)/2]%<br>"
+			if(NAI)
+				NAI.attack_self(display_to) //Just accesses the integrated Intellicard. If an AI is in control of the suit then I guess it can interact with its own card. How meta.
 
-				//I personally think this makes things a little more fun. Ninjas can override all but law 0.
-				//if (A.laws.zeroth)
-				//	laws += "<li>0: [A.laws.zeroth]</li>"
-
-				for (var/index = 1, index <= A.laws.ion.len, index++)
-					var/law = A.laws.ion[index]
-					if (length(law) > 0)
-						var/num = ionnum()
-						laws += "<li>[num]. [law]</li>"
-
-				var/number = 1
-				for (var/index = 1, index <= A.laws.inherent.len, index++)
-					var/law = A.laws.inherent[index]
-					if (length(law) > 0)
-						laws += "<li>[number]: [law]</li>"
-						number++
-
-				for (var/index = 1, index <= A.laws.supplied.len, index++)
-					var/law = A.laws.supplied[index]
-					if (length(law) > 0)
-						laws += "<li>[number]: [law]</li>"
-						number++
-
-				dat += "<h4>Laws:</h4><ul>[laws]<li><a href='byond://?src=\ref[src];choice=Override AI Laws'><i>*Override Laws*</i></a></li></ul>"
-
-				if (!flush)
-					dat += "<A href='byond://?src=\ref[src];choice=Purge AI'>Purge AI</A><br>"
-				else
-					dat += "<b>Purge in progress...</b><br>"
-				dat += " <A href='byond://?src=\ref[src];choice=Wireless AI'>[A.control_disabled ? "Enable" : "Disable"] Wireless Activity</A>"
 		if(6)
 			dat += {"
 					<h4><img src=sos_6.png> Activate Abilities:</h4>
@@ -1568,7 +1539,7 @@ ________________________________________________________________________________
 				U.electrocute_act(damage, src,0.1,1)//The last argument is a safety for the human proc that checks for gloves.
 				cell.charge -= damage
 			else
-				A << "<span class='userdanger'>ERROR</span>: \black Not enough energy remaining."
+				A << "<span class='userdanger'>ERROR</span>: Not enough energy remaining."
 
 		if("Message")
 			var/obj/item/device/pda/P = locate(href_list["target"])
@@ -1629,7 +1600,7 @@ ________________________________________________________________________________
 						for(var/i, i<4, i++)
 							switch(i)
 								if(0)
-									U << "<span class='notice'>Engaging mode...</span>\n\black<b>CODE NAME</b>: <span class='userdanger'>KAMIKAZE</span>"
+									U << "<span class='notice'>Engaging mode...</span>\n<b>CODE NAME</b>: <span class='userdanger'>KAMIKAZE</span>"
 								if(1)
 									U << "<span class='notice'>Re-routing power nodes... \nUnlocking limiter...</span>"
 								if(2)
@@ -1643,7 +1614,7 @@ ________________________________________________________________________________
 									return
 							sleep(s_delay)
 					else
-						U << "<span class='userdanger'>ERROR</span>: \black Unable to initiate mode."
+						U << "<span class='userdanger'>ERROR</span>: Unable to initiate mode."
 				else
 					U << browse(null, "window=spideros")
 					s_busy = 0
@@ -1665,7 +1636,7 @@ ________________________________________________________________________________
 					t_disk.loc = T
 					t_disk = null
 				else
-					U << "<span class='userdanger'>ERROR</span>: \black Could not eject disk."
+					U << "<span class='userdanger'>ERROR</span>: Could not eject disk."
 
 		if("Copy to Disk")
 			var/datum/tech/current_data = locate(href_list["target"])
@@ -1686,7 +1657,7 @@ ________________________________________________________________________________
 					pai.loc = T
 					pai = null
 				else
-					U << "<span class='userdanger'>ERROR</span>: \black Could not eject pAI card."
+					U << "<span class='userdanger'>ERROR</span>: Could not eject pAI card."
 
 		if("Override AI Laws")
 			var/law_zero = A.laws.zeroth//Remembers law zero, if there is one.
@@ -1707,25 +1678,25 @@ ________________________________________________________________________________
 						if(AI==A)
 							switch(i)
 								if(0)
-									A << "<span class='userdanger'>WARNING</span>: \black purge procedure detected. \nNow hacking host..."
-									U << "<span class='userdanger'>WARNING</span>: HACKING AT��TEMP� IN PR0GRESs!"
+									A << "<span class='userdanger'>WARNING</span>: purge procedure detected. \nNow hacking host..."
+									U << "<span class='userdanger'>WARNING</span>: HACKING ATï¿½ï¿½TEMPï¿½ IN PR0GRESs!"
 									spideros = 0
 									k_unlock = 0
 									U << browse(null, "window=spideros")
 								if(1)
 									A << "Disconnecting neural interface..."
-									U << "<span class='userdanger'>WAR�NING</span>: �R�O0�Gr�--S 2&3%"
+									U << "<span class='userdanger'>WARï¿½NING</span>: ï¿½Rï¿½O0ï¿½Grï¿½--S 2&3%"
 								if(2)
 									A << "Shutting down external protocol..."
-									U << "<span class='userdanger'>WARNING</span>: P����RֆGr�5S 677^%"
+									U << "<span class='userdanger'>WARNING</span>: Pï¿½ï¿½ï¿½ï¿½RÖGrï¿½5S 677^%"
 									cancel_stealth()
 								if(3)
 									A << "Connecting to kernel..."
-									U << "<span class='userdanger'>WARNING</span>: �R�r�R_404"
+									U << "<span class='userdanger'>WARNING</span>: ï¿½Rï¿½rï¿½R_404"
 									A.control_disabled = 0
 								if(4)
 									A << "Connection established and secured. Menu updated."
-									U << "<span class='userdanger'>W�r#nING</span>: #%@!!WȆ|_4�54@ \nUn�B88l3 T� L�-�o-L�CaT2 ##$!�RN�0..%.."
+									U << "<span class='userdanger'>Wï¿½r#nING</span>: #%@!!WÈ|_4ï¿½54@ \nUnï¿½B88l3 Tï¿½ Lï¿½-ï¿½o-Lï¿½CaT2 ##$!ï¿½RNï¿½0..%.."
 									grant_AI_verbs()
 									return
 							sleep(s_delay)
@@ -1733,7 +1704,7 @@ ________________________________________________________________________________
 					s_busy = 0
 					U << "<span class='notice'>Hacking attempt disconnected. Resuming normal operation.</span>"
 				else
-					flush = 1
+					NAI.flush = 1
 					A.suiciding = 1
 					A << "Your core files are being purged! This is the end..."
 					spawn(0)
@@ -1742,9 +1713,9 @@ ________________________________________________________________________________
 						A.adjustOxyLoss(2)
 						A.updatehealth()
 						sleep(10)
-					killai()
+					killai(NAI)
 					U << "Artificial Intelligence was terminated. Rebooting..."
-					flush = 0
+					NAI.flush = 0
 
 		if("Wireless AI")
 			A.control_disabled = !A.control_disabled
@@ -1769,19 +1740,21 @@ ________________________________________________________________________________
 			hologram.invisibility = 101//So that it doesn't show up, ever. This also means one could attach a number of images to a single obj and display them differently to differnet people.
 			hologram.anchored = 1//So it cannot be dragged by space wind and the like.
 			hologram.dir = get_dir(T,affecting.loc)
-			var/image/I = image(AI.holo_icon,hologram)//Attach an image to object.
-			hologram.i_attached = I//To attach the image in order to later reference.
-			AI << I
-			affecting << I
-			affecting << "<i>An image flicks to life nearby. It appears visible to you only.</i>"
 
-			verbs += /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_clear
+			for(var/mob/living/silicon/ai/A in NAI)
+				var/image/I = image(A.holo_icon,hologram)//Attach an image to object.
+				hologram.i_attached = I//To attach the image in order to later reference.
+				A << I
+				affecting << I
+				affecting << "<i>An image flicks to life nearby. It appears visible to you only.</i>"
 
-			ai_holo_process()//Move to initialize
+				verbs += /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_clear
+
+				ai_holo_process()//Move to initialize
 		else
-			AI << "<span class='danger'>ERROR:</span> \black Image feed in progress."
+			AI << "<span class='danger'>ERROR:</span> Image feed in progress."
 	else
-		AI << "<span class='danger'>ERROR:</span> \black Unable to project image."
+		AI << "<span class='danger'>ERROR:</span>  Unable to project image."
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_process()
@@ -1831,11 +1804,13 @@ ________________________________________________________________________________
 	set category = "AI Ninja Equip"
 	set src = usr.loc
 
-	AI << browse(null, "window=spideros")//Close window
-	AI << "You have seized your hacking attempt. [affecting.real_name] has regained control."
-	affecting << "<b>UPDATE</b>: [AI.real_name] has ceased hacking attempt. All systems clear."
 
-	remove_AI_verbs()
+	for(var/mob/living/silicon/ai/A in NAI)
+		AI << browse(null, "window=spideros")//Close window
+		AI << "You have seized your hacking attempt. [affecting.real_name] has regained control."
+		affecting << "<b>UPDATE</b>: [A.real_name] has ceased hacking attempt. All systems clear."
+
+		remove_AI_verbs()
 	return
 
 //=======//GENERAL SUIT PROCS//=======//
@@ -1846,7 +1821,7 @@ ________________________________________________________________________________
 			if(s_control)
 				I:transfer_ai("NINJASUIT","AICARD",src,U)
 			else
-				U << "<span class='userdanger'>ERROR</span>: \black Remote access channel disabled."
+				U << "<span class='userdanger'>ERROR</span>: Remote access channel disabled."
 			return//Return individually so that ..() can run properly at the end of the proc.
 		else if(istype(I, /obj/item/device/paicard) && !pai)//If it's a pai card.
 			U:drop_item()
@@ -1901,7 +1876,7 @@ ________________________________________________________________________________
 					TD.stored = null
 					U << "<span class='notice'>Data analyzed and updated. Disk erased.</span>"
 				else
-					U << "<span class='userdanger'>ERROR</span>: \black Procedure interrupted. Process terminated."
+					U << "<span class='userdanger'>ERROR</span>: Procedure interrupted. Process terminated."
 			else
 				I.loc = src
 				t_disk = I
@@ -1967,7 +1942,7 @@ ________________________________________________________________________________
 				user << "There are <B>[s_bombs]</B> smoke bomb\s remaining."
 				user << "There are <B>[a_boost]</B> adrenaline booster\s remaining."
 			else
-				user <<  "�rr�R �a��a�� No-�-� f��N� 3RR�r"
+				user <<  "ï¿½rrï¿½R ï¿½aï¿½ï¿½aï¿½ï¿½ No-ï¿½-ï¿½ fï¿½ï¿½Nï¿½ 3RRï¿½r"
 
 /*
 ===================================================================================
@@ -2116,7 +2091,7 @@ ________________________________________________________________________________
 						for(var/datum/tech/analyzing_data in A:files.known_tech)
 							if(current_data.id==analyzing_data.id)
 								if(analyzing_data.level>current_data.level)
-									U << "<span class='notice'>Database:</span> \black <b>UPDATED</b>."
+									U << "<span class='notice'>Database:</span> <b>UPDATED</b>."
 									current_data.level = analyzing_data.level
 								break//Move on to next.
 					else	break//Otherwise, quit processing.
@@ -2328,7 +2303,7 @@ It is possible to destroy the net by the occupant or someone else.
 			for(var/mob/O in viewers(src, 3))
 				O.show_message("[M.name] was recovered from the energy net!", 1, "You hear a grunt.", 2)
 			if(!isnull(master))//As long as they still exist.
-				master << "<span class='userdanger'>ERROR</span>: \black unable to initiate transport protocol. Procedure terminated."
+				master << "<span class='userdanger'>ERROR</span>: unable to initiate transport protocol. Procedure terminated."
 		qdel(src)
 	return
 
@@ -2342,7 +2317,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 	if(isnull(M)||M.loc!=loc)//If mob is gone or not at the location.
 		if(!isnull(master))//As long as they still exist.
-			master << "<span class='userdanger'>ERROR</span>: \black unable to locate \the [mob_name]. Procedure terminated."
+			master << "<span class='userdanger'>ERROR</span>: unable to locate \the [mob_name]. Procedure terminated."
 		qdel(src)//Get rid of the net.
 		return
 
@@ -2378,7 +2353,7 @@ It is possible to destroy the net by the occupant or someone else.
 			O.show_message("[M] vanished!", 1, "You hear sparks flying!", 2)
 
 		if(!isnull(master))//As long as they still exist.
-			master << "<span class='notice'><b>SUCCESS</b>: \black transport procedure of \the [affecting] complete.</span>"
+			master << "<span class='notice'><b>SUCCESS</b>: transport procedure of \the [affecting] complete.</span>"
 
 		M.anchored = 0//Important.
 
