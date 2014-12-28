@@ -1,7 +1,2 @@
 author: Unid
-changes: 
-  - bugfix: Animals can no longer snatch IDs from the ID computer.
-  - tweak: Service cyborgs can drink from their shaker.
-  - tweak: Service cyborgs now have their own dice (d6 and d20).
-  - tweak: Standard cyborgs now have a sound recorder and a megaphone.
-  - tweak: 'Boo!' spell now works on silicons.
+changes: []

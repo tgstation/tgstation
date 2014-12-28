@@ -1,8 +1,2 @@
 author: Duny
-changes: 
-  - wip: Following changes made to Defficiency
-  - tweak: Dongmos is now much bigger and has built-in external access similar to what I did on Box. The pipe layout is still the same minus 3 pumps.
-  - bugfix: Got rid of as many pipes under rwalls as I could. The nightmare is over.
-  - tweak: Added a telescreen in supermatter monitoring.
-  - tweak: Replaced the RPD in the CE's office with an RCD and some ammo for it.
-  - tweak: Tweaked the fauna a bit to help unrobust nuke ops die less quickly.
+changes: []
