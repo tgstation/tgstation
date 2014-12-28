@@ -157,7 +157,7 @@
 			if(desired==0)
 				return 1
 			var/obj/item/stack/sheet/out = new mat.sheettype(output.loc)
-			out.amount = between(0,desired,min(mat.stored,out.max_amount))
+			out.amount = Clamp(desired, 0, min(mat.stored, out.max_amount))
 			mat.stored -= out.amount
 	updateUsrDialog()
 	return

@@ -201,7 +201,7 @@
 		var/datum/gas_mixture/environment = loc.return_air()
 		switch(environment.temperature)
 			if(T0C to (T20C + 20))
-				integrity = between(0, integrity, 100)
+				integrity = Clamp(integrity, 0, 100)
 			if((T20C + 20) to INFINITY)
 				integrity = max(0, integrity - 1)
 
