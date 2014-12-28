@@ -201,8 +201,8 @@ Security Officer
 	selection_color = "#ffeeee"
 	minimal_player_age = 7
 	var/list/dep_access = null
-	clothing = "Tactical"
-	alt_clothing = list("Corporate")
+	clothing = "Corporate"
+	alt_clothing = list("Tactical")
 
 	default_pda = /obj/item/device/pda/security
 	default_headset = /obj/item/device/radio/headset/headset_sec/alt

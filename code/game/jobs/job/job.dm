@@ -27,7 +27,7 @@
 	var/current_positions = 0
 
 	//Clothing set, if applicable
-	var/clothing = null
+	var/clothing = 0
 
 	//Supervisors, who this person answers to directly
 	var/supervisors = ""

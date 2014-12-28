@@ -374,10 +374,6 @@ datum/preferences
 				continue
 
 			HTML += "<font color=[prefLevelColor]>[prefLevelLabel]</font>"
-
-			if(job.alt_clothing)
-				HTML += "</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td><td><a href=\"byond://?src=\ref[user];preference=job;task=alt_clothings;job=\ref[job]\">\[[GetAltClothing(job)]\]</a></td></tr>"
-
 			HTML += "</a></td></tr>"
 
 		for(var/i = 1, i < (limit - index), i += 1) // Finish the column so it is even
