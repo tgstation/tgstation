@@ -149,7 +149,7 @@ function SetMusic(url, time, volume) {
 		if (url != targetURL || abs(targetStartTime - start_time) > 1 || abs(targetVolume - source_volume) > 0.1 /* 10% */)
 			url = targetURL
 			start_time = targetStartTime
-			source_volume = between(0,targetVolume,1)
+			source_volume = Clamp(targetVolume, 0, 1)
 			send_update()
 
 	proc/stop_music()
