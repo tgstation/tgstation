@@ -108,8 +108,8 @@
 		traitor.objectives += survive_objective
 
 	else
-		var/is_hijacker = prob(10)
-		var/objective_count = is_hijacker 			//Hijacking counts towards number of objectives
+		var/is_shuttlejacker = prob(10)
+		var/objective_count = is_shuttlejacker		//Shuttlejacking counts towards number of objectives
 		if(!exchange_blue && traitors.len >= 5) 	//Set up an exchange if there are enough traitors
 			if(!exchange_red)
 				exchange_red = traitor
@@ -142,16 +142,23 @@
 				steal_objective.find_target()
 				traitor.objectives += steal_objective
 
-		if(is_hijacker && objective_count <= config.traitor_objectives_amount) //Don't assign hijack if it would exceed the number of objectives set in config.traitor_objectives_amount
-			if (!(locate(/datum/objective/hijack) in traitor.objectives))
-				var/datum/objective/hijack/hijack_objective = new
-				hijack_objective.owner = traitor
-				traitor.objectives += hijack_objective
+		if(is_shuttlejacker && objective_count <= config.traitor_objectives_amount && config.shuttlejack_disabled == 0) //Don't assign shuttlejack if it would exceed the number of objectives set in config.traitor_objectives_amount
+			if (!(locate(/datum/objective/shuttlejack) in traitor.objectives))
+				var/datum/objective/shuttlejack/shuttlejack_objective = new
+				shuttlejack_objective.owner = traitor
+				traitor.objectives += shuttlejack_objective
 		else
-			if (!(locate(/datum/objective/escape) in traitor.objectives))
-				var/datum/objective/escape/escape_objective = new
-				escape_objective.owner = traitor
-				traitor.objectives += escape_objective
+			var/is_podjacker = prob(20)
+			if(is_podjacker)
+				if(!(locate(/datum/objective/podjack) in traitor.objectives))
+					var/datum/objective/podjack/podjack_objective = new
+					podjack_objective.owner = traitor
+					traitor.objectives += podjack_objective
+			else
+				if(!(locate(/datum/objective/escape) in traitor.objectives))
+					var/datum/objective/escape/escape_objective = new
+					escape_objective.owner = traitor
+					traitor.objectives += escape_objective
 
 	return
 

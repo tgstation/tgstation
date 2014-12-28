@@ -62,9 +62,9 @@
 		ticker.mode.traitors += user.mind
 		user.mind.special_role = "Avatar of the Wish Granter"
 
-		var/datum/objective/hijack/hijack = new
-		hijack.owner = user.mind
-		user.mind.objectives += hijack
+		var/datum/objective/shuttlejack/shuttlejack = new
+		shuttlejack.owner = user.mind
+		user.mind.objectives += shuttlejack
 
 		var/obj_count = 1
 		for(var/datum/objective/OBJ in user.mind.objectives)

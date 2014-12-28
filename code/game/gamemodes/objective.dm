@@ -189,13 +189,47 @@ datum/objective/protect/update_explanation_text()
 	else
 		explanation_text = "Free Objective"
 
+datum/objective/podjack
+	explanation_text = "Hijack an escape pod by escaping alone."
+	dangerrating = 10
 
+datum/objective/podjack/check_completion()
+	if(!owner.current || owner.current.stat)
+		return 0
+	if(emergency_shuttle.location<2)
+		return 0
+	if(issilicon(owner.current))
+		return 0
+	var/area/antag_pod = get_area(owner.current.loc)
 
-datum/objective/hijack
+	if(!(get_turf(owner.current) in antag_pod))
+		return 0
+
+	var/list/protected_mobs = list(/mob/living/silicon/ai, /mob/living/silicon/pai)
+	for(var/mob/living/player in player_list)
+		if(player.type in protected_mobs)	continue
+		if (player.mind && (player.mind != owner))
+			if(player.stat != DEAD)			//they're not dead!
+				if(get_turf(player) in antag_pod)
+					return 0
+	var/turf/location = get_turf(owner.current.loc)
+	var/area/check_area = location.loc
+	if(istype(check_area, /area/shuttle/escape/centcom)) //fails if you're on the emergency shuttle and not a pod
+		return 0
+	if(istype(check_area, /area/shuttle/escape_pod1/centcom))
+		return 1
+	if(istype(check_area, /area/shuttle/escape_pod2/centcom))
+		return 1
+	if(istype(check_area, /area/shuttle/escape_pod3/centcom))
+		return 1
+	if(istype(check_area, /area/shuttle/escape_pod4/centcom))
+		return 1
+
+datum/objective/shuttlejack
 	explanation_text = "Hijack the emergency shuttle by escaping alone."
 	dangerrating = 25
 
-datum/objective/hijack/check_completion()
+datum/objective/shuttlejack/check_completion()
 	if(!owner.current || owner.current.stat)
 		return 0
 	if(emergency_shuttle.location<2)
@@ -215,7 +249,6 @@ datum/objective/hijack/check_completion()
 				if(get_turf(player) in shuttle)
 					return 0
 	return 1
-
 
 datum/objective/block
 	explanation_text = "Do not allow any organic lifeforms to escape on the shuttle alive."
@@ -237,8 +270,6 @@ datum/objective/block/check_completion()
 				if (get_turf(player) in shuttle)
 					return 0
 	return 1
-
-
 
 datum/objective/escape
 	explanation_text = "Escape on the shuttle or an escape pod alive and without being in custody."
