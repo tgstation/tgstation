@@ -120,3 +120,18 @@
 		var/turf/T = get_turf(src)
 		T.attackby(C, user) //catwalks 'enable' coil laying on space tiles, not the catwalks themselves
 		return
+
+/obj/structure/lattice/catwalk/updateOverlays()
+	overlays.Cut()
+
+	var/dir_sum = 0
+
+	for (var/direction in cardinal)
+		if(locate(/obj/structure/lattice/catwalk, get_step(src, direction)))
+			dir_sum += direction
+		else
+			if(!(istype(get_step(src, direction), /turf/space)))
+				dir_sum += direction
+
+	icon_state = "[name][dir_sum]"
+	return
