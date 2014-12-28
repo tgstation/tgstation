@@ -34,7 +34,7 @@
 	return shoes && shoes.negates_gravity()
 
 /mob/living/carbon/human/Move(NewLoc, direct)
-	..()
+	. = ..()
 	if(shoes)
 		if(!lying)
 			if(loc == NewLoc)

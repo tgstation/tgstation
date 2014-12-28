@@ -47,7 +47,7 @@
 	desc = "Feared outlaw, this guy is one bad news bear." //I'm sorry...
 
 /mob/living/simple_animal/hostile/bear/Move()
-	..()
+	. = ..()
 	if(stat != DEAD)
 		if(loc && istype(loc,/turf/space))
 			icon_state = "bear"

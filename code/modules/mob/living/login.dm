@@ -11,6 +11,4 @@
 				CanBuild()
 
 	if(ventcrawler)
-		src << "<span class='notice'>You can ventcrawl! Use alt+click on vents to quickly travel about the station.</span>"
-	update_interface()
-	return .
+		src << "<span class='notice'>You can ventcrawl! Use alt+click on vents to quickly travel about the station.</span>."

@@ -1,0 +1,12 @@
+/datum/admins/key_down(key, client/user)
+	switch(key)
+		if("F5")
+			user.admin_ghost()
+		if("F6")
+			user.player_panel_new()
+		if("F7")
+			user.cmd_admin_pm_panel()
+		if("F8")
+			user.invisimin()
+
+	return ..()

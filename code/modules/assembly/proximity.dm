@@ -95,7 +95,7 @@
 
 
 /obj/item/device/assembly/prox_sensor/Move()
-	..()
+	. = ..()
 	sense()
 	return
 

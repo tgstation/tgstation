@@ -21,29 +21,17 @@
 		if (!(direct & (direct - 1))) //Cardinal move
 			. = ..()
 		else //Diagonal move, split it into cardinal moves
-			if (direct & 1)
-				if (direct & 4)
-					if (step(src, NORTH))
-						. = step(src, EAST)
-					else if (step(src, EAST))
-						. = step(src, NORTH)
-				else if (direct & 8)
-					if (step(src, NORTH))
-						. = step(src, WEST)
-					else if (step(src, WEST))
-						. = step(src, NORTH)
-			else if (direct & 2)
-				if (direct & 4)
-					if (step(src, SOUTH))
-						. = step(src, EAST)
-					else if (step(src, EAST))
-						. = step(src, SOUTH)
-				else if (direct & 8)
-					if (step(src, SOUTH))
-						. = step(src, WEST)
-					else if (step(src, WEST))
-						. = step(src, SOUTH)
+			var/vertical = direct&NORTH || direct&SOUTH
+			var/horizontal = direct&EAST || direct&WEST
 
+			if(step(src, vertical))
+				. = 1|step(src, horizontal)
+			else if(step(src, horizontal))
+				. = 1|step(src, vertical)
+			else . = 0
+
+// . = (step(src, vertical)) ? (step(src, horizontal) || 1) : (!step(src, horizontal) || !step(src, vertical))
+// Just for demonstration, this is the same couple lines above condensed into pure hell
 
 	if(!loc || (loc == oldloc && oldloc != newloc))
 		last_move = 0
@@ -70,6 +58,9 @@
 /atom/movable/Destroy()
 	if(reagents)
 		qdel(reagents)
+	if(focusers && focusers.len)
+		for(var/mob/M in focusers)
+			M.set_focus(M)
 	for(var/atom/movable/AM in contents)
 		qdel(AM)
 	tag = null
