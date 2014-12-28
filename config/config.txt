@@ -153,3 +153,6 @@ TICKCOMP 0
 
 ## Communication key for receiving data through world/Topic(), you don't want to give this out
 #COMMS_KEY default_pwd
+
+## Uncomment this to let players see their own notes (they can still be set by admins only)
+#SEE_OWN_NOTES

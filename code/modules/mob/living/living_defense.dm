@@ -86,14 +86,12 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 			else
 				return
 		updatehealth()
-		M.occupant_message("<span class='danger'>You hit [src].</span>")
 		visible_message("<span class='danger'>[M.name] has hit [src]!</span>", \
 						"<span class='userdanger'>[M.name] has hit [src]!</span>")
 		add_logs(M.occupant, src, "attacked", object=M, addition="(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 	else
 		step_away(src,M)
 		add_logs(M.occupant, src, "pushed", object=M, admin=0)
-		M.occupant_message("<span class='warning'>You push [src] out of the way.</span>")
 		visible_message("<span class='warning'>[M] pushes [src] out of the way.</span>")
 
 		return
@@ -217,7 +215,10 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 		M << "No attacking people at spawn, you jackass."
 		return 0
 
-	if (M.a_intent == "harm" && !M.is_muzzled())
+	if (M.a_intent == "harm")
+		if(M.is_muzzled() || (M.wear_mask && M.wear_mask.flags & MASKCOVERSMOUTH))
+			M << "<span class='warning'>You can't bite with your mouth covered!</span>"
+			return 0
 		M.do_attack_animation(src)
 		if (prob(75))
 			add_logs(M, src, "attacked", admin=0)

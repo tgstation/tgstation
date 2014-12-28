@@ -721,12 +721,12 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			if(anchored == 2)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				anchored = 1
-				user << "You unscrew the [src]'s hoses."
+				user << "You unscrew \the [src]'s hoses."
 
 			else if(anchored == 1)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				anchored = 2
-				user << "You screw in the [src]'s hoses."
+				user << "You screw in \the [src]'s hoses."
 
 			for(var/obj/machinery/hydroponics/h in range(1,src))
 				spawn()
@@ -813,6 +813,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		mind.transfer_to(podman)
 		podman.ckey = ckey
 		podman.gender = blood_gender
+		podman.faction |= factions
 		hardset_dna(podman,null,null,podman.real_name,blood_type,/datum/species/plant/pod,"#59CE00")//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 		podman.set_cloned_appearance()
 
