@@ -194,7 +194,7 @@
 
 		if("set_output_pressure" in signal.data)
 			output_pressure_max = Clamp(
-			text2num(signal.data["set_output_pressure"]),
+				text2num(signal.data["set_output_pressure"]),
 				0,
 				ONE_ATMOSPHERE*50
 			)
