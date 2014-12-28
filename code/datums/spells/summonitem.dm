@@ -29,7 +29,6 @@
 				marked_item = 		item
 				message += "You mark [item] for recall.</span>"
 				name = "Recall [item]"
-				processing_objects.Add(src)
 				break
 
 			if(!marked_item)
@@ -42,7 +41,11 @@
 			message = "<span class='notice'>You remove the mark on [marked_item] to use elsewhere.</span>"
 			name = "Instant Summons"
 			marked_item = 		null
-			processing_objects.Remove(src)
+
+		else if(marked_item && !marked_item.loc) //the item was destroyed at some point
+			message = "<span class='warning'>You sense your marked item has been destroyed!</span>"
+			name = "Instant Summons"
+			marked_item = 		null
 
 		else	//Getting previously marked item
 			var/obj/item_to_retrive = marked_item
@@ -51,16 +54,33 @@
 			while(!isturf(item_to_retrive.loc) && infinite_recursion < 10) //if it's in something you get the whole thing.
 				if(ismob(item_to_retrive.loc)) //If its on someone, properly drop it
 					var/mob/M = item_to_retrive.loc
+
+					if(issilicon(M)) //Items in silicons warp the whole silicon
+						M.loc.visible_message("<span class='warning'>[M] suddenly disappears!</span>")
+						M.loc = user.loc
+						M.loc.visible_message("<span class='caution'>[M] suddenly appears!</span>")
+						item_to_retrive = null
+						break
+
 					M.unEquip(item_to_retrive)
+
 					if(iscarbon(M)) //Edge case housekeeping
 						var/mob/living/carbon/C = M
 						if(C.internal_organs && item_to_retrive in C.internal_organs) //KALIMA!
 							C.internal_organs -= item_to_retrive
+							if(istype(marked_item,/obj/item/organ/brain)) //If this code ever runs I will be happy
+								var/obj/item/organ/brain/B
+								B.transfer_identity(C)
+								add_logs(user, C, "magically debrained", addition="INTENT: [uppertext(user.a_intent)]")
 						if(C.stomach_contents && item_to_retrive in C.stomach_contents)
 							C.stomach_contents -= item_to_retrive
+
 				else
 					item_to_retrive = item_to_retrive.loc
 				infinite_recursion += 1
+
+			if(!item_to_retrive)
+				return
 
 			item_to_retrive.loc.visible_message("<span class='warning'>The [item_to_retrive.name] suddenly disappears!</span>")
 
@@ -81,9 +101,3 @@
 
 		if(message)
 			user << message
-
-/obj/effect/proc_holder/spell/targeted/summonitem/process()
-	if(!marked_item.loc) //item was destroyed
-		name = "Instant Summons"
-		marked_item = 		null
-		processing_objects.Remove(src)
