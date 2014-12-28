@@ -543,17 +543,17 @@ datum/preferences
 				if("random")
 					if(jobban_isbanned(user, "Assistant") && alternate_option == RETURN_TO_LOBBY)
 						alternate_option = 0
+						SetChoices(user)
 						return
 					if(jobban_isbanned(user, "Assistant") && alternate_option == GET_RANDOM_JOB)
 						alternate_option = 2
+						SetChoices(user)
 						return
 					else
 						if(alternate_option == GET_RANDOM_JOB || alternate_option == BE_ASSISTANT)
 							alternate_option += 1
 						else if(alternate_option == RETURN_TO_LOBBY)
 							alternate_option = 0
-						else
-							return 0
 					SetChoices(user)
 				if("setJobLevel")
 					UpdateJobPreference(user, href_list["text"], text2num(href_list["level"]))
