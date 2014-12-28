@@ -276,6 +276,11 @@ var/global/datum/controller/occupations/job_master
 	// Hand out random jobs to the people who didn't get any in the last check
 	// Also makes sure that they got their preference correct
 	for(var/mob/new_player/player in unassigned)
+		if(jobban_isbanned(player, "Assistant"))
+			if(player.client.prefs.alternate_option == GET_RANDOM_JOB)
+				GiveRandomJob(player)
+
+	for(var/mob/new_player/player in unassigned)
 		if(player.client.prefs.alternate_option == GET_RANDOM_JOB)
 			GiveRandomJob(player)
 
