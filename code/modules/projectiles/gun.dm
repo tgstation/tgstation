@@ -116,8 +116,9 @@
 		return
 
 	for(var/i = 1 to burst_size)
-		if(!(src in get_both_hands(user))) //for burst firing
-			break
+		if(!issilicon(user))
+			if(!(src in get_both_hands(user))) //for burst firing
+				break
 		if(chambered)
 			if(!chambered.fire(target, user, params, , suppressed))
 				shoot_with_empty_chamber(user)
