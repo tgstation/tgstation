@@ -144,11 +144,11 @@
 			return
 
 	if(rotting)
-		user << "\blue The wall crumbles under your touch."
+		user << "<span class='notice'>\The wall crumbles under your touch.</span>"
 		dismantle_wall()
 		return
 
-	user << "\blue You push the wall but nothing happens!"
+	user << "<span class='notice'>You push the wall but nothing happens!</span>"
 	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
 	src.add_fingerprint(user)
 	return

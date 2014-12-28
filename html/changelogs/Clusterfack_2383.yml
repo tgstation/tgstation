@@ -1,0 +1,8 @@
+author: Clusterfack
+delete-after: true
+changes:
+- rscadd: Ported the following things from TG:
+- bugfix: Powersinks no longer put APCs into forever non-charge mode
+- bugfix: Roburgers/xenoburgers will now transform you successfully
+- bugfix: RC announcements can be authorized with an ID inside a PDA
+- rscadd: Pulling across zlevels is now possible
