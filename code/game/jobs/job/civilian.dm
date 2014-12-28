@@ -71,11 +71,11 @@ Cook
 	minimal_access = list(access_kitchen, access_morgue)
 
 /datum/job/cook/equip_items(var/mob/living/carbon/human/H)
-	lawyers += 1
+	cooks += 1
 
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chef(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
-	if(lawyers%2 != 0)
+	if(cooks%2 != 0)
 		H.equip_to_slot_or_del(new /obj/item/clothing/suit/chef(H), slot_wear_suit)
 		H.equip_to_slot_or_del(new /obj/item/clothing/head/chefhat(H), slot_head)
 	else
