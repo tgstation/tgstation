@@ -41,7 +41,19 @@
 		message = replacetext(message, "s", stutter("ss"))
 
 	return message
-
+/*
+ CATBEEST
+*/
+/datum/species/tajaran
+	name = "Tajaran"
+	id = "catbeest"
+	say_mod = "hisses"
+	roundstart = 1
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
+	attack_verb = "slash"
+	attack_sound = 'sound/weapons/slash.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/lizard // temp.
 /*
  PLANTPEOPLE
 */
