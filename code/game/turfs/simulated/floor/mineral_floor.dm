@@ -12,9 +12,8 @@
 	name = "mineral floor"
 	icon_state = ""
 	var/list/icons = list()
-	var/spam_flag = 0
-	var/last_event = 0
-	var/active = null
+
+
 
 /turf/simulated/floor/mineral/New()
 	..()
@@ -78,6 +77,7 @@
 	icon_state = "bananium"
 	floor_tile = /obj/item/stack/tile/mineral/bananium
 	icons = list("bananium","bananium_dam")
+	var/spam_flag = 0
 
 /turf/simulated/floor/mineral/bananium/Entered(var/mob/AM)
 	.=..()
@@ -101,14 +101,14 @@
 		honk()
 
 /turf/simulated/floor/mineral/bananium/proc/honk()
-	if(spam_flag == 0)
+	if(!spam_flag)
 		spam_flag = 1
 		playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
 		spawn(20)
 			spam_flag = 0
 
 /turf/simulated/floor/mineral/bananium/proc/squeek()
-	if(spam_flag == 0)
+	if(!spam_flag)
 		spam_flag = 1
 		playsound(src, "clownstep", 50, 1)
 		spawn(10)
@@ -134,6 +134,8 @@
 	icon_state = "uranium"
 	floor_tile = /obj/item/stack/tile/mineral/uranium
 	icons = list("uranium","uranium_dam")
+	var/last_event = 0
+	var/active = null
 
 /turf/simulated/floor/mineral/uranium/Entered(var/mob/AM)
 	.=..()
@@ -163,6 +165,5 @@
 			for(var/mob/living/L in range(3,src))
 				L.apply_effect(12,IRRADIATE,0)
 			last_event = world.time
-			active = null
+			active = 0
 			return
-	return
