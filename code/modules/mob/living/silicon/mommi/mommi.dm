@@ -27,6 +27,8 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	//Cyborgs will sync their laws with their AI by default, but we may want MoMMIs to be mute independents at some point, kinda like the Keepers in Ass Effect.
 	lawupdate = 1
 
+	speed = 1
+
 /mob/living/carbon/can_use_hands()
 	return 1
 
