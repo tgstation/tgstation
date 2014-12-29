@@ -798,7 +798,7 @@
 "pr" = (/obj/structure/table,/obj/item/weapon/grenade/syndieminibomb{pixel_x = 4; pixel_y = 2},/obj/item/weapon/grenade/syndieminibomb{pixel_x = -1},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/syndicate_station/start)
 "ps" = (/obj/structure/bookcase,/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
 "pt" = (/obj/structure/stool/bed/chair{dir = 4},/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
-"pu" = (/obj/structure/table/wood,/obj/item/clothing/gloves/white,/obj/item/clothing/shoes/sandal/marisa,/obj/item/clothing/suit/wizrobe/santa,/obj/item/clothing/head/wizard/santa,/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
+"pu" = (/obj/structure/table/wood,/obj/item/clothing/gloves/color/white,/obj/item/clothing/shoes/sandal/marisa,/obj/item/clothing/suit/wizrobe/santa,/obj/item/clothing/head/wizard/santa,/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
 "pv" = (/obj/structure/table/wood,/obj/item/weapon/dice/d20,/obj/item/weapon/dice,/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
 "pw" = (/obj/structure/rack,/obj/item/clothing/suit/wizrobe/marisa,/obj/item/clothing/shoes/sandal/marisa,/obj/item/clothing/head/wizard/marisa,/obj/item/weapon/staff/broom,/turf/unsimulated/floor{icon_state = "grimy"},/area/wizard_station)
 "px" = (/obj/structure/rack,/obj/item/clothing/suit/wizrobe/magusblue,/obj/item/clothing/head/wizard/magus,/obj/item/weapon/staff,/turf/unsimulated/floor{icon_state = "grimy"},/area/wizard_station)

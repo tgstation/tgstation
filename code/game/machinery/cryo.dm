@@ -18,7 +18,6 @@
 /obj/machinery/atmospherics/unary/cryo_cell/New()
 	..()
 	initialize_directions = dir
-	initialize()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/cryo_tube(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
@@ -28,6 +27,9 @@
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/stack/cable_coil(null, 1)
 	RefreshParts()
+
+/obj/machinery/atmospherics/unary/cryo_cell/construction()
+	..(dir,dir)
 
 /obj/machinery/atmospherics/unary/cryo_cell/RefreshParts()
 	var/C

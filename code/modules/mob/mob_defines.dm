@@ -2,7 +2,7 @@
 	density = 1
 	layer = 4
 	animate_movement = 2
-	flags = NOREACT | HEAR
+	flags = HEAR
 	hud_possible = list(ANTAG_HUD)
 	var/datum/mind/mind
 

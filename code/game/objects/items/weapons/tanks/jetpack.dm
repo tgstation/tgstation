@@ -41,6 +41,7 @@
 		icon_state = initial(icon_state)
 	//	item_state = initial(item_state)
 		ion_trail.stop()
+	usr << "You toggle the jetpack [on? "on":"off"]."
 	return
 
 

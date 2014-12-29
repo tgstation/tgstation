@@ -304,16 +304,10 @@
 		if(M.client)
 			M.client.screen -= W
 
-	if(new_location)
-		if(ismob(loc))
-			W.dropped(usr)
-		if(ismob(new_location))
-			W.layer = 20
-		else
-			W.layer = initial(W.layer)
-		W.loc = new_location
-	else
-		W.loc = get_turf(src)
+	if(ismob(loc))
+		W.dropped(usr)
+	W.layer = initial(W.layer)
+	W.loc = new_location
 
 	if(usr)
 		orient2hud(usr)
