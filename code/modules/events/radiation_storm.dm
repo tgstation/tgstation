@@ -46,13 +46,14 @@
 			var/badMutation = prob(60)
 			for(var/mob/living/carbon/human/H in living_mob_list)
 				if(istype(H.loc, /obj/spacepod))
+					continue
 				var/turf/T = get_turf(H)
 				if(!T)
 					continue
 				if(T.z != 1 || is_safe_zone(T.loc))
 					continue
 
-				H.apply_effect(irradiationThisBurst),IRRADIATE,0)
+				H.apply_effect(irradiationThisBurst,IRRADIATE,0)
 				if(randomMutation)
 					//H.apply_effect((rand(40,70)),IRRADIATE,0)
 					if (badMutation)
