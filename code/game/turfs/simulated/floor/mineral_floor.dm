@@ -47,7 +47,7 @@
 	..()
 
 /turf/simulated/floor/mineral/plasma/proc/PlasmaBurn()
-	atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 300)
+	atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 50)
 
 /turf/simulated/floor/mineral/plasma/proc/ignite(exposed_temperature)
 	if(exposed_temperature > 300)
