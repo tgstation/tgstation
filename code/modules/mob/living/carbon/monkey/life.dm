@@ -233,7 +233,7 @@
 	//Partial pressure of the O2 in our breath
 	var/O2_pp = (breath.gas["oxygen"]/breath.total_moles)*breath_pressure
 	// Same, but for the toxins
-	var/Toxins_pp = (breath.gas["toxins"]/breath.total_moles)*breath_pressure
+	var/Toxins_pp = (breath.gas["plasma"]/breath.total_moles)*breath_pressure
 	// And CO2, lets say a PP of more than 10 will be bad (It's a little less really, but eh, being passed out all round aint no fun)
 	var/CO2_pp = (breath.gas["carbon_dioxide"]/breath.total_moles)*breath_pressure
 

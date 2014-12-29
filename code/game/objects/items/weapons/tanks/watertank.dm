@@ -354,9 +354,9 @@
 			T.air_update_turf()
 			for(var/obj/effect/hotspot/H in T)
 				H.Kill()
-				if(G.gas["toxins"])
-					G.gas["nitrogen"] += (G.gas["toxins"])
-					G.gas["toxins"] = 0
+				if(G.gas["plasma"])
+					G.gas["nitrogen"] += (G.gas["plasma"])
+					G.gas["plasma"] = 0
 					G.update_values()
 		for(var/obj/machinery/atmospherics/unary/vent_pump/V in T)
 			V.welded = 1

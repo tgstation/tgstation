@@ -313,8 +313,9 @@
 
 /datum/gas_mixture/proc/react(atom/dump_location)
 	. = 0 //set to 1 if a notable reaction occured (used by pipe_network)
-	if(fire() > 0)
-		. = 1
+	if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		if(fire() > 0)
+			. = 1
 
 
 //Rechecks the gas_mixture and adjusts the graphic list if needed.

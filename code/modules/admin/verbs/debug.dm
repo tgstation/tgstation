@@ -1006,7 +1006,7 @@ var/global/list/g_fancy_list_of_types = null
 		if(Rad.anchored)
 			if(!Rad.P)
 				var/obj/item/weapon/tank/plasma/Plasma = new/obj/item/weapon/tank/plasma(Rad)
-				Plasma.air_contents.adjust_gas("toxins", 70)
+				Plasma.air_contents.adjust_gas("plasma", 70)
 				Rad.drainratio = 0
 				Rad.P = Plasma
 				Plasma.loc = Rad
