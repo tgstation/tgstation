@@ -93,14 +93,11 @@ Pipelines + Other Objects -> Pipe network
 		return ..()
 
 /obj/machinery/atmospherics/Deconstruct()
-	var/turf/T = loc
-	stored.loc = T
-	transfer_fingerprints_to(stored)
-	if(istype(src, /obj/machinery/atmospherics/pipe))
-		for(var/obj/machinery/meter/meter in T)
-			if(meter.target == src)
-				new /obj/item/pipe_meter(T)
-				qdel(meter)
+	if(can_unwrench)
+		var/turf/T = loc
+		stored.loc = T
+		transfer_fingerprints_to(stored)
+
 	qdel(src)
 
 /obj/machinery/atmospherics/proc/nullifyPipenet(datum/pipeline/P)
@@ -127,7 +124,7 @@ Pipelines + Other Objects -> Pipe network
 
 	return img
 
-/obj/machinery/atmospherics/proc/construction(D, P)
+/obj/machinery/atmospherics/construction(D, P)
 	dir = D
 	initialize_directions = P
 	var/turf/T = loc

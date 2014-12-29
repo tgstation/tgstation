@@ -22,6 +22,15 @@ Buildable meters
 #define PIPE_HEAT_EXCHANGE      17
 #define PIPE_DVALVE             18
 #define PIPE_4WAYMANIFOLD       19
+//Disposal piping numbers - do NOT hardcode these, use the defines
+#define DISP_PIPE_STRAIGHT		0
+#define DISP_PIPE_BENT			1
+#define DISP_JUNCTION			2
+#define DISP_YJUNCTION			3
+#define DISP_END_TRUNK			4
+#define DISP_END_BIN			5
+#define DISP_END_OUTLET			6
+#define DISP_END_CHUTE			7
 
 /obj/item/pipe
 	name = "pipe"
@@ -95,6 +104,28 @@ Buildable meters
 	src.pixel_y = rand(-5, 5)
 
 //update the name and icon of the pipe item depending on the type
+var/global/list/pipeID2State = list(
+	"simple", \
+	"simple", \
+	"he", \
+	"he", \
+	"connector", \
+	"manifold", \
+	"junction", \
+	"uvent", \
+	"mvalve", \
+	"pump", \
+	"scrubber", \
+	"insulated", \
+	"insulated", \
+	"filter", \
+	"mixer", \
+	"passivegate", \
+	"volumepump", \
+	"heunary", \
+	"dvalve", \
+	"manifold4w", \
+)
 
 /obj/item/pipe/proc/update()
 	var/list/nlist = list( \
@@ -120,29 +151,7 @@ Buildable meters
 		"4-way manifold", \
 	)
 	name = nlist[pipe_type+1] + " fitting"
-	var/list/islist = list( \
-		"simple", \
-		"simple", \
-		"he", \
-		"he", \
-		"connector", \
-		"manifold", \
-		"junction", \
-		"uvent", \
-		"mvalve", \
-		"pump", \
-		"scrubber", \
-		"insulated", \
-		"insulated", \
-		"filter", \
-		"mixer", \
-		"passivegate", \
-		"volumepump", \
-		"heunary", \
-		"dvalve", \
-		"manifold4w", \
-	)
-	icon_state = islist[pipe_type + 1]
+	icon_state = pipeID2State[pipe_type + 1]
 
 //called when a turf is attacked with a pipe item
 // place the pipe on the turf, setting pipe level to 1 (underfloor) if the turf is not intact
@@ -423,24 +432,3 @@ Buildable meters
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	user << "<span class='notice'>You have fastened the meter to the pipe.</span>"
 	qdel(src)
-
-#undef PIPE_SIMPLE_STRAIGHT
-#undef PIPE_SIMPLE_BENT
-#undef PIPE_HE_STRAIGHT
-#undef PIPE_HE_BENT
-#undef PIPE_CONNECTOR
-#undef PIPE_MANIFOLD
-#undef PIPE_JUNCTION
-#undef PIPE_UVENT
-#undef PIPE_MVALVE
-#undef PIPE_PUMP
-#undef PIPE_SCRUBBER
-#undef PIPE_INSULATED_STRAIGHT
-#undef PIPE_INSULATED_BENT
-#undef PIPE_GAS_FILTER
-#undef PIPE_GAS_MIXER
-#undef PIPE_PASSIVE_GATE
-#undef PIPE_VOLUME_PUMP
-#undef PIPE_OUTLET_INJECT
-#undef PIPE_DVALVE
-#undef PIPE_4WAYMANIFOLD
