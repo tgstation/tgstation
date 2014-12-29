@@ -154,14 +154,14 @@
 	desc = "Will cure tourrets."
 	New()
 		..()
-		remove_mutations.Add(mutations_list["Tourettes"])
+		remove_mutations.Add(mutations_list[TOURETTES])
 
 /obj/item/weapon/dnainjector/tourmut
 	name = "\improper DNA injector (Tour.)"
 	desc = "Gives you a nasty case off tourrets."
 	New()
 		..()
-		add_mutations.Add(mutations_list["Tourettes"])
+		add_mutations.Add(mutations_list[TOURETTES])
 
 /obj/item/weapon/dnainjector/stuttmut
 	name = "\improper DNA injector (Stutt.)"
