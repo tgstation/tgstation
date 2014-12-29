@@ -39,7 +39,7 @@
 /obj/item/projectile/beam/disabler
 	name = "disabler beam"
 	icon_state = "omnilaser"
-	damage = 33
+	damage = 36
 	damage_type = STAMINA
 	hitsound = 'sound/weapons/tap.ogg'
 	eyeblur = 0
