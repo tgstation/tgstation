@@ -54,6 +54,33 @@
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/lizard // temp.
+
+/datum/species/tajaran/handle_speech(message)
+	if(prob(15))
+		message = ""
+		if(prob(50))
+			message = pick(
+				"GOD, PLEASE",
+				"NO, GOD",
+				"AGGGGGGGH",
+			)+" "
+		message += pick(
+			"KILL ME",
+			"END MY SUFFERING",
+			"I CAN'T DO THIS ANYMORE",
+		)
+		return message
+	if(copytext(message, 1, 2) != "*")
+		message = replacetext(message, "me", "meow")
+		message = replacetext(message, "I", "meow")
+		message = replacetext(message, "fuck", "yiff")
+		message = replacetext(message, "shit", "scat")
+		message = replacetext(message, "scratch", "scritch")
+		message = replacetext(message, "god", "gosh")
+		message = replacetext(message, "ass", "rump")
+		message = replacetext(message, "rump", "rump")
+		message = replacetext(message, "help", "kill")
+	return message
 /*
  PLANTPEOPLE
 */
