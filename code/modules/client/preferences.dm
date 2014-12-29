@@ -82,6 +82,9 @@ datum/preferences
 	// 0 = character settings, 1 = game preferences
 	var/current_tab = 0
 
+	//for alt clothing sets
+	var/list/player_alt_clothing = list()
+
 		// OOC Metadata:
 	var/metadata = ""
 
@@ -360,7 +363,6 @@ datum/preferences
 				prefUpperLevel = 3
 				prefLowerLevel = 1
 
-
 			HTML += "<a class='white' href='?_src_=prefs;preference=job;task=setJobLevel;level=[prefUpperLevel];text=[rank]' oncontextmenu='javascript:return setJobPrefRedirect([prefLowerLevel], \"[rank]\");'>"
 
 			if(rank == "Assistant")//Assistant is special
@@ -449,6 +451,19 @@ datum/preferences
 			return 1
 
 		return 0
+
+	proc/GetAltClothing(datum/job/job)
+		return player_alt_clothing.Find(job.clothing) > 0 \
+			? player_alt_clothing[job.clothing] \
+			: job.clothing
+
+	proc/SetAltClothing(datum/job/job, new_clothing)
+		// remove existing entry
+		if(player_alt_clothing.Find(job.clothing))
+			player_alt_clothing -= job.clothing
+		// add one if it's not default
+		if(job.clothing != new_clothing)
+			player_alt_clothing[job.clothing] = new_clothing
 
 	proc/UpdateJobPreference(mob/user, role, desiredLvl)
 		if(!job_master)
@@ -540,6 +555,14 @@ datum/preferences
 					else
 						userandomjob = !userandomjob
 					SetChoices(user)
+				if("alt_clothings")
+					var/datum/job/job = locate(href_list["job"])
+					if (job)
+						var/choices = list(job.clothing) + job.alt_clothing
+						var/choice = input("Pick a title for [job.title].", "Character Generation", GetAltClothing(job)) as anything in choices | null
+						if(choice)
+							SetAltClothing(job, choice)
+							SetChoices(user)
 				if("setJobLevel")
 					UpdateJobPreference(user, href_list["text"], text2num(href_list["level"]))
 				else

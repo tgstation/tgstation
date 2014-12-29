@@ -62,6 +62,8 @@ Cook
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	clothing = "Chef"
+	alt_clothing = list("Short-Order Cook")
 
 	default_pda = /obj/item/device/pda/cook
 	default_headset = /obj/item/device/radio/headset/headset_srv
@@ -71,9 +73,15 @@ Cook
 
 /datum/job/cook/equip_items(var/mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chef(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/chef(H), slot_wear_suit)
+	if(H.mind.role_alt_clothing)
+		switch(H.mind.role_alt_clothing)
+			if("Chef")
+				H.equip_to_slot_or_del(new /obj/item/clothing/suit/chef(H), slot_wear_suit)
+				H.equip_to_slot_or_del(new /obj/item/clothing/head/chefhat(H), slot_head)
+			if("Short-Order Cook")
+				H.equip_to_slot_or_del(new /obj/item/clothing/suit/chef/classic(H), slot_wear_suit)
+				H.equip_to_slot_or_del(new /obj/item/clothing/head/soft/mime(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/chefhat(H), slot_head)
 
 /*
 Botanist
@@ -337,7 +345,8 @@ Lawyer
 	spawn_positions = 2
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
-	var/global/lawyers = 0 //Counts lawyer amount
+	clothing = "Blue"
+	alt_clothing = list("Purple","Black")
 
 	default_pda = /obj/item/device/pda/lawyer
 	default_headset = /obj/item/device/radio/headset/headset_sec
@@ -346,14 +355,17 @@ Lawyer
 	minimal_access = list(access_lawyer, access_court, access_sec_doors)
 
 /datum/job/lawyer/equip_items(var/mob/living/carbon/human/H)
-	lawyers += 1
-
-	if(lawyers%2 != 0)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/bluesuit(H), slot_w_uniform)
-		H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/lawyer(H), slot_wear_suit)
-	else
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/purpsuit(H), slot_w_uniform)
-		H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/lawyer/purple(H), slot_wear_suit)
+	if(H.mind.role_alt_clothing)
+		switch(H.mind.role_alt_clothing)
+			if("Blue")
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/bluesuit(H), slot_w_uniform)
+				H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/lawyer(H), slot_wear_suit)
+			if("Purple")
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/purpsuit(H), slot_w_uniform)
+				H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/lawyer/purple(H), slot_wear_suit)
+			if("Black")
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/black(H), slot_w_uniform)
+				H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/lawyer/black(H), slot_wear_suit)
 
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/briefcase(H), slot_l_hand)
