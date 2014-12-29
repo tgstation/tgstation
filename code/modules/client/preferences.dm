@@ -20,7 +20,6 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"gangster" = IS_MODE_COMPILED("gang")				// 11
 )
 
-
 datum/preferences
 	//doohickeys for savefiles
 	var/path
@@ -76,8 +75,8 @@ datum/preferences
 	var/job_engsec_med = 0
 	var/job_engsec_low = 0
 
-		// Want randomjob if preferences already filled - Donkie
-	var/userandomjob = 1 //defaults to 1 for fewer assistants
+	//Keeps track of preference for not getting any unwanted jobs
+	var/alternate_option = GET_RANDOM_JOB
 
 	// 0 = character settings, 1 = game preferences
 	var/current_tab = 0
@@ -381,7 +380,14 @@ datum/preferences
 
 		HTML += "</center></table>"
 
-		HTML += "<center><br><a href='?_src_=prefs;preference=job;task=random'>[userandomjob ? "Get random job if preferences unavailable" : "Be an Assistant if preference unavailable"]</a></center>"
+		switch(alternate_option)
+			if(GET_RANDOM_JOB)
+				HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'>Get random job if preferences unavailable</font></a></u></center><br>"
+			if(BE_ASSISTANT)
+				HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'>Be assistant if preferences unavailable</font></a></u></center><br>"
+			if(RETURN_TO_LOBBY)
+				HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'>Return to lobby if preferences unavailable</font></a></u></center><br>"
+			else return;
 		HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>Reset Preferences</a></center>"
 
 		user << browse(null, "window=preferences")
@@ -535,10 +541,19 @@ datum/preferences
 					ResetJobs()
 					SetChoices(user)
 				if("random")
-					if(jobban_isbanned(user, "Assistant"))
-						userandomjob = 1
+					if(jobban_isbanned(user, "Assistant") && alternate_option == RETURN_TO_LOBBY)
+						alternate_option = 0
+						SetChoices(user)
+						return
+					if(jobban_isbanned(user, "Assistant") && alternate_option == GET_RANDOM_JOB)
+						alternate_option = 2
+						SetChoices(user)
+						return
 					else
-						userandomjob = !userandomjob
+						if(alternate_option == GET_RANDOM_JOB || alternate_option == BE_ASSISTANT)
+							alternate_option += 1
+						else if(alternate_option == RETURN_TO_LOBBY)
+							alternate_option = 0
 					SetChoices(user)
 				if("setJobLevel")
 					UpdateJobPreference(user, href_list["text"], text2num(href_list["level"]))

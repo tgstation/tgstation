@@ -259,6 +259,8 @@ var/round_start_time = 0
 			if(player.mind.assigned_role=="AI")
 				player.close_spawn_windows()
 				player.AIize()
+			else if(!player.mind.assigned_role)
+				continue
 			else
 				player.create_character()
 				qdel(player)
