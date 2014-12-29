@@ -69,7 +69,7 @@
 	desc = "A digitally controlled valve."
 	icon_state = "dvalve_map"
 
-/obj/machinery/atmospherics/valve/digital/attack_ai(mob/user)
+/obj/machinery/atmospherics/binary/valve/digital/attack_ai(mob/user)
 	return src.attack_hand(user)
 
 /obj/machinery/atmospherics/binary/valve/digital/update_icon_nopipes(animation)
