@@ -220,59 +220,7 @@ var/pipenetwarnings = 10
 			if(C.connected_device)
 				GL += C.portableConnectorReturnAir()
 
-	var/total_volume = 0
-	var/total_thermal_energy = 0
-	var/total_heat_capacity = 0
-	var/total_oxygen = 0
-	var/total_nitrogen = 0
-	var/total_toxins = 0
-	var/total_carbon_dioxide = 0
-	var/list/total_trace_gases = list()
-
-	for(var/datum/gas_mixture/G in GL)
-		total_volume += G.volume
-		total_thermal_energy += G.thermal_energy()
-		total_heat_capacity += G.heat_capacity()
-
-		total_oxygen += G.oxygen
-		total_nitrogen += G.nitrogen
-		total_toxins += G.toxins
-		total_carbon_dioxide += G.carbon_dioxide
-
-		if(G.trace_gases.len)
-			for(var/datum/gas/trace_gas in G.trace_gases)
-				var/datum/gas/corresponding = locate(trace_gas.type) in total_trace_gases
-				if(!corresponding)
-					corresponding = new trace_gas.type()
-					total_trace_gases += corresponding
-
-				corresponding.moles += trace_gas.moles
-
-	if(total_volume > 0)
-
-		//Calculate temperature
-		var/temperature = 0
-
-		if(total_heat_capacity > 0)
-			temperature = total_thermal_energy/total_heat_capacity
-
-		//Update individual gas_mixtures by volume ratio
-		for(var/datum/gas_mixture/G in GL)
-			G.oxygen = total_oxygen*G.volume/total_volume
-			G.nitrogen = total_nitrogen*G.volume/total_volume
-			G.toxins = total_toxins*G.volume/total_volume
-			G.carbon_dioxide = total_carbon_dioxide*G.volume/total_volume
-
-			G.temperature = temperature
-
-			if(total_trace_gases.len)
-				for(var/datum/gas/trace_gas in total_trace_gases)
-					var/datum/gas/corresponding = locate(trace_gas.type) in G.trace_gases
-					if(!corresponding)
-						corresponding = new trace_gas.type()
-						G.trace_gases += corresponding
-
-					corresponding.moles = trace_gas.moles*G.volume/total_volume
+	equalize_gases(GL)
 
 
 /*

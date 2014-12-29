@@ -49,8 +49,7 @@
 	icons = list("bananium","bananium_dam")
 
 /turf/simulated/floor/mineral/bananium/airless
-	oxygen = 0.01
-	nitrogen = 0.01
+	init_gas = ""
 	temperature = TCMB
 
 /turf/simulated/floor/mineral/diamond

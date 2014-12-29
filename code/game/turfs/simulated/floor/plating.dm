@@ -76,8 +76,7 @@
 
 /turf/simulated/floor/plating/airless
 	icon_state = "plating"
-	oxygen = 0
-	nitrogen = 0
+	init_gas = ""
 	temperature = TCMB
 
 /turf/simulated/floor/engine
@@ -110,16 +109,8 @@
 	name = "engraved floor"
 	icon_state = "cult"
 
-/turf/simulated/floor/engine/n20/New()
-	..()
-	var/datum/gas_mixture/adding = new
-	var/datum/gas/sleeping_agent/trace_gas = new
-
-	trace_gas.moles = 6000
-	adding.trace_gases += trace_gas
-	adding.temperature = T20C
-
-	assume_air(adding)
+/turf/simulated/floor/engine/n20
+	init_gas = "sleeping_agent=6000&temperature=293.15"
 
 /turf/simulated/floor/engine/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
@@ -133,12 +124,10 @@
 /turf/simulated/floor/engine/vacuum
 	name = "vacuum floor"
 	icon_state = "engine"
-	oxygen = 0
-	nitrogen = 0
+	init_gas = ""
 	temperature = TCMB
 
 /turf/simulated/floor/plasteel/airless
-	oxygen = 0
-	nitrogen = 0
+	init_gas = ""
 	temperature = TCMB
 

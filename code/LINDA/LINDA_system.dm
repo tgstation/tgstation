@@ -118,7 +118,7 @@ datum/controller/air_system
 						active_turfs |= T
 						break
 				else
-					if(!T.air.check_turf_total(enemy_tile))
+					if(!T.air.compare(get_static_gas(enemy_tile.init_gas)))
 						T.excited = 1
 						active_turfs |= T
 
@@ -259,22 +259,21 @@ var/const/SPAWN_AIR = 256
 		G.temperature += 1000
 
 	if(flag & SPAWN_TOXINS)
-		G.toxins += amount
+		G.gas["plasma"] += amount
 	if(flag & SPAWN_OXYGEN)
-		G.oxygen += amount
+		G.gas["oxygen"] += amount
 	if(flag & SPAWN_CO2)
-		G.carbon_dioxide += amount
+		G.gas["carbon_dioxide"] += amount
 	if(flag & SPAWN_NITROGEN)
-		G.nitrogen += amount
-
+		G.gas["nitrogen"] += amount
 	if(flag & SPAWN_N2O)
-		var/datum/gas/sleeping_agent/T = new
-		T.moles += amount
-		G.trace_gases += T
+		G.gas["sleeping_agent"] += amount
 
 	if(flag & SPAWN_AIR)
-		G.oxygen += MOLES_O2STANDARD * amount
-		G.nitrogen += MOLES_N2STANDARD * amount
+		G.gas["oxygen"] += MOLES_O2STANDARD * amount
+		G.gas["nitrogen"] += MOLES_N2STANDARD * amount
+
+	G.update_values()
 
 	air.merge(G)
 	air_master.add_to_active(src, 0)

@@ -14,7 +14,7 @@
 		return 0
 	if(active_hotspot)
 		if(soh)
-			if(air_contents.toxins > 0.5 && air_contents.oxygen > 0.5)
+			if(air_contents.gas["plasma"] > 0.5 && air_contents.gas["oxygen"] > 0.5)
 				if(active_hotspot.temperature < exposed_temperature)
 					active_hotspot.temperature = exposed_temperature
 				if(active_hotspot.volume < exposed_volume)
@@ -23,11 +23,11 @@
 
 	var/igniting = 0
 
-	if((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && air_contents.toxins > 0.5)
+	if((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && air_contents.gas["plasma"] > 0.5)
 		igniting = 1
 
 	if(igniting)
-		if(air_contents.oxygen < 0.5 || air_contents.toxins < 0.5)
+		if(air_contents.gas["oxygen"] < 0.5 || air_contents.gas["plasma"] < 0.5)
 			return 0
 
 		active_hotspot = new(src)
@@ -101,7 +101,7 @@
 		Kill()
 		return
 
-	if(location.air.toxins < 0.5 || location.air.oxygen < 0.5)
+	if(location.air.gas["plasma"] < 0.5 || location.air.gas["oxygen"] < 0.5)
 		Kill()
 		return
 
@@ -179,3 +179,59 @@
 	..()
 	if(isliving(L))
 		L.fire_act()
+
+//Gas mixture fire procs
+/datum/gas_mixture/var/tmp/fuel_burnt = 0
+
+/datum/gas_mixture/proc/fire()
+	var/energy_released = 0
+	var/old_heat_capacity = heat_capacity()
+
+	if(gas["volatile_fuel"]) //General volatile gas burn
+		var/burned_fuel = 0
+
+		if(gas["oxygen"] < gas["volatile_fuel"])
+			burned_fuel = gas["oxygen"]
+			gas["volatile_fuel"] -= burned_fuel
+			gas["oxygen"] = 0
+		else
+			burned_fuel = gas["volatile_fuel"]
+			gas["oxygen"] -= gas["volatile_fuel"]
+
+		energy_released += FIRE_CARBON_ENERGY_RELEASED * burned_fuel
+		gas["carbon_dioxide"] += burned_fuel
+		fuel_burnt += burned_fuel
+
+	//Handle plasma burning
+	if(gas["plasma"])
+		var/plasma_burn_rate = 0
+		var/oxygen_burn_rate = 0
+		//more plasma released at higher temperatures
+		var/temperature_scale
+		if(temperature > PLASMA_UPPER_TEMPERATURE)
+			temperature_scale = 1
+		else
+			temperature_scale = (temperature-PLASMA_MINIMUM_BURN_TEMPERATURE)/(PLASMA_UPPER_TEMPERATURE-PLASMA_MINIMUM_BURN_TEMPERATURE)
+		if(temperature_scale > 0)
+			oxygen_burn_rate = 1.4 - temperature_scale
+			if(gas["oxygen"] > gas["plasma"]*PLASMA_OXYGEN_FULLBURN)
+				plasma_burn_rate = (gas["plasma"]*temperature_scale)/4
+			else
+				plasma_burn_rate = (temperature_scale*(gas["oxygen"]/PLASMA_OXYGEN_FULLBURN))/4
+			if(plasma_burn_rate)
+				gas["plasma"] -= plasma_burn_rate
+				gas["oxygen"] -= plasma_burn_rate*oxygen_burn_rate
+				gas["carbon_dioxide"] += plasma_burn_rate
+
+				energy_released += FIRE_PLASMA_ENERGY_RELEASED * (plasma_burn_rate)
+
+				fuel_burnt += (plasma_burn_rate)*(1+oxygen_burn_rate)
+
+	update_values()
+
+	if(energy_released > 0)
+		var/new_heat_capacity = heat_capacity()
+		if(new_heat_capacity)
+			temperature = (temperature*old_heat_capacity + energy_released)/new_heat_capacity
+
+	return fuel_burnt

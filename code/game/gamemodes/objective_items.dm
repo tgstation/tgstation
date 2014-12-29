@@ -96,7 +96,7 @@ datum/objective_item/steal/plasma
 datum/objective_item/plasma/check_special_completion(var/obj/item/weapon/tank/T)
 	var/target_amount = text2num(name)
 	var/found_amount = 0
-	found_amount += T.air_contents.toxins
+	found_amount += T.air_contents.gas["plasma"]
 	return found_amount>=target_amount
 
 

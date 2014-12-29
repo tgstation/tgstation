@@ -49,7 +49,7 @@
 				var/obj/location_as_object = loc
 				breath = location_as_object.handle_internal_lifeform(src, BREATH_VOLUME)
 			else if(istype(loc, /turf/))
-				var/breath_moles = environment.total_moles()*BREATH_PERCENTAGE
+				var/breath_moles = environment.total_moles*BREATH_PERCENTAGE
 
 				breath = loc.remove_air(breath_moles)
 
@@ -77,29 +77,30 @@
 	if(status_flags & GODMODE)
 		return
 
-	if(!breath || (breath.total_moles() == 0))
+	if(!breath || (breath.total_moles == 0))
 		//Aliens breathe in vaccuum
 		return 0
 
 	var/toxins_used = 0
-	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+	var/breath_pressure = (breath.total_moles*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
 	//Partial pressure of the toxins in our breath
-	var/Toxins_pp = (breath.toxins/breath.total_moles())*breath_pressure
+	var/Toxins_pp = (breath.gas["plasma"]/breath.total_moles)*breath_pressure
 
 	if(Toxins_pp) // Detect toxins in air
 
-		adjustToxLoss(breath.toxins*250)
+		adjustToxLoss(breath.gas["plasma"]*250)
 		toxins_alert = max(toxins_alert, 1)
 
-		toxins_used = breath.toxins
+		toxins_used = breath.gas["plasma"]
 
 	else
 		toxins_alert = 0
 
 	//Breathe in toxins and out oxygen
-	breath.toxins -= toxins_used
-	breath.oxygen += toxins_used
+	breath.gas["plasma"] -= toxins_used
+	breath.gas["oxygen"] += toxins_used
+	breath.update_values()
 
 	if(breath.temperature > (T0C+66) && !(COLD_RESISTANCE in mutations)) // Hot air hurts :(
 		if(prob(20))

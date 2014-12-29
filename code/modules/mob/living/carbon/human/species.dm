@@ -1047,9 +1047,10 @@
 					breath_moles = (ONE_ATMOSPHERE*BREATH_VOLUME/R_IDEAL_GAS_EQUATION*environment.temperature)
 				else*/
 					// Not enough air around, take a percentage of what's there to model this properly
-				breath_moles = environment.total_moles()*BREATH_PERCENTAGE
+				breath_moles = environment.total_moles*BREATH_PERCENTAGE
 
 				breath = H.loc.remove_air(breath_moles)
+				world << "bm: [breath_moles] tm: [breath.total_moles]"
 				// Handle chem smoke effect  -- Doohl
 				var/block = 0
 				if(H.wear_mask)
@@ -1086,7 +1087,7 @@
 	if((H.status_flags & GODMODE))
 		return
 
-	if(!breath || (breath.total_moles() == 0))
+	if(!breath || (breath.total_moles == 0))
 		if(H.reagents.has_reagent("inaprovaline"))
 			return
 		if(H.health >= config.health_threshold_crit)
@@ -1108,15 +1109,15 @@
 	var/SA_para_min = 1
 	var/SA_sleep_min = 5
 	var/oxygen_used = 0
-	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+	var/breath_pressure = (breath.total_moles*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
 	//Partial pressure of the O2 in our breath
-	var/O2_pp = (breath.oxygen/breath.total_moles())*breath_pressure
+	var/O2_pp = (breath.gas["oxygen"]/breath.total_moles)*breath_pressure
 	// Same, but for the toxins
-	var/Toxins_pp = (breath.toxins/breath.total_moles())*breath_pressure
+	var/Toxins_pp = (breath.gas["plasma"]/breath.total_moles)*breath_pressure
 	// And CO2, lets say a PP of more than 10 will be bad (It's a little less really, but eh, being passed out all round aint no fun)
-	var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*breath_pressure // Tweaking to fit the hacky bullshit I've done with atmo -- TLE
-	//var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*0.5 // The default pressure value
+	var/CO2_pp = (breath.gas["carbon_dioxide"]/breath.total_moles)*breath_pressure // Tweaking to fit the hacky bullshit I've done with atmo -- TLE
+	//var/CO2_pp = (breath.carbon_dioxide/breath.total_moles)*0.5 // The default pressure value
 
 	if(O2_pp < safe_oxygen_min) // Too little oxygen
 		if(!(NOBREATH in specflags) || (H.health <= config.health_threshold_crit))
@@ -1126,7 +1127,7 @@
 				var/ratio = safe_oxygen_min/O2_pp
 				H.adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS)) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!)
 				H.failed_last_breath = 1
-				oxygen_used = breath.oxygen*ratio/6
+				oxygen_used = breath.gas["oxygen"]*ratio/6
 			else
 				H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 				H.failed_last_breath = 1
@@ -1140,11 +1141,12 @@
 	else								// We're in safe limits
 		H.failed_last_breath = 0
 		H.adjustOxyLoss(-5)
-		oxygen_used = breath.oxygen/6
+		oxygen_used = breath.gas["oxygen"]/6
 		H.oxygen_alert = 0
 
-	breath.oxygen -= oxygen_used
-	breath.carbon_dioxide += oxygen_used
+	breath.gas["oxygen"] -= oxygen_used
+	breath.gas["carbon_dioxide"] += oxygen_used
+	breath.update_values()
 
 	//CO2 does not affect failed_last_breath. So if there was enough oxygen in the air but too much co2, this will hurt you, but only once per 4 ticks, instead of once per tick.
 	if(CO2_pp > safe_co2_max && !(NOBREATH in specflags))
@@ -1162,7 +1164,7 @@
 		H.co2overloadtime = 0
 
 	if(Toxins_pp > safe_toxins_max && !(NOBREATH in specflags)) // Too much toxins
-		var/ratio = (breath.toxins/safe_toxins_max) * 10
+		var/ratio = (breath.gas["plasma"]/safe_toxins_max) * 10
 		//adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
 		if(H.reagents)
 			H.reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
@@ -1170,16 +1172,15 @@
 	else
 		H.toxins_alert = 0
 
-	if(breath.trace_gases.len && !(NOBREATH in specflags))	// If there's some other shit in the air lets deal with it here.
-		for(var/datum/gas/sleeping_agent/SA in breath.trace_gases)
-			var/SA_pp = (SA.moles/breath.total_moles())*breath_pressure
-			if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
-				H.Paralyse(3) // 3 gives them one second to wake up and run away a bit!
-				if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
-					H.sleeping = max(H.sleeping+2, 10)
-			else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-				if(prob(20))
-					spawn(0) H.emote(pick("giggle", "laugh"))
+	if(breath.gas["sleeping_agent"] && !(NOBREATH in specflags))	// If there's some other shit in the air lets deal with it here.
+		var/SA_pp = (breath.gas["sleeping_agent"]/breath.total_moles)*breath_pressure
+		if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
+			H.Paralyse(3) // 3 gives them one second to wake up and run away a bit!
+			if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
+				H.sleeping = max(H.sleeping+2, 10)
+		else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
+			if(prob(20))
+				spawn(0) H.emote(pick("giggle", "laugh"))
 
 	handle_temperature(breath, H)
 
@@ -1317,7 +1318,7 @@
 	if(!H.on_fire)
 		return
 	var/datum/gas_mixture/G = H.loc.return_air() // Check if we're standing in an oxygenless environment
-	if(G.oxygen < 1)
+	if(G.gas["oxygen"] < 1)
 		ExtinguishMob(H) //If there's no oxygen in the tile we're on, put out the fire
 		return
 	var/turf/location = get_turf(H)

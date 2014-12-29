@@ -13,31 +13,11 @@ turf/assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
 
 turf/return_air()
 	//Create gas mixture to hold data for passing
-	var/datum/gas_mixture/GM = new
-
-	GM.oxygen = oxygen
-	GM.carbon_dioxide = carbon_dioxide
-	GM.nitrogen = nitrogen
-	GM.toxins = toxins
-
-	GM.temperature = temperature
-
-	return GM
+	return new /datum/gas_mixture(get_static_gas_list(init_gas))
 
 turf/remove_air(amount as num)
-	var/datum/gas_mixture/GM = new
-
-	var/sum = oxygen + carbon_dioxide + nitrogen + toxins
-	if(sum>0)
-		GM.oxygen = (oxygen/sum)*amount
-		GM.carbon_dioxide = (carbon_dioxide/sum)*amount
-		GM.nitrogen = (nitrogen/sum)*amount
-		GM.toxins = (toxins/sum)*amount
-
-	GM.temperature = temperature
-
-	return GM
-
+	var/datum/gas_mixture/GM = get_static_gas(init_gas)
+	return GM.remove(amount, 1)
 
 turf/simulated
 	var/datum/excited_group/excited_group
@@ -55,14 +35,7 @@ turf/simulated/New()
 	..()
 
 	if(!blocks_air)
-		air = new
-
-		air.oxygen = oxygen
-		air.carbon_dioxide = carbon_dioxide
-		air.nitrogen = nitrogen
-		air.toxins = toxins
-
-		air.temperature = temperature
+		air = new(get_static_gas_list(init_gas))
 
 turf/simulated/Del()
 	if(active_hotspot)
@@ -194,8 +167,9 @@ turf/simulated/proc/share_temperature_mutual_solid(turf/simulated/sharer, conduc
 		/******************* GROUP HANDLING FINISH *********************************************************************/
 
 		else
-			if(!air.check_turf(enemy_tile, atmos_adjacent_turfs_amount))
-				var/difference = air.mimic(enemy_tile,,atmos_adjacent_turfs_amount)
+			//if(!air.check_turf(enemy_tile, atmos_adjacent_turfs_amount))
+			if(!air.compare(get_static_gas(enemy_tile.init_gas)))
+				var/difference = air.share_ratio(enemy_tile, 1 / (atmos_adjacent_turfs_amount + 1), 1)
 				if(difference)
 					if(difference > 0)
 						consider_pressure_difference(enemy_tile, difference)
@@ -226,8 +200,6 @@ turf/simulated/proc/share_temperature_mutual_solid(turf/simulated/sharer, conduc
 
 
 /turf/simulated/proc/archive()
-	if(air) //For open space like floors
-		air.archive()
 	temperature_archived = temperature
 	archived_cycle = air_master.current_cycle
 
@@ -245,7 +217,7 @@ turf/simulated/proc/share_temperature_mutual_solid(turf/simulated/sharer, conduc
 /turf/simulated/proc/share_air(var/turf/simulated/T)
 	if(T.current_cycle < current_cycle)
 		var/difference
-		difference = air.share(T.air, atmos_adjacent_turfs_amount)
+		difference = air.share_ratio(T.air, 1 / (atmos_adjacent_turfs_amount + 1))
 		if(difference)
 			if(difference > 0)
 				consider_pressure_difference(T, difference)
@@ -317,37 +289,16 @@ atom/movable/proc/experience_pressure_difference(pressure_difference, direction)
 	breakdown_cooldown = 0
 
 /datum/excited_group/proc/self_breakdown()
-	var/datum/gas_mixture/A = new
-	var/datum/gas/sleeping_agent/S = new
-	A.trace_gases += S
-	for(var/turf/simulated/T in turf_list)
-		A.oxygen 		+= T.air.oxygen
-		A.carbon_dioxide+= T.air.carbon_dioxide
-		A.nitrogen 		+= T.air.nitrogen
-		A.toxins 		+= T.air.toxins
-
-		if(T.air.trace_gases.len)
-			for(var/datum/gas/N in T.air.trace_gases)
-				S.moles += N.moles
+	var/list/datum/gas_mixture/gas_list = new
 
 	for(var/turf/simulated/T in turf_list)
-		T.air.oxygen		= A.oxygen/turf_list.len
-		T.air.carbon_dioxide= A.carbon_dioxide/turf_list.len
-		T.air.nitrogen		= A.nitrogen/turf_list.len
-		T.air.toxins		= A.toxins/turf_list.len
+		gas_list += T.air
 
-		if(S.moles > 0)
-			if(T.air.trace_gases.len)
-				for(var/datum/gas/G in T.air.trace_gases)
-					G.moles = S.moles/turf_list.len
-			else
-				var/datum/gas/sleeping_agent/G = new
-				G.moles = S.moles/turf_list.len
-				T.air.trace_gases += G
+	equalize_gases(gas_list)
 
+	for(var/turf/simulated/T in turf_list)
 		if(T.air.check_tile_graphic())
 			T.update_visuals(T.air)
-
 
 /datum/excited_group/proc/dismantle()
 	for(var/turf/simulated/T in turf_list)
@@ -386,7 +337,7 @@ turf/simulated/proc/super_conduct()
 			if(!(atmos_adjacent_turfs & direction) && !(atmos_supeconductivity & direction))
 				conductivity_directions += direction
 
-	if(conductivity_directions>0)
+	/*[FEAR]if(conductivity_directions>0)
 		//Conduct with tiles around me
 		for(var/direction in cardinal)
 			if(conductivity_directions&direction)
@@ -405,11 +356,11 @@ turf/simulated/proc/super_conduct()
 						if(air) //Both tiles are open
 							air.temperature_share(T.air, WINDOW_HEAT_TRANSFER_COEFFICIENT)
 						else //Solid but neighbor is open
-							T.air.temperature_turf_share(src, T.thermal_conductivity)
+							T.air.temperature_share(get_static_gas(T.init_gas), T.thermal_conductivity, 1)
 						air_master.add_to_active(T, 0)
 					else
 						if(air) //Open but neighbor is solid
-							air.temperature_turf_share(T, T.thermal_conductivity)
+							air.temperature_turf(get_static_gas(T.init_gas), T.thermal_conductivity, 1)
 						else //Both tiles are solid
 							share_temperature_mutual_solid(T, T.thermal_conductivity)
 						T.temperature_expose(null, T.temperature, null)
@@ -420,11 +371,11 @@ turf/simulated/proc/super_conduct()
 					if(air) //Open
 						air.temperature_mimic(neighbor, neighbor.thermal_conductivity)
 					else
-						mimic_temperature_solid(neighbor, neighbor.thermal_conductivity)
+						mimic_temperature_solid(neighbor, neighbor.thermal_conductivity)*/
 
 	radiate_to_spess()
 
-	//Conduct with air on my tile if I have it
+	/*[FEAR]//Conduct with air on my tile if I have it
 	if(air)
 		air.temperature_turf_share(src, thermal_conductivity)
 
@@ -436,7 +387,10 @@ turf/simulated/proc/super_conduct()
 	else
 		if(temperature < MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION)
 			air_master.active_super_conductivity -= src
-			return 0
+			return 0*/
+	if(air.temperature < MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION)
+		air_master.active_super_conductivity -= src
+		return 0
 
 turf/simulated/proc/consider_superconductivity(starting)
 	if(!thermal_conductivity)

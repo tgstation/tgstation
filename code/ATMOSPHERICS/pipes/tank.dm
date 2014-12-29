@@ -25,7 +25,7 @@
 	..()
 	air_contents.volume = volume
 	air_contents.temperature = T20C
-	air_contents.carbon_dioxide = (25*ONE_ATMOSPHERE)*(air_contents.volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	air_contents.adjust_gas("carbon_dioxide", (25*ONE_ATMOSPHERE)*(air_contents.volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature))
 
 /obj/machinery/atmospherics/unary/tank/toxins
 	icon_state = "orange"
@@ -35,7 +35,7 @@
 	..()
 	air_contents.volume = volume
 	air_contents.temperature = T20C
-	air_contents.toxins = (25*ONE_ATMOSPHERE)*(air_contents.volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	air_contents.adjust_gas("plasma", (25*ONE_ATMOSPHERE)*(air_contents.volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature))
 
 /obj/machinery/atmospherics/unary/tank/oxygen_agent_b
 	icon_state = "orange_2"
@@ -45,9 +45,7 @@
 	..()
 	air_contents.volume = volume
 	air_contents.temperature = T0C
-	var/datum/gas/oxygen_agent_b/trace_gas = new
-	trace_gas.moles = (25*ONE_ATMOSPHERE)*(air_contents.volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-	air_contents.trace_gases += trace_gas
+	air_contents.adjust_gas("oxygen_agent_b", (25*ONE_ATMOSPHERE)*(air_contents.volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature))
 
 /obj/machinery/atmospherics/unary/tank/oxygen
 	icon_state = "blue"
@@ -57,7 +55,7 @@
 	..()
 	air_contents.volume = volume
 	air_contents.temperature = T20C
-	air_contents.oxygen = (25*ONE_ATMOSPHERE)*(air_contents.volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	air_contents.adjust_gas("oxygen", (25*ONE_ATMOSPHERE)*(air_contents.volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature))
 
 /obj/machinery/atmospherics/unary/tank/nitrogen
 	icon_state = "red"
@@ -67,7 +65,7 @@
 	..()
 	air_contents.volume = volume
 	air_contents.temperature = T20C
-	air_contents.nitrogen = (25*ONE_ATMOSPHERE)*(air_contents.volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	air_contents.adjust_gas("nitrogen", (25*ONE_ATMOSPHERE)*(air_contents.volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature))
 
 /obj/machinery/atmospherics/unary/tank/air
 	icon_state = "grey"
@@ -77,5 +75,6 @@
 	..()
 	air_contents.volume = volume
 	air_contents.temperature = T20C
-	air_contents.oxygen = (25*ONE_ATMOSPHERE*O2STANDARD)*(air_contents.volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-	air_contents.nitrogen = (25*ONE_ATMOSPHERE*N2STANDARD)*(air_contents.volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	air_contents.adjust_multi(
+		"oxygen", (25*ONE_ATMOSPHERE*O2STANDARD)*(air_contents.volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature),
+		"nitrogen", (25*ONE_ATMOSPHERE*N2STANDARD)*(air_contents.volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature))

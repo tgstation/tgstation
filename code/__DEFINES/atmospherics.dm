@@ -8,11 +8,18 @@
 #define MOLES_O2STANDARD		(MOLES_CELLSTANDARD*O2STANDARD)	// O2 standard value (21%)
 #define MOLES_N2STANDARD		(MOLES_CELLSTANDARD*N2STANDARD)	// N2 standard value (79%)
 
+#define GAS_AIRSTANDARD "oxygen=21.84&nitrogen=82.15&temperature=293.15"
+
 #define GAS_O2 	(1 << 0)
 #define GAS_N2	(1 << 1)
 #define GAS_PL	(1 << 2)
 #define GAS_CO2	(1 << 3)
 #define GAS_N2O	(1 << 4)
+
+//XGM gas flags
+#define XGM_GAS_FUEL 1
+#define XGM_GAS_OXIDIZER 2
+#define XGM_GAS_CONTAMINANT 4
 
 //stuff you should probably leave well alone!
 //ATMOS

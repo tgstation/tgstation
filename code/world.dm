@@ -65,6 +65,7 @@
 		else
 			world.log << "Database connection established."
 
+	setup_gas_data()
 	plmaster = new /obj/effect/overlay()
 	plmaster.icon = 'icons/effects/tile_effects.dmi'
 	plmaster.icon_state = "plasma"
