@@ -202,20 +202,16 @@
 		burst_size = initial(burst_size)
 		fire_delay = initial(fire_delay)
 		user << "<span class='notice'>You switch to [burst_size]-rnd burst.</span>"
-		update_icon()
-		return
 	if(select == 1)
 		select = 2
 		user << "<span class='notice'>You switch to grenades.</span>"
-		update_icon()
-		return
 	if(select == 2)
 		select = 0
 		burst_size = 1
 		fire_delay = 0
 		user << "<span class='notice'>You switch to semi-auto.</span>"
-		update_icon()
-		return
+	update_icon()
+	return
 
 /obj/item/weapon/gun/projectile/automatic/tommygun
 	name = "tommy gun"
