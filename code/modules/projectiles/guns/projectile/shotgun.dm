@@ -168,13 +168,13 @@
 
 /obj/item/weapon/gun/projectile/proc/sawoff(mob/user as mob)
 	if(sawn_state == SAWN_OFF)
-		user << "<span class='notice'>\The [src] is already shorten.</span>"
+		user << "<span class='notice'>\The [src] is already shortened.</span>"
 		return
 
 	if(sawn_state == SAWN_SAWING)
 		return
 
-	user.visible_message("<span class='notice'>[user] begin to shorten \the [src].</span>", "<span class='notice'>You begin to shorten \the [src].</span>")
+	user.visible_message("<span class='notice'>[user] begins to shorten \the [src].</span>", "<span class='notice'>You begin to shorten \the [src].</span>")
 
 	//if there's any live ammo inside the gun, makes it go off
 	if(blow_up(user))
@@ -184,6 +184,7 @@
 	sawn_state = SAWN_SAWING
 
 	if(do_after(user, 30))
+		user.visible_message("<span class='warning'>[user] shortens \the [src]!</span>", "<span class='warning'>You shorten \the [src]!</span>")
 		name = "sawn-off [src.name]"
 		desc = sawn_desc
 		icon_state = initial(icon_state) + "-sawn"
@@ -192,7 +193,6 @@
 		slot_flags &= ~SLOT_BACK	//you can't sling it on your back
 		slot_flags |= SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
 		sawn_state = SAWN_OFF
-		user.visible_message("<span class='warning'>[user] shorten \the [src]!</span>", "<span class='warning'>You shorten \the [src]!</span>")
 		update_icon()
 		return
 	else

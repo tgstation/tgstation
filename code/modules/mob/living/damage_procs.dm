@@ -52,7 +52,7 @@
 		if(PARALYZE)
 			Paralyse(effect * blocked)
 		if(IRRADIATE)
-			radiation += max(effect * ((100-run_armor_check(null, "rad", "Your clothes feel warm", "Your clothes feel warm"))/100),0)//Rads auto check armor
+			radiation += max(effect * ((100-run_armor_check(null, "rad", "Your clothes feel warm.", "Your clothes feel warm."))/100),0)//Rads auto check armor
 		if(STUTTER)
 			if(status_flags & CANSTUN) // stun is usually associated with stutter
 				stuttering = max(stuttering,(effect * blocked))
@@ -75,6 +75,6 @@
 	if(stutter)		apply_effect(stutter, STUTTER, blocked)
 	if(eyeblur)		apply_effect(eyeblur, EYE_BLUR, blocked)
 	if(drowsy)		apply_effect(drowsy, DROWSY, blocked)
-	if(stamina)		apply_effect(stamina, STAMINA, blocked)
+	if(stamina)		apply_damage(stamina, STAMINA, null, blocked)
 	if(jitter)		apply_effect(jitter, JITTER, blocked)
 	return 1
