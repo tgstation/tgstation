@@ -42,6 +42,10 @@
 	var/datum/mutation/human/HM = mutations_list[mutation_name]
 	return mutations.Find(HM)
 
+/datum/dna/proc/remove_all_mutations()
+	for(var/datum/mutation/human/HM in mutations)
+		HM.on_losing(holder)
+
 /datum/dna/proc/generate_uni_identity(mob/living/carbon/character)
 	. = ""
 	var/list/L = new /list(DNA_UNI_IDENTITY_BLOCKS)
@@ -271,98 +275,6 @@
 		if(ismob(temp))
 			C = temp
 
-/*	M.disabilities = 0
-	M.mutations.Cut()
-
-	M.see_in_dark = initial(M.see_in_dark)
-	M.see_invisible = initial(M.see_invisible)
-
-	var/list/blocks = new /list(DNA_STRUC_ENZYMES_BLOCKS) //on-off status for each block
-	for(var/i in bad_se_blocks)		//bad mutations
-		blocks[i] = (deconstruct_block(getblock(M.dna.struc_enzymes, i), BAD_MUTATION_DIFFICULTY) == BAD_MUTATION_DIFFICULTY)
-	blocks[RACEBLOCK] = (deconstruct_block(getblock(M.dna.struc_enzymes, RACEBLOCK), BAD_MUTATION_DIFFICULTY) == BAD_MUTATION_DIFFICULTY)
-	for(var/i in good_se_blocks)	//good mutations
-		blocks[i] = (deconstruct_block(getblock(M.dna.struc_enzymes, i), GOOD_MUTATION_DIFFICULTY) == GOOD_MUTATION_DIFFICULTY)
-	for(var/i in op_se_blocks)		//Overpowered mutations...extra difficult to obtain
-		blocks[i] = (deconstruct_block(getblock(M.dna.struc_enzymes, i), OP_MUTATION_DIFFICULTY) == OP_MUTATION_DIFFICULTY)
-
-	if(blocks[NEARSIGHTBLOCK])
-		M.disabilities |= NEARSIGHT
-		M << "<span class='danger'>Your eyes feel strange.</span>"
-	if(blocks[EPILEPSYBLOCK])
-		M.disabilities |= EPILEPSY
-		M << "<span class='danger'>You get a headache.</span>"
-	if(blocks[STRANGEBLOCK])
-		M << "<span class='danger'>You feel strange.</span>"
-		if(prob(95))
-			if(prob(50))	randmutb(M)
-			else			randmuti(M)
-		else				randmutg(M)
-	if(blocks[COUGHBLOCK])
-		M.disabilities |= COUGHING
-		M << "<span class='danger'>You start coughing.</span>"
-	if(blocks[CLUMSYBLOCK])
-		M << "<span class='danger'>You feel lightheaded.</span>"
-		M.mutations |= CLUMSY
-	if(blocks[TOURETTESBLOCK])
-		M.disabilities |= TOURETTES
-		M << "<span class='danger'>You twitch.</span>"
-	if(blocks[NERVOUSBLOCK])
-		M.disabilities |= NERVOUS
-		M << "<span class='danger'>You feel nervous.</span>"
-	if(blocks[DEAFBLOCK])
-		M.disabilities |= DEAF
-		M.ear_deaf = 1
-		M << "<span class='danger'>You can't seem to hear anything.</span>"
-	if(blocks[BLINDBLOCK])
-		M.disabilities |= BLIND
-		M << "<span class='danger'>You can't seem to see anything.</span>"
-	if(blocks[HULKBLOCK])
-		if(inj || prob(10))
-			M.mutations |= HULK
-			M << "<span class='notice'>Your muscles hurt.</span>"
-	if(blocks[XRAYBLOCK])
-		if(inj || prob(30))
-			M.mutations |= XRAY
-			M << "<span class='notice'>The walls suddenly disappear.</span>"
-			M.sight |= SEE_MOBS|SEE_OBJS|SEE_TURFS
-			M.see_in_dark = 8
-			M.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	if(blocks[FIREBLOCK])
-		if(inj || prob(30))
-			M.mutations |= COLD_RESISTANCE
-			M << "<span class='notice'>Your body feels warm.</span>"
-	if(blocks[TELEBLOCK])
-		if(inj || prob(25))
-			M.mutations |= TK
-			M << "<span class='notice'>You feel smarter.</span>"
-
-
-	/* If you want the new mutations to work, UNCOMMENT THIS.
-	if(istype(M, /mob/living/carbon))
-		for (var/datum/mutations/mut in global_mutations)
-			mut.check_mutation(M)
-	*/
-
-//////////////////////////////////////////////////////////// Monkey Block
-	if(blocks[RACEBLOCK])
-		if(istype(M, /mob/living/carbon/human))	// human > monkey
-			var/mob/living/carbon/monkey/O = M.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS)
-			if(connected) //inside dna thing
-				var/obj/machinery/dna_scannernew/C = connected
-				O.loc = C
-				C.occupant = O
-				connected = null
-			return 1
-	else
-		if(istype(M, /mob/living/carbon/monkey))	// monkey > human,
-			var/mob/living/carbon/human/O = M.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS)
-			if(O && connected) //inside dna thing
-				var/obj/machinery/dna_scannernew/C = connected
-				O.loc = C
-				C.occupant = O
-				connected = null
-			return 1*/
 //////////////////////////////////////////////////////////// Monkey Block
 	if(M)
 		M.update_icon = 1	//queue a full icon update at next life() call

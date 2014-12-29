@@ -26,7 +26,7 @@
 		for(var/datum/mutation/human/HM in remove_mutations)
 			HM.on_losing(M)
 		for(var/datum/mutation/human/HM in add_mutations)
-			if(HM.name == "Monkifying")
+			if(HM.name == RACEMUT)
 				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
 				log_msg += " (MONKEY)"
 			HM.force_give(M)
@@ -242,11 +242,11 @@
 	desc = "Will make you a flea bag."
 	New()
 		..()
-		add_mutations.Add(mutations_list["Monkifying"])
+		add_mutations.Add(mutations_list[RACEMUT])
 
 /obj/item/weapon/dnainjector/m2h
 	name = "\improper DNA injector (Monkey > Human)"
 	desc = "Will make you...less hairy."
 	New()
 		..()
-		remove_mutations.Add(mutations_list["Monkifying"])
+		remove_mutations.Add(mutations_list[RACEMUT])

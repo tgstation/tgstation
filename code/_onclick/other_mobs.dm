@@ -42,18 +42,6 @@
 	for(var/datum/mutation/human/HM in dna.mutations)
 		HM.on_ranged_attack(src, A)
 
-
-/*	if(!gloves && !mutations.len) return
-	var/obj/item/clothing/gloves/G = gloves
-	if((LASER in mutations) && a_intent == "harm")
-		LaserEyes(A) // moved into a proc below
-
-	else if(istype(G) && G.Touch(A,0)) // for magic gloves
-		return
-
-	else if(TK in mutations)
-		A.attack_tk(src)
-*/
 /*
 	Animals & All Unspecified
 */

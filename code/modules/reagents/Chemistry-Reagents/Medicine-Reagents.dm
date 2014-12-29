@@ -92,17 +92,12 @@ datum/reagent/medicine/ryetalyn
 	reagent_state = SOLID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
-datum/reagent/medicine/ryetalyn/on_mob_life(var/mob/living/M as mob)
-
-	var/needs_update = M.mutations.len > 0
-	M.mutations = list()
-	M.disabilities = 0
+datum/reagent/medicine/ryetalyn/on_mob_life(mob/living/carbon/human/M)
 	M.jitteriness = 0
 
 	// Might need to update appearance for hulk etc.
-	if(needs_update && ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.update_mutations()
+	if(istype(M) && M.dna)
+		M.dna.remove_all_mutations()
 	..()
 	return
 

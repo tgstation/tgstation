@@ -38,17 +38,9 @@
 		insisting = 0
 
 		user.dna.add_mutation(HULK)
-
-/*		if (!(LASER in user.mutations))
-			user.mutations.Add(LASER)
-*/
 		user.dna.add_mutation(XRAY)
 		user.dna.add_mutation(COLDRES)
 		user.dna.add_mutation(TK)
-
-/*		if(!(HEAL in user.mutations))
-			user.mutations.Add(HEAL)
-*/
 
 		ticker.mode.traitors += user.mind
 		user.mind.special_role = "Avatar of the Wish Granter"

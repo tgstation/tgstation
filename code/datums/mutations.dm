@@ -13,7 +13,7 @@
 	var/dna_block
 	var/quality
 	var/get_chance = 100
-	var/lowest_value = 256 * 9
+	var/lowest_value = 256 * 8
 	var/text_indication = ""
 	var/list/visual_indicators = list()
 
@@ -61,11 +61,7 @@
 */
 /datum/mutation/human/proc/lose_indication(mob/living/carbon/human/owner)
 	owner.overlays.Remove(visual_indicators)
-/*
-	owner.remove_overlay(MUTATIONS_LAYER)
-	for(var/datum/mutation/human/H in owner.dna.mutations)
-		H.gain_indication(owner)
-*/
+
 /datum/mutation/human/proc/on_attack_hand(mob/living/carbon/human/owner, atom/target)
 	return
 
@@ -85,9 +81,9 @@
 
 	name = "Hulk"
 	quality = POSITIVE
-	get_chance = 100
-	lowest_value = 256 * 9
-	text_indication = "Your muscles hurt!"
+	get_chance = 5
+	lowest_value = 256 * 14
+	text_indication = "<span class='notice'>Your muscles hurt!</span>"
 
 /datum/mutation/human/hulk/New()
 	..()
@@ -121,22 +117,14 @@
 
 	name = "Telekinesis"
 	quality = POSITIVE
-	get_chance = 100
-	lowest_value = 256 * 9
-	text_indication = "You feel smarter!"
+	get_chance = 10
+	lowest_value = 256 * 14
+	text_indication = "<span class='notice'>You feel smarter!</span>"
 
 /datum/mutation/human/telekinesis/New()
 	..()
 	visual_indicators |= image("icon"='icons/effects/genetics.dmi', "icon_state"="telekinesishead_s", "layer"=-MUTATIONS_LAYER)
 
-//datum/mutation/human/telekinesis/gain_indication(mob/living/carbon/human/owner)
-/*	var/list/L = list()
-	if(owner.overlays_standing[MUTATIONS_LAYER])
-		L.Add(owner.overlays_standing[MUTATIONS_LAYER])
-	L |= image("icon"='icons/effects/genetics.dmi', "icon_state"="telekinesishead_s", "layer"=-MUTATIONS_LAYER)
-	owner.overlays_standing[MUTATIONS_LAYER] = L
-	..()
-*/
 /datum/mutation/human/telekinesis/on_ranged_attack(mob/living/carbon/human/owner, atom/target)
 	target.attack_tk(owner)
 
@@ -144,20 +132,14 @@
 
 	name = "Cold Resistance"
 	quality = POSITIVE
-	text_indication = "Your body feels warm!"
+	get_chance = 10
+	lowest_value = 256 * 12
+	text_indication = "<span class='notice'>Your body feels warm!</span>"
 
 /datum/mutation/human/cold_resistance/New()
 	..()
 	visual_indicators |= image("icon"='icons/effects/genetics.dmi', "icon_state"="fire_s", "layer"=-MUTATIONS_LAYER)
 
-//datum/mutation/human/cold_resistance/gain_indication(mob/living/carbon/human/owner)
-/*	var/list/L = list()
-	if(owner.overlays_standing[MUTATIONS_LAYER])
-		L.Add(owner.overlays_standing[MUTATIONS_LAYER])
-	L |= image("icon"='icons/effects/genetics.dmi', "icon_state"="fire_s", "layer"=-MUTATIONS_LAYER)
-	owner.overlays_standing[MUTATIONS_LAYER] = L
-	..()
-*/
 /datum/mutation/human/cold_resistance/on_life(mob/living/carbon/human/owner)
 	if(owner.getFireLoss())
 		if(prob(1))
@@ -167,7 +149,9 @@
 
 	name = "X Ray Vision"
 	quality = POSITIVE
-	text_indication = "The walls suddenly disappear!"
+	get_chance = 10
+	lowest_value = 256 * 15
+	text_indication = "<span class='notice'>The walls suddenly disappear!</span>"
 
 /datum/mutation/human/x_ray/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
@@ -188,7 +172,7 @@
 
 	name = "Near Sightness"
 	quality = MINOR_NEGATIVE
-	text_indication = "You can't see very well."
+	text_indication = "<span class='danger'>You can't see very well.</span>"
 
 /datum/mutation/human/nearsight/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
@@ -202,7 +186,7 @@
 
 	name = "Epilepsy"
 	quality = NEGATIVE
-	text_indication = "You get a headache."
+	text_indication = "<span class='danger'>You get a headache.</span>"
 
 /datum/mutation/human/epilepsy/on_life(mob/living/carbon/human/owner)
 	if ((prob(1) && owner.paralysis < 1))
@@ -216,7 +200,7 @@
 
 	name = "Unstable DNA"
 	quality = NEGATIVE
-	text_indication = "You feel strange."
+	text_indication = "<span class='danger'>You feel strange.</span>"
 
 /datum/mutation/human/bad_dna/on_acquiring(mob/living/carbon/human/owner)
 	if(prob(95))
@@ -232,7 +216,7 @@
 
 	name = "Cough"
 	quality = MINOR_NEGATIVE
-	text_indication = "You start coughing."
+	text_indication = "<span class='danger'>You start coughing.</span>"
 
 /datum/mutation/human/cough/on_life(mob/living/carbon/human/owner)
 	if((prob(5) && owner.paralysis <= 1))
@@ -243,7 +227,7 @@
 
 	name = "Clumsiness"
 	quality = MINOR_NEGATIVE
-	text_indication = "You feel lightheaded."
+	text_indication = "<span class='danger'>You feel lightheaded.</span>"
 
 /datum/mutation/human/clumsy/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
@@ -257,7 +241,7 @@
 
 	name = "Tourettes Syndrome"
 	quality = NEGATIVE
-	text_indication = "You twitch."
+	text_indication = "<span class='danger'>You twitch.</span>"
 
 /datum/mutation/human/tourettes/on_life(mob/living/carbon/human/owner)
 	if((prob(10) && owner.paralysis <= 1))
@@ -276,7 +260,7 @@
 
 	name = "Nervousness"
 	quality = MINOR_NEGATIVE
-	text_indication = "You feel nervous."
+	text_indication = "<span class='danger'>You feel nervous.</span>"
 
 /datum/mutation/human/nervousness/on_life(mob/living/carbon/human/owner)
 	if(prob(10))
@@ -286,7 +270,7 @@
 
 	name = "Deafness"
 	quality = NEGATIVE
-	text_indication = "You can't seem to hear anything."
+	text_indication = "<span class='danger'>You can't seem to hear anything.</span>"
 
 /datum/mutation/human/deaf/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
@@ -300,7 +284,7 @@
 
 	name = "Blindness"
 	quality = NEGATIVE
-	text_indication = "You can't seem to see anything."
+	text_indication = "<span class='danger'>You can't seem to see anything.</span>"
 
 /datum/mutation/human/blind/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
@@ -334,7 +318,7 @@
 	name = "Laser Eyes"
 	quality = POSITIVE
 	dna_block = NON_SCANNABLE
-	text_indication = "You feel pressure building up behind your eyes."
+	text_indication = "<span class='notice'>You feel pressure building up behind your eyes.</span>"
 
 /datum/mutation/human/laser_eyes/on_ranged_attack(mob/living/carbon/human/owner, atom/target)
 	if(owner.a_intent == "harm")

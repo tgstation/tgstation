@@ -94,8 +94,6 @@
 		sleep(1)
 		step_away(src,user,15)
 		return 1
-	else
-		return
 
 /mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M as mob)
 	if(..())
