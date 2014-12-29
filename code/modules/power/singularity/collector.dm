@@ -14,7 +14,7 @@ var/global/list/rad_collectors = list()
 	var/last_power = 0
 	var/active = 0
 	var/locked = 0
-	var/drain_ratio = 5 //Quintupled. Maintain them you lazy fucks
+	var/drain_ratio = 3.5 //3.5 times faster than original.
 	ghost_read=0
 	ghost_write=0
 
@@ -128,7 +128,7 @@ var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector/proc/receive_pulse(const/pulse_strength)
 	if (P && active)
-		var/power_produced = P.air_contents.toxins * pulse_strength * 2 // 10 times less now. Fully set Singularity now goes from 3 million watts to 300.000 W
+		var/power_produced = P.air_contents.toxins * pulse_strength * 3.5 // original was 20, nerfed to 2 now 3.5 should get you about 500kw
 		add_avail(power_produced)
 		last_power = power_produced
 
