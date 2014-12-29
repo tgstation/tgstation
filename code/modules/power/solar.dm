@@ -1,7 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 #define SOLAR_MAX_DIST 40
-#define SOLARGENRATE 1250 //Was 1500. Upgrade factor can happen, regular solars start with rglass panels
+#define SOLARGENRATE 1500 //Upgrade factor can happen later, regular solars start with rglass panels
 
 var/list/solars_list = list()
 
