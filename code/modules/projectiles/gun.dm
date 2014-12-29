@@ -117,7 +117,7 @@
 
 	for(var/i = 1 to burst_size)
 		if(!issilicon(user))
-			if(!(src in get_both_hands(user))) //for burst firing
+			if( i>1 && !(src in get_both_hands(user))) //for burst firing
 				break
 		if(chambered)
 			if(!chambered.fire(target, user, params, , suppressed))
@@ -127,9 +127,9 @@
 				if(!special_check(user))
 					return
 				if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
-					shoot_live_shot(user, 1, target)
+					shoot_live_shot(user, 1, target, message)
 				else
-					shoot_live_shot(user)
+					shoot_live_shot(user, message)
 		else
 			shoot_with_empty_chamber(user)
 			break
