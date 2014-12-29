@@ -14,7 +14,7 @@
 	var/state = 0
 	var/reinf = 0
 	var/disassembled = 0
-	var/shuttlew = 0
+	var/wtype = "glass"
 	var/fulltile = 0
 	var/obj/item/stack/rods/storedrods
 	var/obj/item/weapon/shard/storedshard
@@ -28,15 +28,8 @@
 	storedshard = new/obj/item/weapon/shard(src)
 	ini_dir = dir
 	if(reinf)
-		icon_state = "rwindow"
-		desc = "A reinforced window."
-		name = "reinforced window"
 		state = 2*anchored
-		if(opacity)
-			icon_state = "twindow"
 		storedrods = new/obj/item/stack/rods(src)
-	else
-		icon_state = "window"
 
 	air_update_turf(1)
 	update_nearby_icons()
@@ -409,17 +402,17 @@
 		if(anchored)
 			for(var/obj/structure/window/W in orange(src,1))
 				if(W.anchored && W.density	&& W.fulltile) //Only counts anchored, not-destroyed fill-tile windows.
-					if(abs(x-W.x)-abs(y-W.y) ) 		//doesn't count windows, placed diagonally to src
-						junction |= get_dir(src,W)
-		if(opacity)
+					if(src.wtype == W.wtype)
+						if(abs(x-W.x)-abs(y-W.y) ) 		//doesn't count windows, placed diagonally to src
+							junction |= get_dir(src,W)
+		if(istype(src, /obj/structure/window))
+			icon_state = "window[junction]"
+		if(istype(src, /obj/structure/window/reinforced))
+			icon_state = "rwindow[junction]"
+		if(istype(src, /obj/structure/window/reinforced/tinted))
 			icon_state = "twindow[junction]"
-		else
-			if(shuttlew)
-				icon_state = "swindow[junction]"
-			else if(reinf)
-				icon_state = "rwindow[junction]"
-			else
-				icon_state = "window[junction]"
+		if(istype(src, /obj/structure/window/shuttle))
+			icon_state = "swindow[junction]"
 
 		overlays.Cut()
 		var/ratio = health / maxhealth
@@ -467,9 +460,10 @@
 
 /obj/structure/window/shuttle
 	name = "shuttle window"
-	desc = "A strong, air-locked pod window that is extremely difficult to destroy."
+	desc = "A reinforced, air-locked pod window."
 	icon_state = "swindow"
 	dir = 5
 	maxhealth = 100
-	shuttlew = 1
+	wtype = "shuttle"
 	fulltile = 1
+	reinf = 1
