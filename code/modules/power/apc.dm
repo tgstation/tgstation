@@ -489,22 +489,8 @@
 				make_terminal()
 				terminal.connect_to_network()
 	else if (istype(W, /obj/item/weapon/wirecutters) && terminal && opened && has_electronics!=2)
-		if (src.loc:intact)
-			user << "<span class='warning'>You must remove the floor plating in front of the APC first.</span>"
-			return
-		user.visible_message("<span class='warning'>[user.name] dismantles the power terminal from [src].</span>", \
-							"You begin to cut the cables...")
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		if(do_after(user, 50))
-			if(terminal && opened && has_electronics!=2)
-				if (prob(50) && electrocute_mob(usr, terminal.powernet, terminal))
-					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-					s.set_up(5, 1, src)
-					s.start()
-					return
-				new /obj/item/stack/cable_coil(loc,10)
-				user << "<span class='notice'>You cut the cables and dismantle the power terminal.</span>"
-				qdel(terminal)
+		terminal.dismantle(user)
+
 	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && !((stat & BROKEN) || malfhack))
 		user.visible_message("<span class='warning'>[user.name] inserts the power control board into [src].</span>", \
 							"You start to insert the power control board into the frame...")
