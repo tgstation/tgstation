@@ -251,10 +251,12 @@
 				owner.emote("twitch")
 			if(2 to 3)
 				owner.say("[prob(50) ? ";" : ""][pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")]")
-		var/x_offset = owner.pixel_x + rand(-2,2) //Should probably be moved into the twitch emote at some point.
+		var/x_offset_old = owner.pixel_x
+		var/y_offset_old = owner.pixel_y
+		var/x_offset = owner.pixel_x + rand(-2,2)
 		var/y_offset = owner.pixel_y + rand(-1,1)
-		animate(owner, owner.pixel_x = owner.pixel_x + x_offset, owner.pixel_y = owner.pixel_y + y_offset, time = 1)
-		animate(owner.pixel_x = initial(owner.pixel_x) , owner.pixel_y = initial(owner.pixel_y), time = 1)
+		animate(owner, pixel_x = x_offset, pixel_y = y_offset, time = 1)
+		animate(owner, pixel_x = x_offset_old, pixel_y = y_offset_old, time = 1)
 
 /datum/mutation/human/nervousness
 
