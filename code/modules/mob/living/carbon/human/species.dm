@@ -1050,7 +1050,6 @@
 				breath_moles = environment.total_moles*BREATH_PERCENTAGE
 
 				breath = H.loc.remove_air(breath_moles)
-				world << "bm: [breath_moles] tm: [breath.total_moles]"
 				// Handle chem smoke effect  -- Doohl
 				var/block = 0
 				if(H.wear_mask)

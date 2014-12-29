@@ -25,6 +25,7 @@
 	if(init_list)
 		temperature = init_list["temperature"] - 0
 		gas = init_list - "temperature"
+		update_values()
 
 
 //Takes a gas string and the amount of moles to adjust by.  Calls update_values() if update isn't 0.
@@ -216,7 +217,6 @@
 	var/datum/gas_mixture/removed = new
 
 	for(var/g in gas)
-		world << "id: [g], m: [gas[g]], tm: [total_moles], am: [amount]"
 		removed.gas[g] = QUANTIZE((gas[g] / total_moles) * amount)
 		if(!readonly) gas[g] -= removed.gas[g] / group_multiplier
 

@@ -168,8 +168,9 @@ turf/simulated/proc/share_temperature_mutual_solid(turf/simulated/sharer, conduc
 
 		else
 			//if(!air.check_turf(enemy_tile, atmos_adjacent_turfs_amount))
-			if(!air.compare(get_static_gas(enemy_tile.init_gas)))
-				var/difference = air.share_ratio(enemy_tile, 1 / (atmos_adjacent_turfs_amount + 1), 1)
+			var/datum/gas_mixture/enemy_gas = get_static_gas(enemy_tile.init_gas)
+			if(!air.compare(enemy_gas))
+				var/difference = air.share_ratio(enemy_gas, 1 / (atmos_adjacent_turfs_amount + 1), 1)
 				if(difference)
 					if(difference > 0)
 						consider_pressure_difference(enemy_tile, difference)
