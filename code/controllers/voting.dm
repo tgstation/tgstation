@@ -176,7 +176,7 @@ var/datum/controller/vote/vote = new()
 		if(mode == "custom")
 			text += "\n[question]"
 		log_vote(text)
-		world << "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>"
+		world << "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>"
 		time_remaining = round(config.vote_period/10)
 		return 1
 	return 0

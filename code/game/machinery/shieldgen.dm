@@ -232,11 +232,7 @@
 	return
 
 /obj/machinery/shieldgen/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/card/emag))
-		malfunction = 1
-		update_icon()
-
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/weapon/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		if(is_open)
 			user << "<span class='notice'>You close the panel.</span>"
@@ -257,7 +253,7 @@
 			coil.use(1)
 			health = max_health
 			malfunction = 0
-			user << "<span class='notice'>You repair the [src]!</span>"
+			user << "<span class='notice'>You repair \the [src]!</span>"
 			update_icon()
 
 	else if(istype(W, /obj/item/weapon/wrench))
@@ -266,13 +262,13 @@
 			return
 		if(!anchored && !isinspace())
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-			user << "<span class='notice'> You secure the [src] to the floor!</span>"
+			user << "<span class='notice'> You secure \the [src] to the floor!</span>"
 			anchored = 1
 		else if(anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-			user << "<span class='notice'> You unsecure the [src] from the floor!</span>"
+			user << "<span class='notice'> You unsecure \the [src] from the floor!</span>"
 			if(active)
-				user << "<span class='notice'> The [src] shuts off!</span>"
+				user << "<span class='notice'> \The [src] shuts off!</span>"
 				src.shields_down()
 			anchored = 0
 
@@ -287,6 +283,10 @@
 	else
 		..()
 
+/obj/machinery/shieldgen/emag_act()
+	if(!malfunction)
+		malfunction = 1
+		update_icon()
 
 /obj/machinery/shieldgen/update_icon()
 	if(active)

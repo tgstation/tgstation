@@ -11,6 +11,7 @@ datum/design/mass_spectrometer
 	materials = list("$metal" = 30, "$glass" = 20)
 	reliability = 76
 	build_path = /obj/item/device/mass_spectrometer
+	category = list("Medical Designs")
 
 datum/design/adv_mass_spectrometer
 	name = "Advanced Mass-Spectrometer"
@@ -21,6 +22,7 @@ datum/design/adv_mass_spectrometer
 	materials = list("$metal" = 30, "$glass" = 20)
 	reliability = 74
 	build_path = /obj/item/device/mass_spectrometer/adv
+	category = list("Medical Designs")
 
 datum/design/mmi
 	name = "Man-Machine Interface"
@@ -29,9 +31,10 @@ datum/design/mmi
 	req_tech = list("programming" = 2, "biotech" = 3)
 	build_type = PROTOLATHE | MECHFAB
 	materials = list("$metal" = 1000, "$glass" = 500)
+	construction_time = 75
 	reliability = 76
 	build_path = /obj/item/device/mmi
-	category = "Misc"
+	category = list("Misc","Medical Designs")
 
 datum/design/mmi_radio
 	name = "Radio-enabled Man-Machine Interface"
@@ -40,9 +43,10 @@ datum/design/mmi_radio
 	req_tech = list("programming" = 2, "biotech" = 4)
 	build_type = PROTOLATHE | MECHFAB
 	materials = list("$metal" = 1200, "$glass" = 500)
+	construction_time = 75
 	reliability = 74
 	build_path = /obj/item/device/mmi/radio_enabled
-	category = "Misc"
+	category = list("Misc","Medical Designs")
 
 datum/design/synthetic_flash
 	name = "Flash"
@@ -51,9 +55,10 @@ datum/design/synthetic_flash
 	req_tech = list("magnets" = 3, "combat" = 2)
 	build_type = MECHFAB
 	materials = list("$metal" = 750, "$glass" = 750)
+	construction_time = 100
 	reliability = 76
 	build_path = /obj/item/device/flash/handheld
-	category = "Misc"
+	category = list("Misc")
 
 datum/design/bluespacebeaker
 	name = "Bluespace Beaker"
@@ -64,7 +69,7 @@ datum/design/bluespacebeaker
 	materials = list("$metal" = 3000, "$plasma" = 3000, "$diamond" = 500)
 	reliability = 76
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/bluespace
-	category = "Misc"
+	category = list("Misc","Medical Designs")
 
 datum/design/noreactbeaker
 	name = "Cryostasis Beaker"
@@ -75,7 +80,7 @@ datum/design/noreactbeaker
 	materials = list("$metal" = 3000)
 	reliability = 76
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreact
-	category = "Misc"
+	category = list("Medical Designs")
 
 datum/design/bluespacebodybag
 	name = "Bluespace body bag"
@@ -86,7 +91,7 @@ datum/design/bluespacebodybag
 	materials = list("$metal" = 3000, "$plasma" = 2000, "$diamond" = 500)
 	reliability = 76
 	build_path = /obj/item/bodybag/bluespace
-	category = "Misc"
+	category = list("Medical Designs")
 
 datum/design/defib
 	name = "Defibrillator"
@@ -97,4 +102,4 @@ datum/design/defib
 	materials = list("$metal" = 5000, "$glass" = 2000, "$silver" = 1000)
 	reliability = 76
 	build_path = /obj/item/weapon/defibrillator
-	category = "Misc"
+	category = list("Medical Designs")

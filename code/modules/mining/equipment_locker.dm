@@ -471,10 +471,17 @@
 	force = 10
 	throwforce = 10
 	var/cooldown = 0
+	var/list/can_be_placed_into = list(
+		/obj/structure/table,
+		/obj/structure/closet,
+		/obj/item/weapon/storage,
+		/obj/structure/safe,
+		/obj/machinery/disposal
+		)
 
 /obj/item/weapon/resonator/proc/CreateResonance(var/target, var/creator)
 	if(cooldown <= 0)
-		playsound(src,'sound/effects/stealthoff.ogg',50,1)
+		playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
 		var/obj/effect/resonance/R = new /obj/effect/resonance(get_turf(target))
 		R.creator = creator
 		cooldown = 1
@@ -489,6 +496,9 @@
 	if(target in user.contents)
 		return
 	if(proximity_flag)
+		for(var/type in can_be_placed_into)
+			if(istype(target, type))
+				return
 		CreateResonance(target, user)
 
 /obj/effect/resonance
@@ -507,7 +517,7 @@
 		return
 	if(istype(proj_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = proj_turf
-		playsound(src,'sound/effects/sparks4.ogg',50,1)
+		playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
 		M.gets_drilled()
 		spawn(5)
 			qdel(src)
@@ -518,7 +528,7 @@
 			name = "strong resonance field"
 			resonance_damage = 45
 		spawn(50)
-			playsound(src,'sound/effects/sparks4.ogg',50,1)
+			playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
 			if(creator)
 				for(var/mob/living/L in src.loc)
 					add_logs(creator, L, "used a resonator field on", object="resonator")
@@ -702,7 +712,8 @@
 				if(istype(target, /mob/living/simple_animal/hostile))
 					var/mob/living/simple_animal/hostile/H = M
 					if(malfunctioning)
-						M.faction = list("lazarus")
+						H.faction |= list("lazarus", "\ref[user]")
+						H.robust_searching = 1
 						H.friends += user
 						H.attack_same = 1
 						log_game("[user] has revived hostile mob [target] with a malfunctioning lazarus injector")

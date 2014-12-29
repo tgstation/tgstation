@@ -69,7 +69,7 @@
 	new /obj/item/clothing/suit/toggle/labcoat(src)
 	new /obj/item/clothing/shoes/sneakers/white(src)
 	new /obj/item/device/radio/headset/headset_med(src)
-	new /obj/item/clothing/gloves/latex(src)
+	new /obj/item/clothing/gloves/color/latex(src)
 	new /obj/item/weapon/defibrillator/loaded(src)
 	new /obj/item/weapon/storage/belt/medical(src)
 	new /obj/item/clothing/glasses/hud/health(src)
@@ -101,7 +101,7 @@
 	new /obj/item/clothing/shoes/sneakers/brown	(src)
 	new /obj/item/weapon/cartridge/cmo(src)
 	new /obj/item/device/radio/headset/heads/cmo(src)
-	new /obj/item/clothing/gloves/latex(src)
+	new /obj/item/clothing/gloves/color/latex(src)
 	new /obj/item/weapon/defibrillator/loaded(src)
 	new /obj/item/weapon/storage/belt/medical(src)
 	new /obj/item/device/flash/handheld(src)
@@ -129,12 +129,12 @@
 /obj/structure/closet/secure_closet/chemical
 	name = "chemical closet"
 	desc = "Store dangerous chemicals in here."
-	icon_state = "medical1"
-	icon_closed = "medical"
-	icon_locked = "medical1"
+	icon_state = "chemical1"
+	icon_closed = "chemical"
+	icon_locked = "chemical1"
 	icon_opened = "medicalopen"
-	icon_broken = "medicalbroken"
-	icon_off = "medicaloff"
+	icon_broken = "chemicalbroken"
+	icon_off = "chemicaloff"
 	req_access = list(access_chemistry)
 
 

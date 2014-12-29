@@ -393,3 +393,9 @@ var/list/blood_splatter_icons = list()
 
 /atom/proc/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
 	return
+
+/atom/proc/emag_act()
+	return
+
+/atom/proc/narsie_act()
+	return

@@ -80,6 +80,7 @@
 	var/datum/mind/mind = null
 	var/blood_gender = null
 	var/blood_type = null
+	var/factions = null
 
 /obj/item/seeds/replicapod/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/reagent_containers/syringe))
@@ -91,6 +92,7 @@
 					realName = bloodSample.data["real_name"]
 					blood_gender = bloodSample.data["gender"]
 					blood_type = bloodSample.data["blood_type"]
+					factions = bloodSample.data["factions"]
 					W.reagents.clear_reagents()
 					user << "You inject the contents of the syringe into the seeds."
 				else
