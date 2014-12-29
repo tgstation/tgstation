@@ -11,9 +11,6 @@
 	var/hardness = 1
 	var/oreAmount = 7
 	var/mineralType = "metal"
-	var/last_event = 0
-	var/active = null
-	var/spam_flag = 0
 
 /obj/structure/statue/Destroy()
 	density = 0
@@ -143,6 +140,8 @@
 	hardness = 3
 	luminosity = 2
 	mineralType = "uranium"
+	var/last_event = 0
+	var/active = null
 
 /obj/structure/statue/uranium/nuke
 	name = "Statue of a Nuclear Fission Explosive"
@@ -160,6 +159,7 @@
 
 /obj/structure/statue/uranium/Bumped(atom/user)
 	radiate()
+	..()
 
 /obj/structure/statue/uranium/attack_hand(mob/user)
 	radiate()
@@ -167,6 +167,7 @@
 
 /obj/structure/statue/uranium/attack_paw(mob/user)
 	radiate()
+	..()
 
 /obj/structure/statue/uranium/proc/radiate()
 	if(!active)
@@ -298,6 +299,7 @@
 	hardness = 3
 	mineralType = "bananium"
 	desc = "A bananium statue with a small engraving:'HOOOOOOONK'."
+	var/spam_flag = 0
 
 /obj/structure/statue/bananium/clown
 	name = "Statue of a clown"
@@ -305,6 +307,7 @@
 
 /obj/structure/statue/bananium/Bumped(atom/user)
 	honk()
+	..()
 
 /obj/structure/statue/bananium/attackby(obj/item/weapon/W, mob/user)
 	honk()
@@ -316,9 +319,10 @@
 
 /obj/structure/statue/bananium/attack_paw(mob/user)
 	honk()
+	..()
 
 /obj/structure/statue/bananium/proc/honk()
-	if(spam_flag == 0)
+	if(!spam_flag)
 		spam_flag = 1
 		playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
 		spawn(20)
