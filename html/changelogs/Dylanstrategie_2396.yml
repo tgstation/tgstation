@@ -1,0 +1,5 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - wip: Major changes to solars. All glass types can be used and new sprites have been added. Obstruction system has been refined and the material you use affects the statistics of your solar panel
+  - tweak: The sun entity now updates every 30 seconds instead of every minute. This will most likely only affect solar accuracy for now
