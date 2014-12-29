@@ -78,7 +78,7 @@
 		message = replacetext(message, "scratch", "scritch")
 		message = replacetext(message, "god", "gosh")
 		message = replacetext(message, "ass", "rump")
-		message = replacetext(message, "rump", "rump")
+		message = replacetext(message, "butt", "rump")
 		message = replacetext(message, "help", "kill")
 	return message
 /*
