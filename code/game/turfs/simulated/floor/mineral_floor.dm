@@ -54,6 +54,7 @@
 	if(exposed_temperature > 300)
 		PlasmaBurn(exposed_temperature)
 
+
 //GOLD
 
 /turf/simulated/floor/mineral/gold
@@ -79,17 +80,25 @@
 	icons = list("bananium","bananium_dam")
 
 /turf/simulated/floor/mineral/bananium/Entered(var/mob/AM)
-	if(istype(AM))
-		squeek()
+	.=..()
+	if(!.)
+		if(istype(AM))
+			squeek()
 
 /turf/simulated/floor/mineral/bananium/attackby(obj/item/weapon/W, mob/user)
-	honk()
+	.=..()
+	if(!.)
+		honk()
 
 /turf/simulated/floor/mineral/bananium/attack_hand(mob/user)
-	honk()
+	.=..()
+	if(!.)
+		honk()
 
 /turf/simulated/floor/mineral/bananium/attack_paw(mob/user)
-	honk()
+	.=..()
+	if(!.)
+		honk()
 
 /turf/simulated/floor/mineral/bananium/proc/honk()
 	if(spam_flag == 0)
@@ -127,19 +136,25 @@
 	icons = list("uranium","uranium_dam")
 
 /turf/simulated/floor/mineral/uranium/Entered(var/mob/AM)
-	if(istype(AM))
-		radiate()
+	.=..()
+	if(!.)
+		if(istype(AM))
+			radiate()
 
 /turf/simulated/floor/mineral/uranium/attackby(obj/item/weapon/W, mob/user)
-	radiate()
-	..()
+	.=..()
+	if(!.)
+		radiate()
 
 /turf/simulated/floor/mineral/uranium/attack_hand(mob/user)
-	radiate()
-	..()
+	.=..()
+	if(!.)
+		radiate()
 
 /turf/simulated/floor/mineral/uranium/attack_paw(mob/user)
-	radiate()
+	.=..()
+	if(!.)
+		radiate()
 
 /turf/simulated/floor/mineral/uranium/proc/radiate()
 	if(!active)
