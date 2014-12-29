@@ -67,8 +67,7 @@
 					cooldown = 0
 		return
 	else
-		..()
-		return
+		return ..()
 
 
 
