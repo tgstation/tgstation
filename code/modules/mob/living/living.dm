@@ -540,6 +540,7 @@
 	if(C.handcuffed)
 		C.handcuffed = null
 		C.update_inv_handcuffed(0)
+		return
 	else
 		C.legcuffed = null
 		C.update_inv_legcuffed(0)
@@ -571,18 +572,19 @@
 		C.visible_message("<span class='warning'>[C] attempts to remove [I]!</span>")
 		C << "<span class='notice'>You attempt to remove [I]. (This will take around [displaytime] minutes and you need to stand still.)</span>"
 		spawn(0)
-			if(do_after(C, breakouttime))
+			if(do_after(C, breakouttime, 10))
 				if(!I || C.buckled)
 					return
 				C.visible_message("<span class='danger'>[C] manages to remove [I]!</span>")
 				C << "<span class='notice'>You successfully remove [I].</span>"
 
 				if(C.handcuffed)
-					C.handcuffed.loc = usr.loc
+					C.handcuffed.loc = C.loc
 					C.handcuffed = null
 					C.update_inv_handcuffed(0)
+					return
 				if(C.legcuffed)
-					C.legcuffed.loc = usr.loc
+					C.legcuffed.loc = C.loc
 					C.legcuffed = null
 					C.update_inv_legcuffed(0)
 			else
@@ -759,6 +761,13 @@
 
 /mob/living/singularity_pull(S)
 	step_towards(src,S)
+
+/mob/living/narsie_act()
+	if(client)
+		makeNewConstruct(/mob/living/simple_animal/construct/harvester, src, null, 1)
+	spawn_dust()
+	gib()
+	return
 
 /mob/living/proc/do_attack_animation(atom/A)
 	var/pixel_x_diff = 0

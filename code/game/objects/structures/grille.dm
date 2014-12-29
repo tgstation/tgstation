@@ -138,8 +138,8 @@
 		if(!shock(user, 90))
 			playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			anchored = !anchored
-			user.visible_message("<span class='notice'>[user] [anchored ? "fastens" : "unfastens"] the [src].</span>", \
-								 "<span class='notice'>You have [anchored ? "fastened the [src] to" : "unfastened the [src] from"] the floor.</span>")
+			user.visible_message("<span class='notice'>[user] [anchored ? "fastens" : "unfastens"] [src].</span>", \
+								 "<span class='notice'>You have [anchored ? "fastened [src] to" : "unfastened [src] from"] the floor.</span>")
 			return
 	else if(istype(W, /obj/item/stack/rods) && destroyed)
 		var/obj/item/stack/rods/R = W

@@ -10,9 +10,17 @@
 
 /obj/item/clothing/suit/armor/vest
 	name = "armor"
-	desc = "An armored vest that protects against most types of damage."
+	desc = "A slim armored vest that protects against most types of damage."
 	icon_state = "armor"
 	item_state = "armor"
+	blood_overlay_type = "armor"
+	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
+
+/obj/item/clothing/suit/armor/vest/alt
+	name = "armor"
+	desc = "An armored vest that protects against most types of damage. This is a civilian variant."
+	icon_state = "armoralt"
+	item_state = "armoralt"
 	blood_overlay_type = "armor"
 	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
 
@@ -38,13 +46,18 @@
 
 /obj/item/clothing/suit/armor/vest/warden
 	name = "warden's jacket"
-	desc = "An armored jacket with silver rank pips and livery."
+	desc = "A navy-blue armored jacket with blue shoulder designations and '/Warden/' stitched into one of the chest pockets."
 	icon_state = "warden_jacket"
 	item_state = "armor"
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS|HANDS
 	heat_protection = CHEST|GROIN|ARMS|HANDS
 	strip_delay = 70
+
+/obj/item/clothing/suit/armor/vest/warden/alt
+	name = "warden's armored jacket"
+	desc = "A red jacket with silver rank pips and body armor strapped on top."
+	icon_state = "warden_alt"
 
 /obj/item/clothing/suit/armor/vest/capcarapace
 	name = "captain's carapace"
@@ -70,12 +83,12 @@
 	put_on_delay = 60
 
 /obj/item/clothing/suit/armor/bulletproof
-	name = "tactical armor"
-	desc = "A kevlar vest that excels in protecting the wearer against traditional projectile weaponry and explosives."
+	name = "bulletproof armor"
+	desc = "A bulletproof vest that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
 	icon_state = "bulletproof"
 	item_state = "armor"
 	blood_overlay_type = "armor"
-	armor = list(melee = 25, bullet = 60, laser = 25, energy = 10, bomb = 40, bio = 0, rad = 0)
+	armor = list(melee = 25, bullet = 80, laser = 10, energy = 10, bomb = 40, bio = 0, rad = 0)
 	strip_delay = 70
 	put_on_delay = 50
 

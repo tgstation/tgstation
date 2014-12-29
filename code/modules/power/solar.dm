@@ -33,9 +33,10 @@ var/list/solars_list = list()
 
 //set the control of the panel to a given computer if closer than SOLAR_MAX_DIST
 /obj/machinery/power/solar/proc/set_control(var/obj/machinery/power/solar_control/SC)
-	if(SC && (get_dist(src, SC) > SOLAR_MAX_DIST))
+	if(!SC || (get_dist(src, SC) > SOLAR_MAX_DIST))
 		return 0
 	control = SC
+	SC.connected_panels |= src
 	return 1
 
 //set the control of the panel to null and removes it from the control list of the previous control computer if needed
@@ -323,12 +324,10 @@ var/list/solars_list = list()
 				var/obj/machinery/power/solar/S = M
 				if(!S.control) //i.e unconnected
 					S.set_control(src)
-					connected_panels |= S
 			else if(istype(M, /obj/machinery/power/tracker))
 				if(!connected_tracker) //if there's already a tracker connected to the computer don't add another
 					var/obj/machinery/power/tracker/T = M
 					if(!T.control) //i.e unconnected
-						connected_tracker = T
 						T.set_control(src)
 
 //called by the sun controller, update the facing angle (either manually or via tracking) and rotates the panels accordingly
@@ -484,10 +483,10 @@ var/list/solars_list = list()
 			set_panels(targetdir)
 
 	if(href_list["search_connected"])
-		src.search_for_connected()
+		search_for_connected()
 		if(connected_tracker && track == 2)
 			connected_tracker.set_angle(sun.angle)
-		src.set_panels(cdir)
+		set_panels(cdir)
 
 	src.updateUsrDialog()
 	return

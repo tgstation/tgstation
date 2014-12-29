@@ -159,6 +159,26 @@ research holder datum.
 						if(I.crit_fail)
 							D.reliability = min(100, D.reliability + rand(3, 5))
 
+/datum/research/proc/FindDesignByID(var/id)
+	for(var/datum/design/D in known_designs)
+		if(D.id == id)
+			return D
+
+
+//Autolathe files
+/datum/research/autolathe/New()
+	for(var/T in (typesof(/datum/tech) - /datum/tech))
+		possible_tech += new T(src)
+	for(var/path in typesof(/datum/design) - /datum/design)
+		var/datum/design/D = new path(src)
+		possible_designs += D
+		if((D.build_type & AUTOLATHE) && ("initial" in D.category))  //autolathe starts without hacked designs
+			AddDesign2Known(D)
+
+/datum/research/autolathe/AddDesign2Known(var/datum/design/D)
+	if(!(D.build_type & AUTOLATHE))
+		return
+	..()
 
 /***************************************************************
 **						Technology Datums					  **
