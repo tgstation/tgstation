@@ -80,4 +80,5 @@
 	mymob.client.screen = null
 	mymob.client.screen += adding
 
-	mymob.client.mouse_pointer_icon = ui_style
+	if(mymob.client.prefs.mouse_pointer)
+		mymob.client.mouse_pointer_icon = ui_style
