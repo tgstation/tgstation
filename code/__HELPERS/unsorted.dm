@@ -1207,11 +1207,63 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	else return zone
 
 
+//Gets the turf this atom inhabits
 /proc/get_turf(atom/movable/AM)
 	if(istype(AM))
 		return locate(/turf) in AM.locs
 	else if(isturf(AM))
 		return AM
+
+//Gets the turf this atom's *ICON* appears to inhabit
+//Uses half the width/height respectively to work out
+//A minimum pixel amt this icon needs to be pixel'd by
+//to be considered to be in another turf
+
+//division = world.icon_size - icon-width/2; DX = pixel_x/division
+//division = world.icon_size - icon-height/2; DY = pixel_y/division
+
+//Eg: Humans
+//32 - 16; 16/16 = 1, DX = 1
+//32 - 16; 15/16 = 0.9375 = 0 when round()'d, DX = 0
+
+//NOTE: if your atom has non-standard bounds then this proc
+//will handle it, but it'll be a bit slower.
+
+/proc/get_turf_pixel(atom/movable/AM)
+	if(istype(AM))
+		var/rough_x = 0
+		var/rough_y = 0
+		var/final_x = 0
+		var/final_y = 0
+
+		//Assume standards
+		var/i_width = world.icon_size
+		var/i_height = world.icon_size
+
+		//Handle snowflake objects only if necessary
+		if(AM.bound_height != world.icon_size || AM.bound_width != world.icon_size)
+			var/icon/AMicon = icon(AM.icon, AM.icon_state)
+			i_width = AMicon.Width()
+			i_height = AMicon.Height()
+			qdel(AMicon)
+
+		//Find a value to divide pixel_ by
+		var/n_width = (world.icon_size - (i_width/2))
+		var/n_height = (world.icon_size - (i_height/2))
+
+		//DY and DX
+		rough_x = round(AM.pixel_x/n_width)
+		rough_y = round(AM.pixel_y/n_height)
+
+		//Find coordinates
+		final_x = AM.x + rough_x
+		final_y = AM.y + rough_y
+
+		if(final_x || final_y)
+			var/turf/T = locate(final_x, final_y, AM.z)
+			if(T)
+				return T
+
 
 /proc/get(atom/loc, type)
 	while(loc)
@@ -1331,8 +1383,8 @@ var/list/WALLITEMS = list(
 				return 1
 
 			//Some stuff doesn't use dir properly, so we need to check pixel instead
-			//That's exactly what get_wall_mounted_turf() does
-			if(get_wall_mounted_turf(O) == locdir)
+			//That's exactly what get_turf_pixel() does
+			if(get_turf_pixel(O) == locdir)
 				return 1
 
 	//Some stuff is placed directly on the wallturf (signs)
@@ -1393,21 +1445,4 @@ var/list/WALLITEMS = list(
 			step(AM, pick(alldirs))
 		chance = max(chance - (initial_chance / steps), 0)
 		steps--
-
-/proc/get_wall_mounted_turf(atom/A)
-	/* This proc uses the pixel_x/y vars to guess the fake turf of a wall mounted atom.
-	Needless to say, this is an error prone method and possibly open to exploits.
-	It is however faster than using icon procs to get a more accurate reading.
-	I've only tested this proc on APCs. Use it with care.*/
-	if(is_type_in_list(A, WALLITEMS))
-		var/stepdir = 0
-	
-		if(A.pixel_x > 10) stepdir |= EAST
-		if(A.pixel_x < -10) stepdir |= WEST
-		if(A.pixel_y > 10) stepdir |= NORTH
-		if(A.pixel_y < -10) stepdir |= SOUTH
-	
-		if(stepdir)
-			return get_step(A, stepdir)
-	return get_turf(A)
 

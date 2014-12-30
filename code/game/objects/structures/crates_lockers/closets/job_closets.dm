@@ -68,7 +68,7 @@
 	..()
 	new /obj/item/clothing/under/rank/janitor(src)
 	new /obj/item/weapon/cartridge/janitor(src)
-	new /obj/item/clothing/gloves/black(src)
+	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/head/soft/purple(src)
 	new /obj/item/device/flashlight(src)
 	new /obj/item/weapon/caution(src)
