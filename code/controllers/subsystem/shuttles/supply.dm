@@ -260,7 +260,7 @@
 		if(!SSshuttle.supply_packs[href_list["doorder"]])	return
 
 		var/timeout = world.time + 600
-		var/reason = copytext(sanitize(input(usr,"Reason:","Why do you require this item?","") as null|text),1,MAX_MESSAGE_LEN)
+		var/reason = stripped_input(usr,"Reason:","Why do you require this item?","")
 		if(world.time > timeout)	return
 		if(!reason)	return
 
@@ -307,7 +307,7 @@
 
 /obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
 	if(!allowed(user))
-		user << "<span class='warning'> Access Denied.</span>"
+		user << "<span class='warning'>Access Denied.</span>"
 		return
 
 	if(..())
@@ -338,14 +338,10 @@
 	popup.open()
 	return
 
-/obj/machinery/computer/supplycomp/attackby(I as obj, user as mob)
-	if(istype(I,/obj/item/weapon/card/emag) && !hacked)
-		user << "<span class='notice'> Special supplies unlocked.</span>"
+/obj/machinery/computer/supplycomp/emag_act(mob/user)
+	if(!hacked)
+		user << "<span class='notice'>Special supplies unlocked.</span>"
 		hacked = 1
-		return
-	else
-		..()
-	return
 
 /obj/machinery/computer/supplycomp/Topic(href, href_list)
 	if(..())
@@ -406,7 +402,8 @@
 			temp += "<b>Request from: [get_supply_group_name(cat)]</b><BR><BR>"
 			for(var/supply_type in SSshuttle.supply_packs )
 				var/datum/supply_packs/N = SSshuttle.supply_packs[supply_type]
-				if((N.hidden && !hacked) || (N.contraband && !can_order_contraband) || N.group != cat) continue		//Have to send the type instead of a reference to
+				if((N.hidden && !hacked) || (N.contraband && !can_order_contraband) || N.group != cat)
+					continue		//Have to send the type instead of a reference to
 				temp += "<A href='?src=\ref[src];doorder=[supply_type]'>[N.name]</A> Cost: [N.cost]<BR>"		//the obj because it would get caught by the garbage
 
 		/*temp = "Supply points: [supply_shuttle.points]<BR><HR><BR>Request what?<BR><BR>"
@@ -428,7 +425,7 @@
 			return
 
 		var/timeout = world.time + 600
-		var/reason = copytext(sanitize(input(usr,"Reason:","Why do you require this item?","") as null|text),1,MAX_MESSAGE_LEN)
+		var/reason = stripped_input(usr,"Reason:","Why do you require this item?","")
 		if(world.time > timeout)	return
 //		if(!reason)	return
 
