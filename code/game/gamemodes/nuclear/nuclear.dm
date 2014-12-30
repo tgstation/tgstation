@@ -48,44 +48,15 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
-/datum/game_mode/proc/update_all_synd_icons()
-	spawn(0)
-		for(var/datum/mind/synd_mind in syndicates)
-			if(synd_mind.current)
-				if(synd_mind.current.client)
-					for(var/image/I in synd_mind.current.client.images)
-						if(I.icon_state == "synd")
-							del(I)
-
-		for(var/datum/mind/synd_mind in syndicates)
-			if(synd_mind.current)
-				if(synd_mind.current.client)
-					for(var/datum/mind/synd_mind_1 in syndicates)
-						if(synd_mind_1.current)
-							var/I = image('icons/mob/mob.dmi', loc = synd_mind_1.current, icon_state = "synd")
-							synd_mind.current.client.images += I
-
 /datum/game_mode/proc/update_synd_icons_added(datum/mind/synd_mind)
-	spawn(0)
-		if(synd_mind.current)
-			if(synd_mind.current.client)
-				var/I = image('icons/mob/mob.dmi', loc = synd_mind.current, icon_state = "synd")
-				synd_mind.current.client.images += I
+	var/datum/atom_hud/antag/opshud = huds[ANTAG_HUD_OPS]
+	opshud.join_hud(synd_mind.current)
+	set_antag_hud(synd_mind.current, "synd")
 
 /datum/game_mode/proc/update_synd_icons_removed(datum/mind/synd_mind)
-	spawn(0)
-		for(var/datum/mind/synd in syndicates)
-			if(synd.current)
-				if(synd.current.client)
-					for(var/image/I in synd.current.client.images)
-						if(I.icon_state == "synd" && I.loc == synd_mind.current)
-							del(I)
-
-		if(synd_mind.current)
-			if(synd_mind.current.client)
-				for(var/image/I in synd_mind.current.client.images)
-					if(I.icon_state == "synd")
-						del(I)
+	var/datum/atom_hud/antag/opshud = huds[ANTAG_HUD_OPS]
+	opshud.leave_hud(synd_mind.current)
+	set_antag_hud(synd_mind.current, null)
 
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -128,8 +99,6 @@
 			agent_number++
 		spawnpos++
 		update_synd_icons_added(synd_mind)
-
-	update_all_synd_icons()
 
 	if(uplinklocker)
 		new /obj/structure/closet/syndicate/nuclear(uplinklocker.loc)
@@ -192,7 +161,7 @@
 /datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob)
 	var/radio_freq = SYND_FREQ
 
-	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate(synd_mob)
+	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate/alt(synd_mob)
 	R.set_frequency(radio_freq)
 	synd_mob.equip_to_slot_or_del(R, slot_ears)
 

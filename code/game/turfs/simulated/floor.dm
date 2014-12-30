@@ -42,7 +42,13 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	if(floor_tile)
 		builtin_tile = new floor_tile
 
-/turf/simulated/floor/ex_act(severity)
+/turf/simulated/floor/ex_act(severity, target)
+	..()
+	if(target == src)
+		src.ChangeTurf(/turf/space)
+	if(target != null)
+		ex_act(3)
+		return
 	switch(severity)
 		if(1.0)
 			src.ChangeTurf(/turf/space)
@@ -152,3 +158,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 				make_plating()
 		else if(prob(50))
 			ReplaceWithLattice()
+
+/turf/simulated/floor/narsie_act()
+	if(prob(20))
+		ChangeTurf(/turf/simulated/floor/engine/cult)

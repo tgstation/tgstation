@@ -51,3 +51,9 @@
 #define STAGE_THREE 5
 #define STAGE_FOUR 7
 #define STAGE_FIVE 9
+
+
+//SOUND:
+#define SOUND_MINIMUM_PRESSURE 10
+#define FALLOFF_SOUNDS	1
+#define SURROUND_CAP	7

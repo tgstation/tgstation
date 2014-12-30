@@ -38,7 +38,7 @@
 	if (A)
 		if(ismob(A))
 			toxmob(A)
-		if((istype(A,/obj/machinery/the_singularitygen))||(istype(A,/obj/machinery/singularity/)))
+		if((istype(A,/obj/machinery/the_singularitygen))||(istype(A,/obj/singularity/)))
 			A:energy += energy
 	return
 
@@ -49,7 +49,7 @@
 	return
 
 
-/obj/effect/accelerated_particle/ex_act(severity)
+/obj/effect/accelerated_particle/ex_act(severity, target)
 	loc = null
 	return
 

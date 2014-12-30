@@ -166,11 +166,6 @@
 		if(see_override)
 			see_invisible = see_override
 
-	regular_hud_updates() //Handles MED/SEC HUDs for borgs.
-
-	if(sensor_mode)
-		process_data_hud(src,sensor_mode,DATA_HUD_ADVANCED)
-
 	if (src.healths)
 		if (src.stat != 2)
 			switch(health)
@@ -300,8 +295,6 @@
 	overlays -= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
 	if(on_fire)
 		overlays += image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
-	update_icons()
-	return
 
 /mob/living/silicon/robot/fire_act()
 	if(!on_fire) //Silicons don't gain stacks from hotspots, but hotspots can ignite them

@@ -30,7 +30,6 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	density = 0
 	anchored = 1
 	layer = 4
-	explosion_resistance = 5
 
 /obj/structure/plasticflaps/CanPass(atom/movable/A, turf/T)
 	if(istype(A) && A.checkpass(PASSGLASS))
@@ -46,7 +45,8 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 			return 0
 	return ..()
 
-/obj/structure/plasticflaps/ex_act(severity)
+/obj/structure/plasticflaps/ex_act(severity, target)
+	..()
 	switch(severity)
 		if (1)
 			qdel(src)
@@ -578,14 +578,10 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	popup.open()
 	return
 
-/obj/machinery/computer/supplycomp/attackby(I as obj, user as mob)
-	if(istype(I,/obj/item/weapon/card/emag) && !hacked)
+/obj/machinery/computer/supplycomp/emag_act(user as mob)
+	if(!hacked)
 		user << "<span class='notice'>Special supplies unlocked.</span>"
 		hacked = 1
-		return
-	else
-		..()
-	return
 
 /obj/machinery/computer/supplycomp/Topic(href, href_list)
 	if(!supply_shuttle)

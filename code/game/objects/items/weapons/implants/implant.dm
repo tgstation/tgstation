@@ -27,6 +27,9 @@
 /obj/item/weapon/implant/proc/implanted(var/mob/source)
 	if(activated)
 		action_button_name = "Activate [src.name]"
+	if(istype(source, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = source
+		H.sec_hud_set_implants()
 	return 1
 
 

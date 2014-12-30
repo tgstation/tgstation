@@ -22,8 +22,9 @@
 		target.disabilities |= disabilities
 		target.update_mutations()	//update target's mutation overlays
 		spawn(duration)
-			target.mutations.Remove(mutations)
-			target.disabilities &= ~disabilities
-			target.update_mutations()
+			if(target && !target.gc_destroyed)
+				target.mutations.Remove(mutations)
+				target.disabilities &= ~disabilities
+				target.update_mutations()
 
 	return

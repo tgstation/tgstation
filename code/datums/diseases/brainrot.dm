@@ -3,6 +3,7 @@
 	max_stages = 4
 	spread_text = "On contact"
 	spread_flags = CONTACT_GENERAL
+	cure_text = "Alkysine"
 	cures = list("alkysine")
 	agent = "Cryptococcus Cosmosis"
 	viable_mobtypes = list(/mob/living/carbon/human)

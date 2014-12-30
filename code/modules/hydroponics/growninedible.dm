@@ -67,7 +67,7 @@
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
-		user.show_message("<span class='notice'>You make planks out of the [src]!</span>", 1)
+		user.show_message("<span class='notice'>You make planks out of \the [src]!</span>", 1)
 		for(var/i = 0,i < 2,i++)
 			var/obj/item/stack/sheet/mineral/wood/NG = new (user.loc)
 			for (var/obj/item/stack/sheet/mineral/wood/G in user.loc)
@@ -83,7 +83,7 @@
 	if(is_type_in_list(W,accepted))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/leaf = W
 		if(leaf.dry)
-			user.show_message("<span class='notice'>You wrap the [W] around the log, turning it into a torch!</span>")
+			user.show_message("<span class='notice'>You wrap \the [W] around the log, turning it into a torch!</span>")
 			var/obj/item/device/flashlight/flare/torch/T = new /obj/item/device/flashlight/flare/torch(user.loc)
 			usr.unEquip(W)
 			usr.put_in_active_hand(T)
@@ -176,16 +176,22 @@
 	user.visible_message("<span class='suicide'>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	return (BRUTELOSS|TOXLOSS)
 
-/obj/item/weapon/grown/nettle/pickup(mob/living/carbon/human/user as mob)
-	if(!user.gloves)
-		user << "<span class='danger'>The nettle burns your bare hand!</span>"
-		if(istype(user, /mob/living/carbon/human))
-			var/organ = ((user.hand ? "l_":"r_") + "arm")
-			var/obj/item/organ/limb/affecting = user.get_organ(organ)
-			if(affecting.take_damage(0, force))
-				user.update_damage_overlays(0)
-		else
-			user.take_organ_damage(0,force)
+/obj/item/weapon/grown/nettle/pickup(mob/living/user as mob)
+	if(!iscarbon(user))
+		return 0
+	var/mob/living/carbon/C = user
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = C
+		if(H.gloves)
+			return 0
+		var/organ = ((H.hand ? "l_":"r_") + "arm")
+		var/obj/item/organ/limb/affecting = H.get_organ(organ)
+		if(affecting.take_damage(0, force))
+			H.update_damage_overlays(0)
+	else
+		C.take_organ_damage(0,force)
+	C << "<span class='userdanger'>The nettle burns your bare hand!</span>"
+	return 1
 
 /obj/item/weapon/grown/nettle/afterattack(atom/A as mob|obj, mob/user as mob,proximity)
 	if(!proximity) return
@@ -221,18 +227,11 @@
 	reagents.add_reagent("pacid", round((potency / 2), 1))
 	force = round((5 + potency / 2.5), 1)
 
-/obj/item/weapon/grown/nettle/death/pickup(mob/living/carbon/human/user as mob)
-	if(!user.gloves)
-		if(istype(user, /mob/living/carbon/human))
-			var/organ = ((user.hand ? "l_":"r_") + "arm")
-			var/obj/item/organ/limb/affecting = user.get_organ(organ)
-			if(affecting.take_damage(0, force))
-				user.update_damage_overlays(0)
-		else
-			user.take_organ_damage(0, force)
+/obj/item/weapon/grown/nettle/death/pickup(mob/living/carbon/user as mob)
+	if(..())
 		if(prob(50))
 			user.Paralyse(5)
-			user << "<span class='danger'>You are stunned by the Deathnettle when you try picking it up!</span>"
+			user << "<span class='userdanger'>You are stunned by the Deathnettle when you try picking it up!</span>"
 
 /obj/item/weapon/grown/nettle/death/attack(mob/living/carbon/M as mob, mob/user as mob)
 	if(!..()) return

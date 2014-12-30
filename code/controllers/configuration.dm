@@ -64,6 +64,7 @@
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
 	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
+	var/see_own_notes = 0 //Can players see their own admin notes (read-only)? Config option in config.txt
 
 	//game_options.txt configs
 	var/force_random_names = 0
@@ -109,6 +110,7 @@
 
 	var/rename_cyborg = 0
 	var/ooc_during_round = 0
+	var/emojis = 0
 
 	//Used for modifying movement speed for mobs.
 	//Unversal modifiers
@@ -123,8 +125,6 @@
 	var/slime_delay = 0
 	var/animal_delay = 0
 
-	var/use_recursive_explosions //Defines whether the server uses recursive or circular explosions.
-
 	var/gateway_delay = 18000 //How long the gateway takes before it activates. Default is half an hour.
 	var/ghost_interaction = 0
 
@@ -134,7 +134,7 @@
 	var/sandbox_autoclose = 0 // close the sandbox panel after spawning an item, potentially reducing griff
 
 	var/default_laws = 0 //Controls what laws the AI spawns with.
-	var/silicon_max_law_amount = 0
+	var/silicon_max_law_amount = 12
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -283,6 +283,8 @@
 					global.comms_key = value
 					if(value != "default_pwd" && length(value) > 6) //It's the default value or less than 6 characters long, warn badmins
 						global.comms_allowed = 1
+				if("see_own_notes")
+					config.see_own_notes = 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
@@ -302,6 +304,8 @@
 					config.rename_cyborg			= 1
 				if("ooc_during_round")
 					config.ooc_during_round			= 1
+				if("emojis")
+					config.emojis					= 1
 				if("run_delay")
 					config.run_speed				= text2num(value)
 				if("walk_delay")
@@ -387,8 +391,6 @@
 					config.allow_random_events		= 1
 				if("jobs_have_minimal_access")
 					config.jobs_have_minimal_access	= 1
-				if("use_recursive_explosions")
-					use_recursive_explosions		= 1
 				if("humans_need_surnames")
 					humans_need_surnames			= 1
 				if("force_random_names")

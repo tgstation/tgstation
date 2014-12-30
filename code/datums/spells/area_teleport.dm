@@ -54,11 +54,12 @@
 		var/success = 0
 		while(tempL.len)
 			attempt = pick(tempL)
-			success = target.Move(attempt)
-			if(!success)
-				tempL.Remove(attempt)
-			else
+			target.Move(attempt)
+			if(get_turf(target) == attempt)
+				success = 1
 				break
+			else
+				tempL.Remove(attempt)
 
 		if(!success)
 			target.loc = pick(L)

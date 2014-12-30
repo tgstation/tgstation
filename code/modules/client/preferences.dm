@@ -37,6 +37,7 @@ datum/preferences
 	var/ooccolor = "#002eb8"
 	var/be_special = 0					//Special role selection
 	var/UI_style = "Midnight"
+	var/custom_pointer = 0
 	var/toggles = TOGGLES_DEFAULT
 	var/ghost_form = "ghost"
 
@@ -218,6 +219,7 @@ datum/preferences
 				dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 				dat += "<h2>General Settings</h2>"
 				dat += "<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'>[UI_style]</a><br>"
+				dat += "<b>Use Custom Pointers:</b> <a href='?_src_=prefs;preference=pointer'>[custom_pointer ? "Yes" : "No"]</a><br>"
 				dat += "<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</a><br>"
 				dat += "<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</a><br>"
 				dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'>[(toggles & CHAT_GHOSTEARS) ? "Nearest Creatures" : "All Speech"]</a><br>"
@@ -321,7 +323,7 @@ datum/preferences
 				var/available_in_days = job.available_in_days(user.client)
 				HTML += "<font color=red>[rank]</font></td><td><font color=red> \[IN [(available_in_days)] DAYS\]</font></td></tr>"
 				continue
-			if((job_civilian_low & ASSISTANT) && (rank != "Assistant"))
+			if((job_civilian_low & ASSISTANT) && (rank != "Assistant") && !jobban_isbanned(user, "Assistant"))
 				HTML += "<font color=orange>[rank]</font></td><td></td></tr>"
 				continue
 			if(config.enforce_human_authority && (rank in command_positions) && user.client.prefs.pref_species.id != "human")
@@ -738,6 +740,9 @@ datum/preferences
 								UI_style = "Retro"
 							else
 								UI_style = "Midnight"
+
+					if("pointer")
+						custom_pointer = !custom_pointer
 
 					if("be_special")
 						var/num = text2num(href_list["num"])

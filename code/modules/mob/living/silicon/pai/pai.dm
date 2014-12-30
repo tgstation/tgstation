@@ -4,7 +4,6 @@
 	mouse_opacity = 0
 	density = 0
 	mob_size = 0
-	invisibility = 101
 
 	var/network = "SS13"
 	var/obj/machinery/camera/current = null
@@ -51,7 +50,7 @@
 /mob/living/silicon/pai/New(var/obj/item/device/paicard)
 	make_laws()
 	canmove = 0
-	src.loc = get_turf(paicard)
+	src.loc = paicard
 	card = paicard
 	sradio = new(src)
 	if(card)
@@ -65,9 +64,7 @@
 		pda.ownjob = "Personal Assistant"
 		pda.owner = text("[]", src)
 		pda.name = pda.owner + " (" + pda.ownjob + ")"
-		pda.toff = 1
 
-		follow_pai()
 	..()
 
 /mob/living/silicon/pai/make_laws()
@@ -137,7 +134,7 @@
 		if(3)
 			src << "<span class='notice'>You feel an electric surge run through your circuitry and become acutely aware at how lucky you are that you can still feel at all.</span>"
 
-/mob/living/silicon/pai/ex_act(severity)
+/mob/living/silicon/pai/ex_act(severity, target)
 	..()
 
 	switch(severity)

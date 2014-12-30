@@ -386,6 +386,7 @@
 			else
 				user << "<span class = 'alert'>This station cant hold more information, try to use better parts.</span>"
 	if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
+		update_icon()
 		return
 
 	if(exchange_parts(user, W))
@@ -430,10 +431,9 @@
 
 /obj/machinery/teleport/station/power_change()
 	..()
-	if(stat & NOPOWER)
-		update_icon()
-		if(teleporter_hub)
-			teleporter_hub.update_icon()
+	update_icon()
+	if(teleporter_hub)
+		teleporter_hub.update_icon()
 
 /obj/machinery/teleport/station/update_icon()
 	if(panel_open)

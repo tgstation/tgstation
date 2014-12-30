@@ -1872,11 +1872,25 @@
 			if("guns")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","SG")
-				rightandwrong(0, usr)
+				var/survivor_probability = 0
+				switch(alert("Do you want this to create survivors antagonists?",,"No Antags","Some Antags","All Antags!"))
+					if("Some Antags")
+						survivor_probability = 25
+					if("All Antags!")
+						survivor_probability = 100
+
+				rightandwrong(0, usr, survivor_probability)
 			if("magic")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","SM")
-				rightandwrong(1, usr)
+				var/survivor_probability = 0
+				switch(alert("Do you want this to create survivors antagonists?",,"No Antags","Some Antags","All Antags!"))
+					if("Some Antags")
+						survivor_probability = 25
+					if("All Antags!")
+						survivor_probability = 100
+
+				rightandwrong(1, usr, survivor_probability)
 			if("events")
 				if(events && !events.wizardmode)
 					if(alert("Do you want to toggle summon events on?",,"Yes","No") == "Yes")

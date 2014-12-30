@@ -63,6 +63,7 @@
 		O.adjustBruteLoss(getBruteLoss())
 		O.setOxyLoss(getOxyLoss())
 		O.adjustFireLoss(getFireLoss())
+		O.radiation = radiation
 
 	//re-add implants to new mob
 	for(var/obj/item/weapon/implant/I in implants)
@@ -163,6 +164,7 @@
 		viruses = list()
 		for(var/datum/disease/D in O.viruses)
 			D.affected_mob = O
+		O.med_hud_set_status()
 
 	//keep damage?
 	if (tr_flags & TR_KEEPDAMAGE)
@@ -170,11 +172,13 @@
 		O.adjustBruteLoss(getBruteLoss())
 		O.setOxyLoss(getOxyLoss())
 		O.adjustFireLoss(getFireLoss())
+		O.radiation = radiation
 
 	//re-add implants to new mob
 	for(var/obj/item/weapon/implant/I in implants)
 		I.loc = O
 		I.implanted = O
+	O.sec_hud_set_implants()
 
 	if(mind)
 		mind.transfer_to(O)

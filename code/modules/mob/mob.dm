@@ -13,7 +13,6 @@
 /mob/proc/sac_act(var/obj/effect/rune/R, var/mob/victim as mob)
 	return
 
-
 var/next_mob_id = 0
 /mob/New()
 	tag = "mob_[next_mob_id++]"
@@ -22,7 +21,12 @@ var/next_mob_id = 0
 		dead_mob_list += src
 	else
 		living_mob_list += src
+	prepare_huds()
 	..()
+
+/mob/proc/prepare_huds()
+	for(var/hud in hud_possible)
+		hud_list[hud] = image('icons/mob/hud.dmi', src, "")
 
 /mob/proc/Cell()
 	set category = "Admin"
@@ -71,28 +75,52 @@ var/next_mob_id = 0
 		src << msg
 	return
 
-// Show a message to all mobs in sight of this one
+// Show a message to all mobs who sees the src mob and the src mob itself
 // This would be for visible actions by the src mob
 // message is the message output to anyone who can see e.g. "[src] does something!"
-// self_message (optional) is what the src mob sees  e.g. "You do something!"
+// self_message (optional) is what the src mob sees e.g. "You do something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 
 /mob/visible_message(var/message, var/self_message, var/blind_message)
-	for(var/mob/M in viewers(src))
+	var/list/atom_viewers = list()
+	for(var/atom/movable/A in view(src))
+		atom_viewers |= recursive_hear_check(A)
+	atom_viewers |= src
+	for(var/mob/M in atom_viewers)
 		if(M.see_invisible < invisibility)
 			continue //can't view the invisible
 		var/msg = message
 		if(self_message && M==src)
 			msg = self_message
-		M.show_message( msg, 1, blind_message, 2)
+		M.show_message( msg, 1)
+	if(blind_message)
+		var/list/atom_hearers = list()
+		for(var/atom/movable/O in get_hearers_in_view(7, src))
+			if(O in atom_viewers)
+				continue
+			atom_hearers |= O
+		for(var/mob/MOB in atom_hearers)
+			MOB.show_message(blind_message, 2)
 
-// Show a message to all mobs in sight of this atom
+// Show a message to all mobs who sees this atom
 // Use for objects performing visible actions
 // message is output to anyone who can see, e.g. "The [src] does something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
+
 /atom/proc/visible_message(var/message, var/blind_message)
-	for(var/mob/M in viewers(src))
-		M.show_message( message, 1, blind_message, 2)
+	var/list/atom_viewers = list()
+	for(var/atom/movable/A in view(src))
+		atom_viewers |= recursive_hear_check(A)
+	for(var/mob/M in atom_viewers)
+		M.show_message( message, 1)
+	if(blind_message)
+		var/list/atom_hearers = list()
+		for(var/atom/movable/O in get_hearers_in_view(7, src))
+			if(O in atom_viewers)
+				continue
+			atom_hearers |= O
+		for(var/mob/MOB in atom_hearers)
+			MOB.show_message(blind_message, 2)
 
 // Show a message to all mobs in earshot of this one
 // This would be for audible actions by the src mob
@@ -514,7 +542,7 @@ var/list/slot_equipment_priority = list( \
 				namecounts[name] = 1
 			creatures[name] = O
 
-		if(istype(O, /obj/machinery/singularity))
+		if(istype(O, /obj/singularity))
 			var/name = "Singularity"
 			if (names.Find(name))
 				namecounts[name]++
@@ -878,7 +906,7 @@ var/list/slot_equipment_priority = list( \
 
 /mob/proc/get_ghost(even_if_they_cant_reenter = 0)
 	if(mind)
-		for(var/mob/dead/observer/G in player_list)
+		for(var/mob/dead/observer/G in dead_mob_list)
 			if(G.mind == mind)
 				if(G.can_reenter_corpse || even_if_they_cant_reenter)
 					return G

@@ -161,6 +161,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/librarian
 	icon_state = "pda-library"
+	default_cartridge = /obj/item/weapon/cartridge/librarian
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This is model is a WGW-11 series e-reader."
 	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant!"
 	silent = 1 //Quiet in the library!
@@ -170,8 +171,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This is model is a special edition with a transparent case."
 	note = "Congratulations, you have chosen the Thinktronic 5230 Personal Data Assistant Deluxe Special Max Turbo Limited Edition!"
 
-/obj/item/device/pda/chef
-	icon_state = "pda-chef"
+/obj/item/device/pda/cook
+	icon_state = "pda-cook"
 
 /obj/item/device/pda/bar
 	icon_state = "pda-bartender"
@@ -343,6 +344,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 							dat += "<li><a href='byond://?src=\ref[src];choice=50'><img src=pda_cleanbot.png> Cleanbot Access</a></li>"
 					if (istype(cartridge.radio, /obj/item/radio/integrated/signal))
 						dat += "<li><a href='byond://?src=\ref[src];choice=40'><img src=pda_signaler.png> Signaler System</a></li>"
+					if (cartridge.access_newscaster)
+						dat += "<li><a href='byond://?src=\ref[src];choice=53'><img src=pda_notes.png> Newscaster Access </a></li>"
 					if (cartridge.access_reagent_scanner)
 						dat += "<li><a href='byond://?src=\ref[src];choice=Reagent Scan'><img src=pda_reagent.png> [scanmode == 3 ? "Disable" : "Enable"] Reagent Scanner</a></li>"
 					if (cartridge.access_engine)
@@ -367,7 +370,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += note
 
 			if (2)
-				dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.4</h4>"
+				dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.5</h4>"
 				dat += "<a href='byond://?src=\ref[src];choice=Toggle Ringer'><img src=pda_bell.png> Ringer: [silent == 1 ? "Off" : "On"]</a> | "
 				dat += "<a href='byond://?src=\ref[src];choice=Toggle Messenger'><img src=pda_mail.png> Send / Receive: [toff == 1 ? "Off" : "On"]</a> | "
 				dat += "<a href='byond://?src=\ref[src];choice=Ringtone'><img src=pda_bell.png> Set Ringtone</a> | "
@@ -403,7 +406,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					dat += "None detected.<br>"
 
 			if(21)
-				dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.4</h4>"
+				dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.5</h4>"
 				dat += "<a href='byond://?src=\ref[src];choice=Clear'><img src=pda_blank.png> Clear Messages</a>"
 
 				dat += "<h4><img src=pda_mail.png> Messages</h4>"
@@ -753,7 +756,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		id = null
 
 /obj/item/device/pda/proc/msg_input(var/mob/living/U = usr)
-	var/t = input(U, "Please enter message", name, null) as text
+	var/t = input(U, "Please enter message", name, null) as null|text
 	t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
 	if (!t || toff)
 		return

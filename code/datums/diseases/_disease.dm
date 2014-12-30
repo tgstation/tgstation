@@ -56,7 +56,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	var/atom/movable/holder = null
 	var/list/cures = list() //list of cures if the disease has the CURABLE flag, these are reagent ids
 	var/infectivity = 65
-	var/cure_chance = 0
+	var/cure_chance = 8
 	var/carrier = 0 //If our host is only a carrier
 	var/permeability_mod = 1
 	var/severity =	NONTHREAT
@@ -76,10 +76,10 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 
 	if(!cure)
 		if(prob(stage_prob))
-			stage = min(stage++,max_stages)
+			stage = min(stage + 1,max_stages)
 	else
 		if(prob(cure_chance))
-			stage = max(stage--, 1)
+			stage = max(stage - 1, 1)
 
 	if(disease_flags & CURABLE)
 		if(cure && prob(cure_chance))
@@ -91,22 +91,24 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 		return 0
 
 	. = 1
-
 	for(var/C_id in cures)
-		if(!affected_mob.reagents.has_reagent(C_id in cures))
+		if(!affected_mob.reagents.has_reagent(C_id))
 			.--
 			break //One missing cure is enough to fail
 
 
-/datum/disease/proc/spread(var/atom/source)
-	if(spread_flags & SPECIAL || spread_flags & NON_CONTAGIOUS || spread_flags & BLOOD)
+/datum/disease/proc/spread(var/atom/source, var/force_spread = 0)
+	if((spread_flags & SPECIAL || spread_flags & NON_CONTAGIOUS || spread_flags & BLOOD) && !force_spread)
 		return
 
 	if(affected_mob)
-		if(affected_mob.reagents.has_reagent("spaceacillin"))
+		if( affected_mob.reagents.has_reagent("spaceacillin") || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)) )
 			return
 
 	var/spread_range = 1
+
+	if(force_spread)
+		spread_range = force_spread
 
 	if(spread_flags & AIRBORNE)
 		spread_range++
@@ -153,7 +155,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 		if(disease_flags & CAN_RESIST)
 			if(!(type in affected_mob.resistances))
 				affected_mob.resistances += type
-			affected_mob.viruses -= src
+				remove_virus()
 	del(src)
 
 
@@ -193,3 +195,8 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	if(spread_flags & CONTACT_FEET || spread_flags & CONTACT_HANDS || spread_flags & CONTACT_GENERAL)
 		return 1
 	return 0
+
+//don't use this proc directly. this should only ever be called by cure()
+/datum/disease/proc/remove_virus()
+	affected_mob.viruses -= src		//remove the datum from the list
+	affected_mob.med_hud_set_status()

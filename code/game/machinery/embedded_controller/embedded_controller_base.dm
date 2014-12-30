@@ -74,15 +74,20 @@ obj/machinery/embedded_controller/radio
 	var/frequency
 	var/datum/radio_frequency/radio_connection
 
-	initialize()
-		set_frequency(frequency)
+obj/machinery/embedded_controller/radio/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src,frequency)
+	..()
 
-	post_signal(datum/signal/signal)
-		signal.transmission_method = TRANSMISSION_RADIO
-		if(radio_connection)
-			return radio_connection.post_signal(src, signal)
-		else
-			signal = null
+obj/machinery/embedded_controller/radio/initialize()
+	set_frequency(frequency)
+
+obj/machinery/embedded_controller/radio/post_signal(datum/signal/signal)
+	signal.transmission_method = TRANSMISSION_RADIO
+	if(radio_connection)
+		return radio_connection.post_signal(src, signal)
+	else
+		signal = null
 
 obj/machinery/embedded_controller/radio/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)

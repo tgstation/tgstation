@@ -8,7 +8,6 @@
 
 	var/list/modules = list()
 	var/obj/item/emag = null
-	var/obj/item/borg/upgrade/jetpack = null
 	var/list/storages = list()
 
 /obj/item/weapon/robot_module/emp_act(severity)
@@ -38,8 +37,6 @@
 	modules += new /obj/item/device/flash/cyborg(src)
 	emag = new /obj/item/toy/sword(src)
 	emag.name = "Placeholder Emag Item"
-//		jetpack = new /obj/item/toy/sword(src)
-//		jetpack.name = "Placeholder Upgrade Item"
 	return
 
 
@@ -52,6 +49,13 @@
 	for(var/obj/O in temp_list)
 		if(O)
 			modules += O
+	fix_modules()
+
+/obj/item/weapon/robot_module/proc/fix_modules()
+	for(var/obj/item/I in modules)
+		I.flags |= NODROP
+	if(emag)
+		emag.flags |= NODROP
 
 /obj/item/weapon/robot_module/proc/on_emag()
 	return
@@ -69,6 +73,7 @@
 	modules += new /obj/item/weapon/crowbar(src)
 	modules += new /obj/item/device/healthanalyzer(src)
 	emag = new /obj/item/weapon/melee/energy/sword/cyborg(src)
+	fix_modules()
 
 
 /obj/item/weapon/robot_module/medical
@@ -88,6 +93,11 @@
 	emag.reagents.add_reagent("pacid", 250)
 	emag.name = "polyacid spray"
 
+	var/obj/item/weapon/reagent_containers/spray/S = emag
+	S.banned_reagents = list()
+
+	fix_modules()
+
 
 
 /obj/item/weapon/robot_module/engineering
@@ -99,6 +109,7 @@
 	modules += new /obj/item/borg/sight/meson(src)
 	emag = new /obj/item/borg/stun(src)
 	modules += new /obj/item/weapon/rcd/borg(src)
+	modules += new /obj/item/weapon/pipe_dispenser(src) //What could possibly go wrong?
 	modules += new /obj/item/weapon/extinguisher(src)
 	modules += new /obj/item/weapon/weldingtool/largetank/cyborg(src)
 	modules += new /obj/item/weapon/screwdriver(src)
@@ -141,6 +152,7 @@
 	storages += metstore
 	storages += glastore
 	storages += wirestore
+	fix_modules()
 
 /obj/item/weapon/robot_module/security
 	name = "security robot module"
@@ -150,9 +162,10 @@
 	modules += new /obj/item/device/flashlight/seclite(src)
 	modules += new /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg(src)
 	modules += new /obj/item/weapon/melee/baton/loaded(src)
-	modules += new /obj/item/weapon/gun/energy/taser/cyborg(src)
+	modules += new /obj/item/weapon/gun/energy/gun/advtaser/cyborg(src)
 	modules += new /obj/item/clothing/mask/gas/sechailer/cyborg(src)
 	emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
+	fix_modules()
 
 
 /obj/item/weapon/robot_module/janitor
@@ -170,6 +183,7 @@
 
 	emag.reagents.add_reagent("lube", 250)
 	emag.name = "lube spray"
+	fix_modules()
 
 
 /obj/item/weapon/robot_module/butler
@@ -197,6 +211,7 @@
 	modules += new /obj/item/weapon/storage/bag/tray(src)
 	modules += new /obj/item/weapon/reagent_containers/borghypo/borgshaker(src)
 	emag = new /obj/item/weapon/reagent_containers/borghypo/borgshaker/hacked(src)
+	fix_modules()
 
 
 /obj/item/weapon/robot_module/miner
@@ -209,19 +224,20 @@
 	emag = new /obj/item/borg/stun(src)
 	modules += new /obj/item/weapon/storage/bag/ore(src)
 	if(R.emagged)
-		modules += new /obj/item/weapon/pickaxe/diamonddrill(src)
+		modules += new /obj/item/weapon/pickaxe/drill/diamonddrill(src)
 	else
-		modules += new /obj/item/weapon/pickaxe/borgdrill(src)
+		modules += new /obj/item/weapon/pickaxe/jackhammer/borgdrill(src)
 	modules += new /obj/item/device/flashlight/lantern(src)
 	modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
 	modules += new /obj/item/device/t_scanner/adv_mining_scanner(src)
 	modules += new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
+	fix_modules()
 
 /obj/item/weapon/robot_module/miner/on_emag()
 	..()
-	for(var/obj/item/weapon/pickaxe/borgdrill/D in modules)
+	for(var/obj/item/weapon/pickaxe/jackhammer/borgdrill/D in modules)
 		qdel(D)
-	modules += new /obj/item/weapon/pickaxe/diamonddrill(src)
+	modules += new /obj/item/weapon/pickaxe/drill/diamonddrill(src)
 	rebuild()
 
 
@@ -238,6 +254,7 @@
 	modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
 	modules += new /obj/item/weapon/crowbar(src)
 	emag = null
+	fix_modules()
 
 /datum/robot_energy_storage
 	var/name = "Generic energy storage"

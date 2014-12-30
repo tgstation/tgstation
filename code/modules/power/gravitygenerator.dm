@@ -28,7 +28,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	unacidable = 1
 	var/sprite_number = 0
 
-/obj/machinery/gravity_generator/ex_act(severity)
+/obj/machinery/gravity_generator/ex_act(severity, target)
 	if(severity == 1) // Very sturdy.
 		set_broken()
 
@@ -321,7 +321,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 				playsound(src.loc, 'sound/effects/EMPulse.ogg', 100, 1)
 
 			updateDialog()
-			if(prob(25)) // To help stop "Your clothes feel warm" spam.
+			if(prob(25)) // To help stop "Your clothes feel warm." spam.
 				pulse_radiation()
 
 			var/overlay_state = null

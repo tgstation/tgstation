@@ -1,7 +1,7 @@
 
 /mob/proc/HasDisease(var/datum/disease/D)
 	for(var/datum/disease/DD in viruses)
-		if(D.IsSame(D))
+		if(D.IsSame(DD))
 			return 1
 	return 0
 
@@ -32,12 +32,13 @@
 
 
 /mob/proc/AddDisease(var/datum/disease/D)
-	var/datum/disease/DD = new D.type()
+	var/datum/disease/DD = new D.type(1, D, 0)
 	viruses += DD
 	DD.affected_mob = src
 	DD.holder = src
 	if(DD.disease_flags & CAN_CARRY && prob(5))
-		DD.carrier++
+		DD.carrier = 1
+	DD.affected_mob.med_hud_set_status()
 
 
 /mob/living/carbon/ContractDisease(var/datum/disease/D)
@@ -64,6 +65,9 @@
 		feet_ch = 100
 
 	if(prob(15/D.permeability_mod))
+		return
+
+	if(satiety>0 && prob(satiety/10)) // positive satiety makes it harder to contract the disease.
 		return
 
 	var/target_zone = pick(head_ch;1,body_ch;2,hands_ch;3,feet_ch;4)

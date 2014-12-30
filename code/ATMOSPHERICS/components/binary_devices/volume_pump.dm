@@ -26,6 +26,11 @@ Thus, the two variables affect pump operation are set in New():
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
+/obj/machinery/atmospherics/binary/volume_pump/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src,frequency)
+	..()
+
 /obj/machinery/atmospherics/binary/volume_pump/on
 	on = 1
 
@@ -147,8 +152,7 @@ Thus, the two variables affect pump operation are set in New():
 	if(href_list["power"])
 		on = !on
 	if(href_list["set_transfer_rate"])
-		var/new_transfer_rate = input(usr,"Enter new output volume (0-200l/s)","Flow control",src.transfer_rate) as num
-		src.transfer_rate = max(0, min(200, new_transfer_rate))
+		transfer_rate = max(0, min(200, safe_input("Pressure control", "Enter new output pressure (0-4500kPa)", transfer_rate)))
 	usr.set_machine(src)
 	src.update_icon()
 	src.updateUsrDialog()

@@ -42,6 +42,11 @@ Filter types:
 	if(radio_controller)
 		initialize()
 
+/obj/machinery/atmospherics/trinary/filter/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src,frequency)
+	..()
+
 /obj/machinery/atmospherics/trinary/filter/update_icon_nopipes()
 	if(!(stat & NOPOWER) && on && node1 && node2 && node3)
 		icon_state = "filter_on[flipped?"_f":""]"
@@ -197,8 +202,7 @@ Filter types:
 	if (href_list["temp"])
 		src.temp = null
 	if(href_list["set_press"])
-		var/new_pressure = input(usr,"Enter new output pressure (0-4500kPa)","Pressure control",src.target_pressure) as num
-		src.target_pressure = max(0, min(4500, new_pressure))
+		target_pressure = max(0, min(4500, safe_input("Pressure control", "Enter new output pressure (0-4500kPa)", target_pressure)))
 	if(href_list["power"])
 		on=!on
 	src.update_icon()

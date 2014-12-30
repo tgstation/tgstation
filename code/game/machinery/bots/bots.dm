@@ -103,12 +103,19 @@
 	Radio = new /obj/item/device/radio(src)
 	Radio.listening = 0 //Makes bot radios transmit only so no one hears things while adjacent to one.
 
+/obj/machinery/bot/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src,beacon_freq)
+		if(bot_filter)
+			radio_controller.remove_object(src,control_freq)
+	..()
 
 /obj/machinery/bot/proc/add_to_beacons(bot_filter) //Master filter control for bots. Must be placed in the bot's local New() to support map spawned bots.
 	if(radio_controller)
 		radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
 		if(bot_filter)
 			radio_controller.add_object(src, control_freq, filter = bot_filter)
+
 
 /obj/machinery/bot/proc/explode()
 	aibots -= src
@@ -238,8 +245,6 @@
 			user << "<span class='notice'>Maintenance panel is now [open ? "opened" : "closed"].</span>"
 		else
 			user << "<span class='warning'>Maintenance panel is locked.</span>"
-	else if (istype(W, /obj/item/weapon/card/emag) && emagged < 2)
-		Emag(user)
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
 		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
@@ -269,6 +274,9 @@
 				..()
 				healthcheck()
 
+/obj/machinery/bot/emag_act(mob/user as mob)
+	if(emagged < 2)
+		Emag(user)
 
 /obj/machinery/bot/bullet_act(var/obj/item/projectile/Proj)
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
@@ -286,7 +294,7 @@
 	healthcheck()
 	return
 
-/obj/machinery/bot/ex_act(severity)
+/obj/machinery/bot/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			explode()
@@ -416,7 +424,7 @@ obj/machinery/bot/proc/bot_move(var/dest, var/move_speed)
 
 obj/machinery/bot/proc/bot_step(var/dest)
 	if(path && path.len > 1)
-		step_to(src, path[1])
+		step_towards(src, path[1])
 		if(get_turf(src) == path[1]) //Successful move
 			path -= path[1]
 		else

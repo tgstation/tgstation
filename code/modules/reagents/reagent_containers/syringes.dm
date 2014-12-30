@@ -79,7 +79,7 @@
 						user << "<span class='notice'>You are unable to locate any blood.</span>"
 						return
 					if(target != user)
-						target.visible_message("<span class='danger'>[user] is trying to take a blood sample from  [target]!</span>", \
+						target.visible_message("<span class='danger'>[user] is trying to take a blood sample from [target]!</span>", \
 										"<span class='userdanger'>[user] is trying to take a blood sample from [target]!</span>")
 						if(!do_mob(user, target))
 							return
@@ -110,7 +110,15 @@
 						temp_chem += R.name
 						temp_chem[R.name] = R.volume
 					B.data["trace_chem"] = list2params(temp_chem)
-
+					if(T.mind)
+						B.data["mind"] = T.mind
+					if(T.ckey)
+						B.data["ckey"] = T.ckey
+					if(!T.suiciding)
+						B.data["cloneable"] = 1
+					B.data["gender"] = T.gender
+					B.data["real_name"] = T.real_name
+					B.data["factions"] = T.faction
 					reagents.reagent_list += B
 					reagents.update_total()
 					on_reagent_change()
