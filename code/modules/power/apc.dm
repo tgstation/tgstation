@@ -690,7 +690,7 @@
 		"chargingStatus" = charging,
 		"totalLoad" = lastused_equip + lastused_light + lastused_environ,
 		"coverLocked" = coverlocked,
-		"siliconUser" = istype(user, /mob/living/silicon),
+		"siliconUser" = user.has_unlimited_silicon_privilege,
 		"malfStatus" = get_malf_status(user),
 
 		"powerChannels" = list(
@@ -778,7 +778,7 @@
 	if(user.lying)
 		user << "<span class='warning'>You must stand to use [src]!</span>"
 		return 0
-	if (istype(user, /mob/living/silicon))
+	if(user.has_unlimited_silicon_privilege)
 		var/mob/living/silicon/ai/AI = user
 		var/mob/living/silicon/robot/robot = user
 		if (                                                             \
@@ -844,7 +844,7 @@
 		update()
 
 	else if (href_list["overload"])
-		if(istype(usr, /mob/living/silicon))
+		if(usr.has_unlimited_silicon_privilege)
 			src.overload_lighting()
 
 	else if (href_list["malfhack"])
@@ -881,7 +881,7 @@
 			malfvacate()
 
 	else if (href_list["toggleaccess"])
-		if(istype(usr, /mob/living/silicon))
+		if(usr.has_unlimited_silicon_privilege)
 			if(emagged || (stat & (BROKEN|MAINT)))
 				usr << "The APC does not respond to the command."
 			else
