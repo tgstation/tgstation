@@ -28,6 +28,7 @@
 	var/unwieldsound = null
 
 /obj/item/weapon/twohanded/proc/unwield(mob/living/carbon/user)
+	if(!wielded) return
 	wielded = 0
 	force = force_unwielded
 	name = "[initial(name)]"
@@ -41,6 +42,7 @@
 	return
 
 /obj/item/weapon/twohanded/proc/wield(mob/living/carbon/user)
+	if(wielded) return
 	if(istype(user,/mob/living/carbon/monkey) )
 		user << "<span class='warning'>It's too heavy for you to wield fully.</span>"
 		return
@@ -77,9 +79,6 @@
 
 /obj/item/weapon/twohanded/update_icon()
 	return
-
-/obj/item/weapon/twohanded/pickup(mob/user)
-	unwield()
 
 /obj/item/weapon/twohanded/attack_self(mob/user as mob)
 	..()
