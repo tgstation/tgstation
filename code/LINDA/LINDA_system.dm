@@ -1,31 +1,11 @@
-var/kill_air = 0
-
-var/global/datum/controller/air_system/air_master
-
-datum/controller/air_system
-	var/list/excited_groups = list()
-	var/list/active_turfs = list()
-	var/list/hotspots = list()
-	var/speed = 1
-
-	//Special functions lists
-	var/list/turf/simulated/active_super_conductivity = list()
-	var/list/turf/simulated/high_pressure_delta = list()
-
-	var/current_cycle = 0
-
-
+/*
 /datum/controller/air_system/proc/setup()
 	set background = BACKGROUND_ENABLED
 	world << "<span class='userdanger'>Processing Geometry...</span>"
 	sleep(1)
 
 	var/start_time = world.timeofday
-
 	setup_allturfs()
-
-	global_activeturfs = active_turfs.len
-
 	world << "<span class='userdanger'>Geometry processed in [(world.timeofday-start_time)/10] seconds!</span>"
 
 /datum/controller/air_system/proc/process()
@@ -62,9 +42,6 @@ datum/controller/air_system
 	process_super_conductivity()
 	master_controller.air_superconductivity = (world.timeofday - timer) / 10
 
-/datum/controller/air_system/proc/process_hotspots()
-	for(var/obj/effect/hotspot/H in hotspots)
-		H.process()
 
 /datum/controller/air_system/proc/process_super_conductivity()
 	for(var/turf/simulated/T in active_super_conductivity)
@@ -99,7 +76,7 @@ datum/controller/air_system
 				continue
 			var/turf/simulated/S = get_step(T, direction)
 			if(istype(S))
-				air_master.add_to_active(S)
+				SSair.add_to_active(S)
 
 /datum/controller/air_system/proc/setup_allturfs()
 	for(var/turf/simulated/T in world)
@@ -130,6 +107,7 @@ datum/controller/air_system
 			return
 		if(EG.breakdown_cooldown > 20)
 			EG.dismantle()
+*/
 
 /turf/proc/CanAtmosPass(var/turf/T)
 	if(!istype(T))	return 0
@@ -221,8 +199,7 @@ turf/CanPass(atom/movable/mover, turf/target, height=1.5)
 /turf/proc/air_update_turf(var/command = 0)
 	if(command)
 		CalculateAdjacentTurfs()
-	if(air_master)
-		air_master.add_to_active(src,command)
+	SSair.add_to_active(src,command)
 
 /atom/movable/proc/move_update_air(var/turf/T)
     if(istype(T,/turf))
@@ -277,4 +254,4 @@ var/const/SPAWN_AIR = 256
 		G.nitrogen += MOLES_N2STANDARD * amount
 
 	air.merge(G)
-	air_master.add_to_active(src, 0)
+	SSair.add_to_active(src, 0)

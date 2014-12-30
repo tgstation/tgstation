@@ -90,8 +90,7 @@
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		greet_revolutionary(rev_mind)
 	modePlayer += head_revolutionaries
-	if(emergency_shuttle)
-		emergency_shuttle.always_fake_recall = 1
+	SSshuttle.emergencyAlwaysFakeRecall = 1
 	..()
 
 
@@ -208,8 +207,7 @@
 /datum/game_mode/revolution/check_finished()
 	if(config.continuous_round_rev)
 		if(finished != 0)
-			if(emergency_shuttle)
-				emergency_shuttle.always_fake_recall = 0
+			SSshuttle.emergencyAlwaysFakeRecall = 0
 		return ..()
 	if(finished != 0)
 		return 1
