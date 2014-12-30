@@ -31,10 +31,14 @@
 							)
 
 /obj/machinery/computer/arcade/New()
-	..()
-	var/choice = pick(typesof(/obj/machinery/computer/arcade) - /obj/machinery/computer/arcade)
-	new choice(loc)
-	qdel(src)
+	// If spawning the generic arcade machine, pick a random type
+	// and spawn that instead
+	if (!src.circuit)
+		var/choice = pick(typesof(/obj/machinery/computer/arcade) - /obj/machinery/computer/arcade)
+		new choice(loc)
+		qdel(src)
+	else
+		..()
 
 /obj/machinery/computer/arcade/proc/prizevend()
 	if(!contents.len)
@@ -87,6 +91,7 @@
 	var/turtle = 0
 
 /obj/machinery/computer/arcade/battle/New()
+	..()
 	var/name_action
 	var/name_part1
 	var/name_part2
@@ -304,6 +309,7 @@
 	var/list/stopblurbs = list()
 
 /obj/machinery/computer/arcade/orion_trail/New()
+	..()
 	// Sets up the main trail
 	stops = list("Pluto","Asteroid Belt","Proxima Centauri","Dead Space","Rigel Prime","Tau Ceti Beta","Black Hole","Space Outpost Beta-9","Orion Prime")
 	stopblurbs = list(
