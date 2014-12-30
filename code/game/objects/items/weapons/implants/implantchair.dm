@@ -130,7 +130,7 @@
 	for(var/obj/item/weapon/implant/loyalty/imp in implant_list)
 		if(!imp)	continue
 		if(istype(imp, /obj/item/weapon/implant/loyalty))
-			M.visible_message("<span class='danger'>[M] has been implanted by the [src.name].</span>")
+			M.visible_message("<span class='warning'>[M] has been implanted by the [src.name].</span>")
 
 			if(imp.implanted(M))
 				imp.loc = M

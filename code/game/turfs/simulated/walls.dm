@@ -1,6 +1,6 @@
 /turf/simulated/wall
 	name = "wall"
-	desc = "A huge chunk of metal used to seperate rooms."
+	desc = "A huge chunk of metal used to separate rooms."
 	icon = 'icons/turf/walls.dmi'
 	var/mineral = "metal"
 	opacity = 1
@@ -47,11 +47,10 @@
 		builtin_sheet.loc = src
 		new /obj/item/stack/sheet/metal(src)
 
-/turf/simulated/wall/ex_act(severity, specialty)
-	if(specialty)
+/turf/simulated/wall/ex_act(severity, target)
+	if(target == src)
 		dismantle_wall(1,1)
 		return
-
 	switch(severity)
 		if(1.0)
 			//SN src = null
@@ -77,11 +76,9 @@
 /turf/simulated/wall/mech_melee_attack(obj/mecha/M)
 	if(M.damtype == "brute")
 		playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
-		M.occupant_message("<span class='danger'>You hit [src].</span>")
-		visible_message("<span class='danger'>[src] has been hit by [M.name].</span>")
+		visible_message("<span class='danger'>[M.name] has hit [src]!</span>")
 		if(prob(5) && M.force > 20)
 			dismantle_wall(1)
-			M.occupant_message("<span class='warning'>You smash through the wall.</span>")
 			visible_message("<span class='warning'>[src.name] smashes through the wall!</span>")
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 
@@ -225,7 +222,7 @@
 
 
 /turf/simulated/wall/proc/try_destroy(obj/item/weapon/W as obj, mob/user as mob, turf/T as turf)
-	if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+	if (istype(W, /obj/item/weapon/pickaxe/drill/diamonddrill))
 		user << "<span class='notice'>You begin to drill though the wall.</span>"
 		if(do_after(user, slicing_duration*0.6))  // diamond drill is faster than welding tool slicing
 			if( !istype(src, /turf/simulated/wall) || !user || !W || !T )
@@ -288,3 +285,7 @@
 	if(current_size == STAGE_FOUR)
 		if(prob(30))
 			dismantle_wall()
+
+/turf/simulated/wall/narsie_act()
+	if(prob(20))
+		ChangeTurf(/turf/simulated/wall/cult)

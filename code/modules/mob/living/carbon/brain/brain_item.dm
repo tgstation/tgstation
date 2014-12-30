@@ -82,12 +82,10 @@
 		else
 			M.key = brainmob.key
 
+		qdel(brainmob)
+
 		M.internal_organs += src
 		loc = null
-
-		//Update the body's icon so it doesnt appear debrained anymore
-		if(ishuman(M))
-			H.update_hair(0)
 
 		//Update the body's icon so it doesnt appear debrained anymore
 		if(ishuman(M))

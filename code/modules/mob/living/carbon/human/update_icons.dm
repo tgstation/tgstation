@@ -149,6 +149,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 	if( (HUSK in mutations) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) )
 		return
 
+	if((wear_suit) && (wear_suit.hooded) && (wear_suit.suittoggled == 1))
+		return
+
 	if(dna)
 		dna.species.handle_hair(src)
 
@@ -458,6 +461,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 			var/obj/item/clothing/suit/S = wear_suit
 			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="[S.blood_overlay_type]blood")
 
+	src.update_hair()
 	apply_overlay(SUIT_LAYER)
 
 

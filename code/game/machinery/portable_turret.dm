@@ -24,7 +24,7 @@
 	var/locked = 1			//if the turret's behaviour control access is locked
 	var/controllock = 0		//if the turret responds to control panels
 
-	var/installation = /obj/item/weapon/gun/energy/gun		//the type of weapon installed
+	var/installation = /obj/item/weapon/gun/energy/gun/turret		//the type of weapon installed
 	var/gun_charge = 0		//the charge of the gun inserted
 	var/projectile = null	//holder for bullettype
 	var/eprojectile = null	//holder for the shot when emagged
@@ -119,7 +119,7 @@
 		if(/obj/item/weapon/gun/energy/lasercannon)
 			iconholder = 1
 
-		if(/obj/item/weapon/gun/energy/taser)
+		if(/obj/item/weapon/gun/energy/gun/advtaser)
 			eprojectile = /obj/item/projectile/beam
 			eshot_sound = 'sound/weapons/Laser.ogg'
 
@@ -137,6 +137,10 @@
 			eshot_sound = 'sound/weapons/Laser.ogg'
 			egun = 1
 
+		if(/obj/item/weapon/gun/energy/gun/turret)
+			eprojectile = /obj/item/projectile/beam	//If it has, going to copypaste mode
+			eshot_sound = 'sound/weapons/Laser.ogg'
+			egun = 1
 
 /obj/machinery/porta_turret/Destroy()
 	//deletes its own cover with it
@@ -268,18 +272,6 @@
 				user << "<span class='notice'>You remove the turret but did not manage to salvage anything.</span>"
 			qdel(src)
 
-	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
-		//Emagging the turret makes it go bonkers and stun everyone. It also makes
-		//the turret shoot much, much faster.
-		user << "<span class='warning'>You short out [src]'s threat assessment circuits.</span>"
-		visible_message("[src] hums oddly...")
-		emagged = 1
-		iconholder = 1
-		controllock = 1
-		on = 0 //turns off the turret temporarily
-		sleep(60) //6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
-		on = 1 //turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
-
 	else if((istype(I, /obj/item/weapon/wrench)) && (!on))
 		if(raised) return
 		//This code handles moving the turret around. After all, it's a portable turret!
@@ -319,6 +311,16 @@
 					attacked = 0
 		..()
 
+/obj/machinery/porta_turret/emag_act(user as mob)
+	if(!emagged)
+		user << "<span class='warning'>You short out [src]'s threat assessment circuits.</span>"
+		visible_message("[src] hums oddly...")
+		emagged = 1
+		iconholder = 1
+		controllock = 1
+		on = 0 //turns off the turret temporarily
+		sleep(60) //6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
+		on = 1 //turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
 
 /obj/machinery/porta_turret/bullet_act(obj/item/projectile/Proj)
 	if(on)
@@ -370,7 +372,7 @@
 
 	..()
 
-/obj/machinery/porta_turret/ex_act(severity, specialty)
+/obj/machinery/porta_turret/ex_act(severity, target)
 	if(severity >= 3)	//turret dies if an explosion touches it!
 		qdel(src)
 	else
@@ -957,15 +959,7 @@ Status: []<BR>"},
 
 
 /obj/machinery/porta_turret_cover/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/card/emag) && !Parent_Turret.emagged)
-		user << "<span class='notice'>You short out [Parent_Turret]'s threat assessment circuits.</span>"
-		visible_message("[Parent_Turret] hums oddly...")
-		Parent_Turret.emagged = 1
-		Parent_Turret.on = 0
-		sleep(40)
-		Parent_Turret.on = 1
-
-	else if(istype(I, /obj/item/weapon/wrench) && !Parent_Turret.on)
+	if(istype(I, /obj/item/weapon/wrench) && !Parent_Turret.on)
 		if(Parent_Turret.raised) return
 
 		if(!Parent_Turret.anchored)
@@ -1001,6 +995,14 @@ Status: []<BR>"},
 					Parent_Turret.attacked = 0
 		..()
 
+/obj/machinery/porta_turret_cover/emag_act(user as mob)
+	if(!emagged)
+		user << "<span class='notice'>You short out [Parent_Turret]'s threat assessment circuits.</span>"
+		visible_message("[Parent_Turret] hums oddly...")
+		Parent_Turret.emagged = 1
+		Parent_Turret.on = 0
+		sleep(40)
+		Parent_Turret.on = 1
 
 /obj/machinery/porta_turret/stationary
 	emagged = 1
@@ -1049,15 +1051,6 @@ Status: []<BR>"},
 	if (istype(user, /mob/living/silicon))
 		return src.attack_hand(user)
 
-	if (istype(W, /obj/item/weapon/card/emag) && !emagged)
-		user << "<span class='danger'>You short out the turret controls' access analysis module.</span>"
-		emagged = 1
-		locked = 0
-		if(user.machine==src)
-			src.attack_hand(user)
-
-		return
-
 	else if( get_dist(src, user) == 0 )		// trying to unlock the interface
 		if (src.allowed(usr))
 			if(emagged)
@@ -1075,6 +1068,14 @@ Status: []<BR>"},
 					src.attack_hand(user)
 		else
 			user << "<span class='warning'>Access denied.</span>"
+
+/obj/machinery/turretid/emag_act(mob/user as mob)
+	if(!emagged)
+		user << "<span class='danger'>You short out the turret controls' access analysis module.</span>"
+		emagged = 1
+		locked = 0
+		if(user.machine==src)
+			src.attack_hand(user)
 
 /obj/machinery/turretid/attack_ai(mob/user as mob)
 	if(!ailock)

@@ -56,11 +56,12 @@
 				minor_announce("All authorizations to launch the shuttle early have been revoked.")
 				src.authorized.len = 0
 				src.authorized = list(  )
+	return
 
-	else if (istype(W, /obj/item/weapon/card/emag) && !emagged)
-		var/choice = alert(user, "Would you like to launch the shuttle?","Shuttle control", "Launch", "Cancel")
-
-		if(!emagged && emergency_shuttle.location == DOCKED && user.get_active_hand() == W)
+/obj/machinery/computer/emergency_shuttle/emag_act(mob/user as mob)
+	var/choice = alert(user, "Would you like to launch the shuttle?","Shuttle control", "Launch", "Cancel")
+	if(!emagged)
+		if(emergency_shuttle.location == DOCKED)
 			switch(choice)
 				if("Launch")
 					var/time = emergency_shuttle.timeleft()
@@ -71,4 +72,3 @@
 					emagged = 1
 				if("Cancel")
 					return
-	return

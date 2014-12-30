@@ -8,7 +8,7 @@
 	var/health = 15
 
 //similar to weeds, but only barfed out by nurses manually
-/obj/effect/spider/ex_act(severity, specialty)
+/obj/effect/spider/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			qdel(src)
@@ -22,9 +22,9 @@
 
 /obj/effect/spider/attackby(var/obj/item/weapon/W, var/mob/user)
 	if(W.attack_verb.len)
-		visible_message("<span class='danger'>\The [src] has been [pick(W.attack_verb)] with \the [W][(user ? " by [user]" : "")]!</span>")
+		visible_message("<span class='danger'>[user] has [pick(W.attack_verb)] \the [src] with \the [W]!</span>")
 	else
-		visible_message("<span class='danger'>\The [src] has been attacked with \the [W][(user ? " by [user]" : "")]!</span>")
+		visible_message("<span class='danger'>[user] has attacked \the [src] with \the [W]!</span>")
 
 	var/damage = W.force / 4.0
 
@@ -212,7 +212,7 @@
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user << "<span class='notice'>You struggle against the tight bonds! (This will take about [breakout_time] minutes.)</span>"
-	visible_message("You see something struggling and writhing in the [src]!")
+	visible_message("You see something struggling and writhing in \the [src]!")
 	if(do_after(user,(breakout_time*60*10)))
 		if(!user || user.stat != CONSCIOUS || user.loc != src)
 			return

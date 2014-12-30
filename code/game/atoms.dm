@@ -232,8 +232,12 @@ its easier to just keep the beam vertical.
 /atom/proc/relaymove()
 	return
 
-/atom/proc/ex_act(severity, specialty)
-	contents_explosion(src, severity, specialty)
+/atom/proc/contents_explosion(severity, target)
+	for(var/atom/A in contents)
+		A.ex_act(severity, target)
+
+/atom/proc/ex_act(severity, target)
+	contents_explosion(severity, target)
 
 /atom/proc/blob_act()
 	return
@@ -388,4 +392,10 @@ var/list/blood_splatter_icons = list()
 	return
 
 /atom/proc/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
+	return
+
+/atom/proc/emag_act()
+	return
+
+/atom/proc/narsie_act()
 	return

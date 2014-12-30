@@ -89,10 +89,10 @@
 	else
 		..()
 
-/obj/item/clothing/mask/gas/sechailer/verb/adjust(var/mob/user)
+/obj/item/clothing/mask/gas/sechailer/verb/adjust()
 	set category = "Object"
 	set name = "Adjust Mask"
-	adjustmask(user)
+	adjustmask(usr)
 
 /obj/item/clothing/mask/gas/sechailer/attack_self()
 	halt()
@@ -235,12 +235,12 @@
 				temp_message[H] = ninjaspeak(temp_message[H])
 				pick_list -= H
 			message = list2text(temp_message, " ")
-			message = replacetext(message, "o", "¤")
-			message = replacetext(message, "p", "þ")
-			message = replacetext(message, "l", "£")
-			message = replacetext(message, "s", "§")
-			message = replacetext(message, "u", "µ")
-			message = replacetext(message, "b", "ß")
+			message = replacetext(message, "o", "?")
+			message = replacetext(message, "p", "?")
+			message = replacetext(message, "l", "?")
+			message = replacetext(message, "s", "?")
+			message = replacetext(message, "u", "?")
+			message = replacetext(message, "b", "?")
 	return message
 
 

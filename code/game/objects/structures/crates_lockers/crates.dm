@@ -307,7 +307,7 @@
 		overlays += redlight
 		add_fingerprint(user)
 		return
-	else if ( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && locked &&!broken)
+	else if (istype(W, /obj/item/weapon/melee/energy/blade) && locked && !broken)
 		overlays.Cut()
 		overlays += emag
 		overlays += sparks
@@ -320,6 +320,18 @@
 		return
 
 	return ..()
+
+/obj/structure/closet/crate/secure/emag_act(mob/user as mob)
+	if(locked && !broken)
+		overlays.Cut()
+		overlays += emag
+		overlays += sparks
+		spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
+		playsound(src.loc, "sparks", 60, 1)
+		src.locked = 0
+		src.broken = 1
+		user << "<span class='notice'>You unlock \the [src].</span>"
+		add_fingerprint(user)
 
 /obj/structure/closet/crate/attack_paw(mob/user as mob)
 	return attack_hand(user)

@@ -35,19 +35,23 @@
 	max_w_class = 5
 	max_combined_w_class = 35
 
-/obj/item/weapon/storage/backpack/holding/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/storage/backpack/holding/can_be_inserted(obj/item/W, stop_messages = 0, mob/user)
 	if(crit_fail)
 		user << "<span class='danger'>The Bluespace generator isn't working.</span>"
 		return
+	return ..()
+
+/obj/item/weapon/storage/backpack/holding/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
 	if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
 		investigate_log("has become a singularity. Caused by [user.key]","singulo")
 		user << "<span class='danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>"
 		qdel(W)
-		var/obj/machinery/singularity/singulo = new /obj/machinery/singularity (get_turf(src))
+		var/obj/singularity/singulo = new /obj/singularity (get_turf(src))
 		singulo.energy = 300 //should make it a bit bigger~
 		message_admins("[key_name_admin(user)] detonated a bag of holding")
 		log_game("[key_name(user)] detonated a bag of holding")
 		qdel(src)
+		singulo.process()
 		return
 	..()
 

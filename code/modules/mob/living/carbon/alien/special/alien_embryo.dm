@@ -53,6 +53,8 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 
 	switch(stage)
 		if(2, 3)
+			if(affected_mob == DEAD)
+				return
 			if(prob(1))
 				affected_mob.emote("sneeze")
 			if(prob(1))
@@ -62,6 +64,8 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			if(prob(1))
 				affected_mob << "<span class='danger'>Mucous runs down the back of your throat.</span>"
 		if(4)
+			if(affected_mob == DEAD)
+				return
 			if(prob(1))
 				affected_mob.emote("sneeze")
 			if(prob(1))
@@ -76,9 +80,10 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 					affected_mob.adjustToxLoss(1)
 					affected_mob.updatehealth()
 		if(5)
-			affected_mob << "<span class='danger'>You feel something tearing its way out of your stomach...</span>"
-			affected_mob.adjustToxLoss(10)
-			affected_mob.updatehealth()
+			if(affected_mob != DEAD)
+				affected_mob << "<span class='danger'>You feel something tearing its way out of your stomach...</span>"
+				affected_mob.adjustToxLoss(10)
+				affected_mob.updatehealth()
 			if(prob(50))
 				AttemptGrow()
 

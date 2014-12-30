@@ -6,7 +6,7 @@ RCD
 */
 /obj/item/weapon/rcd
 	name = "rapid-construction-device (RCD)"
-	desc = "A device used to rapidly build walls/floor."
+	desc = "A device used to rapidly build and deconstruct walls and floors."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "rcd"
 	opacity = 0
@@ -18,7 +18,7 @@ RCD
 	throw_speed = 3
 	throw_range = 5
 	w_class = 3.0
-	m_amt = 30000
+	m_amt = 100000
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
 	var/matter = 0
@@ -92,7 +92,7 @@ RCD
 
 
 /obj/item/weapon/rcd/New()
-	desc = "A RCD. It currently holds [matter]/30 matter-units."
+	desc = "A RCD. It currently holds [matter]/100 matter-units."
 	src.spark_system = new /datum/effect/effect/system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -102,12 +102,12 @@ RCD
 /obj/item/weapon/rcd/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if(istype(W, /obj/item/weapon/rcd_ammo))
-		if((matter + 10) > 30)
+		if((matter + 20) > 100)
 			user << "<span class='notice'>The RCD cant hold any more matter-units.</span>"
 			return
 		user.drop_item()
 		qdel(W)
-		matter += 10
+		matter += 20
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		user << "<span class='notice'>The RCD now holds [matter]/30 matter-units.</span>"
 		desc = "A RCD. It currently holds [matter]/30 matter-units."
@@ -219,11 +219,11 @@ RCD
 				return 0
 
 			if(istype(A, /obj/machinery/door/airlock))
-				if(checkResource(10, user))
+				if(checkResource(20, user))
 					user << "Deconstructing Airlock..."
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, 50))
-						if(!useResource(10, user)) return 0
+						if(!useResource(20, user)) return 0
 						activate()
 						qdel(A)
 						return 1

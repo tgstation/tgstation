@@ -122,7 +122,7 @@
 //Clonepod
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/datum/species/mrace, var/mcolor)
+/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/datum/species/mrace, var/mcolor, var/factions)
 	if(panel_open)
 		return 0
 	if(mess || attempting)
@@ -168,12 +168,12 @@
 	//Here let's calculate their health so the pod doesn't immediately eject them!!!
 	H.updatehealth()
 
-	H.refresh_huds(clonemind.current)
 	clonemind.transfer_to(H)
 	H.ckey = ckey
 	H << "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>"
 
 	hardset_dna(H, ui, se, null, null, mrace, mcolor)
+	H.faction |= factions
 
 	if(efficiency > 2)
 		for(var/A in bad_se_blocks)
@@ -261,15 +261,15 @@
 		else
 			src.locked = 0
 			user << "System unlocked."
-	else if (istype(W, /obj/item/weapon/card/emag))
-		if (isnull(src.occupant))
-			return
-		user << "You force an emergency ejection."
-		src.locked = 0
-		src.go_out()
-		return
 	else
 		..()
+
+/obj/machinery/clonepod/emag_act(user as mob)
+	if (isnull(src.occupant))
+		return
+	user << "You force an emergency ejection."
+	src.locked = 0
+	src.go_out()
 
 //Put messages in the connected computer's temp var for display.
 /obj/machinery/clonepod/proc/connected_message(var/message)
@@ -348,7 +348,7 @@
 	if(prob(100/(severity*efficiency))) malfunction()
 	..()
 
-/obj/machinery/clonepod/ex_act(severity, specialty)
+/obj/machinery/clonepod/ex_act(severity, target)
 	..()
 	if(!gc_destroyed)
 		go_out()
