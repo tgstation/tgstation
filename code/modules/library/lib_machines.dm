@@ -119,6 +119,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 
 /*
  * Library Computer
+ * After 860 days, it's finally a buildable computer.
  */
 /obj/machinery/computer/libraryconsole/bookmanagement
 	name = "book inventory management console"
