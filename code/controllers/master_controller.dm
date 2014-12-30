@@ -42,16 +42,15 @@ Note: you can set the datum's defined processing_interval to some integer to set
 	//sort subsystems by priority, so they initialize in the correct order
 	sortTim(subsystems, /proc/cmp_subsystem_priority)
 
+	createRandomZlevel()	//gate system
+	setup_map_transitions()
+	for(var/i=0, i<max_secret_rooms, i++)
+		make_mining_asteroid_secret()
+
 	//Eventually all this other setup stuff should be contained in subsystems and done in subsystem.Initialize()
 	for(var/datum/subsystem/S in subsystems)
 		S.Initialize(world.timeofday)
 		sleep(-1)
-
-	createRandomZlevel()	//gate system
-	setup_map_transitions()
-
-	for(var/i=0, i<max_secret_rooms, i++)
-		make_mining_asteroid_secret()
 
 	world << "<span class='userdanger'>Initializations complete</span>"
 	world.log << "Initializations complete"
@@ -69,14 +68,13 @@ Note: you can set the datum's defined processing_interval to some integer to set
 /datum/controller/game_controller/proc/process()
 	if(!Failsafe)	new /datum/controller/failsafe()
 	spawn(0)
-		set background = BACKGROUND_ENABLED
-
 		var/timer = world.time
 		for(var/datum/subsystem/SS in subsystems)
 			timer += processing_interval
 			SS.next_fire = timer
 
 		var/start_time
+		var/cpu
 
 		while(1)	//far more efficient than recursively calling ourself
 			if(processing_interval > 0)
@@ -86,15 +84,17 @@ Note: you can set the datum's defined processing_interval to some integer to set
 
 				for(var/datum/subsystem/SS in subsystems)
 					if(SS.next_fire <= world.time)
+						SS.next_fire += SS.wait
 						if(SS.can_fire > 0)
 							timer = world.timeofday
+							cpu = world.cpu
 							last_thing_processed = SS.type
 							SS.last_fire = world.time
 							SS.fire()
-							SS.cpu = MC_AVERAGE(SS.cpu, world.cpu)
+							SS.cpu = MC_AVERAGE(SS.cpu, world.cpu - cpu)
 							SS.cost = MC_AVERAGE(SS.cost, world.timeofday - timer)
 							++SS.times_fired
-						SS.next_fire += SS.wait
+							sleep(-1)
 
 				cost = MC_AVERAGE(cost, world.timeofday - start_time)
 

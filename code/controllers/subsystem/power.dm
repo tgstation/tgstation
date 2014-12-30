@@ -14,7 +14,5 @@ var/datum/subsystem/power/SSpower
 	..()
 
 /datum/subsystem/power/fire()
-	set background = BACKGROUND_ENABLED
-
 	for(var/datum/powernet/Powernet in powernets)
 		Powernet.reset()

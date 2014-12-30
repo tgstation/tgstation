@@ -21,8 +21,6 @@ var/datum/subsystem/machines/SSmachine
 
 
 /datum/subsystem/machines/fire()
-	set background = BACKGROUND_ENABLED
-
 	var/seconds = wait * 0.1
 	var/i = 1
 	for(var/thing in processing)

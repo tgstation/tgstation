@@ -37,8 +37,6 @@ var/datum/subsystem/lighting/SSlighting
 //than deleting them).
 //By using queues we are ensuring we don't perform more updates than are necessary
 /datum/subsystem/lighting/fire()
-	set background = BACKGROUND_ENABLED
-
 	lights_workload = MC_AVERAGE(lights_workload, lights.len)
 	var/i=1
 	for(var/thing in lights)

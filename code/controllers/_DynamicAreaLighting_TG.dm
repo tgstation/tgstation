@@ -223,7 +223,7 @@
 	if(!istype(Area) || !Area.lighting_use_dynamic) return
 
 	var/level = min(max(round(lighting_lumcount,1),0),SSlighting.lighting_images.len)
-	var/new_tag = loc:lighting_tag(level)
+	var/new_tag = Area.lighting_tag(level)
 	if(Area.tag!=new_tag)	//skip if already in this area
 		var/area/A = Area.build_lighting_area(new_tag,level)
 		A.contents += src	// move the turf into the area

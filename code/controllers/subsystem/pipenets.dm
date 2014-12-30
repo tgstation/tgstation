@@ -27,8 +27,6 @@ var/datum/subsystem/pipenets/SSpipe
 	..()
 
 /datum/subsystem/pipenets/fire()
-	set background = BACKGROUND_ENABLED
-
 	var/i=1
 	for(var/thing in networks)
 		if(thing)

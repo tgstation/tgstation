@@ -22,8 +22,6 @@ var/datum/subsystem/objects/SSobj
 
 
 /datum/subsystem/objects/fire()
-	set background = BACKGROUND_ENABLED
-
 	var/i=1
 	for(var/thing in SSobj.processing)
 		if(thing)

@@ -14,8 +14,6 @@ var/datum/subsystem/mobs/SSmob
 
 
 /datum/subsystem/mobs/fire()
-	set background = BACKGROUND_ENABLED
-
 	var/seconds = wait * 0.1
 	var/i=1
 	for(var/thing in mob_list)

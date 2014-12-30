@@ -35,27 +35,26 @@ var/datum/subsystem/air/SSair
 
 #define MC_AVERAGE(average, current) (0.8*(average) + 0.2*(current))
 /datum/subsystem/air/fire()
-	var/timer_a = world.timeofday
-
+	var/timer = world.timeofday
 	process_active_turfs()
-	var/timer_b = world.timeofday
-	cost_turfs = MC_AVERAGE(cost_turfs, (timer_b - timer_a))
+	cost_turfs = MC_AVERAGE(cost_turfs, (world.timeofday - timer))
 
+	timer = world.timeofday
 	process_excited_groups()
-	timer_a = world.timeofday
-	cost_groups = MC_AVERAGE(cost_groups, (timer_a - timer_b))
+	cost_groups = MC_AVERAGE(cost_groups, (world.timeofday - timer))
 
+	timer = world.timeofday
 	process_high_pressure_delta()
-	timer_b = world.timeofday
-	cost_highpressure = MC_AVERAGE(cost_highpressure, (timer_b - timer_a))
+	cost_highpressure = MC_AVERAGE(cost_highpressure, (world.timeofday - timer))
 
+	timer = world.timeofday
 	process_hotspots()
-	timer_a = world.timeofday
-	cost_hotspots = MC_AVERAGE(cost_hotspots, (timer_a - timer_b))
+	cost_hotspots = MC_AVERAGE(cost_hotspots, (world.timeofday - timer))
 
+	timer = world.timeofday
 	process_super_conductivity()
-	timer_b = world.timeofday
-	cost_superconductivity = MC_AVERAGE(cost_superconductivity, (timer_b - timer_a))
+	cost_superconductivity = MC_AVERAGE(cost_superconductivity, (world.timeofday - timer))
+
 #undef MC_AVERAGE
 
 
@@ -101,7 +100,7 @@ var/datum/subsystem/air/SSair
 				continue
 			var/turf/simulated/S = get_step(T, direction)
 			if(istype(S))
-				SSair.add_to_active(S)
+				add_to_active(S)
 
 
 /datum/subsystem/air/proc/setup_allturfs()
