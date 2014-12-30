@@ -120,8 +120,6 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 /*
  * Library Computer
  */
-// TODO: Make this an actual /obj/machinery/computer that can be crafted from circuit boards and such
-// It is August 22nd, 2012... This TODO has already been here for months.. I wonder how long it'll last before someone does something about it.
 /obj/machinery/computer/libraryconsole/bookmanagement
 	name = "book inventory management console"
 	var/arcanecheckout = 0
@@ -134,7 +132,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	var/checkoutperiod = 5 // In minutes
 	var/obj/machinery/libraryscanner/scanner // Book scanner that will be used when uploading books to the Archive
 
-	var/bibledelay = 0 // LOL NO SPAM (1 minute delay) -- Doohl
+	var/bibledelay = 0
 
 
 /obj/machinery/computer/libraryconsole/bookmanagement/interact(mob/user)
