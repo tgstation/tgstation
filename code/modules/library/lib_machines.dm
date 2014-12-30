@@ -38,6 +38,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	interact(user)
 
 /obj/machinery/computer/libraryconsole/interact(mob/user)
+	user.set_machine(src)
 	var/dat = "" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	switch(screenstate)
 		if(0)
@@ -88,14 +89,11 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		title = sanitizeSQL(title)
 	if(href_list["setcategory"])
 		var/newcategory = input("Choose a category to search for:") in list("Any", "Fiction", "Non-Fiction", "Adult", "Reference", "Religion")
-		world <<"DEBUG: [category], [newcategory]"
 		if(newcategory)
 			category = sanitize(newcategory)
 		else
 			category = "Any"
-		world <<"DEBUG: [category], [newcategory]"
 		category = sanitizeSQL(category)
-		world <<"DEBUG: [category], [newcategory]"
 	if(href_list["setauthor"])
 		var/newauthor = input("Enter an author to search for:") as text|null
 		if(newauthor)
@@ -140,6 +138,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 
 
 /obj/machinery/computer/libraryconsole/bookmanagement/interact(mob/user)
+	user.set_machine(src)
 	var/dat = "" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	switch(screenstate)
 		if(0)
