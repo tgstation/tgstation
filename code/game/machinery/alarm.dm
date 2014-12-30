@@ -563,7 +563,7 @@ table tr:first-child th:first-child { border: none;}
 				var/datum/tlv/tlv = TLV[env]
 				var/newval = input("Enter [varname] for env", "Alarm triggers", tlv.vars[varname]) as num|null
 
-				if (isnull(newval) || ..() || (locked && !issilicon(usr)))
+				if (isnull(newval) || ..() || (locked && !(usr.has_unlimited_silicon_privilege)))
 					return
 				if (newval<0)
 					tlv.vars[varname] = -1.0
@@ -1107,7 +1107,7 @@ FIRE ALARM
 	var/d1
 	var/d2
 	var/dat = ""
-	if (istype(user, /mob/living/carbon/human) || istype(user, /mob/living/silicon))
+	if (istype(user, /mob/living/carbon/human) || user.has_unlimited_silicon_privilege)
 		A = A.loc
 
 		if (A.fire)
@@ -1280,7 +1280,7 @@ Code shamelessly copied from apc_frame
 	var/area/A = src.loc
 	var/d1
 	var/dat
-	if (istype(user, /mob/living/carbon/human) || istype(user, /mob/living/silicon/ai))
+	if (istype(user, /mob/living/carbon/human) || user.has_unlimited_silicon_privilege)
 		A = A.loc
 
 		if (A.party)
