@@ -36,7 +36,7 @@
  */
 /obj/structure/closet/chefcloset
 	name = "\proper chef's closet"
-	desc = "It's a storage unit for foodservice garments."
+	desc = "It's a storage unit for foodservice garments and mouse traps."
 	icon_state = "black"
 	icon_closed = "black"
 
@@ -48,10 +48,14 @@
 	new /obj/item/device/radio/headset/headset_srv(src)
 	new /obj/item/clothing/tie/waistcoat(src)
 	new /obj/item/clothing/tie/waistcoat(src)
-	new /obj/item/clothing/head/soft/black(src)
-	new /obj/item/clothing/head/soft/black(src)
+	new /obj/item/clothing/suit/apron/chef(src)
+	new /obj/item/clothing/suit/apron/chef(src)
+	new /obj/item/clothing/suit/apron/chef(src)
+	new /obj/item/clothing/head/soft/mime(src)
+	new /obj/item/clothing/head/soft/mime(src)
 	new /obj/item/weapon/storage/box/mousetraps(src)
 	new /obj/item/weapon/storage/box/mousetraps(src)
+	new /obj/item/clothing/suit/toggle/chef(src)
 	new /obj/item/clothing/under/rank/chef(src)
 	new /obj/item/clothing/head/chefhat(src)
 
