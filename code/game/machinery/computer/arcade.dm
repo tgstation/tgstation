@@ -31,14 +31,14 @@
 							)
 
 /obj/machinery/computer/arcade/New()
-	// If spawning the generic arcade machine, pick a random type
-	// and spawn that instead
-	if (!src.circuit)
-		var/choice = pick(typesof(/obj/machinery/computer/arcade) - /obj/machinery/computer/arcade)
-		new choice(loc)
+	..()
+	// If it's a generic arcade machine, pick a random arcade
+	// circuit board for it and make the new machine
+	if(!circuit)
+		var/choice = pick(typesof(/obj/item/weapon/circuitboard/arcade) - /obj/item/weapon/circuitboard/arcade)
+		var/obj/item/weapon/circuitboard/CB = new choice()
+		new CB.build_path(loc, CB)
 		qdel(src)
-	else
-		..()
 
 /obj/machinery/computer/arcade/proc/prizevend()
 	if(!contents.len)
