@@ -27,13 +27,20 @@
 
 /obj/item/clothing/gloves/latex
 	name = "latex gloves"
-	desc = "Sterile latex gloves."
+	desc = "Cheap, sterile gloves made from latex."
 	icon_state = "latex"
 	item_state = "lgloves"
 	siemens_coefficient = 0.30
 	permeability_coefficient = 0.01
 	item_color="white"
 	transfer_prints = TRUE
+
+/obj/item/clothing/gloves/latex/nitrile
+	name = "latex gloves"
+	desc = "Expensive sterile gloves that are thicker than latex."
+	icon_state = "nitrile"
+	item_state = "nitrilegloves"
+	transfer_prints = FALSE
 
 	cmo
 		item_color = "medical"		//Exists for washing machines. Is not different from latex gloves in any way.
