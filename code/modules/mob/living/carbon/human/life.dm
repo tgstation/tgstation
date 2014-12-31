@@ -481,7 +481,7 @@
 			if (ear_damage < 100)
 				// Heal the first 1/3 here
 				ear_deaf = max(ear_deaf - 1, 0)
-				ear_damage = max(ear_damage-0.5, 0)
+				ear_damage = max(ear_damage-0.05, 0)
 				if(istype(ears, /obj/item/clothing/ears/earmuffs)) // earmuffs rest your ears, healing 3x faster, but keeping you deaf.
 					// Heal the 2/3 here
 					ear_deaf = max(ear_deaf, 1)
