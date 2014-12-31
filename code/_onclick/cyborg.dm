@@ -140,6 +140,7 @@
 */
 /mob/living/silicon/robot/UnarmedAttack(atom/A)
 	A.attack_robot(src)
+	return ..()
 /mob/living/silicon/robot/RangedAttack(atom/A)
 	A.attack_robot(src)
 

@@ -81,6 +81,7 @@
 	var/obj/item/W = get_active_hand()
 
 	if(W == A)
+		W.attack_self(src)
 		if(hand)
 			update_inv_l_hand(0)
 		else

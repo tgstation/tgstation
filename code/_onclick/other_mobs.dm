@@ -10,10 +10,13 @@
 	// Special glove functions:
 	// If the gloves do anything, have them return 1 to stop
 	// normal attack_hand() here.
+
 	if(proximity && istype(G) && G.Touch(A,1))
-		return
+		return ..()
 
 	A.attack_hand(src)
+	return ..()
+
 /atom/proc/attack_hand(mob/user as mob)
 	return
 
@@ -62,6 +65,8 @@
 */
 /mob/living/carbon/monkey/UnarmedAttack(var/atom/A)
 	A.attack_paw(src)
+	return ..()
+
 /atom/proc/attack_paw(mob/user as mob)
 	return
 
@@ -98,6 +103,8 @@
 */
 /mob/living/carbon/alien/UnarmedAttack(var/atom/A)
 	A.attack_alien(src)
+	return ..()
+
 /atom/proc/attack_alien(mob/user as mob)
 	attack_paw(user)
 	return
@@ -107,6 +114,8 @@
 // Babby aliens
 /mob/living/carbon/alien/larva/UnarmedAttack(var/atom/A)
 	A.attack_larva(src)
+	return ..()
+
 /atom/proc/attack_larva(mob/user as mob)
 	return
 
