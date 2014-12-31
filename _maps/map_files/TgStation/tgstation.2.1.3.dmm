@@ -1950,7 +1950,7 @@
 "aLz" = (/obj/machinery/atmospherics/unary/vent_scrubber{on = 1; scrub_N2O = 0; scrub_Toxins = 0},/turf/simulated/floor/wood,/area/crew_quarters/bar)
 "aLA" = (/obj/machinery/vending/cola,/turf/simulated/floor/wood,/area/crew_quarters/bar)
 "aLB" = (/obj/machinery/vending/coffee,/turf/simulated/floor/wood,/area/crew_quarters/bar)
-"aLC" = (/obj/machinery/icecream_vat,/turf/simulated/floor/plasteel{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
+"aLC" = (/obj/machinery/food_cart,/turf/simulated/floor/plasteel{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
 "aLD" = (/obj/machinery/chem_master/condimaster{name = "CondiMaster Neo"},/obj/machinery/camera{c_tag = "Kitchen Cold Room"},/turf/simulated/floor/plasteel{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
 "aLE" = (/turf/simulated/floor/plasteel{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
 "aLF" = (/obj/structure/closet/crate/hydroponics,/obj/item/weapon/shovel/spade,/obj/item/weapon/wrench,/obj/item/weapon/screwdriver,/obj/item/weapon/reagent_containers/glass/bucket,/turf/simulated/floor/plasteel{icon_state = "hydrofloor"},/area/hydroponics)

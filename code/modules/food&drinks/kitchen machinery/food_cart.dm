@@ -4,22 +4,27 @@
 #define ICECREAM_BLUE 4
 #define CONE_WAFFLE 5
 #define CONE_CHOC 6
+#define STORAGE_CAPACITY 30
 
-/obj/machinery/icecream_vat
-	name = "icecream vat"
-	desc = "Ding-aling ding dong. Get your Nanotrasen-approved ice cream!"
+/obj/machinery/food_cart
+	name = "food cart"
+	desc = "Ding-aling ding dong. Get your Nanotrasen-approved ice cream, as well as other foods and drinks!"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "icecream_vat"
 	density = 1
 	anchored = 0
 	use_power = 0
+	var/food_stored = 0
+	var/glasses = 0
+	var/portion = 10
+	var/list/stored_food = list()
 	var/list/product_types = list()
 	var/dispense_flavour = ICECREAM_VANILLA
 	var/flavour_name = "vanilla"
 	flags = OPENCONTAINER | NOREACT
 	reagents = new()
 
-/obj/machinery/icecream_vat/proc/get_ingredient_list(var/type)
+/obj/machinery/food_cart/proc/get_ingredient_list(var/type)
 	switch(type)
 		if(ICECREAM_CHOCOLATE)
 			return list("milk", "ice", "coco")
@@ -35,7 +40,7 @@
 			return list("milk", "ice")
 
 
-/obj/machinery/icecream_vat/proc/get_flavour_name(var/flavour_type)
+/obj/machinery/food_cart/proc/get_flavour_name(var/flavour_type)
 	switch(flavour_type)
 		if(ICECREAM_CHOCOLATE)
 			return "chocolate"
@@ -51,7 +56,7 @@
 			return "vanilla"
 
 
-/obj/machinery/icecream_vat/New()
+/obj/machinery/food_cart/New()
 	..()
 	while(product_types.len < 6)
 		product_types.Add(5)
@@ -61,11 +66,11 @@
 	reagents.add_reagent("sugar", 5)
 	reagents.add_reagent("ice", 5)
 
-/obj/machinery/icecream_vat/attack_hand(mob/user as mob)
+/obj/machinery/food_cart/attack_hand(mob/user as mob)
 	user.set_machine(src)
 	interact(user)
 
-/obj/machinery/icecream_vat/interact(mob/user as mob)
+/obj/machinery/food_cart/interact(mob/user as mob)
 	var/dat
 	dat += "<b>ICECREAM</b><br><div class='statusDisplay'>"
 	dat += "<b>Dispensing: [flavour_name] icecream </b> <br><br>"
@@ -76,18 +81,34 @@
 	dat += "<br><b>CONES</b><br><div class='statusDisplay'>"
 	dat += "<b>Waffle cones:</b> <a href='?src=\ref[src];cone=[CONE_WAFFLE]'><b>Dispense</b></a> <a href='?src=\ref[src];make=[CONE_WAFFLE];amount=1'><b>Make</b></a> <a href='?src=\ref[src];make=[CONE_WAFFLE];amount=5'><b>x5</b></a> [product_types[CONE_WAFFLE]] cones left. (Ingredients: flour, sugar)<br>"
 	dat += "<b>Chocolate cones:</b> <a href='?src=\ref[src];cone=[CONE_CHOC]'><b>Dispense</b></a> <a href='?src=\ref[src];make=[CONE_CHOC];amount=1'><b>Make</b></a> <a href='?src=\ref[src];make=[CONE_CHOC];amount=5'><b>x5</b></a> [product_types[CONE_CHOC]] cones left. (Ingredients: flour, sugar, coco powder)<br></div>"
-	dat += "<br>"
-	dat += "<b>VAT CONTENT</b><br>"
+	dat += "<br><b>STORED INGREDIENTS AND DRINKS</b><br><div class='statusDisplay'>"
+	dat += "Remaining glasses: [glasses]<br>"
+	dat += "Portion: <a href='?src=\ref[src];portion=1'>[portion]</a><br>"
+	dat += "<table><tr>"
+	var/i = 0
 	for(var/datum/reagent/R in reagents.reagent_list)
-		dat += "[R.name]: [R.volume]"
-		dat += "<A href='?src=\ref[src];disposeI=[R.id]'>Purge</A><BR>"
-	dat += "<a href='?src=\ref[src];refresh=1'>Refresh</a> <a href='?src=\ref[src];close=1'>Close</a>"
+		if(i % 3 == 0)
+			dat += "</tr><tr>"
+		dat += "<td>[R.name]: [R.volume] "
+		dat += "<a href='?src=\ref[src];disposeI=[R.id]'>Purge</a>"
+		if (glasses > 0)
+			dat += "<a href='?src=\ref[src];pour=[R.id]'>Pour in a glass</a>"
+		dat += "</td>"
+		i++
+	dat += "</tr></table></div><br><b>STORED FOOD</b><br><div class='statusDisplay'>"
+	for(var/V in stored_food)
+		if(stored_food[V] > 0)
+			dat += "<b>[V]: [stored_food[V]]</b> <a href='?src=\ref[src];dispense=[V]'>Dispense</a><br>"
+	dat += "</div><br><a href='?src=\ref[src];refresh=1'>Refresh</a> <a href='?src=\ref[src];close=1'>Close</a>"
 
-	var/datum/browser/popup = new(user, "icecreamvat","Icecream Vat", 700, 500, src)
+	var/datum/browser/popup = new(user, "foodcart","Food Cart", 700, 600, src)
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/icecream_vat/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/food_cart/proc/isFull()
+	return food_stored >= STORAGE_CAPACITY
+
+/obj/machinery/food_cart/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/icecream))
 		var/obj/item/weapon/reagent_containers/food/snacks/icecream/I = O
 		if(!I.ice_creamed)
@@ -105,12 +126,49 @@
 		else
 			user << "<span class='notice'>[O] already has icecream in it.</span>"
 		return 1
+	else if(istype(O, /obj/item/weapon/reagent_containers/food/drinks/drinkingglass))
+		var/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/DG = O
+		if(!DG.reagents.total_volume) //glass is empty
+			user.drop_item()
+			qdel(DG)
+			glasses++
+			user << "<span class='notice'>The [src] accepts drinking glass, sterilizing it.</span>"
+	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks))
+		if(isFull())
+			user << "<span class='warning'>The [src] is at full capacity.</span>"
+		else
+			var/obj/item/weapon/reagent_containers/food/snacks/S = O
+			user.drop_item()
+			S.loc = src
+			if(stored_food[sanitize(S.name)])
+				stored_food[sanitize(S.name)]++
+			else
+				stored_food[sanitize(S.name)] = 1
+	else if(istype(O, /obj/item/stack/sheet/glass))
+		var/obj/item/stack/sheet/glass/G = O
+		if(G.get_amount() >= 1)
+			G.use(1)
+			glasses += 4
+			user << "<span class='notice'>The [src] accepts a sheet of glass.</span>"
+	else if(istype(O, /obj/item/weapon/storage/bag/tray))
+		var/obj/item/weapon/storage/bag/tray/T = O
+		for(var/obj/item/weapon/reagent_containers/food/snacks/S in T.contents)
+			if(isFull())
+				user << "<span class='warning'>The [src] is at full capacity.</span>"
+				break
+			else
+				T.remove_from_storage(S, src)
+				if(stored_food[sanitize(S.name)])
+					stored_food[sanitize(S.name)]++
+				else
+					stored_food[sanitize(S.name)] = 1
 	else if(O.is_open_container())
 		return
 	else
 		..()
+	updateDialog()
 
-/obj/machinery/icecream_vat/proc/make(var/mob/user, var/make_type, var/amount)
+/obj/machinery/food_cart/proc/make(var/mob/user, var/make_type, var/amount)
 	for(var/R in get_ingredient_list(make_type))
 		if(reagents.has_reagent(R, amount))
 			continue
@@ -128,7 +186,7 @@
 	else
 		user << "<span class='warning'>You don't have the ingredients to make this.</span>"
 
-/obj/machinery/icecream_vat/Topic(href, href_list)
+/obj/machinery/food_cart/Topic(href, href_list)
 	if(..())
 		return
 	if(href_list["select"])
@@ -157,14 +215,31 @@
 	if(href_list["disposeI"])
 		reagents.del_reagent(href_list["disposeI"])
 
-	updateDialog()
+	if(href_list["dispense"])
+		if(stored_food[href_list["dispense"]]-- <= 0)
+			stored_food[href_list["dispense"]] = 0
+		else
+			for(var/obj/O in contents)
+				if(sanitize(O.name) == href_list["dispense"])
+					O.loc = src.loc
+					break
 
-	if(href_list["refresh"])
-		updateDialog()
+	if(href_list["portion"])
+		portion = max(0, min(50, input("How much drink do you want to dispense per glass?") as num))
+
+	if(href_list["pour"])
+		if(glasses-- <= 0)
+			usr << "span class='warning'>There are no glasses left!</span>"
+			glasses = 0
+		else
+			var/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/DG = new(loc)
+			reagents.trans_id_to(DG, href_list["pour"], portion)
+
+	updateDialog()
 
 	if(href_list["close"])
 		usr.unset_machine()
-		usr << browse(null,"window=icecreamvat")
+		usr << browse(null,"window=foodcart")
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/icecream
@@ -193,3 +268,4 @@
 #undef FLAVOUR_BLUE
 #undef CONE_WAFFLE
 #undef CONE_CHOC
+#undef STORAGE_CAPACITY
