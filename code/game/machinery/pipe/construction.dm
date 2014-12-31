@@ -294,7 +294,7 @@ var/global/list/pipeID2State = list(
 	return rotate()
 
 /obj/item/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-	..()
+
 	//*
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
