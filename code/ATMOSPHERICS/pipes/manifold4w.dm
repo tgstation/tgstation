@@ -25,6 +25,9 @@
 	color = pipe_color
 	..()
 
+/obj/machinery/atmospherics/pipe/manifold4w/SetInitDirections()
+	return
+
 /obj/machinery/atmospherics/pipe/manifold4w/initialize()
 	for(var/D in cardinal)
 		for(var/obj/machinery/atmospherics/target in get_step(src, D))
