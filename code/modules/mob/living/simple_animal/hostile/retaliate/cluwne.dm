@@ -172,6 +172,7 @@
 	return 0
 
 
+/*
 /mob/living/simple_animal/hostile/retaliate/cluwne/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	..()
 	hostile = 1
@@ -180,6 +181,7 @@
 			var/mob/living/simple_animal/hostile/retaliate/cluwne/C = Z
 			C.hostile = 1
 	return 0
+*/
 
 /mob/living/simple_animal/hostile/retaliate/cluwne/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	..()
@@ -245,10 +247,11 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/retaliate/cluwne/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	//only knowledge can kill a cluwne
 	if(istype(O,/obj/item/weapon/book))
 		gib()
 		return
-	if(O.force)
+	/*if(O.force)
 		Retaliate() //alertMode()
 		var/damage = O.force
 		if (O.damtype == HALLOSS)
@@ -257,11 +260,7 @@
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
 				M.show_message("<span class='warning'><B>[src] has been attacked with the [O] by [user].</B></span>")
-	else
-		user << "<span class='warning'>This weapon is ineffective, it does no damage.</span>"
-		for(var/mob/M in viewers(src, null))
-			if ((M.client && !( M.blinded )))
-				M.show_message("<span class='warning'>[user] gently taps [src] with the [O]. </span>")
+	*/
 
 /mob/living/simple_animal/hostile/retaliate/cluwne/Bump(atom/movable/AM as mob|obj, yes)
 	spawn( 0 )

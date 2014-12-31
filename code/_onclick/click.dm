@@ -81,10 +81,6 @@
 	var/obj/item/W = get_active_hand()
 
 	if(W == A)
-		/*next_move = world.time + 6
-		if(W.flags&USEDELAY)
-			next_move += 5*/
-		W.attack_self(src)
 		if(hand)
 			update_inv_l_hand(0)
 		else
@@ -95,28 +91,16 @@
 	// operate two levels deep here (item in backpack in src; NOT item in box in backpack in src)
 	if(A == loc || (A in loc) || (A in contents) || (A.loc in contents))
 
-		/*/ faster access to objects already on you
-		if(A in contents)
-			next_move = world.time + 6 // on your person
-		else
-			next_move = world.time + 8 // in a box/bag or in your square
-		*/
 		// No adjacency needed
 		if(W)
-			/*
-			if(W.flags&USEDELAY)
-				next_move += 5
-			*/
 
 			var/resolved = A.attackby(W,src)
-			if(ismob(A) || istype(A, /obj/mecha) || istype(W, /obj/item/weapon/grab))
-				changeNext_move(10)
+			if(istype(W, /obj/item/weapon/grab))
+				changeNext_move(8)
 			if(!resolved && A && W)
 				W.afterattack(A,src,1,params) // 1 indicates adjacency
-			else
-				changeNext_move(10)
 		else
-			if(ismob(A) || istype(W, /obj/item/weapon/grab))
+			istype(W, /obj/item/weapon/grab))
 				changeNext_move(10)
 			UnarmedAttack(A)
 		return
@@ -126,22 +110,16 @@
 
 	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
 	if(isturf(A) || isturf(A.loc) || (A.loc && isturf(A.loc.loc)))
-		//next_move = world.time + 10
 		if(A.Adjacent(src)) // see adjacent.dm
 			if(W)
-				/*if(W.flags&USEDELAY)
-					next_move += 5
-				*/
 				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-				if(ismob(A) || istype(A, /obj/mecha) || istype(W, /obj/item/weapon/grab))
+				if(istype(W, /obj/item/weapon/grab))
 					changeNext_move(10)
 				var/resolved = A.attackby(W,src)
 				if(!resolved && A && W)
 					W.afterattack(A,src,1,params) // 1: clicking something Adjacent
-				else
-					changeNext_move(10)
 			else
-				if(ismob(A) || istype(W, /obj/item/weapon/grab))
+				if(istype(W, /obj/item/weapon/grab))
 					changeNext_move(10)
 				UnarmedAttack(A, 1)
 			return
