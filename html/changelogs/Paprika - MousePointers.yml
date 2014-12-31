@@ -1,7 +1,0 @@
-author: Paprika
-delete-after: True
-
-
-changes:
- 
-  - rscadd: "Added custom mouse pointers for each UI style, located under the UI style selection. These are in beta and are subject to change.
