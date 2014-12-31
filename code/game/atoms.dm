@@ -7,11 +7,15 @@
 	var/fingerprintslast = null
 	var/list/blood_DNA
 	var/last_bumped = 0
-	var/pass_flags = 0
 	var/throwpass = 0
 
 	///Chemistry.
 	var/datum/reagents/reagents = null
+
+	//This atom's HUD (med/sec, etc) images. Associative list.
+	var/list/image/hud_list = list()
+	//HUD images that this atom can provide.
+	var/list/hud_possible
 
 	//var/chem_is_open_container = 0
 	// replaced by OPENCONTAINER flags and atom/proc/is_open_container()
@@ -228,8 +232,12 @@ its easier to just keep the beam vertical.
 /atom/proc/relaymove()
 	return
 
-/atom/proc/ex_act()
-	return
+/atom/proc/contents_explosion(severity, target)
+	for(var/atom/A in contents)
+		A.ex_act(severity, target)
+
+/atom/proc/ex_act(severity, target)
+	contents_explosion(severity, target)
 
 /atom/proc/blob_act()
 	return
@@ -366,9 +374,6 @@ var/list/blood_splatter_icons = list()
 	else
 		return 0
 
-/atom/proc/checkpass(passflag)
-	return pass_flags&passflag
-
 /atom/proc/isinspace()
 	if(istype(get_turf(src), /turf/space))
 		return 1
@@ -381,4 +386,16 @@ var/list/blood_splatter_icons = list()
 /atom/proc/handle_slip()
 	return
 /atom/proc/singularity_act()
+	return
+
+/atom/proc/singularity_pull()
+	return
+
+/atom/proc/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
+	return
+
+/atom/proc/emag_act()
+	return
+
+/atom/proc/narsie_act()
 	return

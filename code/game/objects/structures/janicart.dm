@@ -77,6 +77,12 @@
 			user << "<span class='notice'>[src] can't hold any more signs.</span>"
 	else if(mybag)
 		mybag.attackby(I, user)
+	else if(istype(I, /obj/item/weapon/crowbar))
+		user.visible_message("<span class='warning'>[user] begins to empty the contents of [src].</span>")
+		if(do_after(user, 30))
+			usr << "<span class='notice'>You empty the contents of [src]'s bucket onto the floor.</span>"
+			reagents.reaction(src.loc)
+			src.reagents.clear_reagents()
 
 /obj/structure/janitorialcart/attack_hand(mob/user)
 	user.set_machine(src)

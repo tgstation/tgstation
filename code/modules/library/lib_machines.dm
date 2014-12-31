@@ -246,8 +246,6 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	popup.open()
 
 /obj/machinery/librarycomp/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (src.density && istype(W, /obj/item/weapon/card/emag))
-		src.emagged = 1
 	if(istype(W, /obj/item/weapon/barcodescanner))
 		var/obj/item/weapon/barcodescanner/scanner = W
 		scanner.computer = src
@@ -255,6 +253,10 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		audible_message("[src] lets out a low, short blip.")
 	else
 		..()
+
+/obj/machinery/librarycomp/emag_act(mob/user as mob)
+	if(density && !emagged)
+		emagged = 1
 
 /obj/machinery/librarycomp/Topic(href, href_list)
 	if(..())
@@ -461,14 +463,20 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	icon_state = "binder"
 	anchored = 1
 	density = 1
+	var/busy = 0
 
 /obj/machinery/bookbinder/attackby(var/obj/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/paper))
+		if(busy)
+			user << "<span class='warning'>The book binder is busy. Please wait for completion of previous operation.</span>"
+			return
 		user.drop_item()
 		O.loc = src
 		user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")
 		src.visible_message("[src] begins to hum as it warms up its printing drums.")
+		busy = 1
 		sleep(rand(200,400))
+		busy = 0
 		src.visible_message("[src] whirs as it prints and binds a new book.")
 		var/obj/item/weapon/book/b = new(src.loc)
 		b.dat = O:info

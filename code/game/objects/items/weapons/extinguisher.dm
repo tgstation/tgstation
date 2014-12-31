@@ -17,6 +17,9 @@
 	var/last_use = 1.0
 	var/safety = 1
 	var/sprite_name = "fire_extinguisher"
+	var/power = 5 //Maximum distance launched water will travel
+	var/precision = 0 //By default, turfs picked from a spray are random, set to 1 to make it always have at least one water effect per row
+	var/cooling_power = 2 //Sets the cooling_temperature of the water reagent datum inside of the extinguisher when it is refilled
 
 /obj/item/weapon/extinguisher/mini
 	name = "pocket fire extinguisher"
@@ -43,16 +46,35 @@
 	user << "The safety is [safety ? "on" : "off"]."
 	return
 
+/obj/item/weapon/extinguisher/proc/AttemptRefill(atom/target, mob/user)
+	if(istype(target, /obj/structure/reagent_dispensers/watertank) && target.Adjacent(user))
+		var/safety_save = safety
+		safety = 1
+		if(reagents.total_volume == reagents.maximum_volume)
+			user << "<span class='notice'>\The [src] is already full!</span>"
+			safety = safety_save
+			return 1
+		var/obj/structure/reagent_dispensers/watertank/W = target
+		var/transferred = W.reagents.trans_to(src, max_water)
+		if(transferred > 0)
+			user << "<span class='notice'>\The [src] has been refilled by [transferred] units</span>"
+			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
+			for(var/datum/reagent/water/R in reagents.reagent_list)
+				R.cooling_temperature = cooling_power
+		else
+			user << "<span class='notice'>\The [W] is empty!</span>"
+		safety = safety_save
+		return 1
+	else
+		return 0
+
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
 	//TODO; Add support for reagents in water.
-
-	if( istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(src,target) <= 1)
-		var/obj/o = target
-		o.reagents.trans_to(src, max_water)
-		user << "<span class='notice'>\The [src] is now refilled</span>"
-		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
+	if(target.loc == user)//No more spraying yourself when putting your extinguisher away
 		return
-
+	var/Refill = AttemptRefill(target, user)
+	if(Refill)
+		return
 	if (!safety)
 		if (src.reagents.total_volume < 1)
 			usr << "<span class='danger'>\The [src] is empty.</span>"
@@ -94,20 +116,25 @@
 		var/turf/T = get_turf(target)
 		var/turf/T1 = get_step(T,turn(direction, 90))
 		var/turf/T2 = get_step(T,turn(direction, -90))
-
 		var/list/the_targets = list(T,T1,T2)
+		if(precision)
+			var/turf/T3 = get_step(T1, turn(direction, 90))
+			var/turf/T4 = get_step(T2,turn(direction, -90))
+			the_targets = list(T,T1,T2,T3,T4)
 
 		for(var/a=0, a<5, a++)
 			spawn(0)
 				var/obj/effect/effect/water/W = new /obj/effect/effect/water( get_turf(src) )
 				var/turf/my_target = pick(the_targets)
+				if(precision)
+					the_targets -= my_target
 				var/datum/reagents/R = new/datum/reagents(5)
 				if(!W) return
 				W.reagents = R
 				R.my_atom = W
 				if(!W || !src) return
 				src.reagents.trans_to(W,1)
-				for(var/b=0, b<5, b++)
+				for(var/b=0, b<power, b++)
 					step_towards(W,my_target)
 					if(!W || !W.reagents) return
 					W.reagents.reaction(get_turf(W))

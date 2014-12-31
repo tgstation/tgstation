@@ -3,20 +3,29 @@
  */
 /obj/item/clothing/under/rank/research_director
 	desc = "It's a suit worn by those with the know-how to achieve the position of \"Research Director\". Its fabric provides minor protection from biological contaminants."
-	name = "research director's suit"
+	name = "research director's vest suit"
 	icon_state = "director"
 	item_state = "g_suit"
 	item_color = "director"
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 10, bio = 10, rad = 0)
 	can_adjust = 0
 
 /obj/item/clothing/under/rank/research_director/alt
 	desc = "Maybe you'll engineer your own half-man, half-pig creature some day. Its fabric provides minor protection from biological contaminants."
-	name = "research director's suit"
+	name = "research director's tan suit"
 	icon_state = "rdwhimsy"
 	item_state = "rdwhimsy"
 	item_color = "rdwhimsy"
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 10, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 10, rad = 0)
+	can_adjust = 1
+
+/obj/item/clothing/under/rank/research_director/turtleneck
+	desc = "A dark purple turtleneck and tan khakis, for a director with a superior sense of style."
+	name = "research director's turtleneck"
+	icon_state = "rdturtle"
+	item_state = "p_suit"
+	item_color = "rdturtle"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 10, rad = 0)
 	can_adjust = 1
 
 /obj/item/clothing/under/rank/scientist
@@ -115,7 +124,7 @@
  * Medsci, unused (i think) stuff
  */
 /obj/item/clothing/under/rank/geneticist_new
-	desc = "It's made of a special fiber which provides minor protection against biohazards."
+	desc = "It's made of a special fiber that provides minor protection against biohazards."
 	name = "geneticist's jumpsuit"
 	icon_state = "genetics_new"
 	item_state = "w_suit"
@@ -125,7 +134,7 @@
 	can_adjust = 0
 
 /obj/item/clothing/under/rank/chemist_new
-	desc = "It's made of a special fiber which provides minor protection against biohazards."
+	desc = "It's made of a special fiber that provides minor protection against biohazards."
 	name = "chemist's jumpsuit"
 	icon_state = "chemist_new"
 	item_state = "w_suit"

@@ -14,6 +14,8 @@
 	set name = "Toggle Magboots"
 	set category = "Object"
 	set src in usr
+	if(!can_use(usr))
+		return
 	attack_self(usr)
 
 

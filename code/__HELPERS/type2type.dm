@@ -454,3 +454,59 @@ for(var/t in test_times)
 			return "SW"
 		else
 	return
+
+
+
+
+//Turns a Body_parts_covered bitfield into a list of organ/limb names.
+//(I challenge you to find a use for this)
+/proc/body_parts_covered2organ_names(var/bpc)
+	var/list/covered_parts = list()
+
+	if(!bpc)
+		return 0
+
+	if(bpc & FULL_BODY)
+		covered_parts |= list("l_arm","r_arm","head","chest","l_leg","r_leg")
+
+	else
+		if(bpc & HEAD)
+			covered_parts |= list("head")
+		if(bpc & CHEST)
+			covered_parts |= list("chest")
+		if(bpc & GROIN)
+			covered_parts |= list("chest")
+
+		if(bpc & ARMS)
+			covered_parts |= list("l_arm","r_arm")
+		else
+			if(bpc & ARM_LEFT)
+				covered_parts |= list("l_arm")
+			if(bpc & ARM_RIGHT)
+				covered_parts |= list("r_arm")
+
+		if(bpc & HANDS)
+			covered_parts |= list("l_arm","r_arm")
+		else
+			if(bpc & HAND_LEFT)
+				covered_parts |= list("l_arm")
+			if(bpc & HAND_RIGHT)
+				covered_parts |= list("r_arm")
+
+		if(bpc & LEGS)
+			covered_parts |= list("l_leg","r_leg")
+		else
+			if(bpc & LEG_LEFT)
+				covered_parts |= list("l_leg")
+			if(bpc & LEG_RIGHT)
+				covered_parts |= list("r_leg")
+
+		if(bpc & FEET)
+			covered_parts |= list("l_leg","r_leg")
+		else
+			if(bpc & FOOT_LEFT)
+				covered_parts |= list("l_leg")
+			if(bpc & FOOT_RIGHT)
+				covered_parts |= list("r_leg")
+
+	return covered_parts

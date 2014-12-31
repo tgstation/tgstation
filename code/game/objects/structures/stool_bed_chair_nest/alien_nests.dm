@@ -12,8 +12,6 @@
 		"<span class='notice'>[user.name] pulls [buckled_mob.name] free from the sticky nest!</span>",\
 		"[user.name] pulls you free from the gelatinous resin.",\
 		"You hear squelching...")
-	buckled_mob.pixel_y = 0
-	buckled_mob.pixel_x = 0
 	unbuckle()
 
 /obj/structure/stool/bed/nest/unbuckle_myself(mob/user as mob)
@@ -23,8 +21,6 @@
 		"You hear squelching...")
 	spawn(600)
 		if(user && buckled_mob && user.buckled == src)
-			buckled_mob.pixel_y = 0
-			buckled_mob.pixel_x = 0
 			unbuckle()
 
 /obj/structure/stool/bed/nest/buckle_mob(mob/M as mob, mob/user as mob)
@@ -43,20 +39,24 @@
 	else
 		M.visible_message(\
 			"<span class='notice'>[user.name] secretes a thick vile goo, securing [M.name] into [src]!</span>",\
-			"<span class='warning'>[user.name] drenches you in a foul-smelling resin, trapping you in the [src]!</span>",\
+			"<span class='warning'>[user.name] drenches you in a foul-smelling resin, trapping you in [src]!</span>",\
 			"<span class='notice'>You hear squelching...</span>")
 	M.buckled = src
 	M.loc = src.loc
 	M.dir = src.dir
 	M.update_canmove()
-	M.pixel_y = 1
-	M.pixel_x = 2
+	M.pixel_y += 1
+	M.pixel_x += 2
+	M.anchored = anchored
 	src.buckled_mob = M
 	src.add_fingerprint(user)
 	src.overlays += image('icons/mob/alien.dmi', "nestoverlay", layer=6)
 	return
 
 /obj/structure/stool/bed/nest/unbuckle()
+	if(buckled_mob)
+		buckled_mob.pixel_y -= 1
+		buckled_mob.pixel_x -= 2
 	overlays.Cut()
 	..()
 

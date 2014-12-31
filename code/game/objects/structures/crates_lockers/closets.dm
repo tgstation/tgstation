@@ -38,7 +38,7 @@
 
 /obj/structure/closet/proc/can_close()
 	for(var/obj/structure/closet/closet in get_turf(src))
-		if(closet != src)
+		if(closet != src && !closet.wall_mounted)
 			return 0
 	return 1
 
@@ -127,48 +127,30 @@
 	return src.open()
 
 // this should probably use dump_contents()
-/obj/structure/closet/ex_act(severity)
-	switch(severity)
-		if(1)
-			for(var/atom/movable/A as mob|obj in src)//pulls everything out of the locker and hits it with an explosion
-				A.loc = src.loc
-				A.ex_act(severity++)
-			qdel(src)
-		if(2)
-			if(prob(50))
-				for (var/atom/movable/A as mob|obj in src)
-					A.loc = src.loc
-					A.ex_act(severity++)
-				qdel(src)
-		if(3)
-			if(prob(5))
-				for(var/atom/movable/A as mob|obj in src)
-					A.loc = src.loc
-					A.ex_act(severity++)
-				qdel(src)
+/obj/structure/closet/ex_act(severity, target)
+	contents_explosion(severity, target)
+	open()
+	..()
 
 /obj/structure/closet/bullet_act(var/obj/item/projectile/Proj)
 	..()
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		health -= Proj.damage
 		if(health <= 0)
-			for(var/atom/movable/A as mob|obj in src)
-				A.loc = src.loc
+			dump_contents()
 			qdel(src)
 	return
 
 /obj/structure/closet/attack_animal(mob/living/simple_animal/user as mob)
 	if(user.environment_smash)
-		visible_message("<span class='danger'>[user] destroys the [src].</span>")
-		for(var/atom/movable/A as mob|obj in src)
-			A.loc = src.loc
+		user.do_attack_animation(src)
+		visible_message("<span class='danger'>[user] destroys \the [src].</span>")
+		dump_contents()
 		qdel(src)
 
-// this should probably use dump_contents()
 /obj/structure/closet/blob_act()
 	if(prob(75))
-		for(var/atom/movable/A as mob|obj in src)
-			A.loc = src.loc
+		dump_contents()
 		qdel(src)
 
 
@@ -188,14 +170,14 @@
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.remove_fuel(0,user))
-				user << "<span class='notice'>You begin cutting the [src] apart...</span>"
+				user << "<span class='notice'>You begin cutting \the [src] apart...</span>"
 				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 				if(do_after(user,40,5,1))
 					if( !src.opened || !istype(src, /obj/structure/closet) || !user || !WT || !WT.isOn() || !user.loc )
 						return
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					new /obj/item/stack/sheet/metal(src.loc)
-					visible_message("<span class='notice'>\The [src] has been cut apart by [user] with \the [WT].</span>", "You hear welding.")
+					visible_message("<span class='notice'>[user] has cut \the [src] apart with \the [WT].</span>", "You hear welding.")
 					qdel(src)
 			return
 
@@ -210,16 +192,16 @@
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
-			user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] the [src]...</span>"
+			user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] \the [src]...</span>"
 			playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
 			if(do_after(user,40,5,1))
 				if(src.opened || !istype(src, /obj/structure/closet) || !user || !WT || !WT.isOn() || !user.loc )
 					return
 				playsound(loc, 'sound/items/welder.ogg', 50, 1)
 				welded = !welded
-				user << "<span class='notice'>You [welded ? "welded the [src] shut":"unwelded the [src]"]</span>"
+				user << "<span class='notice'>You [welded ? "welded [src] shut":"unwelded [src]"].</span>"
 				update_icon()
-				user.visible_message("<span class='warning'>[src] has been [welded? "welded shut":"unwelded"] by [user.name].</span>")
+				user.visible_message("<span class='warning'>[user.name] has [welded ? "welded [src] shut":"unwelded [src]"].</span>")
 		return
 	else if(!place(user, W))
 		src.attack_hand(user)
@@ -316,8 +298,8 @@
 	if(istype(user.loc, /obj/structure/closet/critter) && !welded)
 		breakout_time = 0.75 //45 seconds if it's an unwelded critter crate
 
-	if(opened || (!welded && !locked))
-		return  //Door's open, not locked or welded, no point in resisting.
+	if( opened || (!welded && !locked && !istype(src.loc, /obj/mecha)) )
+		return  //Door's open, not locked or welded or inside a mech, no point in resisting.
 
 	//okay, so the closet is either welded or locked... resist!!!
 	user.changeNext_move(CLICK_CD_BREAKOUT)
@@ -325,9 +307,8 @@
 	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>"
 	for(var/mob/O in viewers(src))
 		O << "<span class='warning'>[src] begins to shake violently!</span>"
-	var/turf/T = get_turf(src)	//Check for moved locker
 	if(do_after(user,(breakout_time*60*10))) //minutes * 60seconds * 10deciseconds
-		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded) || T != get_turf(src))
+		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded && !istype(src.loc, /obj/mecha)) )
 			return
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
 
@@ -336,4 +317,11 @@
 		broken = 1 //applies to secure lockers only
 		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
 		user << "<span class='notice'>You successfully break out of [src]!</span>"
+		if(istype( src.loc, /obj/structure/bigDelivery))
+			var/obj/structure/bigDelivery/D = src.loc
+			qdel(D)
+		else if(istype( src.loc, /obj/mecha))
+			src.loc = get_turf(src.loc)
 		open()
+	else
+		user << "<span class='warning'>You fail to break out of [src]!</span>"

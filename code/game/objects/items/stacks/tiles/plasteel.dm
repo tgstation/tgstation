@@ -11,7 +11,7 @@
 	throw_range = 7
 	flags = CONDUCT
 	max_amount = 60
-	turf_type = /turf/simulated/floor
+	turf_type = /turf/simulated/floor/plasteel
 
 /obj/item/stack/tile/plasteel/cyborg
 	desc = "The ground you walk on" //Not the usual floor tile desc as that refers to throwing, Cyborgs can't do that - RR
@@ -31,14 +31,15 @@
 		var/obj/item/weapon/weldingtool/WT = W
 
 		if(get_amount() < 4)
-			user << "<span class='danger'>You need at least four tiles to do this.</span>"
+			user << "<span class='warning'>You need at least four tiles to do this.</span>"
 			return
 
 		if(WT.remove_fuel(0,user))
 			var/obj/item/stack/sheet/metal/new_item = new(usr.loc)
 			new_item.add_to_stacks(usr)
-			for (var/mob/M in viewers(src))
-				M.show_message("<span class='danger'>[src] is shaped into metal by [user.name] with the weldingtool.</span>", 3, "<span class='danger'>You hear welding.</span>", 2)
+			user.visible_message("<span class='warning'>[user.name] shaped [src] into metal with the weldingtool.</span>", \
+						 "<span class='notice'>You shaped [src] into metal with the weldingtool.</span>", \
+						 "<span class='warning'>You hear welding.</span>")
 			var/obj/item/stack/rods/R = src
 			src = null
 			var/replace = (user.get_inactive_hand()==R)

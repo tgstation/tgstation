@@ -69,10 +69,12 @@ The regular pipe you see everywhere, including bent ones.
 	if(node1)
 		var/obj/machinery/atmospherics/A = node1
 		node1.disconnect(src)
+		node1 = null
 		A.build_network()
 	if(node2)
 		var/obj/machinery/atmospherics/A = node2
 		node2.disconnect(src)
+		node2 = null
 		A.build_network()
 	releaseAirToTurf()
 	..()
@@ -100,7 +102,7 @@ The regular pipe you see everywhere, including bent ones.
 	else return 1
 
 /obj/machinery/atmospherics/pipe/simple/proc/burst()
-	src.visible_message("<span class='userdanger'>[src] bursts!</span>");
+	visible_message("<span class='danger'>[src] bursts!</span>");
 	playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
 	var/datum/effect/effect/system/harmless_smoke_spread/smoke = new
 	smoke.set_up(1,0, src.loc, 0)

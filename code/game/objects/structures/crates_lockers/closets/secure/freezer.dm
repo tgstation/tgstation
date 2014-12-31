@@ -18,7 +18,6 @@
 
 /obj/structure/closet/secure_closet/freezer/kitchen/New()
 	..()
-	sleep(2)
 	for(var/i = 0, i < 3, i++)
 		new /obj/item/weapon/reagent_containers/food/drinks/flour(src)
 	new /obj/item/weapon/reagent_containers/food/condiment/sugar(src)
@@ -42,7 +41,6 @@
 
 /obj/structure/closet/secure_closet/freezer/meat/New()
 	..()
-	sleep(2)
 	for(var/i = 0, i < 4, i++)
 		new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src)
 	return
@@ -61,7 +59,6 @@
 
 /obj/structure/closet/secure_closet/freezer/fridge/New()
 	..()
-	sleep(2)
 	for(var/i = 0, i < 5, i++)
 		new /obj/item/weapon/reagent_containers/food/drinks/milk(src)
 	for(var/i = 0, i < 5, i++)
@@ -86,7 +83,6 @@
 
 /obj/structure/closet/secure_closet/freezer/money/New()
 	..()
-	sleep(2)
 	for(var/i = 0, i < 3, i++)
 		new /obj/item/weapon/spacecash/c1000(src)
 	for(var/i = 0, i < 5, i++)

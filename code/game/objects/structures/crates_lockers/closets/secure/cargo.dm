@@ -10,13 +10,13 @@
 
 /obj/structure/closet/secure_closet/cargotech/New()
 	..()
-	sleep(2)
 	new /obj/item/clothing/under/rank/cargotech(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/device/radio/headset/headset_cargo(src)
 	new /obj/item/clothing/gloves/fingerless(src)
 	new /obj/item/clothing/head/soft(src)
 //	new /obj/item/weapon/cartridge/quartermaster(src)
+	new /obj/item/clothing/suit/toggle/wintercoat/cargo(src)
 	return
 
 /obj/structure/closet/secure_closet/quartermaster
@@ -31,7 +31,6 @@
 
 /obj/structure/closet/secure_closet/quartermaster/New()
 	..()
-	sleep(2)
 	new /obj/item/clothing/under/rank/cargo(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
 	new /obj/item/device/radio/headset/headset_cargo(src)
@@ -42,4 +41,5 @@
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/clothing/head/soft(src)
+	new /obj/item/clothing/suit/toggle/wintercoat/cargo(src)
 	return

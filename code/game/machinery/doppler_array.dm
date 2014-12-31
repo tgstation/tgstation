@@ -38,7 +38,7 @@ var/list/doppler_arrays = list()
 
 	if(!usr || !isturf(usr.loc))
 		return
-	if(usr.stat || usr.restrained())
+	if(usr.stat || usr.restrained() || !usr.canmove)
 		return
 	src.dir = turn(src.dir, 90)
 	return

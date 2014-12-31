@@ -133,6 +133,12 @@
 	if(!H.getorgan(/obj/item/organ/brain))
 		standing	+= image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained_s", "layer" = -HAIR_LAYER)
 
+	if((H.wear_suit) && (H.wear_suit.hooded) && (H.wear_suit.suittoggled == 1))
+		if(standing.len)
+			H.overlays_standing[HAIR_LAYER]    = standing
+		H.apply_overlay(HAIR_LAYER)
+		return
+
 	else if(H.hair_style && HAIR in specflags)
 		S = hair_styles_list[H.hair_style]
 		if(S)
@@ -158,7 +164,6 @@
 		H.overlays_standing[HAIR_LAYER]	= standing
 
 	H.apply_overlay(HAIR_LAYER)
-
 	return
 
 /datum/species/proc/handle_body(var/mob/living/carbon/human/H)
@@ -395,16 +400,41 @@
 			H.update_inv_w_uniform(0)
 			H.update_inv_wear_suit()
 
-	// nutrition decrease
+	// nutrition decrease and satiety
 	if (H.nutrition > 0 && H.stat != 2)
-		H.nutrition = max (0, H.nutrition - HUNGER_FACTOR)
+		var/hunger_rate = HUNGER_FACTOR
+		if(H.satiety > 0)
+			H.satiety--
+		if(H.satiety < 0)
+			H.satiety++
+			if(prob(round(-H.satiety/40)))
+				H.Jitter(5)
+			hunger_rate = 5 * HUNGER_FACTOR
+		H.nutrition = max (0, H.nutrition - hunger_rate)
 
-	if (H.nutrition > 450)
+
+	if (H.nutrition > NUTRITION_LEVEL_FULL)
 		if(H.overeatduration < 600) //capped so people don't take forever to unfat
 			H.overeatduration++
 	else
 		if(H.overeatduration > 1)
 			H.overeatduration -= 2 //doubled the unfat rate
+
+	//metabolism change
+	if(H.nutrition > NUTRITION_LEVEL_FAT)
+		H.metabolism_efficiency = 1
+	else if(H.nutrition > NUTRITION_LEVEL_FED && H.satiety > 80)
+		if(H.metabolism_efficiency != 1.25)
+			H << "<span class='notice'>You feel vigorous.</span>"
+			H.metabolism_efficiency = 1.25
+	else if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
+		if(H.metabolism_efficiency != 0.8)
+			H << "<span class='notice'>You feel sluggish.</span>"
+		H.metabolism_efficiency = 0.8
+	else
+		if(H.metabolism_efficiency == 1.25)
+			H << "<span class='notice'>You no longer feel vigorous.</span>"
+		H.metabolism_efficiency = 1
 
 	if (H.drowsyness)
 		H.drowsyness--
@@ -457,9 +487,6 @@
 				H.sight |= G.vision_flags
 				H.see_in_dark = G.darkness_view
 				H.see_invisible = G.invis_view
-				if(G.hud)
-					G.process_hud(H)
-
 		if(H.druggy)	//Override for druggy
 			H.see_invisible = see_temp
 
@@ -509,13 +536,43 @@
 						if(0 to 20)				H.healths.icon_state = "health5"
 						else					H.healths.icon_state = "health6"
 
+	if(H.healthdoll)
+		H.healthdoll.overlays.Cut()
+		if(H.stat == DEAD)
+			H.healthdoll.icon_state = "healthdoll_DEAD"
+		else
+			H.healthdoll.icon_state = "healthdoll_OVERLAY"
+			for(var/obj/item/organ/limb/L in H.organs)
+				var/damage = L.burn_dam + L.brute_dam
+				var/comparison = (L.max_damage/5)
+				var/icon_num = 0
+				if(damage)
+					icon_num = 1
+				if(damage > (comparison))
+					icon_num = 2
+				if(damage > (comparison*2))
+					icon_num = 3
+				if(damage > (comparison*3))
+					icon_num = 4
+				if(damage > (comparison*4))
+					icon_num = 5
+				if(icon_num)
+					H.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[L.name][icon_num]")
+
 	if(H.nutrition_icon)
 		switch(H.nutrition)
-			if(450 to INFINITY)				H.nutrition_icon.icon_state = "nutrition0"
-			if(350 to 450)					H.nutrition_icon.icon_state = "nutrition1"
-			if(250 to 350)					H.nutrition_icon.icon_state = "nutrition2"
-			if(150 to 250)					H.nutrition_icon.icon_state = "nutrition3"
-			else							H.nutrition_icon.icon_state = "nutrition4"
+			if(NUTRITION_LEVEL_FULL to INFINITY)
+				H.nutrition_icon.icon_state = "nutritionFAT"
+			if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
+				H.nutrition_icon.icon_state = "nutrition0"
+			if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+				H.nutrition_icon.icon_state = "nutrition1"
+			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
+				H.nutrition_icon.icon_state = "nutrition2"
+			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
+				H.nutrition_icon.icon_state = "nutrition3"
+			else
+				H.nutrition_icon.icon_state = "nutrition4"
 
 	if(H.pressure)
 		H.pressure.icon_state = "pressure[H.pressure_alert]"
@@ -620,20 +677,15 @@
 	if(H.status_flags & GOTTAGOFAST)
 		mspeed -= 1
 
-	if(!has_gravity(H))
-		mspeed += 2 //Carefully propelling yourself along the walls is actually quite slow
+	var/hasjetpack = 0
+	if(istype(H.back, /obj/item/weapon/tank/jetpack))
+		var/obj/item/weapon/tank/jetpack/J = H.back
+		if(J.allow_thrust(0.01, H))
+			hasjetpack = 1
+	var/grav = has_gravity(H)
 
-		if(istype(H.back, /obj/item/weapon/tank/jetpack))
-			var/obj/item/weapon/tank/jetpack/J = H.back
-			if(J.allow_thrust(0.01, H))
-				mspeed -= 3
-
-		if(H.l_hand) //Having your hands full makes movement harder when you're weightless. You try climbing around while holding a gun!
-			mspeed += 0.5
-		if(H.r_hand)
-			mspeed += 0.5
-		if(H.r_hand && H.l_hand)
-			mspeed += 0.5
+	if(!grav && !hasjetpack)
+		mspeed += 1 //Slower space without jetpack
 
 	var/health_deficiency = (100 - H.health + H.staminaloss)
 	if(health_deficiency >= 40)
@@ -643,16 +695,16 @@
 	if(hungry >= 70)
 		mspeed += hungry / 50
 
-	if(H.wear_suit)
+	if(H.wear_suit && grav)
 		mspeed += H.wear_suit.slowdown
-	if(H.shoes)
+	if(H.shoes && grav)
 		mspeed += H.shoes.slowdown
-	if(H.back)
+	if(H.back && grav)
 		mspeed += H.back.slowdown
 
-	if(FAT in H.mutations)
+	if(FAT in H.mutations && grav)
 		mspeed += 1.5
-	if(H.bodytemperature < 283.222)
+	if(H.bodytemperature < 283.222 && grav)
 		mspeed += (283.222 - H.bodytemperature) / 10 * 1.75
 
 	mspeed += speedmod
@@ -687,8 +739,10 @@
 
 			if(H.cpr_time < world.time + 30)
 				add_logs(H, M, "CPRed")
-				H.visible_message("<span class='notice'>[M] is trying to perform CPR on [H]!</span>")
+				M.visible_message("<span class='notice'>[M] is trying to perform CPR on [H]!</span>", \
+								"<span class='notice'>You try to perform CPR on [H]. Hold still!</span>")
 				if(!do_mob(M, H))
+					M << "<span class='warning'>You fail to perform CPR on [H]!</span>"
 					return 0
 				if((H.health >= -99 && H.health <= 0))
 					H.cpr_time = world.time
@@ -699,29 +753,12 @@
 					H << "<span class='unconscious'>You feel a breath of fresh air enter your lungs. It feels good.</span>"
 
 		if("grab")
-			if(M == H || H.anchored)
-				return 0
-
-			add_logs(M, H, "grabbed", addition="passively")
-
-			if(H.w_uniform)
-				H.w_uniform.add_fingerprint(M)
-
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, H)
-			if(H.buckled)
-				M << "<span class='notice'>You cannot grab [H], \he is buckled in!</span>"
-			if(!G)	//the grab will delete itself in New if affecting is anchored
-				return
-			M.put_in_active_hand(G)
-			G.synch()
-			H.LAssailant = M
-
-			playsound(H.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			H.visible_message("<span class='warning'>[M] has grabbed [H] passively!</span>")
+			H.grabbedby(M)
 			return 1
 
 		if("harm")
 			add_logs(M, H, "punched")
+			M.do_attack_animation(H)
 
 			var/atk_verb = "punch"
 			if(H.lying)
@@ -767,6 +804,7 @@
 				H.forcesay(hit_appends)
 
 		if("disarm")
+			M.do_attack_animation(H)
 			add_logs(M, H, "disarmed")
 
 			if(H.w_uniform)
@@ -822,15 +860,17 @@
 
 /datum/species/proc/spec_attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone, var/obj/item/organ/limb/affecting, var/hit_area, var/intent, var/obj/item/organ/limb/target_limb, target_area, var/mob/living/carbon/human/H)
 	// Allows you to put in item-specific reactions based on species
+	if(user != src)
+		user.do_attack_animation(H)
 	if((user != H) && H.check_shields(I.force, "the [I.name]"))
 		return 0
 
 	if(I.attack_verb && I.attack_verb.len)
-		H.visible_message("<span class='danger'>[H] has been [pick(I.attack_verb)] in the [hit_area] with [I] by [user]!</span>", \
-						"<span class='userdanger'>[H] has been [pick(I.attack_verb)] in the [hit_area] with [I] by [user]!</span>")
+		H.visible_message("<span class='danger'>[user] has [pick(I.attack_verb)] [H] in the [hit_area] with [I]!</span>", \
+						"<span class='userdanger'>[user] has [pick(I.attack_verb)] [H] in the [hit_area] with [I]!</span>")
 	else if(I.force)
-		H.visible_message("<span class='danger'>[H] has been attacked in the [hit_area] with [I] by [user]!</span>", \
-						"<span class='userdanger'>[H] has been attacked in the [hit_area] with [I] by [user]!</span>")
+		H.visible_message("<span class='danger'>[user] has attacked [H] in the [hit_area] with [I]!</span>", \
+						"<span class='userdanger'>[user] has attacked [H] in the [hit_area] with [I]!</span>")
 	else
 		return 0
 
@@ -911,21 +951,20 @@
 			if(istype(location, /turf/simulated))
 				location.add_blood_floor(H)
 
-	var/showname = "."
-	if(user)
-		showname = " by [user]!"
-	if(!(user in viewers(I, null)))
-		showname = "."
-
+	var/message_verb = ""
 	if(I.attack_verb && I.attack_verb.len)
-		H.visible_message("<span class='danger'>[H] has been [pick(I.attack_verb)] with [I][showname]</span>",
-		"<span class='userdanger'>[H] has been [pick(I.attack_verb)] with [I][showname]</span>")
+		message_verb = "[pick(I.attack_verb)]"
 	else if(I.force)
-		H.visible_message("<span class='danger'>[H] has been attacked with [I][showname]</span>",
-		"<span class='userdanger'>[H] has been attacked with [I][showname]</span>")
-	if(!showname && user)
-		if(user.client)
-			user << "<span class='danger'><B>You attack [H] with [I]. </B></span>"
+		message_verb = "attacked"
+
+	var/attack_message = "[H] has been [message_verb] with [I]."
+	if(user)
+		user.do_attack_animation(src)
+		if(user in viewers(src, null))
+			attack_message = "[user] has [message_verb] [H] with [I]!"
+	if(message_verb)
+		H.visible_message("<span class='danger'>[attack_message]</span>",
+		"<span class='userdanger'>[attack_message]</span>")
 
 	return
 
@@ -1047,14 +1086,9 @@
 	if((H.status_flags & GODMODE))
 		return
 
-	if(!breath || (breath.total_moles() == 0) || H.suiciding)
+	if(!breath || (breath.total_moles() == 0))
 		if(H.reagents.has_reagent("inaprovaline"))
 			return
-		if(H.suiciding)
-			H.adjustOxyLoss(2)//If you are suiciding, you should die a little bit faster
-			H.failed_last_breath = 1
-			H.oxygen_alert = max(H.oxygen_alert, 1)
-			return 0
 		if(H.health >= config.health_threshold_crit)
 			if(NOBREATH in specflags)	return 1
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)

@@ -37,7 +37,7 @@
 			var/mob/M = G.affecting
 			M.resting = 1
 			M.loc = loc
-			visible_message("<span class='notice'>[M] has been laid on [src] by [user].</span>")
+			visible_message("<span class='notice'>[user] has laid [M] on [src].</span>")
 			patient = M
 			check_patient()
 			qdel(W)

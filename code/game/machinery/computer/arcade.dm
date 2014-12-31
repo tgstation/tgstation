@@ -23,8 +23,11 @@
 							/obj/item/toy/prize/mauler						= 1,
 							/obj/item/toy/prize/odysseus					= 1,
 							/obj/item/toy/prize/phazon						= 1,
+							/obj/item/toy/prize/reticence					= 1,
 							/obj/item/toy/cards/deck						= 2,
-							/obj/item/toy/nuke								= 2
+							/obj/item/toy/nuke								= 2,
+							/obj/item/toy/minimeteor						= 2,
+							/obj/item/toy/carpplushie						= 2
 							)
 
 /obj/machinery/computer/arcade/New()
@@ -250,8 +253,8 @@
 	return
 
 
-/obj/machinery/computer/arcade/battle/attackby(I as obj, user as mob)
-	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
+/obj/machinery/computer/arcade/battle/emag_act(mob/user as mob)
+	if(!emagged)
 		temp = "If you die in the game, you die for real!"
 		player_hp = 30
 		player_mp = 10
@@ -267,9 +270,6 @@
 
 
 		src.updateUsrDialog()
-	else
-		..()
-	return
 
 
 

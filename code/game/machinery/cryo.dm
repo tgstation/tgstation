@@ -4,6 +4,7 @@
 	icon_state = "cell-off"
 	density = 1
 	anchored = 1.0
+	interact_offline = 1
 	layer = 4
 
 	var/on = 0
@@ -17,7 +18,6 @@
 /obj/machinery/atmospherics/unary/cryo_cell/New()
 	..()
 	initialize_directions = dir
-	initialize()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/cryo_tube(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
@@ -27,6 +27,9 @@
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/stack/cable_coil(null, 1)
 	RefreshParts()
+
+/obj/machinery/atmospherics/unary/cryo_cell/construction()
+	..(dir,dir)
 
 /obj/machinery/atmospherics/unary/cryo_cell/RefreshParts()
 	var/C
@@ -45,7 +48,7 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/process()
 	..()
-	if(!node)
+	if(!node || !is_operational())
 		return
 	if(!on)
 		updateDialog()
@@ -61,7 +64,7 @@
 				process_occupant()
 
 	if(abs(temperature_archived-air_contents.temperature) > 1)
-		network.update = 1
+		parent.update = 1
 
 	updateDialog()
 	return 1
@@ -97,11 +100,17 @@
 		user << "Seems empty."
 
 /obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user)
-	if(stat & (NOPOWER|BROKEN))
-		if(state_open == 1)
+	if(..())
+		return
+
+	//powerless interaction
+	if(!is_operational())
+		user.unset_machine()//essential to prevent infinite loops of opening/closing the machine
+		if(state_open)
 			close_machine()
 		else
 			open_machine()
+
 	else
 		ui_interact(user)
 
@@ -258,7 +267,7 @@
 	if(state_open)
 		icon_state = "cell-open"
 		return
-	if(on)
+	if(on && is_operational())
 		if(occupant)
 			icon_state = "cell-occupied"
 		else
@@ -266,6 +275,9 @@
 	else
 		icon_state = "cell-off"
 
+/obj/machinery/atmospherics/unary/cryo_cell/power_change()
+	..()
+	update_icon()
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/process_occupant()
 	if(air_contents.total_moles() < 10)

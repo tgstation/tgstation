@@ -23,7 +23,11 @@
 		icon_state = "pinoff"
 		usr << "<span class='notice'>You deactivate the pinpointer.</span>"
 
-/obj/item/weapon/pinpointer/proc/point_at(atom/target)
+/obj/item/weapon/pinpointer/proc/scandisk()
+	if(!the_disk)
+		the_disk = locate()
+
+/obj/item/weapon/pinpointer/proc/point_at(atom/target, spawnself = 1)
 	if(!active)
 		return
 	if(!target)
@@ -46,13 +50,15 @@
 				icon_state = "pinonmedium"
 			if(16 to INFINITY)
 				icon_state = "pinonfar"
-	spawn(5)
-		.()
+	if(spawnself)
+		spawn(5)
+			.()
 
 /obj/item/weapon/pinpointer/proc/workdisk()
-	if(!the_disk)
-		the_disk = locate()
-	point_at(the_disk)
+	scandisk()
+	point_at(the_disk, 0)
+	spawn(5)
+		.()
 
 /obj/item/weapon/pinpointer/examine(mob/user)
 	..()
@@ -77,7 +83,7 @@
 			point_at(location)
 		if(mode == 2)
 			point_at(target)
-		usr << "<span class='notice'>You activate the pinpointer.,/span>"
+		usr << "<span class='notice'>You activate the pinpointer.</span>"
 	else
 		active = 0
 		icon_state = "pinoff"
@@ -88,6 +94,9 @@
 	set category = "Object"
 	set name = "Toggle Pinpointer Mode"
 	set src in view(1)
+
+	if(usr.stat || usr.restrained() || !usr.canmove)
+		return
 
 	active = 0
 	icon_state = "pinoff"
@@ -180,14 +189,10 @@
 		playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)	//Plays a beep
 		visible_message("Shuttle Locator active.")			//Lets the mob holding it know that the mode has changed
 		return		//Get outta here
+	scandisk()
 	if(!the_disk)
-		the_disk = locate()
-		if(!the_disk)
-			icon_state = "pinonnull"
-			return
-//	if(loc.z != the_disk.z)	//If you are on a different z-level from the disk
-//		icon_state = "pinonnull"
-//	else
+		icon_state = "pinonnull"
+		return
 	dir = get_dir(src, the_disk)
 	switch(get_dist(src, the_disk))
 		if(0)

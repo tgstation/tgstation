@@ -4,13 +4,35 @@
 
 #define NOTESFILE "data/player_notes.sav"	//where the player notes are saved
 
+/proc/see_own_notes()
+	if(!config.see_own_notes)
+		return
+	var/ckey = usr.client.ckey
+	if(!ckey)
+		usr << "<span class='warning'>Error: No ckey found.</span>"
+		return
+	var/savefile/notesfile = new(NOTESFILE)
+	if(!notesfile)
+		usr << "<span class='warning'>Error: Cannot access [NOTESFILE]</span>"
+		return
+	notesfile.cd = "/[ckey]"
+	var/dat = "<b>Notes for [ckey]:</b><br>"
+	while(!notesfile.eof)
+		var/note
+		notesfile >> note
+		dat += note
+	var/datum/browser/popup = new(usr, "player_notes", "Player Notes", 700, 400)
+	popup.set_content(dat)
+	popup.open()
+
+
 datum/admins/proc/notes_show(var/ckey)
 	usr << browse("<head><title>Player Notes</title></head><body>[notes_gethtml(ckey)]</body>","window=player_notes;size=700x400")
 
 
 datum/admins/proc/notes_gethtml(var/ckey)
 	var/savefile/notesfile = new(NOTESFILE)
-	if(!notesfile)	return "<font color='red'>Error: Cannot access [NOTESFILE]</font>"
+	if(!notesfile)	return "<span class='warning'>Error: Cannot access [NOTESFILE]</span>"
 	if(ckey)
 		. = "<b>Notes for <a href='?_src_=holder;notes=show'>[ckey]</a>:</b> <a href='?_src_=holder;notes=add;ckey=[ckey]'>\[+\]</a><br>"
 		notesfile.cd = "/[ckey]"

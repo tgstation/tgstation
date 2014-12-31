@@ -73,7 +73,7 @@
 
 	var/n_name = copytext(sanitize(input(usr, "What would you like to label the photo?", "Photo Labelling", null)  as text), 1, MAX_NAME_LEN)
 	//loc.loc check is for making possible renaming photos in clipboards
-	if((loc == usr || loc.loc && loc.loc == usr) && usr.stat == 0)
+	if((loc == usr || loc.loc && loc.loc == usr) && usr.stat == 0 && usr.canmove && !usr.restrained())
 		name = "photo[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
 
@@ -249,8 +249,9 @@
 
 
 /obj/item/device/camera/proc/printpicture(mob/user, icon/temp, mobs, flag) //Normal camera proc for creating photos
-	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
-	user.put_in_hands(P)
+	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo(get_turf(src))
+	if(Adjacent(user)) //needed because of TK
+		user.put_in_hands(P)
 	var/icon/small_img = icon(temp)
 	var/icon/ic = icon('icons/obj/items.dmi',"photo")
 	small_img.Scale(8, 8)

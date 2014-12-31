@@ -118,7 +118,7 @@ datum/controller/air_system
 						active_turfs |= T
 						break
 				else
-					if(!T.air.check_turf(enemy_tile))
+					if(!T.air.check_turf_total(enemy_tile))
 						T.excited = 1
 						active_turfs |= T
 

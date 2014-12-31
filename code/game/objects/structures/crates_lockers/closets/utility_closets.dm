@@ -78,7 +78,6 @@
 
 /obj/structure/closet/firecloset/full/New()
 	..()
-	sleep(4)
 	contents = list()
 
 	new /obj/item/clothing/suit/fire/firefighter(src)
@@ -133,7 +132,7 @@
 	if(prob(20))
 		new /obj/item/device/multitool(src)
 	if(prob(5))
-		new /obj/item/clothing/gloves/yellow(src)
+		new /obj/item/clothing/gloves/color/yellow(src)
 	if(prob(40))
 		new /obj/item/clothing/head/hardhat(src)
 
@@ -165,7 +164,6 @@
 
 /obj/structure/closet/bombcloset/New()
 	..()
-	sleep(2)
 	new /obj/item/clothing/suit/bomb_suit( src )
 	new /obj/item/clothing/under/color/black( src )
 	new /obj/item/clothing/shoes/sneakers/black( src )
@@ -181,7 +179,6 @@
 
 /obj/structure/closet/bombclosetsecurity/New()
 	..()
-	sleep(2)
 	new /obj/item/clothing/suit/bomb_suit/security( src )
 	new /obj/item/clothing/under/rank/security( src )
 	new /obj/item/clothing/shoes/sneakers/brown( src )

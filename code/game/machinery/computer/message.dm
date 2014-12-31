@@ -39,24 +39,6 @@
 		return
 	if(!istype(user))
 		return
-	if(istype(O,/obj/item/weapon/card/emag/))
-		// Will create sparks and print out the console's password. You will then have to wait a while for the console to be back online.
-		// It'll take more time if there's more characters in the password..
-		if(!emag)
-			if(!isnull(src.linkedServer))
-				icon_state = hack_icon // An error screen I made in the computers.dmi
-				emag = 1
-				screen = 2
-				spark_system.set_up(5, 0, src)
-				src.spark_system.start()
-				var/obj/item/weapon/paper/monitorkey/MK = new/obj/item/weapon/paper/monitorkey
-				MK.loc = src.loc
-				// Will help make emagging the console not so easy to get away with.
-				MK.info += "<br><br><font color='red'>£%@%(*$%&(£&?*(%&£/{}</font>"
-				spawn(100*length(src.linkedServer.decryptkey)) UnmagConsole()
-				message = rebootmsg
-			else
-				user << "<span class='notice'>A no server error appears on the screen.</span>"
 	if(istype(O, /obj/item/weapon/screwdriver) && emag)
 		//Stops people from just unscrewing the monitor and putting it back to get the console working again.
 		user << "<span class='warning'>It is too hot to mess with!</span>"
@@ -64,6 +46,23 @@
 
 	..()
 	return
+
+/obj/machinery/computer/message_monitor/emag_act(user as mob)
+	if(!emag)
+		if(!isnull(src.linkedServer))
+			icon_state = hack_icon // An error screen I made in the computers.dmi
+			emag = 1
+			screen = 2
+			spark_system.set_up(5, 0, src)
+			src.spark_system.start()
+			var/obj/item/weapon/paper/monitorkey/MK = new/obj/item/weapon/paper/monitorkey
+			MK.loc = src.loc
+			// Will help make emagging the console not so easy to get away with.
+			MK.info += "<br><br><font color='red'>£%@%(*$%&(£&?*(%&£/{}</font>"
+			spawn(100*length(src.linkedServer.decryptkey)) UnmagConsole()
+			message = rebootmsg
+		else
+			user << "<span class='notice'>A no server error appears on the screen.</span>"
 
 /obj/machinery/computer/message_monitor/update_icon()
 	..()
@@ -114,8 +113,10 @@
 				else
 					dat += "<dd><A href='?src=\ref[src];view=1'>&#09;[++i]. View Message Logs </a><br></dd>"
 					dat += "<dd><A href='?src=\ref[src];viewr=1'>&#09;[++i]. View Request Console Logs </a></br></dd>"
+					dat += "<dd><A href='?src=\ref[src];viewc=1'>&#09;[++i]. View Chatroom Logs </a></br></dd>"
 					dat += "<dd><A href='?src=\ref[src];clear=1'>&#09;[++i]. Clear Message Logs</a><br></dd>"
 					dat += "<dd><A href='?src=\ref[src];clearr=1'>&#09;[++i]. Clear Request Console Logs</a><br></dd>"
+					dat += "<dd><A href='?src=\ref[src];clearc=1'>&#09;[++i]. Clear Chatroom Logs</a><br></dd>"
 					dat += "<dd><A href='?src=\ref[src];pass=1'>&#09;[++i]. Set Custom Key</a><br></dd>"
 					dat += "<dd><A href='?src=\ref[src];msg=1'>&#09;[++i]. Send Admin Message</a><br></dd>"
 			else
@@ -236,6 +237,24 @@
 				<td width='15%'>[rc.rec_dpt]</td><td width='300px'>[rc.message]</td><td width='15%'>[rc.stamp]</td><td width='15%'>[rc.id_auth]</td><td width='15%'>[rc.priority]</td></tr>"}
 			dat += "</table>"
 
+		//Chatroom Logs
+		if(5)
+
+			var/index = 0
+			//var/sender = "Anon"
+			//var/channel = "ss13"
+			//var/message = "Blank"
+			dat += "<center><A href='?src=\ref[src];back=1'>Back</a> - <A href='?src=\ref[src];refresh=1'>Refresh</center><hr>"
+			dat += "<table border='1' width='100%'><tr><th width = '5%'>X</th><th width='15%'>Channel</th><th width='15%'>Nick</th><th width='300px' word-wrap: break-word>Message</th></tr>"
+			for(var/datum/data_chat_msg/msg in src.linkedServer.chat_msgs)
+				index++
+				if(index > 3000)
+					break
+				// Del - Channel - Sender - Message
+				// X   - #ss13   - bigdik - hi asl
+				dat += "<tr><td width = '5%'><center><A href='?src=\ref[src];delete=\ref[msg]' style='color: rgb(255,0,0)'>X</a></center></td><td width='15%'>[msg.channel]</td><td width='15%'>[msg.sender]</td><td width='300px'>[msg.message]</td></tr>"
+			dat += "</table>"
+
 	message = defaultmsg
 	//user << browse(dat, "window=message;size=700x700")
 	//onclose(user, "message")
@@ -320,6 +339,14 @@
 			else
 				if(auth)
 					src.linkedServer.rc_msgs = list()
+					message = "<span class='notice'>NOTICE: Logs cleared.</span>"
+		//Clears the chatroom logs - KEY REQUIRED
+		if (href_list["clearc"])
+			if(!linkedServer || (src.linkedServer.stat & (NOPOWER|BROKEN)))
+				message = noserver
+			else
+				if(auth)
+					src.linkedServer.chat_msgs = list()
 					message = "<span class='notice'>NOTICE: Logs cleared.</span>"
 		//Change the password - KEY REQUIRED
 		if (href_list["pass"])
@@ -464,6 +491,13 @@
 			else
 				if(auth)
 					src.screen = 4
+		//Chatroom Logs - KEY REQUIRED
+		if(href_list["viewc"])
+			if(src.linkedServer == null || (src.linkedServer.stat & (NOPOWER|BROKEN)))
+				message = noserver
+			else
+				if(auth)
+					src.screen = 5
 
 			//usr << href_list["select"]
 

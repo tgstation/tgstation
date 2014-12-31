@@ -1,14 +1,14 @@
 /datum/disease/cold
 	name = "The Cold"
 	max_stages = 3
-	spread = "Airborne"
-	cure = "Rest & Spaceacillin"
-	cure_id = "spaceacillin"
+	spread_flags = AIRBORNE
+	cure_text = "Rest & Spaceacillin"
+	cures = list("spaceacillin")
 	agent = "XY-rhinovirus"
-	affected_species = list("Human", "Monkey")
+	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	permeability_mod = 0.5
 	desc = "If left untreated the subject will contract the flu."
-	severity = "Minor"
+	severity = MINOR
 
 /datum/disease/cold/stage_act()
 	..()
@@ -62,5 +62,5 @@
 			if(prob(1) && prob(50))
 				if(!affected_mob.resistances.Find(/datum/disease/flu))
 					var/datum/disease/Flu = new /datum/disease/flu(0)
-					affected_mob.contract_disease(Flu,1)
+					affected_mob.ContractDisease(Flu)
 					cure()

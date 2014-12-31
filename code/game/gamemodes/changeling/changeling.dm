@@ -91,15 +91,27 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	..()
 
 /datum/game_mode/proc/forge_changeling_objectives(var/datum/mind/changeling)
-	//OBJECTIVES - Always absorb at least 5 genomes, plus random traitor objectives.
-	//If they have two objectives as well as absorb, they must survive rather than escape
+	//OBJECTIVES - random traitor objectives. Unique objectives "steal brain" and "identity theft".
 	//No escape alone because changelings aren't suited for it and it'd probably just lead to rampant robusting
 	//If it seems like they'd be able to do it in play, add a 10% chance to have to escape alone
+
 
 	var/datum/objective/absorb/absorb_objective = new
 	absorb_objective.owner = changeling
 	absorb_objective.gen_amount_goal(6, 8)
 	changeling.objectives += absorb_objective
+
+	if(prob(60))
+		var/datum/objective/steal/steal_objective = new
+		steal_objective.owner = changeling
+		steal_objective.find_target()
+		changeling.objectives += steal_objective
+	else
+		var/datum/objective/debrain/debrain_objective = new
+		debrain_objective.owner = changeling
+		debrain_objective.find_target()
+		changeling.objectives += debrain_objective
+
 
 	var/list/active_ais = active_ais()
 	if(active_ais.len && prob(100/joined_player_list.len))
@@ -119,22 +131,23 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 			maroon_objective.find_target()
 			changeling.objectives += maroon_objective
 
-	if(prob(60))
-		var/datum/objective/steal/steal_objective = new
-		steal_objective.owner = changeling
-		steal_objective.find_target()
-		changeling.objectives += steal_objective
-	else
-		var/datum/objective/debrain/debrain_objective = new
-		debrain_objective.owner = changeling
-		debrain_objective.find_target()
-		changeling.objectives += debrain_objective
+			if (!(locate(/datum/objective/escape) in changeling.objectives))
+				var/datum/objective/escape/escape_with_identity/identity_theft = new
+				identity_theft.owner = changeling
+				identity_theft.target = maroon_objective.target
+				identity_theft.update_explanation_text()
+				changeling.objectives += identity_theft
 
 	if (!(locate(/datum/objective/escape) in changeling.objectives))
-		var/datum/objective/escape/escape_objective = new
-		escape_objective.owner = changeling
-		changeling.objectives += escape_objective
-
+		if(prob(50))
+			var/datum/objective/escape/escape_objective = new
+			escape_objective.owner = changeling
+			changeling.objectives += escape_objective
+		else
+			var/datum/objective/escape/escape_with_identity/identity_theft = new
+			identity_theft.owner = changeling
+			identity_theft.find_target()
+			changeling.objectives += identity_theft
 	return
 
 /datum/game_mode/proc/greet_changeling(var/datum/mind/changeling, var/you_are=1)
@@ -217,6 +230,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 /datum/changeling //stores changeling powers, changeling recharge thingie, changeling absorbed DNA and changeling ID (for changeling hivemind)
 	var/list/absorbed_dna = list()
+	var/list/protected_dna = list() //dna that is not lost when capacity is otherwise full
 	var/dna_max = 4 //How many extra DNA strands the changeling can store for transformation.
 	var/absorbedcount = 1 //We would require at least 1 sample of compatible DNA to have taken on the form of a human.
 	var/chem_charges = 20
@@ -255,9 +269,15 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 
 /datum/changeling/proc/get_dna(var/dna_owner)
-	for(var/datum/dna/DNA in absorbed_dna)
+	for(var/datum/dna/DNA in (absorbed_dna+protected_dna))
 		if(dna_owner == DNA.real_name)
 			return DNA
+
+/datum/changeling/proc/has_dna(var/datum/dna/tDNA)
+	for(var/datum/dna/D in (absorbed_dna+protected_dna))
+		if(tDNA.is_same_as(D))
+			return 1
+	return 0
 
 /datum/changeling/proc/can_absorb_dna(var/mob/living/carbon/user, var/mob/living/carbon/target)
 	if(absorbed_dna[1] == user.dna)//If our current DNA is the stalest, we gotta ditch it.
@@ -265,17 +285,14 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		return
 	if(!target)
 		return
-	if(NOCLONE in target.mutations || HUSK in target.mutations)
+	if((NOCLONE in target.mutations) || (HUSK in target.mutations))
 		user << "<span class='warning'>DNA of [target] is ruined beyond usability!</span>"
 		return
 	if(!ishuman(target))//Absorbing monkeys is entirely possible, but it can cause issues with transforming. That's what lesser form is for anyway!
 		user << "<span class='warning'>We could gain no benefit from absorbing a lesser creature.</span>"
 		return
-	var/datum/dna/tDna = target.dna
-	for(var/datum/dna/D in absorbed_dna)
-		if(tDna.is_same_as(D))
-			user << "<span class='warning'>We already have that DNA in storage.</span>"
-			return
+	if(has_dna(target.dna))
+		user << "<span class='warning'>We already have this DNA in storage!</span>"
 	if(!check_dna_integrity(target))
 		user << "<span class='warning'>[target] is not compatible with our biology.</span>"
 		return

@@ -70,7 +70,8 @@
 		if(exchange_parts(user, O))
 			return
 
-	default_deconstruction_crowbar(O)
+	if(default_deconstruction_crowbar(O))
+		return
 
 	if(src.broken > 0)
 		if(src.broken == 2 && istype(O, /obj/item/weapon/wirecutters)) // If it's broken and they're using a screwdriver
@@ -122,11 +123,12 @@
 			return 1
 
 	else if(istype(O, /obj/item/weapon/soap/)) // If they're trying to clean it then let them
+		var/obj/item/weapon/soap/P = O
 		user.visible_message( \
 			"<span class='notice'>[user] starts to clean the microwave.</span>", \
 			"<span class='notice'>You start to clean the microwave.</span>" \
 		)
-		if (do_after(user,20))
+		if (do_after(user, P.cleanspeed))
 			user.visible_message( \
 				"<span class='notice'>[user]  has cleaned  the microwave.</span>", \
 				"<span class='notice'>You have cleaned the microwave.</span>" \

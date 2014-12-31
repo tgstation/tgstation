@@ -149,6 +149,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 	if( (HUSK in mutations) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) )
 		return
 
+	if((wear_suit) && (wear_suit.hooded) && (wear_suit.suittoggled == 1))
+		return
+
 	if(dna)
 		dna.species.handle_hair(src)
 
@@ -271,6 +274,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 			if(hud_used.inventory_shown)			//if the inventory is open ...
 				w_uniform.screen_loc = ui_iclothing //...draw the item in the inventory screen
 			client.screen += w_uniform				//Either way, add the item to the HUD
+
+		if(wear_suit && (wear_suit.flags_inv & HIDEJUMPSUIT))
+			return
 
 		var/t_color = w_uniform.item_color
 		if(!t_color)		t_color = icon_state
@@ -455,6 +461,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 			var/obj/item/clothing/suit/S = wear_suit
 			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="[S.blood_overlay_type]blood")
 
+	src.update_hair()
 	apply_overlay(SUIT_LAYER)
 
 

@@ -101,12 +101,45 @@
 
 /obj/item/device/flashlight/pen
 	name = "penlight"
-	desc = "A pen-sized light, used by medical staff."
+	desc = "A pen-sized light, used by medical staff. It can also be used to create a hologram to alert people of incoming medical assistance."
 	icon_state = "penlight"
 	item_state = ""
 	flags = CONDUCT
 	brightness_on = 2
+	var/holo_cooldown = 0
 
+/obj/item/device/flashlight/pen/afterattack(atom/target, mob/user, proximity_flag)
+	if(!proximity_flag)
+		if(holo_cooldown)
+			user << "<span class='warning'>[src] is not ready yet.</span>"
+			return
+		var/T = get_turf(target)
+		if(locate(/mob/living) in T)
+			CreateHolo(T, user)
+			return
+	..()
+
+/obj/item/device/flashlight/pen/proc/CreateHolo(var/tturf,var/creator)
+	var/obj/effect/medical_holosign/M = new /obj/effect/medical_holosign(tturf)
+	M.visible_message("<span class='danger'>[creator] created a medical hologram!</span>")
+	holo_cooldown = 1
+	spawn(100)
+		holo_cooldown = 0
+	return
+
+/obj/effect/medical_holosign
+	name = "medical holosign"
+	desc = "A small holographic barrier that indicates a medic is coming to treat a patient."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "medi_holo"
+	layer = 4.1
+	mouse_opacity = 0
+
+/obj/effect/medical_holosign/New()
+	playsound(loc, 'sound/machines/ping.ogg', 50, 0)
+	spawn(30)
+		qdel(src)
+	return
 
 /obj/item/device/flashlight/seclite
 	name = "seclite"
@@ -136,7 +169,7 @@
 	desc = "A classic green-shaded desk lamp."
 	icon_state = "lampgreen"
 	item_state = "lampgreen"
-	brightness_on = 5
+
 
 
 /obj/item/device/flashlight/lamp/verb/toggle_light()
@@ -146,6 +179,13 @@
 
 	if(!usr.stat)
 		attack_self(usr)
+
+//Bananalamp
+obj/item/device/flashlight/lamp/bananalamp
+	name = "banana lamp"
+	desc = "Only a clown would think to make a ghetto banana-shaped lamp. Even has a goofy pullstring."
+	icon_state = "bananalamp"
+	item_state = "bananalamp"
 
 // FLARES
 
@@ -173,18 +213,25 @@
 	if(!fuel || !on)
 		turn_off()
 		if(!fuel)
-			src.icon_state = "[initial(icon_state)]-empty"
+			icon_state = "[initial(icon_state)]-empty"
 		processing_objects -= src
 
 /obj/item/device/flashlight/flare/proc/turn_off()
 	on = 0
-	src.force = initial(src.force)
-	src.damtype = initial(src.damtype)
+	force = initial(src.force)
+	damtype = initial(src.damtype)
 	if(ismob(loc))
 		var/mob/U = loc
 		update_brightness(U)
 	else
 		update_brightness(null)
+
+/obj/item/device/flashlight/flare/update_brightness(var/mob/user = null)
+	..()
+	if(on)
+		item_state = "[initial(item_state)]-on"
+	else
+		item_state = "[initial(item_state)]"
 
 /obj/item/device/flashlight/flare/attack_self(mob/user)
 
@@ -198,9 +245,9 @@
 	. = ..()
 	// All good, turn it on.
 	if(.)
-		user.visible_message("<span class='notice'>[user] lights the [src].</span>", "<span class='notice'>You light the [src]!</span>")
-		src.force = on_damage
-		src.damtype = "fire"
+		user.visible_message("<span class='notice'>[user] lights \the [src].</span>", "<span class='notice'>You light \the [src]!</span>")
+		force = on_damage
+		damtype = "fire"
 		processing_objects += src
 
 /obj/item/device/flashlight/flare/torch
@@ -209,7 +256,7 @@
 	w_class = 4
 	brightness_on = 7
 	icon_state = "torch"
-	item_state = "torch_off"
+	item_state = "torch"
 	on_damage = 10
 
 

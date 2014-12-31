@@ -32,7 +32,12 @@
 		if(radio_controller)
 			radio_controller.add_object(src, freq, RADIO_NAVBEACONS)
 
-	// set the transponder codes assoc list from codes_txt
+/obj/machinery/navbeacon/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src, freq)
+	..()
+
+// set the transponder codes assoc list from codes_txt
 /obj/machinery/navbeacon/proc/set_codes()
 	if(!codes_txt)
 		return

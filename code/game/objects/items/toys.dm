@@ -1,16 +1,18 @@
 /* Toys!
  * ContainsL
  *		Balloons
- *		Fake telebeacon
  *		Fake singularity
  *		Toy gun
  *		Toy crossbow
  *		Toy swords
  *		Crayons
  *		Snap pops
- *		Water flower
+ *		Mech prizes
+ *		AI core prizes
  *		Cards
  *		Toy nuke
+ *		Fake meteor
+ *		Carp plushie
  */
 
 
@@ -65,7 +67,7 @@
 
 /obj/item/toy/balloon/throw_impact(atom/hit_atom)
 	if(src.reagents.total_volume >= 1)
-		src.visible_message("<span class='danger'>The [src] bursts!</span>","You hear a pop and a splash.")
+		src.visible_message("<span class='danger'>\The [src] bursts!</span>","You hear a pop and a splash.")
 		src.reagents.reaction(get_turf(hit_atom))
 		for(var/atom/A in get_turf(hit_atom))
 			src.reagents.reaction(A)
@@ -164,17 +166,17 @@
 						 "<span class='danger'> You hear a gunshot.</span>")
 
 /obj/item/toy/ammo/gun
-	name = "ammo-caps"
+	name = "capgun ammo"
 	desc = "Make sure to recyle the box in an autolathe when it gets empty."
 	icon = 'icons/obj/ammo.dmi'
-	icon_state = "357-7"
+	icon_state = "357OLD-7"
 	w_class = 1.0
 	g_amt = 10
 	m_amt = 10
 	var/amount_left = 7.0
 
 /obj/item/toy/ammo/gun/update_icon()
-	src.icon_state = text("357-[]", src.amount_left)
+	src.icon_state = text("357OLD-[]", src.amount_left)
 
 /obj/item/toy/ammo/gun/examine(mob/user)
 	..()
@@ -550,78 +552,89 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "ripleytoy"
 	var/cooldown = 0
+	var/quiet = 0
 
 //all credit to skasi for toy mech fun ideas
 /obj/item/toy/prize/attack_self(mob/user as mob)
 	if(!cooldown)
 		user << "<span class='notice'>You play with [src].</span>"
-		playsound(user, 'sound/mecha/mechstep.ogg', 20, 1)
 		cooldown = 1
 		spawn(30) cooldown = 0
+		if (!quiet)
+			playsound(user, 'sound/mecha/mechstep.ogg', 20, 1)
+		return
+	..()
 
 /obj/item/toy/prize/attack_hand(mob/user as mob)
 	if(loc == user)
 		if(!cooldown)
 			user << "<span class='notice'>You play with [src].</span>"
-			playsound(user, 'sound/mecha/mechturn.ogg', 20, 1)
 			cooldown = 1
 			spawn(30) cooldown = 0
+			if (!quiet)
+				playsound(user, 'sound/mecha/mechturn.ogg', 20, 1)
 			return
 	..()
 
 /obj/item/toy/prize/ripley
 	name = "toy Ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 1/11."
+	desc = "Mini-Mecha action figure! Collect them all! 1/12."
 
 /obj/item/toy/prize/fireripley
 	name = "toy firefighting Ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 2/11."
+	desc = "Mini-Mecha action figure! Collect them all! 2/12."
 	icon_state = "fireripleytoy"
 
 /obj/item/toy/prize/deathripley
 	name = "toy deathsquad Ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 3/11."
+	desc = "Mini-Mecha action figure! Collect them all! 3/12."
 	icon_state = "deathripleytoy"
 
 /obj/item/toy/prize/gygax
 	name = "toy Gygax"
-	desc = "Mini-Mecha action figure! Collect them all! 4/11."
+	desc = "Mini-Mecha action figure! Collect them all! 4/12."
 	icon_state = "gygaxtoy"
 
 /obj/item/toy/prize/durand
 	name = "toy Durand"
-	desc = "Mini-Mecha action figure! Collect them all! 5/11."
+	desc = "Mini-Mecha action figure! Collect them all! 5/12."
 	icon_state = "durandprize"
 
 /obj/item/toy/prize/honk
 	name = "toy H.O.N.K."
-	desc = "Mini-Mecha action figure! Collect them all! 6/11."
+	desc = "Mini-Mecha action figure! Collect them all! 6/12."
 	icon_state = "honkprize"
 
 /obj/item/toy/prize/marauder
 	name = "toy Marauder"
-	desc = "Mini-Mecha action figure! Collect them all! 7/11."
+	desc = "Mini-Mecha action figure! Collect them all! 7/12."
 	icon_state = "marauderprize"
 
 /obj/item/toy/prize/seraph
 	name = "toy Seraph"
-	desc = "Mini-Mecha action figure! Collect them all! 8/11."
+	desc = "Mini-Mecha action figure! Collect them all! 8/12."
 	icon_state = "seraphprize"
 
 /obj/item/toy/prize/mauler
 	name = "toy Mauler"
-	desc = "Mini-Mecha action figure! Collect them all! 9/11."
+	desc = "Mini-Mecha action figure! Collect them all! 9/12."
 	icon_state = "maulerprize"
 
 /obj/item/toy/prize/odysseus
 	name = "toy Odysseus"
-	desc = "Mini-Mecha action figure! Collect them all! 10/11."
+	desc = "Mini-Mecha action figure! Collect them all! 10/12."
 	icon_state = "odysseusprize"
 
 /obj/item/toy/prize/phazon
 	name = "toy Phazon"
-	desc = "Mini-Mecha action figure! Collect them all! 11/11."
+	desc = "Mini-Mecha action figure! Collect them all! 11/12."
 	icon_state = "phazonprize"
+
+/obj/item/toy/prize/reticence
+	name = "toy Reticence"
+	desc = "Mini-Mecha action figure! Collect them all! 12/12."
+	icon_state = "reticenceprize"
+	quiet = 1
 
 /*
  * AI core prizes
@@ -631,6 +644,7 @@
 	desc = "A little toy model AI core with real law announcing action!"
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "AI"
+	w_class = 2.0
 	var/cooldown = 0
 
 /obj/item/toy/AI/attack_self(mob/user)
@@ -721,7 +735,7 @@ obj/item/toy/cards/deck/attack_hand(mob/user as mob)
 	src.cards -= choice
 	H.pickup(user)
 	user.put_in_active_hand(H)
-	src.visible_message("<span class='notice'>[user] draws a card from the deck.</span>", "<span class='notice'>You draw a card from the deck.</span>")
+	user.visible_message("<span class='notice'>[user] draws a card from the deck.</span>", "<span class='notice'>You draw a card from the deck.</span>")
 	if(cards.len > 26)
 		src.icon_state = "deck_[deckstyle]_full"
 	else if(cards.len > 10)
@@ -1004,6 +1018,9 @@ obj/item/toy/cards/deck/syndicate
 	card_throw_range = 7
 	card_attack_verb = list("attacked", "sliced", "diced", "slashed", "cut")
 
+/*
+ * Fake nuke
+ */
 
 /obj/item/toy/nuke
 	name = "\improper Nuclear Fission Explosive toy"
@@ -1027,3 +1044,33 @@ obj/item/toy/cards/deck/syndicate
 	else
 		var/timeleft = (cooldown - world.time)
 		user << "<span class='alert'>Nothing happens, and '</span>[round(timeleft/10)]<span class='alert'>' appears on a small display.</span>"
+
+/*
+ * Fake meteor
+ */
+
+/obj/item/toy/minimeteor
+	name = "\improper Mini-Meteor"
+	desc = "Relive the excitement of a meteor shower! SweetMeat-eor. Co is not responsible for any injuries, headaches or hearing loss caused by Mini-Meteor™"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "minimeteor"
+	w_class = 2.0
+
+/obj/item/toy/minimeteor/throw_impact(atom/hit_atom)
+	..()
+	playsound(src, 'sound/effects/meteorimpact.ogg', 40, 1)
+	for(var/mob/M in range(10, src))
+		if(!M.stat && !istype(M, /mob/living/silicon/ai))\
+			shake_camera(M, 3, 1)
+	qdel(src)
+
+/*
+ * Carp plushie
+ */
+
+/obj/item/toy/carpplushie
+	name = "space carp plushie"
+	desc = "An adorable stuffed toy that resembles a space carp."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "carpplushie"
+	w_class = 2.0

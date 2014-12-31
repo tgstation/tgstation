@@ -25,6 +25,8 @@
 /obj/machinery/atmospherics/pipe/manifold/New()
 	color = pipe_color
 
+	..()
+
 	switch(dir)
 		if(NORTH)
 			initialize_directions = EAST|SOUTH|WEST
@@ -34,7 +36,6 @@
 			initialize_directions = SOUTH|WEST|NORTH
 		if(WEST)
 			initialize_directions = NORTH|EAST|SOUTH
-	..()
 
 /obj/machinery/atmospherics/pipe/manifold/initialize()
 	for(var/D in cardinal)
@@ -57,14 +58,17 @@
 	if(node1)
 		var/obj/machinery/atmospherics/A = node1
 		node1.disconnect(src)
+		node1 = null
 		A.build_network()
 	if(node2)
 		var/obj/machinery/atmospherics/A = node2
 		node2.disconnect(src)
+		node2 = null
 		A.build_network()
 	if(node3)
 		var/obj/machinery/atmospherics/A = node3
 		node3.disconnect(src)
+		node3 = null
 		A.build_network()
 	releaseAirToTurf()
 	..()

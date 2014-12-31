@@ -18,7 +18,8 @@
 	var/scan_state = null //Holder for the image we display when we're pinged by a mining scanner
 	var/hidden = 1
 
-/turf/simulated/mineral/ex_act(severity)
+/turf/simulated/mineral/ex_act(severity, target)
+	..()
 	switch(severity)
 		if(3.0)
 			if (prob(75))
@@ -99,7 +100,7 @@
 					new/turf/simulated/floor/plating/asteroid/airless/cave(src)
 				if("Gibtonite")
 					M = new/turf/simulated/mineral/gibtonite(src)
-				if("Clown")
+				if("Bananium")
 					M = new/turf/simulated/mineral/clown(src)
 				/*if("Adamantine")
 					M = new/turf/simulated/mineral/adamantine(src)*/
@@ -178,7 +179,7 @@
 /turf/simulated/mineral/clown
 	name = "bananium deposit"
 	icon_state = "rock_Clown"
-	mineralName = "Clown"
+	mineralName = "Bananium"
 	mineralAmt = 3
 	spreadChance = 0
 	spread = 0
@@ -370,13 +371,13 @@
 				new /mob/living/simple_animal/hostile/asteroid/hivelord(T)
 	return
 
-/turf/simulated/mineral/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/turf/simulated/mineral/attackby(var/obj/item/weapon/pickaxe/P as obj, mob/user as mob)
 
 	if (!user.IsAdvancedToolUser())
 		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
 		return
 
-	if (istype(W, /obj/item/weapon/pickaxe))
+	if (istype(P, /obj/item/weapon/pickaxe))
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
@@ -387,13 +388,14 @@
 			return
 */
 //Watch your tabbing, microwave. --NEO
-		if(last_act+W:digspeed > world.time)//prevents message spam
+		if(last_act+P.digspeed > world.time)//prevents message spam
 			return
 		last_act = world.time
 		user << "<span class='danger'>You start picking.</span>"
-		playsound(user, 'sound/weapons/Genhit.ogg', 20, 1)
+		//playsound(user, 'sound/weapons/Genhit.ogg', 20, 1)
+		P.playDigSound()
 
-		if(do_after(user,W:digspeed))
+		if(do_after(user,P.digspeed))
 			user << "<span class='notice'>You finish cutting into the rock.</span>"
 			gets_drilled()
 	else
@@ -416,9 +418,10 @@
 				new /obj/item/weapon/ore/plasma(src)
 			if (src.mineralName == "Diamond")
 				new /obj/item/weapon/ore/diamond(src)
-			if (src.mineralName == "Clown")
+			if (src.mineralName == "Bananium")
 				new /obj/item/weapon/ore/bananium(src)
 	var/turf/simulated/floor/plating/asteroid/airless/N = ChangeTurf(/turf/simulated/floor/plating/asteroid/airless)
+	playsound(src, 'sound/effects/break_stone.ogg', 50, 1) //beautiful destruction
 	N.fullUpdateMineralOverlays()
 	return
 
@@ -493,7 +496,8 @@
 /turf/simulated/floor/plating/asteroid/burn_tile()
 	return
 
-/turf/simulated/floor/plating/asteroid/ex_act(severity)
+/turf/simulated/floor/plating/asteroid/ex_act(severity, target)
+	contents_explosion(severity, target)
 	switch(severity)
 		if(3.0)
 			return
@@ -505,7 +509,7 @@
 	return
 
 /turf/simulated/floor/plating/asteroid/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
+	//note that this proc does not call ..()
 	if(!W || !user)
 		return 0
 
@@ -519,7 +523,7 @@
 			return
 
 		user << "<span class='danger'>You start digging.</span>"
-		playsound(src, 'sound/effects/rustle1.ogg', 50, 1) //russle sounds sounded better
+		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
 
 		sleep(40)
 		if ((user.loc == T && user.get_active_hand() == W))
@@ -537,14 +541,14 @@
 			return
 
 		user << "<span class='danger'>You start digging.</span>"
-		playsound(src, 'sound/effects/rustle1.ogg', 50, 1) //russle sounds sounded better
+		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
 
 		sleep(30)
 		if ((user.loc == T && user.get_active_hand() == W))
 			user << "<span class='notice'>You dug a hole.</span>"
 			gets_dug()
 
-	if ((istype(W,/obj/item/weapon/pickaxe/diamonddrill)) || (istype(W,/obj/item/weapon/pickaxe/borgdrill)))
+	if ((istype(W,/obj/item/weapon/pickaxe/drill/diamonddrill)) || (istype(W,/obj/item/weapon/pickaxe/jackhammer/borgdrill)))
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
@@ -554,7 +558,7 @@
 			return
 
 		user << "<span class='danger'>You start digging.</span>"
-		playsound(src, 'sound/effects/rustle1.ogg', 50, 1) //russle sounds sounded better
+		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
 
 		sleep(0)
 		if ((user.loc == T && user.get_active_hand() == W))
@@ -567,10 +571,6 @@
 			for(var/obj/item/weapon/ore/O in src.contents)
 				O.attackby(W,user)
 				return
-
-	else
-		..(W,user)
-	return
 
 /turf/simulated/floor/plating/asteroid/proc/gets_dug()
 	if(dug)

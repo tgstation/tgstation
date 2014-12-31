@@ -273,7 +273,7 @@
 	else
 		return
 
-/obj/machinery/bot/medbot/process()
+/obj/machinery/bot/medbot/bot_process()
 	if (!..())
 		return
 
@@ -317,16 +317,20 @@
 		return
 
 	//Patient has moved away from us!
-	else if(patient && path && path.len && (get_dist(patient,path[path.len]) > 2))
+	else if(patient && path.len && (get_dist(patient,path[path.len]) > 2))
 		path = list()
 		mode = BOT_IDLE
 		last_found = world.time
 
-	if(!stationary_mode && patient && path.len == 0 && (get_dist(src,patient) > 1))
+	else if(stationary_mode && patient) //Since we cannot move in this mode, ignore the patient and wait for another.
+		patient = null
+		mode = BOT_IDLE
+		last_found = world.time
+		return
+
+	if(patient && path.len == 0 && (get_dist(src,patient) > 1))
 		spawn(0)
-			path = AStar(loc, get_turf(patient), /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 30,id=botcard)
-			if(!path)
-				path = list()
+			path = get_path_to(loc, get_turf(patient), /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 30,id=botcard)
 
 	if(path.len > 0 && patient)
 		if(!bot_move(patient))
@@ -383,11 +387,12 @@
 
 	if(treat_virus)
 		for(var/datum/disease/D in C.viruses)
-			if((D.hidden[SCANNER]) || (D.hidden[PANDEMIC])) //the medibot can't detect viruses that are undetectable to Health Analyzers or Pandemic machines.
+			//the medibot can't detect viruses that are undetectable to Health Analyzers or Pandemic machines.
+			if(D.visibility_flags & HIDDEN_SCANNER || D.visibility_flags & HIDDEN_PANDEMIC)
 				return 0
-			if(D.severity == D.non_threat) // medibot doesn't try to heal truly harmless viruses
+			if(D.severity == NONTHREAT) // medibot doesn't try to heal truly harmless viruses
 				return 0
-			if((D.stage > 1) || (D.spread_type == AIRBORNE)) // medibot can't detect a virus in its initial stage unless it spreads airborne.
+			if((D.stage > 1) || (D.spread_flags & AIRBORNE)) // medibot can't detect a virus in its initial stage unless it spreads airborne.
 
 				if (!C.reagents.has_reagent(treatment_virus))
 					return 1 //STOP DISEASE FOREVER
@@ -423,9 +428,10 @@
 		if(treat_virus)
 			var/virus = 0
 			for(var/datum/disease/D in C.viruses)
-				if((!D.hidden[SCANNER]) && (!D.hidden[PANDEMIC]))    //detectable virus
-					if(D.severity != D.non_threat)      //virus is harmful
-						if((D.stage > 1) || (D.spread_type == AIRBORNE))
+				//detectable virus
+				if((!(D.visibility_flags & HIDDEN_SCANNER)) || (!(D.visibility_flags & HIDDEN_PANDEMIC)))
+					if(D.severity != NONTHREAT)      //virus is harmful
+						if((D.stage > 1) || (D.spread_flags & AIRBORNE))
 							virus = 1
 
 			if (!reagent_id && (virus))
@@ -478,6 +484,7 @@
 					patient.reagents.add_reagent(reagent_id,injection_amount)
 				C.visible_message("<span class='danger'>[src] injects [patient] with the syringe!</span>", \
 					"<span class='userdanger'>[src] injects [patient] with the syringe!</span>")
+				patient = null
 
 			mode = BOT_IDLE
 			updateicon()
@@ -522,7 +529,7 @@
 	speak("Medical emergency! [crit_patient ? "<b>[crit_patient]</b>" : "A patient"] is in critical condition at [location]!",radio_frequency)
 	declare_cooldown = 1
 	spawn(200) //Twenty seconds
-	declare_cooldown = 0
+		declare_cooldown = 0
 
 /*
  *	Medbot Assembly -- Can be made out of all three medkits.
@@ -557,7 +564,7 @@
 /obj/item/weapon/firstaid_arm_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/weapon/pen))
-		var/t = copytext(stripped_input(user, "Enter new robot name", name, created_name),1,MAX_NAME_LEN)
+		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
 		if (!t)
 			return
 		if (!in_range(src, usr) && loc != usr)

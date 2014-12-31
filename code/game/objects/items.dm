@@ -28,14 +28,22 @@
 	var/permeability_coefficient = 1 // for chemicals/diseases
 	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
 	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
-	var/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	var/list/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/list/allowed = null //suit storage stuff.
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 	var/reflect_chance = 0 //This var dictates what % of a time an object will reflect an energy based weapon's shot
 	var/strip_delay = 40
 	var/put_on_delay = 20
+	var/m_amt = 0	// metal
+	var/g_amt = 0	// glass
+	var/reliability = 100	//Used by SOME devices to determine how reliable they are.
+	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 
+	var/list/attack_verb = list() //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = list()	// even if a species cannot put items in a certain slot, if the species id is in the item's exception list, it will be able to wear that item
+
+	var/suittoggled = 0
+	var/hooded = 0
 
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
@@ -46,24 +54,14 @@
 		m.unEquip(src, 1)
 	return ..()
 
-/obj/item/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
-				return
-		if(3.0)
-			if (prob(5))
-				qdel(src)
-				return
-		else
-	return
-
 /obj/item/blob_act()
 	qdel(src)
+
+/obj/item/ex_act(severity, target)
+	if(severity == 1 || target == src)
+		qdel(src)
+	if(!gc_destroyed)
+		contents_explosion(severity, target)
 
 //user: The mob that is suiciding
 //damagetype: The type of damage the item will inflict on the user
@@ -80,7 +78,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(!istype(src.loc, /turf) || usr.stat || usr.restrained() )
+	if(!istype(src.loc, /turf) || usr.stat || usr.restrained() || !usr.canmove)
 		return
 
 	var/turf/T = src.loc
@@ -121,7 +119,7 @@
 	if (istype(src.loc, /obj/item/weapon/storage))
 		//If the item is in a storage item, take it out
 		var/obj/item/weapon/storage/S = src.loc
-		S.remove_from_storage(src)
+		S.remove_from_storage(src, user.loc)
 
 	src.throwing = 0
 	if (loc == user)
@@ -214,9 +212,6 @@
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
 /obj/item/proc/talk_into(mob/M as mob, text)
-	return
-
-/obj/item/proc/moved(mob/user as mob, old_loc as turf)
 	return
 
 /obj/item/proc/dropped(mob/user as mob)
@@ -327,7 +322,7 @@
 		M.adjustBruteLoss(10)
 		*/
 	if(M != user)
-		M.visible_message("<span class='danger'>[M] has been stabbed in the eye with [src] by [user]!</span>", \
+		M.visible_message("<span class='danger'>[user] has stabbed [M] in the eye with [src]!</span>", \
 							"<span class='userdanger'>[user] stabs you in the eye with [src]!</span>")
 	else
 		user.visible_message( \
@@ -376,3 +371,30 @@
 	if(.)
 		transfer_blood = 0
 		bloody_hands_mob = null
+
+/obj/item/singularity_pull(S, current_size)
+	spawn(0) //this is needed or multiple items will be thrown sequentially and not simultaneously
+		if(current_size >= STAGE_FOUR)
+			throw_at(S,14,3)
+		else ..()
+
+/obj/item/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
+	. = 1
+	for(var/V in armor)
+		if(armor[V] > 0)
+			.-- //it survives the acid...
+			break
+	if(.)
+		var/turf/T = get_turf(src)
+		if(T)
+			T.visible_message("<span class='danger'>[src] melts away!</span>")
+			var/obj/effect/decal/cleanable/molten_item/I = new (T)
+			I.pixel_x = rand(-16,16)
+			I.pixel_y = rand(-16,16)
+			I.desc = "Looks like this was \an [src] some time ago."
+		qdel(src)
+	else
+		for(var/armour_value in armor) //but is weakened
+			armor[armour_value] = max(armor[armour_value]-acidpwr,0)
+		if(!findtext(desc, "it looks slightly melted...")) //it looks slightly melted... it looks slightly melted... it looks slightly melted... etc.
+			desc += " it looks slightly melted..." //needs a space at the start, formatting

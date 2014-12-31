@@ -164,9 +164,6 @@
 		if(100 to 200)
 			msg += "<span class='warning'>[t_He] [t_is] twitching ever so slightly.</span>\n"
 
-	if(suiciding)
-		msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
-
 	if(gender_ambiguous) //someone fucked up a gender reassignment surgery
 		if (gender == MALE)
 			msg += "[t_He] has a strange feminine quality to [t_him].\n"
@@ -177,8 +174,9 @@
 	if(stat == DEAD || (status_flags & FAKEDEATH))
 		appears_dead = 1
 		if(getorgan(/obj/item/organ/brain))//Only perform these checks if there is no brain
+			if(suiciding)
+				msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
 			msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life"
-
 			if(!key)
 				var/foundghost = 0
 				if(mind)
@@ -224,10 +222,10 @@
 		msg += "[t_He] looks a little soaked.\n"
 
 
-	if(nutrition < 100)
+	if(nutrition < NUTRITION_LEVEL_STARVING - 50)
 		msg += "[t_He] [t_is] severely malnourished.\n"
-	else if(nutrition >= 500)
-		if(user.nutrition < 100)
+	else if(nutrition >= NUTRITION_LEVEL_FAT)
+		if(user.nutrition < NUTRITION_LEVEL_STARVING - 50)
 			msg += "[t_He] [t_is] plump and delicious looking - Like a fat little piggy. A tasty piggy.\n"
 		else
 			msg += "[t_He] [t_is] quite chubby.\n"

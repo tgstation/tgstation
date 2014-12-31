@@ -1,7 +1,7 @@
 //In this file: Summon Magic/Summon Guns/Summon Events
 
-/proc/rightandwrong(var/summon_type, var/mob/user) //0 = Summon Guns, 1 = Summon Magic
-	var/list/gunslist 			= list("taser","egun","laser","revolver","detective","smg","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","mateba","smg","uzi","crossbow","saw")
+/proc/rightandwrong(var/summon_type, var/mob/user, var/survivor_probability) //0 = Summon Guns, 1 = Summon Magic
+	var/list/gunslist 			= list("taser","egun","laser","revolver","detective","c20r","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","bulldog","mateba","sabr","uzi","crossbow","saw","car")
 	var/list/magiclist 			= list("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge","wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying", "staffdoor", "special")
 	var/list/magicspeciallist	= list("staffchange","staffanimation", "wandbelt", "contract", "staffchaos")
 
@@ -13,7 +13,7 @@
 		if(H.stat == 2 || !(H.client)) continue
 		if(H.mind)
 			if(H.mind.special_role == "Wizard" || H.mind.special_role == "apprentice") continue
-		if(prob(25) && !(H.mind in ticker.mode.traitors))
+		if(prob(survivor_probability) && !(H.mind in ticker.mode.traitors))
 			ticker.mode.traitors += H.mind
 			H.mind.special_role = "traitor"
 			var/datum/objective/survive/survive = new
@@ -31,7 +31,7 @@
 		if(!summon_type)
 			switch (randomizeguns)
 				if("taser")
-					new /obj/item/weapon/gun/energy/taser(get_turf(H))
+					new /obj/item/weapon/gun/energy/gun/advtaser(get_turf(H))
 				if("egun")
 					new /obj/item/weapon/gun/energy/gun(get_turf(H))
 				if("laser")
@@ -40,12 +40,12 @@
 					new /obj/item/weapon/gun/projectile/revolver(get_turf(H))
 				if("detective")
 					new /obj/item/weapon/gun/projectile/revolver/detective(get_turf(H))
-				if("smg")
+				if("c20r")
 					new /obj/item/weapon/gun/projectile/automatic/c20r(get_turf(H))
 				if("nuclear")
 					new /obj/item/weapon/gun/energy/gun/nuclear(get_turf(H))
 				if("deagle")
-					new /obj/item/weapon/gun/projectile/automatic/deagle/camo(get_turf(H))
+					new /obj/item/weapon/gun/projectile/automatic/pistol/deagle/camo(get_turf(H))
 				if("gyrojet")
 					new /obj/item/weapon/gun/projectile/automatic/gyropistol(get_turf(H))
 				if("pulse")
@@ -61,16 +61,18 @@
 					new /obj/item/weapon/gun/projectile/shotgun(get_turf(H))
 				if("combatshotgun")
 					new /obj/item/weapon/gun/projectile/shotgun/combat(get_turf(H))
+				if("bulldog")
+					new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(get_turf(H))
 				if("mateba")
 					new /obj/item/weapon/gun/projectile/revolver/mateba(get_turf(H))
-				if("smg")
+				if("sabr")
 					new /obj/item/weapon/gun/projectile/automatic(get_turf(H))
-				if("uzi")
-					new /obj/item/weapon/gun/projectile/automatic/mini_uzi(get_turf(H))
 				if("crossbow")
 					new /obj/item/weapon/gun/energy/crossbow(get_turf(H))
 				if("saw")
 					new /obj/item/weapon/gun/projectile/automatic/l6_saw(get_turf(H))
+				if("car")
+					new /obj/item/weapon/gun/projectile/automatic/c90gl(get_turf(H))
 		else
 			switch (randomizemagic)
 				if("fireball")
