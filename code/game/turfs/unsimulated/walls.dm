@@ -22,7 +22,7 @@ turf/unsimulated/wall/splashscreen
 		for(var/filename in filenames)
 			if(copytext(filename, length(filename)) == "/")
 				filenames -= filename
-		icon = file("icons/splashworks/[pick(filenames)]")
+		icon = file("[path][pick(filenames)]")
 
 /turf/unsimulated/wall/other
 	icon_state = "r_wall"
