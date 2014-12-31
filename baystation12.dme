@@ -113,7 +113,6 @@
 #include "code\datums\datacore.dm"
 #include "code\datums\datumvars.dm"
 #include "code\datums\disease.dm"
-#include "code\datums\investigation_logs.dm"
 #include "code\datums\mind.dm"
 #include "code\datums\mixed.dm"
 #include "code\datums\modules.dm"
