@@ -55,6 +55,8 @@
 */
 /mob/living/UnarmedAttack(var/atom/A)
 	A.attack_animal(src)
+	return ..()
+
 /atom/proc/attack_animal(mob/user as mob)
 	return
 /mob/living/RestrainedClickOn(var/atom/A)
@@ -126,6 +128,7 @@
 */
 /mob/living/carbon/slime/UnarmedAttack(var/atom/A)
 	A.attack_slime(src)
+	return ..()
 /atom/proc/attack_slime(mob/user as mob)
 	return
 /mob/living/carbon/slime/RestrainedClickOn(var/atom/A)
