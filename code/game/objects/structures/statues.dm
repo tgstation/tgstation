@@ -27,6 +27,7 @@
 								 "<span class='notice'>You are loosening the [name]'s bolts...</span>")
 			if(do_after(user,40))
 				if(!src) return
+				if(!anchored) return
 				user.visible_message("<span class='notice'>[user] loosened the [name]'s bolts!</span>", \
 									 "<span class='notice'>You loosened the [name]'s bolts!</span>")
 				anchored = 0
@@ -39,6 +40,7 @@
 								 "<span class='notice'>You are securing the [name]'s bolts...</span>")
 			if(do_after(user, 40))
 				if(!src) return
+				if(anchored) return
 				user.visible_message("<span class='notice'>[user] has secured the [name]'s bolts!</span>", \
 									 "<span class='notice'>You have secured the [name]'s bolts!</span>")
 				anchored = 1
@@ -47,7 +49,7 @@
 		user.visible_message("<span class='notice'>[user] is slicing apart the [name]...</span>", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")
 		if(do_after(user,30))
-			if(!src) return
+			if(!src.loc) return
 			user.visible_message("<span class='notice'>[user] slices apart the [name]!</span>", \
 								 "<span class='notice'>You slice apart the [name]!</span>")
 			Dismantle(1)
@@ -56,7 +58,7 @@
 		user.visible_message("<span class='notice'>[user] begins to drill apart the [name]!</span>", \
 							 "<span class='notice'>You begin to drill apart the [name]!</span>")
 		if(do_after(user,5))
-			if(!src) return
+			if(!src.loc) return
 			user.visible_message("<span class='notice'>[user] destroys the [name]!</span>", \
 								 "<span class='notice'>You destroy the [name]!</span>")
 			qdel(src)
@@ -66,19 +68,17 @@
 			user.visible_message("<span class='notice'>[user] is slicing apart the [name]...</span>", \
 								 "<span class='notice'>You are slicing apart the [name]...</span>")
 			if(do_after(user, 40))
-				if(!src) return
+				if(!src.loc) return
 				user.visible_message("<span class='notice'>[user] slices apart the [name]!</span>", \
 									 "<span class='notice'>You slice apart the [name]!</span>")
 				Dismantle(1)
 
 	else
 		hardness -= W.force/100
-		user.visible_message("[user] hits the [name] with their [W.name]!", \
-							 "You hit the [name] with your [W.name]!")
 		CheckHardness()
+		..()
 
 /obj/structure/statue/attack_hand(mob/living/user as mob)
-	user.do_attack_animation(src)
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
 	user.visible_message("<span class='notice'>[user] rubs some dust off from the [name]'s surface.</span>", \
