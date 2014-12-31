@@ -52,7 +52,7 @@
 	else
 		return ..()
 
-/mob/living/simple_animal/crab/GetMad()
+/mob/living/simple_animal/crab/proc/GetMad()
 	name = "MEGAMADCRAB"
 	real_name = "MEGAMADCRAB"
 	desc = "OH NO YOU DUN IT NOW."

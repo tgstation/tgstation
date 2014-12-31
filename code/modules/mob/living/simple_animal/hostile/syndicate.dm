@@ -58,7 +58,7 @@
 	status_flags = 0
 
 /mob/living/simple_animal/hostile/syndicate/melee/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	user.changeNext_Move(8)
+	user.changeNext_move(8)
 	if(O.force)
 		if(prob(80))
 			var/damage = O.force

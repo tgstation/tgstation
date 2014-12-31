@@ -213,7 +213,7 @@ var/global/chicken_count = 0
 
 /mob/living/simple_animal/chicken/New()
 	..()
-	prob(5)
+	if(prob(5))
 		name = "Pomf chicken"
 		body_color = "white"
 

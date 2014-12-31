@@ -100,7 +100,7 @@
 			if(!resolved && A && W)
 				W.afterattack(A,src,1,params) // 1 indicates adjacency
 		else
-			istype(W, /obj/item/weapon/grab))
+			if(istype(W, /obj/item/weapon/grab))
 				changeNext_move(10)
 			UnarmedAttack(A)
 		return

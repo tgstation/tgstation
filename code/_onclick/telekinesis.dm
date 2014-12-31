@@ -96,7 +96,7 @@ var/const/tk_maxrange = 15
 			focus.attack_self_tk(user)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, proximity)//TODO: go over this
-		if(user) user.changeNext_Move(8)
+		if(user) user.changeNext_move(8)
 		if(!target || !user)	return
 		if(last_throw+3 > world.time)	return
 		if(!host || host != user)

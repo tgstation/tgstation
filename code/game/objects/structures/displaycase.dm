@@ -260,7 +260,7 @@
 				else
 					src << "\icon[src] <span class='rose'>\The [src] is empty!</span>"
 		else
-			user.changeNext_Move(2) // prevent spam
+			user.changeNext_move(2) // prevent spam
 			user.visible_message("[user.name] gently runs their hands over \the [src] in appreciation of its contents.", \
 				"You gently run your hands over \the [src] in appreciation of its contents.", \
 				"You hear someone streaking glass with their greasy hands.")
