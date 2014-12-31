@@ -48,8 +48,9 @@
 		return
 
 	//Logs all hrefs
-	if(config && config.log_hrefs && href_logfile)
-		href_logfile << "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
+	if(config && config.log_hrefs && investigations[I_HREFS])
+		var/datum/log_controller/I = investigations[I_HREFS]
+		I.write("<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br />")
 
 	switch(href_list["_src_"])
 		if("holder")	hsrc = holder

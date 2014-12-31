@@ -52,7 +52,7 @@
 			return
 		//BoH+BoH=Singularity, WAS commented out
 		if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
-			investigate_log("has become a singularity. Caused by [user.key]","singulo")
+			investigation_log(I_SINGULO,"has become a singularity. Caused by [user.key]")
 			message_admins("[src] has become a singularity. Caused by [user.key]")
 			user << "\red The Bluespace interfaces of the two devices catastrophically malfunction!"
 			del(W)

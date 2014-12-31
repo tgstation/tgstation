@@ -117,7 +117,7 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/binary/volume_pump/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 		return 0
-
+	var/old_on=on
 	if("power" in signal.data)
 		on = text2num(signal.data["power"])
 
@@ -139,7 +139,8 @@ Thus, the two variables affect pump operation are set in New():
 	spawn(2)
 		broadcast_status()
 	update_icon()
-	activity_log += text("\[[time_stamp()]\] Remote signal toggled us [on ? "on" : "off"]")
+	if(old_on!=on)
+		investigation_log(I_ATMOS,"was powered [on ? "on" : "off"] by a remote signal")
 
 
 /obj/machinery/atmospherics/binary/volume_pump/attack_hand(user as mob)
@@ -157,10 +158,11 @@ Thus, the two variables affect pump operation are set in New():
 	if(..()) return
 	if(href_list["power"])
 		on = !on
-		activity_log += text("\[[time_stamp()]\] Real name: [], Key: [] - turned [] \the [].",usr.real_name, usr.key,(on ? "on" : "off"),src)
+		investigation_log(I_ATMOS,"was turned [on ? "on" : "off"] by [key_name(usr)]")
 	if(href_list["set_transfer_rate"])
 		var/new_transfer_rate = input(usr,"Enter new output volume (0-200l/s)","Flow control",src.transfer_rate) as num
 		src.transfer_rate = max(0, min(200, new_transfer_rate))
+		investigation_log(I_ATMOS,"was set to [transfer_rate] L/s by [key_name(usr)]")
 	usr.set_machine(src)
 	src.update_icon()
 	src.updateUsrDialog()

@@ -30,7 +30,7 @@ Thus, the two variables affect pump operation are set in New():
 	name = "High capacity gas pump"
 	desc = "A high capacity pump"
 
-	target_pressure = 15000000
+	target_pressure = 15000000 // Holy fuck man
 
 /obj/machinery/atmospherics/binary/pump/on
 	on = 1
@@ -148,7 +148,7 @@ Thus, the two variables affect pump operation are set in New():
 	spawn(2)
 		broadcast_status()
 	update_icon()
-	activity_log += text("\[[time_stamp()]\] Remote signal toggled us [on ? "on" : "off"]")
+	investigation_log(I_ATMOS,"was turned [on ? "on" : "off"] by signal.")
 	return
 
 
@@ -167,10 +167,11 @@ Thus, the two variables affect pump operation are set in New():
 	if(..()) return
 	if(href_list["power"])
 		on = !on
-		activity_log += text("\[[time_stamp()]\] Real name: [], Key: [] - turned [] \the [].",usr.real_name, usr.key,(on ? "on" : "off"),src)
+		investigation_log(I_ATMOS,"was turned [on ? "on" : "off"] by [key_name(usr)].")
 	if(href_list["set_press"])
 		var/new_pressure = input(usr,"Enter new output pressure (0-4500kPa)","Pressure control",src.target_pressure) as num
 		src.target_pressure = max(0, min(4500, new_pressure))
+		investigation_log(I_ATMOS,"was set to [target_pressure] kPa by [key_name(usr)].")
 	usr.set_machine(src)
 	src.update_icon()
 	src.updateUsrDialog()
@@ -203,5 +204,6 @@ Thus, the two variables affect pump operation are set in New():
 			"[user] unfastens \the [src].", \
 			"\blue You have unfastened \the [src].", \
 			"You hear ratchet.")
+		investigation_log(I_ATMOS,"was <span class='warning'>REMOVED</span> by [key_name(usr)]")
 		new /obj/item/pipe(loc, make_from=src)
 		del(src)

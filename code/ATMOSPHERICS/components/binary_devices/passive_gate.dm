@@ -106,6 +106,7 @@
 	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 		return 0
 
+	var/old_on=on
 	if("power" in signal.data)
 		on = text2num(signal.data["power"])
 
@@ -127,7 +128,8 @@
 	spawn(2)
 		broadcast_status()
 	update_icon()
-	activity_log += text("\[[time_stamp()]\] Remote signal powered us [on ? "on" : "off"]")
+	if(old_on!=on)
+		investigation_log(I_ATMOS,"was powered [on ? "on" : "off"] by a remote signal")
 	return
 
 
@@ -147,10 +149,11 @@
 	if(..()) return
 	if(href_list["power"])
 		on = !on
-		activity_log += text("\[[time_stamp()]\] Real name: [], Key: [] - turned [] \the [].",usr.real_name, usr.key,(on ? "on" : "off"),src)
+		investigation_log(I_ATMOS,"was turned [on ? "on" : "off"] by [key_name(usr)]")
 	if(href_list["set_press"])
 		var/new_pressure = input(usr,"Enter new output pressure (0-4500kPa)","Pressure control",src.target_pressure) as num
 		src.target_pressure = max(0, min(4500, new_pressure))
+		investigation_log(I_ATMOS,"was set to [target_pressure] kPa by [key_name(usr)]")
 	usr.set_machine(src)
 	src.update_icon()
 	src.updateUsrDialog()
