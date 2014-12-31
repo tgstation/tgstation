@@ -1,7 +1,8 @@
+##Warning! This branch is out of date and is not going to be updated!
+**This is only to keep Metastation as a playable map.** <BR>
+If you want the latest and greatest, switch to the master branch or click [here](https://github.com/tgstation/-tg-station).
+
 ##/tg/station v1.0.1
-
-[![Build Status](https://travis-ci.org/tgstation/-tg-station.png)](https://travis-ci.org/tgstation/-tg-station)
-
 
 **Website:** http://www.tgstation13.org <BR>
 **Code:** https://github.com/tgstation/-tg-station <BR>
