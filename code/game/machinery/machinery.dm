@@ -227,7 +227,7 @@ Class Procs:
 	if(restrained() || lying || stat || stunned || weakened)
 		return
 	if(!in_range(M, src))
-		if((be_close == 0) && (TK in mutations))
+		if((be_close == 0) && (dna.check_mutation(TK)))
 			if(tkMaxRangeCheck(src, M))
 				return 1
 		return

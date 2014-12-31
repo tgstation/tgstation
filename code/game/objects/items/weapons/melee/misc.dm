@@ -33,7 +33,7 @@
 /obj/item/weapon/melee/classic_baton/attack(mob/target as mob, mob/living/user as mob)
 	if(on)
 		add_fingerprint(user)
-		if((CLUMSY in user.mutations) && prob(50))
+		if((CLUMSY in user.disabilities) && prob(50))
 			user << "<span class ='danger'>You club yourself over the head.</span>"
 			user.Weaken(3 * force)
 			if(ishuman(user))

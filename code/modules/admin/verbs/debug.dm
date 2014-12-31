@@ -670,7 +670,7 @@ var/global/list/g_fancy_list_of_types = null
 
 		if ("tournament chef") //Steven Seagal FTW
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chef(M), slot_w_uniform)
-			M.equip_to_slot_or_del(new /obj/item/clothing/suit/chef(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/chef(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/chefhat(M), slot_head)
 
