@@ -1408,11 +1408,15 @@ var/global/list/organ_damage_overlays = list(
 			if(glasses)
 				var/obj/item/clothing/glasses/G = glasses
 				if(istype(G))
+					if(G.see_in_dark)
+						see_in_dark = G.see_in_dark
 					see_in_dark += G.darkness_view
 					if(G.vision_flags)		// MESONS
 						sight |= G.vision_flags
 						if(!druggy)
 							see_invisible = SEE_INVISIBLE_MINIMUM
+					if(G.see_invisible)
+						see_invisible = G.see_invisible
 
 	/* HUD shit goes here, as long as it doesn't modify sight flags */
 	// The purpose of this is to stop xray and w/e from preventing you from using huds -- Love, Doohl
