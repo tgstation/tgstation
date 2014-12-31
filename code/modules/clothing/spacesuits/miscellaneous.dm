@@ -115,3 +115,57 @@
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 	strip_delay = 40
 	put_on_delay = 20
+
+/obj/item/clothing/head/helmet/space/ert/sec
+	name = "emergency response unit helmet"
+	desc = "Standard issue helmet for the ERT"
+	icon_state = "erthelmsec"
+	item_state = "erthelmsec"
+	armor = list(melee = 65, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 100, rad = 100)
+	strip_delay = 130
+
+/obj/item/clothing/head/helmet/space/ert/engi
+	name = "emergency response unit helmet"
+	desc = "Standard issue helmet for the ERT"
+	icon_state = "erthelmengi"
+	item_state = "erthelmengi"
+	armor = list(melee = 65, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 100, rad = 100)
+	strip_delay = 130
+
+/obj/item/clothing/head/helmet/space/ert/med
+	name = "emergency response unit helmet"
+	desc = "Standard issue helmet for the ERT"
+	icon_state = "erthelm"
+	item_state = "erthelm"
+	armor = list(melee = 65, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 100, rad = 100)
+	strip_delay = 130
+
+/obj/item/clothing/suit/space/ert/sec
+	name = "emergency response team suit"
+	desc = "Standard issue suit for the ERT."
+	icon_state = "ertspacesec"
+	item_state = "ertspacesec"
+	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
+	armor = list(melee = 65, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 100, rad = 100)
+	slowdown = 1
+	strip_delay = 130
+
+/obj/item/clothing/suit/space/ert/engi
+	name = "emergency response team suit"
+	desc = "Standard issue suit for the ERT."
+	icon_state = "ertspaceengi"
+	item_state = "ertspaceengi"
+	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
+	armor = list(melee = 65, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 100, rad = 100)
+	slowdown = 1
+	strip_delay = 130
+
+/obj/item/clothing/suit/space/ert/med
+	name = "emergency response team suit"
+	desc = "Standard issue suit for the ERT."
+	icon_state = "ertspacemed"
+	item_state = "ertspacemed"
+	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
+	armor = list(melee = 65, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 100, rad = 100)
+	slowdown = 1
+	strip_delay = 130

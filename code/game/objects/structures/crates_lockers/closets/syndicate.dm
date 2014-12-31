@@ -5,6 +5,32 @@
 	icon_closed = "syndicate"
 	icon_opened = "syndicateopen"
 
+/obj/structure/closet/syndicate/ertSec/New()
+	new /obj/item/weapon/gun/energy/gun/militarypistol(src)
+	new /obj/item/weapon/card/id/ertsSecurity(src)
+	new /obj/item/clothing/shoes/combat/swat(src)
+	new /obj/item/clothing/under/rank/centcom_officer(src)
+	new /obj/item/clothing/gloves/combat(src)
+	new /obj/item/weapon/storage/backpack/security(src)
+	return
+
+/obj/structure/closet/syndicate/ertMed/New()
+	new /obj/item/weapon/gun/energy/gun/militarypistol(src)
+	new /obj/item/weapon/card/id/ertsMedical(src)
+	new /obj/item/clothing/shoes/combat/swat(src)
+	new /obj/item/clothing/under/rank/centcom_officer(src)
+	new /obj/item/clothing/gloves/combat(src)
+	new /obj/item/weapon/storage/backpack/medic(src)
+	return
+
+/obj/structure/closet/syndicate/ertEngi/New()
+	new /obj/item/weapon/gun/energy/gun/militarypistol(src)
+	new /obj/item/weapon/card/id/ertsEngineer(src)
+	new /obj/item/clothing/shoes/combat/swat(src)
+	new /obj/item/clothing/under/rank/centcom_officer(src)
+	new /obj/item/clothing/gloves/combat(src)
+	new /obj/item/weapon/storage/backpack/industrial(src)
+	return
 
 /obj/structure/closet/syndicate/personal
 	desc = "It's a personal storage unit for operative gear."

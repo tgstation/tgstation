@@ -121,3 +121,18 @@
 	reagents.add_reagent("lexorin", 1)
 	update_icon()
 	return
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/adminordrazine
+	name = "adminordrazine medipen"
+	desc = "A rapid way to revive a patient from near death, as well as rapidly stimulate their bodys adrenaline."
+	icon_state = "stimpen"
+	amount_per_transfer_from_this = 30
+	volume = 50
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/adminordrazine/New()
+	..()
+	reagents.remove_reagent("inaprovaline", 10)
+	reagents.add_reagent("adminordrazine", 40)
+	reagents.add_reagent("hyperzine", 10)
+	update_icon()
+	return

@@ -17,6 +17,17 @@
 	e_cost = 83
 	select_name = "kill"
 
+/obj/item/ammo_casing/energy/militarykill
+	projectile_type = /obj/item/projectile/beam
+	e_cost = 33
+	select_name = "kill"
+
+/obj/item/ammo_casing/energy/electrode/militarystun
+	projectile_type = /obj/item/projectile/energy/electrode
+	e_cost = 33
+	select_name = "stun"
+	fire_sound = 'sound/weapons/taser.ogg'
+
 /obj/item/ammo_casing/energy/laser/practice
 	projectile_type = /obj/item/projectile/practice
 	select_name = "practice"
