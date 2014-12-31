@@ -41,6 +41,13 @@
 				var/mob/living/M = src
 				M.take_organ_damage(20)
 
+/atom/proc/attack_hulk(mob/living/carbon/human/hulk, do_attack_animation = 0)
+	if(do_attack_animation)
+		hulk.changeNext_move(CLICK_CD_MELEE)
+		add_logs(hulk, src, "punched", "hulk powers", admin=0)
+		hulk.do_attack_animation(src)
+	return
+
 /atom/proc/CheckParts()
 	return
 
