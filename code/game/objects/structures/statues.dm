@@ -17,7 +17,6 @@
 	..()
 
 /obj/structure/statue/attackby(obj/item/weapon/W, mob/living/user as mob)
-	user.do_attack_animation(src)
 	add_fingerprint(user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(istype(W, /obj/item/weapon/wrench))
@@ -75,8 +74,8 @@
 
 	else
 		hardness -= W.force/100
-		CheckHardness()
 		..()
+		CheckHardness()
 
 /obj/structure/statue/attack_hand(mob/living/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
