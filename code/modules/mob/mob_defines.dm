@@ -2,7 +2,7 @@
 	density = 1
 	layer = 4
 	animate_movement = 2
-	flags = NOREACT | HEAR
+	flags = HEAR
 	hud_possible = list(ANTAG_HUD)
 	var/datum/mind/mind
 
@@ -154,6 +154,8 @@
 	var/area/lastarea = null
 
 	var/digitalcamo = 0 // Can they be tracked by the AI?
+
+	var/has_unlimited_silicon_privilege = 0 // Can they interact with station electronics
 
 	var/list/radar_blips = list() // list of screen objects, radar blips
 	var/radar_open = 0 	// nonzero is radar is open

@@ -437,12 +437,12 @@
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
-		visible_message("<span class='danger'>[G.assailant] dunks [G.affecting] into the [src]!</span>", 3)
+		visible_message("<span class='danger'>[G.assailant] dunks [G.affecting] into \the [src]!</span>", 3)
 		qdel(W)
 		return
 	else if (istype(W, /obj/item) && get_dist(src,user)<2)
 		user.drop_item(src)
-		visible_message("<span class='warning'> [user] dunks [W] into the [src]!</span>", 3)
+		visible_message("<span class='warning'> [user] dunks [W] into \the [src]!</span>", 3)
 		return
 
 /obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=0)

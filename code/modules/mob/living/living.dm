@@ -540,6 +540,7 @@
 	if(C.handcuffed)
 		C.handcuffed = null
 		C.update_inv_handcuffed(0)
+		return
 	else
 		C.legcuffed = null
 		C.update_inv_legcuffed(0)
@@ -571,18 +572,19 @@
 		C.visible_message("<span class='warning'>[C] attempts to remove [I]!</span>")
 		C << "<span class='notice'>You attempt to remove [I]. (This will take around [displaytime] minutes and you need to stand still.)</span>"
 		spawn(0)
-			if(do_after(C, breakouttime))
+			if(do_after(C, breakouttime, 10))
 				if(!I || C.buckled)
 					return
 				C.visible_message("<span class='danger'>[C] manages to remove [I]!</span>")
 				C << "<span class='notice'>You successfully remove [I].</span>"
 
 				if(C.handcuffed)
-					C.handcuffed.loc = usr.loc
+					C.handcuffed.loc = C.loc
 					C.handcuffed = null
 					C.update_inv_handcuffed(0)
+					return
 				if(C.legcuffed)
-					C.legcuffed.loc = usr.loc
+					C.legcuffed.loc = C.loc
 					C.legcuffed = null
 					C.update_inv_legcuffed(0)
 			else
@@ -760,7 +762,15 @@
 /mob/living/singularity_pull(S)
 	step_towards(src,S)
 
-/mob/living/proc/do_attack_animation(atom/A)
+/mob/living/narsie_act()
+	if(client)
+		makeNewConstruct(/mob/living/simple_animal/construct/harvester, src, null, 1)
+	spawn_dust()
+	gib()
+	return
+
+
+/atom/movable/proc/do_attack_animation(atom/A)
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0
 	var/direction = get_dir(src, A)
@@ -787,4 +797,8 @@
 			pixel_y_diff = -8
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
 	animate(pixel_x = initial(pixel_x), pixel_y = initial(pixel_y), time = 2)
+
+
+/mob/living/do_attack_animation(atom/A)
+	..()
 	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.

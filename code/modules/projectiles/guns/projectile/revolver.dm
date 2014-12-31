@@ -5,7 +5,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
 
 /obj/item/weapon/gun/projectile/revolver/chamber_round()
-	if (chambered || !magazine)
+	if ((chambered && chambered.BB)|| !magazine) //if there's a live ammo in the chamber or no magazine
 		return
 	else if (magazine.ammo_count())
 		chambered = magazine.get_round(1)
@@ -36,6 +36,9 @@
 		user << "<span class = 'notice'>You unload [num_unloaded] shell\s from [src].</span>"
 	else
 		user << "<span class='notice'>[src] is empty.</span>"
+
+/obj/item/weapon/gun/projectile/revolver/can_shoot()
+	return get_ammo(0,0)
 
 /obj/item/weapon/gun/projectile/revolver/get_ammo(var/countchambered = 0, var/countempties = 1)
 	var/boolets = 0 //mature var names for mature people
@@ -172,7 +175,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/revolver/russian/attack_self(mob/user as mob)
-	if(!spun && get_ammo(0,0))
+	if(!spun && can_shoot())
 		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
 		Spin()
 	else
@@ -190,34 +193,35 @@
 			user << "<span class='notice'>[src] is empty.</span>"
 
 /obj/item/weapon/gun/projectile/revolver/russian/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params)
-	if(!spun && get_ammo(0,0))
-		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
-		Spin()
-	..()
-	spun = 0
-
-/obj/item/weapon/gun/projectile/revolver/russian/attack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj)
-	if(!spun && get_ammo(0,0))
-		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
-		Spin()
+	if(user.a_intent == "harm") // Flogging action
+		return
+	if(isliving(user))
+		if(!can_trigger_gun(user))
+			return
+	if(target != user)
+		user << "<span class='warning'>A mechanism prevents you from shooting anyone but yourself.</span>"
 		return
 
-
-	if(target == user)
-		if(!chambered)
-			user.visible_message("<span class='danger'>*click*</span>", "<span class='danger'>*click*</span>")
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(!spun)
+			user << "<span class='warning'>You need to spin the revolver's chamber first.</span>"
 			return
 
-		if(isliving(target) && isliving(user))
-			var/obj/item/organ/limb/affecting = user.zone_sel.selecting
-			if(affecting == "head")
-				var/obj/item/ammo_casing/AC = chambered
-				if(AC.fire(user, user))
+		spun = 0
+
+		if(chambered)
+			var/obj/item/ammo_casing/AC = chambered
+			if(AC.fire(user, user))
+				playsound(user, fire_sound, 50, 1)
+				var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
+				var/limb_name = affecting.getDisplayName()
+				if(affecting == "head" || affecting == "eyes" || affecting == "mouth")
 					user.apply_damage(300, BRUTE, affecting)
-					playsound(user, fire_sound, 50, 1)
-					user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='danger'>You fire [src] at your head!</span>", "You hear a [istype(AC.BB, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
-					return
+					user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='userdanger'>You fire [src] at your head!</span>", "You hear a gunshot!")
 				else
-					user.visible_message("<span class='danger'>*click*</span>", "<span class='danger'>*click*</span>")
-					return
-	..()
+					user.visible_message("<span class='danger'>[user.name] cowardly fires [src] at \his [limb_name]!</span>", "<span class='userdanger'>You cowardly fire [src] at your [limb_name]!</span>", "You hear a gunshot!")
+				return
+
+		user.visible_message("<span class='danger'>*click*</span>")
+		playsound(user, 'sound/weapons/empty.ogg', 100, 1)

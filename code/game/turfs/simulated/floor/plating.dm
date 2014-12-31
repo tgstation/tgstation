@@ -12,6 +12,7 @@
 	name = "plating"
 	icon_state = "plating"
 	intact = 0
+	cancable = 1
 	broken_states = list("platingdmg1", "platingdmg2", "platingdmg3")
 	burnt_states = list("panelscorched")
 
@@ -63,7 +64,7 @@
 			if((LC.d1==0)||(LC.d2==0))
 				LC.attackby(C,user)
 				return
-		coil.turf_place(src, user)
+		coil.place_turf(src, user)
 	else if(istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/welder = C
 		if( welder.isOn() && (broken || burnt) )
@@ -110,6 +111,9 @@
 	name = "engraved floor"
 	icon_state = "cult"
 
+/turf/simulated/floor/engine/cult/narsie_act()
+	return
+
 /turf/simulated/floor/engine/n20/New()
 	..()
 	var/datum/gas_mixture/adding = new
@@ -137,8 +141,7 @@
 	nitrogen = 0
 	temperature = TCMB
 
-/turf/simulated/floor/airless
-	icon_state = "floor"
+/turf/simulated/floor/plasteel/airless
 	oxygen = 0
 	nitrogen = 0
 	temperature = TCMB

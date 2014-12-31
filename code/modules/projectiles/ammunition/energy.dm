@@ -71,7 +71,7 @@
 /obj/item/ammo_casing/energy/ion
 	projectile_type = /obj/item/projectile/ion
 	select_name = "ion"
-	fire_sound = 'sound/weapons/Laser.ogg'
+	fire_sound = 'sound/weapons/IonRifle.ogg'
 
 /obj/item/ammo_casing/energy/declone
 	projectile_type = /obj/item/projectile/energy/declone
@@ -114,13 +114,13 @@
 	projectile_type = /obj/item/projectile/kinetic
 	select_name = "kinetic"
 	e_cost = 500
-	fire_sound = 'sound/weapons/Gunshot4.ogg'
+	fire_sound = 'sound/weapons/Kenetic_accel.ogg'
 
 /obj/item/ammo_casing/energy/disabler
-	projectile_type = /obj/item/projectile/energy/disabler
+	projectile_type = /obj/item/projectile/beam/disabler
 	select_name  = "disable"
 	e_cost = 50
-	fire_sound = "sound/weapons/taser.ogg"
+	fire_sound = "sound/weapons/taser2.ogg"
 
 /obj/item/ammo_casing/energy/wormhole
 	projectile_type = /obj/item/projectile/beam/wormhole

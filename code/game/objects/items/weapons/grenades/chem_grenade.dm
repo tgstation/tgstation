@@ -76,8 +76,6 @@
 
 	else if(stage == EMPTY && istype(I, /obj/item/device/assembly_holder))
 		var/obj/item/device/assembly_holder/A = I
-		if(!A.secured)
-			return
 		if(isigniter(A.a_left) == isigniter(A.a_right))	//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
 			return
 

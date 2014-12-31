@@ -49,6 +49,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	req_access = list(access_tox)	//Data and setting manipulation requires scientist access.
 
+	var/selected_category
+
 
 /obj/machinery/computer/rdconsole/proc/CallTechName(var/ID) //A simple helper proc to find the name of a tech with a given ID.
 	var/datum/tech/check_tech
@@ -178,6 +180,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	if(href_list["menu"]) //Switches menu screens. Converts a sent text string into a number. Saves a LOT of code.
 		var/temp_screen = text2num(href_list["menu"])
 		screen = temp_screen
+
+	if(href_list["category"])
+		selected_category = href_list["category"]
 
 	else if(href_list["updt_tech"]) //Update the research holder with information from the technology disk.
 		screen = 0.0
@@ -413,7 +418,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 								else
 									new_item.loc = linked_lathe.loc
 						linked_lathe.busy = 0
-						screen = 3.1
+						screen = 3.15
 						updateUsrDialog()
 
 	else if(href_list["imprint"]) //Causes the Circuit Imprinter to build something.
@@ -778,31 +783,42 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<h3>Protolathe Menu:</h3><BR>"
 			dat += "<B>Material Amount:</B> [linked_lathe.TotalMaterials()] / [linked_lathe.max_material_storage]<BR>"
 			dat += "<B>Chemical Volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]<HR>"
+
+			dat += list_categories(linked_lathe.categories, 3.15)
+
+		//Grouping designs by categories, to improve readability
+		if(3.15)
+			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
+			dat += "<A href='?src=\ref[src];menu=3.1'>Protolathe Menu</A>"
+			dat += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3><BR>"
+			dat += "<B>Material Amount:</B> [linked_lathe.TotalMaterials()] / [linked_lathe.max_material_storage]<BR>"
+			dat += "<B>Chemical Volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]<HR>"
+
 			var/coeff = linked_lathe.efficiency_coeff
 			for(var/datum/design/D in files.known_designs)
-				if(!(D.build_type & PROTOLATHE))
+				if(!(selected_category in D.category)|| !(D.build_type & PROTOLATHE))
 					continue
-				var/temp_dat = "[D.name]"
 				var/temp_material
 				var/c = 50
 				var/t
 				for(var/M in D.materials)
 					t = linked_lathe.check_mat(D, M)
+					temp_material += " | "
 					if (!t)
-						temp_material += " <span style=\"color:red\">[D.materials[M]/coeff] [CallMaterialName(M)]</span>"
+						temp_material += "<span class='bad'>[D.materials[M]/coeff] [CallMaterialName(M)]</span>"
 					else
 						temp_material += " [D.materials[M]/coeff] [CallMaterialName(M)]"
 					c = min(c,t)
 
 				if (c)
-					dat += "* <A href='?src=\ref[src];build=[D.id];amount=1'>[temp_dat]</A>"
+					dat += "<A href='?src=\ref[src];build=[D.id];amount=1'>[D.name]</A>"
 					if(c >= 5.0)
 						dat += "<A href='?src=\ref[src];build=[D.id];amount=5'>x5</A>"
 					if(c >= 10.0)
 						dat += "<A href='?src=\ref[src];build=[D.id];amount=10'>x10</A>"
 					dat += "[temp_material]"
 				else
-					dat += "* <span class='linkOff'>[temp_dat]</span>[temp_material]"
+					dat += "<span class='linkOff'>[D.name]</span>[temp_material]"
 				dat += "<BR>"
 			dat += "</div>"
 
@@ -880,23 +896,33 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<h3>Circuit Imprinter Menu:</h3><BR>"
 			dat += "Material Amount: [linked_imprinter.TotalMaterials()]<BR>"
 			dat += "Chemical Volume: [linked_imprinter.reagents.total_volume]<HR>"
+
+			dat += list_categories(linked_imprinter.categories, 4.15)
+
+		if(4.15)
+			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
+			dat += "<A href='?src=\ref[src];menu=4.1'>Circuit Imprinter Menu</A>"
+			dat += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3><BR>"
+			dat += "Material Amount: [linked_imprinter.TotalMaterials()]<BR>"
+			dat += "Chemical Volume: [linked_imprinter.reagents.total_volume]<HR>"
+
 			var/coeff = linked_imprinter.efficiency_coeff
 			for(var/datum/design/D in files.known_designs)
-				if(!(D.build_type & IMPRINTER))
+				if(!(selected_category in D.category) || !(D.build_type & IMPRINTER))
 					continue
-				var/temp_dat = "[D.name]"
 				var/temp_materials
 				var/check_materials = 1
 				for(var/M in D.materials)
+					temp_materials += " | "
 					if (!linked_imprinter.check_mat(D, M))
 						check_materials = 0
-						temp_materials += " <span style=\"color:red\">[D.materials[M]/coeff] [CallMaterialName(M)]</span>"
+						temp_materials += " <span class='bad'>[D.materials[M]/coeff] [CallMaterialName(M)]</span>"
 					else
 						temp_materials += " [D.materials[M]/coeff] [CallMaterialName(M)]"
 				if (check_materials)
-					dat += "* <A href='?src=\ref[src];imprint=[D.id]'>[temp_dat]</A>[temp_materials]<BR>"
+					dat += "<A href='?src=\ref[src];imprint=[D.id]'>[D.name]</A>[temp_materials]<BR>"
 				else
-					dat += "* <span class='linkOff'>[temp_dat]</span>[temp_materials]<BR>"
+					dat += "<span class='linkOff'>[D.name]</span>[temp_materials]<BR>"
 			dat += "</div>"
 
 		if(4.2)
@@ -931,10 +957,29 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(linked_imprinter.diamond_amount >= 2000) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=diamond;imprinter_ejectsheet_amt=50'>All</A>"
 			dat += "</div>"
 
-	var/datum/browser/popup = new(user, "rndconsole", name, 420, 450)
+	var/datum/browser/popup = new(user, "rndconsole", name, 460, 550)
 	popup.set_content(dat)
 	popup.open()
 	return
+
+//helper proc, which return a table containing categories
+/obj/machinery/computer/rdconsole/proc/list_categories(var/list/categories, var/menu_num as num)
+	if(!categories)
+		return
+
+	var/line_length = 1
+	var/dat = "<table style='width:100%' align='center'><tr>"
+
+	for(var/C in categories)
+		if(line_length > 2)
+			dat += "</tr><tr>"
+			line_length = 1
+
+		dat += "<td><A href='?src=\ref[src];category=[C];menu=[menu_num]'>[C]</A></td>"
+		line_length++
+
+	dat += "</tr></table></div>"
+	return dat
 
 /obj/machinery/computer/rdconsole/robotics
 	name = "Robotics R&D Console"
