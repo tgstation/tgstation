@@ -152,7 +152,7 @@
 	. = 0
 	for(var/obj/item/ammo_casing/AC in magazine.stored_ammo)
 		if(AC.BB)
-			process_fire(user, user)
+			process_fire(user, user,0)
 			. = 1
 
 /obj/item/weapon/gun/projectile/shotgun/blow_up(mob/user as mob)
@@ -160,11 +160,6 @@
 	if(chambered && chambered.BB)
 		process_fire(user, user,0)
 		. = 1
-	for(var/obj/item/ammo_casing/AC in magazine.stored_ammo)
-		if(AC.BB)
-			chambered = AC
-			process_fire(user, user,0)
-			. = 1
 
 /obj/item/weapon/gun/projectile/proc/sawoff(mob/user as mob)
 	if(sawn_state == SAWN_OFF)
