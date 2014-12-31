@@ -194,7 +194,7 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 
 /mob/living/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)
-		M.emote("me", 1, "[M.friendly] [src]")
+		M.visible_message("<span class='notice'>\The [M] [M.friendly] [src]!</span>")
 		return 0
 	else
 		if(M.attack_sound)
@@ -215,7 +215,10 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 		M << "No attacking people at spawn, you jackass."
 		return 0
 
-	if (M.a_intent == "harm" && !M.is_muzzled())
+	if (M.a_intent == "harm")
+		if(M.is_muzzled() || (M.wear_mask && M.wear_mask.flags & MASKCOVERSMOUTH))
+			M << "<span class='warning'>You can't bite with your mouth covered!</span>"
+			return 0
 		M.do_attack_animation(src)
 		if (prob(75))
 			add_logs(M, src, "attacked", admin=0)
