@@ -57,19 +57,19 @@
 	return 1
 
 
-/obj/item/device/flash/proc/flash_carbon(var/mob/living/carbon/M, var/mob/user = null, var/power = 5, convert = 1)
+/obj/item/device/flash/proc/flash_carbon(var/mob/living/carbon/M, var/mob/user = null, var/power = 5, targeted = 1)
 	add_logs(user, M, "flashed", object="[src.name]")
 	var/safety = M.eyecheck()
 	if(safety <= 0)
 		M.confused += power
 		flick("e_flash", M.flash)
-		if(user && convert)
+		if(user && targeted)
 			terrible_conversion_proc(M, user)
 			M.Stun(1)
 			user.visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
 		return 1
 	else
-		if(user && convert)
+		if(user && targeted)
 			user.visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>")
 		return 0
 
