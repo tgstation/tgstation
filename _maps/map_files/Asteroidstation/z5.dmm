@@ -8,7 +8,7 @@
 "ah" = (/obj/machinery/teleport/hub,/turf/simulated/floor/plating/airless,/area/AIsattele)
 "ai" = (/obj/item/weapon/shard{icon_state = "medium"},/turf/simulated/floor/plating/airless,/area/AIsattele)
 "aj" = (/turf/simulated/floor/plating/airless,/area/AIsattele)
-"ak" = (/obj/structure/rack,/obj/item/clothing/gloves/yellow,/turf/simulated/floor/plating/airless,/area/AIsattele)
+"ak" = (/obj/structure/rack,/obj/item/clothing/gloves/color/yellow,/turf/simulated/floor/plating/airless,/area/AIsattele)
 "al" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/simulated/floor/plating/airless,/area/AIsattele)
 "am" = (/obj/item/weapon/stock_parts/cell{step_x = 0},/turf/simulated/floor/plating/airless,/area/AIsattele)
 "an" = (/obj/effect/decal/cleanable/dirt,/turf/simulated/floor/plating/airless,/area/AIsattele)
