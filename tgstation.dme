@@ -932,6 +932,7 @@
 #include "code\modules\food&drinks\food\snacks\meat.dm"
 #include "code\modules\food&drinks\kitchen machinery\food_cart.dm"
 #include "code\modules\food&drinks\kitchen machinery\gibber.dm"
+#include "code\modules\food&drinks\kitchen machinery\icecream_vat.dm"
 #include "code\modules\food&drinks\kitchen machinery\juicer.dm"
 #include "code\modules\food&drinks\kitchen machinery\microwave.dm"
 #include "code\modules\food&drinks\kitchen machinery\monkeyrecycler.dm"
