@@ -1,5 +1,32 @@
 #define MIDNIGHT_ROLLOVER		864000	//number of deciseconds in a day
 
+
+//Human Overlays Indexes/////////
+#define SPECIES_LAYER			23		// mutantrace colors... these are on a seperate layer in order to prvent
+#define BODY_LAYER				22		//underwear, undershirts, eyes, lips(makeup)
+#define MUTATIONS_LAYER			21		//Tk headglows etc.
+#define AUGMENTS_LAYER			20
+#define DAMAGE_LAYER			19		//damage indicators (cuts and burns)
+#define UNIFORM_LAYER			18
+#define ID_LAYER				17
+#define SHOES_LAYER				16
+#define GLOVES_LAYER			15
+#define EARS_LAYER				14
+#define SUIT_LAYER				13
+#define GLASSES_LAYER			12
+#define BELT_LAYER				11		//Possible make this an overlay of somethign required to wear a belt?
+#define SUIT_STORE_LAYER		10
+#define BACK_LAYER				9
+#define HAIR_LAYER				8		//TODO: make part of head layer?
+#define FACEMASK_LAYER			7
+#define HEAD_LAYER				6
+#define HANDCUFF_LAYER			5
+#define LEGCUFF_LAYER			4
+#define L_HAND_LAYER			3
+#define R_HAND_LAYER			2		//Having the two hands seperate seems rather silly, merge them together? It'll allow for code to be reused on mobs with arbitarily many hands
+#define FIRE_LAYER				1		//If you're on fire
+#define TOTAL_LAYERS			23		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+
 //Security levels
 #define SEC_LEVEL_GREEN	0
 #define SEC_LEVEL_BLUE	1
