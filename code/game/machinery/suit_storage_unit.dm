@@ -85,25 +85,25 @@
 	SUIT_TYPE = /obj/item/clothing/suit/space/ert
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/ert
 	MASK_TYPE = /obj/item/clothing/mask/breath
-	STORAGE_TYPE = /obj/item/weapon/tank/oxygen
+	STORAGE_TYPE = /obj/item/weapon/tank/emergency_oxygen/double
 
 /obj/machinery/suit_storage_unit/ertSec
 	SUIT_TYPE = /obj/item/clothing/suit/space/ert/sec
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/ert/sec
 	MASK_TYPE = /obj/item/clothing/mask/breath
-	STORAGE_TYPE = /obj/item/weapon/tank/oxygen
+	STORAGE_TYPE = /obj/item/weapon/tank/emergency_oxygen/double
 
 /obj/machinery/suit_storage_unit/ertEngi
 	SUIT_TYPE = /obj/item/clothing/suit/space/ert/engi
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/ert/engi
 	MASK_TYPE = /obj/item/clothing/mask/breath
-	STORAGE_TYPE = /obj/item/weapon/tank/oxygen
+	STORAGE_TYPE = /obj/item/weapon/tank/emergency_oxygen/double
 
 /obj/machinery/suit_storage_unit/ertMed
 	SUIT_TYPE = /obj/item/clothing/suit/space/ert/med
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/ert/med
 	MASK_TYPE = /obj/item/clothing/mask/breath
-	STORAGE_TYPE = /obj/item/weapon/tank/oxygen
+	STORAGE_TYPE = /obj/item/weapon/tank/emergency_oxygen/double
 
 /obj/machinery/suit_storage_unit/New()
 	src.update_icon()
