@@ -132,7 +132,7 @@
 		if((loc == user && user.stat == 0))
 			name = "[n_name]"
 		else
-			user << "You need to be holding the food item in your hand!"
+			user << "<span class='notice'>You need to be holding the food item in your hand!</span>"
 		return
 	if(istype(W,/obj/item/weapon/storage))
 		..() // -> item/attackby()
