@@ -23,6 +23,8 @@
 	attack_sound = "punch"
 	environment_smash = 1
 	gender = MALE
+	faction = "greytide"
+	var/enemy_list = list()
 
 	min_oxy = 5
 	max_oxy = 0
@@ -53,3 +55,28 @@
 /mob/living/simple_animal/hostile/assistant/female/New()
 	name = "[pick(first_names_female)] [pick(last_names)]"
 	..()
+
+/mob/living/simple_animal/hostile/assistant/ListTargets(var/override = -1)
+
+	var/list/L = ..()
+	for(var/atom/A in L)
+		if(istype(A, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = A
+			if(H.name == "Unknown" || ((H.get_assignment() == "Assistant") && !(H in enemy_list)))
+				L -= H
+	return L
+
+//Adds attacker to enemy_list and makes him the new target
+/mob/living/simple_animal/hostile/assistant/attackby(obj/O as obj, mob/user as mob)
+	..()
+	attacked(user)
+
+/mob/living/simple_animal/hostile/assistant/attack_hand(mob/user as mob)
+	..()
+	attacked(user)
+
+/mob/living/simple_animal/hostile/assistant/proc/attacked(var/mob/attacker)
+	if(!(attacker in enemy_list))
+		enemy_list += attacker
+	if(attacker != target)
+		GiveTarget(attacker)
