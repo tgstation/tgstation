@@ -650,8 +650,8 @@ datum/reagent/space_cleaner/reaction_turf(var/turf/T, var/volume)
 
 		for(var/mob/living/carbon/slime/M in T)
 			M.adjustToxLoss(rand(5,10))
-	var/turf/simulated/floor/F = T
 	if(istype(T, /turf/simulated/floor))
+		var/turf/simulated/floor/F = T
 		if(volume >= 1)
 			F.dirt = 0
 
