@@ -7,21 +7,6 @@
 	origin_tech = "combat=3;magnets=2"
 	modifystate = 2
 
-/obj/item/weapon/gun/energy/gun/militarypistol
-	name = "energy pistol"
-	desc = "A military grade sidearm."
-	icon_state = "energypistol"
-	item_state = "laser"
-	w_class = 3.0
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
-
-/obj/item/weapon/gun/energy/gun/militaryegun
-	name = "assault energy gun"
-	desc = "A military grade energy gun."
-	icon_state = "militarygun"
-	item_state = "laser"
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode/militarystun, /obj/item/ammo_casing/energy/militarykill)
-
 /obj/item/weapon/gun/energy/gun/attack_self(mob/living/user as mob)
 	select_fire(user)
 	update_icon()
