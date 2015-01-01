@@ -85,6 +85,7 @@ var/next_mob_id = 0
 	var/list/atom_viewers = list()
 	for(var/atom/movable/A in view(src))
 		atom_viewers |= recursive_hear_check(A)
+	atom_viewers |= src
 	atom_viewers |= viewers(src)
 	for(var/mob/M in atom_viewers)
 		if(M.see_invisible < invisibility)
@@ -111,6 +112,7 @@ var/next_mob_id = 0
 	var/list/atom_viewers = list()
 	for(var/atom/movable/A in view(src))
 		atom_viewers |= recursive_hear_check(A)
+	atom_viewers |= viewers(src)
 	for(var/mob/M in atom_viewers)
 		M.show_message( message, 1)
 	if(blind_message)
