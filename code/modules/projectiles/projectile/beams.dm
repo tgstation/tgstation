@@ -9,7 +9,7 @@
 	eyeblur = 2
 
 /obj/item/projectile/practice
-	name = "laser"
+	name = "practice laser"
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 0
