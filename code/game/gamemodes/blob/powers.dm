@@ -159,6 +159,9 @@
 
 	B.change_to(/obj/effect/blob/factory)
 	B.color = blob_reagent_datum.color
+	var/obj/effect/blob/factory/R = locate() in T
+	if(R)
+		R.overmind = src
 	return
 
 
@@ -189,6 +192,7 @@
 		B.Destroy()
 	blobber.color = blob_reagent_datum.color
 	blobber.overmind = src
+	blob_mobs.Add(blobber)
 	return
 
 
@@ -268,9 +272,8 @@
 		return
 	last_attack = world.time
 	OB.expand(T, 0)
-	for(var/atom/movable/A in T)
-		if(ismob(A) && A != src)
-			blob_reagent_datum.reaction_mob(A, TOUCH)
+	for(var/mob/living/L in T)
+		blob_reagent_datum.reaction_mob(L, TOUCH)
 	OB.color = blob_reagent_datum.color
 	return
 
@@ -340,3 +343,54 @@
 	else
 		src << "<span class='warning'>You weren't able to split your consciousness at this time...</span>"
 
+/mob/camera/blob/verb/blob_broadcast()
+	set category = "Blob"
+	set name = "Blob Broadcast"
+	set desc = "Speak with your blob spores and blobbernauts as your mouthpieces. This action is free."
+
+	var/speak_text = input(usr, "What would you like to say with your minions?", "Blob Broadcast", null) as text
+
+	if(!speak_text)
+		return
+	else
+		usr << "You broadcast with your minions, <B>[speak_text]</B>"
+	for(var/mob/living/simple_animal/hostile/blob_minion in blob_mobs)
+		blob_minion.say(speak_text)
+	return
+
+/mob/camera/blob/verb/create_storage()
+	set category = "Blob"
+	set name = "Create Storage Blob (40)"
+	set desc = "Create a storage tower which will store extra resources for you. This increases your max resource cap by 50."
+
+
+	var/turf/T = get_turf(src)
+
+	if(!T)
+		return
+
+	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
+
+	if(!B)//We are on a blob
+		src << "There is no blob here!"
+		return
+
+	if(!istype(B, /obj/effect/blob/normal))
+		src << "Unable to use this blob, find a normal one."
+		return
+
+	for(var/obj/effect/blob/storage/blob in orange(3, T))
+		src << "There is a storage blob nearby, move more than 4 tiles away from it!"
+		return
+
+	if(!can_buy(40))
+		return
+
+	B.color = blob_reagent_datum.color
+	B.change_to(/obj/effect/blob/storage)
+	var/obj/effect/blob/storage/R = locate() in T
+	if(R)
+		R.overmind = src
+		R.update_max_blob_points(50)
+
+	return

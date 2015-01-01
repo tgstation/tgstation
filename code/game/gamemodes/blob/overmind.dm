@@ -16,6 +16,7 @@
 	var/max_blob_points = 100
 	var/last_attack = 0
 	var/datum/reagent/blob_reagent_datum = new/datum/reagent()
+	var/list/blob_mobs = list()
 
 /mob/camera/blob/New()
 	var/new_name = "[initial(name)] ([rand(1, 999)])"
