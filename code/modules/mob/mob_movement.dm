@@ -284,6 +284,7 @@
 
 		//We are now going to move
 		moving = 1
+		mob.delayNextMove(move_delay)
 		//Something with pulling things
 		if(locate(/obj/item/weapon/grab, mob))
 			move_delay = max(move_delay, world.time + 7)
