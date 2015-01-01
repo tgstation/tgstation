@@ -250,6 +250,20 @@
 			adjustBruteLoss(damage)
 			updatehealth()
 
+/mob/living/carbon/slime/attack_hulk(mob/living/carbon/human/user)
+	if(user.a_intent == "harm")
+		adjustBruteLoss(5)
+		if(Victim || Target)
+			Victim = null
+			Target = null
+			anchored = 0
+			if(prob(80) && !client)
+				Discipline++
+			spawn(0)
+				step_away(src,user,15)
+				sleep(3)
+				step_away(src,user,15)
+
 
 /mob/living/carbon/slime/attack_hand(mob/living/carbon/human/M as mob)
 	if(Victim)
@@ -319,20 +333,6 @@
 			var/damage = rand(1, 9)
 			attacked += 10
 			if (prob(90))
-				if (HULK in M.mutations)
-					damage += 5
-					if(Victim || Target)
-						Victim = null
-						Target = null
-						anchored = 0
-						if(prob(80) && !client)
-							Discipline++
-					spawn(0)
-						step_away(src,M,15)
-						sleep(3)
-						step_away(src,M,15)
-
-
 				playsound(loc, "punch", 25, 1, -1)
 				add_logs(M, src, "attacked", admin=0)
 				visible_message("<span class='danger'>[M] has punched [src]!</span>", \

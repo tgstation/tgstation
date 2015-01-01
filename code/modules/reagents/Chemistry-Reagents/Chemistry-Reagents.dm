@@ -858,4 +858,3 @@ datum/reagent/plantnutriment/robustharvestnutriment
 
 // Undefine the alias for REAGENTS_EFFECT_MULTIPLER
 #undef REM
-

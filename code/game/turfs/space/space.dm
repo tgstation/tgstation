@@ -23,15 +23,25 @@
 	if(istype(C, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
+		var/obj/structure/lattice/catwalk/W = locate(/obj/structure/lattice/catwalk, src)
+		if(W)
+			user << "<span class='warning'>There is already a catwalk here.</span>"
+			return
 		if(L)
-			user << "<span class='warning'>There is already a lattice.</span>"
+			if(R.use(2))
+				user << "<span class='notice'>Constructing catwalk...</span>"
+				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+				qdel(L)
+				ReplaceWithCatwalk()
+			else
+				user << "<span class='warning'>You need two rods to build a catwalk.</span>"
 			return
 		if(R.use(1))
 			user << "<span class='notice'>Constructing support lattice...</span>"
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 			ReplaceWithLattice()
 		else
-			user << "<span class='warning'>You need one rod to build lattice.</span>"
+			user << "<span class='warning'>You need one rod to build a lattice.</span>"
 		return
 	if(istype(C, /obj/item/stack/tile/plasteel))
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
@@ -46,6 +56,13 @@
 				user << "<span class='warning'>You need one floor tile to build a floor.</span>"
 		else
 			user << "<span class='danger'>The plating is going to need some support. Place metal rods first.</span>"
+	if(istype(C, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/coil = C
+		for(var/obj/structure/cable/LC in src)
+			if((LC.d1==0)||(LC.d2==0))
+				LC.attackby(C,user)
+				return
+		coil.place_turf(src, user)
 
 /turf/space/Entered(atom/movable/A)
 	..()

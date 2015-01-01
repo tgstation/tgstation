@@ -123,22 +123,25 @@
 	add_fingerprint(user)
 	playsound(loc, 'sound/effects/Glassknock.ogg', 50, 1)
 
+/obj/structure/window/attack_hulk(mob/living/carbon/human/user)
+	if(!can_be_reached(user))
+		return
+	..(user, 1)
+	user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!"))
+	user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
+	storedshard.add_fingerprint(user)
+	if(storedrods)
+		storedrods.add_fingerprint(user)
+	hit(50)
+	return 1
+
 /obj/structure/window/attack_hand(mob/user as mob)
 	if(!can_be_reached(user))
 		return
-	if(HULK in user.mutations)
-		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!"))
-		user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
-		storedshard.add_fingerprint(user)
-		if(storedrods)
-			storedrods.add_fingerprint(user)
-		spawnfragments()
-	else
-		user.changeNext_move(CLICK_CD_MELEE)
-		user.visible_message("<span class='notice'>[user] knocks on [src].</span>")
-		add_fingerprint(user)
-		playsound(loc, 'sound/effects/Glassknock.ogg', 50, 1)
-
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.visible_message("<span class='notice'>[user] knocks on [src].</span>")
+	add_fingerprint(user)
+	playsound(loc, 'sound/effects/Glassknock.ogg', 50, 1)
 
 /obj/structure/window/attack_paw(mob/user as mob)
 	return attack_hand(user)
@@ -263,10 +266,6 @@
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			user.changeNext_move(CLICK_CD_MELEE)
 			hit(I.force)
-			if(health <= 7)
-				anchored = 0
-				update_nearby_icons()
-				step(src, get_dir(user, src))
 		else
 			playsound(loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		..()

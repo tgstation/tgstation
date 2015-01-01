@@ -33,7 +33,6 @@
 	//blinded get reset each cycle and then get activated later in the
 	//code. Very ugly. I dont care. Moving this stuff here so its easy
 	//to find it.
-	src.blinded = null
 
 	if(environment)
 		handle_environment(environment) // Handle temperature/pressure differences between body and environment
@@ -210,7 +209,7 @@
 
 	if (src.stat == DEAD)
 		src.lying = 1
-		src.blinded = 1
+		src.eye_blind = max(eye_blind, 1)
 	else
 		if (src.paralysis || src.stunned || src.weakened || (status_flags && FAKEDEATH)) //Stunned etc.
 			if (src.stunned > 0)
@@ -222,7 +221,7 @@
 				src.stat = 0
 			if (src.paralysis > 0)
 				AdjustParalysis(-1)
-				src.blinded = 0
+				src.eye_blind = 0
 				src.lying = 0
 				src.stat = 0
 
@@ -234,7 +233,7 @@
 
 	if (src.eye_blind)
 		src.eye_blind = 0
-		src.blinded = 1
+		src.eye_blind = max(eye_blind, 1)
 
 	if (src.ear_deaf > 0) src.ear_deaf = 0
 	if (src.ear_damage < 25)
@@ -242,9 +241,9 @@
 
 	src.density = !( src.lying )
 
-	if (src.sdisabilities & BLIND)
-		src.blinded = 1
-	if (src.sdisabilities & DEAF)
+	if (src.disabilities & BLIND)
+		src.eye_blind = max(eye_blind, 1)
+	if (src.disabilities & DEAF)
 		src.ear_deaf = 1
 
 	if (src.eye_blurry > 0)

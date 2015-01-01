@@ -54,19 +54,19 @@ var/next_mob_id = 0
 	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 
 	if (type)
-		if(type & 1 && (sdisabilities & BLIND || blinded || paralysis) )//Vision related
+		if(type & 1 && (disabilities & BLIND || paralysis) )//Vision related
 			if (!( alt ))
 				return
 			else
 				msg = alt
 				type = alt_type
-		if (type & 2 && (sdisabilities & DEAF || ear_deaf))//Hearing related
+		if (type & 2 && ear_deaf)//Hearing related
 			if (!( alt ))
 				return
 			else
 				msg = alt
 				type = alt_type
-				if ((type & 1 && sdisabilities & BLIND))
+				if ((type & 1 && disabilities & BLIND))
 					return
 	// Added voice muffling for Issue 41.
 	if(stat == UNCONSCIOUS || sleeping > 0)
@@ -313,7 +313,6 @@ var/list/slot_equipment_priority = list( \
 	set name = "Examine"
 	set category = "IC"
 
-//	if( (sdisabilities & BLIND || blinded || stat) && !istype(src,/mob/dead/observer) )
 	if(is_blind(src))
 		src << "<span class='notice'>Something is there but you can't see it.</span>"
 		return
