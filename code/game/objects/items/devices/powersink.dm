@@ -121,6 +121,8 @@
 							if(A.operating && A.cell)
 								A.cell.charge = max(0, A.cell.charge - 50)
 								power_drained += 50
+								if(A.charging == 2)
+									A.charging = 1
 
 
 			if(power_drained > max_power * 0.95)

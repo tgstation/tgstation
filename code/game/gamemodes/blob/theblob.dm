@@ -98,7 +98,7 @@
 		return//Inf loop check
 
 	//Looking for another blob to pulse
-	var/list/dirs = list(1,2,4,8)
+	var/list/dirs = cardinal
 	dirs.Remove(origin_dir)//Dont pulse the guy who pulsed us
 	for(var/i = 1 to 4)
 		if(!dirs.len)	break
@@ -124,7 +124,7 @@
 	if(istype(T, /turf/space) && prob(75))
 		return
 	if(!T)
-		var/list/dirs = list(1,2,4,8)
+		var/list/dirs = cardinal
 		for(var/i = 1 to 4)
 			var/dirn = pick(dirs)
 			dirs.Remove(dirn)
@@ -166,7 +166,7 @@
 
 
 /obj/effect/blob/attackby(var/obj/item/weapon/W, var/mob/user)
-	user.changeNext_move(10)
+	user.delayNextAttack(10)
 	playsound(get_turf(src), 'sound/effects/attackblob.ogg', 50, 1)
 	src.visible_message("\red <B>The [src.name] has been attacked with \the [W][(user ? " by [user]." : ".")]")
 	var/damage = 0

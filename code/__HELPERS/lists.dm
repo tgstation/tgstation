@@ -34,7 +34,7 @@
 proc/listgetindex(var/list/list,index)
 	if(istype(list) && list.len)
 		if(isnum(index))
-			if(InRange(index,1,list.len))
+			if(IsInRange(index,1,list.len))
 				return list[index]
 		else if(index in list)
 			return list[index]
@@ -317,6 +317,10 @@ proc/listclearnulls(list/list)
 		return (result + L.Copy(Li, 0))
 	return (result + R.Copy(Ri, 0))
 
+/proc/find_record(field, value, list/L)
+	for(var/datum/data/record/R in L)
+		if(R.fields[field] == value)
+			return R
 
 //Move a single element from position fromIndex within a list, to position toIndex
 //This will preserve associations ~Carnie
@@ -396,8 +400,3 @@ proc/listclearnulls(list/list)
 			L.Swap(start++,end--)
 
 	return L
-
-/proc/find_record(field, value, list/L)
-	for(var/datum/data/record/R in L)
-		if(R.fields[field] == value)
-			return R

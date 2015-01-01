@@ -246,12 +246,16 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/proc/imbibe(mob/user) //drink the liquid within
 	user << "<span  class='notice'>You swallow a gulp of [src].</span>"
+	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
+
+	if(isrobot(user))
+		reagents.remove_any(gulp_size)
+		return 1
 	if(reagents.total_volume)
 		reagents.reaction(user, INGEST)
 		spawn(5)
 			reagents.trans_to(user, gulp_size)
 
-	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	return 1
 
 

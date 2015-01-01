@@ -46,6 +46,8 @@
 	last_beamchecks.Remove("\ref[B]") // RIP
 
 /mob/living/proc/handle_beams()
+	if(flags & INVULNERABLE)
+		return
 	// New beam damage code (per-tick)
 	for(var/obj/effect/beam/B in beams)
 		apply_beam_damage(B)
@@ -594,9 +596,9 @@
 	set name = "Resist"
 	set category = "IC"
 
-	if(!isliving(usr) || usr.next_move > world.time)
+	if(!isliving(usr) || usr.special_delayer.blocked())
 		return
-	usr.next_move = world.time + 20
+	delayNext(DELAY_ALL,20) // Attack, Move, and Special.
 
 	var/mob/living/L = usr
 
@@ -658,12 +660,12 @@
 
 
 	//unbuckling yourself
-	if(L.buckled && (L.last_special <= world.time))
+	if(L.buckled && !L.special_delayer.blocked())
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
 			if(C.handcuffed)
-				C.next_move = world.time + 100
-				C.last_special = world.time + 100
+				C.delayNextAttack(100)
+				C.delayNextSpecial(100)
 				C << "<span class='warning'>You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)</span>"
 				for(var/mob/O in viewers(L))
 					O.show_message("<span class='warning'>[usr] attempts to unbuckle themself!</span>", 1)
@@ -698,8 +700,7 @@
 		//		breakout_time++ //Harder to get out of welded lockers than locked lockers
 
 		//okay, so the closet is either welded or locked... resist!!!
-		usr.next_move = world.time + 100
-		L.last_special = world.time + 100
+		L.delayNext(DELAY_ALL,100)
 		L << "<span class='warning'>You lean on the back of [C] and start pushing the door open (this will take about [breakout_time] minutes).</span>"
 		for(var/mob/O in viewers(usr.loc))
 			O.show_message("<span class='danger'>The [C] begins to shake violently!</span>", 1)
@@ -761,9 +762,8 @@
 					"<span class='notice'>You extinguish yourself.</span>")
 				ExtinguishMob()
 			return
-		if(CM.handcuffed && CM.canmove && (CM.last_special <= world.time))
-			CM.next_move = world.time + 100
-			CM.last_special = world.time + 100
+		if(CM.handcuffed && CM.canmove && CM.special_delayer.blocked())
+			CM.delayNext(DELAY_ALL,100)
 			if(isalienadult(CM) || (M_HULK in usr.mutations))//Don't want to do a lot of logic gating here.
 				usr << "<span class='warning'>You attempt to break your handcuffs. (This will take around 5 seconds and you need to stand still)</span>"
 				for(var/mob/O in viewers(CM))
@@ -804,9 +804,8 @@
 					else
 						CM << "<span class='warning'>Your uncuffing attempt was interrupted.</span>"
 
-		else if(CM.legcuffed && CM.canmove && (CM.last_special <= world.time))
-			CM.next_move = world.time + 100
-			CM.last_special = world.time + 100
+		else if(CM.legcuffed && CM.canmove && CM.special_delayer.blocked())
+			CM.delayNext(DELAY_ALL,100)
 			if(isalienadult(CM) || (M_HULK in usr.mutations))//Don't want to do a lot of logic gating here.
 				usr << "<span class='warning'>You attempt to break your legcuffs. (This will take around 5 seconds and you need to stand still)</span>"
 				for(var/mob/O in viewers(CM))
@@ -860,7 +859,7 @@
 
 /mob/living/singularity_act()
 	var/gain = 20
-	investigate_log(" has consumed [key_name(src)].", "singulo")
+	investigation_log(I_SINGULO,"has been consumed by a singularity")
 	gib()
 	return(gain)
 

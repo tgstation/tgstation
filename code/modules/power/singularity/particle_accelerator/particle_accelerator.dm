@@ -138,7 +138,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	..()
 	if(master && master.active)
 		master.toggle_power()
-		investigate_log("was moved whilst active; it <font color='red'>powered down</font>.","singulo")
+		investigation_log(I_SINGULO,"was moved whilst active; it <font color='red'>powered down</font>.")
 
 /obj/structure/particle_accelerator/ex_act(severity)
 	switch(severity)

@@ -208,7 +208,7 @@
 			new /obj/machinery/constructable_frame/machine_frame(T)
 		del(src)
 	else if(user.a_intent == "hurt")
-		user.changeNext_move(10)
+		user.delayNextAttack(8)
 		src.health -= W.force
 		src.healthcheck()
 		..()
@@ -237,7 +237,7 @@
 			update_icon()
 	else
 		if(user.a_intent == "hurt")
-			user.changeNext_move(10)
+			user.delayNextAttack(8)
 			user.visible_message("<span class='danger'>[user.name] kicks \the [src]!</span>", \
 				"<span class='danger'>You kick \the [src]!</span>", \
 				"You hear glass crack.")
@@ -260,6 +260,7 @@
 				else
 					src << "\icon[src] <span class='rose'>\The [src] is empty!</span>"
 		else
+			user.delayNextAttack(10) // prevent spam
 			user.visible_message("[user.name] gently runs their hands over \the [src] in appreciation of its contents.", \
 				"You gently run your hands over \the [src] in appreciation of its contents.", \
 				"You hear someone streaking glass with their greasy hands.")

@@ -141,7 +141,7 @@ var/global/disable_vents     = 0
 
 #define T0C  273.15					// 0degC
 #define T20C 293.15					// 20degC
-#define TCMB 2.7					// -270.3degC
+#define TCMB 2.73					// -270.42degC
 
 var/turf/space/Space_Tile = locate(/turf/space) // A space tile to reference when atmos wants to remove excess heat.
 
@@ -956,6 +956,20 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define DIG_SOIL	2	//dirt - this flag gives it shovel functionality
 #define DIG_WALLS	4	//metal station walls - not the mineral ones
 #define DIG_RWALLS	8	//reinforced station walls - beware
+
+// For first investigation_log arg
+// Easier to idiot-proof it this way.
+#define I_HREFS    "hrefs"
+#define I_NOTES    "notes"
+#define I_NTSL     "ntsl"
+#define I_SINGULO  "singulo"
+#define I_ATMOS    "atmos"
+
+// delayNext() flags.
+#define DELAY_MOVE    1
+#define DELAY_ATTACK  2
+#define DELAY_SPECIAL 4
+#define DELAY_ALL (DELAY_MOVE|DELAY_ATTACK|DELAY_SPECIAL)
 
 //singularity defines
 #define STAGE_ONE 	1

@@ -215,7 +215,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	var/datum/gas_mixture/environment = loc.return_air()
 	switch(environment.temperature)
 		if(T0C to (T20C + 20))
-			integrity = between(0, integrity, 100)
+			integrity = Clamp(integrity, 0, 100)
 		if((T20C + 20) to (T0C + 70))
 			integrity = max(0, integrity - 1)
 	if(delay)
@@ -607,7 +607,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	var/msg="[mob.name] has compiled a script to server [src]:"
 	diary << msg
 	diary << rawcode
-	src.investigate_log("[msg]<br>[rawcode]", "ntsl")
+	investigation_log("ntsl","[msg]<br /><pre>[rawcode]</pre>")
 	if(length(rawcode)) // Let's not bother the admins for empty code.
 		message_admins("[mob.real_name] ([mob.key]) has compiled and uploaded a NTLS script to [src.id] ([mob.x],[mob.y],[mob.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[mob.x];Y=[mob.y];Z=[mob.z]'>JMP</a>)",0,1)
 
@@ -635,9 +635,6 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	log.parameters["message"] = content
 	log_entries.Add(log)
 	update_logs()
-
-
-
 
 // Simple log entry datum
 

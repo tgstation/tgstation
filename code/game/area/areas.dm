@@ -59,6 +59,7 @@
 	return contents
 
 /area/proc/poweralert(var/state, var/obj/source as obj)
+	if (suspend_alert) return
 	if (state != poweralm)
 		poweralm = state
 		if(istype(source))	//Only report power alarms on the z-level where the source is located.

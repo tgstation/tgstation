@@ -275,7 +275,7 @@
 		if(H.backbag == 2) H.equip_or_collect(new /obj/item/weapon/storage/backpack(H), slot_back)
 		if(H.backbag == 3) H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel_norm(H), slot_back)
 		H.equip_or_collect(new /obj/item/clothing/under/mime(H), slot_w_uniform)
-		H.equip_or_collect(new /obj/item/clothing/shoes/black(H), slot_shoes)
+		H.equip_or_collect(new /obj/item/clothing/shoes/mime(H), slot_shoes)
 		//H.equip_or_collect(new /obj/item/device/pda/mime(H), slot_belt)
 		H.equip_or_collect(new /obj/item/clothing/gloves/white(H), slot_gloves)
 		H.equip_or_collect(new /obj/item/clothing/mask/gas/mime(H), slot_wear_mask)

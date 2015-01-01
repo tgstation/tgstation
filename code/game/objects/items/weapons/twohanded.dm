@@ -201,6 +201,7 @@
 	if(!proximity) return
 	..()
 	if(A && wielded && (istype(A,/obj/structure/window) || istype(A,/obj/structure/grille))) //destroys windows and grilles in one hit
+		user.delayNextAttack(8)
 		if(istype(A,/obj/structure/window))
 			var/pdiff=performWallPressureCheck(A.loc)
 			if(pdiff>0)
@@ -244,7 +245,7 @@
 		return
 	if((wielded) && prob(50))
 		spawn(0)
-			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
+			for(var/i in alldirs)
 				user.dir = i
 				sleep(1)
 

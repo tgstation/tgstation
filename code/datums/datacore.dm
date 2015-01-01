@@ -13,14 +13,10 @@
 /obj/effect/datacore/proc/manifest_modify(var/name, var/assignment)
 	if(PDA_Manifest.len)
 		PDA_Manifest.Cut()
-	var/datum/data/record/foundrecord
+
 	var/real_title = assignment
 
-	for(var/datum/data/record/t in data_core.general)
-		if (t)
-			if(t.fields["name"] == name)
-				foundrecord = t
-				break
+	var/datum/data/record/foundrecord = find_record("name", name, data_core.general)
 
 	var/list/all_jobs = get_job_datums()
 

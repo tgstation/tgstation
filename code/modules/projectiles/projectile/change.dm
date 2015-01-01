@@ -1,5 +1,3 @@
-
-
 /obj/item/projectile/change
 	name = "bolt of change"
 	icon_state = "ice_1"
@@ -9,11 +7,11 @@
 	flag = "energy"
 	var/changetype=null
 
-	on_hit(var/atom/change)
-		wabbajack(change)
+/obj/item/projectile/change/on_hit(var/atom/change)
+	wabbajack(change)
 
 
-/obj/item/projectile/change/proc/wabbajack (mob/M as mob in living_mob_list)
+/obj/item/projectile/change/proc/wabbajack(var/mob/M) //WHY: as mob in living_mob_list
 	if(istype(M, /mob/living) && M.stat != DEAD)
 		if(M.monkeyizing)
 			return
@@ -22,6 +20,8 @@
 		if(istype(M, /mob/living/carbon/human/manifested))
 			visible_message("<span class='caution'>The bolt of change doesn't seem to affect [M] in any way.</span>")
 			return
+
+		// TODO: This needs to be standardized, sort of a premorph() proc or something.
 		M.monkeyizing = 1
 		M.canmove = 0
 		M.icon = null
@@ -40,8 +40,13 @@
 				W.layer = initial(W.layer)
 				W.loc = M.loc
 				W.dropped(M)
+		// END TODO
 
 		var/mob/living/new_mob
+
+		// Random chance of fucking up
+		if(changetype!=null && prob(10))
+			changetype = null
 
 		var/randomize = changetype==null?pick(available_staff_transforms):changetype
 
@@ -116,6 +121,18 @@
 				var/newspecies = pick(all_species)
 				H.set_species(newspecies)
 				H.generate_name()
+			if("furry")
+				new_mob = new /mob/living/carbon/human(M.loc, delay_ready_dna=1)
+
+				new_mob.gender = M.gender
+
+				var/datum/preferences/A = new()	//Randomize appearance for the human
+				A.randomize_appearance_for(new_mob)
+
+				var/mob/living/carbon/human/H = new_mob
+				H.set_species("Tajaran") // idfk
+				H.generate_name()
+			/* RIP
 			if("cluwne")
 				new_mob = new /mob/living/simple_animal/hostile/retaliate/cluwne(M.loc)
 				new_mob.universal_speak = 1
@@ -125,6 +142,7 @@
 				new_mob.mutations += M_CLUMSY
 				new_mob.mutations += M_FAT
 				new_mob.setBrainLoss(100)
+			*/
 			else
 				return
 

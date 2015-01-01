@@ -61,6 +61,7 @@
 	..()
 
 /obj/item/weapon/nullrod/afterattack(atom/A, mob/user as mob)
+	user.delayNextAttack(8)
 	if (istype(A, /turf/simulated/floor))
 		user << "\blue You hit the floor with the [src]."
 		call(/obj/effect/rune/proc/revealrunes)(src)
