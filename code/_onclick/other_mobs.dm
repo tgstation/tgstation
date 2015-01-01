@@ -47,11 +47,15 @@
 */
 /mob/living/UnarmedAttack(var/atom/A)
 	A.attack_animal(src)
+
+/mob/living/simple_animal/hostile/UnarmedAttack(var/atom/A)
+	target = A
+	AttackingTarget()
+
 /atom/proc/attack_animal(mob/user as mob)
 	return
 /mob/living/RestrainedClickOn(var/atom/A)
 	return
-
 
 /*
 	Monkeys
