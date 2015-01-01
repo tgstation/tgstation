@@ -80,6 +80,9 @@ LINEN BINS
 	icon_state = "sheetred"
 	_color = "red"
 
+/obj/item/weapon/bedsheet/red/redcoat
+		_color = "redcoat" //for denied stamp
+
 /obj/item/weapon/bedsheet/yellow
 	icon_state = "sheetyellow"
 	_color = "yellow"
@@ -120,7 +123,8 @@ LINEN BINS
 	icon_state = "sheetbrown"
 	_color = "brown"
 
-
+/obj/item/weapon/bedsheet/brown/cargo
+	_color = "cargo"		//exists for washing machines, is not different from brown bedsheet in any way
 
 
 /obj/structure/bedsheetbin

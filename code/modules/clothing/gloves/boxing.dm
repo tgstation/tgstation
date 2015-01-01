@@ -23,15 +23,12 @@
 /obj/item/clothing/gloves/white
 	name = "white gloves"
 	desc = "These look pretty fancy."
-	icon_state = "latex"
-	item_state = "lgloves"
+	icon_state = "white"
+	item_state = "whitegloves"
 	_color="mime"
 	species_fit = list("Vox")
 
-	stunglove // For Clown Planet's mimes. - N3X
-		New()
-			..()
-			cell = new /obj/item/weapon/cell/crap/empty(src)
-
-	redcoat
-		_color = "redcoat"		//Exists for washing machines. Is not different from white gloves in any way.
+/obj/item/clothing/gloves/white/stunglove // For Clown Planet's mimes. - N3X
+	New()
+		..()
+		cell = new /obj/item/weapon/cell/crap/empty(src)
