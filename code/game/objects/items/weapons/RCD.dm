@@ -109,8 +109,8 @@ RCD
 		qdel(W)
 		matter += 20
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-		user << "<span class='notice'>The RCD now holds [matter]/30 matter-units.</span>"
-		desc = "A RCD. It currently holds [matter]/30 matter-units."
+		user << "<span class='notice'>The RCD now holds [matter]/100 matter-units.</span>"
+		desc = "A RCD. It currently holds [matter]/100 matter-units."
 		return
 
 
@@ -237,7 +237,7 @@ RCD
 	if(matter < amount)
 		return 0
 	matter -= amount
-	desc = "A RCD. It currently holds [matter]/30 matter-units."
+	desc = "A RCD. It currently holds [matter]/100 matter-units."
 	return 1
 
 /obj/item/weapon/rcd/proc/checkResource(var/amount, var/mob/user)
