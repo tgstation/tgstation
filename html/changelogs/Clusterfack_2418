@@ -1,0 +1,5 @@
+author: Clusterfack
+delete-after: true
+changes:
+- rscadd: RPDs can build on lattices
+- rscadd: Night vision goggles give night vision and no longer see through walls
