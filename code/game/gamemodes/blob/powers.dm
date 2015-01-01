@@ -188,6 +188,7 @@
 	if(blobber)
 		B.Destroy()
 	blobber.color = blob_color
+	blobber.overmind = src
 	return
 
 

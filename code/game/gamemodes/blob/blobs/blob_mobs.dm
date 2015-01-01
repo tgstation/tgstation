@@ -138,9 +138,7 @@
 /mob/living/simple_animal/hostile/blobbernaut/AttackingTarget()
 	..()
 	if(isliving(target))
-		var/mob/living/L = target
-			if(overmind)
-				overmind.blob_reagent_datum.reaction_mob(L, TOUCH)
+		overmind.blob_reagent_datum.reaction_mob(target, TOUCH)
 
 
 /mob/living/simple_animal/hostile/blobbernaut/blob_act()

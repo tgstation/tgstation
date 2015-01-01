@@ -92,5 +92,5 @@ datum/reagent/blob/acid
 
 datum/reagent/blob/acid/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
-		M.acid_act(20,20,20)
+		M.acid_act(20,1,10)
 		M << "You feel your skin and equipment melting off!"
