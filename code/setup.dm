@@ -970,3 +970,11 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define DELAY_ATTACK  2
 #define DELAY_SPECIAL 4
 #define DELAY_ALL (DELAY_MOVE|DELAY_ATTACK|DELAY_SPECIAL)
+
+//singularity defines
+#define STAGE_ONE 	1
+#define STAGE_TWO 	3
+#define STAGE_THREE	5
+#define STAGE_FOUR	7
+#define STAGE_FIVE	9
+#define STAGE_SUPER	11

@@ -413,3 +413,13 @@
 /turf/proc/cultify()
 	ChangeTurf(/turf/space)
 	return
+
+/turf/singularity_act()
+	if(intact)
+		for(var/obj/O in contents)
+			if(O.level != 1)
+				continue
+			if(O.invisibility == 101)
+				O.singularity_act()
+	ChangeTurf(/turf/space)
+	return(2)
