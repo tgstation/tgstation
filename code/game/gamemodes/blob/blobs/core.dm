@@ -14,6 +14,7 @@
 	processing_objects.Add(src)
 	if(!overmind)
 		create_overmind(new_overmind)
+		color = overmind.blob_color
 	point_rate = new_rate
 	..(loc, h)
 
@@ -58,6 +59,7 @@
 		var/obj/effect/blob/normal/B = locate() in get_step(src, b_dir)
 		if(B)
 			B.change_to(/obj/effect/blob/shield)
+			B.color = overmind.blob_color
 	..()
 
 

@@ -1260,6 +1260,7 @@
 #include "code\modules\reagents\reagent_containers.dm"
 #include "code\modules\reagents\reagent_dispenser.dm"
 #include "code\modules\reagents\syringe_gun.dm"
+#include "code\modules\reagents\Chemistry-Reagents\Blob-Reagents.dm"
 #include "code\modules\reagents\Chemistry-Reagents\Chemistry-Reagents.dm"
 #include "code\modules\reagents\Chemistry-Reagents\Medicine-Reagents.dm"
 #include "code\modules\reagents\Chemistry-Reagents\Toxin-Reagents.dm"

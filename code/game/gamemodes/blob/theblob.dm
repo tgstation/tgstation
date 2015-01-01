@@ -113,6 +113,7 @@
 
 	if(!T)	return 0
 	var/obj/effect/blob/normal/B = new /obj/effect/blob/normal(src.loc, min(src.health, 30))
+	B.color = color
 	B.density = 1
 	if(T.Enter(B,src))//Attempt to move into the tile
 		B.density = initial(B.density)
@@ -184,7 +185,8 @@
 /obj/effect/blob/proc/change_to(var/type)
 	if(!ispath(type))
 		ERROR("[type] is an invalid type for the blob.")
-	new type(src.loc)
+	var/obj/effect/blob/B = new type(src.loc)
+	B.color = color
 	qdel(src)
 
 /obj/effect/blob/normal

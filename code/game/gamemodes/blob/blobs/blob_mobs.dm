@@ -132,14 +132,13 @@
 	force_threshold = 10
 	environment_smash = 3
 	mob_size = 2
+	var/mob/camera/blob/overmind
 
 
 /mob/living/simple_animal/hostile/blobbernaut/AttackingTarget()
 	..()
 	if(isliving(target))
-		var/mob/living/L = target
-		if(L.reagents)
-			L.reagents.add_reagent("spore_burning", 10)
+		overmind.blob_reagent_datum.reaction_mob(target, TOUCH)
 
 
 /mob/living/simple_animal/hostile/blobbernaut/blob_act()
