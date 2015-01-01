@@ -27,7 +27,7 @@
 "aA" = (/obj/structure/lattice,/turf/space,/area/AIsattele)
 "aB" = (/obj/structure/girder,/turf/simulated/floor/plating/airless,/area/AIsattele)
 "aC" = (/obj/structure/grille,/turf/simulated/floor/plating/airless,/area/space)
-"aD" = (/obj/machinery/power/solar/fake,/turf/simulated/floor/airless{icon_state = "solarpanel"},/area/djstation/solars)
+"aD" = (/obj/machinery/power/solar/fake,/turf/simulated/floor/plasteel/airless{icon_state = "solarpanel"},/area/djstation/solars)
 "aE" = (/turf/simulated/floor/plating/airless,/area/djstation/solars)
 "aF" = (/turf/simulated/wall,/area/djstation)
 "aG" = (/obj/structure/grille,/turf/simulated/floor/plating,/area/djstation)
