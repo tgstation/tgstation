@@ -116,28 +116,35 @@
 	strip_delay = 40
 	put_on_delay = 20
 
-/obj/item/clothing/head/helmet/space/ert
+/obj/item/clothing/head/helmet/space/hardsuit
+
+
+/obj/item/clothing/head/helmet/space/hardsuit/ert
 	name = "emergency response unit helmet"
 	desc = "Standard issue command helmet for the ERT"
-	icon_state = "ert_command_helmet"
-	item_state = "ert_command_helmet"
+	icon_state = "hardsuit0-ert_commander"
+	item_state = "hardsuit0-ert_commander"
+	item_color = "ert_commander"
 	armor = list(melee = 65, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 100, rad = 100)
 	strip_delay = 130
 
-/obj/item/clothing/head/helmet/space/ert/sec
+/obj/item/clothing/head/helmet/space/hardsuit/ert/sec
 	desc = "Standard issue security helmet for the ERT"
-	icon_state = "ert_security_helmet"
-	item_state = "ert_security_helmet"
+	icon_state = "hardsuit0-ert_security"
+	item_state = "hardsuit0-ert_security"
+	item_color = "ert_security"
 
-/obj/item/clothing/head/helmet/space/ert/engi
+/obj/item/clothing/head/helmet/space/hardsuit/ert/engi
 	desc = "Standard issue engineer helmet for the ERT"
-	icon_state = "ert_engineer_helmet"
-	item_state = "ert_engineer_helmet"
+	icon_state = "hardsuit0-ert_engineer"
+	item_state = "hardsuit0-ert_engineer"
+	item_color = "ert_engineer"
 
-/obj/item/clothing/head/helmet/space/ert/med
+/obj/item/clothing/head/helmet/space/hardsuit/ert/med
 	desc = "Standard issue medical helmet for the ERT"
-	icon_state = "ert_medical_helmet"
-	item_state = "ert_medical_helmet"
+	icon_state = "hardsuit0-ert_medical"
+	item_state = "hardsuit0-ert_medical"
+	item_color = "ert_medical"
 
 /obj/item/clothing/suit/space/ert
 	name = "emergency response team suit"
