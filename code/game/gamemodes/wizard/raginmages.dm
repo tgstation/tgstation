@@ -1,5 +1,5 @@
 /datum/game_mode/wizard/raginmages
-	name = "Ragin' Mages"
+	name = "magin' mages"
 	config_tag = "raginmages"
 	required_players = 20
 	var/max_mages = 0
@@ -9,7 +9,7 @@
 
 /datum/game_mode/wizard/announce()
 	world << "<B>The current game mode is - Ragin' Mages!</B>"
-	world << "<B>The <color=red>Space Wizard Federation</font> is pissed, help defeat all the space wizards!</B>"
+	world << "<B>The <span class='warning'>Space Wizard Federation</span> is pissed, help defeat all the space wizards!</B>"
 
 /datum/game_mode/wizard/raginmages/post_setup()
 	var/playercount = 0
