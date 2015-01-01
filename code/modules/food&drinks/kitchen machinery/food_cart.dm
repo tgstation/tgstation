@@ -2,7 +2,7 @@
 
 /obj/machinery/food_cart
 	name = "food cart"
-	desc = "Ding-aling ding dong. Get your Nanotrasen-approved ice cream, as well as other foods and drinks!"
+	desc = "New generation hot dog stand."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "icecream_vat"
 	density = 1
@@ -11,13 +11,17 @@
 	var/food_stored = 0
 	var/glasses = 0
 	var/portion = 10
+	var/selected_drink
 	var/list/stored_food = list()
 	flags = OPENCONTAINER | NOREACT
 	reagents = new()
+	var/obj/item/weapon/reagent_containers/mixer = new()
 
 /obj/machinery/food_cart/New()
 	..()
 	reagents.my_atom = src
+	mixer.name = "Mixer"
+	mixer.volume = 100
 
 /obj/machinery/food_cart/attack_hand(mob/user as mob)
 	user.set_machine(src)
@@ -28,18 +32,20 @@
 	dat += "<br><b>STORED INGREDIENTS AND DRINKS</b><br><div class='statusDisplay'>"
 	dat += "Remaining glasses: [glasses]<br>"
 	dat += "Portion: <a href='?src=\ref[src];portion=1'>[portion]</a><br>"
-	dat += "<table><tr>"
-	var/i = 0
 	for(var/datum/reagent/R in reagents.reagent_list)
-		if(i % 3 == 0)
-			dat += "</tr><tr>"
-		dat += "<td>[R.name]: [R.volume] "
+		dat += "[R.name]: [R.volume] "
 		dat += "<a href='?src=\ref[src];disposeI=[R.id]'>Purge</a>"
 		if (glasses > 0)
 			dat += "<a href='?src=\ref[src];pour=[R.id]'>Pour in a glass</a>"
-		dat += "</td>"
-		i++
-	dat += "</tr></table></div><br><b>STORED FOOD</b><br><div class='statusDisplay'>"
+		dat += "<a href='?src=\ref[src];mix=[R.id]'>Add to the mixer</a><br>"
+	dat += "</div><br><b>MIXER CONTENTS</b><br><div class='statusDisplay'>"
+	for(var/datum/reagent/R in mixer.reagents.reagent_list)
+		dat += "[R.name]: [R.volume] "
+		dat += "<a href='?src=\ref[src];transfer=[R.id]'>Transfer back</a>"
+		if (glasses > 0)
+			dat += "<a href='?src=\ref[src];m_pour=[R.id]'>Pour in a glass</a>"
+		dat += "<br>"
+	dat += "</div><br><b>STORED FOOD</b><br><div class='statusDisplay'>"
 	for(var/V in stored_food)
 		if(stored_food[V] > 0)
 			dat += "<b>[V]: [stored_food[V]]</b> <a href='?src=\ref[src];dispense=[V]'>Dispense</a><br>"
@@ -114,13 +120,22 @@
 	if(href_list["portion"])
 		portion = max(0, min(50, input("How much drink do you want to dispense per glass?") as num))
 
-	if(href_list["pour"])
+	if(href_list["pour"] || href_list["m_pour"])
 		if(glasses-- <= 0)
 			usr << "span class='warning'>There are no glasses left!</span>"
 			glasses = 0
 		else
 			var/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/DG = new(loc)
-			reagents.trans_id_to(DG, href_list["pour"], portion)
+			if(href_list["pour"])
+				reagents.trans_id_to(DG, href_list["pour"], portion)
+			if(href_list["m_pour"])
+				mixer.reagents.trans_id_to(DG, href_list["m_pour"], portion)
+
+	if(href_list["mix"])
+		reagents.trans_id_to(mixer, href_list["mix"], portion)
+
+	if(href_list["transfer"])
+		mixer.reagents.trans_id_to(src, href_list["transfer"], portion)
 
 	updateDialog()
 
