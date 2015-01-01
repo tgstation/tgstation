@@ -5,6 +5,7 @@
 	icon_state = "closed"
 	var/id = 1
 	var/auto_close = 0 // Time in seconds to automatically close when opened, 0 if it doesn't.
+	sub_door = 1
 
 /obj/machinery/door/poddoor/preopen
 	icon_state = "open"
@@ -22,7 +23,7 @@
 /obj/machinery/door/poddoor/attackby(obj/item/I, mob/user)
 	add_fingerprint(user)
 
-	if(!istype(I, /obj/item/weapon/crowbar))
+	if(!istype(I, /obj/item/weapon/crowbar) && !istype(I, /obj/item/weapon/twohanded/fireaxe))
 		return
 	if(istype(I, /obj/item/weapon/twohanded/fireaxe))
 		var/obj/item/weapon/twohanded/fireaxe/F = I
