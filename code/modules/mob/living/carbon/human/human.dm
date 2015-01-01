@@ -1468,15 +1468,15 @@
 		update_inv_shoes(1)
 		return 1
 
-mob/living/carbon/human/yank_out_object()
+/mob/living/carbon/human/yank_out_object()
 	set category = "Object"
 	set name = "Yank out object"
 	set desc = "Remove an embedded item at the cost of bleeding and pain."
 	set src in view(1)
 
-	if(!isliving(usr) || usr.next_move > world.time)
+	if(!isliving(usr) || (usr.client && usr.client.move_delayer.blocked()))
 		return
-	usr.next_move = world.time + 20
+	usr.delayNextMove(20)
 
 	if(usr.stat == 1)
 		usr << "You are unconcious and cannot do that!"

@@ -964,3 +964,9 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define I_NTSL     "ntsl"
 #define I_SINGULO  "singulo"
 #define I_ATMOS    "atmos"
+
+// delayNext() flags.
+#define DELAY_MOVE    1
+#define DELAY_ATTACK  2
+#define DELAY_SPECIAL 4
+#define DELAY_ALL (DELAY_MOVE|DELAY_ATTACK|DELAY_SPECIAL)

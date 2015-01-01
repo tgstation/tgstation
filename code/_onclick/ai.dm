@@ -23,9 +23,9 @@
 
 
 /mob/living/silicon/ai/ClickOn(var/atom/A, params)
-	if(world.time <= next_click)
+	if(click_delayer.blocked())
 		return
-	next_click = world.time + 1
+	click_delayer.setDelay(1)
 
 	if(client.buildmode) // comes after object.Click to allow buildmode gui objects to be clicked
 		build_click(src, client.buildmode, params, A)
@@ -48,7 +48,7 @@
 		CtrlClickOn(A)
 		return
 
-	if(world.time <= next_move)
+	if(attack_delayer.blocked())
 		return
 
 	if(aicamera.in_camera_mode)

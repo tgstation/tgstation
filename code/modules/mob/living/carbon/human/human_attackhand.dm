@@ -1,5 +1,5 @@
 /mob/living/carbon/human/attack_hand(mob/living/carbon/human/M as mob)
-	//M.changeNext_move(10)
+	//M.delayNextAttack(10)
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
 		M << "No attacking people at spawn, you jackass."
 		return
