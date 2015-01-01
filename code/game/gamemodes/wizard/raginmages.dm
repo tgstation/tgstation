@@ -1,5 +1,5 @@
 /datum/game_mode/wizard/raginmages
-	name = "magin' mages"
+	name = "ragin' mages"
 	config_tag = "raginmages"
 	required_players = 20
 	var/max_mages = 0
