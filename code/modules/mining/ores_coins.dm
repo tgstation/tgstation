@@ -152,7 +152,7 @@
 		if(triggered_by_explosive)
 			log_game("An explosion has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
 		else
-			user.visible_message("<span class='warning'>[user] strikes the [src], causing a chain reaction!</span>")
+			user.visible_message("<span class='warning'>[user] strikes \the [src], causing a chain reaction!</span>")
 			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
 		spawn(det_time)
 		if(primed)

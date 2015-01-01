@@ -34,8 +34,6 @@
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
 /mob/proc/ClickOn( var/atom/A, var/params )
-	if(!A)				//yep folks, apparently such things can happen
-		return
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
@@ -163,12 +161,6 @@
 	animals lunging, etc.
 */
 /mob/proc/RangedAttack(var/atom/A, var/params)
-	if(!mutations.len) return
-	if((LASER in mutations) && a_intent == "harm")
-		LaserEyes(A) // moved into a proc below
-	else
-		if(TK in mutations)
-			A.attack_tk(src)
 /*
 	Restrained ClickOn
 

@@ -41,6 +41,13 @@
 				var/mob/living/M = src
 				M.take_organ_damage(20)
 
+/atom/proc/attack_hulk(mob/living/carbon/human/hulk, do_attack_animation = 0)
+	if(do_attack_animation)
+		hulk.changeNext_move(CLICK_CD_MELEE)
+		add_logs(hulk, src, "punched", "hulk powers", admin=0)
+		hulk.do_attack_animation(src)
+	return
+
 /atom/proc/CheckParts()
 	return
 
@@ -232,8 +239,12 @@ its easier to just keep the beam vertical.
 /atom/proc/relaymove()
 	return
 
-/atom/proc/ex_act(severity, specialty)
-	contents_explosion(src, severity, specialty)
+/atom/proc/contents_explosion(severity, target)
+	for(var/atom/A in contents)
+		A.ex_act(severity, target)
+
+/atom/proc/ex_act(severity, target)
+	contents_explosion(severity, target)
 
 /atom/proc/blob_act()
 	return
@@ -388,4 +399,10 @@ var/list/blood_splatter_icons = list()
 	return
 
 /atom/proc/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
+	return
+
+/atom/proc/emag_act()
+	return
+
+/atom/proc/narsie_act()
 	return

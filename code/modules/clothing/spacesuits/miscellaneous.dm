@@ -27,6 +27,8 @@
 	item_state = "deathsquad"
 	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100)
 	strip_delay = 130
+	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	unacidable = 1
 
 /obj/item/clothing/suit/space/deathsquad
 	name = "deathsquad suit"
@@ -37,6 +39,8 @@
 	armor = list(melee = 80, bullet = 80, laser = 50,energy = 50, bomb = 100, bio = 100, rad = 100)
 	slowdown = 1
 	strip_delay = 130
+	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	unacidable = 1
 
 /obj/item/clothing/head/helmet/space/deathsquad/beret
 	name = "officer's beret"
@@ -69,7 +73,7 @@
 	item_state = "void"
 	desc = "An old, NASA Centcom branch designed, dark red space suit."
 	slowdown = 1
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/multitool)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/device/multitool)
 
 
 	//Space santa outfit suit

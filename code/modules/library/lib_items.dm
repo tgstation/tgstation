@@ -18,6 +18,7 @@
 	density = 1
 	opacity = 0
 	var/state = 0
+	var/list/allowed_books = list(/obj/item/weapon/book, /obj/item/weapon/spellbook, /obj/item/weapon/storage/book) //Things allowed in the bookcase
 
 
 /obj/structure/bookcase/initialize()
@@ -61,7 +62,7 @@
 				state = 0
 
 		if(2)
-			if(istype(I, /obj/item/weapon/book) || istype(I, /obj/item/weapon/spellbook))
+			if(is_type_in_list(I, allowed_books))
 				user.drop_item()
 				I.loc = src
 				update_icon()
@@ -105,7 +106,7 @@
 			update_icon()
 
 
-/obj/structure/bookcase/ex_act(severity, specialty)
+/obj/structure/bookcase/ex_act(severity, target)
 	..()
 	if(!gc_destroyed)
 		for(var/obj/item/weapon/book/b in contents)
@@ -174,7 +175,9 @@
 /obj/item/weapon/book/attack_self(mob/user)
 	if(is_blind(user))
 		return
-
+	if(ismonkey(user))
+		user << "<span class='notice'>You skim through the book but can't comprehend any of it.</span>"
+		return
 	if(dat)
 		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 		user.visible_message("[user] opens a book titled \"[title]\" and begins reading intently.")

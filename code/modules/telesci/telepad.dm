@@ -60,10 +60,10 @@
 		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 		if(anchored)
 			anchored = 0
-			user << "<span class = 'caution'> The [src] can now be moved.</span>"
+			user << "<span class = 'caution'> \The [src] can now be moved.</span>"
 		else if(!anchored)
 			anchored = 1
-			user << "<span class = 'caution'> The [src] is now secured.</span>"
+			user << "<span class = 'caution'> \The [src] is now secured.</span>"
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(stage == 0)
 			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
@@ -148,11 +148,10 @@
 			playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
 			user << "<span class = 'caution'> You calibrate the telepad locator.</span>"
 
-/obj/item/weapon/rcs/attackby(obj/item/W, mob/user)
-	if(istype(W,  /obj/item/weapon/card/emag) && emagged == 0)
+/obj/item/weapon/rcs/emag_act(mob/user as mob)
+	if(!emagged)
 		emagged = 1
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
 		user << "<span class = 'caution'> You emag the RCS. Click on it to toggle between modes.</span>"
-		return

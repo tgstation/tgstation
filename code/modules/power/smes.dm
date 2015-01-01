@@ -142,29 +142,7 @@
 
 	//disassembling the terminal
 	if(istype(I, /obj/item/weapon/wirecutters) && terminal && panel_open)
-		var/turf/T = get_turf(terminal)
-		if (T.intact) //is the floor plating removed ?
-			user << "<span class='alert'>You must first expose the power terminal!</span>"
-			return
-
-		user << "You begin to dismantle the power terminal..."
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-
-		if(do_after(user, 50))
-			if (prob(50) && electrocute_mob(usr, terminal.powernet, terminal)) //animate the electrocution if uncautious and unlucky
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-				s.set_up(5, 1, src)
-				s.start()
-				return
-
-			//give the wires back and delete the terminal
-			new /obj/item/stack/cable_coil(T,10)
-			user.visible_message(\
-				"<span class='alert'>[user.name] cuts the cables and dismantles the power terminal.</span>",\
-				"You cut the cables and dismantle the power terminal.")
-			inputting = 0 //stop inputting, since we have don't have a terminal anymore
-			qdel(terminal)
-			return
+		terminal.dismantle(user)
 
 	//crowbarring it !
 	default_deconstruction_crowbar(I)

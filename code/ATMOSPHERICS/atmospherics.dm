@@ -26,8 +26,13 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/New()
 	..()
+
+	SetInitDirections()
 	if(can_unwrench)
 		stored = new(src, make_from=src)
+
+/obj/machinery/atmospherics/proc/SetInitDirections()
+	return
 
 /obj/machinery/atmospherics/proc/safe_input(var/title, var/text, var/default_set)
 	var/new_value = input(usr,"Enter new output pressure (0-4500kPa)","Pressure control",default_set) as num
@@ -93,14 +98,11 @@ Pipelines + Other Objects -> Pipe network
 		return ..()
 
 /obj/machinery/atmospherics/Deconstruct()
-	var/turf/T = loc
-	stored.loc = T
-	transfer_fingerprints_to(stored)
-	if(istype(src, /obj/machinery/atmospherics/pipe))
-		for(var/obj/machinery/meter/meter in T)
-			if(meter.target == src)
-				new /obj/item/pipe_meter(T)
-				qdel(meter)
+	if(can_unwrench)
+		var/turf/T = loc
+		stored.loc = T
+		transfer_fingerprints_to(stored)
+
 	qdel(src)
 
 /obj/machinery/atmospherics/proc/nullifyPipenet(datum/pipeline/P)
@@ -127,9 +129,15 @@ Pipelines + Other Objects -> Pipe network
 
 	return img
 
-/obj/machinery/atmospherics/proc/construction(D, P)
+/obj/machinery/atmospherics/construction(D, P, var/pipe_type, var/obj_color)
 	dir = D
 	initialize_directions = P
+	if(can_unwrench)
+		color = obj_color
+		pipe_color = obj_color
+		stored.dir = D				  //need to define them here, because the obj directions...
+		stored.pipe_type = pipe_type  //... were not set at the time the stored pipe was created
+		stored.color = obj_color
 	var/turf/T = loc
 	level = T.intact ? 2 : 1
 	initialize()

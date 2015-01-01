@@ -12,6 +12,7 @@
 
 	var/result_amount = 0
 	var/secondary = 0 // set to nonzero if secondary reaction
+	var/mob_react = 0 //Determines if a chemical reaction can occur inside a mob
 
 	var/required_temp = 0
 	var/mix_message = "The solution begins to bubble."
@@ -387,6 +388,7 @@ silicate
 	required_reagents = list("potassium" = 1, "sugar" = 1, "phosphorus" = 1)
 	result_amount = null
 	secondary = 1
+	mob_react = 1
 
 /datum/chemical_reaction/chemsmoke/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -451,6 +453,7 @@ silicate
 	result = null
 	required_reagents = list("iron" = 5, "frostoil" = 5, "plasma" = 20)
 	result_amount = 1
+	mob_react = 1
 
 /datum/chemical_reaction/plasmasolidification/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -540,6 +543,7 @@ silicate
 	result = null
 	required_reagents = list("fluorosurfactant" = 1, "water" = 1)
 	result_amount = 2
+	mob_react = 1
 
 /datum/chemical_reaction/foam/on_reaction(var/datum/reagents/holder, var/created_volume)
 
@@ -569,6 +573,7 @@ silicate
 	result = null
 	required_reagents = list("aluminium" = 3, "foaming_agent" = 1, "pacid" = 1)
 	result_amount = 5
+	mob_react = 1
 
 /datum/chemical_reaction/metalfoam/on_reaction(var/datum/reagents/holder, var/created_volume)
 
@@ -589,6 +594,7 @@ silicate
 	result = null
 	required_reagents = list("iron" = 3, "foaming_agent" = 1, "pacid" = 1)
 	result_amount = 5
+	mob_react = 1
 
 /datum/chemical_reaction/ironfoam/on_reaction(var/datum/reagents/holder, var/created_volume)
 
@@ -957,6 +963,16 @@ datum/chemical_reaction/pestkiller
 	var/mob/living/carbon/slime/S = new /mob/living/carbon/slime
 	S.loc = get_turf(holder.my_atom)
 
+/datum/chemical_reaction/slimeinaprov
+	name = "Slime Inaprovaline"
+	id = "m_inaprov"
+	result = "inaprovaline"
+	required_reagents = list("water" = 5)
+	result_amount = 3
+	required_other = 1
+	required_container = /obj/item/slime_extract/grey
+/datum/chemical_reaction/slimeinaprov/on_reaction(var/datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 
 /datum/chemical_reaction/slimemonkey
 	name = "Slime Monkey"

@@ -3,6 +3,7 @@
 	level = 1.0
 
 	var/intact = 1
+	var/cancable = 0
 
 	//Properties for open tiles (/floor)
 	var/oxygen = 0
@@ -173,7 +174,12 @@
 
 /turf/proc/ReplaceWithLattice()
 	src.ChangeTurf(/turf/space)
-	new /obj/structure/lattice( locate(src.x, src.y, src.z) )
+	new /obj/structure/lattice(locate(src.x, src.y, src.z) )
+
+/turf/proc/ReplaceWithCatwalk()
+	src.ChangeTurf(/turf/space)
+	src.cancable = 1//so cables can be laid
+	new /obj/structure/lattice/catwalk(locate(src.x, src.y, src.z) )
 
 /turf/proc/phase_damage_creatures(damage,mob/U = null)//>Ninja Code. Hurts and knocks out creatures on this turf
 	for(var/mob/living/M in src)

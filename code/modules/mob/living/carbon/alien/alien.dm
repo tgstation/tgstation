@@ -113,10 +113,6 @@
 
 /mob/living/carbon/alien/proc/handle_mutations_and_radiation()
 
-	if(getFireLoss())
-		if((COLD_RESISTANCE in mutations) || prob(5))
-			adjustFireLoss(-1)
-
 	// Aliens love radiation nom nom nom
 	if (radiation)
 		if (radiation > 100)
@@ -126,12 +122,12 @@
 			radiation = 0
 
 		switch(radiation)
-			if(1 to 49)
+			if(0 to 50)
 				radiation--
 				if(prob(25))
 					adjustToxLoss(1)
 
-			if(50 to 74)
+			if(50 to 75)
 				radiation -= 2
 				adjustToxLoss(1)
 				if(prob(5))

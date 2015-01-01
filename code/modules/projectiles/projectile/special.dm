@@ -18,9 +18,20 @@
 	damage = 50
 	flag = "bullet"
 
-
 /obj/item/projectile/bullet/gyro/on_hit(atom/target, blocked = 0)
 	explosion(target, -1, 0, 2)
+	return 1
+
+/obj/item/projectile/bullet/a40mm
+	name ="40mm grenade"
+	desc = "USE A WEEL GUN"
+	icon_state= "bolter"
+	damage = 60
+	flag = "bullet"
+	range = 7
+
+/obj/item/projectile/bullet/a40mm/on_hit(atom/target, blocked = 0)
+	explosion(target, -1, 0, 2, 1, 0, flame_range = 3)
 	return 1
 
 /obj/item/projectile/temp
@@ -94,7 +105,7 @@
 	damage = 15
 	damage_type = BRUTE
 	flag = "bomb"
-	var/range = 3
+	range = 3
 
 obj/item/projectile/kinetic/New()
 	var/turf/proj_turf = get_turf(src)
@@ -130,3 +141,41 @@ obj/item/projectile/kinetic/New()
 /obj/item/effect/kinetic_blast/New()
 	spawn(4)
 		qdel(src)
+
+/obj/item/projectile/beam/wormhole
+	name = "bluespace beam"
+	icon_state = "spark"
+	hitsound = "sparks"
+	damage = 3
+	var/obj/item/weapon/gun/energy/wormhole_projector/gun
+	color = "#33CCFF"
+
+/obj/item/projectile/beam/wormhole/orange
+	name = "orange bluespace beam"
+	color = "#FF6600"
+
+/obj/item/projectile/beam/wormhole/New(var/obj/item/ammo_casing/energy/wormhole/casing)
+	if(casing)
+		gun = casing.gun
+
+/obj/item/ammo_casing/energy/wormhole/New(var/obj/item/weapon/gun/energy/wormhole_projector/wh)
+	gun = wh
+
+/obj/item/projectile/beam/wormhole/on_hit(var/atom/target)
+	if(ismob(target))
+		..()
+		return
+	if(!gun)
+		qdel(src)
+	gun.create_portal(src)
+
+
+/obj/item/projectile/bullet/gyro/on_hit(atom/target, blocked = 0)
+	explosion(target, -1, 0, 2)
+	return 1
+
+
+/obj/item/projectile/bullet/frag12
+	name ="explosive slug"
+	damage = 25
+	weaken = 5

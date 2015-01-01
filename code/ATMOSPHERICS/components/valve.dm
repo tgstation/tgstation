@@ -35,12 +35,14 @@
 
 /obj/machinery/atmospherics/binary/valve/proc/open()
 	open = 1
+	update_icon_nopipes()
 	parent1.update = 0
 	parent2.update = 0
 	return
 
 /obj/machinery/atmospherics/binary/valve/proc/close()
 	open = 0
+	update_icon_nopipes()
 	return
 
 /obj/machinery/atmospherics/binary/valve/proc/normalize_dir()
@@ -67,7 +69,7 @@
 	desc = "A digitally controlled valve."
 	icon_state = "dvalve_map"
 
-/obj/machinery/atmospherics/valve/digital/attack_ai(mob/user)
+/obj/machinery/atmospherics/binary/valve/digital/attack_ai(mob/user)
 	return src.attack_hand(user)
 
 /obj/machinery/atmospherics/binary/valve/digital/update_icon_nopipes(animation)

@@ -23,13 +23,17 @@
 	allowed = list(/obj/item/weapon/disk, /obj/item/weapon/stamp, /obj/item/weapon/reagent_containers/food/drinks/flask, /obj/item/weapon/melee, /obj/item/weapon/storage/lockbox/medal, /obj/item/device/flash/handheld, /obj/item/weapon/storage/box/matches, /obj/item/weapon/lighter, /obj/item/clothing/mask/cigarette, /obj/item/weapon/storage/fancy/cigarettes, /obj/item/weapon/tank/emergency_oxygen)
 
 //Chaplain
-/obj/item/clothing/suit/chaplain_hoodie
+/obj/item/clothing/suit/toggle/chaplain_hoodie
 	name = "chaplain hoodie"
 	desc = "This suit says to you 'hush'!"
 	icon_state = "chaplain_hoodie"
 	item_state = "chaplain_hoodie"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/weapon/storage/book/bible, /obj/item/weapon/nullrod, /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater, /obj/item/weapon/storage/fancy/candle_box, /obj/item/candle, /obj/item/weapon/tank/emergency_oxygen)
+	hooded = 1
+	suittoggled = 0
+	action_button_name = "Toggle Hoodie"
+	togglename = "hood"
 
 //Chaplain
 /obj/item/clothing/suit/nun
@@ -42,24 +46,27 @@
 	allowed = list(/obj/item/weapon/storage/book/bible, /obj/item/weapon/nullrod, /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater, /obj/item/weapon/storage/fancy/candle_box, /obj/item/candle, /obj/item/weapon/tank/emergency_oxygen)
 
 //Chef
-/obj/item/clothing/suit/chef
+/obj/item/clothing/suit/toggle/chef
 	name = "chef's apron"
-	desc = "An apron used by a high class chef."
+	desc = "An apron-jacket used by a high class chef."
 	icon_state = "chef"
 	item_state = "chef"
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
 	body_parts_covered = CHEST|GROIN|ARMS
-	allowed = list (/obj/item/weapon/kitchenknife,/obj/item/weapon/butch)
+	allowed = list(/obj/item/weapon/kitchenknife,/obj/item/weapon/butch)
+	action_button_name = "Toggle Jacket Sleeves"
+	togglename = "sleeves"
 
-//Chef
-/obj/item/clothing/suit/chef/classic
-	name = "A classic chef's apron."
+//Cook
+/obj/item/clothing/suit/apron/chef
+	name = "cook's apron"
 	desc = "A basic, dull, white chef's apron."
 	icon_state = "apronchef"
 	item_state = "apronchef"
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST|GROIN
+	allowed = list(/obj/item/weapon/kitchenknife,/obj/item/weapon/butch)
 
 //Detective
 /obj/item/clothing/suit/det_suit
@@ -90,29 +97,45 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/device/t_scanner,)
 
 //Lawyer
-/obj/item/clothing/suit/lawyer/bluejacket
+/obj/item/clothing/suit/toggle/lawyer
 	name = "blue suit jacket"
 	desc = "A snappy dress jacket."
-	icon_state = "suitjacket_blue_open"
-	item_state = "suitjacket_blue_open"
+	icon_state = "suitjacket_blue"
+	item_state = "suitjacket_blue"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
+	action_button_name = "Toggle Suit Buttons"
+	togglename = "buttons"
 
-/obj/item/clothing/suit/lawyer/purpjacket
+/obj/item/clothing/suit/toggle/lawyer/purple
 	name = "purple suit jacket"
 	desc = "A foppish dress jacket."
 	icon_state = "suitjacket_purp"
 	item_state = "suitjacket_purp"
-	blood_overlay_type = "coat"
-	body_parts_covered = CHEST|ARMS
 
-/obj/item/clothing/suit/lawyer/blackjacket
+/obj/item/clothing/suit/toggle/lawyer/black
 	name = "black suit jacket"
 	desc = "A professional suit jacket."
 	icon_state = "suitjacket_black"
 	item_state = "ro_suit"
-	blood_overlay_type = "coat"
-	body_parts_covered = CHEST|ARMS
+
+//Toggle exosuits for different aesthetic styles (hoodies, suit jacket buttons, etc)
+
+/obj/item/clothing/suit/toggle/attack_self()
+	set src in usr
+
+	if(!can_use(usr))
+		return 0
+
+	usr << "You toggle [src]'s [togglename]."
+	if(src.suittoggled)
+		src.icon_state = "[initial(icon_state)]"
+		src.suittoggled = 0
+	else if(!src.suittoggled)
+		src.icon_state = "[initial(icon_state)]_t"
+		src.suittoggled = 1
+	usr.update_inv_wear_suit()
+
 
 //Mime
 /obj/item/clothing/suit/suspenders

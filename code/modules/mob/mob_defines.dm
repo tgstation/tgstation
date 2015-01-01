@@ -2,7 +2,7 @@
 	density = 1
 	layer = 4
 	animate_movement = 2
-	flags = NOREACT | HEAR
+	flags = HEAR
 	hud_possible = list(ANTAG_HUD)
 	var/datum/mind/mind
 
@@ -32,6 +32,7 @@
 	*/
 	var/obj/screen/zone_sel/zone_sel = null
 	var/obj/screen/leap_icon = null
+	var/obj/screen/healthdoll = null
 
 	var/damageoverlaytemp = 0
 	var/computer_id = null
@@ -41,7 +42,6 @@
 	var/obj/machinery/machine = null
 	var/other_mobs = null
 	var/memory = ""
-	var/sdisabilities = 0	//Carbon
 	var/disabilities = 0	//Carbon
 	var/atom/movable/pulling = null
 	var/next_move = null
@@ -53,7 +53,6 @@
 	var/ear_damage = null	//Carbon
 	var/stuttering = null	//Carbon
 	var/real_name = null
-	var/blinded = null
 	var/bhunger = 0			//Carbon
 	var/ajourn = 0
 	var/druggy = 0			//Carbon
@@ -77,7 +76,8 @@
 	var/drowsyness = 0//Carbon
 	var/dizziness = 0//Carbon
 	var/jitteriness = 0//Carbon
-	var/nutrition = 400//Carbon
+	var/nutrition = NUTRITION_LEVEL_FED + 50//Carbon
+	var/satiety = 0//Carbon
 
 	var/overeatduration = 0		// How long this guy is overeating //Carbon
 	var/paralysis = 0
@@ -152,6 +152,8 @@
 	var/area/lastarea = null
 
 	var/digitalcamo = 0 // Can they be tracked by the AI?
+
+	var/has_unlimited_silicon_privilege = 0 // Can they interact with station electronics
 
 	var/list/radar_blips = list() // list of screen objects, radar blips
 	var/radar_open = 0 	// nonzero is radar is open

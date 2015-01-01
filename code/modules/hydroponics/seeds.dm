@@ -69,46 +69,37 @@
 	lifespan = 50
 	endurance = 8
 	maturation = 10
-	production = 10
+	production = 1
 	yield = 1 //seeds if there isn't a dna inside
 	oneharvest = 1
 	potency = 30
 	plant_type = 0
 	growthstages = 6
-	var/ui = null //for storing the guy
-	var/se = null
 	var/ckey = null
 	var/realName = null
 	var/datum/mind/mind = null
-	gender = MALE
+	var/blood_gender = null
+	var/blood_type = null
+	var/factions = null
 
 /obj/item/seeds/replicapod/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/reagent_containers))
+	if(istype(W,/obj/item/weapon/reagent_containers/syringe))
 		if(ckey == null)
-			user << "You inject the contents of the syringe into the seeds."
-
-			for(var/datum/reagent/blood/bloodSample in W:reagents.reagent_list)
-				var/mob/living/carbon/human/source = bloodSample.data["donor"] //hacky, since it gets the CURRENT condition of the mob, not how it was when the blood sample was taken
-				if(!istype(source))
-					continue
-				//ui = bloodSample.data["blood_dna"] doesn't work for whatever reason
-				ui = source.dna.uni_identity
-				se = source.dna.struc_enzymes
-				if(source.ckey)
-					ckey = source.ckey
-				else if(source.mind)
-					ckey = ckey(source.mind.key)
-				realName = source.real_name
-				gender = source.gender
-
-				if(!isnull(source.mind))
-					mind = source.mind
-
-			W:reagents.clear_reagents()
+			for(var/datum/reagent/blood/bloodSample in W.reagents.reagent_list)
+				if(bloodSample.data["mind"] && bloodSample.data["cloneable"] == 1)
+					mind = bloodSample.data["mind"]
+					ckey = bloodSample.data["ckey"]
+					realName = bloodSample.data["real_name"]
+					blood_gender = bloodSample.data["gender"]
+					blood_type = bloodSample.data["blood_type"]
+					factions = bloodSample.data["factions"]
+					W.reagents.clear_reagents()
+					user << "You inject the contents of the syringe into the seeds."
+				else
+					user << "The seeds reject the sample!"
 		else
-			user << "There is already a genetic sample in these seeds."
-	else
-		return ..()
+			user << "The seeds already contain a genetic sample."
+	..()
 
 
 /obj/item/seeds/grapeseed

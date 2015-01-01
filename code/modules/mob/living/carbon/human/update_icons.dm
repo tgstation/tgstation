@@ -34,7 +34,6 @@ There are several things that need to be remembered:
 
 
 >	There are also these special cases:
-		update_mutations()			//handles updating your appearance for certain mutations.  e.g TK head-glows
 		update_damage_overlays()	//handles damage overlays for brute/burn damage
 		update_base_icon_state()	//Handles updating var/base_icon_state (WIP) This is used to update the
 									mob's icon_state easily e.g. "[base_icon_state]_s" is the standing icon_state
@@ -90,7 +89,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 	if(dna)
 		base_icon_state = dna.species.update_base_icon_state(src)
 	else
-		if(HUSK in mutations)
+		if(disabilities & HUSK)
 			base_icon_state = "husk"
 		else
 			base_icon_state = "[skin_tone]_[(gender == FEMALE) ? "f" : "m"]"
@@ -146,36 +145,17 @@ Please contact me on #coderbus IRC. ~Carnie x
 	//Reset our hair
 	remove_overlay(HAIR_LAYER)
 
-	if( (HUSK in mutations) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) )
+	if( (disabilities & HUSK) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) )
+		return
+
+	if((wear_suit) && (wear_suit.hooded) && (wear_suit.suittoggled == 1))
 		return
 
 	if(dna)
 		dna.species.handle_hair(src)
 
-/mob/living/carbon/human/update_mutations()
-	remove_overlay(MUTATIONS_LAYER)
-
-	var/list/standing	= list()
-
-	var/g = (gender == FEMALE) ? "f" : "m"
-
-	for(var/mut in mutations)
-		switch(mut)
-			if(HULK)
-				standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="hulk_[g]_s", "layer"=-MUTATIONS_LAYER)
-			if(COLD_RESISTANCE)
-				standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="fire_s", "layer"=-MUTATIONS_LAYER)
-			if(TK)
-				standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="telekinesishead_s", "layer"=-MUTATIONS_LAYER)
-			if(LASER)
-				standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="lasereyes_s", "layer"=-MUTATIONS_LAYER)
-	if(standing.len)
-		overlays_standing[MUTATIONS_LAYER]	= standing
-
-	apply_overlay(MUTATIONS_LAYER)
-
 /mob/living/carbon/human/proc/update_mutcolor()
-	if(dna && !(HUSK in mutations))
+	if(dna && !(disabilities & HUSK))
 		dna.species.update_color(src)
 
 /mob/living/carbon/human/proc/update_body()
@@ -234,7 +214,6 @@ Please contact me on #coderbus IRC. ~Carnie x
 	if(notransform)		return
 	update_body()
 	update_hair()
-	update_mutations()
 	update_inv_w_uniform()
 	update_inv_wear_id()
 	update_inv_gloves()
@@ -458,6 +437,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 			var/obj/item/clothing/suit/S = wear_suit
 			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="[S.blood_overlay_type]blood")
 
+	src.update_hair()
 	apply_overlay(SUIT_LAYER)
 
 

@@ -291,7 +291,7 @@
 			power_change()
 	..()
 
-/obj/machinery/turret/ex_act(severity, specialty)
+/obj/machinery/turret/ex_act(severity, target)
 	if(severity < 3)
 		src.die()
 
@@ -354,14 +354,18 @@
 	var/atom/cur_target = null
 	var/scan_range = 9 //You will never see them coming
 	var/health = 200 //Because it lacks a cover, and is mostly to keep people from touching the syndie shuttle.
+	var/base_icon_state = "syndieturret"
+	var/projectile_type = /obj/item/projectile/bullet
+	var/fire_sound = 'sound/weapons/Gunshot.ogg'
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "syndieturret0"
 
 /obj/machinery/gun_turret/New()
 	..()
 	take_damage(0) //check your health
+	icon_state = "[base_icon_state]" + "0"
 
-/obj/machinery/gun_turret/ex_act(severity, specialty)
+/obj/machinery/gun_turret/ex_act(severity, target)
 	switch(severity)
 		if(1)
 			die()
@@ -377,7 +381,7 @@
 /obj/machinery/gun_turret/update_icon()
 	if(state > 2 || state < 0) //someone fucked up the vars so fix them
 		take_damage(0)
-	icon_state = "syndieturret" + "[state]"
+	icon_state = "[base_icon_state]" + "[state]"
 	return
 
 
@@ -479,8 +483,8 @@
 		return
 	if (targloc == curloc)
 		return
-	playsound(src, 'sound/weapons/Gunshot.ogg', 50, 1)
-	var/obj/item/projectile/A = new /obj/item/projectile/bullet(curloc)
+	playsound(src, fire_sound, 50, 1)
+	var/obj/item/projectile/A = new projectile_type(curloc)
 	A.current = curloc
 	A.yo = targloc.y - curloc.y
 	A.xo = targloc.x - curloc.x
@@ -528,15 +532,6 @@
 	if (istype(user, /mob/living/silicon))
 		return src.attack_hand(user)
 
-	if (istype(W, /obj/item/weapon/card/emag) && !emagged)
-		user << "<span class='danger'>You short out the turret controls' access analysis module.</span>"
-		emagged = 1
-		locked = 0
-		if(user.machine==src)
-			src.attack_hand(user)
-
-		return
-
 	else if( get_dist(src, user) == 0 )		// trying to unlock the interface
 		if (src.allowed(usr))
 			if(emagged)
@@ -554,6 +549,14 @@
 					src.attack_hand(user)
 		else
 			user << "<span class='warning'>Access denied.</span>"
+
+/obj/machinery/areaturretid/emag_act(mob/user as mob)
+	if(!emagged)
+		user << "<span class='danger'>You short out the turret controls' access analysis module.</span>"
+		emagged = 1
+		locked = 0
+		if(user.machine==src)
+			src.attack_hand(user)
 
 /obj/machinery/areaturretid/attack_ai(mob/user as mob)
 	if(!ailock)

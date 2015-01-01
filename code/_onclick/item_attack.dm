@@ -9,7 +9,7 @@
 /atom/movable/attackby(obj/item/W, mob/living/user)
 	user.do_attack_animation(src)
 	if(W && !(W.flags&NOBLUDGEON))
-		visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
+		visible_message("<span class='danger'>[user] has hit [src] with [W].</span>")
 
 /mob/living/attackby(obj/item/I, mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -23,18 +23,21 @@
 			if(istype(location, /turf/simulated))
 				location.add_blood_floor(src)
 
-	var/showname = "."
-	if(user)
-		showname = " by [user]!"
-		user.do_attack_animation(src)
-	if(!(user in viewers(src, null)))
-		showname = "."
+	var/message_verb = ""
 	if(I.attack_verb && I.attack_verb.len)
-		src.visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] with [I][showname]</span>",
-		"<span class='userdanger'>[src] has been [pick(I.attack_verb)] with [I][showname]</span>")
+		message_verb = "[pick(I.attack_verb)]"
 	else if(I.force)
-		src.visible_message("<span class='danger'>[src] has been attacked with [I][showname]</span>",
-		"<span class='userdanger'>[src] has been attacked with [I][showname]</span>")
+		message_verb = "attacked"
+
+	var/attack_message = "[src] has been [message_verb] with [I]."
+	if(user)
+		user.do_attack_animation(src)
+		if(user in viewers(src, null))
+			attack_message = "[user] has [message_verb] [src] with [I]!"
+	if(message_verb)
+		visible_message("<span class='danger'>[attack_message]</span>",
+		"<span class='userdanger'>[attack_message]</span>")
+
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.

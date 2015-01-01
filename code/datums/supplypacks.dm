@@ -219,9 +219,9 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/security/taser
 	name = "Stun Guns Crate"
-	contains = list(/obj/item/weapon/gun/energy/taser,
-					/obj/item/weapon/gun/energy/taser,
-					/obj/item/weapon/gun/energy/taser)
+	contains = list(/obj/item/weapon/gun/energy/gun/advtaser,
+					/obj/item/weapon/gun/energy/gun/advtaser,
+					/obj/item/weapon/gun/energy/gun/advtaser)
 	cost = 15
 	containername = "stun gun crate"
 
@@ -250,13 +250,13 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 15
 	containername = "riot helmets crate"
 
-/datum/supply_packs/security/armory/riotsuits
-	name = "Riot Suits Crate"
+/datum/supply_packs/security/armory/riotarmor
+	name = "Riot Armor Crate"
 	contains = list(/obj/item/clothing/suit/armor/riot,
 					/obj/item/clothing/suit/armor/riot,
 					/obj/item/clothing/suit/armor/riot)
 	cost = 15
-	containername = "riot suits crate"
+	containername = "riot armor crate"
 
 /datum/supply_packs/security/armory/riotshields
 	name = "Riot Shields Crate"
@@ -272,7 +272,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/suit/armor/bulletproof,
 					/obj/item/clothing/suit/armor/bulletproof)
 	cost = 15
-	containername = "bulletproof armor crate"
+	containername = "tactical armor crate"
 
 /datum/supply_packs/security/armory/laserarmor
 	name = "Ablative Armor Crate"
@@ -396,9 +396,9 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/engineering/powergamermitts
 	name = "Insulated Gloves Crate"
-	contains = list(/obj/item/clothing/gloves/yellow,
-					/obj/item/clothing/gloves/yellow,
-					/obj/item/clothing/gloves/yellow)
+	contains = list(/obj/item/clothing/gloves/color/yellow,
+					/obj/item/clothing/gloves/color/yellow,
+					/obj/item/clothing/gloves/color/yellow)
 	cost = 20	//Made of pure-grade bullshittinium
 	containername = "insulated gloves crate"
 
@@ -701,6 +701,15 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 10
 	containername = "food crate"
 
+/datum/supply_packs/organic/pizza
+	name = "Pizza Crate"
+	contains = list(/obj/item/pizzabox/margherita,
+					/obj/item/pizzabox/mushroom,
+					/obj/item/pizzabox/meat,
+					/obj/item/pizzabox/vegetable)
+	cost = 60
+	containername = "Pizza crate"
+
 /datum/supply_packs/organic/monkey
 	name = "Monkey Crate"
 	contains = list (/obj/item/weapon/storage/box/monkeycubes)
@@ -963,10 +972,8 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
 					/obj/item/weapon/storage/book/bible/booze,
 					/obj/item/weapon/storage/book/bible/booze,
-					/obj/item/clothing/suit/chaplain_hoodie,
-					/obj/item/clothing/head/chaplain_hood,
-					/obj/item/clothing/suit/chaplain_hoodie,
-					/obj/item/clothing/head/chaplain_hood)
+					/obj/item/clothing/suit/toggle/chaplain_hoodie,
+					/obj/item/clothing/suit/toggle/chaplain_hoodie)
 	cost = 40	// it costs so much because the Space Church is ran by Space Jews
 	containername = "religious supplies crate"
 
@@ -1077,7 +1084,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/bikehorn,
 					/obj/item/clothing/under/rank/mime,
 					/obj/item/clothing/shoes/sneakers/black,
-					/obj/item/clothing/gloves/white,
+					/obj/item/clothing/gloves/color/white,
 					/obj/item/clothing/mask/gas/mime,
 					/obj/item/clothing/head/beret,
 					/obj/item/clothing/suit/suspenders,
@@ -1151,11 +1158,11 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/under/assistantformal,
 					/obj/item/clothing/under/assistantformal,
 					/obj/item/clothing/under/lawyer/bluesuit,
-					/obj/item/clothing/suit/lawyer/bluejacket,
+					/obj/item/clothing/suit/toggle/lawyer,
 					/obj/item/clothing/under/lawyer/purpsuit,
-					/obj/item/clothing/suit/lawyer/purpjacket,
+					/obj/item/clothing/suit/toggle/lawyer/purple,
 					/obj/item/clothing/under/lawyer/blacksuit,
-					/obj/item/clothing/suit/lawyer/blackjacket,
+					/obj/item/clothing/suit/toggle/lawyer/black,
 					/obj/item/clothing/tie/waistcoat,
 					/obj/item/clothing/tie/blue,
 					/obj/item/clothing/tie/red,

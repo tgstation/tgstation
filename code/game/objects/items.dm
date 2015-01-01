@@ -42,6 +42,9 @@
 	var/list/attack_verb = list() //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = list()	// even if a species cannot put items in a certain slot, if the species id is in the item's exception list, it will be able to wear that item
 
+	var/suittoggled = 0
+	var/hooded = 0
+
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
 
@@ -53,6 +56,12 @@
 
 /obj/item/blob_act()
 	qdel(src)
+
+/obj/item/ex_act(severity, target)
+	if(severity == 1 || target == src)
+		qdel(src)
+	if(!gc_destroyed)
+		contents_explosion(severity, target)
 
 //user: The mob that is suiciding
 //damagetype: The type of damage the item will inflict on the user
@@ -110,7 +119,7 @@
 	if (istype(src.loc, /obj/item/weapon/storage))
 		//If the item is in a storage item, take it out
 		var/obj/item/weapon/storage/S = src.loc
-		S.remove_from_storage(src)
+		S.remove_from_storage(src, user.loc)
 
 	src.throwing = 0
 	if (loc == user)
@@ -304,16 +313,9 @@
 	add_logs(user, M, "attacked", object="[src.name]", addition="(INTENT: [uppertext(user.a_intent)])")
 
 	src.add_fingerprint(user)
-	//if((CLUMSY in user.mutations) && prob(50))
-	//	M = user
-		/*
-		M << "\red You stab yourself in the eye."
-		M.sdisabilities |= BLIND
-		M.weakened += 4
-		M.adjustBruteLoss(10)
-		*/
+
 	if(M != user)
-		M.visible_message("<span class='danger'>[M] has been stabbed in the eye with [src] by [user]!</span>", \
+		M.visible_message("<span class='danger'>[user] has stabbed [M] in the eye with [src]!</span>", \
 							"<span class='userdanger'>[user] stabs you in the eye with [src]!</span>")
 	else
 		user.visible_message( \
@@ -332,7 +334,7 @@
 	M.eye_stat += rand(2,4)
 	if (M.eye_stat >= 10)
 		M.eye_blurry += 15+(0.1*M.eye_blurry)
-		M.disabilities |= NEARSIGHTED
+		M.disabilities |= NEARSIGHT
 		if(M.stat != 2)
 			M << "<span class='danger'>Your eyes start to bleed profusely!</span>"
 		if(prob(50))
@@ -345,7 +347,7 @@
 		if (prob(M.eye_stat - 10 + 1))
 			if(M.stat != 2)
 				M << "<span class='danger'>You go blind!</span>"
-			M.sdisabilities |= BLIND
+			M.disabilities |= BLIND
 	return
 
 /obj/item/clean_blood()
@@ -377,11 +379,12 @@
 			break
 	if(.)
 		var/turf/T = get_turf(src)
-		T.visible_message("<span class='danger'>[src] melts away!</span>")
-		var/obj/effect/decal/cleanable/molten_item/I = new (get_turf(src))
-		I.pixel_x = rand(1,16)
-		I.pixel_y = rand(1,16)
-		I.desc = "Looks like this was \an [src] some time ago."
+		if(T)
+			T.visible_message("<span class='danger'>[src] melts away!</span>")
+			var/obj/effect/decal/cleanable/molten_item/I = new (T)
+			I.pixel_x = rand(-16,16)
+			I.pixel_y = rand(-16,16)
+			I.desc = "Looks like this was \an [src] some time ago."
 		qdel(src)
 	else
 		for(var/armour_value in armor) //but is weakened

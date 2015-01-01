@@ -174,8 +174,8 @@ obj/structure/sign/poster/New(serial,subtype)
 				name += " - D-Day Promotional Poster"
 				desc += " A promotional poster for some rapper."
 			if(28)
-				name += " - Stetchkin Pistol Advertisment"
-				desc += " A poster advertising Stetchkin pistols as being 'Classy as fuck'."
+				name += " - Syndicate Pistol Advertisment"
+				desc += " A poster advertising syndicate pistols as being 'Classy as fuck'."
 			if(29)
 				name += " - E-sword Rainbow"
 				desc += " All the colors of bloody murder rainbow."
@@ -314,7 +314,7 @@ obj/structure/sign/poster/attackby(obj/item/I, mob/user)
 	var/temp_loc = user.loc
 	switch(alert("Do I want to rip the poster from the wall?","You think...","Yes","No"))
 		if("Yes")
-			if(user.loc != temp_loc)
+			if( user.loc != temp_loc || ruined )
 				return
 			visible_message("<span class='warning'>[user] rips [src] in a single, decisive motion!</span>" )
 			playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, 1)

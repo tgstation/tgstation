@@ -73,7 +73,7 @@
 			var/mob/living/carbon/human/H = usr
 			if(!(usr in nearby))
 				if(usr.client && usr.machine==src)
-					if(TK in H.mutations)
+					if(H.dna.check_mutation(TK))
 						is_in_use = 1
 						src.attack_hand(usr)
 		in_use = is_in_use
@@ -123,17 +123,12 @@
 /obj/proc/hide(h)
 	return
 
-/obj/ex_act(severity, specialty)
-	var/survivability = specialty * 15
-	switch(severity)
-		if(1)
+/obj/ex_act(severity, target)
+	if(severity == 1 || target == src)
+		qdel(src)
+	else if(severity == 2)
+		if(prob(50))
 			qdel(src)
-		if(2)
-			if(prob(50 + survivability))
-				qdel(src)
-		if(3)
-			if(prob(25 + survivability))
-				qdel(src)
 	if(!gc_destroyed)
 		..()
 

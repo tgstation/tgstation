@@ -202,3 +202,11 @@
 	throw_range = 5
 	w_class = 2.0
 	attack_verb = list("warned", "cautioned", "smashed")
+
+/obj/item/clothing/head/santa
+	name = "santa hat"
+	desc = "On the first day of christmas my employer gave to me!"
+	icon_state = "santahatnorm"
+	item_state = "that"
+	cold_protection = HEAD
+	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT

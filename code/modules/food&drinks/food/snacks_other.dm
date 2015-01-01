@@ -24,6 +24,7 @@
 	reagents.add_reagent("nutriment", 3)
 	reagents.add_reagent("sugar", 2)
 	reagents.add_reagent("coco", 2)
+	reagents.add_reagent("vitamin", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/chocolatebar/attack_self(mob/user)
 	if(wrapped)
@@ -51,6 +52,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice/New()
 	..()
 	reagents.add_reagent("nutriment", 3)
+	reagents.add_reagent("vitamin", 1)
 	src.bitesize = 3
 
 
@@ -120,7 +122,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/badrecipe
 	name = "burned mess"
-	desc = "Someone should be demoted from chef for this."
+	desc = "Someone should be demoted from cook for this."
 	icon_state = "badrecipe"
 
 /obj/item/weapon/reagent_containers/food/snacks/badrecipe/New()
@@ -164,6 +166,7 @@
 	..()
 	reagents.add_reagent("nutriment", 3)
 	reagents.add_reagent("imidazoline", 3)
+	reagents.add_reagent("vitamin", 2)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/candiedapple
@@ -174,6 +177,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/candiedapple/New()
 	..()
 	reagents.add_reagent("nutriment", 3)
+	reagents.add_reagent("sugar", 3)
 	bitesize = 3
 
 /*
@@ -196,8 +200,6 @@
 	..()
 	reagents.add_reagent("minttoxin", 1)
 	bitesize = 1
-
-////////////////////////////////FOOD ADDITIONS////////////////////////////////////////////
 
 /obj/item/weapon/reagent_containers/food/snacks/wrap
 	name = "egg wrap"
@@ -229,3 +231,26 @@
 	reagents.add_reagent("nutriment", 2)
 	reagents.add_reagent("toxin", 3)
 	bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/chococoin
+	name = "chocolate coin"
+	desc = "A completely edible but nonflippable festive coin."
+	icon_state = "chococoin"
+
+/obj/item/weapon/reagent_containers/food/snacks/chococoin/New()
+	..()
+	reagents.add_reagent("nutriment", 3)
+	reagents.add_reagent("sugar", 2)
+	reagents.add_reagent("coco", 2)
+	bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/chocoorange
+	name = "chocolate orange"
+	desc = "A festive chocolate orange"
+	icon_state = "chocoorange"
+
+/obj/item/weapon/reagent_containers/food/snacks/chocoorange/New()
+	..()
+	reagents.add_reagent("nutriment", 4)
+	reagents.add_reagent("sugar", 2)
+	reagents.add_reagent("coco", 2)

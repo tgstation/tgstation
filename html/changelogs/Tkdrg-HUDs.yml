@@ -1,5 +1,0 @@
-author: Tkdrg
-delete-after: True
-
-changes: 
-  - tweak: Security/Medical HUDs are now more responsive and less laggy.
