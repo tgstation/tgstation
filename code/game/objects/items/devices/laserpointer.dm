@@ -78,12 +78,9 @@
 	if (!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
-	if(user.has_mutation(HULK))
-		user << "<span class='warning'>Your meaty finger is too large for the button!</span>"
-		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.dna && NOGUNS in H.dna.species.specflags)
+		if(H.dna && (H.dna.check_mutation(HULK) || NOGUNS in H.dna.species.specflags))
 			user << "<span class='warning'>Your fingers can't press the button!</span>"
 			return
 
@@ -109,7 +106,7 @@
 				//eye target check
 				outmsg = "<span class='notice'>You blind [C] by shining [src] in their eyes.</span>"
 				var/eye_prot = C.eyecheck()
-				if(C.blinded || eye_prot >= 2)
+				if(C.eye_blind || eye_prot >= 2)
 					eye_prot = 4
 				var/severity = 3 - eye_prot
 				if(prob(33))

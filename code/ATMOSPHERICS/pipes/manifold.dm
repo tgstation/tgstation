@@ -27,6 +27,7 @@
 
 	..()
 
+/obj/machinery/atmospherics/pipe/manifold/SetInitDirections()
 	switch(dir)
 		if(NORTH)
 			initialize_directions = EAST|SOUTH|WEST

@@ -966,16 +966,16 @@ steam.start() -- spawns the effect
 		qdel(src)
 		return
 
-/obj/structure/foamedmetal/attack_hand(var/mob/user)
-	if ((HULK in user.mutations) || (prob(75 - metal*25)))
+/obj/structure/foamedmetal/attack_hulk(mob/living/carbon/human/user)
+	..(user, 1)
+	if(prob(75 - metal*25))
 		user.visible_message("<span class='danger'>[user] smashes through the foamed metal.</span>", \
 						"<span class='danger'>You smash through the metal foam wall.</span>")
-
 		qdel(src)
-	else
-		user << "<span class='notice'>You hit the metal foam but bounce off it.</span>"
-	return
+	return 1
 
+/obj/structure/foamedmetal/attack_hand(var/mob/user)
+	user << "<span class='notice'>You hit the metal foam but bounce off it.</span>"
 
 /obj/structure/foamedmetal/attackby(var/obj/item/I, var/mob/user)
 

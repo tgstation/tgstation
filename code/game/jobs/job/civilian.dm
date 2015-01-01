@@ -62,6 +62,7 @@ Cook
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	var/global/cooks = 0 //Counts cooks amount
 
 	default_pda = /obj/item/device/pda/cook
 	default_headset = /obj/item/device/radio/headset/headset_srv
@@ -70,10 +71,17 @@ Cook
 	minimal_access = list(access_kitchen, access_morgue)
 
 /datum/job/cook/equip_items(var/mob/living/carbon/human/H)
+	cooks += 1
+
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chef(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/chef(H), slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/chefhat(H), slot_head)
+	switch(cooks)
+		if(1)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/chef(H), slot_wear_suit)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/chefhat(H), slot_head)
+		else
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/apron/chef(H), slot_wear_suit)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/soft/mime(H), slot_head)
 
 /*
 Botanist
@@ -227,7 +235,7 @@ Clown
 	H.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(H), slot_l_store)
 	H.equip_to_slot_or_del(new /obj/item/toy/crayon/rainbow(H), slot_r_store)
 
-	H.mutations.Add(CLUMSY)
+	H.dna.add_mutation(CLOWNMUT)
 	H.rename_self("clown")
 
 /*
@@ -348,12 +356,13 @@ Lawyer
 /datum/job/lawyer/equip_items(var/mob/living/carbon/human/H)
 	lawyers += 1
 
-	if(lawyers%2 != 0)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/bluesuit(H), slot_w_uniform)
-		H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/lawyer(H), slot_wear_suit)
-	else
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/purpsuit(H), slot_w_uniform)
-		H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/lawyer/purple(H), slot_wear_suit)
+	switch(lawyers)
+		if(1)
+			H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/bluesuit(H), slot_w_uniform)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/lawyer(H), slot_wear_suit)
+		else
+			H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/purpsuit(H), slot_w_uniform)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/lawyer/purple(H), slot_wear_suit)
 
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/briefcase(H), slot_l_hand)

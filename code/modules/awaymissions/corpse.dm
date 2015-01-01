@@ -160,7 +160,7 @@
 /obj/effect/landmark/corpse/cook
 	name = "Cook"
 	corpseuniform = /obj/item/clothing/under/rank/chef
-	corpsesuit = /obj/item/clothing/suit/chef/classic
+	corpsesuit = /obj/item/clothing/suit/apron/chef
 	corpseshoes = /obj/item/clothing/shoes/sneakers/black
 	corpsehelmet = /obj/item/clothing/head/chefhat
 	corpseback = /obj/item/weapon/storage/backpack

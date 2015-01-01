@@ -7,34 +7,6 @@
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
 
-
-/obj/item/weapon/storage/belt/proc/can_use()
-	if(!ismob(loc)) return 0
-	var/mob/M = loc
-	if(src in M.get_equipped_items())
-		return 1
-	else
-		return 0
-
-
-/obj/item/weapon/storage/belt/MouseDrop(obj/over_object as obj, src_location, over_location)
-	var/mob/M = usr
-	if(!istype(over_object, /obj/screen))
-		return ..()
-	playsound(src.loc, "rustle", 50, 1, -5)
-	if (!M.restrained() && !M.stat && can_use())
-		switch(over_object.name)
-			if("r_hand")
-				M.unEquip(src)
-				M.put_in_r_hand(src)
-			if("l_hand")
-				M.unEquip(src)
-				M.put_in_l_hand(src)
-		src.add_fingerprint(usr)
-		return
-
-
-
 /obj/item/weapon/storage/belt/utility
 	name = "toolbelt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
 	desc = "Holds tools."
