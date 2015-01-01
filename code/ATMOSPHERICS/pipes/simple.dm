@@ -33,10 +33,16 @@ The regular pipe you see everywhere, including bent ones.
 
 	..()
 
+
+/obj/machinery/atmospherics/pipe/simple/SetInitDirections()
 	switch(dir)
-		if(SOUTH || NORTH)
+		if(NORTH)
 			initialize_directions = SOUTH|NORTH
-		if(EAST || WEST)
+		if(SOUTH)
+			initialize_directions = SOUTH|NORTH
+		if(EAST)
+			initialize_directions = EAST|WEST
+		if(WEST)
 			initialize_directions = EAST|WEST
 		if(NORTHEAST)
 			initialize_directions = NORTH|EAST
