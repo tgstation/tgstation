@@ -83,3 +83,14 @@ datum/reagent/blob/lung_destroying_toxin/reaction_mob(var/mob/living/M as mob, v
 		M.apply_damage(10, OXY)
 		M.apply_damage(10, TOX)
 		M << "You feel your lungs rotting!"
+// Special Reagents
+datum/reagent/blob/acid
+	name = "Acidic Liquid"
+	id = "blob_acid"
+	description = ""
+	color = "#912CEE"
+
+datum/reagent/blob/acid/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
+	if(method == TOUCH)
+		M.acid_act(20,20,20)
+		M << "You feel your skin and equipment melting off!"
