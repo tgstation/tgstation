@@ -14,7 +14,8 @@
 	processing_objects.Add(src)
 	if(!overmind)
 		create_overmind(new_overmind)
-		color = overmind.blob_color
+	else
+		color = overmind.blob_reagent_datum.color
 	point_rate = new_rate
 	..(loc, h)
 
@@ -59,7 +60,7 @@
 		var/obj/effect/blob/normal/B = locate() in get_step(src, b_dir)
 		if(B)
 			B.change_to(/obj/effect/blob/shield)
-			B.color = overmind.blob_color
+			B.color = overmind.blob_reagent_datum.color
 	..()
 
 
@@ -88,6 +89,7 @@
 		B.key = C.key
 		B.blob_core = src
 		src.overmind = B
+		color = overmind.blob_reagent_datum.color
 		return 1
 	return 0
 

@@ -74,7 +74,10 @@
 	H.hair_style = null
 	H.update_hair()
 	overlays = H.overlays
-	overlays += image('icons/mob/blob.dmi', icon_state = "blob_head")
+	var/image/I = image('icons/mob/blob.dmi', icon_state = "blob_head")
+	I.color = color
+	color = initial(color)//looks better.
+	overlays += I
 	H.loc = src
 	is_zombie = 1
 	loc.visible_message("<span class='warning'> The corpse of [H.name] suddenly rises!</span>")
