@@ -54,7 +54,7 @@
 	if(!can_buy(10))
 		return
 
-	B.color = blob_color
+	B.color = blob_reagent_datum.color
 	B.change_to(/obj/effect/blob/shield)
 
 	return
@@ -89,7 +89,7 @@
 	if(!can_buy(40))
 		return
 
-	B.color = blob_color
+	B.color = blob_reagent_datum.color
 	B.change_to(/obj/effect/blob/resource)
 	var/obj/effect/blob/resource/R = locate() in T
 	if(R)
@@ -125,7 +125,7 @@
 	if(!can_buy(60))
 		return
 
-	B.color = blob_color
+	B.color = blob_reagent_datum.color
 	B.change_to(/obj/effect/blob/node)
 	return
 
@@ -158,7 +158,7 @@
 		return
 
 	B.change_to(/obj/effect/blob/factory)
-	B.color = blob_color
+	B.color = blob_reagent_datum.color
 	return
 
 
@@ -187,7 +187,7 @@
 	var/mob/living/simple_animal/hostile/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blobbernaut (get_turf(B))
 	if(blobber)
 		B.Destroy()
-	blobber.color = blob_color
+	blobber.color = blob_reagent_datum.color
 	blobber.overmind = src
 	return
 
@@ -257,7 +257,6 @@
 	var/obj/effect/blob/B = locate() in T
 	if(B)
 		src << "There is a blob here!"
-		B.color = blob_color
 		return
 
 	var/obj/effect/blob/OB = locate() in circlerange(T, 1)
@@ -272,7 +271,7 @@
 	for(var/atom/movable/A in T)
 		if(ismob(A) && A != src)
 			blob_reagent_datum.reaction_mob(A, TOUCH)
-	OB.color = blob_color
+	OB.color = blob_reagent_datum.color
 	return
 
 
@@ -300,3 +299,44 @@
 			BS.LoseTarget()
 			BS.Goto(pick(surrounding_turfs), BS.move_to_delay)
 	return
+
+
+/mob/camera/blob/verb/split_consciousness()
+	set category = "Blob"
+	set name = "Split consciousness (100) (One use)"
+	set desc = "Expend resources to attempt to produce another sentient overmind"
+
+
+	var/client/C = null
+	var/list/candidates = get_candidates(BE_BLOB)
+	if(candidates.len)
+		C = pick(candidates)
+
+	if(C)
+		if(!blob_nodes || !blob_nodes.len)
+			src << "<span class='warning'>A node is required to birth your offspring...</span>"
+			return
+		var/obj/effect/blob/node/N = locate(/obj/effect/blob) in blob_nodes
+		if(!N)
+			src << "<span class='warning'>A node is required to birth your offspring...</span>"
+			return
+
+		if(!can_buy(100))
+			return
+
+		verbs -= /mob/camera/blob/verb/split_consciousness //we've used our split_consciousness
+		var/obj/effect/blob/core/new_core = new(get_turf(N), 200, C, blob_core.point_rate)
+		qdel(N)
+		var/mob/camera/blob/B = new(get_turf(new_core))
+		B.verbs -= /mob/camera/blob/verb/split_consciousness //our child doesn't get to make a child
+		B.key = C.key
+		B.blob_core = new_core
+		new_core.overmind = B
+
+		if(ticker && ticker.mode.name == "blob")
+			var/datum/game_mode/blob/BL = ticker.mode
+			BL.blobwincount = initial(BL.blobwincount) * 2
+
+	else
+		src << "<span class='warning'>You weren't able to split your consciousness at this time...</span>"
+

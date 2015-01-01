@@ -44,7 +44,7 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/binary/pump/process()
 //	..()
 	if(stat & (NOPOWER|BROKEN))
-		return
+		return 0
 	if(!on)
 		return 0
 
@@ -70,8 +70,7 @@ Thus, the two variables affect pump operation are set in New():
 
 	return 1
 
-	//Radio remote control
-
+//Radio remote control
 /obj/machinery/atmospherics/binary/pump/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
