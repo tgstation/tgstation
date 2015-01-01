@@ -54,8 +54,9 @@
 	if(!can_buy(10))
 		return
 
-
+	B.color = blob_color
 	B.change_to(/obj/effect/blob/shield)
+
 	return
 
 
@@ -88,7 +89,7 @@
 	if(!can_buy(40))
 		return
 
-
+	B.color = blob_color
 	B.change_to(/obj/effect/blob/resource)
 	var/obj/effect/blob/resource/R = locate() in T
 	if(R)
@@ -124,7 +125,7 @@
 	if(!can_buy(60))
 		return
 
-
+	B.color = blob_color
 	B.change_to(/obj/effect/blob/node)
 	return
 
@@ -157,6 +158,7 @@
 		return
 
 	B.change_to(/obj/effect/blob/factory)
+	B.color = blob_color
 	return
 
 
@@ -185,7 +187,7 @@
 	var/mob/living/simple_animal/hostile/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blobbernaut (get_turf(B))
 	if(blobber)
 		B.Destroy()
-
+	blobber.color = blob_color
 	return
 
 
@@ -254,6 +256,7 @@
 	var/obj/effect/blob/B = locate() in T
 	if(B)
 		src << "There is a blob here!"
+		B.color = blob_color
 		return
 
 	var/obj/effect/blob/OB = locate() in circlerange(T, 1)
@@ -265,6 +268,10 @@
 		return
 	last_attack = world.time
 	OB.expand(T, 0)
+	for(var/atom/movable/A in T)
+		if(ismob(A) && A != src)
+			blob_reagent_datum.reaction_mob(A, TOUCH)
+	OB.color = blob_color
 	return
 
 
