@@ -4,7 +4,7 @@
 #define SUPPLY_STATION_AREATYPE "/area/supply/station" //Type of the supply shuttle area for station
 #define SUPPLY_DOCK_AREATYPE "/area/supply/dock"	//Type of the supply shuttle area for dock
 #define SUPPLY_TAX 10 // Credits to charge per order.
-var/datum/controller/supply_shuttle/supply_shuttle = new()
+var/datum/controller/supply_shuttle/supply_shuttle = new
 
 var/list/mechtoys = list(
 	/obj/item/toy/prize/ripley,
