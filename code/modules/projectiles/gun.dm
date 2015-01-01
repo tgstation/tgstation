@@ -139,7 +139,7 @@
 	in_chamber.loc = get_turf(user)
 	in_chamber.starting = get_turf(user)
 	in_chamber.shot_from = src
-	user.next_move = world.time + 4
+	user.delayNextAttack(4) // TODO: Should be delayed per-gun.
 	in_chamber.silenced = silenced
 	in_chamber.current = curloc
 	in_chamber.OnFired()

@@ -160,7 +160,9 @@
 					assailant.attack_log += "\[[time_stamp()]\] <font color='red'>Strangled (kill intent) [affecting.name] ([affecting.ckey])</font>"
 					log_attack("<font color='red'>[assailant.name] ([assailant.ckey]) Strangled (kill intent) [affecting.name] ([affecting.ckey])</font>")
 
-					assailant.next_move = world.time + 10
+					assailant.delayNextMove(10)
+					assailant.delayNextAttack(10)
+
 					affecting.losebreath += 1
 				else
 					assailant.visible_message("<span class='warning'>[assailant] was unable to tighten \his grip on [affecting]'s neck!</span>")

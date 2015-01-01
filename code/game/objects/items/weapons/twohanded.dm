@@ -201,7 +201,7 @@
 	if(!proximity) return
 	..()
 	if(A && wielded && (istype(A,/obj/structure/window) || istype(A,/obj/structure/grille))) //destroys windows and grilles in one hit
-		user.changeNext_move(8)
+		user.delayNextAttack(8)
 		if(istype(A,/obj/structure/window))
 			var/pdiff=performWallPressureCheck(A.loc)
 			if(pdiff>0)
