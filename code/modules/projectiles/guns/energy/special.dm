@@ -5,7 +5,8 @@
 	fire_sound = 'sound/weapons/ion.ogg'
 	origin_tech = "combat=2;magnets=4"
 	w_class = 4.0
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags =  FPRINT | TABLEPASS | USEDELAY
+	siemens_coefficient = 1
 	slot_flags = SLOT_BACK
 	charge_cost = 100
 	projectile_type = "/obj/item/projectile/ion"
@@ -36,7 +37,8 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","fur
 	icon_state = "staffofchange"
 	item_state = "staffofchange"
 	fire_sound = 'sound/weapons/radgun.ogg'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags =  FPRINT | TABLEPASS | USEDELAY
+	siemens_coefficient = 1
 	slot_flags = SLOT_BACK
 	w_class = 4.0
 	charge_cost = 200

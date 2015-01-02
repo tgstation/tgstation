@@ -188,7 +188,8 @@ proc/move_mining_shuttle()
 	name = "pickaxe"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "pickaxe"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT | TABLEPASS
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	force = 15.0
 	throwforce = 4.0

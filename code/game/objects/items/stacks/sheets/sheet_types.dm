@@ -88,7 +88,8 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	m_amt = 3750
 	w_type = RECYK_METAL
 	throwforce = 14.0
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS
+	siemens_coefficient = 1
 	origin_tech = "materials=1"
 	melt_temperature = MELTPOINT_STEEL
 
@@ -124,7 +125,8 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	m_amt = 3750 // Was 7500, which doesn't make any fucking sense
 	perunit = 2875 //average of plasma and metal
 	throwforce = 15.0
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS
+	siemens_coefficient = 1
 	origin_tech = "materials=2"
 	w_type = RECYK_METAL
 	melt_temperature = MELTPOINT_STEEL+500

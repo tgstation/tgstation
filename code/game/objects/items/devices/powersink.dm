@@ -6,7 +6,8 @@
 	icon_state = "powersink0"
 	item_state = "electronic"
 	w_class = 4.0
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS
+	siemens_coefficient = 1
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 2

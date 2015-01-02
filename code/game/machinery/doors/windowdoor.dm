@@ -15,6 +15,7 @@
 	air_properties_vary_with_direction = 1
 	ghost_read=0
 	machine_flags = EMAGGABLE
+	soundeffect = 'sound/machines/windowdoor.ogg'
 
 /obj/machinery/door/window/New()
 	..()
@@ -86,7 +87,7 @@
 	if(!src.operating) //in case of emag
 		src.operating = 1
 	flick(text("[]opening", src.base_state), src)
-	playsound(get_turf(src), 'sound/machines/windowdoor.ogg', 100, 1)
+	playsound(get_turf(src), soundeffect, 100, 1)
 	src.icon_state = text("[]open", src.base_state)
 	sleep(10)
 
@@ -104,7 +105,7 @@
 		return 0
 	src.operating = 1
 	flick(text("[]closing", src.base_state), src)
-	playsound(get_turf(src), 'sound/machines/windowdoor.ogg', 100, 1)
+	playsound(get_turf(src), soundeffect, 100, 1)
 	src.icon_state = src.base_state
 
 	src.density = 1

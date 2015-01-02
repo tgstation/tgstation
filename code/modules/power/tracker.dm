@@ -1,5 +1,4 @@
 //Solar tracker
-
 //Machine that tracks the sun and reports it's direction to the solar controllers
 //As long as this is working, solar panels on same powernet will track automatically
 
@@ -13,13 +12,13 @@
 	directwired = 1
 	use_power = 0
 
-	var/sun_angle = 0		// sun angle as set by sun datum
+	var/sun_angle = 0	//Sun angle as set by sun datum
 
-/obj/machinery/power/tracker/New(var/turf/loc, var/obj/item/solar_assembly/S)
+/obj/machinery/power/tracker/New(var/turf/loc, var/obj/machinery/power/solar_assembly/S)
 	..(loc)
 	if(!S)
-		S = new /obj/item/solar_assembly(src)
-		S.glass_type = /obj/item/stack/sheet/glass
+		S = new /obj/machinery/power/solar_assembly(src)
+		S.glass_type = /obj/item/stack/sheet/rglass
 		S.tracker = 1
 		S.anchored = 1
 	S.loc = src
@@ -33,19 +32,19 @@
 	..()
 	solars_list.Add(src)
 
-// called by datum/sun/calc_position() as sun's angle changes
+//Called by datum/sun/calc_position() as sun's angle changes
 /obj/machinery/power/tracker/proc/set_angle(var/angle)
 	sun_angle = angle
 
-	//set icon dir to show sun illumination
-	dir = turn(NORTH, -angle - 22.5)	// 22.5 deg bias ensures, e.g. 67.5-112.5 is EAST
+	//Set icon dir to show sun illumination
+	dir = turn(NORTH, -angle - 22.5)	//22.5 deg bias ensures, e.g. 67.5-112.5 is EAST
 
-	// check we can draw power
+	//Check we can draw power
 	if(stat & NOPOWER)
 		return
 
-	// find all solar controls and update them
-	// currently, just update all controllers in world
+	//Find all solar controls and update them
+	//Currently, just update all controllers in world
 	// ***TODO: better communication system using network
 	if(powernet)
 		for(var/obj/machinery/power/solar_control/C in get_solars_powernet())
@@ -54,11 +53,10 @@
 					C.tracker_update(angle)
 
 /obj/machinery/power/tracker/attackby(var/obj/item/weapon/W, var/mob/user)
-
 	if(iscrowbar(W))
 		playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 		if(do_after(user, 50))
-			var/obj/item/solar_assembly/S = locate() in src
+			var/obj/machinery/power/solar_assembly/S = locate() in src
 			if(S)
 				S.loc = src.loc
 				S.give_glass()
@@ -68,8 +66,8 @@
 		return
 	..()
 
-// timed process
-// make sure we can draw power from the powernet
+//Timed process
+//Make sure we can draw power from the powernet
 /obj/machinery/power/tracker/process()
 
 	var/avail = surplus()
@@ -84,7 +82,7 @@
 	solars_list -= src
 	..()
 
-// Tracker Electronic
+//Tracker Electronic
 
 /obj/item/weapon/tracker_electronics
 
