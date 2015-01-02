@@ -551,17 +551,18 @@ var/list/admin_verbs_hideable = list(
 			message_admins("Warning, mysql database is not connected.")
 			src << "Warning, mysql database is not connected."
 			return
-		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, rank FROM [format_table_name("admin")] WHERE ckey = '[ckey]'")
+		var/sql_ckey = sanitizeSQL(ckey)
+		var/DBQuery/query = dbcon.NewQuery("SELECT rank FROM [format_table_name("admin")] WHERE ckey = '[sql_ckey]'")
 		query.Execute()
 		while(query.NextRow())
-			rank = ckeyEx(query.item[2])
-	verbs -= /client/proc/readmin
-	if(!rank)
-		return
+			rank = ckeyEx(query.item[1])
 	if(!D)
 		if(rank_names[rank] == null)
-			error("Admin rank ([rank]) does not exist.")
-			src << "Admin rank ([rank]) does not exist."
+			var/error_extra = ""
+			if(!config.admin_legacy_system)
+				error_extra = " Check mysql DB connection."
+			error("Error while re-adminning [src], admin rank ([rank]) does not exist.[error_extra]")
+			src << "Error while re-adminning, admin rank ([rank]) does not exist.[error_extra]"
 			return
 		D = new(rank_names[rank],ckey)
 		var/client/C = directory[ckey]
@@ -569,7 +570,9 @@ var/list/admin_verbs_hideable = list(
 		message_admins("[src] re-adminned themselves.")
 		log_admin("[src] re-adminned themselves.")
 		feedback_add_details("admin_verb","RAS")
+		verbs -= /client/proc/readmin
 		return
 	else
 		src << "You are already an admin."
+		verbs -= /client/proc/readmin
 		return
