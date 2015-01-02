@@ -46,6 +46,8 @@
 	// turf animation
 	var/atom/movable/overlay/c_animation = null
 
+	var/soundeffect = 'sound/machines/airlock.ogg'
+
 /obj/machinery/door/Bumped(atom/AM)
 	if (ismob(AM))
 		var/mob/M = AM
