@@ -8,8 +8,8 @@
 
 /obj/effect/blob/storage/update_icon()
 	if(health <= 0)
-		qdel(src)
 		overmind.max_blob_points -= 50
+		qdel(src)
 
 /obj/effect/blob/storage/PulseAnimation(var/activate = 0)
 	if(activate)

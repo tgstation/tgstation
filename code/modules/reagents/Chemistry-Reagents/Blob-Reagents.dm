@@ -8,9 +8,10 @@ datum/reagent/blob/boiling_oil
 
 datum/reagent/blob/boiling_oil/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
+		M.apply_damage(15, BURN)
 		M.adjust_fire_stacks(2)
 		M.IgniteMob()
-		M << "You feel your skin burning!"
+		M << "<span class = 'userdanger'>The blob splashes you with burning oil!</span>"
 		M.emote("scream")
 
 datum/reagent/blob/toxic_goop
@@ -22,7 +23,7 @@ datum/reagent/blob/toxic_goop
 datum/reagent/blob/toxic_goop/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
 		M.apply_damage(20, TOX)
-		M << "You feel sick!"
+		M << "<span class = 'userdanger'>The blob strikes you, and you feel sick and nauseated!</span>"
 
 datum/reagent/blob/skin_ripper
 	name = "Skin Ripper"
@@ -33,7 +34,7 @@ datum/reagent/blob/skin_ripper
 datum/reagent/blob/skin_ripper/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
 		M.apply_damage(20, BRUTE)
-		M << "You feel your skin being ripped off!"
+		M << "<span class = 'userdanger'>The blob strikes you, and you feel your skin ripping and tearing off!</span>"
 		M.emote("scream")
 
 datum/reagent/blob/anti_oxygenation
@@ -45,7 +46,7 @@ datum/reagent/blob/anti_oxygenation
 datum/reagent/blob/anti_oxygenation/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
 		M.apply_damage(20, OXY)
-		M << "You can't breathe!"
+		M << "<span class = 'userdanger'>The blob strikes you, and you feel dizzy and out of breath!</span>"
 
 datum/reagent/blob/stamina_drainer
 	name = "Stamina Drainer"
@@ -57,7 +58,7 @@ datum/reagent/blob/stamina_drainer/reaction_mob(var/mob/living/M as mob, var/met
 	if(method == TOUCH)
 		M.apply_damage(30, STAMINA)
 		M.apply_damage(10, BRUTE)
-		M << "You feel incredibly tired!"
+		M << "<span class = 'userdanger'>The blob strikes you, and you feel winded and weak!</span>"
 
 // Combo Reagents
 
@@ -73,7 +74,7 @@ datum/reagent/blob/skin_melter/reaction_mob(var/mob/living/M as mob, var/method=
 		M.apply_damage(10, BURN)
 		M.adjust_fire_stacks(2)
 		M.IgniteMob()
-		M << "You feel your skin burning and melting!"
+		M << "<span class = 'userdanger'>The blob strikes you, and you feel your skin char and melt!</span>"
 		M.emote("scream")
 
 datum/reagent/blob/lung_destroying_toxin
@@ -86,7 +87,7 @@ datum/reagent/blob/lung_destroying_toxin/reaction_mob(var/mob/living/M as mob, v
 	if(method == TOUCH)
 		M.apply_damage(10, OXY)
 		M.apply_damage(10, TOX)
-		M << "You feel your lungs rotting!"
+		M << "<span class = 'userdanger'>The blob strikes you, and your lungs feel heavy and weak!</span>"
 // Special Reagents
 datum/reagent/blob/acid
 	name = "Acidic Liquid"
@@ -98,7 +99,7 @@ datum/reagent/blob/acid/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, 
 	if(method == TOUCH)
 		M.acid_act(20,1,10)
 		M.apply_damage(10, BRUTE)
-		M << "You feel your skin and equipment melting off!"
+		M << "<span class = 'userdanger'>The blob's tendrils melt though your equipment!</span>"
 
 datum/reagent/blob/radioactive_liquid
 	name = "Radioactive Liquid"
@@ -118,7 +119,7 @@ datum/reagent/blob/radioactive_liquid/reaction_mob(var/mob/living/M as mob, var/
 				randmutg(M)
 			domutcheck(M, null)
 			updateappearance(M)
-		M << "You feel irradiated!"
+		M << "<span class = 'userdanger'>The blob strikes you, and your skin feels papery and everything hurts!</span>"
 
 datum/reagent/blob/dark_matter
 	name = "Dark Matter"
@@ -141,7 +142,7 @@ datum/reagent/blob/dark_matter/reaction_mob(var/mob/living/M as mob, var/method=
 						if(S.magpulse)
 							continue
 					X.throw_at(pull)
-		M << "Everything flies at you!"
+		M << "<span class = 'userdanger'>You feel a thrum as the blob strikes you, and everything flies at you!</span>"
 
 datum/reagent/blob/sorium
 	name = "Sorium"
@@ -164,7 +165,7 @@ datum/reagent/blob/sorium/reaction_mob(var/mob/living/M as mob, var/method=TOUCH
 				end_dir = EAST
 			var/atom/throw_target = get_edge_target_turf(M, end_dir)
 			M.throw_at(throw_target, 200, 4)
-			M << "You are sent flying!"
+			M << "<span class = 'userdanger'>The blob slams into you, and sends you flying!</span>"
 
 
 datum/reagent/blob/explosive // I'm gonna burn in hell for this one
@@ -175,6 +176,6 @@ datum/reagent/blob/explosive // I'm gonna burn in hell for this one
 
 datum/reagent/blob/explosive/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
-		if(prob(50))
-			M << "The blob explodes!"
+		if(prob(75))
+			M << "<span class = 'userdanger'>The blob strikes you, and its tendrils explode!</span>"
 			explosion(M.loc, 0, 0, 1, 0, 0)
