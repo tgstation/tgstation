@@ -6,7 +6,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
 	origin_tech = "combat=3;magnets=2"
 	modifystate = 2
-
+	can_flashlight = 1
 
 /obj/item/weapon/gun/energy/gun/attack_self(mob/living/user as mob)
 	select_fire(user)
@@ -21,6 +21,7 @@
 	var/charge_tick = 0
 	modifystate = 0
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
+	can_flashlight = 0
 
 /obj/item/weapon/gun/energy/gun/nuclear/New()
 	..()

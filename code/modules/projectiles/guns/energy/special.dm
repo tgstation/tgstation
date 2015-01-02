@@ -134,7 +134,6 @@
 	icon_state = "disabler"
 	item_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
-	cell_type = "/obj/item/weapon/stock_parts/cell"
 
 
 /obj/item/weapon/gun/energy/wormhole_projector

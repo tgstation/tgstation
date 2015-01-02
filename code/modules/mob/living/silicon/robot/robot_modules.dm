@@ -248,7 +248,6 @@
 	..()
 	modules += new /obj/item/device/flashlight(src)
 	modules += new /obj/item/weapon/melee/energy/sword/cyborg(src)
-	modules += new /obj/item/weapon/gun/energy/crossbow/cyborg(src)
 	modules += new /obj/item/weapon/card/emag(src)
 	modules += new /obj/item/weapon/gun/energy/laser/cyborg(src)
 	modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
