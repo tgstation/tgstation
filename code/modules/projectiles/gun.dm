@@ -164,6 +164,19 @@
 				F = S
 				A.loc = src
 				update_icon()
+				update_gunlight(user)
+	if(istype(A, /obj/item/weapon/screwdriver))
+		if(F)
+			if(user.l_hand != src && user.r_hand != src)
+				user << "<span class='notice'>You'll need [src] in your hands to do that.</span>"
+				return
+			for(var/obj/item/device/flashlight/seclite/S in src)
+				user << "<span class='notice'>You unscrew the seclite from [src].</span>"
+				F = null
+				S.loc = get_turf(user)
+				update_gunlight(user)
+				S.update_brightness(user)
+				update_icon()
 	..()
 	return
 
@@ -197,7 +210,9 @@
 		update_icon()
 	else
 		action_button_name = null
-		if(isturf(loc))
+		if(loc == user)
+			user.AddLuminosity(-5)
+		else if(isturf(loc))
 			SetLuminosity(0)
 		return
 
