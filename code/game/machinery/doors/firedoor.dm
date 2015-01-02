@@ -12,6 +12,7 @@
 	glass = 1
 	var/blocked = 0
 	var/nextstate = null
+	sub_door = 1
 
 
 /obj/machinery/door/firedoor/Bumped(atom/AM)
