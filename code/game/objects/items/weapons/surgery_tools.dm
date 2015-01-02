@@ -21,7 +21,8 @@
 	g_amt = 5000 // OH COME ON, WHERE THE FUCK IS THERE ANY GLASS IN A GODDAMN RETRACTOR
 	melt_temperature = MELTPOINT_STEEL
 	w_type = RECYK_METAL
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS
+	siemens_coefficient = 1
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
 
@@ -142,7 +143,8 @@ LOOK FOR SURGERY.DM*/
 	m_amt = 5000
 	g_amt = 2500
 	w_type = RECYK_METAL
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS
+	siemens_coefficient = 1
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "pinched")
@@ -284,7 +286,8 @@ LOOK FOR SURGERY.DM*/
 	m_amt = 5000
 	g_amt = 2500
 	w_type = RECYK_ELECTRONIC
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS
+	siemens_coefficient = 1
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("burnt")
@@ -381,7 +384,8 @@ LOOK FOR SURGERY.DM*/
 	m_amt = 15000
 	g_amt = 10000
 	w_type = RECYK_ELECTRONIC
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS
+	siemens_coefficient = 1
 	force = 15.0
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
@@ -401,7 +405,8 @@ LOOK FOR SURGERY.DM*/
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "scalpel"
 	hitsound = "sound/weapons/bladeslice.ogg"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS
+	siemens_coefficient = 1
 	force = 10.0
 	w_class = 1.0
 	throwforce = 5.0
@@ -689,7 +694,8 @@ LOOK FOR SURGERY.DM*/
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "saw3"
 	hitsound = 'sound/weapons/circsawhit.ogg'
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS
+	siemens_coefficient = 1
 	force = 15.0
 	w_class = 1.0
 	throwforce = 9.0

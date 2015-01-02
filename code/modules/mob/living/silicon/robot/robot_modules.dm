@@ -4,7 +4,8 @@
 	icon_state = "std_module"
 	w_class = 100.0
 	item_state = "electronic"
-	flags = FPRINT|TABLEPASS | CONDUCT
+	flags = FPRINT|TABLEPASS
+	siemens_coefficient = 1
 
 	var/list/modules = list()
 	var/obj/item/emag = null

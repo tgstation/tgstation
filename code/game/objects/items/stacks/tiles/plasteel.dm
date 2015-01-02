@@ -11,7 +11,8 @@
 	throwforce = 15.0
 	throw_speed = 5
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS
+	siemens_coefficient = 1
 	max_amount = 60
 
 /obj/item/stack/tile/plasteel/New()
