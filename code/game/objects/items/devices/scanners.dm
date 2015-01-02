@@ -202,7 +202,7 @@ MASS SPECTROMETER
 	var/datum/gas_mixture/environment = location.return_air()
 
 	var/pressure = environment.return_pressure()
-	var/total_moles = environment.total_moles()
+	var/total_moles = environment.total_moles
 
 	user.show_message("<span class='info'> <B>Results:</B></span>", 1)
 	if(abs(pressure - ONE_ATMOSPHERE) < 10)
@@ -210,32 +210,8 @@ MASS SPECTROMETER
 	else
 		user.show_message("<span class='warning'> Pressure: [round(pressure,0.1)] kPa</span>", 1)
 	if(total_moles)
-		var/o2_concentration = environment.oxygen/total_moles
-		var/n2_concentration = environment.nitrogen/total_moles
-		var/co2_concentration = environment.carbon_dioxide/total_moles
-		var/plasma_concentration = environment.toxins/total_moles
-
-		var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
-		if(abs(n2_concentration - N2STANDARD) < 20)
-			user.show_message("<span class='info'> Nitrogen: [round(n2_concentration*100)]%</span>", 1)
-		else
-			user.show_message("<span class='warning'> Nitrogen: [round(n2_concentration*100)]%</span>", 1)
-
-		if(abs(o2_concentration - O2STANDARD) < 2)
-			user.show_message("<span class='info'> Oxygen: [round(o2_concentration*100)]%</span>", 1)
-		else
-			user.show_message("<span class='warning'> Oxygen: [round(o2_concentration*100)]%</span>", 1)
-
-		if(co2_concentration > 0.01)
-			user.show_message("<span class='warning'> CO2: [round(co2_concentration*100)]%</span>", 1)
-		else
-			user.show_message("<span class='info'> CO2: [round(co2_concentration*100)]%</span>", 1)
-
-		if(plasma_concentration > 0.01)
-			user.show_message("<span class='info'> Plasma: [round(plasma_concentration*100)]%</span>", 1)
-
-		if(unknown_concentration > 0.01)
-			user.show_message("<span class='warning'> Unknown: [round(unknown_concentration*100)]%</span>", 1)
+		for(var/gasid in environment.gas)
+			user.show_message("<span class='info'> [gas_data.name[gasid]]: [round((environment.gas[gasid] / total_moles) * 100)]%</span>", 1)
 
 		user.show_message("<span class='info'> Temperature: [round(environment.temperature-T0C)]&deg;C</span>", 1)
 

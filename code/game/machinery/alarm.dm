@@ -258,7 +258,7 @@
 /obj/machinery/alarm/proc/return_status()
 	var/turf/location = src.loc
 	var/datum/gas_mixture/environment = location.return_air()
-	var/total = environment.oxygen + environment.carbon_dioxide + environment.toxins + environment.nitrogen
+	var/total = environment.total_moles
 	var/output = "<h3>Air Status:</h3>"
 
 	if(total == 0)
@@ -280,21 +280,19 @@
 	var/pressure_dangerlevel = cur_tlv.get_danger_level(environment_pressure)
 
 	cur_tlv = TLV["oxygen"]
-	var/oxygen_dangerlevel = cur_tlv.get_danger_level(environment.oxygen*GET_PP)
-	var/oxygen_percent = round(environment.oxygen / total * 100, 2)
+	var/oxygen_dangerlevel = cur_tlv.get_danger_level(environment.gas["oxygen"]*GET_PP)
+	var/oxygen_percent = round(environment.gas["oxygen"] / total * 100, 2)
 
 	cur_tlv = TLV["carbon dioxide"]
-	var/co2_dangerlevel = cur_tlv.get_danger_level(environment.carbon_dioxide*GET_PP)
-	var/co2_percent = round(environment.carbon_dioxide / total * 100, 2)
+	var/co2_dangerlevel = cur_tlv.get_danger_level(environment.gas["carbon_dioxide"]*GET_PP)
+	var/co2_percent = round(environment.gas["carbon_dioxide"] / total * 100, 2)
 
 	cur_tlv = TLV["plasma"]
-	var/plasma_dangerlevel = cur_tlv.get_danger_level(environment.toxins*GET_PP)
-	var/plasma_percent = round(environment.toxins / total * 100, 2)
+	var/plasma_dangerlevel = cur_tlv.get_danger_level(environment.gas["plasma"]*GET_PP)
+	var/plasma_percent = round(environment.gas["plasma"] / total * 100, 2)
 
 	cur_tlv = TLV["other"]
-	var/other_moles = 0.0
-	for(var/datum/gas/G in environment.trace_gases)
-		other_moles+=G.moles
+	var/other_moles = environment.gas["oxygen_agent_b"] + environment.gas["sleeping_agent"] //idk, keep old behaviour
 	var/other_dangerlevel = cur_tlv.get_danger_level(other_moles*GET_PP)
 
 	cur_tlv = TLV["temperature"]
@@ -703,18 +701,16 @@ table tr:first-child th:first-child { border: none;}
 	var/pressure_dangerlevel = cur_tlv.get_danger_level(environment_pressure)
 
 	cur_tlv = TLV["oxygen"]
-	var/oxygen_dangerlevel = cur_tlv.get_danger_level(environment.oxygen*GET_PP)
+	var/oxygen_dangerlevel = cur_tlv.get_danger_level(environment.gas["oxygen"]*GET_PP)
 
 	cur_tlv = TLV["carbon dioxide"]
-	var/co2_dangerlevel = cur_tlv.get_danger_level(environment.carbon_dioxide*GET_PP)
+	var/co2_dangerlevel = cur_tlv.get_danger_level(environment.gas["carbon_dioxide"]*GET_PP)
 
 	cur_tlv = TLV["plasma"]
-	var/plasma_dangerlevel = cur_tlv.get_danger_level(environment.toxins*GET_PP)
+	var/plasma_dangerlevel = cur_tlv.get_danger_level(environment.gas["plasma"]*GET_PP)
 
 	cur_tlv = TLV["other"]
-	var/other_moles = 0.0
-	for(var/datum/gas/G in environment.trace_gases)
-		other_moles+=G.moles
+	var/other_moles = environment.gas["oxygen_agent_b"] + environment.gas["sleeping_agent"] //keeping old behaviour
 	var/other_dangerlevel = cur_tlv.get_danger_level(other_moles*GET_PP)
 
 	cur_tlv = TLV["temperature"]

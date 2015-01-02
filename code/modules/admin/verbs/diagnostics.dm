@@ -12,9 +12,10 @@
 		if(T.active_hotspot)
 			burning = 1
 
-	usr << "<span class='adminnotice'>@[target.x],[target.y]: O:[GM.oxygen] T:[GM.toxins] N:[GM.nitrogen] C:[GM.carbon_dioxide] w [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(burning)?("\red BURNING"):(null)]</span>"
-	for(var/datum/gas/trace_gas in GM.trace_gases)
-		usr << "[trace_gas.type]: [trace_gas.moles]"
+	usr << "<span class='adminnotice'>@[target.x],[target.y],[target.z]: [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(burning)?("\red BURNING"):(null)]</span>"
+	for(var/g in GM.gas)
+		usr << "<span class='adminnotice'>[gas_data.name[g]]: [GM.gas[g]]</span>"
+
 	feedback_add_details("admin_verb","DAST") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/fix_next_move()

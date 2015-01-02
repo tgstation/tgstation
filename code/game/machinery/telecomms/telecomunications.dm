@@ -235,7 +235,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			var/datum/gas_mixture/env = L.return_air()
 			if(env.temperature < (heat_amt+T0C))
 
-				var/transfer_moles = 0.25 * env.total_moles()
+				var/transfer_moles = 0.25 * env.total_moles
 
 				var/datum/gas_mixture/removed = env.remove(transfer_moles)
 

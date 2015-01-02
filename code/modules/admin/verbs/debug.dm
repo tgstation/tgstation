@@ -142,10 +142,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/datum/gas_mixture/env = T.return_air()
 
 	var/t = ""
-	t+= "Nitrogen : [env.nitrogen]\n"
-	t+= "Oxygen : [env.oxygen]\n"
-	t+= "Plasma : [env.toxins]\n"
-	t+= "CO2: [env.carbon_dioxide]\n"
+	for(var/gasid in env.gas)
+		t += "[gas_data.name[gasid]]: [env.gas[gasid]]\n"
 
 	usr.show_message(t, 1)
 	feedback_add_details("admin_verb","ASL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -1008,7 +1006,7 @@ var/global/list/g_fancy_list_of_types = null
 		if(Rad.anchored)
 			if(!Rad.P)
 				var/obj/item/weapon/tank/plasma/Plasma = new/obj/item/weapon/tank/plasma(Rad)
-				Plasma.air_contents.toxins = 70
+				Plasma.air_contents.adjust_gas("plasma", 70)
 				Rad.drainratio = 0
 				Rad.P = Plasma
 				Plasma.loc = Rad

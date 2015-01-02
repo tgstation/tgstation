@@ -142,7 +142,7 @@
 
 	// It's a simplified version taking only 1/10 of the moles from the turf nearby. It should be later changed into a better version
 
-	var/transfer_moles = environment.total_moles()/10
+	var/transfer_moles = environment.total_moles/10
 	//var/transfer_moles = rpm/10000*capacity
 	var/datum/gas_mixture/removed = inturf.remove_air(transfer_moles)
 	gas_contained.merge(removed)
@@ -241,15 +241,15 @@
 
 	// Weird function but it works. Should be something else...
 
-	var/newrpm = ((compressor.gas_contained.temperature) * compressor.gas_contained.total_moles())/4
+	var/newrpm = ((compressor.gas_contained.temperature) * compressor.gas_contained.total_moles)/4
 
 	newrpm = max(0, newrpm)
 
 	if(!compressor.starter || newrpm > 1000)
 		compressor.rpmtarget = newrpm
 
-	if(compressor.gas_contained.total_moles()>0)
-		var/oamount = min(compressor.gas_contained.total_moles(), (compressor.rpm+100)/35000*compressor.capacity)
+	if(compressor.gas_contained.total_moles>0)
+		var/oamount = min(compressor.gas_contained.total_moles, (compressor.rpm+100)/35000*compressor.capacity)
 		var/datum/gas_mixture/removed = compressor.gas_contained.remove(oamount)
 		outturf.assume_air(removed)
 

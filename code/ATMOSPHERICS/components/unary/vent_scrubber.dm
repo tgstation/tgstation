@@ -114,8 +114,8 @@
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	if(scrubbing)
-		if((environment.toxins>0) || (environment.carbon_dioxide>0) || (environment.trace_gases.len>0))
-			var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
+		if((environment.gas["plasma"]>0) || (environment.gas["carbon_dioxide"]>0) || (environment.gas["oxygen_agent_b"]>0) || (environment.gas["sleeping_agent"]>0))
+			var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles
 
 			//Take a gas sample
 			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
@@ -126,21 +126,21 @@
 			var/datum/gas_mixture/filtered_out = new
 			filtered_out.temperature = removed.temperature
 			if(scrub_Toxins)
-				filtered_out.toxins = removed.toxins
-				removed.toxins = 0
+				filtered_out.gas["plasma"] = removed.gas["plasma"]
+				removed.gas["plasma"] = 0
+
 			if(scrub_CO2)
-				filtered_out.carbon_dioxide = removed.carbon_dioxide
-				removed.carbon_dioxide = 0
+				filtered_out.gas["carbon_dioxide"] = removed.gas["carbon_dioxide"]
+				removed.gas["carbon_dioxide"] = 0
 
-			if(removed.trace_gases.len>0)
-				for(var/datum/gas/trace_gas in removed.trace_gases)
-					if(istype(trace_gas, /datum/gas/oxygen_agent_b))
-						removed.trace_gases -= trace_gas
-						filtered_out.trace_gases += trace_gas
-					else if(istype(trace_gas, /datum/gas/sleeping_agent) && scrub_N2O)
-						removed.trace_gases -= trace_gas
-						filtered_out.trace_gases += trace_gas
+			filtered_out.gas["oxygen_agent_b"] = removed.gas["oxygen_agent_b"]
+			removed.gas["oxygen_agent_b"] = 0
 
+			filtered_out.gas["sleeping_agent"] = removed.gas["sleeping_agent"]
+			removed.gas["sleeping_agent"] = 0
+
+			filtered_out.update_values()
+			removed.update_values()
 
 			//Remix the resulting gases
 			air_contents.merge(filtered_out)
@@ -154,7 +154,7 @@
 		if (air_contents.return_pressure()>=50*ONE_ATMOSPHERE)
 			return
 
-		var/transfer_moles = environment.total_moles()*(volume_rate/environment.volume)
+		var/transfer_moles = environment.total_moles*(volume_rate/environment.volume)
 
 		var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 

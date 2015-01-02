@@ -17,6 +17,16 @@
 	//List of active tile overlays for this gas_mixture.  Updated by check_tile_graphic()
 	var/list/graphic = list()
 
+	//Moles moved in the last share() call.
+	var/last_share
+
+
+/datum/gas_mixture/New(list/init_list)
+	if(init_list)
+		temperature = init_list["temperature"] - 0
+		gas = init_list - "temperature"
+		update_values()
+
 
 //Takes a gas string and the amount of moles to adjust by.  Calls update_values() if update isn't 0.
 /datum/gas_mixture/proc/adjust_gas(gasid, moles, update = 1)
@@ -199,7 +209,7 @@
 
 
 //Removes moles from the gas mixture and returns a gas_mixture containing the removed air.
-/datum/gas_mixture/proc/remove(amount)
+/datum/gas_mixture/proc/remove(amount, readonly = 0)
 	amount = min(amount, total_moles * group_multiplier) //Can not take more air than the gas mixture has!
 	if(amount <= 0)
 		return null
@@ -208,7 +218,7 @@
 
 	for(var/g in gas)
 		removed.gas[g] = QUANTIZE((gas[g] / total_moles) * amount)
-		gas[g] -= removed.gas[g] / group_multiplier
+		if(!readonly) gas[g] -= removed.gas[g] / group_multiplier
 
 	removed.temperature = temperature
 	update_values()
@@ -302,7 +312,10 @@
 
 
 /datum/gas_mixture/proc/react(atom/dump_location)
-	zburn(null)
+	. = 0 //set to 1 if a notable reaction occured (used by pipe_network)
+	if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		if(fire() > 0)
+			. = 1
 
 
 //Rechecks the gas_mixture and adjusts the graphic list if needed.
@@ -368,8 +381,89 @@
 	return 1
 
 
+/datum/gas_mixture/proc/share_ratio(datum/gas_mixture/sharer, ratio = 0.5, one_way = 0)
+	if(!sharer)	return 0
+
+	ratio /= 2
+
+	last_share = 0
+	var/moved_moles = 0
+
+	var/heat_capacity_self_to_sharer = 0
+	var/heat_capacity_sharer_to_self = 0
+
+	var/delta_temperature = (temperature - sharer.temperature)
+
+	var/old_self_heat_capacity = heat_capacity()
+	var/old_sharer_heat_capacity = sharer.heat_capacity()
+
+	var/list/marked = list()
+	for(var/gasid in gas)
+		var/delta = (gas[gasid] - sharer.gas[gasid]) * ratio
+		gas[gasid] -= delta
+		if(!one_way)
+			sharer.gas[gasid] += delta
+		if(delta > 0)
+			heat_capacity_self_to_sharer += gas_data.specific_heat[gasid] * delta
+		else
+			heat_capacity_sharer_to_self -= gas_data.specific_heat[gasid] * delta
+
+		last_share += abs(delta)
+		moved_moles += delta
+		marked[gasid] = 1
+
+	for(var/gasid in sharer.gas)
+		if(isnull(marked[gasid]))
+			var/delta = (gas[gasid] - sharer.gas[gasid]) * ratio
+			gas[gasid] -= delta
+			if(!one_way)
+				sharer.gas[gasid] += delta
+			if(delta > 0)
+				heat_capacity_self_to_sharer += gas_data.specific_heat[gasid] * delta
+			else
+				heat_capacity_sharer_to_self -= gas_data.specific_heat[gasid] * delta
+
+			moved_moles += delta
+			last_share += abs(delta)
+
+	update_values()
+	sharer.update_values()
+
+	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+		var/new_self_heat_capacity = old_self_heat_capacity + heat_capacity_sharer_to_self - heat_capacity_self_to_sharer
+		var/new_sharer_heat_capacity = old_sharer_heat_capacity + heat_capacity_self_to_sharer - heat_capacity_sharer_to_self
+
+		if(new_self_heat_capacity)
+			temperature = (old_self_heat_capacity*temperature - heat_capacity_self_to_sharer*temperature + heat_capacity_sharer_to_self*sharer.temperature)/new_self_heat_capacity
+
+		if(new_sharer_heat_capacity && !one_way)
+			sharer.temperature = (old_sharer_heat_capacity*sharer.temperature-heat_capacity_sharer_to_self*sharer.temperature + heat_capacity_self_to_sharer*temperature)/new_sharer_heat_capacity
+
+			if(abs(old_sharer_heat_capacity))
+				if(abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.10) // <10% change in sharer heat capacity
+					temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
+
+	if((delta_temperature > MINIMUM_TEMPERATURE_TO_MOVE) || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
+		var/delta_pressure = temperature*(total_moles + moved_moles) - sharer.temperature*(sharer.total_moles - moved_moles)
+		return delta_pressure*R_IDEAL_GAS_EQUATION/volume
+
+
+/datum/gas_mixture/proc/temperature_share(datum/gas_mixture/sharer, conduction_coefficient, one_way = 0)
+	var/delta_temperature = (temperature - sharer.temperature)
+	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+		var/self_heat_capacity = heat_capacity()
+		var/sharer_heat_capacity = sharer.heat_capacity()
+
+		if(sharer_heat_capacity && self_heat_capacity)
+			var/heat = conduction_coefficient*delta_temperature* \
+				(self_heat_capacity*sharer_heat_capacity/(self_heat_capacity+sharer_heat_capacity))
+
+			temperature -= heat/self_heat_capacity
+			if(!one_way) sharer.temperature += heat/sharer_heat_capacity
+
+
 //Shares gas with another gas_mixture based on the amount of connecting tiles and a fixed lookup table.
-/datum/gas_mixture/proc/share_ratio(datum/gas_mixture/other, connecting_tiles, share_size = null, one_way = 0)
+/datum/gas_mixture/proc/share_zone(datum/gas_mixture/other, connecting_tiles, share_size = null, one_way = 0)
 	var/static/list/sharing_lookup_table = list(0.30, 0.40, 0.48, 0.54, 0.60, 0.66)
 	//Shares a specific ratio of gas between mixtures using simple weighted averages.
 	var/ratio = sharing_lookup_table[6]
@@ -417,7 +511,7 @@
 
 //A wrapper around share_ratio for spacing gas at the same rate as if it were going into a large airless room.
 /datum/gas_mixture/proc/share_space(datum/gas_mixture/unsim_air)
-	return share_ratio(unsim_air, unsim_air.group_multiplier, max(1, max(group_multiplier + 3, 1) + unsim_air.group_multiplier), one_way = 1)
+	return share_zone(unsim_air, unsim_air.group_multiplier, max(1, max(group_multiplier + 3, 1) + unsim_air.group_multiplier), one_way = 1)
 
 
 //Equalizes a list of gas mixtures.  Used for pipe networks.

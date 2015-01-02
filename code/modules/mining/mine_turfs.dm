@@ -4,8 +4,7 @@
 	name = "rock"
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "rock_nochance"
-	oxygen = 0
-	nitrogen = 0
+	init_gas = ""
 	opacity = 1
 	density = 1
 	blocks_air = 1
@@ -477,8 +476,7 @@
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
 
 /turf/simulated/floor/plating/asteroid/airless
-	oxygen = 0.01
-	nitrogen = 0.01
+	init_gas = ""
 	temperature = TCMB
 
 /turf/simulated/floor/plating/asteroid/New()

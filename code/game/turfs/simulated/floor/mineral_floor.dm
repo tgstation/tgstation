@@ -115,8 +115,7 @@
 			spam_flag = 0
 
 /turf/simulated/floor/mineral/bananium/airless
-	oxygen = 0.01
-	nitrogen = 0.01
+	init_gas = ""
 	temperature = TCMB
 
 //DIAMOND
