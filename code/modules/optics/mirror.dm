@@ -31,12 +31,14 @@
 
 /obj/machinery/mirror/proc/get_deflections(var/in_dir)
 	if(dir in list(EAST, WEST))
+		testing("[src]: Detected orientation: \\, in_dir=[in_dir], dir=[dir]")
 		switch(in_dir) // \\ orientation
 			if(NORTH) return list(EAST)
 			if(SOUTH) return list(WEST)
 			if(EAST)  return list(NORTH)
 			if(WEST)  return list(SOUTH)
 	else
+		testing("[src]: Detected orientation: /, in_dir=[in_dir], dir=[dir]")
 		switch(in_dir) // / orientation
 			if(NORTH) return list(WEST)
 			if(SOUTH) return list(EAST)
@@ -46,6 +48,9 @@
 /obj/machinery/mirror/Destroy()
 	kill_all_beams()
 	..()
+/obj/machinery/mirror/Move()
+	..()
+	kill_all_beams()
 
 /obj/machinery/mirror/verb/rotate_cw()
 	set name = "Rotate (Clockwise)"
@@ -103,7 +108,7 @@
 		beam=null
 
 /obj/machinery/mirror/proc/update_beams()
-	underlays.Cut()
+	overlays.Cut()
 
 	var/list/beam_dirs[4] // dir = list(
 		                  //  type = power
@@ -129,8 +134,11 @@
 			// For recursion protection
 			spawners += B.sources
 
+			var/beamdir=get_dir(src,B)
+
+			overlays += B.get_machine_underlay(beamdir)
+
 			// Figure out how much power to emit in each direction
-			var/beamdir=get_dir(B.loc,src)
 			var/list/deflections = get_deflections(beamdir)
 			var/splitpower=1
 			if(istype(B, /obj/effect/beam/emitter))
@@ -151,37 +159,51 @@
 	for(i=1;i<=4;i++)
 		var/cdir = cardinal[i]
 		var/list/dirdata = beam_dirs[i]
-		for(var/beamtype in dirdata)
-			var/newbeam=0
-			var/obj/effect/beam/beam = emitted_beams[i]
-			if(!beam || beam.type != beamtype)
-				if (beam && beam.type != beamtype)
-					qdel(beam)
-					emitted_beams[i]=null
-					beam=null
-				if(!beam)
-					beam = new beamtype(loc)
-					emitted_beams[i]=beam
-					beam.dir=cdir
-					newbeam=1
-				if(istype(beam, /obj/effect/beam/emitter))
-					var/obj/effect/beam/emitter/EB=beam
-					EB.power = dirdata[beamtype]
-				underlays += beam.get_machine_underlay(cdir)
-				if(newbeam)
-					beam.emit(spawn_by=spawners)
-				else if(istype(beam, /obj/effect/beam/emitter))
-					var/obj/effect/beam/emitter/EB=beam
-					EB.set_power(EB.power)
-				break
-			else if(beam)
-				qdel(beam)
-				emitted_beams[i]=null
+		var/delbeam=0
+		var/obj/effect/beam/beam
+		if(dirdata.len > 0)
+			for(var/beamtype in dirdata)
+				var/newbeam=0
+				beam = emitted_beams[i]
+				if(!beam || beam.type != beamtype)
+					if (beam && beam.type != beamtype)
+						qdel(beam)
+						emitted_beams[i]=null
+						beam=null
+
+					if(!beam)
+						beam = new beamtype(loc)
+						emitted_beams[i]=beam
+						beam.dir=cdir
+						newbeam=1
+
+					if(istype(beam, /obj/effect/beam/emitter))
+						var/obj/effect/beam/emitter/EB=beam
+						EB.power = dirdata[beamtype]
+
+					overlays += beam.get_machine_underlay(cdir)
+
+					if(newbeam)
+						beam.emit(spawn_by=spawners)
+					else if(istype(beam, /obj/effect/beam/emitter))
+						var/obj/effect/beam/emitter/EB=beam
+						EB.set_power(EB.power)
+					break
+				else
+					delbeam=1
+		else // dirdata.len == 0
+			delbeam=1
+		beam = emitted_beams[i] // One last check.
+		if(delbeam && beam)
+			qdel(beam)
+			emitted_beams[i]=null
+
+	overlays += mirror_state
 
 /obj/machinery/mirror/beamsplitter
 	name = "beamsplitter"
 	desc = "Uses a half-silvered plasma-glass mirror to split beams in two directions."
-	mirror_state = "beamsplitter"
+	mirror_state = "splitter"
 	nsplits = 2
 
 /obj/machinery/mirror/beamsplitter/New()
