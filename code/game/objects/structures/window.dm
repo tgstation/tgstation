@@ -405,14 +405,7 @@
 					if(src.wtype == W.wtype)
 						if(abs(x-W.x)-abs(y-W.y) ) 		//doesn't count windows, placed diagonally to src
 							junction |= get_dir(src,W)
-		if(istype(src, /obj/structure/window))
-			icon_state = "window[junction]"
-		if(istype(src, /obj/structure/window/reinforced))
-			icon_state = "rwindow[junction]"
-		if(istype(src, /obj/structure/window/reinforced/tinted))
-			icon_state = "twindow[junction]"
-		if(istype(src, /obj/structure/window/shuttle))
-			icon_state = "swindow[junction]"
+		icon_state = "[initial(icon_state)][junction]"
 
 		overlays.Cut()
 		var/ratio = health / maxhealth
