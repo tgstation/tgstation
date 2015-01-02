@@ -21,12 +21,8 @@
 /obj/machinery/mirror/New()
 	..()
 	overlays += mirror_state // TODO: break on BROKEN
-	component_parts = newlist(
-		/obj/item/stack/sheet/rglass,
-		/obj/item/stack/sheet/rglass,
-		/obj/item/stack/sheet/rglass,
-		/obj/item/stack/sheet/rglass,
-		/obj/item/stack/sheet/rglass,
+	component_parts = list(
+		new /obj/item/stack/sheet/rglass(src,5),
 	)
 
 /obj/machinery/mirror/proc/get_deflections(var/in_dir)
@@ -153,6 +149,7 @@
 					dirdata[B.type] = splitpower
 				else
 					dirdata[B.type] += splitpower
+				beam_dirs[diridx]=dirdata
 
 
 	// Emit beams.
@@ -166,11 +163,13 @@
 				var/newbeam=0
 				beam = emitted_beams[i]
 				if(!beam || beam.type != beamtype)
+					// If there's a beam and it's changed, nuke the existing beam.
 					if (beam && beam.type != beamtype)
 						qdel(beam)
 						emitted_beams[i]=null
 						beam=null
 
+					// No beam?  Make one.
 					if(!beam)
 						beam = new beamtype(loc)
 						emitted_beams[i]=beam
@@ -199,106 +198,3 @@
 			emitted_beams[i]=null
 
 	overlays += mirror_state
-
-/obj/machinery/mirror/beamsplitter
-	name = "beamsplitter"
-	desc = "Uses a half-silvered plasma-glass mirror to split beams in two directions."
-	mirror_state = "splitter"
-	nsplits = 2
-
-/obj/machinery/mirror/beamsplitter/New()
-	..()
-	component_parts = newlist(
-		/obj/item/stack/sheet/rglass/plasmarglass,
-		/obj/item/stack/sheet/rglass/plasmarglass,
-		/obj/item/stack/sheet/rglass/plasmarglass,
-		/obj/item/stack/sheet/rglass/plasmarglass,
-		/obj/item/stack/sheet/rglass/plasmarglass,
-	)
-
-/obj/machinery/mirror/beamsplitter/get_deflections(var/in_dir)
-	// Splits like a real beam-splitter:
-	//     |
-	// >>==/-- (NORTH, SOUTH)
-	//
-	// >>==\-- (EAST, WEST)
-	//     |
-	// Can probably do this mathematically, but I'm too goddamn tired.
-
-	if(dir in list(EAST, WEST)) // \\ orientation
-		switch(in_dir)
-			if(NORTH) return list(SOUTH, EAST)
-			if(SOUTH) return list(NORTH, WEST)
-			if(EAST)  return list(NORTH, WEST)
-			if(WEST)  return list(SOUTH, EAST)
-	else
-		switch(in_dir) // / orientation
-			if(NORTH) return list(SOUTH, WEST)
-			if(SOUTH) return list(NORTH, EAST)
-			if(EAST)  return list(SOUTH, WEST)
-			if(WEST)  return list(NORTH, EAST)
-
-/obj/structure/mirror_frame
-	name = "mirror frame"
-	desc = "Looks like it holds a sample or a mirror for getting lasered."
-
-	icon='icons/obj/machines/optical/beamsplitter.dmi'
-	icon_state = "base"
-
-	anchored = 0
-	density = 1
-	opacity = 0 // Think table-height.
-
-/obj/structure/mirror_frame/attackby(var/obj/item/W,var/mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
-		user << "<span class='info'>You begin to unfasten \the [src]'s bolts.</span>"
-		if(do_after(user,20))
-			anchored=!anchored
-			user.visible_message("<span class='info'>You unfasten \the [src]'s bolts.</span>", "[user] unfastens the [src]'s bolts.","You hear a ratchet.")
-			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-
-	if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
-		if (WT.remove_fuel(0,user))
-			user << "Now welding the [src]..."
-			if(do_after(user, 20))
-				if(!src || !WT.isOn()) return
-				playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
-				user.visible_message("<span class='warning'>[user] cuts the [src] apart.</span>", "<span class='warning'>You cut the [src] apart.</span>", "You hear welding.")
-				new /obj/item/stack/sheet/metal(src.loc,5)
-				qdel(src)
-				return
-			else
-				user << "\blue The welding tool needs to be on to start this task."
-		else
-			user << "\blue You need more welding fuel to complete this task."
-
-	if(istype(W, /obj/item/stack/sheet/rglass/plasmarglass))
-		var/obj/item/stack/sheet/rglass/plasmarglass/stack = W
-		if(stack.amount < 5)
-			user << "<span class='warning'>You need at least 5 [stack] to build a beamsplitter.</span>"
-			return
-		if(do_after(user,10))
-			if(stack.amount < 5)
-				user << "<span class='warning'>You need at least 5 [stack] to build a beamsplitter.</span>"
-				return
-			stack.use(5)
-			var/obj/machinery/mirror/beamsplitter/BS = new (get_turf(src))
-			user.visible_message("[user] completes the [BS].", "<span class='info'>You successfully build the [BS]!</span>", "You hear a click.")
-			qdel(src)
-		return
-
-	if(istype(W, /obj/item/stack/sheet/rglass))
-		var/obj/item/stack/sheet/rglass/stack = W
-		if(stack.amount < 5)
-			user << "<span class='warning'>You need at least 5 [stack] to build a beamsplitter.</span>"
-			return
-		if(do_after(user,10))
-			if(stack.amount < 5)
-				user << "<span class='warning'>You need at least 5 [stack] to build a beamsplitter.</span>"
-				return
-			stack.use(5)
-			var/obj/machinery/mirror/mirror = new (get_turf(src))
-			user.visible_message("[user] completes the [mirror].", "<span class='info'>You successfully build the [mirror]!</span>", "You hear a click.")
-			qdel(src)
-			return
