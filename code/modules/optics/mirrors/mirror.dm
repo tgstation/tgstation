@@ -44,9 +44,11 @@
 /obj/machinery/mirror/Destroy()
 	kill_all_beams()
 	..()
-/obj/machinery/mirror/Move()
-	..()
-	kill_all_beams()
+
+// Replace machine frame with mirror frame.
+/obj/machinery/mirror/dropFrame()
+	var/obj/structure/mirror_frame/MF = new (src.loc)
+	MF.anchored=anchored
 
 /obj/machinery/mirror/verb/rotate_cw()
 	set name = "Rotate (Clockwise)"
@@ -57,7 +59,7 @@
 		usr << "It is fastened to the floor!"
 		return 0
 	src.dir = turn(src.dir, -90)
-	//kill_all_beams()
+	kill_all_beams()
 	update_beams()
 	return 1
 
@@ -70,7 +72,7 @@
 		usr << "It is fastened to the floor!"
 		return 0
 	src.dir = turn(src.dir, 90)
-	//kill_all_beams()
+	kill_all_beams()
 	update_beams()
 	return 1
 
@@ -122,10 +124,10 @@
 	//testing("Beam count: [beams.len]")
 	if(beams.len>0)
 		// Figure out what we're getting hit by.
-		var/BN=0
+		//var/BN=0
 		for(var/obj/effect/beam/B in beams)
-			BN++
-			testing("Processing beam #[BN]")
+			//BN++
+			//testing("Processing beam #[BN]")
 			if(B.HasSource(src))
 				warning("Ignoring beam [B] due to recursion.")
 				continue // Prevent infinite loops.
@@ -152,10 +154,10 @@
 
 				if(!(B.type in dirdata))
 					dirdata[B.type] = splitpower
-					testing(" splitdir=[splitdir], splitpower=[splitpower]")
+					//testing(" splitdir=[splitdir], splitpower=[splitpower]")
 				else
 					dirdata[B.type] = dirdata[B.type] + splitpower
-					testing(" splitdir=[splitdir], splitpower+=[splitpower]")
+					//testing(" splitdir=[splitdir], splitpower+=[splitpower]")
 				beam_dirs[diridx]=dirdata
 
 
@@ -166,7 +168,7 @@
 		var/delbeam=0
 		var/obj/effect/beam/beam
 		if(dirdata.len > 0)
-			testing("cdir=[cdir]")
+			//testing("cdir=[cdir]")
 			for(var/beamtype in dirdata)
 				var/newbeam=0
 				beam = emitted_beams[i]
