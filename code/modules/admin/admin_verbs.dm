@@ -549,6 +549,7 @@ var/list/admin_verbs_hideable = list(
 	else
 		if(!dbcon.IsConnected())
 			message_admins("Warning, mysql database is not connected.")
+            src << "Warning, mysql database is not connected."
 			return
 		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, rank FROM [format_table_name("admin")] WHERE ckey = '[ckey]'")
 		query.Execute()
@@ -560,12 +561,13 @@ var/list/admin_verbs_hideable = list(
 	if(!D)
 		if(rank_names[rank] == null)
 			error("Admin rank ([rank]) does not exist.")
+            src << "Admin rank ([rank]) does not exist."
 			return
 		D = new(rank_names[rank],ckey)
 		var/client/C = directory[ckey]
 		D.associate(C)
-		message_admins("[src] re-adminned.")
-		log_admin("[src] re-adminned.")
+		message_admins("[src] re-adminned themselves.")
+		log_admin("[src] re-adminned themselves.")
 		feedback_add_details("admin_verb","RAS")
 		return
 	else
