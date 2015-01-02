@@ -378,7 +378,10 @@
 			SV.mutations |= pick(mutations_list)
 			var/datum/spacevine_mutation/randmut = pick(SV.mutations)
 			SV.color = randmut.hue
-			SV.desc = "An extremely expansionistic species of vine. These are [randmut.name] vines."
+			SV.desc = "An extremely expansionistic species of vine. These are "
+			for(var/datum/spacevine_mutation/M in SV.mutations)
+				SV.desc += "[M.name] "
+			SV.desc += "vines."
 
 	for(var/datum/spacevine_mutation/SM in SV.mutations)
 		SM.on_birth(SV)
