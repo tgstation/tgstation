@@ -4771,7 +4771,7 @@
 "bNM" = (/turf/simulated/floor{tag = "icon-cafeteria (NORTHEAST)"; icon_state = "cafeteria"; dir = 5},/area/crew_quarters/kitchen)
 "bNN" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor{tag = "icon-cafeteria (NORTHEAST)"; icon_state = "cafeteria"; dir = 5},/area/crew_quarters/kitchen)
 "bNO" = (/obj/structure/table,/obj/item/stack/sheet/glass{amount = 50},/obj/item/stack/sheet/glass{amount = 50},/obj/item/stack/rods{amount = 50},/obj/item/stack/rods{amount = 50},/obj/item/weapon/wrench,/obj/item/weapon/crowbar,/obj/effect/decal/warning_stripes{icon_state = "bot"},/obj/item/weapon/pipe_dispenser,/turf/simulated/floor,/area/engineering/atmos)
-"bNP" = (/obj/structure/disposalpipe/segment{dir = 4},/obj/machinery/cooking/deepfryer/grill,/turf/simulated/floor{tag = "icon-cafeteria (NORTHEAST)"; icon_state = "cafeteria"; dir = 5},/area/crew_quarters/kitchen)
+"bNP" = (/obj/structure/disposalpipe/segment{dir = 4},/obj/machinery/cooking/grill,/turf/simulated/floor{tag = "icon-cafeteria (NORTHEAST)"; icon_state = "cafeteria"; dir = 5},/area/crew_quarters/kitchen)
 "bNQ" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,/obj/machinery/atmospherics/pipe/simple/cyan/visible{dir = 4},/turf/simulated/floor,/area/engineering/atmos)
 "bNR" = (/obj/structure/disposalpipe/segment{dir = 2; icon_state = "pipe-c"},/obj/structure/sink/kitchen{pixel_y = 28},/obj/structure/cable/yellow{d1 = 2; d2 = 4; icon_state = "2-4"},/turf/simulated/floor{tag = "icon-cafeteria (NORTHEAST)"; icon_state = "cafeteria"; dir = 5},/area/crew_quarters/kitchen)
 "bNS" = (/obj/machinery/atm,/turf/simulated/wall,/area/crew_quarters/locker/locker_toilet{name = "\improper Restrooms"})

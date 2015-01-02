@@ -236,3 +236,14 @@
 /obj/structure/reagent_dispensers/virusfood/New()
 	. = ..()
 	reagents.add_reagent("virusfood", 1000)
+
+/obj/structure/reagent_dispensers/corn_oil_tank
+	name = "oil vat"
+	desc = "The greasiest place on the station, outside the captain's backroom."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "cornoiltank"
+	amount_per_transfer_from_this = 50
+
+/obj/structure/reagent_dispensers/corn_oil_tank/New()
+	. = ..()
+	reagents.add_reagent("cornoil", 1000)
