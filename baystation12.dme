@@ -1263,6 +1263,7 @@
 #include "code\modules\nano\nanomanager.dm"
 #include "code\modules\nano\nanomapgen.dm"
 #include "code\modules\nano\nanoui.dm"
+#include "code\modules\optics\mirror.dm"
 #include "code\modules\optics\prism.dm"
 #include "code\modules\organs\blood.dm"
 #include "code\modules\organs\organ.dm"
