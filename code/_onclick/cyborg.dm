@@ -139,8 +139,10 @@
 	change attack_robot() above to the proper function
 */
 /mob/living/silicon/robot/UnarmedAttack(atom/A)
+	if(ismob(A))
+		delayNextAttack(10)
 	A.attack_robot(src)
-	return ..()
+	return
 /mob/living/silicon/robot/RangedAttack(atom/A)
 	A.attack_robot(src)
 
