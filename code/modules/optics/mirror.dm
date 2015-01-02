@@ -31,7 +31,7 @@
 
 /obj/machinery/mirror/proc/get_deflections(var/in_dir)
 	if(dir in list(EAST, WEST))
-		switch(in_dir) // \ orientation
+		switch(in_dir) // \\ orientation
 			if(NORTH) return list(EAST)
 			if(SOUTH) return list(WEST)
 			if(EAST)  return list(NORTH)
@@ -120,8 +120,6 @@
 
 	//testing("Beam count: [beams.len]")
 	if(beams.len>0)
-
-
 		// Figure out what we're getting hit by.
 		for(var/obj/effect/beam/B in beams)
 			if(B.HasSource(src))
@@ -205,7 +203,7 @@
 	//     |
 	// Can probably do this mathematically, but I'm too goddamn tired.
 
-	if(dir in list(EAST, WEST)) // \ orientation
+	if(dir in list(EAST, WEST)) // \\ orientation
 		switch(in_dir)
 			if(NORTH) return list(SOUTH, EAST)
 			if(SOUTH) return list(NORTH, WEST)
