@@ -652,7 +652,8 @@
 		var/mob/living/carbon/CM = L
 		if(CM.on_fire && CM.canmove)
 			CM.fire_stacks -= 5
-			CM.Weaken(3)
+			CM.weakened = max(CM.weakened, 3)//We dont check for CANWEAKEN, I don't care how immune to weakening you are, if you're rolling on the ground, you're busy.
+			CM.update_canmove()
 			CM.spin(32,2)
 			CM.visible_message("<span class='danger'>[CM] rolls on the floor, trying to put themselves out!</span>", \
 				"<span class='notice'>You stop, drop, and roll!</span>")
