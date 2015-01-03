@@ -28,3 +28,10 @@
 
 /obj/effect/decal/warning_stripes/pathmarkers/blue
 	color = "#719eb6"
+
+/obj/effect/decal/warning_stripes/nmpi
+	name = "NMPI"
+	desc = "If your sense of direction is under average, just follow the Nanotrasen-approved Maintenance Path Indicator to never get lost again. Nanotrasen declines all responsibility if you decide to stray off the path indicated by the Nanotrasen-approved Maintenance Path Indicator."
+
+	icon_state = "maintguide"
+	layer = 2.45
