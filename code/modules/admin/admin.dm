@@ -738,7 +738,18 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
 			<A href='?src=\ref[src];secretsfun=togglenarsie'>Toggle Nar-Sie's behaviour</A><BR>
 			<BR>
-			<B>Final Soloutions</B><BR>
+			<B>False Flags and Bait</B><BR>
+			<I>(Ib's a consbiracy ! The admins want to take our powergaymen away !)</I><BR>
+			<BR>
+			<A href='?src=\ref[src];secretsfun=fakebiohazard'>Trigger a fake Biohazard Alert</A><BR>
+			<A href='?src=\ref[src];secretsfun=fakelifesigns'>Trigger a fake Lifesigns Alert</A><BR>
+			<A href='?src=\ref[src];secretsfun=fakedelta'>Trigger a fake Malfunction Takeover Notice (DANGEROUS : Silicon valid magnet)</A><BR>
+			<A href='?src=\ref[src];secretsfun=fakebooms'>Adds in some Micheal Bay to any scene without major destruction</A><BR>
+			<A href='?src=\ref[src];secretsfun=fakeion'>Trigger a fake Ion Storm Alert (Hazardous to AIs)</A><BR>
+			<A href='?src=\ref[src];secretsfun=fakemeteor'>Trigger a fake Meteor Alert (Hazardous to morale)</A><BR>
+			<A href='?src=\ref[src];secretsfun=fakecarps'>Trigger a fake Space Carp Migration Alert</A><BR>
+			<BR>
+			<B>Final Solutions</B><BR>
 			<I>(Warning, these will end the round!)</I><BR>
 			<BR>
 			<A href='?src=\ref[src];secretsfun=hellonearth'>Summon Nar-Sie</A><BR>

@@ -2633,6 +2633,57 @@
 					newname = "Admin"
 				D.name = newname
 				D.real_name = newname
+			//False flags and bait below. May cause mild hilarity or extreme pain
+			if("fakebiohazard") //GUISE WE HAVE A BLOB
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","FAKEB")
+				message_admins("[key_name_admin(usr)] triggered a FAKE Biohzard Alert.")
+				var/choice = input("Set the level of the biohazard alert, or leave at 0 to have a random level (1 to 7 supported only)", "Space FEMA Readiness Program", 0) as num
+				if(!choice || choice > 7 || choice < 0)
+					return
+				biohazard_alert(level = choice)
+			if("fakelifesigns") //MUH ALIUMS
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","FAKEL")
+				message_admins("[key_name_admin(usr)] triggered a FAKE Lifesign Alert.")
+				command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
+				world << sound('sound/AI/aliens.ogg')
+			if("fakedelta") //BLOW EVERYTHING
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","FAKET")
+				var/choice = input("Do you wish to include the Hostile Runtimes warning to have an authentic malfunction takeover alert ?") in list("Yes", "No")
+				message_admins("[key_name_admin(usr)] triggered a FAKE Malfunction Takeover Alert (Hostile Runtimes alert [choice == "Yes" ? "included":"excluded"])")
+				if(choice == "Yes")
+					command_alert("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert")
+				world << "<font size=4 color='red'>Attention! Delta security level reached!</font>" //Don't ACTUALLY set station alert to Delta to avoid fucking shit up for real
+				world << "<font color='red'>[config.alert_desc_delta]</font>"
+				world << sound('sound/AI/aimalf.ogg') //AI got valid
+			if("fakebooms") //Micheal Bay is in the house !
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","FAKEE")
+				var/choice = input("How much high-budget explosions do you want ?", "Micheal Bay SFX Systems", 1) as num
+				if(choice > 0) //No negative or null explosion amounts here math genius
+					message_admins("[key_name_admin(usr)] improvised himself as Micheal Bay and triggered [round(choice)] fake explosions.")
+					for(var/i = 1 to choice)
+						world << sound('sound/effects/explosionfar.ogg')
+						sleep(rand(2, 10)) //Sleep 0.2 to 1 second
+			if("fakeion")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","FAKEI")
+				message_admins("[key_name_admin(usr)] triggered a FAKE Ion Alert.")
+				command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
+				world << sound('sound/AI/ionstorm.ogg')
+			if("fakemeteor") //You know it
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","FAKEM")
+				message_admins("[key_name_admin(usr)] triggered a FAKE Meteor Alert.")
+				command_alert("A meteor storm has been detected on collision course with the station. Seek shelter within the core of the station immediately.", "Meteor Alert")
+				world << sound('sound/AI/meteors.ogg')
+			if("fakecarps")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","FAKEC")
+				message_admins("[key_name_admin(usr)] triggered a FAKE Carp Migration Alert.")
+				command_alert("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
 		if(usr)
 			log_admin("[key_name(usr)] used secret [href_list["secretsfun"]]")
 			if (ok)
