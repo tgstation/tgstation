@@ -410,6 +410,11 @@
 									return
 					usr << "<span class='warning'>Unable to locate a data core entry for this person.</span>"
 
+
+	if(href_list["show_metadata"])
+		if(client && client.prefs && client.prefs.metadata)
+			usr << "<span class='notice'>[client.prefs.metadata]</span>"
+
 /mob/living/carbon/human/proc/play_xylophone()
 	if(!src.xylophone)
 		visible_message("<span class='notice'>[src] begins playing \his ribcage like a xylophone. It's quite spooky.</span>","<span class='notice'>You begin to play a spooky refrain on your ribcage.</span>","You hear a spooky xylophone melody.")
