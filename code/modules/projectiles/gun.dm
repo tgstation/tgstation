@@ -90,7 +90,7 @@
 		if(!can_trigger_gun(L))
 			return
 
-	process_fire(target,user,flag,params)
+	process_fire(target,user,1,params)
 
 /obj/item/weapon/gun/proc/can_trigger_gun(mob/living/carbon/user)
 	if (!user.IsAdvancedToolUser())
