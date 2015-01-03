@@ -33,10 +33,16 @@ The regular pipe you see everywhere, including bent ones.
 
 	..()
 
+
+/obj/machinery/atmospherics/pipe/simple/SetInitDirections()
 	switch(dir)
-		if(SOUTH || NORTH)
+		if(NORTH)
 			initialize_directions = SOUTH|NORTH
-		if(EAST || WEST)
+		if(SOUTH)
+			initialize_directions = SOUTH|NORTH
+		if(EAST)
+			initialize_directions = EAST|WEST
+		if(WEST)
 			initialize_directions = EAST|WEST
 		if(NORTHEAST)
 			initialize_directions = NORTH|EAST
@@ -102,7 +108,7 @@ The regular pipe you see everywhere, including bent ones.
 	else return 1
 
 /obj/machinery/atmospherics/pipe/simple/proc/burst()
-	src.visible_message("<span class='userdanger'>[src] bursts!</span>");
+	visible_message("<span class='danger'>[src] bursts!</span>");
 	playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
 	var/datum/effect/effect/system/harmless_smoke_spread/smoke = new
 	smoke.set_up(1,0, src.loc, 0)

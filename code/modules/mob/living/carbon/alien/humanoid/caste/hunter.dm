@@ -50,10 +50,15 @@
 
 //Hunter verbs
 
-/mob/living/carbon/alien/humanoid/hunter/proc/toggle_leap()
+
+/mob/living/carbon/alien/humanoid/hunter/proc/toggle_leap(var/message = 1)
 	leap_on_click = !leap_on_click
 	leap_icon.icon_state = "leap_[leap_on_click ? "on":"off"]"
-	src << "<span class='noticealien'>You will now [leap_on_click ? "leap at":"slash at"] enemies!</span>"
+	if(message)
+		src << "<span class='noticealien'>You will now [leap_on_click ? "leap at":"slash at"] enemies!</span>"
+	else
+		return
+
 
 /mob/living/carbon/alien/humanoid/hunter/ClickOn(var/atom/A, var/params)
 	face_atom(A)
@@ -66,6 +71,10 @@
 #define MAX_ALIEN_LEAP_DIST 7
 
 /mob/living/carbon/alien/humanoid/hunter/proc/leap_at(var/atom/A)
+	if(pounce_cooldown)
+		src << "<span class='alertalien'>You are too fatigued to pounce right now!</span>"
+		return
+
 	if(leaping) //Leap while you leap, so you can leap while you leap
 		return
 
@@ -76,13 +85,14 @@
 	if(lying)
 		return
 
-	leaping = 1
-	update_icons()
-	throw_at(A,MAX_ALIEN_LEAP_DIST,1)
-	leaping = 0
-	update_icons()
+	else //Maybe uses plasma in the future, although that wouldn't make any sense...
+		leaping = 1
+		update_icons()
+		throw_at(A,MAX_ALIEN_LEAP_DIST,1)
+		leaping = 0
+		update_icons()
 
-/mob/living/carbon/alien/humanoid/throw_impact(A)
+/mob/living/carbon/alien/humanoid/hunter/throw_impact(A)
 	var/msg = ""
 
 	if(A)
@@ -92,6 +102,11 @@
 			L.Weaken(5)
 			sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 			step_towards(src,L)
+
+			toggle_leap(0)
+			pounce_cooldown = !pounce_cooldown
+			spawn(pounce_cooldown_time) //3s by default
+				pounce_cooldown = !pounce_cooldown
 		else
 			msg = "<span class ='alertalien'>[src] smashes into [A]!</span>"
 			weakened = 2

@@ -88,7 +88,7 @@ datum/reagent/proc/on_update(var/atom/A)
 	return
 
 datum/reagent/blood
-			data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null)
+			data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 			name = "Blood"
 			id = "blood"
 			color = "#C80000" // rgb: 200, 0, 0
@@ -855,4 +855,3 @@ datum/reagent/plantnutriment/robustharvestnutriment
 
 // Undefine the alias for REAGENTS_EFFECT_MULTIPLER
 #undef REM
-

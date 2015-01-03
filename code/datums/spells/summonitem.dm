@@ -76,7 +76,13 @@
 							C.stomach_contents -= item_to_retrive
 
 				else
+					if(istype(item_to_retrive.loc,/obj/machinery/portable_atmospherics/)) //Edge cases for moved machinery
+						var/obj/machinery/portable_atmospherics/P = item_to_retrive.loc
+						P.disconnect()
+						P.update_icon()
+
 					item_to_retrive = item_to_retrive.loc
+
 				infinite_recursion += 1
 
 			if(!item_to_retrive)

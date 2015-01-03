@@ -46,24 +46,27 @@
 	allowed = list(/obj/item/weapon/storage/book/bible, /obj/item/weapon/nullrod, /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater, /obj/item/weapon/storage/fancy/candle_box, /obj/item/candle, /obj/item/weapon/tank/emergency_oxygen)
 
 //Chef
-/obj/item/clothing/suit/chef
+/obj/item/clothing/suit/toggle/chef
 	name = "chef's apron"
-	desc = "An apron used by a high class chef."
+	desc = "An apron-jacket used by a high class chef."
 	icon_state = "chef"
 	item_state = "chef"
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
 	body_parts_covered = CHEST|GROIN|ARMS
-	allowed = list (/obj/item/weapon/kitchenknife,/obj/item/weapon/butch)
+	allowed = list(/obj/item/weapon/kitchenknife,/obj/item/weapon/butch)
+	action_button_name = "Toggle Jacket Sleeves"
+	togglename = "sleeves"
 
-//Chef
-/obj/item/clothing/suit/chef/classic
-	name = "A classic chef's apron."
+//Cook
+/obj/item/clothing/suit/apron/chef
+	name = "cook's apron"
 	desc = "A basic, dull, white chef's apron."
 	icon_state = "apronchef"
 	item_state = "apronchef"
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST|GROIN
+	allowed = list(/obj/item/weapon/kitchenknife,/obj/item/weapon/butch)
 
 //Detective
 /obj/item/clothing/suit/det_suit

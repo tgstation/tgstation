@@ -206,13 +206,13 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		..()
 
 /mob/living/simple_animal/hostile/mimic/copy/AttackingTarget()
-	. =..()
+	..()
 	if(knockdown_people)
-		var/mob/living/L = .
-		if(istype(L))
+		if(isliving(target))
+			var/mob/living/L = target
 			if(prob(15))
 				L.Weaken(1)
-				L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
+				L.visible_message("<span class='danger'>\The [src] knocks down \the [L]!</span>")
 
 //
 // Machine Mimics (Made by Malf AI)

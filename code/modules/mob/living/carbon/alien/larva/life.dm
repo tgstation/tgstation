@@ -38,7 +38,6 @@
 	//blinded get reset each cycle and then get activated later in the
 	//code. Very ugly. I dont care. Moving this stuff here so its easy
 	//to find it.
-	blinded = null
 
 	//Handle temperature/pressure differences between body and environment
 	handle_environment(enviroment)
@@ -64,12 +63,12 @@
 	updatehealth()
 
 	if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
-		blinded = 1
+		eye_blind = max(1, eye_blind)
 		silent = 0
 	else				//ALIVE. LIGHTS ARE ON
 		if(health < -25 || !getorgan(/obj/item/organ/brain))
 			death()
-			blinded = 1
+			eye_blind = max(1, eye_blind)
 			silent = 0
 			return 1
 
@@ -84,11 +83,11 @@
 
 		if(paralysis)
 			AdjustParalysis(-2)
-			blinded = 1
+			eye_blind = max(eye_blind, 1)
 			stat = UNCONSCIOUS
 		else if(sleeping)
 			sleeping = max(sleeping-1, 0)
-			blinded = 1
+			eye_blind = max(eye_blind, 1)
 			stat = UNCONSCIOUS
 			if( prob(10) && health )
 				spawn(0)
@@ -102,16 +101,15 @@
 			move_delay_add = max(0, move_delay_add - rand(1, 2))
 
 		//Eyes
-		if(sdisabilities & BLIND)	//disabled-blind, doesn't get better on its own
-			blinded = 1
+		if(disabilities & BLIND)	//disabled-blind, doesn't get better on its own
+			eye_blind = max(eye_blind, 1)
 		else if(eye_blind)			//blindness, heals slowly over time
 			eye_blind = max(eye_blind-1,0)
-			blinded = 1
 		else if(eye_blurry)	//blurry eyes heal slowly
 			eye_blurry = max(eye_blurry-1, 0)
 
 		//Ears
-		if(sdisabilities & DEAF)	//disabled-deaf, doesn't get better on its own
+		if(disabilities & DEAF)	//disabled-deaf, doesn't get better on its own
 			ear_deaf = max(ear_deaf, 1)
 		else if(ear_deaf)			//deafness, heals slowly over time
 			ear_deaf = max(ear_deaf-1, 0)
@@ -138,7 +136,7 @@
 
 /mob/living/carbon/alien/larva/proc/handle_regular_hud_updates()
 
-	if (stat == 2 || (XRAY in mutations))
+	if (stat == 2)
 		sight |= SEE_TURFS
 		sight |= SEE_MOBS
 		sight |= SEE_OBJS
@@ -191,12 +189,12 @@
 	client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
 
 	if ((blind && stat != 2))
-		if ((blinded))
+		if ((eye_blind))
 			blind.layer = 18
 		else
 			blind.layer = 0
 
-			if (disabilities & NEARSIGHTED)
+			if (disabilities & NEARSIGHT)
 				client.screen += global_hud.vimpaired
 
 			if (eye_blurry)
