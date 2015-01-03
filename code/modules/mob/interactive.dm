@@ -17,6 +17,7 @@
 #define MIN_RANGE_FIND 16
 #define FUZZY_CHANCE_HIGH 85
 #define FUZZY_CHANCE_LOW 50
+#define CHANCE_TALK 15
 
 /*
 	NPC VAR EXPLANATIONS (for modules and other things)
@@ -54,8 +55,8 @@
 	var/interest = 100
 	var/timeout = 0
 	var/inactivity_period = 0
-	var/atom/TARGET = null
-	var/atom/LAST_TARGET = null
+	var/TARGET = null
+	var/LAST_TARGET = null
 	var/list/nearby = list()
 	var/best_force = 0
 	var/retal = 0
@@ -74,9 +75,9 @@
 	var/attitude = 50
 	var/slyness = 50
 	var/graytide = 0
+	var/chattyness = CHANCE_TALK
 	//modules
 	var/list/functions = list("nearbyscan","combat","doorscan","shitcurity","chatter")
-	var/nodeDist = 256
 
 /mob/living/carbon/human/interactive/proc/random()
 	//this is here because this has no client/prefs/brain whatever.
@@ -235,6 +236,18 @@
 		return 1
 	return 0
 
+/mob/living/carbon/human/interactive/proc/enforce_hands()
+	if(hand)
+		if(!l_hand)
+			main_hand = null
+			if(r_hand)
+				swap_hands()
+	else
+		if(!r_hand)
+			main_hand = null
+			if(l_hand)
+				swap_hands()
+
 /mob/living/carbon/human/interactive/proc/swap_hands()
 	hand = !hand
 	var/obj/item/T = other_hand
@@ -257,7 +270,7 @@
 		if(BP.can_be_inserted(I,0))
 			BP.handle_item_insertion(I,0)
 	else
-		unEquip(I)
+		unEquip(I,TRUE)
 	update_hands = 1
 
 /mob/living/carbon/human/interactive/Life()
@@ -469,27 +482,24 @@
 	var/list/curse_words = list("fuck","shit","cunt","ass","cock","dick","bitch","mother fucker")
 
 	if(doing & INTERACTING)
-		if(prob(smartness))
-			src.say("This [pick(nouns_objects)] is a little [pick(adjective_objects)].")
-		else if(prob(smartness))
-			src.say("Well [pick(verbs_use)] my [pick(nouns_body)], this [pick(nouns_insult)] is pretty [pick(adjective_insult)].")
-		else if(prob(smartness))
-			src.say("[capitalize(pick(curse_words))], what am I meant to do with this [pick(adjective_insult)] [pick(nouns_objects)].")
+		if(prob(chattyness))
+			var/chat = pick("This [pick(nouns_objects)] is a little [pick(adjective_objects)].",
+			"Well [pick(verbs_use)] my [pick(nouns_body)], this [pick(nouns_insult)] is pretty [pick(adjective_insult)].",
+			"[capitalize(pick(curse_words))], what am I meant to do with this [pick(adjective_insult)] [pick(nouns_objects)].")
+			src.say(chat)
 	if(doing & TRAVEL)
-		if(prob(smartness))
-			src.say("Oh [pick(curse_words)], [pick(verbs_move)]!")
-		else if(prob(smartness))
-			src.say("Time to get my [pick(adjective_generic)] [pick(adjective_insult)] [pick(nouns_body)] over to [TARGET].")
-		else if(prob(smartness))
-			src.say("I wonder if there is anything to [pick(verbs_use)] and [pick(verbs_touch)] somewhere else..")
+		if(prob(chattyness))
+			var/chat = pick("Oh [pick(curse_words)], [pick(verbs_move)]!",
+			"Time to get my [pick(adjective_generic)] [pick(adjective_insult)] [pick(nouns_body)] elsewhere.",
+			"I wonder if there is anything to [pick(verbs_use)] and [pick(verbs_touch)] somewhere else..")
+			src.say(chat)
 	if(doing & FIGHTING)
-		if(prob(smartness))
-			src.say("I'm going to [pick(verbs_use)] you, you [pick(adjective_insult)] [pick(nouns_insult)]!")
-		else if(prob(smartness))
-			src.say("Rend and [pick(verbs_touch)], Rend and [pick(verbs_use)]!")
-		else if(prob(smartness))
-			src.say("You [pick(nouns_insult)], I'm going to [pick(verbs_use)] you right in the [pick(nouns_body)]. JUST YOU WAIT!")
-	if(prob(smartness/2))
+		if(prob(chattyness))
+			var/chat = pick("I'm going to [pick(verbs_use)] you, you [pick(adjective_insult)] [pick(nouns_insult)]!",
+			"Rend and [pick(verbs_touch)], Rend and [pick(verbs_use)]!",
+			"You [pick(nouns_insult)], I'm going to [pick(verbs_use)] you right in the [pick(nouns_body)]. JUST YOU WAIT!")
+			src.say(chat)
+	if(prob(chattyness/2))
 		var/what = pick(1,2,3,4,5)
 		switch(what)
 			if(1)
@@ -534,6 +544,7 @@
 
 /mob/living/carbon/human/interactive/proc/combat(obj)
 	set background = 1
+	enforce_hands()
 	if(canmove)
 		if(prob(attitude) && (graytide || (TRAITS & TRAIT_MEAN)) || retal)
 			a_intent = "harm"
@@ -553,8 +564,8 @@
 	if((TARGET && (doing & FIGHTING)) || graytide) // this is a redundancy check
 		var/mob/living/M = TARGET
 		if(istype(M,/mob/living))
-			if(M in oview(14,src))
-				if(M.health > 10)
+			if(M in range(FUZZY_CHANCE_LOW,src))
+				if(M.health > 1)
 					if(main_hand)
 						if(main_hand.force != 0)
 							if(istype(main_hand,/obj/item/weapon/gun/projectile))
@@ -565,8 +576,14 @@
 								else if(P.get_ammo(1) == 0)
 									P.attack_self(src)
 								else
-									if(prob(robustness))
-										P.afterattack(TARGET, src)
+									P.afterattack(TARGET, src)
+							else if(istype(main_hand,/obj/item/weapon/gun/energy))
+								var/obj/item/weapon/gun/energy/P = main_hand
+								if(!P.can_shoot())
+									P.update_icon()
+									drop_item()
+								else
+									P.afterattack(TARGET, src)
 							else
 								if(get_dist(src,TARGET) > 2)
 									if(!walk2derpless(TARGET))
@@ -583,7 +600,7 @@
 							if(Adjacent(TARGET))
 								M.attack_hand(src)
 								sleep(1)
-			else if(M.health <= 1 || !(M in oview(14,src)))
+			else if(M.health <= 1 || !(M in range(14,src)))
 				doing = doing & ~FIGHTING
 				timeout = 0
 				TARGET = null
