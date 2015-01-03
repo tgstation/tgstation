@@ -934,19 +934,29 @@
 	icon_state = "shirt_tiedye"
 	gender = NEUTER
 
+/datum/sprite_accessory/undershirt/redjersey
+	name = "Red Jersey"
+	icon_state = "shirt_redjersey"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/bluejersey
+	name = "Blue Jersey"
+	icon_state = "shirt_bluejersey"
+	gender = NEUTER
+
 /datum/sprite_accessory/undershirt/tankstripe
 	name = "Striped Tank Top"
 	icon_state = "tank_stripes"
 	gender = NEUTER
 
-/datum/sprite_accessory/undershirt/alienshirt
-	name = "Alien Shirt"
-	icon_state = "shirt_alien"
-	gender = NEUTER
-
 /datum/sprite_accessory/undershirt/clownshirt
 	name = "Clown Shirt"
 	icon_state = "shirt_clown"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/alienshirt
+	name = "Alien Shirt"
+	icon_state = "shirt_alien"
 	gender = NEUTER
 
 
