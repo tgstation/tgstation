@@ -3,7 +3,7 @@
 	name = "banhammer"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "toyhammer"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	slot_flags = SLOT_BELT
 	throwforce = 0
 	w_class = 1.0
@@ -20,7 +20,7 @@
 	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of paranormal phenomenae."
 	icon_state = "nullrod"
 	item_state = "nullrod"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	slot_flags = SLOT_BELT
 	force = 15
 	throw_speed = 1
@@ -71,7 +71,7 @@
 	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
 	icon_state = "sord"
 	item_state = "sord"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	slot_flags = SLOT_BELT
 	force = 2
 	throwforce = 1
@@ -93,7 +93,7 @@
 	icon_state = "claymore"
 	item_state = "claymore"
 	hitsound = "sound/weapons/bloodyslice.ogg"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	force = 40
@@ -122,7 +122,7 @@
 	icon_state = "katana"
 	item_state = "katana"
 	hitsound = "sound/weapons/bloodyslice.ogg"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 40
@@ -159,7 +159,7 @@ obj/item/weapon/wirerod
 	desc = "A rod with some wire wrapped around the top. It'd be easy to attach something to the top bit."
 	icon_state = "wiredrod"
 	item_state = "rods"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 	force = 9
 	throwforce = 10

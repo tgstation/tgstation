@@ -11,7 +11,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "mat_synthoff"
 
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 	w_class = 3.0
 	origin_tech = "engineering=4;materials=5;power=3"

@@ -4,7 +4,7 @@
 	icon_state = "chain"
 	item_state = "chain"
 	hitsound = "sound/weapons/whip.ogg"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	force = 10

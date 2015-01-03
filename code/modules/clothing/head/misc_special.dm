@@ -15,7 +15,7 @@
 	name = "welding helmet"
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye."
 	icon_state = "welding"
-	flags = (FPRINT | TABLEPASS | HEADCOVERSEYES | HEADCOVERSMOUTH)
+	flags = FPRINT  | HEADCOVERSEYES | HEADCOVERSMOUTH
 	item_state = "welding"
 	m_amt = 3000
 	g_amt = 1000
@@ -59,7 +59,7 @@
 	name = "cake-hat"
 	desc = "It's tasty looking!"
 	icon_state = "cake0"
-	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
+	flags = FPRINT|HEADCOVERSEYES
 	var/onfire = 0.0
 	var/status = 0
 	var/fire_resist = T0C+1300	//this is the max temp it can stand before you start to cook. although it might not burn away, you take damage
@@ -123,7 +123,7 @@
 	icon_state = "hardhat0_pumpkin"//Could stand to be renamed
 	item_state = "hardhat0_pumpkin"
 	_color = "pumpkin"
-	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | HEADCOVERSMOUTH | BLOCKHAIR
+	flags = FPRINT  | HEADCOVERSEYES | HEADCOVERSMOUTH | BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	var/brightness_on = 2 //luminosity when on
 	var/on = 0
@@ -158,7 +158,7 @@
 	name = "kitty ears"
 	desc = "A pair of kitty ears. Meow!"
 	icon_state = "kitty"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	var/icon/mob
 	var/icon/mob2
 	siemens_coefficient = 1.5
@@ -184,7 +184,7 @@
 	desc = "So many butts, so little time."
 	icon_state = "butt"
 	item_state = "butt"
-	flags = TABLEPASS
+	flags = 0
 	force = 4.0
 	w_class = 1.0
 	throwforce = 2

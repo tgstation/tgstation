@@ -146,7 +146,7 @@
 	icon_state = "secure"
 	item_state = "sec-case"
 	desc = "A large briefcase with a digital locking system."
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	force = 8.0
 	throw_speed = 1
 	throw_range = 4
@@ -221,7 +221,7 @@
 	icon_opened = "safe0"
 	icon_locking = "safeb"
 	icon_sparking = "safespark"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	force = 8.0
 	w_class = 8.0
 	max_w_class = 8

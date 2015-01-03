@@ -43,7 +43,7 @@
 	icon = 'icons/obj/harvest.dmi'
 	icon_state = "logs"
 	force = 5
-	flags = TABLEPASS
+	flags = 0
 	throwforce = 5
 	w_class = 3.0
 	throw_speed = 3
@@ -74,7 +74,7 @@
 	icon_state = "sunflower"
 	damtype = "fire"
 	force = 0
-	flags = TABLEPASS
+	flags = 0
 	throwforce = 1
 	w_class = 1.0
 	throw_speed = 1
@@ -92,7 +92,7 @@
 	icon_state = "nettle"
 	damtype = "fire"
 	force = 15
-	flags = TABLEPASS
+	flags = 0
 	throwforce = 1
 	w_class = 2.0
 	throw_speed = 1
@@ -137,7 +137,7 @@
 	icon_state = "deathnettle"
 	damtype = "fire"
 	force = 30
-	flags = TABLEPASS
+	flags = 0
 	throwforce = 1
 	w_class = 2.0
 	throw_speed = 1

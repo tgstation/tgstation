@@ -7,7 +7,7 @@
 	anchored = 0
 	var/lockedby = ""
 	pressure_resistance = 5
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	flags = FPRINT  | OPENCONTAINER
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
 
 /obj/structure/mopbucket/New()

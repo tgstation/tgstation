@@ -7,7 +7,7 @@
 	item_state = ""
 	throw_speed = 4
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | NOBLUDGEON
+	flags = FPRINT  | NOBLUDGEON
 	var/c_tag = ""
 	var/active = 0
 	var/network = ""

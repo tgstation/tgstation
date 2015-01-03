@@ -214,7 +214,7 @@ var/global/list/datum/stack_recipe/phazon_recipes = list()
 	perunit = 1500
 	melt_temperature = MELTPOINT_PLASTIC
 	throwforce = 15.0
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 	origin_tech = "materials=9"
 

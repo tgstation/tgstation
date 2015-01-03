@@ -52,7 +52,7 @@ Buildable meters
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = "simple"
 	item_state = "buildpipe"
-	flags = TABLEPASS|FPRINT
+	flags = FPRINT
 	w_class = 3
 	level = 2
 
@@ -80,7 +80,7 @@ Buildable meters
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = "simple"
 	item_state = "buildpipe"
-	flags = TABLEPASS|FPRINT
+	flags = FPRINT
 	w_class = 3
 	level = 2
 
@@ -454,7 +454,7 @@ var/global/list/pipeID2State = list(
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = "meter"
 	item_state = "buildpipe"
-	flags = TABLEPASS|FPRINT
+	flags = FPRINT
 	w_class = 4
 
 /obj/item/pipe_meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
@@ -477,7 +477,7 @@ var/global/list/pipeID2State = list(
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "gsensor0"
 	item_state = "buildpipe"
-	flags = TABLEPASS|FPRINT
+	flags = FPRINT
 	w_class = 4
 
 /obj/item/pipe_gsensor/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)

@@ -305,7 +305,6 @@ var/list/DummyCache = list()
 	D.flags=initial(D.flags)
 	D.pass_flags=initial(D.pass_flags)
 	if(pass_flags&PASSTABLE)
-		D.flags      |= TABLEPASS
 		D.pass_flags |= PASSTABLE
 
 	if(targetturf.density && targetturf != get_turf(target))
