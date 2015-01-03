@@ -55,8 +55,7 @@
 		qdel(src)
 	else
 		var/turf/T = get_turf(src)
-		T.attackby(C, user) //Attacking to the lattice will attack to the space turf
-		return T.attackby(C, user)
+		return T.attackby(C, user) //Attacking to the lattice will attack to the space turf
 
 /obj/structure/lattice/proc/updateOverlays()
 	set waitfor = 0

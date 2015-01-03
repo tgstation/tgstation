@@ -34,7 +34,7 @@
 	return
 
 /mob/living/simple_animal/vox/armalis/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	user.changeNext_move(8)
+	user.delayNextAttack(8)
 	if(O.force)
 		if(O.force >= 25)
 			var/damage = O.force

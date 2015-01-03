@@ -5,7 +5,8 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "target_stake"
 	density = 1
-	flags = CONDUCT
+	flags = 0
+	siemens_coefficient = 1
 	var/obj/item/target/pinned_target // the current pinned target
 
 	Move()

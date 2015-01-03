@@ -15,6 +15,7 @@
 	air_properties_vary_with_direction = 1
 	ghost_read=0
 	machine_flags = EMAGGABLE
+	soundeffect = 'sound/machines/windowdoor.ogg'
 
 /obj/machinery/door/window/New()
 	..()
@@ -86,7 +87,7 @@
 	if(!src.operating) //in case of emag
 		src.operating = 1
 	flick(text("[]opening", src.base_state), src)
-	playsound(get_turf(src), 'sound/machines/windowdoor.ogg', 100, 1)
+	playsound(get_turf(src), soundeffect, 100, 1)
 	src.icon_state = text("[]open", src.base_state)
 	sleep(10)
 
@@ -104,7 +105,7 @@
 		return 0
 	src.operating = 1
 	flick(text("[]closing", src.base_state), src)
-	playsound(get_turf(src), 'sound/machines/windowdoor.ogg', 100, 1)
+	playsound(get_turf(src), soundeffect, 100, 1)
 	src.icon_state = src.base_state
 
 	src.density = 1
@@ -156,7 +157,7 @@
 	if(istype(user, /mob/living/carbon/alien/humanoid) || istype(user, /mob/living/carbon/slime/adult))
 		if(src.operating)
 			return
-		user.changeNext_move(8)
+		user.delayNextAttack(8)
 		src.health = max(0, src.health - 25)
 		playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 75, 1)
 		visible_message("<span class='warning'>[user] smashes against the [src.name].</span>", 1)
@@ -197,7 +198,7 @@
 	//If it's a weapon, smash windoor. Unless it's an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
 	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
 		var/aforce = I.force
-		user.changeNext_move(8)
+		user.delayNextAttack(8)
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			src.health = max(0, src.health - aforce)
 		playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 75, 1)

@@ -15,7 +15,8 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
-	flags = FPRINT | CONDUCT | NOSHIELD | TABLEPASS
+	flags = FPRINT | NOSHIELD | TABLEPASS
+	siemens_coefficient = 1
 	origin_tech = "combat=3"
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 

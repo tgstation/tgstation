@@ -819,7 +819,8 @@
 	icon_state = "mining"
 	item_state = "analyzer"
 	w_class = 2.0
-	flags = CONDUCT
+	flags = 0
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	var/cooldown = 0
 

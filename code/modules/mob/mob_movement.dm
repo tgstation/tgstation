@@ -199,6 +199,7 @@
 	if(!mob)
 		return // Moved here to avoid nullrefs below. - N3X
 
+	// USE /event
 	call(/datum/pda_app/station_map/proc/minimap_update)(mob)
 
 	// /vg/ - Deny clients from moving certain mobs. (Like cluwnes :^)
@@ -214,7 +215,7 @@
 
 	if(moving)	return 0
 
-	if(world.time < move_delay)	return
+	if(move_delayer.blocked()) return
 
 	if(locate(/obj/effect/stop/, mob.loc))
 		for(var/obj/effect/stop/S in mob.loc)
@@ -265,7 +266,9 @@
 			src << "<span class='notice'> You're pinned to a wall by [mob.pinned[1]]!</span>"
 			return 0
 
-		move_delay = world.time//set move delay
+		// COMPLEX MOVE DELAY SHIT
+		////////////////////////////
+		var/move_delay=0 // set move delay
 		mob.last_move_intent = world.time + 10
 		switch(mob.m_intent)
 			if("run")
@@ -277,15 +280,15 @@
 		move_delay += mob.movement_delay()
 
 		if(config.Tickcomp)
-			move_delay -= 1.3
-			var/tickcomp = ((1/(world.tick_lag))*1.3)
-			move_delay = move_delay + tickcomp
+			move_delay += ((1/(world.tick_lag))*1.3) - 1.3
 
 		//We are now going to move
 		moving = 1
+		mob.delayNextMove(move_delay)
 		//Something with pulling things
 		if(locate(/obj/item/weapon/grab, mob))
 			move_delay = max(move_delay, world.time + 7)
+			mob.delayNextMove(move_delay)
 			var/list/L = mob.ret_grab()
 			if(istype(L, /list))
 				if(L.len == 2)
@@ -345,12 +348,12 @@
 		for(var/obj/item/weapon/grab/G in mob.grabbed_by)
 			if((G.state == 1)&&(!grabbing.Find(G.assailant)))	del(G)
 			if(G.state == 2)
-				move_delay = world.time + 10
+				mob.delayNextMove(10)
 				if(!prob(25))	return 1
 				mob.visible_message("<span class='warning'> [mob] has broken free of [G.assailant]'s grip!</span>")
 				del(G)
 			if(G.state == 3)
-				move_delay = world.time + 10
+				mob.delayNextMove(10)
 				if(!prob(5))	return 1
 				mob.visible_message("<span class='warning'> [mob] has broken free of [G.assailant]'s headlock!</span>")
 				del(G)

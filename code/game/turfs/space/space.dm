@@ -294,3 +294,6 @@
 				if ((A && A.loc))
 					A.loc.Entered(A)
 	return
+
+/turf/space/singularity_act()
+	return

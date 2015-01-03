@@ -45,7 +45,7 @@
 
 
 /mob/living/simple_animal/shade/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
-	user.changeNext_move(8)
+	user.delayNextAttack(8)
 	if(istype(O, /obj/item/device/soulstone))
 		O.transfer_soul("SHADE", src, user)
 	else

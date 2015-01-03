@@ -69,7 +69,7 @@
 	// WHY MUST WE DO THIS
 	// WHY
 	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
-		if(!istype(Proj ,/obj/item/projectile/beam/lastertag) && !istype(Proj ,/obj/item/projectile/beam/practice) )
+		if(!istype(Proj ,/obj/item/projectile/beam/lastertag) && !istype(Proj ,/obj/item/projectile/beam/practice) && !Proj.nodamage)
 			health -= Proj.damage
 	..()
 	if(health <= 0)
@@ -118,45 +118,45 @@
 	name = "Lockbox (Loyalty Implants)"
 	req_access = list(access_security)
 
-	New()
-		..()
-		new /obj/item/weapon/implantcase/loyalty(src)
-		new /obj/item/weapon/implantcase/loyalty(src)
-		new /obj/item/weapon/implantcase/loyalty(src)
-		new /obj/item/weapon/implanter/loyalty(src)
+/obj/item/weapon/storage/lockbox/loyalty/New()
+	..()
+	new /obj/item/weapon/implantcase/loyalty(src)
+	new /obj/item/weapon/implantcase/loyalty(src)
+	new /obj/item/weapon/implantcase/loyalty(src)
+	new /obj/item/weapon/implanter/loyalty(src)
 
 /obj/item/weapon/storage/lockbox/tracking
 	name = "Lockbox (Tracking Implants)"
 	req_access = list(access_security)
 
-	New()
-		..()
-		new /obj/item/weapon/implantcase/tracking(src)
-		new /obj/item/weapon/implantcase/tracking(src)
-		new /obj/item/weapon/implantcase/tracking(src)
-		new /obj/item/weapon/implantpad(src)
-		new /obj/item/weapon/implanter(src)
+/obj/item/weapon/storage/lockbox/tracking/New()
+	..()
+	new /obj/item/weapon/implantcase/tracking(src)
+	new /obj/item/weapon/implantcase/tracking(src)
+	new /obj/item/weapon/implantcase/tracking(src)
+	new /obj/item/weapon/implantpad(src)
+	new /obj/item/weapon/implanter(src)
 
 /obj/item/weapon/storage/lockbox/chem
 	name = "Lockbox (Chemical Implants)"
 	req_access = list(access_security)
 
-	New()
-		..()
-		new /obj/item/weapon/implantcase/chem(src)
-		new /obj/item/weapon/implantcase/chem(src)
-		new /obj/item/weapon/implantcase/chem(src)
-		new /obj/item/weapon/reagent_containers/syringe(src)
-		new /obj/item/weapon/implanter(src)
+/obj/item/weapon/storage/lockbox/chem/New()
+	..()
+	new /obj/item/weapon/implantcase/chem(src)
+	new /obj/item/weapon/implantcase/chem(src)
+	new /obj/item/weapon/implantcase/chem(src)
+	new /obj/item/weapon/reagent_containers/syringe(src)
+	new /obj/item/weapon/implanter(src)
 
 /obj/item/weapon/storage/lockbox/clusterbang
 	name = "lockbox (clusterbang)"
 	desc = "You have a bad feeling about opening this."
 	req_access = list(access_security)
 
-	New()
-		..()
-		new /obj/item/weapon/grenade/flashbang/clusterbang(src)
+/obj/item/weapon/storage/lockbox/clusterbang/New()
+	..()
+	new /obj/item/weapon/grenade/flashbang/clusterbang(src)
 
 /obj/item/weapon/storage/lockbox/unlockable
 	name = "semi-secure lockbox"

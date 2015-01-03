@@ -127,7 +127,8 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "revolver"
 	item_state = "gun"
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags =  FPRINT | TABLEPASS | USEDELAY
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	w_class = 3.0
 	g_amt = 10
@@ -186,7 +187,8 @@
 	desc = "There are 7 caps left! Make sure to recyle the box in an autolathe when it gets empty."
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "357-7"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT | TABLEPASS
+	siemens_coefficient = 1
 	w_class = 1.0
 	g_amt = 10
 	m_amt = 10
@@ -354,7 +356,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "katana"
 	item_state = "katana"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 5
 	throwforce = 5
@@ -614,7 +617,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "katana"
 	item_state = "katana"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 5
 	throwforce = 5
@@ -916,7 +920,8 @@
 	icon_state = "megaphone"
 	item_state = "radio"
 	w_class = 1.0
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS
+	siemens_coefficient = 1
 
 	var/spamcheck = 0
 

@@ -197,7 +197,6 @@ var/MAX_EXPLOSION_RANGE = 14
 #define USEDELAY 	16		// 1 second extra delay on use (Can be used once every 2s)
 #define NODELAY 	32768	// 1 second attackby delay skipped (Can be used once every 0.2s). Most objects have a 1s attackby delay, which doesn't require a flag.
 #define NOSHIELD	32		// weapon not affected by shield
-#define CONDUCT		64		// conducts electricity (metal etc.)
 #define FPRINT		256		// takes a fingerprint
 #define ON_BORDER	512		// item has priority to check when entering or leaving
 #define NOBLUDGEON  4  // when an item has this it produces no "X has been hit by Y with Z" message with the default handler
@@ -964,3 +963,17 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define I_NTSL     "ntsl"
 #define I_SINGULO  "singulo"
 #define I_ATMOS    "atmos"
+
+// delayNext() flags.
+#define DELAY_MOVE    1
+#define DELAY_ATTACK  2
+#define DELAY_SPECIAL 4
+#define DELAY_ALL (DELAY_MOVE|DELAY_ATTACK|DELAY_SPECIAL)
+
+//singularity defines
+#define STAGE_ONE 	1
+#define STAGE_TWO 	3
+#define STAGE_THREE	5
+#define STAGE_FOUR	7
+#define STAGE_FIVE	9
+#define STAGE_SUPER	11

@@ -296,7 +296,8 @@ proc/AirflowSpace(zone/A)
 				break
 			step_towards(src, src.airflow_dest)
 			if(ismob(src) && src:client)
-				src:client:move_delay = world.time + zas_settings.Get(/datum/ZAS_Setting/airflow_mob_slowdown)
+				var/mob/M = src
+				M.delayNextMove(zas_settings.Get(/datum/ZAS_Setting/airflow_mob_slowdown))
 		airflow_dest = null
 		airflow_speed = 0
 		airflow_time = 0
@@ -349,7 +350,8 @@ proc/AirflowSpace(zone/A)
 				return
 			step_towards(src, src.airflow_dest)
 			if(ismob(src) && src:client)
-				src:client:move_delay = world.time + zas_settings.Get(/datum/ZAS_Setting/airflow_mob_slowdown)
+				var/mob/M = src
+				M.delayNextMove(zas_settings.Get(/datum/ZAS_Setting/airflow_mob_slowdown))
 		airflow_dest = null
 		airflow_speed = 0
 		airflow_time = 0

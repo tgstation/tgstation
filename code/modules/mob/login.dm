@@ -34,7 +34,8 @@
 	hud_used = new /datum/hud(src)
 	gui_icons = new /datum/ui_icons(src)
 
-	next_move = 1
+	delayNextMove(0)
+
 	sight |= SEE_SELF
 	..()
 

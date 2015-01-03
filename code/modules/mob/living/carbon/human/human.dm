@@ -1468,15 +1468,15 @@
 		update_inv_shoes(1)
 		return 1
 
-mob/living/carbon/human/yank_out_object()
+/mob/living/carbon/human/yank_out_object()
 	set category = "Object"
 	set name = "Yank out object"
 	set desc = "Remove an embedded item at the cost of bleeding and pain."
 	set src in view(1)
 
-	if(!isliving(usr) || usr.next_move > world.time)
+	if(!isliving(usr) || (usr.client && usr.client.move_delayer.blocked()))
 		return
-	usr.next_move = world.time + 20
+	usr.delayNextMove(20)
 
 	if(usr.stat == 1)
 		usr << "You are unconcious and cannot do that!"
@@ -1819,3 +1819,24 @@ mob/living/carbon/human/yank_out_object()
 		if(eyes && istype(eyes) && !eyes.status & ORGAN_CUT_AWAY)
 			return 1
 	return 0
+
+/mob/living/carbon/human/singularity_act()
+	var/gain = 20
+	if(mind)
+		if((mind.assigned_role == "Station Engineer") || (mind.assigned_role == "Chief Engineer"))
+			gain = 100
+		if(mind.assigned_role == "Clown")
+			gain = rand(-300, 300)
+	investigation_log(I_SINGULO,"has been consumed by a singularity")
+	gib()
+	return gain
+
+/mob/living/carbon/human/singularity_pull(S, current_size)
+	if(current_size >= STAGE_THREE)
+		var/list/handlist = list(l_hand, r_hand)
+		for(var/obj/item/hand in handlist)
+			if(prob(current_size*5) && hand.w_class >= ((11-current_size)/2) && u_equip(hand))
+				step_towards(hand, src)
+				src << "<span class = 'warning'>The [S] pulls \the [hand] from your grip!</span>"
+	apply_effect(current_size * 3, IRRADIATE)
+	..()
