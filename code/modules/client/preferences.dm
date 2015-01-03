@@ -226,7 +226,7 @@ datum/preferences
 				dat += "<b>Pull requests:</b> <a href='?_src_=prefs;preference=pull_requests'>[(toggles & CHAT_PULLR) ? "Yes" : "No"]</a><br>"
 
 				if(config.allow_Metadata)
-					dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'> Edit </a><br>"
+					dat += "<b>Character info:</b> <a href='?_src_=prefs;preference=metadata;task=input'>Edit</a><br>"
 
 				if(user.client)
 					if(user.client.holder)
@@ -594,9 +594,7 @@ datum/preferences
 							age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
 
 					if("metadata")
-						var/new_metadata = input(user, "Enter any information you'd like others to see, such as Roleplay-preferences:", "Game Preference" , metadata)  as message|null
-						if(new_metadata)
-							metadata = sanitize(copytext(new_metadata,1,MAX_MESSAGE_LEN))
+						metadata = strip_html_properly(input(user, "Describe your character's appearance in up to [MAX_MESSAGE_LEN] characters:", "Game Preference" , metadata) as message, MAX_MESSAGE_LEN)
 
 					if("hair")
 						var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as null|color

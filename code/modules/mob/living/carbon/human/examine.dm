@@ -266,6 +266,14 @@
 					msg += "<a href='?src=\ref[src];criminal=1;view_comment=1'>\[View comment log\]</a> "
 					msg += "<a href='?src=\ref[src];criminal=1;add_comment=1'>\[Add comment\]</a>\n"
 
+	//Character RP info (config option)
+	if(config.allow_Metadata && client && client.prefs && client.prefs.metadata)
+		var/metainfo = client.prefs.metadata
+		if(length(metainfo) > 128)
+			metainfo = "[copytext(metainfo,1,127)]<a href='?src=\ref[src];show_metadata=1'>(more)</a>"
+		msg += "*---------*\n"
+		msg += "[metainfo]\n"
+
 	msg += "*---------*</span>"
 
 	user << msg
