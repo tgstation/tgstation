@@ -22,7 +22,7 @@
 
 		new/obj/item/weapon/grown/bananapeel/specialpeel(get_step(src,turn(usr.dir, 180)), 5) //honk
 		bananium.use_amount(100)
-		if(bananium.getAmount() < 100)
+		if(bananium.amount < 100)
 			on = !on
 			update_icon()
 			usr << "<span class='danger'>You ran out of bananium!</span>"
@@ -30,7 +30,6 @@
 		..()
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/attack_self(mob/user)
-	bananium.modLoc(src)
 	var/sheet_amount = bananium.retrieve_all()
 	if(sheet_amount)
 		user << "<span class='notice'>You retrieve [sheet_amount] sheets of bananium from the prototype shoes.</span>"
@@ -50,10 +49,10 @@
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/examine(mob/user)
 	..()
-	user << "<span class='notice'>The shoes are [on ? "enabled" : "disabled"]. There is [bananium.getAmount()] bananium left.</span>"
+	user << "<span class='notice'>The shoes are [on ? "enabled" : "disabled"]. There is [bananium.amount] bananium left.</span>"
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/ui_action_click()
-	if(bananium.getAmount() > 0)
+	if(bananium.amount > 0)
 		on = !on
 		update_icon()
 		usr << "You [on ? "activate" : "deactivate"] the prototype shoes."
