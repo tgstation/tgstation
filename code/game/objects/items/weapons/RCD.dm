@@ -28,6 +28,7 @@ RCD
 	var/disabled = 0
 	var/airlock_type = /obj/machinery/door/airlock
 	var/advanced_airlock_setting = 1 //Set to 1 if you want more paintjobs available
+	var/max_charge = 100
 
 /obj/item/weapon/rcd/verb/change_airlock_setting()
 	set name = "Change Airlock Setting"
@@ -102,16 +103,15 @@ RCD
 /obj/item/weapon/rcd/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if(istype(W, /obj/item/weapon/rcd_ammo))
-		var/rcd_max_cap = 100
-		if((matter + 20) > rcd_max_cap)
+		if((matter + 20) > max_charge)
 			user << "<span class='notice'>The RCD cant hold any more matter-units.</span>"
 			return
 		user.drop_item()
 		qdel(W)
 		matter += 20
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-		user << "<span class='notice'>The RCD now holds [matter]/[rcd_max_cap] matter-units.</span>"
-		desc = "A RCD. It currently holds [matter]/[rcd_max_cap] matter-units."
+		user << "<span class='notice'>The RCD now holds [matter]/[max_charge] matter-units.</span>"
+		desc = "A RCD. It currently holds [matter]/[max_charge] matter-units."
 		return
 
 
@@ -244,7 +244,7 @@ RCD
 	if(matter < amount)
 		return 0
 	matter -= amount
-	desc = "A RCD. It currently holds [matter]/30 matter-units."
+	desc = "A RCD. It currently holds [matter]/[max_charge] matter-units."
 	return 1
 
 /obj/item/weapon/rcd/proc/checkResource(var/amount, var/mob/user)
