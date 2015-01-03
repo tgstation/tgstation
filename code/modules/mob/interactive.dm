@@ -195,6 +195,7 @@
 			retal = 1
 			retal_target = M
 
+//THESE EXIST FOR DEBUGGING OF THE DOING/INTEREST SYSTEM EASILY
 /mob/living/carbon/human/interactive/proc/doing2string(var/doin)
 	var/toReturn = ""
 	if(!doin)
@@ -218,7 +219,7 @@
 	if(inter >= 76)
 		toReturn = "Excited"
 	return toReturn
-
+//END DEBUG
 /mob/living/carbon/human/interactive/proc/isnotfunc()
 	if(!canmove)
 		return 1
@@ -469,15 +470,15 @@
 
 ///BUILT IN MODULES
 /mob/living/carbon/human/interactive/proc/chatter(obj)
-	var/list/verbs_use = list("touch","hold","poke","punch","smash","assault","wrench","tickle","fist","modify")
-	var/list/verbs_touch = list("stroke","pat","lick","finger","mess with","absorb","sneeze on","feel up","inject")
-	var/list/verbs_move = list("run","jog","leg it","slide","cheese it","walk","stroll","fly","scoot","yakkety")
-	var/list/nouns_insult = list("faggot","shitcurity","noob","comdom","greyturd","tator","lingbin","bitch","whorelord")
+	var/list/verbs_use = list("touch","hold","poke","punch","smash","assault","wrench","tickle","modify","whack","beat","tackle","fiddle","destroy")
+	var/list/verbs_touch = list("stroke","pat","lick","finger","mess with","absorb","sneeze on","fist","feel up","inject","rip")
+	var/list/verbs_move = list("run","jog","leg it","slide","cheese it","walk","stroll","fly","scoot","yakkety","speed","fuck off","escape")
+	var/list/nouns_insult = list("faggot","shitcurity","noob","comdom","greyturd","tator","lingbin","bitch","whorelord","cluwne","shitbin","turdcurity","fuckblanket","asswhistle","cumdumpster")
 	var/list/nouns_generic = list("you", "you there", "guy", "person", "dude", "shitbin", "officer")
-	var/list/nouns_objects = list("thing","tool","whatever","potential murder weapon")
-	var/list/nouns_body = list("ass","head","face","arms","fingers","toes","chest","eyes","nails","hoo-hah")
-	var/list/adjective_insult = list("ugly","repulsive","dumb","asian","childish","captain-like","monkey-like","whoreish")
-	var/list/adjective_objects = list("big","small","tiny","round","square","oblong","colorful","dull")
+	var/list/nouns_objects = list("thing","tool","whatever","potential murder weapon","object","toy","rear-end pleasure device","whatever")
+	var/list/nouns_body = list("ass","head","face","arms","fingers","toes","chest","eyes","nails","groin","stomach","intestines","head","hoo-hah")
+	var/list/adjective_insult = list("ugly","repulsive","dumb","asian","mongoloid","childish","captain-like","monkey-like","whoreish","dimwit","cunt-face","vomit-inducer")
+	var/list/adjective_objects = list("big","small","tiny","round","square","oblong","colorful","dull","shiny","sparkling","blinking","awful")
 	var/list/adjective_generic = list("nice","pretty","ugly","bad","okay","stupid")
 	var/list/curse_words = list("fuck","shit","cunt","ass","cock","dick","bitch","mother fucker")
 
