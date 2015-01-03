@@ -594,7 +594,10 @@
 	construction_time = 500
 	category = list("Exosuit Equipment")
 
-//Cyborg Upgrade Modules
+/////////////////////////////////////////
+//////////////Borg Upgrades//////////////
+/////////////////////////////////////////
+
 /datum/design/borg_upgrade_reset
 	name = "Cyborg Upgrade Module (Reset Module)"
 	id = "borg_upgrade_reset"
@@ -649,6 +652,17 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
+/datum/design/borg_syndicate_module
+	name = "Borg Illegal Weapons Upgrade"
+	desc = "Allows for the construction of illegal upgrades for cyborgs"
+	id = "borg_syndicate_module"
+	build_type = MECHFAB
+	req_tech = list("combat" = 4, "syndicate" = 3)
+	build_path = /obj/item/borg/upgrade/syndicate
+	materials = list("$metal"=10000,"$glass"=15000,"$diamond" = 10000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
 //Misc
 /datum/design/mecha_tracking
 	name = "Exosuit Tracking Beacon"
@@ -657,4 +671,15 @@
 	build_path =/obj/item/mecha_parts/mecha_tracking
 	materials = list("$metal"=500)
 	construction_time = 50
+	category = list("Misc")
+
+/datum/design/drone_shell
+	name = "Drone Shell"
+	desc = "A shell of a maintenance drone, an expendable robot built to perform station repairs."
+	id = "drone_shell"
+	req_tech = list("programming" = 2, "biotech" = 4)
+	build_type = MECHFAB
+	materials = list("$metal" = 800, "$glass" = 350)
+	construction_time=150
+	build_path = /obj/item/drone_shell
 	category = list("Misc")
