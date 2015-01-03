@@ -4,6 +4,7 @@
 	name = "beamsplitter"
 	desc = "Uses a half-silvered plasma-glass mirror to split beams in two directions."
 	mirror_state = "splitter"
+	icon_state = "splitter" // For alignment when mapping
 	nsplits = 2
 
 /obj/machinery/mirror/beamsplitter/New()

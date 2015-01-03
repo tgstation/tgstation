@@ -3,7 +3,8 @@
 	desc = "Looks too expensive and sciencey to mount above your bathroom sink."
 
 	icon='icons/obj/machines/optical/beamsplitter.dmi'
-	icon_state="base"
+	icon_state="mirror" // For alignment when mapping
+	var/base_state = "base"
 	var/mirror_state = "mirror"
 
 	var/nsplits=1
@@ -20,6 +21,7 @@
 
 /obj/machinery/mirror/New()
 	..()
+	icon_state = base_state
 	overlays += mirror_state // TODO: break on BROKEN
 	component_parts = list(
 		new /obj/item/stack/sheet/rglass(src,5),
