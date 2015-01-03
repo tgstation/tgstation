@@ -42,7 +42,8 @@
 			if(affecting.status == ORGAN_ORGANIC) //No Bible can heal a robotic arm!
 				if(affecting.heal_damage(heal_amt, heal_amt, 0))
 					H.update_damage_overlays(0)
-	return
+					return 1
+	return 0
 
 /obj/item/weapon/storage/book/bible/attack(mob/living/M as mob, mob/living/carbon/human/user as mob)
 
@@ -79,22 +80,16 @@
 			ticker.mode.remove_cultist(M.mind)*/
 		if ((istype(M, /mob/living/carbon/human) && prob(60)))
 			bless(M)
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
+			if(bless(M))
 				var/message_halt = 0
-				for(var/obj/item/organ/limb/affecting in H.organs)
-					if(affecting.status == ORGAN_ORGANIC)
-						if(message_halt == 0)
-							M.visible_message("<span class='notice'>[user] heals [M] with the power of [src.deity_name]!</span>")
-							M << "<span class='boldnotice'>May the power of [src.deity_name] compel you to be healed!</span>"
-							playsound(src.loc, "punch", 25, 1, -1)
-							message_halt = 1
-					else
-						user << "<span class='warning'>[src.deity_name] refuses to heal this metallic taint!</span>"
-						return
-
-
-
+				if(message_halt == 0)
+					M.visible_message("<span class='notice'>[user] heals [M] with the power of [src.deity_name]!</span>")
+					M << "<span class='boldnotice'>May the power of [src.deity_name] compel you to be healed!</span>"
+					playsound(src.loc, "punch", 25, 1, -1)
+					message_halt = 1
+			else
+				user << "<span class='warning'>[src.deity_name] refuses to heal this metallic taint!</span>"
+				return
 
 		else
 			if(ishuman(M) && !istype(M:head, /obj/item/clothing/head/helmet))
