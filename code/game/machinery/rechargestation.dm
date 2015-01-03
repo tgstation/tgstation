@@ -103,6 +103,9 @@
 		return
 	return
 
+/obj/machinery/recharge_station/attack_ghost(var/mob/user) //why would they
+	return 0
+
 /obj/machinery/recharge_station/attack_ai(var/mob/user)
 	attack_hand(user)
 
