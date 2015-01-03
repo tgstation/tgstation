@@ -22,13 +22,13 @@ RCD
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
 	var/matter = 0
+	var/max_matter = 100
 	var/working = 0
 	var/mode = 1
 	var/canRwall = 0
 	var/disabled = 0
 	var/airlock_type = /obj/machinery/door/airlock
 	var/advanced_airlock_setting = 1 //Set to 1 if you want more paintjobs available
-	var/max_charge = 100
 
 /obj/item/weapon/rcd/verb/change_airlock_setting()
 	set name = "Change Airlock Setting"
