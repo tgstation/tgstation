@@ -77,7 +77,7 @@ For a basic setup, simply copy every file from config-example/ to config/.
 
 The SQL backend for the library and stats tracking requires a MySQL server.  (Linux servers will need to put libmysql.so into the same directory as baystation12.dme.)  Your server details go in /config/dbconfig.txt.
 
-We've included a web control panel with some sample data readouts.  It's recommended to install the database through sphinx, which is included and includes some updates.
+We've included a web control panel with some sample data readouts.  It's recommended to install the database through sphinx, which is included and includes some updates. 
 
 ---
 
