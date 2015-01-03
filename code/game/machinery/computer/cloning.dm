@@ -378,6 +378,12 @@
 
 	subject.dna.check_integrity()
 
+	// Borer sanity checks.
+	var/mob/living/simple_animal/borer/B=subject.has_brain_worms()
+	if(B && B.controlling)
+		// This shouldn't happen, but lolsanity.
+		subject.do_release_control(1)
+
 	var/datum/dna2/record/R = new /datum/dna2/record()
 	R.dna=subject.dna
 	R.ckey = subject.ckey

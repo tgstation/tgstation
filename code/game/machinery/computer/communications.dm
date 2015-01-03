@@ -133,7 +133,7 @@ var/shuttle_call/shuttle_calls[0]
 				if(!input || !(usr in view(1,src)))
 					return
 				captain_announce(input)//This should really tell who is, IE HoP, CE, HoS, RD, Captain
-				log_say("[key_name(usr)] has made a captain announcement: [input]")
+				log_say("[key_name(usr)] (@[usr.x],[usr.y],[usr.z]) has made a captain announcement: [input]")
 				message_admins("[key_name_admin(usr)] has made a captain announcement.", 1)
 				message_cooldown = 1
 				spawn(600)//One minute cooldown
@@ -213,7 +213,7 @@ var/shuttle_call/shuttle_calls[0]
 					return
 				Centcomm_announce(input, usr)
 				usr << "\blue Message transmitted."
-				log_say("[key_name(usr)] has made an IA Centcomm announcement: [input]")
+				log_say("[key_name(usr)] (@[usr.x],[usr.y],[usr.z]) has sent a bluespace message to Centcomm: [input]")
 				centcomm_message_cooldown = 1
 				spawn(300)//10 minute cooldown
 					centcomm_message_cooldown = 0
@@ -231,7 +231,7 @@ var/shuttle_call/shuttle_calls[0]
 					return
 				Syndicate_announce(input, usr)
 				usr << "\blue Message transmitted."
-				log_say("[key_name(usr)] has made a Syndicate announcement: [input]")
+				log_say("[key_name(usr)] (@[usr.x],[usr.y],[usr.z]) has sent a bluespace message to the syndicate: [input]")
 				centcomm_message_cooldown = 1
 				spawn(300)//10 minute cooldown
 					centcomm_message_cooldown = 0

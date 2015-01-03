@@ -15,6 +15,12 @@
 	..()
 	overlays += "pai-off"
 
+#ifdef DEBUG_ROLESELECT
+/obj/item/device/paicard/test/New()
+	src.looking_for_personality = 1
+	paiController.findPAI(src, usr)
+#endif
+
 /obj/item/device/paicard/Destroy()
 	//Will stop people throwing friend pAIs into the singularity so they can respawn
 	if(!isnull(pai))
@@ -150,7 +156,7 @@
 			if(18) src.overlays += "pai-cry"
 
 /obj/item/device/paicard/proc/alertUpdate()
-	var/turf/T = get_turf_or_move(src.loc)
+	var/turf/T = get_turf(src.loc)
 	for (var/mob/M in viewers(T))
 		M.show_message("\blue [src] flashes a message across its screen, \"Additional personalities available for download.\"", 3, "\blue [src] bleeps electronically.", 2)
 		playsound(loc, 'sound/machines/paistartup.ogg', 50, 1)

@@ -246,12 +246,16 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/proc/imbibe(mob/user) //drink the liquid within
 	user << "<span  class='notice'>You swallow a gulp of [src].</span>"
+	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
+
+	if(isrobot(user))
+		reagents.remove_any(gulp_size)
+		return 1
 	if(reagents.total_volume)
 		reagents.reaction(user, INGEST)
 		spawn(5)
 			reagents.trans_to(user, gulp_size)
 
-	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	return 1
 
 
@@ -275,7 +279,8 @@
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = null
 	volume = 150
-	flags = FPRINT | CONDUCT | TABLEPASS | OPENCONTAINER
+	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	siemens_coefficient = 1
 
 /obj/item/weapon/reagent_containers/food/drinks/golden_cup/tournament_26_06_2011
 	desc = "A golden cup. It will be presented to a winner of tournament 26 june and name of the winner will be graved on it."
@@ -899,7 +904,7 @@
 		user << "<span class='notice'>You transfer [trans] units of the solution to [target].</span>"
 
 		// /vg/: Logging transfers of bad things
-		if(target.reagents_to_log.len)
+		if(istype(target.reagents_to_log) && target.reagents_to_log.len)
 			var/list/badshit=list()
 			for(var/bad_reagent in target.reagents_to_log)
 				if(reagents.has_reagent(bad_reagent))

@@ -3,9 +3,6 @@
 	~Sayu
 */
 
-// 1 decisecond click delay (above and beyond mob/next_move)
-/mob/var/next_click	= 0
-
 /*
 	Before anything else, defer these calls to a per-mobtype handler.  This allows us to
 	remove istype() spaghetti code, but requires the addition of other handler procs to simplify it.
@@ -34,9 +31,9 @@
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
 /mob/proc/ClickOn( var/atom/A, var/params )
-	if(world.time <= next_click)
+	if(click_delayer.blocked())
 		return
-	next_click = world.time + 1
+	click_delayer.setDelay(1)
 
 	if(client.buildmode)
 		build_click(src, client.buildmode, params, A)
@@ -61,9 +58,9 @@
 
 	face_atom(A) // change direction to face what you clicked on
 
-	if(next_move > world.time) // in the year 2000...
+	if(attack_delayer.blocked()) // This was next_move.  next_attack makes more sense.
 		return
-	//world << "next_move is [next_move] and world.time is [world.time]"
+	//world << "next_attack is [next_attack] and world.time is [world.time]"
 	if(istype(loc,/obj/mecha))
 		if(!locate(/turf) in list(A,A.loc)) // Prevents inventory from being drilled
 			return
@@ -110,14 +107,14 @@
 
 			var/resolved = A.attackby(W,src)
 			if(ismob(A) || istype(A, /obj/mecha) || istype(W, /obj/item/weapon/grab))
-				changeNext_move(10)
+				delayNextAttack(10)
 			if(!resolved && A && W)
 				W.afterattack(A,src,1,params) // 1 indicates adjacency
 			else
-				changeNext_move(10)
+				delayNextAttack(10)
 		else
 			if(ismob(A) || istype(W, /obj/item/weapon/grab))
-				changeNext_move(10)
+				delayNextAttack(10)
 			UnarmedAttack(A)
 		return
 
@@ -134,31 +131,28 @@
 				*/
 				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
 				if(ismob(A) || istype(A, /obj/mecha) || istype(W, /obj/item/weapon/grab))
-					changeNext_move(10)
+					delayNextAttack(10)
 				var/resolved = A.attackby(W,src)
 				if(!resolved && A && W)
 					W.afterattack(A,src,1,params) // 1: clicking something Adjacent
 				else
-					changeNext_move(10)
+					delayNextAttack(10)
 			else
 				if(ismob(A) || istype(W, /obj/item/weapon/grab))
-					changeNext_move(10)
+					delayNextAttack(10)
 				UnarmedAttack(A, 1)
 			return
 		else // non-adjacent click
 			if(W)
 				if(ismob(A))
-					changeNext_move(10)
+					delayNextAttack(10)
 				W.afterattack(A,src,0,params) // 0: not Adjacent
 			else
 				if(ismob(A))
-					changeNext_move(10)
+					delayNextAttack(10)
 				RangedAttack(A, params)
 
 	return
-
-/mob/proc/changeNext_move(num)
-	next_move = world.time + num
 
 // Default behavior: ignore double clicks, consider them normal clicks instead
 /mob/proc/DblClickOn(var/atom/A, var/params)
@@ -178,7 +172,7 @@
 */
 /mob/proc/UnarmedAttack(var/atom/A, var/proximity_flag)
 	if(ismob(A))
-		changeNext_move(10)
+		delayNextAttack(10)
 	return
 
 /*
@@ -290,7 +284,7 @@
 
 /mob/living/LaserEyes(atom/A)
 	//next_move = world.time + 6
-	changeNext_move(4)
+	delayNextAttack(4)
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(A)
 
@@ -374,7 +368,7 @@
 		spawn( 1 )
 			L.process()
 
-	next_move = world.time + 12
+	delayNextAttack(12)
 	G.next_shock = world.time + time
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place

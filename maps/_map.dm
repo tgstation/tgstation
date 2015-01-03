@@ -23,6 +23,9 @@
 	var/tDomeY = 0
 	var/tDomeZ = 0
 
+	//nanoui stuff
+	var/map_dir = ""
+
 /datum/map/New()
 	. = ..()
 	src.zLevels = src.loadZLevels(src.zLevels)

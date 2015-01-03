@@ -11,7 +11,11 @@
 
 	var/datum/pipe_network/network1
 	var/datum/pipe_network/network2
-	var/list/activity_log = list()
+
+	var/activity_log = ""
+
+/obj/machinery/atmospherics/binary/investigation_log(var/subject, var/message)
+	activity_log += ..()
 
 /obj/machinery/atmospherics/binary/New()
 	..()

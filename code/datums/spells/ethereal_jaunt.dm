@@ -84,7 +84,8 @@
 /obj/effect/dummy/spell_jaunt/relaymove(var/mob/user, direction)
 	if (!src.canmove || reappearing) return
 	var/turf/newLoc = get_step(src,direction)
-	if(!(newLoc.flags & NOJAUNT))
+	var/area/A = get_area(newLoc)
+	if(!(newLoc.flags & NOJAUNT) && !A.anti_ethereal)
 		loc = newLoc
 	else
 		user << "<span class='warning'>Some strange aura is blocking the way!</span>"

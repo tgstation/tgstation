@@ -538,8 +538,9 @@ var/global/list/whitelisted_species = list("Human")
 
 	equip(var/mob/living/carbon/human/H)
 		// Unequip existing suits and hats.
-		H.u_equip(H.wear_suit)
-		H.u_equip(H.head)
+		if(H.mind.assigned_role != "MODE")
+			H.u_equip(H.wear_suit)
+			H.u_equip(H.head)
 		if(H.mind.assigned_role!="Clown")
 			H.u_equip(H.wear_mask)
 
@@ -549,6 +550,7 @@ var/global/list/whitelisted_species = list("Human")
 		var/tank_slot = slot_s_store
 		var/tank_slot_name = "suit storage"
 		switch(H.mind.assigned_role)
+			// DEPRECATED: Vox now have their own clothing.
 			if("Research Director","Scientist","Geneticist","Roboticist")
 				suit=/obj/item/clothing/suit/space/vox/casual/science
 				helm=/obj/item/clothing/head/helmet/space/vox/casual/science
@@ -561,13 +563,23 @@ var/global/list/whitelisted_species = list("Human")
 			if("Chief Medical Officer","Medical Doctor","Paramedic","Chemist")
 				suit=/obj/item/clothing/suit/space/vox/casual/medical
 				helm=/obj/item/clothing/head/helmet/space/vox/casual/medical
+			// END DEPRECATION
 			if("Clown","Mime")
 				tank_slot=slot_r_hand
 				tank_slot_name = "hand"
-		H.equip_or_collect(new suit(H), slot_wear_suit)
-		H.equip_or_collect(new helm(H), slot_head)
+			if("MODE") // Gamemode stuff
+				switch(H.mind.special_role)
+					if("Wizard")
+						suit = null
+						helm = null
+						tank_slot = slot_l_hand
+						tank_slot_name = "hand"
+		if(suit)
+			H.equip_or_collect(new suit(H), slot_wear_suit)
+		if(helm)
+			H.equip_or_collect(new helm(H), slot_head)
 		H.equip_or_collect(new/obj/item/weapon/tank/nitrogen(H), tank_slot)
-		H << "\blue You are now running on nitrogen internals from the [H.s_store] in your [tank_slot_name]. Your species finds oxygen toxic, so you must breathe nitrogen (AKA N<sub>2</sub>) only."
+		H << "<span class='info'>You are now running on nitrogen internals from the [H.s_store] in your [tank_slot_name]. Your species finds oxygen toxic, so <b>you must breathe nitrogen (AKA N<sub>2</sub>) only</b>.</span"
 		H.internal = H.get_item_by_slot(tank_slot)
 		if (H.internals)
 			H.internals.icon_state = "internal1"

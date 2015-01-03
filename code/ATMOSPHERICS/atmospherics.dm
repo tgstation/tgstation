@@ -30,6 +30,9 @@ Pipelines + Other Objects -> Pipe network
 
 	var/list/available_colors
 
+	// Investigation logs
+	var/log
+
 // Find a connecting /obj/machinery/atmospherics in specified direction.
 /obj/machinery/atmospherics/proc/findConnecting(var/direction)
 	for(var/obj/machinery/atmospherics/target in get_step(src,direction))

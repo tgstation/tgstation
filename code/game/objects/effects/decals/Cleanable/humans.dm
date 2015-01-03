@@ -47,6 +47,11 @@ var/global/list/image/splatter_cache=list()
 	if(basecolor == "rainbow") basecolor = "#[pick(list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"))]"
 	color = basecolor
 
+	var/icon/blood = icon(base_icon,icon_state,dir)
+	blood.Blend(basecolor,ICON_MULTIPLY)
+
+	icon = blood
+
 /obj/effect/decal/cleanable/blood/Crossed(mob/living/carbon/human/perp)
 	if (!istype(perp))
 		return
@@ -59,11 +64,12 @@ var/global/list/image/splatter_cache=list()
 			perp.shoes.generate_blood_overlay()
 		if(!perp.shoes.blood_DNA)
 			perp.shoes.blood_DNA = list()
-			perp.shoes.blood_overlay.color = basecolor
-			perp.shoes.overlays += perp.shoes.blood_overlay
-			perp.update_inv_shoes(1)
+		perp.shoes.overlays -= perp.shoes.blood_overlay
+		perp.shoes.blood_overlay.color = basecolor
+		perp.shoes.overlays += perp.shoes.blood_overlay
 		perp.shoes.blood_DNA |= blood_DNA.Copy()
 		perp.shoes.blood_color=basecolor
+		perp.update_inv_shoes(1)
 	else
 		perp.track_blood = max(amount,perp.track_blood)                                //Or feet
 		if(!perp.feet_blood_DNA)
@@ -108,6 +114,8 @@ var/global/list/image/splatter_cache=list()
 	icon_state = "1"
 	random_icon_states = list("1","2","3","4","5")
 	amount = 0
+
+	base_icon = 'icons/effects/drip.dmi'
 
 /obj/effect/decal/cleanable/blood/writing
 	icon_state = "tracks"
@@ -185,10 +193,10 @@ var/global/list/image/splatter_cache=list()
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 
-	Del()
-		for(var/datum/disease/D in viruses)
-			D.cure(0)
-		..()
+/obj/effect/decal/cleanable/blood/viralsputum/Del()
+	for(var/datum/disease/D in viruses)
+		D.cure(0)
+	..()
 
 
 

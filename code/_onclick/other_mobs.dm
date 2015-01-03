@@ -10,10 +10,14 @@
 	// Special glove functions:
 	// If the gloves do anything, have them return 1 to stop
 	// normal attack_hand() here.
+	if(ismob(A))
+		delayNextAttack(10)
 	if(proximity && istype(G) && G.Touch(A,1))
 		return
 
 	A.attack_hand(src)
+	return
+
 /atom/proc/attack_hand(mob/user as mob)
 	return
 
@@ -51,7 +55,11 @@
 	Animals & All Unspecified
 */
 /mob/living/UnarmedAttack(var/atom/A)
+	if(ismob(A))
+		delayNextAttack(10)
 	A.attack_animal(src)
+	return
+
 /atom/proc/attack_animal(mob/user as mob)
 	return
 /mob/living/RestrainedClickOn(var/atom/A)
@@ -61,7 +69,11 @@
 	Monkeys
 */
 /mob/living/carbon/monkey/UnarmedAttack(var/atom/A)
+	if(ismob(A))
+		delayNextAttack(10)
 	A.attack_paw(src)
+	return
+
 /atom/proc/attack_paw(mob/user as mob)
 	return
 
@@ -97,7 +109,11 @@
 	Defaults to same as monkey in most places
 */
 /mob/living/carbon/alien/UnarmedAttack(var/atom/A)
+	if(ismob(A))
+		delayNextAttack(10)
 	A.attack_alien(src)
+	return
+
 /atom/proc/attack_alien(mob/user as mob)
 	attack_paw(user)
 	return
@@ -106,7 +122,11 @@
 
 // Babby aliens
 /mob/living/carbon/alien/larva/UnarmedAttack(var/atom/A)
+	if(ismob(A))
+		delayNextAttack(10)
 	A.attack_larva(src)
+	return
+
 /atom/proc/attack_larva(mob/user as mob)
 	return
 
@@ -117,6 +137,7 @@
 */
 /mob/living/carbon/slime/UnarmedAttack(var/atom/A)
 	A.attack_slime(src)
+	return ..()
 /atom/proc/attack_slime(mob/user as mob)
 	return
 /mob/living/carbon/slime/RestrainedClickOn(var/atom/A)

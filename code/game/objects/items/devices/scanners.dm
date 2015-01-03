@@ -79,7 +79,8 @@ REAGENT SCANNER
 	icon_state = "health"
 	item_state = "analyzer"
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = 1.0
@@ -233,7 +234,8 @@ REAGENT SCANNER
 	icon_state = "atmos"
 	item_state = "analyzer"
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT | TABLEPASS
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	throwforce = 5
 	throw_speed = 4
@@ -305,7 +307,8 @@ REAGENT SCANNER
 	icon_state = "spectrometer"
 	item_state = "analyzer"
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS| CONDUCT | OPENCONTAINER
+	flags = FPRINT | TABLEPASS| OPENCONTAINER
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	throwforce = 5
 	throw_speed = 4
@@ -377,7 +380,8 @@ REAGENT SCANNER
 	icon_state = "spectrometer"
 	item_state = "analyzer"
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	throwforce = 5
 	throw_speed = 4

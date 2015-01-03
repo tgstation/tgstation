@@ -97,7 +97,7 @@
 	if(!user)
 		return
 	if(istype(C, /obj/item/weapon/wrench))
-		user << "\blue Removing rods..."
+		user << "<span class='notice'>Removing rods...</span>"
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 80, 1)
 		if(do_after(user, 30))
 			new /obj/item/stack/rods(src, 2)
@@ -113,6 +113,9 @@
 /turf/simulated/floor/engine/cult/cultify()
 	return
 
+/turf/simulated/floor/engine/airless
+	oxygen = 0.01
+	nitrogen = 0.01
 
 /turf/simulated/floor/engine/n20
 	New()
@@ -260,7 +263,7 @@
 			spawn(4)
 				if(src)
 					update_icon()
-					for(var/direction in list(1,2,4,8,5,6,9,10))
+					for(var/direction in alldirs)
 						if(istype(get_step(src,direction),/turf/simulated/floor))
 							var/turf/simulated/floor/FF = get_step(src,direction)
 							FF.update_icon() //so siding get updated properly

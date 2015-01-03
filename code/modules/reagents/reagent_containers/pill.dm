@@ -66,15 +66,11 @@
 	afterattack(obj/target, mob/user , flag)
 
 		if(target.is_open_container() != 0 && target.reagents)
-			if(!target.reagents.total_volume)
-				user << "\red [target] is empty. Cant dissolve pill."
-				return
-
-			user << "\blue You dissolve the pill in [target]"
+			var/hadContents = target.reagents.total_volume
 			var/trans = reagents.trans_to(target, reagents.total_volume)
 
 			// /vg/: Logging transfers of bad things
-			if(target.reagents_to_log.len)
+			if(istype(target.reagents_to_log) && target.reagents_to_log.len)
 				var/list/badshit=list()
 				for(var/bad_reagent in target.reagents_to_log)
 					if(reagents.has_reagent(bad_reagent))
@@ -84,10 +80,24 @@
 					message_admins("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 					log_game("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].")
 
-			for(var/mob/O in viewers(2, user))
-				O.show_message("\red [user] puts something in [target].", 1)
-			spawn(5)
-				del(src)
+			if(trans)
+				if(reagents.total_volume == 0)//Total transfer case
+					if(hadContents)
+						user << "<span class='notice'>You dissolve the pill into [target]</span>"
+					else
+						user << "<span class='notice'>You crush the pill into [target]</span>"
+					spawn(1)
+						qdel(src)
+				else//Partial transfer case
+					if(hadContents)
+						user << "<span class='notice'>You partially dissolve the pill into [target], filling it</span>"
+					else
+						user << "<span class='notice'>You crush part of the pill into [target], filling it</span>"
+				for(var/mob/O in viewers(2, user))
+					if(O!=user)
+						O.show_message("<span class='attack'>[user] puts something in [target].</span>", 1)
+			else//No transfer case
+				user << "<span class='notice'>[target] is full!</span>"
 
 		return
 

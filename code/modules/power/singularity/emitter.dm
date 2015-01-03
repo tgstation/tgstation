@@ -45,7 +45,7 @@
 	if (src.anchored || usr:stat)
 		usr << "It is fastened to the floor!"
 		return 0
-	src.dir = turn(src.dir, 90)
+	src.dir = turn(src.dir, -90)
 	return 1
 
 /obj/machinery/power/emitter/verb/rotate_ccw()
@@ -56,7 +56,7 @@
 	if (src.anchored || usr:stat)
 		usr << "It is fastened to the floor!"
 		return 0
-	src.dir = turn(src.dir, -90)
+	src.dir = turn(src.dir, 90)
 	return 1
 
 /obj/machinery/power/emitter/initialize()
@@ -64,6 +64,9 @@
 	if(state == 2 && anchored)
 		connect_to_network()
 		src.directwired = 1
+		update_icon()
+		update_beam()
+
 	if(frequency)
 		set_frequency(frequency)
 
@@ -80,7 +83,7 @@
 		if(!beam)
 			beam = new (loc)
 			beam.dir=dir
-		beam.emit(spawn_by=src)
+			beam.emit(spawn_by=src)
 	else
 		qdel(beam)
 		beam=null
@@ -108,7 +111,7 @@
 		var/statestr=on?"on":"off"
 		// Spammy message_admins("Emitter turned [statestr] by radio signal ([signal.data["command"]] @ [frequency]) in [formatJumpTo(src)]",0,1)
 		log_game("Emitter turned [statestr] by radio signal ([signal.data["command"]] @ [frequency]) in ([x],[y],[z])")
-		investigate_log("turned <font color='orange'>[statestr]</font> by radio signal ([signal.data["command"]] @ [frequency])","singulo")
+		investigation_log(I_SINGULO,"turned <font color='orange'>[statestr]</font> by radio signal ([signal.data["command"]] @ [frequency])")
 		update_icon()
 		update_beam()
 
@@ -116,7 +119,7 @@
 	qdel(beam)
 	message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 	log_game("Emitter deleted at ([x],[y],[z])")
-	investigate_log("<font color='red'>deleted</font> at ([x],[y],[z])","singulo")
+	investigation_log(I_SINGULO,"<font color='red'>deleted</font> at ([x],[y],[z])")
 	..()
 
 /obj/machinery/power/emitter/update_icon()
@@ -141,7 +144,7 @@
 				user << "You turn off the [src]."
 				message_admins("Emitter turned off by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 				log_game("Emitter turned off by [user.ckey]([user]) in ([x],[y],[z])")
-				investigate_log("turned <font color='red'>off</font> by [user.key]","singulo")
+				investigation_log(I_SINGULO,"turned <font color='red'>off</font> by [user.key]")
 			else
 				src.active = 1
 				user << "You turn on the [src]."
@@ -149,7 +152,7 @@
 				src.fire_delay = 100
 				message_admins("Emitter turned on by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 				log_game("Emitter turned on by [user.ckey]([user]) in ([x],[y],[z])")
-				investigate_log("turned <font color='green'>on</font> by [user.key]","singulo")
+				investigation_log(I_SINGULO,"turned <font color='green'>on</font> by [user.key]")
 			update_icon()
 			update_beam()
 		else
@@ -171,6 +174,11 @@
 	return 0
 
 /obj/machinery/power/emitter/process()
+	if(!anchored)
+		active = 0
+		update_icon()
+		update_beam()
+		return
 	if(stat & BROKEN)
 		return
 
@@ -187,12 +195,12 @@
 			if(!powered)
 				powered = 1
 				update_icon()
-				investigate_log("regained power and turned <font color='green'>on</font>","singulo")
+				investigation_log(I_SINGULO,"regained power and turned <font color='green'>on</font>")
 		else
 			if(powered)
 				powered = 0
 				update_icon()
-				investigate_log("lost power and turned <font color='red'>off</font>","singulo")
+				investigation_log(I_SINGULO,"lost power and turned <font color='red'>off</font>")
 			return
 
 		last_shot = world.time

@@ -23,8 +23,8 @@
 		comment = "Nat 20!"
 	else if(sides == 20 && result == 1)
 		comment = "Ouch, bad luck."
-	icon_state = "[name][result]"
 	playsound(loc, 'sound/weapons/diceroll.ogg', 50, 1)
 	user.visible_message("<span class='notice'>[user] has thrown [src]. It lands on [result]. [comment]</span>", \
 						 "<span class='notice'>You throw [src]. It lands on a [result]. [comment]</span>", \
 						 "<span class='notice'>You hear [src] landing on a [result]. [comment]</span>")
+	icon_state = "d[sides][result]"

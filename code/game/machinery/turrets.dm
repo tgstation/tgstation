@@ -298,7 +298,7 @@
 	return
 
 /obj/machinery/turret/attackby(obj/item/weapon/W, mob/user)//I can't believe no one added this before/N
-	user.changeNext_move(10)
+	user.delayNextAttack(10)
 	if(..())
 		return 1
 	playsound(get_turf(src), 'sound/weapons/smash.ogg', 60, 1)
@@ -587,7 +587,7 @@
 					if(src)
 						src.process()
 		if(href_list["scan_range"])
-			src.scan_range = between(1,src.scan_range+text2num(href_list["scan_range"]),8)
+			src.scan_range = Clamp(src.scan_range + text2num(href_list["scan_range"]), 1, 8)
 		if(href_list["scan_for"])
 			if(href_list["scan_for"] in scan_for)
 				scan_for[href_list["scan_for"]] = !scan_for[href_list["scan_for"]]

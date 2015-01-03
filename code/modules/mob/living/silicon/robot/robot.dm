@@ -199,6 +199,7 @@
 			module_sprites["Default"] = "robot"
 			module_sprites["Marina-SD"] = "marinaSD"
 			module_sprites["Sleek"] = "sleekstandard"
+			speed = 0
 
 		if("Service")
 			module = new /obj/item/weapon/robot_module/butler(src)
@@ -210,6 +211,7 @@
 			module_sprites["R2-D2"] = "r2d2"
 			module_sprites["Marina-SV"] = "marinaSV"
 			module_sprites["Sleek"] = "sleekservice"
+			speed = 0
 
 		if("Miner")
 			module = new /obj/item/weapon/robot_module/miner(src)
@@ -222,6 +224,7 @@
 			module_sprites["Wall-A"] = "wall-a"
 			module_sprites["Marina-MN"] = "marinaMN"
 			module_sprites["Sleek"] = "sleekminer"
+			speed = -1
 
 		if("Medical")
 			module = new /obj/item/weapon/robot_module/medical(src)
@@ -235,6 +238,7 @@
 			module_sprites["Marina-MD"] = "marina"
 			module_sprites["Eve"] = "eve"
 			module_sprites["Sleek"] = "sleekmedic"
+			speed = -2
 
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
@@ -246,6 +250,7 @@
 			module_sprites["Securitron"] = "securitron"
 			module_sprites["Marina-SC"] = "marinaSC"
 			src << "<span class='warning'><big><b>Just a reminder, by default you do not follow space law, you follow your lawset</b></big></span>"
+			speed = -1
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
@@ -259,6 +264,7 @@
 			module_sprites["Wall-E"] = "wall-e"
 			module_sprites["Marina-EN"] = "marinaEN"
 			module_sprites["Sleek"] = "sleekengineer"
+			speed = -2
 
 		if("Janitor")
 			module = new /obj/item/weapon/robot_module/janitor(src)
@@ -269,6 +275,7 @@
 			module_sprites["HAN-D"] = "han-d"
 			module_sprites["Marina-JN"] = "marinaJN"
 			module_sprites["Sleek"] = "sleekjanitor"
+			speed = -1
 
 		if("Combat")
 			module = new /obj/item/weapon/robot_module/combat(src)
@@ -277,6 +284,7 @@
 			module_sprites["Mr. Gutsy"] = "mrgutsy"
 			module_sprites["Marina-CB"] = "marinaCB"
 			channels = list("Security" = 1)
+			speed = -2
 
 	//Custom_sprite check and entry
 	if (custom_sprite == 1)
@@ -864,9 +872,9 @@
 					laws.show_laws(src)
 					src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and their commands."
 					if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
-						for(var/obj/item/weapon/pickaxe/borgdrill/D in src.module.modules)
+						for(var/obj/item/weapon/pickaxe/drill/borg/D in src.module.modules)
 							del(D)
-						src.module.modules += new /obj/item/weapon/pickaxe/diamonddrill(src.module)
+						src.module.modules += new /obj/item/weapon/pickaxe/drill/diamond(src.module)
 						src.module.rebuild()
 					updateicon()
 				else

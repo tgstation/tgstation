@@ -192,9 +192,6 @@ var/global/list/organ_damage_overlays = list(
 			src << "Successfully handled disabilities"
 			last_processed = "Handle disabilities"
 
-		//Organ failure.
-		handle_organs()
-
 		if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
 			src << "Successfully handled organs"
 			last_processed = "Handle organs"
@@ -340,13 +337,12 @@ var/global/list/organ_damage_overlays = list(
 /mob/living/carbon/human
 
 	proc/handle_disabilities()
-		if (disabilities & EPILEPSY)
-			if ((prob(1) && paralysis < 1))
-				src << "\red You have a seizure!"
-				for(var/mob/O in viewers(src, null))
-					if(O == src)
-						continue
-					O.show_message(text("\red <B>[src] starts having a seizure!"), 1)
+		if(disabilities & EPILEPSY)
+			if((prob(1)) && (paralysis < 1))
+				visible_message( \
+					"<SPAN CLASS='danger'>[src] starts having a seizure!</SPAN>", \
+					"<SPAN CLASS='warning'>You have a seizure!</SPAN>")
+
 				Paralyse(10)
 				make_jittery(1000)
 
@@ -1274,8 +1270,9 @@ var/global/list/organ_damage_overlays = list(
 	proc/handle_regular_hud_updates()
 		if(!client)	return 0
 
-		regular_hud_updates()
+		sight &= ~BLIND
 
+		regular_hud_updates()
 
 		client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask/*, global_hud.nvg*/)
 
@@ -1411,11 +1408,15 @@ var/global/list/organ_damage_overlays = list(
 			if(glasses)
 				var/obj/item/clothing/glasses/G = glasses
 				if(istype(G))
+					if(G.see_in_dark)
+						see_in_dark = G.see_in_dark
 					see_in_dark += G.darkness_view
 					if(G.vision_flags)		// MESONS
 						sight |= G.vision_flags
 						if(!druggy)
 							see_invisible = SEE_INVISIBLE_MINIMUM
+					if(G.see_invisible)
+						see_invisible = G.see_invisible
 
 	/* HUD shit goes here, as long as it doesn't modify sight flags */
 	// The purpose of this is to stop xray and w/e from preventing you from using huds -- Love, Doohl

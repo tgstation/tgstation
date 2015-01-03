@@ -29,26 +29,24 @@
 			if(!targets.len)
 				break
 			var/summoned_object_type = pick(summon_type)
-			var/spawn_place = pick(targets)
+			var/turf/spawn_place = pick(targets)
 			if(summon_ignore_prev_spawn_points)
 				targets -= spawn_place
-			var/atom/summoned_object = new summoned_object_type(spawn_place)
+			if(istype(spawn_place,/turf/simulated/shuttle))
+				usr << "<span class='warning'>You can't build things on shuttles!</span>"
+				break
 			var/atom/movable/overlay/animation = new /atom/movable/overlay(spawn_place)
 			animation.name = "conjure"
 			animation.density = 0
 			animation.anchored = 1
 			animation.icon = 'icons/effects/effects.dmi'
 			animation.layer = 3
-			animation.master = summoned_object
 			if(ispath(summoned_object_type,/turf))
-				if(istype(get_turf(usr),/turf/simulated/shuttle))
-					usr << "\red You can't build things on shuttles!"
-					break
-				var/turf/O = spawn_place
-				var/N = summoned_object_type
-				O.ChangeTurf(N)
+				animation.master = summoned_object_type
+				spawn_place.ChangeTurf(summoned_object_type)
 			else
-
+				var/atom/summoned_object = new summoned_object_type(spawn_place)
+				animation.master = summoned_object
 				for(var/varName in newVars)
 					if(varName in summoned_object.vars)
 						summoned_object.vars[varName] = newVars[varName]

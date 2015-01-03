@@ -21,10 +21,10 @@
 			return
 
 	if(rotting)
-		user << "\blue This wall feels rather unstable."
+		user << "<span class='notice'>This wall feels rather unstable.</span>"
 		return
 
-	user << "\blue You push the wall but nothing happens!"
+	user << "<span class='notice'>You push the wall but nothing happens!</span>"
 	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
 	src.add_fingerprint(user)
 	return
@@ -236,15 +236,20 @@
 //vv OK, we weren't performing a valid deconstruction step or igniting thermite,let's check the other possibilities vv
 
 	//DRILLING
-	if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+	if (istype(W, /obj/item/weapon/pickaxe))
 
-		user << "<span class='notice'>You begin to drill though the wall.</span>"
+		var/obj/item/weapon/pickaxe/PK = W
+		if(!(PK.diggables & DIG_RWALLS))
+			return
 
-		sleep(200)
-		if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )	return
+		user << "<span class='notice'>You begin [PK.drill_verb] through the outer plating.</span>"
+		playsound(src, PK.drill_sound, 100, 1)
+		sleep(PK.digspeed * 50)
 
-		if( user.loc == T && user.get_active_hand() == W )
-			user << "<span class='notice'>Your drill tears though the last of the reinforced plating.</span>"
+		if( !istype(src, /turf/simulated/wall/r_wall) || !user || !PK || !T )	return
+
+		if( user.loc == T && user.get_active_hand() == PK )
+			user << "<span class='notice'>Your [src] tears though the last of the reinforced plating.</span>"
 			dismantle_wall()
 
 	//REPAIRING
@@ -319,3 +324,8 @@
 	else if(!d_state)
 		return attack_hand(user)
 	return
+
+/turf/simulated/wall/r_wall/singularity_pull(S, current_size)
+	if(current_size >= STAGE_FIVE)
+		if(prob(30))
+			dismantle_wall()

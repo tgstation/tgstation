@@ -6,6 +6,7 @@
 /datum/map/active
 	nameShort = "taxi"
 	nameLong = "Taxi Station"
+	map_dir = "taxistation"
 	tDomeX = 127
 	tDomeY = 67
 	tDomeZ = 2
@@ -25,5 +26,4 @@
 		)
 
 ////////////////////////////////////////////////////////////////
-
 #include "taxistation.dmm"

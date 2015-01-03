@@ -6,6 +6,7 @@
 /datum/map/active
 	nameShort = "meta"
 	nameLong = "Meta Club"
+	map_dir = "metaclub"
 	tDomeX = 128
 	tDomeY = 69
 	tDomeZ = 2
@@ -28,5 +29,4 @@
 		)
 
 ////////////////////////////////////////////////////////////////
-
 #include "metaclub.dmm"

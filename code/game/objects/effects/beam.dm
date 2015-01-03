@@ -14,6 +14,8 @@
 // Uncomment to spam console with debug info.
 //#define BEAM_DEBUG
 
+#define BEAM_DEL(x) del(x)
+
 #ifdef BEAM_DEBUG
 # warning SOME ASSHOLE FORGOT TO COMMENT BEAM_DEBUG BEFORE COMMITTING
 # define beam_testing(x) testing(x)
@@ -97,7 +99,7 @@
 	beam_testing("Bumped by [AM]")
 	am_connector=1
 	connect_to(AM)
-	qdel(src)
+	BEAM_DEL(src)
 
 /obj/effect/beam/proc/get_master()
 	if(master)
@@ -135,7 +137,7 @@
 /obj/effect/beam/proc/killKids()
 	for(var/obj/effect/beam/child in children)
 		if(child)
-			qdel(child)
+			BEAM_DEL(child)
 	children.Cut()
 
 /obj/effect/beam/proc/disconnect(var/re_emit=1)
@@ -148,7 +150,7 @@
 		_master.targetMoveKey=null
 		_master.targetDestroyKey=null
 		//if(_master.next)
-		//	qdel(_master.next)
+		//	BEAM_DEL(_master.next)
 		if(re_emit)
 			_master.emit(sources)
 
@@ -168,7 +170,7 @@
 	beam_testing(" Connecting!")
 	am_connector=1
 	connect_to(AM)
-	qdel(src)
+	BEAM_DEL(src)
 
 /obj/effect/beam/proc/HasSource(var/atom/source)
 	return source in sources
@@ -194,11 +196,11 @@
 		return
 
 	if(!loc)
-		qdel(src)
+		BEAM_DEL(src)
 		return
 
 	if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
-		qdel(src)
+		BEAM_DEL(src)
 		return
 
 	// If we're master, we're actually invisible, and we're on the same tile as the machine.
@@ -215,13 +217,13 @@
 		step(src, dir) // Move.
 
 		if(bumped)
-			qdel(src)
+			BEAM_DEL(src)
 			return
 
 		stepped=1
 
 		if(_range-- < 1)
-			qdel(src)
+			BEAM_DEL(src)
 			return
 
 	update_icon()
@@ -248,11 +250,14 @@
 
 /obj/effect/beam/Destroy()
 	if(!am_connector && !master)
-		beam_testing("\ref[get_master()] - Disconnecting (qdel)")
+		beam_testing("\ref[get_master()] - Disconnecting (deleted)")
 		disconnect(0)
 	if(master)
 		master.children.Remove(src)
 	if(next)
-		qdel(next)
+		BEAM_DEL(next)
 		next=null
 	..()
+
+/obj/effect/beam/singularity_pull()
+	return

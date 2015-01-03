@@ -407,7 +407,7 @@
 
 /mob/living/simple_animal/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
 	if(istype(O, /obj/item/stack/medical))
-		user.changeNext_move(4)
+		user.delayNextAttack(4)
 		if(stat != DEAD)
 			var/obj/item/stack/medical/MED = O
 			if(health < maxHealth)
@@ -425,7 +425,7 @@
 		if(istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))
 			harvest()
 	else
-		user.changeNext_move(8)
+		user.delayNextAttack(8)
 		if(O.force)
 			var/damage = O.force
 			if (O.damtype == HALLOSS)

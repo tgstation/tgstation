@@ -178,14 +178,6 @@
 		else
 			user.take_organ_damage(0,force)
 
-/obj/item/weapon/grown/nettle/afterattack(atom/A as mob|obj, mob/user as mob)
-	if(force > 0)
-		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off
-		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
-	else
-		usr << "All the leaves have fallen off the nettle from violent whacking."
-		del(src)
-
 /obj/item/weapon/grown/nettle/changePotency(newValue) //-QualityVan
 	potency = newValue
 	force = round((5+potency/5), 1)
@@ -228,13 +220,6 @@
 			M.Weaken(force/15)
 		M.drop_item()
 
-/obj/item/weapon/grown/deathnettle/afterattack(atom/A as mob|obj, mob/user as mob)
-	if (force > 0)
-		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off
-
-	else
-		usr << "All the leaves have fallen off the deathnettle from violent whacking."
-		del(src)
 
 /obj/item/weapon/grown/deathnettle/changePotency(newValue) //-QualityVan
 	potency = newValue

@@ -157,7 +157,7 @@
 			if(desired==0)
 				return 1
 			var/obj/item/stack/sheet/out = new mat.sheettype(output.loc)
-			out.amount = between(0,desired,min(mat.stored,out.max_amount))
+			out.amount = Clamp(desired, 0, min(mat.stored, out.max_amount))
 			mat.stored -= out.amount
 	updateUsrDialog()
 	return
@@ -819,7 +819,8 @@
 	icon_state = "mining"
 	item_state = "analyzer"
 	w_class = 2.0
-	flags = CONDUCT
+	flags = 0
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	var/cooldown = 0
 

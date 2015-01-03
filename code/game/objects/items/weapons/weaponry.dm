@@ -61,6 +61,7 @@
 	..()
 
 /obj/item/weapon/nullrod/afterattack(atom/A, mob/user as mob)
+	user.delayNextAttack(8)
 	if (istype(A, /turf/simulated/floor))
 		user << "\blue You hit the floor with the [src]."
 		call(/obj/effect/rune/proc/revealrunes)(src)
@@ -92,7 +93,8 @@
 	icon_state = "claymore"
 	item_state = "claymore"
 	hitsound = "sound/weapons/bloodyslice.ogg"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	force = 40
 	throwforce = 10
@@ -120,7 +122,8 @@
 	icon_state = "katana"
 	item_state = "katana"
 	hitsound = "sound/weapons/bloodyslice.ogg"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 40
 	throwforce = 10
@@ -156,7 +159,8 @@ obj/item/weapon/wirerod
 	desc = "A rod with some wire wrapped around the top. It'd be easy to attach something to the top bit."
 	icon_state = "wiredrod"
 	item_state = "rods"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS
+	siemens_coefficient = 1
 	force = 9
 	throwforce = 10
 	w_class = 3

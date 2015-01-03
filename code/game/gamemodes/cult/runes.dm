@@ -160,8 +160,6 @@ var/list/sacrificed = list()
 	qdel(src)
 	return
 
-
-
 /////////////////////////////////////////THIRD RUNE
 
 /obj/effect/rune/proc/convert()
@@ -205,37 +203,30 @@ var/list/sacrificed = list()
 	usr.show_message("\red The markings pulse with a small burst of light, then fall dark.", 3, "\red You hear a faint fizzle.", 2)
 	usr << "<span class='notice'> You remembered the words correctly, but the rune isn't working. Maybe your ritual is missing something important.</span>"
 
-
-
 /////////////////////////////////////////FOURTH RUNE
-var/global/cult_tearreality_lastattempt=0
-#define CULT_TEAR_REALITY_DELAY 50 // 5s minimum delay
-/obj/effect/rune/proc/tearreality()
-	var/cultist_count = 0
 
-	// Spamming this is getting so bad that it's impossible to process ahelps.
-	//if((world.time - cult_tearreality_lastattempt) < CULT_TEAR_REALITY_DELAY)
-	//	return fizzle()
-	//cult_tearreality_lastattempt=world.time
+/obj/effect/rune/proc/tearreality()
+	var/list/active_cultists=list()
+
+	for(var/mob/M in range(1,src))
+		if(iscultist(M) && !M.stat)
+			active_cultists.Add(M)
 
 	if(universe.name == "Hell Rising")
-		for(var/mob/N in range(1,src))
-			if(iscultist(N))
-				N << "<span class='warning'>This plane of reality has already been torn into Nar-Sie's realm.</span>"
-	else
-		for(var/mob/M in range(1,src))
-			if(iscultist(M) && !M.stat)
+		for(var/mob/M in active_cultists)
+			M << "<span class='warning'>This plane of reality has already been torn into Nar-Sie's realm.</span>"
+
+	if(active_cultists.len >= 9)
+		// Sanity checks
+		// Are we permitted to spawn Nar-Sie?
+		if(ticker.mode.eldergod)
+			// Only chant when Nar-Sie spawns
+			for(var/mob/M in active_cultists)
 				M.say("Tok-lyr rqa'nap g[pick("'","`")]lt-ulotf!")
-				cultist_count += 1
-		if(cultist_count >= 9)
-			// Sanity checks
-			// Are we permitted to spawn Nar-Sie?
-			if(ticker.mode.eldergod)
-				new /obj/machinery/singularity/narsie/large(src.loc,cultspawn=1)
-				ticker.mode.eldergod = 0
+			ticker.mode.eldergod = 0
+			new /obj/machinery/singularity/narsie/large(src.loc,cultspawn=1)
 			return
-		else
-			return fizzle()
+	return fizzle()
 
 /////////////////////////////////////////FIFTH RUNE
 
@@ -456,9 +447,6 @@ var/global/cult_tearreality_lastattempt=0
 			sleep(100)
 	return fizzle()
 
-
-
-
 /////////////////////////////////////////ELEVENTH RUNE
 
 /obj/effect/rune/proc/manifest()
@@ -535,10 +523,6 @@ var/global/cult_tearreality_lastattempt=0
 		"<span class='warning'>You hear faint rustle.</span>")
 		D.dust()
 	return
-
-
-
-
 
 /////////////////////////////////////////TWELFTH RUNE
 

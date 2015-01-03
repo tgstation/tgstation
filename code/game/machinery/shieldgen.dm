@@ -233,7 +233,7 @@
 /obj/machinery/shieldgen/attack_ghost(mob/user)
 	if(isAdminGhost(user)) src.attack_hand(user)
 	return
-	
+
 /obj/machinery/shieldgen/attack_hand(mob/user as mob)
 	if(locked)
 		user << "The machine is locked, you are unable to use it."
@@ -330,7 +330,8 @@
 //		var/maxshieldload = 200
 		var/obj/structure/cable/attached		// the attached cable
 		var/storedpower = 0
-		flags = FPRINT | CONDUCT
+		flags = FPRINT
+		siemens_coefficient = 1
 		use_power = 0
 
 		machine_flags = WRENCHMOVE | FIXED2WORK

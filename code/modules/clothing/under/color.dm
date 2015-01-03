@@ -37,10 +37,17 @@
 
 /obj/item/clothing/under/color/orange
 	name = "orange jumpsuit"
-	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
 	icon_state = "orange"
 	item_state = "o_suit"
 	_color = "orange"
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+
+/obj/item/clothing/under/color/prisoner
+	name = "prison jumpsuit"
+	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
+	icon_state = "prisoner"
+	item_state = "o_suit"
+	_color = "prisoner"
 	has_sensor = 2
 	sensor_mode = 3
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL

@@ -170,11 +170,20 @@ datum
 		//	required_reagents = list("hydrogen" = 1, "carbon" = 1, "nitrogen" = 1)
 		//	result_amount = 1
 
-		water //I can't believe we never had this.
+/* You attempt to make water by mixing the ingredients for Hydroperoxyl, but you get a big, whopping sum of nothing!
+		water //Keeping this commented out for posterity.
 			name = "Water"
 			id = "water"
-			result = null
-			required_reagents = list("oxygen" = 2, "hydrogen" = 1)
+			result = null //I can't believe it's not water!
+			required_reagents = list("oxygen" = 2, "hydrogen" = 1) //And there goes the atmosphere, thanks greenhouse gases!
+			result_amount = 1
+*/
+
+		water
+			name = "Water"
+			id = "water"
+			result = "water"
+			required_reagents = list("hydrogen" = 2, "oxygen" = 1)
 			result_amount = 1
 
 		thermite

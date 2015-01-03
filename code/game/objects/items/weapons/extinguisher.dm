@@ -6,7 +6,8 @@
 	icon_state = "fire_extinguisher0"
 	item_state = "fire_extinguisher"
 	hitsound = 'sound/weapons/smash.ogg'
-	flags = FPRINT | USEDELAY | TABLEPASS | CONDUCT
+	flags = FPRINT | USEDELAY | TABLEPASS
+	siemens_coefficient = 1
 	throwforce = 10
 	w_class = 3.0
 	throw_speed = 2
@@ -100,6 +101,7 @@
 		message_admins("[user]/[user.ckey] has crammed \a [W] into a [src].")
 
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
+	user.delayNextAttack(5)
 	if(get_dist(src,target) <= 1)
 		if((istype(target, /obj/structure/reagent_dispensers)))
 			var/obj/o = target

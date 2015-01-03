@@ -124,7 +124,8 @@ obj/machinery/door/airlock/New()
 	desc = "Used for repairing or building airlock sensors"
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_sensor_off"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS
+	siemens_coefficient = 1
 
 /obj/item/airlock_sensor_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
@@ -289,7 +290,8 @@ obj/machinery/airlock_sensor/attackby(var/obj/item/W, var/mob/user)
 	desc = "Used for repairing or building airlock access buttons"
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "access_button_build"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT | TABLEPASS
+	siemens_coefficient = 1
 
 /obj/item/access_button_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()

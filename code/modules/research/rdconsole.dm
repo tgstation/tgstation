@@ -668,7 +668,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:644: dat += "Name: [d_disk.blueprint.name]<BR>"
 				dat += {"Name: [d_disk.blueprint.name]<BR>
-					Level: [between(0, (d_disk.blueprint.reliability + rand(-15,15)), 100)]<BR>"}
+					Level: [Clamp(d_disk.blueprint.reliability + rand(-15,15), 0, 100)]<BR>"}
 				// END AUTOFIX
 				switch(d_disk.blueprint.build_type)
 					if(IMPRINTER) dat += "Lathe Type: Circuit Imprinter<BR>"

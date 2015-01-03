@@ -14,6 +14,7 @@ var/global/list/special_roles = list(
 	ROLE_NINJA        = 1,
 	ROLE_OPERATIVE    = IS_MODE_COMPILED("nuclear"),
 	ROLE_PAI          = 1, // -- TLE
+	ROLE_POSIBRAIN    = 1,
 	ROLE_REV          = IS_MODE_COMPILED("revolution"),
 	ROLE_TRAITOR      = IS_MODE_COMPILED("traitor"),
 	ROLE_VAMPIRE      = IS_MODE_COMPILED("vampire"),

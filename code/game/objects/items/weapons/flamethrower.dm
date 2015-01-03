@@ -4,7 +4,8 @@
 	icon = 'icons/obj/flamethrower.dmi'
 	icon_state = "flamethrowerbase"
 	item_state = "flamethrower_0"
-	flags = FPRINT | TABLEPASS| CONDUCT | USEDELAY // USEDELAY flag needed in order to use afterattack() for things that are not in reach. I.E: Shooting flames.
+	flags = FPRINT | TABLEPASS| USEDELAY // USEDELAY flag needed in order to use afterattack() for things that are not in reach. I.E: Shooting flames.
+	siemens_coefficient = 1
 	force = 3.0
 	throwforce = 10.0
 	throw_speed = 1
@@ -64,6 +65,7 @@
 
 /obj/item/weapon/flamethrower/afterattack(atom/target, mob/user, flag)
 	// Make sure our user is still holding us
+	user.delayNextAttack(8)
 	if(user && user.get_active_hand() == src)
 		var/turf/target_turf = get_turf(target)
 		if(target_turf)

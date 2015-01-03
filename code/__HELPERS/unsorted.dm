@@ -8,13 +8,6 @@
 /proc/dd_range(var/low, var/high, var/num)
 	return max(low,min(high,num))
 
-//Returns whether or not A is the middle most value
-/proc/InRange(var/A, var/lower, var/upper)
-	if(A < lower) return 0
-	if(A > upper) return 0
-	return 1
-
-
 /proc/Get_Angle(atom/movable/start,atom/movable/end)//For beams.
 	if(!start || !end) return 0
 	var/dy
@@ -237,10 +230,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(oldname)
 		//update the datacore records! This is goig to be a bit costly.
 		for(var/list/L in list(data_core.general,data_core.medical,data_core.security,data_core.locked))
-			for(var/datum/data/record/R in L)
-				if(R.fields["name"] == oldname)
-					R.fields["name"] = newname
-					break
+			var/datum/data/record/R = find_record("name", oldname, L)
+
+			if(R)
+				R.fields["name"] = newname
 
 		//update our pda and id if we have them on our person
 		var/list/searching = GetAllContents(searchDepth = 3)
@@ -471,14 +464,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/M = E/(SPEED_OF_LIGHT_SQ)
 	return M
 
-//Forces a variable to be posative
-/proc/modulus(var/M)
-	if(M >= 0)
-		return M
-	if(M < 0)
-		return -M
-
-
 /proc/key_name(var/whom, var/include_link = null, var/include_name = 1)
 	var/mob/M
 	var/client/C
@@ -643,10 +628,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/x = min(world.maxx, max(1, A.x + dx))
 	var/y = min(world.maxy, max(1, A.y + dy))
 	return locate(x,y,A.z)
-
-//Makes sure MIDDLE is between LOW and HIGH. If not, it adjusts it. Returns the adjusted value.
-/proc/between(var/low, var/middle, var/high)
-	return max(min(middle, high), low)
 
 proc/arctan(x)
 	var/y=arcsin(x/sqrt(1+x*x))
@@ -1234,10 +1215,6 @@ proc/get_mob_with_client_list()
 		loc = loc.loc
 	return null
 
-/proc/get_turf_or_move(turf/location)
-	return get_turf(location)
-
-
 //Quick type checks for some tools
 var/global/list/common_tools = list(
 /obj/item/weapon/cable_coil,
@@ -1343,7 +1320,7 @@ proc/is_hot(obj/item/W as obj)
 		istype(W, /obj/item/weapon/circular_saw)                  || \
 		istype(W, /obj/item/weapon/melee/energy/sword)            || \
 		istype(W, /obj/item/weapon/melee/energy/blade)            || \
-		istype(W, /obj/item/weapon/shovel)                        || \
+		istype(W, /obj/item/weapon/pickaxe/shovel)				  || \
 		istype(W, /obj/item/weapon/kitchenknife)                  || \
 		istype(W, /obj/item/weapon/butch)						  || \
 		istype(W, /obj/item/weapon/scalpel)                       || \

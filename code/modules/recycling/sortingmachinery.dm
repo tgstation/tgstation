@@ -208,7 +208,8 @@
 
 	w_class = 1
 	item_state = "electronic"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 
 	proc/openwindow(mob/user as mob)
