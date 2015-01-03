@@ -614,7 +614,7 @@
 		var/turf/T = get_step(src,dir)
 		if(T)
 			for(var/obj/machinery/door/D in T.contents)
-				if(D.check_access(MYID) && !istype(D,/obj/machinery/door/poddoor) && D.layer == 3.1)
+				if(D.check_access(MYID) && !istype(D,/obj/machinery/door/poddoor) && D.density)
 					//layer 3.1 is "closed" for most doors, this is just a hacky !open check because i cannot find an open var
 					spawn(1)
 						D.open()
