@@ -93,7 +93,7 @@ RCD
 
 
 /obj/item/weapon/rcd/New()
-	desc = "A RCD. It currently holds [matter]/100 matter-units."
+	desc = "A RCD. It currently holds [matter]/[max_charge] matter-units."
 	src.spark_system = new /datum/effect/effect/system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
