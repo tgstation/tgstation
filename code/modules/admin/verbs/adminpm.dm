@@ -52,7 +52,7 @@
 
 	//get message text, limit it's length.and clean/escape html
 	if(!msg)
-		msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as text|null
+		msg = sanitize(input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as text|null)
 
 		if(!msg)	return
 		if(!C)
@@ -65,10 +65,11 @@
 
 	//clean the message if it's not sent by a high-rank admin
 	if(!check_rights(R_SERVER|R_DEBUG,0))
-		msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+	//	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 		if(!msg)	return
 
 	msg = emoji_parse(msg)
+	var/recieve_pm_type = "Player"
 
 	if(C.holder)
 		if(holder)	//both are admins
@@ -78,6 +79,7 @@
 		else		//recipient is an admin but sender is not
 			C << "<font color='red'>Reply PM from-<b>[key_name(src, C, 1)]</b>: [msg]</font>"
 			src << "<font color='blue'>PM to-<b>Admins</b>: [msg]</font>"
+
 
 		//play the recieving admin the adminhelp sound (if they have them enabled)
 		if(C.prefs.toggles & SOUND_ADMINHELP)
@@ -98,7 +100,7 @@
 				spawn()	//so we don't hold the caller proc up
 					var/sender = src
 					var/sendername = key
-					var/reply = input(C, msg,"Admin PM from-[sendername]", "") as text|null		//show message and await a reply
+					var/reply = input(C, msg,"[recieve_pm_type] PM from-[sendername]", "") as text|null
 					if(C && reply)
 						if(sender)
 							C.cmd_admin_pm(sender,reply)										//sender is still about, let's reply to them

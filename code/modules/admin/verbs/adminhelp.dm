@@ -20,8 +20,8 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 
 	//remove out adminhelp verb temporarily to prevent spamming of admins.
 	src.verbs -= /client/verb/adminhelp
-	spawn(1200)
-		src.verbs += /client/verb/adminhelp	// 2 minute cool-down for adminhelps
+	spawn(150)
+		src.verbs += /client/verb/adminhelp	// cool-down for adminhelps
 
 	//clean the input msg
 	if(!msg)	return
@@ -30,7 +30,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	var/original_msg = msg
 
 	//explode the input msg into a list
-	var/list/msglist = text2list(msg, " ")
+	//var/list/msglist = text2list(msg, " ")
 
 	//generate keywords lookup
 	var/list/surnames = list()
@@ -58,7 +58,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 			//ckeys
 			ckeys[M.ckey] = M
 
-	var/ai_found = 0
+/*	var/ai_found = 0
 	msg = ""
 	var/list/mobs_found = list()
 	for(var/original_word in msglist)
@@ -81,6 +81,8 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 							msg += "<b><font color='black'>[original_word] (<A HREF='?_src_=holder;adminmoreinfo=\ref[found]'>?</A>)</font></b> "
 							continue
 			msg += "[original_word] "
+
+*/
 
 	if(!mob)	return						//this doesn't happen
 
