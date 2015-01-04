@@ -333,6 +333,7 @@
 #include "code\game\jobs\job\science.dm"
 #include "code\game\jobs\job\security.dm"
 #include "code\game\jobs\job\silicon.dm"
+#include "code\game\jobs\job\supply.dm"
 #include "code\game\machinery\ai_slipper.dm"
 #include "code\game\machinery\airlock_control.dm"
 #include "code\game\machinery\alarm.dm"
