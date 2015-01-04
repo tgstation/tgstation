@@ -16,5 +16,11 @@
 
 	. = src.say_dead(message)
 
+/mob/dead/observer/compose_track_href(atom/movable/speaker, message_langs, raw_message, radio_freq)
+	return "<a href=?src=\ref[src];follow=\ref[speaker]>"
+
+/mob/dead/observer/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
+	return "</a>"
+
 /mob/dead/observer/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
 	src << message
