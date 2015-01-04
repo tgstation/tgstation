@@ -140,7 +140,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/ex_act(severity, target)
 	..()
-	if(client && !blinded)
+	if(client && !eye_blind)
 		flick("flash", src.flash)
 
 /mob/living/proc/updatehealth()
@@ -161,8 +161,6 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/burn_skin(burn_amount)
 	if(istype(src, /mob/living/carbon/human))
 		//world << "DEBUG: burn_skin(), mutations=[mutations]"
-		if (COLD_RESISTANCE in src.mutations) //fireproof
-			return 0
 		var/mob/living/carbon/human/H = src	//make this damage method divide the damage to be done among all the body parts, then burn each body part for that much damage. will have better effect then just randomly picking a body part
 		var/divided_damage = (burn_amount)/(H.organs.len)
 		var/extradam = 0	//added to when organ is at max dam
@@ -173,8 +171,6 @@ Sorry Giacom. Please don't be mad :(
 		H.updatehealth()
 		return 1
 	else if(istype(src, /mob/living/carbon/monkey))
-		if (COLD_RESISTANCE in src.mutations) //fireproof
-			return 0
 		var/mob/living/carbon/monkey/M = src
 		M.adjustFireLoss(burn_amount)
 		M.updatehealth()
@@ -384,9 +380,7 @@ Sorry Giacom. Please don't be mad :(
 	radiation = 0
 	nutrition = NUTRITION_LEVEL_FED + 50
 	bodytemperature = 310
-	sdisabilities = 0
 	disabilities = 0
-	blinded = 0
 	eye_blind = 0
 	eye_blurry = 0
 	ear_deaf = 0
@@ -534,7 +528,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/cuff_break(obj/item/weapon/restraints/I, mob/living/carbon/C)
 
-	if(HULK in usr.mutations)
+	if(C.dna.check_mutation(HULK))
 		C.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 
 	C.visible_message("<span class='danger'>[C] manages to break [I]!</span>")
@@ -561,7 +555,7 @@ Sorry Giacom. Please don't be mad :(
 		breakouttime = LC.breakouttime
 	displaytime = breakouttime / 600
 
-	if(isalienadult(C) || HULK in usr.mutations)
+	if(isalienadult(C) || C.dna.check_mutation(HULK))
 		C.visible_message("<span class='warning'>[C] is trying to break [I]!</span>")
 		C << "<span class='notice'>You attempt to break [I]. (This will take around 5 seconds and you need to stand still.)</span>"
 		spawn(0)

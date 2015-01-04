@@ -73,7 +73,7 @@
 			var/mob/living/carbon/human/H = usr
 			if(!(usr in nearby))
 				if(usr.client && usr.machine==src)
-					if(TK in H.mutations)
+					if(H.dna.check_mutation(TK))
 						is_in_use = 1
 						src.attack_hand(usr)
 		in_use = is_in_use

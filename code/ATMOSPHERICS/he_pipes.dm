@@ -50,6 +50,8 @@
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/New()
 	..()
+
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/SetInitDirections()
 	switch(dir)
 		if(SOUTH)
 			initialize_directions = NORTH

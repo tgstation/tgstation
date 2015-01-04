@@ -86,7 +86,7 @@
 	if(!istype(M))	return ..()
 	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head")
 		return ..()
-	if((CLUMSY in user.mutations) && prob(50))
+	if(user.disabilities & CLUMSY && prob(50))
 		M = user
 	return eyestab(M,user)
 
@@ -349,14 +349,14 @@
 		user << "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>"
 	if (prob(user.eye_stat - 25 + 1))
 		user << "<span class='warning'>You go blind!</span>"
-		user.sdisabilities |= BLIND
+		user.disabilities |= BLIND
 	else if(prob(user.eye_stat - 15 + 1))
 		user << "<span class='warning'>You go blind!</span>"
 		user.eye_blind = 5
 		user.eye_blurry = 5
-		user.disabilities |= NEARSIGHTED
+		user.disabilities |= NEARSIGHT
 		spawn(100)
-			user.disabilities &= ~NEARSIGHTED
+			user.disabilities &= ~NEARSIGHT
 
 /obj/item/weapon/weldingtool/proc/flamethrower_screwdriver(obj/item/I, mob/user)
 	if(welding)

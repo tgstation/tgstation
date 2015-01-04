@@ -163,7 +163,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/potato/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/C
+		var/obj/item/stack/cable_coil/C = W
 		if (C.use(5))
 			user << "<span class='notice'>You add some cable to the potato and slide it inside the battery encasing.</span>"
 			var/obj/item/weapon/stock_parts/cell/potato/pocell = new /obj/item/weapon/stock_parts/cell/potato(user.loc)

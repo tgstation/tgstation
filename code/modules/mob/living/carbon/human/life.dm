@@ -49,17 +49,20 @@
 	//blinded get reset each cycle and then get activated later in the
 	//code. Very ugly. I dont care. Moving this stuff here so its easy
 	//to find it.
-	blinded = null
 	fire_alert = 0 //Reset this here, because both breathe() and handle_environment() have a chance to set it.
 	tinttotal = tintcheck() //here as both hud updates and status updates call it
 
 	//TODO: seperate this out
 	var/datum/gas_mixture/environment = loc.return_air()
 
+	handle_regular_hud_updates()
+
 	//No need to update all of these procs if the guy is dead.
 	if(stat != DEAD)
-		if(SSair.times_fired%4==2 || failed_last_breath) 	//First, resolve location and get a breath
-			breathe() 				//Only try to take a breath every 4 ticks, unless suffocating
+		for(var/datum/mutation/human/HM in dna.mutations)
+			HM.on_life(src)
+
+		if(SSair.times_fired%4==2 || failed_last_breath) 	//First, resolve location and get a breath			breathe() 				//Only try to take a breath every 4 ticks, unless suffocating
 
 		else //Still give containing object the chance to interact
 			if(istype(loc, /obj/))
@@ -97,8 +100,6 @@
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
-	handle_regular_hud_updates()
-
 	if(dna)
 		dna.species.spec_life(src) // for mutantraces
 
@@ -125,34 +126,6 @@
 
 
 /mob/living/carbon/human/proc/handle_disabilities()
-	if (disabilities & EPILEPSY)
-		if ((prob(1) && paralysis < 1))
-			src << "<span class='danger'>You have a seizure!</span>"
-			for(var/mob/O in viewers(src, null))
-				if(O == src)
-					continue
-				O.show_message(text("<span class='userdanger'>[src] starts having a seizure!</span>"), 1)
-			Paralyse(10)
-			Jitter(1000)
-	if (disabilities & COUGHING)
-		if ((prob(5) && paralysis <= 1))
-			drop_item()
-			emote("cough")
-	if (disabilities & TOURETTES)
-		if ((prob(10) && paralysis <= 1))
-			Stun(10)
-			switch(rand(1, 3))
-				if(1)
-					emote("twitch")
-				if(2 to 3)
-					say("[prob(50) ? ";" : ""][pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")]")
-			var/x_offset = pixel_x + rand(-2,2) //Should probably be moved into the twitch emote at some point.
-			var/y_offset = pixel_y + rand(-1,1)
-			animate(src, pixel_x = pixel_x + x_offset, pixel_y = pixel_y + y_offset, time = 1)
-			animate(pixel_x = initial(pixel_x) , pixel_y = initial(pixel_y), time = 1)
-	if (disabilities & NERVOUS)
-		if (prob(10))
-			stuttering = max(10, stuttering)
 	if (getBrainLoss() >= 60 && stat != 2)
 		if (prob(3))
 			switch(pick(1,2,3))
@@ -335,7 +308,7 @@
 
 /mob/living/carbon/human/proc/get_cold_protection(temperature)
 
-	if(COLD_RESISTANCE in mutations)
+	if(dna.check_mutation(COLDRES))
 		return 1 //Fully protected from the cold.
 
 	if(dna && COLDRES in dna.species.specflags)
@@ -437,13 +410,13 @@
 
 /mob/living/carbon/human/proc/handle_regular_status_updates()
 	if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
-		blinded = 1
+		eye_blind = max(eye_blind, 1)
 		silent = 0
 	else				//ALIVE. LIGHTS ARE ON
 		updatehealth()	//TODO
 		if(health <= config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
 			death()
-			blinded = 1
+			eye_blind = max(eye_blind, 1)
 			silent = 0
 			return 1
 
@@ -473,13 +446,13 @@
 
 		if(paralysis)
 			AdjustParalysis(-1)
-			blinded = 1
+			eye_blind = max(eye_blind, 1)
 			stat = UNCONSCIOUS
 		else if(sleeping)
 			handle_dreams()
 			adjustStaminaLoss(-10)
 			sleeping = max(sleeping-1, 0)
-			blinded = 1
+			eye_blind = max(eye_blind, 1)
 			stat = UNCONSCIOUS
 			if( prob(10) && health && !hal_crit )
 				spawn(0)
@@ -489,27 +462,29 @@
 			stat = CONSCIOUS
 
 		//Eyes
-		if(sdisabilities & BLIND)	//disabled-blind, doesn't get better on its own
-			blinded = 1
+		if(disabilities & BLIND)	//disabled-blind, doesn't get better on its own
+			eye_blind = max(eye_blind, 1)
 		else if(eye_blind)			//blindness, heals slowly over time
 			eye_blind = max(eye_blind-1,0)
-			blinded = 1
 		else if(tinttotal >= TINT_BLIND)		//covering your eyes heals blurry eyes faster
 			eye_blurry = max(eye_blurry-3, 0)
-		//	blinded = 1				//now handled under /handle_regular_hud_updates()
 		else if(eye_blurry)	//blurry eyes heal slowly
 			eye_blurry = max(eye_blurry-1, 0)
 
 		//Ears
-		if(sdisabilities & DEAF)	//disabled-deaf, doesn't get better on its own
+		if(disabilities & DEAF)	//disabled-deaf, doesn't get better on its own
 			ear_deaf = max(ear_deaf, 1)
-		else if(istype(ears, /obj/item/clothing/ears/earmuffs))	//resting your ears with earmuffs heals ear damage faster, and slowly heals deafness
-			ear_damage = max(ear_damage-0.15, 0)
-			ear_deaf = max(ear_deaf-1, 1)
-		else if(ear_deaf) //deafness, heals slowly over time
-			ear_deaf = max(ear_deaf-1, 0)
-		else if(ear_damage < 25)	//ear damage heals slowly under this threshold. otherwise you'll need earmuffs
-			ear_damage = max(ear_damage-0.05, 0)
+		else
+			/* might be better to create a variable here, and instead of doing this nested for. */
+			// deafness heals slowly over time, unless ear_damage is over 100
+			if (ear_damage < 100)
+				// Heal the first 1/3 here
+				ear_deaf = max(ear_deaf - 1, 0)
+				ear_damage = max(ear_damage-0.05, 0)
+				if(istype(ears, /obj/item/clothing/ears/earmuffs)) // earmuffs rest your ears, healing 3x faster, but keeping you deaf.
+					// Heal the 2/3 here
+					ear_deaf = max(ear_deaf, 1)
+					ear_damage = max(ear_damage-0.10, 0)
 
 		//Dizziness
 		if(dizziness)

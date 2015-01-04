@@ -64,7 +64,7 @@
 		holder.luminosity = 4
 
 /datum/spacevine_mutation/toxicity
-	name = "toxicity"
+	name = "toxic"
 	hue = "#ff00ff"
 
 /datum/spacevine_mutation/toxicity/on_cross(obj/effect/spacevine/holder, mob/living/crosser)
@@ -87,7 +87,7 @@
 	explosion(holder.loc, 0, 0, 2, 0, 0)
 
 /datum/spacevine_mutation/fire_proof
-	name = "fire resist"
+	name = "fire proof"
 	hue = "#ff8888"
 
 /datum/spacevine_mutation/fire_proof/process_temperature(obj/effect/spacevine/holder, temp, volume)
@@ -116,7 +116,7 @@
 	buckled.ex_act(severity)
 
 /datum/spacevine_mutation/transparency
-	name = "transparency"
+	name = "transparent"
 	hue = ""
 
 /datum/spacevine_mutation/transparency/on_grow(obj/effect/spacevine/holder)
@@ -124,7 +124,7 @@
 	holder.alpha = 125
 
 /datum/spacevine_mutation/oxy_eater
-	name = "oxygen consumption"
+	name = "oxygen consuming"
 	hue = "#ffff88"
 
 /datum/spacevine_mutation/oxy_eater/process_mutation(obj/effect/spacevine/holder)
@@ -134,7 +134,7 @@
 		GM.oxygen = max(0, GM.oxygen - severity * holder.energy)
 
 /datum/spacevine_mutation/nitro_eater
-	name = "nitrogen consumption"
+	name = "nitrogen consuming"
 	hue = "#8888ff"
 
 /datum/spacevine_mutation/nitro_eater/process_mutation(obj/effect/spacevine/holder)
@@ -144,7 +144,7 @@
 		GM.nitrogen = max(0, GM.nitrogen - severity * holder.energy)
 
 /datum/spacevine_mutation/carbondioxide_eater
-	name = "CO2 consumption"
+	name = "CO2 consuming"
 	hue = "#00ffff"
 
 /datum/spacevine_mutation/carbondioxide_eater/process_mutation(obj/effect/spacevine/holder)
@@ -154,7 +154,7 @@
 		GM.carbon_dioxide = max(0, GM.carbon_dioxide - severity * holder.energy)
 
 /datum/spacevine_mutation/plasma_eater
-	name = "toxins consumption"
+	name = "toxins consuming"
 	hue = "#ffbbff"
 
 /datum/spacevine_mutation/plasma_eater/process_mutation(obj/effect/spacevine/holder)
@@ -164,7 +164,7 @@
 		GM.toxins = max(0, GM.toxins - severity * holder.energy)
 
 /datum/spacevine_mutation/thorns
-	name = "thorns"
+	name = "thorny"
 	hue = "#666666"
 
 /datum/spacevine_mutation/thorns/on_cross(obj/effect/spacevine/holder, crosser)
@@ -373,10 +373,15 @@
 	if(parent)
 		SV.mutations |= parent.mutations
 		SV.color = parent.color
+		SV.desc = parent.desc
 		if(prob(mutativness))
 			SV.mutations |= pick(mutations_list)
 			var/datum/spacevine_mutation/randmut = pick(SV.mutations)
 			SV.color = randmut.hue
+			SV.desc = "An extremely expansionistic species of vine. These are "
+			for(var/datum/spacevine_mutation/M in SV.mutations)
+				SV.desc += "[M.name] "
+			SV.desc += "vines."
 
 	for(var/datum/spacevine_mutation/SM in SV.mutations)
 		SM.on_birth(SV)

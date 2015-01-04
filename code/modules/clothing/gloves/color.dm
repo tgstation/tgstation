@@ -137,7 +137,7 @@
 
 /obj/item/clothing/gloves/color/latex
 	name = "latex gloves"
-	desc = "Sterile latex gloves."
+	desc = "Cheap sterile gloves made from latex."
 	icon_state = "latex"
 	item_state = "lgloves"
 	siemens_coefficient = 0.30
@@ -148,11 +148,18 @@
 /obj/item/clothing/gloves/color/latex/cmo
 	item_color = "medical"		//Exists for washing machines. Is not different from latex gloves in any way.
 
+/obj/item/clothing/gloves/color/latex/nitrile
+	name = "nitrile gloves"
+	desc = "Pricy sterile gloves that are stronger than latex."
+	icon_state = "nitrile"
+	item_state = "nitrilegloves"
+	transfer_prints = FALSE
+
 /obj/item/clothing/gloves/color/white
 	name = "white gloves"
 	desc = "These look pretty fancy."
-	icon_state = "latex"
-	item_state = "lgloves"
+	icon_state = "white"
+	item_state = "wgloves"
 	item_color="mime"
 
 /obj/item/clothing/gloves/color/white/redcoat

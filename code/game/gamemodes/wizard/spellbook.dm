@@ -38,8 +38,8 @@
 		dat += "<HR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=spells'>Learn and Improve Magical Abilities</A><BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=artifacts'>Summon Magical Tools and Weapons</A><BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=challenge'>Raise The Stakes For More Power</A><BR>"
-
+		if(ticker.mode != "raginmages") // we totally need summon guns x 200
+			dat += "<A href='byond://?src=\ref[src];spell_choice=challenge'>Raise The Stakes For More Power</A><BR>"
 		dat += "<HR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=rememorize'>Re-memorize Spells</A><BR>"
 
@@ -362,12 +362,8 @@
 						if("scrying")
 							feedback_add_details("wizard_spell_learned","SO") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							new /obj/item/weapon/scrying(get_turf(H))
-							if (!(XRAY in H.mutations))
-								H.mutations.Add(XRAY)
-								H.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
-								H.see_in_dark = 8
-								H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-								H << "<span class='notice'>The walls suddenly disappear.</span>"
+							if (!(H.dna.check_mutation(XRAY)))
+								H.dna.add_mutation(XRAY)
 							temp = "You have purchased a scrying orb, and gained x-ray vision."
 							max_uses--
 		else
