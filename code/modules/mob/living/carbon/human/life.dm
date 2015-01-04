@@ -440,7 +440,7 @@ var/global/list/organ_damage_overlays = list(
 		if(flags & INVULNERABLE)
 			return
 		if(getFireLoss())
-			if((M_RESIST_HEAT in mutations)))
+			if((M_RESIST_HEAT in mutations))
 				heal_organ_damage(0,1)
 
 
