@@ -693,6 +693,7 @@ datum/reagent/cryptobiolin/on_mob_life(var/mob/living/M as mob)
 	if(!M.confused)
 		M.confused = 1
 	M.confused = max(M.confused, 20)
+	..()
 	return
 
 datum/reagent/impedrezene
