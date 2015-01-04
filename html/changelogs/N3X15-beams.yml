@@ -1,7 +1,0 @@
-author: N3X15
-delete-after: true
-changes:
-- rscadd: "Added mirror frames, constructable with 5 metal sheets."
-- rscadd: "Added mirrors.  Mirrors redirect beams on 90° angles. Can be made with 5 reinforced glass on a mirror frame."
-- rscadd: "Added beam splitters, which split the beam into two half-strength child beams. Can be made with 5 reinforced plasmaglass on a mirror frame."
-- rscadd: "Added photocollectors, which generate 390W of power per emitter beam power level.  Will be used for map power transmission."
