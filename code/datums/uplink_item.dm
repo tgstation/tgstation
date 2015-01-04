@@ -280,7 +280,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/ammo/a40mm
 	name = "Ammo Box - 40mm grenades"
-	desc = "A box of 4 additional 40mm HE grenades for use the M-80gl's underbarrel grenade launcher. Your teammates will thank you to not shoot these down small hallways."
+	desc = "A box of 4 additional 40mm HE grenades for use the M-90gl's underbarrel grenade launcher. Your teammates will thank you to not shoot these down small hallways."
 	item = /obj/item/ammo_box/a40mm
 	cost = 4
 	gamemodes = list(/datum/game_mode/nuclear)
