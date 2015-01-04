@@ -198,7 +198,7 @@
 
 /obj/item/borg/upgrade/syndicate/
 	name = "Illegal Equipment Module"
-	desc = "Unlocks the hidden, deadlier functions of a robot"
+	desc = "Unlocks the hidden, deadlier functions of a robot."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 
@@ -209,4 +209,30 @@
 		return 0
 
 	R.emagged = 1
+	return 1
+
+/obj/item/borg/upgrade/engineering/
+	name = "Engineering Equipment Module"
+	desc = "Adds several tools and materials for the robot to use."
+	icon_state = "cyborg_upgrade3"
+	require_module = 1
+
+/obj/item/borg/upgrade/engineering/action(var/mob/living/silicon/robot/R)
+	if(..()) return 0
+
+	if(!istype(R.module, /obj/item/weapon/robot_module/engineering))
+		return 0
+
+	var/obj/item/device/material_synth/S = locate(/obj/item/device/material_synth) in R.module.modules
+	if(!S) return 0
+
+	S.materials_scanned |= list("plasma glass" = /obj/item/stack/sheet/glass/plasmaglass,
+								"reinforced plasma glass" = /obj/item/stack/sheet/rglass/plasmarglass,
+								"carpet tiles" = /obj/item/stack/tile/carpet)
+
+	var/obj/item/weapon/wrench/socket/W = locate(/obj/item/weapon/wrench/socket) in R.module.modules
+	if(W) return 0
+
+	R.module.modules += new/obj/item/weapon/wrench/socket(src)
+
 	return 1
