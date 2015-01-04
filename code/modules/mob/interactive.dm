@@ -470,52 +470,53 @@
 
 ///BUILT IN MODULES
 /mob/living/carbon/human/interactive/proc/chatter(obj)
-	var/list/verbs_use = list("touch","hold","poke","punch","smash","assault","wrench","tickle","modify","whack","beat","tackle","fiddle","destroy")
-	var/list/verbs_touch = list("stroke","pat","lick","finger","mess with","absorb","sneeze on","fist","feel up","inject","rip")
-	var/list/verbs_move = list("run","jog","leg it","slide","cheese it","walk","stroll","fly","scoot","yakkety","speed","fuck off","escape")
-	var/list/nouns_insult = list("faggot","shitcurity","noob","comdom","greyturd","tator","lingbin","bitch","whorelord","cluwne","shitbin","turdcurity","fuckblanket","asswhistle","cumdumpster")
-	var/list/nouns_generic = list("you", "you there", "guy", "person", "dude", "shitbin", "officer")
-	var/list/nouns_objects = list("thing","tool","whatever","potential murder weapon","object","toy","rear-end pleasure device","whatever")
-	var/list/nouns_body = list("ass","head","face","arms","fingers","toes","chest","eyes","nails","groin","stomach","intestines","head","hoo-hah")
-	var/list/adjective_insult = list("ugly","repulsive","dumb","asian","mongoloid","childish","captain-like","monkey-like","whoreish","dimwit","cunt-face","vomit-inducer")
-	var/list/adjective_objects = list("big","small","tiny","round","square","oblong","colorful","dull","shiny","sparkling","blinking","awful")
-	var/list/adjective_generic = list("nice","pretty","ugly","bad","okay","stupid")
-	var/list/curse_words = list("fuck","shit","cunt","ass","cock","dick","bitch","mother fucker")
+	var/verbs_use = pick_list("npc_chatter.txt","verbs_use")
+	var/verbs_touch = pick_list("npc_chatter.txt","verbs_touch")
+	var/verbs_move = pick_list("npc_chatter.txt","verbs_move")
+	var/nouns_insult = pick_list("npc_chatter.txt","nouns_insult")
+	var/nouns_generic = pick_list("npc_chatter.txt","nouns_generic")
+	var/nouns_objects = pick_list("npc_chatter.txt","nouns_objects")
+	var/nouns_body = pick_list("npc_chatter.txt","nouns_body")
+	var/adjective_insult = pick_list("npc_chatter.txt","adjective_insult")
+	var/adjective_objects = pick_list("npc_chatter.txt","adjective_objects")
+	var/adjective_generic = pick_list("npc_chatter.txt","adjective_generic")
+	var/curse_words = pick_list("npc_chatter.txt","curse_words")
 
 	if(doing & INTERACTING)
 		if(prob(chattyness))
-			var/chat = pick("This [pick(nouns_objects)] is a little [pick(adjective_objects)].",
-			"Well [pick(verbs_use)] my [pick(nouns_body)], this [pick(nouns_insult)] is pretty [pick(adjective_insult)].",
-			"[capitalize(pick(curse_words))], what am I meant to do with this [pick(adjective_insult)] [pick(nouns_objects)].")
+			var/chat = pick("This [nouns_objects] is a little [adjective_objects].",
+			"Well [verbs_use] my [nouns_body], this [nouns_insult] is pretty [adjective_insult].",
+			"[capitalize(curse_words)], what am I meant to do with this [adjective_insult] [nouns_objects].")
 			src.say(chat)
 	if(doing & TRAVEL)
 		if(prob(chattyness))
-			var/chat = pick("Oh [pick(curse_words)], [pick(verbs_move)]!",
-			"Time to get my [pick(adjective_generic)] [pick(adjective_insult)] [pick(nouns_body)] elsewhere.",
-			"I wonder if there is anything to [pick(verbs_use)] and [pick(verbs_touch)] somewhere else..")
+			var/chat = pick("Oh [curse_words], [verbs_move]!",
+			"Time to get my [adjective_generic] [adjective_insult] [nouns_body] elsewhere.",
+			"I wonder if there is anything to [verbs_use] and [verbs_touch] somewhere else..")
 			src.say(chat)
 	if(doing & FIGHTING)
 		if(prob(chattyness))
-			var/chat = pick("I'm going to [pick(verbs_use)] you, you [pick(adjective_insult)] [pick(nouns_insult)]!",
-			"Rend and [pick(verbs_touch)], Rend and [pick(verbs_use)]!",
-			"You [pick(nouns_insult)], I'm going to [pick(verbs_use)] you right in the [pick(nouns_body)]. JUST YOU WAIT!")
+			var/chat = pick("I'm going to [verbs_use] you, you [adjective_insult] [nouns_insult]!",
+			"Rend and [verbs_touch], Rend and [verbs_use]!",
+			"You [nouns_insult], I'm going to [verbs_use] you right in the [nouns_body]. JUST YOU WAIT!")
 			src.say(chat)
 	if(prob(chattyness/2))
 		var/what = pick(1,2,3,4,5)
 		switch(what)
 			if(1)
-				src.say("Well [pick(curse_words)], this is a [pick(adjective_generic)] situation.")
+				src.say("Well [curse_words], this is a [adjective_generic] situation.")
 			if(2)
-				src.say("Oh [pick(curse_words)], that [pick(nouns_insult)] was one hell of an [pick(adjective_insult)] [pick(nouns_body)].")
+				src.say("Oh [curse_words], that [nouns_insult] was one hell of an [adjective_insult] [nouns_body].")
 			if(3)
-				src.say("I want to [pick(verbs_use)] that [pick(nouns_insult)] when I find them.")
+				src.say("I want to [verbs_use] that [nouns_insult] when I find them.")
 			if(4)
-				src.say("[pick("Innocent","Guilty","Traitorous","Honk")] until proven [pick(adjective_generic)]!")
+				src.say("[pick("Innocent","Guilty","Traitorous","Honk")] until proven [adjective_generic]!")
 			if(5)
 				var/toSay = ""
 				for(var/i = 0; i < 5; i++)
-					toSay += "[pick(curse_words)] "
-				src.say("Hey [pick(nouns_generic)], why dont you go [toSay], you [pick(nouns_insult)]!")
+					curse_words = pick_list("npc_chatter.txt","curse_words")
+					toSay += "[curse_words] "
+				src.say("Hey [nouns_generic], why dont you go [toSay], you [nouns_insult]!")
 
 /mob/living/carbon/human/interactive/proc/shitcurity(obj)
 	if(retal && TARGET)

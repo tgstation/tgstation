@@ -1,0 +1,11 @@
+verbs_use@=touch@,hold@,poke@,punch@,smash@,assault@,wrench@,tickle@,modify@,whack@,beat@,tackle@,fiddle@,destroy
+verbs_touch@=stroke@,pat@,lick@,finger@,mess with@,absorb@,sneeze on@,fist@,feel up@,inject@,rip
+verbs_move@=run@,jog@,leg it@,slide@,cheese it@,walk@,stroll@,fly@,scoot@,yakkety@,speed@,fuck off@,escape
+nouns_insult@=faggot@,shitcurity@,noob@,comdom@,greyturd@,tator@,lingbin@,bitch@,whorelord@,cluwne@,shitbin@,turdcurity@,fuckblanket@,asswhistle@,cumdumpster
+nouns_generic@=you@,you there@,guy@,person@,dude@,shitbin@,officer
+nouns_objects@=thing@,tool@,whatever@,potential murder weapon@,object@,toy@,rear-end pleasure device@,whatever
+nouns_body@=ass@,head@,face@,arms@,fingers@,toes@,chest@,eyes@,nails@,groin@,stomach@,intestines@,head@,hoo-hah
+adjective_insult@=ugly@,repulsive@,dumb@,asian@,mongoloid@,childish@,captain-like@,monkey-like@,whoreish@,dimwit@,cunt-face@,vomit-inducer
+adjective_objects@=big@,small@,tiny@,round@,square@,oblong@,colorful@,dull@,shiny@,sparkling@,blinking@,awful
+adjective_generic@=nice@,pretty@,ugly@,bad@,okay@,stupid
+curse_words@=fuck@,shit@,cunt@,ass@,cock@,dick@,bitch@,mother fucker
