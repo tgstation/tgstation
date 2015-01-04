@@ -235,6 +235,12 @@ steam.start() -- spawns the effect
 		return 0
 	return 1
 
+/obj/effect/effect/smoke/Destroy()
+	if(reagents)
+		reagents.my_atom = null
+		reagents = null
+	..()
+
 /////////////////////////////////////////////
 // Bad smoke
 /////////////////////////////////////////////
@@ -474,7 +480,9 @@ steam.start() -- spawns the effect
 					sleep(10)
 					step(smoke,direction)
 				spawn(150+rand(10,30))
-					if(smoke) qdel(smoke)
+					if(smoke)
+						qdel(smoke)
+						smoke = null
 					src.total_smoke--
 
 // Goon compat.
