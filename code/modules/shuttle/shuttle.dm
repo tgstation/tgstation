@@ -1,5 +1,5 @@
 //use this define to highlight docking port bounding boxes (ONLY FOR DEBUG USE)
-#define DOCKING_PORT_HIGHLIGHT
+//#define DOCKING_PORT_HIGHLIGHT
 
 //NORTH default dir
 /obj/docking_port
@@ -116,6 +116,7 @@
 	name = "dock"
 
 	var/turf_type = /turf/space
+	var/area_type = /area/space
 
 	New()
 		..()
@@ -141,10 +142,6 @@
 
 /obj/docking_port/stationary/transit
 	name = "In Transit"
-	height = 0
-	width = 0
-	dheight = 0
-	dheight = 0
 	turf_type = /turf/space/transit
 
 	New()
@@ -163,7 +160,7 @@
 	var/mode = SHUTTLE_IDLE			//current shuttle mode (see global defines)
 	var/callTime = 50				//time spent in transit (deciseconds)
 
-	var/travelDir = NORTH			//direction the shuttle would travel in
+	var/travelDir = 0			//direction the shuttle would travel in
 
 	var/obj/docking_port/stationary/destination
 	var/obj/docking_port/stationary/previous
@@ -180,14 +177,11 @@
 		if(!areaInstance)
 			areaInstance = new()
 			areaInstance.name = name
+		areaInstance.contents += return_ordered_turfs()
 
 		#ifdef DOCKING_PORT_HIGHLIGHT
 		highlight("#0f0")
 		#endif
-
-	initialize()
-		..()
-		areaInstance.contents += return_ordered_turfs()
 
 	//this is a hook for custom behaviour. Maybe at some point we could add checks to see if engines are intact
 	proc/canMove()
@@ -254,11 +248,13 @@
 //			return
 		var/obj/docking_port/stationary/S0 = get_docked()
 		var/obj/docking_port/stationary/S1 = findTransitDock()
-		if(S1 && S0)
+		if(S1)
 			if(dock(S1))
 				WARNING("shuttle \"[id]\" could not enter transit space. Docked at [S0 ? S0.id : "null"]. Transit dock [S1 ? S1.id : "null"].")
 			else
 				previous = S0
+		else
+			WARNING("shuttle \"[id]\" could not enter transit space. S0=[S0 ? S0.id : "null"] S1=[S1 ? S1.id : "null"]")
 
 	//this is the main proc. It instantly moves our mobile port to stationary port S1
 	//it handles all the generic behaviour, such as sanity checks, closing doors on the shuttle, stunning mobs, etc
@@ -273,20 +269,29 @@
 
 		closePortDoors()
 
-		//rotate transit docking ports, so we don't need zillions of variants
-		if(istype(S1, /obj/docking_port/stationary/transit))
-			S1.dir = turn(NORTH, -travelDir)
+//		//rotate transit docking ports, so we don't need zillions of variants
+//		if(istype(S1, /obj/docking_port/stationary/transit))
+//			S1.dir = turn(NORTH, -travelDir)
 
 		var/obj/docking_port/stationary/S0 = get_docked()
 		var/turf_type = /turf/space
-		if(S0 && S0.turf_type)
-			turf_type = S0.turf_type
+		var/area_type = /area/space
+		if(S0)
+			if(S0.turf_type)
+				turf_type = S0.turf_type
+			if(S0.area_type)
+				area_type = S0.area_type
 
 		var/list/L0 = return_ordered_turfs()
 		var/list/L1 = return_ordered_turfs(S1.x, S1.y, S1.z, S1.dir)
 
 		//remove area surrounding docking port
-		areaInstance.contents.Cut()
+		if(areaInstance.contents.len)
+			var/area/A0 = locate("[area_type]")
+			if(!A0)
+				A0 = new area_type(null)
+			for(var/turf/T0 in L0)
+				A0.contents += T0
 
 		//move or squish anything in the way ship at destination
 		roadkill(L1, S1.dir)
@@ -322,7 +327,8 @@
 				if(istype(O, /obj/machinery/door))
 					var/obj/machinery/door/Door = O
 					spawn(-1)
-						Door.close()
+						if(Door)
+							Door.close()
 
 			for(var/mob/M in T0)
 				if(!M.move_on_shuttle)
@@ -340,20 +346,17 @@
 					if(!M.buckled)
 						M.Weaken(3)
 
-
 			T0.ChangeTurf(turf_type)
-
-
-			//todo
-			//T0.loc =
 
 		//air system updates
 		for(var/turf/T1 in L1)
+			T1.shift_to_subarea()
 			SSair.remove_from_active(T1)
 			T1.CalculateAdjacentTurfs()
 			SSair.add_to_active(T1,1)
 
 		for(var/turf/T0 in L0)
+			T0.shift_to_subarea()
 			SSair.remove_from_active(T0)
 			T0.CalculateAdjacentTurfs()
 			SSair.add_to_active(T0,1)
@@ -367,11 +370,16 @@
 */
 
 	proc/findTransitDock()
-		for(var/obj/docking_port/stationary/S in SSshuttle.transit)
-			if(findtext(S.id, "_transit", -8, 0))
+		var/obj/docking_port/stationary/transit/T = SSshuttle.getDock("[id]_transit")
+		if(T && !canDock(T))
+			return T
+	/*	commented out due to issues with rotation
+		for(var/obj/docking_port/stationary/transit/S in SSshuttle.transit)
+			if(S.id)
 				continue
 			if(!canDock(S))
 				return S
+	*/
 
 
 	//shuttle-door closing is handled in the dock() proc whilst looping through turfs
@@ -482,14 +490,17 @@
 
 	var/list/options = params2list(possible_destinations)
 	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
-	var/dat = "Status: [M.getStatusText()]<br><br>"
-	for(var/obj/docking_port/stationary/S in SSshuttle.stationary)
-		if(!options.Find(S.id))
-			continue
-		dat += "<A href='?src=\ref[src];move=[S.id]'>Send to [S.name]</A><br>"
+	var/dat = "Status: [M ? M.getStatusText() : "*Missing*"]<br><br>"
+	if(M)
+		for(var/obj/docking_port/stationary/S in SSshuttle.stationary)
+			if(!options.Find(S.id))
+				continue
+			if(M.canDock(S))
+				continue
+			dat += "<A href='?src=\ref[src];move=[S.id]'>Send to [S.name]</A><br>"
 	dat += "<a href='?src=\ref[user];mach_close=computer'>Close</a>"
 
-	var/datum/browser/popup = new(user, "computer", M ? M.name : "shuttle", 200, 140)
+	var/datum/browser/popup = new(user, "computer", M ? M.name : "shuttle", 300, 200)
 	popup.set_content("<center>[dat]</center>")
 	popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()

@@ -2,6 +2,12 @@
 	name = "emergency shuttle"
 	id = "emergency"
 
+	dwidth = 9
+	width = 22
+	height = 11
+	dir = 4
+	travelDir = -90
+
 /obj/docking_port/mobile/emergency/New()
 	..()
 	SSshuttle.emergency = src
@@ -59,11 +65,12 @@
 		SSshuttle.emergencyLastCallLoc = signalOrigin
 	priority_announce("The emergency shuttle has been recalled.[SSshuttle.emergencyLastCallLoc ? " Recall signal traced. Results can be viewed on any communcations console." : "" ]", null, 'sound/AI/shuttlerecalled.ogg', "Priority")
 
-
+/*
 /obj/docking_port/mobile/emergency/findTransitDock()
 	. = SSshuttle.getDock("emergency_transit")
 	if(.)	return .
 	return ..()
+*/
 
 
 /obj/docking_port/mobile/emergency/check()
@@ -111,6 +118,10 @@
 	name = "escape pod"
 	id = "pod"
 
+	dwidth = 1
+	width = 3
+	height = 4
+
 	New()
 		if(id == "pod")
 			WARNING("[type] id has not been changed from the default. Use the id convention \"pod1\" \"pod2\" etc.")
@@ -122,7 +133,9 @@
 	cancel()
 		return
 
+/*
 	findTransitDock()
 		. = SSshuttle.getDock("[id]_transit")
 		if(.)	return .
 		return ..()
+*/

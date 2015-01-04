@@ -57,8 +57,6 @@ var/datum/subsystem/lighting/SSlighting
 //Note: if we get additional z-levels at runtime (e.g. if the gateway thin ever gets finished) we can initialize specific
 //z-levels with the z_level argument
 /datum/subsystem/lighting/Initialize(timeofday, z_level)
-	set background = BACKGROUND_ENABLED
-
 	var/i=1
 	for(var/thing in lights)
 		if(thing && !thing:check())

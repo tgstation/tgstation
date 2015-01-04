@@ -2,6 +2,9 @@
 	icon_state = "black"
 	dir = SOUTH
 
+/turf/space/transit/horizontal
+	dir = WEST
+
 /turf/space/transit/Entered(atom/movable/AM, atom/OldLoc)
 	if(!AM)
 		return
@@ -50,12 +53,16 @@
 		if(NORTH)
 			angle = 180
 			state = ((-p*x+y) % 15) + 1
+			if(state < 1)
+				state += 15
 		if(EAST)
-			angle = -90
+			angle = 90
 			state = ((x+p*y) % 15) + 1
 		if(WEST)
-			angle = 90
+			angle = -90
 			state = ((x-p*y) % 15) + 1
+			if(state < 1)
+				state += 15
 		else
 			state =	((p*x+y) % 15) + 1
 
