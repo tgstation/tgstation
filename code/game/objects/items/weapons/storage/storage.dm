@@ -104,7 +104,7 @@
 /obj/item/weapon/storage/proc/can_see_contents()
 	var/list/cansee = list()
 	for(var/mob/M in is_seeing)
-		if(M.s_active == src)
+		if(M.s_active == src && M.client)
 			cansee |= M
 		else
 			is_seeing -= M

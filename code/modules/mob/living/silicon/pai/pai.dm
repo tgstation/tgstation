@@ -4,7 +4,6 @@
 	mouse_opacity = 0
 	density = 0
 	mob_size = 0
-	invisibility = 101
 
 	var/network = "SS13"
 	var/obj/machinery/camera/current = null
@@ -51,7 +50,7 @@
 /mob/living/silicon/pai/New(var/obj/item/device/paicard)
 	make_laws()
 	canmove = 0
-	src.loc = get_turf(paicard)
+	src.loc = paicard
 	card = paicard
 	sradio = new(src)
 	if(card)
@@ -66,7 +65,6 @@
 		pda.owner = text("[]", src)
 		pda.name = pda.owner + " (" + pda.ownjob + ")"
 
-		follow_pai()
 	..()
 
 /mob/living/silicon/pai/make_laws()

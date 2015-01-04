@@ -15,8 +15,8 @@
 	var/last_used = 0 //last world.time it was used.
 
 
-/obj/item/device/flash/proc/clown_check(mob/user)
-	if(user && (CLUMSY in user.mutations) && prob(50))
+/obj/item/device/flash/proc/clown_check(mob/living/carbon/human/user)
+	if(user.disabilities & CLUMSY && prob(50))
 		flash_carbon(user, user, 15, 0)
 		return 0
 	return 1
@@ -57,19 +57,20 @@
 	return 1
 
 
-/obj/item/device/flash/proc/flash_carbon(var/mob/living/carbon/M, var/mob/user = null, var/power = 5, convert = 1)
+/obj/item/device/flash/proc/flash_carbon(var/mob/living/carbon/M, var/mob/user = null, var/power = 5, targeted = 1)
 	add_logs(user, M, "flashed", object="[src.name]")
-	var/safety = M:eyecheck()
+	var/safety = M.eyecheck()
 	if(safety <= 0)
 		M.confused += power
 		flick("e_flash", M.flash)
-		if(user && convert)
+		if(user && targeted)
 			terrible_conversion_proc(M, user)
 			M.Stun(1)
-		user.visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
+			user.visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
 		return 1
 	else
-		user.visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>")
+		if(user && targeted)
+			user.visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>")
 		return 0
 
 /obj/item/device/flash/attack(mob/living/M, mob/user)
@@ -92,6 +93,7 @@
 /obj/item/device/flash/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	if(!try_use_flash(user))
 		return 0
+	user.visible_message("<span class='disarm'>[user]'s flash emits a blinding light!</span>")
 	for(var/mob/living/carbon/M in oviewers(3, null))
 		flash_carbon(M, user, 3, 0)
 

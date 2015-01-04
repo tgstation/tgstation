@@ -3,7 +3,7 @@
 
 ////////////////////////////////////////////////PIES////////////////////////////////////////////////
 
-/datum/recipe/pie
+/datum/recipe/pie/banana
 	reagents = list("flour" = 10)
 	items = list(
 		 /obj/item/weapon/reagent_containers/food/snacks/grown/banana,

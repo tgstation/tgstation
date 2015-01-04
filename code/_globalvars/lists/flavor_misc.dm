@@ -14,6 +14,10 @@ var/global/list/underwear_f = list()	//stores only underwear name
 var/global/list/undershirt_list = list() 	//stores /datum/sprite_accessory/undershirt indexed by name
 var/global/list/undershirt_m = list()	 //stores only undershirt name
 var/global/list/undershirt_f = list()	 //stores only undershirt name
+	//Socks
+var/global/list/socks_list = list()		//stores /datum/sprite_accessory/socks indexed by name
+var/global/list/socks_m = list()	 //stores only socks name
+var/global/list/socks_f = list()	 //stores only socks name
 	//Backpacks
 var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
 	//Female Uniforms

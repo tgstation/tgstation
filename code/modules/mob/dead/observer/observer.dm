@@ -7,7 +7,6 @@
 	stat = DEAD
 	density = 0
 	canmove = 0
-	blinded = 0
 	anchored = 1	//  don't get pushed around
 	invisibility = INVISIBILITY_OBSERVER
 	languages = ALL
