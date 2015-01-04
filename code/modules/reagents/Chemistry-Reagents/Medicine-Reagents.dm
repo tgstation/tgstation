@@ -92,18 +92,12 @@ datum/reagent/medicine/ryetalyn
 	reagent_state = SOLID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
-datum/reagent/medicine/ryetalyn/on_mob_life(var/mob/living/M as mob)
-
-	var/needs_update = M.mutations.len > 0
-	M.mutations = list()
-	M.disabilities = 0
-	M.sdisabilities = 0
+datum/reagent/medicine/ryetalyn/on_mob_life(mob/living/carbon/human/M)
 	M.jitteriness = 0
 
 	// Might need to update appearance for hulk etc.
-	if(needs_update && ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.update_mutations()
+	if(istype(M) && M.dna)
+		M.dna.remove_all_mutations()
 	..()
 	return
 
@@ -210,7 +204,6 @@ datum/reagent/medicine/adminordrazine/on_mob_life(var/mob/living/carbon/M as mob
 	M.hallucination = 0
 	M.setBrainLoss(0)
 	M.disabilities = 0
-	M.sdisabilities = 0
 	M.eye_blurry = 0
 	M.eye_blind = 0
 	M.SetWeakened(0)
@@ -299,9 +292,8 @@ datum/reagent/medicine/imidazoline
 datum/reagent/medicine/imidazoline/on_mob_life(var/mob/living/M as mob)
 	M.eye_blurry = max(M.eye_blurry-5 , 0)
 	M.eye_blind = max(M.eye_blind-5 , 0)
-	M.disabilities &= ~NEARSIGHTED
+	M.disabilities &= ~NEARSIGHT
 	M.eye_stat = max(M.eye_stat-5, 0)
-//	M.sdisabilities &= ~1		Replaced by eye surgery
 	..()
 	return
 

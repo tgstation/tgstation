@@ -7,6 +7,7 @@
 		gender = pick(MALE,FEMALE)
 	underwear = random_underwear(gender)
 	undershirt = random_undershirt(gender)
+	socks = random_socks(gender)
 	skin_tone = random_skin_tone()
 	hair_style = random_hair_style(gender)
 	facial_hair_style = random_facial_hair_style(gender)
@@ -39,6 +40,11 @@
 
 	if(undershirt)
 		S = undershirt_list[undershirt]
+		if(S)
+			preview_icon.Blend(new /icon(S.icon, "[S.icon_state]_s"), ICON_OVERLAY)
+
+	if(socks)
+		S = socks_list[socks]
 		if(S)
 			preview_icon.Blend(new /icon(S.icon, "[S.icon_state]_s"), ICON_OVERLAY)
 

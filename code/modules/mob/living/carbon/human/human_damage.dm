@@ -44,18 +44,6 @@
 	else
 		heal_overall_damage(0, -amount)
 
-/mob/living/carbon/human/Stun(amount)
-	if(HULK in mutations)	return
-	..()
-
-/mob/living/carbon/human/Weaken(amount)
-	if(HULK in mutations)	return
-	..()
-
-/mob/living/carbon/human/Paralyse(amount)
-	if(HULK in mutations)	return
-	..()
-
 mob/living/carbon/human/proc/hat_fall_prob()
 	var/multiplier = 1
 	var/obj/item/clothing/head/H = head

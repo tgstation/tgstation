@@ -346,11 +346,11 @@
 					 //10
 					 list("key"=/obj/item/weapon/stock_parts/scanning_module/adv,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Scanning module is secured."),
+					 		"desc"="Weapon control module is secured."),
 					 //11
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,
-					 		"desc"="Scanning module is installed."),
+					 		"desc"="Weapon control module is installed."),
 					 //12
 					 list("key"=/obj/item/weapon/circuitboard/mecha/gygax/targeting,
 					 		"backkey"=/obj/item/weapon/screwdriver,
@@ -924,11 +924,11 @@
 					 //10
 					 list("key"=/obj/item/weapon/stock_parts/scanning_module/phasic,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Scanning module is secured."),
+					 		"desc"="Weapon control module is secured."),
 					 //11
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,
-					 		"desc"="Scanning module is installed."),
+					 		"desc"="Weapon control module is installed."),
 					 //12
 					 list("key"=/obj/item/weapon/circuitboard/mecha/durand/targeting,
 					 		"backkey"=/obj/item/weapon/screwdriver,
@@ -1218,11 +1218,11 @@
 					 //13
 					 list("key"=/obj/item/weapon/stock_parts/scanning_module/phasic,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Scanning module is secured."),
+					 		"desc"="Weapon control module is secured."),
 					 //14
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,
-					 		"desc"="Scanning module is installed."),
+					 		"desc"="Weapon control is installed."),
 					 //15
 					 list("key"=/obj/item/weapon/circuitboard/mecha/phazon/targeting,
 					 		"backkey"=/obj/item/weapon/screwdriver,

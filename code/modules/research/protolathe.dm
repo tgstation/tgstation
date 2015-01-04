@@ -27,8 +27,12 @@ Note: Must be placed west/left of and R&D console to function.
 
 	var/list/categories = list(
 								"Power Designs",
-								"Stock Parts",
 								"Medical Designs",
+								"Bluespace Designs",
+								"Stock Parts",
+								"Equipement",
+								"Mining Designs",
+								"Electronics",
 								"Weapons",
 								"Ammo",
 								)

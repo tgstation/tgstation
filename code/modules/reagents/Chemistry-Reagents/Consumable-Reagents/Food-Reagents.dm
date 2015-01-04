@@ -1,5 +1,3 @@
-
-
 ///////////////////////////////////////////////////////////////////
 					//Food Reagents
 //////////////////////////////////////////////////////////////////
@@ -384,5 +382,4 @@ datum/reagent/consumable/cherryjelly
 	id = "cherryjelly"
 	description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
 	color = "#801E28" // rgb: 128, 30, 40
-
 
