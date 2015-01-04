@@ -72,7 +72,7 @@
 				if("saw")
 					new /obj/item/weapon/gun/projectile/automatic/l6_saw(get_turf(H))
 				if("car")
-					new /obj/item/weapon/gun/projectile/automatic/zak74(get_turf(H))
+					new /obj/item/weapon/gun/projectile/automatic/m90(get_turf(H))
 		else
 			switch (randomizemagic)
 				if("fireball")

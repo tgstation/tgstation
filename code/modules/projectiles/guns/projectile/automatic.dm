@@ -153,33 +153,33 @@
 		return
 	..()
 
-/obj/item/weapon/gun/projectile/automatic/zak74
+/obj/item/weapon/gun/projectile/automatic/m90
 	name = "syndicate carbine"
-	desc = "A three-round burst 5.45x39 carbine, designated 'ZAK-74u'. Has an attached underbarrel grenade launcher which can be toggled on and off."
-	icon_state = "zak"
-	item_state = "l6closedmag" //placeholder
+	desc = "A three-round burst 5.56 toploading carbine, designated 'M-90gl'. Has an attached underbarrel grenade launcher which can be toggled on and off."
+	icon_state = "m90"
+	item_state = "m90"
 	origin_tech = "combat=5;materials=2;syndicate=8"
-	mag_type = /obj/item/ammo_box/magazine/m545
+	mag_type = /obj/item/ammo_box/magazine/m556
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	can_suppress = 0
 	var/obj/item/weapon/gun/projectile/revolver/grenadelauncher/underbarrel
 	burst_size = 3
 	fire_delay = 2
 
-/obj/item/weapon/gun/projectile/automatic/zak74/New()
+/obj/item/weapon/gun/projectile/automatic/m90/New()
 	..()
 	underbarrel = new /obj/item/weapon/gun/projectile/revolver/grenadelauncher(src)
 	update_icon()
 	return
 
-/obj/item/weapon/gun/projectile/automatic/zak74/afterattack(var/atom/target, var/mob/living/user, flag, params)
+/obj/item/weapon/gun/projectile/automatic/m90/afterattack(var/atom/target, var/mob/living/user, flag, params)
 	if(select == 2)
 		underbarrel.afterattack(target, user, flag, params)
 	else
 		..()
 		return
 
-/obj/item/weapon/gun/projectile/automatic/zak74/attackby(var/obj/item/A, mob/user)
+/obj/item/weapon/gun/projectile/automatic/m90/attackby(var/obj/item/A, mob/user)
 	if(istype(A, /obj/item/ammo_casing))
 		if(istype(A, underbarrel.magazine.ammo_type))
 			underbarrel.attack_self()
@@ -187,7 +187,7 @@
 	else
 		..()
 
-/obj/item/weapon/gun/projectile/automatic/zak74/update_icon()
+/obj/item/weapon/gun/projectile/automatic/m90/update_icon()
 	..()
 	overlays.Cut()
 	switch(select)
@@ -200,7 +200,7 @@
 	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
 	return
 
-/obj/item/weapon/gun/projectile/automatic/zak74/burst_select()
+/obj/item/weapon/gun/projectile/automatic/m90/burst_select()
 	var/mob/living/carbon/human/user = usr
 	switch(select)
 		if(0)

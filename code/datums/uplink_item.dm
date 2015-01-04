@@ -120,10 +120,10 @@ var/list/uplink_items = list()
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 40
 
-/datum/uplink_item/dangerous/zak
-	name = "ZAK-74u Carbine"
-	desc = "A fully-loaded Zashchita Industriya carbine that uses 30-round 5.45x39mm magazines with a togglable underslung 40mm grenade launcher."
-	item = /obj/item/weapon/gun/projectile/automatic/zak74
+/datum/uplink_item/dangerous/carbine
+	name = "M-90gl Carbine"
+	desc = "A fully-loaded three-round burst carbine that uses 30-round 5.56mm magazines with a togglable underslung 40mm grenade launcher."
+	item = /obj/item/weapon/gun/projectile/automatic/m90
 	cost = 18
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 50
@@ -271,16 +271,16 @@ var/list/uplink_items = list()
 	cost = 3
 	gamemodes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/ammo/zak
-	name = "Bakelite Magazine - 5.45x39mm"
-	desc = "An additional 30-round 5.45x39mm magazine for use in the ZAK-74u carbine. These bullets don't have the punch to knock most targets down, but dish out higher overall damage."
-	item = /obj/item/ammo_box/magazine/m545
+/datum/uplink_item/ammo/carbine
+	name = "STANAG Magazine - 5.56"
+	desc = "An additional 30-round 5.56 magazine for use in the M-80gl carbine. These bullets don't have the punch to knock most targets down, but dish out higher overall damage."
+	item = /obj/item/ammo_box/magazine/m556
 	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/a40mm
 	name = "Ammo Box - 40mm grenades"
-	desc = "A box of 4 additional 40mm HE grenades for use the C-90gl's underbarrel grenade launcher. Your teammates will thank you to not shoot these down small hallways."
+	desc = "A box of 4 additional 40mm HE grenades for use the M-80gl's underbarrel grenade launcher. Your teammates will thank you to not shoot these down small hallways."
 	item = /obj/item/ammo_box/a40mm
 	cost = 4
 	gamemodes = list(/datum/game_mode/nuclear)
