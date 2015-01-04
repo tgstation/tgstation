@@ -488,7 +488,7 @@ var/global/list/RPD_recipes=list(
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 				if(do_after(user, 5))
 					activate()
-					del(A)
+					qdel(A)
 					return 1
 				return 0
 
