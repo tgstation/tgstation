@@ -174,7 +174,13 @@ RCD
 		if(2)
 			if(istype(A, /turf/simulated/floor))
 				if(checkResource(10, user))
-					if(!locate(/obj/machinery/door) in A)
+					var/door_check = 1
+					for(var/obj/machinery/door/D in A)
+						if(!D.sub_door)
+							door_check = 0
+							break
+		
+					if(door_check)
 						user << "Building Airlock..."
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, 50))
