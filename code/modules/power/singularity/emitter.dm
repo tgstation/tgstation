@@ -283,7 +283,7 @@
 	var/power = 1
 
 	anchored = 1.0
-	flags = TABLEPASS
+	flags = 0
 
 	damage_type=BURN
 	damage=30

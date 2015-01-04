@@ -150,7 +150,7 @@
 	icon_state = "generic"
 	item_state = "syringe_kit"
 	w_class = 4.0
-	flags = FPRINT|TABLEPASS
+	flags = FPRINT
 
 	var/foldable = /obj/item/stack/sheet/cardboard
 	var/foldable_amount = 4

@@ -88,7 +88,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	m_amt = 3750
 	w_type = RECYK_METAL
 	throwforce = 14.0
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 	origin_tech = "materials=1"
 	melt_temperature = MELTPOINT_STEEL
@@ -125,7 +125,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	m_amt = 3750 // Was 7500, which doesn't make any fucking sense
 	perunit = 2875 //average of plasma and metal
 	throwforce = 15.0
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 	origin_tech = "materials=2"
 	w_type = RECYK_METAL
@@ -203,7 +203,7 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	desc = "Large sheets of card, like boxes folded flat."
 	singular_name = "cardboard sheet"
 	icon_state = "sheet-card"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	origin_tech = "materials=1"
 
 /obj/item/stack/sheet/cardboard/New(var/loc, var/amount=null)
@@ -220,7 +220,7 @@ var/global/list/datum/stack_recipe/charcoal_recipes = list ()
 	desc = "Yum."
 	singular_name = "charcoal sheet"
 	icon_state = "sheet-charcoal"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	origin_tech = "materials=1"
 	autoignition_temperature=AUTOIGNITION_WOOD
 

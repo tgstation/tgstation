@@ -2,7 +2,7 @@
 	name = "pinpointer"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "pinoff"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	w_class = 2.0

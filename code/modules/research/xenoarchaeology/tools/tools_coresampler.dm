@@ -20,7 +20,7 @@
 	icon_state = "sampler0"
 	item_state = "screwdriver_brown"
 	w_class = 1.0
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	//slot_flags = SLOT_BELT
 	var/sampled_turf = ""
 	var/num_stored_bags = 10

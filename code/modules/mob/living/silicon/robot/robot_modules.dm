@@ -4,7 +4,7 @@
 	icon_state = "std_module"
 	w_class = 100.0
 	item_state = "electronic"
-	flags = FPRINT|TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 
 	var/list/modules = list()

@@ -20,7 +20,7 @@
 	desc = "A small satchel made for organizing seeds."
 	var/mode = 1;  //0 = pick one at a time, 1 = pick all on tile
 	var/capacity = 500; //the number of seeds it can carry.
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	slot_flags = SLOT_BELT
 	w_class = 1
 	var/list/item_quants = list()
@@ -144,7 +144,7 @@
 	icon_state = "novaflower"
 	damtype = "fire"
 	force = 0
-	flags = TABLEPASS
+	flags = 0
 	slot_flags = SLOT_HEAD
 	throwforce = 1
 	w_class = 1.0

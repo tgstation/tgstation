@@ -187,7 +187,7 @@
 	throw_range = 5
 	m_amt = CC_PER_SHEET_METAL
 	w_type = RECYK_METAL
-	flags = TABLEPASS | USEDELAY | FPRINT
+	flags = USEDELAY | FPRINT
 	siemens_coefficient = 1.5 //extra conducting
 	slot_flags = SLOT_BELT
 	item_state = "coil_red"

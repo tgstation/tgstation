@@ -4,7 +4,7 @@
 	icon_state = "megaphone"
 	item_state = "radio"
 	w_class = 1.0
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 
 	var/spamcheck = 0
@@ -72,7 +72,7 @@
 	icon_state = "soundsynth"
 	item_state = "radio"
 	w_class = 1.0
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 
 	var/spam_flag = 0 //To prevent mashing the button to cause annoyance like a huge idiot.

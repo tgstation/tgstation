@@ -3,7 +3,7 @@
 	desc = "LOADSAMONEY"
 	icon_state = "balaclava"
 	item_state = "balaclava"
-	flags = FPRINT|TABLEPASS|BLOCKHAIR
+	flags = FPRINT|BLOCKHAIR
 	flags_inv = HIDEFACE
 	w_class = 2
 	species_fit = list("Vox")
@@ -13,7 +13,7 @@
 	desc = "Worn by robust fighters, flying high to defeat their foes!"
 	icon_state = "luchag"
 	item_state = "luchag"
-	flags = FPRINT|TABLEPASS|BLOCKHAIR|MASKINTERNALS
+	flags = FPRINT|BLOCKHAIR|MASKINTERNALS
 	flags_inv = HIDEFACE
 	w_class = 2
 	siemens_coefficient = 3.0

@@ -15,7 +15,7 @@
 	force = 4
 	recoil = 1
 	fire_delay = 10
-	flags =  FPRINT | TABLEPASS | USEDELAY
+	flags = FPRINT  | USEDELAY
 	siemens_coefficient = 1
 	caliber = list("flare" = 1)
 	origin_tech = "combat=2;materials=2"

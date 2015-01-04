@@ -5,7 +5,7 @@
 	desc = "Used for repairing or building airlock controllers"
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_control_build0"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 
 /obj/item/airlock_controller_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)

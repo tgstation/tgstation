@@ -17,7 +17,7 @@
 	desc = "Used for building lights."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-construct-item"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 	var/fixture_type = "tube"
 	var/obj/machinery/light/newlight = null
@@ -65,7 +65,7 @@
 	desc = "Used for building small lights."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "bulb-construct-item"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 	fixture_type = "bulb"
 	sheets_refunded = 1
@@ -643,7 +643,7 @@
 
 /obj/item/weapon/light
 	icon = 'icons/obj/lighting.dmi'
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	force = 2
 	throwforce = 5
 	w_class = 1
