@@ -272,8 +272,8 @@ var/list/uplink_items = list()
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/carbine
-	name = "STANAG Magazine - 5.56"
-	desc = "An additional 30-round 5.56 magazine for use in the M-80gl carbine. These bullets don't have the punch to knock most targets down, but dish out higher overall damage."
+	name = "Toploader Magazine - 5.56"
+	desc = "An additional 30-round 5.56 magazine for use in the M-90gl carbine. These bullets don't have the punch to knock most targets down, but dish out higher overall damage."
 	item = /obj/item/ammo_box/magazine/m556
 	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear)
