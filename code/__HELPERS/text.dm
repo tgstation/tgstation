@@ -37,7 +37,7 @@
 	return t
 
 //Removes a few problematic characters
-/proc/sanitize_simple(var/t,var/list/repl_chars = list("\n"="#","\t"="#","ï¿½"="ï¿½","ÿ"="____255;"))
+/proc/sanitize_simple(var/t,var/list/repl_chars = list("\n"="#","\t"="#","�"="�","�"="____255;"))
 	for(var/char in repl_chars)
 		var/index = findtext(t, char)
 		while(index)
@@ -52,7 +52,7 @@
         var/index = findtext(t, "____255;")
         if(unicode)
                 while(index)
-                        t = copytext(t, 1, index) + "ÿ" + copytext(t, index+8)
+                        t = copytext(t, 1, index) + "�" + copytext(t, index+8)
                         index = findtext(t, "____255;")
         else
                 while(index)
