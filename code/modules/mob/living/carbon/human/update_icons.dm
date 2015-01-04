@@ -135,21 +135,28 @@ Please contact me on #coderbus IRC. ~Carn x
 //I'll work on removing that stuff by rewriting some of the cloaking stuff at a later date.
 /mob/living/carbon/human/update_icons()
 	update_hud()		//TODO: remove the need for this
-
-	if(species && species.override_icon)
-		overlays.len = 0
-		icon = species.override_icon
-		icon_state = "[lowertext(species.name)]_[gender][(mutations & M_FAT)?"_fat":""]"
-	else
-		if(overlays.len != overlays_standing.len)
-			overlays.len = 0
-			icon = stand_icon
-
-			for(var/overlay in overlays_standing)
-				if(overlay)
-					overlays += overlay
-
+	update_overlays_standing()
 	update_transform()
+
+/mob/living/carbon/human/proc/update_overlays_standing()
+	if(species && species.override_icon)
+		species_override_icon()
+	else
+		generate_overlays_icon()
+
+/mob/living/carbon/human/proc/species_override_icon()
+	overlays.len = 0
+	icon = species.override_icon
+	icon_state = "[lowertext(species.name)]_[gender][(mutations & M_FAT)?"_fat":""]"
+
+/mob/living/carbon/human/proc/generate_overlays_icon()
+	if(overlays.len != overlays_standing.len)
+		overlays.len = 0
+		icon = stand_icon
+
+		for(var/overlay in overlays_standing)
+			if(overlay)
+				overlays += overlay
 
 var/global/list/damage_icon_parts = list()
 
