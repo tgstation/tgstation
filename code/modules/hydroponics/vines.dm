@@ -27,6 +27,9 @@
 	return
 
 /obj/effect/plantsegment/Destroy()
+	if(reagents)
+		reagents.my_atom = null
+		reagents = null
 	if(master)
 		master.vines -= src
 		master.growth_queue -= src
