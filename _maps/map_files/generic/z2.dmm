@@ -666,7 +666,7 @@
 "mP" = (/obj/structure/lattice,/turf/space,/area/space)
 "mQ" = (/obj/structure/table/reinforced,/obj/item/ammo_box/a357,/obj/item/ammo_box/a357,/obj/item/weapon/gun/projectile/revolver/mateba,/turf/unsimulated/floor{icon_state = "floor"},/area/centcom/ferry)
 "mR" = (/obj/structure/table/reinforced,/obj/item/device/aicard,/obj/item/clothing/glasses/hud/security/night,/turf/unsimulated/floor{icon_state = "floor"},/area/centcom/ferry)
-"mS" = (/obj/structure/rack,/obj/item/weapon/melee/baton/loaded,/obj/item/weapon/storage/box/handcuffs,/obj/item/weapon/storage/firstaid/regular,/obj/item/device/flash/handheld,/turf/unsimulated/floor{icon_state = "floor"},/area/centcom/ferry)
+"mS" = (/obj/structure/rack,/obj/item/weapon/melee/baton/loaded,/obj/item/weapon/storage/box/handcuffs,/obj/item/weapon/storage/firstaid/regular,/obj/item/weapon/storage/belt/security,/obj/item/device/flash/handheld,/obj/item/weapon/grenade/flashbang,/turf/unsimulated/floor{icon_state = "floor"},/area/centcom/ferry)
 "mT" = (/turf/unsimulated/floor{icon_state = "delivery"},/area/centcom/ferry)
 "mU" = (/turf/unsimulated/floor{tag = "icon-bluecorner (EAST)"; icon_state = "bluecorner"; dir = 4},/area/centcom/ferry)
 "mV" = (/turf/unsimulated/floor{tag = "icon-blue (NORTH)"; icon_state = "blue"; dir = 1},/area/centcom/ferry)

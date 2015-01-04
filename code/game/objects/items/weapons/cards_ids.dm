@@ -196,7 +196,7 @@ update_label("John Doe", "Clowny")
 	desc = "A ERT ID card"
 	icon_state = "centcom"
 	registered_name = "Emergency Response Team Commander"
-	assignment = "Command"
+	assignment = "Emergency Response Team Commander"
 	access = list(access_sec_doors, access_engine, access_medical)
 
 /obj/item/weapon/card/id/ertsSecurity
@@ -204,7 +204,7 @@ update_label("John Doe", "Clowny")
 	desc = "A ERT ID card"
 	icon_state = "centcom"
 	registered_name = "Security Response Officer"
-	assignment = "Security"
+	assignment = "Security Response Officer"
 	access = list(access_sec_doors)
 
 /obj/item/weapon/card/id/ertsEngineer
@@ -212,7 +212,7 @@ update_label("John Doe", "Clowny")
 	desc = "A ERT ID card"
 	icon_state = "centcom"
 	registered_name = "Engineer Response Officer"
-	assignment = "Engineering"
+	assignment = "Engineer Response Officer"
 	access = list(access_engine)
 
 /obj/item/weapon/card/id/ertsMedical
@@ -220,7 +220,7 @@ update_label("John Doe", "Clowny")
 	desc = "A ERT ID card"
 	icon_state = "centcom"
 	registered_name = "Medical Response Officer"
-	assignment = "Medbay"
+	assignment = "Medical Response Officer"
 	access = list(access_medical)
 
 /obj/item/weapon/card/id/prisoner
