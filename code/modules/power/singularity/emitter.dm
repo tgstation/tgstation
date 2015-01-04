@@ -313,5 +313,9 @@
 	//if(!master) testing("Visible power: [visible_power]")
 	icon_state="[base_state]_[visible_power]"
 
+/obj/effect/beam/emitter/get_machine_underlay(var/mdir)
+	var/visible_power=Clamp(round(power/3)+1, 1, 3)
+	return image(icon=icon, icon_state="[base_state]_[visible_power] underlay", dir=mdir)
+
 /obj/effect/beam/emitter/get_damage()
 	return damage*power
