@@ -157,8 +157,8 @@ var/global/list/damage_icon_parts = list()
 	if(damage_icon_parts["[damage_state]/[body_part]/[species_blood]"] == null)
 		var/icon/DI = icon('icons/mob/dam_human.dmi', damage_state)			// the damage icon for whole human
 		DI.Blend(icon('icons/mob/dam_mask.dmi', body_part), ICON_MULTIPLY)	// mask with this organ's pixels
-		//if(species_blood)
-			//DI.Blend(species_blood, ICON_MULTIPLY)							// mask with this species's blood color
+		if(species_blood)
+			DI.Blend(species_blood, ICON_MULTIPLY)							// mask with this species's blood color
 		damage_icon_parts["[damage_state]/[body_part]/[species_blood]"] = DI
 		return DI
 	else

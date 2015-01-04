@@ -2157,9 +2157,9 @@ proc/process_adminbus_teleport_locs()
 		sound_delay = rand(0, 50)
 
 	for(var/mob/living/carbon/human/H in src)
-		if(H.s_tone > -55)
+	/*	if(H.s_tone > -55)
 			H.s_tone--
-			H.update_body()
+			H.update_body()*/
 		if(H.client)
 			mysound.status = SOUND_UPDATE
 			H << mysound

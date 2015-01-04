@@ -509,7 +509,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	var/n_is = damage_state_text()
 	if (n_is != damage_state)
 		damage_state = n_is
-		owner.update_body(1)
+		//owner.update_body(1)
 		return 1
 	return 0
 
