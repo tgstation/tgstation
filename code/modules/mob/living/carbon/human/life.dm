@@ -440,7 +440,7 @@ var/global/list/organ_damage_overlays = list(
 		if(flags & INVULNERABLE)
 			return
 		if(getFireLoss())
-			if((M_RESIST_HEAT in mutations) || (prob(1)))
+			if((M_RESIST_HEAT in mutations)))
 				heal_organ_damage(0,1)
 
 
@@ -475,7 +475,7 @@ var/global/list/organ_damage_overlays = list(
 				switch(radiation)
 					if(1 to 49)
 						radiation--
-						if(prob(25))
+						if(!(radiation % 5)) //damage every 5 ticks. Previously prob(25)
 							adjustToxLoss(1)
 							damage = 1
 							updatehealth()
@@ -495,11 +495,13 @@ var/global/list/organ_damage_overlays = list(
 						radiation -= 3
 						adjustToxLoss(3)
 						damage = 1
+						/*
 						if(prob(1))
 							src << "\red You mutate!"
 							randmutb(src)
 							domutcheck(src,null)
 							emote("gasp")
+						*/
 						updatehealth()
 
 				if(damage && organs.len)
