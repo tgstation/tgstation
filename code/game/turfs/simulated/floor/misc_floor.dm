@@ -63,6 +63,7 @@
 /turf/simulated/floor/beach
 	name = "Beach"
 	icon = 'icons/misc/beach.dmi'
+	ignoredirt = 1
 
 /turf/simulated/floor/beach/ex_act(severity, target)
 	contents_explosion(severity, target)
@@ -84,11 +85,13 @@
 	..()
 	name = "Iron Sand"
 	icon_state = "ironsand[rand(1,15)]"
+	ignoredirt = 1
 
 /turf/simulated/floor/plating/snow
 	name = "snow"
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
+	ignoredirt = 1
 
 /turf/simulated/floor/plating/snow/ex_act(severity, target)
 	contents_explosion(severity, target)
