@@ -71,7 +71,7 @@
 			icon_state = initial(icon_state)
 
 //copied from computer.dm
-/obj/machinery/power/monitor/attackby(I as obj, user as mob)
+/obj/machinery/power/monitor/attackby(I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/screwdriver) && circuit)
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
@@ -82,12 +82,12 @@
 			for (var/obj/C in src)
 				C.loc = src.loc
 			if (src.stat & BROKEN)
-				user << "\blue The broken glass falls out."
+				user.show_message("<span class=\"info\">The broken glass falls out.</span>")
 				new /obj/item/weapon/shard( src.loc )
 				A.state = 3
 				A.icon_state = "3"
 			else
-				user << "\blue You disconnect the monitor."
+				user.show_message("<span class=\"info\">You disconnect the monitor.</span>")
 				A.state = 4
 				A.icon_state = "4"
 
