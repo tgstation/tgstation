@@ -468,7 +468,7 @@ client/proc/one_click_antag()
 			chosen_candidate.client.prefs.copy_to(ERTOperative)
 			ready_dna(ERTOperative)
 			if(numagents == 1) //If Squad Leader
-				ERTOperative.real_name = "Officer [pick(ERTOperative.real_name)]"
+				ERTOperative.real_name = "Commander [pick(ERTOperative.real_name)]"
 				equip_emergencyresponsesquad(ERTOperative, 1)
 			else
 				ERTOperative.real_name = "Officer [pick(ERTOperative.real_name)]"

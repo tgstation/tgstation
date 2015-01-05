@@ -1123,5 +1123,6 @@ var/global/list/g_fancy_list_of_types = null
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(M)
 	L.imp_in = M
 	L.implanted = 1
+	M.sec_hud_set_implants()
 
 
