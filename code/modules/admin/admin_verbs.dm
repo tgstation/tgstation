@@ -570,7 +570,6 @@ var/list/admin_verbs_hideable = list(
 		message_admins("[src] re-adminned themselves.")
 		log_admin("[src] re-adminned themselves.")
 		feedback_add_details("admin_verb","RAS")
-		verbs -= /client/proc/readmin
 		return
 	else
 		src << "You are already an admin."
