@@ -43,6 +43,7 @@ var/list/prisonwarped = list()	//list of players already warped
 var/list/blobstart = list()
 var/list/secequipment = list()
 var/list/deathsquadspawn = list()
+var/list/emergencyresponseteamspawn = list()
 var/list/global_activeturfs
 
 	//away missions

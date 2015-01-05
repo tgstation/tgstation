@@ -9,12 +9,7 @@
 	name = "commanders closet"
 	desc = "Emergency Response Team equipment locker"
 	new /obj/item/weapon/card/id/ertsCommand(src)
-	new /obj/item/clothing/shoes/combat/swat(src)
-	new /obj/item/clothing/under/rank/centcom_officer(src)
-	new /obj/item/clothing/gloves/combat(src)
 	new /obj/item/weapon/storage/backpack/security(src)
-	var/obj/item/device/radio/headset/R = new /obj/item/device/radio/headset/headset_cent(src)
-	R.set_frequency(1441)
 	return
 
 /obj/structure/closet/syndicate/ertSec/New()
@@ -22,12 +17,7 @@
 	desc = "Emergency Response Team equipment locker"
 	new /obj/item/weapon/gun/energy/pulse_rifle/pulse_pistol(src)
 	new /obj/item/weapon/card/id/ertsSecurity(src)
-	new /obj/item/clothing/shoes/combat/swat(src)
-	new /obj/item/clothing/under/rank/centcom_officer(src)
-	new /obj/item/clothing/gloves/combat(src)
 	new /obj/item/weapon/storage/backpack/security(src)
-	var/obj/item/device/radio/headset/R = new /obj/item/device/radio/headset/headset_cent(src)
-	R.set_frequency(1441)
 	return
 
 /obj/structure/closet/syndicate/ertMed/New()
@@ -35,12 +25,7 @@
 	desc = "Emergency Response Team equipment locker"
 	new /obj/item/weapon/gun/energy/pulse_rifle/pulse_pistol(src)
 	new /obj/item/weapon/card/id/ertsMedical(src)
-	new /obj/item/clothing/shoes/combat/swat(src)
-	new /obj/item/clothing/under/rank/centcom_officer(src)
-	new /obj/item/clothing/gloves/combat(src)
 	new /obj/item/weapon/storage/backpack/medic(src)
-	var/obj/item/device/radio/headset/R = new /obj/item/device/radio/headset/headset_cent(src)
-	R.set_frequency(1441)
 	return
 
 /obj/structure/closet/syndicate/ertEngi/New()
@@ -48,12 +33,8 @@
 	desc = "Emergency Response Team equipment locker"
 	new /obj/item/weapon/gun/energy/pulse_rifle/pulse_pistol(src)
 	new /obj/item/weapon/card/id/ertsEngineer(src)
-	new /obj/item/clothing/shoes/combat/swat(src)
-	new /obj/item/clothing/under/rank/centcom_officer(src)
-	new /obj/item/clothing/gloves/combat(src)
 	new /obj/item/weapon/storage/backpack/industrial(src)
-	var/obj/item/device/radio/headset/R = new /obj/item/device/radio/headset/headset_cent(src)
-	R.set_frequency(1441)
+
 	return
 
 /obj/structure/closet/syndicate/personal
