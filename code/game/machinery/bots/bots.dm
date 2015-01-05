@@ -2,7 +2,7 @@
 
 /obj/machinery/bot
 	icon = 'icons/obj/aibots.dmi'
-	layer = MOB_LAYER
+	layer = BOT_LAYER
 	luminosity = 3
 	use_power = 0
 	var/obj/item/weapon/card/id/botcard			// the ID card that the bot "holds"

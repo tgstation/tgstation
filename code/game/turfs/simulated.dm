@@ -9,9 +9,6 @@
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
 	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
 
-/turf/simulated/New()
-	..()
-	levelupdate()
 
 /turf/simulated/proc/MakeSlippery(var/wet_setting = 1) // 1 = Water, 2 = Lube
 	if(wet >= wet_setting)

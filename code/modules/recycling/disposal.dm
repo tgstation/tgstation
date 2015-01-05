@@ -53,6 +53,7 @@
 		Deconstruct()
 
 /obj/machinery/disposal/initialize()
+	..()
 	// this will get a copy of the air turf and take a SEND PRESSURE amount of air from it
 	var/atom/L = loc
 	var/datum/gas_mixture/env = new
@@ -460,7 +461,7 @@
 		stored.ptype = 6 // 6 = disposal unit
 		stored.anchored = 0
 		stored.density = 1
-		stored.update()
+		stored.update_icon()
 	..()
 // virtual disposal object
 // travels through pipes in lieu of actual items
@@ -606,11 +607,10 @@
 	anchored = 1
 	density = 0
 
-	level = 1			// underfloor only
 	var/dpdir = 0		// bitmask of pipe directions
 	dir = 0				// dir will contain dominant direction for junction pipes
 	var/health = 10 	// health points 0-10
-	layer = 2.3			// slightly lower than wires and other pipes
+	layer = DISPOSAL_LAYER
 	var/base_icon_state	// initial icon state on map
 	var/obj/structure/disposalconstruct/stored
 
@@ -690,28 +690,8 @@
 
 	return P
 
-
-// update the icon_state to reflect hidden status
-/obj/structure/disposalpipe/proc/update()
-	var/turf/T = src.loc
-	hide(T.intact && !istype(T,/turf/space))	// space never hides pipes
-
-// hide called by levelupdate if turf intact status changes
-// change visibility status and force update of icon
-/obj/structure/disposalpipe/hide(var/intact)
-	invisibility = intact ? 101: 0	// hide if floor is intact
-	updateicon()
-
-// update actual icon_state depending on visibility
-// if invisible, append "f" to icon_state to show faded version
-// this will be revealed if a T-scanner is used
-// if visible, use regular icon_state
-/obj/structure/disposalpipe/proc/updateicon()
-	if(invisibility)
-		icon_state = "[base_icon_state]f"
-	else
-		icon_state = base_icon_state
-	return
+/obj/structure/disposalpipe/update_icon()
+	icon_state = "[base_icon_state]"
 
 
 // expel the held objects into a turf
@@ -854,7 +834,7 @@
 	stored.dir = dir
 	stored.density = 0
 	stored.anchored = 1
-	stored.update()
+	stored.update_icon()
 	..()
 
 /obj/structure/disposalpipe/singularity_pull(S, current_size)
@@ -877,7 +857,7 @@
 	else
 		dpdir = dir | turn(dir, -90)
 
-	update()
+	update_icon()
 	return
 
 
@@ -895,7 +875,7 @@
 		dpdir = dir | turn(dir, 90) | turn(dir,180)
 	else // pipe-y
 		dpdir = dir | turn(dir,90) | turn(dir, -90)
-	update()
+	update_icon()
 	return
 
 
@@ -958,7 +938,7 @@
 	..()
 	updatedir()
 	updatedesc()
-	update()
+	update_icon()
 	return
 
 /obj/structure/disposalpipe/sortjunction/attackby(var/obj/item/I, var/mob/user)
@@ -1034,7 +1014,7 @@
 		negdir = turn(posdir, 180)
 	dpdir = sortdir | posdir | negdir
 
-	update()
+	update_icon()
 	return
 
 // next direction to move
@@ -1088,7 +1068,7 @@
 	spawn(1)
 		getlinked()
 
-	update()
+	update_icon()
 	return
 
 /obj/structure/disposalpipe/trunk/proc/getlinked()
@@ -1103,7 +1083,7 @@
 	if(O)
 		linked = O
 
-	update()
+	update_icon()
 	return
 
 	// Override attackby so we disallow trunkremoval when somethings ontop
@@ -1187,7 +1167,7 @@
 
 /obj/structure/disposalpipe/broken/New()
 	..()
-	update()
+	update_icon()
 	return
 
 // called when welded
@@ -1271,7 +1251,7 @@
 				var/obj/structure/disposalconstruct/C = new (src.loc)
 				src.transfer_fingerprints_to(C)
 				C.ptype = 7 // 7 =  outlet
-				C.update()
+				C.update_icon()
 				C.anchored = 1
 				C.density = 1
 				qdel(src)

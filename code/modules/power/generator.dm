@@ -24,6 +24,7 @@
 
 
 /obj/machinery/power/generator/initialize()
+	..()
 
 	circ1 = null
 	circ2 = null

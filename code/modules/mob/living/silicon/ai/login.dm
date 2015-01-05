@@ -9,12 +9,12 @@
 	flash.icon_state = "blank"
 	flash.name = "flash"
 	flash.screen_loc = "1,1 to 15,15"
-	flash.layer = 17
+	flash.layer = EYE_LAYER
 	blind = new /obj/screen()
 	blind.icon_state = "black"
 	blind.name = " "
 	blind.screen_loc = "1,1 to 15,15"
-	blind.layer = 0
+	blind.layer = EYE_LAYER
 	client.screen.Add( blind, flash )
 
 	if(stat != DEAD)

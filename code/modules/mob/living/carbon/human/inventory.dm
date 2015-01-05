@@ -323,7 +323,7 @@
 	I.screen_loc = null // will get moved if inventory is visible
 	I.loc = src
 	I.equipped(src, slot)
-	I.layer = 20
+	I.layer = EQUIPMENT_LAYER
 
 	switch(slot)
 		if(slot_back)

@@ -10,7 +10,6 @@
 	anchored = 0
 	density = 0
 	pressure_resistance = 5*ONE_ATMOSPHERE
-	level = 2
 	var/ptype = 0
 	// 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk, 6=disposal bin, 7=outlet, 8=inlet
 
@@ -18,7 +17,7 @@
 	var/base_state = "pipe-s"
 
 	// update iconstate and dpdir due to dir and type
-/obj/structure/disposalconstruct/proc/update()
+/obj/structure/disposalconstruct/update_icon()
 	var/flip = turn(dir, 180)
 	var/left = turn(dir, 90)
 	var/right = turn(dir, -90)
@@ -74,12 +73,6 @@
 	// if invisible, fade icon
 	alpha = (invisibility ? 0 : 255)
 
-// hide called by levelupdate if turf intact status changes
-// change visibility status and force update of icon
-/obj/structure/disposalconstruct/hide(var/intact)
-	invisibility = (intact && level==1) ? 101: 0	// hide if floor is intact
-	update()
-
 
 // flip and rotate verbs
 /obj/structure/disposalconstruct/verb/rotate()
@@ -95,7 +88,7 @@
 		return
 
 	dir = turn(dir, -90)
-	update()
+	update_icon()
 
 /obj/structure/disposalconstruct/verb/flip()
 	set name = "Flip Pipe"
@@ -119,7 +112,7 @@
 		if(10)
 			ptype = 9
 
-	update()
+	update_icon()
 
 // returns the type path of disposalpipe corresponding to this item dtype
 /obj/structure/disposalconstruct/proc/dpipetype()
@@ -175,7 +168,7 @@
 		if(anchored)
 			anchored = 0
 			if(ispipe)
-				level = 2
+				layer = initial(layer)
 				density = 0
 			else
 				density = 1
@@ -191,7 +184,7 @@
 					return
 			else
 				if(CP)
-					update()
+					update_icon()
 					var/pdir = CP.dpdir
 					if(istype(CP, /obj/structure/disposalpipe/broken))
 						pdir = CP.dir
@@ -200,13 +193,13 @@
 						return
 			anchored = 1
 			if(ispipe)
-				level = 1 // We don't want disposal bins to disappear under the floors
+				layer = DISPOSAL_LAYER
 				density = 0
 			else
 				density = 1 // We don't want disposal bins or outlets to go density 0
 			user << "You attach the [nicetype] to the underfloor."
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-		update()
+		update_icon()
 
 	else if(istype(I, /obj/item/weapon/weldingtool))
 		if(anchored)
@@ -218,7 +211,7 @@
 					if(!src.loc || !W.isOn())
 						return
 					user << "The [nicetype] has been welded in place!"
-					update() // TODO: Make this neat
+					update_icon()
 					if(ispipe) // Pipe
 
 						var/pipetype = dpipetype()
@@ -227,7 +220,7 @@
 						P.base_icon_state = base_state
 						P.dir = dir
 						P.dpdir = dpdir
-						P.updateicon()
+						P.update_icon()
 
 						//Needs some special treatment ;)
 						if(ptype==9 || ptype==10)

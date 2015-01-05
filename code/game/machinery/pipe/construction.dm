@@ -43,7 +43,6 @@ Buildable meters
 	icon_state = "simple"
 	item_state = "buildpipe"
 	w_class = 3
-	level = 2
 	var/flipped = 0
 
 /obj/item/pipe/New(loc, pipe_type, dir, obj/machinery/atmospherics/make_from)
@@ -70,7 +69,7 @@ Buildable meters
 			src.pipe_type = PIPE_MANIFOLD
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/vent_pump))
 			src.pipe_type = PIPE_UVENT
-		else if(istype(make_from, /obj/machinery/atmospherics/valve/digital))
+		else if(istype(make_from, /obj/machinery/atmospherics/binary/valve/digital))
 			src.pipe_type = PIPE_DVALVE
 		else if(istype(make_from, /obj/machinery/atmospherics/binary/valve))
 			src.pipe_type = PIPE_MVALVE
@@ -100,7 +99,7 @@ Buildable meters
 		src.pipe_type = pipe_type
 		src.dir = dir
 	//src.pipe_dir = get_pipe_dir()
-	update()
+	update_icon()
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
 
@@ -128,7 +127,7 @@ var/global/list/pipeID2State = list(
 	"manifold4w", \
 )
 
-/obj/item/pipe/proc/update()
+/obj/item/pipe/update_icon()
 	var/list/nlist = list( \
 		"pipe", \
 		"bent pipe", \
@@ -153,9 +152,6 @@ var/global/list/pipeID2State = list(
 	)
 	name = nlist[pipe_type+1] + " fitting"
 	icon_state = pipeID2State[pipe_type + 1]
-
-//called when a turf is attacked with a pipe item
-// place the pipe on the turf, setting pipe level to 1 (underfloor) if the turf is not intact
 
 // rotate the pipe item clockwise
 
@@ -351,7 +347,7 @@ var/global/list/pipeID2State = list(
 			V.construction(dir, get_pdir())
 
 		if(PIPE_DVALVE)
-			var/obj/machinery/atmospherics/valve/digital/V = new(src.loc)
+			var/obj/machinery/atmospherics/binary/valve/digital/V = new(src.loc)
 			if (pipename)
 				V.name = pipename
 			V.construction(dir, get_pdir())

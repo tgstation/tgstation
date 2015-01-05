@@ -50,7 +50,7 @@
 	M.anchored = anchored
 	src.buckled_mob = M
 	src.add_fingerprint(user)
-	src.overlays += image('icons/mob/alien.dmi', "nestoverlay", layer=6)
+	src.overlays += image('icons/mob/alien.dmi', "nestoverlay", layer=ON_TOP_OF_MOB_LAYER)
 	return
 
 /obj/structure/stool/bed/nest/unbuckle()

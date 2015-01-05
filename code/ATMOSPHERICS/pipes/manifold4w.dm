@@ -18,9 +18,6 @@
 	var/obj/machinery/atmospherics/node3 // East
 	var/obj/machinery/atmospherics/node4 // West
 
-	level = 1
-	layer = 2.4 //under wires with their 2.44
-
 /obj/machinery/atmospherics/pipe/manifold4w/New()
 	color = pipe_color
 	..()
@@ -39,14 +36,7 @@
 					node4 = target
 				break
 
-	var/turf/T = src.loc			// hide if turf is not intact
-	hide(T.intact)
-	update_icon()
-
-/obj/machinery/atmospherics/pipe/manifold4w/hide(var/i)
-	if(level == 1 && istype(loc, /turf/simulated))
-		invisibility = i ? 101 : 0
-	update_icon()
+	..()
 
 /obj/machinery/atmospherics/pipe/manifold4w/pipeline_expansion()
 	return list(node1, node2, node3, node4)
@@ -96,38 +86,44 @@
 	..()
 
 /obj/machinery/atmospherics/pipe/manifold4w/update_icon()
-	if(!node1 && !node2 && !node3 && !node4) //Remove us if we ain't connected to anything.
-		qdel(src)
-		return
 
-	var/invis = invisibility ? "-f" : ""
+	icon_state = "manifold4w_center"
 
-	icon_state = "manifold4w_center[invis]"
-
-	overlays.Cut()
+	underlays.Cut()
 
 	//Add non-broken pieces
 	if(node1)
-		overlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_full[invis]", NORTH)
+		underlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_full", NORTH)
+	else
+		underlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_broken", NORTH)
 
 	if(node2)
-		overlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_full[invis]", SOUTH)
+		underlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_full", SOUTH)
+	else
+		underlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_broken", SOUTH)
 
 	if(node3)
-		overlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_full[invis]", EAST)
+		underlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_full", EAST)
+	else
+		underlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_broken", EAST)
 
 	if(node4)
-		overlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_full[invis]", WEST)
+		underlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_full", WEST)
+	else
+		underlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_broken", WEST)
+
+	if(!pipe_color)
+		pipe_color = (node1 && node1.pipe_color) || (node2 && node2.pipe_color) || (node3 && node3.pipe_color) || (node4 && node4.pipe_color) || pipe_color
+		color = pipe_color
 
 //Colored pipes, use these for mapping
 /obj/machinery/atmospherics/pipe/manifold4w/general
 	name="pipe"
 
 /obj/machinery/atmospherics/pipe/manifold4w/general/visible
-	level = 2
+	layer = ATMOSPHERIC_MACHINE_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold4w/general/hidden
-	level = 1
 
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers
 	name="scrubbers pipe"
@@ -135,10 +131,9 @@
 	color=rgb(255,0,0)
 
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/visible
-	level = 2
+	layer = ATMOSPHERIC_MACHINE_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden
-	level = 1
 
 /obj/machinery/atmospherics/pipe/manifold4w/supply
 	name="air supply pipe"
@@ -146,10 +141,9 @@
 	color=rgb(0,0,255)
 
 /obj/machinery/atmospherics/pipe/manifold4w/supply/visible
-	level = 2
+	layer = ATMOSPHERIC_MACHINE_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden
-	level = 1
 
 /obj/machinery/atmospherics/pipe/manifold4w/supplymain
 	name="main air supply pipe"
@@ -157,37 +151,33 @@
 	color=rgb(130,43,272)
 
 /obj/machinery/atmospherics/pipe/manifold4w/supplymain/visible
-	level = 2
+	layer = ATMOSPHERIC_MACHINE_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold4w/supplymain/hidden
-	level = 1
 
 /obj/machinery/atmospherics/pipe/manifold4w/yellow
 	pipe_color=rgb(255,198,0)
 	color=rgb(255,198,0)
 
 /obj/machinery/atmospherics/pipe/manifold4w/yellow/visible
-	level = 2
+	layer = ATMOSPHERIC_MACHINE_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold4w/yellow/hidden
-	level = 1
 
 /obj/machinery/atmospherics/pipe/manifold4w/cyan
 	pipe_color=rgb(0,256,249)
 	color=rgb(0,256,249)
 
 /obj/machinery/atmospherics/pipe/manifold4w/cyan/visible
-	level = 2
+	layer = ATMOSPHERIC_MACHINE_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold4w/cyan/hidden
-	level = 1
 
 /obj/machinery/atmospherics/pipe/manifold4w/green
 	pipe_color=rgb(30,256,0)
 	color=rgb(30,256,0)
 
 /obj/machinery/atmospherics/pipe/manifold4w/green/visible
-	level = 2
+	layer = ATMOSPHERIC_MACHINE_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold4w/green/hidden
-	level = 1

@@ -6,23 +6,22 @@
 	can_unwrench = 1
 	var/obj/machinery/portable_atmospherics/connected_device
 	use_power = 0
-	level = 0
-
-/obj/machinery/atmospherics/unary/portables_connector/visible
-	level = 2
 
 /obj/machinery/atmospherics/unary/portables_connector/update_icon()
 	icon_state = "connector"
 	underlays.Cut()
-	if(showpipe)
-		var/state
-		var/col
-		if(node)
-			state = "pipe_intact"
-			col = node.pipe_color
-		else
-			state = "pipe_exposed"
-		underlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', state, initialize_directions, col)
+	var/state
+	var/col
+	var/lay
+	if(node)
+		state = "pipe_intact"
+		col = node.pipe_color
+		lay = node.layer
+	else
+		state = "pipe_exposed"
+		lay = layer
+
+	underlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', state, initialize_directions, col, lay)
 
 /obj/machinery/atmospherics/unary/portables_connector/process()
 	if(!connected_device)

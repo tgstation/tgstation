@@ -9,7 +9,7 @@
 /obj/screen
 	name = ""
 	icon = 'icons/mob/screen_gen.dmi'
-	layer = 20.0
+	layer = UI_LAYER
 	unacidable = 1
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
 
@@ -72,7 +72,6 @@
 	name = "drop"
 	icon = 'icons/mob/screen_midnight.dmi'
 	icon_state = "act_drop"
-	layer = 19
 
 /obj/screen/drop/Click()
 	usr.drop_item_v()
@@ -191,7 +190,6 @@
 	name = "resist"
 	icon = 'icons/mob/screen_midnight.dmi'
 	icon_state = "act_resist"
-	layer = 19
 
 /obj/screen/resist/Click()
 	if(isliving(usr))

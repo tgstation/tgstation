@@ -5,8 +5,6 @@
 	desc = "Has a valve and pump attached to it"
 	use_power = 1
 
-	level = 1
-
 	can_unwrench = 1
 
 	var/area/initial_loc
@@ -47,8 +45,8 @@
 
 /obj/machinery/atmospherics/unary/vent_scrubber/update_icon_nopipes()
 	overlays.Cut()
-	if(showpipe)
-		overlays += getpipeimage('icons/obj/atmospherics/unary_devices.dmi', "scrub_cap", initialize_directions)
+	var/cap_layer = node ? node.layer : PIPE_LAYER // use the node's layer or use the default pipe layer if no node
+	overlays += getpipeimage('icons/obj/atmospherics/unary_devices.dmi', "scrub_cap", initialize_directions, , cap_layer)
 
 	if(!node || !on || stat & (NOPOWER|BROKEN))
 		icon_state = "scrub_off"

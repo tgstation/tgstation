@@ -11,7 +11,6 @@
 	desc = "A generic vending machine."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "generic"
-	layer = 2.9
 	anchored = 1
 	density = 1
 	var/active = 1		//No sales pitches if off!
@@ -75,6 +74,7 @@
 	build_inventory(products)
 	build_inventory(contraband, 1)
 	build_inventory(premium, 0, 1)
+	..()
 
 /obj/machinery/vending/RefreshParts()         //Better would be to make constructable child
 	if(component_parts)

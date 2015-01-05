@@ -3,7 +3,7 @@
 	desc = "It's a g-g-g-g-ghooooost!" //jinkies!
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "ghost"
-	layer = 4
+	layer = GHOST_LAYER
 	stat = DEAD
 	density = 0
 	canmove = 0

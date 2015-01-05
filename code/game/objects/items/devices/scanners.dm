@@ -13,6 +13,7 @@ MASS SPECTROMETER
 	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
 	icon_state = "t-ray0"
 	var/on = 0
+	var/list/last_processed = list() // objects shown last tick associated with their old invisibility
 	slot_flags = SLOT_BELT
 	w_class = 2
 	item_state = "electronic"
@@ -29,12 +30,15 @@ MASS SPECTROMETER
 
 
 /obj/item/device/t_scanner/process()
+	clear_last_process()
 	if(!on)
 		processing_objects.Remove(src)
 		return null
 	scan()
 
 /obj/item/device/t_scanner/proc/scan()
+
+#define T_RAY_ANIMATION_TIME 10
 
 	for(var/turf/T in range(1, src.loc) )
 
@@ -43,24 +47,29 @@ MASS SPECTROMETER
 
 		for(var/obj/O in T.contents)
 
-			if(O.level != 1)
+			if(O.layer > T.layer)
 				continue
 
-			if(O.invisibility == 101)
-				O.invisibility = 0
-				spawn(10)
-					if(O)
-						var/turf/U = O.loc
-						if(U.intact)
-							O.invisibility = 101
+			// magic numbers used by magic coders such as myself -- actually these alphas are arbitrary and chosen because they look ok
+			O.invisibility = 0
+			O.alpha = 0
+			animate(O, time = T_RAY_ANIMATION_TIME/4, alpha = 140)
+			animate(time = T_RAY_ANIMATION_TIME/2, alpha = 70)
+			animate(time = T_RAY_ANIMATION_TIME/4, alpha = 40, easing = EASE_OUT|SINE_EASING)
+			animate(time = 0, alpha = 255) // Reset alpha to 255. At this point the turf's layer below should be reset and thus we're not shown
 
-		var/mob/living/M = locate() in T
-		if(M && M.invisibility == 2)
-			M.invisibility = 0
-			spawn(2)
-				if(M)
-					M.invisibility = INVISIBILITY_LEVEL_TWO
+		last_processed |= T
+		var/oldlayer = T.layer
+		animate(T, layer = SPACE_LAYER, time = 0)
+		animate(layer = SPACE_LAYER, time = T_RAY_ANIMATION_TIME)
+		animate(layer = oldlayer, time = 0)
 
+#undef T_RAY_ANIMATION_TIME
+
+/obj/item/device/t_scanner/proc/clear_last_process()
+	for(var/turf/T in last_processed)
+		T.levelupdate()
+	last_processed.Cut()
 
 /obj/item/device/healthanalyzer
 	name = "health analyzer"

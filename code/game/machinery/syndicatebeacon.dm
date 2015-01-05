@@ -111,7 +111,7 @@
 
 	anchored = 0
 	density = 1
-	layer = MOB_LAYER - 0.1 //so people can't hide it and it's REALLY OBVIOUS
+	layer = STRUCTURE_LAYER
 	stat = 0
 
 	var/active = 0

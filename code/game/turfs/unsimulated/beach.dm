@@ -17,4 +17,4 @@
 
 /turf/unsimulated/beach/water/New()
 	..()
-	overlays += image("icon"='icons/misc/beach.dmi',"icon_state"="water2","layer"=MOB_LAYER+0.1)
+	overlays += image("icon"='icons/misc/beach.dmi',"icon_state"="water2","layer"=SPECIAL_EFFECT_LAYER-SLIGHTLY_ABOVE)

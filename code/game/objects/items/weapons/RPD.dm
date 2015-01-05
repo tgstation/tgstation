@@ -503,7 +503,7 @@ var/global/list/RPD_recipes=list(
 			if(do_after(user, 20))
 				activate()
 				var/obj/item/pipe/P = new (A, pipe_type=p_type, dir=p_dir)
-				P.update()
+				P.update_icon()
 				P.add_fingerprint(usr)
 				return 1
 			return 0
@@ -555,7 +555,7 @@ var/global/list/RPD_recipes=list(
 					if(8)
 						C.ptype = 9
 				C.add_fingerprint(usr)
-				C.update()
+				C.update_icon()
 				return 1
 			return 0
 		else

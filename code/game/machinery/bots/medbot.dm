@@ -8,7 +8,6 @@
 	desc = "A little medical robot. He looks somewhat underwhelmed."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "medibot0"
-	layer = 5.0
 	density = 0
 	anchored = 0
 	health = 20

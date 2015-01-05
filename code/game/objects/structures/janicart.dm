@@ -5,6 +5,7 @@
 	icon_state = "cart"
 	anchored = 0
 	density = 1
+	layer = MOB_LAYER
 	flags = OPENCONTAINER
 	//copypaste sorry
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
@@ -248,9 +249,9 @@
 
 /obj/structure/stool/bed/chair/janicart/handle_rotation()
 	if(dir == SOUTH)
-		layer = FLY_LAYER
+		layer = MOB_LAYER + SLIGHTLY_ABOVE
 	else
-		layer = OBJ_LAYER
+		layer = initial(layer)
 
 	if(buckled_mob)
 		if(buckled_mob.loc != loc)

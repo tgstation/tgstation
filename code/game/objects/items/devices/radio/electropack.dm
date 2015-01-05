@@ -15,6 +15,7 @@
 	var/shock_cooldown = 0
 
 /obj/item/device/electropack/initialize()
+	..()
 	if(radio_controller)
 		radio_controller.add_object(src, frequency, RADIO_CHAT)
 

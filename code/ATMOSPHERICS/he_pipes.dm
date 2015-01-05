@@ -2,7 +2,6 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging
 	icon = 'icons/obj/pipes/heat.dmi'
 	icon_state = "intact"
-	level = 2
 	var/initialize_directions_he
 	minimum_temperature_difference = 20
 	thermal_conductivity = WINDOW_HEAT_TRANSFER_COEFFICIENT
@@ -25,7 +24,7 @@
 					if(!node2 && N == 0)
 						node2 = target
 						break
-	update_icon()
+	..()
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/process()
 	var/environment_temperature = 0
@@ -44,7 +43,6 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction
 	icon = 'icons/obj/pipes/junction.dmi'
 	icon_state = "intact"
-	level = 2
 	minimum_temperature_difference = 300
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 
@@ -81,5 +79,4 @@
 		if(target.initialize_directions_he & get_dir(target,src))
 			node2 = target
 			break
-	update_icon()
-	return
+	..()

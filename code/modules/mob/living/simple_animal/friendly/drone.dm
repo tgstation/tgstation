@@ -338,7 +338,7 @@
 	I.screen_loc = null // will get moved if inventory is visible
 	I.loc = src
 	I.equipped(src, slot)
-	I.layer = 20
+	I.layer = EQUIPMENT_LAYER
 
 	switch(slot)
 		if(slot_head)
@@ -424,7 +424,7 @@
 		hands_overlays += image("icon"='icons/mob/items_righthand.dmi', "icon_state"="[r_state]", "layer"=-HANDS_LAYER)
 
 		if(client && hud_used)
-			r_hand.layer = 20
+			r_hand.layer = EQUIPMENT_LAYER
 			r_hand.screen_loc = ui_rhand
 			client.screen |= r_hand
 
@@ -436,7 +436,7 @@
 		hands_overlays += image("icon"='icons/mob/items_lefthand.dmi', "icon_state"="[l_state]", "layer"=-HANDS_LAYER)
 
 		if(client && hud_used)
-			l_hand.layer = 20
+			l_hand.layer = EQUIPMENT_LAYER
 			l_hand.screen_loc = ui_lhand
 			client.screen |= l_hand
 

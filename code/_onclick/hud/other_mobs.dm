@@ -11,7 +11,7 @@
 	mymob.blind.icon_state = "blackimageoverlay"
 	mymob.blind.name = " "
 	mymob.blind.screen_loc = "CENTER-7,CENTER-7"
-	mymob.blind.layer = 0
+	mymob.blind.layer = BEHIND_SPACE_LAYER
 
 	if(mymob.client.prefs.custom_pointer)
 		mymob.client.mouse_pointer_icon = ui_style
@@ -22,13 +22,13 @@
 	blobpwrdisplay.name = "blob power"
 	blobpwrdisplay.icon_state = "block"
 	blobpwrdisplay.screen_loc = ui_health
-	blobpwrdisplay.layer = 20
+	blobpwrdisplay.layer = UI_LAYER
 
 	blobhealthdisplay = new /obj/screen()
 	blobhealthdisplay.name = "blob health"
 	blobhealthdisplay.icon_state = "block"
 	blobhealthdisplay.screen_loc = ui_internal
-	blobhealthdisplay.layer = 20
+	blobhealthdisplay.layer = UI_LAYER
 
 	mymob.client.screen = null
 

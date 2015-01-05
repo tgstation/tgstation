@@ -6,6 +6,7 @@
 	opacity = 1
 	density = 1
 	blocks_air = 1
+	layer = WALL_LAYER
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
@@ -260,7 +261,7 @@
 	O.anchored = 1
 	O.opacity = 1
 	O.density = 1
-	O.layer = 5
+	O.layer = SPECIAL_EFFECT_LAYER
 
 	playsound(src, 'sound/items/Welder.ogg', 100, 1)
 

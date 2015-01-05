@@ -22,7 +22,7 @@
 	component_parts += new /obj/item/stack/cable_coil(null, 1)
 	component_parts += new /obj/item/stack/cable_coil(null, 1)
 	RefreshParts()
-	src.initialize(); //Agouri
+	src.initialize()
 
 /obj/machinery/r_n_d/server/Destroy()
 	griefProtection()
@@ -35,6 +35,7 @@
 	heat_gen /= max(1, tot_rating)
 
 /obj/machinery/r_n_d/server/initialize()
+	..()
 	if(!files) files = new /datum/research(src)
 	var/list/temp_list
 	if(!id_with_upload.len)

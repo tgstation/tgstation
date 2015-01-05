@@ -503,8 +503,8 @@
 					H.client.screen += global_hud.darkMask
 
 		if(H.blind)
-			if(H.blinded)		H.blind.layer = 18
-			else			H.blind.layer = 0
+			if(H.blinded)		H.blind.layer = EYE_LAYER
+			else			H.blind.layer = BEHIND_SPACE_LAYER
 
 		if( H.disabilities & NEARSIGHTED && !istype(H.glasses, /obj/item/clothing/glasses/regular) )
 			H.client.screen += global_hud.vimpaired

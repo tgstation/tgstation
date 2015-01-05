@@ -146,7 +146,7 @@
 
 /obj/item/device/flash/cyborg/proc/cyborg_flash_animation(var/mob/living/user)
 	var/atom/movable/overlay/animation = new(user.loc)
-	animation.layer = user.layer + 1
+	animation.layer = ON_TOP_OF_MOB_LAYER
 	animation.icon_state = "blank"
 	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = user

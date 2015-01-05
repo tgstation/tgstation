@@ -7,12 +7,12 @@
 	if(stat != CONSCIOUS)
 		return
 
-	if (layer != TURF_LAYER+0.2)
-		layer = TURF_LAYER+0.2
+	if (layer != initial(layer))
+		layer = UNDER_TABLE_LAYER
 		visible_message("<span class='name'>[src] scurries to the ground!</span>", \
 						"<span class='noticealien'>You are now hiding.</span>")
 	else
-		layer = MOB_LAYER
+		layer = initial(layer)
 		visible_message("[src] slowly peaks up from the ground...", \
 					"<span class='noticealien'>You have stopped hiding.</span>")
 

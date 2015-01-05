@@ -130,7 +130,7 @@
 	boxes.screen_loc = "[tx]:,[ty] to [mx],[my]"
 	for(var/obj/O in contents)
 		O.screen_loc = "[cx],[cy]"
-		O.layer = 20
+		O.layer = EQUIPMENT_LAYER
 		cx++
 		if(cx > mx)
 			cx = tx
@@ -148,7 +148,7 @@
 		for(var/datum/numbered_display/ND in display_contents)
 			ND.sample_object.screen_loc = "[cx]:16,[cy]:16"
 			ND.sample_object.maptext = "<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>"
-			ND.sample_object.layer = 20
+			ND.sample_object.layer = UI_LAYER
 			cx++
 			if(cx > (4+cols))
 				cx = 4
@@ -157,7 +157,7 @@
 		for(var/obj/O in contents)
 			O.screen_loc = "[cx]:16,[cy]:16"
 			O.maptext = ""
-			O.layer = 20
+			O.layer = EQUIPMENT_LAYER
 			cx++
 			if(cx > (4+cols))
 				cx = 4
@@ -419,11 +419,11 @@
 	boxes.master = src
 	boxes.icon_state = "block"
 	boxes.screen_loc = "7,7 to 10,8"
-	boxes.layer = 19
+	boxes.layer = UI_LAYER
 	closer = new /obj/screen/close()
 	closer.master = src
 	closer.icon_state = "x"
-	closer.layer = 20
+	closer.layer = UI_LAYER
 	orient2hud()
 
 

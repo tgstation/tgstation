@@ -10,8 +10,7 @@
 	icon_state = "floor_magnet-f"
 	name = "electromagnetic generator"
 	desc = "A device that uses station power to create points of magnetic energy."
-	level = 1		// underfloor
-	layer = 2.5
+	layer = BEACON_LAYER
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 50
@@ -31,9 +30,7 @@
 
 /obj/machinery/magnetic_module/New()
 	..()
-	var/turf/T = loc
-	hide(T.intact)
-	center = T
+	center = get_turf(src)
 
 	spawn(10)	// must wait for map loading to finish
 		if(radio_controller)
@@ -47,23 +44,14 @@
 		radio_controller.remove_object(src, freq)
 	..()
 
-// update the invisibility and icon
-/obj/machinery/magnetic_module/hide(var/intact)
-	invisibility = intact ? 101 : 0
-	updateicon()
-
 // update the icon_state
-/obj/machinery/magnetic_module/proc/updateicon()
+/obj/machinery/magnetic_module/update_icon()
 	var/state="floor_magnet"
 	var/onstate=""
 	if(!on)
 		onstate="0"
 
-	if(invisibility)
-		icon_state = "[state][onstate]-f"	// if invisible, set icon to faded version
-											// in case of being revealed by T-scanner
-	else
-		icon_state = "[state][onstate]"
+	icon_state = "[state][onstate]"
 
 /obj/machinery/magnetic_module/receive_signal(datum/signal/signal)
 
@@ -172,7 +160,7 @@
 						qdel(src)
 		*/
 
-	updateicon()
+	update_icon()
 
 
 /obj/machinery/magnetic_module/proc/magnetic_process() // proc that actually does the pulling

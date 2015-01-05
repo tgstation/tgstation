@@ -29,7 +29,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	icon_state = "plasticflaps"
 	density = 0
 	anchored = 1
-	layer = 4
+	layer = STRUCTURE_LAYER
 
 /obj/structure/plasticflaps/CanPass(atom/movable/A, turf/T)
 	if(istype(A) && A.checkpass(PASSGLASS))

@@ -198,18 +198,19 @@
 	w_class = 3 //Can fit in backpacks itself.
 	storage_slots = 5
 	max_combined_w_class = 15
-	level = 1
 	cant_hold = list(/obj/item/weapon/storage/backpack/satchel_flat) //muh recursive backpacks
 
 /obj/item/weapon/storage/backpack/satchel_flat/hide(var/intact)
-	if(intact)
-		invisibility = 101
-		anchored = 1 //otherwise you can start pulling, cover it, and drag around an invisible backpack.
-		icon_state = "[initial(icon_state)]2"
-	else
-		invisibility = initial(invisibility)
+	if(!intact)
+		layer = initial(layer)
 		anchored = 0
 		icon_state = initial(icon_state)
+	else
+		layer = BEHIND_TILE_LAYER
+		anchored = 1 //otherwise you can start pulling, cover it, and drag around an invisible backpack.
+		icon_state = "[initial(icon_state)]2"
+
+	..()
 
 /obj/item/weapon/storage/backpack/satchel_flat/New()
 	..()

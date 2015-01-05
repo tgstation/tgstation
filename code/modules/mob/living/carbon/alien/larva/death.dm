@@ -7,7 +7,7 @@
 	if(!gibbed)
 		visible_message("<span class='name'>[src]</span> lets out a waning high-pitched cry.")
 		update_canmove()
-		if(client)	blind.layer = 0
+		if(client)	blind.layer = BEHIND_SPACE_LAYER
 
 	tod = worldtime2text() //weasellos time of death patch
 	if(mind)	mind.store_memory("Time of death: [tod]", 0)

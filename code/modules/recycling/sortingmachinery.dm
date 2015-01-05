@@ -340,7 +340,7 @@
 				user << "<span class='notice'>You sliced the floorweld off the delivery chute.</span>"
 				var/obj/structure/disposalconstruct/C = new (loc)
 				C.ptype = 8 // 8 =  Delivery chute
-				C.update()
+				C.update_icon()
 				C.anchored = 1
 				C.density = 1
 				qdel(src)

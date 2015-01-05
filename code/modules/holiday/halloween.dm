@@ -170,7 +170,7 @@
 	density = 0
 	anchored = 1
 	incorporeal_move = 1
-	layer = 4
+	layer = GHOST_LAYER
 	var/timer = 0
 
 /mob/living/simple_animal/shade/howling_ghost/New()

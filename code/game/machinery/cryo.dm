@@ -5,7 +5,7 @@
 	density = 1
 	anchored = 1.0
 	interact_offline = 1
-	layer = 4
+	layer = MACHINE_LAYER
 
 	var/on = 0
 	var/temperature_archived
@@ -247,7 +247,6 @@
 /obj/machinery/atmospherics/unary/cryo_cell/open_machine()
 	if(!state_open && !panel_open)
 		on = 0
-		layer = 3
 		if(occupant)
 			occupant.bodytemperature = Clamp(occupant.bodytemperature, 261, 360)
 		..()
@@ -256,7 +255,6 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/close_machine(mob/living/carbon/M)
 	if(state_open && !panel_open)
-		layer = 4
 		..(M)
 		return occupant
 

@@ -70,7 +70,7 @@
 
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
-	robot_modules_background.layer = 19	//Objects that appear on screen are on layer 20, UI should be just below it.
+	robot_modules_background.layer = UI_LAYER
 
 	ident = rand(1, 999)
 	updatename()

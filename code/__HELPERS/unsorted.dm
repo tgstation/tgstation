@@ -661,7 +661,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(direction)
 		animation.dir = direction
 	animation.icon = a_icon
-	animation.layer = target:layer+1
+	animation.layer = SPECIAL_EFFECT_LAYER
 	if(a_icon_state)
 		animation.icon_state = a_icon_state
 	else

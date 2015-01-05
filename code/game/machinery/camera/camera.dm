@@ -6,7 +6,7 @@
 	use_power = 2
 	idle_power_usage = 5
 	active_power_usage = 10
-	layer = 5
+	layer = MACHINE_LAYER
 
 	var/datum/wires/camera/wires = null // Wires datum
 	var/list/network = list("SS13")
@@ -48,6 +48,7 @@
 /obj/machinery/camera/initialize()
 	if(z == 1 && prob(3) && !start_active)
 		deactivate()
+	..()
 
 /obj/machinery/camera/Destroy()
 	deactivate(null, 0) //kick anyone viewing out

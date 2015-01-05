@@ -19,6 +19,7 @@
 
 /obj/machinery/computer/teleporter/initialize()
 	link_power_station()
+	..()
 
 /obj/machinery/computer/teleporter/proc/link_power_station()
 	if(power_station)
@@ -257,6 +258,7 @@
 
 /obj/machinery/teleport/hub/initialize()
 	link_power_station()
+	..()
 
 /obj/machinery/teleport/hub/RefreshParts()
 	var/A = 0
@@ -349,6 +351,7 @@
 
 /obj/machinery/teleport/station/initialize()
 	link_console_and_hub()
+	..()
 
 /obj/machinery/teleport/station/RefreshParts()
 	var/E

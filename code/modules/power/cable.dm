@@ -23,7 +23,6 @@ By design, d1 is the smallest direction and d2 is the highest
 */
 
 /obj/structure/cable
-	level = 1 //is underfloor
 	anchored =1
 	var/datum/powernet/powernet
 	name = "power cable"
@@ -32,7 +31,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	icon_state = "0-1"
 	var/d1 = 0   // cable direction 1 (see above)
 	var/d2 = 1   // cable direction 2 (see above)
-	layer = 2.44 //Just below unary stuff, which is at 2.45 and above pipes, which are at 2.4
+	layer = CABLE_LAYER
 	var/cable_color = "red"
 	var/obj/item/stack/cable_coil/stored
 
@@ -78,7 +77,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	var/turf/T = src.loc			// hide if turf is not intact
 
-	if(level==1) hide(T.intact)
+	if(layer < T.layer) hide(T.intact)
 	cable_list += src //add it to the global cable list
 
 	if(d1)
@@ -101,18 +100,8 @@ By design, d1 is the smallest direction and d2 is the highest
 // General procedures
 ///////////////////////////////////
 
-//If underfloor, hide the cable
-/obj/structure/cable/hide(var/i)
-
-	if(level == 1 && istype(loc, /turf))
-		invisibility = i ? 101 : 0
-	updateicon()
-
-/obj/structure/cable/proc/updateicon()
-	if(invisibility)
-		icon_state = "[d1]-[d2]-f"
-	else
-		icon_state = "[d1]-[d2]"
+/obj/structure/cable/update_icon()
+	icon_state = "[d1]-[d2]"
 
 
 // returns the powernet this cable belongs to
@@ -662,7 +651,7 @@ obj/structure/cable/proc/avail()
 		C.d1 = 0 //it's a O-X node cable
 		C.d2 = dirn
 		C.add_fingerprint(user)
-		C.updateicon()
+		C.update_icon()
 
 		//create a new powernet with the cable, if needed it will be merged later
 		var/datum/powernet/PN = new()
@@ -728,7 +717,7 @@ obj/structure/cable/proc/avail()
 			NC.d1 = 0
 			NC.d2 = fdirn
 			NC.add_fingerprint()
-			NC.updateicon()
+			NC.update_icon()
 
 			//create a new powernet with the cable, if needed it will be merged later
 			var/datum/powernet/newPN = new()
@@ -777,7 +766,7 @@ obj/structure/cable/proc/avail()
 		C.update_stored(2, item_color)
 
 		C.add_fingerprint()
-		C.updateicon()
+		C.update_icon()
 
 
 		C.mergeConnectedNetworks(C.d1) //merge the powernets...

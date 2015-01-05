@@ -19,7 +19,7 @@
 	visible_message("<b>The [name]</b> seizes up and falls limp...") //ded -- Urist
 
 	update_canmove()
-	if(blind)	blind.layer = 0
+	if(blind)	blind.layer = BEHIND_SPACE_LAYER
 
 	if(ticker && ticker.mode)
 		ticker.mode.check_win()

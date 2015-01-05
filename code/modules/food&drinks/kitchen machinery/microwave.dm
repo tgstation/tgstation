@@ -3,7 +3,6 @@
 	desc = "Keeps hot things hot and cold things hot."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "mw"
-	layer = 2.9
 	density = 1
 	anchored = 1
 	use_power = 1

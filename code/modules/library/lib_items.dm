@@ -21,6 +21,7 @@
 
 
 /obj/structure/bookcase/initialize()
+	..()
 	state = 2
 	icon_state = "book-0"
 	anchored = 1

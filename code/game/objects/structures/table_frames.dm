@@ -16,7 +16,7 @@
 	icon_state = "table_frame"
 	density = 0
 	anchored = 0
-	layer = 2.8
+	layer = TABLE_LAYER
 
 /obj/structure/table_frame/attackby(var/obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/wrench))

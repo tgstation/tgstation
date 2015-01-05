@@ -98,6 +98,7 @@
 
 
 /obj/item/device/radio/initialize()
+	..()
 	if(freerange)
 		if(frequency < 1200 || frequency > 1600)
 			frequency = sanitize_frequency(frequency, maxf)

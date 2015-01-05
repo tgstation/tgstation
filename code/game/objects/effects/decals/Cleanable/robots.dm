@@ -4,9 +4,6 @@
 	name = "robot debris"
 	desc = "It's a useless heap of junk... <i>or is it?</i>"
 	gender = PLURAL
-	density = 0
-	anchored = 1
-	layer = 2
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "gib1"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7")
@@ -43,9 +40,6 @@
 	name = "motor oil"
 	desc = "It's black and greasy. Looks like Beepsky made another mess."
 	gender = PLURAL
-	density = 0
-	anchored = 1
-	layer = 2
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "floor1"
 	var/viruses = list()

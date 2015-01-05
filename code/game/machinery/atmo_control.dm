@@ -70,6 +70,7 @@ obj/machinery/air_sensor/proc/set_frequency(new_frequency)
 
 obj/machinery/air_sensor/initialize()
 	set_frequency(frequency)
+	..()
 
 obj/machinery/air_sensor/New()
 	..()
@@ -189,6 +190,7 @@ obj/machinery/computer/general_air_control/proc/set_frequency(new_frequency)
 
 obj/machinery/computer/general_air_control/initialize()
 	set_frequency(frequency)
+	..()
 
 obj/machinery/computer/general_air_control/Topic(href, href_list)
 	if(..())

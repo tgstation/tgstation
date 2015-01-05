@@ -224,7 +224,6 @@ Crematorium Switch
 /obj/structure/tray
 	icon = 'icons/obj/stationobjs.dmi'
 	density = 1
-	layer = 2.9
 	var/obj/structure/bodycontainer/connected = null
 	anchored = 1.0
 	throwpass = 1

@@ -1823,7 +1823,7 @@
 									if(F.lava)
 										var/safe = 0
 										for(var/obj/structure/O in F.contents)
-											if(O.level > F.level && !istype(O, /obj/structure/window)) // Something to stand on and it isn't under the floor!
+											if(O.layer > F.layer && !istype(O, /obj/structure/window)) // Something to stand on and it isn't under the floor!
 												safe = 1
 												break
 										if(!safe)

@@ -8,7 +8,6 @@
 	can_unwrench = 1
 
 	var/area/initial_loc
-	level = 1
 	var/area_uid
 	var/id_tag = null
 
@@ -70,8 +69,8 @@
 
 /obj/machinery/atmospherics/unary/vent_pump/update_icon_nopipes()
 	overlays.Cut()
-	if(showpipe)
-		overlays += getpipeimage('icons/obj/atmospherics/unary_devices.dmi', "vent_cap", initialize_directions)
+	var/cap_layer = node ? node.layer : PIPE_LAYER // use the node's layer or use the default pipe layer if no node
+	overlays += getpipeimage('icons/obj/atmospherics/unary_devices.dmi', "vent_cap", initialize_directions, , cap_layer)
 
 	if(welded)
 		icon_state = "vent_welded"

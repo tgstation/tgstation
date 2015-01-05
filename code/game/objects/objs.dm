@@ -50,9 +50,6 @@
 	else
 		return null
 
-/atom/movable/proc/initialize()
-	return
-
 /obj/proc/updateUsrDialog()
 	if(in_use)
 		var/is_in_use = 0
@@ -120,8 +117,22 @@
 /obj/proc/alter_health()
 	return 1
 
-/obj/proc/hide(h)
-	return
+/obj/initialize()
+	if(isturf(loc))
+		var/turf/T = loc
+		hide(T.intact, T.layer)
+	..()
+
+// Make anything underneath the current turf invisible
+/obj/proc/hide(intact, loclayer)
+	var/invis = invisibility
+	if(!intact || layer >= loclayer)
+		if(invisibility == INVISIBILITY_UNDER_THE_FLOOR)
+			invis = initial(invisibility)
+	else
+		invis = INVISIBILITY_UNDER_THE_FLOOR
+	animate(src, invisibility = invis, time = 0) // cancel any animations going
+
 
 /obj/ex_act(severity, target)
 	if(severity == 1 || target == src)

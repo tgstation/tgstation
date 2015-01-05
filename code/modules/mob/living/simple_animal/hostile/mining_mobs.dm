@@ -111,8 +111,7 @@
 /mob/living/simple_animal/hostile/asteroid/basilisk/Die()
 	var/counter
 	for(counter=0, counter<2, counter++)
-		var/obj/item/weapon/ore/diamond/D = new /obj/item/weapon/ore/diamond(src.loc)
-		D.layer = 4.1
+		new /obj/item/weapon/ore/diamond(src.loc)
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub
@@ -434,8 +433,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/Die()
-	var/obj/item/asteroid/goliath_hide/G = new /obj/item/asteroid/goliath_hide(src.loc)
-	G.layer = 4.1
+	new /obj/item/asteroid/goliath_hide(src.loc)
 	..()
 
 /obj/item/asteroid/goliath_hide
@@ -445,7 +443,6 @@
 	icon_state = "goliath_hide"
 	flags = NOBLUDGEON
 	w_class = 3
-	layer = 4
 
 /obj/item/asteroid/goliath_hide/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)

@@ -10,6 +10,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	name = "effect"
 	icon = 'icons/effects/effects.dmi'
 	mouse_opacity = 0
+	layer = SPECIAL_EFFECT_LAYER
 	unacidable = 1//So effect are not targeted by alien acid.
 	pass_flags = PASSTABLE | PASSGRILLE
 
@@ -775,7 +776,7 @@ steam.start() -- spawns the effect
 	opacity = 0
 	anchored = 1
 	density = 0
-	layer = TURF_LAYER + 0.1
+	layer = FOAM_LAYER
 	mouse_opacity = 0
 	var/amount = 3
 	var/expand = 1

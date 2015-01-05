@@ -386,6 +386,7 @@
 	dead_mob_list += src
 	icon_state = icon_dead
 	stat = DEAD
+	layer = STRUCTURE_LAYER
 	density = 0
 	return
 

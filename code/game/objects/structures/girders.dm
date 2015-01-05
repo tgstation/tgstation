@@ -3,7 +3,7 @@
 	icon_state = "girder"
 	anchored = 1
 	density = 1
-	layer = 2
+	layer = WALL_LAYER
 	var/state = 0
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 
@@ -253,7 +253,7 @@
 	icon_state= "cultgirder"
 	anchored = 1
 	density = 1
-	layer = 2
+	layer = WALL_LAYER
 
 /obj/structure/cultgirder/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/wrench))

@@ -135,7 +135,7 @@
 	desc = "What is that thing?"
 	density = 1
 	anchored = 1
-	layer = 3
+	layer = ITEM_LAYER
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blobpod"
 	var/triggerproc = "explode" //name of the proc thats called when the mine is triggered

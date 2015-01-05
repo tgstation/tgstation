@@ -68,7 +68,7 @@ var/const/tk_maxrange = 15
 	flags = NOBLUDGEON | ABSTRACT
 	//item_state = null
 	w_class = 10.0
-	layer = 20
+	layer = EQUIPMENT_LAYER
 
 	var/last_throw = 0
 	var/atom/movable/focus = null
@@ -162,7 +162,7 @@ var/const/tk_maxrange = 15
 	O.name = "sparkles"
 	O.anchored = 1
 	O.density = 0
-	O.layer = FLY_LAYER
+	O.layer = SPECIAL_EFFECT_LAYER
 	O.dir = pick(cardinal)
 	O.icon = 'icons/effects/effects.dmi'
 	O.icon_state = "nothing"

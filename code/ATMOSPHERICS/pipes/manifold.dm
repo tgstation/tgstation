@@ -19,8 +19,6 @@
 	var/obj/machinery/atmospherics/node2
 	var/obj/machinery/atmospherics/node3
 
-	level = 1
-	layer = 2.4 //under wires with their 2.44
 
 /obj/machinery/atmospherics/pipe/manifold/New()
 	color = pipe_color
@@ -50,9 +48,7 @@
 				if(turn(dir, 180) == D)
 					node3 = target
 				break
-	var/turf/T = src.loc			// hide if turf is not intact
-	hide(T.intact)
-	update_icon()
+	..()
 
 /obj/machinery/atmospherics/pipe/manifold/Destroy()
 	if(node1)
@@ -90,26 +86,30 @@
 	..()
 
 /obj/machinery/atmospherics/pipe/manifold/update_icon()
-	var/invis = invisibility ? "-f" : ""
 
-	icon_state = "manifold_center[invis]"
+	icon_state = "manifold_center"
 
-	overlays.Cut()
+	underlays.Cut()
 
 	//Add non-broken pieces
 	if(node1)
-		overlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_full[invis]", get_dir(src,node1))
+		underlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_full", turn(dir, 90))
+	else
+		underlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_broken", turn(dir, 90))
 
 	if(node2)
-		overlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_full[invis]", get_dir(src,node2))
+		underlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_full", turn(dir, 270))
+	else
+		underlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_broken", turn(dir, 270))
 
 	if(node3)
-		overlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_full[invis]", get_dir(src,node3))
+		underlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_full", turn(dir, 180))
+	else
+		underlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_broken", turn(dir, 180))
 
-/obj/machinery/atmospherics/pipe/manifold/hide(var/i)
-	if(level == 1 && istype(loc, /turf/simulated))
-		invisibility = i ? 101 : 0
-	update_icon()
+	if(!pipe_color)
+		pipe_color = (node1 && node1.pipe_color) || (node2 && node2.pipe_color) || (node3 && node3.pipe_color) || pipe_color
+		color = pipe_color
 
 /obj/machinery/atmospherics/pipe/manifold/pipeline_expansion()
 	return list(node1, node2, node3)
@@ -120,10 +120,9 @@
 	name="pipe"
 
 /obj/machinery/atmospherics/pipe/manifold/general/visible
-	level = 2
+	layer = ATMOSPHERIC_MACHINE_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold/general/hidden
-	level = 1
 
 /obj/machinery/atmospherics/pipe/manifold/scrubbers
 	name="scrubbers pipe"
@@ -131,10 +130,9 @@
 	color=rgb(255,0,0)
 
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible
-	level = 2
+	layer = ATMOSPHERIC_MACHINE_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden
-	level = 1
 
 /obj/machinery/atmospherics/pipe/manifold/supply
 	name="air supply pipe"
@@ -142,10 +140,9 @@
 	color=rgb(0,0,255)
 
 /obj/machinery/atmospherics/pipe/manifold/supply/visible
-	level = 2
+	layer = ATMOSPHERIC_MACHINE_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden
-	level = 1
 
 /obj/machinery/atmospherics/pipe/manifold/supplymain
 	name="main air supply pipe"
@@ -153,37 +150,33 @@
 	color=rgb(130,43,272)
 
 /obj/machinery/atmospherics/pipe/manifold/supplymain/visible
-	level = 2
+	layer = ATMOSPHERIC_MACHINE_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden
-	level = 1
 
 /obj/machinery/atmospherics/pipe/manifold/yellow
 	pipe_color=rgb(255,198,0)
 	color=rgb(255,198,0)
 
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible
-	level = 2
+	layer = ATMOSPHERIC_MACHINE_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold/yellow/hidden
-	level = 1
 
 /obj/machinery/atmospherics/pipe/manifold/cyan
 	pipe_color=rgb(0,256,249)
 	color=rgb(0,256,249)
 
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible
-	level = 2
+	layer = ATMOSPHERIC_MACHINE_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden
-	level = 1
 
 /obj/machinery/atmospherics/pipe/manifold/green
 	pipe_color=rgb(30,256,0)
 	color=rgb(30,256,0)
 
 /obj/machinery/atmospherics/pipe/manifold/green/visible
-	level = 2
+	layer = ATMOSPHERIC_MACHINE_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold/green/hidden
-	level = 1

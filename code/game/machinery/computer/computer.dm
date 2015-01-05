@@ -20,6 +20,7 @@
 
 /obj/machinery/computer/initialize()
 	power_change()
+	..()
 
 /obj/machinery/computer/process()
 	if(stat & (NOPOWER|BROKEN))

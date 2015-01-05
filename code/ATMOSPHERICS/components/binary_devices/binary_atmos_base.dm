@@ -13,8 +13,6 @@
 	var/datum/pipeline/parent1
 	var/datum/pipeline/parent2
 
-	var/showpipe = 0
-
 /obj/machinery/atmospherics/binary/New()
 	..()
 	switch(dir)
@@ -37,27 +35,21 @@
 	return
 
 /obj/machinery/atmospherics/binary/update_icon()
+	underlays.Cut()
 	update_icon_nopipes()
 
-	underlays.Cut()
-	if(showpipe)
-		var/connected = 0
+	var/connected = 0
 
-		//Add intact pieces
-		if(node1)
-			connected = icon_addintact(node1, connected)
+	//Add intact pieces
+	if(node1)
+		connected = icon_addintact(node1, connected)
 
-		if(node2)
-			connected = icon_addintact(node2, connected)
+	if(node2)
+		connected = icon_addintact(node2, connected)
 
-		//Add broken pieces
-		icon_addbroken(connected)
+	//Add broken pieces
+	icon_addbroken(connected)
 
-/obj/machinery/atmospherics/binary/hide(var/intact)
-	showpipe = !intact
-	update_icon()
-
-	..(intact)
 
 // Housekeeping and pipe network stuff below
 /obj/machinery/atmospherics/binary/Destroy()
@@ -72,7 +64,6 @@
 	..()
 
 /obj/machinery/atmospherics/binary/initialize()
-	src.disconnect(src)
 
 	var/node2_connect = dir
 	var/node1_connect = turn(dir, 180)
@@ -87,10 +78,7 @@
 			node2 = target
 			break
 
-	if(level == 2)
-		showpipe = 1
-
-	update_icon()
+	..()
 
 /obj/machinery/atmospherics/binary/build_network()
 	if(!parent1)

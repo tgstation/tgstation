@@ -25,7 +25,7 @@
 	if(!l_hand)
 		W.loc = src		//TODO: move to equipped?
 		l_hand = W
-		W.layer = 20	//TODO: move to equipped?
+		W.layer = EQUIPMENT_LAYER	//TODO: move to equipped?
 //		l_hand.screen_loc = ui_lhand
 		W.equipped(src,slot_l_hand)
 		if(client)	client.screen |= W
@@ -42,7 +42,7 @@
 	if(!r_hand)
 		W.loc = src
 		r_hand = W
-		W.layer = 20
+		W.layer = EQUIPMENT_LAYER
 //		r_hand.screen_loc = ui_rhand
 		W.equipped(src,slot_r_hand)
 		if(client)	client.screen |= W
