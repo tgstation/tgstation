@@ -886,8 +886,8 @@ var/list/sacrificed = list()
 			C.ear_deaf += 50
 			C.show_message("<span class='danger'>The world around you suddenly becomes quiet.</span>", 3)
 			affected++
-			if(prob(1))
-				C.sdisabilities |= DEAF
+			if(prob(1) && ishuman(C))
+				C.dna.add_mutation(DEAFMUT)
 		if(affected)
 			usr.say("Sti[pick("'","`")] kaliedir!")
 			usr << "<span class='danger'>The world becomes quiet as the deafening rune dissipates into fine dust.</span>"
@@ -926,9 +926,9 @@ var/list/sacrificed = list()
 			C.eye_blurry += 50
 			C.eye_blind += 20
 			if(prob(5))
-				C.disabilities |= NEARSIGHTED
+				C.disabilities |= NEARSIGHT
 				if(prob(10))
-					C.sdisabilities |= BLIND
+					C.disabilities |= BLIND
 			C.show_message("<span class='danger'>Suddenly you see red flash that blinds you.</span>", 3)
 			affected++
 		if(affected)
@@ -1030,8 +1030,7 @@ var/list/sacrificed = list()
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
 				flick("e_flash", C.flash)
-				if(C.stuttering < 1 && (!(HULK in C.mutations)))
-					C.stuttering = 1
+				C.stuttering = 1
 				C.Weaken(1)
 				C.Stun(1)
 				C.show_message("<span class='danger'>The rune explodes in a bright flash.</span>", 3)
@@ -1057,10 +1056,9 @@ var/list/sacrificed = list()
 			else if(iscarbon(T))
 				var/mob/living/carbon/C = T
 				flick("e_flash", C.flash)
-				if (!(HULK in C.mutations))
-					C.silent += 15
-					C.Weaken(10)
-					C.Stun(10)
+				C.silent += 15
+				C.Weaken(10)
+				C.Stun(10)
 		return
 
 /////////////////////////////////////////TWENTY-FIFTH RUNE

@@ -46,7 +46,6 @@
 	//blinded get reset each cycle and then get activated later in the
 	//code. Very ugly. I dont care. Moving this stuff here so its easy
 	//to find it.
-	blinded = null
 
 	//Handle temperature/pressure differences between body and environment
 	if(environment)	// More error checking -- TLE
@@ -78,41 +77,7 @@
 
 /mob/living/carbon/monkey/proc/handle_disabilities()
 
-	if (disabilities & EPILEPSY)
-		if ((prob(1) && paralysis < 10))
-			src << "<span class='danger'>You have a seizure!</span>"
-			Paralyse(10)
-	if (disabilities & COUGHING)
-		if ((prob(5) && paralysis <= 1))
-			drop_item()
-			spawn( 0 )
-				emote("cough")
-				return
-	if (disabilities & TOURETTES)
-		if ((prob(10) && paralysis <= 1))
-			Stun(10)
-			spawn( 0 )
-				emote("twitch")
-				return
-	if (disabilities & NERVOUS)
-		if (prob(10))
-			stuttering = max(10, stuttering)
-
 /mob/living/carbon/monkey/proc/handle_mutations_and_radiation()
-
-	if(getFireLoss())
-		if((COLD_RESISTANCE in mutations) && prob(50))
-			switch(getFireLoss())
-				if(1 to 50)
-					adjustFireLoss(-1)
-				if(51 to 100)
-					adjustFireLoss(-5)
-
-	if ((HULK in mutations) && health <= 25)
-		mutations.Remove(HULK)
-		src << "<span class='danger'>You suddenly feel very weak.</span>"
-		Weaken(3)
-		emote("collapse")
 
 	if (radiation)
 		if (radiation > 100)
@@ -339,11 +304,8 @@
 		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
 			pressure_alert = -1
 		else
-			if( !(COLD_RESISTANCE in mutations) )
-				adjustBruteLoss( LOW_PRESSURE_DAMAGE )
-				pressure_alert = -2
-			else
-				pressure_alert = -1
+			adjustBruteLoss( LOW_PRESSURE_DAMAGE )
+			pressure_alert = -2
 
 	return
 
@@ -384,12 +346,12 @@
 	updatehealth()
 
 	if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
-		blinded = 1
+		eye_blind = max(eye_blind, 1)
 		silent = 0
 	else				//ALIVE. LIGHTS ARE ON
 		if(health < config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
 			death()
-			blinded = 1
+			eye_blind = max(eye_blind, 1)
 			stat = DEAD
 			silent = 0
 			return 1
@@ -405,11 +367,11 @@
 
 		if(paralysis)
 			AdjustParalysis(-1)
-			blinded = 1
+			eye_blind = max(eye_blind, 1)
 			stat = UNCONSCIOUS
 		else if(sleeping)
 			sleeping = max(sleeping-1, 0)
-			blinded = 1
+			eye_blind = max(eye_blind, 1)
 			stat = UNCONSCIOUS
 			if( prob(10) && health )
 				spawn(0)
@@ -419,21 +381,24 @@
 			stat = CONSCIOUS
 
 		//Eyes
-		if(sdisabilities & BLIND)	//disabled-blind, doesn't get better on its own
-			blinded = 1
+		if(disabilities & BLIND)	//disabled-blind, doesn't get better on its own
+			eye_blind = max(eye_blind, 1)
 		else if(eye_blind)			//blindness, heals slowly over time
 			eye_blind = max(eye_blind-1,0)
-			blinded = 1
+			eye_blind = max(eye_blind, 1)
 		else if(eye_blurry)			//blurry eyes heal slowly
 			eye_blurry = max(eye_blurry-1, 0)
 
 		//Ears
-		if(sdisabilities & DEAF)		//disabled-deaf, doesn't get better on its own
+		if(disabilities & DEAF)		//disabled-deaf, doesn't get better on its own
 			ear_deaf = max(ear_deaf, 1)
-		else if(ear_deaf)			//deafness, heals slowly over time
-			ear_deaf = max(ear_deaf-1, 0)
-		else if(ear_damage < 25)	//ear damage heals slowly under this threshold. otherwise you'll need earmuffs
-			ear_damage = max(ear_damage-0.05, 0)
+		else 
+			/* might be better to create a variable here, and instead of doing this nested for. */
+			// deafness heals slowly over time, unless ear_damage is over 100
+			if (ear_damage < 100)
+				// Heal the first 1/3 here
+				ear_deaf = max(ear_deaf - 1, 0)
+				ear_damage = max(ear_damage-0.05, 0)
 
 		//Other
 		if(stunned)
@@ -457,7 +422,7 @@
 
 /mob/living/carbon/monkey/proc/handle_regular_hud_updates()
 
-	if (stat == 2 || (XRAY in mutations))
+	if (stat == 2)
 		sight |= SEE_TURFS
 		sight |= SEE_MOBS
 		sight |= SEE_OBJS
@@ -532,12 +497,12 @@
 	client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
 
 	if(blind && stat != DEAD)
-		if(blinded)
+		if(eye_blind)
 			blind.layer = 18
 		else
 			blind.layer = 0
 
-			if(disabilities & NEARSIGHTED)
+			if(disabilities & NEARSIGHT)
 				client.screen += global_hud.vimpaired
 
 			if(eye_blurry)

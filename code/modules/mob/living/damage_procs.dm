@@ -15,7 +15,6 @@
 		if(BRUTE)
 			adjustBruteLoss(damage * blocked)
 		if(BURN)
-			if(COLD_RESISTANCE in mutations)	damage = 0
 			adjustFireLoss(damage * blocked)
 		if(TOX)
 			adjustToxLoss(damage * blocked)
@@ -52,7 +51,7 @@
 		if(PARALYZE)
 			Paralyse(effect * blocked)
 		if(IRRADIATE)
-			radiation += max(effect * ((100-run_armor_check(null, "rad", "Your clothes feel warm", "Your clothes feel warm"))/100),0)//Rads auto check armor
+			radiation += max(effect * ((100-run_armor_check(null, "rad", "Your clothes feel warm.", "Your clothes feel warm."))/100),0)//Rads auto check armor
 		if(STUTTER)
 			if(status_flags & CANSTUN) // stun is usually associated with stutter
 				stuttering = max(stuttering,(effect * blocked))

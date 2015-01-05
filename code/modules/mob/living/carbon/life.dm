@@ -15,6 +15,7 @@
 				internals.icon_state = "internal0"
 	return
 
+
 /mob/living/carbon/proc/breathe()
 	//processing environment chems done here for sake of noncopypastaing
 	var/datum/gas_mixture/environment = loc.return_air()

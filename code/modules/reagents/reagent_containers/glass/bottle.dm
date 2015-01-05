@@ -289,6 +289,28 @@
 		var/list/data = list("viruses"= list(F))
 		reagents.add_reagent("blood", 20, data)
 
+/obj/item/weapon/reagent_containers/glass/bottle/anxiety
+	name = "Severe Anxiety culture bottle"
+	desc = "A small bottle. Contains a sample of Lepidopticides."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle3"
+	New()
+		..()
+		var/datum/disease/F = new /datum/disease/anxiety(0)
+		var/list/data = list("viruses"= list(F))
+		reagents.add_reagent("blood", 20, data)
+
+/obj/item/weapon/reagent_containers/glass/bottle/beesease
+	name = "Beesease culture bottle"
+	desc = "A small bottle. Contains a sample of invasive Apidae."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle3"
+	New()
+		..()
+		var/datum/disease/F = new /datum/disease/beesease(0)
+		var/list/data = list("viruses"= list(F))
+		reagents.add_reagent("blood", 20, data)
+
 /obj/item/weapon/reagent_containers/glass/bottle/pacid
 	name = "Polytrinic Acid Bottle"
 	desc = "A small bottle. Contains a small amount of Polytrinic Acid"

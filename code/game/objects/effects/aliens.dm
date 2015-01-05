@@ -108,14 +108,12 @@
 	health -= tforce
 	healthcheck()
 
-
-/obj/structure/alien/resin/attack_hand(mob/living/user)
-	if(HULK in user.mutations)
-		user.do_attack_animation(src)
-		user.visible_message("<span class='danger'>[user] destroys [src]!</span>")
-		health = 0
-		healthcheck()
-
+/obj/structure/alien/resin/attack_hulk(mob/living/carbon/human/user)
+	..(user, 1)
+	user.do_attack_animation(src)
+	user.visible_message("<span class='danger'>[user] destroys [src]!</span>")
+	health = 0
+	healthcheck()
 
 /obj/structure/alien/resin/attack_paw(mob/user)
 	return attack_hand(user)

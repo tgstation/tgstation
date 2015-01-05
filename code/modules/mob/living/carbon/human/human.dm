@@ -305,7 +305,7 @@
 	if(href_list["criminal"])
 		if(istype(usr, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = usr
-			if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
+			if(istype(H.glasses, /obj/item/clothing/glasses/hud/security))
 				if(usr.stat || usr == src) //|| !usr.canmove || usr.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
 					return													  //Non-fluff: This allows sec to set people to arrest as they get disarmed or beaten
 				// Checks the user has security clearence before allowing them to change arrest status via hud, comment out to enable all access
@@ -331,7 +331,7 @@
 						if(href_list["status"])
 							var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Parolled", "Discharged", "Cancel")
 							if(R)
-								if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
+								if(istype(H.glasses, /obj/item/clothing/glasses/hud/security))
 									if(setcriminal != "Cancel")
 										investigate_log("[src.key] has been set from [R.fields["criminal"]] to [setcriminal] by [usr.name] ([usr.key]).", "records")
 										R.fields["criminal"] = setcriminal
@@ -340,7 +340,7 @@
 
 						if(href_list["view"])
 							if(R)
-								if(usr.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security) || !istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
+								if(usr.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security))
 									return
 								usr << "<b>Name:</b> [R.fields["name"]]	<b>Criminal Status:</b> [R.fields["criminal"]]"
 								usr << "<b>Minor Crimes:</b>"
@@ -365,7 +365,7 @@
 										var/t1 = copytext(sanitize(input("Please input minor crime names:", "Security HUD", "", null)  as text),1,MAX_MESSAGE_LEN)
 										var/t2 = copytext(sanitize(input("Please input minor crime details:", "Security HUD", "", null)  as message),1,MAX_MESSAGE_LEN)
 										if(R)
-											if (!t1 || !t2 || !allowed_access || H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security) || !istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
+											if (!t1 || !t2 || !allowed_access || H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security))
 												return
 											var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
 											data_core.addMinorCrime(R.fields["id"], crime)
@@ -376,7 +376,7 @@
 										var/t1 = copytext(sanitize(input("Please input major crime names:", "Security HUD", "", null)  as text),1,MAX_MESSAGE_LEN)
 										var/t2 = copytext(sanitize(input("Please input major crime details:", "Security HUD", "", null)  as message),1,MAX_MESSAGE_LEN)
 										if(R)
-											if (!t1 || !t2 || !allowed_access || H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security) || !istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
+											if (!t1 || !t2 || !allowed_access || H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security))
 												return
 											var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
 											data_core.addMajorCrime(R.fields["id"], crime)
@@ -386,7 +386,7 @@
 
 						if(href_list["view_comment"])
 							if(R)
-								if(H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security) || !istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
+								if(H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security))
 									return
 								usr << "<b>Comments/Log:</b>"
 								var/counter = 1
@@ -400,7 +400,7 @@
 							if(R)
 								var/t1 = copytext(sanitize(input("Add Comment:", "Secure. records", null, null)  as message),1,MAX_MESSAGE_LEN)
 								if(R)
-									if (!t1 || !allowed_access || H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security) || !istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
+									if (!t1 || !allowed_access || H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security))
 										return
 									var/counter = 1
 									while(R.fields[text("com_[]", counter)])
