@@ -37,12 +37,10 @@
 	if (istype(A,/mob/living/carbon))
 		var/mob/living/carbon/M = A
 		if(M.lying)	return
-
 		switch (src.wet)
 			if(1) //wet floor
 				if(!M.slip(4, 2, null, (NO_SLIP_WHEN_WALKING|STEP)))
 					M.inertia_dir = 0
 				return
-
 			if(2) //lube
 				M.slip(0, 7, null, (STEP|SLIDE|GALOSHES_DONT_HELP))
