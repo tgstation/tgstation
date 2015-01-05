@@ -32,11 +32,12 @@
 
 // Adds the adjacent turfs to the current atmos processing
 /turf/Del()
-	for(var/direction in cardinal)
-		if(atmos_adjacent_turfs & direction)
-			var/turf/simulated/T = get_step(src, direction)
-			if(istype(T))
-				SSair.add_to_active(T)
+	if(air_master)
+		for(var/direction in cardinal)
+			if(atmos_adjacent_turfs & direction)
+				var/turf/simulated/T = get_step(src, direction)
+				if(istype(T))
+					air_master.add_to_active(T)
 	..()
 
 /turf/attack_hand(mob/user as mob)
@@ -117,7 +118,8 @@
 	if(path == type)	return src
 	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
 	var/old_opacity = opacity
-	SSair.remove_from_active(src)
+	if(air_master)
+		air_master.remove_from_active(src)
 
 	var/turf/W = new path(src)
 
@@ -128,7 +130,7 @@
 	W.lighting_lumcount += old_lumcount
 	if(old_lumcount != W.lighting_lumcount)	//light levels of the turf have changed. We need to shift it to another lighting-subarea
 		W.lighting_changed = 1
-		SSlighting.changed_turfs += W
+		lighting_controller.changed_turfs += W
 
 	if(old_opacity != W.opacity)			//opacity has changed. Need to update surrounding lights
 		if(W.lighting_lumcount)				//unless we're being illuminated, don't bother (may be buggy, hard to test)
@@ -167,7 +169,8 @@
 		air.carbon_dioxide = (aco/max(turf_count,1))
 		air.toxins = (atox/max(turf_count,1))
 		air.temperature = (atemp/max(turf_count,1))//Trace gases can get bant
-		SSair.add_to_active(src)
+		if(air_master)
+			air_master.add_to_active(src)
 
 /turf/proc/ReplaceWithLattice()
 	src.ChangeTurf(/turf/space)

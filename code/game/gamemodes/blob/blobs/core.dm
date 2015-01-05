@@ -11,7 +11,7 @@
 
 /obj/effect/blob/core/New(loc, var/h = 200, var/client/new_overmind = null, var/new_rate = 2)
 	blob_cores += src
-	SSobj.processing.Add(src)
+	processing_objects.Add(src)
 	if(!overmind)
 		create_overmind(new_overmind)
 	point_rate = new_rate
@@ -22,7 +22,7 @@
 	blob_cores -= src
 	if(overmind)
 		qdel(overmind)
-	SSobj.processing.Remove(src)
+	processing_objects.Remove(src)
 	..()
 
 /obj/effect/blob/core/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)

@@ -12,10 +12,10 @@
 
 /obj/item/device/radio/intercom/New()
 	..()
-	SSobj.processing += src
+	processing_objects += src
 
 /obj/item/device/radio/intercom/Destroy()
-	SSobj.processing -= src
+	processing_objects -= src
 	..()
 
 /obj/item/device/radio/intercom/attack_ai(mob/user as mob)

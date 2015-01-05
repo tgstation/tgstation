@@ -24,10 +24,10 @@
 /obj/effect/forcefield/mime/New()
 	..()
 	last_process = world.time
-	SSobj.processing.Add(src)
+	processing_objects.Add(src)
 
 /obj/effect/forcefield/mime/process()
 	timeleft -= (world.time - last_process)
 	if(timeleft <= 0)
-		SSobj.processing.Remove(src)
+		processing_objects.Remove(src)
 		qdel(src)

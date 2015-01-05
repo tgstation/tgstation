@@ -14,4 +14,5 @@
 
 /datum/game_mode/sandbox/post_setup()
 	..()
-	SSshuttle.emergencyAlwaysFakeRecall = 1
+	if(emergency_shuttle)
+		emergency_shuttle.always_fake_recall = 1

@@ -36,7 +36,7 @@
 	var/del_new_on_log = 1				// del's new players if they log before they spawn in
 	var/allow_Metadata = 0				// Metadata is supported.
 	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
-	var/fps = 10
+	var/Ticklag = 0.9
 	var/Tickcomp = 0
 	var/allow_holidays = 0				//toggles whether holiday-specific content should be used
 
@@ -262,9 +262,7 @@
 				if("allow_metadata")
 					config.allow_Metadata = 1
 				if("kick_inactive")
-					if(value < 1)
-						value = INACTIVITY_KICK
-					config.kick_inactive = value
+					config.kick_inactive = 1
 				if("load_jobs_from_txt")
 					load_jobs_from_txt = 1
 				if("forbid_singulo_possession")
@@ -276,11 +274,7 @@
 				if("useircbot")
 					useircbot = 1
 				if("ticklag")
-					var/ticklag = text2num(value)
-					if(ticklag > 0)
-						fps = 10 / ticklag
-				if("fps")
-					fps = text2num(value)
+					Ticklag = text2num(value)
 				if("tickcomp")
 					Tickcomp = 1
 				if("automute_on")
@@ -419,10 +413,6 @@
 					config.mutant_colors			= 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
-
-	fps = round(fps)
-	if(fps <= 0)
-		fps = initial(fps)
 
 /datum/configuration/proc/loadsql(filename)
 	var/list/Lines = file2list(filename)

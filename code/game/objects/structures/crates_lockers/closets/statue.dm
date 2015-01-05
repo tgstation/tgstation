@@ -46,7 +46,7 @@
 		qdel(src)
 		return
 
-	SSobj.processing.Add(src)
+	processing_objects.Add(src)
 	..()
 
 /obj/structure/closet/statue/process()
@@ -58,7 +58,7 @@
 		M.setOxyLoss(intialOxy)
 	if (timer <= 0)
 		dump_contents()
-		SSobj.processing.Remove(src)
+		processing_objects.Remove(src)
 		qdel(src)
 
 /obj/structure/closet/statue/dump_contents()

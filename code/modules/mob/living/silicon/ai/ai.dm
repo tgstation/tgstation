@@ -135,7 +135,7 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/Destroy()
 	ai_list -= src
 	shuttle_caller_list -= src
-	SSshuttle.autoEvac()
+	emergency_shuttle.autoshuttlecall()
 	..()
 
 
@@ -177,15 +177,10 @@ var/list/ai_list = list()
 	..()
 	statpanel("Status")
 	if (client.statpanel == "Status")
-		var/ETA
-		switch(SSshuttle.emergency.mode)
-			if(SHUTTLE_CALL)
-				ETA = "ETA"
-			if(SHUTTLE_DOCKED)
-				ETA = "ETD"
-		if(ETA)
-			var/timeleft = SSshuttle.emergency.timeLeft()
-			stat(null, "[ETA]-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+		if(emergency_shuttle.online && emergency_shuttle.location < 2)
+			var/timeleft = emergency_shuttle.timeleft()
+			if (timeleft)
+				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
 		if(ticker.mode.name == "AI malfunction")
 			var/datum/game_mode/malfunction/malf = ticker.mode
@@ -242,7 +237,7 @@ var/list/ai_list = list()
 	onclose(src, "airoster")
 
 /mob/living/silicon/ai/proc/ai_call_shuttle()
-	if(src.stat == DEAD)
+	if(src.stat == 2)
 		src << "You can't call the shuttle because you are dead!"
 		return
 	if(istype(usr,/mob/living/silicon/ai))
@@ -253,11 +248,11 @@ var/list/ai_list = list()
 
 	var/reason = input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call") as text
 
-	if(trim(reason))
-		SSshuttle.requestEvac(src, reason)
+	if(length(trim(reason)) > 0)
+		call_shuttle_proc(src, reason)
 
 	// hack to display shuttle timer
-	if(SSshuttle.emergency.mode >= SHUTTLE_CALL)
+	if(emergency_shuttle.online)
 		var/obj/machinery/computer/communications/C = locate() in machines
 		if(C)
 			C.post_status("shuttle")
@@ -290,7 +285,7 @@ var/list/ai_list = list()
 		if(AI.control_disabled)
 			src	 << "Wireless control is disabled!"
 			return
-	SSshuttle.cancelEvac(src)
+	cancel_call_proc(src)
 	return
 
 /mob/living/silicon/ai/check_eye(var/mob/user as mob)
@@ -373,7 +368,7 @@ var/list/ai_list = list()
 		return
 
 	if (href_list["callbot"]) //Command a bot to move to a selected location.
-		Bot = locate(href_list["callbot"]) in SSbot.processing
+		Bot = locate(href_list["callbot"]) in aibots
 		if(!Bot || Bot.remote_disabled || src.control_disabled)
 			return //True if there is no bot found, the bot is manually emagged, or the AI is carded with wireless off.
 		waypoint_mode = 1
@@ -381,7 +376,7 @@ var/list/ai_list = list()
 		return
 
 	if (href_list["interface"]) //Remotely connect to a bot!
-		Bot = locate(href_list["interface"]) in SSbot.processing
+		Bot = locate(href_list["interface"]) in aibots
 		if(!Bot || Bot.remote_disabled || src.control_disabled)
 			return
 		Bot.attack_ai(src)
@@ -464,7 +459,7 @@ var/list/ai_list = list()
 	d += "<A HREF=?src=\ref[src];botrefresh=\ref[Bot]>Query network status</A><br>"
 	d += "<table width='100%'><tr><td width='40%'><h3>Name</h3></td><td width='30%'><h3>Status</h3></td><td width='30%'><h3>Location</h3></td><td width='10%'><h3>Control</h3></td></tr>"
 
-	for (Bot in SSbot.processing)
+	for (Bot in aibots)
 		if(Bot.z == ai_Zlevel && !Bot.remote_disabled) //Only non-emagged bots on the same Z-level are detected!
 			bot_area = get_area(Bot)
 			d += "<tr><td width='30%'>[Bot.hacked ? "<span class='bad'>(!) </span>[Bot.name]" : Bot.name]</td>"

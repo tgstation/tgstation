@@ -128,7 +128,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 
 /datum/disease/proc/process()
 	if(!holder)
-		SSdisease.processing -= src
+		active_diseases -= src
 		return
 
 	if(prob(infectivity))
@@ -169,7 +169,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 						cure()
 						return
 
-	SSdisease.processing += src
+	active_diseases += src
 
 
 /datum/disease/proc/IsSame(var/datum/disease/D)
@@ -187,7 +187,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 
 
 /datum/disease/Del()
-	SSdisease.processing.Remove(src)
+	active_diseases.Remove(src)
 	..()
 
 

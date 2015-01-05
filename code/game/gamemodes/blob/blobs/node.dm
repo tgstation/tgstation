@@ -8,7 +8,7 @@
 
 /obj/effect/blob/node/New(loc, var/h = 100)
 	blob_nodes += src
-	SSobj.processing.Add(src)
+	processing_objects.Add(src)
 	..(loc, h)
 
 /obj/effect/blob/node/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -16,7 +16,7 @@
 
 /obj/effect/blob/node/Destroy()
 	blob_nodes -= src
-	SSobj.processing.Remove(src)
+	processing_objects.Remove(src)
 	..()
 
 /obj/effect/blob/node/Life()

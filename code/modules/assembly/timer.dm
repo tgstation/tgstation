@@ -26,10 +26,10 @@
 /obj/item/device/assembly/timer/toggle_secure()
 	secured = !secured
 	if(secured)
-		SSobj.processing.Add(src)
+		processing_objects.Add(src)
 	else
 		timing = 0
-		SSobj.processing.Remove(src)
+		processing_objects.Remove(src)
 	update_icon()
 	return secured
 

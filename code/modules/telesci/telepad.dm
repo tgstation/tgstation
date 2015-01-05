@@ -119,14 +119,14 @@
 
 /obj/item/weapon/rcs/New()
 	..()
-	SSobj.processing.Add(src)
+	processing_objects.Add(src)
 
 /obj/item/weapon/rcs/examine(mob/user)
 	..()
 	user << "There are [rcharges] charge\s left."
 
 /obj/item/weapon/rcs/Destroy()
-	SSobj.processing.Remove(src)
+	processing_objects.Remove(src)
 	..()
 /obj/item/weapon/rcs/process()
 	if(rcharges > 10)

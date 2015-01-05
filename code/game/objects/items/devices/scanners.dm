@@ -25,12 +25,12 @@ MASS SPECTROMETER
 	icon_state = copytext(icon_state, 1, length(icon_state))+"[on]"
 
 	if(on)
-		SSobj.processing.Add(src)
+		processing_objects.Add(src)
 
 
 /obj/item/device/t_scanner/process()
 	if(!on)
-		SSobj.processing.Remove(src)
+		processing_objects.Remove(src)
 		return null
 	scan()
 

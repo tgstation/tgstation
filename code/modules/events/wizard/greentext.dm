@@ -39,7 +39,7 @@
 	if(!(user in color_altered_mobs))
 		color_altered_mobs += user
 	user.color = "#00FF00"
-	SSobj.processing.Add(src)
+	processing_objects.Add(src)
 	..()
 
 /obj/item/weapon/greentext/dropped(mob/living/user as mob)
@@ -48,7 +48,7 @@
 		user.color = "#FF0000" //ya blew it
 	last_holder 	= null
 	new_holder 		= null
-	SSobj.processing.Remove(src)
+	processing_objects.Remove(src)
 	..()
 
 /obj/item/weapon/greentext/process()

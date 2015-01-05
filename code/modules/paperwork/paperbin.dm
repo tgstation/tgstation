@@ -47,7 +47,7 @@
 			papers.Remove(P)
 		else
 			P = new /obj/item/weapon/paper
-			if(SSevent.holiday == "April Fool's Day")
+			if(events.holiday == "April Fool's Day")
 				if(prob(30))
 					P.info = "<font face=\"[P.crayonfont]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
 					P.rigged = 1

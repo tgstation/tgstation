@@ -45,8 +45,7 @@
 	desc = "Used to call and send the mining shuttle."
 	req_access = list(access_mining)
 	circuit = /obj/item/weapon/circuitboard/mining_shuttle
-	shuttleId = "mining"
-	possible_destinations = "mining_home;mining_away"
+	id = "mining"
 
 /******************************Lantern*******************************/
 

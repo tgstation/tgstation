@@ -23,11 +23,11 @@
 /obj/item/device/assembly/infra/toggle_secure()
 	secured = !secured
 	if(secured)
-		SSobj.processing.Add(src)
+		processing_objects.Add(src)
 	else
 		on = 0
 		if(first)	qdel(first)
-		SSobj.processing.Remove(src)
+		processing_objects.Remove(src)
 	update_icon()
 	return secured
 

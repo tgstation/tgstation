@@ -1,4 +1,5 @@
-/datum/subsystem/ticker/proc/setupGenetics()
+/proc/setupgenetics()
+
 	var/list/avnums = new /list(DNA_STRUC_ENZYMES_BLOCKS)
 	for(var/i=1, i<=DNA_STRUC_ENZYMES_BLOCKS, i++)
 		avnums[i] = i
@@ -14,17 +15,18 @@
 		else if(B.quality == MINOR_NEGATIVE)
 			not_good_mutations |= B
 
-/datum/subsystem/ticker/proc/setupFactions()
+/proc/setupfactions()
+
 	// Populate the factions list:
-	for(var/typepath in typesof(/datum/faction))
-		var/datum/faction/F = new typepath()
+	for(var/x in typesof(/datum/faction))
+		var/datum/faction/F = new x
 		if(!F.name)
-			qdel(F)
+			del(F)
 			continue
 		else
-			factions.Add(F)
-			availablefactions.Add(F)
+			ticker.factions.Add(F)
+			ticker.availablefactions.Add(F)
 
 	// Populate the syndicate coalition:
-	for(var/datum/faction/syndicate/S in factions)
-		syndicate_coalition.Add(S)
+	for(var/datum/faction/syndicate/S in ticker.factions)
+		ticker.syndicate_coalition.Add(S)

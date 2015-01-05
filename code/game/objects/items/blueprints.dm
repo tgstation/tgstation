@@ -116,6 +116,7 @@
 		/area/centcom,
 		/area/asteroid,
 		/area/tdome,
+		/area/syndicate_station,
 		/area/wizard_station,
 		/area/prison
 	)
