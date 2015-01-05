@@ -32,7 +32,7 @@
 
 	src.energy = starting_energy
 	..()
-	SSobj.processing.Add(src)
+	processing_objects.Add(src)
 	for(var/obj/machinery/power/singularity_beacon/singubeacon in world)
 		if(singubeacon.active)
 			target = singubeacon
@@ -40,7 +40,7 @@
 	return
 
 /obj/singularity/Destroy()
-	SSobj.processing.Remove(src)
+	processing_objects.Remove(src)
 	..()
 
 /obj/singularity/Move(atom/newloc, direct)

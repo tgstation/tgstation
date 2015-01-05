@@ -50,7 +50,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		name = "lit match"
 		desc = "A match. This one is lit."
 		attack_verb = list("burnt","singed")
-		SSobj.processing.Add(src)
+		processing_objects.Add(src)
 		update_icon()
 	return
 
@@ -64,7 +64,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		name = "burnt match"
 		desc = "A match. This one has seen better days."
 		attack_verb = null
-		SSobj.processing.Remove(src)
+		processing_objects.Remove(src)
 
 /obj/item/weapon/match/dropped(mob/user as mob)
 	matchburnout()
@@ -180,7 +180,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(flavor_text)
 			var/turf/T = get_turf(src)
 			T.visible_message(flavor_text)
-		SSobj.processing.Add(src)
+		processing_objects.Add(src)
 
 		//can't think of any other way to update the overlays :<
 		if(ismob(loc))
@@ -209,7 +209,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime--
 	if(smoketime < 1)
 		new type_butt(location)
-		SSobj.processing.Remove(src)
+		processing_objects.Remove(src)
 		if(ismob(loc))
 			M << "<span class='notice'>Your [name] goes out.</span>"
 			M.unEquip(src, 1)	//un-equip it so the overlays can update //Force the un-equip so the overlays update
@@ -228,7 +228,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		var/turf/T = get_turf(src)
 		new type_butt(T)
 		new /obj/effect/decal/cleanable/ash(T)
-		SSobj.processing.Remove(src)
+		processing_objects.Remove(src)
 		qdel(src)
 	return ..()
 
@@ -354,7 +354,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			M.update_inv_wear_mask(0)
 			packeditem = 0
 			name = "empty [initial(name)]"
-		SSobj.processing.Remove(src)
+		processing_objects.Remove(src)
 		return
 	if(location)
 		location.hotspot_expose(700, 5)
@@ -391,7 +391,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		lit = 0
 		icon_state = icon_off
 		item_state = icon_off
-		SSobj.processing.Remove(src)
+		processing_objects.Remove(src)
 		return
 	if(!lit && smoketime > 0)
 		user << "<span class='notice'>You empty [src] onto [location].</span>"
@@ -470,7 +470,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light [src], they however burn their finger in the process.</span>")
 
 			user.AddLuminosity(1)
-			SSobj.processing.Add(src)
+			processing_objects.Add(src)
 		else
 			lit = 0
 			icon_state = icon_off
@@ -484,7 +484,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				user.visible_message("<span class='notice'>[user] quietly shuts off [src].")
 
 			user.AddLuminosity(-1)
-			SSobj.processing.Remove(src)
+			processing_objects.Remove(src)
 	else
 		return ..()
 	return

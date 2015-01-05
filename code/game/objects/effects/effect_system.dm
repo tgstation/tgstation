@@ -791,7 +791,7 @@ steam.start() -- spawns the effect
 	spawn(3 + metal*3)
 		process()
 	spawn(120)
-		SSobj.processing.Remove(src)
+		processing_objects.Remove(src)
 		sleep(30)
 
 		if(metal)

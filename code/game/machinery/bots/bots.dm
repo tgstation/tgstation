@@ -97,7 +97,7 @@
 
 /obj/machinery/bot/New()
 	..()
-	SSbot.processing += src //Global bot list
+	aibots += src //Global bot list
 	botcard = new /obj/item/weapon/card/id(src)
 	set_custom_texts()
 	Radio = new /obj/item/device/radio(src)
@@ -118,7 +118,7 @@
 
 
 /obj/machinery/bot/proc/explode()
-	SSbot.processing -= src
+	aibots -= src
 	qdel(src)
 
 /obj/machinery/bot/proc/healthcheck()

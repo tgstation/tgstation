@@ -19,10 +19,10 @@
 
 /obj/structure/transit_tube/station/New()
 	..()
-	SSobj.processing += src
+	processing_objects += src
 
 /obj/structure/transit_tube/station/Destroy()
-	SSobj.processing -= src
+	processing_objects -= src
 	..()
 
 // Stations which will send the tube in the opposite direction after their stop.

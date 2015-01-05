@@ -204,7 +204,7 @@
 			force = 3
 			damtype = "brute"
 			update_icon()
-			SSobj.processing.Remove(src)
+			processing_objects.Remove(src)
 			return
 	//Welders left on now use up fuel, but lets not have them run out quite that fast
 		if(1)
@@ -306,7 +306,7 @@
 			damtype = "fire"
 			hitsound = 'sound/items/welder.ogg'
 			icon_state = "welder1"
-			SSobj.processing.Add(src)
+			processing_objects.Add(src)
 		else
 			user << "<span class='notice'>You need more fuel.</span>"
 			welding = 0

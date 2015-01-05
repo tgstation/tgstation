@@ -19,6 +19,7 @@
 	icon_state = "id_mod"
 	item_state = "electronic"
 	origin_tech = "programming=2"
+	var/id = null
 	var/frequency = null
 	var/build_path = null
 	var/board_type = "computer"
@@ -73,10 +74,12 @@
 	name = "circuit board (Communications)"
 	build_path = /obj/machinery/computer/communications
 	origin_tech = "programming=2;magnets=2"
-	var/lastTimeUsed = 0
-/obj/item/weapon/circuitboard/communications/proc/cooldownLeft(deciseconds=600)
-	return max(deciseconds - (world.time - lastTimeUsed), 0)
-
+	var/cooldown = 0
+/obj/item/weapon/circuitboard/communications/New()
+	..()
+	processing_objects |= src
+/obj/item/weapon/circuitboard/communications/process()
+	cooldown = max(cooldown - 1, 0)
 /obj/item/weapon/circuitboard/card
 	name = "circuit board (ID Console)"
 	build_path = /obj/machinery/computer/card
@@ -201,8 +204,7 @@
 /obj/item/weapon/circuitboard/shuttle
 	name = "circuit board (Shuttle)"
 	build_path = /obj/machinery/computer/shuttle
-	var/shuttleId
-	var/possible_destinations = ""
+	id = "1"
 /obj/item/weapon/circuitboard/labor_shuttle
 	name = "circuit Board (Labor Shuttle)"
 	build_path = /obj/machinery/computer/shuttle/labor
@@ -274,11 +276,9 @@
 
 /obj/item/weapon/circuitboard/shuttle/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/device/multitool))
-		var/chosen_id = round(input(usr, "Choose an ID number (-1 for reset):", "Input an Integer", null) as num|null)
+		var/chosen_id = round(input(usr, "Choose an ID number:", "Input an Integer", null) as num|null)
 		if(chosen_id >= 0)
-			shuttleId = chosen_id
-		else
-			shuttleId = initial(shuttleId)
+			id = chosen_id
 	return
 
 /obj/structure/computerframe/attackby(obj/item/P as obj, mob/user as mob)

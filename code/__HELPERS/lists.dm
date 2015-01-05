@@ -70,14 +70,11 @@
 	return
 
 //Removes any null entries from the list
-/proc/listclearnulls(list/L)
-	if(istype(L))
-		var/i=1
-		for(var/thing in L)
-			if(thing != null)
-				++i
-				continue
-			L.Cut(i,i+1)
+/proc/listclearnulls(list/list)
+	if(istype(list))
+		while(null in list)
+			list -= null
+	return
 
 /*
  * Returns list containing all the entries from first list that are not present in second.
@@ -260,6 +257,8 @@
 /proc/moveElement(list/L, fromIndex, toIndex)
 	if(fromIndex > toIndex)
 		++fromIndex
+	else
+		++toIndex
 
 	L.Insert(toIndex, null)
 	L.Swap(fromIndex, toIndex)
@@ -284,6 +283,8 @@
 	else
 		if(fromIndex > toIndex)
 			fromIndex += len
+		else
+			toIndex += len	//?
 
 		for(var/i=0, i<len, ++i)
 			L.Insert(toIndex, null)
@@ -329,14 +330,3 @@
 			L.Swap(start++,end--)
 
 	return L
-
-
-//return first thing in L which has var/varname == value
-//this is typecaste as list/L, but you could actually feed it an atom instead.
-//completely safe to use
-/proc/getElementByVar(list/L, varname, value)
-	varname = "[varname]"
-	for(var/datum/D in L)
-		if(D.vars.Find(varname))
-			if(D.vars[varname] == value)
-				return D

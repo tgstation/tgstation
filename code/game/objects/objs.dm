@@ -11,12 +11,12 @@
 	var/force = 0
 
 /obj/proc/process()
-	SSobj.processing.Remove(src)
+	processing_objects.Remove(src)
 	return 0
 
 /obj/Destroy()
 	if(!istype(src, /obj/machinery))
-		SSobj.processing.Remove(src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
+		processing_objects.Remove(src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	..()
 
 /obj/assume_air(datum/gas_mixture/giver)

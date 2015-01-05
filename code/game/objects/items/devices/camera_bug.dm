@@ -42,7 +42,7 @@
 
 /obj/item/device/camera_bug/New()
 	..()
-	SSobj.processing += src
+	processing_objects += src
 
 /obj/item/device/camera_bug/Destroy()
 	if(expansion)

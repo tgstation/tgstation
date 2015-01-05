@@ -354,13 +354,13 @@
 		qdel(src)
 
 	spawn_spacevine_piece(src.loc, , muts)
-	SSobj.processing.Add(src)
+	processing_objects.Add(src)
 	init_subtypes(/datum/spacevine_mutation/, mutations_list)
 	if(mttv != null)
 		mutativness = mttv
 
 /obj/effect/spacevine_controller/Destroy()
-	SSobj.processing.Remove(src)
+	processing_objects.Remove(src)
 	..()
 
 /obj/effect/spacevine_controller/proc/spawn_spacevine_piece(var/turf/location, obj/effect/spacevine/parent, list/muts)

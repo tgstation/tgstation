@@ -217,7 +217,7 @@
 
 
 // rebuild all power networks from scratch - only called at world creation or by the admin verb
-/datum/subsystem/power/proc/makepowernets()
+/proc/makepowernets()
 	for(var/datum/powernet/PN in powernets)
 		del(PN)
 	powernets.Cut()
@@ -356,10 +356,10 @@
 ////////////////////////////////////////////
 
 /datum/powernet/New()
-	SSpower.powernets += src
+	powernets += src
 
 /datum/powernet/Destroy()
-	SSpower.powernets -= src
+	powernets -= src
 
 /datum/powernet/proc/is_empty()
 	return !cables.len && !nodes.len

@@ -33,11 +33,11 @@
 
 /obj/item/weapon/gun/energy/floragun/New()
 	..()
-	SSobj.processing.Add(src)
+	processing_objects.Add(src)
 
 
 /obj/item/weapon/gun/energy/floragun/Destroy()
-	SSobj.processing.Remove(src)
+	processing_objects.Remove(src)
 	..()
 
 
@@ -69,11 +69,11 @@
 
 /obj/item/weapon/gun/energy/meteorgun/New()
 	..()
-	SSobj.processing.Add(src)
+	processing_objects.Add(src)
 
 
 /obj/item/weapon/gun/energy/meteorgun/Destroy()
-	SSobj.processing.Remove(src)
+	processing_objects.Remove(src)
 	..()
 
 /obj/item/weapon/gun/energy/meteorgun/process()

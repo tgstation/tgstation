@@ -34,20 +34,20 @@
 		if(DISCONNECTED)
 			attached = null
 			if(mode == OPERATING)
-				SSobj.processing.Remove(src)
+				processing_objects.Remove(src)
 			anchored = 0
 
 		if(CLAMPED_OFF)
 			if(!attached)
 				return
 			if(mode == OPERATING)
-				SSobj.processing.Remove(src)
+				processing_objects.Remove(src)
 			anchored = 1
 
 		if(OPERATING)
 			if(!attached)
 				return
-			SSobj.processing.Add(src)
+			processing_objects.Add(src)
 			anchored = 1
 
 	mode = value
@@ -140,6 +140,6 @@
 		playsound(src, 'sound/effects/screech.ogg', 100, 1, 1)
 
 	if(power_drained >= max_power)
-		SSobj.processing.Remove(src)
+		processing_objects.Remove(src)
 		explosion(src.loc, 3,6,9,12)
 		qdel(src)

@@ -17,7 +17,7 @@
 	see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
 	shuttle_caller_list -= src
-	SSshuttle.autoEvac()
+	emergency_shuttle.autoshuttlecall()
 
 	if(explosive)
 		spawn(10)

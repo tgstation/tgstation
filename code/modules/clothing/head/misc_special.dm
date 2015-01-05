@@ -55,7 +55,7 @@
 
 /obj/item/clothing/head/cakehat/process()
 	if(!onfire)
-		SSobj.processing.Remove(src)
+		processing_objects.Remove(src)
 		return
 
 	var/turf/location = src.loc
@@ -74,7 +74,7 @@
 		src.force = 3
 		src.damtype = "fire"
 		src.icon_state = "cake1"
-		SSobj.processing.Add(src)
+		processing_objects.Add(src)
 	else
 		src.force = null
 		src.damtype = "brute"
