@@ -44,7 +44,6 @@ var/global/list/datum/pipeline/pipe_networks = list()
 var/pipenetwarnings = 10
 
 /datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/base)
-	base.setPipenet(src)
 	var/volume = 0
 	if(istype(base, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/E = base
