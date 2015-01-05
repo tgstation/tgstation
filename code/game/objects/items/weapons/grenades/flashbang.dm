@@ -45,11 +45,11 @@
 		M.Weaken(max(10/distance, 3))
 		if (M.eye_stat >= 20 && takes_eye_damage)
 			M << "<span class='warning'>Your eyes start to burn badly!</span>"
-			M.disabilities |= NEARSIGHTED
+			M.disabilities |= NEARSIGHT
 			if(!banglet && !(istype(src , /obj/item/weapon/grenade/flashbang/clusterbang)))
 				if (prob(M.eye_stat - 20 + 1))
 					M << "<span class='warning'>You can't see anything!</span>"
-					M.sdisabilities |= BLIND
+					M.disabilities |= BLIND
 
 //Bang
 	if((src.loc == M) || src.loc == M.loc)//Holding on person or being exactly where lies is significantly more dangerous and voids protection
@@ -63,9 +63,9 @@
 		if (M.ear_damage >= 15)
 			M << "<span class='warning'>Your ears start to ring badly!</span>"
 			if(!banglet && !(istype(src , /obj/item/weapon/grenade/flashbang/clusterbang)))
-				if (prob(M.ear_damage - 10 + 5))
+				if(prob(M.ear_damage - 10 + 5))
 					M << "<span class='warning'>You can't hear anything!</span>"
-					M.sdisabilities |= DEAF
+					M.disabilities |= DEAF
 		else
 			if (M.ear_damage >= 5)
 				M << "<span class='warning'>Your ears start to ring!</span>"

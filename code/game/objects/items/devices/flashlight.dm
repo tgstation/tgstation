@@ -45,11 +45,11 @@
 	return 1
 
 
-/obj/item/device/flashlight/attack(mob/living/M as mob, mob/living/user as mob)
+/obj/item/device/flashlight/attack(mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
 	add_fingerprint(user)
 	if(on && user.zone_sel.selecting == "eyes")
 
-		if(((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))	//too dumb to use flashlight properly
+		if((user.disabilities & CLUMSY || user.getBrainLoss() >= 60) && prob(50))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
 
 		if(!user.IsAdvancedToolUser())
@@ -62,7 +62,7 @@
 			return
 
 		if(M == user)	//they're using it on themselves
-			if(!M.blinded)
+			if(!M.eye_blind)
 				flick("flash", M.flash)
 				M.visible_message("<span class='notice'>[M] directs [src] to \his eyes.</span>", \
 									 "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
@@ -75,12 +75,12 @@
 							 "<span class='notice'>You direct [src] to [M]'s eyes.</span>")
 
 		if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))	//robots and aliens are unaffected
-			if(M.stat == DEAD || M.sdisabilities & BLIND)	//mob is dead or fully blind
+			if(M.stat == DEAD || M.disabilities & BLIND)	//mob is dead or fully blind
 				user << "<span class='notice'>[M] pupils does not react to the light!</span>"
-			else if(XRAY in M.mutations)	//mob has X-RAY vision
+			else if(M.dna.check_mutation(XRAY))	//mob has X-RAY vision
 				user << "<span class='notice'>[M] pupils give an eerie glow!</span>"
 			else	//they're okay!
-				if(!M.blinded)
+				if(!M.eye_blind)
 					flick("flash", M.flash)	//flash the affected mob
 					user << "<span class='notice'>[M]'s pupils narrow.</span>"
 	else
@@ -214,7 +214,7 @@ obj/item/device/flashlight/lamp/bananalamp
 		turn_off()
 		if(!fuel)
 			icon_state = "[initial(icon_state)]-empty"
-		processing_objects -= src
+		SSobj.processing -= src
 
 /obj/item/device/flashlight/flare/proc/turn_off()
 	on = 0
@@ -248,7 +248,7 @@ obj/item/device/flashlight/lamp/bananalamp
 		user.visible_message("<span class='notice'>[user] lights \the [src].</span>", "<span class='notice'>You light \the [src]!</span>")
 		force = on_damage
 		damtype = "fire"
-		processing_objects += src
+		SSobj.processing += src
 
 /obj/item/device/flashlight/flare/torch
 	name = "torch"
@@ -283,10 +283,10 @@ obj/item/device/flashlight/lamp/bananalamp
 
 /obj/item/device/flashlight/emp/New()
 		..()
-		processing_objects.Add(src)
+		SSobj.processing.Add(src)
 
 /obj/item/device/flashlight/emp/Destroy()
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 		..()
 
 /obj/item/device/flashlight/emp/process()

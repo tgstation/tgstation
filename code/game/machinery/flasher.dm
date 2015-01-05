@@ -95,7 +95,7 @@
 			flick("e_flash", O:flash)
 			O.eye_stat += rand(1, 2)
 		else
-			if(!O.blinded)
+			if(!O.eye_blind)
 				flick("flash", O:flash)
 				O.eye_stat += rand(0, 2)
 	return 1

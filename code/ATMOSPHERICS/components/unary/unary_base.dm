@@ -10,10 +10,12 @@
 
 /obj/machinery/atmospherics/unary/New()
 	..()
-	initialize_directions = dir
 	air_contents = new
 	air_contents.volume = 200
 
+
+/obj/machinery/atmospherics/unary/SetInitDirections()
+	initialize_directions = dir
 /*
 Iconnery
 */
