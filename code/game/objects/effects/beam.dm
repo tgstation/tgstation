@@ -109,6 +109,9 @@
 /obj/effect/beam/proc/get_damage()
 	return damage
 
+/obj/effect/beam/proc/get_machine_underlay(var/mdir)
+	return image(icon=icon, icon_state="[icon_state] underlay", dir=mdir)
+
 /obj/effect/beam/proc/connect_to(var/atom/movable/AM)
 	if(!AM)
 		return

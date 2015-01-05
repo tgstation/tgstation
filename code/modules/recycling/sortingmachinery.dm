@@ -208,7 +208,7 @@
 
 	w_class = 1
 	item_state = "electronic"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 

@@ -11,7 +11,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	icon = 'icons/effects/effects.dmi'
 	mouse_opacity = 0
 	unacidable = 1 // so effect are not targeted by alien acid.
-	flags = TABLEPASS
+	flags = 0
 	w_type=NOT_RECYCLABLE
 
 /obj/effect/effect/water
@@ -234,6 +234,12 @@ steam.start() -- spawns the effect
 	if (M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
 		return 0
 	return 1
+
+/obj/effect/effect/smoke/Destroy()
+	if(reagents)
+		reagents.my_atom = null
+		reagents = null
+	..()
 
 /////////////////////////////////////////////
 // Bad smoke
@@ -474,7 +480,9 @@ steam.start() -- spawns the effect
 					sleep(10)
 					step(smoke,direction)
 				spawn(150+rand(10,30))
-					if(smoke) qdel(smoke)
+					if(smoke)
+						qdel(smoke)
+						smoke = null
 					src.total_smoke--
 
 // Goon compat.

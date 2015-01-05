@@ -59,7 +59,7 @@ var/global/list/rad_collectors = list()
 		return 1
 	else if(istype(W, /obj/item/device/analyzer) || istype(W, /obj/item/device/multitool))
 		if(active)
-			user << "<span class='notice'>\The [W] registers that [last_power] W is being produced every cycle.</span>"
+			user << "<span class='notice'>\The [W] registers that [format_watts(last_power)] is being produced every cycle.</span>"
 		else
 			user << "<span class='notice'>\The [W] registers that the unit is currently not producing power.</span>"
 		return 1

@@ -102,7 +102,7 @@
 	icon_state = "polaroid"
 	item_state = "polaroid"
 	w_class = 2.0
-	flags = FPRINT | USEDELAY | TABLEPASS
+	flags = FPRINT | USEDELAY
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	m_amt = 2000

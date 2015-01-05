@@ -7,7 +7,7 @@
 
 	m_amt = 120
 
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 
 	var/use_name

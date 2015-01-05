@@ -2416,6 +2416,16 @@ k
 	category = "Cyborg Upgrade Modules"
 	materials = list("$iron"=10000,"$glass"=15000,"$diamond" = 10000)
 
+/datum/design/borg_engineer_upgrade
+	name = "engineering module board"
+	desc = "Used to give an engineering cyborg more materials."
+	id = "borg_engineer_module"
+	build_type = MECHFAB
+	req_tech = list("engineering" = 1)
+	build_path = /obj/item/borg/upgrade/engineering
+	category = "Cyborg Upgrade Modules"
+	materials = list("$iron"=10000,"$glass"=10000,"$plasma"=5000)
+
 /datum/design/medical_module_surgery
 	name = "medical module board"
 	desc = "Used to give a medical cyborg surgery tools."

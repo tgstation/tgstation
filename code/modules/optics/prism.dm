@@ -31,6 +31,11 @@
 		/obj/item/weapon/stock_parts/micro_laser/high,
 	)
 
+/obj/machinery/prism/Destroy()
+	qdel(beam)
+	beam=null
+	..()
+
 /obj/machinery/prism/verb/rotate_cw()
 	set name = "Rotate (Clockwise)"
 	set category = "Object"
@@ -96,6 +101,9 @@
 			if(B.HasSource(src))
 				warning("Ignoring beam [B] due to recursion.")
 				continue // Prevent infinite loops.
+			// Don't process beams firing into our emission side.
+			if(get_dir(src, B) == dir)
+				continue
 			spawners += B.sources
 			beam.power += B.power
 			var/beamdir=get_dir(B.loc,src)
