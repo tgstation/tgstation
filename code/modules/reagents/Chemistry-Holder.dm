@@ -331,7 +331,7 @@ datum/reagents/proc/update_total()
 	for(var/datum/reagent/R in reagent_list)
 		if(R.volume < 0.1)
 			del_reagent(R.id)
-		else
+		else if (total_volume + R.volume <= maximum_volume) // only add to the volume if it can hold that much
 			total_volume += R.volume
 
 	return 0
