@@ -97,7 +97,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ooccolor"]			>> ooccolor
 	S["lastchangelog"]		>> lastchangelog
 	S["UI_style"]			>> UI_style
-	S["custom_pointer"]		>> custom_pointer
 	S["be_special"]			>> be_special
 	S["default_slot"]		>> default_slot
 	S["toggles"]			>> toggles
@@ -111,7 +110,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ooccolor		= sanitize_ooccolor(sanitize_hexcolor(ooccolor, 6, 1, initial(ooccolor)))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
 	UI_style		= sanitize_inlist(UI_style, list("Midnight", "Plasmafire", "Retro"), initial(UI_style))
-	custom_pointer	= sanitize_integer(custom_pointer, 0, 65535, initial(custom_pointer))
 	be_special		= sanitize_integer(be_special, 0, 65535, initial(be_special))
 	default_slot	= sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
@@ -131,7 +129,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ooccolor"]			<< ooccolor
 	S["lastchangelog"]		<< lastchangelog
 	S["UI_style"]			<< UI_style
-	S["custom_pointer"]		<< custom_pointer
 	S["be_special"]			<< be_special
 	S["default_slot"]		<< default_slot
 	S["toggles"]			<< toggles
@@ -183,6 +180,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["facial_style_name"]	>> facial_hair_style
 	S["underwear"]			>> underwear
 	S["undershirt"]			>> undershirt
+	S["socks"]				>> socks
 	S["backbag"]			>> backbag
 	S["mutant_color"]		>> mutant_color
 
@@ -216,11 +214,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		facial_hair_style			= sanitize_inlist(facial_hair_style, facial_hair_styles_male_list)
 		underwear		= sanitize_inlist(underwear, underwear_m)
 		undershirt 		= sanitize_inlist(undershirt, undershirt_m)
+		socks			= sanitize_inlist(socks, socks_m)
 	else
 		hair_style			= sanitize_inlist(hair_style, hair_styles_female_list)
 		facial_hair_style			= sanitize_inlist(facial_hair_style, facial_hair_styles_female_list)
 		underwear		= sanitize_inlist(underwear, underwear_f)
 		undershirt		= sanitize_inlist(undershirt, undershirt_f)
+		socks			= sanitize_inlist(socks, socks_f)
 
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
 	hair_color			= sanitize_hexcolor(hair_color, 3, 0)
@@ -266,6 +266,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["facial_style_name"]	<< facial_hair_style
 	S["underwear"]			<< underwear
 	S["undershirt"]			<< undershirt
+	S["socks"]				<< socks
 	S["backbag"]			<< backbag
 	S["species"]			<< pref_species.name
 	S["mutant_color"]		<< mutant_color

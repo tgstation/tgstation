@@ -23,6 +23,28 @@
 	var/datum/species/species = new /datum/species/human() //The type of mutant race the player is if applicable (i.e. potato-man)
 	var/mutant_color = "FFF"		 // What color you are if you have certain speciess
 	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
+	var/list/mutations = list()   //All mutations are from now on here
+	var/mob/living/carbon/holder
+
+/datum/dna/New(mob/living/carbon/new_holder)
+	if(new_holder && istype(new_holder))
+		holder = new_holder
+
+/datum/dna/proc/add_mutation(mutation_name)
+	var/datum/mutation/human/HM = mutations_list[mutation_name]
+	HM.on_acquiring(holder)
+
+/datum/dna/proc/remove_mutation(mutation_name)
+	var/datum/mutation/human/HM = mutations_list[mutation_name]
+	HM.on_losing(holder)
+
+/datum/dna/proc/check_mutation(mutation_name)
+	var/datum/mutation/human/HM = mutations_list[mutation_name]
+	return mutations.Find(HM)
+
+/datum/dna/proc/remove_all_mutations()
+	for(var/datum/mutation/human/HM in mutations)
+		HM.on_losing(holder)
 
 /datum/dna/proc/generate_uni_identity(mob/living/carbon/character)
 	. = ""
@@ -51,20 +73,25 @@
 
 /datum/dna/proc/generate_struc_enzymes(mob/living/carbon/character)
 	var/list/L = list("0","1","2","3","4","5","6")
-	. = ""
-	for(var/i=1, i<=DNA_STRUC_ENZYMES_BLOCKS, i++)
-		if(i == RACEBLOCK)
-			. += construct_block(istype(character,/mob/living/carbon/monkey)+1, 2)
+	var/list/sorting = list()
+	sorting.len = 14
+	var/result
+	for(var/datum/mutation/human/A in good_mutations + bad_mutations + not_good_mutations)
+		if(A.name == RACEMUT && istype(character,/mob/living/carbon/monkey))
+			sorting[A.dna_block] = num2hex(A.lowest_value + rand(0, 256 * 6), DNA_BLOCK_SIZE)
+			character.dna.mutations.Add(mutations_list[RACEMUT])
 		else
-			. += random_string(DNA_BLOCK_SIZE, L)
-	return .
+			sorting[A.dna_block] = random_string(DNA_BLOCK_SIZE, L)
+
+	for(var/B in sorting)
+		result += B
+	return result
 
 /datum/dna/proc/generate_unique_enzymes(mob/living/carbon/character)
 	. = ""
 	if(istype(character))
 		real_name = character.real_name
 		. += md5(character.real_name)
-		reg_dna[.] = real_name
 	else
 		. += repeat_string(DNA_UNIQUE_ENZYMES_LEN, "0")
 	return .
@@ -131,7 +158,7 @@
 	return character.dna
 
 /proc/create_dna(mob/living/carbon/C, datum/species/S) //don't use this unless you're about to use hardset_dna or ready_dna
-	C.dna = new /datum/dna()
+	C.dna = new /datum/dna(C)
 	if(S)	C.dna.species = new S()	// do not remove; this is here to prevent runtimes
 
 /////////////////////////// DNA DATUM
@@ -172,9 +199,13 @@
 	return
 
 /proc/randmutb(mob/living/carbon/M)
+	var/datum/mutation/human/HM = pick(bad_mutations | not_good_mutations)
+	HM.on_acquiring(M)
 	return randmut(M, bad_se_blocks)
 
 /proc/randmutg(mob/living/carbon/M)
+	var/datum/mutation/human/HM = pick(good_mutations)
+	HM.on_acquiring(M)
 	return randmut(M, good_se_blocks | op_se_blocks)
 
 /proc/randmuti(mob/living/carbon/M)
@@ -234,99 +265,15 @@
 	if(!check_dna_integrity(M))
 		return 0
 
-	M.disabilities = 0
-	M.sdisabilities = 0
-	M.mutations.Cut()
+	var/mob/living/carbon/C = M
+	var/mob/living/carbon/temp
 
-	M.see_in_dark = initial(M.see_in_dark)
-	M.see_invisible = initial(M.see_invisible)
+	for(var/A in mutations_list)
+		var/datum/mutation/human/HM = mutations_list[A]
+		temp = HM.check_block(C)
+		if(ismob(temp))
+			C = temp
 
-	var/list/blocks = new /list(DNA_STRUC_ENZYMES_BLOCKS) //on-off status for each block
-	for(var/i in bad_se_blocks)		//bad mutations
-		blocks[i] = (deconstruct_block(getblock(M.dna.struc_enzymes, i), BAD_MUTATION_DIFFICULTY) == BAD_MUTATION_DIFFICULTY)
-	blocks[RACEBLOCK] = (deconstruct_block(getblock(M.dna.struc_enzymes, RACEBLOCK), BAD_MUTATION_DIFFICULTY) == BAD_MUTATION_DIFFICULTY)
-	for(var/i in good_se_blocks)	//good mutations
-		blocks[i] = (deconstruct_block(getblock(M.dna.struc_enzymes, i), GOOD_MUTATION_DIFFICULTY) == GOOD_MUTATION_DIFFICULTY)
-	for(var/i in op_se_blocks)		//Overpowered mutations...extra difficult to obtain
-		blocks[i] = (deconstruct_block(getblock(M.dna.struc_enzymes, i), OP_MUTATION_DIFFICULTY) == OP_MUTATION_DIFFICULTY)
-
-	if(blocks[NEARSIGHTEDBLOCK])
-		M.disabilities |= NEARSIGHTED
-		M << "<span class='danger'>Your eyes feel strange.</span>"
-	if(blocks[EPILEPSYBLOCK])
-		M.disabilities |= EPILEPSY
-		M << "<span class='danger'>You get a headache.</span>"
-	if(blocks[STRANGEBLOCK])
-		M << "<span class='danger'>You feel strange.</span>"
-		if(prob(95))
-			if(prob(50))	randmutb(M)
-			else			randmuti(M)
-		else				randmutg(M)
-	if(blocks[COUGHBLOCK])
-		M.disabilities |= COUGHING
-		M << "<span class='danger'>You start coughing.</span>"
-	if(blocks[CLUMSYBLOCK])
-		M << "<span class='danger'>You feel lightheaded.</span>"
-		M.mutations |= CLUMSY
-	if(blocks[TOURETTESBLOCK])
-		M.disabilities |= TOURETTES
-		M << "<span class='danger'>You twitch.</span>"
-	if(blocks[NERVOUSBLOCK])
-		M.disabilities |= NERVOUS
-		M << "<span class='danger'>You feel nervous.</span>"
-	if(blocks[DEAFBLOCK])
-		M.sdisabilities |= DEAF
-		M.ear_deaf = 1
-		M << "<span class='danger'>You can't seem to hear anything.</span>"
-	if(blocks[BLINDBLOCK])
-		M.sdisabilities |= BLIND
-		M << "<span class='danger'>You can't seem to see anything.</span>"
-	if(blocks[HULKBLOCK])
-		if(inj || prob(10))
-			M.mutations |= HULK
-			M << "<span class='notice'>Your muscles hurt.</span>"
-	if(blocks[XRAYBLOCK])
-		if(inj || prob(30))
-			M.mutations |= XRAY
-			M << "<span class='notice'>The walls suddenly disappear.</span>"
-			M.sight |= SEE_MOBS|SEE_OBJS|SEE_TURFS
-			M.see_in_dark = 8
-			M.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	if(blocks[FIREBLOCK])
-		if(inj || prob(30))
-			M.mutations |= COLD_RESISTANCE
-			M << "<span class='notice'>Your body feels warm.</span>"
-	if(blocks[TELEBLOCK])
-		if(inj || prob(25))
-			M.mutations |= TK
-			M << "<span class='notice'>You feel smarter.</span>"
-
-
-	/* If you want the new mutations to work, UNCOMMENT THIS.
-	if(istype(M, /mob/living/carbon))
-		for (var/datum/mutations/mut in global_mutations)
-			mut.check_mutation(M)
-	*/
-
-//////////////////////////////////////////////////////////// Monkey Block
-	if(blocks[RACEBLOCK])
-		if(istype(M, /mob/living/carbon/human))	// human > monkey
-			var/mob/living/carbon/monkey/O = M.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS)
-			if(connected) //inside dna thing
-				var/obj/machinery/dna_scannernew/C = connected
-				O.loc = C
-				C.occupant = O
-				connected = null
-			return 1
-	else
-		if(istype(M, /mob/living/carbon/monkey))	// monkey > human,
-			var/mob/living/carbon/human/O = M.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS)
-			if(O && connected) //inside dna thing
-				var/obj/machinery/dna_scannernew/C = connected
-				O.loc = C
-				C.occupant = O
-				connected = null
-			return 1
 //////////////////////////////////////////////////////////// Monkey Block
 	if(M)
 		M.update_icon = 1	//queue a full icon update at next life() call
@@ -866,7 +813,12 @@
 						if("se")
 							if(buffer_slot["SE"])
 								I = new /obj/item/weapon/dnainjector(loc)
-								I.fields = list("SE"=buffer_slot["SE"])
+								for(var/datum/mutation/human/HM in good_mutations + bad_mutations + not_good_mutations)
+									if(HM.check_block_string(buffer_slot["SE"]))
+										if(prob(HM.get_chance))
+											I.add_mutations.Add(HM)
+									else
+										I.remove_mutations.Add(HM)
 								I.damage_coeff  = connected.damage_coeff
 						if("ui")
 							if(buffer_slot["UI"])

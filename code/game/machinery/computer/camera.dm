@@ -9,7 +9,7 @@
 	var/mapping = 0//For the overview file, interesting bit of code.
 
 /obj/machinery/computer/security/check_eye(var/mob/user as mob)
-	if ((get_dist(user, src) > 1 || user.blinded || !( current ) || !( current.status )) && (!istype(user, /mob/living/silicon)))
+	if ((get_dist(user, src) > 1 || user.eye_blind || !( current ) || !( current.status )) && (!istype(user, /mob/living/silicon)))
 		return null
 	var/list/viewing = viewers(src)
 	if((istype(user,/mob/living/silicon/robot)) && (!(viewing.Find(user))))
@@ -64,7 +64,7 @@
 			return 0
 
 		if(C)
-			if ((get_dist(user, src) > 1 || user.machine != src || user.blinded || !( C.can_use() )) && (!istype(user, /mob/living/silicon/ai)))
+			if ((get_dist(user, src) > 1 || user.machine != src || user.eye_blind || !( C.can_use() )) && (!istype(user, /mob/living/silicon/ai)))
 				if(!C.can_use() && !isAI(user))
 					src.current = null
 				return 0

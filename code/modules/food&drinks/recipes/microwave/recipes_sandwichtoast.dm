@@ -3,7 +3,7 @@
 
 ////////////////////////////////////////////////SANDWICHES////////////////////////////////////////////////
 
-/datum/recipe/sandwich
+/datum/recipe/sandwich/plain
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meatsteak,
 		/obj/item/weapon/reagent_containers/food/snacks/breadslice,

@@ -419,7 +419,7 @@ var/global/list/g_fancy_list_of_types = null
 /client/proc/cmd_debug_make_powernets()
 	set category = "Debug"
 	set name = "Make Powernets"
-	makepowernets()
+	SSpower.makepowernets()
 	log_admin("[key_name(src)] has remade the powernet. makepowernets() called.")
 	message_admins("[key_name_admin(src)] has remade the powernets. makepowernets() called.", 0)
 	feedback_add_details("admin_verb","MPWN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -611,9 +611,10 @@ var/global/list/g_fancy_list_of_types = null
 	var/datum/job/jobdatum
 	if (dresscode == "as job...")
 		var/jobname = input("Select job", "Robust quick dress shop") as null|anything in get_all_jobs()
-		jobdatum = job_master.GetJob(jobname)
 		if(isnull(jobname))
 			return
+		jobdatum = SSjob.GetJob(jobname)
+
 
 	feedback_add_details("admin_verb","SEQ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	for (var/obj/item/I in M)
@@ -1048,8 +1049,8 @@ var/global/list/g_fancy_list_of_types = null
 
 	var/dat = "<B>List of things that failed to GC this round</B><BR><BR>"
 
-	for(var/path in garbage.logging)
-		dat += "[path] - [garbage.logging[path]] times<BR>"
+	for(var/path in SSgarbage.logging)
+		dat += "[path] - [SSgarbage.logging[path]] times<BR>"
 
 	usr << browse(dat, "window=dellog")
 

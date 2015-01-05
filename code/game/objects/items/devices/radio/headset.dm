@@ -195,7 +195,7 @@
 
 /obj/item/device/radio/headset/ai
 	name = "\proper Integrated Subspace Transceiver "
-	keyslot = new /obj/item/device/encryptionkey/ai
+	keyslot2 = new /obj/item/device/encryptionkey/ai
 
 /obj/item/device/radio/headset/ai/receive_range(freq, level)
 	return ..(freq, level, 1)

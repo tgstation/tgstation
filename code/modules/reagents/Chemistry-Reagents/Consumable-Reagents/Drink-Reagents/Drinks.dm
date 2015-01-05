@@ -60,7 +60,7 @@ datum/reagent/consumable/carrotjuice/on_mob_life(var/mob/living/M as mob)
 			//nothing
 		if(21 to INFINITY)
 			if (prob(data-10))
-				M.disabilities &= ~NEARSIGHTED
+				M.disabilities &= ~NEARSIGHT
 	data++
 	..()
 	return

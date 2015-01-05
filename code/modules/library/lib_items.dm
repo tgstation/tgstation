@@ -18,6 +18,7 @@
 	density = 1
 	opacity = 0
 	var/state = 0
+	var/list/allowed_books = list(/obj/item/weapon/book, /obj/item/weapon/spellbook, /obj/item/weapon/storage/book) //Things allowed in the bookcase
 
 
 /obj/structure/bookcase/initialize()
@@ -61,7 +62,7 @@
 				state = 0
 
 		if(2)
-			if(istype(I, /obj/item/weapon/book) || istype(I, /obj/item/weapon/spellbook))
+			if(is_type_in_list(I, allowed_books))
 				user.drop_item()
 				I.loc = src
 				update_icon()
