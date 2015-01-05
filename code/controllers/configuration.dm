@@ -64,6 +64,7 @@
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
 	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
+	var/see_own_notes = 0 //Can players see their own admin notes (read-only)? Config option in config.txt
 
 	//game_options.txt configs
 	var/force_random_names = 0
@@ -109,6 +110,7 @@
 
 	var/rename_cyborg = 0
 	var/ooc_during_round = 0
+	var/emojis = 0
 
 	//Used for modifying movement speed for mobs.
 	//Unversal modifiers
@@ -281,6 +283,8 @@
 					global.comms_key = value
 					if(value != "default_pwd" && length(value) > 6) //It's the default value or less than 6 characters long, warn badmins
 						global.comms_allowed = 1
+				if("see_own_notes")
+					config.see_own_notes = 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
@@ -300,6 +304,8 @@
 					config.rename_cyborg			= 1
 				if("ooc_during_round")
 					config.ooc_during_round			= 1
+				if("emojis")
+					config.emojis					= 1
 				if("run_delay")
 					config.run_speed				= text2num(value)
 				if("walk_delay")

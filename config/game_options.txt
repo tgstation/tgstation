@@ -27,6 +27,10 @@ REVIVAL_BRAIN_LIFE -1
 #Comment this out if you want OOC to be automatically disabled during the round, it will be enabled during the lobby and after the round end results.
 OOC_DURING_ROUND
 
+### EMOJI ###
+#Comment this out if you want to disable emojis
+EMOJIS
+
 ### MOB MOVEMENT ###
 
 ## We suggest editing these variables ingame to find a good speed for your server.
@@ -84,6 +88,7 @@ PROBABILITY CHANGELING 2
 PROBABILITY WIZARD 4
 PROBABILITY MALFUNCTION 1
 PROBABILITY BLOB 2
+PROBABILITY RAGINMAGES 2
 PROBABILITY MONKEY 1
 PROBABILITY METEOR 0
 PROBABILITY EXTENDED 0

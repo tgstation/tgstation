@@ -66,7 +66,7 @@
 		src.icon_state = "fork"
 		return
 	else
-		if((CLUMSY in user.mutations) && prob(50))
+		if(user.disabilities & CLUMSY && prob(50))
 			M = user
 		return eyestab(M,user)
 
@@ -86,9 +86,9 @@
 						"<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>"))
 	return (BRUTELOSS)
 
-/obj/item/weapon/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
-	if ((CLUMSY in user.mutations) && prob(50))
-		user << "<span class='danger'> You accidentally cut yourself with \the [src].</span>"
+/obj/item/weapon/kitchen/utensil/knife/attack(target, mob/living/carbon/human/user)
+	if(istype(user) && user.disabilities & CLUMSY && prob(50))
+		user << "<span class='danger'>You accidentally cut yourself with \the [src].</span>"
 		user.take_organ_damage(20)
 		return
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)

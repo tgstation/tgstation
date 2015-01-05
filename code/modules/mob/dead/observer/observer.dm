@@ -7,7 +7,6 @@
 	stat = DEAD
 	density = 0
 	canmove = 0
-	blinded = 0
 	anchored = 1	//  don't get pushed around
 	invisibility = INVISIBILITY_OBSERVER
 	languages = ALL
@@ -301,3 +300,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return 0
 	usr.visible_message("<span class='deadsay'><b>[src]</b> points to [A]</span>")
 	return 1
+
+/mob/dead/observer/verb/view_manfiest()
+	set name = "View Crew Manifest"
+	set category = "Ghost"
+
+	var/dat
+	dat += "<h4>Crew Manifest</h4>"
+	dat += data_core.get_manifest()
+
+	src << browse(dat, "window=manifest;size=370x420;can_close=1")

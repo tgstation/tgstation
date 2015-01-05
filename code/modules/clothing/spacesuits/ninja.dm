@@ -3,7 +3,6 @@
 	name = "ninja hood"
 	icon_state = "s-ninja"
 	item_state = "s-ninja_mask"
-	allowed = list(/obj/item/weapon/stock_parts/cell)
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 25)
 	strip_delay = 12
 	unacidable = 1
@@ -56,8 +55,11 @@
 	var/a_boost = 3.0//Number of adrenaline boosters.
 
 		//Onboard AI related variables.
-	var/mob/living/silicon/ai/AI//If there is an AI inside the suit.
+
+	var/obj/item/device/aicard/NAI //Integrated intellicard.
+
 	var/obj/item/device/paicard/pai//A slot for a pAI device
+
 	var/obj/effect/overlay/hologram//Is the AI hologram on or off? Visible only to the wearer of the suit. This works by attaching an image to a blank overlay.
-	var/flush = 0//If an AI purge is in progress.
+
 	var/s_control = 1//If user in control of the suit.

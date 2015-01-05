@@ -69,3 +69,17 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/apple
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/candiedapple
+
+/datum/recipe/chococoin
+	items = list(
+		/obj/item/weapon/coin,
+		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/chococoin
+
+/datum/recipe/chocoorange
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange,
+		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/chocoorange

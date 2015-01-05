@@ -21,6 +21,8 @@
 obj/item/weapon/mop/proc/clean(turf/simulated/A)
 	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1))
 		A.clean_blood()
+		var/turf/simulated/floor/F = A
+		F.dirt = 0
 		for(var/obj/effect/O in A)
 			if(istype(O,/obj/effect/decal/cleanable) || istype(O,/obj/effect/overlay))
 				qdel(O)

@@ -47,9 +47,9 @@ F
 		emote("me", 1, "nashes at [.]!")
 
 /mob/living/simple_animal/hostile/carp/AttackingTarget()
-	. =..()
-	var/mob/living/carbon/L = .
-	if(istype(L))
+	..()
+	if(isliving(target))
+		var/mob/living/L = target
 		if(prob(15))
 			L.Weaken(3)
 			L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")

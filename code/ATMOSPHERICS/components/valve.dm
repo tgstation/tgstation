@@ -46,9 +46,9 @@
 	return
 
 /obj/machinery/atmospherics/binary/valve/proc/normalize_dir()
-	if(dir==3)
+	if(dir==2)
 		dir = 1
-	else if(dir==12)
+	else if(dir==8)
 		dir = 4
 
 /obj/machinery/atmospherics/binary/valve/attack_ai(mob/user)
@@ -69,7 +69,7 @@
 	desc = "A digitally controlled valve."
 	icon_state = "dvalve_map"
 
-/obj/machinery/atmospherics/valve/digital/attack_ai(mob/user)
+/obj/machinery/atmospherics/binary/valve/digital/attack_ai(mob/user)
 	return src.attack_hand(user)
 
 /obj/machinery/atmospherics/binary/valve/digital/update_icon_nopipes(animation)

@@ -8,7 +8,7 @@
 	luminosity = 5
 	icon_state = "light_on"
 	floor_tile = /obj/item/stack/tile/light
-	broken_states = list("light-broken")
+	broken_states = list("light_broken")
 	var/on = 1
 	var/state //0 = fine, 1 = flickering, 2 = breaking, 3 = broken
 

@@ -109,6 +109,7 @@
 	modules += new /obj/item/borg/sight/meson(src)
 	emag = new /obj/item/borg/stun(src)
 	modules += new /obj/item/weapon/rcd/borg(src)
+	modules += new /obj/item/weapon/pipe_dispenser(src) //What could possibly go wrong?
 	modules += new /obj/item/weapon/extinguisher(src)
 	modules += new /obj/item/weapon/weldingtool/largetank/cyborg(src)
 	modules += new /obj/item/weapon/screwdriver(src)
@@ -161,7 +162,7 @@
 	modules += new /obj/item/device/flashlight/seclite(src)
 	modules += new /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg(src)
 	modules += new /obj/item/weapon/melee/baton/loaded(src)
-	modules += new /obj/item/weapon/gun/energy/taser/cyborg(src)
+	modules += new /obj/item/weapon/gun/energy/gun/advtaser/cyborg(src)
 	modules += new /obj/item/clothing/mask/gas/sechailer/cyborg(src)
 	emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
 	fix_modules()
