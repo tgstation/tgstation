@@ -1533,27 +1533,27 @@ proc/process_ghost_teleport_locs()
 
 //Hallways
 /area/hallway/primary/fore
-	name = "\improper Fore Hallway"
+	name = "Fore Hallway"
 
 /area/hallway/primary/forecentral
-	name = "\improper Fore Central Hallway"
+	name = "Fore Central Hallway"
 	icon_state = "hallfc"
 
 /area/hallway/primary/starboard
-	name = "\improper Starboard Hallway"
+	name = "Starboard Hallway"
 
 /area/hallway/primary/aft
-	name = "\improper Aft Hallway"
+	name = "Aft Hallway"
 
 /area/hallway/primary/aftcentral
-	name = "\improper Aft Central Hallway"
+	name = "Aft Central Hallway"
 	icon_state = "hallac"
 
 /area/hallway/primary/port
-	name = "\improper Port Hallway"
+	name = "Port Hallway"
 
 /area/hallway/primary/portcentral
-	name = "\improper Port Central Hallway"
+	name = "Port Central Hallway"
 	icon_state = "hallpc"
 
 
