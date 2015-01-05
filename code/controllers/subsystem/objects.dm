@@ -10,9 +10,9 @@ var/datum/subsystem/objects/SSobj
 	NEW_SS_GLOBAL(SSobj)
 
 /datum/subsystem/objects/Initialize()
-	for(var/atom/movable/AM in world)
+	for(var/atom/movable/AM in machines)
 		AM.initialize()
-	for(var/turf/simulated/floor/F in world)
+	for(var/turf/simulated/floor/F in machines)
 		F.MakeDirty()
 	..()
 

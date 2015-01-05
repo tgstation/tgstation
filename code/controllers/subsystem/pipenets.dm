@@ -13,10 +13,10 @@ var/datum/subsystem/pipenets/SSpipe
 	set background = BACKGROUND_ENABLED
 
 	//is it possible to combine all these procs into initialize() ??
-	for(var/obj/machinery/atmospherics/M in machines)
+	for(var/obj/machinery/atmospherics/M in world)
 		M.build_network()
 
-	for(var/obj/machinery/atmospherics/unary/U in machines)
+	for(var/obj/machinery/atmospherics/unary/U in world)
 		if(istype(U, /obj/machinery/atmospherics/unary/vent_pump))
 			var/obj/machinery/atmospherics/unary/vent_pump/V = U
 			V.broadcast_status()

@@ -58,7 +58,7 @@ Note: you can set the datum's defined processing_interval to some integer to set
 	world.sleep_offline = 1
 	world.fps = config.fps
 
-	sleep(50)
+	sleep(-1)
 
 	process()
 

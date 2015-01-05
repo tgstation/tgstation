@@ -23,7 +23,7 @@
 
 		//First, resolve location and get a breath
 
-		if(SSair.times_fired%4==2)
+		if(SSmob.times_fired%4==2)
 			//Only try to take a breath every 4 seconds, unless suffocating
 			spawn(0) breathe()
 
