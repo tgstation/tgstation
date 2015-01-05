@@ -49,7 +49,9 @@ var/list/mommicomment_sound = list('sound/voice/mommi_comment1.ogg', 'sound/voic
 
 		//message_admins("We're starting off with [atmosphere], [extrarange], and [vol]")
 		var/atmos_modifier = round(atmosphere/ONE_ATMOSPHERE, 0.1)
-		extrarange = -7 + min ( round( (7 + extrarange) * sqrt(atmos_modifier), 1 ), (7 + (extrarange * 2))  ) //upper range of twice the original range. Range technically falls off with the root of pressure (see Newtonian sound)
+		var/total_range = world.view + extrarange //this must be positive.
+		total_range = min ( round( (total_range) * sqrt(atmos_modifier), 1 ), (total_range * 2)  ) //upper range of twice the original range. Range technically falls off with the root of pressure (see Newtonian sound)
+		extrarange = total_range - world.view
 		vol = min( round( (vol) * atmos_modifier, 1 ), vol * 2) //upper range of twice the volume. Trust me, otherwise you get 10000 volume in a plasmafire
 		//message_admins("We've adjusted the sound of [source] at [turf_source.loc] to have a range of [7 + extrarange] and a volume of [vol]")
 
