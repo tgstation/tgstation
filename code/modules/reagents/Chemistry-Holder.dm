@@ -118,9 +118,13 @@ datum/reagents/proc/trans_to(var/obj/target, var/amount=1, var/multiplier=1, var
 datum/reagents/proc/copy_to(var/obj/target, var/amount=1, var/multiplier=1, var/preserve_data=1)
 	if(!target)
 		return
-	if(!target.reagents || src.total_volume<=0)
-		return
-	var/datum/reagents/R = target.reagents
+	var/datum/reagents/R
+	if(istype(target,/datum/reagents/))
+		R = target
+	else
+		if (!target.reagents || src.total_volume<=0)
+			return
+		R = target.reagents
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
 	var/part = amount / src.total_volume
 	var/trans_data = null
@@ -212,7 +216,8 @@ datum/reagents/proc/conditional_update(var/atom/A)
 		R.on_update (A)
 	update_total()
 
-datum/reagents/proc/handle_reactions()
+datum/reagents/proc/handle_reactions(var/show_message=1)
+	if(!my_atom) return
 	if(my_atom.flags & NOREACT) return //Yup, no reactions here. No siree.
 
 	var/reaction_occured = 0
@@ -275,9 +280,10 @@ datum/reagents/proc/handle_reactions()
 
 					var/list/seen = viewers(4, get_turf(my_atom))
 
-					if(!istype(my_atom, /mob)) // No bubbling mobs
-						for(var/mob/M in seen)
-							M << "<span class='notice'>\icon[my_atom] The solution begins to bubble.</span>"
+					if(show_message)
+						if(!istype(my_atom, /mob)) // No bubbling mobs
+							for(var/mob/M in seen)
+								M << "<span class='notice'>\icon[my_atom] The solution begins to bubble.</span>"
 
 					if(istype(my_atom, /obj/item/slime_extract))
 						var/obj/item/slime_extract/ME2 = my_atom
@@ -312,7 +318,8 @@ datum/reagents/proc/del_reagent(var/reagent)
 			reagent_list -= A
 			del(A)
 			update_total()
-			my_atom.on_reagent_change()
+			if(my_atom)
+				my_atom.on_reagent_change()
 			check_gofast(my_atom)
 			return 0
 
@@ -373,7 +380,8 @@ datum/reagents/proc/add_reagent(var/reagent, var/amount, var/list/data=null)
 		if (R.id == reagent)
 			R.volume += amount
 			update_total()
-			my_atom.on_reagent_change()
+			if(my_atom)
+				my_atom.on_reagent_change()
 			R.on_merge(data)
 			handle_reactions()
 			return 0
@@ -395,7 +403,8 @@ datum/reagents/proc/add_reagent(var/reagent, var/amount, var/list/data=null)
 		//	world << "Container data: [D] = [R.data[D]]"
 		//debug
 		update_total()
-		my_atom.on_reagent_change()
+		if(my_atom)
+			my_atom.on_reagent_change()
 		handle_reactions()
 		return 0
 	else
@@ -421,7 +430,8 @@ datum/reagents/proc/remove_reagent(var/reagent, var/amount, var/safety)//Added a
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to
 				handle_reactions()
-			my_atom.on_reagent_change()
+			if(my_atom)
+				my_atom.on_reagent_change()
 			return 0
 
 	return 1

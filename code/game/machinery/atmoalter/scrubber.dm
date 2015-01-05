@@ -93,6 +93,9 @@
 	..()
 
 	if(on)
+		//internal scrubber mechanism.. something something science chemical cleaning
+		if(air_contents.gas_reagents.total_volume)
+			air_contents.gas_reagents.remove_any(air_contents.gas_reagents.total_volume/2)
 		var/datum/gas_mixture/environment
 		if(holding)
 			environment = holding.air_contents

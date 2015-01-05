@@ -225,6 +225,27 @@
 /// Syringes. END
 ////////////////////////////////////////////////////////////////////////////////
 
+/obj/item/weapon/reagent_containers/syringe/atmospherics
+	name = "industrial chemical injector"
+	desc = "Used to inject chemicals into air systems."
+	amount_per_transfer_from_this = 100
+	volume = 100
+	icon_state = "lazarus_hypo"
+
+	update_icon()
+		if(reagents.total_volume)
+			icon_state = "lazarus_hypo"
+		else
+			icon_state = "lazarus_empty"
+
+	attack_self(mob/user)
+		if(mode == SYRINGE_INJECT)
+			user << "<span class='notice'>You switch the [src] to Draw Mode.</span>"
+			desc = "Used to inject chemicals into air systems. It is on Injection mode."
+		else
+			user << "<span class='notice'>You switch the [src] to Inject Mode.</span>"
+			desc = "Used to inject chemicals into air systems. It is on Draw mode."
+		..()
 
 
 /obj/item/weapon/reagent_containers/syringe/inaprovaline

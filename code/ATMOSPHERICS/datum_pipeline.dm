@@ -1,4 +1,5 @@
 var/global/list/datum/pipeline/pipe_networks = list()
+var/global/dispersion_rate = 35
 
 /datum/pipeline
 	var/datum/gas_mixture/air
@@ -10,6 +11,7 @@ var/global/list/datum/pipeline/pipe_networks = list()
 	var/update = 1
 
 	var/alert_pressure = 0
+
 
 /datum/pipeline/New()
 	pipe_networks += src
@@ -155,6 +157,9 @@ var/pipenetwarnings = 10
 
 		member.air_temporary.temperature = air.temperature
 
+		if(air.gas_reagents.total_volume)
+			air.gas_reagents.copy_to(member.air_temporary.gas_reagents,air.gas_reagents.total_volume)
+
 		if(air.trace_gases.len)
 			for(var/datum/gas/trace_gas in air.trace_gases)
 				var/datum/gas/corresponding = new trace_gas.type()
@@ -239,6 +244,7 @@ var/pipenetwarnings = 10
 	var/total_toxins = 0
 	var/total_carbon_dioxide = 0
 	var/list/total_trace_gases = list()
+	var/datum/reagents/pipeline_reagents = new(maximum=AIRCHEM_SIZE)
 
 	for(var/datum/gas_mixture/G in GL)
 		total_volume += G.volume
@@ -249,6 +255,15 @@ var/pipenetwarnings = 10
 		total_nitrogen += G.nitrogen
 		total_toxins += G.toxins
 		total_carbon_dioxide += G.carbon_dioxide
+
+		for(var/datum/reagent/R in G.gas_reagents)
+			if(R.id == "plasma")
+				G.toxins += R.volume
+				total_toxins += R.volume
+
+		if(G.gas_reagents.total_volume)
+			//let it flow.. a little more into the system by multiplying chems.
+			G.gas_reagents.trans_to(pipeline_reagents,G.gas_reagents.total_volume,log(G.gas_reagents.total_volume*AIRCHEM_SPREAD_RATE))
 
 		if(G.trace_gases.len)
 			for(var/datum/gas/trace_gas in G.trace_gases)
@@ -276,6 +291,10 @@ var/pipenetwarnings = 10
 
 			G.temperature = temperature
 
+			if(pipeline_reagents.total_volume)
+				//"disperse" reagents into the gasses, some dilution may occur.
+				pipeline_reagents.trans_to(G.gas_reagents,pipeline_reagents.total_volume/GL.len)
+
 			if(total_trace_gases.len)
 				for(var/datum/gas/trace_gas in total_trace_gases)
 					var/datum/gas/corresponding = locate(trace_gas.type) in G.trace_gases
@@ -284,6 +303,11 @@ var/pipenetwarnings = 10
 						G.trace_gases += corresponding
 
 					corresponding.moles = trace_gas.moles*G.volume/total_volume
+			if(prob(dispersion_rate))
+				//reagents have a chance to decay over time
+				//controls overflow of reagents duplicating from going back and fourth in the buffer
+				G.gas_reagents.remove_any(G.gas_reagents.total_volume/2)
+				pipeline_reagents.remove_any(pipeline_reagents.total_volume/2)
 
 
 /*

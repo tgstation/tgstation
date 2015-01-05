@@ -55,7 +55,7 @@ turf/simulated/New()
 	..()
 
 	if(!blocks_air)
-		air = new
+		air = new(src)
 
 		air.oxygen = oxygen
 		air.carbon_dioxide = carbon_dioxide
@@ -144,7 +144,8 @@ turf/simulated/proc/share_temperature_mutual_solid(turf/simulated/sharer, conduc
 	current_cycle = air_master.current_cycle
 
 	var/remove = 1 //set by non simulated turfs who are sharing with this turf
-
+	if(prob(dispersion_rate))
+		air.gas_reagents.remove_any(air.gas_reagents.total_volume/2)
 	for(var/direction in cardinal)
 		if(!(atmos_adjacent_turfs & direction))
 			continue
@@ -241,6 +242,14 @@ turf/simulated/proc/share_temperature_mutual_solid(turf/simulated/sharer, conduc
 			overlays.Add(plmaster)
 		if("sleeping_agent")
 			overlays.Add(slmaster)
+		if("chem_smoke")
+			var/obj/effect/overlay/chem = new /obj/effect/overlay()
+			chem.icon = 'icons/effects/tile_effects.dmi'
+			chem.icon_state = "chem_smoke"
+			chem.layer = FLY_LAYER
+			chem.mouse_opacity = 0
+			chem.color = mix_color_from_reagents(model.gas_reagents.reagent_list)
+			overlays.Add(chem)
 
 /turf/simulated/proc/share_air(var/turf/simulated/T)
 	if(T.current_cycle < current_cycle)

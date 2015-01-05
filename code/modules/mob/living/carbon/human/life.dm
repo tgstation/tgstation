@@ -142,10 +142,10 @@
 	if(dna)
 		dna.species.handle_mutations_and_radiation(src)
 
-/mob/living/carbon/human/proc/breathe()
+/mob/living/carbon/human/breathe()
 	if(dna)
 		dna.species.breathe(src)
-
+	..()
 	return
 
 /mob/living/carbon/human/proc/handle_environment(datum/gas_mixture/environment)
