@@ -127,7 +127,7 @@
 /*
  * Bucher's cleaver
  */
-/obj/item/weapon/butch
+/obj/item/weapon/kitchenknife/butcher
 	name = "butcher's cleaver"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "butch"
