@@ -48,12 +48,12 @@
 	//The topmost paper. You can't organise contents directly in byond, so this is what we're stuck with.	-Pete
 	if(toppaper)
 		var/obj/item/weapon/paper/P = toppaper
-		dat += "<A href='?src=\ref[src];write=\ref[P]'>Write</A> <A href='?src=\ref[src];remove=\ref[P]'>Remove</A> - <A href='?src=\ref[src];read=\ref[P]'>[P.name]</A><BR><HR>"
+		dat += "<A href='?src=\ref[src];write=\ref[P]'>Write</A> <A href='?src=\ref[src];remove=\ref[P]'>Remove</A> - <A href='?src=\ref[src];read=\ref[P]'>[sanitize_cobra(P.name)]</A><BR><HR>"
 
 		for(P in src)
 			if(P == toppaper)
 				continue
-			dat += "<A href='?src=\ref[src];write=\ref[P]'>Write</A> <A href='?src=\ref[src];remove=\ref[P]'>Remove</A> <A href='?src=\ref[src];top=\ref[P]'>Move to top</A> - <A href='?src=\ref[src];read=\ref[P]'>[P.name]</A><BR>"
+			dat += "<A href='?src=\ref[src];write=\ref[P]'>Write</A> <A href='?src=\ref[src];remove=\ref[P]'>Remove</A> <A href='?src=\ref[src];top=\ref[P]'>Move to top</A> - <A href='?src=\ref[src];read=\ref[P]'>[sanitize_cobra(P.name)]</A><BR>"
 	user << browse(dat, "window=clipboard")
 	onclose(user, "clipboard")
 	add_fingerprint(usr)
@@ -109,7 +109,7 @@
 			var/obj/item/P = locate(href_list["top"])
 			if(istype(P) && P.loc == src)
 				toppaper = P
-				usr << "<span class='notice'>You move [P.name] to the top.</span>"
+				usr << "<span class='notice'>You move [sanitize_cobra(P.name)] to the top.</span>"
 
 		//Update everything
 		attack_self(usr)
