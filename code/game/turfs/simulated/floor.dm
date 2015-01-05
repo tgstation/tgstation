@@ -174,9 +174,9 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 				if(M.lying)	return
 				dirt++
 				var/obj/effect/decal/cleanable/dirt/dirtoverlay = locate(/obj/effect/decal/cleanable/dirt, src)
-				if (dirt >= 30)
+				if (dirt >= 100)
 					if (!dirtoverlay)
 						dirtoverlay = new/obj/effect/decal/cleanable/dirt(src)
-						dirtoverlay.alpha = 15
-					else if (dirt > 30)
-						dirtoverlay.alpha = min(dirtoverlay.alpha+20, 255)
+						dirtoverlay.alpha = 10
+					else if (dirt > 100)
+						dirtoverlay.alpha = min(dirtoverlay.alpha+5, 200)
