@@ -872,7 +872,7 @@
 	desc = "Wall-mounted Medical Equipment dispenser."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "wallmed_frame0"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 
 /obj/item/wallmed_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)

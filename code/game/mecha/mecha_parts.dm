@@ -7,7 +7,7 @@
 	icon = 'icons/mecha/mech_construct.dmi'
 	icon_state = "blank"
 	w_class = 20
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 	origin_tech = "programming=2;materials=2"
 
@@ -331,7 +331,7 @@
 	icon_state = "std_mod"
 	item_state = "circuitboard"
 	board_type = "other"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 	force = 5.0
 	w_class = 2.0

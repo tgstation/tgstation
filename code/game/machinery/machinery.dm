@@ -407,14 +407,17 @@ Class Procs:
 	uid = gl_uid
 	gl_uid++
 
+/obj/machinery/proc/dropFrame()
+	var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+	M.state = 2
+	M.icon_state = "box_1"
+
 /obj/machinery/proc/crowbarDestroy(mob/user)
 	user.visible_message(	"[user] begins to pry out the circuitboard from \the [src].",
 							"You begin to pry out the circuitboard from \the [src]...")
 	if(do_after(user, 40))
 		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-		M.state = 2
-		M.icon_state = "box_1"
+		dropFrame()
 		for(var/obj/I in component_parts)
 			if(istype(I, /obj/item/weapon/reagent_containers/glass/beaker) && src:reagents && src:reagents.total_volume)
 				reagents.trans_to(I, reagents.total_volume)
@@ -552,15 +555,3 @@ Class Procs:
 		return 1
 	else
 		return 0
-
-// Hook for html_interface module to prevent updates to clients who don't have this as their active machine.
-/obj/machinery/proc/hiIsValidClient(datum/html_interface_client/hclient)
-	if (hclient.client.mob && hclient.client.mob.stat == 0)
-		if (isAI(hclient.client.mob)) return TRUE
-		else                          return hclient.client.mob.machine == src && src.Adjacent(hclient.client.mob)
-	else
-		return FALSE
-
-// Hook for html_interface module to unset the active machine when the window is closed by the player.
-/obj/machinery/proc/hiOnHide(datum/html_interface_client/hclient)
-	if (hclient.client.mob && hclient.client.mob.machine == src) hclient.client.mob.unset_machine()

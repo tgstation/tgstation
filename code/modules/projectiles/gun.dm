@@ -4,7 +4,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "detective"
 	item_state = "gun"
-	flags =  FPRINT | TABLEPASS | USEDELAY
+	flags = FPRINT  | USEDELAY
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	m_amt = 2000

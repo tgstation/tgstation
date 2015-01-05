@@ -80,11 +80,11 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			if(BLOOD_VOLUME_SAFE to 10000)
 				if(pale)
 					pale = 0
-					update_body()
+					//update_body()
 			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
 				if(!pale)
 					pale = 1
-					update_body()
+					//update_body()
 					var/word = pick("dizzy","woosey","faint")
 					src << "\red You feel [word]"
 				if(prob(1))
@@ -95,7 +95,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
 				if(!pale)
 					pale = 1
-					update_body()
+					//update_body()
 				eye_blurry += 6
 				if(oxyloss < 50)
 					oxyloss += 5
@@ -107,7 +107,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
 				if(!pale)
 					pale = 1
-					update_body()
+					//update_body()
 				oxyloss += 5
 				toxloss += 1
 				if(prob(15))
@@ -118,10 +118,10 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				// I SAID DON'T OVERDO IT
 				if(!pale) //Somehow
 					pale = 1
-					update_body()
+					//update_body()
 				oxyloss += 8
 				toxloss += 2
-				cloneloss += 1
+				//cloneloss += 1
 				Paralyse(5) //Keep them on the ground, that'll teach them
 
 		// Without enough blood you slowly go hungry.

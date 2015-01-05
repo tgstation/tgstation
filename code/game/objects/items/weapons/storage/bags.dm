@@ -20,7 +20,7 @@
 	display_contents_with_number = 0 // UNStABLE AS FuCK, turn on when it stops crashing clients
 	use_to_pickup = 1
 	slot_flags = SLOT_BELT
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 
 // -----------------------------
 //          Trash bag

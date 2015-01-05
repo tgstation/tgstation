@@ -11,7 +11,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "mat_synthoff"
 
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 	w_class = 3.0
 	origin_tech = "engineering=4;materials=5;power=3"
@@ -26,13 +26,20 @@
 										"plasteel" = /obj/item/stack/sheet/plasteel)
 	var/matter = 0
 
-/obj/item/device/material_synth/cyborg
+/obj/item/device/material_synth/robot //MoMMI version, has more materials
 	materials_scanned = list(	"plasma glass" = /obj/item/stack/sheet/glass/plasmaglass,
 								"reinforced plasma glass" = /obj/item/stack/sheet/rglass/plasmarglass,
 								"metal" = /obj/item/stack/sheet/metal,
 								"glass" = /obj/item/stack/sheet/glass,
 								"reinforced glass" = /obj/item/stack/sheet/rglass,
 								"plasteel" = /obj/item/stack/sheet/plasteel)
+
+/obj/item/device/material_synth/robot/cyborg //Cyborg version, has less materials and the ability to make tiles & rods (as borgs can't do it themselves)
+	materials_scanned = list(	"metal" = /obj/item/stack/sheet/metal,
+								"glass" = /obj/item/stack/sheet/glass,
+								"reinforced glass" = /obj/item/stack/sheet/rglass,
+								"floor tiles" = /obj/item/stack/tile/plasteel,
+								"metal rods" = /obj/item/stack/rods)
 
 /obj/item/device/material_synth/update_icon()
 	icon_state = "mat_synth[mode ? "on" : "off"]"
@@ -103,10 +110,12 @@
 			if(initial(active_material.perunit) < 2000)
 				modifier = MAT_COST_RARE
 			var/tospawn = max(0, round(input("How many sheets of [mat_name] do you want to synthesize?") as num))
+			if(tospawn>50) tospawn=50
 			if(tospawn)
 				if(TakeCost(tospawn, modifier, r_user))
 					var/obj/item/stack/sheet/spawned_sheet = new active_material(get_turf(src))
 					spawned_sheet.amount = tospawn
+					return spawned_sheet
 				else
 					r_user <<"<span class='warning'>You can't make that much [mat_name] without shutting down!</span>"
 					return
@@ -149,12 +158,31 @@
 	return 1*/
 
 //mommis matter synth lacks the capability to scan new materials.
-obj/item/device/material_synth/cyborg/afterattack(/obj/target, mob/user)
+obj/item/device/material_synth/robot/afterattack(/obj/target, mob/user)
 	user << "<span class='notice'>Your [src.name] does not contain this functionality.</span>"
 	return 0
 
-/obj/item/device/material_synth/cyborg/TakeCost(var/spawned, var/modifier, mob/user)
+/obj/item/device/material_synth/robot/TakeCost(var/spawned, var/modifier, mob/user)
 	if(isrobot(user))
 		var/mob/living/silicon/robot/R = user
 		return R.cell.use(spawned*modifier*MAT_SYNTH_ROBO)
 	return
+
+/obj/item/device/material_synth/robot/cyborg/attack_self(mob/user) //After spawning a sheet, add it to the borg's module
+	if(!isrobot(user)) return
+	var/obj/item/stack/sheet/spawned_sheet=..()
+	var/mob/living/silicon/robot/U = user
+	if(!U.module) return
+	if(!spawned_sheet) return
+
+	for(var/obj/item/stack/sheets_in_module in U.module.modules)
+		if(istype(spawned_sheet, sheets_in_module))
+			if((sheets_in_module.amount + spawned_sheet.amount) <= sheets_in_module.max_amount) //if we can add the new sheet to the old stack
+				sheets_in_module.amount+=spawned_sheet.amount
+				user << "Added [spawned_sheet.amount] [spawned_sheet] to the stack."
+				qdel(spawned_sheet)
+				return
+			else
+				return //Leave the new sheet at the floor
+	spawned_sheet.loc=U
+	U.module.modules += spawned_sheet

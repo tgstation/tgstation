@@ -5,7 +5,7 @@
 	icon_state = "pneumatic"
 	item_state = "pneumatic"
 	w_class = 5.0
-	flags =  FPRINT | TABLEPASS | USEDELAY
+	flags = FPRINT  | USEDELAY
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	max_w_class = 3

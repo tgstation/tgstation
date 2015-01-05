@@ -4,7 +4,7 @@
 	icon_state = "std_module"
 	w_class = 100.0
 	item_state = "electronic"
-	flags = FPRINT|TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 
 	var/list/modules = list()
@@ -164,13 +164,11 @@
 
 /obj/item/weapon/robot_module/engineering/New()
 	..()
-	//src.modules += new /obj/item/borg/sight/meson(src)
 	src.emag = new /obj/item/borg/stun(src)
 	src.modules += new /obj/item/weapon/rcd/borg(src)
 	src.modules += new /obj/item/weapon/pipe_dispenser(src) //What could possibly go wrong?
 	src.modules += new /obj/item/weapon/extinguisher(src)
 	src.modules += new /obj/item/weapon/extinguisher/foam(src)
-//		src.modules += new /obj/item/device/flashlight(src)
 	src.modules += new /obj/item/weapon/weldingtool/largetank(src)
 	src.modules += new /obj/item/weapon/screwdriver(src)
 	src.modules += new /obj/item/weapon/wrench(src)
@@ -181,26 +179,8 @@
 	src.modules += new /obj/item/device/analyzer(src)
 	src.modules += new /obj/item/taperoll/atmos(src)
 	src.modules += new /obj/item/taperoll/engineering(src)
-
-	var/obj/item/stack/sheet/metal/cyborg/M = new /obj/item/stack/sheet/metal/cyborg(src)
-	M.amount = 50
-	src.modules += M
-
-	var/obj/item/stack/tile/plasteel/F = new /obj/item/stack/tile/plasteel(src)
-	F.amount = 50
-	src.modules += F
-
-	var/obj/item/stack/rods/O = new /obj/item/stack/rods(src)
-	O.amount = 50
-	src.modules += O
-
-	var/obj/item/stack/sheet/glass/cyborg/G = new /obj/item/stack/sheet/glass/cyborg(src)
-	G.amount = 50
-	src.modules += G
-
-	var/obj/item/stack/sheet/rglass/cyborg/R = new /obj/item/stack/sheet/rglass/cyborg(src)
-	R.amount = 50
-	src.modules += R
+	src.modules += new /obj/item/weapon/tile_painter(src)
+	src.modules += new /obj/item/device/material_synth/robot/cyborg(src)
 
 	var/obj/item/weapon/cable_coil/W = new /obj/item/weapon/cable_coil(src)
 	W.amount = 50
@@ -212,12 +192,7 @@
 
 /obj/item/weapon/robot_module/engineering/respawn_consumable(var/mob/living/silicon/robot/R)
 	var/list/what = list (
-		/obj/item/stack/sheet/metal,
-		/obj/item/stack/tile/plasteel,
-		/obj/item/stack/rods,
-		/obj/item/stack/sheet/glass,
-		/obj/item/stack/sheet/rglass,
-		/obj/item/weapon/cable_coil,
+		/obj/item/weapon/cable_coil
 	)
 	for (var/T in what)
 		if (!(locate(T) in src.modules))
@@ -230,6 +205,10 @@
 	return
 
 /obj/item/weapon/robot_module/engineering/recharge_consumable(var/mob/living/silicon/robot/R)
+	for(var/T in src.modules)
+		if(!(locate(T) in src.modules)) //Remove nulls
+			src.modules -= null
+
 	recharge_tick++
 	if(recharge_tick < recharge_time) return 0
 	recharge_tick = 0
@@ -239,11 +218,7 @@
 		// ^ makes sinle list of active (R.contents) and inactive modules (R.module.modules)
 		for(var/obj/O in um)
 			// Engineering
-			if(istype(O,/obj/item/stack/sheet/metal)\
-			|| istype(O,/obj/item/stack/sheet/rglass)\
-			|| istype(O,/obj/item/stack/sheet/glass)\
-			|| istype(O,/obj/item/weapon/cable_coil)\
-			|| istype(O,/obj/item/stack/tile/plasteel))
+			if(istype(O,/obj/item/weapon/cable_coil))
 				if(O:amount < 50)
 					O:amount += 1
 					R.cell.use(50) 		//Take power from the borg...
@@ -302,14 +277,13 @@
 	src.modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
 	src.modules += new /obj/item/weapon/pen/robopen(src)
 
-	var/obj/item/weapon/rsf/M = new /obj/item/weapon/rsf(src)
-	M.matter = 30
-	src.modules += M
+	src.modules += new /obj/item/weapon/rsf/cyborg(src)
 
 	src.modules += new /obj/item/weapon/reagent_containers/robodropper(src)
 
 	var/obj/item/weapon/lighter/zippo/L = new /obj/item/weapon/lighter/zippo(src)
 	L.lit = 1
+	L.icon_state = L.icon_on
 	src.modules += L
 
 	src.modules += new /obj/item/weapon/tray/robotray(src)
