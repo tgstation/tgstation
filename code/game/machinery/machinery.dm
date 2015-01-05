@@ -115,10 +115,12 @@ Class Procs:
 /obj/machinery/New()
 	..()
 	machines += src
+	SSmachine.processing += src
 	auto_use_power()
 
 /obj/machinery/Destroy()
 	machines.Remove(src)
+	SSmachine.processing -= src
 	if(occupant)
 		open_machine()
 	..()
