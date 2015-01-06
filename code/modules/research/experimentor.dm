@@ -39,7 +39,7 @@
 		item_reactions["[I]"] = pick(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
 		if(ispath(I,/obj/item/weapon/reagent_containers/food) || ispath(I,/obj/item/weapon/stock_parts) || ispath(I,/obj/item/weapon/grenade/chem_grenade) || ispath(I,/obj/item/weapon/kitchen))
 			var/obj/item/tempCheck = new I()
-			if(tempCheck:icon_state != null) //check it's an actual usable item, in a hacky way
+			if(tempCheck.icon_state != null) //check it's an actual usable item, in a hacky way
 				valid_items += I
 			qdel(tempCheck)
 
