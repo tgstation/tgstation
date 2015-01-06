@@ -97,4 +97,4 @@
 	name = "EMT cap"
 	desc = "It's a baseball hat with a dark turquoise color and a reflective cross on the top."
 	icon_state = "emtsoft"
-	item_color = "emtsoft"
+	item_color = "emt"

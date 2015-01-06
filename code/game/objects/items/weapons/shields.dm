@@ -56,8 +56,8 @@
 /obj/item/weapon/shield/energy/IsReflect()
 	return (active)
 
-/obj/item/weapon/shield/energy/attack_self(mob/living/user)
-	if((CLUMSY in user.mutations) && prob(50))
+/obj/item/weapon/shield/energy/attack_self(mob/living/carbon/human/user)
+	if(user.disabilities & CLUMSY && prob(50))
 		user << "<span class='warning'>You beat yourself in the head with [src].</span>"
 		user.take_organ_damage(5)
 	active = !active

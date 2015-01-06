@@ -33,7 +33,7 @@
 
 /obj/item/weapon/flamethrower/process()
 	if(!lit)
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 		return null
 	var/turf/location = loc
 	if(istype(location, /mob/))
@@ -140,7 +140,7 @@
 		if(!status)	return
 		lit = !lit
 		if(lit)
-			processing_objects.Add(src)
+			SSobj.processing.Add(src)
 	if(href_list["amount"])
 		throw_amount = throw_amount + text2num(href_list["amount"])
 		throw_amount = max(50, min(5000, throw_amount))
@@ -189,7 +189,7 @@
 	//Burn it based on transfered gas
 	target.hotspot_expose((ptank.air_contents.temperature*2) + 380,500)
 	//location.hotspot_expose(1000,500,1)
-	air_master.add_to_active(target, 0)
+	SSair.add_to_active(target, 0)
 	return
 
 

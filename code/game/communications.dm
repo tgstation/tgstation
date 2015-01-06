@@ -64,7 +64,6 @@
 	so i made radios not use the radio controller.
 */
 var/list/all_radios = list()
-
 /proc/add_radio(var/obj/item/radio, freq)
 	if(!freq || !radio)
 		return
@@ -181,48 +180,8 @@ var/const/RADIO_CLEANBOT = "10"
 var/const/RADIO_FLOORBOT = "11"
 var/const/RADIO_MEDBOT = "12"
 
-var/global/datum/controller/radio/radio_controller
+/datum/radio_frequency
 
-datum/controller/radio
-	var/list/datum/radio_frequency/frequencies = list()
-
-datum/controller/radio/proc/add_object(obj/device as obj, var/new_frequency as num, var/filter = null as text|null)
-	var/f_text = num2text(new_frequency)
-	var/datum/radio_frequency/frequency = frequencies[f_text]
-
-	if(!frequency)
-		frequency = new
-		frequency.frequency = new_frequency
-		frequencies[f_text] = frequency
-
-	frequency.add_listener(device, filter)
-	return frequency
-
-datum/controller/radio/proc/remove_object(obj/device, old_frequency)
-	var/f_text = num2text(old_frequency)
-	var/datum/radio_frequency/frequency = frequencies[f_text]
-
-	if(frequency)
-		frequency.remove_listener(device)
-
-		if(frequency.devices.len == 0)
-			frequencies -= f_text
-			del(frequency)
-
-	return 1
-
-datum/controller/radio/proc/return_frequency(var/new_frequency as num)
-	var/f_text = num2text(new_frequency)
-	var/datum/radio_frequency/frequency = frequencies[f_text]
-
-	if(!frequency)
-		frequency = new
-		frequency.frequency = new_frequency
-		frequencies[f_text] = frequency
-
-	return frequency
-
-datum/radio_frequency
 	var/frequency as num
 	var/list/list/obj/devices = list()
 
@@ -263,19 +222,23 @@ datum/radio_frequency/proc/add_listener(obj/device as obj, var/filter as text|nu
 	if (!filter)
 		filter = "_default"
 
-	if(!devices[filter])
-		devices[filter] = list()
-	devices[filter] += device
+	var/list/devices_line = devices[filter]
+	if(!devices_line)
+		devices_line = list()
+		devices[filter] = devices_line
+	devices_line += device
 
 
 datum/radio_frequency/proc/remove_listener(obj/device)
 	for(var/devices_filter in devices)
 		var/list/devices_line = devices[devices_filter]
-		devices_line -= device
-
-		if (devices_line.len==0)
+		if(!devices_line)
 			devices -= devices_filter
-			del(devices_line)
+		devices_line -= device
+		if(!devices_line.len)
+			devices -= devices_filter
+
+
 
 
 var/list/pointers = list()

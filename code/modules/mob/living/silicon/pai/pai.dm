@@ -4,7 +4,6 @@
 	mouse_opacity = 0
 	density = 0
 	mob_size = 0
-	invisibility = 101
 
 	var/network = "SS13"
 	var/obj/machinery/camera/current = null
@@ -51,7 +50,7 @@
 /mob/living/silicon/pai/New(var/obj/item/device/paicard)
 	make_laws()
 	canmove = 0
-	src.loc = get_turf(paicard)
+	src.loc = paicard
 	card = paicard
 	sradio = new(src)
 	if(card)
@@ -66,7 +65,6 @@
 		pda.owner = text("[]", src)
 		pda.name = pda.owner + " (" + pda.ownjob + ")"
 
-		follow_pai()
 	..()
 
 /mob/living/silicon/pai/make_laws()
@@ -82,10 +80,15 @@
 	..()
 	statpanel("Status")
 	if (src.client.statpanel == "Status")
-		if(emergency_shuttle.online && emergency_shuttle.location < 2)
-			var/timeleft = emergency_shuttle.timeleft()
-			if (timeleft)
-				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+		var/ETA
+		switch(SSshuttle.emergency.mode)
+			if(SHUTTLE_CALL)
+				ETA = "ETA"
+			if(SHUTTLE_DOCKED)
+				ETA = "ETD"
+		if(ETA)
+			var/timeleft = SSshuttle.emergency.timeLeft()
+			stat(null, "[ETA]-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 		if(src.silence_time)
 			var/timeleft = round((silence_time - world.timeofday)/10 ,1)
 			stat(null, "Communications system reboot in -[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")

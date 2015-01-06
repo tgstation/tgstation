@@ -96,13 +96,14 @@
 		return Move_object(direct)
 	if(world.time < move_delay)
 		return 0
-	if(isAI(mob))
-		return AIMove(n,direct,mob)
 	if(!isliving(mob))
 		return mob.Move(n,direct)
-	if(moving)
-		return 0
 	if(mob.stat == DEAD)
+		mob.ghostize()
+		return 0
+	if(isAI(mob))
+		return AIMove(n,direct,mob)
+	if(moving)
 		return 0
 	if(isliving(mob))
 		var/mob/living/L = mob
