@@ -237,7 +237,7 @@ obj/item/weapon/twohanded/
 /obj/item/weapon/twohanded/dualsaber/wield(mob/living/carbon/M) //Specific wield () hulk checks due to reflect_chance var for balance issues and switches hitsounds.
 	if(istype(M))
 		if(M.dna.check_mutation(HULK))
-			M << "<span class='warning'>You lack the grace to wield this to its full extent.</span>"
+			M << "<span class='warning'>You lack the grace to wield this.</span>"
 			return
 	..()
 	hitsound = 'sound/weapons/blade1.ogg'

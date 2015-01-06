@@ -109,19 +109,10 @@ datum/objective/maroon/check_completion()
 	if(target && target.current)
 		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
 			return 1
-		var/area/A = get_area(target.current)
-		if(istype(A, /area/shuttle/escape/centcom))
+
+		var/turf/T = get_turf(target.current)
+		if(T.z == ZLEVEL_CENTCOM)
 			return 0
-		if(istype(A, /area/shuttle/escape_pod1/centcom))
-			return 0
-		if(istype(A, /area/shuttle/escape_pod2/centcom))
-			return 0
-		if(istype(A, /area/shuttle/escape_pod3/centcom))
-			return 0
-		if(istype(A, /area/shuttle/escape_pod4/centcom))
-			return 0
-		else
-			return 1
 	return 1
 
 datum/objective/maroon/update_explanation_text()
@@ -198,21 +189,22 @@ datum/objective/hijack
 datum/objective/hijack/check_completion()
 	if(!owner.current || owner.current.stat)
 		return 0
-	if(emergency_shuttle.location<2)
+	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
 		return 0
 	if(issilicon(owner.current))
 		return 0
-	var/area/shuttle = locate(/area/shuttle/escape/centcom)
 
-	if(!(get_turf(owner.current) in shuttle))
+	var/area/A = get_area(owner.current)
+	if(SSshuttle.emergency.areaInstance != A)
 		return 0
 
-	var/list/protected_mobs = list(/mob/living/silicon/ai, /mob/living/silicon/pai)
 	for(var/mob/living/player in player_list)
-		if(player.type in protected_mobs)	continue
-		if (player.mind && (player.mind != owner))
-			if(player.stat != DEAD)			//they're not dead!
-				if(get_turf(player) in shuttle)
+		if(player.mind && player.mind != owner)
+			if(player.stat != DEAD)
+				switch(player.type)
+					if(/mob/living/silicon/ai, /mob/living/silicon/pai)
+						continue
+				if(get_area(player) == A)
 					return 0
 	return 1
 
@@ -224,20 +216,20 @@ datum/objective/block
 datum/objective/block/check_completion()
 	if(!istype(owner.current, /mob/living/silicon))
 		return 0
-	if(emergency_shuttle.location<2)
-		return 0
-	if(!owner.current)
-		return 0
-	var/area/shuttle = locate(/area/shuttle/escape/centcom)
-	var/protected_mobs[] = list(/mob/living/silicon/ai, /mob/living/silicon/pai, /mob/living/silicon/robot)
-	for(var/mob/living/player in player_list)
-		if(player.type in protected_mobs)	continue
-		if (player.mind)
-			if (player.stat != 2)
-				if (get_turf(player) in shuttle)
-					return 0
-	return 1
+	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
+		return 1
 
+	var/area/A = SSshuttle.emergency.areaInstance
+
+	for(var/mob/living/player in player_list)
+		if(istype(player, /mob/living/silicon))
+			continue
+		if(player.mind)
+			if(player.stat != DEAD)
+				if(get_area(player) == A)
+					return 0
+
+	return 1
 
 
 datum/objective/escape
@@ -249,30 +241,21 @@ datum/objective/escape/check_completion()
 		return 0
 	if(isbrain(owner.current))
 		return 0
-	if(emergency_shuttle.location<2)
+	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
 		return 0
-	if(!owner.current || owner.current.stat ==2)
+	if(!owner.current || owner.current.stat == DEAD)
 		return 0
-	var/turf/location = get_turf(owner.current.loc)
+	var/turf/location = get_turf(owner.current)
 	if(!location)
 		return 0
 
 	if(istype(location, /turf/simulated/shuttle/floor4)) // Fails traitors if they are in the shuttle brig -- Polymorph
 		return 0
 
-	var/area/check_area = location.loc
-	if(istype(check_area, /area/shuttle/escape/centcom))
+	if(location.z == ZLEVEL_CENTCOM)
 		return 1
-	if(istype(check_area, /area/shuttle/escape_pod1/centcom))
-		return 1
-	if(istype(check_area, /area/shuttle/escape_pod2/centcom))
-		return 1
-	if(istype(check_area, /area/shuttle/escape_pod3/centcom))
-		return 1
-	if(istype(check_area, /area/shuttle/escape_pod4/centcom))
-		return 1
-	else
-		return 0
+
+	return 0
 
 datum/objective/escape/escape_with_identity
 	dangerrating = 10

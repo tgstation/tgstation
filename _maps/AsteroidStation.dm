@@ -16,14 +16,9 @@ Then tick this file, the maps and all additional files will be automatically def
 	#include "map_files\Asteroidstation\z5.dmm"
 	#include "map_files\Asteroidstation\z6.dmm"
 	#include "map_files\Asteroidstation\z7.dmm"
-
+	
 	#define MAP_FILE "Asteroidstation.dmm"
-	#define MAP_NAME "AsteroidStationv8"
-
-	#if !defined(MAP_OVERRIDE_FILES)
-		#define MAP_OVERRIDE_FILES
-		#include "map_files\Asteroidstation\areas.dm"
-	#endif
+	#define MAP_NAME "AsteroidStation"
 
 #elif !defined(MAP_OVERRIDE)
 

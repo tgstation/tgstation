@@ -214,7 +214,7 @@ obj/item/device/flashlight/lamp/bananalamp
 		turn_off()
 		if(!fuel)
 			icon_state = "[initial(icon_state)]-empty"
-		processing_objects -= src
+		SSobj.processing -= src
 
 /obj/item/device/flashlight/flare/proc/turn_off()
 	on = 0
@@ -248,7 +248,7 @@ obj/item/device/flashlight/lamp/bananalamp
 		user.visible_message("<span class='notice'>[user] lights \the [src].</span>", "<span class='notice'>You light \the [src]!</span>")
 		force = on_damage
 		damtype = "fire"
-		processing_objects += src
+		SSobj.processing += src
 
 /obj/item/device/flashlight/flare/torch
 	name = "torch"
@@ -283,10 +283,10 @@ obj/item/device/flashlight/lamp/bananalamp
 
 /obj/item/device/flashlight/emp/New()
 		..()
-		processing_objects.Add(src)
+		SSobj.processing.Add(src)
 
 /obj/item/device/flashlight/emp/Destroy()
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 		..()
 
 /obj/item/device/flashlight/emp/process()
