@@ -1313,6 +1313,126 @@ proc/process_ghost_teleport_locs()
 
 
 
+
+//Hallways
+/area/hallway/primary/fore
+	name = "Fore Hallway"
+
+/area/hallway/primary/forecentral
+	name = "Fore Central Hallway"
+	icon_state = "hallfc"
+
+/area/hallway/primary/starboard
+	name = "Starboard Hallway"
+
+/area/hallway/primary/aft
+	name = "Aft Hallway"
+
+/area/hallway/primary/aftcentral
+	name = "Aft Central Hallway"
+	icon_state = "hallac"
+
+/area/hallway/primary/port
+	name = "Port Hallway"
+
+/area/hallway/primary/portcentral
+	name = "Port Central Hallway"
+	icon_state = "hallpc"
+
+
+
+
+//Maintenance
+/area/maintenance/brig
+	name = "Brig Maintenance"
+	icon_state = "brigmaint"
+
+/area/maintenance/eva
+	name = "EVA Maintenance"
+	icon_state = "evamaint"
+
+/area/maintenance/rd
+	name = "Research Division Maintenance"
+	icon_state = "rdmaint"
+
+/area/maintenance/cargo
+	name = "Cargo Bay Maintenance"
+	icon_state = "cargomaint"
+
+/area/maintenance/medbay
+	name = "Medbay Maintenance"
+	icon_state = "medmaint"
+
+/area/maintenance/bridge
+	name = "Bridge Maintenance"
+	icon_state = "bridgemaint"
+
+/area/maintenance/telecomm
+	name = "Telecommunications Maintenance"
+	icon_state = "tcommaint"
+
+/area/maintenance/bar
+	name = "Bar Maintenance"
+	icon_state = "barmaint"
+
+/area/maintenance/port_interior
+	name = "Port Interior Maintenance"
+	icon_state = "pimaint"
+
+/area/maintenance/aft_interior
+	name = "Aft Interior Maintenance"
+	icon_state = "aimaint"
+
+/area/maintenance/fore_interior
+	name = "Fore Interior Maintenance"
+	icon_state = "fimaint"
+
+/area/maintenance/recycler
+	name = "Recycler"
+	icon_state = "recycler"
+
+/area/maintenance/transit
+	icon_state = "transit"
+
+/area/maintenance/transit/fore_port
+	name = "Fore Port Transit Station"
+
+/area/maintenance/transit/fore_starboard
+	name = "Fore Starboard Transit Station"
+
+/area/maintenance/transit/aft_port
+	name = "Aft Port Transit Station"
+
+/area/maintenance/transit/aft_starboard
+	name = "Aft Starboard Transit Station"
+
+
+
+
+//Head Quarters
+/area/crew_quarters/cmo
+	name = "Chief Medical Officer's Quarters"
+	icon_state = "cmo"
+
+/area/crew_quarters/ce
+	name = "Chief Engineer's Quarters"
+	icon_state = "ce"
+
+/area/crew_quarters/rd
+	name = "Research Director's Quarters"
+	icon_state = "rd"
+
+/area/crew_quarters/hos
+	name = "Head of Security's Quarters"
+	icon_state = "hos"
+
+/area/crew_quarters/hop
+	name = "Head of Personnel's Quarters"
+	icon_state = "hop"
+
+
+
+
 // Away Missions
 /area/awaymission
 	name = "\improper Strange Location"
