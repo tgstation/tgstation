@@ -8,33 +8,34 @@
 
 /obj/item/weapon/gun/energy/stunrevolver
 	name = "stun revolver"
-	desc = "A high-tech revolver that fires internal, reusable stun cartidges in a revolving cylinder. Holds twice as much ammo as a standard taser."
+	desc = "A high-tech revolver that fires internal, reusable stun cartidges in a revolving cylinder. Holds twice as many electrodes as a standard taser."
 	icon_state = "stunrevolver"
 	origin_tech = "combat=3;materials=3;powerstorage=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode/gun)
-	can_flashlight = 1
+	can_flashlight = 0
 
 /obj/item/weapon/gun/energy/gun/advtaser
 	name = "hybrid taser"
-	desc = "A hybrid taser designed to fire both short-range high-power electrodes and long-range disabler beams."
+	desc = "A dual-mode taser designed to fire both short-range high-power electrodes and long-range disabler beams."
 	icon_state = "advtaser"
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/disabler)
+	cell_type = "/obj/item/weapon/stock_parts/cell/crap"
 	origin_tech = null
 
 /obj/item/weapon/gun/energy/gun/advtaser/cyborg
-	name = "hybrid taser"
-	desc = "An integrated taser that draws directly from a cyborg's power cell. The weapon contains a limiter to prevent the cyborg's power cell from overheating."
+	name = "cyborg taser"
+	desc = "An integrated hybrid taser that draws directly from a cyborg's power cell. The weapon contains a limiter to prevent the cyborg's power cell from overheating."
 	var/charge_tick = 0
 	var/recharge_time = 10
 	can_flashlight = 0
 
 /obj/item/weapon/gun/energy/gun/advtaser/cyborg/New()
 	..()
-	processing_objects.Add(src)
+	SSobj.processing.Add(src)
 
 
 /obj/item/weapon/gun/energy/gun/advtaser/cyborg/Destroy()
-	processing_objects.Remove(src)
+	SSobj.processing.Remove(src)
 	..()
 
 /obj/item/weapon/gun/energy/gun/advtaser/cyborg/process() //Every [recharge_time] ticks, recharge a shot for the cyborg

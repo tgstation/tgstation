@@ -1,8 +1,13 @@
-var/datum/controller/vote/vote = new()
+var/datum/subsystem/vote/SSvote
 
-/datum/controller/vote
+/datum/subsystem/vote
+	name = "Vote"
+	can_fire = 1
+	wait = 10
+	priority = -1
+
 	var/initiator = null
-	var/started_timeofday = null
+	var/started_time = null
 	var/time_remaining = 0
 	var/mode = null
 	var/question = null
@@ -10,44 +15,28 @@ var/datum/controller/vote/vote = new()
 	var/list/voted = list()
 	var/list/voting = list()
 
-/datum/controller/vote/New()
-	if(vote != src)
-		if(istype(vote))
-			del(vote)
-		vote = src
+/datum/subsystem/vote/New()
+	NEW_SS_GLOBAL(SSvote)
 
-/datum/controller/vote/proc/process()	//called by master_controller
+/datum/subsystem/vote/fire()	//called by master_controller
 	if(mode)
-		time_remaining = started_timeofday + config.vote_period
-		if(world.timeofday < started_timeofday)
-			time_remaining -= 864000
-		time_remaining = round((time_remaining - world.timeofday)/10)
+		time_remaining = round((started_time + config.vote_period - world.time)/10)
 
-		var/i=1
 		if(time_remaining < 0)
 			result()
-			while(i<=voting.len)
-				var/client/C = voting[i]
-				if(C)
-					C << browse(null,"window=vote;can_close=0")
-				i++
+			for(var/client/C in voting)
+				C << browse(null, "window=vote;can_close=0")
 			reset()
 		else
 			var/datum/browser/client_popup
-			while(i<=voting.len)
-				var/client/C = voting[i]
-				if(C)
-					//C << browse(vote.interface(C),"window=vote;can_close=0")
-					client_popup = new(C, "vote", "Voting Panel")
-					client_popup.set_window_options("can_close=0")
-					client_popup.set_content(vote.interface(C))
-					client_popup.open(0)
+			for(var/client/C in voting)
+				client_popup = new(C, "vote", "Voting Panel")
+				client_popup.set_window_options("can_close=0")
+				client_popup.set_content(interface(C))
+				client_popup.open(0)
 
-					i++
-				else
-					voting.Cut(i,i+1)
 
-/datum/controller/vote/proc/reset()
+/datum/subsystem/vote/proc/reset()
 	initiator = null
 	time_remaining = 0
 	mode = null
@@ -56,7 +45,7 @@ var/datum/controller/vote/vote = new()
 	voted.Cut()
 	voting.Cut()
 
-/datum/controller/vote/proc/get_result()
+/datum/subsystem/vote/proc/get_result()
 	//get the highest number of votes
 	var/greatest_votes = 0
 	var/total_votes = 0
@@ -86,7 +75,7 @@ var/datum/controller/vote/vote = new()
 				. += option
 	return .
 
-/datum/controller/vote/proc/announce_result()
+/datum/subsystem/vote/proc/announce_result()
 	var/list/winners = get_result()
 	var/text
 	if(winners.len > 0)
@@ -111,7 +100,7 @@ var/datum/controller/vote/vote = new()
 	world << "\n<font color='purple'>[text]</font>"
 	return .
 
-/datum/controller/vote/proc/result()
+/datum/subsystem/vote/proc/result()
 	. = announce_result()
 	var/restart = 0
 	if(.)
@@ -137,7 +126,7 @@ var/datum/controller/vote/vote = new()
 
 	return .
 
-/datum/controller/vote/proc/submit_vote(var/vote)
+/datum/subsystem/vote/proc/submit_vote(var/vote)
 	if(mode)
 		if(config.vote_no_dead && usr.stat == DEAD && !usr.client.holder)
 			return 0
@@ -148,13 +137,11 @@ var/datum/controller/vote/vote = new()
 				return vote
 	return 0
 
-/datum/controller/vote/proc/initiate_vote(var/vote_type, var/initiator_key)
+/datum/subsystem/vote/proc/initiate_vote(var/vote_type, var/initiator_key)
 	if(!mode)
-		if(started_timeofday != null)
-			var/next_allowed_timeofday = (started_timeofday + config.vote_delay)
-			if(world.timeofday < started_timeofday)
-				next_allowed_timeofday -= 864000
-			if(next_allowed_timeofday > world.timeofday)
+		if(started_time != null)
+			var/next_allowed_time = (started_time + config.vote_delay)
+			if(next_allowed_time > world.time)
 				return 0
 
 		reset()
@@ -171,7 +158,7 @@ var/datum/controller/vote/vote = new()
 			else			return 0
 		mode = vote_type
 		initiator = initiator_key
-		started_timeofday = world.timeofday
+		started_time = world.time
 		var/text = "[capitalize(mode)] vote started by [initiator]."
 		if(mode == "custom")
 			text += "\n[question]"
@@ -181,7 +168,7 @@ var/datum/controller/vote/vote = new()
 		return 1
 	return 0
 
-/datum/controller/vote/proc/interface(var/client/C)
+/datum/subsystem/vote/proc/interface(var/client/C)
 	if(!C)	return
 	var/admin = 0
 	var/trialmin = 0
@@ -229,7 +216,7 @@ var/datum/controller/vote/vote = new()
 	return .
 
 
-/datum/controller/vote/Topic(href,href_list[],hsrc)
+/datum/subsystem/vote/Topic(href,href_list[],hsrc)
 	if(!usr || !usr.client)	return	//not necessary but meh...just in-case somebody does something stupid
 	switch(href_list["vote"])
 		if("close")
@@ -263,9 +250,8 @@ var/datum/controller/vote/vote = new()
 	set category = "OOC"
 	set name = "Vote"
 
-	if(vote)
-		//src << browse(vote.interface(client),"window=vote;can_close=0")
-		var/datum/browser/popup = new(src, "vote", "Voting Panel")
-		popup.set_window_options("can_close=0")
-		popup.set_content(vote.interface(client))
-		popup.open(0)
+	var/datum/browser/popup = new(src, "vote", "Voting Panel")
+	popup.set_window_options("can_close=0")
+	popup.set_content(SSvote.interface(client))
+	popup.open(0)
+
