@@ -3598,7 +3598,7 @@ datum
 			var/slur_start = 65			//amount absorbed after which mob starts slurring
 			var/confused_start = 130	//amount absorbed after which mob starts confusing directions
 			var/blur_start = 260	//amount absorbed after which mob starts getting blurred vision
-			var/pass_out = 325	//amount absorbed after which mob starts passing out
+			var/pass_out = 450	//amount absorbed after which mob starts passing out
 
 			on_mob_life(var/mob/living/M as mob)
 
@@ -3647,7 +3647,7 @@ datum
 						if (!L)
 							H.adjustToxLoss(5)
 						else if(istype(L))
-							L.take_damage(0.1, 1)
+							L.take_damage(0.05, 1)
 						H.adjustToxLoss(0.1)
 				if(!holder)
 					holder = M.reagents
