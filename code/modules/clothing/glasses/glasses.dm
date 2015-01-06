@@ -117,22 +117,26 @@
 	set category = "Object"
 	set name = "Adjust welding goggles"
 	set src in usr
-
-	if(usr.canmove && !usr.stat && !usr.restrained())
+	var/mob/C = usr
+	if(!usr)
+		if(!ismob(loc))
+			return
+		C = loc
+	if(C.canmove && !C.stat && !C.restrained())
 		if(src.up)
 			src.up = !src.up
 			src.flags |= GLASSESCOVERSEYES
 			flags_inv |= HIDEEYES
 			icon_state = initial(icon_state)
-			usr << "You flip the [src] down to protect your eyes."
+			C << "You flip the [src] down to protect your eyes."
 		else
 			src.up = !src.up
 			src.flags &= ~HEADCOVERSEYES
 			flags_inv &= ~HIDEEYES
 			icon_state = "[initial(icon_state)]up"
-			usr << "You push the [src] up out of your face."
+			C << "You push the [src] up out of your face."
 
-		usr.update_inv_glasses()
+		C.update_inv_glasses()
 
 /obj/item/clothing/glasses/welding/superior
 	name = "superior welding goggles"

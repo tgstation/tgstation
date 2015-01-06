@@ -464,6 +464,8 @@ datum
 				return
 
 			add_reagent(var/reagent, var/amount, var/list/data=null)
+				if(!my_atom)
+					return 0
 				if(!isnum(amount)) return 1
 				update_total()
 				if(total_volume + amount > maximum_volume)

@@ -373,7 +373,7 @@
 			if(A && A.anti_ethereal)
 				mob << "<span class='warning'>A strong force repels you from this area!</span>"
 			else
-				if(T.holy && isobserver(mob) && ((mob.invisibility == 0) || (ticker.mode && (mob.mind in ticker.mode.cult))))
+				if((T && T.holy) && isobserver(mob) && ((mob.invisibility == 0) || (ticker.mode && (mob.mind in ticker.mode.cult))))
 					mob << "<span class='warning'>You cannot get past holy grounds while you are in this plane of existence!</span>"
 				else
 					mob.loc = get_step(mob, direct)

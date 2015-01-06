@@ -3621,7 +3621,8 @@ datum
 				src.data++
 
 				var/d = data
-
+				if(!holder)
+					del(src)
 				// make all the beverages work together
 				for(var/datum/reagent/ethanol/A in holder.reagent_list)
 					if(isnum(A.data)) d += A.data
