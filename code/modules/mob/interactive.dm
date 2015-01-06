@@ -424,7 +424,7 @@
 	var/turf/D = get_step(src,dir)
 	if(D)
 		if(!D.density)
-			walk_to(src,T)
+			walk_to(src,T,0,5)
 			doing = doing & ~TRAVEL
 			return 1
 		else
@@ -539,10 +539,10 @@
 			if(shift)
 				if(src.dir == NORTH || SOUTH)
 					var/towalk = pick(EAST,WEST)
-					walk_to(src,get_step(src,towalk))
+					walk_to(src,get_step(src,towalk),0,5)
 				else
 					var/towalk = pick(NORTH,SOUTH)
-					walk_to(src,get_step(src,towalk))
+					walk_to(src,get_step(src,towalk),0,5)
 
 /mob/living/carbon/human/interactive/proc/combat(obj)
 	set background = 1
@@ -602,7 +602,8 @@
 							if(Adjacent(TARGET))
 								M.attack_hand(src)
 								sleep(1)
-			else if(M.health <= 1 || !(M in range(14,src)))
+				timeout++
+			else if(timeout >= 10 || M.health <= 1 || !(M in range(14,src)))
 				doing = doing & ~FIGHTING
 				timeout = 0
 				TARGET = null
