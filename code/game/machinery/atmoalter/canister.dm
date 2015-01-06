@@ -310,6 +310,10 @@ Release Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?sr
 					if(air_contents.toxins > 0)
 						message_admins("[key_name(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) opened a canister that contains plasma! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
 						log_admin("[key_name(usr)] opened a canister that contains plasma at [x], [y], [z]")
+					var/datum/gas/sleeping_agent = locate(/datum/gas/sleeping_agent) in air_contents.trace_gases
+					if(sleeping_agent && (sleeping_agent.moles > 1))
+						message_admins("[key_name(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) opened a canister that contains N2O! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
+						log_admin("[key_name(usr)] opened a canister that contains N2O at [x], [y], [z]")
 			investigate_log(logmsg, "atmos")
 			release_log += logmsg
 			valve_open = !valve_open
