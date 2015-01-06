@@ -30,6 +30,15 @@
 	if(new_holder && istype(new_holder))
 		holder = new_holder
 
+/datum/dna/proc/transfer_identity(mob/living/carbon/destination)
+	if(check_dna_integrity(destination))
+		destination.dna.unique_enzymes = unique_enzymes
+		destination.dna.uni_identity = uni_identity
+		destination.dna.blood_type = blood_type
+		destination.dna.species = species
+		destination.dna.real_name = real_name
+		destination.dna.mutations = mutations
+
 /datum/dna/proc/add_mutation(mutation_name)
 	var/datum/mutation/human/HM = mutations_list[mutation_name]
 	HM.on_acquiring(holder)
@@ -79,7 +88,7 @@
 	for(var/datum/mutation/human/A in good_mutations + bad_mutations + not_good_mutations)
 		if(A.name == RACEMUT && istype(character,/mob/living/carbon/monkey))
 			sorting[A.dna_block] = num2hex(A.lowest_value + rand(0, 256 * 6), DNA_BLOCK_SIZE)
-			character.dna.mutations.Add(mutations_list[RACEMUT])
+			character.dna.mutations.Add(A)
 		else
 			sorting[A.dna_block] = random_string(DNA_BLOCK_SIZE, L)
 
@@ -160,6 +169,7 @@
 
 /proc/create_dna(mob/living/carbon/C, datum/species/S) //don't use this unless you're about to use hardset_dna or ready_dna
 	C.dna = new /datum/dna(C)
+	C.dna.holder = C
 	if(S)	C.dna.species = new S()	// do not remove; this is here to prevent runtimes
 
 /////////////////////////// DNA DATUM
@@ -194,9 +204,8 @@
 /proc/randmut(mob/living/carbon/M, list/candidates, difficulty = 2)
 	if(!check_dna_integrity(M))
 		return
-	var/num = pick(candidates)
-	var/newdna = setblock(M.dna.struc_enzymes, num, construct_block(difficulty,difficulty))
-	M.dna.struc_enzymes = newdna
+	var/datum/mutation/human/num = pick(candidates)
+	num.force_give(M)
 	return
 
 /proc/randmutb(mob/living/carbon/M)
@@ -219,6 +228,7 @@
 /proc/clean_dna(mob/living/carbon/M)
 	if(!check_dna_integrity(M))
 		return
+	M.dna.remove_all_mutations()
 	M.dna.struc_enzymes = M.dna.generate_struc_enzymes(M) // Give clean DNA.
 
 /proc/clean_randmut(mob/living/carbon/M, list/candidates, difficulty = 2)
@@ -262,7 +272,7 @@
 		H.update_hair()
 	return 1
 
-/proc/domutcheck(mob/living/carbon/M, connected, inj)
+/proc/domutcheck(mob/living/carbon/M)
 	if(!check_dna_integrity(M))
 		return 0
 

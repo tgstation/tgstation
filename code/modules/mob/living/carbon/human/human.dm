@@ -27,7 +27,6 @@
 	internal_organs += new /obj/item/organ/brain
 
 	// for spawned humans; overwritten by other code
-	create_dna(src)
 	ready_dna(src)
 	randomize_human(src)
 
