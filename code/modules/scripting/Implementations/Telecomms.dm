@@ -190,6 +190,11 @@
 		interpreter.SetProc("randseed", /proc/n_randseed)
 		interpreter.SetProc("min", /proc/n_min)
 		interpreter.SetProc("max", /proc/n_max)
+		interpreter.SetProc("sin", /proc/n_sin)
+		interpreter.SetProc("cos", /proc/n_cos)
+		interpreter.SetProc("asin", /proc/n_asin)
+		interpreter.SetProc("acos", /proc/n_acos)
+		interpreter.SetProc("log", /proc/n_log)
 
 		// Time
 		interpreter.SetProc("time", /proc/n_time)

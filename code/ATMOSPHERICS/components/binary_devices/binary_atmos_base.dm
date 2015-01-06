@@ -17,6 +17,14 @@
 
 /obj/machinery/atmospherics/binary/New()
 	..()
+
+	air1 = new
+	air2 = new
+
+	air1.volume = 200
+	air2.volume = 200
+
+/obj/machinery/atmospherics/binary/SetInitDirections()
 	switch(dir)
 		if(NORTH)
 			initialize_directions = NORTH|SOUTH
@@ -26,11 +34,6 @@
 			initialize_directions = EAST|WEST
 		if(WEST)
 			initialize_directions = EAST|WEST
-	air1 = new
-	air2 = new
-
-	air1.volume = 200
-	air2.volume = 200
 
 //Separate this because we don't need to update pipe icons if we just are going to change the state
 /obj/machinery/atmospherics/binary/proc/update_icon_nopipes()

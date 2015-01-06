@@ -371,10 +371,9 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 				hud_used.action_intent.icon_state = "help"
 
 proc/is_blind(A)
-	if(istype(A, /mob/living/carbon))
-		var/mob/living/carbon/C = A
-		if(C.blinded != null)
-			return 1
+	if(ismob(A))
+		var/mob/B = A
+		return	B.eye_blind
 	return 0
 
 proc/is_special_character(mob/M) // returns 1 for special characters and 2 for heroes of gamemode //moved out of admins.dm because things other than admin procs were calling this.

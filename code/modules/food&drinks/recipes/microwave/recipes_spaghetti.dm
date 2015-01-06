@@ -3,7 +3,7 @@
 
 ////////////////////////////////////////////////SPAGHETTI////////////////////////////////////////////////
 
-/datum/recipe/spaghetti
+/datum/recipe/spaghetti/plain
 	reagents = list("flour" = 5)
 	result= /obj/item/weapon/reagent_containers/food/snacks/spaghetti
 
@@ -54,6 +54,6 @@
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/eggplant
+		/obj/item/weapon/reagent_containers/food/snacks/grown/eggplant,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/eggplantparm

@@ -29,6 +29,12 @@
 /obj/structure/grille/attack_paw(mob/user as mob)
 	attack_hand(user)
 
+/obj/structure/grille/attack_hulk(mob/living/carbon/human/user)
+	..(user, 1)
+	shock(user, 70)
+	health -= 5
+	healthcheck()
+
 /obj/structure/grille/attack_hand(mob/living/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
@@ -39,8 +45,6 @@
 
 	if(shock(user, 70))
 		return
-	if(HULK in user.mutations)
-		health -= 5
 	else
 		health -= rand(1,2)
 	healthcheck()
@@ -192,6 +196,8 @@
 		health -= W.force * 0.1
 	else if(!shock(user, 70))
 		switch(W.damtype)
+			if(STAMINA)
+				return
 			if(BURN)
 				playsound(loc, 'sound/items/welder.ogg', 80, 1)
 			else

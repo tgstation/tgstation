@@ -88,7 +88,11 @@
 				GiveTarget(watching)
 
 /mob/living/simple_animal/hostile/statue/AttackingTarget()
-	if(!can_be_seen())
+	if(can_be_seen())
+		if(client)
+			src << "<span class='warning'>You cannot attack, there are eyes on you!</span>"
+			return
+	else
 		..()
 
 /mob/living/simple_animal/hostile/statue/DestroySurroundings()
@@ -98,13 +102,6 @@
 /mob/living/simple_animal/hostile/statue/face_atom()
 	if(!can_be_seen())
 		..()
-
-/mob/living/simple_animal/hostile/statue/UnarmedAttack()
-	if(can_be_seen())
-		if(client)
-			src << "<span class='warning'>You cannot attack, there are eyes on you!</span>"
-		return
-	..()
 
 /mob/living/simple_animal/hostile/statue/proc/can_be_seen(var/turf/destination)
 	if(!cannot_be_seen)
@@ -127,7 +124,7 @@
 	for(var/atom/check in check_list)
 		for(var/mob/living/M in viewers(world.view + 1, check) - src)
 			if(M.client && CanAttack(M) && !issilicon(M))
-				if(!M.blinded && !(sdisabilities & BLIND))
+				if(!M.eye_blind)
 					return M
 	return null
 
