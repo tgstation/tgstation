@@ -277,7 +277,7 @@
 	if(exp == SCANTYPE_COLD)
 		visible_message("<span class='notice'>[src] lowers [exp_on]'s temperature.</span>")
 		if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
-			visible_message("<span class='notice'>[src] malfunctions, shattering [exp_on] and releasing a dangerous cloud of coolant!.</span>")
+			visible_message("<span class='notice'>[src] malfunctions, shattering [exp_on] and releasing a dangerous cloud of coolant!</span>")
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = src
 			R.add_reagent("frostoil", 50)
