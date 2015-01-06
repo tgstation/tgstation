@@ -35,9 +35,9 @@ var/datum/subsystem/events/SSevent
 /datum/subsystem/events/fire()
 	checkEvent()
 	var/i=1
-	for(var/thing in running)
-		if(thing)
-			thing:process()
+	for(var/event in running)
+		if(event)
+			event:process()
 			++i
 			continue
 		running.Cut(i,i+1)
