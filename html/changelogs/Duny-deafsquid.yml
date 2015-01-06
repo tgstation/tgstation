@@ -1,0 +1,9 @@
+author: Duny
+delete-after: True
+changes: 
+  - tweak: Deathsquad now has its own proper rig. They no longer get to wear some shitty recolored swat armor.
+  - rscadd: Added deathsquad magboots, featuring no slowdown and proper emo colors.
+  - tweak: Tweaked bomb, bio, rad armor values to make them stronger. Bio is now at 100 like the rest of the rigs.
+  - tweak: Helmet and suit both feature heat resistance on par with the atmos hardsuit. The helmet also has a built-in light.
+  - tweak: Their gloves are now insulated.
+  - tweak: They now no longer spawn with any flashbangs, or flashlights. Their shitty oxygen tank is replaced by a double emergency oxygen tank and they now get an eshield. All members now spawn with a pinpointer instead of just the leader. The leader still has the disk.
