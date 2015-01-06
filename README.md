@@ -125,7 +125,9 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ##LICENSE
 
-All code is under a GNU AGPL v3 license (http://www.gnu.org/licenses/agpl-3.0.html),
+All code after commit 333c566b88108de218d882840e61928a9b759d8f is licensed under GNU AGPL v3 (http://www.gnu.org/licenses/agpl-3.0.html).
+All code before commit 333c566b88108de218d882840e61928a9b759d8f is licensed under GNU GPL v3 (https://www.gnu.org/licenses/gpl-3.0.html).
+
 including tools unless their readme specifies otherwise. See LICENSE.txt for more details.
 All content including icons and sound is under a Creative Commons 3.0 BY-SA
 license (http://creativecommons.org/licenses/by-sa/3.0/).
