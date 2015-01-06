@@ -226,7 +226,7 @@
 		visible_message("<span class='notice'>[src] fills it's chamber with gas, [exp_on] included.</span>")
 		if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='notice'>[src] destroys [exp_on], leaking dangerous gas!.</span>")
-			var/list/chems = list("carbon","radium","toxin","condensedcapsaicin","mushroomhallucinogen","space_drugs","ethanol","pacid")
+			var/list/chems = list("carbon","radium","toxin","condensedcapsaicin","mushroomhallucinogen","space_drugs","ethanol","beepskysmash")
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = src
 			R.add_reagent(pick(chems), 50)
