@@ -20,9 +20,9 @@ var/datum/subsystem/nano/SSnano
 
 /datum/subsystem/nano/fire()
 	var/i=1
-	for(var/thing in SSnano.processing_uis)
-		if(thing)
-			var/datum/nanoui/ui = thing
+	for(var/nano_ui in SSnano.processing_uis)
+		if(nano_ui)
+			var/datum/nanoui/ui = nano_ui
 			if(ui.src_object && ui.user)
 				ui.process()
 				++i
