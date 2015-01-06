@@ -28,9 +28,9 @@ var/datum/subsystem/pipenets/SSpipe
 
 /datum/subsystem/pipenets/fire()
 	var/i=1
-	for(var/thing in networks)
-		if(thing)
-			thing:process()
+	for(var/pipe in networks)
+		if(pipe)
+			pipe:process()
 			++i
 			continue
 		networks.Cut(i, i+1)
