@@ -167,15 +167,11 @@
 		src.amount-=amount
 	else
 		return 0
+	. = 1
 	if (src.amount<=0)
-		message_admins("watafak")
-		var/oldsrc = src
-		//src = null //dont kill proc after del()
 		if(usr)
-			usr.before_take_item(oldsrc)
-		qdel(oldsrc)
-		qdel(src)
-	return 1
+			usr.before_take_item(src)
+		spawn qdel(src)
 
 /obj/item/stack/proc/add_to_stacks(mob/usr as mob)
 	var/obj/item/stack/oldsrc = src
