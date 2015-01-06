@@ -90,7 +90,10 @@
 
 		// Signal data
 
-		interpreter.SetVar("$content", 	html_decode(signal.data["message"]))
+		var/italicized = 0
+		if (copytext(signal.data["message"],1,4)=="<i>")
+			italicized = 1 // We need to mark if the message is italicized so that italics can be replaced later.
+		interpreter.SetVar("$content", strip_html_properly(signal.data["message"])) // Strip any html present in the message
 		interpreter.SetVar("$freq"   , 	signal.frequency)
 		interpreter.SetVar("$source" , 	signal.data["name"])
 		interpreter.SetVar("$job"    , 	signal.data["job"])
@@ -208,6 +211,9 @@
 		/* sanitize EVERYTHING. fucking players can't be trusted with SHIT */
 
 		signal.data["message"] 	= interpreter.GetCleanVar("$content", signal.data["message"])
+		if (italicized)
+			// If the original message was italicized, we need to italicize it again.
+			signal.data["message"] = "<i>" + signal.data["message"] + "</i>";
 		signal.frequency 		= interpreter.GetCleanVar("$freq", signal.frequency)
 
 		var/setname = interpreter.GetCleanVar("$source", signal.data["name"])
