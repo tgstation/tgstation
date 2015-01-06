@@ -402,8 +402,10 @@
 	domutcheck(src.occupant) //Waiting until they're out before possible monkeyizing.
 	src.occupant.add_side_effect("Bad Stomach") // Give them an extra side-effect for free.
 	src.occupant = null
-
-	src.biomass -= CLONE_BIOMASS/resource_efficiency //Improve parts to use less biomass
+	if(biomass > 0)
+		src.biomass -= CLONE_BIOMASS/resource_efficiency //Improve parts to use less biomass
+	else
+		biomass = 0
 
 	return
 
