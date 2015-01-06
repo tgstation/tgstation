@@ -370,7 +370,7 @@
 		if(1)
 			var/turf/T = get_step(mob, direct)
 			var/area/A = get_area(T)
-			if(A && A.anti_ethereal)
+			if(A && A.anti_ethereal && !isAdminGhost(mob))
 				mob << "<span class='warning'>A strong force repels you from this area!</span>"
 			else
 				if(T.holy && isobserver(mob) && ((mob.invisibility == 0) || (ticker.mode && (mob.mind in ticker.mode.cult))))
