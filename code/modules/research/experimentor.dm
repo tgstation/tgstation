@@ -47,7 +47,7 @@
 /obj/machinery/r_n_d/experimentor/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/destructive_analyzer(src)
+	component_parts += new /obj/item/weapon/circuitboard/experimentor(src)
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
