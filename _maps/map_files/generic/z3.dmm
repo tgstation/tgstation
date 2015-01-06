@@ -242,7 +242,7 @@
 "eH" = (/obj/item/weapon/storage/toolbox/electrical{pixel_x = 1; pixel_y = -1},/turf/simulated/floor/plasteel{dir = 10; icon_state = "warning"},/area/tcommsat/chamber)
 "eI" = (/turf/simulated/floor/plasteel{dir = 2; icon_state = "warning"},/area/tcommsat/chamber)
 "eJ" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor/plasteel{dir = 6; icon_state = "warning"},/area/tcommsat/chamber)
-"eK" = (/obj/docking_port/stationary{dheight = 9; dir = 2; dwidth = 5; height = 22; id = "syndicate_z3"; name = "near abandoned satellite"; turf_type = /turf/unsimulated/floor{icon = 'icons/turf/snow.dmi'; icon_state = "snow"}; width = 18},/turf/space,/area/space)
+"eK" = (/obj/docking_port/stationary{dheight = 9; dir = 2; dwidth = 5; height = 22; id = "syndicate_z3"; name = "near abandoned satellite"; turf_type = /turf/space; width = 18},/turf/space,/area/space)
 "eL" = (/obj/structure/computerframe,/turf/simulated/floor/plating,/area/tcommsat/chamber)
 "eM" = (/obj/machinery/teleport/station,/turf/simulated/floor/plating,/area/tcommsat/chamber)
 "eN" = (/obj/machinery/teleport/hub,/turf/simulated/floor/plating,/area/tcommsat/chamber)
@@ -530,3 +530,4 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}
+

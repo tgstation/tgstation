@@ -4,7 +4,7 @@
 	req_access = list(access_syndicate)
 
 	shuttleId = "syndicate"
-	possible_destinations = "syndicate_away;syndicate_mining;syndicate_commsat;home_ne;home_nw;home_n;home_se;home_sw;home_s"
+	possible_destinations = "syndicate_away;syndicate_z5;syndicate_z3;syndicate_z4;syndicate_ne;syndicate_nw;syndicate_n;syndicate_se;syndicate_sw;syndicate_s"
 
 /obj/machinery/computer/shuttle/syndicate/recall
 	name = "syndicate shuttle recall terminal"
