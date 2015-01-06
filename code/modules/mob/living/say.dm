@@ -210,7 +210,7 @@ var/list/department_radio_keys = list(
 	if(!message)
 		return 0
 
-	if(sdisabilities & MUTE)
+	if(disabilities & MUTE)
 		return 0
 
 	if(is_muzzled())
@@ -260,6 +260,8 @@ var/list/department_radio_keys = list(
 
 	if(stuttering)
 		message = stutter(message)
+
+	message = capitalize(message)
 
 	return message
 

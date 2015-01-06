@@ -104,17 +104,21 @@
 	updatehealth()
 	return
 
+/mob/living/carbon/alien/larva/attack_hulk(mob/living/carbon/human/user)
+	if(user.a_intent == "harm")
+		..(user, 1)
+		adjustBruteLoss(5 + rand(1,9))
+		Paralyse(1)
+		spawn()
+			step_away(src,user,15)
+			sleep(1)
+			step_away(src,user,15)
+		return 1
+
 /mob/living/carbon/alien/larva/attack_hand(mob/living/carbon/human/M as mob)
 	if(..())
 		var/damage = rand(1, 9)
 		if (prob(90))
-			if (HULK in M.mutations)
-				damage += 5
-				spawn(0)
-					Paralyse(1)
-					step_away(src,M,15)
-					sleep(3)
-					step_away(src,M,15)
 			playsound(loc, "punch", 25, 1, -1)
 			add_logs(M, src, "attacked", admin=0)
 			visible_message("<span class='danger'>[M] has kicked [src]!</span>", \

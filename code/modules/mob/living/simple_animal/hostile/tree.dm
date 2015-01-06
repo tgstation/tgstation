@@ -43,12 +43,12 @@
 		emote("me", 1, "growls at [.].")
 
 /mob/living/simple_animal/hostile/tree/AttackingTarget()
-	. =..()
-	var/mob/living/L = .
-	if(istype(L))
+	..()
+	if(isliving(target))
+		var/mob/living/L = target
 		if(prob(15))
 			L.Weaken(3)
-			L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
+			L.visible_message("<span class='danger'>\The [src] knocks down \the [L]!</span>")
 
 /mob/living/simple_animal/hostile/tree/Die()
 	..()

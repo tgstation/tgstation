@@ -6,7 +6,7 @@
 "af" = (/turf/simulated/floor/plating/airless,/area/AIsattele)
 "ag" = (/obj/item/weapon/shard{icon_state = "medium"},/turf/simulated/floor/plating/airless,/area/AIsattele)
 "ah" = (/obj/structure/cable,/turf/simulated/floor/plating/airless,/area/AIsattele)
-"ai" = (/obj/structure/rack,/obj/item/clothing/gloves/yellow,/turf/simulated/floor/plating/airless,/area/AIsattele)
+"ai" = (/obj/structure/rack,/obj/item/clothing/gloves/color/yellow,/turf/simulated/floor/plating/airless,/area/AIsattele)
 "aj" = (/obj/structure/girder,/turf/simulated/floor/plating/airless,/area/AIsattele)
 "ak" = (/obj/item/weapon/stock_parts/cell,/turf/simulated/floor/plating/airless,/area/AIsattele)
 "al" = (/obj/structure/grille{density = 0; icon_state = "brokengrille"},/turf/simulated/floor/plating/airless,/area/AIsattele)

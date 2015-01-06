@@ -45,6 +45,8 @@ var/list/admin_datums = list()
 		return 1 //they have no rights
 	if(rank.rights == 65535)
 		return 1 //we have all the rights
+	if(src == other)
+		return 1 //you always have more rights than yourself
 	if(rank.rights != other.rank.rights)
 		if( (rank.rights & other.rank.rights) == other.rank.rights )
 			return 1 //we have all the rights they have and more

@@ -1,5 +1,3 @@
-var/global/list/datum/pipeline/pipe_networks = list()
-
 /datum/pipeline
 	var/datum/gas_mixture/air
 	var/list/datum/gas_mixture/other_airs = list()
@@ -12,10 +10,10 @@ var/global/list/datum/pipeline/pipe_networks = list()
 	var/alert_pressure = 0
 
 /datum/pipeline/New()
-	pipe_networks += src
+	SSpipe.networks += src
 
 /datum/pipeline/Destroy()
-	pipe_networks -= src
+	SSpipe.networks -= src
 	if(air && air.volume)
 		temporarily_store_air()
 	for(var/obj/machinery/atmospherics/pipe/P in members)

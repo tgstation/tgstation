@@ -17,6 +17,7 @@
 	var/access_janitor = 0
 //	var/access_flora = 0
 	var/access_reagent_scanner = 0
+	var/access_newscaster = 0
 	var/access_remote_door = 0 //Control some blast doors remotely!!
 	var/remote_door_id = ""
 	var/access_status_display = 0
@@ -32,6 +33,7 @@
 	var/message1	// used for status_displays
 	var/message2
 	var/list/stored_data = list()
+	var/current_channel
 
 /obj/item/weapon/cartridge/engineering
 	name = "\improper Power-ON cartridge"
@@ -115,6 +117,12 @@
 	icon_state = "cart-mi"
 	access_mime = 1
 	var/mime_charges = 5
+
+/obj/item/weapon/cartridge/librarian
+	name = "\improper Lib-Tweet cartridge"
+	icon_state = "cart-s"
+	access_newscaster = 1
+
 /*
 /obj/item/weapon/cartridge/botanist
 	name = "\improper Green Thumb v4.20 cartridge"
@@ -553,15 +561,29 @@ Code:
 			menu = "<h4><img src=pda_crate.png> Supply Record Interlink</h4>"
 
 			menu += "<BR><B>Supply shuttle</B><BR>"
-			menu += "Location: [supply_shuttle.moving ? "Moving to station ([supply_shuttle.eta] Mins.)":supply_shuttle.at_station ? "Station":"Dock"]<BR>"
-			menu += "Current approved orders: <BR><ol>"
-			for(var/S in supply_shuttle.shoppinglist)
+			menu += "Location: "
+			switch(SSshuttle.supply.mode)
+				if(SHUTTLE_CALL)
+					menu += "Moving to "
+					if(SSshuttle.supply.z != ZLEVEL_STATION)
+						menu += "station"
+					else
+						menu += "centcomm"
+					menu += " ([SSshuttle.supply.timeLeft(600)] Mins)"
+				else
+					menu += "At "
+					if(SSshuttle.supply.z != ZLEVEL_STATION)
+						menu += "centcomm"
+					else
+						menu += "station"
+			menu += "<BR>Current approved orders: <BR><ol>"
+			for(var/S in SSshuttle.shoppinglist)
 				var/datum/supply_order/SO = S
 				menu += "<li>#[SO.ordernum] - [SO.object.name] approved by [SO.orderedby] [SO.comment ? "([SO.comment])":""]</li>"
 			menu += "</ol>"
 
 			menu += "Current requests: <BR><ol>"
-			for(var/S in supply_shuttle.requestlist)
+			for(var/S in SSshuttle.requestlist)
 				var/datum/supply_order/SO = S
 				menu += "<li>#[SO.ordernum] - [SO.object.name] requested by [SO.orderedby]</li>"
 			menu += "</ol><font size=\"-3\">Upgrade NOW to Space Parts & Space Vendors PLUS for full remote order control and inventory management."
@@ -700,6 +722,20 @@ Code:
 			var/obj/item/radio/integrated/medbot/SC = radio
 			bot_control(SC)
 
+		if (53) // Newscaster
+			menu = "<h4><img src=pda_notes.png> Newscaster Access</h4>"
+			menu += "<br> Current Newsfeed: <A href='byond://?src=\ref[src];choice=Newscaster Switch Channel'>[current_channel ? current_channel : "None"]</a> <br>"
+			var/datum/feed_channel/current
+			for(var/datum/feed_channel/chan in news_network.network_channels)
+				if (chan.channel_name == current_channel)
+					current = chan
+			if(!current)
+				menu += "<h5> ERROR : NO CHANNEL FOUND </h5>"
+				return
+			for(var/datum/feed_message/msg in current.messages)
+				menu +="-[msg.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[msg.author]</FONT>\]</FONT><BR>"
+			menu += "<br> <A href='byond://?src=\ref[src];choice=Newscaster Message'>Post Message</a>"
+
 /obj/item/weapon/cartridge/Topic(href, href_list)
 	..()
 
@@ -761,6 +797,33 @@ Code:
 			powmonitor = powermonitors[pnum]
 			loc:mode = 433
 			mode = 433
+
+		if("Newscaster Access")
+			mode = 53
+
+		if("Newscaster Message")
+			var/obj/item/device/pda/pda = loc
+			var/pda_owner_name = pda.id ? "[pda.id.registered_name] ([pda.id.assignment])" : "Unknown"
+			var/message = pda.msg_input()
+			var/datum/feed_channel/current
+			for(var/datum/feed_channel/chan in news_network.network_channels)
+				if (chan.channel_name == current_channel)
+					current = chan
+			if(current.locked && current.author != pda_owner_name)
+				pda.cart += "<h5> ERROR : NOT AUTHORIZED [pda.id ? "" : "- ID SLOT EMPTY"] </h5>"
+				pda.Topic(null,list("choice"="Refresh"))
+				return
+			news_network.SubmitArticle(message,pda.owner,current_channel)
+			pda.Topic(null,list("choice"=num2text(mode)))
+			return
+
+		if("Newscaster Switch Channel")
+			var/obj/item/device/pda/pda = loc
+			current_channel = pda.msg_input()
+			pda.Topic(null,list("choice"=num2text(mode)))
+			return
+
+
 
 	generate_menu()
 	print_to_host(menu)

@@ -13,7 +13,7 @@ var/sound/admin_sound
 	log_admin("[key_name(src)] played sound [S]")
 	message_admins("[key_name_admin(src)] played sound [S]")
 
-	if(events.holiday == "April Fool's Day")
+	if(SSevent.holiday == "April Fool's Day")
 		admin_sound.frequency = pick(0.5, 0.7, 0.8, 0.85, 0.9, 0.95, 1.1, 1.2, 1.4, 1.6, 2.0, 2.5)
 		src << "You feel the Honkmother messing with your song..."
 
