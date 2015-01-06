@@ -79,7 +79,18 @@
 #define STAGE_FOUR 7
 #define STAGE_FIVE 9
 
+//zlevel defines, can be overridden for different maps in the appropriate _maps file.
+#define ZLEVEL_SPACEMAX 7
+#define ZLEVEL_SPACEMIN 3
+#define ZLEVEL_CENTCOM 2
+#define ZLEVEL_STATION 1
 
+//ticker.current_state values
+#define GAME_STATE_STARTUP		0
+#define GAME_STATE_PREGAME		1
+#define GAME_STATE_SETTING_UP	2
+#define GAME_STATE_PLAYING		3
+#define GAME_STATE_FINISHED		4
 //SOUND:
 #define SOUND_MINIMUM_PRESSURE 10
 #define FALLOFF_SOUNDS	1

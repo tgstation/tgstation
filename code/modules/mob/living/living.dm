@@ -1,8 +1,12 @@
+/* I am informed this was added by Giacom to reduce mob-stacking in escape pods.
+It's sorta problematic atm due to the shuttle changes I am trying to do
+Sorry Giacom. Please don't be mad :(
 /mob/living/Life()
 	..()
-	var/area/cur_area = get_area(loc)
-	if(cur_area)
-		cur_area.mob_activate(src)
+	var/area/A = get_area(loc)
+	if(A && A.push_dir)
+		push_mob_back(src, A.push_dir)
+*/
 
 /mob/living/Destroy()
 //	if(mind)

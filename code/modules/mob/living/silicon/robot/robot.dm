@@ -292,10 +292,16 @@
 	..()
 	statpanel("Status")
 	if (client.statpanel == "Status")
-		if(emergency_shuttle.online && emergency_shuttle.location < 2)
-			var/timeleft = emergency_shuttle.timeleft()
-			if (timeleft)
-				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+		var/ETA
+		switch(SSshuttle.emergency.mode)
+			if(SHUTTLE_CALL)
+				ETA = "ETA"
+			if(SHUTTLE_DOCKED)
+				ETA = "ETD"
+		if(ETA)
+			var/timeleft = SSshuttle.emergency.timeLeft()
+			stat(null, "[ETA]-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+
 
 		if(ticker.mode.name == "AI malfunction")
 			var/datum/game_mode/malfunction/malf = ticker.mode

@@ -339,7 +339,7 @@
 						C.upgradeMotion()
 						upgraded = 1
 						// Add it to machines that process
-						machines |= C
+						SSmachine.processing |= C//machines |= C
 
 					if(upgraded)
 						UC.uses --

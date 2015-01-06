@@ -664,30 +664,30 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle19"
 
-	attack(mob/living/carbon/slime/M as mob, mob/user as mob)
-		if(!istype(M, /mob/living/carbon/slime/))//If target is not a slime.
-			user << "<span class='warning'> The potion only works on slimes!</span>"
-			return ..()
-		if(M.stat)
-			user << "<span class='warning'> The slime is dead!</span>"
-			return..()
-		if(M.mind)
-			user << "<span class='warning'> The slime resists!</span>"
-			return ..()
-		var/mob/living/simple_animal/adultslime/pet = new /mob/living/simple_animal/adultslime(M.loc)
-		pet.icon_state = "[M.colour] adult slime"
-		pet.icon_living = "[M.colour] adult slime"
-		pet.icon_dead = "[M.colour] baby slime dead"
-		pet.colour = "[M.colour]"
-		user <<"You feed the slime the potion, removing it's powers and calming it."
-		qdel(M)
-		var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
+/obj/item/weapon/slimepotion2/attack(mob/living/carbon/slime/M as mob, mob/user as mob)
+	if(!istype(M, /mob/living/carbon/slime/))//If target is not a slime.
+		user << "<span class='warning'> The potion only works on slimes!</span>"
+		return ..()
+	if(M.stat)
+		user << "<span class='warning'> The slime is dead!</span>"
+		return..()
+	if(M.mind)
+		user << "<span class='warning'> The slime resists!</span>"
+		return ..()
+	var/mob/living/simple_animal/slime/adult/pet = new /mob/living/simple_animal/slime/adult(M.loc)
+	pet.icon_state = "[M.colour] adult slime"
+	pet.icon_living = "[M.colour] adult slime"
+	pet.icon_dead = "[M.colour] baby slime dead"
+	pet.colour = "[M.colour]"
+	user <<"You feed the slime the potion, removing it's powers and calming it."
+	qdel(M)
+	var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
 
-		if (!newname)
-			newname = "pet slime"
-		pet.name = newname
-		pet.real_name = newname
-		qdel(src)
+	if (!newname)
+		newname = "pet slime"
+	pet.name = newname
+	pet.real_name = newname
+	qdel(src)
 
 
 /obj/item/weapon/slimesteroid
@@ -805,7 +805,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 	New()
 		..()
-		processing_objects.Add(src)
+		SSobj.processing.Add(src)
 
 /obj/effect/golemrune/process()
 	var/mob/dead/observer/ghost
@@ -917,11 +917,11 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Grow()
 	grown = 1
 	icon_state = "slime egg-grown"
-	processing_objects.Add(src)
+	SSobj.processing.Add(src)
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Hatch()
-	processing_objects.Remove(src)
+	SSobj.processing.Remove(src)
 	var/turf/T = get_turf(src)
 	src.visible_message("<span class='warning'> The [name] pulsates and quivers!</span>")
 	spawn(rand(50,100))
