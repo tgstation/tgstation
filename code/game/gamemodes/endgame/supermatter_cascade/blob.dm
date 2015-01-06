@@ -1,9 +1,14 @@
 // QUALITY COPYPASTA
 /turf/unsimulated/wall/supermatter
-	name = "supermatter"
+	name = "Bluespace"
 	desc = "THE END IS right now actually."
-	icon_state = "supermatter"
-	luminosity = 5
+
+	icon = 'icons/turf/space.dmi'
+	icon_state = "bluespace"
+
+	//luminosity = 5
+	//l_color="#0066FF"
+	layer = LIGHTING_LAYER+1
 
 	var/spawned=0 // DIR mask
 	var/next_check=0
@@ -19,19 +24,38 @@
 	..()
 
 /turf/unsimulated/wall/supermatter/proc/process()
+	// Only check infrequently.
 	if(next_check>world.time) return
+
+	// No more available directions? Shut down process().
 	if(avail_dirs.len==0)
 		processing_objects.Remove(src)
 		return 1
+
+	// We're checking, reset the timer.
 	next_check = world.time+5 SECONDS
+
+	// Choose a direction.
 	var/pdir = pick(avail_dirs)
 	avail_dirs -= pdir
 	var/turf/T=get_step(src,pdir)
+
+	// EXPAND DONG
 	if(!istype(T,type))
-		for(var/atom/movable/A in T)
-			qdel(A)
-		T.ChangeTurf(type)
-	if(spawned & (NORTH|SOUTH|EAST|WEST))
+		// Do pretty fadeout animation for 1s.
+		new /obj/effect/overlay/bluespacify(T)
+		spawn(10)
+			// Nom.
+			for(var/atom/movable/A in T)
+				if(A)
+					if(istype(A,/mob/living))
+						del(A)
+					else if(istype(A,/mob)) // Observers, AI cameras.
+						continue
+					qdel(A)
+			T.ChangeTurf(type)
+
+	if((spawned & (NORTH|SOUTH|EAST|WEST)) == (NORTH|SOUTH|EAST|WEST))
 		processing_objects -= src
 		return
 
@@ -50,12 +74,12 @@
 	src.examine()
 
 /turf/unsimulated/wall/supermatter/attack_ai(mob/user as mob)
-	user << "<span class = \"warning\">You attempt to interface with the control circuits but find they are not connected to your network.  Maybe in a future firmware update.</span>"
+	return src.examine()
 
 /turf/unsimulated/wall/supermatter/attack_hand(mob/user as mob)
-	user.visible_message("<span class=\"warning\">\The [user] reaches out and touches \the [src], inducing a resonance... \his body starts to glow and bursts into flames before flashing into ash.</span>",\
-		"<span class=\"danger\">You reach out and touch \the [src]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"</span>",\
-		"<span class=\"warning\">You hear an unearthly noise as a wave of heat washes over you.</span>")
+	user.visible_message("<span class=\"warning\">\The [user] reaches out and touches \the [src]... And then blinks out of existance.</span>",\
+		"<span class=\"danger\">You reach out and touch \the [src]. Everything immediately goes quiet. Your last thought is \"That was not a wise decision.\"</span>",\
+		"<span class=\"warning\">You hear an unearthly noise.</span>")
 
 	playsound(src, 'sound/effects/supermatter.ogg', 50, 1)
 
@@ -70,8 +94,6 @@
 
 	user.drop_from_inventory(W)
 	Consume(W)
-
-	user.apply_effect(150, IRRADIATE)
 
 
 /turf/unsimulated/wall/supermatter/Bumped(atom/AM as mob|obj)
@@ -89,17 +111,7 @@
 
 
 /turf/unsimulated/wall/supermatter/proc/Consume(var/mob/living/user)
-	if(istype(user))
-		user.dust()
-	else
-		del user
+	if(istype(user,/mob/dead/observer))
+		return
 
-		//Some poor sod got eaten, go ahead and irradiate people nearby.
-	for(var/mob/living/l in range(10))
-		if(l in view())
-			l.show_message("<span class=\"warning\">As \the [src] slowly stops resonating, you find your skin covered in new radiation burns.</span>", 1,\
-				"<span class=\"warning\">The unearthly ringing subsides and you notice you have new radiation burns.</span>", 2)
-		else
-			l.show_message("<span class=\"warning\">You hear an uneartly ringing and notice your skin is covered in fresh radiation burns.</span>", 2)
-		var/rads = 500 * sqrt( 1 / (get_dist(l, src) + 1) )
-		l.apply_effect(rads, IRRADIATE, 0) // Permit blocking
+	del(user)

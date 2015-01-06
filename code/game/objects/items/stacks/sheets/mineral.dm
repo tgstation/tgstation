@@ -33,7 +33,7 @@ Mineral Sheets
 
 var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 	new/datum/stack_recipe("pile of dirt", /obj/machinery/portable_atmospherics/hydroponics/soil, 3, time = 10, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("sandstone door", /obj/structure/mineral_door/sandstone, 10, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("sandstone door", /obj/machinery/door/mineral/sandstone, 10, one_per_turf = 1, on_floor = 1), \
 /*	new/datum/stack_recipe("sandstone wall", ???), \
 		new/datum/stack_recipe("sandstone floor", ???),\ */
 	)
@@ -63,7 +63,7 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 	melt_temperature = 3820 // In a vacuum, but fuck dat
 
 var/global/list/datum/stack_recipe/diamond_recipes = list ( \
-	new/datum/stack_recipe("diamond door", /obj/structure/mineral_door/transparent/diamond, 10, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("diamond door", /obj/machinery/door/mineral/transparent/diamond, 10, one_per_turf = 1, on_floor = 1), \
 	)
 
 /obj/item/stack/sheet/mineral/diamond/New(var/loc, var/amount=null)
@@ -93,7 +93,7 @@ var/global/list/datum/stack_recipe/diamond_recipes = list ( \
 	melt_temperature = 1132+T0C
 
 var/global/list/datum/stack_recipe/uranium_recipes = list ( \
-	new/datum/stack_recipe("uranium door", /obj/structure/mineral_door/uranium, 10, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("uranium door", /obj/machinery/door/mineral/uranium, 10, one_per_turf = 1, on_floor = 1), \
 	)
 
 /obj/item/stack/sheet/mineral/uranium/New(var/loc, var/amount=null)
@@ -123,7 +123,7 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 	melt_temperature = MELTPOINT_STEEL+500
 
 var/global/list/datum/stack_recipe/plasma_recipes = list ( \
-	new/datum/stack_recipe("plasma door", /obj/structure/mineral_door/transparent/plasma, 10, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("plasma door", /obj/machinery/door/mineral/transparent/plasma, 10, one_per_turf = 1, on_floor = 1), \
 	)
 
 /obj/item/stack/sheet/mineral/plasma/New(var/loc, var/amount=null)
@@ -186,7 +186,7 @@ var/global/list/datum/stack_recipe/plastic_recipes = list ( \
 	sheettype = "gold"
 
 var/global/list/datum/stack_recipe/gold_recipes = list ( \
-	new/datum/stack_recipe("golden door", /obj/structure/mineral_door/gold, 10, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("golden door", /obj/machinery/door/mineral/gold, 10, one_per_turf = 1, on_floor = 1), \
 	)
 
 /obj/item/stack/sheet/mineral/gold/New(var/loc, var/amount=null)
@@ -214,7 +214,8 @@ var/global/list/datum/stack_recipe/phazon_recipes = list()
 	perunit = 1500
 	melt_temperature = MELTPOINT_PLASTIC
 	throwforce = 15.0
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	origin_tech = "materials=9"
 
 /obj/item/stack/sheet/mineral/phazon/New(var/loc, var/amount=null)
@@ -241,7 +242,7 @@ var/global/list/datum/stack_recipe/phazon_recipes = list()
 	sheettype = "silver"
 
 var/global/list/datum/stack_recipe/silver_recipes = list ( \
-	new/datum/stack_recipe("silver door", /obj/structure/mineral_door/silver, 10, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("silver door", /obj/machinery/door/mineral/silver, 10, one_per_turf = 1, on_floor = 1), \
 	)
 
 /obj/item/stack/sheet/mineral/silver/New(var/loc, var/amount=null)

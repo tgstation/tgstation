@@ -1306,7 +1306,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/canface()
 	if(!canmove)						return 0
 	if(client.moving)					return 0
-	if(world.time < client.move_delay)	return 0
+	if(client.move_delayer.blocked())	return 0
 	if(stat==2)							return 0
 	if(anchored)						return 0
 	if(monkeyizing)						return 0
@@ -1323,6 +1323,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		else
 			lying = 1
 	else if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH))
+		stop_pulling()
 		lying = 1
 		canmove = 0
 	else if( stunned )
@@ -1364,7 +1365,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(!canface())	return 0
 	dir = EAST
 	Facing()
-	client.move_delay += movement_delay()
+	delayNextMove(movement_delay(),additive=1)
 	return 1
 
 
@@ -1373,7 +1374,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(!canface())	return 0
 	dir = WEST
 	Facing()
-	client.move_delay += movement_delay()
+	delayNextMove(movement_delay(),additive=1)
 	return 1
 
 
@@ -1382,7 +1383,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(!canface())	return 0
 	dir = NORTH
 	Facing()
-	client.move_delay += movement_delay()
+	delayNextMove(movement_delay(),additive=1)
 	return 1
 
 
@@ -1391,7 +1392,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(!canface())	return 0
 	dir = SOUTH
 	Facing()
-	client.move_delay += movement_delay()
+	delayNextMove(movement_delay(),additive=1)
 	return 1
 
 
@@ -1485,15 +1486,17 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/flash_weak_pain()
 	flick("weak_pain",pain)
 
-mob/proc/yank_out_object()
+/mob/proc/yank_out_object()
 	set category = "Object"
 	set name = "Yank out object"
 	set desc = "Remove an embedded item at the cost of bleeding and pain."
 	set src in view(1)
 
-	if(!isliving(usr) || usr.next_move > world.time)
+	if(!isliving(usr) || (usr.client && usr.client.move_delayer.blocked()))
 		return
-	usr.next_move = world.time + 20
+
+	delayNextMove(20)
+	delayNextAttack(20)
 
 	if(usr.stat == 1)
 		usr << "You are unconcious and cannot do that!"

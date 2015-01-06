@@ -267,13 +267,13 @@ emp_act
 		bloody_hands_mob = source
 	update_inv_gloves()		//updates on-mob overlays for bloody hands and/or bloody gloves
 
-/mob/living/carbon/human/proc/bloody_body(var/mob/living/source)
+/mob/living/carbon/human/proc/bloody_body(var/mob/living/source,var/update = 0)
 	if(wear_suit)
 		wear_suit.add_blood(source)
-		update_inv_wear_suit(0)
+		update_inv_wear_suit(update)
 	if(w_uniform)
 		w_uniform.add_blood(source)
-		update_inv_w_uniform(0)
+		update_inv_w_uniform(update)
 
 /mob/living/carbon/human/ex_act(severity)
 	if(flags & INVULNERABLE)

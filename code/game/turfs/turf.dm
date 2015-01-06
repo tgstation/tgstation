@@ -70,7 +70,7 @@
 
 /turf/Enter(atom/movable/O, atom/oldloc)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
-		usr << "\red Movement is admin-disabled." //This is to identify lag problems
+		usr << "<span class='warning'>Movement is admin-disabled.</span>" //This is to identify lag problems
 		return 0
 
 	// first, check objects to block exit that are not on the border
@@ -186,9 +186,11 @@
 			if((M && !(M.anchored) && !(M.pulledby) && (M.loc == src)))
 				if(M.inertia_dir)
 					step(M, M.inertia_dir)
+					call(/datum/pda_app/station_map/proc/minimap_update)(M)
 					return
 				M.inertia_dir = M.last_move
 				step(M, M.inertia_dir)
+				call(/datum/pda_app/station_map/proc/minimap_update)(M)
 	return
 
 /turf/proc/levelupdate()
@@ -411,3 +413,13 @@
 /turf/proc/cultify()
 	ChangeTurf(/turf/space)
 	return
+
+/turf/singularity_act()
+	if(intact)
+		for(var/obj/O in contents)
+			if(O.level != 1)
+				continue
+			if(O.invisibility == 101)
+				O.singularity_act()
+	ChangeTurf(/turf/space)
+	return(2)

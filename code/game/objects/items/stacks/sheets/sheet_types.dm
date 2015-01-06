@@ -39,6 +39,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("computer frame", /obj/structure/computerframe, 5, time = 25, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("wall girders", /obj/structure/girder, 2, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("machine frame",/obj/machinery/constructable_frame/machine_frame, 5, time = 25, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("mirror frame",/obj/structure/mirror_frame, 5, time = 25, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("nanomed frame",/obj/item/wallmed_frame,                           3, time = 25, one_per_turf = 0, on_floor = 1), \
 	new/datum/stack_recipe("turret frame", /obj/machinery/porta_turret_construct, 5, time = 25, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("iv drip",      /obj/machinery/iv_drip,                            2, time = 25, one_per_turf = 1, on_floor = 1), \
@@ -68,6 +69,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("airlock sensor frame",               /obj/item/airlock_sensor_frame,                           1, time = 50, one_per_turf = 0, on_floor = 1), \
 	null, \
 	new/datum/stack_recipe("grenade casing", /obj/item/weapon/grenade/chem_grenade), \
+	new/datum/stack_recipe("desk bell shell", /obj/item/device/deskbell_assembly, 2), \
 	new/datum/stack_recipe("light fixture frame", /obj/item/light_fixture_frame, 2), \
 	new/datum/stack_recipe("small light fixture frame", /obj/item/light_fixture_frame/small, 1), \
 	null, \
@@ -75,7 +77,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("air alarm frame", /obj/item/alarm_frame, 2), \
 	new/datum/stack_recipe("fire alarm frame", /obj/item/firealarm_frame, 2), \
 	null, \
-	new/datum/stack_recipe("iron door", /obj/structure/mineral_door/iron, 20, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("iron door", /obj/machinery/door/mineral/iron, 20, one_per_turf = 1, on_floor = 1), \
 )
 
 /obj/item/stack/sheet/metal
@@ -86,7 +88,8 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	m_amt = 3750
 	w_type = RECYK_METAL
 	throwforce = 14.0
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	origin_tech = "materials=1"
 	melt_temperature = MELTPOINT_STEEL
 
@@ -122,7 +125,8 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	m_amt = 3750 // Was 7500, which doesn't make any fucking sense
 	perunit = 2875 //average of plasma and metal
 	throwforce = 15.0
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	origin_tech = "materials=2"
 	w_type = RECYK_METAL
 	melt_temperature = MELTPOINT_STEEL+500
@@ -146,7 +150,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	new/datum/stack_recipe("wooden chair", /obj/structure/stool/bed/chair/wood/normal, 3, time = 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("barricade kit", /obj/item/weapon/barricade_kit, 5), \
 	new/datum/stack_recipe("bookcase", /obj/structure/bookcase, 5, time = 50, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("wooden door", /obj/structure/mineral_door/wood, 10, time = 20, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("wooden door", /obj/machinery/door/mineral/wood, 10, time = 20, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("coffin", /obj/structure/closet/coffin, 5, time = 15, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("apiary", /obj/item/apiary, 10, time = 25, one_per_turf = 0, on_floor = 0), \
 	)
@@ -189,6 +193,9 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg), \
 	new/datum/stack_recipe("pizza box", /obj/item/pizzabox), \
 	new/datum/stack_recipe("folder", /obj/item/weapon/folder), \
+	new/datum/stack_recipe("flare box", /obj/item/weapon/storage/fancy/flares), \
+	new/datum/stack_recipe("donut box", /obj/item/weapon/storage/fancy/donut_box), \
+	new/datum/stack_recipe("eggbox", /obj/item/weapon/storage/fancy/egg_box), \
 )
 
 /obj/item/stack/sheet/cardboard	//BubbleWrap
@@ -196,7 +203,7 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	desc = "Large sheets of card, like boxes folded flat."
 	singular_name = "cardboard sheet"
 	icon_state = "sheet-card"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	origin_tech = "materials=1"
 
 /obj/item/stack/sheet/cardboard/New(var/loc, var/amount=null)
@@ -213,7 +220,7 @@ var/global/list/datum/stack_recipe/charcoal_recipes = list ()
 	desc = "Yum."
 	singular_name = "charcoal sheet"
 	icon_state = "sheet-charcoal"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	origin_tech = "materials=1"
 	autoignition_temperature=AUTOIGNITION_WOOD
 

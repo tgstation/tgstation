@@ -1,5 +1,6 @@
 
 /proc/power_failure(var/announce = 1)
+	suspend_alert = 1
 	if(announce)
 		command_alert("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Critical Power Failure")
 		for(var/mob/M in player_list)
@@ -33,7 +34,6 @@
 		A.power_light = 0
 		A.power_equip = 0
 		A.power_environ = 0
-		A.power_change()
 
 	for(var/obj/machinery/power/apc/C in world)
 		if(C.cell && C.z == 1)
@@ -70,10 +70,9 @@
 			A.power_light = 1
 			A.power_equip = 1
 			A.power_environ = 1
-			A.power_change()
+	suspend_alert = 0
 
 /proc/power_restore_quick(var/announce = 1)
-
 	if(announce)
 		command_alert("All SMESs on [station_name()] have been recharged. We apologize for the inconvenience.", "Power Systems Nominal")
 		for(var/mob/M in player_list)
@@ -86,3 +85,4 @@
 		S.online = 1
 		S.updateicon()
 		S.power_change()
+	suspend_alert = 0

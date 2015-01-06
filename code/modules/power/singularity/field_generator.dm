@@ -33,7 +33,6 @@ field_generator power level display
 
 	machine_flags = WRENCHMOVE | FIXED2WORK | WELD_FIXED
 
-
 /obj/machinery/field_generator/update_icon()
 	overlays.Cut()
 	if(!active)
@@ -45,7 +44,7 @@ field_generator power level display
 	// Scale % power to % num_power_levels and truncate value
 	var/level = round(num_power_levels * power / field_generator_max_power)
 	// Clamp between 0 and num_power_levels for out of range power values
-	level = between(0, level, num_power_levels)
+	level = Clamp(level, 0, num_power_levels)
 	if(level)
 		overlays += "+p[level]"
 
@@ -58,8 +57,11 @@ field_generator power level display
 	connected_gens = list()
 	return
 
-
 /obj/machinery/field_generator/process()
+
+	for(var/obj/effect/beam/B in beams)
+		power += B.get_damage()
+
 	if(Varedit_start == 1)
 		if(active == 0)
 			active = 1
@@ -91,7 +93,7 @@ field_generator power level display
 					"You turn on the [src.name].", \
 					"You hear heavy droning")
 				turn_on()
-				investigate_log("<font color='green'>activated</font> by [user.key].","singulo")
+				investigation_log(I_SINGULO,"<font color='green'>activated</font> by [user.key].")
 
 				src.add_fingerprint(user)
 	else
@@ -178,7 +180,7 @@ field_generator power level display
 		for(var/mob/M in viewers(src))
 			M.show_message("\red The [src.name] shuts down!")
 		turn_off()
-		investigate_log("ran out of power and <font color='red'>deactivated</font>","singulo")
+		investigation_log(I_SINGULO,"ran out of power and <font color='red'>deactivated</font>")
 		src.power = 0
 		return 0
 
@@ -312,5 +314,5 @@ field_generator power level display
 				if((world.time - O.last_warning) > 50) //to stop message-spam
 					temp = 0
 					message_admins("A singulo exists and a containment field has failed.",1)
-					investigate_log("has <font color='red'>failed</font> whilst a singulo exists.","singulo")
+					investigation_log(I_SINGULO,"has <font color='red'>failed</font> whilst a singulo exists.")
 			O.last_warning = world.time

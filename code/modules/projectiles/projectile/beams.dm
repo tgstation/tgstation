@@ -342,6 +342,8 @@ var/list/beam_master = list()
 	icon_state = "emitter"
 	damage = 30
 
+/obj/item/projectile/beam/emitter/singularity_pull()
+	return
 
 /obj/item/projectile/beam/lastertag/blue
 	name = "lasertag beam"

@@ -748,7 +748,7 @@ datum/mind
 						usr << "\red No changeling!"
 						return
 					var/new_g = input(usr,"Number of genomes","Changeling",changeling.geneticpoints) as num
-					changeling.geneticpoints = between(0,new_g,100)
+					changeling.geneticpoints = Clamp(new_g, 0, 100)
 					log_admin("[key_name_admin(usr)] has set changeling [current] to [changeling.geneticpoints] genomes.")
 
 		else if (href_list["vampire"])

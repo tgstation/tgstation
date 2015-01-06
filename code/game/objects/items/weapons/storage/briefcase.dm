@@ -2,7 +2,8 @@
 	name = "briefcase"
 	desc = "It's made of AUTHENTIC faux-leather and has a price-tag still attached. Its owner must be a real professional."
 	icon_state = "briefcase"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	force = 8.0
 	throw_speed = 1
 	throw_range = 4
@@ -13,7 +14,6 @@
 /obj/item/weapon/storage/briefcase/suicide_act(mob/user)
 	viewers(user) << "<span class='danger'><b>[user] is smashing \his head inside the [src.name]! It looks like \he's  trying to commit suicide!</b></span>"
 	return (BRUTELOSS)
-
 
 /obj/item/weapon/storage/briefcase/New()
 	new /obj/item/weapon/paper/demotion_key(src)

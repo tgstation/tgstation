@@ -2,7 +2,7 @@
 /obj/item/clothing/suit/armor
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_storage,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs)
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 
 	cold_protection = UPPER_TORSO|LOWER_TORSO
 	min_cold_protection_temperature = ARMOR_MIN_COLD_PROTECITON_TEMPERATURE
@@ -17,7 +17,7 @@
 	icon_state = "armor"
 	item_state = "armor"
 	blood_overlay_type = "armor"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = FPRINT  | ONESIZEFITSALL
 	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/vest/security
@@ -50,7 +50,7 @@
 	icon_state = "xcomarmor2"
 	item_state = "xcomarmor2"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	armor = list(melee = 10, bullet = 90, laser = 50, energy = 50, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 10, bullet = 50, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 	siemens_coefficient = 0.5
 
@@ -60,7 +60,7 @@
 	icon_state = "xcomarmor1"
 	item_state = "xcomarmor1"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	armor = list(melee = 90, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0)
 	slowdown = 1
 	flags_inv = HIDEJUMPSUIT
 	siemens_coefficient = 0.5
@@ -91,7 +91,7 @@
 	item_state = "swat_suit"
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_storage,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/tank/emergency_nitrogen)
 	slowdown = 1
@@ -117,7 +117,7 @@
 	icon_state = "detective-armor"
 	item_state = "armor"
 	blood_overlay_type = "armor"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = FPRINT  | ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
 
@@ -132,7 +132,7 @@
 	item_state = "reactiveoff"
 	blood_overlay_type = "armor"
 	slowdown = 1
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = FPRINT  | ONESIZEFITSALL
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/reactive/IsShield()

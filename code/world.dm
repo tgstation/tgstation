@@ -22,7 +22,8 @@
 	// logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
 
-	href_logfile = file("data/logs/[date_string] hrefs.htm")
+	investigations["hrefs"] = new /datum/log_controller("hrefs", filename="data/logs/[date_string] hrefs.htm", persist=TRUE)
+
 	diary = file("data/logs/[date_string].log")
 	diaryofmeanpeople = file("data/logs/[date_string] Attack.log")
 	admin_diary = file("data/logs/[date_string] admin only.log")
@@ -37,8 +38,6 @@
 
 	if(byond_version < RECOMMENDED_VERSION)
 		world.log << "Your server's byond version does not meet the recommended requirements for this code. Please update BYOND"
-
-
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
@@ -65,7 +64,6 @@
 		// dumb and hardcoded but I don't care~
 		config.server_name += " #[(world.port % 1000) / 100]"
 
-	investigate_reset()
 	Get_Holiday()	//~Carn, needs to be here when the station is named so :P
 
 	src.update_status()

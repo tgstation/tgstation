@@ -23,16 +23,17 @@
 // Strange rocks
 
 //have all strange rocks be cleared away using welders for now
-/obj/item/weapon/ore/strangerock
+/obj/item/weapon/strangerock
 	name = "Strange rock"
 	desc = "Seems to have some unusal strata evident throughout it."
 	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "strange"
 	var/obj/item/weapon/inside
 	var/method = 0// 0 = fire, 1 = brush, 2 = pick
+	var/datum/geosample/geologic_data
 	origin_tech = "materials=5"
 
-/obj/item/weapon/ore/strangerock/New(loc, var/inside_item_type = 0)
+/obj/item/weapon/strangerock/New(loc, var/inside_item_type = 0)
 	..(loc)
 
 	//method = rand(0,2)
@@ -41,11 +42,11 @@
 		if(!inside)
 			inside = locate() in contents
 
-/*/obj/item/weapon/ore/strangerock/ex_act(var/severity)
+/*/obj/item/weapon/strangerock/ex_act(var/severity)
 	if(severity && prob(30))
 		src.visible_message("The [src] crumbles away, leaving some dust and gravel behind.")*/
 
-/obj/item/weapon/ore/strangerock/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/strangerock/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/weldingtool/))
 		var/obj/item/weapon/weldingtool/w = W
 		if(w.isOn())

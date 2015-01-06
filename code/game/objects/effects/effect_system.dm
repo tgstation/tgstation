@@ -11,7 +11,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	icon = 'icons/effects/effects.dmi'
 	mouse_opacity = 0
 	unacidable = 1 // so effect are not targeted by alien acid.
-	flags = TABLEPASS
+	flags = 0
 	w_type=NOT_RECYCLABLE
 
 /obj/effect/effect/water
@@ -234,6 +234,12 @@ steam.start() -- spawns the effect
 	if (M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
 		return 0
 	return 1
+
+/obj/effect/effect/smoke/Destroy()
+	if(reagents)
+		reagents.my_atom = null
+		reagents = null
+	..()
 
 /////////////////////////////////////////////
 // Bad smoke
@@ -474,7 +480,9 @@ steam.start() -- spawns the effect
 					sleep(10)
 					step(smoke,direction)
 				spawn(150+rand(10,30))
-					if(smoke) qdel(smoke)
+					if(smoke)
+						qdel(smoke)
+						smoke = null
 					src.total_smoke--
 
 // Goon compat.
@@ -512,15 +520,34 @@ steam.start() -- spawns the effect
 /// and don't call start() in a loop that will be repeated otherwise it'll get spammed!
 /////////////////////////////////////////////
 
-/obj/effect/effect/ion_trails
-	name = "ion trails"
-	icon_state = "ion_trails"
+/obj/effect/effect/trails
+	name = ""
+	icon_state = ""
 	anchored = 1
 
-/datum/effect/effect/system/ion_trail_follow
+	var/base_name="ion"
+
+/obj/effect/effect/trails/New()
+	..()
+	name = "[base_name] trails"
+	icon_state = "[base_name]_trails"
+
+/obj/effect/effect/trails/proc/Play()
+	flick("[base_name]_fade", src)
+	icon_state = "blank"
+	spawn( 20 )
+		if(src)
+			qdel(src)
+
+/obj/effect/effect/trails/ion
+	base_name = "ion"
+
+/datum/effect/effect/system/trail
 	var/turf/oldposition
 	var/processing = 1
 	var/on = 1
+
+	var/trail_type=/obj/effect/effect/trails/ion
 
 	set_up(atom/atom)
 		attach(atom)
@@ -536,31 +563,24 @@ steam.start() -- spawns the effect
 				var/turf/T = get_turf(src.holder)
 				if(T != src.oldposition)
 					if(istype(T, /turf/space))
-						var/obj/effect/effect/ion_trails/I = new /obj/effect/effect/ion_trails(src.oldposition)
+						var/obj/effect/effect/trails/I = new trail_type(src.oldposition)
 						src.oldposition = T
 						I.dir = src.holder.dir
-						flick("ion_fade", I)
-						I.icon_state = "blank"
-						spawn( 20 )
-							if(I) qdel(I)
-					spawn(2)
-						if(src.on)
-							src.processing = 1
-							src.start()
-				else
-					spawn(2)
-						if(src.on)
-							src.processing = 1
-							src.start()
+						I.Play()
+				spawn(2)
+					if(src.on)
+						src.processing = 1
+						src.start()
 
 	proc/stop()
 		src.processing = 0
 		src.on = 0
 
-/datum/effect/effect/system/ion_trail_follow/space_trail
+/datum/effect/effect/system/trail/space_trail
 	var/turf/oldloc // secondary ion trail loc
 	var/turf/currloc
-/datum/effect/effect/system/ion_trail_follow/space_trail/start()
+
+/datum/effect/effect/system/trail/space_trail/start()
 	if(!src.on)
 		src.on = 1
 		src.processing = 1
@@ -591,8 +611,8 @@ steam.start() -- spawns the effect
 						src.oldloc = get_step(oldposition,NORTH)
 						//src.oldloc = get_step(oldloc,EAST)
 				if(istype(T, /turf/space))
-					var/obj/effect/effect/ion_trails/I = new /obj/effect/effect/ion_trails(src.oldposition)
-					var/obj/effect/effect/ion_trails/II = new /obj/effect/effect/ion_trails(src.oldloc)
+					var/obj/effect/effect/trails/ion/I = new /obj/effect/effect/trails/ion(src.oldposition)
+					var/obj/effect/effect/trails/ion/II = new /obj/effect/effect/trails/ion(src.oldloc)
 					//src.oldposition = T
 					I.dir = src.holder.dir
 					II.dir = src.holder.dir
@@ -603,15 +623,11 @@ steam.start() -- spawns the effect
 					spawn( 20 )
 						if(I) qdel(I)
 						if(II) qdel(II)
-				spawn(2)
-					if(src.on)
-						src.processing = 1
-						src.start()
-			else
-				spawn(2)
-					if(src.on)
-						src.processing = 1
-						src.start()
+
+			spawn(2)
+				if(src.on)
+					src.processing = 1
+					src.start()
 			currloc = T
 
 
@@ -877,7 +893,7 @@ steam.start() -- spawns the effect
 		return
 
 	attack_hand(var/mob/user)
-		user.changeNext_move(10)
+		user.delayNextMove(10)
 		if ((M_HULK in user.mutations) || (prob(75 - metal*25)))
 			user << "\blue You smash through the metal foam wall."
 			for(var/mob/O in oviewers(user))
@@ -890,7 +906,7 @@ steam.start() -- spawns the effect
 
 
 	attackby(var/obj/item/I, var/mob/user)
-		user.changeNext_move(10)
+		user.delayNextAttack(10)
 		if (istype(I, /obj/item/weapon/grab))
 			var/obj/item/weapon/grab/G = I
 			G.affecting.loc = src.loc

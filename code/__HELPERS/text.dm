@@ -334,15 +334,25 @@ proc/checkhtml(var/t)
  */
 /proc/format_num(var/number, var/sep=",")
 	var/c="" // Current char
-	var/origtext = "[number]"
+	var/list/parts = text2list("[number]",".")
+	var/origtext = "[parts[1]]"
 	var/len      = length(origtext)
 	var/offset   = len % 3
 	for(var/i=1;i<=len;i++)
 		c = copytext(origtext,i,i+1)
-		if(c==".")
-			. += copytext(origtext,i) // Just paste in everything else.
-			break
-		else
-			. += c
-			if((i%3)==offset && i!=len)
-				. += sep
+		. += c
+		if((i%3)==offset && i!=len)
+			. += sep
+	if(parts.len==2)
+		. += ".[parts[2]]"
+
+var/global/list/watt_suffixes = list("W", "KW", "MW", "GW", "TW", "PW", "EW", "ZW", "YW")
+/proc/format_watts(var/number)
+	if(number<0) return "-[format_watts(number)]"
+	if(number==0) return "0 W"
+
+	var/i=1
+	while (round(number/1000) >= 1)
+		number/=1000
+		i++
+	return "[format_num(number)] [watt_suffixes[i]]"

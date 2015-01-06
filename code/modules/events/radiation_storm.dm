@@ -40,32 +40,28 @@
 
 		command_alert("The station has entered the radiation belt. Please remain in a sheltered area until we have passed the radiation belt.", "Anomaly Alert")
 
-		for(var/i = 0, i < 10, i++)
+		for(var/i = 0, i < 15, i++)
+			var/irradiationThisBurst = rand(15,25) //everybody gets the same rads this radiation burst
+			var/randomMutation = prob(50)
+			var/badMutation = prob(60)
 			for(var/mob/living/carbon/human/H in living_mob_list)
+				if(istype(H.loc, /obj/spacepod))
+					continue
 				var/turf/T = get_turf(H)
 				if(!T)
 					continue
 				if(T.z != 1 || is_safe_zone(T.loc))
 					continue
 
-				H.apply_effect((rand(15,35)),IRRADIATE,0)
-				if(prob(5))
-					H.apply_effect((rand(40,70)),IRRADIATE,0)
-					if (prob(75))
+				H.apply_effect(irradiationThisBurst,IRRADIATE,0)
+				if(randomMutation)
+					//H.apply_effect((rand(40,70)),IRRADIATE,0)
+					if (badMutation)
 						randmutb(H) // Applies bad mutation
 						domutcheck(H,null,MUTCHK_FORCED)
 					else
 						randmutg(H) // Applies good mutation
 						domutcheck(H,null,MUTCHK_FORCED)
-
-			for(var/mob/living/carbon/monkey/M in living_mob_list)
-				var/turf/T = get_turf(M)
-				if(!T)
-					continue
-				if(T.z != 1 || is_safe_zone(T.loc))
-					continue
-
-				M.apply_effect((rand(5,25)),IRRADIATE,0)
 
 			sleep(100)
 

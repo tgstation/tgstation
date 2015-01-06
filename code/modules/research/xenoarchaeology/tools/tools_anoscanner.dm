@@ -5,7 +5,7 @@
 	icon_state = "ano_scanner"
 	item_state = "lampgreen"
 	w_class = 1.0
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	slot_flags = SLOT_BELT
 	var/nearest_artifact_id = "unknown"
 	var/nearest_artifact_distance = -1

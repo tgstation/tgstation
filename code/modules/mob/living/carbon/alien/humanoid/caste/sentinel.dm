@@ -1,5 +1,5 @@
 /mob/living/carbon/alien/humanoid/sentinel
-	name = "alien sentinel"
+	name = "alien sentinel" //The alien sentinel, not Alien Sentinel
 	caste = "s"
 	maxHealth = 175
 	health = 125
@@ -7,6 +7,8 @@
 	max_plasma = 250
 	icon_state = "aliens_s"
 	plasma_rate = 10
+
+//As far as movement goes, Sentinels are average
 
 /mob/living/carbon/alien/humanoid/sentinel/New()
 	var/datum/reagents/R = new/datum/reagents(100)
@@ -25,8 +27,8 @@
 
 		..() //-Yvarov
 
-		if (healths)
-			if (stat != 2)
+		if(healths)
+			if(stat != 2)
 				switch(health)
 					if(175 to INFINITY)
 						healths.icon_state = "health0"

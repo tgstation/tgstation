@@ -197,7 +197,9 @@
 			module_sprites["Basic"] = "robot_old"
 			module_sprites["Android"] = "droid"
 			module_sprites["Default"] = "robot"
+			module_sprites["Marina-SD"] = "marinaSD"
 			module_sprites["Sleek"] = "sleekstandard"
+			speed = 0
 
 		if("Service")
 			module = new /obj/item/weapon/robot_module/butler(src)
@@ -209,6 +211,7 @@
 			module_sprites["R2-D2"] = "r2d2"
 			module_sprites["Marina-SV"] = "marinaSV"
 			module_sprites["Sleek"] = "sleekservice"
+			speed = 0
 
 		if("Miner")
 			module = new /obj/item/weapon/robot_module/miner(src)
@@ -221,6 +224,7 @@
 			module_sprites["Wall-A"] = "wall-a"
 			module_sprites["Marina-MN"] = "marinaMN"
 			module_sprites["Sleek"] = "sleekminer"
+			speed = -1
 
 		if("Medical")
 			module = new /obj/item/weapon/robot_module/medical(src)
@@ -231,9 +235,10 @@
 			module_sprites["Advanced Droid"] = "droid-medical"
 			module_sprites["Needles"] = "medicalrobot"
 			module_sprites["Standard"] = "surgeon"
-			module_sprites["Marina"] = "marina"
+			module_sprites["Marina-MD"] = "marina"
 			module_sprites["Eve"] = "eve"
 			module_sprites["Sleek"] = "sleekmedic"
+			speed = -2
 
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
@@ -245,6 +250,7 @@
 			module_sprites["Securitron"] = "securitron"
 			module_sprites["Marina-SC"] = "marinaSC"
 			src << "<span class='warning'><big><b>Just a reminder, by default you do not follow space law, you follow your lawset</b></big></span>"
+			speed = -1
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
@@ -258,6 +264,7 @@
 			module_sprites["Wall-E"] = "wall-e"
 			module_sprites["Marina-EN"] = "marinaEN"
 			module_sprites["Sleek"] = "sleekengineer"
+			speed = -2
 
 		if("Janitor")
 			module = new /obj/item/weapon/robot_module/janitor(src)
@@ -268,13 +275,16 @@
 			module_sprites["HAN-D"] = "han-d"
 			module_sprites["Marina-JN"] = "marinaJN"
 			module_sprites["Sleek"] = "sleekjanitor"
+			speed = -1
 
 		if("Combat")
 			module = new /obj/item/weapon/robot_module/combat(src)
 			module_sprites["Combat Android"] = "droid-combat"
 			module_sprites["Bladewolf"] = "bladewolf"
 			module_sprites["Mr. Gutsy"] = "mrgutsy"
+			module_sprites["Marina-CB"] = "marinaCB"
 			channels = list("Security" = 1)
+			speed = -2
 
 	//Custom_sprite check and entry
 	if (custom_sprite == 1)
@@ -862,9 +872,9 @@
 					laws.show_laws(src)
 					src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and their commands."
 					if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
-						for(var/obj/item/weapon/pickaxe/borgdrill/D in src.module.modules)
+						for(var/obj/item/weapon/pickaxe/drill/borg/D in src.module.modules)
 							del(D)
-						src.module.modules += new /obj/item/weapon/pickaxe/diamonddrill(src.module)
+						src.module.modules += new /obj/item/weapon/pickaxe/drill/diamond(src.module)
 						src.module.rebuild()
 					updateicon()
 				else
@@ -889,6 +899,9 @@
 			else
 				usr << "Upgrade error!"
 
+	else if(istype(W, /obj/item/device/camera_bug))
+		help_shake_act(user)
+		return 0
 
 	else
 		spark_system.start()
@@ -1076,8 +1089,9 @@
 		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
 			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("CYBORG",src,user:wear_suit)
 			return
-		if(user.a_intent == "help")
-			user.visible_message("\blue [user.name] pats [src.name] on the head.")
+		else
+			if (user:a_intent == "help")
+				help_shake_act(user)
 			return
 
 /mob/living/silicon/robot/proc/allowed(mob/M)
@@ -1451,3 +1465,6 @@
 
 /mob/living/silicon/robot/get_inactive_hand(var/obj/item/W)
 	return 0
+
+/mob/living/silicon/robot/proc/help_shake_act(mob/user)
+	user.visible_message("<span class='notice'>[user.name] pats [src.name] on the head.</span>")

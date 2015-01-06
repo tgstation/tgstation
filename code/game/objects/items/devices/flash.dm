@@ -7,7 +7,8 @@
 	w_class = 1.0
 	throw_speed = 4
 	throw_range = 10
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	origin_tech = "magnets=2;combat=1"
 
 	var/times_used = 0 //Number of times it's been used.

@@ -4,7 +4,7 @@
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "utilitybelt"
 	item_state = "utility"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
 
@@ -201,7 +201,7 @@
 	max_combined_w_class = 28
 	can_hold = list(
 		"/obj/item/weapon/storage/bag/ore",
-		"/obj/item/weapon/shovel",
+		"/obj/item/weapon/pickaxe/shovel",
 		"/obj/item/weapon/storage/box/samplebags",
 		"/obj/item/device/core_sampler",
 		"/obj/item/device/beacon_locator",

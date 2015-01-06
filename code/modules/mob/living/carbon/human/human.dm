@@ -724,19 +724,8 @@
 	var/list/ourlist = list()
 	var/able = (!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr) && Adjacent(usr))
 
-	/*
-
-	if(!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr) && Adjacent(usr))
-		if(href_list["pockets"])
-			if(isanimal(usr)) return //Animals can't do that
-			if(ishuman(usr) && (usr:gloves))
-				var/obj/item/clothing/gloves/G = usr:gloves
-				pickpocket = G.pickpocket
-			var/pocket_side = href_list["pockets"]
-
-	*/
-
-	if(href_list["item"] && able)
+	if(href_list["item"])
+		if (!able) return
 		var/slot = href_list["item"]
 		var/obj/item/place_item = usr.get_active_hand()
 		var/obj/item/id_item = src.wear_id
@@ -789,9 +778,8 @@
 					O.process()
 					spawn(HUMAN_STRIP_DELAY)	if(in_range(src, usr)) show_inv(usr)
 					return
-
-
-	if(href_list["pockets"] && able)
+	else if(href_list["pockets"])
+		if (!able) return
 		var/pocket_side = href_list["pockets"]
 		var/pocket_id = (pocket_side == "right" ? slot_r_store : slot_l_store)
 		var/obj/item/pocket_item = (pocket_id == slot_r_store ? src.r_store : src.l_store)
@@ -823,36 +811,14 @@
 		else if(!pickpocket)
 				// Display a warning if the user mocks up
 			src << "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>"
-
-
-	if (href_list["refresh"])
+	else if (href_list["refresh"])
 		if((machine)&&(in_range(src, usr)))
 			show_inv(machine)
-
-	if (href_list["mach_close"])
+	else if (href_list["mach_close"])
 		var/t1 = text("window=[]", href_list["mach_close"])
 		unset_machine()
 		src << browse(null, t1)
-/*
-	if ((href_list["item"] && !( usr.stat ) && usr.canmove && !( usr.restrained() ) && in_range(src, usr) && ticker)) //if game hasn't started, can't make an equip_e
-		if(isanimal(usr)) return //Animals can't do that
-		var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
-		if(ishuman(usr) && usr:gloves)
-			var/obj/item/clothing/gloves/G = usr:gloves
-			pickpocket = G.pickpocket
-		O.source = usr
-		O.target = src
-		O.item = usr.get_active_hand()
-		O.s_loc = usr.loc
-		O.t_loc = loc
-		O.place = href_list["item"]
-		O.pickpocket = pickpocket //Stealthy
-		requests += O
-		spawn( 0 )
-			O.process()
-			return
-*/
-	if (href_list["criminal"])
+	else if (href_list["criminal"])
 		if(hasHUD(usr,"security"))
 			var/perpname = "wot"
 			var/modified
@@ -890,18 +856,7 @@
 
 			if(!modified)
 				usr << "\red Unable to locate a data core entry for this person."
-
-
-
-
-
-
-
-
-
-
-
-	if (href_list["secrecord"])
+	else if (href_list["secrecord"])
 		if(hasHUD(usr,"security"))
 			var/perpname = "wot"
 			var/read = 0
@@ -930,8 +885,7 @@
 
 			if(!read)
 				usr << "\red Unable to locate a data core entry for this person."
-
-	if (href_list["secrecordComment"])
+	else if (href_list["secrecordComment"])
 		if(hasHUD(usr,"security"))
 			var/perpname = "wot"
 			var/read = 0
@@ -960,8 +914,7 @@
 
 			if(!read)
 				usr << "\red Unable to locate a data core entry for this person."
-
-	if (href_list["secrecordadd"])
+	else if (href_list["secrecordadd"])
 		if(hasHUD(usr,"security"))
 			var/perpname = "wot"
 			if(wear_id)
@@ -989,8 +942,7 @@
 								if(istype(usr,/mob/living/silicon/robot))
 									var/mob/living/silicon/robot/U = usr
 									R.fields[text("com_[counter]")] = text("Made by [U.name] ([U.modtype] [U.braintype]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [game_year]<BR>[t1]")
-
-	if (href_list["medical"])
+	else if (href_list["medical"])
 		if(hasHUD(usr,"medical"))
 			var/perpname = "wot"
 			var/modified = 0
@@ -1028,8 +980,7 @@
 
 			if(!modified)
 				usr << "\red Unable to locate a data core entry for this person."
-
-	if (href_list["medrecord"])
+	else if (href_list["medrecord"])
 		if(hasHUD(usr,"medical"))
 			var/perpname = "wot"
 			var/read = 0
@@ -1059,8 +1010,7 @@
 
 			if(!read)
 				usr << "\red Unable to locate a data core entry for this person."
-
-	if (href_list["medrecordComment"])
+	else if (href_list["medrecordComment"])
 		if(hasHUD(usr,"medical"))
 			var/perpname = "wot"
 			var/read = 0
@@ -1089,8 +1039,7 @@
 
 			if(!read)
 				usr << "\red Unable to locate a data core entry for this person."
-
-	if (href_list["medrecordadd"])
+	else if (href_list["medrecordadd"])
 		if(hasHUD(usr,"medical"))
 			var/perpname = "wot"
 			if(wear_id)
@@ -1118,37 +1067,18 @@
 								if(istype(usr,/mob/living/silicon/robot))
 									var/mob/living/silicon/robot/U = usr
 									R.fields[text("com_[counter]")] = text("Made by [U.name] ([U.modtype] [U.braintype]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [game_year]<BR>[t1]")
-
-	/*
-
-		if(!. && error_msg && user)
-			user << "<span class='alert'>There is no exposed flesh or thin material [above_neck(target_zone) ? "on their head" : "on their body"].</span>"
-
-
-	*/
-
-
-
-
-
-
-
-
-
-
-		if (href_list["lookitem"])
-			var/obj/item/I = locate(href_list["lookitem"])
-			I.examine()
-
-		if (href_list["lookmob"])
-			var/mob/M = locate(href_list["lookmob"])
-			M.examine()
+		//else if(!. && error_msg && user)
+		//	user << "<span class='alert'>There is no exposed flesh or thin material [above_neck(target_zone) ? "on their head" : "on their body"].</span>"
+	else if (href_list["lookitem"])
+		var/obj/item/I = locate(href_list["lookitem"])
+		I.examine()
+	else if (href_list["lookmob"])
+		var/mob/M = locate(href_list["lookmob"])
+		M.examine()
+	else
 		..()
-		return
 
-
-
-
+	return
 
 /mob/living/carbon/human/proc/check_obscured_slots()
 	var/list/obscured = list()
@@ -1538,15 +1468,15 @@
 		update_inv_shoes(1)
 		return 1
 
-mob/living/carbon/human/yank_out_object()
+/mob/living/carbon/human/yank_out_object()
 	set category = "Object"
 	set name = "Yank out object"
 	set desc = "Remove an embedded item at the cost of bleeding and pain."
 	set src in view(1)
 
-	if(!isliving(usr) || usr.next_move > world.time)
+	if(!isliving(usr) || (usr.client && usr.client.move_delayer.blocked()))
 		return
-	usr.next_move = world.time + 20
+	usr.delayNextMove(20)
 
 	if(usr.stat == 1)
 		usr << "You are unconcious and cannot do that!"
@@ -1889,3 +1819,24 @@ mob/living/carbon/human/yank_out_object()
 		if(eyes && istype(eyes) && !eyes.status & ORGAN_CUT_AWAY)
 			return 1
 	return 0
+
+/mob/living/carbon/human/singularity_act()
+	var/gain = 20
+	if(mind)
+		if((mind.assigned_role == "Station Engineer") || (mind.assigned_role == "Chief Engineer"))
+			gain = 100
+		if(mind.assigned_role == "Clown")
+			gain = rand(-300, 300)
+	investigation_log(I_SINGULO,"has been consumed by a singularity")
+	gib()
+	return gain
+
+/mob/living/carbon/human/singularity_pull(S, current_size)
+	if(current_size >= STAGE_THREE)
+		var/list/handlist = list(l_hand, r_hand)
+		for(var/obj/item/hand in handlist)
+			if(prob(current_size*5) && hand.w_class >= ((11-current_size)/2) && u_equip(hand))
+				step_towards(hand, src)
+				src << "<span class = 'warning'>The [S] pulls \the [hand] from your grip!</span>"
+	apply_effect(current_size * 3, IRRADIATE)
+	..()

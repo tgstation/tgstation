@@ -69,7 +69,7 @@
 	blob_talk(message)
 
 /mob/camera/blob/proc/blob_talk(message)
-	log_say("[key_name(src)] : [message]")
+	log_say("[key_name(src)] (@[src.x],[src.y],[src.z]): [message]")
 
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
@@ -120,4 +120,10 @@
 				break
 			if(newrange > maxjumprange) //to avoid going in an infinite loop
 				break
+
+		// Update on_moved listeners.
+		INVOKE_EVENT(on_moved,list("loc"=NewLoc))
 		return 0
+
+	// Update on_moved listeners.
+	INVOKE_EVENT(on_moved,list("loc"=NewLoc))

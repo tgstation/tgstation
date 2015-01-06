@@ -11,7 +11,8 @@
 	throwforce = 15.0
 	throw_speed = 5
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	max_amount = 60
 
 /obj/item/stack/tile/plasteel/New()
@@ -41,7 +42,7 @@
 */
 
 /obj/item/stack/tile/plasteel/proc/build(turf/S as turf)
-	if (istype(S,/turf/space))
+	if (istype(S,/turf/space) || istype(S,/turf/unsimulated))
 		S.ChangeTurf(/turf/simulated/floor/plating/airless)
 	else
 		S.ChangeTurf(/turf/simulated/floor/plating)

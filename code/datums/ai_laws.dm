@@ -26,8 +26,9 @@ var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck o
 /datum/ai_laws
 	var/name = "Unknown Laws"
 	var/randomly_selectable = 0
+	// Zeroth laws
 	var/zeroth = null
-	var/zeroth_borg = null
+	var/zeroth_borg = null // wotm8
 	var/list/inherent = list()
 	var/list/supplied = list()
 	var/list/ion = list()
@@ -91,32 +92,60 @@ var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck o
 			number++
 
 /datum/ai_laws/proc/adminLink(var/mob/living/silicon/S,var/law_type,var/index,var/label)
-	return "<a href=\"?src=\ref[src];set_law=[law_type];index=[index];mob=\ref[S]\">[label]</a>"
+	return "<a href=\"?src=\ref[src];set_law=[law_type];index=[index];mob=\ref[S]\">[label]</a> (<a href=\"?src=\ref[src];rm_law=[law_type];index=[index];mob=\ref[S]\" style=\"color:red\">Remove</a>)"
 
 /datum/ai_laws/Topic(href,href_list)
-	if("set_law" in href_list)
-		if(usr.client && usr.client.holder)
-			var/lawtype=text2num(href_list["set_law"])
-			var/index=text2num(href_list["index"])
-			var/mob/living/silicon/S=locate(href_list["mob"])
-			var/oldlaw = get_law(lawtype,index)
-			var/newlaw = copytext(sanitize(input(usr, "Please enter a new law.", "Freeform Law Entry", oldlaw)),1,MAX_MESSAGE_LEN)
-			if(newlaw == "")
-				if(alert(src,"Are you sure you wish to delete this law?","Yes","No") == "No")
-					return
-			set_law(lawtype,index,newlaw)
+	if(!usr.client || !usr.client.holder)
+		return
+	if("rm_law" in href_list)
+		var/lawtype = text2num(href_list["rm_law"])
+		var/index=text2num(href_list["index"])
+		var/mob/living/silicon/S=locate(href_list["mob"])
 
-			var/lawtype_str="law #[index]"
-			switch(lawtype)
-				if(LAW_ZERO)
-					lawtype_str = "law zero"
-				if(LAW_IONIC)
-					lawtype_str = "ionic law #[index]"
-				if(LAW_INHERENT)
-					lawtype_str = "core law #[index]"
-			log_admin("[key_name(usr)] has changed [lawtype_str] on [key_name(S)]: \"[newlaw]\"")
-			message_admins("[usr.key] changed [lawtype_str] on [key_name(S)]: \"[newlaw]\"")
-			return 1
+
+		var/oldlaw = get_law(lawtype,index)
+
+		rm_law(lawtype,index)
+
+		var/lawtype_str="law #[index]"
+		switch(lawtype)
+			if(LAW_ZERO)
+				lawtype_str = "law zero"
+			if(LAW_IONIC)
+				lawtype_str = "ionic law #[index]"
+			if(LAW_INHERENT)
+				lawtype_str = "core law #[index]"
+		log_admin("[key_name(usr)] has removed [lawtype_str] on [key_name(S)]: \"[oldlaw]\"")
+		message_admins("[usr.key] removed [lawtype_str] on [key_name(S)]: \"[oldlaw]\"")
+		lawchanges.Add("[key_name(usr)] has removed [lawtype_str] on [key_name(S)]: \"[oldlaw]\"")
+		usr.client.holder.show_player_panel(S)
+
+		return 1
+
+	if("set_law" in href_list)
+		var/lawtype=text2num(href_list["set_law"])
+		var/index=text2num(href_list["index"])
+		var/mob/living/silicon/S=locate(href_list["mob"])
+		var/oldlaw = get_law(lawtype,index)
+		var/newlaw = copytext(sanitize(input(usr, "Please enter a new law.", "Freeform Law Entry", oldlaw)),1,MAX_MESSAGE_LEN)
+		if(newlaw == "" || newlaw==null)
+			return
+		set_law(lawtype,index,newlaw)
+
+		var/lawtype_str="law #[index]"
+		switch(lawtype)
+			if(LAW_ZERO)
+				lawtype_str = "law zero"
+			if(LAW_IONIC)
+				lawtype_str = "ionic law #[index]"
+			if(LAW_INHERENT)
+				lawtype_str = "core law #[index]"
+		log_admin("[key_name(usr)] has changed [lawtype_str] on [key_name(S)]: \"[newlaw]\"")
+		message_admins("[usr.key] changed [lawtype_str] on [key_name(S)]: \"[newlaw]\"")
+
+		usr.client.holder.show_player_panel(S)
+
+		return 1
 	return 0
 
 /datum/ai_laws/proc/display_admin_tools(var/mob/living/silicon/context)
@@ -180,7 +209,17 @@ var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck o
 		else
 			supplied[idx]=law
 
-
+// /vg/: Used in the simplified law system. Takes LAW_ constants.
+/datum/ai_laws/proc/rm_law(var/law_type,var/idx)
+	switch(law_type)
+		if(LAW_IONIC)
+			ion.Cut(idx,idx+1)
+		if(LAW_ZERO)
+			zeroth=null
+		if(LAW_INHERENT)
+			inherent.Cut(idx,idx+1)
+		else
+			supplied.Cut(idx,idx+1)
 
 // Now a modifier
 /datum/ai_laws/proc/malfunction()

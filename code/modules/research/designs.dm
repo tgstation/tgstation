@@ -41,7 +41,7 @@ The required techs are the following:
 - Electromagnetic Spectrum Research	max=8	"magnets"
 - Data Theory Research				max=5	"programming"
 - Illegal Technologies Research		max=8	"syndicate"
-
+k
 */
 #define	IMPRINTER	1	//For circuits. Uses glass/chemicals.
 #define PROTOLATHE	2	//New stuff. Uses glass/metal/chemicals
@@ -81,7 +81,7 @@ The required techs are the following:
 	for(var/datum/tech/T in temp_techs)
 		if(T.id in req_tech)
 			new_reliability += T.level
-	new_reliability = between(reliability_base, new_reliability, 100)
+	new_reliability = Clamp(new_reliability, reliability_base, 100)
 	reliability = new_reliability
 	return
 
@@ -576,6 +576,15 @@ The required techs are the following:
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/aifixer
 
+/datum/design/pda_terminal
+	name = "Circuit Design (PDA Terminal)"
+	desc = "Allows for the construction of circuit boards used to build a PDA Terminal."
+	id = "pda_terminal"
+	req_tech = list("programming" = 3, "bluespace"= 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/pda_terminal
+
 /datum/design/pipedispenser
 	name = "Circuit Design (Pipe Dispenser)"
 	desc = "Allows for the construction of circuit boards used to build a Pipe Dispenser."
@@ -593,6 +602,10 @@ The required techs are the following:
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/pipedispenser/disposal
+
+///////////////////////////////////
+////////Mechanics Machines/////////
+///////////////////////////////////
 
 /datum/design/reverse_engine
 	name = "Circuit Design (Reverse Engine)"
@@ -2164,7 +2177,7 @@ The required techs are the following:
 	build_type = PROTOLATHE
 	materials = list("$iron" = 3000, "$glass" = 1000, "$diamond" = 3750) //Yes, a whole diamond is needed.
 	reliability_base = 79
-	build_path = /obj/item/weapon/pickaxe/diamonddrill
+	build_path = /obj/item/weapon/pickaxe/drill/diamond
 
 /datum/design/mesons
 	name = "Optical Meson Scanners"
@@ -2332,6 +2345,14 @@ The required techs are the following:
 	materials = list("$iron" = 700, "$glass" = 2000, "$gold" = 100)
 	build_path = /obj/item/clothing/glasses/night
 
+/datum/design/device_analyser
+	name = "Device Analyser"
+	desc = "A device for scanning other devices. Meta."
+	id = "deviceanalyser"
+	req_tech = list("magnets"=3, "engineering"=4, "materials"=4, "programming"=3)
+	build_type = PROTOLATHE
+	materials = list("$iron" = 500, "$glass" = 1000, "$gold" = 200, "$silver" = 200)
+	build_path = /obj/item/device/device_analyser
 
 /////////////////////////////////////////
 //////////////////Security///////////////
@@ -2394,6 +2415,16 @@ The required techs are the following:
 	build_path = /obj/item/borg/upgrade/syndicate
 	category = "Cyborg Upgrade Modules"
 	materials = list("$iron"=10000,"$glass"=15000,"$diamond" = 10000)
+
+/datum/design/borg_engineer_upgrade
+	name = "engineering module board"
+	desc = "Used to give an engineering cyborg more materials."
+	id = "borg_engineer_module"
+	build_type = MECHFAB
+	req_tech = list("engineering" = 1)
+	build_path = /obj/item/borg/upgrade/engineering
+	category = "Cyborg Upgrade Modules"
+	materials = list("$iron"=10000,"$glass"=10000,"$plasma"=5000)
 
 /datum/design/medical_module_surgery
 	name = "medical module board"
@@ -2621,6 +2652,25 @@ The required techs are the following:
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/bhangmeter
 
+/datum/design/mechapowerport
+	name = "Circuit Design (Mech Bay Power Port)"
+	desc = "Allows for the construction of circuit boards used to build a mech bay power connector port."
+	id = "mechapowerport"
+	req_tech = list("engineering" = 2, "powerstorage" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/mech_bay_power_port
+
+
+/datum/design/mechapowerfloor
+	name = "Circuit Design (Recharge Station)"
+	desc = "Allows for the construction of circuit boards used to build a mech bay recharge station."
+	id = "mechapowerfloor"
+	req_tech = list("materials" = 2, "powerstorage" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/mech_bay_recharge_station
+
 
 //////////////////////////////////////////////////////////////////
 // EMBEDDED CONTROLLER BOARDS
@@ -2827,3 +2877,12 @@ The required techs are the following:
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/centrifuge
+
+/datum/design/prism
+	name = "Circuit Design (Atmospherics Automation Console)"
+	desc = "Allows for the construction of circuit boards used to build an Atmospherics Automation Console"
+	id = "atmos_automation"
+	req_tech = list("programming" = 3, "engineering" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/prism

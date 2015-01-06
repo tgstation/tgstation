@@ -76,7 +76,6 @@
 	var/sdisabilities = 0	//Carbon
 	var/disabilities = 0	//Carbon
 	var/atom/movable/pulling = null
-	var/next_move = null
 	var/monkeyizing = null	//Carbon
 	var/other = 0.0
 	var/hand = null

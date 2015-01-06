@@ -8,9 +8,9 @@
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
-	use_power = 0
+	use_power = 1
 	idle_power_usage = 40
-	var/energy = 100
+	var/energy = 0
 	var/max_energy = 100
 	var/amount = 30
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
@@ -21,6 +21,14 @@
 	"copper","mercury","radium","water","ethanol","sugar","sacid","tungsten")
 
 	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
+
+
+/*
+USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
+*/
+
+/obj/machinery/chem_dispenser/mapping
+	energy = 100
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
@@ -939,6 +947,8 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/ricestalk = list("rice" = -5),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = list("cherryjelly" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/plastellium = list("plasticide" = 5),
+
+		/obj/item/seeds = list("blackpepper" = 5),
 
 
 		//archaeology!

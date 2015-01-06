@@ -148,7 +148,7 @@ Works together with spawning an observer, noted above.
 
 	if(client.images.len)
 		for(var/image/hud in client.images)
-			if(copytext(hud.icon_state,1,4) == "hud")
+			if(findtext(hud.icon_state, "hud", 1, 4))
 				client.images.Remove(hud)
 	if(antagHUD)
 		var/list/target_list = list()
@@ -464,8 +464,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/list/mobs = getmobs()
 	var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
 	var/mob/target = mobs[input]
-	if (/mob/living/silicon/ai == target)
-		target = target.client.eye
 	ManualFollow(target)
 
 // This is the ghost's follow verb with an argument

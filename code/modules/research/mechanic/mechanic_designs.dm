@@ -43,6 +43,7 @@
 			//message_admins("Found the [D]")
 			req_tech = D.req_tech //our tech is simply the item requirement
 			materials = D.materials
+			materials["$plastic"] += round(0.1 * src.MatTotal()) //plastic reqs
 			del(D)
 		else
 			req_tech = ConvertReqString2List(I.origin_tech)

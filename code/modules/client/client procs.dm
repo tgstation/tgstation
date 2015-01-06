@@ -21,13 +21,15 @@
 	If you have any  questions about this stuff feel free to ask. ~Carn
 	*/
 /client/Topic(href, href_list, hsrc)
+	//var/timestart = world.timeofday
+	//testing("topic call for [usr] [href]")
 	if(!usr || usr != mob)	//stops us calling Topic for somebody else's client. Also helps prevent usr=null
 		return
 
 	//Reduces spamming of links by dropping calls that happen during the delay period
-	if(next_allowed_topic_time > world.time)
-		return
-	next_allowed_topic_time = world.time + TOPIC_SPAM_DELAY
+//	if(next_allowed_topic_time > world.time)
+//		return
+	//next_allowed_topic_time = world.time + TOPIC_SPAM_DELAY
 
 	//search the href for script injection
 	if( findtext(href,"<script",1,0) )
@@ -46,8 +48,9 @@
 		return
 
 	//Logs all hrefs
-	if(config && config.log_hrefs && href_logfile)
-		href_logfile << "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
+	if(config && config.log_hrefs && investigations[I_HREFS])
+		var/datum/log_controller/I = investigations[I_HREFS]
+		I.write("<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br />")
 
 	switch(href_list["_src_"])
 		if("holder")	hsrc = holder
@@ -56,6 +59,7 @@
 		if("vars")		return view_var_Topic(href,href_list,hsrc)
 
 	..()	//redirect to hsrc.Topic()
+	//testing("[usr] topic call took [(world.timeofday - timestart)/10] seconds")
 
 /client/proc/handle_spam_prevention(var/message, var/mute_type)
 	if(config.automute_on && !holder && src.last_message == message)
@@ -110,7 +114,6 @@
 
 	src << "\red If the title screen is black, resources are still downloading. Please be patient until the title screen appears."
 
-
 	clients += src
 	directory[ckey] = src
 
@@ -150,7 +153,11 @@
 
 	if(prefs.lastchangelog != changelog_hash) //bolds the changelog button on the interface so we know there are updates.
 		winset(src, "rpane.changelog", "background-color=#eaeaea;font-style=bold")
+		prefs.SetChangelog(ckey,changelog_hash)
+		src << "<span class='info'>Changelog has changed since your last visit.</span>"
 
+	//Set map label to correct map name
+	winset(src, "rpane.map", "text=\"[map.nameLong]\"")
 
 	//////////////
 	//DISCONNECT//
@@ -162,8 +169,6 @@
 	directory -= ckey
 	clients -= src
 	return ..()
-
-
 
 /client/proc/log_client_to_db()
 	if(IsGuestKey(key))
@@ -286,6 +291,13 @@
 		'icons/pda_icons/pda_signaler.png',
 		'icons/pda_icons/pda_status.png',
 		'icons/pda_icons/pda_clock.png',
+		'icons/pda_icons/pda_minimap_box.png',
+		'icons/pda_icons/pda_minimap_bg_notfound.png',
+		'icons/pda_icons/pda_minimap_deff.png',
+		'icons/pda_icons/pda_minimap_taxi.png',
+		'icons/pda_icons/pda_minimap_meta.png',
+		'icons/pda_icons/pda_minimap_loc.gif',
+		'icons/pda_icons/pda_minimap_mkr.gif',
 		'icons/spideros_icons/sos_1.png',
 		'icons/spideros_icons/sos_2.png',
 		'icons/spideros_icons/sos_3.png',

@@ -227,12 +227,12 @@ var/list/department_radio_keys = list(
 	switch (message_mode)
 		if ("headset")
 			if (isrobot(src) && src:radio)
-				src:radio.talk_into(src, message)
+				spawn src:radio.talk_into(src, message)
 				used_radios += src:radio
 				is_speaking_radio = 1
 
 			if (!isrobot(src) && src:ears)
-				src:ears.talk_into(src, message)
+				spawn src:ears.talk_into(src, message)
 				used_radios += src:ears
 				is_speaking_radio = 1
 
@@ -242,7 +242,7 @@ var/list/department_radio_keys = list(
 
 		if ("secure headset")
 			if (src:ears)
-				src:ears.talk_into(src, message, 1)
+				spawn src:ears.talk_into(src, message, 1)
 				used_radios += src:ears
 				is_speaking_radio = 1
 
@@ -251,7 +251,7 @@ var/list/department_radio_keys = list(
 
 		if ("right hand")
 			if (r_hand)
-				r_hand.talk_into(src, message)
+				spawn r_hand.talk_into(src, message)
 				used_radios += src:r_hand
 				is_speaking_radio = 1
 
@@ -269,7 +269,7 @@ var/list/department_radio_keys = list(
 
 		if ("intercom")
 			for (var/obj/item/device/radio/intercom/I in view(1, null))
-				I.talk_into(src, message)
+				spawn I.talk_into(src, message)
 				used_radios += I
 				is_speaking_radio = 1
 
@@ -296,32 +296,40 @@ var/list/department_radio_keys = list(
 		if ("department")
 			if(istype(src, /mob/living/carbon))
 				if (src:ears)
-					src:ears.talk_into(src, message, message_mode)
+					spawn src:ears.talk_into(src, message, message_mode)
 					used_radios += src:ears
 					is_speaking_radio = 1
 			else if(istype(src, /mob/living/silicon/robot))
 				if (src:radio)
-					src:radio.talk_into(src, message, message_mode)
+					spawn src:radio.talk_into(src, message, message_mode)
 					used_radios += src:radio
 			message_range = 1
 			italics = 1
 
 		if ("pAI")
 			if (src:radio)
-				src:radio.talk_into(src, message)
+				spawn src:radio.talk_into(src, message)
 				used_radios += src:radio
 			message_range = 1
 			italics = 1
 
 		if("changeling")
 			if(mind && mind.changeling)
-				log_say("[key_name(src)] ([mind.changeling.changelingID]): [message]")
+				log_say("[key_name(src)] ([mind.changeling.changelingID])(@[src.x],[src.y],[src.z]): [message]")
 				for(var/mob/Changeling in mob_list)
 					if(istype(Changeling, /mob/living/silicon)) continue //WHY IS THIS NEEDED?
-					if((Changeling.mind && Changeling.mind.changeling) || istype(Changeling, /mob/dead/observer))
-						Changeling << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
-					else if(istype(Changeling,/mob/dead/observer)  && (Changeling.client && Changeling.client.prefs.toggles & CHAT_GHOSTEARS))
-						Changeling << "<i><font color=#800080><b>[mind.changeling.changelingID] (:</b> <a href='byond://?src=\ref[Changeling];follow2=\ref[Changeling];follow=\ref[src]'>(Follow)</a> [message]</font></i>"
+					if(!Changeling.client) continue
+					var/controls = ""
+					if(isobserver(Changeling))
+						controls = " (<a href='byond://?src=\ref[Changeling];follow2=\ref[Changeling];follow=\ref[src]'>Follow</a>"
+						if(Changeling.client.holder)
+							controls+= " | <A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>"
+							controls += " - AKA [src]"
+						controls += ")"
+					if( (Changeling.mind && Changeling.mind.changeling) \
+					  || isobserver(Changeling))
+						// TODO: needs CSS
+						Changeling << "<i><font color=#800080><b>[mind.changeling.changelingID]</b>[controls]: [message]</font></i>"
 				return
 ////SPECIAL HEADSETS START
 		else
@@ -330,11 +338,11 @@ var/list/department_radio_keys = list(
 				if(isrobot(src))//Seperates robots to prevent runtimes from the ear stuff
 					var/mob/living/silicon/robot/R = src
 					if(R.radio)//Sanityyyy
-						R.radio.talk_into(src, message, message_mode)
+						spawn R.radio.talk_into(src, message, message_mode)
 						used_radios += R.radio
 				else
 					if (src:ears)
-						src:ears.talk_into(src, message, message_mode)
+						spawn src:ears.talk_into(src, message, message_mode)
 						used_radios += src:ears
 				message_range = 1
 				italics = 1
@@ -435,7 +443,7 @@ var/list/department_radio_keys = list(
 
 			if("changeling")
 				if(mind && mind.changeling)
-					log_say("[key_name(src)] ([mind.changeling.changelingID]): [message]")
+					log_say("[key_name(src)] ([mind.changeling.changelingID])(@[src.x],[src.y],[src.z]): [message]")
 					for(var/mob/Changeling in mob_list)
 						if(istype(Changeling, /mob/living/silicon)) continue //WHY IS THIS NEEDED?
 						if((Changeling.mind && Changeling.mind.changeling) || istype(Changeling, /mob/dead/observer))
@@ -620,13 +628,13 @@ var/list/department_radio_keys = list(
 		if(O.listening_to_players)
 			O.catchMessage(message, src)
 
-	log_say("[name]/[key] : [message]")
+	log_say("[name]/[key] (@[x],[y],[z]): [message]")
 
 /mob/proc/addSpeechBubble(image/speech_bubble)
 	if(client)
 		client.images += speech_bubble
 		spawn(30)
-			client.images -= speech_bubble
+			if(client) client.images -= speech_bubble
 
 /obj/effect/speech_bubble
 	var/mob/parent

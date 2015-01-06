@@ -3,7 +3,8 @@
 	desc = "Some rods. Can be used for building, or something."
 	singular_name = "metal rod"
 	icon_state = "rods"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	w_class = 3.0
 	force = 9.0
 	throwforce = 15.0
@@ -70,5 +71,7 @@
 
 		var/obj/structure/grille/Grille = getFromPool(/obj/structure/grille, user.loc)
 		user << "<span class='notice'>You assembled a grille!</span>"
+		if(!Grille)
+			Grille = new(user.loc)
 		Grille.add_fingerprint(user)
 		use(2)

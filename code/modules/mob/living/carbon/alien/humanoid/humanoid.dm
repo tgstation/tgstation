@@ -21,44 +21,28 @@
 
 //This is fine, works the same as a human
 /mob/living/carbon/alien/humanoid/Bump(atom/movable/AM as mob|obj, yes)
-	spawn( 0 )
-		if ((!( yes ) || now_pushing))
-			return
-		now_pushing = 0
-		..()
-		if (!istype(AM, /atom/movable))
-			return
-
-		if (ismob(AM))
-			var/mob/tmob = AM
-			tmob.LAssailant = src
-
-		if (!now_pushing)
-			now_pushing = 1
-			if (!AM.anchored)
-				var/t = get_dir(src, AM)
-				if (istype(AM, /obj/structure/window/full))
-					for(var/obj/structure/window/win in get_step(AM,t))
-						now_pushing = 0
-						return
-				step(AM, t)
-			now_pushing = null
+	if ((!(yes) || now_pushing)) //IF YES !
 		return
+	now_pushing = 0
+	..()
+	if(!istype(AM, /atom/movable))
+		return
+
+	if(ismob(AM))
+		var/mob/tmob = AM
+		tmob.LAssailant = src
+
+	if(!now_pushing)
+		now_pushing = 1
+		if(!AM.anchored)
+			var/t = get_dir(src, AM)
+			if(istype(AM, /obj/structure/window/full))
+				for(var/obj/structure/window/win in get_step(AM,t))
+					now_pushing = 0
+					return
+			step(AM, t)
+		now_pushing = null
 	return
-
-/mob/living/carbon/alien/humanoid/movement_delay()
-	var/tally = 0
-	if (istype(src, /mob/living/carbon/alien/humanoid/queen))
-		tally += 5
-	if (istype(src, /mob/living/carbon/alien/humanoid/drone))
-		tally += 2
-	if (istype(src, /mob/living/carbon/alien/humanoid/sentinel))
-		tally += 1
-	if (istype(src, /mob/living/carbon/alien/humanoid/hunter))
-		tally = -1 // hunters go supersuperfast
-	return (tally + move_delay_add + config.alien_delay)
-
-///mob/living/carbon/alien/humanoid/bullet_act(var/obj/item/projectile/Proj) taken care of in living
 
 /mob/living/carbon/alien/humanoid/emp_act(severity)
 	if(flags & INVULNERABLE)
@@ -82,23 +66,21 @@
 	var/b_loss = null
 	var/f_loss = null
 	switch (severity)
-		if (1.0)
+		if(1.0)
 			b_loss += 500
 			gib()
 			return
 
-		if (2.0)
-			if (!shielded)
+		if(2.0)
+			if(!shielded)
 				b_loss += 60
-
 			f_loss += 60
-
 			ear_damage += 30
 			ear_deaf += 120
 
 		if(3.0)
 			b_loss += 30
-			if (prob(50) && !shielded)
+			if(prob(50) && !shielded)
 				Paralyse(1)
 			ear_damage += 15
 			ear_deaf += 60
@@ -111,18 +93,17 @@
 /mob/living/carbon/alien/humanoid/blob_act()
 	if(flags & INVULNERABLE)
 		return
-	if (stat == 2)
+	if(stat == 2)
 		return
 	var/shielded = 0
 	var/damage = null
-	if (stat != 2)
+	if(stat != 2)
 		damage = rand(30,40)
 
 	if(shielded)
 		damage /= 4
 
-
-	show_message("\red The blob attacks!")
+	src << "<span class='warning'>The blob attacks you!</span>"
 
 	adjustFireLoss(damage)
 
@@ -132,58 +113,53 @@
 /mob/living/carbon/alien/humanoid/meteorhit(O as obj)
 	if(flags & INVULNERABLE)
 		return
-	for(var/mob/M in viewers(src, null))
-		if ((M.client && !( M.blinded )))
-			M.show_message(text("\red [] has been hit by []", src, O), 1)
-	if (health > 0)
+	visible_message("<span class='warning'>\The [src] has been hit by [O]</span>")
+	if(health > 0)
 		adjustFireLoss((istype(O, /obj/effect/meteor/small) ? 10 : 25))
 		adjustFireLoss(30)
-
 		updatehealth()
 	return
 
 
 /mob/living/carbon/alien/humanoid/attack_paw(mob/living/carbon/monkey/M as mob)
-	if(!ismonkey(M))	return//Fix for aliens receiving double messages when attacking other aliens.
+	if(!ismonkey(M))
+		return//Fix for aliens receiving double messages when attacking other aliens.
 
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
+	if(!ticker)
+		M << "<span class='warning'>You cannot attack people before the game has started.</span>"
 		return
 
+	/*
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
 		M << "No attacking people at spawn, you jackass."
 		return
+	*/
 	..()
 
 	switch(M.a_intent)
 
-		if ("help")
+		if("help")
 			help_shake_act(M)
 		else
-			if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
+			if(istype(wear_mask, /obj/item/clothing/mask/muzzle))
 				return
-			if (health > 0)
+			if(health > 0)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[M.name] has bit [src]!</B>"), 1)
+				visible_message("<span class='danger'>\The [M] has bit \the [src]!</span>")
 				adjustBruteLoss(rand(1, 3))
 				updatehealth()
 	return
 
 
 /mob/living/carbon/alien/humanoid/attack_slime(mob/living/carbon/slime/M as mob)
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
+	if(!ticker)
+		M << "<span class='warning'>You cannot attack people before the game has started.</span>"
 		return
 
 	if(M.Victim) return // can't attack while eating!
 
-	if (health > -100)
-
-		for(var/mob/O in viewers(src, null))
-			if ((O.client && !( O.blinded )))
-				O.show_message(text("\red <B>The [M.name] glomps []!</B>", src), 1)
+	if(health > -100)
+		visible_message("<span class='danger'>\The [M] glomps [src]!</span>")
 
 		var/damage = rand(1, 3)
 
@@ -210,13 +186,10 @@
 				M.powerlevel -= 3
 				if(M.powerlevel < 0)
 					M.powerlevel = 0
-
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>The [M.name] has shocked []!</B>", src), 1)
+				visible_message("<span class='danger'>\The [M] has shocked [src]!</span>")
 
 				Weaken(power)
-				if (stuttering < power)
+				if(stuttering < power)
 					stuttering = power
 				Stun(power)
 
@@ -224,12 +197,10 @@
 				s.set_up(5, 1, src)
 				s.start()
 
-				if (prob(stunprob) && M.powerlevel >= 8)
+				if(prob(stunprob) && M.powerlevel >= 8)
 					adjustFireLoss(M.powerlevel * rand(6,10))
 
-
 		updatehealth()
-
 	return
 
 /mob/living/carbon/alien/humanoid/attack_animal(mob/living/simple_animal/M as mob)
@@ -240,21 +211,21 @@
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [M.attacktext] by [M.name] ([M.ckey])</font>")
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+		visible_message("<span class='warning'><B>[M]</B> [M.attacktext] \the [src] !</span>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
 		updatehealth()
 
 /mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M as mob)
-	//M.changeNext_move(10)
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
+	if(!ticker)
+		M << "<span class='warning'>You cannot attack people before the game has started.</span>"
 		return
 
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
+	/*
+	if(istype(loc, /turf) && istype(loc.loc, /area/start))
 		M << "No attacking people at spawn, you jackass."
 		return
+	*/
 
 	..()
 
@@ -266,41 +237,38 @@
 					G.cell.charge -= 2500
 
 					Weaken(5)
-					if (stuttering < 5)
+					if(stuttering < 5)
 						stuttering = 5
 					Stun(5)
-
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>", 1, "\red You hear someone fall.", 2)
+					visible_message("<span class='danger'>\The [src] has been touched with the stun gloves by [M] !</span>")
 					return
 				else
-					M << "\red Not enough charge! "
+					M << "<span class='warning'>Not enough charge !</span>"
 					return
 
 	switch(M.a_intent)
 
-		if ("help")
-			if (health > 0)
+		if("help")
+			if(health > 0)
 				help_shake_act(M)
 			else
-				if (M.health >= -75.0)
-					if (((M.head && M.head.flags & 4) || ((M.wear_mask && !( M.wear_mask.flags & 32 )) || ((head && head.flags & 4) || (wear_mask && !( wear_mask.flags & 32 ))))))
-						M << "\blue <B>Remove that mask!</B>"
+				if(M.health >= -75.0)
+					if(((M.head && M.head.flags & 4) || ((M.wear_mask && !( M.wear_mask.flags & 32 )) || ((head && head.flags & 4) || (wear_mask && !( wear_mask.flags & 32))))))
+						M << "<span class='notice'>Remove that mask!</span>"
 						return
-					var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
+					var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human()
 					O.source = M
 					O.target = src
 					O.s_loc = M.loc
 					O.t_loc = loc
 					O.place = "CPR"
 					requests += O
-					spawn( 0 )
+					spawn(0)
 						O.process()
 						return
 
-		if ("grab")
-			if (M == src)
+		if("grab")
+			if(M == src)
 				return
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
 
@@ -312,57 +280,43 @@
 			LAssailant = M
 
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
+			visible_message("<span class='warning'>[M] has grabbed \the [src] passively!</span>")
 
-		if ("hurt")
+		if("hurt")
 			var/damage = rand(1, 9)
-			if (prob(90))
-				if (M_HULK in M.mutations)//M_HULK SMASH
+			if(prob(90))
+				if(M_HULK in M.mutations) //M_HULK SMASH
 					damage += 14
 					spawn(0)
-						Weaken(damage) // Why can a hulk knock an alien out but not knock out a human? Damage is robust enough.
-						step_away(src,M,15)
+						Weaken(damage) //Why can a hulk knock an alien out but not knock out a human? Damage is robust enough.
+						step_away(src, M, 15)
 						sleep(3)
-						step_away(src,M,15)
+						step_away(src, M, 15)
 				playsound(loc, "punch", 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has punched []!</B>", M, src), 1)
-				if (damage > 9||prob(5))//Regular humans have a very small chance of weakening an alien.
-					Weaken(1,5)
-					for(var/mob/O in viewers(M, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("\red <B>[] has weakened []!</B>", M, src), 1, "\red You hear someone fall.", 2)
+				visible_message("<span class='danger'>[M] has punched \the [src] !</span>")
+				if(damage > 9 ||prob(5))//Regular humans have a very small chance of weakening an alien.
+					Weaken(1, 5)
+					visible_message("<span class='danger'>[M] has weakened \the [src] !</span>")
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has attempted to punch []!</B>", M, src), 1)
+				visible_message("<span class='danger'>[M] has attempted to punch \the [src] !</span>")
 
-		if ("disarm")
-			if (!lying)
-				if (prob(5))//Very small chance to push an alien down.
+		if("disarm")
+			if(!lying)
+				if(prob(5)) //Very small chance to push an alien down.
 					Weaken(2)
 					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("\red <B>[] has pushed down []!</B>", M, src), 1)
+					visible_message("<span class='danger'>[M] has pushed down \the [src] !</span>")
 				else
-					if (prob(50))
+					if(prob(50))
 						drop_item()
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-						for(var/mob/O in viewers(src, null))
-							if ((O.client && !( O.blinded )))
-								O.show_message(text("\red <B>[] has disarmed []!</B>", M, src), 1)
+						visible_message("<span class='danger'>[M] has disarmed \the [src] !</span>")
 					else
 						playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-						for(var/mob/O in viewers(src, null))
-							if ((O.client && !( O.blinded )))
-								O.show_message(text("\red <B>[] has attempted to disarm []!</B>", M, src), 1)
+						visible_message("<span class='danger'>[M] has attempted to disarm \the [src] !</span>")
 	return
 
 /*Code for aliens attacking aliens. Because aliens act on a hivemind, I don't see them as very aggressive with each other.
@@ -371,39 +325,35 @@ In all, this is a lot like the monkey code. /N
 */
 
 /mob/living/carbon/alien/humanoid/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
+	if(!ticker)
+		M << "<span class='warning'>You cannot attack people before the game has started.</span>"
 		return
 
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
+	/*
+	if(istype(loc, /turf) && istype(loc.loc, /area/start))
 		M << "No attacking people at spawn, you jackass."
 		return
-
+	*/
 	..()
 
 	switch(M.a_intent)
 
-		if ("help")
+		if("help")
 			sleeping = max(0,sleeping-5)
 			resting = 0
 			AdjustParalysis(-3)
 			AdjustStunned(-3)
 			AdjustWeakened(-3)
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("\blue [M.name] nuzzles [] trying to wake it up!", src), 1)
-
+			visible_message("<span class='notice'>[M] nuzzles [src] trying to wake it up !</span>")
 		else
-			if (health > 0)
+			if(health > 0)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				var/damage = rand(1, 3)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
+				visible_message("<span class='danger'>\The [M] has bit [src]!</span>")
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
-				M << "\green <B>[name] is too injured for that.</B>"
+				M << "<span class='alien'>[name] is too injured for that.</span>"
 	return
 
 

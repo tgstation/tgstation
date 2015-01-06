@@ -20,7 +20,7 @@
 	icon_state = "sampler0"
 	item_state = "screwdriver_brown"
 	w_class = 1.0
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	//slot_flags = SLOT_BELT
 	var/sampled_turf = ""
 	var/num_stored_bags = 10
@@ -53,8 +53,8 @@
 		var/turf/unsimulated/mineral/T = item_to_sample
 		T.geologic_data.UpdateNearbyArtifactInfo(T)
 		geo_data = T.geologic_data
-	else if(istype(item_to_sample, /obj/item/weapon/ore))
-		var/obj/item/weapon/ore/O = item_to_sample
+	else if(istype(item_to_sample, /obj/item/weapon/strangerock))
+		var/obj/item/weapon/strangerock/O = item_to_sample
 		geo_data = O.geologic_data
 
 	if(geo_data)

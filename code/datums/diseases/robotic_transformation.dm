@@ -55,11 +55,9 @@
 				if(src.gibbed != 0) return 0
 				var/turf/T = find_loc(affected_mob)
 				gibs(T)
-				src.cure(0)
 				gibbed = 1
 				var/mob/living/carbon/human/H = affected_mob
 				if(istype(H) && !jobban_isbanned(affected_mob, "Cyborg"))
 					H.Robotize()
 				else
 					affected_mob.death(1)
-

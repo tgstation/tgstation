@@ -71,13 +71,13 @@ Used In File(s): /code/game/machinery/computers/communications.dm
 		<h3>Presets</h3>
 		{{for data.stat_display.presets}}
 			<div class="line">
-				<div class="statusLabel">{{:helper.link(value.label,'info',{'operation':'setstat','statdisp':value.name},null,(value.name==data.stat_display.type?'linkOn':''))}}</div>
+				<div class="statusLabel">{{:helper.link(value.label,'info',{'operation':'setstat','statdisp':name},null,(name==data.stat_display.type?'linkOn':''))}}</div>
 			</div>
 		{{/for}}
 		<h3>Alerts</h3>
 		{{for data.stat_display.alerts}}
 			<div class="line">
-				<div class="statusLabel">{{:helper.link(value.label,'alert',{'operation':'setstat','statdisp':'alert','alert':value.alert},null,(value.alert==data.stat_display.type?'linkOn':''))}}</div>
+				<div class="statusLabel">{{:helper.link(value.label,'alert',{'operation':'setstat','statdisp':'alert','alert':alert},null,(name==data.stat_display.type?'linkOn':''))}}</div>
 			</div>
 		{{/for}}
 		<h3>Messages</h3>

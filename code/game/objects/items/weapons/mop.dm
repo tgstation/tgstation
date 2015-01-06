@@ -9,7 +9,7 @@
 	throw_speed = 5
 	throw_range = 3
 	w_class = 3.0
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	attack_verb = list("mopped", "bashed", "bludgeoned", "whacked", "slapped", "whipped")
 
 /obj/item/weapon/mop/New()

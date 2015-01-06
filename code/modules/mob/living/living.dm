@@ -13,6 +13,9 @@
 		if(M_HARDCORE in mutations)
 			mutations.Remove(M_HARDCORE)
 			src << "<span class='notice'>You feel like a pleb.</span>"
+
+	handle_beams()
+
 	if(mind)
 		if(mind in ticker.mode.implanted)
 			if(implanting) return
@@ -31,6 +34,23 @@
 					special_role = null
 					current << "\red <FONT size = 3><B>The fog clouding your mind clears. You remember nothing from the moment you were implanted until now..(You don't remember who enslaved you)</B></FONT>"
 				*/
+
+// Apply connect damage
+/mob/living/beam_connect(var/obj/effect/beam/B)
+	..()
+	last_beamchecks["\ref[B]"]=world.time
+
+/mob/living/beam_disconnect(var/obj/effect/beam/B)
+	..()
+	apply_beam_damage(B)
+	last_beamchecks.Remove("\ref[B]") // RIP
+
+/mob/living/proc/handle_beams()
+	if(flags & INVULNERABLE)
+		return
+	// New beam damage code (per-tick)
+	for(var/obj/effect/beam/B in beams)
+		apply_beam_damage(B)
 
 /mob/living/cultify()
 	if(iscultist(src) && client)
@@ -57,6 +77,19 @@
 		G << "<span class='sinister'>You feel relieved as what's left of your soul finally escapes its prison of flesh.</span>"
 	else
 		dust()
+
+/mob/living/proc/apply_beam_damage(var/obj/effect/beam/B)
+	var/lastcheck=last_beamchecks["\ref[B]"]
+
+	// Figure out how much damage to deal.
+	// Formula: (deciseconds_since_connect/10 deciseconds)*B.get_damage()
+	var/damage = ((world.time - lastcheck)/10)  * B.get_damage()
+
+	// Actually apply damage
+	apply_damage(damage, B.damage_type, B.def_zone)
+
+	// Update check time.
+	last_beamchecks["\ref[B]"]=world.time
 
 /mob/living/verb/succumb()
 	set hidden = 1
@@ -556,13 +589,16 @@
 		for(var/mob/living/carbon/slime/M in view(1,src))
 			M.UpdateFeed(src)
 
+	// Update on_moved listeners.
+	INVOKE_EVENT(on_moved,list("loc"=loc))
+
 /mob/living/verb/resist()
 	set name = "Resist"
 	set category = "IC"
 
-	if(!isliving(usr) || usr.next_move > world.time)
+	if(!isliving(usr) || usr.special_delayer.blocked())
 		return
-	usr.next_move = world.time + 20
+	delayNext(DELAY_ALL,20) // Attack, Move, and Special.
 
 	var/mob/living/L = usr
 
@@ -590,12 +626,8 @@
 			H << "\red <B>With an immense exertion of will, you regain control of your body!</B>"
 			B.host << "\red <B>You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you.</b>"
 
-			var/mob/living/carbon/C=L
+			var/mob/living/carbon/C=B.host
 			C.do_release_control(0) // Was detach().
-
-			verbs -= /mob/living/carbon/proc/release_control
-			verbs -= /mob/living/carbon/proc/punish_host
-			verbs -= /mob/living/carbon/proc/spawn_larvae
 
 			return
 
@@ -628,12 +660,12 @@
 
 
 	//unbuckling yourself
-	if(L.buckled && (L.last_special <= world.time))
+	if(L.buckled && !L.special_delayer.blocked())
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
 			if(C.handcuffed)
-				C.next_move = world.time + 100
-				C.last_special = world.time + 100
+				C.delayNextAttack(100)
+				C.delayNextSpecial(100)
 				C << "<span class='warning'>You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)</span>"
 				for(var/mob/O in viewers(L))
 					O.show_message("<span class='warning'>[usr] attempts to unbuckle themself!</span>", 1)
@@ -668,8 +700,7 @@
 		//		breakout_time++ //Harder to get out of welded lockers than locked lockers
 
 		//okay, so the closet is either welded or locked... resist!!!
-		usr.next_move = world.time + 100
-		L.last_special = world.time + 100
+		L.delayNext(DELAY_ALL,100)
 		L << "<span class='warning'>You lean on the back of [C] and start pushing the door open (this will take about [breakout_time] minutes).</span>"
 		for(var/mob/O in viewers(usr.loc))
 			O.show_message("<span class='danger'>The [C] begins to shake violently!</span>", 1)
@@ -731,9 +762,8 @@
 					"<span class='notice'>You extinguish yourself.</span>")
 				ExtinguishMob()
 			return
-		if(CM.handcuffed && CM.canmove && (CM.last_special <= world.time))
-			CM.next_move = world.time + 100
-			CM.last_special = world.time + 100
+		if(CM.handcuffed && CM.canmove && CM.special_delayer.blocked())
+			CM.delayNext(DELAY_ALL,100)
 			if(isalienadult(CM) || (M_HULK in usr.mutations))//Don't want to do a lot of logic gating here.
 				usr << "<span class='warning'>You attempt to break your handcuffs. (This will take around 5 seconds and you need to stand still)</span>"
 				for(var/mob/O in viewers(CM))
@@ -774,9 +804,8 @@
 					else
 						CM << "<span class='warning'>Your uncuffing attempt was interrupted.</span>"
 
-		else if(CM.legcuffed && CM.canmove && (CM.last_special <= world.time))
-			CM.next_move = world.time + 100
-			CM.last_special = world.time + 100
+		else if(CM.legcuffed && CM.canmove && CM.special_delayer.blocked())
+			CM.delayNext(DELAY_ALL,100)
 			if(isalienadult(CM) || (M_HULK in usr.mutations))//Don't want to do a lot of logic gating here.
 				usr << "<span class='warning'>You attempt to break your legcuffs. (This will take around 5 seconds and you need to stand still)</span>"
 				for(var/mob/O in viewers(CM))
@@ -827,3 +856,12 @@
 
 /mob/living/proc/has_eyes()
 	return 1
+
+/mob/living/singularity_act()
+	var/gain = 20
+	investigation_log(I_SINGULO,"has been consumed by a singularity")
+	gib()
+	return(gain)
+
+/mob/living/singularity_pull(S)
+	step_towards(src, S)

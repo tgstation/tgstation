@@ -4,7 +4,7 @@
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "cleaner"
 	item_state = "cleaner"
-	flags = TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	flags = OPENCONTAINER|FPRINT|USEDELAY
 	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = 2.0
@@ -23,7 +23,7 @@
 	if(istype(A, /obj/effect/proc_holder/spell))
 		return
 
-	user.changeNext_move(8)
+	user.delayNextAttack(8)
 
 	if(istype(A, /obj/structure/reagent_dispensers) && get_dist(src,A) <= 1) //this block copypasted from reagent_containers/glass, for lack of a better solution
 		if(!A.reagents.total_volume && A.reagents)

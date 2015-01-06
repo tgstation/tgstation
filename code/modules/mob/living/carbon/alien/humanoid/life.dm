@@ -7,7 +7,6 @@
 
 	var/temperature_alert = 0
 
-
 /mob/living/carbon/alien/humanoid/Life()
 	set invisibility = 0
 	//set background = 1
@@ -68,24 +67,24 @@
 
 /mob/living/carbon/alien/humanoid
 	proc/handle_disabilities()
-		if (disabilities & EPILEPSY)
-			if ((prob(1) && paralysis < 10))
-				src << "\red You have a seizure!"
+		if(disabilities & EPILEPSY)
+			if((prob(1) && paralysis < 10))
+				src << "<span class='warning'>You have a seizure !</span>"
 				Paralyse(10)
-		if (disabilities & COUGHING)
-			if ((prob(5) && paralysis <= 1))
+		if(disabilities & COUGHING)
+			if((prob(5) && paralysis <= 1))
 				drop_item()
 				spawn( 0 )
 					emote("cough")
 					return
-		if (disabilities & TOURETTES)
-			if ((prob(10) && paralysis <= 1))
+		if(disabilities & TOURETTES)
+			if((prob(10) && paralysis <= 1))
 				Stun(10)
 				spawn( 0 )
 					emote("twitch")
 					return
-		if (disabilities & NERVOUS)
-			if (prob(10))
+		if(disabilities & NERVOUS)
+			if(prob(10))
 				stuttering = max(10, stuttering)
 
 
@@ -150,16 +149,16 @@
 
 	proc/get_breath_from_internal(volume_needed)
 		if(internal)
-			if (!contents.Find(internal))
+			if(!contents.Find(internal))
 				internal = null
-			if (!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
+			if(!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
 				internal = null
 			if(internal)
-				if (internals)
+				if(internals)
 					internals.icon_state = "internal1"
 				return internal.remove_air_volume(volume_needed)
 			else
-				if (internals)
+				if(internals)
 					internals.icon_state = "internal0"
 		return null
 
@@ -193,7 +192,7 @@
 
 		if(breath.temperature > (T0C+66) && !(M_RESIST_HEAT in mutations)) // Hot air hurts :(
 			if(prob(20))
-				src << "\red You feel a searing heat in your lungs!"
+				src << "<span class='warning'>You feel a searing heat in your lungs !</span>"
 			fire_alert = max(fire_alert, 1)
 		else
 			fire_alert = 0
@@ -201,8 +200,6 @@
 		//Temporary fixes to the alerts.
 
 		return 1
-
-
 
 	proc/adjust_body_temperature(current, loc_temp, boost)
 		var/temperature = current
@@ -265,12 +262,12 @@
 		if(M_FAT in mutations)
 			if(nutrition < 100)
 				if(prob(round((50 - nutrition) / 100)))
-					src << "\blue You feel fit again!"
+					src << "<span class='notice'>You feel fit again!</span>"
 					mutations.Remove(M_FAT)
 		else
 			if(nutrition > 500)
 				if(prob(5 + round((nutrition - 200) / 2)))
-					src << "\red You suddenly feel blubbery!"
+					src << "<span class='warning'>You suddenly feel blubbery!</span>"
 					mutations.Add(M_FAT)
 
 		if (nutrition > 0)
