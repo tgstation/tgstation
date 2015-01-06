@@ -28,6 +28,11 @@
 	colour = "#DA00FF"
 	colourName = "purple"
 
+/obj/item/toy/crayon/white
+	icon_state = "crayonwhite"
+	colour = "#FFFFFF"
+	colourName = "white"
+
 /obj/item/toy/crayon/mime
 	icon_state = "crayonmime"
 	desc = "A very sad-looking crayon."
