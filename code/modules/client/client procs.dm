@@ -156,6 +156,8 @@
 		prefs.SetChangelog(ckey,changelog_hash)
 		src << "<span class='info'>Changelog has changed since your last visit.</span>"
 
+	//Set map label to correct map name
+	winset(src, "rpane.map", "text=\"[map.nameLong]\"")
 
 	//////////////
 	//DISCONNECT//

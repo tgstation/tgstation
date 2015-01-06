@@ -6,7 +6,7 @@
 	icon = 'code/WorkInProgress/Cael_Aislinn/Rust/rust.dmi'
 	icon_state = "fuel_compressor0"
 	w_class = 4
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 
 /obj/item/rust_fuel_compressor_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)

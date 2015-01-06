@@ -291,7 +291,7 @@
 	icon = 'icons/obj/items.dmi'
 	name = "Coin"
 	icon_state = "coin"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 	force = 0.0
 	throwforce = 0.0

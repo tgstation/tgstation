@@ -12,7 +12,7 @@
 	w_type = RECYK_ELECTRONIC
 	origin_tech = "engineering=1"
 
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 

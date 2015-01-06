@@ -92,6 +92,7 @@
 
 		log_admin("[key_name(usr)] has added a law to [key_name(S)]: \"[newlaw]\"")
 		message_admins("[usr.key] has added a law to [key_name(S)]: \"[newlaw]\"")
+		lawchanges.Add("[key_name(usr)] has added a law to [key_name(S)]: \"[newlaw]\"")
 
 	else if("reset_laws" in href_list)
 		var/mob/living/silicon/S = locate(href_list["mob"])
@@ -114,6 +115,7 @@
 
 		log_admin("[key_name(usr)] has reset [key_name(S)]: [lawtype]")
 		message_admins("[usr.key] has reset [key_name(S)]: [lawtype]")
+		lawchanges.Add("[key_name(usr)] has reset [key_name(S)]: [lawtype]")
 
 	else if("clear_laws" in href_list)
 		var/mob/living/silicon/S = locate(href_list["mob"])
@@ -127,6 +129,7 @@
 
 		log_admin("[key_name(usr)] has purged [key_name(S)]")
 		message_admins("[usr.key] has purged [key_name(S)]")
+		lawchanges.Add("[key_name(usr)] has purged [key_name(S)]")
 
 	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"])
 		var/adminckey = href_list["dbsearchadmin"]
@@ -1866,6 +1869,7 @@
 		usr << "\blue New [subject] will spawn with the [selected_law] lawset."
 		log_admin("[key_name(src.owner)] set the default laws of [subject] to: [selected_law]")
 		message_admins("[key_name_admin(src.owner)] set the default laws of [subject] to: [selected_law]", 1)
+		lawchanges.Add("[key_name_admin(src.owner)] set the default laws of [subject] to: [selected_law]")
 
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))	return

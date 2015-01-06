@@ -416,4 +416,4 @@ obj/item/weapon/grenade/chem_grenade/exgrenade
 	desc = "..."
 	icon_state = null
 	volume = 1000
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOREACT
+	flags = FPRINT  | OPENCONTAINER | NOREACT

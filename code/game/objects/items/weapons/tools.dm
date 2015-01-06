@@ -21,7 +21,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "wrench"
 	hitsound = "sound/weapons/smash.ogg"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	force = 5.0
@@ -49,7 +49,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "screwdriver"
 	hitsound = 'sound/weapons/toolhit.ogg'
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	force = 5.0
@@ -135,7 +135,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "cutters"
 	hitsound = 'sound/weapons/toolhit.ogg'
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	force = 6.0
@@ -175,7 +175,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "welder"
 	hitsound = 'sound/weapons/toolhit.ogg'
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 
@@ -486,7 +486,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "crowbar"
 	hitsound = "sound/weapons/toolhit.ogg"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	force = 5.0
@@ -540,7 +540,7 @@
 	desc = "A professional conversion kit used to convert any knock off revolver into the real deal capable of shooting lethal .357 rounds without the possibility of catastrophic failure"
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "kit"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 	w_class = 2.0
 	w_type = RECYK_MISC

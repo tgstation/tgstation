@@ -1,4 +1,23 @@
 //Please use mob or src (not usr) in these procs. This way they can be called in the same fashion as procs.
+/client/verb/MapRender()
+	set name = "MapRender"
+	set desc = "Shows a high scale rendering of the current map in your browser."
+	set hidden = 1
+
+	if(alert("This will open the map render(s) in your browser. Are you sure?",,"Yes","No")=="No")
+		return
+	if(map)
+		switch(map.nameShort)
+			if("meta")
+				src << link("http://ss13.nexisonline.net/img/map-renders/metaclub/")
+			if("deff")
+				src << link("http://ss13.nexisonline.net/img/map-renders/defficiency/")
+			if("box")
+				src << link("http://ss13.nexisonline.net/img/map-renders/tgstation/")
+			else
+				src << "<span class='warning'>No map render for [map.nameLong], bug nexis about it!</span>"
+	return
+
 /client/verb/wiki()
 	set name = "wiki"
 	set desc = "Visit the wiki."

@@ -4,7 +4,7 @@
 	icon_state = "electropack0"
 	item_state = "electropack"
 	frequency = 1449
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BACK
 	w_class = 5.0

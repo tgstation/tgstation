@@ -106,7 +106,11 @@ datum/controller/game_controller/proc/setup()
 datum/controller/game_controller/proc/setup_objects()
 	world << "\red \b Initializing objects"
 	sleep(-1)
+	//var/last_init_type = null
 	for(var/atom/movable/object in world)
+		//if(last_init_type != object.type)
+		//	testing("Initializing [object.type]")
+		//	last_init_type = object.type
 		object.initialize()
 
 

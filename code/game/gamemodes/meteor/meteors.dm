@@ -138,7 +138,7 @@
 
 /obj/effect/meteor/big
 	name = "big meteor"
-	pass_flags = null //Nope, you're not dodging that table
+	pass_flags = 0 //Nope, you're not dodging that table
 
 /obj/effect/meteor/big/ex_act(severity)
 		return

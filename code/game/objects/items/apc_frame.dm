@@ -5,7 +5,7 @@
 	desc = "Used for repairing or building APCs"
 	icon = 'icons/obj/apc_repair.dmi'
 	icon_state = "apc_frame"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 	w_type=RECYK_METAL
 
@@ -54,7 +54,7 @@
 	desc = "Used for repairing or building intercoms"
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "intercom_frame"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 	w_type=RECYK_METAL
 

@@ -234,7 +234,7 @@ proc/cardinalrange(var/center)
 	icon_state = "box"
 	item_state = "electronic"
 	w_class = 4.0
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 1
 	throwforce = 5
 	throw_speed = 1
