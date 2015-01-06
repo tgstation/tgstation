@@ -14,6 +14,7 @@
 	stun = 5
 	weaken = 5
 	stutter = 5
+	jitter = 20
 	hitsound = "sparks"
 	range = 7
 

@@ -114,11 +114,8 @@
 					new /obj/item/clothing/head/helmet/space/hardsuit/wizard(get_turf(H))
 				if("scrying")
 					new /obj/item/weapon/scrying(get_turf(H))
-					if (!(XRAY in H.mutations))
-						H.mutations.Add(XRAY)
-						H.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
-						H.see_in_dark = 8
-						H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+					if (!(H.dna.check_mutation(XRAY)))
+						H.dna.add_mutation(XRAY)
 						H << "<span class='notice'>The walls suddenly disappear.</span>"
 
 				if("special")
@@ -137,19 +134,18 @@
 					H << "<span class='notice'>You suddenly feel lucky.</span>"
 
 /proc/summonevents()
-	if(events) 																//if there isn't something is very wrong
-		if(!events.wizardmode)
-			events.frequency_lower = 600									//1 minute lower bound
-			events.frequency_upper = 3000									//5 minutes upper bound
-			events.toggleWizardmode()
-			events.reschedule()
+	if(!SSevent.wizardmode)
+		SSevent.frequency_lower = 600									//1 minute lower bound
+		SSevent.frequency_upper = 3000									//5 minutes upper bound
+		SSevent.toggleWizardmode()
+		SSevent.reschedule()
 
-		else 																//Speed it up
-			events.frequency_lower = round(events.frequency_lower * 0.8)	//1 minute | 48 seconds | 34.8 seconds | 30.7 seconds | 24.6 seconds
-			events.frequency_upper = round(events.frequency_upper * 0.6)	//5 minutes | 3 minutes | 1 minute 48 seconds | 1 minute 4.8 seconds | 38.9 seconds
-			if(events.frequency_upper < events.frequency_lower)
-				events.frequency_upper = events.frequency_lower				//this can't happen unless somehow multiple spellbooks are used, but just in case
+	else 																//Speed it up
+		SSevent.frequency_lower = round(SSevent.frequency_lower * 0.8)	//1 minute | 48 seconds | 34.8 seconds | 30.7 seconds | 24.6 seconds
+		SSevent.frequency_upper = round(SSevent.frequency_upper * 0.6)	//5 minutes | 3 minutes | 1 minute 48 seconds | 1 minute 4.8 seconds | 38.9 seconds
+		if(SSevent.frequency_upper < SSevent.frequency_lower)
+			SSevent.frequency_upper = SSevent.frequency_lower				//this can't happen unless somehow multiple spellbooks are used, but just in case
 
-			events.reschedule()
-			message_admins("Summon Events intensifies, events will now occur every [events.frequency_lower / 600] to [events.frequency_upper / 600] minutes.")
-			log_game("Summon Events was increased!")
+		SSevent.reschedule()
+		message_admins("Summon Events intensifies, events will now occur every [SSevent.frequency_lower / 600] to [SSevent.frequency_upper / 600] minutes.")
+		log_game("Summon Events was increased!")

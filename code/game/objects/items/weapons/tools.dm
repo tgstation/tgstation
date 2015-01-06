@@ -86,7 +86,7 @@
 	if(!istype(M))	return ..()
 	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head")
 		return ..()
-	if((CLUMSY in user.mutations) && prob(50))
+	if(user.disabilities & CLUMSY && prob(50))
 		M = user
 	return eyestab(M,user)
 
@@ -204,7 +204,7 @@
 			force = 3
 			damtype = "brute"
 			update_icon()
-			processing_objects.Remove(src)
+			SSobj.processing.Remove(src)
 			return
 	//Welders left on now use up fuel, but lets not have them run out quite that fast
 		if(1)
@@ -306,7 +306,7 @@
 			damtype = "fire"
 			hitsound = 'sound/items/welder.ogg'
 			icon_state = "welder1"
-			processing_objects.Add(src)
+			SSobj.processing.Add(src)
 		else
 			user << "<span class='notice'>You need more fuel.</span>"
 			welding = 0
@@ -349,14 +349,14 @@
 		user << "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>"
 	if (prob(user.eye_stat - 25 + 1))
 		user << "<span class='warning'>You go blind!</span>"
-		user.sdisabilities |= BLIND
+		user.disabilities |= BLIND
 	else if(prob(user.eye_stat - 15 + 1))
 		user << "<span class='warning'>You go blind!</span>"
 		user.eye_blind = 5
 		user.eye_blurry = 5
-		user.disabilities |= NEARSIGHTED
+		user.disabilities |= NEARSIGHT
 		spawn(100)
-			user.disabilities &= ~NEARSIGHTED
+			user.disabilities &= ~NEARSIGHT
 
 /obj/item/weapon/weldingtool/proc/flamethrower_screwdriver(obj/item/I, mob/user)
 	if(welding)
