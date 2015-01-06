@@ -125,4 +125,3 @@
 /obj/item/ammo_casing/energy/wormhole/orange
 	projectile_type = /obj/item/projectile/beam/wormhole/orange
 	select_name = "orange"
-

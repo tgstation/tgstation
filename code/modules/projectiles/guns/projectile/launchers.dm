@@ -15,12 +15,15 @@
 	if(istype(A, /obj/item/ammo_box) || istype(A, /obj/item/ammo_casing))
 		chamber_round()
 
-/obj/item/weapon/gun/projectile/revolver/grenadelauncher/multi
-	desc = "A revolving 6-shot grenade launcher."
+/obj/item/weapon/gun/projectile/revolver/grenadelauncher/cyborg
+	desc = "A 6-shot grenade launcher."
 	name = "multi grenade launcher"
-	icon_state = "bulldog"
-	item_state = "bulldog"
+	icon = 'icons/mecha/mecha_equipment.dmi'
+	icon_state = "mecha_grenadelnchr"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/grenadelauncher/multi
+
+/obj/item/weapon/gun/projectile/revolver/grenadelauncher/cyborg/attack_self()
+	return
 
 /obj/item/weapon/gun/projectile/automatic/gyropistol
 	name = "gyrojet pistol"
