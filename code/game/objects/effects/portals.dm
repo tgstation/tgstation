@@ -41,7 +41,7 @@
 		return
 	if (istype(M, /atom/movable))
 		var/area/A = get_area(target)
-		if(A.anti_ethereal)
+		if(A && A.anti_ethereal)
 			visible_message("<span class='sinister'>A dark form vaguely ressembling a hand reaches through the portal and tears it apart before anything can go through.</span>")
 			del(src)
 		else

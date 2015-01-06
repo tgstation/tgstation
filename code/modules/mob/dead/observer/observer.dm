@@ -435,6 +435,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/area/thearea = ghostteleportlocs[A]
 	if(!thearea)	return
 
+	if(thearea && thearea.anti_ethereal && !isAdminGhost(usr))
+		usr << "<span class='sinister'>As you are about to arrive, a strange dark form grabs you and sends you back where you came from.</span>"
+		return
+
 	var/list/L = list()
 	var/holyblock = 0
 
@@ -470,6 +474,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/proc/ManualFollow(var/atom/movable/target)
 	if(target)
 		var/turf/targetloc = get_turf(target)
+		var/area/targetarea = get_area(target)
+		if(targetarea && targetarea.anti_ethereal && !isAdminGhost(usr))
+			usr << "<span class='sinister'>You can sense a sinister force surrounding that mob, your spooky body itself refuses to follow it.</span>"
+			return
 		if(targetloc.holy && ((src.invisibility == 0) || (src.mind in ticker.mode.cult)))
 			usr << "<span class='warning'>You cannot follow a mob standing on holy grounds!</span>"
 			return
@@ -510,6 +518,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			return
 		else
 			var/turf/targetloc = get_turf(target)
+			var/area/targetarea = get_area(target)
+			if(targetarea && targetarea.anti_ethereal && !isAdminGhost(usr))
+				usr << "<span class='sinister'>You can sense a sinister force surrounding that mob, your spooky body itself refuses to jump to it.</span>"
+				return
 			if(targetloc && targetloc.holy && ((src.invisibility == 0) || (src.mind in ticker.mode.cult)))
 				usr << "<span class='warning'>The mob that you are trying to follow is standing on holy grounds, you cannot reach him!</span>"
 				return
