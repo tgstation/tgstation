@@ -46,9 +46,9 @@
 	return
 
 /obj/machinery/atmospherics/binary/valve/proc/normalize_dir()
-	if(dir==3)
+	if(dir==2)
 		dir = 1
-	else if(dir==12)
+	else if(dir==8)
 		dir = 4
 
 /obj/machinery/atmospherics/binary/valve/attack_ai(mob/user)

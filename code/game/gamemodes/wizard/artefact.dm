@@ -58,7 +58,7 @@
 	var/cowsleft = 20
 
 /obj/effect/rend/cow/New()
-	processing_objects.Add(src)
+	SSobj.processing.Add(src)
 	return
 
 /obj/effect/rend/cow/process()

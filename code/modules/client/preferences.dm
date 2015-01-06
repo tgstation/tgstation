@@ -279,7 +279,7 @@ datum/preferences
 		popup.open(0)
 
 	proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), widthPerColumn = 295, height = 620)
-		if(!job_master)	return
+		if(!SSjob)	return
 
 		//limit - The amount of jobs allowed per column. Defaults to 17 to make it look nice.
 		//splitJobs - Allows you split the table by job. You can make different tables for each department by including their heads. Defaults to CE to make it look nice.
@@ -300,7 +300,7 @@ datum/preferences
 		//The job before the current job. I only use this to get the previous jobs color when I'm filling in blank rows.
 		var/datum/job/lastJob
 
-		for(var/datum/job/job in job_master.occupations)
+		for(var/datum/job/job in SSjob.occupations)
 
 			index += 1
 			if((index >= limit) || (job.title in splitJobs))
@@ -453,9 +453,9 @@ datum/preferences
 		return 0
 
 	proc/UpdateJobPreference(mob/user, role, desiredLvl)
-		if(!job_master)
+		if(!SSjob)
 			return
-		var/datum/job/job = job_master.GetJob(role)
+		var/datum/job/job = SSjob.GetJob(role)
 
 		if(!job)
 			user << browse(null, "window=mob_occupation")

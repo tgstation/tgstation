@@ -92,7 +92,6 @@
 	if(istype(character))
 		real_name = character.real_name
 		. += md5(character.real_name)
-		reg_dna[.] = real_name
 	else
 		. += repeat_string(DNA_UNIQUE_ENZYMES_LEN, "0")
 	return .
