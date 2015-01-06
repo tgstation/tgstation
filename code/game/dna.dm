@@ -409,8 +409,9 @@
 	return 1
 
 /obj/machinery/dna_scannernew/relaymove(mob/user as mob)
-	if(user.stat)
+	if(user.stat || locked)
 		return
+
 	open_machine()
 	return
 
