@@ -91,7 +91,7 @@
 	age = rand(AGE_MIN,AGE_MAX)
 	ready_dna(src,random_blood_type())
 	//job handling
-	var/list/jobs = job_master.occupations
+	var/list/jobs = SSjob.occupations
 	for(var/datum/job/J in jobs)
 		if(J.title == "Cyborg" || J.title == "AI" || J.title == "Chaplain" || J.title == "Mime")
 			jobs -= J
