@@ -13,10 +13,6 @@
 	landmarks_list += src
 
 	switch(name)			//some of these are probably obsolete
-		if("shuttle")
-			shuttle_z = z
-			qdel(src)
-			return
 		if("monkey")
 			monkeystart += loc
 			qdel(src)

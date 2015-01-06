@@ -539,7 +539,7 @@
 	..()
 	if( istype(src.loc, /mob) )
 		held_mob = src.loc
-		processing_objects.Add(src)
+		SSobj.processing.Add(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli/process()
 	if(held_mob && src.loc == held_mob)

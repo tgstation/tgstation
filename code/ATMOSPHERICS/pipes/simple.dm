@@ -137,6 +137,13 @@ The regular pipe you see everywhere, including bent ones.
 /obj/machinery/atmospherics/pipe/simple/pipeline_expansion()
 	return list(node1, node2)
 
+/obj/machinery/atmospherics/pipe/simple/update_node_icon()
+	..()
+	if(node1)
+		node1.update_icon()
+	if(node2)
+		node2.update_icon()
+
 /obj/machinery/atmospherics/pipe/simple/insulated
 	icon = 'icons/obj/atmospherics/red_pipe.dmi'
 	icon_state = "intact"
