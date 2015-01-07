@@ -3,8 +3,6 @@
 /mob/new_player
 	var/ready = 0
 	var/spawning = 0//Referenced when you want to delete the new_player later on in the code.
-	var/totalPlayers = 0		 //Player counts for the Lobby tab
-	var/totalPlayersReady = 0
 
 	flags = NONE
 
@@ -67,28 +65,16 @@
 /mob/new_player/Stat()
 	..()
 
-	statpanel("Lobby")
-	if(client.statpanel == "Lobby" && ticker)
-		if(ticker.hide_mode)
-			stat("Game Mode:", "Secret")
-		else
-			stat("Game Mode:", "[master_mode]")
-
-		if((ticker.current_state == GAME_STATE_PREGAME) && going)
-			stat("Time To Start:", ticker.pregame_timeleft)
-		if((ticker.current_state == GAME_STATE_PREGAME) && !going)
-			stat("Time To Start:", "DELAYED")
+	if(statpanel("Lobby"))
+		stat("Game Mode:", (ticker.hide_mode) ? "Secret" : "[master_mode]")
 
 		if(ticker.current_state == GAME_STATE_PREGAME)
-			stat("Players:", "[totalPlayers]")
-			if(src.client in admins)
-				stat("Players Ready:", "[totalPlayersReady]")
-			totalPlayers = 0
-			totalPlayersReady = 0
-			for(var/mob/new_player/player in player_list)
-				stat("[player.key]", (player.ready && src.client in admins)?("(Playing)"):(null))
-				totalPlayers++
-				if(player.ready)totalPlayersReady++
+			stat("Time To Start:", (ticker.can_fire) ? "[round(ticker.timeLeft / 10)]s" : "DELAYED")
+
+			stat("Players:", "[ticker.totalPlayers]")
+			if(client.holder)
+				stat("Players Ready:", "[ticker.totalPlayersReady]")
+
 
 /mob/new_player/Topic(href, href_list[])
 	if(src != usr)
@@ -252,7 +238,7 @@
 						vote_on_poll(pollid, optionid, 1)
 
 /mob/new_player/proc/IsJobAvailable(rank)
-	var/datum/job/job = job_master.GetJob(rank)
+	var/datum/job/job = SSjob.GetJob(rank)
 	if(!job)
 		return 0
 	if((job.current_positions >= job.total_positions) && job.total_positions != -1)
@@ -271,10 +257,10 @@
 		src << alert("[rank] is not available. Please try another.")
 		return 0
 
-	job_master.AssignRole(src, rank, 1)
+	SSjob.AssignRole(src, rank, 1)
 
 	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
-	job_master.EquipRank(character, rank, 1)					//equips the human
+	SSjob.EquipRank(character, rank, 1)					//equips the human
 	character.loc = pick(latejoin)
 	character.lastarea = get_area(loc)
 
@@ -287,8 +273,13 @@
 
 	joined_player_list += character.ckey
 
-	if(config.allow_latejoin_antagonists && emergency_shuttle.timeleft() > 300) //Don't make them antags if the station is evacuating
-		ticker.mode.make_antag_chance(character)
+	if(config.allow_latejoin_antagonists)
+		switch(SSshuttle.emergency.mode)
+			if(SHUTTLE_RECALL, SHUTTLE_IDLE)
+				ticker.mode.make_antag_chance(character)
+			if(SHUTTLE_CALL)
+				if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
+					ticker.mode.make_antag_chance(character)
 	qdel(src)
 
 /mob/new_player/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
@@ -310,21 +301,22 @@
 
 	var/dat = "<div class='notice'>Round Duration: [round(hours)]h [round(mins)]m</div>"
 
-	if(emergency_shuttle) //In case Nanotrasen decides reposess Centcom's shuttles.
-		if(emergency_shuttle.direction == 2) //Shuttle is going to centcom, not recalled
+	switch(SSshuttle.emergency.mode)
+		if(SHUTTLE_ESCAPE)
 			dat += "<div class='notice red'>The station has been evacuated.</div><br>"
-		if(emergency_shuttle.direction == 1 && emergency_shuttle.timeleft() < 300) //Shuttle is past the point of no recall
-			dat += "<div class='notice red'>The station is currently undergoing evacuation procedures.</div><br>"
+		if(SHUTTLE_CALL)
+			if(SSshuttle.emergency.timeLeft() < 0.5 * initial(SSshuttle.emergencyCallTime)) //Shuttle is past the point of no recall
+				dat += "<div class='notice red'>The station is currently undergoing evacuation procedures.</div><br>"
 
 	var/available_job_count = 0
-	for(var/datum/job/job in job_master.occupations)
+	for(var/datum/job/job in SSjob.occupations)
 		if(job && IsJobAvailable(job.title))
 			available_job_count++;
 
 	dat += "<div class='clearBoth'>Choose from the following open positions:</div><br>"
 	dat += "<div class='jobs'><div class='jobsColumn'>"
 	var/job_count = 0
-	for(var/datum/job/job in job_master.occupations)
+	for(var/datum/job/job in SSjob.occupations)
 		if(job && IsJobAvailable(job.title))
 			job_count++;
 			if (job_count > round(available_job_count / 2))

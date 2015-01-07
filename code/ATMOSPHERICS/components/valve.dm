@@ -38,11 +38,13 @@
 	update_icon_nopipes()
 	parent1.update = 0
 	parent2.update = 0
+	investigate_log("was opened by [usr ? key_name(usr) : "a remote signal"]", "atmos")
 	return
 
 /obj/machinery/atmospherics/binary/valve/proc/close()
 	open = 0
 	update_icon_nopipes()
+	investigate_log("was closed by [usr ? key_name(usr) : "a remote signal"]", "atmos")
 	return
 
 /obj/machinery/atmospherics/binary/valve/proc/normalize_dir()
