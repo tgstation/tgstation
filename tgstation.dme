@@ -1295,6 +1295,7 @@
 #include "code\modules\research\circuitprinter.dm"
 #include "code\modules\research\designs.dm"
 #include "code\modules\research\destructive_analyzer.dm"
+#include "code\modules\research\experimentor.dm"
 #include "code\modules\research\message_server.dm"
 #include "code\modules\research\protolathe.dm"
 #include "code\modules\research\rd-readme.dm"
