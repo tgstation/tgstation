@@ -66,6 +66,11 @@
 	desc = "A robust beret for the Head of Security, for looking stylish while not sacrificing protection."
 	icon_state = "hosberetblack"
 
+/obj/item/clothing/head/HoS/formal
+	name = "formal head of security cap"
+	desc = "A robust formal cap for special occasions."
+	icon_state = "hosformal"
+
 /obj/item/clothing/head/warden
 	name = "warden's police hat"
 	desc = "It's a special armored hat issued to the Warden of a security force. Protects the head from impacts."

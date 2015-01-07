@@ -40,7 +40,7 @@
 
 /obj/item/clothing/under/rank/prisoner
 	name = "prison jumpsuit"
-	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
+	desc = "It's standardised Nanotrasen prisoner wear. Its suit sensors are stuck in the \"Fully On\" position."
 	icon_state = "prisoner"
 	item_state = "o_suit"
 	item_color = "prisoner"
@@ -336,7 +336,7 @@
 
 /obj/item/clothing/under/captainparade
 	name = "captain's parade uniform"
-	desc = "A captain's luxury-wear, for special occasions."
+	desc = "A captain's luxury wear, for special occasions."
 	icon_state = "captain_parade"
 	item_state = "by_suit"
 	item_color = "captain_parade"
@@ -344,15 +344,20 @@
 
 /obj/item/clothing/under/hosparademale
 	name = "head of security's parade uniform"
-	desc = "A male head of security's luxury-wear, for special occasions."
+	desc = "A male head of security's luxury wear, for special occasions."
 	icon_state = "hos_parade_male"
 	item_state = "r_suit"
 	item_color = "hos_parade_male"
 	can_adjust = 0
+	fitted = 0
+
+/obj/item/clothing/under/hosparademale/New()
+	..()
+	attachTie(new /obj/item/clothing/tie/red(src))
 
 /obj/item/clothing/under/hosparadefem
 	name = "head of security's parade uniform"
-	desc = "A female head of security's luxury-wear, for special occasions."
+	desc = "A female head of security's luxury wear, for special occasions."
 	icon_state = "hos_parade_fem"
 	item_state = "r_suit"
 	item_color = "hos_parade_fem"
@@ -361,7 +366,7 @@
 
 /obj/item/clothing/under/assistantformal
 	name = "assistant's formal uniform"
-	desc = "An assistant's formal-wear. Why an assistant needs formal-wear is still unknown."
+	desc = "An assistant's formal wear. Why an assistant needs formal wear is still unknown."
 	icon_state = "assistant_formal"
 	item_state = "gy_suit"
 	item_color = "assistant_formal"
