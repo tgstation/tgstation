@@ -63,11 +63,16 @@
 
 	// attack by item places it in to disposal
 /obj/machinery/disposal/attackby(var/obj/item/I, var/mob/user)
-	if(stat & BROKEN || !I || !user || (I.flags & NODROP))
+	if(stat & BROKEN || !I || !user)
 		return
 
-	if(isrobot(user) && !istype(I, /obj/item/weapon/storage/bag/trash))
-		return
+	if(isrobot(user))
+		if(!istype(I, /obj/item/weapon/storage/bag/trash))
+			return
+	else
+		if(I.flags & NODROP)
+			return
+
 	src.add_fingerprint(user)
 	if(mode<=0) // It's off
 		if(istype(I, /obj/item/weapon/screwdriver))

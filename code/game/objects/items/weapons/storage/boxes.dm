@@ -83,13 +83,13 @@
 
 /obj/item/weapon/storage/box/gloves/New()
 	..()
-	new /obj/item/clothing/gloves/latex(src)
-	new /obj/item/clothing/gloves/latex(src)
-	new /obj/item/clothing/gloves/latex(src)
-	new /obj/item/clothing/gloves/latex(src)
-	new /obj/item/clothing/gloves/latex(src)
-	new /obj/item/clothing/gloves/latex(src)
-	new /obj/item/clothing/gloves/latex(src)
+	new /obj/item/clothing/gloves/color/latex(src)
+	new /obj/item/clothing/gloves/color/latex(src)
+	new /obj/item/clothing/gloves/color/latex(src)
+	new /obj/item/clothing/gloves/color/latex(src)
+	new /obj/item/clothing/gloves/color/latex(src)
+	new /obj/item/clothing/gloves/color/latex(src)
+	new /obj/item/clothing/gloves/color/latex(src)
 
 /obj/item/weapon/storage/box/masks
 	name = "box of sterile masks"

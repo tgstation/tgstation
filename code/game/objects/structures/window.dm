@@ -263,10 +263,6 @@
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			user.changeNext_move(CLICK_CD_MELEE)
 			hit(I.force)
-			if(health <= 7)
-				anchored = 0
-				update_nearby_icons()
-				step(src, get_dir(user, src))
 		else
 			playsound(loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		..()

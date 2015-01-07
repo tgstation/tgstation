@@ -31,6 +31,7 @@ Buildable meters
 #define DISP_END_BIN			5
 #define DISP_END_OUTLET			6
 #define DISP_END_CHUTE			7
+#define DISP_SORTJUNCTION		8
 
 /obj/item/pipe
 	name = "pipe"

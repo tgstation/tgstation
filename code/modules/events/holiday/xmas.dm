@@ -117,7 +117,7 @@
 				santa.equip_to_slot_or_del(new /obj/item/clothing/suit/space/santa, slot_wear_suit)
 				santa.equip_to_slot_or_del(new /obj/item/clothing/head/santa, slot_head)
 				santa.equip_to_slot_or_del(new /obj/item/clothing/mask/breath, slot_wear_mask)
-				santa.equip_to_slot_or_del(new /obj/item/clothing/gloves/red, slot_gloves)
+				santa.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/red, slot_gloves)
 				santa.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/red, slot_shoes)
 				santa.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen/double, slot_belt)
 				santa.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain, slot_ears)

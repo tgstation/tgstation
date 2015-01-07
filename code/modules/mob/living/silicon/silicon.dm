@@ -2,6 +2,7 @@
 	gender = NEUTER
 	voice_name = "synthesized voice"
 	languages = ROBOT | HUMAN
+	has_unlimited_silicon_privilege = 1
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/list/alarms_to_show = list()

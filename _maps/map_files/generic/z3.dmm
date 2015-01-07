@@ -252,7 +252,7 @@
 "eR" = (/obj/machinery/teleport/hub,/turf/simulated/floor/plating/airless,/area/AIsattele)
 "eS" = (/obj/item/weapon/shard{icon_state = "medium"},/turf/simulated/floor/plating/airless,/area/AIsattele)
 "eT" = (/turf/simulated/floor/plating/airless,/area/AIsattele)
-"eU" = (/obj/structure/rack,/obj/item/clothing/gloves/yellow,/turf/simulated/floor/plating/airless,/area/AIsattele)
+"eU" = (/obj/structure/rack,/obj/item/clothing/gloves/color/yellow,/turf/simulated/floor/plating/airless,/area/AIsattele)
 "eV" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating/airless,/area/AIsattele)
 "eW" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/obj/structure/grille,/turf/simulated/floor/plating/airless,/area/AIsattele)
 "eX" = (/obj/item/weapon/stock_parts/cell{step_x = 0},/turf/simulated/floor/plating/airless,/area/AIsattele)

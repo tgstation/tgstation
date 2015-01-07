@@ -166,17 +166,17 @@
 						 "<span class='danger'> You hear a gunshot.</span>")
 
 /obj/item/toy/ammo/gun
-	name = "ammo-caps"
+	name = "capgun ammo"
 	desc = "Make sure to recyle the box in an autolathe when it gets empty."
 	icon = 'icons/obj/ammo.dmi'
-	icon_state = "357-7"
+	icon_state = "357OLD-7"
 	w_class = 1.0
 	g_amt = 10
 	m_amt = 10
 	var/amount_left = 7.0
 
 /obj/item/toy/ammo/gun/update_icon()
-	src.icon_state = text("357-[]", src.amount_left)
+	src.icon_state = text("357OLD-[]", src.amount_left)
 
 /obj/item/toy/ammo/gun/examine(mob/user)
 	..()
