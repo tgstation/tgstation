@@ -52,8 +52,8 @@
 	return 1
 
 /mob/living/carbon/proc/ChangeToHusk()
-	if(HUSK in mutations)	return
-	mutations.Add(HUSK)
+	if(disabilities & HUSK)	return
+	disabilities |= HUSK
 	status_flags |= DISFIGURED	//makes them unknown without fucking up other stuff like admintools
 	return 1
 

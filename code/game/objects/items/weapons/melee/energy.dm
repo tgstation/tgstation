@@ -60,8 +60,8 @@
 		return 1
 	return 0
 
-/obj/item/weapon/melee/energy/attack_self(mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+/obj/item/weapon/melee/energy/attack_self(mob/living/carbon/user)
+	if(user.disabilities & CLUMSY && prob(50))
 		user << "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>"
 		user.take_organ_damage(5,5)
 	active = !active

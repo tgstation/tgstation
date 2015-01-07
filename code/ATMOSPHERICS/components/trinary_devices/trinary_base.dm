@@ -20,6 +20,16 @@
 
 /obj/machinery/atmospherics/trinary/New()
 	..()
+
+	air1 = new
+	air2 = new
+	air3 = new
+
+	air1.volume = 200
+	air2.volume = 200
+	air3.volume = 200
+
+/obj/machinery/atmospherics/trinary/SetInitDirections()
 	switch(dir)
 		if(NORTH)
 			initialize_directions = EAST|NORTH|SOUTH
@@ -29,14 +39,6 @@
 			initialize_directions = EAST|WEST|SOUTH
 		if(WEST)
 			initialize_directions = WEST|NORTH|EAST
-	air1 = new
-	air2 = new
-	air3 = new
-
-	air1.volume = 200
-	air2.volume = 200
-	air3.volume = 200
-
 /*
 Iconnery
 */

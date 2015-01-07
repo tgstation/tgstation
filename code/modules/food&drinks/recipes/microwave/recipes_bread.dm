@@ -3,7 +3,7 @@
 
 ////////////////////////////////////////////////BREAD////////////////////////////////////////////////
 
-/datum/recipe/bread
+/datum/recipe/bread/plain
 	reagents = list("flour" = 15)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/bread
 

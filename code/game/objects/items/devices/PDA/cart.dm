@@ -561,15 +561,29 @@ Code:
 			menu = "<h4><img src=pda_crate.png> Supply Record Interlink</h4>"
 
 			menu += "<BR><B>Supply shuttle</B><BR>"
-			menu += "Location: [supply_shuttle.moving ? "Moving to station ([supply_shuttle.eta] Mins.)":supply_shuttle.at_station ? "Station":"Dock"]<BR>"
-			menu += "Current approved orders: <BR><ol>"
-			for(var/S in supply_shuttle.shoppinglist)
+			menu += "Location: "
+			switch(SSshuttle.supply.mode)
+				if(SHUTTLE_CALL)
+					menu += "Moving to "
+					if(SSshuttle.supply.z != ZLEVEL_STATION)
+						menu += "station"
+					else
+						menu += "centcomm"
+					menu += " ([SSshuttle.supply.timeLeft(600)] Mins)"
+				else
+					menu += "At "
+					if(SSshuttle.supply.z != ZLEVEL_STATION)
+						menu += "centcomm"
+					else
+						menu += "station"
+			menu += "<BR>Current approved orders: <BR><ol>"
+			for(var/S in SSshuttle.shoppinglist)
 				var/datum/supply_order/SO = S
 				menu += "<li>#[SO.ordernum] - [SO.object.name] approved by [SO.orderedby] [SO.comment ? "([SO.comment])":""]</li>"
 			menu += "</ol>"
 
 			menu += "Current requests: <BR><ol>"
-			for(var/S in supply_shuttle.requestlist)
+			for(var/S in SSshuttle.requestlist)
 				var/datum/supply_order/SO = S
 				menu += "<li>#[SO.ordernum] - [SO.object.name] requested by [SO.orderedby]</li>"
 			menu += "</ol><font size=\"-3\">Upgrade NOW to Space Parts & Space Vendors PLUS for full remote order control and inventory management."

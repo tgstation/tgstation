@@ -21,8 +21,8 @@
 			user << "<span class='info'>\icon[src]Error: Device out of range of station communication arrays.</span>"
 			return
 
-		if(emergency_shuttle.location==0)
-			if (emergency_shuttle.online)
+		switch(SSshuttle.emergency.mode)
+			if(SHUTTLE_CALL)
 				recalling = 1
 				loc << "<span class='info'>\icon[src]Generating shuttle recall order with codes retrieved from last call signal...</span>"
 				sleep(rand(10,30))
@@ -33,7 +33,7 @@
 				recalling = 0
 				log_game("[key_name(user)] has recalled the shuttle with a recaller.")
 				message_admins("[key_name_admin(user)] has recalled the shuttle with a recaller.", 1)
-				if(!cancel_call_proc(user))
+				if(!SSshuttle.cancelEvac(user))
 					loc << "<span class='info'>\icon[src]No response recieved. Emergency shuttle cannot be recalled at this time.</span>"
 				return
 

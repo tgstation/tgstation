@@ -346,7 +346,7 @@
 			user << "<span class='notice'> [src] is dead, medical items won't bring it back to life.</span>"
 			return
 	if(meat_type && (stat == DEAD))	//if the animal has a meat, and if it is dead.
-		if(istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))
+		if(istype(O, /obj/item/weapon/kitchenknife))
 			harvest()
 
 	user.changeNext_move(CLICK_CD_MELEE)

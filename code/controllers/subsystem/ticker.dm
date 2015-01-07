@@ -1,107 +1,164 @@
-var/global/datum/controller/gameticker/ticker
 var/round_start_time = 0
 
-#define GAME_STATE_PREGAME		1
-#define GAME_STATE_SETTING_UP	2
-#define GAME_STATE_PLAYING		3
-#define GAME_STATE_FINISHED		4
+var/datum/subsystem/ticker/ticker
 
-/datum/controller/gameticker
-	var/const/restart_timeout = 250
-	var/current_state = GAME_STATE_PREGAME
+/datum/subsystem/ticker
+	name = "Ticker"
+	can_fire = 1
+	priority = 0
+
+	var/restart_timeout = 250				//delay when restarting server
+	var/current_state = GAME_STATE_STARTUP	//state of current round (used by process()) Use the defines GAME_STATE_* !
 
 	var/hide_mode = 0
 	var/datum/game_mode/mode = null
 	var/event_time = null
 	var/event = 0
 
-	var/login_music			// music played in pregame lobby
+	var/login_music							//music played in pregame lobby
 
-	var/list/datum/mind/minds = list()//The people in the game. Used for objective tracking.
+	var/list/datum/mind/minds = list()		//The characters in the game. Used for objective tracking.
 
-	var/Bible_icon_state	// icon_state the chaplain has chosen for his bible
-	var/Bible_item_state	// item_state the chaplain has chosen for his bible
-	var/Bible_name			// name of the bible
-	var/Bible_deity_name
+		//These bible variables should be a preference
+	var/Bible_icon_state					//icon_state the chaplain has chosen for his bible
+	var/Bible_item_state					//item_state the chaplain has chosen for his bible
+	var/Bible_name							//name of the bible
+	var/Bible_deity_name					//name of chaplin's deity
 
-	var/list/syndicate_coalition = list() // list of traitor-compatible factions
-	var/list/factions = list()			  // list of all factions
-	var/list/availablefactions = list()	  // list of factions with openings
+	var/list/syndicate_coalition = list()	//list of traitor-compatible factions
+	var/list/factions = list()				//list of all factions
+	var/list/availablefactions = list()		//list of factions with openings
 
-	var/pregame_timeleft = 0
+	var/delay_end = 0						//if set true, the round will not restart on it's own
 
-	var/delay_end = 0	//if set to nonzero, the round will not restart on it's own
+	var/triai = 0							//Global holder for Triumvirate
+	var/tipped = 0							//Did we broadcast the tip of the day yet?
 
-	var/triai = 0//Global holder for Triumvirate
+	var/timeLeft = 1200						//pregame timer
 
-/datum/controller/gameticker/proc/pregame()
+	var/totalPlayers = 0					//used for pregame stats on statpanel
+	var/totalPlayersReady = 0				//used for pregame stats on statpanel
+
+	var/obj/screen/cinematic = null			//used for station explosion cinematic
+
+
+/datum/subsystem/ticker/New()
+	NEW_SS_GLOBAL(ticker)
 
 	login_music = pickweight(list('sound/ambience/title2.ogg' = 49, 'sound/ambience/title1.ogg' = 49, 'sound/ambience/clown.ogg' = 2)) // choose title music!
-	if(events.holiday == "April Fool's Day")
+	if(SSevent.holiday == "April Fool's Day")
 		login_music = 'sound/ambience/clown.ogg'
-	for(var/client/C in clients)
-		C.playtitlemusic()
 
-	do
-		if(config)
-			pregame_timeleft = config.lobby_countdown
-		else
-			ERROR("configuration was null when retrieving the lobby_countdown value.")
-			pregame_timeleft = 120
-		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
-		world << "Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds"
-		while(current_state == GAME_STATE_PREGAME)
-			sleep(10)
-			if(going)
-				pregame_timeleft--
+/datum/subsystem/ticker/Initialize()
+	if(!syndicate_code_phrase)		syndicate_code_phrase	= generate_code_phrase()
+	if(!syndicate_code_response)	syndicate_code_response	= generate_code_phrase()
+	setupGenetics()
+	setupFactions()
+	..()
 
-			if(pregame_timeleft <= 0)
+/datum/subsystem/ticker/fire()
+	switch(current_state)
+		if(GAME_STATE_STARTUP)
+			timeLeft = config.lobby_countdown * 10
+			world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
+			world << "Please, setup your character and select ready. Game will start in [config.lobby_countdown] seconds"
+			current_state = GAME_STATE_PREGAME
+
+		if(GAME_STATE_PREGAME)
+				//lobby stats for statpanels
+			totalPlayers = 0
+			totalPlayersReady = 0
+			for(var/mob/new_player/player in player_list)
+				++totalPlayers
+				if(player.ready)
+					++totalPlayersReady
+
+			//countdown
+			timeLeft -= wait
+
+			if(timeLeft <= 30 && !tipped)
+				send_random_tip()
+				tipped = 1
+
+			if(timeLeft <= 0)
 				current_state = GAME_STATE_SETTING_UP
-	while (!setup())
 
-/datum/controller/gameticker/proc/setup()
-	//Create and announce mode
-	if(master_mode=="secret")
-		src.hide_mode = 1
+		if(GAME_STATE_SETTING_UP)
+			if(!setup())
+				//setup failed
+				current_state = GAME_STATE_STARTUP
+
+		if(GAME_STATE_PLAYING)
+			mode.process(wait * 0.1)
+
+			if(!mode.explosion_in_progress && mode.check_finished())
+				current_state = GAME_STATE_FINISHED
+				auto_toggle_ooc(1) // Turn it on
+				declare_completion()
+				spawn(50)
+					if(mode.station_was_nuked)
+						feedback_set_details("end_proper","nuke")
+						if(!delay_end)
+							world << "\blue <B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B>"
+					else
+						feedback_set_details("end_proper","proper completion")
+						if(!delay_end)
+							world << "\blue <B>Restarting in [restart_timeout/10] seconds</B>"
+
+
+					if(blackbox)
+						blackbox.save_all_data_to_sql()
+
+					if(delay_end)
+						world << "\blue <B>An admin has delayed the round end</B>"
+					else
+						sleep(restart_timeout)
+						kick_clients_in_lobby("\red The round came to an end with you in the lobby.", 1) //second parameter ensures only afk clients are kicked
+						world.Reboot()
+
+
+/datum/subsystem/ticker/proc/setup()
+		//Create and announce mode
 	var/list/datum/game_mode/runnable_modes
-	if((master_mode=="random") || (master_mode=="secret"))
+	if(master_mode == "random" || master_mode == "secret")
 		runnable_modes = config.get_runnable_modes()
 
-		if((master_mode=="secret") && (secret_force_mode != "secret"))
-			var/datum/game_mode/smode = config.pick_mode(secret_force_mode)
-			if (!smode.can_start())
-				message_admins("\blue Unable to force secret [secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.")
-			else
-				src.mode = smode
+		if(master_mode == "secret")
+			hide_mode = 1
+			if(secret_force_mode != "secret")
+				var/datum/game_mode/smode = config.pick_mode(secret_force_mode)
+				if(!smode.can_start())
+					message_admins("\blue Unable to force secret [secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.")
+				else
+					mode = smode
 
-		if(!src.mode)
-			if (runnable_modes.len==0)
-				current_state = GAME_STATE_PREGAME
+		if(!mode)
+			if(!runnable_modes.len)
 				world << "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby."
 				return 0
-			src.mode = pickweight(runnable_modes)
+			mode = pickweight(runnable_modes)
 
 	else
-		src.mode = config.pick_mode(master_mode)
-		if (!src.mode.can_start())
+		mode = config.pick_mode(master_mode)
+		if(!mode.can_start())
 			world << "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players and [mode.required_enemies] eligible antagonists needed. Reverting to pre-game lobby."
 			del(mode)
-			current_state = GAME_STATE_PREGAME
-			job_master.ResetOccupations()
+			SSjob.ResetOccupations()
 			return 0
 
 	//Configure mode and assign player to special mode stuff
 	var/can_continue = 0
-	if (src.mode.pre_setup_before_jobs)	can_continue = src.mode.pre_setup()
-	job_master.DivideOccupations() 				//Distribute jobs
-	if (!src.mode.pre_setup_before_jobs)	can_continue = src.mode.pre_setup()
+	if(mode.pre_setup_before_jobs)
+		can_continue = src.mode.pre_setup()
+	SSjob.DivideOccupations() 				//Distribute jobs
+	if(!mode.pre_setup_before_jobs)
+		can_continue = src.mode.pre_setup()
 
 	if(!Debug2)
 		if(!can_continue)
 			del(mode)
-			current_state = GAME_STATE_PREGAME
 			world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
-			job_master.ResetOccupations()
+			SSjob.ResetOccupations()
 			return 0
 	else
 		world << "<span class='notice'>DEBUG: Bypassing prestart checks..."
@@ -109,66 +166,53 @@ var/round_start_time = 0
 	if(hide_mode)
 		var/list/modes = new
 		for (var/datum/game_mode/M in runnable_modes)
-			modes+=M.name
+			modes += M.name
 		modes = sortList(modes)
 		world << "<B>The current game mode is - Secret!</B>"
 		world << "<B>Possibilities:</B> [english_list(modes)]"
 	else
-		src.mode.announce()
+		mode.announce()
 
+	current_state = GAME_STATE_PLAYING
+	auto_toggle_ooc(0) // Turn it off
 	round_start_time = world.time
-
-	supply_shuttle.process() 		//Start the supply shuttle regenerating points
-	master_controller.process()		//Start master_controller.process()
-	lighting_controller.process()	//Start processing DynamicAreaLighting updates
-
-	sleep(10)
 
 	create_characters() //Create player characters and transfer them
 	collect_minds()
 	equip_characters()
 	data_core.manifest()
-	current_state = GAME_STATE_PLAYING
+
+	master_controller.roundHasStarted()
+
+
+	world << "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>"
+	world << sound('sound/AI/welcome.ogg') // Skie
+	//Holiday Round-start stuff	~Carn
+	if(SSevent.holiday)
+		world << "<font color='blue'>and...</font>"
+		world << "<h4>Happy [SSevent.holiday] Everybody!</h4>"
+
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
 		mode.post_setup()
 		//Cleanup some stuff
 		for(var/obj/effect/landmark/start/S in landmarks_list)
 			//Deleting Startpoints but we need the ai point to AI-ize people later
-			if (S.name != "AI")
+			if(S.name != "AI")
 				qdel(S)
-		world << "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>"
-		world << sound('sound/AI/welcome.ogg') // Skie
-		//Holiday Round-start stuff	~Carn
-		if(events.holiday)
-			world << "<font color='blue'>and...</font>"
-			world << "<h4>Happy [events.holiday] Everybody!</h4>"
 
-	if(!admins.len)
-		send2irc("Server", "Round just started with no admins online!")
-	auto_toggle_ooc(0) // Turn it off
+		if(!admins.len)
+			send2irc("Server", "Round just started with no admins online!")
 
-	if(config.sql_enabled)
-		spawn(3000)
-			statistic_cycle() // Polls population totals regularly and stores them in an SQL DB
 	return 1
 
-/datum/controller/gameticker
-	//station_explosion used to be a variable for every mob's hud. Which was a waste!
-	//Now we have a general cinematic centrally held within the gameticker....far more efficient!
-	var/obj/screen/cinematic = null
 
 	//Plus it provides an easy way to make cinematics for other events. Just use this as a template
-/datum/controller/gameticker/proc/station_explosion_cinematic(var/station_missed=0, var/override = null)
+/datum/subsystem/ticker/proc/station_explosion_cinematic(var/station_missed=0, var/override = null)
 	if( cinematic )	return	//already a cinematic in progress!
 	auto_toggle_ooc(1) // Turn it on
 	//initialise our cinematic screen object
-	cinematic = new(src)
-	cinematic.icon = 'icons/effects/station_explosion.dmi'
-	cinematic.icon_state = "station_intact"
-	cinematic.layer = MAP_LAYER
-	cinematic.mouse_opacity = 0
-	cinematic.screen_loc = "1,0"
+	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=CINEMATIC_LAYER;mouse_opacity=0;screen_loc="1,0";}(src)
 
 	var/obj/structure/stool/bed/temp_buckle = new(src)
 	if(station_missed)
@@ -252,7 +296,8 @@ var/round_start_time = 0
 	return
 
 
-/datum/controller/gameticker/proc/create_characters()
+
+/datum/subsystem/ticker/proc/create_characters()
 	for(var/mob/new_player/player in player_list)
 		if(player.ready && player.mind)
 			joined_player_list += player.ckey
@@ -266,72 +311,30 @@ var/round_start_time = 0
 			player.new_player_panel()
 
 
-/datum/controller/gameticker/proc/collect_minds()
+/datum/subsystem/ticker/proc/collect_minds()
 	for(var/mob/living/player in player_list)
 		if(player.mind)
 			ticker.minds += player.mind
 
 
-/datum/controller/gameticker/proc/equip_characters()
+/datum/subsystem/ticker/proc/equip_characters()
 	var/captainless=1
 	for(var/mob/living/carbon/human/player in player_list)
 		if(player && player.mind && player.mind.assigned_role)
 			if(player.mind.assigned_role == "Captain")
 				captainless=0
 			if(player.mind.assigned_role != "MODE")
-				job_master.EquipRank(player, player.mind.assigned_role, 0)
+				SSjob.EquipRank(player, player.mind.assigned_role, 0)
 	if(captainless)
 		for(var/mob/M in player_list)
 			if(!istype(M,/mob/new_player))
 				M << "Captainship not forced on anyone."
 
 
-/datum/controller/gameticker/proc/process()
-	if(current_state != GAME_STATE_PLAYING)
-		return 0
 
-	mode.process()
-
-	emergency_shuttle.process()
-
-	if(!mode.explosion_in_progress && mode.check_finished())
-		current_state = GAME_STATE_FINISHED
-		auto_toggle_ooc(1) // Turn it on
-		spawn
-			declare_completion()
-
-		spawn(50)
-			if (mode.station_was_nuked)
-				feedback_set_details("end_proper","nuke")
-				if(!delay_end)
-					world << "\blue <B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B>"
-			else
-				feedback_set_details("end_proper","proper completion")
-				if(!delay_end)
-					world << "\blue <B>Restarting in [restart_timeout/10] seconds</B>"
-
-
-			if(blackbox)
-				blackbox.save_all_data_to_sql()
-
-			if(!delay_end)
-				sleep(restart_timeout)
-				kick_clients_in_lobby("\red The round came to an end with you in the lobby.", 1) //second parameter ensures only afk clients are kicked
-				world.Reboot()
-			else
-				world << "\blue <B>An admin has delayed the round end</B>"
-
-	return 1
-
-/datum/controller/gameticker/proc/getfactionbyname(var/name)
-	for(var/datum/faction/F in factions)
-		if(F.name == name)
-			return F
-
-
-/datum/controller/gameticker/proc/declare_completion()
+/datum/subsystem/ticker/proc/declare_completion()
 	var/station_evacuated
-	if(emergency_shuttle.location > 0)
+	if(SSshuttle.emergency.mode >= SHUTTLE_ESCAPE)
 		station_evacuated = 1
 	var/num_survivors = 0
 	var/num_escapees = 0
@@ -345,7 +348,7 @@ var/round_start_time = 0
 				num_survivors++
 				if(station_evacuated) //If the shuttle has already left the station
 					var/turf/playerTurf = get_turf(Player)
-					if(playerTurf.z != 2)
+					if(!playerTurf || playerTurf.z != ZLEVEL_CENTCOM)
 						Player << "<font color='blue'><b>You managed to survive, but were marooned on [station_name()]...</b></FONT>"
 					else
 						num_escapees++
@@ -419,3 +422,9 @@ var/round_start_time = 0
 		log_game("[i]s[total_antagonists[i]].")
 
 	return 1
+
+/datum/subsystem/ticker/proc/send_random_tip()
+	var/list/randomtips = file2list("config/tips.txt")
+	if(randomtips.len)
+		world << "<font color='purple'><b>Tip of the round: </b>[strip_html_properly(pick(randomtips))]</font>"
+

@@ -83,8 +83,7 @@
 			if(alert(AI_mind.current,"Do you want to use an alternative sprite for your real core?",,"Yes","No")=="Yes")
 				AI_mind.current.icon_state = "ai-malf2"
 */
-	if(emergency_shuttle)
-		emergency_shuttle.always_fake_recall = 1
+	SSshuttle.emergencyAlwaysFakeRecall = 1
 	..()
 
 
@@ -97,9 +96,9 @@
 	malf.current << "When you feel you have enough APCs under your control, you may begin the takeover attempt."
 	return
 
-/datum/game_mode/malfunction/process()
+/datum/game_mode/malfunction/process(seconds)
 	if ((apcs > 0) && malf_mode_declared)
-		AI_win_timeleft -= apcs * last_tick_duration	//Victory timer de-increments based on how many APCs are hacked
+		AI_win_timeleft -= apcs * seconds	//Victory timer de-increments based on how many APCs are hacked
 	..()
 	if (AI_win_timeleft<=0)
 		check_win()
@@ -147,8 +146,7 @@
 		return 1
 	if (is_malf_ai_dead())
 		if(config.continuous_round_malf)
-			if(emergency_shuttle)
-				emergency_shuttle.always_fake_recall = 0
+			SSshuttle.emergencyAlwaysFakeRecall = 0
 			malf_mode_declared = 0
 		else
 			return 1
@@ -214,7 +212,7 @@
 
 /datum/game_mode/malfunction/declare_completion()
 	var/malf_dead = is_malf_ai_dead()
-	var/crew_evacuated = (emergency_shuttle.location==2)
+	var/crew_evacuated = (SSshuttle.emergency.mode >= SHUTTLE_ENDGAME)
 
 	if      ( station_captured &&                station_was_nuked)
 		feedback_set_details("round_end_result","win - AI win - nuke")

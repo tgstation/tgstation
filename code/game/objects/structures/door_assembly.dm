@@ -461,7 +461,13 @@ obj/structure/door_assembly/New()
 			return
 
 	else if(istype(W, /obj/item/weapon/wrench) && !anchored )
-		if(!locate(/obj/machinery/door) in loc)
+		var/door_check = 1
+		for(var/obj/machinery/door/D in loc)
+			if(!D.sub_door)
+				door_check = 0
+				break
+		
+		if(door_check)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user.visible_message("<span class='warning'>[user] secures the airlock assembly to the floor.</span>", \
 								 "You start to secure the airlock assembly to the floor.", \

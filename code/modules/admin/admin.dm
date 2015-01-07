@@ -636,10 +636,10 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set desc="Delay the game start"
 	set name="Delay"
-	if (!ticker || ticker.current_state != GAME_STATE_PREGAME)
-		return alert("Too late... The game has already started!", null, null, null, null, null)
-	going = !( going )
-	if (!( going ))
+	if(ticker.current_state > GAME_STATE_PREGAME)
+		return alert("Too late... The game has already started!")
+	ticker.can_fire = !ticker.can_fire
+	if(!ticker.can_fire)
 		world << "<b>The game start has been delayed.</b>"
 		log_admin("[key_name(usr)] delayed the game.")
 	else
@@ -810,8 +810,8 @@ var/global/floorIsLava = 0
 		alert(usr, "You cannot manage jobs before the round starts!")
 		return
 
-	if(job_master)
-		for(var/datum/job/job in job_master.occupations)
+	if(SSjob)
+		for(var/datum/job/job in SSjob.occupations)
 			count++
 			var/J_title = html_encode(job.title)
 			var/J_opPos = html_encode(job.total_positions - (job.total_positions - job.current_positions))

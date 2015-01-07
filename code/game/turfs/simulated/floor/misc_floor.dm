@@ -56,6 +56,11 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "plating"
 
+/turf/simulated/shuttle/plating/airless
+	oxygen = 0.01
+	nitrogen = 0.01
+	temperature = TCMB
+
 /turf/simulated/shuttle/floor4 // Added this floor tile so that I have a seperate turf to check in the shuttle -- Polymorph
 	name = "Brig floor"        // Also added it into the 2x3 brig area of the shuttle.
 	icon_state = "floor4"
@@ -63,6 +68,7 @@
 /turf/simulated/floor/beach
 	name = "Beach"
 	icon = 'icons/misc/beach.dmi'
+	ignoredirt = 1
 
 /turf/simulated/floor/beach/ex_act(severity, target)
 	contents_explosion(severity, target)
@@ -84,11 +90,13 @@
 	..()
 	name = "Iron Sand"
 	icon_state = "ironsand[rand(1,15)]"
+	ignoredirt = 1
 
 /turf/simulated/floor/plating/snow
 	name = "snow"
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
+	ignoredirt = 1
 
 /turf/simulated/floor/plating/snow/ex_act(severity, target)
 	contents_explosion(severity, target)

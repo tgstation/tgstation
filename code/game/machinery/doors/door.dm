@@ -17,6 +17,7 @@
 	var/normalspeed = 1
 	var/heat_proof = 0 // For glass airlocks/opacity firedoors
 	var/emergency = 0 // Emergency access override
+	var/sub_door = 0 // 1 if it's meant to go under another door.
 
 /obj/machinery/door/New()
 	..()

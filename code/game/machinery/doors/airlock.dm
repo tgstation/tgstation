@@ -896,7 +896,8 @@ About the new airlock wires panel:
 			if(do_after(user,40,5,1))
 				if(density && !operating)//Door must be closed to weld.
 					if( !istype(src, /obj/machinery/door/airlock) || !user || !W || !W.isOn() || !user.loc )
-						return					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+						return
+					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					welded = !welded
 					user.visible_message("<span class='warning'>[user.name] has [welded? "welded shut":"unwelded"] [src].</span>", \
 										"<span class='notice'>You've [welded ? "welded the airlock shut":"unwelded the airlock"].</span>")
