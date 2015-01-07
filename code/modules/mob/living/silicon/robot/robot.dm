@@ -54,7 +54,7 @@
 	var/speed = 0 //Cause sec borgs gotta go fast //No they dont!
 	var/scrambledcodes = 0 // Used to determine if a borg shows up on the robotics console.  Setting to one hides them.
 
-	var/obj/item/weapon/tank/large/internal = null	//Hatred. Used if a borg has a jetpack.
+	var/obj/item/weapon/tank/internal = null	//Hatred. Used if a borg has a jetpack.
 	var/obj/item/robot_parts/robot_suit/robot_suit = null //Used for deconstruction to remember what the borg was constructed out of..
 	var/obj/item/device/camera/siliconcam/aicamera = null //photography
 	var/toner = 0

@@ -4,7 +4,7 @@
 	var/datum/gas_mixture/air_contents = new
 
 	var/obj/machinery/atmospherics/unary/portables_connector/connected_port
-	var/obj/item/weapon/tank/large/holding
+	var/obj/item/weapon/tank/holding
 
 	var/volume = 0
 	var/destroyed = 0
