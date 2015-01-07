@@ -19,8 +19,8 @@ Head of Security
 	selection_color = "#ffdddd"
 	req_admin_notify = 1
 	minimal_player_age = 14
-	clothing = "Trenchcoat"
-	alt_clothing = list("Greatcoat","Parade")
+	clothing = "Corporate"
+	alt_clothing = list("Tactical","Parade")
 
 	default_id = /obj/item/weapon/card/id/silver
 	default_pda = /obj/item/device/pda/heads/hos
@@ -40,14 +40,16 @@ Head of Security
 /datum/job/hos/equip_items(var/mob/living/carbon/human/H)
 	if(H.mind.role_alt_clothing)
 		switch(H.mind.role_alt_clothing)
-			if("Trenchcoat")
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security(H), slot_w_uniform)
+			if("Tactical")
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security/tactical(H), slot_w_uniform)
 				H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/hos/trenchcoat(H), slot_wear_suit)
 				H.equip_to_slot_or_del(new /obj/item/clothing/head/HoS/beret(H), slot_head)
-			if("Greatcoat")
+				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
+			if("Corporate")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security(H), slot_w_uniform)
 				H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/hos(H), slot_wear_suit)
 				H.equip_to_slot_or_del(new /obj/item/clothing/head/HoS(H), slot_head)
+				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), slot_shoes)
 			if("Parade")
 				if(H.gender == FEMALE)
 					H.equip_to_slot_or_del(new /obj/item/clothing/under/hosparadefem(H), slot_w_uniform)
@@ -55,7 +57,7 @@ Head of Security
 					H.equip_to_slot_or_del(new /obj/item/clothing/under/hosparademale(H), slot_w_uniform)
 				H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor(H), slot_wear_suit)
 				H.equip_to_slot_or_del(new /obj/item/clothing/head/HoS/beret(H), slot_head)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
+				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/black/hos(H), slot_gloves)
 	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/security/sunglasses(H), slot_glasses)
 	H.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun(H), slot_s_store)
@@ -85,8 +87,8 @@ Warden
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	minimal_player_age = 7
-	clothing = "Navy Jacket"
-	alt_clothing = list("Red Jacket")
+	clothing = "Corporate"
+	alt_clothing = list("Tactical")
 
 	default_pda = /obj/item/device/pda/warden
 	default_headset = /obj/item/device/radio/headset/headset_sec/alt
@@ -97,14 +99,17 @@ Warden
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_weapons) //See /datum/job/warden/get_access()
 
 /datum/job/warden/equip_items(var/mob/living/carbon/human/H)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/warden(H), slot_head)
 	if(H.mind.role_alt_clothing)
 		switch(H.mind.role_alt_clothing)
-			if("Navy Jacket")
+			if("Corporate")
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden(H), slot_w_uniform)
+				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), slot_shoes)
+				H.equip_to_slot_or_del(new /obj/item/clothing/head/warden(H), slot_head)
 				H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest/warden(H), slot_wear_suit)
-			if("Red Jacket")
+			if("Tactical")
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden/tactical(H), slot_w_uniform)
+				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
+				H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/sec/navywarden(H), slot_head)
 				H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest/warden/alt(H), slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/black(H), slot_gloves)
 	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/security/sunglasses(H), slot_glasses)
@@ -215,9 +220,15 @@ Security Officer
 /datum/job/officer/equip_items(var/mob/living/carbon/human/H)
 	assign_sec_to_department(H)
 
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
+	if(H.mind.role_alt_clothing)
+		switch(H.mind.role_alt_clothing)
+			if("Corporate")
+				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), slot_shoes)
+				H.equip_to_slot_or_del(new /obj/item/clothing/head/soft/sec(H), slot_head)
+			if("Tactical")
+				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
+				H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/sec(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(H), slot_wear_suit)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/sec(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/black(H), slot_gloves)
 	H.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun/advtaser(H), slot_s_store)
 	H.equip_to_slot_or_del(new /obj/item/device/flash/handheld(H), slot_l_store)
