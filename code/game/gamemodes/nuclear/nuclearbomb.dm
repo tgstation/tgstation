@@ -161,7 +161,9 @@ var/bomb_set
 	set src in oview(1)
 
 	if (!usr || usr.stat || usr.lying) return
-	if (!ishuman(usr)) usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
+	if (!ishuman(usr))
+		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		return
 
 	if (src.deployable)
 		usr << "<span class='notice'>You close several panels to make [src] undeployable.</span>"
