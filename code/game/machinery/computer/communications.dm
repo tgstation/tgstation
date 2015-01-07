@@ -120,8 +120,8 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				src.state = STATE_CALLSHUTTLE
 		if("callshuttle2")
 			if(src.authenticated)
-				call_shuttle_proc(usr, href_list["call"])
-				if(emergency_shuttle.online)
+				SSshuttle.requestEvac(usr, href_list["call"])
+				if(SSshuttle.emergency.timer)
 					post_status("shuttle")
 			src.state = STATE_DEFAULT
 		if("cancelshuttle")
@@ -130,7 +130,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				src.state = STATE_CANCELSHUTTLE
 		if("cancelshuttle2")
 			if(src.authenticated)
-				cancel_call_proc(usr)
+				SSshuttle.cancelEvac(usr)
 			src.state = STATE_DEFAULT
 		if("messagelist")
 			src.currmsg = 0
@@ -200,7 +200,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		// OMG CENTCOM LETTERHEAD
 		if("MessageCentcomm")
 			if(src.authenticated==2)
-				if(CM.cooldown)
+				if(CM.cooldownLeft())
 					usr << "Arrays recycling.  Please stand by."
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to Centcom via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response.", "To abort, send an empty message.", "")
@@ -209,13 +209,13 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				Centcomm_announce(input, usr)
 				usr << "Message transmitted."
 				log_say("[key_name(usr)] has made a Centcom announcement: [input]")
-				CM.cooldown = 55
+				CM.lastTimeUsed = world.time
 
 
 		// OMG SYNDICATE ...LETTERHEAD
 		if("MessageSyndicate")
 			if((src.authenticated==2) && (src.emagged))
-				if(CM.cooldown)
+				if(CM.cooldownLeft())
 					usr << "Arrays recycling.  Please stand by."
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING COORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response.", "To abort, send an empty message.", "")
@@ -224,7 +224,6 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				Syndicate_announce(input, usr)
 				usr << "Message transmitted."
 				log_say("[key_name(usr)] has made a Syndicate announcement: [input]")
-				CM.cooldown = 55 //about one minute
 
 		if("RestoreBackup")
 			usr << "Backup routing data restored!"
@@ -240,7 +239,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		if("ai-callshuttle")
 			src.aistate = STATE_CALLSHUTTLE
 		if("ai-callshuttle2")
-			call_shuttle_proc(usr, href_list["call"])
+			SSshuttle.requestEvac(usr, href_list["call"])
 			src.aistate = STATE_DEFAULT
 		if("ai-messagelist")
 			src.aicurrmsg = 0
@@ -329,8 +328,8 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 	user.set_machine(src)
 	var/dat = ""
-	if (emergency_shuttle.online && emergency_shuttle.location==0)
-		var/timeleft = emergency_shuttle.timeleft()
+	if(SSshuttle.emergency.mode == SHUTTLE_CALL)
+		var/timeleft = SSshuttle.emergency.timeLeft()
 		dat += "<B>Emergency shuttle</B>\n<BR>\nETA: [timeleft / 60 % 60]:[add_zero(num2text(timeleft % 60), 2)]"
 
 
@@ -351,21 +350,20 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	switch(src.state)
 		if(STATE_DEFAULT)
 			if (src.authenticated)
-				if(emergency_shuttle.recall_count > 1)
-					if(emergency_shuttle.last_call_loc)
-						dat += "<BR>Most recent shuttle call/recall traced to: <b>[format_text(emergency_shuttle.last_call_loc.name)]</b>"
-					else
-						dat += "<BR>Unable to trace most recent shuttle call/recall signal."
+				if(SSshuttle.emergencyLastCallLoc)
+					dat += "<BR>Most recent shuttle call/recall traced to: <b>[format_text(SSshuttle.emergencyLastCallLoc.name)]</b>"
+				else
+					dat += "<BR>Unable to trace most recent shuttle call/recall signal."
 				dat += "<BR>Logged in as: [auth_id]"
 				dat += "<BR>"
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=logout'>Log Out</A> \]<BR>"
 				dat += "<BR><B>General Functions</B>"
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=messagelist'>Message List</A> \]"
-				if(emergency_shuttle.location==0)
-					if (emergency_shuttle.online)
-						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=cancelshuttle'>Cancel Shuttle Call</A> \]"
-					else
+				switch(SSshuttle.emergency.mode)
+					if(SHUTTLE_IDLE, SHUTTLE_RECALL)
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=callshuttle'>Call Emergency Shuttle</A> \]"
+					else
+						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=cancelshuttle'>Cancel Shuttle Call</A> \]"
 
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=status'>Set Status Display</A> \]"
 				if (src.authenticated==2)
@@ -481,18 +479,17 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	var/dat = ""
 	switch(src.aistate)
 		if(STATE_DEFAULT)
-			if(emergency_shuttle.recall_count > 1)
-				if(emergency_shuttle.last_call_loc)
-					dat += "<BR>Latest emergency signal trace attempt successful.<BR>Last signal origin: <b>[format_text(emergency_shuttle.last_call_loc.name)]</b>.<BR>"
-				else
-					dat += "<BR>Latest emergency signal trace attempt failed.<BR>"
+			if(SSshuttle.emergencyLastCallLoc)
+				dat += "<BR>Latest emergency signal trace attempt successful.<BR>Last signal origin: <b>[format_text(SSshuttle.emergencyLastCallLoc.name)]</b>.<BR>"
+			else
+				dat += "<BR>Latest emergency signal trace attempt failed.<BR>"
 			if(authenticated)
 				dat += "Current login: [auth_id]"
 			else
 				dat += "Current login: None"
 			dat += "<BR><BR><B>General Functions</B>"
 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-messagelist'>Message List</A> \]"
-			if(emergency_shuttle.location==0 && !emergency_shuttle.online)
+			if(SSshuttle.emergency.mode <= SHUTTLE_IDLE)
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-callshuttle'>Call Emergency Shuttle</A> \]"
 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-status'>Set Status Display</A> \]"
 			dat += "<BR><BR><B>Special Functions</B>"
@@ -569,60 +566,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	log_say("[key_name(user)] has made a priority announcement: [input]")
 	message_admins("[key_name_admin(user)] has made a priority announcement.")
 
-/proc/call_shuttle_proc(var/mob/user, var/call_reason)
-	if ((!( ticker ) || emergency_shuttle.location))
-		return
-	if(world.time - round_start_time < config.shuttle_refuel_delay)
-		user << "The emergency shuttle is refueling. Please wait another [abs(round(((world.time - round_start_time) - config.shuttle_refuel_delay)/600))] minutes before trying again."
-		return
 
-	if(emergency_shuttle.direction == -1)
-		user << "The emergency shuttle may not be called while returning to Centcom."
-		return
-
-	if(emergency_shuttle.online)
-		user << "The emergency shuttle is already on its way."
-		return
-
-	call_reason = strip_html_properly(trim(call_reason))
-
-	if(length(call_reason) < CALL_SHUTTLE_REASON_LENGTH)
-		user << "You must provide a reason."
-		return
-
-	var/area/signal_origin = get_area(user)
-	var/emergency_reason = "\nNature of emergency:\n\n[call_reason]"
-	if (seclevel2num(get_security_level()) == SEC_LEVEL_RED) // There is a serious threat we gotta move no time to give them five minutes.
-		emergency_shuttle.incall(0.6, signal_origin, emergency_reason, 1)
-	else
-		emergency_shuttle.incall(1, signal_origin, emergency_reason, 0)
-
-	log_game("[key_name(user)] has called the shuttle.")
-	message_admins("[key_name_admin(user)] has called the shuttle.")
-
-	return
-
-
-/proc/cancel_call_proc(var/mob/user)
-	if ((!( ticker ) || emergency_shuttle.location || emergency_shuttle.direction == 0))
-		return
-	if(ticker.mode.name == "meteor")
-		return
-
-	if ((seclevel2num(get_security_level()) == SEC_LEVEL_RED))
-		if (emergency_shuttle.timeleft() < SHUTTLEARRIVETIME / 4)
-			return
-	else if (emergency_shuttle.timeleft() < SHUTTLEARRIVETIME / 2)
-		return
-
-
-	if(emergency_shuttle.direction != -1 && emergency_shuttle.online) //check that shuttle isn't already heading to centcom
-		var/area/signal_origin = get_area(user)
-		emergency_shuttle.recall(signal_origin)
-		log_game("[key_name(user)] has recalled the shuttle.")
-		message_admins("[key_name_admin(user)] has recalled the shuttle.")
-		return 1
-	return
 
 /obj/machinery/computer/communications/proc/post_status(var/command, var/data1, var/data2)
 
@@ -647,6 +591,6 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 /obj/machinery/computer/communications/Destroy()
 	shuttle_caller_list -= src
-	emergency_shuttle.autoshuttlecall()
+	SSshuttle.autoEvac()
 	..()
 

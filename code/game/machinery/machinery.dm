@@ -115,10 +115,12 @@ Class Procs:
 /obj/machinery/New()
 	..()
 	machines += src
+	SSmachine.processing += src
 	auto_use_power()
 
 /obj/machinery/Destroy()
 	machines.Remove(src)
+	SSmachine.processing -= src
 	if(occupant)
 		open_machine()
 	..()
@@ -227,7 +229,7 @@ Class Procs:
 	if(restrained() || lying || stat || stunned || weakened)
 		return
 	if(!in_range(M, src))
-		if((be_close == 0) && (TK in mutations))
+		if((be_close == 0) && (dna.check_mutation(TK)))
 			if(tkMaxRangeCheck(src, M))
 				return 1
 		return
@@ -242,8 +244,8 @@ Class Procs:
 		return
 	//stop AIs from leaving windows open and using then after they lose vision
 	//apc_override is needed here because AIs use their own APC when powerless
-	//the snowflake get_wall_mounted_turf() is because APCs in maint aren't actually in view of the inner camera
-	if(cameranet && !cameranet.checkTurfVis(get_wall_mounted_turf(M)) && !apc_override)
+	//get_turf_pixel() is because APCs in maint aren't actually in view of the inner camera
+	if(cameranet && !cameranet.checkTurfVis(get_turf_pixel(M)) && !apc_override)
 		return
 	return 1
 

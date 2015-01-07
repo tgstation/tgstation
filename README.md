@@ -1,3 +1,5 @@
+# **Licensing has recently changed from GPLv3 to AGPLv3. See [#6689](https://github.com/tgstation/-tg-station/pull/6689) for more info.**
+
 ##/tg/station v1.0.1
 
 [![Build Status](https://travis-ci.org/tgstation/-tg-station.png)](https://travis-ci.org/tgstation/-tg-station)
@@ -123,7 +125,9 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ##LICENSE
 
-All code is under a GNU GPL v3 license (http://www.gnu.org/licenses/gpl.html),
-including tools unless their readme specifies otherwise.
+All code after commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST (https://github.com/tgstation/-tg-station/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under GNU AGPL v3 (http://www.gnu.org/licenses/agpl-3.0.html).
+All code before commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST (https://github.com/tgstation/-tg-station/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under GNU GPL v3 (https://www.gnu.org/licenses/gpl-3.0.html).
+
+including tools unless their readme specifies otherwise. See LICENSE-AGPLv3.txt and LICENSE-GPLv3.txt for more details.
 All content including icons and sound is under a Creative Commons 3.0 BY-SA
 license (http://creativecommons.org/licenses/by-sa/3.0/).

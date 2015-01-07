@@ -22,6 +22,7 @@ RCD
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
 	var/matter = 0
+	var/max_matter = 100
 	var/working = 0
 	var/mode = 1
 	var/canRwall = 0
@@ -92,7 +93,7 @@ RCD
 
 
 /obj/item/weapon/rcd/New()
-	desc = "A RCD. It currently holds [matter]/100 matter-units."
+	desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
 	src.spark_system = new /datum/effect/effect/system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -102,15 +103,15 @@ RCD
 /obj/item/weapon/rcd/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if(istype(W, /obj/item/weapon/rcd_ammo))
-		if((matter + 20) > 100)
+		if((matter + 20) > max_matter)
 			user << "<span class='notice'>The RCD cant hold any more matter-units.</span>"
 			return
 		user.drop_item()
 		qdel(W)
 		matter += 20
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-		user << "<span class='notice'>The RCD now holds [matter]/30 matter-units.</span>"
-		desc = "A RCD. It currently holds [matter]/30 matter-units."
+		user << "<span class='notice'>The RCD now holds [matter]/[max_matter] matter-units.</span>"
+		desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
 		return
 
 
@@ -174,7 +175,13 @@ RCD
 		if(2)
 			if(istype(A, /turf/simulated/floor))
 				if(checkResource(10, user))
-					if(!locate(/obj/machinery/door) in A)
+					var/door_check = 1
+					for(var/obj/machinery/door/D in A)
+						if(!D.sub_door)
+							door_check = 0
+							break
+		
+					if(door_check)
 						user << "Building Airlock..."
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, 50))
@@ -237,7 +244,7 @@ RCD
 	if(matter < amount)
 		return 0
 	matter -= amount
-	desc = "A RCD. It currently holds [matter]/30 matter-units."
+	desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
 	return 1
 
 /obj/item/weapon/rcd/proc/checkResource(var/amount, var/mob/user)

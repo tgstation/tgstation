@@ -93,3 +93,27 @@
 
 /area/maintenance/asteroidstation/transit/aft_starboard
 	name = "Aft Starboard Transit Station"
+
+//Head Quarters
+/area/crew_quarters/asteroidstation/
+	icon = '_maps/map_files/Asteroidstation/areas.dmi'
+
+/area/crew_quarters/asteroidstation/cmo
+	name = "Chief Medical Officer's Quarters"
+	icon_state = "cmo"
+
+/area/crew_quarters/asteroidstation/ce
+	name = "Chief Engineer's Quarters"
+	icon_state = "ce"
+
+/area/crew_quarters/asteroidstation/rd
+	name = "Research Director's Quarters"
+	icon_state = "rd"
+
+/area/crew_quarters/asteroidstation/hos
+	name = "Head of Security's Quarters"
+	icon_state = "hos"
+
+/area/crew_quarters/asteroidstation/hop
+	name = "Head of Personnel's Quarters"
+	icon_state = "hop"

@@ -32,7 +32,7 @@
 		/obj/item/weapon/gun/energy/laser/bluetag,\
 		/obj/item/weapon/gun/energy/laser/redtag,\
 		/obj/item/weapon/gun/energy/laser/practice,\
-		/obj/item/weapon/melee/telebaton,\
+		/obj/item/weapon/melee/classic_baton/telescopic,\
 		/obj/item/weapon/gun/energy/kinetic_accelerator)
 
 
@@ -218,8 +218,7 @@ Auto Patrol: []"},
 						icon_state = "secbot[on]"
 					var/mob/living/carbon/M = target
 					if(istype(M, /mob/living/carbon/human))
-						if( M.stuttering < 5 && !(HULK in M.mutations) )
-							M.stuttering = 5
+						M.stuttering = 5
 						M.Stun(5)
 						M.Weaken(5)
 					else

@@ -67,6 +67,7 @@ datum/design/pacman
 	reliability = 79
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/pacman
+	category = list("Engineering Machinery")
 
 datum/design/superpacman
 	name = "Machine Design (SUPERPACMAN-type Generator Board)"
@@ -77,6 +78,7 @@ datum/design/superpacman
 	reliability = 76
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/pacman/super
+	category = list("Engineering Machinery")
 
 datum/design/mrspacman
 	name = "Machine Design (MRSPACMAN-type Generator Board)"
@@ -87,3 +89,4 @@ datum/design/mrspacman
 	reliability = 74
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/pacman/mrs
+	category = list("Engineering Machinery")

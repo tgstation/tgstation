@@ -76,7 +76,7 @@
 							 "<span class='notice'>You throw [src]. It lands on [result]. [comment]</span>", \
 							 "<span class='notice'>You hear [src] landing on [result]. [comment]</span>")
 	else if(src.throwing == 0) //Dice was thrown and is coming to rest
-		src.loc.visible_message("<span class='notice'>[src] rolls to a stop, landing on [result]. [comment]</span>")
+		visible_message("<span class='notice'>[src] rolls to a stop, landing on [result]. [comment]</span>")
 
 /obj/item/weapon/dice/d4/Crossed(var/mob/living/carbon/human/H)
 	if(istype(H) && !H.shoes)

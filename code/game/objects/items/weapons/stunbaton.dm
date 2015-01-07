@@ -100,8 +100,8 @@
 	update_icon()
 	add_fingerprint(user)
 
-/obj/item/weapon/melee/baton/attack(mob/M, mob/living/user)
-	if(status && (CLUMSY in user.mutations) && prob(50))
+/obj/item/weapon/melee/baton/attack(mob/M, mob/living/carbon/human/user)
+	if(status && user.disabilities & CLUMSY && prob(50))
 		user.visible_message("<span class='danger'>[user] accidentally hits themself with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 		user.Weaken(stunforce*3)

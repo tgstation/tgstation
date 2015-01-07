@@ -1,31 +1,31 @@
 
-//bitflags for mutations
-	// Extra powers:
-#define SHADOW			(1<<10)	// shadow teleportation (create in/out portals anywhere) (25%)
-#define SCREAM			(1<<11)	// supersonic screaming (25%)
-#define EXPLOSIVE		(1<<12)	// exploding on-demand (15%)
-#define REGENERATION	(1<<13)	// superhuman regeneration (30%)
-#define REPROCESSOR		(1<<14)	// eat anything (50%)
-#define SHAPESHIFTING	(1<<15)	// take on the appearance of anything (40%)
-#define PHASING			(1<<16)	// ability to phase through walls (40%)
-#define SHIELD			(1<<17)	// shielding from all projectile attacks (30%)
-#define SHOCKWAVE		(1<<18)	// attack a nearby tile and cause a massive shockwave, knocking most people on their asses (25%)
-#define ELECTRICITY		(1<<19)	// ability to shoot electric attacks (15%)
+//Defines copying names of mutations in all cases, make sure to change this if you change mutation's name
+#define HULK		"Hulk"
+#define XRAY		"X Ray Vision"
+#define COLDRES		"Cold Resistance"
+#define TK			"Telekinesis"
+#define NERVOUS		"Nervousness"
+#define EPILEPSY	"Epilepsy"
+#define MUTATE		"Unstable DNA"
+#define COUGH		"Cough"
+#define CLOWNMUT	"Clumsiness"
+#define TOURETTES	"Tourettes Syndrome"
+#define DEAFMUT		"Deafness"
+#define BLINDMUT	"Blindness"
+#define RACEMUT		"Monkified"
+#define BADSIGHT	"Near Sightness"
+#define LASEREYES	"Laser Eyes"
 
 
 // String identifiers for associative list lookup
-// mob/var/list/mutations
 
-	// Generic mutations:
-#define	TK				1
-#define COLD_RESISTANCE	2
-#define XRAY			3
-#define HULK			4
-#define CLUMSY			5
-#define FAT				6
-#define HUSK			7
-#define NOCLONE			8
+//Types of usual mutations
+#define	POSITIVE 			1
+#define	NEGATIVE			2
+#define	MINOR_NEGATIVE		3
 
+//Mutations that cant be taken from genetics and are not in SE
+#define	NON_SCANNABLE		-1
 
 	// Extra powers:
 #define LASER			9 	// harm intent - click anywhere to shoot lasers from eyes
@@ -40,18 +40,6 @@
 #define SHIELD			18 	// shielding from all projectile attacks (30%)
 #define SHOCKWAVE		19 	// attack a nearby tile and cause a massive shockwave, knocking most people on their asses (25%)
 #define ELECTRICITY		20 	// ability to shoot electric attacks (15%)
-
-//disabilities
-#define NEARSIGHTED		1
-#define EPILEPSY		2
-#define COUGHING		4
-#define TOURETTES		8
-#define NERVOUS			16
-
-//sdisabilities
-#define BLIND			1
-#define MUTE			2
-#define DEAF			4
 
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE				3

@@ -20,6 +20,8 @@
 	desc = "A hybrid taser designed to fire both short-range high-power electrodes and long-range disabler beams."
 	icon_state = "advtaser"
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/disabler)
+	cell_type = "/obj/item/weapon/stock_parts/cell/crap"
+	origin_tech = null
 
 /obj/item/weapon/gun/energy/gun/advtaser/cyborg
 	name = "advanced taser"
@@ -30,11 +32,11 @@
 
 /obj/item/weapon/gun/energy/gun/advtaser/cyborg/New()
 	..()
-	processing_objects.Add(src)
+	SSobj.processing.Add(src)
 
 
 /obj/item/weapon/gun/energy/gun/advtaser/cyborg/Destroy()
-	processing_objects.Remove(src)
+	SSobj.processing.Remove(src)
 	..()
 
 /obj/item/weapon/gun/energy/gun/advtaser/cyborg/process() //Every [recharge_time] ticks, recharge a shot for the cyborg
@@ -70,11 +72,11 @@
 
 /obj/item/weapon/gun/energy/crossbow/New()
 	..()
-	processing_objects.Add(src)
+	SSobj.processing.Add(src)
 
 
 /obj/item/weapon/gun/energy/crossbow/Destroy()
-	processing_objects.Remove(src)
+	SSobj.processing.Remove(src)
 	..()
 
 

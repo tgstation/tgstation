@@ -110,14 +110,7 @@ proc/sql_report_cyborg_death(var/mob/living/silicon/robot/H)
 			log_game("SQL ERROR during death reporting. Error : \[[err]\]\n")
 
 
-proc/statistic_cycle()
-	if(!config.sql_enabled)
-		return
-	while(1)
-		sql_poll_players()
-		sleep(600)
-		sql_poll_admins()
-		sleep(6000) // Poll every ten minutes
+
 
 //This proc is used for feedback. It is executed at round end.
 proc/sql_commit_feedback()

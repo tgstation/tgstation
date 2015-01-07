@@ -274,22 +274,24 @@ atom/proc/generate_female_clothing(index,t_color,icon)
 	if(src.has_sensor <= 0)
 		usr << "This suit does not have any sensors."
 		return 0
-	src.sensor_mode += 1
-	if(src.sensor_mode > 3)
-		src.sensor_mode = 0
-	switch(src.sensor_mode)
-		if(0)
-			M << "You disable your suit's remote sensing equipment."
-		if(1)
-			M << "Your suit will now report whether you are live or dead."
-		if(2)
-			M << "Your suit will now report your vital lifesigns."
-		if(3)
-			M << "Your suit will now report your vital lifesigns as well as your coordinate position."
-	if(istype(loc,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = loc
-		if(H.w_uniform == src)
-			H.update_suit_sensors()
+
+	var/list/modes = list("Off", "Binary vitals", "Exact vitals", "Tracking beacon")
+	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) in modes
+	if(get_dist(usr, src) > 1)
+		usr << "You have moved too far away."
+		return
+	sensor_mode = modes.Find(switchMode) - 1
+
+	if (src.loc == usr)
+		switch(sensor_mode)
+			if(0)
+				usr << "You disable your suit's remote sensing equipment."
+			if(1)
+				usr << "Your suit will now only report whether you are alive or dead."
+			if(2)
+				usr << "Your suit will now only report your exact vital lifesigns."
+			if(3)
+				usr << "Your suit will now report your exact vital lifesigns as well as your coordinate position."
 	..()
 
 /obj/item/clothing/under/verb/rolldown()

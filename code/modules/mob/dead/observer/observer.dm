@@ -7,7 +7,6 @@
 	stat = DEAD
 	density = 0
 	canmove = 0
-	blinded = 0
 	anchored = 1	//  don't get pushed around
 	invisibility = INVISIBILITY_OBSERVER
 	languages = ALL
@@ -127,11 +126,15 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 					//world << "DEBUG: malf mode ticker test"
 					if(malf.malf_mode_declared && (malf.apcs > 0))
 						stat(null, "Time left: [max(malf.AI_win_timeleft/malf.apcs, 0)]")
-		if(emergency_shuttle)
-			if(emergency_shuttle.online && emergency_shuttle.location < 2)
-				var/timeleft = emergency_shuttle.timeleft()
-				if (timeleft)
-					stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+		var/ETA
+		switch(SSshuttle.emergency.mode)
+			if(SHUTTLE_CALL)
+				ETA = "ETA"
+			if(SHUTTLE_DOCKED)
+				ETA = "ETD"
+		if(ETA)
+			var/timeleft = SSshuttle.emergency.timeLeft()
+			stat(null, "[ETA]-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
@@ -311,3 +314,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	dat += data_core.get_manifest()
 
 	src << browse(dat, "window=manifest;size=370x420;can_close=1")
+
+/mob/dead/observer/Topic(href, href_list)
+	if(href_list["follow"])
+		var/atom/movable/target = locate(href_list["follow"])
+		if((usr == src) && istype(target) && (target != src)) //for safety against href exploits
+			ManualFollow(target)
+
