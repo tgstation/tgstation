@@ -19,6 +19,8 @@ Head of Security
 	selection_color = "#ffdddd"
 	req_admin_notify = 1
 	minimal_player_age = 14
+	clothing = "Trenchcoat"
+	alt_clothing = list("Greatcoat","Parade")
 
 	default_id = /obj/item/weapon/card/id/silver
 	default_pda = /obj/item/device/pda/heads/hos
@@ -36,11 +38,25 @@ Head of Security
 			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway)
 
 /datum/job/hos/equip_items(var/mob/living/carbon/human/H)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security(H), slot_w_uniform)
+	if(H.mind.role_alt_clothing)
+		switch(H.mind.role_alt_clothing)
+			if("Trenchcoat")
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security(H), slot_w_uniform)
+				H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/hos/trenchcoat(H), slot_wear_suit)
+				H.equip_to_slot_or_del(new /obj/item/clothing/head/HoS/beret(H), slot_head)
+			if("Greatcoat")
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security(H), slot_w_uniform)
+				H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/hos(H), slot_wear_suit)
+				H.equip_to_slot_or_del(new /obj/item/clothing/head/HoS(H), slot_head)
+			if("Parade")
+				if(H.gender == FEMALE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/under/hosparadefem(H), slot_w_uniform)
+				else
+					H.equip_to_slot_or_del(new /obj/item/clothing/under/hosparademale(H), slot_w_uniform)
+				H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor(H), slot_wear_suit)
+				H.equip_to_slot_or_del(new /obj/item/clothing/head/HoS/beret(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/hos/trenchcoat(H), slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/black/hos(H), slot_gloves)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/HoS/beret(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/security/sunglasses(H), slot_glasses)
 	H.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun(H), slot_s_store)
 
@@ -69,6 +85,8 @@ Warden
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	minimal_player_age = 7
+	clothing = "Navy Jacket"
+	alt_clothing = list("Red Jacket")
 
 	default_pda = /obj/item/device/pda/warden
 	default_headset = /obj/item/device/radio/headset/headset_sec/alt
@@ -81,8 +99,13 @@ Warden
 /datum/job/warden/equip_items(var/mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest/warden(H), slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/warden(H), slot_head)
+	if(H.mind.role_alt_clothing)
+		switch(H.mind.role_alt_clothing)
+			if("Navy Jacket")
+				H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest/warden(H), slot_wear_suit)
+			if("Red Jacket")
+				H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest/warden/alt(H), slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/black(H), slot_gloves)
 	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/security/sunglasses(H), slot_glasses)
 	H.equip_to_slot_or_del(new /obj/item/device/flash/handheld(H), slot_l_store)
@@ -117,6 +140,8 @@ Detective
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	minimal_player_age = 7
+	clothing = "Default"
+	alt_clothing = list("Noir","Tactical")
 
 	default_pda = /obj/item/device/pda/detective
 	default_headset = /obj/item/device/radio/headset/headset_sec
@@ -125,13 +150,25 @@ Detective
 	minimal_access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court, access_weapons)
 
 /datum/job/detective/equip_items(var/mob/living/carbon/human/H)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/det(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/brown(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/det_hat(H), slot_head)
+	if(H.mind.role_alt_clothing)
+		switch(H.mind.role_alt_clothing)
+			if("Default")
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/det(H), slot_w_uniform)
+				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/brown(H), slot_shoes)
+				H.equip_to_slot_or_del(new /obj/item/clothing/head/det_hat(H), slot_head)
+				H.equip_to_slot_or_del(new /obj/item/clothing/suit/det_suit(H), slot_wear_suit)
+			if("Noir")
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/det/grey(H), slot_w_uniform)
+				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), slot_shoes)
+				H.equip_to_slot_or_del(new /obj/item/clothing/head/fedora(H), slot_head)
+				H.equip_to_slot_or_del(new /obj/item/clothing/suit/det_suit/grey(H), slot_wear_suit)
+			if("Tactical")
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/det(H), slot_w_uniform)
+				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/brown(H), slot_shoes)
+				H.equip_to_slot_or_del(new /obj/item/clothing/head/soft/sec(H), slot_head)
+				H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest/det_suit(H), slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/black(H), slot_gloves)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/det_suit(H), slot_wear_suit)
-	H.equip_to_slot_or_del(new /obj/item/toy/crayon/white(H), slot_l_store)
-	H.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo(H), slot_r_store)
+	H.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo(H), slot_l_store)
 
 	var/obj/item/clothing/mask/cigarette/cig = new /obj/item/clothing/mask/cigarette(H)
 	cig.light("")
@@ -164,6 +201,8 @@ Security Officer
 	selection_color = "#ffeeee"
 	minimal_player_age = 7
 	var/list/dep_access = null
+	clothing = "Corporate"
+	alt_clothing = list("Tactical")
 
 	default_pda = /obj/item/device/pda/security
 	default_headset = /obj/item/device/radio/headset/headset_sec/alt
@@ -207,12 +246,23 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 
 /datum/job/officer/proc/assign_sec_to_department(var/mob/living/carbon/human/H)
 	if(!sec_departments.len)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security(H), slot_w_uniform)
+		if(H.mind.role_alt_clothing)
+			switch(H.mind.role_alt_clothing)
+				if("Corporate")
+					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security(H), slot_w_uniform)
+				if("Tactical")
+					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security/tactical(H), slot_w_uniform)
 	else
 		var/department = pick(sec_departments)
 		sec_departments -= department
 		var/destination = null
-		var/obj/item/clothing/under/U = new /obj/item/clothing/under/rank/security(H)
+		var/obj/item/clothing/under/U
+		if(H.mind.role_alt_clothing)
+			switch(H.mind.role_alt_clothing)
+				if("Corporate")
+					U = new /obj/item/clothing/under/rank/security(H)
+				if("Tactical")
+					U = new /obj/item/clothing/under/rank/security/tactical(H)
 		switch(department)
 			if("supply")
 				default_headset = /obj/item/device/radio/headset/headset_sec/alt/department/supply

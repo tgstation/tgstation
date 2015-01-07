@@ -12,6 +12,8 @@ Chaplain
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	clothing = "Default"
+	alt_clothing = list("Hoodie","Priest","Nun")
 
 	default_pda = /obj/item/device/pda/chaplain
 
@@ -81,7 +83,20 @@ Chaplain
 		usr << browse(null, "window=editicon") // Close window
 
 /datum/job/chaplain/equip_items(var/mob/living/carbon/human/H)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chaplain(H), slot_w_uniform)
+	if(H.mind.role_alt_clothing)
+		switch(H.mind.role_alt_clothing)
+			if("Default")
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chaplain(H), slot_w_uniform)
+			if("Hoodie")
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chaplain(H), slot_w_uniform)
+				H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/chaplain_hoodie(H), slot_wear_suit)
+			if("Priest")
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chaplain(H), slot_w_uniform)
+				H.equip_to_slot_or_del(new /obj/item/clothing/suit/holidaypriest(H), slot_wear_suit)
+			if("Nun")
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chaplain(H), slot_w_uniform)
+				H.equip_to_slot_or_del(new /obj/item/clothing/suit/nun(H), slot_wear_suit)
+				H.equip_to_slot_or_del(new /obj/item/clothing/head/nun_hood(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
 
 	var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible/booze(H)

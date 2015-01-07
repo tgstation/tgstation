@@ -48,6 +48,9 @@ var/datum/subsystem/job/SSjob
 		if(J.title == rank)	return J
 	return null
 
+/datum/subsystem/job/proc/GetPlayerAltClothing(mob/new_player/player, rank)
+	return player.client.prefs.GetPlayerAltClothing(GetJob(rank))
+
 /datum/subsystem/job/proc/AssignRole(mob/new_player/player, rank, latejoin=0)
 	Debug("Running AR, Player: [player], Rank: [rank], LJ: [latejoin]")
 	if(player && player.mind && rank)
@@ -61,6 +64,7 @@ var/datum/subsystem/job/SSjob
 		if((job.current_positions < position_limit) || position_limit == -1)
 			Debug("Player: [player] is now Rank: [rank], JCP:[job.current_positions], JPL:[position_limit]")
 			player.mind.assigned_role = rank
+			player.mind.role_alt_clothing = GetPlayerAltClothing(player, rank)
 			unassigned -= player
 			job.current_positions++
 			return 1
@@ -321,8 +325,10 @@ var/datum/subsystem/job/SSjob
 		if(istype(S, /obj/effect/landmark/start) && istype(S.loc, /turf))
 			H.loc = S.loc
 
+	var/alt_clothing = null
 	if(H.mind)
 		H.mind.assigned_role = rank
+		alt_clothing = H.mind.role_alt_clothing
 
 	if(job)
 		var/new_mob = job.equip(H)

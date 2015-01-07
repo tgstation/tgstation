@@ -18,6 +18,13 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	strip_delay = 50
 
+/obj/item/clothing/under/rank/security/tactical
+	name = "security jumpsuit"
+	desc = "A tactical red zip-up jumpsuit for combat efficiency."
+	icon_state = "securityred"
+	item_state = "r_suit"
+	item_color = "securityred"
+
 /obj/item/clothing/under/rank/warden
 	name = "warden's suit"
 	desc = "A formal security suit for the warden with blue desginations and '/Warden/' stiched into the shoulders."
@@ -26,6 +33,13 @@
 	item_color = "warden"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	strip_delay = 50
+
+/obj/item/clothing/under/rank/warden/tactical
+	name = "warden's jumpsuit"
+	desc = "A tactical red zip-up jumpsuit for combat efficiency with silver arm designations."
+	icon_state = "wardenred"
+	item_state = "r_suit"
+	item_color = "wardenred"
 
 /*
  * Detective
@@ -57,6 +71,13 @@
 	item_color = "hos"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	strip_delay = 60
+
+/obj/item/clothing/under/rank/head_of_security/tactical
+	name = "head of security's jumpsuit"
+	desc = "A zip-up jumpsuit decorated for those few with the dedication to achieve the position of Head of Security."
+	icon_state = "hosred"
+	item_state = "r_suit"
+	item_color = "hosred"
 
 /*
  * Navy uniforms
