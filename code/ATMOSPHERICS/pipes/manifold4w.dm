@@ -25,6 +25,9 @@
 	color = pipe_color
 	..()
 
+/obj/machinery/atmospherics/pipe/manifold4w/SetInitDirections()
+	return
+
 /obj/machinery/atmospherics/pipe/manifold4w/initialize()
 	for(var/D in cardinal)
 		for(var/obj/machinery/atmospherics/target in get_step(src, D))
@@ -118,6 +121,17 @@
 
 	if(node4)
 		overlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_full[invis]", WEST)
+
+/obj/machinery/atmospherics/pipe/manifold4w/update_node_icon()
+	..()
+	if(node1)
+		node1.update_icon()
+	if(node2)
+		node2.update_icon()
+	if(node3)
+		node3.update_icon()
+	if(node4)
+		node4.update_icon()
 
 //Colored pipes, use these for mapping
 /obj/machinery/atmospherics/pipe/manifold4w/general

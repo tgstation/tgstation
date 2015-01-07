@@ -47,6 +47,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/chat_channel = "#ss13" //name of our current NTRC channel
 	var/nick = "" //our NTRC nick
 	var/list/ntrclog = list() //NTRC message log
+	var/new_ntrc_msg = 0
 
 	var/noreturn = 0 //whether the PDA can use the Return button, used for the aiPDA chatroom
 
@@ -260,6 +261,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(active_uplink_check(user))
 		return
 
+	setup_chatrooms()
+
 	var/dat = "<html><head><title>Personal Data Assistant</title></head><body bgcolor=\"#808000\"><style>a, a:link, a:visited, a:active, a:hover { color: #000000; }img {border-style:none;}</style>"
 
 	dat += "<a href='byond://?src=\ref[src];choice=Close'><img src=pda_exit.png> Close</a>"
@@ -292,7 +295,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += "<ul>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=1'><img src=pda_notes.png> Notekeeper</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=2'><img src=pda_mail.png> Messenger</a></li>"
-				dat += "<li><a href='byond://?src=\ref[src];choice=5'><img src=pda_chatroom.png> Nanotrasen Relay Chat</a></li>"
+				dat += "<li><a href='byond://?src=\ref[src];choice=5'><img src=pda_chatroom.png> Nanotrasen Relay Chat</a> ([new_ntrc_msg] unread)</li>"
 
 				if (cartridge)
 					if (cartridge.access_clown)
@@ -444,10 +447,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += "<br>"
 
 			if (5)
-				if(!nick) //first time join
-					nick = copytext(sanitize(owner), 1, 9)
-					var/datum/chatroom/C = chatchannels[chat_channel]
-					C.parse_msg(src, nick, "/join [chat_channel]")
+				new_ntrc_msg = 0
 				dat += "<h4><img src=pda_chatroom.png> SS13 Nanotrasen Relay Chat Network</h4>"
 
 				dat += "<a href='byond://?src=\ref[src];choice=Set Nick'>[nick]</a> | "
@@ -1152,6 +1152,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		ntrclog[channel] = msg + ntrclog[channel]
 	if (findtext(message, nick) && !silent)
 		loc.audible_message("\icon[src] *[ttone]*", null, 3)
+	new_ntrc_msg++
+
+/obj/item/device/pda/proc/setup_chatrooms() //this can't be done on New() because the messaging server needs to be instanced first
+	if(!nick) //first time using the PDA
+		//join the default chat channel
+		nick = copytext(sanitize(owner), 1, 9)
+		var/datum/chatroom/C = chatchannels[chat_channel]
+		C.parse_msg(src, nick, "/join [chat_channel]")
 
 /proc/get_viewable_pdas()
 	. = list()
