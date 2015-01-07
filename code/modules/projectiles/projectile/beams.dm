@@ -8,15 +8,11 @@
 	flag = "laser"
 	eyeblur = 2
 
-/obj/item/projectile/practice
+/obj/item/projectile/beam/practice
 	name = "practice laser"
-	icon_state = "laser"
-	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 0
 	hitsound = null
-	damage_type = BURN
-	flag = "laser"
-	eyeblur = 2
+	nodamage = 1
 
 /obj/item/projectile/beam/scatter
 	name = "laser pellet"
