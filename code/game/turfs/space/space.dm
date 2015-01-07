@@ -3,7 +3,6 @@
 	name = "\proper space"
 	icon_state = "0"
 	intact = 0
-	layer = SPACE_LAYER
 
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
@@ -16,6 +15,8 @@
 /turf/space/New()
 	if(!istype(src, /turf/space/transit))
 		icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
+	layer = SPACE_LAYER
+	..()
 
 /turf/space/attack_paw(mob/user as mob)
 	return src.attack_hand(user)

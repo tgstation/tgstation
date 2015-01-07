@@ -132,7 +132,7 @@
 	desc = "A small holographic barrier that indicates a medic is coming to treat a patient."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "medi_holo"
-	layer = 4.1
+	layer = ITEM_LAYER
 	mouse_opacity = 0
 
 /obj/effect/medical_holosign/New()

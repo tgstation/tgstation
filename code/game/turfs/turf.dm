@@ -1,5 +1,6 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
+	layer = MAPPING_FAR_BACK_LAYER
 
 	var/intact = 1
 	var/cancable = 0
@@ -25,9 +26,15 @@
 
 /turf/New()
 	..()
+	if(layer == MAPPING_FAR_BACK_LAYER)
+		if(density)
+			layer = WALL_LAYER
+		else if(intact)
+			layer = TILE_LAYER
+		else // space is hardcoded in space/New() so we don't have to istype() for it
+			layer = PLATING_LAYER
 	for(var/atom/movable/AM in src)
 		Entered(AM)
-	return
 
 // Adds the adjacent turfs to the current atmos processing
 /turf/Del()

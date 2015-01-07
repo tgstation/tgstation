@@ -41,8 +41,8 @@
 	desc = "Your instincts say you shouldn't be following these."
 	gender = PLURAL
 	density = 0
-	anchored = BLOOD_LAYER
-	layer = 2
+	anchored = 1
+	layer = BLOOD_LAYER
 	random_icon_states = null
 	var/list/existing_dirs = list()
 	blood_DNA = list()

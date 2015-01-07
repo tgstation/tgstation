@@ -66,12 +66,11 @@
 
 /obj/machinery/atmospherics/binary/valve/digital/update_icon_nopipes(animation)
 	normalize_dir()
+	overlays.Cut()
 	if(stat & NOPOWER)
 		icon_state = "dvalve_nopower"
-		overlays.Cut()
 		return
 	icon_state = "dvalve_off"
-	overlays.Cut()
 	if(animation)
 		overlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "dvalve_[open][!open]")
 	else if(open)

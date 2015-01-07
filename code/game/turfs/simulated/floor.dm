@@ -19,7 +19,6 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	//- builtin_tile should be dropped if needed for performance reasons (eg singularity_act())
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
-	layer = TILE_LAYER
 
 	var/icon_regular_floor = "floor" //used to remember what icon the tile should have by default
 	var/icon_plating = "plating"

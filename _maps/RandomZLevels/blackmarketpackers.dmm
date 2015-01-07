@@ -366,7 +366,7 @@
 "hb" = (/obj/structure/reagent_dispensers,/turf/simulated/floor/plasteel{icon_state = "showroomfloor"},/area/awaymission/BMPship/Aft)
 "hc" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/turf/simulated/shuttle/plating,/area/awaymission/BMPship/Aft)
 "hd" = (/turf/simulated/shuttle/wall{tag = "icon-swallc2"; icon_state = "swallc2"},/area/awaymission/BMPship/Aft)
-"he" = (/turf/simulated/floor/plating/airless{tag = "icon-platingdmg2"; icon_state = "platingdmg2"},/turf/simulated/shuttle/wall{dir = 3; icon_state = "swall_f10"; layer = 2; tag = "icon-swall_f10"},/area/awaymission/BMPship/Fore)
+"he" = (/turf/simulated/floor/plating/airless{tag = "icon-platingdmg2"; icon_state = "platingdmg2"},/turf/simulated/shuttle/wall{dir = 3; icon_state = "swall_f10"; tag = "icon-swall_f10"},/area/awaymission/BMPship/Fore)
 "hf" = (/obj/structure/computerframe{anchored = 1},/turf/simulated/floor/plating/airless{tag = "icon-panelscorched"; icon_state = "panelscorched"},/area/awaymission/BMPship/Fore)
 "hg" = (/obj/structure/computerframe{anchored = 1},/turf/simulated/floor/plating/airless{tag = "icon-platingdmg1"; icon_state = "platingdmg1"},/area/awaymission/BMPship/Fore)
 "hh" = (/obj/machinery/light/small,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/awaymission/BMPship/Midship)

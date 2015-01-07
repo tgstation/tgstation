@@ -50,9 +50,6 @@
 	if (!id_tag)
 		assign_uid()
 		id_tag = num2text(uid)
-	if(ticker && ticker.current_state == 3)//if the game is running
-		src.initialize()
-		src.broadcast_status()
 
 /obj/machinery/atmospherics/unary/vent_pump/Destroy()
 	if(radio_controller)
@@ -67,10 +64,12 @@
 	..()
 	air_contents.volume = 1000
 
-/obj/machinery/atmospherics/unary/vent_pump/update_icon_nopipes()
-	overlays.Cut()
+/obj/machinery/atmospherics/unary/vent_pump/update_icon()
+	..()
 	var/cap_layer = node ? node.layer : PIPE_LAYER // use the node's layer or use the default pipe layer if no node
-	overlays += getpipeimage('icons/obj/atmospherics/unary_devices.dmi', "vent_cap", initialize_directions, , cap_layer)
+	underlays += getpipeimage('icons/obj/atmospherics/unary_devices.dmi', "vent_cap", initialize_directions, , cap_layer)
+
+/obj/machinery/atmospherics/unary/vent_pump/update_icon_nopipes()
 
 	if(welded)
 		icon_state = "vent_welded"
@@ -190,6 +189,7 @@
 	radio_filter_out = frequency==1439?(RADIO_TO_AIRALARM):null
 	if(frequency)
 		set_frequency(frequency)
+	broadcast_status()
 
 /obj/machinery/atmospherics/unary/vent_pump/receive_signal(datum/signal/signal)
 	if(stat & (NOPOWER|BROKEN))

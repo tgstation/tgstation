@@ -102,7 +102,7 @@
 "bX" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/fire,/obj/item/weapon/storage/firstaid/fire{pixel_x = -2; pixel_y = 4},/turf/simulated/shuttle/floor,/area/awaymission/centcomAway/hangar)
 "bY" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/regular{pixel_x = 2; pixel_y = 0},/obj/item/weapon/storage/firstaid/regular{pixel_x = -2; pixel_y = 4},/turf/simulated/shuttle/floor,/area/awaymission/centcomAway/hangar)
 "bZ" = (/turf/simulated/shuttle/floor,/turf/simulated/shuttle/wall{icon_state = "swall_f5"; dir = 2},/area/awaymission/centcomAway/hangar)
-"ca" = (/turf/simulated/shuttle/plating,/turf/simulated/shuttle/wall{dir = 2; icon_state = "swall_f10"; layer = 2},/area/awaymission/centcomAway/hangar)
+"ca" = (/turf/simulated/shuttle/plating,/turf/simulated/shuttle/wall{dir = 2; icon_state = "swall_f10"},/area/awaymission/centcomAway/hangar)
 "cb" = (/obj/item/weapon/paper_bin,/obj/structure/table,/turf/simulated/floor/plasteel{tag = "icon-redyellowfull"; icon_state = "redyellowfull"},/area/awaymission/centcomAway/cafe)
 "cc" = (/obj/item/weapon/clipboard,/obj/structure/table,/turf/simulated/floor/plasteel{tag = "icon-redyellowfull"; icon_state = "redyellowfull"},/area/awaymission/centcomAway/cafe)
 "cd" = (/obj/machinery/suit_storage_unit/standard_unit,/turf/simulated/floor/plasteel{dir = 1; icon_state = "yellow"},/area/awaymission/centcomAway/general)

@@ -11,7 +11,6 @@
 /turf/simulated/floor/plating
 	name = "plating"
 	icon_state = "plating"
-	layer = PLATING_LAYER
 	intact = 0
 	cancable = 1
 	broken_states = list("platingdmg1", "platingdmg2", "platingdmg3")
@@ -87,7 +86,6 @@
 	icon_state = "engine"
 	thermal_conductivity = 0.025
 	heat_capacity = 325000
-	layer = PLATING_LAYER
 
 /turf/simulated/floor/engine/break_tile()
 	return //unbreakable

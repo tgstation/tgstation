@@ -494,7 +494,6 @@
 #include "code\game\objects\effects\effect_system.dm"
 #include "code\game\objects\effects\explosion_particles.dm"
 #include "code\game\objects\effects\forcefields.dm"
-#include "code\game\objects\effects\gas.dm"
 #include "code\game\objects\effects\gibs.dm"
 #include "code\game\objects\effects\glowshroom.dm"
 #include "code\game\objects\effects\landmarks.dm"

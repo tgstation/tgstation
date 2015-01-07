@@ -23,10 +23,10 @@
 "w" = (/turf/space,/area/syndicate_station/mining)
 "x" = (/turf/simulated/floor/plating,/obj/structure/shuttle/engine/propulsion{tag = "icon-propulsion (EAST)"; icon_state = "propulsion"; dir = 4},/turf/simulated/shuttle/wall{icon_state = "swall_f6"; dir = 2},/area/mine/explored)
 "y" = (/turf/simulated/shuttle/wall{icon_state = "swall12"; dir = 2},/area/mine/explored)
-"z" = (/turf/simulated/floor/plating/asteroid/airless,/turf/simulated/shuttle/wall{dir = 3; icon_state = "swall_f10"; layer = 2},/area/mine/explored)
+"z" = (/turf/simulated/floor/plating/asteroid/airless,/turf/simulated/shuttle/wall{dir = 3; icon_state = "swall_f10"},/area/mine/explored)
 "A" = (/turf/simulated/shuttle/floor,/area/mine/explored)
 "B" = (/obj/structure/stool/bed/chair{dir = 4},/obj/item/device/radio/intercom{pixel_y = 25},/obj/item/weapon/paper{icon_state = "paper_words"; info = "This pod is known to have navigation errors. Don't launch it under any circumstance!"; name = "Notice"},/turf/simulated/shuttle/floor,/area/mine/explored)
-"C" = (/obj/structure/stool/bed/chair{dir = 4},/obj/machinery/status_display{density = 0; layer = 4; pixel_x = 0; pixel_y = 32},/obj/effect/decal/remains/human,/turf/simulated/shuttle/floor,/area/mine/explored)
+"C" = (/obj/structure/stool/bed/chair{dir = 4},/obj/machinery/status_display{density = 0; pixel_x = 0; pixel_y = 32},/obj/effect/decal/remains/human,/turf/simulated/shuttle/floor,/area/mine/explored)
 "D" = (/obj/item/stack/rods,/obj/item/weapon/shard{icon_state = "medium"},/turf/simulated/shuttle/plating,/area/mine/explored)
 "E" = (/turf/simulated/floor/plating,/obj/structure/shuttle/engine/propulsion{tag = "icon-propulsion (EAST)"; icon_state = "propulsion"; dir = 4},/turf/simulated/shuttle/wall{icon_state = "swall_f5"; dir = 2},/area/mine/explored)
 

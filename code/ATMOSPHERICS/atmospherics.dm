@@ -25,14 +25,16 @@ Pipelines + Other Objects -> Pipe network
 	var/global/list/iconsetids = list()
 	var/global/list/pipeimages = list()
 
-/obj/machinery/atmospherics/initialize()
-	if(can_unwrench && !stored)
-		stored = new(src, make_from=src)
-	update_icon()
+/obj/machinery/atmospherics/New()
 	..()
 
 	SetInitDirections()
+	if(can_unwrench && !stored)
+		stored = new(src, make_from=src)
 
+/obj/machinery/atmospherics/initialize()
+	..()
+	update_icon()
 
 /obj/machinery/atmospherics/proc/SetInitDirections()
 	return
@@ -146,15 +148,13 @@ Pipelines + Other Objects -> Pipe network
 	var/turf/T = loc
 	if(layer < T.layer)
 		layer = ATMOSPHERIC_MACHINE_LAYER
-		if(layer < T.layer) //walls are higher up and can be placed with the RPD
+		if(layer < T.layer) //I dunno ok
 			hide(T.intact, T.layer)
 	initialize()
 	var/list/nodes = pipeline_expansion()
 	for(var/obj/machinery/atmospherics/A in nodes)
 		A.initialize()
 		A.addMember(src)
-		if(A.name != src.name && src.name == initial(src.name) && istype(src, /obj/machinery/atmospherics/pipe) && istype(A, /obj/machinery/atmospherics/pipe) )
-			name = A.name
 	build_network()
 
 /obj/machinery/atmospherics/singularity_pull(S, current_size)

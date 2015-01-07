@@ -6,7 +6,7 @@
 	use_power = 2
 	idle_power_usage = 5
 	active_power_usage = 10
-	layer = MACHINE_LAYER
+	layer = ON_WALL_LAYER
 
 	var/datum/wires/camera/wires = null // Wires datum
 	var/list/network = list("SS13")

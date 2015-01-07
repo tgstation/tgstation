@@ -5,7 +5,6 @@
 	opacity = 1
 	density = 1
 	blocks_air = 1
-	layer = WALL_LAYER
 
 /turf/unsimulated/wall/normal
 	icon_state = "wall"
@@ -35,7 +34,6 @@ turf/unsimulated/wall/splashscreen
 	icon = 'icons/turf/shuttle.dmi'
 	thermal_conductivity = 0.05
 	heat_capacity = 0
-	layer = TILE_LAYER
 
 /turf/unsimulated/shuttle/wall
 	name = "wall"
