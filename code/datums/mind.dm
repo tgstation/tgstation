@@ -52,6 +52,8 @@
 	var/datum/changeling/changeling		//changeling holder
 
 	var/miming = 0 // Mime's vow of silence
+	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
+	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
 
 /datum/mind/New(var/key)
 	src.key = key
@@ -64,7 +66,7 @@
 	if(current)					//remove ourself from our old body's mind variable
 		current.mind = null
 
-		nanomanager.user_transferred(current, new_character)
+		SSnano.user_transferred(current, new_character)
 
 	if(key)
 		if(new_character.key != key)					//if we're transfering into a body with a key associated which is not ours
@@ -77,6 +79,7 @@
 
 	current = new_character								//associate ourself with our new body
 	new_character.mind = src							//and associate our new body with ourself
+	transfer_antag_huds(new_character)					//inherit the antag HUDs from this mind (TODO: move this to a possible antag datum)
 
 	if(active)
 		new_character.key = key		//now transfer the key to link the client to our new body
@@ -966,7 +969,7 @@
 					log_admin("[key_name(usr)] has traitor'ed [current].")
 					if(isAI(current))
 						var/mob/living/silicon/ai/A = current
-						call(/datum/game_mode/proc/add_law_zero)(A)
+						ticker.mode.add_law_zero(A)
 						A.show_laws()
 
 			if("autoobjectives")

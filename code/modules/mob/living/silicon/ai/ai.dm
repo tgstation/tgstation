@@ -20,6 +20,8 @@ var/list/ai_list = list()
 	density = 1
 	status_flags = CANSTUN|CANPARALYSE|CANPUSH
 	force_compose = 1 //This ensures that the AI always composes it's own hear message. Needed for hrefs and job display.
+	med_hud = DATA_HUD_MEDICAL_BASIC
+	sec_hud = DATA_HUD_SECURITY_BASIC
 	var/list/network = list("SS13")
 	var/obj/machinery/camera/current = null
 	var/list/connected_robots = list()
@@ -29,6 +31,7 @@ var/list/ai_list = list()
 	var/viewalerts = 0
 	var/icon/holo_icon//Default is assigned when AI is created.
 	var/radio_enabled = 1 //Determins if a carded AI can speak with its built in radio or not.
+	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
 	var/obj/item/device/pda/ai/aiPDA = null
 	var/obj/item/device/multitool/aiMulti = null
 	var/obj/item/device/camera/siliconcam/aicamera = null
@@ -58,6 +61,7 @@ var/list/ai_list = list()
 	var/last_announcement = "" // For AI VOX, if enabled
 	var/turf/waypoint //Holds the turf of the currently selected waypoint.
 	var/waypoint_mode = 0 //Waypoint mode is for selecting a turf via clicking.
+	var/apc_override = 0 //hack for letting the AI use its APC even when visionless
 
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
 	var/list/possibleNames = ai_names
@@ -100,7 +104,7 @@ var/list/ai_list = list()
 		verbs.Add(/mob/living/silicon/ai/proc/ai_network_change, \
 		/mob/living/silicon/ai/proc/ai_statuschange, /mob/living/silicon/ai/proc/ai_hologram_change, \
 		/mob/living/silicon/ai/proc/toggle_camera_light, /mob/living/silicon/ai/proc/botcall,\
-		/mob/living/silicon/ai/proc/control_integrated_radio)
+		/mob/living/silicon/ai/proc/control_integrated_radio, /mob/living/silicon/ai/proc/set_automatic_say_channel)
 
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
 		if (!B)//If there is no player/brain inside.
@@ -131,7 +135,7 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/Destroy()
 	ai_list -= src
 	shuttle_caller_list -= src
-	emergency_shuttle.autoshuttlecall()
+	SSshuttle.autoEvac()
 	..()
 
 
@@ -173,10 +177,15 @@ var/list/ai_list = list()
 	..()
 	statpanel("Status")
 	if (client.statpanel == "Status")
-		if(emergency_shuttle.online && emergency_shuttle.location < 2)
-			var/timeleft = emergency_shuttle.timeleft()
-			if (timeleft)
-				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+		var/ETA
+		switch(SSshuttle.emergency.mode)
+			if(SHUTTLE_CALL)
+				ETA = "ETA"
+			if(SHUTTLE_DOCKED)
+				ETA = "ETD"
+		if(ETA)
+			var/timeleft = SSshuttle.emergency.timeLeft()
+			stat(null, "[ETA]-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
 		if(ticker.mode.name == "AI malfunction")
 			var/datum/game_mode/malfunction/malf = ticker.mode
@@ -233,7 +242,7 @@ var/list/ai_list = list()
 	onclose(src, "airoster")
 
 /mob/living/silicon/ai/proc/ai_call_shuttle()
-	if(src.stat == 2)
+	if(src.stat == DEAD)
 		src << "You can't call the shuttle because you are dead!"
 		return
 	if(istype(usr,/mob/living/silicon/ai))
@@ -244,11 +253,11 @@ var/list/ai_list = list()
 
 	var/reason = input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call") as text
 
-	if(length(trim(reason)) > 0)
-		call_shuttle_proc(src, reason)
+	if(trim(reason))
+		SSshuttle.requestEvac(src, reason)
 
 	// hack to display shuttle timer
-	if(emergency_shuttle.online)
+	if(SSshuttle.emergency.mode >= SHUTTLE_CALL)
 		var/obj/machinery/computer/communications/C = locate() in machines
 		if(C)
 			C.post_status("shuttle")
@@ -281,7 +290,7 @@ var/list/ai_list = list()
 		if(AI.control_disabled)
 			src	 << "Wireless control is disabled!"
 			return
-	cancel_call_proc(src)
+	SSshuttle.cancelEvac(src)
 	return
 
 /mob/living/silicon/ai/check_eye(var/mob/user as mob)
@@ -309,7 +318,7 @@ var/list/ai_list = list()
 				ai_call_shuttle()
 	..()
 
-/mob/living/silicon/ai/ex_act(severity)
+/mob/living/silicon/ai/ex_act(severity, target)
 	..()
 
 	switch(severity)
@@ -364,7 +373,7 @@ var/list/ai_list = list()
 		return
 
 	if (href_list["callbot"]) //Command a bot to move to a selected location.
-		Bot = locate(href_list["callbot"]) in aibots
+		Bot = locate(href_list["callbot"]) in SSbot.processing
 		if(!Bot || Bot.remote_disabled || src.control_disabled)
 			return //True if there is no bot found, the bot is manually emagged, or the AI is carded with wireless off.
 		waypoint_mode = 1
@@ -372,7 +381,7 @@ var/list/ai_list = list()
 		return
 
 	if (href_list["interface"]) //Remotely connect to a bot!
-		Bot = locate(href_list["interface"]) in aibots
+		Bot = locate(href_list["interface"]) in SSbot.processing
 		if(!Bot || Bot.remote_disabled || src.control_disabled)
 			return
 		Bot.attack_ai(src)
@@ -455,7 +464,7 @@ var/list/ai_list = list()
 	d += "<A HREF=?src=\ref[src];botrefresh=\ref[Bot]>Query network status</A><br>"
 	d += "<table width='100%'><tr><td width='40%'><h3>Name</h3></td><td width='30%'><h3>Status</h3></td><td width='30%'><h3>Location</h3></td><td width='10%'><h3>Control</h3></td></tr>"
 
-	for (Bot in aibots)
+	for (Bot in SSbot.processing)
 		if(Bot.z == ai_Zlevel && !Bot.remote_disabled) //Only non-emagged bots on the same Z-level are detected!
 			bot_area = get_area(Bot)
 			d += "<tr><td width='30%'>[Bot.hacked ? "<span class='bad'>(!) </span>[Bot.name]" : Bot.name]</td>"
@@ -492,7 +501,9 @@ var/list/ai_list = list()
 
 	Bot.call_bot(src, waypoint)
 
-/mob/living/silicon/ai/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
+/mob/living/silicon/ai/triggerAlarm(var/class, area/A, var/O, var/obj/alarmsource)
+	if(alarmsource.z != z)
+		return
 	if (stat == 2)
 		return 1
 	var/list/L = alarms[class]
@@ -542,7 +553,7 @@ var/list/ai_list = list()
 				cleared = 1
 				L -= I
 	if (cleared)
-		queueAlarm(text("--- [] alarm in [] has been cleared.", class, A.name), class, 0)
+		queueAlarm("--- [class] alarm in [A.name] has been cleared.", class, 0)
 		if (viewalerts) ai_alerts()
 	return !cleared
 
@@ -724,6 +735,17 @@ var/list/ai_list = list()
 	src << "Accessing Subspace Transceiver control..."
 	if (radio)
 		radio.interact(src)
+
+/mob/living/silicon/ai/proc/set_syndie_radio()
+	if(radio)
+		radio.make_syndie()
+
+/mob/living/silicon/ai/proc/set_automatic_say_channel()
+	set name = "Set Auto Announce Mode"
+	set desc = "Modify the default radio setting for your automatic announcements."
+	set category = "AI Commands"
+
+	set_autosay()
 
 /mob/living/silicon/ai/attack_slime(mob/living/carbon/slime/user)
 	return

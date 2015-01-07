@@ -61,7 +61,6 @@
 /obj/item/weapon/storage/box/survival/New()
 	..()
 	contents = list()
-	sleep(1)
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/emergency_oxygen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
@@ -72,7 +71,6 @@
 /obj/item/weapon/storage/box/engineer/New()
 	..()
 	contents = list()
-	sleep(1)
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
@@ -85,13 +83,13 @@
 
 /obj/item/weapon/storage/box/gloves/New()
 	..()
-	new /obj/item/clothing/gloves/latex(src)
-	new /obj/item/clothing/gloves/latex(src)
-	new /obj/item/clothing/gloves/latex(src)
-	new /obj/item/clothing/gloves/latex(src)
-	new /obj/item/clothing/gloves/latex(src)
-	new /obj/item/clothing/gloves/latex(src)
-	new /obj/item/clothing/gloves/latex(src)
+	new /obj/item/clothing/gloves/color/latex(src)
+	new /obj/item/clothing/gloves/color/latex(src)
+	new /obj/item/clothing/gloves/color/latex(src)
+	new /obj/item/clothing/gloves/color/latex(src)
+	new /obj/item/clothing/gloves/color/latex(src)
+	new /obj/item/clothing/gloves/color/latex(src)
+	new /obj/item/clothing/gloves/color/latex(src)
 
 /obj/item/weapon/storage/box/masks
 	name = "box of sterile masks"
@@ -526,6 +524,7 @@
 	storage_slots = 10
 	w_class = 1
 	slot_flags = SLOT_BELT
+	can_hold = list(/obj/item/weapon/match)
 
 /obj/item/weapon/storage/box/matches/New()
 	..()

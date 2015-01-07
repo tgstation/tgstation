@@ -42,6 +42,11 @@
 	spawn()
 		magnetic_process()
 
+/obj/machinery/magnetic_module/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src, freq)
+	..()
+
 // update the invisibility and icon
 /obj/machinery/magnetic_module/hide(var/intact)
 	invisibility = intact ? 101 : 0
@@ -235,6 +240,10 @@
 	if(path) // check for default path
 		filter_path() // renders rpath
 
+/obj/machinery/magnetic_controller/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src, frequency)
+	..()
 
 /obj/machinery/magnetic_controller/process()
 	if(magnets.len == 0 && autolink)

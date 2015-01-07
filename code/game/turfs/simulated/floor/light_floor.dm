@@ -8,15 +8,21 @@
 	luminosity = 5
 	icon_state = "light_on"
 	floor_tile = /obj/item/stack/tile/light
-	broken_states = list("light-broken")
+	broken_states = list("light_broken")
 	var/on = 1
 	var/state //0 = fine, 1 = flickering, 2 = breaking, 3 = broken
 
 /turf/simulated/floor/light/New()
 	..()
+	spawn(5) //needed because when placing a light floor tile it will take a short while before setting state
+		if(istype(builtin_tile, /obj/item/stack/tile/light))
+			var/obj/item/stack/tile/light/L = builtin_tile
+			L.state = state
 	update_icon()
 
 /turf/simulated/floor/light/update_icon()
+	if(!..())
+		return 0
 	if(on)
 		switch(state)
 			if(0)
@@ -35,6 +41,10 @@
 	else
 		SetLuminosity(0)
 		icon_state = "light_off"
+
+/turf/simulated/floor/light/ChangeTurf(turf/T as turf)
+	SetLuminosity(0)
+	..()
 
 /turf/simulated/floor/light/attack_hand(mob/user as mob)
 	on = !on

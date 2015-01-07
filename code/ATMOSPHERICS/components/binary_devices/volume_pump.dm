@@ -26,6 +26,11 @@ Thus, the two variables affect pump operation are set in New():
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
+/obj/machinery/atmospherics/binary/volume_pump/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src,frequency)
+	..()
+
 /obj/machinery/atmospherics/binary/volume_pump/on
 	on = 1
 
@@ -57,11 +62,9 @@ Thus, the two variables affect pump operation are set in New():
 
 	air2.merge(removed)
 
-	if(network1)
-		network1.update = 1
+	parent1.update = 1
 
-	if(network2)
-		network2.update = 1
+	parent2.update = 1
 
 	return 1
 
@@ -110,6 +113,8 @@ Thus, the two variables affect pump operation are set in New():
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
 		return 0
 
+	var/old_on = on //for logging
+
 	if("power" in signal.data)
 		on = text2num(signal.data["power"])
 
@@ -122,6 +127,9 @@ Thus, the two variables affect pump operation are set in New():
 			0,
 			air1.volume
 		)
+
+	if(on != old_on)
+		investigate_log("was turned [on ? "on" : "off"] by a remote signal", "atmos")
 
 	if("status" in signal.data)
 		spawn(2)
@@ -148,9 +156,10 @@ Thus, the two variables affect pump operation are set in New():
 	if(..()) return
 	if(href_list["power"])
 		on = !on
+		investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
 	if(href_list["set_transfer_rate"])
-		var/new_transfer_rate = input(usr,"Enter new output volume (0-200l/s)","Flow control",src.transfer_rate) as num
-		src.transfer_rate = max(0, min(200, new_transfer_rate))
+		transfer_rate = max(0, min(200, safe_input("Pressure control", "Enter new output pressure (0-4500kPa)", transfer_rate)))
+		investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", "atmos")
 	usr.set_machine(src)
 	src.update_icon()
 	src.updateUsrDialog()

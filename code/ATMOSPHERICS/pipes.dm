@@ -8,7 +8,7 @@
 	var/alert_pressure = 80*ONE_ATMOSPHERE
 		//minimum pressure before check_pressure(...) should be called
 
-/obj/machinery/atmospherics/pipe/proc/pipeline_expansion()
+/obj/machinery/atmospherics/proc/pipeline_expansion()
 	return null
 
 /obj/machinery/atmospherics/pipe/proc/check_pressure(pressure)
@@ -23,38 +23,34 @@
 		air_update_turf()
 
 /obj/machinery/atmospherics/pipe/return_air()
-	if(!parent)
-		parent = new /datum/pipeline()
-		parent.build_pipeline(src)
 	return parent.air
 
 /obj/machinery/atmospherics/pipe/build_network()
 	if(!parent)
 		parent = new /datum/pipeline()
 		parent.build_pipeline(src)
-	return parent.return_network()
-
-/obj/machinery/atmospherics/pipe/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
-	if(!parent)
-		parent = new /datum/pipeline()
-		parent.build_pipeline(src)
-	return parent.network_expand(new_network, reference)
-
-/obj/machinery/atmospherics/pipe/return_network(obj/machinery/atmospherics/reference)
-	if(!parent)
-		parent = new /datum/pipeline()
-		parent.build_pipeline(src)
-	return parent.return_network(reference)
-
-/obj/machinery/atmospherics/pipe/Destroy()
-	del(parent)
-	..()
 
 /obj/machinery/atmospherics/pipe/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/device/analyzer))
 		atmosanalyzer_scan(parent.air, user)
 
-	if(istype(W,/obj/item/device/pipe_painter))
+	if(istype(W,/obj/item/device/pipe_painter) || istype(W,/obj/item/weapon/pipe_dispenser))
 		return
 
 	return ..()
+
+/obj/machinery/atmospherics/pipe/setPipenet(datum/pipeline/P)
+	parent = P
+
+/obj/machinery/atmospherics/pipe/Destroy()
+	var/turf/T = loc
+	for(var/obj/machinery/meter/meter in T)
+		if(meter.target == src)
+			var/obj/item/pipe_meter/PM = new (T)
+			meter.transfer_fingerprints_to(PM)
+			qdel(meter)
+	..()
+
+/obj/machinery/atmospherics/pipe/proc/update_node_icon()
+	//Used for pipe painting. Overriden in the children.
+	return

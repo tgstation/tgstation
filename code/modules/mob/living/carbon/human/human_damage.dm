@@ -13,6 +13,8 @@
 	//TODO: fix husking
 	if( ((maxHealth - total_burn) < config.health_threshold_dead) && stat == DEAD )
 		ChangeToHusk()
+	med_hud_set_health()
+	med_hud_set_status()
 	return
 
 
@@ -41,18 +43,6 @@
 		take_overall_damage(0, amount)
 	else
 		heal_overall_damage(0, -amount)
-
-/mob/living/carbon/human/Stun(amount)
-	if(HULK in mutations)	return
-	..()
-
-/mob/living/carbon/human/Weaken(amount)
-	if(HULK in mutations)	return
-	..()
-
-/mob/living/carbon/human/Paralyse(amount)
-	if(HULK in mutations)	return
-	..()
 
 mob/living/carbon/human/proc/hat_fall_prob()
 	var/multiplier = 1

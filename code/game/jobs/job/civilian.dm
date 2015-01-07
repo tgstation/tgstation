@@ -40,7 +40,7 @@ Bartender
 
 /datum/job/bartender/equip_items(var/mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(H), slot_wear_suit)
+	H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest/alt(H), slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/bartender(H), slot_w_uniform)
 
 	if(H.backbag != 1)
@@ -50,30 +50,38 @@ Bartender
 		H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
 
 /*
-Chef
+Cook
 */
-/datum/job/chef
-	title = "Chef"
-	flag = CHEF
+/datum/job/cook
+	title = "Cook"
+	flag = COOK
 	department_head = list("Head of Personnel")
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 1
+	total_positions = 2
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	var/global/cooks = 0 //Counts cooks amount
 
-	default_pda = /obj/item/device/pda/chef
+	default_pda = /obj/item/device/pda/cook
 	default_headset = /obj/item/device/radio/headset/headset_srv
 
 	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue)
 	minimal_access = list(access_kitchen, access_morgue)
 
-/datum/job/chef/equip_items(var/mob/living/carbon/human/H)
+/datum/job/cook/equip_items(var/mob/living/carbon/human/H)
+	cooks += 1
+
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chef(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/chef(H), slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/chefhat(H), slot_head)
+	switch(cooks)
+		if(1)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/chef(H), slot_wear_suit)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/chefhat(H), slot_head)
+		else
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/apron/chef(H), slot_wear_suit)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/soft/mime(H), slot_head)
 
 /*
 Botanist
@@ -227,7 +235,7 @@ Clown
 	H.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(H), slot_l_store)
 	H.equip_to_slot_or_del(new /obj/item/toy/crayon/rainbow(H), slot_r_store)
 
-	H.mutations.Add(CLUMSY)
+	H.dna.add_mutation(CLOWNMUT)
 	H.rename_self("clown")
 
 /*
@@ -250,21 +258,22 @@ Mime
 	access = list(access_theatre, access_maint_tunnels)
 	minimal_access = list(access_theatre)
 
+/datum/job/mime/equip_backpack(var/mob/living/carbon/human/H)
+	var/obj/item/weapon/storage/backpack/BPK = new default_backpack(H)
+
+	new default_storagebox(BPK)
+	new /obj/item/toy/crayon/mime(BPK)
+	new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(BPK)
+
+	H.equip_to_slot_or_del(BPK, slot_back)
 
 /datum/job/mime/equip_items(var/mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/mime(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/white(H), slot_gloves)
+	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/white(H), slot_gloves)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/mime(H), slot_wear_mask)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/suspenders(H), slot_wear_suit)
-
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/toy/crayon/mime(H), slot_l_store)
-		H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(H), slot_l_hand)
-	else
-		H.equip_to_slot_or_del(new /obj/item/toy/crayon/mime(H), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(H), slot_in_backpack)
 
 	if(H.mind)
 		H.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall(null)
@@ -282,7 +291,7 @@ Janitor
 	department_head = list("Head of Personnel")
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 1
+	total_positions = 2
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
@@ -347,12 +356,13 @@ Lawyer
 /datum/job/lawyer/equip_items(var/mob/living/carbon/human/H)
 	lawyers += 1
 
-	if(lawyers%2 != 0)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/bluesuit(H), slot_w_uniform)
-		H.equip_to_slot_or_del(new /obj/item/clothing/suit/lawyer/bluejacket(H), slot_wear_suit)
-	else
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/purpsuit(H), slot_w_uniform)
-		H.equip_to_slot_or_del(new /obj/item/clothing/suit/lawyer/purpjacket(H), slot_wear_suit)
+	switch(lawyers)
+		if(1)
+			H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/bluesuit(H), slot_w_uniform)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/lawyer(H), slot_wear_suit)
+		else
+			H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/purpsuit(H), slot_w_uniform)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/lawyer/purple(H), slot_wear_suit)
 
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/briefcase(H), slot_l_hand)

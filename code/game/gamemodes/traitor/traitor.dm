@@ -177,7 +177,7 @@
 	..()
 	return//Traitors will be checked as part of check_extra_completion. Leaving this here as a reminder.
 
-/datum/game_mode/proc/give_codewords(mob/living/traitor_mob)
+/proc/give_codewords(mob/living/traitor_mob)
 	traitor_mob << "<U><B>The Syndicate provided you with the following information on how to identify their agents:</B></U>"
 	traitor_mob << "<B>Code Phrase</B>: <span class='danger'>[syndicate_code_phrase]</span>"
 	traitor_mob << "<B>Code Response</B>: <span class='danger'>[syndicate_code_response]</span>"
@@ -195,6 +195,8 @@
 	killer.set_zeroth_law(law, law_borg)
 	killer << "New law: 0. [law]"
 	give_codewords(killer)
+	killer.set_syndie_radio()
+	killer << "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!"
 
 
 /datum/game_mode/proc/auto_declare_completion_traitor()
@@ -264,7 +266,7 @@
 	if (traitor_mob.mind)
 		if (traitor_mob.mind.assigned_role == "Clown")
 			traitor_mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
-			traitor_mob.mutations.Remove(CLUMSY)
+			traitor_mob.dna.remove_mutation(CLOWNMUT)
 
 	// find a radio! toolbox(es), backpack, belt, headset
 	var/loc = ""

@@ -16,7 +16,8 @@ var/list/admin_verbs_default = list(
 	/client/proc/reload_admins,
 	/client/proc/reestablish_db_connection,/*reattempt a connection to the database*/
 	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
-	/client/proc/cmd_admin_pm_panel		/*admin-pm list*/
+	/client/proc/cmd_admin_pm_panel,		/*admin-pm list*/
+	/client/proc/stop_sounds
 	)
 var/list/admin_verbs_admin = list(
 	/client/proc/player_panel,			/*shows an interface for all players, with links to various panels (old style)*/
@@ -69,7 +70,6 @@ var/list/admin_verbs_ban = list(
 var/list/admin_verbs_sounds = list(
 	/client/proc/play_local_sound,
 	/client/proc/play_sound,
-	/client/proc/stop_sounds
 	)
 var/list/admin_verbs_fun = list(
 	/client/proc/cmd_admin_dress,
@@ -106,7 +106,6 @@ var/list/admin_verbs_debug = list(
 	/client/proc/restart_controller,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,
-	/client/proc/kill_air,
 	/client/proc/cmd_debug_make_powernets,
 	/client/proc/debug_controller,
 	/client/proc/cmd_debug_mob_lists,
@@ -178,7 +177,6 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/callproc,
 	/client/proc/Debug2,
 	/client/proc/reload_admins,
-	/client/proc/kill_air,
 	/client/proc/cmd_debug_make_powernets,
 	/client/proc/debug_controller,
 	/client/proc/startSinglo,
@@ -243,10 +241,10 @@ var/list/admin_verbs_hideable = list(
 		/client/proc/count_objects_all,
 		/client/proc/cmd_assume_direct_control,
 		/client/proc/startSinglo,
-		/client/proc/ticklag,
+		/client/proc/fps,
 		/client/proc/cmd_admin_grantfullaccess,
-		/client/proc/kaboom,
-		/client/proc/cmd_admin_areatest
+		/client/proc/cmd_admin_areatest,
+		/client/proc/readmin
 		)
 	if(holder)
 		verbs.Remove(holder.rank.adds)
@@ -417,10 +415,18 @@ var/list/admin_verbs_hideable = list(
 		if("Big Bomb")
 			explosion(epicenter, 3, 5, 7, 5)
 		if("Custom Bomb")
-			var/devastation_range = input("Devastation range (in tiles):") as num
-			var/heavy_impact_range = input("Heavy impact range (in tiles):") as num
-			var/light_impact_range = input("Light impact range (in tiles):") as num
-			var/flash_range = input("Flash range (in tiles):") as num
+			var/devastation_range = input("Devastation range (in tiles):") as null|num
+			if(devastation_range == null)
+				return
+			var/heavy_impact_range = input("Heavy impact range (in tiles):") as null|num
+			if(heavy_impact_range == null)
+				return
+			var/light_impact_range = input("Light impact range (in tiles):") as null|num
+			if(light_impact_range == null)
+				return
+			var/flash_range = input("Flash range (in tiles):") as null|num
+			if(flash_range == null)
+				return
 			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 	message_admins("<span class='adminnotice'>[ckey] creating an admin explosion at [epicenter.loc].</span>")
 	feedback_add_details("admin_verb","DB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -449,7 +455,7 @@ var/list/admin_verbs_hideable = list(
 	set desc = "Gives a Disease to a mob."
 	var/datum/disease/D = input("Choose the disease to give to that guy", "ACHOO") as null|anything in diseases
 	if(!D) return
-	T.ForceContractDisease(new D,)
+	T.ForceContractDisease(new D)
 	feedback_add_details("admin_verb","GD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the disease [D].")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] gave [key_name(T)] the disease [D].</span>")
@@ -475,30 +481,16 @@ var/list/admin_verbs_hideable = list(
 		togglebuildmode(src.mob)
 	feedback_add_details("admin_verb","TBMS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/kill_air()
-	set category = "Debug"
-	set name = "Kill Air"
-	set desc = "Toggle Air Processing"
-	if(kill_air)
-		kill_air = 0
-		usr << "<b>Enabled air processing.</b>"
-	else
-		kill_air = 1
-		usr << "<b>Disabled air processing.</b>"
-	feedback_add_details("admin_verb","KA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	log_admin("[key_name(usr)] used 'kill air'.")
-	message_admins("<span class='adminnotice'>[key_name_admin(usr)] used 'kill air'.</span>")
-
 /client/proc/deadmin_self()
 	set name = "De-admin self"
 	set category = "Admin"
 
 	if(holder)
-		if(alert("Confirm self-deadmin for the round? You can't re-admin yourself without someont promoting you.",,"Yes","No") == "Yes")
-			log_admin("[src] deadmined themself.")
-			message_admins("[src] deadmined themself.")
-			deadmin()
-			src << "<span class='interface'>You are now a normal player.</span>"
+		log_admin("[src] deadmined themself.")
+		message_admins("[src] deadmined themself.")
+		deadmin()
+		verbs += /client/proc/readmin
+		src << "<span class='interface'>You are now a normal player.</span>"
 	feedback_add_details("admin_verb","DAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggle_log_hrefs()
@@ -519,3 +511,52 @@ var/list/admin_verbs_hideable = list(
 	if(holder)
 		src.holder.output_ai_laws()
 
+/client/proc/readmin()
+	set name = "Re-admin self"
+	set category = "Admin"
+	set desc = "Regain your admin powers."
+	var/list/rank_names = list()
+	for(var/datum/admin_rank/R in admin_ranks)
+		rank_names[R.name] = R
+	var/datum/admins/D = admin_datums[ckey]
+	var/rank = null
+	if(config.admin_legacy_system)
+		//load text from file
+		var/list/Lines = file2list("config/admins.txt")
+		for(var/line in Lines)
+			var/list/splitline = text2list(line, " = ")
+			if(splitline[1] == ckey)
+				if(splitline.len >= 2)
+					rank = ckeyEx(splitline[2])
+				break
+			continue
+	else
+		if(!dbcon.IsConnected())
+			message_admins("Warning, mysql database is not connected.")
+			src << "Warning, mysql database is not connected."
+			return
+		var/sql_ckey = sanitizeSQL(ckey)
+		var/DBQuery/query = dbcon.NewQuery("SELECT rank FROM [format_table_name("admin")] WHERE ckey = '[sql_ckey]'")
+		query.Execute()
+		while(query.NextRow())
+			rank = ckeyEx(query.item[1])
+	if(!D)
+		if(rank_names[rank] == null)
+			var/error_extra = ""
+			if(!config.admin_legacy_system)
+				error_extra = " Check mysql DB connection."
+			error("Error while re-adminning [src], admin rank ([rank]) does not exist.[error_extra]")
+			src << "Error while re-adminning, admin rank ([rank]) does not exist.[error_extra]"
+			return
+		D = new(rank_names[rank],ckey)
+		var/client/C = directory[ckey]
+		D.associate(C)
+		message_admins("[src] re-adminned themselves.")
+		log_admin("[src] re-adminned themselves.")
+		feedback_add_details("admin_verb","RAS")
+		verbs -= /client/proc/readmin
+		return
+	else
+		src << "You are already an admin."
+		verbs -= /client/proc/readmin
+		return

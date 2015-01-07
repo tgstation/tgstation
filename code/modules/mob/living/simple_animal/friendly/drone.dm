@@ -30,6 +30,7 @@
 	voice_name = "synthesized chirp"
 	languages = DRONE
 	mob_size = 0
+	has_unlimited_silicon_privilege = 1
 	var/picked = FALSE
 	var/list/drone_overlays[TOTAL_LAYERS]
 	var/laws = \
@@ -78,7 +79,7 @@
 					switch(d_input)
 						if("Reactivate")
 							var/mob/dead/observer/G = get_ghost()
-							if(!client && !G)
+							if(!client && (!G || !G.client))
 								var/list/faux_gadgets = list("hypertext inflator","failsafe directory","DRM switch","stack initializer",\
 															 "anti-freeze capacitor","data stream diode","TCP bottleneck","supercharged I/O bolt",\
 															 "tradewind stablizer","radiated XML cable","registry fluid tank","open-source debunker")
@@ -113,7 +114,7 @@
 									new /obj/effect/decal/cleanable/oil/streak(get_turf(src))
 									qdel(src)
 								else
-									D << "<span class='notice'>You need to remain still to canibalize [src].</span>"
+									D << "<span class='notice'>You need to remain still to cannibalize [src].</span>"
 							else
 								D << "<span class='notice'>You're already in perfect condition!</span>"
 						if("Nothing")
@@ -140,6 +141,10 @@
 		src.loc = DH
 		return
 
+	..()
+
+/mob/living/simple_animal/drone/Destroy()
+	qdel(access_card) //Otherwise it ends up on the floor!
 	..()
 
 /mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
@@ -361,7 +366,9 @@
 		src << "<span class='userdanger'>HeAV% DA%^MMA+G TO I/O CIR!%UUT!</span>"
 
 
-/mob/living/simple_animal/drone/proc/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
+/mob/living/simple_animal/drone/proc/triggerAlarm(var/class, area/A, var/O, var/obj/alarmsource)
+	if(alarmsource.z != z)
+		return
 	if(stat != DEAD)
 		var/list/L = src.alarms[class]
 		for (var/I in L)
@@ -515,8 +522,6 @@
 	icon = 'icons/mob/drone.dmi'
 	icon_state = "drone_item"
 	origin_tech = "programming=2;biotech=4"
-	var/construction_cost = list("metal"=800, "glass"=350)
-	var/construction_time=150
 	var/drone_type = /mob/living/simple_animal/drone //Type of drone that will be spawned
 
 /obj/item/drone_shell/attack_ghost(mob/user)
@@ -524,7 +529,7 @@
 		return
 
 	var/be_drone = alert("Become a drone? (Warning, You can no longer be cloned!)",,"Yes","No")
-	if(be_drone == "No")
+	if(be_drone == "No" || gc_destroyed)
 		return
 	var/mob/living/simple_animal/drone/D = new drone_type(get_turf(loc))
 	D.key = user.key

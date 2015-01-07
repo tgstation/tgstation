@@ -32,6 +32,7 @@
 	var/datum/changeling/changeling = user.mind.changeling
 	var/obj/item/weapon/grab/G = user.get_active_hand()
 	var/mob/living/carbon/human/target = G.affecting
+	changeling.isabsorbing = 1
 	for(var/stage = 1, stage<=3, stage++)
 		switch(stage)
 			if(1)
@@ -58,7 +59,8 @@
 	if(!changeling.has_dna(target.dna))
 		changeling.absorb_dna(target, user)
 
-	if(user.nutrition < 400) user.nutrition = min((user.nutrition + target.nutrition), 400)
+	if(user.nutrition < NUTRITION_LEVEL_WELL_FED)
+		user.nutrition = min((user.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED)
 
 	if(target.mind)//if the victim has got a mind
 

@@ -68,9 +68,13 @@
 
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
-	if((CLUMSY in usr.mutations) && prob(25))
-		usr << "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>"
-		usr.damageoverlaytemp = 9001
+
+	if(!ishuman(usr))
+		return
+	var/mob/living/carbon/human/H = usr
+	if(H.disabilities & CLUMSY && prob(25))
+		H << "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>"
+		H.damageoverlaytemp = 9001
 		return
 	var/n_name = copytext(sanitize(input(usr, "What would you like to label the paper?", "Paper Labelling", null)  as text), 1, MAX_NAME_LEN)
 	if((loc == usr && usr.stat == 0))
@@ -80,7 +84,7 @@
 
 /obj/item/weapon/paper/attack_self(mob/user)
 	user.examinate(src)
-	if(rigged && (events.holiday == "April Fool's Day"))
+	if(rigged && (SSevent.holiday == "April Fool's Day"))
 		if(spam_flag == 0)
 			spam_flag = 1
 			playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
@@ -263,14 +267,14 @@
 			update_icon()
 
 
-/obj/item/weapon/paper/attackby(obj/item/weapon/P, mob/user)
+/obj/item/weapon/paper/attackby(obj/item/weapon/P, mob/living/carbon/human/user)
 	..()
 
 	if(is_blind(user))
 		return
 
 	var/clown = 0
-	if(user && (CLUMSY in user.mutations))
+	if(user.disabilities & CLUMSY)
 		clown = 1
 
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))

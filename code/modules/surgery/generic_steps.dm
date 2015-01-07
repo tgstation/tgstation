@@ -58,7 +58,7 @@
 
 //saw bone
 /datum/surgery_step/saw
-	implements = list(/obj/item/weapon/circular_saw = 100, /obj/item/weapon/melee/arm_blade = 75, /obj/item/weapon/hatchet = 35, /obj/item/weapon/butch = 25)
+	implements = list(/obj/item/weapon/circular_saw = 100, /obj/item/weapon/melee/arm_blade = 75, /obj/item/weapon/hatchet = 35, /obj/item/weapon/kitchenknife/butcher = 25)
 	time = 64
 
 /datum/surgery_step/saw/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

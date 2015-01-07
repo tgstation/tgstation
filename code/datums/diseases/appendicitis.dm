@@ -10,6 +10,7 @@
 	severity = "Dangerous!"
 	longevity = 1000
 	disease_flags = CAN_CARRY|CAN_RESIST
+	spread_flags = NON_CONTAGIOUS
 	visibility_flags = HIDDEN_PANDEMIC
 	required_organs = list(/obj/item/organ/limb/chest)
 

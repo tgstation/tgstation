@@ -130,6 +130,7 @@
 				if(component_check)
 					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 					var/obj/machinery/new_machine = new src.circuit.build_path(src.loc)
+					new_machine.construction()
 					for(var/obj/O in new_machine.component_parts)
 						qdel(O)
 					new_machine.component_parts = list()
@@ -211,10 +212,10 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/vending_refill/boozeomat = 3)
 
 	var/list/names_paths = list(/obj/machinery/vending/boozeomat = "Booze-O-Mat",
-							/obj/machinery/vending/coffee = "Hot Drinks",
+							/obj/machinery/vending/coffee = "Solar's Best Hot Drinks",
 							/obj/machinery/vending/snack = "Getmore Chocolate Corp",
 							/obj/machinery/vending/cola = "Robust Softdrinks",
-							/obj/machinery/vending/cigarette = "Cigarette",
+							/obj/machinery/vending/cigarette = "ShadyCigs Deluxe",
 							/obj/machinery/vending/autodrobe = "AutoDrobe")
 
 /obj/item/weapon/circuitboard/vendor/attackby(obj/item/I, mob/user)

@@ -365,8 +365,9 @@ steam.start() -- spawns the effect
 			if (M.coughedtime != 1)
 				M.coughedtime = 1
 				M.emote("cough")
-				spawn ( 20 )
-					M.coughedtime = 0
+				spawn(20)
+					if(M && M.loc)
+						M.coughedtime = 0
 	return
 
 
@@ -389,8 +390,9 @@ steam.start() -- spawns the effect
 			if (M.coughedtime != 1)
 				M.coughedtime = 1
 				M.emote("cough")
-				spawn ( 20 )
-					M.coughedtime = 0
+				spawn(20)
+					if(M && M.loc)
+						M.coughedtime = 0
 	return
 
 /datum/effect/effect/system/bad_smoke_spread
@@ -602,8 +604,9 @@ steam.start() -- spawns the effect
 			if (M.coughedtime != 1)
 				M.coughedtime = 1
 				M.emote("cough")
-				spawn ( 20 )
-					M.coughedtime = 0
+				spawn(20)
+					if(M && M.loc)
+						M.coughedtime = 0
 	return
 
 /obj/effect/effect/sleep_smoke/Crossed(mob/living/carbon/M as mob )
@@ -618,8 +621,9 @@ steam.start() -- spawns the effect
 			if (M.coughedtime != 1)
 				M.coughedtime = 1
 				M.emote("cough")
-				spawn ( 20 )
-					M.coughedtime = 0
+				spawn(20)
+					if(M && M.loc)
+						M.coughedtime = 0
 	return
 
 /datum/effect/effect/system/sleep_smoke_spread
@@ -787,7 +791,7 @@ steam.start() -- spawns the effect
 	spawn(3 + metal*3)
 		process()
 	spawn(120)
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 		sleep(30)
 
 		if(metal)
@@ -940,7 +944,7 @@ steam.start() -- spawns the effect
 		icon_state = "ironfoam"
 
 
-/obj/structure/foamedmetal/ex_act(severity)
+/obj/structure/foamedmetal/ex_act(severity, target)
 	qdel(src)
 
 /obj/structure/foamedmetal/blob_act()
@@ -962,16 +966,16 @@ steam.start() -- spawns the effect
 		qdel(src)
 		return
 
-/obj/structure/foamedmetal/attack_hand(var/mob/user)
-	if ((HULK in user.mutations) || (prob(75 - metal*25)))
+/obj/structure/foamedmetal/attack_hulk(mob/living/carbon/human/user)
+	..(user, 1)
+	if(prob(75 - metal*25))
 		user.visible_message("<span class='danger'>[user] smashes through the foamed metal.</span>", \
 						"<span class='danger'>You smash through the metal foam wall.</span>")
-
 		qdel(src)
-	else
-		user << "<span class='notice'>You hit the metal foam but bounce off it.</span>"
-	return
+	return 1
 
+/obj/structure/foamedmetal/attack_hand(var/mob/user)
+	user << "<span class='notice'>You hit the metal foam but bounce off it.</span>"
 
 /obj/structure/foamedmetal/attackby(var/obj/item/I, var/mob/user)
 

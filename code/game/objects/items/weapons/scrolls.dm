@@ -79,16 +79,17 @@
 	if(user && user.buckled)
 		user.buckled.unbuckle()
 
-	var/list/tempL = L
+	var/list/tempL = L.Copy()
 	var/attempt = null
 	var/success = 0
 	while(tempL.len)
 		attempt = pick(tempL)
-		success = user.Move(attempt)
-		if(!success)
-			tempL.Remove(attempt)
-		else
+		user.Move(attempt)
+		if(get_turf(user) == attempt)
+			success = 1
 			break
+		else
+			tempL.Remove(attempt)
 
 	if(!success)
 		user.loc = pick(L)

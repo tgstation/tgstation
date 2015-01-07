@@ -37,11 +37,11 @@
 	if(!partner)
 		return 0
 
-	if(!air_master || air_master.current_cycle <= update_cycle)
+	if(SSair.times_fired <= update_cycle)
 		return 0
 
-	update_cycle = air_master.current_cycle
-	partner.update_cycle = air_master.current_cycle
+	update_cycle = SSair.times_fired
+	partner.update_cycle = SSair.times_fired
 
 	var/air_heat_capacity = air_contents.heat_capacity()
 	var/other_air_heat_capacity = partner.air_contents.heat_capacity()
@@ -57,12 +57,10 @@
 		air_contents.temperature = new_temperature
 		partner.air_contents.temperature = new_temperature
 
-	if(network)
-		if(abs(old_temperature-air_contents.temperature) > 1)
-			network.update = 1
+	if(abs(old_temperature-air_contents.temperature) > 1)
+		parent.update = 1
 
-	if(partner.network)
-		if(abs(other_old_temperature-partner.air_contents.temperature) > 1)
-			partner.network.update = 1
+	if(abs(other_old_temperature-partner.air_contents.temperature) > 1)
+		partner.parent.update = 1
 
 	return 1

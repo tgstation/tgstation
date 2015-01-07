@@ -1,7 +1,0 @@
-author: Menshin
-delete-after: True
-changes: 
-  - tweak: "Made meteors more threatening."
-  - rscadd: "Added three levels of danger for meteors waves, randomly selected at spawn."
-  - rscadd: "Rumors speaks of a very rare meteor of unfathomable destructive power in the station sector..."
-  - bugfix: "Fixed infinigib/infinisplosion with meteors bumping"

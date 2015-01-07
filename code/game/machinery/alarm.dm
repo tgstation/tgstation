@@ -144,6 +144,11 @@
 	if(ticker && ticker.current_state == 3)//if the game is running
 		src.initialize()
 
+/obj/machinery/alarm/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src, frequency)
+	..()
+
 /obj/machinery/alarm/initialize()
 	set_frequency(frequency)
 	if (!master_is_operating())
@@ -174,7 +179,7 @@
 			return
 
 
-		else if (istype(user, /mob/living/silicon) && src.aidisabled)
+		else if (user.has_unlimited_silicon_privilege && src.aidisabled)
 			user << "AI control for this Air Alarm interface has been disabled."
 			user << browse(null, "window=air_alarm")
 			return
@@ -188,7 +193,7 @@
 		popup.open()
 		refresh_all()
 
-	if(panel_open && (!istype(user, /mob/living/silicon)))
+	if(panel_open && (!istype(user, /mob/living/silicon/ai)))
 		wires.Interact(user)
 
 	return
@@ -243,11 +248,10 @@
 
 /obj/machinery/alarm/proc/return_text()
 	var/dat = ""
-	if(!(istype(usr, /mob/living/silicon)) && locked)
-		dat += "<div class='notice icon'>Swipe ID card to unlock interface</div>"
+	dat += "<div class='notice icon'>Swipe ID card to [locked ? "unlock" : "lock"] interface.</div>"
+	if(!usr.has_unlimited_silicon_privilege && locked)
 		dat += "[return_status()]"
 	else
-		dat += "<div class='notice icon'>Swipe ID card to lock interface</div>"
 		dat += "[return_status()]<hr>[return_controls()]"
 	return dat
 
@@ -559,7 +563,7 @@ table tr:first-child th:first-child { border: none;}
 				var/datum/tlv/tlv = TLV[env]
 				var/newval = input("Enter [varname] for env", "Alarm triggers", tlv.vars[varname]) as num|null
 
-				if (isnull(newval) || ..() || (locked && !issilicon(usr)))
+				if (isnull(newval) || ..() || (locked && !(usr.has_unlimited_silicon_privilege)))
 					return
 				if (newval<0)
 					tlv.vars[varname] = -1.0
@@ -582,13 +586,13 @@ table tr:first-child th:first-child { border: none;}
 
 
 	if(href_list["atmos_alarm"])
-		if (alarm_area.atmosalert(2))
+		if (alarm_area.atmosalert(2,src))
 			post_alert(2)
 		spawn(1)
 			src.updateUsrDialog()
 		update_icon()
 	if(href_list["atmos_reset"])
-		if (alarm_area.atmosalert(0))
+		if (alarm_area.atmosalert(0,src))
 			post_alert(0)
 		spawn(1)
 			src.updateUsrDialog()
@@ -754,7 +758,7 @@ table tr:first-child th:first-child { border: none;}
 	else if (alert_level==0)
 		alert_signal.data["alert"] = "clear"
 
-	frequency.post_signal(src, alert_signal)
+	frequency.post_signal(src, alert_signal,null,-1)
 
 /obj/machinery/alarm/proc/apply_danger_level()
 	var/new_area_danger_level = 0
@@ -762,7 +766,7 @@ table tr:first-child th:first-child { border: none;}
 		for (var/obj/machinery/alarm/AA in A)
 			if (!(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
 				new_area_danger_level = max(new_area_danger_level,AA.danger_level)
-	if (alarm_area.atmosalert(new_area_danger_level)) //if area was in normal state or if area was in alert state
+	if (alarm_area.atmosalert(new_area_danger_level,src)) //if area was in normal state or if area was in alert state
 		post_alert(new_area_danger_level)
 	update_icon()
 
@@ -1077,7 +1081,7 @@ FIRE ALARM
 			src.alarm()
 			src.time = 0
 			src.timing = 0
-			processing_objects.Remove(src)
+			SSobj.processing.Remove(src)
 		src.updateDialog()
 	last_process = world.timeofday
 	return
@@ -1103,7 +1107,7 @@ FIRE ALARM
 	var/d1
 	var/d2
 	var/dat = ""
-	if (istype(user, /mob/living/carbon/human) || istype(user, /mob/living/silicon))
+	if (istype(user, /mob/living/carbon/human) || user.has_unlimited_silicon_privilege)
 		A = A.loc
 
 		if (A.fire)
@@ -1155,7 +1159,7 @@ FIRE ALARM
 	else if (href_list["time"])
 		src.timing = text2num(href_list["time"])
 		last_process = world.timeofday
-		processing_objects.Add(src)
+		SSobj.processing.Add(src)
 	else if (href_list["tp"])
 		var/tp = text2num(href_list["tp"])
 		src.time += tp
@@ -1167,14 +1171,14 @@ FIRE ALARM
 	if (stat & (NOPOWER|BROKEN)) // can't reset alarm if it's unpowered or broken.
 		return
 	var/area/A = get_area(src)
-	A.firereset()
+	A.firereset(src)
 	return
 
 /obj/machinery/firealarm/proc/alarm()
 	if (stat & (NOPOWER|BROKEN))  // can't activate alarm if it's unpowered or broken.
 		return
 	var/area/A = get_area(src)
-	A.firealert()
+	A.firealert(src)
 	//playsound(src.loc, 'sound/ambience/signal.ogg', 75, 0)
 	return
 
@@ -1276,7 +1280,7 @@ Code shamelessly copied from apc_frame
 	var/area/A = src.loc
 	var/d1
 	var/dat
-	if (istype(user, /mob/living/carbon/human) || istype(user, /mob/living/silicon/ai))
+	if (istype(user, /mob/living/carbon/human) || user.has_unlimited_silicon_privilege)
 		A = A.loc
 
 		if (A.party)

@@ -19,7 +19,6 @@
 	icon_state = "id_mod"
 	item_state = "electronic"
 	origin_tech = "programming=2"
-	var/id = null
 	var/frequency = null
 	var/build_path = null
 	var/board_type = "computer"
@@ -74,6 +73,10 @@
 	name = "circuit board (Communications)"
 	build_path = /obj/machinery/computer/communications
 	origin_tech = "programming=2;magnets=2"
+	var/lastTimeUsed = 0
+/obj/item/weapon/circuitboard/communications/proc/cooldownLeft(deciseconds=600)
+	return max(deciseconds - (world.time - lastTimeUsed), 0)
+
 /obj/item/weapon/circuitboard/card
 	name = "circuit board (ID Console)"
 	build_path = /obj/machinery/computer/card
@@ -198,7 +201,8 @@
 /obj/item/weapon/circuitboard/shuttle
 	name = "circuit board (Shuttle)"
 	build_path = /obj/machinery/computer/shuttle
-	id = "1"
+	var/shuttleId
+	var/possible_destinations = ""
 /obj/item/weapon/circuitboard/labor_shuttle
 	name = "circuit Board (Labor Shuttle)"
 	build_path = /obj/machinery/computer/shuttle/labor
@@ -270,9 +274,11 @@
 
 /obj/item/weapon/circuitboard/shuttle/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/device/multitool))
-		var/chosen_id = round(input(usr, "Choose an ID number:", "Input an Integer", null) as num|null)
+		var/chosen_id = round(input(usr, "Choose an ID number (-1 for reset):", "Input an Integer", null) as num|null)
 		if(chosen_id >= 0)
-			id = chosen_id
+			shuttleId = chosen_id
+		else
+			shuttleId = initial(shuttleId)
 	return
 
 /obj/structure/computerframe/attackby(obj/item/P as obj, mob/user as mob)
@@ -317,7 +323,7 @@
 					circuit = P
 					user.drop_item()
 					circuit.add_fingerprint(user)
-					P.loc = src
+					P.loc = null
 				else
 					user << "<span class='warning'>This frame does not accept circuit boards of this type!</span>"
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
@@ -387,18 +393,6 @@
 			if(istype(P, /obj/item/weapon/screwdriver))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "<span class='notice'>You connect the monitor.</span>"
-				var/obj/B = new src.circuit.build_path (src.loc)
-				if(circuit.powernet) B:powernet = circuit.powernet
-				if(circuit.id) B:id = circuit.id
-				if(circuit.records) B:records = circuit.records
-				if(circuit.frequency) B:frequency = circuit.frequency
-				if(istype(circuit,/obj/item/weapon/circuitboard/supplycomp))
-					var/obj/machinery/computer/supplycomp/SC = B
-					var/obj/item/weapon/circuitboard/supplycomp/C = circuit
-					SC.can_order_contraband = C.contraband_enabled
-				else if(istype(circuit,/obj/item/weapon/circuitboard/shuttle))
-					var/obj/machinery/computer/shuttle/S = B
-					var/obj/item/weapon/circuitboard/shuttle/C = circuit
-					S.id = C.id
+				var/obj/B = new src.circuit.build_path (src.loc, circuit)
 				transfer_fingerprints_to(B)
 				qdel(src)

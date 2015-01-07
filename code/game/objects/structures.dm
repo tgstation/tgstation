@@ -5,19 +5,13 @@
 	if(prob(50))
 		qdel(src)
 
-/obj/structure/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if(prob(50))
-				qdel(src)
-				return
-		if(3.0)
-			return
-
 /obj/structure/Destroy()
 	if(opacity)
 		UpdateAffectingLights()
 	..()
+
+/obj/structure/mech_melee_attack(obj/mecha/M)
+	if(M.damtype == "brute")
+		visible_message("<span class='danger'>[M.name] has hit [src].</span>")
+		return 1
+	return 0

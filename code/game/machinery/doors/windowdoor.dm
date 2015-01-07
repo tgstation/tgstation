@@ -9,7 +9,6 @@
 	flags = ON_BORDER
 	opacity = 0
 	var/obj/item/weapon/airlock_electronics/electronics = null
-	explosion_resistance = 5
 
 /obj/machinery/door/window/New()
 	..()
@@ -115,7 +114,6 @@
 	src.icon_state ="[src.base_state]open"
 	sleep(10)
 
-	explosion_resistance = 0
 	src.density = 0
 //	src.sd_SetOpacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
 	air_update_turf(1)
@@ -140,7 +138,6 @@
 	src.icon_state = src.base_state
 
 	src.density = 1
-	explosion_resistance = initial(explosion_resistance)
 //	if(src.visible)
 //		SetOpacity(1)	//TODO: why is this here? Opaque windoors? ~Carn
 	air_update_turf(1)
@@ -165,7 +162,7 @@
 		qdel(src)
 		return
 
-/obj/machinery/door/window/ex_act(severity)
+/obj/machinery/door/window/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			qdel(src)
@@ -197,6 +194,14 @@
 	playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
 	take_damage(tforce)
 	//..() //Does this really need to be here twice? The parent proc doesn't even do anything yet. - Nodrak
+	return
+
+
+/obj/machinery/door/window/mech_melee_attack(obj/mecha/M)
+	if(M.damtype == "brute")
+		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+		visible_message("<span class='danger'>[M.name] has hit [src].</span>")
+		take_damage(M.force)
 	return
 
 
@@ -240,6 +245,15 @@
 /obj/machinery/door/window/attack_hand(mob/user as mob)
 	return src.attackby(user, user)
 
+/obj/machinery/door/window/emag_act(mob/user as mob)
+	if(density && !emagged)
+		operating = -1
+		flick("[src.base_state]spark", src)
+		sleep(6)
+		desc += "<BR><span class='warning'>Its access panel is smoking slightly.</span>"
+		open()
+		emagged = 1
+
 /obj/machinery/door/window/attackby(obj/item/weapon/I as obj, mob/living/user as mob)
 
 	//If it's in the process of opening/closing, ignore the click
@@ -248,23 +262,19 @@
 
 	add_fingerprint(user)
 
-	//Emags and ninja swords? You may pass.
-	if (src.density && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
+	//ninja sword garbage
+	if (src.density && istype(I, /obj/item/weapon/melee/energy/blade))
 		src.operating = -1
 		flick("[src.base_state]spark", src)
 		sleep(6)
 		desc += "<BR><span class='warning'>Its access panel is smoking slightly.</span>"
-		if(istype(I, /obj/item/weapon/melee/energy/blade))
-			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-			spark_system.set_up(5, 0, src.loc)
-			spark_system.start()
-			playsound(src.loc, "sparks", 50, 1)
-			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-			visible_message("<span class='warning'> The glass door was sliced open by [user]!</span>")
-			open(2)
-			emagged = 1
-			return 1
-		open()
+		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		spark_system.set_up(5, 0, src.loc)
+		spark_system.start()
+		playsound(src.loc, "sparks", 50, 1)
+		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
+		visible_message("<span class='warning'> The glass door was sliced open by [user]!</span>")
+		open(2)
 		emagged = 1
 		return 1
 
@@ -344,7 +354,7 @@
 			return
 		var/aforce = I.force
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-		visible_message("<span class='danger'>\The [src] has been hit by [user] with [I].</span>")
+		visible_message("<span class='danger'>[user] has hit \the [src] with [I].</span>")
 		if(I.damtype == BURN || I.damtype == BRUTE)
 			take_damage(aforce)
 		return

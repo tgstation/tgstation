@@ -22,6 +22,11 @@ Passive gate is similar to the regular pump except:
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
+/obj/machinery/atmospherics/binary/passive_gate/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src,frequency)
+	..()
+
 /obj/machinery/atmospherics/binary/passive_gate/update_icon_nopipes()
 	overlays.Cut()
 	if(on & !(stat & NOPOWER))
@@ -51,11 +56,9 @@ Passive gate is similar to the regular pump except:
 		var/datum/gas_mixture/removed = air1.remove(transfer_moles)
 		air2.merge(removed)
 
-		if(network1)
-			network1.update = 1
+		parent1.update = 1
 
-		if(network2)
-			network2.update = 1
+		parent2.update = 1
 
 
 //Radio remote control
@@ -104,6 +107,8 @@ Passive gate is similar to the regular pump except:
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
 		return 0
 
+	var/old_on = on //for logging
+
 	if("power" in signal.data)
 		on = text2num(signal.data["power"])
 
@@ -116,6 +121,9 @@ Passive gate is similar to the regular pump except:
 			0,
 			ONE_ATMOSPHERE*50
 		)
+
+	if(on != old_on)
+		investigate_log("was turned [on ? "on" : "off"] by a remote signal", "atmos")
 
 	if("status" in signal.data)
 		spawn(2)
@@ -144,9 +152,10 @@ Passive gate is similar to the regular pump except:
 	if(..()) return
 	if(href_list["power"])
 		on = !on
+		investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
 	if(href_list["set_press"])
-		var/new_pressure = input(usr,"Enter new output pressure (0-4500kPa)","Pressure control",src.target_pressure) as num
-		src.target_pressure = max(0, min(4500, new_pressure))
+		target_pressure = max(0, min(4500, safe_input("Pressure control", "Enter new output pressure (0-4500kPa)", target_pressure)))
+		investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
 	usr.set_machine(src)
 	src.update_icon()
 	src.updateUsrDialog()

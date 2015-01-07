@@ -13,16 +13,28 @@
 		else			return "000"
 
 /proc/random_underwear(gender)
+	if(!underwear_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, underwear_list, underwear_m, underwear_f)
 	switch(gender)
 		if(MALE)	return pick(underwear_m)
 		if(FEMALE)	return pick(underwear_f)
 		else		return pick(underwear_list)
 
 /proc/random_undershirt(gender)
+	if(!undershirt_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, undershirt_list, undershirt_m, undershirt_f)
 	switch(gender)
 		if(MALE)	return pick(undershirt_m)
 		if(FEMALE)	return pick(undershirt_f)
 		else		return pick(undershirt_list)
+
+/proc/random_socks(gender)
+	if(!socks_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, socks_list, socks_m, socks_f)
+	switch(gender)
+		if(MALE)	return pick(socks_m)
+		if(FEMALE)	return pick(socks_f)
+		else		return pick(socks_list)
 
 /proc/random_hair_style(gender)
 	switch(gender)

@@ -9,7 +9,7 @@
 
 //cut fat
 /datum/surgery_step/cut_fat
-	implements = list(/obj/item/weapon/circular_saw = 100, /obj/item/weapon/hatchet = 35, /obj/item/weapon/butch = 25)
+	implements = list(/obj/item/weapon/circular_saw = 100, /obj/item/weapon/hatchet = 35, /obj/item/weapon/kitchenknife/butcher = 25)
 	time = 64
 
 /datum/surgery_step/cut_fat/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -31,7 +31,7 @@
 	user.visible_message("<span class='notice'>[user] extracts [target]'s fat!</span>")
 	target.overeatduration = 0 //patient is unfatted
 	var/removednutriment = target.nutrition
-	target.nutrition = 450
+	target.nutrition = NUTRITION_LEVEL_WELL_FED
 	removednutriment -= 450 //whatever was removed goes into the meat
 	var/obj/item/weapon/reagent_containers/food/snacks/meat/human/newmeat = new
 	newmeat.name = "fatty meat"

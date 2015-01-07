@@ -85,7 +85,7 @@ Class Procs:
       Called by the 'master_controller' once per game tick for each machine that is listed in the 'machines' list.
 
 	is_operational()
-		Returns 0 if the machine is unpowered, broken or undergoing maintenance, 1 if not
+		Returns 0 if the machine is unpowered, broken or undergoing maintenance, something else if not
 
 	Compiled by Aygar
 */
@@ -115,11 +115,14 @@ Class Procs:
 /obj/machinery/New()
 	..()
 	machines += src
+	SSmachine.processing += src
+	auto_use_power()
 
 /obj/machinery/Destroy()
 	machines.Remove(src)
+	SSmachine.processing -= src
 	if(occupant)
-		open_machine()
+		dropContents()
 	..()
 
 /obj/machinery/process()//If you dont use process or power why are you here
@@ -175,22 +178,6 @@ Class Procs:
 	updateUsrDialog()
 	update_icon()
 
-/obj/machinery/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
-				return
-		if(3.0)
-			if (prob(25))
-				qdel(src)
-				return
-		else
-	return
-
 /obj/machinery/blob_act()
 	if(prob(50))
 		qdel(src)
@@ -206,15 +193,21 @@ Class Procs:
 
 /obj/machinery/Topic(href, href_list)
 	..()
-	if(!interact_offline && stat & (NOPOWER|BROKEN))
-		return 1
-	if(!usr.canUseTopic(src))
+	if(!can_be_used_by(usr))
 		return 1
 	add_fingerprint(usr)
 	return 0
 
+/obj/machinery/proc/can_be_used_by(mob/user)
+	if(!interact_offline && stat & (NOPOWER|BROKEN))
+		return 0
+	if(!user.canUseTopic(src))
+		return 0
+	return 1
+
 /obj/machinery/proc/is_operational()
 	return !(stat & (NOPOWER|BROKEN|MAINT))
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -237,7 +230,7 @@ Class Procs:
 	if(restrained() || lying || stat || stunned || weakened)
 		return
 	if(!in_range(M, src))
-		if((be_close == 0) && (TK in mutations))
+		if((be_close == 0) && (dna.check_mutation(TK)))
 			if(tkMaxRangeCheck(src, M))
 				return 1
 		return
@@ -249,6 +242,11 @@ Class Procs:
 	if(stat)
 		return
 	if(be_close && !in_range(M, src))
+		return
+	//stop AIs from leaving windows open and using then after they lose vision
+	//apc_override is needed here because AIs use their own APC when powerless
+	//get_turf_pixel() is because APCs in maint aren't actually in view of the inner camera
+	if(cameranet && !cameranet.checkTurfVis(get_turf_pixel(M)) && !apc_override)
 		return
 	return 1
 
@@ -271,8 +269,13 @@ Class Procs:
 /obj/machinery/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
-/obj/machinery/attack_hand(mob/user as mob)
-	if(!interact_offline && stat & (NOPOWER|BROKEN|MAINT))
+//set_machine must be 0 if clicking the machinery doesn't bring up a dialog
+/obj/machinery/attack_hand(mob/user as mob, var/check_power = 1, var/set_machine = 1)
+	if(check_power && stat & NOPOWER)
+		user << "<span class='danger'>\The [src] seems unpowered.</span>"
+		return 1
+	if(!interact_offline && stat & (BROKEN|MAINT))
+		user << "<span class='danger'>\The [src] seems broken.</span>"
 		return 1
 	if(user.lying || user.stat)
 		return 1
@@ -294,7 +297,8 @@ Class Procs:
 			return 1
 
 	src.add_fingerprint(user)
-	user.set_machine(src)
+	if(set_machine)
+		user.set_machine(src)
 	return 0
 
 /obj/machinery/CheckParts()
@@ -308,8 +312,17 @@ Class Procs:
 	uid = gl_uid
 	gl_uid++
 
+/obj/machinery/proc/default_pry_open(var/obj/item/weapon/crowbar/C)
+	. = !(state_open || panel_open || is_operational()) && istype(C)
+	if(.)
+		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+		visible_message("<span class = 'notice'>[usr] pry open \the [src].</span>", "<span class = 'notice'>You pry open \the [src].</span>")
+		open_machine()
+		return 1
+
 /obj/machinery/proc/default_deconstruction_crowbar(var/obj/item/weapon/crowbar/C, var/ignore_panel = 0)
-	if(istype(C) && (panel_open || ignore_panel))
+	. = istype(C) && (panel_open || ignore_panel)
+	if(.)
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 		M.state = 2
@@ -337,8 +350,8 @@ Class Procs:
 /obj/machinery/proc/default_change_direction_wrench(var/mob/user, var/obj/item/weapon/wrench/W)
 	if(panel_open && istype(W))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		dir = pick(WEST,EAST,SOUTH,NORTH)
-		user << "<span class='notice'>You clumsily rotate [src].</span>"
+		dir = turn(dir,-90)
+		user << "<span class='notice'>You rotate [src].</span>"
 		return 1
 	return 0
 
@@ -384,3 +397,7 @@ Class Procs:
 			W.play_rped_sound()
 		return 1
 	return 0
+
+//called on machinery construction (i.e from frame to machinery) but not on initialization
+/obj/machinery/proc/construction()
+	return

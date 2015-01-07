@@ -5,6 +5,8 @@
 	var/obj/item/l_store = null
 	var/caste = ""
 	var/leap_on_click = 0
+	var/pounce_cooldown = 0
+	var/pounce_cooldown_time = 30
 	update_icon = 1
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
@@ -14,31 +16,6 @@
 		name = text("alien ([rand(1, 1000)])")
 	real_name = name
 	..()
-
-//This is fine, works the same as a human
-/mob/living/carbon/alien/humanoid/Bump(atom/movable/AM as mob|obj, yes)
-	if ((!( yes ) || now_pushing))
-		return
-	now_pushing = 0
-	..()
-	if (!istype(AM, /atom/movable))
-		return
-
-	if (ismob(AM))
-		var/mob/tmob = AM
-		tmob.LAssailant = src
-
-	if (!now_pushing)
-		now_pushing = 1
-		if (!AM.anchored)
-			var/t = get_dir(src, AM)
-			if (istype(AM, /obj/structure/window))
-				if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-					for(var/obj/structure/window/win in get_step(AM,t))
-						now_pushing = 0
-						return
-			step(AM, t)
-		now_pushing = null
 
 /mob/living/carbon/alien/humanoid/movement_delay()
 	. = ..()
@@ -51,7 +28,7 @@
 	if(l_store) l_store.emp_act(severity)
 	..()
 
-/mob/living/carbon/alien/humanoid/ex_act(severity)
+/mob/living/carbon/alien/humanoid/ex_act(severity, target)
 	..()
 
 	var/shielded = 0
@@ -110,19 +87,22 @@
 	updatehealth()
 	return
 
+/mob/living/carbon/alien/humanoid/attack_hulk(mob/living/carbon/human/user)
+	if(user.a_intent == "harm")
+		..(user, 1)
+		adjustBruteLoss(14 + rand(1,9))
+		Paralyse(1)
+		step_away(src,user,15)
+		sleep(1)
+		step_away(src,user,15)
+		return 1
+
 /mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M as mob)
 	if(..())
 		switch(M.a_intent)
 			if ("harm")
 				var/damage = rand(1, 9)
 				if (prob(90))
-					if (HULK in M.mutations)//HULK SMASH
-						damage += 14
-						spawn(0)
-							Paralyse(1)
-							step_away(src,M,15)
-							sleep(3)
-							step_away(src,M,15)
 					playsound(loc, "punch", 25, 1, -1)
 					visible_message("<span class='danger'>[M] has punched [src]!</span>", \
 							"<span class='userdanger'>[M] has punched [src]!</span>")

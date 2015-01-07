@@ -27,7 +27,7 @@
 	// find the attached trunk (if present) and init gas resvr.
 /obj/machinery/disposal/New()
 	..()
-	stored = new /obj/structure/disposalconstruct(src)
+	stored = new /obj/structure/disposalconstruct(0,0,0)
 	trunk_check()
 
 	air_contents = new/datum/gas_mixture()
@@ -63,11 +63,16 @@
 
 	// attack by item places it in to disposal
 /obj/machinery/disposal/attackby(var/obj/item/I, var/mob/user)
-	if(stat & BROKEN || !I || !user || (I.flags & NODROP))
+	if(stat & BROKEN || !I || !user)
 		return
 
-	if(isrobot(user) && !istype(I, /obj/item/weapon/storage/bag/trash))
-		return
+	if(isrobot(user))
+		if(!istype(I, /obj/item/weapon/storage/bag/trash))
+			return
+	else
+		if(I.flags & NODROP)
+			return
+
 	src.add_fingerprint(user)
 	if(mode<=0) // It's off
 		if(istype(I, /obj/item/weapon/screwdriver))
@@ -156,8 +161,8 @@
 			user.visible_message("<span class='warning'>[user] climbs into [src].</span>", \
 									"<span class='notice'>[user] climbs into [src].</span>")
 		else
-			target.visible_message("<span class='danger'>[target] has been placed in [src] by [user].</span>", \
-									"<span class='userdanger'>[target] has been placed in [src] by [user].</span>")
+			target.visible_message("<span class='danger'>[user] has placed [target] in [src].</span>", \
+									"<span class='userdanger'>[user] has placed [target] in [src].</span>")
 			add_logs(user, target, "stuffed", addition="into [src]")
 		update()
 
@@ -458,7 +463,7 @@
 		stored.loc = T
 		src.transfer_fingerprints_to(stored)
 		stored.ptype = 6 // 6 = disposal unit
-		stored.anchored = 1
+		stored.anchored = 0
 		stored.density = 1
 		stored.update()
 	..()
@@ -507,7 +512,7 @@
 		AM.loc = src
 		if(istype(AM, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = AM
-			if(FAT in H.mutations)		// is a human and fat?
+			if(H.disabilities & FAT)		// is a human and fat?
 				has_fat_guy = 1			// set flag on holder
 		if(istype(AM, /obj/structure/bigDelivery) && !hasmob)
 			var/obj/structure/bigDelivery/T = AM
@@ -592,7 +597,8 @@
 
 // called to vent all gas in holder to a location
 /obj/structure/disposalholder/proc/vent_gas(var/atom/location)
-	location.assume_air(gas)  // vent all gas to turf
+	if(location)
+		location.assume_air(gas)  // vent all gas to turf
 	air_update_turf()
 	return
 
@@ -793,13 +799,12 @@
 
 
 // pipe affected by explosion
-/obj/structure/disposalpipe/ex_act(severity)
+/obj/structure/disposalpipe/ex_act(severity, target)
 
 	//pass on ex_act to our contents before calling it on ourself
 	var/obj/structure/disposalholder/H = locate() in src
 	if(H)
-		for(var/atom/movable/AM in H)
-			AM.ex_act(severity)
+		H.contents_explosion(severity, target)
 
 	switch(severity)
 		if(1.0)

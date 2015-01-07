@@ -16,7 +16,6 @@
 
 /obj/structure/closet/gmcloset/New()
 	..()
-	sleep(2)
 	new /obj/item/clothing/head/that(src)
 	new /obj/item/device/radio/headset/headset_srv(src)
 	new /obj/item/device/radio/headset/headset_srv(src)
@@ -37,23 +36,26 @@
  */
 /obj/structure/closet/chefcloset
 	name = "\proper chef's closet"
-	desc = "It's a storage unit for foodservice garments."
+	desc = "It's a storage unit for foodservice garments and mouse traps."
 	icon_state = "black"
 	icon_closed = "black"
 
 /obj/structure/closet/chefcloset/New()
 	..()
-	sleep(2)
 	new /obj/item/clothing/under/waiter(src)
 	new /obj/item/clothing/under/waiter(src)
 	new /obj/item/device/radio/headset/headset_srv(src)
 	new /obj/item/device/radio/headset/headset_srv(src)
 	new /obj/item/clothing/tie/waistcoat(src)
 	new /obj/item/clothing/tie/waistcoat(src)
-	new /obj/item/clothing/head/soft/black(src)
-	new /obj/item/clothing/head/soft/black(src)
+	new /obj/item/clothing/suit/apron/chef(src)
+	new /obj/item/clothing/suit/apron/chef(src)
+	new /obj/item/clothing/suit/apron/chef(src)
+	new /obj/item/clothing/head/soft/mime(src)
+	new /obj/item/clothing/head/soft/mime(src)
 	new /obj/item/weapon/storage/box/mousetraps(src)
 	new /obj/item/weapon/storage/box/mousetraps(src)
+	new /obj/item/clothing/suit/toggle/chef(src)
 	new /obj/item/clothing/under/rank/chef(src)
 	new /obj/item/clothing/head/chefhat(src)
 
@@ -68,10 +70,9 @@
 
 /obj/structure/closet/jcloset/New()
 	..()
-	sleep(2)
 	new /obj/item/clothing/under/rank/janitor(src)
 	new /obj/item/weapon/cartridge/janitor(src)
-	new /obj/item/clothing/gloves/black(src)
+	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/head/soft/purple(src)
 	new /obj/item/device/flashlight(src)
 	new /obj/item/weapon/caution(src)
@@ -98,10 +99,10 @@
 	new /obj/item/clothing/under/lawyer/black(src)
 	new /obj/item/clothing/under/lawyer/red(src)
 	new /obj/item/clothing/under/lawyer/bluesuit(src)
-	new /obj/item/clothing/suit/lawyer/bluejacket(src)
+	new /obj/item/clothing/suit/toggle/lawyer(src)
 	new /obj/item/clothing/under/lawyer/purpsuit(src)
-	new /obj/item/clothing/suit/lawyer/purpjacket(src)
+	new /obj/item/clothing/suit/toggle/lawyer/purple(src)
 	new /obj/item/clothing/under/lawyer/blacksuit(src)
-	new /obj/item/clothing/suit/lawyer/blackjacket(src)
+	new /obj/item/clothing/suit/toggle/lawyer/black(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/clothing/shoes/laceup(src)

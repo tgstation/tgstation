@@ -33,10 +33,16 @@ The regular pipe you see everywhere, including bent ones.
 
 	..()
 
+
+/obj/machinery/atmospherics/pipe/simple/SetInitDirections()
 	switch(dir)
-		if(SOUTH || NORTH)
+		if(NORTH)
 			initialize_directions = SOUTH|NORTH
-		if(EAST || WEST)
+		if(SOUTH)
+			initialize_directions = SOUTH|NORTH
+		if(EAST)
+			initialize_directions = EAST|WEST
+		if(WEST)
 			initialize_directions = EAST|WEST
 		if(NORTHEAST)
 			initialize_directions = NORTH|EAST
@@ -69,10 +75,12 @@ The regular pipe you see everywhere, including bent ones.
 	if(node1)
 		var/obj/machinery/atmospherics/A = node1
 		node1.disconnect(src)
+		node1 = null
 		A.build_network()
 	if(node2)
 		var/obj/machinery/atmospherics/A = node2
 		node2.disconnect(src)
+		node2 = null
 		A.build_network()
 	releaseAirToTurf()
 	..()
@@ -100,7 +108,7 @@ The regular pipe you see everywhere, including bent ones.
 	else return 1
 
 /obj/machinery/atmospherics/pipe/simple/proc/burst()
-	src.visible_message("<span class='userdanger'>[src] bursts!</span>");
+	visible_message("<span class='danger'>[src] bursts!</span>");
 	playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
 	var/datum/effect/effect/system/harmless_smoke_spread/smoke = new
 	smoke.set_up(1,0, src.loc, 0)
@@ -108,9 +116,9 @@ The regular pipe you see everywhere, including bent ones.
 	qdel(src)
 
 /obj/machinery/atmospherics/pipe/simple/proc/normalize_dir()
-	if(dir==3)
+	if(dir==2)
 		dir = 1
-	else if(dir==12)
+	else if(dir==8)
 		dir = 4
 
 /obj/machinery/atmospherics/pipe/simple/update_icon()
@@ -128,6 +136,13 @@ The regular pipe you see everywhere, including bent ones.
 
 /obj/machinery/atmospherics/pipe/simple/pipeline_expansion()
 	return list(node1, node2)
+
+/obj/machinery/atmospherics/pipe/simple/update_node_icon()
+	..()
+	if(node1)
+		node1.update_icon()
+	if(node2)
+		node2.update_icon()
 
 /obj/machinery/atmospherics/pipe/simple/insulated
 	icon = 'icons/obj/atmospherics/red_pipe.dmi'

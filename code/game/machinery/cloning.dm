@@ -122,7 +122,7 @@
 //Clonepod
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/datum/species/mrace, var/mcolor)
+/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/datum/species/mrace, var/mcolor, var/factions)
 	if(panel_open)
 		return 0
 	if(mess || attempting)
@@ -152,6 +152,7 @@
 		src.eject_wait = 0
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
+	H.silent = 20 //Prevents an extreme edge case where clones could speak if they said something at exactly the right moment.
 	occupant = H
 
 	if(!clonename)	//to prevent null names
@@ -167,26 +168,12 @@
 	//Here let's calculate their health so the pod doesn't immediately eject them!!!
 	H.updatehealth()
 
-	H.silent = 5 //Prevents an extreme edge case where clones could speak if they said something at exactly the right moment.
 	clonemind.transfer_to(H)
 	H.ckey = ckey
 	H << "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>"
 
-	// -- Mode/mind specific stuff goes here
-
-	if((H.mind in ticker.mode.revolutionaries) || (H.mind in ticker.mode.head_revolutionaries))
-		ticker.mode.update_all_rev_icons() //So the icon actually appears
-	if((H.mind in ticker.mode.A_bosses) || ((H.mind in ticker.mode.A_gangsters) || (H.mind in ticker.mode.B_bosses)) || (H.mind in ticker.mode.B_gangsters))
-		ticker.mode.update_all_gang_icons()
-	if(H.mind in ticker.mode.syndicates)
-		ticker.mode.update_all_synd_icons()
-	if (H.mind in ticker.mode.cult)
-		ticker.mode.add_cultist(src.occupant.mind)
-		ticker.mode.update_all_cult_icons() //So the icon actually appears
-
-	// -- End mode specific stuff
-
 	hardset_dna(H, ui, se, null, null, mrace, mcolor)
+	H.faction |= factions
 
 	if(efficiency > 2)
 		for(var/A in bad_se_blocks)
@@ -274,15 +261,15 @@
 		else
 			src.locked = 0
 			user << "System unlocked."
-	else if (istype(W, /obj/item/weapon/card/emag))
-		if (isnull(src.occupant))
-			return
-		user << "You force an emergency ejection."
-		src.locked = 0
-		src.go_out()
-		return
 	else
 		..()
+
+/obj/machinery/clonepod/emag_act(user as mob)
+	if (isnull(src.occupant))
+		return
+	user << "You force an emergency ejection."
+	src.locked = 0
+	src.go_out()
 
 //Put messages in the connected computer's temp var for display.
 /obj/machinery/clonepod/proc/connected_message(var/message)
@@ -361,29 +348,10 @@
 	if(prob(100/(severity*efficiency))) malfunction()
 	..()
 
-/obj/machinery/clonepod/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			for(var/atom/movable/A as mob|obj in src)
-				A.loc = src.loc
-				ex_act(severity)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				for(var/atom/movable/A as mob|obj in src)
-					A.loc = src.loc
-					ex_act(severity)
-				qdel(src)
-				return
-		if(3.0)
-			if (prob(25))
-				for(var/atom/movable/A as mob|obj in src)
-					A.loc = src.loc
-					ex_act(severity)
-				qdel(src)
-				return
-	return
+/obj/machinery/clonepod/ex_act(severity, target)
+	..()
+	if(!gc_destroyed)
+		go_out()
 
 /*
  *	Diskette Box

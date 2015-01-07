@@ -270,9 +270,9 @@
 		if(path.len == 0)
 			if(!istype(target, /turf/))
 				var/turf/TL = get_turf(target)
-				path = AStar(loc, TL, /turf/proc/AdjacentTurfsSpace, /turf/proc/Distance, 0, 30, id=botcard)
+				path = get_path_to(loc, TL, /turf/proc/AdjacentTurfsSpace, /turf/proc/Distance, 0, 30, id=botcard)
 			else
-				path = AStar(loc, target, /turf/proc/AdjacentTurfsSpace, /turf/proc/Distance, 0, 30, id=botcard)
+				path = get_path_to(loc, target, /turf/proc/AdjacentTurfsSpace, /turf/proc/Distance, 0, 30, id=botcard)
 
 			if(!bot_move(target))
 				add_to_ignore(target)
@@ -307,7 +307,7 @@
 					anchored = 0
 					mode = BOT_IDLE
 					target = null
-			path = new()
+			path = list()
 			return
 
 	oldloc = loc
@@ -343,7 +343,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 				result = F
 		if(FIX_TILE)	//Selects only damaged floors.
 			F = scan_target
-			if(F.broken || F.burnt)
+			if(istype(F) && (F.broken || F.burnt))
 				result = F
 		if(TILE_EMAG) //Emag mode! Rip up the floor and cause breaches to space!
 			F = scan_target
@@ -369,12 +369,12 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 	anchored = 1
 	icon_state = "floorbot-c"
 	if(istype(target_turf, /turf/space/)) //If we are fixing an area not part of pure space, it is
-		visible_message("<span class='notice'> [targetdirection ? "[src] begins installing a bridge plating." : "[src] begins to repair the hole."] </span>")
+		visible_message("<span class='notice'>[targetdirection ? "[src] begins installing a bridge plating." : "[src] begins to repair the hole."] </span>")
 		mode = BOT_REPAIRING
 		spawn(50)
 			if(mode == BOT_REPAIRING)
 				if(autotile) //Build the floor and include a tile.
-					target_turf.ChangeTurf(/turf/simulated/floor)
+					target_turf.ChangeTurf(/turf/simulated/floor/plasteel)
 				else //Build a hull plating without a floor tile.
 					target_turf.ChangeTurf(/turf/simulated/floor/plating)
 				mode = BOT_IDLE
@@ -385,10 +385,12 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 	else
 		var/turf/simulated/floor/F = target_turf
 		mode = BOT_REPAIRING
-		visible_message("<span class='notice'> [src] begins repairing the floor.</span>")
+		visible_message("<span class='notice'>[src] begins repairing the floor.</span>")
 		spawn(50)
 			if(mode == BOT_REPAIRING)
-				F.make_floor(/turf/simulated/floor)
+				F.broken = 0
+				F.burnt = 0
+				F.ChangeTurf(/turf/simulated/floor/plasteel)
 				mode = BOT_IDLE
 				amount -= 1
 				updateicon()

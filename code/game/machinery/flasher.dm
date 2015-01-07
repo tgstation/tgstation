@@ -42,7 +42,7 @@
 		if (bulb)
 			user.visible_message("<span class='warning'>[user] begins to disconnect [src]'s flashbulb.</span>", "<span class='warning'>You begin to disconnect [src]'s flashbulb.</span>")
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			if(do_after(user, 30))
+			if(do_after(user, 30) && bulb)
 				user.visible_message("<span class='warning'>[user] has disconnected [src]'s flashbulb!</span>", "<span class='notice'>You disconnect [src]'s flashbulb!</span>")
 				bulb.loc = src.loc
 				bulb = null
@@ -95,7 +95,7 @@
 			flick("e_flash", O:flash)
 			O.eye_stat += rand(1, 2)
 		else
-			if(!O.blinded)
+			if(!O.eye_blind)
 				flick("flash", O:flash)
 				O.eye_stat += rand(0, 2)
 	return 1

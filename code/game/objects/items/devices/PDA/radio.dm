@@ -23,6 +23,11 @@
 		spawn(5)
 			add_to_radio(bot_filter)
 
+/obj/item/radio/integrated/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src, control_freq)
+	..()
+
 /obj/item/radio/integrated/proc/post_signal(var/freq, var/key, var/value, var/key2, var/value2, var/key3, var/value3,var/key4, var/value4, s_filter)
 
 	//world << "Post: [freq]: [key]=[value], [key2]=[value2]"
@@ -54,10 +59,6 @@
 			src.hostpda.cartridge.unlock()
 
 	return
-
-/obj/item/radio/integrated/proc/generate_menu()
-
-
 
 /obj/item/radio/integrated/receive_signal(datum/signal/signal)
 	/*var/obj/item/device/pda/P = src.loc
@@ -144,6 +145,11 @@
 			radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
 			spawn(10)
 				post_signal(beacon_freq, "findbeacon", "delivery", s_filter = RADIO_NAVBEACONS)
+
+/obj/item/radio/integrated/mule/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src,beacon_freq)
+	..()
 
 // receive radio signals
 // can detect bot status signals
@@ -238,6 +244,11 @@
 	..()
 	if(radio_controller)
 		initialize()
+
+/obj/item/radio/integrated/signal/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src, frequency)
+	..()
 
 /obj/item/radio/integrated/signal/initialize()
 	if (src.frequency < 1441 || src.frequency > 1489)

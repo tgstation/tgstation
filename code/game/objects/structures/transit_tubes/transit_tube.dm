@@ -19,28 +19,18 @@
 	//  this continues to work.
 	var/global/list/tube_dir_list = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
 
+/obj/structure/transit_tube/CanPass(atom/movable/mover, turf/target)
+	if(istype(mover) && mover.checkpass(PASSGLASS))
+		return 1
+	return !density
 
 // When destroyed by explosions, properly handle contents.
-obj/structure/transit_tube/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			for(var/atom/movable/AM in contents)
-				AM.loc = loc
-				AM.ex_act(severity++)
-
-			qdel(src)
-			return
-		if(2.0)
-			if(prob(50))
-				for(var/atom/movable/AM in contents)
-					AM.loc = loc
-					AM.ex_act(severity++)
-
-				qdel(src)
-				return
-		if(3.0)
-			return
-
+obj/structure/transit_tube/ex_act(severity, target)
+	if(3 - severity >= 0)
+		var/oldloc = loc
+		..(severity + 1)
+		for(var/atom/movable/AM in contents)
+			AM.loc = oldloc
 
 /obj/structure/transit_tube/New(loc)
 	..(loc)
@@ -54,7 +44,7 @@ obj/structure/transit_tube/ex_act(severity)
 			for(var/obj/structure/transit_tube_pod/pod in src.loc)
 				user << "<span class='notice'>Remove the pod first.</span>"
 				return
-			user.visible_message("<span class='warning'>[user] starts to deattach the [src]!</span>", "<span class='notice'>You start deattaching the [name]...</span>")
+			user.visible_message("<span class='warning'>[user] starts to deattach \the [src]!</span>", "<span class='notice'>You start deattaching the [name]...</span>")
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			if(do_after(user, 35))
 				user << "<span class='notice'>You deattach the [name]!</span>"

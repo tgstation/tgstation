@@ -18,7 +18,7 @@
 		if(!armed)
 			if(ishuman(usr))
 				var/mob/living/carbon/human/user = usr
-				if(((user.getBrainLoss() >= 60 || (CLUMSY in user.mutations)) && prob(50)))
+				if((user.getBrainLoss() >= 60) || user.disabilities & CLUMSY && prob(50))
 					user << "Your hand slips, setting off the trigger."
 					pulse(0)
 		update_icon()
@@ -65,11 +65,11 @@
 	pulse(0)
 
 
-/obj/item/device/assembly/mousetrap/attack_self(mob/living/user as mob)
+/obj/item/device/assembly/mousetrap/attack_self(mob/living/carbon/human/user as mob)
 	if(!armed)
 		user << "<span class='notice'>You arm [src].</span>"
 	else
-		if(((user.getBrainLoss() >= 60 || (CLUMSY in user.mutations)) && prob(50)))
+		if(((user.getBrainLoss() >= 60) || user.disabilities & CLUMSY) && prob(50))
 			var/which_hand = "l_hand"
 			if(!user.hand)
 				which_hand = "r_hand"
@@ -83,9 +83,9 @@
 	playsound(user.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
 
 
-/obj/item/device/assembly/mousetrap/attack_hand(mob/living/user as mob)
+/obj/item/device/assembly/mousetrap/attack_hand(mob/living/carbon/human/user as mob)
 	if(armed)
-		if(((user.getBrainLoss() >= 60 || CLUMSY in user.mutations)) && prob(50))
+		if(((user.getBrainLoss() >= 60) || user.disabilities & CLUMSY) && prob(50))
 			var/which_hand = "l_hand"
 			if(!user.hand)
 				which_hand = "r_hand"
