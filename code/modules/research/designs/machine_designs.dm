@@ -150,6 +150,7 @@
 	build_type = IMPRINTER
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/experimentor
+	category = list("Research Machinery")
 
 /datum/design/protolathe
 	name = "Machine Design (Protolathe Board)"
