@@ -280,7 +280,7 @@ var/list/uplink_items = list()
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/machinegun
-	name = "Box Magazine - 7.62×51mm"
+	name = "Box Magazine - 7.62x51mm"
 	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW machinegun. By the time you need to use this, you'll already be on a pile of corpses."
 	item = /obj/item/ammo_box/magazine/m762
 	cost = 12
