@@ -15,6 +15,7 @@
 	var/icon_locked = "lockbox+l"
 	var/icon_closed = "lockbox"
 	var/icon_broken = "lockbox+b"
+	var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 
 
 /obj/item/weapon/storage/lockbox/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -40,7 +41,6 @@
 		locked = 0
 		desc = "It appears to be broken."
 		icon_state = src.icon_broken
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, src.loc)
 		spark_system.start()
 		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
@@ -74,8 +74,10 @@
 				src.locked = 0
 				src.icon_state = src.icon_closed
 			else if(!src.locked)
-				src.locked = 1
-				src.icon_state = src.icon_locked
+				src.broken = 1
+				src.icon_state = src.icon_broken
+				spark_system.set_up(5, 0, src.loc)
+				spark_system.start()
 
 /obj/item/weapon/storage/lockbox/show_to(mob/user as mob)
 	if(locked)
