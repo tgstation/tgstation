@@ -153,8 +153,8 @@
 						/obj/item/device/radio,
 						/obj/item/device/radio/off,
 						/obj/item/clothing/suit/cardborg,
-						/obj/item/weapon/tank/oxygen,
-						/obj/item/weapon/tank/air,
+						/obj/item/weapon/tank/large/oxygen,
+						/obj/item/weapon/tank/large/air,
 						/obj/item/weapon/extinguisher
 					)
 

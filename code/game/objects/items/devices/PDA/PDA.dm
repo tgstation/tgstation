@@ -972,8 +972,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				user << "<span class='notice'>No significant chemical agents found in [A].</span>"
 
 		if(5)
-			if (istype(A, /obj/item/weapon/tank))
-				var/obj/item/weapon/tank/T = A
+			if (istype(A, /obj/item/weapon/tank/large))
+				var/obj/item/weapon/tank/large/T = A
 				atmosanalyzer_scan(T.air_contents, user, T)
 			else if (istype(A, /obj/machinery/portable_atmospherics))
 				var/obj/machinery/portable_atmospherics/T = A

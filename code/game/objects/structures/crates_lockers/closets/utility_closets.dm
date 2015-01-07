@@ -35,7 +35,7 @@
 			new /obj/item/weapon/storage/firstaid/o2(src)
 
 		if ("tank")
-			new /obj/item/weapon/tank/air(src)
+			new /obj/item/weapon/tank/large/air(src)
 
 		if ("both")
 			new /obj/item/weapon/tank/emergency_oxygen(src)
@@ -54,7 +54,7 @@
 			qdel(src)*/
 
 /obj/structure/closet/emcloset/legacy/New()
-	new /obj/item/weapon/tank/oxygen(src)
+	new /obj/item/weapon/tank/large/oxygen(src)
 	new /obj/item/clothing/mask/gas(src)
 
 /*
@@ -72,7 +72,7 @@
 
 	new /obj/item/clothing/suit/fire/firefighter(src)
 	new /obj/item/clothing/mask/gas(src)
-	new /obj/item/weapon/tank/oxygen/red(src)
+	new /obj/item/weapon/tank/large/oxygen/red(src)
 	new /obj/item/weapon/extinguisher(src)
 	new /obj/item/clothing/head/hardhat/red(src)
 
@@ -83,7 +83,7 @@
 	new /obj/item/clothing/suit/fire/firefighter(src)
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/device/flashlight(src)
-	new /obj/item/weapon/tank/oxygen/red(src)
+	new /obj/item/weapon/tank/large/oxygen/red(src)
 	new /obj/item/weapon/extinguisher(src)
 	new /obj/item/clothing/head/hardhat/red(src)
 
