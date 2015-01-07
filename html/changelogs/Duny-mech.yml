@@ -1,0 +1,4 @@
+author: Duny
+delete-after: True
+changes: 
+  - bugfix: Fixed people entering mechs/gibbers when those got deleted during the climbing process.
