@@ -3,7 +3,7 @@
 	desc = "Used for building lights."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-construct-item"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
 	var/fixture_type = "tube"
 	mount_reqs = list("simfloor")
 
@@ -36,6 +36,6 @@
 	desc = "Used for building small lights."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "bulb-construct-item"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
 	fixture_type = "bulb"
 	sheets_refunded = 1

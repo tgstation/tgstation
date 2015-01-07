@@ -17,7 +17,12 @@ turf/unsimulated/wall/splashscreen
 	layer = FLY_LAYER
 
 	New()
-		icon = file("icons/splashworks/title[rand(1,12)].gif")
+		var/path = "icons/splashworks/"
+		var/list/filenames = flist(path)
+		for(var/filename in filenames)
+			if(copytext(filename, length(filename)) == "/")
+				filenames -= filename
+		icon = file("[path][pick(filenames)]")
 
 /turf/unsimulated/wall/other
 	icon_state = "r_wall"

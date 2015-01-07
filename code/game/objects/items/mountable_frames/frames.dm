@@ -1,7 +1,7 @@
 /obj/item/mounted/frame
 	name = "mountable frame"
 	desc = "Place it on a wall."
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
 	w_type=RECYK_METAL
 	var/sheets_refunded = 2
 	var/list/mount_reqs = list() //can contain simfloor, nospace. Used in try_build to see if conditions are needed, then met

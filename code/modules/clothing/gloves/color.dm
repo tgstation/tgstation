@@ -31,7 +31,7 @@
 	name = "black gloves"
 	icon_state = "black"
 	item_state = "bgloves"
-	_color="brown"
+	_color="black"
 	species_fit = list("Vox")
 
 	cold_protection = HANDS
@@ -40,15 +40,20 @@
 	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECITON_TEMPERATURE
 
 
-	hos
-		_color = "hosred"		//Exists for washing machines. Is not different from black gloves in any way.
+/obj/item/clothing/gloves/black/hos
+	_color = "hosred"			//Exists for washing machines. Is not different from black gloves in any way.
 
-	ce
-		_color = "chief"			//Exists for washing machines. Is not different from black gloves in any way.
+/obj/item/clothing/gloves/black/ce
+	_color = "chief"			//Exists for washing machines. Is not different from black gloves in any way.
 
-	thief
-		pickpocket = 1
+/obj/item/clothing/gloves/black/rd
+	_color = "director"			//Exists for washing machines. Is not different from black gloves in any way.
 
+/obj/item/clothing/gloves/black/hop
+	_color = "hop"				//Exists for washing machines. Is not different from black gloves in any way.
+	
+/obj/item/clothing/gloves/black/thief
+	pickpocket = 1
 
 
 /obj/item/clothing/gloves/orange
@@ -67,6 +72,9 @@
 	_color = "red"
 	species_fit = list("Vox")
 
+/obj/item/clothing/gloves/red/redcoat
+	_color = "redcoat"		//Exists for washing machines. Is not different from red gloves in any way.
+
 /obj/item/clothing/gloves/rainbow
 	name = "rainbow gloves"
 	desc = "A pair of gloves, they don't look special in any way."
@@ -75,8 +83,8 @@
 	_color = "rainbow"
 	species_fit = list("Vox")
 
-	clown
-		_color = "clown"
+/obj/item/clothing/gloves/rainbow/clown
+	_color = "clown"
 
 /obj/item/clothing/gloves/blue
 	name = "blue gloves"
@@ -110,12 +118,6 @@
 	_color="grey"
 	species_fit = list("Vox")
 
-	rd
-		_color = "director"			//Exists for washing machines. Is not different from gray gloves in any way.
-
-	hop
-		_color = "hop"				//Exists for washing machines. Is not different from gray gloves in any way.
-
 /obj/item/clothing/gloves/light_brown
 	name = "light brown gloves"
 	desc = "A pair of gloves, they don't look special in any way."
@@ -131,6 +133,6 @@
 	item_state = "browngloves"
 	_color="brown"
 	species_fit = list("Vox")
-
-	cargo
-		_color = "cargo"				//Exists for washing machines. Is not different from brown gloves in any way.
+	
+/obj/item/clothing/gloves/brown/cargo
+	_color = "cargo" 		//Exists for washing machines. Is not different from brown gloves in any way.

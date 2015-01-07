@@ -3,7 +3,7 @@
 	desc = "Used for repairing or building APCs"
 	icon = 'icons/obj/apc_repair.dmi'
 	icon_state = "apc_frame"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
 	w_type=RECYK_METAL
 	mount_reqs = list("simfloor", "nospace")
 

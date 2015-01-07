@@ -331,7 +331,7 @@
 					set_ready_state(0)
 					if(do_after_cooldown(target))
 						if(disabled) return
-						target:ChangeTurf(/turf/simulated/floor/plating)
+						target:ChangeTurf(/turf/simulated/floor/plating/airless)
 						playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
 						chassis.spark_system.start()
 						chassis.use_power(energy_drain*2)

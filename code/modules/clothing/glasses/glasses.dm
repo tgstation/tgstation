@@ -36,8 +36,8 @@
 	icon_state = "night"
 	item_state = "glasses"
 	origin_tech = "magnets=2"
-	vision_flags = SEE_TURFS
-	darkness_view = 3
+	see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+	see_in_dark = 8
 	species_fit = list("Vox")
 
 /obj/item/clothing/glasses/eyepatch
@@ -117,22 +117,26 @@
 	set category = "Object"
 	set name = "Adjust welding goggles"
 	set src in usr
-
-	if(usr.canmove && !usr.stat && !usr.restrained())
+	var/mob/C = usr
+	if(!usr)
+		if(!ismob(loc))
+			return
+		C = loc
+	if(C.canmove && !C.stat && !C.restrained())
 		if(src.up)
 			src.up = !src.up
 			src.flags |= GLASSESCOVERSEYES
 			flags_inv |= HIDEEYES
 			icon_state = initial(icon_state)
-			usr << "You flip the [src] down to protect your eyes."
+			C << "You flip the [src] down to protect your eyes."
 		else
 			src.up = !src.up
 			src.flags &= ~HEADCOVERSEYES
 			flags_inv &= ~HIDEEYES
 			icon_state = "[initial(icon_state)]up"
-			usr << "You push the [src] up out of your face."
+			C << "You push the [src] up out of your face."
 
-		usr.update_inv_glasses()
+		C.update_inv_glasses()
 
 /obj/item/clothing/glasses/welding/superior
 	name = "superior welding goggles"
@@ -206,7 +210,7 @@
 	name = "Thermonocle"
 	desc = "A monocle thermal."
 	icon_state = "thermoncle"
-	flags = null //doesn't protect eyes because it's a monocle, duh
+	flags = 0 //doesn't protect eyes because it's a monocle, duh
 
 /obj/item/clothing/glasses/thermal/eyepatch
 	name = "Optical Thermal Eyepatch"

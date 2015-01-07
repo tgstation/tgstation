@@ -7,7 +7,7 @@
 /mob/living/silicon/pai/proc/securityHUD()
 	if(client)
 		var/image/holder
-		var/turf/T = get_turf_or_move(src.loc)
+		var/turf/T = get_turf(src.loc)
 		for(var/mob/living/carbon/human/perp in view(T))
 			if(src.see_invisible < perp.invisibility)
 				continue
@@ -51,7 +51,7 @@
 /mob/living/silicon/pai/proc/medicalHUD()
 	if(client)
 		var/image/holder
-		var/turf/T = get_turf_or_move(src.loc)
+		var/turf/T = get_turf(src.loc)
 		for(var/mob/living/carbon/human/patient in view(T))
 			if(src.see_invisible < patient.invisibility)
 				continue

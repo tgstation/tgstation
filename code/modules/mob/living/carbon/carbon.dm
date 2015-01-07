@@ -300,7 +300,7 @@
 								O.show_message(text("<B>[src] scrambles into the ventilation ducts!</B>"), 1)
 							loc = target_vent
 
-							var/travel_time = round(get_dist(loc, target_vent.loc) / 2)
+							var/travel_time = round(get_dist(loc, target_vent.loc) / 4)
 
 							spawn(travel_time)
 

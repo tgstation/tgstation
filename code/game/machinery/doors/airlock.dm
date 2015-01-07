@@ -50,6 +50,7 @@
 	var/hasShocked = 0 //Prevents multiple shocks from happening
 	autoclose = 1
 	var/busy = 0
+	soundeffect = 'sound/machines/airlock.ogg'
 
 	emag_cost = 1 // in MJ
 
@@ -99,6 +100,7 @@
 	icon = 'icons/obj/doors/Doorglass.dmi'
 	opacity = 0
 	glass = 1
+	soundeffect = 'sound/machines/windowdoor.ogg'
 
 /obj/machinery/door/airlock/centcom
 	name = "Airlock"
@@ -267,6 +269,7 @@
 	name = "Bananium Airlock"
 	icon = 'icons/obj/doors/Doorbananium.dmi'
 	mineral = "clown"
+	soundeffect = 'sound/items/bikehorn.ogg'
 
 /obj/machinery/door/airlock/sandstone
 	name = "Sandstone Airlock"
@@ -1104,12 +1107,7 @@ About the new airlock wires panel:
 		if( !arePowerSystemsOn() || (stat & NOPOWER) || isWireCut(AIRLOCK_WIRE_OPEN_DOOR) )
 			return 0
 	use_power(50)
-	if(istype(src, /obj/machinery/door/airlock/glass))
-		playsound(get_turf(src), 'sound/machines/windowdoor.ogg', 100, 1)
-	if(istype(src, /obj/machinery/door/airlock/clown))
-		playsound(get_turf(src), 'sound/items/bikehorn.ogg', 30, 1)
-	else
-		playsound(get_turf(src), 'sound/machines/airlock.ogg', 30, 1)
+	playsound(get_turf(src), soundeffect, 30, 1)
 	if(src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
 		src.closeOther.close()
 	// This worries me - N3X
@@ -1170,12 +1168,7 @@ About the new airlock wires panel:
 				if (istype(loc, /turf/simulated))
 					T.add_blood(L)
 
-	if (istype(type, /obj/machinery/door/airlock/glass))
-		playsound(get_turf(src), 'sound/machines/windowdoor.ogg', 30, 1)
-	else if (istype(type, /obj/machinery/door/airlock/clown))
-		playsound(get_turf(src), 'sound/items/bikehorn.ogg', 30, 1)
-	else
-		playsound(get_turf(src), 'sound/machines/airlock.ogg', 30, 1)
+	playsound(get_turf(src),soundeffect, 30, 1)
 
 	for(var/turf/T in loc)
 		var/obj/structure/window/W = locate(/obj/structure/window) in T

@@ -21,10 +21,10 @@
 			return
 
 	if(rotting)
-		user << "\blue This wall feels rather unstable."
+		user << "<span class='notice'>This wall feels rather unstable.</span>"
 		return
 
-	user << "\blue You push the wall but nothing happens!"
+	user << "<span class='notice'>You push the wall but nothing happens!</span>"
 	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
 	src.add_fingerprint(user)
 	return
@@ -278,3 +278,8 @@
 	else if(!d_state)
 		return attack_hand(user)
 	return
+
+/turf/simulated/wall/r_wall/singularity_pull(S, current_size)
+	if(current_size >= STAGE_FIVE)
+		if(prob(30))
+			dismantle_wall()

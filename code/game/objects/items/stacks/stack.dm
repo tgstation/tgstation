@@ -13,6 +13,7 @@
 	var/list/datum/stack_recipe/recipes
 	var/singular_name
 	var/amount = 1
+	var/perunit = 3750
 	var/max_amount //also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
 
 /obj/item/stack/New(var/loc, var/amount=null)
@@ -162,14 +163,15 @@
 	return
 
 /obj/item/stack/proc/use(var/amount)
-	src.amount-=amount
+	if(src.amount>=amount)
+		src.amount-=amount
+	else
+		return 0
+	. = 1
 	if (src.amount<=0)
-		var/oldsrc = src
-		src = null //dont kill proc after del()
 		if(usr)
-			usr.before_take_item(oldsrc)
-		qdel(oldsrc)
-	return
+			usr.before_take_item(src)
+		spawn qdel(src)
 
 /obj/item/stack/proc/add_to_stacks(mob/usr as mob)
 	var/obj/item/stack/oldsrc = src

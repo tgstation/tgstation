@@ -5,8 +5,9 @@
 	desc = "Used for repairing or building airlock controllers"
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_control_build0"
-	flags = FPRINT | TABLEPASS| CONDUCT
 	mount_reqs = list("simfloor")
+	flags = FPRINT
+	siemens_coefficient = 1
 
 /obj/item/mounted/frame/airlock_controller/do_build(turf/on_wall, mob/user)
 	new /obj/machinery/embedded_controller(get_turf(src), get_dir(user, on_wall), 1)

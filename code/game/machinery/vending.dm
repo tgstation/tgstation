@@ -867,7 +867,6 @@
 	pack = /obj/structure/vendomatpack/medical//can be reloaded with NanoMed Plus packs
 
 ////////WALL-MOUNTED NANOMED FRAME//////
-
 /obj/machinery/vending/wallmed1/New(turf/loc)
 	..()
 	component_parts = 0

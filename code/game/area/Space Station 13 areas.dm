@@ -76,6 +76,11 @@ proc/process_teleport_locs()
 	for(var/area/AR in world)
 		if(istype(AR, /area/shuttle) || istype(AR, /area/syndicate_station) || istype(AR, /area/wizard_station)) continue
 		if(teleportlocs.Find(AR.name)) continue
+		var/list/turfss = get_area_turfs(AR.type)
+		if(!istype(turfss) || !turfss.len)
+			//warning("Area [AR] had no turfs!")
+			continue
+		//testing("Picking a turf from [AR]/([AR.type]) turfs length [turfss.len]")
 		var/turf/picked = pick(get_area_turfs(AR.type))
 		if (picked.z == 1)
 			teleportlocs += AR.name
@@ -100,6 +105,11 @@ proc/process_ghost_teleport_locs()
 		if(istype(AR, /area/turret_protected/aisat) || istype(AR, /area/derelict) || istype(AR, /area/tdome))
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
+		var/list/turfss = get_area_turfs(AR.type)
+		if(!istype(turfss) || !turfss.len)
+			//warning("Area [AR] had no turfs!")
+			continue
+		//testing("Picking a turf from [AR]/([AR.type]) turfs length [turfss.len]")
 		var/turf/picked = pick(get_area_turfs(AR.type))
 		if (picked.z == 1 || picked.z == 5 || picked.z == 3)
 			ghostteleportlocs += AR.name
@@ -2147,9 +2157,9 @@ proc/process_adminbus_teleport_locs()
 		sound_delay = rand(0, 50)
 
 	for(var/mob/living/carbon/human/H in src)
-		if(H.s_tone > -55)
+	/*	if(H.s_tone > -55)
 			H.s_tone--
-			H.update_body()
+			H.update_body()*/
 		if(H.client)
 			mysound.status = SOUND_UPDATE
 			H << mysound

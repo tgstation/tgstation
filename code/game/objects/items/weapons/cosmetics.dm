@@ -3,7 +3,7 @@
 	desc = "A generic brand of lipstick."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "lipstick"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	w_class = 1.0
 	var/colour = "red"
 	var/open = 0

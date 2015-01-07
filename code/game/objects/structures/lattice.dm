@@ -47,21 +47,15 @@
 	return
 
 /obj/structure/lattice/attackby(obj/item/C as obj, mob/user as mob)
-
-	// /vg/ - Rods for catwalks - N3X
-	if (istype(C, /obj/item/stack/tile/plasteel) || istype(C, /obj/item/stack/rods))
-		var/turf/T = get_turf(src)
-		T.attackby(C, user) //BubbleWrap - hand this off to the underlying turf instead
-		return
-
 	if(istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WeldingTool = C
-
 		if(WeldingTool.remove_fuel(0, user))
 			user << "<span class='notice'>Slicing lattice joints...</span>"
-
 		new/obj/item/stack/rods(loc)
 		qdel(src)
+	else
+		var/turf/T = get_turf(src)
+		return T.attackby(C, user) //Attacking to the lattice will attack to the space turf
 
 /obj/structure/lattice/proc/updateOverlays()
 	set waitfor = 0

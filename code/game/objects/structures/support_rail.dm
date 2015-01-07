@@ -5,7 +5,8 @@
 	icon_state = "rail"
 	density = 0
 	anchored = 1
-	flags = FPRINT | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = 2.1
 	explosion_resistance = 5

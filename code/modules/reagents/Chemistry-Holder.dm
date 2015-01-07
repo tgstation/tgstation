@@ -426,7 +426,8 @@ datum
 					del_reagent(R.id,update_totals=0)
 				// Only call ONCE. -- N3X
 				update_total()
-				my_atom.on_reagent_change()
+				if(my_atom)
+					my_atom.on_reagent_change()
 				return 0
 
 			reaction(var/atom/A, var/method=TOUCH, var/volume_modifier=0)
@@ -463,6 +464,8 @@ datum
 				return
 
 			add_reagent(var/reagent, var/amount, var/list/data=null)
+				if(!my_atom)
+					return 0
 				if(!isnum(amount)) return 1
 				update_total()
 				if(total_volume + amount > maximum_volume)

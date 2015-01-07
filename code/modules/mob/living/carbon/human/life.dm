@@ -440,7 +440,7 @@ var/global/list/organ_damage_overlays = list(
 		if(flags & INVULNERABLE)
 			return
 		if(getFireLoss())
-			if((M_RESIST_HEAT in mutations) || (prob(1)))
+			if((M_RESIST_HEAT in mutations))
 				heal_organ_damage(0,1)
 
 
@@ -475,7 +475,7 @@ var/global/list/organ_damage_overlays = list(
 				switch(radiation)
 					if(1 to 49)
 						radiation--
-						if(prob(25))
+						if(!(radiation % 5)) //damage every 5 ticks. Previously prob(25)
 							adjustToxLoss(1)
 							damage = 1
 							updatehealth()
@@ -495,11 +495,13 @@ var/global/list/organ_damage_overlays = list(
 						radiation -= 3
 						adjustToxLoss(3)
 						damage = 1
+						/*
 						if(prob(1))
 							src << "\red You mutate!"
 							randmutb(src)
 							domutcheck(src,null)
 							emote("gasp")
+						*/
 						updatehealth()
 
 				if(damage && organs.len)
@@ -515,7 +517,10 @@ var/global/list/organ_damage_overlays = list(
 		if(species && species.flags & NO_BREATHE) return
 
 		var/datum/organ/internal/lungs/L = internal_organs_by_name["lungs"]
-		L.process()
+		if(L)
+			L.process()
+		else
+			src << "<span class='warning'>You have no lungs which to breathe with, panic and tell a coder.</span>"
 
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/datum/gas_mixture/breath
@@ -1270,8 +1275,9 @@ var/global/list/organ_damage_overlays = list(
 	proc/handle_regular_hud_updates()
 		if(!client)	return 0
 
-		regular_hud_updates()
+		sight &= ~BLIND
 
+		regular_hud_updates()
 
 		client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask/*, global_hud.nvg*/)
 
@@ -1407,11 +1413,15 @@ var/global/list/organ_damage_overlays = list(
 			if(glasses)
 				var/obj/item/clothing/glasses/G = glasses
 				if(istype(G))
+					if(G.see_in_dark)
+						see_in_dark = G.see_in_dark
 					see_in_dark += G.darkness_view
 					if(G.vision_flags)		// MESONS
 						sight |= G.vision_flags
 						if(!druggy)
 							see_invisible = SEE_INVISIBLE_MINIMUM
+					if(G.see_invisible)
+						see_invisible = G.see_invisible
 
 	/* HUD shit goes here, as long as it doesn't modify sight flags */
 	// The purpose of this is to stop xray and w/e from preventing you from using huds -- Love, Doohl

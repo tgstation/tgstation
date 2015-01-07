@@ -23,7 +23,7 @@
 	if(client.buildmode)
 		build_click(src, client.buildmode, params, A)
 		return
-	if(world.time <= next_move)
+	if(attack_delayer.blocked())
 		return
 	//next_move = world.time + 8
 

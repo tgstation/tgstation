@@ -3,7 +3,7 @@
 	desc = "Used for repairing or building airlock access buttons"
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "access_button_build"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
 	mount_reqs = list("simfloor")
 
 /obj/item/mounted/frame/access_button/do_build(turf/on_wall, mob/user)

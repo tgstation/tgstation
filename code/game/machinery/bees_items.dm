@@ -64,7 +64,7 @@
 	name = "bottle of BeezEez"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle17"
-	flags = FPRINT |  TABLEPASS
+	flags = FPRINT
 
 /obj/item/beezeez/New()
 	. = ..()

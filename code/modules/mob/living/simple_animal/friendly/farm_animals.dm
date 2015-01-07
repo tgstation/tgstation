@@ -213,6 +213,10 @@ var/global/chicken_count = 0
 
 /mob/living/simple_animal/chicken/New()
 	..()
+	if(prob(5))
+		name = "Pomf chicken"
+		body_color = "white"
+
 	if(!body_color)
 		body_color = pick( list("brown","black","white") )
 	icon_state = "chicken_[body_color]"

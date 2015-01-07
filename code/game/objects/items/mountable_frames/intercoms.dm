@@ -3,7 +3,7 @@
 	desc = "Used for repairing or building intercoms"
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "intercom-frame"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
 	w_type=RECYK_METAL
 	mount_reqs = list("nospace", "simfloor")
 

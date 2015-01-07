@@ -70,7 +70,7 @@
 	switch(severity)
 		if(1.0)
 			if(prob(25))
-				investigate_log("has been destroyed by an explosion.","singulo")
+				investigation_log(I_SINGULO,"has been destroyed by an explosion.")
 				qdel(src)
 				return
 			else
@@ -110,7 +110,7 @@
 	if (!count)
 		message_admins("A singulo has been created without containment fields active ([x], [y], [z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>).")
 
-	investigate_log("was created. [count ? "" : "<font color='red'>No containment fields were active.</font>"]", "singulo")
+	investigation_log(I_SINGULO,"was created. [count ? "" : "<font color='red'>No containment fields were active.</font>"]")
 
 /obj/machinery/singularity/proc/dissipate()
 	if (!dissipate)
@@ -132,7 +132,7 @@
 		temp_allowed_size = force_size
 
 	switch (temp_allowed_size)
-		if (1)
+		if (STAGE_ONE)
 			name = "Gravitational Singularity"
 			desc = "A Gravitational Singularity."
 			current_size = 1
@@ -149,7 +149,7 @@
 			if(chained)
 				overlays = "chain_s1"
 			visible_message("<span class='notice'>The singularity has shrunk to a rather pitiful size.</span>")
-		if (3) // 1 to 3 does not check for the turfs if you put the gens right next to a 1x1 then its going to eat them.
+		if (STAGE_TWO) // 1 to 3 does not check for the turfs if you put the gens right next to a 1x1 then its going to eat them.
 			name = "Gravitational Singularity"
 			desc = "A Gravitational Singularity."
 			current_size = 3
@@ -169,7 +169,7 @@
 				visible_message("<span class='notice'>The singularity noticeably grows in size.</span>")
 			else
 				visible_message("<span class='notice'>The singularity has shrunk to a less powerful size.</span>")
-		if (5)
+		if (STAGE_THREE)
 			if ((check_turfs_in(1, 2)) && (check_turfs_in(2, 2)) && (check_turfs_in(4, 2)) && (check_turfs_in(8, 2)))
 				name = "Gravitational Singularity"
 				desc = "A Gravitational Singularity."
@@ -190,7 +190,7 @@
 					visible_message("<span class='notice'>The singularity expands to a reasonable size.</span>")
 				else
 					visible_message("<span class='notice'>The singularity has returned to a safe size.</span>")
-		if(7)
+		if(STAGE_FOUR)
 			if ((check_turfs_in(1, 3)) && (check_turfs_in(2, 3)) && (check_turfs_in(4, 3)) && (check_turfs_in(8, 3)))
 				name = "Gravitational Singularity"
 				desc = "A Gravitational Singularity."
@@ -211,7 +211,7 @@
 					visible_message("<span class='warning'>The singularity expands to a dangerous size.</span>")
 				else
 					visible_message("<span class='notice'>Miraculously, the singularity reduces in size, and can be contained.</span>")
-		if(9) // This one also lacks a check for gens because it eats everything.
+		if(STAGE_FIVE) // This one also lacks a check for gens because it eats everything.
 			name = "Gravitational Singularity"
 			desc = "A Gravitational Singularity."
 			current_size = 9
@@ -229,7 +229,7 @@
 				visible_message("<span class='danger'><font size='2'>The singularity has grown out of control!</font></span>")
 			else
 				visible_message("<span class='warning'>The singularity miraculously reduces in size and loses its supermatter properties.</span>")
-		if(11)//SUPERSINGULO
+		if(STAGE_SUPER)//SUPERSINGULO
 			name = "Super Gravitational Singularity"
 			desc = "A Gravitational Singularity with the properties of supermatter. <b>It has the power to destroy worlds.</b>"
 			current_size = 11
@@ -246,7 +246,7 @@
 			visible_message("<span class='sinister'><font size='3'>You witness the creation of a destructive force that cannot possibly be stopped by human hands.</font></span>")
 
 	if (current_size == allowed_size)
-		investigate_log("<font color='red'>grew to size [current_size].</font>", "singulo")
+		investigation_log(I_SINGULO,"<font color='red'>grew to size [current_size].</font>")
 		return 1
 	else if (current_size < (--temp_allowed_size) && current_size != 11)
 		expand(temp_allowed_size)
@@ -255,7 +255,7 @@
 
 /obj/machinery/singularity/proc/check_energy()
 	if (energy <= 0)
-		investigate_log("collapsed.", "singulo")
+		investigation_log(I_SINGULO,"collapsed.")
 		qdel(src)
 		return 0
 
@@ -281,15 +281,27 @@
 /obj/machinery/singularity/proc/eat()
 	set background = BACKGROUND_ENABLED
 
+
 	if (defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 1
 
-	for (var/turf/T in trange(grav_pull, src)) // TODO: Create a similar trange for orange to prevent snowflake of self check.
-		consume(T)
+	for(var/atom/X in orange(grav_pull, src))
+		var/dist = get_dist(X, src)
+		var/obj/machinery/singularity/S = src
+		if(!istype(src))
+			return
+		if(dist > consume_range)
+			X.singularity_pull(S, current_size)
+		else if(dist <= consume_range)
+			consume(X)
+
+	//for (var/turf/T in trange(grav_pull, src)) // TODO: Create a similar trange for orange to prevent snowflake of self check.
+	//	consume(T)
 
 	if (defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 0
 
+	return
 /*
  * Singulo optimization.
  * Jump out whenever we've made a decision.
@@ -306,51 +318,16 @@
 	return 0
 
 /obj/machinery/singularity/proc/consume(const/atom/A)
-	if(!(A.singuloCanEat()))
-		return 0
+	//if(!(A.singuloCanEat()))
+	//	return 0
 
-	var/gain = 0
-
-	if (istype(A, /mob/living)) // Mobs get gibbed.
-		var/mob/living/M = A
-
-		if(M.flags & INVULNERABLE)
-			return 0
-
-		gain = 20
-
-		if (istype(M,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = M
-
-			if (H.mind)
-				switch (H.mind.assigned_role)
-					if ("Station Engineer", "Chief Engineer")
-						gain = 100
-					if ("Clown")
-						gain = rand(-300, 300) // HONK!
-		M.gib()
-	else if (istype(A, /obj/))
-		if (istype(A, /obj/item/weapon/storage/backpack/holding))
-			var/dist = max((current_size - 2), 1)
-			explosion(get_turf(src), dist, dist * 2, dist * 4)
-			return
-
-		if (istype(A, /obj/machinery/singularity)) // Welp now you did it.
-			var/obj/machinery/singularity/S = A
-			energy += (current_size == 11 ? S.energy : S.energy / 2) // Absorb most of it, unless supersingulo, in which case LITTLE SINGULO GETS EATEN.
-			qdel(S)
-			var/dist = max((current_size - 2), 1)
-			explosion(get_turf(src), dist, dist * 2, dist * 4)
-			return
-
+	var/gain = A.singularity_act(current_size)
+	src.energy += gain
+	/*if (istype(A, /obj/))
 		if (isbot(A))
 			var/obj/machinery/bot/B = A
 			if(B.flags & INVULNERABLE)
 				return
-
-		if(istype(A, /obj/machinery/power/supermatter))//NOW YOU REALLY FUCKED UP
-			if(istype(A, /obj/machinery/power/supermatter/shard))
-				src.energy += 15000//Instantly sends it to max size
 			else
 				src.energy += 20000//Instantly sends it to max size
 				SetUniversalState(/datum/universal_state/supermatter_cascade) //AND NOW YOU'RE FUCKED
@@ -362,44 +339,8 @@
 			log_admin("New super singularity made by eating a SM crystal [prints]. Last touched by [A.fingerprintslast].")
 			message_admins("New super singularity made by eating a SM crystal [prints]. Last touched by [A.fingerprintslast].")
 			del(A)
-			return
-
-		A.ex_act(1)
-
-		if (A)
-			qdel(A)
-
-		gain = 2
-	else if (isturf(A))
-		var/dist = get_dist(A, src)
-
-		for (var/atom/movable/AM in A.contents)
-			if (AM == src) // This is the snowflake.
-				continue
-
-			if (dist <= consume_range)
-				consume(AM)
-				continue
-
-			if (dist > consume_range && canPull(AM))
-				if(!(AM.singuloCanEat()))
-					continue
-
-				if (101 == AM.invisibility)
-					continue
-
-				spawn (0)
-					step_towards(AM, src)
-
-		if (dist <= consume_range && !istype(A, /turf/space))
-			var/turf/T = A
-			if(istype(T,/turf/simulated/wall))
-				var/turf/simulated/wall/W = T
-				W.del_suppress_resmoothing=1 // Reduce lag from wallsmoothing.
-			T.ChangeTurf(/turf/space)
-			gain = 2
-
-	energy += gain
+			return*/
+	return
 
 /obj/machinery/singularity/proc/move(var/force_move = 0)
 	if(!move_self)
@@ -602,3 +543,10 @@
 	var/dist = max((current_size - 2), 1)
 	explosion(get_turf(src), dist, dist * 2, dist * 4)
 	del(src)
+
+/obj/machinery/singularity/singularity_act()
+	var/gain = (energy/2)
+	var/dist = max((current_size - 2), 1)
+	explosion(src.loc,(dist),(dist*2),(dist*4))
+	qdel(src)
+	return(gain)

@@ -27,6 +27,9 @@
 	return
 
 /obj/effect/plantsegment/Destroy()
+	if(reagents)
+		reagents.my_atom = null
+		reagents = null
 	if(master)
 		master.vines -= src
 		master.growth_queue -= src
@@ -215,13 +218,22 @@
 	if(istype(step,/turf/simulated/floor))
 		var/turf/simulated/floor/F = step
 		if(!locate(/obj/effect/plantsegment,F))
-			if(locate(/obj/structure/window,F))
+			if(locate(/obj/structure/window,F))//PREVENTS VINES FROM PASSING INTO WINDOWS
 				for(var/obj/structure/window/twindow in F)
 					if(get_dir(step, loc) == twindow.dir)
 						return
-			if(locate(/obj/structure/window,loc))
+			if(locate(/obj/structure/window,loc))//PREVENTS VINES FROM PASSING OUT OF WINDOWS
 				for(var/obj/structure/window/lwindow in loc)
 					if(get_dir(loc, step) == lwindow.dir)
+						return
+
+			if(locate(/obj/machinery/door/window,F))//PREVENTS VINES FROM PASSING OUT OF CLOSED WINDOORS
+				for(var/obj/machinery/door/window/twindoor in F)
+					if(get_dir(step, loc) == twindoor.dir && twindoor.density == 1)
+						return
+			if(locate(/obj/machinery/door/window,loc))//PREVENTS VINES FROM PASSING OUT OF CLOSED WINDOORS
+				for(var/obj/machinery/door/window/lwindoor in loc)
+					if(get_dir(loc, step) == lwindoor.dir && lwindoor.density == 1)
 						return
 			if(F.Enter(src))
 				if(master)

@@ -77,7 +77,7 @@
 	src.brainmob << "<b>Use say :b to speak to other artificial intelligences.</b>"
 	src.brainmob.mind.assigned_role = "Positronic Brain"
 
-	var/turf/T = get_turf_or_move(src.loc)
+	var/turf/T = get_turf(src.loc)
 	for (var/mob/M in viewers(T))
 		M.show_message("<span class='notice'>The [src] chimes quietly.</span>")
 	icon_state = "posibrain-occupied"
@@ -89,7 +89,7 @@
 	src.searching = 0
 	icon_state = "posibrain"
 
-	var/turf/T = get_turf_or_move(src.loc)
+	var/turf/T = get_turf(src.loc)
 	for (var/mob/M in viewers(T))
 		M.show_message("<span class='notice'>The [src] buzzes quietly, and the golden lights fade away. Perhaps you could try again?</span>")
 
@@ -179,6 +179,6 @@
 	if(searching)
 		volunteer(O)
 	else
-		var/turf/T = get_turf_or_move(src.loc)
+		var/turf/T = get_turf(src.loc)
 		for (var/mob/M in viewers(T))
 			M.show_message("<span class='notice'>The [src] pings softly.</span>")

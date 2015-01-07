@@ -97,7 +97,7 @@
 	if(!user)
 		return
 	if(istype(C, /obj/item/weapon/wrench))
-		user << "\blue Removing rods..."
+		user << "<span class='notice'>Removing rods...</span>"
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 80, 1)
 		if(do_after(user, 30))
 			new /obj/item/stack/rods(src, 2)
@@ -113,6 +113,9 @@
 /turf/simulated/floor/engine/cult/cultify()
 	return
 
+/turf/simulated/floor/engine/airless
+	oxygen = 0.01
+	nitrogen = 0.01
 
 /turf/simulated/floor/engine/n20
 	New()

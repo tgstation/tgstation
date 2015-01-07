@@ -9,7 +9,8 @@
 	w_class = 2.0
 	throw_speed = 4
 	throw_range = 10
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	attack_verb = list("rang")
 	hitsound = 'sound/machines/ding2.ogg'
 	m_amt = 3750
@@ -234,7 +235,8 @@
 	w_class = 2.0
 	throw_speed = 4
 	throw_range = 10
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	m_amt = 3750
 	w_type = RECYK_METAL
 	melt_temperature=MELTPOINT_STEEL

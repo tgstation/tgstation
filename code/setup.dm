@@ -189,7 +189,6 @@ var/MAX_EXPLOSION_RANGE = 14
 //FLAGS BITMASK
 #define STOPSPRESSUREDMAGE 1	//This flag is used on the flags variable for SUIT and HEAD items which stop pressure damage. Note that the flag 1 was previous used as ONBACK, so it is possible for some code to use (flags & 1) when checking if something can be put on your back. Replace this code with (inv_flags & SLOT_BACK) if you see it anywhere
                                 //To successfully stop you taking all pressure damage you must have both a suit and head item with this flag.
-#define TABLEPASS 2			// can pass by a table or rack
 
 #define MASKINTERNALS	8	// mask allows internals
 //#define SUITSPACE		8	// suit protects against space
@@ -197,7 +196,6 @@ var/MAX_EXPLOSION_RANGE = 14
 #define USEDELAY 	16		// 1 second extra delay on use (Can be used once every 2s)
 #define NODELAY 	32768	// 1 second attackby delay skipped (Can be used once every 0.2s). Most objects have a 1s attackby delay, which doesn't require a flag.
 #define NOSHIELD	32		// weapon not affected by shield
-#define CONDUCT		64		// conducts electricity (metal etc.)
 #define FPRINT		256		// takes a fingerprint
 #define ON_BORDER	512		// item has priority to check when entering or leaving
 #define NOBLUDGEON  4  // when an item has this it produces no "X has been hit by Y with Z" message with the default handler
@@ -956,3 +954,25 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define DIG_SOIL	2	//dirt - this flag gives it shovel functionality
 #define DIG_WALLS	4	//metal station walls - not the mineral ones
 #define DIG_RWALLS	8	//reinforced station walls - beware
+
+// For first investigation_log arg
+// Easier to idiot-proof it this way.
+#define I_HREFS    "hrefs"
+#define I_NOTES    "notes"
+#define I_NTSL     "ntsl"
+#define I_SINGULO  "singulo"
+#define I_ATMOS    "atmos"
+
+// delayNext() flags.
+#define DELAY_MOVE    1
+#define DELAY_ATTACK  2
+#define DELAY_SPECIAL 4
+#define DELAY_ALL (DELAY_MOVE|DELAY_ATTACK|DELAY_SPECIAL)
+
+//singularity defines
+#define STAGE_ONE 	1
+#define STAGE_TWO 	3
+#define STAGE_THREE	5
+#define STAGE_FOUR	7
+#define STAGE_FIVE	9
+#define STAGE_SUPER	11

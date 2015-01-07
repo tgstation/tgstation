@@ -3,7 +3,7 @@ obj/item/mounted/frame/firealarm
 	desc = "Used for building Fire Alarms"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire_bitem"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
 	m_amt=2*CC_PER_SHEET_METAL
 	melt_temperature = MELTPOINT_STEEL
 	w_type = RECYK_METAL

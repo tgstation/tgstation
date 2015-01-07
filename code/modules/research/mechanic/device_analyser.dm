@@ -12,7 +12,7 @@
 	var/syndi_filter = 1 //whether the scanner should filter traitor tech items. 1 is filtered, 0 is not filtered
 	var/access_avoidance = 0 //whether the scanner can ignore access requirements for machines. 1 is ignore, 0 is not
 	var/loadone = 0 //whether or not it should load just one at a time. 0 is all at once, 1 is one at a time
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	slot_flags = SLOT_BELT
 	w_class = 2
 	item_state = "electronic"
