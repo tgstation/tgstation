@@ -25,13 +25,12 @@
 	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/hos
-	name = "armored greatcoat"
-	desc = "A greatcoat enchanced with a special alloy for some protection and style for those with a commanding presence."
+	name = "head of security's jacket"
+	desc = "A black armored jacket with gold shoulder designations and 'Head of Security' stitched into one of the chest pockets."
 	icon_state = "hos"
-	item_state = "greatcoat"
+	item_state = "hostrench"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	armor = list(melee = 65, bullet = 30, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
-	flags_inv = HIDEJUMPSUIT
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	strip_delay = 80
@@ -41,12 +40,11 @@
 	desc = "A trenchcoat enchanced with a special lightweight kevlar. The epitome of tactical plainclothes."
 	icon_state = "hostrench"
 	item_state = "hostrench"
-	flags_inv = 0
 	strip_delay = 80
 
 /obj/item/clothing/suit/armor/vest/warden
 	name = "warden's jacket"
-	desc = "A navy-blue armored jacket with blue shoulder designations and '/Warden/' stitched into one of the chest pockets."
+	desc = "A navy-blue armored jacket with blue shoulder designations and 'Warden' stitched into one of the chest pockets."
 	icon_state = "warden_jacket"
 	item_state = "armor"
 	body_parts_covered = CHEST|GROIN|ARMS

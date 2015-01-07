@@ -80,6 +80,8 @@ datum/preferences
 		// Want randomjob if preferences already filled - Donkie
 	var/userandomjob = 1 //defaults to 1 for fewer assistants
 
+	var/list/player_alt_clothing = new()
+
 	// 0 = character settings, 1 = game preferences
 	var/current_tab = 0
 
@@ -374,6 +376,8 @@ datum/preferences
 				continue
 
 			HTML += "<font color=[prefLevelColor]>[prefLevelLabel]</font>"
+			if(job.clothing)
+				HTML += "</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td><td><a href=\"byond://?src=\ref[user];preference=job;task=alt_clothing;job=\ref[job]\">\[GetPlayerAltClothing(job)]\</a></td></tr>"
 			HTML += "</a></td></tr>"
 
 		for(var/i = 1, i < (limit - index), i += 1) // Finish the column so it is even
@@ -393,6 +397,19 @@ datum/preferences
 		popup.set_content(HTML)
 		popup.open(0)
 		return
+
+	proc/GetPlayerAltClothing(datum/job/job)
+		return player_alt_clothing.Find(job.clothing) > 0 \
+			? player_alt_clothing[job.clothing] \
+			: job.clothing
+
+	proc/SetPlayerAltClothing(datum/job/job, new_clothing)
+		// remove existing entry
+		if(player_alt_clothing.Find(job.clothing))
+			player_alt_clothing -= job.clothing
+		// add one if it's not default
+		if(job.clothing != new_clothing)
+			player_alt_clothing[job.clothing] = new_clothing
 
 	proc/SetJobPreferenceLevel(var/datum/job/job, var/level)
 		if (!job)
@@ -542,6 +559,14 @@ datum/preferences
 					else
 						userandomjob = !userandomjob
 					SetChoices(user)
+				if ("alt_clothing")
+					var/datum/job/job = locate(href_list["job"])
+					if(job)
+						var/choices = list(job.clothing) + job.alt_clothing
+						var/choice = input("Pick a clothing set for [job.clothing].", "Character Generation", GetPlayerAltClothing(job)) as anything in choices | null
+						if(choice)
+							SetPlayerAltClothing(job, choice)
+							SetChoices(user)
 				if("setJobLevel")
 					UpdateJobPreference(user, href_list["text"], text2num(href_list["level"]))
 				else

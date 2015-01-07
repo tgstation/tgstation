@@ -13,6 +13,8 @@ Captain
 	selection_color = "#ccccff"
 	req_admin_notify = 1
 	minimal_player_age = 14
+	clothing = "Default"
+	alt_clothing = list("Parade")
 
 	default_id = /obj/item/weapon/card/id/gold
 	default_pda = /obj/item/device/pda/captain
@@ -24,12 +26,21 @@ Captain
 	minimal_access = list() 	//See get_access()
 
 /datum/job/captain/equip_items(var/mob/living/carbon/human/H)
-	var/obj/item/clothing/under/U = new /obj/item/clothing/under/rank/captain(H)
-	U.attachTie(new /obj/item/clothing/tie/medal/gold/captain())
-	H.equip_to_slot_or_del(U, slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest/capcarapace(H), slot_wear_suit)
+	if(H.mind.role_alt_clothing)
+		switch(H.mind.role_alt_clothing)
+			if("Default")
+				var/obj/item/clothing/under/U = new /obj/item/clothing/under/rank/captain(H)
+				U.attachTie(new /obj/item/clothing/tie/medal/gold/captain())
+				H.equip_to_slot_or_del(U, slot_w_uniform)
+				H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest/capcarapace(H), slot_wear_suit)
+				H.equip_to_slot_or_del(new /obj/item/clothing/head/caphat(H), slot_head)
+			if("Parade")
+				var/obj/item/clothing/under/U = new /obj/item/clothing/under/captainparade(H)
+				U.attachTie(new /obj/item/clothing/tie/medal/gold/captain())
+				H.equip_to_slot_or_del(U, slot_w_uniform)
+				H.equip_to_slot_or_del(new /obj/item/clothing/suit/captunic(H), slot_wear_suit)
+				H.equip_to_slot_or_del(new /obj/item/clothing/head/caphat/parade(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/brown(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/caphat(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(H), slot_glasses)
 
 	//Equip ID box & telebaton
