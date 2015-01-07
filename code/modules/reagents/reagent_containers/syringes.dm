@@ -88,6 +88,7 @@
 						if(!do_mob(user, target))
 							busy = 0
 							return
+					busy = 0
 					B.holder = src
 					B.volume = amount
 					//set reagent data
@@ -129,7 +130,6 @@
 					on_reagent_change()
 					reagents.handle_reactions()
 					user.visible_message("<span class='notice'>[user] takes a blood sample from [target].</span>")
-					busy = 0
 
 			else //if not mob
 				if(!target.reagents.total_volume)
