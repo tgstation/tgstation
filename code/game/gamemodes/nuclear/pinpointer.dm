@@ -160,7 +160,7 @@
 
 /obj/item/weapon/pinpointer/nukeop
 	var/mode = 0	//Mode 0 locates disk, mode 1 locates the shuttle
-	var/obj/machinery/computer/syndicate_station/home = null
+	var/obj/docking_port/mobile/home
 
 
 /obj/item/weapon/pinpointer/nukeop/attack_self(mob/user as mob)
@@ -220,7 +220,7 @@
 		visible_message("<span class='notice'>Authentication Disk Locator active.</span>")
 		return
 	if(!home)
-		home = locate()
+		home = SSshuttle.getShuttle("syndicate")
 		if(!home)
 			icon_state = "pinonnull"
 			return
