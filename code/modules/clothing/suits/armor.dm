@@ -31,7 +31,6 @@
 	item_state = "hostrench"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	armor = list(melee = 65, bullet = 30, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
-	flags_inv = HIDEJUMPSUIT
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	strip_delay = 80
@@ -41,7 +40,6 @@
 	desc = "A trenchcoat enchanced with a special lightweight kevlar. The epitome of tactical plainclothes."
 	icon_state = "hostrench"
 	item_state = "hostrench"
-	flags_inv = 0
 	strip_delay = 80
 
 /obj/item/clothing/suit/armor/vest/warden

@@ -21,8 +21,6 @@ Assistant
 		switch(H.mind.role_alt_clothing)
 			if("Random")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/color/random(H), slot_w_uniform)
-			if("Grey")
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(H), slot_w_uniform)
 			if("Red")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/color/red(H), slot_w_uniform)
 			if("Blue")
@@ -33,8 +31,14 @@ Assistant
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/color/yellow(H), slot_w_uniform)
 			if("Black")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(H), slot_w_uniform)
+			if("White")
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/color/white(H), slot_w_uniform)
 			if("Orange")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange(H), slot_w_uniform)
+			if("Aqua")
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/color/aqua(H), slot_w_uniform)
+			if("Pink")
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/color/pink(H), slot_w_uniform)
 
 /datum/job/assistant/get_access()
 	if(config.jobs_have_maint_access & ASSISTANTS_HAVE_MAINT_ACCESS) //Config has assistant maint access set
