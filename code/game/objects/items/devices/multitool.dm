@@ -107,13 +107,13 @@ obj/item/device/multitool/ai_detect/update_icon()
 	else src.icon_state = initial(src.icon_state)
 	return
 
-obj/item/device/multitool/ai_detect/examine()
+obj/item/device/multitool/ai_detect/examine(mob/user)
 	..()
-	if(src.detected) usr << "The screen displays:"
-	if(src.detected & DETECT_AI) usr << "AI detected"
-	if(src.detected & DETECT_PAI) usr << "pAI detected"
-	if(src.detected & DETECT_RECORDER) usr << "Tape recorder detected"
-	if(src.detected & DETECT_ANALYZER) usr << "Voice analyzer detected"
+	if(src.detected) user << "The screen displays:"
+	if(src.detected & DETECT_AI) user << "AI detected"
+	if(src.detected & DETECT_PAI) user << "pAI detected"
+	if(src.detected & DETECT_RECORDER) user << "Tape recorder detected"
+	if(src.detected & DETECT_ANALYZER) user << "Voice analyzer detected"
 
 ////////////////////////////////////////////////////////////////////////
 #undef DETECT_TICKER_PERIOD

@@ -27,19 +27,13 @@
 		overlays  += "sheater-open"
 	return
 
-/obj/machinery/space_heater/air_conditioner/examine()
-	set src in oview(12)
-	if (!( usr ))
-		return
-	usr << "This is \icon[src] \an [src.name]."
-	usr << src.desc
-
-	usr << "The air conditioner is [on ? "on" : "off"] and the hatch is [open ? "open" : "closed"]."
+/obj/machinery/space_heater/air_conditioner/examine(mob/user)
+	..()
+	user << "The air conditioner is [on ? "on" : "off"] and the hatch is [open ? "open" : "closed"]."
 	if(open)
-		usr << "The power cell is [cell ? "installed" : "missing"]."
+		user << "The power cell is [cell ? "installed" : "missing"]."
 	else
-		usr << "The charge meter reads [cell ? round(cell.percent(),1) : 0]%"
-	return
+		user << "The charge meter reads [cell ? round(cell.percent(),1) : 0]%"
 
 /obj/machinery/space_heater/air_conditioner/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
@@ -96,11 +90,11 @@
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\Documents\Projects\vgstation13\code\ATMOSPHERICS\chiller.dm:95: dat += "Power Level: [cell ? round(cell.percent(),1) : 0]%<BR><BR>"
 		dat += {"Power Level: [cell ? round(cell.percent(),1) : 0]%<BR><BR>
-			Set Temperature: 
-			<A href='?src=\ref[src];op=temp;val=-5'>-</A> 
+			Set Temperature:
+			<A href='?src=\ref[src];op=temp;val=-5'>-</A>
 			<A href='?src=\ref[src];op=temp;val=-1'>-</A>
-			[temp]&deg;C 
-			<A href='?src=\ref[src];op=temp;val=1'>+</A> 
+			[temp]&deg;C
+			<A href='?src=\ref[src];op=temp;val=1'>+</A>
 			<A href='?src=\ref[src];op=temp;val=5'>+</A><BR>"}
 		// END AUTOFIX
 		user.set_machine(src)

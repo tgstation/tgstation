@@ -46,7 +46,7 @@
 
 // We don't need a fucking toggle.
 /mob/dead/observer/ShiftClickOn(var/atom/A)
-	A.examine()
+	usr.examination(src)
 
 /atom/proc/attack_ghost(mob/user as mob)
 	var/ghost_flags = 0
@@ -55,7 +55,7 @@
 	if(canGhostRead(user,src,ghost_flags))
 		src.attack_ai(user)
 	else
-		src.examine()
+		user.examination(src)
 
 /* Bay edition
 // Oh by the way this didn't work with old click code which is why clicking shit didn't spam you

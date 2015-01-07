@@ -23,9 +23,9 @@
 
 	soot_type = null
 
-/turf/simulated/wall/examine()
+/turf/simulated/wall/examine(mob/user)
 	..()
-	if(src.engraving) usr << src.engraving
+	if(src.engraving) user << src.engraving
 
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, explode=0)
 	if(istype(src,/turf/simulated/wall/r_wall))

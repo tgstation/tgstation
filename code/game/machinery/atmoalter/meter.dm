@@ -1,6 +1,6 @@
 /obj/machinery/meter
 	name = "meter"
-	desc = "It measures something."
+	desc = "A gas flow meter."
 	icon = 'icons/obj/meter.dmi'
 	icon_state = "meterX"
 	var/obj/machinery/atmospherics/pipe/target = null
@@ -100,12 +100,9 @@
 		t += "The connect error light is blinking."
 	return t
 
-/obj/machinery/meter/examine()
-	set src in view(3)
-
-	var/t = "A gas flow meter. "
-	t += status()
-	usr << t
+/obj/machinery/meter/examine(mob/user)
+	..()
+	user << status()
 
 /obj/machinery/meter/attack_ai(var/mob/user)
 	attack_hand(user)

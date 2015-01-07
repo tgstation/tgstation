@@ -46,12 +46,12 @@
 	if(being_built)
 		overlays += "[base_state]_ani"
 
-/obj/machinery/r_n_d/fabricator/examine()
+/obj/machinery/r_n_d/fabricator/examine(mob/user)
 	..()
 	if(being_built)
-		usr << "It's building \a [src.being_built]."
+		user << "It's building \a [src.being_built]."
 	else
-		usr << "Nothing's being built."
+		user << "Nothing's being built."
 
 /obj/machinery/r_n_d/fabricator/RefreshParts()
 	var/T = 0

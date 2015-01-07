@@ -16,12 +16,11 @@
 	icon_state = "oxygen"
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
 
-	examine()
-		set src in usr
-		..()
-		if(air_contents.oxygen < 10)
-			usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
-			playsound(usr, 'sound/effects/alert.ogg', 50, 1)
+/obj/item/weapon/tank/oxygen/examine(mob/user)
+	..()
+	if(air_contents.oxygen < 10)
+		user << text("<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>")
+		playsound(user, 'sound/effects/alert.ogg', 50, 1)
 
 /obj/item/weapon/tank/oxygen/New()
 	. = ..()
@@ -59,12 +58,11 @@
 	icon_state = "oxygen"
 
 
-	examine()
-		set src in usr
-		..()
-		if(air_contents.oxygen < 1 && loc==usr)
-			usr << "\red <B>The meter on the [src.name] indicates you are almost out of air!</B>"
-			usr << sound('sound/effects/alert.ogg')
+/obj/item/weapon/tank/air/examine(mob/user)
+	..()
+	if(air_contents.oxygen < 1 && loc==usr)
+		user << "<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>"
+		user << sound('sound/effects/alert.ogg')
 
 /obj/item/weapon/tank/air/New()
 	. = ..()
@@ -100,12 +98,11 @@
 	desc = "The lifeblood of plasmamen.  Warning:  Extremely flammable, do not inhale (unless you're a plasman)."
 	icon_state = "plasma_fr"
 
-/obj/item/weapon/tank/plasma/plasmaman/examine()
-	set src in usr
+/obj/item/weapon/tank/plasma/plasmaman/examine(mob/user)
 	..()
 	if(air_contents.toxins < 0.2 && loc==usr)
-		usr << text("\red <B>The meter on the [src.name] indicates you are almost out of plasma!</B>")
-		usr << sound('sound/effects/alert.ogg')
+		user << text("<span class='danger'>The meter on the [src.name] indicates you are almost out of plasma!</span>")
+		user << sound('sound/effects/alert.ogg')
 
 /*
  * Emergency Oxygen
@@ -121,12 +118,11 @@
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
 	volume = 2 //Tiny. Real life equivalents only have 21 breaths of oxygen in them. They're EMERGENCY tanks anyway -errorage (dangercon 2011)
 
-	examine()
-		set src in usr
-		..()
-		if(air_contents.oxygen < 0.2 && loc==usr)
-			usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
-			usr << sound('sound/effects/alert.ogg')
+/obj/item/weapon/tank/emergency_oxygen/examine(mob/user)
+	..()
+	if(air_contents.oxygen < 0.2 && loc==usr)
+		user << text("<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>")
+		user << sound('sound/effects/alert.ogg')
 
 /obj/item/weapon/tank/emergency_oxygen/New()
 	. = ..()
@@ -167,9 +163,8 @@
 	. = ..()
 	air_contents.adjust(, , (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C))
 
-/obj/item/weapon/tank/nitrogen/examine()
-	set src in usr
+/obj/item/weapon/tank/nitrogen/examine(mob/user)
 	..()
 	if(air_contents.nitrogen < 10)
-		usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
-		playsound(usr, 'sound/effects/alert.ogg', 50, 1)
+		user << text("<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>")
+		playsound(user, 'sound/effects/alert.ogg', 50, 1)

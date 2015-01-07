@@ -15,12 +15,6 @@
 			findNullRod(A)
 	return 0
 
-
-/obj/item/weapon/paper/talisman/examine()
-	set src in view(2)
-	..()
-	return
-
 /obj/item/weapon/paper/talisman/New()
 	..()
 	pixel_x=0

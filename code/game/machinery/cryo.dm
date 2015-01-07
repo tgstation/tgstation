@@ -123,7 +123,7 @@
 	go_out()
 	return
 
-/obj/machinery/atmospherics/unary/cryo_cell/examine()
+/obj/machinery/atmospherics/unary/cryo_cell/examine(mob/user)
 	..()
 
 	if(in_range(usr, src))

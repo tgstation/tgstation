@@ -26,11 +26,9 @@
 		usr << browse(null, "window=stack")
 	..()
 
-/obj/item/stack/examine()
-	set src in view(1)
+/obj/item/stack/examine(mob/user)
 	..()
-	usr << "There are [src.amount] [src.singular_name]\s in the stack."
-	return
+	user << "There are [src.amount] [src.singular_name]\s in the stack."
 
 /obj/item/stack/attack_self(mob/user as mob)
 	list_recipes(user)

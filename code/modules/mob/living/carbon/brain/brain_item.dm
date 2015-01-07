@@ -38,16 +38,12 @@
 	brainmob << "\blue You feel slightly disoriented. That's normal when you're just a brain."
 	callHook("debrain", list(brainmob))
 
-/obj/item/organ/brain/examine() // -- TLE
-	set src in oview(12)
-	if (!( usr ))
-		return
-	usr << "This is \icon[src] \an [name]."
-
+/obj/item/organ/brain/examine(mob/user)
+	..()
 	if(brainmob && brainmob.client)//if thar be a brain inside... the brain.
-		usr << "You can feel the small spark of life still left in this one."
+		user << "You can feel the small spark of life still left in this one."
 	else
-		usr << "This one seems particularly lifeless. Perhaps it will regain some of its luster later.."
+		user << "This one seems particularly lifeless. Perhaps it will regain some of its luster later.."
 
 /obj/item/organ/brain/removed(var/mob/living/target,var/mob/living/user)
 

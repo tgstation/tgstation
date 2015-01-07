@@ -210,9 +210,9 @@
 	else
 		return 1
 
-/obj/machinery/atmospherics/pipe/simple/examine()
+/obj/machinery/atmospherics/pipe/simple/examine(mob/user)
 	..()
-	usr << "<span class='info'>This [src.name] is rated up to [format_num(alert_pressure)] kPa.</span>"
+	user << "<span class='info'>This [src.name] is rated up to [format_num(alert_pressure)] kPa.</span>"
 
 /obj/machinery/atmospherics/pipe/simple/proc/groan()
 	src.visible_message("<span class='warning'>\The [src] groans from the pressure!</span>");
