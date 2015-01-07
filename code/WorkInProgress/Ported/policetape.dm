@@ -139,6 +139,9 @@
 /obj/item/tape/Bumped(M as mob)
 	if(src.allowed(M))
 		var/turf/T = get_turf(src)
+		for(var/atom/A in T) //Check to see if there's anything solid on the tape's turf (it's possible to build on it)
+			if(A.density)
+				return
 		M:loc = T
 
 /obj/item/tape/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
