@@ -85,7 +85,7 @@ Class Procs:
       Called by the 'master_controller' once per game tick for each machine that is listed in the 'machines' list.
 
 	is_operational()
-		Returns 0 if the machine is unpowered, broken or undergoing maintenance, 1 if not
+		Returns 0 if the machine is unpowered, broken or undergoing maintenance, something else if not
 
 	Compiled by Aygar
 */
@@ -122,7 +122,7 @@ Class Procs:
 	machines.Remove(src)
 	SSmachine.processing -= src
 	if(occupant)
-		open_machine()
+		dropContents()
 	..()
 
 /obj/machinery/process()//If you dont use process or power why are you here
@@ -208,6 +208,7 @@ Class Procs:
 /obj/machinery/proc/is_operational()
 	return !(stat & (NOPOWER|BROKEN|MAINT))
 
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 /mob/proc/canUseTopic() //TODO: once finished, place these procs on the respective mob files
@@ -268,10 +269,13 @@ Class Procs:
 /obj/machinery/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
-/obj/machinery/attack_hand(mob/user as mob, var/check_power = 1)
+//set_machine must be 0 if clicking the machinery doesn't bring up a dialog
+/obj/machinery/attack_hand(mob/user as mob, var/check_power = 1, var/set_machine = 1)
 	if(check_power && stat & NOPOWER)
+		user << "<span class='danger'>\The [src] seems unpowered.</span>"
 		return 1
 	if(!interact_offline && stat & (BROKEN|MAINT))
+		user << "<span class='danger'>\The [src] seems broken.</span>"
 		return 1
 	if(user.lying || user.stat)
 		return 1
@@ -293,7 +297,8 @@ Class Procs:
 			return 1
 
 	src.add_fingerprint(user)
-	user.set_machine(src)
+	if(set_machine)
+		user.set_machine(src)
 	return 0
 
 /obj/machinery/CheckParts()
@@ -306,6 +311,14 @@ Class Procs:
 /obj/machinery/proc/assign_uid()
 	uid = gl_uid
 	gl_uid++
+
+/obj/machinery/proc/default_pry_open(var/obj/item/weapon/crowbar/C)
+	. = !(state_open || panel_open || is_operational()) && istype(C)
+	if(.)
+		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+		visible_message("<span class = 'notice'>[usr] pry open \the [src].</span>", "<span class = 'notice'>You pry open \the [src].</span>")
+		open_machine()
+		return 1
 
 /obj/machinery/proc/default_deconstruction_crowbar(var/obj/item/weapon/crowbar/C, var/ignore_panel = 0)
 	. = istype(C) && (panel_open || ignore_panel)

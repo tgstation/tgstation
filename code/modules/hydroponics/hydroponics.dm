@@ -793,16 +793,29 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 /obj/item/seeds/replicapod/harvest(mob/user = usr) //now that one is fun -- Urist
 	var/obj/machinery/hydroponics/parent = loc
 	var/make_podman = 0
-	if(ckey && config.revival_pod_plants)
-		for(var/mob/M in player_list)
-			if(M.ckey == ckey && M.stat == 2 && !M.suiciding)
+	var/ckey_holder = null
+	if(config.revival_pod_plants)
+		if(ckey)
+			for(var/mob/M in player_list)
 				if(istype(M, /mob/dead/observer))
 					var/mob/dead/observer/O = M
-					if(O.can_reenter_corpse)
+					if(O.ckey == ckey && O.can_reenter_corpse)
 						make_podman = 1
+						break
+				else
+					if(M.ckey == ckey && M.stat == 2 && !M.suiciding)
+						make_podman = 1
+						break
+		else //If the player has ghosted from his corpse before blood was drawn, his ckey is no longer attached to the mob, so we need to match up the cloned player through the mind key
+			for(var/mob/M in player_list)
+				if(ckey(M.mind.key) == ckey(mind.key) && M.ckey && M.client && M.stat == 2 && !M.suiciding)
+					if(istype(M, /mob/dead/observer))
+						var/mob/dead/observer/O = M
+						if(!O.can_reenter_corpse)
+							break
+					make_podman = 1
+					ckey_holder = M.ckey
 					break
-				make_podman = 1
-				break
 
 	if(make_podman)	//all conditions met!
 		var/mob/living/carbon/human/podman = new /mob/living/carbon/human(parent.loc)
@@ -811,7 +824,10 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		else
 			podman.real_name = "Pod Person [rand(0,999)]"
 		mind.transfer_to(podman)
-		podman.ckey = ckey
+		if(ckey)
+			podman.ckey = ckey
+		else
+			podman.ckey = ckey_holder
 		podman.gender = blood_gender
 		podman.faction |= factions
 		hardset_dna(podman,null,null,podman.real_name,blood_type,/datum/species/plant/pod,"#59CE00")//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
