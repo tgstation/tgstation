@@ -289,6 +289,7 @@
 	siemens_coefficient = 0.2
 	species_restricted = list("exclude","Vox")
 	_color = "deathsquad"
+	flags = FPRINT | HEADCOVERSEYES | BLOCKHAIR | STOPSPRESSUREDMAGE | PLASMAGUARD
 
 /obj/item/clothing/suit/space/rig/deathsquad
 	name = "deathsquad suit"
@@ -300,3 +301,4 @@
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECITON_TEMPERATURE
 	siemens_coefficient = 0.5
 	species_restricted = list("exclude","Vox")
+	flags = FPRINT | STOPSPRESSUREDMAGE | PLASMAGUARD
