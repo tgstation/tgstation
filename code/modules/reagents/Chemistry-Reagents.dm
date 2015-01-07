@@ -132,7 +132,7 @@ datum
 			name = "Blood"
 			id = "blood"
 			reagent_state = LIQUID
-			color = "#C80000" // rgb: 200, 0, 0
+			color = "#a00000" // rgb: 160, 0, 0
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				var/datum/reagent/blood/self = src
@@ -1580,7 +1580,7 @@ datum
 			id = "plasma"
 			description = "Plasma in its liquid form."
 			reagent_state = LIQUID
-			color = "#E71B00" // rgb: 231, 27, 0
+			color = "#500064" // rgb: 80, 0, 100
 
 			on_mob_life(var/mob/living/M as mob)
 
