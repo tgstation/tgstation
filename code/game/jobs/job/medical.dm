@@ -52,7 +52,7 @@ Medical Doctor
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 	clothing = "Default"
-	alt_clothing = list("Emergency Physician","Nurse")
+	alt_clothing = list("Emergency Physician","Scrubs")
 
 	default_pda = /obj/item/device/pda/medical
 	default_headset = /obj/item/device/radio/headset/headset_med
@@ -74,7 +74,7 @@ Medical Doctor
 				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
 				H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/labcoat/emt(H), slot_wear_suit)
 				H.equip_to_slot_or_del(new /obj/item/clothing/head/soft/emt(H), slot_head)
-			if("Nurse")
+			if("Scrubs")
 				switch(pick("blue", "green", "purple"))
 					if ("blue")
 						H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/blue(H), slot_w_uniform)
@@ -83,8 +83,9 @@ Medical Doctor
 					if ("purple")
 						H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/purple(H), slot_w_uniform)
 				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
+				H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/labcoat(H), slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/regular(H), slot_l_hand)
-	H.equip_to_slot_or_del(new /obj/item/device/flashlight/pen(H), slot_r_store)
+	H.equip_to_slot_or_del(new /obj/item/device/flashlight/pen(H), slot_s_store)
 
 /*
 Chemist
