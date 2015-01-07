@@ -1,7 +1,7 @@
 "aaa" = (/turf/space,/area/space)
-"aab" = (/obj/docking_port/stationary{dheight = 9; dir = 2; dwidth = 5; height = 22; id = "syndicate_n"; name = "north of station"; turf_type = /turf/unsimulated/floor{icon = 'icons/turf/snow.dmi'; icon_state = "snow"}; width = 18},/turf/space,/area/space)
-"aac" = (/obj/docking_port/stationary{dheight = 9; dir = 2; dwidth = 5; height = 22; id = "syndicate_ne"; name = "northeast of station"; turf_type = /turf/unsimulated/floor{icon = 'icons/turf/snow.dmi'; icon_state = "snow"}; width = 18},/turf/space,/area/space)
-"aad" = (/obj/docking_port/stationary{dheight = 9; dir = 2; dwidth = 5; height = 22; id = "syndicate_nw"; name = "northwest of station"; turf_type = /turf/unsimulated/floor{icon = 'icons/turf/snow.dmi'; icon_state = "snow"}; width = 18},/turf/space,/area/space)
+"aab" = (/obj/docking_port/stationary{dheight = 9; dir = 2; dwidth = 5; height = 22; id = "syndicate_n"; name = "north of station"; turf_type = /turf/space; width = 18},/turf/space,/area/space)
+"aac" = (/obj/docking_port/stationary{dheight = 9; dir = 2; dwidth = 5; height = 22; id = "syndicate_ne"; name = "northeast of station"; turf_type = /turf/space; width = 18},/turf/space,/area/space)
+"aad" = (/obj/docking_port/stationary{dheight = 9; dir = 2; dwidth = 5; height = 22; id = "syndicate_nw"; name = "northwest of station"; turf_type = /turf/space; width = 18},/turf/space,/area/space)
 "aae" = (/obj/effect/landmark{name = "carpspawn"},/turf/space,/area/space)
 "aaf" = (/obj/structure/lattice,/turf/space,/area/space)
 "aag" = (/obj/structure/lattice/catwalk,/turf/space,/area/space)
@@ -6316,7 +6316,7 @@
 "crx" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/floor/plating,/area/aisat)
 "cry" = (/obj/structure/window/reinforced,/obj/machinery/door/window{dir = 1; name = "MiniSat Walkway Access"; req_access_txt = "13;65"},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/floor/plating,/area/aisat)
 "crz" = (/obj/structure/window/reinforced{dir = 4},/obj/machinery/door/window{base_state = "right"; dir = 1; icon_state = "right"; name = "MiniSat Walkway Access"; req_access_txt = "13;65"},/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 10},/turf/simulated/floor/plating,/area/aisat)
-"crA" = (/obj/docking_port/stationary{dheight = 9; dir = 2; dwidth = 5; height = 22; id = "syndicate_sw"; name = "southwest of station"; turf_type = /turf/unsimulated/floor{icon = 'icons/turf/snow.dmi'; icon_state = "snow"}; width = 18},/turf/space,/area/space)
+"crA" = (/obj/docking_port/stationary{dheight = 9; dir = 2; dwidth = 5; height = 22; id = "syndicate_sw"; name = "southwest of station"; turf_type = /turf/space; width = 18},/turf/space,/area/space)
 "crB" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor/plating,/area/aisat)
 "crC" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/turf/space,/area/space)
 "crD" = (/obj/structure/window/reinforced{dir = 1},/turf/space,/area/space)
@@ -6380,7 +6380,7 @@
 "csJ" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/machinery/light/small{dir = 4},/obj/machinery/camera{c_tag = "MiniSat Exterior South West"; dir = 8; network = list("MiniSat"); pixel_x = 0; pixel_y = 0},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor/plating,/area/aisat)
 "csK" = (/obj/machinery/power/smes{charge = 5e+006},/obj/structure/cable,/turf/simulated/floor/plasteel{icon_state = "dark"},/area/turret_protected/ai)
 "csL" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/machinery/light/small{dir = 8},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/camera{c_tag = "MiniSat Exterior South East"; dir = 4; network = list("MiniSat"); pixel_x = 0; pixel_y = 0},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor/plating,/area/aisat)
-"csM" = (/obj/docking_port/stationary{dheight = 9; dir = 2; dwidth = 5; height = 22; id = "syndicate_se"; name = "southeast of station"; turf_type = /turf/unsimulated/floor{icon = 'icons/turf/snow.dmi'; icon_state = "snow"}; width = 18},/turf/space,/area/space)
+"csM" = (/obj/docking_port/stationary{dheight = 9; dir = 2; dwidth = 5; height = 22; id = "syndicate_se"; name = "southeast of station"; turf_type = /turf/space; width = 18},/turf/space,/area/space)
 "csN" = (/turf/simulated/wall/r_wall,/area/ai_monitored/storage/secure)
 "csO" = (/obj/machinery/power/terminal{icon_state = "term"; dir = 1},/obj/structure/cable{icon_state = "0-2"; d2 = 2},/turf/simulated/wall/r_wall,/area/turret_protected/ai)
 "csP" = (/turf/simulated/wall,/area/ai_monitored/storage/secure)
@@ -6415,7 +6415,7 @@
 "cts" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/wall,/area/ai_monitored/storage/secure)
 "ctt" = (/obj/structure/window/reinforced{dir = 1},/obj/machinery/atmospherics/unary/outlet_injector{dir = 8},/turf/simulated/floor/plating/airless,/area/space)
 "ctu" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/lattice,/turf/space,/area/space)
-"ctv" = (/obj/docking_port/stationary{dheight = 9; dir = 2; dwidth = 5; height = 22; id = "syndicate_s"; name = "south of station"; turf_type = /turf/unsimulated/floor{icon = 'icons/turf/snow.dmi'; icon_state = "snow"}; width = 18},/turf/space,/area/space)
+"ctv" = (/obj/docking_port/stationary{dheight = 9; dir = 2; dwidth = 5; height = 22; id = "syndicate_s"; name = "south of station"; turf_type = /turf/space; width = 18},/turf/space,/area/space)
 "ctw" = (/obj/machinery/atmospherics/unary/portables_connector/visible{dir = 1; name = "Auxiliary MiniSat Distribution Port"},/obj/machinery/portable_atmospherics/canister/air,/turf/simulated/floor/plasteel{icon_state = "yellow"; dir = 10},/area/ai_monitored/storage/secure)
 "ctx" = (/obj/structure/table,/obj/item/stack/sheet/metal{amount = 50},/obj/item/stack/sheet/glass{amount = 50},/turf/simulated/floor/plasteel{icon_state = "yellow"},/area/ai_monitored/storage/secure)
 "cty" = (/obj/machinery/computer/station_alert,/turf/simulated/floor/plasteel{icon_state = "yellow"},/area/ai_monitored/storage/secure)
@@ -6680,3 +6680,4 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}
+

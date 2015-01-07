@@ -4,7 +4,6 @@
 	icon_state = "cell-off"
 	density = 1
 	anchored = 1.0
-	interact_offline = 1
 	layer = 4
 
 	var/on = 0
@@ -103,16 +102,7 @@
 	if(..())
 		return
 
-	//powerless interaction
-	if(!is_operational())
-		user.unset_machine()//essential to prevent infinite loops of opening/closing the machine
-		if(state_open)
-			close_machine()
-		else
-			open_machine()
-
-	else
-		ui_interact(user)
+	ui_interact(user)
 
 
  /**
@@ -240,6 +230,9 @@
 		return
 
 	if(exchange_parts(user, I))
+		return
+
+	if(default_pry_open(I))
 		return
 
 	default_deconstruction_crowbar(I)

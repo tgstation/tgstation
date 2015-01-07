@@ -11,7 +11,6 @@
 	icon_state = "sleeper-open"
 	density = 0
 	anchored = 1
-	interact_offline = 1
 	state_open = 1
 	var/efficiency
 	var/initial_bin_rating = 1
@@ -82,6 +81,9 @@
 	if(exchange_parts(user, I))
 		return
 
+	if(default_pry_open(I))
+		return
+
 	default_deconstruction_crowbar(I)
 
 /obj/machinery/sleeper/ex_act(severity, target)
@@ -118,16 +120,7 @@
 	if(..())
 		return
 
-	//powerless interaction
-	if(!is_operational())
-		user.unset_machine()//essential to prevent infinite loops of opening/closing the machine
-		if(state_open)
-			close_machine()
-		else
-			open_machine()
-
-	else
-		sleeperUI(user)
+	sleeperUI(user)
 
 /obj/machinery/sleeper/proc/sleeperUI(mob/user)
 	var/dat
