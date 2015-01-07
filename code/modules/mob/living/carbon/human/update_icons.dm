@@ -900,8 +900,9 @@ var/global/list/damage_icon_parts = list()
 	if(r_hand)
 		r_hand.screen_loc = ui_rhand	//TODO
 		var/t_state = r_hand.item_state
+		var/t_inhand_state = r_hand.inhand_states["right_hand"]
 		if(!t_state)	t_state = r_hand.icon_state
-		overlays_standing[R_HAND_LAYER] = image("icon" = 'icons/mob/items_righthand.dmi', "icon_state" = "[t_state]")
+		overlays_standing[R_HAND_LAYER] = image("icon" = t_inhand_state, "icon_state" = "[t_state]")
 		if (handcuffed) drop_r_hand()
 		if(!old_r_hand_state)
 			//src << "update: rhand is different"
@@ -919,8 +920,9 @@ var/global/list/damage_icon_parts = list()
 	if(l_hand)
 		l_hand.screen_loc = ui_lhand	//TODO
 		var/t_state = l_hand.item_state
+		var/t_inhand_state = l_hand.inhand_states["left_hand"]
 		if(!t_state)	t_state = l_hand.icon_state
-		overlays_standing[L_HAND_LAYER] = image("icon" = 'icons/mob/items_lefthand.dmi', "icon_state" = "[t_state]")
+		overlays_standing[L_HAND_LAYER] = image("icon" = t_inhand_state, "icon_state" = "[t_state]")
 		if (handcuffed) drop_l_hand()
 		if(!old_l_hand_state)
 			//src << "update: lhand is different"
