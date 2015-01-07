@@ -43,7 +43,7 @@ var/next_mob_id = 0
 	t+= "<span class='notice'>Plasma : [environment.toxins] \n</span>"
 	t+= "<span class='notice'>Carbon Dioxide: [environment.carbon_dioxide] \n</span>"
 	for(var/datum/gas/trace_gas in environment.trace_gases)
-		usr << "<span class='notice'>[trace_gas.type]: [trace_gas.moles] \n</span>"
+		t+= "<span class='notice'>[trace_gas.type]: [trace_gas.moles] \n</span>"
 
 	usr.show_message(t, 1)
 
@@ -54,19 +54,19 @@ var/next_mob_id = 0
 	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 
 	if (type)
-		if(type & 1 && (sdisabilities & BLIND || blinded || paralysis) )//Vision related
+		if(type & 1 && (disabilities & BLIND || paralysis) )//Vision related
 			if (!( alt ))
 				return
 			else
 				msg = alt
 				type = alt_type
-		if (type & 2 && (sdisabilities & DEAF || ear_deaf))//Hearing related
+		if (type & 2 && ear_deaf)//Hearing related
 			if (!( alt ))
 				return
 			else
 				msg = alt
 				type = alt_type
-				if ((type & 1 && sdisabilities & BLIND))
+				if ((type & 1 && disabilities & BLIND))
 					return
 	// Added voice muffling for Issue 41.
 	if(stat == UNCONSCIOUS || sleeping > 0)
@@ -75,28 +75,52 @@ var/next_mob_id = 0
 		src << msg
 	return
 
-// Show a message to all mobs in sight of this one
+// Show a message to all mobs who sees the src mob and the src mob itself
 // This would be for visible actions by the src mob
 // message is the message output to anyone who can see e.g. "[src] does something!"
-// self_message (optional) is what the src mob sees  e.g. "You do something!"
+// self_message (optional) is what the src mob sees e.g. "You do something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 
 /mob/visible_message(var/message, var/self_message, var/blind_message)
-	for(var/mob/M in viewers(src))
+	var/list/atom_viewers = list()
+	for(var/atom/movable/A in view(src))
+		atom_viewers |= recursive_hear_check(A)
+	atom_viewers |= src
+	for(var/mob/M in atom_viewers)
 		if(M.see_invisible < invisibility)
 			continue //can't view the invisible
 		var/msg = message
 		if(self_message && M==src)
 			msg = self_message
-		M.show_message( msg, 1, blind_message, 2)
+		M.show_message( msg, 1)
+	if(blind_message)
+		var/list/atom_hearers = list()
+		for(var/atom/movable/O in get_hearers_in_view(7, src))
+			if(O in atom_viewers)
+				continue
+			atom_hearers |= O
+		for(var/mob/MOB in atom_hearers)
+			MOB.show_message(blind_message, 2)
 
-// Show a message to all mobs in sight of this atom
+// Show a message to all mobs who sees this atom
 // Use for objects performing visible actions
 // message is output to anyone who can see, e.g. "The [src] does something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
+
 /atom/proc/visible_message(var/message, var/blind_message)
-	for(var/mob/M in viewers(src))
-		M.show_message( message, 1, blind_message, 2)
+	var/list/atom_viewers = list()
+	for(var/atom/movable/A in view(src))
+		atom_viewers |= recursive_hear_check(A)
+	for(var/mob/M in atom_viewers)
+		M.show_message( message, 1)
+	if(blind_message)
+		var/list/atom_hearers = list()
+		for(var/atom/movable/O in get_hearers_in_view(7, src))
+			if(O in atom_viewers)
+				continue
+			atom_hearers |= O
+		for(var/mob/MOB in atom_hearers)
+			MOB.show_message(blind_message, 2)
 
 // Show a message to all mobs in earshot of this one
 // This would be for audible actions by the src mob
@@ -289,7 +313,6 @@ var/list/slot_equipment_priority = list( \
 	set name = "Examine"
 	set category = "IC"
 
-//	if( (sdisabilities & BLIND || blinded || stat) && !istype(src,/mob/dead/observer) )
 	if(is_blind(src))
 		src << "<span class='notice'>Something is there but you can't see it.</span>"
 		return
@@ -646,29 +669,18 @@ var/list/slot_equipment_priority = list( \
 	..()
 
 	if(client && client.holder)
-
-		if(statpanel("Status"))	//not looking at that panel
-			stat(null,"Location:\t([x], [y], [z])")
-			stat(null,"CPU:\t[world.cpu]")
-			stat(null,"Instances:\t[world.contents.len]")
+		if(statpanel("MC"))
+			stat("Location:","([x], [y], [z])")
+			stat("CPU:","[world.cpu]")
+			stat("Instances:","[world.contents.len]")
 
 			if(master_controller)
-				stat(null,"MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[controller_iteration])")
-				stat(null,"Air-[master_controller.air_cost]\t#[global_activeturfs]")
-				stat(null,"Turfs-[master_controller.air_turfs]\tGroups-[master_controller.air_groups]")
-				stat(null,"SC-[master_controller.air_superconductivity]\tHP-[master_controller.air_highpressure]\tH-[master_controller.air_hotspots]")
-				stat(null,"Sun-[master_controller.sun_cost]")
-				stat(null,"Mob-[master_controller.mobs_cost]\t#[mob_list.len]")
-				stat(null,"Dis-[master_controller.diseases_cost]\t#[active_diseases.len]")
-				stat(null,"Mch-[master_controller.machines_cost]\t#[machines.len]")
-				stat(null,"Bots-[master_controller.aibots_cost]\t#[aibots.len]")
-				stat(null,"Obj-[master_controller.objects_cost]\t#[processing_objects.len]")
-				stat(null,"Net-[master_controller.networks_cost]\tPnet-[master_controller.powernets_cost]")
-				stat(null,"NanoUI-[master_controller.nano_cost]\t#[nanomanager.processing_uis.len]")
-				stat(null,"GC-[master_controller.gc_cost]\t#[garbage.destroyed.len]-#dels[garbage.dels]")
-				stat(null,"Tick-[master_controller.ticker_cost]\tALL-[master_controller.total_cost]")
+				stat("MasterController:","[round(master_controller.cost,0.001)]ds (Interval:[master_controller.processing_interval] | Iteration:[master_controller.iteration])")
+				for(var/datum/subsystem/SS in master_controller.subsystems)
+					if(SS.can_fire)
+						SS.stat_entry()
 			else
-				stat(null,"MasterController-ERROR")
+				stat("MasterController:","ERROR")
 
 	if(listed_turf && client)
 		if(!TurfAdjacent(listed_turf))

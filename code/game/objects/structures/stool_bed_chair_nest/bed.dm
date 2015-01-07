@@ -55,6 +55,8 @@
 	if(M.environment_smash)
 		new /obj/item/stack/sheet/metal(src.loc)
 		qdel(src)
+		return
+	manual_unbuckle(M)
 
 /obj/structure/stool/bed/MouseDrop_T(mob/M as mob, mob/user as mob)
 	if(!istype(M)) return
@@ -101,7 +103,7 @@
 
 /obj/structure/stool/bed/proc/unbuckle_myself(mob/user as mob)
 	buckled_mob.visible_message(\
-		"<span class='notice'>[buckled_mob.name] unbuckled \himself!</span>",\
+		"<span class='notice'>[buckled_mob.name] unbuckled!</span>",\
 		"You unbuckle yourself from [src].",\
 		"You hear metal clanking.")
 	unbuckle()
@@ -112,8 +114,8 @@
 	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || user.lying || user.stat || M.buckled || istype(user, /mob/living/silicon/pai) || M.anchored)
 		return
 
-	if (istype(M, /mob/living/carbon/slime))
-		user << "The [M] is too squishy to buckle in."
+	if (istype(M, /mob/living/carbon/slime) || istype(M, /mob/living/simple_animal/slime))
+		user << "\The [M] is too squishy to buckle in."
 		return
 
 	unbuckle()
