@@ -62,6 +62,21 @@
 		for(var/mob/O in viewers(user, 3))
 			O.show_message(text("<span class='notice'>\The [src] has been broken by [] with an electromagnetic card!</span>", user), 1, text("You hear a faint electrical spark."), 2)
 			return
+
+/obj/item/weapon/storage/lockbox/emp_act(severity)
+	for(var/obj/O in src)
+		O.emp_act(severity)
+	if(!src.broken)
+		if(prob(80/severity)) //a decent chance, it is a shitty metal case after all
+			src.req_access = list()
+			src.req_access += pick(get_all_accesses())
+			if(src.locked)
+				src.locked = 0
+				src.icon_state = src.icon_closed
+			else if(!src.locked)
+				src.locked = 1
+				src.icon_state = src.icon_locked
+
 /obj/item/weapon/storage/lockbox/show_to(mob/user as mob)
 	if(locked)
 		user << "<span class='danger'>It's locked!</span>"
