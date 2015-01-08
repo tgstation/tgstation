@@ -593,6 +593,20 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	access = access_cmo
 
 
+/datum/supply_packs/medical/outbreak_prevention
+	name = "Outbreak Prevention Crate"
+	contains = list(/obj/item/weapon/storage/box/gloves,
+					/obj/item/weapon/storage/box/masks,
+					/obj/item/device/healthanalyzer,
+					/obj/item/device/healthanalyzer,
+					/obj/item/weapon/reagent_containers/pill/spaceacillin,
+					/obj/item/weapon/reagent_containers/pill/spaceacillin,
+					/obj/item/weapon/reagent_containers/pill/cure_lowgrade,
+					/obj/item/weapon/soap/nanotrasen)
+	cost = 15 //cheap to be afforded in times of crisis
+	containername = "outbreak prevention crate"
+
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Science /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////

@@ -181,3 +181,22 @@
 	reagents.add_reagent("hyperzine", 10)
 	reagents.add_reagent("ethylredoxrazine", 10)
 	reagents.add_reagent("coffee", 30)
+
+/obj/item/weapon/reagent_containers/pill/spaceacillin
+	name = "spaceacillin pill"
+	desc = "Used to prevent diseases from spreading."
+	icon_state = "pill18"
+
+/obj/item/weapon/reagent_gontainers/pill/spaceacillin/New()
+	..()
+	reagents.add_reagent("spaceacillin", 25) //decent amount
+
+/obj/item/weapon/reagent_containers/pill/cure_lowgrade
+	name = "low-grade disease cure"
+	desc = "Often used to get a healty blood sample for a vaccine. Cures the common cold and magnitis."
+	icon_state = "pill18"
+
+/obj/item/weapon/reagent_containers/pill/cure_lowgrade/New()
+	..()
+	reagents.add_reagent("orangejuice", 10)
+	reagents.add_reagent("iron", 10)
