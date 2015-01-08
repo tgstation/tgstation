@@ -53,7 +53,7 @@ Bonus
 		if(!check_dna_integrity(M))
 			return
 		hardset_dna(M, se = archived_dna)
-		domutcheck(M, null, 1)
+		domutcheck(M)
 /*
 //////////////////////////////////////
 

@@ -205,14 +205,18 @@
 	quality = NEGATIVE
 	text_indication = "<span class='danger'>You feel strange.</span>"
 
-/datum/mutation/human/bad_dna/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/human/bad_dna/on_acquiring(var/mob/living/carbon/human/owner)
+	var/mob/new_mob
 	if(prob(95))
 		if(prob(50))
-			randmutb(owner)
+			new_mob = randmutb(owner)
 		else
-			randmuti(owner)
+			new_mob = randmuti(owner)
 	else
-		randmutg(owner)
+		new_mob = randmutg(owner)
+	if(new_mob && ismob(new_mob))
+		owner = new_mob
+	. = owner
 	on_losing(owner)
 
 /datum/mutation/human/cough

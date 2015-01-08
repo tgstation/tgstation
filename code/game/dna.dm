@@ -138,7 +138,7 @@
 	return
 
 /proc/check_dna_integrity(mob/living/carbon/character)
-	if(!(istype(character, /mob/living/carbon/human) || istype(character, /mob/living/carbon/monkey))) //Evict xenos from carbon 2012
+	if(!character || !(istype(character, /mob/living/carbon/human) || istype(character, /mob/living/carbon/monkey))) //Evict xenos from carbon 2012
 		return
 	if(!character.dna)
 		if(ready_dna(character))
@@ -204,17 +204,17 @@
 	if(!check_dna_integrity(M))
 		return
 	var/datum/mutation/human/num = pick(candidates)
-	num.force_give(M)
+	. = num.force_give(M)
 	return
 
 /proc/randmutb(mob/living/carbon/M)
 	var/datum/mutation/human/HM = pick(bad_mutations | not_good_mutations)
-	HM.on_acquiring(M)
+	. = HM.on_acquiring(M)
 	return randmut(M, bad_se_blocks)
 
 /proc/randmutg(mob/living/carbon/M)
 	var/datum/mutation/human/HM = pick(good_mutations)
-	HM.on_acquiring(M)
+	. = HM.on_acquiring(M)
 	return randmut(M, good_se_blocks | op_se_blocks)
 
 /proc/randmuti(mob/living/carbon/M)
@@ -241,7 +241,7 @@
 		for(var/i=1, i<=DNA_STRUC_ENZYMES_BLOCKS, i++)
 			if(prob(probability))
 				M.dna.struc_enzymes = setblock(M.dna.struc_enzymes, i, random_string(DNA_BLOCK_SIZE, hex_characters))
-		domutcheck(M, null)
+		domutcheck(M)
 	if(ui)
 		for(var/i=1, i<=DNA_UNI_IDENTITY_BLOCKS, i++)
 			if(prob(probability))
@@ -801,7 +801,7 @@
 						if("se")
 							if(buffer_slot["SE"])
 								viable_occupant.dna.struc_enzymes = buffer_slot["SE"]
-								domutcheck(viable_occupant, connected)
+								domutcheck(viable_occupant)
 						if("ui")
 							if(buffer_slot["UI"])
 								viable_occupant.dna.uni_identity = buffer_slot["UI"]
@@ -907,7 +907,7 @@
 							last_change += "->[hex]"
 
 							viable_occupant.dna.struc_enzymes = copytext(viable_occupant.dna.struc_enzymes, 1, num) + hex + copytext(viable_occupant.dna.struc_enzymes, num+1, 0)
-							domutcheck(viable_occupant, connected)
+							domutcheck(viable_occupant)
 				else
 					current_screen = "mainmenu"
 

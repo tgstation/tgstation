@@ -1,8 +1,3 @@
-/mob/living/carbon/UnarmedAttack(var/atom/A, var/proximity_flag)
-	..()
-	for(var/datum/mutation/human/HM in dna.mutations)
-		. += HM.on_attack_hand(A, src)
-
 /mob/living/carbon/prepare_huds()
 	..()
 	prepare_data_huds()
