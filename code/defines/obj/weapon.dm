@@ -601,7 +601,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	flags = FPRINT  | NOSHIELD
+	flags = FPRINT
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
 
 /obj/item/weapon/staff/broom
@@ -621,7 +621,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	flags = FPRINT  | NOSHIELD
+	flags = FPRINT
 
 /obj/item/weapon/table_parts
 	name = "table parts"
@@ -761,7 +761,7 @@
 	w_class = 4.0
 	m_amt = 15000
 	w_type = RECYK_METAL
-	flags = FPRINT  | NOSHIELD
+	flags = FPRINT
 	slot_flags = SLOT_BACK
 	origin_tech = "materials=2;combat=2"
 	attack_verb = list("chopped", "sliced", "cut", "reaped")

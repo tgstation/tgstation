@@ -393,3 +393,16 @@
 	icon_state = "russofurcoat"
 	item_state = "russofurcoat"
 	allowed = list(/obj/item/weapon/gun)
+
+/obj/item/clothing/suit/doshjacket
+	name = "Plasterer's Jacket"
+	desc = "Perfect for doing up the house."
+	icon_state = "doshjacket"
+	item_state = "doshjacket"
+
+/obj/item/clothing/suit/lordadmiral
+	name = "Lord Admiral's Coat"
+	desc = "You'll be the Ruler of the King's Navy in no time."
+	icon_state = "lordadmiral"
+	item_state = "lordadmiral"
+	allowed = list (/obj/item/weapon/gun)
