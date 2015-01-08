@@ -1,5 +1,5 @@
 /obj/item/device/soulstone
-	name = "Soul Stone Shard"
+	name = "soulstone shard"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "soulstone"
 	item_state = "electronic"
@@ -71,10 +71,13 @@
 			for(var/mob/living/simple_animal/shade/A in src)
 				A.status_flags &= ~GODMODE
 				A.canmove = 1
-				A << "<b>You have been released from your prison, but you are still bound to [U.name]'s will. Help them suceed in their goals at all costs.</b>"
 				A.loc = U.loc
 				A.cancel_camera()
 				src.icon_state = "soulstone"
+				if(ifwizard(U))
+					A << "<b>You have been released from your prison, but you are still bound to [U.name]'s will. Help them suceed in their goals at all costs.</b>"
+				else if(iscultist(U))
+					A << "<b>You have been released from your prison, but you are still bound to the cult's will. Help them suceed in their goals at all costs.</b>"
 	attack_self(U)
 
 ///////////////////////////Transferring to constructs/////////////////////////////////////////////////////
@@ -189,7 +192,10 @@ proc/makeNewConstruct(var/mob/living/simple_animal/construct/ctype, var/mob/targ
 			ticker.mode.cult+=newstruct.mind
 		ticker.mode.update_cult_icons_added(newstruct.mind)
 	newstruct << newstruct.playstyle_string
-	newstruct << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
+	if(stoner && iswizard(stoner)
+		newstruct << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
+	else if(stoner && iscultist(stoner)
+		newstruct << "<B>You are still bound to serve the cult, follow their orders and help them complete their goals at all costs.</B>"
 	newstruct.cancel_camera()
 
 
@@ -215,7 +221,10 @@ proc/makeNewConstruct(var/mob/living/simple_animal/construct/ctype, var/mob/targ
 	S.cancel_camera()
 	C.icon_state = "soulstone2"
 	C.name = "Soul Stone: [S.real_name]"
-	S << "Your soul has been captured! You are now bound to [U.name]'s will, help them suceed in their goals at all costs."
+	if(ifwizard(U))
+		S << "Your soul has been captured! You are now bound to [U.name]'s will, help them suceed in their goals at all costs."
+	else if(iscultist(U))
+		S << "Your soul has been captured! You are now bound to the cult's will, help them suceed in their goals at all costs."
 	C.imprinted = "[S.name]"
 	if(vic)
 		U << "<span class='info'><b>Capture successful!</b>:</span> [T.real_name]'s soul has been ripped from their body and stored within the soul stone."
