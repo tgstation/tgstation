@@ -65,6 +65,17 @@
 
 /obj/item/weapon/storage/lockbox/emp_act(severity)
 	for(var/obj/O in src)
+		if(istype(O, /obj/item/weapon/gun/energy/stunrevolver))
+			explosion(O.loc,0,1,4) //fuck your shitty stun revolvers
+			qdel(src)
+		var/obj/item/weapon/stock_parts/cell/C
+		for(C in O)
+			C.corrupt()
+			if(prob(80)) //cell is probably kill
+				C.corrupt()
+				C.corrupt()
+			if(prob(13)) //unlucky kaboop
+				C.rigged = 1
 		O.emp_act(severity)
 	if(!src.broken)
 		if(prob(80/severity)) //a decent chance, it is a shitty metal case after all
