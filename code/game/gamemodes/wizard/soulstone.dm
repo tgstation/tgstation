@@ -74,7 +74,7 @@
 				A.loc = U.loc
 				A.cancel_camera()
 				src.icon_state = "soulstone"
-				if(ifwizard(U))
+				if(iswizard(U))
 					A << "<b>You have been released from your prison, but you are still bound to [U.name]'s will. Help them suceed in their goals at all costs.</b>"
 				else if(iscultist(U))
 					A << "<b>You have been released from your prison, but you are still bound to the cult's will. Help them suceed in their goals at all costs.</b>"
@@ -221,7 +221,7 @@ proc/makeNewConstruct(var/mob/living/simple_animal/construct/ctype, var/mob/targ
 	S.cancel_camera()
 	C.icon_state = "soulstone2"
 	C.name = "Soul Stone: [S.real_name]"
-	if(ifwizard(U))
+	if(iswizard(U))
 		S << "Your soul has been captured! You are now bound to [U.name]'s will, help them suceed in their goals at all costs."
 	else if(iscultist(U))
 		S << "Your soul has been captured! You are now bound to the cult's will, help them suceed in their goals at all costs."
