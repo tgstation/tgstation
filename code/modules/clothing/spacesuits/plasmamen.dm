@@ -21,7 +21,7 @@
 
 /obj/item/clothing/suit/space/plasmaman/examine(mob/user)
 	..()
-	user << "There are [extinguishes_left] extinguisher canisters left in this suit."
+	user << "<span class='info'>There are [extinguishes_left] extinguisher canisters left in this suit.</span>"
 
 /obj/item/clothing/suit/space/plasmaman/proc/Extinguish(var/mob/user)
 	var/mob/living/carbon/human/H=user

@@ -126,11 +126,11 @@
 	if(bitecount == 0)
 		return
 	else if(bitecount == 1)
-		user << "[src] was bitten by someone!"
+		user << "<span class='info'>[src] was bitten by someone!</span>"
 	else if(bitecount <= 3)
-		user << "[src] was bitten [bitecount] times!"
+		user << "<span class='info'>[src] was bitten [bitecount] times!</span>"
 	else
-		user << "[src] was bitten multiple times!"
+		user << "<span class='info'>[src] was bitten multiple times!</span>"
 
 
 /obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W, mob/user)

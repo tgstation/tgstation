@@ -64,7 +64,7 @@
 /obj/item/weapon/paper_pack/examine(mob/user)
 	..()
 	if(amount)
-		user << "There are [amount] sheets in the pack."
+		user << "<span class='info'>There are [amount] sheets in the pack.</span>"
 
 /obj/item/weapon/paper_pack/verb/ribbontie()
 	set name = "Untie Paper Pack"

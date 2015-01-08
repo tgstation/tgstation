@@ -100,8 +100,8 @@ var/global/ingredientLimit = 10
 
 /obj/machinery/cooking/examine(mob/user)
 	. = ..()
-	if(src.active) user << "It's currently processing [src.ingredient ? src.ingredient.name : ""]."
-	if(src.cooks_in_reagents) user << "It seems to have [reagents.total_volume] units left."
+	if(src.active) user << "<span class='info'>It's currently processing [src.ingredient ? src.ingredient.name : ""].</span>"
+	if(src.cooks_in_reagents) user << "<span class='info'>It seems to have [reagents.total_volume] units left.</span>"
 
 /obj/machinery/cooking/attack_hand(mob/user)
 	if(istype(user,/mob/dead/observer))	user << "Your ghostly hand goes straight through."

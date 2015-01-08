@@ -55,7 +55,7 @@
 /obj/item/weapon/melee/baton/examine(mob/user)
 	..()
 	if(bcell)
-		user <<"<span class='notice'>The baton is [round(bcell.percent())]% charged.</span>"
+		user <<"<span class='info'>The baton is [round(bcell.percent())]% charged.</span>"
 	if(!bcell)
 		user <<"<span class='warning'>The baton does not have a power source installed.</span>"
 
@@ -121,7 +121,7 @@
 		playsound(loc, "swing_hit", 50, 1, -1)
 
 	else if(!status)
-		L.visible_message("<span class='warning'>[L] has been prodded with the [src] by [user]. Luckily it was off.</span>")
+		L.visible_message("<span class='attack'>[L] has been prodded with the [src] by [user]. Luckily it was off.</span>")
 		return
 
 	if(status)

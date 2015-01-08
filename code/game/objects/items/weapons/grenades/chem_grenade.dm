@@ -40,7 +40,7 @@
 					inserted_cores = 0
 		name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 	if(stage > 1 && !active && clown_check(user))
-		user << "<span class='warning'>You prime \the [name]!</span>"
+		user << "<span class='attack'>You prime \the [name]!</span>"
 
 		log_attack("<font color='red'>[user.name] ([user.ckey]) primed \a [src].</font>")
 		log_admin("ATTACK: [user] ([user.ckey]) primed \a [src].")
@@ -128,7 +128,7 @@
 /obj/item/weapon/grenade/chem_grenade/examine(mob/user)
 	..()
 	if(detonator)
-		user << "With attached [detonator.name]"
+		user << "<span class='info'>With an attached [detonator.name]</span>"
 
 /obj/item/weapon/grenade/chem_grenade/activate(mob/user as mob)
 	if(active) return
@@ -280,7 +280,7 @@ obj/item/weapon/grenade/chem_grenade/exgrenade/attackby(obj/item/weapon/W as obj
 			stage = 2
 		else if(stage == 2)
 			if(active && prob(95))
-				user << "<span class='warning'> You trigger the assembly!</span>"
+				user << "<span class='attack'> You trigger the assembly!</span>"
 				prime()
 				return
 			else

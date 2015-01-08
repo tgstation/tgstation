@@ -90,9 +90,9 @@ display round(lastgen) and plasmatank amount
 /obj/machinery/power/port_gen/examine(mob/user)
 	..()
 	if(active)
-		usr << "<span class='notice'>The generator is on.</span>"
+		usr << "<span class='info'>The generator is on.</span>"
 	else
-		usr << "<span class='notice'>The generator is off.</span>"
+		usr << "<span class='info'>The generator is off.</span>"
 
 /obj/machinery/power/port_gen/pacman
 	name = "P.A.C.M.A.N.-type Portable Generator"

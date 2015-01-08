@@ -89,4 +89,4 @@
 /obj/item/weapon/grenade/iedcasing/examine(mob/user)
 	..()
 	if(assembled == 3)
-		user << "You can't tell when it will explode!" //Stops you from checking the time to detonation unlike regular grenades
+		user << "<span class='info'>You can't tell when it will explode!</span>" //Stops you from checking the time to detonation unlike regular grenades

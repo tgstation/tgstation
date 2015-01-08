@@ -146,7 +146,7 @@ Class Procs:
 /obj/machinery/examine(mob/user)
 	..()
 	if(panel_open)
-		user << "Its maintenance panel is open."
+		user << "<span class='info'>Its maintenance panel is open.</span>"
 
 /obj/machinery/Destroy()
 	if(src in machines)
@@ -243,7 +243,7 @@ Class Procs:
 		var/re_init=0
 		if("set_tag" in href_list)
 			if(!(href_list["set_tag"] in vars))
-				usr << "\red Something went wrong: Unable to find [href_list["set_tag"]] in vars!"
+				usr << "<span class='warning'>Something went wrong: Unable to find [href_list["set_tag"]] in vars!</span>"
 				return 1
 			var/current_tag = src.vars[href_list["set_tag"]]
 			var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag", src, current_tag) as null|text),1,MAX_MESSAGE_LEN)
@@ -260,13 +260,13 @@ Class Procs:
 			if(!O)
 				return 1
 			if(!canLink(O))
-				usr << "\red You can't link with that device."
+				usr << "<span class='warning'>You can't link with that device.</span>"
 				return 1
 
 			if(unlinkFrom(usr, O))
-				usr << "\blue A green light flashes on \the [P], confirming the link was removed."
+				usr << "<span class='confirm'>A green light flashes on \the [P], confirming the link was removed.</span>"
 			else
-				usr << "\red A red light flashes on \the [P].  It appears something went wrong when unlinking the two devices."
+				usr << "<span class='attack'>A red light flashes on \the [P].  It appears something went wrong when unlinking the two devices.</span>"
 			update_mt_menu=1
 
 		if("link" in href_list)
@@ -274,25 +274,25 @@ Class Procs:
 			if(!O)
 				return 1
 			if(!canLink(O,href_list))
-				usr << "\red You can't link with that device."
+				usr << "<span class='warning'>You can't link with that device.</span>"
 				return 1
 			if (isLinkedWith(O))
-				usr << "\red A red light flashes on \the [P]. The two devices are already linked."
+				usr << "<span class='attack'>A red light flashes on \the [P]. The two devices are already linked.</span>"
 				return 1
 
 			if(linkWith(usr, O, href_list))
-				usr << "\blue A green light flashes on \the [P], confirming the link was removed."
+				usr << "<span class='confirm'>A green light flashes on \the [P], confirming the link has been created.</span>"
 			else
-				usr << "\red A red light flashes on \the [P].  It appears something went wrong when linking the two devices."
+				usr << "<span class='attack'>A red light flashes on \the [P].  It appears something went wrong when linking the two devices.</span>"
 			update_mt_menu=1
 
 		if("buffer" in href_list)
 			P.buffer = src
-			usr << "\blue A green light flashes, and the device appears in the multitool buffer."
+			usr << "<span class='confirm'>A green light flashes, and the device appears in the multitool buffer.</span>"
 			update_mt_menu=1
 
 		if("flush" in href_list)
-			usr << "\blue A green light flashes, and the device disappears from the multitool buffer."
+			usr << "<span class='confirm'>A green light flashes, and the device disappears from the multitool buffer.</span>"
 			P.buffer = null
 			update_mt_menu=1
 
@@ -324,7 +324,7 @@ Class Procs:
 		if ( ! (istype(usr, /mob/living/carbon/human) || \
 				istype(usr, /mob/living/silicon) || \
 				istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
-			usr << "\red You don't have the dexterity to do this!"
+			usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 			return 1
 
 		var/norange = 0
@@ -380,7 +380,7 @@ Class Procs:
 	if ( ! (istype(usr, /mob/living/carbon/human) || \
 			istype(usr, /mob/living/silicon) || \
 			istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
-		usr << "\red You don't have the dexterity to do this!"
+		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 1
 /*
 	//distance checks are made by atom/proc/DblClick
@@ -390,10 +390,10 @@ Class Procs:
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)
-			visible_message("\red [H] stares cluelessly at [src] and drools.")
+			visible_message("<span class='warning'>[H] stares cluelessly at [src] and drools.</span>")
 			return 1
 		else if(prob(H.getBrainLoss()))
-			user << "\red You momentarily forget how to use [src]."
+			user << "<span class='warning'>You momentarily forget how to use [src].</span>"
 			return 1
 
 	src.add_fingerprint(user)

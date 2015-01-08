@@ -64,7 +64,7 @@
 /obj/item/weapon/paper_bin/nano/examine(mob/user)
 	..()
 	if(ressources)
-		user << "There is [ressources] nano paper left in the dispenser!"
+		user << "<span class='info'>There is [ressources] nano paper left in the dispenser!</span>"
 	else
 		user << "<span class='warning'>The nano paper dispenser is empty! add more plasteel to refil!</span>"
 

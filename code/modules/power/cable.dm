@@ -177,6 +177,7 @@
 	name = "cable coil"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil_red"
+	gender = NEUTER
 	var/amount = MAXCOIL
 	var/max_amount = MAXCOIL
 	_color = "red"

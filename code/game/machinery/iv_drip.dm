@@ -149,7 +149,7 @@
 	set src in view(1)
 
 	if(!istype(usr, /mob/living))
-		usr << "\red You can't do that."
+		usr << "<span class='warning'>You can't do that.</span>"
 		return
 
 	if(usr.stat)
@@ -160,16 +160,12 @@
 
 /obj/machinery/iv_drip/examine(mob/user)
 	..()
-	if (!(usr in view(2)) && usr!=src.loc) return
-
 	user << "The [src] is [mode ? "injecting" : "taking blood"]."
-
 	if(beaker)
 		if(beaker.reagents && beaker.reagents.reagent_list.len)
-			user << "<span class='notice'>Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>"
+			user << "<span class='info'>Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>"
 		else
-			user << "<span class='notice'>Attached is an empty [beaker].</span>"
+			user << "<span class='info'>Attached is an empty [beaker].</span>"
 	else
-		user << "<span class='notice'>No chemicals are attached.</span>"
-
-	user << "<span class='notice'>[attached ? attached : "No one"] is attached.</span>"
+		user << "<span class='info'>No chemicals are attached.</span>"
+	user << "<span class='info'>[attached ? attached : "No one"] is attached.</span>"

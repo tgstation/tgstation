@@ -138,7 +138,7 @@
 
 /obj/item/weapon/disk/data/examine(mob/user)
 	..()
-	user << text("The write-protect tab is set to [src.read_only ? "protected" : "unprotected"].")
+	user << "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."
 
 //Health Tracker Implant
 
@@ -319,7 +319,7 @@
 
 /obj/machinery/clonepod/crowbarDestroy(mob/user)
 	if (occupant)
-		user << "\red You cannot disassemble this [src], it's occupado."
+		user << "<span class='warning'>You cannot disassemble this [src], it's occupado.</span>"
 		return
 	return..()
 
@@ -327,18 +327,18 @@
 /obj/machinery/clonepod/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (!src.check_access(W))
-			user << "\red Access Denied."
+			user << "<span class='warning'>Access Denied.</span>"
 			return
 		if ((!src.locked) || (isnull(src.occupant)))
 			return
 		if ((src.occupant.health < -20) && (src.occupant.stat != 2))
-			user << "\red Access Refused."
+			user << "<span class='warning'>Access Refused.</span>"
 			return
 		else
 			src.locked = 0
 			user << "System unlocked."
 	else if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
-		user << "\blue \The [src] processes \the [W]."
+		user << "<span class='notice'>\The [src] processes \the [W].</span>"
 		biomass += 50
 		user.drop_item()
 		del(W)

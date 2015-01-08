@@ -49,9 +49,9 @@
 /obj/machinery/r_n_d/fabricator/examine(mob/user)
 	..()
 	if(being_built)
-		user << "It's building \a [src.being_built]."
+		user << "<span class='info'>It's building \a [src.being_built].</span>"
 	else
-		user << "Nothing's being built."
+		user << "<span class='info'>Nothing's being built.</span>"
 
 /obj/machinery/r_n_d/fabricator/RefreshParts()
 	var/T = 0

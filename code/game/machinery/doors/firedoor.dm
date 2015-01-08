@@ -101,7 +101,7 @@
 /obj/machinery/door/firedoor/examine(mob/user)
 	. = ..()
 	if(pdiff >= FIREDOOR_MAX_PRESSURE_DIFF)
-		user << "<span class='warning'>WARNING: Current pressure differential is [pdiff]kPa! Opening door may result in injury!</span>"
+		user << "<span class='danger'>WARNING: Current pressure differential is [pdiff]kPa! Opening door may result in injury!</span>"
 
 	user << "<b>Sensor readings:</b>"
 	for(var/index = 1; index <= tile_info.len; index++)
@@ -188,7 +188,7 @@
 		var/obj/item/weapon/weldingtool/W = C
 		if(W.remove_fuel(0, user))
 			blocked = !blocked
-			user.visible_message("<span class='warning'>\The [user] [blocked ? "welds" : "unwelds"] \the [src] with \a [W].</span>",\
+			user.visible_message("<span class='attack'>\The [user] [blocked ? "welds" : "unwelds"] \the [src] with \a [W].</span>",\
 			"You [blocked ? "weld" : "unweld"] \the [src] with \the [W].",\
 			"You hear something being welded.")
 			update_icon()
@@ -206,11 +206,11 @@
 		if(operating)
 			return
 		if( blocked )
-			user.visible_message("<span class='warning'>\The [user] pries at \the [src] with \a [C], but \the [src] is welded in place!</span>",\
+			user.visible_message("<span class='attack'>\The [user] pries at \the [src] with \a [C], but \the [src] is welded in place!</span>",\
 			"You try to pry \the [src] [density ? "open" : "closed"], but it is welded in place!",\
 			"You hear someone struggle and metal straining.")
 
-		user.visible_message("<span class='warning'>\The [user] forces \the [src] [density ? "open" : "closed"] with \a [C]!</span>",\
+		user.visible_message("<span class='attack'>\The [user] forces \the [src] [density ? "open" : "closed"] with \a [C]!</span>",\
 			"You force \the [src] [density ? "open" : "closed"] with \the [C]!",\
 			"You hear metal strain, and a door [density ? "open" : "close"].")
 

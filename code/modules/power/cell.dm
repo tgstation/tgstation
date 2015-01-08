@@ -59,7 +59,7 @@
 	if(crit_fail)
 		user << "<span class='warning'>This power cell seems to be faulty.</span>"
 	else
-		user << "The charge meter reads [round(src.percent() )]%."
+		user << "<span class='info'>The charge meter reads [round(src.percent() )]%.</span>"
 
 /obj/item/weapon/cell/attack_self(mob/user as mob)
 	src.add_fingerprint(user)

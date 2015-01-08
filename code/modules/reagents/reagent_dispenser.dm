@@ -24,9 +24,9 @@
 	user << "<span class='info'>It contains:</span>"
 	if(reagents && reagents.reagent_list.len)
 		for(var/datum/reagent/R in reagents.reagent_list)
-			user << "<span class='notice'>[R.volume] units of [R.name]</span>"
+			user << "<span class='info'>[R.volume] units of [R.name]</span>"
 	else
-		user << "<span class='notice'>Nothing.</span>"
+		user << "<span class='info'>Nothing.</span>"
 
 /obj/structure/reagent_dispensers/verb/set_APTFT() //set amount_per_transfer_from_this
 	set name = "Set transfer amount"

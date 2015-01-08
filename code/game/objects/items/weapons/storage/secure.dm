@@ -29,7 +29,7 @@
 
 /obj/item/weapon/storage/secure/examine(mob/user)
 	..()
-	user << text("The service panel is [src.open ? "open" : "closed"].")
+	user << "<span class='info'>The service panel is [src.open ? "open" : "closed"].</span>"
 
 /obj/item/weapon/storage/secure/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(locked)

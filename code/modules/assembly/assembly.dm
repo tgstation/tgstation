@@ -139,9 +139,9 @@
 /obj/item/device/assembly/examine(mob/user)
 	..()
 	if(secured)
-		user << "\The [src] is ready!"
+		user << "<span class='info'>\The [src] is ready!</span>"
 	else
-		user << "\The [src] can be attached!"
+		user << "<span class='info'>\The [src] can be attached!</span>"
 
 /obj/item/device/assembly/attack_self(mob/user as mob)
 	if(!user)	return 0

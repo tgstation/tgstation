@@ -97,6 +97,6 @@
 		slag.mats = src.mats
 		qdel(src)
 	else
-		user.visible_message("<span class=\"warning\">[user.name] hits \the [src] with his [W.name].</span>", \
-			"<span class=\"warning\">You fail to damage \the [src] with your [W.name]!</span>", \
+		user.visible_message("<span class=\"attack\">[user.name] hits \the [src] with his [W.name].</span>", \
+			"<span class=\"attack\">You fail to damage \the [src] with your [W.name]!</span>", \
 			"You hear someone hitting something.")

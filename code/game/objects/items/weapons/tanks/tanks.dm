@@ -64,9 +64,11 @@
 	else
 		descriptive = "furiously hot"
 
-	user << "<span class='notice'>\The \icon[icon][src] feels [descriptive]</span>"
+	user << "<span class='info'>\The \icon[icon][src] feels [descriptive]</span>"
 
-	return
+	if(air_contents.volume * 10 < volume)
+		user << "<span class='danger'>The meter on the [src.name] indicates you are almost out of gas!</span>"
+		playsound(user, 'sound/effects/alert.ogg', 50, 1)
 
 /obj/item/weapon/tank/blob_act()
 	if(prob(50))
@@ -87,9 +89,7 @@
 		icon = src.loc
 
 	if ((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
-		for (var/mob/O in viewers(user, null))
-			O << "<span class='warning'>[user] has used [W] on \icon[icon] [src]</span>"
-
+		user.visible_message("<span class='attack'>[user] has used [W] on \icon[icon] [src]</span>", "<span class='attack'>You use \the [W] on \icon[icon] [src]</span>")
 		var/pressure = air_contents.return_pressure()
 		manipulated_by = user.real_name			//This person is aware of the contents of the tank.
 		var/total_moles = air_contents.total_moles()

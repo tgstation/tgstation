@@ -89,7 +89,7 @@
 
 /obj/structure/displaycase/examine(mob/user)
 	..()
-	var/msg = "<span class='notice'>Peering through the glass, you see that it contains:</span>"
+	var/msg = "<span class='info'>Peering through the glass, you see that it contains:</span>"
 	if(occupant)
 		msg+= "\icon[occupant] <span class='notice'>\A [occupant]</span>"
 	else

@@ -17,7 +17,7 @@
 /obj/item/weapon/gun/grenadelauncher/examine(mob/user)
 	..()
 	if(!(grenades.len))
-		user << "It is empty."
+		user << "<span class='info'>It is empty.</span>"
 		return
 	user << "<span class='info'>It has [grenades.len] / [max_grenades] grenades loaded.</span>"
 	for(var/obj/item/weapon/grenade/G in grenades)

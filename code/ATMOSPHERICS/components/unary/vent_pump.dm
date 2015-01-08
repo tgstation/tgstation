@@ -55,9 +55,10 @@
 /obj/machinery/atmospherics/unary/vent_pump/high_volume
 	name = "Large Air Vent"
 	power_channel = EQUIP
-	New()
-		..()
-		air_contents.volume = 1000
+
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/New()
+	..()
+	air_contents.volume = 1000
 
 /obj/machinery/atmospherics/unary/vent_pump/update_icon()
 	if(welded)
@@ -287,7 +288,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/examine(mob/user)
 	..()
 	if(welded)
-		user << "It seems welded shut."
+		user << "<span class='info'>It seems welded shut.</span>"
 
 /obj/machinery/atmospherics/unary/vent_pump/power_change()
 	if(powered(power_channel))

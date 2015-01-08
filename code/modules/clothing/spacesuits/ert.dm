@@ -20,7 +20,7 @@
 
 /obj/item/clothing/head/helmet/space/ert/examine(mob/user)
 	..()
-	if(get_dist(usr,src) <= 1)
+	if(get_dist(user,src) <= 1)
 		user << "This helmet has a built-in camera. It's [camera ? "" : "in"]active."
 
 /obj/item/clothing/suit/space/ert

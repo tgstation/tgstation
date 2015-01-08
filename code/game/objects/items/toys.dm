@@ -897,7 +897,7 @@
 	icon_state = "gooncode"
 
 	suicide_act(mob/user)
-		viewers(user) << "<span class = 'warning'><b>[user] is using [src.name]! It looks like \he's  trying to re-add poo!</b></span>"
+		viewers(user) << "<span class = 'danger'>[user] is using [src.name]! It looks like \he's  trying to re-add poo!</span>"
 		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
 
 

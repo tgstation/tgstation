@@ -51,8 +51,6 @@
 
 	..()	//We don't want them to see the dumb "this is a paper" thing every time.
 	//But we don't want to break our new mob verb indiscriminately yet.
-// I didn't like the idea that people can read tiny pieces of paper from across the room.
-// Now you need to be next to the paper in order to read it.
 	if(in_range(user, src))
 		var/info_2 = ""
 		if(img)

@@ -44,7 +44,7 @@
 /obj/item/weapon/airlock_painter/examine(mob/user)
 	..()
 	if(!ink)
-		user << "<span class='notice'>It doesn't have a toner cardridge installed.</span>"
+		user << "<span class='info'>It doesn't have a toner cardridge installed.</span>"
 		return
 	var/ink_level = "high"
 	if(ink.charges < 1)
@@ -53,7 +53,7 @@
 		ink_level = "low"
 	else if((ink.charges/ink.max_charges) > 1) //Over 100% (admin var edit)
 		ink_level = "dangerously high"
-	user << "<span class='notice'>Its ink levels look [ink_level].</span>"
+	user << "<span class='info'>Its ink levels look [ink_level].</span>"
 
 /obj/item/weapon/airlock_painter/attackby(obj/item/weapon/W, mob/user)
 	..()

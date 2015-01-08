@@ -27,11 +27,11 @@
 /obj/item/weapon/storage/fancy/examine(mob/user)
 	..()
 	if(contents.len <= 0)
-		user << "There are no [src.icon_type]s left in the box."
+		user << "<span class='info'>There are no [src.icon_type]s left in the box.</span>"
 	else if(contents.len == 1)
-		user << "There is one [src.icon_type] left in the box."
+		user << "<span class='info'>There is one [src.icon_type] left in the box.</span>"
 	else
-		user << "There are [src.contents.len] [src.icon_type]s in the box."
+		user << "<span class='info'>There are [src.contents.len] [src.icon_type]s in the box.</span>"
 
 
 /*

@@ -677,9 +677,9 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio/examine(mob/user)
 	..()
 	if (b_stat)
-		usr.show_message("<span class = 'notice'>\the [src] can be attached and modified!</span>")
+		user.show_message("<span class = 'info'>\the [src] can be attached and modified!</span>")
 	else
-		usr.show_message("<span class = 'notice'>\the [src] can not be modified or attached!</span>")
+		user.show_message("<span class = 'info'>\the [src] can not be modified or attached!</span>")
 
 /obj/item/device/radio/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()

@@ -122,7 +122,7 @@
 
 /obj/item/device/camera/examine(mob/user)
 	..()
-	user <<"<span class='notice'>It has [pictures_left] photos left.</span>"
+	user <<"<span class='info'>It has [pictures_left] photos left.</span>"
 
 
 /obj/item/device/camera/ai_camera //camera AI can take pictures with

@@ -80,9 +80,9 @@
 /obj/item/weapon/paper_bin/examine(mob/user)
 	..()
 	if(amount)
-		user << "<span class='notice'>There " + (amount > 1 ? "are [amount] papers" : "is one paper") + " in the bin.</span>"
+		user << "<span class='info'>There " + (amount > 1 ? "are [amount] papers" : "is one paper") + " in the bin.</span>"
 	else
-		user << "<span class='notice'>There are no papers in the bin.</span>"
+		user << "<span class='info'>There are no papers in the bin.</span>"
 
 
 /obj/item/weapon/paper_bin/update_icon()

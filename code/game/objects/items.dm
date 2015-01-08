@@ -685,13 +685,13 @@
 
 		if(M != user)
 			for(var/mob/O in (viewers(M) - user - M))
-				O.show_message("<span class='warning'>[M] has been stabbed in the eye with [src] by [user].</span>", 1)
-			M << "<span class='warning'>[user] stabs you in the eye with [src]!</span>"
-			user << "<span class='warning'>You stab [M] in the eye with [src]!</span>"
+				O.show_message("<span class='attack'>[M] has been stabbed in the eye with [src] by [user].</span>", 1)
+			M << "<span class='attack'>[user] stabs you in the eye with [src]!</span>"
+			user << "<span class='attack'>You stab [M] in the eye with [src]!</span>"
 		else
 			user.visible_message( \
-				"<span class='warning'>[user] has stabbed themself with [src]!</span>", \
-				"<span class='warning'>You stab yourself in the eyes with [src]!</span>" \
+				"<span class='attack'>[user] has stabbed themself with [src]!</span>", \
+				"<span class='attack'>You stab yourself in the eyes with [src]!</span>" \
 			)
 
 		eyes.damage += rand(3,4)

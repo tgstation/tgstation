@@ -131,7 +131,7 @@
 	. = ..()
 	switch(mode)
 		if(1,2,4)
-			user << "The display says:<br>\t<xmp>[message1]</xmp><br>\t<xmp>[message2]</xmp>"
+			user << "<span class='info'>The display says:<br>\t<xmp>[message1]</xmp><br>\t<xmp>[message2]</xmp></span>"
 
 
 /obj/machinery/status_display/proc/set_message(m1, m2)

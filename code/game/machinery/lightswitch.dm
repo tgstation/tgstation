@@ -23,7 +23,7 @@
 
 /obj/machinery/light_switch/examine(mob/user)
 	..()
-	user << "It is [on? "on" : "off"]."
+	user << "<span class='info'>It is [on? "on" : "off"].</span>"
 
 
 /obj/machinery/light_switch/attack_paw(mob/user)

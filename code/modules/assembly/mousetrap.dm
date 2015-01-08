@@ -11,7 +11,7 @@
 /obj/item/device/assembly/mousetrap/examine(mob/user)
 	..()
 	if(armed)
-		user << "It looks like it's armed."
+		user << "<span class='warning'>It looks like it's armed.</span>"
 
 /obj/item/device/assembly/mousetrap/update_icon()
 	if(armed)

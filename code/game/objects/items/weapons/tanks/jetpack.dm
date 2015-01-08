@@ -13,13 +13,6 @@
 	var/volume_rate = 500              //Needed for borg jetpack transfer
 	action_button_name = "Toggle Jetpack"
 
-/obj/item/weapon/tank/jetpack/examine(mob/user)
-	..()
-	if(air_contents.oxygen < 10)
-		user << text("<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>")
-		playsound(user, 'sound/effects/alert.ogg', 50, 1)
-
-
 /obj/item/weapon/tank/jetpack/verb/toggle_rockets()
 	set name = "Toggle Jetpack Stabilization"
 	set category = "Object"
@@ -93,12 +86,6 @@
 	icon_state = "jetpack-red"
 	item_state = "jetpack-red"
 
-/obj/item/weapon/tank/jetpack/nitrogen/examine(mob/user)
-	..()
-	if(air_contents.nitrogen < 10)
-		user << text("<span class='danger'>The meter on the [src.name] indicates you are almost out of nitrogen!</span>")
-		playsound(user, 'sound/effects/alert.ogg', 50, 1)
-
 /obj/item/weapon/tank/jetpack/nitrogen/New()
 	. = ..()
 	air_contents.adjust(, , (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
@@ -109,12 +96,6 @@
 	distribute_pressure = 0
 	icon_state = "jetpack-black"
 	item_state =  "jetpack-black"
-
-/obj/item/weapon/tank/jetpack/carbondioxide/examine(mob/user)
-	..()
-	if(air_contents.carbon_dioxide < 10)
-		user << text("<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>")
-		playsound(user, 'sound/effects/alert.ogg', 50, 1)
 
 /obj/item/weapon/tank/jetpack/carbondioxide/New()
 	. = ..()

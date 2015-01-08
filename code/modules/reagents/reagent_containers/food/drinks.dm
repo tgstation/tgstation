@@ -229,18 +229,18 @@
 
 	return
 
-/obj/item/weapon/reagent_containers/food/drinks/examine()
+/obj/item/weapon/reagent_containers/food/drinks/examine(mob/user)
 	..()
 	if(!reagents || reagents.total_volume==0)
-		usr << "<span  class='notice'>\The [src] is empty!</span>"
+		user << "<span  class='info'>\The [src] is empty!</span>"
 	else if (reagents.total_volume<=src.volume/4)
-		usr << "<span  class='notice'>\The [src] is almost empty!</span>"
+		user << "<span  class='info'>\The [src] is almost empty!</span>"
 	else if (reagents.total_volume<=src.volume*0.66)
-		usr << "<span  class='notice'>\The [src] is half full!</span>"
+		user << "<span  class='info'>\The [src] is half full!</span>"
 	else if (reagents.total_volume<=src.volume*0.90)
-		usr << "<span  class='notice'>\The [src] is almost full!</span>"
+		user << "<span  class='info'>\The [src] is almost full!</span>"
 	else
-		usr << "<span  class='notice'>\The [src] is full!</span>"
+		user << "<span  class='info'>\The [src] is full!</span>"
 
 /obj/item/weapon/reagent_containers/food/drinks/proc/imbibe(mob/user) //drink the liquid within
 	user << "<span  class='notice'>You swallow a gulp of [src].</span>"

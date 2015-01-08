@@ -46,15 +46,15 @@
 /obj/item/weapon/grenade/examine(mob/user)
 	..()
 	if(det_time > 1)
-		user << "The timer is set to [det_time/10] seconds."
+		user << "<span class='info'>The timer is set to [det_time/10] seconds.</span>"
 		return
-	user << "\The [src] is set for instant detonation."
+	user << "<span class='warning'>\The [src] is set for instant detonation.</span>"
 
 
 /obj/item/weapon/grenade/attack_self(mob/user as mob)
 	if(!active)
 		if(clown_check(user))
-			user << "<span class='warning'>You prime \the [name]! [det_time/10] seconds!</span>"
+			user << "<span class='attack'>You prime \the [name]! [det_time/10] seconds!</span>"
 
 			activate(user)
 			add_fingerprint(user)

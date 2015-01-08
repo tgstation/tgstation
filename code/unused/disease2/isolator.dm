@@ -135,5 +135,5 @@
 /obj/item/weapon/virusdish/examine(mob/user)
 	..()
 	if(src.info)
-		user << "It has the following information about its contents"
+		user << "<span class='info'>It has the following information about its contents</span>"
 		user << src.info

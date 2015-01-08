@@ -99,13 +99,13 @@ var/list/genescanner_addresses = list()
 	examine(mob/user)
 		..()
 		if (src.occupant)
-			user << "[src.occupant.name] is inside the scanner."
+			user << "<span class='info'>[src.occupant.name] is inside the scanner.</span>"
 		else
-			user << "There is nobody currently inside the scanner."
+			user << "<span class='info'>There is nobody currently inside the scanner.</span>"
 		if (src.locked)
-			user << "The scanner is currently locked."
+			user << "<span class='info'>The scanner is currently locked.</span>"
 		else
-			user << "The scanner is not currently locked."
+			user << "<span class='info'>The scanner is not currently locked.</span>"
 
 	verb/move_inside()
 		set name = "Enter"

@@ -167,7 +167,6 @@
 /obj/item/weapon/storage/lockbox/unlockable/examine(mob/user)
 	..()
 	user << tracked_access
-	return 1
 
 /obj/item/weapon/storage/lockbox/unlockable/attackby(obj/O as obj, mob/user as mob)
 	if (istype(O, /obj/item/weapon/card/id))

@@ -35,7 +35,7 @@
 	if(istype(W,/obj/item/weapon/card/id))
 		// N3X - Fixes people's IDs getting eaten when a new card is inserted
 		if(istype(inserted_id))
-			user << "\red There is already an ID card within the machine."
+			user << "<span class='warning'>There is already an ID card within the machine.</span>"
 			return
 		var/obj/item/weapon/card/id/I = usr.get_active_hand()
 		if(istype(I))
@@ -134,9 +134,9 @@
 				var/datum/money_account/acct = get_card_account(inserted_id)
 				if(acct.charge(-credits,null,"Claimed mining credits.",dest_name = "Ore Redemption"))
 					credits = 0
-					usr << "\blue Credits transferred."
+					usr << "<span class='notice'>Credits transferred.</span>"
 				else
-					usr << "\red Failed to claim credits."
+					usr << "<span class='warning'>Failed to claim credits.</span>"
 		else if(href_list["choice"] == "insert")
 			var/obj/item/weapon/card/id/I = usr.get_active_hand()
 			if(istype(I))
@@ -144,14 +144,14 @@
 				I.loc = src
 				inserted_id = I
 			else
-				usr << "\red No valid ID."
+				usr << "<span class='warning'>No valid ID.</span>"
 				return 1
 	else if(href_list["release"] && istype(inserted_id))
 		if(check_access(inserted_id))
 			var/release=href_list["release"]
 			var/datum/material/mat = materials.getMaterial(release)
 			if(!mat)
-				usr << "\red Unable to find material [release]!"
+				usr << "<span class='warning'>Unable to find material [release]!</span>"
 				return 1
 			var/desired = input("How much?","How much [mat.processed_name] to eject?",mat.stored) as num
 			if(desired==0)
@@ -262,7 +262,7 @@
 				usr.drop_item()
 				I.loc = src
 				inserted_id = I
-			else usr << "\red No valid ID."
+			else usr << "<span class='warning'>No valid ID.</span>"
 	if(href_list["purchase"])
 		if(istype(inserted_id))
 			var/datum/data/mining_equipment/prize = locate(href_list["purchase"])
@@ -352,7 +352,7 @@
 
 /obj/item/weapon/card/mining_point_card/examine(mob/user)
 	..()
-	user << "There's [points] credits on the card."
+	user << "<span class='info'>There's [points] credits on the card.</span>"
 
 /**********************Jaunter**********************/
 

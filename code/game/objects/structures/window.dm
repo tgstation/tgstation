@@ -28,7 +28,7 @@
 /obj/structure/window/examine(mob/user)
 	..()
 	if(!anchored)
-		user << "<span class='notice'>\the [src] appears to be loose.</span>"
+		user << "<span class='info'>\the [src] appears to be loose.</span>"
 
 /obj/structure/window/bullet_act(var/obj/item/projectile/Proj)
 	health -= Proj.damage

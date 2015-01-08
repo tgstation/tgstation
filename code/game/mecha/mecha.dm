@@ -170,15 +170,15 @@
 	var/integrity = health/initial(health)*100
 	switch(integrity)
 		if(85 to 100)
-			user << "It's fully intact."
+			user << "<span class='info'>It's fully intact.</span>"
 		if(65 to 85)
-			user << "It's slightly damaged."
+			user << "<span class='notice'>It's slightly damaged.</span>"
 		if(45 to 65)
-			user << "It's badly damaged."
+			user << "<span class='warning'>It's badly damaged.</span>"
 		if(25 to 45)
-			user << "It's heavily damaged."
+			user << "<span class='warning'>It's heavily damaged.</span>"
 		else
-			user << "It's falling apart."
+			user << "<span class='danger'>It's falling apart.</span>"
 	if(equipment && equipment.len)
 		user << "It's equipped with:"
 		for(var/obj/item/mecha_parts/mecha_equipment/ME in equipment)
@@ -634,7 +634,7 @@
 	user.delayNextAttack(8)
 	src.log_message("Attacked by [W]. Attacker - [user]")
 	if(prob(src.deflect_chance))
-		user << "<span class='warning'>The [W] bounces off [src.name] armor.<span class='warning'>"
+		user << "<span class='attack'>The [W] bounces off [src.name] armor.</span>"
 		src.log_append_to_last("Armor saved.")
 /*
 		for (var/mob/V in viewers(src))

@@ -55,6 +55,7 @@ h1.alert, h2.alert		{color: #000000;}
 .warning				{color: #ff0000;	font-style: italic;}
 .sinister				{color: #800080;	font-weight: bold;	font-style: italic;} /* /vg/ */
 .blob					{color: #006221;	font-weight: bold;	font-style: italic;}
+.confirm				{color: #00af3b;}
 .rose					{color: #ff5050;}
 .info					{color: #0000CC;}
 .notice					{color: #000099;}

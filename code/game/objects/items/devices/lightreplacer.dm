@@ -69,7 +69,7 @@
 
 /obj/item/device/lightreplacer/examine(mob/user)
 	..()
-	user << "It has [uses] light\s remaining."
+	user << "<span class='info'>It has [uses] light\s remaining.</span>"
 
 /obj/item/device/lightreplacer/attackby(obj/item/W, mob/user)
 	if(istype(W,  /obj/item/weapon/card/emag) && emagged == 0)

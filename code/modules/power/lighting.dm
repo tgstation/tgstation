@@ -89,13 +89,15 @@
 
 /obj/machinery/light_construct/examine(mob/user)
 	..()
+	var/mode
 	switch(src.stage)
 		if(1)
-			user << "It's an empty frame."
+			mode = "It's an empty frame."
 		if(2)
-			user << "It's wired."
+			mode = "It's wired."
 		if(3)
-			user << "The casing is closed."
+			mode = "The casing is closed."
+	user << "<span class='info'>[mode]</span>"
 
 /obj/machinery/light_construct/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	src.add_fingerprint(user)
@@ -324,14 +326,13 @@
 	..()
 	switch(status)
 		if(LIGHT_OK)
-			user << "[desc] It is turned [on? "on" : "off"]."
+			user << "<span class='info'>[desc] It is turned [on? "on" : "off"].</span>"
 		if(LIGHT_EMPTY)
-			user << "[desc] The [fitting] has been removed."
+			user << "<span class='info'>[desc] The [fitting] has been removed.</span>"
 		if(LIGHT_BURNED)
-			user << "[desc] The [fitting] is burnt out."
+			user << "<span class='info'>[desc] The [fitting] is burnt out.</span>"
 		if(LIGHT_BROKEN)
-			user << "[desc] The [fitting] has been smashed."
-
+			user << "<span class='info'>[desc] The [fitting] has been smashed.</span>"
 
 
 // attack with item - insert light (if right type), otherwise try to break the light
@@ -479,7 +480,7 @@
 		return
 	else if (status == LIGHT_OK||status == LIGHT_BURNED)
 		for(var/mob/M in viewers(src))
-			M.show_message("<span class='warning'>[user.name] smashed the light!</span>", 3, "You hear a tinkle of breaking glass", 2)
+			M.show_message("<span class='attack'>[user.name] smashed the light!</span>", 3, "You hear a tinkle of breaking glass", 2)
 		broken()
 	return
 
@@ -490,7 +491,7 @@
 		return
 	else if (status == LIGHT_OK||status == LIGHT_BURNED)
 		for(var/mob/O in viewers(src))
-			O.show_message("<span class='warning'>[M.name] smashed the light!</span>", 3, "You hear a tinkle of breaking glass", 2)
+			O.show_message("<span class='attack'>[M.name] smashed the light!</span>", 3, "You hear a tinkle of breaking glass", 2)
 		broken()
 	return
 // attack with hand - remove tube/bulb

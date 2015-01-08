@@ -69,7 +69,7 @@
 
 /obj/item/weapon/fuel/examine()
 	..()
-	user << "A magnetic storage ring, it contains [fuel]kg of [content ? content : "nothing"]."
+	user << "<span class='info'>A magnetic storage ring, it contains [fuel]kg of [content ? content : "nothing"].</span>"
 
 /obj/item/weapon/fuel/proc/injest(mob/M as mob)
 	switch(content)

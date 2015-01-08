@@ -286,17 +286,19 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/examine(mob/user)
 	..()
+	var/mode
 	switch(src.sensor_mode)
 		if(0)
-			user << "Its sensors appear to be disabled."
+			mode = "Its sensors appear to be disabled."
 		if(1)
-			user << "Its binary life sensors appear to be enabled."
+			mode = "Its binary life sensors appear to be enabled."
 		if(2)
-			user << "Its vital tracker appears to be enabled."
+			mode = "Its vital tracker appears to be enabled."
 		if(3)
-			user << "Its vital tracker and tracking beacon appear to be enabled."
+			mode = "Its vital tracker and tracking beacon appear to be enabled."
+	user << "<span class='info'>" + mode + "</span>"
 	if(hastie)
-		user << "\A [hastie] is clipped to it."
+		user << "<span class='info'>\A [hastie] is clipped to it.</span>"
 
 /obj/item/clothing/under/proc/set_sensors(mob/usr as mob)
 	var/mob/M = usr

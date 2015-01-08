@@ -109,8 +109,8 @@
 
 /obj/item/clothing/head/helmet/space/rig/syndi/examine(mob/user)
 	..()
-	if(get_dist(usr,src) <= 1)
-		user << "This helmet has a built-in camera. It's [camera ? "" : "in"]active."
+	if(get_dist(user,src) <= 1)
+		user << "<span class='info'>This helmet has a built-in camera. It's [camera ? "" : "in"]active.</span>"
 
 /obj/item/clothing/suit/space/rig/syndi
 	icon_state = "rig-syndi"

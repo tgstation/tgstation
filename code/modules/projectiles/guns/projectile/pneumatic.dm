@@ -63,11 +63,11 @@
 
 /obj/item/weapon/storage/pneumatic/examine(mob/user)
 	..()
-	user << "The valve is dialed to [pressure_setting]%."
+	user << "<span class='info'>The valve is dialed to [pressure_setting]%.</span>"
 	if(tank)
-		user << "The tank dial reads [tank.air_contents.return_pressure()] kPa."
+		user << "<span class='info'>The tank dial reads [tank.air_contents.return_pressure()] kPa.</span>"
 	else
-		user << "Nothing is attached to the tank valve!"
+		user << "<span class='warning'>Nothing is attached to the tank valve!</span>"
 
 /obj/item/weapon/storage/pneumatic/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
 	if (istype(target, /obj/item/weapon/storage/backpack ))
