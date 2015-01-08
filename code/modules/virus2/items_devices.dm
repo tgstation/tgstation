@@ -10,7 +10,7 @@
 	icon_state = "antibody"
 	w_class = 2.0
 	item_state = "electronic"
-	flags = FPRINT  | USEDELAY
+	flags = FPRINT
 	siemens_coefficient = 1
 
 

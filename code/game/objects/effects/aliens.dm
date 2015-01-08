@@ -475,7 +475,7 @@ Alien plants should do something if theres a lot of poison
 	if(health <= 0)
 		return
 	user.delayNextAttack(10)
-	if(W.attack_verb.len)
+	if(W.attack_verb && W.attack_verb.len)
 		src.visible_message("\red <B>\The [src] has been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
 	else
 		src.visible_message("\red <B>\The [src] has been attacked with \the [W][(user ? " by [user]." : ".")]")

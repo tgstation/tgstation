@@ -305,6 +305,8 @@
 	return 0
 
 /obj/machinery/alarm/proc/get_danger_level(const/current_value, const/list/danger_levels)
+	if(!danger_levels || !danger_levels.len)
+		return 0
 	if ((current_value >= danger_levels[4] && danger_levels[4] > 0) || current_value <= danger_levels[1])
 		return 2
 	if ((current_value >= danger_levels[3] && danger_levels[3] > 0) || current_value <= danger_levels[2])

@@ -1,9 +1,2 @@
 author: Unid
-changes:
-  - bugfix: Fixed some ghost exploits.
-  - bugfix: RCD now creates airless floors.
-  - tweak: Non-cyborg Rapid Service Fabricators can no longer create money.
-  - tweak: Rapid Service Fabricators gain 30 matter units from a single cartridge.
-  - rscadd: Engineering cyborgs now have a material synthesizer, which adds spawned materials to the cyborg's modules.
-  - rscadd: An engineering cyborg upgrade can be made at the mech fabricator, which adds some materials and tools.
-  - rscadd: Using floor tiles on an asteroid floor will now create plating.
+changes: []

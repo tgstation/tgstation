@@ -166,6 +166,9 @@ proc/process_adminbus_teleport_locs()
 	name = "\improper Admin room"
 	icon_state = "start"
 
+/area/no_ethereal
+	anti_ethereal = 1
+
 
 
 //These are shuttle areas, they must contain two areas in a subgroup if you want to move a shuttle from one

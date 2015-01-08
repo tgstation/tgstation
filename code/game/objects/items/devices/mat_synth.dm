@@ -175,14 +175,20 @@ obj/item/device/material_synth/robot/afterattack(/obj/target, mob/user)
 	if(!U.module) return
 	if(!spawned_sheet) return
 
-	for(var/obj/item/stack/sheets_in_module in U.module.modules)
-		if(istype(spawned_sheet, sheets_in_module))
-			if((sheets_in_module.amount + spawned_sheet.amount) <= sheets_in_module.max_amount) //if we can add the new sheet to the old stack
-				sheets_in_module.amount+=spawned_sheet.amount
-				user << "Added [spawned_sheet.amount] [spawned_sheet] to the stack."
+	for(var/obj/item/stack/S in U.module.modules) //Check all sheets in the cyborg's module
+		if(istype(spawned_sheet, S) && spawned_sheet.type==S.type) //If we find a sheet with the same type
+			if((S.amount + spawned_sheet.amount) <= S.max_amount) //Increase its amount
+				S.amount+=spawned_sheet.amount
+				user << "Added [spawned_sheet.amount] of [spawned_sheet] to the stack."
 				qdel(spawned_sheet)
 				return
 			else
+				if(S.amount<S.max_amount) //Check to see if we can add SOME of the new sheets to our module
+					var/transfer_amount = min(S.max_amount - S.amount, spawned_sheet.amount) //Calculate the amount of sheets transferred
+
+					S.amount += transfer_amount
+					spawned_sheet.amount -= transfer_amount
+					user << "Added [transfer_amount] of [spawned_sheet] to the stack, and dropped [spawned_sheet.amount]."
 				return //Leave the new sheet at the floor
 	spawned_sheet.loc=U
 	U.module.modules += spawned_sheet

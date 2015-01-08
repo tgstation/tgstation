@@ -71,7 +71,8 @@ var/list/exclude = list("loc", "locs", "parent_type", "vars", "verbs", "type", "
 	#ifdef DEBUG_OBJECT_POOL
 	world << text("DEBUG_OBJECT_POOL: getFromPool([]) [] left.", A, length(masterPool[A]))
 	#endif
-
+	if(!O)
+		O = new A
 	O.loc = B
 	return O
 
