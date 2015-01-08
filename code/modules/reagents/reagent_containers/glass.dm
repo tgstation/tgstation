@@ -12,11 +12,13 @@
 	volume = 50
 	flags = OPENCONTAINER
 
-	var/list/can_be_placed_into = list(
+	can_be_placed_into = list(
 		/obj/machinery/chem_master/,
 		/obj/machinery/chem_dispenser/,
 		/obj/machinery/reagentgrinder,
+		/obj/machinery/biogenerator,
 		/obj/structure/table,
+		/obj/structure/rack,
 		/obj/structure/closet,
 		/obj/structure/sink,
 		/obj/item/weapon/storage,
@@ -35,10 +37,7 @@
 
 
 /obj/item/weapon/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
-	if(!proximity) return // not adjacent
-	for(var/type in can_be_placed_into)
-		if(istype(target, type))
-			return
+	if((!proximity) || !check_allowed_items(target)) return
 
 	if(ismob(target) && target.reagents && reagents.total_volume)
 		var/mob/M = target
