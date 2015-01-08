@@ -283,6 +283,7 @@
 			module_sprites["Bladewolf"] = "bladewolf"
 			module_sprites["Mr. Gutsy"] = "mrgutsy"
 			module_sprites["Marina-CB"] = "marinaCB"
+			module_sprites["Squadbot"] = "squats"
 			channels = list("Security" = 1)
 			speed = -2
 
