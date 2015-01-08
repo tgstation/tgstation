@@ -1,22 +1,24 @@
 /obj/item/clothing/head/helmet/space/space_ninja
-	desc = "What may appear to be a simple black garment is in fact a highly sophisticated nano-weave helmet. Standard issue ninja gear."
-	name = "ninja hood"
+	desc = "An advanced and modern-looking quantum-weave helmet designed to protect the head from impacts and hard vacuum."
+	name = "chrono hood"
 	icon_state = "s-ninja"
 	item_state = "s-ninja_mask"
-	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 25)
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 100)
 	strip_delay = 12
 	unacidable = 1
 
 
 /obj/item/clothing/suit/space/space_ninja
-	name = "ninja suit"
-	desc = "A unique, vaccum-proof suit of nano-enhanced armor designed specifically for Spider Clan assassins."
+	name = "chrono suit"
+	desc = "A unique, vaccum-proof suit of nano-enhanced armor designed for chrono-legionnaires."
 	icon_state = "s-ninja"
 	item_state = "s-ninja_suit"
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/stock_parts/cell)
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/jetpack/chrono,/obj/item/weapon/stock_parts/cell)
 	slowdown = 0
 	unacidable = 1
-	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
+	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 100)
 	strip_delay = 12
 
 		//Important parts of the suit.

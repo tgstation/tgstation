@@ -107,3 +107,14 @@
 	ion_trail = new /datum/effect/effect/system/ion_trail_follow()
 	ion_trail.set_up(src)
 	air_contents.carbon_dioxide = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+
+/obj/item/weapon/tank/jetpack/chrono
+	name = "chronopack (oxygen)"
+	desc = "A high-tech, back-mounted pack designed for propelling through space; filled with compressed oxygen to double as internals. Used by chrono-legionnaires."
+	distribute_pressure = 16
+	icon_state = "jetpack-chrono"
+	item_state =  "jetpack-chrono"
+
+/obj/item/weapon/tank/jetpack/chrono/New()
+	..()
+	air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)\

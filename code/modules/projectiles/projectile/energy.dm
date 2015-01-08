@@ -45,7 +45,7 @@
 
 /obj/item/projectile/energy/dart //ninja throwing dart
 	name = "dart"
-	icon_state = "toxin"
+	icon_state = "chrono"
 	damage = 5
 	damage_type = TOX
 	weaken = 5

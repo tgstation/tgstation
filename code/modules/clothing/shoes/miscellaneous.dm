@@ -30,7 +30,7 @@
 	armor = list(melee = 80, bullet = 60, laser = 50, energy = 50, bomb = 50, bio = 30, rad = 30)
 
 /obj/item/clothing/shoes/space_ninja
-	name = "ninja shoes"
+	name = "chrono shoes"
 	desc = "A pair of running shoes. Excellent for running and even better for smashing skulls."
 	icon_state = "s-ninja"
 	item_state = "secshoes"

@@ -11,7 +11,7 @@
 
 /obj/item/clothing/gloves/space_ninja
 	desc = "These nano-enhanced gloves insulate from electricity and provide fire resistance."
-	name = "ninja gloves"
+	name = "chrono gloves"
 	icon_state = "s-ninja"
 	item_state = "s-ninja"
 	siemens_coefficient = 0
