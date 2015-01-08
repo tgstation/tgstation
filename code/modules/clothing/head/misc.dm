@@ -297,3 +297,9 @@
 	item_state = "russofurhat"
 	flags = FPRINT  | BLOCKHEADHAIR
 	flags_inv = HIDEEARS
+
+/obj/item/clothing/head/lordadmiralhat
+	name = "Lord Admiral's Hat"
+	desc = "A hat suitable for any man of high and exalted rank."
+	icon_state = "lordadmiralhat"
+	item_state = "lordadmiralhat"
