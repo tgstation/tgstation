@@ -147,4 +147,5 @@
 		borg.mmi = null
 	if(brainmob)
 		qdel(brainmob)
+		brainmob = null
 	..()

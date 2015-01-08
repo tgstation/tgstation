@@ -103,4 +103,5 @@
 /obj/item/device/mmi/Destroy() //copypasted from MMIs.
 	if(brainmob)
 		qdel(brainmob)
+		brainmob = null
 	..()
