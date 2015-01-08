@@ -179,7 +179,7 @@
 			return
 
 
-		else if (istype(user, /mob/living/silicon) && src.aidisabled)
+		else if (user.has_unlimited_silicon_privilege && src.aidisabled)
 			user << "AI control for this Air Alarm interface has been disabled."
 			user << browse(null, "window=air_alarm")
 			return
@@ -248,11 +248,10 @@
 
 /obj/machinery/alarm/proc/return_text()
 	var/dat = ""
-	if(!(istype(usr, /mob/living/silicon)) && locked)
-		dat += "<div class='notice icon'>Swipe ID card to unlock interface</div>"
+	dat += "<div class='notice icon'>Swipe ID card to [locked ? "unlock" : "lock"] interface.</div>"
+	if(!usr.has_unlimited_silicon_privilege && locked)
 		dat += "[return_status()]"
 	else
-		dat += "<div class='notice icon'>Swipe ID card to lock interface</div>"
 		dat += "[return_status()]<hr>[return_controls()]"
 	return dat
 
@@ -564,7 +563,7 @@ table tr:first-child th:first-child { border: none;}
 				var/datum/tlv/tlv = TLV[env]
 				var/newval = input("Enter [varname] for env", "Alarm triggers", tlv.vars[varname]) as num|null
 
-				if (isnull(newval) || ..() || (locked && !issilicon(usr)))
+				if (isnull(newval) || ..() || (locked && !(usr.has_unlimited_silicon_privilege)))
 					return
 				if (newval<0)
 					tlv.vars[varname] = -1.0
@@ -1082,7 +1081,7 @@ FIRE ALARM
 			src.alarm()
 			src.time = 0
 			src.timing = 0
-			processing_objects.Remove(src)
+			SSobj.processing.Remove(src)
 		src.updateDialog()
 	last_process = world.timeofday
 	return
@@ -1108,7 +1107,7 @@ FIRE ALARM
 	var/d1
 	var/d2
 	var/dat = ""
-	if (istype(user, /mob/living/carbon/human) || istype(user, /mob/living/silicon))
+	if (istype(user, /mob/living/carbon/human) || user.has_unlimited_silicon_privilege)
 		A = A.loc
 
 		if (A.fire)
@@ -1160,7 +1159,7 @@ FIRE ALARM
 	else if (href_list["time"])
 		src.timing = text2num(href_list["time"])
 		last_process = world.timeofday
-		processing_objects.Add(src)
+		SSobj.processing.Add(src)
 	else if (href_list["tp"])
 		var/tp = text2num(href_list["tp"])
 		src.time += tp
@@ -1281,7 +1280,7 @@ Code shamelessly copied from apc_frame
 	var/area/A = src.loc
 	var/d1
 	var/dat
-	if (istype(user, /mob/living/carbon/human) || istype(user, /mob/living/silicon/ai))
+	if (istype(user, /mob/living/carbon/human) || user.has_unlimited_silicon_privilege)
 		A = A.loc
 
 		if (A.party)

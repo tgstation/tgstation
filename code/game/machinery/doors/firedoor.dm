@@ -12,6 +12,7 @@
 	glass = 1
 	var/blocked = 0
 	var/nextstate = null
+	sub_door = 1
 
 
 /obj/machinery/door/firedoor/Bumped(atom/AM)
@@ -36,7 +37,7 @@
 		var/obj/item/weapon/weldingtool/W = C
 		if(W.remove_fuel(0, user))
 			blocked = !blocked
-			user << text("<span class='danger'>You [blocked?"welded":"unwelded"] the [src]</span>")
+			user << text("<span class='danger'>You [blocked?"welded":"unwelded"] \the [src]</span>")
 			update_icon()
 			return
 

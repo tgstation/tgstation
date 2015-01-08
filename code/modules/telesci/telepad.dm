@@ -60,10 +60,10 @@
 		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 		if(anchored)
 			anchored = 0
-			user << "<span class = 'caution'> The [src] can now be moved.</span>"
+			user << "<span class = 'caution'> \The [src] can now be moved.</span>"
 		else if(!anchored)
 			anchored = 1
-			user << "<span class = 'caution'> The [src] is now secured.</span>"
+			user << "<span class = 'caution'> \The [src] is now secured.</span>"
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(stage == 0)
 			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
@@ -119,14 +119,14 @@
 
 /obj/item/weapon/rcs/New()
 	..()
-	processing_objects.Add(src)
+	SSobj.processing.Add(src)
 
 /obj/item/weapon/rcs/examine(mob/user)
 	..()
 	user << "There are [rcharges] charge\s left."
 
 /obj/item/weapon/rcs/Destroy()
-	processing_objects.Remove(src)
+	SSobj.processing.Remove(src)
 	..()
 /obj/item/weapon/rcs/process()
 	if(rcharges > 10)

@@ -1,8 +1,6 @@
 #define SOLAR_MAX_DIST 40
 #define SOLARGENRATE 1500
 
-var/list/solars_list = list()
-
 /obj/machinery/power/solar
 	name = "solar panel"
 	desc = "A solar electrical generator."
@@ -33,9 +31,10 @@ var/list/solars_list = list()
 
 //set the control of the panel to a given computer if closer than SOLAR_MAX_DIST
 /obj/machinery/power/solar/proc/set_control(var/obj/machinery/power/solar_control/SC)
-	if(SC && (get_dist(src, SC) > SOLAR_MAX_DIST))
+	if(!SC || (get_dist(src, SC) > SOLAR_MAX_DIST))
 		return 0
 	control = SC
+	SC.connected_panels |= src
 	return 1
 
 //set the control of the panel to null and removes it from the control list of the previous control computer if needed
@@ -107,14 +106,12 @@ var/list/solars_list = list()
 
 //calculates the fraction of the sunlight that the panel recieves
 /obj/machinery/power/solar/proc/update_solar_exposure()
-	if(!sun)
-		return
 	if(obscured)
 		sunfrac = 0
 		return
 
 	//find the smaller angle between the direction the panel is facing and the direction of the sun (the sign is not important here)
-	var/p_angle = min(abs(adir - sun.angle), 360 - abs(adir - sun.angle))
+	var/p_angle = min(abs(adir - SSsun.angle), 360 - abs(adir - SSsun.angle))
 
 	if(p_angle > 90)			// if facing more than 90deg from sun, zero output
 		sunfrac = 0
@@ -126,7 +123,7 @@ var/list/solars_list = list()
 /obj/machinery/power/solar/process()//TODO: remove/add this from machines to save on processing as needed ~Carn PRIORITY
 	if(stat & BROKEN)
 		return
-	if(!sun || !control) //if there's no sun or the panel is not linked to a solar control computer, no need to proceed
+	if(!control) //if there's no sun or the panel is not linked to a solar control computer, no need to proceed
 		return
 
 	if(powernet)
@@ -177,10 +174,12 @@ var/list/solars_list = list()
 	var/ax = x		// start at the solar panel
 	var/ay = y
 	var/turf/T = null
+	var/dx = SSsun.dx
+	var/dy = SSsun.dy
 
 	for(var/i = 1 to 20)		// 20 steps is enough
-		ax += sun.dx	// do step
-		ay += sun.dy
+		ax += dx	// do step
+		ay += dy
 
 		T = locate( round(ax,0.5),round(ay,0.5),z)
 
@@ -307,12 +306,12 @@ var/list/solars_list = list()
 
 /obj/machinery/power/solar_control/disconnect_from_network()
 	..()
-	solars_list.Remove(src)
+	SSsun.solars.Remove(src)
 
 /obj/machinery/power/solar_control/connect_to_network()
 	var/to_return = ..()
 	if(powernet) //if connected and not already in solar_list...
-		solars_list |= src //... add it
+		SSsun.solars |= src //... add it
 	return to_return
 
 //search for unconnected panels and trackers in the computer powernet and connect them
@@ -323,12 +322,10 @@ var/list/solars_list = list()
 				var/obj/machinery/power/solar/S = M
 				if(!S.control) //i.e unconnected
 					S.set_control(src)
-					connected_panels |= S
 			else if(istype(M, /obj/machinery/power/tracker))
 				if(!connected_tracker) //if there's already a tracker connected to the computer don't add another
 					var/obj/machinery/power/tracker/T = M
 					if(!T.control) //i.e unconnected
-						connected_tracker = T
 						T.set_control(src)
 
 //called by the sun controller, update the facing angle (either manually or via tracking) and rotates the panels accordingly
@@ -342,7 +339,7 @@ var/list/solars_list = list()
 				cdir = targetdir //...the current direction is the targetted one (and rotates panels to it)
 		if(2) // auto-tracking
 			if(connected_tracker)
-				connected_tracker.set_angle(sun.angle)
+				connected_tracker.set_angle(SSsun.angle)
 
 	set_panels(cdir)
 	updateDialog()
@@ -476,7 +473,7 @@ var/list/solars_list = list()
 		track = text2num(href_list["track"])
 		if(track == 2)
 			if(connected_tracker)
-				connected_tracker.set_angle(sun.angle)
+				connected_tracker.set_angle(SSsun.angle)
 				set_panels(cdir)
 		else if (track == 1) //begin manual tracking
 			src.targetdir = src.cdir
@@ -484,10 +481,10 @@ var/list/solars_list = list()
 			set_panels(targetdir)
 
 	if(href_list["search_connected"])
-		src.search_for_connected()
+		search_for_connected()
 		if(connected_tracker && track == 2)
-			connected_tracker.set_angle(sun.angle)
-		src.set_panels(cdir)
+			connected_tracker.set_angle(SSsun.angle)
+		set_panels(cdir)
 
 	src.updateUsrDialog()
 	return

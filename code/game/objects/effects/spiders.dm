@@ -81,7 +81,7 @@
 /obj/effect/spider/eggcluster/New()
 	pixel_x = rand(3,-3)
 	pixel_y = rand(3,-3)
-	processing_objects.Add(src)
+	SSobj.processing.Add(src)
 
 /obj/effect/spider/eggcluster/process()
 	amount_grown += rand(0,2)
@@ -109,7 +109,7 @@
 /obj/effect/spider/spiderling/New()
 	pixel_x = rand(6,-6)
 	pixel_y = rand(6,-6)
-	processing_objects.Add(src)
+	SSobj.processing.Add(src)
 
 /obj/effect/spider/spiderling/Bump(atom/user)
 	if(istype(user, /obj/structure/table))
@@ -212,7 +212,7 @@
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user << "<span class='notice'>You struggle against the tight bonds! (This will take about [breakout_time] minutes.)</span>"
-	visible_message("You see something struggling and writhing in the [src]!")
+	visible_message("You see something struggling and writhing in \the [src]!")
 	if(do_after(user,(breakout_time*60*10)))
 		if(!user || user.stat != CONSCIOUS || user.loc != src)
 			return

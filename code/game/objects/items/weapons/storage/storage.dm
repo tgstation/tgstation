@@ -104,7 +104,7 @@
 /obj/item/weapon/storage/proc/can_see_contents()
 	var/list/cansee = list()
 	for(var/mob/M in is_seeing)
-		if(M.s_active == src)
+		if(M.s_active == src && M.client)
 			cansee |= M
 		else
 			is_seeing -= M
@@ -304,16 +304,10 @@
 		if(M.client)
 			M.client.screen -= W
 
-	if(new_location)
-		if(ismob(loc))
-			W.dropped(usr)
-		if(ismob(new_location))
-			W.layer = 20
-		else
-			W.layer = initial(W.layer)
-		W.loc = new_location
-	else
-		W.loc = get_turf(src)
+	if(ismob(loc))
+		W.dropped(usr)
+	W.layer = initial(W.layer)
+	W.loc = new_location
 
 	if(usr)
 		orient2hud(usr)

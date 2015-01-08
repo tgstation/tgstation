@@ -35,14 +35,31 @@
 	var/stutter = 0
 	var/eyeblur = 0
 	var/drowsy = 0
+	var/stamina = 0
+	var/jitter = 0
 	var/forcedodge = 0
+
+	var/range = 0
+	var/proj_hit = 0
+
+/obj/item/projectile/proc/Range()
+	if(range)
+		range--
+		if(range <= 0)
+			on_range()
+	else
+		return
+
+/obj/item/projectile/proc/on_range() //if we want there to be effects when they reach the end of their range
+	proj_hit = 1
+	qdel(src)
 
 /obj/item/projectile/proc/on_hit(atom/target, blocked = 0, hit_zone)
 	if(!isliving(target))	return 0
 	if(isanimal(target))	return 0
 	var/mob/living/L = target
 	L.on_hit(type)
-	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, blocked)
+	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, blocked, stamina, jitter)
 
 /obj/item/projectile/proc/vol_by_damage()
 	if(src.damage)
@@ -74,8 +91,8 @@
 			if(hitsound)
 				var/volume = vol_by_damage()
 				playsound(loc, hitsound, volume, 1, -1)
-			M.visible_message("<span class='danger'>[M] is hit by \a [src] in the [parse_zone(def_zone)]!", \
-								"<span class='userdanger'>[M] is hit by \a [src] in the [parse_zone(def_zone)]!")	//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+			M.visible_message("<span class='danger'>[M] is hit by \a [src] in the [parse_zone(def_zone)]!</span>", \
+								"<span class='userdanger'>[M] is hit by \a [src] in the [parse_zone(def_zone)]!</span>")	//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 		add_logs(firer, M, "shot", object="[src]", addition=reagent_note)
 
 	var/turf/new_loc = get_turf(A)
@@ -115,6 +132,3 @@
 						Bump(original)
 			Range()
 			sleep(1)
-
-/obj/item/projectile/proc/Range()
-	return

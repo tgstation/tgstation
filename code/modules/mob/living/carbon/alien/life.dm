@@ -101,7 +101,7 @@
 	breath.toxins -= toxins_used
 	breath.oxygen += toxins_used
 
-	if(breath.temperature > (T0C+66) && !(COLD_RESISTANCE in mutations)) // Hot air hurts :(
+	if(breath.temperature > (T0C+66)) // Hot air hurts :(
 		if(prob(20))
 			src << "<span class='danger'>You feel a searing heat in your lungs!</span>"
 		fire_alert = max(fire_alert, 1)
@@ -124,7 +124,7 @@
 					stomach_contents.Remove(M)
 					qdel(M)
 					continue
-				if(air_master.current_cycle%3==1)
+				if(SSmob.times_fired%3==1)
 					if(!(M.status_flags & GODMODE))
 						M.adjustBruteLoss(5)
 					nutrition += 10

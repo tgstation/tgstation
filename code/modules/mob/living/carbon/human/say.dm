@@ -22,7 +22,7 @@
 	if(dna)
 		message = dna.species.handle_speech(message,src)
 
-	if ((HULK in mutations) && health >= 25 && length(message))
+	if (dna.check_mutation(HULK))
 		message = "[uppertext(replacetext(message, ".", "!"))]!!" //because I don't know how to code properly in getting vars from other files -Bro
 
 	if(viruses.len)
@@ -103,7 +103,7 @@
 			if (ears)
 				ears.talk_into(src, message, message_mode)
 			return ITALICS | REDUCE_RANGE
-	
+
 	if(message_mode in radiochannels)
 		if(ears)
 			ears.talk_into(src, message, message_mode)

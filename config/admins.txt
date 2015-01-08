@@ -71,3 +71,7 @@ xxnoob = Game Master
 tkdrg = Game Master
 Cuboos = Game Master
 thunder12345 = Game Master
+wjohnston = Game Master
+mandurrh = Game Master
+thurgatar = Game Master
+xerux = Game Master

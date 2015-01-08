@@ -97,7 +97,7 @@ var/global/list/rad_collectors = list()
 				user << "The controls are now [src.locked ? "locked." : "unlocked."]"
 			else
 				src.locked = 0 //just in case it somehow gets locked
-				user << "<span class='danger'>The controls can only be locked when the [src] is active.</span>"
+				user << "<span class='danger'>The controls can only be locked when \the [src] is active.</span>"
 		else
 			user << "<span class='danger'>Access denied!</span>"
 			return 1

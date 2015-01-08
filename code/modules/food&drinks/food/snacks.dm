@@ -135,7 +135,6 @@
 	var/inaccurate = 0
 	if( \
 			istype(W, /obj/item/weapon/kitchenknife) || \
-			istype(W, /obj/item/weapon/butch) || \
 			istype(W, /obj/item/weapon/scalpel) || \
 			istype(W, /obj/item/weapon/kitchen/utensil/knife) \
 		)
@@ -189,10 +188,10 @@
 	if(isanimal(M))
 		if(iscorgi(M))
 			if(bitecount == 0 || prob(50))
-				M.emote("me", 1, "nibbles away at the [src]")
+				M.emote("me", 1, "nibbles away at \the [src]")
 			bitecount++
 			if(bitecount >= 5)
-				var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where the [src] was")
+				var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where \the [src] was")
 				if(sattisfaction_text)
 					M.emote("me", 1, "[sattisfaction_text]")
 				qdel(src)

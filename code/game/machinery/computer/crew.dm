@@ -56,7 +56,7 @@ proc/crewmonitor(mob/user,var/atom/source)
 	jobs["Shaft Miner"] = 52
 	jobs["Cargo Technician"] = 53
 	jobs["Bartender"] = 61
-	jobs["Chef"] = 62
+	jobs["Cook"] = 62
 	jobs["Botanist"] = 63
 	jobs["Librarian"] = 64
 	jobs["Chaplain"] = 65
@@ -64,7 +64,7 @@ proc/crewmonitor(mob/user,var/atom/source)
 	jobs["Mime"] = 67
 	jobs["Janitor"] = 68
 	jobs["Assistant"] = 99	//Unknowns/custom jobs should appear after civilians, and before assistants
-	
+
 	var/t = "<table width='100%'><tr><td width='40%'><h3>Name</h3></td><td width='30%'><h3>Vitals</h3></td><td width='30%'><h3>Position</h3></td></tr>"
 	var/list/logs = list()
 	var/list/tracked = crewscan()
@@ -86,15 +86,15 @@ proc/crewmonitor(mob/user,var/atom/source)
 					var/ijob = jobs[I.assignment]
 					if(ijob % 10 == 0)
 						style += "font-weight: bold; "	//head roles always end in 0
-					if(ijob >= 10 && ijob < 20)		
+					if(ijob >= 10 && ijob < 20)
 						style += "color: #E74C3C; "	//security
-					if(ijob >= 20 && ijob < 30)		
+					if(ijob >= 20 && ijob < 30)
 						style += "color: #3498DB; "	//medical
-					if(ijob >= 30 && ijob < 40)		
-						style += "color: #9B59B6; "	//science	
-					if(ijob >= 40 && ijob < 50)		
+					if(ijob >= 30 && ijob < 40)
+						style += "color: #9B59B6; "	//science
+					if(ijob >= 40 && ijob < 50)
 						style += "color: #F1C40F; "	//engineering
-					if(ijob >= 50 && ijob < 60)		
+					if(ijob >= 50 && ijob < 60)
 						style += "color: #F39C12; "	//cargo
 					log += "<span style=\"display: none\">[ijob]]</span><tr><td width='40%'><span style=\"[style]\">[I.registered_name]</span> ([I.assignment])</td>"		//ijob does not get displayed, nor does it take up space, it's just used for the positioning of an entry
 				else
