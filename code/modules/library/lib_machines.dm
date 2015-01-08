@@ -207,7 +207,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 				while(query.NextRow())
 					var/id = query.item[1]
 					var/author = query.item[2]
-					var/title = query.item[3]
+					var/title = sanitize_cobra(query.item[3])
 					var/category = query.item[4]
 					dat += "<tr><td>[author]</td><td>[title]</td><td>[category]</td><td><A href='?src=\ref[src];targetid=[id]'>\[Order\]</A></td></tr>"
 				dat += "</table>"
