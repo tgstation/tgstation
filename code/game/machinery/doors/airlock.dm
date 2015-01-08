@@ -1055,7 +1055,7 @@ About the new airlock wires panel:
 		return 1
 	operating = 1
 	do_animate("closing")
-	src.layer = 3.1
+	src.layer = DOOR_CLOSED_LAYER
 	sleep(5)
 	src.density = 1
 	if(!safe)

@@ -23,7 +23,7 @@ turf/unsimulated/wall/splashscreen
 	name = "Space Station 13"
 	icon = 'icons/misc/fullscreen.dmi'
 	icon_state = "title"
-	layer = FLY_LAYER
+	layer = ABSTRACT_LAYER
 
 /turf/unsimulated/wall/other
 	icon_state = "r_wall"
@@ -34,7 +34,6 @@ turf/unsimulated/wall/splashscreen
 	icon = 'icons/turf/shuttle.dmi'
 	thermal_conductivity = 0.05
 	heat_capacity = 0
-	layer = 2
 
 /turf/unsimulated/shuttle/wall
 	name = "wall"

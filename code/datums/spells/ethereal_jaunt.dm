@@ -24,7 +24,7 @@
 			animation.density = 0
 			animation.anchored = 1
 			animation.icon = 'icons/mob/mob.dmi'
-			animation.layer = 5
+			animation.layer = SPECIAL_EFFECT_LAYER
 			animation.master = holder
 			target.ExtinguishMob()
 			if(target.buckled)

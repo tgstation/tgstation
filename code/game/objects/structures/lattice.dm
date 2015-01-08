@@ -5,7 +5,7 @@
 	icon_state = "latticefull"
 	density = 0
 	anchored = 1.0
-	layer = 2.3 //under pipes
+	layer = LATTICE_LAYER
 	var/obj/item/stack/rods/stored
 	//	flags = CONDUCT
 

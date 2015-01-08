@@ -16,7 +16,7 @@
 		visible_message("<b>[src]</b> lets out a faint chimper as it collapses and stops moving...")	//ded -- Urist
 
 	update_canmove()
-	if(blind)	blind.layer = 0
+	if(blind)	blind.layer = BEHIND_SPACE_LAYER
 
 	if(ticker && ticker.mode)
 		ticker.mode.check_win()

@@ -457,7 +457,7 @@ ________________________________________________________________________________
 	alpha_mask.AddAlphaMask(alpha_mask_2)
 	opacity_icon.AddAlphaMask(alpha_mask)
 	for(var/i=0,i<5,i++)//And now we add it as overlays. It's faster than creating an icon and then merging it.
-		var/image/I = image("icon" = opacity_icon, "icon_state" = A.icon_state, "layer" = layer+0.8)//So it's above other stuff but below weapons and the like.
+		var/image/I = image("icon" = opacity_icon, "icon_state" = A.icon_state, "layer" = ON_TOP_OF_MOB_LAYER)//So it's above other stuff but below weapons and the like.
 		switch(i)//Now to determine offset so the result is somewhat blurred.
 			if(1)
 				I.pixel_x -= 1
@@ -469,12 +469,12 @@ ________________________________________________________________________________
 				I.pixel_y += 1
 
 		overlays += I//And finally add the overlay.
-	overlays += image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = layer+0.9)
+	overlays += image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = SPECIAL_EFFECT_LAYER)
 
 //When ninja steal malfunctions.
 /mob/proc/NinjaStealthMalf()
 	invisibility = 0//Set ninja invis to 0.
-	overlays += image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = layer+0.9)
+	overlays += image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = SPECIAL_EFFECT_LAYER)
 	playsound(loc, 'sound/effects/stealthoff.ogg', 75, 1)
 
 //=======//GENERIC VERB MODIFIERS//=======//
@@ -862,7 +862,7 @@ Must right click on a mob to activate.*/
 				M.anchored = 1//Anchors them so they can't move.
 				U.say("Get over here!")
 				var/obj/effect/energy_net/E = new /obj/effect/energy_net(M.loc)
-				E.layer = M.layer+1//To have it appear one layer above the mob.
+				E.layer = ON_TOP_OF_MOB_LAYER
 				for(var/mob/O in viewers(U, 3))
 					O.show_message(text("<span class='danger'>[] caught [] with an energy net!</span>", U, M), 1)
 				E.affecting = M

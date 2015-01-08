@@ -1,6 +1,4 @@
 /atom
-	layer = 2
-	var/level = 2
 	var/flags = 0
 	var/list/fingerprints
 	var/list/fingerprintshidden

@@ -8,7 +8,6 @@
 	name = "dual-port air vent"
 	desc = "Has a valve and pump attached to it. There are two ports."
 
-	level = 1
 	var/frequency = 0
 	var/id = null
 	var/datum/radio_frequency/radio_connection
@@ -41,8 +40,7 @@
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/update_icon_nopipes()
 	overlays.Cut()
-	if(showpipe)
-		overlays += getpipeimage('icons/obj/atmospherics/unary_devices.dmi', "dpvent_cap")
+	overlays += getpipeimage('icons/obj/atmospherics/unary_devices.dmi', "dpvent_cap", , PIPE_LAYER)
 
 	if(!on || stat & (NOPOWER|BROKEN))
 		icon_state = "vent_off"

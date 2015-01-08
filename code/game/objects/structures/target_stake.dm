@@ -28,7 +28,6 @@
 		W.density = 1
 		user.drop_item()
 		W.loc = loc
-		W.layer = 3.1
 		pinned_target = W
 		user << "You slide the target into the stake."
 	return
@@ -38,7 +37,6 @@
 	if(pinned_target)
 		density = 1
 		pinned_target.density = 0
-		pinned_target.layer = OBJ_LAYER
 
 		pinned_target.loc = user.loc
 		if(ishuman(user))

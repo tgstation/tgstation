@@ -237,9 +237,9 @@
 
 	if ((src.blind && src.stat != 2))
 		if(src.eye_blind)
-			src.blind.layer = 18
+			src.blind.layer = EYE_LAYER
 		else
-			src.blind.layer = 0
+			src.blind.layer = BEHIND_SPACE_LAYER
 			if (src.disabilities & NEARSIGHT)
 				src.client.screen += global_hud.vimpaired
 

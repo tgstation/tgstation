@@ -9,8 +9,6 @@
 	languages = SLIME | HUMAN
 	faction = list("slime")
 
-	layer = 5
-
 	maxHealth = 150
 	health = 150
 	gender = NEUTER
@@ -801,7 +799,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "golem"
 	unacidable = 1
-	layer = TURF_LAYER
+	layer = RUNE_LAYER
 
 	New()
 		..()

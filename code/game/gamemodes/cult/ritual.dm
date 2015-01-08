@@ -104,7 +104,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "1"
 	unacidable = 1
-	layer = TURF_LAYER
+	layer = RUNE_LAYER
 
 
 	var/word1

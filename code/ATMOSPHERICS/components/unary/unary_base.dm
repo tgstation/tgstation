@@ -2,11 +2,9 @@
 	icon = 'icons/obj/atmospherics/unary_devices.dmi'
 	dir = SOUTH
 	initialize_directions = SOUTH
-	layer = TURF_LAYER+0.1
 	var/datum/gas_mixture/air_contents
 	var/obj/machinery/atmospherics/node
 	var/datum/pipeline/parent
-	var/showpipe = 0
 
 /obj/machinery/atmospherics/unary/New()
 	..()
@@ -25,28 +23,23 @@ Iconnery
 	return
 
 /obj/machinery/atmospherics/unary/update_icon()
+	underlays.Cut()
 	update_icon_nopipes()
 
 	//This code might be a bit specific to scrubber, vents and injectors, but honestly they are basically the only ones used in the unary branch.
 
-	underlays.Cut()
+	var/state
+	var/col
+	var/lay
+	if(node)
+		state = "pipe_intact"
+		col = node.pipe_color
+		lay = node.layer
+	else
+		state = "pipe_exposed"
+		lay = PIPE_LAYER
 
-	if(showpipe)
-		var/state
-		var/col
-		if(node)
-			state = "pipe_intact"
-			col = node.pipe_color
-		else
-			state = "pipe_exposed"
-
-		underlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', state, initialize_directions, col)
-
-/obj/machinery/atmospherics/unary/hide(var/intact)
-	showpipe = !intact
-	update_icon()
-
-	..(intact)
+	underlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', state, initialize_directions, col, lay)
 
 /*
 Housekeeping and pipe network stuff below
@@ -65,9 +58,7 @@ Housekeeping and pipe network stuff below
 		if(target.initialize_directions & get_dir(target,src))
 			node = target
 			break
-	if(level == 2)
-		showpipe = 1
-	update_icon()
+	..()
 
 /obj/machinery/atmospherics/unary/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
 	if(..())

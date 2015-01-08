@@ -69,4 +69,4 @@
 
 	I.loc = src
 	I.equipped(src, slot)
-	I.layer = 20
+	I.layer = EQUIPMENT_LAYER

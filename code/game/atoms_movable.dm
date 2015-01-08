@@ -1,5 +1,4 @@
 /atom/movable
-	layer = 3
 	var/last_move = null
 	var/anchored = 0
 	var/move_speed = 10
@@ -92,6 +91,9 @@
 		A.Bumped(src)
 	return
 	..()
+	return
+
+/atom/movable/proc/initialize()
 	return
 
 /atom/movable/proc/forceMove(atom/destination)
@@ -202,7 +204,6 @@
 		src.throw_impact(get_turf(src))
 
 	return 1
-
 
 //Overlays
 /atom/movable/overlay

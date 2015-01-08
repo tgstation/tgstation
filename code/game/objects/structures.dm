@@ -1,9 +1,12 @@
 /obj/structure
 	icon = 'icons/obj/structures.dmi'
+	layer = STRUCTURE_LAYER
 
 /obj/structure/blob_act()
 	if(prob(50))
 		qdel(src)
+
+/obj/structure/New(nloc)
 
 /obj/structure/Destroy()
 	if(opacity)

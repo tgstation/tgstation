@@ -82,6 +82,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 //
 
 /obj/machinery/gravity_generator/main/station/initialize()
+	..()
 	setup_parts()
 	middle.overlays += "activated"
 	update_list()
@@ -138,7 +139,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 			middle = part
 		if(count <= 3) // Their sprite is the top part of the generator
 			part.density = 0
-			part.layer = MOB_LAYER + 0.1
+			part.layer = TALL_LAYER
 		part.sprite_number = count
 		part.main_part = src
 		parts += part

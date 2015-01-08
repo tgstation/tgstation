@@ -16,6 +16,7 @@
 
 /obj/machinery/computer/operating/initialize()
 	find_table()
+	..()
 
 /obj/machinery/computer/operating/proc/find_table()
 	for(var/dir in cardinal)

@@ -95,7 +95,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	var/obj/effect/overlay/h = new(T)//Spawn a blank effect at the location.
 	h.icon = A.holo_icon
 	h.mouse_opacity = 0//So you can't click on it.
-	h.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
+	h.layer = SPECIAL_EFFECT_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 	h.anchored = 1//So space wind cannot drag it.
 	h.name = "[A.name] (Hologram)"//If someone decides to right click.
 	h.SetLuminosity(2)	//hologram lighting

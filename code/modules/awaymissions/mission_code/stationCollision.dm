@@ -187,7 +187,7 @@ var/sc_safecode5 = "[rand(0,9)]"
 		var/turf/T = A
 		if(T.intact)
 			for(var/obj/O in T.contents)
-				if(O.level != 1)
+				if(O.layer > T.layer)
 					continue
 				if(O.invisibility == 101)
 					src.consume(O)

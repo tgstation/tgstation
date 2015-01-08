@@ -1,6 +1,6 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
-	level = 1.0
+	layer = MAPPING_FAR_BACK_LAYER
 
 	var/intact = 1
 	var/cancable = 0
@@ -26,9 +26,15 @@
 
 /turf/New()
 	..()
+	if(layer == MAPPING_FAR_BACK_LAYER)
+		if(density)
+			layer = WALL_LAYER
+		else if(intact)
+			layer = TILE_LAYER
+		else // space is hardcoded in space/New() so we don't have to istype() for it
+			layer = PLATING_LAYER
 	for(var/atom/movable/AM in src)
 		Entered(AM)
-	return
 
 // Adds the adjacent turfs to the current atmos processing
 /turf/Del()
@@ -95,15 +101,14 @@
 	return 0
 
 /turf/proc/levelupdate()
+	animate(src)
 	for(var/obj/O in src)
-		if(O.level == 1)
-			O.hide(src.intact)
+		O.hide(src.intact, src.layer)
 
 // override for space turfs, since they should never hide anything
 /turf/space/levelupdate()
 	for(var/obj/O in src)
-		if(O.level == 1)
-			O.hide(0)
+		O.hide(0, src.layer)
 
 // Removes all signs of lattice on the pos of the turf -Donkieyo
 /turf/proc/RemoveLattice()
@@ -325,7 +330,7 @@
 /turf/singularity_act()
 	if(intact)
 		for(var/obj/O in contents) //this is for deleting things like wires contained in the turf
-			if(O.level != 1)
+			if(O.layer > layer)
 				continue
 			if(O.invisibility == 101)
 				O.singularity_act()

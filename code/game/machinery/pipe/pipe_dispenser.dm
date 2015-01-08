@@ -58,7 +58,7 @@
 			var/p_type = text2num(href_list["make"])
 			var/p_dir = text2num(href_list["dir"])
 			var/obj/item/pipe/P = new (/*usr.loc*/ src.loc, pipe_type=p_type, dir=p_dir)
-			P.update()
+			P.update_icon()
 			P.add_fingerprint(usr)
 			wait = 1
 			spawn(10)
@@ -194,7 +194,7 @@ Nah
 				if(8)
 					C.ptype = 9
 			C.add_fingerprint(usr)
-			C.update()
+			C.update_icon()
 			wait = 1
 			spawn(15)
 				wait = 0

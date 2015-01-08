@@ -7,6 +7,7 @@
 	name = "conveyor belt"
 	desc = "A conveyor belt."
 	anchored = 1
+	layer = CONVEYOR_LAYER
 	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
 	var/forwards		// this is the default (forward) direction, set by the map dir
@@ -279,6 +280,7 @@
 	name = "conveyor belt assembly"
 	desc = "A conveyor belt assembly."
 	w_class = 4
+	layer = CONVEYOR_LAYER
 	var/id = "" //inherited by the belt
 
 /obj/item/conveyor_construct/attackby(obj/item/I, mob/user)

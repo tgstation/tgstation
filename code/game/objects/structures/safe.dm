@@ -31,6 +31,7 @@ FLOOR SAFES
 
 
 /obj/structure/safe/initialize()
+	..()
 	for(var/obj/item/I in loc)
 		if(space >= maxspace)
 			return
@@ -174,15 +175,5 @@ obj/structure/safe/ex_act(severity, target)
 	name = "floor safe"
 	icon_state = "floorsafe"
 	density = 0
-	level = 1	//underfloor
-	layer = 2.5
+	layer = BEACON_LAYER
 
-
-/obj/structure/safe/floor/initialize()
-	..()
-	var/turf/T = loc
-	hide(T.intact)
-
-
-/obj/structure/safe/floor/hide(var/intact)
-	invisibility = intact ? 101 : 0

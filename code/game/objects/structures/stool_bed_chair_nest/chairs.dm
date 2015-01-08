@@ -32,6 +32,10 @@
 		rotate()
 	return
 
+/obj/structure/stool/bed/chair/afterbuckle(mob/M)
+	..()
+	handle_layer()
+
 /obj/structure/stool/bed/chair/proc/handle_rotation(direction)
 	if(buckled_mob)
 		buckled_mob.buckled = null //Temporary, so Move() succeeds.
@@ -43,10 +47,11 @@
 	return 1
 
 /obj/structure/stool/bed/chair/proc/handle_layer()
-	if(dir == NORTH)
-		src.layer = FLY_LAYER
-	else
-		src.layer = OBJ_LAYER
+	if(buckled_mob)
+		if(dir == NORTH)
+			buckled_mob.layer = layer - SLIGHTLY_ABOVE
+		else
+			buckled_mob.layer = layer + SLIGHTLY_ABOVE
 
 /obj/structure/stool/bed/chair/proc/spin()
 	src.dir = turn(src.dir, 90)
@@ -101,11 +106,12 @@
 
 /obj/structure/stool/bed/chair/comfy/New()
 	armrest = image("icons/obj/objects.dmi", "comfychair_armrest")
-	armrest.layer = MOB_LAYER + 0.1
+	armrest.layer = layer + SLIGHTLY_ABOVE + SLIGHTLY_ABOVE // to be above the mob buckled into the chair
 
 	return ..()
 
 /obj/structure/stool/bed/chair/comfy/afterbuckle()
+	..()
 	if(buckled_mob)
 		overlays += armrest
 	else

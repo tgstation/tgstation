@@ -36,7 +36,7 @@
 	if(mymob && !mymob.hand)	//This being 0 or null means the right hand is in use
 		inv_box.icon_state = "hand_r_active"
 	inv_box.screen_loc = ui_rhand
-	inv_box.layer = 19
+	inv_box.layer = UI_LAYER
 	r_hand_hud_object = inv_box
 	inv_box.slot_id = slot_r_hand
 	adding += inv_box
@@ -48,7 +48,7 @@
 	if(mymob && mymob.hand)	//This being 1 means the left hand is in use
 		inv_box.icon_state = "hand_l_active"
 	inv_box.screen_loc = ui_lhand
-	inv_box.layer = 19
+	inv_box.layer = UI_LAYER
 	inv_box.slot_id = slot_l_hand
 	l_hand_hud_object = inv_box
 	adding += inv_box
@@ -60,7 +60,7 @@
 	using.icon = 'icons/mob/screen_alien.dmi'
 	using.icon_state = "swap_1"
 	using.screen_loc = ui_swaphand1
-	using.layer = 19
+	using.layer = UI_LAYER
 	adding += using
 
 	using = new /obj/screen/inventory()
@@ -68,7 +68,7 @@
 	using.icon = 'icons/mob/screen_alien.dmi'
 	using.icon_state = "swap_2"
 	using.screen_loc = ui_swaphand2
-	using.layer = 19
+	using.layer = UI_LAYER
 	adding += using
 
 	using = new /obj/screen/act_intent()
@@ -149,14 +149,14 @@
 	mymob.blind.icon_state = "blackimageoverlay"
 	mymob.blind.name = " "
 	mymob.blind.screen_loc = "CENTER-7,CENTER-7"
-	mymob.blind.layer = 0
+	mymob.blind.layer = BEHIND_SPACE_LAYER
 
 	mymob.flash = new /obj/screen()
 	mymob.flash.icon = 'icons/mob/screen_alien.dmi'
 	mymob.flash.icon_state = "blank"
 	mymob.flash.name = "flash"
 	mymob.flash.screen_loc = "WEST,SOUTH to EAST,NORTH"
-	mymob.flash.layer = 17
+	mymob.flash.layer = EYE_LAYER
 
 	mymob.zone_sel = new /obj/screen/zone_sel/alien()
 	mymob.zone_sel.icon = 'icons/mob/screen_alien.dmi'

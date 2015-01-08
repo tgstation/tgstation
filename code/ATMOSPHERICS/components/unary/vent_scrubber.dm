@@ -5,8 +5,6 @@
 	desc = "Has a valve and pump attached to it"
 	use_power = 1
 
-	level = 1
-
 	can_unwrench = 1
 
 	var/area/initial_loc
@@ -36,9 +34,6 @@
 	if (!id_tag)
 		assign_uid()
 		id_tag = num2text(uid)
-	if(ticker && ticker.current_state == 3)//if the game is running
-		src.initialize()
-		src.broadcast_status()
 
 /obj/machinery/atmospherics/unary/vent_scrubber/Destroy()
 	if(radio_controller)
@@ -46,9 +41,6 @@
 	..()
 
 /obj/machinery/atmospherics/unary/vent_scrubber/update_icon_nopipes()
-	overlays.Cut()
-	if(showpipe)
-		overlays += getpipeimage('icons/obj/atmospherics/unary_devices.dmi', "scrub_cap", initialize_directions)
 
 	if(!node || !on || stat & (NOPOWER|BROKEN))
 		icon_state = "scrub_off"
@@ -58,6 +50,11 @@
 		icon_state = "scrub_on"
 	else
 		icon_state = "scrub_purge"
+
+/obj/machinery/atmospherics/unary/vent_scrubber/update_icon()
+	..()
+	var/cap_layer = node ? node.layer : PIPE_LAYER // use the node's layer or use the default pipe layer if no node
+	underlays += getpipeimage('icons/obj/atmospherics/unary_devices.dmi', "scrub_cap", initialize_directions, , cap_layer)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
@@ -99,6 +96,7 @@
 	radio_filter_out = frequency==initial(frequency)?(RADIO_TO_AIRALARM):null
 	if (frequency)
 		set_frequency(frequency)
+	broadcast_status()
 
 /obj/machinery/atmospherics/unary/vent_scrubber/process()
 	..()

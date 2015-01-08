@@ -26,7 +26,6 @@ The regular pipe you see everywhere, including bent ones.
 	var/fatigue_pressure = 55*ONE_ATMOSPHERE
 	alert_pressure = 55*ONE_ATMOSPHERE
 
-	level = 1
 
 /obj/machinery/atmospherics/pipe/simple/New()
 	color = pipe_color
@@ -67,9 +66,7 @@ The regular pipe you see everywhere, including bent ones.
 					if(!node2 && N == 0)
 						node2 = target
 						break
-	var/turf/T = loc			// hide if turf is not intact
-	hide(T.intact)
-	update_icon()
+	..()
 
 /obj/machinery/atmospherics/pipe/simple/Destroy()
 	if(node1)
@@ -94,6 +91,7 @@ The regular pipe you see everywhere, including bent ones.
 		if(istype(node2, /obj/machinery/atmospherics/pipe))
 			qdel(parent)
 		node2 = null
+	else return
 	update_icon()
 
 /obj/machinery/atmospherics/pipe/simple/check_pressure(pressure)
@@ -123,16 +121,16 @@ The regular pipe you see everywhere, including bent ones.
 
 /obj/machinery/atmospherics/pipe/simple/update_icon()
 	if(node1&&node2)
-		icon_state = "intact[invisibility ? "-f" : "" ]"
+		icon_state = "intact"
 	else
 		var/have_node1 = node1?1:0
 		var/have_node2 = node2?1:0
-		icon_state = "exposed[have_node1][have_node2][invisibility ? "-f" : "" ]"
+		icon_state = "exposed[have_node1][have_node2]"
 
-/obj/machinery/atmospherics/pipe/simple/hide(var/i)
-	if(level == 1 && istype(loc, /turf/simulated))
-		invisibility = i ? 101 : 0
-	update_icon()
+	if(!pipe_color)
+		pipe_color = (node1 && node1.pipe_color) || (node2 && node2.pipe_color) || pipe_color
+		color = pipe_color
+	..()
 
 /obj/machinery/atmospherics/pipe/simple/pipeline_expansion()
 	return list(node1, node2)
@@ -147,22 +145,21 @@ The regular pipe you see everywhere, including bent ones.
 /obj/machinery/atmospherics/pipe/simple/insulated
 	icon = 'icons/obj/atmospherics/red_pipe.dmi'
 	icon_state = "intact"
+	layer = ATMOSPHERIC_MACHINE_LAYER
 	minimum_temperature_difference = 10000
 	thermal_conductivity = 0
 	maximum_pressure = 1000*ONE_ATMOSPHERE
 	fatigue_pressure = 900*ONE_ATMOSPHERE
 	alert_pressure = 900*ONE_ATMOSPHERE
-	level = 2
 
 //Colored pipes, use these for mapping
 /obj/machinery/atmospherics/pipe/simple/general
 	name="pipe"
 
 /obj/machinery/atmospherics/pipe/simple/general/visible
-	level = 2
+	layer = ATMOSPHERIC_MACHINE_LAYER
 
 /obj/machinery/atmospherics/pipe/simple/general/hidden
-	level = 1
 
 /obj/machinery/atmospherics/pipe/simple/scrubbers
 	name="scrubbers pipe"
@@ -170,10 +167,9 @@ The regular pipe you see everywhere, including bent ones.
 	color=rgb(255,0,0)
 
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible
-	level = 2
+	layer = ATMOSPHERIC_MACHINE_LAYER
 
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden
-	level = 1
 
 /obj/machinery/atmospherics/pipe/simple/supply
 	name="air supply pipe"
@@ -181,10 +177,9 @@ The regular pipe you see everywhere, including bent ones.
 	color=rgb(0,0,255)
 
 /obj/machinery/atmospherics/pipe/simple/supply/visible
-	level = 2
+	layer = ATMOSPHERIC_MACHINE_LAYER
 
 /obj/machinery/atmospherics/pipe/simple/supply/hidden
-	level = 1
 
 /obj/machinery/atmospherics/pipe/simple/supplymain
 	name="main air supply pipe"
@@ -192,37 +187,33 @@ The regular pipe you see everywhere, including bent ones.
 	color=rgb(130,43,272)
 
 /obj/machinery/atmospherics/pipe/simple/supplymain/visible
-	level = 2
+	layer = ATMOSPHERIC_MACHINE_LAYER
 
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden
-	level = 1
 
 /obj/machinery/atmospherics/pipe/simple/yellow
 	pipe_color=rgb(255,198,0)
 	color=rgb(255,198,0)
 
 /obj/machinery/atmospherics/pipe/simple/yellow/visible
-	level = 2
+	layer = ATMOSPHERIC_MACHINE_LAYER
 
 /obj/machinery/atmospherics/pipe/simple/yellow/hidden
-	level = 1
 
 /obj/machinery/atmospherics/pipe/simple/cyan
 	pipe_color=rgb(0,256,249)
 	color=rgb(0,256,249)
 
 /obj/machinery/atmospherics/pipe/simple/cyan/visible
-	level = 2
+	layer = ATMOSPHERIC_MACHINE_LAYER
 
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden
-	level = 1
 
 /obj/machinery/atmospherics/pipe/simple/green
 	pipe_color=rgb(30,256,0)
 	color=rgb(30,256,0)
 
 /obj/machinery/atmospherics/pipe/simple/green/visible
-	level = 2
+	layer = ATMOSPHERIC_MACHINE_LAYER
 
 /obj/machinery/atmospherics/pipe/simple/green/hidden
-	level = 1

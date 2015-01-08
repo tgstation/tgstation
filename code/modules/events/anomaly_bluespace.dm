@@ -66,7 +66,7 @@
 								blueeffect.screen_loc = "WEST,SOUTH to EAST,NORTH"
 								blueeffect.icon = 'icons/effects/effects.dmi'
 								blueeffect.icon_state = "shieldsparkles"
-								blueeffect.layer = 17
+								blueeffect.layer = EYE_LAYER
 								blueeffect.mouse_opacity = 0
 								M.client.screen += blueeffect
 								sleep(20)

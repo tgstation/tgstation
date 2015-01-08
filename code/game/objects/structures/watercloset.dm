@@ -150,7 +150,7 @@
 	name = "mist"
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mist"
-	layer = MOB_LAYER + 1
+	layer = SPECIAL_EFFECT_LAYER
 	anchored = 1
 	mouse_opacity = 0
 

@@ -29,6 +29,7 @@
 	var/corpseoxy = null //set suffocation damage on the corpse
 
 /obj/effect/landmark/corpse/initialize()
+	..()
 	createCorpse()
 
 /obj/effect/landmark/corpse/proc/createCorpse() //Creates a mob and checks for gear in each slot before attempting to equip it.

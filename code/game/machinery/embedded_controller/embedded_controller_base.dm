@@ -81,6 +81,7 @@ obj/machinery/embedded_controller/radio/Destroy()
 
 obj/machinery/embedded_controller/radio/initialize()
 	set_frequency(frequency)
+	..()
 
 obj/machinery/embedded_controller/radio/post_signal(datum/signal/signal)
 	signal.transmission_method = TRANSMISSION_RADIO

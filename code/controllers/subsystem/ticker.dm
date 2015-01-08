@@ -212,7 +212,7 @@ var/datum/subsystem/ticker/ticker
 	if( cinematic )	return	//already a cinematic in progress!
 	auto_toggle_ooc(1) // Turn it on
 	//initialise our cinematic screen object
-	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=20;mouse_opacity=0;screen_loc="1,0";}(src)
+	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=CINEMATIC_LAYER;mouse_opacity=0;screen_loc="1,0";}(src)
 
 	var/obj/structure/stool/bed/temp_buckle = new(src)
 	if(station_missed)

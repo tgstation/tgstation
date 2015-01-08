@@ -53,7 +53,6 @@
 		if(stake.pinned_target)
 			stake.density = 1
 			density = 0
-			layer = OBJ_LAYER
 
 			loc = user.loc
 			if(ishuman(user))
@@ -103,7 +102,7 @@
 		bmark.pixel_x = p_x
 		bmark.pixel_y = p_y
 		bmark.icon = 'icons/effects/effects.dmi'
-		bmark.layer = 3.5
+		bmark.layer = FLOAT_LAYER
 		bmark.icon_state = "scorch"
 
 		if(decaltype == 1)

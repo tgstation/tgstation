@@ -6,7 +6,6 @@
 	icon = 'icons/obj/pipes/transit_tube.dmi'
 	icon_state = "E-W" //icon_state decides which tube will be built
 	density = 0
-	layer = 3.1 //same as the built tube
 	anchored = 0.0
 
 //wrapper for turn that changes the transit tube formatted icon_state instead of the dir

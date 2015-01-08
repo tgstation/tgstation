@@ -183,7 +183,7 @@
 		del(I)
 		del(J)
 		H.icon = HI
-		H.layer = 25
+		H.layer = UI_LAYER
 		usr.mapobjs += H
 #else
 
@@ -307,7 +307,7 @@
 
 		H.icon = I
 		del(I)
-		H.layer = 25
+		H.layer = UI_LAYER
 		usr.mapobjs += H
 
 #endif

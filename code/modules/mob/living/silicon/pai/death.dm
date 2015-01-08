@@ -2,7 +2,7 @@
 	if(stat == DEAD)	return
 	stat = DEAD
 	canmove = 0
-	if(blind)	blind.layer = 0
+	if(blind)	blind.layer = BEHIND_SPACE_LAYER
 	sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_LEVEL_TWO

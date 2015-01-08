@@ -4,7 +4,7 @@
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "window"
 	density = 1
-	layer = 3.2//Just above doors
+	layer = WALL_LAYER
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = 1.0
 	flags = ON_BORDER

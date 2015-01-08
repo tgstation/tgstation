@@ -2,7 +2,6 @@ var/datum/subsystem/lighting/SSlighting
 
 #define MC_AVERAGE(average, current) (0.8*(average) + 0.2*(current))
 #define LIGHTING_ICON 'icons/effects/ss13_dark_alpha6.dmi'
-#define LIGHTING_LAYER 10									//Drawing layer for lighting overlays
 
 /datum/subsystem/lighting
 	name = "Lighting"

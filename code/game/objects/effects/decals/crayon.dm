@@ -3,7 +3,7 @@
 	desc = "A rune drawn in crayon."
 	icon = 'icons/effects/crayondecal.dmi'
 	icon_state = "rune1"
-	layer = 2.1
+	layer = GRAFFITI_LAYER
 	anchored = 1
 
 /obj/effect/decal/cleanable/crayon/examine()

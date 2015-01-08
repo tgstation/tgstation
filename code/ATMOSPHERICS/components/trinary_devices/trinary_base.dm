@@ -46,8 +46,8 @@ Iconnery
 	return
 
 /obj/machinery/atmospherics/trinary/icon_addintact(var/obj/machinery/atmospherics/node, var/connected)
-	var/image/img = getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "intact", get_dir(src,node), node.pipe_color)
-	overlays += img
+	var/image/img = getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "intact", get_dir(src,node), node.pipe_color, node.layer)
+	underlays += img
 
 	return connected | img.dir
 
@@ -55,13 +55,13 @@ Iconnery
 	var/unconnected = (~connected) & initialize_directions
 	for(var/direction in cardinal)
 		if(unconnected & direction)
-			overlays += getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "intact", direction)
+			underlays += getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "broken", direction, , PIPE_LAYER)
 
 /obj/machinery/atmospherics/trinary/update_icon()
+	underlays.Cut()
 	update_icon_nopipes()
 
 	var/connected = 0
-	overlays.Cut()
 
 	//Add non-broken pieces
 	if(node1)
@@ -130,7 +130,7 @@ Housekeeping and pipe network stuff below
 			node3 = target
 			break
 
-	update_icon()
+	..()
 
 /obj/machinery/atmospherics/trinary/build_network()
 	if(!parent1)

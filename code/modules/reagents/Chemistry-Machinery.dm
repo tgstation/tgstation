@@ -814,7 +814,6 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		desc = "Used to grind things up into raw materials."
 		icon = 'icons/obj/kitchen.dmi'
 		icon_state = "juicer1"
-		layer = 2.9
 		anchored = 1
 		use_power = 1
 		idle_power_usage = 5

@@ -20,11 +20,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/atmosalm = 0
 	var/poweralm = 1
 	var/party = null
-	level = null
 	name = "Space"
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "unknown"
-	layer = 10
+	layer = MAP_LAYER
 	mouse_opacity = 0
 	invisibility = INVISIBILITY_LIGHTING
 	var/lightswitch = 1

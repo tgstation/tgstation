@@ -402,6 +402,7 @@ Sorry Giacom. Please don't be mad :(
 		living_mob_list += src
 	if(!isanimal(src))	stat = CONSCIOUS
 	update_fire()
+	layer = initial(layer)
 	regenerate_icons()
 	..()
 	return

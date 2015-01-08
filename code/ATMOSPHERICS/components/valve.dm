@@ -4,6 +4,7 @@
 	name = "manual valve"
 	desc = "A pipe valve"
 	can_unwrench = 1
+	dir = NORTH
 	var/open = 0
 	var/frequency = 0
 	var/id = null
@@ -21,17 +22,6 @@
 	else if(open)
 		overlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "mvalve_on")
 
-/obj/machinery/atmospherics/binary/valve/update_icon()
-	update_icon_nopipes()
-	var/connected = 0
-	underlays.Cut()
-	//Add non-broken pieces
-	if(node1)
-		connected = icon_addintact(node1, connected)
-	if(node2)
-		connected = icon_addintact(node2, connected)
-	//Add broken pieces
-	icon_addbroken(connected)
 
 /obj/machinery/atmospherics/binary/valve/proc/open()
 	open = 1
@@ -76,12 +66,11 @@
 
 /obj/machinery/atmospherics/binary/valve/digital/update_icon_nopipes(animation)
 	normalize_dir()
+	overlays.Cut()
 	if(stat & NOPOWER)
 		icon_state = "dvalve_nopower"
-		overlays.Cut()
 		return
 	icon_state = "dvalve_off"
-	overlays.Cut()
 	if(animation)
 		overlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "dvalve_[open][!open]")
 	else if(open)

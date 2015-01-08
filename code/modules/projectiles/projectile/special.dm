@@ -136,7 +136,7 @@ obj/item/projectile/kinetic/New()
 	name = "kinetic explosion"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "kinetic_blast"
-	layer = 4.1
+	layer = SPECIAL_EFFECT_LAYER
 
 /obj/item/effect/kinetic_blast/New()
 	spawn(4)

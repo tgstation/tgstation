@@ -8,15 +8,18 @@
 
 /obj/machinery/atmospherics/unary/tank/update_icon()
 	underlays.Cut()
-	if(showpipe)
-		var/state
-		var/col
-		if(node)
-			state = "pipe_intact"
-			col = node.pipe_color
-		else
-			state = "pipe_exposed"
-		underlays += getpipeimage('icons/obj/atmospherics/pipe_tank.dmi', state, initialize_directions, col)
+	var/state
+	var/col
+	var/lay
+	if(node)
+		state = "pipe_intact"
+		col = node.pipe_color
+		lay = node.layer
+	else
+		state = "pipe_exposed"
+		lay = PIPE_LAYER
+
+	underlays += getpipeimage('icons/obj/atmospherics/pipe_tank.dmi', state, initialize_directions, col, lay)
 
 /obj/machinery/atmospherics/unary/tank/carbon_dioxide
 	name = "pressure tank (Carbon Dioxide)"

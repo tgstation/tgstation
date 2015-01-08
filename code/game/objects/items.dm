@@ -1,6 +1,7 @@
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items.dmi'
+	layer = ITEM_LAYER
 	var/item_state = null
 	var/hitsound = null
 	var/throwhitsound = null

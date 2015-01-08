@@ -33,6 +33,7 @@
 				user << "You wrench the assembly into place."
 				anchored = 1
 				state = 1
+				layer = ON_WALL_LAYER
 				update_icon()
 				auto_turn()
 				return
@@ -50,6 +51,7 @@
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				user << "You unattach the assembly from its place."
 				anchored = 0
+				layer = initial(layer)
 				update_icon()
 				state = 0
 				return

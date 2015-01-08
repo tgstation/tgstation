@@ -15,6 +15,7 @@ Pipelines + Other Objects -> Pipe network
 	idle_power_usage = 0
 	active_power_usage = 0
 	power_channel = ENVIRON
+	layer = ATMOSPHERIC_MACHINE_LAYER
 	var/nodealert = 0
 	var/can_unwrench = 0
 	var/initialize_directions = 0
@@ -28,8 +29,12 @@ Pipelines + Other Objects -> Pipe network
 	..()
 
 	SetInitDirections()
-	if(can_unwrench)
+	if(can_unwrench && !stored)
 		stored = new(src, make_from=src)
+
+/obj/machinery/atmospherics/initialize()
+	..()
+	update_icon()
 
 /obj/machinery/atmospherics/proc/SetInitDirections()
 	return
@@ -60,7 +65,7 @@ Pipelines + Other Objects -> Pipe network
 	return
 
 /obj/machinery/atmospherics/proc/icon_addintact(var/obj/machinery/atmospherics/node, var/connected)
-	var/image/img = getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "pipe_intact", get_dir(src,node), node.pipe_color)
+	var/image/img = getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "pipe_intact", get_dir(src,node), node.pipe_color, node.layer)
 	underlays += img
 
 	return connected | img.dir
@@ -69,7 +74,7 @@ Pipelines + Other Objects -> Pipe network
 	var/unconnected = (~connected) & initialize_directions
 	for(var/direction in cardinal)
 		if(unconnected & direction)
-			underlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "pipe_exposed", direction)
+			underlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "pipe_exposed", direction, , PIPE_LAYER)
 
 /obj/machinery/atmospherics/update_icon()
 	return null
@@ -77,7 +82,7 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if(can_unwrench && istype(W, /obj/item/weapon/wrench))
 		var/turf/T = src.loc
-		if (level==1 && isturf(T) && T.intact)
+		if (layer<T.layer && isturf(T) && T.intact)
 			user << "<span class='danger'>You must remove the plating first.</span>"
 			return 1
 		var/datum/gas_mixture/int_air = return_air()
@@ -109,19 +114,20 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/proc/nullifyPipenet(datum/pipeline/P)
 	P.other_atmosmch -= src
 
-/obj/machinery/atmospherics/proc/getpipeimage(var/iconset, var/iconstate, var/direction, var/col=rgb(255,255,255))
+/obj/machinery/atmospherics/proc/getpipeimage(var/iconset, var/iconstate, var/direction, var/col=rgb(255,255,255), var/nodelayer = layer)
 
 	//Add identifiers for the iconset
 	if(iconsetids[iconset] == null)
 		iconsetids[iconset] = num2text(iconsetids.len + 1)
 
 	//Generate a unique identifier for this image combination
-	var/identifier = iconsetids[iconset] + "_[iconstate]_[direction]_[col]"
+	var/identifier = iconsetids[iconset] + "_[iconstate]_[direction]_[col]_[nodelayer]"
 
 	var/image/img
 	if(pipeimages[identifier] == null)
 		img = image(iconset, icon_state=iconstate, dir=direction)
 		img.color = col
+		img.layer = nodelayer
 
 		pipeimages[identifier] = img
 
@@ -140,7 +146,10 @@ Pipelines + Other Objects -> Pipe network
 		stored.pipe_type = pipe_type  //... were not set at the time the stored pipe was created
 		stored.color = obj_color
 	var/turf/T = loc
-	level = T.intact ? 2 : 1
+	if(layer < T.layer)
+		layer = ATMOSPHERIC_MACHINE_LAYER
+		if(layer < T.layer) //I dunno ok
+			hide(T.intact, T.layer)
 	initialize()
 	var/list/nodes = pipeline_expansion()
 	for(var/obj/machinery/atmospherics/A in nodes)

@@ -495,7 +495,7 @@
 	desc = "A resonating field that significantly damages anything inside of it when the field eventually ruptures."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield1"
-	layer = 4.1
+	layer = SPECIAL_EFFECT_LAYER
 	mouse_opacity = 0
 	var/resonance_damage = 20
 	var/creator = null
@@ -762,7 +762,7 @@
 		else
 			for(M in L)
 				var/turf/T = get_turf(M)
-				var/image/I = image('icons/turf/walls.dmi', loc = T, icon_state = M.scan_state, layer = 18)
+				var/image/I = image('icons/turf/walls.dmi', loc = T, icon_state = M.scan_state, layer = ABSTRACT_LAYER)
 				C.images += I
 				spawn(30)
 					if(C)
@@ -807,11 +807,17 @@
 					var/client/C = user.client
 					for(M in L)
 						var/turf/T = get_turf(M)
-						var/image/I = image('icons/turf/walls.dmi', loc = T, icon_state = M.scan_state, layer = 18)
+						var/image/I = image('icons/turf/walls.dmi', loc = T, icon_state = M.scan_state, layer = ABSTRACT_LAYER)
 						C.images += I
 						spawn(30)
 							if(C)
 								C.images -= I
+
+/obj/item/device/t_scanner/adv_mining_scanner/clear_last_process()
+// Inherited from t-ray scanners, we don't want to call their version
+// TODO: Ensure the images from the last tick are garbage collected and not causing a memory leak.
+	return
+
 
 /**********************Xeno Warning Sign**********************/
 /obj/structure/sign/xeno_warning_mining

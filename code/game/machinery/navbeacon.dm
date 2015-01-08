@@ -7,8 +7,7 @@
 	icon_state = "navbeacon0-f"
 	name = "navigation beacon"
 	desc = "A radio beacon used for bot navigation."
-	level = 1		// underfloor
-	layer = 2.5
+	layer = BEACON_LAYER
 	anchored = 1
 
 	var/open = 0		// true if cover is open
@@ -24,9 +23,6 @@
 	..()
 
 	set_codes()
-
-	var/turf/T = loc
-	hide(T.intact)
 
 	spawn(5)	// must wait for map loading to finish
 		if(radio_controller)
@@ -55,22 +51,11 @@
 		else
 			codes[e] = "1"
 
-
-// called when turf state changes
-// hide the object if turf is intact
-/obj/machinery/navbeacon/hide(var/intact)
-	invisibility = intact ? 101 : 0
-	updateicon()
-
 // update the icon_state
-/obj/machinery/navbeacon/proc/updateicon()
+/obj/machinery/navbeacon/update_icon()
 	var/state="navbeacon[open]"
 
-	if(invisibility)
-		icon_state = "[state]-f"	// if invisible, set icon to faded version
-									// in case revealed by T-scanner
-	else
-		icon_state = "[state]"
+	icon_state = "[state]"
 
 
 // look for a signal of the form "findbeacon=X"
@@ -114,7 +99,7 @@
 
 		user.visible_message("[user] [open ? "opens" : "closes"] the beacon's cover.", "You [open ? "open" : "close"] the beacon's cover.")
 
-		updateicon()
+		update_icon()
 
 	else if (istype(I, /obj/item/weapon/card/id)||istype(I, /obj/item/device/pda))
 		if(open)

@@ -153,6 +153,7 @@
 	set_frequency(frequency)
 	if (!master_is_operating())
 		elect_master()
+	..()
 
 /obj/machinery/alarm/proc/master_is_operating()
 	return alarm_area.master_air_alarm && !(alarm_area.master_air_alarm.stat & (NOPOWER|BROKEN))

@@ -250,7 +250,7 @@
 	O.anchored = 1
 	O.opacity = 1
 	O.density = 1
-	O.layer = 5
+	O.layer = SPECIAL_EFFECT_LAYER
 
 	playsound(src, 'sound/items/Welder.ogg', 100, 1)
 

@@ -72,6 +72,7 @@
 			buckled_mob.buckled = null
 			buckled_mob.anchored = initial(buckled_mob.anchored)
 			buckled_mob.update_canmove()
+			buckled_mob.layer = initial(buckled_mob.layer)
 
 			var/mob/M = buckled_mob
 			buckled_mob = null
@@ -134,6 +135,7 @@
 	M.anchored = anchored
 	M.loc = src.loc
 	M.dir = src.dir
+	M.layer = layer + SLIGHTLY_ABOVE
 	M.update_canmove()
 	src.buckled_mob = M
 	src.add_fingerprint(user)

@@ -76,7 +76,6 @@
 	icon_state = "plasticflaps"
 	density = 0
 	anchored = 1
-	layer = 4
 
 /obj/structure/plasticflaps/CanPass(atom/movable/A, turf/T)
 	if(istype(A) && A.checkpass(PASSGLASS))

@@ -2,7 +2,7 @@
 	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
 	var/datum/pipeline/parent
 	var/volume = 0
-	layer = 2.4 //under wires with their 2.44
+	layer = PIPE_LAYER
 	use_power = 0
 	can_unwrench = 1
 	var/alert_pressure = 80*ONE_ATMOSPHERE

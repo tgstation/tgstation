@@ -188,11 +188,11 @@
 
 	client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
 
-	if ((blind && stat != 2))
+	if ((blind && stat != DEAD))
 		if ((eye_blind))
-			blind.layer = 18
+			blind.layer = EYE_LAYER
 		else
-			blind.layer = 0
+			blind.layer = BEHIND_SPACE_LAYER
 
 			if (disabilities & NEARSIGHT)
 				client.screen += global_hud.vimpaired

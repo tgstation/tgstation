@@ -3,7 +3,7 @@
 	anchored = 1
 	opacity = 0
 	density = 0
-	layer = 3.5
+	layer = ON_WALL_LAYER
 
 /obj/structure/sign/ex_act(severity, target)
 	qdel(src)

@@ -17,14 +17,14 @@ var/datum/global_hud/global_hud = new()
 	druggy.screen_loc = "WEST,SOUTH to EAST,NORTH"
 	druggy.icon_state = "druggy"
 	druggy.blend_mode = BLEND_MULTIPLY
-	druggy.layer = 17
+	druggy.layer = EYE_LAYER
 	druggy.mouse_opacity = 0
 
 	//that white blurry effect you get when you eyes are damaged
 	blurry = new /obj/screen()
 	blurry.screen_loc = "WEST,SOUTH to EAST,NORTH"
 	blurry.icon_state = "blurry"
-	blurry.layer = 17
+	blurry.layer = EYE_LAYER
 	blurry.mouse_opacity = 0
 
 	var/obj/screen/O
@@ -64,20 +64,20 @@ var/datum/global_hud/global_hud = new()
 		O = vimpaired[i]
 		O.icon_state = "dither50"
 		O.blend_mode = BLEND_MULTIPLY
-		O.layer = 17
+		O.layer = EYE_LAYER
 		O.mouse_opacity = 0
 
 		O = darkMask[i]
 		O.icon_state = "dither50"
 		O.blend_mode = BLEND_MULTIPLY
-		O.layer = 17
+		O.layer = EYE_LAYER
 		O.mouse_opacity = 0
 
 	for(i = 5, i <= 8, i++)
 		O = darkMask[i]
 		O.icon_state = "black"
 		O.blend_mode = BLEND_MULTIPLY
-		O.layer = 17
+		O.layer = EYE_LAYER
 		O.mouse_opacity = 0
 
 /*
