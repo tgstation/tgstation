@@ -227,3 +227,33 @@
 			src << "<i>I am not ready to reproduce yet...</i>"
 	else
 		src << "<i>I am not old enough to reproduce yet...</i>"
+
+/mob/living/carbon/slime/verb/Emote()
+	set category = "Slime"
+	set desc = "This lets you show the world your emotions."
+
+	if(stat)
+		src << "<i>I must be conscious to do this...</i>" //there's no reason to smile about being dead
+		return
+
+	var/selection = input(src,"Select a feeling.", "Emotions") in list("cancel",":>",":3",":<",":(",">:(","none")
+
+	switch(selection)
+		if("cancel")
+			return
+		if("none")
+			mood = null
+		if(":>")
+			mood = "mischevous"
+		if(":3")
+			mood = ":33"
+		if(":<")
+			mood = "pout"
+		if(":(")
+			mood = "sad"
+		if(">:(")
+			mood = "angry"
+		else
+			return
+
+	regenerate_icons()
