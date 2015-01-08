@@ -192,9 +192,9 @@ proc/makeNewConstruct(var/mob/living/simple_animal/construct/ctype, var/mob/targ
 			ticker.mode.cult+=newstruct.mind
 		ticker.mode.update_cult_icons_added(newstruct.mind)
 	newstruct << newstruct.playstyle_string
-	if(stoner && iswizard(stoner)
+	if(stoner && iswizard(stoner))
 		newstruct << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
-	else if(stoner && iscultist(stoner)
+	else if(stoner && iscultist(stoner))
 		newstruct << "<B>You are still bound to serve the cult, follow their orders and help them complete their goals at all costs.</B>"
 	newstruct.cancel_camera()
 
