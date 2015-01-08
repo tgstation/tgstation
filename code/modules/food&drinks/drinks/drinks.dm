@@ -273,9 +273,10 @@
 	name = "detective's flask"
 	desc = "The detective's only true friend."
 	icon_state = "detflask"
-	New()
-		..()
-		reagents.add_reagent("whiskey", 30)
+
+/obj/item/weapon/reagent_containers/food/drinks/flask/det/New()
+	..()
+	reagents.add_reagent("whiskey", 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/britcup
 	name = "cup"

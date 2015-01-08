@@ -250,13 +250,11 @@ obj/item/weapon/twohanded/
 	if(wielded)
 		return 1
 
-/obj/item/weapon/twohanded/dualsaber/green
-	New()
-		item_color = "green"
+/obj/item/weapon/twohanded/dualsaber/green/New()
+	item_color = "green"
 
-/obj/item/weapon/twohanded/dualsaber/red
-	New()
-		item_color = "red"
+/obj/item/weapon/twohanded/dualsaber/red/New()
+	item_color = "red"
 
 /obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()

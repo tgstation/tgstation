@@ -14,10 +14,10 @@
 	icon_state = "bottle16"
 	reagent = "inaprovaline"
 
-	New()
-		..()
-		reagents.add_reagent("inaprovaline", 60)
-		return
+/obj/item/weapon/reagent_containers/glass/bottle/robot/inaprovaline/New()
+	..()
+	reagents.add_reagent("inaprovaline", 60)
+	return
 
 
 /obj/item/weapon/reagent_containers/glass/bottle/robot/antitoxin
@@ -27,7 +27,7 @@
 	icon_state = "bottle17"
 	reagent = "anti_toxin"
 
-	New()
-		..()
-		reagents.add_reagent("anti_toxin", 60)
-		return
+/obj/item/weapon/reagent_containers/glass/bottle/robot/antitoxin/New()
+	..()
+	reagents.add_reagent("anti_toxin", 60)
+	return

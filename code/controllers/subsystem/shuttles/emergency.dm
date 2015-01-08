@@ -122,20 +122,20 @@
 	width = 3
 	height = 4
 
-	New()
-		if(id == "pod")
-			WARNING("[type] id has not been changed from the default. Use the id convention \"pod1\" \"pod2\" etc.")
-		..()
+/obj/docking_port/mobile/pod/New()
+	if(id == "pod")
+		WARNING("[type] id has not been changed from the default. Use the id convention \"pod1\" \"pod2\" etc.")
+	..()
 
-	request()
-		return
+/obj/docking_port/mobile/pod/request()
+	return
 
-	cancel()
-		return
+/obj/docking_port/mobile/pod/cancel()
+	return
 
 /*
-	findTransitDock()
-		. = SSshuttle.getDock("[id]_transit")
-		if(.)	return .
-		return ..()
+/obj/docking_port/mobile/pod/findTransitDock()
+	. = SSshuttle.getDock("[id]_transit")
+	if(.)	return .
+	return ..()
 */

@@ -302,38 +302,38 @@
 	var/obj/machinery/door/poddoor/filler_object/f2
 	icon = 'icons/obj/doors/1x2blast_hor.dmi'
 
-	New()
-		..()
-		f1 = new/obj/machinery/door/poddoor/filler_object (src.loc)
-		f2 = new/obj/machinery/door/poddoor/filler_object (get_step(src,EAST))
-		f1.density = density
-		f2.density = density
-		f1.sd_SetOpacity(opacity)
-		f2.sd_SetOpacity(opacity)
+/obj/machinery/door/poddoor/two_tile_hor/New()
+	..()
+	f1 = new/obj/machinery/door/poddoor/filler_object (src.loc)
+	f2 = new/obj/machinery/door/poddoor/filler_object (get_step(src,EAST))
+	f1.density = density
+	f2.density = density
+	f1.sd_SetOpacity(opacity)
+	f2.sd_SetOpacity(opacity)
 
-	Destroy()
-		qdel(f1)
-		qdel(f2)
-		..()
+/obj/machinery/door/poddoor/two_tile_hor/Destroy()
+	qdel(f1)
+	qdel(f2)
+	..()
 
 /obj/machinery/door/poddoor/two_tile_ver
 	var/obj/machinery/door/poddoor/filler_object/f1
 	var/obj/machinery/door/poddoor/filler_object/f2
 	icon = 'icons/obj/doors/1x2blast_vert.dmi'
 
-	New()
-		..()
-		f1 = new/obj/machinery/door/poddoor/filler_object (src.loc)
-		f2 = new/obj/machinery/door/poddoor/filler_object (get_step(src,NORTH))
-		f1.density = density
-		f2.density = density
-		f1.sd_SetOpacity(opacity)
-		f2.sd_SetOpacity(opacity)
+/obj/machinery/door/poddoor/two_tile_ver/New()
+	..()
+	f1 = new/obj/machinery/door/poddoor/filler_object (src.loc)
+	f2 = new/obj/machinery/door/poddoor/filler_object (get_step(src,NORTH))
+	f1.density = density
+	f2.density = density
+	f1.sd_SetOpacity(opacity)
+	f2.sd_SetOpacity(opacity)
 
-	Destroy()
-		qdel(f1)
-		qdel(f2)
-		..()
+/obj/machinery/door/poddoor/two_tile_ver/Destroy()
+	qdel(f1)
+	qdel(f2)
+	..()
 
 /obj/machinery/door/poddoor/four_tile_hor
 	var/obj/machinery/door/poddoor/filler_object/f1
@@ -342,27 +342,27 @@
 	var/obj/machinery/door/poddoor/filler_object/f4
 	icon = 'icons/obj/doors/1x4blast_hor.dmi'
 
-	New()
-		..()
-		f1 = new/obj/machinery/door/poddoor/filler_object (src.loc)
-		f2 = new/obj/machinery/door/poddoor/filler_object (get_step(f1,EAST))
-		f3 = new/obj/machinery/door/poddoor/filler_object (get_step(f2,EAST))
-		f4 = new/obj/machinery/door/poddoor/filler_object (get_step(f3,EAST))
-		f1.density = density
-		f2.density = density
-		f3.density = density
-		f4.density = density
-		f1.sd_SetOpacity(opacity)
-		f2.sd_SetOpacity(opacity)
-		f4.sd_SetOpacity(opacity)
-		f3.sd_SetOpacity(opacity)
+/obj/machinery/door/poddoor/four_tile_hor/New()
+	..()
+	f1 = new/obj/machinery/door/poddoor/filler_object (src.loc)
+	f2 = new/obj/machinery/door/poddoor/filler_object (get_step(f1,EAST))
+	f3 = new/obj/machinery/door/poddoor/filler_object (get_step(f2,EAST))
+	f4 = new/obj/machinery/door/poddoor/filler_object (get_step(f3,EAST))
+	f1.density = density
+	f2.density = density
+	f3.density = density
+	f4.density = density
+	f1.sd_SetOpacity(opacity)
+	f2.sd_SetOpacity(opacity)
+	f4.sd_SetOpacity(opacity)
+	f3.sd_SetOpacity(opacity)
 
-	Destroy()
-		qdel(f1)
-		qdel(f2)
-		qdel(f3)
-		qdel(f4)
-		..()
+/obj/machinery/door/poddoor/four_tile_hor/Destroy()
+	qdel(f1)
+	qdel(f2)
+	qdel(f3)
+	qdel(f4)
+	..()
 
 /obj/machinery/door/poddoor/four_tile_ver
 	var/obj/machinery/door/poddoor/filler_object/f1
@@ -371,27 +371,27 @@
 	var/obj/machinery/door/poddoor/filler_object/f4
 	icon = 'icons/obj/doors/1x4blast_vert.dmi'
 
-	New()
-		..()
-		f1 = new/obj/machinery/door/poddoor/filler_object (src.loc)
-		f2 = new/obj/machinery/door/poddoor/filler_object (get_step(f1,NORTH))
-		f3 = new/obj/machinery/door/poddoor/filler_object (get_step(f2,NORTH))
-		f4 = new/obj/machinery/door/poddoor/filler_object (get_step(f3,NORTH))
-		f1.density = density
-		f2.density = density
-		f3.density = density
-		f4.density = density
-		f1.sd_SetOpacity(opacity)
-		f2.sd_SetOpacity(opacity)
-		f4.sd_SetOpacity(opacity)
-		f3.sd_SetOpacity(opacity)
+/obj/machinery/door/poddoor/four_tile_ver/New()
+	..()
+	f1 = new/obj/machinery/door/poddoor/filler_object (src.loc)
+	f2 = new/obj/machinery/door/poddoor/filler_object (get_step(f1,NORTH))
+	f3 = new/obj/machinery/door/poddoor/filler_object (get_step(f2,NORTH))
+	f4 = new/obj/machinery/door/poddoor/filler_object (get_step(f3,NORTH))
+	f1.density = density
+	f2.density = density
+	f3.density = density
+	f4.density = density
+	f1.sd_SetOpacity(opacity)
+	f2.sd_SetOpacity(opacity)
+	f4.sd_SetOpacity(opacity)
+	f3.sd_SetOpacity(opacity)
 
-	Destroy()
-		qdel(f1)
-		qdel(f2)
-		qdel(f3)
-		qdel(f4)
-		..()
+/obj/machinery/door/poddoor/four_tile_ver/Destroy()
+	qdel(f1)
+	qdel(f2)
+	qdel(f3)
+	qdel(f4)
+	..()
 
 /obj/machinery/door/poddoor/filler_object
 	name = ""
