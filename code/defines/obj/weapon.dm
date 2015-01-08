@@ -1031,7 +1031,7 @@
 	icon = 'icons/obj/lightning.dmi'
 	icon_state = "lightning"
 	desc = "test lightning"
-	flags = USEDELAY
+	flags = 0
 
 	New()
 		icon = midicon

@@ -6,7 +6,7 @@
 	icon_state = "fire_extinguisher0"
 	item_state = "fire_extinguisher"
 	hitsound = 'sound/weapons/smash.ogg'
-	flags = FPRINT | USEDELAY
+	flags = FPRINT
 	siemens_coefficient = 1
 	throwforce = 10
 	w_class = 3.0
@@ -33,7 +33,7 @@
 	icon_state = "miniFE0"
 	item_state = "miniFE"
 	hitsound = null	//it is much lighter, after all.
-	flags = FPRINT | USEDELAY
+	flags = FPRINT
 	throwforce = 2
 	w_class = 2.0
 	force = 3.0

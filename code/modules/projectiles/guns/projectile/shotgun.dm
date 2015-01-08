@@ -7,7 +7,7 @@
 	max_shells = 4
 	w_class = 4.0
 	force = 10
-	flags = FPRINT  | USEDELAY
+	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BACK
 	caliber = list("shotgun" = 1, "flare" = 1) //flare shells are still shells
@@ -74,7 +74,7 @@
 	max_shells = 2
 	w_class = 4.0
 	force = 10
-	flags = FPRINT  | USEDELAY
+	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BACK
 	caliber = list("shotgun" = 1, "flare" = 1)

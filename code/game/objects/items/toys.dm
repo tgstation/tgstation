@@ -127,7 +127,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "revolver"
 	item_state = "gun"
-	flags = FPRINT  | USEDELAY
+	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	w_class = 3.0
@@ -211,7 +211,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "crossbow"
 	item_state = "crossbow"
-	flags = FPRINT  | USEDELAY
+	flags = FPRINT
 	w_class = 2.0
 	attack_verb = list("attacked", "struck", "hit")
 	var/bullets = 5
@@ -472,7 +472,7 @@
 	icon_state = "sunflower"
 	item_state = "sunflower"
 	var/empty = 0
-	flags = USEDELAY
+	flags = 0
 
 /obj/item/toy/waterflower/New()
 	. = ..()
