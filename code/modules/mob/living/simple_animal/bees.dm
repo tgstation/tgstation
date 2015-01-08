@@ -101,7 +101,7 @@
 
 		for(var/this_type in calmers)
 			var/check_effect = locate(this_type) in src.loc
-			if(check_effect && check_effect.type == this_type)
+			if(check_effect && check_effect == this_type)
 				calming = 1
 				break
 

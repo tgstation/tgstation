@@ -142,9 +142,9 @@ var/const/MAX_SAVE_SLOTS = 8
 			if(load_pref)
 				if(load_save_sqlite(C.ckey, src, default_slot))
 					return
-	randomize_appearance_for()
-	real_name = random_name(gender)
-	save_character_sqlite(src, C.ckey, default_slot)
+		randomize_appearance_for()
+		real_name = random_name(gender)
+		save_character_sqlite(src, C.ckey, default_slot)
 
 /datum/preferences
 
