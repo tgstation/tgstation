@@ -100,7 +100,7 @@
 	icon_state = "brain-alien"
 	origin_tech = "biotech=7"
 
-/obj/item/device/mmi/Destroy() //copypasted from MMIs.
+/obj/item/organ/brain/Destroy() //copypasted from MMIs.
 	if(brainmob)
 		qdel(brainmob)
 		brainmob = null
