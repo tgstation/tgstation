@@ -193,7 +193,6 @@ var/MAX_EXPLOSION_RANGE = 14
 #define MASKINTERNALS	8	// mask allows internals
 //#define SUITSPACE		8	// suit protects against space
 
-#define NOSHIELD	32		// weapon not affected by shield
 #define FPRINT		256		// takes a fingerprint
 #define ON_BORDER	512		// item has priority to check when entering or leaving
 #define NOBLUDGEON  4  // when an item has this it produces no "X has been hit by Y with Z" message with the default handler
