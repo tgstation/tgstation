@@ -95,7 +95,7 @@ datum
 				return the_id
 
 			trans_to(var/obj/target, var/amount=1, var/multiplier=1, var/preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
-				if (!target )
+				if (!target)
 					return
 				if (!target.reagents || src.total_volume<=0)
 					return

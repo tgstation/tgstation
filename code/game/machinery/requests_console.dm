@@ -386,7 +386,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			msgVerified = "<font color='green'><b>Verified by [ID.registered_name] ([ID.assignment])</b></font>"
 			updateUsrDialog()
 		if(screen == 10)
-			var/obj/item/weapon/card/id/ID = O
+			var/obj/item/weapon/card/id/ID = O.GetID()
 			if (access_RC_announce in ID.access)
 				announceAuth = 1
 			else

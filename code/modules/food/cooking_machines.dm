@@ -376,7 +376,7 @@ var/global/ingredientLimit = 10
 	sleep(src.cookTime/3)
 	if(src.ingredient) src.ingredient.color = "#C28566"
 	sleep(src.cookTime/3)
-	src.ingredient.color = "#A34719"
+	if(src.ingredient) src.ingredient.color = "#A34719"
 	sleep(src.cookTime/3)
 	src.icon_state = initial(src.icon_state)
 	src.active = 0
