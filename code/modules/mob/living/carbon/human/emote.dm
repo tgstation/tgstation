@@ -571,15 +571,15 @@
 					for(var/mob/M in view(0))
 						if(M != src)
 							if(!miming)
-								visible_message("<span class = 'warning'<b>[src]</b> farts in <b>[M]</b>'s face!</span>")
+								visible_message("<span class = 'warning'><b>[src]</b> farts in <b>[M]</b>'s face!</span>")
 							else
 								visible_message("<span class = 'warning'><b>[src]</b> silently farts in <b>[M]</b>'s face!</span>")
 						else
 							continue
 					/*
-					
+
 					GAY BROKEN SHIT
-					
+
 					for(var/mob/M in view(1))
 						if(M != src)
 							if(!miming)
@@ -588,11 +588,11 @@
 								visible_message("\red <b>[src]</b> silently farts in <b>[M]</b>'s face!")
 						else
 							continue
-					
+
 					GAY BROKEN SHIT
-					
-					*/ 
-					
+
+					*/
+
 					//101 shitty fart jokes
 					var/list/smells = list(
 						"burrito filling",
@@ -633,12 +633,12 @@
 						"burps, the burp smells like a fart",
 						"farts. Now it smells like [smell] in here"
 						)
-						
+
 					if(miming)
 						farts = list("silently farts.", "acts out a fart.", "lets out a silent but deadly fart.")
-					
+
 					var/fart = pick(farts)
-					
+
 					if(!miming)
 						message = "<b>[src]</b> [fart]."
 						if(mind && mind.assigned_role == "Clown")
