@@ -2,7 +2,7 @@
 //Don't judge me D; ~Carn
 
 /datum/round_event_control/ninja
-	name = "Space Ninja"
+	name = "Chrono-Legionnaire"
 	typepath = /datum/round_event/ninja
 	max_occurrences = 1
 	earliest_start = 30000 // 1 hour
@@ -157,8 +157,9 @@
 	Mind.objectives += O
 
 	//add some RP-fluff
-	Mind.store_memory("I am an elite mercenary assassin of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!")
-	Mind.store_memory("Suprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by right clicking on it, to use abilities like stealth)!")
+	Mind.store_memory("I am a <font color='blue'><B>chrono-legionnaire</B></font> of the Fadria Corporation. I am here to divert the station's course, for better or worse.")
+	Mind.store_memory("I have been transported forward into the future, although I can no longer remember how.")
+	Mind.store_memory("I will do as I see fit. <font color='blue'><B>This station is mine.</B></font> (//initialize your suit by right clicking on it, to use abilities like stealth)!")
 	Mind.store_memory("Officially, [helping_station?"Nanotrasen":"The Syndicate"] are my employer.")
 
 	//spawn the ninja and assign the candidate
@@ -185,14 +186,14 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 */
 /datum/round_event/ninja/proc/generate_ninja_directive()
 	switch(rand(1,13))
-		if(1)	return "The Spider Clan must not be linked to this operation. Remain as hidden and covert as possible."
-		if(2)	return "[station_name] is financed by an enemy of the Spider Clan. Cause as much structural damage as possible."
+		if(1)	return "The Fadria must not be linked to this operation. Remain as hidden and covert as possible."
+		if(2)	return "[station_name] is financed by an enemy of the Fadria. Cause as much structural damage as possible."
 		if(3)	return "A wealthy animal rights activist has made a request we cannot refuse. Prioritize saving animal lives whenever possible."
-		if(4)	return "The Spider Clan absolutely cannot be linked to this operation. Eliminate all witnesses using most extreme prejudice."
+		if(4)	return "The Fadria absolutely cannot be linked to this operation. Eliminate all witnesses using most extreme prejudice."
 		if(5)	return "We are currently negotiating with Nanotrasen command. Prioritize saving human lives over ending them."
 		if(6)	return "We are engaged in a legal dispute over [station_name]. If a laywer is present on board, force their cooperation in the matter."
 		if(7)	return "A financial backer has made an offer we cannot refuse. Implicate Syndicate involvement in the operation."
-		if(8)	return "Let no one question the mercy of the Spider Clan. Ensure the safety of all non-essential personnel you encounter."
+		if(8)	return "Let no one question the mercy of the Fadria. Ensure the safety of all non-essential personnel you encounter."
 		if(9)	return "A free agent has proposed a lucrative business deal. Implicate Nanotrasen involvement in the operation."
 		if(10)	return "Our reputation is on the line. Harm as few civilians or innocents as possible."
 		if(11)	return "Our honor is on the line. Utilize only honorable tactics when dealing with opponents."
@@ -289,7 +290,7 @@ ________________________________________________________________________________
 
 /client/proc/cmd_admin_ninjafy(var/mob/living/carbon/human/H in player_list)
 	set category = null
-	set name = "Make Space Ninja"
+	set name = "Make Chrono-Legionnaire"
 
 	if(!ticker)
 		alert("Wait until the game starts")
@@ -301,7 +302,7 @@ ________________________________________________________________________________
 	if(alert(src, "You sure?", "Confirm", "Yes", "No") != "Yes")
 		return
 
-	log_admin("[key_name(src)] turned [H.key] into a Space Ninja.")
+	log_admin("[key_name(src)] turned [H.key] into a Chrono-Legionnaire.")
 	H.mind = create_ninja_mind(H.key)
 	H.mind_initialize()
 	H.equip_space_ninja(1)
@@ -314,8 +315,8 @@ ________________________________________________________________________________
 
 /client/proc/send_space_ninja()
 	set category = "Fun"
-	set name = "Spawn Space Ninja"
-	set desc = "Spawns a space ninja for when you need a teenager with attitude."
+	set name = "Spawn Chrono-Legionnaire"
+	set desc = "Spawns a chrono-legionnaire for when you need a teenager with attitude."
 	set popup_menu = 0
 
 	if(!holder)
@@ -324,12 +325,12 @@ ________________________________________________________________________________
 	if(!ticker.mode)
 		alert("The game hasn't started yet!")
 		return
-	if(alert("Are you sure you want to send in a space ninja?",,"Yes","No")=="No")
+	if(alert("Are you sure you want to send in a chrono-legionnaire?",,"Yes","No")=="No")
 		return
 
-	var/mission = copytext(sanitize(input(src, "Please specify which mission the space ninja shall undertake.", "Specify Mission", null) as text|null),1,MAX_MESSAGE_LEN)
+	var/mission = copytext(sanitize(input(src, "Please specify which mission the legionnaire shall undertake.", "Specify Mission", null) as text|null),1,MAX_MESSAGE_LEN)
 
-	var/client/C = input("Pick character to spawn as the Space Ninja", "Key", "") as null|anything in clients
+	var/client/C = input("Pick character to spawn as the chrono-legionnaire", "Key", "") as null|anything in clients
 	if(!C)
 		return
 
@@ -337,8 +338,8 @@ ________________________________________________________________________________
 	E.key=C.key
 	E.mission=mission
 
-	message_admins("<span class='notice'>[key_name_admin(key)] has spawned [key_name_admin(C.key)] as a Space Ninja.</span>")
-	log_admin("[key] used Spawn Space Ninja.")
+	message_admins("<span class='notice'>[key_name_admin(key)] has spawned [key_name_admin(C.key)] as a Chrono-Legionnaire.</span>")
+	log_admin("[key] used Spawn Chrono-Legionnaire.")
 
 	return
 
@@ -376,7 +377,7 @@ ________________________________________________________________________________
 	equip_to_slot_or_del(new /obj/item/weapon/c4(src), slot_r_store)
 	equip_to_slot_or_del(new /obj/item/weapon/c4(src), slot_l_store)
 	equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen(src), slot_s_store)
-	equip_to_slot_or_del(new /obj/item/weapon/tank/jetpack/carbondioxide(src), slot_back)
+	equip_to_slot_or_del(new /obj/item/weapon/tank/jetpack/chrono(src), slot_back)
 
 	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(src)
 	E.imp_in = src
@@ -671,7 +672,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 /obj/item/clothing/suit/space/space_ninja/proc/ninjasmoke()
 	set name = "Smoke Bomb"
 	set desc = "Blind your enemies momentarily with a well-placed smoke bomb."
-	set category = "Ninja Ability"
+	set category = "Chrono Ability"
 	set popup_menu = 0//Will not see it when right clicking.
 
 	if(!ninjacost(,2))
@@ -690,7 +691,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 /obj/item/clothing/suit/space/space_ninja/proc/ninjajaunt()
 	set name = "Phase Jaunt (10E)"
 	set desc = "Utilizes the internal VOID-shift device to rapidly transit in direction facing."
-	set category = "Ninja Ability"
+	set category = "Chrono Ability"
 	set popup_menu = 0
 
 	var/C = 100
@@ -701,7 +702,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 		if(destination&&istype(mobloc, /turf))//The turf check prevents unusual behavior. Like teleporting out of cryo pods, cloners, mechs, etc.
 			spawn(0)
 				playsound(U.loc, "sparks", 50, 1)
-				anim(mobloc,src,'icons/mob/mob.dmi',,"phaseout",,U.dir)
+				anim(mobloc,src,'icons/mob/mob.dmi',,"chronophase",,U.dir)
 
 			handle_teleport_grab(destination, U)
 			U.loc = destination
@@ -710,7 +711,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 				spark_system.start()
 				playsound(U.loc, 'sound/effects/phasein.ogg', 25, 1)
 				playsound(U.loc, "sparks", 50, 1)
-				anim(U.loc,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
+				anim(U.loc,U,'icons/mob/mob.dmi',,"chronophasein",,U.dir)
 
 			spawn(0)
 				destination.phase_damage_creatures(20,U)//Paralyse and damage mobs and mechas on the turf
@@ -735,7 +736,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 		if((!T.density)&&istype(mobloc, /turf))
 			spawn(0)
 				playsound(U.loc, 'sound/effects/sparks4.ogg', 50, 1)
-				anim(mobloc,src,'icons/mob/mob.dmi',,"phaseout",,U.dir)
+				anim(mobloc,src,'icons/mob/mob.dmi',,"chronophase",,U.dir)
 
 			handle_teleport_grab(T, U)
 			U.loc = T
@@ -744,7 +745,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 				spark_system.start()
 				playsound(U.loc, 'sound/effects/phasein.ogg', 25, 1)
 				playsound(U.loc, 'sound/effects/sparks2.ogg', 50, 1)
-				anim(U.loc,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
+				anim(U.loc,U,'icons/mob/mob.dmi',,"chronophasein",,U.dir)
 
 			spawn(0)//Any living mobs in teleport area are gibbed.
 				T.phase_damage_creatures(20,U)//Paralyse and damage mobs and mechas on the turf
@@ -759,7 +760,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 /obj/item/clothing/suit/space/space_ninja/proc/ninjapulse()
 	set name = "EM Burst (25E)"
 	set desc = "Disable any nearby technology with a electro-magnetic pulse."
-	set category = "Ninja Ability"
+	set category = "Chrono Ability"
 	set popup_menu = 0
 
 	var/C = 250
@@ -776,7 +777,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 /obj/item/clothing/suit/space/space_ninja/proc/ninjablade()
 	set name = "Energy Blade (5E)"
 	set desc = "Create a focused beam of energy in your active hand."
-	set category = "Ninja Ability"
+	set category = "Chrono Ability"
 	set popup_menu = 0
 
 	var/C = 50
@@ -809,7 +810,7 @@ This could be a lot better but I'm too tired atm.*/
 /obj/item/clothing/suit/space/space_ninja/proc/ninjastar()
 	set name = "Energy Star (5E)"
 	set desc = "Launches an energy star at a random living target."
-	set category = "Ninja Ability"
+	set category = "Chrono Ability"
 	set popup_menu = 0
 
 	var/C = 50
@@ -882,7 +883,7 @@ Movement impairing would indicate drugs and the like.*/
 /obj/item/clothing/suit/space/space_ninja/proc/ninjaboost()
 	set name = "Adrenaline Boost"
 	set desc = "Inject a secret chemical that will counteract all movement-impairing effect."
-	set category = "Ninja Ability"
+	set category = "Chrono Ability"
 	set popup_menu = 0
 
 	if(!ninjacost(,3))//Have to make sure stat is not counted for this ability.
@@ -921,7 +922,7 @@ Or otherwise known as anime mode. Which also happens to be ridiculously powerful
 /obj/item/clothing/suit/space/space_ninja/proc/ninjawalk()
 	set name = "Shadow Walk"
 	set desc = "Combines the VOID-shift and CLOAK-tech devices to freely move between solid matter. Toggle on or off."
-	set category = "Ninja Ability"
+	set category = "Chrono Ability"
 	set popup_menu = 0
 
 	var/mob/living/carbon/human/U = affecting
@@ -938,7 +939,7 @@ Or otherwise known as anime mode. Which also happens to be ridiculously powerful
 /obj/item/clothing/suit/space/space_ninja/proc/ninjaslayer()
 	set name = "Phase Slayer"
 	set desc = "Utilizes the internal VOID-shift device to kill all creatures in a straight line."
-	set category = "Ninja Ability"
+	set category = "Chrono Ability"
 	set popup_menu = 0
 
 	if(!ninjacost())
@@ -976,9 +977,9 @@ Or otherwise known as anime mode. Which also happens to be ridiculously powerful
 /*Appear behind a randomly chosen mob while a few decoy teleports appear.
 This is so anime it hurts. But that's the point.*/
 /obj/item/clothing/suit/space/space_ninja/proc/ninjamirage()
-	set name = "Spider Mirage"
+	set name = "Time Mirage"
 	set desc = "Utilizes the internal VOID-shift device to create decoys and teleport behind a random target."
-	set category = "Ninja Ability"
+	set category = "Chrono Ability"
 	set popup_menu = 0
 
 	if(!ninjacost())//Simply checks for stat.
@@ -1021,14 +1022,14 @@ This is so anime it hurts. But that's the point.*/
 				var/turf/picked = locate(locx,locy,mobloc.z)
 				spawn(0)
 					playsound(U.loc, "sparks", 50, 1)
-					anim(mobloc,U,'icons/mob/mob.dmi',,"phaseout",,U.dir)
+					anim(mobloc,U,'icons/mob/mob.dmi',,"chronophase",,U.dir)
 
 				spawn(0)
 					var/limit = 4
 					for(var/turf/T in oview(5))
 						if(prob(20))
 							spawn(0)
-								anim(T,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
+								anim(T,U,'icons/mob/mob.dmi',,"chronophasein",,U.dir)
 							limit--
 						if(limit<=0)	break
 
@@ -1040,7 +1041,7 @@ This is so anime it hurts. But that's the point.*/
 					spark_system.start()
 					playsound(U.loc, 'sound/effects/phasein.ogg', 25, 1)
 					playsound(U.loc, "sparks", 50, 1)
-					anim(U.loc,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
+					anim(U.loc,U,'icons/mob/mob.dmi',,"chronophasein",,U.dir)
 				s_coold = 1
 			else
 				U << "<span class='danger'>The VOID-shift device is malfunctioning, <B>teleportation failed</B>.</span>"
@@ -1125,7 +1126,7 @@ ________________________________________________________________________________
 /obj/item/clothing/suit/space/space_ninja/proc/init()
 	set name = "Initialize Suit"
 	set desc = "Initializes the suit for field operation."
-	set category = "Ninja Equip"
+	set category = "Chrono Equip"
 
 	ninitialize()
 	return
@@ -1133,7 +1134,7 @@ ________________________________________________________________________________
 /obj/item/clothing/suit/space/space_ninja/proc/deinit()
 	set name = "De-Initialize Suit"
 	set desc = "Begins procedure to remove the suit."
-	set category = "Ninja Equip"
+	set category = "Chrono Equip"
 
 	if(s_control&&!s_busy)
 		deinitialize()
@@ -1142,9 +1143,9 @@ ________________________________________________________________________________
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/spideros()
-	set name = "Display SpiderOS"
+	set name = "Display ChronOS"
 	set desc = "Utilize built-in computer system."
-	set category = "Ninja Equip"
+	set category = "Chrono Equip"
 
 	if(s_control&&!s_busy&&!kamikaze)
 		display_spideros()
@@ -1155,7 +1156,7 @@ ________________________________________________________________________________
 /obj/item/clothing/suit/space/space_ninja/proc/stealth()
 	set name = "Toggle Stealth"
 	set desc = "Utilize the internal CLOAK-tech device to activate or deactivate stealth-camo."
-	set category = "Ninja Equip"
+	set category = "Chrono Equip"
 
 	if(s_control&&!s_busy)
 		toggle_stealth()
@@ -1230,7 +1231,7 @@ ________________________________________________________________________________
 				if(5)
 					U << "<span class='notice'>Primary system status: <B>ONLINE</B>.\nBackup system status: <B>ONLINE</B>.\nCurrent energy capacity: <B>[cell.charge]</B>.</span>"
 				if(6)
-					U << "<span class='notice'>All systems operational. Welcome to <B>SpiderOS</B>, [U.real_name].</span>"
+					U << "<span class='notice'>All systems operational. Welcome to <B>ChronOS</B>, [U.real_name].</span>"
 					grant_ninja_verbs()
 					grant_equip_verbs()
 					ntick()
@@ -1266,7 +1267,7 @@ ________________________________________________________________________________
 					remove_kamikaze(U)//Shutdowns kamikaze.
 					spideros = 0//Spideros resets.
 				if(1)
-					U << "<span class='notice'>Logging off, [U:real_name]. Shutting down <B>SpiderOS</B>.</span>"
+					U << "<span class='notice'>Logging off, [U:real_name]. Shutting down <B>ChronOS</B>.</span>"
 					remove_ninja_verbs()
 				if(2)
 					U << "<span class='notice'>Primary system status: <B>OFFLINE</B>.\nBackup system status: <B>OFFLINE</B>.</span>"
@@ -1295,17 +1296,17 @@ ________________________________________________________________________________
 	var/mob/living/silicon/ai/A = AI
 	var/display_to = s_control ? U : A//Who do we want to display certain messages to?
 
-	var/dat = "<html><head><title>SpiderOS</title></head><body bgcolor=\"#3D5B43\" text=\"#DB2929\"><style>a, a:link, a:visited, a:active, a:hover { color: #DB2929; }img {border-style:none;}</style>"
+	var/dat = "<html><head><title>ChronOS</title></head><body bgcolor=\"#3D5B43\" text=\"#DB2929\"><style>a, a:link, a:visited, a:active, a:hover { color: #DB2929; }img {border-style:none;}</style>"
 	dat += "<a href='byond://?src=\ref[src];choice=Refresh'><img src=sos_7.png> Refresh</a>"
 	if(spideros)
 		dat += " | <a href='byond://?src=\ref[src];choice=Return'><img src=sos_1.png> Return</a>"
 	dat += " | <a href='byond://?src=\ref[src];choice=Close'><img src=sos_8.png> Close</a>"
 	dat += "<br>"
 	if(s_control)
-		dat += "<h2 ALIGN=CENTER>SpiderOS v.1.337</h2>"
+		dat += "<h2 ALIGN=CENTER>ChronOS v.1.337</h2>"
 		dat += "Welcome, <b>[U.real_name]</b>.<br>"
 	else
-		dat += "<h2 ALIGN=CENTER>SpiderOS v.<b>ERR-RR00123</b></h2>"
+		dat += "<h2 ALIGN=CENTER>ChronOS v.<b>ERR-RR00123</b></h2>"
 	dat += "<br>"
 	dat += "<img src=sos_10.png> Current Time: [worldtime2text()]<br>"
 	dat += "<img src=sos_9.png> Battery Life: [round(cell.charge/100)]%<br>"
@@ -1411,47 +1412,47 @@ ________________________________________________________________________________
 				dat += "Use with caution. De-initialize the suit when energy is low."
 			else
 				//Only leaving this in for funnays. CAN'T LET YOU DO THAT STAR FOX
-				dat += "<b>WARNING</b>: Hostile runtime intrusion detected: operation locked. The Spider Clan is watching you, <b>INTRUDER</b>."
-				dat += "<b>ERROR</b>: TARANTULA.v.4.77.12 encryption algorithm detected. Unable to decrypt archive.<br>"
+				dat += "<b>WARNING</b>: Hostile runtime intrusion detected: operation locked. The Fadria is watching you, <b>INRTRUDER</b>."
+				dat += "<b>ERROR</b>: TIMEYWIMEY.v.4.77.12 encryption algorithm detected. Unable to decrypt archive.<br>"
 		if(4)
 			dat += {"
-					<h4><img src=sos_6.png> Ninja Manual:</h4>
+					<h4><img src=sos_6.png> Legionnaire Field Manual:</h4>
 					<h5>Who they are:</h5>
-					Space ninjas are a special type of ninja, specifically one of the space-faring type. The vast majority of space ninjas belong to the Spider Clan, a cult-like sect, which has existed for several hundred years. The Spider Clan practice a sort of augmentation of human flesh in order to achieve a more perfect state of being and follow Postmodern Space Bushido. They also kill people for money. Their leaders are chosen from the oldest of the grand-masters, people that have lived a lot longer than any mortal man should.<br>Being a sect of technology-loving fanatics, the Spider Clan have the very best to choose from in terms of hardware--cybernetic implants, exoskeleton rigs, hyper-capacity batteries, and you get the idea. Some believe that much of the Spider Clan equipment is based on reverse-engineered alien technology while others doubt such claims.<br>Whatever the case, their technology is absolutely superb.
+					Chrono-legionnaires are a cybernetic soldier wielding space-time technology too complex for human minds to understand. The vast majority of chrono-legionnaires belong to the Fadria Corporation, a cult-like sect, which has existed for several hundred years. The Fadria practice a sort of augmentation of human flesh in order to achieve a more perfect state of being and follow Postmodern Space Bushido. They also kill people for money. Their leaders are chosen from the oldest of the grand-masters, people that have lived a lot longer than any mortal man should.<br>Being a sect of technology-loving fanatics, the Fadria have the very best to choose from in terms of hardware--cybernetic implants, exoskeleton rigs, hyper-capacity batteries, and you get the idea. Some believe that much of the Spider Clan equipment is based on reverse-engineered alien technology while others doubt such claims.<br>Whatever the case, their technology is absolutely superb.
 					<h5>How they relate to other SS13 organizations:</h5>
 					<ul>
 					<li>*<b>Nanotrasen</b> and the Syndicate are two sides of the same coin and that coin is valuable.</li>
-					<li>*<b>The Space Wizard Federation</b> is a problem, mainly because they are an extremely dangerous group of unpredictable individuals--not to mention the wizards hate technology and are in direct opposition of the Spider Clan. Best avoided or left well-enough alone. How to battle: wizards possess several powerful abilities to steer clear off. Blind in particular is a nasty spell--jaunt away if you are blinded and never approach a wizard in melee. Stealth may also work if the wizard is not wearing thermal scanners--don't count on this. Run away if you feel threatened and await a better opportunity.</li>
-					<li>*<b>Changeling Hivemind</b>: extremely dangerous and to be killed on sight. How to battle: they will likely try to absorb you. Adrenaline boost, then phase shift into them. If you get stung, use SpiderOS to inject counter-agents. Stealth may also work but detecting a changeling is the real battle.</li>
-					<li>*<b>Xeno Hivemind</b>: their skulls make interesting kitchen decorations and are challenging to best, especially in larger nests. How to battle: they can see through your stealth guise and energy stars will not work on them. Best killed with a Phase Shift or at range. If you happen on a projectile stun weapon, use it and then close in to melee.</li>
+					<li>*<b>The Space Wizard Federation</b> is a problem, mainly because they are an extremely dangerous group of unpredictable individuals--not to mention the wizards hate technology and are in direct opposition of the Fadria. Best avoided or left well-enough alone. How to battle: wizards possess several powerful abilities to steer clear off. Blind in particular is a nasty spell--jaunt away if you are blinded and never approach a wizard in melee. Stealth may also work if the wizard is not wearing thermal scanners--don't count on this. Run away if you feel threatened and await a better opportunity.</li>
+					<li>*<b>Changeling Hivemind</b>: extremely dangerous and to be killed on sight. How to battle: they will likely try to absorb you. Adrenaline boost, then phase shift into them. If you get stung, use ChronOS to inject counter-agents. Stealth may also work but detecting a changeling is the real battle.</li>
+					<li>*<b>Xeno Hivemind</b>: their skulls make interesting kitchen decorations and are challenging to best, especially in larger nests. How to battle: they can see through your stealth guise and energy stars will not work on them. Best killed with a Chrono Shift or at range. If you happen on a projectile stun weapon, use it and then close in to melee.</li>
 					</ul>
 					<h5>The reason they (you) are here:</h5>
-					Space ninjas are renowned throughout the known controlled space as fearless spies, infiltrators, and assassins. They are sent on missions of varying nature by Nanotrasen, the Syndicate, and other shady organizations and people. To hire a space ninja means serious business.
+					Chrono-legionnaires are renowned throughout the known controlled space as fearless spies, infiltrators, and assassins. They are sent on missions of varying nature by Nanotrasen, the Syndicate, and other shady organizations and people. To hire a Fadrian legionnaire means serious business.
 					<h5>Their playstyle:</h5>
-					A mix of traitor, changeling, and wizard. Ninjas rely on energy, or electricity to be precise, to keep their suits running (when out of energy, a suit hibernates). Suits gain energy from objects or creatures that contain electrical charge. APCs, cell batteries, rechargers, SMES batteries, cyborgs, mechs, and exposed wires are currently supported. Through energy ninjas gain access to special powers--while all powers are tied to the ninja suit, the most useful of them are verb activated--to help them in their mission.<br>It is a constant struggle for a ninja to remain hidden long enough to recharge the suit and accomplish their objective; despite their arsenal of abilities, ninjas can die like any other. Unlike wizards, ninjas do not possess good crowd control and are typically forced to play more subdued in order to achieve their goals. Some of their abilities are specifically designed to confuse and disorient others.<br>With that said, it should be perfectly possible to completely flip the fuck out and rampage as a ninja.
+					A mix of traitor, changeling, and wizard. Legionnaires rely on energy, or electricity to be precise, to keep their suits running (when out of energy, a suit hibernates). Suits gain energy from objects or creatures that contain electrical charge. APCs, cell batteries, rechargers, SMES batteries, cyborgs, mechs, and exposed wires are currently supported. Through energy legionnaires gain access to special powers--while all powers are tied to the legionnaire suit, the most useful of them are verb activated--to help them in their mission.<br>It is a constant struggle for a legionnaire to remain hidden long enough to recharge the suit and accomplish their objective; despite their arsenal of abilities, legionnaires can die like any other. Unlike wizards, they do not possess good crowd control and are typically forced to play more subdued in order to achieve their goals. Some of their abilities are specifically designed to confuse and disorient others.<br>With that said, it should be perfectly possible to completely flip the fuck out and rampage as a legionnaire.
 					<h5>Their powers:</h5>
 					There are two primary types: Equipment and Abilties. Passive effect are always on. Active effect must be turned on and remain active only when there is energy to do so. Ability costs are listed next to them.
-					<b>Equipment</b>: cannot be tracked by AI (passive), faster speed (passive), stealth (active), vision switch (passive if toggled), voice masking (passive), SpiderOS (passive if toggled), energy drain (passive if toggled).
+					<b>Equipment</b>: cannot be tracked by AI (passive), faster speed (passive), stealth (active), vision switch (passive if toggled), voice masking (passive), ChronOS (passive if toggled), energy drain (passive if toggled).
 					<ul>
-					<li><i>Voice masking</i> generates a random name the ninja can use over the radio and in-person. Although, the former use is recommended.</li>
+					<li><i>Voice masking</i> generates a random name the legionnaire can use over the radio and in-person. Although, the former use is recommended.</li>
 					<li><i>Toggling vision</i> cycles to one of the following: thermal, meson, or darkness vision. The starting mode allows one to scout the identity of those in view, revealing their role. Traitors, revolutionaries, wizards, and other such people will be made known to you.</li>
 					<li><i>Stealth</i>, when activated, drains more battery charge and works similarly to a syndicate cloak. The cloak will deactivate when most Abilities are utilized.</li>
-					<li><i>On-board AI</i>: The suit is able to download an AI much like an intellicard. Check with SpiderOS for details once downloaded.</li>
-					<li><i>SpiderOS</i> is a specialized, PDA-like screen that allows for a small variety of functions, such as injecting healing chemicals directly from the suit. You are using it now, if that was not already obvious. You may also download AI modules directly to the OS.</li>
+					<li><i>On-board AI</i>: The suit is able to download an AI much like an intellicard. Check with ChronOS for details once downloaded.</li>
+					<li><i>ChronOS</i> is a specialized, PDA-like screen that allows for a small variety of functions, such as injecting healing chemicals directly from the suit. You are using it now, if that was not already obvious. You may also download AI modules directly to the OS.</li>
 					</ul>
 					<b>Abilities</b>:
 					<ul>
-					<li>*<b>Phase Shift</b> (<i>2000E</i>) and <b>Phase Jaunt</b> (<i>1000E</i>) are unique powers in that they can both be used for defense and offense. Jaunt launches the ninja forward facing up to 9 squares, somewhat randomly selecting the final destination. Shift can only be used on turf in view but is precise (cannot be used on walls). Any living mob in the area teleported to is instantly gibbed (mechs are damaged, huggers and other similar critters are killed). It is possible to teleport with a target, provided you grab them before teleporting.</li>
-					<li>*<b>Energy Blade</b> (<i>500E</i>) is a highly effective weapon. It is summoned directly to the ninja's hand and can also function as an EMAG for certain objects (doors/lockers/etc). You may also use it to cut through walls and disabled doors. Experiment! The blade will crit humans in two hits. This item cannot be placed in containers and when dropped or thrown disappears. Having an energy blade drains more power from the battery each tick.</li>
-					<li>*<b>EM Pulse</b> (<i>2500E</i>) is a highly useful ability that will create an electromagnetic shockwave around the ninja, disabling technology whenever possible. If used properly it can render a security force effectively useless. Of course, getting beat up with a toolbox is not accounted for.</li>
-					<li>*<b>Energy Star</b> (<i>500E</i>) is a ninja star made of green energy AND coated in poison. It works by picking a random living target within range and can be spammed to great effect in incapacitating foes. Just remember that the poison used is also used by the Xeno Hivemind (and will have no effect on them).</li>
+					<li>*<b>Phase Shift</b> (<i>2000E</i>) and <b>Phase Jaunt</b> (<i>1000E</i>) are unique powers in that they can both be used for defense and offense. Jaunt launches the legionnaire forward facing up to 9 squares, somewhat randomly selecting the final destination. Shift can only be used on turf in view but is precise (cannot be used on walls). Any living mob in the area teleported to is instantly gibbed (mechs are damaged, huggers and other similar critters are killed). It is possible to teleport with a target, provided you grab them before teleporting.</li>
+					<li>*<b>Energy Blade</b> (<i>500E</i>) is a highly effective weapon. It is summoned directly to the legionnaire's hand and can also function as an EMAG for certain objects (doors/lockers/etc). You may also use it to cut through walls and disabled doors. Experiment! The blade will crit humans in two hits. This item cannot be placed in containers and when dropped or thrown disappears. Having an energy blade drains more power from the battery each tick.</li>
+					<li>*<b>EM Pulse</b> (<i>2500E</i>) is a highly useful ability that will create an electromagnetic shockwave around the legionnaire, disabling technology whenever possible. If used properly it can render a security force effectively useless. Of course, getting beat up with a toolbox is not accounted for.</li>
+					<li>*<b>Energy Star</b> (<i>500E</i>) is a legionnaire star made of blue energy AND coated in poison. It works by picking a random living target within range and can be spammed to great effect in incapacitating foes. Just remember that the poison used is also used by the Xeno Hivemind (and will have no effect on them).</li>
 					<li>*<b>Energy Net</b> (<i>2000E</i>) is a non-lethal solution to incapacitating humanoids. The net is made of non-harmful phase energy and will halt movement as long as it remains in effect--it can be destroyed. If the net is not destroyed, after a certain time it will teleport the target to a holding facility for the Spider Clan and then vanish. You will be notified if the net fails or succeeds in capturing a target in this manner. Combine with energy stars or stripping to ensure success. Abduction never looked this leet.</li>
 					<li>*<b>Adrenaline Boost</b> (<i>1 E. Boost/3</i>) recovers the user from stun, weakness, and paralysis. Also injects 20 units of radium into the bloodstream.</li>
 					<li>*<b>Smoke Bomb</b> (<i>1 Sm.Bomb/10</i>) is a weak but potentially useful ability. It creates harmful smoke and can be used in tandem with other powers to confuse enemies.</li>
 					<li>*<b>???</b>: unleash the <b>True Ultimate Power!</b></li>
 					<h4>IMPORTANT:</h4>
 					<ul>
-					<li>*Make sure to toggle Special Interaction from the Ninja Equipment menu to interact differently with certain objects.</li>
+					<li>*Make sure to toggle Special Interaction from the Chrono Equipment menu to interact differently with certain objects.</li>
 					<li>*Your starting power cell can be replaced if you find one with higher maximum energy capacity by clicking on your suit with the higher capacity cell.</li>
 					<li>*Conserve your energy. Without it, you are very vulnerable.</li>
 					</ul>
@@ -1772,7 +1773,7 @@ ________________________________________________________________________________
 /obj/item/clothing/suit/space/space_ninja/proc/ai_instruction()//Let's the AI know what they can do.
 	set name = "Instructions"
 	set desc = "Displays a list of helpful information."
-	set category = "AI Ninja Equip"
+	set category = "AI Chrono Equip"
 	set src = usr.loc
 
 	AI << "The menu you are seeing will contain other commands if they become available.\nRight click a nearby turf to display an AI Hologram. It will only be visible to you and your host. You can move it freely using normal movement keys--it will disappear if placed too far away."
@@ -1780,7 +1781,7 @@ ________________________________________________________________________________
 /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_clear()
 	set name = "Clear Hologram"
 	set desc = "Stops projecting the current holographic image."
-	set category = "AI Ninja Equip"
+	set category = "AI Chrono Equip"
 	set src = usr.loc
 
 	qdel(hologram.i_attached)
@@ -1790,9 +1791,9 @@ ________________________________________________________________________________
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/ai_hack_ninja()
-	set name = "Hack SpiderOS"
-	set desc = "Hack directly into the Black Widow(tm) neuro-interface."
-	set category = "AI Ninja Equip"
+	set name = "Hack ChronOS"
+	set desc = "Hack directly into the TIME(tm) neuro-interface."
+	set category = "AI Chrono Equip"
 	set src = usr.loc
 
 	display_spideros()
@@ -1801,7 +1802,7 @@ ________________________________________________________________________________
 /obj/item/clothing/suit/space/space_ninja/proc/ai_return_control()
 	set name = "Relinquish Control"
 	set desc = "Return control to the user."
-	set category = "AI Ninja Equip"
+	set category = "AI Chrono Equip"
 	set src = usr.loc
 
 
@@ -2181,7 +2182,7 @@ ________________________________________________________________________________
 /obj/item/clothing/gloves/space_ninja/proc/toggled()
 	set name = "Toggle Interaction"
 	set desc = "Toggles special interaction on or off."
-	set category = "Ninja Equip"
+	set category = "Chrono Equip"
 
 	var/mob/living/carbon/human/U = loc
 	U << "You <b>[candrain?"disable":"enable"]</b> special interaction."
@@ -2239,7 +2240,7 @@ ________________________________________________________________________________
 /obj/item/clothing/mask/gas/voice/space_ninja/proc/togglev()
 	set name = "Toggle Voice"
 	set desc = "Toggles the voice synthesizer on or off."
-	set category = "Ninja Equip"
+	set category = "Chrono Equip"
 
 	var/mob/U = loc//Can't toggle voice when you're not wearing the mask.
 	var/vchange = (alert("Would you like to synthesize a new name or turn off the voice synthesizer?",,"New Name","Turn Off"))
