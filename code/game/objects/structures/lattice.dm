@@ -129,9 +129,6 @@
 	for (var/direction in cardinal)
 		if(locate(/obj/structure/lattice/catwalk, get_step(src, direction)))
 			dir_sum += direction
-		else
-			if(!(istype(get_step(src, direction), /turf/space)))
-				dir_sum += direction
 
 	icon_state = "[name][dir_sum]"
 	return
