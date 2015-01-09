@@ -146,7 +146,7 @@ var/list/ai_list = list()
 		return
 
 		//if(icon_state == initial(icon_state))
-	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline", "Hades", "Helios", "President", "Gigyas", "Yuki", "Syndicat Meow", "Alien", "Alter Ego", "Too Deep", "Triumvirate", "Triumvirate-M", "Text", "Smiley", "Matrix", "Dorf", "Bliss", "Not Malf", "Fuzzy", "Goon", "Database", "Glitchman", "Murica", "Nanotrasen", "Gentoo", "E-102")
+	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline", "Hades", "Helios", "President", "Syndicat Meow", "Alien", "Too Deep", "Triumvirate", "Triumvirate-M", "Text", "Matrix", "Dorf", "Bliss", "Not Malf", "Fuzzy", "Goon", "Database", "Glitchman", "Murica", "Nanotrasen", "Gentoo")
 	if(icontype == "Clown")
 		icon_state = "ai-clown2"
 	else if(icontype == "Monochrome")
@@ -175,16 +175,10 @@ var/list/ai_list = list()
 		icon_state = "ai-helios"
 	else if(icontype == "President")
 		icon_state = "ai-pres"
-	else if(icontype == "Gigyas")
-		icon_state = "ai-gigyas"
-	else if(icontype == "Yuki")
-		icon_state = "ai-yuki"
 	else if(icontype == "Syndicat Meow")
 		icon_state = "ai-syndicatmeow"
 	else if(icontype == "Alien")
 		icon_state = "ai-alien"
-	else if(icontype == "Alter Ego")
-		icon_state = "ai-alterego"
 	else if(icontype == "Too Deep")
 		icon_state = "ai-toodeep"
 	else if(icontype == "Triumvirate")
@@ -193,8 +187,6 @@ var/list/ai_list = list()
 		icon_state = "ai-triumvirate-malf"
 	else if(icontype == "Text")
 		icon_state = "ai-text"
-	else if(icontype == "Smiley")
-		icon_state = "ai-smiley"
 	else if(icontype == "Matrix")
 		icon_state = "ai-matrix"
 	else if(icontype == "Dorf")
@@ -217,8 +209,6 @@ var/list/ai_list = list()
 		icon_state = "ai-nanotrasen"
 	else if(icontype == "Gentoo")
 		icon_state = "ai-gentoo"
-	else if(icontype == "E-102")
-		icon_state = "ai-e102"
 	//else
 			//usr <<"You can only change your display once!"
 			//return
