@@ -116,9 +116,7 @@
 	strip_delay = 40
 	put_on_delay = 20
 
-/obj/item/clothing/head/helmet/space/hardsuit
-
-
+	//Emergency Response Team suits
 /obj/item/clothing/head/helmet/space/hardsuit/ert
 	name = "emergency response unit helmet"
 	desc = "Standard issue command helmet for the ERT"

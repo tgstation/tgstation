@@ -428,7 +428,7 @@ client/proc/one_click_antag()
 
 	return 0
 
-// DEATH SQUADS
+// EMERGENCY RESPONSE TEAM
 /datum/admins/proc/makeEmergencyresponseteam()
 	var/list/mob/dead/observer/candidates = list()
 	var/time_passed = world.time
