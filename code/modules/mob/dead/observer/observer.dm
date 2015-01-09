@@ -313,7 +313,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	dat += "<h4>Crew Manifest</h4>"
 	dat += data_core.get_manifest()
 
-	src << browse(dat, "window=manifest;size=370x420;can_close=1")
+	src << browse(dat, "window=manifest;size=387x420;can_close=1")
 
 /mob/dead/observer/Topic(href, href_list)
 	if(href_list["follow"])

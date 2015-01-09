@@ -311,7 +311,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	O.orderedbyRank = _orderedbyRank
 	O.comment = _comment
 
-	shoppinglist += O
+	requestlist += O
 
 	return O
 
