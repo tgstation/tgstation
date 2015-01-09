@@ -1,0 +1,6 @@
+author: Incoming5643
+
+delete-after: True
+
+changes: 
+  - bugfix: "Player controlled slimes can now change their face to match AI controlled slimes in kawaiiness. use *help as a slime to find the commands."
