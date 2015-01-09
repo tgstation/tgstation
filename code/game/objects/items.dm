@@ -58,6 +58,8 @@
 	else
 		return 1
 
+	var/attackback = 0 //calls calls attackby() when you hit an obj with an item with this var set to 1.
+
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
 

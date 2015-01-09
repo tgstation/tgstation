@@ -34,8 +34,6 @@
 		BB = new projectile_type(src)
 	return
 
-
-
 //Boxes of ammo
 /obj/item/ammo_box
 	name = "ammo box (null_reference_exception)"

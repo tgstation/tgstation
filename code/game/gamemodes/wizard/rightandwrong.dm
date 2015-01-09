@@ -68,11 +68,11 @@
 				if("sabr")
 					new /obj/item/weapon/gun/projectile/automatic(get_turf(H))
 				if("crossbow")
-					new /obj/item/weapon/gun/energy/crossbow(get_turf(H))
+					new /obj/item/weapon/gun/projectile/automatic/crossbow(get_turf(H))
 				if("saw")
 					new /obj/item/weapon/gun/projectile/automatic/l6_saw(get_turf(H))
 				if("car")
-					new /obj/item/weapon/gun/projectile/automatic/c90gl(get_turf(H))
+					new /obj/item/weapon/gun/projectile/automatic/m90(get_turf(H))
 		else
 			switch (randomizemagic)
 				if("fireball")
