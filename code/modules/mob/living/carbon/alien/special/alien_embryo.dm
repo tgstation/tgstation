@@ -14,10 +14,11 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	if(istype(loc, /mob/living))
 		affected_mob = loc
 		affected_mob.status_flags |= XENO_HOST
+		SSobj.processing.Add(src)
 		if(istype(affected_mob,/mob/living/carbon))
 			var/mob/living/carbon/H = affected_mob
 			H.med_hud_set_status()
-		processing_objects.Add(src)
+		SSobj.processing.Add(src)
 		spawn(0)
 			AddInfectionImages(affected_mob)
 	else
@@ -37,10 +38,11 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	if(!affected_mob)	return
 	if(loc != affected_mob)
 		affected_mob.status_flags &= ~(XENO_HOST)
+		SSobj.processing.Remove(src)
 		if(istype(affected_mob,/mob/living/carbon))
 			var/mob/living/carbon/H = affected_mob
 			H.med_hud_set_status()
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 		spawn(0)
 			RemoveInfectionImages(affected_mob)
 			affected_mob = null
@@ -53,6 +55,8 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 
 	switch(stage)
 		if(2, 3)
+			if(affected_mob == DEAD)
+				return
 			if(prob(1))
 				affected_mob.emote("sneeze")
 			if(prob(1))
@@ -62,6 +66,8 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			if(prob(1))
 				affected_mob << "<span class='danger'>Mucous runs down the back of your throat.</span>"
 		if(4)
+			if(affected_mob == DEAD)
+				return
 			if(prob(1))
 				affected_mob.emote("sneeze")
 			if(prob(1))
@@ -76,9 +82,10 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 					affected_mob.adjustToxLoss(1)
 					affected_mob.updatehealth()
 		if(5)
-			affected_mob << "<span class='danger'>You feel something tearing its way out of your stomach...</span>"
-			affected_mob.adjustToxLoss(10)
-			affected_mob.updatehealth()
+			if(affected_mob != DEAD)
+				affected_mob << "<span class='danger'>You feel something tearing its way out of your stomach...</span>"
+				affected_mob.adjustToxLoss(10)
+				affected_mob.updatehealth()
 			if(prob(50))
 				AttemptGrow()
 

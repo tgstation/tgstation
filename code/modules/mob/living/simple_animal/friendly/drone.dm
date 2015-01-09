@@ -30,6 +30,7 @@
 	voice_name = "synthesized chirp"
 	languages = DRONE
 	mob_size = 0
+	has_unlimited_silicon_privilege = 1
 	var/picked = FALSE
 	var/list/drone_overlays[TOTAL_LAYERS]
 	var/laws = \

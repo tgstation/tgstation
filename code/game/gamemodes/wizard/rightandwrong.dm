@@ -1,8 +1,8 @@
 //In this file: Summon Magic/Summon Guns/Summon Events
 
-/proc/rightandwrong(var/summon_type, var/mob/user) //0 = Summon Guns, 1 = Summon Magic
+/proc/rightandwrong(var/summon_type, var/mob/user, var/survivor_probability) //0 = Summon Guns, 1 = Summon Magic
 	var/list/gunslist 			= list("taser","egun","laser","revolver","detective","c20r","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","bulldog","mateba","sabr","uzi","crossbow","saw","car")
-	var/list/magiclist 			= list("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge","wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying", "staffdoor", "special")
+	var/list/magiclist 			= list("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge", "summonitem", "wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying", "staffdoor", "special")
 	var/list/magicspeciallist	= list("staffchange","staffanimation", "wandbelt", "contract", "staffchaos")
 
 	if(user) //in this case either someone holding a spellbook or a badmin
@@ -13,7 +13,7 @@
 		if(H.stat == 2 || !(H.client)) continue
 		if(H.mind)
 			if(H.mind.special_role == "Wizard" || H.mind.special_role == "apprentice") continue
-		if(prob(25) && !(H.mind in ticker.mode.traitors))
+		if(prob(survivor_probability) && !(H.mind in ticker.mode.traitors))
 			ticker.mode.traitors += H.mind
 			H.mind.special_role = "traitor"
 			var/datum/objective/survive/survive = new
@@ -31,7 +31,7 @@
 		if(!summon_type)
 			switch (randomizeguns)
 				if("taser")
-					new /obj/item/weapon/gun/energy/taser(get_turf(H))
+					new /obj/item/weapon/gun/energy/gun/advtaser(get_turf(H))
 				if("egun")
 					new /obj/item/weapon/gun/energy/gun(get_turf(H))
 				if("laser")
@@ -45,7 +45,7 @@
 				if("nuclear")
 					new /obj/item/weapon/gun/energy/gun/nuclear(get_turf(H))
 				if("deagle")
-					new /obj/item/weapon/gun/projectile/automatic/deagle/camo(get_turf(H))
+					new /obj/item/weapon/gun/projectile/automatic/pistol/deagle/camo(get_turf(H))
 				if("gyrojet")
 					new /obj/item/weapon/gun/projectile/automatic/gyropistol(get_turf(H))
 				if("pulse")
@@ -62,17 +62,17 @@
 				if("combatshotgun")
 					new /obj/item/weapon/gun/projectile/shotgun/combat(get_turf(H))
 				if("bulldog")
-					new /obj/item/weapon/gun/projectile/automatic/bulldog(get_turf(H))
+					new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(get_turf(H))
 				if("mateba")
 					new /obj/item/weapon/gun/projectile/revolver/mateba(get_turf(H))
 				if("sabr")
 					new /obj/item/weapon/gun/projectile/automatic(get_turf(H))
 				if("crossbow")
-					new /obj/item/weapon/gun/energy/crossbow(get_turf(H))
+					new /obj/item/weapon/gun/projectile/automatic/crossbow(get_turf(H))
 				if("saw")
 					new /obj/item/weapon/gun/projectile/automatic/l6_saw(get_turf(H))
 				if("car")
-					new /obj/item/weapon/gun/projectile/automatic/c90gl(get_turf(H))
+					new /obj/item/weapon/gun/projectile/automatic/m90(get_turf(H))
 		else
 			switch (randomizemagic)
 				if("fireball")
@@ -91,6 +91,8 @@
 					new /obj/item/weapon/spellbook/oneuse/horsemask(get_turf(H))
 				if("charge")
 					new /obj/item/weapon/spellbook/oneuse/charge(get_turf(H))
+				if("summonitem")
+					new /obj/item/weapon/spellbook/oneuse/summonitem(get_turf(H))
 				if("wandnothing")
 					new /obj/item/weapon/gun/magic/wand(get_turf(H))
 				if("wanddeath")
@@ -114,11 +116,8 @@
 					new /obj/item/clothing/head/helmet/space/hardsuit/wizard(get_turf(H))
 				if("scrying")
 					new /obj/item/weapon/scrying(get_turf(H))
-					if (!(XRAY in H.mutations))
-						H.mutations.Add(XRAY)
-						H.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
-						H.see_in_dark = 8
-						H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+					if (!(H.dna.check_mutation(XRAY)))
+						H.dna.add_mutation(XRAY)
 						H << "<span class='notice'>The walls suddenly disappear.</span>"
 
 				if("special")
@@ -137,19 +136,18 @@
 					H << "<span class='notice'>You suddenly feel lucky.</span>"
 
 /proc/summonevents()
-	if(events) 																//if there isn't something is very wrong
-		if(!events.wizardmode)
-			events.frequency_lower = 600									//1 minute lower bound
-			events.frequency_upper = 3000									//5 minutes upper bound
-			events.toggleWizardmode()
-			events.reschedule()
+	if(!SSevent.wizardmode)
+		SSevent.frequency_lower = 600									//1 minute lower bound
+		SSevent.frequency_upper = 3000									//5 minutes upper bound
+		SSevent.toggleWizardmode()
+		SSevent.reschedule()
 
-		else 																//Speed it up
-			events.frequency_lower = round(events.frequency_lower * 0.8)	//1 minute | 48 seconds | 34.8 seconds | 30.7 seconds | 24.6 seconds
-			events.frequency_upper = round(events.frequency_upper * 0.6)	//5 minutes | 3 minutes | 1 minute 48 seconds | 1 minute 4.8 seconds | 38.9 seconds
-			if(events.frequency_upper < events.frequency_lower)
-				events.frequency_upper = events.frequency_lower				//this can't happen unless somehow multiple spellbooks are used, but just in case
+	else 																//Speed it up
+		SSevent.frequency_lower = round(SSevent.frequency_lower * 0.8)	//1 minute | 48 seconds | 34.8 seconds | 30.7 seconds | 24.6 seconds
+		SSevent.frequency_upper = round(SSevent.frequency_upper * 0.6)	//5 minutes | 3 minutes | 1 minute 48 seconds | 1 minute 4.8 seconds | 38.9 seconds
+		if(SSevent.frequency_upper < SSevent.frequency_lower)
+			SSevent.frequency_upper = SSevent.frequency_lower				//this can't happen unless somehow multiple spellbooks are used, but just in case
 
-			events.reschedule()
-			message_admins("Summon Events intensifies, events will now occur every [events.frequency_lower / 600] to [events.frequency_upper / 600] minutes.")
-			log_game("Summon Events was increased!")
+		SSevent.reschedule()
+		message_admins("Summon Events intensifies, events will now occur every [SSevent.frequency_lower / 600] to [SSevent.frequency_upper / 600] minutes.")
+		log_game("Summon Events was increased!")

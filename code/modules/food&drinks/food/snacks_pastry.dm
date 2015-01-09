@@ -211,21 +211,10 @@
 	name = "\improper Donk-pocket"
 	desc = "The food of choice for the seasoned traitor."
 	icon_state = "donkpocket"
-	var/warm = 0
 
 /obj/item/weapon/reagent_containers/food/snacks/donkpocket/New()
 	..()
 	reagents.add_reagent("nutriment", 4)
-	reagents.add_reagent("sugar", 5)
-
-/obj/item/weapon/reagent_containers/food/snacks/donkpocket/proc/cooltime() //Not working, derp?
-	if(warm)
-		spawn(4200)	//ew
-			warm = 0
-			reagents.del_reagent("tricordrazine")
-			reagents.add_reagent("sugar", 5)
-			name = initial(name)
-	return
 
 /obj/item/weapon/reagent_containers/food/snacks/fortunecookie
 	name = "fortune cookie"
@@ -320,3 +309,14 @@
 	reagents.add_reagent("nutriment", 3)
 	reagents.add_reagent("sugar", 3)
 	bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/chococornet/
+	name = "chocolate cornet"
+	desc = "Which side's the head, the fat end or the thin end?"
+	icon_state = "chococornet"
+
+/obj/item/weapon/reagent_containers/food/snacks/chococornet/New()
+	..()
+	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("sodiumchloride", 1)
+	reagents.add_reagent("vitamin", 1)

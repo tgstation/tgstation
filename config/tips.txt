@@ -1,0 +1,79 @@
+You can drag yourself to a chair or a bed to buckle yourself to it.
+You can drag yourself onto a photocopier to copy your ass.
+Space transitions change every round, but are consistent within a round.
+People can be ejected from the cloner before they are done by cutting power to the clone pod.
+If you've been feeding some slimes for at least two generations, you can order them around, and even have them follow you if they like you enough.
+Almost all slime cores have two or more different effects.
+With the right slime cores, you can get up to nine uses of a single slime's effects.
+Touching a supermatter shard is akin to hugging a singularity.
+To catch thrown items, toggle throw mode on and make sure you have an open hand.
+Updating sec records regularly helps avoid confusion in the brig!
+You can drag the icon of an equipped headset or PDA onto your screen to interact with them.
+The mime's invisible wall will block electrodes and other projectiles, but beams pass straight through it like windows.
+The Librarian system is much more robust than most people think! Mess around with it, see if you can log who takes out the books for radio-reading.
+Use a pair of handcuffs on a pair of orange shoes (standard prisoner issue) to chain them together.
+Revolutionaries brainwashed by Rev leaders can have their opinions swayed back to nanotrasen loyalty by enough heavy objects to the head.
+Husked corpses that have been drained of their genomes by a changeling also lack blood in their veins, unlike burned or space frozen corpses.
+The stethoscope's utility extends beyond lung and heart checkups. They can also be used to crack certain safes.
+Chloral Hydrate can be counteracted by having coffee in your system!
+The AI system integrity restorer in both the RD's office and on the bridge can revive a dead AI loaded onto an intellicard.
+If an anomaly appears, scan it with an analyzer and then ping the frequency it gives you with a remote signaling device. 
+Various creatures can crawl through air vents by holding alt while left clicking them.
+Nuclear operatives can be extremely powerful, but only if they work together. Communication is key!
+A rogue AI can be an extremely powerful tool for traitors, but be wary of the laws you use to slave it to you, as it may try to find loopholes to get back at you.
+You can drag yourself onto tables to climb on them. This takes a moment and requires two free hands.
+You can drag other players onto yourself to open the strip menu, letting you remove their equipment or force them to equip something.
+Aliens are by far the most powerful close-quarters combat menace. Fight them at a distance to gain the upper hand!
+Aliens take double damage from all burn sources, such as lasers and fires. Flamethrowers are extremely effective against them.
+As an alien, your most powerful weapon is the facehugger. It can instantly win any fight, but can be completely blocked by certain headgear. Strip downed victims before applying one.
+Monkeys can still wear some human items, such as masks and backpacks, but they cannot bring anything with them when vent crawling.
+Nuclear operatives are very effective in a blitzkrieg tactic: attacking almost as soon as the round starts and well before the crew is prepared.
+You can use a fire extinguisher as a ghetto jetpack by spraying in the opposite direction of where you want to go. This also works with any gun.
+Coffee can keep you very warm. Drink a lot before running around through exposed space.
+Both cargo and the HoP can make you fill out a form for their services.
+You can destroy a blob by shooting emitters at its core.
+You can electrify a grille by having an exposed wire node underneath it.
+If you press the tab key, you can toggle hotkey mode, which allows you to move using WASD and perform other actions using hotkeys.
+You can hack MULE bots to let you ride them.
+You can hack most vending machines to obtain contraband items.
+You can use a multitool on the Cargo Ordering Console circuitboards to get contraband crates.
+The cryptographic sequencer (emag) has an enormous amount of functions beyond breaking open locks and hacking cyborgs, experiment!
+Touching anything without black, insulated, or brown gloves will leave fingerprints, which can be analyzed by detectives to find the suspect. Be careful of what you leave prints on!
+Blobs are extremely powerful and are impossible to defeat alone. Communicate with the crew and rally them against the threat!
+You can fight blob pieces diagonally, as they can only expand onto adjacent tiles in cardinal directions.
+Security huds and secglass huds can tell you if someone is implanted with a loyalty implant. Use this to your advantage in a revolution.
+Loyalty implants can only prevent someone from being turned into a cultist: unlike revolutionaries, it will not de-cult them if they have already been converted.
+Don't neglect upgrading your machines with the machine parts produced by research! These can seriously improve the efficiency of your equipment.
+Cyborgs are impervious to fires and temperature, and can walk in a blazing inferno without worry. Don't shy away from setting the whole station on fire as a malfunctioning or rogue AI!
+The heads of staff, especially the Head of Security and the Captain, are usually extremely difficult to kill. If one of them is your target as a traitor, plan carefully.
+The Steal DNA sting from changelings counts for your genome absorb objective, but does not let you change your powers.
+Chemists are among the most powerful people on the station. They can survive almost anything thanks to all the chemicals in them that have basically replaced their blood.
+The station is capable of being entirely powered by the solar arrays, and is a much safer form of power over the singularity engine.
+The singularity engine is extremely dangerous if containment fails. Check back on it very frequently and call the shuttle immediately when, not if, it breaks free.
+Firesuits and winter coats offer mild protection from the cold, allowing you to spend longer periods of time near breaches and space than if wearing nothing at all.
+Vendors provide a very poor source of food riddled with sugar. This can affect your metabolism quite severely and it comes with many negative effects. Eat from the kitchen to stay healthy and even profit from a happy gut!
+Emergency internals tanks can be used from your hands, your pockets, your belt, or your suit storage slot (assuming you're wearing a valid exosuit).
+When walking through halls, stay on the Help intent to pass through people rather than bumping into them.
+Trying to do surgery but you keep cutting your patient? Remember to be on the help intent and to target the right limb!
+Glass shards can be welded to make glass, and metal rods can be welded to make metal. Ores can be welded, too, but this takes a lot of fuel.
+Many monsters won't attack you if you're unconscious. If you see a space bear, go to sleep, quick!
+Many monsters won't attack you if you're unconscious, but a medibot will still heal you. Keep one around when you're mining and never worry about dying again.
+Two people are critical and need your help, but you don't have time for two trips? Pull one and use the grab intent to grab the other. This will make you slower, but you will be able to take them both.
+When using the grab intent, grab someone by clicking on them then upgrade your grab by clicking on your hand slot. Holding them by the hands lets you throw them or table them.
+Can't seem to get a patient into the cryo tube or sleepers? Just drag their sprite to it to put them in it instantly. No more needing to shuffle around pulling them into it awkwardly.
+EMP blasts have a chance to make machines explode!
+Targeting your opponent's mouth in a fistfight will give you a greater chance of knocking them unconscious.
+As a security officer, examining a crew member with a secHUD allows you to set their status to arrest. You can even give a reason for the arrest warrant, as well.
+Clowns are extremely clumsy and will often misfire weapons.
+Hulks can't fire weapons because of their meaty fingers.
+The mime's crayon is edible.
+Shooting lasers at a computer console will destroy it.
+Using ethanol on a piece of paper will remove any writing on it.
+Using an emag on the gibber will allow you to throw people into it!
+Using the comms console with captain level access will allow you to broadcast announcements in BIG, RED LETTERS!
+You can repair cracked windows with a welding tool on help intent.
+Alt-click on an adjacent tile to see its contents in the top right pane.
+While observing or as a ghost, double click on people, bots, or the singularity to follow them.
+Ghosts can click on active teleporters, portals, wormholes, or the gateway to jump to its destination!
+Ghosts can double-click their corpse, or the object containing their corpse (such as the cloning scanner), to re-enter it.
+Ghosts can see inside storage items that have been left on the ground.

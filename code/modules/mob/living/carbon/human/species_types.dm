@@ -15,6 +15,7 @@
 		H.dna.species = new /datum/species/slime()
 		H.regenerate_icons()
 		H.reagents.del_reagent(chem.type)
+		H.faction |= "slime"
 		return 1
 
 /*
@@ -37,7 +38,7 @@
 /datum/species/lizard/handle_speech(message)
 	// jesus christ why
 	if(copytext(message, 1, 2) != "*")
-		message = replacetext(message, "s", stutter("ss"))
+		message = replacetext(message, "s", "sss")
 
 	return message
 
@@ -93,6 +94,7 @@
 	// A mutation caused by a human being ressurected in a revival pod. These regain health in light, and begin to wither in darkness.
 	name = "Podperson"
 	id = "pod"
+	specflags = list(MUTCOLORS,EYECOLOR)
 
 /datum/species/plant/pod/spec_life(mob/living/carbon/human/H)
 	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing

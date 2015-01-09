@@ -185,35 +185,33 @@ var/bomb_set
 	else
 		off_station = 2
 
-	if(ticker)
-		if(ticker.mode && ticker.mode.name == "nuclear emergency")
-			var/obj/machinery/computer/syndicate_station/syndie_location = locate(/obj/machinery/computer/syndicate_station)
-			if(syndie_location)
-				ticker.mode:syndies_didnt_escape = (syndie_location.z > 1 ? 0 : 1)	//muskets will make me change this, but it will do for now
-			ticker.mode:nuke_off_station = off_station
-		ticker.station_explosion_cinematic(off_station,null)
-		if(ticker.mode)
-			ticker.mode.explosion_in_progress = 0
-			if(ticker.mode.name == "nuclear emergency")
-				ticker.mode:nukes_left --
-			else
-				world << "<B>The station was destoyed by the nuclear blast!</B>"
+	if(ticker.mode && ticker.mode.name == "nuclear emergency")
+		var/obj/docking_port/mobile/Shuttle = SSshuttle.getShuttle("syndicate")
+		ticker.mode:syndies_didnt_escape = (Shuttle && Shuttle.z == ZLEVEL_CENTCOM) ? 0 : 1
+		ticker.mode:nuke_off_station = off_station
+	ticker.station_explosion_cinematic(off_station,null)
+	if(ticker.mode)
+		ticker.mode.explosion_in_progress = 0
+		if(ticker.mode.name == "nuclear emergency")
+			ticker.mode:nukes_left --
+		else
+			world << "<B>The station was destoyed by the nuclear blast!</B>"
 
-			ticker.mode.station_was_nuked = (off_station<2)	//offstation==1 is a draw. the station becomes irradiated and needs to be evacuated.
-															//kinda shit but I couldn't  get permission to do what I wanted to do.
+		ticker.mode.station_was_nuked = (off_station<2)	//offstation==1 is a draw. the station becomes irradiated and needs to be evacuated.
+														//kinda shit but I couldn't  get permission to do what I wanted to do.
 
-			if(!ticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
-				world << "<B>Resetting in 30 seconds!</B>"
+		if(!ticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
+			world << "<B>Resetting in 30 seconds!</B>"
 
-				feedback_set_details("end_error","nuke - unhandled ending")
+			feedback_set_details("end_error","nuke - unhandled ending")
 
-				if(blackbox)
-					blackbox.save_all_data_to_sql()
-				sleep(300)
-				log_game("Rebooting due to nuclear detonation")
-				kick_clients_in_lobby("<span class='danger'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
-				world.Reboot()
-				return
+			if(blackbox)
+				blackbox.save_all_data_to_sql()
+			sleep(300)
+			log_game("Rebooting due to nuclear detonation")
+			kick_clients_in_lobby("<span class='danger'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
+			world.Reboot()
+			return
 	return
 
 
@@ -227,7 +225,7 @@ var/bomb_set
 
 /obj/item/weapon/disk/nuclear/New()
 	..()
-	processing_objects.Add(src)
+	SSobj.processing.Add(src)
 
 /obj/item/weapon/disk/nuclear/process()
 	var/turf/disk_loc = get_turf(src)

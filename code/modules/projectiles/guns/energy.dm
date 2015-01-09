@@ -35,7 +35,9 @@
 /obj/item/weapon/gun/energy/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, params)
 	newshot() //prepare a new shot
 	..()
-
+/obj/item/weapon/gun/energy/can_shoot()
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	return power_supply.charge >= shot.e_cost
 
 /obj/item/weapon/gun/energy/proc/newshot()
 	if (!ammo_type || !power_supply)
@@ -77,4 +79,13 @@
 			icon_state = "[initial(icon_state)][shot.mod_name][ratio]"
 		if (2)
 			icon_state = "[initial(icon_state)][shot.select_name][ratio]"
+	overlays.Cut()
+	if(F)
+		if(F.on)
+			overlays += "flight-on"
+		else
+			overlays += "flight"
 	return
+
+/obj/item/weapon/gun/energy/ui_action_click()
+	toggle_gunlight()

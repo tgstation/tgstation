@@ -1,17 +1,16 @@
 /obj/item/weapon/gun/energy/gun
 	name = "energy gun"
-	desc = "A basic hybrid energy gun with two settings: Stun and kill."
+	desc = "A basic hybrid energy gun with two settings: Disable and kill."
 	icon_state = "energy"
 	item_state = null	//so the human update icon uses the icon_state instead.
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
 	origin_tech = "combat=3;magnets=2"
 	modifystate = 2
-
+	can_flashlight = 1
 
 /obj/item/weapon/gun/energy/gun/attack_self(mob/living/user as mob)
 	select_fire(user)
 	update_icon()
-
 
 /obj/item/weapon/gun/energy/gun/nuclear
 	name = "advanced energy gun"
@@ -21,14 +20,16 @@
 	var/lightfail = 0
 	var/charge_tick = 0
 	modifystate = 0
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
+	can_flashlight = 0
 
 /obj/item/weapon/gun/energy/gun/nuclear/New()
 	..()
-	processing_objects.Add(src)
+	SSobj.processing.Add(src)
 
 
 /obj/item/weapon/gun/energy/gun/nuclear/Destroy()
-	processing_objects.Remove(src)
+	SSobj.processing.Remove(src)
 	..()
 
 
@@ -62,7 +63,7 @@
 			M << "<span class='danger'>You feel a wave of heat wash over you.</span>"
 			M.apply_effect(300, IRRADIATE)
 		crit_fail = 1 //break the gun so it stops recharging
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 		update_icon()
 	return 0
 
@@ -105,3 +106,8 @@
 	update_charge()
 	update_reactor()
 	update_mode()
+
+/obj/item/weapon/gun/energy/gun/turret
+	name = "hybrid turret gun"
+	desc = "A basic hybrid energy gun with two settings: Stun and kill."
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
