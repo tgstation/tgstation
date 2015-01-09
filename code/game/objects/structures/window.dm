@@ -25,10 +25,10 @@
 	update_nearby_tiles()
 	update_nearby_icons()
 
-/obj/structure/window/examine()
+/obj/structure/window/examine(mob/user)
 	..()
 	if(!anchored)
-		usr << "<span class='notice'>\the [src] appears to be loose.</span>"
+		user << "<span class='info'>\the [src] appears to be loose.</span>"
 
 /obj/structure/window/bullet_act(var/obj/item/projectile/Proj)
 	health -= Proj.damage
@@ -136,8 +136,8 @@
 	else if (usr.a_intent == "hurt")
 		user.delayNextAttack(8) // not so polite
 		playsound(get_turf(src), 'sound/effects/glassknock.ogg', 80, 1)
-		usr.visible_message("\red [usr.name] bangs against the [src.name]!", \
-							"\red You bang against the [src.name]!", \
+		usr.visible_message("<span class='warning'>[usr.name] bangs against the [src.name]!</span>", \
+							"<span class='warning'>You bang against the [src.name]!</span>", \
 							"You hear a banging sound.")
 	else
 		user.delayNextAttack(10)
@@ -197,20 +197,20 @@
 					M.apply_damage(7)
 					damage = 7
 					hit(10)
-					visible_message("\red [user] slams [M] against \the [src]!")
+					visible_message("<span class='warning'>[user] slams [M] against \the [src]!</span>")
 				if(2)
 					if (prob(50))
 						M.Weaken(1)
 					M.apply_damage(10)
 					damage = 10
 					hit(25)
-					visible_message("\red <b>[user] bashes [M] against \the [src]!</b>")
+					visible_message("<span class='danger'>[user] bashes [M] against \the [src]!</span>")
 				if(3)
 					M.Weaken(5)
 					M.apply_damage(20)
 					damage = 20
 					hit(50)
-					visible_message("\red <big><b>[user] crushes [M] against \the [src]!</b></big>")
+					visible_message("<big><span class='danger'>[user] crushes [M] against \the [src]!</span></big>")
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been window slammed by [user.name] ([user.ckey]) for [damage] damage.</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Window slammed [M.name] for [damage] damage.</font>")
 			msg_admin_attack("[user.name] ([user.ckey]) window slammed [M.name] ([M.ckey]) for [damage] damage (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")

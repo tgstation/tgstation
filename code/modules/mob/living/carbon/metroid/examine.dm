@@ -1,11 +1,4 @@
-/mob/living/carbon/slime/examine()
-	set src in oview()
-
-	if(!usr || !src)	return
-	if( (usr.sdisabilities & BLIND || usr.blinded || usr.stat) && !istype(usr,/mob/dead/observer) )
-		usr << "<span class='notice'>Something is there but you can't see it.</span>"
-		return
-
+/mob/living/carbon/slime/examine(mob/user)
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
 	if (src.stat == DEAD)
 		msg += "<span class='deadsay'>It is limp and unresponsive.</span>\n"
@@ -30,8 +23,7 @@
 				msg += "<span class='warning'>It is glowing brightly with high levels of electrical activity.</span>\n"
 
 			if(10)
-				msg += "<span class='warning'><B>It is radiating with massive levels of electrical activity!</B></span>\n"
+				msg += "<span class='danger'>It is radiating with massive levels of electrical activity!</span>\n"
 
 	msg += "*---------*</span>"
-	usr << msg
-	return
+	user << msg

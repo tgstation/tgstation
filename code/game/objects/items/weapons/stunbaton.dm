@@ -17,7 +17,7 @@
 	var/mob/foundmob = "" //Used in throwing proc.
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is putting the live [src.name] in \his mouth! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='danger'>[user] is putting the live [src.name] in \his mouth! It looks like \he's trying to commit suicide.</span>"
 		return (FIRELOSS)
 
 /obj/item/weapon/melee/baton/New()
@@ -52,13 +52,12 @@
 	else
 		icon_state = "[initial(name)]"
 
-/obj/item/weapon/melee/baton/examine()
-	set src in view(1)
+/obj/item/weapon/melee/baton/examine(mob/user)
 	..()
 	if(bcell)
-		usr <<"<span class='notice'>The baton is [round(bcell.percent())]% charged.</span>"
+		user <<"<span class='info'>The baton is [round(bcell.percent())]% charged.</span>"
 	if(!bcell)
-		usr <<"<span class='warning'>The baton does not have a power source installed.</span>"
+		user <<"<span class='warning'>The baton does not have a power source installed.</span>"
 
 /obj/item/weapon/melee/baton/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/cell))
@@ -85,7 +84,7 @@
 
 /obj/item/weapon/melee/baton/attack_self(mob/user)
 	if(status && (M_CLUMSY in user.mutations) && prob(50))
-		user << "\red You grab the [src] on the wrong side."
+		user << "<span class='warning'>You grab the [src] on the wrong side.</span>"
 		user.Weaken(stunforce*3)
 		deductcharge(hitcost)
 		return
@@ -122,7 +121,7 @@
 		playsound(loc, "swing_hit", 50, 1, -1)
 
 	else if(!status)
-		L.visible_message("<span class='warning'>[L] has been prodded with the [src] by [user]. Luckily it was off.</span>")
+		L.visible_message("<span class='attack'>[L] has been prodded with the [src] by [user]. Luckily it was off.</span>")
 		return
 
 	if(status)

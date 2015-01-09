@@ -27,11 +27,9 @@
 		usr << browse(null, "window=stack")
 	..()
 
-/obj/item/stack/examine()
-	set src in view(1)
+/obj/item/stack/examine(mob/user)
 	..()
-	usr << "There are [src.amount] [src.singular_name]\s in the stack."
-	return
+	user << "<span class='info'>There are [src.amount] [src.singular_name]\s in the stack.</span>"
 
 /obj/item/stack/attack_self(mob/user as mob)
 	list_recipes(user)
@@ -120,18 +118,18 @@
 		if (!multiplier) multiplier = 1
 		if (src.amount < R.req_amount*multiplier)
 			if (R.req_amount*multiplier>1)
-				usr << "\red You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!"
+				usr << "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>"
 			else
-				usr << "\red You haven't got enough [src] to build \the [R.title]!"
+				usr << "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>"
 			return
 		if (R.one_per_turf && (locate(R.result_type) in usr.loc))
-			usr << "\red There is another [R.title] here!"
+			usr << "<span class='warning'>There is another [R.title] here!</span>"
 			return
 		if (R.on_floor && !istype(usr.loc, /turf/simulated/floor))
-			usr << "\red \The [R.title] must be constructed on the floor!"
+			usr << "<span class='warning'>\The [R.title] must be constructed on the floor!</span>"
 			return
 		if (R.time)
-			usr << "\blue Building [R.title] ..."
+			usr << "<span class='notice'>Building [R.title] ...</span>"
 			if (!do_after(usr, R.time))
 				return
 		if (src.amount < R.req_amount*multiplier)

@@ -103,12 +103,12 @@
 			for(var/mob/M in range(tmob, 1))
 				if(tmob.pinned.len ||  ((M.pulling == tmob && ( tmob.restrained() && !( M.restrained() ) && M.stat == 0)) || locate(/obj/item/weapon/grab, tmob.grabbed_by.len)) )
 					if ( !(world.time % 5) )
-						src << "\red [tmob] is restrained, you cannot push past"
+						src << "<span class='warning'>[tmob] is restrained, you cannot push past</span>"
 					now_pushing = 0
 					return
 				if( tmob.pulling == M && ( M.restrained() && !( tmob.restrained() ) && tmob.stat == 0) )
 					if ( !(world.time % 5) )
-						src << "\red [tmob] is restraining [M], you cannot push past"
+						src << "<span class='warning'>[tmob] is restraining [M], you cannot push past</span>"
 					now_pushing = 0
 					return
 
@@ -125,7 +125,7 @@
 
 		if(istype(tmob, /mob/living/carbon/human) && (M_FAT in tmob.mutations))
 			if(prob(40) && !(M_FAT in src.mutations))
-				src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
+				src << "<span class='danger'>You fail to push [tmob]'s fat ass out of the way.</span>"
 				now_pushing = 0
 				return
 		if(tmob.r_hand && istype(tmob.r_hand, /obj/item/weapon/shield/riot))
@@ -319,7 +319,7 @@
 		return
 	for(var/mob/M in viewers(src, null))
 		if ((M.client && !( M.blinded )))
-			M.show_message("\red [src] has been hit by [O]", 1)
+			M.show_message("<span class='warning'>[src] has been hit by [O]</span>", 1)
 	if (health > 0)
 		var/datum/organ/external/affecting = get_organ(pick("chest", "chest", "chest", "head"))
 		if(!affecting)	return
@@ -346,7 +346,7 @@
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+			O.show_message("<span class='danger'>[M] [M.attacktext] [src]!</span>", 1)
 		add_logs(M, src, "attacked", admin=0)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
@@ -371,7 +371,7 @@
 
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
-				O.show_message(text("\red <B>The [M.name] glomps []!</B>", src), 1)
+				O.show_message(text("<span class='danger'>The [M.name] glomps []!</span>", src), 1)
 
 		var/damage = rand(1, 3)
 
@@ -407,7 +407,7 @@
 
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>The [M.name] has shocked []!</B>", src), 1)
+						O.show_message(text("<span class='danger'>The [M.name] has shocked []!</span>", src), 1)
 
 				Weaken(power)
 				if (stuttering < power)
@@ -855,7 +855,7 @@
 												U.handle_regular_hud_updates()
 
 			if(!modified)
-				usr << "\red Unable to locate a data core entry for this person."
+				usr << "<span class='warning'>Unable to locate a data core entry for this person.</span>"
 	else if (href_list["secrecord"])
 		if(hasHUD(usr,"security"))
 			var/perpname = "wot"
@@ -884,7 +884,7 @@
 								read = 1
 
 			if(!read)
-				usr << "\red Unable to locate a data core entry for this person."
+				usr << "<span class='warning'>Unable to locate a data core entry for this person.</span>"
 	else if (href_list["secrecordComment"])
 		if(hasHUD(usr,"security"))
 			var/perpname = "wot"
@@ -913,7 +913,7 @@
 								usr << "<a href='?src=\ref[src];secrecordadd=`'>\[Add comment\]</a>"
 
 			if(!read)
-				usr << "\red Unable to locate a data core entry for this person."
+				usr << "<span class='warning'>Unable to locate a data core entry for this person.</span>"
 	else if (href_list["secrecordadd"])
 		if(hasHUD(usr,"security"))
 			var/perpname = "wot"
@@ -979,7 +979,7 @@
 											U.handle_regular_hud_updates()
 
 			if(!modified)
-				usr << "\red Unable to locate a data core entry for this person."
+				usr << "<span class='warning'>Unable to locate a data core entry for this person.</span>"
 	else if (href_list["medrecord"])
 		if(hasHUD(usr,"medical"))
 			var/perpname = "wot"
@@ -1009,7 +1009,7 @@
 								read = 1
 
 			if(!read)
-				usr << "\red Unable to locate a data core entry for this person."
+				usr << "<span class='warning'>Unable to locate a data core entry for this person.</span>"
 	else if (href_list["medrecordComment"])
 		if(hasHUD(usr,"medical"))
 			var/perpname = "wot"
@@ -1038,7 +1038,7 @@
 								usr << "<a href='?src=\ref[src];medrecordadd=`'>\[Add comment\]</a>"
 
 			if(!read)
-				usr << "\red Unable to locate a data core entry for this person."
+				usr << "<span class='warning'>Unable to locate a data core entry for this person.</span>"
 	else if (href_list["medrecordadd"])
 		if(hasHUD(usr,"medical"))
 			var/perpname = "wot"
@@ -1071,10 +1071,10 @@
 		//	user << "<span class='alert'>There is no exposed flesh or thin material [above_neck(target_zone) ? "on their head" : "on their body"].</span>"
 	else if (href_list["lookitem"])
 		var/obj/item/I = locate(href_list["lookitem"])
-		I.examine()
+		usr.examination(I)
 	else if (href_list["lookmob"])
 		var/mob/M = locate(href_list["lookmob"])
-		M.examine()
+		usr.examination(M)
 	else
 		..()
 
@@ -1158,7 +1158,7 @@
 
 /mob/living/carbon/human/proc/play_xylophone()
 	if(!src.xylophone)
-		visible_message("\red [src] begins playing his ribcage like a xylophone. It's quite spooky.","\blue You begin to play a spooky refrain on your ribcage.","\red You hear a spooky xylophone melody.")
+		visible_message("<span class='warning'>[src] begins playing his ribcage like a xylophone. It's quite spooky.</span>","<span class='notice'>You begin to play a spooky refrain on your ribcage.</span>","<span class='notice'>You hear a spooky xylophone melody.</span>")
 		var/song = pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg')
 		playsound(loc, song, 50, 1, -1)
 		xylophone = 1
@@ -1268,7 +1268,7 @@
 	regenerate_icons()
 	check_dna()
 
-	visible_message("\blue \The [src] morphs and changes [get_visible_gender() == MALE ? "his" : get_visible_gender() == FEMALE ? "her" : "their"] appearance!", "\blue You change your appearance!", "\red Oh, god!  What the hell was that?  It sounded like flesh getting squished and bone ground into a different shape!")
+	visible_message("<span class='notice'>\The [src] morphs and changes [get_visible_gender() == MALE ? "his" : get_visible_gender() == FEMALE ? "her" : "their"] appearance!</span>", "<span class='notice'>You change your appearance!</span>", "<span class='warning'>Oh, god!  What the hell was that?  It sounded like flesh getting squished and bone ground into a different shape!</span>")
 /mob/living/carbon/human/proc/can_mind_interact(mob/M)
 	if(!ishuman(M)) return 0 //Can't see non humans with your fancy human mind.
 	var/turf/temp_turf = get_turf(M)
@@ -1300,10 +1300,10 @@
 
 	var/say = input ("What do you wish to say")
 	if(M_REMOTE_TALK in target.mutations)
-		target.show_message("\blue You hear [src.real_name]'s voice: [say]")
+		target.show_message("<span class='notice'>You hear [src.real_name]'s voice: [say]</span>")
 	else
-		target.show_message("\blue You hear a voice that seems to echo around the room: [say]")
-	usr.show_message("\blue You project your mind into [target.real_name]: [say]")
+		target.show_message("<span class='notice'>You hear a voice that seems to echo around the room: [say]</span>")
+	usr.show_message("<span class='notice'>You project your mind into [target.real_name]: [say]</span>")
 	for(var/mob/dead/observer/G in world)
 		G.show_message("<i>Telepathic message from <b>[src]</b> to <b>[target]</b>: [say]</i>")
 
@@ -1323,7 +1323,7 @@
 		return
 
 	if(istype(l_hand, /obj/item/tk_grab) || istype(r_hand, /obj/item/tk_grab/))
-		src << "\red Your mind is too busy with that telekinetic grab."
+		src << "<span class='warning'>Your mind is too busy with that telekinetic grab.</span>"
 		remoteview_target = null
 		reset_view(0)
 		return
@@ -1342,7 +1342,7 @@
 	var/mob/target = input ("Who do you want to project your mind to ?") as mob in creatures
 
 	if(istype(l_hand, /obj/item/tk_grab) || istype(r_hand, /obj/item/tk_grab/))
-		src << "\red Your mind is too busy with that telekinetic grab."
+		src << "<span class='warning'>Your mind is too busy with that telekinetic grab.</span>"
 		remoteview_target = null
 		reset_view(0)
 		return
@@ -1594,16 +1594,16 @@
 	if(usr == src)
 		self = 1
 	if(!self)
-		usr.visible_message("\blue [usr] kneels down, puts \his hand on [src]'s wrist and begins counting their pulse.",\
+		usr.visible_message("<span class='notice'>[usr] kneels down, puts \his hand on [src]'s wrist and begins counting their pulse.</span>",\
 		"You begin counting [src]'s pulse")
 	else
-		usr.visible_message("\blue [usr] begins counting their pulse.",\
+		usr.visible_message("<span class='notice'>[usr] begins counting their pulse.</span>",\
 		"You begin counting your pulse.")
 
 	if(src.pulse)
-		usr << "\blue [self ? "You have a" : "[src] has a"] pulse! Counting..."
+		usr << "<span class='notice'>[self ? "You have a" : "[src] has a"] pulse! Counting...</span>"
 	else
-		usr << "\red [src] has no pulse!"	//it is REALLY UNLIKELY that a dead person would check his own pulse
+		usr << "<span class='warning'>[src] has no pulse!</span>"	//it is REALLY UNLIKELY that a dead person would check his own pulse
 		return
 
 	usr << "Don't move until counting is finished."
@@ -1612,7 +1612,7 @@
 	if(usr.l_move_time >= time)	//checks if our mob has moved during the sleep()
 		usr << "You moved while counting. Try again."
 	else
-		usr << "\blue [self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)]."
+		usr << "<span class='notice'>[self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)].</span>"
 
 /mob/living/carbon/human/proc/set_species(var/new_species_name, var/force_organs, var/default_colour)
 

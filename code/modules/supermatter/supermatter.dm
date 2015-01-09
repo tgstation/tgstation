@@ -313,7 +313,6 @@
 	attack_ai(user)
 
 /obj/machinery/power/supermatter/attack_ai(mob/user as mob)
-	src.examine()
 	var/stability = num2text(round((damage / explosion_point) * 100))
 	user << "<span class = \"info\">Matrix Instability: [stability]%</span>"
 	user << "<span class = \"info\">Damage: [format_num(damage)]</span>" // idfk what units we're using.

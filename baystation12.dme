@@ -1306,7 +1306,6 @@
 #include "code\modules\power\power.dm"
 #include "code\modules\power\smes.dm"
 #include "code\modules\power\solar.dm"
-#include "code\modules\power\switch.dm"
 #include "code\modules\power\terminal.dm"
 #include "code\modules\power\tracker.dm"
 #include "code\modules\power\turbine.dm"

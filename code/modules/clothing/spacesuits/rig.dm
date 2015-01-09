@@ -105,12 +105,12 @@
 		camera.network = list("NUKE")
 		cameranet.removeCamera(camera)
 		camera.c_tag = user.name
-		user << "\blue User scanned as [camera.c_tag]. Camera activated."
+		user << "<span class='notice'>User scanned as [camera.c_tag]. Camera activated.</span>"
 
-/obj/item/clothing/head/helmet/space/rig/syndi/examine()
+/obj/item/clothing/head/helmet/space/rig/syndi/examine(mob/user)
 	..()
-	if(get_dist(usr,src) <= 1)
-		usr << "This helmet has a built-in camera. It's [camera ? "" : "in"]active."
+	if(get_dist(user,src) <= 1)
+		user << "<span class='info'>This helmet has a built-in camera. It's [camera ? "" : "in"]active.</span>"
 
 /obj/item/clothing/suit/space/rig/syndi
 	icon_state = "rig-syndi"

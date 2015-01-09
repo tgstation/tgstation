@@ -27,13 +27,13 @@
 	src.name = "packet of [seed.seed_name] [seed.seed_noun]"
 	src.desc = "It has a picture of [seed.display_name] on the front."
 
-/obj/item/seeds/examine()
+/obj/item/seeds/examine(mob/user)
 	..()
 	if(seed && !seed.roundstart)
-		usr << "It's tagged as variety #[seed.uid]."
+		user << "It's tagged as variety <span class='info'>#[seed.uid].</span>"
 	else
-		usr << "Plant Yield: <span class='notice'>[(seed.yield != -1) ? seed.yield : "<span class='warning'> ERROR</span>"]</span>"
-		usr << "Plant Potency: <span class='notice'>[(seed.potency != -1) ? seed.potency : "<span class='warning> ERROR</span>"]</span>"
+		user << "Plant Yield: <span class='info'>[(seed.yield != -1) ? seed.yield : "<span class='warning'> ERROR</span>"]</span>"
+		user << "Plant Potency: <span class='info'>[(seed.potency != -1) ? seed.potency : "<span class='warning> ERROR</span>"]</span>"
 
 /obj/item/seeds/cutting
 	name = "cuttings"
