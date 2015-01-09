@@ -283,6 +283,135 @@
 				Coming soon...
 			"}
 
+/obj/item/weapon/book/manual/experimentor
+	name = "Mentoring your Experiments"
+	icon_state = "rdbook"
+	author = "Dr. S.A. Woo"
+	dat = {"<html>
+				<head>
+				<style>
+				h1 {font-size: 18px; margin: 15px 0px 5px;}
+				h2 {font-size: 15px; margin: 15px 0px 5px;}
+				li {margin: 2px 0px 2px 15px;}
+				ul {list-style: none; margin: 5px; padding: 0px;}
+				ol {margin: 5px; padding: 0px 15px;}
+				</style>
+				</head>
+				<body>
+				<h1>THE E.X.P.E.R.I-MENTOR</h1>
+				The Enhanced Xenobiological Period Extraction (and) Restoration Instructor is a machine designed to discover the secrets behind every item in existence.
+				With advanced technology, it can process 99.95% of items, and discover their uses and secrets.
+				The E.X.P.E.R.I-MENTOR is a Research machine that takes items, and through a process of elimination, allows you to research technology from them.
+				Due to the volatile nature of the E.X.P.E.R.I-MENTOR, there is a probably result of the machine backfiring and it's subsystems causing havoc.
+				Upgrading the parts of the E.X.P.E.R.I-MENTOR will result in less failiures.
+				The E.X.P.E.R.I-MENTOR uses randomly generated patterns to identify the technological uses of items, meaning that at the start of every shift, it will have a whole new set of uses.
+
+				<h2>BASIC PROCESS</h2>
+				To use the E.X.P.E.R.I-MENTOR, it is simple:
+				<ol>
+					<li>1. Find an Item with a technological background</li>
+					<li>2. Insert the Item into the E.X.P.E.R.I-MENTOR</li>
+					<li>3. Click the different processing methods to experiment on the device.</li>
+					<li>4. A succesful result will give a unique message, and a chance for an event.</li>
+				</ol>
+
+				<h2>ADVANCED USAGE</h2>
+				The E.X.P.E.R.I-MENTOR has a variety of uses, beyond basic researching. The different results can be used to combat localised events, or even to get special items.
+
+				The E.X.P.E.R.I-MENTOR's OBLITERATE function has the added use of transferring the destroyed item's material into a linked lathe.
+
+				The IRRADIATE function can be used to transform items into other items, resulting in potential upgrades (or downgrades.)
+
+				Users should remember to always carry appropriate protection when using the machine, because malfunction can occur at any moment!
+
+				<h1>EVENTS</h1>
+				<h2>GLOBAL (happens at any time):</h2>
+					<ol>
+					<li>DETECTION MALFUNCTION - The machine's onboard sensors have malfunctioned, causing it to redefine the item's experiment type.
+					Produces the message: The E.X.P.E.R.I-MENTOR's onboard detection system has malfunctioned!</li>
+
+					<li>IANIZATION - The machine's onboard corgi-filter has malfunctioned, causing it to produce a corgi from.. somewhere.
+					Produces the message: The E.X.P.E.R.I-MENTOR melts the banana, ian-izing the air around it!</li>
+
+					<li>RUNTIME ERROR - The machine's onboard C4T-P processor has encountered a critical error, causing it to produce a cat from.. somewhere.
+					Produces the message: The E.X.P.E.R.I-MENTOR encounters a run-time error!</li>
+
+					<li>B100DG0D.EXE - The machine has encountered an unknown subroutine, which has been injected into it's runtime. It upgrades the held item!
+					Produces the message: The E.X.P.E.R.I-MENTOR improves the banana, drawing the life essence of those nearby!</li>
+
+					<li>POWERSINK - The machine's PSU has tripped the charging mechanism! It consumes massive amounts of power!
+					Produces the message: The E.X.P.E.R.I-MENTOR begins to smoke and hiss, shaking violently!</li>
+					</ol>
+				<h2>FAIL:</h2>
+					This event is produced when the item mismatches the selected experiment.
+					Produces a random message similar to: "the Banana rumbles, and shakes, the experiment was a failiure!"
+
+				<h2>POKE:</h2>
+					<ol>
+					<li>WILD ARMS - The machine's gryoscopic processors malfunction, causing it to lash out at nearby people with it's arms.
+					Produces the message: The E.X.P.E.R.I-MENTOR malfunctions and destroys the banana, lashing it's arms out at nearby people!</li>
+
+					<li>MISTYPE - The machine's interface has been garbled, and it switches to OBLITERATE.
+					Produces the message: The E.X.P.E.R.I-MENTOR malfunctions!</li>
+
+					<li>THROW - The machine's spatial recognition device has shifted several meters across the room, causing it to try and repostion the item there.
+					Produces the message: The E.X.P.E.R.I-MENTOR malfunctions, throwing the banana!</li>
+					</ol>
+				<h2>IRRADIATE:</h2>
+					<ol>
+					<li>RADIATION LEAK - The machine's shield has failed, resulting in a toxic radiation leak.
+					Produces the message: The E.X.P.E.R.I-MENTOR malfunctions, melting the banana and leaking radiation!</li>
+
+					<li>RADIATION DUMP - The machine's recycling and containment functions have failed, resulting in a dump of toxic waste around it
+					Produces the message: The E.X.P.E.R.I-MENTOR malfunctions, spewing toxic waste!</li>
+
+					<li>MUTATION - The machine's radio-isotope level meter has malfunctioned, causing it over-irradiate the item, making it transform.
+					Produces the message: The E.X.P.E.R.I-MENTOR malfunctions, transforming the banana!</li>
+					</ol>
+				<h2>GAS:</h2>
+					<ol>
+					<li>TOXIN LEAK - The machine's filtering and vent systems have failed, resulting in a cloud of toxic gas being expelled.
+					Produces the message: The E.X.P.E.R.I-MENTOR destroys the banana, leaking dangerous gas!</li>
+
+					<li>GAS LEAK - The machine's vent systems have failed, resulting in a cloud of harmless, but obscuring gas.
+					Produces the message: The E.X.P.E.R.I-MENTOR malfunctions, spewing harmless gas!</li>
+
+					<li>ELECTROMAGNETIC IONS - The machine's electrolytic scanners have failed, causing a dangerous Electromagnetic reaction.
+					Produces the message: The E.X.P.E.R.I-MENTOR melts the banana, ionizing the air around it!</li>
+					</ol>
+				<h2>HEAT:</h2>
+					<ol>
+					<li>TOASTER - The machine's heating coils have come into contact with the machine's gas storage, causing a large, sudden blast of flame.
+					Produces the message: The E.X.P.E.R.I-MENTOR malfunctions, melting the banana and releasing a burst of flame!</li>
+
+					<li>SAUNA - The machine's vent loop has sprung a leak, resulting in a large amount of superheated air being dumped around it.
+					Produces the message: The E.X.P.E.R.I-MENTOR malfunctions, melting the banana and leaking hot air!</li>
+
+					<li>EMERGENCY VENT - The machine's temperature gauge has malfunctioned, resulting in it attempting to cool the area around it, but instead, dumping a cloud of steam.
+					Produces the message: The E.X.P.E.R.I-MENTOR malfunctions, activating it's emergency coolant systems!</li>
+					</ol>
+				<h2>COLD:</h2>
+					<ol>
+					<li>FREEZER - The machine's cooling loop has sprung a leak, resulting in a cloud of super-cooled liquid being blasted into the air.
+					Produces the message: The E.X.P.E.R.I-MENTOR malfunctions, shattering the banana and releasing a dangerous cloud of coolant!</li>
+
+					<li>FRIDGE - The machine's cooling loop has been exposed to the outside air, resulting in a large decrease in temperature.
+					Produces the message: The E.X.P.E.R.I-MENTOR malfunctions, shattering the banana and leaking cold air!</li>
+
+					<li>SNOWSTORM - The machine's cooling loop has come into contact with the heating coils, resulting in a sudden blast of cool air.
+					Produces the message: The E.X.P.E.R.I-MENTOR malfunctions, releasing a flurry of chilly air as the banana pops out!</li>
+					</ol>
+				<h2>OBLITERATE:</h2>
+					<ol>
+					<li>IMPLOSION - The machine's pressure leveller has malfunctioned, causing it to pierce the space-time momentarily, making everything in the area fly towards it.
+					Produces the message: The E.X.P.E.R.I-MENTOR's crusher goes way too many levels too high, crushing right through space-time!</li>
+
+					<li>DISTORTION - The machine's pressure leveller has completely disabled, resulting in a momentary space-time distortion, causing everything to fly around.
+					Produces the message: The E.X.P.E.R.I-MENTOR's crusher goes one level too high, crushing right into space-time!</li>
+					</ol>
+				</body>
+	</html>
+	"}
 
 /obj/item/weapon/book/manual/research_and_development
 	name = "Research and Development 101"
