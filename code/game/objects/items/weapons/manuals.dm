@@ -286,7 +286,7 @@
 /obj/item/weapon/book/manual/experimentor
 	name = "Mentoring your Experiments"
 	icon_state = "rdbook"
-	author = "Dr. S.A. Woo"
+	author = "Dr. H.P. Kritz"
 	dat = {"<html>
 				<head>
 				<style>
