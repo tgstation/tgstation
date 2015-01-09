@@ -201,7 +201,7 @@
 "dS" = (/obj/structure/table,/obj/item/weapon/paper_bin,/turf/simulated/shuttle/floor,/area/centcom/evac)
 "dT" = (/obj/machinery/door/airlock/shuttle{name = "Supply Shuttle Airlock"; req_access_txt = "31"},/turf/simulated/shuttle/plating,/area/space)
 "dU" = (/obj/machinery/door_control{dir = 2; id = "QMLoaddoor2"; name = "Loading Doors"; pixel_x = 24; pixel_y = 8},/obj/machinery/door_control{id = "QMLoaddoor"; name = "Loading Doors"; pixel_x = 24; pixel_y = -8},/turf/simulated/shuttle/floor,/area/space)
-"dV" = (/obj/machinery/door/airlock/shuttle{name = "Supply Shuttle Airlock"; req_access_txt = "31"},/obj/docking_port/mobile/supply{dwidth = 5; width = 12},/obj/docking_port/stationary{dir = 8; dwidth = 4; height = 7; id = "supply_away"; name = "Centcom"; width = 11},/turf/simulated/shuttle/plating,/area/space)
+"dV" = (/obj/machinery/door/airlock/shuttle{name = "Supply Shuttle Airlock"; req_access_txt = "31"},/obj/docking_port/mobile/supply{dwidth = 5; width = 12},/obj/docking_port/stationary{dir = 8; dwidth = 5; height = 7; id = "supply_away"; name = "Centcom"; width = 12},/turf/simulated/shuttle/plating,/area/space)
 "dW" = (/obj/machinery/conveyor{dir = 4; id = "QMLoad"},/obj/machinery/door/poddoor{id = "QMLoaddoor"; name = "supply dock loading door"},/turf/simulated/shuttle/plating,/area/space)
 "dX" = (/turf/simulated/shuttle/wall{icon_state = "swall7"; dir = 2},/area/space)
 "dY" = (/turf/simulated/shuttle/floor,/turf/simulated/shuttle/wall{icon_state = "swall_f10"; dir = 2},/area/space)
