@@ -314,7 +314,8 @@ var/list/admin_verbs_mod = list(
 		/client/proc/cmd_admin_grantfullaccess,
 		/client/proc/kaboom,
 		/client/proc/splash,
-		/client/proc/cmd_admin_areatest
+		/client/proc/cmd_admin_areatest,
+		/client/proc/readmin,
 		)
 
 /client/proc/hide_most_verbs()//Allows you to keep some functionality while hiding some verbs
@@ -663,11 +664,12 @@ var/list/admin_verbs_mod = list(
 	set category = "Admin"
 
 	if(holder)
-		if(alert("Confirm self-deadmin for the round? You can't re-admin yourself without someont promoting you.",,"Yes","No") == "Yes")
-			log_admin("[src] deadmined themself.")
-			message_admins("[src] deadmined themself.", 1)
-			deadmin()
-			src << "<span class='interface'>You are now a normal player.</span>"
+		log_admin("[src] deadminned themself.")
+		message_admins("[src] deadminned themself.")
+		deadmin()
+		verbs += /client/proc/readmin
+		deadmins += ckey
+		src << "<span class='interface'>You are now a normal player.</span>"
 	feedback_add_details("admin_verb","DAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggle_log_hrefs()
@@ -831,3 +833,41 @@ var/list/admin_verbs_mod = list(
 
 	log_admin("[key_name(usr)] told everyone to man up and deal with it.")
 	message_admins("\blue [key_name_admin(usr)] told everyone to man up and deal with it.", 1)
+
+
+/client/proc/readmin()
+	set name = "Re-admin self"
+	set category = "Admin"
+	set desc = "Regain your admin powers."
+	var/datum/admins/D = admin_datums[ckey]
+	if(config.admin_legacy_system)
+		src << "<span class='notice'>Legacy admins is not supported yet</span>"
+		return
+	else
+		if(!dbcon.IsConnected())
+			message_admins("Warning, mysql database is not connected.")
+			src << "Warning, mysql database is not connected."
+			return
+		if(D)
+			src << "You are already an admin."
+			verbs -= /client/proc/readmin
+			return
+		var/sql_ckey = sanitizeSQL(ckey)
+		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, rank, level, flags FROM erro_admin WHERE ckey = [sql_ckey]")
+		query.Execute()
+		while(query.NextRow())
+			var/ckey = query.item[1]
+			var/rank = query.item[2]
+			if(rank == "Removed")	continue	//This person was de-adminned. They are only in the admin list for archive purposes.
+
+			var/rights = query.item[4]
+			if(istext(rights))	rights = text2num(rights)
+			D = new /datum/admins(rank, rights, ckey)
+
+			//find the client for a ckey if they are connected and associate them with the new admin datum
+			D.associate(directory[ckey])
+			message_admins("[src] re-adminned themselves.")
+			log_admin("[src] re-adminned themselves.")
+			feedback_add_details("admin_verb","RAS")
+			verbs -= /client/proc/readmin
+			return

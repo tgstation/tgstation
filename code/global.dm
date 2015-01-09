@@ -1,3 +1,5 @@
+//List of ckeys that have de-adminned themselves during this round
+var/global/list/deadmins = list()
 
 // List of types and how many instances of each type there are.
 var/global/list/type_instances[0]
