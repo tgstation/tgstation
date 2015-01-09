@@ -15,6 +15,7 @@
 	var/icon_locked = "lockbox+l"
 	var/icon_closed = "lockbox"
 	var/icon_broken = "lockbox+b"
+	var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 
 
 /obj/item/weapon/storage/lockbox/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -40,7 +41,6 @@
 		locked = 0
 		desc = "It appears to be broken."
 		icon_state = src.icon_broken
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, src.loc)
 		spark_system.start()
 		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
@@ -62,6 +62,34 @@
 		for(var/mob/O in viewers(user, 3))
 			O.show_message(text("<span class='notice'>\The [src] has been broken by [] with an electromagnetic card!</span>", user), 1, text("You hear a faint electrical spark."), 2)
 			return
+
+/obj/item/weapon/storage/lockbox/emp_act(severity)
+	for(var/obj/O in src)
+		if(istype(O, /obj/item/weapon/gun/energy/stunrevolver))
+			explosion(O.loc,0,1,4) //fuck your shitty stun revolvers
+			qdel(src)
+		var/obj/item/weapon/stock_parts/cell/C
+		for(C in O)
+			C.corrupt()
+			if(prob(80)) //cell is probably kill
+				C.corrupt()
+				C.corrupt()
+			if(prob(13)) //unlucky kaboop
+				C.rigged = 1
+		O.emp_act(severity)
+	if(!src.broken)
+		if(prob(80/severity)) //a decent chance, it is a shitty metal case after all
+			src.req_access = list()
+			src.req_access += pick(get_all_accesses())
+			if(src.locked)
+				src.locked = 0
+				src.icon_state = src.icon_closed
+			else if(!src.locked)
+				src.broken = 1
+				src.icon_state = src.icon_broken
+				spark_system.set_up(5, 0, src.loc)
+				spark_system.start()
+
 /obj/item/weapon/storage/lockbox/show_to(mob/user as mob)
 	if(locked)
 		user << "<span class='danger'>It's locked!</span>"
