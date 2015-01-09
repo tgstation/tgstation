@@ -107,8 +107,8 @@
 	src.loc = T
 
 /obj/item/examine(mob/user)
+	..() //TODO: Make The following code simply append to the description instead of a separate line
 	var/size
-	var/odesc = desc
 	switch(src.w_class)
 		if(1.0)
 			size = "tiny"
@@ -127,12 +127,7 @@
 		pronoun = "They are"
 	else
 		pronoun = "It is"
-	if (!desc)
-		user << "[pronoun] a [size] item."
-	else
-		desc += " [pronoun] a [size] item."
-	..()
-	desc = odesc
+	user << " [pronoun] a [size] item."
 
 
 /obj/item/attack_ai(mob/user as mob)

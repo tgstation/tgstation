@@ -231,7 +231,7 @@
 	This is overridden in ai.dm
 */
 /mob/proc/ShiftClickOn(var/atom/A)
-	A.ShiftClick()
+	A.ShiftClick(src)
 	return
 /atom/proc/ShiftClick(var/mob/user)
 	if(user.client && user.client.eye == user)
