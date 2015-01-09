@@ -132,7 +132,7 @@
 "cB" = (/obj/machinery/light,/turf/simulated/floor/plasteel{icon_state = "vault"; dir = 5},/area/solar/port{name = "\improper Syndicate Listening Post"})
 "cC" = (/obj/machinery/vending/cigarette,/turf/simulated/floor/plasteel{icon_state = "vault"; dir = 5},/area/solar/port{name = "\improper Syndicate Listening Post"})
 "cD" = (/obj/machinery/vending/cola,/turf/simulated/floor/plasteel{icon_state = "vault"; dir = 5},/area/solar/port{name = "\improper Syndicate Listening Post"})
-"cE" = (/turf/space,/area/syndicate_station/commssat)
+"cE" = (/turf/space,/area/admin)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
