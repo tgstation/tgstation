@@ -296,9 +296,6 @@ its easier to just keep the beam vertical.
 	if(desc)
 		user << desc
 
-	// *****RM
-	//user << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
-
 	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
 		user << "It contains:"
 		if(reagents.reagent_list.len)

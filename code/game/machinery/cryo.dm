@@ -128,7 +128,7 @@
 	if(in_range(user,src))
 		if(contents)
 			user << "You can just about make out some properties of the cryo's murky depths:"
-			for(var/atom/movable/floater in contents)
+			for(var/atom/movable/floater in (contents - beaker))
 				user << "A figure floats in the depths, they appear to be [floater.name]"
 			if(beaker)
 				user << "A beaker is releasing the following chemicals into the fluids:"
