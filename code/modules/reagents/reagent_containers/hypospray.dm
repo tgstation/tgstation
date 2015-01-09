@@ -91,6 +91,6 @@
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/examine(mob/user)
 	..()
 	if(reagents && reagents.reagent_list.len)
-		user << "<span class='info'>It is currently loaded.</span>"
+		user << "<span class='info'>It ready for injection.</span>"
 	else
-		user << "<span class='info'>It is spent.</span>"
+		user << "<span class='info'>The autoinjector has been spent.</span>"

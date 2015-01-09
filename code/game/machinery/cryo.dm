@@ -125,15 +125,17 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/examine(mob/user)
 	..()
-
-	if(in_range(user, src))
-		user << "You can just about make out some loose objects floating in the murk:"
-		for(var/obj/O in src)
-			if(O != beaker)
-				user << O.name
-		for(var/mob/M in src)
-			if(M != occupant)
-				user << M.name
+	if(in_range(user,src))
+		if(contents)
+			user << "You can just about make out some properties of the cryo's murky depths:"
+			for(var/atom/movable/floater in contents)
+				user << "A figure floats in the depths, they appear to be [floater.name]"
+			if(beaker)
+				user << "A beaker is releasing the following chemicals into the fluids:"
+				for(var/datum/reagent/R in beaker.reagents.reagent_list)
+					user << "<span class='info'>[R.volume] units of [R.name]</span>"
+		else
+			user << "<span class='info'>The chamber appears devoid of anything but its biotic fluids.</span>"
 	else
 		user << "<span class='notice'>Too far away to view contents.</span>"
 

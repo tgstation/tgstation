@@ -37,10 +37,8 @@ var/global/list/moneytypes=list(
 /obj/item/weapon/spacecash/examine(mob/user)
 	..()
 	if(amount>1)
-		user << "\icon[src] This is a stack of [amount] [src]s."
-	else
-		user << "\icon[src] This is \a [src]s."
-	user << "<span class='info'>It's worth [worth*amount] credits.</span>"
+		user << "It is a stack holding [amount] chips."
+		user << "<span class='info'>It's worth [worth*amount] credits.</span>"
 
 /obj/item/weapon/spacecash/update_icon()
 	icon_state = "cash[worth]"

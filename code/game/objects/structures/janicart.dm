@@ -26,7 +26,7 @@
 
 /obj/structure/stool/bed/chair/vehicle/janicart/examine(mob/user)
 	..()
-	if(in_range(src, usr) && reagents.has_reagent("lube"))
+	if(in_range(src, user) && reagents.has_reagent("lube"))
 		user << "<span class='warning'> Something is very off about this water.</span>"
 	switch(health)
 		if(75 to 99)

@@ -303,11 +303,11 @@ its easier to just keep the beam vertical.
 		user << "It contains:"
 		if(reagents.reagent_list.len)
 			for(var/datum/reagent/R in reagents.reagent_list)
-				user << "[R.volume] units of [R.name]"
+				user << "<span class='info'>[R.volume] units of [R.name]</span>"
 		else
-			user << "Nothing."
+			user << "<span class='info'>Nothing.</span>"
 	if(on_fire)
-		user << "\red OH SHIT! IT'S ON FIRE!"
+		user << "<span class='danger'>OH SHIT! IT'S ON FIRE!</span>"
 	return
 
 // /atom/proc/MouseDrop_T()

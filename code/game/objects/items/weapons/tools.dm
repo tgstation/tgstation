@@ -211,7 +211,7 @@
 
 /obj/item/weapon/weldingtool/examine(mob/user)
 	..()
-	user << text("\icon[] [] contains []/[] units of fuel!", src, src.name, get_fuel(),src.max_fuel )
+	user << "It contains [get_fuel()]/[src.max_fuel] units of fuel!"
 
 /obj/item/weapon/weldingtool/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/screwdriver))

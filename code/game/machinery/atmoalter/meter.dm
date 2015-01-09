@@ -119,7 +119,7 @@
 	if (get_dist(usr, src) <= 3 || istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/dead))
 		t += status()
 	else
-		usr << "<span class='bnotice'>You are too far away.</span>"
+		usr << "<span class='notice'><B>You are too far away.</B></span>"
 		return 1
 
 	usr << t

@@ -107,8 +107,8 @@
 	src.loc = T
 
 /obj/item/examine(mob/user)
-	..()
 	var/size
+	var/odesc = desc
 	switch(src.w_class)
 		if(1.0)
 			size = "tiny"
@@ -127,7 +127,12 @@
 		pronoun = "They are"
 	else
 		pronoun = "It is"
-	user << "[pronoun] a [size] item."
+	if (!desc)
+		user << "[pronoun] a [size] item."
+	else
+		desc += " [pronoun] a [size] item."
+	..()
+	desc = odesc
 
 
 /obj/item/attack_ai(mob/user as mob)

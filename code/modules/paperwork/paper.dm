@@ -5,7 +5,7 @@
 
 /obj/item/weapon/paper
 	name = "paper"
-	gender = PLURAL
+	gender = NEUTER
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
 	throwforce = 0
@@ -48,9 +48,6 @@
 		icon_state += "_words"
 
 /obj/item/weapon/paper/examine(mob/user)
-
-	..()	//We don't want them to see the dumb "this is a paper" thing every time.
-	//But we don't want to break our new mob verb indiscriminately yet.
 	if(in_range(user, src))
 		var/info_2 = ""
 		if(img)
@@ -63,6 +60,7 @@
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_2][info][stamps]</BODY></HTML>", "window=[name]")
 			onclose(user, "[name]")
 	else
+		..() //Only show a regular description if it is too far away to read.
 		user << "<span class='notice'>It is too far away.</span>"
 
 /obj/item/weapon/paper/verb/rename()

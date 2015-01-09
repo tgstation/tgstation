@@ -527,7 +527,7 @@
 
 /obj/item/toy/waterflower/examine(mob/user)
 	..()
-	user << "\icon[src] [src.reagents.total_volume] units of water left!"
+	user << "[src.reagents.total_volume] units of water left!"
 
 /*
  * Mech prizes

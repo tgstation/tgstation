@@ -50,10 +50,13 @@
 
 /obj/item/weapon/extinguisher/examine(mob/user)
 	..()
-	user << "\icon[src] [src.name] contains:"
-	if(reagents && reagents.reagent_list.len)
-		for(var/datum/reagent/R in reagents.reagent_list)
-			user << "<span class='notice'>[R.volume] units of [R.name]</span>"
+	if(!is_open_container())
+		user << "It contains:"
+		if(reagents && reagents.reagent_list.len)
+			for(var/datum/reagent/R in reagents.reagent_list)
+				user << "<span class='info'>[R.volume] units of [R.name]</span>"
+		else
+			user << "<span class='info'>Nothing</span>"
 	for(var/thing in src)
 		user << "<span class='warning'>\A [thing] is jammed into the nozzle!</span>"
 

@@ -44,8 +44,6 @@
 
 /obj/structure/stool/bed/chair/vehicle/clowncart/examine(mob/user)
 	..()
-	var/tmp/difference = reagents.total_volume - reagents.get_reagent_amount("banana")
-	user << "This [nick] contains [reagents.get_reagent_amount("banana")] unit\s of banana juice[(difference != 0 ? ", and [difference] unit\s of something else!" : "!")]" //yeah
 	if(max_health > 100)
 		user << "<span class='info'>It is reinforced with [(max_health-100)/20] bananium sheets.</span>"
 	switch(health)

@@ -165,7 +165,7 @@
 		if(beaker.reagents && beaker.reagents.reagent_list.len)
 			user << "<span class='info'>Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>"
 		else
-			user << "<span class='info'>Attached is an empty [beaker].</span>"
+			user << "<span class='info'>Attached is \an empty [beaker].</span>"
 	else
 		user << "<span class='info'>No chemicals are attached.</span>"
-	user << "<span class='info'>[attached ? attached : "No one"] is attached.</span>"
+	user << "<span class='info'>It is attached to [attached ? attached : "no one"].</span>"
