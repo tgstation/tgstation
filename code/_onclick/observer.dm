@@ -50,7 +50,7 @@
 
 // We don't need a fucking toggle.
 /mob/dead/observer/ShiftClickOn(var/atom/A)
-	user.examination(src)
+	A.examination(src)
 
 /atom/proc/attack_ghost(mob/user as mob)
 	var/ghost_flags = 0
