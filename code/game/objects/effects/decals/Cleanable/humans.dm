@@ -134,9 +134,9 @@ var/global/list/image/splatter_cache=list()
 	else
 		icon_state = "writing1"
 
-/obj/effect/decal/cleanable/blood/writing/examine()
+/obj/effect/decal/cleanable/blood/writing/examine(mob/user)
 	..()
-	usr << "It reads: <font color='[basecolor]'>\"[message]\"<font>"
+	user << "It reads: <font color='[basecolor]'>\"[message]\"<font>"
 
 /obj/effect/decal/cleanable/blood/gibs
 	name = "gibs"

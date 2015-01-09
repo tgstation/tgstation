@@ -94,8 +94,8 @@
 
 			//Display an attack message.
 			for(var/mob/O in viewers(user, null))
-				if(M != user) O.show_message(text("\red <B>[M] has been hit over the head with a [smashtext][src.name], by [user]!</B>"), 1)
-				else O.show_message(text("\red <B>[M] hit himself with a [smashtext][src.name] on the head!</B>"), 1)
+				if(M != user) O.show_message(text("<span class='danger'>[M] has been hit over the head with a [smashtext][src.name], by [user]!</span>"), 1)
+				else O.show_message(text("<span class='danger'>[M] hit himself with a [smashtext][src.name] on the head!</span>"), 1)
 			//Weaken the target for the duration that we calculated and divide it by 5.
 			if(armor_duration)
 				M.apply_effect(min(armor_duration, 10) , WEAKEN) // Never weaken more than a flash!
@@ -103,8 +103,8 @@
 		else
 			//Default attack message and don't weaken the target.
 			for(var/mob/O in viewers(user, null))
-				if(M != user) O.show_message(text("\red <B>[M] has been attacked with a [smashtext][src.name], by [user]!</B>"), 1)
-				else O.show_message(text("\red <B>[M] has attacked himself with a [smashtext][src.name]!</B>"), 1)
+				if(M != user) O.show_message(text("<span class='danger'>[M] has been attacked with a [smashtext][src.name], by [user]!</span>"), 1)
+				else O.show_message(text("<span class='danger'>[M] has attacked himself with a [smashtext][src.name]!</span>"), 1)
 
 		//Attack logs
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has attacked [M.name] ([M.ckey]) with a bottle!</font>")
@@ -118,7 +118,7 @@
 		//The reagents in the bottle splash all over the target, thanks for the idea Nodrak
 		if(src.reagents)
 			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\blue <B>The contents of \the [smashtext][src] splashes all over [M]!</B>"), 1)
+				O.show_message(text("<span class='bnotice'>The contents of \the [smashtext][src] splashes all over [M]!</span>"), 1)
 			src.reagents.reaction(M, TOUCH)
 
 		//Finally, smash the bottle. This kills (del) the bottle.
@@ -229,20 +229,18 @@
 
 	return
 
-/obj/item/weapon/reagent_containers/food/drinks/examine()
-	set src in view()
+/obj/item/weapon/reagent_containers/food/drinks/examine(mob/user)
 	..()
-	if (!(usr in range(0)) && usr!=src.loc) return
 	if(!reagents || reagents.total_volume==0)
-		usr << "<span  class='notice'>\The [src] is empty!</span>"
+		user << "<span  class='info'>\The [src] is empty!</span>"
 	else if (reagents.total_volume<=src.volume/4)
-		usr << "<span  class='notice'>\The [src] is almost empty!</span>"
+		user << "<span  class='info'>\The [src] is almost empty!</span>"
 	else if (reagents.total_volume<=src.volume*0.66)
-		usr << "<span  class='notice'>\The [src] is half full!</span>"
+		user << "<span  class='info'>\The [src] is half full!</span>"
 	else if (reagents.total_volume<=src.volume*0.90)
-		usr << "<span  class='notice'>\The [src] is almost full!</span>"
+		user << "<span  class='info'>\The [src] is almost full!</span>"
 	else
-		usr << "<span  class='notice'>\The [src] is full!</span>"
+		user << "<span  class='info'>\The [src] is full!</span>"
 
 /obj/item/weapon/reagent_containers/food/drinks/proc/imbibe(mob/user) //drink the liquid within
 	user << "<span  class='notice'>You swallow a gulp of [src].</span>"
@@ -858,7 +856,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/afterattack(obj/target, mob/user , flag)//copied from glass.dm, only way to have it only dispense 5u of its content
 	..()
 	if(ismob(target) && target.reagents && reagents.total_volume)
-		user << "\blue You splash some the flask's content onto [target]."
+		user << "<span class='notice'>You splash some the flask's content onto [target].</span>"
 
 		var/mob/living/M = target
 		var/list/injected = list()
@@ -910,7 +908,7 @@
 				if(reagents.has_reagent(bad_reagent))
 					badshit += reagents_to_log[bad_reagent]
 			if(badshit.len)
-				var/hl="\red <b>([english_list(badshit)])</b> \black"
+				var/hl="<span class='warning'>([english_list(badshit)])</span>"
 				message_admins("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 				log_game("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].")
 

@@ -128,24 +128,18 @@
 	icon_state = "boots-vox"
 	species_restricted = list("Vox")
 
-	toggle()
-		//set name = "Toggle Floor Grip"
-		if(usr.stat)
-			return
-		if(src.magpulse)
-			src.flags &= ~NOSLIP
-			src.magpulse = 0
-			usr << "You relax your deathgrip on the flooring."
-		else
-			src.flags |= NOSLIP
-			src.magpulse = 1
-			usr << "You dig your claws deeply into the flooring, bracing yourself."
-
-
-	examine()
-		set src in view()
-		..()
-
+/obj/item/clothing/shoes/magboots/vox/toggle()
+	//set name = "Toggle Floor Grip"
+	if(usr.stat)
+		return
+	if(src.magpulse)
+		src.flags &= ~NOSLIP
+		src.magpulse = 0
+		usr << "You relax your deathgrip on the flooring."
+	else
+		src.flags |= NOSLIP
+		src.magpulse = 1
+		usr << "You dig your claws deeply into the flooring, bracing yourself."
 
 // Vox Casual
 // Civvie

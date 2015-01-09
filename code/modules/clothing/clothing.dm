@@ -24,7 +24,7 @@
 					wearable = 1
 
 			if(!wearable && (slot != 15 && slot != 16)) //Pockets.
-				M << "\red Your species cannot wear [src]."
+				M << "<span class='warning'>Your species cannot wear [src].</span>"
 				return 0
 
 	return ..()
@@ -106,11 +106,6 @@ BLIND     // can't see anything
 	attack_verb = list("challenged")
 	species_restricted = list("exclude","Unathi","Tajaran","Muton")
 	var/pickpocket = 0 //Master pickpocket?
-
-/obj/item/clothing/gloves/examine()
-	set src in usr
-	..()
-	return
 
 /obj/item/clothing/gloves/emp_act(severity)
 	if(cell)
@@ -289,20 +284,21 @@ BLIND     // can't see anything
 
 	..()
 
-/obj/item/clothing/under/examine()
-	set src in view()
+/obj/item/clothing/under/examine(mob/user)
 	..()
+	var/mode
 	switch(src.sensor_mode)
 		if(0)
-			usr << "Its sensors appear to be disabled."
+			mode = "Its sensors appear to be disabled."
 		if(1)
-			usr << "Its binary life sensors appear to be enabled."
+			mode = "Its binary life sensors appear to be enabled."
 		if(2)
-			usr << "Its vital tracker appears to be enabled."
+			mode = "Its vital tracker appears to be enabled."
 		if(3)
-			usr << "Its vital tracker and tracking beacon appear to be enabled."
+			mode = "Its vital tracker and tracking beacon appear to be enabled."
+	user << "<span class='info'>" + mode + "</span>"
 	if(hastie)
-		usr << "\A [hastie] is clipped to it."
+		user << "<span class='info'>\A [hastie] is clipped to it.</span>"
 
 /obj/item/clothing/under/proc/set_sensors(mob/usr as mob)
 	var/mob/M = usr
@@ -375,32 +371,32 @@ BLIND     // can't see anything
 	if(usr.stat) return
 
 	if (!hastie || !istype(hastie,/obj/item/clothing/tie/holster))
-		usr << "\red You need a holster for that!"
+		usr << "<span class='warning'>You need a holster for that!</span>"
 		return
 	var/obj/item/clothing/tie/holster/H = hastie
 
 	if(!H.holstered)
 		if(!istype(usr.get_active_hand(), /obj/item/weapon/gun))
-			usr << "\blue You need your gun equiped to holster it."
+			usr << "<span class='notice'>You need your gun equiped to holster it.</span>"
 			return
 		var/obj/item/weapon/gun/W = usr.get_active_hand()
 		if (!W.isHandgun())
-			usr << "\red This gun won't fit in \the [H]!"
+			usr << "<span class='warning'>This gun won't fit in \the [H]!</span>"
 			return
 		H.holstered = usr.get_active_hand()
 		usr.drop_item()
 		H.holstered.loc = src
-		usr.visible_message("\blue \The [usr] holsters \the [H.holstered].", "You holster \the [H.holstered].")
+		usr.visible_message("<span class='notice'>\The [usr] holsters \the [H.holstered].", "You holster \the [H.holstered].</span>")
 	else
 		if(istype(usr.get_active_hand(),/obj) && istype(usr.get_inactive_hand(),/obj))
-			usr << "\red You need an empty hand to draw the gun!"
+			usr << "<span class='warning'>You need an empty hand to draw the gun!</span>"
 		else
 			if(usr.a_intent == "hurt")
-				usr.visible_message("\red \The [usr] draws \the [H.holstered], ready to shoot!", \
-				"\red You draw \the [H.holstered], ready to shoot!")
+				usr.visible_message("<span class='warning'>\The [usr] draws \the [H.holstered], ready to shoot!</span>", \
+				"<span class='warning'>You draw \the [H.holstered], ready to shoot!</span>")
 			else
-				usr.visible_message("\blue \The [usr] draws \the [H.holstered], pointing it at the ground.", \
-				"\blue You draw \the [H.holstered], pointing it at the ground.")
+				usr.visible_message("<span class='notice'>\The [usr] draws \the [H.holstered], pointing it at the ground.</span>", \
+				"<span class='notice'>You draw \the [H.holstered], pointing it at the ground.</span>")
 			usr.put_in_hands(H.holstered)
 			H.holstered = null
 
@@ -412,7 +408,7 @@ BLIND     // can't see anything
 	if(usr.stat) return
 
 	if (!hastie || !istype(hastie,/obj/item/clothing/tie/storage))
-		usr << "\red You need something to store items in for that!"
+		usr << "<span class='warning'>You need something to store items in for that!</span>"
 		return
 	var/obj/item/clothing/tie/storage/W = hastie
 

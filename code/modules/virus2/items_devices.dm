@@ -58,11 +58,11 @@
 						infect_virus2(target,src.virus2, notes="([src] attacked by [key_name(user)])")
 		del src
 
-/obj/item/weapon/virusdish/examine()
-	usr << "This is a virus containment dish"
+/obj/item/weapon/virusdish/examine(mob/user)
+	..()
 	if(src.info)
-		usr << "It has the following information about its contents"
-		usr << src.info
+		user << "<span class='info'>It has the following information about its contents</span>"
+		user << src.info
 
 ///////////////GNA DISK///////////////
 

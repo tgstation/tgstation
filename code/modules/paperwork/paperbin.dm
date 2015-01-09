@@ -15,10 +15,10 @@
 
 
 /obj/item/weapon/paper_bin/ashify()
-		new ashtype(src.loc)
-		papers=0
-		amount=0
-		update_icon()
+	new ashtype(src.loc)
+	papers=0
+	amount=0
+	update_icon()
 
 /obj/item/weapon/paper_bin/getFireFuel()
 	return amount
@@ -77,14 +77,12 @@
 	amount++
 
 
-/obj/item/weapon/paper_bin/examine()
-	set src in oview(1)
-
+/obj/item/weapon/paper_bin/examine(mob/user)
+	..()
 	if(amount)
-		usr << "<span class='notice'>There " + (amount > 1 ? "are [amount] papers" : "is one paper") + " in the bin.</span>"
+		user << "<span class='info'>There " + (amount > 1 ? "are [amount] papers" : "is one paper") + " in the bin.</span>"
 	else
-		usr << "<span class='notice'>There are no papers in the bin.</span>"
-	return
+		user << "<span class='info'>There are no papers in the bin.</span>"
 
 
 /obj/item/weapon/paper_bin/update_icon()

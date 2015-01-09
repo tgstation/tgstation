@@ -177,6 +177,7 @@
 	name = "cable coil"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil_red"
+	gender = NEUTER
 	var/amount = MAXCOIL
 	var/max_amount = MAXCOIL
 	_color = "red"
@@ -219,16 +220,6 @@
 	else
 		icon_state = "coil_[_color]"
 		name = "cable coil"
-
-/obj/item/weapon/cable_coil/examine()
-	set src in view(1)
-
-	if(amount == 1)
-		usr << "A short piece of power cable."
-	else if(amount == 2)
-		usr << "A piece of power cable."
-	else
-		usr << "A coil of power cable. There are [amount] lengths of cable in the coil."
 
 /obj/item/weapon/cable_coil/verb/make_restraint()
 	set name = "Make Cable Restraints"
