@@ -395,7 +395,6 @@
 	if(..())
 		reagents.add_reagent("nutriment", 1 + round((potency / 6), 1))
 		reagents.add_reagent("vitamin", 1 + round((potency / 10), 1))
-		bitesize = 1 + round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin
 	seed = /obj/item/seeds/pumpkinseed
@@ -481,7 +480,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/chili
 	seed = /obj/item/seeds/chiliseed
 	name = "chili pepper"
-	desc = "It's spicy! Wait... IT'S BURNING ME!!"
+	desc = "It's spicy! Wait... IT'S BURNING ME!"
 	icon_state = "chilipepper"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/chili/add_juice()
@@ -500,7 +499,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper
 	seed = /obj/item/seeds/icepepperseed
 	name = "chilly pepper"
-	desc = "It's cold to the touch let alone to your taste buds."
+	desc = "It's chilly! Wait... IT'S FREEZING ME!"
 	icon_state = "icepepper"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper/add_juice()
@@ -1139,11 +1138,8 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	icon_state = "blumpkin"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin/add_juice()
-	if(..())
-		reagents.add_reagent("nutriment", 1 + round((potency / 6), 1))
-		reagents.add_reagent("vitamin", 1 + round((potency / 10), 1))
-		reagents.add_reagent("cleaner", 1 + round((potency / 10), 1))
-		bitesize = 1 + round(reagents.total_volume / 2, 1)
+	..()
+	reagents.add_reagent("cleaner", 1 + round((potency / 10), 1))
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/holymelon
@@ -1153,11 +1149,8 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	icon_state = "holymelon"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/holymelon/add_juice()
-	if(..())
-		reagents.add_reagent("nutriment", 1 + round((potency / 6), 1))
-		reagents.add_reagent("vitamin", 1 + round((potency / 10), 1))
-		reagents.add_reagent("holywater", 1 + round((potency / 10), 1))
-		bitesize = 1 + round(reagents.total_volume / 2, 1)
+	..()
+	reagents.add_reagent("holywater", 1 + round((potency / 10), 1))
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/singulopotato
@@ -1178,11 +1171,12 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	user.visible_message("<span class='warning'>[user] crushes a singularity potato!</span>")
 	var/vortexpower = max(3, round(potency/14, 1)) // this limits the range to 7 at max potency.
 	var/turf/pull = user.loc
-	playsound(user, 'sound/weapons/marauder.ogg', 50, 1)
+	playsound(user, 'sound/effects/empulse.ogg', 50, 1)
 	for(var/atom/X in orange(vortexpower,pull))
 		if(istype(X, /atom/movable))
 			if(X == user) continue
 			if((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))
+				step_towards(X,pull)
 				step_towards(X,pull)
 				step_towards(X,pull)
 				step_towards(X,pull)
@@ -1192,7 +1186,8 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 					var/obj/item/clothing/shoes/magboots/M = H.shoes
 					if(M.magpulse)
 						continue
-				H.apply_effect(min(3, vortexpower), WEAKEN, 0)
+				H.apply_effect(min(3, vortexpower))
+				step_towards(H,pull)
 				step_towards(H,pull)
 				step_towards(H,pull)
 				step_towards(H,pull)
