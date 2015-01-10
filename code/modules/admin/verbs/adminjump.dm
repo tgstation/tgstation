@@ -139,7 +139,6 @@
 	var/startflags = mover.pass_flags
 	var/startincorporeal = 0
 	if(istype(mover, /mob/living))
-		world << "incorporeal"
 		var/mob/living/L = mover
 		startincorporeal = L.incorporeal_move
 		L.incorporeal_move = 1
