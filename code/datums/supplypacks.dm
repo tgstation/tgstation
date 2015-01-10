@@ -769,6 +769,12 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containertype = /obj/structure/closet/critter/pug
 	containername = "pug crate"
 
+/datum/supply_packs/organic/fox
+	name = "Fox Crate"
+	cost = 55 //Foxes are cool.
+	containertype = /obj/structure/closet/critter/fox
+	containername = "fox crate"
+
 ////// hippy gear
 
 /datum/supply_packs/organic/hydroponics // -- Skie
