@@ -17,7 +17,7 @@
 	var/production = 0
 	var/yield = 0
 	var/plant_type = 0
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	potency = -1
 	dried_type = -1 //bit different. saves us from having to define each stupid grown's dried_type as itself. If you don't want a plant to be driable (watermelons) set this to null in the time definition.
 
@@ -445,14 +445,14 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange
 	seed = /obj/item/seeds/orangeseed
 	name = "orange"
-	desc = "It's an tangy fruit."
+	desc = "It's a tangy fruit."
 	icon_state = "orange"
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet
 	seed = /obj/item/seeds/whitebeetseed
-	name = "white-beet"
-	desc = "You can't beat white-beet."
+	name = "sugar beet"
+	desc = "You can't beat a beet."
 	icon_state = "whitebeet"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet/add_juice()
@@ -480,7 +480,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/chili
 	seed = /obj/item/seeds/chiliseed
-	name = "chili"
+	name = "chili pepper"
 	desc = "It's spicy! Wait... IT'S BURNING ME!!"
 	icon_state = "chilipepper"
 
@@ -499,8 +499,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper
 	seed = /obj/item/seeds/icepepperseed
-	name = "ice-pepper"
-	desc = "It's a mutant strain of chili"
+	name = "chilly pepper"
+	desc = "It's cold to the touch let alone to your taste buds."
 	icon_state = "icepepper"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper/add_juice()
@@ -518,7 +518,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli
 	seed = /obj/item/seeds/chillighost
-	name = "ghost chili"
+	name = "ghost pepper"
 	desc = "It seems to be vibrating gently."
 	icon_state = "ghostchilipepper"
 	var/mob/held_mob
@@ -577,7 +577,7 @@
 
 obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	seed = /obj/item/seeds/eggyseed
-	name = "Egg-plant"
+	name = "egg-plant"
 	desc = "There MUST be a chicken inside."
 	icon_state = "eggyplant"
 	inside_type = /obj/item/weapon/reagent_containers/food/snacks/egg
@@ -657,7 +657,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer
 	seed = /obj/item/seeds/killertomatoseed
-	name = "killer-tomato"
+	name = "killer tomato"
 	desc = "I say to-mah-to, you say tom-mae-to... OH GOD IT'S EATING MY LEGS!!"
 	icon_state = "killertomato"
 	var/awakening = 0
@@ -691,7 +691,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blood
 	seed = /obj/item/seeds/bloodtomatoseed
-	name = "blood-tomato"
+	name = "blood tomato"
 	desc = "So bloody...so...very...bloody....AHHHH!!!!"
 	icon_state = "bloodtomato"
 	splat = /obj/effect/gibspawner/generic
@@ -703,7 +703,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue
 	seed = /obj/item/seeds/bluetomatoseed
-	name = "blue-tomato"
+	name = "blue tomato"
 	desc = "I say blue-mah-to, you say blue-mae-to."
 	icon_state = "bluetomato"
 	splat = /obj/effect/decal/cleanable/oil
@@ -721,7 +721,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue/bluespace
 	seed = /obj/item/seeds/bluespacetomatoseed
-	name = "blue-space tomato"
+	name = "bluespace tomato"
 	desc = "So lubricated, you might slip through space-time."
 	icon_state = "bluespacetomato"
 	origin_tech = "bluespace=3"
@@ -893,7 +893,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap
 	seed = /obj/item/seeds/libertymycelium
-	name = "liberty-cap"
+	name = "liberty cap"
 	desc = "<I>Psilocybe Semilanceata</I>: Liberate yourself!"
 	icon_state = "libertycap"
 
@@ -910,7 +910,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet
 	seed = /obj/item/seeds/plumpmycelium
-	name = "plump-helmet"
+	name = "plump helmet"
 	desc = "<I>Plumus Hellmus</I>: Plump, soft and s-so inviting~"
 	icon_state = "plumphelmet"
 
@@ -1010,8 +1010,8 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/shell/moneyfruit
 	seed = /obj/item/seeds/cashseed
-	name = "Money Fruit"
-	desc = "Looks like a lemon with someone buldging from the inside."
+	name = "money fruit"
+	desc = "Looks like a lemon with something bulging from the inside."
 	icon_state = "moneyfruit"
 	inside_type = null
 
@@ -1107,7 +1107,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tea //abstract type
 	seed = /obj/item/seeds/tea_aspera_seed
-	name = "Tea tips"
+	name = "tea tips"
 	desc = "These aromatic tips of the tea plant can be dried to make tea."
 	icon_state = "tea_aspera_leaves"
 
@@ -1119,15 +1119,83 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tea/aspera
 	seed = /obj/item/seeds/tea_aspera_seed
-	name = "Tea Aspera tips"
+	name = "tea aspera tips"
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra
 	seed = /obj/item/seeds/tea_astra_seed
-	name = "Tea Astra tips"
+	name = "tea astra tips"
 	desc = "These aromatic tips of the tea plant can be dried to make tea."
 	icon_state = "tea_astra_leaves"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra/add_juice()
 	..()
 	reagents.add_reagent("kelotane", 1 + round((potency / 20), 1))
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin
+	seed = /obj/item/seeds/blumpkinseed
+	name = "blumpkin"
+	desc = "When you're making a mess this blumpkin's there to clean you up."
+	icon_state = "blumpkin"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin/add_juice()
+	if(..())
+		reagents.add_reagent("nutriment", 1 + round((potency / 6), 1))
+		reagents.add_reagent("vitamin", 1 + round((potency / 10), 1))
+		reagents.add_reagent("cleaner", 1 + round((potency / 10), 1))
+		bitesize = 1 + round(reagents.total_volume / 2, 1)
+
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/holymelon
+	seed = /obj/item/seeds/holymelonseed
+	name = "holymelon"
+	desc = "The water within this melon has been blessed by some deity that's particularly fond of watermelon."
+	icon_state = "holymelon"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/holymelon/add_juice()
+	if(..())
+		reagents.add_reagent("nutriment", 1 + round((potency / 6), 1))
+		reagents.add_reagent("vitamin", 1 + round((potency / 10), 1))
+		reagents.add_reagent("holywater", 1 + round((potency / 10), 1))
+		bitesize = 1 + round(reagents.total_volume / 2, 1)
+
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/singulopotato
+	seed = /obj/item/seeds/singulopotatoseed
+	name = "singularity potato"
+	desc = "This strange potato seems to have its own gravitational pull..."
+	icon_state = "singulopotato"
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/potato
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/singulopotato/add_juice()
+	if(..())
+		reagents.add_reagent("nutriment", 1 + round((potency / 10), 1))
+		reagents.add_reagent("vitamin", 1 + round((potency / 10), 1))
+		reagents.add_reagent("singulo", 1 + round((potency / 10), 1))
+		bitesize = reagents.total_volume
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/singulopotato/attack_self(mob/user as mob)
+	user.visible_message("<span class='warning'>[user] crushes a singularity potato!</span>")
+	var/vortexpower = max(3, round(potency/14, 1)) // this limits the range to 7 at max potency.
+	var/turf/pull = user.loc
+	playsound(user, 'sound/weapons/marauder.ogg', 50, 1)
+	for(var/atom/X in orange(vortexpower,pull))
+		if(istype(X, /atom/movable))
+			if(X == user) continue
+			if((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))
+				step_towards(X,pull)
+				step_towards(X,pull)
+				step_towards(X,pull)
+			else if(istype(X,/mob/living/carbon/human))
+				var/mob/living/carbon/human/H = X
+				if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
+					var/obj/item/clothing/shoes/magboots/M = H.shoes
+					if(M.magpulse)
+						continue
+				H.apply_effect(min(3, vortexpower), WEAKEN, 0)
+				step_towards(H,pull)
+				step_towards(H,pull)
+				step_towards(H,pull)
+	log_game("[key_name(user)] used a singularity potato.")
+	qdel(src)
+	return
