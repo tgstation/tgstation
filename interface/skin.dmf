@@ -1352,7 +1352,7 @@ window "outputwindow"
 		on-size = ""
 		link-color = #0000ff
 		visited-color = #ff00ff
-		style = ".system {color:#ff0000;}"
+		style = ""
 		enable-http-images = false
 		max-lines = 1000
 		image = ""

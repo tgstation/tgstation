@@ -156,6 +156,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/qdel_toggle,              // /vg/
 	/client/proc/cmd_admin_dump_instances, // /vg/
 	/client/proc/disable_bloodvirii,       // /vg/
+	/client/proc/reload_style_sheet,
+	/client/proc/reset_style_sheet,
 	/client/proc/configFood,
 	/client/proc/debug_reagents,
 	/client/proc/make_invulnerable,

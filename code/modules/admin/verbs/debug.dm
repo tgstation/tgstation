@@ -1162,6 +1162,24 @@ var/global/blood_virus_spreading_disabled = 0
 	else
 		message_admins("[src.ckey] enabled findAirborneVirii.")
 
+/client/proc/reload_style_sheet()
+	set category = "Server"
+	set name = "Reload Style Sheet"
+	set desc = "Reload the Style Sheet (be careful)."
+
+	for(var/client/C in clients)
+		winset(C, null, "outputwindow.output.style=[config.world_style_config];")
+	message_admins("The style sheet has been reloaded by [src.ckey]")
+
+/client/proc/reset_style_sheet()
+	set category = "Server"
+	set name = "Reset Style Sheet"
+	set desc = "Reset the Style Sheet (restore to default)."
+
+	for(var/client/C in clients)
+		winset(C, null, "outputwindow.output.style=[world_style];")
+	message_admins("The style sheet has been reset by [src.ckey]")
+
 /client/proc/cmd_admin_cluwneize(var/mob/M in mob_list)
 	set category = "Fun"
 	set name = "Make Cluwne"
