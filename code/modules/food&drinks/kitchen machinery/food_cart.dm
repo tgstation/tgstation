@@ -4,7 +4,7 @@
 	name = "food cart"
 	desc = "New generation hot dog stand."
 	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "icecream_vat"
+	icon_state = "foodcart"
 	density = 1
 	anchored = 0
 	use_power = 0
