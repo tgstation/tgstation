@@ -5,7 +5,7 @@
 /datum/design/nuclear_gun/pin_testing
 	name = "test-range firing pin"
 	desc = "This safety firing pin allows weapons to be fired within proximity to a firing range."
-	id = "nuclear_gun"
+	id = "pin_testing"
 	req_tech = list("combat" = 1, "materials" = 2)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 500, "$glass" = 300)
@@ -15,7 +15,7 @@
 /datum/design/nuclear_gun/pin_loyalty
 	name = "loyalty firing pin"
 	desc = "This is a security firing pin which only authorizes users who are loyalty-implanted."
-	id = "nuclear_gun"
+	id = "pin_loyalty"
 	req_tech = list("combat" = 5, "materials" = 3, "powerstorage" = 3)
 	build_type = PROTOLATHE
 	materials = list("$silver" = 600, "$diamond" = 600, "$uranium" = 200)
