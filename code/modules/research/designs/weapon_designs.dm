@@ -2,7 +2,7 @@
 /////////////////Weapons/////////////////
 /////////////////////////////////////////
 
-/datum/design/nuclear_gun/pin_testing
+/datum/design/pin_testing
 	name = "test-range firing pin"
 	desc = "This safety firing pin allows weapons to be fired within proximity to a firing range."
 	id = "pin_testing"
@@ -12,7 +12,7 @@
 	build_path = /obj/item/device/firing_pin/test_range
 	category = list("Firing Pins")
 
-/datum/design/nuclear_gun/pin_loyalty
+/datum/design/pin_loyalty
 	name = "loyalty firing pin"
 	desc = "This is a security firing pin which only authorizes users who are loyalty-implanted."
 	id = "pin_loyalty"
