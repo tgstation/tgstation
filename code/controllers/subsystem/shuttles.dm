@@ -62,9 +62,9 @@ var/datum/subsystem/shuttle/SSshuttle
 	points += points_per_decisecond * wait
 
 	var/i=1
-	for(var/docking_port in mobile)
-		if(docking_port)
-			var/obj/docking_port/mobile/P = docking_port
+	for(var/mobile_docking_port in mobile)
+		if(mobile_docking_port)
+			var/obj/docking_port/mobile/P = mobile_docking_port
 			P.check()
 			++i
 			continue
