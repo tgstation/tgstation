@@ -191,6 +191,38 @@ update_label("John Doe", "Clowny")
 		access = get_all_centcom_access()
 		..()
 
+/obj/item/weapon/card/id/ertsCommand
+	name = "\improper Centcom ID"
+	desc = "A ERT ID card"
+	icon_state = "centcom"
+	registered_name = "Emergency Response Team Commander"
+	assignment = "Emergency Response Team Commander"
+	access = list(access_sec_doors, access_engine, access_medical)
+
+/obj/item/weapon/card/id/ertsSecurity
+	name = "\improper Centcom ID"
+	desc = "A ERT ID card"
+	icon_state = "centcom"
+	registered_name = "Security Response Officer"
+	assignment = "Security Response Officer"
+	access = list(access_sec_doors)
+
+/obj/item/weapon/card/id/ertsEngineer
+	name = "\improper Centcom ID"
+	desc = "A ERT ID card"
+	icon_state = "centcom"
+	registered_name = "Engineer Response Officer"
+	assignment = "Engineer Response Officer"
+	access = list(access_engine)
+
+/obj/item/weapon/card/id/ertsMedical
+	name = "\improper Centcom ID"
+	desc = "A ERT ID card"
+	icon_state = "centcom"
+	registered_name = "Medical Response Officer"
+	assignment = "Medical Response Officer"
+	access = list(access_medical)
+
 /obj/item/weapon/card/id/prisoner
 	name = "prisoner ID card"
 	desc = "You are a number, you are not a free man."

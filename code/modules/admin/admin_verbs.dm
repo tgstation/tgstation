@@ -490,6 +490,7 @@ var/list/admin_verbs_hideable = list(
 		message_admins("[src] deadmined themself.")
 		deadmin()
 		verbs += /client/proc/readmin
+		deadmins += ckey
 		src << "<span class='interface'>You are now a normal player.</span>"
 	feedback_add_details("admin_verb","DAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -553,10 +554,11 @@ var/list/admin_verbs_hideable = list(
 		D.associate(C)
 		message_admins("[src] re-adminned themselves.")
 		log_admin("[src] re-adminned themselves.")
+		deadmins -= ckey
 		feedback_add_details("admin_verb","RAS")
-		verbs -= /client/proc/readmin
 		return
 	else
 		src << "You are already an admin."
 		verbs -= /client/proc/readmin
+		deadmins -= ckey
 		return
