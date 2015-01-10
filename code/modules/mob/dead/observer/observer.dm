@@ -126,15 +126,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 					//world << "DEBUG: malf mode ticker test"
 					if(malf.malf_mode_declared && (malf.apcs > 0))
 						stat(null, "Time left: [max(malf.AI_win_timeleft/malf.apcs, 0)]")
-		var/ETA
-		switch(SSshuttle.emergency.mode)
-			if(SHUTTLE_CALL)
-				ETA = "ETA"
-			if(SHUTTLE_DOCKED)
-				ETA = "ETD"
-		if(ETA)
-			var/timeleft = SSshuttle.emergency.timeLeft()
-			stat(null, "[ETA]-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
