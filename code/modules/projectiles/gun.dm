@@ -30,14 +30,19 @@
 	var/sawn_state = SAWN_INTACT
 	var/burst_size = 1
 	var/fire_delay = 0
+
+	var/obj/item/device/firing_pin/pin = /obj/item/device/firing_pin //standard firing pin for most guns
+
 	var/obj/item/device/flashlight/F = null
 	var/can_flashlight = 0
 
+/obj/item/weapon/gun/New()
+	..()
+	if(pin)
+		pin = new pin(src)
+
 /obj/item/weapon/gun/proc/process_chamber()
 	return 0
-
-/obj/item/weapon/gun/proc/special_check(var/mob/M) //Placeholder for any special checks, like detective's revolver.
-	return 1
 
 //check if there's enough ammo/energy/whatever to shoot one time
 //i.e if clicking would make it shoot
@@ -109,12 +114,22 @@
 				return 0
 	return 1
 
-/obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, var/message = 1, params)
+/obj/item/weapon/gun/proc/handle_pins(mob/living/user)
+	if(pin)
+		if(pin.pin_auth(user))
+			return 1
+		else
+			user << "<span class='warning'>INVALID USER.</span>"
+			return 0
+	else
+		user << "<span class='notice'>\The [src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>"
+	return 0
 
+/obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, var/message = 1, params)
 	add_fingerprint(user)
 
-	if(!special_check(user))
-		return
+	if(!handle_pins(user))
+		return 0
 
 	for(var/i = 1 to burst_size)
 		if(!issilicon(user))
@@ -125,8 +140,6 @@
 				shoot_with_empty_chamber(user)
 				break
 			else
-				if(!special_check(user))
-					return
 				if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
 					shoot_live_shot(user, 1, target, message)
 				else
@@ -142,6 +155,7 @@
 		user.update_inv_l_hand(0)
 	else
 		user.update_inv_r_hand(0)
+
 
 /obj/item/weapon/gun/attack(mob/M as mob, mob/user)
 	if(user.a_intent == "harm") //Flogging

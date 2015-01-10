@@ -13,6 +13,7 @@
 	origin_tech = "combat=3;materials=3;powerstorage=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode/gun)
 	can_flashlight = 0
+	pin = null
 
 /obj/item/weapon/gun/energy/gun/advtaser
 	name = "hybrid taser"

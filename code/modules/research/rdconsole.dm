@@ -399,7 +399,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 					var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
 					var/R = being_built.reliability
-					var/O = being_built.locked
 					spawn(32*amount/coeff)
 						if(g2g) //And if we only fail the material requirements, we still spend time and power
 							for(var/i = 0, i<amount, i++)
@@ -411,12 +410,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 								new_item.g_amt /= coeff
 								if(linked_lathe.hacked)
 									R = max((new_item.reliability/2), 0)
-								if(O)
-									var/obj/item/weapon/storage/lockbox/L = new/obj/item/weapon/storage/lockbox(linked_lathe.loc)
-									new_item.loc = L
-									L.name += " ([new_item.name])"
-								else
-									new_item.loc = linked_lathe.loc
+								new_item.loc = linked_lathe.loc
 						linked_lathe.busy = 0
 						screen = 3.15
 						updateUsrDialog()

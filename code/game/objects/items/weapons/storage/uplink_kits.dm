@@ -103,21 +103,21 @@
 /*/obj/item/weapon/storage/box/syndie_kit/imp_compress
 	name = "Compressed Matter Implant (with injector)"
 
-/obj/item/weapon/storage/syndie_kit/imp_compress/New()
+/obj/item/weapon/storage/box/syndie_kit/imp_compress/New()
 	new /obj/item/weapon/implanter/compressed(src)
 	..()
 	return
+*/
 
-/obj/item/weapon/storage/syndie_kit/imp_explosive
+/obj/item/weapon/storage/box/syndie_kit/imp_explosive
 	name = "Explosive Implant (with injector)"
 
-/obj/item/weapon/storage/syndie_kit/imp_explosive/New()
-	var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(src)
+/obj/item/weapon/storage/box/syndie_kit/imp_explosive/New()
+	var/obj/item/weapon/implanter/O = new(src)
 	O.imp = new /obj/item/weapon/implant/explosive(O)
-	O.name = "(BIO-HAZARD) BIO-detpack"
 	O.update_icon()
 	..()
-	return*/
+	return
 
 /obj/item/weapon/storage/box/syndie_kit/imp_uplink
 	name = "boxed uplink implant (with injector)"
@@ -151,6 +151,7 @@
 	new /obj/item/clothing/suit/space/syndicate/black/red(src) // Black and red is so in right now
 	new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
 	return
+
 
 /obj/item/weapon/storage/box/syndie_kit/emp
 	name = "boxed EMP kit"
