@@ -45,7 +45,7 @@
 		noz.loc = user
 	else
 		//Remove from their hands and put back "into" the tank
-		remove_noz(user)
+		remove_noz()
 	return
 
 /obj/item/weapon/watertank/proc/make_noz()
@@ -53,18 +53,17 @@
 
 /obj/item/weapon/watertank/equipped(mob/user, slot)
 	if (slot != slot_back)
-		remove_noz(user)
+		remove_noz()
 
-/obj/item/weapon/watertank/proc/remove_noz(mob/user)
-	var/mob/living/carbon/human/M = user
-	if(noz in get_both_hands(M))
+/obj/item/weapon/watertank/proc/remove_noz()
+	if(ismob(noz.loc))
+		var/mob/M = noz.loc
 		M.unEquip(noz, 1)
 	return
 
 /obj/item/weapon/watertank/Destroy()
 	if (on)
-		var/M = get(noz, /mob)
-		remove_noz(M)
+		remove_noz()
 		qdel(noz)
 		noz = null
 	..()
@@ -96,7 +95,7 @@
 
 /obj/item/weapon/watertank/attackby(obj/item/W, mob/user)
 	if(W == noz)
-		remove_noz(user)
+		remove_noz()
 		return
 	..()
 

@@ -58,6 +58,7 @@
 	else
 		return 1
 
+
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
 

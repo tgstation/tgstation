@@ -30,6 +30,8 @@
 	var/sawn_state = SAWN_INTACT
 	var/burst_size = 1
 	var/fire_delay = 0
+	var/obj/item/device/flashlight/F = null
+	var/can_flashlight = 0
 
 /obj/item/weapon/gun/proc/process_chamber()
 	return 0
@@ -146,3 +148,82 @@
 		..()
 	else
 		return
+
+/obj/item/weapon/gun/attackby(var/obj/item/A as obj, mob/user as mob)
+	if(istype(A, /obj/item/device/flashlight/seclite))
+		var/obj/item/device/flashlight/seclite/S = A
+		if(can_flashlight)
+			if(!F)
+				if(user.l_hand != src && user.r_hand != src)
+					user << "<span class='notice'>You'll need [src] in your hands to do that.</span>"
+					return
+				user.drop_item()
+				user << "<span class='notice'>You click [S] into place on [src].</span>"
+				if(S.on)
+					SetLuminosity(0)
+				F = S
+				A.loc = src
+				update_icon()
+				update_gunlight(user)
+	if(istype(A, /obj/item/weapon/screwdriver))
+		if(F)
+			if(user.l_hand != src && user.r_hand != src)
+				user << "<span class='notice'>You'll need [src] in your hands to do that.</span>"
+				return
+			for(var/obj/item/device/flashlight/seclite/S in src)
+				user << "<span class='notice'>You unscrew the seclite from [src].</span>"
+				F = null
+				S.loc = get_turf(user)
+				update_gunlight(user)
+				S.update_brightness(user)
+				update_icon()
+	..()
+	return
+
+/obj/item/weapon/gun/verb/toggle_gunlight()
+	set name = "Toggle Gunlight"
+	set category = "Object"
+	set desc = "Click to toggle your weapon's attached flashlight."
+	var/mob/living/carbon/human/user = usr
+	if(!isturf(user.loc))
+		user << "You cannot turn the light on while in this [user.loc]."
+	F.on = !F.on
+	user << "<span class='notice'>You toggle the gunlight [F.on ? "on":"off"].</span>"
+
+	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+	update_gunlight(user)
+	return
+
+/obj/item/weapon/gun/proc/update_gunlight(var/mob/user = null)
+	if(F)
+		action_button_name = "Toggle Gunlight"
+		if(F.on)
+			if(loc == user)
+				user.AddLuminosity(F.brightness_on)
+			else if(isturf(loc))
+				SetLuminosity(F.brightness_on)
+		else
+			if(loc == user)
+				user.AddLuminosity(-F.brightness_on)
+			else if(isturf(loc))
+				SetLuminosity(0)
+		update_icon()
+	else
+		action_button_name = null
+		if(loc == user)
+			user.AddLuminosity(-5)
+		else if(isturf(loc))
+			SetLuminosity(0)
+		return
+
+/obj/item/weapon/gun/pickup(mob/user)
+	if(F)
+		if(F.on)
+			user.AddLuminosity(F.brightness_on)
+			SetLuminosity(0)
+
+/obj/item/weapon/gun/dropped(mob/user)
+	if(F)
+		if(F.on)
+			user.AddLuminosity(-F.brightness_on)
+			SetLuminosity(F.brightness_on)

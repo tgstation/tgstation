@@ -4,9 +4,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 /obj/item/weapon/reagent_containers/glass
 	name = "glass"
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "null"
-	item_state = "null"
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10, 15, 25, 30, 50)
 	volume = 50

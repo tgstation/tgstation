@@ -136,9 +136,9 @@
 	caliber = "a762"
 	projectile_type = /obj/item/projectile/bullet
 
-/obj/item/ammo_casing/a545
-	desc = "A 5.45mm bullet casing."
-	caliber = "a545"
+/obj/item/ammo_casing/a556
+	desc = "A 5.56mm bullet casing."
+	caliber = "a556"
 	projectile_type = /obj/item/projectile/bullet/heavybullet
 
 /obj/item/ammo_casing/caseless
@@ -164,3 +164,11 @@
 	caliber = "40mm"
 	icon_state = "40mmHE"
 	projectile_type = /obj/item/projectile/bullet/a40mm
+
+/obj/item/ammo_casing/caseless/bolt //xbow
+	name = "poison crossbow bolt"
+	desc = "A reusable crossbow bolt tipped with specialized carpotoxin."
+	projectile_type = /obj/item/projectile/energy/bolt
+	caliber = "crossbow"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "cbbolt"
