@@ -42,10 +42,11 @@
 	user.remote_control = camera
 
 /obj/item/clothing/suit/space/chronos/ui_action_click()
-	if(!activated)
-		activate()
-	else
-		deactivate()
+	if((cooldown <= world.time) && !teleporting && !activating)
+		if(!activated)
+			activate()
+		else
+			deactivate()
 
 /obj/item/clothing/suit/space/chronos/dropped()
 	if(activated)
@@ -55,6 +56,14 @@
 /obj/item/clothing/suit/space/chronos/Destroy()
 	dropped()
 	..()
+
+/obj/item/clothing/suit/space/chronos/emp_act(severity)
+	var/mob/living/carbon/human/user = src.loc
+	switch(severity)
+		if(1)
+			if(user && ishuman(user) && (user.wear_suit == src))
+				user << "<span class='userdanger'>Elecrtromagnetic pulse detected, shutting down systems to preserve integrity...</span>"
+			deactivate()
 
 /obj/item/clothing/suit/space/chronos/proc/chronowalk(var/mob/living/carbon/human/user)
 	if(!teleporting && user && (user.stat == CONSCIOUS))
@@ -117,7 +126,7 @@
 		SSobj.processing.Remove(src)
 
 /obj/item/clothing/suit/space/chronos/proc/activate()
-	if(!activating && !activated && !teleporting && (cooldown <= world.time))
+	if(!activating && !activated && !teleporting)
 		activating = 1
 		var/mob/living/carbon/human/user = src.loc
 		if(user && ishuman(user))
@@ -145,7 +154,7 @@
 		return 0
 
 /obj/item/clothing/suit/space/chronos/proc/deactivate()
-	if(!activating && activated && !teleporting && (cooldown <= world.time))
+	if(activated)
 		activating = 1
 		var/mob/living/carbon/human/user = src.loc
 		if(user && ishuman(user))
