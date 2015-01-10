@@ -226,6 +226,11 @@ datum/reagent/medicine/adminordrazine/on_mob_life(var/mob/living/carbon/M as mob
 	..()
 	return
 
+datum/reagent/medicine/adminordrazine/nanites
+	name = "Nanites"
+	id = "nanites"
+	description = "Tiny machines capable of rapid cellular regeneration."
+
 datum/reagent/medicine/synaptizine
 	name = "Synaptizine"
 	id = "synaptizine"
