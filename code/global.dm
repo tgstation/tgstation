@@ -351,3 +351,8 @@ var/list/score=list(
 	"dmgestdamage"  = 0,
 	"dmgestkey"     = null
 )
+
+// Mostly used for ban systems.
+var/event/on_login = new()
+var/event/on_ban = new()
+var/event/on_unban = new()
