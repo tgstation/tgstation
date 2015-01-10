@@ -803,9 +803,9 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	unacidable = 1
 	layer = TURF_LAYER
 
-	New()
-		..()
-		SSobj.processing.Add(src)
+/obj/effect/golemrune/New()
+	..()
+	SSobj.processing.Add(src)
 
 /obj/effect/golemrune/process()
 	var/mob/dead/observer/ghost
@@ -878,22 +878,22 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	var/Uses = 5 // uses before it goes inert
 
 /obj/item/slime_core/New()
-		..()
-		create_reagents(100)
-		POWERFLAG = rand(1,10)
-		Uses = rand(7, 25)
-		//flags |= NOREACT
+	..()
+	create_reagents(100)
+	POWERFLAG = rand(1,10)
+	Uses = rand(7, 25)
+	//flags |= NOREACT
 /*
-		spawn()
-			Life()
+	spawn()
+		Life()
 
-	proc/Life()
-		while(src)
-			sleep(25)
-			Flush--
-			if(Flush <= 0)
-				reagents.clear_reagents()
-				Flush = 30
+/obj/item/slime_core/proc/Life()
+	while(src)
+		sleep(25)
+		Flush--
+		if(Flush <= 0)
+			reagents.clear_reagents()
+			Flush = 30
 */
 
 

@@ -9,8 +9,8 @@
 
 	var/wax = 200
 	var/lit = 0
-	proc
-		light(var/flavor_text = "<span class='danger'>[usr] lights the [name].</span>")
+
+/obj/item/candle/proc/light(var/flavor_text = "<span class='danger'>[usr] lights the [name].</span>")
 
 
 /obj/item/candle/update_icon()

@@ -357,13 +357,11 @@
 	flags = NOSHIELD
 	var/active = 0
 
-/obj/item/weapon/holo/esword/green
-	New()
-		item_color = "green"
+/obj/item/weapon/holo/esword/green/New()
+	item_color = "green"
 
-/obj/item/weapon/holo/esword/red
-	New()
-		item_color = "red"
+/obj/item/weapon/holo/esword/red/New()
+	item_color = "red"
 
 /obj/item/weapon/holo/esword/IsShield()
 	if(active)

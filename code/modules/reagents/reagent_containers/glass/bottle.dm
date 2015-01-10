@@ -122,11 +122,23 @@
 	icon_state = "bottle3"
 	spawned_disease = /datum/disease/advance/flu
 
+/obj/item/weapon/reagent_containers/glass/bottle/flu_virion/New()
+	..()
+	var/datum/disease/F = new /datum/disease/advance/flu(0)
+	var/list/data = list("viruses"= list(F))
+	reagents.add_reagent("blood", 20, data)
+
 /obj/item/weapon/reagent_containers/glass/bottle/epiglottis_virion
 	name = "Epiglottis virion culture bottle"
 	desc = "A small bottle. Contains Epiglottis virion culture in synthblood medium."
 	icon_state = "bottle3"
 	spawned_disease = /datum/disease/advance/voice_change
+
+/obj/item/weapon/reagent_containers/glass/bottle/epiglottis_virion/New()
+	..()
+	var/datum/disease/F = new /datum/disease/advance/voice_change(0)
+	var/list/data = list("viruses"= list(F))
+	reagents.add_reagent("blood", 20, data)
 
 /obj/item/weapon/reagent_containers/glass/bottle/liver_enhance_virion
 	name = "Liver enhancement virion culture bottle"
@@ -134,11 +146,23 @@
 	icon_state = "bottle3"
 	spawned_disease = /datum/disease/advance/heal
 
+/obj/item/weapon/reagent_containers/glass/bottle/liver_enhance_virion/New()
+	..()
+	var/datum/disease/F = new /datum/disease/advance/heal(0)
+	var/list/data = list("viruses"= list(F))
+	reagents.add_reagent("blood", 20, data)
+
 /obj/item/weapon/reagent_containers/glass/bottle/hullucigen_virion
 	name = "Hullucigen virion culture bottle"
 	desc = "A small bottle. Contains hullucigen virion culture in synthblood medium."
 	icon_state = "bottle3"
 	spawned_disease = /datum/disease/advance/hullucigen
+
+/obj/item/weapon/reagent_containers/glass/bottle/hullucigen_virion/New()
+	..()
+	var/datum/disease/F = new /datum/disease/advance/hullucigen(0)
+	var/list/data = list("viruses"= list(F))
+	reagents.add_reagent("blood", 20, data)
 
 /obj/item/weapon/reagent_containers/glass/bottle/pierrot_throat
 	name = "Pierrot's Throat culture bottle"
@@ -146,17 +170,30 @@
 	icon_state = "bottle3"
 	spawned_disease = /datum/disease/pierrot_throat
 
+/obj/item/weapon/reagent_containers/glass/bottle/pierrot_throat/New()
+	..()
+	var/datum/disease/F = new /datum/disease/pierrot_throat(0)
+	var/list/data = list("viruses"= list(F))
+	reagents.add_reagent("blood", 20, data)
+
 /obj/item/weapon/reagent_containers/glass/bottle/cold
 	name = "Rhinovirus culture bottle"
 	desc = "A small bottle. Contains XY-rhinovirus culture in synthblood medium."
 	icon_state = "bottle3"
 	spawned_disease = /datum/disease/advance/cold
 
+/obj/item/weapon/reagent_containers/glass/bottle/random/New()
+	..()
+	var/datum/disease/advance/F = new(0)
+	var/list/data = list("viruses"= list(F))
+	reagents.add_reagent("blood", 20, data)
+
 /obj/item/weapon/reagent_containers/glass/bottle/retrovirus
 	name = "Retrovirus culture bottle"
 	desc = "A small bottle. Contains a retrovirus culture in a synthblood medium."
 	icon_state = "bottle3"
 	spawned_disease = /datum/disease/dna_retrovirus
+
 
 /obj/item/weapon/reagent_containers/glass/bottle/gbs
 	name = "GBS culture bottle"
@@ -177,11 +214,18 @@
 	icon_state = "bottle3"
 	spawned_disease = /datum/disease/brainrot
 
+/obj/item/weapon/reagent_containers/glass/bottle/brainrot/New()
+	..()
+	var/datum/disease/F = new /datum/disease/brainrot(0)
+	var/list/data = list("viruses"= list(F))
+	reagents.add_reagent("blood", 20, data)
+
 /obj/item/weapon/reagent_containers/glass/bottle/magnitis
 	name = "Magnitis culture bottle"
 	desc = "A small bottle. Contains a small dosage of Fukkos Miracos."
 	icon_state = "bottle3"
 	spawned_disease = /datum/disease/magnitis
+
 
 /obj/item/weapon/reagent_containers/glass/bottle/wizarditis
 	name = "Wizarditis culture bottle"
@@ -189,11 +233,23 @@
 	icon_state = "bottle3"
 	spawned_disease = /datum/disease/wizarditis
 
+/obj/item/weapon/reagent_containers/glass/bottle/wizarditis/New()
+	..()
+	var/datum/disease/F = new /datum/disease/wizarditis(0)
+	var/list/data = list("viruses"= list(F))
+	reagents.add_reagent("blood", 20, data)
+
 /obj/item/weapon/reagent_containers/glass/bottle/anxiety
 	name = "Severe Anxiety culture bottle"
 	desc = "A small bottle. Contains a sample of Lepidopticides."
 	icon_state = "bottle3"
 	spawned_disease = /datum/disease/anxiety
+
+/obj/item/weapon/reagent_containers/glass/bottle/anxiety/New()
+	..()
+	var/datum/disease/F = new /datum/disease/anxiety(0)
+	var/list/data = list("viruses"= list(F))
+	reagents.add_reagent("blood", 20, data)
 
 /obj/item/weapon/reagent_containers/glass/bottle/beesease
 	name = "Beesease culture bottle"
