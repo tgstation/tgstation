@@ -309,10 +309,10 @@
 				<h2>BASIC PROCESS</h2>
 				To use the E.X.P.E.R.I-MENTOR, it is simple:
 				<ol>
-					<li>1. Find an Item with a technological background</li>
-					<li>2. Insert the Item into the E.X.P.E.R.I-MENTOR</li>
-					<li>3. Click the different processing methods to experiment on the device.</li>
-					<li>4. A succesful result will give a unique message, and a chance for an event.</li>
+					<li>Find an Item with a technological background</li>
+					<li>Insert the Item into the E.X.P.E.R.I-MENTOR</li>
+					<li>Click the different processing methods to experiment on the device.</li>
+					<li>A succesful result will give a unique message, and a chance for an event.</li>
 				</ol>
 
 				<h2>ADVANCED USAGE</h2>
