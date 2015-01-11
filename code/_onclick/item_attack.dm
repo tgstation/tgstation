@@ -63,6 +63,7 @@ obj/item/proc/get_clamped_volume()
 	/////////////////////////
 	user.lastattacked = M
 	M.lastattacker = user
+	user.last_movement=world.time
 
 	add_logs(user, M, "attacked", object=src.name, addition="(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 

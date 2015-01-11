@@ -74,7 +74,7 @@
 /datum/dna/proc/generate_struc_enzymes(mob/living/carbon/character)
 	var/list/L = list("0","1","2","3","4","5","6")
 	var/list/sorting = list()
-	sorting.len = 23
+	sorting.len = DNA_STRUC_ENZYMES_BLOCKS
 	var/result
 	for(var/datum/mutation/human/A in good_mutations + bad_mutations + not_good_mutations)
 		if(A.name == RACEMUT && istype(character,/mob/living/carbon/monkey))
