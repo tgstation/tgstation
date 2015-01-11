@@ -1,75 +1,75 @@
 // Human Overlay objects for the new Overlays system.
 /obj/Overlays/fire_layer
-	layer = FLOAT_LAYER - 1
+	layer = FLOAT_LAYER - 24
 
 /obj/Overlays/mutantrace_layer
-	layer = FLOAT_LAYER - 2
-
-/obj/Overlays/mutations_layer
-	layer = FLOAT_LAYER - 3
-
-/obj/Overlays/damage_layer
-	layer = FLOAT_LAYER - 4
-
-/obj/Overlays/uniform_layer
-	layer = FLOAT_LAYER - 5
-
-/obj/Overlays/id_layer
-	layer = FLOAT_LAYER - 6
-
-/obj/Overlays/shoes_layer
-	layer = FLOAT_LAYER - 7
-
-/obj/Overlays/gloves_layer
-	layer = FLOAT_LAYER - 8
-
-/obj/Overlays/ears_layer
-	layer = FLOAT_LAYER - 9
-
-/obj/Overlays/suit_layer
-	layer = FLOAT_LAYER - 10
-
-/obj/Overlays/glasses_layer
-	layer = FLOAT_LAYER - 11
-
-/obj/Overlays/belt_layer
-	layer = FLOAT_LAYER - 12
-
-/obj/Overlays/suit_store_layer
-	layer = FLOAT_LAYER - 13
-
-/obj/Overlays/back_layer
-	layer = FLOAT_LAYER - 14
-
-/obj/Overlays/hair_layer
-	layer = FLOAT_LAYER - 15
-
-/obj/Overlays/glasses_over_hair_layer
-	layer = FLOAT_LAYER - 16
-
-/obj/Overlays/facemask_layer
-	layer = FLOAT_LAYER - 17
-
-/obj/Overlays/head_layer
-	layer = FLOAT_LAYER - 18
-
-/obj/Overlays/handcuff_layer
-	layer = FLOAT_LAYER - 19
-
-/obj/Overlays/legcuff_layer
-	layer = FLOAT_LAYER - 20
-
-/obj/Overlays/l_hand_layer
-	layer = FLOAT_LAYER - 21
-
-/obj/Overlays/r_hand_layer
-	layer = FLOAT_LAYER - 22
-
-/obj/Overlays/tail_layer
 	layer = FLOAT_LAYER - 23
 
+/obj/Overlays/mutations_layer
+	layer = FLOAT_LAYER - 22
+
+/obj/Overlays/damage_layer
+	layer = FLOAT_LAYER - 21
+
+/obj/Overlays/uniform_layer
+	layer = FLOAT_LAYER - 20
+
+/obj/Overlays/id_layer
+	layer = FLOAT_LAYER - 19
+
+/obj/Overlays/shoes_layer
+	layer = FLOAT_LAYER - 18
+
+/obj/Overlays/gloves_layer
+	layer = FLOAT_LAYER - 17
+
+/obj/Overlays/ears_layer
+	layer = FLOAT_LAYER - 16
+
+/obj/Overlays/suit_layer
+	layer = FLOAT_LAYER - 15
+
+/obj/Overlays/glasses_layer
+	layer = FLOAT_LAYER - 14
+
+/obj/Overlays/belt_layer
+	layer = FLOAT_LAYER - 13
+
+/obj/Overlays/suit_store_layer
+	layer = FLOAT_LAYER - 12
+
+/obj/Overlays/back_layer
+	layer = FLOAT_LAYER - 11
+
+/obj/Overlays/hair_layer
+	layer = FLOAT_LAYER - 10
+
+/obj/Overlays/glasses_over_hair_layer
+	layer = FLOAT_LAYER - 9
+
+/obj/Overlays/facemask_layer
+	layer = FLOAT_LAYER - 8
+
+/obj/Overlays/head_layer
+	layer = FLOAT_LAYER - 7
+
+/obj/Overlays/handcuff_layer
+	layer = FLOAT_LAYER - 6
+
+/obj/Overlays/legcuff_layer
+	layer = FLOAT_LAYER - 5
+
+/obj/Overlays/l_hand_layer
+	layer = FLOAT_LAYER - 4
+
+/obj/Overlays/r_hand_layer
+	layer = FLOAT_LAYER - 3
+
+/obj/Overlays/tail_layer
+	layer = FLOAT_LAYER - 2
+
 /obj/Overlays/targeted_layer
-	layer = FLOAT_LAYER - 24
+	layer = FLOAT_LAYER - 1
 
 
 
