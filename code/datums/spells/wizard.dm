@@ -261,7 +261,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse
 	name = "Repulse"
-	desc = "This spell throws everything around the user away.."
+	desc = "This spell throws everything around the user away."
 	charge_max = 400
 	clothes_req = 1
 	invocation = "GITTAH WEIGH"
@@ -283,25 +283,22 @@
 	for(var/atom/movable/AM in thrownatoms)
 		if(AM == user || AM.anchored) continue
 	
-		var/obj/effect/overlay/targeteffect = new /obj/effect/overlay(AM.loc)
-		targeteffect.icon = "icons/effects/effects.dmi"
-		targeteffect.icon_state = "shieldsparkles"
-		targeteffect.anchored = 1
-		targeteffect.density = 0
-
+		var/obj/effect/overlay/targeteffect	= new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density = 0}()
+		AM.overlays += targeteffect
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
 		distfromcaster = get_dist(user, AM)
+		spawn(10)
+			AM.overlays -= targeteffect
+			qdel(targeteffect)
 		if(distfromcaster == 0)
 			if(istype(AM, /mob/living))
 				var/mob/living/M = AM
 				M.Weaken(5)
 				M.adjustBruteLoss(5)
-				M << "You're slammed into the floor by an invisible force!"
-				spawn(10) qdel(targeteffect)
+				M << "You're slammed into the floor by a mystical force!"
 		else
 			if(istype(AM, /mob/living))
 				var/mob/living/M = AM
 				M.Weaken(2)
-				M << "You're thrown back by an invisible force!"
-			spawn(10) qdel(targeteffect)
-			spawn(0) AM.throw_at(throwtarget, (Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow)), 1)//So stuff gets tossed around at the same time.
+				M << "You're thrown back by a mystical force!"
+			spawn(0) AM.throw_at(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1)//So stuff gets tossed around at the same time.
