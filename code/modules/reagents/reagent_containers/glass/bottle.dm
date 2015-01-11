@@ -205,7 +205,6 @@
 	icon_state = "bottle3"
 	spawned_disease = /datum/disease/anxiety
 
-<<<<<<< HEAD
 /obj/item/weapon/reagent_containers/glass/bottle/frostoil
 	name = "Frost Oil Bottle"
 	desc = "A small bottle. Contains cold sauce."
@@ -225,10 +224,9 @@
 	..()
 	var/new_reagent = pick("polonium", "histamine", "formaldehyde", "venom", "neurotoxin2", "cyanide")
 	reagents.add_reagent(new_reagent, 50)
-=======
+
 /obj/item/weapon/reagent_containers/glass/bottle/beesease
 	name = "Beesease culture bottle"
 	desc = "A small bottle. Contains a sample of invasive Apidae."
 	icon_state = "bottle3"
 	spawned_disease = /datum/disease/beesease
->>>>>>> cd3e08f624974076be926c5e311cc488ece7133d
