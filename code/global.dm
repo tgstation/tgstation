@@ -220,7 +220,6 @@ var/list/alldirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAS
 
 var/datum/station_state/start_state = null
 var/datum/configuration/config = null
-var/datum/sun/sun = null
 
 var/list/combatlog = list()
 var/list/IClog = list()
@@ -360,3 +359,4 @@ var/global/event/on_unban
 
 // List of /plugins
 var/global/list/plugins = list()
+

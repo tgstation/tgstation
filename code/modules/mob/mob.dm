@@ -1272,7 +1272,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 			if (master_controller)
 				stat(null, "MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[master_controller.iteration])")
-				stat(null, "Air-[master_controller.air_cost]")
+				/*stat(null, "Air-[master_controller.air_cost]")
 				stat(null, "Sun-[master_controller.sun_cost]")
 				stat(null, "Mob-[master_controller.mobs_cost]\t#[mob_list.len]")
 				stat(null, "Dis-[master_controller.diseases_cost]\t#[active_diseases.len]")
@@ -1282,7 +1282,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 				stat(null, "Ponet-[master_controller.powernets_cost]\t#[powernets.len]")
 				stat(null, "NanoUI-[master_controller.nano_cost]\t#[nanomanager.processing_uis.len]")
 				stat(null, "Tick-[master_controller.ticker_cost]")
-				stat(null, "garbage collector - [master_controller.garbageCollectorCost]")
+				stat(null, "garbage collector - [master_controller.garbageCollectorCost]")*/
 				stat(null, "\tqdel - [garbageCollector.del_everything ? "off" : "on"]")
 				stat(null, "\ton queue - [garbageCollector.queue.len]")
 				stat(null, "\ttotal delete - [garbageCollector.dels_count]")
@@ -1291,6 +1291,62 @@ note dizziness decrements automatically in the mob's Life() proc.
 				stat(null, "ALL - [master_controller.total_cost]")
 			else
 				stat(null, "master controller - ERROR")
+
+			if(processScheduler.getIsRunning())
+				var/datum/controller/process/process
+
+				process = processScheduler.getProcess("vote")
+				stat(null, "VOT\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("air")
+				stat(null, "AIR\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("sun")
+				stat(null, "SUN\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("ticker")
+				stat(null, "TIC\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("garbage")
+				stat(null, "GAR\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("lighting")
+				stat(null, "LIG\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("supply shuttle")
+				stat(null, "SUP\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("emergency shuttle")
+				stat(null, "EME\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("inactivity")
+				stat(null, "IAC\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("mob")
+				stat(null, "MOB([mob_list.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("disease")
+				stat(null, "DIS([active_diseases.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("machinery")
+				stat(null, "MAC([machines.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("obj")
+				stat(null, "OBJ([processing_objects.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("pipenet")
+				stat(null, "PIP([pipe_networks.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("powernet")
+				stat(null, "POW([powernets.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("nanoui")
+				stat(null, "NAN([nanomanager.processing_uis.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("event")
+				stat(null, "EVE([events.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+			else
+				stat(null, "processScheduler is not running.")
 
 	if(listed_turf && client)
 		if(get_dist(listed_turf,src) > 1)

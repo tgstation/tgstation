@@ -76,7 +76,7 @@
 
 	makepowernets()
 
-	sun = new /datum/sun()
+	//sun = new /datum/sun()
 	radio_controller = new /datum/controller/radio()
 	data_core = new /obj/effect/datacore()
 	paiController = new /datum/paiController()
@@ -109,8 +109,13 @@
 
 	send2mainirc("Server starting up on [config.server? "byond://[config.server]" : "byond://[world.address]:[world.port]"]")
 
+	processScheduler = new
 	master_controller = new /datum/controller/game_controller()
+
 	spawn(1)
+		processScheduler.deferSetupFor(/datum/controller/process/ticker)
+		processScheduler.setup()
+
 		master_controller.setup()
 
 		setup_species()
@@ -127,8 +132,8 @@
 	spawn(3000)		//so we aren't adding to the round-start lag
 		if(config.ToRban)
 			ToRban_autoupdate()
-		if(config.kick_inactive)
-			KickInactiveClients()
+		/*if(config.kick_inactive)
+			KickInactiveClients()*/
 
 #undef RECOMMENDED_VERSION
 
@@ -214,6 +219,8 @@
 	spawn(0)
 		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/slugmissioncomplete.ogg')) // random end sounds!! - LastyBatsy
 
+	processScheduler.stop()
+
 	for(var/client/C in clients)
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
@@ -235,7 +242,7 @@
 						log_access("AFK: [key_name(C)]")
 						C << "<span class='warning'>You have been inactive for more than 10 minutes and have been disconnected.</span>"
 						del(C)
-#undef INACTIVITY_KICK
+//#undef INACTIVITY_KICK
 
 
 /world/proc/load_mode()

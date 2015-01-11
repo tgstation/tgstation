@@ -96,67 +96,12 @@ If you have any questions/constructive-comments/bugs-to-report/or have a massivl
 Please contact me on #coderbus IRC. ~Carn x
 */
 
-//Human Overlays Indexes/////////
-#define FIRE_LAYER				1		//If you're on fire (/tg/ shit)
-#define MUTANTRACE_LAYER		2		//TODO: make part of body?
-#define MUTATIONS_LAYER			3
-#define DAMAGE_LAYER			4
-#define UNIFORM_LAYER			5
-#define ID_LAYER				6
-#define SHOES_LAYER				7
-#define GLOVES_LAYER			8
-#define EARS_LAYER				9
-#define SUIT_LAYER				10
-#define GLASSES_LAYER			11
-#define BELT_LAYER				12		//Possible make this an overlay of somethign required to wear a belt?
-#define SUIT_STORE_LAYER		13
-#define BACK_LAYER				14
-#define HAIR_LAYER				15		//TODO: make part of head layer?
-#define GLASSES_OVER_HAIR_LAYER	16
-#define FACEMASK_LAYER			17
-#define HEAD_LAYER				18
-#define HANDCUFF_LAYER			19
-#define LEGCUFF_LAYER			20
-#define L_HAND_LAYER			21
-#define R_HAND_LAYER			22
-#define TAIL_LAYER				23		//bs12 specific. this hack is probably gonna come back to haunt me
-#define TARGETED_LAYER			24		//BS12: Layer for the target overlay from weapon targeting system
-#define TOTAL_LAYERS			25
-//////////////////////////////////
-
 /mob/living/carbon/human
 	var/list/overlays_standing[TOTAL_LAYERS]
 	var/previous_damage_appearance // store what the body last looked like, so we only have to update it if something changed
 	var/icon/race_icon
 	var/icon/deform_icon
 	var/update_overlays = 0
-
-/mob/living/carbon/human/New()
-	obj_overlays[FIRE_LAYER] = new /obj/Overlays/fire_layer
-	obj_overlays[MUTANTRACE_LAYER] = new /obj/Overlays/mutantrace_layer
-	obj_overlays[MUTATIONS_LAYER] = new /obj/Overlays/mutations_layer
-	obj_overlays[DAMAGE_LAYER] = new /obj/Overlays/damage_layer
-	obj_overlays[UNIFORM_LAYER] = new /obj/Overlays/uniform_layer
-	obj_overlays[ID_LAYER] = new /obj/Overlays/id_layer
-	obj_overlays[SHOES_LAYER] = new /obj/Overlays/shoes_layer
-	obj_overlays[GLOVES_LAYER] = new /obj/Overlays/gloves_layer
-	obj_overlays[EARS_LAYER] = new /obj/Overlays/ears_layer
-	obj_overlays[SUIT_LAYER] = new /obj/Overlays/suit_layer
-	obj_overlays[GLASSES_LAYER] = new /obj/Overlays/glasses_layer
-	obj_overlays[BELT_LAYER] = new /obj/Overlays/belt_layer
-	obj_overlays[SUIT_STORE_LAYER] = new /obj/Overlays/suit_store_layer
-	obj_overlays[BACK_LAYER] = new /obj/Overlays/back_layer
-	obj_overlays[HAIR_LAYER] = new /obj/Overlays/hair_layer
-	obj_overlays[GLASSES_OVER_HAIR_LAYER] = new /obj/Overlays/glasses_over_hair_layer
-	obj_overlays[FACEMASK_LAYER] = new /obj/Overlays/facemask_layer
-	obj_overlays[HEAD_LAYER] = new /obj/Overlays/head_layer
-	obj_overlays[HANDCUFF_LAYER] = new /obj/Overlays/handcuff_layer
-	obj_overlays[LEGCUFF_LAYER] = new /obj/Overlays/legcuff_layer
-	obj_overlays[L_HAND_LAYER] = new /obj/Overlays/l_hand_layer
-	obj_overlays[R_HAND_LAYER] = new /obj/Overlays/r_hand_layer
-	obj_overlays[TAIL_LAYER] = new /obj/Overlays/tail_layer
-	obj_overlays[TARGETED_LAYER] = new /obj/Overlays/targeted_layer
-	..()
 
 
 //UPDATES OVERLAYS FROM OVERLAYS_LYING/OVERLAYS_STANDING
@@ -1051,30 +996,3 @@ var/global/list/damage_icon_parts = list()
 
 	var/image/face_lying_image = new /image(icon = face_lying)
 	return face_lying_image
-
-//Human Overlays Indexes/////////
-#undef FIRE_LAYER
-#undef MUTANTRACE_LAYER
-#undef MUTATIONS_LAYER
-#undef DAMAGE_LAYER
-#undef UNIFORM_LAYER
-#undef ID_LAYER
-#undef SHOES_LAYER
-#undef GLOVES_LAYER
-#undef EARS_LAYER
-#undef SUIT_LAYER
-#undef GLASSES_LAYER
-#undef FACEMASK_LAYER
-#undef BELT_LAYER
-#undef SUIT_STORE_LAYER
-#undef BACK_LAYER
-#undef HAIR_LAYER
-#undef GLASSES_OVER_HAIR_LAYER
-#undef HEAD_LAYER
-#undef HANDCUFF_LAYER
-#undef LEGCUFF_LAYER
-#undef L_HAND_LAYER
-#undef R_HAND_LAYER
-#undef TAIL_LAYER
-#undef TARGETED_LAYER
-#undef TOTAL_LAYERS
