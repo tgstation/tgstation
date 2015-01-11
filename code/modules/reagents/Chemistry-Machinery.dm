@@ -423,6 +423,22 @@
 			else
 				var/obj/item/weapon/reagent_containers/food/condiment/P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
 				reagents.trans_to(P,50)
+		else if (href_list["createpatch"]) //Also used for condiment packs.
+			if(reagents.total_volume == 0) return
+				var/amount = 1
+				var/vol_each = min(reagents.total_volume, 50)
+				if(text2num(href_list["many"]))
+					amount = min(max(round(input(usr, "Amount:", "How many patches?") as num), 1), 10)
+					vol_each = min(reagents.total_volume/amount, 50)
+				var/name = reject_bad_text(input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)"))
+				var/obj/item/weapon/reagent_containers/pill/P
+
+				for(var/i = 0; i < amount; i++)
+					P = new/obj/item/weapon/reagent_containers/pill/patch(src.loc)
+					if(!name) name = reagents.get_master_reagent_name()
+					P.name = "[name] patch"
+					P.pixel_x = rand(-7, 7) //random position
+					P.pixel_y = rand(-7, 7)
 
 	src.updateUsrDialog()
 	return
@@ -480,6 +496,8 @@
 		if(!condi)
 			dat += "<HR><BR><A href='?src=\ref[src];createpill=1;many=0'>Create pill (50 units max)</A><BR>"
 			dat += "<A href='?src=\ref[src];createpill=1;many=1'>Create pills (10 pills max)</A><BR><BR>"
+			dat += "<HR><BR><A href='?src=\ref[src];createpatch=1;many=0'>Create patch (50 units max)</A><BR>"
+			dat += "<A href='?src=\ref[src];createpatch=1;many=1'>Create patches (10 patches max)</A><BR><BR>"
 			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (30 units max)</A>"
 		else
 			dat += "<HR><BR><A href='?src=\ref[src];createpill=1'>Create pack (10 units max)</A><BR>"
@@ -1261,14 +1279,14 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 	if(on)
 		if(beaker)
 			if(beaker.reagents.chem_temp > temperature)
-				beaker.reagents.chem_temp--
+				beaker.reagents.chem_temp -= 2
 			if(beaker.reagents.chem_temp < temperature)
-				beaker.reagents.chem_temp++
+				beaker.reagents.chem_temp += 2
 			if(beaker.reagents.chem_temp == temperature)
 				beaker.loc = get_turf(src)
+				beaker.reagents.handle_reactions()
 				beaker = null
 				icon_state = "mixer0b"
-				beaker.reagents.handle_reactions()
 				on = FALSE
 
 
