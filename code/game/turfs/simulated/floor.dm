@@ -100,8 +100,6 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	icon_state = pick(broken_states)
 	broken = 1
 
-/turf/simulated/proc/burn_tile()
-
 /turf/simulated/floor/burn_tile()
 	if(broken || burnt)
 		return
