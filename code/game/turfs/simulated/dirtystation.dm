@@ -57,11 +57,6 @@
 		new /obj/effect/decal/cleanable/dirt(src)	//vanilla, but it works
 		return
 
-
-	if(prob(80))	//mid dirt  - 1/15
-		return
-
-
 	if(istype(A, /area/engine) || istype(A,/area/assembly) || istype(A,/area/maintenance) || istype(A,/area/construction))
 	 	//Blood, sweat, and oil.  Oh, and dirt.
 		if(prob(3))
@@ -88,13 +83,6 @@
 		if(prob(75))
 			new /obj/effect/decal/cleanable/oil(src)
 		return
-
-
-
-	if(prob(75))	//low dirt  - 1/60
-		return
-
-
 
 	if(istype(A, /area/turret_protected) || istype(A, /area/security))	//chance of incident
 		if(prob(20))
