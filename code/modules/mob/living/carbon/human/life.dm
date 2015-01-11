@@ -57,6 +57,8 @@
 
 	handle_regular_hud_updates()
 
+	//Status updates, death etc.
+		//TODO: optimise ~Carn
 	handle_regular_status_updates()
 
 	//No need to update all of these procs if the guy is dead.
@@ -95,8 +97,7 @@
 	//stuff in the stomach
 	handle_stomach()
 
-	//Status updates, death etc.
-		//TODO: optimise ~Carn
+
 	update_canmove()
 
 	//Update our name based on whether our face is obscured/disfigured

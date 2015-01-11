@@ -208,14 +208,16 @@
 	return
 
 /proc/randmutb(mob/living/carbon/M)
-	var/datum/mutation/human/HM = pick(bad_mutations | not_good_mutations)
-	. = HM.on_acquiring(M)
-	return randmut(M, bad_se_blocks)
+	if(!check_dna_integrity(M))
+		return
+	var/datum/mutation/human/HM = pick((bad_mutations | not_good_mutations) - mutations_list[RACEMUT])
+	. = HM.force_give(M)
 
 /proc/randmutg(mob/living/carbon/M)
+	if(!check_dna_integrity(M))
+		return
 	var/datum/mutation/human/HM = pick(good_mutations)
-	. = HM.on_acquiring(M)
-	return randmut(M, good_se_blocks | op_se_blocks)
+	. = HM.force_give(M)
 
 /proc/randmuti(mob/living/carbon/M)
 	if(!check_dna_integrity(M))	return

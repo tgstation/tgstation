@@ -155,8 +155,8 @@
 	else
 		if(cmptext("monkey",copytext(O.dna.real_name,1,7)))
 			O.dna.real_name = random_name(O.gender)
-	O.real_name = O.dna.real_name
-	O.name = O.real_name
+		O.real_name = O.dna.real_name
+		O.name = O.real_name
 
 	if(suiciding)
 		O.suiciding = suiciding

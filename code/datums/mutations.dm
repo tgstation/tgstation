@@ -19,11 +19,11 @@
 
 /datum/mutation/human/proc/force_give(mob/living/carbon/human/owner)
 	set_block(owner)
-	on_acquiring(owner)
+	. = on_acquiring(owner)
 
 /datum/mutation/human/proc/force_lose(mob/living/carbon/human/owner)
 	set_block(owner, 0)
-	on_losing(owner)
+	. = on_losing(owner)
 
 /datum/mutation/human/proc/set_se(se_string, on = 1)
 	if(!se_string || lentext(se_string) < DNA_STRUC_ENZYMES_BLOCKS * DNA_BLOCK_SIZE)	return
