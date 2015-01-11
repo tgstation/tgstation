@@ -21,7 +21,6 @@ client/proc/one_click_antag()
 		<a href='?src=\ref[src];makeAntag=6'>Make Wizard (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=7'>Make Nuke Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=10'>Make Deathsquad (Requires Ghosts)</a><br>
-		<a href='?src=\ref[src];makeAntag=13'>Make Emergency Response Team (Requires Ghosts)</a><br>
 		"}
 /* These dont work just yet
 	Ninja, aliens and deathsquad I have not looked into yet
@@ -428,83 +427,6 @@ client/proc/one_click_antag()
 
 	return 0
 
-// EMERGENCY RESPONSE TEAM
-/datum/admins/proc/makeEmergencyresponseteam()
-	var/list/mob/dead/observer/candidates = list()
-	var/time_passed = world.time
-	var/mission = input("Assign a mission to the Emergency Response Team", "Assign Mission", "Assist the station.")
-
-	//Generates a list of officers from active ghosts. Then the user picks which characters to respawn as the officers.
-	for(var/mob/dead/observer/G in player_list)
-		spawn(0)
-			switch(alert(G,"Do you wish to be considered for an elite Nanotrasen Emergency Response Team being sent in?","Please answer in 30 seconds!","Yes","No"))
-				if("Yes")
-					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
-						return
-					candidates += G
-				if("No")
-					return
-				else
-					return
-	sleep(300)
-
-	for(var/mob/dead/observer/G in candidates)
-		if(!G.key)
-			candidates.Remove(G)
-
-	if(candidates.len >= 4) //Minimum 4 to be considered a squad
-		//Pick the (un)lucky players
-		var/numagents = min(7,candidates.len) //How many officers to spawn
-		var/list/spawnpoints = emergencyresponseteamspawn
-		while(numagents && spawnpoints.len && candidates.len)
-			var/spawnloc = spawnpoints[1]
-			var/mob/dead/observer/chosen_candidate = pick(candidates)
-			candidates -= chosen_candidate
-			if(!chosen_candidate.key)
-				continue
-
-			//Spawn and equip the officer
-			var/mob/living/carbon/human/ERTOperative = new(spawnloc)
-			chosen_candidate.client.prefs.copy_to(ERTOperative)
-			ready_dna(ERTOperative)
-			if(numagents == 1) //If Squad Leader
-				ERTOperative.real_name = "Commander [pick(ERTOperative.real_name)]"
-				equip_emergencyresponsesquad(ERTOperative, 1)
-			else
-				ERTOperative.real_name = "Officer [pick(ERTOperative.real_name)]"
-				equip_emergencyresponsesquad(ERTOperative)
-			ERTOperative.key = chosen_candidate.key
-			ERTOperative.mind.assigned_role = "ERT"
-
-			//Assign antag status and the mission
-			ticker.mode.traitors += ERTOperative.mind
-			ERTOperative.mind.special_role = "ert"
-			var/datum/objective/missionobj = new
-			missionobj.owner = ERTOperative.mind
-			missionobj.explanation_text = mission
-			missionobj.completed = 1
-			ERTOperative.mind.objectives += missionobj
-
-			//Greet the commando
-			ERTOperative << "<B><font size=3 color=red>You are the [numagents==1?"Emergency Response Team Commander":"Emergency Response Officer"].</font></B>"
-			var/missiondesc = "Your squad is being sent on a mission to [station_name()] by Nanotrasen's Security Division."
-			if(numagents == 1) //If Squad Leader
-				missiondesc += " Lead your squad to ensure the completion of the mission. Avoid civilian casualites when possible. Board the shuttle when your team is ready."
-			else
-				missiondesc += " Follow orders given to you by your commander. Avoid civilian casualites when possible."
-			missiondesc += "<BR><B>Your Mission</B>: [mission]"
-			ERTOperative << missiondesc
-
-			//Logging and cleanup
-			if(numagents == 1)
-				message_admins("The emergency response team has spawned with the mission: [mission].")
-			log_game("[key_name(ERTOperative)] has been selected as a Emergency Response Officer")
-			spawnpoints -= spawnloc
-			numagents--
-
-		return 1
-
-	return
 
 /datum/admins/proc/makeBody(var/mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
 	if(!G_found || !G_found.key)	return
