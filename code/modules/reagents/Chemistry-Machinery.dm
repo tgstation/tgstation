@@ -423,22 +423,23 @@
 			else
 				var/obj/item/weapon/reagent_containers/food/condiment/P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
 				reagents.trans_to(P,50)
-		else if (href_list["createpatch"]) //Also used for condiment packs.
+		else if(href_list["createpatch"])
 			if(reagents.total_volume == 0) return
-				var/amount = 1
-				var/vol_each = min(reagents.total_volume, 50)
-				if(text2num(href_list["many"]))
-					amount = min(max(round(input(usr, "Amount:", "How many patches?") as num), 1), 10)
-					vol_each = min(reagents.total_volume/amount, 50)
-				var/name = reject_bad_text(input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)"))
-				var/obj/item/weapon/reagent_containers/pill/P
+			var/amount = 1
+			var/vol_each = min(reagents.total_volume, 50)
+			if(text2num(href_list["many"]))
+				amount = min(max(round(input(usr, "Amount:", "How many patches?") as num), 1), 10)
+				vol_each = min(reagents.total_volume/amount, 50)
+			var/name = reject_bad_text(input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)"))
+			var/obj/item/weapon/reagent_containers/pill/P
 
-				for(var/i = 0; i < amount; i++)
-					P = new/obj/item/weapon/reagent_containers/pill/patch(src.loc)
-					if(!name) name = reagents.get_master_reagent_name()
-					P.name = "[name] patch"
-					P.pixel_x = rand(-7, 7) //random position
-					P.pixel_y = rand(-7, 7)
+			for(var/i = 0; i < amount; i++)
+				P = new/obj/item/weapon/reagent_containers/pill/patch(src.loc)
+				if(!name) name = reagents.get_master_reagent_name()
+				P.name = "[name] patch"
+				P.pixel_x = rand(-7, 7) //random position
+				P.pixel_y = rand(-7, 7)
+				reagents.trans_to(P,vol_each)
 
 	src.updateUsrDialog()
 	return

@@ -19,7 +19,7 @@ datum/reagent/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob, var/meth
 		M.emote("scream")
 	if(method == INGEST)
 		M.adjustToxLoss(0.5*volume)
-		M << "You probably shouldn't of eaten that. Maybe you should of splashed it on?"
+		M << "You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?"
 	..()
 	return
 
@@ -38,7 +38,7 @@ datum/reagent/styptic_powder/reaction_mob(var/mob/living/M as mob, var/method=TO
 		M.emote("scream")
 	if(method == INGEST)
 		M.adjustToxLoss(0.5*volume)
-		M << "You probably shouldn't of eaten that. Maybe you should of splashed it on?"
+		M << "You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?"
 	..()
 	return
 
@@ -122,7 +122,7 @@ datum/reagent/charcoal/on_mob_life(var/mob/living/M as mob)
 	id = "styptic_powder"
 	result = "styptic_powder"
 	required_reagents = list("aluminium" = 1, "hydrogen" = 1, "oxygen" = 1, "sacid" = 1)
-	result_amount = 2
+	result_amount = 4
 	mix_message = "The solution yields an astringent powder."
 
 datum/reagent/omnizine

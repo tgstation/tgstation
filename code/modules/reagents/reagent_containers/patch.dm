@@ -6,8 +6,8 @@
 	item_state = "bandaid"
 	possible_transfer_amounts = null
 	volume = 50
-	var/apply_type = TOUCH
-	var/apply_method = "apply"
+	apply_type = TOUCH
+	apply_method = "apply"
 
 /obj/item/weapon/reagent_containers/pill/patch/New()
 	..()

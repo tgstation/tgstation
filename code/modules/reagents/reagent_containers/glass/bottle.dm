@@ -205,15 +205,6 @@
 	icon_state = "bottle3"
 	spawned_disease = /datum/disease/anxiety
 
-/obj/item/weapon/reagent_containers/glass/bottle/frostoil
-	name = "Frost Oil Bottle"
-	desc = "A small bottle. Contains cold sauce."
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle17"
-	New()
-		..()
-		reagents.add_reagent("frostoil", 30)
-
 /obj/item/weapon/reagent_containers/glass/bottle/traitor
 	name = "syndicate bottle"
 	desc = "A small bottle. Contains a random nasty chemical."

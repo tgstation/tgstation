@@ -81,7 +81,7 @@ datum/reagent/crank/on_mob_life(var/mob/living/M as mob)
 	if(cycle_count == 50)
 		M << "Your skin falls off!"
 		M.adjustBruteLoss(rand(10,30)*REM)
-		hardset_dna(M, null, null, null, null, /datum/species/zombie)
+		hardset_dna(M, null, null, null, null, /datum/species/skeleton)
 	if(volume > 20)
 		overdosed = 1
 	if(overdosed)
