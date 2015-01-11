@@ -4,6 +4,7 @@
 	get_chance = 10
 	lowest_value = 256 * 14
 	text_indication = "<span class='notice'>You begin to fade into the shadows.</span>"
+	lose_indication = "<span class='notice'>You become fully visible.</span>"
 
 /datum/mutation/human/stealth/on_life(mob/living/carbon/human/owner)
 	var/turf/simulated/T = get_turf(owner)
@@ -17,13 +18,13 @@
 /datum/mutation/human/stealth/on_losing(mob/living/carbon/human/owner)
 	..()
 	owner.alpha = 255
-	owner << "<span class='notice'>You become fully visible.</span>"
 
 /datum/mutation/human/chameleon
 	name = "Chameleon"
 	text_indication = "<span class='notice'>You feel one with your surroundings.</span>"
+	lose_indication = "<span class='notice'>You feel oddly exposed.</span>"
 
-/datum/mutation/human/stealth/chameleon/on_life(mob/living/carbon/human/owner)
+/datum/mutation/human/chameleon/on_life(mob/living/carbon/human/owner)
 	if((world.time - owner.last_movement) >= 30 && !owner.stat && owner.canmove && !owner.restrained())
 		owner.alpha -= 25
 	else
@@ -32,4 +33,3 @@
 /datum/mutation/human/chameleon/on_losing(mob/living/carbon/human/owner)
 	..()
 	owner.alpha = 255
-	owner << "<span class='notice'>You feel oddly exposed.</span>"

@@ -163,4 +163,4 @@
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
 
 	var/turf/listed_turf = null	//the current turf being examined in the stat panel
-	var/last_movement = -100 // Last world.time the mob actually moved of its own accord.
+	var/last_movement = 0 // Last world.time the mob actually moved of its own accord.

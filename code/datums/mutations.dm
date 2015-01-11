@@ -15,6 +15,7 @@
 	var/get_chance = 100
 	var/lowest_value = 256 * 8
 	var/text_indication = ""
+	var/lose_indication = ""
 	var/list/visual_indicators = list()
 
 /datum/mutation/human/proc/force_give(mob/living/carbon/human/owner)
@@ -74,8 +75,13 @@
 /datum/mutation/human/proc/on_losing(mob/living/carbon/human/owner)
 	if(owner.dna.mutations.Remove(src))
 		lose_indication(owner)
+		owner << lose_indication
 		return 0
 	return 1
+
+/datum/mutation/human/proc/say_mod(var/message)
+	if(message)
+		return message
 
 /datum/mutation/human/hulk
 
@@ -112,6 +118,11 @@
 /datum/mutation/human/hulk/on_losing(mob/living/carbon/human/owner)
 	..()
 	owner.status_flags |= CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH
+
+/datum/mutation/human/hulk/say_mod(var/message)
+	if(message)
+		message = "[uppertext(replacetext(message, ".", "!"))]!!"
+	return message
 
 /datum/mutation/human/telekinesis
 

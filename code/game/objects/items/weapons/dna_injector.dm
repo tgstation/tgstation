@@ -292,13 +292,13 @@
 	name = "\improper DNA injector (Anti-Mute)"
 	New()
 		..()
-		remove_mutations.Add(mutations_list[MUTE])
+		remove_mutations.Add(mutations_list[MUT_MUTE])
 
 /obj/item/weapon/dnainjector/mutemut
 	name = "\improper DNA injector (Mute)"
 	New()
 		..()
-		add_mutations.Add(mutations_list[MUTE])
+		add_mutations.Add(mutations_list[MUT_MUTE])
 
 /obj/item/weapon/dnainjector/antismile
 	name = "\improper DNA injector (Anti-Smile)"

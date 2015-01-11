@@ -194,10 +194,9 @@
 
 		if(mob.confused && IsEven(world.time))
 			step(mob, pick(cardinal))
-			mob.last_movement=world.time
 		else
 			. = ..()
-			mob.last_movement=world.time
+		mob.last_movement=world.time
 
 		moving = 0
 		if(mob && .)
