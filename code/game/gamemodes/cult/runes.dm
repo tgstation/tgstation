@@ -1096,3 +1096,169 @@ var/list/sacrificed = list()
 			qdel(src)
 			return 1
 		return fizzle()
+
+///////TWENTY-SIXTH RUNE
+/obj/effect/rune/proc/walltalisman()//only emp, teleport, deafen, blind runes can be imbued atm
+	var/obj/effect/rune/imbued_from
+	var/obj/effect/walltalisman/TR = new /obj/effect/walltalisman
+	for(var/obj/effect/rune/R in orange(1,src))
+		if(R==src)
+			continue
+		if(R.word1==wordtravel && R.word2==wordself)  //teleport. This WILL take people to floor written teleport runes with the same last word! That is however, the point (sending sec straight into the toxins burnh chamber, anyone?)
+			TR.imbue = "[R.word3]"
+			imbued_from = R //So we take the effects of whatever our other rune is.
+			if(R.runedir == 1)    //Runedir is handled in the ritual code.
+				TR.dir = 2        //Sets not only the dir of the wall talisman...
+				TR.loc = src.loc  //But also the location of it (On top of where the rune "actually" is).
+				TR.pixel_y = -32
+			if(R.runedir == 2)
+				TR.dir = 1
+				TR.loc = src.loc
+				TR.pixel_y = 32
+			if(R.runedir == 4)
+				TR.dir = 8
+				TR.loc = src.loc
+				TR.pixel_x = -32
+			if(R.runedir == 8)
+				TR.dir = 4
+				TR.loc = src.loc
+				TR.pixel_x = 32
+			qdel(imbued_from)
+			qdel(src)
+			qdel(R)
+			for (var/mob/V in viewers(src))
+				V.show_message("<span class='danger'>The runes congeal together, forming  a new one.</span>", 3)
+			usr.say("FRI[pick("'","'","...")]AH TAWN T[pick("'","'","...")]OO")
+			break
+		if(R.word1==worddestr && R.word2==wordsee && R.word3==wordtech) //emp
+			TR.imbue = "emp"
+			imbued_from = R
+			if(R.runedir == 1)    //Runedir is handled in the ritual code.
+				TR.dir = 2        //Sets not only the dir of the wall talisman...
+				TR.loc = src.loc  //But also the location of it (On top of where the rune "actually" is).
+				TR.pixel_y = -32
+			if(R.runedir == 2)
+				TR.dir = 1
+				TR.loc = src.loc
+				TR.pixel_y = 32
+			if(R.runedir == 4)
+				TR.dir = 8
+				TR.loc = src.loc
+				TR.pixel_x = -32
+			if(R.runedir == 8)
+				TR.dir = 4
+				TR.loc = src.loc
+				TR.pixel_x = 32
+			qdel(imbued_from)
+			qdel(src)
+			qdel(R)
+			for (var/mob/V in viewers(src))
+				V.show_message("<span class='danger'>The runes congeal together, forming  a new one.</span>", 3)
+			usr.say("FRI[pick("'","'","...")]AH TAWN T[pick("'","'","...")]OO")
+			break
+		if(R.word1==wordhide && R.word2==wordother && R.word3==wordsee) //deafen
+			TR.imbue = "deafen"
+			imbued_from = R
+			if(R.runedir == 1)    //Runedir is handled in the ritual code.
+				TR.dir = 2        //Sets not only the dir of the wall talisman...
+				TR.loc = src.loc  //But also the location of it (On top of where the rune "actually" is).
+				TR.pixel_y = -32
+			if(R.runedir == 2)
+				TR.dir = 1
+				TR.loc = src.loc
+				TR.pixel_y = 32
+			if(R.runedir == 4)
+				TR.dir = 8
+				TR.loc = src.loc
+				TR.pixel_x = -32
+			if(R.runedir == 8)
+				TR.dir = 4
+				TR.loc = src.loc
+				TR.pixel_x = 32
+			qdel(imbued_from)
+			qdel(src)
+			qdel(R)
+			for (var/mob/V in viewers(src))
+				V.show_message("<span class='danger'>The runes congeal together, forming  a new one.</span>", 3)
+			usr.say("FRI[pick("'","'","...")]AH TAWN T[pick("'","'","...")]OO")
+			break
+		if(R.word1==worddestr && R.word2==wordsee && R.word3==wordother) //blind
+			TR.imbue = "blind"
+			imbued_from = R
+			if(R.runedir == 1)    //Runedir is handled in the ritual code.
+				TR.dir = 2        //Sets not only the dir of the wall talisman...
+				TR.loc = src.loc  //But also the location of it (On top of where the rune "actually" is).
+				TR.pixel_y = -32
+			if(R.runedir == 2)
+				TR.dir = 1
+				TR.loc = src.loc
+				TR.pixel_y = 32
+			if(R.runedir == 4)
+				TR.dir = 8
+				TR.loc = src.loc
+				TR.pixel_x = -32
+			if(R.runedir == 8)
+				TR.dir = 4
+				TR.loc = src.loc
+				TR.pixel_x = 32
+			qdel(imbued_from)
+			qdel(src)
+			qdel(R)
+			for (var/mob/V in viewers(src))
+				V.show_message("<span class='danger'>The runes congeal together, forming  a new one.</span>", 3)
+			usr.say("FRI[pick("'","'","...")]AH TAWN T[pick("'","'","...")]OO")
+			break
+		if(R.word1==wordjoin && R.word2==wordhide && R.word3==wordtech) //stun
+			TR.imbue = "runestun"
+			imbued_from = R
+			if(R.runedir == 1)    //Runedir is handled in the ritual code.
+				TR.dir = 2        //Sets not only the dir of the wall talisman...
+				TR.loc = src.loc  //But also the location of it (On top of where the rune "actually" is).
+				TR.pixel_y = -32
+			if(R.runedir == 2)
+				TR.dir = 1
+				TR.loc = src.loc
+				TR.pixel_y = 32
+			if(R.runedir == 4)
+				TR.dir = 8
+				TR.loc = src.loc
+				TR.pixel_x = -32
+			if(R.runedir == 8)
+				TR.dir = 4
+				TR.loc = src.loc
+				TR.pixel_x = 32
+			qdel(imbued_from)
+			qdel(src)
+			qdel(R)
+			for (var/mob/V in viewers(src))
+				V.show_message("<span class='danger'>The runes congeal together, forming  a new one.</span>", 3)
+			usr.say("FRI[pick("'","'","...")]AH TAWN T[pick("'","'","...")]OO")
+			break
+		else
+			usr << "The rune to imbue from is not of an acceptable type!"
+			return fizzle()
+
+//////////////For the purposes of modularity, here is a "blank" wall talisman copy.
+/*		if(R.word1==wordFIRST && R.word2==wordSECOND && R.word3==wordthird)  //Label what it does.
+			TR.imbue = "The switch() name of the rune" 						 //The list of these wall talisman effects is in the cult_structures.dm file
+			imbued_from = R
+			if(R.runedir == 1)
+				TR.dir = 2
+				TR.loc = src.loc
+				TR.pixel_y = 32
+			if(R.runedir == 2)
+				TR.dir = 1
+				TR.loc = src.loc
+				TR.pixel_y = -32
+			if(R.runedir == 4)
+				TR.dir = 8
+				TR.loc = src.loc
+				TR.pixel_x = 32
+			if(R.runedir == 8)
+				TR.dir = 4
+				TR.loc = src.loc
+				TR.pixel_x = -32
+			qdel(src)
+			qdel(R)
+			break
+			*/
