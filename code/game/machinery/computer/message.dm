@@ -417,7 +417,7 @@
 
 					//Select Your Name
 					if("Sender")
-						customsender 	= input(usr, "Please enter the sender's name.") as text|null
+						customsender 	= stripped_input(usr, "Please enter the sender's name.")
 
 					//Select Receiver
 					if("Recepient")
@@ -430,12 +430,11 @@
 
 					//Enter custom job
 					if("RecJob")
-						customjob	 	= input(usr, "Please enter the sender's job.") as text|null
+						customjob	 	= stripped_input(usr, "Please enter the sender's job.")
 
 					//Enter message
 					if("Message")
-						custommessage	= input(usr, "Please enter your message.") as text|null
-						custommessage	= copytext(sanitize(custommessage), 1, MAX_MESSAGE_LEN)
+						custommessage	= stripped_input(usr, "Please enter your message.")
 
 					//Send message
 					if("Send")
