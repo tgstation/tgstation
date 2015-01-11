@@ -201,9 +201,12 @@ var/global/datum/controller/gameticker/ticker
 	if(0 == admins.len)
 		send2adminirc("Round has started with no admins online.")
 
+	/*
 	supply_shuttle.process() 		//Start the supply shuttle regenerating points -- TLE
 	master_controller.process()		//Start master_controller.process()
 	lighting_controller.process()	//Start processing DynamicAreaLighting updates
+	*/
+	processScheduler.start()
 
 	if(config.sql_enabled)
 		spawn(3000)
@@ -357,7 +360,7 @@ var/global/datum/controller/gameticker/ticker
 
 	mode.process()
 
-	emergency_shuttle.process()
+	/*emergency_shuttle.process()*/
 	watchdog.check_for_update()
 
 	var/force_round_end=0
