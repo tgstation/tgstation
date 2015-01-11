@@ -2252,6 +2252,7 @@ var/list/the_station_areas = list (
 	requires_power = 0
 	var/sound/mysound = null
 
+/* We have a jukebox now, fuck that
 /area/beach/New()
 	..()
 	var/sound/S = new/sound()
@@ -2272,6 +2273,7 @@ var/list/the_station_areas = list (
 			Obj << mysound
 	return
 
+//This only works when using Move() to exit the area
 /area/beach/Exited(atom/movable/Obj)
 	if(ismob(Obj))
 		if(Obj:client)
@@ -2300,3 +2302,4 @@ var/list/the_station_areas = list (
 
 	spawn(60) .()
 
+*/

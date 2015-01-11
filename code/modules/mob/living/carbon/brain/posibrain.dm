@@ -23,7 +23,7 @@
 /obj/item/device/mmi/posibrain/attack_self(mob/user as mob)
 	if(brainmob && !brainmob.key && searching == 0)
 		//Start the process of searching for a new user.
-		user << "<span class='notice'>You carefully locate the manual activation switch and start the [src]'s boot process.</span>"
+		user << "<span class='notice'>You carefully locate the manual activation switch and start \the [src]'s boot process.</span>"
 		search_for_candidates()
 
 /obj/item/device/mmi/posibrain/proc/search_for_candidates()
@@ -57,7 +57,7 @@
 /obj/item/device/mmi/posibrain/proc/question(var/client/C)
 	spawn(0)
 		if(!C)	return
-		var/response = alert(C, "Someone is requesting a personality for a [src]. Would you like to play as one?", "[src] request", "Yes", "No", "Never for this round")
+		var/response = alert(C, "Someone is requesting a personality for \a [src]. Would you like to play as one?", "[src] request", "Yes", "No", "Never for this round")
 		if(!C || brainmob.key || 0 == searching)	return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
 		if(response == "Yes")
 			transfer_personality(C.mob)
@@ -79,7 +79,7 @@
 
 	var/turf/T = get_turf(src.loc)
 	for (var/mob/M in viewers(T))
-		M.show_message("<span class='notice'>The [src] chimes quietly.</span>")
+		M.show_message("<span class='notice'>\The [src] chimes quietly.</span>")
 	icon_state = "posibrain-occupied"
 
 /obj/item/device/mmi/posibrain/proc/reset_search() //We give the players sixty seconds to decide, then reset the timer.
@@ -116,32 +116,17 @@
 	O.<< "<span class='notice'>You've been added to the list of ghosts that may become this [src].  Click again to unvolunteer.</span>"
 	ghost_volunteers.Add(O)
 
-/obj/item/device/mmi/posibrain/examine()
-
-	set src in oview()
-
-	if(!usr || !src)	return
-	if( (usr.sdisabilities & BLIND || usr.blinded || usr.stat) && !istype(usr,/mob/dead/observer) )
-		usr << "<span class='notice'>Something is there but you can't see it.</span>"
-		return
-
-
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\living\carbon\brain\posibrain.dm:86: var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n"
-	var/msg = {"<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n
-<span class='warning'>"}
-	// END AUTOFIX
-	if(src.brainmob && src.brainmob.key)
-		switch(src.brainmob.stat)
-			if(CONSCIOUS)
-				if(!src.brainmob.client)	msg += "It appears to be in stand-by mode.\n" //afk
-			if(UNCONSCIOUS)		msg += "<span class='warning'>It doesn't seem to be responsive.</span>\n"
-			if(DEAD)			msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
-	else
-		msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
-	msg += "<span class='info'>*---------*</span>"
-	usr << msg
-	return
+/obj/item/device/mmi/posibrain/examine(mob/user)
+	user << "<span class='info'>*---------</span>*"
+	..()
+	if(src.brainmob)
+		if(src.brainmob.stat == DEAD)
+			user << "<span class='deadsay'>It appears to be completely inactive.</span>" //suicided
+		else if(!src.brainmob.client)
+			user << "<span class='notice'>It appears to be in stand-by mode.</span>" //closed game window
+		else if(!src.brainmob.key)
+			user << "<span class='warning'>It doesn't seem to be responsive.</span>" //ghosted
+	user << "<span class='info'>*---------*</span>"
 
 /obj/item/device/mmi/posibrain/emp_act(severity)
 	if(!src.brainmob)
@@ -181,4 +166,4 @@
 	else
 		var/turf/T = get_turf(src.loc)
 		for (var/mob/M in viewers(T))
-			M.show_message("<span class='notice'>The [src] pings softly.</span>")
+			M.show_message("<span class='notice'>\The [src] pings softly.</span>")

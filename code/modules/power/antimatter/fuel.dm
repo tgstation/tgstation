@@ -68,9 +68,8 @@
 
 
 /obj/item/weapon/fuel/examine()
-	set src in view(1)
-	if(usr && !usr.stat)
-		usr << "A magnetic storage ring, it contains [fuel]kg of [content ? content : "nothing"]."
+	..()
+	user << "<span class='info'>A magnetic storage ring, it contains [fuel]kg of [content ? content : "nothing"].</span>"
 
 /obj/item/weapon/fuel/proc/injest(mob/M as mob)
 	switch(content)

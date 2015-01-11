@@ -107,9 +107,8 @@
 
 	src.loc = T
 
-/obj/item/examine()
-	set src in view()
-
+/obj/item/examine(mob/user)
+	..() //TODO: Make The following code simply append to the description instead of a separate line
 	var/size
 	switch(src.w_class)
 		if(1.0)
@@ -124,10 +123,13 @@
 			size = "huge"
 		else
 	//if ((M_CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
-	usr << "This is a [src.blood_DNA ? "bloody " : ""]\icon[src][src.name]. It is a [size] item."
-	if(src.desc)
-		usr << src.desc
-	return
+	var/pronoun
+	if (src.gender == PLURAL)
+		pronoun = "They are"
+	else
+		pronoun = "It is"
+	user << " [pronoun] a [size] item."
+
 
 /obj/item/attack_ai(mob/user as mob)
 	..()
@@ -284,7 +286,7 @@
 				testing("[M] TOO FAT TO WEAR [src]!")
 				if(!(flags & ONESIZEFITSALL))
 					if(!disable_warning)
-						H << "\red You're too fat to wear the [name]."
+						H << "<span class='warning'>You're too fat to wear the [name].</span>"
 					return 0
 
 		switch(slot)
@@ -359,7 +361,7 @@
 			if(slot_belt)
 				if(!H.w_uniform)
 					if(!disable_warning)
-						H << "\red You need a jumpsuit before you can attach this [name]."
+						H << "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>"
 					return 0
 				if( !(slot_flags & SLOT_BELT) )
 					return 0
@@ -458,7 +460,7 @@
 			if(slot_wear_id)
 				if(!H.w_uniform)
 					if(!disable_warning)
-						H << "\red You need a jumpsuit before you can attach this [name]."
+						H << "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>"
 					return 0
 				if( !(slot_flags & SLOT_ID) )
 					return 0
@@ -474,7 +476,7 @@
 			if(slot_l_store)
 				if(!H.w_uniform)
 					if(!disable_warning)
-						H << "\red You need a jumpsuit before you can attach this [name]."
+						H << "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>"
 					return 0
 				if(slot_flags & SLOT_DENYPOCKET)
 					return
@@ -491,7 +493,7 @@
 			if(slot_r_store)
 				if(!H.w_uniform)
 					if(!disable_warning)
-						H << "\red You need a jumpsuit before you can attach this [name]."
+						H << "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>"
 					return 0
 				if(slot_flags & SLOT_DENYPOCKET)
 					return
@@ -508,7 +510,7 @@
 			if(slot_s_store)
 				if(!H.wear_suit)
 					if(!disable_warning)
-						H << "\red You need a suit before you can attach this [name]."
+						H << "<span class='warning'>You need a suit before you can attach this [name].</span>"
 					return 0
 				if(!H.wear_suit.allowed)
 					if(!disable_warning)
@@ -593,25 +595,25 @@
 	if(istype(usr, /mob/living/carbon/brain))//Is a brain
 		usr << "You can't pick things up!"
 	if( usr.stat || usr.restrained() )//Is not asleep/dead and is not restrained
-		usr << "\red You can't pick things up!"
+		usr << "<span class='warning'>You can't pick things up!</span>"
 		return
 	if(src.anchored) //Object isn't anchored
-		usr << "\red You can't pick that up!"
+		usr << "<span class='warning'>You can't pick that up!</span>"
 		return
 	if(!usr.hand && usr.r_hand) //Right hand is not full
-		usr << "\red Your right hand is full."
+		usr << "<span class='warning'>Your right hand is full.</span>"
 		return
 	if(usr.hand && usr.l_hand && !isMoMMI(usr)) //Left hand is not full
-		usr << "\red Your left hand is full."
+		usr << "<span class='warning'>Your left hand is full.</span>"
 		return
 	if(!istype(src.loc, /turf)) //Object is on a turf
-		usr << "\red You can't pick that up!"
+		usr << "<span class='warning'>You can't pick that up!</span>"
 		return
 	//All checks are done, time to pick it up!
 	if(isMoMMI(usr))
 		// Otherwise, we get MoMMIs changing their own laws.
 		if(istype(src,/obj/item/weapon/aiModule))
-			src << "\red Your firmware prevents you from picking up [src]!"
+			src << "<span class='warning'>Your firmware prevents you from picking up [src]!</span>"
 			return
 		if(usr.get_active_hand() == null)
 			usr.put_in_hands(src)
@@ -644,7 +646,7 @@
 			(H.glasses && H.glasses.flags & GLASSESCOVERSEYES) \
 		))
 		// you can't stab someone in the eyes wearing a mask!
-		user << "\red You're going to need to remove that mask/helmet/glasses first."
+		user << "<span class='warning'>You're going to need to remove that mask/helmet/glasses first.</span>"
 		return
 
 	var/mob/living/carbon/monkey/Mo = M
@@ -652,11 +654,11 @@
 			(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES) \
 		))
 		// you can't stab someone in the eyes wearing a mask!
-		user << "\red You're going to need to remove that mask/helmet/glasses first."
+		user << "<span class='warning'>You're going to need to remove that mask/helmet/glasses first.</span>"
 		return
 
 	if(!M.has_eyes())
-		user << "\red You cannot locate any eyes on [M]!"
+		user << "<span class='warning'>You cannot locate any eyes on [M]!</span>"
 		return
 
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
@@ -684,30 +686,30 @@
 
 		if(M != user)
 			for(var/mob/O in (viewers(M) - user - M))
-				O.show_message("\red [M] has been stabbed in the eye with [src] by [user].", 1)
-			M << "\red [user] stabs you in the eye with [src]!"
-			user << "\red You stab [M] in the eye with [src]!"
+				O.show_message("<span class='attack'>[M] has been stabbed in the eye with [src] by [user].</span>", 1)
+			M << "<span class='attack'>[user] stabs you in the eye with [src]!</span>"
+			user << "<span class='attack'>You stab [M] in the eye with [src]!</span>"
 		else
 			user.visible_message( \
-				"\red [user] has stabbed themself with [src]!", \
-				"\red You stab yourself in the eyes with [src]!" \
+				"<span class='attack'>[user] has stabbed themself with [src]!</span>", \
+				"<span class='attack'>You stab yourself in the eyes with [src]!</span>" \
 			)
 
 		eyes.damage += rand(3,4)
 		if(eyes.damage >= eyes.min_bruised_damage)
 			if(M.stat != 2)
 				if(eyes.robotic <= 1) //robot eyes bleeding might be a bit silly
-					M << "\red Your eyes start to bleed profusely!"
+					M << "<span class='warning'>Your eyes start to bleed profusely!</span>"
 			if(prob(50))
 				if(M.stat != 2)
-					M << "\red You drop what you're holding and clutch at your eyes!"
+					M << "<span class='warning'>You drop what you're holding and clutch at your eyes!</span>"
 					M.drop_item()
 				M.eye_blurry += 10
 				M.Paralyse(1)
 				M.Weaken(4)
 			if (eyes.damage >= eyes.min_broken_damage)
 				if(M.stat != 2)
-					M << "\red You go blind!"
+					M << "<span class='warning'>You go blind!</span>"
 		var/datum/organ/external/affecting = M:get_organ("head")
 		if(affecting.take_damage(7))
 			M:UpdateDamageIcon()

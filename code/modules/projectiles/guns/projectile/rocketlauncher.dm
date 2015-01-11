@@ -13,7 +13,7 @@
 	throw_speed = 4
 	throw_range = 3
 	fire_delay = 5
-	flags = FPRINT  | USEDELAY
+	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BACK
 	caliber = list("rpg" = 1)

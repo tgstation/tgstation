@@ -65,14 +65,15 @@
 		G.overlays = 0
 		if(istype(G.mind.current, /mob/living/carbon/human/))
 			var/mob/living/carbon/human/H = G.mind.current
-			G.overlays += H.overlays_standing[6]//ID
-			G.overlays += H.overlays_standing[9]//Ears
-			G.overlays += H.overlays_standing[10]//Suit
-			G.overlays += H.overlays_standing[11]//Glasses
-			G.overlays += H.overlays_standing[12]//Belt
-			G.overlays += H.overlays_standing[14]//Back
-			G.overlays += H.overlays_standing[18]//Head
-			G.overlays += H.overlays_standing[19]//Handcuffs
+			G.overlays += H.obj_overlays[ID_LAYER]
+			G.overlays += H.obj_overlays[EARS_LAYER]
+			G.overlays += H.obj_overlays[SUIT_LAYER]
+			G.overlays += H.obj_overlays[GLASSES_LAYER]
+			G.overlays += H.obj_overlays[GLASSES_OVER_HAIR_LAYER]
+			G.overlays += H.obj_overlays[BELT_LAYER]
+			G.overlays += H.obj_overlays[BACK_LAYER]
+			G.overlays += H.obj_overlays[HEAD_LAYER]
+			G.overlays += H.obj_overlays[HANDCUFF_LAYER]
 		G.invisibility = 0
 		G << "<span class='sinister'>You feel relieved as what's left of your soul finally escapes its prison of flesh.</span>"
 	else
@@ -401,7 +402,10 @@
 	eye_blurry = 0
 	ear_deaf = 0
 	ear_damage = 0
-	reagents.clear_reagents()
+	if(!reagents)
+		create_reagents(1000)
+	else
+		reagents.clear_reagents()
 	heal_overall_damage(1000, 1000)
 	ExtinguishMob()
 	fire_stacks = 0

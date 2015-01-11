@@ -280,24 +280,31 @@ its easier to just keep the beam vertical.
 					//I've found that 3 ticks provided a nice balance for my use.
 	for(var/obj/effect/overlay/beam/O in orange(10,src)) if(O.BeamSource==src) del O
 
-
+//Woo hoo. Overtime
 //All atoms
-/atom/verb/examine()
-	set name = "Examine"
-	set category = "IC"
-	set src in oview(12)	//make it work from farther away
+/atom/proc/examine(mob/user)
+	//This reformat names to get a/an properly working on item descriptions when they are bloody
+	var/f_name = "\a [src]."
+	if(src.blood_DNA)
+		if(gender == PLURAL)
+			f_name = "some "
+		else
+			f_name = "a "
+		f_name += "<span class='danger'>blood-stained</span> [name]!"
 
-	if (!( usr ))
-		return
+	user << "\icon[src] That's [f_name]"
+	if(desc)
+		user << desc
 
-	usr.face_atom(src)
-	usr << "That's \a [src]." //changed to "That's" from "This is" because "This is some metal sheets" sounds dumb compared to "That's some metal sheets" ~Carn
-	usr << desc
-
+	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
+		user << "It contains:"
+		if(reagents.reagent_list.len)
+			for(var/datum/reagent/R in reagents.reagent_list)
+				user << "<span class='info'>[R.volume] units of [R.name]</span>"
+		else
+			user << "<span class='info'>Nothing.</span>"
 	if(on_fire)
-		usr << "\red OH SHIT! IT'S ON FIRE!"
-	// *****RM
-	//usr << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
+		user << "<span class='danger'>OH SHIT! IT'S ON FIRE!</span>"
 	return
 
 // /atom/proc/MouseDrop_T()

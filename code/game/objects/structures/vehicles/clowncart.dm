@@ -42,20 +42,17 @@
 	processing_objects |= src
 	handle_rotation()
 
-/obj/structure/stool/bed/chair/vehicle/clowncart/examine()
-	set src in usr
-	usr << "\icon[src] [desc]"
-	var/tmp/difference = reagents.total_volume - reagents.get_reagent_amount("banana")
-	usr << "This [nick] contains [reagents.get_reagent_amount("banana")] unit\s of banana juice[(difference != 0 ? ", and [difference] unit\s of something else!" : "!")]" //yeah
+/obj/structure/stool/bed/chair/vehicle/clowncart/examine(mob/user)
+	..()
 	if(max_health > 100)
-		usr << "It is reinforced with [(max_health-100)/20] bananium sheets."
+		user << "<span class='info'>It is reinforced with [(max_health-100)/20] bananium sheets.</span>"
 	switch(health)
 		if(max_health*0.5 to max_health)
-			usr << "<span class='notice'>It appears slightly dented.</span>"
+			user << "<span class='notice'>It appears slightly dented.</span>"
 		if(1 to max_health*0.5)
-			usr << "<span class='warning'>It appears heavily dented.</span>"
+			user << "<span class='warning'>It appears heavily dented.</span>"
 		if((INFINITY * -1) to 0)
-			usr << "<span class='danger'>It appears completely unsalvageable.</span>"
+			user << "<span class='danger'>It appears completely unsalvageable.</span>"
 
 /obj/structure/stool/bed/chair/vehicle/clowncart/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/weapon/bikehorn))

@@ -98,13 +98,12 @@
 	. = ..()
 
 
-/obj/machinery/door/firedoor/examine()
-	set src in view()
+/obj/machinery/door/firedoor/examine(mob/user)
 	. = ..()
 	if(pdiff >= FIREDOOR_MAX_PRESSURE_DIFF)
-		usr << "<span class='warning'>WARNING: Current pressure differential is [pdiff]kPa! Opening door may result in injury!</span>"
+		user << "<span class='danger'>WARNING: Current pressure differential is [pdiff]kPa! Opening door may result in injury!</span>"
 
-	usr << "<b>Sensor readings:</b>"
+	user << "<b>Sensor readings:</b>"
 	for(var/index = 1; index <= tile_info.len; index++)
 		var/o = "&nbsp;&nbsp;"
 		switch(index)
@@ -129,14 +128,14 @@
 		o += "[celsius]°C</span> "
 		o += "<span style='color:blue'>"
 		o += "[pressure]kPa</span></li>"
-		usr << o
+		user << o
 
 	if( islist(users_to_open) && users_to_open.len)
 		var/users_to_open_string = users_to_open[1]
 		if(users_to_open.len >= 2)
 			for(var/i = 2 to users_to_open.len)
 				users_to_open_string += ", [users_to_open[i]]"
-		usr << "These people have opened \the [src] during an alert: [users_to_open_string]."
+		user << "These people have opened \the [src] during an alert: [users_to_open_string]."
 
 
 /obj/machinery/door/firedoor/Bumped(atom/AM)
@@ -189,14 +188,14 @@
 		var/obj/item/weapon/weldingtool/W = C
 		if(W.remove_fuel(0, user))
 			blocked = !blocked
-			user.visible_message("\red \The [user] [blocked ? "welds" : "unwelds"] \the [src] with \a [W].",\
+			user.visible_message("<span class='attack'>\The [user] [blocked ? "welds" : "unwelds"] \the [src] with \a [W].</span>",\
 			"You [blocked ? "weld" : "unweld"] \the [src] with \the [W].",\
 			"You hear something being welded.")
 			update_icon()
 			return
 
 	if(blocked)
-		user << "\red \The [src] is welded solid!"
+		user << "<span class='warning'>\The [src] is welded solid!</span>"
 		return
 
 	var/area/A = get_area_master(src)
@@ -207,11 +206,11 @@
 		if(operating)
 			return
 		if( blocked )
-			user.visible_message("\red \The [user] pries at \the [src] with \a [C], but \the [src] is welded in place!",\
+			user.visible_message("<span class='attack'>\The [user] pries at \the [src] with \a [C], but \the [src] is welded in place!</span>",\
 			"You try to pry \the [src] [density ? "open" : "closed"], but it is welded in place!",\
 			"You hear someone struggle and metal straining.")
 
-		user.visible_message("\red \The [user] forces \the [src] [density ? "open" : "closed"] with \a [C]!",\
+		user.visible_message("<span class='attack'>\The [user] forces \the [src] [density ? "open" : "closed"] with \a [C]!</span>",\
 			"You force \the [src] [density ? "open" : "closed"] with \the [C]!",\
 			"You hear metal strain, and a door [density ? "open" : "close"].")
 
@@ -272,7 +271,7 @@
 		"You hear a beep, and a door opening.")
 		*/
 	else
-		user.visible_message("\blue \The [src] [density ? "open" : "close"]s for \the [user].",\
+		user.visible_message("<span class='notice'>\The [src] [density ? "open" : "close"]s for \the [user].</span>",\
 		"\The [src] [density ? "open" : "close"]s.",\
 		"You hear a beep, and a door opening.")
 		// Accountability!
