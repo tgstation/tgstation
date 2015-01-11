@@ -26,7 +26,8 @@
 //This needs to be fixed
 /mob/living/carbon/alien/larva/Stat()
 	..()
-	stat(null, "Progress: [amount_grown]/[max_grown]")
+	if(statpanel("Status"))
+		stat(null, "Progress: [amount_grown]/[max_grown]")
 
 /mob/living/carbon/alien/larva/adjustToxLoss(amount)
 	if(stat != DEAD)
