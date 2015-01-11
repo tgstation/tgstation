@@ -139,7 +139,7 @@
 	if (mob.mind)
 		if (mob.mind.assigned_role == "Clown")
 			mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
-			mob.mutations.Remove(CLUMSY)
+			mob.dna.remove_mutation(CLOWNMUT)
 
 
 	var/obj/item/weapon/paper/talisman/supply/T = new(mob)
@@ -275,9 +275,8 @@
 /datum/game_mode/cult/proc/check_survive()
 	acolytes_survived = 0
 	for(var/datum/mind/cult_mind in cult)
-		if (cult_mind.current && cult_mind.current.stat!=2)
-			var/area/A = get_area(cult_mind.current )
-			if ( is_type_in_list(A, centcom_areas))
+		if (cult_mind.current && cult_mind.current.stat != DEAD)
+			if(cult_mind.current.onCentcom())
 				acolytes_survived++
 	if(acolytes_survived>=acolytes_needed)
 		return 0

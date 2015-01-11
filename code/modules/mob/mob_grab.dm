@@ -201,7 +201,7 @@
 		return
 
 	if(M == assailant && state >= GRAB_AGGRESSIVE)
-		if( (ishuman(user) && (FAT in user.mutations) && ismonkey(affecting) ) || ( isalien(user) && iscarbon(affecting) ) )
+		if( (ishuman(user) && (user.disabilities & FAT) && ismonkey(affecting) ) || ( isalien(user) && iscarbon(affecting) ) )
 			var/mob/living/carbon/attacker = user
 			user.visible_message("<span class='danger'>[user] is attempting to devour [affecting]!</span>")
 			if(istype(user, /mob/living/carbon/alien/humanoid/hunter))

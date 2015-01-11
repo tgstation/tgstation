@@ -33,10 +33,16 @@ The regular pipe you see everywhere, including bent ones.
 
 	..()
 
+
+/obj/machinery/atmospherics/pipe/simple/SetInitDirections()
 	switch(dir)
-		if(SOUTH || NORTH)
+		if(NORTH)
 			initialize_directions = SOUTH|NORTH
-		if(EAST || WEST)
+		if(SOUTH)
+			initialize_directions = SOUTH|NORTH
+		if(EAST)
+			initialize_directions = EAST|WEST
+		if(WEST)
 			initialize_directions = EAST|WEST
 		if(NORTHEAST)
 			initialize_directions = NORTH|EAST
@@ -110,9 +116,9 @@ The regular pipe you see everywhere, including bent ones.
 	qdel(src)
 
 /obj/machinery/atmospherics/pipe/simple/proc/normalize_dir()
-	if(dir==3)
+	if(dir==2)
 		dir = 1
-	else if(dir==12)
+	else if(dir==8)
 		dir = 4
 
 /obj/machinery/atmospherics/pipe/simple/update_icon()
@@ -130,6 +136,13 @@ The regular pipe you see everywhere, including bent ones.
 
 /obj/machinery/atmospherics/pipe/simple/pipeline_expansion()
 	return list(node1, node2)
+
+/obj/machinery/atmospherics/pipe/simple/update_node_icon()
+	..()
+	if(node1)
+		node1.update_icon()
+	if(node2)
+		node2.update_icon()
 
 /obj/machinery/atmospherics/pipe/simple/insulated
 	icon = 'icons/obj/atmospherics/red_pipe.dmi'

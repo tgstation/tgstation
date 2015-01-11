@@ -2396,13 +2396,12 @@ It is possible to destroy the net by the occupant or someone else.
 	..()
 	return
 
-/obj/effect/energy_net/attack_hand(mob/user)
-	if (HULK in user.mutations)
-		user.visible_message("<span class='danger'>[user] rips the energy net apart!</span>", \
+/obj/effect/energy_net/attack_hulk(mob/living/carbon/human/user)
+	..(user, 1)
+	user.visible_message("<span class='danger'>[user] rips the energy net apart!</span>", \
 								"<span class='notice'>You easily destroy the energy net.</span>")
-		health-=50
+	health-=50
 	healthcheck()
-	return
 
 /obj/effect/energy_net/attack_paw(mob/user)
 	return attack_hand()

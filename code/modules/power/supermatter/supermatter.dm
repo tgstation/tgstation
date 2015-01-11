@@ -180,7 +180,7 @@
 			l.hallucination = max(0, min(200, l.hallucination + power * config_hallucination_power * sqrt( 1 / max(1, get_dist(l, src)) ) ) )
 
 	for(var/mob/living/l in range(src, round((power / 100) ** 0.25)))
-		var/rads = (power / 10) * sqrt( 1 / min(get_dist(l, src),1) )
+		var/rads = (power / 10) * sqrt( 1 / max(get_dist(l, src),1) )
 		l.apply_effect(rads, IRRADIATE)
 
 	power -= (power/500)**3
