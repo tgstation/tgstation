@@ -15,7 +15,8 @@ var/const/MAX_ACTIVE_TIME = 400
 	icon_state = "facehugger"
 	item_state = "facehugger"
 	w_class = 1 //note: can be picked up by aliens unlike most other items of w_class below 4
-	flags = FPRINT  | MASKCOVERSMOUTH | MASKCOVERSEYES | MASKINTERNALS
+	flags = FPRINT  | MASKINTERNALS
+	body_parts_covered = HEAD|MOUTH|EYES
 	throw_range = 5
 	var/real = 1 //Facehuggers are real, toys are not.
 
@@ -133,8 +134,9 @@ var/const/MAX_ACTIVE_TIME = 400
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		if(H.head && H.head.flags & HEADCOVERSMOUTH)
-			H.visible_message("<span class='danger'>\The [src] smashes against [H]'s [H.head] !</span>")
+		var/obj/item/mouth_protection = H.get_body_part_coverage(MOUTH)
+		if(mouth_protection && mouth_protection != H.wear_mask) //can't be protected with your own mask, has to be a hat
+			H.visible_message("<span class='danger'>\The [src] smashes against [H]'s [mouth_protection] !</span>")
 			Die()
 			return 0
 
@@ -234,6 +236,6 @@ var/const/MAX_ACTIVE_TIME = 400
 	var/mob/living/carbon/C = M
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(H.head && H.head.flags & HEADCOVERSMOUTH)
+		if(H.check_body_part_coverage(MOUTH))
 			return 0
 	return 1

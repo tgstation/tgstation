@@ -41,7 +41,6 @@
 
 /obj/item/clothing/head/helmet/space/vox
 	armor = list(melee = 60, bullet = 50, laser = 30, energy = 15, bomb = 30, bio = 30, rad = 30)
-	flags = HEADCOVERSEYES|STOPSPRESSUREDMAGE
 	species_restricted = list("Vox")
 
 /obj/item/clothing/head/helmet/space/vox/pressure
@@ -159,7 +158,6 @@
 	icon_state = "vox-pressure-normal"
 	item_state = "vox-pressure-normal"
 	desc = "A very alien-looking helmet for Nanotrasen-hired Vox."
-	flags = HEADCOVERSEYES|STOPSPRESSUREDMAGE|BLOCKHAIR
 	flags_inv = HIDEMASK
 	species_restricted = list("Vox")
 

@@ -2,7 +2,7 @@
 	name = "glasses"
 	icon = 'icons/obj/clothing/glasses.dmi'
 	//w_class = 2.0
-	//flags = GLASSESCOVERSEYES
+	//flags = PL_HCE
 	//slot_flags = SLOT_EYES
 	//var/vision_flags = 0
 	//var/darkness_view = 0//Base human is 2
@@ -125,13 +125,13 @@
 	if(C.canmove && !C.stat && !C.restrained())
 		if(src.up)
 			src.up = !src.up
-			src.flags |= GLASSESCOVERSEYES
+			body_parts_covered |= EYES
 			flags_inv |= HIDEEYES
 			icon_state = initial(icon_state)
 			C << "You flip the [src] down to protect your eyes."
 		else
 			src.up = !src.up
-			src.flags &= ~HEADCOVERSEYES
+			src.body_parts_covered &= ~EYES
 			flags_inv &= ~HIDEEYES
 			icon_state = "[initial(icon_state)]up"
 			C << "You push the [src] up out of your face."

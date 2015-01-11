@@ -35,7 +35,7 @@
 		H.ExtinguishMob()
 
 /obj/item/clothing/head/helmet/space/plasmaman
-	flags = FPRINT  | HEADCOVERSEYES | BLOCKHAIR | STOPSPRESSUREDMAGE | PLASMAGUARD
+	flags = FPRINT  | BLOCKHAIR | STOPSPRESSUREDMAGE | PLASMAGUARD
 	species_restricted = list("Plasmaman")
 
 	icon_state = "plasmaman_helmet0"

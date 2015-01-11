@@ -289,7 +289,7 @@
 	siemens_coefficient = 0.2
 	species_restricted = list("exclude","Vox")
 	_color = "deathsquad"
-	flags = FPRINT | HEADCOVERSEYES | BLOCKHAIR | STOPSPRESSUREDMAGE | PLASMAGUARD
+	flags = FPRINT | BLOCKHAIR | STOPSPRESSUREDMAGE | PLASMAGUARD
 
 /obj/item/clothing/suit/space/rig/deathsquad
 	name = "deathsquad suit"

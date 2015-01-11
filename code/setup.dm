@@ -198,12 +198,6 @@ var/MAX_EXPLOSION_RANGE = 14
 #define NOBLUDGEON  4  // when an item has this it produces no "X has been hit by Y with Z" message with the default handler
 #define NOBLOODY	2048	// used to items if they don't want to get a blood overlay
 
-#define GLASSESCOVERSEYES	1024
-#define MASKCOVERSEYES		1024		// get rid of some of the other retardation in these flags
-#define HEADCOVERSEYES		1024		// feel free to realloc these numbers for other purposes
-#define MASKCOVERSMOUTH		2048		// on other items, these are just for mask/head
-#define HEADCOVERSMOUTH		2048
-
 #define NOSLIP		1024 		//prevents from slipping on wet floors, in space etc
 
 #define OPENCONTAINER	4096	// is an open container for chemistry purposes
@@ -264,7 +258,11 @@ var/MAX_EXPLOSION_RANGE = 14
 //Cant seem to find a mob bitflags area other than the powers one
 
 // bitflags for clothing parts
-#define HEAD			1
+#define HEAD			1 		//top of the head
+#define EYES			2048
+#define MOUTH			4096
+#define EARS			8192
+#define FULL_HEAD		14337 //everything
 #define UPPER_TORSO		2
 #define LOWER_TORSO		4
 #define LEG_LEFT		8
@@ -279,7 +277,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define HAND_LEFT		512
 #define HAND_RIGHT		1024
 #define HANDS			1536
-#define FULL_BODY		2047
+#define FULL_BODY		16383
 
 // bitflags for the percentual amount of protection a piece of clothing which covers the body part offers.
 // Used with human/proc/get_heat_protection() and human/proc/get_cold_protection()
