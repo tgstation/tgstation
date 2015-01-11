@@ -631,7 +631,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 //CHATROOM FUNCTIONS====================================
 
 			if("Set Nick")
-				var/t = stripped_input(U, "Please enter nickname", name, null, 8)
+				nick = stripped_input(U, "Please enter nickname", name, null, 8)
 
 			if("Set Channel")
 				var/t = stripped_input(U, "Please enter channel", name, chat_channel)
