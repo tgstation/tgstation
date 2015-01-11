@@ -17,6 +17,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	w_class = 1 //note: can be picked up by aliens unlike most other items of w_class below 4
 	flags = FPRINT  | MASKCOVERSMOUTH | MASKCOVERSEYES | MASKINTERNALS
 	throw_range = 5
+	var/real = 1 //Facehuggers are real, toys are not.
 
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
 
@@ -53,16 +54,17 @@ var/const/MAX_ACTIVE_TIME = 400
 	else
 		del(src)
 
-/obj/item/clothing/mask/facehugger/examine()
+/obj/item/clothing/mask/facehugger/examine(mob/user)
 	..()
+	if(!real) //Toy facehuggers are a child, avoid confusing examine text.
+		return
 	switch(stat)
 		if(DEAD,UNCONSCIOUS)
-			usr << "<span class='danger'>\The [src] is not moving.</span>"
+			user << "<span class='deadsay'>\The [src] is not moving.</span>"
 		if(CONSCIOUS)
-			usr << "<span class='danger'>\The [src] seems active.</span>"
+			user << "<span class='danger'>\The [src] seems active.</span>"
 	if (sterile)
-		usr << "<span class='danger'>It looks like \the [src]'s proboscis has been removed.</span>"
-	return
+		user << "<span class='danger'>It looks like \the [src]'s proboscis has been removed.</span>"
 
 /obj/item/clothing/mask/facehugger/attackby()
 	Die()

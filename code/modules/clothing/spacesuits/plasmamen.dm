@@ -19,10 +19,10 @@
 	var/extinguish_cooldown=10 SECONDS
 	var/extinguishes_left=10 // Yeah yeah, reagents, blah blah blah.  This should be simple.
 
-/obj/item/clothing/suit/space/plasmaman/examine()
-	set src in view()
+/obj/item/clothing/suit/space/plasmaman/examine(mob/user)
 	..()
-	usr << "There are [extinguishes_left] extinguisher canisters left in this suit."
+	user << "<span class='info'>There are [extinguishes_left] extinguisher canisters left in this suit.</span>"
+
 /obj/item/clothing/suit/space/plasmaman/proc/Extinguish(var/mob/user)
 	var/mob/living/carbon/human/H=user
 	if(extinguishes_left)

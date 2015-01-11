@@ -16,12 +16,12 @@
 		camera.network = list("ERT")
 		cameranet.removeCamera(camera)
 		camera.c_tag = user.name
-		user << "\blue User scanned as [camera.c_tag]. Camera activated."
+		user << "<span class='notice'>User scanned as [camera.c_tag]. Camera activated.</span>"
 
-/obj/item/clothing/head/helmet/space/ert/examine()
+/obj/item/clothing/head/helmet/space/ert/examine(mob/user)
 	..()
-	if(get_dist(usr,src) <= 1)
-		usr << "This helmet has a built-in camera. It's [camera ? "" : "in"]active."
+	if(get_dist(user,src) <= 1)
+		user << "This helmet has a built-in camera. It's [camera ? "" : "in"]active."
 
 /obj/item/clothing/suit/space/ert
 	name = "emergency response team suit"

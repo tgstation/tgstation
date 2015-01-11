@@ -4,7 +4,7 @@
 	icon = 'icons/obj/flamethrower.dmi'
 	icon_state = "flamethrowerbase"
 	item_state = "flamethrower_0"
-	flags = FPRINT | USEDELAY // USEDELAY flag needed in order to use afterattack() for things that are not in reach. I.E: Shooting flames.
+	flags = FPRINT
 	siemens_coefficient = 1
 	force = 3.0
 	throwforce = 10.0

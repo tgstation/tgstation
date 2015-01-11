@@ -5,7 +5,10 @@
 /obj/item/weapon/cell/New()
 	..()
 	charge = maxcharge
-
+	if(maxcharge <= 2500)
+		desc = "The manufacturer's label states this cell has a power rating of [maxcharge], and that you should not swallow it."
+	else
+		desc = "This power cell has an exciting chrome finish, as it is an uber-capacity cell type! It has a power rating of [maxcharge]!"
 	spawn(5)
 		updateicon()
 
@@ -51,15 +54,12 @@
 	return power_used
 
 
-/obj/item/weapon/cell/examine()
-	set src in view(1)
-	if(usr /*&& !usr.stat*/)
-		if(maxcharge <= 2500)
-			usr << "[desc]\nThe manufacturer's label states this cell has a power rating of [maxcharge], and that you should not swallow it.\nThe charge meter reads [round(src.percent() )]%."
-		else
-			usr << "This power cell has an exciting chrome finish, as it is an uber-capacity cell type! It has a power rating of [maxcharge]!\nThe charge meter reads [round(src.percent() )]%."
+/obj/item/weapon/cell/examine(mob/user)
+	..()
 	if(crit_fail)
-		usr << "\red This power cell seems to be faulty."
+		user << "<span class='warning'>This power cell seems to be faulty.</span>"
+	else
+		user << "<span class='info'>The charge meter reads [round(src.percent() )]%.</span>"
 
 /obj/item/weapon/cell/attack_self(mob/user as mob)
 	src.add_fingerprint(user)

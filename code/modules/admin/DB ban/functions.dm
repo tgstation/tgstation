@@ -85,6 +85,17 @@
 	usr << "\blue Ban saved to database."
 	message_admins("[key_name_admin(usr)] has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[reason]\" to the ban database.",1)
 
+	INVOKE_EVENT(on_ban,list(
+		"ckey"=ckey,
+		"computer_id"=computerid,
+		"reason"=reason,
+		"duration"=duration,
+		"ip"=ip,
+		"type"=bantype,
+		"job"=job,
+		"admin"=usr
+	))
+
 
 
 datum/admins/proc/DB_ban_unban(var/ckey, var/bantype, var/job = "")
@@ -254,6 +265,12 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 	var/DBQuery/query_update = dbcon.NewQuery(sql_update)
 	query_update.Execute()
 
+	INVOKE_EVENT(on_unban,list(
+		"id"=id,
+		"ckey"=pckey,
+
+		"admin"=src.owner
+	))
 
 /client/proc/DB_ban_panel()
 	set category = "Admin"
@@ -264,7 +281,6 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 		return
 
 	holder.DB_ban_panel()
-
 
 /datum/admins/proc/DB_ban_panel(var/playerckey = null, var/adminckey = null)
 	if(!usr.client)

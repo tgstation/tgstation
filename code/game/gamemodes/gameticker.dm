@@ -389,7 +389,9 @@ var/global/datum/controller/gameticker/ticker
 				blackbox.save_all_data_to_sql()
 
 			if (watchdog.waiting)
-				world << "<span class='notice'><B>Server will shut down for an automatic update in a few seconds.</B></span>"
+				world << "<span class='notice'><B>Server will shut down for an automatic update [config.map_voting ? "[(restart_timeout/10)] seconds." : "in a few seconds."]</B></span>"
+				if(config.map_voting)
+					sleep(restart_timeout) //waiting for a mapvote to end
 				watchdog.signal_ready()
 			else if(!delay_end)
 				sleep(restart_timeout)

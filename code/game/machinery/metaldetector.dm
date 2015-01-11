@@ -28,8 +28,7 @@
 /obj/machinery/detector/proc/assess_perp(mob/living/carbon/human/perp as mob)
 	var/threatcount = 0
 	if(!(istype(perp, /mob/living/carbon)))
-		return
-	if(src.emagged == 2) return 10
+		return -1
 
 	if(!src.allowed(perp))
 
@@ -95,10 +94,6 @@
 						&& !istype(things, /obj/item/weapon/gun/energy/laser/practice))
 							threatcount += 2
 
-
-
-
-
 		if(idmode)
 			//
 			if(!perp.wear_id)
@@ -109,23 +104,15 @@
 			if(!perp.wear_id)
 				threatcount += 2
 
-
 		if(istype(perp.wear_suit, /obj/item/clothing/suit/wizrobe))
 			threatcount += 2
 
 		if(perp.dna && perp.dna.mutantrace && perp.dna.mutantrace != "none")
 			threatcount += 2
 
-
-
-
-
 		//Agent cards lower threatlevel.
 		//if(perp.wear_id && istype(perp:wear_id.GetID(), /obj/item/weapon/card/id/syndicate)) ///////////////nah, i dont think so
 		//	threatcount -= 2
-
-
-
 
 	var/passperpname = ""
 	for (var/datum/data/record/E in data_core.general)
@@ -146,7 +133,8 @@
 					break
 
 	var/list/retlist = list(threatcount, passperpname)
-
+	if(emagged)
+		retlist[1] = 10
 	return retlist
 
 
@@ -273,6 +261,8 @@
 		if (get_dist(src, O) > src.range)
 			continue
 		var/list/ourretlist = src.assess_perp(O)
+		if(!istype(ourretlist) || !ourretlist.len)
+			return
 		var/dudesthreat = ourretlist[1]
 		var/dudesname = ourretlist[2]
 

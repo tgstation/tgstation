@@ -826,7 +826,7 @@
 		stat ^= BROKEN
 		add_fingerprint(user)
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red [] has []activated []!", user, (stat&BROKEN) ? "de" : "re", src), 1)
+			O.show_message(text("<span class='warning'>[] has []activated []!</span>", user, (stat&BROKEN) ? "de" : "re", src), 1)
 		update_icon()
 		return
 */
@@ -851,10 +851,10 @@
 				else
 					if(allowed(user) && !wires.IsIndexCut(AALARM_WIRE_IDSCAN))
 						locked = !locked
-						user << "\blue You [ locked ? "lock" : "unlock"] the Air Alarm interface."
+						user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the Air Alarm interface.</span>"
 						updateUsrDialog()
 					else
-						user << "\red Access denied."
+						user << "<span class='warning'>Access denied.</span>"
 			return
 
 		if(1)
@@ -909,12 +909,12 @@
 	spawn(rand(0,15))
 		update_icon()
 
-/obj/machinery/alarm/examine()
+/obj/machinery/alarm/examine(mob/user)
 	..()
 	if (buildstage < 2)
-		usr << "It is not wired."
+		user << "<span class='info'>It is not wired.</span>"
 	if (buildstage < 1)
-		usr << "The circuit is missing."
+		user << "<span class='info'>The circuit is missing.</span>"
 
 /*
 FIRE ALARM
@@ -994,13 +994,13 @@ FIRE ALARM
 				if (istype(W, /obj/item/device/multitool))
 					src.detecting = !( src.detecting )
 					if (src.detecting)
-						user.visible_message("\red [user] has reconnected [src]'s detecting unit!", "You have reconnected [src]'s detecting unit.")
+						user.visible_message("<span class='attack'>[user] has reconnected [src]'s detecting unit!</span>", "You have reconnected [src]'s detecting unit.")
 					else
-						user.visible_message("\red [user] has disconnected [src]'s detecting unit!", "You have disconnected [src]'s detecting unit.")
+						user.visible_message("<span class='attack'>[user] has disconnected [src]'s detecting unit!</span>", "You have disconnected [src]'s detecting unit.")
 				if(istype(W, /obj/item/weapon/wirecutters))
 					if(do_after(user,50))
 						buildstage=1
-						user.visible_message("\red [user] has cut the wiring from \the [src]!", "You have cut the last of the wiring from \the [src].")
+						user.visible_message("<span class='attack'>[user] has cut the wiring from \the [src]!</span>", "You have cut the last of the wiring from \the [src].")
 						update_icon()
 						new /obj/item/weapon/cable_coil(user.loc,5)
 						playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)

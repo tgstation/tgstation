@@ -33,19 +33,13 @@
 		overlays  += "sheater-open"
 	return
 
-/obj/machinery/space_heater/examine()
-	set src in oview(12)
-	if (!( usr ))
-		return
-	usr << "This is \icon[src] \an [src.name]."
-	usr << src.desc
-
-	usr << "The heater is [on ? "on" : "off"] and the hatch is [open ? "open" : "closed"]."
+/obj/machinery/space_heater/examine(mob/user)
+	..()
+	user << "<span class='info'>The heater is [on ? "on" : "off"] and the hatch is [open ? "open" : "closed"].</span>"
 	if(open)
-		usr << "The power cell is [cell ? "installed" : "missing"]."
+		user << "<span class='info'>The power cell is [cell ? "installed" : "missing"].</span>"
 	else
-		usr << "The charge meter reads [cell ? round(cell.percent(),1) : 0]%"
-	return
+		user << "<span class='info'>The charge meter reads [cell ? round(cell.percent(),1) : 0]%</span>"
 
 /obj/machinery/space_heater/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
@@ -71,7 +65,7 @@
 					C.loc = src
 					C.add_fingerprint(usr)
 
-					user.visible_message("\blue [user] inserts a power cell into [src].", "\blue You insert the power cell into [src].")
+					user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 		else
 			user << "The hatch must be open to insert a power cell."
 			return
@@ -119,7 +113,7 @@
 
 	else
 		on = !on
-		user.visible_message("\blue [user] switches [on ? "on" : "off"] the [src].","\blue You switch [on ? "on" : "off"] the [src].")
+		user.visible_message("<span class='notice'>[user] switches [on ? "on" : "off"] the [src].</span>","<span class='notice'>You switch [on ? "on" : "off"] the [src].</span>")
 		update_icon()
 	return
 
@@ -144,7 +138,7 @@
 					usr.put_in_hands(cell)
 					cell.add_fingerprint(usr)
 					cell = null
-					usr.visible_message("\blue [usr] removes the power cell from \the [src].", "\blue You remove the power cell from \the [src].")
+					usr.visible_message("<span class='notice'>[usr] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
 
 			if("cellinstall")
 				if(open && !cell)
@@ -155,7 +149,7 @@
 						C.loc = src
 						C.add_fingerprint(usr)
 
-						usr.visible_message("\blue [usr] inserts a power cell into \the [src].", "\blue You insert the power cell into \the [src].")
+						usr.visible_message("<span class='notice'>[usr] inserts a power cell into \the [src].</span>", "<span class='notice'>You insert the power cell into \the [src].</span>")
 
 		updateDialog()
 	else

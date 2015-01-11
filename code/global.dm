@@ -1,3 +1,5 @@
+//List of ckeys that have de-adminned themselves during this round
+var/global/list/deadmins = list()
 
 // List of types and how many instances of each type there are.
 var/global/list/type_instances[0]
@@ -349,3 +351,8 @@ var/list/score=list(
 	"dmgestdamage"  = 0,
 	"dmgestkey"     = null
 )
+
+// Mostly used for ban systems.
+var/event/on_login = new()
+var/event/on_ban = new()
+var/event/on_unban = new()

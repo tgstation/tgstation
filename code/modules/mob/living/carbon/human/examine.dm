@@ -1,24 +1,11 @@
-/mob/living/carbon/human/examine()
-	set src in view()
-
-	if(!usr || !src)	return
-	if( usr.sdisabilities & BLIND || usr.blinded || usr.stat==UNCONSCIOUS )
-		usr << "<span class='notice'>Something is there but you can't see it.</span>"
-		return
-
+/mob/living/carbon/human/examine(mob/user)
+	var/list/obscured = check_obscured_slots()
 	var/skipgloves = 0
 	//var/skipsuitstorage = 0
 	var/skipjumpsuit = 0
 	var/skipshoes = 0
 	var/skipmask = 0
-	var/list/obscured = check_obscured_slots()
 	var/skipface = 0
-
-
-
-
-
-
 
 /*
 
@@ -39,11 +26,6 @@
 
 
 */
-
-
-
-
-
 
 	if(wear_mask)
 		skipface |= wear_mask.flags_inv & HIDEFACE
@@ -197,7 +179,7 @@
 		else if(istype(wear_id, /obj/item/weapon/card/id)) //just in case something other than a PDA/ID card somehow gets in the ID slot :[
 			var/obj/item/weapon/card/id/idcard = wear_id
 			id = idcard.registered_name
-		if(id && (id != real_name) && (get_dist(src, usr) <= 1) && prob(10))
+		if(id && (id != real_name) && (get_dist(src, user) <= 1) && prob(10))
 			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[wear_id] \a [wear_id] yet something doesn't seem right...</span>\n"
 		else*/
 		msg += "[t_He] [t_is] wearing \icon[wear_id] \a [wear_id].\n"
@@ -223,8 +205,8 @@
 	if(M_DWARF in mutations)
 		msg += "[t_He] [t_is] a short, sturdy creature fond of drink and industry.\n"
 
-	var/distance = get_dist(usr,src)
-	if(istype(usr, /mob/dead/observer) || usr.stat == 2) // ghosts can see anything
+	var/distance = get_dist(user,src)
+	if(istype(user, /mob/dead/observer) || user.stat == 2) // ghosts can see anything
 		distance = 1
 	if(distance <= 3)
 		if(!has_brain())
@@ -233,22 +215,22 @@
 		msg += "<span class='warning'>[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.</span>\n"
 		if((stat == 2 || src.health < config.health_threshold_crit || status_flags & FAKEDEATH) && distance <= 3)
 			msg += "<span class='warning'>[t_He] does not appear to be breathing.</span>\n"
-		if(istype(usr, /mob/living/carbon/human) && usr.stat == 0 && src.stat == 1 && distance <= 1)
-			for(var/mob/O in viewers(usr.loc, null))
-				O.show_message("[usr] checks [src]'s pulse.", 1)
+		if(istype(user, /mob/living/carbon/human) && user.stat == 0 && src.stat == 1 && distance <= 1)
+			for(var/mob/O in viewers(user.loc, null))
+				O.show_message("[user] checks [src]'s pulse.", 1)
 		spawn(15)
-			if(distance <= 1 && usr.stat != 1)
+			if(distance <= 1 && user.stat != 1)
 				if(pulse == PULSE_NONE)
-					usr << "<span class='deadsay'>[t_He] has no pulse[src.client ? "" : " and [t_his] soul has departed"]...</span>"
+					user << "<span class='deadsay'>[t_He] has no pulse[src.client ? "" : " and [t_his] soul has departed"]...</span>"
 				else
-					usr << "<span class='deadsay'>[t_He] has a pulse!</span>"
+					user << "<span class='deadsay'>[t_He] has a pulse!</span>"
 
 	msg += "<span class='warning'>"
 
 	if(nutrition < 100)
 		msg += "[t_He] [t_is] severely malnourished.\n"
 	else if(nutrition >= 500)
-		if(usr.nutrition < 100)
+		if(user.nutrition < 100)
 			msg += "[t_He] [t_is] plump and delicious looking - Like a fat little piggy. A tasty piggy.\n"
 		else
 			msg += "[t_He] [t_is] quite chubby.\n"
@@ -428,7 +410,7 @@
 		msg += "[t_He] [t_is] repulsively uncanny!\n"
 
 
-	if(hasHUD(usr,"security"))
+	if(hasHUD(user,"security"))
 		var/perpname = "wot"
 		var/criminal = "None"
 
@@ -454,7 +436,7 @@
 			msg += {"<span class = 'deptradio'>Criminal status:</span> <a href='?src=\ref[src];criminal=1'>\[[criminal]\]</a>
 <span class = 'deptradio'>Security records:</span> <a href='?src=\ref[src];secrecord=`'>\[View\]</a>  <a href='?src=\ref[src];secrecordadd=`'>\[Add comment\]</a>\n"}
 			// END AUTOFIX
-	if(hasHUD(usr,"medical"))
+	if(hasHUD(user,"medical"))
 		var/perpname = "wot"
 		var/medical = "None"
 
@@ -487,7 +469,7 @@
 			pose = addtext(pose,".") //Makes sure all emotes end with a period.
 		msg += "\n[t_He] is [pose]"
 
-	usr << msg
+	user << msg
 
 //Helper procedure. Called by /mob/living/carbon/human/examine() and /mob/living/carbon/human/Topic() to determine HUD access to security and medical records.
 /proc/hasHUD(mob/M as mob, hudtype)
