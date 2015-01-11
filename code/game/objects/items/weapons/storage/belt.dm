@@ -100,6 +100,9 @@
 	..()
 	new /obj/item/device/flashlight/seclite(src)
 
+/obj/item/weapon/storage/belt/security/empty/New()
+	..()
+
 /obj/item/weapon/storage/belt/soulstone
 	name = "soul stone belt"
 	desc = "Designed for ease of access to the shards during a fight, as to not let a single enemy spirit slip away"
