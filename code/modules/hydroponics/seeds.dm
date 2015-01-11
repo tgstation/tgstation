@@ -909,24 +909,6 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 6
-	mutatelist = list(/obj/item/seeds/holymelonseed)
-
-/obj/item/seeds/holymelonseed
-	name = "pack of holymelon seeds"
-	desc = "These seeds have been blessed by some deity to grow into holymelon plants."
-	icon_state = "seed-holymelon"
-	species = "holymelon"
-	plantname = "Holymelon Vines"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/holymelon
-	lifespan = 50
-	endurance = 40
-	maturation = 6
-	production = 6
-	yield = 3
-	potency = 10
-	plant_type = 0
-	growthstages = 6
-	rarity = 40
 
 /obj/item/seeds/pumpkinseed
 	name = "pack of pumpkin seeds"
@@ -943,24 +925,6 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 3
-	mutatelist = list(/obj/item/seeds/blumpkinseed)
-
-/obj/item/seeds/blumpkinseed
-	name = "pack of pumpkin seeds"
-	desc = "These seeds grow into blumpkin vines which help produce even more seeds."
-	icon_state = "seed-blumpkin"
-	species = "blumpkin"
-	plantname = "Blumpkin Vines"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin
-	lifespan = 50
-	endurance = 40
-	maturation = 6
-	production = 6
-	yield = 3
-	potency = 10
-	plant_type = 0
-	growthstages = 3
-	rarity = 20
 
 /obj/item/seeds/limeseed
 	name = "pack of lime seeds"

@@ -1131,28 +1131,6 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	..()
 	reagents.add_reagent("kelotane", 1 + round((potency / 20), 1))
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin
-	seed = /obj/item/seeds/blumpkinseed
-	name = "blumpkin"
-	desc = "When you're making a mess this blumpkin's there to clean you up."
-	icon_state = "blumpkin"
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin/add_juice()
-	..()
-	reagents.add_reagent("cleaner", 1 + round((potency / 10), 1))
-
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/holymelon
-	seed = /obj/item/seeds/holymelonseed
-	name = "holymelon"
-	desc = "The water within this melon has been blessed by some deity that's particularly fond of watermelon."
-	icon_state = "holymelon"
-	dried_type = null
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/holymelon/add_juice()
-	..()
-	reagents.add_reagent("holywater", 1 + round((potency / 10), 1))
-
 /obj/item/weapon/reagent_containers/food/snacks/grown/panana
 	seed = /obj/item/seeds/pananaseed
 	name = "panana"
