@@ -15,7 +15,15 @@
 #define RACEMUT		"Monkified"
 #define BADSIGHT	"Near Sightness"
 #define LASEREYES	"Laser Eyes"
-
+#define STEALTH		"Cloak Of Darkness"
+#define CHAMELEON	"Chameleon"
+#define WACKY		"Wacky"
+#define MUTE		"Mute"
+#define SMILE		"Smile"
+#define UNINTELLIGABLE		"Unintelligable"
+#define SWEDISH		"Swedish"
+#define CHAV		"Chav"
+#define ELVIS		"Elvis"
 
 // String identifiers for associative list lookup
 
