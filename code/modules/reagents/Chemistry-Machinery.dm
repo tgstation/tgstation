@@ -269,6 +269,7 @@
 		spawn(rand(0, 15))
 			stat |= NOPOWER
 
+
 /obj/machinery/chem_master/attackby(var/obj/item/weapon/B as obj, var/mob/user as mob)
 
 	if(default_unfasten_wrench(user, B))
@@ -1243,8 +1244,26 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 	var/energy = 50
 	var/max_energy = 50
 	var/amount = 30
-	var/beaker = null
+	var/obj/item/weapon/reagent_containers/beaker = null
 	var/set_temp
+	var/temperature
+	var/on = FALSE
+
+/obj/machinery/chem_heater/process()
+	..()
+	if(on)
+		if(beaker)
+			if(beaker.reagents.chem_temp > temperature)
+				beaker.reagents.chem_temp--
+			if(beaker.reagents.chem_temp < temperature)
+				beaker.reagents.chem_temp++
+			if(beaker.reagents.chem_temp == temperature)
+				beaker.loc = get_turf(src)
+				beaker = null
+				icon_state = "mixer0b"
+				beaker.reagents.handle_reactions()
+				on = FALSE
+
 
 /obj/machinery/chem_heater/attackby(var/obj/item/weapon/reagent_containers/glass/B as obj, var/mob/user as mob)
 	if(isrobot(user))
@@ -1267,16 +1286,9 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 	if(!beaker)
 		user << "Please insert a beaker."
 		return
-	var/temperature = input("Please input desired temperature between 1 and 3000.", name, set_temp) as num
+	temperature = input("Please input desired temperature between 1 and 3000.", name, set_temp) as num
 	if(temperature > 3000 || temperature < 1)
 		user << "Invalid temperature."
 		return
 	user << "Adjusting chemical temperature..."
-	sleep(50)
-	var/obj/item/weapon/reagent_containers/B = beaker
-	B.reagents.chem_temp = temperature
-	user << "Chemical adjusted to [temperature]K."
-	B.loc = get_turf(src)
-	beaker = null
-	icon_state = "mixer0b"
-	B.reagents.handle_reactions()
+	on = TRUE

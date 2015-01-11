@@ -10,7 +10,7 @@ datum/reagents
 	var/total_volume = 0
 	var/maximum_volume = 100
 	var/atom/my_atom = null
-	var/chem_temp = 100
+	var/chem_temp = 150
 
 datum/reagents/New(maximum=100)
 	maximum_volume = maximum
