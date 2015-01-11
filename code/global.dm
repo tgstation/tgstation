@@ -352,6 +352,11 @@ var/list/score=list(
 )
 
 // Mostly used for ban systems.
-var/event/on_login = new()
-var/event/on_ban = new()
-var/event/on_unban = new()
+// Initialized on world/New()
+var/global/event/on_login
+var/global/event/on_ban
+var/global/event/on_unban
+
+// List of /plugins
+var/global/list/plugins = list()
+
