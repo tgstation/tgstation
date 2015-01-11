@@ -267,7 +267,7 @@
 	invocation = "GITTAH WEIGH"
 	invocation_type = "shout"
 	range = 5
-	cooldown_min = 200 //50 deciseconds reduction per rank
+	cooldown_min = 150
 	selection_type = "view"
 	var/maxthrow = 5
 
