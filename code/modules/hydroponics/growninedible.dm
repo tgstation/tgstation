@@ -272,6 +272,11 @@
 /obj/item/weapon/grown/bananapeel/specialpeel/Crossed(AM)
 	if(..())	qdel(src)
 
+/obj/item/weapon/grown/bananapeel/specialpeel/pananapeel
+	name = "panana peel"
+	desc = "An invisible peel from an invisible banana."
+	icon_state = "panana_peel"
+
 /obj/item/weapon/grown/corncob
 	name = "corn cob"
 	desc = "A reminder of meals gone by."

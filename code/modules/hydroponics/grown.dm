@@ -1147,10 +1147,24 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	name = "holymelon"
 	desc = "The water within this melon has been blessed by some deity that's particularly fond of watermelon."
 	icon_state = "holymelon"
+	dried_type = null
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/holymelon/add_juice()
 	..()
 	reagents.add_reagent("holywater", 1 + round((potency / 10), 1))
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/panana
+	seed = /obj/item/seeds/pananaseed
+	name = "panana"
+	desc = "It's an excellent prop for a mime."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "panana"
+	trash = /obj/item/weapon/grown/bananapeel/specialpeel/pananapeel
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/panana/add_juice()
+	if(..())
+		reagents.add_reagent("nothing", 1 + round((potency / 10), 1))
+		reagents.add_reagent("mutetoxin", 1 + round((potency / 10), 1))
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/singulopotato

@@ -203,6 +203,23 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 6
+	mutatelist = list(/obj/item/seeds/pananaseed)
+
+/obj/item/seeds/pananaseed
+	name = "pack of panana seeds"
+	desc = "A seemingly empty packet of seeds."
+	icon_state = "seed-panana"
+	species = "panana"
+	plantname = "Panana Tree"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/panana
+	lifespan = 50
+	endurance = 30
+	maturation = 6
+	production = 6
+	yield = 3
+	potency = 10
+	plant_type = 0
+	rarity = 20
 
 /obj/item/seeds/eggplantseed
 	name = "pack of eggplant seeds"
