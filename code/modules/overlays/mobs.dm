@@ -102,4 +102,4 @@
 	var/obj/Overlays/r_hand_layer/r_hand_layer = new
 	var/obj/Overlays/tail_layer/tail_layer = new
 	var/obj/Overlays/targeted_layer/targeted_layer = new
-	*/sa
+	*/
