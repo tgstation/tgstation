@@ -75,12 +75,12 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket
 
-/datum/recipe/donkpocket/warm
+/datum/recipe/donkpocketwarm
 	reagents = list()
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/donkpocket
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket/warm
+	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocketwarm/
 
 
 ////////////////////////////////////////////////MUFFINS////////////////////////////////////////////////
