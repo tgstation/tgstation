@@ -1178,6 +1178,7 @@ var/global/blood_virus_spreading_disabled = 0
 
 	for(var/client/C in clients)
 		winset(C, null, "outputwindow.output.style=[world_style];")
+	config.world_style_config = world_style
 	message_admins("The style sheet has been reset by [src.ckey]")
 
 /client/proc/cmd_admin_cluwneize(var/mob/M in mob_list)
