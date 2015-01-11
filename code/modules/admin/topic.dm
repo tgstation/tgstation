@@ -66,7 +66,11 @@
 				log_admin("[key_name(usr)] started a gang war.")
 				if(!src.makeGangsters())
 					usr << "<span class='danger'>Unfortunatly there were not enough candidates available.</span>"
-
+			if("13")
+				message_admins("[key_name(usr)] created a emergency response team.")
+				log_admin("[key_name(usr)] created a emergency response team.")
+				if(!src.makeEmergencyresponseteam())
+					usr << "<span class='danger'>Unfortunatly there were not enough candidates available.</span>"
 
 	else if(href_list["forceevent"])
 		var/datum/round_event_control/E = locate(href_list["forceevent"]) in SSevent.control
