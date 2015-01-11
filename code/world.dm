@@ -13,6 +13,12 @@
 	WORLD_X_OFFSET=rand(-50,50)
 	WORLD_Y_OFFSET=rand(-50,50)
 
+	// Initialize world events as early as possible.
+	on_login = new ()
+	on_ban   = new ()
+	on_unban = new ()
+
+
 	/*Runtimes, not sure if i need it still so commenting out for now
 	starticon = rotate_icon('icons/obj/lightning.dmi', "lightningstart")
 	midicon = rotate_icon('icons/obj/lightning.dmi', "lightning")
@@ -108,6 +114,11 @@
 		master_controller.setup()
 
 		setup_species()
+
+	for(var/plugin_type in typesof(/plugin))
+		var/plugin/P = new plugin_type()
+		plugins[P.name] = P
+		P.on_world_loaded()
 
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
