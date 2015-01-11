@@ -75,7 +75,6 @@
 	..()
 
 /obj/machinery/atmospherics/binary/initialize()
-	src.disconnect(src)
 
 	var/node2_connect = dir
 	var/node1_connect = turn(dir, 180)

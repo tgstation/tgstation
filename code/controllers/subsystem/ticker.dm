@@ -32,6 +32,7 @@ var/datum/subsystem/ticker/ticker
 	var/delay_end = 0						//if set true, the round will not restart on it's own
 
 	var/triai = 0							//Global holder for Triumvirate
+	var/tipped = 0							//Did we broadcast the tip of the day yet?
 
 	var/timeLeft = 1200						//pregame timer
 
@@ -74,6 +75,11 @@ var/datum/subsystem/ticker/ticker
 
 			//countdown
 			timeLeft -= wait
+
+			if(timeLeft <= 30 && !tipped)
+				send_random_tip()
+				tipped = 1
+
 			if(timeLeft <= 0)
 				current_state = GAME_STATE_SETTING_UP
 
@@ -341,8 +347,7 @@ var/datum/subsystem/ticker/ticker
 			if(Player.stat != DEAD && !isbrain(Player))
 				num_survivors++
 				if(station_evacuated) //If the shuttle has already left the station
-					var/turf/playerTurf = get_turf(Player)
-					if(!playerTurf || playerTurf.z != ZLEVEL_CENTCOM)
+					if(!Player.onCentcom())
 						Player << "<font color='blue'><b>You managed to survive, but were marooned on [station_name()]...</b></FONT>"
 					else
 						num_escapees++
@@ -416,3 +421,9 @@ var/datum/subsystem/ticker/ticker
 		log_game("[i]s[total_antagonists[i]].")
 
 	return 1
+
+/datum/subsystem/ticker/proc/send_random_tip()
+	var/list/randomtips = file2list("config/tips.txt")
+	if(randomtips.len)
+		world << "<font color='purple'><b>Tip of the round: </b>[strip_html_properly(pick(randomtips))]</font>"
+

@@ -94,6 +94,8 @@
 					return
 				mode = SHUTTLE_DOCKED
 				timer = world.time
+				send2irc("Server", "The Emergency Shuttle has docked with the station.")
+				priority_announce("The Emergency Shuttle has docked with the station. You have [timeLeft(600)] minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
 		if(SHUTTLE_DOCKED)
 			if(time_left <= 0)
 				//move each escape pod to its corresponding transit dock
@@ -103,6 +105,7 @@
 				enterTransit()
 				mode = SHUTTLE_ESCAPE
 				timer = world.time
+				priority_announce("The Emergency Shuttle has left the station. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
 		if(SHUTTLE_ESCAPE)
 			if(time_left <= 0)
 				//move each escape pod to its corresponding escape dock

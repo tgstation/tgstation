@@ -75,7 +75,7 @@
 	req_tech = list("combat" = 5, "materials" = 5, "engineering" = 3, "biotech" = 4, "syndicate" = 3)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 5000, "$glass" = 1500, "$uranium" = 1500, "$silver" = 1500)
-	build_path = /obj/item/weapon/gun/energy/crossbow/largecrossbow
+	build_path = /obj/item/weapon/gun/projectile/automatic/crossbow/large
 	locked = 1
 	category = list("Weapons")
 

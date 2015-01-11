@@ -103,7 +103,7 @@
 
 /obj/structure/stool/bed/proc/unbuckle_myself(mob/user as mob)
 	buckled_mob.visible_message(\
-		"<span class='notice'>[buckled_mob.name] unbuckled \himself!</span>",\
+		"<span class='notice'>[buckled_mob.name] unbuckled!</span>",\
 		"You unbuckle yourself from [src].",\
 		"You hear metal clanking.")
 	unbuckle()

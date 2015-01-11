@@ -109,9 +109,7 @@ datum/objective/maroon/check_completion()
 	if(target && target.current)
 		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
 			return 1
-
-		var/turf/T = get_turf(target.current)
-		if(T.z == ZLEVEL_CENTCOM)
+		if(target.current.onCentcom())
 			return 0
 	return 1
 
@@ -252,7 +250,7 @@ datum/objective/escape/check_completion()
 	if(istype(location, /turf/simulated/shuttle/floor4)) // Fails traitors if they are in the shuttle brig -- Polymorph
 		return 0
 
-	if(location.z == ZLEVEL_CENTCOM)
+	if(location.onCentcom())
 		return 1
 
 	return 0

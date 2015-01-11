@@ -142,6 +142,16 @@
 	build_path = /obj/item/weapon/circuitboard/destructive_analyzer
 	category = list("Research Machinery")
 
+/datum/design/experimentor
+	name = "Machine Design (E.X.P.E.R.I-MENTOR Board)"
+	desc = "The circuit board for an E.X.P.E.R.I-MENTOR."
+	id = "experimentor"
+	req_tech = list("programming" = 2, "magnets" = 2, "engineering" = 2, "bluespace" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/experimentor
+	category = list("Research Machinery")
+
 /datum/design/protolathe
 	name = "Machine Design (Protolathe Board)"
 	desc = "The circuit board for a protolathe."
