@@ -10,6 +10,7 @@
 		act = copytext(act,1,length(act))
 
 	var/m_type = 1
+	var/regenerate_icons
 	var/message
 
 	switch(act) //Alphabetical please
@@ -45,11 +46,36 @@
 			message = "<B>The [src.name]</B> vibrates!"
 			m_type = 1
 
+		if("noface") //mfw I have no face
+			mood = null
+			regenerate_icons = 1
+
+		if("smile")
+			mood = "mischevous"
+			regenerate_icons = 1
+
+		if(":3")
+			mood = ":33"
+			regenerate_icons = 1
+
+		if("pout")
+			mood = "pout"
+			regenerate_icons = 1
+
+		if("frown")
+			mood = "sad"
+			regenerate_icons = 1
+
+		if("scowl")
+			mood = "angry"
+			regenerate_icons = 1
+
 		if ("help") //This is an exception
-			src << "Help for slime emotes. You can use these emotes with say \"*emote\":\n\nbounce, jiggle, light, moan, shiver, sway, twitch, vibrate"
+			src << "Help for slime emotes. You can use these emotes with say \"*emote\":\n\nbounce, jiggle, light, moan, shiver, sway, twitch, vibrate. \n\nYou may also change your face with: \n\nsmile, :3, pout, frown, scowl, noface"
 
 		else
 			src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
+
 	if ((message && src.stat == 0))
 		if(client)
 			log_emote("[name]/[key] : [message]")
@@ -57,5 +83,8 @@
 			visible_message(message)
 		else
 			src.loc.audible_message(message)
+
+	if (regenerate_icons)
+		regenerate_icons()
 
 	return

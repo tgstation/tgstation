@@ -41,6 +41,7 @@
 	icon_state = "omnilaser"
 	damage = 36
 	damage_type = STAMINA
+	flag = "energy"
 	hitsound = 'sound/weapons/tap.ogg'
 	eyeblur = 0
 

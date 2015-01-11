@@ -17,11 +17,11 @@
 
 /obj/item/weapon/twohanded/singularityhammer/New()
 	..()
-	processing_objects.Add(src)
+	SSobj.processing.Add(src)
 
 
 /obj/item/weapon/twohanded/singularityhammer/Destroy()
-	processing_objects.Remove(src)
+	SSobj.processing.Remove(src)
 	..()
 
 

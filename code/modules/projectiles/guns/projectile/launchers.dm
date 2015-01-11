@@ -7,6 +7,7 @@
 	icon_state = "dshotgun-sawn"
 	item_state = "gun"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/grenadelauncher
+	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	w_class = 3
 
 /obj/item/weapon/gun/projectile/revolver/grenadelauncher/attackby(var/obj/item/A, mob/user)
@@ -14,22 +15,26 @@
 	if(istype(A, /obj/item/ammo_box) || istype(A, /obj/item/ammo_casing))
 		chamber_round()
 
-/obj/item/weapon/gun/projectile/revolver/grenadelauncher/multi
-	desc = "A revolving 6-shot grenade launcher."
+/obj/item/weapon/gun/projectile/revolver/grenadelauncher/cyborg
+	desc = "A 6-shot grenade launcher."
 	name = "multi grenade launcher"
-	icon_state = "bulldog"
-	item_state = "bulldog"
+	icon = 'icons/mecha/mecha_equipment.dmi'
+	icon_state = "mecha_grenadelnchr"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/grenadelauncher/multi
+
+/obj/item/weapon/gun/projectile/revolver/grenadelauncher/cyborg/attack_self()
+	return
 
 /obj/item/weapon/gun/projectile/automatic/gyropistol
 	name = "gyrojet pistol"
 	desc = "A prototype pistol designed to fire self propelled rockets."
 	icon_state = "gyropistol"
-	fire_sound = 'sound/effects/Explosion1.ogg'
+	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	origin_tech = "combat=3"
 	mag_type = /obj/item/ammo_box/magazine/m75
 	burst_size = 1
 	fire_delay = 0
+	action_button_name = null
 
 /obj/item/weapon/gun/projectile/automatic/gyropistol/process_chamber(var/eject_casing = 0, var/empty_chamber = 1)
 	..()
@@ -38,3 +43,45 @@
 	..()
 	icon_state = "[initial(icon_state)][magazine ? "loaded" : ""]"
 	return
+
+/obj/item/weapon/gun/projectile/automatic/crossbow
+	name = "mini auto-crossbow"
+	desc = "A weapon favored by syndicate stealth specialists. Fires specialized poison bolts."
+	icon_state = "crossbow"
+	item_state = "crossbow"
+	w_class = 2
+	m_amt = 2000
+	origin_tech = "combat=2;magnets=2;syndicate=5"
+	suppressed = 1
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/crossbow
+	fire_sound = 'sound/weapons/genhit.ogg'
+	burst_size = 1
+	fire_delay = 0
+	select = 0
+	action_button_name = null
+
+/obj/item/weapon/gun/projectile/automatic/crossbow/update_icon()
+	return
+
+/obj/item/weapon/gun/projectile/automatic/crossbow/attack_self()
+	return
+
+/obj/item/weapon/gun/projectile/automatic/crossbow/process_chamber(var/eject_casing = 0, var/empty_chamber = 1)
+	..()
+
+/obj/item/weapon/gun/projectile/automatic/crossbow/attackby(var/obj/item/A, mob/user)
+	var/num_loaded = magazine.attackby(A, user, 1)
+	if(num_loaded)
+		user << "<span class='notice'>You load [num_loaded] bolt\s into \the [src].</span>"
+		update_icon()
+		chamber_round()
+
+/obj/item/weapon/gun/projectile/automatic/crossbow/large //holds twice the ammo of mini crossbows but can't be pocketed
+	name = "auto crossbow"
+	desc = "A weapon favored by carp hunters. Fires specialized poison bolts."
+	icon_state = "crossbowlarge"
+	w_class = 3
+	force = 10
+	m_amt = 4000
+	suppressed = 0
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/crossbow/large

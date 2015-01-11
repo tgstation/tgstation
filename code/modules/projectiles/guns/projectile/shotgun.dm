@@ -204,8 +204,9 @@
 	mag_type = /obj/item/ammo_box/magazine/m12g
 	fire_sound = 'sound/weapons/Gunshot.ogg'
 	can_suppress = 0
-	burst_size = 2
-	fire_delay = 1
+	burst_size = 1
+	fire_delay = 0
+
 /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/New()
 	..()
 	update_icon()

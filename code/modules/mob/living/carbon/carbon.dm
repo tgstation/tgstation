@@ -87,7 +87,7 @@
 	//src.adjustFireLoss(shock_damage) //burn_skin will do this for us
 	//src.updatehealth()
 	src.visible_message(
-		"<span class='danger'>[src] was shocked by the [source]!</span>", \
+		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
 		"<span class='danger'>You hear a heavy electrical crack.</span>" \
 	)

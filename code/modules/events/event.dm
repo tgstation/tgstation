@@ -110,11 +110,11 @@
 //which should be the only place it's referenced.
 //Called when start(), announce() and end() has all been called.
 /datum/round_event/proc/kill()
-	events.running -= src
+	SSevent.running -= src
 
 
 //Sets up the event then adds the event to the the list of running events
 /datum/round_event/New()
 	setup()
-	events.running += src
+	SSevent.running += src
 	return ..()
