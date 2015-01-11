@@ -10,7 +10,7 @@ datum/reagent/silver_sulfadiazine
 	description = "100% chance per cycle of healing 2 points of BURN damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
-	metabolize_rate = 2
+	metabolization_rate = 2
 
 datum/reagent/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
@@ -19,7 +19,7 @@ datum/reagent/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob, var/meth
 		M.emote("scream")
 	if(method == INGEST)
 		M.adjustToxLoss(0.5*volume)
-		M << "You probably shouldn't of eaten that. Maybe you should of splashed it on, or used a patch?"
+		M << "You probably shouldn't of eaten that. Maybe you should of splashed it on?"
 	..()
 	return
 
@@ -29,7 +29,7 @@ datum/reagent/styptic_powder
 	description = "100% chance per cycle of healing 2 points of BRUTE damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
-	metabolize_rate = 2
+	metabolization_rate = 2
 
 datum/reagent/styptic_powder/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
@@ -38,7 +38,7 @@ datum/reagent/styptic_powder/reaction_mob(var/mob/living/M as mob, var/method=TO
 		M.emote("scream")
 	if(method == INGEST)
 		M.adjustToxLoss(0.5*volume)
-		M << "You probably shouldn't of eaten that. Maybe you should of splashed it on, or used a patch?"
+		M << "You probably shouldn't of eaten that. Maybe you should of splashed it on?"
 	..()
 	return
 
@@ -80,39 +80,12 @@ datum/reagent/charcoal
 	description = "Heals 2 TOX damage per cycle."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
-	overrides_metab = 1
-	new_metabolize_rate = 0.5
+
 datum/reagent/charcoal/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.adjustToxLoss(-2*REM)
 	..()
 	return
-
-datum/reagent/calomel
-	name = "Calomel"
-	id = "calomel"
-	description = "Increases all depletion rates by 5. +5 TOX damage while health > 20."
-	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
-	overrides_metab = 1
-	new_metabolize_rate = 5
-	metabolize_rate = 2
-
-datum/reagent/calomel/on_mob_life(var/mob/living/M as mob)
-	if(!M) M = holder.my_atom
-	if(M.getTotalLoss() < 80)
-		M.adjustToxLoss(5*REM)
-	..()
-	return
-
-/datum/chemical_reaction/calomel
-	name = "Calomel"
-	id = "calomel"
-	result = "calomel"
-	required_reagents = list("mercury" = 1, "chlorine" = 1)
-	result_amount = 2
-	mix_message = "Stinging vapors rise from the solution."
-	required_temp = 380
 
 /datum/chemical_reaction/charcoal
 	name = "Charcoal"
@@ -158,7 +131,7 @@ datum/reagent/omnizine
 	description = "Heals one each of OXY, TOX, BRUTE and BURN per cycle."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
-	metabolize_rate = 0.2
+	metabolization_rate = 0.2
 
 datum/reagent/omnizine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -199,8 +172,6 @@ datum/reagent/pen_acid
 	description = "80% chance of removing 1 RAD. Radiation is cumulative and causes tox+burn."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
-	overrides_metab = 1
-	new_metabolize_rate = 4
 
 datum/reagent/pen_acid/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -249,7 +220,7 @@ datum/reagent/salbutamol
 	description = "Heals 6 OXY damage, reduces LOSEBREATH by 4."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
-	metabolize_rate = 0.2
+	metabolization_rate = 0.2
 
 datum/reagent/salbutamol/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -272,7 +243,7 @@ datum/reagent/perfluorodecalin
 	description = "Heals 25 OXY damage, but you can't talk. 33% chance of healing 1 BRUTE and 1 BURN."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
-	metabolize_rate = 0.2
+	metabolization_rate = 0.2
 
 datum/reagent/perfluorodecalin/on_mob_life(var/mob/living/carbon/human/M as mob)
 	if(!M) M = holder.my_atom
@@ -299,7 +270,7 @@ datum/reagent/ephedrine
 	description = "Stun reduction per cycle, increases run speed slightly, minor stamina regeneration buff, stabilizes crit."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
-	metabolize_rate = 0.3
+	metabolization_rate = 0.3
 
 datum/reagent/ephedrine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -327,8 +298,6 @@ datum/reagent/diphenhydramine
 	description = "Stun reduction per cycle, increases run speed slightly, minor stamina regeneration buff, stabilizes crit."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
-	overrides_metab = 1
-	new_metabolize_rate = 3
 datum/reagent/diphenhydramine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.drowsyness -= 1

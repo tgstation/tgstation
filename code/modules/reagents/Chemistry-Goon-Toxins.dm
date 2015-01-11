@@ -10,7 +10,7 @@ datum/reagent/polonium
 	description = "A toxic chemical."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
-	metabolize_rate = 0.1
+	metabolization_rate = 0.1
 
 datum/reagent/polonium/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -25,7 +25,7 @@ datum/reagent/histamine
 	description = "A toxic chemical."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
-	metabolize_rate = 0.2
+	metabolization_rate = 0.2
 
 datum/reagent/histamine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -78,7 +78,7 @@ datum/reagent/venom
 	description = "A toxic chemical."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
-	metabolize_rate = 0.2
+	metabolization_rate = 0.2
 datum/reagent/venom/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.adjustToxLoss((0.1*volume)*REM)
@@ -96,7 +96,7 @@ datum/reagent/neurotoxin2
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	var/cycle_count = 0
-	metabolize_rate = 1
+	metabolization_rate = 1
 
 datum/reagent/neurotoxin2/on_mob_life(var/mob/living/M as mob)
 	cycle_count++
@@ -123,7 +123,7 @@ datum/reagent/cyanide
 	description = "A highly toxic chemical."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
-	metabolize_rate = 0.1
+	metabolization_rate = 0.1
 
 datum/reagent/cyanide/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -145,12 +145,12 @@ datum/reagent/cyanide/on_mob_life(var/mob/living/M as mob)
 	required_temp = 380
 
 /datum/reagent/questionmark // food poisoning
-	name = "????"
+	name = "Bad Food"
 	id = "????"
 	description = "????"
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
-	metabolize_rate = 0.2
+	metabolization_rate = 0.2
 
 datum/reagent/questionmark/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom

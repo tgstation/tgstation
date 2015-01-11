@@ -23,6 +23,7 @@ datum/reagent
 	//var/list/viruses = list()
 	var/color = "#000000" // rgb: 0, 0, 0 (does not support alpha channels - yet!)
 	var/metabolization_rate = REAGENTS_METABOLISM
+	var/overrides_metab = 0
 
 datum/reagent/proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume) //By default we have a chance to transfer some
 	if(!istype(M, /mob/living))

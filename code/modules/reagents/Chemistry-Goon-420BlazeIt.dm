@@ -21,32 +21,8 @@ datum/reagent/nicotine/on_mob_life(var/mob/living/M as mob)
 	if(volume > 35)
 		M << "You feel like you smoked too much."
 		M.adjustToxLoss(1*REM)
+	..()
 	return
-
-datum/reagent/jenkem
-	name = "Jenkem"
-	id = "jenkem"
-	description = "A legal chemical compound used as a drug."
-	reagent_state = LIQUID
-	color = "#60A584" // rgb: 96, 165, 132
-
-datum/reagent/jenkem/on_mob_life(var/mob/living/carbon/M as mob)
-	if(!M) M = holder.my_atom
-	var/high_message = pick("You wonder why the hell you just ingested that.", "You realize you are high as fuck.", "You feel the color blue.", "You ponder the meaning of red.", "You think deeply on the color green.", "You taste a horrible mixture, and you want to throw up, but you hold it back.")
-	if(prob(30))
-		M << high_message
-	if(prob(25))
-		M.adjustToxLoss(1*REM)
-	M.dizziness += 1
-	return
-
-/datum/chemical_reaction/jenkem
-	name = "Jenkem"
-	id = "jenkem"
-	result = "jenkem"
-	required_reagents = list("sewage" = 1, "compost" = 1)
-	result_amount = 2
-	mix_message = "The mixture ferments into a filthy morass."
 
 datum/reagent/crank
 	name = "Crank"
@@ -67,6 +43,7 @@ datum/reagent/crank/on_mob_life(var/mob/living/M as mob)
 		M.adjustBrainLoss(rand(1,10)*REM)
 		M.adjustToxLoss(rand(1,10)*REM)
 		M.adjustBruteLoss(rand(1,10)*REM)
+	..()
 	return
 
 /datum/chemical_reaction/crank
@@ -109,6 +86,7 @@ datum/reagent/crank/on_mob_life(var/mob/living/M as mob)
 		overdosed = 1
 	if(overdosed)
 		cycle_count++
+	..()
 	return
 
 /datum/chemical_reaction/krokodil

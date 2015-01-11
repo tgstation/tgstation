@@ -11,15 +11,15 @@
 	icon_state = "dispenser"
 	use_power = 1
 	idle_power_usage = 40
-	var/energy = 50
-	var/max_energy = 50
+	var/energy = 100
+	var/max_energy = 100
 	var/amount = 30
 	var/beaker = null
 	var/recharged = 0
-	var/recharge_delay = 15  //Time it game ticks between recharges
+	var/recharge_delay = 5  //Time it game ticks between recharges
 	var/list/dispensable_reagents = list("hydrogen","lithium","carbon","nitrogen","oxygen","fluorine",
 	"sodium","aluminium","silicon","phosphorus","sulfur","chlorine","potassium","iron",
-	"copper","mercury","radium","water","ethanol","sugar","sacid","fuel","silver","iodine","bromine","fluorine")
+	"copper","mercury","radium","water","ethanol","sugar","sacid","fuel","silver","iodine","bromine","fluorine","stable_plasma")
 
 /obj/machinery/chem_dispenser/proc/recharge()
 	if(stat & (BROKEN|NOPOWER)) return
@@ -1267,8 +1267,8 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 	if(!beaker)
 		user << "Please insert a beaker."
 		return
-	var/temperature = input("Please input desired temperature between 1 and 1000.", name, set_temp) as num
-	if(temperature > 1000 || temperature < 1)
+	var/temperature = input("Please input desired temperature between 1 and 3000.", name, set_temp) as num
+	if(temperature > 3000 || temperature < 1)
 		user << "Invalid temperature."
 		return
 	user << "Adjusting chemical temperature..."
