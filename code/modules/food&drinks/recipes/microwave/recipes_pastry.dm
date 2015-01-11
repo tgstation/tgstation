@@ -75,6 +75,13 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket
 
+/datum/recipe/donkpocket/warm
+	reagents = list()
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/donkpocket
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket/warm
+
 
 ////////////////////////////////////////////////MUFFINS////////////////////////////////////////////////
 

@@ -216,6 +216,14 @@
 	..()
 	reagents.add_reagent("nutriment", 4)
 
+/obj/item/weapon/reagent_containers/food/snacks/donkpocket/warm
+	name = "\improper Warm Donk-pocket"
+	desc = "The heated food of choice for the seasoned traitor."
+
+/obj/item/weapon/reagent_containers/food/snacks/donkpocket/warm/New()
+	..()
+	reagents.add_reagent("tricordrazine", 4)
+
 /obj/item/weapon/reagent_containers/food/snacks/fortunecookie
 	name = "fortune cookie"
 	desc = "A true prophecy in each cookie!"
