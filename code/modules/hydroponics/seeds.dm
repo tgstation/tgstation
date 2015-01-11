@@ -153,6 +153,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 1
+	mutatelist = list(/obj/item/seeds/replicapod)
 
 /obj/item/seeds/berryseed
 	name = "pack of berry seeds"
