@@ -155,7 +155,7 @@ var/datum/subsystem/shuttle/SSshuttle
 				continue
 
 		var/turf/T = get_turf(thing)
-		if(T && T.z == 1)
+		if(T && T.z == ZLEVEL_STATION)
 			callShuttle = 0
 			break
 

@@ -54,7 +54,7 @@
 		var/turf/T = get_turf(M)
 		if(!T)
 			continue
-		if(T.z == 2)
+		if(T.z == ZLEVEL_STATION)
 			continue
 		if(T.z > 6)
 			continue
