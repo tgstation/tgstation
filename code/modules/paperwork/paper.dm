@@ -165,7 +165,7 @@
 	if(length(t) < 1)		//No input means nothing needs to be parsed
 		return
 
-//	t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
+	t = copytext(sanitize_cobra(t),1,MAX_MESSAGE_LEN)
 
 	t = replacetext(t, "\[center\]", "<center>")
 	t = replacetext(t, "\[/center\]", "</center>")
