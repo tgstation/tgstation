@@ -694,6 +694,9 @@ var/list/datum/dna/hivemind_bank = list()
 	set desc = "Shape our vocal glands to form a voice of someone we choose. We cannot regenerate chemicals when mimicing."
 
 
+	if(!usr)
+		return
+	var/mob/user = usr
 	var/datum/changeling/changeling = changeling_power()
 	if(!changeling)	return
 
