@@ -150,14 +150,11 @@
 	return 1 // Aliens can eat, and they can be fed food/drink
 
 /mob/living/carbon/alien/Stat()
-
-	statpanel("Status")
-	stat(null, "Intent: [a_intent]")
-	stat(null, "Move Mode: [m_intent]")
-
 	..()
 
-	if (client.statpanel == "Status")
+	if(statpanel("Status"))
+		stat(null, "Intent: [a_intent]")
+		stat(null, "Move Mode: [m_intent]")
 		stat(null, "Plasma Stored: [getPlasma()]/[max_plasma]")
 
 /mob/living/carbon/alien/Stun(amount)

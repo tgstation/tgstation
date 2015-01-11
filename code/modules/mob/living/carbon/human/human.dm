@@ -52,8 +52,8 @@
 
 /mob/living/carbon/human/Stat()
 	..()
-	statpanel("Status")
-	if (client.statpanel == "Status")
+
+	if(statpanel("Status"))
 		stat(null, "Intent: [a_intent]")
 		stat(null, "Move Mode: [m_intent]")
 		if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")
