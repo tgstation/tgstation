@@ -45,17 +45,17 @@ h1.alert, h2.alert		{color: #000000;}
 .info					{color: #0000CC;}
 .notice					{color: #000099;}
 .bnotice				{color: #000099; 	font-weight: bold;}
-.sans					{font-family: "Comic Sans MS", cursive, sans-serif;}
+.sans					{font-family: 'Comic Sans MS', cursive, sans-serif;}
 .alien					{color: #543354;}
 .newscaster				{color: #800000;}
 .mod					{color: #735638;	font-weight: bold;}
-.modooc					{color: #184880;	font-weight: bold;}
+.modooc					{color: #000000;	font-weight: bold;}
 .adminmod				{color: #402A14;	font-weight: bold;}
 .tajaran				{color: #803B56;}
 .skrell					{color: #00CED1;}
 .soghun					{color: #228B22;}
 .vox					{color: #AA00AA;}
-.rough					{font-family: "Trebuchet MS", cursive, sans-serif;}
+.rough					{font-family: 'Trebuchet MS', cursive, sans-serif;}
 .say_quote				{font-family: Georgia, Verdana, sans-serif;}
 .interface				{color: #330033;}
 /* /vg/ */
