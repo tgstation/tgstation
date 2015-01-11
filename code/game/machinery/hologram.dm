@@ -45,6 +45,9 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 	if(!istype(user))
 		return
 	if(alert(user,"Would you like to request an AI's presence?",,"Yes","No") == "Yes")
+		if(!Adjacent(user)) //also prevents request spam!
+			user << "<span class='notice'>You are too far from the holopad.</span>"
+			return
 		if(last_request + 200 < world.time) //don't spam the AI with requests you jerk!
 			last_request = world.time
 			user << "<span class='notice'>You request an AI's presence.</span>"

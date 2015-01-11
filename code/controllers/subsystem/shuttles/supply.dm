@@ -263,7 +263,7 @@
 			return
 
 		//Find the correct supply_pack datum
-		if(!SSshuttle.supply_packs[href_list["doorder"]])	return
+		if(!SSshuttle.supply_packs["[href_list["doorder"]]"])	return
 
 		var/timeout = world.time + 600
 		var/reason = stripped_input(usr,"Reason:","Why do you require this item?","")
