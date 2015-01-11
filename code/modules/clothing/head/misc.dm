@@ -69,6 +69,7 @@
 	item_state = "syndicate"
 	desc = "A plastic replica of a syndicate agent's space helmet, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
 	flags = FPRINT  | BLOCKHAIR
+	body_parts_covered = FULL_HEAD
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	siemens_coefficient = 2.0
 
@@ -253,6 +254,7 @@
 	item_state = "xenos_helm"
 	desc = "A helmet made out of chitinous alien hide."
 	flags = FPRINT  | BLOCKHAIR
+	body_parts_covered = FULL_HEAD
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	siemens_coefficient = 2.0
 
@@ -263,7 +265,7 @@
 	item_state = "bmhead"
 	flags = FPRINT | BLOCKHAIR
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
-	body_parts_covered = HEAD|EYES
+	body_parts_covered = HEAD|EYES|EARS
 
 /obj/item/clothing/head/stalhelm
 	name = "Stalhelm"

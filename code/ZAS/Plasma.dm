@@ -65,7 +65,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 		//Burn eyes if exposed.
 		if(zas_settings.Get(/datum/ZAS_Setting/EYE_BURNS))
 			var/eye_protection = get_body_part_coverage(EYES)
-			if(eye_protection != glasses) //goggles aren't enough
+			if(!eye_protection)
 				burn_eyes()
 
 		//Genetic Corruption

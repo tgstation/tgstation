@@ -58,7 +58,7 @@
 	desc = "Ave, Imperator, morituri te salutant."
 	icon_state = "gladiator"
 	flags = FPRINT|BLOCKHAIR
-	body_parts_covered = HEAD|EYES|MOUTH
+	body_parts_covered = FULL_HEAD
 	item_state = "gladiator"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 	siemens_coefficient = 1

@@ -36,8 +36,8 @@
 
 	OnSay(var/mob/M, var/message)
 		M.whisper(message)
-
-
+		
+		
 /datum/dna/gene/disability/dizzy
 	name = "Dizzy"
 	desc = "Causes the cerebellum to shut down in some places."

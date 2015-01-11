@@ -44,16 +44,16 @@ LOOK FOR SURGERY.DM*/
 
 		var/mob/living/carbon/human/H = M
 		if(istype(H) && ( \
-				(H.head && H.head.flags & PL_HCE) || \
-				(H.wear_mask && H.wear_mask.flags & PL_HCE) || \
-				(H.glasses && H.glasses.flags & PL_HCE) \
+				(H.head && H.head.flags & HEADCOVERSEYES) || \
+				(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
+				(H.glasses && H.glasses.flags & GLASSESCOVERSEYES) \
 			))
 			user << "\red You're going to need to remove that mask/helmet/glasses first."
 			return
 
 		var/mob/living/carbon/monkey/Mo = M
 		if(istype(Mo) && ( \
-				(Mo.wear_mask && Mo.wear_mask.flags & PL_HCE) \
+				(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES) \
 			))
 			user << "\red You're going to need to remove that mask/helmet/glasses first."
 			return
@@ -191,16 +191,16 @@ LOOK FOR SURGERY.DM*/
 
 		var/mob/living/carbon/human/H = M
 		if(istype(H) && ( \
-				(H.head && H.head.flags & PL_HCE) || \
-				(H.wear_mask && H.wear_mask.flags & PL_HCE) || \
-				(H.glasses && H.glasses.flags & PL_HCE) \
+				(H.head && H.head.flags & HEADCOVERSEYES) || \
+				(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
+				(H.glasses && H.glasses.flags & GLASSESCOVERSEYES) \
 			))
 			user << "\red You're going to need to remove that mask/helmet/glasses first."
 			return
 
 		var/mob/living/carbon/monkey/Mo = M
 		if(istype(Mo) && ( \
-				(Mo.wear_mask && Mo.wear_mask.flags & PL_HCE) \
+				(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES) \
 			))
 			user << "\red You're going to need to remove that mask/helmet/glasses first."
 			return
@@ -322,16 +322,16 @@ LOOK FOR SURGERY.DM*/
 
 		var/mob/living/carbon/human/H = M
 		if(istype(H) && ( \
-				(H.head && H.head.flags & PL_HCE) || \
-				(H.wear_mask && H.wear_mask.flags & PL_HCE) || \
-				(H.glasses && H.glasses.flags & PL_HCE) \
+				(H.head && H.head.flags & HEADCOVERSEYES) || \
+				(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
+				(H.glasses && H.glasses.flags & GLASSESCOVERSEYES) \
 			))
 			user << "\red You're going to need to remove that mask/helmet/glasses first."
 			return
 
 		var/mob/living/carbon/monkey/Mo = M
 		if(istype(Mo) && ( \
-				(Mo.wear_mask && Mo.wear_mask.flags & PL_HCE) \
+				(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES) \
 			))
 			user << "\red You're going to need to remove that mask/helmet/glasses first."
 			return
@@ -463,16 +463,16 @@ LOOK FOR SURGERY.DM*/
 
 		var/mob/living/carbon/human/H = M
 		if(istype(H) && ( \
-				(H.head && H.head.flags & PL_HCE) || \
-				(H.wear_mask && H.wear_mask.flags & PL_HCE) || \
-				(H.glasses && H.glasses.flags & PL_HCE) \
+				(H.head && H.head.flags & HEADCOVERSEYES) || \
+				(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
+				(H.glasses && H.glasses.flags & GLASSESCOVERSEYES) \
 			))
 			user << "\red You're going to need to remove that mask/helmet/glasses first."
 			return
 
 		var/mob/living/carbon/monkey/Mo = M
 		if(istype(Mo) && ( \
-				(Mo.wear_mask && Mo.wear_mask.flags & PL_HCE) \
+				(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES) \
 			))
 			user << "\red You're going to need to remove that mask/helmet/glasses first."
 			return
@@ -572,16 +572,16 @@ LOOK FOR SURGERY.DM*/
 
 		var/mob/living/carbon/human/H = M
 		if(istype(H) && ( \
-				(H.head && H.head.flags & PL_HCE) || \
-				(H.wear_mask && H.wear_mask.flags & PL_HCE) || \
-				(H.glasses && H.glasses.flags & PL_HCE) \
+				(H.head && H.head.flags & HEADCOVERSEYES) || \
+				(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
+				(H.glasses && H.glasses.flags & GLASSESCOVERSEYES) \
 			))
 			user << "\red You're going to need to remove that mask/helmet/glasses first."
 			return
 
 		var/mob/living/carbon/monkey/Mo = M
 		if(istype(Mo) && ( \
-				(Mo.wear_mask && Mo.wear_mask.flags & PL_HCE) \
+				(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES) \
 			))
 			user << "\red You're going to need to remove that mask/helmet/glasses first."
 			return
@@ -730,16 +730,16 @@ LOOK FOR SURGERY.DM*/
 
 		var/mob/living/carbon/human/H = M
 		if(istype(H) && ( \
-				(H.head && H.head.flags & PL_HCE) || \
-				(H.wear_mask && H.wear_mask.flags & PL_HCE) || \
-				(H.glasses && H.glasses.flags & PL_HCE) \
+				(H.head && H.head.flags & HEADCOVERSEYES) || \
+				(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
+				(H.glasses && H.glasses.flags & GLASSESCOVERSEYES) \
 			))
 			user << "\red You're going to need to remove that mask/helmet/glasses first."
 			return
 
 		var/mob/living/carbon/monkey/Mo = M
 		if(istype(Mo) && ( \
-				(Mo.wear_mask && Mo.wear_mask.flags & PL_HCE) \
+				(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES) \
 			))
 			user << "\red You're going to need to remove that mask/helmet/glasses first."
 			return

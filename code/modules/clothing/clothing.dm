@@ -79,6 +79,7 @@
 	var/cover_hair = 0
 	var/see_invisible = 0
 	var/see_in_dark = 0
+	var/prescription = 0
 	species_restricted = list("exclude","Muton")
 /*
 SEE_SELF  // can see self, no matter what

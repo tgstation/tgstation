@@ -23,7 +23,7 @@
 	var/up = 0
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags_inv = (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
-	body_parts_covered = HEAD|EYES|MOUTH
+	body_parts_covered = HEAD|EYES|MOUTH|EARS //using this instead of FULL_HEAD to show how the flags change in the code
 	action_button_name = "Toggle Welding Helmet"
 	siemens_coefficient = 0.9
 	species_fit = list("Vox")
@@ -40,13 +40,13 @@
 	if(usr.canmove && !usr.stat && !usr.restrained())
 		if(src.up)
 			src.up = !src.up
-			src.body_parts_covered |= (EYES|MOUTH)
+			src.body_parts_covered |= (EYES|MOUTH|EARS)
 			flags_inv |= (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 			icon_state = initial(icon_state)
 			usr << "You flip the [src] down to protect your eyes."
 		else
 			src.up = !src.up
-			src.body_parts_covered &= ~(EYES|MOUTH)
+			src.body_parts_covered &= ~(EYES|MOUTH|EARS)
 			flags_inv &= ~(HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 			icon_state = "[initial(icon_state)]up"
 			usr << "You push the [src] up out of your face."

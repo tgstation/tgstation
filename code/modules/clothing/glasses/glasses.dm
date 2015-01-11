@@ -1,13 +1,4 @@
-/obj/item/clothing/glasses
-	name = "glasses"
-	icon = 'icons/obj/clothing/glasses.dmi'
-	//w_class = 2.0
-	//flags = PL_HCE
-	//slot_flags = SLOT_EYES
-	//var/vision_flags = 0
-	//var/darkness_view = 0//Base human is 2
-	//var/invisa_view = 0
-	var/prescription = 0
+//the basic glasses can be found in clothing.dm
 
 /obj/item/clothing/glasses/meson
 	name = "Optical Meson Scanner"
