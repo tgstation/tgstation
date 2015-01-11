@@ -292,6 +292,12 @@ atom/proc/generate_female_clothing(index,t_color,icon)
 				usr << "Your suit will now only report your exact vital lifesigns."
 			if(3)
 				usr << "Your suit will now report your exact vital lifesigns as well as your coordinate position."
+
+	if(istype(loc,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = loc
+		if(H.w_uniform == src)
+			H.update_suit_sensors()
+
 	..()
 
 /obj/item/clothing/under/verb/rolldown()
