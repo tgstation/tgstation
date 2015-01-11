@@ -82,14 +82,10 @@
 				new /obj/effect/decal/cleanable/vomit/old(src)
 			else
 				new /obj/effect/decal/cleanable/blood/old(src)
-		else
-			new /obj/effect/decal/cleanable/dirt(src)
 		return
 
 	if(istype(A, /area/quartermaster))
 		if(prob(75))
-			new /obj/effect/decal/cleanable/dirt(src)
-		else
 			new /obj/effect/decal/cleanable/oil(src)
 		return
 
@@ -106,8 +102,6 @@
 				new /obj/effect/decal/cleanable/blood/gibs/old(src)
 			else
 				new /obj/effect/decal/cleanable/blood/old(src)
-		else
-			new /obj/effect/decal/cleanable/dirt(src)
 		return
 
 
@@ -117,8 +111,6 @@
 				new /obj/effect/decal/cleanable/egg_smudge(src)
 			else
 				new /obj/effect/decal/cleanable/flour(src)
-		else if(prob(33))
-			new /obj/effect/decal/cleanable/dirt(src)
 		return
 
 	if(istype(A, /area/medical))	//Kept clean, but chance of blood
@@ -137,11 +129,7 @@
 
 	if(istype(A, /area/toxins))
 		if(prob(80))
-			new /obj/effect/decal/cleanable/dirt(src)
-		else
 			new /obj/effect/decal/cleanable/greenglow(src)	//this cleans itself up but it might startle you when you see it.
 		return
 
-	//default
-	new /obj/effect/decal/cleanable/dirt(src)
 	return
