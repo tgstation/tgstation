@@ -273,7 +273,7 @@
 			else new/obj/item/weapon/storage/belt/utility(src.loc)
 		if("sbelt")
 			if (check_cost(300/efficiency)) return 0
-			else new/obj/item/weapon/storage/belt/security/empty(src.loc)
+			else new/obj/item/weapon/storage/belt/security(src.loc)
 		if("mbelt")
 			if (check_cost(300/efficiency)) return 0
 			else new/obj/item/weapon/storage/belt/medical(src.loc)
