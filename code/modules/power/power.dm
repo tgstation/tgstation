@@ -11,7 +11,6 @@
 	icon = 'icons/obj/power.dmi'
 	anchored = 1.0
 	var/datum/powernet/powernet = null
-	var/directwired = 1		// TODEL
 	use_power = 0
 	idle_power_usage = 0
 	active_power_usage = 0
@@ -83,6 +82,7 @@
 
 		stat |= NOPOWER
 
+// connect the machine to a powernet if a node cable is present on the turf
 /obj/machinery/power/proc/connect_to_network()
 	var/turf/T = src.loc
 
@@ -97,6 +97,7 @@
 	C.powernet.add_machine(src)
 	return 1
 
+// remove and disconnect the machine from its current powernet
 /obj/machinery/power/proc/disconnect_from_network()
 	if(!powernet)
 		return 0
@@ -113,20 +114,18 @@
 /obj/machinery/power/proc/get_connections()
 	. = list()
 
-	if(!directwired)
-		return get_indirect_connections()
-
 	var/cdir
+	var/turf/T
 
 	for(var/card in cardinal)
-		var/turf/T = get_step(loc, card)
+		T = get_step(loc, card)
 		cdir = get_dir(T, loc)
 
 		for(var/obj/structure/cable/C in T)
 			if(C.powernet)
 				continue
 
-			if((C.d1 == cdir) || (C.d2 == cdir))
+			if(C.d1 == cdir || C.d2 == cdir)
 				. += C
 
 // returns all the cables in neighbors turfs,
@@ -134,17 +133,15 @@
 /obj/machinery/power/proc/get_marked_connections()
 	. = list()
 
-	if(!directwired)
-		return get_indirect_connections()
-
 	var/cdir
+	var/turf/T
 
 	for(var/card in cardinal)
-		var/turf/T = get_step(loc, card)
+		T = get_step(loc, card)
 		cdir = get_dir(T, loc)
 
 		for(var/obj/structure/cable/C in T)
-			if((C.d1 == cdir) || (C.d2 == cdir))
+			if(C.d1 == cdir || C.d2 == cdir)
 				. += C
 
 // returns all the NODES (O-X) cables WITHOUT a powernet in the turf the machine is located at
@@ -155,7 +152,7 @@
 		if(C.powernet)
 			continue
 
-		if(C.d1 == 0)
+		if(C.d1 == 0) // the cable is a node cable
 			. += C
 
 ///////////////////////////////////////////
@@ -186,7 +183,7 @@
 			var/obj/structure/cable/C = AM
 
 			if(!unmarked || !C.powernet)
-				if((C.d1 == d) || (C.d2 == d))
+				if(C.d1 == d || C.d2 == d)
 					. += C
 
 // rebuild all power networks from scratch - only called at world creation or by the admin verb
@@ -345,16 +342,9 @@
 ////////////////////////////////////////////
 
 /datum/powernet/New()
-	..()
 	powernets += src
 
 /datum/powernet/Destroy()
-	for(var/obj/machinery/power/node in nodes)
-		node.powernet = null
-
-	for(var/obj/structure/cable/cable in cables)
-		cable.powernet = null
-
 	powernets -= src
 
 /datum/powernet/proc/is_empty()

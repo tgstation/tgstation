@@ -63,7 +63,6 @@
 	..()
 	if(state == 2 && anchored)
 		connect_to_network()
-		src.directwired = 1
 		update_icon()
 		update_beam()
 
@@ -241,10 +240,8 @@
 		switch(state)
 			if(1)
 				disconnect_from_network()
-				src.directwired = 0
 			if(2)
 				connect_to_network()
-				src.directwired = 1
 		return 1
 	return -1
 

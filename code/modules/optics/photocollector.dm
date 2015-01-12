@@ -5,7 +5,6 @@
 	icon_state = "lasergen"
 	anchored = 0
 	density = 1
-	directwired = 1
 
 	var/last_power = 0
 	var/production_ratio = 290 // Emitters draw 300 power each.

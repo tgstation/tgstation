@@ -342,10 +342,14 @@ By design, d1 is the smallest direction and d2 is the highest
 
 // merge with the powernets of power objects in the source turf
 /obj/structure/cable/proc/mergeConnectedNetworksOnTurf()
+	var/list/to_connect = list()
+
 	if(!powernet) // if we somehow have no powernet, make one (should not happen for cables)
 		var/datum/powernet/newPN = new()
 		newPN.add_cable(src)
 
+	// first let's add turf cables to our powernet
+	// then we'll connect machines on turf with a node cable is present
 	for(var/AM in loc)
 		if(istype(AM, /obj/structure/cable))
 			var/obj/structure/cable/C = AM
@@ -364,22 +368,22 @@ By design, d1 is the smallest direction and d2 is the highest
 			if(!N.terminal)
 				continue // APC are connected through their terminal
 
-			if(N.terminal.powernet)
-				merge_powernets(powernet, N.terminal.powernet)
-			else
-				if(!N.terminal.connect_to_network())
-					N.terminal.disconnect_from_network()
+			if(N.terminal.powernet == powernet)
+				continue
+
+			to_connect += N.terminal // we'll connect the machines after all cables are merged
 		else if(istype(AM, /obj/machinery/power)) // other power machines
 			var/obj/machinery/power/M = AM
 
 			if(M.powernet == powernet)
 				continue
 
-			if(M.powernet)
-				merge_powernets(powernet, M.powernet)
-			else
-				if(!M.connect_to_network())
-					M.disconnect_from_network()
+			to_connect += M //we'll connect the machines after all cables are merged
+
+	// now that cables are done, let's connect found machines
+	for(var/obj/machinery/power/PM in to_connect)
+		if(!PM.connect_to_network())
+			PM.disconnect_from_network() // if we somehow can't connect the machine to the new powernet, remove it from the old nonetheless
 
 //////////////////////////////////////////////
 // Powernets handling helpers
@@ -388,7 +392,7 @@ By design, d1 is the smallest direction and d2 is the highest
 // if powernetless_only = 1, will only get connections without powernet
 /obj/structure/cable/proc/get_connections(powernetless_only = 0)
 	. = list() // this will be a list of all connected power objects without a powernet
-	var/turf/T = loc
+	var/turf/T
 
 	// get matching cables from the first direction
 	if(d1) // if not a node cable
@@ -428,22 +432,6 @@ By design, d1 is the smallest direction and d2 is the highest
 			. += power_list(T, src, d2 ^ 12, powernetless_only) // get diagonally matching cables
 
 	. += power_list(loc, src, d2, powernetless_only) //get on turf matching cables
-
-// will get both marked and unmarked connections (i.e with or without powernets)
-/obj/structure/cable/proc/get_marked_connections()
-	. = list() // this will be a list of all connected power objects
-	var/turf/T = loc
-
-	if(d1)
-		T = get_step(src, d1)
-
-	if(T)
-		. += power_list(T, src, d1, 0)
-
-	T = get_step(src, d2)
-
-	if(T)
-		. += power_list(T, src, d2, 0)
 
 // should be called after placing a cable which extends another cable, creating a "smooth" cable that no longer terminates in the centre of a turf.
 // needed as this can, unlike other placements, disconnect cables
