@@ -1,3 +1,5 @@
+var/global/datum/sun/sun
+
 /datum/sun
 	var/angle
 	var/dx
