@@ -1020,6 +1020,10 @@ proc/process_adminbus_teleport_locs()
 	name = "\improper Law Office"
 	icon_state = "law"
 
+/area/crew_quarters/casino
+	name = "Casino"
+	icon_state = "casino"
+
 
 
 
