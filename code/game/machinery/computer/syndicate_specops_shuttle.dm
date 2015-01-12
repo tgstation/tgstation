@@ -24,14 +24,14 @@ var/syndicate_elite_shuttle_timeleft = 0
 /proc/syndicate_elite_process()
 	var/area/syndicate_mothership/control/syndicate_ship = locate()//To find announcer. This area should exist for this proc to work.
 	var/area/syndicate_mothership/elite_squad/elite_squad = locate()//Where is the specops area located?
-//	var/mob/living/silicon/decoy/announcer = locate() in syndicate_ship//We need a fake AI to announce some stuff below. Otherwise it will be wonky.
+	var/mob/living/silicon/decoy/announcer = locate() in syndicate_ship//We need a fake AI to announce some stuff below. Otherwise it will be wonky.
 
 	var/message_tracker[] = list(0,1,2,3,5,10,30,45)//Create a a list with potential time values.
 	var/message = "THE SYNDICATE ELITE SHUTTLE IS PREPARING FOR LAUNCH"//Initial message shown.
-//	if(announcer)
-//		announcer.say(message)
-	//	message = "ARMORED SQUAD TAKE YOUR POSITION ON GRAVITY LAUNCH PAD"
-	//	announcer.say(message)
+	if(announcer)
+		announcer.say(message)
+		message = "ARMORED SQUAD TAKE YOUR POSITION ON GRAVITY LAUNCH PAD"
+		announcer.say(message)
 
 	while(syndicate_elite_shuttle_time - world.timeofday > 0)
 		var/ticksleft = syndicate_elite_shuttle_time - world.timeofday
@@ -41,7 +41,7 @@ var/syndicate_elite_shuttle_timeleft = 0
 		syndicate_elite_shuttle_timeleft = (ticksleft / 10)
 
 		//All this does is announce the time before launch.
-/*		if(announcer)
+		if(announcer)
 			var/rounded_time_left = round(syndicate_elite_shuttle_timeleft)//Round time so that it will report only once, not in fractions.
 			if(rounded_time_left in message_tracker)//If that time is in the list for message announce.
 				message = "ALERT: [rounded_time_left] SECOND[(rounded_time_left!=1)?"S":""] REMAIN"
@@ -50,7 +50,7 @@ var/syndicate_elite_shuttle_timeleft = 0
 				announcer.say(message)
 				message_tracker -= rounded_time_left//Remove the number from the list so it won't be called again next cycle.
 				//Should call all the numbers but lag could mean some issues. Oh well. Not much I can do about that.
-*/
+
 		sleep(5)
 
 	syndicate_elite_shuttle_moving_to_station = 0

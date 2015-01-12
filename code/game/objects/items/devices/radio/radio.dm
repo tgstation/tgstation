@@ -1,8 +1,3 @@
-var/GLOBAL_RADIO_TYPE = 1 // radio type to use
-	// 0 = old radios
-	// 1 = new radios (subspace technology)
-
-
 /obj/item/device/radio
 	icon = 'icons/obj/radio.dmi'
 	name = "station bounced radio"
@@ -267,7 +262,6 @@ obj/item/device/radio/Destroy()
 	//#### Tagging the signal with all appropriate identity values ####//
 
 	// ||-- The mob's name identity --||
-	var/displayname = M.name	// grab the display name (name you get when you hover over someone's icon)
 	var/real_name = M.real_name // mob's real name
 	var/mobkey = "none" // player key associated with mob
 	var/voicemask = 0 // the speaker is wearing a voice mask
@@ -280,6 +274,8 @@ obj/item/device/radio/Destroy()
 
 	// --- Human: use their actual job ---
 	if (ishuman(M))
+		if(voice != real_name)
+			voicemask = 1
 		jobname = M:get_assignment()
 
 	// --- Carbon Nonhuman ---
@@ -327,7 +323,7 @@ obj/item/device/radio/Destroy()
 			"mob" = M, // store a reference to the mob
 			"mobtype" = M.type, 	// the mob's type
 			"realname" = real_name, // the mob's real name
-			"name" = displayname,	// the mob's display name
+			"name" = voice,	// the mob's voice name
 			"job" = jobname,		// the mob's job
 			"key" = mobkey,			// the mob's key
 			"vmessage" = pick(M.speak_emote), // the message to display if the voice wasn't understood
@@ -384,7 +380,7 @@ obj/item/device/radio/Destroy()
 		"mob" = M, // store a reference to the mob
 		"mobtype" = M.type, 	// the mob's type
 		"realname" = real_name, // the mob's real name
-		"name" = displayname,	// the mob's display name
+		"name" = voice,	// the mob's display name
 		"job" = jobname,		// the mob's job
 		"key" = mobkey,			// the mob's key
 		"vmessage" = pick(M.speak_emote), // the message to display if the voice wasn't understood
@@ -416,7 +412,7 @@ obj/item/device/radio/Destroy()
   	// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet in our level.
   	// Send a mundane broadcast with limited targets:
 		Broadcast_Message(M, voicemask,
-						  src, message, displayname, jobname, real_name,
+						  src, message, voice, jobname, real_name,
 						  filter_type, signal.data["compression"], list(position.z), freq)
 
 /obj/item/device/radio/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)

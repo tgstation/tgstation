@@ -52,7 +52,7 @@
 /obj/item/device/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
 	if(mytape && recording)
 		mytape.timestamp += mytape.used_capacity
-		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [message]"
+		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [strip_html_properly(message)]"
 
 /obj/item/device/taperecorder/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()

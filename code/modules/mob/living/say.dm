@@ -130,11 +130,13 @@ var/list/department_radio_keys = list(
 	if(radio_return & ITALICS)
 		message = "<i>[message]</i>"
 	if(radio_return & REDUCE_RANGE)
-		message = 1
+		message_range = 1
 
 	send_speech(message, message_range, src, bubble_type)
 
 	log_say("[name]/[key] : [message]")
+
+	return 1
 
 
 /mob/living/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
@@ -143,8 +145,9 @@ var/list/department_radio_keys = list(
 	var/deaf_message
 	var/deaf_type
 	if(speaker != src)
-		deaf_message = "<span class='name'>[name]</span> talks but you cannot hear them."
-		deaf_type = 1
+		if(!radio_freq) //These checks have to be seperate, else people talking on the radio will make "You can't hear yourself!" appear when hearing people over the radio while deaf.
+			deaf_message = "<span class='name'>[speaker]</span> talks but you cannot hear them."
+			deaf_type = 1
 	else
 		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
 		deaf_type = 2 // Since you should be able to hear yourself without looking
@@ -234,7 +237,7 @@ var/list/department_radio_keys = list(
 		if(lingcheck())
 			log_say("[mind.changeling.changelingID]/[src.key] : [message]")
 			for(var/mob/M in mob_list)
-				if(M.lingcheck() || M.stat == DEAD)
+				if(M.lingcheck() || (M in dead_mob_list))
 					M << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
 			return 1
 	return 0

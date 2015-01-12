@@ -1,5 +1,7 @@
 /mob/living/carbon/alien/say(var/message)
-	return ..(message, "A")
+	. = ..(message, "A")
+	if(.)
+		playsound(loc, "hiss", 25, 1, 1)
 
 /mob/living/proc/alien_talk(var/message)
 
@@ -12,7 +14,7 @@
 	var/message_a = say_quote(message)
 	var/rendered = "<i><span class='game say'>Hivemind, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"
 	for (var/mob/living/S in player_list)
-		if((!S.stat && (S.hivecheck()) || S.stat == DEAD))
+		if((!S.stat && (S.hivecheck())) || (S in dead_mob_list))
 			S << rendered
 
 /mob/living/carbon/alien/handle_inherent_channels(message, message_mode)

@@ -638,15 +638,19 @@ var/list/admin_verbs_mod = list(
 		togglebuildmode(src.mob)
 	feedback_add_details("admin_verb","TBMS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/object_talk(var/msg as text) // -- TLE
+/client/proc/object_talk(var/obj/O in world) // -- TLE
 	set category = "Special Verbs"
-	set name = "oSay"
-	set desc = "Display a message to everyone who can hear the target"
-	if(mob.control_object)
-		if(!msg)
-			return
-		for (var/mob/V in hearers(mob.control_object))
-			V.show_message("<b>[mob.control_object.name]</b> says: \"" + msg + "\"", 2)
+	set name = "Object Say"
+	set desc = "Make an object say something"
+	var/message = input(usr, "What do you want the message to be?", "Make Sound") as text | null
+	if(!message)
+		return
+	var/templanguages = O.languages
+	O.languages |= ALL
+	O.say(message)
+	O.languages = templanguages
+	log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z] say \"[message]\"")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. say \"[message]\"</span>", 1)
 	feedback_add_details("admin_verb","OT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/kill_air() // -- TLE
