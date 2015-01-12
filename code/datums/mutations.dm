@@ -14,8 +14,8 @@
 	var/quality
 	var/get_chance = 100
 	var/lowest_value = 256 * 8
-	var/text_indication = ""
-	var/lose_indication = ""
+	var/text_gain_indication = ""
+	var/text_lose_indication = ""
 	var/list/visual_indicators = list()
 
 /datum/mutation/human/proc/force_give(mob/living/carbon/human/owner)
@@ -49,7 +49,7 @@
 		return 1
 	owner.dna.mutations.Add(src)
 	gain_indication(owner)
-	owner << text_indication
+	owner << text_gain_indication
 
 /datum/mutation/human/proc/gain_indication(mob/living/carbon/human/owner)
 	owner.overlays.Add(visual_indicators)
@@ -60,7 +60,7 @@
 		result_overlays[L.identificator] = visual_indicators[L.identificator]  //visual_indicators is where overlays icons are stored, they are all created on new of each mutation, i assume you will change it to linked list for easyness, but for now its just a list
 	return owner.redraw_overlays(result_overlays, MUTATION_LAYER)    //Currently mutations draw the overlays themselves but i assume if dismemberment will be overriding lots of shit like maybe clothes or something else mutations will just pass the shit to redraw proc
 */
-/datum/mutation/human/proc/lose_indication(mob/living/carbon/human/owner)
+/datum/mutation/human/proc/text_lose_indication(mob/living/carbon/human/owner)
 	owner.overlays.Remove(visual_indicators)
 
 /datum/mutation/human/proc/on_attack_hand(mob/living/carbon/human/owner, atom/target)
@@ -74,8 +74,8 @@
 
 /datum/mutation/human/proc/on_losing(mob/living/carbon/human/owner)
 	if(owner.dna.mutations.Remove(src))
-		lose_indication(owner)
-		owner << lose_indication
+		text_lose_indication(owner)
+		owner << text_lose_indication
 		return 0
 	return 1
 
@@ -89,7 +89,7 @@
 	quality = POSITIVE
 	get_chance = 5
 	lowest_value = 256 * 14
-	text_indication = "<span class='notice'>Your muscles hurt!</span>"
+	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
 
 /datum/mutation/human/hulk/New()
 	..()
@@ -130,7 +130,7 @@
 	quality = POSITIVE
 	get_chance = 10
 	lowest_value = 256 * 14
-	text_indication = "<span class='notice'>You feel smarter!</span>"
+	text_gain_indication = "<span class='notice'>You feel smarter!</span>"
 
 /datum/mutation/human/telekinesis/New()
 	..()
@@ -145,7 +145,7 @@
 	quality = POSITIVE
 	get_chance = 10
 	lowest_value = 256 * 12
-	text_indication = "<span class='notice'>Your body feels warm!</span>"
+	text_gain_indication = "<span class='notice'>Your body feels warm!</span>"
 
 /datum/mutation/human/cold_resistance/New()
 	..()
@@ -162,7 +162,7 @@
 	quality = POSITIVE
 	get_chance = 10
 	lowest_value = 256 * 15
-	text_indication = "<span class='notice'>The walls suddenly disappear!</span>"
+	text_gain_indication = "<span class='notice'>The walls suddenly disappear!</span>"
 
 /datum/mutation/human/x_ray/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
@@ -183,7 +183,7 @@
 
 	name = "Near Sightness"
 	quality = MINOR_NEGATIVE
-	text_indication = "<span class='danger'>You can't see very well.</span>"
+	text_gain_indication = "<span class='danger'>You can't see very well.</span>"
 
 /datum/mutation/human/nearsight/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
@@ -197,7 +197,7 @@
 
 	name = "Epilepsy"
 	quality = NEGATIVE
-	text_indication = "<span class='danger'>You get a headache.</span>"
+	text_gain_indication = "<span class='danger'>You get a headache.</span>"
 
 /datum/mutation/human/epilepsy/on_life(mob/living/carbon/human/owner)
 	if ((prob(1) && owner.paralysis < 1))
@@ -211,7 +211,7 @@
 
 	name = "Unstable DNA"
 	quality = NEGATIVE
-	text_indication = "<span class='danger'>You feel strange.</span>"
+	text_gain_indication = "<span class='danger'>You feel strange.</span>"
 
 /datum/mutation/human/bad_dna/on_acquiring(mob/living/carbon/human/owner)
 	if(prob(95))
@@ -227,7 +227,7 @@
 
 	name = "Cough"
 	quality = MINOR_NEGATIVE
-	text_indication = "<span class='danger'>You start coughing.</span>"
+	text_gain_indication = "<span class='danger'>You start coughing.</span>"
 
 /datum/mutation/human/cough/on_life(mob/living/carbon/human/owner)
 	if((prob(5) && owner.paralysis <= 1))
@@ -238,7 +238,7 @@
 
 	name = "Clumsiness"
 	quality = MINOR_NEGATIVE
-	text_indication = "<span class='danger'>You feel lightheaded.</span>"
+	text_gain_indication = "<span class='danger'>You feel lightheaded.</span>"
 
 /datum/mutation/human/clumsy/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
@@ -252,7 +252,7 @@
 
 	name = "Tourettes Syndrome"
 	quality = NEGATIVE
-	text_indication = "<span class='danger'>You twitch.</span>"
+	text_gain_indication = "<span class='danger'>You twitch.</span>"
 
 /datum/mutation/human/tourettes/on_life(mob/living/carbon/human/owner)
 	if((prob(10) && owner.paralysis <= 1))
@@ -273,7 +273,7 @@
 
 	name = "Nervousness"
 	quality = MINOR_NEGATIVE
-	text_indication = "<span class='danger'>You feel nervous.</span>"
+	text_gain_indication = "<span class='danger'>You feel nervous.</span>"
 
 /datum/mutation/human/nervousness/on_life(mob/living/carbon/human/owner)
 	if(prob(10))
@@ -283,7 +283,7 @@
 
 	name = "Deafness"
 	quality = NEGATIVE
-	text_indication = "<span class='danger'>You can't seem to hear anything.</span>"
+	text_gain_indication = "<span class='danger'>You can't seem to hear anything.</span>"
 
 /datum/mutation/human/deaf/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
@@ -297,7 +297,7 @@
 
 	name = "Blindness"
 	quality = NEGATIVE
-	text_indication = "<span class='danger'>You can't seem to see anything.</span>"
+	text_gain_indication = "<span class='danger'>You can't seem to see anything.</span>"
 
 /datum/mutation/human/blind/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
@@ -319,7 +319,7 @@
 /datum/mutation/human/race/gain_indication(mob/living/carbon/human/owner)
 	return
 
-/datum/mutation/human/race/lose_indication(mob/living/carbon/monkey/owner)
+/datum/mutation/human/race/text_lose_indication(mob/living/carbon/monkey/owner)
 	return
 
 /datum/mutation/human/race/on_losing(mob/living/carbon/monkey/owner)
@@ -331,7 +331,7 @@
 	name = "Laser Eyes"
 	quality = POSITIVE
 	dna_block = NON_SCANNABLE
-	text_indication = "<span class='notice'>You feel pressure building up behind your eyes.</span>"
+	text_gain_indication = "<span class='notice'>You feel pressure building up behind your eyes.</span>"
 
 /datum/mutation/human/laser_eyes/on_ranged_attack(mob/living/carbon/human/owner, atom/target)
 	if(owner.a_intent == "harm")

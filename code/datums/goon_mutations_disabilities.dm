@@ -1,8 +1,8 @@
 /datum/mutation/human/wacky
 	name = "Wacky"
 	quality = MINOR_NEGATIVE
-	text_indication = "<span class='sans'>You feel an off sensation in your voicebox.</span>"
-	lose_indication = "<span class='notice'>The off sensation passes.</span>"
+	text_gain_indication = "<span class='sans'>You feel an off sensation in your voicebox.</span>"
+	text_lose_indication = "<span class='notice'>The off sensation passes.</span>"
 
 /datum/mutation/human/wacky/say_mod(var/message)
 	if(message)
@@ -12,8 +12,8 @@
 /datum/mutation/human/mute
 	name = "Mute"
 	quality = NEGATIVE
-	text_indication = "<span class='notice'>You feel unable to express yourself at all.</span>"
-	lose_indication = "<span class='notice'>You feel able to speak freely again.</span>"
+	text_gain_indication = "<span class='notice'>You feel unable to express yourself at all.</span>"
+	text_lose_indication = "<span class='notice'>You feel able to speak freely again.</span>"
 
 /datum/mutation/human/mute/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
@@ -26,8 +26,8 @@
 /datum/mutation/human/smile
 	name = "Smile"
 	quality = MINOR_NEGATIVE
-	text_indication = "<span class='notice'>You feel so happy. Nothing can be wrong with anything. :)</span>"
-	lose_indication = "<span class='notice'>Everything is terrible again. :(</span>"
+	text_gain_indication = "<span class='notice'>You feel so happy. Nothing can be wrong with anything. :)</span>"
+	text_lose_indication = "<span class='notice'>Everything is terrible again. :(</span>"
 
 /datum/mutation/human/smile/say_mod(var/message)
 	if(message)
@@ -80,8 +80,8 @@
 /datum/mutation/human/unintelligable
 	name = "Unintelligable"
 	quality = NEGATIVE
-	text_indication = "<span class='notice'>You can't seem to form any coherent thoughts!</span>"
-	lose_indication = "<span class='notice'>Your mind feels more clear.</span>"
+	text_gain_indication = "<span class='notice'>You can't seem to form any coherent thoughts!</span>"
+	text_lose_indication = "<span class='notice'>Your mind feels more clear.</span>"
 
 /datum/mutation/human/unintelligable/say_mod(var/message)
 	if(message)
@@ -111,8 +111,8 @@
 /datum/mutation/human/swedish
 	name = "Swedish"
 	quality = MINOR_NEGATIVE
-	text_indication = "<span class='notice'>You feel Swedish, however that works.</span>"
-	lose_indication = "<span class='notice'>The feeling of Swedishness passes.</span>"
+	text_gain_indication = "<span class='notice'>You feel Swedish, however that works.</span>"
+	text_lose_indication = "<span class='notice'>The feeling of Swedishness passes.</span>"
 
 /datum/mutation/human/swedish/say_mod(var/message)
 	if(message)
@@ -124,8 +124,8 @@
 /datum/mutation/human/chav
 	name = "Chav"
 	quality = MINOR_NEGATIVE
-	text_indication = "<span class='notice'>Ye feel like a reet prat like, innit?</span>"
-	lose_indication = "<span class='notice'>You no longer feel like being rude and sassy.</span>"
+	text_gain_indication = "<span class='notice'>Ye feel like a reet prat like, innit?</span>"
+	text_lose_indication = "<span class='notice'>You no longer feel like being rude and sassy.</span>"
 
 /datum/mutation/human/chav/say_mod(var/message)
 	if(message)
@@ -143,7 +143,7 @@
 		message = replacetext(message,"i don't know","wot mate")
 		message = replacetext(message,"no","naw")
 		message = replacetext(message,"robust","chin")
-		message = replacetext(message," hi ","how what how")
+		message = replacetext(message,"hi","how what how")
 		message = replacetext(message,"hello","sup bruv")
 		message = replacetext(message,"kill","bang")
 		message = replacetext(message,"murder","bang")
@@ -157,8 +157,8 @@
 /datum/mutation/human/elvis
 	name = "Elvis"
 	quality = MINOR_NEGATIVE
-	text_indication = "<span class='notice'>You feel pretty good, honeydoll.</span>"
-	lose_indication = "<span class='notice'>You feel a little less conversation would be great.</span>"
+	text_gain_indication = "<span class='notice'>You feel pretty good, honeydoll.</span>"
+	text_lose_indication = "<span class='notice'>You feel a little less conversation would be great.</span>"
 
 /datum/mutation/human/elvis/on_life(mob/living/carbon/human/owner)
 	switch(pick(1,2))
