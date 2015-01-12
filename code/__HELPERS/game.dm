@@ -42,10 +42,14 @@
 
 // Like view but bypasses luminosity check
 /proc/get_hear(var/range, var/atom/source)
+
 	var/lum = source.luminosity
 	source.luminosity = 6
-	. = view(range, source)
+
+	var/list/heard = view(range, source)
 	source.luminosity = lum
+
+	return heard
 
 
 /proc/alone_in_area(var/area/the_area, var/mob/must_be_alone, var/check_type = /mob/living/carbon)
@@ -129,12 +133,57 @@
 /proc/recursive_hear_check(var/atom/O)
 	var/list/processing_list = list(O)
 	var/list/processed_list = list()
-	var/list/found_mobs = list()
+	var/list/found_atoms = list()
 
 	while(processing_list.len)
 		var/atom/A = processing_list[1]
 
 		if(A.flags & HEAR)
+			found_atoms |= A
+
+		for(var/atom/B in A)
+			if(!processed_list[B])
+				processing_list |= B
+
+		processing_list.Cut(1, 2)
+		processed_list[A] = A
+
+	return found_atoms
+
+//var/debug_mob = 0
+
+// Will recursively loop through an atom's contents and check for mobs, then it will loop through every atom in that atom's contents.
+// It will keep doing this until it checks every content possible. This will fix any problems with mobs, that are inside objects,
+// being unable to hear people due to being in a box within a bag.
+
+/proc/recursive_mob_check(var/atom/O,var/client_check=1,var/sight_check=1,var/include_radio=1)
+
+	var/list/processing_list = list(O)
+	var/list/processed_list = list()
+	var/list/found_mobs = list()
+
+	while(processing_list.len)
+
+		var/atom/A = processing_list[1]
+		var/passed = 0
+
+		if(ismob(A))
+			var/mob/A_tmp = A
+			passed=1
+
+			if(client_check && !A_tmp.client)
+				passed=0
+
+			if(sight_check && !isInSight(A_tmp, O))
+				passed=0
+
+		else if(include_radio && istype(A, /obj/item/device/radio))
+			passed=1
+
+			if(sight_check && !isInSight(A, O))
+				passed=0
+
+		if(passed)
 			found_mobs |= A
 
 		for(var/atom/B in A)
@@ -144,37 +193,7 @@
 		processing_list.Cut(1, 2)
 		processed_list[A] = A
 
-//var/debug_mob = 0
-
-// Will recursively loop through an atom's contents and check for mobs, then it will loop through every atom in that atom's contents.
-// It will keep doing this until it checks every content possible. This will fix any problems with mobs, that are inside objects,
-// being unable to hear people due to being in a box within a bag.
-
-/proc/recursive_mob_check(var/atom/O,  var/list/L = list(), var/recursion_limit = 3, var/client_check = 1, var/sight_check = 1, var/include_radio = 1)
-
-	//debug_mob += O.contents.len
-	if(!recursion_limit)
-		return L
-	for(var/atom/movable/A in O.contents)
-
-		if(ismob(A))
-			var/mob/M = A
-			if(client_check && !M.client)
-				L = recursive_mob_check(A, L, recursion_limit - 1, client_check, sight_check, include_radio)
-				continue
-			if(sight_check && !isInSight(A, O))
-				continue
-			L |= M
-			//world.log << "[recursion_limit] = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
-
-		else if(include_radio && istype(A, /obj/item/device/radio))
-			if(sight_check && !isInSight(A, O))
-				continue
-			L |= A
-
-		L = recursive_mob_check(A, L, recursion_limit - 1, client_check, sight_check, include_radio)
-
-	return L
+	return found_mobs
 
 // The old system would loop through lists for a total of 5000 per function call, in an empty server.
 // This new system will loop at around 1000 in an empty server.
@@ -192,6 +211,7 @@
 		hear |= recursive_hear_check(A)
 
 	return hear
+
 /proc/get_mobs_in_radio_ranges(var/list/obj/item/device/radio/radios)
 
 	//set background = 1
