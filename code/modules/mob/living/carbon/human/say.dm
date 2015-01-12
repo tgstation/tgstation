@@ -22,8 +22,8 @@
 	return "says, \"[text]\"";
 
 /mob/living/carbon/human/treat_message(message)
-	//if(dna)
-		//message = dna.species.handle_speech(message,src)
+	if(dna)
+		message = species.handle_speech(message,src)
 
 	if ((M_HULK in mutations) && health >= 25 && length(message))
 		message = "[uppertext(replacetext(message, ".", "!"))]!!" //because I don't know how to code properly in getting vars from other files -Bro
