@@ -1,6 +1,5 @@
 // These can only be applied by blobs. They are what blobs are made out of.
 // The 4 damage
-/*
 datum/reagent/blob/boiling_oil
 	name = "Boiling Oil"
 	id = "boiling_oil"
@@ -54,7 +53,7 @@ datum/reagent/blob/skin_melter/reaction_mob(var/mob/living/M as mob, var/method=
 		M.IgniteMob()
 		M << "<span class = 'userdanger'>The blob strikes you, and you feel your skin char and melt!</span>"
 		M.emote("scream")
-*/
+
 datum/reagent/blob/lung_destroying_toxin
 	name = "Lung Destroying Toxin"
 	id = "lung_destroying_toxin"
@@ -67,7 +66,7 @@ datum/reagent/blob/lung_destroying_toxin/reaction_mob(var/mob/living/M as mob, v
 		M.apply_damage(20, TOX)
 		M << "<span class = 'userdanger'>The blob strikes you, and your lungs feel heavy and weak!</span>"
 // Special Reagents
-/*
+
 datum/reagent/blob/acid
 	name = "Acidic Liquid"
 	id = "blob_acid"
@@ -164,4 +163,3 @@ datum/reagent/blob/explosive/reaction_mob(var/mob/living/M as mob, var/method=TO
 		if(prob(75))
 			M << "<span class = 'userdanger'>The blob strikes you, and its tendrils explode!</span>"
 			explosion(M.loc, 0, 0, 1, 0, 0)
-*/
