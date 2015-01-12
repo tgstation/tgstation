@@ -131,7 +131,7 @@
 			for(var/atom/movable/floater in (contents - beaker))
 				user << "A figure floats in the depths, they appear to be [floater.name]"
 			if(beaker)
-				user << "A beaker is releasing the following chemicals into the fluids:"
+				user << "A beaker, releasing the following chemicals into the fluids:"
 				for(var/datum/reagent/R in beaker.reagents.reagent_list)
 					user << "<span class='info'>[R.volume] units of [R.name]</span>"
 		else
