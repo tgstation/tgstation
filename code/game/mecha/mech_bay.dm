@@ -147,10 +147,16 @@
 
 
 /obj/machinery/computer/mech_bay_power_console/update_icon()
+	if(stat & NOPOWER)
+		icon_state = "recharge_comp0"
+		return
+	if(stat & BROKEN)
+		icon_state = "recharge_compb"
+		return
 	if(!recharge_port || !recharge_port.recharging_mech || !recharge_port.recharging_mech.cell || !(recharge_port.recharging_mech.cell.charge < recharge_port.recharging_mech.cell.maxcharge))
 		icon_state = "recharge_comp"
-	else
-		icon_state = "recharge_comp_on"
+		return
+	icon_state = "recharge_comp_on"
 
 /obj/machinery/computer/mech_bay_power_console/initialize()
 	reconnect()

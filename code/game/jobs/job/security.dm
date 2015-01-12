@@ -130,7 +130,8 @@ Detective
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/det_hat(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/black(H), slot_gloves)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/det_suit(H), slot_wear_suit)
-	H.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo(H), slot_l_store)
+	H.equip_to_slot_or_del(new /obj/item/toy/crayon/white(H), slot_l_store)
+	H.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo(H), slot_r_store)
 
 	var/obj/item/clothing/mask/cigarette/cig = new /obj/item/clothing/mask/cigarette(H)
 	cig.light("")
@@ -142,6 +143,7 @@ Detective
 	else
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/evidence(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/device/detective_scanner(H), slot_in_backpack)
+		H.equip_to_slot_or_del(new /obj/item/weapon/melee/classic_baton/telescopic(H), slot_in_backpack)
 
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 	L.imp_in = H

@@ -21,7 +21,7 @@
 
 	if (stat != DEAD) //still breathing
 		//First, resolve location and get a breath
-		if(air_master.current_cycle%4==2)
+		if(SSmob.times_fired%4==2)
 			//Only try to take a breath every 4 seconds, unless suffocating
 			breathe()
 		else //Still give containing object the chance to interact
@@ -392,7 +392,7 @@
 		//Ears
 		if(disabilities & DEAF)		//disabled-deaf, doesn't get better on its own
 			ear_deaf = max(ear_deaf, 1)
-		else 
+		else
 			/* might be better to create a variable here, and instead of doing this nested for. */
 			// deafness heals slowly over time, unless ear_damage is over 100
 			if (ear_damage < 100)

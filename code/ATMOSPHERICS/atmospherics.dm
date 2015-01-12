@@ -93,6 +93,7 @@ Pipelines + Other Objects -> Pipe network
 				"[user] unfastens \the [src].", \
 				"<span class='notice'>You have unfastened \the [src].</span>", \
 				"You hear ratchet.")
+			investigate_log("was <span class='warning'>REMOVED</span> by [key_name(usr)]", "atmos")
 			Deconstruct()
 	else
 		return ..()

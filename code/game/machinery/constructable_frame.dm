@@ -382,6 +382,17 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/weapon/stock_parts/cell = 1)
 
+//Almost the same recipe as destructive analyzer to give people choices.
+/obj/item/weapon/circuitboard/experimentor
+	name = "circuit board (E.X.P.E.R.I-MENTOR)"
+	build_path = /obj/machinery/r_n_d/experimentor
+	board_type = "machine"
+	origin_tech = "magnets=1;engineering=1;programming=1;biotech=1;bluespace=2"
+	req_components = list(
+							/obj/item/weapon/stock_parts/scanning_module = 1,
+							/obj/item/weapon/stock_parts/manipulator = 2,
+							/obj/item/weapon/stock_parts/micro_laser = 2)
+
 
 /obj/item/weapon/circuitboard/destructive_analyzer
 	name = "circuit board (Destructive Analyzer)"
