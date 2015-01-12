@@ -2,6 +2,7 @@
  *
  * Contains:
  *		Borrowbook datum
+ *		Cachedbook datum
  *		Library Public Computer
  *		Library Computer
  *		Library Scanner
@@ -16,6 +17,44 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	var/mobname
 	var/getdate
 	var/duedate
+
+/*
+ * Cachedbook datum
+ */
+datum/cachedbook // Datum used to cache the SQL DB books locally in order to achieve a performance gain.
+	var/id
+	var/title
+	var/author
+	var/category
+
+var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
+var/libcomp_menu
+
+/proc/load_library_db_to_cache(force=0)
+	if(cachedbooks && !force)
+		return
+	establish_db_connection()
+	if(!dbcon.IsConnected())
+		return
+	cachedbooks = list()
+	var/DBQuery/query = dbcon.NewQuery("SELECT id, author, title, category FROM [format_table_name("library")] WHERE isnull(deleted)")
+	query.Execute()
+
+	while(query.NextRow())
+		var/datum/cachedbook/newbook = new()
+		newbook.id = query.item[1]
+		newbook.author = query.item[2]
+		newbook.title = query.item[3]
+		newbook.category = query.item[4]
+		cachedbooks += newbook
+	build_library_menu()
+
+/proc/build_library_menu()
+	if(!cachedbooks)
+		return
+	libcomp_menu = ""
+	for(var/datum/cachedbook/C in cachedbooks)
+		libcomp_menu += "<tr><td>[C.author]</td><td>[C.title]</td><td>[C.category]</td><td><A href='?src=\ref[src];targetid=[C.id]'>\[Order\]</A></td></tr>"
 
 /*
  * Library Public Computer
@@ -118,6 +157,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
  */
 // TODO: Make this an actual /obj/machinery/computer that can be crafted from circuit boards and such
 // It is August 22nd, 2012... This TODO has already been here for months.. I wonder how long it'll last before someone does something about it.
+// It's December 25th, 2014, and this is STILL here, and it's STILL relevant. Kill me
 /obj/machinery/librarycomp
 	name = "book inventory management console"
 	icon = 'icons/obj/library.dmi'
@@ -193,23 +233,16 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			dat += "<A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
 		if(4)
 			dat += "<h3>External Archive</h3>"
-			establish_db_connection()
-			if(!dbcon.IsConnected())
+			load_library_db_to_cache()
+			if(!cachedbooks)
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font>"
 			else
 				dat += "<A href='?src=\ref[src];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A><BR><BR>"
 				dat += "<table>"
 				dat += "<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td></td></tr>"
 
-				var/DBQuery/query = dbcon.NewQuery("SELECT id, author, title, category FROM [format_table_name("library")] WHERE isnull(deleted)")
-				query.Execute()
+				dat += libcomp_menu
 
-				while(query.NextRow())
-					var/id = query.item[1]
-					var/author = query.item[2]
-					var/title = query.item[3]
-					var/category = query.item[4]
-					dat += "<tr><td>[author]</td><td>[title]</td><td>[category]</td><td><A href='?src=\ref[src];targetid=[id]'>\[Order\]</A></td></tr>"
 				dat += "</table>"
 			dat += "<BR><A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
 		if(5)
@@ -341,12 +374,6 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 					if(!dbcon.IsConnected())
 						alert("Connection to Archive has been severed. Aborting.")
 					else
-						/*
-						var/sqltitle = dbcon.Quote(scanner.cache.name)
-						var/sqlauthor = dbcon.Quote(scanner.cache.author)
-						var/sqlcontent = dbcon.Quote(scanner.cache.dat)
-						var/sqlcategory = dbcon.Quote(upload_category)
-						*/
 						var/sqltitle = sanitizeSQL(scanner.cache.name)
 						var/sqlauthor = sanitizeSQL(scanner.cache.author)
 						var/sqlcontent = sanitizeSQL(scanner.cache.dat)
@@ -357,6 +384,8 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 						else
 							log_game("[usr.name]/[usr.key] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
 							alert("Upload Complete.")
+							//force a cache update. not strictly necessary but it works
+							load_library_db_to_cache(1)
 
 	if(href_list["targetid"])
 		var/sqlid = sanitizeSQL(href_list["targetid"])
@@ -396,7 +425,6 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 
 /obj/machinery/librarycomp/say_quote(text)
 	return "flashes, \"[text]\""
-
 
 
 /*
