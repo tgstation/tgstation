@@ -47,13 +47,24 @@
 	return returnString
 
 /obj/machinery/r_n_d/experimentor/proc/SetTypeReactions()
+	var/probWeight = 0
 	for(var/I in typesof(/obj/item))
 		item_reactions["[I]"] = pick(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
-		if(ispath(I,/obj/item/weapon/reagent_containers/food) || ispath(I,/obj/item/weapon/stock_parts) || ispath(I,/obj/item/weapon/grenade/chem_grenade) || ispath(I,/obj/item/weapon/kitchen))
+		if(ispath(I,/obj/item/weapon/stock_parts) || ispath(I,/obj/item/weapon/grenade/chem_grenade) || ispath(I,/obj/item/weapon/kitchen))
 			var/obj/item/tempCheck = new I()
 			if(tempCheck.icon_state != null) //check it's an actual usable item, in a hacky way
+				valid_items += 15
+				valid_items += I
+				probWeight++
+			qdel(tempCheck)
+
+		if(ispath(I,/obj/item/weapon/reagent_containers/food))
+			var/obj/item/tempCheck = new I()
+			if(tempCheck.icon_state != null) //check it's an actual usable item, in a hacky way
+				valid_items += rand(1,max(2,35-probWeight))
 				valid_items += I
 			qdel(tempCheck)
+
 		if(ispath(I,/obj/item/weapon/rcd) || ispath(I,/obj/item/weapon/grenade) || ispath(I,/obj/item/device/aicard) || ispath(I,/obj/item/weapon/storage/backpack/holding) || ispath(I,/obj/item/slime_extract) || ispath(I,/obj/item/device/onetankbomb) || ispath(I,/obj/item/device/transfer_valve))
 			var/obj/item/tempCheck = new I()
 			if(tempCheck.icon_state != null)
@@ -204,6 +215,19 @@
 	smoke.set_up(1,0, where, 0)
 	smoke.start()
 
+/obj/machinery/r_n_d/experimentor/proc/pickWeighted(var/list/from)
+	var/result = FALSE
+	var/counter = 1
+	while(!result)
+		var/probtocheck = from[counter]
+		if(prob(probtocheck))
+			result = TRUE
+			return from[counter+1]
+		if(counter + 2 < from.len)
+			counter = counter + 2
+		else
+			counter = 1
+
 /*
 #define EFFECT_PROB_VERYLOW 10
 #define EFFECT_PROB_LOW 20
@@ -256,10 +280,11 @@
 					if(prob(EFFECT_PROB_VERYHIGH))
 						new /obj/effect/decal/cleanable/greenglow(T)
 		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
-			visible_message("<span class='notice'>[src] malfunctions, transforming the [exp_on]!.</span>")
+			var/savedName = "[exp_on]"
 			ejectItem(TRUE)
-			var/newPath = pick(valid_items)
+			var/newPath = pickWeighted(valid_items)
 			loaded_item = new newPath(src)
+			visible_message("<span class='notice'>[src] malfunctions, transforming [savedName] into [loaded_item]!.</span>")
 			if(istype(loaded_item,/obj/item/weapon/grenade/chem_grenade))
 				var/obj/item/weapon/grenade/chem_grenade/CG = loaded_item
 				CG.prime()
