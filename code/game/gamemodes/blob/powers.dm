@@ -125,8 +125,11 @@
 	if(!can_buy(60))
 		return
 
-	B.color = blob_reagent_datum.color
 	B.change_to(/obj/effect/blob/node)
+	var/obj/effect/blob/node/R = locate() in T
+	if(R)
+		R.adjustcolors(blob_reagent_datum.color)
+		R.overmind = src
 	return
 
 
@@ -271,7 +274,7 @@
 	if(!can_buy(5))
 		return
 	last_attack = world.time
-	OB.expand(T, 0)
+	OB.expand(T, 0, blob_reagent_datum.color)
 	for(var/mob/living/L in T)
 		blob_reagent_datum.reaction_mob(L, TOUCH)
 	OB.color = blob_reagent_datum.color

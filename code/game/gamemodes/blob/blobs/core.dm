@@ -1,7 +1,7 @@
 /obj/effect/blob/core
 	name = "blob core"
 	icon = 'icons/mob/blob.dmi'
-	icon_state = "blob_core"
+	icon_state = "blank_blob"
 	health = 200
 	fire_resist = 2
 	var/mob/camera/blob/overmind = null // the blob core's overmind
@@ -15,9 +15,18 @@
 	if(!overmind)
 		create_overmind(new_overmind)
 	if(overmind)
-		color = overmind.blob_reagent_datum.color
+		adjustcolors(overmind.blob_reagent_datum.color)
 	point_rate = new_rate
 	..(loc, h)
+
+
+/obj/effect/blob/core/adjustcolors(var/a_color)
+	color = null
+	var/image/I = new('icons/mob/blob.dmi', "blob")
+	I.color = a_color
+	overlays += I
+	var/image/C = new('icons/mob/blob.dmi', "blob_core_overlay")
+	overlays += C
 
 
 /obj/effect/blob/core/Destroy()
@@ -53,7 +62,7 @@
 	if(overmind)
 		overmind.update_health()
 	for(var/i = 1; i < 8; i += i)
-		Pulse(0, i)
+		Pulse(0, i, overmind.blob_reagent_datum.color)
 	for(var/b_dir in alldirs)
 		if(!prob(5))
 			continue
@@ -61,6 +70,7 @@
 		if(B)
 			B.change_to(/obj/effect/blob/shield)
 			B.color = overmind.blob_reagent_datum.color
+	color = null
 	..()
 
 
