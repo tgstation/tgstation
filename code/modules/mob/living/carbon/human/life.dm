@@ -7,7 +7,6 @@
 #define TINT_BLIND 3			//Threshold of tint level to obscure vision fully
 
 #define HUMAN_MAX_OXYLOSS 3 //Defines how much oxyloss humans can get per tick. A tile with no air at all (such as space) applies this value, otherwise it's a percentage of it.
-#define HUMAN_CRIT_MAX_OXYLOSS ( (last_tick_duration) /3) //The amount of damage you'll get when in critical condition. We want this to be a 5 minute deal = 300s. There are 100HP to get through, so (1/3)*last_tick_duration per second. Breaths however only happen every 4 ticks.
 
 #define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
 #define HEAT_DAMAGE_LEVEL_2 3 //Amount of damage applied when your body temperature passes the 400K point
@@ -57,6 +56,10 @@
 
 	handle_regular_hud_updates()
 
+	//Status updates, death etc.
+		//TODO: optimise ~Carn
+	handle_regular_status_updates()
+
 	//No need to update all of these procs if the guy is dead.
 	if(stat != DEAD)
 		for(var/datum/mutation/human/HM in dna.mutations)
@@ -93,8 +96,7 @@
 	//stuff in the stomach
 	handle_stomach()
 
-	//Status updates, death etc.
-	handle_regular_status_updates()		//TODO: optimise ~Carn
+
 	update_canmove()
 
 	//Update our name based on whether our face is obscured/disfigured
@@ -410,13 +412,11 @@
 
 /mob/living/carbon/human/proc/handle_regular_status_updates()
 	if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
-		eye_blind = max(eye_blind, 1)
 		silent = 0
 	else				//ALIVE. LIGHTS ARE ON
 		updatehealth()	//TODO
 		if(health <= config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
 			death()
-			eye_blind = max(eye_blind, 1)
 			silent = 0
 			return 1
 
@@ -424,13 +424,6 @@
 		//UNCONSCIOUS. NO-ONE IS HOME
 		if( (getOxyLoss() > 50) || (config.health_threshold_crit >= health) )
 			Paralyse(3)
-
-			/* Done by handle_breath()
-			if( health <= 20 && prob(1) )
-				spawn(0)
-					emote("gasp")
-			if(!reagents.has_reagent("inaprovaline"))
-				adjustOxyLoss(1)*/
 
 		if(hallucination)
 			spawn handle_hallucinations()
@@ -446,13 +439,11 @@
 
 		if(paralysis)
 			AdjustParalysis(-1)
-			eye_blind = max(eye_blind, 1)
 			stat = UNCONSCIOUS
 		else if(sleeping)
 			handle_dreams()
 			adjustStaminaLoss(-10)
 			sleeping = max(sleeping-1, 0)
-			eye_blind = max(eye_blind, 1)
 			stat = UNCONSCIOUS
 			if( prob(10) && health && !hal_crit )
 				spawn(0)
@@ -462,7 +453,7 @@
 			stat = CONSCIOUS
 
 		//Eyes
-		if(disabilities & BLIND)	//disabled-blind, doesn't get better on its own
+		if(disabilities & BLIND || stat)	//disabled-blind, doesn't get better on its own
 			eye_blind = max(eye_blind, 1)
 		else if(eye_blind)			//blindness, heals slowly over time
 			eye_blind = max(eye_blind-1,0)
@@ -548,6 +539,9 @@
 			druggy = max(druggy-1, 0)
 
 		CheckStamina()
+
+	if(dna)
+		dna.species.handle_vision(src)
 
 	return 1
 
@@ -639,7 +633,6 @@
 			if(!client.adminobs)			reset_view(null)
 
 	if(dna)
-		dna.species.handle_vision(src)
 		dna.species.handle_hud_icons(src)
 
 	return 1
@@ -688,4 +681,3 @@
 		mind.changeling.regenerate()
 
 #undef HUMAN_MAX_OXYLOSS
-#undef HUMAN_CRIT_MAX_OXYLOSS

@@ -27,7 +27,6 @@
 	internal_organs += new /obj/item/organ/brain
 
 	// for spawned humans; overwritten by other code
-	create_dna(src)
 	ready_dna(src)
 	randomize_human(src)
 
@@ -52,8 +51,8 @@
 
 /mob/living/carbon/human/Stat()
 	..()
-	statpanel("Status")
-	if (client.statpanel == "Status")
+
+	if(statpanel("Status"))
 		stat(null, "Intent: [a_intent]")
 		stat(null, "Move Mode: [m_intent]")
 		if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")

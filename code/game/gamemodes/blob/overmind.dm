@@ -83,14 +83,11 @@
 	return
 
 /mob/camera/blob/Stat()
-
-	statpanel("Status")
 	..()
-	if (client.statpanel == "Status")
+	if(statpanel("Status"))
 		if(blob_core)
 			stat(null, "Core Health: [blob_core.health]")
 		stat(null, "Power Stored: [blob_points]/[max_blob_points]")
-	return
 
 /mob/camera/blob/Move(var/NewLoc, var/Dir = 0)
 	var/obj/effect/blob/B = locate() in range("3x3", NewLoc)
