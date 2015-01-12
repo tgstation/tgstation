@@ -198,8 +198,9 @@
 
 	for(var/obj/structure/cable/PC in cable_list)
 		if(!PC.powernet)
-			PC.powernet = new()
-			propagate_network(PC,PC.powernet)
+			var/datum/powernet/NewPN = new()
+			NewPN.add_cable(PC)
+			propagate_network(PC, PC.powernet)
 
 // remove the old powernet and replace it with a new one throughout the network.
 /proc/propagate_network(var/obj/O, var/datum/powernet/PN)
