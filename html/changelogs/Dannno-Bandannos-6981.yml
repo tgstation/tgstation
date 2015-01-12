@@ -1,0 +1,6 @@
+author: Dannno
+delete-after: True
+
+changes:
+  - rscadd: Adds a bandanas in basic colors to lockers in the station.
+  - rscadd: Adds more colored jumpsuits to the mixed locker.
