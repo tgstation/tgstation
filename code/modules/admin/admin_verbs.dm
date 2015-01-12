@@ -640,7 +640,7 @@ var/list/admin_verbs_mod = list(
 
 /client/proc/object_talk(var/obj/O in world) // -- TLE
 	set category = "Special Verbs"
-	set name = "Object Say"
+	set name = "OSay"
 	set desc = "Make an object say something"
 	var/message = input(usr, "What do you want the message to be?", "Make Sound") as text | null
 	if(!message)
