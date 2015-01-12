@@ -4,24 +4,36 @@
 	damage = 0
 	damage_type = BURN
 	flag = "energy"
-	color = "#FFFF00"
 
 
 /obj/item/projectile/energy/electrode
 	name = "electrode"
 	icon_state = "spark"
+	color = "#FFFF00"
 	nodamage = 1
 	stun = 5
 	weaken = 5
 	stutter = 5
-	hitsound = "sparks"
+	jitter = 20
+	hitsound = 'sound/weapons/taserhit.ogg'
+	range = 7
 
-	on_hit(var/atom/target, var/blocked = 0)
+/obj/item/projectile/energy/electrode/on_hit(var/atom/target, var/blocked = 0)
+	if(!proj_hit)
 		if(!ismob(target) || blocked >= 2) //Fully blocked by mob or collided with dense object - burst into sparks!
 			var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread
 			sparks.set_up(1, 1, src)
 			sparks.start()
-		..()
+			proj_hit = 1
+	..()
+
+/obj/item/projectile/energy/electrode/on_range() //to ensure the bolt sparks when it reaches the end of its range if it didn't hit a target yet
+	if(!proj_hit)
+		var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread
+		sparks.set_up(1, 1, src)
+		sparks.start()
+		proj_hit = 1
+	..()
 
 /obj/item/projectile/energy/declone
 	name = "radiation beam"
@@ -31,39 +43,31 @@
 	irradiate = 40
 
 
-/obj/item/projectile/energy/dart
+/obj/item/projectile/energy/dart //ninja throwing dart
 	name = "dart"
 	icon_state = "toxin"
 	damage = 5
 	damage_type = TOX
 	weaken = 5
+	range = 7
 
-
-/obj/item/projectile/energy/bolt
+/obj/item/projectile/energy/bolt //xbow bolts
 	name = "bolt"
 	icon_state = "cbbolt"
-	damage = 10
+	damage = 15
 	damage_type = TOX
 	nodamage = 0
 	weaken = 5
 	stutter = 5
+	range = 7
 
+/obj/item/projectile/energy/bolt/on_hit(var/atom/target, var/blocked = 0) //drop a bolt on hitting basically anything
+	if(!proj_hit)
+		proj_hit = 1
+		new /obj/item/ammo_casing/caseless/bolt(src.loc)
+	..()
 
-/obj/item/projectile/energy/bolt/large
-	name = "largebolt"
-	damage = 20
-
-/obj/item/projectile/energy/disabler
-	name = "disabler beam"
-	icon_state = "omnilaser"
-	damage = 34
-	damage_type = STAMINA
-	var/range = 7
-
-/obj/item/projectile/energy/disabler/Range()
-	range--
-	if(range <= 0)
-		qdel(src)
-
-
-
+/obj/item/projectile/energy/bolt/on_range() //drop a bolt after 7 tiles
+	if(!proj_hit)
+		new /obj/item/ammo_casing/caseless/bolt(src.loc)
+		..()

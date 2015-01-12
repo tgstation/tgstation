@@ -14,6 +14,7 @@
 	possible_transfer_amounts = null	//list(5, 10, 15)
 	volume = 15
 	var/mode = SYRINGE_DRAW
+	var/busy = 0		// needed for delayed drawing of blood
 	g_amt = 20
 	m_amt = 10
 
@@ -43,6 +44,8 @@
 	return
 
 /obj/item/weapon/reagent_containers/syringe/afterattack(obj/target, mob/user , proximity)
+	if(busy)
+		return
 	if(!proximity) return
 	if(!target.reagents) return
 
@@ -79,10 +82,13 @@
 						user << "<span class='notice'>You are unable to locate any blood.</span>"
 						return
 					if(target != user)
-						target.visible_message("<span class='danger'>[user] is trying to take a blood sample from  [target]!</span>", \
+						target.visible_message("<span class='danger'>[user] is trying to take a blood sample from [target]!</span>", \
 										"<span class='userdanger'>[user] is trying to take a blood sample from [target]!</span>")
+						busy = 1
 						if(!do_mob(user, target))
+							busy = 0
 							return
+					busy = 0
 					B.holder = src
 					B.volume = amount
 					//set reagent data
@@ -118,6 +124,7 @@
 						B.data["cloneable"] = 1
 					B.data["gender"] = T.gender
 					B.data["real_name"] = T.real_name
+					B.data["factions"] = T.faction
 					reagents.reagent_list += B
 					reagents.update_total()
 					on_reagent_change()

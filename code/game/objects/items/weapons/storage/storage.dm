@@ -104,7 +104,7 @@
 /obj/item/weapon/storage/proc/can_see_contents()
 	var/list/cansee = list()
 	for(var/mob/M in is_seeing)
-		if(M.s_active == src)
+		if(M.s_active == src && M.client)
 			cansee |= M
 		else
 			is_seeing -= M
@@ -276,7 +276,7 @@
 
 		add_fingerprint(usr)
 
-		if(!prevent_warning && !istype(W, /obj/item/weapon/gun/energy/crossbow))
+		if(!prevent_warning && !istype(W, /obj/item/weapon/gun/projectile/automatic/crossbow))
 			for(var/mob/M in viewers(usr, null))
 				if(M == usr)
 					usr << "<span class='notice'>You put [W] [preposition]to [src].</span>"

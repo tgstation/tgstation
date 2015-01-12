@@ -66,7 +66,7 @@
 	if(current)					//remove ourself from our old body's mind variable
 		current.mind = null
 
-		nanomanager.user_transferred(current, new_character)
+		SSnano.user_transferred(current, new_character)
 
 	if(key)
 		if(new_character.key != key)					//if we're transfering into a body with a key associated which is not ours
@@ -900,7 +900,7 @@
 					C.dna = changeling.absorbed_dna[1]
 					C.real_name = C.dna.real_name
 					updateappearance(C)
-					domutcheck(C, null)
+					domutcheck(C)
 
 	else if (href_list["nuclear"])
 		switch(href_list["nuclear"])

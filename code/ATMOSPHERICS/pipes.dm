@@ -34,7 +34,7 @@
 	if(istype(W, /obj/item/device/analyzer))
 		atmosanalyzer_scan(parent.air, user)
 
-	if(istype(W,/obj/item/device/pipe_painter))
+	if(istype(W,/obj/item/device/pipe_painter) || istype(W,/obj/item/weapon/pipe_dispenser))
 		return
 
 	return ..()
@@ -50,3 +50,7 @@
 			meter.transfer_fingerprints_to(PM)
 			qdel(meter)
 	..()
+
+/obj/machinery/atmospherics/pipe/proc/update_node_icon()
+	//Used for pipe painting. Overriden in the children.
+	return

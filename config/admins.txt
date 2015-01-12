@@ -73,4 +73,10 @@ Cuboos = Game Master
 thunder12345 = Game Master
 wjohnston = Game Master
 mandurrh = Game Master
+<<<<<<< HEAD
 dannno = Game Master
+=======
+thurgatar = Game Master
+xerux = Game Master
+dannno = Game Master
+>>>>>>> d5950a62a4f4208a1be32a3424765f23174b9db7

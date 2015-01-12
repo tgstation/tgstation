@@ -152,7 +152,7 @@
 	. = 0
 	for(var/obj/item/ammo_casing/AC in magazine.stored_ammo)
 		if(AC.BB)
-			process_fire(user, user)
+			process_fire(user, user,0)
 			. = 1
 
 /obj/item/weapon/gun/projectile/shotgun/blow_up(mob/user as mob)
@@ -160,21 +160,16 @@
 	if(chambered && chambered.BB)
 		process_fire(user, user,0)
 		. = 1
-	for(var/obj/item/ammo_casing/AC in magazine.stored_ammo)
-		if(AC.BB)
-			chambered = AC
-			process_fire(user, user,0)
-			. = 1
 
 /obj/item/weapon/gun/projectile/proc/sawoff(mob/user as mob)
 	if(sawn_state == SAWN_OFF)
-		user << "<span class='notice'>\The [src] is already shorten.</span>"
+		user << "<span class='notice'>\The [src] is already shortened.</span>"
 		return
 
 	if(sawn_state == SAWN_SAWING)
 		return
 
-	user.visible_message("<span class='notice'>[user] begin to shorten \the [src].</span>", "<span class='notice'>You begin to shorten \the [src].</span>")
+	user.visible_message("<span class='notice'>[user] begins to shorten \the [src].</span>", "<span class='notice'>You begin to shorten \the [src].</span>")
 
 	//if there's any live ammo inside the gun, makes it go off
 	if(blow_up(user))
@@ -184,6 +179,7 @@
 	sawn_state = SAWN_SAWING
 
 	if(do_after(user, 30))
+		user.visible_message("<span class='warning'>[user] shortens \the [src]!</span>", "<span class='warning'>You shorten \the [src]!</span>")
 		name = "sawn-off [src.name]"
 		desc = sawn_desc
 		icon_state = initial(icon_state) + "-sawn"
@@ -192,8 +188,40 @@
 		slot_flags &= ~SLOT_BACK	//you can't sling it on your back
 		slot_flags |= SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
 		sawn_state = SAWN_OFF
-		user.visible_message("<span class='warning'>[user] shorten \the [src]!</span>", "<span class='warning'>You shorten \the [src]!</span>")
 		update_icon()
 		return
 	else
 		sawn_state = SAWN_INTACT
+
+
+/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog
+	name = "syndicate shotgun"
+	desc = "A compact, mag-fed burst-fire shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines."
+	icon_state = "bulldog"
+	item_state = "bulldog"
+	w_class = 3.0
+	origin_tech = "combat=5;materials=4;syndicate=6"
+	mag_type = /obj/item/ammo_box/magazine/m12g
+	fire_sound = 'sound/weapons/Gunshot.ogg'
+	can_suppress = 0
+	burst_size = 1
+	fire_delay = 0
+
+/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/New()
+	..()
+	update_icon()
+	return
+/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/proc/update_magazine()
+	if(magazine)
+		src.overlays = 0
+		overlays += "[magazine.icon_state]"
+		return
+/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/update_icon()
+	src.overlays = 0
+	update_magazine()
+	icon_state = "bulldog[chambered ? "" : "-e"]"
+	return
+/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/afterattack()
+	..()
+	empty_alarm()
+	return

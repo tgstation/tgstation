@@ -18,7 +18,6 @@
 	damage = 50
 	flag = "bullet"
 
-
 /obj/item/projectile/bullet/gyro/on_hit(atom/target, blocked = 0)
 	explosion(target, -1, 0, 2)
 	return 1
@@ -105,7 +104,7 @@
 	damage = 15
 	damage_type = BRUTE
 	flag = "bomb"
-	var/range = 3
+	range = 3
 
 obj/item/projectile/kinetic/New()
 	var/turf/proj_turf = get_turf(src)

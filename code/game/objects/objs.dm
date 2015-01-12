@@ -11,12 +11,12 @@
 	var/force = 0
 
 /obj/proc/process()
-	processing_objects.Remove(src)
+	SSobj.processing.Remove(src)
 	return 0
 
 /obj/Destroy()
 	if(!istype(src, /obj/machinery))
-		processing_objects.Remove(src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
+		SSobj.processing.Remove(src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	..()
 
 /obj/assume_air(datum/gas_mixture/giver)
@@ -73,7 +73,7 @@
 			var/mob/living/carbon/human/H = usr
 			if(!(usr in nearby))
 				if(usr.client && usr.machine==src)
-					if(TK in H.mutations)
+					if(H.dna.check_mutation(TK))
 						is_in_use = 1
 						src.attack_hand(usr)
 		in_use = is_in_use

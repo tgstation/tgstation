@@ -25,3 +25,6 @@
 
 /mob/living/carbon/brain/toggle_throw_mode()
 	return
+
+/mob/living/carbon/brain/ex_act() //you cant blow up brainmobs because it makes transfer_to() freak out when borgs blow up.
+	return
