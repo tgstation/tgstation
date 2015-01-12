@@ -47,7 +47,7 @@ var/list/solars_list = list()
 	solars_list -= src
 
 /obj/machinery/power/solar/connect_to_network()
-	..()
+	. = ..()
 	solars_list += src
 
 /obj/machinery/power/solar/proc/make()
@@ -331,9 +331,10 @@ var/list/solars_list = list()
 	solars_list -= src
 
 /obj/machinery/power/solar_control/connect_to_network()
-	..()
+	. = ..()
+
 	if(powernet)
-		solars_list.Add(src)
+		solars_list += src
 
 /obj/machinery/power/solar_control/initialize()
 	..()
