@@ -11653,7 +11653,7 @@
 "eqe" = (/obj/effect/decal/warning_stripes{color = "#ffff00"; dir = 8; icon_state = "pathmarker"; tag = "icon-pathmarker (WEST)"},/obj/effect/decal/warning_stripes{color = "#ffff00"; dir = 4; icon_state = "pathmarker"},/turf/simulated/floor/plating/airless,/area/engineering/engine)
 "eqf" = (/obj/structure/lattice,/obj/structure/grille,/obj/structure/grille,/obj/structure/lattice,/turf/space,/area)
 "eqg" = (/obj/structure/sign/securearea{desc = "A warning sign which reads 'RADIOACTIVE AREA'"; icon_state = "radiation"; name = "RADIOACTIVE AREA"; pixel_x = 0},/turf/simulated/wall/r_wall,/area)
-"eqh" = (/obj/machinery/door/airlock/external{req_access_txt = "0"; req_one_access_txt = "10;24"},/turf/simulated/floor/engine/vacuum,/area/engineering/supermatter_room)
+"eqh" = (/obj/machinery/door/airlock/external{name = "Chamber Airlock"; req_access_txt = "0"; req_one_access_txt = "10;24"},/turf/simulated/floor/engine/vacuum,/area/engineering/supermatter_room)
 "eqi" = (/obj/structure/transit_tube{icon_state = "D-SW"},/obj/structure/lattice,/turf/space,/area)
 "eqj" = (/obj/structure/girder/reinforced,/turf/simulated/floor/plating,/area)
 "eqp" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area/vox_trading_post/hallway)
