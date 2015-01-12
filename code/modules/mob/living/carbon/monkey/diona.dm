@@ -72,7 +72,7 @@
 	gender = NEUTER
 	dna.mutantrace = "plant"
 	greaterform = "Diona"
-	add_language("Rootspeak")
+	//add_language("Rootspeak")
 
 //Verbs after this point.
 
@@ -142,8 +142,8 @@
 		src.loc = L.loc
 		del(L)
 
-	for(var/datum/language/L in languages)
-		adult.add_language(L.name)
+	//for(var/datum/language/L in languages)
+		//adult.add_language(L.name)
 	adult.regenerate_icons()
 
 	adult.name = src.name
@@ -186,10 +186,9 @@
 		ready_evolve = 1
 		src << "\green You feel ready to move on to your next stage of growth."
 	else if(donors.len == 2)
-		universal_understand = 1
 		src << "\green You feel your awareness expand, and realize you know how to understand the creatures around you."
 	else if(donors.len == 4)
-		universal_speak = 1
+		languages = HUMAN
 		src << "\green You feel your vocal range expand, and realize you know how to speak with the creatures around you."
 	else if(donors.len == 3)
 		src << "\green More blood seeps into you, continuing to expand your growing collection of memories."

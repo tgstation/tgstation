@@ -850,3 +850,6 @@
 
 /mob/living/singularity_pull(S)
 	step_towards(src, S)
+
+/mob/living/proc/InCritical()
+	return (src.health < 0 && src.health > -95.0 && stat == UNCONSCIOUS)

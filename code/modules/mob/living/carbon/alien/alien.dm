@@ -5,15 +5,14 @@
 /mob/living/carbon/alien
 	name = "alien" //The alien, not Alien
 	voice_name = "alien"
-	speak_emote = list("hisses")
+	//speak_emote = list("hisses")
 	icon = 'icons/mob/alien.dmi'
 	gender = NEUTER
 	dna = null
+	languages = ALIEN
 
 	var/storedPlasma = 250
 	var/max_plasma = 500
-
-	alien_talk_understand = 1
 
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/has_fine_manipulation = 0

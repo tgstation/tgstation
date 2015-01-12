@@ -43,7 +43,6 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 	if(!on)
 		return
-	//world << "[src] ([src.id]) - [signal.debug_print()]"
 	var/send_count = 0
 
 	signal.data["slow"] += rand(0, round((100-integrity))) // apply some lag based on integrity
@@ -79,12 +78,9 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			"name" = signal.data["name"],
 			"job" = signal.data["job"],
 			"key" = signal.data["key"],
-			"vmessage" = signal.data["vmessage"],
-			"vname" = signal.data["vname"],
 			"vmask" = signal.data["vmask"],
 			"compression" = signal.data["compression"],
 			"message" = signal.data["message"],
-			"connection" = signal.data["connection"],
 			"radio" = signal.data["radio"],
 			"slow" = signal.data["slow"],
 			"traffic" = signal.data["traffic"],
@@ -552,22 +548,17 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 				update_logs()
 
 				var/datum/comm_log_entry/log = new
-				var/mob/M = signal.data["mob"]
 
 				// Copy the signal.data entries we want
 				log.parameters["mobtype"] = signal.data["mobtype"]
 				log.parameters["job"] = signal.data["job"]
 				log.parameters["key"] = signal.data["key"]
-				log.parameters["vmessage"] = signal.data["message"]
-				log.parameters["vname"] = signal.data["vname"]
 				log.parameters["message"] = signal.data["message"]
 				log.parameters["name"] = signal.data["name"]
 				log.parameters["realname"] = signal.data["realname"]
 
-				if(!istype(M, /mob/new_player) && M)
-					log.parameters["uspeech"] = M.universal_speak
-				else
-					log.parameters["uspeech"] = 0
+				log.parameters["uspeech"] = signal.data["languages"] & HUMAN //good enough
+
 
 				// If the signal is still compressed, make the log entry gibberish
 				if(signal.data["compression"] > 0)
@@ -575,7 +566,6 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 					log.parameters["job"] = Gibberish(signal.data["job"], signal.data["compression"] + 50)
 					log.parameters["name"] = Gibberish(signal.data["name"], signal.data["compression"] + 50)
 					log.parameters["realname"] = Gibberish(signal.data["realname"], signal.data["compression"] + 50)
-					log.parameters["vname"] = Gibberish(signal.data["vname"], signal.data["compression"] + 50)
 					log.input_type = "Corrupt File"
 
 				// Log and store everything that needs to be logged
