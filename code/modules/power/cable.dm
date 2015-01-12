@@ -253,7 +253,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/structure/cable/proc/add_load(var/amount)
 	if(powernet)
-		powernet.newload += amount
+		powernet.load += amount
 
 /obj/structure/cable/proc/surplus()
 	if(powernet)

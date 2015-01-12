@@ -1049,7 +1049,7 @@ ________________________________________________________________________________
 						var/drained = 0
 						if(PN&&do_after(U,10))
 							drained = min(drain, PN.avail)
-							PN.newload += drained
+							PN.load += drained
 							if(drained < drain)//if no power on net, drain apcs
 								for(var/obj/machinery/power/terminal/T in PN.nodes)
 									if(istype(T.master, /obj/machinery/power/apc))
@@ -1101,7 +1101,7 @@ ________________________________________________________________________________
 				var/drained = 0
 				if(PN&&do_after(U,10))
 					drained = min(drain, PN.avail)
-					PN.newload += drained
+					PN.load += drained
 					if(drained < drain)//if no power on net, drain apcs
 						for(var/obj/machinery/power/terminal/T in PN.nodes)
 							if(istype(T.master, /obj/machinery/power/apc))

@@ -31,7 +31,7 @@
 
 /obj/machinery/power/proc/add_load(var/amount)
 	if(powernet)
-		powernet.newload += amount
+		powernet.load += amount
 
 /obj/machinery/power/proc/surplus()
 	if(powernet)
@@ -340,7 +340,7 @@
 		source_area.use_power(drained_energy / CELLRATE)
 	else if(istype(power_source, /datum/powernet))
 		var/drained_power = drained_energy / CELLRATE						// convert from "joules" to "watts"
-		PN.newload += drained_power
+		PN.load += drained_power
 	else if(istype(power_source, /obj/item/weapon/cell))
 		cell.use(drained_energy)
 
@@ -411,37 +411,24 @@
 	M.powernet = src
 	nodes += M
 
-//handles the power changes in the powernet
-//called every ticks by the powernet controller
+// handles the power changes in the powernet
+// called every ticks by the powernet controller
 /datum/powernet/proc/reset()
-	load = newload
-	newload = 0
-	avail = newavail
-	newavail = 0
+	// see if there's a surplus of power remaining in the powernet and stores unused power in the SMES
+	netexcess = avail - load
 
+	if(netexcess > 100 && nodes && nodes.len) // if there was excess power last cycle
+		for(var/obj/machinery/power/smes/S in nodes) // find the SMESes in the network
+			S.restore() // and restore some of the power that was used
+
+	// updates the viewed load (as seen on power computers)
 	viewload = 0.8 * viewload + 0.2 * load
 	viewload = round(viewload)
 
-	var/numapc = 0
-
-	if(nodes && nodes.len)
-		for(var/obj/machinery/power/terminal/term in nodes)
-			if(istype( term.master, /obj/machinery/power/apc))
-				numapc++
-
-	if(numapc)
-		perapc = avail/numapc
-
-	netexcess = avail - load
-
-	if(netexcess > 100)										// if there was excess power last cycle
-		if(nodes && nodes.len)
-			for(var/obj/machinery/power/smes/S in nodes)	// find the SMESes in the network
-				if(S.powernet == src)
-					S.restore()								// and restore some of the power that was used
-				else
-					error("[S.name] (\ref[S]) had a [S.powernet ? "different (\ref[S.powernet])" : "null"] powernet to our powernet (\ref[src]).") // this line is a faggot and using the normal ERROR proc breaks it
-					nodes.Remove(S)
+	// reset the powernet
+	load = 0
+	avail = newavail
+	newavail = 0
 
 /datum/powernet/proc/get_electrocute_damage()
 	// cube root of power times 1,5 to 2 in increments of 10^-1
