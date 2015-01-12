@@ -367,7 +367,8 @@ By design, d1 is the smallest direction and d2 is the highest
 			if(N.terminal.powernet)
 				merge_powernets(powernet, N.terminal.powernet)
 			else
-				powernet.add_machine(N.terminal)
+				if(!N.terminal.connect_to_network())
+					N.terminal.disconnect_from_network()
 		else if(istype(AM, /obj/machinery/power)) // other power machines
 			var/obj/machinery/power/M = AM
 
@@ -377,7 +378,8 @@ By design, d1 is the smallest direction and d2 is the highest
 			if(M.powernet)
 				merge_powernets(powernet, M.powernet)
 			else
-				powernet.add_machine(M)
+				if(!M.connect_to_network())
+					M.disconnect_from_network()
 
 //////////////////////////////////////////////
 // Powernets handling helpers
