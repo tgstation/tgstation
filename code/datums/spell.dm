@@ -25,6 +25,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 	var/clothes_req = 1 //see if it requires clothes
 	var/human_req = 0 //spell can only be cast by humans
+	var/nonabstract_req = 0 //spell can only be cast by mobs that are physical entities
 	var/stat_allowed = 0 //see if it requires being conscious/alive, need to set to 1 for ghostpells
 	var/invocation = "HURP DURP" //what is uttered when the wizard casts the spell
 	var/invocation_emote_self = null
@@ -94,6 +95,9 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	else
 		if(clothes_req || human_req)
 			user << "<span class='notice'>This spell can only be cast by humans!</span>"
+			return 0
+		if(nonabstract_req && (isbrain(user) || ispAI(user)))
+			user << "<span class='notice'>This spell can only be cast by physical beings!</span>"
 			return 0
 
 	if(!skipcharge)
