@@ -392,24 +392,6 @@
 	oneharvest = 1
 	potency = 10
 	growthstages = 4
-	mutatelist = list(/obj/item/seeds/singulopotatoseed)
-
-/obj/item/seeds/singulopotatoseed
-	name = "pack of singularity seeds"
-	desc = "These seeds grow into singularity potatoes. 97% less dangerous than a regular singularity!"
-	icon_state = "seed-singulopotato"
-	species = "singulopotato"
-	plantname = "Singularity Potato"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/singulopotato
-	lifespan = 20
-	endurance = 10
-	maturation = 5
-	production = 5
-	yield = 3
-	potency = 10
-	growthstages = 3
-	plant_type = 0
-	rarity = 30
 
 /obj/item/seeds/icepepperseed
 	name = "pack of chilly pepper seeds"
