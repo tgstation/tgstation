@@ -304,8 +304,7 @@ datum/reagent/medicine/inacusiate
 	color = "#6600FF" // rgb: 100, 165, 255
 
 datum/reagent/medicine/inacusiate/on_mob_life(var/mob/living/M as mob)
-	M.ear_damage = 0
-	M.ear_deaf = 0
+	M.setEarDamage(0,0)
 	..()
 	return
 
