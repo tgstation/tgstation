@@ -24,7 +24,7 @@
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		for(var/datum/mutation/human/HM in remove_mutations)
-			HM.on_losing(M)
+			HM.force_lose(M)
 		for(var/datum/mutation/human/HM in add_mutations)
 			if(HM.name == RACEMUT)
 				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")

@@ -60,7 +60,7 @@
 	perform_exposure()
 
 /obj/effect/hotspot/proc/perform_exposure()
-	var/turf/simulated/floor/location = loc
+	var/turf/simulated/location = loc
 	if(!istype(location))	return 0
 
 	if(volume > CELL_VOLUME*0.95)	bypassing = 1
@@ -89,7 +89,7 @@
 		just_spawned = 0
 		return 0
 
-	var/turf/simulated/floor/location = loc
+	var/turf/simulated/location = loc
 	if(!istype(location))
 		Kill()
 		return

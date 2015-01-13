@@ -27,7 +27,6 @@
 	internal_organs += new /obj/item/organ/brain
 
 	// for spawned humans; overwritten by other code
-	create_dna(src)
 	ready_dna(src)
 	randomize_human(src)
 
@@ -52,25 +51,14 @@
 
 /mob/living/carbon/human/Stat()
 	..()
-	statpanel("Status")
-	if (client.statpanel == "Status")
+
+	if(statpanel("Status"))
 		stat(null, "Intent: [a_intent]")
 		stat(null, "Move Mode: [m_intent]")
 		if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")
 			var/datum/game_mode/malfunction/malf = ticker.mode
 			if(malf.malf_mode_declared && (malf.apcs > 0))
 				stat(null, "Time left: [max(malf.AI_win_timeleft/malf.apcs, 0)]")
-
-		var/ETA
-		switch(SSshuttle.emergency.mode)
-			if(SHUTTLE_CALL)
-				ETA = "ETA"
-			if(SHUTTLE_DOCKED)
-				ETA = "ETD"
-		if(ETA)
-			var/timeleft = SSshuttle.emergency.timeLeft()
-			stat(null, "[ETA]-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
-
 
 		if (internal)
 			if (!internal.air_contents)

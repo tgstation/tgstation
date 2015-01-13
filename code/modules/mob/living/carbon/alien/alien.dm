@@ -150,25 +150,13 @@
 	return 1 // Aliens can eat, and they can be fed food/drink
 
 /mob/living/carbon/alien/Stat()
-
-	statpanel("Status")
-	stat(null, "Intent: [a_intent]")
-	stat(null, "Move Mode: [m_intent]")
-
 	..()
 
-	if (client.statpanel == "Status")
+	if(statpanel("Status"))
+		stat(null, "Intent: [a_intent]")
+		stat(null, "Move Mode: [m_intent]")
 		stat(null, "Plasma Stored: [getPlasma()]/[max_plasma]")
 
-		var/ETA
-		switch(SSshuttle.emergency.mode)
-			if(SHUTTLE_CALL)
-				ETA = "ETA"
-			if(SHUTTLE_DOCKED)
-				ETA = "ETD"
-		if(ETA)
-			var/timeleft = SSshuttle.emergency.timeLeft()
-			stat(null, "[ETA]-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 /mob/living/carbon/alien/Stun(amount)
 	if(status_flags & CANSTUN)
 		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun

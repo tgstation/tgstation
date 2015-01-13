@@ -346,12 +346,10 @@
 	updatehealth()
 
 	if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
-		eye_blind = max(eye_blind, 1)
 		silent = 0
 	else				//ALIVE. LIGHTS ARE ON
 		if(health < config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
 			death()
-			eye_blind = max(eye_blind, 1)
 			stat = DEAD
 			silent = 0
 			return 1
@@ -367,11 +365,9 @@
 
 		if(paralysis)
 			AdjustParalysis(-1)
-			eye_blind = max(eye_blind, 1)
 			stat = UNCONSCIOUS
 		else if(sleeping)
 			sleeping = max(sleeping-1, 0)
-			eye_blind = max(eye_blind, 1)
 			stat = UNCONSCIOUS
 			if( prob(10) && health )
 				spawn(0)
@@ -381,11 +377,10 @@
 			stat = CONSCIOUS
 
 		//Eyes
-		if(disabilities & BLIND)	//disabled-blind, doesn't get better on its own
-			eye_blind = max(eye_blind, 1)
+		if(disabilities & BLIND || stat)	//disabled-blind, doesn't get better on its own
+			eye_blind = max(eye_blind, 2)
 		else if(eye_blind)			//blindness, heals slowly over time
 			eye_blind = max(eye_blind-1,0)
-			eye_blind = max(eye_blind, 1)
 		else if(eye_blurry)			//blurry eyes heal slowly
 			eye_blurry = max(eye_blurry-1, 0)
 
