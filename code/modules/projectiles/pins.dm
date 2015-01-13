@@ -7,6 +7,7 @@
 	flags =  CONDUCT
 	w_class = 1
 	attack_verb = list("poked")
+	var/emagged = 0
 
 /obj/item/device/firing_pin/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
@@ -18,6 +19,11 @@
 				loc = G
 			else
 				user << "<span class ='notice'>This firearm already has a firing pin installed.</span>"
+
+/obj/item/device/firing_pin/emag_act(mob/user)
+	if(!emagged)
+		emagged = 1
+		user << "<span class='notice'>You override the authentication mechanism.</span>"
 
 /obj/item/device/firing_pin/proc/pin_auth(mob/living/user)
 	return 1

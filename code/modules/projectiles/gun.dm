@@ -36,23 +36,36 @@
 	var/obj/item/device/flashlight/F = null
 	var/can_flashlight = 0
 
+
 /obj/item/weapon/gun/New()
 	..()
 	if(pin)
 		pin = new pin(src)
 
+
+/obj/item/weapon/gun/examine(mob/user)
+	..()
+	if(pin)
+		user << "It has a [pin] installed."
+	else
+		user << "It doesn't have a firing pin installed, and won't fire."
+
+
 /obj/item/weapon/gun/proc/process_chamber()
 	return 0
+
 
 //check if there's enough ammo/energy/whatever to shoot one time
 //i.e if clicking would make it shoot
 /obj/item/weapon/gun/proc/can_shoot()
 	return 1
 
+
 /obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	user << "<span class='danger'>*click*</span>"
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	return
+
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user as mob|obj, var/pointblank = 0, var/mob/pbtarget = null, var/message = 1)
 	if(recoil)
@@ -70,9 +83,11 @@
 		else
 			user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
 
+
 /obj/item/weapon/gun/emp_act(severity)
 	for(var/obj/O in contents)
 		O.emp_act(severity)
+
 
 /obj/item/weapon/gun/afterattack(atom/target as mob|obj|turf, mob/living/carbon/human/user as mob|obj, flag, params)//TODO: go over this
 	if(flag) //It's adjacent, is the user, or is on the user's person
@@ -99,10 +114,12 @@
 
 	process_fire(target,user,1,params)
 
+
 /obj/item/weapon/gun/proc/can_trigger_gun(mob/living/carbon/user)
 	if (!user.IsAdvancedToolUser())
 		user << "<span class='notice'>You don't have the dexterity to do this!</span>"
 		return 0
+
 
 	if(trigger_guard)
 		if(istype(user) && user.dna)
@@ -114,9 +131,10 @@
 				return 0
 	return 1
 
+
 /obj/item/weapon/gun/proc/handle_pins(mob/living/user)
 	if(pin)
-		if(pin.pin_auth(user))
+		if(pin.pin_auth(user) || pin.emagged)
 			return 1
 		else
 			user << "<span class='warning'>INVALID USER.</span>"
@@ -124,6 +142,7 @@
 	else
 		user << "<span class='notice'>\The [src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>"
 	return 0
+
 
 /obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, var/message = 1, params)
 	add_fingerprint(user)

@@ -4,7 +4,7 @@
 
 /datum/design/pin_testing
 	name = "test-range firing pin"
-	desc = "This safety firing pin allows weapons to be fired within proximity to a firing range."
+	desc = "This safety firing pin allows firearms to be operated within proximity to a firing range."
 	id = "pin_testing"
 	req_tech = list("combat" = 1, "materials" = 2)
 	build_type = PROTOLATHE
@@ -16,7 +16,7 @@
 	name = "loyalty firing pin"
 	desc = "This is a security firing pin which only authorizes users who are loyalty-implanted."
 	id = "pin_loyalty"
-	req_tech = list("combat" = 5, "materials" = 3, "powerstorage" = 3)
+	req_tech = list("combat" = 10, "materials" = 3, "powerstorage" = 3)
 	build_type = PROTOLATHE
 	materials = list("$silver" = 600, "$diamond" = 600, "$uranium" = 200)
 	build_path = /obj/item/device/firing_pin/implant/loyalty
