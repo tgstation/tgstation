@@ -216,6 +216,48 @@
 	var/new_reagent = pick("polonium", "histamine", "formaldehyde", "venom", "neurotoxin2", "cyanide")
 	reagents.add_reagent(new_reagent, 50)
 
+/obj/item/weapon/reagent_containers/glass/bottle/polonium
+	name = "polonium bottle"
+	desc = "A small bottle. Contains Polonium."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle16"
+	spawned_reagent = "polonium"
+
+/obj/item/weapon/reagent_containers/glass/bottle/venom
+	name = "venom bottle"
+	desc = "A small bottle. Contains Venom."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle16"
+	spawned_reagent = "venom"
+
+/obj/item/weapon/reagent_containers/glass/bottle/neurotoxin2
+	name = "neurotoxin bottle"
+	desc = "A small bottle. Contains Neurotoxin."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle16"
+	spawned_reagent = "neurotoxin2"
+
+/obj/item/weapon/reagent_containers/glass/bottle/formaldehyde
+	name = "formaldehyde bottle"
+	desc = "A small bottle. Contains Formaldehyde."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle16"
+	spawned_reagent = "formaldehyde"
+
+/obj/item/weapon/reagent_containers/glass/bottle/cyanide
+	name = "cyanide bottle"
+	desc = "A small bottle. Contains Cyanide."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle16"
+	spawned_reagent = "cyanide"
+
+/obj/item/weapon/reagent_containers/glass/bottle/histamine
+	name = "histamine bottle"
+	desc = "A small bottle. Contains Histamine."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle16"
+	spawned_reagent = "histamine"
+
 /obj/item/weapon/reagent_containers/glass/bottle/beesease
 	name = "Beesease culture bottle"
 	desc = "A small bottle. Contains a sample of invasive Apidae."

@@ -64,71 +64,18 @@
 
 /datum/reagent/sorium/reaction_turf(var/turf/simulated/T, var/volume)
 	if(istype(T, /turf/simulated/floor/))
-		for(var/atom/X in orange(5,T))
-			if(istype(X, /atom/movable))
-				if((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))
-					step_away(X,T)
-					step_away(X,T)
-					step_away(X,T)
-				else if(istype(X,/mob/living/carbon/human))
-					var/mob/living/carbon/human/H = X
-					if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
-						var/obj/item/clothing/shoes/magboots/M = H.shoes
-						if(M.magpulse)
-							continue
-					H.apply_effect(1, WEAKEN, 0)
-					step_away(H,T)
-					step_away(H,T)
-					step_away(H,T)
-			return
+		goonchem_vortex(T, 1, 5, 3)
 /datum/reagent/sorium/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 	if(!istype(M, /mob/living))
 		return
 	if(method == TOUCH)
 		var/turf/simulated/T = get_turf(M)
-		for(var/atom/X in orange(5,T))
-			if(istype(X, /atom/movable))
-				if((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))
-					step_away(X,T)
-					step_away(X,T)
-					step_away(X,T)
-				else if(istype(X,/mob/living/carbon/human))
-					var/mob/living/carbon/human/H = X
-					if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
-						var/obj/item/clothing/shoes/magboots/S = H.shoes
-						if(S.magpulse)
-							continue
-					H.apply_effect(1, WEAKEN, 0)
-					step_away(H,T)
-					step_away(H,T)
-					step_away(H,T)
-				return
+		goonchem_vortex(T, 1, 5, 3)
+
 
 /datum/chemical_reaction/sorium/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/turf/simulated/T = get_turf(holder.my_atom)
-	for(var/atom/X in orange(5,T))
-		if(istype(X, /atom/movable))
-			if((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))
-				step_away(X,T)
-				step_away(X,T)
-				step_away(X,T)
-				step_away(X,T)
-				step_away(X,T)
-				step_away(X,T)
-			else if(istype(X,/mob/living/carbon/human))
-				var/mob/living/carbon/human/H = X
-				if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
-					var/obj/item/clothing/shoes/magboots/M = H.shoes
-					if(M.magpulse)
-						continue
-				H.apply_effect(1, WEAKEN, 0)
-				step_away(H,T)
-				step_away(H,T)
-				step_away(H,T)
-				step_away(H,T)
-				step_away(H,T)
-				step_away(H,T)
-	return
+	goonchem_vortex(T, 1, 5, 6)
 
 /datum/reagent/liquid_dark_matter
 	name = "Liquid Dark Matter"
@@ -147,67 +94,26 @@
 
 /datum/reagent/liquid_dark_matter/reaction_turf(var/turf/simulated/T, var/volume)
 	if(istype(T, /turf/simulated/floor/))
-		for(var/atom/X in orange(5,T))
-			if(istype(X, /atom/movable))
-				if((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))
-					step_towards(X,T)
-					step_towards(X,T)
-					step_towards(X,T)
-				else if(istype(X,/mob/living/carbon/human))
-					var/mob/living/carbon/human/H = X
-					if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
-						var/obj/item/clothing/shoes/magboots/M = H.shoes
-						if(M.magpulse)
-							continue
-					H.apply_effect(1, WEAKEN, 0)
-					step_towards(H,T)
-					step_towards(H,T)
-					step_towards(H,T)
-			return
+		goonchem_vortex(T, 0, 5, 3)
+		return
 /datum/reagent/liquid_dark_matter/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 	if(!istype(M, /mob/living))
 		return
 	if(method == TOUCH)
 		var/turf/simulated/T = get_turf(M)
-		for(var/atom/X in orange(5,T))
-			if(istype(X, /atom/movable))
-				if((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))
-					step_towards(X,T)
-					step_towards(X,T)
-					step_towards(X,T)
-				else if(istype(X,/mob/living/carbon/human))
-					var/mob/living/carbon/human/H = X
-					if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
-						var/obj/item/clothing/shoes/magboots/S = H.shoes
-						if(S.magpulse)
-							continue
-					H.apply_effect(1, WEAKEN, 0)
-					step_towards(H,T)
-					step_towards(H,T)
-					step_towards(H,T)
-				return
+		goonchem_vortex(T, 0, 5, 3)
+		return
 /datum/chemical_reaction/liquid_dark_matter/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/turf/simulated/T = get_turf(holder.my_atom)
-	for(var/atom/X in orange(5,T))
-		if(istype(X, /atom/movable))
-			if((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))
-				step_towards(X,T)
-				step_towards(X,T)
-				step_towards(X,T)
-				step_towards(X,T)
-				step_towards(X,T)
-				step_towards(X,T)
-			else if(istype(X,/mob/living/carbon/human))
-				var/mob/living/carbon/human/H = X
-				if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
-					var/obj/item/clothing/shoes/magboots/M = H.shoes
-					if(M.magpulse)
-						continue
-				H.apply_effect(1, WEAKEN, 0)
-				step_towards(H,T)
-				step_towards(H,T)
-				step_towards(H,T)
-				step_towards(H,T)
-				step_towards(H,T)
-				step_towards(H,T)
+	goonchem_vortex(T, 0, 5, 6)
 	return
+
+proc/goonchem_vortex(var/turf/simulated/T, var/setting_type, var/range, var/pull_times)
+	for(var/atom/movable/X in orange(range, T))
+		if(istype(X, /atom/movable))
+			if((X))
+				if(setting_type)
+					for(var/i = 0, i < pull_times, i++)
+						step_towards(X,T)
+				else
+					X.throw_at(T)
