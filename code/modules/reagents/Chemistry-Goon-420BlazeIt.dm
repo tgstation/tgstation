@@ -14,7 +14,7 @@ datum/reagent/nicotine
 datum/reagent/nicotine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	var/smoke_message = pick("You can just feel your lungs dying!", "You feel relaxed.", "You feel calmed.", "You feel the lung cancer forming.", "You feel the money you wasted.", "You feel like a space cowboy.", "You feel rugged.")
-	if(prob(30))
+	if(prob(5))
 		M << smoke_message
 	M.AdjustStunned(-1)
 	M.adjustStaminaLoss(-1*REM)
@@ -34,7 +34,7 @@ datum/reagent/crank
 datum/reagent/crank/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	var/high_message = pick("You feel jittery.", "You feel like you gotta go fast.", "You feel like you need to step it up.")
-	if(prob(30))
+	if(prob(5))
 		M << high_message
 	M.AdjustParalysis(-2)
 	M.AdjustStunned(-2)
@@ -68,7 +68,7 @@ datum/reagent/crank/on_mob_life(var/mob/living/M as mob)
 /datum/reagent/krokodil/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	var/high_message = pick("You feel calm.", "You feel collected.", "You feel like you need to relax.")
-	if(prob(30))
+	if(prob(5))
 		M << high_message
 	if(prob(10))
 		M.adjustBrainLoss(rand(1,5)*REM)
