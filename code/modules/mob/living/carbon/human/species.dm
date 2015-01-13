@@ -401,7 +401,7 @@
 	else
 		if(H.overeatduration > 500)
 			H << "<span class='danger'>You suddenly feel blubbery!</span>"
-			H.mutations |= FAT
+			H.disabilities |= FAT
 			H.update_inv_w_uniform(0)
 			H.update_inv_wear_suit()
 
