@@ -87,12 +87,12 @@ display round(lastgen) and plasmatank amount
 	if(!anchored)
 		return
 
-/obj/machinery/power/port_gen/examine()
-	set src in oview(1)
+/obj/machinery/power/port_gen/examine(mob/user)
+	..()
 	if(active)
-		usr << "\blue The generator is on."
+		usr << "<span class='info'>The generator is on.</span>"
 	else
-		usr << "\blue The generator is off."
+		usr << "<span class='info'>The generator is off.</span>"
 
 /obj/machinery/power/port_gen/pacman
 	name = "P.A.C.M.A.N.-type Portable Generator"
@@ -143,10 +143,12 @@ display round(lastgen) and plasmatank amount
 	reliability = min(round(temp_reliability / 4), 100)
 	power_gen = round(initial(power_gen) * (max(2, temp_rating) / 2))
 
-/obj/machinery/power/port_gen/pacman/examine()
+/obj/machinery/power/port_gen/pacman/examine(mob/user)
 	..()
-	usr << "\blue The generator has [sheets] units of [sheet_name] fuel left, producing [power_gen] per cycle."
-	if(crit_fail) usr << "\red The generator seems to have broken down."
+	if(crit_fail)
+		user << "<span class='warning'>The generator seems to have broken down.</span>"
+	else
+		user << "<span class='info'>The generator has [sheets] units of [sheet_name] fuel left, producing [power_gen] per cycle.</span>"
 
 /obj/machinery/power/port_gen/pacman/HasFuel()
 	if(sheets >= 1 / (time_per_sheet / power_output) - sheet_left)
@@ -234,9 +236,9 @@ display round(lastgen) and plasmatank amount
 		var/obj/item/stack/addstack = O
 		var/amount = min((max_sheets - sheets), addstack.amount)
 		if(amount < 1)
-			user << "\blue The [src.name] is full!"
+			user << "<span class='notice'>The [src.name] is full!</span>"
 			return
-		user << "\blue You add [amount] sheets to the [src.name]."
+		user << "<span class='notice'>You add [amount] sheets to the [src.name].</span"
 		sheets += amount
 		addstack.use(amount)
 		updateUsrDialog()

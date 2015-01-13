@@ -2568,7 +2568,7 @@ datum
 							holder.remove_reagent("capsaicin", 5)
 						if(istype(M, /mob/living/carbon/slime))
 							M.bodytemperature -= rand(5,20)
-						if(M.dna.mutantrace == "slime")
+						if(M.dna && M.dna.mutantrace == "slime")
 							M.bodytemperature -= rand(5,20)
 					if(15 to 25)
 						M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT

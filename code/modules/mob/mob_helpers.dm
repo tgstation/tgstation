@@ -1,138 +1,3 @@
-
-// fun if you want to typecast humans/monkeys/etc without writing long path-filled lines.
-/proc/ishuman(A)
-	if(istype(A, /mob/living/carbon/human))
-		return 1
-	return 0
-
-/proc/ismonkey(A)
-	if(A && istype(A, /mob/living/carbon/monkey))
-		return 1
-	return 0
-
-/proc/isbrain(A)
-	if(A && istype(A, /mob/living/carbon/brain))
-		return 1
-	return 0
-
-/proc/isalien(A)
-	if(istype(A, /mob/living/carbon/alien))
-		return 1
-	return 0
-
-/proc/isalienadult(A)
-	if(istype(A, /mob/living/carbon/alien/humanoid))
-		return 1
-	return 0
-
-/proc/islarva(A)
-	if(istype(A, /mob/living/carbon/alien/larva))
-		return 1
-	return 0
-
-/proc/isslime(A)
-	if(istype(A, /mob/living/carbon/slime))
-		return 1
-	return 0
-
-/proc/isslimeadult(A)
-	if(istype(A, /mob/living/carbon/slime/adult))
-		return 1
-	return 0
-
-/proc/isrobot(A)
-	if(istype(A, /mob/living/silicon/robot))
-		return 1
-	return 0
-
-/proc/isanimal(A)
-	if(istype(A, /mob/living/simple_animal))
-		return 1
-	return 0
-
-/proc/iscorgi(A)
-	if(istype(A, /mob/living/simple_animal/corgi))
-		return 1
-	return 0
-
-/proc/iscrab(A)
-	if(istype(A, /mob/living/simple_animal/crab))
-		return 1
-	return 0
-
-/proc/iscat(A)
-	if(istype(A, /mob/living/simple_animal/cat))
-		return 1
-	return 0
-
-/proc/ismouse(A)
-	if(istype(A, /mob/living/simple_animal/mouse))
-		return 1
-	return 0
-
-/proc/isbear(A)
-	if(istype(A, /mob/living/simple_animal/hostile/bear))
-		return 1
-	return 0
-
-/proc/iscarp(A)
-	if(istype(A, /mob/living/simple_animal/hostile/carp))
-		return 1
-	return 0
-
-/proc/isclown(A)
-	if(istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
-		return 1
-	return 0
-
-/proc/isAI(A)
-	if(istype(A, /mob/living/silicon/ai))
-		return 1
-	return 0
-
-/proc/isAIEye(A)
-	if(istype(A, /mob/camera/aiEye))
-		return 1
-	return 0
-
-/proc/ispAI(A)
-	if(istype(A, /mob/living/silicon/pai))
-		return 1
-	return 0
-
-/proc/iscarbon(A)
-	if(istype(A, /mob/living/carbon))
-		return 1
-	return 0
-
-/proc/issilicon(A)
-	if(istype(A, /mob/living/silicon))
-		return 1
-	return 0
-
-/proc/isMoMMI(A)
-	if(istype(A, /mob/living/silicon/robot/mommi))
-		return 1
-	return 0
-
-/proc/isbot(A)
-	if(istype(A, /obj/machinery/bot))
-		return 1
-	return 0
-
-/proc/isborer(A)
-	return istype(A, /mob/living/simple_animal/borer)
-
-/proc/isshade(A)
-	if(istype(A, /mob/living/simple_animal/shade))
-		return 1
-	return 0
-
-/proc/isconstruct(A)
-	if(istype(A, /mob/living/simple_animal/construct))
-		return 1
-	return 0
-
 /proc/isAdminGhost(A)
 	if(isobserver(A))
 		var/mob/dead/observer/O = A
@@ -155,26 +20,6 @@
 	if(isAdminGhost(A))
 		if(desc!="")
 			add_ghostlogs(A, target, desc, 1)
-		return 1
-	return 0
-
-/proc/isliving(A)
-	if(istype(A, /mob/living))
-		return 1
-	return 0
-
-proc/isobserver(A)
-	if(istype(A, /mob/dead/observer))
-		return 1
-	return 0
-
-proc/isovermind(A)
-	if(istype(A, /mob/camera/blob))
-		return 1
-	return 0
-
-proc/isorgan(A)
-	if(istype(A, /datum/organ/external))
 		return 1
 	return 0
 
@@ -494,13 +339,6 @@ proc/is_blind(A)
 	if(!istype(P))
 		return null
 	return P
-
-
-
-/proc/iscluwne(A)
-	if(A && istype(A, /mob/living/simple_animal/hostile/retaliate/cluwne))
-		return 1
-	return 0
 
 /proc/broadcast_security_hud_message(var/message, var/broadcast_source)
 	broadcast_hud_message(message, broadcast_source, sec_hud_users, /obj/item/clothing/glasses/hud/security)

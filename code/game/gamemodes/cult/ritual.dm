@@ -21,7 +21,7 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 		runewords-=cultwords[word]
 
 /obj/effect/rune
-	desc = ""
+	desc = "A strange collection of symbols drawn in blood."
 	anchored = 1
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "1"
@@ -76,26 +76,10 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 	rune_list.Remove(src)
 	..()
 
-/obj/effect/rune/examine()
-	set src in view(2)
-
-	if(!iscultist(usr))
-		usr << "A strange collection of symbols drawn in blood."
-		return
-		/* Explosions... really?
-		if(desc && !usr.stat)
-			usr << "It reads: <i>[desc]</i>."
-			sleep(30)
-			explosion(src.loc, 0, 2, 5, 5)
-			if(src)
-				del(src)
-		*/
-	if(!desc)
-		usr << "A spell circle drawn in blood. It reads: <i>[word1] [word2] [word3]</i>."
-	else
-		usr << "Explosive Runes inscription in blood. It reads: <i>[desc]</i>."
-
-	return
+/obj/effect/rune/examine(mob/user)
+	..()
+	if(iscultist(user))
+		user << "A spell circle drawn in blood. It reads: <i>[word1] [word2] [word3]</i>."
 
 
 /obj/effect/rune/attackby(I as obj, user as mob)
@@ -194,6 +178,7 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 
 /obj/item/weapon/tome
 	name = "arcane tome"
+	desc = "An old, dusty tome with frayed edges and a sinister looking cover."
 	icon_state ="tome"
 	throw_speed = 1
 	throw_range = 5
@@ -484,12 +469,10 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 		user << "You copy the translation notes from your tome."
 
 
-/obj/item/weapon/tome/examine()
-	set src in usr
-	if(!iscultist(usr))
-		usr << "An old, dusty tome with frayed edges and a sinister looking cover."
-	else
-		usr << "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of. Most of these are useless, though."
+/obj/item/weapon/tome/examine(mob/user)
+	..()
+	if(iscultist(user))
+		user << "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of. Most of these are useless, though."
 
 /obj/item/weapon/tome/cultify()
 	return

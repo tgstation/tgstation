@@ -23,9 +23,9 @@
 
 	soot_type = null
 
-/turf/simulated/wall/examine()
+/turf/simulated/wall/examine(mob/user)
 	..()
-	if(src.engraving) usr << src.engraving
+	if(src.engraving) user << src.engraving
 
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, explode=0)
 	if(istype(src,/turf/simulated/wall/r_wall))
@@ -107,12 +107,12 @@
 	user.delayNextAttack(8)
 	if ((M_HULK in user.mutations))
 		if (prob(hardness))
-			usr << text("\blue You smash through the wall.")
+			usr << text("<span class='attack'>You smash through the wall.</span>")
 			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			dismantle_wall(1)
 			return
 		else
-			usr << text("\blue You punch the wall.")
+			usr << text("<span class='attack'>You punch the wall.</span>")
 			return
 
 	return src.attack_hand(user)
@@ -123,11 +123,11 @@
 		if(istype(src, /turf/simulated/wall/r_wall))
 			if(M.environment_smash == 3)
 				dismantle_wall(1)
-				M << "<span class='info'>You smash through the wall.</span>"
+				M << "<span class='attack'>You smash through the wall.</span>"
 			else
 				M << "<span class='info'>This wall is far too strong for you to destroy.</span>"
 		else
-			M << "<span class='info'>You smash through the wall.</span>"
+			M << "<span class='attack'>You smash through the wall.</span>"
 			dismantle_wall(1)
 			return
 
@@ -135,12 +135,12 @@
 	user.delayNextAttack(8)
 	if (M_HULK in user.mutations)
 		if (prob(hardness) || rotting)
-			usr << text("\blue You smash through the wall.")
+			usr << text("<span class='attack'>You smash through the wall.</span>")
 			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			dismantle_wall(1)
 			return
 		else
-			usr << text("\blue You punch the wall.")
+			usr << text("<span class='attack'>You punch the wall.</span>")
 			return
 
 	if(rotting)

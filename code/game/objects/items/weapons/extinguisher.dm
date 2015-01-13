@@ -48,18 +48,17 @@
 	item_state = "foam_extinguisher"
 	sprite_name = "foam_extinguisher"
 
-/obj/item/weapon/extinguisher/examine()
-	set src in usr
-
-	usr << "\icon[src] [src.name] contains:"
-	if(reagents && reagents.reagent_list.len)
-		for(var/datum/reagent/R in reagents.reagent_list)
-			usr << "\blue [R.volume] units of [R.name]"
-	for(var/thing in src)
-		usr << "\red \A [thing] is jammed into the nozzle!"
-
+/obj/item/weapon/extinguisher/examine(mob/user)
 	..()
-	return
+	if(!is_open_container())
+		user << "It contains:"
+		if(reagents && reagents.reagent_list.len)
+			for(var/datum/reagent/R in reagents.reagent_list)
+				user << "<span class='info'>[R.volume] units of [R.name]</span>"
+		else
+			user << "<span class='info'>Nothing</span>"
+	for(var/thing in src)
+		user << "<span class='warning'>\A [thing] is jammed into the nozzle!</span>"
 
 /obj/item/weapon/extinguisher/attack_self(mob/user as mob)
 	safety = !safety
@@ -72,15 +71,15 @@
 	if(user.stat || user.restrained() || user.lying)	return
 	if (istype(W, /obj/item/weapon/wrench))
 		if(!is_open_container())
-			user.visible_message("[user] begins to unwrench the fill cap on \the [src].","\blue You begin to unwrench the fill cap on \the [src].")
+			user.visible_message("[user] begins to unwrench the fill cap on \the [src].","<span class='notice'>You begin to unwrench the fill cap on \the [src].</span>")
 			if(do_after(user, 25))
-				user.visible_message("[user] removes the fill cap on \the [src].","\blue You remove the fill cap on \the [src].")
+				user.visible_message("[user] removes the fill cap on \the [src].","<span class='notice'>You remove the fill cap on \the [src].</span>")
 				playsound(get_turf(src),'sound/items/Ratchet.ogg', 100, 1)
 				flags |= OPENCONTAINER
 		else
-			user.visible_message("[user] begins to seal the fill cap on \the [src].","\blue You begin to seal the fill cap on \the [src].")
+			user.visible_message("[user] begins to seal the fill cap on \the [src].","<span class='notice'>You begin to seal the fill cap on \the [src].</span>")
 			if(do_after(user, 25))
-				user.visible_message("[user] fastens the fill cap on \the [src].","\blue You fasten the fill cap on \the [src].")
+				user.visible_message("[user] fastens the fill cap on \the [src].","<span class='notice'>You fasten the fill cap on \the [src].</span>")
 				playsound(get_turf(src),'sound/items/Ratchet.ogg', 100, 1)
 				flags &= ~OPENCONTAINER
 		return
@@ -110,16 +109,16 @@
 				if(o.reagents.has_reagent(bad_reagent))
 					badshit += reagents_to_log[bad_reagent]
 			if(badshit.len)
-				var/hl="\red <b>([english_list(badshit)])</b> \black"
+				var/hl="<span class='danger'>([english_list(badshit)])"
 				// message_admins("[user.name] ([user.ckey]) filled \a [src] with [o.reagents.get_reagent_ids()] [hl]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 				log_game("[user.name] ([user.ckey]) filled \a [src] with [o.reagents.get_reagent_ids()] [hl]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 			o.reagents.trans_to(src, 50)
-			user << "\blue \The [src] is now refilled"
+			user << "<span class='notice'>\The [src] is now refilled</span>"
 			playsound(get_turf(src), 'sound/effects/refill.ogg', 50, 1, -6)
 			return
 
 		if(is_open_container() && reagents.total_volume)
-			user << "\blue You empty \the [src] onto [target]."
+			user << "<span class='notice'>You empty \the [src] onto [target].</span>"
 			if(reagents.has_reagent("fuel"))
 				message_admins("[user.name] ([user.ckey]) poured Welder Fuel onto [target]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 				log_game("[user.name] ([user.ckey]) poured Welder Fuel onto [target]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
@@ -128,7 +127,7 @@
 			return
 	if (!safety && !is_open_container())
 		if (src.reagents.total_volume < 1)
-			usr << "\red \The [src] is empty."
+			usr << "<span class='warning'>\The [src] is empty.</span>"
 			return
 
 		if (world.time < src.last_use + 20)
@@ -139,7 +138,7 @@
 			if(reagents.has_reagent(bad_reagent))
 				badshit += reagents_to_log[bad_reagent]
 		if(badshit.len)
-			var/hl="\red <b>([english_list(badshit)])</b> \black"
+			var/hl="<span class='danger'>([english_list(badshit)])</span>"
 			message_admins("[user.name] ([user.ckey]) used \a [src] filled with [reagents.get_reagent_ids(1)] [hl]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 			log_game("[user.name] ([user.ckey]) used \a [src] filled with [reagents.get_reagent_ids(1)] [hl]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
@@ -230,13 +229,13 @@
 		if((istype(target, /obj/structure/reagent_dispensers/watertank)))
 			var/obj/o = target
 			o.reagents.trans_to(src, 50)
-			user << "\blue \The [src] is now refilled"
+			user << "<span class='notice'>\The [src] is now refilled</span>"
 			playsound(get_turf(src), 'sound/effects/refill.ogg', 50, 1, -6)
 			return
 
 	if (!safety && !is_open_container())
 		if (src.reagents.total_volume < 1)
-			usr << "\red \The [src] is empty."
+			usr << "<span class='warning'>\The [src] is empty."
 			return
 
 		if (world.time < src.last_use + 20)

@@ -65,11 +65,11 @@
 	if(config.automute_on && !holder && src.last_message == message)
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
-			src << "\red You have exceeded the spam filter limit for identical messages. An auto-mute was applied."
+			src << "<span class='warning'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>"
 			cmd_admin_mute(src.mob, mute_type, 1)
 			return 1
 		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
-			src << "\red You are nearing the spam filter limit for identical messages."
+			src << "<span class='warning'>You are nearing the spam filter limit for identical messages.</span>"
 			return 0
 	else
 		last_message = message
@@ -95,6 +95,11 @@
 	//CONNECT//
 	///////////
 /client/New(TopicData)
+	if(config)
+		winset(src, null, "outputwindow.output.style=[config.world_style_config];")
+		winset(src, null, "window1.msay_output.style=[config.world_style_config];") // it isn't possible to set two window elements in the same winset so we need to call it for each element we're assigning a stylesheet.
+	else
+		src << "<span class='warning'>The stylesheet wasn't properly setup call an administrator to reload the stylesheet or relog.</span>"
 	TopicData = null							//Prevent calls to client.Topic from connect
 
 	if(connection != "seeker")					//Invalid connection type.
@@ -112,7 +117,7 @@
 		src.preload_rsc = pick(config.resource_urls)
 	else src.preload_rsc = 1 // If config.resource_urls is not set, preload like normal.
 
-	src << "\red If the title screen is black, resources are still downloading. Please be patient until the title screen appears."
+	src << "<span class='warning'>If the title screen is black, resources are still downloading. Please be patient until the title screen appears.</span>"
 
 	clients += src
 	directory[ckey] = src
@@ -158,6 +163,12 @@
 
 	//Set map label to correct map name
 	winset(src, "rpane.map", "text=\"[map.nameLong]\"")
+
+	// Notify scanners.
+	INVOKE_EVENT(on_login,list(
+		"client"=src,
+		"admin"=(holder!=null)
+	))
 
 	//////////////
 	//DISCONNECT//

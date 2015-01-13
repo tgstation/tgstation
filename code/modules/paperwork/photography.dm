@@ -36,7 +36,7 @@
 
 
 /obj/item/weapon/photo/attack_self(mob/user)
-	examine()
+	user.examination(src)
 
 
 /obj/item/weapon/photo/attackby(obj/item/weapon/P, mob/user)
@@ -48,15 +48,12 @@
 	..()
 
 
-/obj/item/weapon/photo/examine()
-	set src in oview(1)
-	if(is_blind(usr))	return
-
-	if(in_range(usr, src))
-		show(usr)
-		usr << desc
+/obj/item/weapon/photo/examine(mob/user)
+	..()
+	if(in_range(user, src))
+		show(user)
 	else
-		usr << "<span class='notice'>It is too far away.</span>"
+		user << "<span class='notice'>You can't make out the picture from here.</span>"
 
 
 /obj/item/weapon/photo/proc/show(mob/user)
@@ -123,10 +120,9 @@
 	icon_on = "sepia-camera"
 	icon_off = "sepia-camera_off"
 
-/obj/item/device/camera/examine()
-	set src in view(1)
+/obj/item/device/camera/examine(mob/user)
 	..()
-	usr <<"<span class='notice'>It has [pictures_left] photos left.</span>"
+	user <<"<span class='info'>It has [pictures_left] photos left.</span>"
 
 
 /obj/item/device/camera/ai_camera //camera AI can take pictures with

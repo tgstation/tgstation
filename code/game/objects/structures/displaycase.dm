@@ -87,13 +87,14 @@
 	req_access=list(access_rd)
 	update_icon()
 
-/obj/structure/displaycase/examine()
+/obj/structure/displaycase/examine(mob/user)
 	..()
-	usr << "<span class='notice'>Peering through the glass, you see that it contains:</span>"
+	var/msg = "<span class='info'>Peering through the glass, you see that it contains:</span>"
 	if(occupant)
-		usr << "\icon[occupant] <span class='notice'>\A [occupant]</span>"
-	else:
-		usr << "Nothing."
+		msg+= "\icon[occupant] <span class='notice'>\A [occupant]</span>"
+	else
+		msg+= "Nothing."
+	user << msg
 
 /obj/structure/displaycase/proc/dump()
 	if(occupant)

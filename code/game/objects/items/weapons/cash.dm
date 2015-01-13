@@ -34,12 +34,15 @@ var/global/list/moneytypes=list(
 	amount = new_amount
 	update_icon()
 
-/obj/item/weapon/spacecash/examine()
+/obj/item/weapon/spacecash/examine(mob/user)
 	if(amount>1)
-		usr << "\icon[src] This is a stack of [amount] [src]s."
+		gender = PLURAL
+		..()
+		user << "It is a stack holding [amount] chips."
+		user << "<span class='info'>It's worth [worth*amount] credits.</span>"
 	else
-		usr << "\icon[src] This is \a [src]s."
-	usr << "It's worth [worth*amount] credits."
+		gender = NEUTER
+		..()
 
 /obj/item/weapon/spacecash/update_icon()
 	icon_state = "cash[worth]"
@@ -80,13 +83,13 @@ var/global/list/moneytypes=list(
 				collected += collect_from(cash)
 		if(collected)
 			update_icon()
-			user << "\blue You add [collected] chips to your stack of cash."
+			user << "span class='notice'>You add [collected] chips to your stack of cash.</span>"
 	else if(istype(A,/obj/item/weapon/spacecash))
 		var/obj/item/weapon/spacecash/cash = A
 		var/collected = src.collect_from(cash)
 		if(collected)
 			update_icon()
-			user << "\blue You add [collected] chips to your stack of cash."
+			user << "span class='notice'>You add [collected] chips to your stack of cash.</span>"
 
 /obj/item/weapon/spacecash/c10
 	icon_state = "cash10"

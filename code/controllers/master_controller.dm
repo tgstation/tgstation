@@ -60,11 +60,11 @@ datum/controller/game_controller/New()
 
 	if(!syndicate_code_phrase)		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)	syndicate_code_response	= generate_code_phrase()
-	if(!emergency_shuttle)			emergency_shuttle = new /datum/shuttle_controller/emergency_shuttle()
-
+	/*if(!emergency_shuttle)			emergency_shuttle = new /datum/shuttle_controller/emergency_shuttle()*/
+/*
 	if(global.garbageCollector)
 		garbageCollector = global.garbageCollector
-
+*/
 datum/controller/game_controller/proc/setup()
 	world.tick_lag = config.Ticklag
 
@@ -73,7 +73,7 @@ datum/controller/game_controller/proc/setup()
 	socket_talk.send_raw("type=startup")
 
 	createRandomZlevel()
-
+/*
 	if(!air_master)
 		air_master = new /datum/controller/air_system()
 		air_master.Setup()
@@ -84,7 +84,7 @@ datum/controller/game_controller/proc/setup()
 	if(!global.garbageCollector)
 		global.garbageCollector = new
 		garbageCollector = global.garbageCollector
-
+*/
 	setup_objects()
 	setupgenetics()
 	setupfactions()
@@ -96,12 +96,13 @@ datum/controller/game_controller/proc/setup()
 
 	//if(config.socket_talk)
 	//	keepalive()
-
+/*
 	spawn(0)
 		if(ticker)
 			ticker.pregame()
 
 	lighting_controller.Initialize()
+*/
 
 datum/controller/game_controller/proc/setup_objects()
 	world << "\red \b Initializing objects"
