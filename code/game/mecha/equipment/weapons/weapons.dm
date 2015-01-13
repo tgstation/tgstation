@@ -131,7 +131,7 @@
 		M << "<font color='red' size='7'>HONK</font>"
 		M.sleeping = 0
 		M.stuttering += 20
-		M.ear_deaf += 30
+		M.adjustEarDamage(0, 30)
 		M.Weaken(3)
 		if(prob(30))
 			M.Stun(10)
