@@ -187,6 +187,9 @@
 	new /obj/item/clothing/shoes/sneakers/white(src)
 	new /obj/item/clothing/shoes/sneakers/white(src)
 	new /obj/item/clothing/shoes/sneakers/white(src)
+	new /obj/item/clothing/head/soft/mime(src)
+	new /obj/item/clothing/head/soft/mime(src)
+	new /obj/item/clothing/head/soft/mime(src)
 	return
 
 /obj/structure/closet/wardrobe/white/medical
