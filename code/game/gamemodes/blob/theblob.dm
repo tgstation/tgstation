@@ -51,7 +51,8 @@
 	return
 
 /obj/effect/blob/proc/PulseAnimation()
-	flick("[icon_state]_glow", src)
+	if(!istype(src, /obj/effect/blob/core) || !istype(src, /obj/effect/blob/node))
+		flick("[icon_state]_glow", src)
 	return
 
 /obj/effect/blob/proc/RegenHealth()
@@ -64,7 +65,7 @@
 		health_timestamp = world.time + 10 // 1 seconds
 
 
-/obj/effect/blob/proc/Pulse(var/pulse = 0, var/origin_dir = 0)//Todo: Fix spaceblob expand
+/obj/effect/blob/proc/Pulse(var/pulse = 0, var/origin_dir = 0, var/a_color)//Todo: Fix spaceblob expand
 
 	set background = BACKGROUND_ENABLED
 
@@ -88,9 +89,10 @@
 		var/turf/T = get_step(src, dirn)
 		var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
 		if(!B)
-			expand(T)//No blob here so try and expand
+			expand(T,1,a_color)//No blob here so try and expand
 			return
-		B.Pulse((pulse+1),get_dir(src.loc,T))
+		B.color = a_color
+		B.Pulse((pulse+1),get_dir(src.loc,T), a_color)
 		return
 	return
 
@@ -99,7 +101,7 @@
 	return 0
 
 
-/obj/effect/blob/proc/expand(var/turf/T = null, var/prob = 1)
+/obj/effect/blob/proc/expand(var/turf/T = null, var/prob = 1, var/a_color)
 	if(prob && !prob(health))	return
 	if(istype(T, /turf/space) && prob(75)) 	return
 	if(!T)
@@ -113,6 +115,7 @@
 
 	if(!T)	return 0
 	var/obj/effect/blob/normal/B = new /obj/effect/blob/normal(src.loc, min(src.health, 30))
+	B.color = a_color
 	B.density = 1
 	if(T.Enter(B,src))//Attempt to move into the tile
 		B.density = initial(B.density)
@@ -184,8 +187,15 @@
 /obj/effect/blob/proc/change_to(var/type)
 	if(!ispath(type))
 		ERROR("[type] is an invalid type for the blob.")
-	new type(src.loc)
+	var/obj/effect/blob/B = new type(src.loc)
+	if(!istype(type, /obj/effect/blob/core) || !istype(type, /obj/effect/blob/node))
+		B.color = color
+	else
+		B.adjustcolors(color)
 	qdel(src)
+
+/obj/effect/blob/proc/adjustcolors(var/a_color)
+	return
 
 /obj/effect/blob/normal
 	icon_state = "blob"

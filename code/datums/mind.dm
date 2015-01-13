@@ -900,7 +900,7 @@
 					C.dna = changeling.absorbed_dna[1]
 					C.real_name = C.dna.real_name
 					updateappearance(C)
-					domutcheck(C, null)
+					domutcheck(C)
 
 	else if (href_list["nuclear"])
 		switch(href_list["nuclear"])

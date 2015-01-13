@@ -378,8 +378,8 @@
 /mob/living/simple_animal/Stat()
 	..()
 
-	statpanel("Status")
-	stat(null, "Health: [round((health / maxHealth) * 100)]%")
+	if(statpanel("Status"))
+		stat(null, "Health: [round((health / maxHealth) * 100)]%")
 
 /mob/living/simple_animal/proc/Die()
 	health = 0 // so /mob/living/simple_animal/Life() doesn't magically revive them

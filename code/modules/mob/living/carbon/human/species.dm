@@ -8,7 +8,7 @@
 #define TINT_BLIND 3
 
 #define HUMAN_MAX_OXYLOSS 3
-#define HUMAN_CRIT_MAX_OXYLOSS (SSmob.wait/3)
+#define HUMAN_CRIT_MAX_OXYLOSS (SSmob.wait/30)
 
 #define HEAT_DAMAGE_LEVEL_1 2
 #define HEAT_DAMAGE_LEVEL_2 3
@@ -475,11 +475,12 @@
 		if(H.seer)
 			H.see_invisible = SEE_INVISIBLE_OBSERVER
 
-		if(H.mind && H.mind.changeling)
-			H.hud_used.lingchemdisplay.invisibility = 0
-			H.hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[H.mind.changeling.chem_charges]</font></div>"
-		else
-			H.hud_used.lingchemdisplay.invisibility = 101
+		if(H.mind)
+			if(H.mind.changeling)
+				H.hud_used.lingchemdisplay.invisibility = 0
+				H.hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[H.mind.changeling.chem_charges]</font></div>"
+			else
+				H.hud_used.lingchemdisplay.invisibility = 101
 
 		if(H.glasses)
 			if(istype(H.glasses, /obj/item/clothing/glasses))
