@@ -116,7 +116,7 @@
 				return 1
 			if(do_after(user, 10))
 				user << "\blue You cut the intercom frame from the wall!"
-				new /obj/item/intercom_frame(src.loc)
+				new /obj/item/mounted/frame/intercom(src.loc)
 				return 1
 	else
 		if(istype(W,/obj/item/weapon/crowbar))

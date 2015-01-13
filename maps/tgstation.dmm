@@ -1784,7 +1784,7 @@
 "aIp" = (/obj/structure/urinal{pixel_y = 32},/turf/simulated/floor{icon_state = "freezerfloor"},/area/crew_quarters/toilet)
 "aIq" = (/obj/structure/urinal{pixel_y = 32},/obj/machinery/camera{c_tag = "EVA East"; dir = 8},/turf/simulated/floor{icon_state = "freezerfloor"},/area/crew_quarters/toilet)
 "aIr" = (/obj/effect/landmark{name = "xeno_spawn"; pixel_x = -1},/obj/item/weapon/bikehorn/rubberducky,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor{icon_state = "freezerfloor"},/area/crew_quarters/toilet)
-"aIs" = (/obj/structure/table/woodentable,/obj/item/weapon/cartridge/clown,/obj/item/weapon/contraband/poster,/obj/item/weapon/contraband/poster,/obj/item/weapon/contraband/poster,/obj/machinery/light_switch{pixel_y = 27},/turf/simulated/floor/wood,/area/crew_quarters/theatre)
+"aIs" = (/obj/structure/table/woodentable,/obj/item/weapon/cartridge/clown,/obj/item/mounted/poster,/obj/item/mounted/poster,/obj/item/mounted/poster,/obj/machinery/light_switch{pixel_y = 27},/turf/simulated/floor/wood,/area/crew_quarters/theatre)
 "aIt" = (/obj/machinery/camera{c_tag = "Theatre Storage"},/obj/structure/mirror{pixel_y = 28},/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/snacks/pie,/turf/simulated/floor/wood,/area/crew_quarters/theatre)
 "aIu" = (/obj/machinery/vending/autodrobe,/turf/simulated/floor/wood,/area/crew_quarters/theatre)
 "aIv" = (/obj/machinery/power/apc{dir = 1; pixel_y = 24},/obj/structure/cable{icon_state = "0-2"; d2 = 2},/obj/structure/stool/bed/chair/wood/wings,/turf/simulated/floor/wood,/area/crew_quarters/theatre)
