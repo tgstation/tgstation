@@ -7,6 +7,7 @@
 	var/list/spores = list()
 	var/max_spores = 3
 	var/spore_delay = 0
+	var/mob/camera/blob/overmind
 
 /obj/effect/blob/factory/update_icon()
 	if(health <= 0)
@@ -30,6 +31,8 @@
 		return 0
 	spore_delay = world.time + 100 // 10 seconds
 	PulseAnimation(1)
-	new/mob/living/simple_animal/hostile/blobspore(src.loc, src)
+	var/mob/living/simple_animal/hostile/blobspore/BS = new/mob/living/simple_animal/hostile/blobspore(src.loc, src)
+	BS.color = color
+	overmind.blob_mobs.Add(BS)
 	return 0
 

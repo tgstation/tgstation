@@ -408,3 +408,9 @@
 			visible_message("<span class='danger'>[M] punches [src], but doesn't leave a dent.</span>", \
 						"<span class='userdanger'>[M] punches [src], but doesn't leave a dent.!</span>")
 	return 0
+
+/mob/living/silicon/adjustEarDamage()
+	return
+
+/mob/living/silicon/setEarDamage()
+	return

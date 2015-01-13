@@ -15,18 +15,25 @@
 	var/blob_points = 0
 	var/max_blob_points = 100
 	var/last_attack = 0
+	var/datum/reagent/blob_reagent_datum = new/datum/reagent()
+	var/list/blob_mobs = list()
 
 /mob/camera/blob/New()
 	var/new_name = "[initial(name)] ([rand(1, 999)])"
 	name = new_name
 	real_name = new_name
 	last_attack = world.time
+	var/list/possible_reagents = list()
+	for(var/type in (typesof(/datum/reagent/blob) - /datum/reagent/blob))
+		possible_reagents.Add(new type)
+	blob_reagent_datum = pick(possible_reagents)
 	..()
 
 /mob/camera/blob/Login()
 	..()
 	sync_mind()
 	src << "<span class='notice'>You are the overmind!</span>"
+	src << "Your randomly chosen reagent is: <b>[blob_reagent_datum.name]</b>!"
 	src << "You are the overmind and can control the blob! You can expand, which will attack people, and place new blob pieces such as..."
 	src << "<b>Normal Blob</b> will expand your reach and allow you to upgrade into special blobs that perform certain functions."
 	src << "<b>Shield Blob</b> is a strong and expensive blob which can take more damage. It is fireproof and can block air, use this to protect yourself from station fires."
@@ -70,7 +77,7 @@
 		return
 
 	var/message_a = say_quote(message)
-	var/rendered = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i></font>"
+	var/rendered = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]([blob_reagent_datum.name])</span> <span class='message'>[message_a]</span></span></i></font>"
 
 	for (var/mob/M in mob_list)
 		if(isovermind(M) || isobserver(M))

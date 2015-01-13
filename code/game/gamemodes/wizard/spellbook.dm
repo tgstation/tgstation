@@ -306,15 +306,15 @@
 						if("summonguns")
 							feedback_add_details("wizard_spell_learned","SG") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							rightandwrong(0, H, 0)
-							uses++
 							max_uses++
+							uses = uses + 2 //refund plus a free point
 							active_challenges += "summon guns"
 							temp = "You have cast summon guns and gained an extra charge for your spellbook."
 						if("summonmagic")
 							feedback_add_details("wizard_spell_learned","SU") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							rightandwrong(1, H, 0)
-							uses++
 							max_uses++
+							uses = uses + 2 //refund plus a free point
 							active_challenges += "summon magic"
 							temp = "You have cast summon magic and gained an extra charge for your spellbook."
 						if("summonevents")
