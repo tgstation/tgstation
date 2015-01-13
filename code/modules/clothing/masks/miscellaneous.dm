@@ -74,9 +74,8 @@
 	visor_flags = MASKCOVERSMOUTH
 	visor_flags_inv = HIDEFACE
 	slot_flags = SLOT_MASK
-	action_button_name = "Adjust Bandana"
 	ignore_maskadjust = 0
-	adjusted_flags = SLOT_HEAD | SLOT_MASK
+	adjusted_flags = SLOT_HEAD
 	icon_state = "bandbotany"
 
 /obj/item/clothing/mask/bandana/attack_self(var/mob/user)
