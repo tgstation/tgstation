@@ -80,7 +80,7 @@
 		return
 
 	if(istype(A, /area/quartermaster))
-		if(prob(75))
+		if(prob(25))
 			new /obj/effect/decal/cleanable/oil(src)
 		return
 
@@ -116,7 +116,7 @@
 		return
 
 	if(istype(A, /area/toxins))
-		if(prob(80))
+		if(prob(20))
 			new /obj/effect/decal/cleanable/greenglow(src)	//this cleans itself up but it might startle you when you see it.
 		return
 
