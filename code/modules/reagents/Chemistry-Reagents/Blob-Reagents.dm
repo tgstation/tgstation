@@ -109,18 +109,7 @@ datum/reagent/blob/dark_matter
 datum/reagent/blob/dark_matter/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
 		M.apply_damage(15, BRUTE)
-		var/turf/pull = get_turf(M)
-		for(var/atom/movable/X in orange(4,pull))
-			if(istype(X, /atom/movable))
-				if((X) && (!istype(X,/mob/living/carbon/human)))
-					X.throw_at(pull)
-				else if(istype(X,/mob/living/carbon/human))
-					var/mob/living/carbon/human/H = X
-					if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
-						var/obj/item/clothing/shoes/magboots/S = H.shoes
-						if(S.magpulse)
-							continue
-					X.throw_at(pull)
+		reagent_vortex(M, 0)
 		M << "<span class = 'userdanger'>You feel a thrum as the blob strikes you, and everything flies at you!</span>"
 
 datum/reagent/blob/b_sorium
@@ -132,24 +121,8 @@ datum/reagent/blob/b_sorium
 datum/reagent/blob/b_sorium/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
 		M.apply_damage(15, BRUTE)
-		var/turf/pull = get_turf(M)
-		for(var/atom/movable/X in orange(4,pull))
-			if(istype(X, /atom/movable))
-				if((X) && (!istype(X,/mob/living/carbon/human)))
-					step_away(X,pull)
-					step_away(X,pull)
-					step_away(X,pull)
-					step_away(X,pull)
-				else if(istype(X,/mob/living/carbon/human))
-					var/mob/living/carbon/human/H = X
-					if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
-						var/obj/item/clothing/shoes/magboots/S = H.shoes
-						if(S.magpulse)
-							continue
-					step_away(X,pull)
-					step_away(X,pull)
-					step_away(X,pull)
-					step_away(X,pull)
+		M << "<span class = 'userdanger'>The blob slams into you, and sends you flying!</span>"
+		reagent_vortex(M, 1)
 
 
 datum/reagent/blob/explosive // I'm gonna burn in hell for this one
@@ -163,3 +136,16 @@ datum/reagent/blob/explosive/reaction_mob(var/mob/living/M as mob, var/method=TO
 		if(prob(75))
 			M << "<span class = 'userdanger'>The blob strikes you, and its tendrils explode!</span>"
 			explosion(M.loc, 0, 0, 1, 0, 0)
+
+/proc/reagent_vortex(var/mob/living/M as mob, var/setting_type)
+	var/turf/pull = get_turf(M)
+	for(var/atom/movable/X in orange(4,pull))
+		if(istype(X, /atom/movable))
+			if((X))
+				if(setting_type)
+					step_away(X,pull)
+					step_away(X,pull)
+					step_away(X,pull)
+					step_away(X,pull)
+				else
+					X.throw_at(pull)
