@@ -45,7 +45,7 @@ var/datum/subsystem/ticker/ticker
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
 
-	login_music = pickweight(list('sound/ambience/title2.ogg' = 49, 'sound/ambience/title1.ogg' = 49, 'sound/ambience/clown.ogg' = 2)) // choose title music!
+	login_music = pickweight(list('sound/ambience/title3.ogg' = 49, 'sound/ambience/title2.ogg' = 49, 'sound/ambience/title1.ogg' = 49, 'sound/ambience/clown.ogg' = 2)) // choose title music!
 	if(SSevent.holiday == "April Fool's Day")
 		login_music = 'sound/ambience/clown.ogg'
 
