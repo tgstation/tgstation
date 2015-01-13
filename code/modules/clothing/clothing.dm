@@ -85,7 +85,7 @@ BLIND     // can't see anything
 	put_on_delay = 40
 	var/mask_adjusted = 0
 	var/ignore_maskadjust = 1
-	var/hathead_only = 1
+	var/adjusted_flags = null
 
 //Override this to modify speech like luchador masks.
 /obj/item/clothing/mask/proc/speechModification(message)
@@ -113,8 +113,8 @@ BLIND     // can't see anything
 			flags &= ~visor_flags
 			flags_inv &= ~visor_flags_inv
 			src.mask_adjusted = 1
-			if(!hathead_only)
-				slot_flags = SLOT_HEAD | SLOT_MASK
+			if(adjusted_flags)
+				slot_flags = adjusted_flags
 		usr.update_inv_wear_mask()
 
 

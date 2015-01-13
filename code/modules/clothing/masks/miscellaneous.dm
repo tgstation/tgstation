@@ -76,7 +76,7 @@
 	slot_flags = SLOT_MASK
 	action_button_name = "Adjust Bandana"
 	ignore_maskadjust = 0
-	hathead_only = 0
+	adjusted_flags = SLOT_HEAD | SLOT_MASK
 	icon_state = "bandbotany"
 
 /obj/item/clothing/mask/bandana/attack_self(var/mob/user)
