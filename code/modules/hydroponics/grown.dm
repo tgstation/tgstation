@@ -1143,3 +1143,108 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	if(..())
 		reagents.add_reagent("nothing", 1 + round((potency / 10), 1))
 		reagents.add_reagent("mutetoxin", 1 + round((potency / 10), 1))
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin
+	seed = /obj/item/seeds/blumpkinseed
+	name = "blumpkin"
+	desc = "When you're making a mess this blumpkin's there to clean you up."
+	icon_state = "blumpkin"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin/add_juice()
+	..()
+	reagents.add_reagent("cleaner", 1 + round((potency / 10), 1))
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/holymelon
+	seed = /obj/item/seeds/holymelonseed
+	name = "holymelon"
+	desc = "The water within this melon has been blessed by some deity that's particularly fond of watermelon."
+	icon_state = "holymelon"
+	dried_type = null
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/holymelon/add_juice()
+	..()
+	reagents.add_reagent("holywater", 1 + round((potency / 10), 1))
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/oats
+	seed = /obj/item/seeds/oatseed
+	name = "oats"
+	desc = "Eat oats, do squats."
+	icon_state = "oats"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/oats/add_juice()
+	if(..())
+		reagents.add_reagent("nutriment", 1 + round((potency / 25), 1))
+		bitesize = 1 + round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/bluecherries
+	seed = /obj/item/seeds/bluecherryseed
+	name = "blue cherries"
+	desc = "They're cherries that are blue."
+	icon_state = "bluecherry"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/bluecherries/add_juice()
+	if(..())
+		reagents.add_reagent("nutriment", 1 + round((potency / 15), 1))
+		reagents.add_reagent("sugar", 1 + round((potency / 50), 1))
+		bitesize = 1 + round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/sweetpotato
+	seed = /obj/item/seeds/sweetpotatoseed
+	name = "sweet potato"
+	desc = "It's sweet."
+	icon_state = "sweetpotato"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/sweetpotato/add_juice()
+	if(..())
+		reagents.add_reagent("nutriment", 1 + round((potency / 10), 1))
+		reagents.add_reagent("vitamin", 1 + round((potency / 10), 1))
+		reagents.add_reagent("sugar", 1 + round((potency / 10), 1))
+		bitesize = reagents.total_volume
+
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/parsnip
+	seed = /obj/item/seeds/parsnipseed
+	name = "parsnip"
+	desc = "Closely related to carrots."
+	icon_state = "parsnip"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/parsnip/add_juice()
+	if(..())
+		reagents.add_reagent("nutriment", 1 + round((potency / 20), 1))
+		reagents.add_reagent("vitamin", 1 + round((potency / 20), 1))
+		bitesize = 1 + round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/redbeet
+	seed = /obj/item/seeds/redbeetseed
+	name = "red beet"
+	desc = "You can't beat red beet."
+	icon_state = "redbeet"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/redbeet/add_juice()
+	if(..())
+		reagents.add_reagent("nutriment", round((potency / 20), 1))
+		reagents.add_reagent("vitamin", 1 + round((potency / 20), 1))
+		bitesize = 1 + round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/geranium
+	seed = /obj/item/seeds/geraniumseed
+	name = "geranium"
+	desc = "A blue flower."
+	icon_state = "geranium"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/geranium/add_juice()
+	if(..())
+		reagents.add_reagent("nutriment", 1 + round((potency / 20), 1))
+		bitesize = 1 + round(reagents.total_volume / 3, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/vanilla
+	seed = /obj/item/seeds/vanillapodseed
+	name = "vanilla"
+	desc = "The standard, the default, vanilla."
+	icon_state = "vanillapod"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/vanilla/add_juice()
+	if(..())
+		reagents.add_reagent("nutriment", 1 + round((potency / 10), 1))
+		reagents.add_reagent("vanilla", 4 + round((potency / 5), 1))
+		bitesize = 1 + round(reagents.total_volume / 2, 1)
