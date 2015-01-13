@@ -319,8 +319,8 @@
 		visible_message("<span class='notice'>[src] raises [exp_on]'s temperature.</span>")
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message("<span class='notice'>[src]'s emergency coolant system gives off a small beep!</span>")
-			var/obj/machinery/vending/coffee/C = new /obj/machinery/vending/coffee(pick(oview(1,src)))
-			var/list/chems = list("plasma","frostoil","ethanol")
+			var/obj/item/weapon/reagent_containers/food/drinks/coffee/C = new /obj/item/weapon/reagent_containers/food/drinks/coffee(pick(oview(1,src)))
+			var/list/chems = list("plasma","capsaicin","ethanol")
 			C.reagents.remove_any(25)
 			C.reagents.add_reagent(pick(chems),25)
 			C.name = "Cup of Suspicious Liquid"
