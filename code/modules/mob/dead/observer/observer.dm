@@ -197,34 +197,35 @@ Works together with spawning an observer, noted above.
 	var/image/holder
 	for(var/mob/living/carbon/human/patient in oview(M))
 		var/foundVirus = 0
-		if(patient.virus2.len)
+		if(patient && patient.virus2 && patient.virus2.len)
 			foundVirus = 1
 		if(!C) return
 		holder = patient.hud_list[HEALTH_HUD]
-		if(patient.stat == 2)
-			holder.icon_state = "hudhealth-100"
-		else
-			holder.icon_state = "hud[RoundHealth(patient.health)]"
-		C.images += holder
+		if(holder)
+			if(patient.stat == 2)
+				holder.icon_state = "hudhealth-100"
+			else
+				holder.icon_state = "hud[RoundHealth(patient.health)]"
+			C.images += holder
 
 		holder = patient.hud_list[STATUS_HUD]
-		if(patient.stat == 2)
-			holder.icon_state = "huddead"
-		else if(patient.status_flags & XENO_HOST)
-			holder.icon_state = "hudxeno"
-		else if(foundVirus)
-			holder.icon_state = "hudill"
-		else if(patient.has_brain_worms())
-			var/mob/living/simple_animal/borer/B = patient.has_brain_worms()
-			if(B.controlling)
-				holder.icon_state = "hudbrainworm"
+		if(holder)
+			if(patient.stat == 2)
+				holder.icon_state = "huddead"
+			else if(patient.status_flags & XENO_HOST)
+				holder.icon_state = "hudxeno"
+			else if(foundVirus)
+				holder.icon_state = "hudill"
+			else if(patient.has_brain_worms())
+				var/mob/living/simple_animal/borer/B = patient.has_brain_worms()
+				if(B.controlling)
+					holder.icon_state = "hudbrainworm"
+				else
+					holder.icon_state = "hudhealthy"
 			else
 				holder.icon_state = "hudhealthy"
-		else
-			holder.icon_state = "hudhealthy"
 
-		C.images += holder
-
+			C.images += holder
 
 /mob/dead/proc/assess_targets(list/target_list, mob/dead/observer/U)
 	var/icon/tempHud = 'icons/mob/hud.dmi'
@@ -255,7 +256,7 @@ Works together with spawning an observer, noted above.
 					U.client.images += image(tempHud,target,"vampire")
 				else//If we don't know what role they have but they have one.
 					U.client.images += image(tempHud,target,"hudunknown1")
-		else//If the silicon mob has no law datum, no inherent laws, or a law zero, add them to the hud.
+		else if(issilicon(target))//If the silicon mob has no law datum, no inherent laws, or a law zero, add them to the hud.
 			var/mob/living/silicon/silicon_target = target
 			if(!silicon_target.laws||(silicon_target.laws&&(silicon_target.laws.zeroth||!silicon_target.laws.inherent.len))||silicon_target.mind.special_role=="traitor")
 				if(isrobot(silicon_target))//Different icons for robutts and AI.
@@ -465,6 +466,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/list/mobs = getmobs()
 	var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
 	var/mob/target = mobs[input]
+	if(istype(target,/mob/living/silicon/ai))
+		var/mob/living/silicon/ai/M = target
+		target = M.eyeobj
 	ManualFollow(target)
 
 // This is the ghost's follow verb with an argument
