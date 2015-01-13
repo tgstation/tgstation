@@ -127,6 +127,13 @@
 
 
 /obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W,/obj/item/weapon/pen))
+		var/n_name = stripped_input(user,"What would you like to name this dish?","Food Renaming","",MAX_NAME_LEN)
+		if((loc == user && user.stat == 0))
+			name = "[n_name]"
+		else
+			user << "<span class='notice'>You need to be holding the food item in your hand!</span>"
+		return
 	if(istype(W,/obj/item/weapon/storage))
 		..() // -> item/attackby()
 		return 0
