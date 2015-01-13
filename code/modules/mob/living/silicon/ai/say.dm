@@ -170,7 +170,7 @@ var/const/VOX_DELAY = 600
 		if(!only_listener)
 			// Play voice for all mobs in the z level
 			for(var/mob/M in player_list)
-				if(M.client)
+				if(M.client && !M.ear_deaf)
 					var/turf/T = get_turf(M)
 					if(T.z == z_level)
 						M << voice

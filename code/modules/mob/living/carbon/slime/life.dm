@@ -235,16 +235,12 @@
 		src.eye_blind = 0
 		src.eye_blind = max(eye_blind, 1)
 
-	if (src.ear_deaf > 0) src.ear_deaf = 0
-	if (src.ear_damage < 25)
-		src.ear_damage = 0
+	setEarDamage((ear_damage < 25 ? 0 : ear_damage),(disabilities & DEAF ? 1 :0))
 
 	src.density = !( src.lying )
 
 	if (src.disabilities & BLIND)
 		src.eye_blind = max(eye_blind, 1)
-	if (src.disabilities & DEAF)
-		src.ear_deaf = 1
 
 	if (src.eye_blurry > 0)
 		src.eye_blurry = 0
