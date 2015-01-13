@@ -775,13 +775,6 @@
 	title = "Infections - Making your own pandemic!"
 	page_link = "Infections"
 
-/obj/item/weapon/book/manual/wiki/telescience
-	name = "Teleportation Science - Bluespace for dummies!"
-	icon_state = "book7"
-	author = "University of Bluespace"
-	title = "Teleportation Science - Bluespace for dummies!"
-	page_link = "Guide_to_telescience"
-
 /obj/item/weapon/book/manual/wiki/engineering_hacking
 	name = "Hacking"
 	icon_state ="bookHacking"

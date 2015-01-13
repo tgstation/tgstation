@@ -350,16 +350,6 @@
 	build_path = /obj/item/weapon/circuitboard/comm_traffic
 	category = list("Computer Boards")
 
-/datum/design/telesci_console
-	name = "Computer Design (Telepad Control Console Board)"
-	desc = "Allows for the construction of circuit boards used to build a telescience console."
-	id = "telesci_console"
-	req_tech = list("programming" = 3, "bluespace" = 2)
-	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/telesci_console
-	category = list("Computer Boards")
-
 /datum/design/aifixer
 	name = "Computer Design (AI Integrity Restorer)"
 	desc = "Allows for the construction of circuit boards used to build an AI Integrity Restorer."

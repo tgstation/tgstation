@@ -1,0 +1,5 @@
+author: MrPerson
+delete-after: True
+changes: 
+  - rscdel: "Removed telescience. It's not fun to use or fight against. Worth a try but it was a failure."
+  - rscadd: "Instead there's a break room in science again until we can figure out what to do with the area."
