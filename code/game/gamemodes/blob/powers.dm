@@ -334,7 +334,6 @@
 		var/obj/effect/blob/core/new_core = new(get_turf(N), 200, C, blob_core.point_rate)
 		qdel(N)
 		var/mob/camera/blob/B = new(get_turf(new_core))
-		B.verbs -= /mob/camera/blob/verb/split_consciousness //our child doesn't get to make a child
 		B.key = C.key
 		B.blob_core = new_core
 		new_core.overmind = B
