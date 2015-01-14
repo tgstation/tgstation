@@ -345,7 +345,7 @@ datum/objective/steal/proc/select_target() //For admins setting objectives manua
 		var/tmp_obj = new custom_target
 		var/custom_name = tmp_obj:name
 		qdel(tmp_obj)
-		custom_name = copytext(sanitize(input("Enter target name:", "Objective target", custom_name) as text|null),1,MAX_MESSAGE_LEN)
+		custom_name = stripped_input("Enter target name:", "Objective target", custom_name)
 		if (!custom_name) return
 		steal_target = custom_target
 		explanation_text = "Steal [custom_name]."
