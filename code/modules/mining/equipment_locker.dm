@@ -507,8 +507,8 @@
 	if(istype(proj_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = proj_turf
 		playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
-		M.gets_drilled()
 		spawn(5)
+			M.gets_drilled(creator)
 			qdel(src)
 	else
 		var/datum/gas_mixture/environment = proj_turf.return_air()
