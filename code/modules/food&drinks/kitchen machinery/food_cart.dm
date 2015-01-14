@@ -1,4 +1,6 @@
 #define STORAGE_CAPACITY 30
+#define LIQUID_CAPACIY 200
+#define MIXER_CAPACITY 100
 
 /obj/machinery/food_cart
 	name = "food cart"
@@ -14,14 +16,15 @@
 	var/selected_drink
 	var/list/stored_food = list()
 	flags = OPENCONTAINER | NOREACT
-	reagents = new()
-	var/obj/item/weapon/reagent_containers/mixer = new()
+	var/obj/item/weapon/reagent_containers/mixer
 
 /obj/machinery/food_cart/New()
 	..()
-	reagents.my_atom = src
+	create_reagents(LIQUID_CAPACIY)
+	mixer = new /obj/item/weapon/reagent_containers(src)
 	mixer.name = "Mixer"
-	mixer.volume = 100
+	mixer.volume = MIXER_CAPACITY
+	mixer.create_reagents(MIXER_CAPACITY)
 
 /obj/machinery/food_cart/attack_hand(mob/user as mob)
 	user.set_machine(src)
@@ -65,7 +68,7 @@
 			user.drop_item()
 			qdel(DG)
 			glasses++
-			user << "<span class='notice'>The [src] accepts drinking glass, sterilizing it.</span>"
+			user << "<span class='notice'>The [src] accepts the drinking glass, sterilizing it.</span>"
 	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks))
 		if(isFull())
 			user << "<span class='warning'>The [src] is at full capacity.</span>"
@@ -118,11 +121,11 @@
 					break
 
 	if(href_list["portion"])
-		portion = max(0, min(50, input("How much drink do you want to dispense per glass?") as num))
+		portion = Clamp(input("How much drink do you want to dispense per glass?") as num, 0, 50)
 
 	if(href_list["pour"] || href_list["m_pour"])
 		if(glasses-- <= 0)
-			usr << "span class='warning'>There are no glasses left!</span>"
+			usr << "<span class='warning'>There are no glasses left!</span>"
 			glasses = 0
 		else
 			var/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/DG = new(loc)
@@ -132,10 +135,12 @@
 				mixer.reagents.trans_id_to(DG, href_list["m_pour"], portion)
 
 	if(href_list["mix"])
-		reagents.trans_id_to(mixer, href_list["mix"], portion)
+		if(reagents.trans_id_to(mixer, href_list["mix"], portion) == 0)
+			usr << "<span class='warning'>The [mixer] is full!</span>"
 
 	if(href_list["transfer"])
-		mixer.reagents.trans_id_to(src, href_list["transfer"], portion)
+		if(mixer.reagents.trans_id_to(src, href_list["transfer"], portion) == 0)
+			usr << "<span class='warning'>The [src] is full!</span>"
 
 	updateDialog()
 
@@ -145,3 +150,5 @@
 	return
 
 #undef STORAGE_CAPACITY
+#undef LIQUID_CAPACIY
+#undef MIXER_CAPACITY
