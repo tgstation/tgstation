@@ -100,7 +100,7 @@
 		/obj/item/weapon/lipstick/random,
 		/obj/item/weapon/grenade/smokebomb,
 //		/obj/item/weapon/corncob,
-		/obj/item/weapon/contraband/poster,
+		/obj/item/mounted/poster,
 //		/obj/item/weapon/book/manual/barman_recipes,	//we're in December 2014 and those books are still empty
 //		/obj/item/weapon/book/manual/chef_recipes,
 		/obj/item/weapon/bikehorn,

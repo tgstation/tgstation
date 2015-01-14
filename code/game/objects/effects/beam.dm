@@ -256,6 +256,9 @@
 		beam_testing("\ref[get_master()] - Disconnecting (deleted)")
 		disconnect(0)
 	if(master)
+		for(var/obj/effect/beam/B in master.children)
+			if(B.next == src)
+				B.next = null
 		master.children.Remove(src)
 	if(next)
 		BEAM_DEL(next)

@@ -1,2 +1,11 @@
 author: Duny
-changes: []
+changes: 
+  - wip: Following changes made to defficiency.
+  - rscadd: Added a casino near the theatre.
+  - rscadd: The HoS and CMO now have a hardsuit in their offices.
+  - rscadd: Added a few Groans vending machines.
+  - tweak: Added a superjuke to the metaclub's beach.
+  - rscremove : Chase is gone, we won't miss him.
+  - bugfix: Fixed half the pipes on the map having a required access for some reason.
+  - tweak: Added a few cameras and a whole bunch of camera assemblies to the map.
+  - tweak: Added tool and electrical supplies closets to the mechanics workshop.

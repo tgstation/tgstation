@@ -579,31 +579,9 @@
 	if(istype(W, /obj/item/weapon/pipe_dispenser) || istype(W, /obj/item/device/pipe_painter))
 		return // Coloring pipes.
 	if (istype(W, /obj/item/device/analyzer) && get_dist(user, src) <= 1)
-		for (var/mob/O in viewers(user, null))
-			O << "<span class='attack'>[user] has used the analyzer on \icon[icon]</span>"
-
-		var/pressure = parent.air.return_pressure()
-		var/total_moles = parent.air.total_moles()
-
-		user << "<span class='notice'>Results of analysis of \icon[icon]</span>"
-		if (total_moles>0)
-			var/o2_concentration = parent.air.oxygen/total_moles
-			var/n2_concentration = parent.air.nitrogen/total_moles
-			var/co2_concentration = parent.air.carbon_dioxide/total_moles
-			var/plasma_concentration = parent.air.toxins/total_moles
-
-			var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
-
-			user << "<span class='info'>Pressure: [round(pressure,0.1)] kPa</span>"
-			user << "<span class='info'>Nitrogen: [round(n2_concentration*100)]%</span>"
-			user << "<span class='info'>Oxygen: [round(o2_concentration*100)]%</span>"
-			user << "<span class='info'>CO2: [round(co2_concentration*100)]%</span>"
-			user << "<span class='info'>Plasma: [round(plasma_concentration*100)]%</span>"
-			if(unknown_concentration>0.01)
-				user << "<span class='warning'>Unknown: [round(unknown_concentration*100)]%</span>"
-			user << "<span class='info'>Temperature: [round(parent.air.temperature-T0C)]&deg;C</span>"
-		else
-			user << "<span class='notice'>Tank is empty!</span>"
+		user.visible_message("<span class='attack'>[user] has used [W] on \icon[icon] [src]</span>", "<span class='attack'>You use \the [W] on \icon[icon] [src]</span>")
+		var/obj/item/device/analyzer/analyzer = W
+		user.show_message(analyzer.output_gas_scan(air_temporary, src, 0), 1)
 
 /obj/machinery/atmospherics/pipe/manifold
 	icon = 'icons/obj/atmospherics/pipe_manifold.dmi'
