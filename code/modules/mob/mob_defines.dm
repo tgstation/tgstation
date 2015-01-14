@@ -47,10 +47,10 @@
 	var/next_move = null
 	var/notransform = null	//Carbon
 	var/hand = null
-	var/eye_blind = null	//Carbon
-	var/eye_blurry = null	//Carbon
-	var/ear_deaf = null		//Carbon
-	var/ear_damage = null	//Carbon
+	var/eye_blind = 0		//Carbon
+	var/eye_blurry = 0		//Carbon
+	var/ear_deaf = 0		//Carbon
+	var/ear_damage = 0		//Carbon
 	var/stuttering = null	//Carbon
 	var/real_name = null
 	var/bhunger = 0			//Carbon
@@ -110,10 +110,6 @@
 	var/music_lastplayed = "null"
 
 	var/job = null//Living
-
-	var/const/blindness = 1//Carbon
-	var/const/deafness = 2//Carbon
-	var/const/muteness = 4//Carbon
 
 	var/radiation = 0//Carbon
 

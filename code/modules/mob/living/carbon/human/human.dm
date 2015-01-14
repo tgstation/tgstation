@@ -27,7 +27,6 @@
 	internal_organs += new /obj/item/organ/brain
 
 	// for spawned humans; overwritten by other code
-	create_dna(src)
 	ready_dna(src)
 	randomize_human(src)
 
@@ -52,8 +51,8 @@
 
 /mob/living/carbon/human/Stat()
 	..()
-	statpanel("Status")
-	if (client.statpanel == "Status")
+
+	if(statpanel("Status"))
 		stat(null, "Intent: [a_intent]")
 		stat(null, "Move Mode: [m_intent]")
 		if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")
@@ -104,8 +103,7 @@
 				f_loss = f_loss/1.5
 
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
-				ear_damage += 30
-				ear_deaf += 120
+				adjustEarDamage(30, 120)
 			if (prob(70) && !shielded)
 				Paralyse(10)
 
@@ -114,8 +112,7 @@
 			if (prob(getarmor(null, "bomb")))
 				b_loss = b_loss/2
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
-				ear_damage += 15
-				ear_deaf += 60
+				adjustEarDamage(15,60)
 			if (prob(50) && !shielded)
 				Paralyse(10)
 
@@ -143,7 +140,7 @@
 	show_message("<span class='userdanger'> The blob attacks you!</span>")
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 	var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
-	apply_damage(rand(20,30), BRUTE, affecting, run_armor_check(affecting, "melee"))
+	apply_damage(5, BRUTE, affecting, run_armor_check(affecting, "melee"))
 	return
 
 /mob/living/carbon/human/var/co2overloadtime = null

@@ -49,9 +49,9 @@
 
 	if(SSshuttle.emergencyAlwaysFakeRecall)
 		if((seclevel2num(get_security_level()) == SEC_LEVEL_RED))
-			SSshuttle.emergencyFakeRecall = rand(0.2, 0.5)
+			SSshuttle.emergencyFakeRecall = rand(2, 5) * 0.1
 		else
-			SSshuttle.emergencyFakeRecall = rand(0.5, 0.8)
+			SSshuttle.emergencyFakeRecall = rand(5, 8) * 0.1
 
 
 /obj/docking_port/mobile/emergency/cancel(area/signalOrigin)

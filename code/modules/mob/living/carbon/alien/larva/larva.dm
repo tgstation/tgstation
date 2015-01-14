@@ -26,7 +26,8 @@
 //This needs to be fixed
 /mob/living/carbon/alien/larva/Stat()
 	..()
-	stat(null, "Progress: [amount_grown]/[max_grown]")
+	if(statpanel("Status"))
+		stat(null, "Progress: [amount_grown]/[max_grown]")
 
 /mob/living/carbon/alien/larva/adjustToxLoss(amount)
 	if(stat != DEAD)
@@ -50,15 +51,13 @@
 
 			f_loss += 60
 
-			ear_damage += 30
-			ear_deaf += 120
+			adjustEarDamage(30,120)
 
 		if(3.0)
 			b_loss += 30
 			if (prob(50))
 				Paralyse(1)
-			ear_damage += 15
-			ear_deaf += 60
+			adjustEarDamage(15,60)
 
 	adjustBruteLoss(b_loss)
 	adjustFireLoss(f_loss)
