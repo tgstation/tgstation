@@ -137,9 +137,10 @@ var/list/uplink_items = list()
 	surplus = 0
 
 /datum/uplink_item/dangerous/crossbow
-	name = "Miniature Auto Crossbow"
-	desc = "A short bow mounted across a tiller in miniature. Small enough to fit into a pocket or slip into a bag unnoticed. It fires bolts tipped with a paralyzing toxin collected from a rare organism."
-	item = /obj/item/weapon/gun/projectile/automatic/crossbow
+	name = "Miniature Energy Crossbow"
+	desc = "A short bow mounted across a tiller in miniature. Small enough to fit into a pocket or slip into a bag unnoticed. It fires bolts tipped with a paralyzing toxin collected from a rare organism. \
+	The bow generates bolts using an internal power source but must be manually charged between shots."
+	item = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
 	cost = 10
 	excludefrom = list(/datum/game_mode/nuclear)
 	surplus = 50
@@ -229,13 +230,6 @@ var/list/uplink_items = list()
 	desc = "An additional 8-round 10mm magazine for use in the syndicate pistol. These subsonic rounds are dirt cheap but are half as effective as .357 rounds."
 	item = /obj/item/ammo_box/magazine/m10mm
 	cost = 1
-
-/datum/uplink_item/ammo/crossbow
-	name = "Poison-tipped Crossbow Bolts (x4)"
-	desc = "A four pack of paralyzing crossbow bolts, for hunting big game."
-	item = /obj/item/ammo_box/crossbow
-	cost = 2
-	excludefrom = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/revolver
 	name = "Speed Loader - .357"

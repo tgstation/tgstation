@@ -47,7 +47,7 @@
 /obj/item/weapon/gun/projectile/automatic/proc/burst_select()
 	var/mob/living/carbon/human/user = usr
 	select = !select
-	if(select)
+	if(!select)
 		burst_size = 1
 		fire_delay = 0
 		user << "<span class='notice'>You switch to semi-automatic.</span>"
