@@ -160,6 +160,8 @@
 				if(3.0)
 					dat += "<font size='4'><b>Security Record</b></font><br>"
 					if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
+						user << browse_rsc(active1.fields["photo_front"], "photo_front")
+						user << browse_rsc(active1.fields["photo_side"], "photo_side")
 						dat += {"<table>
 						<tr><td>Name:</td><td><A href='?src=\ref[src];choice=Edit Field;field=name'>&nbsp;[active1.fields["name"]]&nbsp;</A></td></tr>
 						<tr><td>ID:</td><td><A href='?src=\ref[src];choice=Edit Field;field=id'>&nbsp;[active1.fields["id"]]&nbsp;</A></td></tr>
@@ -169,7 +171,7 @@
 						<tr><td>Fingerprint:</td><td><A href='?src=\ref[src];choice=Edit Field;field=fingerprint'>&nbsp;[active1.fields["fingerprint"]]&nbsp;</A></td></tr>
 						<tr><td>Physical Status:</td><td>&nbsp;[active1.fields["p_stat"]]&nbsp;</td></tr>
 						<tr><td>Mental Status:</td><td>&nbsp;[active1.fields["m_stat"]]&nbsp;</td></tr>
-						</table>"}
+						</table><div class='statusDisplay'><center><img src=photo_front height=64 width=64><img src=photo_side height=64 width=64></center></div>"}
 					else
 						dat += "General Record Lost!<br>"
 					if ((istype(active2, /datum/data/record) && data_core.security.Find(active2)))
