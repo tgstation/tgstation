@@ -6422,7 +6422,7 @@
 "ctz" = (/obj/structure/table,/obj/item/stack/sheet/mineral/plasma{layer = 2.9},/turf/simulated/floor/plasteel{icon_state = "yellow"},/area/ai_monitored/storage/secure)
 "ctA" = (/obj/machinery/power/port_gen/pacman,/obj/structure/cable,/turf/simulated/floor/plasteel{dir = 6; icon_state = "yellow"},/area/ai_monitored/storage/secure)
 "ctB" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/simulated/floor/plating,/area/ai_monitored/storage/secure)
-"ctC" = (/mob/living/simple_animal/hostile/retaliate/bat/SgtSteely,/turf/simulated/floor/fancy/carpet,/area/security/hos)
+"ctC" = (/mob/living/simple_animal/hostile/retaliate/bat/SgtArachna,/turf/simulated/floor/fancy/carpet,/area/security/hos)
 "ctD" = (/mob/living/simple_animal/fox/Renault,/turf/simulated/floor/wood,/area/library)
 "ctE" = (/mob/living/simple_animal/pug/Tywin,/turf/simulated/floor/wood,/area/crew_quarters/captain)
 
