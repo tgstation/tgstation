@@ -86,7 +86,7 @@
 		// Must be in a crate (or a critter crate)!
 		if(istype(MA,/obj/structure/closet/crate) || istype(MA,/obj/structure/closet/critter))
 			SSshuttle.sold_atoms += ":"
-			if(!MA.contents)
+			if(!MA.contents.len)
 				SSshuttle.sold_atoms += " (empty)"
 			++crate_count
 
@@ -377,7 +377,7 @@
 			else
 				temp = "The supply shuttle has departed.<BR><BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 				SSshuttle.toggleShuttle("supply", "supply_home", "supply_away", 1)
-				investigate_log("[usr.key] has sent the supply shuttle away. Remaining points: [SSshuttle.points]. Shuttle contents:[SSshuttle.sold_atoms].", "cargo")
+				investigate_log("[usr.key] has sent the supply shuttle away. Remaining points: [SSshuttle.points]. Shuttle contents:[SSshuttle.sold_atoms]", "cargo")
 		else
 			if(href_list["loan"] && SSshuttle.shuttle_loan)
 				if(!SSshuttle.shuttle_loan.dispatched)
