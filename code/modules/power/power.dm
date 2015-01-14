@@ -56,7 +56,7 @@
 	if(!use_power)
 		return 1
 
-	if (isnull(areaMaster))
+	if(isnull(areaMaster))
 		return 0						// if not, then not powered.
 
 	return areaMaster.powered(chan)		// return power status of the area.
@@ -316,7 +316,7 @@
 
 	var/shock_damage = 0
 
-	if(PN_damage>=cell_damage)
+	if(PN_damage >= cell_damage)
 		power_source = PN
 		shock_damage = PN_damage
 	else

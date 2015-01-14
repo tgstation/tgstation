@@ -34,6 +34,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/d2 = 1								// cable direction 2 (see above)
 	layer = 2.44							// just below unary stuff, which is at 2.45 and above pipes, which are at 2.4
 	var/obj/item/device/powersink/attached	// holding this here for qdel
+	l_color = "red"
 
 /obj/structure/cable/yellow
 	l_color = "yellow"
@@ -196,8 +197,6 @@ By design, d1 is the smallest direction and d2 is the highest
 			s.set_up(5,1,src)
 			s.start()
 			return 1
-		else
-			return 0
 
 	return 0
 
@@ -217,13 +216,8 @@ By design, d1 is the smallest direction and d2 is the highest
 				qdel(src)
 	return
 
-/obj/structure/cable/proc/cableColor(var/colorC)
-	var/color_n = "red"
-
-	if(colorC)
-		color_n = colorC
-
-	l_color = color_n
+/obj/structure/cable/proc/cableColor(var/colorC = "red")
+	l_color = colorC
 
 	switch(colorC)
 		if("red")
@@ -590,7 +584,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	var/mob/M = usr
 
-	if(ishuman(M) && !M.restrained() && !M.stat && !M.paralysis && ! M.stunned)
+	if(ishuman(M) && !M.restrained() && !M.stat && M.canmove)
 		if(!isturf(usr.loc))
 			return
 
