@@ -222,7 +222,6 @@
 				"\blue [M] gives [src] a [pick("hug","warm embrace")].", \
 				"\blue You hug [src].", \
 				)
-			 VG-EDIT Killing people through hugs, one overdose at a time.
 			reagents.add_reagent("paracetamol", 1)
 
 			share_contact_diseases(M)
