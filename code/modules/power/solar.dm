@@ -21,7 +21,6 @@ var/list/solars_list = list()
 	icon_state = "sp_base"
 	anchored = 1
 	density = 1
-	directwired = 1
 	use_power = 0
 	idle_power_usage = 0
 	active_power_usage = 0
@@ -47,7 +46,7 @@ var/list/solars_list = list()
 	solars_list -= src
 
 /obj/machinery/power/solar/connect_to_network()
-	..()
+	. = ..()
 	solars_list += src
 
 /obj/machinery/power/solar/proc/make()
@@ -298,7 +297,6 @@ var/list/solars_list = list()
 	icon_state = "solar"
 	anchored = 1
 	density = 1
-	directwired = 1
 	use_power = 1
 	idle_power_usage = 50
 	active_power_usage = 300
@@ -331,9 +329,10 @@ var/list/solars_list = list()
 	solars_list -= src
 
 /obj/machinery/power/solar_control/connect_to_network()
-	..()
+	. = ..()
+
 	if(powernet)
-		solars_list.Add(src)
+		solars_list += src
 
 /obj/machinery/power/solar_control/initialize()
 	..()
