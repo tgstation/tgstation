@@ -2,5 +2,5 @@ author: Dannno
 delete-after: True
 
 changes:
-  - rscadd: Adds a bandanas in basic colors to lockers in the station.
+  - rscadd: Adds a bandanas in basic colors to lockers in the station. Activate in hand to switch between head and mask modes.
   - rscadd: Adds more colored jumpsuits to the mixed locker.
