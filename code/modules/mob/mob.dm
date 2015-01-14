@@ -694,6 +694,22 @@ var/list/slot_equipment_priority = list( \
 /mob/Stat()
 	..()
 
+	if(statpanel("Status"))
+		var/ETA
+		switch(SSshuttle.emergency.mode)
+			if(SHUTTLE_RECALL)
+				ETA = "RCL"
+			if(SHUTTLE_CALL)
+				ETA = "ETA"
+			if(SHUTTLE_DOCKED)
+				ETA = "ETD"
+			if(SHUTTLE_ESCAPE)
+				ETA = "ESC"
+		if(ETA)
+			var/timeleft = SSshuttle.emergency.timeLeft()
+			stat(null, "[ETA]-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+
+
 	if(client && client.holder)
 		if(statpanel("MC"))
 			stat("Location:","([x], [y], [z])")
@@ -925,3 +941,9 @@ var/list/slot_equipment_priority = list( \
 				if(G.can_reenter_corpse || even_if_they_cant_reenter)
 					return G
 				break
+
+/mob/proc/adjustEarDamage()
+	return
+
+/mob/proc/setEarDamage()
+	return

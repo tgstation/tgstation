@@ -471,13 +471,6 @@
 	force = 10
 	throwforce = 10
 	var/cooldown = 0
-	var/list/can_be_placed_into = list(
-		/obj/structure/table,
-		/obj/structure/closet,
-		/obj/item/weapon/storage,
-		/obj/structure/safe,
-		/obj/machinery/disposal
-		)
 
 /obj/item/weapon/resonator/proc/CreateResonance(var/target, var/creator)
 	if(cooldown <= 0)
@@ -493,12 +486,8 @@
 	..()
 
 /obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity_flag)
-	if(target in user.contents)
-		return
 	if(proximity_flag)
-		for(var/type in can_be_placed_into)
-			if(istype(target, type))
-				return
+		if(!check_allowed_items(target, 1)) return
 		CreateResonance(target, user)
 
 /obj/effect/resonance

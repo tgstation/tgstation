@@ -146,7 +146,7 @@ var/list/ai_list = list()
 		return
 
 		//if(icon_state == initial(icon_state))
-	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline")
+	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline", "Hades", "Helios", "President", "Syndicat Meow", "Alien", "Too Deep", "Triumvirate", "Triumvirate-M", "Text", "Matrix", "Dorf", "Bliss", "Not Malf", "Fuzzy", "Goon", "Database", "Glitchman", "Murica", "Nanotrasen", "Gentoo")
 	if(icontype == "Clown")
 		icon_state = "ai-clown2"
 	else if(icontype == "Monochrome")
@@ -169,24 +169,53 @@ var/list/ai_list = list()
 		icon_state = "ai-house"
 	else if(icontype == "Heartline")
 		icon_state = "ai-heartline"
+	else if(icontype == "Hades")
+		icon_state = "ai-hades"
+	else if(icontype == "Helios")
+		icon_state = "ai-helios"
+	else if(icontype == "President")
+		icon_state = "ai-pres"
+	else if(icontype == "Syndicat Meow")
+		icon_state = "ai-syndicatmeow"
+	else if(icontype == "Alien")
+		icon_state = "ai-alien"
+	else if(icontype == "Too Deep")
+		icon_state = "ai-toodeep"
+	else if(icontype == "Triumvirate")
+		icon_state = "ai-triumvirate"
+	else if(icontype == "Triumvirate-M")
+		icon_state = "ai-triumvirate-malf"
+	else if(icontype == "Text")
+		icon_state = "ai-text"
+	else if(icontype == "Matrix")
+		icon_state = "ai-matrix"
+	else if(icontype == "Dorf")
+		icon_state = "ai-dorf"
+	else if(icontype == "Bliss")
+		icon_state = "ai-bliss"
+	else if(icontype == "Not Malf")
+		icon_state = "ai-notmalf"
+	else if(icontype == "Fuzzy")
+		icon_state = "ai-fuzz"
+	else if(icontype == "Goon")
+		icon_state = "ai-goon"
+	else if(icontype == "Database")
+		icon_state = "ai-database"
+	else if(icontype == "Glitchman")
+		icon_state = "ai-glitchman"
+	else if(icontype == "Murica")
+		icon_state = "ai-murica"
+	else if(icontype == "Nanotrasen")
+		icon_state = "ai-nanotrasen"
+	else if(icontype == "Gentoo")
+		icon_state = "ai-gentoo"
 	//else
 			//usr <<"You can only change your display once!"
 			//return
 
 /mob/living/silicon/ai/Stat()
 	..()
-	statpanel("Status")
-	if (client.statpanel == "Status")
-		var/ETA
-		switch(SSshuttle.emergency.mode)
-			if(SHUTTLE_CALL)
-				ETA = "ETA"
-			if(SHUTTLE_DOCKED)
-				ETA = "ETD"
-		if(ETA)
-			var/timeleft = SSshuttle.emergency.timeLeft()
-			stat(null, "[ETA]-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
-
+	if(statpanel("Status"))
 		if(ticker.mode.name == "AI malfunction")
 			var/datum/game_mode/malfunction/malf = ticker.mode
 			for (var/datum/mind/malfai in malf.malf_ai)

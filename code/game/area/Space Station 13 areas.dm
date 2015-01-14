@@ -1540,11 +1540,6 @@ proc/process_ghost_teleport_locs()
  Used in gamemodes code at the moment. --rastaf0
 */
 
-// CENTCOM
-var/list/centcom_areas = list (
-	/area/centcom
-)
-
 //SPACE STATION 13
 var/list/the_station_areas = list (
 	/area/atmos,

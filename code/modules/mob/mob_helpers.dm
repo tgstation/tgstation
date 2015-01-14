@@ -163,14 +163,14 @@ proc/isorgan(A)
 	if(prob(probability))
 		return zone
 
-	var/t = rand(1, 17) // randomly pick a different zone, or maybe the same one
+	var/t = rand(1, 18) // randomly pick a different zone, or maybe the same one
 	switch(t)
 		if(1)		 return "head"
 		if(2)		 return "chest"
 		if(3 to 6)	 return "l_arm"
 		if(7 to 10)	 return "r_arm"
-		if(10 to 13) return "l_leg"
-		if(14 to 17) return "r_leg"
+		if(11 to 14) return "l_leg"
+		if(15 to 18) return "r_leg"
 
 	return zone
 

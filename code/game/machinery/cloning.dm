@@ -152,6 +152,17 @@
 		src.eject_wait = 0
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
+
+	if(efficiency > 2)
+		for(var/A in bad_se_blocks)
+			setblock(H.dna.struc_enzymes, A, construct_block(0,2))
+	if(efficiency > 5 && prob(20))
+		randmutg(H)
+	if(efficiency < 3 && prob(50))
+		var/mob/M = randmutb(H)
+		if(ismob(M))
+			H = M
+
 	H.silent = 20 //Prevents an extreme edge case where clones could speak if they said something at exactly the right moment.
 	occupant = H
 
@@ -174,14 +185,6 @@
 
 	hardset_dna(H, ui, se, null, null, mrace, mcolor)
 	H.faction |= factions
-
-	if(efficiency > 2)
-		for(var/A in bad_se_blocks)
-			setblock(H.dna.struc_enzymes, A, construct_block(0,2))
-	if(efficiency > 5 && prob(20))
-		randmutg(H)
-	if(efficiency < 3 && prob(50))
-		randmutb(H)
 
 	H.set_cloned_appearance()
 

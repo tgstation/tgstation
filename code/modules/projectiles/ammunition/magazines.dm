@@ -90,6 +90,15 @@
 	ammo_type = /obj/item/ammo_casing/a40mm
 	max_ammo = 6
 
+/obj/item/ammo_box/magazine/internal/cylinder/crossbow
+	name = "autocrossbow internal magazine"
+	ammo_type = /obj/item/ammo_casing/caseless/bolt
+	caliber = "crossbow"
+	max_ammo = 10
+
+/obj/item/ammo_box/magazine/internal/cylinder/crossbow/large
+	max_ammo = 15
+
 ///////////EXTERNAL MAGAZINES////////////////
 
 /obj/item/ammo_box/magazine/m10mm
@@ -159,17 +168,14 @@ obj/item/ammo_box/magazine/tommygunm45
 	multiple_sprites = 2
 	max_ammo = 8
 
-/obj/item/ammo_box/magazine/m545
-	name = "box magazine (5.45mm)"
-	icon_state = "5.45m"
+/obj/item/ammo_box/magazine/m556
+	name = "toploader magazine (5.56mm)"
+	icon_state = "5.56m"
 	origin_tech = "combat=5;syndicate=1"
-	ammo_type = /obj/item/ammo_casing/a545
-	caliber = "a545"
+	ammo_type = /obj/item/ammo_casing/a556
+	caliber = "a556"
 	max_ammo = 30
-
-/obj/item/ammo_box/magazine/m545/update_icon()
-	..()
-	icon_state = "[initial(icon_state)]-[round(ammo_count(),10)]"
+	multiple_sprites = 2
 
 /obj/item/ammo_box/magazine/m762
 	name = "box magazine (7.62mm)"

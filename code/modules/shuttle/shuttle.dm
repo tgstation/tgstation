@@ -546,7 +546,12 @@
 
 /turf/proc/copyTurf(turf/T)
 	if(T.type != type)
+		var/image/I
+		if(underlays.len)	//we have underlays, which implies some sort of transparency, so we want to a snapshot of the previous turf as an underlay
+			I = image(T.icon, T.icon_state)
 		T = new type(T)
+		if(I)
+			T.underlays.Add(I)
 	if(T.icon_state != icon_state)
 		T.icon_state = icon_state
 	if(T.icon != icon)

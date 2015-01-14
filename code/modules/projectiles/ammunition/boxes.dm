@@ -39,3 +39,9 @@
 	ammo_type = /obj/item/ammo_casing/a40mm
 	max_ammo = 4
 	multiple_sprites = 1
+
+/obj/item/ammo_box/crossbow
+	name = "ammo box (crossbow bolts)"
+	icon_state = "xbow"
+	ammo_type = /obj/item/ammo_casing/caseless/bolt
+	max_ammo = 4
