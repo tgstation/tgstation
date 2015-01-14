@@ -16,9 +16,9 @@ var/datum/subsystem/mobs/SSmob
 /datum/subsystem/mobs/fire()
 	var/seconds = wait * 0.1
 	var/i=1
-	for(var/thing in mob_list)
-		if(thing)
-			thing:Life(seconds)
+	for(var/mob in mob_list)
+		if(mob)
+			mob:Life(seconds)
 			++i
 			continue
 		mob_list.Cut(i, i+1)

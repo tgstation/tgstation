@@ -22,10 +22,10 @@ var/datum/subsystem/machines/SSmachine
 
 /datum/subsystem/machines/fire()
 	var/seconds = wait * 0.1
-	for(var/thing in processing)
-		if(thing && (thing:process(seconds) != PROCESS_KILL))
-			if(thing:use_power)
-				thing:auto_use_power()
+	for(var/machine in processing)
+		if(machine && (machine:process(seconds) != PROCESS_KILL))
+			if(machine:use_power)
+				machine:auto_use_power()
 			continue
-		processing.Remove(thing)
+		processing.Remove(machine)
 

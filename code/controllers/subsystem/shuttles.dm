@@ -62,9 +62,9 @@ var/datum/subsystem/shuttle/SSshuttle
 	points += points_per_decisecond * wait
 
 	var/i=1
-	for(var/thing in mobile)
-		if(thing)
-			var/obj/docking_port/mobile/P = thing
+	for(var/mobile_docking_port in mobile)
+		if(mobile_docking_port)
+			var/obj/docking_port/mobile/P = mobile_docking_port
 			P.check()
 			++i
 			continue
@@ -144,17 +144,17 @@ var/datum/subsystem/shuttle/SSshuttle
 /datum/subsystem/shuttle/proc/autoEvac()
 	var/callShuttle = 1
 
-	for(var/thing in shuttle_caller_list)
-		if(istype(thing, /mob/living/silicon/ai))
-			var/mob/living/silicon/ai/AI = thing
+	for(var/shuttle_caller in shuttle_caller_list)
+		if(istype(shuttle_caller, /mob/living/silicon/ai))
+			var/mob/living/silicon/ai/AI = shuttle_caller
 			if(AI.stat || !AI.client)
 				continue
-		else if(istype(thing, /obj/machinery/computer/communications))
-			var/obj/machinery/computer/communications/C = thing
+		else if(istype(shuttle_caller, /obj/machinery/computer/communications))
+			var/obj/machinery/computer/communications/C = shuttle_caller
 			if(C.stat & BROKEN)
 				continue
 
-		var/turf/T = get_turf(thing)
+		var/turf/T = get_turf(shuttle_caller)
 		if(T && T.z == 1)
 			callShuttle = 0
 			break

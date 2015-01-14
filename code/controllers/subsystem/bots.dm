@@ -12,10 +12,10 @@ var/datum/subsystem/bots/SSbot
 /datum/subsystem/bots/fire()
 	var/seconds = wait * 0.1
 	var/i=1
-	for(var/thing in processing)
-		if(thing && !thing:gc_destroyed)
+	for(var/bot in processing)
+		if(bot && !bot:gc_destroyed)
 			spawn(-1)
-				thing:bot_process(seconds)
+				bot:bot_process(seconds)
 			++i
 			continue
 		processing.Cut(i, i+1)
