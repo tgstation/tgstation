@@ -8,7 +8,7 @@
 	var/alarmed = 0
 	can_suppress = 1
 	burst_size = 3
-	fire_delay = 1
+	fire_delay = 2
 	var/select = 1
 	action_button_name = "Toggle Firemode"
 
@@ -231,3 +231,4 @@
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	can_suppress = 0
 	burst_size = 4
+	fire_delay = 1
