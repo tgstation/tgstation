@@ -8,16 +8,20 @@
 	slot_flags = SLOT_BELT
 	origin_tech = "bluespace=4;materials=4"
 	var/imprinted = "empty"
+	var/usability = 0
+
+/obj/item/device/soulstone/anybody
+	usability = 1
 
 /obj/item/device/soulstone/pickup(mob/living/user as mob)
-	if(!iscultist(user) && !iswizard(user))
+	if(!iscultist(user) && !iswizard(user) && !usability)
 		user << "<span class='danger'>An overwhelming feeling of dread comes over you as you pick up the soulstone. It would be wise to be rid of this quickly.</span>"
 		user.Dizzy(120)
 
 //////////////////////////////Capturing////////////////////////////////////////////////////////
 
 /obj/item/device/soulstone/attack(mob/living/carbon/human/M as mob, mob/user as mob)
-	if(!iscultist(user) && !iswizard(user))
+	if(!iscultist(user) && !iswizard(user) && !usability)
 		user.Paralyse(5)
 		user << "<span class='userdanger'>Your body is wracked with debilitating pain!</span>"
 		return
@@ -35,7 +39,7 @@
 /obj/item/device/soulstone/attack_self(mob/user)
 	if (!in_range(src, user))
 		return
-	if(!iscultist(user) && !iswizard(user))
+	if(!iscultist(user) && !iswizard(user) && !usability)
 		user.Paralyse(5)
 		user << "<span class='userdanger'>Your body is wracked with debilitating pain!</span>"
 		return
@@ -74,10 +78,11 @@
 				A.loc = U.loc
 				A.cancel_camera()
 				src.icon_state = "soulstone"
-				if(iswizard(U))
+				if(iswizard(U) || usability)
 					A << "<b>You have been released from your prison, but you are still bound to [U.name]'s will. Help them suceed in their goals at all costs.</b>"
 				else if(iscultist(U))
 					A << "<b>You have been released from your prison, but you are still bound to the cult's will. Help them suceed in their goals at all costs.</b>"
+
 	attack_self(U)
 
 ///////////////////////////Transferring to constructs/////////////////////////////////////////////////////
@@ -196,6 +201,7 @@ proc/makeNewConstruct(var/mob/living/simple_animal/construct/ctype, var/mob/targ
 		newstruct << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
 	else if(stoner && iscultist(stoner))
 		newstruct << "<B>You are still bound to serve the cult, follow their orders and help them complete their goals at all costs.</B>"
+	else newstruct << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
 	newstruct.cancel_camera()
 
 
@@ -221,7 +227,7 @@ proc/makeNewConstruct(var/mob/living/simple_animal/construct/ctype, var/mob/targ
 	S.cancel_camera()
 	C.icon_state = "soulstone2"
 	C.name = "Soul Stone: [S.real_name]"
-	if(iswizard(U))
+	if(iswizard(U) || usability)
 		S << "Your soul has been captured! You are now bound to [U.name]'s will, help them suceed in their goals at all costs."
 	else if(iscultist(U))
 		S << "Your soul has been captured! You are now bound to the cult's will, help them suceed in their goals at all costs."
