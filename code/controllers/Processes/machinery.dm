@@ -4,7 +4,7 @@
 
 /datum/controller/process/machinery/doWork()
 	#ifdef PROFILE_MACHINES
-	machine_profiling.Cut()
+	machine_profiling.len = 0
 	#endif
 
 	for(var/obj/machinery/M in machines)
@@ -18,7 +18,7 @@
 				machines.Remove(M)
 				continue
 
-			if(M.use_power)
+			if(M && M.use_power)
 				M.auto_use_power()
 
 			#ifdef PROFILE_MACHINES

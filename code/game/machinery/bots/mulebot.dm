@@ -88,8 +88,6 @@ var/global/mulebot_count = 0
 		name = "\improper Mulebot ([suffix])"
 
 
-	verbs -= /atom/movable/verb/pull
-
 	can_load = list(
 		/obj/structure/closet/crate,
 		/obj/structure/vendomatpack,

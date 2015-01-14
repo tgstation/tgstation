@@ -63,6 +63,11 @@
 	LoadBans()
 	SetupHooks() // /vg/
 
+	load_library_db_to_cache(1)
+	spawn()
+		for(var/obj/machinery/librarycomp/L in world)
+			build_library_menu(L)
+
 	copy_logs() // Just copy the logs.
 	if(config && config.log_runtimes)
 		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM-DD")]-runtime.log")

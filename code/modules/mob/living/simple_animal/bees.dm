@@ -30,7 +30,6 @@
 /mob/living/simple_animal/bee/New(loc, var/obj/machinery/apiary/new_parent)
 	..()
 	parent = new_parent
-	verbs -= /atom/movable/verb/pull
 
 /mob/living/simple_animal/bee/Destroy()
 	if(parent)

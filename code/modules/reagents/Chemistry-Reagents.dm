@@ -1263,14 +1263,13 @@ datum
 			reagent_state = LIQUID
 			color = "#C855DC"
 			overdose_dam = 0
-			overdose = 60
+			overdose = 0
 
 			on_mob_life(var/mob/living/M as mob)
 
 				if(!holder) return
-				if (volume > overdose)
-					M.hallucination = max(M.hallucination, 2)
-
+				M.shock_stage--
+				M.traumatic_shock--
 		mutagen
 			name = "Unstable mutagen"
 			id = "mutagen"
@@ -2567,7 +2566,7 @@ datum
 							holder.remove_reagent("capsaicin", 5)
 						if(istype(M, /mob/living/carbon/slime))
 							M.bodytemperature -= rand(5,20)
-						if(M.dna.mutantrace == "slime")
+						if(M.dna && M.dna.mutantrace == "slime")
 							M.bodytemperature -= rand(5,20)
 					if(15 to 25)
 						M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT

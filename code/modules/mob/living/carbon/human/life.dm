@@ -612,7 +612,7 @@ var/global/list/organ_damage_overlays = list(
 			loc.assume_air(breath)
 
 			//spread some viruses while we are at it
-			if (virus2.len > 0)
+			if (virus2 && virus2.len > 0)
 				if (prob(10) && get_infection_chance(src))
 //					log_debug("[src] : Exhaling some viruses")
 					for(var/mob/living/carbon/M in view(1,src))
