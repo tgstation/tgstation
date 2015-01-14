@@ -98,12 +98,6 @@
 	item_state = "g_suit"
 	item_color = "lightgreen"
 
-/obj/item/clothing/under/color/lightblue
-	name = "lightblue jumpsuit"
-	icon_state = "lightblue"
-	item_state = "b_suit"
-	item_color = "lightblue"
-
 /obj/item/clothing/under/color/lightbrown
 	name = "lightbrown jumpsuit"
 	icon_state = "lightbrown"
