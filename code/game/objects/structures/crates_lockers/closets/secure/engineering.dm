@@ -15,6 +15,7 @@
 		new /obj/item/weapon/storage/backpack/industrial(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel_eng(src)
+	new /obj/item/weapon/storage/backpack/dufflebag/engineering(src)
 	new /obj/item/areaeditor/blueprints(src)
 	new /obj/item/weapon/storage/box/permits(src)
 	new /obj/item/clothing/under/rank/chief_engineer(src)
@@ -101,6 +102,7 @@
 		new /obj/item/weapon/storage/backpack/industrial(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel_eng(src)
+	new /obj/item/weapon/storage/backpack/dufflebag/engineering(src)
 	new /obj/item/clothing/under/rank/engineer(src)
 	new /obj/item/clothing/shoes/sneakers/orange(src)
 	new /obj/item/weapon/storage/toolbox/mechanical(src)
@@ -129,6 +131,7 @@
 	new /obj/item/weapon/pipe_dispenser(src)
 	new /obj/item/weapon/storage/toolbox/mechanical(src)
 	new /obj/item/weapon/storage/backpack/satchel_norm(src)
+	new /obj/item/weapon/storage/backpack/dufflebag/engineering(src)
 	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
 	new /obj/item/weapon/watertank/atmos(src)
 	new /obj/item/clothing/suit/fire/atmos(src)
