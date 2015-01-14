@@ -34,7 +34,7 @@ var/datum/subsystem/npcpool/SSbp
 	// 3. Process delegation: if a bot (or bots) has been delegated, assign them to the task.
 	// 4. Process coordination: if a bot(or bots) has been asked to coordinate, assign them to help.
 	// 5. Do all assignments: goes through the delegated/coordianted bots and assigns the right variables/tasks to them.
-	var/npcCount
+	var/npcCount = 1
 
 	//bot handling
 	for(var/obj/machinery/bot/check in botPool_l_non)
@@ -49,7 +49,7 @@ var/datum/subsystem/npcpool/SSbp
 			canBeUsed_non |= check
 		npcCount++
 
-	npcCount = 0 //reset the count
+	npcCount = 1 //reset the count
 
 	//SNPC handling
 	for(var/mob/living/carbon/human/interactive/check in botPool_l)
