@@ -165,6 +165,8 @@
 				A.loc = src
 				update_icon()
 				update_gunlight(user)
+				verbs += /obj/item/weapon/gun/proc/toggle_gunlight
+
 	if(istype(A, /obj/item/weapon/screwdriver))
 		if(F)
 			if(user.l_hand != src && user.r_hand != src)
@@ -177,13 +179,18 @@
 				update_gunlight(user)
 				S.update_brightness(user)
 				update_icon()
+				verbs -= /obj/item/weapon/gun/proc/toggle_gunlight
 	..()
 	return
 
-/obj/item/weapon/gun/verb/toggle_gunlight()
+/obj/item/weapon/gun/proc/toggle_gunlight()
 	set name = "Toggle Gunlight"
 	set category = "Object"
 	set desc = "Click to toggle your weapon's attached flashlight."
+
+	if(!F)
+		return
+
 	var/mob/living/carbon/human/user = usr
 	if(!isturf(user.loc))
 		user << "You cannot turn the light on while in this [user.loc]."
