@@ -1,0 +1,6 @@
+author: Boggart
+
+delete-after: True
+
+changes:
+  - bugfix: "Fixes the Exosuit Control Console having the unpowered icon state while powered."
