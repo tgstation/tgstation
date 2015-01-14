@@ -37,8 +37,8 @@
 	max_n2 = 0
 	minbodytemp = 0
 
-/mob/living/simple_animal/hostile/retaliate/bat/SgtSteel
-	name = "Sgt Steel"
+/mob/living/simple_animal/hostile/retaliate/bat/SgtSteely
+	name = "Sgt Steely"
 	desc = "Uncompromising, unassailable and scary, just don't hit it"
 	icon_state = "guard"
 	icon_living = "guard"
