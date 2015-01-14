@@ -354,6 +354,11 @@ var/global/list/damage_icon_parts = list()
 		fat = "fat"
 
 	var/image/standing	= image("icon" = 'icons/effects/genetics.dmi')
+	overlays -= obj_overlays[MUTATIONS_LAYER]
+	var/obj/Overlays/O = obj_overlays[MUTATIONS_LAYER]
+	O.overlays.len = 0
+	O.underlays.len = 0
+
 	var/add_image = 0
 	var/g = "m"
 	if(gender == FEMALE)	g = "f"
@@ -364,7 +369,8 @@ var/global/list/damage_icon_parts = list()
 		if(gene.is_active(src))
 			var/underlay=gene.OnDrawUnderlays(src,g,fat)
 			if(underlay)
-				standing.underlays += underlay
+				//standing.underlays += underlay
+				O.underlays += underlay
 				add_image = 1
 	for(var/mut in mutations)
 		switch(mut)
@@ -386,15 +392,18 @@ var/global/list/damage_icon_parts = list()
 				add_image = 1
 			*/
 			if(M_LASER)
-				standing.overlays	+= "lasereyes_s"
+				//standing.overlays	+= "lasereyes_s"
+				O.overlays += "lasereyes_s"
 				add_image = 1
 	if((M_RESIST_COLD in mutations) && (M_RESIST_HEAT in mutations))
-		standing.underlays	-= "cold[fat]_s"
-		standing.underlays	-= "fire[fat]_s"
-		standing.underlays	+= "coldfire[fat]_s"
-	overlays -= obj_overlays[MUTATIONS_LAYER]
+		//standing.underlays	-= "cold[fat]_s"
+		//standing.underlays	-= "fire[fat]_s"
+		//standing.underlays	+= "coldfire[fat]_s"
+		O.underlays	-= "cold[fat]_s"
+		O.underlays	-= "fire[fat]_s"
+		O.underlays	+= "coldfire[fat]_s"
+
 	if(add_image)
-		var/obj/Overlays/O = obj_overlays[MUTATIONS_LAYER]
 		O.icon = standing
 		O.icon_state = standing.icon_state
 		overlays += O
@@ -507,6 +516,8 @@ var/global/list/damage_icon_parts = list()
 	overlays -= obj_overlays[UNIFORM_LAYER]
 	if(w_uniform && istype(w_uniform, /obj/item/clothing/under) )
 		w_uniform.screen_loc = ui_iclothing
+		var/obj/Overlays/O = obj_overlays[UNIFORM_LAYER]
+		O.overlays.len = 0
 		var/t_color = w_uniform._color
 		if(!t_color)		t_color = icon_state
 		var/image/standing	= image("icon_state" = "[t_color]_s")
@@ -532,14 +543,15 @@ var/global/list/damage_icon_parts = list()
 		if(w_uniform.blood_DNA)
 			var/image/bloodsies	= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "uniformblood")
 			bloodsies.color		= w_uniform.blood_color
-			standing.overlays	+= bloodsies
+			//standing.overlays	+= bloodsies
+			O.overlays += bloodsies
 
 		if(w_uniform:hastie)	//WE CHECKED THE TYPE ABOVE. THIS REALLY SHOULD BE FINE.
 			var/tie_color = w_uniform:hastie._color
 			if(!tie_color) tie_color = w_uniform:hastie.icon_state
-			standing.overlays	+= image("icon" = 'icons/mob/ties.dmi', "icon_state" = "[tie_color]")
+			O.overlays	+= image("icon" = 'icons/mob/ties.dmi', "icon_state" = "[tie_color]")
 
-		var/obj/Overlays/O = obj_overlays[UNIFORM_LAYER]
+
 		O.icon = standing
 		O.icon_state = standing.icon_state
 		overlays += O
@@ -584,6 +596,7 @@ var/global/list/damage_icon_parts = list()
 /mob/living/carbon/human/update_inv_gloves(var/update_icons=1)
 	overlays -= obj_overlays[GLOVES_LAYER]
 	var/obj/Overlays/O = obj_overlays[GLOVES_LAYER]
+	O.overlays.len = 0
 	O.color = null
 	if(gloves)
 
@@ -601,6 +614,7 @@ var/global/list/damage_icon_parts = list()
 			var/image/bloodsies	= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "bloodyhands")
 			bloodsies.color = gloves.blood_color
 			standing.overlays	+= bloodsies
+			O.overlays += bloodsies
 		gloves.screen_loc = ui_gloves
 
 		O.icon = standing
@@ -723,6 +737,8 @@ var/global/list/damage_icon_parts = list()
 /mob/living/carbon/human/update_inv_head(var/update_icons=1)
 	overlays -= obj_overlays[HEAD_LAYER]
 	if(head)
+		var/obj/Overlays/O = obj_overlays[HEAD_LAYER]
+		O.overlays.len = 0
 		head.screen_loc = ui_head		//TODO
 		var/image/standing
 		if(istype(head,/obj/item/clothing/head/kitty))
@@ -738,8 +754,8 @@ var/global/list/damage_icon_parts = list()
 		if(head.blood_DNA)
 			var/image/bloodsies = image("icon" = 'icons/effects/blood.dmi', "icon_state" = "helmetblood")
 			bloodsies.color = head.blood_color
-			standing.overlays	+= bloodsies
-		var/obj/Overlays/O = obj_overlays[HEAD_LAYER]
+			//standing.overlays	+= bloodsies
+			O.overlays	+= bloodsies
 		O.icon = standing
 		O.icon_state = standing.icon_state
 		overlays += O
@@ -776,6 +792,8 @@ var/global/list/damage_icon_parts = list()
 	overlays -= obj_overlays[SUIT_LAYER]
 	if( wear_suit && istype(wear_suit, /obj/item/clothing/suit) )	//TODO check this
 		wear_suit.screen_loc = ui_oclothing	//TODO
+		var/obj/Overlays/O = obj_overlays[SUIT_LAYER]
+		O.overlays.len = 0
 		var/image/standing	= image("icon" = ((wear_suit.icon_override) ? wear_suit.icon_override : 'icons/mob/suit.dmi'), "icon_state" = "[wear_suit.icon_state]")
 
 		if( istype(wear_suit, /obj/item/clothing/suit/straight_jacket) )
@@ -792,8 +810,9 @@ var/global/list/damage_icon_parts = list()
 			var/obj/item/clothing/suit/S = wear_suit
 			var/image/bloodsies = image("icon" = 'icons/effects/blood.dmi', "icon_state" = "[S.blood_overlay_type]blood")
 			bloodsies.color = wear_suit.blood_color
-			standing.overlays	+= bloodsies
-		var/obj/Overlays/O = obj_overlays[SUIT_LAYER]
+			//standing.overlays	+= bloodsies
+			O.overlays	+= bloodsies
+
 		O.icon = standing
 		O.icon_state = standing.icon_state
 		overlays += O
@@ -816,6 +835,8 @@ var/global/list/damage_icon_parts = list()
 /mob/living/carbon/human/update_inv_wear_mask(var/update_icons=1)
 	overlays -= obj_overlays[FACEMASK_LAYER]
 	if( wear_mask && ( istype(wear_mask, /obj/item/clothing/mask) || istype(wear_mask, /obj/item/clothing/tie) ) )
+		var/obj/Overlays/O = obj_overlays[FACEMASK_LAYER]
+		O.overlays.len = 0
 		wear_mask.screen_loc = ui_mask	//TODO
 		var/image/standing	= image("icon" = ((wear_mask.icon_override) ? wear_mask.icon_override : 'icons/mob/mask.dmi'), "icon_state" = "[wear_mask.icon_state]")
 
@@ -827,8 +848,9 @@ var/global/list/damage_icon_parts = list()
 		if( !istype(wear_mask, /obj/item/clothing/mask/cigarette) && wear_mask.blood_DNA )
 			var/image/bloodsies = image("icon" = 'icons/effects/blood.dmi', "icon_state" = "maskblood")
 			bloodsies.color = wear_mask.blood_color
-			standing.overlays	+= bloodsies
-		var/obj/Overlays/O = obj_overlays[FACEMASK_LAYER]
+			//standing.overlays	+= bloodsies
+			O.overlays += bloodsies
+
 		O.icon = standing
 		O.icon_state = standing.icon_state
 		overlays += O
