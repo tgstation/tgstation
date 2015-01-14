@@ -15,11 +15,11 @@ datum/reagent/silver_sulfadiazine
 datum/reagent/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
 		M.adjustFireLoss((volume-(volume*2))*REM)
-		M << "You feel your burns healing!"
+		M << "<span class='notice'>You feel your burns healing!</span>"
 		M.emote("scream")
 	if(method == INGEST)
 		M.adjustToxLoss(0.5*volume)
-		M << "You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?"
+		M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
 	..()
 	return
 
@@ -34,11 +34,11 @@ datum/reagent/styptic_powder
 datum/reagent/styptic_powder/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
 		M.heal_organ_damage(volume*REM,0)
-		M << "You feel your wounds knitting back together!"
+		M << "<span class='notice'>You feel your wounds knitting back together!</span>"
 		M.emote("scream")
 	if(method == INGEST)
 		M.adjustToxLoss(0.5*volume)
-		M << "You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?"
+		M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
 	..()
 	return
 
@@ -70,7 +70,7 @@ datum/reagent/synthflesh/reaction_mob(var/mob/living/M, var/method=TOUCH, var/vo
 	if(method == TOUCH)
 		M.heal_organ_damage(volume*REM,0)
 		M.adjustFireLoss((volume-(volume*2)*REM))
-		M << "You feel your burns healing and your flesh knitting together!"
+		M << "<span class='notice'>You feel your burns healing and your flesh knitting together!"
 	..()
 	return
 

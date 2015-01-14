@@ -15,7 +15,7 @@ datum/reagent/nicotine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	var/smoke_message = pick("You can just feel your lungs dying!", "You feel relaxed.", "You feel calmed.", "You feel the lung cancer forming.", "You feel the money you wasted.", "You feel like a space cowboy.", "You feel rugged.")
 	if(prob(5))
-		M << smoke_message
+		M << "<span class='notice'>[high_message]</span>"
 	M.AdjustStunned(-1)
 	M.adjustStaminaLoss(-1*REM)
 	if(volume > 35)
@@ -35,7 +35,7 @@ datum/reagent/crank/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	var/high_message = pick("You feel jittery.", "You feel like you gotta go fast.", "You feel like you need to step it up.")
 	if(prob(5))
-		M << high_message
+		M << "<span class='notice'>[high_message]</span>"
 	M.AdjustParalysis(-2)
 	M.AdjustStunned(-2)
 	M.AdjustWeakened(-2)
@@ -69,7 +69,7 @@ datum/reagent/crank/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	var/high_message = pick("You feel calm.", "You feel collected.", "You feel like you need to relax.")
 	if(prob(5))
-		M << high_message
+		M << "<span class='notice'>[high_message]</span>"
 	if(prob(10))
 		M.adjustBrainLoss(rand(1,5)*REM)
 		M.adjustToxLoss(rand(1,5)*REM)
@@ -77,9 +77,9 @@ datum/reagent/crank/on_mob_life(var/mob/living/M as mob)
 		M.adjustBrainLoss(rand(1,10)*REM)
 		M.adjustToxLoss(rand(1,10)*REM)
 	if(cycle_count == 20)
-		M << "Your skin feels loose..."
+		M << "<span class='danger'>Your skin feels loose...</span>"
 	if(cycle_count == 50)
-		M << "Your skin falls off!"
+		M << "<span class='userdanger'>Your skin falls off!</span>"
 		M.adjustBruteLoss(rand(10,30)*REM)
 		hardset_dna(M, null, null, null, null, /datum/species/skeleton)
 	if(volume > 20)

@@ -36,7 +36,7 @@ datum/reagent/histamine/on_mob_life(var/mob/living/M as mob)
 	if(volume < 20)
 		switch(pick(1, 2, 3))
 			if(1)
-				M << "<span class='notice'>You are unable to look straight!</span>"
+				M << "<span class='danger'>You are unable to look straight!</span>"
 				M.Dizzy(10)
 			if(2)
 				M.emote("cough")
