@@ -1264,14 +1264,13 @@ datum
 			reagent_state = LIQUID
 			color = "#C855DC"
 			overdose_dam = 0
-			overdose = 60
+			overdose = 0
 
 			on_mob_life(var/mob/living/M as mob)
 
 				if(!holder) return
-				if (volume > overdose)
-					M.hallucination = max(M.hallucination, 2)
-
+				M.shock_stage--
+				M.traumatic_shock--
 		mutagen
 			name = "Unstable mutagen"
 			id = "mutagen"
