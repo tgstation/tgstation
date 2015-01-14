@@ -2,7 +2,7 @@ author: Iamgootball
 delete-after: true
 changes:
   - rscadd: "Added Goonstation Chemistry!"
-  - rscadd: "Adds 13 medicines!"
+  - rscadd: "Adds 14 medicines!"
   - rscadd: "Adds 3 pyrotechnics!"
   - rscadd: "Adds 3 drugs with actual gameplay uses!"
   - rscadd: "Adds 7 toxins!"
