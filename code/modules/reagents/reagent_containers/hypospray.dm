@@ -70,11 +70,11 @@
 	ignore_flags = 1 //so you can medipen through hardsuits
 	flags = null
 	var/starting_reagent = "inaprovaline"
+	var/starting_amount = 10
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/New()
 	..()
-	reagents.add_reagent(starting_reagent, 9)
-	reagents.add_reagent("inaprovaline", 1)
+	reagents.add_reagent(starting_reagent, starting_amount)
 	update_icon()
 	return
 
@@ -103,6 +103,7 @@
 	desc = "A rapid way to regulate your body's temperature in the event of a hardsuit malfunction at the cost of some shortness of breath."
 	icon_state = "lepopen"
 	starting_reagent = "leporazine"
+	starting_amount = 9
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/leporazine/New()
 	..()
@@ -115,6 +116,7 @@
 	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in restrictive armor at the cost of some shortness of breath."
 	icon_state = "stimpen"
 	starting_reagent = "hyperzine"
+	starting_amount = 9
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack/New()
 	..()
