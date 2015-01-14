@@ -275,10 +275,6 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/setMaxHealth(var/newMaxHealth)
 	maxHealth = newMaxHealth
 
-/mob/living/proc/getTotalLoss(var/amount)
-	amount = getBruteLoss() + getOxyLoss() + getToxLoss() + getFireLoss() + getCloneLoss() + getBrainLoss()
-	return amount
-
 // MOB PROCS //END
 
 
