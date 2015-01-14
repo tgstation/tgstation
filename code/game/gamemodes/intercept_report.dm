@@ -174,7 +174,7 @@
 	else
 		traitor_name = pick_mob()
 	*/
-	src.text += "<BR><BR>It has been brought to our attention that the <B>[name_1] [name_2]</B> have stumbled upon some dark secrets. They apparently want to spread the dangerous knowledge onto as many stations as they can."
+	src.text += "<BR><BR>It has been brought to our attention that the <B><U>[name_1] [name_2]</U></B> have stumbled upon some dark secrets. They apparently want to spread the dangerous knowledge onto as many stations as they can."
 	src.text += "Watch out for the following: praying to an unfamilar god, preaching the word of \[REDACTED\], sacrifices, magical dark power, living constructs of evil and a portal to the dimension of the underworld."
 	src.text += "<BR><HR>"
 	/*
