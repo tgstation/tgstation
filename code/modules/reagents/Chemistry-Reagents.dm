@@ -1269,8 +1269,9 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 
 				if(!holder) return
-				M.shock_stage--
-				M.traumatic_shock--
+				if(ishuman(M))
+					M:shock_stage--
+					M:traumatic_shock--
 		mutagen
 			name = "Unstable mutagen"
 			id = "mutagen"
