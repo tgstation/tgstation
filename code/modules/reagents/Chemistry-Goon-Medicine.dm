@@ -70,7 +70,7 @@ datum/reagent/synthflesh/reaction_mob(var/mob/living/M, var/method=TOUCH, var/vo
 	if(method == TOUCH)
 		M.heal_organ_damage(volume*REM,0)
 		M.adjustFireLoss((volume-(volume*2)*REM))
-		M << "<span class='notice'>You feel your burns healing and your flesh knitting together!"
+		M << "<span class='notice'>You feel your burns healing and your flesh knitting together!</span>"
 	..()
 	return
 
