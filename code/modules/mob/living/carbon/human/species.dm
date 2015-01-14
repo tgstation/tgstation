@@ -401,7 +401,7 @@
 	else
 		if(H.overeatduration > 500)
 			H << "<span class='danger'>You suddenly feel blubbery!</span>"
-			H.mutations |= FAT
+			H.disabilities |= FAT
 			H.update_inv_w_uniform(0)
 			H.update_inv_wear_suit()
 
@@ -414,7 +414,7 @@
 			H.satiety++
 			if(prob(round(-H.satiety/40)))
 				H.Jitter(5)
-			hunger_rate = 5 * HUNGER_FACTOR
+			hunger_rate = 3 * HUNGER_FACTOR
 		H.nutrition = max (0, H.nutrition - hunger_rate)
 
 

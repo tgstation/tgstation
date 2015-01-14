@@ -292,13 +292,11 @@
 		temp = "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><BR><BR>Current approved orders: <BR><BR>"
 		for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
 			temp += "[SO.object.name] approved by [SO.orderedby] [SO.comment ? "([SO.comment])":""]<BR>"
-		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 
 	else if (href_list["viewrequests"])
-		temp = "Current requests: <BR><BR>"
+		temp = "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><BR><BR>Current requests: <BR><BR>"
 		for(var/datum/supply_order/SO in SSshuttle.requestlist)
 			temp += "#[SO.ordernum] - [SO.object.name] requested by [SO.orderedby]<BR>"
-		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 
 	else if (href_list["mainmenu"])
 		temp = null
@@ -493,12 +491,11 @@
 		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 */
 	else if (href_list["viewrequests"])
-		temp = "Current requests: <BR><BR>"
+		temp = "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><BR><BR>Current requests: <BR><BR>"
 		for(var/datum/supply_order/SO in SSshuttle.requestlist)
-			temp += "#[SO.ordernum] - [SO.object.name] requested by [SO.orderedby]  [SSshuttle.supply.mode != SHUTTLE_IDLE ? "":SSshuttle.supply.getDockedId() == "supply_away" ? "":"<A href='?src=\ref[src];confirmorder=[SO.ordernum]'>Approve</A> <A href='?src=\ref[src];rreq=[SO.ordernum]'>Remove</A>"]<BR>"
+			temp += "#[SO.ordernum] - [SO.object.name] requested by [SO.orderedby]  [SSshuttle.supply.getDockedId() == "supply_away" ? "<A href='?src=\ref[src];confirmorder=[SO.ordernum]'>Approve</A> <A href='?src=\ref[src];rreq=[SO.ordernum]'>Remove</A>" : ""]<BR>"
 
 		temp += "<BR><A href='?src=\ref[src];clearreq=1'>Clear list</A>"
-		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 
 	else if (href_list["rreq"])
 		var/ordernum = text2num(href_list["rreq"])

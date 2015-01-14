@@ -386,14 +386,11 @@
 
 		//Ears
 		if(disabilities & DEAF)		//disabled-deaf, doesn't get better on its own
-			ear_deaf = max(ear_deaf, 1)
+			setEarDamage(-1, max(ear_deaf, 1))
 		else
-			/* might be better to create a variable here, and instead of doing this nested for. */
 			// deafness heals slowly over time, unless ear_damage is over 100
 			if (ear_damage < 100)
-				// Heal the first 1/3 here
-				ear_deaf = max(ear_deaf - 1, 0)
-				ear_damage = max(ear_damage-0.05, 0)
+				adjustEarDamage(-0.05,-1)
 
 		//Other
 		if(stunned)

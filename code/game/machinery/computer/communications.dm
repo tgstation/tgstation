@@ -50,7 +50,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 /obj/machinery/computer/communications/Topic(href, href_list)
 	if(..())
 		return
-	if (src.z > 1)
+	if (src.z > ZLEVEL_STATION)
 		usr << "<span class='userdanger'>Unable to establish a connection</span>: \black You're too far away from the station!"
 		return
 	usr.set_machine(src)

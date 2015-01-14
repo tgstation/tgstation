@@ -464,18 +464,12 @@
 
 		//Ears
 		if(disabilities & DEAF)	//disabled-deaf, doesn't get better on its own
-			ear_deaf = max(ear_deaf, 1)
-		else
-			/* might be better to create a variable here, and instead of doing this nested for. */
-			// deafness heals slowly over time, unless ear_damage is over 100
-			if (ear_damage < 100)
-				// Heal the first 1/3 here
-				ear_deaf = max(ear_deaf - 1, 0)
-				ear_damage = max(ear_damage-0.05, 0)
-				if(istype(ears, /obj/item/clothing/ears/earmuffs)) // earmuffs rest your ears, healing 3x faster, but keeping you deaf.
-					// Heal the 2/3 here
-					ear_deaf = max(ear_deaf, 1)
-					ear_damage = max(ear_damage-0.10, 0)
+			setEarDamage(-1, max(ear_deaf, 1))
+		else if (ear_damage < 100) // deafness heals slowly over time, unless ear_damage is over 100
+			if(istype(ears, /obj/item/clothing/ears/earmuffs)) // earmuffs rest your ears, healing 3x faster, but keeping you deaf.
+				setEarDamage(max(ear_damage-0.15, 0), max(ear_deaf - 1, 1))
+			else
+				adjustEarDamage(-0.05, -1)
 
 		//Dizziness
 		if(dizziness)

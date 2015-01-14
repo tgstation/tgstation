@@ -62,6 +62,9 @@
 		dat += "<A href='byond://?src=\ref[src];spell_choice=disabletech'>Disable Technology</A> (60)<BR>"
 		dat += "<I>This spell disables all weapons, cameras and most other technology in range.</I><BR>"
 
+		dat += "<A href='byond://?src=\ref[src];spell_choice=repulse'>Repulse</A> (40)<BR>"
+		dat += "<I>This spell throws nearby objects away from you and knocks creatures down.</I><BR>"
+
 		dat += "<A href='byond://?src=\ref[src];spell_choice=smoke'>Smoke</A> (10)<BR>"
 		dat += "<I>This spell spawns a cloud of choking smoke at your location and does not require wizard garb.</I><BR>"
 
@@ -205,7 +208,7 @@
 				uses--
 			/*
 			*/
-				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disintegrate = "Disintegrate", disabletech = "Disable Tech", smoke = "Smoke", blind = "Blind", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", fleshtostone = "Flesh to Stone", summonitem = "Instant Summons", summonguns = "Summon Guns", summonmagic = "Summon Magic", summonevents = "Summon Events", staffchange = "Staff of Change", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation", staffchaos = "Staff of Chaos", staffdoor = "Staff of Door Creation", wands = "Wand Assortment")
+				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disintegrate = "Disintegrate", disabletech = "Disable Tech", repulse = "Repulse", smoke = "Smoke", blind = "Blind", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", fleshtostone = "Flesh to Stone", summonitem = "Instant Summons", summonguns = "Summon Guns", summonmagic = "Summon Magic", summonevents = "Summon Events", staffchange = "Staff of Change", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation", staffchaos = "Staff of Chaos", staffdoor = "Staff of Door Creation", wands = "Wand Assortment")
 				var/already_knows = 0
 				for(var/obj/effect/proc_holder/spell/aspell in H.mind.spell_list)
 					if(available_spells[href_list["spell_choice"]] == initial(aspell.name))
@@ -255,6 +258,10 @@
 							feedback_add_details("wizard_spell_learned","DT") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech(null)
 							temp = "You have learned disable technology."
+						if("repulse")
+							feedback_add_details("wizard_spell_learned","RP") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+							H.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/repulse(null)
+							temp = "You have learned repulse."
 						if("smoke")
 							feedback_add_details("wizard_spell_learned","SM") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/smoke(null)
@@ -306,15 +313,15 @@
 						if("summonguns")
 							feedback_add_details("wizard_spell_learned","SG") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							rightandwrong(0, H, 0)
-							uses++
 							max_uses++
+							uses = uses + 2 //refund plus a free point
 							active_challenges += "summon guns"
 							temp = "You have cast summon guns and gained an extra charge for your spellbook."
 						if("summonmagic")
 							feedback_add_details("wizard_spell_learned","SU") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							rightandwrong(1, H, 0)
-							uses++
 							max_uses++
+							uses = uses + 2 //refund plus a free point
 							active_challenges += "summon magic"
 							temp = "You have cast summon magic and gained an extra charge for your spellbook."
 						if("summonevents")

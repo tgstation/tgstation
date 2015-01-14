@@ -155,7 +155,7 @@ var/datum/subsystem/shuttle/SSshuttle
 				continue
 
 		var/turf/T = get_turf(thing)
-		if(T && T.z == 1)
+		if(T && T.z == ZLEVEL_STATION)
 			callShuttle = 0
 			break
 
@@ -254,7 +254,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	slip.ordernumber = ordernum
 
 	var/stationName = (errors & MANIFEST_ERROR_NAME) ? new_station_name() : station_name()
-	var/packagesAmt = SSshuttle.shoppinglist.len + ((errors & MANIFEST_ERROR_COUNT) ? 0 : rand(1,2))
+	var/packagesAmt = SSshuttle.shoppinglist.len + ((errors & MANIFEST_ERROR_COUNT) ? rand(1,2) : 0)
 
 	slip.info = "<h3>[command_name()] Shipping Manifest</h3><hr><br>"
 	slip.info +="Order #[ordernum]<br>"

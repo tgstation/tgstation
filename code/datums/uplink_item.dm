@@ -313,6 +313,13 @@ var/list/uplink_items = list()
 	cost = 1
 	surplus = 50
 
+/datum/uplink_item/stealthy_weapons/traitor_chem_bottle
+	name = "Poison Kit"
+	desc = "An assortment of nasty chemicals."
+	item = /obj/item/weapon/storage/box/syndie_kit/chemical
+	cost = 2
+	surplus = 50
+
 /datum/uplink_item/stealthy_weapons/detomatix
 	name = "Detomatix PDA Cartridge"
 	desc = "When inserted into a personal digital assistant, this cartridge gives you five opportunities to detonate PDAs of crewmembers who have their message feature enabled. \

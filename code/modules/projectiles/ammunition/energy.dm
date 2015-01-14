@@ -18,7 +18,7 @@
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/laser/practice
-	projectile_type = /obj/item/projectile/practice
+	projectile_type = /obj/item/projectile/beam/practice
 	select_name = "practice"
 
 /obj/item/ammo_casing/energy/laser/scatter

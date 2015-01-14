@@ -308,7 +308,7 @@
 					temp = "<font color = #666633>-% New ID assigned: \"[id]\" %-</font color>"
 
 			if("network")
-				var/newnet = input(usr, "Specify the new network for this machine. This will break all current links.", src, network) as null|text
+				var/newnet = stripped_input(usr, "Specify the new network for this machine. This will break all current links.", src, network)
 				if(newnet && canAccess(usr))
 
 					if(length(newnet) > 15)

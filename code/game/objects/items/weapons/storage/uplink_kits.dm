@@ -162,3 +162,16 @@
 	new /obj/item/weapon/implanter/emp/(src)
 	new /obj/item/device/flashlight/emp/(src)
 	return
+
+/obj/item/weapon/storage/box/syndie_kit/chemical
+	name = "boxed chemical kit"
+
+/obj/item/weapon/storage/box/syndie_kit/chemical/New()
+	..()
+	new /obj/item/weapon/reagent_containers/glass/bottle/polonium(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/venom(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/neurotoxin2(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/formaldehyde(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/cyanide(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/histamine(src)
+	return
