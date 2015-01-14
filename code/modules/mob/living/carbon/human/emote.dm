@@ -569,7 +569,7 @@
 			if(src.op_stage.butt != 4)
 				if(world.time-lastFart >= 400)
 					for(var/mob/M in view(0))
-						if(M != src && M.loc = src.loc)
+						if(M != src && M.loc == src.loc)
 							if(!miming)
 								visible_message("<span class = 'warning'><b>[src]</b> farts in <b>[M]</b>'s face!</span>")
 							else
