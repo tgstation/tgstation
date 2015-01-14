@@ -36,3 +36,15 @@
 	min_n2 = 0
 	max_n2 = 0
 	minbodytemp = 0
+
+/mob/living/simple_animal/hostile/retaliate/bat/SgtSteel
+	name = "Sgt Steel"
+	desc = "Uncompromising, unassailable and scary, just don't hit it"
+	icon_state = "guard"
+	icon_living = "guard"
+	icon_dead = "guard_dead"
+	response_help  = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm   = "hits"
+	maxHealth = 200
+	health = 200
