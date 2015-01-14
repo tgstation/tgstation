@@ -183,7 +183,7 @@ obj/machinery/gibber/New()
 	src.add_fingerprint(user)
 	user.visible_message("\red [user.name] starts climbing into the [src].", "\red You start climbing into the [src].")
 
-	if(do_after(user, 30) && user && !occupant)
+	if(do_after(user, 30) && user && !occupant && !isnull(src.loc))
 		user.visible_message("\red [user] climbs into the [src]", "\red You climb into the [src].")
 		if(user.client)
 			user.client.perspective = EYE_PERSPECTIVE

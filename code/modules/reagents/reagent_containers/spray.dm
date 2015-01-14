@@ -4,7 +4,7 @@
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "cleaner"
 	item_state = "cleaner"
-	flags = OPENCONTAINER|FPRINT|USEDELAY
+	flags = OPENCONTAINER|FPRINT
 	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = 2.0
@@ -89,14 +89,6 @@
 
 	amount_per_transfer_from_this = (amount_per_transfer_from_this == 10 ? 5 : 10)
 	user << "<span class='notice'>You switched [amount_per_transfer_from_this == 10 ? "on" : "off"] the pressure nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>"
-
-
-/obj/item/weapon/reagent_containers/spray/examine()
-	set src in usr
-	..()
-	for(var/datum/reagent/R in reagents.reagent_list)
-		usr << "[round(R.volume)] units of [R.name] left."
-	return
 
 /obj/item/weapon/reagent_containers/spray/verb/empty()
 

@@ -128,7 +128,7 @@
 	level = T.intact ? 2 : 1
 	initialize(1)
 	if(!node1&&!node2)
-		usr << "\red There's nothing to connect this pipe section to! (with how the pipe code works, at least one end needs to be connected to something, otherwise the game deletes the segment)"
+		usr << "<span class='warning'>There's nothing to connect this pipe section to! A pipe segment must be connected to at least one other object!</span>"
 		return 0
 	update_icon()
 	build_network()
@@ -210,9 +210,9 @@
 	else
 		return 1
 
-/obj/machinery/atmospherics/pipe/simple/examine()
+/obj/machinery/atmospherics/pipe/simple/examine(mob/user)
 	..()
-	usr << "<span class='info'>This [src.name] is rated up to [format_num(alert_pressure)] kPa.</span>"
+	user << "<span class='info'>This [src.name] is rated up to [format_num(alert_pressure)] kPa.</span>"
 
 /obj/machinery/atmospherics/pipe/simple/proc/groan()
 	src.visible_message("<span class='warning'>\The [src] groans from the pressure!</span>");
@@ -579,31 +579,9 @@
 	if(istype(W, /obj/item/weapon/pipe_dispenser) || istype(W, /obj/item/device/pipe_painter))
 		return // Coloring pipes.
 	if (istype(W, /obj/item/device/analyzer) && get_dist(user, src) <= 1)
-		for (var/mob/O in viewers(user, null))
-			O << "\red [user] has used the analyzer on \icon[icon]"
-
-		var/pressure = parent.air.return_pressure()
-		var/total_moles = parent.air.total_moles()
-
-		user << "\blue Results of analysis of \icon[icon]"
-		if (total_moles>0)
-			var/o2_concentration = parent.air.oxygen/total_moles
-			var/n2_concentration = parent.air.nitrogen/total_moles
-			var/co2_concentration = parent.air.carbon_dioxide/total_moles
-			var/plasma_concentration = parent.air.toxins/total_moles
-
-			var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
-
-			user << "\blue Pressure: [round(pressure,0.1)] kPa"
-			user << "\blue Nitrogen: [round(n2_concentration*100)]%"
-			user << "\blue Oxygen: [round(o2_concentration*100)]%"
-			user << "\blue CO2: [round(co2_concentration*100)]%"
-			user << "\blue Plasma: [round(plasma_concentration*100)]%"
-			if(unknown_concentration>0.01)
-				user << "\red Unknown: [round(unknown_concentration*100)]%"
-			user << "\blue Temperature: [round(parent.air.temperature-T0C)]&deg;C"
-		else
-			user << "\blue Tank is empty!"
+		user.visible_message("<span class='attack'>[user] has used [W] on \icon[icon] [src]</span>", "<span class='attack'>You use \the [W] on \icon[icon] [src]</span>")
+		var/obj/item/device/analyzer/analyzer = W
+		user.show_message(analyzer.output_gas_scan(air_temporary, src, 0), 1)
 
 /obj/machinery/atmospherics/pipe/manifold
 	icon = 'icons/obj/atmospherics/pipe_manifold.dmi'
@@ -627,7 +605,7 @@
 	level = T.intact ? 2 : 1
 	initialize(1)
 	if(!node1&&!node2&&!node3)
-		usr << "\red There's nothing to connect this manifold to! (with how the pipe code works, at least one end needs to be connected to something, otherwise the game deletes the segment)"
+		usr << "<span class='warning'>There's nothing to connect this manifold to! A pipe segment must be connected to at least one other object!</span>"
 		return 0
 	update_icon() // Skipped in initialize()!
 	build_network()
@@ -873,7 +851,7 @@
 	level = T.intact ? 2 : 1
 	initialize(1)
 	if(!node1 && !node2 && !node3 && !node4)
-		usr << "\red There's nothing to connect this manifold to! (with how the pipe code works, at least one end needs to be connected to something, otherwise the game deletes the segment)"
+		usr << "<span class='warning'>There's nothing to connect this manifold to! A pipe segment must be connected to at least one other object!</span>"
 		return 0
 	update_icon()
 	build_network()
@@ -1089,25 +1067,25 @@
 	if(istype(W, /obj/item/weapon/reagent_containers/glass/paint/red))
 		src._color = "red"
 		src.color = PIPE_COLOR_RED
-		user << "\red You paint the pipe red."
+		user << "<span class='notice'>You paint the pipe red.</span>"
 		update_icon()
 		return 1
 	if(istype(W, /obj/item/weapon/reagent_containers/glass/paint/blue))
 		src._color = "blue"
 		src.color = PIPE_COLOR_BLUE
-		user << "\red You paint the pipe blue."
+		user << "<span class='notice'>You paint the pipe blue.</span>"
 		update_icon()
 		return 1
 	if(istype(W, /obj/item/weapon/reagent_containers/glass/paint/green))
 		src._color = "green"
 		src.color = PIPE_COLOR_GREEN
-		user << "\red You paint the pipe green."
+		user << "<span class='notice'>You paint the pipe green.</span>"
 		update_icon()
 		return 1
 	if(istype(W, /obj/item/weapon/reagent_containers/glass/paint/yellow))
 		src._color = "yellow"
 		src.color = PIPE_COLOR_YELLOW
-		user << "\red You paint the pipe yellow."
+		user << "<span class='notice'>You paint the pipe yellow.</span>"
 		update_icon()
 		return 1
 

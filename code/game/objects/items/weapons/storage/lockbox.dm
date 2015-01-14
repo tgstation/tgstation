@@ -54,13 +54,13 @@
 	if(!locked)
 		..()
 	else
-		user << "\red Its locked!"
+		user << "<span class='warning'>Its locked!</span>"
 	return
 
 
 /obj/item/weapon/storage/lockbox/show_to(mob/user as mob)
 	if(locked)
-		user << "\red Its locked!"
+		user << "<span class='warning'>Its locked!</span>"
 	else
 		..()
 	return
@@ -164,10 +164,9 @@
 	req_access = list()
 	var/tracked_access = "It doesn't look like it's ever been used."
 
-/obj/item/weapon/storage/lockbox/unlockable/examine()
+/obj/item/weapon/storage/lockbox/unlockable/examine(mob/user)
 	..()
-	usr << tracked_access
-	return 1
+	user << tracked_access
 
 /obj/item/weapon/storage/lockbox/unlockable/attackby(obj/O as obj, mob/user as mob)
 	if (istype(O, /obj/item/weapon/card/id))

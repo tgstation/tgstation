@@ -137,7 +137,7 @@
 */
 /mob/living/carbon/slime/UnarmedAttack(var/atom/A)
 	A.attack_slime(src)
-	return ..()
+	return
 /atom/proc/attack_slime(mob/user as mob)
 	return
 /mob/living/carbon/slime/RestrainedClickOn(var/atom/A)

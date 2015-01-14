@@ -71,5 +71,7 @@
 
 		var/obj/structure/grille/Grille = getFromPool(/obj/structure/grille, user.loc)
 		user << "<span class='notice'>You assembled a grille!</span>"
+		if(!Grille)
+			Grille = new(user.loc)
 		Grille.add_fingerprint(user)
 		use(2)

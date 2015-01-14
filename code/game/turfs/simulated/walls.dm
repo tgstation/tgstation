@@ -23,9 +23,9 @@
 
 	soot_type = null
 
-/turf/simulated/wall/examine()
+/turf/simulated/wall/examine(mob/user)
 	..()
-	if(src.engraving) usr << src.engraving
+	if(src.engraving) user << src.engraving
 
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, explode=0)
 	if(istype(src,/turf/simulated/wall/r_wall))
@@ -107,12 +107,12 @@
 	user.delayNextAttack(8)
 	if ((M_HULK in user.mutations))
 		if (prob(hardness))
-			usr << text("\blue You smash through the wall.")
+			usr << text("<span class='attack'>You smash through the wall.</span>")
 			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			dismantle_wall(1)
 			return
 		else
-			usr << text("\blue You punch the wall.")
+			usr << text("<span class='attack'>You punch the wall.</span>")
 			return
 
 	return src.attack_hand(user)
@@ -123,11 +123,11 @@
 		if(istype(src, /turf/simulated/wall/r_wall))
 			if(M.environment_smash == 3)
 				dismantle_wall(1)
-				M << "<span class='info'>You smash through the wall.</span>"
+				M << "<span class='attack'>You smash through the wall.</span>"
 			else
 				M << "<span class='info'>This wall is far too strong for you to destroy.</span>"
 		else
-			M << "<span class='info'>You smash through the wall.</span>"
+			M << "<span class='attack'>You smash through the wall.</span>"
 			dismantle_wall(1)
 			return
 
@@ -135,12 +135,12 @@
 	user.delayNextAttack(8)
 	if (M_HULK in user.mutations)
 		if (prob(hardness) || rotting)
-			usr << text("\blue You smash through the wall.")
+			usr << text("<span class='attack'>You smash through the wall.</span>")
 			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			dismantle_wall(1)
 			return
 		else
-			usr << text("\blue You punch the wall.")
+			usr << text("<span class='attack'>You punch the wall.</span>")
 			return
 
 	if(rotting)
@@ -276,69 +276,7 @@
 				O.show_message("<span class='warning'>The wall was sliced apart by [user]!</span>", 1, "<span class='warning'>You hear metal being sliced apart and sparks flying.</span>", 2)
 		return
 
-	else if(istype(W,/obj/item/apc_frame))
-		var/obj/item/apc_frame/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/airlock_controller_frame))
-		var/obj/item/airlock_controller_frame/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/access_button_frame))
-		var/obj/item/access_button_frame/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/airlock_sensor_frame))
-		var/obj/item/airlock_sensor_frame/AH = W
-		AH.try_build(src)
-		return
-	/*
-	else if(istype(W,/obj/item/newscaster_frame))
-		var/obj/item/newscaster_frame/AH = W
-		AH.try_build(src)
-		return
-	*/
-	else if(istype(W,/obj/item/alarm_frame))
-		var/obj/item/alarm_frame/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/firealarm_frame))
-		var/obj/item/firealarm_frame/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/light_fixture_frame))
-		var/obj/item/light_fixture_frame/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/light_fixture_frame/small))
-		var/obj/item/light_fixture_frame/small/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/rust_fuel_compressor_frame))
-		var/obj/item/rust_fuel_compressor_frame/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/rust_fuel_assembly_port_frame))
-		var/obj/item/rust_fuel_assembly_port_frame/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/wallmed_frame))
-		var/obj/item/wallmed_frame/AH = W
-		AH.try_build(src)
-		return
-
-	//Poster stuff
-	else if(istype(W,/obj/item/weapon/contraband/poster))
-		place_poster(W,user)
+	else if(istype(W, /obj/item/mounted)) //if we place it, we don't want to have a silly message
 		return
 
 	else

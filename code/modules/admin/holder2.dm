@@ -30,6 +30,7 @@ var/list/admin_datums = list()
 		owner.holder = src
 		owner.add_admin_verbs()	//TODO
 		admins |= C
+		owner.verbs -= /client/proc/readmin
 
 /datum/admins/proc/disassociate()
 	if(owner)

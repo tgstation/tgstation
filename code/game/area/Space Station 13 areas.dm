@@ -166,6 +166,9 @@ proc/process_adminbus_teleport_locs()
 	name = "\improper Admin room"
 	icon_state = "start"
 
+/area/no_ethereal
+	anti_ethereal = 1
+
 
 
 //These are shuttle areas, they must contain two areas in a subgroup if you want to move a shuttle from one
@@ -1016,6 +1019,10 @@ proc/process_adminbus_teleport_locs()
 /area/lawoffice
 	name = "\improper Law Office"
 	icon_state = "law"
+
+/area/crew_quarters/casino
+	name = "Casino"
+	icon_state = "casino"
 
 
 
@@ -2245,6 +2252,7 @@ var/list/the_station_areas = list (
 	requires_power = 0
 	var/sound/mysound = null
 
+/* We have a jukebox now, fuck that
 /area/beach/New()
 	..()
 	var/sound/S = new/sound()
@@ -2265,6 +2273,7 @@ var/list/the_station_areas = list (
 			Obj << mysound
 	return
 
+//This only works when using Move() to exit the area
 /area/beach/Exited(atom/movable/Obj)
 	if(ismob(Obj))
 		if(Obj:client)
@@ -2293,3 +2302,4 @@ var/list/the_station_areas = list (
 
 	spawn(60) .()
 
+*/

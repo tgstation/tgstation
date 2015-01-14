@@ -132,7 +132,7 @@ datum
 			name = "Blood"
 			id = "blood"
 			reagent_state = LIQUID
-			color = "#C80000" // rgb: 200, 0, 0
+			color = "#a00000" // rgb: 160, 0, 0
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				var/datum/reagent/blood/self = src
@@ -1264,14 +1264,14 @@ datum
 			reagent_state = LIQUID
 			color = "#C855DC"
 			overdose_dam = 0
-			overdose = 60
+			overdose = 0
 
 			on_mob_life(var/mob/living/M as mob)
 
 				if(!holder) return
-				if (volume > overdose)
-					M.hallucination = max(M.hallucination, 2)
-
+				if(ishuman(M))
+					M:shock_stage--
+					M:traumatic_shock--
 		mutagen
 			name = "Unstable mutagen"
 			id = "mutagen"
@@ -1580,7 +1580,7 @@ datum
 			id = "plasma"
 			description = "Plasma in its liquid form."
 			reagent_state = LIQUID
-			color = "#E71B00" // rgb: 231, 27, 0
+			color = "#500064" // rgb: 80, 0, 100
 
 			on_mob_life(var/mob/living/M as mob)
 
@@ -2568,7 +2568,7 @@ datum
 							holder.remove_reagent("capsaicin", 5)
 						if(istype(M, /mob/living/carbon/slime))
 							M.bodytemperature -= rand(5,20)
-						if(M.dna.mutantrace == "slime")
+						if(M.dna && M.dna.mutantrace == "slime")
 							M.bodytemperature -= rand(5,20)
 					if(15 to 25)
 						M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
@@ -3598,7 +3598,7 @@ datum
 			var/slur_start = 65			//amount absorbed after which mob starts slurring
 			var/confused_start = 130	//amount absorbed after which mob starts confusing directions
 			var/blur_start = 260	//amount absorbed after which mob starts getting blurred vision
-			var/pass_out = 325	//amount absorbed after which mob starts passing out
+			var/pass_out = 450	//amount absorbed after which mob starts passing out
 
 			on_mob_life(var/mob/living/M as mob)
 
@@ -3621,7 +3621,8 @@ datum
 				src.data++
 
 				var/d = data
-
+				if(!holder)
+					del(src)
 				// make all the beverages work together
 				for(var/datum/reagent/ethanol/A in holder.reagent_list)
 					if(isnum(A.data)) d += A.data
@@ -3647,7 +3648,7 @@ datum
 						if (!L)
 							H.adjustToxLoss(5)
 						else if(istype(L))
-							L.take_damage(0.1, 1)
+							L.take_damage(0.05, 1)
 						H.adjustToxLoss(0.1)
 				if(!holder)
 					holder = M.reagents

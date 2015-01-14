@@ -77,6 +77,12 @@
 	MASK_TYPE = /obj/item/clothing/mask/breath
 	BOOT_TYPE = /obj/item/clothing/shoes/magboots
 
+/obj/machinery/suit_storage_unit/medical
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/medical
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/medical
+	MASK_TYPE = /obj/item/clothing/mask/breath
+	BOOT_TYPE = /obj/item/clothing/shoes/magboots
+
 /obj/machinery/suit_storage_unit/meteor_eod //Used for meteor rounds
 	SUIT_TYPE = /obj/item/clothing/suit/bomb_suit
 	HELMET_TYPE = /obj/item/clothing/head/bomb_hood

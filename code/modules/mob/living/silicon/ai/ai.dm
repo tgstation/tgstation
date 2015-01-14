@@ -470,6 +470,8 @@ var/list/ai_list = list()
 
 
 /mob/living/silicon/ai/attack_animal(mob/living/simple_animal/M as mob)
+	if(!istype(M))
+		return
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else

@@ -156,31 +156,27 @@
 	spawn(5)
 		src.update()
 
-/obj/machinery/power/apc/examine()
-	set src in oview(1)
-
-	if(usr /*&& !usr.stat*/)
-		..()
-		if(stat & BROKEN)
-			usr << "Looks broken."
-			return
-		if(opened)
-			if(has_electronics && terminal)
-				usr << "The cover is [opened==2?"removed":"open"] and the power cell is [ cell ? "installed" : "missing"]."
-			else if (!has_electronics && terminal)
-				usr << "There are some wires but no any electronics."
-			else if (has_electronics && !terminal)
-				usr << "Electronics installed but not wired."
-			else /* if (!has_electronics && !terminal) */
-				usr << "There is no electronics nor connected wires."
-
+/obj/machinery/power/apc/examine(mob/user)
+	..()
+	if(stat & BROKEN)
+		user << "Looks broken."
+		return
+	if(opened)
+		if(has_electronics && terminal)
+			user << "The cover is [opened==2?"removed":"open"] and the power cell is [ cell ? "installed" : "missing"]."
+		else if (!has_electronics && terminal)
+			user << "There are some wires but no any electronics."
+		else if (has_electronics && !terminal)
+			user << "Electronics installed but not wired."
+		else /* if (!has_electronics && !terminal) */
+			user << "There is no electronics nor connected wires."
+	else
+		if (stat & MAINT)
+			user << "The cover is closed. Something wrong with it: it doesn't work."
+		else if (malfhack)
+			user << "The cover is broken. It may be hard to force it open."
 		else
-			if (stat & MAINT)
-				usr << "The cover is closed. Something wrong with it: it doesn't work."
-			else if (malfhack)
-				usr << "The cover is broken. It may be hard to force it open."
-			else
-				usr << "The cover is closed."
+			user << "The cover is closed."
 
 /obj/machinery/power/apc/update_icon()
 	if (!status_overlays)
@@ -536,14 +532,14 @@
 					"You disassembled the broken APC frame.",\
 					"\red You hear welding.")
 			else
-				new /obj/item/apc_frame(loc)
+				new /obj/item/mounted/frame/apc_frame(loc)
 				user.visible_message(\
 					"\red [src] has been cut from the wall by [user.name] with the weldingtool.",\
 					"You cut the APC frame from the wall.",\
 					"\red You hear welding.")
 			del(src)
 			return
-	else if (istype(W, /obj/item/apc_frame) && opened && emagged)
+	else if (istype(W, /obj/item/mounted/frame/apc_frame) && opened && emagged)
 		emagged = 0
 		if (opened==2)
 			opened = 1
@@ -552,7 +548,7 @@
 			"You replace the damaged APC frontal panel with a new one.")
 		del(W)
 		update_icon()
-	else if (istype(W, /obj/item/apc_frame) && opened && ((stat & BROKEN) || malfhack))
+	else if (istype(W, /obj/item/mounted/frame/apc_frame) && opened && ((stat & BROKEN) || malfhack))
 		if (has_electronics)
 			user << "You cannot repair this APC until you remove the electronics still inside."
 			return

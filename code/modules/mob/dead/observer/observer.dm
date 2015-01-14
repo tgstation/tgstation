@@ -197,34 +197,35 @@ Works together with spawning an observer, noted above.
 	var/image/holder
 	for(var/mob/living/carbon/human/patient in oview(M))
 		var/foundVirus = 0
-		if(patient.virus2.len)
+		if(patient && patient.virus2 && patient.virus2.len)
 			foundVirus = 1
 		if(!C) return
 		holder = patient.hud_list[HEALTH_HUD]
-		if(patient.stat == 2)
-			holder.icon_state = "hudhealth-100"
-		else
-			holder.icon_state = "hud[RoundHealth(patient.health)]"
-		C.images += holder
+		if(holder)
+			if(patient.stat == 2)
+				holder.icon_state = "hudhealth-100"
+			else
+				holder.icon_state = "hud[RoundHealth(patient.health)]"
+			C.images += holder
 
 		holder = patient.hud_list[STATUS_HUD]
-		if(patient.stat == 2)
-			holder.icon_state = "huddead"
-		else if(patient.status_flags & XENO_HOST)
-			holder.icon_state = "hudxeno"
-		else if(foundVirus)
-			holder.icon_state = "hudill"
-		else if(patient.has_brain_worms())
-			var/mob/living/simple_animal/borer/B = patient.has_brain_worms()
-			if(B.controlling)
-				holder.icon_state = "hudbrainworm"
+		if(holder)
+			if(patient.stat == 2)
+				holder.icon_state = "huddead"
+			else if(patient.status_flags & XENO_HOST)
+				holder.icon_state = "hudxeno"
+			else if(foundVirus)
+				holder.icon_state = "hudill"
+			else if(patient.has_brain_worms())
+				var/mob/living/simple_animal/borer/B = patient.has_brain_worms()
+				if(B.controlling)
+					holder.icon_state = "hudbrainworm"
+				else
+					holder.icon_state = "hudhealthy"
 			else
 				holder.icon_state = "hudhealthy"
-		else
-			holder.icon_state = "hudhealthy"
 
-		C.images += holder
-
+			C.images += holder
 
 /mob/dead/proc/assess_targets(list/target_list, mob/dead/observer/U)
 	var/icon/tempHud = 'icons/mob/hud.dmi'
@@ -255,7 +256,7 @@ Works together with spawning an observer, noted above.
 					U.client.images += image(tempHud,target,"vampire")
 				else//If we don't know what role they have but they have one.
 					U.client.images += image(tempHud,target,"hudunknown1")
-		else//If the silicon mob has no law datum, no inherent laws, or a law zero, add them to the hud.
+		else if(issilicon(target))//If the silicon mob has no law datum, no inherent laws, or a law zero, add them to the hud.
 			var/mob/living/silicon/silicon_target = target
 			if(!silicon_target.laws||(silicon_target.laws&&(silicon_target.laws.zeroth||!silicon_target.laws.inherent.len))||silicon_target.mind.special_role=="traitor")
 				if(isrobot(silicon_target))//Different icons for robutts and AI.
@@ -337,9 +338,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(A)
 		A.Entered(src)
 */
-/mob/dead/observer/examine()
-	if(usr)
-		usr << desc
 
 /mob/dead/observer/can_use_hands()	return 0
 /mob/dead/observer/is_active()		return 0
@@ -435,6 +433,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/area/thearea = ghostteleportlocs[A]
 	if(!thearea)	return
 
+	if(thearea && thearea.anti_ethereal && !isAdminGhost(usr))
+		usr << "<span class='sinister'>As you are about to arrive, a strange dark form grabs you and sends you back where you came from.</span>"
+		return
+
 	var/list/L = list()
 	var/holyblock = 0
 
@@ -464,12 +466,19 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/list/mobs = getmobs()
 	var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
 	var/mob/target = mobs[input]
+	if(istype(target,/mob/living/silicon/ai))
+		var/mob/living/silicon/ai/M = target
+		target = M.eyeobj
 	ManualFollow(target)
 
 // This is the ghost's follow verb with an argument
 /mob/dead/observer/proc/ManualFollow(var/atom/movable/target)
 	if(target)
 		var/turf/targetloc = get_turf(target)
+		var/area/targetarea = get_area(target)
+		if(targetarea && targetarea.anti_ethereal && !isAdminGhost(usr))
+			usr << "<span class='sinister'>You can sense a sinister force surrounding that mob, your spooky body itself refuses to follow it.</span>"
+			return
 		if(targetloc.holy && ((src.invisibility == 0) || (src.mind in ticker.mode.cult)))
 			usr << "<span class='warning'>You cannot follow a mob standing on holy grounds!</span>"
 			return
@@ -510,6 +519,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			return
 		else
 			var/turf/targetloc = get_turf(target)
+			var/area/targetarea = get_area(target)
+			if(targetarea && targetarea.anti_ethereal && !isAdminGhost(usr))
+				usr << "<span class='sinister'>You can sense a sinister force surrounding that mob, your spooky body itself refuses to jump to it.</span>"
+				return
 			if(targetloc && targetloc.holy && ((src.invisibility == 0) || (src.mind in ticker.mode.cult)))
 				usr << "<span class='warning'>The mob that you are trying to follow is standing on holy grounds, you cannot reach him!</span>"
 				return
@@ -810,3 +823,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				following = null
 	..()
 //END TELEPORT HREF CODE
+
+
+//this is a mob verb instead of atom for performance reasons
+//see /mob/verb/examinate() in mob.dm for more info
+//overriden here and in /mob/living for different point span classes and sanity checks
+/mob/dead/observer/pointed(atom/A as mob|obj|turf in view())
+	if(!..())
+		return 0
+	usr.visible_message("<span class='deadsay'><b>[src]</b> points to [A]</span>")
+	return 1

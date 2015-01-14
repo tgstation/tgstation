@@ -250,7 +250,7 @@
 			module_sprites["Securitron"] = "securitron"
 			module_sprites["Marina-SC"] = "marinaSC"
 			src << "<span class='warning'><big><b>Just a reminder, by default you do not follow space law, you follow your lawset</b></big></span>"
-			speed = -1
+			speed = 0
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
@@ -283,8 +283,9 @@
 			module_sprites["Bladewolf"] = "bladewolf"
 			module_sprites["Mr. Gutsy"] = "mrgutsy"
 			module_sprites["Marina-CB"] = "marinaCB"
+			module_sprites["Squadbot"] = "squats"
 			channels = list("Security" = 1)
-			speed = -2
+			speed = -1
 
 	//Custom_sprite check and entry
 	if (custom_sprite == 1)

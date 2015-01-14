@@ -407,7 +407,8 @@ var/const/POS_HEADER = {"<html>
 		src.attack_hand(usr)
 		return
 	if(usr != logged_in)
-		usr << "\red [logged_in.name] is already logged in.  You cannot use this machine until they log out."
+		if(logged_in)
+			usr << "\red [logged_in.name] is already logged in.  You cannot use this machine until they log out."
 		return
 	if("act" in href_list)
 		switch(href_list["act"])
@@ -471,8 +472,9 @@ var/const/POS_HEADER = {"<html>
 		if(!newtext) return
 		var/pid = href_list["setpname"]
 		var/line_item/LI = products[pid]
-		LI.name = newtext
-		products[pid]=LI
+		if(LI)
+			LI.name = newtext
+			products[pid]=LI
 	else if("setprice" in href_list)
 		var/newprice = input(usr,"Enter the product's price.") as num
 		if(!newprice) return

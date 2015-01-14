@@ -38,7 +38,7 @@
 					if(do_after(user, 50))
 						usr << "\blue You unscrew \the [src] from the wall."
 						playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-						new /obj/item/airlock_controller_frame(get_turf(src))
+						new /obj/item/mounted/frame/airlock_controller(get_turf(src))
 						del(src)
 					return 1
 				if(istype(W, /obj/item/weapon/circuitboard))

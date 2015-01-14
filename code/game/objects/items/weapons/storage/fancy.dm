@@ -24,19 +24,14 @@
 	src.icon_state = "[src.icon_type]box[total_contents]"
 	return
 
-/obj/item/weapon/storage/fancy/examine()
-	set src in oview(1)
-
+/obj/item/weapon/storage/fancy/examine(mob/user)
 	..()
 	if(contents.len <= 0)
-		usr << "There are no [src.icon_type]s left in the box."
+		user << "<span class='info'>There are no [src.icon_type]s left in the box.</span>"
 	else if(contents.len == 1)
-		usr << "There is one [src.icon_type] left in the box."
+		user << "<span class='info'>There is one [src.icon_type] left in the box.</span>"
 	else
-		usr << "There are [src.contents.len] [src.icon_type]s in the box."
-
-	return
-
+		user << "<span class='info'>There are [src.contents.len] [src.icon_type]s in the box.</span>"
 
 
 /*
@@ -180,10 +175,10 @@
 	return
 
 /obj/item/weapon/storage/fancy/cigarettes/remove_from_storage(obj/item/W as obj, atom/new_location)
-		var/obj/item/clothing/mask/cigarette/C = W
-		if(!istype(C)) return // what
-		reagents.trans_to(C, (reagents.total_volume/contents.len))
-		..()
+	var/obj/item/clothing/mask/cigarette/C = W
+	if(!istype(C)) return // what
+	reagents.trans_to(C, (reagents.total_volume/contents.len))
+	..()
 
 /obj/item/weapon/storage/fancy/cigarettes/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M, /mob))
