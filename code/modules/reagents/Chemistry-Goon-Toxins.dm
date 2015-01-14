@@ -7,7 +7,7 @@
 datum/reagent/polonium
 	name = "Polonium"
 	id = "polonium"
-	description = "A toxic chemical."
+	description = "+8 RAD."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	metabolization_rate = 0.1
@@ -22,7 +22,7 @@ datum/reagent/polonium/on_mob_life(var/mob/living/M as mob)
 datum/reagent/histamine
 	name = "Histamine"
 	id = "histamine"
-	description = "A toxic chemical."
+	description = "Dose-dependent, ranges from annoying to incredibly lethal."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	metabolization_rate = 0.2
@@ -51,7 +51,7 @@ datum/reagent/histamine/on_mob_life(var/mob/living/M as mob)
 datum/reagent/formaldehyde
 	name = "Formaldehyde"
 	id = "formaldehyde"
-	description = "A toxic chemical."
+	description = "+1 TOX, 10% chance to decay into 5-15 units of histamine."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 
@@ -59,7 +59,7 @@ datum/reagent/formaldehyde/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.adjustToxLoss(1*REM)
 	if(prob(10))
-		M.reagents.add_reagent("histamine",pick(5,10))
+		M.reagents.add_reagent("histamine",pick(5,15))
 		M.reagents.remove_reagent("formaldehyde",1)
 	..()
 	return
@@ -75,7 +75,7 @@ datum/reagent/formaldehyde/on_mob_life(var/mob/living/M as mob)
 datum/reagent/venom
 	name = "Venom"
 	id = "venom"
-	description = "A toxic chemical."
+	description = "Scaling TOX and BRUTE damage with dose. 25% chance to decay into 5-10 histamine."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	metabolization_rate = 0.2
@@ -92,7 +92,7 @@ datum/reagent/venom/on_mob_life(var/mob/living/M as mob)
 datum/reagent/neurotoxin2
 	name = "Neurotoxin"
 	id = "neurotoxin2"
-	description = "A toxic chemical."
+	description = "+1 TOX, +1 BRAIN up to 60 before it slows down, confusion, knockout after 17 elapsed cycles."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	var/cycle_count = 0
@@ -120,7 +120,7 @@ datum/reagent/neurotoxin2/on_mob_life(var/mob/living/M as mob)
 datum/reagent/cyanide
 	name = "Cyanide"
 	id = "cyanide"
-	description = "A highly toxic chemical."
+	description = "+1.5 TOX, 10% chance of +1 LOSEBREATH, 8% chance of stun and extra +2 TOX."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	metabolization_rate = 0.1

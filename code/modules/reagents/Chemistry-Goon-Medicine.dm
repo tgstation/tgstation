@@ -23,6 +23,13 @@ datum/reagent/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob, var/meth
 	..()
 	return
 
+datum/reagent/silver_sulfadiazine/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	if(prob(55))
+		M.adjustFireLoss(-2*REM)
+	..()
+	return
+
 datum/reagent/styptic_powder
 	name = "Styptic Powder"
 	id = "styptic_powder"
@@ -39,6 +46,13 @@ datum/reagent/styptic_powder/reaction_mob(var/mob/living/M as mob, var/method=TO
 	if(method == INGEST)
 		M.adjustToxLoss(0.5*volume)
 		M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
+	..()
+	return
+
+datum/reagent/styptic_powder/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	if(prob(55))
+		M.adjustBruteLoss(-2*REM)
 	..()
 	return
 
@@ -83,7 +97,10 @@ datum/reagent/charcoal
 
 datum/reagent/charcoal/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	M.adjustToxLoss(-2*REM)
+	M.adjustToxLoss(-1.5*REM)
+	for(var/datum/reagent/R in M.reagents)
+		if(M != src)
+			M.reagents.remove_reagent(R.id,0.5)
 	..()
 	return
 
@@ -142,6 +159,31 @@ datum/reagent/omnizine/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
+datum/reagent/calomel
+	name = "Calomel"
+	id = "calomel"
+	description = "Increases all depletion rates by 5. +5 TOX damage while health > 20."
+	reagent_state = LIQUID
+	color = "#C8A5DC" // rgb: 200, 165, 220
+
+datum/reagent/calomel/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	for(var/datum/reagent/R in M.reagents)
+		if(M != src)
+			M.reagents.remove_reagent(R.id,5)
+	if(M.health > 20)
+		M.adjustToxLoss(5*REM)
+	..()
+	return
+
+/datum/chemical_reaction/calomel
+	name = "Calomel"
+	id = "calomel"
+	result = "calomel"
+	required_reagents = list("mercury" = 1, "chlorine" = 1)
+	result_amount = 2
+	required_temp = 374
+
 datum/reagent/potass_iodide
 	name = "Potassium Iodide"
 	id = "potass_iodide"
@@ -169,7 +211,7 @@ datum/reagent/potass_iodide/on_mob_life(var/mob/living/M as mob)
 datum/reagent/pen_acid
 	name = "Pentetic Acid"
 	id = "pen_acid"
-	description = "80% chance of removing 1 RAD. Radiation is cumulative and causes tox+burn."
+	description = "Reduces 7 RAD, heals 4 TOX damage, increases all depletion rates by 4. 33% chance of taking 1 unit brute damage"
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
@@ -182,6 +224,9 @@ datum/reagent/pen_acid/on_mob_life(var/mob/living/M as mob)
 		M.adjustBruteLoss(1*REM)
 	if(M.radiation < 0)
 		M.radiation = 0
+	for(var/datum/reagent/R in M.reagents)
+		if(M != src)
+			M.reagents.remove_reagent(R.id,4)
 	..()
 	return
 
@@ -295,13 +340,14 @@ datum/reagent/ephedrine/on_mob_life(var/mob/living/M as mob)
 datum/reagent/diphenhydramine
 	name = "Diphenhydramine"
 	id = "diphenhydramine"
-	description = "Stun reduction per cycle, increases run speed slightly, minor stamina regeneration buff, stabilizes crit."
+	description = "Causes a little bit of drowsiness, reduces jitteriness. Raises histamine depletion rates by 3"
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 datum/reagent/diphenhydramine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	M.drowsyness -= 1
+	M.drowsyness += 1
 	M.jitteriness -= 1
+	M.reagents.remove_reagent("histamine",3)
 	..()
 	return
 
@@ -316,7 +362,7 @@ datum/reagent/diphenhydramine/on_mob_life(var/mob/living/M as mob)
 datum/reagent/morphine
 	name = "Morphine"
 	id = "morphine"
-	description = "100% chance per cycle of healing 1 point each of OXY and TOX damage."
+	description = "Dramatically counters movement reduction from severe injury. Reduces jitteriness if someone is shaking like crazy from whatever. Will knock you out within 36 cycles if any remains in you."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	var/cycle_count = 0

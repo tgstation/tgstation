@@ -7,7 +7,7 @@
 datum/reagent/nicotine
 	name = "Nicotine"
 	id = "nicotine"
-	description = "A legal chemical compound used as a drug."
+	description = "Stun reduction per cycle, slight stamina regeneration buff. Overdoses become rapidly deadly."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 
@@ -15,19 +15,20 @@ datum/reagent/nicotine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	var/smoke_message = pick("You can just feel your lungs dying!", "You feel relaxed.", "You feel calmed.", "You feel the lung cancer forming.", "You feel the money you wasted.", "You feel like a space cowboy.", "You feel rugged.")
 	if(prob(5))
-		M << "<span class='notice'>[high_message]</span>"
+		M << "<span class='notice'>[smoke_message]</span>"
 	M.AdjustStunned(-1)
 	M.adjustStaminaLoss(-1*REM)
 	if(volume > 35)
 		M << "You feel like you smoked too much."
-		M.adjustToxLoss(1*REM)
+		M.adjustToxLoss(2*REM)
+		M.adjustOxyLoss(2*REM)
 	..()
 	return
 
 datum/reagent/crank
 	name = "Crank"
 	id = "crank"
-	description = "A legal chemical compound used as a drug."
+	description = "2x stun reduction per cycle. Warms you up, makes you jittery as hell."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 
@@ -58,7 +59,7 @@ datum/reagent/crank/on_mob_life(var/mob/living/M as mob)
 /datum/reagent/krokodil
 	name = "Krokodil"
 	id = "krokodil"
-	description = "A legal chemical compound used as a drug."
+	description = "Cools and calms you down, occasional BRAIN and TOX damage."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 	var/cycle_count = 0

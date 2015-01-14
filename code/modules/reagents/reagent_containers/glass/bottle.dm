@@ -53,10 +53,7 @@
 	desc = "A small bottle of morphine."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle20"
-
-	New()
-		..()
-		reagents.add_reagent("morphine", 30)
+	spawned_reagent = "morphine"
 
 /obj/item/weapon/reagent_containers/glass/bottle/chloralhydrate
 	name = "Chloral Hydrate Bottle"

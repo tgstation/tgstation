@@ -73,7 +73,7 @@
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/New()
 	..()
-	reagents.add_reagent(starting_reagent, 10)
+	reagents.add_reagent(starting_reagent, 9)
 	update_icon()
 	return
 
