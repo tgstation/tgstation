@@ -988,6 +988,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	req_access = null
 	req_access_txt = "29"
 
+/obj/machinery/computer/rdconsole/robotics/New()
+	..()
+	if(circuit)
+		circuit.name = "circuit board (RD Console - Robotics)"
+		circuit.build_path = /obj/machinery/computer/rdconsole/robotics
+
 /obj/machinery/computer/rdconsole/core
 	name = "Core R&D Console"
 	desc = "A console used to interface with R&D tools."

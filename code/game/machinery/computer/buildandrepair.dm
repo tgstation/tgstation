@@ -237,8 +237,8 @@
 	build_path = /obj/machinery/computer/slot_machine
 	origin_tech = "programming=1"
 /obj/item/weapon/circuitboard/libraryconsole
-	name = "circuit board (Book Inventory Management Console)"
-	build_path = /obj/machinery/computer/libraryconsole/bookmanagement
+	name = "circuit board (Library Visitor Console)"
+	build_path = /obj/machinery/computer/libraryconsole
 	origin_tech = "programming=1"
 
 
