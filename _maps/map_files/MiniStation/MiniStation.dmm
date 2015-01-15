@@ -573,7 +573,7 @@
 "la" = (/obj/structure/table/wood,/obj/item/weapon/paper_bin{pixel_x = 1; pixel_y = 9},/obj/item/device/paicard,/obj/item/weapon/coin/silver,/obj/item/weapon/pen,/obj/machinery/light,/obj/item/weapon/storage/toolbox/mechanical,/turf/simulated/floor/plasteel{icon_state = "neutral"},/area/hallway/primary/central)
 "lb" = (/obj/machinery/bookbinder,/turf/simulated/floor/plasteel{icon_state = "neutral"},/area/hallway/primary/central)
 "lc" = (/obj/machinery/libraryscanner,/turf/simulated/floor/plasteel{icon_state = "neutral"},/area/hallway/primary/central)
-"ld" = (/obj/structure/table/wood,/obj/machinery/librarycomp{pixel_y = 0},/turf/simulated/floor/plasteel{icon_state = "neutral"; dir = 6},/area/hallway/primary/central)
+"ld" = (/obj/structure/table/wood,/obj/machinery/computer/libraryconsole{pixel_y = 0},/turf/simulated/floor/plasteel{icon_state = "neutral"; dir = 6},/area/hallway/primary/central)
 "le" = (/obj/machinery/door/airlock/research{name = "Toxins Lab"; req_access_txt = "7"},/turf/simulated/floor/plasteel{icon_state = "white"},/area/medical/research{name = "Research Division"})
 "lf" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/vending/coffee,/turf/simulated/floor/plasteel{icon_state = "white"},/area/medical/research{name = "Research Division"})
 "lg" = (/obj/machinery/vending/cigarette,/turf/simulated/floor/plasteel{icon_state = "white"},/area/medical/research{name = "Research Division"})

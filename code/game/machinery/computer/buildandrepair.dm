@@ -236,6 +236,10 @@
 	name = "circuit board (Slot Machine)"
 	build_path = /obj/machinery/computer/slot_machine
 	origin_tech = "programming=1"
+/obj/item/weapon/circuitboard/libraryconsole
+	name = "circuit board (Library Visitor Console)"
+	build_path = /obj/machinery/computer/libraryconsole
+	origin_tech = "programming=1"
 
 
 /obj/item/weapon/circuitboard/supplycomp/attackby(obj/item/I as obj, mob/user as mob)
@@ -270,6 +274,18 @@
 			name = "circuit board (RD Console)"
 			build_path = /obj/machinery/computer/rdconsole/core
 			user << "<span class='notice'>Defaulting access protocols.</span>"
+	return
+
+/obj/item/weapon/circuitboard/libraryconsole/attackby(obj/item/I as obj, mob/user as mob)
+	if(istype(I,/obj/item/weapon/screwdriver))
+		if(build_path == /obj/machinery/computer/libraryconsole/bookmanagement)
+			name = "circuit board (Library Visitor Console)"
+			build_path = /obj/machinery/computer/libraryconsole
+			user << "<span class='notice'>Defaulting access protocols.</span>"
+		else
+			name = "circuit board (Book Inventory Management Console)"
+			build_path = /obj/machinery/computer/libraryconsole/bookmanagement
+			user << "<span class='notice'>Access protocols successfully updated.</span>"
 	return
 
 /obj/item/weapon/circuitboard/shuttle/attackby(obj/item/I as obj, mob/user as mob)
