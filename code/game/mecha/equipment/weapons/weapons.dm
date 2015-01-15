@@ -417,7 +417,7 @@
 	name = "mousetrap mortar"
 	desc = "Equipment for clown exosuits. Launches armed mousetraps."
 	icon_state = "mecha_mousetrapmrtr"
-	projectile = /obj/item/device/assembly/mousetrap
+	projectile = /obj/item/device/assembly/mousetrap/armed
 	fire_sound = 'sound/items/bikehorn.ogg'
 	projectiles = 15
 	missile_speed = 1.5
@@ -433,7 +433,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar/action(target)
 	if(!action_checks(target)) return
 	set_ready_state(0)
-	var/obj/item/device/assembly/mousetrap/M = new projectile(chassis.loc)
+	var/obj/item/device/assembly/mousetrap/armed/M = new projectile(chassis.loc)
 	M.secured = 1
 	playsound(chassis, fire_sound, 60, 1)
 	M.throw_at(target, missile_range, missile_speed)
