@@ -17,7 +17,14 @@
 	var/dpdir = 0	// directions as disposalpipe
 	var/base_state = "pipe-s"
 
-	// update iconstate and dpdir due to dir and type
+/obj/structure/disposalconstruct/New(var/loc, var/pipe_type)
+	..(loc)
+	if(pipe_type)
+		ptype = pipe_type
+		if(!is_pipe())    // bins/chutes/outlets are dense
+			density = 1
+
+// update iconstate and dpdir due to dir and type
 /obj/structure/disposalconstruct/proc/update()
 	var/flip = turn(dir, 180)
 	var/left = turn(dir, 90)
@@ -66,7 +73,7 @@
 			dpdir = dir | left | flip
 
 
-	if(ptype<6 || ptype>8)
+	if(is_pipe())
 		icon_state = "con[base_state]"
 	else
 		icon_state = base_state
@@ -148,7 +155,7 @@
 
 /obj/structure/disposalconstruct/attackby(var/obj/item/I, var/mob/user)
 	var/nicetype = "pipe"
-	var/ispipe = 0 // Indicates if we should change the level of this pipe
+	var/ispipe = is_pipe() // Indicates if we should change the level of this pipe
 	src.add_fingerprint(user)
 	switch(ptype)
 		if(6)
@@ -159,10 +166,8 @@
 			nicetype = "delivery chute"
 		if(9, 10)
 			nicetype = "sorting pipe"
-			ispipe = 1
 		else
 			nicetype = "pipe"
-			ispipe = 1
 
 	var/turf/T = src.loc
 	if(T.intact)
@@ -181,7 +186,7 @@
 				density = 1
 			user << "You detach the [nicetype] from the underfloor."
 		else
-			if(ptype>=6 && ptype <= 8) // Disposal or outlet
+			if(!is_pipe()) // Disposal or outlet
 				if(CP) // There's something there
 					if(!istype(CP,/obj/structure/disposalpipe/trunk))
 						user << "The [nicetype] requires a trunk underneath it in order to work."
@@ -247,7 +252,7 @@
 						var/obj/structure/disposalpipe/trunk/Trunk = CP
 						Trunk.linked = P
 
-					else if(ptype==8) // Disposal outlet
+					else if(ptype==8) // Disposal chute
 
 						var/obj/machinery/disposal/deliveryChute/P = new /obj/machinery/disposal/deliveryChute(src.loc)
 						src.transfer_fingerprints_to(P)
@@ -258,3 +263,20 @@
 		else
 			user << "You need to attach it to the plating first!"
 			return
+
+/obj/structure/disposalconstruct/proc/is_pipe()
+	return !(ptype >=6 && ptype <= 8)
+
+//helper proc that makes sure you can place the construct (i.e no dense objects stacking)
+/obj/structure/disposalconstruct/proc/can_place()
+	if(is_pipe())
+		return 1
+
+	for(var/obj/structure/disposalconstruct/DC in get_turf(src))
+		if(DC == src)
+			continue
+
+		if(!DC.is_pipe()) //there's already a chute/outlet/bin there
+			return 0
+
+	return 1

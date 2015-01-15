@@ -170,29 +170,13 @@ Nah
 	if(href_list["dmake"])
 		if(!wait)
 			var/p_type = text2num(href_list["dmake"])
-			var/obj/structure/disposalconstruct/C = new (src.loc)
-			switch(p_type)
-				if(0)
-					C.ptype = 0
-				if(1)
-					C.ptype = 1
-				if(2)
-					C.ptype = 2
-				if(3)
-					C.ptype = 4
-				if(4)
-					C.ptype = 5
-				if(5)
-					C.ptype = 6
-					C.density = 1
-				if(6)
-					C.ptype = 7
-					C.density = 1
-				if(7)
-					C.ptype = 8
-					C.density = 1
-				if(8)
-					C.ptype = 9
+			var/obj/structure/disposalconstruct/C = new (src.loc,p_type+1)
+
+			if(!C.can_place())
+				usr << "<span class='warning'>There's not enough room to build that here!</span>"
+				qdel(C)
+				return
+
 			C.add_fingerprint(usr)
 			C.update()
 			wait = 1
