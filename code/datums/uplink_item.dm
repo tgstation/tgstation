@@ -120,10 +120,10 @@ var/list/uplink_items = list()
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 40
 
-/datum/uplink_item/dangerous/car
-	name = "C-90gl Compact Assault Rifle"
-	desc = "A fully-loaded Zashchita Industriya toploading bullpup assault rifle that uses 30-round 5.45x39mm magazines with a togglable underslung 40mm grenade launcher."
-	item = /obj/item/weapon/gun/projectile/automatic/c90gl
+/datum/uplink_item/dangerous/carbine
+	name = "M-90gl Carbine"
+	desc = "A fully-loaded three-round burst carbine that uses 30-round 5.56mm magazines with a togglable underslung 40mm grenade launcher."
+	item = /obj/item/weapon/gun/projectile/automatic/m90
 	cost = 18
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 50
@@ -137,11 +137,10 @@ var/list/uplink_items = list()
 	surplus = 0
 
 /datum/uplink_item/dangerous/crossbow
-	name = "Miniature Energy Crossbow"
-	desc = "A short bow mounted across a tiller in miniature. Small enough to fit into a pocket or slip into a bag unnoticed. It fires bolts tipped with a paralyzing toxin collected from a rare organism. \
-	Its bolts stun enemies for short periods, and replenish automatically."
-	item = /obj/item/weapon/gun/energy/crossbow
-	cost = 12
+	name = "Miniature Auto Crossbow"
+	desc = "A short bow mounted across a tiller in miniature. Small enough to fit into a pocket or slip into a bag unnoticed. It fires bolts tipped with a paralyzing toxin collected from a rare organism."
+	item = /obj/item/weapon/gun/projectile/automatic/crossbow
+	cost = 10
 	excludefrom = list(/datum/game_mode/nuclear)
 	surplus = 50
 
@@ -226,10 +225,17 @@ var/list/uplink_items = list()
 	surplus = 40
 
 /datum/uplink_item/ammo/pistol
-	name = "Magazine - 10mm"
+	name = "Handgun Magazine - 10mm"
 	desc = "An additional 8-round 10mm magazine for use in the syndicate pistol. These subsonic rounds are dirt cheap but are half as effective as .357 rounds."
 	item = /obj/item/ammo_box/magazine/m10mm
 	cost = 1
+
+/datum/uplink_item/ammo/crossbow
+	name = "Poison-tipped Crossbow Bolts (x4)"
+	desc = "A four pack of paralyzing crossbow bolts, for hunting big game."
+	item = /obj/item/ammo_box/crossbow
+	cost = 2
+	excludefrom = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/revolver
 	name = "Speed Loader - .357"
@@ -238,7 +244,7 @@ var/list/uplink_items = list()
 	cost = 4
 
 /datum/uplink_item/ammo/smg
-	name = "Magazine - .45"
+	name = "SMG Magazine - .45"
 	desc = "An additional 20-round .45 magazine for use in the C-20r submachine gun. These bullets pack a lot of punch that can knock most targets down, but do limited overall damage."
 	item = /obj/item/ammo_box/magazine/smgm45
 	cost = 2
@@ -265,16 +271,16 @@ var/list/uplink_items = list()
 	cost = 3
 	gamemodes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/ammo/car
-	name = "Box Magazine - 5.45x39mm"
-	desc = "An additional 30-round 5.45x39mm magazine for use in the C-90gl assault rifle. These bullets don't have the punch to knock most targets down, but dish out higher overall damage."
-	item = /obj/item/ammo_box/magazine/m545
+/datum/uplink_item/ammo/carbine
+	name = "Toploader Magazine - 5.56"
+	desc = "An additional 30-round 5.56 magazine for use in the M-90gl carbine. These bullets don't have the punch to knock most targets down, but dish out higher overall damage."
+	item = /obj/item/ammo_box/magazine/m556
 	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/a40mm
 	name = "Ammo Box - 40mm grenades"
-	desc = "A box of 4 additional 40mm HE grenades for use the C-90gl's underbarrel grenade launcher. Your teammates will thank you to not shoot these down small hallways."
+	desc = "A box of 4 additional 40mm HE grenades for use the M-90gl's underbarrel grenade launcher. Your teammates will thank you to not shoot these down small hallways."
 	item = /obj/item/ammo_box/a40mm
 	cost = 4
 	gamemodes = list(/datum/game_mode/nuclear)
@@ -305,6 +311,13 @@ var/list/uplink_items = list()
 	desc = "A sinister-looking surfactant used to clean blood stains to hide murders and prevent DNA analysis. You can also drop it underfoot to slip people."
 	item = /obj/item/weapon/soap/syndie
 	cost = 1
+	surplus = 50
+
+/datum/uplink_item/stealthy_weapons/traitor_chem_bottle
+	name = "Poison Kit"
+	desc = "An assortment of nasty chemicals."
+	item = /obj/item/weapon/storage/box/syndie_kit/chemical
+	cost = 2
 	surplus = 50
 
 /datum/uplink_item/stealthy_weapons/detomatix

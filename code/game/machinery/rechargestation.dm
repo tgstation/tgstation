@@ -174,11 +174,6 @@
 				if(istype(O,/obj/item/weapon/reagent_containers/food/condiment/enzyme))
 					if(O.reagents.get_reagent_amount("enzyme") < 50)
 						O.reagents.add_reagent("enzyme", 2 * coeff)
-				//Medical
-				if(istype(O,/obj/item/weapon/reagent_containers/glass/bottle/robot))
-					var/obj/item/weapon/reagent_containers/glass/bottle/robot/B = O
-					if(B.reagent && (B.reagents.get_reagent_amount(B.reagent) < B.volume))
-						B.reagents.add_reagent(B.reagent, 2 * coeff)
 				//Janitor
 				if(istype(O, /obj/item/device/lightreplacer))
 					var/obj/item/device/lightreplacer/LR = O

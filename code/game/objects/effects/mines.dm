@@ -31,7 +31,7 @@
 	s.start()
 	obj:radiation += 50
 	randmutb(obj)
-	domutcheck(obj,null)
+	domutcheck(obj)
 	qdel(src)
 
 /obj/effect/mine/proc/triggerstun(obj)

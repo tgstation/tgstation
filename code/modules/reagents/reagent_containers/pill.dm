@@ -9,6 +9,8 @@
 	item_state = "pill"
 	possible_transfer_amounts = null
 	volume = 50
+	var/apply_type = INGEST
+	var/apply_method = "swallow"
 
 /obj/item/weapon/reagent_containers/pill/New()
 	..()
@@ -25,16 +27,16 @@
 		return 0
 
 	if(M == user)
-		M << "<span class='notice'>You swallow [src].</span>"
+		M << "<span class='notice'>You [apply_method] [src].</span>"
 
 	else
-		M.visible_message("<span class='danger'>[user] attempts to force [M] to swallow [src].</span>", \
-							"<span class='userdanger'>[user] attempts to force [M] to swallow [src].</span>")
+		M.visible_message("<span class='danger'>[user] attempts to force [M] to [apply_method] [src].</span>", \
+							"<span class='userdanger'>[user] attempts to force [M] to [apply_method] [src].</span>")
 
 		if(!do_mob(user, M)) return
 
-		M.visible_message("<span class='danger'>[user] forces [M] to swallow [src].</span>", \
-							"<span class='userdanger'>[user] forces [M] to swallow [src].</span>")
+		M.visible_message("<span class='danger'>[user] forces [M] to [apply_method] [src].</span>", \
+							"<span class='userdanger'>[user] forces [M] to [apply_method] [src].</span>")
 
 
 	user.unEquip(src) //icon update
@@ -42,7 +44,7 @@
 	loc = M //Put the pill inside the mob. This fixes the issue where the pill appears to drop to the ground after someone eats it.
 
 	if(reagents.total_volume)
-		reagents.reaction(M, INGEST)
+		reagents.reaction(M, apply_type)
 		spawn(5)
 			reagents.trans_to(M, reagents.total_volume)
 			qdel(src)

@@ -1,6 +1,8 @@
 /mob/living/carbon/human/attack_hulk(mob/living/carbon/human/user)
-	adjustBruteLoss(5)
-	Weaken(4)
+	if(user.a_intent == "harm")
+		..(user, 1)
+		adjustBruteLoss(5)
+		Weaken(4)
 
 /mob/living/carbon/human/attack_hand(mob/living/carbon/human/M)
 	if(..())	//to allow surgery to return properly.
