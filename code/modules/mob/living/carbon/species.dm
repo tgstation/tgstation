@@ -545,25 +545,65 @@ var/global/list/whitelisted_species = list("Human")
 			H.u_equip(H.wear_mask)
 
 		H.equip_or_collect(new /obj/item/clothing/mask/breath/vox(H), slot_wear_mask)
-		var/suit=/obj/item/clothing/suit/space/vox/casual
-		var/helm=/obj/item/clothing/head/helmet/space/vox/casual
+		var/suit=/obj/item/clothing/suit/space/vox/civ
+		var/helm=/obj/item/clothing/head/helmet/space/vox/civ
 		var/tank_slot = slot_s_store
 		var/tank_slot_name = "suit storage"
 		switch(H.mind.assigned_role)
-			// DEPRECATED: Vox now have their own clothing.
-			if("Research Director","Scientist","Geneticist","Roboticist")
-				suit=/obj/item/clothing/suit/space/vox/casual/science
-				helm=/obj/item/clothing/head/helmet/space/vox/casual/science
-			if("Chief Engineer","Station Engineer","Atmospheric Technician")
-				suit=/obj/item/clothing/suit/space/vox/casual/engineer
-				helm=/obj/item/clothing/head/helmet/space/vox/casual/engineer
+
+			if("Bartender")
+				suit=/obj/item/clothing/suit/space/vox/civ/bartender
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/bartender
+			if("Chef")
+				suit=/obj/item/clothing/suit/space/vox/civ/chef
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/chef
+			if("Chaplain")
+				suit=/obj/item/clothing/suit/space/vox/civ/chaplain
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/chaplain
+			if("Librarian")
+				suit=/obj/item/clothing/suit/space/vox/civ/librarian
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/librarian
+
+			if("Chief Engineer")
+				suit=/obj/item/clothing/suit/space/vox/civ/engineer/ce
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/engineer/ce
+			if("Station Engineer")
+				suit=/obj/item/clothing/suit/space/vox/civ/engineer
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/engineer
+			if("Atmospheric Technician")
+				suit=/obj/item/clothing/suit/space/vox/civ/engineer/atmos
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/engineer/atmos
+
+			if("Scientist","Roboticist")
+				suit=/obj/item/clothing/suit/space/vox/civ/science
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/science
+			if("Research Director")
+				suit=/obj/item/clothing/suit/space/vox/civ/science/rd
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/science/rd
+
+			if("Medical Doctor")
+				suit=/obj/item/clothing/suit/space/vox/civ/medical
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/medical
+			if("Paramedic")
+				suit=/obj/item/clothing/suit/space/vox/civ/medical/paramedic
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/medical/paramedic
+			if("Geneticist")
+				suit=/obj/item/clothing/suit/space/vox/civ/medical/geneticist
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/medical/geneticist
+			if("Virologist")
+				suit=/obj/item/clothing/suit/space/vox/civ/medical/virologist
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/medical/virologist
+			if("Chemist")
+				suit=/obj/item/clothing/suit/space/vox/civ/medical/chemist
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/medical/chemist
+			if("Chief Medical Officer")
+				suit=/obj/item/clothing/suit/space/vox/civ/medical/cmo
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/medical/cmo
+
 			if("Head of Security","Warden","Detective","Security Officer")
-				suit=/obj/item/clothing/suit/space/vox/casual/security
-				helm=/obj/item/clothing/head/helmet/space/vox/casual/security
-			if("Chief Medical Officer","Medical Doctor","Paramedic","Chemist")
-				suit=/obj/item/clothing/suit/space/vox/casual/medical
-				helm=/obj/item/clothing/head/helmet/space/vox/casual/medical
-			// END DEPRECATION
+				suit=/obj/item/clothing/suit/space/vox/civ/security
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/security
+
 			if("Clown","Mime")
 				tank_slot=slot_r_hand
 				tank_slot_name = "hand"
