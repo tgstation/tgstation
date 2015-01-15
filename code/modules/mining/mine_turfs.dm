@@ -208,9 +208,6 @@
 	if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) && stage == 1)
 		user.visible_message("<span class='notice'>You use [I] to locate where to cut off the chain reaction and attempt to stop it...</span>")
 		defuse()
-	if(istype(I, /obj/item/weapon/pickaxe))
-		activated_ckey = "[user.ckey]"
-		activated_name = "[user.name]"
 	..()
 
 /turf/simulated/mineral/gibtonite/proc/explosive_reaction(var/mob/user = null, triggered_by_explosion = 0)
@@ -410,7 +407,7 @@
 
 		if(do_after(user,P.digspeed))
 			user << "<span class='notice'>You finish cutting into the rock.</span>"
-			gets_drilled()
+			gets_drilled(user)
 	else
 		return attack_hand(user)
 	return
