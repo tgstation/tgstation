@@ -397,6 +397,9 @@ its easier to just keep the beam vertical.
 /atom/proc/singularity_pull()
 	return
 
+/atom/proc/emag_act()
+	return
+	
 /atom/proc/hitby(atom/movable/AM as mob|obj)
 	return
 

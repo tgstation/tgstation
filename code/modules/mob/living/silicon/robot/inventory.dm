@@ -18,6 +18,7 @@
 	contents -= module
 	if(module)
 		module.loc = src.module
+	hud_used.update_robot_modules_display()
 	return 1
 
 /mob/living/silicon/robot/proc/uneq_active()
@@ -39,6 +40,7 @@
 
 	module_active = null
 	updateicon()
+
 	
 /mob/living/silicon/robot/proc/activate_module(var/obj/item/O)
 	if(!(locate(O) in src.module.modules) && O != src.module.emag)
