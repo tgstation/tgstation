@@ -1083,7 +1083,7 @@ FIRE ALARM
 	user.set_machine(src)
 	var/d1
 	var/d2
-	if (istype(user, /mob/living/carbon/human) || istype(user, /mob/living/silicon))
+	if (istype(user, /mob/living/carbon/human) || istype(user, /mob/living/silicon) || isobserver(user))
 
 		if (areaMaster.fire)
 			d1 = text("<A href='?src=\ref[];reset=1'>Reset - Lockdown</A>", src)
