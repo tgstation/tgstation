@@ -231,7 +231,7 @@
 	src.text += "<BR><BR>Syndicate forces may be supplying opposing criminal organizations within your sector in an attempt at destabilizing our operations."
 	src.text += "Ensure law and order is maintained on the station and be on the lookout for violent confrontations between station factions."
 	src.text += "Central Command retains an interest in any criminal leaders captured by station security. The execution or exile of these persons are ill-advised."
-	src.text += "<BR><HR>
+	src.text += "<BR><HR>"
 
 /datum/intercept_text/proc/build_wizard(datum/mind/correct_person)
 	var/SWF_desc = pick(SWF_names)
