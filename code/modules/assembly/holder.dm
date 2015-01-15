@@ -127,13 +127,6 @@
 			var/obj/item/S = special_assembly
 			S.on_found(finder)
 
-
-/obj/item/device/assembly_holder/hear_talk(mob/living/M as mob, msg)
-	if(a_left)
-		a_left.hear_talk(M, msg)
-	if(a_right)
-		a_right.hear_talk(M, msg)
-
 /obj/item/device/assembly_holder/Move()
 	..()
 	if(a_left && a_right)
@@ -142,7 +135,6 @@
 //		if(special_assembly)
 //			special_assembly:holder_movement()
 	return
-
 
 /obj/item/device/assembly_holder/attack_hand()//Perhapse this should be a holder_pickup proc instead, can add if needbe I guess
 	if(a_left && a_right)
@@ -243,12 +235,6 @@
 //			if(!special_assembly == D)
 //				special_assembly.dothings()
 	return 1
-
-
-
-
-
-
 
 /obj/item/device/assembly_holder/timer_igniter
 	name = "timer-igniter assembly"

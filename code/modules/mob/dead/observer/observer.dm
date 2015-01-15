@@ -14,6 +14,7 @@
 	blinded = 0
 	anchored = 1	//  don't get pushed around
 	invisibility = INVISIBILITY_OBSERVER
+	languages = ALL
 
 	// For Aghosts dicking with telecoms equipment.
 	var/obj/item/device/multitool/ghostMulti = null
@@ -28,7 +29,6 @@
 	var/has_enabled_antagHUD = 0
 	var/medHUD = 0
 	var/antagHUD = 0
-	universal_speak = 1
 	var/atom/movable/following = null
 	incorporeal_move = 1
 
@@ -653,7 +653,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(host)
 		if(config.uneducated_mice)
-			host.universal_understand = 0
+			languages = NONE
 		host.ckey = src.ckey
 		host << "<span class='info'>You are now a mouse. Try to avoid interaction with players, and do not give hints away that you are more than a simple rodent.</span>"
 

@@ -166,7 +166,6 @@
 				W.dropped(M)
 
 		var/mob/living/new_mob = new /mob/living/simple_animal/hostile/retaliate/cluwne(A.loc)
-		new_mob.universal_speak = 1
 		new_mob.gender=src.gender
 		new_mob.name = pick(clown_names)
 		new_mob.real_name = new_mob.name

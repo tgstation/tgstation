@@ -851,7 +851,8 @@
 /mob/living/singularity_pull(S)
 	step_towards(src, S)
 
-
+/mob/living/proc/InCritical()
+	return (src.health < 0 && src.health > -95.0 && stat == UNCONSCIOUS)
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm

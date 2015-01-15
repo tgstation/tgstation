@@ -25,6 +25,9 @@
 
 	store_position()
 
+/mob/proc/is_muzzled()
+	return 0
+
 /mob/proc/store_position()
 	origin_x = x
 	origin_y = y

@@ -18,9 +18,6 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker/noreactgrenade/reservoir = null
 	var/extract_uses = 0
 
-/obj/item/weapon/grenade/chem_grenade/hear_talk(mob/M as mob, message)
-	if(detonator)
-		detonator.hear_talk(M, message)
 /obj/item/weapon/grenade/chem_grenade/attack_self(mob/user as mob)
 	if(!stage || stage==1)
 		if(detonator)

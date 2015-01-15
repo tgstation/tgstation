@@ -283,8 +283,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 									Console.icon_state = "req_comp2"
 								if(!Console.silent)
 									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
-									for (var/mob/O in hearers(5, Console.loc))
-										O.show_message(text("\icon[Console] *The Requests Console beeps: 'PRIORITY Alert in [department]'"))
+									say(text("\icon[Console] *The Requests Console beeps: 'PRIORITY Alert in [department]'"))
 								Console.messages += "<B><FONT color='red'>High Priority message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></FONT></B><BR>[sending]"
 
 		//					if("3")		//Not implemanted, but will be 		//Removed as it doesn't look like anybody intends on implimenting it ~Carn
@@ -303,16 +302,14 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 									Console.icon_state = "req_comp1"
 								if(!Console.silent)
 									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
-									for (var/mob/O in hearers(4, Console.loc))
-										O.show_message(text("\icon[Console] *The Requests Console beeps: 'Message from [department]'"))
+									say(text("\icon[Console] *The Requests Console beeps: 'Message from [department]'"))
 								Console.messages += "<B>Message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></FONT></B><BR>[message]"
 
 						screen = 6
 						Console.luminosity = 2
 				messages += "<B>Message sent to [dpt]</B><BR>[message]"
 			else
-				for (var/mob/O in hearers(4, src.loc))
-					O.show_message(text("\icon[src] *The Requests Console beeps: 'NOTICE: No server detected!'"))
+				say(text("\icon[src] *The Requests Console beeps: 'NOTICE: No server detected!'"))
 
 
 	//Handle screen switching
@@ -355,6 +352,13 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 	updateUsrDialog()
 	return
+
+/obj/machinery/say_quote(var/text)
+	var/ending = copytext(text, length(text) - 2)
+	if(ending == "!!!")
+		return "blares, \"[text]\""
+
+	return "beeps, \"[text]\""
 
 					//err... hacking code, which has no reason for existing... but anyway... it's supposed to unlock priority 3 messanging on that console (EXTREME priority...) the code for that actually exists.
 /obj/machinery/requests_console/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)

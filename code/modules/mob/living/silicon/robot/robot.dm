@@ -5,7 +5,6 @@
 	icon_state = "robot"
 	maxHealth = 300
 	health = 300
-	universal_speak = 1
 
 	var/sight_mode = 0
 	var/custom_name = ""
@@ -30,7 +29,6 @@
 	var/module_state_2 = null
 	var/module_state_3 = null
 
-	var/obj/item/device/radio/borg/radio = null
 	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/item/weapon/cell/cell = null
 	var/obj/machinery/camera/camera = null

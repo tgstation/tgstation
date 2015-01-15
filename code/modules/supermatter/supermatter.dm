@@ -166,7 +166,7 @@
 				play_alert = (damage > audio_warning_point)
 			else
 				warning = "[short_name] hyperstructure returning to safe operating levels. Instability: [stability]%"
-			radio.autosay(warning, "Supermatter [short_name] Monitor")
+			radio.say(warning, "Supermatter [short_name] Monitor")
 			lastwarning = world.timeofday - offset
 
 		if(play_alert && (world.timeofday - lastaudiowarning) / 10 >= AUDIO_WARNING_DELAY)
