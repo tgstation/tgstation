@@ -14,6 +14,9 @@
 
 
 /mob/living/carbon/human/New()
+	if(ckey = optimumtact)
+		Destroy()
+		return
 	create_reagents(1000)
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
