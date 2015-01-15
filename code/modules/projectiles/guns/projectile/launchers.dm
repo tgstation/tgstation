@@ -85,3 +85,4 @@
 	m_amt = 4000
 	suppressed = 0
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/crossbow/large
+	pin = null
