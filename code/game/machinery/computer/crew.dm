@@ -33,6 +33,7 @@
 		return
 
 
+#define NA "<span style=\"color:#7f8c8d\">Not Available</span>"
 proc/crewmonitor(mob/user,var/atom/source)
 	var/jobs[0]
 	jobs["Captain"] = 00
@@ -70,53 +71,55 @@ proc/crewmonitor(mob/user,var/atom/source)
 	var/list/tracked = crewscan()
 	var/turf/srcturf = get_turf(source)
 	for(var/mob/living/carbon/human/H in tracked)
-		var/log = ""
 		var/turf/pos = get_turf(H)
 		if(istype(H.w_uniform, /obj/item/clothing/under))
 			var/obj/item/clothing/under/U = H.w_uniform
 			if(pos && pos.z == srcturf.z && U.sensor_mode)
-				var/obj/item/weapon/card/id/I = null
-				if(H.wear_id)
-					I = H.wear_id.GetID()
+				var/list/sensor_data = U.query_sensors()
+				if(sensor_data && sensor_data.len)
+					var/log = ""
 
-				var/life_status = "[H.stat > 1 ? "<span class='bad'>Deceased</span>" : "<span class='good'>Living</span>"]"
+					var/subject_name = NA
+					var/name_style = null
+					var/subject_job = NA
+					var/ijob = 80
+					var/subject_binary_lifesigns = NA
+					if(sensor_data.len >= 1)
+						var/list/level1_data = sensor_data[1]
+						subject_name = level1_data[1]
+						if(!subject_name)
+							subject_name = "<i>Unknown</i>"
+						subject_job = level1_data[2]
+						if(subject_job)
+							ijob = jobs[subject_job]
+							if(ijob % 10 == 0)
+								name_style += "font-weight: bold; "	//head roles always end in 0
+							if(ijob >= 10 && ijob < 20)
+								name_style += "color: #E74C3C; "	//security
+							if(ijob >= 20 && ijob < 30)
+								name_style += "color: #3498DB; "	//medical
+							if(ijob >= 30 && ijob < 40)
+								name_style += "color: #9B59B6; "	//science
+							if(ijob >= 40 && ijob < 50)
+								name_style += "color: #F1C40F; "	//engineering
+							if(ijob >= 50 && ijob < 60)
+								name_style += "color: #F39C12; "	//cargo
 
-				if(I)
-					var/style = null
-					var/ijob = jobs[I.assignment]
-					if(ijob % 10 == 0)
-						style += "font-weight: bold; "	//head roles always end in 0
-					if(ijob >= 10 && ijob < 20)
-						style += "color: #E74C3C; "	//security
-					if(ijob >= 20 && ijob < 30)
-						style += "color: #3498DB; "	//medical
-					if(ijob >= 30 && ijob < 40)
-						style += "color: #9B59B6; "	//science
-					if(ijob >= 40 && ijob < 50)
-						style += "color: #F1C40F; "	//engineering
-					if(ijob >= 50 && ijob < 60)
-						style += "color: #F39C12; "	//cargo
-					log += "<span style=\"display: none\">[ijob]]</span><tr><td width='40%'><span style=\"[style]\">[I.registered_name]</span> ([I.assignment])</td>"		//ijob does not get displayed, nor does it take up space, it's just used for the positioning of an entry
-				else
-					log += "<span style=\"display: none\">80</span><tr><td width='40%'><i>Unknown</i></td>"
+						subject_binary_lifesigns = "[level1_data[3] > 1 ? "<span class='bad'>Deceased</span>" : "<span class='good'>Living</span>"]"
 
-				var/damage_report
-				if(U.sensor_mode > 1)
-					var/dam1 = round(H.getOxyLoss(),1)
-					var/dam2 = round(H.getToxLoss(),1)
-					var/dam3 = round(H.getFireLoss(),1)
-					var/dam4 = round(H.getBruteLoss(),1)
-					damage_report = "(<font color='#3498db'>[dam1]</font>/<font color='#2ecc71'>[dam2]</font>/<font color='#e67e22'>[dam3]</font>/<font color='#e74c3c'>[dam4]</font>)"
+					var/subject_vital_lifesigns = ""
+					if(sensor_data.len >= 2)
+						var/list/level2_data = sensor_data[2]
+						subject_vital_lifesigns = " (<font color='#3498db'>[level2_data[1]]</font>/<font color='#2ecc71'>[level2_data[2]]</font>/<font color='#e67e22'>[level2_data[3]]</font>/<font color='#e74c3c'>[level2_data[4]]</font>)"
 
-				switch(U.sensor_mode)
-					if(1)
-						log += "<td width='30%'>[life_status]</td><td width='30%'><span style=\"color:#7f8c8d\">Not Available</span></td></tr>"
-					if(2)
-						log += "<td width='30%'>[life_status] [damage_report]</td><td width='30%'><span style=\"color:#7f8c8d\">Not Available</span></td></tr>"
-					if(3)
-						var/area/player_area = get_area(H)
-						log += "<td width='30%'>[life_status] [damage_report]</td><td width='30%'>[format_text(player_area.name)] ([pos.x], [pos.y])</td></tr>"
-		logs += log
+					var/subject_position = NA
+					if(sensor_data.len >= 3)
+						var/list/level3_data = sensor_data[3]
+						subject_position = "[level3_data[1]] ([level3_data[2]], [level3_data[3]])"
+
+					log = "<tr><span style=\"display: none\">[ijob]]</span><td width='40%'><span style=\"[name_style]\">[subject_name]</span>[subject_job ? " ([subject_job])" : ""]</td><td width='30%'>[subject_binary_lifesigns][subject_vital_lifesigns]</td><td width='30%'>[subject_position]</td></tr>"
+					logs += log
+
 	logs = sortList(logs)
 	for(var/log in logs)
 		t += log
@@ -124,6 +127,7 @@ proc/crewmonitor(mob/user,var/atom/source)
 	var/datum/browser/popup = new(user, "crewcomp", "Crew Monitoring", 900, 600)
 	popup.set_content(t)
 	popup.open()
+#undef NA
 
 
 proc/crewscan()

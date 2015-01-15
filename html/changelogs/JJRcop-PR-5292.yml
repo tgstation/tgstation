@@ -1,0 +1,4 @@
+author: JJRcop
+delete-after: True
+changes:
+  - wip: "We're hard at work trying to fix an exploit involving suit sensors and wirecutters. The problem is that cutting the data wire from the suit sensors to the antenna will cause the antenna's error handler to default, and keep sending the old data at the time of cutting them, because it cannot recieve new data from the sensors due to the data wire being cut. Please do not worry, we'll have this fixed in a few days. <span style=\"font-size:5px;\">NanoTrasen may not be held responsible for the delay or termination of any or all projects or fixes they commit to.</span>"
