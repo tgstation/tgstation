@@ -375,12 +375,13 @@ obj/machinery/bot/proc/scan(var/scan_type, var/old_target, var/scan_range = DEFA
 	for (var/scan in view (scan_range, src) ) //Search for something in range!
 		if(!istype(scan, scan_type)) //Check that the thing we found is the type we want!
 			continue //If not, keep searching!
-		if( !(scan in ignore_list) && (scan != old_target) ) //Filter for blacklisted elements, usually unreachable or previously processed oness
-			var/scan_result = process_scan(scan) //Some bots may require additional processing when a result is selected.
-			if( scan_result )
-				final_result = scan_result
-			else
-				continue //The current element failed assessment, move on to the next.
+		if( (scan in ignore_list) || (scan == old_target) ) //Filter for blacklisted elements, usually unreachable or previously processed oness
+			continue
+		var/scan_result = process_scan(scan) //Some bots may require additional processing when a result is selected.
+		if( scan_result )
+			final_result = scan_result
+		else
+			continue //The current element failed assessment, move on to the next.
 		return final_result
 
 //When the scan finds a target, run bot specific processing to select it for the next step. Empty by default.
