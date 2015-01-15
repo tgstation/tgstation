@@ -1,0 +1,6 @@
+author: iconleap
+
+delete-after: True
+
+changes: 
+  - tweak: port tg powernet code, check https://tgstation13.org/wiki/Guide_to_construction#Connecting_Wires for reference.
