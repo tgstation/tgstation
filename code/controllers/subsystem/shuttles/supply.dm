@@ -195,6 +195,10 @@
 				return 1
 			if(istype(A,/obj/item/device/radio/beacon))
 				return 1
+			if(istype(A,/obj/machinery/the_singularitygen/))
+				return 1
+			if(istype(A,/obj/singularity))
+				return 1
 
 		for(var/thing in A)
 			if(.(thing))
