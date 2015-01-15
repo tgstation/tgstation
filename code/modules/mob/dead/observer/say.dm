@@ -27,4 +27,6 @@
 	return "[pick("whines", "cries", "spooks", "complains", "drones", "mutters")], \"[text]\"";
 
 /mob/dead/observer/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
-	src << message
+	if(radio_freq)
+		speaker = speaker.GetSource()
+	src << "<a href=?src=\ref[src];follow=\ref[speaker])(Follow)</a> [message]"
