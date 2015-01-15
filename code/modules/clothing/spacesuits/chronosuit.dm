@@ -4,7 +4,7 @@
 	icon_state = "chronohelmet"
 	item_state = "chronohelmet"
 	slowdown = 1
-	armor = list(melee = 99, bullet = 40, laser = 100, energy = 30, bomb = 10, bio = 90, rad = 100)
+	armor = list(melee = 60, bullet = 30/*bullet through the visor*/, laser = 60, energy = 60, bomb = 30, bio = 90, rad = 90)
 	var/obj/item/clothing/suit/space/chronos/suit = null
 
 /obj/item/clothing/head/helmet/space/chronos/dropped()
@@ -24,7 +24,7 @@
 	item_state = "chronosuit"
 	action_button_name = "Toggle Chronosuit"
 	slowdown = 2
-	armor = list(melee = 99, bullet = 60, laser = 80, energy = 30, bomb = 10, bio = 90, rad = 100)
+	armor = list(melee = 60, bullet = 60, laser = 60, energy = 60, bomb = 30, bio = 90, rad = 90)
 	var/obj/item/clothing/head/helmet/space/chronos/helmet = null
 	var/obj/effect/chronos_cam/camera = null
 	var/activating = 0
@@ -167,7 +167,7 @@
 				if(helmet)
 					user << "\[ <span style='color: #ff5500;'>ok</span> \] Stopping ui display driver"
 					user << "\[ <span style='color: #ff5500;'>ok</span> \] Stopping brainwave scanner"
-					user << "\[ <span style='color: #ff5500;'>ok</span> \] Unounting /dev/helmet"
+					user << "\[ <span style='color: #ff5500;'>ok</span> \] Unmounting /dev/helmet"
 					helmet.flags &= ~NODROP
 					helmet.suit = null
 					helmet = null
@@ -195,7 +195,11 @@
 				user.client.eye = src
 			var/step = get_step(src, direction)
 			if(step)
-				src.loc = step
+				if(istype(step, /turf/space))
+					if(!src.Move(step))
+						src.loc = step
+				else
+					src.loc = step
 	else
 		qdel(src)
 

@@ -155,9 +155,7 @@
 	var/mob/living/captured = null
 	var/obj/item/weapon/gun/energy/chrono_gun/gun = null
 	var/tickstokill = 30
-	var/icon/mob_snapshot = null
 	var/image/mob_underlay = null
-	var/icon/cached_icon = null
 	var/preloaded = 0
 	var/RPpos = null
 
@@ -165,8 +163,8 @@
 	if(target && isliving(target) && G)
 		target.loc = src
 		src.captured = target
-		mob_snapshot = getFlatIcon(target)
-		cached_icon = new()
+		var/icon/mob_snapshot = getFlatIcon(target)
+		var/icon/cached_icon = new()
 
 		for(var/i=1, i<=CHRONO_FRAME_COUNT, i++)
 			var/icon/removing_frame = icon('icons/obj/chronos.dmi', "erasing", SOUTH, i)
@@ -174,7 +172,6 @@
 			mob_icon.Blend(removing_frame, ICON_MULTIPLY)
 			cached_icon.Insert(mob_icon, "frame[i]")
 
-		cached_icon = fcopy_rsc(cached_icon)
 		mob_underlay = new(cached_icon, "frame1")
 		update_icon()
 
