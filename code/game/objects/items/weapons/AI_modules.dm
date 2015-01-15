@@ -28,12 +28,13 @@ AI MODULES
 		user << "<span class='warning'>ERROR: No laws found on board.</span>"
 		return
 
+	//Handle the lawcap
 	if(reciever.laws)
 		var/tot_laws = 0
-		tot_laws += reciever.laws.inherent.len
-		tot_laws += reciever.laws.supplied.len
-		tot_laws += reciever.laws.ion.len
-		tot_laws += laws.len
+		for(var/lawlist in list(reciever.laws.inherent,reciever.laws.supplied,reciever.laws.ion,laws))
+			for(var/mylaw in lawlist)
+				if(mylaw != "")
+					tot_laws++
 		if(tot_laws > config.silicon_max_law_amount && !bypass_law_amt_check)//allows certain boards to avoid this check, eg: reset
 			user << "<span class='caution'>Not enough memory allocated to [reciever]'s law processor to handle this amount of laws."
 			message_admins("[key_name_admin(user)] tried to upload laws to [key_name_admin(reciever)] that would exceed the law cap.")

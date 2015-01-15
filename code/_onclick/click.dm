@@ -37,7 +37,6 @@
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
-
 	if(client.buildmode)
 		build_click(src, client.buildmode, params, A)
 		return
@@ -162,12 +161,6 @@
 	animals lunging, etc.
 */
 /mob/proc/RangedAttack(var/atom/A, var/params)
-	if(!mutations.len) return
-	if((LASER in mutations) && a_intent == "harm")
-		LaserEyes(A) // moved into a proc below
-	else
-		if(TK in mutations)
-			A.attack_tk(src)
 /*
 	Restrained ClickOn
 
@@ -288,8 +281,7 @@
 	LE.current = T
 	LE.yo = U.y - T.y
 	LE.xo = U.x - T.x
-	spawn( 1 )
-		LE.process()
+	LE.fire()
 
 /mob/living/carbon/human/LaserEyes()
 	if(nutrition>0)

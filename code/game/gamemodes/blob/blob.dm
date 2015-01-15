@@ -81,7 +81,7 @@ var/list/blob_nodes = list()
 			if(directory[ckey(blob.key)])
 				blob_client = directory[ckey(blob.key)]
 				location = get_turf(C)
-				if(location.z != 1 || istype(location, /turf/space))
+				if(location.z != ZLEVEL_STATION || istype(location, /turf/space))
 					location = null
 				C.gib()
 
@@ -99,16 +99,12 @@ var/list/blob_nodes = list()
 	for(var/datum/mind/blob in infected_crew)
 		greet_blob(blob)
 
-	if(emergency_shuttle)
-		emergency_shuttle.always_fake_recall = 1
+	SSshuttle.emergencyAlwaysFakeRecall = 1
 
 	// Disable the blob event for this round.
-	if(events)
-		var/datum/round_event_control/blob/B = locate() in events.control
-		if(B)
-			B.max_occurrences = 0 // disable the event
-	else
-		ERROR("Events variable is null in blob gamemode post setup.")
+	var/datum/round_event_control/blob/B = locate() in SSevent.control
+	if(B)
+		B.max_occurrences = 0 // disable the event
 
 	spawn(0)
 

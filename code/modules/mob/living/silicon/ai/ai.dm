@@ -20,6 +20,8 @@ var/list/ai_list = list()
 	density = 1
 	status_flags = CANSTUN|CANPARALYSE|CANPUSH
 	force_compose = 1 //This ensures that the AI always composes it's own hear message. Needed for hrefs and job display.
+	med_hud = DATA_HUD_MEDICAL_BASIC
+	sec_hud = DATA_HUD_SECURITY_BASIC
 	var/list/network = list("SS13")
 	var/obj/machinery/camera/current = null
 	var/list/connected_robots = list()
@@ -29,6 +31,7 @@ var/list/ai_list = list()
 	var/viewalerts = 0
 	var/icon/holo_icon//Default is assigned when AI is created.
 	var/radio_enabled = 1 //Determins if a carded AI can speak with its built in radio or not.
+	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
 	var/obj/item/device/pda/ai/aiPDA = null
 	var/obj/item/device/multitool/aiMulti = null
 	var/obj/item/device/camera/siliconcam/aicamera = null
@@ -58,6 +61,7 @@ var/list/ai_list = list()
 	var/last_announcement = "" // For AI VOX, if enabled
 	var/turf/waypoint //Holds the turf of the currently selected waypoint.
 	var/waypoint_mode = 0 //Waypoint mode is for selecting a turf via clicking.
+	var/apc_override = 0 //hack for letting the AI use its APC even when visionless
 
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
 	var/list/possibleNames = ai_names
@@ -100,7 +104,7 @@ var/list/ai_list = list()
 		verbs.Add(/mob/living/silicon/ai/proc/ai_network_change, \
 		/mob/living/silicon/ai/proc/ai_statuschange, /mob/living/silicon/ai/proc/ai_hologram_change, \
 		/mob/living/silicon/ai/proc/toggle_camera_light, /mob/living/silicon/ai/proc/botcall,\
-		/mob/living/silicon/ai/proc/control_integrated_radio)
+		/mob/living/silicon/ai/proc/control_integrated_radio, /mob/living/silicon/ai/proc/set_automatic_say_channel)
 
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
 		if (!B)//If there is no player/brain inside.
@@ -131,7 +135,7 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/Destroy()
 	ai_list -= src
 	shuttle_caller_list -= src
-	emergency_shuttle.autoshuttlecall()
+	SSshuttle.autoEvac()
 	..()
 
 
@@ -142,7 +146,7 @@ var/list/ai_list = list()
 		return
 
 		//if(icon_state == initial(icon_state))
-	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline")
+	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline", "Hades", "Helios", "President", "Syndicat Meow", "Alien", "Too Deep", "Triumvirate", "Triumvirate-M", "Text", "Matrix", "Dorf", "Bliss", "Not Malf", "Fuzzy", "Goon", "Database", "Glitchman", "Murica", "Nanotrasen", "Gentoo")
 	if(icontype == "Clown")
 		icon_state = "ai-clown2"
 	else if(icontype == "Monochrome")
@@ -165,19 +169,53 @@ var/list/ai_list = list()
 		icon_state = "ai-house"
 	else if(icontype == "Heartline")
 		icon_state = "ai-heartline"
+	else if(icontype == "Hades")
+		icon_state = "ai-hades"
+	else if(icontype == "Helios")
+		icon_state = "ai-helios"
+	else if(icontype == "President")
+		icon_state = "ai-pres"
+	else if(icontype == "Syndicat Meow")
+		icon_state = "ai-syndicatmeow"
+	else if(icontype == "Alien")
+		icon_state = "ai-alien"
+	else if(icontype == "Too Deep")
+		icon_state = "ai-toodeep"
+	else if(icontype == "Triumvirate")
+		icon_state = "ai-triumvirate"
+	else if(icontype == "Triumvirate-M")
+		icon_state = "ai-triumvirate-malf"
+	else if(icontype == "Text")
+		icon_state = "ai-text"
+	else if(icontype == "Matrix")
+		icon_state = "ai-matrix"
+	else if(icontype == "Dorf")
+		icon_state = "ai-dorf"
+	else if(icontype == "Bliss")
+		icon_state = "ai-bliss"
+	else if(icontype == "Not Malf")
+		icon_state = "ai-notmalf"
+	else if(icontype == "Fuzzy")
+		icon_state = "ai-fuzz"
+	else if(icontype == "Goon")
+		icon_state = "ai-goon"
+	else if(icontype == "Database")
+		icon_state = "ai-database"
+	else if(icontype == "Glitchman")
+		icon_state = "ai-glitchman"
+	else if(icontype == "Murica")
+		icon_state = "ai-murica"
+	else if(icontype == "Nanotrasen")
+		icon_state = "ai-nanotrasen"
+	else if(icontype == "Gentoo")
+		icon_state = "ai-gentoo"
 	//else
 			//usr <<"You can only change your display once!"
 			//return
 
 /mob/living/silicon/ai/Stat()
 	..()
-	statpanel("Status")
-	if (client.statpanel == "Status")
-		if(emergency_shuttle.online && emergency_shuttle.location < 2)
-			var/timeleft = emergency_shuttle.timeleft()
-			if (timeleft)
-				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
-
+	if(statpanel("Status"))
 		if(ticker.mode.name == "AI malfunction")
 			var/datum/game_mode/malfunction/malf = ticker.mode
 			for (var/datum/mind/malfai in malf.malf_ai)
@@ -233,7 +271,7 @@ var/list/ai_list = list()
 	onclose(src, "airoster")
 
 /mob/living/silicon/ai/proc/ai_call_shuttle()
-	if(src.stat == 2)
+	if(src.stat == DEAD)
 		src << "You can't call the shuttle because you are dead!"
 		return
 	if(istype(usr,/mob/living/silicon/ai))
@@ -244,11 +282,11 @@ var/list/ai_list = list()
 
 	var/reason = input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call") as text
 
-	if(length(trim(reason)) > 0)
-		call_shuttle_proc(src, reason)
+	if(trim(reason))
+		SSshuttle.requestEvac(src, reason)
 
 	// hack to display shuttle timer
-	if(emergency_shuttle.online)
+	if(SSshuttle.emergency.mode >= SHUTTLE_CALL)
 		var/obj/machinery/computer/communications/C = locate() in machines
 		if(C)
 			C.post_status("shuttle")
@@ -281,7 +319,7 @@ var/list/ai_list = list()
 		if(AI.control_disabled)
 			src	 << "Wireless control is disabled!"
 			return
-	cancel_call_proc(src)
+	SSshuttle.cancelEvac(src)
 	return
 
 /mob/living/silicon/ai/check_eye(var/mob/user as mob)
@@ -309,7 +347,7 @@ var/list/ai_list = list()
 				ai_call_shuttle()
 	..()
 
-/mob/living/silicon/ai/ex_act(severity)
+/mob/living/silicon/ai/ex_act(severity, target)
 	..()
 
 	switch(severity)
@@ -364,7 +402,7 @@ var/list/ai_list = list()
 		return
 
 	if (href_list["callbot"]) //Command a bot to move to a selected location.
-		Bot = locate(href_list["callbot"]) in aibots
+		Bot = locate(href_list["callbot"]) in SSbot.processing
 		if(!Bot || Bot.remote_disabled || src.control_disabled)
 			return //True if there is no bot found, the bot is manually emagged, or the AI is carded with wireless off.
 		waypoint_mode = 1
@@ -372,7 +410,7 @@ var/list/ai_list = list()
 		return
 
 	if (href_list["interface"]) //Remotely connect to a bot!
-		Bot = locate(href_list["interface"]) in aibots
+		Bot = locate(href_list["interface"]) in SSbot.processing
 		if(!Bot || Bot.remote_disabled || src.control_disabled)
 			return
 		Bot.attack_ai(src)
@@ -455,7 +493,7 @@ var/list/ai_list = list()
 	d += "<A HREF=?src=\ref[src];botrefresh=\ref[Bot]>Query network status</A><br>"
 	d += "<table width='100%'><tr><td width='40%'><h3>Name</h3></td><td width='30%'><h3>Status</h3></td><td width='30%'><h3>Location</h3></td><td width='10%'><h3>Control</h3></td></tr>"
 
-	for (Bot in aibots)
+	for (Bot in SSbot.processing)
 		if(Bot.z == ai_Zlevel && !Bot.remote_disabled) //Only non-emagged bots on the same Z-level are detected!
 			bot_area = get_area(Bot)
 			d += "<tr><td width='30%'>[Bot.hacked ? "<span class='bad'>(!) </span>[Bot.name]" : Bot.name]</td>"
@@ -544,7 +582,7 @@ var/list/ai_list = list()
 				cleared = 1
 				L -= I
 	if (cleared)
-		queueAlarm(text("--- [] alarm in [] has been cleared.", class, A.name), class, 0)
+		queueAlarm("--- [class] alarm in [A.name] has been cleared.", class, 0)
 		if (viewalerts) ai_alerts()
 	return !cleared
 
@@ -730,6 +768,14 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/proc/set_syndie_radio()
 	if(radio)
 		radio.make_syndie()
+
+/mob/living/silicon/ai/proc/set_automatic_say_channel()
+	set name = "Set Auto Announce Mode"
+	set desc = "Modify the default radio setting for your automatic announcements."
+	set category = "AI Commands"
+
+	set_autosay()
+
 /mob/living/silicon/ai/attack_slime(mob/living/carbon/slime/user)
 	return
 

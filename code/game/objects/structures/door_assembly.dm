@@ -461,17 +461,26 @@ obj/structure/door_assembly/New()
 			return
 
 	else if(istype(W, /obj/item/weapon/wrench) && !anchored )
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-		user.visible_message("<span class='warning'>[user] secures the airlock assembly to the floor.</span>", \
-							 "You start to secure the airlock assembly to the floor.", \
-							 "You hear wrenching")
+		var/door_check = 1
+		for(var/obj/machinery/door/D in loc)
+			if(!D.sub_door)
+				door_check = 0
+				break
+		
+		if(door_check)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+			user.visible_message("<span class='warning'>[user] secures the airlock assembly to the floor.</span>", \
+								 "You start to secure the airlock assembly to the floor.", \
+								 "You hear wrenching")
 
-		if(do_after(user, 40))
-			if( src.anchored )
-				return
-			user << "<span class='notice'> You've secured the airlock assembly.</span>"
-			src.name = "secured airlock assembly"
-			src.anchored = 1
+			if(do_after(user, 40))
+				if( src.anchored )
+					return
+				user << "<span class='notice'> You've secured the airlock assembly.</span>"
+				src.name = "secured airlock assembly"
+				src.anchored = 1
+		else
+			user << "There is another door here!"
 
 	else if(istype(W, /obj/item/weapon/wrench) && anchored )
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
@@ -599,7 +608,7 @@ obj/structure/door_assembly/New()
 							 "You start finishing the airlock.")
 
 		if(do_after(user, 40))
-			if(state == 2)
+			if(src.loc && state == 2)
 				user << "<span class='notice'> You've finished the airlock.</span>"
 				var/obj/machinery/door/airlock/door
 				if(mineral == "glass")

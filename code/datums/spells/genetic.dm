@@ -17,13 +17,14 @@
 
 /obj/effect/proc_holder/spell/targeted/genetic/cast(list/targets)
 
-	for(var/mob/living/target in targets)
-		target.mutations.Add(mutations)
+	for(var/mob/living/carbon/target in targets)
+		for(var/A in mutations)
+			target.dna.add_mutation(A)
 		target.disabilities |= disabilities
-		target.update_mutations()	//update target's mutation overlays
 		spawn(duration)
-			target.mutations.Remove(mutations)
-			target.disabilities &= ~disabilities
-			target.update_mutations()
+			if(target && !target.gc_destroyed)
+				for(var/A in mutations)
+					target.dna.remove_mutation(A)
+				target.disabilities &= ~disabilities
 
 	return

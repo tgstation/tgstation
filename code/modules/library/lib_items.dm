@@ -18,6 +18,7 @@
 	density = 1
 	opacity = 0
 	var/state = 0
+	var/list/allowed_books = list(/obj/item/weapon/book, /obj/item/weapon/spellbook, /obj/item/weapon/storage/book) //Things allowed in the bookcase
 
 
 /obj/structure/bookcase/initialize()
@@ -49,10 +50,11 @@
 		if(1)
 			if(istype(I, /obj/item/stack/sheet/mineral/wood))
 				var/obj/item/stack/sheet/mineral/wood/W = I
-				W.use(2)
-				user << "<span class='notice'>You add a shelf.</span>"
-				state = 2
-				icon_state = "book-0"
+				if(W.get_amount() >= 2)
+					W.use(2)
+					user << "<span class='notice'>You add a shelf.</span>"
+					state = 2
+					icon_state = "book-0"
 			if(istype(I, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
 				user << "<span class='notice'>You unwrench the frame.</span>"
@@ -60,7 +62,7 @@
 				state = 0
 
 		if(2)
-			if(istype(I, /obj/item/weapon/book) || istype(I, /obj/item/weapon/spellbook))
+			if(is_type_in_list(I, allowed_books))
 				user.drop_item()
 				I.loc = src
 				update_icon()
@@ -83,7 +85,7 @@
 				else
 					playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 					user << "<span class='notice'>You pry the shelf out.</span>"
-					new /obj/item/stack/sheet/mineral/wood(loc, 1)
+					new /obj/item/stack/sheet/mineral/wood(loc, 2)
 					state = 1
 					icon_state = "bookempty"
 			else
@@ -104,25 +106,13 @@
 			update_icon()
 
 
-/obj/structure/bookcase/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			for(var/obj/item/weapon/book/b in contents)
-				qdel(b)
+/obj/structure/bookcase/ex_act(severity, target)
+	..()
+	if(!gc_destroyed)
+		for(var/obj/item/weapon/book/b in contents)
+			b.loc = (get_turf(src))
+		if(prob(50))
 			qdel(src)
-		if(2.0)
-			for(var/obj/item/weapon/book/b in contents)
-				if(prob(50))
-					b.loc = (get_turf(src))
-				else
-					qdel(b)
-			qdel(src)
-		if(3.0)
-			if(prob(50))
-				for(var/obj/item/weapon/book/b in contents)
-					b.loc = (get_turf(src))
-				qdel(src)
-
 
 /obj/structure/bookcase/update_icon()
 	if(contents.len < 5)
@@ -185,7 +175,9 @@
 /obj/item/weapon/book/attack_self(mob/user)
 	if(is_blind(user))
 		return
-
+	if(ismonkey(user))
+		user << "<span class='notice'>You skim through the book but can't comprehend any of it.</span>"
+		return
 	if(dat)
 		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 		user.visible_message("[user] opens a book titled \"[title]\" and begins reading intently.")
@@ -289,7 +281,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = 1.0
-	var/obj/machinery/librarycomp/computer	//Associated computer - Modes 1 to 3 use this
+	var/obj/machinery/computer/libraryconsole/bookmanagement/computer	//Associated computer - Modes 1 to 3 use this
 	var/obj/item/weapon/book/book			//Currently scanned book
 	var/mode = 0							//0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory
 

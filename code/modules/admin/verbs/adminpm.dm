@@ -68,6 +68,8 @@
 		msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 		if(!msg)	return
 
+	msg = emoji_parse(msg)
+
 	if(C.holder)
 		if(holder)	//both are admins
 			C << "<font color='red'>Admin PM from-<b>[key_name(src, C, 1)]</b>: [msg]</font>"

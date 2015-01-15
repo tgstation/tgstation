@@ -8,12 +8,12 @@
 	var/list/turfs = list() //list of all the empty floor turfs in the hallway areas
 
 	for(var/area/hallway/A in world)
-		for(var/turf/simulated/floor/F in A)
-			if(!F.contents.len)
+		for(var/turf/simulated/F in A)
+			if(!F.density && !F.contents.len)
 				turfs += F
 
 	if(turfs.len) //Pick a turf to spawn at if we can
-		var/turf/simulated/floor/T = pick(turfs)
+		var/turf/simulated/T = pick(turfs)
 		spawn(0)	new/obj/effect/spacevine_controller(T) //spawn a controller at turf
 
 
@@ -64,7 +64,7 @@
 		holder.luminosity = 4
 
 /datum/spacevine_mutation/toxicity
-	name = "toxicity"
+	name = "toxic"
 	hue = "#ff00ff"
 
 /datum/spacevine_mutation/toxicity/on_cross(obj/effect/spacevine/holder, mob/living/crosser)
@@ -87,7 +87,7 @@
 	explosion(holder.loc, 0, 0, 2, 0, 0)
 
 /datum/spacevine_mutation/fire_proof
-	name = "fire resist"
+	name = "fire proof"
 	hue = "#ff8888"
 
 /datum/spacevine_mutation/fire_proof/process_temperature(obj/effect/spacevine/holder, temp, volume)
@@ -116,7 +116,7 @@
 	buckled.ex_act(severity)
 
 /datum/spacevine_mutation/transparency
-	name = "transparency"
+	name = "transparent"
 	hue = ""
 
 /datum/spacevine_mutation/transparency/on_grow(obj/effect/spacevine/holder)
@@ -124,47 +124,47 @@
 	holder.alpha = 125
 
 /datum/spacevine_mutation/oxy_eater
-	name = "oxygen consumption"
+	name = "oxygen consuming"
 	hue = "#ffff88"
 
 /datum/spacevine_mutation/oxy_eater/process_mutation(obj/effect/spacevine/holder)
-	var/turf/simulated/floor/T = holder.loc
+	var/turf/simulated/T = holder.loc
 	if(istype(T))
 		var/datum/gas_mixture/GM = T.air
 		GM.oxygen = max(0, GM.oxygen - severity * holder.energy)
 
 /datum/spacevine_mutation/nitro_eater
-	name = "nitrogen consumption"
+	name = "nitrogen consuming"
 	hue = "#8888ff"
 
 /datum/spacevine_mutation/nitro_eater/process_mutation(obj/effect/spacevine/holder)
-	var/turf/simulated/floor/T = holder.loc
+	var/turf/simulated/T = holder.loc
 	if(istype(T))
 		var/datum/gas_mixture/GM = T.air
 		GM.nitrogen = max(0, GM.nitrogen - severity * holder.energy)
 
 /datum/spacevine_mutation/carbondioxide_eater
-	name = "CO2 consumption"
+	name = "CO2 consuming"
 	hue = "#00ffff"
 
 /datum/spacevine_mutation/carbondioxide_eater/process_mutation(obj/effect/spacevine/holder)
-	var/turf/simulated/floor/T = holder.loc
+	var/turf/simulated/T = holder.loc
 	if(istype(T))
 		var/datum/gas_mixture/GM = T.air
 		GM.carbon_dioxide = max(0, GM.carbon_dioxide - severity * holder.energy)
 
 /datum/spacevine_mutation/plasma_eater
-	name = "toxins consumption"
+	name = "toxins consuming"
 	hue = "#ffbbff"
 
 /datum/spacevine_mutation/plasma_eater/process_mutation(obj/effect/spacevine/holder)
-	var/turf/simulated/floor/T = holder.loc
+	var/turf/simulated/T = holder.loc
 	if(istype(T))
 		var/datum/gas_mixture/GM = T.air
 		GM.toxins = max(0, GM.toxins - severity * holder.energy)
 
 /datum/spacevine_mutation/thorns
-	name = "thorns"
+	name = "thorny"
 	hue = "#666666"
 
 /datum/spacevine_mutation/thorns/on_cross(obj/effect/spacevine/holder, crosser)
@@ -350,17 +350,17 @@
 	//meaning if you get the spacevines' size to something less than 20 plots, it won't grow anymore.
 
 /obj/effect/spacevine_controller/New(loc, list/muts, mttv)
-	if(!istype(src.loc,/turf/simulated/floor))
+	if(!istype(loc, /turf/simulated) || loc:density)
 		qdel(src)
 
-	spawn_spacevine_piece(src.loc, , muts)
-	processing_objects.Add(src)
+	spawn_spacevine_piece(loc, , muts)
+	SSobj.processing.Add(src)
 	init_subtypes(/datum/spacevine_mutation/, mutations_list)
 	if(mttv != null)
 		mutativness = mttv
 
 /obj/effect/spacevine_controller/Destroy()
-	processing_objects.Remove(src)
+	SSobj.processing.Remove(src)
 	..()
 
 /obj/effect/spacevine_controller/proc/spawn_spacevine_piece(var/turf/location, obj/effect/spacevine/parent, list/muts)
@@ -373,10 +373,15 @@
 	if(parent)
 		SV.mutations |= parent.mutations
 		SV.color = parent.color
+		SV.desc = parent.desc
 		if(prob(mutativness))
 			SV.mutations |= pick(mutations_list)
 			var/datum/spacevine_mutation/randmut = pick(SV.mutations)
 			SV.color = randmut.hue
+			SV.desc = "An extremely expansionistic species of vine. These are "
+			for(var/datum/spacevine_mutation/M in SV.mutations)
+				SV.desc += "[M.name] "
+			SV.desc += "vines."
 
 	for(var/datum/spacevine_mutation/SM in SV.mutations)
 		SM.on_birth(SV)
@@ -459,8 +464,8 @@
 	var/step = get_step(src,direction)
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_spread(src, step)
-	if(istype(step,/turf/simulated/floor))
-		var/turf/simulated/floor/F = step
+	if(istype(step,/turf/simulated) && !step:density)
+		var/turf/simulated/F = step
 		if(!locate(/obj/effect/spacevine,F))
 			if(F.Enter(src))
 				if(master)
@@ -473,7 +478,7 @@
 	if (prob(50)) Vspread = locate(src.x + rand(-1,1),src.y,src.z)
 	else Vspread = locate(src.x,src.y + rand(-1, 1),src.z)
 	var/dogrowth = 1
-	if (!istype(Vspread, /turf/simulated/floor)) dogrowth = 0
+	if (!istype(Vspread, /turf/simulated)) dogrowth = 0
 	for(var/obj/O in Vspread)
 		if (istype(O, /obj/structure/window) || istype(O, /obj/effect/forcefield) || istype(O, /obj/effect/blob) || istype(O, /obj/effect/alien/weeds) || istype(O, /obj/effect/spacevine)) dogrowth = 0
 		if (istype(O, /obj/machinery/door/))
@@ -500,7 +505,7 @@
 
 */
 
-/obj/effect/spacevine/ex_act(severity)
+/obj/effect/spacevine/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			Destroy()

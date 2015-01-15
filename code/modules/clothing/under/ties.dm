@@ -154,8 +154,8 @@
 /obj/item/clothing/tie/armband
 	name = "red armband"
 	desc = "An fancy red armband!"
-	icon_state = "red"
-	item_color = "red"
+	icon_state = "redband"
+	item_color = "redband"
 
 /obj/item/clothing/tie/armband/deputy
 	name = "security deputy armband"
@@ -164,35 +164,116 @@
 /obj/item/clothing/tie/armband/cargo
 	name = "cargo bay guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is brown."
-	icon_state = "cargo"
-	item_color = "cargo"
+	icon_state = "cargoband"
+	item_color = "cargoband"
 
 /obj/item/clothing/tie/armband/engine
 	name = "engineering guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is orange with a reflective strip!"
-	icon_state = "engie"
-	item_color = "engie"
+	icon_state = "engieband"
+	item_color = "engieband"
 
 /obj/item/clothing/tie/armband/science
 	name = "science guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is purple."
-	icon_state = "rnd"
-	item_color = "rnd"
+	icon_state = "rndband"
+	item_color = "rndband"
 
 /obj/item/clothing/tie/armband/hydro
 	name = "hydroponics guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is green and blue."
-	icon_state = "hydro"
-	item_color = "hydro"
+	icon_state = "hydroband"
+	item_color = "hydroband"
 
 /obj/item/clothing/tie/armband/med
 	name = "medical guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white."
-	icon_state = "med"
-	item_color = "med"
+	icon_state = "medband"
+	item_color = "medband"
 
 /obj/item/clothing/tie/armband/medblue
 	name = "medical guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white and blue."
-	icon_state = "medblue"
-	item_color = "medblue"
+	icon_state = "medblueband"
+	item_color = "medblueband"
+
+///////////
+//SCARVES//
+///////////
+
+/obj/item/clothing/tie/scarf
+	name = "scarf"
+	desc = "A stylish scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks."
+
+/obj/item/clothing/tie/scarf/red
+	name = "red scarf"
+	icon_state = "redscarf"
+	item_color = "redscarf"
+
+/obj/item/clothing/tie/scarf/green
+	name = "green scarf"
+	icon_state = "greenscarf"
+	item_color = "greenscarf"
+
+/obj/item/clothing/tie/scarf/darkblue
+	name = "dark blue scarf"
+	icon_state = "darkbluescarf"
+	item_color = "darkbluescarf"
+
+/obj/item/clothing/tie/scarf/purple
+	name = "purple scarf"
+	icon_state = "purplescarf"
+	item_color = "purplescarf"
+
+/obj/item/clothing/tie/scarf/yellow
+	name = "yellow scarf"
+	icon_state = "yellowscarf"
+	item_color = "yellowscarf"
+
+/obj/item/clothing/tie/scarf/orange
+	name = "orange scarf"
+	icon_state = "orangescarf"
+	item_color = "orangescarf"
+
+/obj/item/clothing/tie/scarf/lightblue
+	name = "light blue scarf"
+	icon_state = "lightbluescarf"
+	item_color = "lightbluescarf"
+
+/obj/item/clothing/tie/scarf/white
+	name = "white scarf"
+	icon_state = "whitescarf"
+	item_color = "whitescarf"
+
+/obj/item/clothing/tie/scarf/black
+	name = "black scarf"
+	icon_state = "blackscarf"
+	item_color = "blackscarf"
+
+/obj/item/clothing/tie/scarf/zebra
+	name = "zebra scarf"
+	icon_state = "zebrascarf"
+	item_color = "zebrascarf"
+
+/obj/item/clothing/tie/scarf/christmas
+	name = "christmas scarf"
+	icon_state = "christmasscarf"
+	item_color = "christmasscarf"
+
+//The three following scarves don't have the scarf subtype
+//This is because Ian can equip anything from that subtype
+//However, these 3 don't have corgi versions of their sprites
+/obj/item/clothing/tie/stripedredscarf
+	name = "striped red scarf"
+	icon_state = "stripedredscarf"
+	item_color = "stripedredscarf"
+
+/obj/item/clothing/tie/stripedgreenscarf
+	name = "striped green scarf"
+	icon_state = "stripedgreenscarf"
+	item_color = "stripedgreenscarf"
+
+/obj/item/clothing/tie/stripedbluescarf
+	name = "striped blue scarf"
+	icon_state = "stripedbluescarf"
+	item_color = "stripedbluescarf"

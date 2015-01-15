@@ -3,6 +3,7 @@
 /obj/effect/step_trigger
 	var/affect_ghosts = 0
 	var/stopper = 1 // stops throwers
+	var/mobs_only = 0
 	invisibility = 101 // nope cant see this shit
 	anchored = 1
 
@@ -15,8 +16,9 @@
 		return
 	if(istype(H, /mob/dead/observer) && !affect_ghosts)
 		return
+	if(!istype(H, /mob) && mobs_only)
+		return
 	Trigger(H)
-
 
 
 /* Tosses things in a certain direction */
@@ -114,3 +116,30 @@
 			A.x = rand(teleport_x, teleport_x_offset)
 			A.y = rand(teleport_y, teleport_y_offset)
 			A.z = rand(teleport_z, teleport_z_offset)
+
+
+/* Simple sound player, Mapper friendly! */
+
+/obj/effect/step_trigger/sound_effect
+	var/sound //eg. path to the sound, inside '' eg: 'growl.ogg'
+	var/volume = 100
+	var/freq_vary = 1 //Should the frequency of the sound vary?
+	var/extra_range = 0 // eg World.view = 7, extra_range = 1, 7+1 = 8, 8 turfs radius
+	var/happens_once = 0
+	var/triggerer_only = 0 //Whether the triggerer is the only person who hears this
+
+
+/obj/effect/step_trigger/sound_effect/Trigger(var/atom/movable/A)
+	var/turf/T = get_turf(A)
+
+	if(!T)
+		return
+
+	if(triggerer_only)
+		A.playsound_local(T, sound, volume, freq_vary)
+	else
+		playsound(T, sound, volume, freq_vary, extra_range)
+
+	if(happens_once)
+		qdel(src)
+

@@ -28,6 +28,10 @@
 		return 0
 
 	if(M == user)
+		if(src.reagents.has_reagent("sugar") && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 )
+			M << "<span class='notice'>You don't feel like drinking any more sugary drink at the moment.</span>"
+			return 0
+
 		M << "<span class='notice'>You swallow a gulp of [src].</span>"
 		if(reagents.total_volume)
 			reagents.reaction(M, INGEST)
@@ -74,14 +78,13 @@
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
 			user << "<span class='warning'>[target] is full.</span>"
 			return
-
+		var/refill = reagents.get_master_reagent_id()
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 		user << "<span class='notice'> You transfer [trans] units of the solution to [target].</span>"
 
 		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user
 			bro.cell.use(30)
-			var/refill = reagents.get_master_reagent_id()
 			spawn(600)
 				reagents.add_reagent(refill, trans)
 
@@ -95,7 +98,6 @@
 	desc = "A golden cup"
 	name = "golden cup"
 	icon_state = "golden_cup"
-	item_state = "" //nope :(
 	w_class = 4
 	force = 14
 	throwforce = 10
@@ -193,6 +195,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/h_chocolate/New()
 	..()
 	reagents.add_reagent("hot_coco", 30)
+	reagents.add_reagent("sugar", 5)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 

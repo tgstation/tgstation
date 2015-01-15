@@ -52,6 +52,8 @@
 	var/datum/changeling/changeling		//changeling holder
 
 	var/miming = 0 // Mime's vow of silence
+	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
+	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
 
 /datum/mind/New(var/key)
 	src.key = key
@@ -64,7 +66,7 @@
 	if(current)					//remove ourself from our old body's mind variable
 		current.mind = null
 
-		nanomanager.user_transferred(current, new_character)
+		SSnano.user_transferred(current, new_character)
 
 	if(key)
 		if(new_character.key != key)					//if we're transfering into a body with a key associated which is not ours
@@ -77,6 +79,7 @@
 
 	current = new_character								//associate ourself with our new body
 	new_character.mind = src							//and associate our new body with ourself
+	transfer_antag_huds(new_character)					//inherit the antag HUDs from this mind (TODO: move this to a possible antag datum)
 
 	if(active)
 		new_character.key = key		//now transfer the key to link the client to our new body
@@ -631,7 +634,7 @@
 				new_objective.target_amount = target_number
 
 			if ("custom")
-				var/expl = copytext(sanitize(input("Custom objective:", "Objective", objective ? objective.explanation_text : "") as text|null),1,MAX_MESSAGE_LEN)
+				var/expl = stripped_input(usr, "Custom objective:", "Objective", objective ? objective.explanation_text : "")
 				if (!expl) return
 				new_objective = new /datum/objective
 				new_objective.owner = src
@@ -897,7 +900,7 @@
 					C.dna = changeling.absorbed_dna[1]
 					C.real_name = C.dna.real_name
 					updateappearance(C)
-					domutcheck(C, null)
+					domutcheck(C)
 
 	else if (href_list["nuclear"])
 		switch(href_list["nuclear"])

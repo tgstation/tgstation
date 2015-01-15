@@ -133,8 +133,7 @@
 	if(href_list["power"])
 		on = !on
 	if(href_list["set_press"])
-		var/new_pressure = input(usr,"Enter new output pressure (0-4500kPa)","Pressure control",src.target_pressure) as num
-		src.target_pressure = max(0, min(4500, new_pressure))
+		target_pressure = max(0, min(4500, safe_input("Pressure control", "Enter new output pressure (0-4500kPa)", target_pressure)))
 	if(href_list["node1_c"])
 		var/value = text2num(href_list["node1_c"])
 		src.node1_concentration = max(0, min(1, src.node1_concentration + value))

@@ -33,11 +33,11 @@
 
 /obj/item/weapon/gun/energy/floragun/New()
 	..()
-	processing_objects.Add(src)
+	SSobj.processing.Add(src)
 
 
 /obj/item/weapon/gun/energy/floragun/Destroy()
-	processing_objects.Remove(src)
+	SSobj.processing.Remove(src)
 	..()
 
 
@@ -69,11 +69,11 @@
 
 /obj/item/weapon/gun/energy/meteorgun/New()
 	..()
-	processing_objects.Add(src)
+	SSobj.processing.Add(src)
 
 
 /obj/item/weapon/gun/energy/meteorgun/Destroy()
-	processing_objects.Remove(src)
+	SSobj.processing.Remove(src)
 	..()
 
 /obj/item/weapon/gun/energy/meteorgun/process()
@@ -123,7 +123,7 @@
 	if(overheat || recent_reload)
 		return
 	power_supply.give(500)
-	playsound(src.loc, 'sound/weapons/shotgunpump.ogg', 60, 1)
+	playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 	recent_reload = 1
 	update_icon()
 	return
@@ -134,4 +134,87 @@
 	icon_state = "disabler"
 	item_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
-	cell_type = "/obj/item/weapon/stock_parts/cell"
+
+
+/obj/item/weapon/gun/energy/wormhole_projector
+	name = "bluespace wormhole projector"
+	desc = "A projector that emits high density quantum-coupled bluespace beams."
+	ammo_type = list(/obj/item/ammo_casing/energy/wormhole, /obj/item/ammo_casing/energy/wormhole/orange)
+	item_state = null
+	icon_state = "wormhole_projector"
+	var/obj/effect/portal/blue
+	var/obj/effect/portal/orange
+
+/obj/item/weapon/gun/energy/wormhole_projector/update_icon()
+	icon_state = "[initial(icon_state)][select]"
+	return
+
+/obj/item/weapon/gun/energy/wormhole_projector/attack_self(mob/living/user as mob)
+	select_fire(user)
+
+/obj/item/weapon/gun/energy/wormhole_projector/process_chamber()
+	..()
+	select_fire()
+
+/obj/item/weapon/gun/energy/wormhole_projector/proc/portal_destroyed(var/obj/effect/portal/P)
+	if(P.icon_state == "portal")
+		blue = null
+		if(orange)
+			orange.target = null
+	else
+		orange = null
+		if(blue)
+			blue.target = null
+
+/obj/item/weapon/gun/energy/wormhole_projector/proc/create_portal(var/obj/item/projectile/beam/wormhole/W)
+	var/obj/effect/portal/P = new /obj/effect/portal(get_turf(W), null, src)
+	P.precision = 0
+	if(W.name == "bluespace beam")
+		qdel(blue)
+		blue = P
+	else
+		qdel(orange)
+		P.icon_state = "portal1"
+		orange = P
+	if(orange && blue)
+		blue.target = get_turf(orange)
+		orange.target = get_turf(blue)
+
+
+/* 3d printer 'pseudo guns' for borgs */
+
+/obj/item/weapon/gun/energy/printer
+	name = "cyborg lmg"
+	desc = "A machinegun that fires 3d-printed flachettes slowly regenerated using a cyborg's internal power source."
+	icon_state = "l6closed0"
+	cell_type = "/obj/item/weapon/stock_parts/cell/secborg"
+	ammo_type = list(/obj/item/ammo_casing/energy/c3dbullet)
+	var/charge_tick = 0
+	var/recharge_time = 5
+
+/obj/item/weapon/gun/energy/printer/update_icon()
+	return
+
+/obj/item/weapon/gun/energy/printer/New()
+	..()
+	SSobj.processing.Add(src)
+
+
+/obj/item/weapon/gun/energy/printer/Destroy()
+	SSobj.processing.Remove(src)
+	..()
+
+/obj/item/weapon/gun/energy/printer/process()
+	charge_tick++
+	if(charge_tick < recharge_time) return 0
+	charge_tick = 0
+
+	if(!power_supply) return 0 //sanity
+	if(isrobot(src.loc))
+		var/mob/living/silicon/robot/R = src.loc
+		if(R && R.cell)
+			var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
+			if(R.cell.use(shot.e_cost)) 		//Take power from the borg...
+				power_supply.give(shot.e_cost)	//...to recharge the shot
+
+	return 1

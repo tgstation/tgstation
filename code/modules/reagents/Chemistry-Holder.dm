@@ -10,6 +10,7 @@ datum/reagents
 	var/total_volume = 0
 	var/maximum_volume = 100
 	var/atom/my_atom = null
+	var/chem_temp = 150
 
 datum/reagents/New(maximum=100)
 	maximum_volume = maximum
@@ -232,6 +233,7 @@ datum/reagents/proc/handle_reactions()
 				var/matching_container = 0
 				var/matching_other = 0
 				var/list/multipliers = new/list()
+				var/required_temp = C.required_temp
 
 				for(var/B in C.required_reagents)
 					if(!has_reagent(B, C.required_reagents[B]))	break
@@ -247,7 +249,9 @@ datum/reagents/proc/handle_reactions()
 				else
 					if(my_atom.type == C.required_container)
 						matching_container = 1
-
+				if (isliving(my_atom)) //Makes it so certain chemical reactions don't occur in mobs
+					if (C.mob_react)
+						return
 				if(!C.required_other)
 					matching_other = 1
 
@@ -257,10 +261,11 @@ datum/reagents/proc/handle_reactions()
 					if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
 						matching_other = 1
 
+				if(required_temp == 0)
+					required_temp = chem_temp
 
 
-
-				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other)
+				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && chem_temp >= required_temp)
 					var/multiplier = min(multipliers)
 					for(var/B in C.required_reagents)
 						remove_reagent(B, (multiplier * C.required_reagents[B]), safety = 1)
@@ -275,15 +280,15 @@ datum/reagents/proc/handle_reactions()
 
 					if(!istype(my_atom, /mob)) // No bubbling mobs
 						for(var/mob/M in seen)
-							M << "<span class='notice'>\icon[my_atom] The solution begins to bubble.</span>"
+							M << "<span class='notice'>\icon[my_atom] [C.mix_message]</span>"
 
 					if(istype(my_atom, /obj/item/slime_extract))
 						var/obj/item/slime_extract/ME2 = my_atom
 						ME2.Uses--
 						if(ME2.Uses <= 0) // give the notification that the slime core is dead
 							for(var/mob/M in seen)
-								M << "<span class='notice'>\icon[my_atom] The [my_atom]'s power is consumed in the reaction.</span>"
-								ME2.name = "\improper used slime extract"
+								M << "<span class='notice'>\icon[my_atom] \The [my_atom]'s power is consumed in the reaction.</span>"
+								ME2.name = "used slime extract"
 								ME2.desc = "This extract has been used up."
 
 					playsound(get_turf(my_atom), 'sound/effects/bubbles.ogg', 80, 1)

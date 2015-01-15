@@ -42,7 +42,7 @@
 		/obj/item/weapon/gun/energy/laser/bluetag,\
 		/obj/item/weapon/gun/energy/laser/redtag,\
 		/obj/item/weapon/gun/energy/laser/practice,\
-		/obj/item/weapon/melee/telebaton,\
+		/obj/item/weapon/melee/classic_baton/telescopic,\
 		/obj/item/weapon/gun/energy/kinetic_accelerator)
 
 
@@ -255,8 +255,7 @@ Auto Patrol[]"},
 						icon_state = "[lasercolor]ed209[on]"
 					var/mob/living/carbon/M = target
 					if(istype(M, /mob/living/carbon/human))
-						if( M.stuttering < 5 && !(HULK in M.mutations) )
-							M.stuttering = 5
+						M.stuttering = 5
 						M.Stun(5)
 						M.Weaken(5)
 					else
@@ -267,8 +266,8 @@ Auto Patrol[]"},
 					if(declare_arrests)
 						var/area/location = get_area(src)
 						speak("[arrest_type ? "Detaining" : "Arresting"] level [threatlevel] scumbag <b>[target]</b> in [location].", radio_frequency)
-					target.visible_message("<span class='danger'>[target] has been stunned by [src]!</span>",\
-											"<span class='userdanger'>[target] has been stunned by [src]!</span></span>")
+					target.visible_message("<span class='danger'>[src] has stunned [target]!</span>",\
+											"<span class='userdanger'>[src] has stunned [target]!</span></span>")
 
 					mode = BOT_PREP_ARREST
 					anchored = 1
@@ -398,17 +397,6 @@ Auto Patrol[]"},
 			return 1
 	return 0
 
-/obj/machinery/bot/ed209/Bump(M as mob|obj) //Leave no door unopened!
-	if ((istype(M, /obj/machinery/door)) && (!isnull(botcard)))
-		var/obj/machinery/door/D = M
-		if (!istype(D, /obj/machinery/door/firedoor) && D.check_access(botcard))
-			D.open()
-			frustration = 0
-	else if ((istype(M, /mob/living/)) && (!anchored))
-		loc = M:loc
-		frustration = 0
-	return
-
 /* terrible
 /obj/machinery/bot/ed209/Bumped(atom/movable/M as mob|obj)
 	spawn(0)
@@ -429,7 +417,7 @@ Auto Patrol[]"},
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
 	if(!lasercolor)
-		var/obj/item/weapon/gun/energy/taser/G = new /obj/item/weapon/gun/energy/taser(Tsec)
+		var/obj/item/weapon/gun/energy/gun/advtaser/G = new /obj/item/weapon/gun/energy/gun/advtaser(Tsec)
 		G.power_supply.charge = 0
 		G.update_icon()
 	else if(lasercolor == "b")
@@ -504,10 +492,7 @@ Auto Patrol[]"},
 	A.current = U
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
-	spawn( 0 )
-		A.process()
-		return
-	return
+	A.fire()
 
 /obj/machinery/bot/ed209/attack_alien(var/mob/living/carbon/alien/user as mob)
 	..()
@@ -659,7 +644,7 @@ Auto Patrol[]"},
 						return
 					name = "redtag ED-209 assembly"
 				if("")
-					if(!istype(W, /obj/item/weapon/gun/energy/taser))
+					if(!istype(W, /obj/item/weapon/gun/energy/gun/advtaser))
 						return
 					name = "taser ED-209 assembly"
 				else

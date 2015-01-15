@@ -29,6 +29,9 @@
 			no_den_usage = 0
 	..()
 
+/obj/item/weapon/gun/magic/can_shoot()
+	return charges
+
 /obj/item/weapon/gun/magic/proc/newshot()
 	if (charges && chambered)
 		chambered.newshot()
@@ -43,11 +46,11 @@
 	..()
 	charges = max_charges
 	chambered = new ammo_type(src)
-	if(can_charge)	processing_objects.Add(src)
+	if(can_charge)	SSobj.processing.Add(src)
 
 
 /obj/item/weapon/gun/magic/Destroy()
-	if(can_charge)	processing_objects.Remove(src)
+	if(can_charge)	SSobj.processing.Remove(src)
 	..()
 
 

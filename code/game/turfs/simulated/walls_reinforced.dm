@@ -28,16 +28,11 @@
 	else
 		M << "<span class='warning'>This wall is far too strong for you to destroy.</span>"
 
-/turf/simulated/wall/r_wall/attack_hand(mob/user as mob)
-	//this is ugly
-	if ((HULK in user.mutations) || !d_state)
-		..()
-
 /turf/simulated/wall/r_wall/try_destroy(obj/item/weapon/W as obj, mob/user as mob, turf/T as turf)
 	if(istype(W, /obj/item/weapon/melee/energy/blade))
 		user << "<span class='notice'>This wall is too thick to slice through. You will need to find a different path.</span>"
 		return 1
-	else if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamonddrill))
 		user << "<span class='notice'>You begin to drill though the wall.</span>"
 		if(do_after(user, 200))
 			if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )

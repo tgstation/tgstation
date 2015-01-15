@@ -21,6 +21,9 @@
 	component_parts += new /obj/item/stack/cable_coil(null, 1)
 	RefreshParts()
 
+/obj/machinery/atmospherics/unary/cold_sink/freezer/construction()
+	..(dir,dir)
+
 /obj/machinery/atmospherics/unary/cold_sink/freezer/RefreshParts()
 	var/H
 	var/T
@@ -143,6 +146,9 @@
 	component_parts += new /obj/item/stack/cable_coil(null, 1)
 	RefreshParts()
 
+/obj/machinery/atmospherics/unary/heat_reservoir/heater/construction()
+	..(dir,dir)
+
 /obj/machinery/atmospherics/unary/heat_reservoir/heater/RefreshParts()
 	var/H
 	var/T
@@ -207,6 +213,7 @@
 	//user << browse(dat, "window=freezer;size=400x500")
 	//onclose(user, "freezer")
 	var/datum/browser/popup = new(user, "freezer", "Pyro Gas Heating System", 400, 240) // Set up the popup browser window
+
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.set_content(dat)
 	popup.open()

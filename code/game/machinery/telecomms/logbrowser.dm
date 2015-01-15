@@ -93,7 +93,7 @@
 					else if(mobtype in silicons || C.parameters["job"] == "AI") // sometimes M gets deleted prematurely for AIs... just check the job
 						race = "Artificial Life"
 						language = race
-					
+
 					else if(istype(mobtype, /obj))
 						race = "Machinery"
 						language = race
@@ -204,7 +204,7 @@
 
 	if(href_list["network"])
 
-		var/newnet = input(usr, "Which network do you want to view?", "Comm Monitor", network) as null|text
+		var/newnet = stripped_input(usr, "Which network do you want to view?", "Comm Monitor", network)
 
 		if(newnet && ((usr in range(1, src) || issilicon(usr))))
 			if(length(newnet) > 15)
@@ -220,12 +220,13 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/computer/telecomms/server/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
-	if(istype(D, /obj/item/weapon/card/emag) && !emagged)
+/obj/machinery/computer/telecomms/server/attackby()
+	..()
+	src.updateUsrDialog()
+	return
+
+/obj/machinery/computer/telecomms/server/emag_act(mob/user as mob)
+	if(!emagged)
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
 		user << "<span class='notice'>You you disable the security protocols.</span>"
-	else
-		..()
-	src.updateUsrDialog()
-	return

@@ -49,6 +49,11 @@
 		var/obj/Loc=loc
 		Loc.on_log()
 
+	//readd this mob's HUDs (antag, med, etc)
+	reload_huds()
+	if(ckey in deadmins)
+		verbs += /client/proc/readmin
+
 // Calling update_interface() in /mob/Login() causes the Cyborg to immediately be ghosted; because of winget().
 // Calling it in the overriden Login, such as /mob/living/Login() doesn't cause this.
 /mob/proc/update_interface()

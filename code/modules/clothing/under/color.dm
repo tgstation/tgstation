@@ -19,6 +19,7 @@
 
 /obj/item/clothing/under/color/grey
 	name = "grey jumpsuit"
+	desc = "A tasteful grey jumpsuit that reminds you of the good old days."
 	icon_state = "grey"
 	item_state = "gy_suit"
 	item_color = "grey"
@@ -45,6 +46,7 @@
 /obj/item/clothing/under/color/pink
 	name = "pink jumpsuit"
 	icon_state = "pink"
+	desc = "Just looking at this makes you feel <i>fabulous</i>."
 	item_state = "p_suit"
 	item_color = "pink"
 
@@ -95,12 +97,6 @@
 	icon_state = "lightgreen"
 	item_state = "g_suit"
 	item_color = "lightgreen"
-
-/obj/item/clothing/under/color/lightblue
-	name = "lightblue jumpsuit"
-	icon_state = "lightblue"
-	item_state = "b_suit"
-	item_color = "lightblue"
 
 /obj/item/clothing/under/color/lightbrown
 	name = "lightbrown jumpsuit"

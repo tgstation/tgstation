@@ -51,7 +51,8 @@
 	return
 
 /obj/effect/blob/proc/PulseAnimation()
-	flick("[icon_state]_glow", src)
+	if(!istype(src, /obj/effect/blob/core) || !istype(src, /obj/effect/blob/node))
+		flick("[icon_state]_glow", src)
 	return
 
 /obj/effect/blob/proc/RegenHealth()
@@ -64,7 +65,7 @@
 		health_timestamp = world.time + 10 // 1 seconds
 
 
-/obj/effect/blob/proc/Pulse(var/pulse = 0, var/origin_dir = 0)//Todo: Fix spaceblob expand
+/obj/effect/blob/proc/Pulse(var/pulse = 0, var/origin_dir = 0, var/a_color)//Todo: Fix spaceblob expand
 
 	set background = BACKGROUND_ENABLED
 
@@ -88,9 +89,10 @@
 		var/turf/T = get_step(src, dirn)
 		var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
 		if(!B)
-			expand(T)//No blob here so try and expand
+			expand(T,1,a_color)//No blob here so try and expand
 			return
-		B.Pulse((pulse+1),get_dir(src.loc,T))
+		B.color = a_color
+		B.Pulse((pulse+1),get_dir(src.loc,T), a_color)
 		return
 	return
 
@@ -99,7 +101,7 @@
 	return 0
 
 
-/obj/effect/blob/proc/expand(var/turf/T = null, var/prob = 1)
+/obj/effect/blob/proc/expand(var/turf/T = null, var/prob = 1, var/a_color)
 	if(prob && !prob(health))	return
 	if(istype(T, /turf/space) && prob(75)) 	return
 	if(!T)
@@ -113,6 +115,7 @@
 
 	if(!T)	return 0
 	var/obj/effect/blob/normal/B = new /obj/effect/blob/normal(src.loc, min(src.health, 30))
+	B.color = a_color
 	B.density = 1
 	if(T.Enter(B,src))//Attempt to move into the tile
 		B.density = initial(B.density)
@@ -126,7 +129,8 @@
 		A.blob_act()
 	return 1
 
-/obj/effect/blob/ex_act(severity)
+/obj/effect/blob/ex_act(severity, target)
+	..()
 	var/damage = 150
 	health -= ((damage/brute_resist) - (severity * 5))
 	update_icon()
@@ -153,7 +157,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
-	src.visible_message("<span class='danger'>The [src.name] has been attacked with \the [W][(user ? " by [user]" : "")]!</span>")
+	visible_message("<span class='danger'>[user] has attacked the [src.name] with \the [W]!</span>")
 	var/damage = 0
 	switch(W.damtype)
 		if("fire")
@@ -171,7 +175,7 @@
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
-	src.visible_message("<span class='danger'>The [src.name] has been attacked by \the [M]!</span>")
+	visible_message("<span class='danger'>\The [M] has attacked the [src.name]!</span>")
 	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 	if(!damage) // Avoid divide by zero errors
 		return
@@ -183,8 +187,15 @@
 /obj/effect/blob/proc/change_to(var/type)
 	if(!ispath(type))
 		ERROR("[type] is an invalid type for the blob.")
-	new type(src.loc)
+	var/obj/effect/blob/B = new type(src.loc)
+	if(!istype(type, /obj/effect/blob/core) || !istype(type, /obj/effect/blob/node))
+		B.color = color
+	else
+		B.adjustcolors(color)
 	qdel(src)
+
+/obj/effect/blob/proc/adjustcolors(var/a_color)
+	return
 
 /obj/effect/blob/normal
 	icon_state = "blob"

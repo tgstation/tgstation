@@ -1,6 +1,6 @@
 /turf/simulated/wall
 	name = "wall"
-	desc = "A huge chunk of metal used to seperate rooms."
+	desc = "A huge chunk of metal used to separate rooms."
 	icon = 'icons/turf/walls.dmi'
 	var/mineral = "metal"
 	opacity = 1
@@ -20,6 +20,9 @@
 	..()
 	builtin_sheet = new sheet_type
 
+/turf/simulated/wall/attack_tk()
+	return
+
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, explode=0)
 	if(devastated)
 		devastate_wall()
@@ -37,7 +40,6 @@
 
 	ChangeTurf(/turf/simulated/floor/plating)
 
-
 /turf/simulated/wall/proc/break_wall()
 		builtin_sheet.amount = 2
 		builtin_sheet.loc = src
@@ -48,8 +50,10 @@
 		builtin_sheet.loc = src
 		new /obj/item/stack/sheet/metal(src)
 
-
-/turf/simulated/wall/ex_act(severity)
+/turf/simulated/wall/ex_act(severity, target)
+	if(target == src)
+		dismantle_wall(1,1)
+		return
 	switch(severity)
 		if(1.0)
 			//SN src = null
@@ -63,7 +67,9 @@
 		if(3.0)
 			if (prob(hardness))
 				dismantle_wall(0,1)
-		else
+			else
+	if(!density)
+		..()
 	return
 
 /turf/simulated/wall/blob_act()
@@ -73,29 +79,14 @@
 /turf/simulated/wall/mech_melee_attack(obj/mecha/M)
 	if(M.damtype == "brute")
 		playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
-		M.occupant_message("<span class='danger'>You hit [src].</span>")
-		visible_message("<span class='danger'>[src] has been hit by [M.name].</span>")
+		visible_message("<span class='danger'>[M.name] has hit [src]!</span>")
 		if(prob(5) && M.force > 20)
 			dismantle_wall(1)
-			M.occupant_message("<span class='warning'>You smash through the wall.</span>")
 			visible_message("<span class='warning'>[src.name] smashes through the wall!</span>")
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 
 /turf/simulated/wall/attack_paw(mob/living/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if ((HULK in user.mutations))
-		user.do_attack_animation(src)
-		if (prob(hardness))
-			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-			user << "<span class='notice'>You smash through the wall.</span>"
-			user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-			dismantle_wall(1)
-			return
-		else
-			playsound(src, 'sound/effects/bang.ogg', 50, 1)
-			usr << text("<span class='notice'>You punch the wall.</span>")
-			return
-
 	return src.attack_hand(user)
 
 
@@ -108,21 +99,21 @@
 		dismantle_wall(1)
 		return
 
+/turf/simulated/wall/attack_hulk(mob/user)
+	..(user, 1)
+	if(prob(hardness))
+		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+		user << text("<span class='notice'>You smash through the wall.</span>")
+		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		dismantle_wall(1)
+
+	else
+		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+		user << text("<span class='notice'>You punch the wall.</span>")
+	return 1
 
 /turf/simulated/wall/attack_hand(mob/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if (HULK in user.mutations)
-		if (prob(hardness))
-			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-			usr << text("<span class='notice'>You smash through the wall.</span>")
-			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-			dismantle_wall(1)
-			return
-		else
-			playsound(src, 'sound/effects/bang.ogg', 50, 1)
-			usr << text("<span class='notice'>You punch the wall.</span>")
-			return
-
 	user << "<span class='notice'>You push the wall but nothing happens!</span>"
 	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
 	src.add_fingerprint(user)
@@ -221,7 +212,7 @@
 
 
 /turf/simulated/wall/proc/try_destroy(obj/item/weapon/W as obj, mob/user as mob, turf/T as turf)
-	if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+	if (istype(W, /obj/item/weapon/pickaxe/drill/diamonddrill))
 		user << "<span class='notice'>You begin to drill though the wall.</span>"
 		if(do_after(user, slicing_duration*0.6))  // diamond drill is faster than welding tool slicing
 			if( !istype(src, /turf/simulated/wall) || !user || !W || !T )
@@ -284,3 +275,7 @@
 	if(current_size == STAGE_FOUR)
 		if(prob(30))
 			dismantle_wall()
+
+/turf/simulated/wall/narsie_act()
+	if(prob(20))
+		ChangeTurf(/turf/simulated/wall/cult)

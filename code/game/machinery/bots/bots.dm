@@ -97,7 +97,7 @@
 
 /obj/machinery/bot/New()
 	..()
-	aibots += src //Global bot list
+	SSbot.processing += src //Global bot list
 	botcard = new /obj/item/weapon/card/id(src)
 	set_custom_texts()
 	Radio = new /obj/item/device/radio(src)
@@ -118,7 +118,7 @@
 
 
 /obj/machinery/bot/proc/explode()
-	aibots -= src
+	SSbot.processing -= src
 	qdel(src)
 
 /obj/machinery/bot/proc/healthcheck()
@@ -245,8 +245,6 @@
 			user << "<span class='notice'>Maintenance panel is now [open ? "opened" : "closed"].</span>"
 		else
 			user << "<span class='warning'>Maintenance panel is locked.</span>"
-	else if (istype(W, /obj/item/weapon/card/emag) && emagged < 2)
-		Emag(user)
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
 		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
@@ -276,6 +274,9 @@
 				..()
 				healthcheck()
 
+/obj/machinery/bot/emag_act(mob/user as mob)
+	if(emagged < 2)
+		Emag(user)
 
 /obj/machinery/bot/bullet_act(var/obj/item/projectile/Proj)
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
@@ -293,7 +294,7 @@
 	healthcheck()
 	return
 
-/obj/machinery/bot/ex_act(severity)
+/obj/machinery/bot/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			explode()
@@ -423,7 +424,7 @@ obj/machinery/bot/proc/bot_move(var/dest, var/move_speed)
 
 obj/machinery/bot/proc/bot_step(var/dest)
 	if(path && path.len > 1)
-		step_to(src, path[1])
+		step_towards(src, path[1])
 		if(get_turf(src) == path[1]) //Successful move
 			path -= path[1]
 		else

@@ -5,9 +5,6 @@
 	if (src.notransform)
 		return
 
-
-	src.blinded = null
-
 	//Status updates, death etc.
 	clamp_values()
 	handle_regular_status_updates()
@@ -50,7 +47,7 @@
 			if(src.module_state_3)
 				src.cell.use(5)
 			src.cell.use(1)
-			src.blinded = 0
+			src.eye_blind = 0
 			src.stat = 0
 	else
 		uneq_all()
@@ -98,34 +95,25 @@
 				AdjustWeakened(-1)
 			if (src.paralysis > 0)
 				AdjustParalysis(-1)
-				src.blinded = 1
+				src.eye_blind = max(eye_blind, 1)
 			else
-				src.blinded = 0
+				src.eye_blind = 0
 
 		else	//Not stunned.
 			src.stat = 0
 
 	else //Dead.
-		src.blinded = 1
-		src.stat = 2
+		src.eye_blind = 1
 
 	if (src.stuttering) src.stuttering--
 
 	if (src.eye_blind)
 		src.eye_blind--
-		src.blinded = 1
-
-	if (src.ear_deaf > 0) src.ear_deaf--
-	if (src.ear_damage < 25)
-		src.ear_damage -= 0.05
-		src.ear_damage = max(src.ear_damage, 0)
 
 	src.density = !( src.lying )
 
-	if ((src.sdisabilities & BLIND))
-		src.blinded = 1
-	if ((src.sdisabilities & DEAF))
-		src.ear_deaf = 1
+	if (src.disabilities & BLIND)
+		src.eye_blind = max(1, eye_blind)
 
 	if (src.eye_blurry > 0)
 		src.eye_blurry--
@@ -139,7 +127,7 @@
 
 /mob/living/silicon/robot/proc/handle_regular_hud_updates()
 
-	if (src.stat == 2 || XRAY in mutations || src.sight_mode & BORGXRAY)
+	if (src.stat == 2 || src.sight_mode & BORGXRAY)
 		src.sight |= SEE_TURFS
 		src.sight |= SEE_MOBS
 		src.sight |= SEE_OBJS
@@ -165,11 +153,6 @@
 			src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 		if(see_override)
 			see_invisible = see_override
-
-	regular_hud_updates() //Handles MED/SEC HUDs for borgs.
-
-	if(sensor_mode)
-		process_data_hud(src,sensor_mode,DATA_HUD_ADVANCED)
 
 	if (src.healths)
 		if (src.stat != 2)
@@ -246,11 +229,11 @@
 	client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
 
 	if ((src.blind && src.stat != 2))
-		if(src.blinded)
+		if(src.eye_blind)
 			src.blind.layer = 18
 		else
 			src.blind.layer = 0
-			if (src.disabilities & NEARSIGHTED)
+			if (src.disabilities & NEARSIGHT)
 				src.client.screen += global_hud.vimpaired
 
 			if (src.eye_blurry)
@@ -300,8 +283,6 @@
 	overlays -= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
 	if(on_fire)
 		overlays += image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
-	update_icons()
-	return
 
 /mob/living/silicon/robot/fire_act()
 	if(!on_fire) //Silicons don't gain stacks from hotspots, but hotspots can ignite them

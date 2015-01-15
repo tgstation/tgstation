@@ -31,11 +31,11 @@
 			for(var/obj/structure/transit_tube/station/T in loc)
 				return
 			if(src.contents.len)
-				user.visible_message("<span class='notice'>[user] empties the [src].</span>", "<span class='notice'>You empty the [src].</span>")
+				user.visible_message("<span class='notice'>[user] empties \the [src].</span>", "<span class='notice'>You empty \the [src].</span>")
 				src.empty()
 				return
 			else
-				user << "<span class='notice'>You free the [src].</span>"
+				user << "<span class='notice'>You free \the [src].</span>"
 				var/obj/structure/c_transit_tube_pod/R = new/obj/structure/c_transit_tube_pod(src.loc)
 				src.transfer_fingerprints_to(R)
 				R.add_fingerprint(user)

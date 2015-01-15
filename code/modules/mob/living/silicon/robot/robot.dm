@@ -74,7 +74,7 @@
 
 	ident = rand(1, 999)
 	updatename()
-	updateicon()
+	update_icons()
 
 	if(!cell)
 		cell = new /obj/item/weapon/stock_parts/cell(src)
@@ -118,12 +118,16 @@
 	toner = 40
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
-//Improved /N
 /mob/living/silicon/robot/Destroy()
 	if(mmi && mind)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 		if(T)	mmi.loc = T
-		mind.transfer_to(mmi.brainmob)
+		if(mmi.brainmob)
+			mind.transfer_to(mmi.brainmob)
+		else
+			src << "<span class='userdanger'>Oops! Something went very wrong, your MMI was unable to receive your mind. You have been ghosted. Please make a bug report so we can fix this bug.</span>"
+			ghostize()
+			ERROR("A borg has been destroyed, but its MMI lacked a brainmob, so the mind could not be transferred. Player: [ckey].")
 		mmi = null
 	..()
 
@@ -209,11 +213,9 @@
 			modtype = "Jan"
 			feedback_inc("cyborg_janitor",1)
 
-	overlays -= "eyes" //Takes off the eyes that it started with
-
 	transform_animation(animation_length)
 	notify_ai(2)
-	updateicon()
+	update_icons()
 	SetEmagged(emagged) // Update emag status and give/take emag modules.
 
 /mob/living/silicon/robot/proc/transform_animation(animation_length)
@@ -292,13 +294,7 @@
 
 /mob/living/silicon/robot/Stat()
 	..()
-	statpanel("Status")
-	if (client.statpanel == "Status")
-		if(emergency_shuttle.online && emergency_shuttle.location < 2)
-			var/timeleft = emergency_shuttle.timeleft()
-			if (timeleft)
-				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
-
+	if(statpanel("Status"))
 		if(ticker.mode.name == "AI malfunction")
 			var/datum/game_mode/malfunction/malf = ticker.mode
 			for (var/datum/mind/malfai in malf.malf_ai)
@@ -325,9 +321,7 @@
 	return 0
 
 
-/mob/living/silicon/robot/ex_act(severity)
-	..()
-
+/mob/living/silicon/robot/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			gib()
@@ -389,7 +383,7 @@
 				cleared = 1
 				L -= I
 	if (cleared)
-		queueAlarm(text("--- [class] alarm in [A.name] has been cleared."), class, 0)
+		queueAlarm("--- [class] alarm in [A.name] has been cleared.", class, 0)
 //		if (viewalerts) robot_alerts()
 	return !cleared
 
@@ -430,14 +424,14 @@
 		if(opened)
 			user << "You close the cover."
 			opened = 0
-			updateicon()
+			update_icons()
 		else
 			if(locked)
 				user << "The cover is locked and cannot be opened."
 			else
 				user << "You open the cover."
 				opened = 1
-				updateicon()
+				update_icons()
 
 	else if (istype(W, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
 		if(wiresexposed)
@@ -450,7 +444,7 @@
 			cell = W
 			user << "You insert the power cell."
 //			chargecount = 0
-		updateicon()
+		update_icons()
 
 	else if (istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool) || istype(W, /obj/item/device/assembly/signaler))
 		if (wiresexposed)
@@ -461,14 +455,14 @@
 	else if(istype(W, /obj/item/weapon/screwdriver) && opened && !cell)	// haxing
 		wiresexposed = !wiresexposed
 		user << "The wires have been [wiresexposed ? "exposed" : "unexposed"]"
-		updateicon()
+		update_icons()
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && opened && cell)	// radio
 		if(radio)
 			radio.attackby(W,user)//Push it to the radio to let it handle everything
 		else
 			user << "Unable to locate a radio."
-		updateicon()
+		update_icons()
 
 	else if(istype(W, /obj/item/weapon/wrench) && opened && !cell) //Deconstruction. The flashes break from the fall, to prevent this from being a ghetto reset module.
 		if(!lockcharge)
@@ -513,69 +507,9 @@
 			if(allowed(usr))
 				locked = !locked
 				user << "You [ locked ? "lock" : "unlock"] [src]'s cover."
-				updateicon()
+				update_icons()
 			else
 				user << "<span class='danger'>Access denied.</span>"
-
-	else if(istype(W, /obj/item/weapon/card/emag))		// trying to unlock with an emag card
-		if(user != src)//To prevent syndieborgs from emagging themselves
-			if(!opened)//Cover is closed
-				if(locked)
-					if(prob(90))
-						user << "You emag the cover lock."
-						locked = 0
-					else
-						user << "You fail to emag the cover lock."
-						if(prob(25))
-							src << "Hack attempt detected."
-				else
-					user << "The cover is already unlocked."
-				return
-
-			if(opened)//Cover is open
-				if(emagged)	return//Prevents the X has hit Y with Z message also you cant emag them twice
-				if(wiresexposed)
-					user << "You must close the cover first"
-					return
-				else
-					sleep(6)
-					if(prob(50))
-						SetEmagged(1)
-						SetLockdown(1) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
-						lawupdate = 0
-						connected_ai = null
-						user << "You emag [src]'s interface."
-//						message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
-						log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
-						clear_supplied_laws()
-						clear_inherent_laws()
-						laws = new /datum/ai_laws/syndicate_override
-						var/time = time2text(world.realtime,"hh:mm:ss")
-						lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-						set_zeroth_law("Only [user.real_name] and people they designate as being such are Syndicate Agents.")
-						src << "<span class='danger'>ALERT: Foreign software detected.</span>"
-						sleep(5)
-						src << "<span class='danger'>Initiating diagnostics...</span>"
-						sleep(20)
-						src << "<span class='danger'>SynBorg v1.7 loaded.</span>"
-						sleep(5)
-						src << "<span class='danger'>LAW SYNCHRONISATION ERROR</span>"
-						sleep(5)
-						src << "<span class='danger'>Would you like to send a report to NanoTraSoft? Y/N</span>"
-						sleep(10)
-						src << "<span class='danger'>> N</span>"
-						sleep(20)
-						src << "<span class='danger'>ERRORERRORERROR</span>"
-						src << "<b>Obey these laws:</b>"
-						laws.show_laws(src)
-						src << "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</span>"
-						SetLockdown(0)
-						updateicon()
-					else
-						user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
-						if(prob(25))
-							src << "Hack attempt detected."
-				return
 
 	else if(istype(W, /obj/item/borg/upgrade/))
 		var/obj/item/borg/upgrade/U = W
@@ -607,6 +541,64 @@
 			spark_system.start()
 		return ..()
 
+/mob/living/silicon/robot/emag_act(mob/user as mob)
+	if(user != src)//To prevent syndieborgs from emagging themselves
+		if(!opened)//Cover is closed
+			if(locked)
+				if(prob(90))
+					user << "You emag the cover lock."
+					locked = 0
+				else
+					user << "You fail to emag the cover lock."
+					if(prob(25))
+						src << "Hack attempt detected."
+			else
+				user << "The cover is already unlocked."
+			return
+		if(opened)//Cover is open
+			if(emagged)	return//Prevents the X has hit Y with Z message also you cant emag them twice
+			if(wiresexposed)
+				user << "You must close the cover first"
+				return
+			else
+				sleep(6)
+				if(prob(50))
+					SetEmagged(1)
+					SetLockdown(1) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
+					lawupdate = 0
+					connected_ai = null
+					user << "You emag [src]'s interface."
+					message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
+					log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
+					clear_supplied_laws()
+					clear_inherent_laws()
+					laws = new /datum/ai_laws/syndicate_override
+					var/time = time2text(world.realtime,"hh:mm:ss")
+					lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
+					set_zeroth_law("Only [user.real_name] and people they designate as being such are Syndicate Agents.")
+					src << "<span class='danger'>ALERT: Foreign software detected.</span>"
+					sleep(5)
+					src << "<span class='danger'>Initiating diagnostics...</span>"
+					sleep(20)
+					src << "<span class='danger'>SynBorg v1.7 loaded.</span>"
+					sleep(5)
+					src << "<span class='danger'>LAW SYNCHRONISATION ERROR</span>"
+					sleep(5)
+					src << "<span class='danger'>Would you like to send a report to NanoTraSoft? Y/N</span>"
+					sleep(10)
+					src << "<span class='danger'>> N</span>"
+					sleep(20)
+					src << "<span class='danger'>ERRORERRORERROR</span>"
+					src << "<b>Obey these laws:</b>"
+					laws.show_laws(src)
+					src << "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</span>"
+					SetLockdown(0)
+					update_icons()
+				else
+					user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
+					if(prob(25))
+						src << "Hack attempt detected."
+
 /mob/living/silicon/robot/verb/unlock_own_cover()
 	set category = "Robot Commands"
 	set name = "Unlock Cover"
@@ -615,7 +607,7 @@
 		switch(alert("You can not lock your cover again, are you sure?\n      (You can still ask for a human to lock it)", "Unlock Own Cover", "Yes", "No"))
 			if("Yes")
 				locked = 0
-				updateicon()
+				update_icons()
 				usr << "You unlock your cover."
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
@@ -672,7 +664,7 @@
 			user.put_in_active_hand(cell)
 			user << "You remove \the [cell]."
 			cell = null
-			updateicon()
+			update_icons()
 
 	if(!opened)
 		if(..()) // hulk attack
@@ -717,34 +709,30 @@
 			return 0
 	return 1
 
-/mob/living/silicon/robot/proc/updateicon()
+/mob/living/silicon/robot/regenerate_icons()
+	return update_icons()
+
+/mob/living/silicon/robot/update_icons()
 
 	overlays.Cut()
 	if(stat == 0)
-		overlays += "eyes"
-		if(icon_state == "robot")
-			overlays.Cut()
-			overlays += "eyes-standard"
-		if(icon_state == "toiletbot")
-			overlays.Cut()
-			overlays += "eyes-toiletbot"
-		if(icon_state == "secborg")
-			overlays.Cut()
-			overlays += "eyes-secborg"
-		if(icon_state =="engiborg")
-			overlays.Cut()
-			overlays += "eyes-engiborg"
-		if(icon_state =="janiborg")
-			overlays.Cut()
-			overlays += "eyes-janiborg"
-		if(icon_state =="minerborg" || icon_state =="Miner+j")
-			overlays.Cut()
-			overlays += "eyes-minerborg"
-		if(icon_state =="syndie_bloodhound")
-			overlays.Cut()
-			overlays+= "eyes-syndie_bloodhound"
-	else
-		overlays -= "eyes"
+		switch(icon_state)
+			if("robot")
+				overlays += "eyes-standard"
+			if("toiletbot")
+				overlays += "eyes-toiletbot"
+			if("secborg")
+				overlays += "eyes-secborg"
+			if("engiborg")
+				overlays += "eyes-engiborg"
+			if("janiborg")
+				overlays += "eyes-janiborg"
+			if("minerborg" || "Miner+j")
+				overlays += "eyes-minerborg"
+			if("syndie_bloodhound")
+				overlays += "eyes-syndie_bloodhound"
+			else
+				overlays += "eyes"
 
 	if(opened)
 		if(wiresexposed)
@@ -755,7 +743,6 @@
 			overlays += "ov-opencover -c"
 
 	update_fire()
-	return
 
 
 
@@ -857,6 +844,9 @@
 			var/turf/tile = loc
 			if(isturf(tile))
 				tile.clean_blood()
+				if (istype(tile, /turf/simulated/floor))
+					var/turf/simulated/floor/F = tile
+					F.dirt = 0
 				for(var/A in tile)
 					if(istype(A, /obj/effect))
 						if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
@@ -959,13 +949,19 @@
 			uneq_module(module.emag)
 	if(hud_used)
 		hud_used.update_robot_modules_display()	//Shows/hides the emag item if the inventory screen is already open.
-	updateicon()
+	update_icons()
 
 /mob/living/silicon/robot/verb/outputlaws()
 	set category = "Robot Commands"
 	set name = "State Laws"
 
 	checklaws()
+
+/mob/living/silicon/robot/verb/set_automatic_say_channel() //Borg version of setting the radio for autosay messages.
+	set name = "Set Auto Announce Mode"
+	set desc = "Modify the default radio setting for stating your laws."
+	set category = "Robot Commands"
+	set_autosay()
 
 /mob/living/silicon/robot/proc/deconstruct()
 	var/turf/T = get_turf(src)

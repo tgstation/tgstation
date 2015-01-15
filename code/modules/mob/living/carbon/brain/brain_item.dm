@@ -82,12 +82,10 @@
 		else
 			M.key = brainmob.key
 
+		qdel(brainmob)
+
 		M.internal_organs += src
 		loc = null
-
-		//Update the body's icon so it doesnt appear debrained anymore
-		if(ishuman(M))
-			H.update_hair(0)
 
 		//Update the body's icon so it doesnt appear debrained anymore
 		if(ishuman(M))
@@ -101,3 +99,9 @@
 	desc = "We barely understand the brains of terrestial animals. Who knows what we may find in the brain of such an advanced species?"
 	icon_state = "brain-alien"
 	origin_tech = "biotech=7"
+
+/obj/item/organ/brain/Destroy() //copypasted from MMIs.
+	if(brainmob)
+		qdel(brainmob)
+		brainmob = null
+	..()

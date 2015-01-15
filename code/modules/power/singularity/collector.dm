@@ -82,7 +82,7 @@ var/global/list/rad_collectors = list()
 			user.visible_message("[user.name] secures the [src.name].", \
 				"You secure the external bolts.", \
 				"You hear a ratchet")
-			disconnect_from_network()
+			connect_to_network()
 		else if(anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			anchored = 0
@@ -97,7 +97,7 @@ var/global/list/rad_collectors = list()
 				user << "The controls are now [src.locked ? "locked." : "unlocked."]"
 			else
 				src.locked = 0 //just in case it somehow gets locked
-				user << "<span class='danger'>The controls can only be locked when the [src] is active.</span>"
+				user << "<span class='danger'>The controls can only be locked when \the [src] is active.</span>"
 		else
 			user << "<span class='danger'>Access denied!</span>"
 			return 1
@@ -106,7 +106,7 @@ var/global/list/rad_collectors = list()
 		return 1
 
 
-/obj/machinery/power/rad_collector/ex_act(severity)
+/obj/machinery/power/rad_collector/ex_act(severity, target)
 	switch(severity)
 		if(2, 3)
 			eject()

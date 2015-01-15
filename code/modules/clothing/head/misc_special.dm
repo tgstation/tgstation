@@ -55,7 +55,7 @@
 
 /obj/item/clothing/head/cakehat/process()
 	if(!onfire)
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 		return
 
 	var/turf/location = src.loc
@@ -74,7 +74,7 @@
 		src.force = 3
 		src.damtype = "fire"
 		src.icon_state = "cake1"
-		processing_objects.Add(src)
+		SSobj.processing.Add(src)
 	else
 		src.force = null
 		src.damtype = "brute"
@@ -91,15 +91,20 @@
 	icon_state = "ushankadown"
 	item_state = "ushankadown"
 	flags_inv = HIDEEARS
+	var/earflaps = 1
+	cold_protection = HEAD
+	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 
 /obj/item/clothing/head/ushanka/attack_self(mob/user as mob)
-	if(src.icon_state == "ushankadown")
+	if(earflaps)
 		src.icon_state = "ushankaup"
 		src.item_state = "ushankaup"
+		earflaps = 0
 		user << "You raise the ear flaps on the ushanka."
 	else
 		src.icon_state = "ushankadown"
 		src.item_state = "ushankadown"
+		earflaps = 1
 		user << "You lower the ear flaps on the ushanka."
 
 /*

@@ -1,3 +1,7 @@
+ #define SAWN_INTACT  0
+ #define SAWN_OFF     1
+ #define SAWN_SAWING -1
+
 /obj/item/weapon/gun
 	name = "gun"
 	desc = "It's a gun. It's pretty terrible, though."
@@ -17,11 +21,17 @@
 
 	var/fire_sound = "gunshot"
 	var/suppressed = 0
+	var/can_suppress = 0
 	var/recoil = 0
 	var/clumsy_check = 1
 	var/obj/item/ammo_casing/chambered = null
 	var/trigger_guard = 1
 	var/sawn_desc = null
+	var/sawn_state = SAWN_INTACT
+	var/burst_size = 1
+	var/fire_delay = 0
+	var/obj/item/device/flashlight/F = null
+	var/can_flashlight = 0
 
 /obj/item/weapon/gun/proc/process_chamber()
 	return 0
@@ -29,12 +39,17 @@
 /obj/item/weapon/gun/proc/special_check(var/mob/M) //Placeholder for any special checks, like detective's revolver.
 	return 1
 
+//check if there's enough ammo/energy/whatever to shoot one time
+//i.e if clicking would make it shoot
+/obj/item/weapon/gun/proc/can_shoot()
+	return 1
+
 /obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	user << "<span class='danger'>*click*</span>"
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	return
 
-/obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user as mob|obj, var/pointblank = 0, var/mob/pbtarget = null)
+/obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user as mob|obj, var/pointblank = 0, var/mob/pbtarget = null, var/message = 1)
 	if(recoil)
 		spawn()
 			shake_camera(user, recoil + 1, recoil)
@@ -43,6 +58,8 @@
 		playsound(user, fire_sound, 10, 1)
 	else
 		playsound(user, fire_sound, 50, 1)
+		if(!message)
+			return
 		if(pointblank)
 			user.visible_message("<span class='danger'>[user] fires [src] point blank at [pbtarget]!</span>", "<span class='danger'>You fire [src] point blank at [pbtarget]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
 		else
@@ -52,7 +69,7 @@
 	for(var/obj/O in contents)
 		O.emp_act(severity)
 
-/obj/item/weapon/gun/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params)//TODO: go over this
+/obj/item/weapon/gun/afterattack(atom/target as mob|obj|turf, mob/living/carbon/human/user as mob|obj, flag, params)//TODO: go over this
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(istype(target, /mob/) && target != user && !(target in user.contents)) //We make sure that it is a mob, it's not us or part of us.
 			if(user.a_intent == "harm") //Flogging action
@@ -61,47 +78,65 @@
 			return
 
 	//Exclude lasertag guns from the CLUMSY check.
-	if(clumsy_check)
+	if(clumsy_check && can_shoot())
 		if(istype(user, /mob/living))
 			var/mob/living/M = user
-			if ((CLUMSY in M.mutations) && prob(40))
-				M << "<span class='danger'>You shoot yourself in the foot with \the [src]!</span>"
-				afterattack(user, user)
+			if (M.disabilities & CLUMSY && prob(40))
+				user << "<span class='danger'>You shoot yourself in the foot with \the [src]!</span>"
+				process_fire(user,user,0,params)
 				M.drop_item()
 				return
 
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!can_trigger_gun(L))
+			return
+
+	process_fire(target,user,1,params)
+
+/obj/item/weapon/gun/proc/can_trigger_gun(mob/living/carbon/user)
 	if (!user.IsAdvancedToolUser())
 		user << "<span class='notice'>You don't have the dexterity to do this!</span>"
-		return
+		return 0
 
 	if(trigger_guard)
-		if(istype(user, /mob/living))
-			var/mob/living/M = user
-			if (HULK in M.mutations)
-				M << "<span class='notice'>Your meaty finger is much too large for the trigger guard!</span>"
-				return
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if(H.dna && NOGUNS in H.dna.species.specflags)
+		if(istype(user) && user.dna)
+			if(user.dna.check_mutation(HULK))
+				user << "<span class='notice'>Your meaty finger is much too large for the trigger guard!</span>"
+				return 0
+			if(NOGUNS in user.dna.species.specflags)
 				user << "<span class='notice'>Your fingers don't fit in the trigger guard!</span>"
-				return
+				return 0
+	return 1
+
+/obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, var/message = 1, params)
 
 	add_fingerprint(user)
 
 	if(!special_check(user))
 		return
-	if(chambered)
-		if(!chambered.fire(target, user, params, , suppressed))
-			shoot_with_empty_chamber(user)
-		else
-			if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
-				shoot_live_shot(user, 1, target)
+
+	for(var/i = 1 to burst_size)
+		if(!issilicon(user))
+			if( i>1 && !(src in get_both_hands(user))) //for burst firing
+				break
+		if(chambered)
+			if(!chambered.fire(target, user, params, , suppressed))
+				shoot_with_empty_chamber(user)
+				break
 			else
-				shoot_live_shot(user)
-	else
-		shoot_with_empty_chamber(user)
-	process_chamber()
-	update_icon()
+				if(!special_check(user))
+					return
+				if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
+					shoot_live_shot(user, 1, target, message)
+				else
+					shoot_live_shot(user, 0, target, message)
+		else
+			shoot_with_empty_chamber(user)
+			break
+		process_chamber()
+		update_icon()
+		sleep(fire_delay)
 
 	if(user.hand)
 		user.update_inv_l_hand(0)
@@ -113,3 +148,89 @@
 		..()
 	else
 		return
+
+/obj/item/weapon/gun/attackby(var/obj/item/A as obj, mob/user as mob)
+	if(istype(A, /obj/item/device/flashlight/seclite))
+		var/obj/item/device/flashlight/seclite/S = A
+		if(can_flashlight)
+			if(!F)
+				if(user.l_hand != src && user.r_hand != src)
+					user << "<span class='notice'>You'll need [src] in your hands to do that.</span>"
+					return
+				user.drop_item()
+				user << "<span class='notice'>You click [S] into place on [src].</span>"
+				if(S.on)
+					SetLuminosity(0)
+				F = S
+				A.loc = src
+				update_icon()
+				update_gunlight(user)
+				verbs += /obj/item/weapon/gun/proc/toggle_gunlight
+
+	if(istype(A, /obj/item/weapon/screwdriver))
+		if(F)
+			if(user.l_hand != src && user.r_hand != src)
+				user << "<span class='notice'>You'll need [src] in your hands to do that.</span>"
+				return
+			for(var/obj/item/device/flashlight/seclite/S in src)
+				user << "<span class='notice'>You unscrew the seclite from [src].</span>"
+				F = null
+				S.loc = get_turf(user)
+				update_gunlight(user)
+				S.update_brightness(user)
+				update_icon()
+				verbs -= /obj/item/weapon/gun/proc/toggle_gunlight
+	..()
+	return
+
+/obj/item/weapon/gun/proc/toggle_gunlight()
+	set name = "Toggle Gunlight"
+	set category = "Object"
+	set desc = "Click to toggle your weapon's attached flashlight."
+
+	if(!F)
+		return
+
+	var/mob/living/carbon/human/user = usr
+	if(!isturf(user.loc))
+		user << "You cannot turn the light on while in this [user.loc]."
+	F.on = !F.on
+	user << "<span class='notice'>You toggle the gunlight [F.on ? "on":"off"].</span>"
+
+	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+	update_gunlight(user)
+	return
+
+/obj/item/weapon/gun/proc/update_gunlight(var/mob/user = null)
+	if(F)
+		action_button_name = "Toggle Gunlight"
+		if(F.on)
+			if(loc == user)
+				user.AddLuminosity(F.brightness_on)
+			else if(isturf(loc))
+				SetLuminosity(F.brightness_on)
+		else
+			if(loc == user)
+				user.AddLuminosity(-F.brightness_on)
+			else if(isturf(loc))
+				SetLuminosity(0)
+		update_icon()
+	else
+		action_button_name = null
+		if(loc == user)
+			user.AddLuminosity(-5)
+		else if(isturf(loc))
+			SetLuminosity(0)
+		return
+
+/obj/item/weapon/gun/pickup(mob/user)
+	if(F)
+		if(F.on)
+			user.AddLuminosity(F.brightness_on)
+			SetLuminosity(0)
+
+/obj/item/weapon/gun/dropped(mob/user)
+	if(F)
+		if(F.on)
+			user.AddLuminosity(-F.brightness_on)
+			SetLuminosity(F.brightness_on)

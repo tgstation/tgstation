@@ -18,8 +18,10 @@
 
 /obj/structure/toilet/attack_hand(mob/living/user)
 	if(swirlie)
-		user.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie]'s head!</span>", "<span class='notice'>You slam the toilet seat onto [swirlie]'s head!</span>", "You hear reverberating porcelain.")
-		swirlie.adjustBruteLoss(8)
+		user.changeNext_move(CLICK_CD_MELEE)
+		playsound(src.loc, "swing_hit", 25, 1)
+		swirlie.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie]'s head!</span>", "<span class='userdanger'>[user] slams the toilet seat onto [swirlie]'s head!</span>", "You hear reverberating porcelain.")
+		swirlie.adjustBruteLoss(5)
 		return
 
 	if(cistern && !open)
@@ -55,6 +57,7 @@
 			return
 
 	if(istype(I, /obj/item/weapon/grab))
+		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/weapon/grab/G = I
 		if(!G.confirm())
 			return
@@ -64,21 +67,23 @@
 				if(GM.loc != get_turf(src))
 					user << "<span class='notice'>[GM] needs to be on [src].</span>"
 					return
-				if(open && !swirlie)
-					user.visible_message("<span class='danger'>[user] starts to give [GM] a swirlie!</span>", "<span class='notice'>You start to give [GM] a swirlie!</span>")
-					swirlie = GM
-					if(do_after(user, 30, 5, 0))
-						user.visible_message("<span class='danger'>[user] gives [GM] a swirlie!</span>", "<span class='notice'>You give [GM] a swirlie!</span>", "You hear a toilet flushing.")
-						if(iscarbon(GM))
-							var/mob/living/carbon/C = GM
-							if(!C.internal)
-								C.adjustOxyLoss(5)
-						else
-							GM.adjustOxyLoss(5)
-					swirlie = null
-				else
-					user.visible_message("<span class='danger'>[user] slams [GM.name] into the [src]!</span>", "<span class='notice'>You slam [GM] into [src]!</span>")
-					GM.adjustBruteLoss(8)
+				if(!swirlie)
+					if(open)
+						GM.visible_message("<span class='danger'>[user] starts to give [GM] a swirlie!</span>", "<span class='userdanger'>[user] starts to give [GM] a swirlie!</span>")
+						swirlie = GM
+						if(do_after(user, 30, 5, 0))
+							GM.visible_message("<span class='danger'>[user] gives [GM] a swirlie!</span>", "<span class='userdanger'>[user] gives [GM] a swirlie!</span>", "You hear a toilet flushing.")
+							if(iscarbon(GM))
+								var/mob/living/carbon/C = GM
+								if(!C.internal)
+									C.adjustOxyLoss(5)
+							else
+								GM.adjustOxyLoss(5)
+						swirlie = null
+					else
+						playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
+						GM.visible_message("<span class='danger'>[user] slams [GM.name] into [src]!</span>", "<span class='userdanger'>[user] slams [GM.name] into [src]!</span>")
+						GM.adjustBruteLoss(5)
 			else
 				user << "<span class='notice'>You need a tighter grip.</span>"
 
@@ -125,7 +130,6 @@
 				user << "<span class='notice'>You need a tighter grip.</span>"
 
 
-
 /obj/machinery/shower
 	name = "shower"
 	desc = "The HS-451. Installed in the 2550s by the Nanotrasen Hygiene Division."
@@ -167,7 +171,7 @@
 	if(I.type == /obj/item/device/analyzer)
 		user << "<span class='notice'>The water temperature seems to be [watertemp].</span>"
 	if(istype(I, /obj/item/weapon/wrench))
-		user << "<span class='notice'>You begin to adjust the temperature valve with the [I].</span>"
+		user << "<span class='notice'>You begin to adjust the temperature valve with \the [I].</span>"
 		if(do_after(user, 50))
 			switch(watertemp)
 				if("normal")
@@ -176,7 +180,7 @@
 					watertemp = "boiling"
 				if("boiling")
 					watertemp = "normal"
-			user.visible_message("<span class='notice'>[user] adjusts the shower with the [I].</span>", "<span class='notice'>You adjust the shower with the [I] to [watertemp] temperature.</span>")
+			user.visible_message("<span class='notice'>[user] adjusts the shower with \the [I].</span>", "<span class='notice'>You adjust the shower with \the [I] to [watertemp] temperature.</span>")
 			log_game("[key_name(user)] has wrenched a shower to [watertemp] at ([x],[y],[z])")
 			add_hiddenprint(user)
 

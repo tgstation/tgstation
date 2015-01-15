@@ -18,7 +18,6 @@
 	//blinded get reset each cycle and then get activated later in the
 	//code. Very ugly. I dont care. Moving this stuff here so its easy
 	//to find it.
-	blinded = null
 
 	//Handle temperature/pressure differences between body and environment
 	if(environment)	// More error checking
@@ -42,14 +41,17 @@
 			else//Fluff-wise, since the brain can't detect anything itself, the MMI handles thing like that
 				src << "<span class='danger'>STATUS: CRITICAL AMOUNTS OF RADIATION DETECTED.</span>"
 
+		if (radiation < 0)
+			radiation = 0
+
 		switch(radiation)
-			if(1 to 49)
+			if(0 to 50)
 				radiation--
 				if(prob(25))
 					adjustToxLoss(1)
 					updatehealth()
 
-			if(50 to 74)
+			if(50 to 75)
 				radiation -= 2
 				adjustToxLoss(1)
 				if(prob(5))
@@ -122,12 +124,12 @@
 	updatehealth()
 
 	if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
-		blinded = 1
+		eye_blind = max(eye_blind, 1)
 		silent = 0
 	else				//ALIVE. LIGHTS ARE ON
 		if( !container && (health < config.health_threshold_dead || ((world.time - timeofhostdeath) > config.revival_brain_life)) )
 			death()
-			blinded = 1
+			eye_blind = max(eye_blind, 1)
 			silent = 0
 			return 1
 
@@ -141,9 +143,8 @@
 				if(31 to INFINITY)
 					emp_damage = 30//Let's not overdo it
 				if(21 to 30)//High level of EMP damage, unable to see, hear, or speak
-					eye_blind = 1
-					blinded = 1
-					ear_deaf = 1
+					eye_blind = max(eye_blind, 1)
+					setEarDamage(-1,1)
 					silent = 1
 					if(!alert)//Sounds an alarm, but only once per 'level'
 						emote("alarm")
@@ -153,14 +154,13 @@
 						emp_damage -= 1
 				if(20)
 					alert = 0
-					blinded = 0
 					eye_blind = 0
-					ear_deaf = 0
+					setEarDamage(-1,0)
 					silent = 0
 					emp_damage -= 1
 				if(11 to 19)//Moderate level of EMP damage, resulting in nearsightedness and ear damage
 					eye_blurry = 1
-					ear_damage = 1
+					setEarDamage(1,-1)
 					if(!alert)
 						emote("alert")
 						src << "<span class='danger'>Primary systems are now online.</span>"
@@ -170,7 +170,7 @@
 				if(10)
 					alert = 0
 					eye_blurry = 0
-					ear_damage = 0
+					setEarDamage(0,-1)
 					emp_damage -= 1
 				if(2 to 9)//Low level of EMP damage, has few effects(handled elsewhere)
 					if(!alert)
@@ -206,7 +206,7 @@
 
 /mob/living/carbon/brain/proc/handle_regular_hud_updates()
 
-	if (stat == 2 || (XRAY in src.mutations))
+	if (stat == 2)
 		sight |= SEE_TURFS
 		sight |= SEE_MOBS
 		sight |= SEE_OBJS
@@ -246,12 +246,12 @@
 	client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
 
 	if ((blind && stat != 2))
-		if ((blinded))
+		if (eye_blind)
 			blind.layer = 18
 		else
 			blind.layer = 0
 
-			if (disabilities & NEARSIGHTED)
+			if (disabilities & NEARSIGHT)
 				client.screen += global_hud.vimpaired
 
 			if (eye_blurry)

@@ -17,17 +17,21 @@
 	name = "Commemorative Plaque"
 	icon_state = "plaque"
 	desc = "\"This is a plaque in honour of our comrades on the G4407 Stations. Hopefully TG4407 model can live up to your fame and fortune.\" Scratched in beneath that is a crude image of a meteor and a spaceman. The spaceman is laughing. The meteor is exploding."
+	floor_tile = /obj/item/stack/tile/plasteel
 
 /turf/simulated/floor/vault
 	icon_state = "rockvault"
+	floor_tile = /obj/item/stack/tile/plasteel
 
 /turf/simulated/floor/bluegrid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "bcircuit"
+	floor_tile = /obj/item/stack/tile/plasteel
 
 /turf/simulated/floor/greengrid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "gcircuit"
+	floor_tile = /obj/item/stack/tile/plasteel
 
 /turf/simulated/shuttle
 	name = "shuttle"
@@ -52,6 +56,11 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "plating"
 
+/turf/simulated/shuttle/plating/airless
+	oxygen = 0.01
+	nitrogen = 0.01
+	temperature = TCMB
+
 /turf/simulated/shuttle/floor4 // Added this floor tile so that I have a seperate turf to check in the shuttle -- Polymorph
 	name = "Brig floor"        // Also added it into the 2x3 brig area of the shuttle.
 	icon_state = "floor4"
@@ -59,9 +68,10 @@
 /turf/simulated/floor/beach
 	name = "Beach"
 	icon = 'icons/misc/beach.dmi'
+	ignoredirt = 1
 
-/turf/simulated/floor/beach/ex_act(severity)
-	return
+/turf/simulated/floor/beach/ex_act(severity, target)
+	contents_explosion(severity, target)
 
 /turf/simulated/floor/beach/sand
 	name = "Sand"
@@ -80,14 +90,16 @@
 	..()
 	name = "Iron Sand"
 	icon_state = "ironsand[rand(1,15)]"
+	ignoredirt = 1
 
 /turf/simulated/floor/plating/snow
 	name = "snow"
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
+	ignoredirt = 1
 
-/turf/simulated/floor/plating/snow/ex_act(severity)
-	return
+/turf/simulated/floor/plating/snow/ex_act(severity, target)
+	contents_explosion(severity, target)
 
 /turf/simulated/floor/noslip
 	name = "high-traction floor"

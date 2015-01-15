@@ -55,11 +55,12 @@
 	*/
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
-	if(istype(W, /obj/item/weapon/card/emag))
-		req_access = list()
-		req_one_access = list()
-		playsound(src.loc, "sparks", 100, 1)
 	return src.attack_hand(user)
+
+/obj/machinery/door_control/emag_act(user as mob)
+	req_access = list()
+	req_one_access = list()
+	playsound(src.loc, "sparks", 100, 1)
 
 /obj/machinery/door_control/attack_hand(mob/user as mob)
 	src.add_fingerprint(usr)

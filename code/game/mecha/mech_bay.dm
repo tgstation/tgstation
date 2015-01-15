@@ -107,7 +107,10 @@
 			data += "<div class='statusDisplay'>No mech detected.</div>"
 		else
 			data += "<div class='statusDisplay'>Integrity: [recharge_port.recharging_mech.health]<BR>"
-			data += "Power: [recharge_port.recharging_mech.cell.charge]/[recharge_port.recharging_mech.cell.maxcharge]</div>"
+			if(recharge_port.recharging_mech.cell.crit_fail)
+				data += "<span class='bad'>WARNING : the mech cell seems faulty!</span></div>"
+			else
+				data += "Power: [recharge_port.recharging_mech.cell.charge]/[recharge_port.recharging_mech.cell.maxcharge]</div>"
 
 	var/datum/browser/popup = new(user, "mech recharger", name, 300, 300)
 	popup.set_content(data)
@@ -144,10 +147,16 @@
 
 
 /obj/machinery/computer/mech_bay_power_console/update_icon()
+	if(stat & NOPOWER)
+		icon_state = "recharge_comp0"
+		return
+	if(stat & BROKEN)
+		icon_state = "recharge_compb"
+		return
 	if(!recharge_port || !recharge_port.recharging_mech || !recharge_port.recharging_mech.cell || !(recharge_port.recharging_mech.cell.charge < recharge_port.recharging_mech.cell.maxcharge))
 		icon_state = "recharge_comp"
-	else
-		icon_state = "recharge_comp_on"
+		return
+	icon_state = "recharge_comp_on"
 
 /obj/machinery/computer/mech_bay_power_console/initialize()
 	reconnect()
