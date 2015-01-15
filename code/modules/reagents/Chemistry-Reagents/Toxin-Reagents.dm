@@ -121,19 +121,6 @@ datum/reagent/toxin/slimejelly/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/toxin/cyanide
-	name = "Cyanide"
-	id = "cyanide"
-	description = "A highly toxic chemical."
-	color = "#CF3600" // rgb: 207, 54, 0
-	toxpwr = 3
-
-datum/reagent/toxin/cyanide/on_mob_life(var/mob/living/M as mob)
-	M.adjustOxyLoss(3*REM)
-	M.sleeping += 1
-	..()
-	return
-
 datum/reagent/toxin/minttoxin
 	name = "Mint Toxin"
 	id = "minttoxin"

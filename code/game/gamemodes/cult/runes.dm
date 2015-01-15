@@ -11,7 +11,7 @@ var/list/sacrificed = list()
 	for(var/obj/effect/rune/R in world)
 		if(R == src)
 			continue
-		if(R.word1 == wordtravel && R.word2 == wordself && R.word3 == key && R.z != 2)
+		if(R.word1 == wordtravel && R.word2 == wordself && R.word3 == key && R.z != ZLEVEL_CENTCOM)
 			index++
 			allrunesloc.len = index
 			allrunesloc[index] = R.loc
@@ -883,7 +883,7 @@ var/list/sacrificed = list()
 			var/obj/item/weapon/nullrod/N = locate() in C
 			if(N)
 				continue
-			C.ear_deaf += 50
+			C.adjustEarDamage(0, 50)
 			C.show_message("<span class='danger'>The world around you suddenly becomes quiet.</span>", 3)
 			affected++
 			if(prob(1) && ishuman(C))
@@ -902,7 +902,7 @@ var/list/sacrificed = list()
 			var/obj/item/weapon/nullrod/N = locate() in C
 			if(N)
 				continue
-			C.ear_deaf += 30
+			C.adjustEarDamage(0, 30)
 			//talismans is weaker.
 			C.show_message("<span class='danger'>The world around you suddenly becomes quiet.</span>", 3)
 			affected++

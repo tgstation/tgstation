@@ -48,6 +48,13 @@
 	icon_state = "bottle20"
 	spawned_reagent = "stoxin"
 
+/obj/item/weapon/reagent_containers/glass/bottle/morphine
+	name = "morphine bottle"
+	desc = "A small bottle of morphine."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle20"
+	spawned_reagent = "morphine"
+
 /obj/item/weapon/reagent_containers/glass/bottle/chloralhydrate
 	name = "Chloral Hydrate Bottle"
 	desc = "A small bottle of Choral Hydrate. Mickey's Favorite!"
@@ -194,6 +201,59 @@
 	desc = "A small bottle. Contains a sample of Lepidopticides."
 	icon_state = "bottle3"
 	spawned_disease = /datum/disease/anxiety
+
+/obj/item/weapon/reagent_containers/glass/bottle/traitor
+	name = "syndicate bottle"
+	desc = "A small bottle. Contains a random nasty chemical."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle16"
+
+/obj/item/weapon/reagent_containers/glass/bottle/traitor/New()
+	..()
+	var/new_reagent = pick("polonium", "histamine", "formaldehyde", "venom", "neurotoxin2", "cyanide")
+	reagents.add_reagent(new_reagent, 50)
+
+/obj/item/weapon/reagent_containers/glass/bottle/polonium
+	name = "polonium bottle"
+	desc = "A small bottle. Contains Polonium."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle16"
+	spawned_reagent = "polonium"
+
+/obj/item/weapon/reagent_containers/glass/bottle/venom
+	name = "venom bottle"
+	desc = "A small bottle. Contains Venom."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle16"
+	spawned_reagent = "venom"
+
+/obj/item/weapon/reagent_containers/glass/bottle/neurotoxin2
+	name = "neurotoxin bottle"
+	desc = "A small bottle. Contains Neurotoxin."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle16"
+	spawned_reagent = "neurotoxin2"
+
+/obj/item/weapon/reagent_containers/glass/bottle/formaldehyde
+	name = "formaldehyde bottle"
+	desc = "A small bottle. Contains Formaldehyde."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle16"
+	spawned_reagent = "formaldehyde"
+
+/obj/item/weapon/reagent_containers/glass/bottle/cyanide
+	name = "cyanide bottle"
+	desc = "A small bottle. Contains Cyanide."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle16"
+	spawned_reagent = "cyanide"
+
+/obj/item/weapon/reagent_containers/glass/bottle/histamine
+	name = "histamine bottle"
+	desc = "A small bottle. Contains Histamine."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle16"
+	spawned_reagent = "histamine"
 
 /obj/item/weapon/reagent_containers/glass/bottle/beesease
 	name = "Beesease culture bottle"
