@@ -25,6 +25,8 @@
 	var/framestack = /obj/item/stack/rods
 	var/buildstack = /obj/item/stack/sheet/metal
 	var/busy = 0
+	var/buildstackamount = 1
+	var/framestackamount = 2
 
 /obj/structure/table/New()
 	..()
@@ -333,8 +335,12 @@
 /obj/structure/table/proc/table_destroy(var/destroy_type, var/mob/user)
 
 	if(destroy_type == TBL_DESTROY)
-		new framestack(src.loc)
-		new buildstack(src.loc)
+		var/frameamount = framestack
+		for(var/i = 1, i <= framestackamount, i++)
+			new frameamount(get_turf(src))
+		var/buildamount = buildstack
+		for(var/i = 1, i <= buildstackamount, i++)
+			new buildamount(get_turf(src))
 		qdel(src)
 		return
 
@@ -343,7 +349,9 @@
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
 			new frame(src.loc)
-			new buildstack(src.loc)
+			var/buildamount = buildstack
+			for(var/i = 1, i <= buildstackamount, i++)
+				new buildamount(get_turf(src))
 			qdel(src)
 			return
 
@@ -351,8 +359,12 @@
 		user << "<span class='notice'>Now deconstructing [src].</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 40))
-			new framestack(src.loc)
-			new buildstack(src.loc)
+			var/frameamount = framestack
+			for(var/i = 1, i <= framestackamount, i++)
+				new frameamount(get_turf(src))
+			var/buildamount = buildstack
+			for(var/i = 1, i <= buildstackamount, i++)
+				new buildamount(get_turf(src))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			qdel(src)
 			return
