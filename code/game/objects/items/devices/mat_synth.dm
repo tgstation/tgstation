@@ -61,26 +61,38 @@
 			if(amount)
 				if(TakeCost(amount, modifier, R))
 					var/obj/item/stack/sheet/inside_sheet = (locate(material_type) in R.module.modules)
-					if(!inside_sheet) R.module.modules += new material_type(R.module) //cyborgs can get a free sheet, honk!
-					for(var/obj/item/stack/S in R.module.modules)
-						if(istype(material_type, S) && material_type.type == S.type)
-							if((S.amount + amount) <= S.max_amount)
-								S.amount += material_type.amount
-								R << "Added [amount] of [material_type] to the stack."
-								R.module.contents += S
-								return
+					if(!inside_sheet) 
+						R.module.modules += new material_type(R.module) //cyborgs can get a free sheet, honk!
+						var/obj/item/stack/sheet/created_sheet = (locate(material_type) in R.module.modules)
+						if((created_sheet.amount + amount) <= created_sheet.max_amount)
+							created_sheet.amount += amount
+							R << "Added [amount] of [material_type] to the stack."
 						else
-							if(S.amount <= S.max_amount)
-								var/transfer_amount = min(S.max_amount - S.amount, amount)
-								S.amount += transfer_amount
+							if(created_sheet.amount <= created_sheet.max_amount)
+								var/transfer_amount = min(created_sheet.max_amount - created_sheet.amount, amount)
+								created_sheet.amount += transfer_amount
 								amount -= transfer_amount
-							if(amount >= 1)
+							if(amount >= 1 && (created_sheet.amount >= created_sheet.max_amount))
 								R << "Dropping [amount], you cannot hold anymore of [material_type]."
 								var/obj/item/stack/sheet/dropped_sheet = new material_type(get_turf(src))
 								dropped_sheet.amount = amount
-						R.module.rebuild()
-						R.hud_used.update_robot_modules_display()
-						return
+					else
+						if((inside_sheet.amount + amount) <= inside_sheet.max_amount)
+							inside_sheet.amount += amount
+							R << "Added [amount] of [material_type] to the stack."
+							return
+						else
+							if(inside_sheet.amount <= inside_sheet.max_amount)
+								var/transfer_amount = min(inside_sheet.max_amount - inside_sheet.amount, amount)
+								inside_sheet.amount += transfer_amount
+								amount -= transfer_amount
+							if(amount >= 1 && (inside_sheet.amount >= inside_sheet.max_amount))
+								R << "Dropping [amount], you cannot hold anymore of [material_type]."
+								var/obj/item/stack/sheet/dropped_sheet = new material_type(get_turf(src))
+								dropped_sheet.amount = amount
+					R.module.rebuild()
+					R.hud_used.update_robot_modules_display()
+					return
 				else
 					R << "<span class='warning'>You can't make that much [material_type] without shutting down!</span>"
 					return
