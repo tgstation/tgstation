@@ -115,7 +115,7 @@
 	new /obj/item/clothing/under/gimmick/rank/captain/suit(src.loc)
 	new /obj/item/clothing/head/flatcap(src.loc)
 	new /obj/item/clothing/mask/cigarette/cigar/havana(src.loc)
-	new /obj/item/clothing/shoes/jackboots(src.loc)
+	new /obj/item/clothing/shoes/boots(src.loc)
 	qdel(src)
 
 /obj/effect/landmark/costume/nyangirl/New()

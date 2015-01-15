@@ -14,21 +14,6 @@
 	icon_state = "mime"
 	item_color = "mime"
 
-/obj/item/clothing/shoes/combat //basic syndicate combat boots for nuke ops and mob corpses
-	name = "combat boots"
-	desc = "High speed, low drag combat boots."
-	icon_state = "jackboots"
-	item_state = "jackboots"
-	armor = list(melee = 50, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 10, rad = 0)
-	strip_delay = 70
-
-/obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
-	name = "\improper SWAT boots"
-	desc = "High speed, no drag combat boots."
-	permeability_coefficient = 0.01
-	flags = NOSLIP
-	armor = list(melee = 80, bullet = 60, laser = 50, energy = 50, bomb = 50, bio = 30, rad = 30)
-
 /obj/item/clothing/shoes/space_ninja
 	name = "ninja shoes"
 	desc = "A pair of running shoes. Excellent for running and even better for smashing skulls."
@@ -82,14 +67,29 @@
 	else
 		footstep++
 
-/obj/item/clothing/shoes/jackboots
-	name = "jackboots"
-	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
-	icon_state = "jackboots"
-	item_state = "jackboots"
+/obj/item/clothing/shoes/boots
+	name = "boots"
+	desc = "A pair of regular dark grey slip-on boots."
+	icon_state = "boots"
+	item_state = "boots"
 	item_color = "hosred"
 	strip_delay = 50
 	put_on_delay = 50
+
+/obj/item/clothing/shoes/boots/combat //basic armored syndicate combat boots for nuke ops and mob corpses
+	name = "combat boots"
+	desc = "High speed, low drag combat boots."
+	icon_state = "combatboots"
+	item_state = "combatboots"
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 10, rad = 0)
+	strip_delay = 70
+
+/obj/item/clothing/shoes/boots/combat/swat //overpowered noslip boots for death squads
+	name = "\improper SWAT boots"
+	desc = "High speed, no drag combat boots."
+	permeability_coefficient = 0.01
+	flags = NOSLIP
+	armor = list(melee = 80, bullet = 60, laser = 50, energy = 50, bomb = 50, bio = 30, rad = 30)
 
 /obj/item/clothing/shoes/winterboots
 	name = "winter boots"
