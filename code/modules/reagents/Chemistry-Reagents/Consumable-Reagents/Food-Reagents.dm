@@ -255,6 +255,13 @@ datum/reagent/consumable/hot_coco/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
+datum/reagent/consumable/vanilla
+	name = "Vanilla Extract"
+	id = "vanilla"
+	description = "A sweet, default tasting extract from vanilla pods."
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	color = "#FFFFFF" // rgb: 0, 0, 0
+
 datum/reagent/mushroomhallucinogen
 	name = "Mushroom Hallucinogen"
 	id = "mushroomhallucinogen"

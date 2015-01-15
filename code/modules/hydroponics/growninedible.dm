@@ -45,7 +45,7 @@
 	seed = /obj/item/seeds/towermycelium
 	name = "tower-cap log"
 	desc = "It's better than bad, it's good!"
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "logs"
 	force = 5
 	throwforce = 5
@@ -97,7 +97,7 @@
 	seed = /obj/item/seeds/sunflowerseed
 	name = "sunflower"
 	desc = "It's beautiful! A certain person might beat you to death if you trample these."
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "sunflower"
 	damtype = "fire"
 	force = 0
@@ -116,7 +116,7 @@
 	seed = /obj/item/seeds/novaflowerseed
 	name = "novaflower"
 	desc = "These beautiful flowers have a crisp smokey scent, like a summer bonfire."
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "novaflower"
 	damtype = "fire"
 	force = 0
@@ -126,7 +126,7 @@
 	throw_speed = 1
 	throw_range = 3
 	plant_type = 0
-	attack_verb = list("seared", "heated", "whacked", "steamed")
+	attack_verb = list("seared", "scorched", "burned")
 
 /obj/item/weapon/grown/novaflower/add_juice()
 	if(..())
@@ -138,8 +138,9 @@
 /obj/item/weapon/grown/novaflower/attack(mob/living/carbon/M as mob, mob/user as mob)
 	if(!..()) return
 	if(istype(M, /mob/living))
-		M << "<span class='danger'>You are heated by the warmth of the of the [name]!</span>"
-		M.bodytemperature += potency / 2 * TEMPERATURE_DAMAGE_COEFFICIENT
+		M << "<span class='danger'>You are lit on fire from the intense heat of the [name]!</span>"
+		M.adjust_fire_stacks(potency / 5)
+		M.IgniteMob()
 
 /obj/item/weapon/grown/novaflower/afterattack(atom/A as mob|obj, mob/user as mob,proximity)
 	if(!proximity) return
@@ -272,10 +273,15 @@
 /obj/item/weapon/grown/bananapeel/specialpeel/Crossed(AM)
 	if(..())	qdel(src)
 
+/obj/item/weapon/grown/bananapeel/specialpeel/pananapeel
+	name = "panana peel"
+	desc = "An invisible peel from an invisible banana."
+	icon_state = "panana_peel"
+
 /obj/item/weapon/grown/corncob
 	name = "corn cob"
 	desc = "A reminder of meals gone by."
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "corncob"
 	item_state = "corncob"
 	w_class = 1.0
