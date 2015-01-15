@@ -1,4 +1,4 @@
-/obj/item/weapon/twohanded/singularityhammer
+/obj/item/weapon/singularityhammer
 	name = "singularity hammer"
 	desc = "The pinnacle of close combat technology, the hammer harnesses the power of a miniaturized singularity to deal crushing blows."
 	icon_state = "mjollnir0"
@@ -12,30 +12,31 @@
 	w_class = 5
 	var/charged = 5
 	origin_tech = "combat=5;bluespace=4"
+	twohanded = 1
 
 
 
-/obj/item/weapon/twohanded/singularityhammer/New()
+/obj/item/weapon/singularityhammer/New()
 	..()
 	SSobj.processing.Add(src)
 
 
-/obj/item/weapon/twohanded/singularityhammer/Destroy()
+/obj/item/weapon/singularityhammer/Destroy()
 	SSobj.processing.Remove(src)
 	..()
 
 
-/obj/item/weapon/twohanded/singularityhammer/process()
+/obj/item/weapon/singularityhammer/process()
 	if(charged < 5)
 		charged++
 	return
 
-/obj/item/weapon/twohanded/singularityhammer/update_icon()  //Currently only here to fuck with the on-mob icons.
+/obj/item/weapon/singularityhammer/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "mjollnir[wielded]"
 	return
 
 
-/obj/item/weapon/twohanded/singularityhammer/proc/vortex(var/turf/pull as turf, mob/wielder as mob)
+/obj/item/weapon/singularityhammer/proc/vortex(var/turf/pull as turf, mob/wielder as mob)
 	for(var/atom/X in orange(5,pull))
 		if(istype(X, /atom/movable))
 			if(X == wielder) continue
@@ -57,7 +58,7 @@
 
 
 
-/obj/item/weapon/twohanded/singularityhammer/afterattack(atom/A as mob|obj|turf|area, mob/user as mob, proximity)
+/obj/item/weapon/singularityhammer/afterattack(atom/A as mob|obj|turf|area, mob/user as mob, proximity)
 	if(!proximity) return
 	if(wielded)
 		if(charged == 5)
@@ -70,7 +71,7 @@
 			vortex(target,user)
 
 
-/obj/item/weapon/twohanded/mjollnir
+/obj/item/weapon/mjollnir
 	name = "Mjollnir"
 	desc = "A weapon worthy of a god, able to strike with the force of a lightning bolt. It crackles with barely contained energy."
 	icon_state = "mjollnir0"
@@ -85,7 +86,7 @@
 	//var/charged = 5
 	origin_tech = "combat=5;powerstorage=5"
 
-/obj/item/weapon/twohanded/mjollnir/proc/shock(mob/living/target as mob)
+/obj/item/weapon/mjollnir/proc/shock(mob/living/target as mob)
 	var/datum/effect/effect/system/lightning_spread/s = new /datum/effect/effect/system/lightning_spread
 	s.set_up(5, 1, target.loc)
 	s.start()
@@ -98,7 +99,7 @@
 	return
 
 
-/obj/item/weapon/twohanded/mjollnir/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/mjollnir/attack(mob/M as mob, mob/user as mob)
 	..()
 	spawn(0)
 	if(wielded)
@@ -110,6 +111,6 @@
 			shock(M)
 
 
-/obj/item/weapon/twohanded/mjollnir/update_icon()  //Currently only here to fuck with the on-mob icons.
+/obj/item/weapon/mjollnir/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "mjollnir[wielded]"
 	return

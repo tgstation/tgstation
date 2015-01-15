@@ -185,6 +185,14 @@ obj/item/ammo_box/magazine/tommygunm45
 	caliber = "a762"
 	max_ammo = 50
 
+/obj/item/ammo_box/magazine/minigun
+	name = "drum magazine (7.62mm)"
+	icon_state = "a762"
+	origin_tech = "combat=2"
+	ammo_type = /obj/item/ammo_casing/a762
+	caliber = "a762"
+	max_ammo = 500
+
 /obj/item/ammo_box/magazine/m762/update_icon()
 	..()
 	icon_state = "[initial(icon_state)]-[round(ammo_count(),10)]"

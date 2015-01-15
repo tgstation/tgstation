@@ -200,12 +200,13 @@
 
 /mob/living/simple_animal/drone/swap_hand()
 	var/obj/item/held_item = get_active_hand()
+	var/obj/item/weapon/T = held_item
 	if(held_item)
-		if(istype(held_item, /obj/item/weapon/twohanded))
-			var/obj/item/weapon/twohanded/T = held_item
-			if(T.wielded == 1)
-				usr << "<span class='warning'>Your other hand is too busy holding the [T.name].</span>"
-				return
+		if(istype(held_item, /obj/item/weapon))
+			if(T.twohanded)
+				if(T.wielded == 1)
+					usr << "<span class='warning'>Your other hand is too busy holding the [T.name].</span>"
+					return
 
 	hand = !hand
 	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)

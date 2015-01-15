@@ -342,7 +342,7 @@
 			user << "<span class='notice'>\the [flags & NODROP ? src : W] is stuck to your hand, you can't attach it to \the [flags & NODROP ? W : src]!</span>"
 		else
 			user << "<span class='notice'>You attach the ends of the two plastic swords, making a single double-bladed toy! You're fake-cool.</span>"
-			var/obj/item/weapon/twohanded/dualsaber/toy/newSaber = new /obj/item/weapon/twohanded/dualsaber/toy(user.loc)
+			var/obj/item/weapon/dualsaber/toy/newSaber = new /obj/item/weapon/dualsaber/toy(user.loc)
 			if(hacked) // That's right, we'll only check the "original" "sword".
 				newSaber.hacked = 1
 				newSaber.item_color = "rainbow"
@@ -370,7 +370,7 @@
 /*
  * Subtype of Double-Bladed Energy Swords
  */
-/obj/item/weapon/twohanded/dualsaber/toy
+/obj/item/weapon/dualsaber/toy
 	name = "double-bladed toy sword"
 	desc = "A cheap, plastic replica of TWO energy swords.  Double the fun!"
 	force = 0
@@ -382,10 +382,10 @@
 	origin_tech = null
 	attack_verb = list("attacked", "struck", "hit")
 
-/obj/item/weapon/twohanded/dualsaber/toy/IsShield()
+/obj/item/weapon/dualsaber/toy/IsShield()
 	return 0
 
-/obj/item/weapon/twohanded/dualsaber/toy/IsReflect()//Stops Toy Dualsabers from reflecting energy projectiles
+/obj/item/weapon/dualsaber/toy/IsReflect()//Stops Toy Dualsabers from reflecting energy projectiles
 	return 0
 
 /obj/item/toy/katana

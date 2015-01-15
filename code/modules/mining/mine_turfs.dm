@@ -259,7 +259,7 @@
 		mineralAmt = 0
 		explosion(bombturf,1,2,5, adminlog = 0)
 	if(stage == 2) //Gibtonite deposit is now benign and extractable. Depending on how close you were to it blowing up before defusing, you get better quality ore.
-		var/obj/item/weapon/twohanded/required/gibtonite/G = new /obj/item/weapon/twohanded/required/gibtonite/(src)
+		var/obj/item/weapon/gibtonite/G = new /obj/item/weapon/gibtonite/(src)
 		if(det_time <= 0)
 			G.quality = 3
 			G.icon_state = "Gibtonite ore 3"

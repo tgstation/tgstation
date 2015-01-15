@@ -759,7 +759,7 @@ var/global/list/g_fancy_list_of_types = null
 			W.update_label(M.real_name)
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
-			var/obj/item/weapon/twohanded/fireaxe/fire_axe = new(M)
+			var/obj/item/weapon/fireaxe/fire_axe = new(M)
 			M.equip_to_slot_or_del(fire_axe, slot_r_hand)
 
 		if("masked killer")
@@ -774,7 +774,7 @@ var/global/list/g_fancy_list_of_types = null
 			M.equip_to_slot_or_del(new /obj/item/weapon/kitchenknife(M), slot_l_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/scalpel(M), slot_r_store)
 
-			var/obj/item/weapon/twohanded/fireaxe/fire_axe = new(M)
+			var/obj/item/weapon/fireaxe/fire_axe = new(M)
 			M.equip_to_slot_or_del(fire_axe, slot_r_hand)
 
 			for(var/obj/item/carried_item in M.contents)
