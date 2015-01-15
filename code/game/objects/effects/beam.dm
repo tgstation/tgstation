@@ -252,6 +252,19 @@
 	return 1
 
 /obj/effect/beam/Destroy()
+	for(var/obj/machinery/prism/P in prism_list)
+		var/changed = 0
+		if(src == P.beam)
+			P.beam = null
+			changed = 1
+		if(src in P.beams)
+			P.beams -= src
+			changed = 1
+		if(changed)
+			P.update_beams()
+	for(var/obj/machinery/power/photocollector/PC in photocollector_list)
+		if(src in PC.beams)
+			PC.beams -= src
 	if(!am_connector && !master)
 		beam_testing("\ref[get_master()] - Disconnecting (deleted)")
 		disconnect(0)

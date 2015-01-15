@@ -1,3 +1,4 @@
+var/list/obj/machinery/power/photocollector/photocollector_list = list()
 /obj/machinery/power/photocollector
 	name = "Photocollector"
 	desc = "A device that uses high-energy photons to produce power."
@@ -12,6 +13,14 @@
 	ghost_write=0
 
 	machine_flags = WRENCHMOVE | FIXED2WORK
+
+/obj/machinery/power/photocollector/New()
+	photocollector_list += src
+	..()
+
+/obj/machinery/power/photocollector/Destroy()
+	photocollector_list -= src
+	..()
 
 /obj/machinery/power/photocollector/beam_connect(var/obj/effect/beam/B)
 	..()
