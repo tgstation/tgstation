@@ -795,9 +795,9 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			qdel(src)
 		return
 
-	if (src.isbroken)
+	if (isbroken)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 100, 1)
-		src.loc.audible_message("<span class='danger'>[user.name] further abuses the shattered [src.name].</span>", null, 5 )
+		audible_message("<span class='danger'>[user.name] further abuses the shattered [src.name].</span>", null, 5 )
 	else
 		if(istype(I, /obj/item/weapon) )
 			user.do_attack_animation(src)
@@ -805,16 +805,16 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			if(W.damtype == STAMINA)
 				return
 			if(W.force <15)
-				src.loc.audible_message("<span class='danger'>[user.name] hits the [src.name] with the [W.name] with no visible effect.</span>", null , 5 )
+				audible_message("<span class='danger'>[user.name] hits the [src.name] with the [W.name] with no visible effect.</span>", null , 5 )
 				playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
 			else
-				src.hitstaken++
-				if(src.hitstaken==3)
-					src.loc.audible_message("<span class='danger'>[user.name] smashes the [src.name]!</span>", null, 5 )
-					src.isbroken=1
+				hitstaken++
+				if(hitstaken==3)
+					audible_message("<span class='danger'>[user.name] smashes the [src.name]!</span>", null, 5 )
+					isbroken=1
 					playsound(src.loc, 'sound/effects/Glassbr3.ogg', 100, 1)
 				else
-					src.loc.audible_message("<span class='danger'>[user.name] forcefully slams the [src.name] with the [I.name]!</span>", null, 5 )
+					audible_message("<span class='danger'>[user.name] forcefully slams the [src.name] with the [I.name]!</span>", null, 5 )
 					playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
 		else
 			user << "<FONT COLOR='blue'>This does nothing.</FONT>"

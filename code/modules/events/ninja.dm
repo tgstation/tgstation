@@ -1555,7 +1555,7 @@ ________________________________________________________________________________
 			P.tnote += "<i><b>&larr; From [!s_control?(A):"an unknown source"]:</b></i><br>[t]<br>"
 			if (!P.silent)
 				playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
-				P.loc.audible_message("\icon[P] *[P.ttone]*", null, 3)
+				P.audible_message("\icon[P] *[P.ttone]*", null, 3)
 			P.overlays.Cut()
 			P.overlays += image('icons/obj/pda.dmi', "pda-r")
 
