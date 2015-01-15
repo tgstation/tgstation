@@ -31,7 +31,7 @@
 	return "states, \"[text]\"";
 
 /mob/living/silicon/ai/IsVocal()
-	//return !config.silent_ai
+	return !config.silent_ai
 
 /mob/living/silicon/ai/get_message_mode(message)
 	if(copytext(message, 1, 3) in list(":h", ":H", ".h", ".H", "#h", "#H"))

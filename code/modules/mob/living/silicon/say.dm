@@ -11,6 +11,9 @@
 /mob/living/silicon/say(var/message)
 	return ..(message, "R")
 
+/mob/living/silicon/robot/IsVocal()
+		return !config.silent_borg
+	
 /mob/living/proc/robot_talk(var/message)
 
 	log_say("[key_name(src)] (@[src.x],[src.y],[src.z])(binary): [message]")
