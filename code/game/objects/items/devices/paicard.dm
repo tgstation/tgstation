@@ -62,7 +62,7 @@
 
 	if(href_list["request"])
 		src.looking_for_personality = 1
-		paiController.findPAI(src, usr)
+		SSpai.findPAI(src, usr)
 
 	if(pai)
 		if(href_list["setdna"])
