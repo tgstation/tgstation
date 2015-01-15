@@ -104,7 +104,7 @@
 
 
 /obj/item/weapon/grab/proc/s_click(obj/screen/S)
-	if(!affecting)
+	if(!affecting || !assailant || timeDestroyed)
 		return
 	if(state == GRAB_UPGRADING)
 		return
