@@ -44,11 +44,11 @@
 /obj/item/device/material_synth/update_icon()
 	icon_state = "mat_synth[mode ? "on" : "off"]"
 
-	
-	
+
+
 /obj/item/device/material_synth/proc/create_material(mob/user, var/material)
 	var/obj/item/stack/sheet/material_type = material
-	
+
 	if(isrobot(user))
 		var/mob/living/silicon/robot/R = user
 		if(material_type && R.cell.charge)
@@ -61,9 +61,9 @@
 			if(amount)
 				if(TakeCost(amount, modifier, R))
 					var/obj/item/stack/sheet/inside_sheet = (locate(material_type) in R.module.modules)
-					if(!inside_sheet) 
-						R.module.modules += new material_type(R.module) //cyborgs can get a free sheet, honk!
-						var/obj/item/stack/sheet/created_sheet = (locate(material_type) in R.module.modules)
+					if(!inside_sheet)
+						var/obj/item/stack/sheet/created_sheet = new material_type(R.module)
+						R.module.modules +=  created_sheet//cyborgs can get a free sheet, honk!
 						if((created_sheet.amount + amount) <= created_sheet.max_amount)
 							created_sheet.amount += amount
 							R << "Added [amount] of [material_type] to the stack."
@@ -98,10 +98,10 @@
 					return
 
 				return
-			
+
 		else if(R.cell.charge)
 			R << "You need to select a sheet type first!"
-			return		
+			return
 	else
 		if(material_type && matter)
 			var/modifier = MAT_COST_COMMON
@@ -119,8 +119,8 @@
 			return
 		else
 			user << "\The [src] is empty!"
-			
-	return 1	
+
+	return 1
 /obj/item/device/material_synth/afterattack(var/obj/target, mob/user)
 	if(istype(target, /obj/item/stack/sheet))
 		for(var/matID in materials_scanned)
@@ -179,7 +179,7 @@
 /obj/item/device/material_synth/proc/TakeCost(var/spawned, var/modifier, mob/user)
 	if(spawned)
 		matter -= round(spawned * modifier)
-		
+
 //mommis matter synth lacks the capability to scan new materials.
 obj/item/device/material_synth/robot/afterattack(/obj/target, mob/user)
 	user << "<span class='notice'>Your [src.name] does not contain this functionality.</span>"
