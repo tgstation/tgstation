@@ -42,7 +42,7 @@
 
 /obj/item/weapon/reagent_containers/hypospray/CMO/New()
 	..()
-	reagents.add_reagent("doctorsdelight", 30)
+	reagents.add_reagent("omnizine", 30)
 
 /obj/item/weapon/reagent_containers/hypospray/combat
 	name = "combat stimulant injector"
@@ -54,14 +54,15 @@
 
 /obj/item/weapon/reagent_containers/hypospray/combat/New()
 	..()
-	reagents.add_reagent("synaptizine", 30)
+	reagents.add_reagent("ephedrine", 15)
+	reagents.add_reagent("salglu_solution", 15)
 
 
 
 //MediPens
 
 /obj/item/weapon/reagent_containers/hypospray/medipen
-	name = "inaprovaline medipen" //lol epipen is copyrighted
+	name = "ephedrine medipen"
 	desc = "A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge."
 	icon_state = "medipen"
 	item_state = "medipen"
@@ -69,7 +70,7 @@
 	volume = 10
 	ignore_flags = 1 //so you can medipen through hardsuits
 	flags = null
-	var/starting_reagent = "inaprovaline"
+	var/starting_reagent = "ephedrine"
 	var/starting_amount = 10
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/New()
@@ -129,9 +130,3 @@
 	desc = "A rapid way to get you out of a tight situation and fast! You'll feel rather drowsy, though."
 	icon_state = "medipen"
 	starting_reagent = "morphine"
-
-/obj/item/weapon/reagent_containers/hypospray/medipen/ephedrine
-	name = "ephedrine medipen"
-	desc = "A rapid way to get you up and out of a tight situation and fast!"
-	icon_state = "medipen"
-	starting_reagent = "ephedrine"
