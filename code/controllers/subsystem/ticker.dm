@@ -347,8 +347,7 @@ var/datum/subsystem/ticker/ticker
 			if(Player.stat != DEAD && !isbrain(Player))
 				num_survivors++
 				if(station_evacuated) //If the shuttle has already left the station
-					var/turf/playerTurf = get_turf(Player)
-					if(!playerTurf || playerTurf.z != ZLEVEL_CENTCOM)
+					if(!Player.onCentcom())
 						Player << "<font color='blue'><b>You managed to survive, but were marooned on [station_name()]...</b></FONT>"
 					else
 						num_escapees++

@@ -54,9 +54,9 @@
 		var/turf/T = get_turf(M)
 		if(!T)
 			continue
-		if(T.z == 2)
+		if(T.z == ZLEVEL_CENTCOM)
 			continue
-		if(T.z > 6)
+		if(T.z >= ZLEVEL_SPACEMAX)
 			continue
 		if(M == usr)
 			continue

@@ -684,7 +684,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "confliction")
 		var/choice = input("The shuttle will just return if you call it. Call anyway?") in list("Confirm", "Cancel")
 		if(choice == "Confirm")
-			SSshuttle.emergencyFakeRecall = rand(0.5,0.9)
+			SSshuttle.emergencyFakeRecall = rand(5,9) * 0.1
 		else
 			return
 

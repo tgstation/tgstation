@@ -55,7 +55,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		user << "<span class='warning'>You shouldn't have this spell! Something's wrong.</span>"
 		return 0
 
-	if(user.z == 2 && !centcom_cancast) //Certain spells are not allowed on the centcom zlevel
+	if(user.z == ZLEVEL_CENTCOM && !centcom_cancast) //Certain spells are not allowed on the centcom zlevel
 		return 0
 
 	if(!skipcharge)

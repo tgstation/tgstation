@@ -79,4 +79,13 @@
 			icon_state = "[initial(icon_state)][shot.mod_name][ratio]"
 		if (2)
 			icon_state = "[initial(icon_state)][shot.select_name][ratio]"
+	overlays.Cut()
+	if(F)
+		if(F.on)
+			overlays += "flight-on"
+		else
+			overlays += "flight"
 	return
+
+/obj/item/weapon/gun/energy/ui_action_click()
+	toggle_gunlight()

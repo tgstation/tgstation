@@ -149,10 +149,10 @@ var/datum/subsystem/vote/SSvote
 			if("restart")	choices.Add("Restart Round","Continue Playing")
 			if("gamemode")	choices.Add(config.votable_modes)
 			if("custom")
-				question = html_encode(input(usr,"What is the vote for?") as text|null)
+				question = stripped_input(usr,"What is the vote for?")
 				if(!question)	return 0
 				for(var/i=1,i<=10,i++)
-					var/option = capitalize(html_encode(input(usr,"Please enter an option or hit cancel to finish") as text|null))
+					var/option = capitalize(stripped_input(usr,"Please enter an option or hit cancel to finish"))
 					if(!option || mode || !usr.client)	break
 					choices.Add(option)
 			else			return 0

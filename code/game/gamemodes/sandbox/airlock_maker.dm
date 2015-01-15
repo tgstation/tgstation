@@ -75,7 +75,7 @@ datum/airlock_maker/Topic(var/href,var/list/href_list)
 		return
 
 	if("rename" in href_list)
-		var/newname = input(usr,"New airlock name:","Name the airlock",doorname) as null|text
+		var/newname = stripped_input(usr,"New airlock name:","Name the airlock",doorname)
 		if(newname)
 			doorname = newname
 	if("access" in href_list)

@@ -18,7 +18,7 @@
 		for(var/mob/living/player in mob_list)
 			if (player.client && player.stat != 2)
 				playercount += 1
-			max_mages = round(playercount / 2)
+			max_mages = round(playercount / 5)
 
 /datum/game_mode/wizard/raginmages/greet_wizard(var/datum/mind/wizard, var/you_are=1)
 	if (you_are)
@@ -50,7 +50,7 @@
 
 	if (wizards_alive)
 		if(!time_checked) time_checked = world.time
-		if(world.time > time_checked + 500 && (mages_made < max_mages))
+		if(world.time > time_checked + 1500 && (mages_made < max_mages))
 			time_checked = world.time
 			make_more_mages()
 	else
@@ -71,7 +71,7 @@
 	mages_made++
 	var/list/mob/dead/observer/candidates = list()
 	var/mob/dead/observer/theghost = null
-	spawn(rand(100, 200))
+	spawn(rand(500, 700))
 		message_admins("SWF is still pissed, sending another wizard - [max_mages - mages_made] left.")
 		for(var/mob/dead/observer/G in player_list)
 			if(G.client && !G.client.holder && !G.client.is_afk() && G.client.prefs.be_special & BE_WIZARD)

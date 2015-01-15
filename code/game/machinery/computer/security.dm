@@ -514,7 +514,7 @@ What a mess.*/
 				switch(href_list["field"])
 					if("name")
 						if (istype(active1, /datum/data/record) || istype(active2, /datum/data/record))
-							var/t1 = input("Please input name:", "Secure. records", active1.fields["name"], null)  as text
+							var/t1 = stripped_input(usr, "Please input name:", "Secure. records", active1.fields["name"], null)
 							if ((!( t1 ) || !length(trim(t1)) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon)))) || active1 != a1)
 								return
 							if(istype(active1, /datum/data/record))

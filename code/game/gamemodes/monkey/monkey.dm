@@ -72,8 +72,7 @@
 /datum/game_mode/monkey/proc/check_monkey_victory()
 	for(var/mob/living/carbon/monkey/M in living_mob_list)
 		if (M.HasDisease(/datum/disease/transformation/jungle_fever))
-			var/area/A = get_area(M)
-			if(is_type_in_list(A, centcom_areas))
+			if(M.onCentcom())
 				escaped_monkeys++
 	if(escaped_monkeys >= monkeys_to_win)
 		return 0

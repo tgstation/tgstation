@@ -144,7 +144,7 @@
 					emp_damage = 30//Let's not overdo it
 				if(21 to 30)//High level of EMP damage, unable to see, hear, or speak
 					eye_blind = max(eye_blind, 1)
-					ear_deaf = 1
+					setEarDamage(-1,1)
 					silent = 1
 					if(!alert)//Sounds an alarm, but only once per 'level'
 						emote("alarm")
@@ -155,12 +155,12 @@
 				if(20)
 					alert = 0
 					eye_blind = 0
-					ear_deaf = 0
+					setEarDamage(-1,0)
 					silent = 0
 					emp_damage -= 1
 				if(11 to 19)//Moderate level of EMP damage, resulting in nearsightedness and ear damage
 					eye_blurry = 1
-					ear_damage = 1
+					setEarDamage(1,-1)
 					if(!alert)
 						emote("alert")
 						src << "<span class='danger'>Primary systems are now online.</span>"
@@ -170,7 +170,7 @@
 				if(10)
 					alert = 0
 					eye_blurry = 0
-					ear_damage = 0
+					setEarDamage(0,-1)
 					emp_damage -= 1
 				if(2 to 9)//Low level of EMP damage, has few effects(handled elsewhere)
 					if(!alert)
