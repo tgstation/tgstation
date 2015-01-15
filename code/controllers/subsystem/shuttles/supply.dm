@@ -182,31 +182,24 @@
 
 /proc/forbidden_atoms_check(atom/A)
 	if(A)
-		if(istype(A,/mob/living))
+		if(is_type_in_list(A, blacklist))
 			return 1
-		if(istype(A,/obj))
-			if(istype(A,/obj/effect/blob))
-				return 1
-			if(istype(A,/obj/effect/spider/spiderling))
-				return 1
-			if(istype(A,/obj/item/weapon/disk/nuclear))
-				return 1
-			if(istype(A,/obj/machinery/nuclearbomb))
-				return 1
-			if(istype(A,/obj/item/device/radio/beacon))
-				return 1
-			if(istype(A,/obj/machinery/the_singularitygen/))
-				return 1
-			if(istype(A,/obj/singularity))
-				return 1
-
 		for(var/thing in A)
 			if(.(thing))
 				return 1
 
 	return 0
 
-
+/var/list/blacklist = list(
+	/mob/living,
+	/obj/effect/blob,
+	/obj/effect/spider/spiderling,
+	/obj/item/weapon/disk/nuclear,
+	/obj/machinery/nuclearbomb,
+	/obj/item/device/radio/beacon,
+	/obj/machinery/the_singularitygen,
+	/obj/singularity,
+)
 
 
 /obj/machinery/computer/ordercomp/attack_hand(var/mob/user as mob)
