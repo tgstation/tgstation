@@ -81,7 +81,7 @@ datum/reagent/crank/on_mob_life(var/mob/living/M as mob)
 		M << "<span class='danger'>Your skin feels loose...</span>"
 	if(cycle_count == 50)
 		M << "<span class='userdanger'>Your skin falls off!</span>"
-		M.adjustBruteLoss(rand(10,30)*REM)
+		M.adjustBruteLoss(rand(50,80)*REM) // holy shit your skin just FELL THE FUCK OFF
 		hardset_dna(M, null, null, null, null, /datum/species/skeleton)
 	if(volume > 20)
 		overdosed = 1
@@ -94,7 +94,7 @@ datum/reagent/crank/on_mob_life(var/mob/living/M as mob)
 	name = "Krokodil"
 	id = "krokodil"
 	result = "krokodil"
-	required_reagents = list("diphenhydramine" = 1, "morphine" = 1, "cleaner" = 1, "potassium" = 1, "phosphorous" = 1, "fuel" = 1)
+	required_reagents = list("diphenhydramine" = 1, "morphine" = 1, "cleaner" = 1, "potassium" = 1, "phosphorus" = 1, "fuel" = 1)
 	result_amount = 6
 	mix_message = "The mixture dries into a pale blue powder."
 	required_temp = 380

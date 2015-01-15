@@ -29,6 +29,7 @@
 	var/turf/simulated/T = get_turf(holder.my_atom)
 	for(var/turf/simulated/turf in orange(1,T))
 		new /obj/effect/hotspot(turf)
+	new /obj/effect/hotspot(T)
 	return
 
 /datum/reagent/clf3/reaction_turf(var/turf/simulated/T, var/volume)
@@ -38,6 +39,11 @@
 			F.make_plating()
 		if(prob(11))
 			F.ChangeTurf(/turf/space)
+	if(istype(T, /turf/simulated/wall/))
+		var/turf/simulated/wall/W = T
+		if(prob(33))
+			F.ChangeTurf(/turf/simulated/floor)
+	new /obj/effect/hotspot(T)
 	return
 
 /datum/reagent/clf3/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
@@ -45,6 +51,7 @@
 		return
 	if(method == TOUCH)
 		M.adjust_fire_stacks(20)
+		new /obj/effect/hotspot(M.loc)
 		return
 
 /datum/reagent/sorium
