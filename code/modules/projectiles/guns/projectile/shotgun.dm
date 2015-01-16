@@ -206,6 +206,7 @@
 	can_suppress = 0
 	burst_size = 1
 	fire_delay = 0
+	pin = /obj/item/device/firing_pin/implant/pindicate
 	action_button_name = null
 
 /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/New()

@@ -80,6 +80,7 @@
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	fire_delay = 2
 	burst_size = 2
+	pin = /obj/item/device/firing_pin/implant/pindicate
 
 /obj/item/weapon/gun/projectile/automatic/c20r/New()
 	..()
@@ -112,6 +113,7 @@
 	can_suppress = 0
 	burst_size = 5
 	fire_delay = 3
+	pin = /obj/item/device/firing_pin/implant/pindicate
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user as mob)
 	cover_open = !cover_open
@@ -165,6 +167,7 @@
 	var/obj/item/weapon/gun/projectile/revolver/grenadelauncher/underbarrel
 	burst_size = 3
 	fire_delay = 2
+	pin = /obj/item/device/firing_pin/implant/pindicate
 
 /obj/item/weapon/gun/projectile/automatic/m90/New()
 	..()

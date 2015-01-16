@@ -8,6 +8,7 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
+	pin = null
 
 
 /obj/item/weapon/gun/energy/ionrifle/emp_act(severity)
@@ -19,6 +20,7 @@
 	icon_state = "decloner"
 	origin_tech = "combat=5;materials=4;powerstorage=3"
 	ammo_type = list(/obj/item/ammo_casing/energy/declone)
+	pin = null
 
 /obj/item/weapon/gun/energy/floragun
 	name = "floral somatoray"

@@ -14,6 +14,9 @@
 	var/secondary = 0 // set to nonzero if secondary reaction
 	var/mob_react = 0 //Determines if a chemical reaction can occur inside a mob
 
+	var/required_temp = 0
+	var/mix_message = "The solution begins to bubble."
+
 /datum/chemical_reaction/proc/on_reaction(var/datum/reagents/holder, var/created_volume)
 	return
 

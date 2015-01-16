@@ -11,7 +11,7 @@ var/list/sacrificed = list()
 	for(var/obj/effect/rune/R in world)
 		if(R == src)
 			continue
-		if(R.word1 == wordtravel && R.word2 == wordself && R.word3 == key && R.z != 2)
+		if(R.word1 == wordtravel && R.word2 == wordself && R.word3 == key && R.z != ZLEVEL_CENTCOM)
 			index++
 			allrunesloc.len = index
 			allrunesloc[index] = R.loc

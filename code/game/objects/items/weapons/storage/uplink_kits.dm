@@ -103,21 +103,21 @@
 /*/obj/item/weapon/storage/box/syndie_kit/imp_compress
 	name = "Compressed Matter Implant (with injector)"
 
-/obj/item/weapon/storage/syndie_kit/imp_compress/New()
+/obj/item/weapon/storage/box/syndie_kit/imp_compress/New()
 	new /obj/item/weapon/implanter/compressed(src)
 	..()
 	return
+*/
 
-/obj/item/weapon/storage/syndie_kit/imp_explosive
+/obj/item/weapon/storage/box/syndie_kit/imp_explosive
 	name = "Explosive Implant (with injector)"
 
-/obj/item/weapon/storage/syndie_kit/imp_explosive/New()
-	var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(src)
+/obj/item/weapon/storage/box/syndie_kit/imp_explosive/New()
+	var/obj/item/weapon/implanter/O = new(src)
 	O.imp = new /obj/item/weapon/implant/explosive(O)
-	O.name = "(BIO-HAZARD) BIO-detpack"
 	O.update_icon()
 	..()
-	return*/
+	return
 
 /obj/item/weapon/storage/box/syndie_kit/imp_uplink
 	name = "boxed uplink implant (with injector)"
@@ -152,6 +152,7 @@
 	new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
 	return
 
+
 /obj/item/weapon/storage/box/syndie_kit/emp
 	name = "boxed EMP kit"
 
@@ -161,4 +162,17 @@
 	new /obj/item/weapon/grenade/empgrenade(src)
 	new /obj/item/weapon/implanter/emp/(src)
 	new /obj/item/device/flashlight/emp/(src)
+	return
+
+/obj/item/weapon/storage/box/syndie_kit/chemical
+	name = "boxed chemical kit"
+
+/obj/item/weapon/storage/box/syndie_kit/chemical/New()
+	..()
+	new /obj/item/weapon/reagent_containers/glass/bottle/polonium(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/venom(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/neurotoxin2(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/formaldehyde(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/cyanide(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/histamine(src)
 	return
