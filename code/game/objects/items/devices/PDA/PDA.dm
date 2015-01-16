@@ -631,11 +631,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 //CHATROOM FUNCTIONS====================================
 
 			if("Set Nick")
-				var/t = stripped_input(U, "Please enter nickname", name, null) as text
-				nick = copytext(sanitize(t), 1, 9)
+				nick = stripped_input(U, "Please enter nickname", name, null, 8)
 
 			if("Set Channel")
-				var/t = stripped_input(U, "Please enter channel", name, (chat_channel)) as text
+				var/t = stripped_input(U, "Please enter channel", name, chat_channel)
 
 				if(t)
 					var/datum/chatroom/C = chatchannels[chat_channel]
@@ -810,7 +809,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 		if (!P.silent)
 			playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
-		P.loc.audible_message("\icon[P] *[P.ttone]*", null, 3)
+			P.audible_message("\icon[P] *[P.ttone]*", null, 3)
 		//Search for holder of the PDA.
 		var/mob/living/L = null
 		if(P.loc && isliving(P.loc))
@@ -1151,7 +1150,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	else
 		ntrclog[channel] = msg + ntrclog[channel]
 	if (findtext(message, nick) && !silent)
-		loc.audible_message("\icon[src] *[ttone]*", null, 3)
+		audible_message("\icon[src] *[ttone]*", null, 3)
 	new_ntrc_msg++
 
 /obj/item/device/pda/proc/setup_chatrooms() //this can't be done on New() because the messaging server needs to be instanced first

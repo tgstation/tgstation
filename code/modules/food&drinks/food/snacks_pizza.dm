@@ -228,13 +228,13 @@
 		if(open )
 			return
 
-		var/t = input("Enter what you want to add to the tag:", "Write", null, null) as text
+		var/t = stripped_input(user, "Enter what you want to add to the tag:", "Write", "", 30)
 
 		var/obj/item/pizzabox/boxtotagto = src
 		if(boxes.len > 0)
 			boxtotagto = boxes[boxes.len]
 
-		boxtotagto.boxtag = copytext("[boxtotagto.boxtag][t]", 1, 30)
+		boxtotagto.boxtag = "[boxtotagto.boxtag][t]"
 
 		update_icon()
 		return

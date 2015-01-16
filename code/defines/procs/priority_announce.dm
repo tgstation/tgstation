@@ -30,7 +30,7 @@
 
 /proc/print_command_report(var/text = "", var/title = "Central Command Update")
 	for (var/obj/machinery/computer/communications/C in machines)
-		if(!(C.stat & (BROKEN|NOPOWER)) && C.z == 1)
+		if(!(C.stat & (BROKEN|NOPOWER)) && C.z == ZLEVEL_STATION)
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
 			P.name = "paper- '[title]'"
 			P.info = text

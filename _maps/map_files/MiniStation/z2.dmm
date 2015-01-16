@@ -337,7 +337,7 @@
 "kn" = (/obj/structure/bookcase{name = "Forbidden Knowledge"},/obj/effect/decal/cleanable/cobweb,/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
 "ko" = (/obj/structure/bookcase{name = "Forbidden Knowledge"},/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
 "kp" = (/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
-"kq" = (/obj/machinery/librarycomp,/obj/structure/table/wood,/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
+"kq" = (/obj/machinery/computer/libraryconsole/bookmanagement,/obj/structure/table/wood,/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
 "kr" = (/obj/machinery/vending/magivend,/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
 "ks" = (/obj/machinery/vending/snack,/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
 "kt" = (/obj/structure/closet{icon_closed = "cabinet_closed"; icon_opened = "cabinet_open"; icon_state = "cabinet_closed"},/obj/item/weapon/storage/backpack/satchel,/turf/unsimulated/floor{dir = 9; icon_state = "carpetside"},/area/wizard_station)

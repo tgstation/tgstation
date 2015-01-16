@@ -288,7 +288,7 @@
 /datum/game_mode/revolution/proc/check_heads_victory()
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		var/turf/T = get_turf(rev_mind.current)
-		if((rev_mind) && (rev_mind.current) && (rev_mind.current.stat != 2) && rev_mind.current.client && T && (T.z == 1))
+		if((rev_mind) && (rev_mind.current) && (rev_mind.current.stat != 2) && rev_mind.current.client && T && (T.z == ZLEVEL_STATION))
 			if(ishuman(rev_mind.current))
 				return 0
 	return 1
@@ -329,7 +329,7 @@
 			if(headrev.current)
 				if(headrev.current.stat == DEAD)
 					text += "died"
-				else if(headrev.current.z != 1)
+				else if(headrev.current.z != ZLEVEL_STATION)
 					text += "fled the station"
 				else
 					text += "survived the revolution"
@@ -353,7 +353,7 @@
 			if(rev.current)
 				if(rev.current.stat == DEAD || isbrain(rev.current))
 					text += "died"
-				else if(rev.current.z != 1)
+				else if(rev.current.z != ZLEVEL_STATION)
 					text += "fled the station"
 				else
 					text += "survived the revolution"
@@ -379,7 +379,7 @@
 			if(head.current)
 				if(head.current.stat == DEAD || isbrain(head.current))
 					text += "died"
-				else if(head.current.z != 1)
+				else if(head.current.z != ZLEVEL_STATION)
 					text += "fled the station"
 				else
 					text += "survived the revolution"

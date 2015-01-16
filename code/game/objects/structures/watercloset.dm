@@ -130,7 +130,6 @@
 				user << "<span class='notice'>You need a tighter grip.</span>"
 
 
-
 /obj/machinery/shower
 	name = "shower"
 	desc = "The HS-451. Installed in the 2550s by the Nanotrasen Hygiene Division."

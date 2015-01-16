@@ -22,6 +22,7 @@
 	modifystate = 0
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
 	can_flashlight = 0
+	pin = null
 
 /obj/item/weapon/gun/energy/gun/nuclear/New()
 	..()
