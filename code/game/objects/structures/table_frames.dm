@@ -68,7 +68,7 @@
 
 /obj/structure/table_frame/wood/attackby(var/obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/wrench))
-	 ..()
+		..()
 	if(istype(I, /obj/item/stack/sheet/mineral/wood))
 		var/obj/item/stack/sheet/mineral/wood/W = I
 		user << "<span class='notice'>Now adding [W] to [src].</span>"
