@@ -119,6 +119,9 @@ var/list/department_radio_keys = list(
 
 	if(handle_inherent_channels(message, message_mode))
 		return
+	if(isMoMMI(src))
+		src:mommi_talk(message)
+		return
 	if(!can_speak_vocal(message))
 		return
 	message = treat_message(message)
