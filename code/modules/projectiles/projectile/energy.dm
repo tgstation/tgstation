@@ -51,7 +51,7 @@
 	weaken = 5
 	range = 7
 
-/obj/item/projectile/energy/bolt //xbow bolts
+/obj/item/projectile/energy/bolt //ebow bolts
 	name = "bolt"
 	icon_state = "cbbolt"
 	damage = 15
@@ -61,13 +61,5 @@
 	stutter = 5
 	range = 7
 
-/obj/item/projectile/energy/bolt/on_hit(var/atom/target, var/blocked = 0) //drop a bolt on hitting basically anything
-	if(!proj_hit)
-		proj_hit = 1
-		new /obj/item/ammo_casing/caseless/bolt(src.loc)
-	..()
-
-/obj/item/projectile/energy/bolt/on_range() //drop a bolt after 7 tiles
-	if(!proj_hit)
-		new /obj/item/ammo_casing/caseless/bolt(src.loc)
-		..()
+/obj/item/projectile/energy/bolt/large
+	damage = 20

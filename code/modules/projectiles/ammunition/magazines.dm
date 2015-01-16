@@ -90,14 +90,19 @@
 	ammo_type = /obj/item/ammo_casing/a40mm
 	max_ammo = 6
 
-/obj/item/ammo_box/magazine/internal/cylinder/crossbow
-	name = "autocrossbow internal magazine"
-	ammo_type = /obj/item/ammo_casing/caseless/bolt
-	caliber = "crossbow"
-	max_ammo = 10
+/obj/item/ammo_box/magazine/internal/cylinder/speargun
+	name = "speargun internal magazine"
+	ammo_type = /obj/item/ammo_casing/caseless/magspear
+	caliber = "speargun"
+	max_ammo = 1
 
-/obj/item/ammo_box/magazine/internal/cylinder/crossbow/large
-	max_ammo = 15
+/obj/item/ammo_box/magazine/internal/boltaction
+	name = "bolt action rifle internal magazine"
+	desc = "Oh god, this shouldn't be here"
+	ammo_type = /obj/item/ammo_casing/a762
+	caliber = "a762"
+	max_ammo = 5
+	multiload = 1
 
 ///////////EXTERNAL MAGAZINES////////////////
 

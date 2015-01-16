@@ -169,7 +169,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	if(!iscultist(user))
 		user << "<span class='notice'>You can't mouth the arcane scratchings without fumbling over them.</span>"
 		return
-	if(user.is_muzzled())
+	if(!user.can_speak() && (user.mind && !user.mind.miming))
 		user << "<span class='notice'>You are unable to speak the words of the rune.</span>"
 		return
 	if(!word1 || !word2 || !word3 || prob(user.getBrainLoss()))

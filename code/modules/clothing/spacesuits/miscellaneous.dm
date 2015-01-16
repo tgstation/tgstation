@@ -115,3 +115,56 @@
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 	strip_delay = 40
 	put_on_delay = 20
+
+	//Emergency Response Team suits
+/obj/item/clothing/head/helmet/space/hardsuit/ert
+	name = "emergency response unit helmet"
+	desc = "Standard issue command helmet for the ERT"
+	icon_state = "hardsuit0-ert_commander"
+	item_state = "hardsuit0-ert_commander"
+	item_color = "ert_commander"
+	armor = list(melee = 65, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 100, rad = 100)
+	strip_delay = 130
+
+/obj/item/clothing/head/helmet/space/hardsuit/ert/sec
+	desc = "Standard issue security helmet for the ERT"
+	icon_state = "hardsuit0-ert_security"
+	item_state = "hardsuit0-ert_security"
+	item_color = "ert_security"
+
+/obj/item/clothing/head/helmet/space/hardsuit/ert/engi
+	desc = "Standard issue engineer helmet for the ERT"
+	icon_state = "hardsuit0-ert_engineer"
+	item_state = "hardsuit0-ert_engineer"
+	item_color = "ert_engineer"
+
+/obj/item/clothing/head/helmet/space/hardsuit/ert/med
+	desc = "Standard issue medical helmet for the ERT"
+	icon_state = "hardsuit0-ert_medical"
+	item_state = "hardsuit0-ert_medical"
+	item_color = "ert_medical"
+
+/obj/item/clothing/suit/space/ert
+	name = "emergency response team suit"
+	desc = "Standard issue command suit for the ERT."
+	icon_state = "ert_command"
+	item_state = "ert_command"
+	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
+	armor = list(melee = 65, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 100, rad = 100)
+	slowdown = 1
+	strip_delay = 130
+
+/obj/item/clothing/suit/space/ert/sec
+	desc = "Standard issue security suit for the ERT."
+	icon_state = "ert_security"
+	item_state = "ert_security"
+
+/obj/item/clothing/suit/space/ert/engi
+	desc = "Standard issue engineer suit for the ERT."
+	icon_state = "ert_engineer"
+	item_state = "ert_engineer"
+
+/obj/item/clothing/suit/space/ert/med
+	desc = "Standard issue medical suit for the ERT."
+	icon_state = "ert_medical"
+	item_state = "ert_medical"
