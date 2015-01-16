@@ -130,7 +130,7 @@
 	var/obj/item/TS
 	if(isnull(module_active))
 		return
-	if((module_active in src.contents) && !(module_active in src.module.modules))
+	if((module_active in src.contents) && !(module_active in src.module.modules) && (module_active != src.module.emag))
 		TS = tool_state
 		drop_item()
 		if(TS && TS.loc)
@@ -162,7 +162,7 @@
 		inv_tool.icon_state = "inv1"
 	if(is_in_modules(TS))
 		TS.loc = src.module
-	R.hud_used.update_robot_modules_display()
+	hud_used.update_robot_modules_display()
 
 /mob/living/silicon/robot/mommi/uneq_all()
 	module_active = null
