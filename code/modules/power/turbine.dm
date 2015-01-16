@@ -136,8 +136,9 @@
 	return !density
 
 /obj/machinery/power/compressor/process()
-	stat = (!turbine || panel_open)
-	if(stat & BROKEN)
+	if(!turbine)
+		stat = BROKEN
+	if(stat & BROKEN || panel_open)
 		return
 	if(!starter)
 		return
@@ -235,8 +236,11 @@
 	return !density
 
 /obj/machinery/power/turbine/process()
-	stat = (!compressor || panel_open)
-	if(stat & BROKEN)
+
+	if(!compressor)
+		stat = BROKEN
+
+	if((stat & BROKEN) || panel_open)
 		return
 	if(!compressor.starter)
 		return
