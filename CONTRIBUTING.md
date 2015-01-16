@@ -99,3 +99,18 @@ There is no strict process when it comes to merging pull requests, pull requests
 * If you are proposing multiple changes, which change many different aspects of the code, you are expected to section them off into different pull requests in order to make it easier to review them and to deny/accept the changes that are deemed acceptable.
 
 * If your pull request is accepted, the code you add is no longer exclusively yours but everyones, everyone is free to work on it but you are also free to object to any changes being made, which will be noted by a Project Lead or Project Manager. It is a shame this has to be explicitly told but there have been cases where this would've saved some trouble.
+
+##Developing Secure Code
+
+* Player input must always be escaped safely, we recommend you use stripped_input in all cases where you would use input. Essentially, just always treat input from players as inherently malicious and design with that use case in mind
+
+* Calls to the database must be escaped properly - use sanitizeSQL to escape database entries from players or admins
+
+* All calls to topics must be checked for correctness, topic href calls can be generated maliciously, so you should ensure that the call is valid for the state the item is in. Do not rely on the UI code to provide only valid topic calls
+
+* Information that players could use to metagame (that is to identify the round type and or the antags via information that would not be available to them in character) should be kept as administrator only
+
+* It is recommended as well you do not expose information about the players - even something as simple as the number of people who have readied up at the start of the round can and has been used to try to identify the round type
+
+* Where you have code that can cause large scale modification and *FUN* make sure you start it out locked behind one of the default admin roles - use common sense to determine which role fits the level of damage a function could do
+

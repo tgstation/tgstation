@@ -81,7 +81,7 @@ var/list/blob_nodes = list()
 			if(directory[ckey(blob.key)])
 				blob_client = directory[ckey(blob.key)]
 				location = get_turf(C)
-				if(location.z != 1 || istype(location, /turf/space))
+				if(location.z != ZLEVEL_STATION || istype(location, /turf/space))
 					location = null
 				C.gib()
 

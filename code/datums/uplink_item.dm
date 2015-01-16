@@ -137,9 +137,10 @@ var/list/uplink_items = list()
 	surplus = 0
 
 /datum/uplink_item/dangerous/crossbow
-	name = "Miniature Auto Crossbow"
-	desc = "A short bow mounted across a tiller in miniature. Small enough to fit into a pocket or slip into a bag unnoticed. It fires bolts tipped with a paralyzing toxin collected from a rare organism."
-	item = /obj/item/weapon/gun/projectile/automatic/crossbow
+	name = "Miniature Energy Crossbow"
+	desc = "A short bow mounted across a tiller in miniature. Small enough to fit into a pocket or slip into a bag unnoticed. It fires bolts tipped with a paralyzing toxin collected from a rare organism. \
+	The bow generates bolts using an internal power source but must be manually charged between shots."
+	item = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
 	cost = 10
 	excludefrom = list(/datum/game_mode/nuclear)
 	surplus = 50
@@ -230,13 +231,6 @@ var/list/uplink_items = list()
 	item = /obj/item/ammo_box/magazine/m10mm
 	cost = 1
 
-/datum/uplink_item/ammo/crossbow
-	name = "Poison-tipped Crossbow Bolts (x4)"
-	desc = "A four pack of paralyzing crossbow bolts, for hunting big game."
-	item = /obj/item/ammo_box/crossbow
-	cost = 2
-	excludefrom = list(/datum/game_mode/nuclear)
-
 /datum/uplink_item/ammo/revolver
 	name = "Speed Loader - .357"
 	desc = "A speed loader that contains seven additional .357 Magnum rounds for the syndicate revolver. For when you really need a lot of things dead."
@@ -311,6 +305,13 @@ var/list/uplink_items = list()
 	desc = "A sinister-looking surfactant used to clean blood stains to hide murders and prevent DNA analysis. You can also drop it underfoot to slip people."
 	item = /obj/item/weapon/soap/syndie
 	cost = 1
+	surplus = 50
+
+/datum/uplink_item/stealthy_weapons/traitor_chem_bottle
+	name = "Poison Kit"
+	desc = "An assortment of nasty chemicals."
+	item = /obj/item/weapon/storage/box/syndie_kit/chemical
+	cost = 2
 	surplus = 50
 
 /datum/uplink_item/stealthy_weapons/detomatix
@@ -549,6 +550,12 @@ var/list/uplink_items = list()
 	desc = "An implant injected into the body, and later activated using a bodily gesture to inject a chemical cocktail, which has a mild healing effect along with removing all stuns and increasing his speed."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenal
 	cost = 8
+
+/datum/uplink_item/implants/explosive
+	name = "Explosive Implant"
+	desc = "An implant injected into the body, and later activated either manually or automatically upon death. Creates a moderately-sized fiery explosion. For those agents who know there is no going back."
+	item = /obj/item/weapon/storage/box/syndie_kit/imp_explosive
+	cost = 9
 
 // POINTLESS BADASSERY
 
