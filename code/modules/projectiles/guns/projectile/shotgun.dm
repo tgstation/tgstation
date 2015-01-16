@@ -206,21 +206,25 @@
 	can_suppress = 0
 	burst_size = 1
 	fire_delay = 0
+	pin = /obj/item/device/firing_pin/implant/pindicate
 
 /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/New()
 	..()
 	update_icon()
 	return
+
 /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/proc/update_magazine()
 	if(magazine)
 		src.overlays = 0
 		overlays += "[magazine.icon_state]"
 		return
+
 /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/update_icon()
 	src.overlays = 0
 	update_magazine()
 	icon_state = "bulldog[chambered ? "" : "-e"]"
 	return
+
 /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/afterattack()
 	..()
 	empty_alarm()
