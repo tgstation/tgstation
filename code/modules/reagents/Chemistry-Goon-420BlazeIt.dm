@@ -19,9 +19,10 @@ datum/reagent/nicotine/on_mob_life(var/mob/living/M as mob)
 	M.AdjustStunned(-1)
 	M.adjustStaminaLoss(-1*REM)
 	if(volume > 35)
-		M << "You feel like you smoked too much."
-		M.adjustToxLoss(2*REM)
-		M.adjustOxyLoss(2*REM)
+		if(prob(20))
+			M << "You feel like you smoked too much."
+		M.adjustToxLoss(0.1*REM)
+		M.adjustOxyLoss(0.1*REM)
 	..()
 	return
 

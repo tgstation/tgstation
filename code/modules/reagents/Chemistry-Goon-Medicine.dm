@@ -97,8 +97,8 @@ datum/reagent/charcoal
 datum/reagent/charcoal/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.adjustToxLoss(-1.5*REM)
-	for(var/datum/reagent/R in M.reagents)
-		if(M != src)
+	for(var/datum/reagent/R in M.reagents.reagent_list)
+		if(R != src)
 			M.reagents.remove_reagent(R.id,0.5)
 	..()
 	return
@@ -167,8 +167,8 @@ datum/reagent/calomel
 
 datum/reagent/calomel/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	for(var/datum/reagent/R in M.reagents)
-		if(M != src)
+	for(var/datum/reagent/R in M.reagents.reagent_list)
+		if(R != src)
 			M.reagents.remove_reagent(R.id,5)
 	if(M.health > 20)
 		M.adjustToxLoss(5*REM)
@@ -223,8 +223,8 @@ datum/reagent/pen_acid/on_mob_life(var/mob/living/M as mob)
 		M.adjustBruteLoss(1*REM)
 	if(M.radiation < 0)
 		M.radiation = 0
-	for(var/datum/reagent/R in M.reagents)
-		if(M != src)
+	for(var/datum/reagent/R in M.reagents.reagent_list)
+		if(R != src)
 			M.reagents.remove_reagent(R.id,4)
 	..()
 	return
@@ -325,6 +325,7 @@ datum/reagent/ephedrine/on_mob_life(var/mob/living/M as mob)
 	M.AdjustStunned(-1)
 	M.AdjustWeakened(-1)
 	M.adjustStaminaLoss(-1*REM)
+	M.adjustOxyLoss(-1*REM)
 	..()
 	return
 
@@ -378,3 +379,35 @@ datum/reagent/morphine/on_mob_life(var/mob/living/M as mob)
 	cycle_count++
 	..()
 	return
+
+datum/reagent/oculine/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	cycle_amount++
+	if(M.eye_blind > 0 && cycle_amount > 20)
+		if(prob(30))
+			M.eye_blind = 0
+		else if(prob(80))
+			M.eye_blind = 0
+			M.eye_blurry = 1
+		if(M.eye_blurry > 0)
+			if(prob(80))
+				M.eye_blurry = 0
+	..()
+	return
+
+/datum/chemical_reaction/oculine
+	name = "Oculine"
+	id = "oculine"
+	result = "oculine"
+	required_reagents = list("atropine" = 1, "spaceacillin" = 1, "salglu_solution" = 1)
+	result_amount = 3
+	mix_message = "The mixture sputters loudly and becomes a pale pink color."
+
+datum/reagent/oculine
+	name = "Oculine"
+	id = "oculine"
+	description = "30% chance to remove blindness, 80% chance to slightly reduce eye damage."
+	reagent_state = LIQUID
+	color = "#C8A5DC" // rgb: 200, 165, 220
+	metabolization_rate = 0.4
+	var/cycle_amount = 0

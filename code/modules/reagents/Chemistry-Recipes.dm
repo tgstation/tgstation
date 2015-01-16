@@ -69,21 +69,7 @@ silicate
 	name = "Sterilizine"
 	id = "sterilizine"
 	result = "sterilizine"
-	required_reagents = list("ethanol" = 1, "anti_toxin" = 1, "chlorine" = 1)
-	result_amount = 3
-
-/datum/chemical_reaction/inaprovaline
-	name = "Inaprovaline"
-	id = "inaprovaline"
-	result = "inaprovaline"
-	required_reagents = list("oxygen" = 1, "carbon" = 1, "sugar" = 1)
-	result_amount = 3
-
-/datum/chemical_reaction/anti_toxin
-	name = "Anti-Toxin (Dylovene)"
-	id = "anti_toxin"
-	result = "anti_toxin"
-	required_reagents = list("silicon" = 1, "potassium" = 1, "nitrogen" = 1)
+	required_reagents = list("ethanol" = 1, "charcoal" = 1, "chlorine" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/mutagen
@@ -142,32 +128,11 @@ silicate
 	required_reagents = list("sugar" = 1, "lithium" = 1, "water" = 1)
 	result_amount = 3
 
-/datum/chemical_reaction/hyronalin
-	name = "Hyronalin"
-	id = "hyronalin"
-	result = "hyronalin"
-	required_reagents = list("radium" = 1, "anti_toxin" = 1)
-	result_amount = 2
-
-/datum/chemical_reaction/arithrazine
-	name = "Arithrazine"
-	id = "arithrazine"
-	result = "arithrazine"
-	required_reagents = list("hyronalin" = 1, "hydrogen" = 1)
-	result_amount = 2
-
 /datum/chemical_reaction/impedrezene
 	name = "Impedrezene"
 	id = "impedrezene"
 	result = "impedrezene"
 	required_reagents = list("mercury" = 1, "oxygen" = 1, "sugar" = 1)
-	result_amount = 2
-
-/datum/chemical_reaction/kelotane
-	name = "Kelotane"
-	id = "kelotane"
-	result = "kelotane"
-	required_reagents = list("silicon" = 1, "carbon" = 1)
 	result_amount = 2
 
 /datum/chemical_reaction/leporazine
@@ -185,68 +150,25 @@ silicate
 	required_reagents = list("potassium" = 1, "oxygen" = 1, "sugar" = 1)
 	result_amount = 3
 
-/datum/chemical_reaction/tricordrazine
-	name = "Tricordrazine"
-	id = "tricordrazine"
-	result = "tricordrazine"
-	required_reagents = list("inaprovaline" = 1, "anti_toxin" = 1)
-	result_amount = 2
-
 /datum/chemical_reaction/alkysine
 	name = "Alkysine"
 	id = "alkysine"
 	result = "alkysine"
-	required_reagents = list("chlorine" = 1, "nitrogen" = 1, "anti_toxin" = 1)
+	required_reagents = list("chlorine" = 1, "nitrogen" = 1, "charcoal" = 1)
 	result_amount = 2
-
-/datum/chemical_reaction/dexalin
-	name = "Dexalin"
-	id = "dexalin"
-	result = "dexalin"
-	required_reagents = list("oxygen" = 2)
-	required_catalysts = list("plasma" = 5)
-	result_amount = 1
-
-/datum/chemical_reaction/dermaline
-	name = "Dermaline"
-	id = "dermaline"
-	result = "dermaline"
-	required_reagents = list("oxygen" = 1, "phosphorus" = 1, "kelotane" = 1)
-	result_amount = 3
-
-/datum/chemical_reaction/dexalinp
-	name = "Dexalin Plus"
-	id = "dexalinp"
-	result = "dexalinp"
-	required_reagents = list("dexalin" = 1, "carbon" = 1, "iron" = 1)
-	result_amount = 3
-
-/datum/chemical_reaction/bicaridine
-	name = "Bicaridine"
-	id = "bicaridine"
-	result = "bicaridine"
-	required_reagents = list("inaprovaline" = 1, "carbon" = 1)
-	result_amount = 2
-
-/datum/chemical_reaction/hyperzine
-	name = "Hyperzine"
-	id = "hyperzine"
-	result = "hyperzine"
-	required_reagents = list("sugar" = 1, "phosphorus" = 1, "sulfur" = 1,)
-	result_amount = 3
 
 /datum/chemical_reaction/ryetalyn
 	name = "Ryetalyn"
 	id = "ryetalyn"
 	result = "ryetalyn"
-	required_reagents = list("arithrazine" = 1, "carbon" = 1)
+	required_reagents = list("pen_acid" = 1, "carbon" = 1)
 	result_amount = 2
 
 /datum/chemical_reaction/cryoxadone
 	name = "Cryoxadone"
 	id = "cryoxadone"
 	result = "cryoxadone"
-	required_reagents = list("dexalin" = 1, "water" = 1, "oxygen" = 1)
+	required_reagents = list("salbutamol" = 1, "water" = 1, "oxygen" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/clonexadone
@@ -261,28 +183,21 @@ silicate
 	name = "Spaceacillin"
 	id = "spaceacillin"
 	result = "spaceacillin"
-	required_reagents = list("cryptobiolin" = 1, "inaprovaline" = 1)
-	result_amount = 2
-
-/datum/chemical_reaction/imidazoline
-	name = "imidazoline"
-	id = "imidazoline"
-	result = "imidazoline"
-	required_reagents = list("carbon" = 1, "hydrogen" = 1, "anti_toxin" = 1)
+	required_reagents = list("cryptobiolin" = 1, "ephedrine" = 1)
 	result_amount = 2
 
 /datum/chemical_reaction/inacusiate
 	name = "inacusiate"
 	id = "inacusiate"
 	result = "inacusiate"
-	required_reagents = list("water" = 1, "carbon" = 1, "anti_toxin" = 1)
+	required_reagents = list("water" = 1, "carbon" = 1, "charcoal" = 1)
 	result_amount = 2
 
 /datum/chemical_reaction/ethylredoxrazine
 	name = "Ethylredoxrazine"
 	id = "ethylredoxrazine"
 	result = "ethylredoxrazine"
-	required_reagents = list("oxygen" = 1, "anti_toxin" = 1, "carbon" = 1)
+	required_reagents = list("oxygen" = 1, "charcoal" = 1, "carbon" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/ethanoloxidation
@@ -437,7 +352,7 @@ silicate
 	name = "Mindbreaker Toxin"
 	id = "mindbreaker"
 	result = "mindbreaker"
-	required_reagents = list("silicon" = 1, "hydrogen" = 1, "anti_toxin" = 1)
+	required_reagents = list("silicon" = 1, "hydrogen" = 1, "charcoal" = 1)
 	result_amount = 5
 
 /datum/chemical_reaction/lipozine
@@ -964,9 +879,9 @@ datum/chemical_reaction/pestkiller
 	S.loc = get_turf(holder.my_atom)
 
 /datum/chemical_reaction/slimeinaprov
-	name = "Slime Inaprovaline"
+	name = "Slime ephedrine"
 	id = "m_inaprov"
-	result = "inaprovaline"
+	result = "ephedrine"
 	required_reagents = list("water" = 5)
 	result_amount = 3
 	required_other = 1

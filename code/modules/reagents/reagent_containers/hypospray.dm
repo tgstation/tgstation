@@ -116,7 +116,7 @@
 	name = "stimpack medipen"
 	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in restrictive armor at the cost of some shortness of breath."
 	icon_state = "stimpen"
-	starting_reagent = "hyperzine"
+	starting_reagent = "morphine"
 	starting_amount = 9
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack/New()

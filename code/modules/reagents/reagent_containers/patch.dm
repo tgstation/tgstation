@@ -33,6 +33,6 @@
 	name = "silver sulfadiazine patch"
 	desc = "Helps with burn injuries."
 
-/obj/item/weapon/reagent_containers/pill/patch/styptic/New()
+/obj/item/weapon/reagent_containers/pill/patch/silver_sulf/New()
 	..()
 	reagents.add_reagent("silver_sulfadiazine", 25)

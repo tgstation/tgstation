@@ -61,8 +61,8 @@ datum/reagent/toxin/plasma
 	toxpwr = 3
 
 datum/reagent/toxin/plasma/on_mob_life(var/mob/living/M as mob)
-	if(holder.has_reagent("inaprovaline"))
-		holder.remove_reagent("inaprovaline", 2*REM)
+	if(holder.has_reagent("ephedrine"))
+		holder.remove_reagent("ephedrine", 2*REM)
 	..()
 	return
 

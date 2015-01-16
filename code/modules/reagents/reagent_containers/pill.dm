@@ -121,7 +121,7 @@
 
 /obj/item/weapon/reagent_containers/pill/stimulant/New()
 	..()
-	reagents.add_reagent("hyperzine", 10)
+	reagents.add_reagent("morphine", 10)
 	reagents.add_reagent("ethylredoxrazine", 10)
 	reagents.add_reagent("coffee", 30)
 
