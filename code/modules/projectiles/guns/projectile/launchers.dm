@@ -44,45 +44,33 @@
 	icon_state = "[initial(icon_state)][magazine ? "loaded" : ""]"
 	return
 
-/obj/item/weapon/gun/projectile/automatic/crossbow
-	name = "mini auto-crossbow"
-	desc = "A weapon favored by syndicate stealth specialists. Fires specialized poison bolts."
-	icon_state = "crossbow"
-	item_state = "crossbow"
-	w_class = 2
-	m_amt = 2000
-	origin_tech = "combat=2;magnets=2;syndicate=5"
-	suppressed = 1
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/crossbow
-	fire_sound = 'sound/weapons/genhit.ogg'
+/obj/item/weapon/gun/projectile/automatic/speargun
+	name = "kinetic speargun"
+	desc = "A weapon favored by carp hunters. Fires specialized spears using kinetic energy."
+	icon_state = "speargun"
+	item_state = "misteratmos" //professional asset reuse
+	w_class = 4
+	force = 10
+	can_suppress = 0
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/speargun
+	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	burst_size = 1
 	fire_delay = 0
 	select = 0
 	action_button_name = null
 
-/obj/item/weapon/gun/projectile/automatic/crossbow/update_icon()
+/obj/item/weapon/gun/projectile/automatic/speargun/update_icon()
 	return
 
-/obj/item/weapon/gun/projectile/automatic/crossbow/attack_self()
+/obj/item/weapon/gun/projectile/automatic/speargun/attack_self()
 	return
 
-/obj/item/weapon/gun/projectile/automatic/crossbow/process_chamber(var/eject_casing = 0, var/empty_chamber = 1)
+/obj/item/weapon/gun/projectile/automatic/speargun/process_chamber(var/eject_casing = 0, var/empty_chamber = 1)
 	..()
 
-/obj/item/weapon/gun/projectile/automatic/crossbow/attackby(var/obj/item/A, mob/user)
+/obj/item/weapon/gun/projectile/automatic/speargun/attackby(var/obj/item/A, mob/user)
 	var/num_loaded = magazine.attackby(A, user, 1)
 	if(num_loaded)
-		user << "<span class='notice'>You load [num_loaded] bolt\s into \the [src].</span>"
+		user << "<span class='notice'>You load [num_loaded] spear\s into \the [src].</span>"
 		update_icon()
 		chamber_round()
-
-/obj/item/weapon/gun/projectile/automatic/crossbow/large //holds twice the ammo of mini crossbows but can't be pocketed
-	name = "auto crossbow"
-	desc = "A weapon favored by carp hunters. Fires specialized poison bolts."
-	icon_state = "crossbowlarge"
-	w_class = 3
-	force = 10
-	m_amt = 4000
-	suppressed = 0
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/crossbow/large
-	pin = null

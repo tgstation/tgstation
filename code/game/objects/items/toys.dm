@@ -190,7 +190,7 @@
 	name = "foam dart crossbow"
 	desc = "A weapon favored by many overactive children. Ages 8 and up."
 	icon = 'icons/obj/gun.dmi'
-	icon_state = "crossbow"
+	icon_state = "crossbow100"
 	item_state = "crossbow"
 	w_class = 2.0
 	attack_verb = list("attacked", "struck", "hit")

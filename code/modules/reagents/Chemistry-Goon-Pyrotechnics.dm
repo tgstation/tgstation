@@ -111,9 +111,9 @@
 proc/goonchem_vortex(var/turf/simulated/T, var/setting_type, var/range, var/pull_times)
 	for(var/atom/movable/X in orange(range, T))
 		if(istype(X, /atom/movable))
-			if((X))
+			if((X) && !X.anchored)
 				if(setting_type)
 					for(var/i = 0, i < pull_times, i++)
-						step_towards(X,T)
+						step_away(X,T)
 				else
 					X.throw_at(T)

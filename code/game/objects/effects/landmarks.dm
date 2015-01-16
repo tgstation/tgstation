@@ -59,6 +59,10 @@
 			deathsquadspawn += loc
 			qdel(src)
 			return
+		if("Emergencyresponseteam")
+			emergencyresponseteamspawn += loc
+			qdel(src)
+			return
 		if("xeno_spawn")
 			xeno_spawn += loc
 			qdel(src)
