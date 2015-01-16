@@ -17,8 +17,8 @@
 	var/min_health = 25
 	var/list/injection_chems = list() //list of injectable chems except ephedrine, coz ephedrine is always avalible
 	var/list/possible_chems = list(list("stoxin", "salbutamol", "salglu_solution", "salglu_solution"),
-								   list("stoxin", "salbutamolp", "salglu_solution", "salglu_solution", "oculine"),
-								   list("stoxin", "salbutamolp", "salglu_solution", "salglu_solution", "oculine", "charcoal", "ryetalyn", "alkysine", "pen_acid"))
+								   list("stoxin", "salbutamol", "salglu_solution", "salglu_solution", "oculine"),
+								   list("stoxin", "salbutamol", "salglu_solution", "salglu_solution", "oculine", "charcoal", "ryetalyn", "alkysine", "pen_acid"))
 
 /obj/machinery/sleeper/New()
 	..()

@@ -46,7 +46,7 @@
 	name = "\improper Mysterious Medibot"
 	desc = "International Medibot of mystery."
 	skin = "bezerk"
-	treatment_oxy = "salbutamolp"
+	treatment_oxy = "salbutamol"
 	treatment_brute = "salglu_solution"
 	treatment_fire = "salglu_solution"
 	treatment_tox = "charcoal"
