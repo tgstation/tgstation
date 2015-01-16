@@ -143,3 +143,13 @@
 /obj/item/ammo_casing/energy/wormhole/orange
 	projectile_type = /obj/item/projectile/beam/wormhole/orange
 	select_name = "orange"
+
+/obj/item/ammo_casing/energy/bolt
+	projectile_type = /obj/item/projectile/energy/bolt
+	select_name = "bolt"
+	e_cost = 500
+	fire_sound = 'sound/weapons/Genhit.ogg'
+
+/obj/item/ammo_casing/energy/bolt/large
+	projectile_type = /obj/item/projectile/energy/bolt/large
+	select_name = "heavy bolt"

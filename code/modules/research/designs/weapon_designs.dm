@@ -90,8 +90,9 @@
 	req_tech = list("combat" = 5, "materials" = 5, "engineering" = 3, "biotech" = 4, "syndicate" = 3)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 5000, "$glass" = 1500, "$uranium" = 1500, "$silver" = 1500)
-	build_path = /obj/item/weapon/gun/projectile/automatic/crossbow/large
+	build_path = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large
 	category = list("Weapons")
+	reliability = 76
 
 /datum/design/temp_gun
 	name = "Temperature Gun"

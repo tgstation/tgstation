@@ -166,10 +166,11 @@
 	icon_state = "40mmHE"
 	projectile_type = /obj/item/projectile/bullet/a40mm
 
-/obj/item/ammo_casing/caseless/bolt //xbow
-	name = "poison crossbow bolt"
-	desc = "A reusable crossbow bolt tipped with specialized carpotoxin."
-	projectile_type = /obj/item/projectile/energy/bolt
-	caliber = "crossbow"
-	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "cbbolt"
+/obj/item/ammo_casing/caseless/magspear
+	name = "magnetic spear"
+	desc = "A reusable spear that is typically loaded into kinetic spearguns."
+	projectile_type = /obj/item/projectile/bullet/magspear
+	caliber = "speargun"
+	icon_state = "magspear"
+	throwforce = 15 //still deadly when thrown
+	throw_speed = 3

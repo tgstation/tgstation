@@ -1,7 +1,7 @@
 //In this file: Summon Magic/Summon Guns/Summon Events
 
 /proc/rightandwrong(var/summon_type, var/mob/user, var/survivor_probability) //0 = Summon Guns, 1 = Summon Magic
-	var/list/gunslist 			= list("taser","egun","laser","revolver","detective","c20r","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","bulldog","mateba","sabr","uzi","crossbow","saw","car","boltaction")
+	var/list/gunslist 			= list("taser","egun","laser","revolver","detective","c20r","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","bulldog","mateba","sabr","uzi","crossbow","saw","car","boltaction","speargun")
 	var/list/magiclist 			= list("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge", "summonitem", "wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying", "staffdoor", "special")
 	var/list/magicspeciallist	= list("staffchange","staffanimation", "wandbelt", "contract", "staffchaos")
 
@@ -60,7 +60,7 @@
 				if("mateba")
 					new /obj/item/weapon/gun/projectile/revolver/mateba(get_turf(H))
 				if("crossbow")
-					new /obj/item/weapon/gun/projectile/automatic/crossbow(get_turf(H))
+					new /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large(get_turf(H))
 				if("nuclear")
 					var/obj/item/weapon/gun/energy/gun/nuclear/gat
 					gat.pin = /obj/item/device/firing_pin //no authentication pins for spawned guns. fun allowed.
@@ -87,6 +87,8 @@
 					new gat(get_turf(H))
 				if("boltaction")
 					new /obj/item/weapon/gun/projectile/shotgun/boltaction(get_turf(H))
+				if("speargun")
+					new /obj/item/weapon/gun/projectile/automatic/speargun(get_turf(H))
 		else
 			switch (randomizemagic)
 				if("fireball")

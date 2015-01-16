@@ -242,7 +242,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog
 	name = "syndicate shotgun"
-	desc = "A compact, mag-fed burst-fire shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines."
+	desc = "A semi-auto, mag-fed shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines."
 	icon_state = "bulldog"
 	item_state = "bulldog"
 	w_class = 3.0
@@ -253,6 +253,7 @@
 	burst_size = 1
 	fire_delay = 0
 	pin = /obj/item/device/firing_pin/implant/pindicate
+	action_button_name = null
 
 /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/New()
 	..()
