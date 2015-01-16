@@ -125,6 +125,9 @@ Class Procs:
 		dropContents()
 	..()
 
+/obj/machinery/proc/locate_machinery()
+	return
+
 /obj/machinery/process()//If you dont use process or power why are you here
 	return PROCESS_KILL
 

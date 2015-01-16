@@ -30,24 +30,42 @@
 	var/sawn_state = SAWN_INTACT
 	var/burst_size = 1
 	var/fire_delay = 0
+
+	var/obj/item/device/firing_pin/pin = /obj/item/device/firing_pin //standard firing pin for most guns
+
 	var/obj/item/device/flashlight/F = null
 	var/can_flashlight = 0
+
+
+/obj/item/weapon/gun/New()
+	..()
+	if(pin)
+		pin = new pin(src)
+
+
+/obj/item/weapon/gun/examine(mob/user)
+	..()
+	if(pin)
+		user << "It has a [pin] installed."
+	else
+		user << "It doesn't have a firing pin installed, and won't fire."
+
 
 /obj/item/weapon/gun/proc/process_chamber()
 	return 0
 
-/obj/item/weapon/gun/proc/special_check(var/mob/M) //Placeholder for any special checks, like detective's revolver.
-	return 1
 
 //check if there's enough ammo/energy/whatever to shoot one time
 //i.e if clicking would make it shoot
 /obj/item/weapon/gun/proc/can_shoot()
 	return 1
 
+
 /obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	user << "<span class='danger'>*click*</span>"
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	return
+
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user as mob|obj, var/pointblank = 0, var/mob/pbtarget = null, var/message = 1)
 	if(recoil)
@@ -65,9 +83,11 @@
 		else
 			user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
 
+
 /obj/item/weapon/gun/emp_act(severity)
 	for(var/obj/O in contents)
 		O.emp_act(severity)
+
 
 /obj/item/weapon/gun/afterattack(atom/target as mob|obj|turf, mob/living/carbon/human/user as mob|obj, flag, params)//TODO: go over this
 	if(flag) //It's adjacent, is the user, or is on the user's person
@@ -94,10 +114,12 @@
 
 	process_fire(target,user,1,params)
 
+
 /obj/item/weapon/gun/proc/can_trigger_gun(mob/living/carbon/user)
 	if (!user.IsAdvancedToolUser())
 		user << "<span class='notice'>You don't have the dexterity to do this!</span>"
 		return 0
+
 
 	if(trigger_guard)
 		if(istype(user) && user.dna)
@@ -109,12 +131,24 @@
 				return 0
 	return 1
 
-/obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, var/message = 1, params)
 
+/obj/item/weapon/gun/proc/handle_pins(mob/living/user)
+	if(pin)
+		if(pin.pin_auth(user) || pin.emagged)
+			return 1
+		else
+			user << "<span class='warning'>INVALID USER.</span>"
+			return 0
+	else
+		user << "<span class='notice'>\The [src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>"
+	return 0
+
+
+/obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, var/message = 1, params)
 	add_fingerprint(user)
 
-	if(!special_check(user))
-		return
+	if(!handle_pins(user))
+		return 0
 
 	for(var/i = 1 to burst_size)
 		if(!issilicon(user))
@@ -125,8 +159,6 @@
 				shoot_with_empty_chamber(user)
 				break
 			else
-				if(!special_check(user))
-					return
 				if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
 					shoot_live_shot(user, 1, target, message)
 				else
@@ -142,6 +174,7 @@
 		user.update_inv_l_hand(0)
 	else
 		user.update_inv_r_hand(0)
+
 
 /obj/item/weapon/gun/attack(mob/M as mob, mob/user)
 	if(user.a_intent == "harm") //Flogging
@@ -165,6 +198,8 @@
 				A.loc = src
 				update_icon()
 				update_gunlight(user)
+				verbs += /obj/item/weapon/gun/proc/toggle_gunlight
+
 	if(istype(A, /obj/item/weapon/screwdriver))
 		if(F)
 			if(user.l_hand != src && user.r_hand != src)
@@ -177,13 +212,18 @@
 				update_gunlight(user)
 				S.update_brightness(user)
 				update_icon()
+				verbs -= /obj/item/weapon/gun/proc/toggle_gunlight
 	..()
 	return
 
-/obj/item/weapon/gun/verb/toggle_gunlight()
+/obj/item/weapon/gun/proc/toggle_gunlight()
 	set name = "Toggle Gunlight"
 	set category = "Object"
 	set desc = "Click to toggle your weapon's attached flashlight."
+
+	if(!F)
+		return
+
 	var/mob/living/carbon/human/user = usr
 	if(!isturf(user.loc))
 		user << "You cannot turn the light on while in this [user.loc]."
