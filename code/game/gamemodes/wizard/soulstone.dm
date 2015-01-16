@@ -224,6 +224,9 @@ proc/makeNewConstruct(var/mob/living/simple_animal/construct/ctype, var/mob/targ
 	S.faction |= "\ref[U]" //Add the master as a faction, allowing inter-mob cooperation
 	if(iscultist(U))
 		ticker.mode.add_cultist(S.mind,2)
+	else
+		if(iscultist(S))
+			ticker.mode.remove_cultist(S.mind)
 	S.cancel_camera()
 	C.icon_state = "soulstone2"
 	C.name = "Soul Stone: [S.real_name]"
