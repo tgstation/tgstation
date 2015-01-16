@@ -17,7 +17,7 @@
 	response_disarm = "gently pushes aside"
 	response_harm = "kicks"
 
-//Captain fox
+//Librarian fox
 /mob/living/simple_animal/fox/Renault
 	name = "Renault"
-	desc = "Renault, the Captain's trustworthy fox. I wonder what it says?"
+	desc = "Renault, the Librarian's trustworthy fox. I wonder what it says?"

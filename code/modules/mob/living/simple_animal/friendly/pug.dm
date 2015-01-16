@@ -40,3 +40,7 @@
 					sleep(1)
 	else
 		..()
+
+/mob/living/simple_animal/pug/Tywin
+	name = "Tywin"
+	desc = "The power behind the throne."
