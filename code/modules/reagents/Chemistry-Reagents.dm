@@ -559,7 +559,6 @@ datum
 							W.dropped(M)
 						var/mob/living/carbon/slime/new_mob = new /mob/living/carbon/slime(M.loc)
 						new_mob.a_intent = "hurt"
-						new_mob.universal_speak = 1
 						if(M.mind)
 							M.mind.transfer_to(new_mob)
 						else
@@ -1264,14 +1263,14 @@ datum
 			reagent_state = LIQUID
 			color = "#C855DC"
 			overdose_dam = 0
-			overdose = 60
+			overdose = 0
 
 			on_mob_life(var/mob/living/M as mob)
 
 				if(!holder) return
-				if (volume > overdose)
-					M.hallucination = max(M.hallucination, 2)
-
+				if(ishuman(M))
+					M:shock_stage--
+					M:traumatic_shock--
 		mutagen
 			name = "Unstable mutagen"
 			id = "mutagen"

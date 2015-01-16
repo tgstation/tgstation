@@ -1,31 +1,17 @@
 // Copypasta from APC HULL
 
-/obj/item/airlock_controller_frame
+/obj/item/mounted/frame/airlock_controller
 	name = "Airlock Controller frame"
 	desc = "Used for repairing or building airlock controllers"
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_control_build0"
+	mount_reqs = list("simfloor")
 	flags = FPRINT
 	siemens_coefficient = 1
 
-/obj/item/airlock_controller_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
-	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
-		del(src)
-
-/obj/item/airlock_controller_frame/proc/try_build(turf/on_wall)
-	if (get_dist(on_wall,usr)>1)
-		return
-	var/ndir = get_dir(usr,on_wall)
-	if (!(ndir in cardinal))
-		return
-	var/turf/loc = get_turf(usr)
-	if (!istype(loc, /turf/simulated/floor))
-		usr << "\red APC cannot be placed on this spot."
-		return
-	new /obj/machinery/embedded_controller(loc, ndir, 1)
-	del(src)
+/obj/item/mounted/frame/airlock_controller/do_build(turf/on_wall, mob/user)
+	new /obj/machinery/embedded_controller(get_turf(src), get_dir(user, on_wall), 1)
+	qdel(src)
 
 /////////////////////////////////////////////////////////////
 // Embedded Controller Boards

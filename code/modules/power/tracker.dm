@@ -9,7 +9,6 @@
 	icon_state = "tracker"
 	anchored = 1
 	density = 1
-	directwired = 1
 	use_power = 0
 
 	var/sun_angle = 0	//Sun angle as set by sun datum
@@ -26,11 +25,11 @@
 
 /obj/machinery/power/tracker/disconnect_from_network()
 	..()
-	solars_list.Remove(src)
+	solars_list -= src
 
 /obj/machinery/power/tracker/connect_to_network()
-	..()
-	solars_list.Add(src)
+	. = ..()
+	solars_list += src
 
 //Called by datum/sun/calc_position() as sun's angle changes
 /obj/machinery/power/tracker/proc/set_angle(var/angle)

@@ -5,7 +5,8 @@
 	var/spawning = 0//Referenced when you want to delete the new_player later on in the code.
 	var/totalPlayers = 0		 //Player counts for the Lobby tab
 	var/totalPlayersReady = 0
-	universal_speak = 1
+
+	flags = NONE
 
 	invisibility = 101
 
@@ -343,7 +344,7 @@
 		var/obj/item/device/radio/intercom/a = new /obj/item/device/radio/intercom(null)// BS12 EDIT Arrivals Announcement Computer, rather than the AI.
 		if(character.mind.role_alt_title)
 			rank = character.mind.role_alt_title
-		a.autosay("[character.real_name],[rank ? " [rank]," : " visitor," ] has arrived on the station.", "Arrivals Announcement Computer")
+		say("[character.real_name],[rank ? " [rank]," : " visitor," ] has arrived on the station.", "Arrivals Announcement Computer")
 		del(a)
 
 /mob/new_player/proc/LateChoices()
@@ -392,15 +393,15 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 	if(chosen_species)
 		if(is_alien_whitelisted(src, client.prefs.species) || !config.usealienwhitelist || !(chosen_species.flags & WHITELISTED) || (client.holder.rights & R_ADMIN) )// Have to recheck admin due to no usr at roundstart. Latejoins are fine though.
 			new_character.set_species(client.prefs.species)
-			if(chosen_species.language)
-				new_character.add_language(chosen_species.language)
+			//if(chosen_species.language)
+				//new_character.add_language(chosen_species.language)
 
-	var/datum/language/chosen_language
-	if(client.prefs.language)
+	//var/datum/language/chosen_language
+/*	if(client.prefs.language)
 		chosen_language = all_languages[client.prefs.language]
 	if(chosen_language)
 		if(is_alien_whitelisted(src, client.prefs.language) || !config.usealienwhitelist || !(chosen_language.flags & WHITELISTED))
-			new_character.add_language(client.prefs.language)
+			new_character.add_language(client.prefs.language)*/
 	if(ticker.random_players || appearance_isbanned(src)) //disabling ident bans for now
 		new_character.gender = pick(MALE, FEMALE)
 		client.prefs.real_name = random_name(new_character.gender)

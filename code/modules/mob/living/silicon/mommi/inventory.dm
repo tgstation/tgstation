@@ -23,9 +23,9 @@
 		return 0
 	// Make sure we're not picking up something that's in our factory-supplied toolbox.
 	//if(is_type_in_list(W,src.module.modules))
-	if(is_in_modules(W))
-		src << "\red Picking up something that's built-in to you seems a bit silly."
-		return 0
+	//if(is_in_modules(W))
+		//src << "\red Picking up something that's built-in to you seems a bit silly."
+		//return 0
 	if(tool_state)
 		//var/obj/item/found = locate(tool_state) in src.module.modules
 		var/obj/item/TS = tool_state
@@ -70,6 +70,8 @@
 		unequip_sight()
 	else if (W == head_state)
 		unequip_head()
+	
+	
 
 // Override the default /mob version since we only have one hand slot.
 /mob/living/silicon/robot/mommi/put_in_active_hand(var/obj/item/W)
@@ -96,8 +98,9 @@
 	if(tool_state)
 		//var/obj/item/found = locate(tool_state) in src.module.modules
 		if(is_in_modules(tool_state))
-			src << "\red This item cannot be dropped."
-			return 0
+			if((tool_state in contents) && (tool_state in src.module.modules))
+				src << "<span class='warning'>This item cannot be dropped.</span>"
+				return 0
 		if(client)
 			client.screen -= tool_state
 		contents -= tool_state
@@ -127,6 +130,11 @@
 	var/obj/item/TS
 	if(isnull(module_active))
 		return
+	if((module_active in src.contents) && !(module_active in src.module.modules))
+		TS = tool_state
+		drop_item()
+		if(TS && TS.loc)
+			TS.loc = get_turf(src)
 	if(sight_state == module_active)
 		TS = sight_state
 		if(istype(sight_state,/obj/item/borg/sight))
@@ -213,6 +221,7 @@
 		inv_tool.icon_state = "inv1"
 		if(is_in_modules(TS))
 			TS.loc = src.module
+		hud_used.update_robot_modules_display()
 
 
 /mob/living/silicon/robot/mommi/activated(obj/item/O)

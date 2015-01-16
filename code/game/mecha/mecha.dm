@@ -83,7 +83,6 @@
 	add_cell()
 	add_iterators()
 	removeVerb(/obj/mecha/verb/disconnect_from_port)
-	removeVerb(/atom/movable/verb/pull)
 	log_message("[src.name] created.")
 	loc.Entered(src)
 	mechas_list += src //global mech list
@@ -187,10 +186,10 @@
 /obj/mecha/proc/drop_item()//Derpfix, but may be useful in future for engineering exosuits.
 	return
 
-/obj/mecha/hear_talk(mob/M as mob, text)
-	if(M==occupant && radio.broadcasting)
-		radio.talk_into(M, text)
-	return
+/obj/mecha/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+	if(speaker == occupant && radio.broadcasting)
+		radio.talk_into(speaker, text)
+ 	return
 
 ////////////////////////////
 ///// Action processing ////

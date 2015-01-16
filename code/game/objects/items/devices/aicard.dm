@@ -24,13 +24,6 @@
 		playsound(get_turf(src), 'sound/machines/paistartup.ogg', 50, 1)
 		return
 
-	attack(mob/living/silicon/decoy/M as mob, mob/user as mob)
-		if (!istype (M, /mob/living/silicon/decoy))
-			return ..()
-		else
-			M.death()
-			user << "<b>ERROR ERROR ERROR</b>"
-
 	attack_self(mob/user)
 		if (!in_range(src, user))
 			return

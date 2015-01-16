@@ -197,6 +197,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define ON_BORDER	512		// item has priority to check when entering or leaving
 #define NOBLUDGEON  4  // when an item has this it produces no "X has been hit by Y with Z" message with the default handler
 #define NOBLOODY	2048	// used to items if they don't want to get a blood overlay
+#define HEAR		16
 
 #define GLASSESCOVERSEYES	1024
 #define MASKCOVERSEYES		1024		// get rid of some of the other retardation in these flags
@@ -219,11 +220,26 @@ var/MAX_EXPLOSION_RANGE = 14
 
 #define INVULNERABLE 128
 
+
+#define ALL ~0
+#define NONE 0
+
 //flags for pass_flags
 #define PASSTABLE	1
 #define PASSGLASS	2
 #define PASSGRILLE	4
 #define PASSBLOB	8
+
+/*
+	These defines are used specifically with the atom/movable/languages bitmask.
+	They are used in atom/movable/Hear() and atom/movable/say() to determine whether hearers can understand a message.
+*/
+
+#define HUMAN 1
+#define MONKEY 2
+#define ALIEN 4
+#define ROBOT 8
+#define SLIME 16
 
 //turf-only flags
 #define NOJAUNT		1

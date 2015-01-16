@@ -1648,11 +1648,11 @@
 	else	new_species_name = "Human"
 
 	if(src.species)
-		if(src.species.language)	src.remove_language(species.language)
+		//if(src.species.language)	src.remove_language(species.language)
 		if(src.species.abilities)	src.verbs -= species.abilities
 	src.species = all_species[new_species_name]
 	if(src.species.abilities)
-		if(src.species.language)	src.add_language(species.language)
+		//if(src.species.language)	src.add_language(species.language)
 		if(src.species.abilities)	src.verbs |= species.abilities
 	if(force_organs || !src.organs || !src.organs.len)	src.species.create_organs(src)
 	src.see_in_dark = species.darksight

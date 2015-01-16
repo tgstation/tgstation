@@ -6,6 +6,7 @@
  *		AI
  *		Procs / Verbs (usable by players)
  *		Sub-types
+ *		Hear & say (the things we do for gimmicks)
  */
 
 /*
@@ -122,6 +123,41 @@
 	..()
 	stat("Held Item", held_item)
 	stat("Mode",a_intent)
+
+
+/mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+	if(speaker != src && prob(20)) //Don't imitate outselves
+		if(speech_buffer.len >= 20)
+			speech_buffer -= pick(speech_buffer)
+		speech_buffer |= html_decode(raw_message)
+	..()
+
+/mob/living/simple_animal/parrot/radio(message, message_mode) //literally copied from human/radio(), but there's no other way to do this, at least it's better than it used to be.
+	. = ..()
+	if(. != 0)
+		return .
+
+	switch(message_mode)
+		if(MODE_HEADSET)
+			if (ears)
+				ears.talk_into(src, message)
+				return ITALICS | REDUCE_RANGE
+
+		if(MODE_SECURE_HEADSET)
+			if(ears)
+				ears.talk_into(src, message, 1)
+			return ITALICS | REDUCE_RANGE
+		if(MODE_DEPARTMENT)
+			if(ears)
+				ears.talk_into(src, message, message_mode)
+			return ITALICS | REDUCE_RANGE
+
+	if(message_mode in radiochannels)
+		if(ears)
+			ears.talk_into(src, message, message_mode)
+			return ITALICS | REDUCE_RANGE
+
+	return 0
 
 /*
  * Inventory
@@ -327,7 +363,7 @@
 
 //-----SPEECH
 	/* Parrot speech mimickry!
-	   Phrases that the parrot hears in mob/living/say() get added to speach_buffer.
+	   Phrases that the parrot Hears() get added to speech_buffer.
 	   Every once in a while, the parrot picks one of the lines from the buffer and replaces an element of the 'speech' list.
 	   Then it clears the buffer to make sure they dont magically remember something from hours ago. */
 	if(speech_buffer.len && prob(10))
@@ -370,7 +406,7 @@
 							useradio = 1
 
 						if(copytext(possible_phrase,1,3) in department_radio_keys)
-							possible_phrase = "[useradio?pick(available_channels):""] [copytext(possible_phrase,3,length(possible_phrase)+1)]" //crop out the channel prefix
+							possible_phrase = "[useradio?pick(available_channels):""] [copytext(possible_phrase,3)]" //crop out the channel prefix
 						else
 							possible_phrase = "[useradio?pick(available_channels):""] [possible_phrase]"
 

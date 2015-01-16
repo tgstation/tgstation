@@ -138,6 +138,11 @@
 			if(src == user:tool_state || src == user:sight_state)
 				return 0
 			attack_hand(user)
+	if(istype(src.loc, /obj/item/weapon/robot_module))
+		if(!isrobot(user)) 	return
+		var/mob/living/silicon/robot/R = user
+		R.activate_module(src)
+		R.hud_used.update_robot_modules_display()
 
 /obj/item/attack_hand(mob/user as mob)
 	if (!user) return
@@ -150,6 +155,7 @@
 			return
 
 	if (istype(src.loc, /obj/item/weapon/storage))
+		//If the item is in a storage item, take it out.
 		var/obj/item/weapon/storage/S = src.loc
 		S.remove_from_storage(src)
 
@@ -794,5 +800,10 @@
 /obj/item/singularity_pull(S, current_size)
 	spawn(0) //this is needed or multiple items will be thrown sequentially and not simultaneously
 		if(current_size >= STAGE_FOUR)
-			throw_at(S, 14, 3)
+			//throw_at(S, 14, 3)
+			step_towards(src,S)
+			sleep(1)
+			step_towards(src,S)
+		else if(current_size > STAGE_ONE)
+			step_towards(src,S)
 		else ..()

@@ -67,7 +67,6 @@
 		del(t)
 
 	var/mob/living/simple_animal/hostile/retaliate/cluwne/new_mob = new (src.loc)
-	new_mob.universal_speak = 1
 	new_mob.gender=src.gender
 	new_mob.name = pick(clown_names)
 	new_mob.real_name = new_mob.name
