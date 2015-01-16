@@ -240,14 +240,73 @@
 	desc = "A heavy jacket made from 'synthetic' animal furs."
 	icon_state = "coatwinter"
 	item_state = "labcoat"
-	body_parts_covered = CHEST|GROIN|ARMS|HEAD
-	cold_protection = CHEST|GROIN|ARMS|HEAD
+	body_parts_covered = CHEST|GROIN|ARMS
+	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter)
 	hooded = 1
-	action_button_name = "Toggle Winter Hood"
+	action_button_name = "Put up hood"
 	togglename = "hood"
+	var/obj/item/clothing/head/winterhood/hood
+
+/obj/item/clothing/suit/toggle/wintercoat/New()
+	MakeHood()
+
+/obj/item/clothing/suit/toggle/wintercoat/proc/MakeHood()
+	if(!hood)
+		var/obj/item/clothing/head/winterhood/W = new /obj/item/clothing/head/winterhood(src)
+		hood = W
+		W.armor = src.armor
+
+/obj/item/clothing/suit/toggle/wintercoat/ui_action_click()
+	ToggleHood()
+
+/obj/item/clothing/suit/toggle/wintercoat/equipped(mob/user, slot)
+	if(slot != slot_wear_suit)
+		RemoveHood()
+
+/obj/item/clothing/suit/toggle/wintercoat/proc/RemoveHood()
+	src.icon_state = "[initial(icon_state)]"
+	suittoggled = 0
+	if(ishuman(hood.loc))
+		var/mob/living/carbon/H = hood.loc
+		H.unEquip(hood, 1)
+		H.update_inv_wear_suit()
+	hood.loc = src
+
+/obj/item/clothing/suit/toggle/wintercoat/dropped()
+	RemoveHood()
+
+/obj/item/clothing/suit/toggle/wintercoat/proc/ToggleHood()
+	if(!suittoggled)
+		if(ishuman(src.loc))
+			var/mob/living/carbon/human/H = src.loc
+			if(H.wear_suit != src)
+				H << "You must be wearing [src] to put up the hood."
+				return
+			if(H.head)
+				H << "You're already wearing something on your head."
+				return
+			else
+				H.equip_to_slot_if_possible(hood,slot_head,0,0,1)
+				suittoggled = 1
+				src.icon_state = "[initial(icon_state)]_t"
+				H.update_inv_wear_suit()
+	else
+		RemoveHood()
+
+/obj/item/clothing/suit/toggle/wintercoat/attack_self()
+	return
+
+/obj/item/clothing/head/winterhood
+	name = "winter hood"
+	desc = "A hood attached to a heavy winter jacket"
+	icon_state = "generic_hood"
+	body_parts_covered = HEAD
+	cold_protection = HEAD
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	flags = NODROP
 
 /obj/item/clothing/suit/toggle/wintercoat/captain
 	name = "captain's winter coat"
