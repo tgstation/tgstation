@@ -428,8 +428,7 @@
 			desc += " it looks slightly melted..." //needs a space at the start, formatting
 
 /obj/item/proc/unwield(mob/living/carbon/user)
-	if(!twohanded) return
-	if(!wielded) return
+	if(!twohanded || !wielded || requiretwohanded) return
 	wielded = 0
 	force = force_unwielded
 	name = "[initial(name)]"
@@ -443,8 +442,7 @@
 	return
 
 /obj/item/proc/wield(mob/living/carbon/user)
-	if(!twohanded) return
-	if(wielded) return
+	if(!twohanded || wielded || requiretwohanded) return
 	if(istype(user,/mob/living/carbon/monkey) )
 		user << "<span class='warning'>It's too heavy for you to wield fully.</span>"
 		return
@@ -478,7 +476,7 @@
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
 	if(twohanded)
 		if(user)
-			var/obj/item/weapon/O = user.get_inactive_hand()
+			var/obj/item/offhand/O = user.get_inactive_hand()
 			O.unwield(user)
 		return	unwield(user)
 
