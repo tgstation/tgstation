@@ -800,5 +800,10 @@
 /obj/item/singularity_pull(S, current_size)
 	spawn(0) //this is needed or multiple items will be thrown sequentially and not simultaneously
 		if(current_size >= STAGE_FOUR)
-			throw_at(S, 14, 3)
+			//throw_at(S, 14, 3)
+			step_towards(src,S)
+			sleep(1)
+			step_towards(src,S)
+		else if(current_size > STAGE_ONE)
+			step_towards(src,S)
 		else ..()
