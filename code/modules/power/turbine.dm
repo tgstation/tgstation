@@ -372,8 +372,7 @@
 	if(compressor && compressor.turbine)
 		dat += "<BR><B>Gas turbine remote control system</B><HR>"
 		if(compressor.stat || compressor.turbine.stat)
-			dat += "[compressor.stat ? "<B>Compressor is inoperable</B><BR>" : ""]"
-			dat += "[compressor.turbine.stat ? "<B>Turbine is inoperable</B>" : ""]"
+			dat += "[compressor.stat ? "<B>Compressor is inoperable</B><BR>" : "<B>Turbine is inoperable</B>"]"
 		else
 			dat += {"Turbine status: [ src.compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]
 			\n<BR>
