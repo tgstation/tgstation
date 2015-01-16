@@ -405,8 +405,13 @@ obj/machinery/bot/proc/bot_move(var/dest, var/move_speed)
 	if(!dest || !path || path.len == 0) //A-star failed or a path/destination was not set.
 		path = list()
 		return 0
-	if(get_turf(src) == get_turf(dest)) //We have arrived, no need to move again.
+	dest = get_turf(dest) //We must always compare turfs, so get the turf of the dest var if dest was originally something else.
+	var/turf/last_node = get_turf(path[path.len]) //This is the turf at the end of the path, it should be equal to dest.
+	if(get_turf(src) == dest) //We have arrived, no need to move again.
 		return 1
+	else if (dest != last_node) //The path should lead us to our given destination. If this is not true, we must stop.
+		path = list()
+		return 0
 	var/success
 	var/step_count = move_speed ? move_speed : speed //If a value is passed into move_speed, use that instead of the default speed var.
 	if(step_count >= 1 && tries < 4)
