@@ -23,6 +23,8 @@
 	var/gcDestroyed
 	var/timeDestroyed
 
+	var/sound_override = 0 //Do we make a sound when bumping into something?
+
 /atom/movable/New()
 	. = ..()
 	areaMaster = get_area_master(src)
@@ -113,8 +115,10 @@
 					src.throw_impact(A,speed)
 					src.throwing = 0
 
-/atom/movable/proc/throw_at(atom/target, range, speed)
+/atom/movable/proc/throw_at(atom/target, range, speed, override = 1)
 	if(!target || !src)	return 0
+	if(override)
+		sound_override = 1
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
 
 	throwing = 1
