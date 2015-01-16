@@ -25,6 +25,12 @@
 	result_amount = 4
 	required_temp = 424
 
+datum/reagent/clf3/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	M.adjustFireLoss(1*REM)
+	..()
+	return
+
 /datum/chemical_reaction/clf3/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/turf/simulated/T = get_turf(holder.my_atom)
 	for(var/turf/simulated/turf in orange(1,T))
