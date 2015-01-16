@@ -208,6 +208,8 @@
 
 		if("Service")
 			module = new /obj/item/weapon/robot_module/butler(src)
+			radio.keyslot = new /obj/item/device/encryptionkey/headset_service(radio)
+			radio.recalculateChannels()
 			module_sprites["Waitress"] = "Service"
 			module_sprites["Kent"] = "toiletbot"
 			module_sprites["Bro"] = "Brobot"
@@ -220,6 +222,8 @@
 
 		if("Miner")
 			module = new /obj/item/weapon/robot_module/miner(src)
+			radio.keyslot = new /obj/item/device/encryptionkey/headset_cargo(radio)
+			radio.recalculateChannels()
 			channels = list("Supply" = 1)
 			if(camera && "Robots" in camera.network)
 				camera.network.Add("MINE")
@@ -233,6 +237,8 @@
 
 		if("Medical")
 			module = new /obj/item/weapon/robot_module/medical(src)
+			radio.keyslot = new /obj/item/device/encryptionkey/headset_med(radio)
+			radio.recalculateChannels()
 			channels = list("Medical" = 1)
 			if(camera && "Robots" in camera.network)
 				camera.network.Add("Medical")
@@ -247,6 +253,8 @@
 
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
+			radio.keyslot = new /obj/item/device/encryptionkey/headset_sec(radio)
+			radio.recalculateChannels()
 			channels = list("Security" = 1)
 			module_sprites["Basic"] = "secborg"
 			module_sprites["Red Knight 2.0"] = "sleeksecurity"
@@ -259,6 +267,8 @@
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
+			radio.keyslot = new /obj/item/device/encryptionkey/headset_eng(radio)
+			radio.recalculateChannels()
 			channels = list("Engineering" = 1)
 			if(camera && "Robots" in camera.network)
 				camera.network.Add("Engineering")
@@ -284,6 +294,8 @@
 
 		if("Combat")
 			module = new /obj/item/weapon/robot_module/combat(src)
+			radio.keyslot = new /obj/item/device/encryptionkey/headset_sec(radio)
+			radio.recalculateChannels()
 			module_sprites["Combat Android"] = "droid-combat"
 			module_sprites["Bladewolf"] = "bladewolf"
 			module_sprites["Mr. Gutsy"] = "mrgutsy"
