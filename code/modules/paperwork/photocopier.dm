@@ -345,7 +345,7 @@
 	for(var/atom/movable/AM in loc)
 		if(AM == src)
 			continue
-		if(AM.density || AM.density)
+		if(AM.density)
 			return 1
 	return 0
 
