@@ -112,6 +112,7 @@
 	update_nearby_icons()
 
 /obj/structure/window/attack_tk(mob/user as mob)
+	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
 	add_fingerprint(user)
 	playsound(loc, 'sound/effects/Glassknock.ogg', 50, 1)

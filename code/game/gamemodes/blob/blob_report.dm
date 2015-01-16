@@ -22,7 +22,7 @@
 			var/nukecode = rand(10000, 99999)
 			for(var/obj/machinery/nuclearbomb/bomb in world)
 				if(bomb && bomb.r_code)
-					if(bomb.z == 1)
+					if(bomb.z == ZLEVEL_STATION)
 						bomb.r_code = nukecode
 
 			intercepttext += "<FONT size = 3><B>NanoTrasen Update</B>: Biohazard Alert.</FONT><HR>"
@@ -58,7 +58,7 @@
 
 /datum/station_state/proc/count()
 	for(var/turf/T in world)
-		if(T.z != 1)
+		if(T.z != ZLEVEL_STATION)
 			continue
 
 		if(istype(T,/turf/simulated/floor))
@@ -80,7 +80,7 @@
 				src.r_wall += 1
 
 	for(var/obj/O in world)
-		if(O.z != 1)
+		if(O.z != ZLEVEL_STATION)
 			continue
 
 		if(istype(O, /obj/structure/window))

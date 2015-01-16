@@ -84,7 +84,7 @@ obj/item/weapon/gun/energy/laser/retro
 	slot_flags = SLOT_BACK
 	origin_tech = "combat=4;materials=3;powerstorage=3"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/heavy)
-
+	pin = null
 
 /obj/item/weapon/gun/energy/xray
 	name = "xray laser gun"
@@ -93,7 +93,7 @@ obj/item/weapon/gun/energy/laser/retro
 	item_state = "laser"
 	origin_tech = "combat=5;materials=3;magnets=2;syndicate=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/xray)
-
+	pin = null
 
 ////////Laser Tag////////////////////
 
@@ -105,23 +105,15 @@ obj/item/weapon/gun/energy/laser/retro
 	origin_tech = "combat=1;magnets=2"
 	clumsy_check = 0
 	var/charge_tick = 0
-
-/obj/item/weapon/gun/energy/laser/bluetag/special_check(var/mob/living/carbon/human/M)
-	if(ishuman(M))
-		if(istype(M.wear_suit, /obj/item/clothing/suit/bluetag))
-			return 1
-		M << "<span class='danger'>You need to be wearing your laser tag vest!</span>"
-	return 0
+	pin = /obj/item/device/firing_pin/tag/blue
 
 /obj/item/weapon/gun/energy/laser/bluetag/New()
 	..()
 	SSobj.processing.Add(src)
 
-
 /obj/item/weapon/gun/energy/laser/bluetag/Destroy()
 	SSobj.processing.Remove(src)
 	..()
-
 
 /obj/item/weapon/gun/energy/laser/bluetag/process()
 	charge_tick++
@@ -135,7 +127,6 @@ obj/item/weapon/gun/energy/laser/retro
 	return 1
 
 
-
 /obj/item/weapon/gun/energy/laser/redtag
 	name = "laser tag gun"
 	icon_state = "redtag"
@@ -144,23 +135,15 @@ obj/item/weapon/gun/energy/laser/retro
 	origin_tech = "combat=1;magnets=2"
 	clumsy_check = 0
 	var/charge_tick = 0
-
-/obj/item/weapon/gun/energy/laser/redtag/special_check(var/mob/living/carbon/human/M)
-	if(ishuman(M))
-		if(istype(M.wear_suit, /obj/item/clothing/suit/redtag))
-			return 1
-		M << "<span class='danger'>You need to be wearing your laser tag vest!</span>"
-	return 0
+	pin = /obj/item/device/firing_pin/tag/red
 
 /obj/item/weapon/gun/energy/laser/redtag/New()
 	..()
 	SSobj.processing.Add(src)
 
-
 /obj/item/weapon/gun/energy/laser/redtag/Destroy()
 	SSobj.processing.Remove(src)
 	..()
-
 
 /obj/item/weapon/gun/energy/laser/redtag/process()
 	charge_tick++

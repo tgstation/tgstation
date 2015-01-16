@@ -1,0 +1,38 @@
+################################
+# Example Changelog File
+#
+# Note: This file, and files beginning with ".", and files that don't end in ".yml" will not be read.  If you change this file, you will look really dumb.
+#
+# Your changelog will be merged with a master changelog. (New stuff added only, and only on the date entry for the day it was merged.)
+# When it is, any changes listed below will disappear.
+#
+# Valid Prefixes: 
+#   bugfix
+#   wip (For works in progress)
+#   tweak
+#   soundadd
+#   sounddel
+#   rscdel (general adding of nice things)
+#   rscadd (general deleting of nice things)
+#   imageadd
+#   imagedel
+#   spellcheck (typo fixes)
+#   experiment
+#   tgs (TG-ported fixes?)
+#################################
+
+# Your name.  
+author: Steelpoint
+
+# Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
+delete-after: True
+
+# Any changes you've made.  See valid prefix list above.
+# INDENT WITH TWO SPACES.  NOT TABS.  SPACES.
+# SCREW THIS UP AND IT WON'T WORK.
+# Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
+# Please surround your changes in single (') or double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
+changes: 
+  - rscadd: "The Emergency Response Team project has been activated by Nanotrasen. The ERT are a seven man squad that can be deployed by the Central Command (admins) to attempt to rescue the station from a overwhelming threat, or to render assistance in dealing with a significant problem."
+  - rscadd: "The ERT consists of a single Commander, two Security Officers, two Engineering Officers and two Medical Officers. The Commander is preselected when the squad is being spawned in, however the remaining six officers are free to select their role in the squad."
+  - rscadd: "Two new Pulse gun variants have been added to the game. They are the Pulse Carbine and the Pulse Pistol, both have significantly smaller ammunition capacities than the Pulse Rifle, however they both can fit in a backpack and the pistol can fit in a pocket. All ERT Officers have a Pulse Pistol for a sidearm, however the Security Officers get a Pulse Carbine as their primary longarm."

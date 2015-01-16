@@ -38,6 +38,24 @@
 	select_name = "DESTROY"
 	fire_sound = 'sound/weapons/pulse.ogg'
 
+/obj/item/ammo_casing/energy/laser/pulse/carbine
+	e_cost = 1000
+
+/obj/item/ammo_casing/energy/laser/carbine
+	e_cost = 1000
+
+/obj/item/ammo_casing/energy/electrode/carbine
+	e_cost = 1000
+
+/obj/item/ammo_casing/energy/laser/pulse/pistol
+	e_cost = 2000
+
+/obj/item/ammo_casing/energy/laser/pistol
+	e_cost = 1000
+
+/obj/item/ammo_casing/energy/electrode/pistol
+	e_cost = 1000
+
 /obj/item/ammo_casing/energy/laser/bluetag
 	projectile_type = /obj/item/projectile/lasertag/bluetag
 	select_name = "bluetag"
@@ -125,3 +143,13 @@
 /obj/item/ammo_casing/energy/wormhole/orange
 	projectile_type = /obj/item/projectile/beam/wormhole/orange
 	select_name = "orange"
+
+/obj/item/ammo_casing/energy/bolt
+	projectile_type = /obj/item/projectile/energy/bolt
+	select_name = "bolt"
+	e_cost = 500
+	fire_sound = 'sound/weapons/Genhit.ogg'
+
+/obj/item/ammo_casing/energy/bolt/large
+	projectile_type = /obj/item/projectile/energy/bolt/large
+	select_name = "heavy bolt"

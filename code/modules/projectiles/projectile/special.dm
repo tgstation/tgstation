@@ -178,3 +178,20 @@ obj/item/projectile/kinetic/New()
 	name ="explosive slug"
 	damage = 25
 	weaken = 5
+
+/obj/item/projectile/bullet/magspear
+	name = "magnetic spear"
+	desc = "WHITE WHALE, HOLY GRAIL"
+	damage = 30 //takes 3 spears to kill a mega carp, one to kill a normal carp
+	icon_state = "magspear"
+
+/obj/item/projectile/bullet/magspear/on_hit(var/atom/target, var/blocked = 0)
+	if(!proj_hit)
+		proj_hit = 1
+		new /obj/item/ammo_casing/caseless/magspear(src.loc)
+	..()
+
+/obj/item/projectile/bullet/magspear/on_range()
+	if(!proj_hit)
+		new /obj/item/ammo_casing/caseless/magspear(src.loc)
+		..()
