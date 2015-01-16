@@ -33,7 +33,7 @@ datum/reagent/clf3/on_mob_life(var/mob/living/M as mob)
 
 /datum/chemical_reaction/clf3/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/turf/simulated/T = get_turf(holder.my_atom)
-	for(var/turf/simulated/turf in orange(1,T))
+	for(var/turf/simulated/turf in range(1,T))
 		new /obj/effect/hotspot(turf)
 	new /obj/effect/hotspot(T)
 	return
