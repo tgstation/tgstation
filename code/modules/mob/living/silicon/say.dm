@@ -30,7 +30,7 @@
 			else
 				S << rendered
 	for(var/mob/dead/observer/O in dead_mob_list)
-		if(istype(O , /mob/dead/observer) && S.stat == DEAD)
+		if(istype(O , /mob/dead/observer) && O.stat == DEAD)
 			var/rendered_Obs = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <a href='byond://?src=\ref[O];follow2=\ref[O];follow=\ref[src]'>(Follow)</a> <span class='message'>[message_a]</span></span></i>"
 			O << rendered_Obs
 
