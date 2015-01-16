@@ -69,7 +69,10 @@
 			if (M.ear_damage >= 5)
 				M << "<span class='warning'>Your ears start to ring!</span>"
 
-/obj/item/weapon/grenade/flashbang/clusterbang//Created by Polymorph, fixed by Sieve
+////////////////////
+//Clusterbang
+////////////////////
+/obj/item/weapon/grenade/flashbang/clusterbang
 	desc = "Use of this weapon may constiute a war crime in your area, consult your local captain."
 	name = "clusterbang"
 	icon = 'icons/obj/grenade.dmi'
@@ -79,60 +82,60 @@
 	update_mob()
 	var/numspawned = rand(4,8)
 	var/again = 0
+
 	for(var/more = numspawned,more > 0,more--)
 		if(prob(35))
 			again++
-			numspawned --
+			numspawned--
 
-	for(,numspawned > 0, numspawned--)
-		spawn(0)
-			new /obj/item/weapon/grenade/flashbang/cluster(src.loc)//Launches flashbangs
-			playsound(src.loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
+	for(var/loop = numspawned, loop > 0, loop--)
+		new /obj/item/weapon/grenade/flashbang/cluster(loc)//Launches flashbangs
 
-	for(,again > 0, again--)
-		spawn(0)
-			new /obj/item/weapon/grenade/flashbang/clusterbang/segment(src.loc)//Creates a 'segment' that launches a few more flashbangs
-			playsound(src.loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
+	for(var/loop = again ,loop > 0, loop--)
+		new /obj/item/weapon/grenade/flashbang/clusterbang/segment(loc)//Creates a 'segment' that launches a few more flashbangs
+
+	playsound(src.loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
+
 	qdel(src)
 
+
+//////////////////////
+//Clusterbang segment
+//////////////////////
 /obj/item/weapon/grenade/flashbang/clusterbang/segment
 	desc = "A smaller segment of a clusterbang. Better run."
 	name = "clusterbang segment"
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "clusterbang_segment"
 
-/obj/item/weapon/grenade/flashbang/clusterbang/segment/New()//Segments should never exist except part of the clusterbang, since these immediately 'do their thing' and asplode
+/obj/item/weapon/grenade/flashbang/clusterbang/segment/New()
+	..()
 	icon_state = "clusterbang_segment_active"
 	active = 1
-	var/stepdist = rand(1,4)//How far to step
-	var/temploc = src.loc//Saves the current location to know where to step away from
-	walk_away(src,temploc,stepdist)//I must go, my people need me
-	var/dettime = rand(15,60)
-	spawn(dettime)
+	walk_away(src,loc,rand(1,4))
+	spawn(rand(15,60))
 		prime()
-	..()
+
 
 /obj/item/weapon/grenade/flashbang/clusterbang/segment/prime()
 	update_mob()
 	var/numspawned = rand(4,8)
-	for(var/more = numspawned,more > 0,more--)
-		if(prob(35))
-			numspawned --
 
-	for(,numspawned > 0, numspawned--)
-		spawn(0)
-			new /obj/item/weapon/grenade/flashbang/cluster(src.loc)
-			playsound(src.loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
+	for(var/loop = numspawned ,loop > 0, loop--)
+		new /obj/item/weapon/grenade/flashbang/cluster(loc)
+
+	playsound(src.loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
+
 	qdel(src)
 
-/obj/item/weapon/grenade/flashbang/cluster/New()//Same concept as the segments, so that all of the parts don't become reliant on the clusterbang
+////////////////////////////////
+//Clusterbang spwaned flashbang
+////////////////////////////////
+/obj/item/weapon/grenade/flashbang/cluster/New()
 	..()
 	icon_state = "flashbang_active"
 	active = 1
 	banglet = 1
-	var/stepdist = rand(1,3)
-	var/temploc = src.loc
-	walk_away(src,temploc,stepdist)
-	var/dettime = rand(15,60)
-	spawn(dettime)
-	prime()
+	walk_away(src,loc,rand(1,3))
+	spawn(rand(15,60))
+		prime()
