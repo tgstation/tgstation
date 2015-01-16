@@ -1,13 +1,6 @@
 /obj/item/weapon/
 	name = "weapon"
 	icon = 'icons/obj/weapons.dmi'
-	var/twohanded = 0
-	var/requiretwohanded = 0
-	var/wielded = 0
-	var/force_unwielded = 0
-	var/force_wielded = 0
-	var/wieldsound = null
-	var/unwieldsound = null
 
 /obj/item/weapon/New()
 	..()
@@ -21,104 +14,6 @@
 	spawn(0)
 		..()
 	return
-
-/obj/item/weapon/proc/unwield(mob/living/carbon/user)
-	if(!twohanded) return
-	if(!wielded) return
-	wielded = 0
-	force = force_unwielded
-	name = "[initial(name)]"
-	update_icon()
-	user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
-	if(unwieldsound)
-		playsound(loc, unwieldsound, 50, 1)
-	var/obj/item/weapon/offhand/O = user.get_inactive_hand()
-	if(O && istype(O))
-		O.unwield()
-	return
-
-/obj/item/weapon/proc/wield(mob/living/carbon/user)
-	if(!twohanded) return
-	if(wielded) return
-	if(istype(user,/mob/living/carbon/monkey) )
-		user << "<span class='warning'>It's too heavy for you to wield fully.</span>"
-		return
-	if(user.get_inactive_hand())
-		user << "<span class='warning'>You need your other hand to be empty</span>"
-		return
-	wielded = 1
-	force = force_wielded
-	name = "[initial(name)] (Wielded)"
-	update_icon()
-	user << "<span class='notice'>You grab the [initial(name)] with both hands.</span>"
-	if (wieldsound)
-		playsound(loc, wieldsound, 50, 1)
-	var/obj/item/weapon/offhand/O = new(user) ////Let's reserve his other hand~
-	O.name = "[initial(name)] - offhand"
-	O.desc = "Your second grip on the [initial(name)]"
-	user.put_in_inactive_hand(O)
-	return
-
-/obj/item/weapon/mob_can_equip(M as mob, slot)
-	if(twohanded)//Cannot equip wielded items.
-		if(wielded)
-			if(requiretwohanded)
-				M << "<span class='warning'>[src.name] is too cumbersome to carry with anything but your hands!</span>"
-				return 0
-			M << "<span class='warning'>Unwield the [initial(name)] first!</span>"
-			return 0
-		return ..()
-
-/obj/item/weapon/dropped(mob/user as mob)
-	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
-	if(twohanded)
-		if(user)
-			var/obj/item/weapon/O = user.get_inactive_hand()
-			O.unwield(user)
-		return	unwield(user)
-
-/obj/item/weapon/attack_self(mob/user as mob)
-	..()
-	if(twohanded)
-		if(requiretwohanded)
-			return
-		if(wielded) //Trying to unwield it
-			unwield(user)
-		else //Trying to wield it
-			wield(user)
-
-///////////OFFHAND///////////////
-/obj/item/weapon/offhand
-	name = "offhand"
-	icon_state = "offhand"
-	w_class = 5.0
-	flags = ABSTRACT
-
-/obj/item/weapon/offhand/unwield()
-	qdel(src)
-
-/obj/item/weapon/offhand/wield()
-	qdel(src)
-
-/obj/item/weapon/offhand/IsShield()//if the actual twohanded weapon is a shield, we count as a shield too!
-	var/mob/user = loc
-	if(!istype(user)) return 0
-	var/obj/item/I = user.get_active_hand()
-	if(I == src) I = user.get_inactive_hand()
-	if(!I) return 0
-	return I.IsShield()
-
-/obj/item/weapon/attack_hand(mob/user)//Can't even pick it up without both hands empty
-	if(requiretwohanded)
-		var/obj/item/weapon/H = user.get_inactive_hand()
-		if(H != null)
-			user.visible_message("<span class='notice'>[src.name] is too cumbersome to carry in one hand!</span>")
-			return
-		var/obj/item/weapon/offhand/O = new(user)
-		user.put_in_inactive_hand(O)
-		..()
-		wielded = 1
-	..()
 
 /*
  * Fireaxe
