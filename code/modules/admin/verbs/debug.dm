@@ -819,6 +819,9 @@ var/global/list/g_fancy_list_of_types = null
 		if("death commando")
 			equip_deathsquad(M)
 
+		if("emergency response officer")
+			equip_emergencyresponsesquad(M)
+
 		if("centcom official")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(M), slot_shoes)
@@ -1054,6 +1057,7 @@ var/global/list/g_fancy_list_of_types = null
 
 	usr << browse(dat, "window=dellog")
 
+//Deathsquad
 /proc/equip_deathsquad(var/mob/living/carbon/human/M, var/officer)
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(M)
 	R.set_frequency(1441)
@@ -1101,3 +1105,25 @@ var/global/list/g_fancy_list_of_types = null
 	W.registered_name = M.real_name
 	W.update_label(M.real_name)
 	M.equip_to_slot_or_del(W, slot_wear_id)
+
+//Emergency Response Team
+/proc/equip_emergencyresponsesquad(var/mob/living/carbon/human/M, var/officer)
+	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(M)
+	R.set_frequency(1441)
+	M.equip_to_slot_or_del(R, slot_ears)
+
+	if(officer)
+		M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
+		M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
+		M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
+		M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(M), slot_back)
+		M.equip_to_slot_or_del(new /obj/item/weapon/card/id/ertsCommand(M), slot_wear_id)
+	else
+		M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
+		M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
+		M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
+
+	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(M)
+	L.imp_in = M
+	L.implanted = 1
+	M.sec_hud_set_implants()
