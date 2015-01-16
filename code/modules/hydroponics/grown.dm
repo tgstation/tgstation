@@ -334,7 +334,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus/add_juice()
 	..()
-	reagents.add_reagent("salglu_solution", 1 + round(potency / 8, 1))
+	reagents.add_reagent("omnizine", 1 + round(potency / 8, 1))
 	reagents.add_reagent("synaptizine", 1 + round(potency / 8, 1))
 	reagents.add_reagent("morphine", 1 + round(potency / 10, 1))
 	reagents.add_reagent("space_drugs", 1 + round(potency / 10, 1))

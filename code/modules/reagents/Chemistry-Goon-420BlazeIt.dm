@@ -21,8 +21,8 @@ datum/reagent/nicotine/on_mob_life(var/mob/living/M as mob)
 	if(volume > 35)
 		if(prob(20))
 			M << "You feel like you smoked too much."
-		M.adjustToxLoss(0.1*REM)
-		M.adjustOxyLoss(0.1*REM)
+		M.adjustToxLoss(1*REM)
+		M.adjustOxyLoss(1*REM)
 	..()
 	return
 

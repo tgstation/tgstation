@@ -168,7 +168,7 @@
 	name = "bottle of charcoal pills"
 	desc = "Contains pills used to counter toxins."
 
-/obj/item/weapon/storage/pill_bottle/salglu_solution/New()
+/obj/item/weapon/storage/pill_bottle/charcoal/New()
 	..()
 	new /obj/item/weapon/reagent_containers/pill/charcoal( src )
 	new /obj/item/weapon/reagent_containers/pill/charcoal( src )
