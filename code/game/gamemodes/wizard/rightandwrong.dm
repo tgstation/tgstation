@@ -60,7 +60,7 @@
 				if("mateba")
 					new /obj/item/weapon/gun/projectile/revolver/mateba(get_turf(H))
 				if("crossbow")
-					new /obj/item/weapon/gun/projectile/automatic/crossbow(get_turf(H))
+					new /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large(get_turf(H))
 				if("nuclear")
 					var/obj/item/weapon/gun/energy/gun/nuclear/gat
 					gat.pin = /obj/item/device/firing_pin //no authentication pins for spawned guns. fun allowed.
@@ -86,9 +86,7 @@
 					gat.pin = /obj/item/device/firing_pin
 					new gat(get_turf(H))
 				if("speargun")
-					var/obj/item/weapon/gun/projectile/automatic/speargun/gat
-					gat.pin = /obj/item/device/firing_pin
-					new gat(get_turf(H))
+					new /obj/item/weapon/gun/projectile/automatic/speargun(get_turf(H))
 		else
 			switch (randomizemagic)
 				if("fireball")
