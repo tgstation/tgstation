@@ -8,6 +8,7 @@
 				return
 			else
 				message = Gibberish(message, (emp_damage*6)) //scrambles the message, gets worse when emp_damage is higher
+	return ..(message)
 
 /mob/living/carbon/brain/radio(message, message_mode)
 	if(message_mode && istype(container, /obj/item/device/mmi/radio_enabled))
