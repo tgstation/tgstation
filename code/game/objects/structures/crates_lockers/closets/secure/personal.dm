@@ -6,6 +6,7 @@
 
 /obj/structure/closet/secure_closet/personal/New()
 	..()
+	new /obj/item/weapon/storage/backpack/dufflebag(src)
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack(src)
 	else
