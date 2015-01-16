@@ -13,7 +13,7 @@
 
 /mob/living/silicon/robot/IsVocal()
 		return !config.silent_borg
-	
+
 /mob/living/proc/robot_talk(var/message)
 
 	log_say("[key_name(src)] (@[src.x],[src.y],[src.z])(binary): [message]")
@@ -27,11 +27,12 @@
 			if(istype(S , /mob/living/silicon/ai) && !isMoMMI(src))
 				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src]'><span class='name'>[name]</span></a> <span class='message'>[message_a]</span></span></i>"
 				S << renderedAI
-			else if(istype(S , /mob/dead/observer) && S.stat == DEAD)
-				var/rendered_Obs = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <a href='byond://?src=\ref[S];follow2=\ref[S];follow=\ref[src]'>(Follow)</a> <span class='message'>[message_a]</span></span></i>"
-				S << rendered_Obs
 			else
 				S << rendered
+	for(var/mob/dead/observer/O in dead_mob_list)
+		if(istype(O , /mob/dead/observer) && S.stat == DEAD)
+			var/rendered_Obs = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <a href='byond://?src=\ref[O];follow2=\ref[O];follow=\ref[src]'>(Follow)</a> <span class='message'>[message_a]</span></span></i>"
+			O << rendered_Obs
 
 /mob/living/silicon/binarycheck()
 	return 1
