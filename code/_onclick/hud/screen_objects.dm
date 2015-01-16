@@ -403,7 +403,6 @@
 			if(isrobot(usr))
 				var/mob/living/silicon/robot/R = usr
 				R.uneq_active()
-				R.hud_used.update_robot_modules_display()
 
 		if(INV_SLOT_TOOL)
 			if(istype(usr, /mob/living/silicon/robot/mommi))
