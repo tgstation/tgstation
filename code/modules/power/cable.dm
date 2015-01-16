@@ -81,11 +81,9 @@ By design, d1 is the smallest direction and d2 is the highest
 	cable_list += src		//add it to the global cable list
 
 /obj/structure/cable/Destroy()			// called when a cable is deleted
-	if(!defer_powernet_rebuild)			// set if network will be rebuilt manually.
-		if(powernet)
-			cut_cable_from_powernet()	// update the powernets
-
-	cable_list -= src
+	if(powernet)
+		cut_cable_from_powernet()				// update the powernets
+	cable_list -= src							//remove it from global cable list
 
 	if(istype(attached))
 		attached.SetLuminosity(0)
