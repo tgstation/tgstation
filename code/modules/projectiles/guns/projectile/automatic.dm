@@ -231,22 +231,3 @@
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	can_suppress = 0
 	burst_size = 4
-
-/obj/item/weapon/gun/projectile/automatic/minigun
-	name = "minigun"
-	desc = "For real terminators only."
-	icon_state = "tommygun"
-	item_state = "shotgun"
-	slot_flags = 0
-	origin_tech = "combat=8;materials=1;syndicate=4"
-	mag_type = /obj/item/ammo_box/magazine/minigun
-	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
-	can_suppress = 0
-	burst_size = 10
-	twohanded = 1
-	requiretwohanded = 1
-
-/obj/item/weapon/gun/projectile/automatic/minigun/attack_hand(mob/living/carbon/human/user)
-	if(user.back)
-		user << "<span class='warning'>You can't fit the ammo pack on your back.</span>"
-		return
