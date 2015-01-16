@@ -316,6 +316,8 @@
 				stat("Tank Pressure", internal.air_contents.return_pressure())
 			for (var/datum/robot_energy_storage/st in module.storages)
 				stat("[st.name]: [st.energy]/[st.max_energy]")
+		if(connected_ai)
+			stat(null, text("Master AI: [connected_ai.name]"))
 
 /mob/living/silicon/robot/restrained()
 	return 0
