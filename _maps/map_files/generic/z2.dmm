@@ -238,7 +238,7 @@
 "eD" = (/obj/structure/stool/bed/chair{dir = 1},/turf/simulated/shuttle/floor,/area/space)
 "eE" = (/obj/machinery/computer/emergency_shuttle,/turf/simulated/shuttle/floor,/area/space)
 "eF" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/regular{pixel_x = 2; pixel_y = 3},/obj/item/weapon/crowbar,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
-"eG" = (/obj/structure/table,/obj/item/weapon/reagent_containers/syringe/salglu_solution,/obj/item/weapon/reagent_containers/syringe/salglu_solution{pixel_y = 2},/obj/item/weapon/reagent_containers/syringe/salglu_solution{pixel_y = 4},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/space)
+"eG" = (/obj/structure/table,/obj/item/weapon/reagent_containers/syringe/charcoal,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/space)
 "eH" = (/obj/machinery/door/poddoor{id = "CentComPort"; name = "security door"},/turf/unsimulated/floor{dir = 1; icon_state = "loadingarea"},/area/centcom/control)
 "eI" = (/obj/machinery/door/airlock/centcom{name = "Centcom Security"; opacity = 1; req_access_txt = "101"},/turf/unsimulated/floor{icon_state = "dark"},/area/centcom/control)
 "eJ" = (/turf/unsimulated/floor{icon_state = "dark"},/area/centcom/evac)

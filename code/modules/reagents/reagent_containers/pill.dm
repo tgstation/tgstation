@@ -134,14 +134,14 @@
 	..()
 	reagents.add_reagent("salbutamol", 30)
 
-/obj/item/weapon/reagent_containers/pill/salglu_solution
-	name = "saline-glucose solution pill"
+/obj/item/weapon/reagent_containers/pill/charcoal
+	name = "charcoal pill"
 	desc = "Neutralizes many common toxins."
 	icon_state = "pill17"
 
-/obj/item/weapon/reagent_containers/pill/salglu_solution/New()
+/obj/item/weapon/reagent_containers/pill/charcoal/New()
 	..()
-	reagents.add_reagent("salglu_solution", 50)
+	reagents.add_reagent("charcoal", 50)
 
 /obj/item/weapon/reagent_containers/pill/ephedrine
 	name = "ephedrine pill"

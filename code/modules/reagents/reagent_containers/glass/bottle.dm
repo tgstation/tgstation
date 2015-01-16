@@ -62,9 +62,9 @@
 	spawned_reagent = "chloralhydrate"
 	spawned_amount = 15
 
-/obj/item/weapon/reagent_containers/glass/bottle/salglu_solution
-	name = "saline-glucose solution bottle"
-	desc = "A small bottle of saline-glucose solution."
+/obj/item/weapon/reagent_containers/glass/bottle/charcoal
+	name = "charcoal bottle"
+	desc = "A small bottle of charcoal."
 	icon_state = "bottle17"
 	spawned_reagent = "salglu_solution"
 

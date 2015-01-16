@@ -242,12 +242,12 @@
 		mode = SYRINGE_INJECT
 		update_icon()
 
-/obj/item/weapon/reagent_containers/syringe/salglu_solution
-	name = "syringe (saline-glucose solution)"
-	desc = "Contains saline-glucose solution."
+/obj/item/weapon/reagent_containers/syringe/charcoal
+	name = "syringe (charcoal)"
+	desc = "Contains charcoal."
 	New()
 		..()
-		reagents.add_reagent("salglu_solution", 15)
+		reagents.add_reagent("charcoal", 15)
 		mode = SYRINGE_INJECT
 		update_icon()
 
@@ -270,12 +270,12 @@
 
 //Robot syringes
 //Not special in any way, code wise. They don't have added variables or procs.
-/obj/item/weapon/reagent_containers/syringe/robot/salglu_solution
-	name = "syringe (saline-glucose solution)"
-	desc = "Contains saline-glucose solution."
+/obj/item/weapon/reagent_containers/syringe/robot/charcoal
+	name = "syringe (charcoal)"
+	desc = "Contains charcoal."
 	New()
 		..()
-		reagents.add_reagent("salglu_solution", 15)
+		reagents.add_reagent("charcoal", 15)
 		mode = SYRINGE_INJECT
 		update_icon()
 
@@ -290,10 +290,10 @@
 
 /obj/item/weapon/reagent_containers/syringe/robot/mixed
 	name = "syringe (mixed)"
-	desc = "Contains ephedrine & saline-glucose solution."
+	desc = "Contains ephedrine & charcoal solution."
 	New()
 		..()
 		reagents.add_reagent("ephedrine", 7)
-		reagents.add_reagent("salglu_solution", 8)
+		reagents.add_reagent("charcoal", 8)
 		mode = SYRINGE_INJECT
 		update_icon()

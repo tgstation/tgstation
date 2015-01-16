@@ -39,11 +39,12 @@
 			F.make_plating()
 		if(prob(11))
 			F.ChangeTurf(/turf/space)
+		if(istype(F, /turf/simulated/floor/))
+			new /obj/effect/hotspot(F)
 	if(istype(T, /turf/simulated/wall/))
 		var/turf/simulated/wall/W = T
 		if(prob(33))
-			F.ChangeTurf(/turf/simulated/floor)
-	new /obj/effect/hotspot(T)
+			W.ChangeTurf(/turf/simulated/floor)
 	return
 
 /datum/reagent/clf3/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
@@ -51,6 +52,7 @@
 		return
 	if(method == TOUCH)
 		M.adjust_fire_stacks(20)
+		M.IgniteMob()
 		new /obj/effect/hotspot(M.loc)
 		return
 
