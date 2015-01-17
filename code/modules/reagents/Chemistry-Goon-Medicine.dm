@@ -422,9 +422,9 @@ datum/reagent/atropine
 
 datum/reagent/atropine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	if(M.health > 60)
+	if(M.health > -60)
 		M.adjustToxLoss(1*REM)
-	if(M.health < 25)
+	if(M.health < -25)
 		M.adjustBruteLoss(3*REM)
 		M.adjustFireLoss(3*REM)
 	if(M.oxyloss > 65)

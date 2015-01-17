@@ -233,7 +233,7 @@
 
 
 
-/obj/item/weapon/reagent_containers/syringe/ephedrine
+/obj/item/weapon/reagent_containers/syringe/epinephrine
 	name = "syringe (epinephrine)"
 	desc = "Contains epinephrine - used to stabilize patients."
 	New()
@@ -279,7 +279,7 @@
 		mode = SYRINGE_INJECT
 		update_icon()
 
-/obj/item/weapon/reagent_containers/syringe/robot/ephedrine
+/obj/item/weapon/reagent_containers/syringe/robot/epinephrine
 	name = "syringe (epinephrine)"
 	desc = "Contains epinephrine - used to stabilize patients."
 	New()

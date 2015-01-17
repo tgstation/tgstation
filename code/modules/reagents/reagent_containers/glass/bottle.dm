@@ -24,11 +24,11 @@
 		reagents.add_reagent("[spawned_reagent]", spawned_amount)
 
 
-/obj/item/weapon/reagent_containers/glass/bottle/ephedrine
-	name = "ephedrine bottle"
-	desc = "A small bottle. Contains ephedrine - used to stabilize patients."
+/obj/item/weapon/reagent_containers/glass/bottle/epinephrine
+	name = "epinephrine bottle"
+	desc = "A small bottle. Contains epinephrine - used to stabilize patients."
 	icon_state = "bottle16"
-	spawned_reagent = "ephedrine"
+	spawned_reagent = "epinephrine"
 
 /obj/item/weapon/reagent_containers/glass/bottle/toxin
 	name = "toxin bottle"

@@ -178,19 +178,19 @@
 	new /obj/item/weapon/reagent_containers/pill/charcoal( src )
 	new /obj/item/weapon/reagent_containers/pill/charcoal( src )
 
-/obj/item/weapon/storage/pill_bottle/ephedrine
-	name = "bottle of ephedrine pills"
+/obj/item/weapon/storage/pill_bottle/epinephrine
+	name = "bottle of epinephrine pills"
 	desc = "Contains pills used to stabilize patients."
 
-/obj/item/weapon/storage/pill_bottle/ephedrine/New()
+/obj/item/weapon/storage/pill_bottle/epinephrine/New()
 	..()
-	new /obj/item/weapon/reagent_containers/pill/ephedrine( src )
-	new /obj/item/weapon/reagent_containers/pill/ephedrine( src )
-	new /obj/item/weapon/reagent_containers/pill/ephedrine( src )
-	new /obj/item/weapon/reagent_containers/pill/ephedrine( src )
-	new /obj/item/weapon/reagent_containers/pill/ephedrine( src )
-	new /obj/item/weapon/reagent_containers/pill/ephedrine( src )
-	new /obj/item/weapon/reagent_containers/pill/ephedrine( src )
+	new /obj/item/weapon/reagent_containers/pill/epinephrine( src )
+	new /obj/item/weapon/reagent_containers/pill/epinephrine( src )
+	new /obj/item/weapon/reagent_containers/pill/epinephrine( src )
+	new /obj/item/weapon/reagent_containers/pill/epinephrine( src )
+	new /obj/item/weapon/reagent_containers/pill/epinephrine( src )
+	new /obj/item/weapon/reagent_containers/pill/epinephrine( src )
+	new /obj/item/weapon/reagent_containers/pill/epinephrine( src )
 
 /obj/item/weapon/storage/pill_bottle/stimulant
 	name = "bottle of stimulant pills"
