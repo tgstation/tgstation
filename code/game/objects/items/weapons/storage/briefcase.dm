@@ -62,7 +62,6 @@
 	name = "briefcase"
 	desc = "It's made of AUTHENTIC faux-leather and has a price-tag still attached. This one feels a bit heavier than normal for how much fits in it."
 	icon_state = "briefcase"
-	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 8.0
 	throw_speed = 1
 	throw_range = 3
