@@ -317,8 +317,10 @@
 		stop()
 		if(cooked)
 			cooked.loc = src.loc
+			cooked:freshIndex = 1
 		for(var/i=1,i<efficiency,i++)
 			cooked = new cooked.type(loc)
+			cooked:freshIndex = 1
 		return
 
 /obj/machinery/microwave/proc/wzhzhzh(var/seconds as num)

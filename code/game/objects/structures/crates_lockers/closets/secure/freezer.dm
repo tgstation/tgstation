@@ -12,6 +12,14 @@
 		else
 			icon_state = icon_opened
 
+/obj/structure/closet/secure_closet/freezer/close()
+	..()
+	if(!broken)
+		for(var/O in src)
+			if(istype(O,/obj/item/weapon/reagent_containers/food))
+				var/obj/item/weapon/reagent_containers/food/F = O
+				F.freshMod = -1
+
 /obj/structure/closet/secure_closet/freezer/kitchen
 	name = "kitchen Cabinet"
 	req_access = list(access_kitchen)
