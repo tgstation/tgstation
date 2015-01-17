@@ -639,5 +639,5 @@ proc/chemical_mob_spawn(var/datum/reagents/holder, var/amount_to_spawn, var/reac
 /datum/reagent/mutadone
 	name = "Mutadone"
 	id = "mutadone"
-	description = "Heals 3 BRAIN damage."
+	description = "Chance to remove genetic disabilities."
 	color = "#C8A5DC" // rgb: 200, 165, 220
