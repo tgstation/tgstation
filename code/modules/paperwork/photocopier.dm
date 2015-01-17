@@ -254,7 +254,7 @@
 	else if(istype(O, /obj/item/weapon/wrench))
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user << "<span class='warning'>You start [anchored ? "wrenching" : "unwrenching"] [src]</span>"
-		if(do_after(20, user))
+		if(do_after(user, 20))
 			if(gc_destroyed)
 				return
 			anchored = !anchored
