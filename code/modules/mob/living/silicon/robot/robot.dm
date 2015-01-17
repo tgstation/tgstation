@@ -309,6 +309,7 @@
 		else
 			stat(null, text("No Cell Inserted!"))
 
+		stat(null, "Station Time: [worldtime2text()]")
 		if(module)
 			internal = locate(/obj/item/weapon/tank/jetpack) in module.modules
 			if(internal)
