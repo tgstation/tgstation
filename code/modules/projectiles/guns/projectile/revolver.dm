@@ -81,7 +81,65 @@
 					perfect = 0
 
 
+/obj/item/weapon/gun/projectile/sarevolver
+	name = "single action revolver"
+	desc = "A revolver that you have to pull the hammer back each time to fire."
+	fire_sound = 'sound/weapons/shotgun.ogg'
+	icon_state = "revolver"
+	item_state = "revolver"
+	max_shells = 6
+	w_class = 3.0
+	force = 10
+	flags = FPRINT
+	siemens_coefficient = 1
+	slot_flags = SLOT_BACK
+	caliber = list("38" = 1, "357" = 1) //flare shells are still shells
+	origin_tech = "combat=4;materials=2"
+	ammo_type = "/obj/item/ammo_casing/c38"
+	var/recentpump = 0 // to prevent spammage
+	var/pumped = 0
+	var/obj/item/ammo_casing/current_shell = null
 
+
+	gun_flags = 0
+
+	isHandgun()
+		return 1
+
+	attack_self(mob/living/user as mob)
+		if(recentpump)	return
+		pump(user)
+		recentpump = 1
+		spawn(10)
+			recentpump = 0
+		return
+
+	process_chambered()
+		if(in_chamber)
+			return 1
+		else if(current_shell && current_shell.BB)
+			in_chamber = current_shell.BB //Load projectile into chamber.
+			current_shell.BB.loc = src //Set projectile loc to gun.
+			current_shell.BB = null
+			current_shell.update_icon()
+			return 1
+		return 0
+
+	proc/pump(mob/M as mob)
+		playsound(M, 'sound/weapons/Genhit.ogg', 60, 1)
+		pumped = 0
+		if(current_shell)//We have a shell in the chamber
+			current_shell.loc = get_turf(src)//Eject casing
+			current_shell = null
+			if(in_chamber)
+				in_chamber = null
+		if(!getAmmo())
+			return 0
+		var/obj/item/ammo_casing/AC = loaded[1] //load next casing.
+		loaded -= AC //Remove casing from loaded list.
+		current_shell = AC
+		update_icon()	//I.E. fix the desc
+		return 1
 
 /obj/item/weapon/gun/projectile/mateba
 	name = "mateba"
