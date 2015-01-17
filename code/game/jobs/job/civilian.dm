@@ -256,8 +256,8 @@
 					H.equip_or_collect(new /obj/item/clothing/shoes/jestershoes(H), slot_shoes)
 					H.equip_or_collect(new /obj/item/clothing/head/jesterhat(H), slot_head)
 				else
-		H.equip_or_collect(new /obj/item/clothing/under/rank/clown(H), slot_w_uniform)
-		H.equip_or_collect(new /obj/item/clothing/shoes/clown_shoes(H), slot_shoes)
+				H.equip_or_collect(new /obj/item/clothing/under/rank/clown(H), slot_w_uniform)
+				H.equip_or_collect(new /obj/item/clothing/shoes/clown_shoes(H), slot_shoes)
 		return 1
 
 
