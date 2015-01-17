@@ -275,3 +275,6 @@ Made a proc so this is not repeated 14 (or more) times.*/
 		return 0
 	else
 		return 1
+
+/proc/iswizard(mob/living/M as mob)
+	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.wizards)

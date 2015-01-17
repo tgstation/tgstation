@@ -121,14 +121,38 @@
 		recent_reload = 0
 	..()
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/attack_self(var/mob/living/user/L)
+/obj/item/weapon/gun/energy/kinetic_accelerator/attack_self(mob/living/user)
 	if(overheat || recent_reload)
 		return
 	power_supply.give(500)
-	playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
+	if(!suppressed)
+		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
+	else
+		playsound(user, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 	recent_reload = 1
 	update_icon()
 	return
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
+	name = "mini energy crossbow"
+	desc = "A weapon favored by syndicate stealth specialists."
+	icon_state = "crossbow"
+	item_state = "crossbow"
+	w_class = 2
+	m_amt = 2000
+	origin_tech = "combat=2;magnets=2;syndicate=5"
+	suppressed = 1
+	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large
+	name = "energy crossbow"
+	desc = "A reverse engineered weapon using syndicate technology."
+	icon_state = "crossbowlarge"
+	w_class = 3
+	m_amt = 4000
+	origin_tech = "combat=2;magnets=2;syndicate=3" //can be further researched for more syndie tech
+	suppressed = 0
+	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 
 /obj/item/weapon/gun/energy/disabler
 	name = "disabler"

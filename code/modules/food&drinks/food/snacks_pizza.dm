@@ -74,7 +74,7 @@
 	..()
 	reagents.add_reagent("nutriment", 25)
 	reagents.add_reagent("tomatojuice", 6)
-	reagents.add_reagent("imidazoline", 12)
+	reagents.add_reagent("oculine", 12)
 	reagents.add_reagent("vitamin", 5)
 	bitesize = 2
 

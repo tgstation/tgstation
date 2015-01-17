@@ -530,10 +530,10 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/medical/supplies
 	name = "Medical Supplies Crate"
-	contains = list(/obj/item/weapon/reagent_containers/glass/bottle/antitoxin,
-					/obj/item/weapon/reagent_containers/glass/bottle/antitoxin,
-					/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline,
-					/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline,
+	contains = list(/obj/item/weapon/reagent_containers/glass/bottle/charcoal,
+					/obj/item/weapon/reagent_containers/glass/bottle/charcoal,
+					/obj/item/weapon/reagent_containers/glass/bottle/epinephrine,
+					/obj/item/weapon/reagent_containers/glass/bottle/epinephrine,
 					/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
 					/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
 					/obj/item/weapon/reagent_containers/glass/bottle/morphine,

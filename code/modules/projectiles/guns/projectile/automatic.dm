@@ -8,7 +8,7 @@
 	var/alarmed = 0
 	can_suppress = 1
 	burst_size = 3
-	fire_delay = 1
+	fire_delay = 2
 	var/select = 1
 	action_button_name = "Toggle Firemode"
 
@@ -47,7 +47,7 @@
 /obj/item/weapon/gun/projectile/automatic/proc/burst_select()
 	var/mob/living/carbon/human/user = usr
 	select = !select
-	if(select)
+	if(!select)
 		burst_size = 1
 		fire_delay = 0
 		user << "<span class='notice'>You switch to semi-automatic.</span>"
@@ -234,3 +234,4 @@
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	can_suppress = 0
 	burst_size = 4
+	fire_delay = 1

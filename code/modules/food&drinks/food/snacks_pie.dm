@@ -78,7 +78,7 @@
 	if(prob(10))
 		name = "exceptional plump pie"
 		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump pie!"
-		reagents.add_reagent("tricordrazine", 5)
+		reagents.add_reagent("omnizine", 5)
 
 	reagents.add_reagent("nutriment", 8)
 	reagents.add_reagent("vitamin", 4)

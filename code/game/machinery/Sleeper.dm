@@ -15,10 +15,10 @@
 	var/efficiency
 	var/initial_bin_rating = 1
 	var/min_health = 25
-	var/list/injection_chems = list() //list of injectable chems except inaprovaline, coz inaprovaline is always avalible
-	var/list/possible_chems = list(list("stoxin", "dexalin", "bicaridine", "kelotane"),
-								   list("stoxin", "dexalinp", "bicaridine", "dermaline", "imidazoline"),
-								   list("stoxin", "dexalinp", "bicaridine", "dermaline", "imidazoline", "anti_toxin", "ryetalyn", "alkysine", "arithrazine"))
+	var/list/injection_chems = list() //list of injectable chems except ephedrine, coz ephedrine is always avalible
+	var/list/possible_chems = list(list("stoxin", "salbutamol", "salglu_solution", "salglu_solution"),
+								   list("stoxin", "salbutamol", "salglu_solution", "salglu_solution", "oculine"),
+								   list("stoxin", "salbutamol", "salglu_solution", "salglu_solution", "oculine", "charcoal", "ryetalyn", "alkysine", "pen_acid"))
 
 /obj/machinery/sleeper/New()
 	..()
@@ -126,9 +126,9 @@
 	var/dat
 	dat += "<h3>Injector</h3>"
 	if(occupant)
-		dat += "<A href='?src=\ref[src];inject=inaprovaline'>Inject Inaprovaline</A>"
+		dat += "<A href='?src=\ref[src];inject=epinephrine'>Inject epinephrine</A>"
 	else
-		dat += "<span class='linkOff'>Inject Inaprovaline</span>"
+		dat += "<span class='linkOff'>Inject epinephrine</span>"
 	if(occupant && occupant.health > min_health)
 		for(var/re in injection_chems)
 			var/datum/reagent/C = chemical_reagents_list[re]
@@ -191,7 +191,7 @@
 		close_machine()
 		return
 	if(occupant && occupant.stat != DEAD)
-		if(href_list["inject"] == "inaprovaline" || occupant.health > min_health)
+		if(href_list["inject"] == "epinephrine" || occupant.health > min_health)
 			inject_chem(usr, href_list["inject"])
 		else
 			usr << "<span class='notice'>ERROR: Subject is not in stable condition for auto-injection.</span>"
@@ -218,7 +218,7 @@
 	if(!is_operational())
 		return
 	if(occupant && occupant.reagents)
-		if(chem in injection_chems + "inaprovaline")
+		if(chem in injection_chems + "epinephrine")
 			if(occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency)
 				occupant.reagents.add_reagent(chem, 10)
 			var/units = round(occupant.reagents.get_reagent_amount(chem))
