@@ -1,6 +1,7 @@
 /datum/configuration
 	var/server_name = null				// server name (for world name / status)
 	var/server_suffix = 0				// generate numeric suffix based on server port
+	var/world_style_config = world_style
 
 	var/nudge_script_path = "nudge.py"  // where the nudge.py script is located
 
@@ -76,6 +77,10 @@
 	var/usealienwhitelist = 0
 	var/limitalienplayers = 0
 	var/alien_to_human_ratio = 0.5
+	
+	//used to determine if cyborgs/AI can speak
+	var/silent_ai = 0
+	var/silent_borg = 0
 
 	var/server
 	var/banappeals
@@ -565,6 +570,10 @@
 					config.emag_recharge_rate = value
 				if("emag_recharge_ticks")
 					config.emag_recharge_ticks = value
+				if("silent_ai")
+					config.silent_ai = 1
+				if("silent_borg")
+					config.silent_borg = 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

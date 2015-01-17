@@ -62,8 +62,8 @@
 			Grass.amount -= 1
 		else
 			del(Grass)
-		new /obj/item/weapon/table_parts/wood/poker( src.loc )
-		visible_message("<span class='notice'>[user] adds grass to the wooden table parts</span>")
+		new /obj/item/weapon/table_parts/wood/poker( get_turf(src) )
+		visible_message("<span class='notice'>[user] adds grass to the wooden table parts.</span>")
 		del(src)
 
 /obj/item/weapon/table_parts/wood/attack_self(mob/user as mob)

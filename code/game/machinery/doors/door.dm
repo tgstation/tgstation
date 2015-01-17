@@ -131,7 +131,7 @@
 
 				// TODO: analyze the called proc
 				if(O.take_damage(10, 0))
-					H.UpdateDamageIcon()
+					H.QueueUpdateDamageIcon()
 					O = null
 			else
 				// TODO: fix sentence

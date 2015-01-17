@@ -31,7 +31,7 @@
 			if(L.len >= pos && !(pos > L.len))
 				return L[pos]
 		else
-			if(L.len >= pos)
+			if(L.len >= pos && !(pos > L.len))
 				L[pos] = value
 	else if(istext(pos))
 		if(!value)

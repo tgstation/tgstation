@@ -31,7 +31,7 @@
 					if (istype(organ, /datum/organ/external))
 						var/datum/organ/external/temp = organ
 						if(temp.take_damage(d, 0))
-							H.UpdateDamageIcon()
+							H.QueueUpdateDamageIcon()
 					H.updatehealth()
 				else
 					src.take_organ_damage(d)
@@ -222,11 +222,8 @@
 				"\blue [M] gives [src] a [pick("hug","warm embrace")].", \
 				"\blue You hug [src].", \
 				)
-			if(prob(10))
-				src.emote("fart")
-			/* VG-EDIT Killing people through hugs, one overdose at a time.
 			reagents.add_reagent("paracetamol", 1)
-			*/
+
 			share_contact_diseases(M)
 
 
@@ -663,3 +660,6 @@
 	else
 		src << "You do not have enough chemicals stored to reproduce."
 		return
+
+/mob/living/carbon/is_muzzled()
+	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))

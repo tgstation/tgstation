@@ -25,6 +25,9 @@
 
 	store_position()
 
+/mob/proc/is_muzzled()
+	return 0
+
 /mob/proc/store_position()
 	origin_x = x
 	origin_y = y
@@ -103,6 +106,8 @@
 
 /mob/visible_message(var/message, var/self_message, var/blind_message)
 	for(var/mob/M in viewers(src))
+		if(M.see_invisible < invisibility)
+			continue
 		var/msg = message
 		if(self_message && M==src)
 			msg = self_message
@@ -764,37 +769,66 @@ var/list/slot_equipment_priority = list( \
 				return L.container
 	return
 
+//note: ghosts can point, this is intended
+//visible_message will handle invisibility properly
+//overriden here and in /mob/dead/observer for different point span classes and sanity checks
 /mob/verb/pointed(atom/A as turf | obj | mob in view())
 	set name = "Point To"
 	set category = "Object"
 
-	if(!src || !isturf(src.loc))
-		return
-
-	if(src.stat != CONSCIOUS || src.restrained())
-		return
-
-	if(src.status_flags & FAKEDEATH)
-		return
-
-	if(!(A in view(src.loc)))
-		return
+	if(!src || !isturf(src.loc) || !(A in view(src.loc)))
+		return 0
 
 	if(istype(A, /obj/effect/decal/point))
-		return
+		return 0
 
 	var/tile = get_turf(A)
 
-	if(isnull(tile))
-		return
+	if(!tile)
+		return 0
 
 	var/obj/point = new/obj/effect/decal/point(tile)
-
+	point.invisibility = invisibility
 	spawn(20)
 		if(point)
 			qdel(point)
 
-	usr.visible_message("<b>[src]</b> points to [A]")
+	return 1
+
+//this and stop_pulling really ought to be /mob/living procs
+/mob/proc/start_pulling(var/atom/movable/AM)
+	if ( !AM || !src || src==AM || !isturf(src.loc) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
+		return
+	if (!( AM.anchored ))
+		AM.add_fingerprint(src)
+
+		// If we're pulling something then drop what we're currently pulling and pull this instead.
+		if(pulling)
+			// Are we trying to pull something we are already pulling? Then just stop here, no need to continue.
+
+			stop_pulling()
+			if(AM == pulling)
+				return
+
+		src.pulling = AM
+		AM.pulledby = src
+		if(ismob(AM))
+			var/mob/M = AM
+			if(!iscarbon(src))
+				M.LAssailant = null
+			else
+				M.LAssailant = usr
+
+/mob/verb/stop_pulling()
+
+	set name = "Stop Pulling"
+	set category = "IC"
+
+	if(pulling)
+		pulling.pulledby = null
+		pulling = null
+
+
 
 /mob/verb/mode()
 	set name = "Activate Held Object"
@@ -861,6 +895,20 @@ var/list/slot_equipment_priority = list( \
 
 	if (popup)
 		memory()
+
+//mob verbs are faster than object verbs. See http://www.byond.com/forum/?post=1326139&page=2#comment8198716 for why this isn't atom/verb/examine()
+/mob/verb/examination(atom/A as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
+	set name = "Examine"
+	set category = "IC"
+
+//	if( (sdisabilities & BLIND || blinded || stat) && !istype(src,/mob/dead/observer) )
+	if(is_blind(src))
+		src << "<span class='notice'>Something is there but you can't see it.</span>"
+		return
+
+	face_atom(A)
+	A.examine(src)
+
 
 /mob/proc/update_flavor_text()
 	set src in usr
@@ -1109,54 +1157,6 @@ var/list/slot_equipment_priority = list( \
 	show_inv(usr)
 
 
-/mob/verb/stop_pulling()
-
-	set name = "Stop Pulling"
-	set category = "IC"
-
-	if(pulling)
-		pulling.pulledby = null
-		pulling = null
-
-/mob/proc/start_pulling(var/atom/movable/AM)
-
-	if ( !AM || !usr || src==AM || !isturf(src.loc) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
-		return
-
-	if (AM.anchored)
-		return
-
-	var/mob/M = AM
-	if(ismob(AM))
-		if(!iscarbon(src))
-			M.LAssailant = null
-		else
-			M.LAssailant = usr
-
-	if(pulling)
-		var/pulling_old = pulling
-		stop_pulling()
-		// Are we pulling the same thing twice? Just stop pulling.
-		if(pulling_old == AM)
-			return
-
-	src.pulling = AM
-	AM.pulledby = src
-
-	if(ismob(AM))
-		M.attack_log += text("\[[time_stamp()]\] <span class='warning'>Has been pulled by [src.name] ([src.ckey])</span>")
-		src.attack_log += text("\[[time_stamp()]\] <span class='warning'>Pulled [M.name] ([M.ckey])</span>")
-
-		if(ishuman(AM))
-			var/mob/living/carbon/human/H = AM
-			if(H.pull_damage())
-				src << "<span class='warning'> <B>Pulling \the [H] in their current condition would probably be a bad idea.</B></span>"
-
-	//Attempted fix for people flying away through space when cuffed and dragged.
-	if(ismob(AM))
-		var/mob/pulled = AM
-		pulled.inertia_dir = 0
-
 /mob/proc/can_use_hands()
 	return
 
@@ -1258,7 +1258,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 			if (master_controller)
 				stat(null, "MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[master_controller.iteration])")
-				stat(null, "Air-[master_controller.air_cost]")
+				/*stat(null, "Air-[master_controller.air_cost]")
 				stat(null, "Sun-[master_controller.sun_cost]")
 				stat(null, "Mob-[master_controller.mobs_cost]\t#[mob_list.len]")
 				stat(null, "Dis-[master_controller.diseases_cost]\t#[active_diseases.len]")
@@ -1268,7 +1268,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 				stat(null, "Ponet-[master_controller.powernets_cost]\t#[powernets.len]")
 				stat(null, "NanoUI-[master_controller.nano_cost]\t#[nanomanager.processing_uis.len]")
 				stat(null, "Tick-[master_controller.ticker_cost]")
-				stat(null, "garbage collector - [master_controller.garbageCollectorCost]")
+				stat(null, "garbage collector - [master_controller.garbageCollectorCost]")*/
 				stat(null, "\tqdel - [garbageCollector.del_everything ? "off" : "on"]")
 				stat(null, "\ton queue - [garbageCollector.queue.len]")
 				stat(null, "\ttotal delete - [garbageCollector.dels_count]")
@@ -1277,6 +1277,62 @@ note dizziness decrements automatically in the mob's Life() proc.
 				stat(null, "ALL - [master_controller.total_cost]")
 			else
 				stat(null, "master controller - ERROR")
+
+			if(processScheduler.getIsRunning())
+				var/datum/controller/process/process
+
+				process = processScheduler.getProcess("vote")
+				stat(null, "VOT\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("air")
+				stat(null, "AIR\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("sun")
+				stat(null, "SUN\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("ticker")
+				stat(null, "TIC\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("garbage")
+				stat(null, "GAR\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("lighting")
+				stat(null, "LIG\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("supply shuttle")
+				stat(null, "SUP\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("emergency shuttle")
+				stat(null, "EME\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("inactivity")
+				stat(null, "IAC\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("mob")
+				stat(null, "MOB([mob_list.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("disease")
+				stat(null, "DIS([active_diseases.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("machinery")
+				stat(null, "MAC([machines.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("obj")
+				stat(null, "OBJ([processing_objects.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("pipenet")
+				stat(null, "PIP([pipe_networks.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("powernet")
+				stat(null, "POW([powernets.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("nanoui")
+				stat(null, "NAN([nanomanager.processing_uis.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("event")
+				stat(null, "EVE([events.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+			else
+				stat(null, "processScheduler is not running.")
 
 	if(listed_turf && client)
 		if(get_dist(listed_turf,src) > 1)

@@ -19,16 +19,14 @@
 /obj/structure/reagent_dispensers/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	return
 
-/obj/structure/reagent_dispensers/examine()
-	set src in view()
+/obj/structure/reagent_dispensers/examine(mob/user)
 	..()
-	if (!(usr in view(2)) && usr!=src.loc) return
-	usr << "<span class='notice'>It contains:</span>"
+	user << "<span class='info'>It contains:</span>"
 	if(reagents && reagents.reagent_list.len)
 		for(var/datum/reagent/R in reagents.reagent_list)
-			usr << "<span class='notice'>[R.volume] units of [R.name]</span>"
+			user << "<span class='info'>[R.volume] units of [R.name]</span>"
 	else
-		usr << "<span class='notice'>Nothing.</span>"
+		user << "<span class='info'>Nothing.</span>"
 
 /obj/structure/reagent_dispensers/verb/set_APTFT() //set amount_per_transfer_from_this
 	set name = "Set transfer amount"
@@ -89,18 +87,17 @@
 	var/modded = 0
 	var/obj/item/device/assembly_holder/rig = null
 
-/obj/structure/reagent_dispensers/fueltank/hear_talk(mob/living/M, text)
+/*/obj/structure/reagent_dispensers/fueltank/hear_talk(mob/living/M, text)
 	if(rig)
 		rig.hear_talk(M,text)
+*/
 
-/obj/structure/reagent_dispensers/fueltank/examine()
-	set src in view()
+/obj/structure/reagent_dispensers/fueltank/examine(mob/user)
 	..()
-	if (!(usr in view(2)) && usr!=src.loc) return
 	if (modded)
-		usr << "<span class='warning'>Fuel faucet is wrenched open, leaking the fuel!</span>"
+		user << "<span class='warning'>Fuel faucet is wrenched open, leaking the fuel!</span>"
 	if(rig)
-		usr << "<span class='notice'>There is some kind of device rigged to the tank.</span>"
+		user << "<span class='notice'>There is some kind of device rigged to the tank.</span>"
 
 /obj/structure/reagent_dispensers/fueltank/attack_hand()
 	if (rig)

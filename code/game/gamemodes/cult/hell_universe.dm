@@ -83,8 +83,8 @@ In short:
 	for(var/turf/space/spess in world)
 		spess.overlays += "hell01"
 
-	for(var/turf/T in world)
-		if(!T.holy && istype(T,/turf/simulated/floor) && prob(1))
+	for(var/turf/simulated/floor/T in world)
+		if(!T.holy && prob(1))
 			new /obj/effect/gateway/active/cult(T)
 
 	for (var/obj/machinery/firealarm/alm in world)

@@ -60,7 +60,28 @@
       If receiving object don't know right key, it must ignore encrypted signal in its receive_signal.
 
 */
+var/list/all_radios = list()
+/proc/add_radio(var/obj/item/radio, freq)
+	if(!freq || !radio)
+		return
+	if(!all_radios["[freq]"])
+		all_radios["[freq]"] = list(radio)
+		return freq
 
+	all_radios["[freq]"] |= radio
+	return freq
+
+/proc/remove_radio(var/obj/item/radio, freq)
+	if(!freq || !radio)
+		return
+	if(!all_radios["[freq]"])
+		return
+
+	all_radios["[freq]"] -= radio
+
+/proc/remove_radio_all(var/obj/item/radio)
+	for(var/freq in all_radios)
+		all_radios["[freq]"] -= radio
 /*
 Frequency range: 1200 to 1600
 Radiochat range: 1441 to 1489 (most devices refuse to be tune to other frequency, even during mapmaking)
@@ -104,24 +125,34 @@ var/list/radiochannels = list(
 	"Medical" = 1355,
 	"Engineering" = 1357,
 	"Security" = 1359,
-	"Response Team" = 1345,
-	"Deathsquad" = 1341,
+	"Deathsquad" = 1441,
 	"Syndicate" = 1213,
 	"Supply" = 1347,
-	"Service" = 1349
+	"Service" = 1349,
+	"AI Private" = 1447
 )
+
+var/list/radiochannelsreverse = list(
+	"1459" = "Common",
+	"1351" = "Science",
+	"1353" = "Command",
+	"1355" = "Medical",
+	"1357" = "Engineering",
+	"1359" = "Security",
+	"1441" = "Deathsquad",
+	"1213" = "Syndicate",
+	"1347" = "Supply",
+	"1349" = "Service",
+	"1447" = "AI Private"
+)
+
+
 //depenging helpers
-var/list/DEPT_FREQS = list(
-	1351,
-	1355,
-	1357,
-	1359,
-	1213,
-	1345,
-	1341,
-	1347,
-	1349
-)
+var/const/SUPP_FREQ = 1347 //supply, coloured light brown in chat window
+var/const/SERV_FREQ = 1349 //service, coloured green in chat window
+var/const/DSQUAD_FREQ = 1441 //death squad frequency, coloured grey in chat window
+var/const/AIPRIV_FREQ = 1447 //AI private, colored magenta in chat window
+
 
 // central command channels, i.e deathsquid & response teams
 var/list/CENT_FREQS = list(1345, 1341)
@@ -143,7 +174,7 @@ var/const/SER_FREQ = 1349
 /* filters */
 var/const/RADIO_TO_AIRALARM = "1"
 var/const/RADIO_FROM_AIRALARM = "2"
-var/const/RADIO_CHAT = "3"
+var/const/RADIO_CHAT = "3" //deprecated
 var/const/RADIO_ATMOSIA = "4"
 var/const/RADIO_NAVBEACONS = "5"
 var/const/RADIO_AIRLOCK = "6"
@@ -289,7 +320,7 @@ var/list/pointers = list()
 			src << S.debug_print()
 
 /obj/proc/receive_signal(datum/signal/signal, receive_method, receive_param)
-	return null
+	return
 
 /datum/signal
 	var/obj/source

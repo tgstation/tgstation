@@ -5,7 +5,7 @@
 	fire_sound = 'sound/weapons/ion.ogg'
 	origin_tech = "combat=2;magnets=4"
 	w_class = 4.0
-	flags = FPRINT  | USEDELAY
+	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BACK
 	charge_cost = 100
@@ -37,7 +37,7 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","fur
 	icon_state = "staffofchange"
 	item_state = "staffofchange"
 	fire_sound = 'sound/weapons/radgun.ogg'
-	flags = FPRINT  | USEDELAY
+	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BACK
 	w_class = 4.0

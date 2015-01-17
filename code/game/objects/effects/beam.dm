@@ -252,10 +252,39 @@
 	return 1
 
 /obj/effect/beam/Destroy()
+	if(target)
+		if(target.beams)
+			target.beams -= src
+	for(var/obj/machinery/mirror/M in mirror_list)
+		if(!M)
+			continue
+		if(src in M.beams)
+			M.beams -= src
+	for(var/obj/machinery/field_generator/F in field_gen_list)
+		if(!F)
+			continue
+		if(src in F.beams)
+			F.beams -= src
+	for(var/obj/machinery/prism/P in prism_list)
+		var/changed = 0
+		if(src == P.beam)
+			P.beam = null
+			changed = 1
+		if(src in P.beams)
+			P.beams -= src
+			changed = 1
+		if(changed)
+			P.update_beams()
+	for(var/obj/machinery/power/photocollector/PC in photocollector_list)
+		if(src in PC.beams)
+			PC.beams -= src
 	if(!am_connector && !master)
 		beam_testing("\ref[get_master()] - Disconnecting (deleted)")
 		disconnect(0)
 	if(master)
+		for(var/obj/effect/beam/B in master.children)
+			if(B.next == src)
+				B.next = null
 		master.children.Remove(src)
 	if(next)
 		BEAM_DEL(next)

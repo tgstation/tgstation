@@ -145,18 +145,26 @@
 
 	return 0
 
-/obj/item/weapon/card/emag/examine()
+/obj/item/weapon/card/emag/examine(mob/user)
 	..()
 	if(energy==-1)
-		usr << "<span class=\"info\">\The [name] has a tiny fusion generator for power.</span>"
+		user << "<span class=\"info\">\The [name] has a tiny fusion generator for power.</span>"
 	else
 		var/class="info"
 		if(energy/max_energy < 0.1 /* 10% energy left */)
 			class="warning"
-		usr << "<span class=\"[class]\">This [name] has [energy]MJ left in its capacitor ([max_energy]MJ capacity).</span>"
+		user << "<span class=\"[class]\">This [name] has [energy]MJ left in its capacitor ([max_energy]MJ capacity).</span>"
 	if(recharge_rate && recharge_ticks)
-		usr << "<span class=\"info\">A small label on a thermocouple notes that it recharges at a rate of [recharge_rate]MJ for every [recharge_ticks<=1?"":"[recharge_ticks] "]oscillator tick[recharge_ticks>1?"s":""].</span>"
+		user << "<span class=\"info\">A small label on a thermocouple notes that it recharges at a rate of [recharge_rate]MJ for every [recharge_ticks<=1?"":"[recharge_ticks] "]oscillator tick[recharge_ticks>1?"s":""].</span>"
 
+/obj/item/weapon/card/emag/attack()
+	return
+	
+/obj/item/weapon/card/emag/afterattack(atom/target, mob/user, proximity)
+	var/atom/A = target
+	if(!proximity) return
+	A.emag_act(user)
+		
 /obj/item/weapon/card/id
 	name = "identification card"
 	desc = "A card used to provide ID and determine access across the station."
@@ -274,7 +282,7 @@
 		src.access |= I.access
 		if(istype(user, /mob/living) && user.mind)
 			if(user.mind.special_role)
-				usr << "\blue The card's microscanners activate as you pass it over the ID, copying its access."
+				usr << "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>"
 
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user as mob)
 	if(!src.registered_name)
@@ -292,7 +300,7 @@
 			return
 		src.assignment = u
 		src.name = "[src.registered_name]'s ID Card ([src.assignment])"
-		user << "\blue You successfully forge the ID card."
+		user << "<span class='notice'>You successfully forge the ID card.</span>"
 		registered_user = user
 	else if(!registered_user || registered_user == user)
 
@@ -312,7 +320,7 @@
 					return
 				src.assignment = u
 				src.name = "[src.registered_name]'s ID Card ([src.assignment])"
-				user << "\blue You successfully forge the ID card."
+				user << "<span class='notice'>You successfully forge the ID card.</span>"
 				return
 			if("Show")
 				..()

@@ -144,7 +144,7 @@ Implant Specifics:<BR>"}
 <b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
 		return dat
 
-	hear_talk(mob/M as mob, msg)
+	hear(mob/M as mob, msg)
 		hear(msg)
 		return
 
@@ -439,19 +439,19 @@ the implant may become unstable and either pre-maturely inject the subject or si
 				var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
 				if(istype(t, /area/syndicate_station) || istype(t, /area/syndicate_mothership) || istype(t, /area/shuttle/syndicate_elite) )
 					//give the syndies a bit of stealth
-					a.autosay("[mobname] has died in Space!", "[mobname]'s Death Alarm")
+					say("[mobname] has died in Space!", "[mobname]'s Death Alarm")
 				else
-					a.autosay("[mobname] has died in [t.name]!", "[mobname]'s Death Alarm")
+					say("[mobname] has died in [t.name]!", "[mobname]'s Death Alarm")
 				del(a)
 				processing_objects.Remove(src)
 			if ("emp")
 				var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
 				var/name = prob(50) ? t.name : pick(teleportlocs)
-				a.autosay("[mobname] has died in [name]!", "[mobname]'s Death Alarm")
+				say("[mobname] has died in [name]!", "[mobname]'s Death Alarm")
 				del(a)
 			else
 				var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
-				a.autosay("[mobname] has died-zzzzt in-in-in...", "[mobname]'s Death Alarm")
+				say("[mobname] has died-zzzzt in-in-in...", "[mobname]'s Death Alarm")
 				del(a)
 				processing_objects.Remove(src)
 

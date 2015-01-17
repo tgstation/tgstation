@@ -56,7 +56,7 @@
 	if(istype(M, /mob/living/carbon))
 		if(M == user)								//If you're eating it yourself.
 			if(!M:hasmouth)
-				user << "\red Oh god where's your mouth?!"
+				user << "<span class='warning'>Oh god where's your mouth?!</span>"
 				return 0
 			var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
 			if(wrapped)
@@ -121,19 +121,16 @@
 	return
 
 
-/obj/item/weapon/reagent_containers/food/snacks/examine()
-	set src in view()
+/obj/item/weapon/reagent_containers/food/snacks/examine(mob/user)
 	..()
-	if(!(usr in range(1)) && usr != loc)
-		return
 	if(bitecount == 0)
 		return
 	else if(bitecount == 1)
-		usr << "[src] was bitten by someone!"
+		user << "<span class='info'>[src] was bitten by someone!</span>"
 	else if(bitecount <= 3)
-		usr << "[src] was bitten [bitecount] times!"
+		user << "<span class='info'>[src] was bitten [bitecount] times!</span>"
 	else
-		usr << "[src] was bitten multiple times!"
+		user << "<span class='info'>[src] was bitten multiple times!</span>"
 
 
 /obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W, mob/user)
@@ -229,7 +226,7 @@
 				bitecount++
 		else if(ismouse(M))
 			var/mob/living/simple_animal/mouse/N = M
-			N << text("\blue You nibble away at [src].")
+			N << text("<span class='notice'>You nibble away at [src].</span>")
 			if(prob(50))
 				N.visible_message("[N] nibbles away at [src].", "")
 			//N.emote("nibbles away at the [src]")
@@ -496,7 +493,7 @@
 		..()
 		new/obj/effect/decal/cleanable/egg_smudge(src.loc)
 		src.reagents.reaction(hit_atom, TOUCH)
-		src.visible_message("\red [src.name] has been squashed.","\red You hear a smack.")
+		src.visible_message("<span class='warning'>[src.name] has been squashed.</span>","<span class='warning'>You hear a smack.</span>")
 		del(src)
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -1141,7 +1138,7 @@
 		bitesize = 0.1 //this snack is supposed to be eating during looooong time. And this it not dinner food! --rastaf0
 	On_Consume()
 		if(prob(unpopped))	//lol ...what's the point? << AINT SO POINTLESS NO MORE
-			usr << "\red You bite down on an un-popped kernel, and it hurts your teeth!"
+			usr << "<span class='warning'>You bite down on an un-popped kernel, and it hurts your teeth!</span>"
 			unpopped = max(0, unpopped-1)
 			reagents.add_reagent("sacid",0.1) //only a little tingle.
 		..()
@@ -1619,7 +1616,7 @@
 
 	proc/Expand()
 		for(var/mob/M in viewers(src,7))
-			M << "\red \The [src] expands!"
+			M << "<span class='warning'>\The [src] expands!</span>"
 		new monkey_type(get_turf(src))
 		del(src)
 
@@ -2653,7 +2650,7 @@
 	if( open && pizza )
 		user.put_in_hands( pizza )
 
-		user << "\red You take the [src.pizza] out of the [src]."
+		user << "<span class='notice'>You take the [src.pizza] out of the [src].</span>"
 		src.pizza = null
 		update_icon()
 		return
@@ -2667,7 +2664,7 @@
 		boxes -= box
 
 		user.put_in_hands( box )
-		user << "\red You remove the topmost [src] from your hand."
+		user << "<span class='warning'>You remove the topmost [src] from your hand.</span>"
 		box.update_icon()
 		update_icon()
 		return
@@ -2706,11 +2703,11 @@
 				box.update_icon()
 				update_icon()
 
-				user << "\red You put the [box] ontop of the [src]!"
+				user << "<span class='notice'>You put the [box] ontop of the [src]!</span>"
 			else
-				user << "\red The stack is too high!"
+				user << "<span class='warning'>The stack is too high!</span>"
 		else
-			user << "\red Close the [box] first!"
+			user << "<span class='warning'>Close the [box] first!</span>"
 
 		return
 

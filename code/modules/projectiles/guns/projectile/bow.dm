@@ -43,7 +43,7 @@
 	icon_state = "crossbow"
 	item_state = "crossbow-solid"
 	w_class = 5.0
-	flags = FPRINT  | USEDELAY
+	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT | SLOT_BACK
 

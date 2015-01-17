@@ -43,7 +43,12 @@
 	var/voice = "Unknown"
 	var/vchange = 0//This didn't do anything before. It now checks if the mask has special functions/N
 	origin_tech = "syndicate=4"
+	action_button_name = "Toggle Mask"
 	species_fit = list("Vox")
+
+/obj/item/clothing/mask/gas/voice/attack_self(mob/user)
+	vchange = !vchange
+	user << "<span class='notice'>The voice changer is now [vchange ? "on" : "off"]!</span>"
 
 /obj/item/clothing/mask/gas/voice/space_ninja
 	name = "ninja mask"

@@ -15,7 +15,14 @@
 
 /obj/item/weapon/robot_module/proc/recharge_consumable()
 	return
-
+	
+/obj/item/weapon/robot_module/proc/on_emag()
+	return
+	
+/obj/item/weapon/robot_module/on_emag()
+	modules += emag
+	rebuild()
+	..()
 
 /obj/item/weapon/robot_module/emp_act(severity)
 	if(modules)

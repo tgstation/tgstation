@@ -46,12 +46,12 @@
 	if(being_built)
 		overlays += "[base_state]_ani"
 
-/obj/machinery/r_n_d/fabricator/examine()
+/obj/machinery/r_n_d/fabricator/examine(mob/user)
 	..()
 	if(being_built)
-		usr << "It's building \a [src.being_built]."
+		user << "<span class='info'>It's building \a [src.being_built].</span>"
 	else
-		usr << "Nothing's being built."
+		user << "<span class='info'>Nothing's being built.</span>"
 
 /obj/machinery/r_n_d/fabricator/RefreshParts()
 	var/T = 0
@@ -453,9 +453,11 @@
 			//message_admins("Breaking on [copytext(stringinput, i)] and [i]")
 			final_digit = i
 			break
-	var/part_list = part_sets[copytext(stringinput, final_digit)]
+	var/list/part_list = part_sets[copytext(stringinput, final_digit)]
 	var/index = text2num(copytext(stringinput, 1, final_digit))
 	//message_admins("From [stringinput] we have [index] and [copytext(stringinput, final_digit)]")
+	if(!istype(part_list) || part_list.len < index)
+		return 0
 	return part_list[index]
 
 /obj/machinery/r_n_d/fabricator/Topic(href, href_list)

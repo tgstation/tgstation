@@ -98,7 +98,7 @@
 		return//Inf loop check
 
 	//Looking for another blob to pulse
-	var/list/dirs = cardinal
+	var/list/dirs = cardinal.Copy()
 	dirs.Remove(origin_dir)//Dont pulse the guy who pulsed us
 	for(var/i = 1 to 4)
 		if(!dirs.len)	break

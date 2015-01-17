@@ -1,3 +1,4 @@
+var/global/list/obj/machinery/mirror/mirror_list = list()
 /obj/machinery/mirror
 	name = "mirror"
 	desc = "Looks too expensive and sciencey to mount above your bathroom sink."
@@ -21,6 +22,7 @@
 
 /obj/machinery/mirror/New()
 	..()
+	mirror_list += src
 	icon_state = base_state
 	overlays += mirror_state // TODO: break on BROKEN
 	component_parts = list(
@@ -45,6 +47,7 @@
 
 /obj/machinery/mirror/Destroy()
 	kill_all_beams()
+	mirror_list -= src
 	..()
 
 // Replace machine frame with mirror frame.

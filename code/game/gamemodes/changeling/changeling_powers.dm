@@ -156,7 +156,7 @@
 				playsound(get_turf(src), 'sound/effects/lingstabs.ogg', 50, 1)
 				var/datum/organ/external/affecting = T.get_organ(src.zone_sel.selecting)
 				if(affecting.take_damage(39,0,1,"large organic needle"))
-					T:UpdateDamageIcon()
+					T:QueueUpdateDamageIcon(1)
 					continue
 
 		feedback_add_details("changeling_powers","A[stage]")
@@ -488,6 +488,7 @@
 		C.status_flags &= ~(FAKEDEATH)
 		C.update_canmove()
 		C.make_changeling()
+	regenerate_icons()
 	src.verbs -= /mob/proc/changeling_returntolife
 	feedback_add_details("changeling_powers","RJ")
 
@@ -694,6 +695,9 @@ var/list/datum/dna/hivemind_bank = list()
 	set desc = "Shape our vocal glands to form a voice of someone we choose. We cannot regenerate chemicals when mimicing."
 
 
+	if(!usr)
+		return
+	var/mob/user = usr
 	var/datum/changeling/changeling = changeling_power()
 	if(!changeling)	return
 
@@ -702,7 +706,7 @@ var/list/datum/dna/hivemind_bank = list()
 		src << "<span class='notice'>We return our vocal glands to their original location.</span>"
 		return
 
-	var/mimic_voice = input("Enter a name to mimic.", "Mimic Voice", null) as text
+	var/mimic_voice = stripped_input(user, "Enter a name to mimic.", "Mimic Voice", null, MAX_NAME_LEN)
 	if(!mimic_voice)
 		return
 

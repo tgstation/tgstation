@@ -3,6 +3,7 @@
 
 #define SMESMAXCHARGELEVEL 200000
 #define SMESMAXOUTPUT 200000
+#define SMESRATE 0.05 				// rate of internal charge to external power
 
 /obj/machinery/power/smes
 	name = "power storage unit"
@@ -157,9 +158,6 @@
 /obj/machinery/power/smes/proc/chargedisplay()
 	return round(5.5*charge/(capacity ? capacity : 5e6))
 
-#define SMESRATE 0.05			// rate of internal charge to external power
-
-
 /obj/machinery/power/smes/process()
 
 	if(stat & BROKEN)	return
@@ -169,6 +167,7 @@
 	var/last_chrg = charging
 	var/last_onln = online
 
+	// inputting
 	if(terminal)
 		var/excess = terminal.surplus()
 
@@ -198,7 +197,8 @@
 			else
 				chargecount = 0
 
-	if(online)		// if outputting
+	// outputting
+	if(online)
 		lastout = min( charge/SMESRATE, output)		//limit output to that stored
 
 		charge -= lastout*SMESRATE		// reduce the storage (may be recovered in /restore() if excessive)
@@ -236,19 +236,17 @@
 
 	var/clev = chargedisplay()
 
-	charge += excess * SMESRATE
+	charge += excess * SMESRATE			// restore unused power
 	powernet.netexcess -= excess		// remove the excess from the powernet, so later SMESes don't try to use it
 
 	loaddemand = lastout-excess
 
-	if(clev != chargedisplay() )
+	if(clev != chargedisplay())			// if needed updates the icons overlay
 		updateicon()
-	return
-
 
 /obj/machinery/power/smes/add_load(var/amount)
 	if(terminal && terminal.powernet)
-		terminal.powernet.newload += amount
+		terminal.powernet.load += amount
 
 
 /obj/machinery/power/smes/attack_ai(mob/user)
@@ -306,7 +304,7 @@
 
 //world << "[href] ; [href_list[href]]"
 
-	if (!istype(src.loc, /turf) && !istype(usr, /mob/living/silicon/))
+	if (!isturf(src.loc) && !istype(usr, /mob/living/silicon/))
 		return 0 // Do not update ui
 
 	if( href_list["cmode"] )
