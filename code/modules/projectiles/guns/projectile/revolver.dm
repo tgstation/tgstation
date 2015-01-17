@@ -97,7 +97,7 @@
 	origin_tech = "combat=4;materials=2"
 	ammo_type = "/obj/item/ammo_casing/c38"
 	var/recentpump = 0 // to prevent spammage
-	var/pumped = 0
+	var/pumped = 1
 	var/obj/item/ammo_casing/current_shell = null
 
 
@@ -127,6 +127,7 @@
 
 	proc/pump(mob/M as mob)
 		playsound(M, 'sound/weapons/Genhit.ogg', 60, 1)
+		user << "<span class='notice'>You pull the hammer back.</span>"
 		pumped = 0
 		if(current_shell)//We have a shell in the chamber
 			current_shell.loc = get_turf(src)//Eject casing
