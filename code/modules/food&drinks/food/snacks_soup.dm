@@ -79,7 +79,7 @@
 	eatverb = pick("slurp","sip","suck","inhale","drink")
 	reagents.add_reagent("nutriment", 8)
 	reagents.add_reagent("water", 5)
-	reagents.add_reagent("tricordrazine", 5)
+	reagents.add_reagent("omnizine", 5)
 	reagents.add_reagent("vitamin", 5)
 	bitesize = 5
 
@@ -104,7 +104,7 @@
 		if(3)
 			reagents.add_reagent("nutriment", 5)
 			reagents.add_reagent("water", 5)
-			reagents.add_reagent("tricordrazine", 5)
+			reagents.add_reagent("omnizine", 5)
 		if(4)
 			reagents.add_reagent("nutriment", 5)
 			reagents.add_reagent("water", 10)
@@ -126,7 +126,7 @@
 		if(10)
 			reagents.add_reagent("nutriment", 6)
 			reagents.add_reagent("tomatojuice", 5)
-			reagents.add_reagent("imidazoline", 5)
+			reagents.add_reagent("oculine", 5)
 	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/wishsoup

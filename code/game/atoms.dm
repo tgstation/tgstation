@@ -25,18 +25,11 @@
 	var/turf/T = get_turf(src)
 	if(!T)
 		return 0
-
-	if(T.z != ZLEVEL_CENTCOM)//if not, don't bother
+	if(T.z != ZLEVEL_CENTCOM)
 		return 0
-
-	//check for centcomm shuttles
-	for(var/centcom_shuttle in list("emergency", "pod1", "pod2", "pod3", "pod4", "ferry"))
-		var/obj/docking_port/mobile/M = SSshuttle.getShuttle(centcom_shuttle)
-		if(src in M.areaInstance)
-			return 1
-
-	//finally check for centcom itself
-	return istype(T.loc,/area/centcom)
+	if(T.y > 160)
+		return 0
+	return 1
 
 /atom/proc/throw_impact(atom/hit_atom)
 	if(istype(hit_atom,/mob/living))

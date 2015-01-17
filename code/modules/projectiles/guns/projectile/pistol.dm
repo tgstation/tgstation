@@ -21,7 +21,6 @@
 	icon_state = "m1911"
 	w_class = 3
 	mag_type = /obj/item/ammo_box/magazine/m45
-	can_suppress = 0
 
 /obj/item/weapon/gun/projectile/automatic/pistol/deagle
 	name = "desert eagle"
@@ -29,7 +28,6 @@
 	icon_state = "deagle"
 	force = 14
 	mag_type = /obj/item/ammo_box/magazine/m50
-	can_suppress = 0
 
 /obj/item/weapon/gun/projectile/automatic/pistol/deagle/update_icon()
 	..()

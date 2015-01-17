@@ -95,9 +95,6 @@
 /mob/living/carbon/alien/humanoid/hunter/throw_impact(A)
 	var/msg = ""
 
-	if(!leaping)
-		return ..()
-
 	if(A)
 		if(istype(A, /mob/living))
 			var/mob/living/L = A
@@ -165,5 +162,7 @@
 
 
 	src.throwing = 0
+	if(isobj(src))
+		src.throw_impact(get_turf(src))
 
 	return 1

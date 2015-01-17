@@ -139,7 +139,8 @@ Code:
 	if(signal.encryption != code)	return 0
 	if(!(src.wires & WIRE_RADIO_RECEIVE))	return 0
 	pulse(1)
-	audible_message("\icon[src] *beep* *beep*", null, 1)
+	if(src.loc)
+		src.loc.audible_message("\icon[src] *beep* *beep*", null, 1)
 	return
 
 

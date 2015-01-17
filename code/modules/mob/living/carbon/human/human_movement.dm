@@ -38,8 +38,6 @@
 	if(shoes)
 		if(!lying)
 			if(loc == NewLoc)
-				if(!has_gravity(loc))
-					return
 				var/obj/item/clothing/shoes/S = shoes
 				S.step_action()
 

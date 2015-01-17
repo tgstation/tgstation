@@ -8,7 +8,7 @@
 	var/alarmed = 0
 	can_suppress = 1
 	burst_size = 3
-	fire_delay = 2
+	fire_delay = 1
 	var/select = 1
 	action_button_name = "Toggle Firemode"
 
@@ -47,7 +47,7 @@
 /obj/item/weapon/gun/projectile/automatic/proc/burst_select()
 	var/mob/living/carbon/human/user = usr
 	select = !select
-	if(!select)
+	if(select)
 		burst_size = 1
 		fire_delay = 0
 		user << "<span class='notice'>You switch to semi-automatic.</span>"
@@ -80,7 +80,6 @@
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	fire_delay = 2
 	burst_size = 2
-	pin = /obj/item/device/firing_pin/implant/pindicate
 
 /obj/item/weapon/gun/projectile/automatic/c20r/New()
 	..()
@@ -113,7 +112,6 @@
 	can_suppress = 0
 	burst_size = 5
 	fire_delay = 3
-	pin = /obj/item/device/firing_pin/implant/pindicate
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user as mob)
 	cover_open = !cover_open
@@ -167,7 +165,6 @@
 	var/obj/item/weapon/gun/projectile/revolver/grenadelauncher/underbarrel
 	burst_size = 3
 	fire_delay = 2
-	pin = /obj/item/device/firing_pin/implant/pindicate
 
 /obj/item/weapon/gun/projectile/automatic/m90/New()
 	..()
@@ -234,4 +231,3 @@
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	can_suppress = 0
 	burst_size = 4
-	fire_delay = 1
