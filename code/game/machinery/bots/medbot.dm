@@ -46,10 +46,10 @@
 	name = "\improper Mysterious Medibot"
 	desc = "International Medibot of mystery."
 	skin = "bezerk"
-	treatment_oxy = "salbutamol"
-	treatment_brute = "salglu_solution"
-	treatment_fire = "salglu_solution"
-	treatment_tox = "charcoal"
+	treatment_oxy = "omnizine"
+	treatment_brute = "omnizine"
+	treatment_fire = "omnizine"
+	treatment_tox = "omnizine"
 
 /obj/item/weapon/firstaid_arm_assembly
 	name = "incomplete medibot assembly."

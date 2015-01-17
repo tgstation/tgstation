@@ -150,20 +150,6 @@ silicate
 	required_reagents = list("potassium" = 1, "oxygen" = 1, "sugar" = 1)
 	result_amount = 3
 
-/datum/chemical_reaction/alkysine
-	name = "Alkysine"
-	id = "alkysine"
-	result = "alkysine"
-	required_reagents = list("chlorine" = 1, "nitrogen" = 1, "charcoal" = 1)
-	result_amount = 2
-
-/datum/chemical_reaction/ryetalyn
-	name = "Ryetalyn"
-	id = "ryetalyn"
-	result = "ryetalyn"
-	required_reagents = list("pen_acid" = 1, "carbon" = 1)
-	result_amount = 2
-
 /datum/chemical_reaction/cryoxadone
 	name = "Cryoxadone"
 	id = "cryoxadone"

@@ -57,22 +57,6 @@ datum/reagent/medicine/leporazine/on_mob_life(var/mob/living/M as mob)
 		M.bodytemperature = min(310, M.bodytemperature + (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
 
-datum/reagent/medicine/ryetalyn
-	name = "Ryetalyn"
-	id = "ryetalyn"
-	description = "Ryetalyn can cure all genetic abnomalities."
-	reagent_state = SOLID
-	color = "#C8A5DC" // rgb: 200, 165, 220
-
-datum/reagent/medicine/ryetalyn/on_mob_life(mob/living/carbon/human/M)
-	M.jitteriness = 0
-
-	// Might need to update appearance for hulk etc.
-	if(istype(M) && M.dna)
-		M.dna.remove_all_mutations()
-	..()
-	return
-
 datum/reagent/medicine/adminordrazine //An OP chemical for admins
 	name = "Adminordrazine"
 	id = "adminordrazine"
@@ -135,19 +119,6 @@ datum/reagent/medicine/synaptizine/on_mob_life(var/mob/living/M as mob)
 		M.adjustToxLoss(1)
 	..()
 	return
-
-datum/reagent/medicine/alkysine
-	name = "Alkysine"
-	id = "alkysine"
-	description = "Alkysine is a drug used to lessen the damage to neurological tissue after a catastrophic injury. Can heal brain tissue."
-	color = "#C8A5DC" // rgb: 200, 165, 220
-
-datum/reagent/medicine/alkysine/on_mob_life(var/mob/living/M as mob)
-	if(M != DEAD)
-		M.adjustBrainLoss(-3*REM)
-	..()
-	return
-
 datum/reagent/medicine/inacusiate
 	name = "Inacusiate"
 	id = "inacusiate"

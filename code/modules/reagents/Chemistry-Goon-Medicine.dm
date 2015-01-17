@@ -325,7 +325,6 @@ datum/reagent/ephedrine/on_mob_life(var/mob/living/M as mob)
 	M.AdjustStunned(-1)
 	M.AdjustWeakened(-1)
 	M.adjustStaminaLoss(-1*REM)
-	M.adjustOxyLoss(-1*REM)
 	..()
 	return
 
@@ -425,8 +424,8 @@ datum/reagent/atropine/on_mob_life(var/mob/living/M as mob)
 	if(M.health > -60)
 		M.adjustToxLoss(1*REM)
 	if(M.health < -25)
-		M.adjustBruteLoss(3*REM)
-		M.adjustFireLoss(3*REM)
+		M.adjustBruteLoss(-3*REM)
+		M.adjustFireLoss(-3*REM)
 	if(M.oxyloss > 65)
 		M.setOxyLoss(65)
 	if(M.losebreath > 5)
@@ -454,7 +453,7 @@ datum/reagent/epinephrine
 
 datum/reagent/epinephrine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	if(M.health > -10 && M.health < -65)
+	if(M.health < -10 && M.health > -65)
 		M.adjustToxLoss(-1*REM)
 		M.adjustBruteLoss(-1*REM)
 		M.adjustFireLoss(-1*REM)
@@ -486,7 +485,7 @@ datum/reagent/strange_reagent
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	metabolization_rate = 0.2
 
-datum/reagent/strange_reagent/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
+datum/reagent/strange_reagent/reaction_mob(var/mob/living/carbon/human/M as mob, var/method=TOUCH, var/volume)
 	if(M.bruteloss > 80 || M.fireloss > 80)
 		if(ishuman(M) || ismonkey(M))
 			var/mob/living/carbon/C_target = M
@@ -497,12 +496,23 @@ datum/reagent/strange_reagent/reaction_mob(var/mob/living/M as mob, var/method=T
 				C_target.internal_organs -= B
 			M.gib()
 	else if(M.stat == DEAD)
-		M.stat = CONSCIOUS
-		M.adjustOxyLoss(-50*REM)
-		M.adjustBruteLoss(-50*REM)
-		M.adjustToxLoss(-50*REM)
-		M.adjustFireLoss(-50*REM)
-		M << "<span class='notice'>You surge back to life!</span>"
+		var/mob/dead/observer/ghost = M.get_ghost()
+		var/total_burn	= 0
+		var/total_brute	= 0
+		var/health = M.health
+		M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")
+		playsound(get_turf(src), "bodyfall", 50, 1)
+		playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
+		for(var/obj/item/organ/limb/O in M.organs)
+			total_brute	+= O.brute_dam
+			total_burn	+= O.burn_dam
+		if(M.health <= config.health_threshold_dead && !M.suiciding && !ghost && !(NOCLONE in M.mutations))
+			M.stat = 1
+			dead_mob_list -= M
+			living_mob_list |= list(M)
+			M.emote("gasp")
+			add_logs(M, M, "revived", object="strange reagent")
+			hardset_dna(M, null, null, null, null, /datum/species/zombie)
 	..()
 	return
 
@@ -593,3 +603,43 @@ proc/chemical_mob_spawn(var/datum/reagents/holder, var/amount_to_spawn, var/reac
 			if(prob(50))
 				for(var/j = 1, j <= rand(1, 3), j++)
 					step(C, pick(NORTH,SOUTH,EAST,WEST))
+
+/datum/reagent/mannitol/on_mob_life(mob/living/M as mob)
+	M.adjustBrainLoss(-3)
+	..()
+	return
+
+/datum/chemical_reaction/mannitol
+	name = "Mannitol"
+	id = "mannitol"
+	result = "mannitol"
+	required_reagents = list("sugar" = 1, "hydrogen" = 1, "water" = 1)
+	result_amount = 3
+	mix_message = "The solution slightly bubbles, becoming thicker."
+
+/datum/reagent/mannitol
+	name = "Mannitol"
+	id = "mannitol"
+	description = "Heals 3 BRAIN damage."
+	color = "#C8A5DC" // rgb: 200, 165, 220
+
+/datum/reagent/mutadone/on_mob_life(var/mob/living/carbon/human/M as mob)
+	M.jitteriness = 0
+	if(istype(M) && M.dna)
+		M.dna.remove_all_mutations()
+	..()
+	return
+
+/datum/chemical_reaction/mutadone
+	name = "Mutadone"
+	id = "mutadone"
+	result = "mutadone"
+	required_reagents = list("mutagen" = 1, "acetone" = 1, "bromine" = 1)
+	result_amount = 3
+
+
+/datum/reagent/mutadone
+	name = "Mutadone"
+	id = "mutadone"
+	description = "Heals 3 BRAIN damage."
+	color = "#C8A5DC" // rgb: 200, 165, 220

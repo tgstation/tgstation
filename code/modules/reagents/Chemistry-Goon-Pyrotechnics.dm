@@ -48,7 +48,7 @@ datum/reagent/clf3/on_mob_life(var/mob/living/M as mob)
 			new /obj/effect/hotspot(F)
 	if(istype(T, /turf/simulated/wall/))
 		var/turf/simulated/wall/W = T
-		if(prob(33))
+		if(prob(11))
 			W.ChangeTurf(/turf/simulated/floor)
 	return
 

@@ -232,8 +232,8 @@
 	M.AdjustStunned(-4)
 	M.AdjustWeakened(-4)
 	M.AdjustStunned(-4)
-	if(M.reagents.get_reagent_amount("ephedrine") < 5)
-		M.reagents.add_reagent("ephedrine", 5)
+	if(M.reagents.get_reagent_amount("epinephrine") < 5)
+		M.reagents.add_reagent("epinephrine", 5)
 	S.chassis.use_power(S.energy_drain)
 	S.update_equip_info()
 	return
