@@ -10,6 +10,7 @@
 
 /obj/structure/closet/secure_closet/captains/New()
 	..()
+	new /obj/item/clothing/suit/toggle/wintercoat/captain(src)
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack/captain(src)
 	else
@@ -23,8 +24,6 @@
 	new /obj/item/clothing/shoes/sneakers/brown(src)
 	new /obj/item/device/radio/headset/heads/captain/alt(src)
 	new /obj/item/clothing/gloves/color/captain(src)
-	new /obj/item/clothing/suit/toggle/wintercoat/captain(src)
-	new /obj/item/clothing/head/santa(src)
 	new /obj/item/weapon/gun/energy/gun(src)
 	return
 
@@ -40,6 +39,7 @@
 
 /obj/structure/closet/secure_closet/hop/New()
 	..()
+	new /obj/item/clothing/suit/toggle/wintercoat/cargo(src)
 	new /obj/item/clothing/under/rank/head_of_personnel(src)
 	new /obj/item/clothing/head/hopcap(src)
 	new /obj/item/weapon/cartridge/hop(src)
@@ -52,7 +52,6 @@
 	new /obj/item/device/flash/handheld(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/weapon/mining_voucher(src)
-	new /obj/item/clothing/suit/toggle/wintercoat/cargo(src)
 	new /obj/item/clothing/head/hardhat/reindeer()
 	return
 
@@ -70,6 +69,7 @@
 
 /obj/structure/closet/secure_closet/hos/New()
 	..()
+	new /obj/item/clothing/suit/toggle/wintercoat/security(src)
 	new /obj/item/weapon/cartridge/hos(src)
 	new /obj/item/device/radio/headset/heads/hos(src)
 	new /obj/item/clothing/under/hosparadefem(src)
@@ -84,7 +84,6 @@
 	new /obj/item/weapon/melee/baton/loaded(src)
 	new /obj/item/weapon/gun/energy/gun/advtaser(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
-	new /obj/item/clothing/suit/toggle/wintercoat/security(src)
 	return
 
 
@@ -114,7 +113,6 @@
 	new /obj/item/weapon/melee/baton/loaded(src)
 	new /obj/item/weapon/gun/energy/gun/advtaser(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
-	new /obj/item/clothing/suit/toggle/wintercoat/security(src)
 	return
 
 
@@ -139,7 +137,6 @@
 	new /obj/item/weapon/grenade/flashbang(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
-	new /obj/item/clothing/suit/toggle/wintercoat/security(src)
 	return
 
 
@@ -209,7 +206,6 @@
 	new /obj/item/device/radio/headset/headset_sec/alt(src)
 	new /obj/item/device/detective_scanner(src)
 	new /obj/item/clothing/suit/armor/vest/det_suit(src)
-	new /obj/item/clothing/suit/toggle/wintercoat(src)
 	new /obj/item/ammo_box/c38(src)
 	new /obj/item/ammo_box/c38(src)
 	new /obj/item/weapon/gun/projectile/revolver/detective(src)
