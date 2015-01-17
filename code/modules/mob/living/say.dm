@@ -240,7 +240,7 @@ var/list/department_radio_keys = list(
 		if(lingcheck())
 			log_say("[mind.changeling.changelingID]/[src.key] : [message]")
 			for(var/mob/M in mob_list)
-				if(M.lingcheck() || (M in dead_mob_list))
+				if(M.lingcheck() || (M in dead_mob_list && !istype(M, /mob/new_player)))
 					M << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
 			return 1
 	return 0
@@ -277,7 +277,7 @@ var/list/department_radio_keys = list(
 			return NOPASS
 	return 0
 /mob/living/lingcheck()
-	if(mind && mind.changeling)
+	if(mind && mind.changeling && !issilicon(src))
 		return 1
 
 /mob/living/say_quote()
