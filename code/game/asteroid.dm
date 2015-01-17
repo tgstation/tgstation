@@ -124,7 +124,7 @@ proc/make_mining_asteroid_secret()
 			treasureitems = list(/obj/item/weapon/gun/energy/floragun=1,/obj/item/seeds/novaflowerseed=2,/obj/item/seeds/bluespacetomatoseed=2,/obj/item/seeds/bluetomatoseed=2,
 			/obj/item/seeds/coffee_robusta_seed=2, /obj/item/seeds/cashseed=2)
 			fluffitems = list(/obj/structure/flora/kirbyplants=1,/obj/structure/table/reinforced=2,/obj/machinery/hydroponics=1,
-							  /obj/effect/glowshroom/single=2,/obj/item/weapon/reagent_containers/syringe/antitoxin=2,
+							  /obj/effect/glowshroom/single=2,/obj/item/weapon/reagent_containers/syringe/charcoal=2,
 							  /obj/item/weapon/reagent_containers/glass/bottle/diethylamine=3,/obj/item/weapon/reagent_containers/glass/bottle/ammonia=3)
 
 		/*if("poly")
