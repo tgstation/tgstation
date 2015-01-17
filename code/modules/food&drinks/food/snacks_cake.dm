@@ -8,9 +8,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/carrotcake/New()
 	..()
-	reagents.add_reagent("nutriment", 20)
-	reagents.add_reagent("oculine", 10)
-	reagents.add_reagent("vitamin", 5)
+	peakReagents = list("nutriment", 20, "oculine", 10, "vitamin", 5)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/carrotcakeslice
@@ -29,9 +27,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/braincake/New()
 	..()
-	reagents.add_reagent("nutriment", 20)
-	reagents.add_reagent("alkysine", 10)
-	reagents.add_reagent("vitamin", 5)
+	peakReagents = list("nutriment", 20, "vitamin", 10)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/braincakeslice
@@ -50,8 +46,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/cheesecake/New()
 	..()
-	reagents.add_reagent("nutriment", 20)
-	reagents.add_reagent("vitamin", 5)
+	peakReagents = list("nutriment", 20, "vitamin", 5)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesecakeslice
@@ -70,8 +65,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/plaincake/New()
 	..()
-	reagents.add_reagent("nutriment", 20)
-	reagents.add_reagent("vitamin", 5)
+	peakReagents = list("nutriment", 20,"vitamin",5)
 
 /obj/item/weapon/reagent_containers/food/snacks/plaincakeslice
 	name = "vanilla cake slice"
@@ -89,8 +83,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/orangecake/New()
 	..()
-	reagents.add_reagent("nutriment", 20)
-	reagents.add_reagent("vitamin", 5)
+	peakReagents = list("nutriment", 20, "vitamin", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/orangecakeslice
 	name = "orange cake slice"
@@ -108,8 +101,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/limecake/New()
 	..()
-	reagents.add_reagent("nutriment", 20)
-	reagents.add_reagent("vitamin", 5)
+	peakReagents = list("nutriment", 20, "vitamin", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/limecakeslice
 	name = "lime cake slice"
@@ -127,8 +119,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/lemoncake/New()
 	..()
-	reagents.add_reagent("nutriment", 20)
-	reagents.add_reagent("vitamin", 5)
+	peakReagents = list("nutriment", 20, "vitamin", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/lemoncakeslice
 	name = "lemon cake slice"
@@ -146,8 +137,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/chocolatecake/New()
 	..()
-	reagents.add_reagent("nutriment", 20)
-	reagents.add_reagent("vitamin", 5)
+	peakReagents = list("nutriment", 20, "vitamin", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/chocolatecakeslice
 	name = "chocolate cake slice"
@@ -165,9 +155,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/birthdaycake/New()
 	..()
-	reagents.add_reagent("nutriment", 20)
-	reagents.add_reagent("sprinkles", 10)
-	reagents.add_reagent("vitamin", 5)
+	peakReagents = list("nutriment", 20, "sprinkles", 10, "vitamin", 5)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/birthdaycakeslice
@@ -186,8 +174,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/applecake/New()
 	..()
-	reagents.add_reagent("nutriment", 20)
-	reagents.add_reagent("vitamin", 5)
+	peakReagents = list("nutriment", 20,"vitamin",5)
 
 /obj/item/weapon/reagent_containers/food/snacks/applecakeslice
 	name = "apple cake slice"

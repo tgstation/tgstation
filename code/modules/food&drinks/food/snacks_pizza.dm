@@ -3,6 +3,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza
 	slices_num = 6
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/margherita
 	name = "margherita"
@@ -13,9 +14,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/margherita/New()
 	..()
-	reagents.add_reagent("nutriment", 30)
-	reagents.add_reagent("tomatojuice", 6)
-	reagents.add_reagent("vitamin", 5)
+	peakReagents = list("nutriment", 30, "tomatojuice",6, "vitamin", 5)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/margheritaslice
@@ -33,9 +32,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meatpizza/New()
 	..()
-	reagents.add_reagent("nutriment", 40)
-	reagents.add_reagent("tomatojuice", 6)
-	reagents.add_reagent("vitamin", 8)
+	peakReagents = list("nutriment", 40, "tomatojuice", 6, "vitamin", 8)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/meatpizzaslice
@@ -43,6 +40,7 @@
 	desc = "A nutritious slice of meatpizza."
 	icon_state = "meatpizzaslice"
 	bitesize = 2
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/mushroompizza
 	name = "mushroom pizza"
@@ -53,8 +51,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/mushroompizza/New()
 	..()
-	reagents.add_reagent("nutriment", 30)
-	reagents.add_reagent("vitamin", 5)
+	peakReagents = list("nutriment", 30, "vitamin", 5)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/mushroompizzaslice
@@ -62,6 +59,7 @@
 	desc = "Maybe it is the last slice of pizza in your life."
 	icon_state = "mushroompizzaslice"
 	bitesize = 2
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/vegetablepizza
 	name = "vegetable pizza"
@@ -72,10 +70,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/vegetablepizza/New()
 	..()
-	reagents.add_reagent("nutriment", 25)
-	reagents.add_reagent("tomatojuice", 6)
-	reagents.add_reagent("oculine", 12)
-	reagents.add_reagent("vitamin", 5)
+	peakReagents = list("nutriment", 25, "tomatojuice", 6, "oculine", 12, "vitamin", 5)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/vegetablepizzaslice
@@ -83,6 +78,7 @@
 	desc = "A slice of the most green pizza of all pizzas not containing green ingredients."
 	icon_state = "vegetablepizzaslice"
 	bitesize = 2
+	coolFood = FALSE
 
 /obj/item/pizzabox
 	name = "pizza box"
