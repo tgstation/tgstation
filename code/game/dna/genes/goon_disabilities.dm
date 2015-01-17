@@ -20,6 +20,13 @@
 	OnSay(var/mob/M, var/message)
 		return ""
 
+	activate(var/mob/M, var/connected, var/flags)
+		..()
+		M.sdisabilities |= MUTE
+
+	deactivate(var/mob/M, var/connected, var/flags)
+		..()
+		M.sdisabilities &= ~MUTE
 ////////////////////////////////////////
 // Harmful to others as well as self
 ////////////////////////////////////////
