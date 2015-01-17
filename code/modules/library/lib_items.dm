@@ -281,7 +281,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = 1.0
-	var/obj/machinery/librarycomp/computer	//Associated computer - Modes 1 to 3 use this
+	var/obj/machinery/computer/libraryconsole/bookmanagement/computer	//Associated computer - Modes 1 to 3 use this
 	var/obj/item/weapon/book/book			//Currently scanned book
 	var/mode = 0							//0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory
 

@@ -66,7 +66,7 @@
 	if(stat & BROKEN)
 		icon_state = "mechab"
 		return
-	icon_state = "mecha0"
+	icon_state = "mecha"
 
 /obj/item/mecha_parts/mecha_tracking
 	name = "exosuit tracking beacon"

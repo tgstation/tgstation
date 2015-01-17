@@ -42,7 +42,7 @@
 
 /obj/item/weapon/reagent_containers/hypospray/CMO/New()
 	..()
-	reagents.add_reagent("doctorsdelight", 30)
+	reagents.add_reagent("omnizine", 30)
 
 /obj/item/weapon/reagent_containers/hypospray/combat
 	name = "combat stimulant injector"
@@ -54,14 +54,22 @@
 
 /obj/item/weapon/reagent_containers/hypospray/combat/New()
 	..()
-	reagents.add_reagent("synaptizine", 30)
+	reagents.add_reagent("epinephrine", 15)
+	reagents.add_reagent("salglu_solution", 15)
 
+obj/item/weapon/reagent_containers/hypospray/combat/nanites
+	desc = "A modified air-needle autoinjector for use in combat situations. Prefilled with expensive medical nanites for rapid healing."
+	volume = 100
 
+/obj/item/weapon/reagent_containers/hypospray/combat/nanites/New()
+	..()
+	reagents.remove_reagent("synaptizine", 30)
+	reagents.add_reagent("nanites", 100)
 
 //MediPens
 
 /obj/item/weapon/reagent_containers/hypospray/medipen
-	name = "inaprovaline medipen" //lol epipen is copyrighted
+	name = "epinephrine medipen"
 	desc = "A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge."
 	icon_state = "medipen"
 	item_state = "medipen"
@@ -69,10 +77,12 @@
 	volume = 10
 	ignore_flags = 1 //so you can medipen through hardsuits
 	flags = null
+	var/starting_reagent = "epinephrine"
+	var/starting_amount = 10
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/New()
 	..()
-	reagents.add_reagent("inaprovaline", 10)
+	reagents.add_reagent(starting_reagent, starting_amount)
 	update_icon()
 	return
 
@@ -100,11 +110,11 @@
 	name = "leporazine medipen"
 	desc = "A rapid way to regulate your body's temperature in the event of a hardsuit malfunction at the cost of some shortness of breath."
 	icon_state = "lepopen"
+	starting_reagent = "leporazine"
+	starting_amount = 9
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/leporazine/New()
 	..()
-	reagents.remove_reagent("inaprovaline", 10)
-	reagents.add_reagent("leporazine", 9)
 	reagents.add_reagent("lexorin", 1)
 	update_icon()
 	return
@@ -113,11 +123,17 @@
 	name = "stimpack medipen"
 	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in restrictive armor at the cost of some shortness of breath."
 	icon_state = "stimpen"
+	starting_reagent = "morphine"
+	starting_amount = 9
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack/New()
 	..()
-	reagents.remove_reagent("inaprovaline", 10)
-	reagents.add_reagent("hyperzine", 9)
 	reagents.add_reagent("lexorin", 1)
 	update_icon()
 	return
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/morphine
+	name = "morphine medipen"
+	desc = "A rapid way to get you out of a tight situation and fast! You'll feel rather drowsy, though."
+	icon_state = "medipen"
+	starting_reagent = "morphine"

@@ -58,17 +58,17 @@
 	origin_tech = "combat=2;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
 
-/obj/item/weapon/gun/projectile/revolver/detective/special_check(var/mob/living/carbon/human/M)
-	if(magazine.caliber == initial(magazine.caliber))
-		return 1
-	if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
-		playsound(M, fire_sound, 50, 1)
-		M << "<span class='danger'>[src] blows up in your face!</span>"
-		M.take_organ_damage(0,20)
-		M.drop_item()
-		qdel(src)
-		return 0
-	return 1
+/obj/item/weapon/gun/projectile/revolver/detective/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, var/message = 1, params)
+	if(magazine.caliber != initial(magazine.caliber))
+		if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
+			playsound(user, fire_sound, 50, 1)
+			user << "<span class='danger'>[src] blows up in your face!</span>"
+			user.take_organ_damage(0,20)
+			user.drop_item()
+			qdel(src)
+			return 0
+	..()
+
 
 /obj/item/weapon/gun/projectile/revolver/detective/verb/rename_gun()
 	set name = "Name Gun"

@@ -61,8 +61,8 @@ datum/reagent/toxin/plasma
 	toxpwr = 3
 
 datum/reagent/toxin/plasma/on_mob_life(var/mob/living/M as mob)
-	if(holder.has_reagent("inaprovaline"))
-		holder.remove_reagent("inaprovaline", 2*REM)
+	if(holder.has_reagent("epinephrine"))
+		holder.remove_reagent("epinephrine", 2*REM)
 	..()
 	return
 
@@ -118,19 +118,6 @@ datum/reagent/toxin/slimejelly/on_mob_life(var/mob/living/M as mob)
 		M.adjustToxLoss(rand(20,60)*REM)
 	else if(prob(40))
 		M.heal_organ_damage(5*REM,0)
-	..()
-	return
-
-datum/reagent/toxin/cyanide
-	name = "Cyanide"
-	id = "cyanide"
-	description = "A highly toxic chemical."
-	color = "#CF3600" // rgb: 207, 54, 0
-	toxpwr = 3
-
-datum/reagent/toxin/cyanide/on_mob_life(var/mob/living/M as mob)
-	M.adjustOxyLoss(3*REM)
-	M.sleeping += 1
 	..()
 	return
 

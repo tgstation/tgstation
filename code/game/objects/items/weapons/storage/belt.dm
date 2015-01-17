@@ -96,7 +96,7 @@
 		/obj/item/weapon/melee/classic_baton/telescopic
 		)
 
-/obj/item/weapon/storage/belt/security/New()
+/obj/item/weapon/storage/belt/security/full/New()
 	..()
 	new /obj/item/device/flashlight/seclite(src)
 
@@ -173,4 +173,14 @@
 		/obj/item/weapon/reagent_containers/spray,
 		/obj/item/weapon/soap,
 		/obj/item/weapon/holosign_creator
+		)
+
+/obj/item/weapon/storage/belt/bandolier
+	name = "bandolier"
+	desc = "A bandolier for holding shotgun ammunition."
+	icon_state = "bandolier"
+	item_state = "bandolier"
+	storage_slots = 6
+	can_hold = list(
+		/obj/item/ammo_casing/shotgun
 		)

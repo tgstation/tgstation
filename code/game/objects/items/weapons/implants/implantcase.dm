@@ -19,12 +19,11 @@
 /obj/item/weapon/implantcase/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if(istype(W, /obj/item/weapon/pen))
-		var/t = input(user, "What would you like the label to be?", name, null) as text
+		var/t = stripped_input(user, "What would you like the label to be?", name, null)
 		if(user.get_active_hand() != W)
 			return
 		if(!in_range(src, user) && loc != user)
 			return
-		t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
 		if(t)
 			name = "glass case- '[t]'"
 		else

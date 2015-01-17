@@ -128,8 +128,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/badrecipe/New()
 	..()
 	eatverb = pick("choke down","nibble","gnaw","chomp")
-	reagents.add_reagent("toxin", 1)
-	reagents.add_reagent("carbon", 3)
+	reagents.add_reagent("????", 30)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/spacylibertyduff
@@ -166,7 +165,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/carrotfries/New()
 	..()
 	reagents.add_reagent("nutriment", 3)
-	reagents.add_reagent("imidazoline", 3)
+	reagents.add_reagent("oculine", 3)
 	reagents.add_reagent("vitamin", 2)
 	bitesize = 2
 

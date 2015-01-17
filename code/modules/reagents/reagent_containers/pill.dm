@@ -9,6 +9,8 @@
 	item_state = "pill"
 	possible_transfer_amounts = null
 	volume = 50
+	var/apply_type = INGEST
+	var/apply_method = "swallow"
 
 /obj/item/weapon/reagent_containers/pill/New()
 	..()
@@ -25,16 +27,16 @@
 		return 0
 
 	if(M == user)
-		M << "<span class='notice'>You swallow [src].</span>"
+		M << "<span class='notice'>You [apply_method] [src].</span>"
 
 	else
-		M.visible_message("<span class='danger'>[user] attempts to force [M] to swallow [src].</span>", \
-							"<span class='userdanger'>[user] attempts to force [M] to swallow [src].</span>")
+		M.visible_message("<span class='danger'>[user] attempts to force [M] to [apply_method] [src].</span>", \
+							"<span class='userdanger'>[user] attempts to force [M] to [apply_method] [src].</span>")
 
 		if(!do_mob(user, M)) return
 
-		M.visible_message("<span class='danger'>[user] forces [M] to swallow [src].</span>", \
-							"<span class='userdanger'>[user] forces [M] to swallow [src].</span>")
+		M.visible_message("<span class='danger'>[user] forces [M] to [apply_method] [src].</span>", \
+							"<span class='userdanger'>[user] forces [M] to [apply_method] [src].</span>")
 
 
 	user.unEquip(src) //icon update
@@ -42,7 +44,7 @@
 	loc = M //Put the pill inside the mob. This fixes the issue where the pill appears to drop to the ground after someone eats it.
 
 	if(reagents.total_volume)
-		reagents.reaction(M, INGEST)
+		reagents.reaction(M, apply_type)
 		spawn(5)
 			reagents.trans_to(M, reagents.total_volume)
 			qdel(src)
@@ -72,14 +74,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 //Pills
-/obj/item/weapon/reagent_containers/pill/antitox
-	name = "anti-toxins pill"
-	desc = "Neutralizes many common toxins."
-	icon_state = "pill17"
-
-/obj/item/weapon/reagent_containers/pill/antitox/New()
-	..()
-	reagents.add_reagent("anti_toxin", 50)
 
 
 /obj/item/weapon/reagent_containers/pill/tox
@@ -120,57 +114,6 @@
 	..()
 	reagents.add_reagent("stoxin", 30)
 
-
-/obj/item/weapon/reagent_containers/pill/kelotane
-	name = "kelotane pill"
-	desc = "Used to treat burns."
-	icon_state = "pill11"
-
-/obj/item/weapon/reagent_containers/pill/kelotane/New()
-	..()
-	reagents.add_reagent("kelotane", 30)
-
-
-/obj/item/weapon/reagent_containers/pill/dermaline
-	name = "dermaline pill"
-	desc = "Used to treat severe burns."
-	icon_state = "pill12"
-
-/obj/item/weapon/reagent_containers/pill/dermaline/New()
-	..()
-	reagents.add_reagent("dermaline", 30)
-
-
-/obj/item/weapon/reagent_containers/pill/inaprovaline
-	name = "inaprovaline pill"
-	desc = "Used to stabilize patients."
-	icon_state = "pill20"
-
-/obj/item/weapon/reagent_containers/pill/inaprovaline/New()
-	..()
-	reagents.add_reagent("inaprovaline", 30)
-
-
-/obj/item/weapon/reagent_containers/pill/dexalin
-	name = "dexalin pill"
-	desc = "Used to treat oxygen deprivation."
-	icon_state = "pill16"
-
-/obj/item/weapon/reagent_containers/pill/dexalin/New()
-	..()
-	reagents.add_reagent("dexalin", 30)
-
-
-/obj/item/weapon/reagent_containers/pill/bicaridine
-	name = "bicaridine pill"
-	desc = "Used to treat physical injuries."
-	icon_state = "pill18"
-
-/obj/item/weapon/reagent_containers/pill/bicaridine/New()
-	..()
-	reagents.add_reagent("bicaridine", 30)
-
-
 /obj/item/weapon/reagent_containers/pill/stimulant
 	name = "stimulant pill"
 	desc = "Often taken by overworked employees, athletes, and the inebriated. You'll snap to attention immediately!"
@@ -178,6 +121,33 @@
 
 /obj/item/weapon/reagent_containers/pill/stimulant/New()
 	..()
-	reagents.add_reagent("hyperzine", 10)
+	reagents.add_reagent("morphine", 10)
 	reagents.add_reagent("ethylredoxrazine", 10)
 	reagents.add_reagent("coffee", 30)
+
+/obj/item/weapon/reagent_containers/pill/salbutamol
+	name = "salbutamol pill"
+	desc = "Used to treat oxygen deprivation."
+	icon_state = "pill18"
+
+/obj/item/weapon/reagent_containers/pill/salbutamol/New()
+	..()
+	reagents.add_reagent("salbutamol", 30)
+
+/obj/item/weapon/reagent_containers/pill/charcoal
+	name = "charcoal pill"
+	desc = "Neutralizes many common toxins."
+	icon_state = "pill17"
+
+/obj/item/weapon/reagent_containers/pill/charcoal/New()
+	..()
+	reagents.add_reagent("charcoal", 50)
+
+/obj/item/weapon/reagent_containers/pill/epinephrine
+	name = "epinephrine pill"
+	desc = "Used to stabilize patients."
+	icon_state = "pill17"
+
+/obj/item/weapon/reagent_containers/pill/epinephrine/New()
+	..()
+	reagents.add_reagent("epinephrine", 50)

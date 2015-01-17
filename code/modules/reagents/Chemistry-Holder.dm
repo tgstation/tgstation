@@ -10,6 +10,8 @@ datum/reagents
 	var/total_volume = 0
 	var/maximum_volume = 100
 	var/atom/my_atom = null
+	var/chem_temp = 150
+	var/last_tick = 0
 
 datum/reagents/New(maximum=100)
 	maximum_volume = maximum
@@ -194,12 +196,14 @@ datum/reagents/proc/trans_id_to(var/obj/target, var/reagent, var/amount=1, var/p
 */
 
 datum/reagents/proc/metabolize(var/mob/M)
-	for(var/A in reagent_list)
-		var/datum/reagent/R = A
-		if(M && R)
-			if(M.reagent_check(R) != 1)
-				R.on_mob_life(M)
-
+	if(last_tick == 3)
+		last_tick = 0
+		for(var/A in reagent_list)
+			var/datum/reagent/R = A
+			if(M && R)
+				if(M.reagent_check(R) != 1)
+					R.on_mob_life(M)
+	last_tick++
 	update_total()
 
 datum/reagents/proc/conditional_update_move(var/atom/A, var/Running = 0)
@@ -232,6 +236,7 @@ datum/reagents/proc/handle_reactions()
 				var/matching_container = 0
 				var/matching_other = 0
 				var/list/multipliers = new/list()
+				var/required_temp = C.required_temp
 
 				for(var/B in C.required_reagents)
 					if(!has_reagent(B, C.required_reagents[B]))	break
@@ -259,10 +264,11 @@ datum/reagents/proc/handle_reactions()
 					if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
 						matching_other = 1
 
+				if(required_temp == 0)
+					required_temp = chem_temp
 
 
-
-				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other)
+				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && chem_temp >= required_temp)
 					var/multiplier = min(multipliers)
 					for(var/B in C.required_reagents)
 						remove_reagent(B, (multiplier * C.required_reagents[B]), safety = 1)
@@ -277,7 +283,7 @@ datum/reagents/proc/handle_reactions()
 
 					if(!istype(my_atom, /mob)) // No bubbling mobs
 						for(var/mob/M in seen)
-							M << "<span class='notice'>\icon[my_atom] The solution begins to bubble.</span>"
+							M << "<span class='notice'>\icon[my_atom] [C.mix_message]</span>"
 
 					if(istype(my_atom, /obj/item/slime_extract))
 						var/obj/item/slime_extract/ME2 = my_atom
@@ -321,7 +327,7 @@ datum/reagents/proc/del_reagent(var/reagent)
 
 datum/reagents/proc/check_gofast(var/mob/M)
 	if(istype(M, /mob))
-		if(M.reagents.has_reagent("hyperzine")||M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola"))
+		if(M.reagents.has_reagent("morphine")||M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola"))
 			return 1
 		else
 			M.status_flags &= ~GOTTAGOFAST

@@ -22,7 +22,7 @@
 			user << "<span class='notice'>[src] blinks red as you try to insert [G].</span>"
 			return
 
-		if (istype(G, /obj/item/weapon/gun/energy/gun/nuclear) || istype(G, /obj/item/weapon/gun/energy/crossbow))
+		if (istype(G, /obj/item/weapon/gun/energy/gun/nuclear))
 			user << "<span class='notice'>Your gun's recharge port was removed to make room for a miniaturized reactor.</span>"
 			return
 		user.drop_item()

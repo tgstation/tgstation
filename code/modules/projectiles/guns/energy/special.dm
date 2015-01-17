@@ -8,6 +8,7 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
+	pin = null
 
 
 /obj/item/weapon/gun/energy/ionrifle/emp_act(severity)
@@ -19,6 +20,7 @@
 	icon_state = "decloner"
 	origin_tech = "combat=5;materials=4;powerstorage=3"
 	ammo_type = list(/obj/item/ammo_casing/energy/declone)
+	pin = null
 
 /obj/item/weapon/gun/energy/floragun
 	name = "floral somatoray"
@@ -119,14 +121,38 @@
 		recent_reload = 0
 	..()
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/attack_self(var/mob/living/user/L)
+/obj/item/weapon/gun/energy/kinetic_accelerator/attack_self(mob/living/user)
 	if(overheat || recent_reload)
 		return
 	power_supply.give(500)
-	playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
+	if(!suppressed)
+		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
+	else
+		playsound(user, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 	recent_reload = 1
 	update_icon()
 	return
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
+	name = "mini energy crossbow"
+	desc = "A weapon favored by syndicate stealth specialists."
+	icon_state = "crossbow"
+	item_state = "crossbow"
+	w_class = 2
+	m_amt = 2000
+	origin_tech = "combat=2;magnets=2;syndicate=5"
+	suppressed = 1
+	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large
+	name = "energy crossbow"
+	desc = "A reverse engineered weapon using syndicate technology."
+	icon_state = "crossbowlarge"
+	w_class = 3
+	m_amt = 4000
+	origin_tech = "combat=2;magnets=2;syndicate=3" //can be further researched for more syndie tech
+	suppressed = 0
+	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 
 /obj/item/weapon/gun/energy/disabler
 	name = "disabler"
@@ -134,7 +160,6 @@
 	icon_state = "disabler"
 	item_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
-	cell_type = "/obj/item/weapon/stock_parts/cell"
 
 
 /obj/item/weapon/gun/energy/wormhole_projector
@@ -180,3 +205,42 @@
 	if(orange && blue)
 		blue.target = get_turf(orange)
 		orange.target = get_turf(blue)
+
+
+/* 3d printer 'pseudo guns' for borgs */
+
+/obj/item/weapon/gun/energy/printer
+	name = "cyborg lmg"
+	desc = "A machinegun that fires 3d-printed flachettes slowly regenerated using a cyborg's internal power source."
+	icon_state = "l6closed0"
+	cell_type = "/obj/item/weapon/stock_parts/cell/secborg"
+	ammo_type = list(/obj/item/ammo_casing/energy/c3dbullet)
+	var/charge_tick = 0
+	var/recharge_time = 5
+
+/obj/item/weapon/gun/energy/printer/update_icon()
+	return
+
+/obj/item/weapon/gun/energy/printer/New()
+	..()
+	SSobj.processing.Add(src)
+
+
+/obj/item/weapon/gun/energy/printer/Destroy()
+	SSobj.processing.Remove(src)
+	..()
+
+/obj/item/weapon/gun/energy/printer/process()
+	charge_tick++
+	if(charge_tick < recharge_time) return 0
+	charge_tick = 0
+
+	if(!power_supply) return 0 //sanity
+	if(isrobot(src.loc))
+		var/mob/living/silicon/robot/R = src.loc
+		if(R && R.cell)
+			var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
+			if(R.cell.use(shot.e_cost)) 		//Take power from the borg...
+				power_supply.give(shot.e_cost)	//...to recharge the shot
+
+	return 1

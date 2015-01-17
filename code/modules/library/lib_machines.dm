@@ -17,23 +17,28 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	var/getdate
 	var/duedate
 
+
 /*
  * Library Public Computer
  */
-/obj/machinery/librarypubliccomp
+/obj/machinery/computer/libraryconsole
 	name = "library visitor console"
-	icon = 'icons/obj/library.dmi'
-	icon_state = "computer"
-	anchored = 1
-	density = 1
+	icon = 'icons/obj/computer.dmi'
+	icon_state = "library"
+	circuit = /obj/item/weapon/circuitboard/libraryconsole
 	var/screenstate = 0
 	var/title
 	var/category = "Any"
 	var/author
 	var/SQLquery
 
-/obj/machinery/librarypubliccomp/attack_hand(var/mob/user as mob)
-	usr.set_machine(src)
+/obj/machinery/computer/libraryconsole/attack_hand(var/mob/user as mob)
+	if(..())
+		return
+	interact(user)
+
+/obj/machinery/computer/libraryconsole/interact(mob/user)
+	user.set_machine(src)
 	var/dat = "" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	switch(screenstate)
 		if(0)
@@ -63,14 +68,13 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 					dat += "<tr><td>[author]</td><td>[title]</td><td>[category]</td><td>[id]</td></tr>"
 				dat += "</table><BR>"
 			dat += "<A href='?src=\ref[src];back=1'>\[Go Back\]</A><BR>"
-	//user << browse(dat, "window=publiclibrary")
-	//onclose(user, "publiclibrary")
 	var/datum/browser/popup = new(user, "publiclibrary", name, 600, 400)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
-/obj/machinery/librarypubliccomp/Topic(href, href_list)
+/obj/machinery/computer/libraryconsole/Topic(href, href_list)
+	. = ..()
 	if(..())
 		usr << browse(null, "window=publiclibrary")
 		onclose(usr, "publiclibrary")
@@ -115,17 +119,12 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 
 /*
  * Library Computer
+ * After 860 days, it's finally a buildable computer.
  */
-// TODO: Make this an actual /obj/machinery/computer that can be crafted from circuit boards and such
-// It is August 22nd, 2012... This TODO has already been here for months.. I wonder how long it'll last before someone does something about it.
-/obj/machinery/librarycomp
+/obj/machinery/computer/libraryconsole/bookmanagement
 	name = "book inventory management console"
-	icon = 'icons/obj/library.dmi'
-	icon_state = "computer"
-	anchored = 1
-	density = 1
 	var/arcanecheckout = 0
-	var/screenstate = 0 // 0 - Main Menu, 1 - Inventory, 2 - Checked Out, 3 - Check Out a Book
+	screenstate = 0 // 0 - Main Menu, 1 - Inventory, 2 - Checked Out, 3 - Check Out a Book
 	var/buffer_book
 	var/buffer_mob
 	var/upload_category = "Fiction"
@@ -134,10 +133,16 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	var/checkoutperiod = 5 // In minutes
 	var/obj/machinery/libraryscanner/scanner // Book scanner that will be used when uploading books to the Archive
 
-	var/bibledelay = 0 // LOL NO SPAM (1 minute delay) -- Doohl
+	var/bibledelay = 0
 
-/obj/machinery/librarycomp/attack_hand(var/mob/user as mob)
-	usr.set_machine(src)
+/obj/machinery/computer/libraryconsole/bookmanagement/New()
+	..()
+	if(circuit)
+		circuit.name = "circuit board (Book Inventory Management Console)"
+		circuit.build_path = /obj/machinery/computer/libraryconsole/bookmanagement
+
+/obj/machinery/computer/libraryconsole/bookmanagement/interact(mob/user)
+	user.set_machine(src)
 	var/dat = "" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	switch(screenstate)
 		if(0)
@@ -237,15 +242,12 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			dat += "<A href='?src=\ref[src];arccheckout=1'>Yes.</A><BR>"
 			dat += "<A href='?src=\ref[src];switchscreen=0'>No.</A><BR>"
 
-	//dat += "<A HREF='?src=\ref[user];mach_close=library'>Close</A><br><br>"
-	//user << browse(dat, "window=library")
-	//onclose(user, "library")
 	var/datum/browser/popup = new(user, "library", name, 600, 400)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
-/obj/machinery/librarycomp/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/barcodescanner))
 		var/obj/item/weapon/barcodescanner/scanner = W
 		scanner.computer = src
@@ -254,11 +256,11 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	else
 		..()
 
-/obj/machinery/librarycomp/emag_act(mob/user as mob)
+/obj/machinery/computer/libraryconsole/bookmanagement/emag_act(mob/user as mob)
 	if(density && !emagged)
 		emagged = 1
 
-/obj/machinery/librarycomp/Topic(href, href_list)
+/obj/machinery/computer/libraryconsole/bookmanagement/Topic(href, href_list)
 	if(..())
 		usr << browse(null, "window=library")
 		onclose(usr, "library")
@@ -394,7 +396,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/librarycomp/say_quote(text)
+/obj/machinery/computer/libraryconsole/bookmanagement/say_quote(text)
 	return "flashes, \"[text]\""
 
 
