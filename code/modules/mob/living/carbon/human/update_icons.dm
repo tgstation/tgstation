@@ -455,7 +455,7 @@ var/global/list/damage_icon_parts = list()
 	if (targeted_by && target_locked)
 		var/obj/Overlays/O = obj_overlays[TARGETED_LAYER]
 		O.icon = target_locked
-		O.icon_state = "locking"
+		O.icon_state = "locking" //Does not update to "locked" sprite, need to find a way to get icon_state from an image, or rewrite Targeted() proc
 		overlays += O
 		obj_overlays[TARGETED_LAYER] = O
 		//overlays_standing[TARGETED_LAYER]	= target_locked
