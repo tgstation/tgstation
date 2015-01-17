@@ -444,6 +444,40 @@ datum/reagent/atropine/on_mob_life(var/mob/living/M as mob)
 	required_reagents = list("ethanol" = 1, "acetone" = 1, "diethylamine" = 1, "phenol" = 1, "sacid" = 1)
 	result_amount = 5
 
+datum/reagent/epinephrine
+	name = "Epinephrine"
+	id = "epinephrine"
+	description = "Reduces most of the knockout/stun effects, minor stamina regeneration buff. Attempts to cap OXY damage at 35 and LOSEBREATH at 3. If health is between -10 to -65, heals 1 TOX, 1 BRUTE, 1 BURN."
+	reagent_state = LIQUID
+	color = "#C8A5DC" // rgb: 200, 165, 220
+	metabolization_rate = 0.2
+
+datum/reagent/epinephrine/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	if(M.health > -10 && M.health < -65)
+		M.adjustToxLoss(-1*REM)
+		M.adjustBruteLoss(-1*REM)
+		M.adjustFireLoss(-1*REM)
+	if(M.oxyloss > 35)
+		M.setOxyLoss(35)
+	if(M.losebreath > 3)
+		M.losebreath = 3
+	M.adjustStaminaLoss(-1*REM)
+	if(prob(30))
+		M.AdjustParalysis(-1)
+		M.AdjustStunned(-1)
+		M.AdjustWeakened(-1)
+		M.sleeping -= 1
+	..()
+	return
+
+/datum/chemical_reaction/epinephrine
+	name = "Epinephrine"
+	id = "epinephrine"
+	result = "epinephrine"
+	required_reagents = list("phenol" = 1, "acetone" = 1, "diethylamine" = 1, "oxygen" = 1, "chlorine" = 1, "hydrogen" = 1)
+	result_amount = 6
+
 datum/reagent/strange_reagent
 	name = "Strange Reagent"
 	id = "strange_reagent"
@@ -504,6 +538,9 @@ datum/reagent/life
 	required_temp = 374
 
 /datum/chemical_reaction/life/on_reaction(var/datum/reagents/holder, var/created_volume)
+	chemical_mob_spawn(holder, 1, "Life")
+
+proc/chemical_mob_spawn(var/datum/reagents/holder, var/amount_to_spawn, var/reaction_name)
 	if(holder && holder.my_atom)
 		var/blocked = list(/mob/living/simple_animal/hostile,
 			/mob/living/simple_animal/hostile/pirate,
@@ -532,7 +569,7 @@ datum/reagent/life
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)
 		var/area/my_area = get_area(T)
-		var/message = "A life reaction has occured in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
+		var/message = "A [reaction_name] reaction has occured in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
 		message += " (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"
 
 		var/mob/M = get(A, /mob)
@@ -548,10 +585,10 @@ datum/reagent/life
 		for(var/mob/living/carbon/human/H in viewers(get_turf(holder.my_atom), null))
 			if(H:eyecheck() <= 0)
 				flick("e_flash", H.flash)
-		for(var/i = 1, i <= 5, i++)
+		for(var/i = 1, i <= amount_to_spawn, i++)
 			var/chosen = pick(critters)
 			var/mob/living/simple_animal/hostile/C = new chosen
-			C.faction |= "lifesummon"
+			C.faction |= "chemicalsummon"
 			C.loc = get_turf(holder.my_atom)
 			if(prob(50))
 				for(var/j = 1, j <= rand(1, 3), j++)

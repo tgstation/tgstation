@@ -234,11 +234,11 @@
 
 
 /obj/item/weapon/reagent_containers/syringe/ephedrine
-	name = "syringe (ephedrine)"
-	desc = "Contains ephedrine - used to stabilize patients."
+	name = "syringe (epinephrine)"
+	desc = "Contains epinephrine - used to stabilize patients."
 	New()
 		..()
-		reagents.add_reagent("ephedrine", 15)
+		reagents.add_reagent("epinephrine", 15)
 		mode = SYRINGE_INJECT
 		update_icon()
 
@@ -280,20 +280,20 @@
 		update_icon()
 
 /obj/item/weapon/reagent_containers/syringe/robot/ephedrine
-	name = "syringe (ephedrine)"
-	desc = "Contains ephedrine - used to stabilize patients."
+	name = "syringe (epinephrine)"
+	desc = "Contains epinephrine - used to stabilize patients."
 	New()
 		..()
-		reagents.add_reagent("ephedrine", 15)
+		reagents.add_reagent("epinephrine", 15)
 		mode = SYRINGE_INJECT
 		update_icon()
 
 /obj/item/weapon/reagent_containers/syringe/robot/mixed
 	name = "syringe (mixed)"
-	desc = "Contains ephedrine & charcoal solution."
+	desc = "Contains epinephrine & charcoal solution."
 	New()
 		..()
-		reagents.add_reagent("ephedrine", 7)
+		reagents.add_reagent("epinephrine", 7)
 		reagents.add_reagent("charcoal", 8)
 		mode = SYRINGE_INJECT
 		update_icon()

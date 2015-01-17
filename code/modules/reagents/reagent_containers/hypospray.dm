@@ -54,7 +54,7 @@
 
 /obj/item/weapon/reagent_containers/hypospray/combat/New()
 	..()
-	reagents.add_reagent("ephedrine", 15)
+	reagents.add_reagent("epinephrine", 15)
 	reagents.add_reagent("salglu_solution", 15)
 
 obj/item/weapon/reagent_containers/hypospray/combat/nanites
@@ -69,7 +69,7 @@ obj/item/weapon/reagent_containers/hypospray/combat/nanites
 //MediPens
 
 /obj/item/weapon/reagent_containers/hypospray/medipen
-	name = "ephedrine medipen"
+	name = "epinephrine medipen"
 	desc = "A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge."
 	icon_state = "medipen"
 	item_state = "medipen"
@@ -77,7 +77,7 @@ obj/item/weapon/reagent_containers/hypospray/combat/nanites
 	volume = 10
 	ignore_flags = 1 //so you can medipen through hardsuits
 	flags = null
-	var/starting_reagent = "ephedrine"
+	var/starting_reagent = "epinephrine"
 	var/starting_amount = 10
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/New()

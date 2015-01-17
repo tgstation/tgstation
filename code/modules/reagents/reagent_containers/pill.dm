@@ -144,10 +144,10 @@
 	reagents.add_reagent("charcoal", 50)
 
 /obj/item/weapon/reagent_containers/pill/ephedrine
-	name = "ephedrine pill"
+	name = "epinephrine pill"
 	desc = "Used to stabilize patients."
 	icon_state = "pill17"
 
 /obj/item/weapon/reagent_containers/pill/ephedrine/New()
 	..()
-	reagents.add_reagent("ephedrine", 50)
+	reagents.add_reagent("epinephrine", 50)
