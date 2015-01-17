@@ -708,13 +708,25 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			return
 
 		if(!anchored && !isinspace())
+			user.visible_message("<span class='notice'>[user] begins to wrench [src] into place.</span>", \
+								"<span class='notice'>You begin to wrench [src] in place.</span>")
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			anchored = 1
-			user << "You wrench [src] in place."
+			if (do_after(user, 20))
+				if(anchored)
+					return
+				anchored = 1
+				user.visible_message("<span class='notice'>[user] wrenches [src] into place.</span>", \
+									"<span class='notice'>You wrench [src] in place.</span>")
 		else if(anchored)
+			user.visible_message("<span class='notice'>[user] begins to unwrench [src].</span>", \
+								"<span class='notice'>You begin to unwrench [src].</span>")
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			anchored = 0
-			user << "You unwrench [src]."
+			if (do_after(user, 20))
+				if(!anchored)
+					return
+				anchored = 0
+				user.visible_message("<span class='notice'>[user] unwrenches [src].</span>", \
+									"<span class='notice'>You unwrench [src].</span>")
 
 	else if(istype(O, /obj/item/weapon/screwdriver) && unwrenchable) //THIS NEED TO BE DONE DIFFERENTLY, SOMEONE REFACTOR THE TRAY CODE ALREADY
 		if(anchored)

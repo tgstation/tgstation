@@ -57,7 +57,14 @@
 	reagents.add_reagent("ephedrine", 15)
 	reagents.add_reagent("salglu_solution", 15)
 
+obj/item/weapon/reagent_containers/hypospray/combat/nanites
+	desc = "A modified air-needle autoinjector for use in combat situations. Prefilled with expensive medical nanites for rapid healing."
+	volume = 100
 
+/obj/item/weapon/reagent_containers/hypospray/combat/nanites/New()
+	..()
+	reagents.remove_reagent("synaptizine", 30)
+	reagents.add_reagent("nanites", 100)
 
 //MediPens
 
