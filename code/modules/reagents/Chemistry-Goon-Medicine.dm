@@ -497,13 +497,7 @@ datum/reagent/strange_reagent/reaction_mob(var/mob/living/carbon/human/M as mob,
 			M.gib()
 	else if(M.stat == DEAD)
 		var/mob/dead/observer/ghost = M.get_ghost()
-		var/total_burn	= 0
-		var/total_brute	= 0
-		var/health = M.health
 		M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")
-		for(var/obj/item/organ/limb/O in M.organs)
-			total_brute	+= O.brute_dam
-			total_burn	+= O.burn_dam
 		if(M.health <= config.health_threshold_dead && !M.suiciding && !ghost && !(NOCLONE in M.mutations))
 			M.stat = 1
 			dead_mob_list -= M
