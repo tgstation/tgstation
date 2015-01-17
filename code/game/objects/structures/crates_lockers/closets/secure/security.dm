@@ -52,7 +52,6 @@
 	new /obj/item/device/flash/handheld(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/weapon/mining_voucher(src)
-	new /obj/item/clothing/head/hardhat/reindeer()
 	return
 
 
