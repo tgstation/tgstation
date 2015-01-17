@@ -165,7 +165,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/carrotfries/New()
 	..()
 	reagents.add_reagent("nutriment", 3)
-	reagents.add_reagent("imidazoline", 3)
+	reagents.add_reagent("oculine", 3)
 	reagents.add_reagent("vitamin", 2)
 	bitesize = 2
 

@@ -233,21 +233,21 @@
 
 
 
-/obj/item/weapon/reagent_containers/syringe/inaprovaline
-	name = "syringe (inaprovaline)"
-	desc = "Contains inaprovaline - used to stabilize patients."
+/obj/item/weapon/reagent_containers/syringe/epinephrine
+	name = "syringe (epinephrine)"
+	desc = "Contains epinephrine - used to stabilize patients."
 	New()
 		..()
-		reagents.add_reagent("inaprovaline", 15)
+		reagents.add_reagent("epinephrine", 15)
 		mode = SYRINGE_INJECT
 		update_icon()
 
-/obj/item/weapon/reagent_containers/syringe/antitoxin
-	name = "syringe (anti-toxin)"
-	desc = "Contains anti-toxins."
+/obj/item/weapon/reagent_containers/syringe/charcoal
+	name = "syringe (charcoal)"
+	desc = "Contains charcoal."
 	New()
 		..()
-		reagents.add_reagent("anti_toxin", 15)
+		reagents.add_reagent("charcoal", 15)
 		mode = SYRINGE_INJECT
 		update_icon()
 
@@ -270,30 +270,30 @@
 
 //Robot syringes
 //Not special in any way, code wise. They don't have added variables or procs.
-/obj/item/weapon/reagent_containers/syringe/robot/antitoxin
-	name = "syringe (anti-toxin)"
-	desc = "Contains anti-toxins."
+/obj/item/weapon/reagent_containers/syringe/robot/charcoal
+	name = "syringe (charcoal)"
+	desc = "Contains charcoal."
 	New()
 		..()
-		reagents.add_reagent("anti_toxin", 15)
+		reagents.add_reagent("charcoal", 15)
 		mode = SYRINGE_INJECT
 		update_icon()
 
-/obj/item/weapon/reagent_containers/syringe/robot/inoprovaline
-	name = "syringe (inoprovaline)"
-	desc = "Contains inaprovaline - used to stabilize patients."
+/obj/item/weapon/reagent_containers/syringe/robot/epinephrine
+	name = "syringe (epinephrine)"
+	desc = "Contains epinephrine - used to stabilize patients."
 	New()
 		..()
-		reagents.add_reagent("inaprovaline", 15)
+		reagents.add_reagent("epinephrine", 15)
 		mode = SYRINGE_INJECT
 		update_icon()
 
 /obj/item/weapon/reagent_containers/syringe/robot/mixed
 	name = "syringe (mixed)"
-	desc = "Contains inaprovaline & anti-toxins."
+	desc = "Contains epinephrine & charcoal solution."
 	New()
 		..()
-		reagents.add_reagent("inaprovaline", 7)
-		reagents.add_reagent("anti_toxin", 8)
+		reagents.add_reagent("epinephrine", 7)
+		reagents.add_reagent("charcoal", 8)
 		mode = SYRINGE_INJECT
 		update_icon()

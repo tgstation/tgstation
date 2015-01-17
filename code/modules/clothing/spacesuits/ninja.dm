@@ -23,7 +23,7 @@
 	var/mob/living/carbon/affecting = null//The wearer.
 	var/obj/item/weapon/stock_parts/cell/cell//Starts out with a high-capacity cell using New().
 	var/datum/effect/effect/system/spark_spread/spark_system//To create sparks.
-	var/reagent_list[] = list("tricordrazine","dexalinp","spaceacillin","anti_toxin","nutriment","radium","hyronalin")//The reagents ids which are added to the suit at New().
+	var/reagent_list[] = list("omnizine","salbutamol","spaceacillin","charcoal","nutriment","radium","potass_iodide")//The reagents ids which are added to the suit at New().
 	var/stored_research[]//For stealing station research.
 	var/obj/item/weapon/disk/tech_disk/t_disk//To copy design onto disk.
 

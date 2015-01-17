@@ -720,7 +720,7 @@
 "nR" = (/turf/unsimulated/floor{tag = "icon-cult"; icon_state = "cult"},/turf/simulated/shuttle/wall{icon_state = "swall_f5"; dir = 2},/area/wizard_station)
 "nS" = (/turf/unsimulated/wall/fakedoor{name = "Squad 3 Pod"},/area/wizard_station)
 "nT" = (/obj/structure/table,/obj/item/weapon/gun/syringe{pixel_x = 1; pixel_y = 2},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/space)
-"nU" = (/obj/structure/table,/obj/item/weapon/reagent_containers/syringe/antitoxin,/obj/item/weapon/reagent_containers/syringe/antitoxin{pixel_y = 2},/obj/item/weapon/reagent_containers/syringe/antitoxin{pixel_y = 4},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/space)
+"nU" = (/obj/structure/table,/obj/item/weapon/reagent_containers/syringe/charcoal,/obj/item/weapon/reagent_containers/syringe/charcoal{pixel_y = 2},/obj/item/weapon/reagent_containers/syringe/charcoal{pixel_y = 4},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/space)
 "nV" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 1},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/space)
 "nW" = (/obj/machinery/door/window{dir = 1; name = "Secure Storage"; req_access_txt = "150"},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/space)
 "nX" = (/obj/structure/table,/obj/item/device/sbeacondrop/bomb{pixel_y = 5},/obj/item/device/sbeacondrop/bomb,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/space)
@@ -1092,3 +1092,4 @@ abababababababababababababababababababababababababababababababababababababababab
 ababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
 ababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
 "}
+

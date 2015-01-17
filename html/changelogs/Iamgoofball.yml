@@ -1,0 +1,20 @@
+author: Iamgoofball (Look Ma, I didn't mispell my name this time!)
+delete-after: true
+changes:
+  - rscadd: "Replaced Star Trek chemistry with Goon Chemistry."
+  - rscadd: "Emergency Medic's Handbook Tip 1: Styptic Powder = BRUTE, Silver Sulfadiazine = BURN, Charcoal = TOX, Salbutamol = OXY"
+  - rscadd: "In recipes that used removed reagents, they have been replaced with their goon chemistry counterpart:"
+  - rscadd: "Hyperzine -> Morphine"
+  - rscadd: "Inaprovaline -> Epinephrine"
+  - rscadd: "Kelotane -> Saline-Glucose Solution"
+  - rscadd: "Bicardine -> Saline-Glucose Solution"
+  - rscadd: "Dermaline -> Saline-Glucose Solution"
+  - rscadd: "Dexalin -> Salbutamol"
+  - rscadd: "Dexalin Plus -> Salbutamol"
+  - rscadd: "Tricordrazine -> Omnizine"
+  - rscadd: "Anti-Toxin -> Charcoal"
+  - rscadd: "Hydronalin -> Penetic Acid"
+  - rscadd: "Arithrazine -> Penetic Acid"
+  - rscadd: "Imidazoline -> Oculine"
+  - rscadd: "Mannitol -> Alkysine"
+  - rscadd: "Ryetalyn -> Mutadone"

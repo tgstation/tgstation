@@ -29,11 +29,11 @@ datum/reagent/histamine
 
 datum/reagent/histamine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	if(volume >= 20)
-		M.adjustOxyLoss(pick(5,10)*REM)
-		M.adjustBruteLoss(pick(5,10)*REM)
-		M.adjustToxLoss(pick(5,10)*REM)
-	if(volume < 20)
+	if(volume >= 30)
+		M.adjustOxyLoss(pick(2,5)*REM)
+		M.adjustBruteLoss(pick(2,5)*REM)
+		M.adjustToxLoss(pick(2,5)*REM)
+	if(volume < 30)
 		switch(pick(1, 2, 3))
 			if(1)
 				M << "<span class='danger'>You are unable to look straight!</span>"
@@ -101,7 +101,7 @@ datum/reagent/neurotoxin2
 datum/reagent/neurotoxin2/on_mob_life(var/mob/living/M as mob)
 	cycle_count++
 	if(!M) M = holder.my_atom
-	if(!(M.brainloss + M.toxloss) >= 60)
+	if(M.brainloss + M.toxloss <= 60)
 		M.adjustBrainLoss(1*REM)
 		M.adjustToxLoss(1*REM)
 	if(cycle_count == 17)
@@ -132,7 +132,7 @@ datum/reagent/cyanide/on_mob_life(var/mob/living/M as mob)
 		M.adjustOxyLoss(1*REM)
 	if(prob(8))
 		M.sleeping += 1
-		M.adjustToxLoss(4*REM)
+		M.adjustToxLoss(2*REM)
 	..()
 	return
 
