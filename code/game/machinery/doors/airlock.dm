@@ -1198,3 +1198,8 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/CanAStarPass(var/obj/item/weapon/card/id/ID)
 //Airlock is passable if it is open (!density), bot has access, and is not bolted shut)
 	return !density || (check_access(ID) && !locked)
+
+/obj/machinery/door/airlock/HasProximity(atom/movable/AM as mob|obj)
+	for (var/obj/A in contents)
+		A.HasProximity(AM)
+	return
