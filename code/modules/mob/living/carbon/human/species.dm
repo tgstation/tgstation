@@ -498,14 +498,16 @@
 		if(H.tinttotal >= TINT_IMPAIR)
 			if(tinted_weldhelh)
 				if(H.tinttotal >= TINT_BLIND)
-					H.eye_blind = max(H.eye_blind, 1)								// You get the sudden urge to learn to play keyboard
-					H.client.screen += global_hud.darkMask
-				else
+					H.eye_blind = max(H.eye_blind, 1)
+				if(H.client)
 					H.client.screen += global_hud.darkMask
 
 		if(H.blind)
 			if(H.eye_blind)		H.blind.layer = 18
 			else			H.blind.layer = 0
+
+		if(!H.client)//no client, no screen to update
+			return 1
 
 		if( H.disabilities & NEARSIGHT && !istype(H.glasses, /obj/item/clothing/glasses/regular) )
 			H.client.screen += global_hud.vimpaired
