@@ -88,7 +88,7 @@
 	icon_state = "revolver"
 	item_state = "revolver"
 	max_shells = 6
-	w_class = 3.0
+	w_class = 2.0
 	force = 10
 	flags = FPRINT
 	siemens_coefficient = 1
