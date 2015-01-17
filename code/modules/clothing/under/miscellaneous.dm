@@ -134,26 +134,12 @@
 	fitted = 0
 	can_adjust = 0
 
-/obj/item/clothing/under/johnny
-	name = "johnny~~ jumpsuit"
-	desc = "Johnny~~"
-	icon_state = "johnny"
-	item_color = "johnny"
-	can_adjust = 0
-
 /obj/item/clothing/under/rainbow
 	name = "rainbow"
 	desc = "rainbow"
 	icon_state = "rainbow"
 	item_state = "rainbow"
 	item_color = "rainbow"
-	can_adjust = 0
-
-/obj/item/clothing/under/cloud
-	name = "cloud"
-	desc = "cloud"
-	icon_state = "cloud"
-	item_color = "cloud"
 	can_adjust = 0
 
 /obj/item/clothing/under/gimmick/rank/captain/suit
@@ -180,68 +166,12 @@
 	item_color = "black_suit"
 	can_adjust = 0
 
-/obj/item/clothing/under/suit_jacket/really_black
-	name = "executive suit"
-	desc = "A formal black suit and red tie, intended for the station's finest."
-	icon_state = "really_black_suit"
-	item_state = "bl_suit"
-	item_color = "black_suit"
-	can_adjust = 0
-
 /obj/item/clothing/under/suit_jacket/female
 	name = "executive suit"
 	desc = "A formal trouser suit for women, intended for the station's finest."
 	icon_state = "black_suit_fem"
 	item_state = "black_suit_fem"
 	item_color = "black_suit_fem"
-
-/obj/item/clothing/under/suit_jacket/red
-	name = "red suit"
-	desc = "A red suit and blue tie. Somewhat formal."
-	icon_state = "red_suit"
-	item_state = "r_suit"
-	item_color = "red_suit"
-	can_adjust = 0
-
-/obj/item/clothing/under/suit_jacket/charcoal
-	name = "charcoal suit"
-	desc = "A charcoal suit and red tie. Very professional."
-	icon_state = "charcoal_suit"
-	item_state = "charcoal_suit"
-	item_color = "charcoal_suit"
-	can_adjust = 0
-
-/obj/item/clothing/under/suit_jacket/navy
-	name = "navy suit"
-	desc = "A navy suit and red tie, intended for the station's finest."
-	icon_state = "navy_suit"
-	item_state = "navy_suit"
-	item_color = "navy_suit"
-	can_adjust = 0
-
-/obj/item/clothing/under/suit_jacket/burgundy
-	name = "burgundy suit"
-	desc = "A burgundy suit and black tie. Somewhat formal."
-	icon_state = "burgundy_suit"
-	item_state = "burgundy_suit"
-	item_color = "burgundy_suit"
-	can_adjust = 0
-
-/obj/item/clothing/under/suit_jacket/checkered
-	name = "checkered suit"
-	desc = "That's a very nice suit you have there. Shame if something were to happen to it, eh?"
-	icon_state = "checkered_suit"
-	item_state = "checkered_suit"
-	item_color = "checkered_suit"
-	can_adjust = 0
-
-/obj/item/clothing/under/suit_jacket/tan
-	name = "tan suit"
-	desc = "A tan suit with a yellow tie. Smart, but casual."
-	icon_state = "tan_suit"
-	item_state = "tan_suit"
-	item_color = "tan_suit"
-	can_adjust = 0
 
 /obj/item/clothing/under/blackskirt
 	name = "black skirt"

@@ -272,11 +272,15 @@ Lawyer
 
 	switch(lawyers)
 		if(1)
-			H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/bluesuit(H), slot_w_uniform)
+			var/obj/item/clothing/under/U = new /obj/item/clothing/under/lawyer(H)
+			U.attachTie(new /obj/item/clothing/tie/red())
+			H.equip_to_slot_or_del(U, slot_w_uniform)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/lawyer(H), slot_wear_suit)
 		else
-			H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/purpsuit(H), slot_w_uniform)
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/lawyer/purple(H), slot_wear_suit)
+			var/obj/item/clothing/under/U = new /obj/item/clothing/under/lawyer/tan(H)
+			U.attachTie(new /obj/item/clothing/tie/blue())
+			H.equip_to_slot_or_del(U, slot_w_uniform)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/lawyer/tan(H), slot_wear_suit)
 
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/briefcase(H), slot_l_hand)

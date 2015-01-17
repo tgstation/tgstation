@@ -959,7 +959,7 @@ var/global/list/g_fancy_list_of_types = null
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/tommygun(M), slot_r_hand)
-			M.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket/really_black(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/black(M), slot_w_uniform)
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.assignment = "Assistant"
