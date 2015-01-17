@@ -1,7 +1,0 @@
-author: phil235
-delete-after: True
-
-
-changes:
- 
-  - rscadd: "The two library consoles are now real buildable computers. The circuitboard design is available in R&D."
