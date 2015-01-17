@@ -206,7 +206,7 @@
 			if(windoor==0) //Remove this check if plasma windoors are added
 				user << "\red Constructing plasma windoors is impossible currently!"
 				return 1
-			if(!src || src.loc != user) 
+			if(!src || src.loc != user)
 				return 1
 			if(isturf(user.loc) && locate(/obj/structure/windoor_assembly/, user.loc))
 				user << "\red There is already a windoor assembly in that location."
@@ -219,7 +219,7 @@
 			if(src.amount < 5)
 				user << "\red You need more glass to do that."
 				return 1
-				
+
 			var/obj/structure/windoor_assembly/WD = new windoor(user.loc, 0 )
 			WD.state = "01"
 			WD.anchored = 0
@@ -309,7 +309,7 @@
 
 				H.Weaken(3)
 				if(affecting.take_damage(5, 0))
-					H.UpdateDamageIcon()
+					H.QueueUpdateDamageIcon()
 				H.updatehealth()
 	..()
 

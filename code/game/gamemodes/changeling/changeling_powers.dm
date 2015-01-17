@@ -156,7 +156,7 @@
 				playsound(get_turf(src), 'sound/effects/lingstabs.ogg', 50, 1)
 				var/datum/organ/external/affecting = T.get_organ(src.zone_sel.selecting)
 				if(affecting.take_damage(39,0,1,"large organic needle"))
-					T:UpdateDamageIcon()
+					T:QueueUpdateDamageIcon(1)
 					continue
 
 		feedback_add_details("changeling_powers","A[stage]")
@@ -488,6 +488,7 @@
 		C.status_flags &= ~(FAKEDEATH)
 		C.update_canmove()
 		C.make_changeling()
+	regenerate_icons()
 	src.verbs -= /mob/proc/changeling_returntolife
 	feedback_add_details("changeling_powers","RJ")
 

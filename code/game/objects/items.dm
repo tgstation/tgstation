@@ -717,7 +717,7 @@
 					M << "<span class='warning'>You go blind!</span>"
 		var/datum/organ/external/affecting = M:get_organ("head")
 		if(affecting.take_damage(7))
-			M:UpdateDamageIcon()
+			M:QueueUpdateDamageIcon(1)
 	else
 		M.take_organ_damage(7)
 	M.eye_blurry += rand(3,4)
