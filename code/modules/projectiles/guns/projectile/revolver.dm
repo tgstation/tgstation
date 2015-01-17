@@ -81,7 +81,7 @@
 					perfect = 0
 
 
-/obj/item/weapon/gun/projectile/sarevolver
+/*/obj/item/weapon/gun/projectile/sarevolver   //Commented out until a rainy day. ToDo: Sprites, Absolute paths, Manual reload, Spinning chamber
 	name = "single action revolver"
 	desc = "A revolver that you have to pull the hammer back each time to fire."
 	fire_sound = 'sound/weapons/shotgun.ogg'
@@ -140,7 +140,7 @@
 		loaded -= AC //Remove casing from loaded list.
 		current_shell = AC
 		update_icon()	//I.E. fix the desc
-		return 1
+		return 1 */
 
 /obj/item/weapon/gun/projectile/mateba
 	name = "mateba"
