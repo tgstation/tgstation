@@ -501,8 +501,6 @@ datum/reagent/strange_reagent/reaction_mob(var/mob/living/carbon/human/M as mob,
 		var/total_brute	= 0
 		var/health = M.health
 		M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")
-		playsound(get_turf(src), "bodyfall", 50, 1)
-		playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 		for(var/obj/item/organ/limb/O in M.organs)
 			total_brute	+= O.brute_dam
 			total_burn	+= O.burn_dam
