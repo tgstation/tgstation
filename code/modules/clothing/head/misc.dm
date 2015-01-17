@@ -303,3 +303,11 @@
 	desc = "A hat suitable for any man of high and exalted rank."
 	icon_state = "lordadmiralhat"
 	item_state = "lordadmiralhat"
+
+/obj/item/clothing/head/jesterhat
+	name = "Jester Hat"
+	desc = "A hat fit for a fool."
+	icon_state = "jesterhat"
+	item_state = "jesterhat"
+	flags = FPRINT  | BLOCKHEADHAIR
+	flags_inv = HIDEEARS
