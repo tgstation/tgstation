@@ -7,11 +7,6 @@
 # NOTE: if the rank-name cannot be found in admin_ranks.txt, they will not be adminned! ~Carn #
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
-<<<<<<< HEAD
-Snipered = Host
-	
-Buddy.Hooves = Game Master
-=======
 MrStonedOne = Host
 Gun Hog = Game Master
 razharas = Game Master
@@ -81,5 +76,3 @@ mandurrh = Game Master
 thurgatar = Game Master
 xerux = Game Master
 dannno = Game Master
-
->>>>>>> 61e4fe8ebf857d8bb8b1a45a7c76fbae21058096
