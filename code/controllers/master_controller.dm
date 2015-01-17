@@ -6,7 +6,7 @@
 var/global/datum/controller/game_controller/master_controller = new()
 
 /datum/controller/game_controller
-	var/processing_interval = 1	//The minimum length of time between MC ticks (in deciseconds). The highest this can be without affecting schedules, is the GCD of all subsystem var/wait. Set to 0 to disable all processing.
+	var/processing = 1	// Set to 0 to disable all processing.
 	var/iteration = 0
 	var/cost = 0
 	var/last_thing_processed
@@ -24,17 +24,6 @@ var/global/datum/controller/game_controller/master_controller = new()
 
 		master_controller = src
 
-/*
-calculate the longest number of ticks the MC can wait between each cycle without causing subsystems to not fire on schedule
-Note: you can set the datum's defined processing_interval to some integer to set an -absolute- minimum wait duration.
-*/
-	var/GCD
-	for(var/datum/subsystem/SS in subsystems)
-		if(SS.wait)
-			GCD = Gcd(SS.wait, GCD)
-	GCD = round(GCD)
-	if(GCD > processing_interval)
-		processing_interval = GCD
 
 /datum/controller/game_controller/proc/setup()
 	world << "<span class='userdanger'>Initializing Subsystems...</span>"
@@ -70,14 +59,14 @@ Note: you can set the datum's defined processing_interval to some integer to set
 	spawn(0)
 		var/timer = world.time
 		for(var/datum/subsystem/SS in subsystems)
-			timer += processing_interval
+			timer += world.tick_lag // stagger them slightly so all the subsystems aren't trying to fire on the same tick
 			SS.next_fire = timer
 
 		var/start_time
 		var/cpu
 
 		while(1)	//far more efficient than recursively calling ourself
-			if(processing_interval > 0)
+			if(processing)
 				++iteration
 
 				start_time = world.timeofday
@@ -98,7 +87,7 @@ Note: you can set the datum's defined processing_interval to some integer to set
 
 				cost = MC_AVERAGE(cost, world.timeofday - start_time)
 
-				sleep(processing_interval)
+				sleep(world.tick_lag)
 			else
 				sleep(50)
 

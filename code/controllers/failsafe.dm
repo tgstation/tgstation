@@ -21,7 +21,7 @@ var/datum/controller/failsafe/Failsafe
 			if(!master_controller)		new /datum/controller/game_controller()	//replace the missing master_controller! This should never happen.
 
 			if(processing_interval > 0)
-				if(master_controller.processing_interval > 0)	//only poke if these overrides aren't in effect
+				if(master_controller.processing)	//only poke if these overrides aren't in effect
 					if(MC_iteration == master_controller.iteration)	//master_controller hasn't finished processing in the defined interval
 						switch(MC_defcon)
 							if(0 to 3)
