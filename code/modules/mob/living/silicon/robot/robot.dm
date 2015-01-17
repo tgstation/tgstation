@@ -129,6 +129,8 @@
 			ghostize()
 			ERROR("A borg has been destroyed, but its MMI lacked a brainmob, so the mind could not be transferred. Player: [ckey].")
 		mmi = null
+	if(connected_ai)
+		connected_ai.connected_robots -= src
 	..()
 
 
