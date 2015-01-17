@@ -3,11 +3,11 @@
 	name = "spaghetti"
 	desc = "Now that's a nic'e pasta!"
 	icon_state = "spaghetti"
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/spaghetti/New()
 	..()
-	reagents.add_reagent("nutriment", 1)
-	reagents.add_reagent("vitamin", 1)
+	peakReagents = list("nutriment", 1, "vitamin", 1)
 	bitesize = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti
@@ -15,11 +15,11 @@
 	desc = "A plain dish of noodles, this sucks."
 	icon_state = "spaghettiboiled"
 	trash = /obj/item/trash/plate
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti/New()
 	..()
-	reagents.add_reagent("nutriment", 2)
-	reagents.add_reagent("vitamin", 1)
+	peakReagents = list("nutriment", 2, "vitamin", 1)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/pastatomato
@@ -27,12 +27,11 @@
 	desc = "Spaghetti and crushed tomatoes. Just like your abusive father used to make!"
 	icon_state = "pastatomato"
 	trash = /obj/item/trash/plate
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/pastatomato/New()
 	..()
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("tomatojuice", 10)
-	reagents.add_reagent("vitamin", 4)
+	peakReagents = list("nutriment", 6, "tomatojuice", 10, "vitamin", 4)
 	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/copypasta
@@ -40,12 +39,11 @@
 	desc = "You probably shouldn't try this, you always hear people talking about how bad it is..."
 	icon_state = "copypasta"
 	trash = /obj/item/trash/plate
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/copypasta/New()
 	..()
-	reagents.add_reagent("nutriment", 12)
-	reagents.add_reagent("tomatojuice", 20)
-	reagents.add_reagent("vitamin", 8)
+	peakReagents = list("nutriment", 12, "tomatojuice", 20, "vitamin", 8)
 	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/meatballspaghetti
@@ -53,22 +51,22 @@
 	desc = "Now that's a nic'e meatball!"
 	icon_state = "meatballspaghetti"
 	trash = /obj/item/trash/plate
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/meatballspaghetti/New()
 	..()
-	reagents.add_reagent("nutriment", 8)
-	reagents.add_reagent("vitamin", 4)
+	peakReagents = list("nutriment", 8, "vitamin", 4)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/spesslaw
 	name = "spesslaw"
 	desc = "A lawyers favourite."
 	icon_state = "spesslaw"
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/spesslaw/New()
 	..()
-	reagents.add_reagent("nutriment", 8)
-	reagents.add_reagent("vitamin", 6)
+	peakReagents = list("nutriment", 8, "vitamin", 6)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/eggplantparm
@@ -76,9 +74,9 @@
 	desc = "The only good recipe for eggplant."
 	icon_state = "eggplantparm"
 	trash = /obj/item/trash/plate
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/eggplantparm/New()
 	..()
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("vitamin", 2)
+	peakReagents = list("nutriment", 6, "vitamin", 2)
 	bitesize = 2

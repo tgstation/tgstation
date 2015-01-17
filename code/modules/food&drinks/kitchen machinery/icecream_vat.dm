@@ -179,7 +179,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/icecream/New()
 	create_reagents(20)
-	reagents.add_reagent("nutriment", 5)
+	peakReagents = list("nutriment", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/icecream/proc/add_ice_cream(var/flavour_name)
 	name = "[flavour_name] icecream"

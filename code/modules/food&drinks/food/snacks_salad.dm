@@ -10,9 +10,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/aesirsalad/New()
 	..()
 	eatverb = pick("crunch","devour","nibble","gnaw","gobble","chomp")
-	reagents.add_reagent("nutriment", 8)
-	reagents.add_reagent("omnizine", 8)
-	reagents.add_reagent("vitamin", 6)
+	peakReagents = list("nutriment", 8, "omnizine", 8, "vitamin", 6)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/herbsalad
@@ -23,8 +21,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/herbsalad/New()
 	..()
-	reagents.add_reagent("nutriment", 8)
-	reagents.add_reagent("vitamin", 2)
+	peakReagents = list("nutriment", 8, "vitamin", 2)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/validsalad
@@ -32,10 +29,9 @@
 	desc = "It's just an herb salad with meatballs and fried potato slices. Nothing suspicious about it."
 	icon_state = "validsalad"
 	trash = /obj/item/trash/snack_bowl
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/validsalad/New()
 	..()
-	reagents.add_reagent("nutriment", 8)
-	reagents.add_reagent("doctorsdelight", 5)
-	reagents.add_reagent("vitamin", 2)
+	peakReagents = list("nutriment", 8, "doctorsdelight", 5, "vitamin", 2)
 	bitesize = 3

@@ -6,7 +6,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/New()
 	..()
-	reagents.add_reagent("nutriment", 3)
+	peakReagents = list("nutriment", 3)
 	src.bitesize = 3
 
 
@@ -22,16 +22,18 @@
 /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/slime
 	icon_state = "slimemeat"
 	desc = "Because jello wasn't offensive enough to vegans"
-	New()
-		..()
-		reagents.add_reagent("slimejelly", 3)
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/slime/New()
+	..()
+	peakReagents = list("slimejelly", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/golem
 	icon_state = "golemmeat"
 	desc = "Edible rocks, welcome to the future"
-	New()
-		..()
-		reagents.add_reagent("iron", 3)
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/golem/New()
+	..()
+	peakReagents = list("iron", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/golem/adamantine
 	icon_state = "agolemmeat"
@@ -52,9 +54,10 @@
 /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/fly
 	icon_state = "flymeat"
 	desc = "Nothing says tasty like maggot filled radioactive mutant flesh"
-	New()
-		..()
-		reagents.add_reagent("uranium", 3)
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/fly/New()
+	..()
+	peakReagents = list("uranium", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/skeleton
 	name = "-bone"
