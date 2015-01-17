@@ -252,6 +252,19 @@
 	return 1
 
 /obj/effect/beam/Destroy()
+	if(target)
+		if(target.beams)
+			target.beams -= src
+	for(var/obj/machinery/mirror/M in mirror_list)
+		if(!M)
+			continue
+		if(src in M.beams)
+			M.beams -= src
+	for(var/obj/machinery/field_generator/F in field_gen_list)
+		if(!F)
+			continue
+		if(src in F.beams)
+			F.beams -= src
 	for(var/obj/machinery/prism/P in prism_list)
 		var/changed = 0
 		if(src == P.beam)
