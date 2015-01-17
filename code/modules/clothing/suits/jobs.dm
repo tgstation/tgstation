@@ -107,11 +107,10 @@
 	action_button_name = "Toggle Suit Buttons"
 	togglename = "buttons"
 
-/obj/item/clothing/suit/toggle/lawyer/purple
-	name = "purple suit jacket"
-	desc = "A foppish dress jacket."
-	icon_state = "suitjacket_purp"
-	item_state = "suitjacket_purp"
+/obj/item/clothing/suit/toggle/lawyer/tan
+	name = "tan suit jacket"
+	icon_state = "suitjacket_tan"
+	item_state = "suitjacket_tan"
 
 /obj/item/clothing/suit/toggle/lawyer/black
 	name = "black suit jacket"

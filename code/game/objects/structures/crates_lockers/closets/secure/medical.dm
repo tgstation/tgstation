@@ -73,7 +73,6 @@
 	new /obj/item/clothing/gloves/color/latex/nitrile(src)
 	new /obj/item/weapon/storage/belt/medical(src)
 	new /obj/item/clothing/glasses/hud/health(src)
-	new /obj/item/clothing/suit/toggle/wintercoat/medical(src)
 	return
 
 
@@ -94,6 +93,7 @@
 		new /obj/item/weapon/storage/backpack/medic(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel_med(src)
+	new /obj/item/clothing/suit/toggle/wintercoat/medical(src)
 	new /obj/item/clothing/suit/bio_suit/cmo(src)
 	new /obj/item/clothing/head/bio_hood/cmo(src)
 	new /obj/item/clothing/suit/toggle/labcoat/cmo(src)
@@ -105,7 +105,6 @@
 	new /obj/item/clothing/gloves/color/latex/nitrile(src)
 	new /obj/item/weapon/storage/belt/medical(src)
 	new /obj/item/device/flash/handheld(src)
-	new /obj/item/clothing/suit/toggle/wintercoat/medical(src)
 	new /obj/item/weapon/reagent_containers/hypospray/CMO(src)
 	return
 

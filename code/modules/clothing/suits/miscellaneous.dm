@@ -54,28 +54,6 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 
-/obj/item/clothing/suit/greatcoat
-	name = "greatcoat"
-	desc = "A Nazi greatcoat."
-	icon_state = "nazi"
-	item_state = "nazi"
-
-
-/obj/item/clothing/suit/johnny_coat
-	name = "johnny~~ coat"
-	desc = "Johnny~~"
-	icon_state = "johnny"
-	item_state = "johnny"
-
-
-/obj/item/clothing/suit/justice
-	name = "justice suit"
-	desc = "this pretty much looks ridiculous" //Needs no fixing
-	icon_state = "justice"
-	item_state = "justice"
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-
-
 /obj/item/clothing/suit/judgerobe
 	name = "judge's robe"
 	desc = "This robe commands authority."

@@ -1175,11 +1175,11 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/clothing/under/blacktango,
 					/obj/item/clothing/under/assistantformal,
 					/obj/item/clothing/under/assistantformal,
-					/obj/item/clothing/under/lawyer/bluesuit,
+					/obj/item/clothing/under/lawyer,
 					/obj/item/clothing/suit/toggle/lawyer,
-					/obj/item/clothing/under/lawyer/purpsuit,
-					/obj/item/clothing/suit/toggle/lawyer/purple,
-					/obj/item/clothing/under/lawyer/blacksuit,
+					/obj/item/clothing/under/lawyer/tan,
+					/obj/item/clothing/suit/toggle/lawyer/tan,
+					/obj/item/clothing/under/lawyer/black,
 					/obj/item/clothing/suit/toggle/lawyer/black,
 					/obj/item/clothing/tie/waistcoat,
 					/obj/item/clothing/tie/blue,
@@ -1193,11 +1193,6 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/shoes/laceup,
 					/obj/item/clothing/shoes/laceup,
 					/obj/item/clothing/shoes/laceup,
-					/obj/item/clothing/under/suit_jacket/charcoal,
-					/obj/item/clothing/under/suit_jacket/navy,
-					/obj/item/clothing/under/suit_jacket/burgundy,
-					/obj/item/clothing/under/suit_jacket/checkered,
-					/obj/item/clothing/under/suit_jacket/tan,
 					/obj/item/weapon/lipstick/random)
 	cost = 30 //Lots of very expensive items. You gotta pay up to look good!
 	containername = "formal-wear crate"

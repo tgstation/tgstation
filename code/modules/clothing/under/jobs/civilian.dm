@@ -3,9 +3,9 @@
 /obj/item/clothing/under/rank/bartender
 	desc = "It looks like it could use some more flair."
 	name = "bartender's uniform"
-	icon_state = "ba_suit"
-	item_state = "ba_suit"
-	item_color = "ba_suit"
+	icon_state = "bar_suit"
+	item_state = "bar_suit"
+	item_color = "bar_suit"
 
 
 /obj/item/clothing/under/rank/captain //Alright, technically not a 'civilian' but its better then giving a .dm file for a single define.
@@ -85,60 +85,27 @@
 
 
 /obj/item/clothing/under/lawyer
-	desc = "Slick threads."
-	name = "Lawyer suit"
-	can_adjust = 0
-
-
-/obj/item/clothing/under/lawyer/black
-	icon_state = "lawyer_black"
-	item_state = "lawyer_black"
-	item_color = "lawyer_black"
-
-
-/obj/item/clothing/under/lawyer/female
-	icon_state = "black_suit_fem"
-	item_state = "black_suit_fem"
-	item_color = "black_suit_fem"
-
-
-/obj/item/clothing/under/lawyer/red
-	icon_state = "lawyer_red"
-	item_state = "lawyer_red"
-	item_color = "lawyer_red"
-
-
-/obj/item/clothing/under/lawyer/blue
-	icon_state = "lawyer_blue"
-	item_state = "lawyer_blue"
-	item_color = "lawyer_blue"
-
-
-/obj/item/clothing/under/lawyer/bluesuit
 	name = "blue suit"
-	desc = "A classy suit and tie."
+	desc = "A professional white dress shirt and blue slacks."
 	icon_state = "bluesuit"
 	item_state = "bluesuit"
 	item_color = "bluesuit"
 	can_adjust = 1
 
 
-/obj/item/clothing/under/lawyer/purpsuit
-	name = "purple suit"
-	icon_state = "lawyer_purp"
-	item_state = "lawyer_purp"
-	item_color = "lawyer_purp"
-	fitted = 0
-	can_adjust = 1
+/obj/item/clothing/under/lawyer/tan
+	name = "tan suit"
+	desc = "A professional white dress shirt and tan slacks."
+	icon_state = "tansuit"
+	item_color = "tansuit"
 
 
-/obj/item/clothing/under/lawyer/blacksuit
+/obj/item/clothing/under/lawyer/black
 	name = "black suit"
-	desc = "A professional black suit. Nanotrasen Investigation Bureau approved!"
+	desc = "A professional white dress shirt and black slacks. Nanotrasen Investigation Bureau approved!"
 	icon_state = "blacksuit"
 	item_state = "ba_suit"
 	item_color = "blacksuit"
-	can_adjust = 1
 
 
 /obj/item/clothing/under/rank/librarian
