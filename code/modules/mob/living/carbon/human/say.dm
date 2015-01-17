@@ -22,11 +22,9 @@
 	return "says, \"[text]\"";
 
 /mob/living/carbon/human/treat_message(message)
-	if(istype(wear_mask, /obj/item/clothing/mask/horsehead))
-		var/obj/item/clothing/mask/horsehead/hoers = wear_mask
-		if(hoers.voicechange)
-			if(!(copytext(message, 1, 2) == "*" || (mind && mind.changeling && department_radio_keys[copytext(message, 1, 3)] != "changeling")))
-				message = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
+	if(wear_mask && istype(wear_mask))
+		if(!(copytext(message, 1, 2) == "*" || (mind && mind.changeling && department_radio_keys[copytext(message, 1, 3)] != "changeling")))
+			message = wear_mask.treat_mask_message(message)
 
 	if(dna)
 		message = species.handle_speech(message,src)
