@@ -363,6 +363,7 @@
 /obj/effect/equip_e/human/Destroy()
 	if(target)
 		target.requests -= src
+	..()
 
 /obj/effect/equip_e/monkey
 	name = "monkey"
@@ -371,6 +372,7 @@
 /obj/effect/equip_e/monkey/Destroy()
 	if(target)
 		target.requests -= src
+	..()
 
 /obj/effect/equip_e/process()
 	return
