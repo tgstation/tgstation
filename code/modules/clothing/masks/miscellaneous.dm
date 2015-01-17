@@ -96,6 +96,11 @@
 	var/voicechange = 0
 	siemens_coefficient = 0.9
 
+/obj/item/clothing/mask/horsehead/treat_mask_message(var/message)
+	if(src.voicechange)
+		return pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
+	return message
+
 /obj/item/clothing/mask/chapmask
 	name = "venetian mask"
 	desc = "A plain porcelain mask that covers the entire face. Standard attire for particularly unspeakable religions. The eyes are wide shut."
