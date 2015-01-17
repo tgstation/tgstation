@@ -325,7 +325,7 @@
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
 			if("l_arm")
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
-	if(update)	UpdateDamageIcon()
+	if(update)	QueueUpdateDamageIcon(1)
 
 
 /mob/living/carbon/human/blob_act()
@@ -351,10 +351,10 @@
 		if(!affecting)	return
 		if (istype(O, /obj/effect/immovablerod))
 			if(affecting.take_damage(101, 0))
-				UpdateDamageIcon()
+				QueueUpdateDamageIcon(1)
 		else
 			if(affecting.take_damage((istype(O, /obj/effect/meteor/small) ? 10 : 25), 30))
-				UpdateDamageIcon()
+				QueueUpdateDamageIcon(1)
 		updatehealth()
 	return
 
@@ -1648,11 +1648,11 @@
 	else	new_species_name = "Human"
 
 	if(src.species)
-		if(src.species.language)	src.remove_language(species.language)
+		//if(src.species.language)	src.remove_language(species.language)
 		if(src.species.abilities)	src.verbs -= species.abilities
 	src.species = all_species[new_species_name]
 	if(src.species.abilities)
-		if(src.species.language)	src.add_language(species.language)
+		//if(src.species.language)	src.add_language(species.language)
 		if(src.species.abilities)	src.verbs |= species.abilities
 	if(force_organs || !src.organs || !src.organs.len)	src.species.create_organs(src)
 	src.see_in_dark = species.darksight

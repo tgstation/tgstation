@@ -42,11 +42,11 @@ Here it is: Buttbot.
 	return
 
 
-/obj/machinery/bot/buttbot/hear_talk(mob/M as mob, msg)
+/obj/machinery/bot/buttbot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
 	if(prob(buttchance))
-		msg = html_decode(msg)
+		message = html_decode(message)
 
-		var/list/split_phrase = text2list(msg," ") //Split it up into words.
+		var/list/split_phrase = text2list(message," ") //Split it up into words.
 
 		var/list/prepared_words = split_phrase.Copy()
 		var/i = rand(1,3)
@@ -60,7 +60,8 @@ Here it is: Buttbot.
 
 			split_phrase[index] = "butt"
 
-		speak(sanitize(list2text(split_phrase," ")))
+		say(sanitize(list2text(split_phrase," ")))
+	return
 
 
 

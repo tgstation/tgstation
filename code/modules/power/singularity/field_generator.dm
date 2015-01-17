@@ -12,6 +12,8 @@ field_generator power level display
    -Aygar
 */
 
+var/global/list/obj/machinery/field_generator/field_gen_list = list()
+
 #define field_generator_max_power 250
 /obj/machinery/field_generator
 	name = "Field Generator"
@@ -55,6 +57,7 @@ field_generator power level display
 	..()
 	fields = list()
 	connected_gens = list()
+	field_gen_list += src
 	return
 
 /obj/machinery/field_generator/process()
@@ -138,6 +141,7 @@ field_generator power level display
 
 /obj/machinery/field_generator/Destroy()
 	src.cleanup()
+	field_gen_list -= src
 	..()
 
 
@@ -288,6 +292,11 @@ field_generator power level display
 
 /obj/machinery/field_generator/proc/cleanup()
 	clean_up = 1
+	for (var/obj/effect/beam/B in beams)
+		if(!B)
+			continue
+		if(B.target == src)
+			B.target = null
 	for (var/obj/machinery/containment_field/F in fields)
 		if (isnull(F))
 			continue

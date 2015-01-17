@@ -31,7 +31,7 @@
 					if (istype(organ, /datum/organ/external))
 						var/datum/organ/external/temp = organ
 						if(temp.take_damage(d, 0))
-							H.UpdateDamageIcon()
+							H.QueueUpdateDamageIcon()
 					H.updatehealth()
 				else
 					src.take_organ_damage(d)
@@ -660,3 +660,6 @@
 	else
 		src << "You do not have enough chemicals stored to reproduce."
 		return
+
+/mob/living/carbon/is_muzzled()
+	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))

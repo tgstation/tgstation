@@ -4,6 +4,8 @@
 	icon_state = "taperecorderidle"
 	item_state = "analyzer"
 	w_class = 1.0
+	flags = HEAR
+	languages = ALL //this is a translator, after all.
 	m_amt = 60
 	g_amt = 30
 	w_type = RECYK_ELECTRONIC
@@ -15,6 +17,7 @@
 	var/playsleepseconds = 0.0
 	var/list/storedinfo = new/list()
 	var/list/timestamp = new/list()
+	var/obj/item/device/tape/mytape
 	var/canprint = 1
 	flags = FPRINT
 	siemens_coefficient = 1
@@ -22,24 +25,34 @@
 	throw_speed = 4
 	throw_range = 20
 
-/obj/item/device/taperecorder/hear_talk(mob/living/M as mob, msg)
-	if(recording)
-		var/ending = copytext(msg, length(msg))
-		timestamp+= timerecorded
-		if(M.stuttering)
-			storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] stammers, \"[msg]\""
-			return
-		if(M.getBrainLoss() >= 60)
-			storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] gibbers, \"[msg]\""
-			return
-		if(ending == "?")
-			storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] asks, \"[msg]\""
-			return
-		else if(ending == "!")
-			storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] exclaims, \"[msg]\""
-			return
-		storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] says, \"[msg]\""
-		return
+
+/obj/item/device/tape
+	name = "tape"
+	desc = "A magnetic tape that can hold up to ten minutes of content."
+	icon_state = "tape_white"
+	item_state = "analyzer"
+	w_class = 1
+	m_amt = 20
+	g_amt = 5
+	force = 1
+	throwforce = 0
+	var/max_capacity = 600
+	var/used_capacity = 0
+	var/list/storedinfo = list()
+	var/list/timestamp = list()
+	var/ruined = 0
+
+
+/obj/item/device/taperecorder/New()
+//	wires = new(src)
+	mytape = new /obj/item/device/tape
+	update_icon()
+
+
+/obj/item/device/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+	if(mytape && recording)
+		mytape.timestamp += mytape.used_capacity
+		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [strip_html_properly(message)]"
 
 /obj/item/device/taperecorder/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
@@ -97,19 +110,18 @@
 	if(usr.stat)
 		return
 	if(emagged == 1)
-		usr << "\red The tape recorder makes a scratchy noise."
+		usr << "<span class='danger'>The tape recorder makes a scratchy noise.</span>"
 		return
-	if(recording == 1)
+	if(recording)
 		recording = 0
 		timestamp+= timerecorded
 		storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] Recording stopped."
 		usr << "<span class='notice'>Recording stopped.</span>"
 		icon_state = "taperecorderidle"
 		return
-	else if(playing == 1)
+	else if(playing)
 		playing = 0
-		var/turf/T = get_turf(src)
-		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Playback stopped.</font>")
+		say("Playback stopped.")
 		icon_state = "taperecorderidle"
 		return
 
@@ -157,38 +169,30 @@
 			break
 		if(storedinfo.len < i)
 			break
-		var/turf/T = get_turf(src)
-		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: [storedinfo[i]]</font>")
+		say("<font color=Maroon><B>Tape Recorder</B>: [storedinfo[i]]</font>")
 		if(storedinfo.len < i+1)
 			playsleepseconds = 1
 			sleep(10)
-			T = get_turf(src)
-			T.visible_message("<font color=Maroon><B>Tape Recorder</B>: End of recording.</font>")
+			say("<font color=Maroon><B>Tape Recorder</B>: End of recording.</font>")
 		else
 			playsleepseconds = timestamp[i+1] - timestamp[i]
 		if(playsleepseconds > 14)
 			sleep(10)
-			T = get_turf(src)
-			T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Skipping [playsleepseconds] seconds of silence</font>")
+			say("<font color=Maroon><B>Tape Recorder</B>: Skipping [playsleepseconds] seconds of silence</font>")
 			playsleepseconds = 1
 		i++
 	icon_state = "taperecorderidle"
 	playing = 0
 	if(emagged == 1.0)
-		var/turf/T = get_turf(src)
-		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: This tape recorder will self-destruct in... Five.</font>")
+		say("<font color=Maroon><B>Tape Recorder</B>: This tape recorder will self-destruct in... Five.</font>")
 		sleep(10)
-		T = get_turf(src)
-		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Four.</font>")
+		say("<font color=Maroon><B>Tape Recorder</B>: Four.</font>")
 		sleep(10)
-		T = get_turf(src)
-		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Three.</font>")
+		say("<font color=Maroon><B>Tape Recorder</B>: Three.</font>")
 		sleep(10)
-		T = get_turf(src)
-		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Two.</font>")
+		say("<font color=Maroon><B>Tape Recorder</B>: Two.</font>")
 		sleep(10)
-		T = get_turf(src)
-		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: One.</font>")
+		say("<font color=Maroon><B>Tape Recorder</B>: One.</font>")
 		sleep(10)
 		explode()
 

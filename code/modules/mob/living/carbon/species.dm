@@ -109,6 +109,9 @@ var/global/list/whitelisted_species = list("Human")
 		"eyes" =     /datum/organ/internal/eyes
 		)
 
+/datum/species/proc/handle_speech(var/message, var/mob/living/carbon/human/H)
+	return message
+
 /datum/species/proc/create_organs(var/mob/living/carbon/human/H) //Handles creation of mob organs.
 
 	//This is a basic humanoid limb setup.

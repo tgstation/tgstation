@@ -3,9 +3,9 @@
 	schedule_interval = 20 // every 2 seconds
 
 /datum/controller/process/machinery/doWork()
-	#ifdef PROFILE_MACHINES
-	machine_profiling.len = 0
-	#endif
+	//#ifdef PROFILE_MACHINES
+	//machine_profiling.len = 0
+	//#endif
 
 	for(var/obj/machinery/M in machines)
 		if(M && !M.gcDestroyed)
