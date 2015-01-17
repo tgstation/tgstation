@@ -108,8 +108,7 @@
 	togglename = "buttons"
 
 /obj/item/clothing/suit/toggle/lawyer/tan
-	name = "purple suit jacket"
-	desc = "A foppish dress jacket."
+	name = "tan suit jacket"
 	icon_state = "suitjacket_tan"
 	item_state = "suitjacket_tan"
 
