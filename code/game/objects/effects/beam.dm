@@ -255,6 +255,9 @@
 	if(target)
 		if(target.beams)
 			target.beams -= src
+	if(master && master.target)
+		if(master.target.beams)
+			master.target.beams -= src
 	for(var/obj/machinery/mirror/M in mirror_list)
 		if(!M)
 			continue
