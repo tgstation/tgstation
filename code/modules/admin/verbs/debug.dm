@@ -1138,7 +1138,7 @@ Pressure: [env.return_pressure()]"}
 	fdel(F)
 	F << "type,deletes"
 	for(var/typepath in del_profiling)
-		var/ns = machine_profiling[typepath]
+		var/ns = del_profiling[typepath]
 		F << "[typepath],[ns]"
 
 	usr << "\blue Dumped to del_profiling.csv."
