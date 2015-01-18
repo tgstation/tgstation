@@ -74,7 +74,7 @@
 	for(var/obj/O in src.loc)
 		if(istype(O,/obj/item/weapon/reagent_containers/food))
 			var/obj/item/weapon/reagent_containers/food/F = O
-			dat += "<font color=[F.coolFood ? "#3399FF" : "#CC3300"]>[F.name]</font> - [fluffTemp(F.freshMod*freshModifier)] ([(F.freshMod*freshModifier)*15.5]°F)<br>"
+			dat += "<font color=[F.coolFood ? "#3399FF" : "#CC3300"]>[F.name]</font> - [fluffTemp(F.freshMod*freshModifier)] ([(F.freshMod*freshModifier)*7]°F)<br>"
 	dat += "<a href='byond://?src=\ref[src];function=toggle'>Mode: [cold ? "Cool" : "Heat"]</a><br>"
 	dat += "<a href='byond://?src=\ref[src];function=refresh'>Check Temperatures</a><br>"
 	dat += "</center>"
@@ -107,12 +107,48 @@
 	user.set_machine(src)
 	interact(user)
 
+/obj/machinery/servingplate/proc/tablepush(obj/item/I, mob/user)
+	if(get_dist(src, user) < 2)
+		var/obj/item/weapon/grab/G = I
+		if(G.affecting.buckled)
+			user << "<span class='warning'>[G.affecting] is buckled to [G.affecting.buckled]!</span>"
+			return 0
+		if(G.state == GRAB_AGGRESSIVE)
+			G.affecting.visible_message("<span class='danger'>[G.assailant] slams [G.affecting] onto [src].</span>", \
+									"<span class='userdanger'>[G.assailant] slams [G.affecting] onto [src].</span>")
+			playsound(G.affecting, 'sound/items/trayhit2.ogg', 50, 1)
+			var/damage = freshModifier < 0 ? (-freshModifier)*20 : freshModifier*20
+			var/mob/living/L = G.affecting
+			L.apply_damage(damage,BURN,"head")
+			return 1
+		if(!G.confirm())
+			return 0
+		G.affecting.loc = src.loc
+		G.affecting.Weaken(5)
+		G.affecting.visible_message("<span class='danger'>[G.assailant] pushes [G.affecting] onto [src].</span>", \
+									"<span class='userdanger'>[G.assailant] pushes [G.affecting] onto [src].</span>")
+		add_logs(G.assailant, G.affecting, "pushed")
+		qdel(I)
+		return 1
+	qdel(I)
+
 /obj/machinery/servingplate/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(default_unfasten_wrench(user, O))
 		power_change()
 		return
 	if(stat)
 		return 0
+	if (istype(O, /obj/item/weapon/grab))
+		tablepush(O, user)
+		return
+	if (istype(O, /obj/item/weapon/storage/bag/tray))
+		var/obj/item/weapon/storage/bag/tray/T = O
+		if(T.contents.len > 0)
+			var/list/obj/item/oldContents = T.contents.Copy()
+			T.quick_empty()
+			for(var/obj/item/C in oldContents)
+				C.loc = src.loc
+			user.visible_message("<span class='notice'>[user] empties [O] on [src].</span>")
 	if(!(O.flags & ABSTRACT))
 		if(user.drop_item())
 			O.loc = loc
