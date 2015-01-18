@@ -159,6 +159,12 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/melee/energy/sword/saber
 	cost = 8
 
+/datum/uplink_item/dangerous/throwknife
+	name = "Throwing Knives (x6)"
+	desc = "A cheaper and stealthier alternative to the energy sword, these throwing knives cause massive damage when thrown and can be reused; but are limited in number and take up more space."
+	item = /obj/item/weapon/storage/box/syndie_kit/knives
+	cost = 4
+
 /datum/uplink_item/dangerous/emp
 	name = "EMP Kit"
 	desc = "A box that contains two EMP grenades, an EMP implant and a short ranged recharging device disguised as a flashlight. Useful to disrupt communication and silicon lifeforms."
