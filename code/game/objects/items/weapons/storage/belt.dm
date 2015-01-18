@@ -96,7 +96,7 @@
 		/obj/item/weapon/melee/classic_baton/telescopic
 		)
 
-/obj/item/weapon/storage/belt/security/New()
+/obj/item/weapon/storage/belt/security/full/New()
 	..()
 	new /obj/item/device/flashlight/seclite(src)
 

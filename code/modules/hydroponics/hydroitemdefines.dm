@@ -17,7 +17,7 @@
 /obj/item/weapon/reagent_containers/spray/weedspray // -- Skie
 	desc = "It's a toxic mixture, in spray form, to kill small weeds."
 	icon = 'icons/obj/hydroponics.dmi'
-	name = "weed-spray"
+	name = "weed spray"
 	icon_state = "weedspray"
 	item_state = "spray"
 	volume = 100
@@ -39,7 +39,7 @@
 /obj/item/weapon/reagent_containers/spray/pestspray // -- Skie
 	desc = "It's some pest eliminator spray! <I>Do not inhale!</I>"
 	icon = 'icons/obj/hydroponics.dmi'
-	name = "pest-spray"
+	name = "pest spray"
 	icon_state = "pestspray"
 	item_state = "spray"
 	volume = 100
@@ -118,3 +118,21 @@
 /obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh/New()
 	..()
 	reagents.add_reagent("robustharvestnutriment", 50)
+
+/obj/item/weapon/reagent_containers/glass/bottle/weedkiller
+	name = "bottle of weed killer"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle19"
+
+/obj/item/weapon/reagent_containers/glass/bottle/weedkiller/New()
+	..()
+	reagents.add_reagent("weedkiller", 50)
+
+/obj/item/weapon/reagent_containers/glass/bottle/pestkiller
+	name = "bottle of pest spray"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle20"
+
+/obj/item/weapon/reagent_containers/glass/bottle/pestkiller/New()
+	..()
+	reagents.add_reagent("pestkiller", 50)

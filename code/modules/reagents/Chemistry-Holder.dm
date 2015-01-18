@@ -11,6 +11,7 @@ datum/reagents
 	var/maximum_volume = 100
 	var/atom/my_atom = null
 	var/chem_temp = 150
+	var/last_tick = 0
 
 datum/reagents/New(maximum=100)
 	maximum_volume = maximum
@@ -195,12 +196,14 @@ datum/reagents/proc/trans_id_to(var/obj/target, var/reagent, var/amount=1, var/p
 */
 
 datum/reagents/proc/metabolize(var/mob/M)
-	for(var/A in reagent_list)
-		var/datum/reagent/R = A
-		if(M && R)
-			if(M.reagent_check(R) != 1)
-				R.on_mob_life(M)
-
+	if(last_tick == 3)
+		last_tick = 0
+		for(var/A in reagent_list)
+			var/datum/reagent/R = A
+			if(M && R)
+				if(M.reagent_check(R) != 1)
+					R.on_mob_life(M)
+	last_tick++
 	update_total()
 
 datum/reagents/proc/conditional_update_move(var/atom/A, var/Running = 0)
@@ -324,7 +327,7 @@ datum/reagents/proc/del_reagent(var/reagent)
 
 datum/reagents/proc/check_gofast(var/mob/M)
 	if(istype(M, /mob))
-		if(M.reagents.has_reagent("hyperzine")||M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola"))
+		if(M.reagents.has_reagent("morphine")||M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola"))
 			return 1
 		else
 			M.status_flags &= ~GOTTAGOFAST

@@ -543,7 +543,7 @@
 				occupant_status += "</div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [viable_occupant.health]%;' class='progressFill good'></div></div><div class='statusValue'>[viable_occupant.health]%</div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Radiation Level:</div><div class='progressBar'><div style='width: [viable_occupant.radiation]%;' class='progressFill bad'></div></div><div class='statusValue'>[viable_occupant.radiation]%</div></div>"
-				var/rejuvenators = viable_occupant.reagents.get_reagent_amount("inaprovaline")
+				var/rejuvenators = viable_occupant.reagents.get_reagent_amount("epinephrine")
 				occupant_status += "<div class='line'><div class='statusLabel'>Rejuvenators:</div><div class='progressBar'><div style='width: [round((rejuvenators / REJUVENATORS_MAX) * 100)]%;' class='progressFill highlight'></div></div><div class='statusValue'>[rejuvenators] units</div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Unique Enzymes :</div><div class='statusValue'><span class='highlight'>[viable_occupant.dna.unique_enzymes]</span></div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Last Operation:</div><div class='statusValue'>[last_change ? last_change : "----"]</div></div>"
@@ -752,9 +752,9 @@
 			current_screen = href_list["text"]
 		if("rejuv")
 			if(viable_occupant && viable_occupant.reagents)
-				var/inaprovaline_amount = viable_occupant.reagents.get_reagent_amount("inaprovaline")
-				var/can_add = max(min(REJUVENATORS_MAX - inaprovaline_amount, REJUVENATORS_INJECT), 0)
-				viable_occupant.reagents.add_reagent("inaprovaline", can_add)
+				var/epinephrine_amount = viable_occupant.reagents.get_reagent_amount("epinephrine")
+				var/can_add = max(min(REJUVENATORS_MAX - epinephrine_amount, REJUVENATORS_INJECT), 0)
+				viable_occupant.reagents.add_reagent("epinephrine", can_add)
 		if("setbufferlabel")
 			var/text = sanitize(input(usr, "Input a new label:", "Input an Text", null) as text|null)
 			if(num && text)

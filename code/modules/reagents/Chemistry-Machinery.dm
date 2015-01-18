@@ -878,9 +878,9 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 
 				//Grinder stuff, but only if dry
 				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/arabica = list("coffeepowder" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/robusta = list("coffeepowder" = 0, "hyperzine" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/robusta = list("coffeepowder" = 0, "morphine" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/tea/aspera = list("teapowder" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra = list("teapowder" = 0, "kelotane" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra = list("teapowder" = 0, "salglu_solution" = 0),
 
 
 
@@ -908,9 +908,9 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 
 				//Grinder stuff, but only if dry
 				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/arabica = list("coffeepowder" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/robusta = list("coffeepowder" = 0, "hyperzine" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/robusta = list("coffeepowder" = 0, "morphine" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/tea/aspera = list("teapowder" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra = list("teapowder" = 0, "kelotane" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra = list("teapowder" = 0, "salglu_solution" = 0),
 		)
 
 		var/list/holdingitems = list()
@@ -1267,54 +1267,131 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 	icon_state = "mixer0b"
 	use_power = 1
 	idle_power_usage = 40
-	var/energy = 50
-	var/max_energy = 50
-	var/amount = 30
 	var/obj/item/weapon/reagent_containers/beaker = null
-	var/set_temp
-	var/temperature
+	var/temperature = 300
+	var/rate = 10 //heating/cooling rate, default is 10 kelvin per tick
 	var/on = FALSE
+
+/obj/machinery/chem_heater/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/chem_heater(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
+	RefreshParts()
+
+/obj/machinery/chem_heater/RefreshParts()
+	rate = 10
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		rate *= M.rating
 
 /obj/machinery/chem_heater/process()
 	..()
+	if(stat & NOPOWER)
+		return
+	var/state_change = 0
 	if(on)
 		if(beaker)
 			if(beaker.reagents.chem_temp > temperature)
-				beaker.reagents.chem_temp -= 2
-			if(beaker.reagents.chem_temp < temperature)
-				beaker.reagents.chem_temp += 2
-			if(beaker.reagents.chem_temp == temperature)
-				beaker.loc = get_turf(src)
-				beaker.reagents.handle_reactions()
-				beaker = null
-				icon_state = "mixer0b"
-				on = FALSE
+				beaker.reagents.chem_temp = max(beaker.reagents.chem_temp-rate, temperature)
+				state_change = 1
+			else if(beaker.reagents.chem_temp < temperature)
+				beaker.reagents.chem_temp = min(beaker.reagents.chem_temp+rate, temperature)
+				state_change = 1
+	if(state_change)
+		SSnano.update_uis(src)
 
+/obj/machinery/chem_heater/proc/eject_beaker()
+	if(beaker)
+		beaker.loc = get_turf(src)
+		beaker.reagents.handle_reactions()
+		beaker = null
+		icon_state = "mixer0b"
+		SSnano.update_uis(src)
 
-/obj/machinery/chem_heater/attackby(var/obj/item/weapon/reagent_containers/glass/B as obj, var/mob/user as mob)
+/obj/machinery/chem_heater/power_change()
+	if(powered())
+		stat &= ~NOPOWER
+	else
+		spawn(rand(0, 15))
+			stat |= NOPOWER
+	SSnano.update_uis(src)
+
+/obj/machinery/chem_heater/attackby(var/obj/item/I as obj, var/mob/user as mob)
 	if(isrobot(user))
 		return
 
-	if(!istype(B, /obj/item/weapon/reagent_containers/glass))
+	if(istype(I, /obj/item/weapon/reagent_containers/glass))
+		if(beaker)
+			user << "<span class='notice'>A beaker is already loaded into the machine.</span>"
+			return
+
+		if(user.drop_item())
+			beaker = I
+			I.loc = src
+			user << "<span class='notice'>You add the beaker to the machine!</span>"
+			icon_state = "mixer1b"
+			SSnano.update_uis(src)
+
+	if(default_deconstruction_screwdriver(user, "mixer0b", "mixer0b", I))
 		return
 
-	if(src.beaker)
-		user << "A beaker is already loaded into the machine."
+	if(exchange_parts(user, I))
 		return
 
-	src.beaker =  B
-	user.drop_item()
-	B.loc = src
-	user << "You add the beaker to the machine!"
-	icon_state = "mixer1b"
+	if(panel_open)
+		if(istype(I, /obj/item/weapon/crowbar))
+			eject_beaker()
+			default_deconstruction_crowbar(I)
+			return 1
 
 /obj/machinery/chem_heater/attack_hand(var/mob/user as mob)
-	if(!beaker)
-		user << "Please insert a beaker."
-		return
-	temperature = input("Please input desired temperature between 1 and 3000.", name, set_temp) as num
-	if(temperature > 3000 || temperature < 1)
-		user << "Invalid temperature."
-		return
-	user << "Adjusting chemical temperature..."
-	on = TRUE
+	ui_interact(user)
+
+/obj/machinery/chem_heater/Topic(href, href_list)
+	if(..())
+		return 0
+
+	if(href_list["toggle_on"])
+		on = !on
+		. = 1
+
+	if(href_list["adjust_temperature"])
+		var/val = href_list["adjust_temperature"]
+		if(isnum(val))
+			temperature = Clamp(temperature+val, 0, 1000)
+		else if(val == "input")
+			temperature = Clamp(input("Please input the target temperature", name) as num, 0, 1000)
+		else
+			return 0
+		. = 1
+
+	if(href_list["eject_beaker"])
+		eject_beaker()
+		. = 0 //updated in eject_beaker() already
+
+/obj/machinery/chem_heater/ui_interact(var/mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+	if(user.stat || user.restrained()) return
+
+	var/data[0]
+	data["targetTemp"] = temperature
+	data["isActive"] = on
+	data["isBeakerLoaded"] = beaker ? 1 : 0
+
+	data["currentTemp"] = beaker ? beaker.reagents.chem_temp : null
+	data["beakerCurrentVolume"] = beaker ? beaker.reagents.total_volume : null
+	data["beakerMaxVolume"] = beaker ? beaker.volume : null
+
+	//copy-pasted from chem dispenser
+	var beakerContents[0]
+	if(beaker)
+		for(var/datum/reagent/R in beaker.reagents.reagent_list)
+			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
+	data["beakerContents"] = beakerContents
+
+	// update the ui if it exists, returns null if no ui is passed/found
+	ui = SSnano.try_update_ui(user, src, ui_key, ui, data)
+	if (!ui)
+		ui = new(user, src, ui_key, "chem_heater.tmpl", "ChemHeater", 350, 270)
+		ui.set_initial_data(data)
+		ui.open()

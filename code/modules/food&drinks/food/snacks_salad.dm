@@ -11,7 +11,7 @@
 	..()
 	eatverb = pick("crunch","devour","nibble","gnaw","gobble","chomp")
 	reagents.add_reagent("nutriment", 8)
-	reagents.add_reagent("tricordrazine", 8)
+	reagents.add_reagent("omnizine", 8)
 	reagents.add_reagent("vitamin", 6)
 	bitesize = 3
 

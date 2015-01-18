@@ -206,8 +206,8 @@
 	imp_in.update_canmove()
 
 	imp_in.reagents.add_reagent("synaptizine", 10)
-	imp_in.reagents.add_reagent("tricordrazine", 10)
-	imp_in.reagents.add_reagent("hyperzine", 10)
+	imp_in.reagents.add_reagent("omnizine", 10)
+	imp_in.reagents.add_reagent("morphine", 10)
 
 
 /obj/item/weapon/implant/emp

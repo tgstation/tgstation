@@ -74,14 +74,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 //Pills
-/obj/item/weapon/reagent_containers/pill/antitox
-	name = "anti-toxins pill"
-	desc = "Neutralizes many common toxins."
-	icon_state = "pill17"
-
-/obj/item/weapon/reagent_containers/pill/antitox/New()
-	..()
-	reagents.add_reagent("anti_toxin", 50)
 
 
 /obj/item/weapon/reagent_containers/pill/tox
@@ -122,57 +114,6 @@
 	..()
 	reagents.add_reagent("stoxin", 30)
 
-
-/obj/item/weapon/reagent_containers/pill/kelotane
-	name = "kelotane pill"
-	desc = "Used to treat burns."
-	icon_state = "pill11"
-
-/obj/item/weapon/reagent_containers/pill/kelotane/New()
-	..()
-	reagents.add_reagent("kelotane", 30)
-
-
-/obj/item/weapon/reagent_containers/pill/dermaline
-	name = "dermaline pill"
-	desc = "Used to treat severe burns."
-	icon_state = "pill12"
-
-/obj/item/weapon/reagent_containers/pill/dermaline/New()
-	..()
-	reagents.add_reagent("dermaline", 30)
-
-
-/obj/item/weapon/reagent_containers/pill/inaprovaline
-	name = "inaprovaline pill"
-	desc = "Used to stabilize patients."
-	icon_state = "pill20"
-
-/obj/item/weapon/reagent_containers/pill/inaprovaline/New()
-	..()
-	reagents.add_reagent("inaprovaline", 30)
-
-
-/obj/item/weapon/reagent_containers/pill/dexalin
-	name = "dexalin pill"
-	desc = "Used to treat oxygen deprivation."
-	icon_state = "pill16"
-
-/obj/item/weapon/reagent_containers/pill/dexalin/New()
-	..()
-	reagents.add_reagent("dexalin", 30)
-
-
-/obj/item/weapon/reagent_containers/pill/bicaridine
-	name = "bicaridine pill"
-	desc = "Used to treat physical injuries."
-	icon_state = "pill18"
-
-/obj/item/weapon/reagent_containers/pill/bicaridine/New()
-	..()
-	reagents.add_reagent("bicaridine", 30)
-
-
 /obj/item/weapon/reagent_containers/pill/stimulant
 	name = "stimulant pill"
 	desc = "Often taken by overworked employees, athletes, and the inebriated. You'll snap to attention immediately!"
@@ -180,6 +121,33 @@
 
 /obj/item/weapon/reagent_containers/pill/stimulant/New()
 	..()
-	reagents.add_reagent("hyperzine", 10)
+	reagents.add_reagent("morphine", 10)
 	reagents.add_reagent("ethylredoxrazine", 10)
 	reagents.add_reagent("coffee", 30)
+
+/obj/item/weapon/reagent_containers/pill/salbutamol
+	name = "salbutamol pill"
+	desc = "Used to treat oxygen deprivation."
+	icon_state = "pill18"
+
+/obj/item/weapon/reagent_containers/pill/salbutamol/New()
+	..()
+	reagents.add_reagent("salbutamol", 30)
+
+/obj/item/weapon/reagent_containers/pill/charcoal
+	name = "charcoal pill"
+	desc = "Neutralizes many common toxins."
+	icon_state = "pill17"
+
+/obj/item/weapon/reagent_containers/pill/charcoal/New()
+	..()
+	reagents.add_reagent("charcoal", 50)
+
+/obj/item/weapon/reagent_containers/pill/epinephrine
+	name = "epinephrine pill"
+	desc = "Used to stabilize patients."
+	icon_state = "pill17"
+
+/obj/item/weapon/reagent_containers/pill/epinephrine/New()
+	..()
+	reagents.add_reagent("epinephrine", 50)
