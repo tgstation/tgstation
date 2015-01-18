@@ -7,8 +7,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sandwich/New()
 	..()
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("vitamin", 1)
+	peakReagents = list("nutriment", 6, "vitamin", 1)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/toastedsandwich
@@ -16,11 +15,11 @@
 	desc = "Now if you only had a pepper bar."
 	icon_state = "toastedsandwich"
 	trash = /obj/item/trash/plate
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/toastedsandwich/New()
 	..()
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("carbon", 2)
+	peakReagents = list("nutriment", 6, "carbon", 2)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/grilledcheese
@@ -28,11 +27,11 @@
 	desc = "Goes great with Tomato soup!"
 	icon_state = "toastedsandwich"
 	trash = /obj/item/trash/plate
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/grilledcheese/New()
 	..()
-	reagents.add_reagent("nutriment", 7)
-	reagents.add_reagent("vitamin", 1)
+	peakReagents = list("nutriment", 7, "vitamin", 1)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/jellysandwich
@@ -43,18 +42,16 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/jellysandwich/New()
 	..()
-	reagents.add_reagent("nutriment", 2)
+	peakReagents = list("nutriment", 2)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/jellysandwich/slime/New()
 	..()
-	reagents.add_reagent("slimejelly", 5)
-	reagents.add_reagent("vitamin", 2)
+	peakReagents = list("slimejelly", 5, "vitamin", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/jellysandwich/cherry/New()
 	..()
-	reagents.add_reagent("cherryjelly", 5)
-	reagents.add_reagent("vitamin", 2)
+	peakReagents = list("cherryjelly", 5, "vitamin", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/icecreamsandwich
 	name = "icecream sandwich"
@@ -63,8 +60,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/icecreamsandwich/New()
 	..()
-	reagents.add_reagent("nutriment", 2)
-	reagents.add_reagent("ice", 2)
+	peakReagents = list("nutriment", 2, "ice", 2)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/notasandwich
@@ -75,8 +71,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/notasandwich/New()
 	..()
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("vitamin", 6)
+	peakReagents = list("nutriment", 6, "vitamin", 6)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast
@@ -84,21 +79,20 @@
 	desc = "A slice of bread covered with delicious jam."
 	icon_state = "jellytoast"
 	trash = /obj/item/trash/plate
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast/New()
 	..()
-	reagents.add_reagent("nutriment", 1)
+	peakReagents = list("nutriment", 1)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast/cherry/New()
 	..()
-	reagents.add_reagent("cherryjelly", 5)
-	reagents.add_reagent("vitamin", 2)
+	peakReagents = list("cherryjelly", 5, "vitamin", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast/slime/New()
 	..()
-	reagents.add_reagent("slimejelly", 5)
-	reagents.add_reagent("vitamin", 2)
+	peakReagents = list("slimejelly", 5, "vitamin", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/twobread
 	name = "two bread"
@@ -107,6 +101,5 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/twobread/New()
 	..()
-	reagents.add_reagent("nutriment", 2)
-	reagents.add_reagent("vitamin", 2)
+	peakReagents = list("nutriment", 2, "vitamin", 2)
 	bitesize = 3

@@ -8,8 +8,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy_corn/New()
 	..()
-	reagents.add_reagent("nutriment", 4)
-	reagents.add_reagent("sugar", 2)
+	peakReagents = list("nutriment", 4, "sugar", 2)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/chocolatebar
@@ -21,10 +20,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/chocolatebar/New()
 	..()
-	reagents.add_reagent("nutriment", 3)
-	reagents.add_reagent("sugar", 2)
-	reagents.add_reagent("coco", 2)
-	reagents.add_reagent("vitamin", 1)
+	peakReagents = list("nutriment", 3, "sugar", 2, "coco", 2, "vitamin", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/chocolatebar/attack_self(mob/user)
 	if(wrapped)
@@ -51,8 +47,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice/New()
 	..()
-	reagents.add_reagent("nutriment", 3)
-	reagents.add_reagent("vitamin", 1)
+	peakReagents = list("nutriment", 3, "vitamin", 1)
 	src.bitesize = 3
 
 
@@ -62,12 +57,13 @@
 	icon_state = "popcorn"
 	trash = /obj/item/trash/popcorn
 	var/unpopped = 0
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/popcorn/New()
 	..()
 	eatverb = pick("bite","crunch","nibble","gnaw","gobble","chomp")
 	unpopped = rand(1,10)
-	reagents.add_reagent("nutriment", 2)
+	peakReagents = list("nutriment", 2)
 	bitesize = 0.1 //this snack is supposed to be eating during looooong time. And this it not dinner food! --rastaf0
 
 /obj/item/weapon/reagent_containers/food/snacks/popcorn/On_Consume()
@@ -81,10 +77,11 @@
 	name = "loaded baked potato"
 	desc = "Totally baked."
 	icon_state = "loadedbakedpotato"
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/loadedbakedpotato/New()
 	..()
-	reagents.add_reagent("nutriment", 6)
+	peakReagents = list("nutriment", 6)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/fries
@@ -92,10 +89,11 @@
 	desc = "AKA: French Fries, Freedom Fries, etc."
 	icon_state = "fries"
 	trash = /obj/item/trash/plate
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/fries/New()
 	..()
-	reagents.add_reagent("nutriment", 4)
+	peakReagents = list("nutriment", 4)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/soydope
@@ -106,7 +104,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/soydope/New()
 	..()
-	reagents.add_reagent("nutriment", 2)
+	peakReagents = list("nutriment", 2)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesyfries
@@ -114,10 +112,11 @@
 	desc = "Fries. Covered in cheese. Duh."
 	icon_state = "cheesyfries"
 	trash = /obj/item/trash/plate
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesyfries/New()
 	..()
-	reagents.add_reagent("nutriment", 6)
+	peakReagents = list("nutriment", 6)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/badrecipe
@@ -128,7 +127,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/badrecipe/New()
 	..()
 	eatverb = pick("choke down","nibble","gnaw","chomp")
-	reagents.add_reagent("????", 30)
+	peakReagents = list("????", 30)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/spacylibertyduff
@@ -139,8 +138,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/spacylibertyduff/New()
 	..()
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("mushroomhallucinogen", 6)
+	peakReagents = list("nutriment", 6, "mushroomhallucinogen", 6)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/amanitajelly
@@ -151,9 +149,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/amanitajelly/New()
 	..()
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("amatoxin", 6)
-	reagents.add_reagent("mushroomhallucinogen", 3)
+	peakReagents = list("nutriment", 6, "amatoxin", 6, "mushroomhallucinogen", 3)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/carrotfries
@@ -161,12 +157,11 @@
 	desc = "Tasty fries from fresh Carrots."
 	icon_state = "carrotfries"
 	trash = /obj/item/trash/plate
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/carrotfries/New()
 	..()
-	reagents.add_reagent("nutriment", 3)
-	reagents.add_reagent("oculine", 3)
-	reagents.add_reagent("vitamin", 2)
+	peakReagents = list("nutriment", 3, "oculine", 3, "vitamin", 2)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/candiedapple
@@ -176,8 +171,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candiedapple/New()
 	..()
-	reagents.add_reagent("nutriment", 3)
-	reagents.add_reagent("sugar", 3)
+	peakReagents = list("nutriment", 3, "sugar", 3)
 	bitesize = 3
 
 /*
@@ -198,27 +192,29 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/mint/New()
 	..()
-	reagents.add_reagent("minttoxin", 1)
+	peakReagents = list("minttoxin", 1)
 	bitesize = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/wrap
 	name = "egg wrap"
 	desc = "The precursor to Pigs in a Blanket."
 	icon_state = "wrap"
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/wrap/New()
 	..()
-	reagents.add_reagent("nutriment", 5)
+	peakReagents = list("nutriment", 5)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/beans
 	name = "tin of beans"
 	desc = "Musical fruit in a slightly less musical container."
 	icon_state = "beans"
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/beans/New()
 	..()
-	reagents.add_reagent("nutriment", 10)
+	peakReagents = list("nutriment", 10)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/spidereggs
@@ -228,8 +224,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/spidereggs/New()
 	..()
-	reagents.add_reagent("nutriment", 2)
-	reagents.add_reagent("toxin", 3)
+	peakReagents = list("nutriment", 2, "toxin", 3)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/chococoin
@@ -239,9 +234,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/chococoin/New()
 	..()
-	reagents.add_reagent("nutriment", 3)
-	reagents.add_reagent("sugar", 2)
-	reagents.add_reagent("coco", 2)
+	peakReagents = list("nutriment", 3, "sugar", 2, "coco", 2)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/chocoorange
@@ -251,6 +244,4 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/chocoorange/New()
 	..()
-	reagents.add_reagent("nutriment", 4)
-	reagents.add_reagent("sugar", 2)
-	reagents.add_reagent("coco", 2)
+	peakReagents = list("nutriment", 4, "sugar", 2, "coco", 2)

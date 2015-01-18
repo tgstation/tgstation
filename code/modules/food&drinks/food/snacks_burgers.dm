@@ -2,11 +2,11 @@
 	name = "burger"
 	desc = "The cornerstone of every nutritious breakfast."
 	icon_state = "hburger"
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/New()
 	..()
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("vitamin", 1)
+	peakReagents = list("nutriment", 6, "vitamin", 1)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/human
@@ -27,8 +27,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/fish/New()
 	..()
-	reagents.add_reagent("carpotoxin", 3)
-	reagents.add_reagent("vitamin", 3)
+	peakReagents = list("carpotoxin", 3, "vitamin", 3)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/tofu
@@ -43,8 +42,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/roburger/New()
 	..()
-	reagents.add_reagent("nanites", 2)
-	reagents.add_reagent("vitamin", 5)
+	peakReagents = list("nanites", 2, "vitamin", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/roburgerbig
 	name = "roburger"
@@ -54,8 +52,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/roburgerbig/New()
 	..()
-	reagents.add_reagent("nanites", 100)
-	reagents.add_reagent("vitamin", 20)
+	peakReagents = list("nanites", 100, "vitamin", 20)
 	bitesize = 0.1
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/xeno
@@ -65,7 +62,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/xeno/New()
 	..()
-	reagents.add_reagent("nutriment", 2)
+	peakReagents = list("nutriment",2)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/clown
 	name = "clown burger"
@@ -84,8 +81,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/brain/New()
 	..()
-	reagents.add_reagent("alkysine", 6)
-	reagents.add_reagent("vitamin", 3)
+	peakReagents = list("vitamin", 6)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/ghost
 	name = "ghost burger"
@@ -100,7 +96,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/red/New()
 	..()
-	reagents.add_reagent("redcrayonpowder", 10)
+	peakReagents = list("redcrayonpowder", 10)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/orange
@@ -111,7 +107,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/orange/New()
 	..()
-	reagents.add_reagent("orangecrayonpowder", 10)
+	peakReagents = list("orangecrayonpowder", 10)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/yellow
@@ -122,7 +118,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/yellow/New()
 	..()
-	reagents.add_reagent("yellowcrayonpowder", 10)
+	peakReagents = list("yellowcrayonpowder", 10)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/green
@@ -133,7 +129,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/green/New()
 	..()
-	reagents.add_reagent("greencrayonpowder", 10)
+	peakReagents = list("greencrayonpowder", 10)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/blue
@@ -144,7 +140,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/blue/New()
 	..()
-	reagents.add_reagent("bluecrayonpowder", 10)
+	peakReagents = list("bluecrayonpowder", 10)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/purple
@@ -155,7 +151,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/purple/New()
 	..()
-	reagents.add_reagent("purplecrayonpowder", 10)
+	peakReagents = list("purplecrayonpowder", 10)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/spell
@@ -170,7 +166,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/bigbite/New()
 	..()
-	reagents.add_reagent("nutriment", 8)
+	peakReagents = list("nutriment", 8)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/jelly
@@ -180,13 +176,11 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/jelly/slime/New()
 	..()
-	reagents.add_reagent("slimejelly", 5)
-	reagents.add_reagent("vitamin", 3)
+	peakReagents = list("slimejelly", 5, "vitamin", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/jelly/cherry/New()
 	..()
-	reagents.add_reagent("cherryjelly", 5)
-	reagents.add_reagent("vitamin", 3)
+	peakReagents = list("cherryjelly", 5, "vitamin", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/superbite
 	name = "super bite burger"
@@ -195,5 +189,5 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/superbite/New()
 	..()
-	reagents.add_reagent("nutriment", 40)
+	peakReagents = list("nutriment", 40)
 	bitesize = 10
