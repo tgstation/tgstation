@@ -7,40 +7,25 @@
  *		Glass shards - TODO: Move this into code/game/object/item/weapons
  */
 
-/*
- * Glass sheets
- */
 /obj/item/stack/sheet/glass
-	name = "glass"
-	desc = "HOLY SHEET! That is a lot of glass."
-	singular_name = "glass sheet"
-	icon_state = "sheet-glass"
-	g_amt = 3750
 	w_type = RECYK_GLASS
 	melt_temperature = MELTPOINT_GLASS
-	origin_tech = "materials=1"
 	var/created_window = /obj/structure/window/basic
 	var/full_window = /obj/structure/window/full/basic
-
-/obj/item/stack/sheet/glass/cyborg
-	g_amt = 0
+	var/windoor = null
+	var/reinforced = 0
+	var/rglass = 0
+	var/glass_quality = 0.5 //Quality of a solar made from this
+	var/shealth = 5 //Health of a solar made from this
+	var/sname = "glass"
 
 /obj/item/stack/sheet/glass/attack_self(mob/user as mob)
 	construct_window(user)
 
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user)
-	if(istype(W,/obj/item/weapon/cable_coil))
-		var/obj/item/weapon/cable_coil/CC = W
-		if(CC.amount < 5)
-			user << "\b There is not enough wire in this coil. You need 5 lengths."
-			return
-		CC.use(5)
-		user << "\blue You attach wire to the [name]."
-		new /obj/item/stack/light_w(user.loc)
-		src.use(1)
-	else if( istype(W, /obj/item/stack/rods) )
+	if(istype(W, /obj/item/stack/rods) && !reinforced)
 		var/obj/item/stack/rods/V  = W
-		var/obj/item/stack/sheet/rglass/RG = new (user.loc)
+		var/obj/item/stack/sheet/glass/RG = new rglass(user.loc)
 		RG.add_fingerprint(user)
 		RG.add_to_stacks(user)
 		V.use(1)
@@ -56,18 +41,22 @@
 	else
 		return ..()
 
-/obj/item/stack/sheet/glass/recycle(var/datum/materials/rec)
-	rec.addAmount("glass", 1*src.amount)
-	return 1
-
 /obj/item/stack/sheet/glass/proc/construct_window(mob/user as mob)
 	if(!user || !src)	return 0
 	if(!istype(user.loc,/turf)) return 0
 	if(!user.IsAdvancedToolUser())
 		user << "\red You don't have the dexterity to do this!"
 		return 0
-	var/title = "Sheet-Glass"
+	var/title = "[src.name] Sheets"
 	title += " ([src.amount] sheet\s left)"
+	if(windoor)
+		construct_rwindow()
+	else
+		construct_uwindow()
+	return 0
+
+
+/obj/item/stack/sheet/glass/proc/construct_uwindow(mob/user as mob)
 	switch(alert(title, "Would you like full tile glass or one direction?", "One Direction", "Full Window", "Cancel", null))
 		if("One Direction")
 			if(!src)	return 1
@@ -116,42 +105,7 @@
 	return 0
 
 
-/*
- * Reinforced glass sheets
- */
-/obj/item/stack/sheet/rglass
-	name = "reinforced glass"
-	desc = "Glass which seems to have rods or something stuck in them."
-	singular_name = "reinforced glass sheet"
-	icon_state = "sheet-rglass"
-	g_amt = 3750
-	m_amt = 1875
-	w_type = RECYK_GLASS
-	melt_temperature = MELTPOINT_GLASS
-	var/created_window = /obj/structure/window/reinforced
-	var/full_window = /obj/structure/window/full/reinforced
-	var/windoor = /obj/structure/windoor_assembly/
-	origin_tech = "materials=2"
-
-/obj/item/stack/sheet/rglass/cyborg
-	name = "reinforced glass"
-	desc = "Glass which seems to have rods or something stuck in them."
-	singular_name = "reinforced glass sheet"
-	icon_state = "sheet-rglass"
-	g_amt = 0
-	m_amt = 0
-
-/obj/item/stack/sheet/rglass/attack_self(mob/user as mob)
-	construct_window(user)
-
-/obj/item/stack/sheet/rglass/proc/construct_window(mob/user as mob)
-	if(!user || !src)	return 0
-	if(!istype(user.loc,/turf)) return 0
-	if(!user.IsAdvancedToolUser())
-		user << "\red You don't have the dexterity to do this!"
-		return 0
-	var/title = "Sheet Reinf. Glass"
-	title += " ([src.amount] sheet\s left)"
+/obj/item/stack/sheet/rglass/proc/construct_rwindow(mob/user as mob)
 	switch(input(title, "Would you like full tile glass a one direction glass pane or a windoor?") in list("One Direction", "Full Window", "Windoor", "Cancel"))
 		if("One Direction")
 			if(!src)	return 1
@@ -245,6 +199,120 @@
 
 	return 0
 
+
+/*
+ * Glass sheets
+ */
+
+/obj/item/stack/sheet/glass/glass
+	name = "Glass"
+	desc = "HOLY SHEET! That is a lot of glass."
+	singular_name = "glass sheet"
+	icon_state = "sheet-glass"
+	g_amt = 3750
+	origin_tech = "materials=1"
+	rglass = /obj/item/stack/sheet/glass/rglass
+
+/obj/item/stack/sheet/glass/glass/cyborg
+	g_amt = 0
+
+/obj/item/stack/sheet/glass/glass/recycle(var/datum/materials/rec)
+	rec.addAmount("glass", 1*src.amount)
+	return 1
+
+/obj/item/stack/sheet/glass/glass/attackby(obj/item/W, mob/user)
+	if(istype(W,/obj/item/weapon/cable_coil))
+		var/obj/item/weapon/cable_coil/CC = W
+		if(CC.amount < 5)
+			user << "\b There is not enough wire in this coil. You need 5 lengths."
+			return
+		CC.use(5)
+		user << "\blue You attach wire to the [name]."
+		new /obj/item/stack/light_w(user.loc)
+		src.use(1)
+	else
+		return ..()
+
+
+/*
+ * Reinforced glass sheets
+ */
+
+/obj/item/stack/sheet/glass/rglass
+	name = "Reinforced glass"
+	desc = "Glass which seems to have rods or something stuck in them."
+	singular_name = "reinforced glass sheet"
+	sname = "glass_ref"
+	icon_state = "sheet-rglass"
+	g_amt = 3750
+	m_amt = 1875
+	created_window = /obj/structure/window/reinforced
+	full_window = /obj/structure/window/full/reinforced
+	windoor = /obj/structure/windoor_assembly/
+	origin_tech = "materials=2"
+	reinforced = 1
+	glass_quality = 1
+	shealth = 10
+
+/obj/item/stack/sheet/glass/rglass/cyborg
+	g_amt = 0
+	m_amt = 0
+
+/obj/item/stack/sheet/glass/rglass/recycle(var/datum/materials/rec)
+	rec.addAmount("glass", 1*src.amount)
+	rec.addAmount("iron",  0.5*src.amount)
+	return 1
+
+/*
+ * Plasma Glass sheets
+ */
+/obj/item/stack/sheet/glass/plasmaglass
+	name = "Plasma glass"
+	desc = "A very strong and very resistant sheet of a plasma-glass alloy."
+	singular_name = "glass sheet"
+	icon_state = "sheet-plasmaglass"
+	sname = "plasma"
+	g_amt=CC_PER_SHEET_GLASS
+	origin_tech = "materials=3;plasmatech=2"
+	created_window = /obj/structure/window/plasmabasic
+	full_window = /obj/structure/window/full/plasmabasic
+	rglass = /obj/item/stack/sheet/glass/plasmarglass
+	perunit = 2875 //average of plasma and glass
+	melt_temperature = MELTPOINT_STEEL+500
+	glass_quality = 1.15 //Can you imagine a world in which plasmaglass is worse than rglass
+	shealth = 20
+
+/obj/item/stack/sheet/glass/plasmaglass/recycle(var/datum/materials/rec)
+	rec.addAmount("plasma",1*src.amount)
+	rec.addAmount("glass", 1*src.amount)
+	return RECYK_GLASS
+
+/*
+ * Reinforced plasma glass sheets
+ */
+/obj/item/stack/sheet/glass/plasmarglass
+	name = "Reinforced plasma glass"
+	desc = "Plasma glass which seems to have rods or something stuck in them."
+	singular_name = "reinforced plasma glass sheet"
+	icon_state = "sheet-plasmarglass"
+	sname = "plasma_ref"
+	g_amt=CC_PER_SHEET_GLASS
+	m_amt = 1875
+	melt_temperature = MELTPOINT_STEEL+500 // I guess...?
+	origin_tech = "materials=4;plasmatech=2"
+	created_window = /obj/structure/window/plasmareinforced
+	full_window = /obj/structure/window/full/plasmareinforced
+	perunit = 2875
+	reinforced = 1
+	glass_quality = 1.3
+	shealth = 30
+
+/obj/item/stack/sheet/glass/plasmarglass/recycle(var/datum/materials/rec)
+	rec.addAmount("plasma",1*src.amount)
+	rec.addAmount("glass", 1*src.amount)
+	rec.addAmount("iron",  0.5*src.amount)
+	return 1
+
 /*
  * Glass shards - TODO: Move this into code/game/object/item/weapons
  */
@@ -282,8 +350,8 @@
 	if ( istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
-			var/obj/item/stack/sheet/glass/NG = new (user.loc)
-			for (var/obj/item/stack/sheet/glass/G in user.loc)
+			var/obj/item/stack/sheet/glass/glass/NG = new (user.loc)
+			for (var/obj/item/stack/sheet/glass/glass/G in user.loc)
 				if(G==NG)
 					continue
 				if(G.amount>=G.max_amount)
@@ -314,73 +382,3 @@
 	..()
 
 
-
-
-/*
- * Plasma Glass sheets
- */
-/obj/item/stack/sheet/glass/plasmaglass
-	name = "plasma glass"
-	desc = "A very strong and very resistant sheet of a plasma-glass alloy."
-	singular_name = "glass sheet"
-	icon_state = "sheet-plasmaglass"
-	//g_amt = 7500
-	g_amt=CC_PER_SHEET_GLASS
-	w_type = RECYK_GLASS
-	origin_tech = "materials=3;plasmatech=2"
-	created_window = /obj/structure/window/plasmabasic
-	full_window = /obj/structure/window/full/plasmabasic
-
-	perunit = 2875 //average of plasma and glass
-	melt_temperature = MELTPOINT_STEEL+500
-
-/obj/item/stack/sheet/glass/plasmaglass/recycle(var/datum/materials/rec)
-	rec.addAmount("plasma",1*src.amount)
-	rec.addAmount("glass", 1*src.amount)
-	return RECYK_GLASS
-
-/obj/item/stack/sheet/glass/plasmaglass/attack_self(mob/user as mob)
-	construct_window(user)
-
-/obj/item/stack/sheet/glass/plasmaglass/attackby(obj/item/W, mob/user)
-	if( istype(W, /obj/item/stack/rods) )
-		var/obj/item/stack/rods/V  = W
-		var/obj/item/stack/sheet/rglass/plasmarglass/RG = new (user.loc)
-		RG.add_fingerprint(user)
-		RG.add_to_stacks(user)
-		V.use(1)
-		var/obj/item/stack/sheet/glass/plasmaglass/G = src
-		src = null
-		var/replace = (user.get_inactive_hand()==G)
-		G.use(1)
-		if (!G && !RG && replace)
-			user.put_in_hands(RG)
-	else
-		return ..()
-
-/*
- * Reinforced plasma glass sheets
- */
-/obj/item/stack/sheet/rglass/plasmarglass
-	name = "reinforced plasma glass"
-	desc = "Plasma glass which seems to have rods or something stuck in them."
-	singular_name = "reinforced plasma glass sheet"
-	icon_state = "sheet-plasmarglass"
-	g_amt=CC_PER_SHEET_GLASS
-	m_amt = 1875
-	w_type = RECYK_GLASS
-	melt_temperature = MELTPOINT_STEEL+500 // I guess...?
-	origin_tech = "materials=4;plasmatech=2"
-	created_window = /obj/structure/window/plasmareinforced
-	full_window = /obj/structure/window/full/plasmareinforced
-	windoor = 0 //If plasma windoors are added add /obj name here and remove check in construct proc earlier
-	perunit = 2875
-
-/obj/item/stack/sheet/rglass/plasmarglass/recycle(var/datum/materials/rec)
-	rec.addAmount("plasma",1*src.amount)
-	rec.addAmount("glass", 1*src.amount)
-	rec.addAmount("iron",  0.5*src.amount)
-	return 1
-
-/obj/item/stack/sheet/rglass/plasmarglass/attack_self(mob/user as mob)
-	construct_window(user)

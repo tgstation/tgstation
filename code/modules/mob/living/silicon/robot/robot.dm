@@ -537,12 +537,12 @@
 		stat(null, text("Metal Sheets: [M.amount]/50"))
 
 /mob/living/silicon/robot/proc/show_glass_sheets()
-	var/obj/item/stack/sheet/glass/G = installed_module(/obj/item/stack/sheet/glass)
+	var/obj/item/stack/sheet/glass/glass/G = installed_module(/obj/item/stack/sheet/glass/glass)
 	if(G)
 		stat(null, text("Glass Sheets: [G.amount]/50"))
 
 /mob/living/silicon/robot/proc/show_rglass_sheets()
-	var/obj/item/stack/sheet/rglass/G = installed_module(/obj/item/stack/sheet/rglass)
+	var/obj/item/stack/sheet/glass/rglass/G = installed_module(/obj/item/stack/sheet/glass/rglass)
 	if(G)
 		stat(null, text("Reinforced Glass Sheets: [G.amount]/50"))
 

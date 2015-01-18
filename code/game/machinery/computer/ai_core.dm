@@ -86,7 +86,7 @@
 					var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( loc )
 					A.amount = 5
 
-			if(istype(P, /obj/item/stack/sheet/rglass))
+			if(istype(P, /obj/item/stack/sheet/glass/rglass))
 				if(P:amount >= 2)
 					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
@@ -160,7 +160,7 @@
 					icon_state = "3b"
 				else
 					icon_state = "3"
-				new /obj/item/stack/sheet/rglass( loc, 2 )
+				new /obj/item/stack/sheet/glass/rglass( loc, 2 )
 				return
 
 			if(istype(P, /obj/item/weapon/screwdriver))

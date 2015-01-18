@@ -160,7 +160,7 @@ datum/hSB
 					hsb.amount = 50
 					hsb.loc = usr.loc
 				if("hsbglass")
-					var/obj/item/stack/sheet/hsb = new/obj/item/stack/sheet/glass
+					var/obj/item/stack/sheet/hsb = new/obj/item/stack/sheet/glass/glass
 					hsb.amount = 50
 					hsb.loc = usr.loc
 				if("hsbplasma")
