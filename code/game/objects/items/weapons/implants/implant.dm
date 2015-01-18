@@ -144,11 +144,12 @@ Implant Specifics:<BR>"}
 <b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
 		return dat
 
-	hear(mob/M as mob, msg)
-		hear(msg)
+	Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+		hear(message)
 		return
 
 	hear(var/msg)
+		testing ("Implant testing, heard [msg]*")
 		var/list/replacechars = list("'" = "","\"" = "",">" = "","<" = "","(" = "",")" = "")
 		msg = sanitize_simple(msg, replacechars)
 		if(findtext(msg,phrase))
@@ -177,6 +178,7 @@ Implant Specifics:<BR>"}
 		phrase = sanitize_simple(phrase, replacechars)
 		usr.mind.store_memory("Explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate.", 0, 0)
 		usr << "The implanted explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate."
+		flags |= HEAR
 		return 1
 
 	emp_act(severity)
