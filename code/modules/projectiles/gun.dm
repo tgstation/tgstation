@@ -213,6 +213,17 @@
 				S.update_brightness(user)
 				update_icon()
 				verbs -= /obj/item/weapon/gun/proc/toggle_gunlight
+				
+	if(istype(A, /obj/item/weapon/wirecutters))
+		if(pin)
+			if(user.l_hand != src && user.r_hand != src)
+				user << "<span class='notice'>You'll need [src] in your hands to do that.</span>"
+				return
+			user << "<span class ='notice'>You pull firing pin from [src]...</span>"
+			if(do_after(user, 20))
+				pin.loc = get_turf(src.loc)
+				pin = null
+				user << "<span class ='notice'>You pulled firing pin from [src]!</span>"
 	..()
 	return
 
