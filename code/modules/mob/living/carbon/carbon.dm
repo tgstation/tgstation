@@ -288,7 +288,7 @@
 					if(loc==startloc)
 						if(contents.len && !isrobot(src))
 							for(var/obj/item/carried_item in contents)//If the monkey got on objects.
-								if( !istype(carried_item, /obj/item/weapon/implant) && !istype(carried_item, /obj/item/clothing/mask/facehugger) )//If it's not an implant or a facehugger
+								if( !istype(carried_item, /obj/item/weapon/implant) && !istype(carried_item, /obj/item/clothing/mask/facehugger) && !istype(carried_item, /obj/item/device/radio/borg) && !istype(carried_item, /obj/machinery/camera) )//If it's not an implant or a facehugger or spiderbot defaults
 									src << "\red You can't be carrying items or have items equipped when vent crawling!"
 									return
 						var/obj/machinery/atmospherics/unary/vent_pump/target_vent = vents[selection]
