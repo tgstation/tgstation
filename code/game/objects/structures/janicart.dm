@@ -341,16 +341,4 @@
 /obj/structure/stool/bed/chair/janicart/secway/update_mob()
 	if(buckled_mob)
 		buckled_mob.dir = dir
-		switch(dir)
-			if(SOUTH)
-				buckled_mob.pixel_x = 0
-				buckled_mob.pixel_y = 4
-			if(WEST)
-				buckled_mob.pixel_x = 2
-				buckled_mob.pixel_y = 4
-			if(NORTH)
-				buckled_mob.pixel_x = 0
-				buckled_mob.pixel_y = 4
-			if(EAST)
-				buckled_mob.pixel_x = -2
-				buckled_mob.pixel_y = 4
+		buckled_mob.pixel_y = 4
