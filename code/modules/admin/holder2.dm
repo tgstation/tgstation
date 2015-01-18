@@ -4,7 +4,7 @@ var/list/admin_datums = list()
 	var/datum/admin_rank/rank
 
 	var/client/owner	= null
-	var/fakekey			= null
+	var/datum/href_proxy/fakekey			= null
 
 	var/datum/marked_datum
 

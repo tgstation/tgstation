@@ -12,7 +12,7 @@
 			for(var/client/C in clients)
 				var/entry = "\t[C.key]"
 				if(C.holder && C.holder.fakekey)
-					entry += " <i>(as [C.holder.fakekey])</i>"
+					entry += " <i>(as [C.holder.fakekey.name])</i>"
 				entry += " - Playing as [C.mob.real_name]"
 				switch(C.mob.stat)
 					if(UNCONSCIOUS)
@@ -34,12 +34,12 @@
 			for(var/client/C in clients)
 				var/entry = "\t[C.key]"
 				if(C.holder && C.holder.fakekey)
-					entry += " <i>(as [C.holder.fakekey])</i>"
+					entry += " <i>(as [C.holder.fakekey.name])</i>"
 				Lines += entry
 	else
 		for(var/client/C in clients)
 			if(C.holder && C.holder.fakekey)
-				Lines += C.holder.fakekey
+				Lines += C.holder.fakekey.name
 			else
 				Lines += C.key
 
@@ -59,7 +59,7 @@
 			msg += "\t[C] is a [C.holder.rank]"
 
 			if(C.holder.fakekey)
-				msg += " <i>(as [C.holder.fakekey])</i>"
+				msg += " <i>(as [C.holder.fakekey.name])</i>"
 
 			if(isobserver(C.mob))
 				msg += " - Observing"
