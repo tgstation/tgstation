@@ -39,9 +39,10 @@ var/global/list/del_profiling = list()
 	var/event/on_moved = new()
 
 /atom/Del()
-	if(!(src.type in del_profiling))
-		del_profiling[src.type] = 0
-	del_profiling[src.type] += 1
+	if(!(type in del_profiling))
+		del_profiling[type] = 0
+
+	del_profiling[type] += 1
 	..()
 
 /atom/proc/beam_connect(var/obj/effect/beam/B)
