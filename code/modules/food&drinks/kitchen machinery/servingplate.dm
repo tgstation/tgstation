@@ -120,6 +120,8 @@
 			var/damage = freshModifier < 0 ? (-freshModifier)*20 : freshModifier*20
 			var/mob/living/L = G.affecting
 			L.apply_damage(damage,BURN,"head")
+			add_logs(G.assailant, G.affecting, "tableslammed")
+			qdel(I)
 			return 1
 		if(!G.confirm())
 			return 0
