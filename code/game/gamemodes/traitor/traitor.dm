@@ -159,6 +159,9 @@
 /datum/game_mode/proc/greet_traitor(var/datum/mind/traitor)
 	traitor.current << "<B><font size=3 color=red>You are the [traitor_name].</font></B>"
 	var/obj_count = 1
+
+	traitor.current << sound('sound/music/traitor_roundstart.ogg')
+
 	for(var/datum/objective/objective in traitor.objectives)
 		traitor.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		obj_count++
