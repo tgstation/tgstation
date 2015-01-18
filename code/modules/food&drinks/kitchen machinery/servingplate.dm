@@ -28,32 +28,42 @@
 				F.tainted = TRUE
 			use_power(active_power_usage * targetTemp)
 
-/obj/machinery/servingplate/proc/fluffTemp(var/what)
-	if(what < 0)
-		what = -what
-	switch(what) //to is not inclusive, needs to be x-1 to y-1
-		if(-110 to 3)
-			return cold ? "Cool" : "Lukewarm"
-		if(2 to 6)
-			return cold ? "Chilled" : "Warm"
-		if(5 to 9)
-			return cold ? "Freezing" : "Hot"
-		if(8 to 110)
-			return cold ? "Frozen" : "Boiling"
-	return "Off"
+/proc/fluffTemp(var/what)
+	if(what <= -9)
+		return "Frozen"
+	if(what < -5 && what > -9)
+		return "Freezing"
+	if(what < -2 && what > -6)
+		return "Chilled"
+	if(what < 0 && what > -3)
+		return "Cool"
+	if(what > 0 && what < 3)
+		return "Lukewarm"
+	if(what > 2 && what < 6)
+		return "Warm"
+	if(what > 5 && what < 9)
+		return "Hot"
+	if(what >= 9)
+		return "Boiling"
+	return "Ambient"
 
-/obj/machinery/servingplate/proc/tempColor(var/what)
-	if(what < 0)
-		what = -what
-	switch(what)
-		if(-3 to 3)
-			return cold ? "#80B2FF" : "#DB704D"
-		if(2 to 6)
-			return cold ? "#66A3FF" : "#D65C33"
-		if(5 to 9)
-			return cold ? "#4D94FF" : "#D14719"
-		if(8 to 11)
-			return cold ? "#3385FF" : "#CC3300"
+/proc/tempColor(var/what)
+	if(what <= -9)
+		return "#3385FF"
+	if(what < -5 && what > -9)
+		return "#4D94FF"
+	if(what < -2 && what > -6)
+		return "#66A3FF"
+	if(what < 0 && what > -3)
+		return "#80B2FF"
+	if(what > 0 && what < 3)
+		return "#DB704D"
+	if(what > 2 && what < 6)
+		return "#D65C33"
+	if(what > 5 && what < 9)
+		return "#D14719"
+	if(what >= 9)
+		return "#CC3300"
 	return "#000000"
 
 /obj/machinery/servingplate/interact(mob/user as mob)
@@ -61,16 +71,16 @@
 		return 0
 
 	var/dat = "<HEAD><TITLE>[src]</TITLE></HEAD><center><br>"
-	dat += "Temperature: [fluffTemp(targetTemp)]<br>"
+	dat += "Temperature: [fluffTemp(cold ? -targetTemp : targetTemp)]<br>"
 	var/counter
 	for(counter = 1; counter <= targetTemp; counter++)
 		if(counter > 48) //48 is the max number that fits comfortably.
 			counter = targetTemp
 			continue
-		dat += "<font color=[tempColor(counter)]><b>|</b></font>"
+		dat += "<font color=[tempColor(cold ? -counter : counter)]><b>|</b></font>"
 	dat += "<br>"
 	dat += "<a href='byond://?src=\ref[src];function=lowermore'>--</a><a href='byond://?src=\ref[src];function=lower'>-</a> <a href='byond://?src=\ref[src];function=raise'>+</a><a href='byond://?src=\ref[src];function=raisemore'>++</a><br>"
-	dat += "[cold ? "Cooled" : "Heated"] food:<br>"
+	dat += "Managed food:<br>"
 	for(var/obj/O in src.loc)
 		if(istype(O,/obj/item/weapon/reagent_containers/food))
 			var/obj/item/weapon/reagent_containers/food/F = O
@@ -164,3 +174,20 @@
 		spark_system.set_up(4, 0, src.loc)
 		spark_system.start()
 		playsound(src.loc, "sparks", 50, 1)
+
+/obj/machinery/conveyor/preserver
+	name = "automated food belt"
+	desc = "Keeps food at the appropriate temperature whilst displaying it proudly!"
+	id = "kitchenconveyor"
+
+/obj/machinery/conveyor/preserver/process()
+	for(var/O in src.loc)
+		if(istype(O,/obj/item/weapon/reagent_containers/food))
+			var/obj/item/weapon/reagent_containers/food/F = O
+			if(F.coolFood)
+				if(F.freshIndex > -0.70)
+					F.freshMod = max(-1,F.freshMod - 0.10)
+			else
+				if(F.freshIndex < 0.70)
+					F.freshMod = min(1,F.freshMod + 0.10)
+	..()

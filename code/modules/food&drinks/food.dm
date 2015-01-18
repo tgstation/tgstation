@@ -12,6 +12,7 @@
 	var/coolFood = FALSE //if a food is marked as coolFood, index checks are reversed
 	var/goesBad = TRUE
 	var/tainted = FALSE //food tainted by an emagged kitchen machine
+	var/cachedDesc // saved desc for updating the desc
 	var/list/peakReagents = list() // reagent IDs and amounts of what the food should have at peak, strided as id, amount
 	var/list/cachedReagents = list()
 
@@ -53,8 +54,14 @@
 		freshIndex = freshIndex - 0.01
 	else if(freshIndex < 0)
 		freshIndex = freshIndex + 0.01
-
-	freshMod = freshMod - 0.01
+	if(freshMod > 0)
+		freshMod = freshMod - 0.01
+	else if(freshMod < 0)
+		freshMod = freshMod + 0.01
+	var/toxic = 0
+	if(src.reagents)
+		toxic = src.reagents.has_reagent("toxin")
+	desc = "[cachedDesc] This food is <font color=[tempColor(freshIndex*10)]>[fluffTemp(freshIndex*10)]</font>. [toxic ? "It has a sickly smell about it." : ""]"
 
 /obj/item/weapon/reagent_containers/food/attack(mob/M as mob, mob/user as mob, def_zone)
 	if(freshIndex < -0.8 || freshIndex > 0.8)
@@ -66,4 +73,5 @@
 	..()
 	pixel_x = rand(-5, 5)	//Randomizes postion slightly.
 	pixel_y = rand(-5, 5)
+	cachedDesc = desc
 	SSfood.insertFood(src)
