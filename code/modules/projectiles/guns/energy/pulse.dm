@@ -21,6 +21,7 @@
 	icon_state = "pulse_carbine"
 	item_state = "pulse"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse/carbine, /obj/item/ammo_casing/energy/electrode/carbine, /obj/item/ammo_casing/energy/laser/carbine)
+	cell_type = "/obj/item/weapon/stock_parts/cell"
 
 /obj/item/weapon/gun/energy/pulse_rifle/pulse_pistol
 	name = "pulse pistol"
@@ -29,6 +30,7 @@
 	icon_state = "pulse_pistol"
 	item_state = "pulse"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse/pistol, /obj/item/ammo_casing/energy/electrode/pistol, /obj/item/ammo_casing/energy/laser/pistol)
+	cell_type = "/obj/item/weapon/stock_parts/cell"
 
 /obj/item/weapon/gun/energy/pulse_rifle/destroyer
 	name = "pulse destroyer"
