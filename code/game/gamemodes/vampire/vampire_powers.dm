@@ -1,4 +1,21 @@
 //This should hold all the vampire related powers
+var/global/hypnotisecost = 0
+var/global/diseasecost = 50 //Diseased touch cost is reduced, not removed, for balance reasons.
+var/global/shapeshiftcost = 0
+var/global/screechcost = 0
+var/global/batcost = 50
+var/global/mistcost = 0
+var/global/shadowstepcost = 0
+var/global/adminvampnerf = 0
+
+if(adminvampnerf == 1) //Vampire starts out buffed, requires an admin to toggle the nerf.
+	hypnotisecost = 20
+	diseasecost = 100
+	shapeshiftcost = 50
+	screechcost = 30
+	batcost = 75
+	mistcost = 30
+	shadowstepcost = 30
 
 
 /mob/proc/vampire_power(required_blood=0, max_stat=0)
@@ -94,12 +111,12 @@
 
 /client/proc/vampire_hypnotise()
 	set category = "Vampire"
-	set name = "Hypnotise (20)"
+	set name = "Hypnotise"
 	set desc= "A piercing stare that incapacitates your victim for a good length of time."
 	var/datum/mind/M = usr.mind
 	if(!M) return
 
-	var/mob/living/carbon/C = M.current.vampire_active(20, 0, 1)
+	var/mob/living/carbon/C = M.current.vampire_active(hypnotisecost, 0, 1)
 
 	if(!C) return
 	M.current.visible_message("<span class='warning'>[M.current.name]'s eyes flash briefly as he stares into [C.name]'s eyes</span>")
@@ -124,12 +141,12 @@
 
 /client/proc/vampire_disease()
 	set category = "Vampire"
-	set name = "Diseased Touch (100)"
+	set name = "Diseased Touch"
 	set desc = "Touches your victim with infected blood giving them the Shutdown Syndrome which quickly shutsdown their major organs resulting in a quick painful death."
 	var/datum/mind/M = usr.mind
 	if(!M) return
 
-	var/mob/living/carbon/C = M.current.vampire_active(100, 0, 1)
+	var/mob/living/carbon/C = M.current.vampire_active(diseasecost, 0, 1)
 	if(!C) return
 	if(!M.current.vampire_can_reach(C, 1))
 		M.current << "\red <b>You cannot touch [C.name] from where you are standing!"
@@ -190,11 +207,11 @@
 
 /client/proc/vampire_shapeshift()
 	set category = "Vampire"
-	set name = "Shapeshift (50)"
+	set name = "Shapeshift"
 	set desc = "Changes your name and appearance at the cost of 50 blood and has a cooldown of 3 minutes."
 	var/datum/mind/M = usr.mind
 	if(!M) return
-	if(M.current.vampire_power(50, 0))
+	if(M.current.vampire_power(shapeshiftcost, 0))
 		M.current.visible_message("<span class='warning'>[M.current.name] transforms!</span>")
 		M.current.client.prefs.real_name = M.current.generate_name() //random_name(M.current.gender)
 		M.current.client.prefs.randomize_appearance_for(M.current)
@@ -205,11 +222,11 @@
 
 /client/proc/vampire_screech()
 	set category = "Vampire"
-	set name = "Chiroptean Screech (30)"
+	set name = "Chiroptean Screech"
 	set desc = "An extremely loud shriek that stuns nearby humans and breaks windows as well."
 	var/datum/mind/M = usr.mind
 	if(!M) return
-	if(M.current.vampire_power(30, 0))
+	if(M.current.vampire_power(screechcost, 0))
 		M.current.visible_message("\red [M.current.name] lets out an ear piercing shriek!", "\red You let out a loud shriek.", "\red You hear a loud painful shriek!")
 		for(var/mob/living/carbon/C in hearers(4, M.current))
 			if(C == M.current) continue
@@ -328,11 +345,11 @@
 
 /client/proc/vampire_bats()
 	set category = "Vampire"
-	set name = "Summon Bats (75)"
+	set name = "Summon Bats"
 	set desc = "You summon a pair of space bats who attack nearby targets until they or their target is dead."
 	var/datum/mind/M = usr.mind
 	if(!M) return
-	if(M.current.vampire_power(75, 0))
+	if(M.current.vampire_power(batcost, 0))
 		var/list/turf/locs = new
 		var/number = 0
 		for(var/direction in alldirs) //looking for bat spawns
@@ -357,13 +374,13 @@
 /client/proc/vampire_jaunt()
 	//AHOY COPY PASTE INCOMING
 	set category = "Vampire"
-	set name = "Mist Form (30)"
+	set name = "Mist Form"
 	set desc = "You take on the form of mist for a short period of time."
 	var/jaunt_duration = 50 //in deciseconds
 	var/datum/mind/M = usr.mind
 	if(!M) return
 
-	if(M.current.vampire_power(30, 0))
+	if(M.current.vampire_power(mistcost, 0))
 		if(M.current.buckled) M.current.buckled.unbuckle()
 		spawn(0)
 			var/mobloc = get_turf(M.current.loc)
@@ -412,7 +429,7 @@
 // Less smoke spam.
 /client/proc/vampire_shadowstep()
 	set category = "Vampire"
-	set name = "Shadowstep (30)"
+	set name = "Shadowstep"
 	set desc = "Vanish into the shadows."
 	var/datum/mind/M = usr.mind
 	if(!M) return
@@ -424,7 +441,7 @@
 	// Maximum lighting_lumcount.
 	var/max_lum = 1
 
-	if(M.current.vampire_power(30, 0))
+	if(M.current.vampire_power(shadowstepcost, 0))
 		if(M.current.buckled) M.current.buckled.unbuckle()
 		spawn(0)
 			var/list/turfs = new/list()

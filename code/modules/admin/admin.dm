@@ -2,7 +2,6 @@
 var/global/BSACooldown = 0
 var/global/floorIsLava = 0
 
-
 ////////////////////////////////
 /proc/message_admins(var/msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
@@ -915,6 +914,16 @@ var/global/floorIsLava = 0
 	log_admin("[key_name(usr)] toggled respawn to [abandon_allowed ? "On" : "Off"].")
 	world.update_status()
 	feedback_add_details("admin_verb","TR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/datum/admins/proc/toggle_vampire_buff()
+	set category = "Server"
+	set desc="Toggle free/reduced vampire power cost"
+	set name="Toggle Vampire Blood Cost"
+	adminvampnerf = !adminvampnerf
+	log_admin("[key_name(usr)] toggled Vampire Blood Cost to [adminvampnerf].")
+	message_admins("[key_name_admin(usr)] toggled Vampire Blood Cost [adminvampnerf ? "on" : "off"].",1)
+	feedback_add_details("admin_verb","TVBC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 
 /datum/admins/proc/toggle_aliens()
 	set category = "Server"

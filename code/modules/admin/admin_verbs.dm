@@ -96,6 +96,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/one_click_antag,
 	/client/proc/antag_madness,
 	/datum/admins/proc/toggle_aliens,
+	/datum/admins/proc/toggle_vampire_buff,
 	/datum/admins/proc/toggle_space_ninja,
 	/client/proc/send_space_ninja,
 	// FUUUUCKED /client/proc/zombie_event, // ZOMBB-B-BIES
@@ -208,6 +209,7 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/drop_bomb,
 	/client/proc/cinematic,
 	/datum/admins/proc/toggle_aliens,
+	/datum/admins/proc/toggle_vampire_buff,
 	/datum/admins/proc/toggle_space_ninja,
 	/client/proc/send_space_ninja,
 	/client/proc/cmd_admin_add_freeform_ai_law,
