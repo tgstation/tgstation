@@ -212,6 +212,7 @@
 	new /obj/item/clothing/suit/toggle/wintercoat(src)
 	new /obj/item/ammo_box/c38(src)
 	new /obj/item/ammo_box/c38(src)
+	new /obj/item/weapon/storage/belt/holster(src)
 	new /obj/item/weapon/gun/projectile/revolver/detective(src)
 	return
 
