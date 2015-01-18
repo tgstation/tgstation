@@ -1,3 +1,4 @@
+var/global/list/del_profiling = list()
 /atom
 	layer = 2
 
@@ -36,6 +37,12 @@
 
 	// When this object moves. (args: loc)
 	var/event/on_moved = new()
+
+/atom/Del()
+	if(!(src.type in del_profiling))
+		del_profiling[src.type] = 0
+	del_profiling[src.type] += 1
+	..()
 
 /atom/proc/beam_connect(var/obj/effect/beam/B)
 	if(!(B in beams))
@@ -399,7 +406,7 @@ its easier to just keep the beam vertical.
 
 /atom/proc/emag_act()
 	return
-	
+
 /atom/proc/hitby(atom/movable/AM as mob|obj)
 	return
 
