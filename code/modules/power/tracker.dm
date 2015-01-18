@@ -17,7 +17,7 @@
 	..(loc)
 	if(!S)
 		S = new /obj/machinery/power/solar_assembly(src)
-		S.glass_type = /obj/item/stack/sheet/rglass
+		S.glass_type = /obj/item/stack/sheet/glass/rglass
 		S.tracker = 1
 		S.anchored = 1
 	S.loc = src

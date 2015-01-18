@@ -52,7 +52,7 @@ var/list/solars_list = list()
 /obj/machinery/power/solar/proc/make()
 	if(!solar_assembly)
 		solar_assembly = new /obj/machinery/power/solar_assembly()
-		solar_assembly.glass_type = /obj/item/stack/sheet/rglass
+		solar_assembly.glass_type = /obj/item/stack/sheet/glass/rglass
 		solar_assembly.anchored = 1
 
 	solar_assembly.loc = src
@@ -88,6 +88,17 @@ var/list/solars_list = list()
 			getFromPool(/obj/item/weapon/shard, loc)
 			getFromPool(/obj/item/weapon/shard, loc)
 			qdel(src)
+/*
+/obj/machinery/power/solar/update_icon()
+	..()
+	overlays.Cut()
+	var/icon = "solar_panel_" + solar_assembly.glass_type.sname
+	if(stat & BROKEN)
+		icon += "-b"
+	overlays += image('icons/obj/power.dmi', icon_state = icon, layer = FLY_LAYER)
+	src.dir = angle2dir(adir)
+	return
+*/
 
 /obj/machinery/power/solar/update_icon()
 	..()
@@ -95,22 +106,22 @@ var/list/solars_list = list()
 	if(stat & BROKEN)
 		if(solar_assembly.glass_type == /obj/item/stack/sheet/glass)
 			overlays += image('icons/obj/power.dmi', icon_state = "solar_panel-b", layer = FLY_LAYER)
-		else if(solar_assembly.glass_type == /obj/item/stack/sheet/rglass)
+		else if(solar_assembly.glass_type == /obj/item/stack/sheet/glass/rglass)
 			overlays += image('icons/obj/power.dmi', icon_state = "solar_panel_ref-b", layer = FLY_LAYER)
 		else if(solar_assembly.glass_type == /obj/item/stack/sheet/glass/plasmaglass)
 			overlays += image('icons/obj/power.dmi', icon_state = "solar_panel_plasma-b", layer = FLY_LAYER)
-		else if(solar_assembly.glass_type == /obj/item/stack/sheet/rglass/plasmarglass)
+		else if(solar_assembly.glass_type == /obj/item/stack/sheet/glass/plasmarglass)
 			overlays += image('icons/obj/power.dmi', icon_state = "solar_panel_plasma_ref-b", layer = FLY_LAYER)
 	else if(solar_assembly.glass_type == /obj/item/stack/sheet/glass)
 		overlays += image('icons/obj/power.dmi', icon_state = "solar_panel", layer = FLY_LAYER)
 		src.dir = angle2dir(adir)
-	else if(solar_assembly.glass_type == /obj/item/stack/sheet/rglass)
+	else if(solar_assembly.glass_type == /obj/item/stack/sheet/glass/rglass)
 		overlays += image('icons/obj/power.dmi', icon_state = "solar_panel_ref", layer = FLY_LAYER)
 		src.dir = angle2dir(adir)
 	else if(solar_assembly.glass_type == /obj/item/stack/sheet/glass/plasmaglass)
 		overlays += image('icons/obj/power.dmi', icon_state = "solar_panel_plasma", layer = FLY_LAYER)
 		src.dir = angle2dir(adir)
-	else if(solar_assembly.glass_type == /obj/item/stack/sheet/rglass/plasmarglass)
+	else if(solar_assembly.glass_type == /obj/item/stack/sheet/glass/plasmarglass)
 		overlays += image('icons/obj/power.dmi', icon_state = "solar_panel_plasma_ref", layer = FLY_LAYER)
 		src.dir = angle2dir(adir)
 	return
@@ -237,8 +248,8 @@ var/list/solars_list = list()
 			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
 			return 1
 
-		if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass)) //Plasma glass types could be added, just needs a fancy sprite
-			var/obj/item/stack/sheet/S = W
+		if(istype(W, /obj/item/stack/sheet/glass)) //Plasma glass types could be added, just needs a fancy sprite
+			var/obj/item/stack/sheet/glass/S = W
 			if(S.amount >= 2)
 				glass_type = W.type
 				S.use(2)
@@ -250,24 +261,9 @@ var/list/solars_list = list()
 				else
 					var/obj/machinery/power/solar/solar = new /obj/machinery/power/solar(get_turf(src))
 					solar.solar_assembly = src
-					//The following is terrible, but it's the easiest way I found of doing it
-					if(istype(W, /obj/item/stack/sheet/glass))
-						solar.glass_quality_factor = 0.5 //Oh shit nigger what the flying fucking shit are you doing ?
-						solar.health = 5 //Glass is some weak shit
-						solar.maxhealth = 5
-					else if(istype(W, /obj/item/stack/sheet/rglass))
-						solar.glass_quality_factor = 1 //You're okay
-						solar.health = 15 //Justin case
-						solar.maxhealth = 15
-					else if(istype(W, /obj/item/stack/sheet/glass/plasmaglass))
-						solar.glass_quality_factor = 0.65 //Somehow plasma gives a small plus to production
-						solar.health = 10
-						solar.maxhealth = 10
-					else if(istype(W, /obj/item/stack/sheet/rglass/plasmarglass))
-						solar.glass_quality_factor = 1.25 //Ditto above
-						solar.health = 30 //Reinforced plasma glass is STRONG
-						solar.maxhealth = 30
-					//This is where tinted glass would go if it were a thing, sadly it isn't. Smuck-bait could have been had
+					solar.glass_quality_factor = S.glass_quality //Silly Dylan, istype checks
+					solar.maxhealth = S.shealth
+					solar.health = S.shealth
 					solar.update_icon() //Sanity check
 			return 1
 

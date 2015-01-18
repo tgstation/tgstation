@@ -26,7 +26,7 @@ var/global/list/obj/machinery/mirror/mirror_list = list()
 	icon_state = base_state
 	overlays += mirror_state // TODO: break on BROKEN
 	component_parts = list(
-		new /obj/item/stack/sheet/rglass(src,5),
+		new /obj/item/stack/sheet/glass/rglass(src,5),
 	)
 
 /obj/machinery/mirror/proc/get_deflections(var/in_dir)

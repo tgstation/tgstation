@@ -24,16 +24,16 @@
 
 	var/obj/item/weapon/cable_coil/W = new /obj/item/weapon/cable_coil(src)
 	W.amount = 50
-	W.max_amount = 50 // Override MAXCOIL 
+	W.max_amount = 50 // Override MAXCOIL
 	src.modules += W
 	return
 
 /obj/item/weapon/robot_module/mommi/respawn_consumable(var/mob/living/silicon/robot/R)
 	var/list/what = list (
 		// /obj/item/stack/sheet/metal/cyborg,
-		// /obj/item/stack/sheet/glass,
+		// /obj/item/stack/sheet/glass/glass,
 		/obj/item/weapon/cable_coil,
-		// /obj/item/stack/sheet/rglass/cyborg,
+		// /obj/item/stack/sheet/glass/rglass/cyborg,
 	)
 	for (var/T in what)
 		if (!(locate(T) in src.modules))

@@ -18,7 +18,7 @@
 	var/obj/screen/inv1 = null
 	var/obj/screen/inv2 = null
 	var/obj/screen/inv3 = null
-	
+
 	var/shown_robot_modules = 0
 	var/obj/screen/robot_modules_background
 
@@ -82,7 +82,7 @@
 		wires = new /datum/wires/robot/mommi(src)
 	else
 		wires = new(src)
-		
+
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
 	robot_modules_background.layer = 19
@@ -537,12 +537,12 @@
 		stat(null, text("Metal Sheets: [M.amount]/50"))
 
 /mob/living/silicon/robot/proc/show_glass_sheets()
-	var/obj/item/stack/sheet/glass/G = installed_module(/obj/item/stack/sheet/glass)
+	var/obj/item/stack/sheet/glass/glass/G = installed_module(/obj/item/stack/sheet/glass/glass)
 	if(G)
 		stat(null, text("Glass Sheets: [G.amount]/50"))
 
 /mob/living/silicon/robot/proc/show_rglass_sheets()
-	var/obj/item/stack/sheet/rglass/G = installed_module(/obj/item/stack/sheet/rglass)
+	var/obj/item/stack/sheet/glass/rglass/G = installed_module(/obj/item/stack/sheet/glass/rglass)
 	if(G)
 		stat(null, text("Reinforced Glass Sheets: [G.amount]/50"))
 
@@ -689,7 +689,7 @@
 //		if (viewalerts) robot_alerts()
 	return !cleared
 
-	
+
 /mob/living/silicon/robot/emag_act(mob/user as mob)
 	if(!user != src)
 		if(!opened)
@@ -747,8 +747,8 @@
 					user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
 					if(prob(25))
 						src << "Hack attempt detected."
-	
-	
+
+
 /mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
 		return
@@ -896,7 +896,7 @@
 				updateicon()
 			else
 				user << "\red Access denied."
-				
+
 	else if(istype(W, /obj/item/borg/upgrade/))
 		var/obj/item/borg/upgrade/U = W
 		if(!opened)
@@ -1392,8 +1392,8 @@
 	if(hud_used)
 		hud_used.update_robot_modules_display()
 	update_icons()
-	
-	
+
+
 /mob/living/silicon/robot/proc/SetLockdown(var/state = 1)
 	// They stay locked down if their wire is cut.
 	if(wires.LockedCut())

@@ -20,7 +20,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	research_flags = HASOUTPUT | TAKESMATIN | CONSOLECONTROL | LOCKBOXES
 
 	allowed_materials=list(
-		/obj/item/stack/sheet/glass,
+		/obj/item/stack/sheet/glass/glass,
 		/obj/item/stack/sheet/mineral/gold,
 		/obj/item/stack/sheet/mineral/diamond,
 		/obj/item/stack/sheet/mineral/uranium,

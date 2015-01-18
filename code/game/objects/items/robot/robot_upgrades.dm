@@ -227,7 +227,7 @@
 	if(!S) return 0
 
 	S.materials_scanned |= list("plasma glass" = /obj/item/stack/sheet/glass/plasmaglass,
-								"reinforced plasma glass" = /obj/item/stack/sheet/rglass/plasmarglass,
+								"reinforced plasma glass" = /obj/item/stack/sheet/glass/plasmarglass,
 								"carpet tiles" = /obj/item/stack/tile/carpet)
 
 	var/obj/item/weapon/wrench/socket/W = locate(/obj/item/weapon/wrench/socket) in R.module.modules
