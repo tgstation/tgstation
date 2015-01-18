@@ -176,3 +176,19 @@
 	new /obj/item/weapon/reagent_containers/glass/bottle/cyanide(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/histamine(src)
 	return
+
+/obj/item/weapon/storage/box/syndie_kit/knives
+	name = "box"
+	desc = "It's just an ordinary box."
+	icon_state = "box"
+	item_state = "syringe_kit"
+
+/obj/item/weapon/storage/box/syndie_kit/knives/New()
+	..()
+	new /obj/item/weapon/melee/throwknife(src)
+	new /obj/item/weapon/melee/throwknife(src)
+	new /obj/item/weapon/melee/throwknife(src)
+	new /obj/item/weapon/melee/throwknife(src)
+	new /obj/item/weapon/melee/throwknife(src)
+	new /obj/item/weapon/melee/throwknife(src)
+	return

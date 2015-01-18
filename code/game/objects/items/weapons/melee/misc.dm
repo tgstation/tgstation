@@ -102,3 +102,20 @@
 
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
 	add_fingerprint(user)
+
+
+/obj/item/weapon/melee/throwknife
+	name = "throwing knife"
+	desc = "A syndicate combat knife that is extremely deadly when thrown and can be reused."
+	icon_state = "throwknife"
+	item_state = "knife"
+	force = 15
+	throwforce = 40
+	throw_range = 10
+	throw_speed = 1
+	w_class = 2
+	origin_tech = "combat=3;syndicate=2"
+
+/obj/item/weapon/melee/throwknife/throw_at()
+	SpinAnimation(5, 1)
+	..()
