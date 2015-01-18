@@ -310,8 +310,9 @@
 			update_inv_gloves(redraw_mob)
 		if(slot_head)
 			src.head = W
-			if((head.flags & BLOCKHAIR) || (head.flags & BLOCKHEADHAIR))
-				update_hair(redraw_mob)	//rebuild hair
+			//if((head.flags & BLOCKHAIR) || (head.flags & BLOCKHEADHAIR)) //Makes people bald when switching to one with no Blocking flags
+			//	update_hair(redraw_mob)	//rebuild hair
+			update_hair(redraw_mob)
 			if(istype(W,/obj/item/clothing/head/kitty))
 				W.update_icon(src)
 			update_inv_head(redraw_mob)
