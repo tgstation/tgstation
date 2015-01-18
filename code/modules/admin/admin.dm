@@ -915,14 +915,7 @@ var/global/floorIsLava = 0
 	world.update_status()
 	feedback_add_details("admin_verb","TR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/datum/admins/proc/toggle_vampire_buff()
-	set category = "Server"
-	set desc="Toggle free/reduced vampire power cost"
-	set name="Toggle Vampire Blood Cost"
-	adminvampnerf = !adminvampnerf
-	log_admin("[key_name(usr)] toggled Vampire Blood Cost to [adminvampnerf].")
-	message_admins("[key_name_admin(usr)] toggled Vampire Blood Cost [adminvampnerf ? "on" : "off"].",1)
-	feedback_add_details("admin_verb","TVBC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 
 
 /datum/admins/proc/toggle_aliens()

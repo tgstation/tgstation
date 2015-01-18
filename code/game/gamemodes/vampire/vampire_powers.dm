@@ -1,21 +1,5 @@
 //This should hold all the vampire related powers
-var/global/hypnotisecost = 0
-var/global/diseasecost = 50 //Diseased touch cost is reduced, not removed, for balance reasons.
-var/global/shapeshiftcost = 0
-var/global/screechcost = 0
-var/global/batcost = 50
-var/global/mistcost = 0
-var/global/shadowstepcost = 0
-var/global/adminvampnerf = 0
 
-if(adminvampnerf == 1) //Vampire starts out buffed, requires an admin to toggle the nerf.
-	hypnotisecost = 20
-	diseasecost = 100
-	shapeshiftcost = 50
-	screechcost = 30
-	batcost = 75
-	mistcost = 30
-	shadowstepcost = 30
 
 
 /mob/proc/vampire_power(required_blood=0, max_stat=0)
@@ -116,7 +100,7 @@ if(adminvampnerf == 1) //Vampire starts out buffed, requires an admin to toggle 
 	var/datum/mind/M = usr.mind
 	if(!M) return
 
-	var/mob/living/carbon/C = M.current.vampire_active(hypnotisecost, 0, 1)
+	var/mob/living/carbon/C = M.current.vampire_active(0, 0, 1)
 
 	if(!C) return
 	M.current.visible_message("<span class='warning'>[M.current.name]'s eyes flash briefly as he stares into [C.name]'s eyes</span>")
@@ -146,7 +130,7 @@ if(adminvampnerf == 1) //Vampire starts out buffed, requires an admin to toggle 
 	var/datum/mind/M = usr.mind
 	if(!M) return
 
-	var/mob/living/carbon/C = M.current.vampire_active(diseasecost, 0, 1)
+	var/mob/living/carbon/C = M.current.vampire_active(50, 0, 1)
 	if(!C) return
 	if(!M.current.vampire_can_reach(C, 1))
 		M.current << "\red <b>You cannot touch [C.name] from where you are standing!"
@@ -211,7 +195,7 @@ if(adminvampnerf == 1) //Vampire starts out buffed, requires an admin to toggle 
 	set desc = "Changes your name and appearance at the cost of 50 blood and has a cooldown of 3 minutes."
 	var/datum/mind/M = usr.mind
 	if(!M) return
-	if(M.current.vampire_power(shapeshiftcost, 0))
+	if(M.current.vampire_power(0, 0))
 		M.current.visible_message("<span class='warning'>[M.current.name] transforms!</span>")
 		M.current.client.prefs.real_name = M.current.generate_name() //random_name(M.current.gender)
 		M.current.client.prefs.randomize_appearance_for(M.current)
@@ -226,7 +210,7 @@ if(adminvampnerf == 1) //Vampire starts out buffed, requires an admin to toggle 
 	set desc = "An extremely loud shriek that stuns nearby humans and breaks windows as well."
 	var/datum/mind/M = usr.mind
 	if(!M) return
-	if(M.current.vampire_power(screechcost, 0))
+	if(M.current.vampire_power(0, 0))
 		M.current.visible_message("\red [M.current.name] lets out an ear piercing shriek!", "\red You let out a loud shriek.", "\red You hear a loud painful shriek!")
 		for(var/mob/living/carbon/C in hearers(4, M.current))
 			if(C == M.current) continue
@@ -349,7 +333,7 @@ if(adminvampnerf == 1) //Vampire starts out buffed, requires an admin to toggle 
 	set desc = "You summon a pair of space bats who attack nearby targets until they or their target is dead."
 	var/datum/mind/M = usr.mind
 	if(!M) return
-	if(M.current.vampire_power(batcost, 0))
+	if(M.current.vampire_power(75, 0))
 		var/list/turf/locs = new
 		var/number = 0
 		for(var/direction in alldirs) //looking for bat spawns
@@ -380,7 +364,7 @@ if(adminvampnerf == 1) //Vampire starts out buffed, requires an admin to toggle 
 	var/datum/mind/M = usr.mind
 	if(!M) return
 
-	if(M.current.vampire_power(mistcost, 0))
+	if(M.current.vampire_power(0, 0))
 		if(M.current.buckled) M.current.buckled.unbuckle()
 		spawn(0)
 			var/mobloc = get_turf(M.current.loc)
@@ -441,7 +425,7 @@ if(adminvampnerf == 1) //Vampire starts out buffed, requires an admin to toggle 
 	// Maximum lighting_lumcount.
 	var/max_lum = 1
 
-	if(M.current.vampire_power(shadowstepcost, 0))
+	if(M.current.vampire_power(10, 0))
 		if(M.current.buckled) M.current.buckled.unbuckle()
 		spawn(0)
 			var/list/turfs = new/list()
