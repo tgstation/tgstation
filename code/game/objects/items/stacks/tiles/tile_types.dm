@@ -25,7 +25,7 @@
 			user << "<span class='warning'>You need at least four tiles to do this.</span>"
 			return
 
-		if(!mineralType)
+		if(is_hot(WT) && !mineralType)
 			user << "<span class='warning'>You can not reform this.</span>"
 			return
 
@@ -39,8 +39,8 @@
 				return
 
 			if (mineralType == "metal")
-				var/obj/item/stack/sheet/metal/new_item = new(usr.loc)
-				new_item.add_to_stacks(usr)
+				var/obj/item/stack/sheet/metal/new_item = new(user.loc)
+				new_item.add_to_stacks(user)
 				user.visible_message("<span class='warning'>[user.name] shaped [src] into metal with the weldingtool.</span>", \
 							 "<span class='notice'>You shaped [src] into metal with the weldingtool.</span>", \
 							 "<span class='warning'>You hear welding.</span>")
@@ -53,8 +53,8 @@
 
 			else
 				var/sheet_type = text2path("/obj/item/stack/sheet/mineral/[mineralType]")
-				var/obj/item/stack/sheet/mineral/new_item = new sheet_type(usr.loc)
-				new_item.add_to_stacks(usr)
+				var/obj/item/stack/sheet/mineral/new_item = new sheet_type(user.loc)
+				new_item.add_to_stacks(user)
 				user.visible_message("<span class='warning'>[user.name] shaped [src] into a sheet with the weldingtool.</span>", \
 							 "<span class='notice'>You shaped [src] into a sheet with the weldingtool.</span>", \
 							 "<span class='warning'>You hear welding.</span>")
