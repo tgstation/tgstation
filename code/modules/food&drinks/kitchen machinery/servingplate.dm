@@ -74,7 +74,7 @@
 	for(var/obj/O in src.loc)
 		if(istype(O,/obj/item/weapon/reagent_containers/food))
 			var/obj/item/weapon/reagent_containers/food/F = O
-			dat += "<font color=[F.coolFood ? "#3399FF" : "#CC3300"]>[F.name]</font> - [fluffTemp(F.freshMod*freshModifier)] ([(F.freshMod*freshModifier)*7]°F)<br>"
+			dat += "<font color=[F.coolFood ? "#3399FF" : "#CC3300"]>[F.name]</font> - [fluffTemp(F.freshMod*freshModifier)] ([(F.freshMod*freshModifier)*7]°C)<br>"
 	dat += "<a href='byond://?src=\ref[src];function=toggle'>Mode: [cold ? "Cool" : "Heat"]</a><br>"
 	dat += "<a href='byond://?src=\ref[src];function=refresh'>Check Temperatures</a><br>"
 	dat += "</center>"
