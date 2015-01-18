@@ -31,19 +31,6 @@ em						{font-style: normal;	font-weight: bold;}
 .medradio				{color: #337296;}
 .engradio				{color: #fb5613;}
 .suppradio				{color: #a8732b;}
-.servradio				{color: #6eaa2c;}
-.syndradio				{color: #6d3f40;}
-.dsquadradio			{color: #686868;}
-.aiprivradio			{color: #ff00ff;}
-
-.alert					{color: #ff0000;}
-h1.alert, h2.alert		{color: #000000;}
-
-.emote					{					font-style: italic;}
-.selecteddna			{color: #ffffff; 	background-color: #001B1B}
-
-.attack					{color: #ff0000;}
-.disarm					{color: #990000;}
 .passive				{color: #660000;}
 
 .userdanger				{color: #ff0000;	font-weight: bold;}
@@ -68,6 +55,9 @@ h1.alert, h2.alert		{color: #000000;}
 .interface				{color: #330033;}
 
 .sans					{font-family: "Comic Sans MS", cursive, sans-serif;}
+.papyrus				{font-family: "Papyrus", cursive, sans-serif;}
+.vineta					{font-family: "Vineta BT", cursive, sans-serif;}
+.jokerman				{font-family: "Jokerman", cursive, sans-serif;}
 
 BIG IMG.icon 			{width: 32px; height: 32px;}
 
