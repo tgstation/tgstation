@@ -21,6 +21,7 @@
 	melee_damage_upper = 12
 	attacktext = "attacks"
 	attack_sound = 'sound/weapons/bite.ogg'
+	var/Attackemote = "growls at"
 
 	min_oxy = 0
 	max_oxy = 0
@@ -38,7 +39,7 @@
 /mob/living/simple_animal/hostile/mimic/FindTarget()
 	. = ..()
 	if(.)
-		emote("me", 1, "growls at [.].")
+		emote("me", 1, "[Attackemote] [.].")
 
 /mob/living/simple_animal/hostile/mimic/Die()
 	..()
@@ -232,3 +233,95 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 			return 0
 	return ..()
 
+//
+//animated blasters, wands, etc
+//
+
+mob/living/simple_animal/hostile/mimic/copy/ranged
+	name = "animated shooty gun"
+	desc = "there's something fishy here."
+	environment_smash = 0 //needed? seems weird for them to do so
+	ranged = 1
+	retreat_distance = 1 //just enough to shoot
+	minimum_distance = 6
+	projectiletype = /obj/item/projectile/magic/
+	projectilesound = 'sound/items/bikehorn.ogg'
+	casingtype = null //todo: drop shells
+	Attackemote = "aims menacingly at"
+	var/shotsleft = 100 //so guns can run out of ammo
+	var/list/autochargingguns = list(/obj/item/weapon/gun/energy/crossbow, /obj/item/weapon/gun/energy/gun/nuclear, /obj/item/weapon/gun/energy/laser/captain)
+
+
+/mob/living/simple_animal/hostile/mimic/copy/ranged/New(loc, var/obj/copy, var/mob/living/creator, var/destroy_original = 0)
+	..()
+
+/mob/living/simple_animal/hostile/mimic/copy/ranged/CopyObject(var/obj/O, var/mob/living/creator, var/destroy_original = 0)
+	if(destroy_original || CheckObject(O))
+
+		O.loc = src
+		name = O.name
+		desc = O.desc
+		icon = O.icon
+		icon_state = O.icon_state
+		icon_living = icon_state
+
+		if(istype(O, /obj/item/weapon/gun)) //leaving for sanity i guess
+			var/obj/item/weapon/gun/G = O
+			health = 15 * G.w_class
+			melee_damage_upper = G.force
+			melee_damage_lower = G.force - max(0, (G.force / 2))
+			move_to_delay = 2 * G.w_class + 1
+			projectilesound = G.fire_sound
+
+			if(istype(G, /obj/item/weapon/gun/magic))
+				var/obj/item/weapon/gun/magic/Zapstick = G
+				var/obj/item/ammo_casing/magic/Zapshot = new Zapstick.ammo_type
+				shotsleft = Zapstick.charges * 2
+				projectiletype = Zapshot.projectile_type
+				qdel(Zapshot)
+
+			if(istype(G, /obj/item/weapon/gun/projectile))
+				var/obj/item/weapon/gun/projectile/Pewgun = G
+				var/obj/item/ammo_box/magazine/Pewmag = new Pewgun.mag_type
+				var/obj/item/ammo_casing/Pewshot = new Pewmag.ammo_type
+				shotsleft = Pewgun.get_ammo(1) * 2
+				projectiletype = Pewshot.projectile_type
+				qdel(Pewshot) //is this needed?
+				qdel(Pewmag)
+
+			if(istype(G, /obj/item/weapon/gun/energy))
+				var/obj/item/weapon/gun/energy/Zapgun = G
+				var/selectfiresetting = Zapgun.select
+				var/obj/item/ammo_casing/energy/Energyammotype = Zapgun.ammo_type[selectfiresetting]
+				projectiletype = Energyammotype.projectile_type
+				if(is_type_in_list(Zapgun, autochargingguns)) //todo: make this work via OOP
+					shotsleft = 9999 //basically infinite
+				else
+					shotsleft = (Zapgun.power_supply.charge / Energyammotype.e_cost) * 2
+
+			if(shotsleft <= 0)
+				src.ranged = 0
+				src.minimum_distance = 1
+				src.retreat_distance = 0
+			if(shotsleft >= 30) //maximum shooty
+				if(prob(20))
+					src.rapid = 1
+
+		maxHealth = health
+		if(creator)
+			src.creator = creator
+			faction += "\ref[creator]"
+		if(destroy_original)
+			qdel(O)
+		return 1
+	return
+
+/mob/living/simple_animal/hostile/mimic/copy/ranged/Shoot()
+	..()
+	if(shotsleft)
+		shotsleft--
+		if(shotsleft <= 0) //melee when out of ammo
+			src.ranged = 0 //of questionable necessity
+			src.minimum_distance = 1
+			src.retreat_distance = 0
+	return

@@ -196,7 +196,7 @@ proc/wabbajack(mob/living/M)
 							if("magicarp")		new_mob = new /mob/living/simple_animal/hostile/carp/ranged(M.loc)
 							if("chaosmagicarp")	new_mob = new /mob/living/simple_animal/hostile/carp/ranged/chaos(M.loc)
 					else
-						var/animal = pick("parrot","corgi","crab","pug","cat","mouse","chicken","cow","lizard","chick")
+						var/animal = pick("parrot","corgi","crab","pug","cat","mouse","chicken","cow","lizard","chick","fox")
 						switch(animal)
 							if("parrot")	new_mob = new /mob/living/simple_animal/parrot(M.loc)
 							if("corgi")		new_mob = new /mob/living/simple_animal/corgi(M.loc)
@@ -207,6 +207,7 @@ proc/wabbajack(mob/living/M)
 							if("chicken")	new_mob = new /mob/living/simple_animal/chicken(M.loc)
 							if("cow")		new_mob = new /mob/living/simple_animal/cow(M.loc)
 							if("lizard")	new_mob = new /mob/living/simple_animal/lizard(M.loc)
+							if("fox") new_mob = new /mob/living/simple_animal/fox(M.loc)
 							else			new_mob = new /mob/living/simple_animal/chick(M.loc)
 					new_mob.languages |= HUMAN
 				if("human")
@@ -264,7 +265,11 @@ proc/wabbajack(mob/living/M)
 				return
 		else
 			var/obj/O = change
-			new /mob/living/simple_animal/hostile/mimic/copy(O.loc, O, firer)
+			if(istype(O, /obj/item/weapon/gun))
+				new /mob/living/simple_animal/hostile/mimic/copy/ranged(O.loc, O, firer)
+			else
+				new /mob/living/simple_animal/hostile/mimic/copy(O.loc, O, firer)
+
 	else if(istype(change, /mob/living/simple_animal/hostile/mimic/copy))
 		// Change our allegiance!
 		var/mob/living/simple_animal/hostile/mimic/copy/C = change
