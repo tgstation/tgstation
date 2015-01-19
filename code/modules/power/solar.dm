@@ -36,9 +36,9 @@ var/list/solars_list = list()
 	var/obj/machinery/power/solar_control/control
 	var/obj/machinery/power/solar_assembly/solar_assembly
 
-/obj/machinery/power/solar/New()
+/obj/machinery/power/solar/New(var/turf/loc, var/obj/machinery/power/solar_assembly/S)
 	. = ..()
-	make()
+	make(S)
 	connect_to_network()
 
 /obj/machinery/power/solar/disconnect_from_network()
@@ -49,27 +49,32 @@ var/list/solars_list = list()
 	. = ..()
 	solars_list += src
 
-/obj/machinery/power/solar/proc/make()
-	if(!solar_assembly)
+/obj/machinery/power/solar/proc/make(var/obj/machinery/power/solar_assembly/S)
+	if(!S)
 		solar_assembly = new /obj/machinery/power/solar_assembly()
-		solar_assembly.glass_type = /obj/item/stack/sheet/glass/rglass
+		solar_assembly.glass = new /obj/item/stack/sheet/glass/rglass()
 		solar_assembly.anchored = 1
-
+	else
+		solar_assembly = S
+	src.glass_quality_factor = solar_assembly.glass.glass_quality //Don't use istype checks kids
+	src.maxhealth = solar_assembly.glass.shealth
+	src.health = solar_assembly.glass.shealth
 	solar_assembly.loc = src
 	update_icon()
 
 /obj/machinery/power/solar/attackby(obj/item/weapon/W, mob/user)
 	if(iscrowbar(W))
 		playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+		user << "<span class='notice'>You begin taking the [solar_assembly.glass.name] off the solar panel.</span>"
 		if(do_after(user, 50))
 			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-			user.visible_message("<span class='notice'>[user] takes the glass off the solar panel.</span>")
+			user.visible_message("<span class='notice'>[user] takes the [solar_assembly.glass.name] off the solar panel.</span>", \
+			"<span class='notice'>You take the [solar_assembly.glass.name] off the solar panel.</span>")
 			qdel(src)
 	else if(W)
 		add_fingerprint(user)
 		health -= W.force
 		healthcheck()
-
 	..()
 
 /obj/machinery/power/solar/blob_act()
@@ -84,22 +89,23 @@ var/list/solars_list = list()
 		if(!(stat & BROKEN))
 			broken()
 		else
-			solar_assembly.glass_type = null //The glass you're looking for is below pal
+			qdel(solar_assembly.glass)
+			solar_assembly.glass = null
 			getFromPool(/obj/item/weapon/shard, loc)
 			getFromPool(/obj/item/weapon/shard, loc)
 			qdel(src)
-/*
+
 /obj/machinery/power/solar/update_icon()
 	..()
 	overlays.Cut()
-	var/icon = "solar_panel_" + solar_assembly.glass_type.sname
+	var/icon = "solar_panel_" + solar_assembly.glass.sname
 	if(stat & BROKEN)
 		icon += "-b"
 	overlays += image('icons/obj/power.dmi', icon_state = icon, layer = FLY_LAYER)
 	src.dir = angle2dir(adir)
 	return
-*/
 
+/* Future generations must know
 /obj/machinery/power/solar/update_icon()
 	..()
 	overlays.Cut()
@@ -125,6 +131,7 @@ var/list/solars_list = list()
 		overlays += image('icons/obj/power.dmi', icon_state = "solar_panel_plasma_ref", layer = FLY_LAYER)
 		src.dir = angle2dir(adir)
 	return
+*/
 
 /obj/machinery/power/solar/proc/update_solar_exposure()
 	if(!sun)
@@ -175,13 +182,13 @@ var/list/solars_list = list()
 /obj/machinery/power/solar/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			solar_assembly.glass_type = null //The glass you're looking for is below pal
+			qdel(solar_assembly.glass)
 			if(prob(15))
 				getFromPool(/obj/item/weapon/shard, loc)
 			qdel(src)
 		if(2.0)
 			if(prob(25))
-				solar_assembly.glass_type = null //The glass you're looking for is below pal
+				qdel(solar_assembly.glass)
 				getFromPool(/obj/item/weapon/shard, loc)
 				qdel(src)
 			else
@@ -223,14 +230,15 @@ var/list/solars_list = list()
 	anchored = 0
 	density = 1
 	var/tracker = 0
-	var/glass_type = null
+	var/obj/item/stack/sheet/glass/glass = null
 
 //Give back the glass type we were supplied with
 /obj/machinery/power/solar_assembly/proc/give_glass() //And the lord said unto him, 'Give that fucker glass'
-	if(glass_type)
-		var/obj/item/stack/sheet/S = new glass_type(get_turf(src))
+	if(glass)
+		var/obj/item/stack/sheet/glass/S = glass
 		S.amount = 2
-		glass_type = null //Memory vars ho !
+		S.loc = get_turf(src)
+		glass = null
 
 /obj/machinery/power/solar_assembly/attackby(var/obj/item/weapon/W, var/mob/user)
 	if(!anchored && isturf(loc))
@@ -251,7 +259,7 @@ var/list/solars_list = list()
 		if(istype(W, /obj/item/stack/sheet/glass)) //Plasma glass types could be added, just needs a fancy sprite
 			var/obj/item/stack/sheet/glass/S = W
 			if(S.amount >= 2)
-				glass_type = W.type
+				glass = new W.type(src)
 				S.use(2)
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 				user.visible_message("<span class='notice'>[user] carefully adds glass to [src].</span>", \
@@ -259,12 +267,7 @@ var/list/solars_list = list()
 				if(tracker)
 					new /obj/machinery/power/tracker(get_turf(src), src)
 				else
-					var/obj/machinery/power/solar/solar = new /obj/machinery/power/solar(get_turf(src))
-					solar.solar_assembly = src
-					solar.glass_quality_factor = S.glass_quality //Silly Dylan, istype checks
-					solar.maxhealth = S.shealth
-					solar.health = S.shealth
-					solar.update_icon() //Sanity check
+					new /obj/machinery/power/solar(get_turf(src), src)
 			return 1
 
 	if(!tracker)
@@ -275,6 +278,7 @@ var/list/solars_list = list()
 			user.visible_message("<span class='notice'>[user] inserts the electronics into [src].</span>", \
 			"<span class='notice'>You insert the electronics into [src].</span>")
 			return 1
+
 	else
 		if(iscrowbar(W))
 			new /obj/item/weapon/tracker_electronics(src.loc)
@@ -304,6 +308,7 @@ var/list/solars_list = list()
 	var/trackrate = 60		//Measured in tenths of degree per minute (i.e. defaults to 6.0 deg/min)
 	var/trackdir = 1		//-1 = CCW, 1 = CW
 	var/nexttime = 0		//Next clock time that manual tracking will move the array
+	ghost_read  = 1
 
 	l_color = "#FF9933"
 
@@ -378,8 +383,8 @@ var/list/solars_list = list()
 				A.anchored = 1
 				del(src)
 			else
-				visible_message("<span class='notice'>[user] disconnects [src]'s monitor.</span>", \
-				"<span class='notice'>You disconnect [src]'s monitor.</span>")
+				visible_message("[user] begins to unscrew \the [src]'s monitor.",
+				"You begin to unscrew the monitor...")
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe(src.loc)
 				var/obj/item/weapon/circuitboard/solar_control/M = new /obj/item/weapon/circuitboard/solar_control(A)
 				for (var/obj/C in src)
@@ -422,7 +427,7 @@ var/list/solars_list = list()
 /obj/machinery/power/solar_control/interact(mob/user)
 	if(stat & (BROKEN | NOPOWER)) return
 	if ((get_dist(src, user) > 1))
-		if (!istype(user, /mob/living/silicon/ai))
+		if (!issilicon(user)&&!isobserver(user))
 			user.unset_machine()
 			user << browse(null, "window=solcon")
 			return
