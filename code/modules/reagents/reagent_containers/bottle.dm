@@ -32,12 +32,6 @@
 	icon_state = "bottle12"
 	list_reagents = list("cyanide" = 30)
 
-/obj/item/weapon/reagent_containers/glass/bottle/stoxin
-	name = "sleep-toxin bottle"
-	desc = "A small bottle of sleep toxins. Just the fumes make you sleepy."
-	icon_state = "bottle20"
-	list_reagents = list("stoxin" = 30)
-
 /obj/item/weapon/reagent_containers/glass/bottle/morphine
 	name = "morphine bottle"
 	desc = "A small bottle of morphine."
@@ -55,8 +49,7 @@
 	name = "charcoal bottle"
 	desc = "A small bottle of charcoal."
 	icon_state = "bottle17"
-	list_reagents = list("salglu_solution" = 30)
-
+	list_reagents = list("charcoal" = 30)
 /obj/item/weapon/reagent_containers/glass/bottle/mutagen
 	name = "unstable mutagen bottle"
 	desc = "A small bottle of unstable mutagen. Randomly changes the DNA structure of whoever comes in contact."

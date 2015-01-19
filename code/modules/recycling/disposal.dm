@@ -27,7 +27,7 @@
 	// find the attached trunk (if present) and init gas resvr.
 /obj/machinery/disposal/New()
 	..()
-	stored = new /obj/structure/disposalconstruct(0,0,0)
+	stored = new /obj/structure/disposalconstruct(0,6) // 6 = disposal unit
 	trunk_check()
 
 	air_contents = new/datum/gas_mixture()
@@ -462,7 +462,6 @@
 		var/turf/T = loc
 		stored.loc = T
 		src.transfer_fingerprints_to(stored)
-		stored.ptype = 6 // 6 = disposal unit
 		stored.anchored = 0
 		stored.density = 1
 		stored.update()
@@ -1273,9 +1272,8 @@
 			if(do_after(user,20))
 				if(!src || !W.isOn()) return
 				user << "<span class='notice'>You've sliced the floorweld off \the [src].</span>"
-				var/obj/structure/disposalconstruct/C = new (src.loc)
+				var/obj/structure/disposalconstruct/C = new (src.loc, 7) // 7 =  outlet
 				src.transfer_fingerprints_to(C)
-				C.ptype = 7 // 7 =  outlet
 				C.update()
 				C.anchored = 1
 				C.density = 1

@@ -100,7 +100,7 @@ obj/item/weapon/reagent_containers/hypospray/combat/nanites
 	name = "stimpack medipen"
 	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in restrictive armor at the cost of some shortness of breath."
 	icon_state = "stimpen"
-	list_reagents = list("morphine" = 9, "lexorin" = 1)
+	list_reagents = list("ephedrine" = 9, "lexorin" = 1)
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/morphine
 	name = "morphine medipen"

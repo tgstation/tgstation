@@ -765,10 +765,10 @@
 	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?;Ping!"
 	req_access_txt = "5"
 	products = list(/obj/item/weapon/reagent_containers/glass/bottle/charcoal = 4,/obj/item/weapon/reagent_containers/glass/bottle/epinephrine = 4,
-					/obj/item/weapon/reagent_containers/glass/bottle/stoxin = 4,/obj/item/weapon/reagent_containers/glass/bottle/toxin = 4,
+					/obj/item/weapon/reagent_containers/glass/bottle/morphine = 4,/obj/item/weapon/reagent_containers/glass/bottle/toxin = 4,
 					/obj/item/weapon/reagent_containers/syringe/antiviral = 4,/obj/item/weapon/reagent_containers/syringe = 12,/obj/item/weapon/reagent_containers/hypospray/medipen = 5,
 					/obj/item/device/healthanalyzer = 5,/obj/item/weapon/reagent_containers/glass/beaker = 4, /obj/item/weapon/reagent_containers/dropper = 2, /obj/item/device/sensor_device = 2)
-	contraband = list(/obj/item/weapon/reagent_containers/pill/tox = 3,/obj/item/weapon/reagent_containers/pill/stox = 4,/obj/item/weapon/reagent_containers/pill/charcoal = 6)
+	contraband = list(/obj/item/weapon/reagent_containers/pill/tox = 3,/obj/item/weapon/reagent_containers/pill/morphine = 4,/obj/item/weapon/reagent_containers/pill/charcoal = 6)
 
 
 //This one's from bay12
@@ -970,7 +970,7 @@
 	/obj/item/clothing/under/suit_jacket/really_black=2,/obj/item/clothing/under/pants/jeans=3,/obj/item/clothing/under/pants/classicjeans=2,
 	/obj/item/clothing/under/pants/camo = 1,/obj/item/clothing/under/pants/blackjeans=2,/obj/item/clothing/under/pants/khaki=2,
 	/obj/item/clothing/under/pants/white=2,/obj/item/clothing/under/pants/red=1,/obj/item/clothing/under/pants/black=2,
-	/obj/item/clothing/under/pants/tan=2,/obj/item/clothing/under/pants/blue=1,/obj/item/clothing/under/pants/track=1,
+	/obj/item/clothing/under/pants/tan=2,/obj/item/clothing/under/pants/track=1,
 	/obj/item/clothing/tie/scarf/red=1,/obj/item/clothing/tie/scarf/green=1,/obj/item/clothing/tie/scarf/darkblue=1,
 	/obj/item/clothing/tie/scarf/purple=1,/obj/item/clothing/tie/scarf/yellow=1,/obj/item/clothing/tie/scarf/orange=1,
 	/obj/item/clothing/tie/scarf/lightblue=1,/obj/item/clothing/tie/scarf/white=1,/obj/item/clothing/tie/scarf/black=1,

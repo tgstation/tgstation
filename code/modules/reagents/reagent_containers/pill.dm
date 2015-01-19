@@ -83,17 +83,17 @@
 	icon_state = "pill16"
 	list_reagents = list("adminordrazine" = 50)
 
-/obj/item/weapon/reagent_containers/pill/stox
-	name = "sleeping pill"
+/obj/item/weapon/reagent_containers/pill/morphine
+	name = "morphine pill"
 	desc = "Commonly used to treat insomnia."
 	icon_state = "pill8"
-	list_reagents = list("stoxin" = 50)
+	list_reagents = list("morphine" = 30)
 
 /obj/item/weapon/reagent_containers/pill/stimulant
 	name = "stimulant pill"
 	desc = "Often taken by overworked employees, athletes, and the inebriated. You'll snap to attention immediately!"
 	icon_state = "pill19"
-	list_reagents = list("morphone" = 10, "ethylredoxrazine" = 10, "coffee" = 30)
+	list_reagents = list("ephedrine" = 10, "ethylredoxrazine" = 10, "coffee" = 30)
 
 /obj/item/weapon/reagent_containers/pill/salbutamol
 	name = "salbutamol pill"

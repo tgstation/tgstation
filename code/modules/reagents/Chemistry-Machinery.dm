@@ -1294,9 +1294,11 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		if(beaker)
 			if(beaker.reagents.chem_temp > temperature)
 				beaker.reagents.chem_temp = max(beaker.reagents.chem_temp-rate, temperature)
+				beaker.reagents.handle_reactions()
 				state_change = 1
 			else if(beaker.reagents.chem_temp < temperature)
 				beaker.reagents.chem_temp = min(beaker.reagents.chem_temp+rate, temperature)
+				beaker.reagents.handle_reactions()
 				state_change = 1
 	if(state_change)
 		SSnano.update_uis(src)

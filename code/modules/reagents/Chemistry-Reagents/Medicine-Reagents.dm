@@ -137,27 +137,15 @@ datum/reagent/medicine/cryoxadone
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
 datum/reagent/medicine/cryoxadone/on_mob_life(var/mob/living/M as mob)
-	if(M.stat != DEAD && M.bodytemperature < 170)
-		M.adjustCloneLoss(-1)
-		M.adjustOxyLoss(-3)
-		M.heal_organ_damage(3,3)
-		M.adjustToxLoss(-3)
-	..()
-	return
-
-datum/reagent/medicine/clonexadone
-	name = "Clonexadone"
-	id = "clonexadone"
-	description = "A liquid compound similar to that used in the cloning process. Can be used to 'finish' clones that get ejected early when used in conjunction with a cryo tube."
-	color = "#C8A5DC" // rgb: 200, 165, 220
-
-datum/reagent/medicine/clonexadone/on_mob_life(var/mob/living/M as mob)
-	if(M.stat != DEAD && M.bodytemperature < 170)
+	if(M.stat != DEAD && M.bodytemperature < 270)
 		M.adjustCloneLoss(-3)
-		M.adjustOxyLoss(-3)
+		M.adjustOxyLoss(-10)
 		M.heal_organ_damage(3,3)
+		M.adjustBruteLoss(-3)
+		M.adjustFireLoss(-3)
 		M.adjustToxLoss(-3)
 		M.status_flags &= ~DISFIGURED
+
 	..()
 	return
 

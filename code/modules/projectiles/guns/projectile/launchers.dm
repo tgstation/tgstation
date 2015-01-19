@@ -48,7 +48,7 @@
 	name = "kinetic speargun"
 	desc = "A weapon favored by carp hunters. Fires specialized spears using kinetic energy."
 	icon_state = "speargun"
-	item_state = "misteratmos" //professional asset reuse
+	item_state = "speargun"
 	w_class = 4
 	force = 10
 	can_suppress = 0
