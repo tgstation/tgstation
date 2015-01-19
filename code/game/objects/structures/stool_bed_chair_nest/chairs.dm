@@ -128,6 +128,29 @@
 
 /obj/structure/stool/bed/chair/office
 	anchored = 0
+	var/cooldown = 0
+
+/obj/structure/stool/bed/chair/office/relaymove(mob/user, direction)
+	if((!Process_Spacemove(direction)) || (!has_gravity(src.loc)) || (cooldown) || user.stat || user.stunned || user.weakened || user.paralysis || (user.restrained()))
+		return
+	step(src, direction)
+	if(buckled_mob)
+		buckled_mob.dir = dir
+		switch(buckled_mob.dir)
+			if(NORTH)
+				buckled_mob.dir = SOUTH
+			if(WEST)
+				buckled_mob.dir = EAST
+			if(SOUTH)
+				buckled_mob.dir = NORTH
+			if(EAST)
+				buckled_mob.dir = WEST
+		dir = buckled_mob.dir
+	handle_rotation()
+	handle_layer()
+	cooldown = 1
+	spawn(10)
+		cooldown = 0
 
 /obj/structure/stool/bed/chair/office/light
 	icon_state = "officechair_white"
