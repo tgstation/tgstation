@@ -32,7 +32,7 @@ var/datum/garbage_collector/garbageCollector
 		dels_count++
 		return
 
-	var/timeofday = world.timeofdaysan
+	var/timeofday = world.timeofday
 	AM.timeDestroyed = timeofday
 	queue -= "\ref[AM]"
 	queue["\ref[AM]"] = timeofday
