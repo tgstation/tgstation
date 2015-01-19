@@ -55,10 +55,6 @@
 
 		..()
 
-	MouseDrop_T(var/obj/item/target, mob/user)
-		src.attackby(target,user)
-
-
 	ex_act(var/severity,var/child=null)
 		var/child_severity=severity
 		if(!child)
@@ -176,48 +172,6 @@
 			M.show_message("[user.name] places \the [I] into the [src].", 3)
 
 		update()
-
-	// mouse drop another mob or self
-	//
-	MouseDrop_T(mob/target, mob/user)
-		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || istype(user, /mob/living/silicon/ai))
-			return
-		if(isanimal(user) && target != user) return //animals cannot put mobs other than themselves into disposal
-		src.add_fingerprint(user)
-		var/target_loc = target.loc
-		var/msg
-		for (var/mob/V in viewers(usr))
-			if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-				V.show_message("[usr] starts climbing into the disposal.", 3)
-			if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-				if(target.anchored) return
-				V.show_message("[usr] starts stuffing [target.name] into the disposal.", 3)
-		if(!do_after(usr, 20))
-			return
-		if(target_loc != target.loc)
-			return
-		if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)	// if drop self, then climbed in
-												// must be awake, not stunned or whatever
-			msg = "[user.name] climbs into the [src]."
-			user << "You climb into the [src]."
-		else if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-			msg = "[user.name] stuffs [target.name] into the [src]!"
-			user << "You stuff [target.name] into the [src]!"
-			log_attack("<font color='red'>[user] ([user.ckey]) placed [target] ([target.ckey]) in a disposals unit.</font>")
-		else
-			return
-		if (target.client)
-			target.client.perspective = EYE_PERSPECTIVE
-			target.client.eye = src
-		target.loc = src
-
-		for (var/mob/C in viewers(src))
-			if(C == user)
-				continue
-			C.show_message(msg, 3)
-
-		update()
-		return
 
 	// can breath normally in the disposal
 	alter_health()
@@ -511,6 +465,67 @@
 			return 0
 		else
 			return ..(mover, target, height, air_group)
+
+/obj/machinery/disposal/MouseDrop_T(atom/dropping, mob/user)
+	if(istype(user, /mob/living/silicon/ai))
+		return
+
+	if(!ismob(dropping))
+		if(istype(dropping, /obj/item))
+			attackby(dropping, user)
+
+		return
+
+	var/locHolder = dropping.loc
+	var/mob/target = dropping
+
+	if(target != user)
+		if(isanimal(user))
+			return // animals cannot put mobs other than themselves into disposal
+
+		if(!user.restrained() && user.canmove)
+			if(target.buckled)
+				return
+
+			user.visible_message("[user] starts stuffing [target] into the [src].", "You start stuffing [target] into the [src].")
+		else
+			return
+	else if(target == user)
+		if(!user.restrained() && user.canmove)
+			target.visible_message("[target] starts climbing into the [src].", "You start climbing into the [src].")
+		else
+			return
+
+	if(!do_after(user, 20))
+		return
+
+	if(locHolder != target.loc)
+		return
+
+	if(target != user)
+		if(!user.restrained() && user.canmove)
+			if(target.buckled)
+				return
+
+			user.visible_message("[user] stuffed [target] into the [src]!", "You stuffed [target] into the [src]!")
+			log_attack("<SPAN CLASS='warning'>[key_name(user)] placed [key_name(target)] in a disposals unit/([src]).</SPAN>")
+		else
+			return
+	else if(target == user)
+		if(!user.restrained() && user.canmove)
+			target.visible_message("[target] climbed into the [src].", "You climbed into the [src].")
+		else
+			return
+
+	add_fingerprint(user)
+
+	if(target.client)
+		target.client.perspective = EYE_PERSPECTIVE
+		target.client.eye = src
+
+	target.loc = src
+
+	update()
 
 // virtual disposal object
 // travels through pipes in lieu of actual items
