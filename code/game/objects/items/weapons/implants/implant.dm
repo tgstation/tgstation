@@ -306,7 +306,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		return 0
 	else if(H.mind in ticker.mode:revolutionaries)
 		ticker.mode:remove_revolutionary(H.mind)
-	H << "\blue You feel a surge of loyalty towards Nanotrasen."
+	H << "<span class = 'notice'> You feel a surge of loyalty towards Nanotrasen.</span>"
 	return 1
 
 /obj/item/weapon/implant/traitor
@@ -345,7 +345,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		H.visible_message("[H] seems to resist the implant!", "You feel a familiar sensation in your head that quickly dissipates.")
 		return 0
 	H.implanting = 1
-	H << "\blue You feel a surge of loyalty towards [user.name]."
+	H << "<span class = 'notice'> You feel a surge of loyalty towards [user.name].</span>"
 	if(!(user.mind in ticker.mode:implanter))
 		ticker.mode:implanter[ref] = list()
 	implanters = ticker.mode:implanter[ref]
@@ -391,7 +391,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	if (src.uses < 1)	return 0
 	if (emote == "pale")
 		src.uses--
-		source << "\blue You feel a sudden surge of energy!"
+		source << "<span class = 'notice'> You feel a sudden surge of energy!</span>"
 		source.SetStunned(0)
 		source.SetWeakened(0)
 		source.SetParalysis(0)
