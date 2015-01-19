@@ -1,5 +1,5 @@
 #define GC_COLLECTIONS_PER_TICK 300 // Was 100.
-#define GC_COLLECTION_TIMEOUT (30 SECONDS)
+#define GC_COLLECTION_TIMEOUT (15 SECONDS)
 #define GC_FORCE_DEL_PER_TICK 20
 //#define GC_DEBUG
 
@@ -32,7 +32,7 @@ var/datum/garbage_collector/garbageCollector
 		dels_count++
 		return
 
-	var/timeofday = world.timeofday
+	var/timeofday = world.timeofdaysan
 	AM.timeDestroyed = timeofday
 	queue -= "\ref[AM]"
 	queue["\ref[AM]"] = timeofday
