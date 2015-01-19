@@ -34,7 +34,7 @@
 	return 0
 
 /obj/item/weapon/implant/proc/meltdown()	//breaks it down, making implant unrecongizible
-	imp_in << "\red You feel something melting inside [part ? "your [part.display_name]" : "you"]!"
+	imp_in << "<span class = 'warning'> You feel something melting inside [part ? "your [part.display_name]" : "you"]!</span>"
 	if (part)
 		part.take_damage(burn = 15, used_weapon = "Electronics meltdown")
 	else
@@ -205,7 +205,7 @@ return dat
 
 /obj/item/weapon/implant/explosive/proc/small_boom()
 	if (ishuman(imp_in) && part)
-		imp_in.visible_message("\red Something beeps inside [imp_in][part ? "'s [part.display_name]" : ""]!")
+		imp_in.visible_message("<span class = 'warning'> Something beeps inside [imp_in][part ? "'s [part.display_name]" : ""]!</span>")
 		playsound(loc, 'sound/items/countdown.ogg', 75, 1, -3)
 		spawn(25)
 			if (ishuman(imp_in) && part)
@@ -356,7 +356,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	ticker.mode:implanter[ref] = implanters
 	ticker.mode.traitors += H.mind
 	H.mind.special_role = "traitor"
-	H << "<B>\red You've been shown the Greytide by [user.name]!</B> You now must lay down your life to protect them and assist in their goals at any cost."
+	H << "<B><span class = 'warning'> You've been shown the Greytide by [user.name]!</B> You now must lay down your life to protect them and assist in their goals at any cost.</span>"
 	var/datum/objective/protect/p = new
 	p.owner = H.mind
 	p.target = user:mind
