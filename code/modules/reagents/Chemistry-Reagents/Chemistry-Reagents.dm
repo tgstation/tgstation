@@ -713,7 +713,7 @@ datum/reagent/impedrezene/on_mob_life(var/mob/living/M as mob)
 
 datum/reagent/nanites
 	name = "Nanomachines"
-	id = "nanites"
+	id = "nanomachines"
 	description = "Microscopic construction robots."
 	color = "#535E66" // rgb: 83, 94, 102
 

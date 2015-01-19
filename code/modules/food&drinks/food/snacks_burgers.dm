@@ -43,7 +43,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/roburger/New()
 	..()
-	reagents.add_reagent("nanites", 2)
+	reagents.add_reagent("nanomachines", 2)
 	reagents.add_reagent("vitamin", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/roburgerbig
@@ -54,7 +54,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/roburgerbig/New()
 	..()
-	reagents.add_reagent("nanites", 100)
+	reagents.add_reagent("nanomachines", 100)
 	reagents.add_reagent("vitamin", 20)
 	bitesize = 0.1
 
