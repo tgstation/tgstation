@@ -4,7 +4,6 @@
  *		Reinforced glass sheets
  *		Plasma Glass Sheets
  *		Reinforced Plasma Glass Sheets (AKA Holy fuck strong windows)
- *		Glass shards - TODO: Move this into code/game/object/item/weapons
  */
 
 /obj/item/stack/sheet/glass
@@ -45,7 +44,7 @@
 	if(!user || !src)	return 0
 	if(!istype(user.loc,/turf)) return 0
 	if(!user.IsAdvancedToolUser())
-		user << "\red You don't have the dexterity to do this!"
+		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 0
 	var/title = "[src.name] Sheets"
 	title += " ([src.amount] sheet\s left)"
@@ -59,11 +58,11 @@
 				for (var/obj/structure/window/win in user.loc)
 					i++
 					if(i >= 4)
-						user << "\red There are too many windows in this location."
+						user << "<span class='warning'>There are too many windows in this location.</span>"
 						return 1
 					directions-=win.dir
 					if(win.is_fulltile())
-						user << "\red Can't let you do that."
+						user << "<span class='warning'>Can't let you do that.</span>"
 						return 1
 				//Determine the direction. It will first check in the direction the person making the window is facing, if it finds an already made window it will try looking at the next cardinal direction, etc.
 				var/dir_to_set = 2
@@ -85,10 +84,10 @@
 				if(!src)	return 1
 				if(src.loc != user)	return 1
 				if(src.amount < 2)
-					user << "\red You need more glass to do that."
+					user << "<span class='warning'>You need more glass to do that.</span>"
 					return 1
 				if(locate(/obj/structure/window/full) in user.loc)
-					user << "\red There is a window in the way."
+					user << "<span class='warning'>There is a window in the way.</span>"
 					return 1
 				var/obj/structure/window/W = new full_window( user.loc, 0 )
 				W.state = 0
@@ -100,13 +99,13 @@
 				if(!src || src.loc != user)
 					return 1
 				if(isturf(user.loc) && locate(/obj/structure/windoor_assembly/, user.loc))
-					user << "\red There is already a windoor assembly in that location."
+					user << "<span class='warning'>There is already a windoor assembly in that location.</span>"
 					return 1
 				if(isturf(user.loc) && locate(/obj/machinery/door/window/, user.loc))
-					user << "\red There is already a windoor in that location."
+					user << "<span class='warning'>There is already a windoor in that location.</span>"
 					return 1
 				if(src.amount < 5)
-					user << "\red You need more glass to do that."
+					user << "<span class='warning'>You need more glass to do that.</span>"
 					return 1
 				var/obj/structure/windoor_assembly/WD = new windoor(user.loc, 0 )
 				WD.state = "01"
@@ -139,11 +138,11 @@
 				for (var/obj/structure/window/win in user.loc)
 					i++
 					if(i >= 4)
-						user << "\red There are too many windows in this location."
+						user << "<span class='warning'>There are too many windows in this location.</span>"
 						return 1
 					directions-=win.dir
 					if(win.is_fulltile())
-						user << "\red Can't let you do that."
+						user << "<span class='warning'>Can't let you do that.</span>"
 						return 1
 				//Determine the direction. It will first check in the direction the person making the window is facing, if it finds an already made window it will try looking at the next cardinal direction, etc.
 				var/dir_to_set = 2
@@ -165,10 +164,10 @@
 				if(!src)	return 1
 				if(src.loc != user)	return 1
 				if(src.amount < 2)
-					user << "\red You need more glass to do that."
+					user << "<span class='warning'>You need more glass to do that.</span>"
 					return 1
 				if(locate(/obj/structure/window/full) in user.loc)
-					user << "\red There is a full window in the way."
+					user << "<span class='warning'>There is a full window in the way.</span>"
 					return 1
 				var/obj/structure/window/W = new full_window( user.loc, 0 )
 				W.anchored = 0
@@ -203,7 +202,7 @@
 			user << "\b There is not enough wire in this coil. You need 5 lengths."
 			return
 		CC.use(5)
-		user << "\blue You attach wire to the [name]."
+		user << "\blue You attach wire to the [name].</span>"
 		new /obj/item/stack/light_w(user.loc)
 		src.use(1)
 	else
@@ -288,73 +287,3 @@
 	rec.addAmount("glass", 1*src.amount)
 	rec.addAmount("iron",  0.5*src.amount)
 	return 1
-
-/*
- * Glass shards - TODO: Move this into code/game/object/item/weapons
- */
-/obj/item/weapon/shard/resetVariables()
-	..("icon_state", "pixel_y", "pixel_x")
-
-/obj/item/weapon/shard/Bump()
-
-	spawn( 0 )
-		if (prob(20))
-			src.force = 15
-		else
-			src.force = 4
-		..()
-		return
-	return
-
-/obj/item/weapon/shard/New()
-
-	src.icon_state = pick("large", "medium", "small")
-	switch(src.icon_state)
-		if("small")
-			src.pixel_x = rand(-12, 12)
-			src.pixel_y = rand(-12, 12)
-		if("medium")
-			src.pixel_x = rand(-8, 8)
-			src.pixel_y = rand(-8, 8)
-		if("large")
-			src.pixel_x = rand(-5, 5)
-			src.pixel_y = rand(-5, 5)
-		else
-	return
-
-/obj/item/weapon/shard/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if ( istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.remove_fuel(0, user))
-			var/obj/item/stack/sheet/glass/glass/NG = new (user.loc)
-			for (var/obj/item/stack/sheet/glass/glass/G in user.loc)
-				if(G==NG)
-					continue
-				if(G.amount>=G.max_amount)
-					continue
-				G.attackby(NG, user)
-				usr << "You add the newly-formed glass to the stack. It now contains [NG.amount] sheets."
-			//SN src = null
-			returnToPool(src)
-			return
-	return ..()
-
-/obj/item/weapon/shard/Crossed(AM as mob|obj)
-	if(ismob(AM))
-		var/mob/M = AM
-		M << "\red <B>You step in the broken glass!</B>"
-		playsound(get_turf(src), 'sound/effects/glass_step.ogg', 50, 1)
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if( !H.shoes && ( !H.wear_suit || !(H.wear_suit.body_parts_covered & FEET) ) )
-				var/datum/organ/external/affecting = H.get_organ(pick("l_foot", "r_foot"))
-				if(affecting.status & (ORGAN_ROBOT|ORGAN_PEG))
-					return
-
-				H.Weaken(3)
-				if(affecting.take_damage(5, 0))
-					H.QueueUpdateDamageIcon()
-				H.updatehealth()
-	..()
-
-

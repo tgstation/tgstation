@@ -1,0 +1,8 @@
+author: Clusterfack
+delete-after: true
+changes:
+- bugfix: Modifying a turf to another type no longer adds/deletes gases to it
+- tweak: You can tell if an MMI is locked/unlocked by examining it now
+- rscadd: Added mommi parts should be dropped when mmi/posis finish a borg
+- bugfix: You should be able to view solar controls at a range as ghosts/mommi
+- bugfix: Glass should no longer stack together inappropriately
