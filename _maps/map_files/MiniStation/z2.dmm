@@ -8,7 +8,7 @@
 "ah" = (/obj/docking_port/stationary/transit{dir = 8; dwidth = 5; height = 7; id = "supply_transit"; width = 10},/turf/space/transit,/area/space)
 "ai" = (/obj/docking_port/stationary/transit{dir = 8; dwidth = 3; height = 5; id = "mining_transit"; width = 7},/turf/space/transit,/area/space)
 "aj" = (/obj/docking_port/stationary/transit{dir = 8; dwidth = 2; height = 5; id = "laborcamp_transit"; width = 9},/turf/space/transit,/area/space)
-"ak" = (/obj/docking_port/stationary/transit{dir = 8; dwidth = 2; height = 12; id = "ferry_transit"; width = 5},/turf/space/transit/horizontal,/area/space)
+"ak" = (/obj/docking_port/stationary/transit{dir = 8; dwidth = 2; height = 12; turf_type = /turf/space/transit/horizontal; id = "ferry_transit"; width = 5},/turf/space/transit/horizontal,/area/space)
 "al" = (/obj/docking_port/stationary/transit{dheight = 9; dir = 2; dwidth = 5; height = 22; id = "syndicate_transit"; width = 18},/turf/space/transit,/area/space)
 "am" = (/turf/simulated/shuttle/floor,/area/space)
 "an" = (/turf/simulated/shuttle/wall{icon_state = "swall3"; dir = 2},/area/space)
