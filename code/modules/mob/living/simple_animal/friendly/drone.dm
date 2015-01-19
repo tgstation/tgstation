@@ -418,12 +418,11 @@
 	remove_overlay(HANDS_LAYER)
 	var/list/hands_overlays = list()
 	if(r_hand)
-		var/r_type = r_hand.inhand_type
 		var/r_state = r_hand.item_state
 		if(!r_state)
 			r_state = r_hand.icon_state
 
-		hands_overlays += image("icon"=file("icons/mob/inhands/[r_type]_righthand.dmi"), "icon_state"="[r_state]", "layer"=-HANDS_LAYER)
+		hands_overlays += image("icon" = r_hand.righthand_file, "icon_state"="[r_state]", "layer"=-HANDS_LAYER)
 
 		if(client && hud_used)
 			r_hand.layer = 20
@@ -431,12 +430,11 @@
 			client.screen |= r_hand
 
 	if(l_hand)
-		var/l_type = l_hand.inhand_type
 		var/l_state = l_hand.item_state
 		if(!l_state)
 			l_state = l_hand.icon_state
 
-		hands_overlays += image("icon"=file("icons/mob/inhands/[l_type]_lefthand.dmi"), "icon_state"="[l_state]", "layer"=-HANDS_LAYER)
+		hands_overlays += image("icon" = l_hand.lefthand_file, "icon_state"="[l_state]", "layer"=-HANDS_LAYER)
 
 		if(client && hud_used)
 			l_hand.layer = 20
