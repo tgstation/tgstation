@@ -10,6 +10,8 @@ datum/reagent/nicotine
 	description = "Stun reduction per cycle, slight stamina regeneration buff. Overdoses become rapidly deadly."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
+	overdose_threshold = 35
+	addiction_threshold = 30
 
 datum/reagent/nicotine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -18,11 +20,14 @@ datum/reagent/nicotine/on_mob_life(var/mob/living/M as mob)
 		M << "<span class='notice'>[smoke_message]</span>"
 	M.AdjustStunned(-1)
 	M.adjustStaminaLoss(-1*REM)
-	if(volume > 35)
-		if(prob(20))
-			M << "You feel like you smoked too much."
-		M.adjustToxLoss(1*REM)
-		M.adjustOxyLoss(1*REM)
+	..()
+	return
+
+datum/reagent/nicotine/overdose_process(var/mob/living/M as mob)
+	if(prob(20))
+		M << "You feel like you smoked too much."
+	M.adjustToxLoss(1*REM)
+	M.adjustOxyLoss(1*REM)
 	..()
 	return
 
@@ -32,6 +37,8 @@ datum/reagent/crank
 	description = "2x stun reduction per cycle. Warms you up, makes you jittery as hell."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
+	overdose_threshold = 20
+	addiction_threshold = 10
 
 datum/reagent/crank/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -41,13 +48,33 @@ datum/reagent/crank/on_mob_life(var/mob/living/M as mob)
 	M.AdjustParalysis(-2)
 	M.AdjustStunned(-2)
 	M.AdjustWeakened(-2)
-	if(volume > 20)
-		M.adjustBrainLoss(rand(1,10)*REM)
-		M.adjustToxLoss(rand(1,10)*REM)
-		M.adjustBruteLoss(rand(1,10)*REM)
+	..()
+	return
+datum/reagent/crank/overdose_process(var/mob/living/M as mob)
+	M.adjustBrainLoss(rand(1,10)*REM)
+	M.adjustToxLoss(rand(1,10)*REM)
+	M.adjustBruteLoss(rand(1,10)*REM)
 	..()
 	return
 
+datum/reagent/crank/addiction_act_stage1(var/mob/living/M as mob)
+	M.adjustBrainLoss(rand(1,10)*REM)
+	..()
+	return
+datum/reagent/crank/addiction_act_stage2(var/mob/living/M as mob)
+	M.adjustToxLoss(rand(1,10)*REM)
+	..()
+	return
+datum/reagent/crank/addiction_act_stage3(var/mob/living/M as mob)
+	M.adjustBruteLoss(rand(1,10)*REM)
+	..()
+	return
+datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
+	M.adjustBrainLoss(rand(1,10)*REM)
+	M.adjustToxLoss(rand(1,10)*REM)
+	M.adjustBruteLoss(rand(1,10)*REM)
+	..()
+	return
 /datum/chemical_reaction/crank
 	name = "Crank"
 	id = "crank"
@@ -63,8 +90,8 @@ datum/reagent/crank/on_mob_life(var/mob/living/M as mob)
 	description = "Cools and calms you down, occasional BRAIN and TOX damage."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
-	var/cycle_count = 0
-	var/overdosed
+	overdose_threshold = 20
+	addiction_threshold = 15
 
 
 /datum/reagent/krokodil/on_mob_life(var/mob/living/M as mob)
@@ -72,22 +99,40 @@ datum/reagent/crank/on_mob_life(var/mob/living/M as mob)
 	var/high_message = pick("You feel calm.", "You feel collected.", "You feel like you need to relax.")
 	if(prob(5))
 		M << "<span class='notice'>[high_message]</span>"
+	..()
+	return
+
+/datum/reagent/krokodil/overdose_process(var/mob/living/M as mob)
 	if(prob(10))
 		M.adjustBrainLoss(rand(1,5)*REM)
 		M.adjustToxLoss(rand(1,5)*REM)
-	if(cycle_count == 10)
-		M.adjustBrainLoss(rand(1,10)*REM)
-		M.adjustToxLoss(rand(1,10)*REM)
-	if(cycle_count == 20)
+	..()
+	return
+
+
+/datum/reagent/krokodil/addiction_act_stage1(var/mob/living/M as mob)
+	M.adjustBrainLoss(rand(1,5)*REM)
+	M.adjustToxLoss(rand(1,5)*REM)
+	..()
+	return
+/datum/reagent/krokodil/addiction_act_stage2(var/mob/living/M as mob)
+	if(prob(25))
 		M << "<span class='danger'>Your skin feels loose...</span>"
-	if(cycle_count == 50)
-		M << "<span class='userdanger'>Your skin falls off!</span>"
+	..()
+	return
+/datum/reagent/krokodil/addiction_act_stage3(var/mob/living/M as mob)
+	if(prob(25))
+		M << "<span class='danger'>Your skin starts to peel away...</span>"
+	M.adjustBruteLoss(3*REM)
+	..()
+	return
+/datum/reagent/krokodil/addiction_act_stage4(var/mob/living/carbon/human/M as mob)
+	if(!istype(M.dna.species, /datum/species/skeleton))
+		M << "<span class='userdanger'>Your skin falls off! Holy shit!</span>"
 		M.adjustBruteLoss(rand(50,80)*REM) // holy shit your skin just FELL THE FUCK OFF
 		hardset_dna(M, null, null, null, null, /datum/species/skeleton)
-	if(volume > 20)
-		overdosed = 1
-	if(overdosed)
-		cycle_count++
+	else
+		M.adjustBruteLoss(5*REM)
 	..()
 	return
 

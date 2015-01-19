@@ -222,30 +222,6 @@ datum/reagent/toxin/pestkiller/reaction_mob(var/mob/living/M, var/method=TOUCH, 
 		if(!C.wear_mask) // If not wearing a mask
 			C.adjustToxLoss(2) // 4 toxic damage per application, doubled for some reason
 
-datum/reagent/toxin/stoxin
-	name = "Sleep Toxin"
-	id = "stoxin"
-	description = "An effective hypnotic used to treat insomnia."
-	color = "#E895CC" // rgb: 232, 149, 204
-	toxpwr = 0
-
-datum/reagent/toxin/stoxin/on_mob_life(var/mob/living/M as mob)
-	if(!data) data = 1
-	switch(data)
-		if(1 to 12)
-			if(prob(5))	M.emote("yawn")
-		if(12 to 15)
-			M.eye_blurry = max(M.eye_blurry, 10)
-		if(15 to 25)
-			M.drowsyness  = max(M.drowsyness, 20)
-		if(25 to INFINITY)
-			M.Paralyse(20)
-			M.drowsyness  = max(M.drowsyness, 30)
-	data++
-	..()
-	return
-
-
 datum/reagent/toxin/spore
 	name = "Spore Toxin"
 	id = "spore"

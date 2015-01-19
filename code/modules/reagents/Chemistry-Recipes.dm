@@ -150,21 +150,6 @@ silicate
 	required_reagents = list("potassium" = 1, "oxygen" = 1, "sugar" = 1)
 	result_amount = 3
 
-/datum/chemical_reaction/cryoxadone
-	name = "Cryoxadone"
-	id = "cryoxadone"
-	result = "cryoxadone"
-	required_reagents = list("salbutamol" = 1, "water" = 1, "oxygen" = 1)
-	result_amount = 3
-
-/datum/chemical_reaction/clonexadone
-	name = "Clonexadone"
-	id = "clonexadone"
-	result = "clonexadone"
-	required_reagents = list("cryoxadone" = 1, "sodium" = 1)
-	required_catalysts = list("plasma" = 5)
-	result_amount = 2
-
 /datum/chemical_reaction/spaceacillin
 	name = "Spaceacillin"
 	id = "spaceacillin"
@@ -177,20 +162,6 @@ silicate
 	id = "inacusiate"
 	result = "inacusiate"
 	required_reagents = list("water" = 1, "carbon" = 1, "charcoal" = 1)
-	result_amount = 2
-
-/datum/chemical_reaction/ethylredoxrazine
-	name = "Ethylredoxrazine"
-	id = "ethylredoxrazine"
-	result = "ethylredoxrazine"
-	required_reagents = list("oxygen" = 1, "charcoal" = 1, "carbon" = 1)
-	result_amount = 3
-
-/datum/chemical_reaction/ethanoloxidation
-	name = "ethanoloxidation"	//Kind of a placeholder in case someone ever changes it so that chemicals
-	id = "ethanoloxidation"		//	react in the body. Also it would be silly if it didn't exist.
-	result = "water"
-	required_reagents = list("ethylredoxrazine" = 1, "ethanol" = 1)
 	result_amount = 2
 
 /datum/chemical_reaction/glycerol

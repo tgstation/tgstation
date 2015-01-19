@@ -124,6 +124,8 @@ datum/reagent/clf3/on_mob_life(var/mob/living/M as mob)
 
 proc/goonchem_vortex(var/turf/simulated/T, var/setting_type, var/range, var/pull_times)
 	for(var/atom/movable/X in orange(range, T))
+		if(istype(X, /obj/effect))
+			continue // stop pulling smoke and hotspots please
 		if(istype(X, /atom/movable))
 			if((X) && !X.anchored)
 				if(setting_type)

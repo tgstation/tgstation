@@ -27,7 +27,7 @@
 
 /obj/item/weapon/reagent_containers/pill/patch/styptic/New()
 	..()
-	reagents.add_reagent("styptic_powder", 25)
+	reagents.add_reagent("styptic_powder", 50)
 
 /obj/item/weapon/reagent_containers/pill/patch/silver_sulf
 	name = "silver sulfadiazine patch"
@@ -35,4 +35,4 @@
 
 /obj/item/weapon/reagent_containers/pill/patch/silver_sulf/New()
 	..()
-	reagents.add_reagent("silver_sulfadiazine", 25)
+	reagents.add_reagent("silver_sulfadiazine", 50)
