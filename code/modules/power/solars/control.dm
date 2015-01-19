@@ -1,6 +1,7 @@
 /obj/machinery/power/solar/control
 	name = "solar panel control"
 	desc = "A controller for solar panel arrays."
+	icon = 'icons/obj/computer.dmi'
 	icon_state = "solar"
 	use_power = 1
 	idle_power_usage = 50
