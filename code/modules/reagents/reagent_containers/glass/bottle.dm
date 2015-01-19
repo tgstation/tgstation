@@ -42,11 +42,11 @@
 	icon_state = "bottle12"
 	spawned_reagent = "cyanide"
 
-/obj/item/weapon/reagent_containers/glass/bottle/stoxin
+/obj/item/weapon/reagent_containers/glass/bottle/morphine
 	name = "sleep-toxin bottle"
 	desc = "A small bottle of sleep toxins. Just the fumes make you sleepy."
 	icon_state = "bottle20"
-	spawned_reagent = "stoxin"
+	spawned_reagent = "morphine"
 
 /obj/item/weapon/reagent_containers/glass/bottle/morphine
 	name = "morphine bottle"
@@ -66,7 +66,7 @@
 	name = "charcoal bottle"
 	desc = "A small bottle of charcoal."
 	icon_state = "bottle17"
-	spawned_reagent = "salglu_solution"
+	spawned_reagent = "charcoal"
 
 /obj/item/weapon/reagent_containers/glass/bottle/mutagen
 	name = "unstable mutagen bottle"

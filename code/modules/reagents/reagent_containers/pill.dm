@@ -106,13 +106,13 @@
 	reagents.add_reagent("adminordrazine", 50)
 
 
-/obj/item/weapon/reagent_containers/pill/stox
-	name = "sleeping pill"
+/obj/item/weapon/reagent_containers/pill/morphine
+	name = "morphine pill"
 	desc = "Commonly used to treat insomnia."
 	icon_state = "pill8"
-/obj/item/weapon/reagent_containers/pill/stox/New()
+/obj/item/weapon/reagent_containers/pill/morphine/New()
 	..()
-	reagents.add_reagent("stoxin", 30)
+	reagents.add_reagent("morphine", 30)
 
 /obj/item/weapon/reagent_containers/pill/stimulant
 	name = "stimulant pill"
@@ -121,7 +121,7 @@
 
 /obj/item/weapon/reagent_containers/pill/stimulant/New()
 	..()
-	reagents.add_reagent("morphine", 10)
+	reagents.add_reagent("ephedrine", 10)
 	reagents.add_reagent("ethylredoxrazine", 10)
 	reagents.add_reagent("coffee", 30)
 

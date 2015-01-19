@@ -311,7 +311,7 @@ var/list/uplink_items = list()
 	name = "Poison Kit"
 	desc = "An assortment of nasty chemicals."
 	item = /obj/item/weapon/storage/box/syndie_kit/chemical
-	cost = 2
+	cost = 6
 	surplus = 50
 
 /datum/uplink_item/stealthy_weapons/detomatix
