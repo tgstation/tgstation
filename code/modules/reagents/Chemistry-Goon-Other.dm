@@ -109,6 +109,7 @@ datum/reagent/colorful_reagent
 	description = "A solution."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
+	var/list/potential_colors = list("#FF0000","#0000FF","#008000","#FFFF00")
 
 /datum/chemical_reaction/colorful_reagent
 	name = "colorful_reagent"
@@ -116,7 +117,6 @@ datum/reagent/colorful_reagent
 	result = "colorful_reagent"
 	required_reagents = list("stable_plasma" = 1, "radium" = 1, "space_drugs" = 1, "cryoxadone" = 1, "triple_citrus" = 1)
 	result_amount = 5
-	var/list/potential_colors = list("#FF0000","#0000FF","#008000","#FFFF00")
 
 datum/reagent/colorful_reagent/reaction_mob(var/mob/M, var/volume)
 	if(M)
