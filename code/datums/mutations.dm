@@ -60,7 +60,7 @@
 		result_overlays[L.identificator] = visual_indicators[L.identificator]  //visual_indicators is where overlays icons are stored, they are all created on new of each mutation, i assume you will change it to linked list for easyness, but for now its just a list
 	return owner.redraw_overlays(result_overlays, MUTATION_LAYER)    //Currently mutations draw the overlays themselves but i assume if dismemberment will be overriding lots of shit like maybe clothes or something else mutations will just pass the shit to redraw proc
 */
-/datum/mutation/human/proc/text_lose_indication(mob/living/carbon/human/owner)
+/datum/mutation/human/proc/lose_indication(mob/living/carbon/human/owner)
 	owner.overlays.Remove(visual_indicators)
 
 /datum/mutation/human/proc/on_attack_hand(mob/living/carbon/human/owner, atom/target)
@@ -74,7 +74,7 @@
 
 /datum/mutation/human/proc/on_losing(mob/living/carbon/human/owner)
 	if(owner.dna.mutations.Remove(src))
-		text_lose_indication(owner)
+		lose_indication(owner)
 		owner << text_lose_indication
 		return 0
 	return 1
@@ -319,7 +319,7 @@
 /datum/mutation/human/race/gain_indication(mob/living/carbon/human/owner)
 	return
 
-/datum/mutation/human/race/text_lose_indication(mob/living/carbon/monkey/owner)
+/datum/mutation/human/race/lose_indication(mob/living/carbon/monkey/owner)
 	return
 
 /datum/mutation/human/race/on_losing(mob/living/carbon/monkey/owner)
