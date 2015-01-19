@@ -31,7 +31,6 @@ em						{font-style: normal;	font-weight: bold;}
 .medradio				{color: #337296;}
 .engradio				{color: #fb5613;}
 .suppradio				{color: #a8732b;}
-.suppradio				{color: #a8732b;}
 .servradio				{color: #6eaa2c;}
 .syndradio				{color: #6d3f40;}
 .dsquadradio			{color: #686868;}
