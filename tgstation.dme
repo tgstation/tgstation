@@ -929,7 +929,6 @@
 #include "code\modules\food&drinks\drinks\drinks.dm"
 #include "code\modules\food&drinks\drinks\drinks\bottle.dm"
 #include "code\modules\food&drinks\drinks\drinks\drinkingglass.dm"
-#include "code\modules\food&drinks\drinks\drinks\bottle\robot.dm"
 #include "code\modules\food&drinks\food\condiment.dm"
 #include "code\modules\food&drinks\food\snacks.dm"
 #include "code\modules\food&drinks\food\snacks_bread.dm"

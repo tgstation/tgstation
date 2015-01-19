@@ -24,7 +24,7 @@
 /obj/item/weapon/reagent_containers/pill/patch/styptic
 	name = "styptic powder patch"
 	desc = "Helps with brute injuries."
-	list_reagents = list("stpytic_powder" = 25)
+	list_reagents = list("styptic_powder" = 25)
 
 /obj/item/weapon/reagent_containers/pill/patch/silver_sulf
 	name = "silver sulfadiazine patch"

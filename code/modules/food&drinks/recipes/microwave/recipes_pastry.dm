@@ -6,7 +6,7 @@
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/egg
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/donut/normal
+	result = /obj/item/weapon/reagent_containers/food/snacks/donut
 
 /datum/recipe/donut/jelly
 	reagents = list("berryjuice" = 5, "flour" = 5)
@@ -17,11 +17,11 @@
 
 /datum/recipe/donut/jelly/slime
 	reagents = list("slimejelly" = 5, "flour" = 5)
-	result = /obj/item/weapon/reagent_containers/food/snacks/donut/slimejelly
+	result = /obj/item/weapon/reagent_containers/food/snacks/donut/jelly/slimejelly
 
 /datum/recipe/donut/jelly/cherry
 	reagents = list("cherryjelly" = 5, "flour" = 5)
-	result = /obj/item/weapon/reagent_containers/food/snacks/donut/cherryjelly
+	result = /obj/item/weapon/reagent_containers/food/snacks/donut/jelly/cherryjelly
 
 /datum/recipe/chaosdonut
 	reagents = list("frostoil" = 5, "capsaicin" = 5, "flour" = 5)
