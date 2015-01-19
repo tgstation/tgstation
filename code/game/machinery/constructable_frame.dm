@@ -36,7 +36,7 @@
 
 	attackby(obj/item/P as obj, mob/user as mob)
 		if(P.crit_fail)
-			user << "\red This part is faulty, you cannot add this to the machine!"
+			user << "<span class='warning'>This part is faulty, you cannot add this to the machine!</span>"
 			return
 		switch(state)
 			if(1)
@@ -44,20 +44,20 @@
 					var/obj/item/weapon/cable_coil/C = P
 					if(C.amount >= 5)
 						playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-						user << "\blue You start to add cables to the frame."
+						user << "<span class='notice'>You start to add cables to the frame.</span>"
 						if(do_after(user, 20))
 							if(C && C.amount >= 5) // Check again
 								C.use(5)
-								user << "\blue You add cables to the frame."
+								user << "<span class='notice'>You add cables to the frame.</span>"
 								state = 2
 								icon_state = "box_1"
 				else if(istype(P, /obj/item/stack/sheet/glass/glass))
 					var/obj/item/stack/sheet/glass/glass/G=P
 					if(G.amount<1)
-						user << "\red How...?"
+						user << "<span class='warning'>How...?</span>"
 						return
 					G.use(1)
-					user << "\blue You add the glass to the frame."
+					user << "<span class='notice'>You add the glass to the frame.</span>"
 					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 					new /obj/structure/displaycase_frame(src.loc)
 					del(src)
@@ -65,7 +65,7 @@
 				else
 					if(istype(P, /obj/item/weapon/wrench))
 						playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
-						user << "\blue You dismantle the frame"
+						user << "<span class='notice'>You dismantle the frame.</span>"
 						new /obj/item/stack/sheet/metal(src.loc, 5)
 						del(src)
 			if(2)
@@ -73,7 +73,7 @@
 					var/obj/item/weapon/circuitboard/B = P
 					if(B.board_type == "machine")
 						playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-						user << "\blue You add the circuit board to the frame."
+						user << "<span class='notice'>You add the circuit board to the frame.</span>"
 						circuit = P
 						user.drop_item()
 						P.loc = src
@@ -95,11 +95,11 @@
 							update_desc()
 						user << desc
 					else
-						user << "\red This frame does not accept circuit boards of this type!"
+						user << "<span class='warning'>This frame does not accept circuit boards of this type!</span>"
 				else
 					if(istype(P, /obj/item/weapon/wirecutters))
 						playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)
-						user << "\blue You remove the cables."
+						user << "<span class='notice'>You remove the cables.</span>"
 						state = 1
 						icon_state = "box_0"
 						var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( src.loc )
@@ -112,9 +112,9 @@
 					circuit.loc = src.loc
 					circuit = null
 					if(components.len == 0)
-						user << "\blue You remove the circuit board."
+						user << "<span class='notice'>You remove the circuit board.</span>"
 					else
-						user << "\blue You remove the circuit board and other components."
+						user << "<span class='notice'>You remove the circuit board and other components.</span>"
 						for(var/obj/item/weapon/W in components)
 							W.loc = src.loc
 					desc = initial(desc)
@@ -164,7 +164,7 @@
 											update_desc()
 											break
 										else
-											user << "\red You do not have enough [P]!"
+											user << "<span class='warning'>You do not have enough [P]!</span>"
 									if(istype(P, /obj/item/stack/rods))
 										var/obj/item/stack/rods/R = P
 										if(R.amount >= req_components[I])
@@ -178,7 +178,7 @@
 											update_desc()
 											break
 										else
-											user << "\red You do not have enough [P]!"
+											user << "<span class='warning'>You do not have enough [P]!</span>"
 									user.drop_item()
 									P.loc = src
 									components += P
@@ -187,7 +187,7 @@
 									break
 							user << desc
 							if(P && P.loc != src && !istype(P, /obj/item/weapon/cable_coil))
-								user << "\red You cannot add that component to the machine!"
+								user << "<span class='warning'>You cannot add that component to the machine!</span>"
 
 
 //Machine Frame Circuit Boards

@@ -30,9 +30,9 @@
 				qdel(src)
 				return
 			else
-				user << "\blue The welding tool needs to be on to start this task."
+				user << "<span class='notice'>The welding tool needs to be on to start this task.</span>"
 		else
-			user << "\blue You need more welding fuel to complete this task."
+			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 
 	if(istype(W, /obj/item/stack/sheet/glass/plasmarglass))
 		var/obj/item/stack/sheet/glass/plasmarglass/stack = W

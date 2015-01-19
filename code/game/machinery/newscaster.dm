@@ -533,13 +533,13 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	if(..())
 		return
 	if(masterController && !isobserver(masterController) && get_dist(masterController,src)<=1 && usr!=masterController)
-		usr << "\red You must wait for [masterController] to finish and move away."
+		usr << "<span class='warning'>You must wait for [masterController] to finish and move away.</span>"
 		return
 	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon) || isobserver(usr)))
 		usr.set_machine(src)
 		if(href_list["set_channel_name"])
 			if(isobserver(usr) && !canGhostWrite(usr,src,"set a channel's name"))
-				usr << "\red You can't do that."
+				usr << "<span class='warning'>You can't do that.</span>"
 				return
 			src.channel_name = strip_html_simple(input(usr, "Provide a Feed Channel Name", "Network Channel Handler", ""))
 			while (findtext(src.channel_name," ") == 1)
@@ -549,7 +549,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 		else if(href_list["set_channel_lock"])
 			if(isobserver(usr) && !canGhostWrite(usr,src,"locked a channel"))
-				usr << "\red You can't do that."
+				usr << "<span class='warning'>You can't do that.</span>"
 				return
 			src.c_locked = !src.c_locked
 			src.updateUsrDialog()
@@ -557,7 +557,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 		else if(href_list["submit_new_channel"])
 			if(isobserver(usr) && !canGhostWrite(usr,src,"created a new channel"))
-				usr << "\red You can't do that."
+				usr << "<span class='warning'>You can't do that.</span>"
 				return
 			//var/list/existing_channels = list() //OBSOLETE
 			var/list/existing_authors = list()
@@ -591,7 +591,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 		else if(href_list["set_channel_receiving"])
 			if(isobserver(usr) && !canGhostWrite(usr,src,"tried to set the receiving channel"))
-				usr << "\red You can't do that."
+				usr << "<span class='warning'>You can't do that.</span>"
 				return
 			//var/list/datum/feed_channel/available_channels = list()
 			var/list/available_channels = list()
@@ -603,7 +603,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 		else if(href_list["set_new_message"])
 			if(isobserver(usr) && !canGhostWrite(usr,src,"set the message of a new feed story"))
-				usr << "\red You can't do that."
+				usr << "<span class='warning'>You can't do that.</span>"
 				return
 			if(isnull(src.msg))
 				src.msg = ""
@@ -614,14 +614,14 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 		else if(href_list["set_attachment"])
 			if(isobserver(usr))
-				usr << "\red You can't do that."
+				usr << "<span class='warning'>You can't do that.</span>"
 				return
 			AttachPhoto(usr)
 			src.updateUsrDialog()
 
 		else if(href_list["submit_new_message"])
 			if(isobserver(usr) && !canGhostWrite(usr,src,"added a new story"))
-				usr << "\red You can't do that."
+				usr << "<span class='warning'>You can't do that.</span>"
 				return
 			if(src.msg =="" || src.msg=="\[REDACTED\]" || src.scanned_user == "Unknown" || src.channel_name == "" )
 				src.screen=6
@@ -644,27 +644,27 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 		else if(href_list["create_channel"])
 			if(isobserver(usr) && !canGhostWrite(usr,src,"created a channel"))
-				usr << "\red You can't do that."
+				usr << "<span class='warning'>You can't do that.</span>"
 				return
 			src.screen=2
 			src.updateUsrDialog()
 
 		else if(href_list["create_feed_story"])
 			if(isobserver(usr) && !canGhostWrite(usr,src,"created a feed story"))
-				usr << "\red You can't do that."
+				usr << "<span class='warning'>You can't do that.</span>"
 				return
 			src.screen=3
 			src.updateUsrDialog()
 
 		else if(href_list["menu_paper"])
 			if(isobserver(usr) && !canGhostWrite(usr,src,""))
-				usr << "\red You can't do that."
+				usr << "<span class='warning'>You can't do that.</span>"
 				return
 			src.screen=8
 			src.updateUsrDialog()
 		else if(href_list["print_paper"])
 			if(isobserver(usr) && !canGhostWrite(usr,src,"printed a paper"))
-				usr << "\red You can't do that."
+				usr << "<span class='warning'>You can't do that.</span>"
 				return
 			if(!src.paper_remaining)
 				src.screen=21
@@ -675,21 +675,21 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 		else if(href_list["menu_censor_story"])
 			if(isobserver(usr) && !canGhostWrite(usr,src,"censored a story"))
-				usr << "\red You can't do that."
+				usr << "<span class='warning'>You can't do that.</span>"
 				return
 			src.screen=10
 			src.updateUsrDialog()
 
 		else if(href_list["menu_censor_channel"])
 			if(isobserver(usr) && !canGhostWrite(usr,src,"censored a channel"))
-				usr << "\red You can't do that."
+				usr << "<span class='warning'>You can't do that.</span>"
 				return
 			src.screen=11
 			src.updateUsrDialog()
 
 		else if(href_list["menu_wanted"])
 			if(isobserver(usr) && !canGhostWrite(usr,src,""))
-				usr << "\red You can't do that."
+				usr << "<span class='warning'>You can't do that.</span>"
 				return
 			var/already_wanted = 0
 			if(news_network.wanted_issue)
@@ -703,7 +703,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 		else if(href_list["set_wanted_name"])
 			if(isobserver(usr) && !canGhostWrite(usr,src,"tried to set the name of a wanted person"))
-				usr << "\red You can't do that."
+				usr << "<span class='warning'>You can't do that.</span>"
 				return
 			src.channel_name = strip_html(input(usr, "Provide the name of the Wanted person", "Network Security Handler", ""))
 			while (findtext(src.channel_name," ") == 1)
@@ -712,7 +712,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 		else if(href_list["set_wanted_desc"])
 			if(isobserver(usr) && !canGhostWrite(usr,src,"tried to set the description of a wanted person"))
-				usr << "\red You can't do that."
+				usr << "<span class='warning'>You can't do that.</span>"
 				return
 			src.msg = strip_html(input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler", ""))
 			while (findtext(src.msg," ") == 1)
@@ -721,7 +721,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 		else if(href_list["submit_wanted"])
 			if(isobserver(usr) && !canGhostWrite(usr,src,"submitted a wanted poster"))
-				usr << "\red You can't do that."
+				usr << "<span class='warning'>You can't do that.</span>"
 				return
 			var/input_param = text2num(href_list["submit_wanted"])
 			if(src.msg == "" || src.channel_name == "" || src.scanned_user == "Unknown")
@@ -771,7 +771,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.updateUsrDialog()
 		else if(href_list["censor_channel_author"])
 			if(isobserver(usr) && !canGhostWrite(usr,src,"tried to censor an author"))
-				usr << "\red You can't do that."
+				usr << "<span class='warning'>You can't do that.</span>"
 				return
 			var/datum/feed_channel/FC = locate(href_list["censor_channel_author"])
 			if(FC.is_admin_channel)
@@ -786,7 +786,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 		else if(href_list["censor_channel_story_author"])
 			if(isobserver(usr) && !canGhostWrite(usr,src,"tried to censor a story's author"))
-				usr << "\red You can't do that."
+				usr << "<span class='warning'>You can't do that.</span>"
 				return
 			var/datum/feed_message/MSG = locate(href_list["censor_channel_story_author"])
 			if(MSG.is_admin_message)
@@ -801,7 +801,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 		else if(href_list["censor_channel_story_body"])
 			if(isobserver(usr) && !canGhostWrite(usr,src,"tried to censor a story"))
-				usr << "\red You can't do that."
+				usr << "<span class='warning'>You can't do that.</span>"
 				return
 			var/datum/feed_message/MSG = locate(href_list["censor_channel_story_body"])
 			if(MSG.is_admin_message)
@@ -821,7 +821,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 		else if(href_list["pick_d_notice"])
 			if(isobserver(usr) && !canGhostWrite(usr,src,""))
-				usr << "\red You can't do that."
+				usr << "<span class='warning'>You can't do that.</span>"
 				return
 			var/datum/feed_channel/FC = locate(href_list["pick_d_notice"])
 			src.viewing_channel = FC
@@ -830,7 +830,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 		else if(href_list["toggle_d_notice"])
 			if(isobserver(usr) && !canGhostWrite(usr,src,"tried to set a D-notice"))
-				usr << "\red You can't do that."
+				usr << "<span class='warning'>You can't do that.</span>"
 				return
 			var/datum/feed_channel/FC = locate(href_list["toggle_d_notice"])
 			if(FC.is_admin_channel)
@@ -886,7 +886,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	if ((stat & BROKEN) && (istype(I, /obj/item/stack/sheet/glass/glass)))
 		var/obj/item/stack/sheet/glass/glass/stack = I
 		if ((stack.amount - 2) < 0)
-			user << "\red You need more glass to do that."
+			user << "<span class='warning'>You need more glass to do that.</span>"
 		else
 			stack.use(2)
 			src.hitstaken = 0
@@ -1107,7 +1107,7 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(masterController != user)
 			if(get_dist(masterController,src)<=1)
 				if(!isobserver(masterController))
-					user << "\red Wait for [masterController] to finish and move away."
+					user << "<span class='warning'>Wait for [masterController] to finish and move away.</span>"
 					return
 	if(istype(user,/mob/living/carbon/human))                       //User is a human
 		var/mob/living/carbon/human/human_user = user
@@ -1133,9 +1133,9 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	else if (isobserver(user))
 		src.scanned_user = "Space-Time Anomaly #[rand(0,9)][rand(0,9)][rand(0,9)]"
 //	if(masterController && masterController.client && get_dist(masterController,src)<=1)
-//		masterController << "\red You were booted from \the [src] by [scanned_user]."
+//		masterController << "<span class='warning'>You were booted from \the [src] by [scanned_user].</span>"
 	masterController = user
-//	masterController << "\icon[src] \blue Welcome back, [scanned_user]!"
+//	masterController << "\icon[src] <span class='notice'>Welcome back, [scanned_user]!</span>"
 
 /obj/machinery/newscaster/proc/print_paper()
 	feedback_inc("newscaster_newspapers_printed",1)

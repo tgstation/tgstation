@@ -82,7 +82,7 @@ proc/is_banned_type(typepath)
 		if(!chosen)
 			return
 	if(is_banned_type(chosen))
-		src << "\red Denied."
+		src << "<span class='warning'>Denied.</span>"
 		return
 	new chosen(usr.loc)
 
