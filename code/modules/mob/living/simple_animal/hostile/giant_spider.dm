@@ -50,10 +50,9 @@
 	pass_flags = PASSTABLE
 	move_to_delay = 6
 	ventcrawler = 2
+	nestedProc = "Web"
 
-	var/turf/nestLoc
-	var/nestSize = 8
-	var/list/nestMates = list()
+
 
 //nursemaids - these create webs and eggs
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse
@@ -99,31 +98,6 @@
 				spawn(50)
 					stop_automated_movement = 0
 					walk(src,0)
-			if(!nestLoc)
-				if(prob(25))
-					nestLoc = src.loc
-			else
-				if(!busy && prob(25)) //chance to return to a spot in their nest
-					stop_automated_movement = 1
-					if(prob(50))
-						Goto(pick(view(nestSize,nestLoc)),move_to_delay)
-					else
-						if(nestMates.len)
-							Goto(pick(nestMates),move_to_delay)
-					spawn(50)
-						stop_automated_movement = 0
-						walk(src,0)
-				else if(!busy && prob(50)) //start to spin our nest and get some mates
-					var/list/inRange = view(nestSize,nestLoc)
-					for(var/mob/living/simple_animal/hostile/poison/giant_spider/A in inRange)
-						if(!(nestMates.Find(A)))
-							nestMates.Add(A)
-							A.nestMates.Add(src)
-							A.nestLoc = nestLoc
-					if(src.loc in inRange)
-						var/obj/effect/spider/stickyweb/W = locate() in get_turf(src)
-						if(!W)
-							Web()
 
 // Chops off each leg with a 50/50 chance of harvesting one, until finally calling
 // default harvest action

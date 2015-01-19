@@ -30,6 +30,11 @@
 	var/stat_exclusive = 0 //Mobs with this set to 1 will exclusively attack things defined by stat_attack, stat_attack 2 means they will only attack corpses
 	var/attack_same = 0 //Set us to 1 to allow us to attack our own faction, or 2, to only ever attack our own faction
 
+	var/turf/nestLoc
+	var/nestSize = 8
+	var/list/nestMates = list()
+	var/nestedProc
+
 /mob/living/simple_animal/hostile/Life()
 
 	. = ..()
@@ -47,6 +52,7 @@
 					EscapeConfinement()
 				var/new_target = FindTarget()
 				GiveTarget(new_target)
+				DoNesting()
 
 			if(HOSTILE_STANCE_ATTACK)
 				MoveToTarget()
@@ -55,6 +61,35 @@
 			if(HOSTILE_STANCE_ATTACKING)
 				AttackTarget()
 				DestroySurroundings()
+
+
+/mob/living/simple_animal/hostile/proc/DoNesting()
+	if(!nestLoc)
+		if(prob(25))
+			nestLoc = src.loc
+	else
+		if(prob(25))
+			stop_automated_movement = 1
+			if(prob(50))
+				Goto(pick(view(nestSize,nestLoc)),move_to_delay)
+			else
+				if(nestMates.len)
+					Goto(pick(nestMates),move_to_delay)
+			spawn(50)
+				stop_automated_movement = 0
+				walk(src,0)
+		else if(prob(50))
+			var/list/inRange = view(nestSize,nestLoc)
+			for(var/mob/living/simple_animal/hostile/A in inRange)
+				if(!(istype(src.type,A)))
+					continue
+				if(!(nestMates.Find(A)))
+					nestMates.Add(A)
+					A.nestMates.Add(src)
+					A.nestLoc = nestLoc
+			if(src.loc in inRange)
+				if(nestedProc)
+					call(src,nestedProc)()
 
 
 //////////////HOSTILE MOB TARGETTING AND AGGRESSION////////////
