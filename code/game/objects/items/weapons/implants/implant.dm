@@ -71,7 +71,7 @@ disintegrate into bio-safe elements.<BR>
 <b>Integrity:</b> Gradient creates slight risk of being overcharged and frying the
 circuitry. As a result neurotoxins can cause massive damage.<HR>
 Implant Specifics:<BR>"}
-return dat
+	return dat
 
 /obj/item/weapon/implant/tracking/emp_act(severity)
 	if (malfunction)	//no, dawg, you can't malfunction while you are malfunctioning
@@ -513,14 +513,14 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		scanned.loc = t
 	del src
 
-implanted(mob/source as mob)
+/obj/item/weapon/implant/compressed/implanted(mob/source as mob)
 	src.activation_emote = input("Choose activation emote:") in list("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
 	if (source.mind)
 		source.mind.store_memory("Compressed matter implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
 	source << "The implanted compressed matter implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
 	return 1
 
-islegal()
+/obj/item/weapon/implant/compressed/islegal()
 	return 0
 
 /obj/item/weapon/implant/cortical
