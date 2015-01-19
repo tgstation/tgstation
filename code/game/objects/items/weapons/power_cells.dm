@@ -126,3 +126,6 @@
 
 /obj/item/weapon/stock_parts/cell/emproof/emp_act(severity)
 	return
+
+/obj/item/weapon/stock_parts/cell/emproof/corrupt()
+	return
