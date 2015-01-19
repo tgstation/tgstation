@@ -30,6 +30,7 @@
 	var/stat_exclusive = 0 //Mobs with this set to 1 will exclusively attack things defined by stat_attack, stat_attack 2 means they will only attack corpses
 	var/attack_same = 0 //Set us to 1 to allow us to attack our own faction, or 2, to only ever attack our own faction
 
+	var/isNesting = FALSE
 	var/turf/nestLoc
 	var/nestSize = 8
 	var/list/nestMates = list()
@@ -52,7 +53,8 @@
 					EscapeConfinement()
 				var/new_target = FindTarget()
 				GiveTarget(new_target)
-				DoNesting()
+				if(isNesting)
+					DoNesting()
 
 			if(HOSTILE_STANCE_ATTACK)
 				MoveToTarget()
