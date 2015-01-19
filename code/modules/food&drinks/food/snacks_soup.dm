@@ -50,7 +50,7 @@
 	var/extra_reagent = null
 /obj/item/weapon/reagent_containers/food/snacks/soup/mysterysoup/New()
 	extra_reagent = pick("capsaicin", "frostoil", "omnizine", "banana", "blood", "slimejelly", "toxin", "banana", "carbon", "oculine")
-	list_reagents.Add(, extra_reagent = 5)
+	list_reagents.Add(extra_reagent = 5)
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/wishsoup

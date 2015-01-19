@@ -7,15 +7,15 @@
 	desc = "Goes great with Robust Coffee."
 	icon_state = "donut1"
 	bitesize = 5
-	list_reagents = list("nutriment" = 3, "sprinkles" = 1, "sugar" = 1)
+	list_reagents = list("nutriment" = 3, "sugar" = 1)
 	var/extra_reagent = null
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/New()
-	..()
 	if(prob(30))
 		icon_state = "donut2"
 		name = "frosted donut"
-		list_reagents.Add(, "sprinkles" = 2)
+		list_reagents.Add("sprinkles" = 2)
+	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/chaos
 	name = "chaos donut"
@@ -23,28 +23,28 @@
 	bitesize = 10
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/chaos/New()
-	extra_reagent = pick("nutriment", "capsaicin", "frostoil", "sprinkles", "plasma", "coco", "slimejelly", "banana", "berryjuice", "omnizine")
-	list_reagents.Add(, extra_reagent = 3)
+	extra_reagent = pick("nutriment", "capsaicin", "frostoil", "krokodil", "plasma", "coco", "slimejelly", "banana", "berryjuice", "omnizine")
+	list_reagents.Add(extra_reagent = 3)
 	if(prob(30))
 		icon_state = "donut2"
 		name = "frosted chaos donut"
-		list_reagents.Add(, "sprinkles" = 2)
+		list_reagents.Add("sprinkles" = 2)
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/jelly
 	name = "jelly donut"
 	desc = "You jelly?"
 	icon_state = "jdonut1"
-	list_reagents = list("nutriment" = 3, "sprinkles" = 1, "sugar" = 1)
+	list_reagents = list("nutriment" = 3, "sugar" = 1)
 	extra_reagent = "berryjuice"
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/jelly/New()
-	..()
-	list_reagents.Add(, extra_reagent = 5)
+	list_reagents.Add(extra_reagent = 5)
 	if(prob(30))
 		icon_state = "jdonut2"
 		name = "frosted jelly Donut"
-		reagents.add_reagent("sprinkles", 2)
+		list_reagents.Add("sprinkles" = 2)
+	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/jelly/slimejelly
 	name = "jelly donut"
@@ -152,7 +152,7 @@
 	if(prob(10))
 		name = "exceptional plump helmet biscuit"
 		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump helmet biscuit!"
-		list_reagents.Add(, "omnizine" = 5)
+		list_reagents.Add("omnizine" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/appletart
 	name = "golden apple streusel tart"
