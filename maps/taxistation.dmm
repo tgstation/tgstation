@@ -6388,7 +6388,7 @@
 "csR" = (/obj/structure/grille,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor/plating/vox,/area)
 "csS" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/o2,/turf/simulated/floor/plating/vox,/area/vox_trading_post/eva)
 "csT" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/toxin,/turf/simulated/floor/plating/vox,/area/vox_trading_post/eva)
-"csU" = (/obj/structure/table,/obj/item/stack/sheet/rglass,/obj/item/stack/sheet/rglass,/turf/simulated/floor/plating/vox,/area/vox_trading_post/eva)
+"csU" = (/obj/structure/table,/obj/item/stack/sheet/glass/rglass,/obj/item/stack/sheet/glass/rglass,/turf/simulated/floor/plating/vox,/area/vox_trading_post/eva)
 "csV" = (/obj/structure/table,/turf/simulated/floor/plating/vox,/area/vox_trading_post/storage_1)
 "csW" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating/vox,/area/vox_trading_post/storage_1)
 "csX" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 8; on = 1},/obj/machinery/alarm/vox{pixel_y = 24},/obj/structure/table,/turf/simulated/floor/plating/vox,/area/vox_trading_post/storage_1)
