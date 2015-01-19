@@ -31,6 +31,9 @@
 	var/burst_size = 1
 	var/fire_delay = 0
 
+	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
+
 	var/obj/item/device/firing_pin/pin = /obj/item/device/firing_pin //standard firing pin for most guns
 
 	var/obj/item/device/flashlight/F = null
