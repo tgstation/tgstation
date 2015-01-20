@@ -310,67 +310,6 @@
 	else
 		src << "\red You're out of energy!  You need food!"
 
-/mob/proc/PowerGlove(atom/A)
-	return
-
-/mob/living/carbon/human/PowerGlove(atom/A)
-	var/obj/item/clothing/gloves/yellow/power/G = src:gloves
-	var/time = 100
-	var/turf/T = get_turf(src)
-	var/turf/U = get_turf(A)
-	var/obj/structure/cable/cable = locate() in T
-	if(!cable || !istype(cable))
-		return
-	if(world.time < G.next_shock)
-		src << "<span class='warning'>[G] aren't ready to shock again!</span>"
-		return
-	src.visible_message("<span class='warning'>[name] fires an arc of electricity!</span>", \
-	"<span class='warning'>You fire an arc of electricity!</span>", \
-	"You hear the loud crackle of electricity!")
-	var/datum/powernet/PN = cable.get_powernet()
-	var/obj/item/projectile/beam/lightning/L = getFromPool(/obj/item/projectile/beam/lightning, loc)
-	if(PN)
-		L.damage = PN.get_electrocute_damage()
-		if(L.damage >= 200)
-			apply_damage(15, BURN, (hand ? "l_hand" : "r_hand"))
-			//usr:Stun(15)
-			//usr:Weaken(15)
-			//if(usr:status_flags & CANSTUN) // stun is usually associated with stutter
-			//	usr:stuttering += 20
-			time = 200
-			src << "<span class='warning'>[G] overloads from the massive current, shocking you in the process!"
-		else if(L.damage >= 100)
-			apply_damage(5, BURN, (hand ? "l_hand" : "r_hand"))
-			//usr:Stun(10)
-			//usr:Weaken(10)
-			//if(usr:status_flags & CANSTUN) // stun is usually associated with stutter
-			//	usr:stuttering += 10
-			time = 150
-			src << "<span class='warning'>[G] overloads from the massive current, shocking you in the process!"
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(5, 1, src)
-		s.start()
-	if(L.damage <= 0)
-		returnToPool(L)
-		//del(L)
-	if(L)
-		playsound(get_turf(src), 'sound/effects/eleczap.ogg', 75, 1)
-		L.tang = L.adjustAngle(get_angle(U,T))
-		L.icon = midicon
-		L.icon_state = "[L.tang]"
-		L.firer = usr
-		L.def_zone = get_organ_target()
-		L.original = src
-		L.current = U
-		L.starting = U
-		L.yo = U.y - T.y
-		L.xo = U.x - T.x
-		spawn( 1 )
-			L.process()
-
-	delayNextAttack(12)
-	G.next_shock = world.time + time
-
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 /mob/proc/face_atom(var/atom/A)
 	if(stat != CONSCIOUS || buckled || !A || !x || !y || !A.x || !A.y )

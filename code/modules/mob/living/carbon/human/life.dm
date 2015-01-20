@@ -314,6 +314,10 @@ var/global/list/organ_damage_overlays = list(
 	if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
 		src << "Successfully handled vampire"
 		last_processed = "Handle vampire"
+
+	if(update_overlays)
+		update_overlays = 0
+		UpdateDamageIcon()
 	cycle++
 
 

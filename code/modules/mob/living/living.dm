@@ -129,7 +129,7 @@
 		for(var/datum/organ/external/affecting in H.organs)
 			if(!affecting)	continue
 			if(affecting.take_damage(0, divided_damage+extradam))	//TODO: fix the extradam stuff. Or, ebtter yet...rewrite this entire proc ~Carn
-				H.UpdateDamageIcon()
+				H.QueueUpdateDamageIcon()
 		H.updatehealth()
 		return 1
 	else if(istype(src, /mob/living/carbon/monkey))
@@ -851,7 +851,8 @@
 /mob/living/singularity_pull(S)
 	step_towards(src, S)
 
-
+/mob/living/proc/InCritical()
+	return (src.health < 0 && src.health > -95.0 && stat == UNCONSCIOUS)
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm

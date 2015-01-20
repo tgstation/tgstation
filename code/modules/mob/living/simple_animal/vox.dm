@@ -17,7 +17,7 @@
 	environment_smash = 2 // WALLS
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	status_flags = 0
-	universal_speak = 1
+	languages = HUMAN
 
 	var/armour = null
 	var/amp = null

@@ -16,7 +16,6 @@
 
 	var/turns_per_move = 1
 	var/turns_since_move = 0
-	universal_speak = 1
 	var/meat_amount = 0
 	var/meat_type
 	var/stop_automated_movement = 0 //Use this to temporarely stop random movement or to if you write special movement code for animals.
@@ -267,9 +266,10 @@
 /mob/living/simple_animal/emote(var/act, var/type, var/desc)
 	if(stat)
 		return
-	if(act)
-		if(act == "scream")	act = "whimper" //ugly hack to stop animals screaming when crushed :P
-		..(act, type, desc)
+	if(act == "scream")
+		desc = "makes a loud and pained whimper"  //ugly hack to stop animals screaming when crushed :P
+		act = "me"
+	..(act, type, desc)
 
 /mob/living/simple_animal/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)

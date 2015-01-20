@@ -18,7 +18,6 @@
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 500
-	directwired = 0
 	var/remote_access_enabled = 1
 	var/cached_power_avail = 0
 	var/emergency_insert_ready = 0

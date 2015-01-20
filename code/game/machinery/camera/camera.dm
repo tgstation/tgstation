@@ -61,10 +61,12 @@ var/list/camera_names=list()
 	..()
 
 /obj/machinery/camera/Destroy()
-	if(wires)
-		wires.Destroy()
-		wires = null
-
+	deactivate(null, 0) //kick anyone viewing out
+	if(assembly)
+		qdel(assembly)
+		assembly = null
+	qdel(wires)
+	cameranet.removeCamera(src) //Will handle removal from the camera network and the chunks, so we don't need to worry about that
 	..()
 
 /obj/machinery/camera/emp_act(severity)
@@ -240,7 +242,7 @@ var/list/camera_names=list()
 	if(isXRay())
 		see = range(view_range, pos)
 	else
-		see = hear(view_range, pos)
+		see = get_hear(view_range, pos)
 	return see
 
 /atom/proc/auto_turn()

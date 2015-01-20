@@ -23,8 +23,9 @@
 	return
 
 /obj/item/stack/Destroy()
-	if (src && usr && usr.machine==src)
+	if (usr && usr.machine==src)
 		usr << browse(null, "window=stack")
+	src.loc = null
 	..()
 
 /obj/item/stack/examine(mob/user)
@@ -35,6 +36,7 @@
 	list_recipes(user)
 
 /obj/item/stack/proc/list_recipes(mob/user as mob, recipes_sublist)
+	ASSERT(isnum(amount))
 	if (!recipes)
 		return
 	if (!src || amount<=0)
@@ -161,6 +163,7 @@
 	return
 
 /obj/item/stack/proc/use(var/amount)
+	ASSERT(isnum(src.amount))
 	if(src.amount>=amount)
 		src.amount-=amount
 	else

@@ -285,7 +285,7 @@ datum
 									var/datum/organ/external/affecting = H.get_organ("head")
 									if(affecting)
 										if(affecting.take_damage(25, 0))
-											H.UpdateDamageIcon()
+											H.QueueUpdateDamageIcon(1)
 										H.status_flags |= DISFIGURED
 										H.emote("scream",,, 1)
 								else
@@ -559,7 +559,6 @@ datum
 							W.dropped(M)
 						var/mob/living/carbon/slime/new_mob = new /mob/living/carbon/slime(M.loc)
 						new_mob.a_intent = "hurt"
-						new_mob.universal_speak = 1
 						if(M.mind)
 							M.mind.transfer_to(new_mob)
 						else
@@ -718,7 +717,7 @@ datum
 										var/datum/organ/external/affecting = H.get_organ("head")
 										if(affecting)
 											if(affecting.take_damage(25, 0))
-												H.UpdateDamageIcon()
+												H.QueueUpdateDamageIcon(1)
 											H.status_flags |= DISFIGURED
 											H.emote("scream",,, 1)
 									else
@@ -1041,7 +1040,7 @@ datum
 							var/datum/organ/external/affecting = H.get_organ("head")
 							if(affecting)
 								if(affecting.take_damage(25, 0))
-									H.UpdateDamageIcon()
+									H.QueueUpdateDamageIcon(1)
 								H.status_flags |= DISFIGURED
 								H.emote("scream",,, 1)
 						else
@@ -1107,7 +1106,7 @@ datum
 						if(!H.unacidable)
 							var/datum/organ/external/affecting = H.get_organ("head")
 							if(affecting.take_damage(15, 0))
-								H.UpdateDamageIcon()
+								H.QueueUpdateDamageIcon(1)
 							H.emote("scream",,, 1)
 					else if(ismonkey(M))
 						var/mob/living/carbon/monkey/MK = M
@@ -1129,7 +1128,7 @@ datum
 							var/mob/living/carbon/human/H = M
 							var/datum/organ/external/affecting = H.get_organ("head")
 							if(affecting.take_damage(15, 0))
-								H.UpdateDamageIcon()
+								H.QueueUpdateDamageIcon(1)
 							H.emote("scream",,, 1)
 							H.status_flags |= DISFIGURED
 						else

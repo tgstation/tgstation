@@ -35,7 +35,7 @@ var/global/narsie_behaviour = "CultStation13"
 	..()
 	if(announce)
 		world << "<font size='15' color='red'><b>[uppertext(name)] HAS RISEN</b></font>"
-
+		world << sound('sound/effects/wind/wind_5_1.ogg')
 	if (emergency_shuttle)
 		emergency_shuttle.incall(0.3) // Cannot recall.
 

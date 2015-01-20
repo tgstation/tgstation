@@ -33,7 +33,7 @@
 							"<span class='notice'>You start [PK.drill_verb] \the [src] with \the [PK]</span>")
 		if(do_after(user,30))
 			if(!src) return
-			user.visible_message("<span class='warning'>[user] destroys \the [PK]!</span>",
+			user.visible_message("<span class='warning'>[user] destroys \the [src]!</span>",
 								"<span class='notice'>You start [PK.drill_verb] \the [src] with \the [PK]</span>")
 			new /obj/item/stack/sheet/metal(get_turf(src))
 			del(src)
@@ -245,7 +245,7 @@
 							"<span class='notice'>You start [PK.drill_verb] \the [src] with \the [PK]</span>")
 		if(do_after(user,30))
 			if(!src) return
-			user.visible_message("<span class='warning'>[user] destroys \the [PK]!</span>",
+			user.visible_message("<span class='warning'>[user] destroys \the [src]!</span>",
 								"<span class='notice'>You start [PK.drill_verb] \the [src] with \the [PK]</span>")
 			new /obj/effect/decal/remains/human(loc)
 			del(src)

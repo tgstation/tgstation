@@ -25,6 +25,9 @@
 
 	store_position()
 
+/mob/proc/is_muzzled()
+	return 0
+
 /mob/proc/store_position()
 	origin_x = x
 	origin_y = y
@@ -802,9 +805,10 @@ var/list/slot_equipment_priority = list( \
 		// If we're pulling something then drop what we're currently pulling and pull this instead.
 		if(pulling)
 			// Are we trying to pull something we are already pulling? Then just stop here, no need to continue.
+
+			stop_pulling()
 			if(AM == pulling)
 				return
-			stop_pulling()
 
 		src.pulling = AM
 		AM.pulledby = src
