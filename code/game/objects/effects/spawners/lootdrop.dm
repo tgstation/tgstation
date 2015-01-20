@@ -117,3 +117,10 @@
 				/obj/item/weapon/wrench = 4,
 				"" = 11
 				)
+
+/obj/effect/spawner/lootdrop/arts
+	name = "art loot spawner"
+	loot = list(
+				/obj/item/toy/crayon/spraycan/rainbow = 1,
+				/obj/item/weapon/storage/fancy/crayons = 5
+				)

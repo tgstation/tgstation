@@ -467,7 +467,7 @@
 		if("random_letter")
 			temp = pick(letters)
 		if("letter")
-			temp = input("Choose the letter.", "Crayon scribbles") in letters
+			temp = input("Choose the letter.", "Scribbles") in letters
 		if("random_rune")
 			temp = "rune[rand(1,6)]"
 		if("random_graffiti")
@@ -494,22 +494,52 @@
 			if(uses)
 				uses--
 				if(!uses)
-					user << "<span class='danger'>You used up your crayon!</span>"
+					user << "<span class='danger'>You used up your [src]!</span>"
 					qdel(src)
 	return
 
 /obj/item/toy/crayon/attack(mob/M as mob, mob/user as mob)
 	if(M == user)
-		user << "You take a bite of the crayon. Delicious!"
+		user << "You take a bite of the [src]. Delicious!"
 		user.nutrition += 5
 		if(uses)
 			uses -= 5
 			if(uses <= 0)
-				user << "<span class='danger'>You ate your crayon!</span>"
+				user << "<span class='danger'>You ate your [src]!</span>"
 				qdel(src)
 	else
 		..()
 
+/obj/item/toy/crayon/spraycan
+	icon_state = "spraycanred_cap"
+	desc = "A metallic container containing tasty paint."
+	var/capped = 1
+	instant = 1
+
+/obj/item/toy/crayon/spraycan/New()
+	..()
+	name = "[colourName] spraycan"
+
+/obj/item/toy/crayon/spraycan/attack_self(mob/living/user as mob)
+	var/choice = input(user,"Spraycan options") in list("Change Cap","Change Drawing")
+	switch(choice)
+		if("Change Cap")
+			if(capped)
+				user << "<span class='notice'>You remove the cap of the [src]</span>"
+				icon_state = "spraycan[colourName]"
+				capped = 0
+			else
+				user << "<span class='notice'>You replace the cap of the [src]</span>"
+				icon_state = "spraycan[colourName]_cap"
+				capped = 1
+		if("Change Drawing")
+			..()
+
+/obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user as mob, proximity)
+	if(capped)
+		return
+	else
+		..()
 /*
  * Snap pops
  */
