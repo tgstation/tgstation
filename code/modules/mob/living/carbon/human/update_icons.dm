@@ -129,6 +129,9 @@ Please contact me on #coderbus IRC. ~Carn x
 	//overlays.len = 0
 	icon = species.override_icon
 	icon_state = "[lowertext(species.name)]_[gender][(mutations & M_FAT)?"_fat":""]"
+	//temporary fix for having mutations on top of overriden icons for like muton, horror, etc
+	overlays -= obj_overlays[MUTANTRACE_LAYER]
+
 
 /mob/living/carbon/human/proc/generate_overlays_icon()
 	icon = stand_icon
@@ -434,11 +437,12 @@ var/global/list/damage_icon_parts = list()
 	if(dna)
 		switch(dna.mutantrace)
 			if("golem","slime","shadow","adamantine")
-				var/obj/Overlays/O = obj_overlays[MUTANTRACE_LAYER]
-				O.icon = 'icons/effects/genetics.dmi'
-				O.icon_state = "[dna.mutantrace][fat]_[gender]_s"
-				overlays += O
-				obj_overlays[MUTANTRACE_LAYER] = O
+				if(species && (!species.override_icon && species.has_mutant_race))
+					var/obj/Overlays/O = obj_overlays[MUTANTRACE_LAYER]
+					O.icon = 'icons/effects/genetics.dmi'
+					O.icon_state = "[dna.mutantrace][fat]_[gender]_s"
+					overlays += O
+					obj_overlays[MUTANTRACE_LAYER] = O
 				//overlays_standing[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[dna.mutantrace][fat]_[gender]_s")
 			//else
 				//overlays_standing[MUTANTRACE_LAYER]	= null

@@ -109,6 +109,9 @@ var/global/list/whitelisted_species = list("Human")
 		"eyes" =     /datum/organ/internal/eyes
 		)
 
+	//If we will apply mutant race overlays or not.
+	var/has_mutant_race = 1
+
 /datum/species/proc/handle_speech(var/message, var/mob/living/carbon/human/H)
 	return message
 
@@ -469,6 +472,8 @@ var/global/list/whitelisted_species = list("Human")
 	default_mutations=list(M_REMOTE_TALK)
 	default_block_names=list("REMOTETALK")
 
+	has_mutant_race = 0
+
 /datum/species/muton // /vg/
 	name = "Muton"
 	icobase = 'icons/mob/human_races/r_muton.dmi'
@@ -487,6 +492,8 @@ var/global/list/whitelisted_species = list("Human")
 	// Both must be set or it's only a 45% chance of manifesting.
 	default_mutations=list(M_STRONG | M_RUN | M_LOUD)
 	default_block_names=list("STRONGBLOCK","LOUDBLOCK","INCREASERUNBLOCK")
+
+	has_mutant_race = 0
 
 	equip(var/mob/living/carbon/human/H)
 		// Unequip existing suits and hats.
@@ -538,6 +545,8 @@ var/global/list/whitelisted_species = list("Human")
 	wear_suit_icons = 'icons/mob/species/vox/suit.dmi'
 	wear_mask_icons = 'icons/mob/species/vox/masks.dmi'
 //	back_icons      = 'icons/mob/back.dmi'
+
+	has_mutant_race = 0
 
 	equip(var/mob/living/carbon/human/H)
 		// Unequip existing suits and hats.
@@ -661,4 +670,6 @@ var/global/list/whitelisted_species = list("Human")
 
 	blood_color = "#004400"
 	flesh_color = "#907E4A"
+
+	has_mutant_race = 0
 
