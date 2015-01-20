@@ -252,13 +252,16 @@
 			user << "<span class='notice'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>"
 
 	else if(istype(O, /obj/item/weapon/wrench))
+		if(isinspace())
+			user << "<span class='warning'>There's nothing to fasten [src] to!</span>"
+			return
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		user << "<span class='warning'>You start [anchored ? "wrenching" : "unwrenching"] [src]</span>"
+		user << "<span class='warning'>You start [anchored ? "unwrenching" : "wrenching"] [src]</span>"
 		if(do_after(user, 20))
 			if(gc_destroyed)
 				return
+			user << "<span class='notice'>You [anchored ? "unwrench" : "wrench"] [src].</span>"
 			anchored = !anchored
-			user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] [src].</span>"
 
 	else if(istype(O, /obj/item/weapon/grab)) //For ass-copying.
 		var/obj/item/weapon/grab/G = O
@@ -342,6 +345,8 @@
 /obj/machinery/photocopier/proc/copier_blocked()
 	if(gc_destroyed)
 		return
+	if(loc.density)
+		return 1
 	for(var/atom/movable/AM in loc)
 		if(AM == src)
 			continue
