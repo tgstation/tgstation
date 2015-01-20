@@ -18,7 +18,7 @@
 	var/obj/screen/inv1 = null
 	var/obj/screen/inv2 = null
 	var/obj/screen/inv3 = null
-
+	
 	var/shown_robot_modules = 0
 	var/obj/screen/robot_modules_background
 
@@ -82,7 +82,7 @@
 		wires = new /datum/wires/robot/mommi(src)
 	else
 		wires = new(src)
-
+		
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
 	robot_modules_background.layer = 19
@@ -436,7 +436,7 @@
 	set name = "Self Diagnosis"
 
 	if(!is_component_functioning("diagnosis unit"))
-		src << "<span class='warning'>Your self-diagnosis component isn't functioning.</span>"
+		src << "\red Your self-diagnosis component isn't functioning."
 
 	var/dat = self_diagnosis()
 	src << browse(dat, "window=robotdiagnosis")
@@ -461,10 +461,10 @@
 	var/datum/robot_component/C = components[toggle]
 	if(C.toggled)
 		C.toggled = 0
-		src << "<span class='warning'>You disable [C.name].</span>"
+		src << "\red You disable [C.name]."
 	else
 		C.toggled = 1
-		src << "<span class='warning'>You enable [C.name].</span>"
+		src << "\red You enable [C.name]."
 
 /mob/living/silicon/robot/blob_act()
 	if(flags & INVULNERABLE)
@@ -537,12 +537,12 @@
 		stat(null, text("Metal Sheets: [M.amount]/50"))
 
 /mob/living/silicon/robot/proc/show_glass_sheets()
-	var/obj/item/stack/sheet/glass/glass/G = installed_module(/obj/item/stack/sheet/glass/glass)
+	var/obj/item/stack/sheet/glass/G = installed_module(/obj/item/stack/sheet/glass)
 	if(G)
 		stat(null, text("Glass Sheets: [G.amount]/50"))
 
 /mob/living/silicon/robot/proc/show_rglass_sheets()
-	var/obj/item/stack/sheet/glass/rglass/G = installed_module(/obj/item/stack/sheet/glass/rglass)
+	var/obj/item/stack/sheet/rglass/G = installed_module(/obj/item/stack/sheet/rglass)
 	if(G)
 		stat(null, text("Reinforced Glass Sheets: [G.amount]/50"))
 
@@ -594,7 +594,7 @@
 	if(flags & INVULNERABLE)
 		return
 	for(var/mob/M in viewers(src, null))
-		M.show_message(text("<span class='attack'>[src] has been hit by [O]</span>"), 1)
+		M.show_message(text("\red [src] has been hit by [O]"), 1)
 		//Foreach goto(19)
 	if (health > 0)
 		adjustBruteLoss(30)
@@ -620,7 +620,7 @@
 			var/mob/tmob = AM
 			if(istype(tmob, /mob/living/carbon/human) && (M_FAT in tmob.mutations))
 				if(prob(20))
-					usr << "<span class='danger'>You fail to push [tmob]'s fat ass out of the way.</span>"
+					usr << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 					now_pushing = 0
 					return
 			if(!(tmob.status_flags & CANPUSH))
@@ -689,7 +689,7 @@
 //		if (viewalerts) robot_alerts()
 	return !cleared
 
-
+	
 /mob/living/silicon/robot/emag_act(mob/user as mob)
 	if(!user != src)
 		if(!opened)
@@ -747,8 +747,8 @@
 					user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
 					if(prob(25))
 						src << "Hack attempt detected."
-
-
+	
+	
 /mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
 		return
@@ -763,7 +763,7 @@
 				user.drop_item()
 				W.loc = null
 
-				usr << "<span class='notice'>You install the [W.name].</span>"
+				usr << "\blue You install the [W.name]."
 
 				return
 
@@ -777,7 +777,7 @@
 			updatehealth()
 			add_fingerprint(user)
 			for(var/mob/O in viewers(user, null))
-				O.show_message(text("<span class='attack'>[user] has fixed some of the dents on [src]!</span>"), 1)
+				O.show_message(text("\red [user] has fixed some of the dents on [src]!"), 1)
 		else
 			user << "Need more welding fuel!"
 			return
@@ -791,7 +791,7 @@
 		updatehealth()
 		coil.use(1)
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("<span class='attack'>[user] has fixed some of the burnt wires on [src]!</span>"), 1)
+			O.show_message(text("\red [user] has fixed some of the burnt wires on [src]!"), 1)
 
 	else if (istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
 		if(opened)
@@ -895,8 +895,8 @@
 				user << "You [ locked ? "lock" : "unlock"] [src]'s interface."
 				updateicon()
 			else
-				user << "<span class='warning'>Access denied.</span>"
-
+				user << "\red Access denied."
+				
 	else if(istype(W, /obj/item/borg/upgrade/))
 		var/obj/item/borg/upgrade/U = W
 		if(!opened)
@@ -946,7 +946,7 @@
 		if ("help")
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
-					O.show_message(text("<span class='notice'>[M] caresses [src]'s plating with its scythe like arm.</span>"), 1)
+					O.show_message(text("\blue [M] caresses [src]'s plating with its scythe like arm."), 1)
 
 		if ("grab")
 			if (M == src)
@@ -960,7 +960,7 @@
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
-					O.show_message(text("<span class='attack'>[] has grabbed [] passively!</span>", M, src), 1)
+					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
 
 		if ("hurt")
 			var/damage = rand(10, 20)
@@ -975,7 +975,7 @@
 
 				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
-					O.show_message(text("<span class='danger'>[] has slashed at []!</span>", M, src), 1)
+					O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
 				if(prob(8))
 					flick("noise", flash)
 				adjustBruteLoss(damage)
@@ -984,7 +984,7 @@
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='danger'>[] took a swipe at []!</span>", M, src), 1)
+						O.show_message(text("\red <B>[] took a swipe at []!</B>", M, src), 1)
 
 		if ("disarm")
 			if(!(lying))
@@ -995,12 +995,12 @@
 					playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
-							O.show_message(text("<span class='danger'>[] has forced back []!</span>", M, src), 1)
+							O.show_message(text("\red <B>[] has forced back []!</B>", M, src), 1)
 				else
 					playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
-							O.show_message(text("<span class='danger'>[] attempted to force back []!</span>", M, src), 1)
+							O.show_message(text("\red <B>[] attempted to force back []!</B>", M, src), 1)
 	return
 
 
@@ -1016,7 +1016,7 @@
 
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
-				O.show_message(text("<span class='danger'>The [M.name] glomps []!</span>", src), 1)
+				O.show_message(text("\red <B>The [M.name] glomps []!</B>", src), 1)
 
 		var/damage = rand(1, 3)
 
@@ -1047,7 +1047,7 @@
 
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='danger'>The [M.name] has electrified []!</span>", src), 1)
+						O.show_message(text("\red <B>The [M.name] has electrified []!</B>", src), 1)
 
 				flick("noise", flash)
 
@@ -1070,7 +1070,7 @@
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		for(var/mob/O in viewers(src, null))
-			O.show_message("<span class='danger'>[M] [M.attacktext] [src]!</span>", 1)
+			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -1182,7 +1182,7 @@
 
 /mob/living/silicon/robot/proc/installed_modules()
 	if(weapon_lock)
-		src << "<span class='attack'>Weapon lock active, unable to use modules! Count:[weaponlock_time]</span>"
+		src << "\red Weapon lock active, unable to use modules! Count:[weaponlock_time]"
 		return
 
 	if(!module)
@@ -1330,7 +1330,7 @@
 								cleaned_human.shoes.clean_blood()
 								cleaned_human.update_inv_shoes(0)
 							cleaned_human.clean_blood()
-							cleaned_human << "<span class='warning'>[src] cleans your face!</span>"
+							cleaned_human << "\red [src] cleans your face!"
 		return
 
 /mob/living/silicon/robot/proc/self_destruct()
@@ -1392,8 +1392,8 @@
 	if(hud_used)
 		hud_used.update_robot_modules_display()
 	update_icons()
-
-
+	
+	
 /mob/living/silicon/robot/proc/SetLockdown(var/state = 1)
 	// They stay locked down if their wire is cut.
 	if(wires.LockedCut())

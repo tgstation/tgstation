@@ -259,7 +259,7 @@
 
 /datum/theft_objective/number/salvage/glass
 	name = "glass"
-	typepath = /obj/item/stack/sheet/glass/glass
+	typepath = /obj/item/stack/sheet/glass
 	min = 200
 	max = 200
 

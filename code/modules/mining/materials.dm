@@ -108,7 +108,7 @@
 	value=1
 	cc_per_sheet=CC_PER_SHEET_GLASS
 	oretype=/obj/item/weapon/ore/glass
-	sheettype=/obj/item/stack/sheet/glass/glass
+	sheettype=/obj/item/stack/sheet/glass
 
 /datum/material/diamond
 	name="Diamond"
