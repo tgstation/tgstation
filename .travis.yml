@@ -4,7 +4,7 @@ language: c
 env:
     global:
     - BYOND_MAJOR="506"
-    - BYOND_MINOR="1249"
+    - BYOND_MINOR="1247"
 
 before_install:
   - sudo apt-get update -qq
