@@ -405,6 +405,8 @@
 /*
  * Crayons
  */
+/mob/living/carbon
+	var/sprayOverlay
 
 /obj/item/toy/crayon
 	name = "crayon"
@@ -547,6 +549,18 @@
 	if(capped)
 		return
 	else
+		if(iscarbon(target))
+			var/mob/living/carbon/C = target
+			user.visible_message("<span class='danger'> [user] sprays [src] into the face of [target]!</span>")
+			var/icon/I = icon(icon='icons/obj/crayons.dmi',icon_state = "spray_face")
+			I.Blend(colourName,ICON_MULTIPLY)
+			if(C.client)
+				C.eye_blurry = max(C.eye_blurry, 3)
+				C.eye_blind = max(C.eye_blind, 1)
+				C.confused = max(C.confused, 3)
+				C.Weaken(3)
+			C.sprayOverlay = I
+			C.overlays.Add(C.sprayOverlay)
 		..()
 /*
  * Snap pops
