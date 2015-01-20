@@ -59,7 +59,7 @@ datum/reagent/styptic_powder/on_mob_life(var/mob/living/M as mob)
 datum/reagent/salglu_solution
 	name = "Saline-Glucose Solution"
 	id = "salglu_solution"
-	description = "33% chance per cycle of healing 3 point each of BRUTE and BURN damage."
+	description = "50% chance per cycle of healing 2 points each of BRUTE and BURN damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
@@ -81,8 +81,8 @@ datum/reagent/synthflesh
 datum/reagent/synthflesh/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 	if(!M) M = holder.my_atom
 	if(method == TOUCH)
-		M.adjustBruteLoss(-(1*volume)*REM)
-		M.adjustFireLoss(-(1*volume)*REM)
+		M.adjustBruteLoss(-(1.5*volume)*REM)
+		M.adjustFireLoss(-(1.5*volume)*REM)
 		M << "<span class='notice'>You feel your burns healing and your flesh knitting together!</span>"
 	..()
 	return
@@ -393,7 +393,6 @@ datum/reagent/diphenhydramine
 	color = "#C8A5DC" // rgb: 200, 165, 220
 datum/reagent/diphenhydramine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	M.drowsyness += 1
 	M.jitteriness -= 1
 	M.reagents.remove_reagent("histamine",3)
 	..()
@@ -422,7 +421,7 @@ datum/reagent/morphine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.status_flags |= GOTTAGOFAST
 	if(cycle_count == 36)
-		M.sleeping += 1
+		M.sleeping += 30
 	cycle_count++
 	..()
 	return
@@ -569,11 +568,6 @@ datum/reagent/epinephrine/on_mob_life(var/mob/living/M as mob)
 		M.setOxyLoss(35)
 	if(M.losebreath > 3)
 		M.losebreath = 3
-	M.adjustStaminaLoss(-1*REM)
-	if(prob(30))
-		M.AdjustParalysis(-1)
-		M.AdjustStunned(-1)
-		M.AdjustWeakened(-1)
 	..()
 	return
 
