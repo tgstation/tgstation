@@ -391,6 +391,7 @@
 			on = (status == LIGHT_OK)
 			update(0)
 		flickering = 0
+		on = has_power()
 
 /obj/machinery/light/attack_ghost(mob/user)
 	if(blessed) return
