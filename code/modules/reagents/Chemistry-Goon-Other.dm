@@ -115,7 +115,7 @@ datum/reagent/colorful_reagent
 	name = "colorful_reagent"
 	id = "colorful_reagent"
 	result = "colorful_reagent"
-	required_reagents = list("stable_plasma" = 1, "radium" = 1, "space_drugs" = 1, "cryoxadone" = 1, "triple_citrus" = 1)
+	required_reagents = list("space_drugs" = 1, "triple_citrus" = 1)
 	result_amount = 5
 
 datum/reagent/colorful_reagent/reaction_mob(var/mob/M, var/volume)
