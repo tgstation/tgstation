@@ -72,6 +72,9 @@ would spawn and follow the beaker, even if it is carried or thrown.
 
 	proc/start()
 
+/obj/effect/canSingulothPull(var/obj/machinery/singularity/singulo)
+	return 0
+
 /////////////////////////////////////////////
 // GENERIC STEAM SPREAD SYSTEM
 

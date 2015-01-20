@@ -49,3 +49,26 @@
 //	var/turf/simulated/floor/W = S.ReplaceWithFloor()
 //	W.make_plating()
 	return
+
+/obj/item/stack/tile/plasteel/attackby(obj/item/W as obj, mob/user as mob)
+	..()
+	if(iswelder(W))
+		var/obj/item/weapon/weldingtool/WT = W
+		if(amount < 4)
+			user << "<span class='warning'>You need at least four tiles to do this.</span>"
+			return
+
+		if(WT.remove_fuel(0,user))
+			var/obj/item/stack/sheet/metal/new_item = new(usr.loc)
+			new_item.add_to_stacks(usr)
+			user.visible_message("<span class='warning'>[src] is shaped into metal by [user.name] with the weldingtool.</span>", \
+			"<span class='warning'>You shape the [src] into metal with the weldingtool.</span>", \
+			"<span class='warning'>You hear welding.</span>")
+			var/obj/item/stack/tile/plasteel/R = src
+			src = null
+			var/replace = (user.get_inactive_hand()==R)
+			R.use(4)
+			if (!R && replace)
+				user.put_in_hands(new_item)
+		return
+	..()

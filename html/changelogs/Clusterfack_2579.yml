@@ -1,0 +1,6 @@
+author: Clusterfack
+delete-after: true
+changes:
+- bugfix: Ghosts can no longer activate unknown artifacts
+- bugfix: Tcomms machines should no longer give extra cable coil
+- rscadd: You can now weld floor tiles back into metal
