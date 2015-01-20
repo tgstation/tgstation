@@ -245,13 +245,14 @@
 		net1 = net2
 		net2 = temp
 
-	for(var/obj/machinery/power/Node in net2.nodes) // merge power machines
-		if(!Node.connect_to_network())
-			Node.disconnect_from_network() // if somehow we can't connect the machine to the new powernet, disconnect it from the old nonetheless
-
 	// merge net2 into net1
 	for(var/obj/structure/cable/Cable in net2.cables) // merge cables
 		net1.add_cable(Cable)
+
+	if(net2) // not nulled, there are still nodes need to be merged
+		for(var/obj/machinery/power/Node in net2.nodes) // merge power machines
+			if(!Node.connect_to_network())
+				Node.disconnect_from_network() // if somehow we can't connect the machine to the new powernet, disconnect it from the old nonetheless
 
 	return net1
 

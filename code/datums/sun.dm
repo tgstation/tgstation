@@ -32,7 +32,7 @@ var/global/datum/sun/sun
 	angle = ((rotationRate * time / 100) % 360 + 360) % 360
 
 	if(angle != lastAngle)
-		var/obj/machinery/power/tracker/T
+		var/obj/machinery/power/solar/tracker/T
 		for(T in solars_list)
 			if(!T.powernet)
 				solars_list.Remove(T)
@@ -60,7 +60,7 @@ var/global/datum/sun/sun
 		dx = si / abs(si)
 		dy = co / abs(si)
 
-	var/obj/machinery/power/solar/S
+	var/obj/machinery/power/solar/panel/S
 
 	for(S in solars_list)
 		if(!S.powernet)
@@ -71,7 +71,7 @@ var/global/datum/sun/sun
 
 //For a solar panel, trace towards sun to see if we're in shadow.
 
-/datum/sun/proc/occlusion(const/obj/machinery/power/solar/S)
+/datum/sun/proc/occlusion(const/obj/machinery/power/solar/panel/S)
 	var/ax = S.x //Start at the solar panel.
 	var/ay = S.y
 	var/i
