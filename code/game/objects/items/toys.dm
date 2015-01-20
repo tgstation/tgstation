@@ -421,6 +421,7 @@
 	var/instant = 0
 	var/colourName = "red" //for updateIcon purposes
 	var/dat
+	var/list/validSurfaces = list(/turf/simulated/floor)
 
 /obj/item/toy/crayon/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</span>")
@@ -479,9 +480,15 @@
 	drawtype = temp
 	update_window(usr)
 
+/obj/item/toy/crayon/proc/validType(var/atom/target)
+	for(var/A in validSurfaces)
+		if(istype(target,A))
+			return TRUE
+	return FALSE
+
 /obj/item/toy/crayon/afterattack(atom/target, mob/user as mob, proximity)
 	if(!proximity) return
-	if(istype(target,/turf/simulated/floor))
+	if(validType(target))
 		var/temp = "rune"
 		if(letters.Find(drawtype))
 			temp = "letter"
@@ -515,6 +522,7 @@
 	desc = "A metallic container containing tasty paint."
 	var/capped = 1
 	instant = 1
+	validSurfaces = list(/turf/simulated/floor,/turf/simulated/wall)
 
 /obj/item/toy/crayon/spraycan/New()
 	..()

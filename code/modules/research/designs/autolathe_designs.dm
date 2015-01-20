@@ -498,3 +498,61 @@
 	materials = list("$metal" = 30000)
 	build_path = /obj/item/ammo_box/c9mm
 	category = list("hacked", "Security")
+
+//Spraycans
+
+/datum/design/spraycanred
+	name = "Red Spraycan"
+	id = "spraycanred"
+	build_type = AUTOLATHE
+	materials = list("$metal" = 70, "$glass" = 60)
+	build_path = /obj/item/toy/crayon/spraycan/red
+	category = list("initial", "Tools")
+
+/datum/design/spraycanorange
+	name = "Orange Spraycan"
+	id = "spraycanorange"
+	build_type = AUTOLATHE
+	materials = list("$metal" = 70, "$glass" = 60)
+	build_path = /obj/item/toy/crayon/spraycan/orange
+	category = list("initial", "Tools")
+
+/datum/design/spraycanyellow
+	name = "Yellow Spraycan"
+	id = "spraycanyellow"
+	build_type = AUTOLATHE
+	materials = list("$metal" = 70, "$glass" = 60)
+	build_path = /obj/item/toy/crayon/spraycan/yellow
+	category = list("initial", "Tools")
+
+/datum/design/spraycangreen
+	name = "Green Spraycan"
+	id = "spraycangreen"
+	build_type = AUTOLATHE
+	materials = list("$metal" = 70, "$glass" = 60)
+	build_path = /obj/item/toy/crayon/spraycan/green
+	category = list("initial", "Tools")
+
+/datum/design/spraycanblue
+	name = "Blue Spraycan"
+	id = "spraycanblue"
+	build_type = AUTOLATHE
+	materials = list("$metal" = 70, "$glass" = 60)
+	build_path = /obj/item/toy/crayon/spraycan/blue
+	category = list("initial", "Tools")
+
+/datum/design/spraycanblue
+	name = "Purple Spraycan"
+	id = "spraycanpurple"
+	build_type = AUTOLATHE
+	materials = list("$metal" = 70, "$glass" = 60)
+	build_path = /obj/item/toy/crayon/spraycan/purple
+	category = list("initial", "Tools")
+
+/datum/design/spraycanwhite
+	name = "White Spraycan"
+	id = "spraycanwhite"
+	build_type = AUTOLATHE
+	materials = list("$metal" = 70, "$glass" = 60)
+	build_path = /obj/item/toy/crayon/spraycan/white
+	category = list("initial", "Tools")
