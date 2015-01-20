@@ -38,7 +38,7 @@
 	name="Slab of meat"
 	cost=50
 	other_amounts=list(5)
-	result=/obj/item/weapon/reagent_containers/food/snacks/meat
+	result=/obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh
 
 /datum/biogen_recipe/nutrient
 	category="Nutrients"
