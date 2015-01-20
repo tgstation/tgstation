@@ -1,3 +1,12 @@
+
+// Vent crawling whitelisted items, whoo
+/atom
+	var/list/canEnterVentWith=list(
+		/obj/item/weapon/implant,
+		/obj/item/clothing/mask/facehugger,
+		/obj/item/device/radio/borg,
+		/obj/machinery/camera)
+
 /mob/living/carbon/Login()
 	..()
 	update_hud()
@@ -287,8 +296,8 @@
 
 					if(loc==startloc)
 						if(contents.len && !isrobot(src))
-							for(var/obj/item/carried_item in contents)//If the monkey got on objects.
-								if( !istype(carried_item, /obj/item/weapon/implant) && !istype(carried_item, /obj/item/clothing/mask/facehugger) )//If it's not an implant or a facehugger
+							for(var/obj/item/carried_item in contents)//If the ventcrawler got on objects.
+								if(!(is_type_in_list(carried_item, canEnterVentWith)))
 									src << "\red You can't be carrying items or have items equipped when vent crawling!"
 									return
 						var/obj/machinery/atmospherics/unary/vent_pump/target_vent = vents[selection]
