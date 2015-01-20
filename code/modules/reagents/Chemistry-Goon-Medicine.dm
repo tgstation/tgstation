@@ -14,12 +14,12 @@ datum/reagent/silver_sulfadiazine
 
 datum/reagent/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
-		M.adjustFireLoss((volume-(volume*2))*REM)
+		M.adjustFireLoss(volume*REM,0)
 		M << "<span class='notice'>You feel your burns healing!</span>"
 		M.emote("scream")
 	if(method == INGEST)
 		M.adjustToxLoss(0.5*volume)
-		M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
+		M << "<span class='notice'>You probably shouldn't have eaten that...</span>"
 	..()
 	return
 
@@ -45,7 +45,7 @@ datum/reagent/styptic_powder/reaction_mob(var/mob/living/M as mob, var/method=TO
 		M.emote("scream")
 	if(method == INGEST)
 		M.adjustToxLoss(0.5*volume)
-		M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
+		M << "<span class='notice'>You probably shouldn't have eaten that...</span>"
 	..()
 	return
 
@@ -248,7 +248,7 @@ datum/reagent/pen_acid/on_mob_life(var/mob/living/M as mob)
 datum/reagent/sal_acid
 	name = "Salicyclic Acid"
 	id = "sal_acid"
-	description = "If BRUTE damage is under 50, 50% chance to heal one unit."
+	description = "If BRUTE damage is under 50, 50% chance to heal two units."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	overdose_threshold = 25
@@ -257,7 +257,7 @@ datum/reagent/sal_acid/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	if(M.getBruteLoss() < 50)
 		if(prob(50))
-			M.adjustBruteLoss(-1*REM)
+			M.adjustBruteLoss(-2*REM)
 	..()
 	return
 
@@ -333,11 +333,9 @@ datum/reagent/ephedrine
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	metabolization_rate = 0.3
 	overdose_threshold = 45
-	addiction_threshold = 30
 
 datum/reagent/ephedrine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	M.status_flags |= GOTTAGOFAST
 	M.AdjustParalysis(-1)
 	M.AdjustStunned(-1)
 	M.AdjustWeakened(-1)
@@ -352,31 +350,6 @@ datum/reagent/ephedrine/overdose_process(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/ephedrine/addiction_act_stage1(var/mob/living/M as mob)
-	if(prob(33))
-		M.adjustToxLoss(2*REM)
-		M.losebreath += 2
-	..()
-	return
-datum/reagent/ephedrine/addiction_act_stage2(var/mob/living/M as mob)
-	if(prob(33))
-		M.adjustToxLoss(3*REM)
-		M.losebreath += 3
-	..()
-	return
-datum/reagent/ephedrine/addiction_act_stage3(var/mob/living/M as mob)
-	if(prob(33))
-		M.adjustToxLoss(4*REM)
-		M.losebreath += 4
-	..()
-	return
-datum/reagent/ephedrine/addiction_act_stage4(var/mob/living/M as mob)
-	if(prob(33))
-		M.adjustToxLoss(5*REM)
-		M.losebreath += 5
-	..()
-	return
-
 /datum/chemical_reaction/ephedrine
 	name = "Ephedrine"
 	id = "ephedrine"
@@ -388,7 +361,7 @@ datum/reagent/ephedrine/addiction_act_stage4(var/mob/living/M as mob)
 datum/reagent/diphenhydramine
 	name = "Diphenhydramine"
 	id = "diphenhydramine"
-	description = "Causes a little bit of drowsiness, reduces jitteriness. Raises histamine depletion rates by 3"
+	description = "Causes a little bit of drowsiness, reduces jitteriness. Raises histamine depletion rates by 3."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 datum/reagent/diphenhydramine/on_mob_life(var/mob/living/M as mob)
@@ -511,7 +484,7 @@ datum/reagent/oculine
 datum/reagent/atropine
 	name = "Atropine"
 	id = "atropine"
-	description = "1 TOX damage if used over -60 health. Causes dizziness and confusion. If under -25 health, heals 3 BRUTE + 3 BURN. Attempts to cap OXY damage at 65 and LOSEBREATH at 5."
+	description = "1 TOX damage if used over -60 health. Causes dizziness and confusion. If under 0 health, heals 3 BRUTE + 3 BURN. Attempts to cap OXY damage at 65 and LOSEBREATH at 5."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	metabolization_rate = 0.2
@@ -521,7 +494,7 @@ datum/reagent/atropine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	if(M.health > -60)
 		M.adjustToxLoss(1*REM)
-	if(M.health < -25)
+	if(M.health < 0)
 		M.adjustBruteLoss(-3*REM)
 		M.adjustFireLoss(-3*REM)
 	if(M.oxyloss > 65)
@@ -564,8 +537,6 @@ datum/reagent/epinephrine/on_mob_life(var/mob/living/M as mob)
 		M.adjustToxLoss(-1*REM)
 		M.adjustBruteLoss(-1*REM)
 		M.adjustFireLoss(-1*REM)
-	if(M.oxyloss > 35)
-		M.setOxyLoss(35)
 	if(M.losebreath > 3)
 		M.losebreath = 3
 	..()
