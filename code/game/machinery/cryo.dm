@@ -47,6 +47,10 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/process()
 	..()
+	if(occupant)
+		if(occupant.health >= 100)
+			on = 0
+			open_machine()
 	if(!node || !is_operational())
 		return
 	if(!on)
@@ -61,7 +65,6 @@
 		if(occupant)
 			if(occupant.stat != 2)
 				process_occupant()
-
 	if(abs(temperature_archived-air_contents.temperature) > 1)
 		parent.update = 1
 

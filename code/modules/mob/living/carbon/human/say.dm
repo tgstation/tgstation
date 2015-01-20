@@ -21,9 +21,7 @@
 /mob/living/carbon/human/treat_message(message)
 	if(dna)
 		message = dna.species.handle_speech(message,src)
-
-	if (dna.check_mutation(HULK))
-		message = "[uppertext(replacetext(message, ".", "!"))]!!" //because I don't know how to code properly in getting vars from other files -Bro
+		message = dna.mutations_say_mods(message)
 
 	if(viruses.len)
 		for(var/datum/disease/pierrot_throat/D in viruses)
@@ -38,7 +36,6 @@
 					temp_message[H] = "HONK"
 					pick_list -= H //Make sure that you dont HONK the same word twice
 				message = list2text(temp_message, " ")
-
 	message = ..(message)
 
 	return message
