@@ -12,7 +12,7 @@
 	// normal attack_hand() here.
 	if(ismob(A))
 		delayNextAttack(10)
-	if(proximity && istype(G) && G.Touch(A,1))
+	if(proximity && istype(G) && G.Touch(A, src, 1))
 		return
 
 	A.attack_hand(src)
@@ -28,11 +28,7 @@
 	if(!gloves && !mutations.len) return
 	if(gloves)
 		var/obj/item/clothing/gloves/G = gloves
-		if(istype(G, /obj/item/clothing/gloves/yellow/power))
-			if(a_intent == "hurt")
-				PowerGlove(A)
-				return
-		else if(istype(G) && G.Touch(A,0)) // for magic gloves
+		if(istype(G) && G.Touch(A, src, 0)) // for magic gloves
 			return
 	if(mutations.len)
 		if((M_LASER in mutations) && a_intent == "hurt")
