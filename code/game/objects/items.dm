@@ -52,6 +52,18 @@
 		/obj/structure/safe,
 		/obj/machinery/disposal
 	)
+
+/* Two-handed variables. Wieldable items use twohanded, items that require two hands use that and requiretwohanded.
+	Force variables switch force when wielding/unwielding */
+
+	var/twohanded = 0
+	var/requiretwohanded = 0
+	var/wielded = 0
+	var/force_unwielded = 0
+	var/force_wielded = 0
+	var/wieldsound = null
+	var/unwieldsound = null
+
 /obj/item/proc/check_allowed_items(atom/target, not_inside)
 	if((src in target) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
 		return 0
@@ -134,6 +146,15 @@
 		//If the item is in a storage item, take it out
 		var/obj/item/weapon/storage/S = src.loc
 		S.remove_from_storage(src, user.loc)
+
+	if(requiretwohanded)
+		var/obj/item/H = user.get_inactive_hand()
+		if(H)
+			user.visible_message("<span class='notice'>[src.name] is too cumbersome to carry in one hand!</span>")
+			return
+		var/obj/item/offhand/O = new(user)
+		user.put_in_inactive_hand(O)
+		wielded = 1
 
 	src.throwing = 0
 	if (loc == user)
@@ -405,3 +426,88 @@
 			armor[armour_value] = max(armor[armour_value]-acidpwr,0)
 		if(!findtext(desc, "it looks slightly melted...")) //it looks slightly melted... it looks slightly melted... it looks slightly melted... etc.
 			desc += " it looks slightly melted..." //needs a space at the start, formatting
+
+/obj/item/proc/unwield(mob/living/carbon/user)
+	if(!twohanded || !wielded || requiretwohanded) return
+	wielded = 0
+	force = force_unwielded
+	name = "[initial(name)]"
+	update_icon()
+	user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
+	if(unwieldsound)
+		playsound(loc, unwieldsound, 50, 1)
+	var/obj/item/offhand/O = user.get_inactive_hand()
+	if(O && istype(O))
+		O.unwield()
+	return
+
+/obj/item/proc/wield(mob/living/carbon/user)
+	if(!twohanded || wielded || requiretwohanded) return
+	if(istype(user,/mob/living/carbon/monkey) )
+		user << "<span class='warning'>It's too heavy for you to wield fully.</span>"
+		return
+	if(user.get_inactive_hand())
+		user << "<span class='warning'>You need your other hand to be empty</span>"
+		return
+	wielded = 1
+	force = force_wielded
+	name = "[initial(name)] (Wielded)"
+	update_icon()
+	user << "<span class='notice'>You grab the [initial(name)] with both hands.</span>"
+	if (wieldsound)
+		playsound(loc, wieldsound, 50, 1)
+	var/obj/item/offhand/O = new(user) ////Let's reserve his other hand~
+	O.name = "[initial(name)] - offhand"
+	O.desc = "Your second grip on the [initial(name)]"
+	user.put_in_inactive_hand(O)
+	return
+
+/obj/item/mob_can_equip(M as mob, slot)
+	if(twohanded)//Cannot equip wielded items.
+		if(wielded)
+			if(requiretwohanded)
+				M << "<span class='warning'>[src.name] is too cumbersome to carry with anything but your hands!</span>"
+				return 0
+			M << "<span class='warning'>Unwield the [initial(name)] first!</span>"
+			return 0
+		return ..()
+
+/obj/item/dropped(mob/user as mob)
+	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
+	if(twohanded)
+		if(user)
+			var/obj/item/offhand/O = user.get_inactive_hand()
+			O.unwield(user)
+		return	unwield(user)
+
+/obj/item/attack_self(mob/user as mob)
+	..()
+	if(twohanded)
+		if(requiretwohanded)
+			return
+		if(wielded) //Trying to unwield it
+			unwield(user)
+		else //Trying to wield it
+			wield(user)
+
+///////////OFFHAND///////////////
+/obj/item/offhand
+	name = "offhand"
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "offhand"
+	w_class = 5.0
+	flags = ABSTRACT
+
+/obj/item/offhand/unwield()
+	qdel(src)
+
+/obj/item/offhand/wield()
+	qdel(src)
+
+/obj/item/offhand/IsShield()//if the actual twohanded weapon is a shield, we count as a shield too!
+	var/mob/user = loc
+	if(!istype(user)) return 0
+	var/obj/item/I = user.get_active_hand()
+	if(I == src) I = user.get_inactive_hand()
+	if(!I) return 0
+	return I.IsShield()

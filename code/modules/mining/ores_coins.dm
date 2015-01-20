@@ -101,7 +101,7 @@
 	desc = "Completely useless"
 	icon_state = "slag"
 
-/obj/item/weapon/twohanded/required/gibtonite
+/obj/item/weapon/gibtonite
 	name = "gibtonite ore"
 	desc = "Extremely explosive if struck with mining equipment, Gibtonite is often used by miners to speed up their work by using it as a mining charge. This material is illegal to possess by unauthorized personnel under space law."
 	icon = 'icons/obj/mining.dmi'
@@ -110,11 +110,13 @@
 	w_class = 4
 	throw_range = 0
 	anchored = 1 //Forces people to carry it by hand, no pulling!
+	twohanded = 1
+	requiretwohanded = 1
 	var/primed = 0
 	var/det_time = 100
 	var/quality = 1 //How pure this gibtonite is, determines the explosion produced by it and is derived from the det_time of the rock wall it was taken from, higher value = better
 
-/obj/item/weapon/twohanded/required/gibtonite/attackby(obj/item/I, mob/user)
+/obj/item/weapon/gibtonite/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/pickaxe) || istype(I, /obj/item/weapon/resonator))
 		GibtoniteReaction(user)
 		return
@@ -126,15 +128,15 @@
 		return
 	..()
 
-/obj/item/weapon/twohanded/required/gibtonite/bullet_act(var/obj/item/projectile/P)
+/obj/item/weapon/gibtonite/bullet_act(var/obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/kinetic))
 		GibtoniteReaction(P.firer)
 	..()
 
-/obj/item/weapon/twohanded/required/gibtonite/ex_act()
+/obj/item/weapon/gibtonite/ex_act()
 	GibtoniteReaction(triggered_by_explosive = 1)
 
-/obj/item/weapon/twohanded/required/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by_explosive = 0)
+/obj/item/weapon/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by_explosive = 0)
 	if(!primed)
 		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,1)
 		primed = 1

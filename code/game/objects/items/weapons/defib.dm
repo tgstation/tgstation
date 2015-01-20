@@ -16,7 +16,7 @@
 	var/on = 0 //if the paddles are equipped (1) or on the defib (0)
 	var/safety = 1 //if you can zap people with the defibs on harm mode
 	var/powered = 0 //if there's a cell in the defib with enough power for a revive, blocks paddles from reviving otherwise
-	var/obj/item/weapon/twohanded/shockpaddles/paddles
+	var/obj/item/weapon/shockpaddles/paddles
 	var/obj/item/weapon/stock_parts/cell/high/bcell = null
 
 /obj/item/weapon/defibrillator/New() //starts without a cell for rnd
@@ -174,7 +174,7 @@
 	return
 
 /obj/item/weapon/defibrillator/proc/make_paddles()
-	return new /obj/item/weapon/twohanded/shockpaddles(src)
+	return new /obj/item/weapon/shockpaddles(src)
 
 /obj/item/weapon/defibrillator/equipped(mob/user, slot)
 	if(slot != slot_back)
@@ -223,7 +223,7 @@
 
 //paddles
 
-/obj/item/weapon/twohanded/shockpaddles
+/obj/item/weapon/shockpaddles
 	name = "defibrillator paddles"
 	desc = "A pair of plastic-gripped paddles with flat metal surfaces that are used to deliver powerful electric shocks."
 	icon = 'icons/obj/weapons.dmi'
@@ -233,13 +233,14 @@
 	throwforce = 6
 	w_class = 4
 	flags = NODROP
+	twohanded = 1
 
 	var/revivecost = 1000
 	var/cooldown = 0
 	var/busy = 0
 	var/obj/item/weapon/defibrillator/defib
 
-/obj/item/weapon/twohanded/shockpaddles/New(mainunit)
+/obj/item/weapon/shockpaddles/New(mainunit)
 	..()
 	if(check_defib_exists(mainunit, src))
 		defib = mainunit
@@ -248,21 +249,21 @@
 		update_icon()
 	return
 
-/obj/item/weapon/twohanded/shockpaddles/update_icon()
+/obj/item/weapon/shockpaddles/update_icon()
 	icon_state = "defibpaddles[wielded]"
 	item_state = "defibpaddles[wielded]"
 	if(cooldown)
 		icon_state = "defibpaddles[wielded]_cooldown"
 
-/obj/item/weapon/twohanded/shockpaddles/suicide_act(mob/user)
+/obj/item/weapon/shockpaddles/suicide_act(mob/user)
 	user.visible_message("<span class='danger'>[user] is putting the live paddles on \his chest! It looks like \he's trying to commit suicide.</span>")
 	defib.deductcharge(revivecost)
 	playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 	return (OXYLOSS)
 
-/obj/item/weapon/twohanded/shockpaddles/dropped(mob/user as mob)
+/obj/item/weapon/shockpaddles/dropped(mob/user as mob)
 	if(user)
-		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
+		var/obj/item/weapon/O = user.get_inactive_hand()
 		if(istype(O))
 			O.unwield()
 		user << "<span class='notice'>The paddles snap back into the main unit.</span>"
@@ -271,7 +272,7 @@
 		defib.update_icon()
 	return	unwield()
 
-/obj/item/weapon/twohanded/shockpaddles/proc/check_defib_exists(mainunit, var/mob/living/carbon/human/M, var/obj/O)
+/obj/item/weapon/shockpaddles/proc/check_defib_exists(mainunit, var/mob/living/carbon/human/M, var/obj/O)
 	if (!mainunit || !istype(mainunit, /obj/item/weapon/defibrillator))	//To avoid weird issues from admin spawns
 		M.unEquip(O)
 		qdel(O)
@@ -279,7 +280,7 @@
 	else
 		return 1
 
-/obj/item/weapon/twohanded/shockpaddles/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/shockpaddles/attack(mob/M as mob, mob/user as mob)
 	var/tobehealed
 	var/threshold = -config.health_threshold_dead
 	var/mob/living/carbon/human/H = M
