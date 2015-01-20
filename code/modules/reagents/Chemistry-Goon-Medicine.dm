@@ -66,8 +66,8 @@ datum/reagent/salglu_solution
 datum/reagent/salglu_solution/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	if(prob(50))
-		M.adjustBruteLoss(-3*REM)
-		M.adjustFireLoss(-3*REM)
+		M.adjustBruteLoss(-2*REM)
+		M.adjustFireLoss(-2*REM)
 	..()
 	return
 
@@ -96,10 +96,10 @@ datum/reagent/charcoal
 
 datum/reagent/charcoal/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	M.adjustToxLoss(-3*REM)
+	M.adjustToxLoss(-1.5*REM)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)
-			M.reagents.remove_reagent(R.id,1)
+			M.reagents.remove_reagent(R.id,0.5)
 	..()
 	return
 
@@ -422,7 +422,7 @@ datum/reagent/morphine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.status_flags |= GOTTAGOFAST
 	if(cycle_count == 36)
-		M.drowsyness += 1
+		M.sleeping += 1
 	cycle_count++
 	..()
 	return
@@ -574,7 +574,6 @@ datum/reagent/epinephrine/on_mob_life(var/mob/living/M as mob)
 		M.AdjustParalysis(-1)
 		M.AdjustStunned(-1)
 		M.AdjustWeakened(-1)
-		M.sleeping = 0
 	..()
 	return
 
