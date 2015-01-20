@@ -27,10 +27,10 @@
 
 /obj/item/borg/upgrade/proc/action(var/mob/living/silicon/robot/R)
 	if(R.stat == DEAD)
-		usr << "\red The [src] will not function on a deceased robot."
+		usr << "<span class='warning'>The [src] will not function on a deceased robot.</span>"
 		return 1
 	if(isMoMMI(R))
-		usr << "\red The [src] only functions on Nanotrasen Cyborgs."
+		usr << "<span class='warning'>The [src] only functions on Nanotrasen Cyborgs.</span>"
 	return 0
 
 
@@ -227,7 +227,7 @@
 	if(!S) return 0
 
 	S.materials_scanned |= list("plasma glass" = /obj/item/stack/sheet/glass/plasmaglass,
-								"reinforced plasma glass" = /obj/item/stack/sheet/rglass/plasmarglass,
+								"reinforced plasma glass" = /obj/item/stack/sheet/glass/plasmarglass,
 								"carpet tiles" = /obj/item/stack/tile/carpet)
 
 	var/obj/item/weapon/wrench/socket/W = locate(/obj/item/weapon/wrench/socket) in R.module.modules

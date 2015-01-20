@@ -10,17 +10,19 @@
 	anchored = 1
 	density = 1
 	use_power = 0
-
+	var/obj/machinery/power/solar_assembly/solar_assembly = null
 	var/sun_angle = 0	//Sun angle as set by sun datum
 
 /obj/machinery/power/tracker/New(var/turf/loc, var/obj/machinery/power/solar_assembly/S)
 	..(loc)
 	if(!S)
-		S = new /obj/machinery/power/solar_assembly(src)
-		S.glass_type = /obj/item/stack/sheet/rglass
-		S.tracker = 1
-		S.anchored = 1
-	S.loc = src
+		solar_assembly = new /obj/machinery/power/solar_assembly(src)
+		solar_assembly.glass = new /obj/item/stack/sheet/glass/rglass(src)
+		solar_assembly.tracker = 1
+		solar_assembly.anchored = 1
+	else
+		solar_assembly = S
+	solar_assembly.loc = src
 	connect_to_network()
 
 /obj/machinery/power/tracker/disconnect_from_network()
@@ -54,13 +56,14 @@
 /obj/machinery/power/tracker/attackby(var/obj/item/weapon/W, var/mob/user)
 	if(iscrowbar(W))
 		playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+		user << "<span class='notice'>You begin taking the [solar_assembly.glass.name] off the tracker.</span>"
 		if(do_after(user, 50))
-			var/obj/machinery/power/solar_assembly/S = locate() in src
-			if(S)
-				S.loc = src.loc
-				S.give_glass()
 			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-			user.visible_message("<span class='notice'>[user] takes the glass off the tracker.</span>")
+			user.visible_message("<span class='notice'>[user] takes the [solar_assembly.glass.name] off the tracker.</span>",\
+			"<span class='notice'>You takes the [solar_assembly.glass.name] off the tracker.</span>")
+			if(solar_assembly)
+				solar_assembly.loc = src.loc
+				solar_assembly.give_glass()
 			del(src)
 		return
 	..()

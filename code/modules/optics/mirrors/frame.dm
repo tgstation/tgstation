@@ -30,12 +30,12 @@
 				qdel(src)
 				return
 			else
-				user << "\blue The welding tool needs to be on to start this task."
+				user << "<span class='notice'>The welding tool needs to be on to start this task.</span>"
 		else
-			user << "\blue You need more welding fuel to complete this task."
+			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 
-	if(istype(W, /obj/item/stack/sheet/rglass/plasmarglass))
-		var/obj/item/stack/sheet/rglass/plasmarglass/stack = W
+	if(istype(W, /obj/item/stack/sheet/glass/plasmarglass))
+		var/obj/item/stack/sheet/glass/plasmarglass/stack = W
 		if(stack.amount < 5)
 			user << "<span class='warning'>You need at least 5 [stack] to build a beamsplitter.</span>"
 			return
@@ -49,8 +49,8 @@
 			qdel(src)
 		return
 
-	if(istype(W, /obj/item/stack/sheet/rglass))
-		var/obj/item/stack/sheet/rglass/stack = W
+	if(istype(W, /obj/item/stack/sheet/glass/rglass))
+		var/obj/item/stack/sheet/glass/rglass/stack = W
 		if(stack.amount < 5)
 			user << "<span class='warning'>You need at least 5 [stack] to build a beamsplitter.</span>"
 			return
