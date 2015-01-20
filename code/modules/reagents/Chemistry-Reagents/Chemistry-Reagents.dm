@@ -671,10 +671,12 @@ datum/reagent/space_cleaner/reaction_obj(var/obj/O, var/volume)
 	else
 		if(O)
 			O.clean_blood()
+			O.color = null
 
 datum/reagent/space_cleaner/reaction_turf(var/turf/T, var/volume)
 	if(volume >= 1)
 		T.clean_blood()
+		T.color = null
 		for(var/obj/effect/decal/cleanable/C in T)
 			qdel(C)
 
@@ -688,6 +690,7 @@ datum/reagent/space_cleaner/reaction_turf(var/turf/T, var/volume)
 datum/reagent/space_cleaner/reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
+		C.color = null
 		if(C.r_hand)
 			C.r_hand.clean_blood()
 		if(C.l_hand)
