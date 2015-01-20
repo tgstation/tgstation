@@ -237,7 +237,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 //animated blasters, wands, etc
 //
 
-mob/living/simple_animal/hostile/mimic/copy/ranged
+/mob/living/simple_animal/hostile/mimic/copy/ranged
 	name = "animated shooty gun"
 	desc = "there's something fishy here."
 	environment_smash = 0 //needed? seems weird for them to do so
@@ -246,14 +246,15 @@ mob/living/simple_animal/hostile/mimic/copy/ranged
 	minimum_distance = 6
 	projectiletype = /obj/item/projectile/magic/
 	projectilesound = 'sound/items/bikehorn.ogg'
-	casingtype = null //todo: drop shells
+	casingtype = null
 	Attackemote = "aims menacingly at"
-	var/shotsleft = 100 //so guns can run out of ammo
-	var/list/autochargingguns = list(/obj/item/weapon/gun/energy/crossbow, /obj/item/weapon/gun/energy/gun/nuclear, /obj/item/weapon/gun/energy/laser/captain)
-
+	var/obj/item/weapon/gun/magic/Zapstick = list()
+	var/obj/item/weapon/gun/projectile/Pewgun = list()
+	var/obj/item/weapon/gun/energy/Zapgun = list()
 
 /mob/living/simple_animal/hostile/mimic/copy/ranged/New(loc, var/obj/copy, var/mob/living/creator, var/destroy_original = 0)
 	..()
+
 
 /mob/living/simple_animal/hostile/mimic/copy/ranged/CopyObject(var/obj/O, var/mob/living/creator, var/destroy_original = 0)
 	if(destroy_original || CheckObject(O))
@@ -274,38 +275,25 @@ mob/living/simple_animal/hostile/mimic/copy/ranged
 			projectilesound = G.fire_sound
 
 			if(istype(G, /obj/item/weapon/gun/magic))
-				var/obj/item/weapon/gun/magic/Zapstick = G
-				var/obj/item/ammo_casing/magic/Zapshot = new Zapstick.ammo_type
-				shotsleft = Zapstick.charges * 2
+				Zapstick = G
+				var/obj/item/ammo_casing/magic/Zapshot = new Zapstick.ammo_type //this is done because ammo_type.proj_type can't be directly checked
 				projectiletype = Zapshot.projectile_type
-				qdel(Zapshot)
+				qdel(Zapshot) //is this needed? i dare not risk piles of nullspace bullets
 
 			if(istype(G, /obj/item/weapon/gun/projectile))
-				var/obj/item/weapon/gun/projectile/Pewgun = G
-				var/obj/item/ammo_box/magazine/Pewmag = new Pewgun.mag_type
+				Pewgun = G
+				var/obj/item/ammo_box/magazine/Pewmag = new Pewgun.mag_type //same problem, mag_type.ammo_type.proj_type can't be checked directly
 				var/obj/item/ammo_casing/Pewshot = new Pewmag.ammo_type
-				shotsleft = Pewgun.get_ammo(1) * 2
 				projectiletype = Pewshot.projectile_type
-				qdel(Pewshot) //is this needed?
+				casingtype = Pewmag.ammo_type
+				qdel(Pewshot)
 				qdel(Pewmag)
 
 			if(istype(G, /obj/item/weapon/gun/energy))
-				var/obj/item/weapon/gun/energy/Zapgun = G
+				Zapgun = G
 				var/selectfiresetting = Zapgun.select
 				var/obj/item/ammo_casing/energy/Energyammotype = Zapgun.ammo_type[selectfiresetting]
 				projectiletype = Energyammotype.projectile_type
-				if(is_type_in_list(Zapgun, autochargingguns)) //todo: make this work via OOP
-					shotsleft = 9999 //basically infinite
-				else
-					shotsleft = (Zapgun.power_supply.charge / Energyammotype.e_cost) * 2
-
-			if(shotsleft <= 0)
-				src.ranged = 0
-				src.minimum_distance = 1
-				src.retreat_distance = 0
-			if(shotsleft >= 30) //maximum shooty
-				if(prob(20))
-					src.rapid = 1
 
 		maxHealth = health
 		if(creator)
@@ -316,12 +304,55 @@ mob/living/simple_animal/hostile/mimic/copy/ranged
 		return 1
 	return
 
-/mob/living/simple_animal/hostile/mimic/copy/ranged/Shoot()
-	..()
-	if(shotsleft)
-		shotsleft--
-		if(shotsleft <= 0) //melee when out of ammo
-			src.ranged = 0 //of questionable necessity
-			src.minimum_distance = 1
-			src.retreat_distance = 0
+/mob/living/simple_animal/hostile/mimic/copy/ranged/OpenFire(var/the_target)
+	walk(src, 0) //to stop retreating
+	if(Zapgun)
+		if(Zapgun.power_supply) //sanity
+			var/obj/item/ammo_casing/energy/shot = Zapgun.ammo_type[Zapgun.select]
+			if(Zapgun.power_supply.charge >= shot.e_cost) //if she can zap
+				Zapgun.power_supply.use(shot.e_cost)
+				..() //zap 'em
+			else
+				Getouttathere(the_target)
+		else
+			Getouttathere(the_target)
+	if(Zapstick)
+		if(Zapstick.charges)
+			Zapstick.charges--
+			..()
+		else
+			Getouttathere(the_target)
+	if(Pewgun)
+		if(Pewgun.chambered)
+			if(Pewgun.magazine)
+				if(Pewgun.magazine.stored_ammo.len)
+					var/obj/item/ammo_casing/TempBullet = Pewgun.magazine.get_round(0)
+					if(TempBullet.BB)
+						qdel(TempBullet)
+						..() //fire from mag
+					else
+						TempBullet.loc = src.loc //dump empty shell
+						TempBullet = null
+						visible_message("<span class='danger'>The <b>[src]</b> clears a jam!</span>")
+				else if(Pewgun.chambered.BB)
+					qdel(Pewgun.chambered)
+					..() //the last boolet
+			else if(Pewgun.chambered.BB) //just if would prob work
+				qdel(Pewgun.chambered)
+				..()
+			else
+				Getouttathere(the_target)
+		else
+			Getouttathere(the_target)
+	else //if somehow the mimic has no weapon
+		src.ranged = 0 //BANZAIIII
+		src.retreat_distance = 0
+		src.minimum_distance = 1
+	return
+
+//rather not make a new proc for this but can't figure out how to retreat otherwise. maybe make a generalized s_animal retreat proc
+/mob/living/simple_animal/hostile/mimic/copy/ranged/proc/Getouttathere(var/the_target)
+	walk_away(src, the_target) //needs improvement
+	if(prob(20))
+		visible_message("<span class='danger'>The <b>[src]</b> skedaddles outta there!</span>")
 	return
