@@ -1,7 +1,6 @@
 /mob/living/captive_brain
 	name = "host brain"
 	real_name = "host brain"
-	universal_understand=1
 
 /mob/living/captive_brain/say(var/message)
 
@@ -88,8 +87,8 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 	friendly = "prods"
 	wander = 0
 	pass_flags = PASSTABLE
+	languages = ALL
 
-	universal_understand=1
 
 	var/chemicals = 10                      // Chemicals used for reproduction and spitting neurotoxin.
 	var/mob/living/carbon/human/host        // Human host for the brain worm.

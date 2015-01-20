@@ -164,6 +164,12 @@
 	//Set map label to correct map name
 	winset(src, "rpane.map", "text=\"[map.nameLong]\"")
 
+	// Notify scanners.
+	INVOKE_EVENT(on_login,list(
+		"client"=src,
+		"admin"=(holder!=null)
+	))
+
 	//////////////
 	//DISCONNECT//
 	//////////////

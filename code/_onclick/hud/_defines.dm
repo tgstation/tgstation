@@ -42,7 +42,8 @@
 #define ui_inv1 "6:16,1:5"			//borgs
 #define ui_inv2 "7:16,1:5"			//borgs
 #define ui_inv3 "8:16,1:5"			//borgs
-#define ui_borg_store "9:16,1:5"	//borgs
+#define ui_borg_module "CENTER+1:16,SOUTH:5" //borgs
+#define ui_borg_store "CENTER+2:16,SOUTH:5"	//borgs
 
 #define ui_monkey_uniform "3:14,1:5"//monkey
 #define ui_monkey_hat "4:14,1:5"	//monkey
@@ -59,7 +60,7 @@
 #define ui_acti_alt "14:28,1:5" //alternative intent switcher for when the interface is hidden (F12)
 
 #define ui_borg_pull "12:24,2:7"
-#define ui_borg_module "13:26,2:7"
+//#define ui_borg_module "13:26,2:7"
 #define ui_borg_panel "14:28,2:7"
 
 //Gun buttons

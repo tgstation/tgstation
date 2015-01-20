@@ -1,3 +1,4 @@
+var/global/list/del_profiling = list()
 /atom
 	layer = 2
 
@@ -36,7 +37,14 @@
 
 	// When this object moves. (args: loc)
 	var/event/on_moved = new()
+/*
+/atom/Del()
+	if(!(type in del_profiling))
+		del_profiling[type] = 0
 
+	del_profiling[type] += 1
+	..()
+*/
 /atom/proc/beam_connect(var/obj/effect/beam/B)
 	if(!(B in beams))
 		beams.Add(B)
@@ -282,7 +290,7 @@ its easier to just keep the beam vertical.
 
 //Woo hoo. Overtime
 //All atoms
-/atom/proc/examine(mob/user)
+/atom/proc/examine(mob/user, var/size = "")
 	//This reformat names to get a/an properly working on item descriptions when they are bloody
 	var/f_name = "\a [src]."
 	if(src.blood_DNA)
@@ -292,7 +300,7 @@ its easier to just keep the beam vertical.
 			f_name = "a "
 		f_name += "<span class='danger'>blood-stained</span> [name]!"
 
-	user << "\icon[src] That's [f_name]"
+	user << "\icon[src] That's [f_name]" + size
 	if(desc)
 		user << desc
 
@@ -395,6 +403,9 @@ its easier to just keep the beam vertical.
 	return
 
 /atom/proc/singularity_pull()
+	return
+
+/atom/proc/emag_act()
 	return
 
 /atom/proc/hitby(atom/movable/AM as mob|obj)

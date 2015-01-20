@@ -455,7 +455,7 @@ client/proc/one_click_antag()
 	new_vox.dna.mutantrace = "vox"
 	new_vox.set_species("Vox") // Actually makes the vox! How about that.
 	new_vox.generate_name()
-	new_vox.add_language("Vox-pidgin")
+	//new_vox.add_language("Vox-pidgin")
 	new_vox.mind_initialize()
 	new_vox.mind.assigned_role = "MODE"
 	new_vox.mind.special_role = "Vox Raider"

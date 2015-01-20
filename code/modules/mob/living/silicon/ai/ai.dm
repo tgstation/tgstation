@@ -19,6 +19,7 @@ var/list/ai_list = list()
 	anchored = 1 // -- TLE
 	density = 1
 	status_flags = CANSTUN|CANPARALYSE
+	force_compose = 1
 	var/list/network = list("SS13")
 	var/obj/machinery/camera/current = null
 	var/list/connected_robots = list()
@@ -470,6 +471,8 @@ var/list/ai_list = list()
 
 
 /mob/living/silicon/ai/attack_animal(mob/living/simple_animal/M as mob)
+	if(!istype(M))
+		return
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else

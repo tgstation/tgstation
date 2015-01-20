@@ -197,6 +197,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define ON_BORDER	512		// item has priority to check when entering or leaving
 #define NOBLUDGEON  4  // when an item has this it produces no "X has been hit by Y with Z" message with the default handler
 #define NOBLOODY	2048	// used to items if they don't want to get a blood overlay
+#define HEAR		16
 
 #define NOSLIP		1024 		//prevents from slipping on wet floors, in space etc
 
@@ -213,11 +214,26 @@ var/MAX_EXPLOSION_RANGE = 14
 
 #define INVULNERABLE 128
 
+
+#define ALL ~0
+#define NONE 0
+
 //flags for pass_flags
 #define PASSTABLE	1
 #define PASSGLASS	2
 #define PASSGRILLE	4
 #define PASSBLOB	8
+
+/*
+	These defines are used specifically with the atom/movable/languages bitmask.
+	They are used in atom/movable/Hear() and atom/movable/say() to determine whether hearers can understand a message.
+*/
+
+#define HUMAN 1
+#define MONKEY 2
+#define ALIEN 4
+#define ROBOT 8
+#define SLIME 16
 
 //turf-only flags
 #define NOJAUNT		1
@@ -971,3 +987,32 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define STAGE_FOUR	7
 #define STAGE_FIVE	9
 #define STAGE_SUPER	11
+
+
+//Human Overlays Indexes/////////
+#define FIRE_LAYER				1		//If you're on fire (/tg/ shit)
+#define MUTANTRACE_LAYER		2		//TODO: make part of body?
+#define MUTATIONS_LAYER			3
+#define DAMAGE_LAYER			4
+#define UNIFORM_LAYER			5
+#define ID_LAYER				6
+#define SHOES_LAYER				7
+#define GLOVES_LAYER			8
+#define EARS_LAYER				9
+#define SUIT_LAYER				10
+#define GLASSES_LAYER			11
+#define BELT_LAYER				12		//Possible make this an overlay of somethign required to wear a belt?
+#define SUIT_STORE_LAYER		13
+#define BACK_LAYER				14
+#define HAIR_LAYER				15		//TODO: make part of head layer?
+#define GLASSES_OVER_HAIR_LAYER	16
+#define FACEMASK_LAYER			17
+#define HEAD_LAYER				18
+#define HANDCUFF_LAYER			19
+#define LEGCUFF_LAYER			20
+#define L_HAND_LAYER			21
+#define R_HAND_LAYER			22
+#define TAIL_LAYER				23		//bs12 specific. this hack is probably gonna come back to haunt me
+#define TARGETED_LAYER			24		//BS12: Layer for the target overlay from weapon targeting system
+#define TOTAL_LAYERS			25
+//////////////////////////////////

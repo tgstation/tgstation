@@ -1,3 +1,4 @@
+
 /mob/living/carbon/human
 	name = "unknown"
 	real_name = "unknown"
@@ -74,6 +75,31 @@
 	hud_list[IMPTRACK_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
 	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
 	hud_list[STATUS_HUD_OOC]  = image('icons/mob/hud.dmi', src, "hudhealthy")
+
+	obj_overlays[FIRE_LAYER] = new /obj/Overlays/fire_layer
+	obj_overlays[MUTANTRACE_LAYER] = new /obj/Overlays/mutantrace_layer
+	obj_overlays[MUTATIONS_LAYER] = new /obj/Overlays/mutations_layer
+	obj_overlays[DAMAGE_LAYER] = new /obj/Overlays/damage_layer
+	obj_overlays[UNIFORM_LAYER] = new /obj/Overlays/uniform_layer
+	obj_overlays[ID_LAYER] = new /obj/Overlays/id_layer
+	obj_overlays[SHOES_LAYER] = new /obj/Overlays/shoes_layer
+	obj_overlays[GLOVES_LAYER] = new /obj/Overlays/gloves_layer
+	obj_overlays[EARS_LAYER] = new /obj/Overlays/ears_layer
+	obj_overlays[SUIT_LAYER] = new /obj/Overlays/suit_layer
+	obj_overlays[GLASSES_LAYER] = new /obj/Overlays/glasses_layer
+	obj_overlays[BELT_LAYER] = new /obj/Overlays/belt_layer
+	obj_overlays[SUIT_STORE_LAYER] = new /obj/Overlays/suit_store_layer
+	obj_overlays[BACK_LAYER] = new /obj/Overlays/back_layer
+	obj_overlays[HAIR_LAYER] = new /obj/Overlays/hair_layer
+	obj_overlays[GLASSES_OVER_HAIR_LAYER] = new /obj/Overlays/glasses_over_hair_layer
+	obj_overlays[FACEMASK_LAYER] = new /obj/Overlays/facemask_layer
+	obj_overlays[HEAD_LAYER] = new /obj/Overlays/head_layer
+	obj_overlays[HANDCUFF_LAYER] = new /obj/Overlays/handcuff_layer
+	obj_overlays[LEGCUFF_LAYER] = new /obj/Overlays/legcuff_layer
+	obj_overlays[L_HAND_LAYER] = new /obj/Overlays/l_hand_layer
+	obj_overlays[R_HAND_LAYER] = new /obj/Overlays/r_hand_layer
+	obj_overlays[TAIL_LAYER] = new /obj/Overlays/tail_layer
+	obj_overlays[TARGETED_LAYER] = new /obj/Overlays/targeted_layer
 
 	..()
 
@@ -299,7 +325,7 @@
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
 			if("l_arm")
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
-	if(update)	UpdateDamageIcon()
+	if(update)	QueueUpdateDamageIcon(1)
 
 
 /mob/living/carbon/human/blob_act()
@@ -325,10 +351,10 @@
 		if(!affecting)	return
 		if (istype(O, /obj/effect/immovablerod))
 			if(affecting.take_damage(101, 0))
-				UpdateDamageIcon()
+				QueueUpdateDamageIcon(1)
 		else
 			if(affecting.take_damage((istype(O, /obj/effect/meteor/small) ? 10 : 25), 30))
-				UpdateDamageIcon()
+				QueueUpdateDamageIcon(1)
 		updatehealth()
 	return
 
@@ -1622,11 +1648,11 @@
 	else	new_species_name = "Human"
 
 	if(src.species)
-		if(src.species.language)	src.remove_language(species.language)
+		//if(src.species.language)	src.remove_language(species.language)
 		if(src.species.abilities)	src.verbs -= species.abilities
 	src.species = all_species[new_species_name]
 	if(src.species.abilities)
-		if(src.species.language)	src.add_language(species.language)
+		//if(src.species.language)	src.add_language(species.language)
 		if(src.species.abilities)	src.verbs |= species.abilities
 	if(force_organs || !src.organs || !src.organs.len)	src.species.create_organs(src)
 	src.see_in_dark = species.darksight

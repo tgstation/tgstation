@@ -63,6 +63,7 @@ k
 	var/list/materials = list()			//List of materials. Format: "id" = amount.
 	var/build_path = null				//The file path of the object that gets created
 	var/locked = 0						//If true it will spawn inside a lockbox with currently sec access
+	var/list/req_lock_access			//Sets the access for the lockbox that a locked item spawns in
 	var/category = null //Primarily used for Mech Fabricators, but can be used for anything
 
 /datum/design/New()
@@ -135,6 +136,8 @@ k
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/aicore
+	locked = 1
+	req_lock_access = list(access_tox, access_robotics, access_rd)
 
 /datum/design/aiupload
 	name = "Circuit Design (AI Upload)"
@@ -144,6 +147,8 @@ k
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/aiupload
+	locked = 1
+	req_lock_access = list(access_tox, access_robotics, access_rd)
 
 /datum/design/borgupload
 	name = "Circuit Design (Cyborg Upload)"
@@ -153,6 +158,8 @@ k
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/borgupload
+	locked = 1
+	req_lock_access = list(access_tox, access_robotics, access_rd)
 
 /datum/design/med_data
 	name = "Circuit Design (Medical Records)"
@@ -663,6 +670,8 @@ k
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$diamond" = 100)
 	build_path = /obj/item/weapon/aiModule/targetted/oneHuman
+	locked = 1
+	req_lock_access = list(access_captain)
 
 /datum/design/protectstation_module
 	name = "Module Design (ProtectStation)"
@@ -699,6 +708,8 @@ k
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
 	build_path = /obj/item/weapon/aiModule/standard/oxygen
+	locked = 1
+	req_lock_access = list(access_captain)
 
 /datum/design/freeform_module
 	name = "Module Design (Freeform)"
@@ -718,7 +729,7 @@ k
 	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
 	build_path = /obj/item/weapon/aiModule/reset
 
-/datum/design/purge_module
+/datum/design/purge_module //tempted to lock this, have a vote on it - Comic
 	name = "Module Design (Purge)"
 	desc = "Allows for the construction of a Purge AI Module."
 	id = "purge_module"
@@ -762,6 +773,8 @@ k
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$diamond" = 100)
 	build_path = /obj/item/weapon/aiModule/core/tyrant
+	locked = 1
+	req_lock_access = list(access_captain)
 
 ///////////////////////////////////
 /////Subspace Telecomms////////////

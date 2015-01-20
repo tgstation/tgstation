@@ -29,7 +29,9 @@
 		else
 			name = real_name
 
+/*
 /obj/item/device/assembly/speaker/proc/say(var/msg=message as text)
 	var/tmp/location = get_turf(src)
 	for(var/mob/O in hearers(location, null)) //to all living
 		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[msg]\"",2)
+*/

@@ -952,7 +952,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 
 		//archaeology!
-		/obj/item/weapon/rocksliver = list("ground_rock" = 50),
+		/obj/item/weapon/rocksliver = list("ground_rock" = 30),
 
 		//All types that you can put into the grinder to transfer the reagents to the beaker. !Put all recipes above this.!
 		/obj/item/weapon/reagent_containers/pill = list(),

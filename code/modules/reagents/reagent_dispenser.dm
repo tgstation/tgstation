@@ -87,9 +87,10 @@
 	var/modded = 0
 	var/obj/item/device/assembly_holder/rig = null
 
-/obj/structure/reagent_dispensers/fueltank/hear_talk(mob/living/M, text)
+/*/obj/structure/reagent_dispensers/fueltank/hear_talk(mob/living/M, text)
 	if(rig)
 		rig.hear_talk(M,text)
+*/
 
 /obj/structure/reagent_dispensers/fueltank/examine(mob/user)
 	..()

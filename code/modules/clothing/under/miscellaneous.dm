@@ -424,3 +424,10 @@
 	icon_state = "russobluecamo"
 	item_state = "russobluecamo"
 	_color = "russobluecamo"
+
+/obj/item/clothing/under/jester
+	name = "Jester Suit"
+	desc = "Only a fool would wear such a suit."
+	icon_state = "jester"
+	item_state = "jester"
+	_color = "jester"

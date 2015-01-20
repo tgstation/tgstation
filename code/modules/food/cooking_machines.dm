@@ -104,19 +104,21 @@ var/global/ingredientLimit = 10
 	if(src.cooks_in_reagents) user << "<span class='info'>It seems to have [reagents.total_volume] units left.</span>"
 
 /obj/machinery/cooking/attack_hand(mob/user)
-	if(istype(user,/mob/dead/observer))	user << "Your ghostly hand goes straight through."
-	else if(istype(user,/mob/living/silicon)) user << "This is old analog equipment. You can't interface with it."
+	if(isobserver(user))	user << "Your ghostly hand goes straight through."
+	else if(issilicon(user)) user << "This is old analog equipment. You can't interface with it."
 	else if(src.active)
-		if(src.ingredient && (get_turf(src.ingredient)==get_turf(src)))
-			if(alert(user,"Remove the [src.ingredient.name]?",,"Yes","No") == "Yes")
-				src.active = 0
-				src.icon_state = initial(src.icon_state)
-				src.ingredient.mouse_opacity = 1
-				user.put_in_hands(src.ingredient)
-				user << "<span class='notice'>You remove the [src.ingredient.name] from the [src.name].</span>"
-				src.ingredient = null
-			else user << "You leave the [src.name] alone."
-		else src.active = 0
+		if(alert(user,"Remove the [src.ingredient.name]?",,"Yes","No") == "Yes")
+			if(src.ingredient && (get_turf(src.ingredient)==get_turf(src)))
+				if(get_dist(src, user) <= 1)
+					src.active = 0
+					src.icon_state = initial(src.icon_state)
+					src.ingredient.mouse_opacity = 1
+					user.put_in_hands(src.ingredient)
+					user << "<span class='notice'>You remove the [src.ingredient.name] from the [src.name].</span>"
+					src.ingredient = null
+				else user << "You are too far away from [src.name]."
+			else src.active = 0
+		else user << "You leave the [src.name] alone."
 	else . = ..()
 	return
 

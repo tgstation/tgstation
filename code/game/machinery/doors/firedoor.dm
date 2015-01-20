@@ -294,6 +294,8 @@
 			if(alarmed && !density)
 				close()
 /obj/machinery/door/firedoor/open()
+	if(!loc)
+		return
 	..()
 	latetoggle()
 	layer = 2.6

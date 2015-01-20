@@ -100,7 +100,6 @@
 	icon = 'icons/obj/doors/Doorglass.dmi'
 	opacity = 0
 	glass = 1
-	soundeffect = 'sound/machines/windowdoor.ogg'
 
 /obj/machinery/door/airlock/centcom
 	name = "Airlock"
@@ -346,6 +345,8 @@ About the new airlock wires panel:
 
 /obj/machinery/door/airlock/proc/isWireCut(var/wireIndex)
 	// You can find the wires in the datum folder.
+	if(!wires)
+		return 1
 	return wires.IsIndexCut(wireIndex)
 
 /obj/machinery/door/airlock/proc/canAIControl()

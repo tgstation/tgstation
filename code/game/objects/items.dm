@@ -108,7 +108,6 @@
 	src.loc = T
 
 /obj/item/examine(mob/user)
-	..() //TODO: Make The following code simply append to the description instead of a separate line
 	var/size
 	switch(src.w_class)
 		if(1.0)
@@ -128,7 +127,7 @@
 		pronoun = "They are"
 	else
 		pronoun = "It is"
-	user << " [pronoun] a [size] item."
+	..(user, " [pronoun] a [size] item.")
 
 
 /obj/item/attack_ai(mob/user as mob)
@@ -139,6 +138,11 @@
 			if(src == user:tool_state || src == user:sight_state)
 				return 0
 			attack_hand(user)
+	if(istype(src.loc, /obj/item/weapon/robot_module))
+		if(!isrobot(user)) 	return
+		var/mob/living/silicon/robot/R = user
+		R.activate_module(src)
+		R.hud_used.update_robot_modules_display()
 
 /obj/item/attack_hand(mob/user as mob)
 	if (!user) return
@@ -151,6 +155,7 @@
 			return
 
 	if (istype(src.loc, /obj/item/weapon/storage))
+		//If the item is in a storage item, take it out.
 		var/obj/item/weapon/storage/S = src.loc
 		S.remove_from_storage(src)
 
@@ -709,7 +714,7 @@
 					M << "<span class='warning'>You go blind!</span>"
 		var/datum/organ/external/affecting = M:get_organ("head")
 		if(affecting.take_damage(7))
-			M:UpdateDamageIcon()
+			M:QueueUpdateDamageIcon(1)
 	else
 		M.take_organ_damage(7)
 	M.eye_blurry += rand(3,4)
@@ -792,5 +797,10 @@
 /obj/item/singularity_pull(S, current_size)
 	spawn(0) //this is needed or multiple items will be thrown sequentially and not simultaneously
 		if(current_size >= STAGE_FOUR)
-			throw_at(S, 14, 3)
+			//throw_at(S, 14, 3)
+			step_towards(src,S)
+			sleep(1)
+			step_towards(src,S)
+		else if(current_size > STAGE_ONE)
+			step_towards(src,S)
 		else ..()

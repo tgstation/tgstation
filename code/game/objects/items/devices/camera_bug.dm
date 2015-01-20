@@ -64,4 +64,5 @@
 			explosion(loc, 0, prob(15), 2, 0)
 
 /obj/item/device/camera_bug/Destroy()
-	del(src)
+	camera_bugs -= src
+	..()

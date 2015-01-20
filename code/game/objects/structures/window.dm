@@ -190,7 +190,7 @@
 		if (istype(G.affecting, /mob/living))
 			var/mob/living/M = G.affecting
 			var/state = G.state
-			del(W)	//gotta delete it here because if window breaks, it won't get deleted
+			qdel(W)	//gotta delete it here because if window breaks, it won't get deleted
 			var/damage
 			switch (state)
 				if(1)
@@ -205,7 +205,7 @@
 					damage = 10
 					hit(25)
 					visible_message("<span class='danger'>[user] bashes [M] against \the [src]!</span>")
-				if(3)
+				if(3 || 4)
 					M.Weaken(5)
 					M.apply_damage(20)
 					damage = 20

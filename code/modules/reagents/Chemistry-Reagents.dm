@@ -285,7 +285,7 @@ datum
 									var/datum/organ/external/affecting = H.get_organ("head")
 									if(affecting)
 										if(affecting.take_damage(25, 0))
-											H.UpdateDamageIcon()
+											H.QueueUpdateDamageIcon(1)
 										H.status_flags |= DISFIGURED
 										H.emote("scream",,, 1)
 								else
@@ -559,7 +559,6 @@ datum
 							W.dropped(M)
 						var/mob/living/carbon/slime/new_mob = new /mob/living/carbon/slime(M.loc)
 						new_mob.a_intent = "hurt"
-						new_mob.universal_speak = 1
 						if(M.mind)
 							M.mind.transfer_to(new_mob)
 						else
@@ -718,7 +717,7 @@ datum
 										var/datum/organ/external/affecting = H.get_organ("head")
 										if(affecting)
 											if(affecting.take_damage(25, 0))
-												H.UpdateDamageIcon()
+												H.QueueUpdateDamageIcon(1)
 											H.status_flags |= DISFIGURED
 											H.emote("scream",,, 1)
 									else
@@ -1041,7 +1040,7 @@ datum
 							var/datum/organ/external/affecting = H.get_organ("head")
 							if(affecting)
 								if(affecting.take_damage(25, 0))
-									H.UpdateDamageIcon()
+									H.QueueUpdateDamageIcon(1)
 								H.status_flags |= DISFIGURED
 								H.emote("scream",,, 1)
 						else
@@ -1107,7 +1106,7 @@ datum
 						if(!H.unacidable)
 							var/datum/organ/external/affecting = H.get_organ("head")
 							if(affecting.take_damage(15, 0))
-								H.UpdateDamageIcon()
+								H.QueueUpdateDamageIcon(1)
 							H.emote("scream",,, 1)
 					else if(ismonkey(M))
 						var/mob/living/carbon/monkey/MK = M
@@ -1129,7 +1128,7 @@ datum
 							var/mob/living/carbon/human/H = M
 							var/datum/organ/external/affecting = H.get_organ("head")
 							if(affecting.take_damage(15, 0))
-								H.UpdateDamageIcon()
+								H.QueueUpdateDamageIcon(1)
 							H.emote("scream",,, 1)
 							H.status_flags |= DISFIGURED
 						else
@@ -1264,14 +1263,14 @@ datum
 			reagent_state = LIQUID
 			color = "#C855DC"
 			overdose_dam = 0
-			overdose = 60
+			overdose = 0
 
 			on_mob_life(var/mob/living/M as mob)
 
 				if(!holder) return
-				if (volume > overdose)
-					M.hallucination = max(M.hallucination, 2)
-
+				if(ishuman(M))
+					M:shock_stage--
+					M:traumatic_shock--
 		mutagen
 			name = "Unstable mutagen"
 			id = "mutagen"
@@ -2550,7 +2549,7 @@ datum
 							holder.remove_reagent("capsaicin", 5)
 						if(istype(M, /mob/living/carbon/slime))
 							M.bodytemperature -= rand(5,20)
-						if(M.dna.mutantrace == "slime")
+						if(M.dna && M.dna.mutantrace == "slime")
 							M.bodytemperature -= rand(5,20)
 					if(15 to 25)
 						M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
