@@ -127,7 +127,7 @@
 	if(occupant)
 		dat += "<A href='?src=\ref[src];inject=epinephrine'>Inject epinephrine</A>"
 	else
-		dat += "<span class='linkOff'>Inject epinephrine</span>"
+		dat += "<span class='linkOff'>Inject Epinephrine</span>"
 	if(occupant && occupant.health > min_health)
 		for(var/re in injection_chems)
 			var/datum/reagent/C = chemical_reagents_list[re]
