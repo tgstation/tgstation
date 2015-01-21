@@ -33,6 +33,8 @@
 /obj/item/weapon/aiModule/targetted/copy()
 	var/obj/item/weapon/aiModule/targetted/clone = ..()
 	clone.targetName=targetName
+	clone.desc = desc
+	clone.law = law
 	return clone
 
 /obj/item/weapon/aiModule/targetted/attack_self(var/mob/user as mob)
