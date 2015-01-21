@@ -15,7 +15,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/emergencyDockTime = 1800	//time taken for emergency shuttle to leave again once it has docked (in deciseconds)
 	var/emergencyEscapeTime = 1200	//time taken for emergency shuttle to reach a safe distance after leaving station (in deciseconds)
 	var/area/emergencyLastCallLoc
-	var/emergencyAlwaysFakeRecall
+	var/emergencyNoEscape
 	var/emergencyFakeRecall
 
 		//supply shuttle stuff
@@ -103,6 +103,9 @@ var/datum/subsystem/shuttle/SSshuttle
 			return
 		if(SHUTTLE_ESCAPE)
 			user << "The emergency shuttle is moving away to a safe distance."
+			return
+		if(SHUTTLE_STRANDED)
+			user << "The emergency shuttle has been disabled by Centcom."
 			return
 
 	call_reason = strip_html_properly(trim(call_reason))
