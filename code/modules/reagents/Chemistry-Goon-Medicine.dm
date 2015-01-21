@@ -790,7 +790,7 @@ datum/reagent/antihol/on_mob_life(var/mob/living/M as mob)
 	description = "Sets all stun-related vars to zero, gets you running really fast. Heals 5 OXY, TOX, BRUTE, and BURN damage if health is below 50. Reduces all stuns."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	metabolization_rate = 0.4
-	overdose_threshold = 25
+	overdose_threshold = 60
 
 datum/reagent/stimulants/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
