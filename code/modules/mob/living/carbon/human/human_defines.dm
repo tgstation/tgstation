@@ -17,7 +17,7 @@
 	var/lip_style = null	//no lipstick by default- arguably misleading, as it could be used for general makeup
 
 	var/age = 30		//Player's age (pure fluff)
-	var/blood_type = "A+"	//Player's bloodtype (Not currently used, just character fluff)
+	var/blood_type = "A+"	//Player's bloodtype
 
 	var/underwear = "Nude"	//Which underwear the player wants
 	var/undershirt = "Nude" //Which undershirt the player wants

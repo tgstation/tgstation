@@ -91,6 +91,13 @@
 					var/datum/disease/ND = D.Copy(1)
 					b.viruses += ND
 					ND.holder = b
-
 			if (step_to(src, get_step(src, direction), 0))
 				break
+
+/obj/effect/decal/cleanable/blood/drip
+	name = "drips of blood"
+	desc = "It's red."
+	gender = PLURAL
+	icon = 'icons/effects/drip.dmi'
+	icon_state = "1"
+	random_icon_states = list("1","2","3","4","5")
