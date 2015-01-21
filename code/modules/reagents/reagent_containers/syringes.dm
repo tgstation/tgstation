@@ -267,6 +267,14 @@
 		mode = SYRINGE_INJECT
 		update_icon()
 
+/obj/item/weapon/reagent_containers/syringe/calomel
+	name = "syringe (calomel)"
+	desc = "Contains calomel."
+	New()
+		..()
+		reagents.add_reagent("calomel", 15)
+		mode = SYRINGE_INJECT
+		update_icon()
 
 //Robot syringes
 //Not special in any way, code wise. They don't have added variables or procs.

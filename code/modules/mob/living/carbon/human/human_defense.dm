@@ -114,7 +114,7 @@ emp_act
 			var/turf/picked = pick(turfs)
 			if(!isturf(picked)) return
 			if(buckled)
-				buckled.unbuckle()
+				buckled.unbuckle_mob()
 			src.loc = picked
 			return 1
 	return 0

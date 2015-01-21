@@ -67,6 +67,11 @@ h1.alert, h2.alert		{color: #000000;}
 
 .interface				{color: #330033;}
 
+.sans					{font-family: "Comic Sans MS", cursive, sans-serif;}
+.papyrus				{font-family: "Papyrus", cursive, sans-serif;}
+.vineta					{font-family: "Vineta BT", cursive, sans-serif;}
+.jokerman				{font-family: "Jokerman", cursive, sans-serif;}
+
 BIG IMG.icon 			{width: 32px; height: 32px;}
 
 </style>"}
