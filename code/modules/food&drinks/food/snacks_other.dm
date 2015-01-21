@@ -47,6 +47,7 @@
 	bitesize = 0.1 //this snack is supposed to be eating during looooong time. And this it not dinner food! --rastaf0
 
 /obj/item/weapon/reagent_containers/food/snacks/popcorn/New()
+	..()
 	eatverb = pick("bite","crunch","nibble","gnaw","gobble","chomp")
 
 /obj/item/weapon/reagent_containers/food/snacks/loadedbakedpotato

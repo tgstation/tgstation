@@ -116,5 +116,5 @@
 	name = "baguette"
 	desc = "Bon appetit!"
 	icon_state = "baguette"
-	list_reagents = list("nutriment" = 60, "blackpepper" = 1, "sodiumchloride" = 1, "vitamin" = 1)
+	list_reagents = list("nutriment" = 6, "blackpepper" = 1, "sodiumchloride" = 1, "vitamin" = 1)
 	bitesize = 3

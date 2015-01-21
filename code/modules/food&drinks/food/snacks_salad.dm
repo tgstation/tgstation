@@ -5,6 +5,7 @@
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/salad/New()
+	..()
 	eatverb = pick("crunch","devour","nibble","gnaw","gobble","chomp")
 
 /obj/item/weapon/reagent_containers/food/snacks/salad/aesirsalad

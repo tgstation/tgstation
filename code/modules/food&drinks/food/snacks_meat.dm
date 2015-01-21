@@ -19,6 +19,7 @@
 	bitesize = 6
 
 /obj/item/weapon/reagent_containers/food/snacks/carpmeat/New()
+	..()
 	eatverb = pick("bite","chew","choke down","gnaw","swallow","chomp")
 
 /obj/item/weapon/reagent_containers/food/snacks/carpmeat/imitation
@@ -97,6 +98,7 @@
 	list_reagents = list("nutriment" = 5, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/sausage/New()
+	..()
 	eatverb = pick("bite","chew","nibble","deep throat","gobble","chomp")
 
 /obj/item/weapon/reagent_containers/food/snacks/wingfangchu
@@ -187,6 +189,7 @@
 	bitesize = 10
 
 /obj/item/weapon/reagent_containers/food/snacks/stew/New()
+	..()
 	eatverb = pick("slurp","sip","suck","inhale","drink")
 
 /obj/item/weapon/reagent_containers/food/snacks/stewedsoymeat
@@ -197,6 +200,7 @@
 	list_reagents = list("nutriment" = 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/stewedsoymeat/New()
+	..()
 	eatverb = pick("slurp","sip","suck","inhale","drink")
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledspiderleg

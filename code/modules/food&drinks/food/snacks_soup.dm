@@ -49,21 +49,22 @@
 	list_reagents = list("nutriment" = 6, "tomatojuice" = 2)
 	var/extra_reagent = null
 /obj/item/weapon/reagent_containers/food/snacks/soup/mysterysoup/New()
-	extra_reagent = pick("capsaicin", "frostoil", "omnizine", "banana", "blood", "slimejelly", "toxin", "banana", "carbon", "oculine")
-	list_reagents.Add(extra_reagent = 5)
 	..()
+	extra_reagent = pick("capsaicin", "frostoil", "omnizine", "banana", "blood", "slimejelly", "toxin", "banana", "carbon", "oculine")
+	reagents.add_reagent("[extra_reagent]", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/wishsoup
 	name = "wish soup"
 	desc = "I wish this was soup."
 	icon_state = "wishsoup"
 /obj/item/weapon/reagent_containers/food/snacks/soup/wishsoup/New()
+	..()
 	if(prob(25))
 		desc = "A wish come true!"
-		list_reagents = list("nutriment" = 9, "vitamin" = 1)
+		reagents.add_reagent("nutriment", 9)
+		reagents.add_reagent("vitamin", 1)
 	else
-		list_reagents = list("water" = 10)
-	..()
+		reagents.add_reagent("water", 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/hotchili
 	name = "hot chili"
