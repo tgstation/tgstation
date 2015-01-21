@@ -1,3 +1,6 @@
+////////////
+//HE Pipes
+////////////
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging
 	icon = 'icons/obj/pipes/heat.dmi'
@@ -12,8 +15,26 @@
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/New()
 	..()
-	initialize_directions_he = initialize_directions	// The auto-detection from /pipe is good enough for a simple HE pipe
 	color = "#404040"
+
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/SetInitDirections()
+	switch(dir)
+		if(SOUTH)
+			initialize_directions_he = SOUTH|NORTH
+		if(NORTH)
+			initialize_directions_he = SOUTH|NORTH
+		if(EAST)
+			initialize_directions_he = EAST|WEST
+		if(WEST)
+			initialize_directions_he = WEST|EAST
+		if(NORTHEAST)
+			initialize_directions_he = NORTH|EAST
+		if(NORTHWEST)
+			initialize_directions_he = NORTH|WEST
+		if(SOUTHEAST)
+			initialize_directions_he = SOUTH|EAST
+		if(SOUTHWEST)
+			initialize_directions_he = SOUTH|WEST
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/initialize()
 	normalize_dir()
@@ -77,16 +98,15 @@
 
 			animate(src, color = rgb(h_r, h_g, h_b), time = 20, easing = SINE_EASING)
 
-
+////////////////
+//HE Junctions
+////////////////
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction
 	icon = 'icons/obj/pipes/junction.dmi'
 	icon_state = "intact"
 	level = 2
 	minimum_temperature_difference = 300
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
-
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/New()
-	..()
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/SetInitDirections()
 	switch(dir)
