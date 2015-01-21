@@ -19,6 +19,9 @@
 	trigger_guard = 0
 	pin = /obj/item/device/firing_pin/magic
 
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi' //not really a gun and some toys use these inhands
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+
 /obj/item/weapon/gun/magic/afterattack(atom/target as mob, mob/living/user as mob, flag)
 	newshot()
 	if(no_den_usage)
