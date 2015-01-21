@@ -105,10 +105,13 @@
 
 					dat += "<table><tr><td><b><font size='4'>Medical Record</font></b></td></tr>"
 					if(active1 in data_core.general)
-						dat += "<tr><td>Name:</td><td>[active1.fields["name"]]</td></tr>"
+						user << browse_rsc(active1.fields["photo_front"], "photo_front")
+						user << browse_rsc(active1.fields["photo_side"], "photo_side")
+						dat += "<tr><td>Name:</td><td>[active1.fields["name"]]</td><td><img src=photo_front height=80 width=80 border=4></td><td><img src=photo_side height=80 width=80 border=4></td></tr>"
 						dat += "<tr><td>ID:</td><td>[active1.fields["id"]]</td></tr>"
 						dat += "<tr><td>Sex:</td><td><A href='?src=\ref[src];field=sex'>&nbsp;[active1.fields["sex"]]&nbsp;</A></td></tr>"
 						dat += "<tr><td>Age:</td><td><A href='?src=\ref[src];field=age'>&nbsp;[active1.fields["age"]]&nbsp;</A></td></tr>"
+						dat += "<tr><td>Species:</td><td><A href='?src=\ref[src];field=species'>&nbsp;[active1.fields["species"]]&nbsp;</A></td></tr>"
 						dat += "<tr><td>Fingerprint:</td><td><A href='?src=\ref[src];field=fingerprint'>&nbsp;[active1.fields["fingerprint"]]&nbsp;</A></td></tr>"
 						dat += "<tr><td>Physical Status:</td><td><A href='?src=\ref[src];field=p_stat'>&nbsp;[active1.fields["p_stat"]]&nbsp;</A></td></tr>"
 						dat += "<tr><td>Mental Status:</td><td><A href='?src=\ref[src];field=m_stat'>&nbsp;[active1.fields["m_stat"]]&nbsp;</A></td></tr>"
@@ -294,6 +297,12 @@
 							if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active1 != a1))
 								return
 							src.active1.fields["age"] = t1
+					if("species")
+						if(active1)
+							var/t1 = input("Select a species", "Species Selection") as null|anything in roundstart_species
+							if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active1 != a1))
+								return
+							active1.fields["species"] = t1
 					if("mi_dis")
 						if(active2)
 							var/t1 = copytext(sanitize(input("Please input minor disabilities list:", "Med. records", src.active2.fields["mi_dis"], null)  as text),1,MAX_MESSAGE_LEN)

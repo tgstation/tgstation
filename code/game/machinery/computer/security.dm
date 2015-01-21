@@ -162,20 +162,25 @@
 					if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
 						user << browse_rsc(active1.fields["photo_front"], "photo_front")
 						user << browse_rsc(active1.fields["photo_side"], "photo_side")
-						dat += {"<table>
+						dat += {"<table><tr><td><table>
 						<tr><td>Name:</td><td><A href='?src=\ref[src];choice=Edit Field;field=name'>&nbsp;[active1.fields["name"]]&nbsp;</A></td></tr>
 						<tr><td>ID:</td><td><A href='?src=\ref[src];choice=Edit Field;field=id'>&nbsp;[active1.fields["id"]]&nbsp;</A></td></tr>
 						<tr><td>Sex:</td><td><A href='?src=\ref[src];choice=Edit Field;field=sex'>&nbsp;[active1.fields["sex"]]&nbsp;</A></td></tr>
-						<tr><td>Age:</td><td><A href='?src=\ref[src];choice=Edit Field;field=age'>&nbsp;[active1.fields["age"]]&nbsp;</A></td></tr>
-						<tr><td>Rank:</td><td><A href='?src=\ref[src];choice=Edit Field;field=rank'>&nbsp;[active1.fields["rank"]]&nbsp;</A></td></tr>
+						<tr><td>Age:</td><td><A href='?src=\ref[src];choice=Edit Field;field=age'>&nbsp;[active1.fields["age"]]&nbsp;</A></td></tr>"}
+						if (config.mutant_races)
+							dat += "<tr><td>Species:</td><td><A href ='?src=\ref[src];choice=Edit Field;field=species'>&nbsp;[active1.fields["species"]]&nbsp;</A></td></tr>"
+						dat += {"<tr><td>Rank:</td><td><A href='?src=\ref[src];choice=Edit Field;field=rank'>&nbsp;[active1.fields["rank"]]&nbsp;</A></td></tr>
 						<tr><td>Fingerprint:</td><td><A href='?src=\ref[src];choice=Edit Field;field=fingerprint'>&nbsp;[active1.fields["fingerprint"]]&nbsp;</A></td></tr>
 						<tr><td>Physical Status:</td><td>&nbsp;[active1.fields["p_stat"]]&nbsp;</td></tr>
 						<tr><td>Mental Status:</td><td>&nbsp;[active1.fields["m_stat"]]&nbsp;</td></tr>
-						</table><div class='statusDisplay'><center><img src=photo_front height=64 width=64><img src=photo_side height=64 width=64></center></div>"}
+						</table></td>
+						<td><table><td align = center><img src=photo_front height=80 width=80 border=4><br><a href='?src=\ref[src];choice=Edit Field;field=photo front'>Update front photo</a></td>
+						<td align = center><img src=photo_side height=80 width=80 border=4><br><a href='?src=\ref[src];choice=Edit Field;field=photo side'>Update side photo</a></td></table>
+						</td></tr></table></td></tr></table>"}
 					else
-						dat += "General Record Lost!<br>"
+						dat += "<br>General Record Lost!<br>"
 					if ((istype(active2, /datum/data/record) && data_core.security.Find(active2)))
-						dat += "<br><font size='4'><b>Security Data</b></font>"
+						dat += "<font size='4'><b>Security Data</b></font>"
 						dat += "<br>Criminal Status: <A href='?src=\ref[src];choice=Edit Field;field=criminal'>[active2.fields["criminal"]]</A>"
 						dat += "<br><br>Minor Crimes: <A href='?src=\ref[src];choice=Edit Field;field=mi_crim_add'>Add New</A>"
 
@@ -357,7 +362,10 @@ What a mess.*/
 					var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
 					P.info = "<CENTER><B>Security Record - (SR-[data_core.securityPrintCount])</B></CENTER><BR>"
 					if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
-						P.info += text("Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", active1.fields["name"], active1.fields["id"], active1.fields["sex"], active1.fields["age"], active1.fields["fingerprint"], active1.fields["p_stat"], active1.fields["m_stat"])
+						P.info += text("Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>", active1.fields["name"], active1.fields["id"], active1.fields["sex"], active1.fields["age"])
+						if (config.mutant_races)
+							P.info += "\nSpecies: [active1.fields["species"]]<BR>"
+						P.info += text("\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", active1.fields["fingerprint"], active1.fields["p_stat"], active1.fields["m_stat"])
 					else
 						P.info += "<B>General Record Lost!</B><BR>"
 					if ((istype(active2, /datum/data/record) && data_core.security.Find(active2)))
@@ -471,6 +479,10 @@ What a mess.*/
 				G.fields["rank"] = "Unassigned"
 				G.fields["sex"] = "Male"
 				G.fields["age"] = "Unknown"
+				if(config.mutant_races)
+					G.fields["species"] = "Human"
+				G.fields["photo_front"] = new /icon()
+				G.fields["photo_side"] = new /icon()
 				G.fields["fingerprint"] = "?????"
 				G.fields["p_stat"] = "Active"
 				G.fields["m_stat"] = "Stable"
@@ -550,6 +562,20 @@ What a mess.*/
 							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active1 != a1))
 								return
 							active1.fields["age"] = t1
+					if("species")
+						if (istype(active1, /datum/data/record))
+							var/t1 = input("Select a species", "Species Selection") as null|anything in roundstart_species
+							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active1 != a1))
+								return
+							active1.fields["species"] = t1
+					if("photo front")
+						var/icon/photo = get_photo(usr)
+						if(photo)
+							active1.fields["photo_front"] = photo
+					if("photo side")
+						var/icon/photo = get_photo(usr)
+						if(photo)
+							active1.fields["photo_side"] = photo
 					if("mi_crim_add")
 						if (istype(active1, /datum/data/record))
 							var/t1 = copytext(sanitize(input("Please input minor crime names:", "Secure. records", "", null)  as text),1,MAX_MESSAGE_LEN)
@@ -659,6 +685,16 @@ What a mess.*/
 	updateUsrDialog()
 	return
 
+/obj/machinery/computer/secure_data/proc/get_photo(var/mob/user)
+	if (istype(user.get_active_hand(), /obj/item/weapon/photo))
+		var/obj/item/weapon/photo/photo = user.get_active_hand()
+		return photo.img
+	if (istype(user, /mob/living/silicon))
+		var/mob/living/silicon/tempAI = user
+		var/datum/picture/selection = tempAI.GetPhoto()
+		if (selection)
+			return selection.fields["img"]
+
 /obj/machinery/computer/secure_data/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
 		..(severity)
@@ -666,11 +702,11 @@ What a mess.*/
 
 	for(var/datum/data/record/R in data_core.security)
 		if(prob(10/severity))
-			switch(rand(1,6))
+			switch(rand(1,8))
 				if(1)
 					R.fields["name"] = "[pick(pick(first_names_male), pick(first_names_female))] [pick(last_names)]"
 				if(2)
-					R.fields["sex"]	= pick("Male", "Female")
+					R.fields["sex"] = pick("Male", "Female")
 				if(3)
 					R.fields["age"] = rand(5, 85)
 				if(4)
@@ -679,6 +715,12 @@ What a mess.*/
 					R.fields["p_stat"] = pick("*Unconcious*", "Active", "Physically Unfit")
 				if(6)
 					R.fields["m_stat"] = pick("*Insane*", "*Unstable*", "*Watch*", "Stable")
+				if(7)
+					R.fields["species"] = pick(roundstart_species)
+				if(8)
+					var/datum/data/record/G = pick(data_core.general)
+					R.fields["photo_front"] = G.fields["photo_front"]
+					R.fields["photo_side"] = G.fields["photo_side"]
 			continue
 
 		else if(prob(1))

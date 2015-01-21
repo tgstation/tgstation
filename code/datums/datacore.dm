@@ -190,6 +190,7 @@ var/record_id_num = 1001
 			assignment = "Unassigned"
 
 		var/id = num2hex(record_id_num++,6)
+		var/image = get_id_photo(H)
 
 		//These records should ~really~ be merged or something
 		//General Record
@@ -198,12 +199,14 @@ var/record_id_num = 1001
 		G.fields["name"]		= H.real_name
 		G.fields["rank"]		= assignment
 		G.fields["age"]			= H.age
+		if(config.mutant_races)
+			G.fields["species"]	= H.dna.species.name
 		G.fields["fingerprint"]	= md5(H.dna.uni_identity)
 		G.fields["p_stat"]		= "Active"
 		G.fields["m_stat"]		= "Stable"
 		G.fields["sex"]			= H.gender
-		G.fields["photo_front"]	= icon(get_id_photo(H), dir = SOUTH)
-		G.fields["photo_side"]	= icon(get_id_photo(H), dir = WEST)
+		G.fields["photo_front"]	= icon(image, dir = SOUTH)
+		G.fields["photo_side"]	= icon(image, dir = WEST)
 		general += G
 
 		//Medical Record
@@ -244,7 +247,7 @@ var/record_id_num = 1001
 		L.fields["b_dna"]		= H.dna.unique_enzymes
 		L.fields["enzymes"]		= H.dna.struc_enzymes
 		L.fields["identity"]	= H.dna.uni_identity
-		L.fields["image"]		= getFlatIcon(H)	//This is god-awful
+		L.fields["image"]		= image
 		locked += L
 	return
 
@@ -345,7 +348,7 @@ var/record_id_num = 1001
 			clothes_s = icon('icons/mob/uniform.dmi', "cmo_s")
 			clothes_s.Blend(icon('icons/mob/feet.dmi', "brown"), ICON_UNDERLAY)
 			clothes_s.Blend(icon('icons/mob/suit.dmi', "labcoat_cmo"), ICON_OVERLAY)
-		if("Doctor")
+		if("Medical Doctor")
 			clothes_s = icon('icons/mob/uniform.dmi', "medical_s")
 			clothes_s.Blend(icon('icons/mob/feet.dmi', "white"), ICON_UNDERLAY)
 			clothes_s.Blend(icon('icons/mob/suit.dmi', "labcoat"), ICON_OVERLAY)
