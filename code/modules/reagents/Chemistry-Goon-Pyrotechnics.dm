@@ -74,7 +74,7 @@
 	id = "sorium"
 	description = "Sends everything flying from the detonation point."
 	reagent_state = LIQUID
-	color = "#60A584"  rgb: 96, 165, 132
+	color = "#60A584"  //rgb: 96, 165, 132
 
 /datum/chemical_reaction/sorium
 	name = "Sorium"
@@ -104,7 +104,7 @@
 	id = "liquid_dark_matter"
 	description = "Sucks everything into the detonation point."
 	reagent_state = LIQUID
-	color = "#60A584"  rgb: 96, 165, 132
+	color = "#60A584"  //rgb: 96, 165, 132
 
 /datum/chemical_reaction/liquid_dark_matter
 	name = "Liquid Dark Matter"
@@ -133,7 +133,7 @@
 proc/goonchem_vortex(var/turf/simulated/T, var/setting_type, var/range, var/pull_times)
 	for(var/atom/movable/X in orange(range, T))
 		if(istype(X, /obj/effect))
-			continue  stop pulling smoke and hotspots please
+			continue  //stop pulling smoke and hotspots please
 		if(istype(X, /atom/movable))
 			if((X) && !X.anchored)
 				if(setting_type)
