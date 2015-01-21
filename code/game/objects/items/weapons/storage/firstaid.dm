@@ -93,6 +93,24 @@
 	new /obj/item/device/healthanalyzer( src )
 	return
 
+/obj/item/weapon/storage/firstaid/brute
+	name = "brute first aid"
+	desc = "A first aid kit for when you get toolboxed."
+	icon_state = "brute"
+	item_state = "firstaid-brute"
+
+/obj/item/weapon/storage/firstaid/brute/New()
+	..()
+	if (empty) return
+	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
+	new /obj/item/device/healthanalyzer( src )
+	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+	new /obj/item/stack/medical/bruise_pack(src)
+	return
+
 /obj/item/weapon/storage/firstaid/tactical
 	name = "first-aid kit"
 	icon_state = "bezerk"

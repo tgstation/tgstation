@@ -135,7 +135,7 @@
 	reagents.add_reagent("salbutamol", 30)
 
 /obj/item/weapon/reagent_containers/pill/charcoal
-	name = "charcoal pill"
+	name = "antitoxin pill"
 	desc = "Neutralizes many common toxins."
 	icon_state = "pill17"
 

@@ -63,7 +63,7 @@
 	spawned_amount = 15
 
 /obj/item/weapon/reagent_containers/glass/bottle/charcoal
-	name = "anti-toxin bottle"
+	name = "antitoxin bottle"
 	desc = "A small bottle of charcoal."
 	icon_state = "bottle17"
 	spawned_reagent = "charcoal"
