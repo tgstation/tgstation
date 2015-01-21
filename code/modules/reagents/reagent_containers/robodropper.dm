@@ -48,16 +48,7 @@
 				if(istype(target , /mob/living/carbon/human))
 					var/mob/living/carbon/human/victim = target
 
-					var/obj/item/safe_thing = null
-					if( victim.wear_mask )
-						if ( victim.wear_mask.flags & MASKCOVERSEYES )
-							safe_thing = victim.wear_mask
-					if( victim.head )
-						if ( victim.head.flags & MASKCOVERSEYES )
-							safe_thing = victim.head
-					if(victim.glasses)
-						if ( !safe_thing )
-							safe_thing = victim.glasses
+					var/obj/item/safe_thing = victim.get_body_part_coverage(EYES)
 
 					if(safe_thing)
 						if(!safe_thing.reagents)

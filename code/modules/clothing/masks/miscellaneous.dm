@@ -3,7 +3,7 @@
 	desc = "To stop that awful noise."
 	icon_state = "muzzle"
 	item_state = "muzzle"
-	flags = FPRINT|MASKCOVERSMOUTH
+	flags = FPRINT
 	w_class = 2
 	gas_transfer_coefficient = 0.90
 	species_fit = list("Vox")
@@ -23,7 +23,7 @@
 	icon_state = "sterile"
 	item_state = "sterile"
 	w_class = 1
-	flags = FPRINT|MASKCOVERSMOUTH
+	flags = FPRINT
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 25, rad = 0)
@@ -43,7 +43,7 @@
 	desc = "A blue neck scarf."
 	icon_state = "blueneckscarf"
 	item_state = "blueneckscarf"
-	flags = FPRINT|MASKCOVERSMOUTH
+	flags = FPRINT
 	w_class = 2
 	gas_transfer_coefficient = 0.90
 
@@ -52,7 +52,7 @@
 	desc = "A red and white checkered neck scarf."
 	icon_state = "redwhite_scarf"
 	item_state = "redwhite_scarf"
-	flags = FPRINT|MASKCOVERSMOUTH
+	flags = FPRINT
 	w_class = 2
 	gas_transfer_coefficient = 0.90
 
@@ -61,7 +61,7 @@
 	desc = "A green neck scarf."
 	icon_state = "green_scarf"
 	item_state = "green_scarf"
-	flags = FPRINT|MASKCOVERSMOUTH
+	flags = FPRINT
 	w_class = 2
 	gas_transfer_coefficient = 0.90
 
@@ -70,7 +70,7 @@
 	desc = "A stealthy, dark scarf."
 	icon_state = "ninja_scarf"
 	item_state = "ninja_scarf"
-	flags = FPRINT|MASKCOVERSMOUTH
+	flags = FPRINT
 	w_class = 2
 	gas_transfer_coefficient = 0.90
 	siemens_coefficient = 0
@@ -82,6 +82,7 @@
 	item_state = "pig"
 	flags = FPRINT|BLOCKHAIR
 	flags_inv = HIDEFACE
+	body_parts_covered = HEAD
 	w_class = 2
 	siemens_coefficient = 0.9
 
@@ -92,6 +93,7 @@
 	item_state = "horsehead"
 	flags = FPRINT|BLOCKHAIR
 	flags_inv = HIDEFACE
+	body_parts_covered = HEAD
 	w_class = 2
 	var/voicechange = 0
 	siemens_coefficient = 0.9
@@ -106,7 +108,7 @@
 	desc = "A plain porcelain mask that covers the entire face. Standard attire for particularly unspeakable religions. The eyes are wide shut."
 	icon_state = "chapmask"
 	item_state = "chapmask"
-	flags = FPRINT|MASKCOVERSMOUTH
+	flags = FPRINT
 	flags_inv = HIDEFACE
 	w_class = 2
 	gas_transfer_coefficient = 0.90

@@ -43,7 +43,6 @@
 
 /obj/item/clothing/head/helmet/space/vox
 	armor = list(melee = 60, bullet = 50, laser = 30, energy = 15, bomb = 30, bio = 30, rad = 30)
-	flags = HEADCOVERSEYES|STOPSPRESSUREDMAGE
 	species_restricted = list("Vox")
 
 /obj/item/clothing/head/helmet/space/vox/pressure
@@ -159,7 +158,7 @@
 	icon_state = "vox-civ-assistant"
 	item_state = "vox-pressure-normal"
 	desc = "A very alien-looking helmet for vox crewmembers."
-	flags = FPRINT  | HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE //Flags need updating from inheritance above
+	flags = FPRINT  | BLOCKHAIR | STOPSPRESSUREDMAGE //Flags need updating from inheritance above
 	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 0, bio = 100, rad = 25)
 
 /obj/item/clothing/suit/space/vox/civ/bartender
@@ -364,7 +363,6 @@
 	icon_state = "vox-pressure-normal"
 	item_state = "vox-pressure-normal"
 	desc = "A very alien-looking helmet for Nanotrasen-hired Vox."
-	flags = HEADCOVERSEYES|STOPSPRESSUREDMAGE|BLOCKHAIR
 	flags_inv = HIDEMASK
 	species_restricted = list("Vox")
 

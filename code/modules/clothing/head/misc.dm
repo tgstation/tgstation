@@ -53,7 +53,8 @@
 	name = "hastur's hood"
 	desc = "It's unspeakably stylish"
 	icon_state = "hasturhood"
-	flags = FPRINT|HEADCOVERSEYES|BLOCKHAIR
+	flags = FPRINT|BLOCKHAIR
+	body_parts_covered = HEAD|EARS
 
 /obj/item/clothing/head/nursehat
 	name = "nurse's hat"
@@ -68,6 +69,7 @@
 	item_state = "syndicate"
 	desc = "A plastic replica of a syndicate agent's space helmet, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
 	flags = FPRINT  | BLOCKHAIR
+	body_parts_covered = FULL_HEAD
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	siemens_coefficient = 2.0
 
@@ -75,7 +77,8 @@
 	name = "cueball helmet"
 	desc = "A large, featureless white orb mean to be worn on your head. How do you even see out of this thing?"
 	icon_state = "cueball"
-	flags = FPRINT|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+	flags = FPRINT|BLOCKHAIR
+	body_parts_covered = FULL_HEAD
 	item_state="cueball"
 	flags_inv = 0
 
@@ -101,15 +104,17 @@
 	desc = "A helmet made out of a box."
 	icon_state = "cardborg_h"
 	item_state = "cardborg_h"
-	flags = FPRINT  | HEADCOVERSEYES | HEADCOVERSMOUTH
+	flags = FPRINT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	body_parts_covered = FULL_HEAD
 
 /obj/item/clothing/head/justice
 	name = "justice hat"
 	desc = "fight for what's righteous!"
 	icon_state = "justicered"
 	item_state = "justicered"
-	flags = FPRINT|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+	flags = FPRINT|BLOCKHAIR
+	body_parts_covered = HEAD|EYES|MOUTH
 
 /obj/item/clothing/head/justice/blue
 	icon_state = "justiceblue"
@@ -249,6 +254,7 @@
 	item_state = "xenos_helm"
 	desc = "A helmet made out of chitinous alien hide."
 	flags = FPRINT  | BLOCKHAIR
+	body_parts_covered = FULL_HEAD
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	siemens_coefficient = 2.0
 
@@ -257,8 +263,9 @@
 	desc = "No one cares who you are until you put on the mask."
 	icon_state = "bmhead"
 	item_state = "bmhead"
-	flags = FPRINT  | HEADCOVERSEYES | BLOCKHAIR
+	flags = FPRINT | BLOCKHAIR
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
+	body_parts_covered = HEAD|EYES|EARS
 
 /obj/item/clothing/head/stalhelm
 	name = "Stalhelm"
