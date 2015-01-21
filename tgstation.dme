@@ -488,6 +488,7 @@
 #include "code\game\mecha\medical\odysseus.dm"
 #include "code\game\mecha\working\ripley.dm"
 #include "code\game\mecha\working\working.dm"
+#include "code\game\objects\buckling.dm"
 #include "code\game\objects\empulse.dm"
 #include "code\game\objects\explosion.dm"
 #include "code\game\objects\items.dm"
