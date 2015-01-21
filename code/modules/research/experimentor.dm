@@ -21,12 +21,18 @@
 	density = 1
 	anchored = 1
 	use_power = 1
+	var/recentlyExperimented = 0
+	var/mob/trackedIan
+	var/mob/trackedRuntime
 	var/obj/item/loaded_item = null
 	///
 	var/badThingCoeff = 0
 	var/resetTime = 15
+	var/cloneMode = FALSE
+	var/cloneCount = 0
 	var/list/item_reactions = list()
-	var/list/valid_items = list()
+	var/list/valid_items = list() //valid items for special reactions like transforming
+	var/list/critical_items = list() //items that can cause critical reactions
 
 /obj/machinery/r_n_d/experimentor/proc/ConvertReqString2List(var/list/source_list)
 	var/list/temp_list = params2list(source_list)
@@ -34,13 +40,49 @@
 		temp_list[O] = text2num(temp_list[O])
 	return temp_list
 
+/obj/machinery/r_n_d/experimentor/proc/ConvertReqList2String(var/list/source_list)
+	var/returnString = ""
+	for(var/O in source_list)
+		returnString += "[O];"
+	return returnString
+
+/* //uncomment to enable forced reactions.
+/obj/machinery/r_n_d/experimentor/verb/forceReaction()
+	set name = "Force Experimentor Reaction"
+	set category = "Debug"
+	set src in oview(1)
+	var/reaction = input(usr,"What reaction?") in list(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
+	var/oldReaction = item_reactions["[loaded_item.type]"]
+	item_reactions["[loaded_item.type]"] = reaction
+	experiment(item_reactions["[loaded_item.type]"],loaded_item)
+	spawn(10)
+		if(loaded_item)
+			item_reactions["[loaded_item.type]"] = oldReaction
+*/
+
 /obj/machinery/r_n_d/experimentor/proc/SetTypeReactions()
+	var/probWeight = 0
 	for(var/I in typesof(/obj/item))
 		item_reactions["[I]"] = pick(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
-		if(ispath(I,/obj/item/weapon/reagent_containers/food) || ispath(I,/obj/item/weapon/stock_parts) || ispath(I,/obj/item/weapon/grenade/chem_grenade) || ispath(I,/obj/item/weapon/kitchen))
+		if(ispath(I,/obj/item/weapon/stock_parts) || ispath(I,/obj/item/weapon/grenade/chem_grenade) || ispath(I,/obj/item/weapon/kitchen))
 			var/obj/item/tempCheck = new I()
 			if(tempCheck.icon_state != null) //check it's an actual usable item, in a hacky way
+				valid_items += 15
 				valid_items += I
+				probWeight++
+			qdel(tempCheck)
+
+		if(ispath(I,/obj/item/weapon/reagent_containers/food))
+			var/obj/item/tempCheck = new I()
+			if(tempCheck.icon_state != null) //check it's an actual usable item, in a hacky way
+				valid_items += rand(1,max(2,35-probWeight))
+				valid_items += I
+			qdel(tempCheck)
+
+		if(ispath(I,/obj/item/weapon/rcd) || ispath(I,/obj/item/weapon/grenade) || ispath(I,/obj/item/device/aicard) || ispath(I,/obj/item/weapon/storage/backpack/holding) || ispath(I,/obj/item/slime_extract) || ispath(I,/obj/item/device/onetankbomb) || ispath(I,/obj/item/device/transfer_valve))
+			var/obj/item/tempCheck = new I()
+			if(tempCheck.icon_state != null)
+				critical_items += I
 			qdel(tempCheck)
 
 
@@ -53,6 +95,8 @@
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
+	trackedIan = locate(/mob/living/simple_animal/corgi/Ian) in mob_list
+	trackedRuntime = locate(/mob/living/simple_animal/cat/Runtime) in mob_list
 	SetTypeReactions()
 	RefreshParts()
 
@@ -65,35 +109,33 @@
 	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
 		badThingCoeff += M.rating
 
+/obj/machinery/r_n_d/experimentor/proc/checkCircumstances(var/obj/item/O as obj)
+	//snowflake check to only take "made" bombs
+	if(istype(O,/obj/item/device/transfer_valve))
+		var/obj/item/device/transfer_valve/T = O
+		if(!T.tank_one || !T.tank_two || !T.attached_device)
+			return FALSE
+	return TRUE
+
 /obj/machinery/r_n_d/experimentor/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (shocked)
 		shock(user,50)
-	if (istype(O, /obj/item/weapon/screwdriver))
-		if (!panel_open)
-			panel_open = 1
-			if(linked_console)
-				linked_console.linked_destroy = null
-				linked_console = null
-			icon_state = "h_lathe_maint"
-			user << "<span class='notice'>You open the maintenance hatch of [src].</span>"
-		else
-			panel_open = 0
-			icon_state = "h_lathe"
-			user << "<span class='notice'>You close the maintenance hatch of [src].</span>"
+
+	if (default_deconstruction_screwdriver(user, "h_lathe_maint", "h_lathe", O))
+		if(linked_console)
+			linked_console.linked_destroy = null
+			linked_console = null
 		return
-	if (panel_open)
-		if(istype(O, /obj/item/weapon/crowbar))
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			M.state = 2
-			M.icon_state = "box_1"
-			for(var/obj/I in component_parts)
-				I.loc = src.loc
-			del(src)
-			return 1
-		else
-			user << "<span class='warning'>You can't load the [src.name] while it's opened.</span>"
-			return 1
+
+	if(exchange_parts(user, O))
+		return
+
+	default_deconstruction_crowbar(O)
+
+	if(!checkCircumstances(O))
+		user << "<span class='warning'>The [O] is not yet valid for the [src] and must be completed!</span>"
+		return
+
 	if (disabled)
 		return
 	if (!linked_console)
@@ -119,8 +161,7 @@
 		O.loc = src
 		user << "<span class='notice'>You add the [O.name] to the machine!</span>"
 		flick("h_lathe_load", src)
-		spawn(15)
-			icon_state = "h_lathe_wloop"
+
 	return
 
 
@@ -130,21 +171,25 @@
 	if(!linked_console)
 		dat += "<b><a href='byond://?src=\ref[src];function=search'>Scan for R&D Console</A></b><br>"
 	if(loaded_item)
-		dat += "<b>Loaded Item:</b> [loaded_item]<br>"
-		dat += "<b>Technology</b>:<br>"
-		var/list/D = ConvertReqString2List(loaded_item.origin_tech)
-		for(var/T in D)
-			dat += "[T]<br>"
-		dat += "<br><br>Available tests:"
-		dat += "<br><b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_POKE]'>Poke</A></b>"
-		dat += "<br><b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_IRRADIATE];'>Irradiate</A></b>"
-		dat += "<br><b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_GAS]'>Gas</A></b>"
-		dat += "<br><b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_HEAT]'>Burn</A></b>"
-		dat += "<br><b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_COLD]'>Freeze</A></b>"
-		dat += "<br><b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_OBLITERATE]'>Destroy</A></b><br>"
-		dat += "<br><b><a href='byond://?src=\ref[src];function=eject'>Eject</A>"
+		if(recentlyExperimented)
+			dat += "<b>The [src] is still resetting!</b>"
+		else
+			dat += "<b>Loaded Item:</b> [loaded_item]<br>"
+			dat += "<b>Technology</b>:<br>"
+			var/list/D = ConvertReqString2List(loaded_item.origin_tech)
+			for(var/T in D)
+				dat += "[T]<br>"
+			dat += "<br><br>Available tests:"
+			dat += "<br><b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_POKE]'>Poke</A></b>"
+			dat += "<br><b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_IRRADIATE];'>Irradiate</A></b>"
+			dat += "<br><b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_GAS]'>Gas</A></b>"
+			dat += "<br><b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_HEAT]'>Burn</A></b>"
+			dat += "<br><b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_COLD]'>Freeze</A></b>"
+			dat += "<br><b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_OBLITERATE]'>Destroy</A></b><br>"
+			dat += "<br><b><a href='byond://?src=\ref[src];function=eject'>Eject</A>"
 	else
 		dat += "<b>Nothing loaded.</b>"
+	dat += "<br><a href='byond://?src=\ref[src];function=refresh'>Refresh</A><br>"
 	dat += "<br><a href='byond://?src=\ref[src];function=close'>Close</A><br></center>"
 	var/datum/browser/popup = new(user, "experimentor","Experimentor", 700, 400, src)
 	popup.set_content(dat)
@@ -167,10 +212,35 @@
 		return FAIL
 
 /obj/machinery/r_n_d/experimentor/proc/ejectItem(var/delete=FALSE)
-	loaded_item.loc = src.loc
-	if(delete)
-		qdel(loaded_item)
-	loaded_item = null
+	if(loaded_item)
+		if(cloneMode && cloneCount > 0)
+			visible_message("<span class='notice'>A duplicate [loaded_item] pops out!</span>")
+			new loaded_item(pick(oview(1,src)))
+			--cloneCount
+			if(cloneCount == 0)
+				cloneMode = FALSE
+		loaded_item.loc = pick(oview(1,src))
+		if(delete)
+			qdel(loaded_item)
+		loaded_item = null
+
+/obj/machinery/r_n_d/experimentor/proc/throwSmoke(var/turf/where)
+	var/datum/effect/effect/system/harmless_smoke_spread/smoke = new
+	smoke.set_up(1,0, where, 0)
+	smoke.start()
+
+/obj/machinery/r_n_d/experimentor/proc/pickWeighted(var/list/from)
+	var/result = FALSE
+	var/counter = 1
+	while(!result)
+		var/probtocheck = from[counter]
+		if(prob(probtocheck))
+			result = TRUE
+			return from[counter+1]
+		if(counter + 2 < from.len)
+			counter = counter + 2
+		else
+			counter = 1
 
 /*
 #define EFFECT_PROB_VERYLOW 10
@@ -180,9 +250,15 @@
 #define EFFECT_PROB_VERYHIGH 85
 */
 /obj/machinery/r_n_d/experimentor/proc/experiment(var/exp,var/obj/item/exp_on)
+	recentlyExperimented = 1
+	icon_state = "h_lathe_wloop"
+	var/criticalReaction = locate(exp_on) in critical_items ? TRUE : FALSE
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == SCANTYPE_POKE)
 		visible_message("<span class='notice'>[src] prods at [exp_on] with mechanical arms.</span>")
+		if(prob(EFFECT_PROB_LOW) && criticalReaction)
+			visible_message("<span class='notice'>[exp_on] is gripped in just the right way, enhancing it's focus.</span>")
+			badThingCoeff++
 		if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='notice'>[src] malfunctions and destroys [exp_on], lashing it's arms out at nearby people!.</span>")
 			for(var/mob/living/m in oview(1))
@@ -201,6 +277,11 @@
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == SCANTYPE_IRRADIATE)
 		visible_message("<span class='notice'>[src] reflects radioactive rays at [exp_on]!</span>")
+		if(prob(EFFECT_PROB_LOW) && criticalReaction)
+			visible_message("<span class='notice'>[exp_on] has activated an unknown subroutine!</span>")
+			cloneMode = TRUE
+			cloneCount = badThingCoeff
+			ejectItem()
 		if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='notice'>[src] malfunctions, melting [exp_on] and leaking radiation!.</span>")
 			for(var/mob/living/m in oview(1))
@@ -213,10 +294,11 @@
 					if(prob(EFFECT_PROB_VERYHIGH))
 						new /obj/effect/decal/cleanable/greenglow(T)
 		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
-			visible_message("<span class='notice'>[src] malfunctions, transforming the [exp_on]!.</span>")
+			var/savedName = "[exp_on]"
 			ejectItem(TRUE)
-			var/newPath = pick(valid_items)
+			var/newPath = pickWeighted(valid_items)
 			loaded_item = new newPath(src)
+			visible_message("<span class='notice'>[src] malfunctions, transforming [savedName] into [loaded_item]!.</span>")
 			if(istype(loaded_item,/obj/item/weapon/grenade/chem_grenade))
 				var/obj/item/weapon/grenade/chem_grenade/CG = loaded_item
 				CG.prime()
@@ -224,6 +306,9 @@
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == SCANTYPE_GAS)
 		visible_message("<span class='notice'>[src] fills it's chamber with gas, [exp_on] included.</span>")
+		if(prob(EFFECT_PROB_LOW) && criticalReaction)
+			visible_message("<span class='notice'>[exp_on] achieves the perfect mix!</span>")
+			new /obj/item/stack/sheet/mineral/plasma(pick(oview(1,src)))
 		if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='notice'>[src] destroys [exp_on], leaking dangerous gas!.</span>")
 			var/list/chems = list("carbon","radium","toxin","condensedcapsaicin","mushroomhallucinogen","space_drugs","ethanol","beepskysmash")
@@ -238,9 +323,7 @@
 			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='notice'>[src] malfunctions, spewing harmless gas!.</span>")
-			var/datum/effect/effect/system/harmless_smoke_spread/smoke = new
-			smoke.set_up(1,0, src.loc, 0)
-			smoke.start()
+			throwSmoke(src.loc)
 		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			visible_message("<span class='notice'>[src] melts [exp_on], ionizing the air around it!.</span>")
 			empulse(src.loc, 8, 10)
@@ -248,6 +331,14 @@
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == SCANTYPE_HEAT)
 		visible_message("<span class='notice'>[src] raises [exp_on]'s temperature.</span>")
+		if(prob(EFFECT_PROB_LOW) && criticalReaction)
+			visible_message("<span class='notice'>[src]'s emergency coolant system gives off a small beep!</span>")
+			var/obj/item/weapon/reagent_containers/food/drinks/coffee/C = new /obj/item/weapon/reagent_containers/food/drinks/coffee(pick(oview(1,src)))
+			var/list/chems = list("plasma","capsaicin","ethanol")
+			C.reagents.remove_any(25)
+			C.reagents.add_reagent(pick(chems),25)
+			C.name = "Cup of Suspicious Liquid"
+			C.desc = "It has a large hazard symbol printed on the side in fading ink."
 		if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='notice'>[src] malfunctions, melting [exp_on] and releasing a burst of flame!.</span>")
 			explosion(src.loc, -1, 0, 0, 0, 0, flame_range = 2)
@@ -267,15 +358,21 @@
 			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			visible_message("<span class='notice'>[src] malfunctions, activating it's emergency coolant systems!.</span>")
-			var/datum/effect/effect/system/harmless_smoke_spread/smoke = new
-			smoke.set_up(1,0, src.loc, 0)
-			smoke.start()
+			throwSmoke(src.loc)
 			for(var/mob/living/m in oview(1))
 				m.apply_damage(5,"burn",pick("head","chest","groin"))
 			ejectItem()
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == SCANTYPE_COLD)
 		visible_message("<span class='notice'>[src] lowers [exp_on]'s temperature.</span>")
+		if(prob(EFFECT_PROB_LOW) && criticalReaction)
+			visible_message("<span class='notice'>[src]'s emergency coolant system gives off a small ping!</span>")
+			var/obj/machinery/vending/coffee/C = new /obj/machinery/vending/coffee(pick(oview(1,src)))
+			var/list/chems = list("uranium","frostoil","hyperzine")
+			C.reagents.remove_any(25)
+			C.reagents.add_reagent(pick(chems),25)
+			C.name = "Cup of Suspicious Liquid"
+			C.desc = "It has a large hazard symbol printed on the side in fading ink."
 		if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='notice'>[src] malfunctions, shattering [exp_on] and releasing a dangerous cloud of coolant!</span>")
 			var/datum/reagents/R = new/datum/reagents(50)
@@ -309,6 +406,9 @@
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == SCANTYPE_OBLITERATE)
 		visible_message("<span class='notice'>[exp_on] activates the crushing mechanism, [exp_on] is destroyed!</span>")
+		if(prob(EFFECT_PROB_LOW) && criticalReaction)
+			visible_message("<span class='notice'>[src]'s crushing mechanism slowly and smoothly descends, flattening the [exp_on]!</span>")
+			new /obj/item/stack/sheet/plasteel(pick(oview(1,src)))
 		if(linked_console.linked_lathe)
 			linked_console.linked_lathe.m_amount += min((linked_console.linked_lathe.max_material_storage - linked_console.linked_lathe.TotalMaterials()), (exp_on.m_amt))
 			linked_console.linked_lathe.g_amount += min((linked_console.linked_lathe.max_material_storage - linked_console.linked_lathe.TotalMaterials()), (exp_on.g_amt))
@@ -342,9 +442,49 @@
 		var/b = pick("crushes","spins","viscerates","smashes","insults")
 		visible_message("<span class='notice'>[exp_on] [a], and [b], the experiment was a failiure!</span>")
 
+
+	//Global reactions
+	if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
+		var/globalMalf = rand(1,100)
+		if(globalMalf < 15)
+			visible_message("<span class='notice'>[src]'s onboard detection system has malfunctioned!.</span>")
+			item_reactions["[exp_on.type]"] = pick(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
+			ejectItem()
+		if(globalMalf > 16 && globalMalf < 35)
+			visible_message("<span class='notice'>[src] melts [exp_on], ian-izing the air around it!.</span>")
+			throwSmoke(src.loc)
+			if(trackedIan)
+				throwSmoke(trackedIan.loc)
+				trackedIan.loc = src.loc
+			else
+				new /mob/living/simple_animal/corgi(src.loc)
+			ejectItem(TRUE)
+		if(globalMalf > 36 && globalMalf < 50)
+			visible_message("<span class='notice'>[src] improves [exp_on], drawing the life essence of those nearby!</span>")
+			for(var/mob/living/m in view(4,src))
+				m << "<span class='danger'>You feel your flesh being torn from you, mists of blood drifting to [src]!</span>"
+				m.apply_damage(50,"brute","chest")
+			var/list/reqs = ConvertReqString2List(exp_on.origin_tech)
+			for(var/T in reqs)
+				T = T + 1
+			exp_on.origin_tech = ConvertReqList2String(reqs)
+		if(globalMalf > 51 && globalMalf < 75)
+			visible_message("<span class='notice'>[src] encounters a run-time error!</span>")
+			throwSmoke(src.loc)
+			if(trackedRuntime)
+				throwSmoke(trackedRuntime.loc)
+				trackedRuntime.loc = src.loc
+			else
+				new /mob/living/simple_animal/cat(src.loc)
+			ejectItem(TRUE)
+		if(globalMalf > 76)
+			visible_message("<span class='notice'>[src] begins to smoke and hiss, shaking violently!</span>")
+			use_power(500000)
+
 	spawn(resetTime)
 		icon_state = "h_lathe"
 		busy = 0
+		recentlyExperimented = 0
 
 /obj/machinery/r_n_d/experimentor/Topic(href, href_list)
 	if(..())
@@ -362,7 +502,12 @@
 			linked_console = D
 	else if(scantype == "eject")
 		ejectItem()
+	else if(scantype == "refresh")
+		src.updateUsrDialog()
 	else
+		if(recentlyExperimented)
+			usr << "<span class='notice'>[src] has been used too recently!</span>"
+			return
 		var/dotype = matchReaction(process,scantype)
 		experiment(dotype,process)
 		use_power(750)

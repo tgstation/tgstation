@@ -2,6 +2,7 @@
 	icon_state = "energy"
 	name = "energy gun"
 	desc = "A basic energy-based gun."
+	icon = 'icons/obj/guns/energy.dmi'
 
 	var/obj/item/weapon/stock_parts/cell/power_supply //What type of power cell this uses
 	var/cell_type = /obj/item/weapon/stock_parts/cell

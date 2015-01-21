@@ -9,7 +9,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/carrotcake/New()
 	..()
 	reagents.add_reagent("nutriment", 20)
-	reagents.add_reagent("imidazoline", 10)
+	reagents.add_reagent("oculine", 10)
 	reagents.add_reagent("vitamin", 5)
 	bitesize = 2
 

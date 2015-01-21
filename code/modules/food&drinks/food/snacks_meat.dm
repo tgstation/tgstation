@@ -83,7 +83,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/bearmeat/New()
 	..()
 	reagents.add_reagent("nutriment", 12)
-	reagents.add_reagent("hyperzine", 5)
+	reagents.add_reagent("morphine", 5)
 	reagents.add_reagent("vitamin", 2)
 	src.bitesize = 3
 
@@ -278,7 +278,7 @@
 	eatverb = pick("slurp","sip","suck","inhale","drink")
 	reagents.add_reagent("nutriment", 10)
 	reagents.add_reagent("tomatojuice", 5)
-	reagents.add_reagent("imidazoline", 5)
+	reagents.add_reagent("oculine", 5)
 	reagents.add_reagent("water", 5)
 	bitesize = 10
 

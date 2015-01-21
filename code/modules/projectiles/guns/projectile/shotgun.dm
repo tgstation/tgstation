@@ -10,7 +10,6 @@
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot
 	var/recentpump = 0 // to prevent spammage
-	var/pumped = 0
 
 /obj/item/weapon/gun/projectile/shotgun/attackby(var/obj/item/A as obj, mob/user as mob)
 	var/num_loaded = magazine.attackby(A, user, 1)
@@ -41,21 +40,29 @@
 
 /obj/item/weapon/gun/projectile/shotgun/proc/pump(mob/M)
 	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
-	pumped = 0
+	pump_unload(M)
+	pump_reload(M)
+	update_icon()	//I.E. fix the desc
+	return 1
+
+/obj/item/weapon/gun/projectile/shotgun/proc/pump_unload(mob/M)
 	if(chambered)//We have a shell in the chamber
 		chambered.loc = get_turf(src)//Eject casing
 		chambered.SpinAnimation(5, 1)
 		chambered = null
+
+/obj/item/weapon/gun/projectile/shotgun/proc/pump_reload(mob/M)
 	if(!magazine.ammo_count())	return 0
 	var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
 	chambered = AC
-	update_icon()	//I.E. fix the desc
-	return 1
+
 
 /obj/item/weapon/gun/projectile/shotgun/examine(mob/user)
 	..()
 	if (chambered)
 		user << "A [chambered.BB ? "live" : "spent"] one is in the chamber."
+
+// COMBAT SHOTGUN //
 
 /obj/item/weapon/gun/projectile/shotgun/combat
 	name = "combat shotgun"
@@ -64,6 +71,8 @@
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shotcom
 	w_class = 5
+
+// RIOT SHOTGUN //
 
 /obj/item/weapon/gun/projectile/shotgun/riot //for spawn in the armory
 	name = "riot shotgun"
@@ -80,6 +89,43 @@
 		var/obj/item/weapon/melee/energy/W = A
 		if(W.active)
 			sawoff(user)
+
+///////////////////////
+// BOLT ACTION RIFLE //
+///////////////////////
+
+/obj/item/weapon/gun/projectile/shotgun/boltaction
+	name = "bolt action rifle"
+	desc = "This piece of junk looks like something that could have been used 700 years ago."
+	icon_state = "moistnugget"
+	item_state = "moistnugget"
+	slot_flags = 0 //no SLOT_BACK sprite, alas
+	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
+	var/bolt_open = 0
+
+/obj/item/weapon/gun/projectile/shotgun/boltaction/pump(mob/M)
+	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
+	if(bolt_open)
+		pump_reload(M)
+	else
+		pump_unload(M)
+	bolt_open = !bolt_open
+	update_icon()	//I.E. fix the desc
+	return 1
+
+/obj/item/weapon/gun/projectile/shotgun/boltaction/attackby(var/obj/item/A as obj, mob/user as mob)
+	if(!bolt_open)
+		user << "<span class='notice'>The bolt is closed!</span>"
+		return
+	. = ..()
+
+/obj/item/weapon/gun/projectile/shotgun/boltaction/examine(mob/user)
+	..()
+	user << "The bolt is [bolt_open ? "open" : "closed"]."
+
+/////////////////////////////
+// DOUBLE BARRELED SHOTGUN //
+/////////////////////////////
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel
 	name = "double-barreled shotgun"
@@ -196,7 +242,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog
 	name = "syndicate shotgun"
-	desc = "A compact, mag-fed burst-fire shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines."
+	desc = "A semi-auto, mag-fed shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines."
 	icon_state = "bulldog"
 	item_state = "bulldog"
 	w_class = 3.0
@@ -206,21 +252,26 @@
 	can_suppress = 0
 	burst_size = 1
 	fire_delay = 0
+	pin = /obj/item/device/firing_pin/implant/pindicate
+	action_button_name = null
 
 /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/New()
 	..()
 	update_icon()
 	return
+
 /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/proc/update_magazine()
 	if(magazine)
 		src.overlays = 0
 		overlays += "[magazine.icon_state]"
 		return
+
 /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/update_icon()
 	src.overlays = 0
 	update_magazine()
 	icon_state = "bulldog[chambered ? "" : "-e"]"
 	return
+
 /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/afterattack()
 	..()
 	empty_alarm()

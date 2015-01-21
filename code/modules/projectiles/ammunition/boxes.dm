@@ -40,8 +40,10 @@
 	max_ammo = 4
 	multiple_sprites = 1
 
-/obj/item/ammo_box/crossbow
-	name = "ammo box (crossbow bolts)"
-	icon_state = "xbow"
-	ammo_type = /obj/item/ammo_casing/caseless/bolt
-	max_ammo = 4
+/obj/item/ammo_box/a762
+	name = "stripper clip (7.62mm)"
+	desc = "A stripper clip."
+	icon_state = "762"
+	ammo_type = /obj/item/ammo_casing/a762
+	max_ammo = 5
+	multiple_sprites = 1

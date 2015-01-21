@@ -24,11 +24,11 @@
 		reagents.add_reagent("[spawned_reagent]", spawned_amount)
 
 
-/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline
-	name = "inaprovaline bottle"
-	desc = "A small bottle. Contains inaprovaline - used to stabilize patients."
+/obj/item/weapon/reagent_containers/glass/bottle/epinephrine
+	name = "epinephrine bottle"
+	desc = "A small bottle. Contains epinephrine - used to stabilize patients."
 	icon_state = "bottle16"
-	spawned_reagent = "inaprovaline"
+	spawned_reagent = "epinephrine"
 
 /obj/item/weapon/reagent_containers/glass/bottle/toxin
 	name = "toxin bottle"
@@ -42,11 +42,11 @@
 	icon_state = "bottle12"
 	spawned_reagent = "cyanide"
 
-/obj/item/weapon/reagent_containers/glass/bottle/stoxin
+/obj/item/weapon/reagent_containers/glass/bottle/morphine
 	name = "sleep-toxin bottle"
 	desc = "A small bottle of sleep toxins. Just the fumes make you sleepy."
 	icon_state = "bottle20"
-	spawned_reagent = "stoxin"
+	spawned_reagent = "morphine"
 
 /obj/item/weapon/reagent_containers/glass/bottle/morphine
 	name = "morphine bottle"
@@ -62,11 +62,11 @@
 	spawned_reagent = "chloralhydrate"
 	spawned_amount = 15
 
-/obj/item/weapon/reagent_containers/glass/bottle/antitoxin
-	name = "anti-toxin bottle"
-	desc = "A small bottle of Anti-toxins. Counters poisons, and repairs damage, a wonder drug."
+/obj/item/weapon/reagent_containers/glass/bottle/charcoal
+	name = "charcoal bottle"
+	desc = "A small bottle of charcoal."
 	icon_state = "bottle17"
-	spawned_reagent = "anti_toxin"
+	spawned_reagent = "charcoal"
 
 /obj/item/weapon/reagent_containers/glass/bottle/mutagen
 	name = "unstable mutagen bottle"

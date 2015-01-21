@@ -102,3 +102,49 @@ datum/reagent/acetone
 	required_reagents = list("oil" = 1)
 	result_amount = 1
 	required_temp = 480
+
+datum/reagent/colorful_reagent
+	name = "Colorful Reagent"
+	id = "colorful_reagent"
+	description = "A solution."
+	reagent_state = LIQUID
+	color = "#C8A5DC" // rgb: 200, 165, 220
+	var/list/potential_colors = list("#FF0000","#0000FF","#008000","#FFFF00")
+
+/datum/chemical_reaction/colorful_reagent
+	name = "colorful_reagent"
+	id = "colorful_reagent"
+	result = "colorful_reagent"
+	required_reagents = list("stable_plasma" = 1, "radium" = 1, "space_drugs" = 1, "cryoxadone" = 1, "triple_citrus" = 1)
+	result_amount = 5
+
+datum/reagent/colorful_reagent/reaction_mob(var/mob/M, var/volume)
+	if(M)
+		M.color = pick(potential_colors)
+	..()
+	return
+datum/reagent/colorful_reagent/reaction_obj(var/obj/O, var/volume)
+	if(O)
+		O.color = pick(potential_colors)
+	..()
+	return
+datum/reagent/colorful_reagent/reaction_turf(var/turf/T, var/volume)
+	if(T)
+		T.color = pick(potential_colors)
+	..()
+	return
+
+
+datum/reagent/triple_citrus
+	name = "Triple Citrus"
+	id = "triple_citrus"
+	description = "A solution."
+	reagent_state = LIQUID
+	color = "#C8A5DC" // rgb: 200, 165, 220
+
+/datum/chemical_reaction/triple_citrus
+	name = "triple_citrus"
+	id = "triple_citrus"
+	result = "triple_citrus"
+	required_reagents = list("lemonjuice" = 1, "limejuice" = 1, "orangejuice" = 1)
+	result_amount = 5

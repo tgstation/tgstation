@@ -228,7 +228,7 @@
 
 /obj/structure/stool/bed/chair/janicart/relaymove(mob/user, direction)
 	if(user.stat || user.stunned || user.weakened || user.paralysis)
-		unbuckle()
+		unbuckle_mob()
 	if(istype(user.l_hand, keytype) || istype(user.r_hand, keytype))
 		if(!Process_Spacemove(direction) || !has_gravity(src.loc) || move_delay)
 			return
@@ -241,7 +241,7 @@
 				playsound(src, 'sound/misc/slip.ogg', 50, 1, -3)
 				buckled_mob.Stun(7)
 				buckled_mob.Weaken(7)
-				unbuckle()
+				unbuckle_mob()
 				step(src, dir)
 		move_delay = 1
 		spawn(2)
@@ -250,15 +250,16 @@
 		user << "<span class='notice'>You'll need the keys in one of your hands to drive this [callme].</span>"
 
 
-/obj/structure/stool/bed/chair/janicart/buckle_mob(mob/M, mob/user)
+/obj/structure/stool/bed/chair/janicart/user_buckle_mob(mob/M, mob/user)
 	if(M != user || !ismob(M) || get_dist(src, user) > 1 || user.restrained() || user.lying || user.stat || M.buckled || istype(user, /mob/living/silicon))
 		return
 
-	unbuckle()
+	unbuckle_mob()
 
 	M.visible_message(\
 		"<span class='notice'>[M] climbs onto the [callme]!</span>",\
 		"<span class='notice'>You climb onto the [callme]!</span>")
+
 	M.buckled = src
 	M.loc = loc
 	M.dir = dir
@@ -267,7 +268,7 @@
 	update_mob()
 	add_fingerprint(user)
 
-/obj/structure/stool/bed/chair/janicart/unbuckle()
+/obj/structure/stool/bed/chair/janicart/unbuckle_mob()
 	if(buckled_mob)
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0

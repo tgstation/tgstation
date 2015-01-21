@@ -226,9 +226,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	pai.real_name = pai.name
 	pai.key = choice.key
 	card.setPersonality(pai)
-	for(var/datum/paiCandidate/candidate in paiController.pai_candidates)
+	for(var/datum/paiCandidate/candidate in SSpai.candidates)
 		if(candidate.key == choice.key)
-			paiController.pai_candidates.Remove(candidate)
+			SSpai.candidates.Remove(candidate)
 	feedback_add_details("admin_verb","MPAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_alienize(var/mob/M in mob_list)
@@ -796,7 +796,7 @@ var/global/list/g_fancy_list_of_types = null
 				qdel(briefcase_item)
 			for(var/i=3, i>0, i--)
 				sec_briefcase.contents += new /obj/item/weapon/spacecash/c1000
-			sec_briefcase.contents += new /obj/item/weapon/gun/projectile/automatic/crossbow
+			sec_briefcase.contents += new /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
 			sec_briefcase.contents += new /obj/item/weapon/gun/projectile/revolver/mateba
 			sec_briefcase.contents += new /obj/item/ammo_box/a357
 			sec_briefcase.contents += new /obj/item/weapon/c4
@@ -818,6 +818,9 @@ var/global/list/g_fancy_list_of_types = null
 // DEATH SQUADS
 		if("death commando")
 			equip_deathsquad(M)
+
+		if("emergency response officer")
+			equip_emergencyresponsesquad(M)
 
 		if("centcom official")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
@@ -1054,6 +1057,7 @@ var/global/list/g_fancy_list_of_types = null
 
 	usr << browse(dat, "window=dellog")
 
+//Deathsquad
 /proc/equip_deathsquad(var/mob/living/carbon/human/M, var/officer)
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(M)
 	R.set_frequency(1441)
@@ -1101,3 +1105,25 @@ var/global/list/g_fancy_list_of_types = null
 	W.registered_name = M.real_name
 	W.update_label(M.real_name)
 	M.equip_to_slot_or_del(W, slot_wear_id)
+
+//Emergency Response Team
+/proc/equip_emergencyresponsesquad(var/mob/living/carbon/human/M, var/officer)
+	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(M)
+	R.set_frequency(1441)
+	M.equip_to_slot_or_del(R, slot_ears)
+
+	if(officer)
+		M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
+		M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
+		M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
+		M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(M), slot_back)
+		M.equip_to_slot_or_del(new /obj/item/weapon/card/id/ertsCommand(M), slot_wear_id)
+	else
+		M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
+		M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
+		M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
+
+	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(M)
+	L.imp_in = M
+	L.implanted = 1
+	M.sec_hud_set_implants()

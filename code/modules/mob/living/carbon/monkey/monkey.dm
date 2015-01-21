@@ -36,7 +36,7 @@
 /mob/living/carbon/monkey/movement_delay()
 	var/tally = 0
 	if(reagents)
-		if(reagents.has_reagent("hyperzine")) return -1
+		if(reagents.has_reagent("morphine")) return -1
 
 		if(reagents.has_reagent("nuka_cola")) return -1
 

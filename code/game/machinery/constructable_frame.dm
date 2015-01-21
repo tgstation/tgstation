@@ -382,6 +382,15 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/weapon/stock_parts/cell = 1)
 
+/obj/item/weapon/circuitboard/chem_heater
+	name = "circuit board (Chemical Heater)"
+	build_path = /obj/machinery/chem_heater
+	board_type = "machine"
+	origin_tech = "materials=2;engineering=2"
+	req_components = list(
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1)
+
 //Almost the same recipe as destructive analyzer to give people choices.
 /obj/item/weapon/circuitboard/experimentor
 	name = "circuit board (E.X.P.E.R.I-MENTOR)"

@@ -528,33 +528,18 @@ var/global/list/RPD_recipes=list(
 			user << "<span class='notice'>Building Pipes...</span>"
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 20))
+				var/obj/structure/disposalconstruct/C = new (A,p_type+1)
+
+				if(!C.can_place())
+					user << "<span class='warning'>There's not enough room to build that here!</span>"
+					qdel(C)
+					return 0
+
 				activate()
-				var/obj/structure/disposalconstruct/C = new (A)
 				// This may still produce runtimes, but I checked and /obj/structure/disposalconstruct
 				//  DOES have a dir property, inherited from /obj/structure. - N3X
 				C.dir=p_dir
-				switch(p_type)
-					if(0)
-						C.ptype = 0
-					if(1)
-						C.ptype = 1
-					if(2)
-						C.ptype = 2
-					if(3)
-						C.ptype = 4
-					if(4)
-						C.ptype = 5
-					if(5)
-						C.ptype = 6
-						C.density = 1
-					if(6)
-						C.ptype = 7
-						C.density = 1
-					if(7)
-						C.ptype = 8
-						C.density = 1
-					if(8)
-						C.ptype = 9
+
 				C.add_fingerprint(usr)
 				C.update()
 				return 1

@@ -96,7 +96,7 @@
 		/obj/item/weapon/melee/classic_baton/telescopic
 		)
 
-/obj/item/weapon/storage/belt/security/New()
+/obj/item/weapon/storage/belt/security/full/New()
 	..()
 	new /obj/item/device/flashlight/seclite(src)
 
@@ -183,4 +183,15 @@
 	storage_slots = 6
 	can_hold = list(
 		/obj/item/ammo_casing/shotgun
+		)
+
+/obj/item/weapon/storage/belt/holster
+	name = "shoulder holster"
+	desc = "A holster to conceal a carried handgun. WARNING: Badasses only."
+	icon_state = "holster"
+	item_state = "bandolier"
+	storage_slots = 1
+	can_hold = list(
+		/obj/item/weapon/gun/projectile/automatic/pistol,
+		/obj/item/weapon/gun/projectile/revolver/detective
 		)

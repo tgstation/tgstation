@@ -26,25 +26,27 @@ datum/reagent/histamine
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	metabolization_rate = 0.2
+	overdose_threshold = 30
 
 datum/reagent/histamine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	if(volume >= 20)
-		M.adjustOxyLoss(pick(5,10)*REM)
-		M.adjustBruteLoss(pick(5,10)*REM)
-		M.adjustToxLoss(pick(5,10)*REM)
-	if(volume < 20)
-		switch(pick(1, 2, 3))
-			if(1)
-				M << "<span class='danger'>You are unable to look straight!</span>"
-				M.Dizzy(10)
-			if(2)
-				M.emote("cough")
-				var/obj/item/I = M.get_active_hand()
-				if(I)
-					M.drop_item()
-			if(3)
-				M.adjustBruteLoss(5*REM)
+	switch(pick(1, 2, 3))
+		if(1)
+			M << "<span class='danger'>You are unable to look straight!</span>"
+			M.Dizzy(10)
+		if(2)
+			M.emote("cough")
+			var/obj/item/I = M.get_active_hand()
+			if(I)
+				M.drop_item()
+		if(3)
+			M.adjustBruteLoss(1*REM)
+	..()
+	return
+datum/reagent/histamine/overdose_process(var/mob/living/M as mob)
+	M.adjustOxyLoss(pick(2,5)*REM)
+	M.adjustBruteLoss(pick(2,5)*REM)
+	M.adjustToxLoss(pick(2,5)*REM)
 	..()
 	return
 
@@ -101,7 +103,7 @@ datum/reagent/neurotoxin2
 datum/reagent/neurotoxin2/on_mob_life(var/mob/living/M as mob)
 	cycle_count++
 	if(!M) M = holder.my_atom
-	if(!(M.brainloss + M.toxloss) >= 60)
+	if(M.brainloss + M.toxloss <= 60)
 		M.adjustBrainLoss(1*REM)
 		M.adjustToxLoss(1*REM)
 	if(cycle_count == 17)
@@ -132,7 +134,7 @@ datum/reagent/cyanide/on_mob_life(var/mob/living/M as mob)
 		M.adjustOxyLoss(1*REM)
 	if(prob(8))
 		M.sleeping += 1
-		M.adjustToxLoss(4*REM)
+		M.adjustToxLoss(2*REM)
 	..()
 	return
 
@@ -157,3 +159,40 @@ datum/reagent/questionmark/on_mob_life(var/mob/living/M as mob)
 	M.adjustToxLoss(1*REM)
 	..()
 	return
+
+datum/reagent/itching_powder
+	name = "Itching Powder"
+	id = "itching_powder"
+	description = "Lots of annoying random effects, chances to do BRUTE damage from scratching. 6% chance to decay into 1-3 units of histamine."
+	reagent_state = LIQUID
+	color = "#CF3600" // rgb: 207, 54, 0
+	metabolization_rate = 0.3
+
+/datum/reagent/itching_powder/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+	if(method == TOUCH)
+		M.reagents.add_reagent("itching_powder", volume)
+		return
+
+datum/reagent/itching_powder/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	if(prob(rand(5,50)))
+		M << "You scratch at your head."
+		M.adjustBruteLoss(0.2*REM)
+	if(prob(rand(5,50)))
+		M << "You scratch at your leg."
+		M.adjustBruteLoss(0.2*REM)
+	if(prob(rand(5,50)))
+		M << "You scratch at your arm."
+		M.adjustBruteLoss(0.2*REM)
+	if(prob(6))
+		M.reagents.add_reagent("histamine",rand(1,3))
+		M.reagents.remove_reagent("itching_powder",1)
+	..()
+	return
+
+/datum/chemical_reaction/itching_powder
+	name = "Itching Powder"
+	id = "itching_powder"
+	result = "itching_powder"
+	required_reagents = list("fuel" = 1, "ammonia" = 1)
+	result_amount = 2
