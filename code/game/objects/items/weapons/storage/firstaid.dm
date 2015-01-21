@@ -29,13 +29,13 @@
 
 	icon_state = pick("ointment","firefirstaid")
 
-	new /obj/item/device/healthanalyzer(src)
+	new /obj/item/stack/medical/ointment(src)
+	new /obj/item/stack/medical/ointment(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
-	new /obj/item/stack/medical/ointment(src)
-	new /obj/item/stack/medical/ointment(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
+	new /obj/item/weapon/reagent_containers/pill/salicyclic(src)
+	new /obj/item/device/healthanalyzer(src)
 	return
 
 
@@ -46,12 +46,12 @@
 	..()
 	if (empty) return
 	new /obj/item/stack/medical/gauze(src)
-	new /obj/item/stack/medical/ointment(src)
-	new /obj/item/stack/medical/ointment(src)
 	new /obj/item/stack/medical/bruise_pack(src)
 	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/device/healthanalyzer(src)
+	new /obj/item/stack/medical/ointment(src)
+	new /obj/item/stack/medical/ointment(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
+	new /obj/item/device/healthanalyzer(src)
 	return
 
 /obj/item/weapon/storage/firstaid/toxin
@@ -84,13 +84,31 @@
 /obj/item/weapon/storage/firstaid/o2/New()
 	..()
 	if (empty) return
-	new /obj/item/weapon/reagent_containers/pill/salbutamol( src )
-	new /obj/item/weapon/reagent_containers/pill/salbutamol( src )
-	new /obj/item/weapon/reagent_containers/pill/salbutamol( src )
-	new /obj/item/weapon/reagent_containers/pill/salbutamol( src )
-	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
-	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
+	new /obj/item/weapon/reagent_containers/pill/salbutamol(src)
+	new /obj/item/weapon/reagent_containers/pill/salbutamol(src)
+	new /obj/item/weapon/reagent_containers/pill/salbutamol(src)
+	new /obj/item/weapon/reagent_containers/pill/salbutamol(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	new /obj/item/device/healthanalyzer( src )
+	return
+
+/obj/item/weapon/storage/firstaid/brute
+	name = "brute first aid"
+	desc = "A first aid kit for when you get toolboxed."
+	icon_state = "brute"
+	item_state = "firstaid-brute"
+
+/obj/item/weapon/storage/firstaid/brute/New()
+	..()
+	if (empty) return
+	new /obj/item/stack/medical/gauze(src)
+	new /obj/item/stack/medical/gauze(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
+	new /obj/item/device/healthanalyzer( src )
+	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+	new /obj/item/stack/medical/bruise_pack(src)
 	return
 
 /obj/item/weapon/storage/firstaid/tactical
@@ -102,16 +120,13 @@
 /obj/item/weapon/storage/firstaid/tactical/New()
 	..()
 	if (empty) return
-	new /obj/item/stack/medical/gauze(src)
-	new /obj/item/stack/medical/gauze(src)
-	new /obj/item/stack/medical/ointment(src)
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/device/healthanalyzer(src)
-	new /obj/item/weapon/surgicaldrill(src)
-	new /obj/item/weapon/reagent_containers/hypospray/combat(src)
-	new /obj/item/weapon/reagent_containers/syringe/lethal/choral(src)
-	new /obj/item/clothing/glasses/hud/health/night(src)
+	new /obj/item/stack/medical/gauze( src )
+	new /obj/item/stack/medical/gauze( src )
+	new /obj/item/weapon/reagent_containers/hypospray/combat( src )
+	new /obj/item/weapon/reagent_containers/pill/patch/styptic( src )
+	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf( src )
+	new /obj/item/weapon/reagent_containers/syringe/lethal/choral( src )
+	new /obj/item/clothing/glasses/hud/health/night( src )
 	return
 
 
@@ -194,6 +209,34 @@
 	new /obj/item/weapon/reagent_containers/pill/epinephrine( src )
 	new /obj/item/weapon/reagent_containers/pill/epinephrine( src )
 	new /obj/item/weapon/reagent_containers/pill/epinephrine( src )
+
+/obj/item/weapon/storage/pill_bottle/mutadone
+	name = "bottle of mutadone pills"
+	desc = "Contains pills used to treat genetic abnormalities."
+
+/obj/item/weapon/storage/pill_bottle/mutadone/New()
+	..()
+	new /obj/item/weapon/reagent_containers/pill/mutadone(src)
+	new /obj/item/weapon/reagent_containers/pill/mutadone(src)
+	new /obj/item/weapon/reagent_containers/pill/mutadone(src)
+	new /obj/item/weapon/reagent_containers/pill/mutadone(src)
+	new /obj/item/weapon/reagent_containers/pill/mutadone(src)
+	new /obj/item/weapon/reagent_containers/pill/mutadone(src)
+	new /obj/item/weapon/reagent_containers/pill/mutadone(src)
+
+/obj/item/weapon/storage/pill_bottle/mannitol
+	name = "bottle of mannitol pills"
+	desc = "Contains pills used to treat brain damage."
+
+/obj/item/weapon/storage/pill_bottle/mannitol/New()
+	..()
+	new /obj/item/weapon/reagent_containers/pill/mannitol(src)
+	new /obj/item/weapon/reagent_containers/pill/mannitol(src)
+	new /obj/item/weapon/reagent_containers/pill/mannitol(src)
+	new /obj/item/weapon/reagent_containers/pill/mannitol(src)
+	new /obj/item/weapon/reagent_containers/pill/mannitol(src)
+	new /obj/item/weapon/reagent_containers/pill/mannitol(src)
+	new /obj/item/weapon/reagent_containers/pill/mannitol(src)
 
 /obj/item/weapon/storage/pill_bottle/stimulant
 	name = "bottle of stimulant pills"

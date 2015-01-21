@@ -5,6 +5,7 @@
 	m_amt = 800
 	g_amt = 200
 	origin_tech = "magnets=1"
+	attachable = 1
 
 	var/scanning = 0
 	var/timing = 0

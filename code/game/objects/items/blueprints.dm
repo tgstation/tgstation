@@ -158,6 +158,8 @@
 	move_turfs_to_area(turfs, A)
 	A.SetDynamicLighting()
 
+	A.addSorted()
+
 	interact()
 	return
 

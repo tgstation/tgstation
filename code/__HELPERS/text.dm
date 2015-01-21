@@ -78,6 +78,11 @@
 	var/name = input(user, message, title, default) as text|null
 	return strip_html_properly(name, max_length)
 
+// Used to get a properly sanitized multiline input, of max_length
+/proc/stripped_multiline_input(var/mob/user, var/message = "", var/title = "", var/default = "", var/max_length=MAX_MESSAGE_LEN)
+	var/name = input(user, message, title, default) as message|null
+	return strip_html_properly(name, max_length)
+
 //Filters out undesirable characters from names
 /proc/reject_bad_name(var/t_in, var/allow_numbers=0, var/max_length=MAX_NAME_LEN)
 	if(!t_in || length(t_in) > max_length)

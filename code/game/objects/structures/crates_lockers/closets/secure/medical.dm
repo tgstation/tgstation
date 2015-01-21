@@ -1,6 +1,6 @@
 /obj/structure/closet/secure_closet/medical1
 	name = "medicine closet"
-	desc = "Filled with medical junk."
+	desc = "Filled to the brim with medical junk."
 	icon_state = "medical1"
 	icon_closed = "medical"
 	icon_locked = "medical1"
@@ -12,15 +12,22 @@
 
 /obj/structure/closet/secure_closet/medical1/New()
 	..()
+	new /obj/item/weapon/reagent_containers/glass/beaker(src)
+	new /obj/item/weapon/reagent_containers/glass/beaker(src)
+	new /obj/item/weapon/reagent_containers/dropper(src)
+	new /obj/item/weapon/reagent_containers/dropper(src)
+	new /obj/item/weapon/storage/belt/medical(src)
 	new /obj/item/weapon/storage/box/syringes(src)
-	new /obj/item/weapon/reagent_containers/dropper(src)
-	new /obj/item/weapon/reagent_containers/dropper(src)
-	new /obj/item/weapon/reagent_containers/glass/beaker(src)
-	new /obj/item/weapon/reagent_containers/glass/beaker(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/toxin(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/morphine(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/morphine(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/epinephrine(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/epinephrine(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/epinephrine(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/charcoal(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/charcoal(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/charcoal(src)
+	new /obj/item/weapon/storage/box/rxglasses(src)
 	return
 
 
