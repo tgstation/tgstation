@@ -158,19 +158,28 @@ GATEWAY_DELAY 18000
 
 
 ### ACCESS ###
+
+## If the number of players ready at round starts exceeds this threshold, JOBS_HAVE_MINIMAL_ACCESS will automatically toggle on.
+## If the number of players does not reach this threshold, expanded access will be used.
+## Set to 0 to disable this automatic toggle.
+MINIMAL_ACCESS_THRESHOLD 20
+
 ## Comment this out if you wish to use the setup where jobs have more access.
 ## This is intended for servers with low populations - where there are not enough
 ## players to fill all roles, so players need to do more than just one job.
-## Also for servers where they don't want people to hide in their own departments.
+## This option is ignored if MINIMAL_ACCESS_THRESHOLD is non-zero.
 #JOBS_HAVE_MINIMAL_ACCESS
 
 ## Uncomment to give assistants maint access.
+## This option is ignored if MINIMAL_ACCESS_THRESHOLD is non-zero.
 #ASSISTANTS_HAVE_MAINT_ACCESS
 
 ## Uncoment to give security maint access. Note that if you comment JOBS_HAVE_MINIMAL_ACCESS security already gets maint from that.
+## This option is ignored if MINIMAL_ACCESS_THRESHOLD is non-zero.
 #SECURITY_HAS_MAINT_ACCESS
 
 ## Uncomment to give everyone maint access.
+## This option is ignored if MINIMAL_ACCESS_THRESHOLD is non-zero.
 #EVERYONE_HAS_MAINT_ACCESS
 
 ## Comment this to make security officers spawn in departmental security posts
