@@ -125,7 +125,7 @@
 
 /client/proc/vampire_disease()
 	set category = "Vampire"
-	set name = "Diseased Touch"
+	set name = "Diseased Touch (50)"
 	set desc = "Touches your victim with infected blood giving them the Shutdown Syndrome which quickly shutsdown their major organs resulting in a quick painful death."
 	var/datum/mind/M = usr.mind
 	if(!M) return
@@ -192,7 +192,7 @@
 /client/proc/vampire_shapeshift()
 	set category = "Vampire"
 	set name = "Shapeshift"
-	set desc = "Changes your name and appearance at the cost of 50 blood and has a cooldown of 3 minutes."
+	set desc = "Changes your name and appearance and has a cooldown of 3 minutes."
 	var/datum/mind/M = usr.mind
 	if(!M) return
 	if(M.current.vampire_power(0, 0))
@@ -206,11 +206,11 @@
 
 /client/proc/vampire_screech()
 	set category = "Vampire"
-	set name = "Chiroptean Screech"
+	set name = "Chiroptean Screech (10)"
 	set desc = "An extremely loud shriek that stuns nearby humans and breaks windows as well."
 	var/datum/mind/M = usr.mind
 	if(!M) return
-	if(M.current.vampire_power(0, 0))
+	if(M.current.vampire_power(10, 0))
 		M.current.visible_message("\red [M.current.name] lets out an ear piercing shriek!", "\red You let out a loud shriek.", "\red You hear a loud painful shriek!")
 		for(var/mob/living/carbon/C in hearers(4, M.current))
 			if(C == M.current) continue
@@ -329,7 +329,7 @@
 
 /client/proc/vampire_bats()
 	set category = "Vampire"
-	set name = "Summon Bats"
+	set name = "Summon Bats (75)"
 	set desc = "You summon a pair of space bats who attack nearby targets until they or their target is dead."
 	var/datum/mind/M = usr.mind
 	if(!M) return
