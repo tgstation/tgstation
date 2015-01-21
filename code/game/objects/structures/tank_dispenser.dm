@@ -31,8 +31,13 @@
 		if(1 to 4)	overlays += "plasma-[plasmatanks]"
 		if(5 to INFINITY) overlays += "plasma-5"
 
+/obj/structure/dispenser/attack_paw(mob/user as mob)
+	return src.attack_hand(user)
 
 /obj/structure/dispenser/attack_hand(mob/user as mob)
+	if(!user.IsAdvancedToolUser())
+		user << "<span class='danger'>You don't have the dexterity to do this!</span>"
+		return 1
 	user.set_machine(src)
 	var/dat = "[src]<br><br>"
 	dat += "Oxygen tanks: [oxygentanks] - [oxygentanks ? "<A href='?src=\ref[src];oxygen=1'>Dispense</A>" : "empty"]<br>"
