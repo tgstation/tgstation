@@ -4,19 +4,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 /obj/item/weapon/reagent_containers/glass
 	name = "glass"
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "null"
-	item_state = "null"
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10, 15, 25, 30, 50)
 	volume = 50
 	flags = OPENCONTAINER
 
-	var/list/can_be_placed_into = list(
+	can_be_placed_into = list(
 		/obj/machinery/chem_master/,
 		/obj/machinery/chem_dispenser/,
+		/obj/machinery/chem_heater/,
 		/obj/machinery/reagentgrinder,
+		/obj/machinery/biogenerator,
 		/obj/structure/table,
+		/obj/structure/rack,
 		/obj/structure/closet,
 		/obj/structure/sink,
 		/obj/item/weapon/storage,
@@ -35,10 +35,7 @@
 
 
 /obj/item/weapon/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
-	if(!proximity) return // not adjacent
-	for(var/type in can_be_placed_into)
-		if(istype(target, type))
-			return
+	if((!proximity) || !check_allowed_items(target)) return
 
 	if(ismob(target) && target.reagents && reagents.total_volume)
 		var/mob/M = target
@@ -184,6 +181,34 @@
 	New()
 		..()
 		reagents.add_reagent("slimejelly", 50)
+		update_icon()
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/styptic
+	name = "styptic reserve tank"
+	New()
+		..()
+		reagents.add_reagent("styptic_powder", 100)
+		update_icon()
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/silver_sulfadiazine
+	name = "silver sulfadiazine reserve tank"
+	New()
+		..()
+		reagents.add_reagent("silver_sulfadiazine", 100)
+		update_icon()
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/charcoal
+	name = "antitoxin reserve tank"
+	New()
+		..()
+		reagents.add_reagent("charcoal", 100)
+		update_icon()
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/epinephrine
+	name = "epinephrine reserve tank"
+	New()
+		..()
+		reagents.add_reagent("epinephrine", 100)
 		update_icon()
 
 /obj/item/weapon/reagent_containers/glass/bucket

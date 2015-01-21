@@ -258,3 +258,47 @@
 	ex_heavy = -1
 	ex_light = 2
 	ex_flash = 5
+
+/obj/effect/proc_holder/spell/aoe_turf/repulse
+	name = "Repulse"
+	desc = "This spell throws everything around the user away."
+	charge_max = 400
+	clothes_req = 1
+	invocation = "GITTAH WEIGH"
+	invocation_type = "shout"
+	range = 5
+	cooldown_min = 150
+	selection_type = "view"
+	var/maxthrow = 5
+
+/obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets)
+	var/mob/user = usr
+	var/list/thrownatoms = list()
+	var/atom/throwtarget
+	var/distfromcaster
+	for(var/turf/T in targets) //Done this way so things don't get thrown all around hilariously.
+		for(var/atom/movable/AM in T)
+			thrownatoms += AM
+	
+	for(var/atom/movable/AM in thrownatoms)
+		if(AM == user || AM.anchored) continue
+	
+		var/obj/effect/overlay/targeteffect	= new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density = 0}()
+		AM.overlays += targeteffect
+		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
+		distfromcaster = get_dist(user, AM)
+		spawn(10)
+			AM.overlays -= targeteffect
+			qdel(targeteffect)
+		if(distfromcaster == 0)
+			if(istype(AM, /mob/living))
+				var/mob/living/M = AM
+				M.Weaken(5)
+				M.adjustBruteLoss(5)
+				M << "<span class='userdanger'>You're slammed into the floor by a mystical force!</span>"
+		else
+			if(istype(AM, /mob/living))
+				var/mob/living/M = AM
+				M.Weaken(2)
+				M << "<span class='userdanger'>You're thrown back by a mystical force!</span>"
+			spawn(0) AM.throw_at(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1)//So stuff gets tossed around at the same time.

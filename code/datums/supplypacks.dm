@@ -288,7 +288,10 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	name = "Combat Shotguns Crate"
 	contains = list(/obj/item/weapon/gun/projectile/shotgun/combat,
 					/obj/item/weapon/gun/projectile/shotgun/combat,
-					/obj/item/weapon/gun/projectile/shotgun/combat)
+					/obj/item/weapon/gun/projectile/shotgun/combat,
+					/obj/item/weapon/storage/belt/bandolier,
+					/obj/item/weapon/storage/belt/bandolier,
+					/obj/item/weapon/storage/belt/bandolier)
 	cost = 20
 	containername = "combat shotgun crate"
 
@@ -348,6 +351,13 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/machinery/deployable/barrier)
 	cost = 20
 	containername = "security barriers crate"
+
+/datum/supply_packs/security/firingpins
+	name = "Standard Firing Pins Crate"
+	contains = list(/obj/item/weapon/storage/box/firingpins,
+					/obj/item/weapon/storage/box/firingpins)
+	cost = 10
+	containername = "firing pins crate"
 
 /datum/supply_packs/security/securityclothes
 	name = "Security Clothing Crate"
@@ -520,12 +530,16 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/medical/supplies
 	name = "Medical Supplies Crate"
-	contains = list(/obj/item/weapon/reagent_containers/glass/bottle/antitoxin,
-					/obj/item/weapon/reagent_containers/glass/bottle/antitoxin,
-					/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline,
-					/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline,
-					/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
-					/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
+	contains = list(/obj/item/weapon/reagent_containers/glass/bottle/charcoal,
+					/obj/item/weapon/reagent_containers/glass/bottle/charcoal,
+					/obj/item/weapon/reagent_containers/glass/bottle/epinephrine,
+					/obj/item/weapon/reagent_containers/glass/bottle/epinephrine,
+					/obj/item/weapon/reagent_containers/glass/bottle/morphine,
+					/obj/item/weapon/reagent_containers/glass/bottle/morphine,
+					/obj/item/weapon/reagent_containers/glass/bottle/morphine,
+					/obj/item/weapon/reagent_containers/glass/bottle/morphine,
+					/obj/item/weapon/reagent_containers/glass/bottle/morphine,
+					/obj/item/weapon/reagent_containers/glass/bottle/morphine,
 					/obj/item/weapon/reagent_containers/glass/bottle/toxin,
 					/obj/item/weapon/reagent_containers/glass/bottle/toxin,
 					/obj/item/weapon/reagent_containers/glass/beaker/large,
@@ -765,6 +779,12 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 50
 	containertype = /obj/structure/closet/critter/pug
 	containername = "pug crate"
+
+/datum/supply_packs/organic/fox
+	name = "Fox Crate"
+	cost = 55 //Foxes are cool.
+	containertype = /obj/structure/closet/critter/fox
+	containername = "fox crate"
 
 ////// hippy gear
 

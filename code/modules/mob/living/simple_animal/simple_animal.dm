@@ -109,6 +109,8 @@
 	if(paralysis)
 		AdjustParalysis(-1)
 
+	adjustEarDamage((ear_damage < 25 ? -0.05 : 0), -1)
+
 	//Movement
 	if(!client && !stop_automated_movement && wander)
 		if(isturf(src.loc) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
@@ -378,8 +380,8 @@
 /mob/living/simple_animal/Stat()
 	..()
 
-	statpanel("Status")
-	stat(null, "Health: [round((health / maxHealth) * 100)]%")
+	if(statpanel("Status"))
+		stat(null, "Health: [round((health / maxHealth) * 100)]%")
 
 /mob/living/simple_animal/proc/Die()
 	health = 0 // so /mob/living/simple_animal/Life() doesn't magically revive them

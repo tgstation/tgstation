@@ -117,13 +117,19 @@
 	toner = 40
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
-//Improved /N
 /mob/living/silicon/robot/Destroy()
 	if(mmi && mind)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 		if(T)	mmi.loc = T
-		mind.transfer_to(mmi.brainmob)
+		if(mmi.brainmob)
+			mind.transfer_to(mmi.brainmob)
+		else
+			src << "<span class='userdanger'>Oops! Something went very wrong, your MMI was unable to receive your mind. You have been ghosted. Please make a bug report so we can fix this bug.</span>"
+			ghostize()
+			ERROR("A borg has been destroyed, but its MMI lacked a brainmob, so the mind could not be transferred. Player: [ckey].")
 		mmi = null
+	if(connected_ai)
+		connected_ai.connected_robots -= src
 	..()
 
 
@@ -289,19 +295,7 @@
 
 /mob/living/silicon/robot/Stat()
 	..()
-	statpanel("Status")
-	if (client.statpanel == "Status")
-		var/ETA
-		switch(SSshuttle.emergency.mode)
-			if(SHUTTLE_CALL)
-				ETA = "ETA"
-			if(SHUTTLE_DOCKED)
-				ETA = "ETD"
-		if(ETA)
-			var/timeleft = SSshuttle.emergency.timeLeft()
-			stat(null, "[ETA]-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
-
-
+	if(statpanel("Status"))
 		if(ticker.mode.name == "AI malfunction")
 			var/datum/game_mode/malfunction/malf = ticker.mode
 			for (var/datum/mind/malfai in malf.malf_ai)
@@ -316,6 +310,7 @@
 		else
 			stat(null, text("No Cell Inserted!"))
 
+		stat(null, "Station Time: [worldtime2text()]")
 		if(module)
 			internal = locate(/obj/item/weapon/tank/jetpack) in module.modules
 			if(internal)
@@ -323,6 +318,8 @@
 				stat("Tank Pressure", internal.air_contents.return_pressure())
 			for (var/datum/robot_energy_storage/st in module.storages)
 				stat("[st.name]: [st.energy]/[st.max_energy]")
+		if(connected_ai)
+			stat(null, text("Master AI: [connected_ai.name]"))
 
 /mob/living/silicon/robot/restrained()
 	return 0

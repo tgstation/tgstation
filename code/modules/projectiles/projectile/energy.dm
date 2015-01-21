@@ -4,18 +4,18 @@
 	damage = 0
 	damage_type = BURN
 	flag = "energy"
-	color = "#FFFF00"
 
 
 /obj/item/projectile/energy/electrode
 	name = "electrode"
 	icon_state = "spark"
+	color = "#FFFF00"
 	nodamage = 1
 	stun = 5
 	weaken = 5
 	stutter = 5
 	jitter = 20
-	hitsound = "sparks"
+	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 7
 
 /obj/item/projectile/energy/electrode/on_hit(var/atom/target, var/blocked = 0)
@@ -59,8 +59,7 @@
 	nodamage = 0
 	weaken = 5
 	stutter = 5
-	range = 10
+	range = 7
 
 /obj/item/projectile/energy/bolt/large
-	name = "largebolt"
 	damage = 20

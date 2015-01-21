@@ -410,6 +410,12 @@
 						"<span class='userdanger'>[M] punches [src], but doesn't leave a dent.!</span>")
 	return 0
 
+/mob/living/silicon/adjustEarDamage()
+	return
+
+/mob/living/silicon/setEarDamage()
+	return
+
 /mob/living/silicon/proc/GetPhoto()
 	if (aicamera)
 		return aicamera.selectpicture(aicamera)

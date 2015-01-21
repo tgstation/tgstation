@@ -1,4 +1,4 @@
-/client/proc/Jump(var/area/A in return_sorted_areas())
+/client/proc/Jump(area/A in returnSortedAreas())
 	set name = "Jump to Area"
 	set desc = "Area to jump to"
 	set category = "Admin"
@@ -6,7 +6,21 @@
 		src << "Only administrators may use this command."
 		return
 
-	usr.loc = pick(get_area_turfs(A))
+	if(!A)
+		return
+
+	var/list/turfs = list()
+	for(var/area/Ar in A.related)
+		for(var/turf/T in Ar)
+			if(T.density)
+				continue
+			turfs.Add(T)
+
+	var/turf/T = pick_n_take(turfs)
+	if(!T)
+		src << "Nowhere to jump to!"
+		return
+	usr.loc = T
 	log_admin("[key_name(usr)] jumped to [A]")
 	message_admins("[key_name_admin(usr)] jumped to [A]")
 	feedback_add_details("admin_verb","JA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -124,7 +138,7 @@
 	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
-	var/area/A = input(usr, "Pick an area.", "Pick an area") in return_sorted_areas()
+	var/area/A = input(usr, "Pick an area.", "Pick an area") in returnSortedAreas()
 	if(A)
 		M.loc = pick(get_area_turfs(A))
 		feedback_add_details("admin_verb","SMOB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

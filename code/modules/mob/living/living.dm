@@ -277,9 +277,6 @@ Sorry Giacom. Please don't be mad :(
 
 // MOB PROCS //END
 
-
-/mob/proc/get_contents()
-
 /mob/living/proc/mob_sleep()
 	set name = "Sleep"
 	set category = "IC"
@@ -291,6 +288,7 @@ Sorry Giacom. Please don't be mad :(
 		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
 			usr.sleeping = 20 //Short nap
 
+/mob/proc/get_contents()
 
 /mob/living/proc/lay_down()
 	set name = "Rest"
@@ -343,6 +341,17 @@ Sorry Giacom. Please don't be mad :(
 	var/obj/item/organ/limb/def_zone = ran_zone(t)
 	return def_zone
 
+//damage/heal the mob ears and adjust the deaf amount
+/mob/living/adjustEarDamage(var/damage, var/deaf)
+	ear_damage = max(0, ear_damage + damage)
+	ear_deaf = max(0, ear_deaf + deaf)
+
+//pass a negative argument to skip one of the variable
+/mob/living/setEarDamage(var/damage, var/deaf)
+	if(damage >= 0)
+		ear_damage = damage
+	if(deaf >= 0)
+		ear_deaf = deaf
 
 // heal ONE external organ, organ gets randomly selected from damaged ones.
 /mob/living/proc/heal_organ_damage(var/brute, var/burn)
@@ -579,6 +588,8 @@ Sorry Giacom. Please don't be mad :(
 				if(C.handcuffed)
 					C.handcuffed.loc = C.loc
 					C.handcuffed = null
+					if(C.buckled && C.buckled.buckle_requires_restraints)
+						C.buckled.unbuckle_mob()
 					C.update_inv_handcuffed(0)
 					return
 				if(C.legcuffed)
@@ -637,13 +648,13 @@ Sorry Giacom. Please don't be mad :(
 							return
 						C.visible_message("<span class='danger'>[C] manages to unbuckle themself!</span>", \
 											"<span class='notice'>You successfully unbuckle yourself.</span>")
-						C.buckled.manual_unbuckle(C)
+						C.buckled.user_unbuckle_mob(C,C)
 					else
 						C << "<span class='warning'>You fail to unbuckle yourself!</span>"
 			else
-				L.buckled.manual_unbuckle(L)
+				L.buckled.user_unbuckle_mob(L,L)
 		else
-			L.buckled.manual_unbuckle(L)
+			L.buckled.user_unbuckle_mob(L,L)
 
 	//Breaking out of a container (Locker, sleeper, cryo...)
 	else if(loc && istype(loc, /obj) && !isturf(loc))

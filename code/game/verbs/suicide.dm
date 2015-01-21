@@ -169,6 +169,20 @@
 
 		updatehealth()
 
+/mob/living/simple_animal/verb/suicide()
+	set hidden = 1
+	if(!canSuicide())
+		return
+	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
+	if(!canSuicide())
+		return
+	if(confirm == "Yes")
+		suiciding = 1
+		visible_message("<span class='danger'>[src] begins to fall down. It looks like \he's lost the will to live.</span>", \
+						"<span class='userdanger'>[src] begins to fall down. It looks like \he's lost the will to live.</span>")
+		death(0)
+
+
 /mob/living/proc/canSuicide()
 	if(stat == CONSCIOUS)
 		return 1

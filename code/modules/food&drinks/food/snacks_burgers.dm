@@ -84,7 +84,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/brain/New()
 	..()
-	reagents.add_reagent("alkysine", 6)
+	reagents.add_reagent("mannitol", 6)
 	reagents.add_reagent("vitamin", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/ghost

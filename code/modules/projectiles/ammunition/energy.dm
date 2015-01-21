@@ -18,7 +18,7 @@
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/laser/practice
-	projectile_type = /obj/item/projectile/practice
+	projectile_type = /obj/item/projectile/beam/practice
 	select_name = "practice"
 
 /obj/item/ammo_casing/energy/laser/scatter
@@ -38,6 +38,24 @@
 	select_name = "DESTROY"
 	fire_sound = 'sound/weapons/pulse.ogg'
 
+/obj/item/ammo_casing/energy/laser/pulse/carbine
+	e_cost = 1000
+
+/obj/item/ammo_casing/energy/laser/carbine
+	e_cost = 1000
+
+/obj/item/ammo_casing/energy/electrode/carbine
+	e_cost = 1000
+
+/obj/item/ammo_casing/energy/laser/pulse/pistol
+	e_cost = 2000
+
+/obj/item/ammo_casing/energy/laser/pistol
+	e_cost = 1000
+
+/obj/item/ammo_casing/energy/electrode/pistol
+	e_cost = 1000
+
 /obj/item/ammo_casing/energy/laser/bluetag
 	projectile_type = /obj/item/projectile/lasertag/bluetag
 	select_name = "bluetag"
@@ -45,15 +63,6 @@
 /obj/item/ammo_casing/energy/laser/redtag
 	projectile_type = /obj/item/projectile/lasertag/redtag
 	select_name = "redtag"
-
-/obj/item/ammo_casing/energy/bolt
-	projectile_type = /obj/item/projectile/energy/bolt
-	select_name = "bolt"
-	fire_sound = 'sound/weapons/Genhit.ogg'
-
-/obj/item/ammo_casing/energy/bolt/large
-	projectile_type = /obj/item/projectile/energy/bolt/large
-	select_name = "heavy bolt"
 
 /obj/item/ammo_casing/energy/xray
 	projectile_type = /obj/item/projectile/beam/xray
@@ -64,9 +73,11 @@
 	projectile_type = /obj/item/projectile/energy/electrode
 	select_name = "stun"
 	fire_sound = 'sound/weapons/taser.ogg'
+	e_cost = 200
 
 /obj/item/ammo_casing/energy/electrode/gun
 	fire_sound = 'sound/weapons/gunshot.ogg'
+	e_cost = 100
 
 /obj/item/ammo_casing/energy/ion
 	projectile_type = /obj/item/projectile/ion
@@ -133,3 +144,12 @@
 	projectile_type = /obj/item/projectile/beam/wormhole/orange
 	select_name = "orange"
 
+/obj/item/ammo_casing/energy/bolt
+	projectile_type = /obj/item/projectile/energy/bolt
+	select_name = "bolt"
+	e_cost = 500
+	fire_sound = 'sound/weapons/Genhit.ogg'
+
+/obj/item/ammo_casing/energy/bolt/large
+	projectile_type = /obj/item/projectile/energy/bolt/large
+	select_name = "heavy bolt"

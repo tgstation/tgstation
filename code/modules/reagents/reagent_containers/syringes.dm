@@ -14,6 +14,7 @@
 	possible_transfer_amounts = null	//list(5, 10, 15)
 	volume = 15
 	var/mode = SYRINGE_DRAW
+	var/busy = 0		// needed for delayed drawing of blood
 	g_amt = 20
 	m_amt = 10
 
@@ -43,6 +44,8 @@
 	return
 
 /obj/item/weapon/reagent_containers/syringe/afterattack(obj/target, mob/user , proximity)
+	if(busy)
+		return
 	if(!proximity) return
 	if(!target.reagents) return
 
@@ -81,8 +84,11 @@
 					if(target != user)
 						target.visible_message("<span class='danger'>[user] is trying to take a blood sample from [target]!</span>", \
 										"<span class='userdanger'>[user] is trying to take a blood sample from [target]!</span>")
+						busy = 1
 						if(!do_mob(user, target))
+							busy = 0
 							return
+					busy = 0
 					B.holder = src
 					B.volume = amount
 					//set reagent data
@@ -227,21 +233,21 @@
 
 
 
-/obj/item/weapon/reagent_containers/syringe/inaprovaline
-	name = "syringe (inaprovaline)"
-	desc = "Contains inaprovaline - used to stabilize patients."
+/obj/item/weapon/reagent_containers/syringe/epinephrine
+	name = "syringe (epinephrine)"
+	desc = "Contains epinephrine - used to stabilize patients."
 	New()
 		..()
-		reagents.add_reagent("inaprovaline", 15)
+		reagents.add_reagent("epinephrine", 15)
 		mode = SYRINGE_INJECT
 		update_icon()
 
-/obj/item/weapon/reagent_containers/syringe/antitoxin
-	name = "syringe (anti-toxin)"
-	desc = "Contains anti-toxins."
+/obj/item/weapon/reagent_containers/syringe/charcoal
+	name = "syringe (charcoal)"
+	desc = "Contains charcoal."
 	New()
 		..()
-		reagents.add_reagent("anti_toxin", 15)
+		reagents.add_reagent("charcoal", 15)
 		mode = SYRINGE_INJECT
 		update_icon()
 
@@ -254,6 +260,17 @@
 		mode = SYRINGE_INJECT
 		update_icon()
 
+/obj/item/weapon/reagent_containers/syringe/stimulants
+	name = "Stimpack"
+	desc = "Contains stimulants."
+	amount_per_transfer_from_this = 50
+	volume = 50
+	New()
+		..()
+		reagents.add_reagent("stimulants", 50)
+		mode = SYRINGE_INJECT
+		update_icon()
+
 /obj/item/weapon/reagent_containers/syringe/lethal/choral
 	New()
 		..()
@@ -261,33 +278,41 @@
 		mode = SYRINGE_INJECT
 		update_icon()
 
-
-//Robot syringes
-//Not special in any way, code wise. They don't have added variables or procs.
-/obj/item/weapon/reagent_containers/syringe/robot/antitoxin
-	name = "syringe (anti-toxin)"
-	desc = "Contains anti-toxins."
+/obj/item/weapon/reagent_containers/syringe/calomel
+	name = "syringe (calomel)"
+	desc = "Contains calomel."
 	New()
 		..()
-		reagents.add_reagent("anti_toxin", 15)
+		reagents.add_reagent("calomel", 15)
 		mode = SYRINGE_INJECT
 		update_icon()
 
-/obj/item/weapon/reagent_containers/syringe/robot/inoprovaline
-	name = "syringe (inoprovaline)"
-	desc = "Contains inaprovaline - used to stabilize patients."
+//Robot syringes
+//Not special in any way, code wise. They don't have added variables or procs.
+/obj/item/weapon/reagent_containers/syringe/robot/charcoal
+	name = "syringe (charcoal)"
+	desc = "Contains charcoal."
 	New()
 		..()
-		reagents.add_reagent("inaprovaline", 15)
+		reagents.add_reagent("charcoal", 15)
+		mode = SYRINGE_INJECT
+		update_icon()
+
+/obj/item/weapon/reagent_containers/syringe/robot/epinephrine
+	name = "syringe (epinephrine)"
+	desc = "Contains epinephrine - used to stabilize patients."
+	New()
+		..()
+		reagents.add_reagent("epinephrine", 15)
 		mode = SYRINGE_INJECT
 		update_icon()
 
 /obj/item/weapon/reagent_containers/syringe/robot/mixed
 	name = "syringe (mixed)"
-	desc = "Contains inaprovaline & anti-toxins."
+	desc = "Contains epinephrine & charcoal solution."
 	New()
 		..()
-		reagents.add_reagent("inaprovaline", 7)
-		reagents.add_reagent("anti_toxin", 8)
+		reagents.add_reagent("epinephrine", 7)
+		reagents.add_reagent("charcoal", 8)
 		mode = SYRINGE_INJECT
 		update_icon()

@@ -51,7 +51,7 @@
 		if(9)
 			reagents.add_reagent("berryjuice", 3)
 		if(10)
-			reagents.add_reagent("tricordrazine", 3)
+			reagents.add_reagent("omnizine", 3)
 	if(prob(30))
 		icon_state = "donut2"
 		name = "frosted chaos donut"
@@ -216,6 +216,16 @@
 	..()
 	reagents.add_reagent("nutriment", 4)
 
+/obj/item/weapon/reagent_containers/food/snacks/donkpocketwarm
+	name = "\improper Warm Donk-pocket"
+	desc = "The heated food of choice for the seasoned traitor."
+	icon_state = "donkpocket"
+
+/obj/item/weapon/reagent_containers/food/snacks/donkpocketwarm/New()
+	..()
+	reagents.add_reagent("omnizine", 4)
+	reagents.add_reagent("nutriment", 4)
+
 /obj/item/weapon/reagent_containers/food/snacks/fortunecookie
 	name = "fortune cookie"
 	desc = "A true prophecy in each cookie!"
@@ -249,7 +259,7 @@
 		name = "exceptional plump helmet biscuit"
 		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump helmet biscuit!"
 		reagents.add_reagent("nutriment", 3)
-		reagents.add_reagent("tricordrazine", 5)
+		reagents.add_reagent("omnizine", 5)
 	reagents.add_reagent("nutriment", 5)
 	reagents.add_reagent("vitamin", 1)
 	bitesize = 2

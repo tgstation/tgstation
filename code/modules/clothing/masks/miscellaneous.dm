@@ -64,3 +64,49 @@
 	if(voicechange)
 		message = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
 	return message
+
+/obj/item/clothing/mask/bandana
+	name = "botany bandana"
+	desc = "A fine bandana with nanotech lining and a hydroponics pattern."
+	w_class = 1
+	flags = MASKCOVERSMOUTH
+	flags_inv = HIDEFACE
+	visor_flags = MASKCOVERSMOUTH
+	visor_flags_inv = HIDEFACE
+	slot_flags = SLOT_MASK
+	ignore_maskadjust = 0
+	adjusted_flags = SLOT_HEAD
+	icon_state = "bandbotany"
+
+/obj/item/clothing/mask/bandana/attack_self(var/mob/user)
+	adjustmask(user)
+
+/obj/item/clothing/mask/bandana/red
+	name = "red bandana"
+	desc = "A fine red bandana with nanotech lining."
+	icon_state = "bandred"
+
+/obj/item/clothing/mask/bandana/blue
+	name = "blue bandana"
+	desc = "A fine blue bandana with nanotech lining."
+	icon_state = "bandblue"
+
+/obj/item/clothing/mask/bandana/green
+	name = "green bandana"
+	desc = "A fine green bandana with nanotech lining."
+	icon_state = "bandgreen"
+
+/obj/item/clothing/mask/bandana/gold
+	name = "gold bandana"
+	desc = "A fine gold bandana with nanotech lining."
+	icon_state = "bandgold"
+
+/obj/item/clothing/mask/bandana/black
+	name = "black bandana"
+	desc = "A fine black bandana with nanotech lining."
+	icon_state = "bandblack"
+
+/obj/item/clothing/mask/bandana/skull
+	name = "skull bandana"
+	desc = "A fine black bandana with nanotech lining and a skull emblem."
+	icon_state = "bandskull"

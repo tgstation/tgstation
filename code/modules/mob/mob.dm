@@ -82,24 +82,37 @@ var/next_mob_id = 0
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 
 /mob/visible_message(var/message, var/self_message, var/blind_message)
-	var/list/atom_viewers = list()
-	for(var/atom/movable/A in view(src))
-		atom_viewers |= recursive_hear_check(A)
-	atom_viewers |= src
-	for(var/mob/M in atom_viewers)
+	var/list/mob_viewers = list()
+	var/list/possible_viewers = list()
+	mob_viewers |= src
+	mob_viewers |= viewers(src)
+	var/heard = get_hear(7, src)
+	for(var/atom/movable/A in heard)
+		possible_viewers |= recursive_hear_check(A)
+	for(var/mob/B in possible_viewers)
+		if(B in mob_viewers)
+			continue
+		if(isturf(B.loc))
+			continue
+		var/turf/T = get_turf(B)
+		if(src in view(T))
+			mob_viewers |= B
+
+	for(var/mob/M in mob_viewers)
 		if(M.see_invisible < invisibility)
 			continue //can't view the invisible
 		var/msg = message
 		if(self_message && M==src)
 			msg = self_message
-		M.show_message( msg, 1)
+		M.show_message(msg, 1)
+
 	if(blind_message)
-		var/list/atom_hearers = list()
-		for(var/atom/movable/O in get_hearers_in_view(7, src))
-			if(O in atom_viewers)
+		var/list/mob_hearers = list()
+		for(var/mob/C in get_hearers_in_view(7, src))
+			if(C in mob_viewers)
 				continue
-			atom_hearers |= O
-		for(var/mob/MOB in atom_hearers)
+			mob_hearers |= C
+		for(var/mob/MOB in mob_hearers)
 			MOB.show_message(blind_message, 2)
 
 // Show a message to all mobs who sees this atom
@@ -108,18 +121,31 @@ var/next_mob_id = 0
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 
 /atom/proc/visible_message(var/message, var/blind_message)
-	var/list/atom_viewers = list()
-	for(var/atom/movable/A in view(src))
-		atom_viewers |= recursive_hear_check(A)
-	for(var/mob/M in atom_viewers)
-		M.show_message( message, 1)
+	var/list/mob_viewers = list()
+	var/list/possible_viewers = list()
+	mob_viewers |= viewers(src)
+	var/heard = get_hear(7, src)
+	for(var/atom/movable/A in heard)
+		possible_viewers |= recursive_hear_check(A)
+	for(var/mob/B in possible_viewers)
+		if(B in mob_viewers)
+			continue
+		if(isturf(B.loc))
+			continue
+		var/turf/T = get_turf(B)
+		if(src in view(T))
+			mob_viewers |= B
+
+	for(var/mob/M in mob_viewers)
+		M.show_message(message, 1)
+
 	if(blind_message)
-		var/list/atom_hearers = list()
-		for(var/atom/movable/O in get_hearers_in_view(7, src))
-			if(O in atom_viewers)
+		var/list/mob_hearers = list()
+		for(var/mob/C in get_hearers_in_view(7, src))
+			if(C in mob_viewers)
 				continue
-			atom_hearers |= O
-		for(var/mob/MOB in atom_hearers)
+			mob_hearers |= C
+		for(var/mob/MOB in mob_hearers)
 			MOB.show_message(blind_message, 2)
 
 // Show a message to all mobs in earshot of this one
@@ -668,6 +694,22 @@ var/list/slot_equipment_priority = list( \
 /mob/Stat()
 	..()
 
+	if(statpanel("Status"))
+		var/ETA
+		switch(SSshuttle.emergency.mode)
+			if(SHUTTLE_RECALL)
+				ETA = "RCL"
+			if(SHUTTLE_CALL)
+				ETA = "ETA"
+			if(SHUTTLE_DOCKED)
+				ETA = "ETD"
+			if(SHUTTLE_ESCAPE)
+				ETA = "ESC"
+		if(ETA)
+			var/timeleft = SSshuttle.emergency.timeLeft()
+			stat(null, "[ETA]-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+
+
 	if(client && client.holder)
 		if(statpanel("MC"))
 			stat("Location:","([x], [y], [z])")
@@ -726,11 +768,12 @@ var/list/slot_equipment_priority = list( \
 	if(restrained())					return 0
 	return 1
 
+
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 //Robots and brains have their own version so don't worry about them
 /mob/proc/update_canmove()
 	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
-	var/bed = !(buckled && istype(buckled, /obj/structure/stool/bed/chair))
+	var/buckle_lying = !(buckled && !buckled.buckle_lying)
 	if(ko || resting || stunned)
 		drop_r_hand()
 		drop_l_hand()
@@ -738,7 +781,7 @@ var/list/slot_equipment_priority = list( \
 		lying = 0
 		canmove = 1
 	if(buckled)
-		lying = 90 * bed
+		lying = 90*buckle_lying
 	else
 		if((ko || resting) && !lying)
 			fall(ko)
@@ -750,6 +793,7 @@ var/list/slot_equipment_priority = list( \
 		update_icon = 0
 		regenerate_icons()
 	return canmove
+
 
 /mob/proc/fall(var/forced)
 	drop_l_hand()
@@ -899,3 +943,9 @@ var/list/slot_equipment_priority = list( \
 				if(G.can_reenter_corpse || even_if_they_cant_reenter)
 					return G
 				break
+
+/mob/proc/adjustEarDamage()
+	return
+
+/mob/proc/setEarDamage()
+	return
