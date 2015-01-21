@@ -90,7 +90,7 @@ datum/reagent/synthflesh/reaction_mob(var/mob/living/M, var/method=TOUCH, var/vo
 datum/reagent/charcoal
 	name = "Charcoal"
 	id = "charcoal"
-	description = "Heals 3 TOX damage per cycle and purges other chemicals slowly."
+	description = "Heals 1.5 TOX damage per cycle and purges other chemicals slowly."
 	reagent_state = LIQUID
 	color = "#323232"
 
