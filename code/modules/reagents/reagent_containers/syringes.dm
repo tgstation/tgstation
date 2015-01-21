@@ -260,6 +260,17 @@
 		mode = SYRINGE_INJECT
 		update_icon()
 
+/obj/item/weapon/reagent_containers/syringe/stimulants
+	name = "Stimpack"
+	desc = "Contains stimulants."
+	amount_per_transfer_from_this = 50
+	volume = 50
+	New()
+		..()
+		reagents.add_reagent("stimulants", 50)
+		mode = SYRINGE_INJECT
+		update_icon()
+
 /obj/item/weapon/reagent_containers/syringe/lethal/choral
 	New()
 		..()
