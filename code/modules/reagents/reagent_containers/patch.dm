@@ -22,11 +22,11 @@
 	return 1 // Masks were stopping people from "eating" patches. Thanks, inheritance.
 
 /obj/item/weapon/reagent_containers/pill/patch/styptic
-	name = "styptic powder patch"
+	name = "brute patch"
 	desc = "Helps with brute injuries."
 	list_reagents = list("styptic_powder" = 50)
 
 /obj/item/weapon/reagent_containers/pill/patch/silver_sulf
-	name = "silver sulfadiazine patch"
+	name = "burn patch"
 	desc = "Helps with burn injuries."
 	list_reagents = list("silver_sulfadiazine" = 50)

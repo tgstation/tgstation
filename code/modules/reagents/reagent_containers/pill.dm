@@ -102,7 +102,7 @@
 	list_reagents = list("salbutamol" = 30)
 
 /obj/item/weapon/reagent_containers/pill/charcoal
-	name = "charcoal pill"
+	name = "antitoxin pill"
 	desc = "Neutralizes many common toxins."
 	icon_state = "pill17"
 	list_reagents = list("charcoal" = 50)
@@ -110,5 +110,23 @@
 /obj/item/weapon/reagent_containers/pill/epinephrine
 	name = "epinephrine pill"
 	desc = "Used to stabilize patients."
-	icon_state = "pill17"
+	icon_state = "pill5"
 	list_reagents = list("epinephrine" = 50)
+
+/obj/item/weapon/reagent_containers/pill/mannitol
+	name = "mannitol pill"
+	desc = "Used to treat brain damage."
+	icon_state = "pill17"
+	list_reagents = list("mannitol" = 50)
+
+/obj/item/weapon/reagent_containers/pill/mutadone
+	name = "mutadone pill"
+	desc = "Used to treat genetic damage."
+	icon_state = "pill20"
+	list_reagents = list("mutadone" = 50)
+
+/obj/item/weapon/reagent_containers/pill/salicyclic
+	name = "salicyclic acid pill"
+	desc = "Used to dull pain."
+	icon_state = "pill5"
+	list_reagents = list("sac_acid" = 50)

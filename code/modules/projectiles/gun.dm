@@ -5,7 +5,7 @@
 /obj/item/weapon/gun
 	name = "gun"
 	desc = "It's a gun. It's pretty terrible, though."
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "detective"
 	item_state = "gun"
 	flags =  CONDUCT
@@ -31,6 +31,9 @@
 	var/burst_size = 1
 	var/fire_delay = 0
 
+	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
+
 	var/obj/item/device/firing_pin/pin = /obj/item/device/firing_pin //standard firing pin for most guns
 
 	var/obj/item/device/flashlight/F = null
@@ -46,7 +49,7 @@
 /obj/item/weapon/gun/examine(mob/user)
 	..()
 	if(pin)
-		user << "It has a [pin] installed."
+		user << "It has [pin] installed."
 	else
 		user << "It doesn't have a firing pin installed, and won't fire."
 

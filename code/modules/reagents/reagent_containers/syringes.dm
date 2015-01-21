@@ -238,6 +238,11 @@
 	desc = "Contains antiviral agents."
 	list_reagents = list("spaceacillin" = 15)
 
+/obj/item/weapon/reagent_containers/syringe/calomel
+	name = "syringe (calomel)"
+	desc = "Contains calomel."
+	list_reagents = list("calomel" = 15)
+
 /obj/item/weapon/reagent_containers/syringe/lethal
 	name = "lethal injection syringe"
 	desc = "A syringe used for lethal injections. It can hold up to 50 units."

@@ -160,3 +160,4 @@
 	var/atom/movable/remote_control //Calls relaymove() to whatever it is
 
 	var/turf/listed_turf = null	//the current turf being examined in the stat panel
+	var/last_movement = 0 // Last world.time the mob actually moved of its own accord.

@@ -83,7 +83,7 @@
 		phaseanim.master = user
 		user.ExtinguishMob()
 		if(user.buckled)
-			user.buckled.unbuckle()
+			user.buckled.unbuckle_mob()
 		user.loc = holder
 		flick("chronophase", phaseanim)
 		spawn(7)

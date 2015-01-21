@@ -82,9 +82,8 @@
 
 /datum/dna/proc/generate_struc_enzymes(mob/living/carbon/character)
 	var/list/L = list("0","1","2","3","4","5","6")
-	var/list/sorting = list()
-	sorting.len = 14
-	var/result
+	var/list/sorting = new /list(DNA_STRUC_ENZYMES_BLOCKS)
+	var/result = ""
 	for(var/datum/mutation/human/A in good_mutations + bad_mutations + not_good_mutations)
 		if(A.name == RACEMUT && istype(character,/mob/living/carbon/monkey))
 			sorting[A.dna_block] = num2hex(A.lowest_value + rand(0, 256 * 6), DNA_BLOCK_SIZE)
@@ -104,6 +103,12 @@
 	else
 		. += repeat_string(DNA_UNIQUE_ENZYMES_LEN, "0")
 	return .
+
+/datum/dna/proc/mutations_say_mods(var/message)
+	if(message)
+		for(var/datum/mutation/human/M in mutations)
+			message = M.say_mod(message)
+		return message
 
 /proc/hardset_dna(mob/living/carbon/owner, ui, se, real_name, blood_type, datum/species/mrace, mcolor)
 	if(!istype(owner, /mob/living/carbon/monkey) && !istype(owner, /mob/living/carbon/human))

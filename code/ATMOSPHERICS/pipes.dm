@@ -8,6 +8,11 @@
 	var/alert_pressure = 80*ONE_ATMOSPHERE
 		//minimum pressure before check_pressure(...) should be called
 
+	//Buckling
+	can_buckle = 1
+	buckle_requires_restraints = 1
+	buckle_lying = -1
+
 /obj/machinery/atmospherics/proc/pipeline_expansion()
 	return null
 

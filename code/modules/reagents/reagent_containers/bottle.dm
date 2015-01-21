@@ -1,4 +1,3 @@
-
 //Not to be confused with /obj/item/weapon/reagent_containers/food/drinks/bottle
 
 /obj/item/weapon/reagent_containers/glass/bottle
@@ -46,10 +45,11 @@
 	list_reagents = list("chloralhydrate" = 15)
 
 /obj/item/weapon/reagent_containers/glass/bottle/charcoal
-	name = "charcoal bottle"
+	name = "antitoxin bottle"
 	desc = "A small bottle of charcoal."
 	icon_state = "bottle17"
 	list_reagents = list("charcoal" = 30)
+
 /obj/item/weapon/reagent_containers/glass/bottle/mutagen
 	name = "unstable mutagen bottle"
 	desc = "A small bottle of unstable mutagen. Randomly changes the DNA structure of whoever comes in contact."
@@ -110,12 +110,12 @@
 	desc = "A small bottle. Contains a random nasty chemical."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
-	var/new_reagent = null
+	var/extra_reagent = null
 
 /obj/item/weapon/reagent_containers/glass/bottle/traitor/New()
-	new_reagent = pick("polonium", "histamine", "formaldehyde", "venom", "neurotoxin2", "cyanide")
-	list_reagents = list("[new_reagent]" = 30)
 	..()
+	extra_reagent = pick("polonium", "histamine", "formaldehyde", "venom", "neurotoxin2", "cyanide")
+	reagents.add_reagent("[extra_reagent]" = 3)
 
 /obj/item/weapon/reagent_containers/glass/bottle/polonium
 	name = "polonium bottle"
@@ -146,6 +146,30 @@
 	desc = "A small bottle. Contains Histamine."
 	icon_state = "bottle16"
 	list_reagents = list("histamine" = 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/diphenhydramine
+	name = "antihistamine bottle"
+	desc = "A small bottle of diphenhydramine."
+	icon_state = "bottle20"
+	list_reagents = list("diphenhydramine" = 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/potass_iodide
+	name = "anti-radiation bottle"
+	desc = "A small bottle of potassium iodide."
+	icon_state = "bottle11"
+	list_reagents = list("potass_iodide" = 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/salglu_solution
+	name = "saline-glucose solution bottle"
+	desc = "A small bottle of saline-glucose solution."
+	icon_state = "bottle1"
+	list_reagents = list("salglu_solution" = 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/atropine
+	name = "atropine bottle"
+	desc = "A small bottle of atropine."
+	icon_state = "bottle12"
+	list_reagents = list("atropine" = 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/flu_virion
 	name = "Flu virion culture bottle"

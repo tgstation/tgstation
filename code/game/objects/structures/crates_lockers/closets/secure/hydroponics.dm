@@ -11,6 +11,7 @@
 
 	New()
 		..()
+		new /obj/item/clothing/suit/toggle/wintercoat/hydro(src)
 		switch(rand(1,2))
 			if(1)
 				new /obj/item/clothing/suit/apron(src)
@@ -23,5 +24,4 @@
 		new /obj/item/clothing/mask/bandana(src)
 		new /obj/item/weapon/minihoe(src)
 		new /obj/item/weapon/hatchet(src)
-		new /obj/item/clothing/suit/toggle/wintercoat/hydro(src)
 		return

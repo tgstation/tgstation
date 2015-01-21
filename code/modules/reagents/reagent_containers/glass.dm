@@ -174,6 +174,22 @@
 /obj/item/weapon/reagent_containers/glass/beaker/slime
 	list_reagents = list("slimejelly" = 50)
 
+/obj/item/weapon/reagent_containers/glass/beaker/large/styptic
+	name = "styptic reserve tank"
+	list_reagents = list("styptic_powder" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/silver_sulfadiazine
+	name = "silver sulfadiazine reserve tank"
+	list_reagents = list("silver_sulfadiazine" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/charcoal
+	name = "antitoxin reserve tank"
+	list_reagents = list("charcoal" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/epinephrine
+	name = "epinephrine reserve tank"
+	list_reagents = list("epinephrine" = 50)
+
 /obj/item/weapon/reagent_containers/glass/bucket
 	name = "bucket"
 	desc = "It's a bucket."
