@@ -45,6 +45,7 @@
 		protect_objective.target = W.mind
 		protect_objective.explanation_text = "Protect [W.real_name], the wizard."
 		I.mind.objectives += protect_objective
+		ticker.mode.update_wiz_icons_added(I.mind)
 
 		I.attack_log += "\[[time_stamp()]\] <font color='red'>Is an imposter!</font>"
 		I << "<B>You are an imposter! Trick and confuse the crew to misdirect malice from your handsome original!</B>"
