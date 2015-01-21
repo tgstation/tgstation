@@ -100,8 +100,8 @@
 		return
 	..()
 
-/obj/machinery/power/apc/New(turf/loc, var/ndir, var/building=0)
-	..()
+/obj/machinery/power/apc/New(loc, var/ndir, var/building=0)
+	..(loc)
 	wires = new(src)
 	// offset 24 pixels in direction of dir
 	// this allows the APC to be embedded in a wall, yet still inside an area
@@ -117,28 +117,15 @@
 		pixel_x = (src.tdir == 4 ? 24 : -24)
 		pixel_y = 0
 
-	switch (isnull(areaMaster))
-		if (0)
-			name = "[areaMaster.name] APC"
-		if (1) // Mapping issue.
-			log_admin("APC tried to spawn in a location without an area. [formatJumpTo(get_turf(src))]")
-
 	if (building==0)
 		init()
 	else
 		opened = 1
 		operating = 0
 		stat |= MAINT
-		src.update_icon()
-		spawn(5)
-			src.update()
 
-/obj/machinery/power/apc/proc/make_terminal()
-	// create a terminal object at the same position as original turf loc
-	// wires will attach to this
-	terminal = new/obj/machinery/power/terminal(src.loc)
-	terminal.dir = tdir
-	terminal.master = src
+	if(ticker)
+		initialize()
 
 /obj/machinery/power/apc/proc/init()
 	has_electronics = 2 //installed and secured
@@ -148,13 +135,24 @@
 		cell.maxcharge = cell_type	// cell_type is maximum charge (old default was 1000 or 2500 (values one and two respectively)
 		cell.charge = start_charge * cell.maxcharge / 100.0 		// (convert percentage to actual value)
 
-	name = "[areaMaster.name] APC"
-	update_icon()
-
 	make_terminal()
 
+/obj/machinery/power/apc/proc/make_terminal()
+	// create a terminal object at the same position as original turf loc
+	// wires will attach to this
+	terminal = new/obj/machinery/power/terminal(src.loc)
+	terminal.dir = tdir
+	terminal.master = src
+
+/obj/machinery/power/apc/initialize()
+	..()
+
+	name = "[areaMaster.name] APC"
+
+	update_icon()
+
 	spawn(5)
-		src.update()
+		update()
 
 /obj/machinery/power/apc/examine(mob/user)
 	..()
