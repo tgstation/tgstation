@@ -323,7 +323,13 @@
 	..()
 
 /obj/structure/piano/attack_hand(mob/user as mob)
+	if(!user.IsAdvancedToolUser())
+		user << "<span class='danger'>You don't have the dexterity to do this!</span>"
+		return 1
 	interact(user)
+
+/obj/structure/piano/attack_paw(mob/user as mob)
+	return src.attack_hand(user)
 
 /obj/structure/piano/interact(mob/user as mob)
 	if(!user || !anchored)

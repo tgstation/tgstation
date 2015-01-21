@@ -1,7 +1,7 @@
 /obj/item/weapon/gun/magic
 	name = "staff of nothing"
 	desc = "This staff is boring to watch because even though it came first you've seen everything it can do in other staves for years."
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/guns/magic.dmi'
 	icon_state = "staffofnothing"
 	item_state = "staff"
 	fire_sound = 'sound/weapons/emitter.ogg'
@@ -17,6 +17,10 @@
 	origin_tech = null
 	clumsy_check = 0
 	trigger_guard = 0
+	pin = /obj/item/device/firing_pin/magic
+
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi' //not really a gun and some toys use these inhands
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 
 /obj/item/weapon/gun/magic/afterattack(atom/target as mob, mob/living/user as mob, flag)
 	newshot()

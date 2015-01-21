@@ -24,6 +24,10 @@ datum/reagent
 	var/color = "#000000" // rgb: 0, 0, 0 (does not support alpha channels - yet!)
 	var/metabolization_rate = REAGENTS_METABOLISM
 	var/overrides_metab = 0
+	var/overdose_threshold = 0
+	var/addiction_threshold = 0
+	var/addiction_stage = 0
+	var/overdosed = 0 // You fucked up and this is now triggering it's overdose effects, purge that shit quick.
 
 datum/reagent/proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume) //By default we have a chance to transfer some
 	if(!istype(M, /mob/living))
@@ -70,7 +74,7 @@ datum/reagent/proc/reaction_turf(var/turf/T, var/volume)
 
 datum/reagent/proc/on_mob_life(var/mob/living/M as mob)
 	if(!istype(M, /mob/living))
-		return //Noticed runtime errors from pacid trying to damage ghosts, this should fix. --NEO
+		return //Noticed runtime errors from facid trying to damage ghosts, this should fix. --NEO
 	holder.remove_reagent(src.id, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
 	return
 
@@ -87,6 +91,31 @@ datum/reagent/proc/on_merge(var/data)
 
 datum/reagent/proc/on_update(var/atom/A)
 	return
+
+// Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects
+datum/reagent/proc/overdose_process(var/mob/living/M as mob)
+	return
+
+datum/reagent/proc/addiction_act_stage1(var/mob/living/M as mob)
+	if(prob(30))
+		M << "<span class = 'notice'>You feel like some [name] right about now.</span>"
+	return
+
+datum/reagent/proc/addiction_act_stage2(var/mob/living/M as mob)
+	if(prob(30))
+		M << "<span class = 'notice'>You feel like you need [name]. You just can't get enough.</span>"
+	return
+
+datum/reagent/proc/addiction_act_stage3(var/mob/living/M as mob)
+	if(prob(30))
+		M << "<span class = 'danger'>You have an intense craving for [name].</span>"
+	return
+
+datum/reagent/proc/addiction_act_stage4(var/mob/living/M as mob)
+	if(prob(30))
+		M << "<span class = 'userdanger'>You're not feeling good at all! You really need some [name].</span>"
+	return
+
 
 datum/reagent/blood
 			data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)

@@ -112,7 +112,7 @@
 	build_path = /obj/item/weapon/circuitboard/chem_dispenser
 	category = list ("Medical Machinery")
 
-/datum/design/chem_dispenser
+/datum/design/chem_heater
 	name = "Machine Design (Chemical Heater Board)"
 	desc = "The circuit board for a chemical heater."
 	id = "chem_heater"

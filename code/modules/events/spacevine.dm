@@ -211,7 +211,6 @@
 	pass_flags = PASSTABLE | PASSGRILLE
 	var/energy = 0
 	var/obj/effect/spacevine_controller/master = null
-	var/mob/living/buckled_mob
 	var/list/mutations = list()
 
 /obj/effect/spacevine/New()
@@ -285,7 +284,7 @@
 				var/obj/item/weapon/weldingtool/WT = W
 				if(WT.remove_fuel(0, user)) qdel(src)
 			else
-				manual_unbuckle(user)
+				user_unbuckle_mob(user,user)
 				return
 		//Plant-b-gone damage is handled in its entry in chemistry-reagents.dm
 	..()
@@ -298,46 +297,16 @@
 /obj/effect/spacevine/attack_hand(mob/user as mob)
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_hit(src, user)
-	manual_unbuckle(user)
+	user_unbuckle_mob(user, user)
 
 
 /obj/effect/spacevine/attack_paw(mob/living/user as mob)
 	user.do_attack_animation(src)
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_hit(src, user)
-	manual_unbuckle(user)
+	user_unbuckle_mob(user,user)
 
-/obj/effect/spacevine/proc/unbuckle()
-	if(buckled_mob)
-		if(buckled_mob.buckled == src)	//this is probably unneccesary, but it doesn't hurt
-			buckled_mob.buckled = null
-			buckled_mob.anchored = initial(buckled_mob.anchored)
-			buckled_mob.update_canmove()
-		buckled_mob = null
-	return
 
-/obj/effect/spacevine/proc/manual_unbuckle(mob/user as mob)
-	if(buckled_mob)
-		if(prob(50))
-			if(buckled_mob.buckled == src)
-				if(buckled_mob != user)
-					buckled_mob.visible_message(\
-						"<span class='notice'>[user.name] frees [buckled_mob.name] from the vines.</span>",\
-						"<span class='notice'>[user.name] frees you from the vines.</span>",\
-						"<span class='warning'>You hear shredding and ripping.</span>")
-				else
-					buckled_mob.visible_message(\
-						"<span class='notice'>[buckled_mob.name] struggles free of the vines.</span>",\
-						"<span class='notice'>You untangle the vines from around yourself.</span>",\
-						"<span class='warning'>You hear shredding and ripping.</span>")
-			unbuckle()
-		else
-			var/text = pick("rip","tear","pull")
-			user.visible_message(\
-				"<span class='notice'>[user.name] [text]s at the vines.</span>",\
-				"<span class='notice'>You [text] at the vines.</span>",\
-				"<span class='warning'>You hear shredding and ripping.</span>")
-	return
 
 /obj/effect/spacevine_controller
 	var/list/obj/effect/spacevine/vines = list()
@@ -446,18 +415,15 @@
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_grow(src)
 
-/obj/effect/spacevine/proc/buckle_mob()
+/obj/effect/spacevine/buckle_mob()
 	if(!buckled_mob && prob(25))
 		for(var/mob/living/carbon/V in src.loc)
 			for(var/datum/spacevine_mutation/SM in mutations)
 				SM.on_buckle(src, V)
-			if((V.stat != DEAD)  && (V.buckled != src)) //if mob not dead or captured
-				V.buckled = src
-				V.loc = src.loc
-				V.update_canmove()
-				src.buckled_mob = V
+			if((V.stat != DEAD) && (V.buckled != src)) //not dead or captured
 				V << "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>"
-				break //only capture one mob at a time.
+				..(V)
+				break //only capture one mob at a time
 
 /obj/effect/spacevine/proc/spread()
 	var/direction = pick(cardinal)

@@ -61,7 +61,7 @@
 		var/t_state = r_hand.item_state
 		if(!t_state)	t_state = r_hand.icon_state
 		overlays -= overlays_standing[M_R_HAND_LAYER]
-		overlays_standing[M_R_HAND_LAYER]	= image("icon" = 'icons/mob/items_righthand.dmi', "icon_state" = t_state, "layer" = -M_R_HAND_LAYER)
+		overlays_standing[M_R_HAND_LAYER]	= image("icon" = r_hand.righthand_file, "icon_state" = t_state, "layer" = -M_R_HAND_LAYER)
 		overlays += overlays_standing[M_R_HAND_LAYER]
 	else
 		overlays -= overlays_standing[M_R_HAND_LAYER]
@@ -80,7 +80,7 @@
 		var/t_state = l_hand.item_state
 		if(!t_state)	 t_state = l_hand.icon_state
 		overlays -= overlays_standing[M_L_HAND_LAYER]
-		overlays_standing[M_L_HAND_LAYER]	= image("icon" = 'icons/mob/items_lefthand.dmi', "icon_state" = t_state, "layer" = -M_L_HAND_LAYER)
+		overlays_standing[M_L_HAND_LAYER]	= image("icon" = l_hand.lefthand_file, "icon_state" = t_state, "layer" = -M_L_HAND_LAYER)
 		overlays += overlays_standing[M_L_HAND_LAYER]
 	else
 		overlays -= overlays_standing[M_L_HAND_LAYER]

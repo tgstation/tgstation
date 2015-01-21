@@ -42,11 +42,11 @@
 
 	..()
 
-//	spawn(15)
 	power_change()		// all machines set to current power level, also updates lighting icon
 	InitializeLighting()
 
 	blend_mode = BLEND_MULTIPLY // Putting this in the constructure so that it stops the icons being screwed up in the map editor.
+
 
 
 /area/proc/poweralert(var/state, var/obj/source as obj)
