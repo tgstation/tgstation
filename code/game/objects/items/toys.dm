@@ -405,6 +405,8 @@
 /*
  * Crayons
  */
+/mob/living/carbon
+	var/sprayOverlay
 
 /obj/item/toy/crayon
 	name = "crayon"
@@ -421,6 +423,7 @@
 	var/instant = 0
 	var/colourName = "red" //for updateIcon purposes
 	var/dat
+	var/list/validSurfaces = list(/turf/simulated/floor)
 
 /obj/item/toy/crayon/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</span>")
@@ -467,7 +470,7 @@
 		if("random_letter")
 			temp = pick(letters)
 		if("letter")
-			temp = input("Choose the letter.", "Crayon scribbles") in letters
+			temp = input("Choose the letter.", "Scribbles") in letters
 		if("random_rune")
 			temp = "rune[rand(1,6)]"
 		if("random_graffiti")
@@ -479,9 +482,15 @@
 	drawtype = temp
 	update_window(usr)
 
+/obj/item/toy/crayon/proc/validType(var/atom/target)
+	for(var/A in validSurfaces)
+		if(istype(target,A))
+			return TRUE
+	return FALSE
+
 /obj/item/toy/crayon/afterattack(atom/target, mob/user as mob, proximity)
 	if(!proximity) return
-	if(istype(target,/turf/simulated/floor))
+	if(validType(target))
 		var/temp = "rune"
 		if(letters.Find(drawtype))
 			temp = "letter"
@@ -494,22 +503,65 @@
 			if(uses)
 				uses--
 				if(!uses)
-					user << "<span class='danger'>You used up your crayon!</span>"
+					user << "<span class='danger'>You used up your [src]!</span>"
 					qdel(src)
 	return
 
 /obj/item/toy/crayon/attack(mob/M as mob, mob/user as mob)
 	if(M == user)
-		user << "You take a bite of the crayon. Delicious!"
+		user << "You take a bite of the [src]. Delicious!"
 		user.nutrition += 5
 		if(uses)
 			uses -= 5
 			if(uses <= 0)
-				user << "<span class='danger'>You ate your crayon!</span>"
+				user << "<span class='danger'>You ate your [src]!</span>"
 				qdel(src)
 	else
 		..()
 
+/obj/item/toy/crayon/spraycan
+	icon_state = "spraycanred_cap"
+	desc = "A metallic container containing tasty paint."
+	var/capped = 1
+	instant = 1
+	validSurfaces = list(/turf/simulated/floor,/turf/simulated/wall)
+
+/obj/item/toy/crayon/spraycan/New()
+	..()
+	name = "[colourName] spraycan"
+
+/obj/item/toy/crayon/spraycan/attack_self(mob/living/user as mob)
+	var/choice = input(user,"Spraycan options") in list("Change Cap","Change Drawing")
+	switch(choice)
+		if("Change Cap")
+			if(capped)
+				user << "<span class='notice'>You remove the cap of the [src]</span>"
+				icon_state = "spraycan[colourName]"
+				capped = 0
+			else
+				user << "<span class='notice'>You replace the cap of the [src]</span>"
+				icon_state = "spraycan[colourName]_cap"
+				capped = 1
+		if("Change Drawing")
+			..()
+
+/obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user as mob, proximity)
+	if(capped)
+		return
+	else
+		if(iscarbon(target))
+			var/mob/living/carbon/C = target
+			user.visible_message("<span class='danger'> [user] sprays [src] into the face of [target]!</span>")
+			var/icon/I = icon(icon='icons/obj/crayons.dmi',icon_state = "spray_face")
+			I.Blend(colourName,ICON_MULTIPLY)
+			if(C.client)
+				C.eye_blurry = max(C.eye_blurry, 3)
+				C.eye_blind = max(C.eye_blind, 1)
+				C.confused = max(C.confused, 3)
+				C.Weaken(3)
+			C.sprayOverlay = I
+			C.overlays.Add(C.sprayOverlay)
+		..()
 /*
  * Snap pops
  */

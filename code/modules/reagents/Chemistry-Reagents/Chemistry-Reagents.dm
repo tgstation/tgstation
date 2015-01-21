@@ -688,6 +688,8 @@ datum/reagent/space_cleaner/reaction_turf(var/turf/T, var/volume)
 datum/reagent/space_cleaner/reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
+		if(C.sprayOverlay)
+			C.overlays.Remove(C.sprayOverlay)
 		if(C.r_hand)
 			C.r_hand.clean_blood()
 		if(C.l_hand)

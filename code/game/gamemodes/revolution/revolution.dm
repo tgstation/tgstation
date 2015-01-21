@@ -136,6 +136,7 @@
 
 
 	var/obj/item/device/flash/T = new(mob)
+	var/obj/item/toy/crayon/spraycan/rainbow/R = new(mob)
 
 	var/list/slots = list (
 		"backpack" = slot_in_backpack,
@@ -144,6 +145,7 @@
 		"left hand" = slot_l_hand,
 		"right hand" = slot_r_hand,
 	)
+	mob.equip_in_one_of_slots(R,slots)
 	var/where = mob.equip_in_one_of_slots(T, slots)
 	if (!where)
 		mob << "The Syndicate were unfortunately unable to get you a flash."
