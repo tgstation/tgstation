@@ -26,11 +26,11 @@
 	internal_organs += new /obj/item/organ/heart
 	internal_organs += new /obj/item/organ/brain
 
-	make_blood()
-
 	// for spawned humans; overwritten by other code
 	ready_dna(src)
 	randomize_human(src)
+
+	make_blood()
 
 	..()
 	var/mob/M = src

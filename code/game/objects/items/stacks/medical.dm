@@ -9,6 +9,8 @@
 	throw_range = 7
 	var/heal_brute = 0
 	var/heal_burn = 0
+	var/stop_bleeding = 0
+	var/self_delay = 50
 
 /obj/item/stack/medical/attack(mob/living/carbon/M as mob, mob/user as mob)
 
@@ -29,31 +31,34 @@
 		user << "<span class='danger'>You don't have the dexterity to do this!</span>"
 		return 1
 
-	if (user)
+	if(isliving(M))
+		if(!M.can_inject(user, 1))
+			return
+
+	if(user)
 		if (M != user)
-			user.visible_message( \
-				"<span class='notice'>[user] has applied [src] on [M].</span>", \
-				"<span class='notice'>You apply \the [src] to [M].</span>" \
-			)
+			user.visible_message("<span class='green'>[user] applies the [src] on [M].</span>", "<span class='green'>You apply the [src] on [M].</span>")
 		else
 			var/t_himself = "itself"
 			if (user.gender == MALE)
 				t_himself = "himself"
 			else if (user.gender == FEMALE)
 				t_himself = "herself"
+			user.visible_message("<span class='notice'>[user] starts to apply the [src] on [t_himself]...</span>", "<span class='notice'>You begin applying the [src] on yourself...</span>")
+			if(!do_mob(user, M, self_delay))	return
+			user.visible_message("<span class='green'>[user] applies the [src] on [t_himself].</span>", "<span class='green'>You apply the [src] on yourself.</span>")
 
-			user.visible_message( \
-				"<span class='notice'>[M] applied [src] on [t_himself].</span>", \
-				"<span class='notice'>You apply \the [src] on yourself.</span>" \
-			)
 
-	if (istype(M, /mob/living/carbon/human))
-
+	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
 
+		if(stop_bleeding)
+			if(H.bleedsuppress) //so you can't stack bleed suppression
+				H.suppress_bloodloss(stop_bleeding)
+
 		if(affecting.status == ORGAN_ORGANIC) //Limb must be organic to be healed - RR
-			if (affecting.heal_damage(src.heal_brute, src.heal_burn, 0))
+			if(affecting.heal_damage(src.heal_brute, src.heal_burn, 0))
 				H.update_damage_overlays(0)
 
 			M.updatehealth()
@@ -72,8 +77,21 @@
 	singular_name = "bruise pack"
 	desc = "A pack designed to treat blunt-force trauma."
 	icon_state = "brutepack"
-	heal_brute = 60
+	heal_brute = 40
 	origin_tech = "biotech=1"
+
+/obj/item/stack/medical/gauze
+	name = "medical gauze"
+	desc = "A roll of elastic cloth that is extremely effective at stopping bloodloss, but does not heal wounds."
+	singular_name = "medical gauze"
+	icon_state = "gauze"
+	stop_bleeding = 3000 //five minutes
+
+/obj/item/stack/medical/gauze/improvised
+	name = "improvised gauze"
+	singular_name = "improvised gauze"
+	desc = "A roll of cloth roughly cut from something that can stop bloodloss, but does not heal wounds."
+	stop_bleeding = 1200 //two minutes
 
 /obj/item/stack/medical/ointment
 	name = "ointment"

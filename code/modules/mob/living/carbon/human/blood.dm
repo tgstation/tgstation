@@ -32,6 +32,16 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		if(B.id == "blood")
 			B.data = list("donor"=src,"viruses"=null,"blood_DNA"=dna.unique_enzymes,"blood_type"=dna.blood_type,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 
+/mob/living/carbon/human/proc/suppress_bloodloss(var/amount)
+	if(bleedsuppress)
+		return
+	else
+		bleedsuppress = 1
+		spawn(amount)
+			bleedsuppress = 0
+			if(stat != DEAD)
+				src << "<span class='warning'>Your bandage wears off.</span>"
+
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/proc/handle_blood()
 
@@ -70,38 +80,32 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				if(!pale)
 					pale = 1
 					update_body()
-					var/word = pick("dizzy","woosey","faint")
-					src << "\red You feel [word]"
-				if(prob(1))
-					var/word = pick("dizzy","woosey","faint")
-					src << "\red You feel [word]"
+					var/word = pick("dizzy","woozy","faint")
+					src << "<span class='warning'>You feel [word].</span>"
 				if(oxyloss < 20)
 					oxyloss += 3
 			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
 				if(!pale)
 					pale = 1
 					update_body()
-				eye_blurry += 6
 				if(oxyloss < 50)
 					oxyloss += 10
 				oxyloss += 1
 				if(prob(5))
-					Paralyse(rand(1,3))
-					var/word = pick("dizzy","woosey","faint")
-					src << "\red You feel extremely [word]"
+					eye_blurry += 6
+					var/word = pick("dizzy","woozy","faint")
+					src << "<span class='warning'>You feel very [word].</span>"
 			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
 				oxyloss += 5
 				if(prob(15))
-					var/word = pick("dizzy","woosey","faint")
-					src << "\red You feel extremely [word]"
+					Paralyse(rand(1,3))
+					var/word = pick("dizzy","woozy","faint")
+					src << "<span class='warning'>You feel extremely [word].</span>"
 			if(0 to BLOOD_VOLUME_SURVIVE)
-				// There currently is a strange bug here. If the mob is not below -100 health
-				// when death() is called, apparently they will be just fine, and this way it'll
-				// spam deathgasp. Adjusting toxloss ensures the mob will stay dead.
 				death()
 
 		//Bleeding out
-		var/blood_max = 0
+		blood_max = 0
 		for(var/obj/item/organ/limb/org in organs)
 			var/brutedamage = org.brute_dam
 
@@ -111,14 +115,12 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				blood_max += 1
 			if(brutedamage > 80)
 				blood_max += 2
-
+		if(bleedsuppress)
+			blood_max = 0
 		drip(blood_max)
 
 //Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/carbon/human/proc/drip(var/amt as num)
-
-	if(NOBLOOD in dna.species.specflags)
-		return
 
 	if(!amt)
 		return

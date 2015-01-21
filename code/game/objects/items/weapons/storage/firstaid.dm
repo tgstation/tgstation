@@ -31,8 +31,8 @@
 
 	new /obj/item/device/healthanalyzer(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
+	new /obj/item/stack/medical/ointment(src)
+	new /obj/item/stack/medical/ointment(src)
 	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
 	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
 	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
@@ -45,11 +45,11 @@
 /obj/item/weapon/storage/firstaid/regular/New()
 	..()
 	if (empty) return
-	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
+	new /obj/item/stack/medical/gauze(src)
+	new /obj/item/stack/medical/ointment(src)
+	new /obj/item/stack/medical/ointment(src)
+	new /obj/item/stack/medical/bruise_pack(src)
+	new /obj/item/stack/medical/bruise_pack(src)
 	new /obj/item/device/healthanalyzer(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
 	return
@@ -102,13 +102,16 @@
 /obj/item/weapon/storage/firstaid/tactical/New()
 	..()
 	if (empty) return
-	new /obj/item/clothing/tie/stethoscope( src )
-	new /obj/item/weapon/surgicaldrill ( src )
-	new /obj/item/weapon/reagent_containers/hypospray/combat( src )
-	new /obj/item/weapon/reagent_containers/pill/patch/styptic( src )
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf( src )
-	new /obj/item/weapon/reagent_containers/syringe/lethal/choral( src )
-	new /obj/item/clothing/glasses/hud/health/night( src )
+	new /obj/item/stack/medical/gauze(src)
+	new /obj/item/stack/medical/gauze(src)
+	new /obj/item/stack/medical/ointment(src)
+	new /obj/item/stack/medical/bruise_pack(src)
+	new /obj/item/stack/medical/bruise_pack(src)
+	new /obj/item/device/healthanalyzer(src)
+	new /obj/item/weapon/surgicaldrill(src)
+	new /obj/item/weapon/reagent_containers/hypospray/combat(src)
+	new /obj/item/weapon/reagent_containers/syringe/lethal/choral(src)
+	new /obj/item/clothing/glasses/hud/health/night(src)
 	return
 
 
