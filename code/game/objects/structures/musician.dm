@@ -324,7 +324,7 @@
 
 /obj/structure/piano/attack_hand(mob/user as mob)
 	if(!user.IsAdvancedToolUser())
-		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
+		user << "<span class='danger'>You don't have the dexterity to do this!</span>"
 		return 1
 	interact(user)
 
