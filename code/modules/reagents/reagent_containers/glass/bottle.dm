@@ -63,7 +63,7 @@
 	spawned_amount = 15
 
 /obj/item/weapon/reagent_containers/glass/bottle/charcoal
-	name = "charcoal bottle"
+	name = "antitoxin bottle"
 	desc = "A small bottle of charcoal."
 	icon_state = "bottle17"
 	spawned_reagent = "charcoal"
@@ -260,3 +260,28 @@
 	desc = "A small bottle. Contains a sample of invasive Apidae."
 	icon_state = "bottle3"
 	spawned_disease = /datum/disease/beesease
+
+/obj/item/weapon/reagent_containers/glass/bottle/diphenhydramine
+	name = "antihistamine bottle"
+	desc = "A small bottle of diphenhydramine."
+	icon_state = "bottle20"
+	spawned_reagent = "diphenhydramine"
+
+/obj/item/weapon/reagent_containers/glass/bottle/potass_iodide
+	name = "anti-radiation bottle"
+	desc = "A small bottle of potassium iodide."
+	icon_state = "bottle11"
+	spawned_reagent = "potass_iodide"
+
+/obj/item/weapon/reagent_containers/glass/bottle/salglu_solution
+	name = "saline-glucose solution bottle"
+	desc = "A small bottle of saline-glucose solution."
+	icon_state = "bottle1"
+	spawned_reagent = "salglu_solution"
+
+/obj/item/weapon/reagent_containers/glass/bottle/atropine
+	name = "atropine bottle"
+	desc = "A small bottle of atropine."
+	icon_state = "bottle12"
+	spawned_reagent = "atropine"
+
