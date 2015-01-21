@@ -11,6 +11,7 @@
 	fire_delay = 2
 	var/select = 1
 	action_button_name = "Toggle Firemode"
+	pin = null
 
 /obj/item/weapon/gun/projectile/automatic/update_icon()
 	..()
@@ -235,3 +236,4 @@
 	can_suppress = 0
 	burst_size = 4
 	fire_delay = 1
+	pin = /obj/item/device/firing_pin

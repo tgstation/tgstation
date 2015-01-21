@@ -35,6 +35,7 @@
 	burst_size = 1
 	fire_delay = 0
 	action_button_name = null
+	pin = /obj/item/device/firing_pin
 
 /obj/item/weapon/gun/projectile/automatic/gyropistol/process_chamber(var/eject_casing = 0, var/empty_chamber = 1)
 	..()
@@ -58,6 +59,7 @@
 	fire_delay = 0
 	select = 0
 	action_button_name = null
+	pin = /obj/item/device/firing_pin
 
 /obj/item/weapon/gun/projectile/automatic/speargun/update_icon()
 	return
