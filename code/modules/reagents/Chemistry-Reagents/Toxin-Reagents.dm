@@ -321,10 +321,10 @@ datum/reagent/toxin/acid/reaction_obj(var/obj/O, var/volume)
 		return
 	O.acid_act(acidpwr, toxpwr, volume)
 
-datum/reagent/toxin/acid/polyacid
-	name = "Polytrinic acid"
-	id = "pacid"
-	description = "Polytrinic acid is a an extremely corrosive chemical substance."
+datum/reagent/toxin/acid/fluacid
+	name = "Fluorosulfuric acid"
+	id = "facid"
+	description = "Fluorosulfuric acid is a an extremely corrosive chemical substance."
 	color = "#8E18A9" // rgb: 142, 24, 169
 	toxpwr = 2
 	acidpwr = 20

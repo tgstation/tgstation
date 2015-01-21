@@ -9,7 +9,7 @@ datum/reagent/silver_sulfadiazine
 	id = "silver_sulfadiazine"
 	description = "100% chance per cycle of healing 2 points of BURN damage."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#ECDB19"
 	metabolization_rate = 2
 
 datum/reagent/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
@@ -35,7 +35,7 @@ datum/reagent/styptic_powder
 	id = "styptic_powder"
 	description = "100% chance per cycle of healing 2 points of BRUTE damage."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#FF9696"
 	metabolization_rate = 2
 
 datum/reagent/styptic_powder/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
@@ -61,7 +61,7 @@ datum/reagent/salglu_solution
 	id = "salglu_solution"
 	description = "50% chance per cycle of healing 2 points each of BRUTE and BURN damage."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#BEBEBE"
 
 datum/reagent/salglu_solution/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -76,7 +76,7 @@ datum/reagent/synthflesh
 	id = "synthflesh"
 	description = "100% chance per cycle of healing 1 point each of BRUTE and BURN damage."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#000000"
 
 datum/reagent/synthflesh/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 	if(!M) M = holder.my_atom
@@ -92,7 +92,7 @@ datum/reagent/charcoal
 	id = "charcoal"
 	description = "Heals 3 TOX damage per cycle and purges other chemicals slowly."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#323232"
 
 datum/reagent/charcoal/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -146,7 +146,7 @@ datum/reagent/omnizine
 	id = "omnizine"
 	description = "Heals one each of OXY, TOX, BRUTE and BURN per cycle."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#BEBEBE"
 	metabolization_rate = 0.2
 	overdose_threshold = 30
 
@@ -172,7 +172,7 @@ datum/reagent/calomel
 	id = "calomel"
 	description = "Increases all depletion rates by 5. +5 TOX damage while health > 20."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#64CB73"
 
 datum/reagent/calomel/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -197,7 +197,7 @@ datum/reagent/potass_iodide
 	id = "potass_iodide"
 	description = "80% chance of removing 1 RAD. Radiation is cumulative and causes tox+burn."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C1E6C7"
 
 datum/reagent/potass_iodide/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -250,7 +250,7 @@ datum/reagent/sal_acid
 	id = "sal_acid"
 	description = "If BRUTE damage is under 50, 50% chance to heal two units."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#2E2E2E"
 	overdose_threshold = 25
 
 datum/reagent/sal_acid/on_mob_life(var/mob/living/M as mob)
@@ -280,7 +280,7 @@ datum/reagent/salbutamol
 	id = "salbutamol"
 	description = "Heals 6 OXY damage, reduces LOSEBREATH by 4."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#00FFFF"
 	metabolization_rate = 0.2
 
 datum/reagent/salbutamol/on_mob_life(var/mob/living/M as mob)
@@ -363,7 +363,7 @@ datum/reagent/diphenhydramine
 	id = "diphenhydramine"
 	description = "Causes a little bit of drowsiness, reduces jitteriness. Raises histamine depletion rates by 3."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#76E6FC"
 datum/reagent/diphenhydramine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.jitteriness -= 1
@@ -384,7 +384,7 @@ datum/reagent/morphine
 	id = "morphine"
 	description = "Dramatically counters movement reduction from severe injury. Reduces jitteriness if someone is shaking like crazy from whatever. Will knock you out within 36 cycles if any remains in you."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#D1ECE9"
 	var/cycle_count = 0
 	overdose_threshold = 30
 	addiction_threshold = 25
@@ -486,7 +486,7 @@ datum/reagent/atropine
 	id = "atropine"
 	description = "1 TOX damage if used over -60 health. Causes dizziness and confusion. If under 0 health, heals 3 BRUTE + 3 BURN. Attempts to cap OXY damage at 65 and LOSEBREATH at 5."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#000000"
 	metabolization_rate = 0.2
 	overdose_threshold = 35
 
@@ -527,7 +527,7 @@ datum/reagent/epinephrine
 	id = "epinephrine"
 	description = "Reduces most of the knockout/stun effects, minor stamina regeneration buff. Attempts to cap OXY damage at 35 and LOSEBREATH at 3. If health is between -10 to -65, heals 1 TOX, 1 BRUTE, 1 BURN."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#D1ECE9"
 	metabolization_rate = 0.2
 	overdose_threshold = 30
 
@@ -697,7 +697,7 @@ proc/chemical_mob_spawn(var/datum/reagents/holder, var/amount_to_spawn, var/reac
 	name = "Mannitol"
 	id = "mannitol"
 	description = "Heals 3 BRAIN damage."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#5096C8"
 
 /datum/reagent/mutadone/on_mob_life(var/mob/living/carbon/human/M as mob)
 	M.jitteriness = 0
@@ -718,13 +718,13 @@ proc/chemical_mob_spawn(var/datum/reagents/holder, var/amount_to_spawn, var/reac
 	name = "Mutadone"
 	id = "mutadone"
 	description = "Chance to remove genetic disabilities."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#5096C8"
 
 datum/reagent/antihol
 	name = "Antihol"
 	id = "antihol"
 	description = "A powerful oxidizer that reacts with ethanol."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#18BA9F"
 
 datum/reagent/antihol/on_mob_life(var/mob/living/M as mob)
 	M.dizziness = 0
@@ -746,5 +746,5 @@ datum/reagent/antihol/on_mob_life(var/mob/living/M as mob)
 	name = "Cryoxadone"
 	id = "cryoxadone"
 	result = "cryoxadone"
-	required_reagents = list("stable_plasma" = 1, "acetone" = 1, "mutagen" = 1)
-	result_amount = 3
+	required_reagents = list("stable_plasma" = 1, "acetone" = 1, "mutagen" = 1, "mannitol" = 1)
+	result_amount = 4
