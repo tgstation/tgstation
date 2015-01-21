@@ -75,14 +75,14 @@
 			inserted_id = I
 			interact(user)
 		return
+	if(default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", W))
+		updateUsrDialog()
+		return
 	if(panel_open)
 		if(istype(W, /obj/item/weapon/crowbar))
 			empty_content()
 			default_deconstruction_crowbar(W)
 		return 1
-	if(default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", W))
-		updateUsrDialog()
-		return
 	..()
 
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(var/obj/item/weapon/ore/O)
