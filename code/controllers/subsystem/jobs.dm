@@ -344,7 +344,8 @@ var/datum/subsystem/job/SSjob
 	H << "<b>To speak on your departments radio, use the :h button. To see others, look closely at your headset.</b>"
 	if(job.req_admin_notify)
 		H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
-	H << "<FONT color='blue'><B>As this station was initially staffed with a [config.jobs_have_minimal_access ? "full crew, only your job's necessities" : "skeleton crew, additional access"] have been added to your ID card.</B></font>"
+	if(config.minimal_access_threshold)
+		H << "<FONT color='blue'><B>As this station was initially staffed with a [config.jobs_have_minimal_access ? "full crew, only your job's necessities" : "skeleton crew, additional access"] have been added to your ID card.</B></font>"
 
 	H.update_hud() 	// Tmp fix for Github issue 1006. TODO: make all procs in update_icons.dm do client.screen |= equipment no matter what.
 	return 1
