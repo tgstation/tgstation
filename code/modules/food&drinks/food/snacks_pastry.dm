@@ -223,7 +223,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/donkpocketwarm/New()
 	..()
-	reagents.add_reagent("tricordrazine", 4)
+	reagents.add_reagent("omnizine", 4)
 	reagents.add_reagent("nutriment", 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/fortunecookie

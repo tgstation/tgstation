@@ -177,4 +177,4 @@
 
 /obj/item/weapon/reagent_containers/pill/salicyclic/New()
 	..()
-	reagents.add_reagent("sac_acid", 50)
+	reagents.add_reagent("sal_acid", 50)

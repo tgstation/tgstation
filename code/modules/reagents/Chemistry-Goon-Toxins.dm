@@ -196,8 +196,8 @@ datum/reagent/itching_powder/on_mob_life(var/mob/living/M as mob)
 	name = "Itching Powder"
 	id = "itching_powder"
 	result = "itching_powder"
-	required_reagents = list("fuel" = 1, "ammonia" = 1)
-	result_amount = 2
+	required_reagents = list("fuel" = 1, "ammonia" = 1, "charcoal" = 1)
+	result_amount = 3
 
 /datum/chemical_reaction/facid
 	name = "Fluorosulfuric acid"

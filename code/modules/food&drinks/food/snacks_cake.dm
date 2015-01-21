@@ -30,7 +30,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/braincake/New()
 	..()
 	reagents.add_reagent("nutriment", 20)
-	reagents.add_reagent("alkysine", 10)
+	reagents.add_reagent("mannitol", 10)
 	reagents.add_reagent("vitamin", 5)
 	bitesize = 2
 
