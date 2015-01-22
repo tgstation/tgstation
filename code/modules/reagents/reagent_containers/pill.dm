@@ -129,4 +129,4 @@
 	name = "salicyclic acid pill"
 	desc = "Used to dull pain."
 	icon_state = "pill5"
-	list_reagents = list("sac_acid" = 50)
+	list_reagents = list("sal_acid" = 50)

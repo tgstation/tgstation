@@ -6,9 +6,9 @@
 	bitesize = 3
 	list_reagents = list("nutriment" = 3)
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh
-	name = "synthetic meat"
-	desc = "A synthetic slab of flesh."
+/obj/item/weapon/reagent_containers/food/snacks/meat/synthmeat
+	name = "synthmeat"
+	desc = "A synthetic slab of meat."
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/human
 	name = "-meat"

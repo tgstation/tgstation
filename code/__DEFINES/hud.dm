@@ -24,3 +24,4 @@
 #define ANTAG_HUD_OPS		7
 #define ANTAG_HUD_GANG_A	8
 #define ANTAG_HUD_GANG_B	9
+#define ANTAG_HUD_WIZ		10

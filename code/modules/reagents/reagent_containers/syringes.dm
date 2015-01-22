@@ -238,6 +238,13 @@
 	desc = "Contains antiviral agents."
 	list_reagents = list("spaceacillin" = 15)
 
+/obj/item/weapon/reagent_containers/syringe/stimulants
+	name = "Stimpack"
+	desc = "Contains stimulants."
+	amount_per_transfer_from_this = 50
+	volume = 50
+	list_reagents = list("stimulants" = 50)
+
 /obj/item/weapon/reagent_containers/syringe/calomel
 	name = "syringe (calomel)"
 	desc = "Contains calomel."

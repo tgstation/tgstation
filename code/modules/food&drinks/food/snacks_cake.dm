@@ -19,7 +19,7 @@
 	icon_state = "braincake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/braincakeslice
 	slices_num = 5
-	list_reagents = list("nutriment" = 20, "alkysine" = 10, "vitamin" = 5)
+	list_reagents = list("nutriment" = 20, "mannitol" = 10, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/braincakeslice
 	name = "brain cake slice"

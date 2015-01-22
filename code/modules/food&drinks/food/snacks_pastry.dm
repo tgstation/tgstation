@@ -134,7 +134,7 @@
 	name = "\improper Warm Donk-pocket"
 	desc = "The heated food of choice for the seasoned traitor."
 	icon_state = "donkpocket"
-	list_reagents = list("nutriment" = 4, "tricordrazine" = 4)
+	list_reagents = list("nutriment" = 4, "omnizine" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/fortunecookie
 	name = "fortune cookie"

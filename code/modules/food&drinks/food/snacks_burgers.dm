@@ -59,7 +59,7 @@
 	name = "brainburger"
 	desc = "A strange looking burger. It looks almost sentient."
 	icon_state = "brainburger"
-	list_reagents = list("nutriment" = 6, "alkysine" = 6, "vitamin" = 5)
+	list_reagents = list("nutriment" = 6, "mannitol" = 6, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/ghost
 	name = "ghost burger"
