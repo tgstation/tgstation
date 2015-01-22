@@ -257,7 +257,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		//AB is a universal receiver.
 	return 0
 
-/mob/living/carbon/proc/blood_splatter(var/target,var/datum/reagent/blood/source,var/large)
+/mob/living/carbon/proc/blood_splatter(var/target,var/datum/reagent/blood/source)
 
 	var/obj/effect/decal/cleanable/blood/B
 	var/decal_type = /obj/effect/decal/cleanable/blood/splatter
@@ -273,24 +273,21 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			source.data["blood_DNA"] = donor.dna.unique_enzymes
 			source.data["blood_type"] = donor.dna.blood_type
 
-	// Are we dripping or splattering?
-	if(!large)
+	// Only a certain number of drips can be on a given turf.
+	var/list/drips = list()
+	var/list/drip_icons = list("1","2","3","4","5")
 
-		// Only a certain number of drips can be on a given turf.
-		var/list/drips = list()
-		var/list/drip_icons = list("1","2","3","4","5")
+	for(var/obj/effect/decal/cleanable/blood/drip/drop in T)
+		drips += drop
+		drip_icons.Remove(drop.icon_state)
 
-		for(var/obj/effect/decal/cleanable/blood/drip/drop in T)
-			drips += drop
-			drip_icons.Remove(drop.icon_state)
-
-		// If we have too many drips, remove them and spawn a proper blood splatter.
-		if(drips.len >= 5)
-			//TODO: copy all virus data from drips to new splatter?
-			for(var/obj/effect/decal/cleanable/blood/drip/drop in drips)
-				del drop
-		else
-			decal_type = /obj/effect/decal/cleanable/blood/drip
+	// If we have too many drips, remove them and spawn a proper blood splatter.
+	if(drips.len >= 5)
+		//TODO: copy all virus data from drips to new splatter?
+		for(var/obj/effect/decal/cleanable/blood/drip/drop in drips)
+			del drop
+	else
+		decal_type = /obj/effect/decal/cleanable/blood/drip
 
 	// Find a blood decal or create a new one.
 	B = locate(decal_type) in T
