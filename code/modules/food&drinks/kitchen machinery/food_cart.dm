@@ -21,10 +21,8 @@
 /obj/machinery/food_cart/New()
 	..()
 	create_reagents(LIQUID_CAPACIY)
-	mixer = new /obj/item/weapon/reagent_containers(src)
+	mixer = new /obj/item/weapon/reagent_containers(src, MIXER_CAPACITY)
 	mixer.name = "Mixer"
-	mixer.volume = MIXER_CAPACITY
-	mixer.create_reagents(MIXER_CAPACITY)
 
 /obj/machinery/food_cart/attack_hand(mob/user as mob)
 	user.set_machine(src)
