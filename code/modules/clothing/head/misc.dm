@@ -178,7 +178,7 @@
 	M.facial_hair_style = "Neckbeard"
 	M.update_icon = 1
 
-/obj/item/clothing/head/fedora/attack_self()
+/obj/item/clothing/head/fedora/euphoric/attack_self()
 	..()
 	usr.say("M'lady.")
 
