@@ -254,19 +254,10 @@
 	if(M != user || !ismob(M) || get_dist(src, user) > 1 || user.restrained() || user.lying || user.stat || M.buckled || istype(user, /mob/living/silicon))
 		return
 
-	unbuckle_mob()
+	..()
 
-	M.visible_message(\
-		"<span class='notice'>[M] climbs onto the [callme]!</span>",\
-		"<span class='notice'>You climb onto the [callme]!</span>")
-
-	M.buckled = src
 	M.loc = loc
-	M.dir = dir
-	M.update_canmove()
-	buckled_mob = M
 	update_mob()
-	add_fingerprint(user)
 
 /obj/structure/stool/bed/chair/janicart/unbuckle_mob()
 	if(buckled_mob)
