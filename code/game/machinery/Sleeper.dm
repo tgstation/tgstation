@@ -128,9 +128,9 @@
 
 	dat += "<HR>Autosleeper Timer</hr> <br/>"
 	if (timing)
-		dat += "<a href='?src=\ref[src];timing=0'>Stop Timer and open door</a><br/>"
+		dat += "<a href='?src=\ref[src];timing=0'>Stop Timer</a><br/>"
 	else
-		dat += "<a href='?src=\ref[src];timing=1'>Activate Timer and close door</a><br/>"
+		dat += "<a href='?src=\ref[src];timing=1'>Activate Timer</a><br/>"
 
 	dat += "Time Left: [(minute ? text("[minute]:") : null)][second] <br/>"
 	dat += "<a href='?src=\ref[src];tp=-60'>-</a> <a href='?src=\ref[src];tp=-1'>-</a> <a href='?src=\ref[src];tp=1'>+</a> <A href='?src=\ref[src];tp=60'>+</a><br/>"
@@ -228,12 +228,11 @@
 	if(!timing)
 		return
 	if(timeleft() && occupant)
-		occupant.paralysis = timeleft
+		occupant.paralysis += 0.75
 		timeleft -= 10
 		if(occupant.reagents.get_reagent_amount("salglu_solution") < 25)
 			occupant.reagents.add_reagent("salglu_solution", 5)
 	else if(!timeleft() && occupant)
-		occupant.paralysis = 0
 		go_out()
 
 /obj/machinery/sleeper/proc/timeset(var/seconds)
