@@ -248,6 +248,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	projectilesound = 'sound/items/bikehorn.ogg'
 	casingtype = null
 	Attackemote = "aims menacingly at"
+	var/obj/item/weapon/gun/TrueGun = null
 	var/obj/item/weapon/gun/magic/Zapstick = list()
 	var/obj/item/weapon/gun/projectile/Pewgun = list()
 	var/obj/item/weapon/gun/energy/Zapgun = list()
@@ -273,6 +274,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 			melee_damage_lower = G.force - max(0, (G.force / 2))
 			move_to_delay = 2 * G.w_class + 1
 			projectilesound = G.fire_sound
+			TrueGun = G
 
 			if(istype(G, /obj/item/weapon/gun/magic))
 				Zapstick = G
@@ -305,54 +307,42 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	return
 
 /mob/living/simple_animal/hostile/mimic/copy/ranged/OpenFire(var/the_target)
-	walk(src, 0) //to stop retreating
 	if(Zapgun)
 		if(Zapgun.power_supply) //sanity
 			var/obj/item/ammo_casing/energy/shot = Zapgun.ammo_type[Zapgun.select]
 			if(Zapgun.power_supply.charge >= shot.e_cost) //if she can zap
 				Zapgun.power_supply.use(shot.e_cost)
+				Zapgun.update_icon()
 				..() //zap 'em
-			else
-				Getouttathere(the_target)
-		else
-			Getouttathere(the_target)
 	if(Zapstick)
 		if(Zapstick.charges)
 			Zapstick.charges--
+			Zapstick.update_icon()
 			..()
-		else
-			Getouttathere(the_target)
 	if(Pewgun)
 		if(Pewgun.chambered)
-			if(Pewgun.magazine)
-				if(Pewgun.magazine.stored_ammo.len)
-					var/obj/item/ammo_casing/TempBullet = Pewgun.magazine.get_round(0)
-					if(TempBullet.BB)
-						qdel(TempBullet)
-						..() //fire from mag
-					else
-						TempBullet.loc = src.loc //dump empty shell
-						TempBullet = null
-						visible_message("<span class='danger'>The <b>[src]</b> clears a jam!</span>")
-				else if(Pewgun.chambered.BB)
-					qdel(Pewgun.chambered)
-					..() //the last boolet
-			else if(Pewgun.chambered.BB) //just if would prob work
-				qdel(Pewgun.chambered)
+			if(Pewgun.chambered.BB)
+				qdel(Pewgun.chambered.BB)
+				Pewgun.chambered.BB = null //because qdel takes too long, ensures icon update
+				Pewgun.chambered.update_icon()
 				..()
 			else
-				Getouttathere(the_target)
-		else
-			Getouttathere(the_target)
+				visible_message("<span class='danger'>The <b>[src]</b> clears a jam!</span>")
+			Pewgun.chambered.loc = src.loc //rip revolver immersions, blame shotgun snowflake procs
+			Pewgun.chambered = null
+			if(Pewgun.magazine && Pewgun.magazine.stored_ammo.len)
+				Pewgun.chambered = Pewgun.magazine.get_round(0)
+				Pewgun.chambered.loc = Pewgun
+			Pewgun.update_icon()
+		else if(Pewgun.magazine && Pewgun.magazine.stored_ammo.len) //only true for pumpguns i think
+			Pewgun.chambered = Pewgun.magazine.get_round(0)
+			Pewgun.chambered.loc = Pewgun
+			visible_message("<span class='danger'>The <b>[src]</b> cocks itself!</span>")
+
 	else //if somehow the mimic has no weapon
 		src.ranged = 0 //BANZAIIII
 		src.retreat_distance = 0
 		src.minimum_distance = 1
-	return
-
-//rather not make a new proc for this but can't figure out how to retreat otherwise. maybe make a generalized s_animal retreat proc
-/mob/living/simple_animal/hostile/mimic/copy/ranged/proc/Getouttathere(var/the_target)
-	walk_away(src, the_target) //needs improvement
-	if(prob(20))
-		visible_message("<span class='danger'>The <b>[src]</b> skedaddles outta there!</span>")
+	src.icon_state = TrueGun.icon_state
+	src.icon_living = TrueGun.icon_state
 	return
