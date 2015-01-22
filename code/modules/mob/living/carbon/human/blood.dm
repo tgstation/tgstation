@@ -109,11 +109,11 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		for(var/obj/item/organ/limb/org in organs)
 			var/brutedamage = org.brute_dam
 
-			if(brutedamage > 40)
+			if(brutedamage > 20)
 				blood_max += 0.5
-			if(brutedamage > 60)
+			if(brutedamage > 40)
 				blood_max += 1
-			if(brutedamage > 80)
+			if(brutedamage > 60)
 				blood_max += 2
 		if(bleedsuppress)
 			blood_max = 0
