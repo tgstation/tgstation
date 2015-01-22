@@ -343,7 +343,7 @@
 	if(exp == SCANTYPE_HEAT)
 		visible_message("<span class='notice'>[src] raises [exp_on]'s temperature.</span>")
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
-			visible_message("<span class='notice'>[src]'s emergency coolant system gives off a small beep!</span>")
+			visible_message("<span class='danger'>[src]'s emergency coolant system gives off a small beep!</span>")
 			var/obj/item/weapon/reagent_containers/food/drinks/coffee/C = new /obj/item/weapon/reagent_containers/food/drinks/coffee(get_turf(pick(oview(1,src))))
 			var/list/chems = list("plasma","capsaicin","ethanol")
 			C.reagents.remove_any(25)
