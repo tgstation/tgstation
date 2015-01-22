@@ -54,7 +54,7 @@
 		var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
 
 		if(stop_bleeding)
-			if(H.bleedsuppress) //so you can't stack bleed suppression
+			if(!H.bleedsuppress) //so you can't stack bleed suppression
 				H.suppress_bloodloss(stop_bleeding)
 
 		if(affecting.status == ORGAN_ORGANIC) //Limb must be organic to be healed - RR
