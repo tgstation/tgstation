@@ -15,10 +15,10 @@
 	var/efficiency
 	var/initial_bin_rating = 1
 	var/min_health = 25
-	var/list/injection_chems = list() //list of injectable chems except ephedrine, coz ephedrine is always avalible
-	var/list/possible_chems = list(list("morphine", "salbutamol", "salglu_solution"),
-								   list("morphine", "salbutamol", "salglu_solution", "oculine"),
-								   list("morphine", "salbutamol", "salglu_solution", "oculine", "charcoal", "mutadone", "mannitol", "pen_acid"))
+	var/timing = 0
+	var/timeleft = 0
+	var/releasetime = 0
+
 /obj/machinery/sleeper/New()
 	..()
 	component_parts = list()
@@ -34,6 +34,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/stack/cable_coil(null, 1)
 	RefreshParts()
+	SSobj.processing.Add(src)
 
 /obj/machinery/sleeper/RefreshParts()
 	var/E
@@ -43,7 +44,6 @@
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		I += M.rating
 
-	injection_chems = possible_chems[I]
 	efficiency = E
 	min_health = -E * 25
 
@@ -122,22 +122,19 @@
 	sleeperUI(user)
 
 /obj/machinery/sleeper/proc/sleeperUI(mob/user)
-	var/dat
-	dat += "<h3>Injector</h3>"
-	if(occupant)
-		dat += "<A href='?src=\ref[src];inject=epinephrine'>Inject epinephrine</A>"
+	var/second = round(timeleft() % 60)
+	var/minute = round((timeleft() - second) / 60)
+	var/dat = "<HTML><BODY><TT>"
+
+	dat += "<HR>Autosleeper Timer</hr> <br/>"
+	if (timing)
+		dat += "<a href='?src=\ref[src];timing=0'>Stop Timer and open door</a><br/>"
 	else
-		dat += "<span class='linkOff'>Inject Epinephrine</span>"
-	if(occupant && occupant.health > min_health)
-		for(var/re in injection_chems)
-			var/datum/reagent/C = chemical_reagents_list[re]
-			if(C)
-				dat += "<BR><A href='?src=\ref[src];inject=[C.id]'>Inject [C.name]</A>"
-	else
-		for(var/re in injection_chems)
-			var/datum/reagent/C = chemical_reagents_list[re]
-			if(C)
-				dat += "<BR><span class='linkOff'>Inject [C.name]</span>"
+		dat += "<a href='?src=\ref[src];timing=1'>Activate Timer and close door</a><br/>"
+
+	dat += "Time Left: [(minute ? text("[minute]:") : null)][second] <br/>"
+	dat += "<a href='?src=\ref[src];tp=-60'>-</a> <a href='?src=\ref[src];tp=-1'>-</a> <a href='?src=\ref[src];tp=1'>+</a> <A href='?src=\ref[src];tp=60'>+</a><br/>"
+	dat += "</TT></BODY></HTML>"
 
 	dat += "<h3>Sleeper Status</h3>"
 	dat += "<A href='?src=\ref[src];refresh=1'>Scan</A>"
@@ -180,6 +177,19 @@
 	if(..() || usr == occupant)
 		return
 	usr.set_machine(src)
+
+	if(href_list["timing"]) //switch between timing and not timing
+		var/timeleft = timeleft()
+		timeleft = min(max(round(timeleft), 0), 600)
+		timing = text2num(href_list["timing"])
+		timeset(timeleft)
+	else if(href_list["tp"]) //adjust timer
+		var/timeleft = timeleft()
+		var/tp = text2num(href_list["tp"])
+		timeleft += tp
+		timeleft = min(max(round(timeleft), 0), 600)
+		timeset(timeleft)
+
 	if(href_list["refresh"])
 		updateUsrDialog()
 		return
@@ -189,13 +199,6 @@
 	if(href_list["close"])
 		close_machine()
 		return
-	if(occupant && occupant.stat != DEAD)
-		if(href_list["inject"] == "epinephrine" || occupant.health > min_health)
-			inject_chem(usr, href_list["inject"])
-		else
-			usr << "<span class='notice'>ERROR: Subject is not in stable condition for auto-injection.</span>"
-	else
-		usr << "<span class='notice'>ERROR: Subject cannot metabolise chemicals.</span>"
 	updateUsrDialog()
 	add_fingerprint(usr)
 
@@ -213,18 +216,34 @@
 	if(state_open && !panel_open)
 		..(target)
 
-/obj/machinery/sleeper/proc/inject_chem(mob/user, chem)
-	if(!is_operational())
-		return
-	if(occupant && occupant.reagents)
-		if(chem in injection_chems + "epinephrine")
-			if(occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency)
-				occupant.reagents.add_reagent(chem, 10)
-			var/units = round(occupant.reagents.get_reagent_amount(chem))
-			user << "<span class='notice'>Occupant now has [units] unit\s of [chem] in their bloodstream.</span>"
-
 /obj/machinery/sleeper/update_icon()
 	if(state_open)
 		icon_state = "sleeper-open"
 	else
 		icon_state = "sleeper"
+
+/obj/machinery/sleeper/process()
+	if(stat & (BROKEN|NOPOWER))
+		return
+	if(!timing)
+		return
+	if(timeleft() && occupant)
+		occupant.paralysis = timeleft
+		timeleft -= 10
+		if(occupant.reagents.get_reagent_amount("salglu_solution") < 25)
+			occupant.reagents.add_reagent("salglu_solution", 5)
+	else if(!timeleft() && occupant)
+		occupant.paralysis = 0
+		go_out()
+
+/obj/machinery/sleeper/proc/timeset(var/seconds)
+	if(timing)
+		releasetime=world.time+seconds*10
+	else
+		timeleft=seconds*10
+	return
+
+/obj/machinery/sleeper/proc/timeleft()
+	. = (timing ? (releasetime-world.time) : timeleft)/10
+	if(. < 0)
+		. = 0
