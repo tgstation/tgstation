@@ -54,20 +54,6 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 
-/obj/item/clothing/suit/greatcoat
-	name = "greatcoat"
-	desc = "A Nazi greatcoat."
-	icon_state = "nazi"
-	item_state = "nazi"
-
-
-/obj/item/clothing/suit/johnny_coat
-	name = "johnny~~ coat"
-	desc = "Johnny~~"
-	icon_state = "johnny"
-	item_state = "johnny"
-
-
 /obj/item/clothing/suit/justice
 	name = "justice suit"
 	desc = "this pretty much looks ridiculous" //Needs no fixing
@@ -214,7 +200,7 @@
 	name = "bomber jacket"
 	desc = "Aviators not included."
 	icon_state = "bomberjacket"
-	item_state = "johnny"
+	item_state = "brownjsuit"
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter)
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS

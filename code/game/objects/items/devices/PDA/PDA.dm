@@ -771,6 +771,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	var/t = msg_input(U)
 
+	if (!t)
+		return
+
 	if (last_text && world.time < last_text + 5)
 		return
 

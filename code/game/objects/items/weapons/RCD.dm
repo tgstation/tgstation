@@ -180,7 +180,7 @@ RCD
 						if(!D.sub_door)
 							door_check = 0
 							break
-		
+
 					if(door_check)
 						user << "Building Airlock..."
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)

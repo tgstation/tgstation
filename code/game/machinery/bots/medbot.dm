@@ -553,6 +553,8 @@
 		A.skin = "tox"
 	else if(istype(src,/obj/item/weapon/storage/firstaid/o2))
 		A.skin = "o2"
+	else if(istype(src,/obj/item/weapon/storage/firstaid/brute))
+		A.skin = "brute"
 
 	qdel(S)
 	user.put_in_hands(A)
