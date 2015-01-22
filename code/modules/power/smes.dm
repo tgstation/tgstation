@@ -24,6 +24,9 @@
 	var/output_level = 50000 // amount of power the SMES attempts to output
 	var/output_level_max = 200000 // cap on output_level
 	var/output_used = 0 // amount of power actually outputted. may be less than output_level if the powernet returns excess power
+	
+	var/charged = 0	// need for batteries handling
+	var/drained = 0 // need for batteries handling
 
 	var/obj/machinery/power/terminal/terminal = null
 
@@ -59,13 +62,16 @@
 /obj/machinery/power/smes/RefreshParts()
 	var/IO = 0
 	var/C = 0
+	var/P = 0
 	for(var/obj/item/weapon/stock_parts/capacitor/CP in component_parts)
 		IO += CP.rating
 	input_level_max = 200000 * IO
 	output_level_max = 200000 * IO
 	for(var/obj/item/weapon/stock_parts/cell/PC in component_parts)
 		C += PC.maxcharge
+		P += PC.charge
 	capacity = C / (15000) * 1e6
+	charge = P / (15000) * 1e6
 
 /obj/machinery/power/smes/attackby(obj/item/I, mob/user)
 	//opening using screwdriver
@@ -212,8 +218,9 @@
 			if(input_available > 0 && input_available >= input_level)		// if there's power available, try to charge
 
 				var/load = min((capacity-charge)/SMESRATE, input_level)		// charge at set rate, limited to spare capacity
+				charged = load * SMESRATE // need for batteries handling
 
-				charge += load * SMESRATE	// increase the charge
+				charge += charging	// increase the charge
 
 				add_load(load)		// add the load to the terminal side network
 
@@ -227,8 +234,9 @@
 	//outputting
 	if(outputting)
 		output_used = min( charge/SMESRATE, output_level)		//limit output to that stored
-
-		charge -= output_used*SMESRATE		// reduce the storage (may be recovered in /restore() if excessive)
+		drained = output_used*SMESRATE // need for batteries handling	
+		
+		charge -= drained	// reduce the storage (may be recovered in /restore() if excessive)
 
 		add_avail(output_used)				// add output to powernet (smes side)
 
@@ -243,8 +251,10 @@
 	// only update icon if state changed
 	if(last_disp != chargedisplay() || last_chrg != inputting || last_onln != outputting)
 		update_icon()
-
-
+	//handling batteries
+	handle_batteries()
+	charged = 0
+	drained = 0
 
 // called after all power processes are finished
 // restores charge level to smes if there was excess this ptick
@@ -266,15 +276,27 @@
 
 	var/clev = chargedisplay()
 
-	charge += excess * SMESRATE			// restore unused power
+	charged = excess * SMESRATE
+	charge += charged			// restore unused power
 	powernet.netexcess -= excess		// remove the excess from the powernet, so later SMESes don't try to use it
 
 	output_used -= excess
+	
+	handle_batteries()
+	charged = 0
 
 	if(clev != chargedisplay() ) //if needed updates the icons overlay
 		update_icon()
 	return
-
+	
+/obj/machinery/power/smes/proc/handle_batteries()
+	if((charged = 0) && (drained = 0))
+		return
+	for(var/obj/item/weapon/stock_parts/cell/PC in component_parts)
+		if(drained!=0)
+			PC.use(drained/5)
+		if(charged!=0)
+			PC.give(charged/5)
 
 /obj/machinery/power/smes/add_load(var/amount)
 	if(terminal && terminal.powernet)
