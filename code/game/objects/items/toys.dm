@@ -54,7 +54,7 @@
 			if(O.reagents.total_volume < 1)
 				user << "The [O] is empty."
 			else if(O.reagents.total_volume >= 1)
-				if(O.reagents.has_reagent("pacid", 1))
+				if(O.reagents.has_reagent("facid", 1))
 					user << "The acid chews through the balloon!"
 					O.reagents.reaction(user)
 					qdel(src)
