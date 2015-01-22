@@ -9,7 +9,6 @@
 	burst_size = 1
 	fire_delay = 0
 	action_button_name = null
-	pin = /obj/item/device/firing_pin
 
 /obj/item/weapon/gun/projectile/automatic/pistol/update_icon()
 	..()

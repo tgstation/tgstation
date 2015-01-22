@@ -1,16 +1,18 @@
 /obj/item/weapon/gun/projectile/automatic
-	name = "prototype SMG"
-	desc = "A prototype three-round burst 9mm submachine gun, designated 'SABR'. Has a threaded barrel for suppressors."
-	icon_state = "saber"
-	w_class = 3
 	origin_tech = "combat=4;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/smgm9mm
+	w_class = 3
 	var/alarmed = 0
+	var/select = 1
 	can_suppress = 1
 	burst_size = 3
 	fire_delay = 2
-	var/select = 1
 	action_button_name = "Toggle Firemode"
+
+/obj/item/weapon/gun/projectile/automatic/proto
+	name = "prototype SMG"
+	desc = "A prototype three-round burst 9mm submachine gun, designated 'SABR'. Has a threaded barrel for suppressors."
+	icon_state = "saber"
+	mag_type = /obj/item/ammo_box/magazine/smgm9mm
 	pin = null
 
 /obj/item/weapon/gun/projectile/automatic/update_icon()
@@ -236,4 +238,3 @@
 	can_suppress = 0
 	burst_size = 4
 	fire_delay = 1
-	pin = /obj/item/device/firing_pin
