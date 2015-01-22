@@ -69,7 +69,7 @@
 		return
 	if(src.occupied)
 		if(src.meattype == MEATTYPE_MONKEY && src.skintype == SKINTYPE_MONKEY)
-			if(src.skin == 1)
+			if(src.skin >= 1)
 				src.skin--
 				new /obj/item/stack/sheet/animalhide/monkey(src.loc)
 				user << "You remove the hide from the monkey!"
@@ -84,7 +84,7 @@
 				src.icon_state = "spike"
 				src.occupied = 0
 		else if(src.meattype == MEATTYPE_ALIEN && src.skintype == SKINTYPE_ALIEN)
-			if(src.skin == 1)
+			if(src.skin >= 1)
 				src.skin--
 				new /obj/item/stack/sheet/animalhide/xeno(src.loc)
 				user << "You remove the hide from the alien!"
