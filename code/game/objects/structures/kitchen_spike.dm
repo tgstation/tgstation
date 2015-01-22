@@ -10,6 +10,8 @@
 	var/meat = 0
 	var/occupied = 0
 	var/meattype = 0 // 0 - Nothing, 1 - Monkey, 2 - Xeno
+	var/skintype = 0
+	var/skin = 0
 
 /obj/structure/kitchenspike/attack_paw(mob/user as mob)
 	return src.attack_hand(usr)
@@ -23,6 +25,8 @@
 			src.occupied = 1
 			src.meat = 5
 			src.meattype = 1
+			src.skin = 1
+			src.skintype = 1
 			for(var/mob/O in viewers(src, null))
 				O.show_message(text("<span class='danger'>[user] has forced [G.affecting] onto the spike, killing them instantly!</span>"))
 			qdel(G.affecting)
@@ -36,6 +40,8 @@
 			src.occupied = 1
 			src.meat = 5
 			src.meattype = 2
+			src.skin = 1
+			src.skintype = 2
 			for(var/mob/O in viewers(src, null))
 				O.show_message(text("<span class='danger'>[user] has forced [G.affecting] onto the spike, killing them instantly!</span>"))
 			qdel(G.affecting)
@@ -55,10 +61,14 @@
 	if(..())
 		return
 	if(src.occupied)
-		if(src.meattype == 1)
-			if(src.meat > 1)
+		if(src.meattype == 1 && src.skintype == 1)
+			if(src.skin == 1)
+				src.skin--
+				new /obj/item/stack/sheet/animalhide/monkey(src.loc)
+				user << "You remove the hide from the monkey!"
+			else if(src.meat > 1)
 				src.meat--
-				new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey( src.loc )
+				new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src.loc )
 				usr << "You remove some meat from the monkey."
 			else if(src.meat == 1)
 				src.meat--
@@ -66,10 +76,14 @@
 				usr << "You remove the last piece of meat from the monkey!"
 				src.icon_state = "spike"
 				src.occupied = 0
-		else if(src.meattype == 2)
-			if(src.meat > 1)
+		else if(src.meattype == 2 && src.skintype == 2)
+			if(src.skin == 1)
+				src.skin--
+				new /obj/item/stack/sheet/animalhide/xeno(src.loc)
+				user << "You remove the hide from the alien!"
+			else if(src.meat > 1)
 				src.meat--
-				new /obj/item/weapon/reagent_containers/food/snacks/xenomeat( src.loc )
+				new /obj/item/weapon/reagent_containers/food/snacks/xenomeat(src.loc )
 				usr << "You remove some meat from the alien."
 			else if(src.meat == 1)
 				src.meat--
