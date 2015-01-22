@@ -77,10 +77,7 @@
 				mode = SHUTTLE_IDLE
 				timer = 0
 		if(SHUTTLE_CALL)
-			if(time_left < SSshuttle.emergencyFakeRecall * SSshuttle.emergencyCallTime)	//recall due to fake recalls
-				cancel()
-				SSshuttle.emergencyFakeRecall = 0
-			else if(time_left <= 0)
+			if(time_left <= 0)
 				//move emergency shuttle to station
 				if(dock(SSshuttle.getDock("emergency_home")))
 					setTimer(20)
@@ -90,7 +87,7 @@
 				send2irc("Server", "The Emergency Shuttle has docked with the station.")
 				priority_announce("The Emergency Shuttle has docked with the station. You have [timeLeft(600)] minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
 		if(SHUTTLE_DOCKED)
-			if(time_left == 0 && SSshuttle.emergencyNoEscape)
+			if(time_left <= 0 && SSshuttle.emergencyNoEscape)
 				priority_announce("Hostile enviroment detected. Departure has been postponed indefinitely pending conflict resolution.", null, 'sound/misc/notice1.ogg', "Priority")
 				mode = SHUTTLE_STRANDED
 			if(time_left <= 0 && !SSshuttle.emergencyNoEscape)

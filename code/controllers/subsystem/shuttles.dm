@@ -16,7 +16,6 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/emergencyEscapeTime = 1200	//time taken for emergency shuttle to reach a safe distance after leaving station (in deciseconds)
 	var/area/emergencyLastCallLoc
 	var/emergencyNoEscape
-	var/emergencyFakeRecall
 
 		//supply shuttle stuff
 	var/obj/docking_port/mobile/supply/supply
