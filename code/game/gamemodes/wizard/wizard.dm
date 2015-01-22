@@ -9,7 +9,7 @@
 	required_enemies = 1
 	recommended_enemies = 1
 	pre_setup_before_jobs = 1
-
+	var/use_huds = 0
 	var/finished = 0
 
 /datum/game_mode/wizard/announce()
@@ -40,6 +40,8 @@
 		equip_wizard(wizard.current)
 		name_wizard(wizard.current)
 		greet_wizard(wizard)
+		if(use_huds)
+			update_wiz_icons_added(wizard)
 	..()
 	return
 
@@ -276,5 +278,18 @@ Made a proc so this is not repeated 14 (or more) times.*/
 	else
 		return 1
 
+
 /proc/iswizard(mob/living/M as mob)
 	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.wizards)
+
+
+/datum/game_mode/proc/update_wiz_icons_added(datum/mind/wiz_mind)
+	var/datum/atom_hud/antag/wizhud = huds[ANTAG_HUD_WIZ]
+	wizhud.join_hud(wiz_mind.current)
+	set_antag_hud(wiz_mind.current, ((wiz_mind in wizards) ? "wizard" : "apprentice"))
+
+
+/datum/game_mode/proc/update_wiz_icons_removed(datum/mind/wiz_mind)
+	var/datum/atom_hud/antag/wizhud = huds[ANTAG_HUD_WIZ]
+	wizhud.leave_hud(wiz_mind.current)
+	set_antag_hud(wiz_mind.current, null)

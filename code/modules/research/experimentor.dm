@@ -466,7 +466,7 @@
 				m.apply_damage(50,"brute","chest")
 			var/list/reqs = ConvertReqString2List(exp_on.origin_tech)
 			for(var/T in reqs)
-				T = T + 1
+				reqs[T] = reqs[T] + 1
 			exp_on.origin_tech = ConvertReqList2String(reqs)
 		if(globalMalf > 51 && globalMalf < 75)
 			visible_message("<span class='notice'>[src] encounters a run-time error!</span>")
