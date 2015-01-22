@@ -4,7 +4,6 @@
 
 var/global/datum/controller/game_controller/master_controller //Set in world.New()
 
-var/global/last_tick_timeofday = world.timeofday
 var/global/last_tick_duration = 0
 
 var/global/air_processing_killed = 0
@@ -143,10 +142,6 @@ datum/controller/game_controller/proc/setup_objects()
 		while (1) // Far more efficient than recursively calling ourself.
 			if (isnull(failsafe))
 				new /datum/controller/failsafe()
-
-			var/currenttime = world.timeofday
-			last_tick_duration = (currenttime - last_tick_timeofday) / 10
-			last_tick_timeofday = currenttime
 
 			if (processing)
 				iteration++
