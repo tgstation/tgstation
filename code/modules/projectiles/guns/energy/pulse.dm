@@ -24,7 +24,7 @@
 	cell_type = "/obj/item/weapon/stock_parts/cell"
 
 /obj/item/weapon/gun/energy/pulse_rifle/pulse_carbine/loyalpin
-	pin = "/obj/item/device/firing_pin/implant/loyalty"
+	pin = /obj/item/device/firing_pin/implant/loyalty
 
 /obj/item/weapon/gun/energy/pulse_rifle/pulse_pistol
 	name = "pulse pistol"
@@ -36,7 +36,7 @@
 	cell_type = "/obj/item/weapon/stock_parts/cell"
 
 /obj/item/weapon/gun/energy/pulse_rifle/pulse_pistol/loyalpin
-	pin = "/obj/item/device/firing_pin/implant/loyalty"
+	pin = /obj/item/device/firing_pin/implant/loyalty
 
 /obj/item/weapon/gun/energy/pulse_rifle/destroyer
 	name = "pulse destroyer"
