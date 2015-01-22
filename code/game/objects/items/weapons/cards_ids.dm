@@ -190,41 +190,25 @@ update_label("John Doe", "Clowny")
 	New()
 		access = get_all_centcom_access()
 		..()
-/obj/item/weapon/card/id/ertsCommand
+/obj/item/weapon/card/id/ert
 	name = "\improper Centcom ID"
 	desc = "A ERT ID card"
 	icon_state = "centcom"
 	registered_name = "Emergency Response Team Commander"
 	assignment = "Emergency Response Team Commander"
-	New()
-		access = get_all_accesses()
+	New() access = get_all_accesses()
 
-/obj/item/weapon/card/id/ertsSecurity
-	name = "\improper Centcom ID"
-	desc = "A ERT ID card"
-	icon_state = "centcom"
+/obj/item/weapon/card/id/ert/Security
 	registered_name = "Security Response Officer"
 	assignment = "Security Response Officer"
-	New()
-		access = get_all_accesses()
 
-/obj/item/weapon/card/id/ertsEngineer
-	name = "\improper Centcom ID"
-	desc = "A ERT ID card"
-	icon_state = "centcom"
+/obj/item/weapon/card/id/ert/Engineer
 	registered_name = "Engineer Response Officer"
 	assignment = "Engineer Response Officer"
-	New()
-		access = get_all_accesses()
 
-/obj/item/weapon/card/id/ertsMedical
-	name = "\improper Centcom ID"
-	desc = "A ERT ID card"
-	icon_state = "centcom"
+/obj/item/weapon/card/id/ert/Medical
 	registered_name = "Medical Response Officer"
 	assignment = "Medical Response Officer"
-	New()
-		access = get_all_accesses()
 
 /obj/item/weapon/card/id/prisoner
 	name = "prisoner ID card"

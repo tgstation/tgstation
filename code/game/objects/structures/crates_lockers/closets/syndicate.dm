@@ -11,7 +11,7 @@
 	icon_state = "capsecureoff"
 	icon_closed = "capsecureoff"
 	icon_opened = "capsecureopen"
-//	new /obj/item/weapon/card/id/ertsCommand(src)
+//	new /obj/item/weapon/card/id/ert(src)
 	new /obj/item/weapon/storage/backpack/captain(src)
 	return
 
@@ -22,7 +22,7 @@
 	icon_closed = "secoff"
 	icon_opened = "secopen"
 	new /obj/item/weapon/gun/energy/pulse_rifle/pulse_pistol/loyalpin(src)
-	new /obj/item/weapon/card/id/ertsSecurity(src)
+	new /obj/item/weapon/card/id/ert/Security(src)
 	new /obj/item/weapon/storage/backpack/security(src)
 	return
 
@@ -33,7 +33,7 @@
 	icon_closed = "securemedoff"
 	icon_opened = "securemedopen"
 	new /obj/item/weapon/gun/energy/pulse_rifle/pulse_pistol/loyalpin(src)
-	new /obj/item/weapon/card/id/ertsMedical(src)
+	new /obj/item/weapon/card/id/ert/Medical(src)
 	new /obj/item/weapon/storage/backpack/medic(src)
 	return
 
@@ -44,7 +44,7 @@
 	icon_closed = "secureengoff"
 	icon_opened = "secureengopen"
 	new /obj/item/weapon/gun/energy/pulse_rifle/pulse_pistol/loyalpin(src)
-	new /obj/item/weapon/card/id/ertsEngineer(src)
+	new /obj/item/weapon/card/id/ert/Engineer(src)
 	new /obj/item/weapon/storage/backpack/industrial(src)
 	return
 
