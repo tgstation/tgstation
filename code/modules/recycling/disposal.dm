@@ -472,14 +472,20 @@
 
 	if(!ismob(dropping))
 		if(istype(dropping, /obj/item))
-			attackby(dropping, user)
+			if(!user.restrained() && user.canmove)
+				attackby(dropping, user)
 
 		return
 
 	var/locHolder = dropping.loc
 	var/mob/target = dropping
 
-	if(target != user)
+	if(target == user)
+		if(!user.restrained() && user.canmove)
+			target.visible_message("[target] starts climbing into the [src].", "You start climbing into the [src].")
+		else
+			return
+	else
 		if(isanimal(user))
 			return // animals cannot put mobs other than themselves into disposal
 
@@ -490,11 +496,6 @@
 			user.visible_message("[user] starts stuffing [target] into the [src].", "You start stuffing [target] into the [src].")
 		else
 			return
-	else if(target == user)
-		if(!user.restrained() && user.canmove)
-			target.visible_message("[target] starts climbing into the [src].", "You start climbing into the [src].")
-		else
-			return
 
 	if(!do_after(user, 20))
 		return
@@ -502,18 +503,18 @@
 	if(locHolder != target.loc)
 		return
 
-	if(target != user)
+	if(target == user)
+		if(!user.restrained() && user.canmove)
+			target.visible_message("[target] climbed into the [src].", "You climbed into the [src].")
+		else
+			return
+	else
 		if(!user.restrained() && user.canmove)
 			if(target.buckled)
 				return
 
 			user.visible_message("[user] stuffed [target] into the [src]!", "You stuffed [target] into the [src]!")
 			log_attack("<SPAN CLASS='warning'>[key_name(user)] placed [key_name(target)] in a disposals unit/([src]).</SPAN>")
-		else
-			return
-	else if(target == user)
-		if(!user.restrained() && user.canmove)
-			target.visible_message("[target] climbed into the [src].", "You climbed into the [src].")
 		else
 			return
 
