@@ -130,6 +130,7 @@
 	..()
 	new /obj/item/clothing/suit/armor/vest(src)
 	new /obj/item/device/radio/headset/headset_sec/alt(src)
+	new /obj/item/clothing/head/beret/sec(src)
 	new /obj/item/clothing/head/soft/sec(src)
 	new /obj/item/weapon/reagent_containers/spray/pepper(src)
 	new /obj/item/device/flash/handheld(src)
