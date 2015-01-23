@@ -635,12 +635,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 //CHATROOM FUNCTIONS====================================
 
 			if("Set Nick")
-				var/n = stripped_input(U, "Please enter nickname", name, nick, 8)
+				var/n = trim(stripped_input(U, "Please enter nickname", name, nick, 9))
 				if(n)
 					nick = n
 
 			if("Set Channel")
-				var/t = stripped_input(U, "Please enter channel", name, chat_channel, 15)
+				var/t = replacetext(trim(stripped_input(U, "Please enter channel", name, chat_channel, 15)), " ", "_")
 				if(t)
 					var/datum/chatroom/C = chatchannels[chat_channel]
 					var/ret = C.parse_msg(src, nick, "/join [t]")
@@ -661,7 +661,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 			if("NTRC Help")
 				var/helptext = "<b>NTRC Commands:</b><br><br>"
-				helptext += "/join #channel<br>/register<br>/log amountoflines<br><br>"
+				helptext += "/join \[#\](channel name)<br>/register<br>/log (amount of lines)<br><br>"
 				usr << browse(helptext, "window=ntrchelp;size=200x200;border=1;can_resize=1;can_close=1;can_minimize=1")
 
 
