@@ -15,7 +15,7 @@
 	amount_per_transfer_from_this = 5
 	volume = 250
 	possible_transfer_amounts = null
-	banned_reagents = list("pacid","sacid")
+	banned_reagents = list("facid","sacid")
 
 
 /obj/item/weapon/reagent_containers/spray/afterattack(atom/A as mob|obj, mob/user as mob)
@@ -52,9 +52,9 @@
 	if(reagents.has_reagent("sacid"))
 		message_admins("[key_name_admin(user)] fired sulphuric acid from \a [src].")
 		log_game("[key_name(user)] fired sulphuric acid from \a [src].")
-	if(reagents.has_reagent("pacid"))
-		message_admins("[key_name_admin(user)] fired Polyacid from \a [src].")
-		log_game("[key_name(user)] fired Polyacid from \a [src].")
+	if(reagents.has_reagent("facid"))
+		message_admins("[key_name_admin(user)] fired Fluacid from \a [src].")
+		log_game("[key_name(user)] fired Fluacid from \a [src].")
 	if(reagents.has_reagent("lube"))
 		message_admins("[key_name_admin(user)] fired Space lube from \a [src].")
 		log_game("[key_name(user)] fired Space lube from \a [src].")
@@ -100,11 +100,7 @@
 /obj/item/weapon/reagent_containers/spray/cleaner
 	name = "space cleaner"
 	desc = "BLAM!-brand non-foaming space cleaner!"
-
-
-/obj/item/weapon/reagent_containers/spray/cleaner/New()
-	..()
-	reagents.add_reagent("cleaner", 250)
+	list_reagents = list("cleaner" = 250)
 
 //pepperspray
 /obj/item/weapon/reagent_containers/spray/pepper
@@ -116,11 +112,7 @@
 	volume = 40
 	spray_maxrange = 4
 	amount_per_transfer_from_this = 5
-
-
-/obj/item/weapon/reagent_containers/spray/pepper/New()
-	..()
-	reagents.add_reagent("condensedcapsaicin", 40)
+	list_reagents = list("condensedcapsaicin" = 40)
 
 //water flower
 /obj/item/weapon/reagent_containers/spray/waterflower
@@ -131,10 +123,7 @@
 	item_state = "sunflower"
 	amount_per_transfer_from_this = 1
 	volume = 10
-
-/obj/item/weapon/reagent_containers/spray/waterflower/New()
-	..()
-	reagents.add_reagent("water", 10)
+	list_reagents = list("water" = 10)
 
 /obj/item/weapon/reagent_containers/spray/waterflower/attack_self(var/mob/user) //Don't allow changing how much the flower sprays
 	return
@@ -143,7 +132,7 @@
 /obj/item/weapon/reagent_containers/spray/chemsprayer
 	name = "chem sprayer"
 	desc = "A utility used to spray large amounts of reagents in a given area."
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "chemsprayer"
 	item_state = "chemsprayer"
 	throwforce = 0
@@ -199,12 +188,7 @@
 	user << "<span class='notice'>You adjust the output switch. You'll now use [amount_per_transfer_from_this] units per spray.</span>"
 
 /obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror/New()
-	..()
-	reagents.add_reagent("spore", 150)
-	reagents.add_reagent("cryptobiolin", 150)
-	reagents.add_reagent("mutagen", 150)
-	reagents.add_reagent("chloralhydrate", 150)
-
+	list_reagents = list("spore" = 150, "cryptobiolin" = 150, "mutagen" = 150, "chloralhydrate" = 150)
 
 // Plant-B-Gone
 /obj/item/weapon/reagent_containers/spray/plantbgone // -- Skie
@@ -214,8 +198,4 @@
 	icon_state = "plantbgone"
 	item_state = "plantbgone"
 	volume = 100
-
-
-/obj/item/weapon/reagent_containers/spray/plantbgone/New()
-	..()
-	reagents.add_reagent("plantbgone", 100)
+	list_reagents = list("plantbgone" = 100)

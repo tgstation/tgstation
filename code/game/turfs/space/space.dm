@@ -177,7 +177,7 @@ proc/setup_map_transitions() //listamania
 		set background = 1
 
 	while(free_zones.len != 0) //Assign the sides of the cube
-		if(!unplaced_z_levels) //if we're somehow unable to fill the cube, pad with deep space
+		if(!unplaced_z_levels || !unplaced_z_levels.len) //if we're somehow unable to fill the cube, pad with deep space
 			z_level =  6
 		else
 			z_level = pick(unplaced_z_levels)

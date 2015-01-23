@@ -21,6 +21,9 @@
 
 /datum/mutation/human/chameleon
 	name = "Chameleon"
+	quality = POSITIVE
+	get_chance = 10
+	lowest_value = 256 * 14
 	text_gain_indication = "<span class='notice'>You feel one with your surroundings.</span>"
 	text_lose_indication = "<span class='notice'>You feel oddly exposed.</span>"
 

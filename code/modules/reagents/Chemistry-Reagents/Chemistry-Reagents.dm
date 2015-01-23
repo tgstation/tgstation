@@ -74,7 +74,7 @@ datum/reagent/proc/reaction_turf(var/turf/T, var/volume)
 
 datum/reagent/proc/on_mob_life(var/mob/living/M as mob)
 	if(!istype(M, /mob/living))
-		return //Noticed runtime errors from pacid trying to damage ghosts, this should fix. --NEO
+		return //Noticed runtime errors from facid trying to damage ghosts, this should fix. --NEO
 	holder.remove_reagent(src.id, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
 	return
 
