@@ -42,17 +42,16 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/roburger/New()
 	..()
-	peakReagents = list("nanites", 2, "vitamin", 5)
+	peakReagents = list("nanomachines", 2, "vitamin", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/roburgerbig
 	name = "roburger"
 	desc = "This massive patty looks like poison. Beep."
 	icon_state = "roburger"
-	volume = 106
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/roburgerbig/New()
 	..()
-	peakReagents = list("nanites", 100, "vitamin", 20)
+	peakReagents = list("nanomachines", 100, "vitamin", 20)
 	bitesize = 0.1
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/xeno
