@@ -25,9 +25,16 @@
 	var/obj/structure/disposalconstruct/stored
 	// create a new disposal
 	// find the attached trunk (if present) and init gas resvr.
-/obj/machinery/disposal/New()
+/obj/machinery/disposal/New(loc, var/obj/structure/disposalconstruct/make_from)
 	..()
-	stored = new /obj/structure/disposalconstruct(0,6) // 6 = disposal unit
+
+	if(make_from)
+		dir = make_from.dir
+		make_from.loc = 0
+		stored = make_from
+	else
+		stored = new /obj/structure/disposalconstruct(0,DISP_END_BIN,dir)
+
 	trunk_check()
 
 	air_contents = new/datum/gas_mixture()
@@ -46,6 +53,8 @@
 
 /obj/machinery/disposal/Destroy()
 	eject()
+	if(trunk)
+		trunk.linked = null
 	..()
 
 /obj/machinery/disposal/singularity_pull(S, current_size)
@@ -348,8 +357,7 @@
 	src.updateDialog()
 
 	if(flush && air_contents.return_pressure() >= SEND_PRESSURE )	// flush can happen even without power
-		spawn(0)
-			flush()
+		flush()
 
 	if(stat & NOPOWER)			// won't charge if no power
 		return
@@ -619,27 +627,35 @@
 	var/obj/structure/disposalconstruct/stored
 
 	// new pipe, set the icon_state as on map
-/obj/structure/disposalpipe/New()
+/obj/structure/disposalpipe/New(loc,var/obj/structure/disposalconstruct/make_from)
 	..()
-	base_icon_state = icon_state
-	stored = new /obj/structure/disposalconstruct(src)
-	switch(base_icon_state)
-		if("pipe-s")
-			stored.ptype = 0
-		if("pipe-c")
-			stored.ptype = 1
-		if("pipe-j1")
-			stored.ptype = 2
-		if("pipe-j2")
-			stored.ptype = 3
-		if("pipe-y")
-			stored.ptype = 4
-		if("pipe-t")
-			stored.ptype = 5
-		if("pipe-j1s")
-			stored.ptype = 9
-		if("pipe-j2s")
-			stored.ptype = 10
+
+	if(make_from && !make_from.gc_destroyed)
+		base_icon_state = make_from.base_state
+		dir = make_from.dir
+		dpdir = make_from.dpdir
+		make_from.loc = src
+		stored = make_from
+	else
+		base_icon_state = icon_state
+		stored = new /obj/structure/disposalconstruct(src,direction=dir)
+		switch(base_icon_state)
+			if("pipe-s")
+				stored.ptype = DISP_PIPE_STRAIGHT
+			if("pipe-c")
+				stored.ptype = DISP_PIPE_BENT
+			if("pipe-j1")
+				stored.ptype = DISP_JUNCTION
+			if("pipe-j2")
+				stored.ptype = DISP_JUNCTION_FLIP
+			if("pipe-y")
+				stored.ptype = DISP_YJUNCTION
+			if("pipe-t")
+				stored.ptype = DISP_END_TRUNK
+			if("pipe-j1s")
+				stored.ptype = DISP_SORTJUNCTION
+			if("pipe-j2s")
+				stored.ptype = DISP_SORTJUNCTION_FLIP
 	return
 
 
@@ -728,7 +744,8 @@
 
 	if(istype(T, /turf/simulated/floor) && !istype(T, /turf/simulated/floor/plating)) //intact floor, pop the tile
 		var/turf/simulated/floor/myturf = T
-		new myturf.floor_tile(T)
+		if(myturf.floor_tile)
+			new myturf.floor_tile(T)
 		myturf.make_plating()
 
 	if(direction)		// direction is specified
@@ -876,7 +893,7 @@
 
 /obj/structure/disposalpipe/segment/New()
 	..()
-	if(icon_state == "pipe-s")
+	if(stored.ptype == DISP_PIPE_STRAIGHT)
 		dpdir = dir | turn(dir, 180)
 	else
 		dpdir = dir | turn(dir, -90)
@@ -893,12 +910,13 @@
 
 /obj/structure/disposalpipe/junction/New()
 	..()
-	if(icon_state == "pipe-j1")
-		dpdir = dir | turn(dir, -90) | turn(dir,180)
-	else if(icon_state == "pipe-j2")
-		dpdir = dir | turn(dir, 90) | turn(dir,180)
-	else // pipe-y
-		dpdir = dir | turn(dir,90) | turn(dir, -90)
+	switch(stored.ptype)
+		if(DISP_JUNCTION)
+			dpdir = dir | turn(dir, -90) | turn(dir,180)
+		if(DISP_JUNCTION_FLIP)
+			dpdir = dir | turn(dir, 90) | turn(dir,180)
+		if(DISP_YJUNCTION)
+			dpdir = dir | turn(dir,90) | turn(dir, -90)
 	update()
 	return
 
@@ -950,7 +968,7 @@
 	posdir = dir
 	negdir = turn(posdir, 180)
 
-	if(icon_state == "pipe-j1s")
+	if(stored.ptype == DISP_SORTJUNCTION)
 		sortdir = turn(posdir, -90)
 	else
 		icon_state = "pipe-j2s"
@@ -1029,7 +1047,7 @@
 /obj/structure/disposalpipe/wrapsortjunction/New()
 	..()
 	posdir = dir
-	if(icon_state == "pipe-j1s")
+	if(stored.ptype == DISP_SORTJUNCTION)
 		sortdir = turn(posdir, -90)
 		negdir = turn(posdir, 180)
 	else
@@ -1211,20 +1229,33 @@
 	anchored = 1
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
+	var/obj/structure/disposalpipe/trunk/trunk = null // the attached pipe trunk
+	var/obj/structure/disposalconstruct/stored
 	var/mode = 0
 	var/start_eject = 0
 	var/eject_range = 2
 
-/obj/structure/disposaloutlet/New()
+/obj/structure/disposaloutlet/New(loc, var/obj/structure/disposalconstruct/make_from)
 	..()
+
+	if(make_from)
+		dir = make_from.dir
+		make_from.loc = src
+		stored = make_from
+	else
+		stored = new (src, DISP_END_OUTLET,dir)
 
 	spawn(1)
 		target = get_ranged_target_turf(src, dir, 10)
 
-
-		var/obj/structure/disposalpipe/trunk/trunk = locate() in src.loc
+		trunk = locate() in src.loc
 		if(trunk)
 			trunk.linked = src	// link the pipe trunk to self
+
+/obj/structure/disposaloutlet/Destroy()
+	if(trunk)
+		trunk.linked = null
+	..()
 
 // expel the contents of the holder object, then delete it
 // called when the holder exits the outlet
@@ -1272,11 +1303,11 @@
 			if(do_after(user,20))
 				if(!src || !W.isOn()) return
 				user << "<span class='notice'>You've sliced the floorweld off \the [src].</span>"
-				var/obj/structure/disposalconstruct/C = new (src.loc, 7) // 7 =  outlet
-				src.transfer_fingerprints_to(C)
-				C.update()
-				C.anchored = 1
-				C.density = 1
+				stored.loc = loc
+				src.transfer_fingerprints_to(stored)
+				stored.update()
+				stored.anchored = 0
+				stored.density = 1
 				qdel(src)
 			return
 		else
