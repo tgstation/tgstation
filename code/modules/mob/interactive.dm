@@ -1,25 +1,6 @@
-#define INTERACTING 2
-#define TRAVEL 4
-#define FIGHTING 8
-
-//TRAITS
-
-#define TRAIT_ROBUST 2
-#define TRAIT_UNROBUST 4
-#define TRAIT_SMART 8
-#define TRAIT_DUMB 16
-#define TRAIT_MEAN 32
-#define TRAIT_FRIENDLY 64
-#define TRAIT_THIEVING 128
-
-//defines
-#define MAX_RANGE_FIND 32
-#define MIN_RANGE_FIND 16
-#define FUZZY_CHANCE_HIGH 85
-#define FUZZY_CHANCE_LOW 50
-#define CHANCE_TALK 15
-
 /*
+	Looking for defines? moved to misc.dm
+
 	NPC VAR EXPLANATIONS (for modules and other things)
 
 		doing = their current action, INTERACTING, TRAVEL or FIGHTING
@@ -76,8 +57,34 @@
 	var/slyness = 50
 	var/graytide = 0
 	var/chattyness = CHANCE_TALK
+	faction = list("station")
 	//modules
 	var/list/functions = list("nearbyscan","combat","doorscan","shitcurity","chatter")
+
+//botPool funcs
+/mob/living/carbon/human/interactive/proc/takeDelegate(var/mob/living/carbon/human/interactive/from,var/doReset=TRUE)
+	eye_color = "blue"
+	if(from == src)
+		return FALSE
+	TARGET = from.TARGET
+	LAST_TARGET = from.LAST_TARGET
+	retal = from.retal
+	retal_target = from.retal_target
+	doing = from.doing
+	//
+	timeout = 0
+	inactivity_period = 0
+	interest = 100
+	//
+	if(doReset)
+		from.TARGET = null
+		from.LAST_TARGET = null
+		from.retal = 0
+		from.retal_target = null
+		from.doing = 0
+	return TRUE
+
+//end pool funcs
 
 /mob/living/carbon/human/interactive/proc/random()
 	//this is here because this has no client/prefs/brain whatever.
@@ -87,7 +94,7 @@
 	facial_hair_style = random_facial_hair_style(gender)
 	hair_color = random_short_color()
 	facial_hair_color = hair_color
-	eye_color = random_eye_color()
+	eye_color = "blue"
 	age = rand(AGE_MIN,AGE_MAX)
 	ready_dna(src,random_blood_type())
 	//job handling
@@ -105,6 +112,12 @@
 	..()
 	retal = 1
 	retal_target = user
+
+/mob/living/carbon/human/interactive/bullet_act(var/obj/item/projectile/P)
+	var/potentialAssault = locate(/mob/living) in view(2,P.starting)
+	if(potentialAssault)
+		attacked_by(P,potentialAssault)
+	..()
 
 /mob/living/carbon/human/interactive/New()
 	..()
@@ -162,7 +175,6 @@
 	update_icons()
 	update_damage_overlays(0)
 	update_augments()
-
 	hand = 0
 
 	if(TRAITS & TRAIT_ROBUST)
@@ -185,6 +197,7 @@
 	if(TRAITS & TRAIT_THIEVING)
 		slyness = 75
 
+	SSbp.insertBot(src)
 
 /mob/living/carbon/human/interactive/attack_hand(mob/living/carbon/human/M as mob)
 	..()
@@ -220,10 +233,10 @@
 		toReturn = "Excited"
 	return toReturn
 //END DEBUG
-/mob/living/carbon/human/interactive/proc/isnotfunc()
+/mob/living/carbon/human/interactive/proc/isnotfunc(var/checkDead = TRUE)
 	if(!canmove)
 		return 1
-	if(health <= 0)
+	if(health <= 0 && checkDead)
 		return 1
 	if(restrained())
 		return 1
@@ -635,6 +648,7 @@
 		TRAITS |= TRAIT_ROBUST
 		TRAITS |= TRAIT_MEAN
 		..()
+		faction = list("bot_angry")
 
 /mob/living/carbon/human/interactive/friendly
 	New()
@@ -649,15 +663,7 @@
 		TRAITS |= TRAIT_THIEVING
 		TRAITS |= TRAIT_DUMB
 		graytide = 1
+		faction = list("bot_grey")
 		..()
 
-#undef INTERACTING
-#undef TRAVEL
-#undef FIGHTING
-#undef TRAIT_ROBUST
-#undef TRAIT_UNROBUST
-#undef TRAIT_SMART
-#undef TRAIT_DUMB
-#undef TRAIT_MEAN
-#undef TRAIT_FRIENDLY
-#undef TRAIT_THIEVING
+//undefs have been removed to use elsewhere
