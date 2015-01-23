@@ -385,6 +385,13 @@ var/list/uplink_items = list()
 	cost = 2
 	surplus = 30
 
+/datum/uplink_item/stealthy_tools/stimpack
+	name = "Stimpack"
+	desc = "Stimpacks, a tool of many great heroes, make you immune to stuns and knockdowns for about 5 minutes after injection."
+	item = /obj/item/weapon/reagent_containers/syringe/stimulants
+	cost = 8
+	surplus = 90
+
 // DEVICE AND TOOLS
 
 /datum/uplink_item/device_tools

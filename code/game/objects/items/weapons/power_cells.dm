@@ -113,3 +113,19 @@
 	m_amt = 0
 	g_amt = 0
 	rating = 3
+
+/obj/item/weapon/stock_parts/cell/emproof
+	name = "\improper EMP-proof cell"
+	desc = "An EMP-proof cell."
+	maxcharge = 500
+	rating = 2
+
+/obj/item/weapon/stock_parts/cell/emproof/empty/New()
+	..()
+	charge = 0
+
+/obj/item/weapon/stock_parts/cell/emproof/emp_act(severity)
+	return
+
+/obj/item/weapon/stock_parts/cell/emproof/corrupt()
+	return

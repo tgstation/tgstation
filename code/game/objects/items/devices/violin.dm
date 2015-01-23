@@ -19,6 +19,9 @@
 	..()
 
 /obj/item/device/violin/attack_self(mob/user as mob)
+	if(!user.IsAdvancedToolUser())
+		user << "<span class='danger'>You don't have the dexterity to do this!</span>"
+		return 1
 	interact(user)
 
 /obj/item/device/violin/interact(mob/user as mob)

@@ -237,13 +237,18 @@
 	var/start_flush = 0
 	var/c_mode = 0
 
-/obj/machinery/disposal/deliveryChute/New()
+/obj/machinery/disposal/deliveryChute/New(loc,var/obj/structure/disposalconstruct/make_from)
 	..()
-	stored.ptype = 8 // 8 =  Delivery chute
+	stored.ptype = DISP_END_CHUTE
 	spawn(5)
 		trunk = locate() in loc
 		if(trunk)
 			trunk.linked = src	// link the pipe trunk to self
+
+/obj/machinery/disposal/deliveryChute/Destroy()
+	if(trunk)
+		trunk.linked = null
+	..()
 
 /obj/machinery/disposal/deliveryChute/interact()
 	return

@@ -574,7 +574,6 @@ datum/reagent/epinephrine/on_mob_life(var/mob/living/M as mob)
 		M.AdjustParalysis(-1)
 		M.AdjustStunned(-1)
 		M.AdjustWeakened(-1)
-		M.sleeping = 0
 	..()
 	return
 
@@ -784,3 +783,35 @@ datum/reagent/antihol/on_mob_life(var/mob/living/M as mob)
 	result = "cryoxadone"
 	required_reagents = list("stable_plasma" = 1, "acetone" = 1, "mutagen" = 1)
 	result_amount = 3
+
+/datum/reagent/stimulants
+	name = "Stimulants"
+	id = "stimulants"
+	description = "Sets all stun-related vars to zero, gets you running really fast. Heals 5 OXY, TOX, BRUTE, and BURN damage if health is below 50. Reduces all stuns."
+	color = "#C8A5DC" // rgb: 200, 165, 220
+	metabolization_rate = 0.4
+	overdose_threshold = 60
+
+datum/reagent/stimulants/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	M.status_flags |= GOTTAGOFAST
+	if(M.health < 50 && M.health > 0)
+		if(prob(50))
+			M.adjustOxyLoss(-5*REM)
+			M.adjustToxLoss(-5*REM)
+			M.adjustBruteLoss(-5*REM)
+			M.adjustFireLoss(-5*REM)
+	M.adjustFireLoss(-3*REM)
+	M.AdjustParalysis(-1)
+	M.AdjustStunned(-1)
+	M.AdjustWeakened(-1)
+	M.adjustStaminaLoss(-3*REM)
+	..()
+
+datum/reagent/stimulants/overdose_process(var/mob/living/M as mob)
+	if(prob(33))
+		M.adjustStaminaLoss(5*REM)
+		M.adjustToxLoss(2*REM)
+		M.losebreath++
+	..()
+	return
