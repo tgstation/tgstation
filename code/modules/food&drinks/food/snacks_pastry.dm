@@ -69,13 +69,13 @@
 		name = "Frosted Jelly Donut"
 		reagents.add_reagent("sprinkles", 2)
 
-/obj/item/weapon/reagent_containers/food/snacks/donut/slimejelly
+/obj/item/weapon/reagent_containers/food/snacks/donut/jelly/slimejelly
 	name = "jelly donut"
 	desc = "You jelly?"
 	icon_state = "jdonut1"
 	bitesize = 5
 
-/obj/item/weapon/reagent_containers/food/snacks/donut/slimejelly/New()
+/obj/item/weapon/reagent_containers/food/snacks/donut/jelly/slimejelly/New()
 	..()
 	peakReagents = list("nutriment", 3, "sprinkles", 1, "slimejelly", 5, "vitamin", 1)
 	bitesize = 5
@@ -84,13 +84,13 @@
 		name = "Frosted Jelly Donut"
 		reagents.add_reagent("sprinkles", 2)
 
-/obj/item/weapon/reagent_containers/food/snacks/donut/cherryjelly
+/obj/item/weapon/reagent_containers/food/snacks/donut/jelly/cherryjelly
 	name = "jelly donut"
 	desc = "You jelly?"
 	icon_state = "jdonut1"
 	bitesize = 5
 
-/obj/item/weapon/reagent_containers/food/snacks/donut/cherryjelly/New()
+/obj/item/weapon/reagent_containers/food/snacks/donut/jelly/cherryjelly/New()
 	..()
 	peakReagents = list("nutriment", 3, "sprinkles", 1, "cherryjelly", 5, "vitamin", 1)
 	if(prob(30))
