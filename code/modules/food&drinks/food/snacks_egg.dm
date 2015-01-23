@@ -5,13 +5,21 @@
 	name = "chocolate egg"
 	desc = "Such, sweet, fattening food."
 	icon_state = "chocolateegg"
-	list_reagents = list("nutriment" = 4, "sugar" = 2, "vitamin" = 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/chocolateegg/New()
+	..()
+	peakReagents = list("nutriment", 4, "sugar", 2, "coco", 2)
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/egg
 	name = "egg"
 	desc = "An egg!"
 	icon_state = "egg"
-	list_reagents = list("nutriment" = 1, "vitamin" = 1)
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/New()
+	..()
+	peakReagents = list("nutriment", 1, "vitamin", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
 	..()
@@ -70,21 +78,33 @@
 	name = "fried egg"
 	desc = "A fried egg, with a touch of salt and pepper."
 	icon_state = "friedegg"
-	list_reagents = list("nutriment" = 2, "sodiumchloride" = 1, "blackpepper" = 1, "vitamin" = 1)
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/friedegg/New()
+	..()
+	peakReagents = list("nutriment", 2, "sodiumchloride", 1, "blackpepper", 1)
 	bitesize = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledegg
 	name = "boiled egg"
 	desc = "A hard boiled egg."
 	icon_state = "egg"
-	list_reagents = list("nutriment" = 2, "vitamin" = 2)
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/boiledegg/New()
+	..()
+	peakReagents = list("nutriment", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/omelette	//FUCK THIS
 	name = "omelette du fromage"
 	desc = "That's all you can say!"
 	icon_state = "omelette"
 	trash = /obj/item/trash/plate
-	list_reagents = list("nutriment" = 7, "vitamin" = 2)
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/omelette/New()
+	..()
+	peakReagents = list("nutriment", 8)
 	bitesize = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/omelette/attackby(obj/item/weapon/W, mob/user)
@@ -107,4 +127,9 @@
 	name = "eggs benedict"
 	desc = "There is only one egg on this, how rude."
 	icon_state = "benedict"
-	list_reagents = list("nutriment" = 6, "vitamin" = 4)
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/benedict/New()
+	..()
+	peakReagents = list("nutriment", 6, "vitamin", 4)
+	bitesize = 3

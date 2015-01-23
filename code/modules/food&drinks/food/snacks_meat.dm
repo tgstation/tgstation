@@ -8,19 +8,23 @@
 	desc = "A grifftastic sandwich that burns your tongue and then leaves it numb!"
 	icon_state = "cubancarp"
 	trash = /obj/item/trash/plate
-	list_reagents = list("nutriment" = 6, "vitamin" = 3)
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/cubancarp/New()
+	..()
+	peakReagents = list("nutriment", 6,"capsaicin",3)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/carpmeat
 	name = "carp fillet"
 	desc = "A fillet of spess carp meat."
 	icon_state = "fishfillet"
-	list_reagents = list("nutriment" = 2, "carpotoxin" = 2, "vitamin" = 2)
-	bitesize = 6
 
 /obj/item/weapon/reagent_containers/food/snacks/carpmeat/New()
 	..()
 	eatverb = pick("bite","chew","choke down","gnaw","swallow","chomp")
+	peakReagents = list("nutriment", 3, "carpotoxin", 2, "vitamin", 2)
+	bitesize = 6
 
 /obj/item/weapon/reagent_containers/food/snacks/carpmeat/imitation
 	name = "imitation carp fillet"
@@ -30,14 +34,23 @@
 	name = "fish fingers"
 	desc = "A finger of fish."
 	icon_state = "fishfingers"
-	list_reagents = list("nutriment" = 4)
-	bitesize = 1
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/fishfingers/New()
+	..()
+	peakReagents = list("nutriment", 4)
+	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/fishandchips
 	name = "fish and chips"
 	desc = "I do say so myself chap."
 	icon_state = "fishandchips"
-	list_reagents = list("nutriment" = 6)
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/fishandchips/New()
+	..()
+	peakReagents = list("nutriment", 6)
+	bitesize = 3
 
 ////////////////////////////////////////////MEATS AND ALIKE////////////////////////////////////////////
 
@@ -45,96 +58,158 @@
 	name = "tofu"
 	desc = "We all love tofu."
 	icon_state = "tofu"
-	list_reagents = list("nutriment" = 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/tofu/New()
+	..()
+	peakReagents = list("nutriment", 3)
+	bitesize = 3
+
 
 /obj/item/weapon/reagent_containers/food/snacks/tomatomeat
 	name = "tomato slice"
 	desc = "A slice from a huge tomato."
 	icon_state = "tomatomeat"
-	list_reagents = list("nutriment" = 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/tomatomeat/New()
+	..()
+	peakReagents = list("nutriment", 3)
+	src.bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/bearmeat
 	name = "bear meat"
 	desc = "A very manly slab of meat."
 	icon_state = "bearmeat"
-	list_reagents = list("nutriment" = 12, "morphine" = 5, "vitamin" = 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/bearmeat/New()
+	..()
+	peakReagents = list("nutriment", 12, "morphine", 5, "vitamin", 2)
+	src.bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/xenomeat
 	name = "meat"
 	desc = "A slab of meat"
 	icon_state = "xenomeat"
-	list_reagents = list("nutriment" = 3, "vitamin" = 1)
-	bitesize = 4
+
+/obj/item/weapon/reagent_containers/food/snacks/xenomeat/New()
+	..()
+	peakReagents = list("nutriment", 3, "vitamin", 1)
+	src.bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/spidermeat
 	name = "spider meat"
 	desc = "A slab of spider meat."
 	icon_state = "spidermeat"
-	list_reagents = list("nutriment" = 3, "toxin" = 3, "vitamin" = 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/spidermeat/New()
+	..()
+	peakReagents = list("nutriment", 3, "toxin", 3, "vitamin", 1)
+	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/spiderleg
 	name = "spider leg"
 	desc = "A still twitching leg of a giant spider... you don't really want to eat this, do you?"
 	icon_state = "spiderleg"
-	list_reagents = list("nutriment" = 2, "toxin" = 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/spiderleg/New()
+	..()
+	peakReagents = list("nutriment", 2, "toxin", 2)
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/cornedbeef
 	name = "corned beef and cabbage"
 	desc = "Now you can feel like a real tourist vacationing in Ireland."
 	icon_state = "cornedbeef"
 	trash = /obj/item/trash/plate
-	list_reagents = list("nutriment" = 6)
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/cornedbeef/New()
+	..()
+	peakReagents = list("nutriment", 6)
+	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/faggot
 	name = "faggot"
 	desc = "A great meal all round. Not a cord of wood."
 	icon_state = "faggot"
-	list_reagents = list("nutriment" = 1, "vitamin" = 1)
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/faggot/New()
+	..()
+	peakReagents = list("nutriment", 3, "vitamin", 1)
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sausage
 	name = "sausage"
 	desc = "A piece of mixed, long meat."
 	icon_state = "sausage"
-	list_reagents = list("nutriment" = 5, "vitamin" = 1)
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/sausage/New()
 	..()
 	eatverb = pick("bite","chew","nibble","deep throat","gobble","chomp")
+	peakReagents = list("nutriment", 6, "vitamin",1)
+	bitesize = 2
+
 
 /obj/item/weapon/reagent_containers/food/snacks/wingfangchu
 	name = "wing fang chu"
 	desc = "A savory dish of alien wing wang in soy."
 	icon_state = "wingfangchu"
 	trash = /obj/item/trash/snack_bowl
-	list_reagents = list("nutriment" = 6, "vitamin" = 2)
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/wingfangchu/New()
+	..()
+	peakReagents = list("nutriment", 6,"vitamin",2)
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/human/kebab
 	name = "-kebab"
 	icon_state = "kebab"
 	desc = "A human meat, on a stick."
 	trash = /obj/item/stack/rods
-	list_reagents = list("nutriment" = 8)
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/human/kebab/New()
+	..()
+	peakReagents = list("nutriment", 8)
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeykebab
 	name = "meat-kebab"
 	icon_state = "kebab"
 	desc = "Delicious meat, on a stick."
 	trash = /obj/item/stack/rods
-	list_reagents = list("nutriment" = 8)
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/monkeykebab/New()
+	..()
+	peakReagents = list("nutriment", 8)
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/tofukebab
 	name = "tofu-kebab"
 	icon_state = "kebab"
 	desc = "Vegan meat, on a stick."
 	trash = /obj/item/stack/rods
-	list_reagents = list("nutriment" = 8)
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/tofukebab/New()
+	..()
+	peakReagents = list("nutriment", 8)
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/meatsteak
 	name = "meat steak"
 	desc = "A piece of hot spicy meat."
 	icon_state = "meatsteak"
 	trash = /obj/item/trash/plate
-	list_reagents = list("nutriment" = 8, "sodiumchloride" = 1, "blackpepper" = 1, "vitamin" = 1)
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/meatsteak/New()
+	..()
+	peakReagents = list("nutriment", 6, "sodiumchloride",1,"blackpepper",1,"vitamin",1)
+	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube
 	name = "monkey cube"
@@ -142,7 +217,10 @@
 	icon_state = "monkeycube"
 	bitesize = 12
 	wrapped = 0
-	list_reagents = list("nutriment" = 10)
+
+/obj/item/weapon/reagent_containers/food/snacks/monkeycube/New()
+	..()
+	peakReagents = list("nutriment",10)
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/afterattack(obj/O, mob/user,proximity)
 	if(!proximity) return
@@ -168,6 +246,7 @@
 	user << "<span class='notice'>You unwrap the cube.</span>"
 	wrapped = 0
 
+
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped
 	desc = "Still wrapped in some paper."
 	icon_state = "monkeycubewrap"
@@ -177,7 +256,11 @@
 	name = "enchiladas"
 	desc = "Viva La Mexico!"
 	icon_state = "enchiladas"
-	list_reagents = list("nutriment" = 8, "capsaicin" = 6)
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/enchiladas/New()
+	..()
+	peakReagents = list("nutriment",8,"capsaicin",6)
 	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/stew
@@ -185,41 +268,77 @@
 	desc = "A nice and warm stew. Healthy and strong."
 	icon_state = "stew"
 	trash = /obj/item/trash/snack_bowl
-	list_reagents = list("nutriment" = 10, "tomatojuice" = 5, "oculine" = 5, "water" = 5)
-	bitesize = 10
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/stew/New()
 	..()
 	eatverb = pick("slurp","sip","suck","inhale","drink")
+	peakReagents = list("nutriment", 10, "tomatojuice", 5, "oculine", 5, "water", 5)
+	bitesize = 10
 
 /obj/item/weapon/reagent_containers/food/snacks/stewedsoymeat
 	name = "stewed soy meat"
 	desc = "Even non-vegetarians will LOVE this!"
 	icon_state = "stewedsoymeat"
 	trash = /obj/item/trash/plate
-	list_reagents = list("nutriment" = 8)
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/stewedsoymeat/New()
 	..()
 	eatverb = pick("slurp","sip","suck","inhale","drink")
+	peakReagents = list("nutriment", 8)
+	bitesize = 2
+
+
+/* No more of this
+/obj/item/weapon/reagent_containers/food/snacks/telebacon
+	name = "tele bacon"
+	desc = "It tastes a little odd but it is still delicious."
+	icon_state = "bacon"
+	var/obj/item/device/radio/beacon/bacon/baconbeacon
+	bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/telebacon/New()
+	..()
+	reagents.add_reagent("nutriment", 4)
+	baconbeacon = new /obj/item/device/radio/beacon/bacon(src)
+/obj/item/weapon/reagent_containers/food/snacks/telebacon/On_Consume()
+	if(!reagents.total_volume)
+		baconbeacon.loc = usr
+		baconbeacon.digest_delay()
+*/
+
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledspiderleg
 	name = "boiled spider leg"
 	desc = "A giant spider's leg that's still twitching after being cooked. Gross!"
 	icon_state = "spiderlegcooked"
 	trash = /obj/item/trash/plate
-	list_reagents = list("nutriment" = 2, "capsaicin" = 2)
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/boiledspiderleg/New()
+	..()
+	peakReagents = list("nutriment", 3, "toxin", 2)
+	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/spidereggsham
 	name = "green eggs and ham"
 	desc = "Would you eat them on a train? Would you eat them on a plane? Would you eat them on a state of the art corporate deathtrap floating through space?"
 	icon_state = "spidereggsham"
 	trash = /obj/item/trash/plate
-	list_reagents = list("nutriment" = 6, "sodiumchloride" = 1, "toxin" = 3)
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/spidereggsham/New()
+	..()
+	peakReagents = list("nutriment", 6, "sodiumchloride", 1, "toxin", 3)
 	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/sashimi
 	name = "carp sashimi"
 	desc = "Celebrate surviving attack from hostile alien lifeforms by hospitalising yourself."
 	icon_state = "sashimi"
-	list_reagents = list("nutriment" = 6, "capsaicin" = 4)
+
+/obj/item/weapon/reagent_containers/food/snacks/sashimi/New()
+	..()
+	peakReagents = list("nutriment", 6, "toxin", 5)
+	bitesize = 3

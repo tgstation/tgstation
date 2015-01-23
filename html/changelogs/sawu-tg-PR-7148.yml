@@ -1,0 +1,6 @@
+author: sawu-tg
+
+delete-after: True
+
+changes: 
+  - rscadd: "Food now works on a freshness and temperature system, the closer a food is to it's desired temperature, the 'healthier' it is."

@@ -1,112 +1,216 @@
-/obj/item/weapon/reagent_containers/food/snacks/soup
-	bitesize = 5
-	trash = /obj/item/trash/snack_bowl
-
-/obj/item/weapon/reagent_containers/food/snacks/soup/New()
-	..()
-	eatverb = pick("slurp","sip","suck","inhale","drink")
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/meatballsoup
 	name = "meatball soup"
 	desc = "You've got balls kid, BALLS!"
 	icon_state = "meatballsoup"
-	list_reagents = list("nutriment" = 8, "water" = 5, "vitamin" = 5)
+	trash = /obj/item/trash/snack_bowl
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/soup/meatballsoup/New()
+	..()
+	eatverb = pick("slurp","sip","suck","inhale","drink")
+	peakReagents = list("nutriment", 8, "water", 5, "vitamin", 4)
+	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/slimesoup
 	name = "slime soup"
 	desc = "If no water is available, you may substitute tears."
 	icon_state = "slimesoup"
-	list_reagents = list("nutriment" = 2, "slimejelly" = 5, "water" = 10, "vitamin" = 5)
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/soup/slimesoup/New()
+	..()
+	eatverb = pick("slurp","sip","suck","inhale","drink")
+	peakReagents = list("slimejelly", 5, "water", 10, "vitamin", 5)
+	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/bloodsoup
 	name = "tomato soup"
 	desc = "Smells like copper."
 	icon_state = "tomatosoup"
-	list_reagents = list("nutriment" = 2, "blood" = 10, "water" = 5, "vitamin" = 6)
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/soup/bloodsoup/New()
+	..()
+	eatverb = pick("slurp","sip","suck","inhale","drink")
+	peakReagents = list("nutriment", 2, "blood", 10, "water", 5, "vitamin", 5)
+
+	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/clownstears
 	name = "clown's tears"
 	desc = "Not very funny."
 	icon_state = "clownstears"
-	list_reagents = list("nutriment" = 4, "banana" = 5, "water" = 10, "vitamin" = 8)
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/soup/clownstears/New()
+	..()
+	eatverb = pick("slurp","sip","suck","inhale","drink")
+	peakReagents = list("nutriment", 4, "banana", 5, "water", 10, "vitamin", 8)
+	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/vegetablesoup
 	name = "vegetable soup"
 	desc = "A true vegan meal."
 	icon_state = "vegetablesoup"
-	list_reagents = list("nutriment" = 8, "water" = 5, "vitamin" = 4)
+	trash = /obj/item/trash/snack_bowl
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/soup/vegetablesoup/New()
+	..()
+	eatverb = pick("slurp","sip","suck","inhale","drink")
+	peakReagents = list("nutriment", 8, "water", 5, "vitamin", 5)
+	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/nettlesoup
 	name = "nettle soup"
 	desc = "To think, the botanist would've beat you to death with one of these."
 	icon_state = "nettlesoup"
-	list_reagents = list("nutriment" = 8, "omnizine" = 5, "water" = 6, "vitamin" = 5)
+	trash = /obj/item/trash/snack_bowl
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/soup/nettlesoup/New()
+	..()
+	eatverb = pick("slurp","sip","suck","inhale","drink")
+	peakReagents = list("nutriment", 8, "water", 5, "omnizine", 5, "vitamin", 5)
+	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/mysterysoup
 	name = "mystery soup"
 	desc = "The mystery is, why aren't you eating it?"
 	icon_state = "mysterysoup"
-	list_reagents = list("nutriment" = 6, "tomatojuice" = 2)
-	var/extra_reagent = null
+	trash = /obj/item/trash/snack_bowl
+	coolFood = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/soup/mysterysoup/New()
 	..()
-	extra_reagent = pick("capsaicin", "frostoil", "omnizine", "banana", "blood", "slimejelly", "toxin", "banana", "carbon", "oculine")
-	reagents.add_reagent("[extra_reagent]", 5)
+	eatverb = pick("slurp","sip","suck","inhale","drink")
+	switch(rand(1,10))
+		if(1)
+			peakReagents = list("nutriment", 6, "capsaicin", 3, "tomatojuice", 2)
+		if(2)
+			peakReagents = list("nutriment", 6, "frostoil", 3, "tomatojuice", 2)
+		if(3)
+			peakReagents = list("nutriment", 5, "water", 5, "omnizine", 5)
+		if(4)
+			peakReagents = list("nutriment", 5, "water", 10)
+		if(5)
+			peakReagents = list("nutriment", 2, "banana", 10)
+		if(6)
+			peakReagents = list("nutriment", 6, "blood", 10)
+		if(7)
+			peakReagents = list("slimejelly", 10, "water", 10)
+		if(8)
+			peakReagents = list("carbon", 10, "toxin", 10)
+		if(9)
+			peakReagents = list("nutriment", 5, "tomatojuice", 10)
+		if(10)
+			peakReagents = list("nutriment", 6, "tomatojuice", 5, "oculine", 5)
+	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/wishsoup
 	name = "wish soup"
 	desc = "I wish this was soup."
 	icon_state = "wishsoup"
+	trash = /obj/item/trash/snack_bowl
+	coolFood = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/soup/wishsoup/New()
 	..()
+	eatverb = pick("slurp","sip","suck","inhale","drink")
+	peakReagents = list("water", 10)
+	bitesize = 5
 	if(prob(25))
 		desc = "A wish come true!"
-		reagents.add_reagent("nutriment", 9)
-		reagents.add_reagent("vitamin", 1)
-	else
-		reagents.add_reagent("water", 10)
+		peakReagents = list("water",10,"nutriment", 8,"vitamin",1)
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/hotchili
 	name = "hot chili"
 	desc = "A five alarm Texan Chili!"
 	icon_state = "hotchili"
-	list_reagents = list("nutriment" = 8, "capsaicin" = 1, "tomatojuice" = 2, "vitamin" = 2)
+	trash = /obj/item/trash/snack_bowl
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/soup/hotchili/New()
+	..()
+	eatverb = pick("slurp","sip","suck","inhale","drink")
+	peakReagents = list("nutriment", 5, "capsaicin", 1, "tomatojuice", 2, "vitamin", 2)
+	bitesize = 5
+
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/coldchili
 	name = "cold chili"
 	desc = "This slush is barely a liquid!"
 	icon_state = "coldchili"
-	list_reagents = list("nutriment" = 5, "frostoil" = 1, "tomatojuice" = 2, "vitamin" = 2)
+	trash = /obj/item/trash/snack_bowl
+
+/obj/item/weapon/reagent_containers/food/snacks/soup/coldchili/New()
+	..()
+	eatverb = pick("slurp","sip","suck","inhale","drink")
+	peakReagents = list("nutriment", 5, "frostoil", 1, "tomatojuice", 2, "vitamin", 2)
+	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/monkeysdelight
 	name = "monkey's delight"
 	desc = "A delicious soup with dumplings and hunks of monkey meat simmered to perfection, in a broth that tastes faintly of bananas."
 	icon_state = "monkeysdelight"
-	list_reagents = list("nutriment" = 10, "banana" = 5, "blackpepper" = 1, "sodiumchloride" = 1, "vitamin" = 5)
+	trash = /obj/item/trash/snack_bowl
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/soup/monkeysdelight/New()
+	..()
+	peakReagents = list("nutriment", 10, "banana", 5, "blackpepper", 1, "sodiumchloride", 1, "vitamin", 5)
+	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/tomatosoup
 	name = "tomato soup"
 	desc = "Drinking this feels like being a vampire! A tomato vampire..."
 	icon_state = "tomatosoup"
-	list_reagents = list("nutriment" = 8, "tomatojuice" = 10, "vitamin" = 3)
+	trash = /obj/item/trash/snack_bowl
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/soup/tomatosoup/New()
+	..()
+	eatverb = pick("slurp","sip","suck","inhale","drink")
+	peakReagents = list("nutriment", 5, "tomatojuice", 10, "vitamin", 3)
+	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/milosoup
 	name = "milosoup"
 	desc = "The universes best soup! Yum!!!"
 	icon_state = "milosoup"
-	list_reagents = list("nutriment" = 8, "water" = 5, "vitamin" = 3)
+	trash = /obj/item/trash/snack_bowl
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/soup/milosoup/New()
+	..()
+	eatverb = pick("slurp","sip","suck","inhale","drink")
+	peakReagents = list("nutriment", 8, "water", 5, "vitamin", 3)
+	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/mushroomsoup
 	name = "chantrelle soup"
 	desc = "A delicious and hearty mushroom soup."
 	icon_state = "mushroomsoup"
-	list_reagents = list("nutriment" = 8, "vitamin" = 5)
+	trash = /obj/item/trash/snack_bowl
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/soup/mushroomsoup/New()
+	..()
+	eatverb = pick("slurp","sip","suck","inhale","drink")
+	peakReagents = list("nutriment", 8, "vitamin", 4)
+	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/beetsoup
 	name = "beet soup"
 	desc = "Wait, how do you spell it again..?"
 	icon_state = "beetsoup"
-	list_reagents = list("nutriment" = 8,"vitamin" = 5)
+	trash = /obj/item/trash/snack_bowl
+	coolFood = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/soup/beetsoup/New()
 	..()
+	eatverb = pick("slurp","sip","suck","inhale","drink")
 	name = pick("borsch","bortsch","borstch","borsh","borshch","borscht")
+	peakReagents = list("nutriment", 8, "vitamin", 4)
+	bitesize = 2

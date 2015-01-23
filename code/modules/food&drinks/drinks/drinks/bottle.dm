@@ -33,7 +33,7 @@
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/attack(mob/living/target as mob, mob/living/user as mob)
-
+	..()
 	if(!target)
 		return
 

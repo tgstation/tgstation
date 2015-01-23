@@ -24,7 +24,7 @@
 	return
 
 /obj/item/weapon/reagent_containers/food/drinks/attack(mob/M as mob, mob/user as mob, def_zone)
-
+	..()
 	if(!reagents || !reagents.total_volume)
 		user << "<span class='alert'>None of [src] left, oh no!</span>"
 		return 0

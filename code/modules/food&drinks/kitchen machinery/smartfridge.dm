@@ -103,7 +103,9 @@
 
 	O.loc = src
 	var/n = O.name
-
+	if(istype(O,/obj/item/weapon/reagent_containers/food))
+		var/obj/item/weapon/reagent_containers/food/F = O
+		F.freshIndex = -1
 	if(item_quants[n])
 		item_quants[n]++
 	else

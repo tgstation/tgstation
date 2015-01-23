@@ -38,6 +38,7 @@
 
 
 /obj/item/weapon/reagent_containers/food/snacks/attack(mob/M, mob/user, def_zone)
+	..()
 	if(!eatverb)
 		eatverb = pick("bite","chew","nibble","gnaw","gobble","chomp")
 	if(!reagents.total_volume)						//Shouldn't be needed but it checks to see if it has anything left in it.
@@ -231,6 +232,7 @@
 
 //sliceable only changes w class, storage is handled by sliceable/store
 /obj/item/weapon/reagent_containers/food/snacks/sliceable
+	coolFood = TRUE
 	w_class = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store
@@ -257,12 +259,22 @@
 	slices_num = 5
 	list_reagents = list("nutriment" = 20, "vitamin" = 5)
 
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesewheel/New()
+	..()
+	peakReagents = list("nutriment", 20, "vitamin", 5)
+	bitesize = 2
+
 /obj/item/weapon/reagent_containers/food/snacks/cheesewedge
 	name = "cheese wedge"
 	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far."
 	icon_state = "cheesewedge"
+	coolFood = TRUE
+	badThreshold = 45
 
 /obj/item/weapon/reagent_containers/food/snacks/watermelonslice
 	name = "watermelon slice"
 	desc = "A slice of watery goodness."
 	icon_state = "watermelonslice"
+	bitesize = 2
+	coolFood = TRUE
+	badThreshold = 3

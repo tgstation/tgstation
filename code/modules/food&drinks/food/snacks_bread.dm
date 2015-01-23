@@ -5,15 +5,20 @@
 	icon_state = "meatbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice
 	slices_num = 5
-	list_reagents = list("nutriment" = 30, "vitamin" = 5)
+	coolFood = FALSE
 
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/meatbread/New()
+	..()
+	peakReagents = list("nutriment", 30, "vitamin", 5)
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice
 	name = "meatbread slice"
 	desc = "A slice of delicious meatbread."
 	icon_state = "meatbreadslice"
 	trash = /obj/item/trash/plate
-
+	bitesize = 2
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/xenomeatbread
 	name = "xenomeatbread loaf"
@@ -21,15 +26,20 @@
 	icon_state = "xenomeatbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/xenomeatbreadslice
 	slices_num = 5
-	list_reagents = list("nutriment" = 30, "vitamin" = 5)
+	coolFood = FALSE
 
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/xenomeatbread/New()
+	..()
+	peakReagents = list("nutriment", 30, "vitamin", 5)
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/xenomeatbreadslice
 	name = "xenomeatbread slice"
 	desc = "A slice of delicious meatbread. Extra Heretical."
 	icon_state = "xenobreadslice"
 	trash = /obj/item/trash/plate
-
+	bitesize = 2
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/spidermeatbread
 	name = "spider meat loaf"
@@ -37,16 +47,24 @@
 	icon_state = "spidermeatbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/spidermeatbreadslice
 	slices_num = 5
-	list_reagents = list("nutriment" = 30, "toxin" = 15, "vitamin" = 5)
+	coolFood = FALSE
 
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/spidermeatbread/New()
+	..()
+	peakReagents = list("nutriment", 30, "toxin", 15, "vitamin", 5)
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/spidermeatbreadslice
 	name = "spider meat bread slice"
 	desc = "A slice of meatloaf made from an animal that most likely still wants you dead."
 	icon_state = "xenobreadslice"
 	trash = /obj/item/trash/plate
+	bitesize = 2
+	coolFood = FALSE
 
-	list_reagents = list("toxin" = 2)
+/obj/item/weapon/reagent_containers/food/snacks/spidermeatbreadslice/New()
+	..()
+	peakReagents = list("toxin", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/bananabread
 	name = "banana-nut bread"
@@ -54,15 +72,20 @@
 	icon_state = "bananabread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/bananabreadslice
 	slices_num = 5
-	list_reagents = list("nutriment" = 30, "banana" = 20)
+	coolFood = FALSE
 
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/bananabread/New()
+	..()
+	peakReagents = list("banana", 20, "nutriment", 20)
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/bananabreadslice
 	name = "banana-nut bread slice"
 	desc = "A slice of delicious banana bread."
 	icon_state = "bananabreadslice"
 	trash = /obj/item/trash/plate
-
+	bitesize = 2
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/tofubread
 	name = "Tofubread"
@@ -70,15 +93,20 @@
 	icon_state = "tofubread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice
 	slices_num = 5
-	list_reagents = list("nutriment" = 30, "vitamin" = 5)
+	coolFood = FALSE
 
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/tofubread/New()
+	..()
+	peakReagents = list("nutriment", 30, "vitamin", 5)
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice
 	name = "tofubread slice"
 	desc = "A slice of delicious tofubread."
 	icon_state = "tofubreadslice"
 	trash = /obj/item/trash/plate
-
+	bitesize = 2
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/bread
 	name = "bread"
@@ -86,14 +114,20 @@
 	icon_state = "bread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice
 	slices_num = 5
-	list_reagents = list("nutriment" = 6, "vitamin" = 5)
+	coolFood = FALSE
 
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/bread/New()
+	..()
+	peakReagents = list("nutriment", 6)
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice
 	name = "bread slice"
 	desc = "A slice of home."
 	icon_state = "breadslice"
 	trash = /obj/item/trash/plate
+	bitesize = 2
+	coolFood = FALSE
 
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/creamcheesebread
@@ -102,19 +136,26 @@
 	icon_state = "creamcheesebread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/creamcheesebreadslice
 	slices_num = 5
-	list_reagents = list("nutriment" = 20, "vitamin" = 5)
 
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/creamcheesebread/New()
+	..()
+	peakReagents = list("nutriment", 20,"vitamin",5)
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/creamcheesebreadslice
 	name = "cream cheese bread slice"
 	desc = "A slice of yum!"
 	icon_state = "creamcheesebreadslice"
 	trash = /obj/item/trash/plate
-
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/baguette
 	name = "baguette"
 	desc = "Bon appetit!"
 	icon_state = "baguette"
-	list_reagents = list("nutriment" = 6, "blackpepper" = 1, "sodiumchloride" = 1, "vitamin" = 1)
+	coolFood = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/baguette/New()
+	..()
+	peakReagents = list("nutriment", 6, "blackpepper", 1, "sodiumchloride", 1, "vitamin", 1)
 	bitesize = 3

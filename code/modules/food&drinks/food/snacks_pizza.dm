@@ -3,6 +3,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza
 	slices_num = 6
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/margherita
 	name = "margherita"
@@ -10,12 +11,17 @@
 	icon_state = "pizzamargherita"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/margheritaslice
 	slices_num = 6
-	list_reagents = list("nutriment" = 30, "tomatojuice" = 6, "vitamin" = 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/margherita/New()
+	..()
+	peakReagents = list("nutriment", 30, "tomatojuice",6, "vitamin", 5)
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/margheritaslice
 	name = "margherita slice"
 	desc = "A slice of the most cheezy pizza in galaxy."
 	icon_state = "pizzamargheritaslice"
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meatpizza
 	name = "meatpizza"
@@ -23,12 +29,18 @@
 	icon_state = "meatpizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/meatpizzaslice
 	slices_num = 6
-	list_reagents = list("nutriment" = 40, "tomatojuice" = 6, "vitamin" = 8)
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meatpizza/New()
+	..()
+	peakReagents = list("nutriment", 40, "tomatojuice", 6, "vitamin", 8)
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/meatpizzaslice
 	name = "meatpizza slice"
 	desc = "A nutritious slice of meatpizza."
 	icon_state = "meatpizzaslice"
+	bitesize = 2
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/mushroompizza
 	name = "mushroom pizza"
@@ -36,12 +48,18 @@
 	icon_state = "mushroompizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/mushroompizzaslice
 	slices_num = 6
-	list_reagents = list("nutriment" = 30, "vitamin" = 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/mushroompizza/New()
+	..()
+	peakReagents = list("nutriment", 30, "vitamin", 5)
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/mushroompizzaslice
 	name = "mushroom pizza slice"
 	desc = "Maybe it is the last slice of pizza in your life."
 	icon_state = "mushroompizzaslice"
+	bitesize = 2
+	coolFood = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/vegetablepizza
 	name = "vegetable pizza"
@@ -49,12 +67,18 @@
 	icon_state = "vegetablepizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/vegetablepizzaslice
 	slices_num = 6
-	list_reagents = list("nutriment" = 25, "tomatojuice" = 6, "oculine" = 12, "vitamin" = 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/vegetablepizza/New()
+	..()
+	peakReagents = list("nutriment", 25, "tomatojuice", 6, "oculine", 12, "vitamin", 5)
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/vegetablepizzaslice
 	name = "vegetable pizza slice"
 	desc = "A slice of the most green pizza of all pizzas not containing green ingredients."
 	icon_state = "vegetablepizzaslice"
+	bitesize = 2
+	coolFood = FALSE
 
 /obj/item/pizzabox
 	name = "pizza box"
