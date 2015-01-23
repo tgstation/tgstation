@@ -82,6 +82,37 @@
 	item_state = "bombsuitsec"
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs)
 
+/obj/item/clothing/head/advancedeod_helmet
+	name = "Advanced EOD Helmet"
+	desc = "Use in case of very large bomb."
+	icon_state = "advancedeod_helmet"
+	item_state = "advancedeod_helmet"
+	flags = FPRINT|BLOCKHAIR
+	armor = list(melee = 70, bullet = 70, laser = 70,energy = 70, bomb = 250, bio = 0, rad = 0)
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+	body_parts_covered = FULL_HEAD
+	species_restricted = list("exclude","Vox")
+	siemens_coefficient = 0
+
+
+/obj/item/clothing/suit/advancedeod
+	name = "Advanced EOD Suit"
+	desc = "A heavy suit designed for heavy protection."
+	icon_state = "advancedeod"
+	item_state = "advancedeod"
+	w_class = 4//bulky item
+	gas_transfer_coefficient = 0.01
+	permeability_coefficient = 0.01
+	flags = FPRINT
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	slowdown = 6
+	armor = list(melee = 70, bullet = 70, laser = 70,energy = 70, bomb = 250, bio = 0, rad = 0)
+	flags_inv = HIDEJUMPSUIT|HIDESHOES
+	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
+	max_heat_protection_temperature = ARMOR_MAX_HEAT_PROTECITON_TEMPERATURE
+	species_restricted = list("exclude","Vox")
+	siemens_coefficient = 0
+
 /*
  * Radiation protection
  */
