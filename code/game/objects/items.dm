@@ -645,21 +645,18 @@
 /obj/item/proc/eyestab(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 
 	var/mob/living/carbon/human/H = M
-	if(istype(H) && ( \
-			(H.head && H.head.flags & HEADCOVERSEYES) || \
-			(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
-			(H.glasses && H.glasses.flags & GLASSESCOVERSEYES) \
-		))
-		// you can't stab someone in the eyes wearing a mask!
-		user << "<span class='warning'>You're going to need to remove that mask/helmet/glasses first.</span>"
-		return
+	if(istype(H))
+		var/obj/item/eye_protection = H.get_body_part_coverage(EYES)
+		if(eye_protection)
+			user << "<span class='warning'>You're going to need to remove that [eye_protection] first.</span>"
+			return
 
 	var/mob/living/carbon/monkey/Mo = M
 	if(istype(Mo) && ( \
-			(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES) \
+			(Mo.wear_mask && Mo.wear_mask.body_parts_covered & EYES) \
 		))
 		// you can't stab someone in the eyes wearing a mask!
-		user << "<span class='warning'>You're going to need to remove that mask/helmet/glasses first.</span>"
+		user << "<span class='warning'>You're going to need to remove that mask first.</span>"
 		return
 
 	if(!M.has_eyes())
@@ -717,7 +714,7 @@
 					M << "<span class='warning'>You go blind!</span>"
 		var/datum/organ/external/affecting = M:get_organ("head")
 		if(affecting.take_damage(7))
-			M:UpdateDamageIcon()
+			M:QueueUpdateDamageIcon(1)
 	else
 		M.take_organ_damage(7)
 	M.eye_blurry += rand(3,4)

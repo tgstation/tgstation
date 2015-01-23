@@ -32,9 +32,6 @@ var/list/alldepartments = list("Central Command")
 	if( !("[department]" in alldepartments) )
 		alldepartments += department
 
-/obj/machinery/faxmachine/process()
-	return 0
-
 /obj/machinery/faxmachine/attack_ghost(mob/user as mob)
 	usr << "\red Nope."
 	return 0

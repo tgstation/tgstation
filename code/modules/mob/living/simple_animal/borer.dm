@@ -525,7 +525,7 @@ mob/living/simple_animal/borer/proc/detach()
 
 	if(istype(M,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		if(H.check_head_coverage(HIDEEARS))
+		if(H.check_body_part_coverage(EARS))
 			src << "You cannot get through that host's protective gear."
 			return
 

@@ -1,13 +1,4 @@
-/obj/item/clothing/glasses
-	name = "glasses"
-	icon = 'icons/obj/clothing/glasses.dmi'
-	//w_class = 2.0
-	//flags = GLASSESCOVERSEYES
-	//slot_flags = SLOT_EYES
-	//var/vision_flags = 0
-	//var/darkness_view = 0//Base human is 2
-	//var/invisa_view = 0
-	var/prescription = 0
+//the basic glasses can be found in clothing.dm
 
 /obj/item/clothing/glasses/meson
 	name = "Optical Meson Scanner"
@@ -125,13 +116,13 @@
 	if(C.canmove && !C.stat && !C.restrained())
 		if(src.up)
 			src.up = !src.up
-			src.flags |= GLASSESCOVERSEYES
+			body_parts_covered |= EYES
 			flags_inv |= HIDEEYES
 			icon_state = initial(icon_state)
 			C << "You flip the [src] down to protect your eyes."
 		else
 			src.up = !src.up
-			src.flags &= ~HEADCOVERSEYES
+			src.body_parts_covered &= ~EYES
 			flags_inv &= ~HIDEEYES
 			icon_state = "[initial(icon_state)]up"
 			C << "You push the [src] up out of your face."

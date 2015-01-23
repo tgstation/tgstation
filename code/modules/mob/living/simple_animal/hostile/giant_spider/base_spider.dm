@@ -83,6 +83,8 @@ var/global/list/spider_types = typesof(/mob/living/simple_animal/hostile/giant_s
 /mob/living/simple_animal/hostile/giant_spider/CanAttack(var/atom/the_target)
 	if(istype(the_target,/mob/living/simple_animal/hostile/giant_spider))
 		return 0
+	if(istype(the_target,/obj/effect))
+		return 0
 	if(istype(the_target,/obj/machinery/door))
 		return CanOpenDoor(the_target)
 	if(istype(the_target,/obj/machinery/light))

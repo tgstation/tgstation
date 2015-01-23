@@ -175,7 +175,7 @@
 		affected.destspawn = 0
 		target.update_body()
 		target.updatehealth()
-		target.UpdateDamageIcon()
+		target.QueueUpdateDamageIcon(1)
 		var/obj/item/weapon/organ/head/B = tool
 		if (B.brainmob.mind)
 			B.brainmob.mind.transfer_to(target)

@@ -15,7 +15,7 @@
 	name = "welding helmet"
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye."
 	icon_state = "welding"
-	flags = FPRINT  | HEADCOVERSEYES | HEADCOVERSMOUTH
+	flags = FPRINT
 	item_state = "welding"
 	m_amt = 3000
 	g_amt = 1000
@@ -23,6 +23,7 @@
 	var/up = 0
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags_inv = (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
+	body_parts_covered = HEAD|EYES|MOUTH|EARS //using this instead of FULL_HEAD to show how the flags change in the code
 	action_button_name = "Toggle Welding Helmet"
 	siemens_coefficient = 0.9
 	species_fit = list("Vox")
@@ -39,13 +40,13 @@
 	if(usr.canmove && !usr.stat && !usr.restrained())
 		if(src.up)
 			src.up = !src.up
-			src.flags |= (HEADCOVERSEYES | HEADCOVERSMOUTH)
+			src.body_parts_covered |= (EYES|MOUTH|EARS)
 			flags_inv |= (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 			icon_state = initial(icon_state)
 			usr << "You flip the [src] down to protect your eyes."
 		else
 			src.up = !src.up
-			src.flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
+			src.body_parts_covered &= ~(EYES|MOUTH|EARS)
 			flags_inv &= ~(HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 			icon_state = "[initial(icon_state)]up"
 			usr << "You push the [src] up out of your face."
@@ -59,7 +60,8 @@
 	name = "cake-hat"
 	desc = "It's tasty looking!"
 	icon_state = "cake0"
-	flags = FPRINT|HEADCOVERSEYES
+	flags = FPRINT
+	body_parts_covered = HEAD|EYES
 	var/onfire = 0.0
 	var/status = 0
 	var/fire_resist = T0C+1300	//this is the max temp it can stand before you start to cook. although it might not burn away, you take damage
@@ -123,8 +125,9 @@
 	icon_state = "hardhat0_pumpkin"//Could stand to be renamed
 	item_state = "hardhat0_pumpkin"
 	_color = "pumpkin"
-	flags = FPRINT  | HEADCOVERSEYES | HEADCOVERSMOUTH | BLOCKHAIR
+	flags = FPRINT  | BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	body_parts_covered = FULL_HEAD
 	var/brightness_on = 2 //luminosity when on
 	var/on = 0
 

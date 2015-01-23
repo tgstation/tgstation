@@ -81,9 +81,11 @@ By design, d1 is the smallest direction and d2 is the highest
 	cable_list += src		//add it to the global cable list
 
 /obj/structure/cable/Destroy()			// called when a cable is deleted
-	if(powernet)
-		cut_cable_from_powernet()				// update the powernets
-	cable_list -= src							//remove it from global cable list
+	if(!defer_powernet_rebuild)			// set if network will be rebuilt manually.
+		if(powernet)
+			cut_cable_from_powernet()	// update the powernets
+
+	cable_list -= src
 
 	if(istype(attached))
 		attached.SetLuminosity(0)
@@ -346,14 +348,14 @@ By design, d1 is the smallest direction and d2 is the highest
 		if(istype(AM, /obj/structure/cable))
 			var/obj/structure/cable/C = AM
 
-			if(C.d1 == d1 || C.d2 == d1 || C.d1 == d2 || C.d2 == d2) // only connected if they have a common direction
-				if(C.powernet == powernet)
-					continue
+			//if(C.d1 == d1 || C.d2 == d1 || C.d1 == d2 || C.d2 == d2) // only connected if they have a common direction // uncomment if you don't want + wiring
+			if(C.powernet == powernet)
+				continue
 
-				if(C.powernet)
-					merge_powernets(powernet, C.powernet)
-				else
-					powernet.add_cable(C) // the cable was powernetless, let's just add it to our powernet
+			if(C.powernet)
+				merge_powernets(powernet, C.powernet)
+			else
+				powernet.add_cable(C) // the cable was powernetless, let's just add it to our powernet
 		else if(istype(AM, /obj/machinery/power/apc))
 			var/obj/machinery/power/apc/N = AM
 

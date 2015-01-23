@@ -368,8 +368,8 @@
 
 
 
-	if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
-		M << "\red You get slammed in the face with the tray, against your mask!"
+	if(istype(M, /mob/living/carbon/human) && H.check_body_part_coverage(EYES))
+		H << "\red You get slammed in the face with the tray, against your mask!"
 		if(prob(33))
 			src.add_blood(H)
 			if (H.wear_mask)

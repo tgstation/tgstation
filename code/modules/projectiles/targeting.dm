@@ -170,7 +170,7 @@ mob/living/proc/Targeted(var/obj/item/weapon/gun/I) //Self explanitory.
 	if(targeted_by.len == 1)
 		spawn(0)
 			target_locked = image("icon" = 'icons/effects/Targeted.dmi', "icon_state" = "locking")
-			overlays += target_locked
+			update_targeted()
 			spawn(0)
 				sleep(20)
 				if(target_locked)

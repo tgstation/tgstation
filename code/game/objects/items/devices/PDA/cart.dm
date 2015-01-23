@@ -123,7 +123,7 @@
 	access_reagent_scanner = 1
 	access_atmos = 1
 
-/obj/item/weapon/cartridge/signal/toxins/New()
+/obj/item/weapon/cartridge/signal/New()
 	..()
 	spawn(5)//giving time for the radio_controller to initialize
 		radio = new /obj/item/radio/integrated/signal(src)

@@ -1130,6 +1130,19 @@ Pressure: [env.return_pressure()]"}
 	usr << "\blue Dumped to machine_profiling.csv."
 #endif
 
+/client/proc/cmd_admin_dump_delprofile()
+	set category = "Debug"
+	set name = "Dump Del Profiling"
+
+	var/F = file("del_profiling.csv")
+	fdel(F)
+	F << "type,deletes"
+	for(var/typepath in del_profiling)
+		var/ns = del_profiling[typepath]
+		F << "[typepath],[ns]"
+
+	usr << "\blue Dumped to del_profiling.csv."
+
 /client/proc/gib_money()
 	set category = "Fun"
 	set name = "Dispense Money"

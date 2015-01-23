@@ -33,10 +33,11 @@
 	gcDestroyed = "bye world!"
 	tag = null
 	loc = null
-	if(beams && beams.len)
+	if(istype(beams) && beams.len)
 		for(var/obj/effect/beam/B in beams)
 			if(B && B.target == src)
 				B.target = null
+		beams.len = 0
 	..()
 
 /atom/movable/Del()

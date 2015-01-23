@@ -55,8 +55,12 @@
 	if(radio_controller)
 		initialize()
 
-obj/item/device/radio/Destroy()
-	remove_radio_all(src)
+/obj/item/device/radio/Destroy()
+	qdel(wires)
+	wires = null
+	remove_radio_all(src) //Just to be sure
+	..()
+
 
 /obj/item/device/radio/initialize()
 
