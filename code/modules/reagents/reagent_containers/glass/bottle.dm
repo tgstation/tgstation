@@ -98,11 +98,11 @@
 	icon_state = "bottle17"
 	spawned_reagent = "diethylamine"
 
-/obj/item/weapon/reagent_containers/glass/bottle/pacid
-	name = "Polytrinic Acid Bottle"
-	desc = "A small bottle. Contains a small amount of Polytrinic Acid"
+/obj/item/weapon/reagent_containers/glass/bottle/facid
+	name = "Fluorosulfuric Acid Bottle"
+	desc = "A small bottle. Contains a small amount of Fluorosulfuric Acid"
 	icon_state = "bottle17"
-	spawned_reagent = "pacid"
+	spawned_reagent = "facid"
 
 /obj/item/weapon/reagent_containers/glass/bottle/adminordrazine
 	name = "Adminordrazine Bottle"
