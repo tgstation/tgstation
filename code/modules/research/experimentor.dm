@@ -351,7 +351,7 @@
 			C.name = "Cup of Suspicious Liquid"
 			C.desc = "It has a large hazard symbol printed on the side in fading ink."
 		if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
-			visible_message("<span class='notice'>[src] activates it's heat-seeking system!</span>")
+			visible_message("<span class='danger'>[src] activates it's heat-seeking system!</span>")
 			new/datum/round_event/meteor_wave()
 		if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='notice'>[src] malfunctions, melting [exp_on] and releasing a burst of flame!.</span>")
