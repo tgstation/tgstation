@@ -134,13 +134,6 @@
 	fitted = 0
 	can_adjust = 0
 
-/obj/item/clothing/under/johnny
-	name = "johnny~~ jumpsuit"
-	desc = "Johnny~~"
-	icon_state = "johnny"
-	item_color = "johnny"
-	can_adjust = 0
-
 /obj/item/clothing/under/rainbow
 	name = "rainbow"
 	desc = "rainbow"
@@ -186,7 +179,6 @@
 	icon_state = "really_black_suit"
 	item_state = "bl_suit"
 	item_color = "black_suit"
-	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket/female
 	name = "executive suit"
@@ -201,7 +193,6 @@
 	icon_state = "red_suit"
 	item_state = "r_suit"
 	item_color = "red_suit"
-	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket/charcoal
 	name = "charcoal suit"
@@ -209,7 +200,6 @@
 	icon_state = "charcoal_suit"
 	item_state = "charcoal_suit"
 	item_color = "charcoal_suit"
-	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket/navy
 	name = "navy suit"
@@ -217,7 +207,6 @@
 	icon_state = "navy_suit"
 	item_state = "navy_suit"
 	item_color = "navy_suit"
-	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket/burgundy
 	name = "burgundy suit"
@@ -225,7 +214,6 @@
 	icon_state = "burgundy_suit"
 	item_state = "burgundy_suit"
 	item_color = "burgundy_suit"
-	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket/checkered
 	name = "checkered suit"
@@ -233,7 +221,6 @@
 	icon_state = "checkered_suit"
 	item_state = "checkered_suit"
 	item_color = "checkered_suit"
-	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket/tan
 	name = "tan suit"
@@ -241,7 +228,13 @@
 	icon_state = "tan_suit"
 	item_state = "tan_suit"
 	item_color = "tan_suit"
-	can_adjust = 0
+
+/obj/item/clothing/under/suit_jacket/white
+	name = "white suit"
+	desc = "A white suit and jacket with a black shirt. You wanna play rough? OKAY!."
+	icon_state = "white_suit"
+	item_state = "white_suit"
+	item_color = "white_suit"
 
 /obj/item/clothing/under/blackskirt
 	name = "black skirt"

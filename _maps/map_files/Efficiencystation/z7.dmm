@@ -316,7 +316,7 @@
 "gd" = (/turf/simulated/floor/plasteel{icon_state = "white"; temperature = 293.15},/area/spacecontent/a8{name = "Abandoned Station Medical"})
 "ge" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area/spacecontent/a8{name = "Abandoned Station Medical"})
 "gf" = (/obj/structure/stool/bed/chair{dir = 4},/turf/simulated/floor/plasteel{icon_state = "cafeteria"},/area/spacecontent/a8{name = "Abandoned Station Medical"})
-"gg" = (/obj/structure/table,/obj/machinery/vending/wallmed1{pixel_y = 28},/obj/item/weapon/folder/white,/obj/item/weapon/pen,/turf/simulated/floor/plasteel{icon_state = "cafeteria"},/area/spacecontent/a8{name = "Abandoned Station Medical"})
+"gg" = (/obj/structure/table,/obj/machinery/vending/wallmed{pixel_y = 28},/obj/item/weapon/folder/white,/obj/item/weapon/pen,/turf/simulated/floor/plasteel{icon_state = "cafeteria"},/area/spacecontent/a8{name = "Abandoned Station Medical"})
 "gh" = (/obj/structure/stool/bed/chair/office/light{dir = 8},/turf/simulated/floor/plasteel{icon_state = "cafeteria"},/area/spacecontent/a8{name = "Abandoned Station Medical"})
 "gi" = (/obj/structure/closet,/obj/effect/spawner/lootdrop/maintenance{lootcount = 2; name = "2maintenance loot spawner"},/turf/simulated/floor/plating,/area/spacecontent/a8{name = "Abandoned Station Medical"})
 "gj" = (/obj/machinery/cell_charger,/turf/simulated/floor/plasteel{icon_state = "vault"; dir = 8},/area/spacecontent/a9{name = "Abandoned Station Research"})
@@ -356,7 +356,7 @@
 "gR" = (/turf/simulated/floor/plasteel{dir = 1; icon_state = "whitegreencorner"},/area/spacecontent/a8{name = "Abandoned Station Medical"})
 "gS" = (/obj/effect/decal/cleanable/blood,/turf/simulated/floor/plasteel{icon_state = "white"; temperature = 293.15},/area/spacecontent/a8{name = "Abandoned Station Medical"})
 "gT" = (/obj/machinery/door/airlock/glass_medical{id_tag = null; name = "Medbay Office 2"; req_access_txt = "201"},/turf/simulated/floor/plasteel{icon_state = "cafeteria"},/area/spacecontent/a8{name = "Abandoned Station Medical"})
-"gU" = (/obj/machinery/vending/wallmed1{pixel_y = 28},/obj/machinery/light_construct/small{dir = 1},/turf/simulated/floor/plasteel{icon_state = "cafeteria"},/area/spacecontent/a8{name = "Abandoned Station Medical"})
+"gU" = (/obj/machinery/vending/wallmed{pixel_y = 28},/obj/machinery/light_construct/small{dir = 1},/turf/simulated/floor/plasteel{icon_state = "cafeteria"},/area/spacecontent/a8{name = "Abandoned Station Medical"})
 "gV" = (/obj/structure/grille,/turf/simulated/floor/plating{burnt = 1; dir = 9; icon_state = "panelscorched"; tag = "icon-panelscorched (NORTHWEST)"},/area/spacecontent/a8{name = "Abandoned Station Medical"})
 "gW" = (/obj/structure/grille{density = 0; icon_state = "brokengrille"},/obj/item/stack/rods,/turf/simulated/floor/plating,/area/spacecontent/a8{name = "Abandoned Station Medical"})
 "gX" = (/obj/effect/decal/remains/human,/turf/simulated/floor/plating/asteroid/airless,/area/mine/explored)
@@ -581,7 +581,7 @@
 "li" = (/turf/space,/turf/simulated/shuttle/wall{dir = 4; icon_state = "diagonalWall3"},/area/spacecontent/a5{name = "Syndicate Scouting Ship"})
 "lj" = (/turf/simulated/wall/r_wall,/area/turret_protected/tcomsat{name = "\improper Syndicate Mini Base"})
 "lk" = (/obj/machinery/power/port_gen/pacman/super,/obj/structure/cable{icon_state = "0-2"; d2 = 2},/turf/simulated/floor/plasteel{icon_state = "red"; dir = 9},/area/turret_protected/tcomsat{name = "\improper Syndicate Mini Base"})
-"ll" = (/obj/structure/table,/obj/item/weapon/reagent_containers/glass/bottle/antitoxin,/obj/item/weapon/reagent_containers/syringe,/turf/simulated/floor/plasteel{icon_state = "red"; dir = 1},/area/turret_protected/tcomsat{name = "\improper Syndicate Mini Base"})
+"ll" = (/obj/structure/table,/obj/item/weapon/reagent_containers/glass/bottle/charcoal,/obj/item/weapon/reagent_containers/syringe,/turf/simulated/floor/plasteel{icon_state = "red"; dir = 1},/area/turret_protected/tcomsat{name = "\improper Syndicate Mini Base"})
 "lm" = (/obj/structure/table,/obj/item/stack/sheet/mineral/uranium{amount = 10},/obj/item/weapon/wrench,/turf/simulated/floor/plasteel{icon_state = "red"; dir = 5},/area/turret_protected/tcomsat{name = "\improper Syndicate Mini Base"})
 "ln" = (/obj/structure/rack{dir = 8; layer = 2.9},/obj/item/clothing/suit/space/syndicate,/obj/item/clothing/mask/gas,/obj/item/clothing/head/helmet/space/syndicate,/obj/item/weapon/pickaxe,/turf/simulated/floor/plating{tag = "icon-warnplatecorner (NORTH)"; icon_state = "warnplatecorner"; dir = 1},/area/turret_protected/tcomsat{name = "\improper Syndicate Mini Base"})
 "lo" = (/obj/machinery/portable_atmospherics/canister/oxygen,/obj/structure/sign/vacuum{pixel_y = 32},/turf/simulated/floor/plating{tag = "icon-warnplatecorner"; icon_state = "warnplatecorner"; dir = 2},/area/turret_protected/tcomsat{name = "\improper Syndicate Mini Base"})
@@ -1124,3 +1124,4 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}
+

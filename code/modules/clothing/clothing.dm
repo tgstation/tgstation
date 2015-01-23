@@ -5,6 +5,9 @@
 	var/up = 0					//	   but seperated to allow items to protect but not impair vision, like space helmets
 	var/visor_flags = 0			// flags that are added/removed when an item is adjusted up/down
 	var/visor_flags_inv = 0		// same as visor_flags, but for flags_inv
+	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
+
 
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears

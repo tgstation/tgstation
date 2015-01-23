@@ -314,6 +314,8 @@
 		update_inv_wear_mask(0)
 	else if(I == handcuffed)
 		handcuffed = null
+		if(buckled && buckled.buckle_requires_restraints)
+			buckled.unbuckle_mob()
 		update_inv_handcuffed(0)
 	else if(I == legcuffed)
 		legcuffed = null
