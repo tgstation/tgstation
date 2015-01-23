@@ -3,7 +3,7 @@
 	desc = "yummy"
 	icon = 'icons/obj/food.dmi'
 	icon_state = null
-	var/bitesize = 1
+	var/bitesize = 2
 	var/bitecount = 0
 	var/trash = null
 	var/slice_path
@@ -257,6 +257,7 @@
 	icon_state = "cheesewheel"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cheesewedge
 	slices_num = 5
+	list_reagents = list("nutriment" = 20, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesewheel/New()
 	..()
@@ -267,7 +268,6 @@
 	name = "cheese wedge"
 	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far."
 	icon_state = "cheesewedge"
-	bitesize = 2
 	coolFood = TRUE
 	badThreshold = 45
 
