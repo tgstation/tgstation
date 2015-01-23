@@ -34,6 +34,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/mimeamt = 0 //How many silence left when infected with mime.exe
 	var/note = "Congratulations, your station has chosen the Thinktronic 5230 Personal Data Assistant!" //Current note in the notepad function
 	var/notehtml = ""
+	var/notescanned = 0 // True if what is in the notekeeper was from a paper.
 	var/const/notefont = "Verdana"
 	var/const/signfont = "Times New Roman"
 	var/cart = "" //A place to stick cartridge menu information
@@ -371,8 +372,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 			if (1)
 				dat += "<h4><img src=pda_notes.png> Notekeeper V2.2</h4>"
-				dat += "<a href='byond://?src=\ref[src];choice=Edit'>Edit</a><br><HR>"
-				dat += "<font face=\"[notefont]\">[(!notehtml ? note : notehtml)]</font>"
+				dat += "<a href='byond://?src=\ref[src];choice=Edit'>Edit</a><br>"
+				if(notescanned)
+					dat += "(This is a scanned image, editing it may cause some text formatting to change.)<br>"
+				dat += "<HR><font face=\"[notefont]\">[(!notehtml ? note : notehtml)]</font>"
 
 			if (2)
 				dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.5</h4>"
@@ -573,6 +576,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					if (mode == 1 && n)
 						note = n
 						notehtml = parsepencode(n, U)
+						notescanned = 0
 				else
 					U << browse(null, "window=pda")
 					return
@@ -1005,7 +1009,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		note = replacetext(note, "<ul>", "\[list\]")
 		note = replacetext(note, "</ul>", "\[/list\]")
 		note = strip_html_properly(note)
-		user << "<span class='notice'>Paper scanned. Saved to notekeeper.</span>" //concept of scanning paper copyright brainoblivion 2009
+		notescanned = 1
+		user << "<span class='notice'>Paper scanned. Saved to PDA's notekeeper.</span>" //concept of scanning paper copyright brainoblivion 2009
 
 
 /obj/item/device/pda/proc/explode() //This needs tuning.
