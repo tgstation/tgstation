@@ -159,8 +159,9 @@ var/global/list/all_money_accounts = list()
 	ghost_read=0
 	ghost_write=0
 
-/obj/machinery/account_database/New()
-	..()
+/obj/machinery/account_database/New(loc)
+	..(loc)
+
 	if(!station_account)
 		create_station_account()
 
@@ -177,6 +178,21 @@ var/global/list/all_money_accounts = list()
 	machine_id = "[station_name()] Acc. DB #[num_financial_terminals++]"
 
 	account_DBs += src
+
+	if(ticker)
+		initialize()
+
+/obj/machinery/account_database/initialize()
+	..()
+
+	if(z == CENTCOMM_Z && isnull(centcomm_account_db))
+		centcomm_account_db = src
+
+/obj/machinery/account_database/Destroy()
+	if(centcomm_account_db == src)
+		centcomm_account_db = null
+
+	..()
 
 /obj/machinery/account_database/attack_hand(mob/user as mob)
 	if(ishuman(user) && !user.stat && get_dist(src,user) <= 1)
