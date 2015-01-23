@@ -1,3 +1,4 @@
+<<<<<<< HEAD:code/modules/reagents/reagent_containers/bottle.dm
 //Not to be confused with /obj/item/weapon/reagent_containers/food/drinks/bottle
 
 /obj/item/weapon/reagent_containers/glass/bottle
@@ -80,11 +81,11 @@
 	icon_state = "bottle17"
 	list_reagents = list("diethylamine" = 30)
 
-/obj/item/weapon/reagent_containers/glass/bottle/pacid
-	name = "Polytrinic Acid Bottle"
-	desc = "A small bottle. Contains a small amount of Polytrinic Acid"
+/obj/item/weapon/reagent_containers/glass/bottle/facid
+	name = "Fluorosulfuric Acid Bottle"
+	desc = "A small bottle. Contains a small amount of Fluorosulfuric Acid"
 	icon_state = "bottle17"
-	list_reagents = list("pacid" = 30)
+	list_reagents = list("facid" = 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/adminordrazine
 	name = "Adminordrazine Bottle"

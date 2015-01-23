@@ -188,7 +188,7 @@
 			if(R.module.emag)
 				if(istype(R.module.emag, /obj/item/weapon/reagent_containers/spray))
 					var/obj/item/weapon/reagent_containers/spray/S = R.module.emag
-					if(S.name == "polyacid spray")
-						S.reagents.add_reagent("pacid", 2 * coeff)
+					if(S.name == "Fluacid spray")
+						S.reagents.add_reagent("facid", 2 * coeff)
 					else if(S.name == "lube spray")
 						S.reagents.add_reagent("lube", 2 * coeff)

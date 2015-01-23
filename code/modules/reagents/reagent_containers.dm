@@ -22,10 +22,12 @@
 	if (N)
 		amount_per_transfer_from_this = N
 
-/obj/item/weapon/reagent_containers/New()
+/obj/item/weapon/reagent_containers/New(location, vol = 0)
 	..()
 	if (!possible_transfer_amounts)
 		src.verbs -= /obj/item/weapon/reagent_containers/verb/set_APTFT
+	if (vol > 0)
+		volume = vol
 	create_reagents(volume)
 	if(spawned_disease)
 		var/datum/disease/F = new spawned_disease(0)

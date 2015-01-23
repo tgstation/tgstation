@@ -512,9 +512,9 @@ obj/machinery/hydroponics/proc/applyChemicals(var/datum/reagents/S)
 		adjustWeeds(-rand(1,2))
 
 	// SERIOUSLY
-	if(S.has_reagent("pacid", 1))
-		adjustHealth(-round(S.get_reagent_amount("pacid") * 2))
-		adjustToxic(round(S.get_reagent_amount("pacid") * 3))
+	if(S.has_reagent("facid", 1))
+		adjustHealth(-round(S.get_reagent_amount("facid") * 2))
+		adjustToxic(round(S.get_reagent_amount("facid") * 3))
 		adjustWeeds(-rand(1,4))
 
 	// Plant-B-Gone is just as bad
