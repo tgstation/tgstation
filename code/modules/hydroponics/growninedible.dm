@@ -224,7 +224,7 @@
 
 /obj/item/weapon/grown/nettle/death/add_juice()
 	..()
-	reagents.add_reagent("pacid", round((potency / 2), 1))
+	reagents.add_reagent("facid", round((potency / 2), 1))
 	force = round((5 + potency / 2.5), 1)
 
 /obj/item/weapon/grown/nettle/death/pickup(mob/living/carbon/user as mob)

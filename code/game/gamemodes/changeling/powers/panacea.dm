@@ -10,7 +10,7 @@
 /obj/effect/proc_holder/changeling/panacea/sting_action(var/mob/user)
 
 	user << "<span class='notice'>We cleanse impurities from our form.</span>"
-	user.reagents.add_reagent("ryetalyn", 10)
+	user.reagents.add_reagent("mutadone", 10)
 	user.reagents.add_reagent("potass_iodide", 10)
 	user.reagents.add_reagent("charcoal", 20)
 

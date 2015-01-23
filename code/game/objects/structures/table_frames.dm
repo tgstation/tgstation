@@ -17,6 +17,8 @@
 	density = 0
 	anchored = 0
 	layer = 2.8
+	var/framestack = /obj/item/stack/rods
+	var/framestackamount = 2
 
 /obj/structure/table_frame/attackby(var/obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/wrench))
@@ -24,7 +26,8 @@
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 30))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			new /obj/item/stack/rods(src.loc)
+			for(var/i = 1, i <= framestackamount, i++)
+				new framestack(get_turf(src))
 			qdel(src)
 			return
 	if(istype(I, /obj/item/stack/sheet/plasteel))
@@ -60,16 +63,12 @@
 	name = "wooden table frame"
 	desc = "Four wooden legs with four framing wooden rods for a wooden table. You could easily pass through this."
 	icon_state = "wood_frame"
+	framestack = /obj/item/stack/sheet/mineral/wood
+	framestackamount = 2
 
 /obj/structure/table_frame/wood/attackby(var/obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/wrench))
-		user << "<span class='notice'>Now disassembling [src].</span>"
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 30))
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			new /obj/item/stack/sheet/mineral/wood(src.loc)
-			qdel(src)
-			return
+		..()
 	if(istype(I, /obj/item/stack/sheet/mineral/wood))
 		var/obj/item/stack/sheet/mineral/wood/W = I
 		user << "<span class='notice'>Now adding [W] to [src].</span>"

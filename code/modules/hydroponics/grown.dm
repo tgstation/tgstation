@@ -805,7 +805,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	. = ..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "<span class='info'>- Anti-Toxin: <i>[reagents.get_reagent_amount("charcoal")]%</i></span>"
-		user << "<span class='info'>- Sleep Toxin: <i>[reagents.get_reagent_amount("stoxin")]%</i></span>"
+		user << "<span class='info'>- Morphine: <i>[reagents.get_reagent_amount("morphine")]%</i></span>"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita
 	seed = /obj/item/seeds/amanitamycelium

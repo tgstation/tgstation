@@ -183,6 +183,34 @@
 		reagents.add_reagent("slimejelly", 50)
 		update_icon()
 
+/obj/item/weapon/reagent_containers/glass/beaker/large/styptic
+	name = "styptic reserve tank"
+	New()
+		..()
+		reagents.add_reagent("styptic_powder", 100)
+		update_icon()
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/silver_sulfadiazine
+	name = "silver sulfadiazine reserve tank"
+	New()
+		..()
+		reagents.add_reagent("silver_sulfadiazine", 100)
+		update_icon()
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/charcoal
+	name = "antitoxin reserve tank"
+	New()
+		..()
+		reagents.add_reagent("charcoal", 100)
+		update_icon()
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/epinephrine
+	name = "epinephrine reserve tank"
+	New()
+		..()
+		reagents.add_reagent("epinephrine", 100)
+		update_icon()
+
 /obj/item/weapon/reagent_containers/glass/bucket
 	name = "bucket"
 	desc = "It's a bucket."
