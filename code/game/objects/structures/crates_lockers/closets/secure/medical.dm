@@ -72,6 +72,7 @@
 		new /obj/item/weapon/storage/backpack/medic(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel_med(src)
+	new /obj/item/weapon/storage/backpack/dufflebag/med(src)
 	new /obj/item/clothing/under/rank/medical(src)
 	new /obj/item/clothing/suit/toggle/labcoat(src)
 	new /obj/item/clothing/shoes/sneakers/white(src)
@@ -101,6 +102,7 @@
 		new /obj/item/weapon/storage/backpack/medic(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel_med(src)
+	new /obj/item/weapon/storage/backpack/dufflebag/med(src)
 	new /obj/item/clothing/suit/bio_suit/cmo(src)
 	new /obj/item/clothing/head/bio_hood/cmo(src)
 	new /obj/item/clothing/suit/toggle/labcoat/cmo(src)
