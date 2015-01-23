@@ -229,12 +229,14 @@
 	desc = "A large dufflebag for holding extra tactical medical supplies."
 	icon_state = "duffle-syndiemed"
 	item_state = "duffle-syndiemed"
+	slowdown = 0
 
 /obj/item/weapon/storage/backpack/dufflebag/syndieammo
 	name = "ammunition dufflebag"
 	desc = "A large dufflebag for holding extra weapons ammunition and supplies."
 	icon_state = "duffle-syndieammo"
 	item_state = "duffle-syndieammo"
+	slowdown = 0
 
 /obj/item/weapon/storage/backpack/dufflebag/captain
 	name = "captain's dufflebag"
