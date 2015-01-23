@@ -9,40 +9,6 @@
 		message = "<span class='sans'>[message]</span>"
 	return message
 
-/datum/mutation/human/joke
-	name = "Joke"
-	quality = MINOR_NEGATIVE
-	text_gain_indication = "<span class='jokerman'>You feel an off sensation in your voicebox.</span>"
-	text_lose_indication = "<span class='notice'>The off sensation passes.</span>"
-
-/datum/mutation/human/joke/say_mod(var/message)
-	if(message)
-		message = "<span class='jokerman'>[message]</span>"
-	return message
-
-/datum/mutation/human/papyrus
-	name = "Papyrus"
-	quality = MINOR_NEGATIVE
-	text_gain_indication = "<span class='papyrus'>You feel an off sensation in your voicebox.</span>"
-	text_lose_indication = "<span class='notice'>The off sensation passes.</span>"
-
-/datum/mutation/human/papyrus/say_mod(var/message)
-	if(message)
-		message = "<span class='papyrus'>[message]</span>"
-	return message
-
-/datum/mutation/human/vineta
-	name = "Vineta"
-	quality = MINOR_NEGATIVE
-	text_gain_indication = "<span class='vineta'>You feel an off sensation in your voicebox.</span>"
-	text_lose_indication = "<span class='notice'>The off sensation passes.</span>"
-
-/datum/mutation/human/vineta/say_mod(var/message)
-	if(message)
-		message = "<span class='vineta'>[message]</span>"
-	return message
-
-
 /datum/mutation/human/mute
 	name = "Mute"
 	quality = NEGATIVE
