@@ -453,7 +453,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 			if (5)
 				new_ntrc_msg = 0
-				dat += "<h4><img src=pda_chatroom.png> SS13 Nanotrasen Relay Chat Network</h4>"
+				dat += "<h4><img src=pda_chatroom.png> Nanotrasen Relay Chat Network V1.2</h4>"
 
 				dat += "<a href='byond://?src=\ref[src];choice=Set Nick'>[nick]</a> | "
 				dat += "<a href='byond://?src=\ref[src];choice=Set Channel'>[chat_channel]</a> | "
