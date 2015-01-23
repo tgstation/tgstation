@@ -166,7 +166,7 @@
 	action_button_name = "Tip Fedora"
 
 /obj/item/clothing/head/fedora/attack_self()
-	if(usr.canmove)
+	if(usr.canUseTopic())
 		usr.visible_message("[usr] tips their [name].")
 
 /obj/item/clothing/head/fedora/euphoric
