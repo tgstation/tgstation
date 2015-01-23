@@ -1,4 +1,3 @@
-<<<<<<< HEAD:code/modules/reagents/reagent_containers/bottle.dm
 //Not to be confused with /obj/item/weapon/reagent_containers/food/drinks/bottle
 
 /obj/item/weapon/reagent_containers/glass/bottle
