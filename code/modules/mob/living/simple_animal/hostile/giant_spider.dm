@@ -50,6 +50,10 @@
 	pass_flags = PASSTABLE
 	move_to_delay = 6
 	ventcrawler = 2
+	isNesting = TRUE
+	nestedProc = "Web"
+
+
 
 //nursemaids - these create webs and eggs
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse

@@ -32,6 +32,23 @@
 	unsuitable_atmos_damage = 15
 	faction = list("russian")
 	status_flags = CANPUSH
+	nestedProc = "layWall"
+	isNesting = TRUE
+
+/mob/living/simple_animal/hostile/russian/verb/layWall()
+	set name = "Lay Barricade"
+	set category = "Russian"
+	set desc = "Lays down a barricade to impede enemy progress."
+
+	var/T = src.loc
+	var/inRange = locate(/obj/structure/barricade/wooden) in oview(src,3)
+
+	if(!inRange)
+		stop_automated_movement = 1
+		spawn(40)
+			src.visible_message("<span class='notice'>\the [src] constructs a barricade!.</span>")
+			new /obj/structure/barricade/wooden(T)
+			stop_automated_movement = 0
 
 
 /mob/living/simple_animal/hostile/russian/ranged

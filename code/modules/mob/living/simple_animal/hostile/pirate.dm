@@ -29,6 +29,7 @@
 	min_n2 = 0
 	max_n2 = 0
 	unsuitable_atmos_damage = 15
+	isNesting = TRUE
 	var/corpse = /obj/effect/landmark/mobcorpse/pirate
 	var/weapon1 = /obj/item/weapon/melee/energy/sword/pirate
 

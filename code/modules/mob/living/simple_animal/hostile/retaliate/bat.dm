@@ -24,6 +24,7 @@
 	environment_smash = 0
 	ventcrawler = 2
 	mob_size = 0
+	isNesting = TRUE
 
 
 	//Space bats need no air to fly in.

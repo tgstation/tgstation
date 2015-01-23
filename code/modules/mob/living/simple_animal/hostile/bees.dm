@@ -32,6 +32,7 @@
 	min_n2 = 0
 	max_n2 = 0
 	minbodytemp = 0
+	isNesting = TRUE
 
 /mob/living/simple_animal/hostile/poison/bees/Process_Spacemove(var/movement_dir = 0)
 	return 1
