@@ -48,12 +48,14 @@ var/global/list/disposalpipeID2State=list(
 	"pipe-s",
 	"pipe-c",
 	"pipe-j1",
+	"pipe-j2",
 	"pipe-y",
 	"pipe-t",
 	"disposal",
 	"outlet",
 	"intake",
-	"pipe-j1s"
+	"pipe-j1s",
+	"pipe-j2s"
 )
 
 /datum/pipe_info/disposal
@@ -65,7 +67,7 @@ var/global/list/disposalpipeID2State=list(
 	src.icon_state=disposalpipeID2State[pid+1]
 	src.dir=2
 	src.dirtype=dt
-	if(pid<5 || pid>7)
+	if(pid<DISP_END_BIN || pid>DISP_END_CHUTE)
 		icon_state = "con[icon_state]"
 
 /datum/pipe_info/disposal/Render(var/dispenser,var/label)
@@ -400,7 +402,7 @@ var/global/list/RPD_recipes=list(
 	return
 
 /obj/item/weapon/pipe_dispenser/Topic(href, href_list)
-	if(usr.stat || usr.restrained())
+	if(!usr.canUseTopic(src))
 		usr << browse(null, "window=pipedispenser")
 		return
 	usr.set_machine(src)
@@ -459,10 +461,13 @@ var/global/list/RPD_recipes=list(
 
 
 /obj/item/weapon/pipe_dispenser/afterattack(atom/A, mob/user)
-	if(!in_range(A,user))
-		return
-	if(loc != user)
-		return
+	if(!in_range(A,user) || loc != user)
+		return 0
+
+	if(!user.IsAdvancedToolUser())
+		user << "<span class='notice'>You don't have the dexterity to do this!</span>"
+		return 0
+
 	if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))
 		return 0
 
@@ -528,7 +533,7 @@ var/global/list/RPD_recipes=list(
 			user << "<span class='notice'>Building Pipes...</span>"
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 20))
-				var/obj/structure/disposalconstruct/C = new (A,p_type+1)
+				var/obj/structure/disposalconstruct/C = new (A,p_type,p_dir)
 
 				if(!C.can_place())
 					user << "<span class='warning'>There's not enough room to build that here!</span>"
@@ -536,9 +541,6 @@ var/global/list/RPD_recipes=list(
 					return 0
 
 				activate()
-				// This may still produce runtimes, but I checked and /obj/structure/disposalconstruct
-				//  DOES have a dir property, inherited from /obj/structure. - N3X
-				C.dir=p_dir
 
 				C.add_fingerprint(usr)
 				C.update()

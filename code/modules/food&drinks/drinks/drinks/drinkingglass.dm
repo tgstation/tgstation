@@ -453,14 +453,12 @@
 		return
 
 // for /obj/machinery/vending/sovietsoda
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/soda
-	New()
-		..()
-		reagents.add_reagent("sodawater", 50)
-		on_reagent_change()
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/New()
+	..()
+	on_reagent_change()
 
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/cola
-	New()
-		..()
-		reagents.add_reagent("cola", 50)
-		on_reagent_change()
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/soda
+	list_reagents = list("sodawater" = 50)
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/cola
+	list_reagents = list("cola" = 50)

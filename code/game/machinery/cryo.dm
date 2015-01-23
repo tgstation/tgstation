@@ -51,6 +51,7 @@
 		if(occupant.health >= 100)
 			on = 0
 			open_machine()
+			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 	if(!node || !is_operational())
 		return
 	if(!on)
@@ -63,8 +64,7 @@
 		expel_gas()
 
 		if(occupant)
-			if(occupant.stat != 2)
-				process_occupant()
+			process_occupant()
 	if(abs(temperature_archived-air_contents.temperature) > 1)
 		parent.update = 1
 
@@ -285,8 +285,8 @@
 		occupant.bodytemperature += 2*(air_contents.temperature - occupant.bodytemperature) * current_heat_capacity / (current_heat_capacity + air_contents.heat_capacity())
 		occupant.bodytemperature = max(occupant.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
 		if(occupant.bodytemperature < T0C)
-			occupant.sleeping = max(5/efficiency, (1 / occupant.bodytemperature)*2000/efficiency)
-			occupant.Paralyse(max(5/efficiency, (1 / occupant.bodytemperature)*3000/efficiency))
+//			occupant.sleeping = max(5/efficiency, (1 / occupant.bodytemperature)*2000/efficiency)
+//			occupant.Paralyse(max(5/efficiency, (1 / occupant.bodytemperature)*3000/efficiency))
 			if(air_contents.oxygen > 2)
 				if(occupant.getOxyLoss()) occupant.adjustOxyLoss(-1)
 			else
