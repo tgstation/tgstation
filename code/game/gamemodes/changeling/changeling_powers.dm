@@ -49,6 +49,9 @@
 	invisibility = 101
 
 	var/atom/movable/overlay/animation = new /atom/movable/overlay( loc )
+	H.visible_message("<span class = 'warning'>[src] emits a putrid odor as their torso splits open!</span>")
+	world << sound('sound/effects/greaterling.ogg')
+	world << "<span class = 'sinister'>A roar pierces the air and makes your blood curdle. Uh oh.</span>"
 	animation.icon_state = "blank"
 	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
@@ -61,11 +64,19 @@
 	stunned = 0
 	icon = null
 	invisibility = initial(invisibility)
-
+	H.maxHealth = 800 /* Gonna need more than one egun to kill one of these bad boys*/
+	H.health = 800
 	H.set_species("Horror")
 	H.client.verbs |= H.species.abilities // Force ability equip.
 	H.update_icons()
-
+	spawn(0)
+		for(var/i = 0, i<10,i++)
+			if(H)
+				H.adjustBruteLoss(-10)
+				H.adjustToxLoss(-10)
+				H.adjustOxyLoss(-10)
+				H.adjustFireLoss(-10)
+				sleep(10)
 //removes our changeling verbs
 /mob/proc/remove_changeling_powers()
 	if(!mind || !mind.changeling)	return
@@ -98,7 +109,7 @@
 		return
 
 	if(changeling.geneticdamage > max_genetic_damage)
-		src << "<span class='warning'>Our geneomes are still reassembling. We need time to recover first.</span>"
+		src << "<span class='warning'>Our genomes are still reassembling. We need time to recover first.</span>"
 		return
 
 	var/mob/living/carbon/human/H = src
