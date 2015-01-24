@@ -230,6 +230,9 @@
 	for(var/obj/effect/decal/cleanable/blood/B in linkedholodeck)
 		qdel(B)
 
+	for(var/obj/effect/decal/cleanable/blooddrip/D in linkedholodeck)
+		qdel(D)
+
 	for(var/mob/living/simple_animal/hostile/carp/C in linkedholodeck)
 		qdel(C)
 

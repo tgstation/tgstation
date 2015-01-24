@@ -335,6 +335,7 @@ var/list/blood_splatter_icons = list()
 	var/obj/effect/decal/cleanable/blood/B = locate() in contents	//check for existing blood splatter
 	if(!B)
 		blood_splatter(src,M.get_blood(M.vessel),1)
+		B = locate(/obj/effect/decal/cleanable/blood) in contents
 	B.add_blood_list(M)
 	return 1 //we bloodied the floor
 
@@ -369,6 +370,7 @@ var/list/blood_splatter_icons = list()
 			var/obj/effect/decal/cleanable/blood/B = locate() in contents
 			if(!B)
 				blood_splatter(src,M,1)
+				B = locate(/obj/effect/decal/cleanable/blood) in contents
 			B.blood_DNA[M.dna.unique_enzymes] = M.dna.blood_type
 		else if(istype(M, /mob/living/carbon/alien))
 			var/obj/effect/decal/cleanable/xenoblood/B = locate() in contents

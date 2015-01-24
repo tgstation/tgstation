@@ -37,16 +37,16 @@
 
 	if(user)
 		if (M != user)
-			user.visible_message("<span class='green'>[user] applies the [src] on [M].</span>", "<span class='green'>You apply the [src] on [M].</span>")
+			user.visible_message("<span class='green'>[user] applies [src] on [M].</span>", "<span class='green'>You apply [src] on [M].</span>")
 		else
 			var/t_himself = "itself"
 			if (user.gender == MALE)
 				t_himself = "himself"
 			else if (user.gender == FEMALE)
 				t_himself = "herself"
-			user.visible_message("<span class='notice'>[user] starts to apply the [src] on [t_himself]...</span>", "<span class='notice'>You begin applying the [src] on yourself...</span>")
+			user.visible_message("<span class='notice'>[user] starts to apply [src] on [t_himself]...</span>", "<span class='notice'>You begin applying [src] on yourself...</span>")
 			if(!do_mob(user, M, self_delay))	return
-			user.visible_message("<span class='green'>[user] applies the [src] on [t_himself].</span>", "<span class='green'>You apply the [src] on yourself.</span>")
+			user.visible_message("<span class='green'>[user] applies [src] on [t_himself].</span>", "<span class='green'>You apply [src] on yourself.</span>")
 
 
 	if(istype(M, /mob/living/carbon/human))
@@ -82,7 +82,8 @@
 
 /obj/item/stack/medical/gauze
 	name = "medical gauze"
-	desc = "A roll of elastic cloth that is extremely effective at stopping bloodloss, but does not heal wounds."
+	desc = "A roll of elastic cloth that is extremely effective at stopping bleeding, but does not heal wounds."
+	gender = PLURAL
 	singular_name = "medical gauze"
 	icon_state = "gauze"
 	stop_bleeding = 3000 //five minutes
@@ -90,7 +91,7 @@
 /obj/item/stack/medical/gauze/improvised
 	name = "improvised gauze"
 	singular_name = "improvised gauze"
-	desc = "A roll of cloth roughly cut from something that can stop bloodloss, but does not heal wounds."
+	desc = "A roll of cloth roughly cut from something that can stop bleeding, but does not heal wounds."
 	stop_bleeding = 1200 //two minutes
 
 /obj/item/stack/medical/ointment

@@ -279,17 +279,17 @@ proc/blood_splatter(var/target,var/datum/reagent/blood/source,var/large)
 		var/list/drips = list()
 		var/list/drip_icons = list("1","2","3","4","5")
 
-		for(var/obj/effect/decal/cleanable/blood/drip/drop in T)
+		for(var/obj/effect/decal/cleanable/blooddrip/drop in T)
 			drips += drop
 			drip_icons.Remove(drop.icon_state)
 
 		// If we have too many drips, remove them and spawn a proper blood splatter.
 		if(drips.len >= 5)
 			//TODO: copy all virus data from drips to new splatter?
-			for(var/obj/effect/decal/cleanable/blood/drip/drop in drips)
+			for(var/obj/effect/decal/cleanable/blooddrip/drop in drips)
 				del drop
 		else
-			decal_type = /obj/effect/decal/cleanable/blood/drip
+			decal_type = /obj/effect/decal/cleanable/blooddrip
 
 	// Find a blood decal or create a new one.
 	B = locate(decal_type) in T
