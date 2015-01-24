@@ -116,7 +116,7 @@ var/savefile/Banlist
 		Banlist["temp"] << temp
 		if (temp)
 			Banlist["minutes"] << bantimestamp
-		if(!minutes)
+		if(!temp)
 			notes_add(ckey, "Permanently banned - [reason]")
 		else
 			notes_add(ckey, "Banned for [minutes] minutes - [reason]")
