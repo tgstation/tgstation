@@ -8,6 +8,7 @@
 	item_state = "violin"
 	force = 10
 	var/datum/song/handheld/song
+	hitsound = "swing_hit"
 
 /obj/item/device/violin/New()
 	song = new("violin", src)
