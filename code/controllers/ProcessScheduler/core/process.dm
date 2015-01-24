@@ -182,6 +182,8 @@ datum/controller/process/proc/kill()
 		// Allow inheritors to clean up if needed
 		onKill()
 
+		killed = TRUE
+
 		// This should del
 		del(src)
 
@@ -191,10 +193,6 @@ datum/controller/process/proc/scheck(var/tickId = 0)
 		// The kill proc should have deleted this datum, and all sleeping procs that are
 		// owned by it.
 		CRASH("A killed process is still running somehow...")
-	if (hung)
-		// This will only really help if the doWork proc ends up in an infinite loop.
-		handleHung()
-		CRASH("Process [name] hung and was restarted.")
 
 	// For each tick the process defers, it increments the cpu_defer_count so we don't
 	// defer indefinitely
@@ -219,16 +217,12 @@ datum/controller/process/proc/update()
 
 	var/elapsedTime = getElapsedTime()
 
-	if (hung)
-		handleHung()
-		return
-	else if (elapsedTime > hang_restart_time)
+	if (elapsedTime > hang_restart_time)
 		hung()
 	else if (elapsedTime > hang_alert_time)
 		setStatus(PROCESS_STATUS_PROBABLY_HUNG)
 	else if (elapsedTime > hang_warning_time)
 		setStatus(PROCESS_STATUS_MAYBE_HUNG)
-
 
 datum/controller/process/proc/getElapsedTime()
 	if (world.timeofday < run_start)
