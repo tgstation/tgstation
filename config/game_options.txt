@@ -158,10 +158,17 @@ GATEWAY_DELAY 18000
 
 
 ### ACCESS ###
+
+## If the number of players ready at round starts exceeds this threshold, JOBS_HAVE_MINIMAL_ACCESS will automatically toggle on.
+## If the number of players does not reach this threshold, JOBS_HAVE_MINIMAL_ACCESS will automatically toggle off, and assistants/security will be given maintenance access.
+## This is useful for accomodating both low and high population rounds on the same server.
+## Comment out or set to 0 to disable this automatic toggle.
+MINIMAL_ACCESS_THRESHOLD 20
+
 ## Comment this out if you wish to use the setup where jobs have more access.
 ## This is intended for servers with low populations - where there are not enough
 ## players to fill all roles, so players need to do more than just one job.
-## Also for servers where they don't want people to hide in their own departments.
+## This option is ignored if MINIMAL_ACCESS_THRESHOLD is non-zero.
 #JOBS_HAVE_MINIMAL_ACCESS
 
 ## Uncomment to give assistants maint access.

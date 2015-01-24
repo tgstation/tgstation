@@ -8,6 +8,9 @@
 	var/possible_transfer_amounts = list(5,10,15,25,30)
 	var/volume = 30
 	var/list/banned_reagents = list() //List of reagent IDs we reject.
+	var/list/list_reagents = null
+	var/spawned_disease = null
+	var/disease_amount = 20
 
 /obj/item/weapon/reagent_containers/verb/set_APTFT() //set amount_per_transfer_from_this
 	set name = "Set transfer amount"
@@ -19,11 +22,19 @@
 	if (N)
 		amount_per_transfer_from_this = N
 
-/obj/item/weapon/reagent_containers/New()
+/obj/item/weapon/reagent_containers/New(location, vol = 0)
 	..()
 	if (!possible_transfer_amounts)
 		src.verbs -= /obj/item/weapon/reagent_containers/verb/set_APTFT
+	if (vol > 0)
+		volume = vol
 	create_reagents(volume)
+	if(spawned_disease)
+		var/datum/disease/F = new spawned_disease(0)
+		var/list/data = list("viruses"= list(F))
+		reagents.add_reagent("blood", disease_amount, data)
+	if(list_reagents)
+		reagents.add_reagent_list(list_reagents)
 
 /obj/item/weapon/reagent_containers/attack_self(mob/user as mob)
 	return

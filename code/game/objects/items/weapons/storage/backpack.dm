@@ -215,3 +215,55 @@
 	..()
 	new /obj/item/stack/tile/plasteel(src)
 	new /obj/item/weapon/crowbar(src)
+
+/obj/item/weapon/storage/backpack/dufflebag
+	name = "dufflebag"
+	desc = "A large dufflebag for holding extra things"
+	icon_state = "duffle"
+	item_state = "duffle"
+	storage_slots = 9
+	slowdown = 1
+
+/obj/item/weapon/storage/backpack/dufflebag/syndiemed
+	name = "medical dufflebag"
+	desc = "A large dufflebag for holding extra tactical medical supplies."
+	icon_state = "duffle-syndiemed"
+	item_state = "duffle-syndiemed"
+	slowdown = 0
+
+/obj/item/weapon/storage/backpack/dufflebag/syndieammo
+	name = "ammunition dufflebag"
+	desc = "A large dufflebag for holding extra weapons ammunition and supplies."
+	icon_state = "duffle-syndieammo"
+	item_state = "duffle-syndieammo"
+	slowdown = 0
+
+/obj/item/weapon/storage/backpack/dufflebag/captain
+	name = "captain's dufflebag"
+	desc = "A large dufflebag for holding extra captainly goods."
+	icon_state = "duffle-captain"
+	item_state = "duffle-captain"
+
+/obj/item/weapon/storage/backpack/dufflebag/med
+	name = "medical dufflebag"
+	desc = "A large dufflebag for holding extra medical supplies."
+	icon_state = "duffle-med"
+	item_state = "duffle-med"
+
+/obj/item/weapon/storage/backpack/dufflebag/sec
+	name = "security dufflebag"
+	desc = "A large dufflebag for holding extra security supplies and ammunition."
+	icon_state = "duffle-sec"
+	item_state = "duffle-sec"
+
+/obj/item/weapon/storage/backpack/dufflebag/engineering
+	name = "engineering dufflebag"
+	desc = "A large dufflebag for holding extra tools and supplies."
+	icon_state = "duffle-eng"
+	item_state = "duffle-eng"
+
+/obj/item/weapon/storage/backpack/dufflebag/clown
+	name = "clown's dufflebag"
+	desc = "A large dufflebag for holding lots of funny gags!"
+	icon_state = "duffle-clown"
+	item_state = "duffle-clown"

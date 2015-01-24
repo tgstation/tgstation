@@ -1,5 +1,6 @@
 /mob/living/carbon/alien/proc/handle_chemicals_in_body()
-	if(reagents) reagents.metabolize(src)
+	if(reagents)
+		reagents.metabolize(src)
 
 	if (drowsyness)
 		drowsyness--

@@ -28,7 +28,7 @@
 		var/obj/vent = pick_n_take(vents)
 		if(vent && vent.loc)
 			var/list/gunk = list("water","carbon","flour","radium","toxin","cleaner","nutriment","condensedcapsaicin","mushroomhallucinogen","lube",
-								 "plantbgone","banana","charcoal","space_drugs","morphine","holywater","ethanol","hot_coco","pacid")
+								 "plantbgone","banana","charcoal","space_drugs","morphine","holywater","ethanol","hot_coco","facid")
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = vent
 			R.add_reagent(pick(gunk), 50)

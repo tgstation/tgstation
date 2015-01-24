@@ -222,19 +222,20 @@ datum/reagents/proc/metabolize(var/mob/M)
 		for(var/A in addiction_list)
 			var/datum/reagent/R = A
 			if(M && R)
-				if(R.addiction_stage < 0)
+				if(R.addiction_stage <= 0)
 					R.addiction_stage++
-				if(R.addiction_stage >= 0 && R.addiction_stage <= 10)
+				if(R.addiction_stage > 0 && R.addiction_stage <= 10)
 					R.addiction_act_stage1(M)
 					R.addiction_stage++
-				if(R.addiction_stage >= 10 && R.addiction_stage <= 20)
+				if(R.addiction_stage > 10 && R.addiction_stage <= 20)
 					R.addiction_act_stage2(M)
 					R.addiction_stage++
-				if(R.addiction_stage >= 20 && R.addiction_stage <= 30)
+				if(R.addiction_stage > 20 && R.addiction_stage <= 30)
 					R.addiction_act_stage3(M)
 					R.addiction_stage++
 				if(R.addiction_stage > 30 && R.addiction_stage <= 40)
 					R.addiction_act_stage4(M)
+					R.addiction_stage++
 				if(R.addiction_stage > 40)
 					M << "<span class = 'notice'>You feel like you've gotten over your need for [R.name].</span>"
 					addiction_list.Remove(R)
