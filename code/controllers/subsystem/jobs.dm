@@ -215,8 +215,6 @@ var/datum/subsystem/job/SSjob
 	if(config.minimal_access_threshold)
 		if(config.minimal_access_threshold > unassigned.len)
 			config.jobs_have_minimal_access = 0
-			config.jobs_have_maint_access |= ASSISTANTS_HAVE_MAINT_ACCESS
-			config.jobs_have_maint_access |= SECURITY_HAS_MAINT_ACCESS
 		else
 			config.jobs_have_minimal_access = 1
 
