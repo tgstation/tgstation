@@ -176,3 +176,6 @@
 			if(do_mob(usr, src, POCKET_STRIP_DELAY * 0.5))
 				unEquip(r_store)
 				unEquip(l_store)
+
+/mob/living/carbon/alien/humanoid/reagent_check(var/datum/reagent/R)
+	return 0
