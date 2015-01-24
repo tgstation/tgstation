@@ -97,3 +97,15 @@
 #define SOUND_MINIMUM_PRESSURE 10
 #define FALLOFF_SOUNDS	1
 #define SURROUND_CAP	7
+
+//FONTS:
+// Used by Paper and PhotoCopier (and PaperBin once a year).
+#define PAPER_DEF_FONT "Verdana"
+#define PAPER_CRAYON_FONT "Comic Sans MS"
+#define PAPER_SIGNFONT "Times New Roman"
+// Used by PDA's Notekeeper.
+#define PDA_NOTE_FONT "Verdana"
+#define PDA_NOTE_SIGNFONT "Times New Roman"
+// Used by NewsCaster and NewsPaper.
+#define NEWS_ARTICLE_FONT "Verdana"
+#define NEWS_ARTICLE_SIGNFONT "Times New Roman"
