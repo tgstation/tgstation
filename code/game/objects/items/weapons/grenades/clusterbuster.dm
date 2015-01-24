@@ -66,20 +66,17 @@
 		walk_away(P,loc,rand(1,4))
 
 		spawn(rand(15,60))
-			P.prime()
+			if(P && !P.gc_destroyed)
+				P.prime()
 			qdel(src)
 
 
 //////////////////////////////////
 //Custom payload clusterbusters
 /////////////////////////////////
-/obj/item/weapon/grenade/flashbang/cluster/New()
-	..()
+/obj/item/weapon/grenade/flashbang/cluster
 	icon_state = "flashbang_active"
 	banglet = 1
-	walk_away(loc,rand(1,3))
-	spawn(rand(15,60))
-		prime()
 
 /obj/item/weapon/grenade/clusterbuster/emp
 	name = "Electromagnetic Storm"
