@@ -115,7 +115,7 @@
 /obj/item/weapon/reagent_containers/glass/bottle/traitor/New()
 	..()
 	extra_reagent = pick("polonium", "histamine", "formaldehyde", "venom", "neurotoxin2", "cyanide")
-	reagents.add_reagent("[extra_reagent]" = 3)
+	reagents.add_reagent("[extra_reagent]", 3)
 
 /obj/item/weapon/reagent_containers/glass/bottle/polonium
 	name = "polonium bottle"
