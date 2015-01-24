@@ -29,14 +29,14 @@
 
 	throw_mult = 1.5 // +0.5 for hulk
 	fireloss_mult = 2 // double the damage, half the fun
-	spawn(0)
-		for(var/i = 0, i<10,i++)
-			if(H)
-				H.adjustBruteLoss(-10)
-				H.adjustToxLoss(-10)
-				H.adjustOxyLoss(-10)
-				H.adjustFireLoss(-10)
-				sleep(10)
+
+	for(var/i = 0, i<10,i++)
+		if(H)
+			H.adjustBruteLoss(-10)
+			H.adjustToxLoss(-10)
+			H.adjustOxyLoss(-10)
+			H.adjustFireLoss(-10)
+			sleep(10)
 	abilities = list(
 		/client/proc/changeling_force_airlock
 	)
