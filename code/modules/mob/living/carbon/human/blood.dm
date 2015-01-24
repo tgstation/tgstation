@@ -234,7 +234,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					return D
 	return res
 
-/mob/living/carbon/proc/blood_incompatible(donor,receiver,donor_species,receiver_species)
+proc/blood_incompatible(donor,receiver,donor_species,receiver_species)
 	if(!donor || !receiver) return 0
 
 	if(donor_species && receiver_species)
@@ -257,8 +257,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		//AB is a universal receiver.
 	return 0
 
-/mob/living/carbon/proc/blood_splatter(var/target,var/datum/reagent/blood/source)
-
+proc/blood_splatter(var/target,var/datum/reagent/blood/source,var/large)
 	var/obj/effect/decal/cleanable/blood/B
 	var/decal_type = /obj/effect/decal/cleanable/blood/splatter
 	var/turf/T = get_turf(target)
@@ -273,21 +272,24 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			source.data["blood_DNA"] = donor.dna.unique_enzymes
 			source.data["blood_type"] = donor.dna.blood_type
 
-	// Only a certain number of drips can be on a given turf.
-	var/list/drips = list()
-	var/list/drip_icons = list("1","2","3","4","5")
+	// Are we dripping or splattering?
+	if(!large)
 
-	for(var/obj/effect/decal/cleanable/blood/drip/drop in T)
-		drips += drop
-		drip_icons.Remove(drop.icon_state)
+		// Only a certain number of drips can be on a given turf.
+		var/list/drips = list()
+		var/list/drip_icons = list("1","2","3","4","5")
 
-	// If we have too many drips, remove them and spawn a proper blood splatter.
-	if(drips.len >= 5)
-		//TODO: copy all virus data from drips to new splatter?
-		for(var/obj/effect/decal/cleanable/blood/drip/drop in drips)
-			del drop
-	else
-		decal_type = /obj/effect/decal/cleanable/blood/drip
+		for(var/obj/effect/decal/cleanable/blood/drip/drop in T)
+			drips += drop
+			drip_icons.Remove(drop.icon_state)
+
+		// If we have too many drips, remove them and spawn a proper blood splatter.
+		if(drips.len >= 5)
+			//TODO: copy all virus data from drips to new splatter?
+			for(var/obj/effect/decal/cleanable/blood/drip/drop in drips)
+				del drop
+		else
+			decal_type = /obj/effect/decal/cleanable/blood/drip
 
 	// Find a blood decal or create a new one.
 	B = locate(decal_type) in T
@@ -305,5 +307,11 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			B.blood_DNA[source.data["blood_DNA"]] = source.data["blood_type"]
 		else
 			B.blood_DNA[source.data["blood_DNA"]] = "O+"
+
+	// Update virus information.
+	for(var/datum/disease/D in source.data["viruses"])
+		var/datum/disease/new_virus = D.Copy(1)
+		source.data["viruses"] += new_virus
+		new_virus.holder = B
 
 	return B
