@@ -88,7 +88,7 @@
 	icon_state = "advancedeod_helmet"
 	item_state = "advancedeod_helmet"
 	flags = FPRINT|BLOCKHAIR
-	armor = list(melee = 70, bullet = 70, laser = 70,energy = 70, bomb = 100, bio = 0, rad = 0)
+	armor = list(melee = 80, bullet = 80, laser = 50,energy = 20, bomb = 100, bio = 0, rad = 0)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 	body_parts_covered = FULL_HEAD
 	species_restricted = list("exclude","Vox")
@@ -106,7 +106,7 @@
 	flags = FPRINT
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	slowdown = 6
-	armor = list(melee = 70, bullet = 70, laser = 70,energy = 70, bomb = 100, bio = 0, rad = 0)
+	armor = list(melee = 80, bullet = 70, laser = 50,energy = 20, bomb = 100, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT|HIDESHOES
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
 	max_heat_protection_temperature = ARMOR_MAX_HEAT_PROTECITON_TEMPERATURE
