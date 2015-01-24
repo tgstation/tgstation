@@ -455,9 +455,9 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		else if (display_freq==SEC_FREQ)
 			part_a = "<span class='secradio'><span class='name'>"
 		else if (display_freq==SERV_FREQ)
-			part_a = "<span class='servradio'><span class='name'>"
+			part_a = "<span class='serradio'><span class='name'>"
 		else if (display_freq==SUPP_FREQ)
-			part_a = "<span class='suppradio'><span class='name'>"
+			part_a = "<span class='supradio'><span class='name'>"
 		else if (display_freq==DSQUAD_FREQ)
 			part_a = "<span class='dsquadradio'><span class='name'>"
 		else if (display_freq==AIPRIV_FREQ)
