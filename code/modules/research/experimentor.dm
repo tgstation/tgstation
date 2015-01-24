@@ -14,7 +14,7 @@
 #define EFFECT_PROB_HIGH 75
 #define EFFECT_PROB_VERYHIGH 95
 
-#define FAIL 7
+#define FAIL 8
 /obj/machinery/r_n_d/experimentor
 	name = "E.X.P.E.R.I-MENTOR"
 	icon = 'icons/obj/machines/heavy_lathe.dmi'
@@ -547,6 +547,7 @@
 #undef SCANTYPE_HEAT
 #undef SCANTYPE_COLD
 #undef SCANTYPE_OBLITERATE
+#undef SCANTYPE_DISCOVER
 
 #undef EFFECT_PROB_VERYLOW
 #undef EFFECT_PROB_LOW
