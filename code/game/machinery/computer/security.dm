@@ -686,14 +686,14 @@ What a mess.*/
 	return
 
 /obj/machinery/computer/secure_data/proc/get_photo(var/mob/user)
-	if (istype(user.get_active_hand(), /obj/item/weapon/photo))
-		var/obj/item/weapon/photo/photo = user.get_active_hand()
-		return photo.img
 	if (istype(user, /mob/living/silicon))
 		var/mob/living/silicon/tempAI = user
 		var/datum/picture/selection = tempAI.GetPhoto()
 		if (selection)
 			return selection.fields["img"]
+	else if (istype(user.get_active_hand(), /obj/item/weapon/photo))
+		var/obj/item/weapon/photo/photo = user.get_active_hand()
+		return photo.img
 
 /obj/machinery/computer/secure_data/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
