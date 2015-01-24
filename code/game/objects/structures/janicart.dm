@@ -204,9 +204,10 @@
 			I.loc = src
 			mybag = I
 	else if(istype(I, /obj/item/janiupgrade))
-		floorbuffer = 1
-		qdel(I)
-		user << "<span class='notice'>You upgrade the [callme] with the floor buffer.</span>"
+		if(keytype == /obj/item/key/janitor)
+			floorbuffer = 1
+			qdel(I)
+			user << "<span class='notice'>You upgrade the [callme] with the floor buffer.</span>"
 	update_icon()
 
 /obj/structure/stool/bed/chair/janicart/update_icon()
