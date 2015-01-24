@@ -21,6 +21,7 @@
 	melee_damage_upper = 12
 	attacktext = "attacks"
 	attack_sound = 'sound/weapons/bite.ogg'
+	var/Attackemote = "growls at"
 
 	min_oxy = 0
 	max_oxy = 0
@@ -38,7 +39,7 @@
 /mob/living/simple_animal/hostile/mimic/FindTarget()
 	. = ..()
 	if(.)
-		emote("me", 1, "growls at [.].")
+		emote("me", 1, "[Attackemote] [.].")
 
 /mob/living/simple_animal/hostile/mimic/Die()
 	..()
@@ -232,3 +233,116 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 			return 0
 	return ..()
 
+//
+//animated blasters, wands, etc
+//
+
+/mob/living/simple_animal/hostile/mimic/copy/ranged
+	name = "animated shooty gun"
+	desc = "there's something fishy here."
+	environment_smash = 0 //needed? seems weird for them to do so
+	ranged = 1
+	retreat_distance = 1 //just enough to shoot
+	minimum_distance = 6
+	projectiletype = /obj/item/projectile/magic/
+	projectilesound = 'sound/items/bikehorn.ogg'
+	casingtype = null
+	Attackemote = "aims menacingly at"
+	var/obj/item/weapon/gun/TrueGun = null
+	var/obj/item/weapon/gun/magic/Zapstick = list()
+	var/obj/item/weapon/gun/projectile/Pewgun = list()
+	var/obj/item/weapon/gun/energy/Zapgun = list()
+
+/mob/living/simple_animal/hostile/mimic/copy/ranged/New(loc, var/obj/copy, var/mob/living/creator, var/destroy_original = 0)
+	..()
+
+
+/mob/living/simple_animal/hostile/mimic/copy/ranged/CopyObject(var/obj/O, var/mob/living/creator, var/destroy_original = 0)
+	if(destroy_original || CheckObject(O))
+
+		O.loc = src
+		name = O.name
+		desc = O.desc
+		icon = O.icon
+		icon_state = O.icon_state
+		icon_living = icon_state
+
+		if(istype(O, /obj/item/weapon/gun)) //leaving for sanity i guess
+			var/obj/item/weapon/gun/G = O
+			health = 15 * G.w_class
+			melee_damage_upper = G.force
+			melee_damage_lower = G.force - max(0, (G.force / 2))
+			move_to_delay = 2 * G.w_class + 1
+			projectilesound = G.fire_sound
+			TrueGun = G
+
+			if(istype(G, /obj/item/weapon/gun/magic))
+				Zapstick = G
+				var/obj/item/ammo_casing/magic/Zapshot = new Zapstick.ammo_type //this is done because ammo_type.proj_type can't be directly checked
+				projectiletype = Zapshot.projectile_type
+				qdel(Zapshot) //is this needed? i dare not risk piles of nullspace bullets
+
+			if(istype(G, /obj/item/weapon/gun/projectile))
+				Pewgun = G
+				var/obj/item/ammo_box/magazine/Pewmag = new Pewgun.mag_type //same problem, mag_type.ammo_type.proj_type can't be checked directly
+				var/obj/item/ammo_casing/Pewshot = new Pewmag.ammo_type
+				projectiletype = Pewshot.projectile_type
+				casingtype = Pewmag.ammo_type
+				qdel(Pewshot)
+				qdel(Pewmag)
+
+			if(istype(G, /obj/item/weapon/gun/energy))
+				Zapgun = G
+				var/selectfiresetting = Zapgun.select
+				var/obj/item/ammo_casing/energy/Energyammotype = Zapgun.ammo_type[selectfiresetting]
+				projectiletype = Energyammotype.projectile_type
+
+		maxHealth = health
+		if(creator)
+			src.creator = creator
+			faction += "\ref[creator]"
+		if(destroy_original)
+			qdel(O)
+		return 1
+	return
+
+/mob/living/simple_animal/hostile/mimic/copy/ranged/OpenFire(var/the_target)
+	if(Zapgun)
+		if(Zapgun.power_supply) //sanity
+			var/obj/item/ammo_casing/energy/shot = Zapgun.ammo_type[Zapgun.select]
+			if(Zapgun.power_supply.charge >= shot.e_cost) //if she can zap
+				Zapgun.power_supply.use(shot.e_cost)
+				Zapgun.update_icon()
+				..() //zap 'em
+	if(Zapstick)
+		if(Zapstick.charges)
+			Zapstick.charges--
+			Zapstick.update_icon()
+			..()
+	if(Pewgun)
+		if(Pewgun.chambered)
+			if(Pewgun.chambered.BB)
+				qdel(Pewgun.chambered.BB)
+				Pewgun.chambered.BB = null //because qdel takes too long, ensures icon update
+				Pewgun.chambered.update_icon()
+				..()
+			else
+				visible_message("<span class='danger'>The <b>[src]</b> clears a jam!</span>")
+			Pewgun.chambered.loc = src.loc //rip revolver immersions, blame shotgun snowflake procs
+			Pewgun.chambered = null
+			if(Pewgun.magazine && Pewgun.magazine.stored_ammo.len)
+				Pewgun.chambered = Pewgun.magazine.get_round(0)
+				Pewgun.chambered.loc = Pewgun
+			Pewgun.update_icon()
+		else if(Pewgun.magazine && Pewgun.magazine.stored_ammo.len) //only true for pumpguns i think
+			Pewgun.chambered = Pewgun.magazine.get_round(0)
+			Pewgun.chambered.loc = Pewgun
+			visible_message("<span class='danger'>The <b>[src]</b> cocks itself!</span>")
+
+	else //if somehow the mimic has no weapon
+		src.ranged = 0 //BANZAIIII
+		src.retreat_distance = 0
+		src.minimum_distance = 1
+	src.icon_state = TrueGun.icon_state
+	src.icon_living = TrueGun.icon_state
+	return
