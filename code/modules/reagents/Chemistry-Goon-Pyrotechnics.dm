@@ -4,8 +4,6 @@
 
 #define REM REAGENTS_EFFECT_MULTIPLIER
 
-/* commented out until further notice
-
 /datum/reagent/clf3
 	name = "Chlorine Trifluoride"
 	id = "clf3"
@@ -42,19 +40,19 @@
 /datum/reagent/clf3/reaction_turf(var/turf/simulated/T, var/volume)
 	if(istype(T, /turf/simulated/floor/))
 		var/turf/simulated/floor/F = T
-		if(prob(66))
+		if(prob(volume/5))
 			F.make_plating()
-		if(prob(1))
+		if(prob(volume/10))
 			F.ChangeTurf(/turf/space)
 		if(istype(F, /turf/simulated/floor/))
 			new /obj/effect/hotspot(F)
 	if(istype(T, /turf/simulated/wall/))
 		var/turf/simulated/wall/W = T
-		if(prob(66))
+		if(prob(volume/5))
 			W.ChangeTurf(/turf/simulated/floor)
 	if(istype(T, /turf/simulated/floor/plating))
 		var/turf/simulated/floor/plating/F = T
-		if(prob(1))
+		if(prob(volume/10))
 			F.ChangeTurf(/turf/space)
 	return
 
@@ -66,8 +64,6 @@
 		M.IgniteMob()
 		new /obj/effect/hotspot(M.loc)
 		return
-
-*/
 
 /datum/reagent/sorium
 	name = "Sorium"
