@@ -382,7 +382,7 @@
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message("<span class='notice'>[src]'s emergency coolant system gives off a small ping!</span>")
 			var/obj/machinery/vending/coffee/C = new /obj/machinery/vending/coffee(get_turf(pick(oview(1,src))))
-			var/list/chems = list("uranium","frostoil","hyperzine")
+			var/list/chems = list("uranium","frostoil","ephedrine")
 			C.reagents.remove_any(25)
 			C.reagents.add_reagent(pick(chems),25)
 			C.name = "Cup of Suspicious Liquid"
