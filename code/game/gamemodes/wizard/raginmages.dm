@@ -13,7 +13,6 @@
 	world << "<B>The <span class='warning'>Space Wizard Federation</span> is pissed, help defeat all the space wizards!</B>"
 
 /datum/game_mode/wizard/raginmages/post_setup()
-	var/playercount = 0
 	..()
 	if(!max_mages)
 		max_mages = round(num_players() / 5)
