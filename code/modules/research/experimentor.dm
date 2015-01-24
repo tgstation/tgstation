@@ -459,8 +459,9 @@
 	if(exp == SCANTYPE_DISCOVER)
 		visible_message("<span class='notice'>[src] scans the [exp_on], revealing it's true nature!.</span>")
 		playsound(src.loc, 'sound/effects/supermatter.ogg', 50, 3, -1)
-		var/obj/item/weapon/relic/R = loaded_item
-		R.reveal()
+		if(istype(loaded_item, /obj/item/weapon/relic))
+			var/obj/item/weapon/relic/R = loaded_item
+			R.reveal()
 		ejectItem()
 
 	//Global reactions
