@@ -6644,7 +6644,7 @@
 "cxN" = (/obj/structure/closet/secure_closet/personal/patient,/turf/simulated/floor{dir = 1; icon_state = "whiteblue"},/area/medical/genetics_cloning)
 "cxO" = (/obj/machinery/computer/cloning,/turf/simulated/floor{dir = 1; icon_state = "whiteblue"},/area/medical/genetics_cloning)
 "cxP" = (/obj/machinery/dna_scannernew,/obj/item/device/radio/intercom{broadcasting = 0; listening = 1; name = "Station Intercom (General)"; pixel_y = 22},/turf/simulated/floor{dir = 5; icon_state = "whiteblue"},/area/medical/genetics_cloning)
-"cxQ" = (/obj/machinery/clonepod{pixel_y = 2},/obj/machinery/camera{c_tag = "Medbay - Cloning Lab"; dir = 8; network = list("SS13","Medbay")},/turf/simulated/floor{icon_state = "dark vault stripe"; dir = 4},/area/medical/genetics_cloning)
+"cxQ" = (/obj/machinery/clonepod{pixel_y = 2},/obj/structure/window/reinforced{dir = 8},/obj/machinery/camera{c_tag = "Medbay - Cloning Lab"; dir = 8; network = list("SS13","Medbay")},/turf/simulated/floor{icon_state = "dark vault stripe"; dir = 4},/area/medical/genetics_cloning)
 "cxR" = (/turf/simulated/wall,/area/medical/genetics_cloning)
 "cxS" = (/obj/machinery/computer/scan_consolenew,/obj/machinery/camera{c_tag = "Science - Genetics Lab"; dir = 4; network = list("SS13","Medbay")},/turf/simulated/floor{icon_state = "whitebluefull"},/area/medical/genetics)
 "cxT" = (/obj/structure/stool/bed/chair/office/light{dir = 8},/obj/effect/landmark/start{name = "Geneticist"},/turf/simulated/floor{dir = 9; icon_state = "whiteblue"},/area/medical/genetics)
