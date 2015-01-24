@@ -1,6 +1,6 @@
 author: Deantwo
 
-#delete-after: True
+delete-after: True
 
 changes: 
   - bugfix: 'Fixed some bugs in PDA's NTRC Chatroom feature.'
