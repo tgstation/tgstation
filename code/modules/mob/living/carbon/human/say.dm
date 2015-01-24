@@ -31,6 +31,8 @@
 
 	if ((M_HULK in mutations) && health >= 25 && length(message))
 		message = "[uppertext(replacetext(message, ".", "!"))]!!" //because I don't know how to code properly in getting vars from other files -Bro
+	if (src.slurring)
+		message = slur(message)
 
 	if(viruses)
 		for(var/datum/disease/pierrot_throat/D in viruses)
