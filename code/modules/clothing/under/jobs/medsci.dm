@@ -5,7 +5,7 @@
 	desc = "It's a suit worn by those with the know-how to achieve the position of \"Research Director\". Its fabric provides minor protection from biological contaminants."
 	name = "research director's vest suit"
 	icon_state = "director"
-	item_state = "g_suit"
+	item_state = "lb_suit"
 	item_color = "director"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 10, bio = 10, rad = 0)
 	can_adjust = 0

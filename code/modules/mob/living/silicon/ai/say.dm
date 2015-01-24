@@ -23,11 +23,11 @@
 	var/ending = copytext(text, length(text))
 
 	if (ending == "?")
-		return "queries, \"[text]\"";
+		return "queries, \"<span class = 'robot'>[text]</span>\"";
 	else if (ending == "!")
-		return "declares, \"[text]\"";
+		return "declares, \"<span class = 'robot'>[text]</span>\"";
 
-	return "states, \"[text]\"";
+	return "states, \"<span class = 'robot'>[text]</span>\"";
 
 /mob/living/silicon/ai/IsVocal()
 	return !config.silent_ai

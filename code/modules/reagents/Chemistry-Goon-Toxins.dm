@@ -22,7 +22,7 @@ datum/reagent/polonium/on_mob_life(var/mob/living/M as mob)
 datum/reagent/histamine
 	name = "Histamine"
 	id = "histamine"
-	description = "Dose-dependent, ranges from annoying to incredibly lethal."
+	description = "A dose-dependent toxin, ranges from annoying to incredibly lethal."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	metabolization_rate = 0.2
@@ -30,23 +30,24 @@ datum/reagent/histamine
 
 datum/reagent/histamine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	switch(pick(1, 2, 3))
+	switch(pick(1, 2, 3, 4))
 		if(1)
-			M << "<span class='danger'>You are unable to look straight!</span>"
-			M.Dizzy(10)
+			M << "<span class='danger'>You can barely see!</span>"
+			M.eye_blurry = 3
 		if(2)
 			M.emote("cough")
-			var/obj/item/I = M.get_active_hand()
-			if(I)
-				M.drop_item()
 		if(3)
-			M.adjustBruteLoss(1*REM)
+			M.emote("sneeze")
+		if(4)
+			if(prob(75))
+				M << "You scratch at an itch."
+				M.adjustBruteLoss(2*REM)
 	..()
 	return
 datum/reagent/histamine/overdose_process(var/mob/living/M as mob)
-	M.adjustOxyLoss(pick(2,5)*REM)
-	M.adjustBruteLoss(pick(2,5)*REM)
-	M.adjustToxLoss(pick(2,5)*REM)
+	M.adjustOxyLoss(pick(1,3)*REM)
+	M.adjustBruteLoss(pick(1,3)*REM)
+	M.adjustToxLoss(pick(1,3)*REM)
 	..()
 	return
 
@@ -131,9 +132,10 @@ datum/reagent/cyanide/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.adjustToxLoss(1.5*REM)
 	if(prob(10))
-		M.adjustOxyLoss(1*REM)
+		M.losebreath += 1
 	if(prob(8))
-		M.sleeping += 1
+		M << "You feel horrendously weak!"
+		M.Stun(2)
 		M.adjustToxLoss(2*REM)
 	..()
 	return
@@ -194,5 +196,13 @@ datum/reagent/itching_powder/on_mob_life(var/mob/living/M as mob)
 	name = "Itching Powder"
 	id = "itching_powder"
 	result = "itching_powder"
-	required_reagents = list("fuel" = 1, "ammonia" = 1)
-	result_amount = 2
+	required_reagents = list("fuel" = 1, "ammonia" = 1, "charcoal" = 1)
+	result_amount = 3
+
+/datum/chemical_reaction/facid
+	name = "Fluorosulfuric acid"
+	id = "facid"
+	result = "facid"
+	required_reagents = list("sacid" = 1, "fluorine" = 1, "hydrogen" = 1, "potassium" = 1)
+	result_amount = 4
+	required_temp = 380

@@ -1116,8 +1116,8 @@ var/global/list/g_fancy_list_of_types = null
 		M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
 		M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
 		M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
-		M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(M), slot_back)
-		M.equip_to_slot_or_del(new /obj/item/weapon/card/id/ertsCommand(M), slot_wear_id)
+//		M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/captain(M), slot_back)
+		M.equip_to_slot_or_del(new /obj/item/weapon/card/id/ert(M), slot_wear_id)
 	else
 		M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
 		M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)

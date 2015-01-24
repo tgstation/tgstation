@@ -145,21 +145,19 @@ Nah
 		return 1
 
 	var/dat = {"<b>Disposal Pipes</b><br><br>
-<A href='?src=\ref[src];dmake=0'>Pipe</A><BR>
-<A href='?src=\ref[src];dmake=1'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];dmake=2'>Junction</A><BR>
-<A href='?src=\ref[src];dmake=3'>Y-Junction</A><BR>
-<A href='?src=\ref[src];dmake=4'>Trunk</A><BR>
-<A href='?src=\ref[src];dmake=5'>Bin</A><BR>
-<A href='?src=\ref[src];dmake=6'>Outlet</A><BR>
-<A href='?src=\ref[src];dmake=7'>Chute</A><BR>
-<A href='?src=\ref[src];dmake=8'>Sort Junction</A><BR>
+<A href='?src=\ref[src];dmake=[DISP_PIPE_STRAIGHT]'>Pipe</A><BR>
+<A href='?src=\ref[src];dmake=[DISP_PIPE_BENT]'>Bent Pipe</A><BR>
+<A href='?src=\ref[src];dmake=[DISP_JUNCTION]'>Junction</A><BR>
+<A href='?src=\ref[src];dmake=[DISP_YJUNCTION]'>Y-Junction</A><BR>
+<A href='?src=\ref[src];dmake=[DISP_END_TRUNK]'>Trunk</A><BR>
+<A href='?src=\ref[src];dmake=[DISP_END_BIN]'>Bin</A><BR>
+<A href='?src=\ref[src];dmake=[DISP_END_OUTLET]'>Outlet</A><BR>
+<A href='?src=\ref[src];dmake=[DISP_END_CHUTE]'>Chute</A><BR>
+<A href='?src=\ref[src];dmake=[DISP_SORTJUNCTION]'>Sort Junction</A><BR>
 "}
 
 	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
 	return
-
-// 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk
 
 
 /obj/machinery/pipedispenser/disposal/Topic(href, href_list)
@@ -170,7 +168,7 @@ Nah
 	if(href_list["dmake"])
 		if(!wait)
 			var/p_type = text2num(href_list["dmake"])
-			var/obj/structure/disposalconstruct/C = new (src.loc,p_type+1)
+			var/obj/structure/disposalconstruct/C = new (src.loc,p_type)
 
 			if(!C.can_place())
 				usr << "<span class='warning'>There's not enough room to build that here!</span>"

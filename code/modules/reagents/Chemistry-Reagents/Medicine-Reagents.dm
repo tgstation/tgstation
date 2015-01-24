@@ -14,22 +14,6 @@ datum/reagent/medicine
 datum/reagent/medicine/on_mob_life(var/mob/living/M as mob)
 	holder.remove_reagent(src.id, metabolization_rate / M.metabolism_efficiency) //medicine reagents stay longer if you have a better metabolism
 
-datum/reagent/medicine/ethylredoxrazine	// FUCK YOU, ALCOHOL
-	name = "Ethylredoxrazine"
-	id = "ethylredoxrazine"
-	description = "A powerful oxidizer that reacts with ethanol."
-	reagent_state = SOLID
-	color = "#605048" // rgb: 96, 80, 72
-
-datum/reagent/medicine/ethylredoxrazine/on_mob_life(var/mob/living/M as mob)
-	M.dizziness = 0
-	M.drowsyness = 0
-	M.stuttering = 0
-	M.confused = 0
-	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 1*REM, 0, 1)
-	..()
-	return
-
 datum/reagent/medicine/lipozine
 	name = "Lipozine" // The anti-nutriment.
 	id = "lipozine"
@@ -134,13 +118,12 @@ datum/reagent/medicine/cryoxadone
 	name = "Cryoxadone"
 	id = "cryoxadone"
 	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the targets body temperature must be under 170K for it to metabolise correctly."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#0000C8"
 
 datum/reagent/medicine/cryoxadone/on_mob_life(var/mob/living/M as mob)
 	if(M.stat != DEAD && M.bodytemperature < 270)
-		M.adjustCloneLoss(-3)
+		M.adjustCloneLoss(-4)
 		M.adjustOxyLoss(-10)
-		M.heal_organ_damage(3,3)
 		M.adjustBruteLoss(-3)
 		M.adjustFireLoss(-3)
 		M.adjustToxLoss(-3)

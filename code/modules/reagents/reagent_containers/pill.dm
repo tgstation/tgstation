@@ -1,6 +1,3 @@
-////////////////////////////////////////////////////////////////////////////////
-/// Pills.
-////////////////////////////////////////////////////////////////////////////////
 /obj/item/weapon/reagent_containers/pill
 	name = "pill"
 	desc = "A tablet or capsule."
@@ -68,86 +65,68 @@
 		spawn(5)
 			qdel(src)
 
-
-////////////////////////////////////////////////////////////////////////////////
-/// Pills. END
-////////////////////////////////////////////////////////////////////////////////
-
-//Pills
-
-
 /obj/item/weapon/reagent_containers/pill/tox
 	name = "toxins pill"
 	desc = "Highly toxic."
 	icon_state = "pill5"
-
-/obj/item/weapon/reagent_containers/pill/tox/New()
-	..()
-	reagents.add_reagent("toxin", 50)
-
+	list_reagents = list("toxin" = 50)
 
 /obj/item/weapon/reagent_containers/pill/cyanide
 	name = "cyanide pill"
 	desc = "Don't swallow this."
 	icon_state = "pill5"
-
-/obj/item/weapon/reagent_containers/pill/cyanide/New()
-	..()
-	reagents.add_reagent("cyanide", 50)
-
+	list_reagents = list("cyanide" = 50)
 
 /obj/item/weapon/reagent_containers/pill/adminordrazine
 	name = "adminordrazine pill"
 	desc = "It's magic. We don't have to explain it."
 	icon_state = "pill16"
-
-/obj/item/weapon/reagent_containers/pill/adminordrazine/New()
-	..()
-	reagents.add_reagent("adminordrazine", 50)
-
+	list_reagents = list("adminordrazine" = 50)
 
 /obj/item/weapon/reagent_containers/pill/morphine
 	name = "morphine pill"
 	desc = "Commonly used to treat insomnia."
 	icon_state = "pill8"
-/obj/item/weapon/reagent_containers/pill/morphine/New()
-	..()
-	reagents.add_reagent("morphine", 30)
+	list_reagents = list("morphine" = 30)
 
 /obj/item/weapon/reagent_containers/pill/stimulant
 	name = "stimulant pill"
 	desc = "Often taken by overworked employees, athletes, and the inebriated. You'll snap to attention immediately!"
 	icon_state = "pill19"
-
-/obj/item/weapon/reagent_containers/pill/stimulant/New()
-	..()
-	reagents.add_reagent("ephedrine", 10)
-	reagents.add_reagent("ethylredoxrazine", 10)
-	reagents.add_reagent("coffee", 30)
+	list_reagents = list("ephedrine" = 10, "ethylredoxrazine" = 10, "coffee" = 30)
 
 /obj/item/weapon/reagent_containers/pill/salbutamol
 	name = "salbutamol pill"
 	desc = "Used to treat oxygen deprivation."
 	icon_state = "pill18"
-
-/obj/item/weapon/reagent_containers/pill/salbutamol/New()
-	..()
-	reagents.add_reagent("salbutamol", 30)
+	list_reagents = list("salbutamol" = 30)
 
 /obj/item/weapon/reagent_containers/pill/charcoal
-	name = "charcoal pill"
+	name = "antitoxin pill"
 	desc = "Neutralizes many common toxins."
 	icon_state = "pill17"
-
-/obj/item/weapon/reagent_containers/pill/charcoal/New()
-	..()
-	reagents.add_reagent("charcoal", 50)
+	list_reagents = list("charcoal" = 50)
 
 /obj/item/weapon/reagent_containers/pill/epinephrine
 	name = "epinephrine pill"
 	desc = "Used to stabilize patients."
-	icon_state = "pill17"
+	icon_state = "pill5"
+	list_reagents = list("epinephrine" = 50)
 
-/obj/item/weapon/reagent_containers/pill/epinephrine/New()
-	..()
-	reagents.add_reagent("epinephrine", 50)
+/obj/item/weapon/reagent_containers/pill/mannitol
+	name = "mannitol pill"
+	desc = "Used to treat brain damage."
+	icon_state = "pill17"
+	list_reagents = list("mannitol" = 50)
+
+/obj/item/weapon/reagent_containers/pill/mutadone
+	name = "mutadone pill"
+	desc = "Used to treat genetic damage."
+	icon_state = "pill20"
+	list_reagents = list("mutadone" = 50)
+
+/obj/item/weapon/reagent_containers/pill/salicyclic
+	name = "salicyclic acid pill"
+	desc = "Used to dull pain."
+	icon_state = "pill5"
+	list_reagents = list("sal_acid" = 50)
