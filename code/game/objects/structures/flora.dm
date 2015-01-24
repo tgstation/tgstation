@@ -181,7 +181,7 @@
 	icon_state = "ppflowers_1"
 
 /obj/structure/flora/ausbushes/ppflowers/New()
-	icon_state = "ppflowers_[rand(1, 4)]"
+	icon_state = "ppflowers_[rand(1, 3)]"
 	..()
 
 /obj/structure/flora/ausbushes/sparsegrass

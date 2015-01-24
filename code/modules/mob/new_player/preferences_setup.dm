@@ -134,7 +134,7 @@
 				if(backbag == 3)
 					clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-norm"), ICON_OVERLAY)
 			if(CARGOTECH)
-				clothes_s = new /icon('icons/mob/uniform.dmi', "cargotech_s")
+				clothes_s = new /icon('icons/mob/uniform.dmi', "cargo_s")
 				clothes_s.Blend(new /icon('icons/mob/feet.dmi', "black"), ICON_UNDERLAY)
 				if(backbag == 2)
 					clothes_s.Blend(new /icon('icons/mob/back.dmi', "backpack"), ICON_OVERLAY)
