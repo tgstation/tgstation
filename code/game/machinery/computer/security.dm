@@ -251,8 +251,9 @@
 I can't be bothered to look more of the actual code outside of switch but that probably needs revising too.
 What a mess.*/
 /obj/machinery/computer/secure_data/Topic(href, href_list)
-	if(..())
-		return
+	. = ..()
+	if(.)
+		return .
 	if (!( data_core.general.Find(active1) ))
 		active1 = null
 	if (!( data_core.security.Find(active2) ))
@@ -433,8 +434,8 @@ What a mess.*/
 				if (!( istype(active2, /datum/data/record) ))
 					return
 				var/a2 = active2
-				var/t1 = copytext(sanitize(input("Add Comment:", "Secure. records", null, null)  as message),1,MAX_MESSAGE_LEN)
-				if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active2 != a2))
+				var/t1 = stripped_multiline_input("Add Comment:", "Secure. records", null, null)
+				if (!canUseSecurityRecordsConsole(t1, usr, null, a2))
 					return
 				var/counter = 1
 				while(active2.fields[text("com_[]", counter)])
@@ -529,7 +530,7 @@ What a mess.*/
 					if("name")
 						if (istype(active1, /datum/data/record) || istype(active2, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input name:", "Secure. records", active1.fields["name"], null)
-							if ((!( t1 ) || !length(trim(t1)) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon)))) || active1 != a1)
+							if (!canUseSecurityRecordsConsole(usr, t1, null, a1))
 								return
 							if(istype(active1, /datum/data/record))
 								active1.fields["name"] = t1
@@ -537,8 +538,8 @@ What a mess.*/
 								active2.fields["name"] = t1
 					if("id")
 						if(istype(active2,/datum/data/record) || istype(active1,/datum/data/record))
-							var/t1 = copytext(sanitize(input("Please input id:", "Secure. records", active1.fields["id"], null)  as text),1,MAX_MESSAGE_LEN)
-							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active1 != a1))
+							var/t1 = stripped_input(usr, "Please input id:", "Secure. records", active1.fields["id"], null)
+							if (!canUseSecurityRecordsConsole(usr, t1, null, a1))
 								return
 							if(istype(active1,/datum/data/record))
 								active1.fields["id"] = t1
@@ -546,8 +547,8 @@ What a mess.*/
 								active2.fields["id"] = t1
 					if("fingerprint")
 						if (istype(active1, /datum/data/record))
-							var/t1 = copytext(sanitize(input("Please input fingerprint hash:", "Secure. records", active1.fields["fingerprint"], null)  as text),1,MAX_MESSAGE_LEN)
-							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active1 != a1))
+							var/t1 = stripped_input(usr, "Please input fingerprint hash:", "Secure. records", active1.fields["fingerprint"], null)
+							if (!canUseSecurityRecordsConsole(usr, t1, null, a1))
 								return
 							active1.fields["fingerprint"] = t1
 					if("sex")
@@ -558,14 +559,14 @@ What a mess.*/
 								active1.fields["sex"] = "Male"
 					if("age")
 						if (istype(active1, /datum/data/record))
-							var/t1 = input("Please input age:", "Secure. records", active1.fields["age"], null)  as num
-							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active1 != a1))
+							var/t1 = input("Please input age:", "Secure. records", active1.fields["age"], null) as num
+							if (!canUseSecurityRecordsConsole(usr, null, null, a1) || !t1)
 								return
 							active1.fields["age"] = t1
 					if("species")
 						if (istype(active1, /datum/data/record))
 							var/t1 = input("Select a species", "Species Selection") as null|anything in roundstart_species
-							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active1 != a1))
+							if (!canUseSecurityRecordsConsole(usr, t1, null, a1))
 								return
 							active1.fields["species"] = t1
 					if("photo front")
@@ -578,36 +579,36 @@ What a mess.*/
 							active1.fields["photo_side"] = photo
 					if("mi_crim_add")
 						if (istype(active1, /datum/data/record))
-							var/t1 = copytext(sanitize(input("Please input minor crime names:", "Secure. records", "", null)  as text),1,MAX_MESSAGE_LEN)
-							var/t2 = copytext(sanitize(input("Please input minor crime details:", "Secure. records", "", null)  as message),1,MAX_MESSAGE_LEN)
-							if ((!( t1 ) || !( t2 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active2 != a2))
+							var/t1 = stripped_input(usr, "Please input minor crime names:", "Secure. records", "", null)
+							var/t2 = stripped_multiline_input(usr, "Please input minor crime details:", "Secure. records", "", null)
+							if (!canUseSecurityRecordsConsole(usr, t1, t2, null, a2))
 								return
 							var/crime = data_core.createCrimeEntry(t1, t2, authenticated, worldtime2text())
 							data_core.addMinorCrime(active1.fields["id"], crime)
 					if("mi_crim_delete")
 						if (istype(active1, /datum/data/record))
 							if (href_list["cdataid"])
-								if ((!( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active2 != a2))
+								if (!canUseSecurityRecordsConsole(usr, null, null, a2))
 									return
 								data_core.removeMinorCrime(active1.fields["id"], href_list["cdataid"])
 					if("ma_crim_add")
 						if (istype(active1, /datum/data/record))
-							var/t1 = copytext(sanitize(input("Please input major crime names:", "Secure. records", "", null)  as text),1,MAX_MESSAGE_LEN)
-							var/t2 = copytext(sanitize(input("Please input major crime details:", "Secure. records", "", null)  as message),1,MAX_MESSAGE_LEN)
-							if ((!( t1 ) || !( t2 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active2 != a2))
+							var/t1 = stripped_input(usr, "Please input major crime names:", "Secure. records", "", null)
+							var/t2 = stripped_multiline_input(usr, "Please input major crime details:", "Secure. records", "", null)
+							if (!canUseSecurityRecordsConsole(usr, t1, t2, a2))
 								return
 							var/crime = data_core.createCrimeEntry(t1, t2, authenticated, worldtime2text())
 							data_core.addMajorCrime(active1.fields["id"], crime)
 					if("ma_crim_delete")
 						if (istype(active1, /datum/data/record))
 							if (href_list["cdataid"])
-								if ((!( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active2 != a2))
+								if (!canUseSecurityRecordsConsole(usr, null, null, a2))
 									return
 								data_core.removeMajorCrime(active1.fields["id"], href_list["cdataid"])
 					if("notes")
 						if (istype(active2, /datum/data/record))
-							var/t1 = copytext(sanitize(input("Please summarize notes:", "Secure. records", active2.fields["notes"], null)  as message),1,MAX_MESSAGE_LEN)
-							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active2 != a2))
+							var/t1 = stripped_input(usr, "Please summarize notes:", "Secure. records", active2.fields["notes"], null)
+							if (!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
 							active2.fields["notes"] = t1
 					if("criminal")
@@ -728,6 +729,17 @@ What a mess.*/
 			continue
 
 	..(severity)
+
+/obj/machinery/computer/secure_data/proc/canUseSecurityRecordsConsole(mob/user, message1 = 1, message2 = 1, record1, record2)
+	if (user)
+		if (trim(message1))
+			if (trim(message2))
+				if (authenticated)
+					if (user.canUseTopic(src))
+						if (!record1 || record1 == active1)
+							if (!record2 || record2 == active2)
+								return 1
+	return 0
 
 /obj/machinery/computer/secure_data/detective_computer
 	icon = 'icons/obj/computer.dmi'

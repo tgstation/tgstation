@@ -298,32 +298,35 @@
 			var/mob/living/carbon/human/H = usr
 			var/perpname = get_face_name(get_id_name(""))
 			if(istype(H.glasses, /obj/item/clothing/glasses/hud))
-				var/datum/data/record/R = find_record("name", perpname, data_core.general)
-				if(R)
-					if(usr.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud))
-						return
-					var/icon/img = null
-					if(href_list["photo_front"])
-						img = R.fields["photo_front"]
-					if(href_list["photo_side"])
-						img = R.fields["photo_side"]
-					if(img)
-						usr << browse_rsc(img, "photo")
-						usr << browse("<img src='photo' height=80 width=80 border=4>", "window=photo;size=120x120")
+				var/datum/data/record/R
+				if(href_list["photo_front"] || href_list["photo_side"])
+					R = find_record("name", perpname, data_core.general)
+					if(R)
+						if(!usr.canUseTopic(src))
+						else if(!istype(H.glasses, /obj/item/clothing/glasses/hud))
+							return
+						var/icon/img = null
+						if(href_list["photo_front"])
+							img = R.fields["photo_front"]
+						else if(href_list["photo_side"])
+							img = R.fields["photo_side"]
+						if(img)
+							usr << browse_rsc(img, "photo")
+							usr << browse("<img src='photo' height=80 width=80 border=4>", "window=photo;size=120x120")
 
 				if(href_list["hud"] == "m")
 					if(istype(H.glasses, /obj/item/clothing/glasses/hud/health))
-						if(usr.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/health))
-							return
 						if(href_list["p_stat"])
 							var/health = input(usr, "Specify a new physical status for this person.", "Medical HUD", R.fields["p_stat"]) in list("Active", "Physically Unfit", "*Unconscious*", "*Deceased*", "Cancel")
-							if(usr.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/health))
+							if(!usr.canUseTopic(src))
+							else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/health))
 								return
 							if(health != "Cancel")
 								R.fields["p_stat"] = health
 						if(href_list["m_stat"])
 							var/health = input(usr, "Specify a new mental status for this person.", "Medical HUD", R.fields["m_stat"]) in list("Stable", "*Watch*", "*Unstable*", "*Insane*", "Cancel")
-							if(usr.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/health))
+							if(!usr.canUseTopic(src))
+							else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/health))
 								return
 							if(health != "Cancel")
 								R.fields["m_stat"] = health
@@ -394,16 +397,18 @@
 								if(href_list["status"])
 									var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Parolled", "Discharged", "Cancel")
 									if(R)
-										if(istype(H.glasses, /obj/item/clothing/glasses/hud/security))
-											if(setcriminal != "Cancel")
-												investigate_log("[src.key] has been set from [R.fields["criminal"]] to [setcriminal] by [usr.name] ([usr.key]).", "records")
-												R.fields["criminal"] = setcriminal
-												sec_hud_set_security_status()
-										return
+										if(usr.canUseTopic(src))
+											if(istype(H.glasses, /obj/item/clothing/glasses/hud/security))
+												if(setcriminal != "Cancel")
+													investigate_log("[src.key] has been set from [R.fields["criminal"]] to [setcriminal] by [usr.name] ([usr.key]).", "records")
+													R.fields["criminal"] = setcriminal
+													sec_hud_set_security_status()
+									return
 
 								if(href_list["view"])
 									if(R)
-										if(usr.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security))
+										if(!usr.canUseTopic(src))
+										else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security))
 											return
 										usr << "<b>Name:</b> [R.fields["name"]]	<b>Criminal Status:</b> [R.fields["criminal"]]"
 										usr << "<b>Minor Crimes:</b>"
@@ -419,16 +424,18 @@
 											usr << "Added by [c.author] at [c.time]"
 											usr << "----------"
 										usr << "<b>Notes:</b> [R.fields["notes"]]"
-										return
+									return
 
 								if(href_list["add_crime"])
 									switch(alert("What crime would you like to add?","Security HUD","Minor Crime","Major Crime","Cancel"))
 										if("Minor Crime")
 											if(R)
-												var/t1 = copytext(sanitize(input("Please input minor crime names:", "Security HUD", "", null)  as text),1,MAX_MESSAGE_LEN)
-												var/t2 = copytext(sanitize(input("Please input minor crime details:", "Security HUD", "", null)  as message),1,MAX_MESSAGE_LEN)
+												var/t1 = stripped_input("Please input minor crime names:", "Security HUD", "", null)
+												var/t2 = stripped_multiline_input("Please input minor crime details:", "Security HUD", "", null)
 												if(R)
-													if (!t1 || !t2 || !allowed_access || H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security))
+													if (!t1 || !t2 || !allowed_access)
+													else if(!usr.canUseTopic(src))
+													else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security))
 														return
 													var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
 													data_core.addMinorCrime(R.fields["id"], crime)
@@ -436,20 +443,22 @@
 													return
 										if("Major Crime")
 											if(R)
-												var/t1 = copytext(sanitize(input("Please input major crime names:", "Security HUD", "", null)  as text),1,MAX_MESSAGE_LEN)
-												var/t2 = copytext(sanitize(input("Please input major crime details:", "Security HUD", "", null)  as message),1,MAX_MESSAGE_LEN)
+												var/t1 = stripped_input("Please input major crime names:", "Security HUD", "", null)
+												var/t2 = stripped_multiline_input("Please input major crime details:", "Security HUD", "", null)
 												if(R)
-													if (!t1 || !t2 || !allowed_access || H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security))
+													if (!t1 || !t2 || !allowed_access)
+													else if (!usr.canUseTopic(src))
+													else if (!istype(H.glasses, /obj/item/clothing/glasses/hud/security))
 														return
 													var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
 													data_core.addMajorCrime(R.fields["id"], crime)
 													usr << "<span class='notice'>Successfully added a major crime.</span>"
-													return
-										else return
+									return
 
 								if(href_list["view_comment"])
 									if(R)
-										if(H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security))
+										if(!usr.canUseTopic(src))
+										else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security))
 											return
 										usr << "<b>Comments/Log:</b>"
 										var/counter = 1
@@ -461,9 +470,11 @@
 
 								if(href_list["add_comment"])
 									if(R)
-										var/t1 = copytext(sanitize(input("Add Comment:", "Secure. records", null, null)  as message),1,MAX_MESSAGE_LEN)
+										var/t1 = stripped_multiline_input("Add Comment:", "Secure. records", null, null)
 										if(R)
-											if (!t1 || !allowed_access || H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security))
+											if (!t1 || !allowed_access)
+											else if(!usr.canUseTopic(src))
+											else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security))
 												return
 											var/counter = 1
 											while(R.fields[text("com_[]", counter)])

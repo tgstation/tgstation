@@ -188,8 +188,9 @@
 	return
 
 /obj/machinery/computer/med_data/Topic(href, href_list)
-	if(..())
-		return
+	. = ..()
+	if(.)
+		return .
 	if(!(active1 in data_core.general))
 		src.active1 = null
 	if(!(active2 in data_core.medical))
@@ -281,8 +282,8 @@
 				switch(href_list["field"])
 					if("fingerprint")
 						if(active1)
-							var/t1 = copytext(sanitize(input("Please input fingerprint hash:", "Med. records", src.active1.fields["fingerprint"], null)  as text),1,MAX_MESSAGE_LEN)
-							if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active1 != a1))
+							var/t1 = stripped_input("Please input fingerprint hash:", "Med. records", src.active1.fields["fingerprint"], null)
+							if (!canUseMedicalRecordsConsole(usr, t1, a1))
 								return
 							src.active1.fields["fingerprint"] = t1
 					if("sex")
@@ -294,67 +295,67 @@
 					if("age")
 						if(active1)
 							var/t1 = input("Please input age:", "Med. records", src.active1.fields["age"], null)  as num
-							if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active1 != a1))
+							if (!canUseMedicalRecordsConsole(usr, t1, a1))
 								return
 							src.active1.fields["age"] = t1
 					if("species")
 						if(active1)
 							var/t1 = input("Select a species", "Species Selection") as null|anything in roundstart_species
-							if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active1 != a1))
+							if (!canUseMedicalRecordsConsole(usr, t1, a1))
 								return
 							active1.fields["species"] = t1
 					if("mi_dis")
 						if(active2)
-							var/t1 = copytext(sanitize(input("Please input minor disabilities list:", "Med. records", src.active2.fields["mi_dis"], null)  as text),1,MAX_MESSAGE_LEN)
-							if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active2 != a2))
+							var/t1 = stripped_input("Please input minor disabilities list:", "Med. records", src.active2.fields["mi_dis"], null)
+							if (!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["mi_dis"] = t1
 					if("mi_dis_d")
 						if(active2)
-							var/t1 = copytext(sanitize(input("Please summarize minor dis.:", "Med. records", src.active2.fields["mi_dis_d"], null)  as message),1,MAX_MESSAGE_LEN)
-							if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active2 != a2))
+							var/t1 = stripped_multiline_input("Please summarize minor dis.:", "Med. records", src.active2.fields["mi_dis_d"], null)
+							if (!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["mi_dis_d"] = t1
 					if("ma_dis")
 						if(active2)
-							var/t1 = copytext(sanitize(input("Please input major diabilities list:", "Med. records", src.active2.fields["ma_dis"], null)  as text),1,MAX_MESSAGE_LEN)
-							if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active2 != a2))
+							var/t1 = stripped_input("Please input major diabilities list:", "Med. records", src.active2.fields["ma_dis"], null)
+							if (!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["ma_dis"] = t1
 					if("ma_dis_d")
 						if(active2)
-							var/t1 = copytext(sanitize(input("Please summarize major dis.:", "Med. records", src.active2.fields["ma_dis_d"], null)  as message),1,MAX_MESSAGE_LEN)
-							if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active2 != a2))
+							var/t1 = stripped_multiline_input("Please summarize major dis.:", "Med. records", src.active2.fields["ma_dis_d"], null)
+							if (!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["ma_dis_d"] = t1
 					if("alg")
 						if(active2)
-							var/t1 = copytext(sanitize(input("Please state allergies:", "Med. records", src.active2.fields["alg"], null)  as text),1,MAX_MESSAGE_LEN)
-							if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active2 != a2))
+							var/t1 = stripped_input("Please state allergies:", "Med. records", src.active2.fields["alg"], null)
+							if (!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["alg"] = t1
 					if("alg_d")
 						if(active2)
-							var/t1 = copytext(sanitize(input("Please summarize allergies:", "Med. records", src.active2.fields["alg_d"], null)  as message),1,MAX_MESSAGE_LEN)
-							if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active2 != a2))
+							var/t1 = stripped_multiline_input("Please summarize allergies:", "Med. records", src.active2.fields["alg_d"], null)
+							if (!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["alg_d"] = t1
 					if("cdi")
 						if(active2)
-							var/t1 = copytext(sanitize(input("Please state diseases:", "Med. records", src.active2.fields["cdi"], null)  as text),1,MAX_MESSAGE_LEN)
-							if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active2 != a2))
+							var/t1 = stripped_input("Please state diseases:", "Med. records", src.active2.fields["cdi"], null)
+							if (!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["cdi"] = t1
 					if("cdi_d")
 						if(active2)
-							var/t1 = copytext(sanitize(input("Please summarize diseases:", "Med. records", src.active2.fields["cdi_d"], null)  as message),1,MAX_MESSAGE_LEN)
-							if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active2 != a2))
+							var/t1 = stripped_multiline_input("Please summarize diseases:", "Med. records", src.active2.fields["cdi_d"], null)
+							if (!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["cdi_d"] = t1
 					if("notes")
 						if(active2)
-							var/t1 = copytext(sanitize(input("Please summarize notes:", "Med. records", src.active2.fields["notes"], null)  as message),1,MAX_MESSAGE_LEN)
-							if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active2 != a2))
+							var/t1 = stripped_multiline_input("Please summarize notes:", "Med. records", src.active2.fields["notes"], null)
+							if (!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["notes"] = t1
 					if("p_stat")
@@ -368,8 +369,8 @@
 							src.temp = text("<B>Blood Type:</B><BR>\n\t<A href='?src=\ref[];temp=1;blood_type=an'>A-</A> <A href='?src=\ref[];temp=1;blood_type=ap'>A+</A><BR>\n\t<A href='?src=\ref[];temp=1;blood_type=bn'>B-</A> <A href='?src=\ref[];temp=1;blood_type=bp'>B+</A><BR>\n\t<A href='?src=\ref[];temp=1;blood_type=abn'>AB-</A> <A href='?src=\ref[];temp=1;blood_type=abp'>AB+</A><BR>\n\t<A href='?src=\ref[];temp=1;blood_type=on'>O-</A> <A href='?src=\ref[];temp=1;blood_type=op'>O+</A><BR>", src, src, src, src, src, src, src, src)
 					if("b_dna")
 						if(active2)
-							var/t1 = copytext(sanitize(input("Please input DNA hash:", "Med. records", src.active2.fields["b_dna"], null)  as text),1,MAX_MESSAGE_LEN)
-							if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active2 != a2))
+							var/t1 = stripped_input("Please input DNA hash:", "Med. records", src.active2.fields["b_dna"], null)
+							if (!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["b_dna"] = t1
 					else
@@ -463,8 +464,8 @@
 				if(!(active2 in data_core.medical))
 					return
 				var/a2 = src.active2
-				var/t1 = copytext(sanitize(input("Add Comment:", "Med. records", null, null)  as message),1,MAX_MESSAGE_LEN)
-				if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active2 != a2))
+				var/t1 = stripped_multiline_input("Add Comment:", "Med. records", null, null)
+				if (!canUseMedicalRecordsConsole(usr, t1, null, a2))
 					return
 				var/counter = 1
 				while(src.active2.fields[text("com_[]", counter)])
@@ -477,7 +478,7 @@
 
 			else if (href_list["search"])
 				var/t1 = stripped_input(usr, "Search String: (Name, DNA, or ID)", "Med. records")
-				if ((!( t1 ) || usr.stat || !( src.authenticated ) || usr.restrained() || ((!in_range(src, usr)) && (!istype(usr, /mob/living/silicon)))))
+				if (!canUseMedicalRecordsConsole(usr, t1))
 					return
 				src.active1 = null
 				src.active2 = null
@@ -554,6 +555,15 @@
 
 	..(severity)
 
+/obj/machinery/computer/med_data/proc/canUseMedicalRecordsConsole(mob/user, message = 1, record1, record2)
+	if (user)
+		if (message)
+			if (authenticated)
+				if (user.canUseTopic(src))
+					if (!record1 || record1 == active1)
+						if (!record2 || record2 == active2)
+							return 1
+	return 0
 
 /obj/machinery/computer/med_data/laptop
 	name = "medical laptop"
