@@ -191,6 +191,7 @@
 	icon_state = "holster"
 	item_state = "bandolier"
 	storage_slots = 1
+	max_w_class = 4
 	can_hold = list(
 		/obj/item/weapon/gun/projectile/automatic/pistol,
 		/obj/item/weapon/gun/projectile/revolver/detective
