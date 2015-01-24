@@ -68,6 +68,8 @@
 	var/supernatural = 0
 	var/purge = 0
 
+	languages = UNDERSTANDS_ALL
+
 /mob/living/simple_animal/rejuvenate()
 	var/turf/T = get_turf(src)
 	T.turf_animation('icons/effects/64x64.dmi',"rejuvinate",-16,0,MOB_LAYER+1,'sound/effects/rejuvinate.ogg')

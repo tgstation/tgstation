@@ -234,6 +234,8 @@ var/MAX_EXPLOSION_RANGE = 14
 #define ALIEN 4
 #define ROBOT 8
 #define SLIME 16
+#define SIMPLE_ANIMAL 32
+#define UNDERSTANDS_ALL 1024
 
 //turf-only flags
 #define NOJAUNT		1

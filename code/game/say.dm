@@ -82,7 +82,7 @@ var/list/freqtoname = list(
 	return "says, \"[text]\""
 
 /atom/movable/proc/lang_treat(atom/movable/speaker, message_langs, raw_message)
-	if(languages & message_langs)
+	if(languages & message_langs || languages & UNDERSTANDS_ALL)
 		var/atom/movable/AM = speaker.GetSource()
 		if(AM)
 			return AM.say_quote(raw_message)
@@ -91,8 +91,12 @@ var/list/freqtoname = list(
 	else if(message_langs & HUMAN)
 		var/atom/movable/AM = speaker.GetSource()
 		if(AM)
+			if(languages & SIMPLE_ANIMAL)
+				return AM.say_quote(raw_message)
 			return AM.say_quote(stars(raw_message))
 		else
+			if(languages & SIMPLE_ANIMAL)
+				return speaker.say_quote(raw_message)
 			return speaker.say_quote(stars(raw_message))
 	else if(message_langs & MONKEY)
 		return "chimpers."
@@ -100,6 +104,12 @@ var/list/freqtoname = list(
 		return "hisses."
 	else if(message_langs & ROBOT)
 		return "beeps rapidly."
+	else if(message_langs & SIMPLE_ANIMAL)
+		var/mob/living/simple_animal/SA = speaker.GetSource()
+		if(istype(SA))
+			return "[pick(SA.speak_emote)]."
+		else
+			return "makes a strange sound."
 	else
 		return "makes a strange sound."
 

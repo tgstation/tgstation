@@ -113,6 +113,13 @@ var/global/list/whitelisted_species = list("Human")
 	var/has_mutant_race = 1
 
 /datum/species/proc/handle_speech(var/message, var/mob/living/carbon/human/H)
+	if(H.dna)
+		if(length(message) >= 2)
+			for(var/datum/dna/gene/gene in dna_genes)
+				if(!gene.block)
+					continue
+				if(gene.is_active(H))
+					message = gene.OnSay(H,message)
 	return message
 
 /datum/species/proc/create_organs(var/mob/living/carbon/human/H) //Handles creation of mob organs.

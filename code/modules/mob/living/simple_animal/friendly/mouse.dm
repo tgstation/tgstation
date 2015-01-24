@@ -26,6 +26,7 @@
 	min_oxy = 16 //Require atleast 16kPA oxygen
 	minbodytemp = 223		//Below -50 Degrees Celcius
 	maxbodytemp = 323	//Above 50 Degrees Celcius
+	languages = SIMPLE_ANIMAL
 
 /mob/living/simple_animal/mouse/Life()
 	..()
@@ -161,3 +162,8 @@
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
+
+/mob/living/simple_animal/mouse/say_quote(text)
+	if(!text)
+		return "squeaks, \"...\"";	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
+	return "squeaks, \"[text]\"";
