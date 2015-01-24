@@ -303,7 +303,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="Creating new Feed Message..."
 				dat+="<HR><B><A href='?src=\ref[src];set_channel_receiving=1'>Receiving Channel</A>:</B> [src.channel_name]<BR>" //MARK
 				dat+="<B>Message Author:</B> <FONT COLOR='green'>[src.scanned_user]</FONT><BR>"
-				dat+="<B><A href='?src=\ref[src];set_new_message=1'>Message Body</A>:</B> <BR><font face=\"[NEWS_ARTICLE_FONT]\">[parsepencode(src.msg, user, NEWS_ARTICLE_SIGNFONT)]</font><BR>"
+				dat+="<B><A href='?src=\ref[src];set_new_message=1'>Message Body</A>:</B> <BR><font face=\"[PEN_FONT]\">[parsepencode(src.msg, user, SIGNFONT)]</font><BR>"
 				dat+="<B><A href='?src=\ref[src];set_attachment=1'>Attach Photo</A>:</B>  [(src.photo ? "Photo Attached" : "No Photo")]</BR>"
 				dat+="<B><A href='?src=\ref[src];set_comment=1'>Comments [allow_comments ? "Enabled" : "Disabled"]</A></B><BR>"
 				dat+="<BR><A href='?src=\ref[src];submit_new_message=1'>Submit</A><BR><BR><A href='?src=\ref[src];setScreen=[0]'>Cancel</A><BR>"
@@ -578,7 +578,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			if(src.msg =="" || src.msg=="\[REDACTED\]" || src.scanned_user == "Unknown" || src.channel_name == "" )
 				src.screen=6
 			else
-				news_network.SubmitArticle("<font face=\"[NEWS_ARTICLE_FONT]\">[parsepencode(src.msg, usr, NEWS_ARTICLE_SIGNFONT)]</font>", scanned_user, channel_name, photo, allow_comments)
+				news_network.SubmitArticle("<font face=\"[PEN_FONT]\">[parsepencode(src.msg, usr, SIGNFONT)]</font>", scanned_user, channel_name, photo, allow_comments)
 				feedback_inc("newscaster_stories",1)
 				src.screen=4
 				src.msg = ""

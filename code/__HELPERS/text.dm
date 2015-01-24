@@ -390,7 +390,7 @@ var/list/binary = list("0","1")
 	return end
 
 
-/proc/parsepencode(t, mob/user=null, signfont=PAPER_SIGNFONT)
+/proc/parsepencode(t, mob/user=null, signfont=SIGNFONT)
 	if(length(t) < 1)		//No input means nothing needs to be parsed
 		return
 

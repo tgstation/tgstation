@@ -373,7 +373,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += "<a href='byond://?src=\ref[src];choice=Edit'>Edit</a><br>"
 				if(notescanned)
 					dat += "(This is a scanned image, editing it may cause some text formatting to change.)<br>"
-				dat += "<HR><font face=\"[PDA_NOTE_FONT]\">[(!notehtml ? note : notehtml)]</font>"
+				dat += "<HR><font face=\"[PEN_FONT]\">[(!notehtml ? note : notehtml)]</font>"
 
 			if (2)
 				dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.6</h4>"
@@ -573,7 +573,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if (in_range(src, U) && loc == U)
 					if (mode == 1 && n)
 						note = n
-						notehtml = parsepencode(n, U, PDA_NOTE_SIGNFONT)
+						notehtml = parsepencode(n, U, SIGNFONT)
 						notescanned = 0
 				else
 					U << browse(null, "window=pda")

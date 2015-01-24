@@ -100,12 +100,8 @@
 
 //FONTS:
 // Used by Paper and PhotoCopier (and PaperBin once a year).
-#define PAPER_DEF_FONT "Verdana"
-#define PAPER_CRAYON_FONT "Comic Sans MS"
-#define PAPER_SIGNFONT "Times New Roman"
 // Used by PDA's Notekeeper.
-#define PDA_NOTE_FONT "Verdana"
-#define PDA_NOTE_SIGNFONT "Times New Roman"
 // Used by NewsCaster and NewsPaper.
-#define NEWS_ARTICLE_FONT "Verdana"
-#define NEWS_ARTICLE_SIGNFONT "Times New Roman"
+#define PEN_FONT "Verdana"
+#define CRAYON_FONT "Comic Sans MS"
+#define SIGNFONT "Times New Roman"
