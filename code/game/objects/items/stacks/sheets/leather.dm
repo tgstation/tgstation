@@ -26,6 +26,15 @@
 	icon_state = "sheet-monkey"
 	origin_tech = null
 
+var/global/list/datum/stack_recipe/monkey_recipes = list ( \
+	new/datum/stack_recipe("monkey mask", /obj/item/clothing/mask/gas/monkeymask, 1, on_floor = 1), \
+	new/datum/stack_recipe("monkey suit", /obj/item/clothing/suit/monkeysuit, 2, on_floor = 1), \
+	)
+
+/obj/item/stack/sheet/animalhide/monkey/New(var/loc, var/amount=null)
+	recipes = monkey_recipes
+	return ..()
+
 /obj/item/stack/sheet/animalhide/lizard
 	name = "lizard skin"
 	desc = "Sssssss..."
@@ -39,6 +48,15 @@
 	singular_name = "alien hide piece"
 	icon_state = "sheet-xeno"
 	origin_tech = null
+
+var/global/list/datum/stack_recipe/xeno_recipes = list ( \
+	new/datum/stack_recipe("alien helmet", /obj/item/clothing/head/xenos, 1, on_floor = 1), \
+	new/datum/stack_recipe("alien suit", /obj/item/clothing/suit/xenos, 2, on_floor = 1), \
+	)
+
+/obj/item/stack/sheet/animalhide/xeno/New(var/loc, var/amount=null)
+	recipes = xeno_recipes
+	return ..()
 
 //don't see anywhere else to put these, maybe together they could be used to make the xenos suit?
 /obj/item/stack/sheet/xenochitin
