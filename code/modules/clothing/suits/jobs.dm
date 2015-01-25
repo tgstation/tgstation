@@ -34,11 +34,6 @@
 	action_button_name = "Toggle Chaplain Hoodie"
 	hoodtype = /obj/item/clothing/head/chaplain_hood
 
-/obj/item/clothing/suit/hooded/chaplain_hoodie/MakeHood()
-	if(!hood)
-		var/obj/item/clothing/head/chaplain_hood/W = new /obj/item/clothing/head/chaplain_hood(src)
-		hood = W
-
 /obj/item/clothing/head/chaplain_hood
 	name = "chaplain hood"
 	desc = "For protecting your identity when immolating demons."
