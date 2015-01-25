@@ -125,21 +125,22 @@
 	item_color = "ert_commander"
 	armor = list(melee = 65, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 100, rad = 100)
 	strip_delay = 130
+	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE | THICKMATERIAL
 
 /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
-	desc = "Standard issue security helmet for the ERT"
+	desc = "Standard issue security helmet for the ERT."
 	icon_state = "hardsuit0-ert_security"
 	item_state = "hardsuit0-ert_security"
 	item_color = "ert_security"
 
 /obj/item/clothing/head/helmet/space/hardsuit/ert/engi
-	desc = "Standard issue engineer helmet for the ERT"
+	desc = "Standard issue engineer helmet for the ERT."
 	icon_state = "hardsuit0-ert_engineer"
 	item_state = "hardsuit0-ert_engineer"
 	item_color = "ert_engineer"
 
 /obj/item/clothing/head/helmet/space/hardsuit/ert/med
-	desc = "Standard issue medical helmet for the ERT"
+	desc = "Standard issue medical helmet for the ERT."
 	icon_state = "hardsuit0-ert_medical"
 	item_state = "hardsuit0-ert_medical"
 	item_color = "ert_medical"
@@ -168,3 +169,20 @@
 	desc = "Standard issue medical suit for the ERT."
 	icon_state = "ert_medical"
 	item_state = "ert_medical"
+
+/obj/item/clothing/suit/space/eva
+	name = "EVA suit"
+	icon_state = "space"
+	item_state = "s_suit"
+	desc = "A lightweight space suit with the basic ability to protect the wearer from the vacuum of space during emergencies."
+	slowdown = 1
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20)
+
+/obj/item/clothing/head/helmet/space/eva
+	name = "EVA helmet"
+	icon_state = "space"
+	item_state = "space"
+	desc = "A lightweight space helmet with the basic ability to protect the wearer from the vacuum of space during emergencies."
+	flash_protect = 0
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20)

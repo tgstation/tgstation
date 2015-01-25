@@ -198,7 +198,6 @@
 /obj/effect/landmark/corpse/engineer/rig
 	corpsesuit = /obj/item/clothing/suit/space/hardsuit
 	corpsemask = /obj/item/clothing/mask/breath
-	corpsehelmet = /obj/item/clothing/head/helmet/space/hardsuit
 
 /obj/effect/landmark/corpse/clown
 	name = "Clown"
@@ -236,7 +235,6 @@
 /obj/effect/landmark/corpse/miner/rig
 	corpsesuit = /obj/item/clothing/suit/space/hardsuit/mining
 	corpsemask = /obj/item/clothing/mask/breath
-	corpsehelmet = /obj/item/clothing/head/helmet/space/hardsuit/mining
 
 
 /////////////////Officers//////////////////////
