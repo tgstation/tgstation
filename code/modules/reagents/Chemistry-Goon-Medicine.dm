@@ -25,8 +25,7 @@ datum/reagent/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob, var/meth
 
 datum/reagent/silver_sulfadiazine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	if(prob(55))
-		M.adjustFireLoss(-2*REM)
+	M.adjustFireLoss(-2*REM)
 	..()
 	return
 
@@ -51,8 +50,7 @@ datum/reagent/styptic_powder/reaction_mob(var/mob/living/M as mob, var/method=TO
 
 datum/reagent/styptic_powder/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	if(prob(55))
-		M.adjustBruteLoss(-2*REM)
+	M.adjustBruteLoss(-8*REM)
 	..()
 	return
 
@@ -81,8 +79,8 @@ datum/reagent/synthflesh
 datum/reagent/synthflesh/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 	if(!M) M = holder.my_atom
 	if(method == TOUCH)
-		M.adjustBruteLoss(-(1*volume)*REM)
-		M.adjustFireLoss(-(1*volume)*REM)
+		M.adjustBruteLoss(-0.5*volume*REM)
+		M.adjustFireLoss(-0.5*volume*REM)
 		M << "<span class='notice'>You feel your burns healing and your flesh knitting together!</span>"
 	..()
 	return
