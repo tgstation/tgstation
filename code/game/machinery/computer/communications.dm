@@ -244,7 +244,7 @@ var/shuttle_call/shuttle_calls[0]
 
 	return 1
 
-/obj/machinery/computer/communcations/emag(mob/user as mob)
+/obj/machinery/computer/communications/emag(mob/user as mob)
 	src.emagged = 1
 	user << "You scramble the communication routing circuits!"
 

@@ -67,6 +67,7 @@
 	var/list/overlays_vending[2]//1 is the panel layer, 2 is the dangermode layer
 
 	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY
+	languages = HUMAN
 
 	var/obj/machinery/account_database/linked_db
 	var/datum/money_account/linked_account
