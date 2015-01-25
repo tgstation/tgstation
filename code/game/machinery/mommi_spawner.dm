@@ -124,9 +124,6 @@
 	if(!M)	return
 
 	M.invisibility = 0
-	//M.custom_name = created_name
-	M.Namepick()
-	M.updatename()
 
 	if(user.mind)		//TODO
 		user.mind.transfer_to(M)
@@ -149,8 +146,8 @@
 
 	M.mmi = new /obj/item/device/mmi(M)
 	M.mmi.transfer_identity(user)//Does not transfer key/client.
-
 	M.Namepick()
+	M.updatename()
 
 	del(user)
 
