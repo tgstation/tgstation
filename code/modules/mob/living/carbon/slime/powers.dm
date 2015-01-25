@@ -227,3 +227,15 @@
 			src << "<i>I am not ready to reproduce yet...</i>"
 	else
 		src << "<i>I am not old enough to reproduce yet...</i>"
+
+/mob/living/carbon/slime/verb/SetSlimeName()
+	set name = "Set Name"
+	set category = "Slime"
+	set desc = "This will change your name."
+
+	var/OldSlimeName = name
+	var/NewSlimeName = copytext(sanitize(input(usr, "Put your gooey title here.", "Pick a name!", OldSlimeName)),1,MAX_NAME_LEN)
+
+	if (length(NewSlimeName) == 0)
+		NewSlimeName = OldSlimeName
+	name = NewSlimeName
