@@ -227,6 +227,8 @@
 			KZ.mutations |= mutations
 	mutations = list()
 	SetOpacity(0)
+	if(buckled_mob)
+		unbuckle()
 	..()
 
 /obj/effect/spacevine/proc/on_chem_effect(datum/reagent/R)
