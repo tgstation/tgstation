@@ -426,10 +426,10 @@
 		else if(href_list["createpatch"])
 			if(reagents.total_volume == 0) return
 			var/amount = 1
-			var/vol_each = min(reagents.total_volume, 50)
+			var/vol_each = min(reagents.total_volume, 40)
 			if(text2num(href_list["many"]))
 				amount = min(max(round(input(usr, "Amount:", "How many patches?") as num), 1), 10)
-				vol_each = min(reagents.total_volume/amount, 50)
+				vol_each = min(reagents.total_volume/amount, 40)
 			var/name = reject_bad_text(input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)"))
 			var/obj/item/weapon/reagent_containers/pill/P
 
