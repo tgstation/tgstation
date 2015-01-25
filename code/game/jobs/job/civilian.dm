@@ -209,7 +209,7 @@ Janitor
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
-	var/global/lawyers = 1
+	var/global/janitors = 1
 
 	default_pda = /obj/item/device/pda/janitor
 	default_headset = /obj/item/device/radio/headset/headset_srv
@@ -218,10 +218,10 @@ Janitor
 	minimal_access = list(access_janitor, access_maint_tunnels)
 
 /datum/job/janitor/equip_items(var/mob/living/carbon/human/H)
-	lawyers += 1
+	janitors += 1
 
 	if(H.backbag != 1)
-		switch(lawyers)
+		switch(janitors)
 			if(1)
 				H.equip_to_slot_or_del(new /obj/item/key/janitor(H), slot_in_backpack)
 			else
