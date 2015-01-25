@@ -15,8 +15,8 @@ Bartender
 	default_pda = /obj/item/device/pda/bar
 	default_headset = /obj/item/device/radio/headset/headset_srv
 
-	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue, access_mineral_storeroom, access_weapons)
-	minimal_access = list(access_bar, access_mineral_storeroom)
+	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue, access_weapons)
+	minimal_access = list(access_bar)
 
 /datum/job/bartender/equip_backpack(var/mob/living/carbon/human/H)
 	switch(H.backbag)
@@ -67,7 +67,7 @@ Cook
 	default_pda = /obj/item/device/pda/cook
 	default_headset = /obj/item/device/radio/headset/headset_srv
 
-	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue, access_mineral_storeroom)
+	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue)
 	minimal_access = list(access_kitchen, access_morgue)
 
 /datum/job/cook/equip_items(var/mob/living/carbon/human/H)
@@ -100,7 +100,7 @@ Botanist
 	default_pda = /obj/item/device/pda/botanist
 	default_headset = /obj/item/device/radio/headset/headset_srv
 
-	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue, access_mineral_storeroom) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
+	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
 	minimal_access = list(access_hydroponics, access_morgue) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
 
 /datum/job/hydro/equip_items(var/mob/living/carbon/human/H)
