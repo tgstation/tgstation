@@ -13,6 +13,7 @@
 	idle_power_usage = 20
 	active_power_usage = 5000
 	var/recharge_time=600 // 60s
+	var/locked_to_zlevel = 0 // Whether to lock the spawned MoMMIs to the z-level
 
 /obj/machinery/mommi_spawner/power_change()
 	if (powered())
@@ -120,10 +121,16 @@
 		return TRUE
 
 /obj/machinery/mommi_spawner/proc/makeMoMMI(var/mob/user)
-	var/mob/living/silicon/robot/mommi/M = new /mob/living/silicon/robot/mommi(get_turf(loc))
+	var/turf/T = get_turf(src)
+
+	var/mob/living/silicon/robot/mommi/M = new /mob/living/silicon/robot/mommi(T)
 	if(!M)	return
 
 	M.invisibility = 0
+
+	if (locked_to_zlevel)
+		M.add_ion_law("You belong to the station where you were created; do not leave it.")
+		M.locked_to_z = T.z
 
 	if(user.mind)		//TODO
 		user.mind.transfer_to(M)
@@ -135,10 +142,6 @@
 		M.key = user.key
 
 	M.job = "Mobile MMI"
-
-	if(M.z==4) // Derelict Z-level?
-		M.add_ion_law("The Derelict is your station.  Do not leave the Derelict.")
-		M.locked_to_z=4
 
 	//M.cell = locate(/obj/item/weapon/cell) in contents
 	//M.cell.loc = M

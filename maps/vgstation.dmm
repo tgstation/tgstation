@@ -8906,7 +8906,7 @@
 "dpu" = (/obj/machinery/door/airlock/external{name = "Air Bridge Access"},/turf/simulated/floor/plating,/area/derelict/solar_control)
 "dpv" = (/turf/simulated/floor/plating,/area/derelict/solar_control)
 "dpw" = (/obj/item/taperoll/engineering,/turf/simulated/floor,/area/derelict/solar_control)
-"dpx" = (/obj/machinery/mommi_spawner,/turf/simulated/floor,/area/derelict/solar_control)
+"dpx" = (/obj/machinery/mommi_spawner{locked_to_zlevel = 1},/turf/simulated/floor,/area/derelict/solar_control)
 "dpy" = (/obj/machinery/light/small{dir = 8},/turf/simulated/floor/plating/airless,/area/derelict/solar_control)
 "dpz" = (/obj/item/taperoll/engineering,/turf/simulated/floor/plating/airless,/area/derelict/solar_control)
 "dpA" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor/plating/airless,/area/derelict/solar_control)
