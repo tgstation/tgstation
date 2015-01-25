@@ -18,7 +18,7 @@ Assistant
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/color/random(H), slot_w_uniform)
 
 /datum/job/assistant/get_access()
-	if(config.jobs_have_maint_access & ASSISTANTS_HAVE_MAINT_ACCESS) //Config has assistant maint access set
+	if((config.jobs_have_maint_access & ASSISTANTS_HAVE_MAINT_ACCESS) || !config.jobs_have_minimal_access) //Config has assistant maint access set
 		. = ..()
 		. |= list(access_maint_tunnels)
 	else

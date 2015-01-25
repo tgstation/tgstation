@@ -165,6 +165,8 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	var/allow_comments = 1
 	luminosity = 0
 	anchored = 1
+	var/const/articlefont = "Verdana"
+	var/const/signfont = "Times New Roman"
 
 
 /obj/machinery/newscaster/security_unit                   //Security unit
@@ -303,7 +305,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="Creating new Feed Message..."
 				dat+="<HR><B><A href='?src=\ref[src];set_channel_receiving=1'>Receiving Channel</A>:</B> [src.channel_name]<BR>" //MARK
 				dat+="<B>Message Author:</B> <FONT COLOR='green'>[src.scanned_user]</FONT><BR>"
-				dat+="<B><A href='?src=\ref[src];set_new_message=1'>Message Body</A>:</B> [src.msg] <BR>"
+				dat+="<B><A href='?src=\ref[src];set_new_message=1'>Message Body</A>:</B> <BR><font face=\"[articlefont]\">[parsepencode(src.msg, user)]</font><BR>"
 				dat+="<B><A href='?src=\ref[src];set_attachment=1'>Attach Photo</A>:</B>  [(src.photo ? "Photo Attached" : "No Photo")]</BR>"
 				dat+="<B><A href='?src=\ref[src];set_comment=1'>Comments [allow_comments ? "Enabled" : "Disabled"]</A></B><BR>"
 				dat+="<BR><A href='?src=\ref[src];submit_new_message=1'>Submit</A><BR><BR><A href='?src=\ref[src];setScreen=[0]'>Cancel</A><BR>"
@@ -565,8 +567,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.updateUsrDialog()
 
 		else if(href_list["set_new_message"])
-			src.msg = trim(stripped_input(usr, "Write your Feed story", "Network Channel Handler"))
-			src.updateUsrDialog()
+			var/temp_message = trim(stripped_multiline_input(usr, "Write your Feed story", "Network Channel Handler", src.msg))
+			if(temp_message)
+				src.msg = temp_message
+				src.updateUsrDialog()
 
 		else if(href_list["set_attachment"])
 			AttachPhoto(usr)
@@ -576,9 +580,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			if(src.msg =="" || src.msg=="\[REDACTED\]" || src.scanned_user == "Unknown" || src.channel_name == "" )
 				src.screen=6
 			else
-				news_network.SubmitArticle(msg, scanned_user, channel_name, photo, allow_comments)
+				news_network.SubmitArticle("<font face=\"[articlefont]\">[parsepencode(src.msg, usr)]</font>", scanned_user, channel_name, photo, allow_comments)
 				feedback_inc("newscaster_stories",1)
 				src.screen=4
+				src.msg = ""
 			src.updateUsrDialog()
 
 		else if(href_list["create_channel"])
@@ -871,6 +876,34 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		P.sillynewscastervar = 1
 		photo = P
 		qdel(P)
+
+
+/obj/machinery/newscaster/proc/parsepencode(t, mob/user)
+	if(length(t) < 1)		//No input means nothing needs to be parsed
+		return
+
+	t = replacetext(t, "\[center\]", "<center>")
+	t = replacetext(t, "\[/center\]", "</center>")
+	t = replacetext(t, "\[br\]", "<BR>")
+	t = replacetext(t, "\[b\]", "<B>")
+	t = replacetext(t, "\[/b\]", "</B>")
+	t = replacetext(t, "\[i\]", "<I>")
+	t = replacetext(t, "\[/i\]", "</I>")
+	t = replacetext(t, "\[u\]", "<U>")
+	t = replacetext(t, "\[/u\]", "</U>")
+	t = replacetext(t, "\[large\]", "<font size=\"4\">")
+	t = replacetext(t, "\[/large\]", "</font>")
+	t = replacetext(t, "\[sign\]", "<font face=\"[signfont]\"><i>[user.real_name]</i></font>")
+	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
+
+	t = replacetext(t, "\[*\]", "<li>")
+	t = replacetext(t, "\[hr\]", "<HR>")
+	t = replacetext(t, "\[small\]", "<font size = \"1\">")
+	t = replacetext(t, "\[/small\]", "</font>")
+	t = replacetext(t, "\[list\]", "<ul>")
+	t = replacetext(t, "\[/list\]", "</ul>")
+
+	return t
 
 
 //########################################################################################################################

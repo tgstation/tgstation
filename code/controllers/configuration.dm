@@ -47,8 +47,9 @@
 	var/kick_inactive = 0				//force disconnect for inactive players
 	var/load_jobs_from_txt = 0
 	var/automute_on = 0					//enables automuting/spam prevention
+	var/minimal_access_threshold = 0	//If the number of players is larger than this threshold, minimal access will be turned on.
 	var/jobs_have_minimal_access = 0	//determines whether jobs use minimal access or expanded access.
-	var/jobs_have_maint_access = 0 		//Who gets maint access?  See defines above
+	var/jobs_have_maint_access = 0 		//Who gets maint access?  See defines above.
 	var/sec_start_brig = 0				//makes sec start in brig or dept sec posts
 
 	var/server
@@ -395,6 +396,8 @@
 					config.allow_latejoin_antagonists	= 1
 				if("allow_random_events")
 					config.allow_random_events		= 1
+				if("minimal_access_threshold")
+					config.minimal_access_threshold	= text2num(value)
 				if("jobs_have_minimal_access")
 					config.jobs_have_minimal_access	= 1
 				if("humans_need_surnames")

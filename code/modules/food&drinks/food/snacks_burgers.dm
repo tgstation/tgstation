@@ -31,14 +31,14 @@
 	name = "roburger"
 	desc = "The lettuce is the only organic component. Beep."
 	icon_state = "roburger"
-	list_reagents = list("nutriment" = 6, "nanites" = 2, "vitamin" = 5)
+	list_reagents = list("nutriment" = 6, "nanomachines" = 2, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/roburgerbig
 	name = "roburger"
 	desc = "This massive patty looks like poison. Beep."
 	icon_state = "roburger"
 	volume = 120
-	list_reagents = list("nutriment" = 20, "nanites" = 80, "vitamin" = 20)
+	list_reagents = list("nutriment" = 20, "nanomachines" = 80, "vitamin" = 20)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/xeno
 	name = "xenoburger"

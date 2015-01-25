@@ -15,8 +15,8 @@ Bartender
 	default_pda = /obj/item/device/pda/bar
 	default_headset = /obj/item/device/radio/headset/headset_srv
 
-	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue, access_mineral_storeroom, access_weapons)
-	minimal_access = list(access_bar, access_mineral_storeroom)
+	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue, access_weapons)
+	minimal_access = list(access_bar)
 
 /datum/job/bartender/equip_backpack(var/mob/living/carbon/human/H)
 	switch(H.backbag)
@@ -127,7 +127,7 @@ Clown
 	default_pda = /obj/item/device/pda/clown
 	default_backpack = /obj/item/weapon/storage/backpack/clown
 
-	access = list(access_theatre, access_maint_tunnels)
+	access = list(access_theatre)
 	minimal_access = list(access_theatre)
 
 /datum/job/clown/equip_backpack(var/mob/living/carbon/human/H)
@@ -169,7 +169,7 @@ Mime
 	default_pda = /obj/item/device/pda/mime
 	default_backpack = /obj/item/weapon/storage/backpack/mime
 
-	access = list(access_theatre, access_maint_tunnels)
+	access = list(access_theatre)
 	minimal_access = list(access_theatre)
 
 /datum/job/mime/equip_backpack(var/mob/living/carbon/human/H)
@@ -236,7 +236,7 @@ Librarian
 
 	default_pda = /obj/item/device/pda/librarian
 
-	access = list(access_library, access_maint_tunnels)
+	access = list(access_library)
 	minimal_access = list(access_library)
 
 /datum/job/librarian/equip_items(var/mob/living/carbon/human/H)
@@ -264,7 +264,7 @@ Lawyer
 	default_pda = /obj/item/device/pda/lawyer
 	default_headset = /obj/item/device/radio/headset/headset_sec
 
-	access = list(access_lawyer, access_court, access_sec_doors, access_maint_tunnels)
+	access = list(access_lawyer, access_court, access_sec_doors)
 	minimal_access = list(access_lawyer, access_court, access_sec_doors)
 
 /datum/job/lawyer/equip_items(var/mob/living/carbon/human/H)

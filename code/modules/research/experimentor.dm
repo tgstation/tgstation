@@ -6,12 +6,13 @@
 #define SCANTYPE_HEAT 4
 #define SCANTYPE_COLD 5
 #define SCANTYPE_OBLITERATE 6
+#define SCANTYPE_DISCOVER 7
 
-#define EFFECT_PROB_VERYLOW 10
-#define EFFECT_PROB_LOW 20
-#define EFFECT_PROB_MEDIUM 45
-#define EFFECT_PROB_HIGH 65
-#define EFFECT_PROB_VERYHIGH 85
+#define EFFECT_PROB_VERYLOW 20
+#define EFFECT_PROB_LOW 35
+#define EFFECT_PROB_MEDIUM 50
+#define EFFECT_PROB_HIGH 75
+#define EFFECT_PROB_VERYHIGH 95
 
 #define FAIL 7
 /obj/machinery/r_n_d/experimentor
@@ -63,7 +64,10 @@
 /obj/machinery/r_n_d/experimentor/proc/SetTypeReactions()
 	var/probWeight = 0
 	for(var/I in typesof(/obj/item))
-		item_reactions["[I]"] = pick(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
+		if(istype(I,/obj/item/weapon/relic))
+			item_reactions["[I]"] = SCANTYPE_DISCOVER
+		else
+			item_reactions["[I]"] = pick(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
 		if(ispath(I,/obj/item/weapon/stock_parts) || ispath(I,/obj/item/weapon/grenade/chem_grenade) || ispath(I,/obj/item/weapon/kitchen))
 			var/obj/item/tempCheck = new I()
 			if(tempCheck.icon_state != null) //check it's an actual usable item, in a hacky way
@@ -186,6 +190,8 @@
 			dat += "<br><b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_HEAT]'>Burn</A></b>"
 			dat += "<br><b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_COLD]'>Freeze</A></b>"
 			dat += "<br><b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_OBLITERATE]'>Destroy</A></b><br>"
+			if(istype(loaded_item,/obj/item/weapon/relic))
+				dat += "<br><b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_DISCOVER]'>Discover</A></b><br>"
 			dat += "<br><b><a href='byond://?src=\ref[src];function=eject'>Eject</A>"
 	else
 		dat += "<b>Nothing loaded.</b>"
@@ -215,11 +221,11 @@
 	if(loaded_item)
 		if(cloneMode && cloneCount > 0)
 			visible_message("<span class='notice'>A duplicate [loaded_item] pops out!</span>")
-			new loaded_item(pick(oview(1,src)))
+			new loaded_item(get_turf(pick(oview(1,src))))
 			--cloneCount
 			if(cloneCount == 0)
 				cloneMode = FALSE
-		loaded_item.loc = pick(oview(1,src))
+		loaded_item.loc = get_turf(pick(oview(1,src)))
 		if(delete)
 			qdel(loaded_item)
 		loaded_item = null
@@ -242,13 +248,6 @@
 		else
 			counter = 1
 
-/*
-#define EFFECT_PROB_VERYLOW 10
-#define EFFECT_PROB_LOW 20
-#define EFFECT_PROB_MEDIUM 45
-#define EFFECT_PROB_HIGH 65
-#define EFFECT_PROB_VERYHIGH 85
-*/
 /obj/machinery/r_n_d/experimentor/proc/experiment(var/exp,var/obj/item/exp_on)
 	recentlyExperimented = 1
 	icon_state = "h_lathe_wloop"
@@ -264,10 +263,10 @@
 			for(var/mob/living/m in oview(1))
 				m.apply_damage(15,"brute",pick("head","chest","groin"))
 			ejectItem(TRUE)
-		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
+		if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='notice'>[src] malfunctions!.</span>")
 			exp = SCANTYPE_OBLITERATE
-		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
+		if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			visible_message("<span class='notice'>[src] malfunctions, throwing the [exp_on]!.</span>")
 			var/mob/living/target = locate(/mob/living) in oview(7,src)
 			if(target)
@@ -287,13 +286,13 @@
 			for(var/mob/living/m in oview(1))
 				m.apply_effect(25,IRRADIATE)
 			ejectItem(TRUE)
-		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
+		if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='notice'>[src] malfunctions, spewing toxic waste!.</span>")
 			for(var/turf/T in oview(1))
 				if(!T.density)
 					if(prob(EFFECT_PROB_VERYHIGH))
 						new /obj/effect/decal/cleanable/greenglow(T)
-		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
+		if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			var/savedName = "[exp_on]"
 			ejectItem(TRUE)
 			var/newPath = pickWeighted(valid_items)
@@ -308,7 +307,7 @@
 		visible_message("<span class='notice'>[src] fills it's chamber with gas, [exp_on] included.</span>")
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message("<span class='notice'>[exp_on] achieves the perfect mix!</span>")
-			new /obj/item/stack/sheet/mineral/plasma(pick(oview(1,src)))
+			new /obj/item/stack/sheet/mineral/plasma(get_turf(pick(oview(1,src))))
 		if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='notice'>[src] destroys [exp_on], leaking dangerous gas!.</span>")
 			var/list/chems = list("carbon","radium","toxin","condensedcapsaicin","mushroomhallucinogen","space_drugs","ethanol","beepskysmash")
@@ -321,10 +320,22 @@
 			smoke.start()
 			R.delete()
 			ejectItem(TRUE)
-		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
+		if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
+			visible_message("<span class='notice'>[src]'s chemical chamber has sprung a leak!.</span>")
+			var/list/chems = list("mutationtoxin","amutationtoxin","nanites","xenomicrobes")
+			var/datum/reagents/R = new/datum/reagents(50)
+			R.my_atom = src
+			R.add_reagent(pick(chems), 50)
+			var/datum/effect/effect/system/chem_smoke_spread/smoke = new
+			smoke.set_up(R, 1, 0, src, 0, silent = 1)
+			playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
+			smoke.start()
+			R.delete()
+			ejectItem(TRUE)
+		if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='notice'>[src] malfunctions, spewing harmless gas!.</span>")
 			throwSmoke(src.loc)
-		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
+		if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			visible_message("<span class='notice'>[src] melts [exp_on], ionizing the air around it!.</span>")
 			empulse(src.loc, 8, 10)
 			ejectItem(TRUE)
@@ -332,18 +343,21 @@
 	if(exp == SCANTYPE_HEAT)
 		visible_message("<span class='notice'>[src] raises [exp_on]'s temperature.</span>")
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
-			visible_message("<span class='notice'>[src]'s emergency coolant system gives off a small beep!</span>")
-			var/obj/item/weapon/reagent_containers/food/drinks/coffee/C = new /obj/item/weapon/reagent_containers/food/drinks/coffee(pick(oview(1,src)))
+			visible_message("<span class='danger'>[src]'s emergency coolant system gives off a small beep!</span>")
+			var/obj/item/weapon/reagent_containers/food/drinks/coffee/C = new /obj/item/weapon/reagent_containers/food/drinks/coffee(get_turf(pick(oview(1,src))))
 			var/list/chems = list("plasma","capsaicin","ethanol")
 			C.reagents.remove_any(25)
 			C.reagents.add_reagent(pick(chems),25)
 			C.name = "Cup of Suspicious Liquid"
 			C.desc = "It has a large hazard symbol printed on the side in fading ink."
 		if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
+			visible_message("<span class='danger'>[src] activates it's heat-seeking system!</span>")
+			new/datum/round_event/meteor_wave()
+		if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='notice'>[src] malfunctions, melting [exp_on] and releasing a burst of flame!.</span>")
 			explosion(src.loc, -1, 0, 0, 0, 0, flame_range = 2)
 			ejectItem(TRUE)
-		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
+		if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			visible_message("<span class='notice'>[src] malfunctions, melting [exp_on] and leaking hot air!.</span>")
 			var/datum/gas_mixture/env = src.loc.return_air()
 			var/transfer_moles = 0.25 * env.total_moles()
@@ -356,7 +370,7 @@
 			env.merge(removed)
 			air_update_turf()
 			ejectItem(TRUE)
-		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
+		if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			visible_message("<span class='notice'>[src] malfunctions, activating it's emergency coolant systems!.</span>")
 			throwSmoke(src.loc)
 			for(var/mob/living/m in oview(1))
@@ -367,7 +381,7 @@
 		visible_message("<span class='notice'>[src] lowers [exp_on]'s temperature.</span>")
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message("<span class='notice'>[src]'s emergency coolant system gives off a small ping!</span>")
-			var/obj/machinery/vending/coffee/C = new /obj/machinery/vending/coffee(pick(oview(1,src)))
+			var/obj/machinery/vending/coffee/C = new /obj/machinery/vending/coffee(get_turf(pick(oview(1,src))))
 			var/list/chems = list("uranium","frostoil","hyperzine")
 			C.reagents.remove_any(25)
 			C.reagents.add_reagent(pick(chems),25)
@@ -384,7 +398,7 @@
 			smoke.start()
 			R.delete()
 			ejectItem(TRUE)
-		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
+		if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='notice'>[src] malfunctions, shattering [exp_on] and leaking cold air!.</span>")
 			var/datum/gas_mixture/env = src.loc.return_air()
 			var/transfer_moles = 0.25 * env.total_moles()
@@ -397,7 +411,7 @@
 			env.merge(removed)
 			air_update_turf()
 			ejectItem(TRUE)
-		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
+		if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			visible_message("<span class='notice'>[src] malfunctions, releasing a flurry of chilly air as [exp_on] pops out!.</span>")
 			var/datum/effect/effect/system/harmless_smoke_spread/smoke = new
 			smoke.set_up(1,0, src.loc, 0)
@@ -408,7 +422,7 @@
 		visible_message("<span class='notice'>[exp_on] activates the crushing mechanism, [exp_on] is destroyed!</span>")
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message("<span class='notice'>[src]'s crushing mechanism slowly and smoothly descends, flattening the [exp_on]!</span>")
-			new /obj/item/stack/sheet/plasteel(pick(oview(1,src)))
+			new /obj/item/stack/sheet/plasteel(get_turf(pick(oview(1,src))))
 		if(linked_console.linked_lathe)
 			linked_console.linked_lathe.m_amount += min((linked_console.linked_lathe.max_material_storage - linked_console.linked_lathe.TotalMaterials()), (exp_on.m_amt))
 			linked_console.linked_lathe.g_amount += min((linked_console.linked_lathe.max_material_storage - linked_console.linked_lathe.TotalMaterials()), (exp_on.g_amt))
@@ -423,7 +437,7 @@
 			for(counter = 1, counter < throwAt.len, ++counter)
 				var/cast = throwAt[counter]
 				cast:throw_at(src,10,1)
-		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
+		if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='notice'>[src]'s crusher goes one level too high, crushing right into space-time!.</span>")
 			playsound(src.loc, 'sound/effects/supermatter.ogg', 50, 1, -3)
 			var/list/oViewStuff = oview(7,src)
@@ -442,6 +456,12 @@
 		var/b = pick("crushes","spins","viscerates","smashes","insults")
 		visible_message("<span class='notice'>[exp_on] [a], and [b], the experiment was a failiure!</span>")
 
+	if(exp == SCANTYPE_DISCOVER)
+		visible_message("<span class='notice'>[src] scans the [exp_on], revealing it's true nature!.</span>")
+		playsound(src.loc, 'sound/effects/supermatter.ogg', 50, 3, -1)
+		var/obj/item/weapon/relic/R = loaded_item
+		R.reveal()
+		ejectItem()
 
 	//Global reactions
 	if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
@@ -535,3 +555,109 @@
 #undef EFFECT_PROB_VERYHIGH
 
 #undef FAIL
+
+
+//////////////////////////////////SPECIAL ITEMS////////////////////////////////////////
+
+/obj/item/weapon/relic
+	name = "strange object"
+	desc = "What mysteries could this hold?"
+	icon = 'icons/obj/assemblies.dmi'
+	origin_tech = "combat=1;plasmatech=1;powerstorage=1;materials=1"
+	var/realName = "defined object"
+	var/revealed = FALSE
+	var/realProc
+	var/cooldownMax = 60
+	var/cooldown
+
+/obj/item/weapon/relic/New()
+	icon_state = pick("shock_kit","armor-igniter-analyzer","infra-igniter0","infra-igniter1","radio-multitool","prox-radio1","radio-radio","timer-multitool0","radio-igniter-tank")
+	realName = "[pick("broken","twisted","spun","improved","silly","regular","badly made")] [pick("device","object","toy","illegal tech","weapon")]"
+
+
+/obj/item/weapon/relic/proc/reveal()
+	revealed = TRUE
+	name = realName
+	cooldownMax = rand(60,300)
+	realProc = pick("teleport","explode","rapidDupe","petSpray","flash","clean","corgicannon")
+
+/obj/item/weapon/relic/attack_self(mob/user as mob)
+	if(revealed)
+		if(cooldown)
+			user << "<span class='notice'>[src] does not react.</span>"
+			return
+		else if(src.loc == user)
+			call(src,realProc)(user)
+			cooldown = TRUE
+			spawn(cooldownMax)
+				cooldown = FALSE
+	else
+		user << "<span class='notice'>You aren't quite sure what to do with this, yet.</span>"
+
+//////////////// RELIC PROCS /////////////////////////////
+
+/obj/item/weapon/relic/proc/throwSmoke(var/turf/where)
+	var/datum/effect/effect/system/harmless_smoke_spread/smoke = new
+	smoke.set_up(1,0, where, 0)
+	smoke.start()
+
+/obj/item/weapon/relic/proc/corgicannon(var/mob/user)
+	playsound(src.loc, "sparks", rand(25,50), 1)
+	var/mob/living/simple_animal/corgi/C = new/mob/living/simple_animal/corgi(get_turf(user))
+	C.throw_at(pick(oview(10,user)),10,rand(3,8))
+	throwSmoke(get_turf(C))
+
+/obj/item/weapon/relic/proc/clean(var/mob/user)
+	playsound(src.loc, "sparks", rand(25,50), 1)
+	var/obj/item/weapon/grenade/chem_grenade/cleaner/CL = new/obj/item/weapon/grenade/chem_grenade/cleaner(get_turf(user))
+	CL.prime()
+
+/obj/item/weapon/relic/proc/flash(var/mob/user)
+	playsound(src.loc, "sparks", rand(25,50), 1)
+	var/obj/item/weapon/grenade/flashbang/CB = new/obj/item/weapon/grenade/flashbang(get_turf(user))
+	CB.prime()
+
+/obj/item/weapon/relic/proc/petSpray(var/mob/user)
+	visible_message("<span class='notice'>[src] begans to shake, and in the distance the sound of rampaging animals arises!</span>")
+	var/animals = rand(1,25)
+	var/counter
+	var/list/valid_animals = list(/mob/living/simple_animal/parrot,/mob/living/simple_animal/butterfly,/mob/living/simple_animal/cat,/mob/living/simple_animal/corgi,/mob/living/simple_animal/crab,/mob/living/simple_animal/fox,/mob/living/simple_animal/lizard,/mob/living/simple_animal/mouse,/mob/living/simple_animal/pug,/mob/living/simple_animal/hostile/bear,/mob/living/simple_animal/hostile/poison/bees,/mob/living/simple_animal/hostile/carp)
+	for(counter = 1; counter < animals; counter++)
+		var/mobType = pick(valid_animals)
+		new mobType(get_turf(src))
+
+/obj/item/weapon/relic/proc/rapidDupe(var/mob/user)
+	visible_message("<span class='notice'>[src] emits a loud pop!</span>")
+	var/list/dupes = list()
+	var/counter
+	var/max = rand(5,45)
+	for(counter = 1; counter < max; counter++)
+		var/obj/item/weapon/relic/R = new src.type(get_turf(src))
+		R.name = name
+		R.desc = desc
+		R.realName = realName
+		R.realProc = realProc
+		R.revealed = TRUE
+		dupes |= R
+		R.throw_at(pick(oview(7,src)),10,1)
+	counter = 0
+	spawn(rand(10,100))
+		for(counter = 1; counter < dupes.len; counter++)
+			var/obj/item/weapon/relic/R = dupes[counter]
+			qdel(R)
+
+/obj/item/weapon/relic/proc/explode(var/mob/user)
+	visible_message("<span class='notice'>[src] begins to heat up!</span>")
+	spawn(rand(35,100))
+		if(src.loc == user)
+			visible_message("<span class='notice'>The [src]'s top opens, releasing a powerful blast!</span>")
+			explosion(user.loc, -1, rand(1,5), rand(1,5), rand(1,5), rand(1,5), flame_range = 2)
+
+/obj/item/weapon/relic/proc/teleport(var/mob/user)
+	visible_message("<span class='notice'>The [src] begins to vibrate!</span>")
+	spawn(rand(10,30))
+		if(src.loc == user)
+			visible_message("<span class='notice'>The [src] twists and bends, relocating itself!</span>")
+			throwSmoke(get_turf(user))
+			do_teleport(user, get_turf(user), 8, asoundin = 'sound/effects/phasein.ogg')
+			throwSmoke(get_turf(user))

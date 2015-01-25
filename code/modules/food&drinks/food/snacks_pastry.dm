@@ -25,7 +25,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/donut/chaos/New()
 	..()
 	extra_reagent = pick("nutriment", "capsaicin", "frostoil", "krokodil", "plasma", "coco", "slimejelly", "banana", "berryjuice", "omnizine")
-	reagents.add_reagent("[extra_reagent]" = 3)
+	reagents.add_reagent("[extra_reagent]", 3)
 	if(prob(30))
 		icon_state = "donut2"
 		name = "frosted chaos donut"
@@ -40,7 +40,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/jelly/New()
 	..()
-	reagents.add_reagent("[extra_reagent]" = 5)
+	reagents.add_reagent("[extra_reagent]", 5)
 	if(prob(30))
 		icon_state = "jdonut2"
 		name = "frosted jelly Donut"
