@@ -322,7 +322,7 @@
 			ejectItem(TRUE)
 		if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='notice'>[src]'s chemical chamber has sprung a leak!.</span>")
-			var/list/chems = list("mutationtoxin","amutationtoxin","nanites","xenomicrobes")
+			var/list/chems = list("mutationtoxin","nanites","xenomicrobes")
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = src
 			R.add_reagent(pick(chems) = 50)
