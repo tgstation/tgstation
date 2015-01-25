@@ -313,7 +313,7 @@
 			var/list/chems = list("carbon","radium","toxin","condensedcapsaicin","mushroomhallucinogen","space_drugs","ethanol","beepskysmash")
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = src
-			R.add_reagent(pick(chems), 50)
+			R.add_reagent(pick(chems) = 50)
 			var/datum/effect/effect/system/chem_smoke_spread/smoke = new
 			smoke.set_up(R, 1, 0, src, 0, silent = 1)
 			playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
@@ -325,7 +325,7 @@
 			var/list/chems = list("mutationtoxin","amutationtoxin","nanites","xenomicrobes")
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = src
-			R.add_reagent(pick(chems), 50)
+			R.add_reagent(pick(chems) = 50)
 			var/datum/effect/effect/system/chem_smoke_spread/smoke = new
 			smoke.set_up(R, 1, 0, src, 0, silent = 1)
 			playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
@@ -347,7 +347,7 @@
 			var/obj/item/weapon/reagent_containers/food/drinks/coffee/C = new /obj/item/weapon/reagent_containers/food/drinks/coffee(get_turf(pick(oview(1,src))))
 			var/list/chems = list("plasma","capsaicin","ethanol")
 			C.reagents.remove_any(25)
-			C.reagents.add_reagent(pick(chems),25)
+			C.reagents.add_reagent(pick(chems) = 50)
 			C.name = "Cup of Suspicious Liquid"
 			C.desc = "It has a large hazard symbol printed on the side in fading ink."
 		if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
@@ -384,14 +384,14 @@
 			var/obj/machinery/vending/coffee/C = new /obj/machinery/vending/coffee(get_turf(pick(oview(1,src))))
 			var/list/chems = list("uranium","frostoil","ephedrine")
 			C.reagents.remove_any(25)
-			C.reagents.add_reagent(pick(chems),25)
+			C.reagents.add_reagent(pick(chems) = 50)
 			C.name = "Cup of Suspicious Liquid"
 			C.desc = "It has a large hazard symbol printed on the side in fading ink."
 		if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='notice'>[src] malfunctions, shattering [exp_on] and releasing a dangerous cloud of coolant!</span>")
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = src
-			R.add_reagent("frostoil", 50)
+			R.add_reagent("frostoil" = 50)
 			var/datum/effect/effect/system/chem_smoke_spread/smoke = new
 			smoke.set_up(R, 1, 0, src, 0, silent = 1)
 			playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
