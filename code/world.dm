@@ -63,10 +63,7 @@
 	LoadBans()
 	SetupHooks() // /vg/
 
-	load_library_db_to_cache(1)
-	spawn()
-		for(var/obj/machinery/librarycomp/L in world)
-			build_library_menu(L)
+	load_library_db_to_cache()
 
 	copy_logs() // Just copy the logs.
 	if(config && config.log_runtimes)
@@ -221,10 +218,11 @@
 				fdel(filename)
 				fcopy(vote.chosen_map, filename)
 			sleep(60)
-	spawn(0)
-		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/slugmissioncomplete.ogg')) // random end sounds!! - LastyBatsy
 
 	processScheduler.stop()
+
+	spawn(0)
+		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/slugmissioncomplete.ogg')) // random end sounds!! - LastyBatsy
 
 	for(var/client/C in clients)
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
