@@ -145,12 +145,9 @@
 		use_power = 0
 	else if(!stat && construction_state <= 3)
 		use_power = 1
+	update_state()s
 	return
 
-	if(!(stat & (BROKEN|NOPOWER)))
-		SetLuminosity(2)
-	else
-		SetLuminosity(0)
 
 
 /obj/machinery/particle_accelerator/control_box/process()
