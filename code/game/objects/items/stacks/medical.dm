@@ -86,13 +86,13 @@
 	gender = PLURAL
 	singular_name = "medical gauze"
 	icon_state = "gauze"
-	stop_bleeding = 3000 //five minutes
+	stop_bleeding = 1800 //180 seconds
 
 /obj/item/stack/medical/gauze/improvised
 	name = "improvised gauze"
 	singular_name = "improvised gauze"
 	desc = "A roll of cloth roughly cut from something that can stop bleeding, but does not heal wounds."
-	stop_bleeding = 1200 //two minutes
+	stop_bleeding = 900 //90 seconds
 
 /obj/item/stack/medical/ointment
 	name = "ointment"
