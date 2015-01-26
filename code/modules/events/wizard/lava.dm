@@ -43,7 +43,7 @@
 
 var/global/disable_rng = 0
 
-/prob()
+prob()
 	if(disable_rng)
 		return 1
 	else
