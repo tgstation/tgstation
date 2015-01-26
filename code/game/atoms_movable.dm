@@ -24,6 +24,7 @@
 	var/timeDestroyed
 
 	var/sound_override = 0 //Do we make a sound when bumping into something?
+	glide_size = 8
 
 /atom/movable/New()
 	. = ..()
