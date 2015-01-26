@@ -218,6 +218,8 @@
 
 		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user
+			if(!istype(bro.module, /obj/item/weapon/robot_module/butler))
+				return
 			var/chargeAmount = max(30,4*trans)
 			bro.cell.use(chargeAmount)
 			user << "Now synthesizing [trans] units of [refillName]..."
