@@ -166,7 +166,7 @@ MASS SPECTROMETER
 		if(H.vessel)
 			if(H.blood_max)
 				user.show_message("<span class='danger'>Subject is bleeding!</span>")
-			var/blood_volume = round(H:vessel.get_reagent_amount("blood"))
+			var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
 			var/blood_percent =  blood_volume / 560
 			var/blood_type = H.dna.blood_type
 			blood_percent *= 100

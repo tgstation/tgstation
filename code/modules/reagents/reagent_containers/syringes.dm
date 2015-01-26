@@ -155,10 +155,7 @@
 				reagents.reaction(target, INGEST)
 			spawn(5)
 				target.add_fingerprint(user)
-				var/datum/reagent/blood/B
-				for(var/datum/reagent/blood/d in src.reagents.reagent_list)
-					B = d
-					break
+				var/datum/reagent/blood/B = locate() in src.reagents.reagent_list
 				var/trans
 				if(B && istype(target,/mob/living/carbon))
 					var/mob/living/carbon/C = target
