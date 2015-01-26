@@ -208,7 +208,7 @@
 	if(isliving(A) && A != usr)
 		var/mob/living/Food = A
 		if(Food.Adjacent(usr) && !stat && Food.stat != DEAD) //messy
-			Feedon(Food) //lmao
+			Feedon(Food)
 	..()
 
 /mob/living/carbon/slime/unEquip(obj/item/W as obj)
