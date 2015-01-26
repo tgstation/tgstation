@@ -159,106 +159,96 @@
 	return round(5.5*charge/(capacity ? capacity : 5e6))
 
 /obj/machinery/power/smes/process()
+	if (stat & BROKEN)
+		return
 
-	if(stat & BROKEN)	return
+	var/_charging = charging
+	var/_online = online
 
-	//store machine state to see if we need to update the icon overlays
-	var/last_disp = chargedisplay()
-	var/last_chrg = charging
-	var/last_onln = online
-
-	// inputting
-	if(terminal)
+	// Input
+	if (terminal)
 		var/excess = terminal.surplus()
 
-		if(charging)
-			if(excess >= 0)		// if there's power available, try to charge
+		if (charging)
+			if (excess >= 0) // If there's power available, try to charge
+				var/load = min((capacity - charge) / SMESRATE, chargelevel) // Charge at set rate, limited to spare capacity
 
-				var/load = min((capacity-charge)/SMESRATE, chargelevel)		// charge at set rate, limited to spare capacity
+				charge += load * SMESRATE // Increase the charge
 
-				charge += load * SMESRATE	// increase the charge
-
-				add_load(load)		// add the load to the terminal side network
-
-			else					// if not enough capcity
-				charging = 0		// stop charging
-				chargecount  = 0
-
+				add_load(load) // Add the load to the terminal side network
+			else
+				charging = FALSE
+				chargecount = 0
 		else
-			if(chargemode)
-				if(chargecount > rand(3,6))
-					charging = 1
+			if (chargemode)
+				if (chargecount > rand(3, 6))
+					charging = TRUE
 					chargecount = 0
 
-				if(excess > chargelevel)
+				if (excess > chargelevel)
 					chargecount++
 				else
 					chargecount = 0
 			else
 				chargecount = 0
+	else
+		charging = FALSE
+		chargecount = 0
 
-	// outputting
-	if(online)
-		lastout = min( charge/SMESRATE, output)		//limit output to that stored
+	// Output
+	if (online)
+		lastout = min(charge / SMESRATE, output) // Limit output to that stored
 
-		charge -= lastout*SMESRATE		// reduce the storage (may be recovered in /restore() if excessive)
+		charge -= lastout * SMESRATE // Reduce the storage (may be recovered in /restore() if excessive)
 
-		add_avail(lastout)				// add output to powernet (smes side)
+		add_avail(lastout) // Add output to powernet (smes side)
 
-		if(charge < 0.0001)
-			online = 0					// stop output if charge falls to zero
+		if (charge < 0.0001)
+			online = FALSE
 
-	// only update icon if state changed
-	if(last_disp != chargedisplay() || last_chrg != charging || last_onln != online)
+	// Only update icon if state changed
+	if(_charging != charging || _online != online)
 		updateicon()
 
-	return
-
-// called after all power processes are finished
-// restores charge level to smes if there was excess this ptick
-
-
+/*
+ * Called after all power processes are finished
+ * Restores charge level to smes if there was excess this ptick
+ */
 /obj/machinery/power/smes/proc/restore()
-	if(stat & BROKEN)
+	if (stat & BROKEN)
 		return
 
-	if(!online)
-		loaddemand = 0
-		return
+	var/excess = powernet.netexcess // This was how much wasn't used on the network last ptick, minus any removed by other SMESes
 
-	var/excess = powernet.netexcess		// this was how much wasn't used on the network last ptick, minus any removed by other SMESes
+	excess = min(lastout, excess) // Clamp it to how much was actually output by this SMES last ptick
 
-	excess = min(lastout, excess)				// clamp it to how much was actually output by this SMES last ptick
+	excess = min((capacity - charge) / SMESRATE, excess) // For safety, also limit recharge by space capacity of SMES (shouldn't happen)
 
-	excess = min((capacity-charge)/SMESRATE, excess)	// for safety, also limit recharge by space capacity of SMES (shouldn't happen)
+	// Now recharge this amount
 
-	// now recharge this amount
+	var/_chargedisplay = chargedisplay()
 
-	var/clev = chargedisplay()
+	charge += excess * SMESRATE // Restore unused power
 
-	charge += excess * SMESRATE			// restore unused power
-	powernet.netexcess -= excess		// remove the excess from the powernet, so later SMESes don't try to use it
+	powernet.netexcess -= excess // Remove the excess from the powernet, so later SMESes don't try to use it
 
-	loaddemand = lastout-excess
+	loaddemand = lastout - excess
 
-	if(clev != chargedisplay())			// if needed updates the icons overlay
+	if(_chargedisplay != chargedisplay()) // If needed updates the icons overlay
 		updateicon()
 
 /obj/machinery/power/smes/add_load(var/amount)
 	if(terminal && terminal.powernet)
 		terminal.powernet.load += amount
 
-
 /obj/machinery/power/smes/attack_ai(mob/user)
 	src.add_hiddenprint(user)
 	add_fingerprint(user)
 	ui_interact(user)
 
-
 /obj/machinery/power/smes/attack_hand(mob/user)
 	add_fingerprint(user)
 	ui_interact(user)
-
 
 /obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 
@@ -290,7 +280,6 @@
 		ui.open()
 		// auto update every Master Controller tick
 		ui.set_auto_update(1)
-
 
 /obj/machinery/power/smes/Topic(href, href_list)
 	..()
@@ -339,7 +328,6 @@
 	investigation_log(I_SINGULO,"input/output; [chargelevel>output?"<font color='green'>":"<font color='red'>"][chargelevel]/[output]</font> | Output-mode: [online?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [chargemode?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [usr.key]")
 
 	return 1
-
 
 /obj/machinery/power/smes/proc/ion_act()
 	if(src.z == 1)
