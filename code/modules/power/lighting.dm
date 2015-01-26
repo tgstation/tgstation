@@ -240,11 +240,11 @@
 		switch(fitting)
 			if("tube")
 				brightness = 8
-				if(prob(2))
+				if(new_prob(2))
 					broken(1)
 			if("bulb")
 				brightness = 4
-				if(prob(5))
+				if(new_prob(5))
 					broken(1)
 		spawn(1)
 			update(0)
@@ -282,7 +282,7 @@
 			if(rigged)
 				if(status == LIGHT_OK && trigger)
 					explode()
-			else if( prob( min(60, switchcount*switchcount*0.01) ) )
+			else if( new_prob( min(60, switchcount*switchcount*0.01) ) )
 				if(status == LIGHT_OK && trigger)
 					status = LIGHT_BURNED
 					icon_state = "[base_state]-burned"
@@ -372,14 +372,14 @@
 		user.do_attack_animation(src)
 		if(W.damtype == STAMINA)
 			return
-		if(prob(1+W.force * 5))
+		if(new_prob(1+W.force * 5))
 
 			user.visible_message("<span class='danger'>[user.name] smashed the light!</span>", \
 								"<span class='danger'>You hit the light, and it smashes!</span>", \
 								 "You hear a tinkle of breaking glass")
 			if(on && (W.flags & CONDUCT))
 				//if(!user.mutations & COLD_RESISTANCE)
-				if (prob(12))
+				if (new_prob(12))
 					electrocute_mob(user, get_area(src), src, 0.3)
 			broken()
 
@@ -415,7 +415,7 @@
 			s.set_up(3, 1, src)
 			s.start()
 			//if(!user.mutations & COLD_RESISTANCE)
-			if (prob(75))
+			if (new_prob(75))
 				electrocute_mob(user, get_area(src), src, rand(0.7,1.0))
 
 
@@ -579,16 +579,16 @@
 	if(!gc_destroyed)
 		switch(severity)
 			if(2)
-				if(prob(50))
+				if(new_prob(50))
 					broken()
 			if(3)
-				if(prob(25))
+				if(new_prob(25))
 					broken()
 
 //blob effect
 
 /obj/machinery/light/blob_act()
-	if(prob(75))
+	if(new_prob(75))
 		broken()
 
 
@@ -602,7 +602,7 @@
 // called when on fire
 
 /obj/machinery/light/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(prob(max(0, exposed_temperature - 673)))   //0% at <400C, 100% at >500C
+	if(new_prob(max(0, exposed_temperature - 673)))   //0% at <400C, 100% at >500C
 		broken()
 
 // explode the light

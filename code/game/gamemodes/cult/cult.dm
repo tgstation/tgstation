@@ -48,7 +48,7 @@
 
 
 /datum/game_mode/cult/pre_setup()
-	if(prob(50))
+	if(new_prob(50))
 		cult_objectives += "survive"
 		cult_objectives += "sacrifice"
 	else

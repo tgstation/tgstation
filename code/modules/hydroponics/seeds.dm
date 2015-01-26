@@ -1085,7 +1085,7 @@
 	var/list/prod = ..()
 	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod/K in prod)
 		K.mutations = mutations
-		K.mutating = prob(15)
+		K.mutating = new_prob(15)
 
 /obj/item/seeds/kudzuseed/attack_self(mob/user as mob)
 	if(istype(user.loc,/turf/space))

@@ -154,15 +154,15 @@
 			A.update_icon()
 
 /obj/machinery/door/blob_act()
-	if(prob(40))
+	if(new_prob(40))
 		qdel(src)
 	return
 
 
 /obj/machinery/door/emp_act(severity)
-	if(prob(20/severity) && (istype(src,/obj/machinery/door/airlock) || istype(src,/obj/machinery/door/window)) )
+	if(new_prob(20/severity) && (istype(src,/obj/machinery/door/airlock) || istype(src,/obj/machinery/door/window)) )
 		open()
-	if(prob(40/severity))
+	if(new_prob(40/severity))
 		if(secondsElectrified == 0)
 			secondsElectrified = -1
 			spawn(300)
@@ -172,7 +172,7 @@
 
 /obj/machinery/door/ex_act(severity, target)
 	if(severity == 3)
-		if(prob(80))
+		if(new_prob(80))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(2, 1, src)
 			s.start()

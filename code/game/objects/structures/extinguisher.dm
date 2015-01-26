@@ -15,7 +15,7 @@
 			qdel(src)
 			return
 		if(2.0)
-			if(prob(50))
+			if(new_prob(50))
 				if(has_extinguisher)
 					has_extinguisher.loc = src.loc
 				qdel(src)

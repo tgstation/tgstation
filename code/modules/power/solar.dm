@@ -149,14 +149,14 @@
 	if(!gc_destroyed)
 		switch(severity)
 			if(2)
-				if(prob(50) && broken())
+				if(new_prob(50) && broken())
 					new /obj/item/weapon/shard(src.loc)
 			if(3)
-				if(prob(25) && broken())
+				if(new_prob(25) && broken())
 					new /obj/item/weapon/shard(src.loc)
 
 /obj/machinery/power/solar/blob_act()
-	if(prob(75))
+	if(new_prob(75))
 		broken()
 		src.density = 0
 
@@ -515,14 +515,14 @@
 	if(!gc_destroyed)
 		switch(severity)
 			if(2)
-				if(prob(50))
+				if(new_prob(50))
 					broken()
 			if(3)
-				if(prob(25))
+				if(new_prob(25))
 					broken()
 
 /obj/machinery/power/solar_control/blob_act()
-	if (prob(75))
+	if (new_prob(75))
 		broken()
 		src.density = 0
 

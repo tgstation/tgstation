@@ -58,18 +58,18 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 			switch(pick(1,2;75,3))
 				if(1)
 					src.ReplaceWithLattice()
-					if(prob(33)) new /obj/item/stack/sheet/metal(src)
+					if(new_prob(33)) new /obj/item/stack/sheet/metal(src)
 				if(2)
 					src.ChangeTurf(/turf/space)
 				if(3)
-					if(prob(80))
+					if(new_prob(80))
 						src.break_tile_to_plating()
 					else
 						src.break_tile()
 					src.hotspot_expose(1000,CELL_VOLUME)
-					if(prob(33)) new /obj/item/stack/sheet/metal(src)
+					if(new_prob(33)) new /obj/item/stack/sheet/metal(src)
 		if(3.0)
-			if (prob(50))
+			if (new_prob(50))
 				src.break_tile()
 				src.hotspot_expose(1000,CELL_VOLUME)
 	return
@@ -144,25 +144,25 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 
 /turf/simulated/floor/singularity_pull(S, current_size)
 	if(current_size == STAGE_THREE)
-		if(prob(30))
+		if(new_prob(30))
 			if(builtin_tile)
 				builtin_tile.loc = src
 				make_plating()
 	else if(current_size == STAGE_FOUR)
-		if(prob(50))
+		if(new_prob(50))
 			if(builtin_tile)
 				builtin_tile.loc = src
 				make_plating()
 	else if(current_size >= STAGE_FIVE)
 		if(builtin_tile)
-			if(prob(70))
+			if(new_prob(70))
 				builtin_tile.loc = src
 				make_plating()
-		else if(prob(50))
+		else if(new_prob(50))
 			ReplaceWithLattice()
 
 /turf/simulated/floor/narsie_act()
-	if(prob(20))
+	if(new_prob(20))
 		ChangeTurf(/turf/simulated/floor/engine/cult)
 
 /turf/simulated/floor/Entered(atom/A, atom/OL)
@@ -172,7 +172,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 			if(istype(A,/mob/living/carbon))
 				var/mob/living/carbon/M = A
 				if(M.lying)	return
-				if(prob(80))
+				if(new_prob(80))
 					dirt++
 				var/obj/effect/decal/cleanable/dirt/dirtoverlay = locate(/obj/effect/decal/cleanable/dirt, src)
 				if(dirt >= 100)

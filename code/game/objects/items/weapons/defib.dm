@@ -138,7 +138,7 @@
 /obj/item/weapon/defibrillator/emp_act(severity)
 	if(bcell)
 		deductcharge(1000 / severity)
-		if(bcell.reliability != 100 && prob(50/severity))
+		if(bcell.reliability != 100 && new_prob(50/severity))
 			bcell.reliability -= 10 / severity
 	if(safety)
 		safety = 0

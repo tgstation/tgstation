@@ -86,21 +86,21 @@ emp_act
 //End Here
 
 /mob/living/carbon/human/proc/check_shields(var/damage = 0, var/attack_text = "the attack")
-	if(l_hand && istype(l_hand, /obj/item/weapon))//Current base is the prob(50-d/3)
+	if(l_hand && istype(l_hand, /obj/item/weapon))//Current base is the new_prob(50-d/3)
 		var/obj/item/weapon/I = l_hand
-		if(I.IsShield() && (prob(50 - round(damage / 3))))
+		if(I.IsShield() && (new_prob(50 - round(damage / 3))))
 			visible_message("<span class='danger'>[src] blocks [attack_text] with [l_hand]!</span>", \
 							"<span class='userdanger'>[src] blocks [attack_text] with [l_hand]!</span>")
 			return 1
 	if(r_hand && istype(r_hand, /obj/item/weapon))
 		var/obj/item/weapon/I = r_hand
-		if(I.IsShield() && (prob(50 - round(damage / 3))))
+		if(I.IsShield() && (new_prob(50 - round(damage / 3))))
 			visible_message("<span class='danger'>[src] blocks [attack_text] with [r_hand]!</span>", \
 							"<span class='userdanger'>[src] blocks [attack_text] with [r_hand]!</span>")
 			return 1
 	if(wear_suit && istype(wear_suit, /obj/item/))
 		var/obj/item/I = wear_suit
-		if(I.IsShield() && (prob(35)))
+		if(I.IsShield() && (new_prob(35)))
 			visible_message("<span class='danger'>The reactive teleport system flings [src] clear of [attack_text]!</span>", \
 							"<span class='userdanger'>The reactive teleport system flings [src] clear of [attack_text]!</span>")
 			var/list/turfs = new/list()
@@ -153,10 +153,10 @@ emp_act
 		apply_damage(I.force, I.damtype, affecting, armor , I)
 
 		var/bloody = 0
-		if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
+		if(((I.damtype == BRUTE) && I.force && new_prob(25 + (I.force * 2))))
 			if(affecting.status == ORGAN_ORGANIC)
 				I.add_blood(src)	//Make the weapon bloody, not the person.
-				if(prob(I.force * 2))	//blood spatter!
+				if(new_prob(I.force * 2))	//blood spatter!
 					bloody = 1
 					var/turf/location = loc
 					if(istype(location, /turf/simulated))
@@ -179,7 +179,7 @@ emp_act
 
 			switch(hit_area)
 				if("head")	//Harder to score a stun but if you do it lasts a bit longer
-					if(stat == CONSCIOUS && prob(I.force))
+					if(stat == CONSCIOUS && new_prob(I.force))
 						visible_message("<span class='danger'>[src] has been knocked unconscious!</span>", \
 										"<span class='userdanger'>[src] has been knocked unconscious!</span>")
 						apply_effect(20, PARALYZE, armor)
@@ -193,12 +193,12 @@ emp_act
 						if(head)
 							head.add_blood(src)
 							update_inv_head(0)
-						if(glasses && prob(33))
+						if(glasses && new_prob(33))
 							glasses.add_blood(src)
 							update_inv_glasses(0)
 
 				if("chest")	//Easier to score a stun but lasts less time
-					if(stat == CONSCIOUS && I.force && prob(I.force + 10))
+					if(stat == CONSCIOUS && I.force && new_prob(I.force + 10))
 						visible_message("<span class='danger'>[src] has been knocked down!</span>", \
 										"<span class='userdanger'>[src] has been knocked down!</span>")
 						apply_effect(5, WEAKEN, armor)
@@ -211,7 +211,7 @@ emp_act
 							w_uniform.add_blood(src)
 							update_inv_w_uniform(0)
 
-			if(Iforce > 10 || Iforce >= 5 && prob(33))
+			if(Iforce > 10 || Iforce >= 5 && new_prob(33))
 				forcesay(hit_appends)	//forcesay checks stat already
 
 /mob/living/carbon/human/emp_act(severity)
@@ -340,7 +340,7 @@ emp_act
 
 		if(affecting.name == "head")
 			affecting.take_damage(2*toxpwr, toxpwr)
-			if(prob(2*acidpwr)) //Applies disfigurement
+			if(new_prob(2*acidpwr)) //Applies disfigurement
 				emote("scream")
 				facial_hair_style = "Shaved"
 				hair_style = "Bald"

@@ -50,7 +50,7 @@
 
 		if(3.0)
 			b_loss += 30
-			if (prob(50) && !shielded)
+			if (new_prob(50) && !shielded)
 				Paralyse(1)
 			adjustEarDamage(15 , 60)
 
@@ -100,11 +100,11 @@
 		switch(M.a_intent)
 			if ("harm")
 				var/damage = rand(1, 9)
-				if (prob(90))
+				if (new_prob(90))
 					playsound(loc, "punch", 25, 1, -1)
 					visible_message("<span class='danger'>[M] has punched [src]!</span>", \
 							"<span class='userdanger'>[M] has punched [src]!</span>")
-					if ((stat != DEAD) && (damage > 9 || prob(5)))//Regular humans have a very small chance of weakening an alien.
+					if ((stat != DEAD) && (damage > 9 || new_prob(5)))//Regular humans have a very small chance of weakening an alien.
 						Paralyse(2)
 						visible_message("<span class='danger'>[M] has weakened [src]!</span>", \
 								"<span class='userdanger'>[M] has weakened [src]!</span>")
@@ -117,14 +117,14 @@
 
 			if ("disarm")
 				if (!lying)
-					if (prob(5))
+					if (new_prob(5))
 						Paralyse(2)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 						add_logs(M, src, "pushed", admin=0)
 						visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
 							"<span class='userdanger'>[M] has pushed down [src]!</span>")
 					else
-						if (prob(50))
+						if (new_prob(50))
 							drop_item()
 							playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 							visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \

@@ -59,7 +59,7 @@
 	icon_state = "wishsoup"
 /obj/item/weapon/reagent_containers/food/snacks/soup/wishsoup/New()
 	..()
-	if(prob(25))
+	if(new_prob(25))
 		desc = "A wish come true!"
 		reagents.add_reagent("nutriment", 9)
 		reagents.add_reagent("vitamin", 1)

@@ -71,7 +71,7 @@
 			else
 				user << "<span class='warning'>[src] is wearing too much armor. You can't reach \his skin.<span>"
 				visible_message("<span class='notice'>[user] gently taps [src] with [O].</span>")
-			if(health>0 && prob(15))
+			if(health>0 && new_prob(15))
 				emote("me", 1, "looks at [user] with [pick("an amused","an annoyed","a confused","a resentful", "a happy", "an excited")] expression.")
 			return
 
@@ -164,7 +164,7 @@
 							usr << "<span class='notice'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s back!</span>"
 							return
 						item_to_add.loc = loc
-						if(prob(25))
+						if(new_prob(25))
 							step_rand(item_to_add)
 						for(var/i in list(1,2,4,8,4,8,4,dir))
 							dir = i
@@ -345,7 +345,7 @@
 			return 0
 		user << "You set [item_to_add] on [src]'s head, but \he shakes it off!"
 		item_to_add.loc = loc
-		if(prob(25))
+		if(new_prob(25))
 			step_rand(item_to_add)
 		for(var/i in list(1,2,4,8,4,8,4,dir))
 			dir = i
@@ -410,10 +410,10 @@
 					if(isturf(movement_target.loc) )
 						movement_target.attack_animal(src)
 					else if(ishuman(movement_target.loc) )
-						if(prob(20))
+						if(new_prob(20))
 							emote("me", 1, "stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
 
-		if(prob(1))
+		if(new_prob(1))
 			emote("me", 1, pick("dances around.","chases its tail!"))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
@@ -500,7 +500,7 @@
 	make_babies()
 
 	if(!stat && !resting && !buckled)
-		if(prob(1))
+		if(new_prob(1))
 			emote("me", 1, pick("dances around.","chases her tail."))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))

@@ -48,16 +48,16 @@ datum/reagent/proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume) //By de
 				if(istype(C, /obj/item/clothing/suit/bio_suit))
 					// bio suits are just about completely fool-proof - Doohl
 					// kind of a hacky way of making bio suits more resistant to chemicals but w/e
-					if(prob(75))
+					if(new_prob(75))
 						block = 1
 
 				if(istype(C, /obj/item/clothing/head/bio_hood))
-					if(prob(75))
+					if(new_prob(75))
 						block = 1
 
 			chance = chance * 100
 
-			if(prob(chance) && !block)
+			if(new_prob(chance) && !block)
 				if(M.reagents)
 					M.reagents.add_reagent(self.id,self.volume/2)
 	return 1
@@ -97,22 +97,22 @@ datum/reagent/proc/overdose_process(var/mob/living/M as mob)
 	return
 
 datum/reagent/proc/addiction_act_stage1(var/mob/living/M as mob)
-	if(prob(30))
+	if(new_prob(30))
 		M << "<span class = 'notice'>You feel like some [name] right about now.</span>"
 	return
 
 datum/reagent/proc/addiction_act_stage2(var/mob/living/M as mob)
-	if(prob(30))
+	if(new_prob(30))
 		M << "<span class = 'notice'>You feel like you need [name]. You just can't get enough.</span>"
 	return
 
 datum/reagent/proc/addiction_act_stage3(var/mob/living/M as mob)
-	if(prob(30))
+	if(new_prob(30))
 		M << "<span class = 'danger'>You have an intense craving for [name].</span>"
 	return
 
 datum/reagent/proc/addiction_act_stage4(var/mob/living/M as mob)
-	if(prob(30))
+	if(new_prob(30))
 		M << "<span class = 'userdanger'>You're not feeling good at all! You really need some [name].</span>"
 	return
 
@@ -292,9 +292,9 @@ datum/reagent/water/holywater/on_mob_life(var/mob/living/M as mob)
 		if (!M.stuttering) M.stuttering = 1
 		M.stuttering += 4
 		M.Dizzy(5)
-		if(iscultist(M) && prob(5))
+		if(iscultist(M) && new_prob(5))
 			M.say(pick("Av'te Nar'sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","Egkau'haom'nai en Chaous","Ho Diak'nos tou Ap'iron","R'ge Na'sie","Diabo us Vo'iscum","Si gn'um Co'nu"))
-	if(data >= 75 && prob(33))	// 30 units, 135 seconds
+	if(data >= 75 && new_prob(33))	// 30 units, 135 seconds
 		if (!M.confused) M.confused = 1
 		M.confused += 3
 		if(iscultist(M))
@@ -386,8 +386,8 @@ datum/reagent/space_drugs/on_mob_life(var/mob/living/M as mob)
 	M.druggy = max(M.druggy, 15)
 	if(isturf(M.loc) && !istype(M.loc, /turf/space))
 		if(M.canmove)
-			if(prob(10)) step(M, pick(cardinal))
-	if(prob(7)) M.emote(pick("twitch","drool","moan","giggle"))
+			if(new_prob(10)) step(M, pick(cardinal))
+	if(new_prob(7)) M.emote(pick("twitch","drool","moan","giggle"))
 	..()
 	return
 
@@ -400,7 +400,7 @@ datum/reagent/serotrotium
 
 datum/reagent/serotrotium/on_mob_life(var/mob/living/M as mob)
 	if(ishuman(M))
-		if(prob(7)) M.emote(pick("twitch","drool","moan","gasp"))
+		if(new_prob(7)) M.emote(pick("twitch","drool","moan","gasp"))
 	..()
 	return
 
@@ -448,7 +448,7 @@ datum/reagent/mercury
 datum/reagent/mercury/on_mob_life(var/mob/living/M as mob)
 	if(M.canmove && istype(M.loc, /turf/space))
 		step(M, pick(cardinal))
-	if(prob(5))
+	if(new_prob(5))
 		M.emote(pick("twitch","drool","moan"))
 	M.adjustBrainLoss(2)
 	..()
@@ -521,7 +521,7 @@ datum/reagent/lithium
 datum/reagent/lithium/on_mob_life(var/mob/living/M as mob)
 	if(M.canmove && istype(M.loc, /turf/space))
 		step(M, pick(cardinal))
-	if(prob(5))
+	if(new_prob(5))
 		M.emote(pick("twitch","drool","moan"))
 	..()
 	return
@@ -737,9 +737,9 @@ datum/reagent/impedrezene
 
 datum/reagent/impedrezene/on_mob_life(var/mob/living/M as mob)
 	M.jitteriness = max(M.jitteriness-5,0)
-	if(prob(80)) M.adjustBrainLoss(1*REM)
-	if(prob(50)) M.drowsyness = max(M.drowsyness, 3)
-	if(prob(10)) M.emote("drool")
+	if(new_prob(80)) M.adjustBrainLoss(1*REM)
+	if(new_prob(50)) M.drowsyness = max(M.drowsyness, 3)
+	if(new_prob(10)) M.emote("drool")
 	..()
 	return
 
@@ -751,7 +751,7 @@ datum/reagent/nanites
 
 datum/reagent/nanites/reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 	src = null
-	if( (prob(10) && method==TOUCH) || method==INGEST)
+	if( (new_prob(10) && method==TOUCH) || method==INGEST)
 		M.ForceContractDisease(new /datum/disease/transformation/robot(0))
 
 datum/reagent/xenomicrobes
@@ -762,7 +762,7 @@ datum/reagent/xenomicrobes
 
 datum/reagent/xenomicrobes/reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 	src = null
-	if( (prob(10) && method==TOUCH) || method==INGEST)
+	if( (new_prob(10) && method==TOUCH) || method==INGEST)
 		M.ContractDisease(new /datum/disease/transformation/xeno(0))
 
 datum/reagent/fluorosurfactant//foam precursor
@@ -863,7 +863,7 @@ datum/reagent/plantnutriment
 	var/tox_prob = 0
 
 datum/reagent/plantnutriment/on_mob_life(var/mob/living/M as mob)
-	if(prob(tox_prob))
+	if(new_prob(tox_prob))
 		M.adjustToxLoss(1*REM)
 	..()
 	return

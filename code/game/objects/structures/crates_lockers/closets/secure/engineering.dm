@@ -13,7 +13,7 @@
 	..()
 	new /obj/item/clothing/suit/toggle/wintercoat/engineering(src)
 	new /obj/item/clothing/suit/toggle/wintercoat/engineering/atmos(src)
-	if(prob(50))
+	if(new_prob(50))
 		new /obj/item/weapon/storage/backpack/industrial(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel_eng(src)
@@ -99,7 +99,7 @@
 
 /obj/structure/closet/secure_closet/engineering_personal/New()
 	..()
-	if(prob(50))
+	if(new_prob(50))
 		new /obj/item/weapon/storage/backpack/industrial(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel_eng(src)

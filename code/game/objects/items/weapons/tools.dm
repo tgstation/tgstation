@@ -78,7 +78,7 @@
 			icon_state = "screwdriver7"
 			item_state = "screwdriver_yellow"
 
-	if (prob(75))
+	if (new_prob(75))
 		src.pixel_y = rand(0, 16)
 	return
 
@@ -86,7 +86,7 @@
 	if(!istype(M))	return ..()
 	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head")
 		return ..()
-	if(user.disabilities & CLUMSY && prob(50))
+	if(user.disabilities & CLUMSY && new_prob(50))
 		M = user
 	return eyestab(M,user)
 
@@ -110,7 +110,7 @@
 	hitsound = 'sound/items/Wirecutter.ogg'
 
 /obj/item/weapon/wirecutters/New()
-	if(prob(50))
+	if(new_prob(50))
 		icon_state = "cutters-y"
 		item_state = "cutters_yellow"
 
@@ -212,7 +212,7 @@
 		if(1)
 			force = 15
 			damtype = "fire"
-			if(prob(5))
+			if(new_prob(5))
 				remove_fuel(1)
 			update_icon()
 
@@ -349,10 +349,10 @@
 			user.eye_stat += rand(12, 16)
 	if(user.eye_stat > 10 && safety < 2)
 		user << "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>"
-	if (prob(user.eye_stat - 25 + 1))
+	if (new_prob(user.eye_stat - 25 + 1))
 		user << "<span class='warning'>You go blind!</span>"
 		user.disabilities |= BLIND
-	else if(prob(user.eye_stat - 15 + 1))
+	else if(new_prob(user.eye_stat - 15 + 1))
 		user << "<span class='warning'>You go blind!</span>"
 		user.eye_blind = 5
 		user.eye_blurry = 5

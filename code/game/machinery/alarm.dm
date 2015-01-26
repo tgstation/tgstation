@@ -202,7 +202,7 @@
 /obj/machinery/alarm/proc/shock(mob/user, prb)
 	if((stat & (NOPOWER)))		// unpowered, no shock
 		return 0
-	if(!prob(prb))
+	if(!new_prob(prb))
 		return 0 //you lucked out, no shock for you
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
@@ -995,7 +995,7 @@ FIRE ALARM
 	return src.attack_hand(user)
 
 /obj/machinery/firealarm/emp_act(severity)
-	if(prob(50/severity)) alarm()
+	if(new_prob(50/severity)) alarm()
 	..()
 
 /obj/machinery/firealarm/attackby(obj/item/W as obj, mob/user as mob)

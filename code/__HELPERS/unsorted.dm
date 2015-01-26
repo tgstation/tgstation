@@ -1183,8 +1183,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/dy = abs(B.y - A.y)
 	return get_dir(A, B) & (rand() * (dx+dy) < dy ? 3 : 12)
 
-//chances are 1:value. anyprob(1) will always return true
-/proc/anyprob(value)
+//chances are 1:value. anynew_prob(1) will always return true
+/proc/anynew_prob(value)
 	return (rand(1,value)==value)
 
 /proc/view_or_range(distance = world.view , center = usr , type)
@@ -1448,7 +1448,7 @@ var/list/WALLITEMS = list(
 /proc/random_step(atom/movable/AM, steps, chance)
 	var/initial_chance = chance
 	while(steps > 0)
-		if(prob(chance))
+		if(new_prob(chance))
 			step(AM, pick(alldirs))
 		chance = max(chance - (initial_chance / steps), 0)
 		steps--

@@ -127,7 +127,7 @@
 	if(severity == 1 || target == src)
 		qdel(src)
 	else if(severity == 2)
-		if(prob(50))
+		if(new_prob(50))
 			qdel(src)
 	if(!gc_destroyed)
 		..()

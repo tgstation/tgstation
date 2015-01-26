@@ -31,7 +31,7 @@ Bonus
 
 /datum/symptom/vomit/Activate(var/datum/disease/advance/A)
 	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB / 2))
+	if(new_prob(SYMPTOM_ACTIVATION_PROB / 2))
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(1, 2, 3, 4)

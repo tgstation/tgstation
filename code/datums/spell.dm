@@ -114,12 +114,12 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 /obj/effect/proc_holder/spell/proc/invocation(mob/user = usr) //spelling the spell out and setting it on recharge/reducing charges amount
 	switch(invocation_type)
 		if("shout")
-			if(prob(50))//Auto-mute? Fuck that noise
+			if(new_prob(50))//Auto-mute? Fuck that noise
 				user.say(invocation)
 			else
 				user.say(replacetext(invocation," ","`"))
 		if("whisper")
-			if(prob(50))
+			if(new_prob(50))
 				user.whisper(invocation)
 			else
 				user.whisper(replacetext(invocation," ","`"))
@@ -152,7 +152,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	spawn(0)
 		if(charge_type == "recharge" && recharge)
 			start_recharge()
-	if(prob(critfailchance))
+	if(new_prob(critfailchance))
 		critfail(targets)
 	else
 		cast(targets)

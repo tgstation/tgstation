@@ -478,7 +478,7 @@ Sorry Giacom. Please don't be mad :(
 					var/mob/living/M = pulling
 					var/ok = 1
 					if (locate(/obj/item/weapon/grab, M.grabbed_by))
-						if (prob(75))
+						if (new_prob(75))
 							var/obj/item/weapon/grab/G = pick(M.grabbed_by)
 							if (istype(G, /obj/item/weapon/grab))
 								visible_message("<span class='danger'>[src] has pulled [G.affecting] from [G.assailant]'s grip.</span>")
@@ -492,7 +492,7 @@ Sorry Giacom. Please don't be mad :(
 						M.stop_pulling()
 
 						//this is the gay blood on floor shit -- Added back -- Skie
-						if (M.lying && (prob(M.getBruteLoss() / 2)))
+						if (M.lying && (new_prob(M.getBruteLoss() / 2)))
 							var/blood_exists = 0
 							var/trail_type = M.getTrail()
 							for(var/obj/effect/decal/cleanable/trail_holder/C in M.loc) //checks for blood splatter already on the floor
@@ -505,7 +505,7 @@ Sorry Giacom. Please don't be mad :(
 										newdir = NORTH
 									else if(newdir == 12) //E + W
 										newdir = EAST
-								if((newdir in list(1, 2, 4, 8)) && (prob(50)))
+								if((newdir in list(1, 2, 4, 8)) && (new_prob(50)))
 									newdir = turn(get_dir(T, M.loc), 180)
 								if(!blood_exists)
 									new /obj/effect/decal/cleanable/trail_holder(M.loc)
@@ -621,12 +621,12 @@ Sorry Giacom. Please don't be mad :(
 				qdel(G)
 			else
 				if(G.state == GRAB_AGGRESSIVE)
-					if(prob(25))
+					if(new_prob(25))
 						L.visible_message("<span class='warning'>[L] has broken free of [G.assailant]'s grip!</span>")
 						qdel(G)
 				else
 					if(G.state == GRAB_NECK)
-						if(prob(5))
+						if(new_prob(5))
 							L.visible_message("<span class='warning'>[L] has broken free of [G.assailant]'s headlock!</span>")
 							qdel(G)
 		if(resisting)

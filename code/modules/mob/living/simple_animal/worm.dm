@@ -89,7 +89,7 @@
 			if(next)
 				Detach(1)
 
-		if(prob(stomachProcessProbability))
+		if(new_prob(stomachProcessProbability))
 			ProcessStomach()
 
 		update_icon()
@@ -172,7 +172,7 @@
 
 	proc/ProcessStomach()
 		for(var/atom/movable/stomachContent in contents)
-			if(prob(digestionProbability))
+			if(new_prob(digestionProbability))
 				if(istype(stomachContent,/obj/item/stack)) //converts to plasma, keeping the stack value
 					if(!istype(stomachContent,/obj/item/stack/sheet/mineral/plasma))
 						var/obj/item/stack/oldStack = stomachContent

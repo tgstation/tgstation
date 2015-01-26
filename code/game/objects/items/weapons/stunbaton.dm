@@ -101,7 +101,7 @@
 	add_fingerprint(user)
 
 /obj/item/weapon/melee/baton/attack(mob/M, mob/living/carbon/human/user)
-	if(status && user.disabilities & CLUMSY && prob(50))
+	if(status && user.disabilities & CLUMSY && new_prob(50))
 		user.visible_message("<span class='danger'>[user] accidentally hits themself with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 		user.Weaken(stunforce*3)
@@ -158,7 +158,7 @@
 /obj/item/weapon/melee/baton/emp_act(severity)
 	if(bcell)
 		deductcharge(1000 / severity)
-		if(bcell.reliability != 100 && prob(50/severity))
+		if(bcell.reliability != 100 && new_prob(50/severity))
 			bcell.reliability -= 10 / severity
 	..()
 

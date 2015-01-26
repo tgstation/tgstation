@@ -12,7 +12,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/New()
 	..()
-	if(prob(30))
+	if(new_prob(30))
 		icon_state = "donut2"
 		name = "frosted donut"
 		reagents.add_reagent("sprinkles", 2)
@@ -26,7 +26,7 @@
 	..()
 	extra_reagent = pick("nutriment", "capsaicin", "frostoil", "krokodil", "plasma", "coco", "slimejelly", "banana", "berryjuice", "omnizine")
 	reagents.add_reagent("[extra_reagent]", 3)
-	if(prob(30))
+	if(new_prob(30))
 		icon_state = "donut2"
 		name = "frosted chaos donut"
 		reagents.add_reagent("sprinkles", 2)
@@ -41,7 +41,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/donut/jelly/New()
 	..()
 	reagents.add_reagent("[extra_reagent]", 5)
-	if(prob(30))
+	if(new_prob(30))
 		icon_state = "jdonut2"
 		name = "frosted jelly Donut"
 		reagents.add_reagent("sprinkles", 2)
@@ -155,7 +155,7 @@
 	list_reagents = list("nutriment" = 5, "vitamin" = 1)
 /obj/item/weapon/reagent_containers/food/snacks/plumphelmetbiscuit/New()
 	..()
-	if(prob(10))
+	if(new_prob(10))
 		name = "exceptional plump helmet biscuit"
 		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump helmet biscuit!"
 		reagents.add_reagent("omnizine", 5)

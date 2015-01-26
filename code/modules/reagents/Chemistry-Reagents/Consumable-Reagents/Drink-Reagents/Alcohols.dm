@@ -30,10 +30,10 @@ datum/reagent/consumable/ethanol/on_mob_life(var/mob/living/M as mob)
 		if (!M.stuttering) M.stuttering = 1
 		M.stuttering += 4
 		M.Dizzy(5)
-	if(data >= boozepwr*2.5 && prob(33))
+	if(data >= boozepwr*2.5 && new_prob(33))
 		if (!M.confused) M.confused = 1
 		M.confused += 3
-	if(data >= boozepwr*10 && prob(33))
+	if(data >= boozepwr*10 && new_prob(33))
 		M.adjustToxLoss(2)
 	..()
 	return
@@ -132,7 +132,7 @@ datum/reagent/consumable/ethanol/bilk
 	boozepwr = 55
 
 datum/reagent/consumable/ethanol/bilk/on_mob_life(var/mob/living/M as mob)
-	if(M.getBruteLoss() && prob(10))
+	if(M.getBruteLoss() && new_prob(10))
 		M.heal_organ_damage(1,0)
 	..()
 	return

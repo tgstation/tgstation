@@ -91,7 +91,7 @@
 		if(myseed.yield == 0)//Oh god don't divide by zero you'll doom us all.
 			adjustSYield(1)
 			//world << "Yield increased by 1, from 0, to a total of [myseed.yield]"
-		else if(prob(1/(myseed.yield * myseed.yield) * 100))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
+		else if(new_prob(1/(myseed.yield * myseed.yield) * 100))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
 			adjustSYield(1)
 			//world << "Yield increased by 1, to a total of [myseed.yield]"
 	else
@@ -114,7 +114,7 @@ obj/machinery/hydroponics/process()
 
 //Nutrients//////////////////////////////////////////////////////////////
 			// Nutrients deplete slowly
-			if(prob(50))
+			if(new_prob(50))
 				adjustNutri(-1)
 
 			// Lack of nutrients hurts non-weeds
@@ -146,7 +146,7 @@ obj/machinery/hydroponics/process()
 			// Sufficient water level and nutrient level = plant healthy
 			else if(waterlevel > 10 && nutrilevel > 0)
 				adjustHealth(rand(1,2))
-				if(prob(5))  //5 percent chance the weed population will increase
+				if(new_prob(5))  //5 percent chance the weed population will increase
 					adjustWeeds(1)
 
 //Toxins/////////////////////////////////////////////////////////////////
@@ -186,15 +186,15 @@ obj/machinery/hydroponics/process()
 					harvest = 1
 				else
 					lastproduce = age
-			if(prob(5))  // On each tick, there's a 5 percent chance the pest population will increase
+			if(new_prob(5))  // On each tick, there's a 5 percent chance the pest population will increase
 				adjustPests(1)
 		else
-			if(waterlevel > 10 && nutrilevel > 0 && prob(10))  // If there's no plant, the percentage chance is 10%
+			if(waterlevel > 10 && nutrilevel > 0 && new_prob(10))  // If there's no plant, the percentage chance is 10%
 				adjustWeeds(1)
 
 		// Weeeeeeeeeeeeeeedddssss
 
-		if(weedlevel >= 10 && prob(50)) // At this point the plant is kind of fucked. Weeds can overtake the plant spot.
+		if(weedlevel >= 10 && new_prob(50)) // At this point the plant is kind of fucked. Weeds can overtake the plant spot.
 			if(planted)
 				if(myseed.plant_type == 0) // If a normal plant
 					weedinvasion()
@@ -209,17 +209,17 @@ obj/machinery/hydroponics/proc/nutrimentMutation()
 	if (mutmod == 0)
 		return
 	if (mutmod == 1)
-		if(prob(80))		//80%
+		if(new_prob(80))		//80%
 			mutate()
-		else if(prob(75))	//15%
+		else if(new_prob(75))	//15%
 			hardmutate()
 		return
 	if (mutmod == 2)
-		if(prob(50))		//50%
+		if(new_prob(50))		//50%
 			mutate()
-		else if(prob(75))	//37.5%
+		else if(new_prob(75))	//37.5%
 			hardmutate()
-		else if(prob(10))	//1/80
+		else if(new_prob(10))	//1/80
 			mutatespecie()
 		return
 	return
@@ -847,7 +847,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	else //else, one packet of seeds. maybe two
 		var/seed_count = 1
-		if(prob(getYield() * 20))
+		if(new_prob(getYield() * 20))
 			seed_count++
 		for(var/i=0,i<seed_count,i++)
 			var/obj/item/seeds/replicapod/harvestseeds = new /obj/item/seeds/replicapod(user.loc)

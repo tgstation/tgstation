@@ -519,7 +519,7 @@
 		S.occupant_message("<span class=\"alert\">Reagent processing stopped.</a>")
 		S.log_message("Reagent processing stopped.")
 		return stop()
-	if(anyprob(S.reliability))
+	if(anynew_prob(S.reliability))
 		S.critfail()
 	var/amount = S.synth_speed / S.processed_reagents.len
 	for(var/reagent in S.processed_reagents)

@@ -100,7 +100,7 @@
 			var/mob/living/carbon/C = target
 
 			//20% chance to actually hit the eyes
-			if(prob(effectchance * diode.rating))
+			if(new_prob(effectchance * diode.rating))
 				add_logs(user, C, "shone in the eyes", object="laser pointer")
 
 				//eye target check
@@ -109,9 +109,9 @@
 				if(C.eye_blind || eye_prot >= 2)
 					eye_prot = 4
 				var/severity = 3 - eye_prot
-				if(prob(33))
+				if(new_prob(33))
 					severity += 1
-				else if(prob(50))
+				else if(new_prob(50))
 					severity -= 1
 				severity = min(max(severity, 0), 4)
 
@@ -130,14 +130,14 @@
 						C << "<span class='danger'>Your eyes were blinded!</span>"
 					if(3)
 						//no eye protection
-						if(prob(2))
+						if(new_prob(2))
 							C.Weaken(1)
 						flick("e_flash", C.flash)
 						C.eye_stat += rand(3, 7)
 						C << "<span class='danger'>Your eyes were blinded!</span>"
 					if(4)
 						//the effect has been worsened by something
-						if(prob(5))
+						if(new_prob(5))
 							C.Weaken(1)
 						flick("e_flash", C.flash)
 						C.eye_stat += rand(5, 10)
@@ -149,7 +149,7 @@
 	else if(issilicon(target))
 		var/mob/living/silicon/S = target
 		//20% chance to actually hit the sensors
-		if(prob(effectchance * diode.rating))
+		if(new_prob(effectchance * diode.rating))
 			S.Weaken(rand(5,10))
 			S << "<span class='warning'>Your sensors were overloaded by a laser!</span>"
 			outmsg = "<span class='notice'>You overload [S] by shining [src] at their sensors.</span>"
@@ -160,7 +160,7 @@
 	//cameras
 	else if(istype(target, /obj/machinery/camera))
 		var/obj/machinery/camera/C = target
-		if(prob(effectchance * diode.rating))
+		if(new_prob(effectchance * diode.rating))
 			C.emp_act(1)
 			outmsg = "<span class='notice'>You hit the lens of [C] with [src], temporarily disabling the camera!</span>"
 			add_logs(user, C, "EMPed", object="laser pointer")
@@ -195,7 +195,7 @@
 	icon_state = "pointer"
 
 /obj/item/device/laser_pointer/process()
-	if(prob(20 - recharge_locked*5))
+	if(new_prob(20 - recharge_locked*5))
 		energy += 1
 		if(energy >= max_energy)
 			energy = max_energy

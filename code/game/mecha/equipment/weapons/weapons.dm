@@ -133,7 +133,7 @@
 		M.stuttering += 20
 		M.adjustEarDamage(0, 30)
 		M.Weaken(3)
-		if(prob(30))
+		if(new_prob(30))
 			M.Stun(10)
 			M.Paralyse(4)
 		else

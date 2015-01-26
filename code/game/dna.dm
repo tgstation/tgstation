@@ -246,12 +246,12 @@
 		return 0
 	if(se)
 		for(var/i=1, i<=DNA_STRUC_ENZYMES_BLOCKS, i++)
-			if(prob(probability))
+			if(new_prob(probability))
 				M.dna.struc_enzymes = setblock(M.dna.struc_enzymes, i, random_string(DNA_BLOCK_SIZE, hex_characters))
 		domutcheck(M)
 	if(ui)
 		for(var/i=1, i<=DNA_UNI_IDENTITY_BLOCKS, i++)
-			if(prob(probability))
+			if(new_prob(probability))
 				M.dna.uni_identity = setblock(M.dna.uni_identity, i, random_string(DNA_BLOCK_SIZE, hex_characters))
 		updateappearance(M)
 	return 1
@@ -467,7 +467,7 @@
 	toggle_open(user)
 
 /obj/machinery/dna_scannernew/blob_act()
-	if(prob(75))
+	if(new_prob(75))
 		qdel(src)
 
 
@@ -818,7 +818,7 @@
 								I = new /obj/item/weapon/dnainjector(loc)
 								for(var/datum/mutation/human/HM in good_mutations + bad_mutations + not_good_mutations)
 									if(HM.check_block_string(buffer_slot["SE"]))
-										if(prob(HM.get_chance))
+										if(new_prob(HM.get_chance))
 											I.add_mutations.Add(HM)
 									else
 										I.remove_mutations.Add(HM)

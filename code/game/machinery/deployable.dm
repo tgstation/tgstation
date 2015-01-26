@@ -225,7 +225,7 @@ for reference:
 /obj/machinery/deployable/barrier/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
 		return
-	if(prob(50/severity))
+	if(new_prob(50/severity))
 		locked = !locked
 		anchored = !anchored
 		icon_state = "barrier[src.locked]"

@@ -122,19 +122,19 @@ RCD
 		if(1)
 			mode = 2
 			user << "<span class='notice'>Changed mode to 'Airlock'</span>"
-			if(prob(20))
+			if(new_prob(20))
 				src.spark_system.start()
 			return
 		if(2)
 			mode = 3
 			user << "<span class='notice'>Changed mode to 'Deconstruct'</span>"
-			if(prob(20))
+			if(new_prob(20))
 				src.spark_system.start()
 			return
 		if(3)
 			mode = 1
 			user << "<span class='notice'>Changed mode to 'Floor & Walls'</span>"
-			if(prob(20))
+			if(new_prob(20))
 				src.spark_system.start()
 			return
 

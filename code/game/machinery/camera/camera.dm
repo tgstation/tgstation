@@ -46,7 +46,7 @@
 	..()
 
 /obj/machinery/camera/initialize()
-	if(z == 1 && prob(3) && !start_active)
+	if(z == 1 && new_prob(3) && !start_active)
 		deactivate()
 
 /obj/machinery/camera/Destroy()
@@ -65,7 +65,7 @@
 
 /obj/machinery/camera/emp_act(severity)
 	if(!isEmpProof())
-		if(prob(100/severity))
+		if(new_prob(100/severity))
 			icon_state = "[initial(icon_state)]emp"
 			var/list/previous_network = network
 			network = list()

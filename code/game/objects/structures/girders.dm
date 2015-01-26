@@ -186,15 +186,15 @@
 	if(height==0)
 		return 1
 	if(istype(mover) && mover.checkpass(PASSGRILLE))
-		return prob(girderpasschance)
+		return new_prob(girderpasschance)
 	else
 		if(istype(mover, /obj/item/projectile))
-			return prob(girderpasschance)
+			return new_prob(girderpasschance)
 		else
 			return 0
 
 /obj/structure/girder/blob_act()
-	if(prob(40))
+	if(new_prob(40))
 		qdel(src)
 
 
@@ -204,13 +204,13 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(70))
+			if (new_prob(70))
 				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
 				new remains(loc)
 				qdel(src)
 			return
 		if(3.0)
-			if (prob(15))
+			if (new_prob(15))
 				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
 				new remains(loc)
 				qdel(src)
@@ -235,13 +235,13 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(30))
+			if (new_prob(30))
 				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
 				new remains(loc)
 				qdel(src)
 			return
 		if(3.0)
-			if (prob(5))
+			if (new_prob(5))
 				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
 				new remains(loc)
 				qdel(src)
@@ -281,7 +281,7 @@
 			qdel(src)
 
 /obj/structure/cultgirder/blob_act()
-	if(prob(40))
+	if(new_prob(40))
 		qdel(src)
 
 
@@ -291,12 +291,12 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(30))
+			if (new_prob(30))
 				new /obj/effect/decal/remains/human(loc)
 				qdel(src)
 			return
 		if(3.0)
-			if (prob(5))
+			if (new_prob(5))
 				new /obj/effect/decal/remains/human(loc)
 				qdel(src)
 			return

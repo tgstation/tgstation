@@ -73,7 +73,7 @@
 			stuttering = power
 		Stun(power)
 		var/stunprob = M.powerlevel * 7 + 10
-		if (prob(stunprob) && M.powerlevel >= 8)
+		if (new_prob(stunprob) && M.powerlevel >= 8)
 			adjustFireLoss(M.powerlevel * rand(6,10))
 			updatehealth()
 		return 1

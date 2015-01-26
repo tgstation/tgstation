@@ -36,7 +36,7 @@
 					break
 			else if(istype(item, /obj/item/weapon/spellbook/oneuse))
 				var/obj/item/weapon/spellbook/oneuse/I = item
-				if(prob(80))
+				if(new_prob(80))
 					user.visible_message("<span class='warning'>[I] catches fire!</span>")
 					qdel(I)
 				else
@@ -45,7 +45,7 @@
 					break
 			else if(istype(item, /obj/item/weapon/gun/magic))
 				var/obj/item/weapon/gun/magic/I = item
-				if(prob(80) && !I.can_charge)
+				if(new_prob(80) && !I.can_charge)
 					I.max_charges--
 				if(I.max_charges <= 0)
 					I.max_charges = 0
@@ -58,7 +58,7 @@
 				break
 			else if(istype(item, /obj/item/weapon/stock_parts/cell/))
 				var/obj/item/weapon/stock_parts/cell/C = item
-				if(prob(80))
+				if(new_prob(80))
 					C.maxcharge -= 200
 				if(C.maxcharge <= 1) //Div by 0 protection
 					C.maxcharge = 1
@@ -71,7 +71,7 @@
 				for(I in item.contents)
 					if(istype(I, /obj/item/weapon/stock_parts/cell/))
 						var/obj/item/weapon/stock_parts/cell/C = I
-						if(prob(80))
+						if(new_prob(80))
 							C.maxcharge -= 200
 						if(C.maxcharge <= 1) //Div by 0 protection
 							C.maxcharge = 1

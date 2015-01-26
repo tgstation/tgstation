@@ -47,14 +47,14 @@
 		switch(radiation)
 			if(0 to 50)
 				radiation--
-				if(prob(25))
+				if(new_prob(25))
 					adjustToxLoss(1)
 					updatehealth()
 
 			if(50 to 75)
 				radiation -= 2
 				adjustToxLoss(1)
-				if(prob(5))
+				if(new_prob(5))
 					radiation -= 5
 					if(!container)
 						src << "<span class='danger'>You feel weak.</span>"
@@ -150,7 +150,7 @@
 						emote("alarm")
 						src << "<span class='danger'>Major electrical distruption detected: System rebooting.</span>"
 						alert = 1
-					if(prob(75))
+					if(new_prob(75))
 						emp_damage -= 1
 				if(20)
 					alert = 0
@@ -165,7 +165,7 @@
 						emote("alert")
 						src << "<span class='danger'>Primary systems are now online.</span>"
 						alert = 1
-					if(prob(50))
+					if(new_prob(50))
 						emp_damage -= 1
 				if(10)
 					alert = 0
@@ -177,7 +177,7 @@
 						emote("notice")
 						src << "<span class='danger'>System reboot nearly complete.</span>"
 						alert = 1
-					if(prob(25))
+					if(new_prob(25))
 						emp_damage -= 1
 				if(1)
 					alert = 0

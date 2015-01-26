@@ -16,7 +16,7 @@ datum/reagent/nicotine
 datum/reagent/nicotine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	var/smoke_message = pick("You can just feel your lungs dying!", "You feel relaxed.", "You feel calmed.", "You feel the lung cancer forming.", "You feel the money you wasted.", "You feel like a space cowboy.", "You feel rugged.")
-	if(prob(5))
+	if(new_prob(5))
 		M << "<span class='notice'>[smoke_message]</span>"
 	M.AdjustStunned(-1)
 	M.adjustStaminaLoss(-1*REM)
@@ -24,7 +24,7 @@ datum/reagent/nicotine/on_mob_life(var/mob/living/M as mob)
 	return
 
 datum/reagent/nicotine/overdose_process(var/mob/living/M as mob)
-	if(prob(20))
+	if(new_prob(20))
 		M << "You feel like you smoked too much."
 	M.adjustToxLoss(1*REM)
 	M.adjustOxyLoss(1*REM)
@@ -43,7 +43,7 @@ datum/reagent/crank
 datum/reagent/crank/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	var/high_message = pick("You feel jittery.", "You feel like you gotta go fast.", "You feel like you need to step it up.")
-	if(prob(5))
+	if(new_prob(5))
 		M << "<span class='notice'>[high_message]</span>"
 	M.AdjustParalysis(-2)
 	M.AdjustStunned(-2)
@@ -97,13 +97,13 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 /datum/reagent/krokodil/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	var/high_message = pick("You feel calm.", "You feel collected.", "You feel like you need to relax.")
-	if(prob(5))
+	if(new_prob(5))
 		M << "<span class='notice'>[high_message]</span>"
 	..()
 	return
 
 /datum/reagent/krokodil/overdose_process(var/mob/living/M as mob)
-	if(prob(10))
+	if(new_prob(10))
 		M.adjustBrainLoss(rand(1,5)*REM)
 		M.adjustToxLoss(rand(1,5)*REM)
 	..()
@@ -116,12 +116,12 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 	..()
 	return
 /datum/reagent/krokodil/addiction_act_stage2(var/mob/living/M as mob)
-	if(prob(25))
+	if(new_prob(25))
 		M << "<span class='danger'>Your skin feels loose...</span>"
 	..()
 	return
 /datum/reagent/krokodil/addiction_act_stage3(var/mob/living/M as mob)
-	if(prob(25))
+	if(new_prob(25))
 		M << "<span class='danger'>Your skin starts to peel away...</span>"
 	M.adjustBruteLoss(3*REM)
 	..()

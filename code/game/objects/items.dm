@@ -120,7 +120,7 @@
 		if(6.0)
 			size = "gigantic"
 		else
-	//if ((CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
+	//if ((CLUMSY in usr.mutations) && new_prob(50)) t = "funny-looking"
 
 	var/pronoun
 	if(src.gender == PLURAL)
@@ -299,7 +299,7 @@
 	return 0
 
 /obj/item/proc/IsReflect(var/def_zone) //This proc determines if and at what% an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
-	if(prob(reflect_chance))
+	if(new_prob(reflect_chance))
 		return 1
 
 /obj/item/proc/eyestab(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
@@ -353,14 +353,14 @@
 		M.disabilities |= NEARSIGHT
 		if(M.stat != 2)
 			M << "<span class='danger'>Your eyes start to bleed profusely!</span>"
-		if(prob(50))
+		if(new_prob(50))
 			if(M.stat != 2)
 				M << "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>"
 				M.drop_item()
 			M.eye_blurry += 10
 			M.Paralyse(1)
 			M.Weaken(2)
-		if (prob(M.eye_stat - 10 + 1))
+		if (new_prob(M.eye_stat - 10 + 1))
 			if(M.stat != 2)
 				M << "<span class='danger'>You go blind!</span>"
 			M.disabilities |= BLIND

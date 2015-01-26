@@ -21,7 +21,7 @@
 	..()
 
 /datum/round_event/ion_storm/announce()
-	if(announceEvent == ION_ANNOUNCE || (announceEvent == ION_RANDOM && prob(ionAnnounceChance)))
+	if(announceEvent == ION_ANNOUNCE || (announceEvent == ION_RANDOM && new_prob(ionAnnounceChance)))
 		priority_announce("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", 'sound/AI/ionstorm.ogg')
 
 
@@ -38,7 +38,7 @@
 
 	if(botEmagChance)
 		for(var/obj/machinery/bot/bot in machines)
-			if(prob(botEmagChance))
+			if(new_prob(botEmagChance))
 				bot.Emag()
 
 /proc/generate_ion_law(ionMessage)

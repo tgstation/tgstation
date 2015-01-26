@@ -17,10 +17,10 @@
 		for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
 			sleep(3)
 			if (i > 0)
-				if (prob(40))
+				if (new_prob(40))
 					/*var/obj/effect/decal/cleanable/oil/o =*/
 					new /obj/effect/decal/cleanable/oil/streak(src.loc)
-				else if (prob(10))
+				else if (new_prob(10))
 					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 					s.set_up(3, 1, src)
 					s.start()

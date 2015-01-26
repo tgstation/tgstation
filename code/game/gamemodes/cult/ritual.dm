@@ -173,7 +173,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	if(!user.can_speak(message) && (user.mind && !user.mind.miming))
 		user << message
 		return
-	if(!word1 || !word2 || !word3 || prob(user.getBrainLoss()))
+	if(!word1 || !word2 || !word3 || new_prob(user.getBrainLoss()))
 		return fizzle(user)
 	if(word1 == wordtravel && word2 == wordself)
 		return teleport(src.word3)

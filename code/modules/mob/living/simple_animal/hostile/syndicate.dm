@@ -59,7 +59,7 @@
 
 /mob/living/simple_animal/hostile/syndicate/melee/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(O.force)
-		if(prob(80))
+		if(new_prob(80))
 			var/damage = O.force
 			if (O.damtype == STAMINA)
 				damage = 0
@@ -75,7 +75,7 @@
 
 /mob/living/simple_animal/hostile/syndicate/melee/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj)	return
-	if(prob(65))
+	if(new_prob(65))
 		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 			src.health -= Proj.damage
 	else

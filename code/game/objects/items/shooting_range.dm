@@ -127,10 +127,10 @@
 
 		if(Proj.damage >= 10 && bulletholes.len <= 35) // maximum of 35 bullet holes
 			if(decaltype == 2) // bullet
-				if(prob(Proj.damage+30)) // bullets make holes more commonly!
+				if(new_prob(Proj.damage+30)) // bullets make holes more commonly!
 					new/datum/bullethole(src, bmark.pixel_x, bmark.pixel_y) // create new bullet hole
 			else // Lasers!
-				if(prob(Proj.damage-10)) // lasers make holes less commonly
+				if(new_prob(Proj.damage-10)) // lasers make holes less commonly
 					new/datum/bullethole(src, bmark.pixel_x, bmark.pixel_y) // create new bullet hole
 
 		// draw bullet holes
@@ -167,12 +167,12 @@
 	b1x1 = pixel_x - pick(1,1,1,1,2,2,3,3,4)
 	b1x2 = pixel_x + pick(1,1,1,1,2,2,3,3,4)
 	b1y = pixel_y
-	if(prob(35))
+	if(new_prob(35))
 		b1y += rand(-4,4)
 
 	// Randomize the second box
 	b2x = pixel_x
-	if(prob(35))
+	if(new_prob(35))
 		b2x += rand(-4,4)
 	b2y1 = pixel_y + pick(1,1,1,1,2,2,3,3,4)
 	b2y2 = pixel_y - pick(1,1,1,1,2,2,3,3,4)

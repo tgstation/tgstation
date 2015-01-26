@@ -61,7 +61,7 @@
 	timer = world.time - timeLeft(1)
 	mode = SHUTTLE_RECALL
 
-	if(prob(70))
+	if(new_prob(70))
 		SSshuttle.emergencyLastCallLoc = signalOrigin
 	priority_announce("The emergency shuttle has been recalled.[SSshuttle.emergencyLastCallLoc ? " Recall signal traced. Results can be viewed on any communcations console." : "" ]", null, 'sound/AI/shuttlerecalled.ogg', "Priority")
 

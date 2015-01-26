@@ -376,7 +376,7 @@
 /obj/structure/closet/crate/secure/emp_act(severity)
 	for(var/obj/O in src)
 		O.emp_act(severity)
-	if(!broken && !opened  && prob(50/severity))
+	if(!broken && !opened  && new_prob(50/severity))
 		if(!locked)
 			src.locked = 1
 			overlays.Cut()
@@ -388,7 +388,7 @@
 			spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
 			playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 			src.locked = 0
-	if(!opened && prob(20/severity))
+	if(!opened && new_prob(20/severity))
 		if(!locked)
 			open()
 		else

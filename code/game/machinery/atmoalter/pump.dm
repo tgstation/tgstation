@@ -32,10 +32,10 @@
 		..(severity)
 		return
 
-	if(prob(50/severity))
+	if(new_prob(50/severity))
 		on = !on
 
-	if(prob(100/severity))
+	if(new_prob(100/severity))
 		direction_out = !direction_out
 
 	target_pressure = rand(0,1300)

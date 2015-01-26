@@ -87,11 +87,11 @@
 /obj/machinery/vending/ex_act(severity, target)
 	..()
 	if(!gc_destroyed)
-		if(prob(25))
+		if(new_prob(25))
 			malfunction()
 
 /obj/machinery/vending/blob_act()
-	if(prob(75))
+	if(new_prob(75))
 		malfunction()
 	else
 		qdel(src)
@@ -419,7 +419,7 @@
 				vend_ready = 1
 				return
 			if(coin.string_attached)
-				if(prob(50))
+				if(new_prob(50))
 					if(usr.put_in_hands(coin))
 						usr << "<span class='notice'>You successfully pull [coin] out before [src] could swallow it.</span>"
 						coin = null
@@ -477,12 +477,12 @@
 		seconds_electrified--
 
 	//Pitch to the people!  Really sell it!
-	if(last_slogan + slogan_delay <= world.time && slogan_list.len > 0 && !shut_up && prob(5))
+	if(last_slogan + slogan_delay <= world.time && slogan_list.len > 0 && !shut_up && new_prob(5))
 		var/slogan = pick(slogan_list)
 		speak(slogan)
 		last_slogan = world.time
 
-	if(shoot_inventory && prob(2))
+	if(shoot_inventory && new_prob(2))
 		throw_item()
 
 
@@ -555,7 +555,7 @@
 /obj/machinery/vending/proc/shock(mob/user, prb)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
 		return 0
-	if(!prob(prb))
+	if(!new_prob(prb))
 		return 0
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)

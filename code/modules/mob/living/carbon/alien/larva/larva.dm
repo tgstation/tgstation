@@ -55,7 +55,7 @@
 
 		if(3.0)
 			b_loss += 30
-			if (prob(50))
+			if (new_prob(50))
 				Paralyse(1)
 			adjustEarDamage(15,60)
 
@@ -117,7 +117,7 @@
 /mob/living/carbon/alien/larva/attack_hand(mob/living/carbon/human/M as mob)
 	if(..())
 		var/damage = rand(1, 9)
-		if (prob(90))
+		if (new_prob(90))
 			playsound(loc, "punch", 25, 1, -1)
 			add_logs(M, src, "attacked", admin=0)
 			visible_message("<span class='danger'>[M] has kicked [src]!</span>", \

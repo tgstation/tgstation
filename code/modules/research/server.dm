@@ -63,7 +63,7 @@
 		var/updateRD = 0
 		files.known_designs = list()
 		for(var/datum/tech/T in files.known_tech)
-			if(prob(1))
+			if(new_prob(1))
 				updateRD++
 				T.level--
 		if(updateRD)

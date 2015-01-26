@@ -48,7 +48,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			affected_mob = null
 		return
 
-	if(stage < 5 && prob(3))
+	if(stage < 5 && new_prob(3))
 		stage++
 		spawn(0)
 			RefreshInfectionImage()
@@ -57,28 +57,28 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 		if(2, 3)
 			if(affected_mob == DEAD)
 				return
-			if(prob(1))
+			if(new_prob(1))
 				affected_mob.emote("sneeze")
-			if(prob(1))
+			if(new_prob(1))
 				affected_mob.emote("cough")
-			if(prob(1))
+			if(new_prob(1))
 				affected_mob << "<span class='danger'>Your throat feels sore.</span>"
-			if(prob(1))
+			if(new_prob(1))
 				affected_mob << "<span class='danger'>Mucous runs down the back of your throat.</span>"
 		if(4)
 			if(affected_mob == DEAD)
 				return
-			if(prob(1))
+			if(new_prob(1))
 				affected_mob.emote("sneeze")
-			if(prob(1))
+			if(new_prob(1))
 				affected_mob.emote("cough")
-			if(prob(2))
+			if(new_prob(2))
 				affected_mob << "<span class='danger'>Your muscles ache.</span>"
-				if(prob(20))
+				if(new_prob(20))
 					affected_mob.take_organ_damage(1)
-			if(prob(2))
+			if(new_prob(2))
 				affected_mob << "<span class='danger'>Your stomach hurts.</span>"
-				if(prob(20))
+				if(new_prob(20))
 					affected_mob.adjustToxLoss(1)
 					affected_mob.updatehealth()
 		if(5)
@@ -86,7 +86,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 				affected_mob << "<span class='danger'>You feel something tearing its way out of your stomach...</span>"
 				affected_mob.adjustToxLoss(10)
 				affected_mob.updatehealth()
-			if(prob(50))
+			if(new_prob(50))
 				AttemptGrow()
 
 /obj/item/alien_embryo/proc/AttemptGrow(var/gib_on_success = 1)

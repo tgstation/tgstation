@@ -277,7 +277,7 @@
 	var/obj/cooked
 	if (!recipe)
 		dirty += 1
-		if (prob(max(10,dirty*5)))
+		if (new_prob(max(10,dirty*5)))
 			if (!microwave_operate(4))
 				abort()
 				return

@@ -11,7 +11,7 @@
 	var/all_species = typesof(/datum/species) - /datum/species
 	var/new_species = pick(all_species)
 
-	if(prob(50))
+	if(new_prob(50))
 		all_the_same = 1
 
 	for(var/mob/living/carbon/human/H in mob_list) //yes, even the dead

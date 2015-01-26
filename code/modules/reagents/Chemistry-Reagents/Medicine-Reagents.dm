@@ -99,7 +99,7 @@ datum/reagent/medicine/synaptizine/on_mob_life(var/mob/living/M as mob)
 	if(holder.has_reagent("mindbreaker"))
 		holder.remove_reagent("mindbreaker", 5)
 	M.hallucination = max(0, M.hallucination - 10)
-	if(prob(60))
+	if(new_prob(60))
 		M.adjustToxLoss(1)
 	..()
 	return

@@ -68,7 +68,7 @@
 	if(!ishuman(usr))
 		return
 	var/mob/living/carbon/human/H = usr
-	if(H.disabilities & CLUMSY && prob(25))
+	if(H.disabilities & CLUMSY && new_prob(25))
 		H << "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>"
 		H.damageoverlaytemp = 9001
 		return

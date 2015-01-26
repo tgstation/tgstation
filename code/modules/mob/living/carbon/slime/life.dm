@@ -46,7 +46,7 @@
 	var/hungry = 0
 	if (nutrition < get_starve_nutrition())
 		hungry = 2
-	else if (nutrition < get_grow_nutrition() && prob(25) || nutrition < get_hunger_nutrition())
+	else if (nutrition < get_grow_nutrition() && new_prob(25) || nutrition < get_hunger_nutrition())
 		hungry = 1
 
 	AIproc = 1
@@ -82,7 +82,7 @@
 						if(Target.Adjacent(src))
 							Target.attack_slime(src)
 					return
-				if(!Target.lying && prob(80))
+				if(!Target.lying && new_prob(80))
 
 					if(Target.client && Target.health >= 20)
 						if(!Atkcool)
@@ -200,7 +200,7 @@
 		if(src.stat != DEAD)
 			src.stat = UNCONSCIOUS
 
-	if(prob(30))
+	if(new_prob(30))
 		adjustOxyLoss(-1)
 		adjustToxLoss(-1)
 		adjustFireLoss(-1)
@@ -252,12 +252,12 @@
 
 /mob/living/carbon/slime/proc/handle_nutrition()
 
-	if(prob(15))
+	if(new_prob(15))
 		nutrition -= 1 + is_adult
 
 	if(nutrition <= 0)
 		nutrition = 0
-		if(prob(75))
+		if(new_prob(75))
 			adjustToxLoss(rand(0,5))
 
 	else if (nutrition >= get_grow_nutrition() && amount_grown < 10)
@@ -273,7 +273,7 @@
 /mob/living/carbon/slime/proc/add_nutrition(var/nutrition_to_add = 0, var/lastnut = 0)
 	nutrition = min((nutrition + nutrition_to_add), get_max_nutrition())
 	if(nutrition >= (lastnut + 50))
-		if(prob(80))
+		if(new_prob(80))
 			lastnut = nutrition
 			powerlevel++
 			if(powerlevel > 10)
@@ -297,9 +297,9 @@
 	if(Discipline > 0)
 
 		if(Discipline >= 5 && rabid)
-			if(prob(60)) rabid = 0
+			if(new_prob(60)) rabid = 0
 
-		if(prob(10))
+		if(new_prob(10))
 			Discipline--
 
 	if(!client)
@@ -319,11 +319,11 @@
 
 		if (nutrition < get_starve_nutrition())
 			hungry = 2
-		else if (nutrition < get_grow_nutrition() && prob(25) || nutrition < get_hunger_nutrition())
+		else if (nutrition < get_grow_nutrition() && new_prob(25) || nutrition < get_hunger_nutrition())
 			hungry = 1
 
 		if(hungry == 2 && !client) // if a slime is starving, it starts losing its friends
-			if(Friends.len > 0 && prob(1))
+			if(Friends.len > 0 && new_prob(1))
 				var/mob/nofriend = pick(Friends)
 				--Friends[nofriend]
 
@@ -363,7 +363,7 @@
 						Target = targets[1] // I am attacked and am fighting back or so hungry I don't even care
 					else
 						for(var/mob/living/carbon/C in targets)
-							if(!Discipline && prob(5))
+							if(!Discipline && new_prob(5))
 								if(ishuman(C) || isalienadult(C))
 									Target = C
 									break
@@ -387,13 +387,13 @@
 			else if(hungry)
 				if (holding_still)
 					holding_still = max(holding_still - hungry, 0)
-				else if(canmove && isturf(loc) && prob(50))
+				else if(canmove && isturf(loc) && new_prob(50))
 					step(src, pick(cardinal))
 
 			else
 				if (holding_still)
 					holding_still = max(holding_still - 1, 0)
-				else if(canmove && isturf(loc) && prob(33))
+				else if(canmove && isturf(loc) && new_prob(33))
 					step(src, pick(cardinal))
 		else if(!AIproc)
 			spawn()
@@ -406,13 +406,13 @@
 	else if (Target) newmood = "mischevous"
 
 	if (!newmood)
-		if (Discipline && prob(25))
+		if (Discipline && new_prob(25))
 			newmood = "pout"
-		else if (prob(1))
+		else if (new_prob(1))
 			newmood = pick("sad", ":3", "pout")
 
 	if ((mood == "sad" || mood == ":3" || mood == "pout") && !newmood)
-		if (prob(75)) newmood = mood
+		if (new_prob(75)) newmood = mood
 
 	if (newmood != mood) // This is so we don't redraw them every time
 		mood = newmood
@@ -490,7 +490,7 @@
 	//Speech starts here
 	if (to_say)
 		say (to_say)
-	else if(prob(1))
+	else if(new_prob(1))
 		emote(pick("bounce","sway","light","vibrate","jiggle"))
 	else
 		var/t = 10
@@ -507,7 +507,7 @@
 				friends_near += M
 		if (nutrition < get_hunger_nutrition()) t += 10
 		if (nutrition < get_starve_nutrition()) t += 10
-		if (prob(2) && prob(t))
+		if (new_prob(2) && new_prob(t))
 			var/phrases = list()
 			if (Target) phrases += "[Target]... looks tasty..."
 			if (nutrition < get_starve_nutrition())

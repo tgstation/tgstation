@@ -37,10 +37,10 @@
 		if(istype(C, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = C
 			H.apply_effect((rand(15, 75)), IRRADIATE, 0)
-			if(prob(5))
+			if(new_prob(5))
 				H.apply_effect((rand(90, 150)), IRRADIATE, 0)
-			if(prob(25))
-				if(prob(75))
+			if(new_prob(25))
+				if(new_prob(75))
 					randmutb(H)
 					domutcheck(H, null, 1)
 				else

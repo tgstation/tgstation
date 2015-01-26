@@ -104,7 +104,7 @@
 		return 1
 	else
 		if(istype(mover, /obj/item/projectile) && density)
-			return prob(30)
+			return new_prob(30)
 		else
 			return !density
 
@@ -224,7 +224,7 @@
 /obj/structure/grille/proc/shock(mob/user as mob, prb)
 	if(!anchored || destroyed)		// anchored/destroyed grilles are never connected
 		return 0
-	if(!prob(prb))
+	if(!new_prob(prb))
 		return 0
 	if(!in_range(src, user))//To prevent TK and mech users from getting shocked
 		return 0

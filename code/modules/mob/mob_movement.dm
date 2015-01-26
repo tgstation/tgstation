@@ -229,14 +229,14 @@
 
 			if(G.state == GRAB_AGGRESSIVE)
 				move_delay = world.time + 10
-				if(!prob(25))
+				if(!new_prob(25))
 					return 1
 				mob.visible_message("<span class='warning'>[mob] has broken free of [G.assailant]'s grip!</span>")
 				qdel(G)
 
 			if(G.state == GRAB_NECK)
 				move_delay = world.time + 10
-				if(!prob(5))
+				if(!new_prob(5))
 					return 1
 				mob.visible_message("<span class='warning'>[mob] has broken free of [G.assailant]'s headlock!</span>")
 				qdel(G)
@@ -256,7 +256,7 @@
 			L.loc = get_step(L, direct)
 			L.dir = direct
 		if(2)
-			if(prob(50))
+			if(new_prob(50))
 				var/locx
 				var/locy
 				switch(direct)

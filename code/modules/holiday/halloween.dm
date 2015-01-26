@@ -9,19 +9,19 @@
 			if(M.job == "Chaplain")
 				if (prob (49))
 					M.show_message("<span class='game'><i>You hear muffled speech... but nothing is there...</i></span>", 2)
-					if(prob(20))
+					if(new_prob(20))
 						playsound(loc, pick('sound/effects/ghost.ogg','sound/effects/ghost2.ogg'), 10, 1)
 				else
 					M.show_message("<span class='game'><i>You hear muffled speech... you can almost make out some words...</i></span>", 2)
 //				M.show_message("<span class='game'><i>[stutter(message)]</i></span>", 2)
-					if(prob(30))
+					if(new_prob(30))
 						playsound(loc, pick('sound/effects/ghost.ogg','sound/effects/ghost2.ogg'), 10, 1)
 			else
-				if(prob(50))
+				if(new_prob(50))
 					return
 				else if(prob (95))
 					M.show_message("<span class='game'><i>You hear muffled speech... but nothing is there...</i></span>", 2)
-					if(prob(20))
+					if(new_prob(20))
 						playsound(loc, pick('sound/effects/ghost.ogg','sound/effects/ghost2.ogg'), 10, 1)
 				else
 					M.show_message("<span class='game'><i>You hear muffled speech... you can almost make out some words...</i></span>", 2)
@@ -67,7 +67,7 @@
 
 /obj/structure/closet/initialize()
 	..()
-	if(prob(30))
+	if(new_prob(30))
 		set_spooky_trap()
 
 /obj/structure/closet/dump_contents()
@@ -75,16 +75,16 @@
 	trigger_spooky_trap()
 
 /obj/structure/closet/proc/set_spooky_trap()
-	if(prob(0.1))
+	if(new_prob(0.1))
 		trapped = INSANE_CLOWN
 		return
-	if(prob(1))
+	if(new_prob(1))
 		trapped = ANGRY_FAITHLESS
 		return
-	if(prob(15))
+	if(new_prob(15))
 		trapped = SCARY_BATS
 		return
-	if(prob(20))
+	if(new_prob(20))
 		trapped = HOWLING_GHOST
 		return
 	else
@@ -183,7 +183,7 @@
 /mob/living/simple_animal/shade/howling_ghost/Life()
 	..()
 	timer--
-	if(prob(20))
+	if(new_prob(20))
 		roam()
 	if(timer == 0)
 		spooky_ghosty()
@@ -194,18 +194,18 @@
 	dir = direction
 
 /mob/living/simple_animal/shade/howling_ghost/proc/roam()
-	if(prob(80))
+	if(new_prob(80))
 		var/direction = pick(NORTH,SOUTH,EAST,WEST,NORTHEAST,NORTHWEST,SOUTHEAST,SOUTHWEST)
 		EtherealMove(direction)
 
 /mob/living/simple_animal/shade/howling_ghost/proc/spooky_ghosty()
-	if(prob(20)) //haunt
+	if(new_prob(20)) //haunt
 		playsound(loc, pick('sound/spookoween/ghosty_wind.ogg','sound/spookoween/ghost_whisper.ogg','sound/spookoween/chain_rattling.ogg'), 300, 1)
-	if(prob(10)) //flickers
+	if(new_prob(10)) //flickers
 		var/obj/machinery/light/L = locate(/obj/machinery/light) in view(5, src)
 		if(L)
 			L.flicker()
-	if(prob(5)) //poltergeist
+	if(new_prob(5)) //poltergeist
 		var/obj/item/I = locate(/obj/item) in view(3, src)
 		if(I)
 			var/direction = pick(NORTH,SOUTH,EAST,WEST,NORTHEAST,NORTHWEST,SOUTHEAST,SOUTHWEST)
@@ -275,12 +275,12 @@
 	return
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/adjustBruteLoss()
-	if(prob(5))
+	if(new_prob(5))
 		playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', 300, 1)
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O,/obj/item/weapon/nullrod))
-		if(prob(5))
+		if(new_prob(5))
 			visible_message("<span class='notice'>[src] finally found the peace it deserves. You hear honks echoing off into the distance.</span>")
 			playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', 300, 1)
 			qdel(src)

@@ -57,7 +57,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 			qdel(src)
 		return
 
-	if(clong && prob(25))
+	if(clong && new_prob(25))
 		x = clong.x
 		y = clong.y
 
@@ -66,7 +66,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 			clong.ex_act(2)
 
 	else if (istype(clong, /mob))
-		if(clong.density || prob(10))
+		if(clong.density || new_prob(10))
 			clong.ex_act(2)
 	else
 		qdel(src)

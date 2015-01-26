@@ -151,15 +151,15 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 	if(emagged == 2) //Emag functions
 		if(istype(loc,/turf/simulated))
 
-			if(prob(10)) //Wets floors randomly
+			if(new_prob(10)) //Wets floors randomly
 				var/turf/simulated/T = loc
 				T.MakeSlippery()
 
-			if(prob(5)) //Spawns foam!
+			if(new_prob(5)) //Spawns foam!
 				visible_message("<span class='danger'>[src] whirs and bubbles violently, before releasing a plume of froth!</span>")
 				new /obj/effect/effect/foam(loc)
 
-	else if (prob(5))
+	else if (new_prob(5))
 		visible_message("[src] makes an excited beeping booping sound!")
 
 	if(!target) //Search for cleanables it can see.
@@ -246,7 +246,7 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
-	if (prob(50))
+	if (new_prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread

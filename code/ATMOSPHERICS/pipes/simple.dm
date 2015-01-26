@@ -103,7 +103,7 @@ The regular pipe you see everywhere, including bent ones.
 		burst()
 	else if(pressure_difference > fatigue_pressure)
 		//TODO: leak to turf, doing pfshhhhh
-		if(prob(5))
+		if(new_prob(5))
 			burst()
 	else return 1
 

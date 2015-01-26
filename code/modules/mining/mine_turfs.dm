@@ -22,10 +22,10 @@
 	..()
 	switch(severity)
 		if(3.0)
-			if (prob(75))
+			if (new_prob(75))
 				src.gets_drilled(null, 1)
 		if(2.0)
-			if (prob(90))
+			if (new_prob(90))
 				src.gets_drilled(null, 1)
 		if(1.0)
 			src.gets_drilled(null, 1)
@@ -54,7 +54,7 @@
 
 	if (mineralName && mineralAmt && spread && spreadChance)
 		for(var/dir in cardinal)
-			if(prob(spreadChance))
+			if(new_prob(spreadChance))
 				var/turf/T = get_step(src, dir)
 				if(istype(T, /turf/simulated/mineral/random))
 					Spread(T)
@@ -78,7 +78,7 @@
 
 /turf/simulated/mineral/random/New()
 	..()
-	if (prob(mineralChance))
+	if (new_prob(mineralChance))
 		var/mName = pickweight(mineralSpawnChanceList) //temp mineral name
 
 		if (mName)
@@ -335,7 +335,7 @@
 
 		if(istype(tunnel))
 			// Small chance to have forks in our tunnel; otherwise dig our tunnel.
-			if(i > 3 && prob(20))
+			if(i > 3 && new_prob(20))
 				new src.type(tunnel, rand(10, 15), 0, dir)
 			else
 				SpawnFloor(tunnel)
@@ -343,7 +343,7 @@
 			break
 
 		// Chance to change our direction left or right.
-		if(i > 2 && prob(33))
+		if(i > 2 && new_prob(33))
 			// We can't go a full loop though
 			next_angle = -next_angle
 			dir = angle2dir(dir2angle(dir) + next_angle)
@@ -363,7 +363,7 @@
 		t.fullUpdateMineralOverlays()
 
 /turf/simulated/floor/plating/asteroid/airless/cave/proc/SpawnMonster(var/turf/T)
-	if(prob(30))
+	if(new_prob(30))
 		if(istype(loc, /area/mine/explored))
 			return
 		for(var/atom/A in range(15,T))//Lowers chance of mob clumps
@@ -496,10 +496,10 @@
 	var/proper_name = name
 	..()
 	name = proper_name
-	//if (prob(50))
+	//if (new_prob(50))
 	//	seedName = pick(list("1","2","3","4"))
 	//	seedAmt = rand(1,4)
-	if(prob(20))
+	if(new_prob(20))
 		icon_state = "asteroid[rand(0,12)]"
 //	spawn(2)
 //O		updateMineralOverlays()
@@ -513,7 +513,7 @@
 		if(3.0)
 			return
 		if(2.0)
-			if (prob(20))
+			if (new_prob(20))
 				src.gets_dug()
 		if(1.0)
 			src.gets_dug()

@@ -200,7 +200,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	detonate = 0
 
 /obj/item/device/pda/ai/attack_self(mob/user as mob)
-	if ((honkamt > 0) && (prob(60)))//For clown virus.
+	if ((honkamt > 0) && (new_prob(60)))//For clown virus.
 		honkamt--
 		playsound(loc, 'sound/items/bikehorn.ogg', 30, 1)
 	..()
@@ -698,9 +698,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 							else
 								difficulty += 2
 
-							if(prob(difficulty * 12) || (P.hidden_uplink))
+							if(new_prob(difficulty * 12) || (P.hidden_uplink))
 								U.show_message("<span class='danger'>An error flashes on your [src].</span>", 1)
-							else if (prob(difficulty * 3))
+							else if (new_prob(difficulty * 3))
 								U.show_message("<span class='danger'>Energy feeds back into your [src]!</span>", 1)
 								U << browse(null, "window=pda")
 								explode()
@@ -741,7 +741,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if (mode == 2||mode == 21)//To clear message overlays.
 		overlays.Cut()
 
-	if ((honkamt > 0) && (prob(60)))//For clown virus.
+	if ((honkamt > 0) && (new_prob(60)))//For clown virus.
 		honkamt--
 		playsound(loc, 'sound/items/bikehorn.ogg', 30, 1)
 

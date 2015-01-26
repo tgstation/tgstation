@@ -68,12 +68,12 @@
 /datum/species/plant/on_hit(proj_type, mob/living/carbon/human/H)
 	switch(proj_type)
 		if(/obj/item/projectile/energy/floramut)
-			if(prob(15))
+			if(new_prob(15))
 				H.apply_effect((rand(30,80)),IRRADIATE)
 				H.Weaken(5)
 				for (var/mob/V in viewers(H))
 					V.show_message("<span class='danger'>[H] writhes in pain as \his vacuoles boil.</span>", 3, "<span class='danger'>You hear the crunching of leaves.</span>", 2)
-				if(prob(80))
+				if(new_prob(80))
 					randmutb(H)
 					domutcheck(H,null)
 				else
@@ -251,7 +251,7 @@
 		if(!(copytext(inserttext, length(inserttext) - 2) == "..."))
 			message_list[insertpos] = inserttext + "..."
 
-		if(prob(20) && message_list.len > 3)
+		if(new_prob(20) && message_list.len > 3)
 			message_list.Insert(insertpos, "[pick("BRAINS", "Brains", "Braaaiinnnsss", "BRAAAIIINNSSS")]...")
 
 	return list2text(message_list, " ")

@@ -204,7 +204,7 @@
 	return min
 
 /proc/n_prob(var/chance)
-	return prob(chance)
+	return new_prob(chance)
 
 /proc/n_randseed(var/seed)
 	rand_seed(seed)

@@ -726,7 +726,7 @@ datum/chemical_reaction/pestkiller
 		var/chosen = pick(critters)
 		var/mob/living/simple_animal/hostile/C = new chosen
 		C.loc = get_turf(holder.my_atom)
-		if(prob(50))
+		if(new_prob(50))
 			for(var/j = 1, j <= rand(1, 3), j++)
 				step(C, pick(NORTH,SOUTH,EAST,WEST))
 /datum/chemical_reaction/slimebork
@@ -753,7 +753,7 @@ datum/chemical_reaction/pestkiller
 		var/obj/B = new chosen
 		if(B)
 			B.loc = get_turf(holder.my_atom)
-			if(prob(50))
+			if(new_prob(50))
 				for(var/j = 1, j <= rand(1, 3), j++)
 					step(B, pick(NORTH,SOUTH,EAST,WEST))
 
@@ -943,7 +943,7 @@ datum/chemical_reaction/pestkiller
 		var/obj/B = new chosen
 		if(B)
 			B.loc = get_turf(holder.my_atom)
-			if(prob(50))
+			if(new_prob(50))
 				for(var/j = 1, j <= rand(1, 3), j++)
 					step(B, pick(NORTH,SOUTH,EAST,WEST))
 
@@ -974,7 +974,7 @@ datum/chemical_reaction/pestkiller
 		var/obj/B = new chosen
 		if(B)
 			B.loc = get_turf(holder.my_atom)
-			if(prob(50))
+			if(new_prob(50))
 				for(var/j = 1, j <= rand(1, 3), j++)
 					step(B, pick(NORTH,SOUTH,EAST,WEST))
 

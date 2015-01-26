@@ -197,14 +197,14 @@ var/datum/subsystem/events/SSevent
 			switch(DD)
 				if(1)
 					holiday = "April Fool's Day"
-					if(YY == 18 && prob(50)) 	holiday = "Easter"
+					if(YY == 18 && new_prob(50)) 	holiday = "Easter"
 				if(5)
 					if(YY == 15)				holiday = "Easter"
 				if(16)
 					if(YY == 17)				holiday = "Easter"
 				if(20)
 					holiday = "Four-Twenty"
-					if(YY == 14 && prob(50))	holiday = "Easter"
+					if(YY == 14 && new_prob(50))	holiday = "Easter"
 				if(22)							holiday = "Earth Day"
 
 		if(5)	//May

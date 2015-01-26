@@ -189,7 +189,7 @@ mob
 			for(var/i = 0 to 1000)
 				// The third parameter forces it to generate a new one, even if it's already cached
 				getFlatIcon(src,0,2)
-				if(prob(5))
+				if(new_prob(5))
 					Add_Overlay()
 			Browse_Icon()
 

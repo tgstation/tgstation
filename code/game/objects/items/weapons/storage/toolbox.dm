@@ -26,7 +26,7 @@
 	..()
 	new /obj/item/weapon/crowbar/red(src)
 	new /obj/item/weapon/extinguisher/mini(src)
-	if(prob(50))
+	if(new_prob(50))
 		new /obj/item/device/flashlight(src)
 	else
 		new /obj/item/device/flashlight/flare(src)
@@ -60,7 +60,7 @@
 	new /obj/item/weapon/crowbar(src)
 	new /obj/item/stack/cable_coil(src,30,color)
 	new /obj/item/stack/cable_coil(src,30,color)
-	if(prob(5))
+	if(new_prob(5))
 		new /obj/item/clothing/gloves/color/yellow(src)
 	else
 		new /obj/item/stack/cable_coil(src,30,color)

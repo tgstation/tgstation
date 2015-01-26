@@ -49,7 +49,7 @@
 	add_fingerprint(user)
 	if(on && user.zone_sel.selecting == "eyes")
 
-		if((user.disabilities & CLUMSY || user.getBrainLoss() >= 60) && prob(50))	//too dumb to use flashlight properly
+		if((user.disabilities & CLUMSY || user.getBrainLoss() >= 60) && new_prob(50))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
 
 		if(!user.IsAdvancedToolUser())

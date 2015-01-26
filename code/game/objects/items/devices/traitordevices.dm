@@ -41,10 +41,10 @@ effective or pretty fucking useless.
 
 	for(var/mob/living/carbon/human/M in orange(10, user))
 		spawn()
-			if(prob(50))
+			if(new_prob(50))
 
 				M.Weaken(rand(10,20))
-				if(prob(25))
+				if(new_prob(25))
 					M.Stun(rand(5,10))
 				M << "<span class='userdanger'>You feel a tremendous, paralyzing wave flood your mind.</span>"
 

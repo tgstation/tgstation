@@ -28,7 +28,7 @@ Bonus
 
 /datum/symptom/sneeze/Activate(var/datum/disease/advance/A)
 	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB))
+	if(new_prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(1, 2, 3)

@@ -20,19 +20,19 @@
 
 	switch(stage)
 		if(1)
-			if(prob(5))
+			if(new_prob(5))
 				affected_mob.emote("cough")
 		if(2)
 			var/obj/item/organ/appendix/A = affected_mob.getorgan(/obj/item/organ/appendix)
 			if(A)
 				A.inflamed = 1
 				A.update_icon()
-			if(prob(3))
+			if(new_prob(3))
 				affected_mob << "<span class='warning'>You feel a stabbing pain in your abdomen!</span>"
 				affected_mob.Stun(rand(2,3))
 				affected_mob.adjustToxLoss(1)
 		if(3)
-			if(prob(1))
+			if(new_prob(1))
 				if (affected_mob.nutrition > 100)
 					affected_mob.Stun(rand(4,6))
 					affected_mob.visible_message("<span class='danger'>[affected_mob] throws up!</span>", \

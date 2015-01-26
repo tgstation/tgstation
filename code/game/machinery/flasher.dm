@@ -91,7 +91,7 @@
 			continue
 
 		O.Weaken(strength)
-		if ((O.eye_stat > 15 && prob(O.eye_stat + 50)))
+		if ((O.eye_stat > 15 && new_prob(O.eye_stat + 50)))
 			flick("e_flash", O:flash)
 			O.eye_stat += rand(1, 2)
 		else
@@ -105,7 +105,7 @@
 	if(stat & (BROKEN|NOPOWER))
 		..(severity)
 		return
-	if(bulb && prob(75/severity))
+	if(bulb && new_prob(75/severity))
 		flash()
 		bulb.burn_out()
 		power_change()
@@ -123,7 +123,7 @@
 /obj/machinery/flasher/portable/flash()
 	if(!..())
 		return
-	if(prob(4))	//Small chance to burn out on use
+	if(new_prob(4))	//Small chance to burn out on use
 		bulb.burn_out()
 		power_change()
 

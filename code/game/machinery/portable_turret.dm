@@ -257,16 +257,16 @@
 			//try and salvage its components
 			user << "<span class='notice'>You begin prying the metal coverings off.</span>"
 			sleep(20)
-			if(prob(70))
+			if(new_prob(70))
 				user << "<span class='notice'>You remove the turret and salvage some components.</span>"
 				if(installation)
 					var/obj/item/weapon/gun/energy/Gun = new installation(loc)
 					Gun.power_supply.charge = gun_charge
 					Gun.update_icon()
 					lasercolor = null
-				if(prob(50))
+				if(new_prob(50))
 					new /obj/item/stack/sheet/metal(loc, rand(1,4))
-				if(prob(50))
+				if(new_prob(50))
 					new /obj/item/device/assembly/prox_sensor(loc)
 			else
 				user << "<span class='notice'>You remove the turret but did not manage to salvage anything.</span>"
@@ -335,7 +335,7 @@
 
 	..()
 
-	if(prob(45) && Proj.damage > 0)
+	if(new_prob(45) && Proj.damage > 0)
 		spark_system.start()
 	if(health <= 0)
 		die()	//the death process :(
@@ -362,7 +362,7 @@
 		criminals = pick(0, 1)
 		auth_weapons = pick(0, 1)
 		stun_all = pick(0, 0, 0, 0, 1)	//stun_all is a pretty big deal, so it's least likely to get turned on
-		if(prob(5))
+		if(new_prob(5))
 			emagged = 1
 
 		on=0

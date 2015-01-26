@@ -197,11 +197,11 @@
 	s.set_up(5, 1, src)
 	s.start()
 	if(severity == 1)
-		if(prob(50))
+		if(new_prob(50))
 			empty_content()
 			qdel(src)
 	else if(severity == 2)
-		if(prob(25))
+		if(new_prob(25))
 			empty_content()
 			qdel(src)
 
@@ -361,7 +361,7 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
-	if(prob(50 / severity) && severity < 3)
+	if(new_prob(50 / severity) && severity < 3)
 		qdel(src)
 
 /**********************Mining Equipment Vendor Items**************************/

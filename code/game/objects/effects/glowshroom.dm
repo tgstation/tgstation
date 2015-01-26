@@ -44,11 +44,11 @@
 	set background = BACKGROUND_ENABLED
 
 	for(var/i=1,i<=yield,i++)
-		if(prob(1/(generation * generation) * 100))//This formula gives you diminishing returns based on generation. 100% with 1st gen, decreasing to 25%, 11%, 6, 4, 2...
+		if(new_prob(1/(generation * generation) * 100))//This formula gives you diminishing returns based on generation. 100% with 1st gen, decreasing to 25%, 11%, 6, 4, 2...
 			var/list/possibleLocs = list()
 			var/spreadsIntoAdjacent = 0
 
-			if(prob(spreadIntoAdjacentChance))
+			if(new_prob(spreadIntoAdjacentChance))
 				spreadsIntoAdjacent = 1
 
 			for(var/turf/simulated/floor/earth in view(3,src))
@@ -123,11 +123,11 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if (new_prob(50))
 				qdel(src)
 				return
 		if(3.0)
-			if (prob(5))
+			if (new_prob(5))
 				qdel(src)
 				return
 		else

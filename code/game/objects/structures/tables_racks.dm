@@ -185,11 +185,11 @@
 /obj/structure/table/ex_act(severity, target)
 	..()
 	if(severity == 3)
-		if(prob(25))
+		if(new_prob(25))
 			table_destroy(1)
 
 /obj/structure/table/blob_act()
-	if(prob(75))
+	if(new_prob(75))
 		table_destroy(1)
 		return
 
@@ -470,7 +470,7 @@
 
 /obj/structure/table/reinforced/attack_hulk(mob/living/carbon/human/user)
 	..(user, 1)
-	if(prob(75))
+	if(new_prob(75))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 		user << text("<span class='notice'>You kick [src] into pieces.</span>")
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
@@ -498,19 +498,19 @@
 		if(1.0)
 			qdel(src)
 		if(2.0)
-			if(prob(50))
+			if(new_prob(50))
 				rack_destroy()
 			else
 				qdel(src)
 		if(3.0)
-			if(prob(25))
+			if(new_prob(25))
 				rack_destroy()
 
 /obj/structure/rack/blob_act()
-	if(prob(75))
+	if(new_prob(75))
 		qdel(src)
 		return
-	else if(prob(50))
+	else if(new_prob(50))
 		rack_destroy()
 		return
 

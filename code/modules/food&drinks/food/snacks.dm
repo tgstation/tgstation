@@ -187,7 +187,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/attack_animal(mob/M)
 	if(isanimal(M))
 		if(iscorgi(M))
-			if(bitecount == 0 || prob(50))
+			if(bitecount == 0 || new_prob(50))
 				M.emote("me", 1, "nibbles away at \the [src]")
 			bitecount++
 			if(bitecount >= 5)

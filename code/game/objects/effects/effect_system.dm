@@ -465,7 +465,7 @@ steam.start() -- spawns the effect
 	..()
 	for(var/atom/A in view(1, src))
 		if(reagents.has_reagent("radium")||reagents.has_reagent("uranium")||reagents.has_reagent("carbon")||reagents.has_reagent("thermite"))//Prevents unholy radium spam by reducing the number of 'greenglows' down to something reasonable -Sieve
-			if(prob(5))
+			if(new_prob(5))
 				reagents.reaction(A)
 		else
 			reagents.reaction(A)
@@ -843,7 +843,7 @@ steam.start() -- spawns the effect
 // foam disolves when heated
 // except metal foams
 /obj/effect/effect/foam/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(!metal && prob(max(0, exposed_temperature - 475)))
+	if(!metal && new_prob(max(0, exposed_temperature - 475)))
 		flick("[icon_state]-disolve", src)
 
 		spawn(5)
@@ -952,7 +952,7 @@ steam.start() -- spawns the effect
 
 /obj/structure/foamedmetal/bullet_act()
 	..()
-	if(metal==1 || prob(50))
+	if(metal==1 || new_prob(50))
 		qdel(src)
 
 /obj/structure/foamedmetal/attack_paw(var/mob/user)
@@ -968,7 +968,7 @@ steam.start() -- spawns the effect
 
 /obj/structure/foamedmetal/attack_hulk(mob/living/carbon/human/user)
 	..(user, 1)
-	if(prob(75 - metal*25))
+	if(new_prob(75 - metal*25))
 		user.visible_message("<span class='danger'>[user] smashes through the foamed metal.</span>", \
 						"<span class='danger'>You smash through the metal foam wall.</span>")
 		qdel(src)
@@ -987,7 +987,7 @@ steam.start() -- spawns the effect
 		qdel(src)
 		return
 
-	if(prob(I.force*20 - metal*25))
+	if(new_prob(I.force*20 - metal*25))
 		user.visible_message("<span class='danger'>[user] smashes through the foamed metal.</span>", \
 						"<span class='danger'>You smash through the foamed metal with \the [I].</span>")
 		qdel(src)

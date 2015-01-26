@@ -19,11 +19,11 @@
 				occupied = 0
 			qdel(src)
 		if (2)
-			if (prob(50))
+			if (new_prob(50))
 				src.health -= 15
 				src.healthcheck()
 		if (3)
-			if (prob(50))
+			if (new_prob(50))
 				src.health -= 5
 				src.healthcheck()
 
@@ -37,7 +37,7 @@
 
 
 /obj/structure/displaycase/blob_act()
-	if (prob(75))
+	if (new_prob(75))
 		new /obj/item/weapon/shard( src.loc )
 		if (occupied)
 			new /obj/item/weapon/gun/energy/laser/captain( src.loc )

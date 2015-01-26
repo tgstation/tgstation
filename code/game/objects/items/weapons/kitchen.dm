@@ -28,7 +28,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/weapon/kitchen/utensil/New()
-	if (prob(60))
+	if (new_prob(60))
 		src.pixel_y = rand(0, 4)
 	return
 
@@ -66,7 +66,7 @@
 		src.icon_state = "fork"
 		return
 	else
-		if(user.disabilities & CLUMSY && prob(50))
+		if(user.disabilities & CLUMSY && new_prob(50))
 			M = user
 		return eyestab(M,user)
 
@@ -87,7 +87,7 @@
 	return (BRUTELOSS)
 
 /obj/item/weapon/kitchen/utensil/knife/attack(target, mob/living/carbon/human/user)
-	if(istype(user) && user.disabilities & CLUMSY && prob(50))
+	if(istype(user) && user.disabilities & CLUMSY && new_prob(50))
 		user << "<span class='danger'>You accidentally cut yourself with \the [src].</span>"
 		user.take_organ_damage(20)
 		return

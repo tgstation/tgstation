@@ -36,7 +36,7 @@
 	viruses += DD
 	DD.affected_mob = src
 	DD.holder = src
-	if(DD.disease_flags & CAN_CARRY && prob(5))
+	if(DD.disease_flags & CAN_CARRY && new_prob(5))
 		DD.carrier = 1
 	DD.affected_mob.med_hud_set_status()
 
@@ -64,10 +64,10 @@
 		hands_ch = 0
 		feet_ch = 100
 
-	if(prob(15/D.permeability_mod))
+	if(new_prob(15/D.permeability_mod))
 		return
 
-	if(satiety>0 && prob(satiety/10)) // positive satiety makes it harder to contract the disease.
+	if(satiety>0 && new_prob(satiety/10)) // positive satiety makes it harder to contract the disease.
 		return
 
 	var/target_zone = pick(head_ch;1,body_ch;2,hands_ch;3,feet_ch;4)
@@ -79,33 +79,33 @@
 			if(1)
 				if(isobj(H.head) && !istype(H.head, /obj/item/weapon/paper))
 					Cl = H.head
-					passed = prob((Cl.permeability_coefficient*100) - 1)
+					passed = new_prob((Cl.permeability_coefficient*100) - 1)
 				if(passed && isobj(H.wear_mask))
 					Cl = H.wear_mask
-					passed = prob((Cl.permeability_coefficient*100) - 1)
+					passed = new_prob((Cl.permeability_coefficient*100) - 1)
 			if(2)
 				if(isobj(H.wear_suit))
 					Cl = H.wear_suit
-					passed = prob((Cl.permeability_coefficient*100) - 1)
+					passed = new_prob((Cl.permeability_coefficient*100) - 1)
 				if(passed && isobj(slot_w_uniform))
 					Cl = slot_w_uniform
-					passed = prob((Cl.permeability_coefficient*100) - 1)
+					passed = new_prob((Cl.permeability_coefficient*100) - 1)
 			if(3)
 				if(isobj(H.wear_suit) && H.wear_suit.body_parts_covered&HANDS)
 					Cl = H.wear_suit
-					passed = prob((Cl.permeability_coefficient*100) - 1)
+					passed = new_prob((Cl.permeability_coefficient*100) - 1)
 
 				if(passed && isobj(H.gloves))
 					Cl = H.gloves
-					passed = prob((Cl.permeability_coefficient*100) - 1)
+					passed = new_prob((Cl.permeability_coefficient*100) - 1)
 			if(4)
 				if(isobj(H.wear_suit) && H.wear_suit.body_parts_covered&FEET)
 					Cl = H.wear_suit
-					passed = prob((Cl.permeability_coefficient*100) - 1)
+					passed = new_prob((Cl.permeability_coefficient*100) - 1)
 
 				if(passed && isobj(H.shoes))
 					Cl = H.shoes
-					passed = prob((Cl.permeability_coefficient*100) - 1)
+					passed = new_prob((Cl.permeability_coefficient*100) - 1)
 
 	else if(istype(src, /mob/living/carbon/monkey))
 		var/mob/living/carbon/monkey/M = src
@@ -113,10 +113,10 @@
 			if(1)
 				if(M.wear_mask && isobj(M.wear_mask))
 					Cl = M.wear_mask
-					passed = prob((Cl.permeability_coefficient*100) - 1)
+					passed = new_prob((Cl.permeability_coefficient*100) - 1)
 
 	if(!passed && (D.spread_flags & AIRBORNE) && !internals)
-		passed = (prob((50*D.permeability_mod) - 1))
+		passed = (new_prob((50*D.permeability_mod) - 1))
 
 	if(passed)
 		AddDisease(D)

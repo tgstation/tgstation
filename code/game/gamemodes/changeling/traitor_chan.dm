@@ -68,7 +68,7 @@
 	if(changelings.len >= changelingcap) //Caps number of latejoin antagonists
 		..()
 		return
-	if(changelings.len <= (changelingcap - 2) || prob(100 / (config.changeling_scaling_coeff * 4)))
+	if(changelings.len <= (changelingcap - 2) || new_prob(100 / (config.changeling_scaling_coeff * 4)))
 		if(character.client.prefs.be_special & BE_CHANGELING)
 			if(!jobban_isbanned(character.client, "changeling") && !jobban_isbanned(character.client, "Syndicate"))
 				if(!(character.job in ticker.mode.restricted_jobs))

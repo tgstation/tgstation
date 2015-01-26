@@ -60,7 +60,7 @@
 	hue = "#ffff00"
 
 /datum/spacevine_mutation/light/on_grow(obj/effect/spacevine/holder)
-	if(prob(10*severity))
+	if(new_prob(10*severity))
 		holder.luminosity = 4
 
 /datum/spacevine_mutation/toxicity
@@ -70,7 +70,7 @@
 /datum/spacevine_mutation/toxicity/on_cross(obj/effect/spacevine/holder, mob/living/crosser)
 	if(issilicon(crosser))
 		return
-	if(prob(severity))
+	if(new_prob(severity))
 		if(crosser.client)
 			crosser << "<span class='alert'>You accidently touch the vine and feel a strange sensation.</span>"
 		crosser.adjustToxLoss(5)
@@ -168,13 +168,13 @@
 	hue = "#666666"
 
 /datum/spacevine_mutation/thorns/on_cross(obj/effect/spacevine/holder, crosser)
-	if(isliving(crosser) && prob(severity))
+	if(isliving(crosser) && new_prob(severity))
 		var/mob/living/M = crosser
 		M.adjustBruteLoss(5)
 		M << "<span class='alert'>You cut yourself on the thorny vines.</span>"
 
 /datum/spacevine_mutation/thorns/on_hit(obj/effect/spacevine/holder, hitter)
-	if(ismob(hitter) && prob(severity))
+	if(ismob(hitter) && new_prob(severity))
 		var/mob/living/M = hitter
 		M.adjustBruteLoss(5)
 		M << "<span class='alert'>You cut yourself on the thorny vines.</span>"
@@ -194,7 +194,7 @@
 			chance = I.force * 2
 		else
 			chance = 8
-		if(prob(chance))
+		if(new_prob(chance))
 			holder.Destroy()
 	return 1
 
@@ -234,7 +234,7 @@
 	for(var/datum/spacevine_mutation/SM in mutations)
 		override += SM.on_chem(src, R)
 	if(!override && istype(R, /datum/reagent/toxin/plantbgone))
-		if(prob(50))
+		if(new_prob(50))
 			Destroy()
 
 /obj/effect/spacevine/proc/eat(mob/eater)
@@ -242,7 +242,7 @@
 	for(var/datum/spacevine_mutation/SM in mutations)
 		override += SM.on_eat(src, eater)
 	if(!override)
-		if(prob(10))
+		if(new_prob(10))
 			eater.say("Nom")
 		Destroy()
 
@@ -268,15 +268,15 @@
 		if(/obj/item/weapon/melee/energy) qdel(src)
 		if(/obj/item/weapon/scythe)
 			for(var/obj/effect/spacevine/B in orange(src,1))
-				if(prob(80))
+				if(new_prob(80))
 					qdel(B)
 			qdel(src)
 
 		//less effective weapons
 		if(/obj/item/weapon/wirecutters)
-			if(prob(25)) qdel(src)
+			if(new_prob(25)) qdel(src)
 		if(/obj/item/weapon/shard)
-			if(prob(25)) qdel(src)
+			if(new_prob(25)) qdel(src)
 
 		else //weapons with subtypes
 			if(istype(W, /obj/item/weapon/melee/energy/sword)) qdel(src)
@@ -343,7 +343,7 @@
 		SV.mutations |= parent.mutations
 		SV.color = parent.color
 		SV.desc = parent.desc
-		if(prob(mutativness))
+		if(new_prob(mutativness))
 			SV.mutations |= pick(mutations_list)
 			var/datum/spacevine_mutation/randmut = pick(SV.mutations)
 			SV.color = randmut.hue
@@ -371,7 +371,7 @@
 	if(reached_collapse_size)
 		length = 0
 	else if(reached_slowdown_size)
-		if(prob(25))
+		if(new_prob(25))
 			length = 1
 		else
 			length = 0
@@ -388,12 +388,12 @@
 		for(var/datum/spacevine_mutation/SM in SV.mutations)
 			SM.process_mutation(SV)
 		if(SV.energy < 2) //If tile isn't fully grown
-			if(prob(20))
+			if(new_prob(20))
 				SV.grow()
 		else //If tile is fully grown
 			SV.buckle_mob()
 
-		//if(prob(25))
+		//if(new_prob(25))
 		SV.spread()
 		if(i >= length)
 			break
@@ -416,7 +416,7 @@
 		SM.on_grow(src)
 
 /obj/effect/spacevine/buckle_mob()
-	if(!buckled_mob && prob(25))
+	if(!buckled_mob && new_prob(25))
 		for(var/mob/living/carbon/V in src.loc)
 			for(var/datum/spacevine_mutation/SM in mutations)
 				SM.on_buckle(src, V)
@@ -441,14 +441,14 @@
 /obj/effect/spacevine/proc/Life()
 	if (!src) return
 	var/Vspread
-	if (prob(50)) Vspread = locate(src.x + rand(-1,1),src.y,src.z)
+	if (new_prob(50)) Vspread = locate(src.x + rand(-1,1),src.y,src.z)
 	else Vspread = locate(src.x,src.y + rand(-1, 1),src.z)
 	var/dogrowth = 1
 	if (!istype(Vspread, /turf/simulated)) dogrowth = 0
 	for(var/obj/O in Vspread)
 		if (istype(O, /obj/structure/window) || istype(O, /obj/effect/forcefield) || istype(O, /obj/effect/blob) || istype(O, /obj/effect/alien/weeds) || istype(O, /obj/effect/spacevine)) dogrowth = 0
 		if (istype(O, /obj/machinery/door/))
-			if(O:p_open == 0 && prob(50)) O:open()
+			if(O:p_open == 0 && new_prob(50)) O:open()
 			else dogrowth = 0
 	if (dogrowth == 1)
 		var/obj/effect/spacevine/B = new /obj/effect/spacevine(Vspread)
@@ -477,11 +477,11 @@
 			Destroy()
 			return
 		if(2.0)
-			if (prob(90))
+			if (new_prob(90))
 				Destroy()
 				return
 		if(3.0)
-			if (prob(50))
+			if (new_prob(50))
 				Destroy()
 				return
 	return

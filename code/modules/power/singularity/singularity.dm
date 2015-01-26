@@ -96,7 +96,7 @@
 	if(current_size >= STAGE_TWO)
 		move()
 		pulse()
-		if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
+		if(new_prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
 			event()
 	eat()
 	dissipate()
@@ -242,7 +242,7 @@
 	if(force_move)
 		movement_dir = force_move
 
-	if(target && prob(60))
+	if(target && new_prob(60))
 		movement_dir = get_dir(src,target) //moves to a singulo beacon, if there is one
 
 	step(src, movement_dir)

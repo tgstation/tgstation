@@ -80,7 +80,7 @@ MASS SPECTROMETER
 /obj/item/device/healthanalyzer/attack(mob/living/M as mob, mob/living/carbon/human/user as mob)
 
 	// Clumsiness/brain damage check
-	if ((user.disabilities & CLUMSY || user.getBrainLoss() >= 60) && prob(50))
+	if ((user.disabilities & CLUMSY || user.getBrainLoss() >= 60) && new_prob(50))
 		user << "<span class='notice'>You stupidly try to analyze the floor's vitals!</span>"
 		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>")
 		user.show_message("<span class='notice'>Analyzing Results for The floor:\n\t Overall Status: Healthy", 1)
@@ -290,7 +290,7 @@ MASS SPECTROMETER
 				break
 		var/dat = "Trace Chemicals Found: "
 		for(var/R in blood_traces)
-			if(prob(reliability))
+			if(new_prob(reliability))
 				if(details)
 					dat += "[R] ([blood_traces[R]] units) "
 				else

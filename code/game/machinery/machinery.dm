@@ -182,7 +182,7 @@ Class Procs:
 	update_icon()
 
 /obj/machinery/blob_act()
-	if(prob(50))
+	if(new_prob(50))
 		qdel(src)
 
 /obj/machinery/proc/auto_use_power()
@@ -295,7 +295,7 @@ Class Procs:
 		if(H.getBrainLoss() >= 60)
 			visible_message("<span class='danger'>[H] stares cluelessly at [src] and drools.</span>")
 			return 1
-		else if(prob(H.getBrainLoss()))
+		else if(new_prob(H.getBrainLoss()))
 			user << "<span class='danger'>You momentarily forget how to use [src].</span>"
 			return 1
 

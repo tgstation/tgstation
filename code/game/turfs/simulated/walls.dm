@@ -60,12 +60,12 @@
 			src.ChangeTurf(/turf/space)
 			return
 		if(2.0)
-			if (prob(50))
+			if (new_prob(50))
 				dismantle_wall(0,1)
 			else
 				dismantle_wall(1,1)
 		if(3.0)
-			if (prob(hardness))
+			if (new_prob(hardness))
 				dismantle_wall(0,1)
 			else
 	if(!density)
@@ -73,14 +73,14 @@
 	return
 
 /turf/simulated/wall/blob_act()
-	if(prob(50))
+	if(new_prob(50))
 		dismantle_wall()
 
 /turf/simulated/wall/mech_melee_attack(obj/mecha/M)
 	if(M.damtype == "brute")
 		playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
 		visible_message("<span class='danger'>[M.name] has hit [src]!</span>")
-		if(prob(5) && M.force > 20)
+		if(new_prob(5) && M.force > 20)
 			dismantle_wall(1)
 			visible_message("<span class='warning'>[src.name] smashes through the wall!</span>")
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
@@ -101,7 +101,7 @@
 
 /turf/simulated/wall/attack_hulk(mob/user)
 	..(user, 1)
-	if(prob(hardness))
+	if(new_prob(hardness))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 		user << text("<span class='notice'>You smash through the wall.</span>")
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
@@ -269,13 +269,13 @@
 
 /turf/simulated/wall/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
-		if(prob(50))
+		if(new_prob(50))
 			dismantle_wall()
 		return
 	if(current_size == STAGE_FOUR)
-		if(prob(30))
+		if(new_prob(30))
 			dismantle_wall()
 
 /turf/simulated/wall/narsie_act()
-	if(prob(20))
+	if(new_prob(20))
 		ChangeTurf(/turf/simulated/wall/cult)

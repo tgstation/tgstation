@@ -346,7 +346,7 @@ ________________________________________________________________________________
 
 /proc/create_space_ninja(spawn_loc)
 	var/mob/living/carbon/human/new_ninja = new(spawn_loc)
-	if(prob(50)) new_ninja.gender = "female"
+	if(new_prob(50)) new_ninja.gender = "female"
 	var/datum/preferences/A = new()//Randomize appearance for the ninja.
 	A.real_name = "[pick(ninja_titles)] [pick(ninja_names)]"
 	A.copy_to(new_ninja)
@@ -1026,7 +1026,7 @@ This is so anime it hurts. But that's the point.*/
 				spawn(0)
 					var/limit = 4
 					for(var/turf/T in oview(5))
-						if(prob(20))
+						if(new_prob(20))
 							spawn(0)
 								anim(T,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
 							limit--
@@ -1188,7 +1188,7 @@ ________________________________________________________________________________
 			if(s_active)//If stealth is active.
 				A += s_acost
 		else
-			if(prob(s_delay))//Suit delay is used as probability. May change later.
+			if(new_prob(s_delay))//Suit delay is used as probability. May change later.
 				U.adjustBruteLoss(k_damage)//Default damage done, usually 1.
 			A = k_cost//kamikaze cost.
 		cell.charge-=A
@@ -2373,7 +2373,7 @@ It is possible to destroy the net by the occupant or someone else.
 		if(2.0)
 			health-=50
 		if(3.0)
-			health-=prob(50)?50:25
+			health-=new_prob(50)?50:25
 	healthcheck()
 	return
 

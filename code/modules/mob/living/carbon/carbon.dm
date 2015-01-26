@@ -37,7 +37,7 @@
 
 /mob/living/carbon/relaymove(var/mob/user, direction)
 	if(user in src.stomach_contents)
-		if(prob(40))
+		if(new_prob(40))
 			audible_message("<span class='danger'>You hear something rumbling inside [src]'s stomach...</span>", \
 						 "<span class='danger'>You hear something rumbling.</span>", 4,\
 						  "<span class='danger'>Something is rumbling inside your stomach!</span>")
@@ -58,7 +58,7 @@
 									"<span class='userdanger'>[user] attacks your stomach wall with the [I.name]!</span>")
 				playsound(user.loc, 'sound/effects/attackblob.ogg', 50, 1)
 
-				if(prob(src.getBruteLoss() - 50))
+				if(new_prob(src.getBruteLoss() - 50))
 					for(var/atom/movable/A in stomach_contents)
 						A.loc = loc
 						stomach_contents.Remove(A)
@@ -145,9 +145,9 @@
 				var/brutedamage = org.brute_dam
 				var/burndamage = org.burn_dam
 				if(hallucination)
-					if(prob(30))
+					if(new_prob(30))
 						brutedamage += rand(30,40)
-					if(prob(30))
+					if(new_prob(30))
 						burndamage += rand(30,40)
 
 				if(brutedamage > 0)
@@ -403,10 +403,10 @@
 
 /mob/living/carbon/getTrail()
 	if(getBruteLoss() < 300)
-		if(prob(50))
+		if(new_prob(50))
 			return "ltrails_1"
 		return "ltrails_2"
-	else if(prob(50))
+	else if(new_prob(50))
 		return "trails_1"
 	return "trails_2"
 

@@ -177,7 +177,7 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 
 		if(M.powerlevel > 0)
 			var/stunprob = M.powerlevel * 7 + 10  // 17 at level 1, 80 at level 10
-			if(prob(stunprob))
+			if(new_prob(stunprob))
 				M.powerlevel -= 3
 				if(M.powerlevel < 0)
 					M.powerlevel = 0
@@ -220,7 +220,7 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 			M << "<span class='warning'>You can't bite with your mouth covered!</span>"
 			return 0
 		M.do_attack_animation(src)
-		if (prob(75))
+		if (new_prob(75))
 			add_logs(M, src, "attacked", admin=0)
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 			visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
@@ -240,7 +240,7 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 
 		else
 			L.do_attack_animation(src)
-			if(prob(90))
+			if(new_prob(90))
 				add_logs(L, src, "attacked", admin=0)
 				visible_message("<span class='danger'>[L.name] bites [src]!</span>", \
 						"<span class='userdanger'>[L.name] bites [src]!</span>")

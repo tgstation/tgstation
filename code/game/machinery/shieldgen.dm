@@ -67,13 +67,13 @@
 /obj/machinery/shield/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
-			if (prob(75))
+			if (new_prob(75))
 				qdel(src)
 		if(2.0)
-			if (prob(50))
+			if (new_prob(50))
 				qdel(src)
 		if(3.0)
-			if (prob(25))
+			if (new_prob(25))
 				qdel(src)
 	return
 
@@ -82,7 +82,7 @@
 		if(1)
 			qdel(src)
 		if(2)
-			if(prob(50))
+			if(new_prob(50))
 				qdel(src)
 
 /obj/machinery/shield/blob_act()
@@ -153,7 +153,7 @@
 
 	for(var/turf/target_tile in range(shield_range, src))
 		if (istype(target_tile,/turf/space) && !(locate(/obj/machinery/shield) in target_tile))
-			if (malfunction && prob(33) || !malfunction)
+			if (malfunction && new_prob(33) || !malfunction)
 				deployed_shields += new /obj/machinery/shield(target_tile)
 
 /obj/machinery/shieldgen/proc/shields_down()
@@ -168,7 +168,7 @@
 
 /obj/machinery/shieldgen/process()
 	if(malfunction && active)
-		if(deployed_shields.len && prob(5))
+		if(deployed_shields.len && new_prob(5))
 			qdel(pick(deployed_shields))
 
 	return
@@ -188,7 +188,7 @@
 			src.checkhp()
 		if(2.0)
 			src.health -= 30
-			if (prob(15))
+			if (new_prob(15))
 				src.malfunction = 1
 			src.checkhp()
 		if(3.0)
@@ -203,7 +203,7 @@
 			malfunction = 1
 			locked = pick(0,1)
 		if(2)
-			if(prob(50))
+			if(new_prob(50))
 				src.health *= 0.3 //chop off a third of the health
 				malfunction = 1
 	checkhp()
@@ -549,7 +549,7 @@
 			qdel(src)
 			return
 //
-		if(prob(50))
+		if(new_prob(50))
 			gen_primary.storedpower -= 10
 		else
 			gen_secondary.storedpower -=10
@@ -558,7 +558,7 @@
 /obj/machinery/shieldwall/bullet_act(var/obj/item/projectile/Proj)
 	if(needs_power)
 		var/obj/machinery/shieldwallgen/G
-		if(prob(50))
+		if(new_prob(50))
 			G = gen_primary
 		else
 			G = gen_secondary
@@ -572,21 +572,21 @@
 		var/obj/machinery/shieldwallgen/G
 		switch(severity)
 			if(1.0) //big boom
-				if(prob(50))
+				if(new_prob(50))
 					G = gen_primary
 				else
 					G = gen_secondary
 				G.storedpower -= 200
 
 			if(2.0) //medium boom
-				if(prob(50))
+				if(new_prob(50))
 					G = gen_primary
 				else
 					G = gen_secondary
 				G.storedpower -= 50
 
 			if(3.0) //lil boom
-				if(prob(50))
+				if(new_prob(50))
 					G = gen_primary
 				else
 					G = gen_secondary
@@ -598,9 +598,9 @@
 	if(height==0) return 1
 
 	if(istype(mover) && mover.checkpass(PASSGLASS))
-		return prob(20)
+		return new_prob(20)
 	else
 		if (istype(mover, /obj/item/projectile))
-			return prob(10)
+			return new_prob(10)
 		else
 			return !src.density

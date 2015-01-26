@@ -90,9 +90,9 @@ datum/reagent/blob/radioactive_liquid/reaction_mob(var/mob/living/M as mob, var/
 		if(istype(M, /mob/living/carbon/human))
 			M.apply_damage(10, BRUTE)
 			M.apply_effect(10,IRRADIATE,0)
-			if(prob(33))
+			if(new_prob(33))
 				randmuti(M)
-				if(prob(98))
+				if(new_prob(98))
 					randmutb(M)
 				else
 					randmutg(M)
@@ -133,7 +133,7 @@ datum/reagent/blob/explosive // I'm gonna burn in hell for this one
 
 datum/reagent/blob/explosive/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
-		if(prob(75))
+		if(new_prob(75))
 			M << "<span class = 'userdanger'>The blob strikes you, and its tendrils explode!</span>"
 			explosion(M.loc, 0, 0, 1, 0, 0)
 

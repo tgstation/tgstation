@@ -66,9 +66,9 @@
 		G.process()
 
 	if(!client && stat == CONSCIOUS)
-		if(prob(33) && canmove && isturf(loc) && !pulledby && !grabbed_by.len)
+		if(new_prob(33) && canmove && isturf(loc) && !pulledby && !grabbed_by.len)
 			step(src, pick(cardinal))
-		if(prob(1))
+		if(new_prob(1))
 			emote(pick("scratch","jump","roll","tail"))
 
 /mob/living/carbon/monkey/calculate_affecting_pressure(var/pressure)
@@ -92,14 +92,14 @@
 		switch(radiation)
 			if(0 to 50)
 				radiation--
-				if(prob(25))
+				if(new_prob(25))
 					adjustToxLoss(1)
 					updatehealth()
 
 			if(50 to 75)
 				radiation -= 2
 				adjustToxLoss(1)
-				if(prob(5))
+				if(new_prob(5))
 					radiation -= 5
 					Weaken(3)
 					src << "<span class='danger'>You feel weak.</span>"
@@ -109,7 +109,7 @@
 			if(75 to 100)
 				radiation -= 3
 				adjustToxLoss(3)
-				if(prob(1))
+				if(new_prob(1))
 					src << "<span class='danger'>You mutate!</span>"
 					randmutb(src)
 					domutcheck(src,null)
@@ -130,7 +130,7 @@
 		losebreath++
 	if(losebreath>0) //Suffocating so do not take a breath
 		losebreath--
-		if (prob(75)) //High chance of gasping for air
+		if (new_prob(75)) //High chance of gasping for air
 			spawn emote("gasp")
 		if(istype(loc, /obj/))
 			var/obj/location_as_object = loc
@@ -203,7 +203,7 @@
 	var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*breath_pressure
 
 	if(O2_pp < safe_oxygen_min) 			// Too little oxygen
-		if(prob(20))
+		if(new_prob(20))
 			spawn(0) emote("gasp")
 		if (O2_pp == 0)
 			O2_pp = 0.01
@@ -233,7 +233,7 @@
 			adjustOxyLoss(3) // Lets hurt em a little, let them know we mean business
 			if(world.time - co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 				adjustOxyLoss(8)
-		if(prob(20)) // Lets give them some chance to know somethings not right though I guess.
+		if(new_prob(20)) // Lets give them some chance to know somethings not right though I guess.
 			spawn(0) emote("cough")
 
 	else
@@ -256,12 +256,12 @@
 				if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
 					sleeping = max(sleeping+2, 10)
 			else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-				if(prob(20))
+				if(new_prob(20))
 					spawn(0) emote(pick("giggle", "laugh"))
 
 
 	if(breath.temperature > (T0C+66)) // Hot air hurts :(
-		if(prob(20))
+		if(new_prob(20))
 			src << "<span class='danger'>You feel a searing heat in your lungs!</span>"
 		fire_alert = max(fire_alert, 2)
 	else
@@ -327,7 +327,7 @@
 	if (drowsyness)
 		drowsyness--
 		eye_blurry = max(2, eye_blurry)
-		if (prob(5))
+		if (new_prob(5))
 			sleeping += 1
 			Paralyse(5)
 
@@ -356,7 +356,7 @@
 
 		//UNCONSCIOUS. NO-ONE IS HOME
 		if( (getOxyLoss() > 25) || (config.health_threshold_crit >= health) )
-			if( health <= 20 && prob(1) )
+			if( health <= 20 && new_prob(1) )
 				spawn(0)
 					emote("gasp")
 			if(!reagents.has_reagent("epinephrine"))
@@ -369,7 +369,7 @@
 		else if(sleeping)
 			sleeping = max(sleeping-1, 0)
 			stat = UNCONSCIOUS
-			if( prob(10) && health )
+			if( new_prob(10) && health )
 				spawn(0)
 					emote("snore")
 		//CONSCIOUS
@@ -514,7 +514,7 @@
 	return 1
 
 /mob/living/carbon/monkey/proc/handle_random_events()
-	if (prob(1) && prob(2))
+	if (new_prob(1) && new_prob(2))
 		spawn(0)
 			emote("scratch")
 			return

@@ -50,7 +50,7 @@
 			prob_chance = implements[implement_type]
 		prob_chance *= get_location_modifier(target)
 
-		if(prob(prob_chance))
+		if(new_prob(prob_chance))
 			if(success(user, target, target_zone, tool, surgery))
 				advance = 1
 		else

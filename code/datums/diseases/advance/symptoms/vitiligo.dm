@@ -26,7 +26,7 @@ BONUS
 
 /datum/symptom/vitiligo/Activate(var/datum/disease/advance/A)
 	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB))
+	if(new_prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M

@@ -220,7 +220,7 @@
 			if(nag_on_empty) //Floorbot is empty and cannot acquire more tiles, nag the engineers for more!
 				nag()
 
-	if(prob(5))
+	if(new_prob(5))
 		visible_message("[src] makes an excited booping beeping sound!")
 
 	//Normal scanning procedure. We have tiles loaded, are not emagged.
@@ -297,7 +297,7 @@
 				var/turf/simulated/floor/F = target
 				anchored = 1
 				mode = BOT_REPAIRING
-				if(prob(90))
+				if(new_prob(90))
 					F.break_tile_to_plating()
 				else
 					F.ReplaceWithLattice()
@@ -454,7 +454,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
-	if (prob(50))
+	if (new_prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
 
 	while (amount)//Dumps the tiles into the appropriate sized stacks

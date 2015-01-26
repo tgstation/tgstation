@@ -66,7 +66,7 @@
 	new /obj/item/clothing/under/color/black(src)
 	new /obj/item/clothing/under/color/black(src)
 	new /obj/item/clothing/under/color/black(src)
-	if(prob(25))
+	if(new_prob(25))
 		new /obj/item/clothing/suit/jacket/leather(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
@@ -79,7 +79,7 @@
 	new /obj/item/clothing/head/soft/black(src)
 	new /obj/item/clothing/mask/bandana/black(src)
 	new /obj/item/clothing/mask/bandana/black(src)
-	if(prob(40))
+	if(new_prob(40))
 		new /obj/item/clothing/mask/bandana/skull(src)
 	return
 
@@ -275,9 +275,9 @@
 	new /obj/item/clothing/gloves/fingerless(src)
 	new /obj/item/clothing/head/soft/black(src)
 	new /obj/item/clothing/head/soft/black(src)
-	if(prob(40))
+	if(new_prob(40))
 		new /obj/item/clothing/mask/bandana/skull(src)
-	if(prob(40))
+	if(new_prob(40))
 		new /obj/item/clothing/mask/bandana/skull(src)
 	return
 
@@ -344,16 +344,16 @@
 	new /obj/item/clothing/head/soft/grey(src)
 	new /obj/item/clothing/head/soft/grey(src)
 	new /obj/item/clothing/head/soft/grey(src)
-	if(prob(50))
+	if(new_prob(50))
 		new /obj/item/weapon/storage/backpack/dufflebag(src)
-	if(prob(40))
+	if(new_prob(40))
 		new /obj/item/clothing/mask/bandana/black(src)
 		new /obj/item/clothing/mask/bandana/black(src)
-	if(prob(40))
+	if(new_prob(40))
 		new /obj/item/clothing/under/assistantformal(src)
-	if(prob(40))
+	if(new_prob(40))
 		new /obj/item/clothing/under/assistantformal(src)
-	if(prob(30))
+	if(new_prob(30))
 		new /obj/item/clothing/suit/toggle/wintercoat(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 	return
@@ -365,9 +365,9 @@
 	icon_closed = "mixed"
 
 /obj/structure/closet/wardrobe/mixed/New()
-	if(prob(40))
+	if(new_prob(40))
 		new /obj/item/clothing/suit/jacket(src)
-	if(prob(40))
+	if(new_prob(40))
 		new /obj/item/clothing/suit/jacket(src)
 	new /obj/item/clothing/under/color/white(src)
 	new /obj/item/clothing/under/color/blue(src)
@@ -393,7 +393,7 @@
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
 	new /obj/item/clothing/shoes/sneakers/white(src)
-	if(prob(30))
+	if(new_prob(30))
 		new /obj/item/clothing/suit/toggle/wintercoat(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 	return

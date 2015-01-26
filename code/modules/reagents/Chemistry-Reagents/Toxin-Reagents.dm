@@ -37,9 +37,9 @@ datum/reagent/toxin/mutagen/reaction_mob(var/mob/living/carbon/M, var/method=TOU
 	if(!istype(M) || !M.dna)
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
 	src = null
-	if((method==TOUCH && prob(33)) || method==INGEST)
+	if((method==TOUCH && new_prob(33)) || method==INGEST)
 		randmuti(M)
-		if(prob(98))
+		if(new_prob(98))
 			randmutb(M)
 		else
 			randmutg(M)
@@ -97,10 +97,10 @@ datum/reagent/toxin/lexorin
 
 datum/reagent/toxin/lexorin/on_mob_life(var/mob/living/M as mob)
 	if(M.stat != DEAD)
-		if(prob(33))
+		if(new_prob(33))
 			M.take_organ_damage(1*REM, 0)
 		M.adjustOxyLoss(3)
-		if(prob(20))
+		if(new_prob(20))
 			M.emote("gasp")
 	..()
 	return
@@ -113,10 +113,10 @@ datum/reagent/toxin/slimejelly
 	toxpwr = 0
 
 datum/reagent/toxin/slimejelly/on_mob_life(var/mob/living/M as mob)
-	if(prob(10))
+	if(new_prob(10))
 		M << "<span class='danger'>Your insides are burning!</span>"
 		M.adjustToxLoss(rand(20,60)*REM)
-	else if(prob(40))
+	else if(new_prob(40))
 		M.heal_organ_damage(5*REM,0)
 	..()
 	return

@@ -16,7 +16,7 @@ var/datum/subsystem/sun/SSsun
 
 	angle = rand (0,360)			// the station position to the sun is randomised at round start
 	rate = rand(50,200)/100			// 50% - 200% of standard rotation
-	if(prob(50))					// same chance to rotate clockwise than counter-clockwise
+	if(new_prob(50))					// same chance to rotate clockwise than counter-clockwise
 		rate = -rate
 
 /datum/subsystem/sun/fire()

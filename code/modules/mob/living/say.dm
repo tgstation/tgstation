@@ -246,7 +246,7 @@ var/list/department_radio_keys = list(
 							if(2)
 								M << msg
 							if(1)
-								if(prob(40))
+								if(new_prob(40))
 									M << "<i><font color=#800080>We can faintly sense another of our kind trying to communicate through the hivemind...</font></i>"
 				return 1
 			if(1)

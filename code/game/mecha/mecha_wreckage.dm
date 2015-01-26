@@ -22,7 +22,7 @@
 			return
 		var/obj/item/weapon/weldingtool/WT = I
 		if(welder_salvage && welder_salvage.len && WT.remove_fuel(0, user))
-			var/type = prob(70) ? pick(welder_salvage) : null
+			var/type = new_prob(70) ? pick(welder_salvage) : null
 			if(type)
 				var/N = new type(get_turf(user))
 				user.visible_message("<span class='notice'>[user] cuts [N] from [src].</span>", "<span class='notice'>You cut [N] from [src].</span>")
@@ -39,7 +39,7 @@
 			user << "<span class='notice'>You don't see anything that can be cut with [I].</span>"
 			return
 		else if(wirecutters_salvage && wirecutters_salvage.len)
-			var/type = prob(70) ? pick(wirecutters_salvage) : null
+			var/type = new_prob(70) ? pick(wirecutters_salvage) : null
 			if(type)
 				var/N = new type(get_turf(user))
 				user.visible_message("<span class='notice'>[user] cuts [N] from [src].</span>", "<span class='notice'>You cut [N] from [src].</span>")
@@ -75,7 +75,7 @@
 								/obj/item/mecha_parts/part/gygax_left_leg,
 								/obj/item/mecha_parts/part/gygax_right_leg)
 	for(var/i = 0; i < 2; i++)
-		if(parts.len && prob(40))
+		if(parts.len && new_prob(40))
 			var/part = pick(parts)
 			welder_salvage += part
 			parts -= part
@@ -116,7 +116,7 @@
 								/obj/item/mecha_parts/part/ripley_left_leg,
 								/obj/item/mecha_parts/part/ripley_right_leg)
 	for(var/i = 0; i < 2; i++)
-		if(parts.len && prob(40))
+		if(parts.len && new_prob(40))
 			var/part = pick(parts)
 			welder_salvage += part
 			parts -= part
@@ -135,7 +135,7 @@
 								/obj/item/mecha_parts/part/ripley_right_leg,
 								/obj/item/clothing/suit/fire)
 	for(var/i = 0; i < 2; i++)
-		if(parts.len && prob(40))
+		if(parts.len && new_prob(40))
 			var/part = pick(parts)
 			welder_salvage += part
 			parts -= part
@@ -161,7 +161,7 @@
 							/obj/item/mecha_parts/part/honker_left_leg,
 							/obj/item/mecha_parts/part/honker_right_leg)
 	for(var/i = 0; i < 2; i++)
-		if(parts.len && prob(40))
+		if(parts.len && new_prob(40))
 			var/part = pick(parts)
 			welder_salvage += part
 			parts -= part
@@ -181,7 +181,7 @@
 								/obj/item/mecha_parts/part/durand_left_leg,
 								/obj/item/mecha_parts/part/durand_right_leg)
 	for(var/i = 0; i < 2; i++)
-		if(parts.len && prob(40))
+		if(parts.len && new_prob(40))
 			var/part = pick(parts)
 			welder_salvage += part
 			parts -= part
@@ -206,7 +206,7 @@
 								/obj/item/mecha_parts/part/odysseus_left_leg,
 								/obj/item/mecha_parts/part/odysseus_right_leg)
 	for(var/i = 0; i < 2; i++)
-		if(parts.len && prob(40))
+		if(parts.len && new_prob(40))
 			var/part = pick(parts)
 			welder_salvage += part
 			parts -= part

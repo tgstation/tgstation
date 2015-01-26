@@ -479,7 +479,7 @@
 			if (C.amount >= 10 && !terminal && opened && has_electronics != 2)
 				var/turf/T = get_turf(src)
 				var/obj/structure/cable/N = T.get_cable_node()
-				if (prob(50) && electrocute_mob(usr, N, N))
+				if (new_prob(50) && electrocute_mob(usr, N, N))
 					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 					s.set_up(5, 1, src)
 					s.start()
@@ -555,7 +555,7 @@
 				&& !opened \
 				&& W.force >= 5 \
 				&& W.w_class >= 3.0 \
-				&& prob(20) )
+				&& new_prob(20) )
 			opened = 2
 			user.visible_message("<span class='danger'>[user.name] has knocked down the APC cover  with the [W.name]!</span>", \
 				"<span class='danger'>You knock down the APC cover with your [W.name]!</span>", \
@@ -581,7 +581,7 @@
 		else
 			flick("apc-spark", src)
 			if (do_after(user,6))
-				if(prob(50))
+				if(new_prob(50))
 					emagged = 1
 					locked = 0
 					user << "<span class='notice'>You emag the APC interface.</span>"
@@ -787,7 +787,7 @@
 		if(H.getBrainLoss() >= 60)
 			H.visible_message("<span class='danger'>[H] stares cluelessly at [src] and drools.</span>")
 			return 0
-		else if(prob(H.getBrainLoss()))
+		else if(new_prob(H.getBrainLoss()))
 			user << "<span class='danger'>You momentarily forget how to use [src].</span>"
 			return 0
 	return 1
@@ -941,7 +941,7 @@
 /obj/machinery/power/apc/proc/ion_act()
 	//intended to be exactly the same as an AI malf attack
 	if(!src.malfhack && src.z == ZLEVEL_STATION)
-		if(prob(3))
+		if(new_prob(3))
 			src.locked = 1
 			if (src.cell.charge > 0)
 //				world << "\red blew APC in [src.loc.loc]"
@@ -1173,16 +1173,16 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 	if(!gc_destroyed)
 		switch(severity)
 			if(2)
-				if(prob(50))
+				if(new_prob(50))
 					set_broken()
 			if(3)
-				if(prob(25))
+				if(new_prob(25))
 					set_broken()
 
 /obj/machinery/power/apc/blob_act()
-	if (prob(75))
+	if (new_prob(75))
 		set_broken()
-		if (cell && prob(5))
+		if (cell && new_prob(5))
 			cell.blob_act()
 
 /obj/machinery/power/apc/disconnect_terminal()
@@ -1217,7 +1217,7 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 					sleep(1)
 
 /obj/machinery/power/apc/proc/shock(mob/user, prb)
-	if(!prob(prb))
+	if(!new_prob(prb))
 		return 0
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)

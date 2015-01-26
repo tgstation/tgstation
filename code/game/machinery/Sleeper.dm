@@ -56,7 +56,7 @@
 	close_machine(target)
 
 /obj/machinery/sleeper/blob_act()
-	if(prob(75))
+	if(new_prob(75))
 		for(var/atom/movable/A in src)
 			A.loc = loc
 			A.blob_act()

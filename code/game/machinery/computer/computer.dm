@@ -27,7 +27,7 @@
 	return 1
 
 /obj/machinery/computer/emp_act(severity)
-	if(prob(20/severity)) set_broken()
+	if(new_prob(20/severity)) set_broken()
 	..()
 
 
@@ -40,28 +40,28 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(25))
+			if (new_prob(25))
 				qdel(src)
 				return
-			if (prob(50))
+			if (new_prob(50))
 				verbs.Cut()
 				set_broken()
 		if(3.0)
-			if (prob(25))
+			if (new_prob(25))
 				verbs.Cut()
 				set_broken()
 		else
 	return
 
 /obj/machinery/computer/bullet_act(var/obj/item/projectile/Proj)
-	if(prob(Proj.damage))
+	if(new_prob(Proj.damage))
 		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 			set_broken()
 	..()
 
 
 /obj/machinery/computer/blob_act()
-	if (prob(75))
+	if (new_prob(75))
 		verbs.Cut()
 		set_broken()
 		density = 0
@@ -121,7 +121,7 @@
 /obj/machinery/computer/attack_paw(mob/living/user)
 	user.do_attack_animation(src)
 	if(circuit)
-		if(prob(10))
+		if(new_prob(10))
 			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with its paws.</span>",\
 			"<span class='danger'>You smash the [src.name] with your paws.</span>",\
 			"<span class='danger'>You hear a smashing sound.</span>")
@@ -134,7 +134,7 @@
 /obj/machinery/computer/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
 	if(circuit)
-		if(prob(80))
+		if(new_prob(80))
 			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with its claws.</span>",\
 			"<span class='danger'>You smash the [src.name] with your claws.</span>",\
 			"<span class='danger'>You hear a smashing sound.</span>")

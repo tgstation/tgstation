@@ -83,7 +83,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/changelingcap = min( round(joined_player_list.len/(config.changeling_scaling_coeff*2))+2, round(joined_player_list.len/config.changeling_scaling_coeff) )
 	if(changelings.len >= changelingcap) //Caps number of latejoin antagonists
 		return
-	if(changelings.len <= (changelingcap - 2) || prob(100 - (config.changeling_scaling_coeff*2)))
+	if(changelings.len <= (changelingcap - 2) || new_prob(100 - (config.changeling_scaling_coeff*2)))
 		if(character.client.prefs.be_special & BE_CHANGELING)
 			if(!jobban_isbanned(character.client, "changeling") && !jobban_isbanned(character.client, "Syndicate"))
 				if(!(character.job in ticker.mode.restricted_jobs))
@@ -101,7 +101,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	absorb_objective.gen_amount_goal(6, 8)
 	changeling.objectives += absorb_objective
 
-	if(prob(60))
+	if(new_prob(60))
 		var/datum/objective/steal/steal_objective = new
 		steal_objective.owner = changeling
 		steal_objective.find_target()
@@ -114,13 +114,13 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 
 	var/list/active_ais = active_ais()
-	if(active_ais.len && prob(100/joined_player_list.len))
+	if(active_ais.len && new_prob(100/joined_player_list.len))
 		var/datum/objective/destroy/destroy_objective = new
 		destroy_objective.owner = changeling
 		destroy_objective.find_target()
 		changeling.objectives += destroy_objective
 	else
-		if(prob(70))
+		if(new_prob(70))
 			var/datum/objective/assassinate/kill_objective = new
 			kill_objective.owner = changeling
 			kill_objective.find_target()
@@ -139,7 +139,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 				changeling.objectives += identity_theft
 
 	if (!(locate(/datum/objective/escape) in changeling.objectives))
-		if(prob(50))
+		if(new_prob(50))
 			var/datum/objective/escape/escape_objective = new
 			escape_objective.owner = changeling
 			changeling.objectives += escape_objective

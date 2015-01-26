@@ -189,7 +189,7 @@
 			var/new_target = FindTarget()
 			GiveTarget(new_target)
 		if(stance == HOSTILE_STANCE_ATTACK)//No more pulling a mob forever and having a second player attack it, it can switch targets now if it finds a more suitable one
-			if(target != null && prob(40))
+			if(target != null && new_prob(40))
 				var/new_target = FindTarget()
 				GiveTarget(new_target)
 
