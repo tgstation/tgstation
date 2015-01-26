@@ -87,6 +87,8 @@
 	suittoggled = 0
 	if(ishuman(helmet.loc))
 		var/mob/living/carbon/H = helmet.loc
+		if(helmet.on)
+			helmet.attack_self(H)
 		H.unEquip(helmet, 1)
 		H.update_inv_wear_suit()
 	helmet.loc = src
