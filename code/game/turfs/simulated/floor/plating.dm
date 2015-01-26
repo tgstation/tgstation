@@ -86,6 +86,7 @@
 	icon_state = "engine"
 	thermal_conductivity = 0.025
 	heat_capacity = 325000
+	floor_tile = /obj/item/stack/rods
 
 /turf/simulated/floor/engine/break_tile()
 	return //unbreakable
@@ -93,7 +94,9 @@
 /turf/simulated/floor/engine/burn_tile()
 	return //unburnable
 
-/turf/simulated/floor/engine/make_plating()
+/turf/simulated/floor/engine/make_plating(var/force = 0)
+	if(force)
+		..()
 	return //unplateable
 
 /turf/simulated/floor/engine/attackby(obj/item/weapon/C as obj, mob/user as mob)

@@ -23,12 +23,12 @@
 	switch(severity)
 		if(3.0)
 			if (prob(75))
-				src.gets_drilled()
+				src.gets_drilled(null, 1)
 		if(2.0)
 			if (prob(90))
-				src.gets_drilled()
+				src.gets_drilled(null, 1)
 		if(1.0)
-			src.gets_drilled()
+			src.gets_drilled(null, 1)
 	return
 
 /turf/simulated/mineral/New()
@@ -208,12 +208,9 @@
 	if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) && stage == 1)
 		user.visible_message("<span class='notice'>You use [I] to locate where to cut off the chain reaction and attempt to stop it...</span>")
 		defuse()
-	if(istype(I, /obj/item/weapon/pickaxe))
-		src.activated_ckey = "[user.ckey]"
-		src.activated_name = "[user.name]"
 	..()
 
-/turf/simulated/mineral/gibtonite/proc/explosive_reaction()
+/turf/simulated/mineral/gibtonite/proc/explosive_reaction(var/mob/user = null, triggered_by_explosion = 0)
 	if(stage == 0)
 		icon_state = "rock_Gibtonite_active"
 		name = "gibtonite deposit"
@@ -222,13 +219,26 @@
 		visible_message("<span class='warning'>There was gibtonite inside! It's going to explode!</span>")
 		var/turf/bombturf = get_turf(src)
 		var/area/A = get_area(bombturf)
-		var/log_str = "[src.activated_ckey]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> [src.activated_name] has triggered a gibtonite deposit reaction <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>."
-		if(z != 5)
-			message_admins(log_str)
-		log_game("[src.activated_ckey] ([src.activated_name]) has triggered a gibtonite deposit reaction at [A.name] ([A.x], [A.y], [A.z]).")
-		countdown()
 
-/turf/simulated/mineral/gibtonite/proc/countdown()
+		if(user)
+			activated_ckey = "[user.ckey]"
+			activated_name = "[user.name]"
+		var/notify_admins = 0
+		if(z != 5)
+			notify_admins = 1
+			if(!triggered_by_explosion)
+				message_admins("[src.activated_ckey]/([src.activated_name])<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has triggered a gibtonite deposit reaction at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+			else
+				message_admins("An explosion has triggered a gibtonite deposit reaction at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+
+		if(!triggered_by_explosion)
+			log_game("[src.activated_ckey] ([src.activated_name]) has triggered a gibtonite deposit reaction at [A.name] ([A.x], [A.y], [A.z]).")
+		else
+			log_game("An explosion has triggered a gibtonite deposit reaction at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
+
+		countdown(notify_admins)
+
+/turf/simulated/mineral/gibtonite/proc/countdown(notify_admins = 0)
 	spawn(0)
 		while(stage == 1 && det_time > 0 && mineralAmt >= 1)
 			det_time--
@@ -236,7 +246,7 @@
 		if(stage == 1 && det_time <= 0 && mineralAmt >= 1)
 			var/turf/bombturf = get_turf(src)
 			mineralAmt = 0
-			explosion(bombturf,1,3,5, adminlog = 0)
+			explosion(bombturf,1,3,5, adminlog = notify_admins)
 		if(stage == 0 || stage == 2)
 			return
 
@@ -249,10 +259,10 @@
 			det_time = 0
 		visible_message("<span class='notice'>The chain reaction was stopped! The gibtonite had [src.det_time] reactions left till the explosion!</span>")
 
-/turf/simulated/mineral/gibtonite/gets_drilled()
+/turf/simulated/mineral/gibtonite/gets_drilled(var/mob/user, triggered_by_explosion = 0)
 	if(stage == 0 && mineralAmt >= 1) //Gibtonite deposit is activated
 		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,1)
-		explosive_reaction()
+		explosive_reaction(user, triggered_by_explosion)
 		return
 	if(stage == 1 && mineralAmt >= 1) //Gibtonite deposit goes kaboom
 		var/turf/bombturf = get_turf(src)
@@ -397,7 +407,7 @@
 
 		if(do_after(user,P.digspeed))
 			user << "<span class='notice'>You finish cutting into the rock.</span>"
-			gets_drilled()
+			gets_drilled(user)
 	else
 		return attack_hand(user)
 	return

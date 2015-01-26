@@ -15,7 +15,7 @@ Chaplain
 
 	default_pda = /obj/item/device/pda/chaplain
 
-	access = list(access_morgue, access_chapel_office, access_crematorium, access_maint_tunnels)
+	access = list(access_morgue, access_chapel_office, access_crematorium)
 	minimal_access = list(access_morgue, access_chapel_office, access_crematorium)
 
 	//Pretty bible names

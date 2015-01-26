@@ -75,14 +75,14 @@
 			inserted_id = I
 			interact(user)
 		return
+	if(default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", W))
+		updateUsrDialog()
+		return
 	if(panel_open)
 		if(istype(W, /obj/item/weapon/crowbar))
 			empty_content()
 			default_deconstruction_crowbar(W)
 		return 1
-	if(default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", W))
-		updateUsrDialog()
-		return
 	..()
 
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(var/obj/item/weapon/ore/O)
@@ -475,8 +475,7 @@
 /obj/item/weapon/resonator/proc/CreateResonance(var/target, var/creator)
 	if(cooldown <= 0)
 		playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
-		var/obj/effect/resonance/R = new /obj/effect/resonance(get_turf(target))
-		R.creator = creator
+		new /obj/effect/resonance(get_turf(target), creator)
 		cooldown = 1
 		spawn(20)
 			cooldown = 0
@@ -498,16 +497,15 @@
 	layer = 4.1
 	mouse_opacity = 0
 	var/resonance_damage = 20
-	var/creator = null
 
-/obj/effect/resonance/New()
+/obj/effect/resonance/New(loc, var/creator = null)
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf))
 		return
 	if(istype(proj_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = proj_turf
 		playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
-		M.gets_drilled()
+		M.gets_drilled(creator)
 		spawn(5)
 			qdel(src)
 	else

@@ -49,20 +49,20 @@
 /obj/item/weapon/defibrillator/proc/update_overlays()
 	overlays.Cut()
 	if(!on)
-		overlays += "defibunit-paddles"
+		overlays += "[initial(icon_state)]-paddles"
 	if(powered)
-		overlays += "defibunit-powered"
+		overlays += "[initial(icon_state)]-powered"
 	if(!bcell)
-		overlays += "defibunit-nocell"
+		overlays += "[initial(icon_state)]-nocell"
 	if(!safety)
-		overlays += "defibunit-emagged"
+		overlays += "[initial(icon_state)]-emagged"
 
 /obj/item/weapon/defibrillator/proc/update_charge()
 	if(powered) //so it doesn't show charge if it's unpowered
 		if(bcell)
 			var/ratio = bcell.charge / bcell.maxcharge
 			ratio = Ceiling(ratio*4) * 25
-			overlays += "defibunit-charge[ratio]"
+			overlays += "[initial(icon_state)]-charge[ratio]"
 
 /obj/item/weapon/defibrillator/CheckParts()
 	bcell = locate(/obj/item/weapon/stock_parts/cell) in contents
@@ -220,6 +220,20 @@
 		paddles.cooldown = 0
 		paddles.update_icon()
 		update_icon()
+
+/obj/item/weapon/defibrillator/combatdefibrillator
+	name = "combat defibrillator"
+	desc = "A expensive combat oriented defibrillator. It is more compact that civilian models."
+	icon_state = "combatdefibunit"
+	item_state = "combatdefibunit"
+	w_class = 3
+
+/obj/item/weapon/defibrillator/combatdefibrillator/loaded/New()
+	..()
+	paddles = make_paddles()
+	bcell = new(src)
+	update_icon()
+	return
 
 //paddles
 

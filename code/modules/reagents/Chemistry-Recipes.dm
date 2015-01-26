@@ -635,7 +635,7 @@ datum/chemical_reaction/pestkiller
 	name = "Slime Teleport"
 	id = "m_tele"
 	result = null
-	required_reagents = list("pacid" = 2, "mutagen" = 2)
+	required_reagents = list("facid" = 2, "mutagen" = 2)
 	required_catalysts = list("plasma" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_core

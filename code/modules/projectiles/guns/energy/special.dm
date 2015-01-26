@@ -112,7 +112,7 @@
 	icon_state = "kineticgun"
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
-	cell_type = "/obj/item/weapon/stock_parts/cell/crap"
+	cell_type = "/obj/item/weapon/stock_parts/cell/emproof"
 	var/overheat = 0
 	var/recent_reload = 1
 
@@ -215,6 +215,7 @@
 	name = "cyborg lmg"
 	desc = "A machinegun that fires 3d-printed flachettes slowly regenerated using a cyborg's internal power source."
 	icon_state = "l6closed0"
+	icon = 'icons/obj/guns/projectile.dmi'
 	cell_type = "/obj/item/weapon/stock_parts/cell/secborg"
 	ammo_type = list(/obj/item/ammo_casing/energy/c3dbullet)
 	var/charge_tick = 0

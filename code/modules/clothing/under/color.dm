@@ -101,11 +101,13 @@
 /obj/item/clothing/under/color/lightbrown
 	name = "lightbrown jumpsuit"
 	icon_state = "lightbrown"
+	item_state = "lb_suit"
 	item_color = "lightbrown"
 
 /obj/item/clothing/under/color/brown
 	name = "brown jumpsuit"
 	icon_state = "brown"
+	item_state = "lb_suit"
 	item_color = "brown"
 
 /obj/item/clothing/under/color/yellowgreen
