@@ -1,6 +1,6 @@
 /////////////////////////////////////////////
 //// SMOKE SYSTEMS
-// direct can be optinally added when set_up, to make the smoke always travel in one direction
+// direct can be optionally added when set_up, to make the smoke always travel in one direction
 // in case you wanted a vent to always smoke north for example
 /////////////////////////////////////////////
 
@@ -89,7 +89,6 @@
 	anchored = 0.0
 	mouse_opacity = 0
 	var/amount = 6.0
-	//Remove this bit to use the old smoke
 	icon = 'icons/effects/96x96.dmi'
 	pixel_x = -32
 	pixel_y = -32
@@ -193,18 +192,18 @@
 	anchored = 0.0
 	mouse_opacity = 0
 	var/amount = 6.0
-
 	icon = 'icons/effects/chemsmoke.dmi'
 	pixel_x = -32
 	pixel_y = -32
 
+
 /obj/effect/effect/chem_smoke/New()
 	..()
 	create_reagents(500)
-
-	spawn (200+rand(10,30))
+	spawn(200+rand(10,30))
 		delete()
 	return
+
 
 /obj/effect/effect/chem_smoke/Move()
 	..()
@@ -214,19 +213,19 @@
 				reagents.reaction(A)
 		else
 			reagents.reaction(A)
-
 	return
+
 
 /obj/effect/effect/chem_smoke/Crossed(mob/living/carbon/M as mob )
 	..()
 	reagents.reaction(M)
 
-	return
 
 /datum/effect/effect/system/chem_smoke_spread
 	var/total_smoke = 0 // To stop it being spammed and lagging!
 	var/direction
 	var/obj/chemholder
+
 
 /datum/effect/effect/system/chem_smoke_spread/New()
 	..()
@@ -237,7 +236,6 @@
 
 
 /datum/effect/effect/system/chem_smoke_spread/set_up(var/datum/reagents/carry = null, n = 5, c = 0, loca, direct, silent = 0)
-
 	if(n > 20)
 		n = 20
 	number = n
@@ -249,6 +247,7 @@
 		location = loca
 	else
 		location = get_turf(loca)
+
 	if(direct)
 		direction = direct
 
@@ -273,6 +272,7 @@
 		else
 			message_admins("A chemical smoke reaction has taken place in ([whereLink]). No associated key.", 0, 1)
 			log_game("A chemical smoke reaction has taken place in ([where])[contained]. No associated key.")
+
 
 /datum/effect/effect/system/chem_smoke_spread/start()
 	var/i = 0

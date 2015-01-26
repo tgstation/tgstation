@@ -79,6 +79,8 @@
 	icon_state = "electricity"
 
 /datum/effect/effect/system/lightning_spread/start()
+	..()
+/*
 	var/i = 0
 	for(i=0, i<src.number, i++)
 		if(src.total_sparks > 20)
@@ -100,3 +102,4 @@
 				if(sparks) // Might be deleted already
 					sparks.delete()
 				src.total_sparks--
+				*/
