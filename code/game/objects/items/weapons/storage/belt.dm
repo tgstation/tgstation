@@ -189,8 +189,9 @@
 	name = "shoulder holster"
 	desc = "A holster to conceal a carried handgun. WARNING: Badasses only."
 	icon_state = "holster"
-	item_state = "bandolier"
+	item_state = "holster"
 	storage_slots = 1
+	max_w_class = 4
 	can_hold = list(
 		/obj/item/weapon/gun/projectile/automatic/pistol,
 		/obj/item/weapon/gun/projectile/revolver/detective

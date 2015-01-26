@@ -1,3 +1,10 @@
+
+#define SKINTYPE_MONKEY 1
+#define SKINTYPE_ALIEN 2
+
+#define MEATTYPE_MONKEY 1
+#define MEATTYPE_ALIEN 2
+
 //////Kitchen Spike
 
 /obj/structure/kitchenspike
@@ -9,7 +16,9 @@
 	anchored = 1
 	var/meat = 0
 	var/occupied = 0
-	var/meattype = 0 // 0 - Nothing, 1 - Monkey, 2 - Xeno
+	var/meattype = null
+	var/skin = 0
+	var/skintype = null
 
 /obj/structure/kitchenspike/attack_paw(mob/user as mob)
 	return src.attack_hand(usr)
@@ -22,7 +31,9 @@
 			src.icon_state = "spikebloody"
 			src.occupied = 1
 			src.meat = 5
-			src.meattype = 1
+			src.meattype = MEATTYPE_MONKEY
+			src.skin = 1
+			src.skintype = SKINTYPE_MONKEY
 			for(var/mob/O in viewers(src, null))
 				O.show_message(text("<span class='danger'>[user] has forced [G.affecting] onto the spike, killing them instantly!</span>"))
 			qdel(G.affecting)
@@ -35,7 +46,9 @@
 			src.icon_state = "spikebloodygreen"
 			src.occupied = 1
 			src.meat = 5
-			src.meattype = 2
+			src.meattype = MEATTYPE_ALIEN
+			src.skin = 1
+			src.skintype = SKINTYPE_ALIEN
 			for(var/mob/O in viewers(src, null))
 				O.show_message(text("<span class='danger'>[user] has forced [G.affecting] onto the spike, killing them instantly!</span>"))
 			qdel(G.affecting)
@@ -55,10 +68,14 @@
 	if(..())
 		return
 	if(src.occupied)
-		if(src.meattype == 1)
-			if(src.meat > 1)
+		if(src.meattype == MEATTYPE_MONKEY && src.skintype == SKINTYPE_MONKEY)
+			if(src.skin >= 1)
+				src.skin--
+				new /obj/item/stack/sheet/animalhide/monkey(src.loc)
+				user << "You remove the hide from the monkey!"
+			else if(src.meat > 1)
 				src.meat--
-				new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey( src.loc )
+				new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src.loc )
 				usr << "You remove some meat from the monkey."
 			else if(src.meat == 1)
 				src.meat--
@@ -66,10 +83,14 @@
 				usr << "You remove the last piece of meat from the monkey!"
 				src.icon_state = "spike"
 				src.occupied = 0
-		else if(src.meattype == 2)
-			if(src.meat > 1)
+		else if(src.meattype == MEATTYPE_ALIEN && src.skintype == SKINTYPE_ALIEN)
+			if(src.skin >= 1)
+				src.skin--
+				new /obj/item/stack/sheet/animalhide/xeno(src.loc)
+				user << "You remove the hide from the alien!"
+			else if(src.meat > 1)
 				src.meat--
-				new /obj/item/weapon/reagent_containers/food/snacks/xenomeat( src.loc )
+				new /obj/item/weapon/reagent_containers/food/snacks/xenomeat(src.loc )
 				usr << "You remove some meat from the alien."
 			else if(src.meat == 1)
 				src.meat--
@@ -77,3 +98,9 @@
 				usr << "You remove the last piece of meat from the alien!"
 				src.icon_state = "spike"
 				src.occupied = 0
+
+#undef SKINTYPE_MONKEY
+#undef SKINTYPE_ALIEN
+
+#undef MEATTYPE_MONKEY
+#undef MEATTYPE_ALIEN
