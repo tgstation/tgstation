@@ -56,18 +56,47 @@
 	// Update on_moved listeners.
 	INVOKE_EVENT(on_moved,list("loc"=loc))
 
-/atom/movable/Move(NewLoc,Dir=0,step_x=0,step_y=0)
-	var/atom/A = src.loc
-	. = ..()
+/atom/movable/Move(atom/newloc, direct = 0)
+	if(!loc || !newloc) return 0
+	var/atom/oldloc = loc
 
+	if(loc != newloc)
+		if (!(direct & (direct - 1))) //Cardinal move
+			. = ..()
+		else //Diagonal move, split it into cardinal moves
+			if (direct & 1)
+				if (direct & 4)
+					if (step(src, NORTH))
+						. = step(src, EAST)
+					else if (step(src, EAST))
+						. = step(src, NORTH)
+				else if (direct & 8)
+					if (step(src, NORTH))
+						. = step(src, WEST)
+					else if (step(src, WEST))
+						. = step(src, NORTH)
+			else if (direct & 2)
+				if (direct & 4)
+					if (step(src, SOUTH))
+						. = step(src, EAST)
+					else if (step(src, EAST))
+						. = step(src, SOUTH)
+				else if (direct & 8)
+					if (step(src, SOUTH))
+						. = step(src, WEST)
+					else if (step(src, WEST))
+						. = step(src, SOUTH)
+
+
+	if(!loc || (loc == oldloc && oldloc != newloc))
+		last_move = 0
+		return
+
+	last_move = direct
 	src.move_speed = world.timeofday - src.l_move_time
 	src.l_move_time = world.timeofday
-	src.m_flag = 1
-	if ((A != src.loc && A && A.z == src.z))
-		src.last_move = get_dir(A, src.loc)
-
 	// Update on_moved listeners.
-	INVOKE_EVENT(on_moved,list("loc"=NewLoc))
+	INVOKE_EVENT(on_moved,list("loc"=newloc))
 
 	return .
 
