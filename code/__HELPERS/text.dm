@@ -388,3 +388,34 @@ var/list/binary = list("0","1")
 		temp = findtextEx(haystack, ascii2text(text2ascii(needles,i)), start, end)	//Note: ascii2text(text2ascii) is faster than copytext()
 		if(temp)	end = temp
 	return end
+
+
+/proc/parsepencode(t, mob/user=null, signfont=SIGNFONT)
+	if(length(t) < 1)		//No input means nothing needs to be parsed
+		return
+
+	t = replacetext(t, "\[center\]", "<center>")
+	t = replacetext(t, "\[/center\]", "</center>")
+	t = replacetext(t, "\[br\]", "<BR>")
+	t = replacetext(t, "\[b\]", "<B>")
+	t = replacetext(t, "\[/b\]", "</B>")
+	t = replacetext(t, "\[i\]", "<I>")
+	t = replacetext(t, "\[/i\]", "</I>")
+	t = replacetext(t, "\[u\]", "<U>")
+	t = replacetext(t, "\[/u\]", "</U>")
+	t = replacetext(t, "\[large\]", "<font size=\"4\">")
+	t = replacetext(t, "\[/large\]", "</font>")
+	if(user)
+		t = replacetext(t, "\[sign\]", "<font face=\"[signfont]\"><i>[user.real_name]</i></font>")
+	else
+		t = replacetext(t, "\[sign\]", "")
+	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
+
+	t = replacetext(t, "\[*\]", "<li>")
+	t = replacetext(t, "\[hr\]", "<HR>")
+	t = replacetext(t, "\[small\]", "<font size = \"1\">")
+	t = replacetext(t, "\[/small\]", "</font>")
+	t = replacetext(t, "\[list\]", "<ul>")
+	t = replacetext(t, "\[/list\]", "</ul>")
+
+	return t

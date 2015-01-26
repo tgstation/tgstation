@@ -66,6 +66,7 @@
 		if(bomb.timing)
 			user << "Extreme danger.  Arming signal detected.   Time remaining: [bomb.timeleft]"
 
+
 /obj/item/weapon/pinpointer/advpinpointer
 	name = "advanced pinpointer"
 	icon = 'icons/obj/device.dmi'
@@ -239,3 +240,38 @@
 				icon_state = "pinonfar"
 
 	spawn(5) .()
+
+/obj/item/weapon/pinpointer/operative
+	name = "operative pinpointer"
+	icon = 'icons/obj/device.dmi'
+	desc = "A pinpointer that leads to the first Syndicate operative detected."
+	var/mob/living/carbon/nearest_op = null
+
+/obj/item/weapon/pinpointer/operative/attack_self()
+	if(!active)
+		active = 1
+		workop()
+		usr << "<span class='notice'>You activate the pinpointer.</span>"
+	else
+		active = 0
+		icon_state = "pinoff"
+		usr << "<span class='notice'>You deactivate the pinpointer.</span>"
+
+/obj/item/weapon/pinpointer/operative/proc/scan_for_ops()
+	if(!nearest_op)
+		for(var/mob/living/carbon/M in mob_list)
+			if(M.mind in ticker.mode.syndicates)
+				nearest_op = M
+
+/obj/item/weapon/pinpointer/operative/proc/workop()
+	scan_for_ops()
+	point_at(nearest_op, 0)
+	spawn(5)
+		.()
+
+/obj/item/weapon/pinpointer/operative/examine(mob/user)
+	..()
+	if(nearest_op != null)
+		user << "Nearest operative: <b>[nearest_op]</b>."
+	if(nearest_op == null && active)
+		user << "No operatives detected within scanning range."

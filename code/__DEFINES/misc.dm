@@ -97,3 +97,11 @@
 #define SOUND_MINIMUM_PRESSURE 10
 #define FALLOFF_SOUNDS	1
 #define SURROUND_CAP	7
+
+//FONTS:
+// Used by Paper and PhotoCopier (and PaperBin once a year).
+// Used by PDA's Notekeeper.
+// Used by NewsCaster and NewsPaper.
+#define PEN_FONT "Verdana"
+#define CRAYON_FONT "Comic Sans MS"
+#define SIGNFONT "Times New Roman"
