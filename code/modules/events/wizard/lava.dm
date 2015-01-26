@@ -41,7 +41,9 @@
 			F.lava = 0
 			F.update_icon()
 
-/atom/prob()
+var/global/disable_rng = 0
+
+/prob()
 	if(disable_rng)
 		return 1
 	else
