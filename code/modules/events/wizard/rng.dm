@@ -16,9 +16,9 @@ var/global/disable_rng = 0
 /datum/round_event/wizard/rng/end()
 	disable_rng = 0
 
-/proc/new_prob(var/probability)
+/proc/new_prob(var/prob)
 	if(disable_rng)
 		return 1
 	else
-		var/roll_the_dice = new_prob(probability)
+		var/roll_the_dice = prob(prob)
 		return roll_the_dice
