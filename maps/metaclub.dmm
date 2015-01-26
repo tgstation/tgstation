@@ -9765,7 +9765,7 @@
 "dGf" = (/obj/machinery/door/airlock/external{name = "Air Bridge Access"},/turf/simulated/floor/plating,/area/derelict/atmos)
 "dGg" = (/turf/simulated/floor/plating,/area/derelict/solar_control)
 "dGh" = (/obj/item/taperoll/engineering,/turf/simulated/floor,/area/derelict/solar_control)
-"dGi" = (/obj/machinery/mommi_spawner,/turf/simulated/floor,/area/derelict/solar_control)
+"dGi" = (/obj/machinery/mommi_spawner{locked_to_zlevel = 1},/turf/simulated/floor,/area/derelict/solar_control)
 "dGj" = (/obj/machinery/light/small{dir = 8},/turf/simulated/floor/plating/airless,/area/derelict/atmos)
 "dGk" = (/obj/item/taperoll/engineering,/turf/simulated/floor/plating/airless,/area/derelict/atmos)
 "dGl" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor/plating/airless,/area/derelict/atmos)

@@ -9491,7 +9491,7 @@
 "dAA" = (/obj/machinery/door/airlock/external{name = "Air Bridge Access"},/turf/simulated/floor/plating,/area/derelict/atmos)
 "dAB" = (/turf/simulated/floor/plating,/area/derelict/solar_control)
 "dAC" = (/obj/item/taperoll/engineering,/turf/simulated/floor,/area/derelict/solar_control)
-"dAD" = (/obj/machinery/mommi_spawner,/turf/simulated/floor,/area/derelict/solar_control)
+"dAD" = (/obj/machinery/mommi_spawner{locked_to_zlevel = 1},/turf/simulated/floor,/area/derelict/solar_control)
 "dAE" = (/obj/machinery/light/small{dir = 8},/turf/simulated/floor/plating/airless,/area/derelict/atmos)
 "dAF" = (/obj/item/taperoll/engineering,/turf/simulated/floor/plating/airless,/area/derelict/atmos)
 "dAG" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor/plating/airless,/area/derelict/atmos)

@@ -5687,7 +5687,7 @@
 "cfs" = (/obj/item/trash/chips,/turf/simulated/floor/wood,/area/derelict/crew_quarters)
 "cft" = (/obj/item/weapon/storage/fancy/crayons,/turf/simulated/floor/plating,/area/derelict/storage/engine_storage{icon_state = "smaint"; name = "Derelict Starboard Maintenance"})
 "cfu" = (/obj/item/taperoll/engineering,/turf/simulated/floor,/area/derelict/solar_control)
-"cfv" = (/obj/machinery/mommi_spawner,/turf/simulated/floor,/area/derelict/solar_control)
+"cfv" = (/obj/machinery/mommi_spawner{locked_to_zlevel = 1},/turf/simulated/floor,/area/derelict/solar_control)
 "cfw" = (/obj/item/weapon/bedsheet/brown,/turf/simulated/floor/plating,/area/derelict/storage/storage_access{icon_state = "pmaint"; name = "Derelict Port Maintenance"})
 "cfx" = (/obj/structure/stool/bed/chair/comfy/brown{dir = 1},/turf/simulated/floor,/area/derelict/medical/chapel{icon_state = "library"; name = "\improper Derelict Game Room"})
 "cfy" = (/obj/structure/stool/bed/chair/comfy/brown{dir = 1},/turf/simulated/floor/plating,/area/derelict/medical/chapel{icon_state = "library"; name = "\improper Derelict Game Room"})
