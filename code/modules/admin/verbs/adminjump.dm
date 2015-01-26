@@ -1,4 +1,4 @@
-/client/proc/Jump(area/A in returnSortedAreas())
+/client/proc/Jump(area/A in sortedAreas)
 	set name = "Jump to Area"
 	set desc = "Area to jump to"
 	set category = "Admin"
@@ -138,7 +138,7 @@
 	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
-	var/area/A = input(usr, "Pick an area.", "Pick an area") in returnSortedAreas()
+	var/area/A = input(usr, "Pick an area.", "Pick an area") in sortedAreas
 	if(A)
 		M.loc = pick(get_area_turfs(A))
 		feedback_add_details("admin_verb","SMOB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
