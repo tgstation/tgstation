@@ -1,6 +1,0 @@
-author: Firecage
-
-delete-after: True
-
-changes: 
-  - rscadd: "Added the ability to reform mineral floortiles back into sheets/bars"

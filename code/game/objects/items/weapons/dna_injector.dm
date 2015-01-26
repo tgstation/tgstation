@@ -288,42 +288,6 @@
 		..()
 		add_mutations.Add(mutations_list[WACKY])
 
-/obj/item/weapon/dnainjector/antijoke
-	name = "\improper DNA injector (Anti-joke)"
-	New()
-		..()
-		remove_mutations.Add(mutations_list[JOKE])
-
-/obj/item/weapon/dnainjector/jokemut
-	name = "\improper DNA injector (Joke)"
-	New()
-		..()
-		add_mutations.Add(mutations_list[JOKE])
-
-/obj/item/weapon/dnainjector/antipapyrus
-	name = "\improper DNA injector (Anti-Papyrus)"
-	New()
-		..()
-		remove_mutations.Add(mutations_list[PAPYRUS])
-
-/obj/item/weapon/dnainjector/papyrusmut
-	name = "\improper DNA injector (Papyrus)"
-	New()
-		..()
-		add_mutations.Add(mutations_list[PAPYRUS])
-
-/obj/item/weapon/dnainjector/antivineta
-	name = "\improper DNA injector (Anti-Vineta)"
-	New()
-		..()
-		remove_mutations.Add(mutations_list[VINETA])
-
-/obj/item/weapon/dnainjector/vinetamut
-	name = "\improper DNA injector (Vineta)"
-	New()
-		..()
-		add_mutations.Add(mutations_list[VINETA])
-
 /obj/item/weapon/dnainjector/antimute
 	name = "\improper DNA injector (Anti-Mute)"
 	New()
