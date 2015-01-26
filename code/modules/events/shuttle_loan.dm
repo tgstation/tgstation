@@ -84,9 +84,9 @@
 
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate)
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate)
-				if(prob(75))
+				if(new_prob(75))
 					shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate)
-				if(prob(50))
+				if(new_prob(50))
 					shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate)
 
 			if(RUSKY_PARTY)
@@ -95,9 +95,9 @@
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian)
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian/ranged)	//drops a mateba
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/bear)
-				if(prob(75))
+				if(new_prob(75))
 					shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian)
-				if(prob(50))
+				if(new_prob(50))
 					shuttle_spawns.Add(/mob/living/simple_animal/hostile/bear)
 
 			if(SPIDER_GIFT)
@@ -106,7 +106,7 @@
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider)
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider)
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider/nurse)
-				if(prob(50))
+				if(new_prob(50))
 					shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider/hunter)
 
 				var/turf/T = pick(empty_shuttle_turfs)

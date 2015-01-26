@@ -129,9 +129,9 @@
 	src.equip_to_slot_or_del(MYPDA, slot_belt)
 	zone_sel = new /obj/screen/zone_sel()
 	zone_sel.selecting = "chest"
-	if(prob(10)) //my x is augmented
+	if(new_prob(10)) //my x is augmented
 		//arms
-		if(prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
+		if(new_prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
 			var/obj/item/organ/limb/r_arm/R = locate(/obj/item/organ/limb/r_arm) in organs
 			del(R)
 			organs += new /obj/item/organ/limb/robot/r_arm
@@ -140,7 +140,7 @@
 			del(L)
 			organs += new /obj/item/organ/limb/robot/l_arm
 		//legs
-		if(prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
+		if(new_prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
 			var/obj/item/organ/limb/r_leg/R = locate(/obj/item/organ/limb/r_leg) in organs
 			del(R)
 			organs += new /obj/item/organ/limb/robot/r_leg
@@ -149,7 +149,7 @@
 			del(L)
 			organs += new /obj/item/organ/limb/robot/l_leg
 		//chest and head
-		if(prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
+		if(new_prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
 			var/obj/item/organ/limb/chest/R = locate(/obj/item/organ/limb/chest) in organs
 			del(R)
 			organs += new /obj/item/organ/limb/robot/chest
@@ -337,18 +337,18 @@
 					var/turf/T = get_step(get_step(D.loc,dir),dir) //recursion yo
 					tryWalk(T)
 			//THIEVING SKILLS
-			if(prob(slyness))
+			if(new_prob(slyness))
 				//---------TOOLS
 				if(istype(TARGET, /obj/item/weapon))
 					var/obj/item/weapon/W = TARGET
-					if(W.force >= best_force || prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
+					if(W.force >= best_force || new_prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
 						if(!l_hand || !r_hand)
 							take_to_slot(W)
 						else
 							insert_into_backpack()
 				//---------FASHION
 				if(istype(TARGET,/obj/item/clothing))
-					if(prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
+					if(new_prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
 						if(!l_hand || !r_hand)
 							var/obj/item/clothing/C = TARGET
 							take_to_slot(C)
@@ -395,15 +395,15 @@
 		if(nearby.len > 4)
 			//i'm crowded, time to leave
 			TARGET = pick(target_filter(orange(MAX_RANGE_FIND,src)))
-		else if(prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
+		else if(new_prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
 			//chance to chase an item
 			TARGET = locate(/obj/item) in orange(MIN_RANGE_FIND,src)
-		else if(prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
+		else if(new_prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
 			//chance to leave
 			TARGET = locate(/obj/machinery/door) in orange(MIN_RANGE_FIND,src) // this is a sort of fix for the current pathing.
 		else
 			//else, target whatever, or go to our department
-			if(prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
+			if(new_prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
 				TARGET = pick(target_filter(orange(MIN_RANGE_FIND,src)))
 			else
 				TARGET = pick(get_area_turfs(job2area(myjob)))
@@ -483,24 +483,24 @@
 	var/curse_words = pick_list("npc_chatter.txt","curse_words")
 
 	if(doing & INTERACTING)
-		if(prob(chattyness))
+		if(new_prob(chattyness))
 			var/chat = pick("This [nouns_objects] is a little [adjective_objects].",
 			"Well [verbs_use] my [nouns_body], this [nouns_insult] is pretty [adjective_insult].",
 			"[capitalize(curse_words)], what am I meant to do with this [adjective_insult] [nouns_objects].")
 			src.say(chat)
 	if(doing & TRAVEL)
-		if(prob(chattyness))
+		if(new_prob(chattyness))
 			var/chat = pick("Oh [curse_words], [verbs_move]!",
 			"Time to get my [adjective_generic] [adjective_insult] [nouns_body] elsewhere.",
 			"I wonder if there is anything to [verbs_use] and [verbs_touch] somewhere else..")
 			src.say(chat)
 	if(doing & FIGHTING)
-		if(prob(chattyness))
+		if(new_prob(chattyness))
 			var/chat = pick("I'm going to [verbs_use] you, you [adjective_insult] [nouns_insult]!",
 			"Rend and [verbs_touch], Rend and [verbs_use]!",
 			"You [nouns_insult], I'm going to [verbs_use] you right in the [nouns_body]. JUST YOU WAIT!")
 			src.say(chat)
-	if(prob(chattyness/2))
+	if(new_prob(chattyness/2))
 		var/what = pick(1,2,3,4,5)
 		switch(what)
 			if(1)
@@ -548,7 +548,7 @@
 	set background = 1
 	enforce_hands()
 	if(canmove)
-		if(prob(attitude) && (graytide || (TRAITS & TRAIT_MEAN)) || retal)
+		if(new_prob(attitude) && (graytide || (TRAITS & TRAIT_MEAN)) || retal)
 			a_intent = "harm"
 			zone_sel.selecting = pick("chest","r_leg","l_leg","r_arm","l_arm","head")
 			doing |= FIGHTING
@@ -592,7 +592,7 @@
 										timeout++
 								else
 									var/obj/item/weapon/W = main_hand
-									if(prob(robustness))
+									if(new_prob(robustness))
 										W.attack(TARGET,src)
 							sleep(1)
 					else

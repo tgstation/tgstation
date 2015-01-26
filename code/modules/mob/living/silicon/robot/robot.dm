@@ -345,7 +345,7 @@
 /mob/living/silicon/robot/bullet_act(var/obj/item/projectile/Proj)
 	..(Proj)
 	updatehealth()
-	if(prob(75) && Proj.damage > 0) spark_system.start()
+	if(new_prob(75) && Proj.damage > 0) spark_system.start()
 	return 2
 
 /mob/living/silicon/robot/triggerAlarm(var/class, area/A, var/O, var/obj/alarmsource)
@@ -550,12 +550,12 @@
 	if(user != src)//To prevent syndieborgs from emagging themselves
 		if(!opened)//Cover is closed
 			if(locked)
-				if(prob(90))
+				if(new_prob(90))
 					user << "You emag the cover lock."
 					locked = 0
 				else
 					user << "You fail to emag the cover lock."
-					if(prob(25))
+					if(new_prob(25))
 						src << "Hack attempt detected."
 			else
 				user << "The cover is already unlocked."
@@ -567,7 +567,7 @@
 				return
 			else
 				sleep(6)
-				if(prob(50))
+				if(new_prob(50))
 					SetEmagged(1)
 					SetLockdown(1) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
 					lawupdate = 0
@@ -601,7 +601,7 @@
 					update_icons()
 				else
 					user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
-					if(prob(25))
+					if(new_prob(25))
 						src << "Hack attempt detected."
 
 /mob/living/silicon/robot/verb/unlock_own_cover()
@@ -619,7 +619,7 @@
 	if (M.a_intent =="disarm")
 		if(!(lying))
 			M.do_attack_animation(src)
-			if (prob(85))
+			if (new_prob(85))
 				Stun(7)
 				step(src,get_dir(M,src))
 				spawn(5)
@@ -642,7 +642,7 @@
 	if(..()) //successful slime shock
 		flick("noise", flash)
 		var/stunprob = M.powerlevel * 7 + 10
-		if(prob(stunprob) && M.powerlevel >= 8)
+		if(new_prob(stunprob) && M.powerlevel >= 8)
 			adjustBruteLoss(M.powerlevel * rand(6,10))
 
 	var/damage = rand(1, 3)

@@ -10,13 +10,13 @@
 		if(1)
 			ChangeTurf(/turf/space)
 		if(2)
-			if(prob(50))
+			if(new_prob(50))
 				ChangeTurf(/turf/space)
 		else
 			return
 
 /turf/simulated/floor/engine/blob_act()
-	if (prob(25))
+	if (new_prob(25))
 		ChangeTurf(/turf/space)
 		qdel(src)
 		return

@@ -455,7 +455,7 @@
 		var/obj/item/I = mover
 		if(istype(I, /obj/item/projectile))
 			return
-		if(prob(75))
+		if(new_prob(75))
 			I.loc = src
 			visible_message("<span class='notice'>\the [I] lands in \the [src].</span>")
 			update()
@@ -944,7 +944,7 @@
 		else
 			setbit = WEST
 
-		if(prob(50))	// 50% chance to choose the found bit or the other one
+		if(new_prob(50))	// 50% chance to choose the found bit or the other one
 			return setbit
 		else
 			return mask & (~setbit)

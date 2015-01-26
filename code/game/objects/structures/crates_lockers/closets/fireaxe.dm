@@ -107,7 +107,7 @@
 			qdel(src)
 			return
 		if(2.0)
-			if(prob(50))
+			if(new_prob(50))
 				if(fireaxe)
 					fireaxe.loc = src.loc
 				qdel(src)
@@ -133,7 +133,7 @@
 		update_icon()
 
 /obj/structure/closet/fireaxecabinet/blob_act()
-	if(prob(75))
+	if(new_prob(75))
 		if(fireaxe)
 			fireaxe.loc = src.loc
 			qdel(src)

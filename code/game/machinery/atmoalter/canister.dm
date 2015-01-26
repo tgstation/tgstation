@@ -208,7 +208,7 @@ update_flag
 /obj/machinery/portable_atmospherics/canister/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
-			if(destroyed || prob(30))
+			if(destroyed || new_prob(30))
 				qdel(src)
 			else
 				src.health = 0

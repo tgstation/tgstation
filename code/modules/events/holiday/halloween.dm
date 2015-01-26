@@ -12,7 +12,7 @@
 		var/obj/item/weapon/storage/backpack/b = locate() in H.contents
 		new /obj/item/weapon/storage/spooky(b)
 		if(H.dna)
-			if(prob(50))
+			if(new_prob(50))
 				hardset_dna(H, null, null, null, null, /datum/species/skeleton)
 			else
 				hardset_dna(H, null, null, null, null, /datum/species/zombie)

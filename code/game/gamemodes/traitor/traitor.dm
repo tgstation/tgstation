@@ -76,7 +76,7 @@
 	var/traitorcap = min(round(joined_player_list.len / (config.traitor_scaling_coeff * 2)) + 2 + num_modifier, round(joined_player_list.len/config.traitor_scaling_coeff) + num_modifier )
 	if(traitors.len >= traitorcap) //Upper cap for number of latejoin antagonists
 		return
-	if(traitors.len <= (traitorcap - 2) || prob(100 / (config.traitor_scaling_coeff * 2)))
+	if(traitors.len <= (traitorcap - 2) || new_prob(100 / (config.traitor_scaling_coeff * 2)))
 		if(character.client.prefs.be_special & BE_TRAITOR)
 			if(!jobban_isbanned(character.client, "traitor") && !jobban_isbanned(character.client, "Syndicate"))
 				if(!(character.job in ticker.mode.restricted_jobs))
@@ -91,7 +91,7 @@
 	if(istype(traitor.current, /mob/living/silicon))
 		var/objective_count = 0
 
-		if(prob(10))
+		if(new_prob(10))
 			var/datum/objective/block/block_objective = new
 			block_objective.owner = traitor
 			traitor.objectives += block_objective
@@ -108,7 +108,7 @@
 		traitor.objectives += survive_objective
 
 	else
-		var/is_hijacker = prob(10)
+		var/is_hijacker = new_prob(10)
 		var/objective_count = is_hijacker 			//Hijacking counts towards number of objectives
 		if(!exchange_blue && traitors.len >= 5) 	//Set up an exchange if there are enough traitors
 			if(!exchange_red)
@@ -120,13 +120,13 @@
 			objective_count += 1					//Exchange counts towards number of objectives
 		var/list/active_ais = active_ais()
 		for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
-			if(prob(50))
-				if(active_ais.len && prob(100/joined_player_list.len))
+			if(new_prob(50))
+				if(active_ais.len && new_prob(100/joined_player_list.len))
 					var/datum/objective/destroy/destroy_objective = new
 					destroy_objective.owner = traitor
 					destroy_objective.find_target()
 					traitor.objectives += destroy_objective
-				else if(prob(30))
+				else if(new_prob(30))
 					var/datum/objective/maroon/maroon_objective = new
 					maroon_objective.owner = traitor
 					maroon_objective.find_target()
@@ -324,7 +324,7 @@
 	exchange_objective.owner = owner
 	owner.objectives += exchange_objective
 
-	if(prob(20))
+	if(new_prob(20))
 		var/datum/objective/steal/exchange/backstab/backstab_objective = new
 		backstab_objective.set_faction(faction)
 		backstab_objective.owner = owner

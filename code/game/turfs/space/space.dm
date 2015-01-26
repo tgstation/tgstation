@@ -187,7 +187,7 @@ proc/setup_map_transitions() //listamania
 		text_zone_connections = replacetext(text_zone_connections, placement, "[z_level]")
 
 		for(var/turf/space/S in turfs_needing_transition) //pass the identity zone to the relevent turfs
-			if(S.transition && prob(50)) //In z = 6 (deep space) it's a bit of a crapshoot in terms of navigation
+			if(S.transition && new_prob(50)) //In z = 6 (deep space) it's a bit of a crapshoot in terms of navigation
 				continue
 			if(S.z == z_level)
 				S.transition = num2text(z_level)

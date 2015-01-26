@@ -175,7 +175,7 @@
 		if(1)
 			Dismantle(1)
 		if(2)
-			if(prob(20))
+			if(new_prob(20))
 				Dismantle(1)
 			else
 				hardness--

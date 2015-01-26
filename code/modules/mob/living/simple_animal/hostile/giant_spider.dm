@@ -14,7 +14,7 @@
 		var/mob/living/L = target
 		if(L.reagents)
 			L.reagents.add_reagent("toxin", poison_per_bite)
-			if(prob(poison_per_bite))
+			if(new_prob(poison_per_bite))
 				L << "<span class='danger'>You feel a tiny prick.</span>"
 				L.reagents.add_reagent(poison_type, poison_per_bite)
 
@@ -86,7 +86,7 @@
 	if(!stat && !ckey)
 		if(stance == HOSTILE_STANCE_IDLE)
 			//1% chance to skitter madly away
-			if(!busy && prob(1))
+			if(!busy && new_prob(1))
 				/*var/list/move_targets = list()
 				for(var/turf/T in orange(20, src))
 					move_targets.Add(T)*/
@@ -103,7 +103,7 @@
 		butcher_state--
 		icon_state = icon_dead + "[butcher_state]"
 
-		if(prob(50))
+		if(new_prob(50))
 			new /obj/item/weapon/reagent_containers/food/snacks/spiderleg(src.loc)
 		return
 	else
@@ -123,7 +123,7 @@
 		if(stance == HOSTILE_STANCE_IDLE)
 			var/list/can_see = view(src, 10)
 			//30% chance to stop wandering and do something
-			if(!busy && prob(30))
+			if(!busy && new_prob(30))
 				//first, check for potential food nearby to cocoon
 				for(var/mob/living/C in can_see)
 					if(C.stat && !istype(C,/mob/living/simple_animal/hostile/poison/giant_spider))

@@ -273,21 +273,21 @@
 		if(1)
 			qdel(src)
 		if(2)
-			if(prob(50))
+			if(new_prob(50))
 				qdel(src)
 			else
 				if(toner > 0)
 					new /obj/effect/decal/cleanable/oil(get_turf(src))
 					toner = 0
 		else
-			if(prob(50))
+			if(new_prob(50))
 				if(toner > 0)
 					new /obj/effect/decal/cleanable/oil(get_turf(src))
 					toner = 0
 
 
 /obj/machinery/photocopier/blob_act()
-	if(prob(50))
+	if(new_prob(50))
 		qdel(src)
 	else
 		if(toner > 0)

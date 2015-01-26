@@ -134,7 +134,7 @@
 
 	if(location.heat_capacity && temperature > location.heat_capacity)
 		location.to_be_destroyed = 1
-		/*if(prob(25))
+		/*if(new_prob(25))
 			location.ReplaceWithSpace()
 			return 0*/
 	return 1
@@ -160,10 +160,10 @@
 		if(T.to_be_destroyed)
 			var/chance_of_deletion
 			if (T.heat_capacity) //beware of division by zero
-				chance_of_deletion = T.max_fire_temperature_sustained / T.heat_capacity * 8 //there is no problem with prob(23456), min() was redundant --rastaf0
+				chance_of_deletion = T.max_fire_temperature_sustained / T.heat_capacity * 8 //there is no problem with new_prob(23456), min() was redundant --rastaf0
 			else
 				chance_of_deletion = 100
-			if(prob(chance_of_deletion))
+			if(new_prob(chance_of_deletion))
 				T.ChangeTurf(/turf/space)
 			else
 				T.to_be_destroyed = 0

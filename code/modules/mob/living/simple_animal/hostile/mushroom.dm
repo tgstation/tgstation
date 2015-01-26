@@ -59,7 +59,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/mushroom/adjustBruteLoss(var/damage)//Possibility to flee from a fight just to make it more visually interesting
-	if(!retreat_distance && prob(33))
+	if(!retreat_distance && new_prob(33))
 		retreat_distance = 5
 		spawn(30)
 			retreat_distance = null
@@ -112,7 +112,7 @@
 /mob/living/simple_animal/hostile/mushroom/proc/LevelUp(var/level_gain)
 	if(powerlevel <= 9)
 		powerlevel += level_gain
-		if(prob(25))
+		if(new_prob(25))
 			melee_damage_lower += (level_gain * rand(1,5))
 		else
 			melee_damage_upper += (level_gain * rand(1,5))

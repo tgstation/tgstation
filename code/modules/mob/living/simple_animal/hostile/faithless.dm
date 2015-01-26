@@ -43,6 +43,6 @@
 	..()
 	if(isliving(target))
 		var/mob/living/L = target
-		if(prob(12))
+		if(new_prob(12))
 			L.Weaken(3)
 			L.visible_message("<span class='danger'>\The [src] knocks down \the [L]!</span>")

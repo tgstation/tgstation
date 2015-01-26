@@ -18,17 +18,17 @@
 	..()
 	switch(stage)
 		if(2 || 3) //Pretend to be a cold and give time to spread.
-			if(prob(8))
+			if(new_prob(8))
 				affected_mob.emote("sneeze")
-			if(prob(8))
+			if(new_prob(8))
 				affected_mob.emote("cough")
-			if(prob(1))
+			if(new_prob(1))
 				affected_mob << "<span class='danger'>Your muscles ache.</span>"
-				if(prob(20))
+				if(new_prob(20))
 					affected_mob.take_organ_damage(1)
-			if(prob(1))
+			if(new_prob(1))
 				affected_mob << "<span class='danger'>Your stomach hurts.</span>"
-				if(prob(20))
+				if(new_prob(20))
 					affected_mob.adjustToxLoss(2)
 					affected_mob.updatehealth()
 		if(4)

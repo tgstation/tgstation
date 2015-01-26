@@ -12,17 +12,17 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if (new_prob(50))
 				qdel(src)
 				return
 		if(3.0)
-			if (prob(5))
+			if (new_prob(5))
 				qdel(src)
 				return
 	return
 
 /obj/structure/stool/blob_act()
-	if(prob(75))
+	if(new_prob(75))
 		new /obj/item/stack/sheet/metal(src.loc)
 		qdel(src)
 

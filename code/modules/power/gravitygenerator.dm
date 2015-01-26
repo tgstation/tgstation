@@ -317,11 +317,11 @@ var/const/GRAV_NEEDS_WRENCH = 3
 			else if(charging_state == POWER_DOWN)
 				charge_count -= 2
 
-			if(charge_count % 4 == 0 && prob(75)) // Let them know it is charging/discharging.
+			if(charge_count % 4 == 0 && new_prob(75)) // Let them know it is charging/discharging.
 				playsound(src.loc, 'sound/effects/EMPulse.ogg', 100, 1)
 
 			updateDialog()
-			if(prob(25)) // To help stop "Your clothes feel warm." spam.
+			if(new_prob(25)) // To help stop "Your clothes feel warm." spam.
 				pulse_radiation()
 
 			var/overlay_state = null

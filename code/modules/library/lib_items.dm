@@ -111,7 +111,7 @@
 	if(!gc_destroyed)
 		for(var/obj/item/weapon/book/b in contents)
 			b.loc = (get_turf(src))
-		if(prob(50))
+		if(new_prob(50))
 			qdel(src)
 
 /obj/structure/bookcase/update_icon()

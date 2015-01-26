@@ -30,7 +30,7 @@
 			user << "It's small and weak, barely the size of a foetus."
 		else
 			user << "It's grown quite large, and writhes slightly as you look at it."
-			if(prob(10))
+			if(new_prob(10))
 				A.AttemptGrow()
 
 		A.loc = get_turf(target)
@@ -40,7 +40,7 @@
 /datum/surgery_step/xenomorph_removal/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/obj/item/alien_embryo/A = locate() in target.contents
 	if(A)
-		if(prob(50))
+		if(new_prob(50))
 			A.AttemptGrow(0)
 		user.visible_message("<span class='warning'>[user] accidentally pokes the xenomorph in [target]!</span>")
 	else

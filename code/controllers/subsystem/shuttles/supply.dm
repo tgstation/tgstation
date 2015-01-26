@@ -57,11 +57,11 @@
 			return
 
 		var/errors = 0
-		if(prob(5))
+		if(new_prob(5))
 			errors |= MANIFEST_ERROR_COUNT
-		if(prob(5))
+		if(new_prob(5))
 			errors |= MANIFEST_ERROR_NAME
-		if(prob(5))
+		if(new_prob(5))
 			errors |= MANIFEST_ERROR_ITEM
 		SO.createObject(T, errors)
 

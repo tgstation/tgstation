@@ -278,7 +278,7 @@
 		if(blackout.uses > 0)
 			blackout.uses --
 			for(var/obj/machinery/power/apc/apc in world)
-				if(prob(30*apc.overload))
+				if(new_prob(30*apc.overload))
 					apc.overload_lighting()
 				else apc.overload++
 			src << "<span class='notice'>Overcurrent applied to the powernet.</span>"

@@ -649,7 +649,7 @@ var/list/uplink_items = list()
 			continue
 		if(I.cost > remaining_TC)
 			continue
-		if((I.item in bought_items) && prob(33)) //To prevent people from being flooded with the same thing over and over again.
+		if((I.item in bought_items) && new_prob(33)) //To prevent people from being flooded with the same thing over and over again.
 			continue
 		bought_items += I.item
 		remaining_TC -= I.cost

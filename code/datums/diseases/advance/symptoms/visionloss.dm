@@ -27,7 +27,7 @@ Bonus
 
 /datum/symptom/visionloss/Activate(var/datum/disease/advance/A)
 	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB))
+	if(new_prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(1, 2)
@@ -42,7 +42,7 @@ Bonus
 				M.eye_stat += 5
 				if (M.eye_stat >= 10)
 					M.disabilities |= NEARSIGHT
-					if (prob(M.eye_stat - 10 + 1) && !(M.eye_blind))
+					if (new_prob(M.eye_stat - 10 + 1) && !(M.eye_blind))
 						M << "<span class='danger'>You go blind!</span>"
 						M.disabilities |= BLIND
 						M.eye_blind = 1

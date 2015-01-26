@@ -5,7 +5,7 @@
 	if (drowsyness)
 		drowsyness--
 		eye_blurry = max(2, eye_blurry)
-		if (prob(5))
+		if (new_prob(5))
 			sleeping += 1
 			Paralyse(5)
 
@@ -35,7 +35,7 @@
 
 	if(losebreath>0) //Suffocating so do not take a breath
 		losebreath--
-		if (prob(75)) //High chance of gasping for air
+		if (new_prob(75)) //High chance of gasping for air
 			spawn emote("gasp")
 		if(istype(loc, /obj/))
 			var/obj/location_as_object = loc
@@ -103,7 +103,7 @@
 	breath.oxygen += toxins_used
 
 	if(breath.temperature > (T0C+66)) // Hot air hurts :(
-		if(prob(20))
+		if(new_prob(20))
 			src << "<span class='danger'>You feel a searing heat in your lungs!</span>"
 		fire_alert = max(fire_alert, 1)
 	else

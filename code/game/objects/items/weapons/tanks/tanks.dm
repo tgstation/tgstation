@@ -64,7 +64,7 @@
 	user << "<span class='notice'>It feels [descriptive].</span>"
 
 /obj/item/weapon/tank/blob_act()
-	if(prob(50))
+	if(new_prob(50))
 		var/turf/location = src.loc
 		if (!( istype(location, /turf) ))
 			qdel(src)

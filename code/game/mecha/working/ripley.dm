@@ -88,7 +88,7 @@
 /obj/mecha/working/ripley/mining/New()
 	..()
 	//Attach drill
-	if(prob(25)) //Possible diamond drill... Feeling lucky?
+	if(new_prob(25)) //Possible diamond drill... Feeling lucky?
 		var/obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill/D = new /obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill
 		D.attach(src)
 	else

@@ -201,7 +201,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 		traffic -= netspeed
 
 /obj/machinery/telecomms/emp_act(severity)
-	if(prob(100/severity))
+	if(new_prob(100/severity))
 		if(!(stat & EMPED))
 			stat |= EMPED
 			var/duration = (300 * 10)/severity

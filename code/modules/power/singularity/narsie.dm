@@ -47,10 +47,10 @@
 
 /obj/singularity/narsie/process()
 	eat()
-	if(!target || prob(5))
+	if(!target || new_prob(5))
 		pickcultist()
 	move()
-	if(prob(25))
+	if(new_prob(25))
 		mezzer()
 
 

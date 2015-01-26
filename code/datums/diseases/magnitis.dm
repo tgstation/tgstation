@@ -15,9 +15,9 @@
 	..()
 	switch(stage)
 		if(2)
-			if(prob(2))
+			if(new_prob(2))
 				affected_mob << "<span class='danger'>You feel a slight shock course through your body.</span>"
-			if(prob(2))
+			if(new_prob(2))
 				for(var/obj/M in orange(2,affected_mob))
 					if(!M.anchored && (M.flags & CONDUCT))
 						step_towards(M,affected_mob)
@@ -35,11 +35,11 @@
 							M.y++
 						*/
 		if(3)
-			if(prob(2))
+			if(new_prob(2))
 				affected_mob << "<span class='danger'>You feel a strong shock course through your body.</span>"
-			if(prob(2))
+			if(new_prob(2))
 				affected_mob << "<span class='danger'>You feel like clowning around.</span>"
-			if(prob(4))
+			if(new_prob(4))
 				for(var/obj/M in orange(4,affected_mob))
 					if(!M.anchored && (M.flags & CONDUCT))
 						var/i
@@ -63,11 +63,11 @@
 							M.y+=rand(1,min(3,affected_mob.y-M.y))
 						*/
 		if(4)
-			if(prob(2))
+			if(new_prob(2))
 				affected_mob << "<span class='danger'>You feel a powerful shock course through your body.</span>"
-			if(prob(2))
+			if(new_prob(2))
 				affected_mob << "<span class='danger'>You query upon the nature of miracles.</span>"
-			if(prob(8))
+			if(new_prob(8))
 				for(var/obj/M in orange(6,affected_mob))
 					if(!M.anchored && (M.flags & CONDUCT))
 						var/i

@@ -167,7 +167,7 @@
 		if(1.0)
 			qdel(src)
 		if(2.0)
-			if(prob(25))
+			if(new_prob(25))
 				qdel(src)
 			else
 				take_damage(120)

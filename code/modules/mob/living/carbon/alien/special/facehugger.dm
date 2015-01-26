@@ -132,7 +132,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	if(iscarbon(M))
 		var/mob/living/carbon/target = L
 		if(target.wear_mask)
-			if(prob(20))	return 0
+			if(new_prob(20))	return 0
 			var/obj/item/clothing/W = target.wear_mask
 			if(W.flags & NODROP)	return 0
 			target.unEquip(W)

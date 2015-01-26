@@ -68,7 +68,7 @@
 
 /obj/structure/closet/secure_closet/medical3/New()
 	..()
-	if(prob(50))
+	if(new_prob(50))
 		new /obj/item/weapon/storage/backpack/medic(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel_med(src)
@@ -98,7 +98,7 @@
 /obj/structure/closet/secure_closet/CMO/New()
 	..()
 	new /obj/item/clothing/suit/toggle/wintercoat/medical(src)
-	if(prob(50))
+	if(new_prob(50))
 		new /obj/item/weapon/storage/backpack/medic(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel_med(src)

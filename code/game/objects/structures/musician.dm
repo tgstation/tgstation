@@ -308,7 +308,7 @@
 /obj/structure/piano/New()
 	song = new("piano", src)
 
-	if(prob(50))
+	if(new_prob(50))
 		name = "space minimoog"
 		desc = "This is a minimoog, like a space piano, but more spacey!"
 		icon_state = "minimoog"

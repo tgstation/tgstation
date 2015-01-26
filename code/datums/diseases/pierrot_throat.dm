@@ -16,10 +16,10 @@
 	..()
 	switch(stage)
 		if(1)
-			if(prob(10)) affected_mob << "<span class='danger'>You feel a little silly.</span>"
+			if(new_prob(10)) affected_mob << "<span class='danger'>You feel a little silly.</span>"
 		if(2)
-			if(prob(10)) affected_mob << "<span class='danger'>You start seeing rainbows.</span>"
+			if(new_prob(10)) affected_mob << "<span class='danger'>You start seeing rainbows.</span>"
 		if(3)
-			if(prob(10)) affected_mob << "<span class='danger'>Your thoughts are interrupted by a loud <b>HONK!</b></span>"
+			if(new_prob(10)) affected_mob << "<span class='danger'>Your thoughts are interrupted by a loud <b>HONK!</b></span>"
 		if(4)
-			if(prob(5)) affected_mob.say( pick( list("HONK!", "Honk!", "Honk.", "Honk?", "Honk!!", "Honk?!", "Honk...") ) )
+			if(new_prob(5)) affected_mob.say( pick( list("HONK!", "Honk!", "Honk.", "Honk?", "Honk!!", "Honk?!", "Honk...") ) )

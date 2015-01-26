@@ -84,7 +84,7 @@
 
 /obj/structure/plasticflaps/CanPass(atom/movable/A, turf/T)
 	if(istype(A) && A.checkpass(PASSGLASS))
-		return prob(60)
+		return new_prob(60)
 
 	var/obj/structure/stool/bed/B = A
 	if (istype(A, /obj/structure/stool/bed) && B.buckled_mob)//if it's a bed/chair and someone is buckled, it will not pass
@@ -102,10 +102,10 @@
 		if (1)
 			qdel(src)
 		if (2)
-			if (prob(50))
+			if (new_prob(50))
 				qdel(src)
 		if (3)
-			if (prob(5))
+			if (new_prob(5))
 				qdel(src)
 
 /obj/structure/plasticflaps/mining //A specific type for mining that doesn't allow airflow because of them damn crates

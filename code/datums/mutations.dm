@@ -44,7 +44,7 @@
 
 /datum/mutation/human/proc/check_block(mob/living/carbon/human/owner)
 	if(check_block_string(owner.dna.struc_enzymes))
-		if(prob(get_chance))
+		if(new_prob(get_chance))
 			. = on_acquiring(owner)
 	else
 		. = on_losing(owner)
@@ -158,7 +158,7 @@
 
 /datum/mutation/human/cold_resistance/on_life(mob/living/carbon/human/owner)
 	if(owner.getFireLoss())
-		if(prob(1))
+		if(new_prob(1))
 			owner.heal_organ_damage(0,1)   //Is this really needed?
 
 /datum/mutation/human/x_ray
@@ -203,7 +203,7 @@
 	text_gain_indication = "<span class='danger'>You get a headache.</span>"
 
 /datum/mutation/human/epilepsy/on_life(mob/living/carbon/human/owner)
-	if ((prob(1) && owner.paralysis < 1))
+	if ((new_prob(1) && owner.paralysis < 1))
 		owner << "<span class='danger'>You have a seizure!</span>"
 		for(var/mob/O in viewers(owner, null) - owner)
 			O.show_message(text("<span class='userdanger'>[src] starts having a seizure!</span>"), 1)
@@ -218,8 +218,8 @@
 
 /datum/mutation/human/bad_dna/on_acquiring(var/mob/living/carbon/human/owner)
 	var/mob/new_mob
-	if(prob(95))
-		if(prob(50))
+	if(new_prob(95))
+		if(new_prob(50))
 			new_mob = randmutb(owner)
 		else
 			new_mob = randmuti(owner)
@@ -237,7 +237,7 @@
 	text_gain_indication = "<span class='danger'>You start coughing.</span>"
 
 /datum/mutation/human/cough/on_life(mob/living/carbon/human/owner)
-	if((prob(5) && owner.paralysis <= 1))
+	if((new_prob(5) && owner.paralysis <= 1))
 		owner.drop_item()
 		owner.emote("cough")
 
@@ -262,13 +262,13 @@
 	text_gain_indication = "<span class='danger'>You twitch.</span>"
 
 /datum/mutation/human/tourettes/on_life(mob/living/carbon/human/owner)
-	if((prob(10) && owner.paralysis <= 1))
+	if((new_prob(10) && owner.paralysis <= 1))
 		owner.Stun(10)
 		switch(rand(1, 3))
 			if(1)
 				owner.emote("twitch")
 			if(2 to 3)
-				owner.say("[prob(50) ? ";" : ""][pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")]")
+				owner.say("[new_prob(50) ? ";" : ""][pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")]")
 		var/x_offset_old = owner.pixel_x
 		var/y_offset_old = owner.pixel_y
 		var/x_offset = owner.pixel_x + rand(-2,2)
@@ -283,7 +283,7 @@
 	text_gain_indication = "<span class='danger'>You feel nervous.</span>"
 
 /datum/mutation/human/nervousness/on_life(mob/living/carbon/human/owner)
-	if(prob(10))
+	if(new_prob(10))
 		owner.stuttering = max(10, owner.stuttering)
 
 /datum/mutation/human/deaf

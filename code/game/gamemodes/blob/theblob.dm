@@ -102,8 +102,8 @@
 
 
 /obj/effect/blob/proc/expand(var/turf/T = null, var/prob = 1, var/a_color)
-	if(prob && !prob(health))	return
-	if(istype(T, /turf/space) && prob(75)) 	return
+	if(prob && !new_prob(health))	return
+	if(istype(T, /turf/space) && new_prob(75)) 	return
 	if(!T)
 		var/list/dirs = list(1,2,4,8)
 		for(var/i = 1 to 4)

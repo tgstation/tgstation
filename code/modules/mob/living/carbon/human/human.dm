@@ -82,7 +82,7 @@
 	switch (severity)
 		if (1.0)
 			b_loss += 500
-			if (!prob(getarmor(null, "bomb")))
+			if (!new_prob(getarmor(null, "bomb")))
 				gib()
 				return
 			else
@@ -98,22 +98,22 @@
 
 			f_loss += 60
 
-			if (prob(getarmor(null, "bomb")))
+			if (new_prob(getarmor(null, "bomb")))
 				b_loss = b_loss/1.5
 				f_loss = f_loss/1.5
 
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(30, 120)
-			if (prob(70) && !shielded)
+			if (new_prob(70) && !shielded)
 				Paralyse(10)
 
 		if(3.0)
 			b_loss += 30
-			if (prob(getarmor(null, "bomb")))
+			if (new_prob(getarmor(null, "bomb")))
 				b_loss = b_loss/2
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(15,60)
-			if (prob(50) && !shielded)
+			if (new_prob(50) && !shielded)
 				Paralyse(10)
 
 	var/update = 0
@@ -548,7 +548,7 @@
 	if(current_size >= STAGE_THREE)
 		var/list/handlist = list(l_hand, r_hand)
 		for(var/obj/item/hand in handlist)
-			if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && unEquip(hand))
+			if(new_prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && unEquip(hand))
 				step_towards(hand, src)
 				src << "<span class='warning'>\The [S] pulls \the [hand] from your grip!</span>"
 	apply_effect(current_size * 3, IRRADIATE)

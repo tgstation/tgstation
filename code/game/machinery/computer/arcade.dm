@@ -219,7 +219,7 @@
 		src.temp = "[src.enemy_name] throws a bomb, exploding you for [boomamt] damage!"
 		src.player_hp -= boomamt
 
-	else if ((src.enemy_mp <= 5) && (prob(70)))
+	else if ((src.enemy_mp <= 5) && (new_prob(70)))
 		var/stealamt = rand(2,3)
 		src.temp = "[src.enemy_name] steals [stealamt] of your power!"
 		src.player_mp -= stealamt
@@ -329,7 +329,7 @@
 	settlers = list()
 	var/choice = null
 	for(var/i = 1; i <= 3; i++)
-		if(prob(50))
+		if(new_prob(50))
 			choice = pick(first_names_male)
 		else
 			choice = pick(first_names_female)
@@ -403,7 +403,7 @@
 		if(turns >= 9)
 			win()
 		else if(turns == 2)
-			if(prob(30))
+			if(new_prob(30))
 				event = "Collision"
 				event()
 				food -= alive*2
@@ -413,14 +413,14 @@
 				food -= alive*2
 				fuel -= 5
 				turns += 1
-				if(prob(75))
+				if(new_prob(75))
 					event = pickweight(events)
 					event()
 		else
 			food -= alive*2
 			fuel -= 5
 			turns += 1
-			if(prob(75))
+			if(new_prob(75))
 				event = pickweight(events)
 				event()
 	else if(href_list["newgame"]) //Reset everything
@@ -454,13 +454,13 @@
 		food -= (alive*2)*3
 		event = null
 	else if(href_list["keepspeed"]) //keep speed
-		if(prob(75))
+		if(new_prob(75))
 			event = "Breakdown"
 			event()
 		else
 			event = null
 	else if(href_list["blackhole"]) //keep speed past a black hole
-		if(prob(75))
+		if(new_prob(75))
 			event = "BlackHole"
 			event()
 		else
@@ -481,13 +481,13 @@
 	eventdat = "<center><h1>[event]</h1></center>"
 	if(event == "Raiders")
 		eventdat += "Raiders have come aboard your ship!"
-		if(prob(50))
+		if(new_prob(50))
 			var/sfood = rand(1,10)
 			var/sfuel = rand(1,10)
 			food -= sfood
 			fuel -= sfuel
 			eventdat += "<br>They have stolen [sfood] <b>Food</b> and [sfuel] <b>Fuel</b>."
-		else if(prob(10))
+		else if(new_prob(10))
 			var/deadname = pick_n_take(settlers)
 			eventdat += "<br>[deadname] tried to fight back but was killed."
 			alive -= 1
@@ -530,13 +530,13 @@
 
 	else if(event == "Collision")
 		eventdat += "Something hit us! Looks like there's some hull damage."
-		if(prob(25))
+		if(new_prob(25))
 			var/sfood = rand(5,15)
 			var/sfuel = rand(5,15)
 			food -= sfood
 			fuel -= sfuel
 			eventdat += "<br>[sfood] <b>Food</b> and [sfuel] <b>Fuel</b> was vented out into space."
-		if(prob(10))
+		if(new_prob(10))
 			var/deadname = pick_n_take(settlers)
 			eventdat += "<br>[deadname] was killed by rapid depressurization."
 			alive -= 1

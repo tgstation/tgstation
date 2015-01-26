@@ -10,8 +10,8 @@
 	var/variable_charges = 1
 
 /obj/item/weapon/gun/magic/wand/New()
-	if(prob(75) && variable_charges) //25% chance of listed max charges, 50% chance of 1/2 max charges, 25% chance of 1/3 max charges
-		if(prob(33))
+	if(new_prob(75) && variable_charges) //25% chance of listed max charges, 50% chance of 1/2 max charges, 25% chance of 1/3 max charges
+		if(new_prob(33))
 			max_charges = Ceiling(max_charges / 3)
 		else
 			max_charges = Ceiling(max_charges / 2)

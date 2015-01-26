@@ -124,13 +124,13 @@
 		switch(radiation)
 			if(0 to 50)
 				radiation--
-				if(prob(25))
+				if(new_prob(25))
 					adjustToxLoss(1)
 
 			if(50 to 75)
 				radiation -= 2
 				adjustToxLoss(1)
-				if(prob(5))
+				if(new_prob(5))
 					radiation -= 5
 
 			if(75 to 100)

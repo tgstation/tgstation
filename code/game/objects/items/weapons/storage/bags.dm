@@ -298,13 +298,13 @@
 					step(I, pick(NORTH,SOUTH,EAST,WEST))
 					sleep(rand(2,4))
 
-	if(prob(50))
+	if(new_prob(50))
 		playsound(M, 'sound/items/trayhit1.ogg', 50, 1)
 	else
 		playsound(M, 'sound/items/trayhit2.ogg', 50, 1)
 
 	if(ishuman(M) || ismonkey(M))
-		if(prob(10))
+		if(new_prob(10))
 			M.Weaken(2)
 
 /obj/item/weapon/storage/bag/tray/proc/rebuild_overlays()

@@ -429,12 +429,12 @@ Auto Patrol[]"},
 		G.power_supply.charge = 0
 		G.update_icon()
 
-	if (prob(50))
+	if (new_prob(50))
 		new /obj/item/robot_parts/l_leg(Tsec)
-		if (prob(25))
+		if (new_prob(25))
 			new /obj/item/robot_parts/r_leg(Tsec)
-	if (prob(25))//50% chance for a helmet OR vest
-		if (prob(50))
+	if (new_prob(25))//50% chance for a helmet OR vest
+		if (new_prob(50))
 			new /obj/item/clothing/head/helmet(Tsec)
 		else
 			if(!lasercolor)
@@ -503,7 +503,7 @@ Auto Patrol[]"},
 
 /obj/machinery/bot/ed209/emp_act(severity)
 
-	if(severity==2 && prob(70))
+	if(severity==2 && new_prob(70))
 		..(severity-1)
 	else
 		var/obj/effect/overlay/pulse2 = new/obj/effect/overlay ( loc )
@@ -520,11 +520,11 @@ Auto Patrol[]"},
 				continue
 			targets += C
 		if(targets.len)
-			if(prob(50))
+			if(new_prob(50))
 				var/mob/toshoot = pick(targets)
 				if (toshoot)
 					targets-=toshoot
-					if (prob(50) && emagged < 2)
+					if (new_prob(50) && emagged < 2)
 						emagged = 2
 						set_weapon()
 						shootAt(toshoot)
@@ -532,7 +532,7 @@ Auto Patrol[]"},
 						set_weapon()
 					else
 						shootAt(toshoot)
-			else if(prob(50))
+			else if(new_prob(50))
 				if(targets.len)
 					var/mob/toarrest = pick(targets)
 					if (toarrest)

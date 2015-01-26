@@ -74,13 +74,13 @@
 			grabbedby(M)
 		if("harm")
 			M.do_attack_animation(src)
-			if (prob(75))
+			if (new_prob(75))
 				visible_message("<span class='danger'>[M] has punched [name]!</span>", \
 						"<span class='userdanger'>[M] has punched [name]!</span>")
 
 				playsound(loc, "punch", 25, 1, -1)
 				var/damage = rand(5, 10)
-				if (prob(40))
+				if (new_prob(40))
 					damage = rand(10, 15)
 					if ( (paralysis < 5)  && (health > 0) )
 						Paralyse(rand(10, 15))
@@ -99,7 +99,7 @@
 		if("disarm")
 			if (!( paralysis ))
 				M.do_attack_animation(src)
-				if (prob(25))
+				if (new_prob(25))
 					Paralyse(2)
 					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 					add_logs(M, src, "pushed", admin=0)
@@ -115,7 +115,7 @@
 /mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if(..()) //if harm or disarm intent.
 		if (M.a_intent == "harm")
-			if ((prob(95) && health > 0))
+			if ((new_prob(95) && health > 0))
 				playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 				var/damage = rand(15, 30)
 				if (damage >= 25)
@@ -139,7 +139,7 @@
 		if (M.a_intent == "disarm")
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			var/damage = 5
-			if(prob(95))
+			if(new_prob(95))
 				Weaken(10)
 				visible_message("<span class='danger'>[M] has tackled down [name]!</span>", \
 						"<span class='userdanger'>[M] has tackled down [name]!</span>")
@@ -204,7 +204,7 @@
 			adjustFireLoss(60)
 		if(3.0)
 			adjustBruteLoss(30)
-			if (prob(50))
+			if (new_prob(50))
 				Paralyse(10)
 	return
 
@@ -213,7 +213,7 @@
 		show_message("<span class='userdanger'>The blob attacks you!</span>")
 		adjustFireLoss(60)
 		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
-	if (prob(50))
+	if (new_prob(50))
 		Paralyse(10)
 	if (stat == DEAD && client)
 		gib()

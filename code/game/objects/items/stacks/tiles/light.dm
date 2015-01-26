@@ -16,11 +16,11 @@
 
 /obj/item/stack/tile/light/New(var/loc, var/amount=null)
 	..()
-	if(prob(5))
+	if(new_prob(5))
 		state = 3 //broken
-	else if(prob(5))
+	else if(new_prob(5))
 		state = 2 //breaking
-	else if(prob(10))
+	else if(new_prob(10))
 		state = 1 //flickering occasionally
 	else
 		state = 0 //fine

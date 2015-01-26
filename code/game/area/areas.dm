@@ -336,7 +336,7 @@
 		L.client.ambience_playing = 1
 		L << sound('sound/ambience/shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
 
-	if(prob(35))
+	if(new_prob(35))
 		var/sound = pick(ambientsounds)
 
 		if(!L.client.played)

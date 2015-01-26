@@ -207,10 +207,10 @@ obj/item/weapon/twohanded/
 
 /obj/item/weapon/twohanded/dualsaber/attack(target as mob, mob/living/carbon/human/user as mob)
 	..()
-	if(user.disabilities & CLUMSY && (wielded) && prob(40))
+	if(user.disabilities & CLUMSY && (wielded) && new_prob(40))
 		impale(user)
 		return
-	if((wielded) && prob(50))
+	if((wielded) && new_prob(50))
 		spawn(0)
 			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
 				user.dir = i

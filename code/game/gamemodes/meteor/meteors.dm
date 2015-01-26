@@ -114,7 +114,7 @@
 		var/turf/T = get_turf(loc)
 		ram_turf(T)
 
-		if(prob(10) && !istype(T, /turf/space))//randomly takes a 'hit' from ramming
+		if(new_prob(10) && !istype(T, /turf/space))//randomly takes a 'hit' from ramming
 			get_hit()
 
 	return .
@@ -291,7 +291,7 @@
 
 /obj/effect/meteor/tunguska/Bump()
 	..()
-	if(prob(20))
+	if(new_prob(20))
 		explosion(src.loc,2,4,6,8)
 
 //////////////////////////

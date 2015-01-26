@@ -227,13 +227,13 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			return
 		if(2.0)
 			src.isbroken=1
-			if(prob(50))
+			if(new_prob(50))
 				qdel(src)
 			else
-				src.update_icon() //can't place it above the return and outside the if-else. or we might get runtimes of null.update_icon() if(prob(50)) goes in.
+				src.update_icon() //can't place it above the return and outside the if-else. or we might get runtimes of null.update_icon() if(new_prob(50)) goes in.
 			return
 		else
-			if(prob(50))
+			if(new_prob(50))
 				src.isbroken=1
 			src.update_icon()
 			return

@@ -18,7 +18,7 @@
 /mob/living/proc/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
 	apply_damage(I.force, I.damtype)
 	if(I.damtype == "brute")
-		if(prob(33) && I.force)
+		if(new_prob(33) && I.force)
 			var/turf/location = src.loc
 			if(istype(location, /turf/simulated))
 				location.add_blood_floor(src)

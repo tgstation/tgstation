@@ -73,7 +73,7 @@ proc/Ellipsis(original_msg, chance = 50, keep_words)
 	var/new_msg = ""
 
 	for(var/w in words)
-		if(prob(chance))
+		if(new_prob(chance))
 			new_words += "..."
 			if(!keep_words)
 				continue

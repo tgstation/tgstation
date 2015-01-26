@@ -1428,7 +1428,7 @@
 
 		var/turf/simulated/floor/T = get_turf(M)
 		if(istype(T))
-			if(prob(80))	T.break_tile_to_plating()
+			if(new_prob(80))	T.break_tile_to_plating()
 			else			T.break_tile()
 
 		if(M.health == 1)

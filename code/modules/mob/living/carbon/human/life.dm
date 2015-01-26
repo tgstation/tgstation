@@ -129,7 +129,7 @@
 
 /mob/living/carbon/human/proc/handle_disabilities()
 	if (getBrainLoss() >= 60 && stat != 2)
-		if (prob(3))
+		if (new_prob(3))
 			switch(pick(1,2,3))
 				if(1)
 					say(pick("IM A PONY NEEEEEEIIIIIIIIIGH", "without oxigen blob don't evoluate?", "CAPTAINS A COMDOM", "[pick("", "that faggot traitor")] [pick("joerge", "george", "gorge", "gdoruge")] [pick("mellens", "melons", "mwrlins")] is grifing me HAL;P!!!", "can u give me [pick("telikesis","halk","eppilapse")]?", "THe saiyans screwed", "Bi is THE BEST OF BOTH WORLDS>", "I WANNA PET TEH monkeyS", "stop grifing me!!!!", "SOTP IT#"))
@@ -445,7 +445,7 @@
 			adjustStaminaLoss(-10)
 			sleeping = max(sleeping-1, 0)
 			stat = UNCONSCIOUS
-			if( prob(10) && health && !hal_crit )
+			if( new_prob(10) && health && !hal_crit )
 				spawn(0)
 					emote("snore")
 		//CONSCIOUS

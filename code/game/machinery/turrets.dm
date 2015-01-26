@@ -267,7 +267,7 @@
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		src.health -= Proj.damage
 		..()
-		if(prob(45) && Proj.damage > 0) src.spark_system.start()
+		if(new_prob(45) && Proj.damage > 0) src.spark_system.start()
 		qdel(Proj)
 		if (src.health <= 0)
 			src.die()

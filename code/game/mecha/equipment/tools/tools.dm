@@ -673,7 +673,7 @@
 	if(!action_checks(user))
 		return chassis.dynattackby(W,user)
 	chassis.log_message("Attacked by [W]. Attacker - [user]")
-	if(prob(chassis.deflect_chance*deflect_coeff))
+	if(new_prob(chassis.deflect_chance*deflect_coeff))
 		user << "<span class='danger'>The [W] bounces off [chassis] armor.</span>"
 		chassis.log_append_to_last("Armor saved.")
 	else
@@ -724,7 +724,7 @@
 /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/proc/dynbulletdamage(var/obj/item/projectile/Proj)
 	if(!action_checks(src))
 		return chassis.dynbulletdamage(Proj)
-	if(prob(chassis.deflect_chance*deflect_coeff))
+	if(new_prob(chassis.deflect_chance*deflect_coeff))
 		chassis.visible_message("The [chassis.name] armor deflects the projectile")
 		chassis.log_append_to_last("Armor saved.")
 	else
@@ -739,7 +739,7 @@
 /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/proc/dynhitby(atom/movable/A)
 	if(!action_checks(A))
 		return chassis.dynhitby(A)
-	if(prob(chassis.deflect_chance*deflect_coeff) || istype(A, /mob/living) || istype(A, /obj/item/mecha_parts/mecha_tracking))
+	if(new_prob(chassis.deflect_chance*deflect_coeff) || istype(A, /mob/living) || istype(A, /obj/item/mecha_parts/mecha_tracking))
 		chassis.visible_message("The [A] bounces off the [chassis] armor")
 		chassis.log_append_to_last("Armor saved.")
 		if(istype(A, /mob/living))
@@ -829,7 +829,7 @@
 	var/repaired = 0
 	if(RD.chassis.hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
 		health_boost *= -2
-	else if(RD.chassis.hasInternalDamage() && prob(15))
+	else if(RD.chassis.hasInternalDamage() && new_prob(15))
 		for(var/int_dam_flag in RD.repairable_damage)
 			if(RD.chassis.hasInternalDamage(int_dam_flag))
 				RD.chassis.clearInternalDamage(int_dam_flag)
@@ -1066,7 +1066,7 @@
 	if(!T)
 		return
 	var/datum/gas_mixture/GM = new
-	if(prob(10))
+	if(new_prob(10))
 		GM.toxins += 100
 		GM.temperature = 1500+T0C //should be enough to start a fire
 		T.visible_message("The [src] suddenly disgorges a cloud of heated plasma.")
@@ -1090,7 +1090,7 @@
 		EG.log_message("Deactivated - no fuel.")
 		EG.set_ready_state(1)
 		return 0
-	if(anyprob(EG.reliability))
+	if(anynew_prob(EG.reliability))
 		EG.critfail()
 		stop()
 		return 0

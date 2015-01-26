@@ -26,7 +26,7 @@ BONUS
 
 /datum/symptom/shedding/Activate(var/datum/disease/advance/A)
 	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB))
+	if(new_prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
 		M << "<span class='notice'>[pick("Your scalp itches.", "Your skin feels flakey.")]</span>"
 		if(istype(M, /mob/living/carbon/human))

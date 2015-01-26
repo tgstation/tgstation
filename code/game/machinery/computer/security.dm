@@ -663,7 +663,7 @@ What a mess.*/
 		return
 
 	for(var/datum/data/record/R in data_core.security)
-		if(prob(10/severity))
+		if(new_prob(10/severity))
 			switch(rand(1,6))
 				if(1)
 					R.fields["name"] = "[pick(pick(first_names_male), pick(first_names_female))] [pick(last_names)]"
@@ -679,7 +679,7 @@ What a mess.*/
 					R.fields["m_stat"] = pick("*Insane*", "*Unstable*", "*Watch*", "Stable")
 			continue
 
-		else if(prob(1))
+		else if(new_prob(1))
 			del(R)
 			continue
 

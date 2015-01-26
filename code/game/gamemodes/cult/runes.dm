@@ -625,7 +625,7 @@ var/list/sacrificed = list()
 							sac_grant_word(C)
 							stone_or_gib(H)
 					else
-						if(prob(60))
+						if(new_prob(60))
 							usr << "<span class='danger'>The Geometer of blood accepts this sacrifice.</span>"
 							sac_grant_word(usr)
 						else
@@ -636,7 +636,7 @@ var/list/sacrificed = list()
 					if(H.stat !=2)
 						usr << "<span class='danger'>The victim is still alive, you will need more cultists chanting for the sacrifice to succeed.</span>"
 					else
-						if(prob(60))
+						if(new_prob(60))
 							usr << "<span class='danger'>The Geometer of blood accepts this sacrifice.</span>"
 							sac_grant_word(usr)
 						else
@@ -651,7 +651,7 @@ var/list/sacrificed = list()
 						sac_grant_word(C)
 						stone_or_gib(H)
 				else
-					if(prob(60))
+					if(new_prob(60))
 						usr << "<span class='danger'>The Geometer of blood accepts this sacrifice.</span>"
 						sac_grant_word(usr)
 					else
@@ -662,7 +662,7 @@ var/list/sacrificed = list()
 				if(H.stat !=2)
 					usr << "<span class='danger'>The victim is still alive, you will need more cultists chanting for the sacrifice to succeed.</span>"
 				else
-					if(prob(60))
+					if(new_prob(60))
 						usr << "<span class='danger'>The Geometer of blood accepts this sacrifice.</span>"
 						sac_grant_word(usr)
 					else
@@ -684,7 +684,7 @@ var/list/sacrificed = list()
 					usr << "<span class='danger'>Your target's earthly bonds are too strong. You need more cultists to succeed in this ritual.</span>"
 					continue
 			else
-				if(prob(30))
+				if(new_prob(30))
 					usr << "<span class='danger'>The Geometer of Blood accepts your meager sacrifice.</span>"
 					sac_grant_word(usr)
 				else
@@ -692,7 +692,7 @@ var/list/sacrificed = list()
 					usr << "<span class='danger'>However, a mere monkey is not enough to satisfy Him.</span>"
 		else
 			usr << "<span class='danger'>The Geometer of Blood accepts your meager sacrifice.</span>"
-			if(prob(30))
+			if(new_prob(30))
 				ticker.mode.grant_runeword(usr)
 		stone_or_gib(M)
 	for(var/mob/victim in src.loc)			//TO-DO: Move the shite above into the mob's own sac_act - see /mob/living/simple_animal/corgi/sac_act for an example
@@ -702,7 +702,7 @@ var/list/sacrificed = list()
 			K.say("Barhah hra zar'garis!")
 		A.dust()      /// A.gib() doesnt work for some reason, and dust() leaves that skull and bones thingy which we dont really need.
 		if (ticker.mode.name == "cult")
-			if(prob(75))
+			if(new_prob(75))
 				usr << "\red The Geometer of Blood accepts your exotic sacrifice."
 				sac_grant_word()
 			else
@@ -886,7 +886,7 @@ var/list/sacrificed = list()
 			C.adjustEarDamage(0, 50)
 			C.show_message("<span class='danger'>The world around you suddenly becomes quiet.</span>", 3)
 			affected++
-			if(prob(1) && ishuman(C))
+			if(new_prob(1) && ishuman(C))
 				C.dna.add_mutation(DEAFMUT)
 		if(affected)
 			usr.say("Sti[pick("'","`")] kaliedir!")
@@ -925,9 +925,9 @@ var/list/sacrificed = list()
 				continue
 			C.eye_blurry += 50
 			C.eye_blind += 20
-			if(prob(5))
+			if(new_prob(5))
 				C.disabilities |= NEARSIGHT
-				if(prob(10))
+				if(new_prob(10))
 					C.disabilities |= BLIND
 			C.show_message("<span class='danger'>Suddenly you see red flash that blinds you.</span>", 3)
 			affected++
@@ -977,11 +977,11 @@ var/list/sacrificed = list()
 				continue
 			M.take_overall_damage(51,51)
 			M << "<span class='danger'>Your blood boils!</span>"
-			if(prob(5))
+			if(new_prob(5))
 				spawn(5)
 					M.gib()
 		for(var/obj/effect/rune/R in view(src))
-			if(prob(10))
+			if(new_prob(10))
 				explosion(R.loc, -1, 0, 1, 5)
 		for(var/mob/living/carbon/human/C in orange(1,src))
 			if(iscultist(C) && !C.stat)

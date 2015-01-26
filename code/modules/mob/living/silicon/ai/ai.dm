@@ -347,7 +347,7 @@ var/list/ai_list = list()
 	return 0
 
 /mob/living/silicon/ai/emp_act(severity)
-	if (prob(30))
+	if (new_prob(30))
 		switch(pick(1,2))
 			if(1)
 				view_core()

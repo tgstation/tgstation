@@ -152,7 +152,7 @@ var/list/advance_cures = 	list(
 	var/number_of = amount_get
 	if(!amount_get)
 		number_of = 1
-		while(prob(20))
+		while(new_prob(20))
 			number_of += 1
 
 	for(var/i = 1; number_of >= i && possible_symptoms.len; i++)

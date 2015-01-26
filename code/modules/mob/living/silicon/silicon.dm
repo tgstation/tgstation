@@ -355,12 +355,12 @@
 /mob/living/silicon/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if(..()) //if harm or disarm intent
 		var/damage = rand(10, 20)
-		if (prob(90))
+		if (new_prob(90))
 			add_logs(M, src, "attacked", admin=0)
 			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
 							"<span class='userdanger'>[M] has slashed at [src]!</span>")
-			if(prob(8))
+			if(new_prob(8))
 				flick("noise", flash)
 			add_logs(M, src, "attacked", admin=0)
 			adjustBruteLoss(damage)

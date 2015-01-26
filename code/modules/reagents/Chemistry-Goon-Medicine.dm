@@ -65,7 +65,7 @@ datum/reagent/salglu_solution
 
 datum/reagent/salglu_solution/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	if(prob(50))
+	if(new_prob(50))
 		M.adjustBruteLoss(-3*REM)
 		M.adjustFireLoss(-3*REM)
 	..()
@@ -202,7 +202,7 @@ datum/reagent/potass_iodide
 datum/reagent/potass_iodide/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	if(M.radiation > 0)
-		if(prob(80))
+		if(new_prob(80))
 			M.radiation--
 	if(M.radiation < 0)
 		M.radiation = 0
@@ -228,7 +228,7 @@ datum/reagent/pen_acid/on_mob_life(var/mob/living/M as mob)
 	if(M.radiation > 0)
 		M.radiation -= 7
 	M.adjustToxLoss(-4*REM)
-	if(prob(33))
+	if(new_prob(33))
 		M.adjustBruteLoss(1*REM)
 	if(M.radiation < 0)
 		M.radiation = 0
@@ -256,14 +256,14 @@ datum/reagent/sal_acid
 datum/reagent/sal_acid/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	if(M.getBruteLoss() < 50)
-		if(prob(50))
+		if(new_prob(50))
 			M.adjustBruteLoss(-1*REM)
 	..()
 	return
 
 datum/reagent/sal_acid/overdose_process(var/mob/living/M as mob)
 	if(M.getBruteLoss() < 50)
-		if(prob(50))
+		if(new_prob(50))
 			M.adjustBruteLoss(2*REM)
 	..()
 	return
@@ -310,7 +310,7 @@ datum/reagent/perfluorodecalin/on_mob_life(var/mob/living/carbon/human/M as mob)
 	if(!M) M = holder.my_atom
 	M.adjustOxyLoss(-25*REM)
 	M.silent = max(M.silent, 5)
-	if(prob(33))
+	if(new_prob(33))
 		M.adjustBruteLoss(-1*REM)
 		M.adjustFireLoss(-1*REM)
 	..()
@@ -346,32 +346,32 @@ datum/reagent/ephedrine/on_mob_life(var/mob/living/M as mob)
 	return
 
 datum/reagent/ephedrine/overdose_process(var/mob/living/M as mob)
-	if(prob(33))
+	if(new_prob(33))
 		M.adjustToxLoss(1*REM)
 		M.losebreath++
 	..()
 	return
 
 datum/reagent/ephedrine/addiction_act_stage1(var/mob/living/M as mob)
-	if(prob(33))
+	if(new_prob(33))
 		M.adjustToxLoss(2*REM)
 		M.losebreath += 2
 	..()
 	return
 datum/reagent/ephedrine/addiction_act_stage2(var/mob/living/M as mob)
-	if(prob(33))
+	if(new_prob(33))
 		M.adjustToxLoss(3*REM)
 		M.losebreath += 3
 	..()
 	return
 datum/reagent/ephedrine/addiction_act_stage3(var/mob/living/M as mob)
-	if(prob(33))
+	if(new_prob(33))
 		M.adjustToxLoss(4*REM)
 		M.losebreath += 4
 	..()
 	return
 datum/reagent/ephedrine/addiction_act_stage4(var/mob/living/M as mob)
-	if(prob(33))
+	if(new_prob(33))
 		M.adjustToxLoss(5*REM)
 		M.losebreath += 5
 	..()
@@ -428,7 +428,7 @@ datum/reagent/morphine/on_mob_life(var/mob/living/M as mob)
 	return
 
 datum/reagent/morphine/overdose_process(var/mob/living/M as mob)
-	if(prob(33))
+	if(new_prob(33))
 		var/obj/item/I = M.get_active_hand()
 		if(I)
 			M.drop_item()
@@ -438,7 +438,7 @@ datum/reagent/morphine/overdose_process(var/mob/living/M as mob)
 	return
 
 datum/reagent/morphine/addiction_act_stage1(var/mob/living/M as mob)
-	if(prob(33))
+	if(new_prob(33))
 		var/obj/item/I = M.get_active_hand()
 		if(I)
 			M.drop_item()
@@ -447,7 +447,7 @@ datum/reagent/morphine/addiction_act_stage1(var/mob/living/M as mob)
 	..()
 	return
 datum/reagent/morphine/addiction_act_stage2(var/mob/living/M as mob)
-	if(prob(33))
+	if(new_prob(33))
 		var/obj/item/I = M.get_active_hand()
 		if(I)
 			M.drop_item()
@@ -457,7 +457,7 @@ datum/reagent/morphine/addiction_act_stage2(var/mob/living/M as mob)
 	..()
 	return
 datum/reagent/morphine/addiction_act_stage3(var/mob/living/M as mob)
-	if(prob(33))
+	if(new_prob(33))
 		var/obj/item/I = M.get_active_hand()
 		if(I)
 			M.drop_item()
@@ -467,7 +467,7 @@ datum/reagent/morphine/addiction_act_stage3(var/mob/living/M as mob)
 	..()
 	return
 datum/reagent/morphine/addiction_act_stage4(var/mob/living/M as mob)
-	if(prob(33))
+	if(new_prob(33))
 		var/obj/item/I = M.get_active_hand()
 		if(I)
 			M.drop_item()
@@ -481,13 +481,13 @@ datum/reagent/oculine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	cycle_amount++
 	if(M.eye_blind > 0 && cycle_amount > 20)
-		if(prob(30))
+		if(new_prob(30))
 			M.eye_blind = 0
-		else if(prob(80))
+		else if(new_prob(80))
 			M.eye_blind = 0
 			M.eye_blurry = 1
 		if(M.eye_blurry > 0)
-			if(prob(80))
+			if(new_prob(80))
 				M.eye_blurry = 0
 	..()
 	return
@@ -529,14 +529,14 @@ datum/reagent/atropine/on_mob_life(var/mob/living/M as mob)
 		M.setOxyLoss(65)
 	if(M.losebreath > 5)
 		M.losebreath = 5
-	if(prob(30))
+	if(new_prob(30))
 		M.Dizzy(5)
 		M.Jitter(5)
 	..()
 	return
 
 datum/reagent/atropine/overdose_process(var/mob/living/M as mob)
-	if(prob(50))
+	if(new_prob(50))
 		M.adjustToxLoss(2*REM)
 		M.Dizzy(1)
 		M.Jitter(1)
@@ -570,7 +570,7 @@ datum/reagent/epinephrine/on_mob_life(var/mob/living/M as mob)
 	if(M.losebreath > 3)
 		M.losebreath = 3
 	M.adjustStaminaLoss(-1*REM)
-	if(prob(30))
+	if(new_prob(30))
 		M.AdjustParalysis(-1)
 		M.AdjustStunned(-1)
 		M.AdjustWeakened(-1)
@@ -578,7 +578,7 @@ datum/reagent/epinephrine/on_mob_life(var/mob/living/M as mob)
 	return
 
 datum/reagent/epinephrine/overdose_process(var/mob/living/M as mob)
-	if(prob(33))
+	if(new_prob(33))
 		M.adjustStaminaLoss(5*REM)
 		M.adjustToxLoss(2*REM)
 		M.losebreath++
@@ -629,7 +629,7 @@ datum/reagent/strange_reagent/reaction_mob(var/mob/living/carbon/human/M as mob,
 
 datum/reagent/strange_reagent/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	if(prob(rand(1,100)))
+	if(new_prob(rand(1,100)))
 		M.adjustBruteLoss(2*REM)
 		M.adjustFireLoss(2*REM)
 	..()
@@ -711,7 +711,7 @@ proc/chemical_mob_spawn(var/datum/reagents/holder, var/amount_to_spawn, var/reac
 			var/mob/living/simple_animal/hostile/C = new chosen
 			C.faction |= "chemicalsummon"
 			C.loc = get_turf(holder.my_atom)
-			if(prob(50))
+			if(new_prob(50))
 				for(var/j = 1, j <= rand(1, 3), j++)
 					step(C, pick(NORTH,SOUTH,EAST,WEST))
 
@@ -796,7 +796,7 @@ datum/reagent/stimulants/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.status_flags |= GOTTAGOFAST
 	if(M.health < 50 && M.health > 0)
-		if(prob(50))
+		if(new_prob(50))
 			M.adjustOxyLoss(-5*REM)
 			M.adjustToxLoss(-5*REM)
 			M.adjustBruteLoss(-5*REM)
@@ -809,7 +809,7 @@ datum/reagent/stimulants/on_mob_life(var/mob/living/M as mob)
 	..()
 
 datum/reagent/stimulants/overdose_process(var/mob/living/M as mob)
-	if(prob(33))
+	if(new_prob(33))
 		M.adjustStaminaLoss(5*REM)
 		M.adjustToxLoss(2*REM)
 		M.losebreath++

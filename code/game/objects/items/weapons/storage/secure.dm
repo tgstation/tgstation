@@ -57,7 +57,7 @@
 			user.show_message(text("<span class='danger'>Now attempting to reset internal memory, please hold.</span>"), 1)
 			src.l_hacking = 1
 			if (do_after(usr, 100))
-				if (prob(40))
+				if (new_prob(40))
 					src.l_setshort = 1
 					src.l_set = 0
 					user.show_message(text("<span class='danger'>Internal memory reset.  Please give it a few seconds to reinitialize.</span>"), 1)

@@ -41,9 +41,9 @@
 	if(maxcharge < amount)	return 0
 	var/power_used = min(maxcharge-charge,amount)
 	if(crit_fail)	return 0
-	if(!prob(reliability))
+	if(!new_prob(reliability))
 		minor_fault++
-		if(prob(minor_fault))
+		if(new_prob(minor_fault))
 			crit_fail = 1
 			return 0
 	charge += power_used
@@ -107,14 +107,14 @@
 /obj/item/weapon/stock_parts/cell/proc/corrupt()
 	charge /= 2
 	maxcharge /= 2
-	if (prob(10))
+	if (new_prob(10))
 		rigged = 1 //broken batterys are dangerous
 
 /obj/item/weapon/stock_parts/cell/emp_act(severity)
 	charge -= 1000 / severity
 	if (charge < 0)
 		charge = 0
-	if(reliability != 100 && prob(50/severity))
+	if(reliability != 100 && new_prob(50/severity))
 		reliability -= 10 / severity
 	..()
 
@@ -123,10 +123,10 @@
 	if(!gc_destroyed)
 		switch(severity)
 			if(2)
-				if(prob(50))
+				if(new_prob(50))
 					corrupt()
 			if(3)
-				if(prob(25))
+				if(new_prob(25))
 					corrupt()
 
 

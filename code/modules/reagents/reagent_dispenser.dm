@@ -16,18 +16,18 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if (new_prob(50))
 				qdel(src)
 				return
 		if(3.0)
-			if (prob(5))
+			if (new_prob(5))
 				qdel(src)
 				return
 		else
 	return
 
 /obj/structure/reagent_dispensers/blob_act()
-	if(prob(50))
+	if(new_prob(50))
 		qdel(src)
 
 /obj/structure/reagent_dispensers/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -66,12 +66,12 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if (new_prob(50))
 				new /obj/effect/effect/water(src.loc)
 				qdel(src)
 				return
 		if(3.0)
-			if (prob(5))
+			if (new_prob(5))
 				new /obj/effect/effect/water(src.loc)
 				qdel(src)
 				return
@@ -79,7 +79,7 @@
 	return
 
 /obj/structure/reagent_dispensers/watertank/blob_act()
-	if(prob(50))
+	if(new_prob(50))
 		new /obj/effect/effect/water(src.loc)
 		qdel(src)
 

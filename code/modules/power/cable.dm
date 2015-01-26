@@ -163,7 +163,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 // shock the user with probability prb
 /obj/structure/cable/proc/shock(mob/user, prb, var/siemens_coeff = 1.0)
-	if(!prob(prb))
+	if(!new_prob(prb))
 		return 0
 	if (electrocute_mob(user, powernet, src, siemens_coeff))
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -179,10 +179,10 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(!gc_destroyed)
 		switch(severity)
 			if(2)
-				if(prob(50))
+				if(new_prob(50))
 					Deconstruct()
 			if(3)
-				if(prob(25))
+				if(new_prob(25))
 					Deconstruct()
 
 /obj/structure/cable/singularity_pull(S, current_size)
@@ -678,7 +678,7 @@ obj/structure/cable/proc/avail()
 		use(1)
 
 		if (C.shock(user, 50))
-			if (prob(50)) //fail
+			if (new_prob(50)) //fail
 				C.Deconstruct()
 
 // called when cable_coil is click on an installed obj/cable
@@ -743,7 +743,7 @@ obj/structure/cable/proc/avail()
 			use(1)
 
 			if (NC.shock(user, 50))
-				if (prob(50)) //fail
+				if (new_prob(50)) //fail
 					NC.Deconstruct()
 
 			return
@@ -793,7 +793,7 @@ obj/structure/cable/proc/avail()
 		use(1)
 
 		if (C.shock(user, 50))
-			if (prob(50)) //fail
+			if (new_prob(50)) //fail
 				C.Deconstruct()
 				return
 

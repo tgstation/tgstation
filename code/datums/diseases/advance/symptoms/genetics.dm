@@ -29,7 +29,7 @@ Bonus
 
 /datum/symptom/genetic_mutation/Activate(var/datum/disease/advance/A)
 	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB * 5)) // 15% chance
+	if(new_prob(SYMPTOM_ACTIVATION_PROB * 5)) // 15% chance
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(4, 5)

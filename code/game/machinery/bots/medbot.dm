@@ -301,7 +301,7 @@
 		path = list()
 
 	if(!patient)
-		if(!shut_up && prob(1))
+		if(!shut_up && new_prob(1))
 			var/message = pick("Radar, put a mask on!","There's always a catch, and it's the best there is.","I knew it, I should've been a plastic surgeon.","What kind of medbay is this? Everyone's dropping like dead flies.","Delicious!")
 			speak(message)
 		var/scan_range = (stationary_mode ? 1 : DEFAULT_SCAN_RANGE) //If in stationary mode, scan range is limited to adjacent patients.
@@ -513,7 +513,7 @@
 		reagent_glass.loc = Tsec
 		reagent_glass = null
 
-	if (prob(50))
+	if (new_prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread

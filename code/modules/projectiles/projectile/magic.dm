@@ -161,12 +161,12 @@ proc/wabbajack(mob/living/M)
 						new_mob.languages |= HUMAN
 				if("slime")
 					new_mob = new /mob/living/carbon/slime(M.loc)
-					if(prob(50))
+					if(new_prob(50))
 						var/mob/living/carbon/slime/Slime = new_mob
 						Slime.is_adult = 1
 					new_mob.languages |= HUMAN
 				if("xeno")
-					if(prob(50))
+					if(new_prob(50))
 						new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
 					else
 						new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
@@ -180,7 +180,7 @@ proc/wabbajack(mob/living/M)
 						else			new_mob = new /mob/living/carbon/alien/larva(M.loc)
 					new_mob.languages |= HUMAN*/
 				if("animal")
-					if(prob(50))
+					if(new_prob(50))
 						var/beast = pick("carp","bear","mushroom","statue", "bat", "goat","killertomato", "spiderbase", "spiderhunter", "blobbernaut", "magicarp", "chaosmagicarp")
 						switch(beast)
 							if("carp")		new_mob = new /mob/living/simple_animal/hostile/carp(M.loc)
@@ -218,7 +218,7 @@ proc/wabbajack(mob/living/M)
 
 					var/mob/living/carbon/human/H = new_mob
 					ready_dna(H)
-					if(H.dna && prob(50))
+					if(H.dna && new_prob(50))
 						var/new_species = pick(typesof(/datum/species) - /datum/species)
 						H.dna.species = new new_species()
 					H.update_icons()

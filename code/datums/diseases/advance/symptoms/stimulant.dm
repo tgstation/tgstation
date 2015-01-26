@@ -26,13 +26,13 @@ Bonus
 
 /datum/symptom/stimulant/Activate(var/datum/disease/advance/A)
 	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB * 10))
+	if(new_prob(SYMPTOM_ACTIVATION_PROB * 10))
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(5)
 				if (M.reagents.get_reagent_amount("ephedrine") < 30)
 					M.reagents.add_reagent("ephedrine", 10)
 			else
-				if(prob(SYMPTOM_ACTIVATION_PROB * 5))
+				if(new_prob(SYMPTOM_ACTIVATION_PROB * 5))
 					M << "<span class='notice'>[pick("You feel restless.", "You feel like running laps around the station.")]</span>"
 	return

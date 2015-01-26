@@ -75,14 +75,14 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	stage = min(stage, max_stages)
 
 	if(!cure)
-		if(prob(stage_prob))
+		if(new_prob(stage_prob))
 			stage = min(stage + 1,max_stages)
 	else
-		if(prob(cure_chance))
+		if(new_prob(cure_chance))
 			stage = max(stage - 1, 1)
 
 	if(disease_flags & CURABLE)
-		if(cure && prob(cure_chance))
+		if(cure && new_prob(cure_chance))
 			cure()
 
 
@@ -102,7 +102,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 		return
 
 	if(affected_mob)
-		if( affected_mob.reagents.has_reagent("spaceacillin") || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)) )
+		if( affected_mob.reagents.has_reagent("spaceacillin") || (affected_mob.satiety > 0 && new_prob(affected_mob.satiety/10)) )
 			return
 
 	var/spread_range = 1
@@ -131,7 +131,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 		SSdisease.processing -= src
 		return
 
-	if(prob(infectivity))
+	if(new_prob(infectivity))
 		spread(holder)
 
 	if(affected_mob)
@@ -145,7 +145,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 				stage_act()
 
 	if(!affected_mob)
-		if(prob(70))
+		if(new_prob(70))
 			if(--longevity<=0)
 				cure()
 

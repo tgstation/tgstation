@@ -15,7 +15,7 @@
 		..(severity)
 		return
 
-	if(prob(50/severity))
+	if(new_prob(50/severity))
 		on = !on
 		update_icon()
 

@@ -108,10 +108,10 @@
 			if(7 to 8)	probab = 60
 			if(9)		probab = 70
 			if(10)		probab = 95
-		if(prob(probab))
+		if(new_prob(probab))
 			if(istype(O, /obj/structure/window) || istype(O, /obj/structure/grille))
 				if(nutrition <= get_hunger_nutrition() && !Atkcool)
-					if (is_adult || prob(5))
+					if (is_adult || new_prob(5))
 						O.attack_slime(src)
 						Atkcool = 1
 						spawn(45)
@@ -119,7 +119,7 @@
 
 /mob/living/carbon/slime/MobBump(mob/M)
 	if(istype(M, /mob/living/carbon/human)) //pushing humans
-		if(is_adult && prob(10)) //only if we're adult, and 10% of the time
+		if(is_adult && new_prob(10)) //only if we're adult, and 10% of the time
 			return 0
 		else
 			return 1
@@ -256,7 +256,7 @@
 			Victim = null
 			Target = null
 			anchored = 0
-			if(prob(80) && !client)
+			if(new_prob(80) && !client)
 				Discipline++
 			spawn(0)
 				step_away(src,user,15)
@@ -267,7 +267,7 @@
 /mob/living/carbon/slime/attack_hand(mob/living/carbon/human/M as mob)
 	if(Victim)
 		if(Victim == M)
-			if(prob(60))
+			if(new_prob(60))
 				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off!</span>")
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 
@@ -275,7 +275,7 @@
 				visible_message("<span class='warning'> [M] manages to wrestle \the [name] off!</span>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
-				if(prob(90) && !client)
+				if(new_prob(90) && !client)
 					Discipline++
 
 				spawn()
@@ -292,7 +292,7 @@
 
 		else
 			M.do_attack_animation(src)
-			if(prob(30))
+			if(new_prob(30))
 				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off of [Victim]!</span>")
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 
@@ -300,7 +300,7 @@
 				visible_message("<span class='warning'> [M] manages to wrestle \the [name] off of [Victim]!</span>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
-				if(prob(80) && !client)
+				if(new_prob(80) && !client)
 					Discipline++
 
 					if(!is_adult)
@@ -331,7 +331,7 @@
 			M.do_attack_animation(src)
 			var/damage = rand(1, 9)
 			attacked += 10
-			if (prob(90))
+			if (new_prob(90))
 				playsound(loc, "punch", 25, 1, -1)
 				add_logs(M, src, "attacked", admin=0)
 				visible_message("<span class='danger'>[M] has punched [src]!</span>", \
@@ -351,7 +351,7 @@
 	if(..()) //if harm or disarm intent.
 
 		if (M.a_intent == "harm")
-			if (prob(95))
+			if (new_prob(95))
 				attacked += 10
 				playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 				var/damage = rand(15, 30)
@@ -377,7 +377,7 @@
 			var/damage = 5
 			attacked += 10
 
-			if(prob(95))
+			if(new_prob(95))
 				visible_message("<span class='danger'>[M] has tackled [name]!</span>", \
 						"<span class='userdanger'>[M] has tackled [name]!</span>")
 
@@ -385,7 +385,7 @@
 					Victim = null
 					Target = null
 					anchored = 0
-					if(prob(80) && !client)
+					if(new_prob(80) && !client)
 						Discipline++
 						if(!istype(src, /mob/living/carbon/slime))
 							if(Discipline == 1)
@@ -423,17 +423,17 @@
 		return
 	else if(W.force > 0)
 		attacked += 10
-		if(prob(25))
+		if(new_prob(25))
 			user.do_attack_animation(src)
 			user << "<span class='danger'>[W] passes right through [src]!</span>"
 			return
-		if(Discipline && prob(50)) // wow, buddy, why am I getting attacked??
+		if(Discipline && new_prob(50)) // wow, buddy, why am I getting attacked??
 			Discipline = 0
 	else if(W.force >= 3)
 		if(is_adult)
-			if(prob(5 + round(W.force/2)))
+			if(new_prob(5 + round(W.force/2)))
 				if(Victim || Target)
-					if(prob(80) && !client)
+					if(new_prob(80) && !client)
 						Discipline++
 
 					Victim = null
@@ -449,16 +449,16 @@
 						if(user)
 							canmove = 0
 							step_away(src, user)
-							if(prob(25 + W.force))
+							if(new_prob(25 + W.force))
 								sleep(2)
 								if(user)
 									step_away(src, user)
 								canmove = 1
 
 		else
-			if(prob(10 + W.force*2))
+			if(new_prob(10 + W.force*2))
 				if(Victim || Target)
-					if(prob(80) && !client)
+					if(new_prob(80) && !client)
 						Discipline++
 					if(Discipline == 1)
 						attacked = 0
@@ -475,7 +475,7 @@
 						if(user)
 							canmove = 0
 							step_away(src, user)
-							if(prob(25 + W.force*4))
+							if(new_prob(25 + W.force*4))
 								sleep(2)
 								if(user)
 									step_away(src, user)
@@ -829,7 +829,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		user << "The rune fizzles uselessly. There is no spirit nearby."
 		return
 	var/mob/living/carbon/human/G = new /mob/living/carbon/human
-	if(prob(50))	G.gender = "female"
+	if(new_prob(50))	G.gender = "female"
 	hardset_dna(G, null, null, null, null, /datum/species/golem/adamantine)
 
 	G.set_cloned_appearance()

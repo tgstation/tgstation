@@ -16,7 +16,7 @@
 
 
 /obj/item/device/flash/proc/clown_check(mob/living/carbon/human/user)
-	if(user.disabilities & CLUMSY && prob(50))
+	if(user.disabilities & CLUMSY && new_prob(50))
 		flash_carbon(user, user, 15, 0)
 		return 0
 	return 1
@@ -29,7 +29,7 @@
 
 
 /obj/item/device/flash/proc/flash_recharge(var/mob/user)
-	if(prob(times_used * 2))	//if you use it 5 times in a minute it has a 10% chance to break!
+	if(new_prob(times_used * 2))	//if you use it 5 times in a minute it has a 10% chance to break!
 		burn_out()
 		return 0
 

@@ -76,11 +76,11 @@
 /obj/machinery/computer/slot_machine/attackby(obj/item/I, mob/living/user)
 	if(istype(I, /obj/item/weapon/coin))
 		var/obj/item/weapon/coin/C = I
-		if(prob(2))
+		if(new_prob(2))
 			user.drop_item()
 			C.loc = loc
 			C.throw_at(user, 3, 10)
-			if(prob(10))
+			if(new_prob(10))
 				balance = max(balance - SPIN_PRICE, 0)
 			user << "<span class='warning'>[src] spits your coin back out!</span>"
 
@@ -155,9 +155,9 @@
 /obj/machinery/computer/slot_machine/emp_act(severity)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if(prob(15 * severity))
+	if(new_prob(15 * severity))
 		return
-	if(prob(1)) // :^)
+	if(new_prob(1)) // :^)
 		emagged = 1
 	var/severity_ascending = 4 - severity
 	money = max(rand(money - (200 * severity_ascending), money + (200 * severity_ascending)), 0)

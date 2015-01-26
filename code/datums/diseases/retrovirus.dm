@@ -19,7 +19,7 @@
 /datum/disease/dna_retrovirus/New()
 	..()
 	agent = "Virus class [pick("A","B","C","D","E","F")][pick("A","B","C","D","E","F")]-[rand(50,300)]"
-	if(prob(40))
+	if(new_prob(40))
 		cures = list("mutadone")
 	else
 		restcure = 1
@@ -30,50 +30,50 @@
 	switch(stage)
 		if(1)
 			if(restcure)
-				if(affected_mob.lying && prob(30))
+				if(affected_mob.lying && new_prob(30))
 					affected_mob << "<span class='notice'>You feel better.</span>"
 					cure()
 					return
-			if (prob(8))
+			if (new_prob(8))
 				affected_mob << "<span class='danger'>Your head hurts.</span>"
-			if (prob(9))
+			if (new_prob(9))
 				affected_mob << "You feel a tingling sensation in your chest."
-			if (prob(9))
+			if (new_prob(9))
 				affected_mob << "<span class='danger'>You feel angry.</span>"
 		if(2)
 			if(restcure)
-				if(affected_mob.lying && prob(20))
+				if(affected_mob.lying && new_prob(20))
 					affected_mob << "<span class='notice'>You feel better.</span>"
 					cure()
 					return
-			if (prob(8))
+			if (new_prob(8))
 				affected_mob << "<span class='danger'>Your skin feels loose.</span>"
-			if (prob(10))
+			if (new_prob(10))
 				affected_mob << "You feel very strange."
-			if (prob(4))
+			if (new_prob(4))
 				affected_mob << "<span class='danger'>You feel a stabbing pain in your head!</span>"
 				affected_mob.Paralyse(2)
-			if (prob(4))
+			if (new_prob(4))
 				affected_mob << "<span class='danger'>Your stomach churns.</span>"
 		if(3)
 			if(restcure)
-				if(affected_mob.lying && prob(20))
+				if(affected_mob.lying && new_prob(20))
 					affected_mob << "<span class='notice'>You feel better.</span>"
 					cure()
 					return
-			if (prob(10))
+			if (new_prob(10))
 				affected_mob << "<span class='danger'>Your entire body vibrates.</span>"
 
-			if (prob(35))
-				if(prob(50))	scramble_dna(affected_mob, 1, 0, rand(15,45))
+			if (new_prob(35))
+				if(new_prob(50))	scramble_dna(affected_mob, 1, 0, rand(15,45))
 				else			scramble_dna(affected_mob, 0, 1, rand(15,45))
 
 		if(4)
 			if(restcure)
-				if(affected_mob.lying && prob(5))
+				if(affected_mob.lying && new_prob(5))
 					affected_mob << "<span class='notice'>You feel better.</span>"
 					cure()
 					return
-			if (prob(60))
-				if(prob(50))	scramble_dna(affected_mob, 1, 0, rand(50,75))
+			if (new_prob(60))
+				if(new_prob(50))	scramble_dna(affected_mob, 1, 0, rand(50,75))
 				else			scramble_dna(affected_mob, 0, 1, rand(50,75))

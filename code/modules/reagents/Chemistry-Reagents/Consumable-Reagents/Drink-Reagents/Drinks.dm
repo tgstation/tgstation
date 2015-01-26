@@ -15,7 +15,7 @@ datum/reagent/consumable/orangejuice
 	color = "#E78108" // rgb: 231, 129, 8
 
 datum/reagent/consumable/orangejuice/on_mob_life(var/mob/living/M as mob)
-	if(M.getOxyLoss() && prob(30))
+	if(M.getOxyLoss() && new_prob(30))
 		M.adjustOxyLoss(-1)
 	..()
 	return
@@ -27,7 +27,7 @@ datum/reagent/consumable/tomatojuice
 	color = "#731008" // rgb: 115, 16, 8
 
 datum/reagent/consumable/tomatojuice/on_mob_life(var/mob/living/M as mob)
-	if(M.getFireLoss() && prob(20))
+	if(M.getFireLoss() && new_prob(20))
 		M.heal_organ_damage(0,1)
 	..()
 	return
@@ -39,7 +39,7 @@ datum/reagent/consumable/limejuice
 	color = "#365E30" // rgb: 54, 94, 48
 
 datum/reagent/consumable/limejuice/on_mob_life(var/mob/living/M as mob)
-	if(M.getToxLoss() && prob(20))
+	if(M.getToxLoss() && new_prob(20))
 		M.adjustToxLoss(-1*REM)
 	..()
 	return
@@ -59,7 +59,7 @@ datum/reagent/consumable/carrotjuice/on_mob_life(var/mob/living/M as mob)
 		if(1 to 20)
 			//nothing
 		if(21 to INFINITY)
-			if (prob(data-10))
+			if (new_prob(data-10))
 				M.disabilities &= ~NEARSIGHT
 	data++
 	..()
@@ -129,7 +129,7 @@ datum/reagent/consumable/milk
 	color = "#DFDFDF" // rgb: 223, 223, 223
 
 datum/reagent/consumable/milk/on_mob_life(var/mob/living/M as mob)
-	if(M.getBruteLoss() && prob(20))
+	if(M.getBruteLoss() && new_prob(20))
 		M.heal_organ_damage(1,0)
 	if(holder.has_reagent("capsaicin"))
 		holder.remove_reagent("capsaicin", 2)
@@ -143,7 +143,7 @@ datum/reagent/consumable/soymilk
 	color = "#DFDFC7" // rgb: 223, 223, 199
 
 datum/reagent/consumable/soymilk/on_mob_life(var/mob/living/M as mob)
-	if(M.getBruteLoss() && prob(20))
+	if(M.getBruteLoss() && new_prob(20))
 		M.heal_organ_damage(1,0)
 	..()
 	return
@@ -155,7 +155,7 @@ datum/reagent/consumable/cream
 	color = "#DFD7AF" // rgb: 223, 215, 175
 
 datum/reagent/consumable/cream/on_mob_life(var/mob/living/M as mob)
-	if(M.getBruteLoss() && prob(20))
+	if(M.getBruteLoss() && new_prob(20))
 		M.heal_organ_damage(1,0)
 	..()
 	return
@@ -191,7 +191,7 @@ datum/reagent/consumable/tea/on_mob_life(var/mob/living/M as mob)
 	M.drowsyness = max(0,M.drowsyness-1)
 	M.jitteriness = max(0,M.jitteriness-3)
 	M.sleeping = max(0,M.sleeping-1)
-	if(M.getToxLoss() && prob(20))
+	if(M.getToxLoss() && new_prob(20))
 		M.adjustToxLoss(-1)
 	if (M.bodytemperature < 310)  //310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(310, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT))
@@ -226,7 +226,7 @@ datum/reagent/consumable/icetea/on_mob_life(var/mob/living/M as mob)
 	M.dizziness = max(0,M.dizziness-2)
 	M.drowsyness = max(0,M.drowsyness-1)
 	M.sleeping = max(0,M.sleeping-2)
-	if(M.getToxLoss() && prob(20))
+	if(M.getToxLoss() && new_prob(20))
 		M.adjustToxLoss(-1)
 	if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
@@ -370,7 +370,7 @@ datum/reagent/consumable/soy_latte/on_mob_life(var/mob/living/M as mob)
 	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
-	if(M.getBruteLoss() && prob(20))
+	if(M.getBruteLoss() && new_prob(20))
 		M.heal_organ_damage(1,0)
 	..()
 	return
@@ -388,7 +388,7 @@ datum/reagent/consumable/cafe_latte/on_mob_life(var/mob/living/M as mob)
 	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
-	if(M.getBruteLoss() && prob(20))
+	if(M.getBruteLoss() && new_prob(20))
 		M.heal_organ_damage(1,0)
 	..()
 	return
@@ -442,7 +442,7 @@ datum/reagent/consumable/gargle_blaster/on_mob_life(var/mob/living/M as mob)
 		if (!M.stuttering)
 			M.stuttering = 1
 		M.stuttering += 3
-	else if(data >= 45 && prob(50) && data <55)
+	else if(data >= 45 && new_prob(50) && data <55)
 		M.confused = max(M.confused+3,0)
 	else if(data >=55)
 		M.druggy = max(M.druggy, 55)
@@ -467,7 +467,7 @@ datum/reagent/consumable/neurotoxin/on_mob_life(var/mob/living/carbon/M as mob)
 		if (!M.stuttering)
 			M.stuttering = 1
 		M.stuttering += 3
-	else if(data >= 45 && prob(50) && data <55)
+	else if(data >= 45 && new_prob(50) && data <55)
 		M.confused = max(M.confused+3,0)
 	else if(data >=55)
 		M.druggy = max(M.druggy, 55)
@@ -493,26 +493,26 @@ datum/reagent/consumable/hippies_delight/on_mob_life(var/mob/living/M as mob)
 		if(1 to 5)
 			if (!M.stuttering) M.stuttering = 1
 			M.Dizzy(10)
-			if(prob(10)) M.emote(pick("twitch","giggle"))
+			if(new_prob(10)) M.emote(pick("twitch","giggle"))
 		if(5 to 10)
 			if (!M.stuttering) M.stuttering = 1
 			M.Jitter(20)
 			M.Dizzy(20)
 			M.druggy = max(M.druggy, 45)
-			if(prob(20)) M.emote(pick("twitch","giggle"))
+			if(new_prob(20)) M.emote(pick("twitch","giggle"))
 		if (10 to 200)
 			if (!M.stuttering) M.stuttering = 1
 			M.Jitter(40)
 			M.Dizzy(40)
 			M.druggy = max(M.druggy, 60)
-			if(prob(30)) M.emote(pick("twitch","giggle"))
+			if(new_prob(30)) M.emote(pick("twitch","giggle"))
 		if(200 to INFINITY)
 			if (!M.stuttering) M.stuttering = 1
 			M.Jitter(60)
 			M.Dizzy(60)
 			M.druggy = max(M.druggy, 75)
-			if(prob(40)) M.emote(pick("twitch","giggle"))
-			if(prob(30)) M.adjustToxLoss(2)
+			if(new_prob(40)) M.emote(pick("twitch","giggle"))
+			if(new_prob(30)) M.adjustToxLoss(2)
 	..()
 	return
 

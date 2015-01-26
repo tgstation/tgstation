@@ -368,7 +368,7 @@ Auto Patrol: []"},
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 	new /obj/item/weapon/melee/baton(Tsec)
 
-	if(prob(50))
+	if(new_prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread

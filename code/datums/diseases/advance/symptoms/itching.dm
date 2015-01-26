@@ -28,7 +28,7 @@ BONUS
 
 /datum/symptom/itching/Activate(var/datum/disease/advance/A)
 	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB))
+	if(new_prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
 		M << "<span class='notice'>Your [pick("back", "arm", "leg", "elbow", "head")] itches.</span>"
 	return

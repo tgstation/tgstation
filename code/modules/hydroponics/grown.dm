@@ -547,7 +547,7 @@
 			if(hasvar(held_mob,"gloves") && held_mob:gloves)
 				return
 			held_mob.bodytemperature += 20 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(prob(10))
+			if(new_prob(10))
 				held_mob << "<span class='warning'>Your hand holding [src] burns!</span>"
 	else
 		held_mob = null

@@ -56,8 +56,8 @@
 	..()
 
 /obj/item/weapon/storage/backpack/holding/proc/failcheck(mob/user as mob)
-	if (prob(src.reliability)) return 1 //No failure
-	if (prob(src.reliability))
+	if (new_prob(src.reliability)) return 1 //No failure
+	if (new_prob(src.reliability))
 		user << "<span class='danger'>The Bluespace portal resists your attempt to add another item.</span>" //light failure
 	else
 		user << "<span class='danger'>The Bluespace generator malfunctions!</span>"

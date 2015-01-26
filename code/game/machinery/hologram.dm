@@ -170,10 +170,10 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		if(1.0)
 			qdel(src)
 		if(2.0)
-			if (prob(50))
+			if (new_prob(50))
 				qdel(src)
 		if(3.0)
-			if (prob(5))
+			if (new_prob(5))
 				qdel(src)
 	return
 

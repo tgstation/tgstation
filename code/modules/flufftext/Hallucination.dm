@@ -58,7 +58,7 @@ mob/living/carbon/proc/handle_hallucinations()
 								halitem.icon = 'icons/obj/assemblies.dmi'
 								halitem.icon_state = "plastic-explosive0"
 								halitem.name = "Mysterious Package"
-								if(prob(25))
+								if(new_prob(25))
 									halitem.icon_state = "c4small_1"
 							if(3) //sword
 								halitem.icon = 'icons/obj/weapons.dmi'
@@ -113,7 +113,7 @@ mob/living/carbon/proc/handle_hallucinations()
 				switch(rand(1,14))
 					if(1) src << 'sound/machines/airlock.ogg'
 					if(2)
-						if(prob(50))src << 'sound/effects/Explosion1.ogg'
+						if(new_prob(50))src << 'sound/effects/Explosion1.ogg'
 						else src << 'sound/effects/Explosion2.ogg'
 					if(3) src << 'sound/effects/explosionfar.ogg'
 					if(4) src << 'sound/effects/Glassbr1.ogg'
@@ -262,7 +262,7 @@ mob/living/carbon/proc/handle_hallucinations()
 /obj/effect/fake_attacker/Crossed(var/mob/M, somenumber)
 	if(M == my_target)
 		step_away(src,my_target,2)
-		if(prob(30))
+		if(new_prob(30))
 			for(var/mob/O in oviewers(world.view , my_target))
 				O << "<span class='danger'>[my_target] stumbles around.</span>"
 
@@ -306,26 +306,26 @@ mob/living/carbon/proc/handle_hallucinations()
 			step_towards(src,my_target)
 			updateimage()
 		else
-			if(prob(15))
+			if(new_prob(15))
 				src.do_attack_animation(my_target)
 				if(weapon_name)
 					my_target << sound(pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg'))
 					my_target.show_message("<span class='danger'>[src.name] has attacked [my_target] with [weapon_name]!</span>", 1)
 					my_target.staminaloss += 30
-					if(prob(20))
+					if(new_prob(20))
 						my_target.eye_blurry += 3
-					if(prob(33))
+					if(new_prob(33))
 						if(!locate(/obj/effect/overlay) in my_target.loc)
 							fake_blood(my_target)
 				else
 					my_target << sound(pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg'))
 					my_target.show_message("<span class='userdanger'>[src.name] has punched [my_target]!</span>", 1)
 					my_target.staminaloss += 30
-					if(prob(33))
+					if(new_prob(33))
 						if(!locate(/obj/effect/overlay) in my_target.loc)
 							fake_blood(my_target)
 
-		if(prob(15))
+		if(new_prob(15))
 			step_away(src,my_target,2)
 
 /obj/effect/fake_attacker/proc/collapse()

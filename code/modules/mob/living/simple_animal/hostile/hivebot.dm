@@ -104,6 +104,6 @@
 	Life()
 		..()
 		if(stat == 0)
-			if(prob(2))//Might be a bit low, will mess with it likely
+			if(new_prob(2))//Might be a bit low, will mess with it likely
 				warpbots()
 

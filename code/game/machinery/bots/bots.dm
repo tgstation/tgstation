@@ -155,7 +155,7 @@
 	health -= rand(15,30)*brute_dam_coeff
 	visible_message("<span class='danger'>[user] has slashed [src]!</span>")
 	playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
-	if(prob(10))
+	if(new_prob(10))
 		new /obj/effect/decal/cleanable/oil(loc)
 	healthcheck()
 
@@ -168,7 +168,7 @@
 	health -= M.melee_damage_upper
 	visible_message("<span class='danger'>[M] has [M.attacktext] [src]!</span>")
 	add_logs(M, src, "attacked", admin=0)
-	if(prob(10))
+	if(new_prob(10))
 		new /obj/effect/decal/cleanable/oil(loc)
 	healthcheck()
 
@@ -281,7 +281,7 @@
 /obj/machinery/bot/bullet_act(var/obj/item/projectile/Proj)
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		health -= Proj.damage
-		if(prob(75) && Proj.damage > 0)
+		if(new_prob(75) && Proj.damage > 0)
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(5, 1, src)
 			s.start()
@@ -305,7 +305,7 @@
 			healthcheck()
 			return
 		if(3.0)
-			if (prob(50))
+			if (new_prob(50))
 				health -= rand(1,5)*fire_dam_coeff
 				health -= rand(1,5)*brute_dam_coeff
 				healthcheck()

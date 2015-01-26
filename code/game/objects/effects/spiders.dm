@@ -13,10 +13,10 @@
 		if(1.0)
 			qdel(src)
 		if(2.0)
-			if (prob(50))
+			if (new_prob(50))
 				qdel(src)
 		if(3.0)
-			if (prob(5))
+			if (new_prob(5))
 				qdel(src)
 	return
 
@@ -56,7 +56,7 @@
 	icon_state = "stickyweb1"
 
 /obj/effect/spider/stickyweb/New()
-	if(prob(50))
+	if(new_prob(50))
 		icon_state = "stickyweb2"
 
 /obj/effect/spider/stickyweb/CanPass(atom/movable/mover, turf/target, height=0)
@@ -64,11 +64,11 @@
 	if(istype(mover, /mob/living/simple_animal/hostile/poison/giant_spider))
 		return 1
 	else if(istype(mover, /mob/living))
-		if(prob(50))
+		if(new_prob(50))
 			mover << "<span class='danger'>You get stuck in \the [src] for a moment.</span>"
 			return 0
 	else if(istype(mover, /obj/item/projectile))
-		return prob(30)
+		return new_prob(30)
 	return 1
 
 /obj/effect/spider/eggcluster
@@ -139,7 +139,7 @@
 				entry_vent = null
 				return
 			var/obj/machinery/atmospherics/unary/vent_pump/exit_vent = pick(vents)
-			if(prob(50))
+			if(new_prob(50))
 				visible_message("<B>[src] scrambles into the ventillation ducts!</B>", \
 								"<span class='notice'>You hear something squeezing through the ventilation ducts.</span>")
 
@@ -153,7 +153,7 @@
 						entry_vent = null
 						return
 
-					if(prob(50))
+					if(new_prob(50))
 						audible_message("<span class='notice'>You hear something squeezing through the ventilation ducts.</span>")
 					sleep(travel_time)
 
@@ -168,14 +168,14 @@
 						new_area.Entered(src)
 	//=================
 
-	else if(prob(33))
+	else if(new_prob(33))
 		var/list/nearby = oview(10, src)
 		if(nearby.len)
 			var/target_atom = pick(nearby)
 			walk_to(src, target_atom)
-			if(prob(40))
+			if(new_prob(40))
 				src.visible_message("<span class='notice'>\The [src] skitters[pick(" away"," around","")].</span>")
-	else if(prob(10))
+	else if(new_prob(10))
 		//ventcrawl!
 		for(var/obj/machinery/atmospherics/unary/vent_pump/v in view(7,src))
 			if(!v.welded)

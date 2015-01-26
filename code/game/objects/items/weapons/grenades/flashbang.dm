@@ -47,7 +47,7 @@
 			M << "<span class='warning'>Your eyes start to burn badly!</span>"
 			M.disabilities |= NEARSIGHT
 			if(!banglet && !(istype(src , /obj/item/weapon/grenade/flashbang/clusterbang)))
-				if (prob(M.eye_stat - 20 + 1))
+				if (new_prob(M.eye_stat - 20 + 1))
 					M << "<span class='warning'>You can't see anything!</span>"
 					M.disabilities |= BLIND
 
@@ -62,7 +62,7 @@
 		if (M.ear_damage >= 15)
 			M << "<span class='warning'>Your ears start to ring badly!</span>"
 			if(!banglet && !(istype(src , /obj/item/weapon/grenade/flashbang/clusterbang)))
-				if(prob(M.ear_damage - 10 + 5))
+				if(new_prob(M.ear_damage - 10 + 5))
 					M << "<span class='warning'>You can't hear anything!</span>"
 					M.disabilities |= DEAF
 		else
@@ -84,7 +84,7 @@
 	var/again = 0
 
 	for(var/more = numspawned,more > 0,more--)
-		if(prob(35))
+		if(new_prob(35))
 			again++
 			numspawned--
 

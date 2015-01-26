@@ -412,7 +412,7 @@
 			H.satiety--
 		if(H.satiety < 0)
 			H.satiety++
-			if(prob(round(-H.satiety/40)))
+			if(new_prob(round(-H.satiety/40)))
 				H.Jitter(5)
 			hunger_rate = 3 * HUNGER_FACTOR
 		H.nutrition = max (0, H.nutrition - hunger_rate)
@@ -444,7 +444,7 @@
 	if (H.drowsyness)
 		H.drowsyness--
 		H.eye_blurry = max(2, H.eye_blurry)
-		if (prob(5))
+		if (new_prob(5))
 			H.sleeping += 1
 			H.Paralyse(5)
 
@@ -630,19 +630,19 @@
 			switch(H.radiation)
 				if(0 to 50)
 					H.radiation--
-					if(prob(25))
+					if(new_prob(25))
 						H.adjustToxLoss(1)
 						H.updatehealth()
 
 				if(50 to 75)
 					H.radiation -= 2
 					H.adjustToxLoss(1)
-					if(prob(5))
+					if(new_prob(5))
 						H.radiation -= 5
 						H.Weaken(3)
 						H << "<span class='danger'>You feel weak.</span>"
 						H.emote("collapse")
-					if(prob(15))
+					if(new_prob(15))
 						if(!( H.hair_style == "Shaved") || !(H.hair_style == "Bald") || HAIR in specflags)
 							H << "<span class='danger'>Your hair starts to fall out in clumps...<span>"
 							spawn(50)
@@ -654,7 +654,7 @@
 				if(75 to 100)
 					H.radiation -= 3
 					H.adjustToxLoss(3)
-					if(prob(1))
+					if(new_prob(1))
 						H << "<span class='danger'>You mutate!</span>"
 						randmutb(H)
 						domutcheck(H,null)
@@ -871,10 +871,10 @@
 	apply_damage(I.force, I.damtype, affecting, armor, H)
 
 	var/bloody = 0
-	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
+	if(((I.damtype == BRUTE) && I.force && new_prob(25 + (I.force * 2))))
 		if(affecting.status == ORGAN_ORGANIC)
 			I.add_blood(H)	//Make the weapon bloody, not the person.
-			if(prob(I.force * 2))	//blood spatter!
+			if(new_prob(I.force * 2))	//blood spatter!
 				bloody = 1
 				var/turf/location = H.loc
 				if(istype(location, /turf/simulated))
@@ -896,7 +896,7 @@
 
 		switch(hit_area)
 			if("head")	//Harder to score a stun but if you do it lasts a bit longer
-				if(H.stat == CONSCIOUS && prob(I.force) && armor < 50)
+				if(H.stat == CONSCIOUS && new_prob(I.force) && armor < 50)
 					H.visible_message("<span class='danger'>[H] has been knocked unconscious!</span>", \
 									"<span class='userdanger'>[H] has been knocked unconscious!</span>")
 					H.apply_effect(20, PARALYZE, armor)
@@ -911,12 +911,12 @@
 					if(H.head)
 						H.head.add_blood(H)
 						H.update_inv_head(0)
-					if(H.glasses && prob(33))
+					if(H.glasses && new_prob(33))
 						H.glasses.add_blood(H)
 						H.update_inv_glasses(0)
 
 			if("chest")	//Easier to score a stun but lasts less time
-				if(H.stat == CONSCIOUS && I.force && prob(I.force + 10))
+				if(H.stat == CONSCIOUS && I.force && new_prob(I.force + 10))
 					H.visible_message("<span class='danger'>[H] has been knocked down!</span>", \
 									"<span class='userdanger'>[H] has been knocked down!</span>")
 					H.apply_effect(5, WEAKEN, armor)
@@ -929,14 +929,14 @@
 						H.w_uniform.add_blood(H)
 						H.update_inv_w_uniform(0)
 
-		if(Iforce > 10 || Iforce >= 5 && prob(33))
+		if(Iforce > 10 || Iforce >= 5 && new_prob(33))
 			H.forcesay(hit_appends)	//forcesay checks stat already.
 		return
 
 /datum/species/proc/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone, var/mob/living/carbon/human/H)
 	H.apply_damage(I.force, I.damtype)
 	if(I.damtype == "brute")
-		if(prob(33) && I.force && !(NOBLOOD in specflags))
+		if(new_prob(33) && I.force && !(NOBLOOD in specflags))
 			var/turf/location = H.loc
 			if(istype(location, /turf/simulated))
 				location.add_blood_floor(H)
@@ -1015,7 +1015,7 @@
 
 	if(H.losebreath>0) //Suffocating so do not take a breath
 		H.losebreath--
-		if (prob(10)) //Gasp per 10 ticks? Sounds about right.
+		if (new_prob(10)) //Gasp per 10 ticks? Sounds about right.
 			spawn H.emote("gasp")
 		if(istype(H.loc, /obj/))
 			var/obj/location_as_object = H.loc
@@ -1110,7 +1110,7 @@
 
 	if(O2_pp < safe_oxygen_min) // Too little oxygen
 		if(!(NOBREATH in specflags) || (H.health <= config.health_threshold_crit))
-			if(prob(20))
+			if(new_prob(20))
 				spawn(0) H.emote("gasp")
 			if(O2_pp > 0)
 				var/ratio = safe_oxygen_min/O2_pp
@@ -1145,7 +1145,7 @@
 			H.adjustOxyLoss(3) // Lets hurt em a little, let them know we mean business
 			if(world.time - H.co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 				H.adjustOxyLoss(8)
-		if(prob(20)) // Lets give them some chance to know somethings not right though I guess.
+		if(new_prob(20)) // Lets give them some chance to know somethings not right though I guess.
 			spawn(0) H.emote("cough")
 
 	else
@@ -1168,7 +1168,7 @@
 				if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
 					H.sleeping = max(H.sleeping+2, 10)
 			else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-				if(prob(20))
+				if(new_prob(20))
 					spawn(0) H.emote(pick("giggle", "laugh"))
 
 	handle_temperature(breath, H)
@@ -1178,10 +1178,10 @@
 /datum/species/proc/handle_temperature(datum/gas_mixture/breath, var/mob/living/carbon/human/H) // called by human/life, handles temperatures
 	if( (abs(310.15 - breath.temperature) > 50) && !(mutations_list[COLDRES] in H.dna.mutations) && !(COLDRES in specflags)) // Hot air hurts :(
 		if(breath.temperature < 260.15)
-			if(prob(20))
+			if(new_prob(20))
 				H << "<span class='danger'>You feel your face freezing and an icicle forming in your lungs!</span>"
 		else if(breath.temperature > 360.15 && !(HEATRES in specflags))
-			if(prob(20))
+			if(new_prob(20))
 				H << "<span class='danger'>You feel your face burning and a searing heat in your lungs!</span>"
 
 		if(!(mutations_list[COLDRES] in H.dna.mutations)) // COLD DAMAGE

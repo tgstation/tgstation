@@ -98,13 +98,13 @@
 	for(var/mob/M in src) //Let's just be ultra sure
 		M.Move(loc)
 
-	if(prob(30))
+	if(new_prob(30))
 		explosion(get_turf(loc), 0, 0, 1, 3)
 
 	if(wreckage)
 		var/obj/structure/mecha_wreckage/WR = new wreckage(loc)
 		for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
-			if(E.salvageable && prob(30))
+			if(E.salvageable && new_prob(30))
 				WR.crowbar_salvage += E
 				E.detach(WR) //detaches from src into WR
 				E.equip_ready = 1
@@ -424,7 +424,7 @@ obj/mecha/proc/can_use(mob/user)
 
 /obj/mecha/proc/check_for_internal_damage(var/list/possible_int_damage,var/ignore_threshold=null)
 	if(!islist(possible_int_damage) || isemptylist(possible_int_damage)) return
-	if(prob(20))
+	if(new_prob(20))
 		if(ignore_threshold || src.health*100/initial(src.health)<src.internal_damage_threshold)
 			for(var/T in possible_int_damage)
 				if(internal_damage & T)
@@ -432,7 +432,7 @@ obj/mecha/proc/can_use(mob/user)
 			var/int_dam_flag = safepick(possible_int_damage)
 			if(int_dam_flag)
 				setInternalDamage(int_dam_flag)
-	if(prob(5))
+	if(new_prob(5))
 		if(ignore_threshold || src.health*100/initial(src.health)<src.internal_damage_threshold)
 			var/obj/item/mecha_parts/mecha_equipment/destr = safepick(equipment)
 			if(destr)
@@ -491,7 +491,7 @@ obj/mecha/proc/can_use(mob/user)
 		qdel(src)
 
 /obj/mecha/attack_hulk(mob/living/carbon/human/user)
-	if(!prob(src.deflect_chance))
+	if(!new_prob(src.deflect_chance))
 		..(user, 1)
 		take_damage(15)
 		check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
@@ -516,7 +516,7 @@ obj/mecha/proc/can_use(mob/user)
 	src.log_message("Attack by alien. Attacker - [user].",1)
 	user.changeNext_move(CLICK_CD_MELEE) //Now stompy alien killer mechs are actually scary to aliens!
 	user.do_attack_animation(src)
-	if(!prob(src.deflect_chance))
+	if(!new_prob(src.deflect_chance))
 		src.take_damage(15)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
@@ -536,7 +536,7 @@ obj/mecha/proc/can_use(mob/user)
 		user.emote("[user.friendly] [src]")
 	else
 		user.do_attack_animation(src)
-		if(!prob(src.deflect_chance))
+		if(!new_prob(src.deflect_chance))
 			var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 			src.take_damage(damage)
 			src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
@@ -562,7 +562,7 @@ obj/mecha/proc/can_use(mob/user)
 		A.forceMove(src)
 		src.visible_message("The [A] fastens firmly to [src].")
 		return
-	if(prob(src.deflect_chance) || istype(A, /mob))
+	if(new_prob(src.deflect_chance) || istype(A, /mob))
 		src.visible_message("[A] bounces off the [src.name] armor")
 		src.log_append_to_last("Armor saved.")
 		if(istype(A, /mob/living))
@@ -584,7 +584,7 @@ obj/mecha/proc/can_use(mob/user)
 	return
 
 /obj/mecha/proc/dynbulletdamage(var/obj/item/projectile/Proj)
-	if(prob(src.deflect_chance))
+	if(new_prob(src.deflect_chance))
 		src.visible_message("The [src.name] armor deflects the projectile")
 		src.log_append_to_last("Armor saved.")
 		return
@@ -603,20 +603,20 @@ obj/mecha/proc/can_use(mob/user)
 
 /obj/mecha/ex_act(severity, target)
 	src.log_message("Affected by explosion of severity: [severity].",1)
-	if(prob(src.deflect_chance))
+	if(new_prob(src.deflect_chance))
 		severity++
 		src.log_append_to_last("Armor saved, changing severity to [severity].")
 	switch(severity)
 		if(1.0)
 			qdel(src)
 		if(2.0)
-			if (prob(30))
+			if (new_prob(30))
 				qdel(src)
 			else
 				src.take_damage(initial(src.health)/2)
 				src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
 		if(3.0)
-			if (prob(5))
+			if (new_prob(5))
 				qdel(src)
 			else
 				src.take_damage(initial(src.health)/5)
@@ -646,7 +646,7 @@ obj/mecha/proc/can_use(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
 	user.do_attack_animation(src)
 	src.log_message("Attacked by [W]. Attacker - [user]")
-	if(prob(src.deflect_chance))
+	if(new_prob(src.deflect_chance))
 		user << "<span class='danger'>The [W] bounces off [src.name] armor.</span>"
 		src.log_append_to_last("Armor saved.")
 		return 0
@@ -1681,7 +1681,7 @@ var/year_integer = text2num(year) // = 2013???
 		if(!mecha.hasInternalDamage())
 			return stop()
 		if(mecha.hasInternalDamage(MECHA_INT_FIRE))
-			if(!mecha.hasInternalDamage(MECHA_INT_TEMP_CONTROL) && prob(5))
+			if(!mecha.hasInternalDamage(MECHA_INT_TEMP_CONTROL) && new_prob(5))
 				mecha.clearInternalDamage(MECHA_INT_FIRE)
 			if(mecha.internal_tank)
 				if(mecha.internal_tank.return_pressure()>mecha.internal_tank.maximum_pressure && !(mecha.hasInternalDamage(MECHA_INT_TANK_BREACH)))

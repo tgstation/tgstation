@@ -83,7 +83,7 @@
 
 /obj/machinery/power/emitter/emp_act(var/severity)//Emitters are hardened but still might have issues
 //	add_load(1000)
-/*	if((severity == 1)&&prob(1)&&prob(1))
+/*	if((severity == 1)&&new_prob(1)&&new_prob(1))
 		if(src.active)
 			src.active = 0
 			src.use_power = 1	*/
@@ -127,7 +127,7 @@
 		A.dir = src.dir
 		playsound(src.loc, 'sound/weapons/emitter.ogg', 25, 1)
 
-		if(prob(35))
+		if(new_prob(35))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(5, 1, src)
 			s.start()

@@ -11,7 +11,7 @@
 /obj/structure/closet/secure_closet/captains/New()
 	..()
 	new /obj/item/clothing/suit/toggle/wintercoat/captain(src)
-	if(prob(50))
+	if(new_prob(50))
 		new /obj/item/weapon/storage/backpack/captain(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel_cap(src)

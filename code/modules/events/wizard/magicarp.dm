@@ -18,7 +18,7 @@
 /datum/round_event/wizard/magicarp/start()
 	for(var/obj/effect/landmark/C in landmarks_list)
 		if(C.name == "carpspawn")
-			if(prob(5))
+			if(new_prob(5))
 				new /mob/living/simple_animal/hostile/carp/ranged/chaos(C.loc)
 			else
 				new /mob/living/simple_animal/hostile/carp/ranged(C.loc)

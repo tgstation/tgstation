@@ -127,7 +127,7 @@
 		stat("Mode",a_intent)
 
 /mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
-	if(speaker != src && prob(20)) //Dont imitate ourselves
+	if(speaker != src && new_prob(20)) //Dont imitate ourselves
 		if(speech_buffer.len >= 20)
 			speech_buffer -= pick(speech_buffer)
 		speech_buffer |= html_decode(raw_message)
@@ -366,7 +366,7 @@
 	   Phrases that the parrot Hear()s get added to speach_buffer.
 	   Every once in a while, the parrot picks one of the lines from the buffer and replaces an element of the 'speech' list.
 	   Then it clears the buffer to make sure they dont magically remember something from hours ago. */
-	if(speech_buffer.len && prob(10))
+	if(speech_buffer.len && new_prob(10))
 		if(speak.len)
 			speak.Remove(pick(speak))
 
@@ -402,7 +402,7 @@
 
 						//50/50 chance to not use the radio at all
 						var/useradio = 0
-						if(prob(50))
+						if(new_prob(50))
 							useradio = 1
 
 						if(copytext(possible_phrase,1,3) in department_radio_keys)
@@ -435,7 +435,7 @@
 
 		//Wander around aimlessly. This will help keep the loops from searches down
 		//and possibly move the mob into a new are in view of something they can use
-		if(prob(90))
+		if(new_prob(90))
 			step(src, pick(cardinal))
 			return
 

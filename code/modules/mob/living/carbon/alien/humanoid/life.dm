@@ -96,7 +96,7 @@
 
 		//UNCONSCIOUS. NO-ONE IS HOME
 		if( (getOxyLoss() > 50) || (config.health_threshold_crit >= health) )
-			if( health <= 20 && prob(1) )
+			if( health <= 20 && new_prob(1) )
 				spawn(0)
 					emote("gasp")
 			if(!reagents.has_reagent("epinephrine"))
@@ -111,7 +111,7 @@
 			sleeping = max(sleeping-1, 0)
 			eye_blind = max(eye_blind, 1)
 			stat = UNCONSCIOUS
-			if( prob(10) && health )
+			if( new_prob(10) && health )
 				spawn(0)
 					emote("hiss")
 		//CONSCIOUS

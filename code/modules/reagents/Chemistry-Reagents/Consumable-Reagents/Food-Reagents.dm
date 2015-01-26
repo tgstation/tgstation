@@ -25,7 +25,7 @@ datum/reagent/consumable/nutriment
 	color = "#664330" // rgb: 102, 67, 48
 
 datum/reagent/consumable/nutriment/on_mob_life(var/mob/living/M as mob)
-	if(prob(50))
+	if(new_prob(50))
 		M.heal_organ_damage(1,0)
 	..()
 	return
@@ -38,7 +38,7 @@ datum/reagent/consumable/vitamin
 	color = "#664330" // rgb: 102, 67, 48
 
 datum/reagent/consumable/vitamin/on_mob_life(var/mob/living/M as mob)
-	if(prob(50))
+	if(new_prob(50))
 		M.heal_organ_damage(1,1)
 	if(M.satiety < 600)
 		M.satiety += 20
@@ -155,7 +155,7 @@ datum/reagent/consumable/condensedcapsaicin/reaction_mob(var/mob/living/M, var/m
 		if ( eyes_covered && mouth_covered )
 			return
 		else if ( mouth_covered )	// Reduced effects if partially protected
-			if(prob(5))
+			if(new_prob(5))
 				victim.emote("scream")
 			victim.eye_blurry = max(M.eye_blurry, 3)
 			victim.eye_blind = max(M.eye_blind, 1)
@@ -169,7 +169,7 @@ datum/reagent/consumable/condensedcapsaicin/reaction_mob(var/mob/living/M, var/m
 			victim.damageoverlaytemp = 30
 			return
 		else // Oh dear :D
-			if(prob(5))
+			if(new_prob(5))
 				victim.emote("scream")
 			victim.eye_blurry = max(M.eye_blurry, 5)
 			victim.eye_blind = max(M.eye_blind, 2)
@@ -179,7 +179,7 @@ datum/reagent/consumable/condensedcapsaicin/reaction_mob(var/mob/living/M, var/m
 			victim.drop_item()
 
 datum/reagent/consumable/condensedcapsaicin/on_mob_life(var/mob/living/M as mob)
-	if(prob(5))
+	if(new_prob(5))
 		M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
 	..()
 	return
@@ -205,7 +205,7 @@ datum/reagent/consumable/frostoil/on_mob_life(var/mob/living/M as mob)
 				M.bodytemperature -= rand(10,20)
 		if(25 to INFINITY)
 			M.bodytemperature -= 15 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(prob(1))
+			if(new_prob(1))
 				M.emote("shiver")
 			if(istype(M, /mob/living/carbon/slime))
 				M.bodytemperature -= rand(15,20)
@@ -271,7 +271,7 @@ datum/reagent/mushroomhallucinogen/on_mob_life(var/mob/living/M as mob)
 			if (!M.stuttering)
 				M.stuttering = 1
 			M.Dizzy(5)
-			if(prob(10))
+			if(new_prob(10))
 				M.emote(pick("twitch","giggle"))
 		if(5 to 10)
 			if (!M.stuttering)
@@ -279,7 +279,7 @@ datum/reagent/mushroomhallucinogen/on_mob_life(var/mob/living/M as mob)
 			M.Jitter(10)
 			M.Dizzy(10)
 			M.druggy = max(M.druggy, 35)
-			if(prob(20))
+			if(new_prob(20))
 				M.emote(pick("twitch","giggle"))
 		if (10 to INFINITY)
 			if (!M.stuttering)
@@ -287,7 +287,7 @@ datum/reagent/mushroomhallucinogen/on_mob_life(var/mob/living/M as mob)
 			M.Jitter(20)
 			M.Dizzy(20)
 			M.druggy = max(M.druggy, 40)
-			if(prob(30))
+			if(new_prob(30))
 				M.emote(pick("twitch","giggle"))
 	data++
 	..()

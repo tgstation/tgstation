@@ -108,7 +108,7 @@
 	if(height==0) return 1
 
 	if(istype(mover, /obj/item/projectile))
-		return prob(95)
+		return new_prob(95)
 	else
 		return 1
 

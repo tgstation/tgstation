@@ -149,7 +149,7 @@
 		qdel(src)
 
 /obj/structure/closet/blob_act()
-	if(prob(75))
+	if(new_prob(75))
 		dump_contents()
 		qdel(src)
 

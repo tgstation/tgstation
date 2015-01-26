@@ -31,7 +31,7 @@
 				content_mob = /mob/living/simple_animal/corgi/Lisa
 			new content_mob(loc)
 		else if(content_mob == /mob/living/simple_animal/cat)
-			if(prob(50))
+			if(new_prob(50))
 				content_mob = /mob/living/simple_animal/cat/Proc
 			new content_mob(loc)
 		else

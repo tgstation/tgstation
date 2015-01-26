@@ -169,7 +169,7 @@
 
 
 			for(var/turf/T in linkedholodeck)
-				if(prob(30))
+				if(new_prob(30))
 					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 					s.set_up(2, 1, T)
 					s.start()
@@ -416,7 +416,7 @@
 		var/mob/living/carbon/M = hit_atom
 		playsound(src, 'sound/items/dodgeball.ogg', 50, 1)
 		M.apply_damage(10, STAMINA)
-		if(prob(5))
+		if(new_prob(5))
 			M.Weaken(3)
 			visible_message("<span class='danger'>[M] is knocked right off \his feet!</span>", 3)
 
@@ -450,7 +450,7 @@
 		var/obj/item/I = mover
 		if(istype(I, /obj/item/projectile))
 			return
-		if(prob(50))
+		if(new_prob(50))
 			I.loc = src.loc
 			visible_message("<span class='warning'> Swish! \the [I] lands in \the [src].</span>", 3)
 		else

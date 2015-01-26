@@ -21,6 +21,6 @@ mob/living/carbon/proc/dream()
 		return 1
 
 mob/living/carbon/proc/handle_dreams()
-	if(prob(5) && !dreaming) dream()
+	if(new_prob(5) && !dreaming) dream()
 
 mob/living/carbon/var/dreaming = 0

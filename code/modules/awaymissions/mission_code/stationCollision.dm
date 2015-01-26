@@ -73,7 +73,7 @@ obj/item/weapon/gun/energy/laser/retro/sc_retro
 /obj/item/weapon/gun/projectile/automatic/c20r/sc_c20r/New()
 	..()
 	for(var/ammo in magazine.stored_ammo)
-		if(prob(95)) //95% chance
+		if(new_prob(95)) //95% chance
 			magazine.stored_ammo -= ammo
 
 //Barman's shotgun
@@ -82,7 +82,7 @@ obj/item/weapon/gun/energy/laser/retro/sc_retro
 /obj/item/weapon/gun/projectile/shotgun/sc_pump/New()
 	..()
 	for(var/ammo in magazine.stored_ammo)
-		if(prob(95)) //95% chance
+		if(new_prob(95)) //95% chance
 			magazine.stored_ammo -= ammo
 
 //Lasers
@@ -170,7 +170,7 @@ var/sc_safecode5 = "[rand(0,9)]"
 
 /obj/singularity/narsie/sc_Narsie/process()
 	eat()
-	if(prob(25))
+	if(new_prob(25))
 		mezzer()
 
 /obj/singularity/narsie/sc_Narsie/consume(var/atom/A)

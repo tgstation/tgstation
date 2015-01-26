@@ -72,7 +72,7 @@
 				if(Victim.health <= 0)
 					Victim.adjustToxLoss(rand(2,4))
 
-				if(prob(15) && Victim.client)
+				if(new_prob(15) && Victim.client)
 					Victim << "<span class='danger'>[pick("You can feel your body becoming weak!", \
 					"You feel like you're about to die!", \
 					"You feel every part of your body screaming in agony!", \
@@ -130,7 +130,7 @@
 			if(!client)
 				if(Victim && !rabid && !attacked)
 					if(Victim.LAssailant && Victim.LAssailant != Victim)
-						if(prob(50))
+						if(new_prob(50))
 							if(!(Victim.LAssailant in Friends))
 								Friends[Victim.LAssailant] = 1
 								//Friends.Add(Victim.LAssailant) // no idea why i was using the |= operator
@@ -139,7 +139,7 @@
 
 
 			if(M.client && istype(src, /mob/living/carbon/human))
-				if(prob(85))
+				if(new_prob(85))
 					rabid = 1 // UUUNNBGHHHH GONNA EAT JUUUUUU
 
 			if(client)
@@ -204,7 +204,7 @@
 			var/new_powerlevel = round(powerlevel / 4)
 			for(var/i=1,i<=4,i++)
 				var/mob/living/carbon/slime/M = new /mob/living/carbon/slime/(loc)
-				if(prob(mutation_chance))
+				if(new_prob(mutation_chance))
 					M.colour = slime_mutation[rand(1,4)]
 				else
 					M.colour = colour

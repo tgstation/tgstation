@@ -48,8 +48,8 @@
 
 /obj/item/weapon/gun/energy/gun/nuclear/proc/failcheck()
 	lightfail = 0
-	if (prob(src.reliability)) return 1 //No failure
-	if (prob(src.reliability))
+	if (new_prob(src.reliability)) return 1 //No failure
+	if (new_prob(src.reliability))
 		for (var/mob/living/M in range(0,src)) //Only a minor failure, enjoy your radiation if you're in the same tile or carrying it
 			if (src in M.contents)
 				M << "<span class='danger'>Your gun feels pleasantly warm for a moment.</span>"

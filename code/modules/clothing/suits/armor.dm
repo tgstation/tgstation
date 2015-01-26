@@ -105,7 +105,7 @@
 	var/hit_reflect_chance = reflect_chance
 	if(!(def_zone in list("chest", "groin"))) //If not shot where ablative is covering you, you don't get the reflection bonus!
 		hit_reflect_chance = 0
-	if (prob(hit_reflect_chance))
+	if (new_prob(hit_reflect_chance))
 		return 1
 
 /obj/item/clothing/suit/armor/vest/det_suit

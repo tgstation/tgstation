@@ -195,7 +195,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(iscarbon(loc))
 		var/mob/living/carbon/C = loc
 		if (src == C.wear_mask) // if it's in the human/monkey mouth, transfer reagents to the mob
-			if(prob(15)) // so it's not an instarape in case of acid
+			if(new_prob(15)) // so it's not an instarape in case of acid
 				reagents.reaction(C, INGEST)
 			reagents.trans_to(C, REAGENTS_METABOLISM)
 			return
@@ -463,7 +463,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			if(istype(src, /obj/item/weapon/lighter/zippo) )
 				user.visible_message("<span class='rose'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
 			else
-				if(prob(75))
+				if(new_prob(75))
 					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light [src].</span>")
 				else
 					user << "<span class='warning'>You burn yourself while lighting the lighter.</span>"

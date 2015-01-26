@@ -36,16 +36,16 @@
 	. = ..()
 	if(.)
 		//chance to go crazy and start wacking stuff
-		if(!enemies.len && prob(1))
+		if(!enemies.len && new_prob(1))
 			Retaliate()
 
-		if(enemies.len && prob(10))
+		if(enemies.len && new_prob(10))
 			enemies = list()
 			LoseTarget()
 			src.visible_message("<span class='notice'>[src] calms down.</span>")
 
 		if(stat == CONSCIOUS)
-			if(udder && prob(5))
+			if(udder && new_prob(5))
 				udder.add_reagent("milk", rand(5, 10))
 
 		if(locate(/obj/effect/spacevine) in loc)
@@ -126,7 +126,7 @@
 /mob/living/simple_animal/cow/Life()
 	. = ..()
 	if(stat == CONSCIOUS)
-		if(udder && prob(5))
+		if(udder && new_prob(5))
 			udder.add_reagent("milk", rand(5, 10))
 
 /mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M as mob)
@@ -244,13 +244,13 @@ var/global/chicken_count = 0
 	. =..()
 	if(!.)
 		return
-	if(!stat && prob(3) && eggsleft > 0)
+	if(!stat && new_prob(3) && eggsleft > 0)
 		visible_message("[src] [pick("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")]")
 		eggsleft--
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = new(get_turf(src))
 		E.pixel_x = rand(-6,6)
 		E.pixel_y = rand(-6,6)
-		if(chicken_count < MAX_CHICKENS && prob(25))
+		if(chicken_count < MAX_CHICKENS && new_prob(25))
 			SSobj.processing.Add(E)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/var/amount_grown = 0

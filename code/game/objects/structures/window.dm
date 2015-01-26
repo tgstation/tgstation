@@ -55,7 +55,7 @@
 			spawnfragments()
 			return
 		if(3.0)
-			if(prob(50))
+			if(new_prob(50))
 				spawnfragments()
 				return
 

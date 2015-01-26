@@ -39,7 +39,7 @@
 		if (1)
 			qdel(src)
 		if (2)
-			if (prob(50))
+			if (new_prob(50))
 				qdel(src)
 
 /obj/item/latexballon/bullet_act()

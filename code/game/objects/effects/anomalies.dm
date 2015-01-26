@@ -22,7 +22,7 @@
 
 
 /obj/effect/anomaly/proc/anomalyEffect()
-	if(prob(50))
+	if(new_prob(50))
 		step(src,pick(alldirs))
 
 
@@ -164,7 +164,7 @@
 	if(isnull(T))	return
 
 	//Pulling and/or ex_act-ing movable atoms in that turf
-	if(prob(pull_chance))
+	if(new_prob(pull_chance))
 		for(var/obj/O in T.contents)
 			if(O.anchored)
 				O.ex_act(ex_act_force)
@@ -174,6 +174,6 @@
 			step_towards(M,src)
 
 	//Damaging the turf
-	if( T && istype(T,/turf/simulated) && prob(turf_removal_chance) )
+	if( T && istype(T,/turf/simulated) && new_prob(turf_removal_chance) )
 		T.ex_act(ex_act_force)
 	return

@@ -98,7 +98,7 @@
 			"<span class='danger'>You hear a heavy electrical crack.</span>")
 
 		else if(issilicon(user))
-			if(prob(20))
+			if(new_prob(20))
 				user.Stun(2)
 			user.take_overall_damage(0, shock_damage)
 			user.visible_message("<span class='danger'>[user.name] was shocked by the [src.name]!</span>", \

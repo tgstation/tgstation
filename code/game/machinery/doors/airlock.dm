@@ -208,7 +208,7 @@
 
 /obj/machinery/door/airlock/uranium/process()
 	if(world.time > last_event+20)
-		if(prob(50))
+		if(new_prob(50))
 			radiate()
 		last_event = world.time
 	..()
@@ -318,7 +318,7 @@ About the new airlock wires panel:
 					return
 			else /*if(src.justzap)*/
 				return
-		else if(user.hallucination > 50 && prob(10) && src.operating == 0)
+		else if(user.hallucination > 50 && new_prob(10) && src.operating == 0)
 			user << "<span class='userdanger'>You feel a powerful shock course through your body!</span>"
 			user.staminaloss += 50
 			user.stunned += 5
@@ -402,7 +402,7 @@ About the new airlock wires panel:
 		return 0
 	if(hasShocked)
 		return 0	//Already shocked someone recently?
-	if(!prob(prb))
+	if(!new_prob(prb))
 		return 0 //you lucked out, no shock for you
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
@@ -634,7 +634,7 @@ About the new airlock wires panel:
 			if(src.shock(user, 100))
 				return
 
-	if(ishuman(user) && prob(40) && src.density)
+	if(ishuman(user) && new_prob(40) && src.density)
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)
 			playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)

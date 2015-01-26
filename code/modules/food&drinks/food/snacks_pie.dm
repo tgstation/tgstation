@@ -47,7 +47,7 @@
 	list_reagents = list("nutriment" = 8, "vitamin" = 4)
 /obj/item/weapon/reagent_containers/food/snacks/plump_pie/New()
 	..()
-	if(prob(10))
+	if(new_prob(10))
 		name = "exceptional plump pie"
 		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump pie!"
 		reagents.add_reagent("omnizine", 5)

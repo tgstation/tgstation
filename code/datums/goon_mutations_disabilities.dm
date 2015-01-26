@@ -117,7 +117,7 @@
 /datum/mutation/human/swedish/say_mod(var/message)
 	if(message)
 		message = replacetext(message,"w","v")
-		if(prob(30))
+		if(new_prob(30))
 			message += " Bork[pick("",", bork",", bork, bork")]!"
 	return message
 
@@ -163,12 +163,12 @@
 /datum/mutation/human/elvis/on_life(mob/living/carbon/human/owner)
 	switch(pick(1,2))
 		if(1)
-			if(prob(15))
+			if(new_prob(15))
 				var/list/dancetypes = list("swinging", "fancy", "stylish", "20'th century", "jivin'", "rock and roller", "cool", "salacious", "bashing", "smashing")
 				var/dancemoves = pick(dancetypes)
 				owner.visible_message("<b>[owner]</b> busts out some [dancemoves] moves!")
 		if(2)
-			if(prob(15))
+			if(new_prob(15))
 				owner.visible_message("<b>[owner]</b> [pick("jiggles their hips", "rotates their hips", "gyrates their hips", "taps their foot", "dances to an imaginary song", "jiggles their legs", "snaps their fingers")]!")
 
 /datum/mutation/human/elvis/say_mod(var/message)

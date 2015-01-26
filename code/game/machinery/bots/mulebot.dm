@@ -126,7 +126,7 @@ obj/machinery/bot/mulebot/bot_reset()
 		if(open)
 			attack_hand(usr)
 	else if(load && ismob(load))  // chance to knock off rider
-		if(prob(1+I.force * 2))
+		if(new_prob(1+I.force * 2))
 			unload(0)
 			user.visible_message("<span class='danger'> [user] knocks [load] off [src] with \the [I]!</span>", "<span class='danger'> You knock [load] off [src] with \the [I]!</span>")
 		else
@@ -154,9 +154,9 @@ obj/machinery/bot/mulebot/bot_reset()
 	return
 
 /obj/machinery/bot/mulebot/bullet_act()
-	if(prob(50) && !isnull(load))
+	if(new_prob(50) && !isnull(load))
 		unload(0)
-	if(prob(25))
+	if(new_prob(25))
 		visible_message("<span class='danger'> Something shorts out inside [src]!</span>")
 		wires.RandomCut()
 	..()

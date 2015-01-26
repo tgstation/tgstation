@@ -392,7 +392,7 @@
 	if(health <= 0)
 		if(status != BURST && status != BURSTING)
 			Burst()
-		else if(status == BURST && prob(50))
+		else if(status == BURST && new_prob(50))
 			qdel(src)	//Remove the egg after it has been hit after bursting.
 
 

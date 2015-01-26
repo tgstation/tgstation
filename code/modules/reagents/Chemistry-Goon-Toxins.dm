@@ -39,7 +39,7 @@ datum/reagent/histamine/on_mob_life(var/mob/living/M as mob)
 		if(3)
 			M.emote("sneeze")
 		if(4)
-			if(prob(75))
+			if(new_prob(75))
 				M << "You scratch at an itch."
 				M.adjustBruteLoss(2*REM)
 	..()
@@ -61,7 +61,7 @@ datum/reagent/formaldehyde
 datum/reagent/formaldehyde/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.adjustToxLoss(1*REM)
-	if(prob(10))
+	if(new_prob(10))
 		M.reagents.add_reagent("histamine",pick(5,15))
 		M.reagents.remove_reagent("formaldehyde",1)
 	..()
@@ -86,7 +86,7 @@ datum/reagent/venom/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.adjustToxLoss((0.1*volume)*REM)
 	M.adjustBruteLoss((0.1*volume)*REM)
-	if(prob(25))
+	if(new_prob(25))
 		M.reagents.add_reagent("histamine",pick(5,10))
 		M.reagents.remove_reagent("venom",1)
 	..()
@@ -131,9 +131,9 @@ datum/reagent/cyanide
 datum/reagent/cyanide/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.adjustToxLoss(1.5*REM)
-	if(prob(10))
+	if(new_prob(10))
 		M.losebreath += 1
-	if(prob(8))
+	if(new_prob(8))
 		M << "You feel horrendously weak!"
 		M.Stun(2)
 		M.adjustToxLoss(2*REM)
@@ -177,16 +177,16 @@ datum/reagent/itching_powder
 
 datum/reagent/itching_powder/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	if(prob(rand(5,50)))
+	if(new_prob(rand(5,50)))
 		M << "You scratch at your head."
 		M.adjustBruteLoss(0.2*REM)
-	if(prob(rand(5,50)))
+	if(new_prob(rand(5,50)))
 		M << "You scratch at your leg."
 		M.adjustBruteLoss(0.2*REM)
-	if(prob(rand(5,50)))
+	if(new_prob(rand(5,50)))
 		M << "You scratch at your arm."
 		M.adjustBruteLoss(0.2*REM)
-	if(prob(6))
+	if(new_prob(6))
 		M.reagents.add_reagent("histamine",rand(1,3))
 		M.reagents.remove_reagent("itching_powder",1)
 	..()
