@@ -14,7 +14,7 @@ datum/reagent/silver_sulfadiazine
 
 datum/reagent/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
-		M.adjustFireLoss((volume-(volume*2))*REM)
+		M.adjustFireLoss(-volume)
 		M << "<span class='notice'>You feel your burns healing!</span>"
 		M.emote("scream")
 	if(method == INGEST)
@@ -40,7 +40,7 @@ datum/reagent/styptic_powder
 
 datum/reagent/styptic_powder/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
-		M.heal_organ_damage(volume*REM,0)
+		M.adjustBruteLoss(-volume)
 		M << "<span class='notice'>You feel your wounds knitting back together!</span>"
 		M.emote("scream")
 	if(method == INGEST)
