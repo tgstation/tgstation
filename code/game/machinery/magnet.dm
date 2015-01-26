@@ -278,6 +278,12 @@
 		onclose(user, "magnet")
 
 	Topic(href, href_list)
+		if(..())
+			return
+		if(usr.stat)
+			return
+		if(!in_range(src, usr) && !istype(usr, /mob/living/silicon))
+			return
 		if(stat & (BROKEN|NOPOWER))
 			return
 		usr.set_machine(src)

@@ -197,6 +197,8 @@ var/libcomp_menu
 	var/bibledelay = 0 // LOL NO SPAM (1 minute delay) -- Doohl
 	var/booklist
 
+	machine_flags = EMAGGABLE
+
 /obj/machinery/librarycomp/New()
 	library_computers += src
 	..()
