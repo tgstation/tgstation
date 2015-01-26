@@ -507,3 +507,26 @@
 
 	prob_slip = round(prob_slip)
 	return(prob_slip)
+
+
+/mob/proc/Move_Pulled(var/atom/A)
+	if (!canmove || restrained() || !pulling)
+		return
+	if (pulling.anchored)
+		return
+	if (!pulling.Adjacent(src))
+		return
+	if (A == loc && pulling.density)
+		return
+	if (!Process_Spacemove(get_dir(pulling.loc, A)))
+		return
+	if (ismob(pulling))
+		var/mob/M = pulling
+		var/atom/movable/t = M.pulling
+		M.stop_pulling()
+		step(pulling, get_dir(pulling.loc, A))
+		if(M)
+			M.start_pulling(t)
+	else
+		step(pulling, get_dir(pulling.loc, A))
+	return
