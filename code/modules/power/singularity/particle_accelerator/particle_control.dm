@@ -145,7 +145,7 @@
 		use_power = 0
 	else if(!stat && construction_state <= 3)
 		use_power = 1
-	update_state()s
+	update_state()
 	return
 
 
