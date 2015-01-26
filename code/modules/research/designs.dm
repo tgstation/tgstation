@@ -2381,6 +2381,25 @@ k
 	build_path = /obj/item/clothing/suit/armor/laserproof
 	locked = 1
 
+/datum/design/advancedeod
+	name = "Advanced EOD Suit"
+	desc = "An advanced EOD suit that affords great protection at the cost of mobility."
+	id = "advanced eod suit"
+	req_tech = list("combat" = 5, "materials" = 5, "biotech" = 2)
+	build_type = PROTOLATHE
+	materials = list ("$iron" = 10000, "$glass" = 2500, "$gold" = 3750, "$silver" = 1000)
+	build_path = /obj/item/clothing/suit/advancedeod
+
+/datum/design/advancedeod_helmet
+	name = "Advanced EOD Helmet"
+	desc = "An advanced EOD helmet that affords great protection at the cost of mobility."
+	id = "advanced eod helmet"
+	req_tech = list("combat" = 5, "materials" = 5, "biotech" = 2)
+	build_type = PROTOLATHE
+	materials = list ("$iron" = 3750, "$glass" = 2500, "$gold" = 3750, "$silver" = 1000)
+	build_path = /obj/item/clothing/head/advancedeod_helmet
+
+
 /////////////////////////////////////////
 //////////////////Test///////////////////
 /////////////////////////////////////////
