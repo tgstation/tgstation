@@ -212,7 +212,7 @@
 			C.ear_deaf = 20
 			C.stuttering = 20
 			C.Stun(8)
-			C.make_jittery(150)
+			C.Jitter(150)
 		for(var/obj/structure/window/W in view(4))
 			W.destroy()
 		playsound(M.current.loc, 'sound/effects/creepyshriek.ogg', 100, 1)

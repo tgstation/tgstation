@@ -377,6 +377,7 @@
 	else if (seconds_electrified)
 		seconds_electrified = 0
 
+/datum/wires/vending/Interact(mob/user as mob)
 	user.set_machine(src)
 
 	var/vendorname = (src.name)  //import the machine's name

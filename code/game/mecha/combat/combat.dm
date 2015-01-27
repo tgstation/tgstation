@@ -113,7 +113,7 @@
 	if(!istype(target, /obj) && !istype(target, /mob)) return
 	if(istype(target, /mob))
 		var/mob/M = target
-		M.make_dizzy(3)
+		M.Dizzy(3)
 		M.adjustBruteLoss(1)
 		M.updatehealth()
 		for (var/mob/V in viewers(src))
