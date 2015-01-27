@@ -31,7 +31,7 @@
 		SSobj.processing.Remove(src)
 		qdel(src)
 
-/obj/item/weapon/reagent_containers/pill/patch/afterattack(obj/target, mob/user , proximity)
+/obj/item/weapon/reagent_containers/pill/patch/afterattack(obj/target, mob/user, proximity)
 	return
 
 /obj/item/weapon/reagent_containers/pill/patch/canconsume(mob/living/carbon/human/target, mob/user)
