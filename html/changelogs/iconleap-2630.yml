@@ -1,0 +1,6 @@
+author: iconleap
+
+delete-after: True
+
+changes: 
+  - bugfix: Fixed issue #2630, rad projectile does BURN damage instead of TOX (affects radiation gun).
