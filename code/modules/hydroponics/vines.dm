@@ -44,6 +44,7 @@
 		if(/obj/item/weapon/twohanded/fireaxe) qdel(src)
 		if(/obj/item/weapon/hatchet) qdel(src)
 		if(/obj/item/weapon/melee/energy) qdel(src)
+		if(/obj/item/weapon/pickaxe/plasmacutter) qdel(src)
 
 		// Less effective weapons
 		if(/obj/item/weapon/wirecutters)
@@ -384,6 +385,8 @@
 		growth_queue -= SV
 
 		SV.life()
+
+		if(!SV) continue
 
 		if(SV.energy < 2) //If tile isn't fully grown
 			var/chance

@@ -671,10 +671,3 @@
 			reagents.add_reagent("toxin", 1+round(potency / 10, 1))
 			reagents.add_reagent("spiritbreaker", 10)
 			bitesize = 1+round(reagents.total_volume / 2, 1)
-
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/generic_fruit
-	name = "fruit"
-	desc = "It smells weird."
-	icon_state = "orange"
-	potency = 10

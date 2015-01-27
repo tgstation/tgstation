@@ -141,6 +141,7 @@ Class Procs:
 
 /obj/machinery/New()
 	machines += src
+	power_change() // Machines are powered by default, turn off it there's no power
 	return ..()
 
 /obj/machinery/examine(mob/user)
