@@ -71,8 +71,7 @@
 	if(src.on)
 		user << "You have to turn off the [src] first!"
 		return
-	if(..())
-		return 1
+	..()
 	if(!anchored)
 		verbs += rotate_verbs
 		if(node)
@@ -234,8 +233,7 @@
 	if(src.on)
 		user << "You have to turn off the [src] first!"
 		return
-	if(..())
-		return 1
+	..()
 	if(!anchored)
 		verbs += rotate_verbs
 		if(node)

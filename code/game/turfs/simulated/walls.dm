@@ -172,7 +172,7 @@
 					qdel(E)
 				rotting = 0
 				return
-		if(istype(W,/obj/item/weapon/soap)
+		if(istype(W,/obj/item/weapon/soap))
 			user << "<span class='notice'>You forcefully scrub away the fungi with your [W].</span>"
 			for(var/obj/effect/E in src) if(E.name == "Wallrot")
 				qdel(E)
