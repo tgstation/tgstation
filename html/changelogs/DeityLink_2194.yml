@@ -1,0 +1,6 @@
+author: Deity Link
+delete-after: true
+changes:
+  - tweak: backend changes to all the surgery files so they now use absolute pathing and span class.
+  - bugfix: laser scalpels and incision managers now actually use their own surgery steps, instead of acting like reskinned scalpels (laser scalpels cut and clamp, incision managers cut, clamp and retract)
+  - rscadd: those scalpels can now be printed at R&D.
