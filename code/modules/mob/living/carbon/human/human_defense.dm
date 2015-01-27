@@ -36,6 +36,13 @@ emp_act
 				protection += C.armor[type]
 	return protection
 
+/mob/living/carbon/human/proc/check_covered(var/obj/item/organ/limb/def_zone)
+	. = 0
+	var/list/items = list(head, wear_mask, wear_suit, w_uniform)
+	for(var/obj/item/clothing/cover in items)
+		if(cover.body_parts_covered & def_zone.body_part)
+			return cover
+
 /mob/living/carbon/human/on_hit(proj_type)
 	if(dna)
 		dna.species.on_hit(proj_type, src)

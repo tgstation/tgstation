@@ -23,6 +23,10 @@ datum/reagent/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob, var/meth
 	..()
 	return
 
+datum/reagent/silver_sulfadiazine/on_touch_apply(var/obj/item/organ/limb/L)
+	..()
+	L.heal_damage(0, 2*REM)
+
 datum/reagent/silver_sulfadiazine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	if(prob(55))
@@ -48,6 +52,10 @@ datum/reagent/styptic_powder/reaction_mob(var/mob/living/M as mob, var/method=TO
 		M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
 	..()
 	return
+
+datum/reagent/styptic_powder/on_touch_apply(var/obj/item/organ/limb/L)
+	..()
+	L.heal_damage(2*REM, 0)
 
 datum/reagent/styptic_powder/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -86,6 +94,10 @@ datum/reagent/synthflesh/reaction_mob(var/mob/living/M, var/method=TOUCH, var/vo
 		M << "<span class='notice'>You feel your burns healing and your flesh knitting together!</span>"
 	..()
 	return
+
+datum/reagent/synthflesh/on_touch_apply(var/obj/item/organ/limb/L)
+	..()
+	L.heal_damage(1*REM, 1*REM)
 
 datum/reagent/charcoal
 	name = "Charcoal"
