@@ -11,6 +11,7 @@
 	w_class = 3.0
 	var/list/can_hold = new/list() //List of objects which this item can store (if set, it can't store anything else)
 	var/list/cant_hold = new/list() //List of objects which this item can't store (in effect only if can_hold isn't set)
+	var/list/is_seeing = new/list() //List of mobs which are currently seeing the contents of this item's storage
 	var/max_w_class = 2 //Max size of objects that this object can store (in effect only if can_hold isn't set)
 	var/max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
 	var/storage_slots = 7 //The number of storage slots in this container.
@@ -21,10 +22,11 @@
 	var/allow_quick_empty	//Set this variable to allow the object to have the 'empty' verb, which dumps all the contents on the floor.
 	var/allow_quick_gather	//Set this variable to allow the object to have the 'toggle mode' verb, which quickly collects all items from a tile.
 	var/collection_mode = 1;  //0 = pick one at a time, 1 = pick all on tile, 2 = pick all of a type
+	var/preposition = "in" // You put things 'in' a bag, but trays need 'on'.
 
 
 /obj/item/weapon/storage/MouseDrop(obj/over_object)
-	if(ismob(usr)) //all the check for item manipulation are in other places, you can safely open any storages as anything and its not buggy, i checked
+	if(iscarbon(usr) || isdrone(usr)) //all the check for item manipulation are in other places, you can safely open any storages as anything and its not buggy, i checked
 		var/mob/M = usr
 
 		if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
@@ -67,7 +69,7 @@
 
 
 /obj/item/weapon/storage/proc/show_to(mob/user)
-	if(user.s_active != src)
+	if(user.s_active != src && (user.stat == CONSCIOUS))
 		for(var/obj/item/I in src)
 			if(I.on_found(user))
 				return
@@ -80,6 +82,12 @@
 	user.client.screen += closer
 	user.client.screen += contents
 	user.s_active = src
+	is_seeing |= user
+
+
+/obj/item/weapon/storage/throw_at(atom/target, range, speed)
+	close_all()
+	return ..()
 
 
 /obj/item/weapon/storage/proc/hide_from(mob/user)
@@ -90,6 +98,17 @@
 	user.client.screen -= contents
 	if(user.s_active == src)
 		user.s_active = null
+	is_seeing -= user
+
+
+/obj/item/weapon/storage/proc/can_see_contents()
+	var/list/cansee = list()
+	for(var/mob/M in is_seeing)
+		if(M.s_active == src && M.client)
+			cansee |= M
+		else
+			is_seeing -= M
+	return cansee
 
 
 /obj/item/weapon/storage/proc/close(mob/user)
@@ -97,13 +116,11 @@
 	user.s_active = null
 
 
-/obj/item/weapon/storage/proc/close_all() //returns 1 if any mobs actually got a close(M) call
-	var/actually_closed = 0
-	for(var/mob/M in range(1))
-		if(M.s_active == src)
-			close(M)
-			actually_closed = 1
-	return actually_closed
+/obj/item/weapon/storage/proc/close_all()
+	for(var/mob/M in can_see_contents())
+		close(M)
+		. = 1 //returns 1 if any mobs actually got a close(M) call
+
 
 //This proc draws out the inventory and places the items on it. tx and ty are the upper left tile and mx, my are the bottm right.
 //The numbers are calculated from the bottom-left The bottom-left slot being 1,1.
@@ -189,7 +206,7 @@
 
 //This proc return 1 if the item can be picked up and 0 if it can't.
 //Set the stop_messages to stop it from printing messages
-/obj/item/weapon/storage/proc/can_be_inserted(obj/item/W, stop_messages = 0)
+/obj/item/weapon/storage/proc/can_be_inserted(obj/item/W, stop_messages = 0, mob/user)
 	if(!istype(W) || (W.flags & ABSTRACT)) return //Not an item
 
 	if(loc == W)
@@ -202,7 +219,7 @@
 	if(can_hold.len)
 		var/ok = 0
 		for(var/A in can_hold)
-			if(istype(W, text2path(A) ))
+			if(istype(W, A))
 				ok = 1
 				break
 		if(!ok)
@@ -211,14 +228,14 @@
 			return 0
 
 	for(var/A in cant_hold) //Check for specific items which this container can't hold.
-		if(istype(W, text2path(A) ))
+		if(istype(W, A))
 			if(!stop_messages)
 				usr << "<span class='notice'>[src] cannot hold [W].</span>"
 			return 0
 
 	if(W.w_class > max_w_class)
 		if(!stop_messages)
-			usr << "<span class='notice'>[W] is too big for this [src].</span>"
+			usr << "<span class='notice'>[W] is too big for [src].</span>"
 		return 0
 
 	var/sum_w_class = W.w_class
@@ -246,7 +263,7 @@
 //This proc handles items being inserted. It does not perform any checks of whether an item can or can't be inserted. That's done by can_be_inserted()
 //The stop_warning parameter will stop the insertion message from being displayed. It is intended for cases where you are inserting multiple items at once,
 //such as when picking up all the items on a tile with one click.
-/obj/item/weapon/storage/proc/handle_item_insertion(obj/item/W, prevent_warning = 0)
+/obj/item/weapon/storage/proc/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
 	if(!istype(W)) return 0
 	if(usr)
 		if(!usr.unEquip(W))
@@ -259,18 +276,18 @@
 
 		add_fingerprint(usr)
 
-		if(!prevent_warning && !istype(W, /obj/item/weapon/gun/energy/crossbow))
+		if(!prevent_warning && !istype(W, /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow))
 			for(var/mob/M in viewers(usr, null))
 				if(M == usr)
-					usr << "<span class='notice'>You put [W] into [src].</span>"
+					usr << "<span class='notice'>You put [W] [preposition]to [src].</span>"
 				else if(in_range(M, usr)) //If someone is standing close enough, they can tell what it is...
-					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>")
+					M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>", 1)
 				else if(W && W.w_class >= 3.0) //Otherwise they can only see large or normal items from a distance...
-					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>")
+					M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>", 1)
 
 		orient2hud(usr)
-		if(usr.s_active)
-			usr.s_active.show_to(usr)
+		for(var/mob/M in can_see_contents())
+			show_to(M)
 	update_icon()
 	return 1
 
@@ -283,21 +300,14 @@
 		var/obj/item/weapon/storage/fancy/F = src
 		F.update_icon(1)
 
-	for(var/mob/M in range(1, loc))
-		if(M.s_active == src)
-			if(M.client)
-				M.client.screen -= W
+	for(var/mob/M in can_see_contents())
+		if(M.client)
+			M.client.screen -= W
 
-	if(new_location)
-		if(ismob(loc))
-			W.dropped(usr)
-		if(ismob(new_location))
-			W.layer = 20
-		else
-			W.layer = initial(W.layer)
-		W.loc = new_location
-	else
-		W.loc = get_turf(src)
+	if(ismob(loc))
+		W.dropped(usr)
+	W.layer = initial(W.layer)
+	W.loc = new_location
 
 	if(usr)
 		orient2hud(usr)
@@ -318,16 +328,10 @@
 		user << "<span class='notice'>You're a robot. No.</span>"
 		return 0	//Robots can't interact with storage items.
 
-	if(!can_be_inserted(W))
+	if(!can_be_inserted(W, 0 , user))
 		return 0
 
-	if(istype(W, /obj/item/weapon/tray))	//THIS ISN'T HOW OOP WORKS
-		var/obj/item/weapon/tray/T = W
-		if(T.calc_carry() > 0)
-			user << "<span class='notice'>[T] won't fit in [src]."
-			return 1
-
-	handle_item_insertion(W)
+	handle_item_insertion(W, 0 , user)
 	return 1
 
 
@@ -367,6 +371,9 @@
 	set name = "Switch Gathering Method"
 	set category = "Object"
 
+	if(usr.stat || !usr.canmove || usr.restrained())
+		return
+
 	collection_mode = (collection_mode+1)%3
 	switch (collection_mode)
 		if(2)
@@ -376,22 +383,27 @@
 		if(0)
 			usr << "[src] now picks up one item at a time."
 
-
+// Empty all the contents onto the current turf
 /obj/item/weapon/storage/verb/quick_empty()
 	set name = "Empty Contents"
 	set category = "Object"
 
-	if((!ishuman(usr) && (loc != usr)) || usr.stat || usr.restrained())
+	if((!ishuman(usr) && (loc != usr)) || usr.stat || usr.restrained() ||!usr.canmove)
 		return
 
+	do_quick_empty()
+
+// Empty all the contents onto the current turf, without checking the user's status.
+/obj/item/weapon/storage/proc/do_quick_empty()
 	var/turf/T = get_turf(src)
-	hide_from(usr)
+	if(usr)
+		hide_from(usr)
 	for(var/obj/item/I in contents)
 		remove_from_storage(I, T)
 
 
 /obj/item/weapon/storage/New()
-
+	..()
 	if(allow_quick_empty)
 		verbs += /obj/item/weapon/storage/verb/quick_empty
 	else
@@ -415,8 +427,10 @@
 	orient2hud()
 
 
-/obj/item/weapon/storage/Del()
+/obj/item/weapon/storage/Destroy()
 	close_all()
+	qdel(boxes)
+	qdel(closer)
 	..()
 
 
@@ -432,3 +446,4 @@
 	if(user.get_active_hand() == src)
 		if(verbs.Find(/obj/item/weapon/storage/verb/quick_empty))
 			quick_empty()
+

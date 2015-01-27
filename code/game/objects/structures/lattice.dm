@@ -1,22 +1,23 @@
 /obj/structure/lattice
-	desc = "A lightweight support lattice."
 	name = "lattice"
+	desc = "A lightweight support lattice."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "latticefull"
 	density = 0
 	anchored = 1.0
 	layer = 2.3 //under pipes
+	var/obj/item/stack/rods/stored
 	//	flags = CONDUCT
 
 /obj/structure/lattice/New()
 	..()
 	if(!(istype(src.loc, /turf/space)))
-		del(src)
+		qdel(src)
 	for(var/obj/structure/lattice/LAT in src.loc)
 		if(LAT != src)
-			del(LAT)
+			qdel(LAT)
+	stored = new/obj/item/stack/rods(src)
 	icon = 'icons/obj/smoothlattice.dmi'
-	icon_state = "latticeblank"
 	updateOverlays()
 	for (var/dir in cardinal)
 		var/obj/structure/lattice/L
@@ -24,7 +25,7 @@
 			L = locate(/obj/structure/lattice, get_step(src, dir))
 			L.updateOverlays()
 
-/obj/structure/lattice/Del()
+/obj/structure/lattice/Destroy()
 	for (var/dir in cardinal)
 		var/obj/structure/lattice/L
 		if(locate(/obj/structure/lattice, get_step(src, dir)))
@@ -33,16 +34,16 @@
 	..()
 
 /obj/structure/lattice/blob_act()
-	del(src)
+	qdel(src)
 	return
 
-/obj/structure/lattice/ex_act(severity)
+/obj/structure/lattice/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
-			del(src)
+			qdel(src)
 			return
 		if(3.0)
 			return
@@ -50,34 +51,87 @@
 	return
 
 /obj/structure/lattice/attackby(obj/item/C as obj, mob/user as mob)
-
+	var/turf/T = get_turf(src)
 	if (istype(C, /obj/item/stack/tile/plasteel))
-		var/turf/T = get_turf(src)
-		T.attackby(C, user) //BubbleWrap - hand this off to the underlying turf instead
-		return
+		T.attackby(C, user) //BubbleWrap - hand this off to the underlying turf instead (for building plating)
+	if(istype(C, /obj/item/stack/rods))
+		T.attackby(C, user) //see above, for building catwalks
 	if (istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = C
 		if(WT.remove_fuel(0, user))
-			user << "\blue Slicing lattice joints ..."
-		new /obj/item/stack/rods(src.loc)
-		del(src)
-
+			user << "<span class='notice'>Slicing [name] joints ...</span>"
+			Deconstruct()
 	return
 
 /obj/structure/lattice/proc/updateOverlays()
 	//if(!(istype(src.loc, /turf/space)))
-	//	del(src)
-	spawn(1)
-		overlays = list()
+	//	qdel(src)
+	overlays.Cut()
 
-		var/dir_sum = 0
+	var/dir_sum = 0
 
-		for (var/direction in cardinal)
-			if(locate(/obj/structure/lattice, get_step(src, direction)))
+	for (var/direction in cardinal)
+		if(locate(/obj/structure/lattice, get_step(src, direction)))
+			dir_sum += direction
+		else
+			if(!(istype(get_step(src, direction), /turf/space)))
 				dir_sum += direction
-			else
-				if(!(istype(get_step(src, direction), /turf/space)))
-					dir_sum += direction
 
-		icon_state = "lattice[dir_sum]"
+	icon_state = "[name][dir_sum]"
+	return
+
+/obj/structure/lattice/Deconstruct()
+	var/turf/T = loc
+	stored.loc = T
+	updateOverlays()
+	..()
+
+/obj/structure/lattice/singularity_pull(S, current_size)
+	if(current_size >= STAGE_FOUR)
+		Deconstruct()
+
+/obj/structure/lattice/catwalk
+	name = "catwalk"
+	desc = "A catwalk for easier EVA manuevering and cable placement."
+	icon_state = "catwalkfull"
+
+/obj/structure/lattice/catwalk/New()
+	var/turf/T = loc
+	T.cancable = 1
+	..()
+
+/obj/structure/lattice/catwalk/Destroy()
+	var/turf/T = loc
+	T.cancable = 0
+	for(var/obj/structure/cable/C in T)
+		C.Destroy()
+	..()
+
+/obj/structure/lattice/catwalk/Deconstruct()
+	var/turf/T = loc
+	T.cancable = 0
+	for(var/obj/structure/cable/C in T)
+		C.Deconstruct()
+	..()
+
+/obj/structure/lattice/catwalk/attackby(obj/item/C as obj, mob/user as mob)
+	..()
+	if(istype(C, /obj/item/stack/cable_coil))
+		var/turf/T = get_turf(src)
+		T.attackby(C, user) //catwalks 'enable' coil laying on space tiles, not the catwalks themselves
 		return
+
+/obj/structure/lattice/catwalk/updateOverlays()
+	overlays.Cut()
+
+	var/dir_sum = 0
+
+	for (var/direction in cardinal)
+		if(locate(/obj/structure/lattice/catwalk, get_step(src, direction)))
+			dir_sum += direction
+		else
+			if(!(istype(get_step(src, direction), /turf/space)))
+				dir_sum += direction
+
+	icon_state = "[name][dir_sum]"
+	return

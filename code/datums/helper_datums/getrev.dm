@@ -1,52 +1,42 @@
 var/global/datum/getrev/revdata = new()
 
 /datum/getrev
-	var/project_href
 	var/revision
 	var/date
 	var/showinfo
 
-	New()
-		if(fexists("config/git_host.txt"))
-			project_href = file2text("config/git_host.txt")
-		else
-			project_href = "https://www.github.com/tgstation/-tg-station"
-		var/list/head_log = file2list(".git/logs/HEAD", "\n")
-		for(var/line=head_log.len, line>=1, line--)
-			if(head_log[line])
-				var/list/last_entry = text2list(head_log[line], " ")
-				if(last_entry.len < 2)	continue
-				revision = last_entry[2]
-				// Get date/time
-				if(last_entry.len >= 5)
-					var/unix_time = text2num(last_entry[5])
-					if(unix_time)
-						date = unix2date(unix_time)
-				break
-
-		showinfo = "<b>Server Revision:</b> "
-		if(revision)
-			showinfo += "<a href='[project_href]/commit/[revision]'><BR>[(date ? date : "No Date")]<BR>[revision]</a>"
-		else
-			showinfo += "*unknown*"
-		showinfo += "<p>-<a href='[project_href]/issues/new'>Report Bugs Here-</a><br><i>Please provide as much info as possible<br>Copy/paste the revision date and hash into your issue report if possible, thanks</i> :)</p>"
-
-		world.log << "Running /tg/ revision:"
-		world.log << date
-		world.log << revision
-		return
+/datum/getrev/New()
+	var/list/head_log = file2list(".git/logs/HEAD", "\n")
+	for(var/line=head_log.len, line>=1, line--)
+		if(head_log[line])
+			var/list/last_entry = text2list(head_log[line], " ")
+			if(last_entry.len < 2)	continue
+			revision = last_entry[2]
+			// Get date/time
+			if(last_entry.len >= 5)
+				var/unix_time = text2num(last_entry[5])
+				if(unix_time)
+					date = unix2date(unix_time)
+			break
+	world.log << "Running /tg/ revision:"
+	world.log << date
+	world.log << revision
+	return
 
 client/verb/showrevinfo()
 	set category = "OOC"
 	set name = "Show Server Revision"
-	var/output = revdata.showinfo
-	output += "<b>Current Infomational Settings:</b><br>"
-	output += "Protect Authority Roles From Traitor: [config.protect_roles_from_antagonist]<br>"
-	output += "Allow Latejoin Antagonists: [config.allow_latejoin_antagonists]<br>"
-	if(config.show_game_type_odds)
-		output += "<br><b>Game Type Odds:</b><br>"
-		for(var/i=1,i<=config.probabilities.len,i++)
-			var/p = config.probabilities[i]
-			output += "[p] [config.probabilities[p]]<br>"
-	usr << browse(output,"window=revdata");
+	set desc = "Check the current server code revision"
+
+	if(revdata.revision)
+		src << "<b>Server revision compiled on:</b> [revdata.date]"
+		src << "<a href='[config.githuburl]/commit/[revdata.revision]'>[revdata.revision]</a>"
+	else
+		src << "Revision unknown"
+	src << "<b>Current Infomational Settings:</b>"
+	src << "Protect Authority Roles From Traitor: [config.protect_roles_from_antagonist]"
+	src << "Protect Assistant Role From Traitor: [config.protect_assistant_from_antagonist]"
+	src << "Enforce Human Authority: [config.enforce_human_authority]"
+	src << "Allow Latejoin Antagonists: [config.allow_latejoin_antagonists]"
+	src << "Protect Assistant From Antagonist: [config.protect_assistant_from_antagonist]"
 	return

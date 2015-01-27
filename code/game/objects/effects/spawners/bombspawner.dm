@@ -102,7 +102,7 @@
 			p4.air_contents.temperature = btemp + T0C
 			p2.secured = 1
 
-	del(src)
+	qdel(src)
 */
 
 /obj/effect/spawner/newbomb
@@ -113,18 +113,18 @@
 	var/btemp1 = 1500
 	var/btemp2 = 1000	// tank temperatures
 
-	timer
-		btype = 2
+/obj/effect/spawner/newbomb/timer
+	btype = 2
 
-		syndicate
-			btemp1 = 150
-			btemp2 = 20
+	syndicate
+		btemp1 = 150
+		btemp2 = 20
 
-	proximity
-		btype = 1
+/obj/effect/spawner/newbomb/proximity
+	btype = 1
 
-	radio
-		btype = 0
+/obj/effect/spawner/newbomb/radio
+	btype = 0
 
 
 /obj/effect/spawner/newbomb/New()
@@ -201,4 +201,4 @@
 			OT.air_contents.temperature = btemp2 + T0C
 
 			V.update_icon()
-	del(src)
+	qdel(src)

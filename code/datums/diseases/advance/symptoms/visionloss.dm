@@ -23,6 +23,7 @@ Bonus
 	stage_speed = -4
 	transmittable = -3
 	level = 5
+	severity = 4
 
 /datum/symptom/visionloss/Activate(var/datum/disease/advance/A)
 	..()
@@ -40,8 +41,9 @@ Bonus
 				M.eye_blurry = 20
 				M.eye_stat += 5
 				if (M.eye_stat >= 10)
-					M.disabilities |= NEARSIGHTED
-					if (prob(M.eye_stat - 10 + 1) && !(M.sdisabilities & BLIND))
+					M.disabilities |= NEARSIGHT
+					if (prob(M.eye_stat - 10 + 1) && !(M.eye_blind))
 						M << "<span class='danger'>You go blind!</span>"
-						M.sdisabilities |= BLIND
+						M.disabilities |= BLIND
+						M.eye_blind = 1
 	return

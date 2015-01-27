@@ -6,26 +6,18 @@
 	layer = 2.1
 	anchored = 1
 
-
-	examine()
-		set src in view(2)
-		..()
-		return
-
-
-	New(location,main = "#FFFFFF", var/type = "rune")
-		..()
-		loc = location
-
-		name = type
-		desc = "A [type] drawn in crayon."
-
-		switch(type)
-			if("rune")
-				type = "rune[rand(1,6)]"
-			if("graffiti")
-				type = pick("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa")
+/obj/effect/decal/cleanable/crayon/examine()
+	set src in view(2)
+	..()
+	return
 
 
-		icon_state = type
-		color = main
+/obj/effect/decal/cleanable/crayon/New(location, main = "#FFFFFF", var/type = "rune1", var/e_name = "rune")
+	..()
+	loc = location
+
+	name = e_name
+	desc = "A [name] drawn in crayon."
+
+	icon_state = type
+	color = main

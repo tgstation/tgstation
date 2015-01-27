@@ -17,23 +17,28 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	var/getdate
 	var/duedate
 
+
 /*
  * Library Public Computer
  */
-/obj/machinery/librarypubliccomp
-	name = "Library Visitor Console"
-	icon = 'icons/obj/library.dmi'
-	icon_state = "computer"
-	anchored = 1
-	density = 1
+/obj/machinery/computer/libraryconsole
+	name = "library visitor console"
+	icon = 'icons/obj/computer.dmi'
+	icon_state = "library"
+	circuit = /obj/item/weapon/circuitboard/libraryconsole
 	var/screenstate = 0
 	var/title
 	var/category = "Any"
 	var/author
 	var/SQLquery
 
-/obj/machinery/librarypubliccomp/attack_hand(var/mob/user as mob)
-	usr.set_machine(src)
+/obj/machinery/computer/libraryconsole/attack_hand(var/mob/user as mob)
+	if(..())
+		return
+	interact(user)
+
+/obj/machinery/computer/libraryconsole/interact(mob/user)
+	user.set_machine(src)
 	var/dat = "" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	switch(screenstate)
 		if(0)
@@ -63,14 +68,13 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 					dat += "<tr><td>[author]</td><td>[title]</td><td>[category]</td><td>[id]</td></tr>"
 				dat += "</table><BR>"
 			dat += "<A href='?src=\ref[src];back=1'>\[Go Back\]</A><BR>"
-	//user << browse(dat, "window=publiclibrary")
-	//onclose(user, "publiclibrary")
 	var/datum/browser/popup = new(user, "publiclibrary", name, 600, 400)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
-/obj/machinery/librarypubliccomp/Topic(href, href_list)
+/obj/machinery/computer/libraryconsole/Topic(href, href_list)
+	. = ..()
 	if(..())
 		usr << browse(null, "window=publiclibrary")
 		onclose(usr, "publiclibrary")
@@ -98,7 +102,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			author = null
 		author = sanitizeSQL(author)
 	if(href_list["search"])
-		SQLquery = "SELECT author, title, category, id FROM erro_library WHERE isnull(deleted) AND "
+		SQLquery = "SELECT author, title, category, id FROM [format_table_name("library")] WHERE isnull(deleted) AND "
 		if(category == "Any")
 			SQLquery += "author LIKE '%[author]%' AND title LIKE '%[title]%'"
 		else
@@ -115,17 +119,12 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 
 /*
  * Library Computer
+ * After 860 days, it's finally a buildable computer.
  */
-// TODO: Make this an actual /obj/machinery/computer that can be crafted from circuit boards and such
-// It is August 22nd, 2012... This TODO has already been here for months.. I wonder how long it'll last before someone does something about it.
-/obj/machinery/librarycomp
-	name = "Book Inventory Management Console"
-	icon = 'icons/obj/library.dmi'
-	icon_state = "computer"
-	anchored = 1
-	density = 1
+/obj/machinery/computer/libraryconsole/bookmanagement
+	name = "book inventory management console"
 	var/arcanecheckout = 0
-	var/screenstate = 0 // 0 - Main Menu, 1 - Inventory, 2 - Checked Out, 3 - Check Out a Book
+	screenstate = 0 // 0 - Main Menu, 1 - Inventory, 2 - Checked Out, 3 - Check Out a Book
 	var/buffer_book
 	var/buffer_mob
 	var/upload_category = "Fiction"
@@ -134,10 +133,16 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	var/checkoutperiod = 5 // In minutes
 	var/obj/machinery/libraryscanner/scanner // Book scanner that will be used when uploading books to the Archive
 
-	var/bibledelay = 0 // LOL NO SPAM (1 minute delay) -- Doohl
+	var/bibledelay = 0
 
-/obj/machinery/librarycomp/attack_hand(var/mob/user as mob)
-	usr.set_machine(src)
+/obj/machinery/computer/libraryconsole/bookmanagement/New()
+	..()
+	if(circuit)
+		circuit.name = "circuit board (Book Inventory Management Console)"
+		circuit.build_path = /obj/machinery/computer/libraryconsole/bookmanagement
+
+/obj/machinery/computer/libraryconsole/bookmanagement/interact(mob/user)
+	user.set_machine(src)
 	var/dat = "" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	switch(screenstate)
 		if(0)
@@ -201,7 +206,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 				dat += "<table>"
 				dat += "<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td></td></tr>"
 
-				var/DBQuery/query = dbcon.NewQuery("SELECT id, author, title, category FROM erro_library WHERE isnull(deleted)")
+				var/DBQuery/query = dbcon.NewQuery("SELECT id, author, title, category FROM [format_table_name("library")] WHERE isnull(deleted)")
 				query.Execute()
 
 				while(query.NextRow())
@@ -237,27 +242,25 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			dat += "<A href='?src=\ref[src];arccheckout=1'>Yes.</A><BR>"
 			dat += "<A href='?src=\ref[src];switchscreen=0'>No.</A><BR>"
 
-	//dat += "<A HREF='?src=\ref[user];mach_close=library'>Close</A><br><br>"
-	//user << browse(dat, "window=library")
-	//onclose(user, "library")
 	var/datum/browser/popup = new(user, "library", name, 600, 400)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
-/obj/machinery/librarycomp/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (src.density && istype(W, /obj/item/weapon/card/emag))
-		src.emagged = 1
+/obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/barcodescanner))
 		var/obj/item/weapon/barcodescanner/scanner = W
 		scanner.computer = src
 		user << "[scanner]'s associated machine has been set to [src]."
-		for (var/mob/V in hearers(src))
-			V.show_message("[src] lets out a low, short blip.", 2)
+		audible_message("[src] lets out a low, short blip.")
 	else
 		..()
 
-/obj/machinery/librarycomp/Topic(href, href_list)
+/obj/machinery/computer/libraryconsole/bookmanagement/emag_act(mob/user as mob)
+	if(density && !emagged)
+		emagged = 1
+
+/obj/machinery/computer/libraryconsole/bookmanagement/Topic(href, href_list)
 	if(..())
 		usr << browse(null, "window=library")
 		onclose(usr, "library")
@@ -280,7 +283,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			if("6")
 				if(!bibledelay)
 
-					var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible(src.loc)
+					var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible(src.loc)
 					if(ticker && ( ticker.Bible_icon_state && ticker.Bible_item_state) )
 						B.icon_state = ticker.Bible_icon_state
 						B.item_state = ticker.Bible_item_state
@@ -292,8 +295,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 						bibledelay = 0
 
 				else
-					for (var/mob/V in hearers(src))
-						V.show_message("<b>[src]</b>'s monitor flashes, \"Bible printer currently unavailable, please wait a moment.\"")
+					say("Bible printer currently unavailable, please wait a moment.")
 
 			if("7")
 				screenstate = 7
@@ -351,7 +353,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 						var/sqlauthor = sanitizeSQL(scanner.cache.author)
 						var/sqlcontent = sanitizeSQL(scanner.cache.dat)
 						var/sqlcategory = sanitizeSQL(upload_category)
-						var/DBQuery/query = dbcon.NewQuery("INSERT INTO erro_library (author, title, content, category, ckey, datetime) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]', '[usr.ckey]', Now())")
+						var/DBQuery/query = dbcon.NewQuery("INSERT INTO [format_table_name("library")] (author, title, content, category, ckey, datetime) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]', '[usr.ckey]', Now())")
 						if(!query.Execute())
 							usr << query.ErrorMsg()
 						else
@@ -364,13 +366,12 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		if(!dbcon.IsConnected())
 			alert("Connection to Archive has been severed. Aborting.")
 		if(bibledelay)
-			for (var/mob/V in hearers(src))
-				V.show_message("<b>[src]</b>'s monitor flashes, \"Printer unavailable. Please allow a short time before attempting to print.\"")
+			say("Printer unavailable. Please allow a short time before attempting to print.")
 		else
 			bibledelay = 1
 			spawn(60)
 				bibledelay = 0
-			var/DBQuery/query = dbcon.NewQuery("SELECT * FROM erro_library WHERE id=[sqlid] AND isnull(deleted)")
+			var/DBQuery/query = dbcon.NewQuery("SELECT * FROM [format_table_name("library")] WHERE id=[sqlid] AND isnull(deleted)")
 			query.Execute()
 
 			while(query.NextRow())
@@ -395,11 +396,16 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	src.updateUsrDialog()
 	return
 
+/obj/machinery/computer/libraryconsole/bookmanagement/say_quote(text)
+	return "flashes, \"[text]\""
+
+
+
 /*
  * Library Scanner
  */
 /obj/machinery/libraryscanner
-	name = "Scanner Control Interface"
+	name = "scanner control interface"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "bigscanner"
 	anchored = 1
@@ -454,24 +460,30 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
  * Book binder
  */
 /obj/machinery/bookbinder
-	name = "Book Binder"
+	name = "book binder"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "binder"
 	anchored = 1
 	density = 1
+	var/busy = 0
 
 /obj/machinery/bookbinder/attackby(var/obj/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/paper))
+		if(busy)
+			user << "<span class='warning'>The book binder is busy. Please wait for completion of previous operation.</span>"
+			return
 		user.drop_item()
 		O.loc = src
 		user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")
 		src.visible_message("[src] begins to hum as it warms up its printing drums.")
+		busy = 1
 		sleep(rand(200,400))
+		busy = 0
 		src.visible_message("[src] whirs as it prints and binds a new book.")
 		var/obj/item/weapon/book/b = new(src.loc)
 		b.dat = O:info
 		b.name = "Print Job #" + "[rand(100, 999)]"
 		b.icon_state = "book[rand(1,7)]"
-		del(O)
+		qdel(O)
 	else
 		..()

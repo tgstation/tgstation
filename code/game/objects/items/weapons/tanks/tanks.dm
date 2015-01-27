@@ -24,25 +24,25 @@
 	src.air_contents.volume = volume //liters
 	src.air_contents.temperature = T20C
 
-	processing_objects.Add(src)
+	SSobj.processing.Add(src)
 
 	return
 
-/obj/item/weapon/tank/Del()
+/obj/item/weapon/tank/Destroy()
 	if(air_contents)
 		del(air_contents)
 
-	processing_objects.Remove(src)
+	SSobj.processing.Remove(src)
 
 	..()
 
-/obj/item/weapon/tank/examine()
+/obj/item/weapon/tank/examine(mob/user)
 	var/obj/icon = src
 	..()
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
-	if (!in_range(src, usr))
-		if (icon == src) usr << "\blue If you want any more information you'll need to get closer."
+	if (!in_range(src, user))
+		if (icon == src) user << "<span class='notice'>If you want any more information you'll need to get closer.</span>"
 		return
 
 	var/celsius_temperature = src.air_contents.temperature-T0C
@@ -61,20 +61,18 @@
 	else
 		descriptive = "furiously hot"
 
-	usr << "\blue It feels [descriptive]"
-
-	return
+	user << "<span class='notice'>It feels [descriptive].</span>"
 
 /obj/item/weapon/tank/blob_act()
 	if(prob(50))
 		var/turf/location = src.loc
 		if (!( istype(location, /turf) ))
-			del(src)
+			qdel(src)
 
 		if(src.air_contents)
 			location.assume_air(air_contents)
 
-		del(src)
+		qdel(src)
 
 /obj/item/weapon/tank/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
@@ -85,10 +83,6 @@
 
 	if ((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
 		atmosanalyzer_scan(air_contents, user)
-	else if (istype(W,/obj/item/latexballon))
-		var/obj/item/latexballon/LB = W
-		LB.blow(src)
-		src.add_fingerprint(user)
 
 	if(istype(W, /obj/item/device/assembly_holder))
 		bomb_assemble(W,user)
@@ -131,17 +125,17 @@
 				if(location.internal == src)
 					location.internal = null
 					location.internals.icon_state = "internal0"
-					usr << "\blue You close the tank release valve."
+					usr << "<span class='notice'>You close the tank release valve.</span>"
 					if (location.internals)
 						location.internals.icon_state = "internal0"
 				else
 					if(location.wear_mask && (location.wear_mask.flags & MASKINTERNALS))
 						location.internal = src
-						usr << "\blue You open \the [src] valve."
+						usr << "<span class='notice'>You open \the [src] valve.</span>"
 						if (location.internals)
 							location.internals.icon_state = "internal1"
 					else
-						usr << "\blue You need something to connect to \the [src]."
+						usr << "<span class='notice'>You need something to connect to \the [src].</span>"
 
 		src.add_fingerprint(usr)
 /*
@@ -205,13 +199,15 @@
 		air_contents.react()
 		pressure = air_contents.return_pressure()
 		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
-		range = min(range, MAX_EX_LIGHT_RANGE)		// was 8 - - - Changed to a configurable define -- TLE
 		var/turf/epicenter = get_turf(loc)
 
 		//world << "\blue Exploding Pressure: [pressure] kPa, intensity: [range]"
 
 		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
-		del(src)
+		if(istype(src.loc,/obj/item/device/transfer_valve))
+			qdel(src.loc)
+		else
+			qdel(src)
 
 	else if(pressure > TANK_RUPTURE_PRESSURE)
 		//world << "\blue[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]"
@@ -221,7 +217,7 @@
 				return
 			T.assume_air(air_contents)
 			playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
-			del(src)
+			qdel(src)
 		else
 			integrity--
 

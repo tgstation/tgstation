@@ -14,7 +14,7 @@
 
 /obj/item/weapon/paper_bin/MouseDrop(atom/over_object)
 	var/mob/M = usr
-	if(M.restrained() || M.stat)
+	if(M.restrained() || M.stat || !Adjacent(M))
 		return
 
 	if(over_object == M)
@@ -47,15 +47,15 @@
 			papers.Remove(P)
 		else
 			P = new /obj/item/weapon/paper
-			if(events.holiday == "April Fool's Day")
+			if(SSevent.holiday == "April Fool's Day")
 				if(prob(30))
-					P.info = "<font face=\"[P.crayonfont]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
+					P.info = "<font face=\"[CRAYON_FONT]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
 					P.rigged = 1
 					P.updateinfolinks()
 
 		P.loc = user.loc
 		user.put_in_hands(P)
-		user << "<span class='notice'>You take [P] out of the [src].</span>"
+		user << "<span class='notice'>You take [P] out of \the [src].</span>"
 	else
 		user << "<span class='notice'>[src] is empty!</span>"
 
@@ -74,13 +74,12 @@
 	update_icon()
 
 
-/obj/item/weapon/paper_bin/examine()
-	set src in oview(1)
+/obj/item/weapon/paper_bin/examine(mob/user)
 	..()
 	if(amount)
-		usr << "It contains " + (amount > 1 ? "[amount] papers" : " one paper")+"."
+		user << "It contains " + (amount > 1 ? "[amount] papers" : " one paper")+"."
 	else
-		usr << "It doesn't contain anything."
+		user << "It doesn't contain anything."
 
 
 /obj/item/weapon/paper_bin/update_icon()

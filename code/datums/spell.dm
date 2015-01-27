@@ -7,6 +7,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	name = "Spell"
 	desc = "A wizard spell"
 	panel = "Spells"
+	anchored = 1 // Crap like fireball projectiles are proc_holders, this is needed so fireballs don't get blown back into your face via atmos etc.
+	pass_flags = PASSTABLE
 	density = 0
 	opacity = 0
 
@@ -23,6 +25,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 	var/clothes_req = 1 //see if it requires clothes
 	var/human_req = 0 //spell can only be cast by humans
+	var/nonabstract_req = 0 //spell can only be cast by mobs that are physical entities
 	var/stat_allowed = 0 //see if it requires being conscious/alive, need to set to 1 for ghostpells
 	var/invocation = "HURP DURP" //what is uttered when the wizard casts the spell
 	var/invocation_emote_self = null
@@ -53,7 +56,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		user << "<span class='warning'>You shouldn't have this spell! Something's wrong.</span>"
 		return 0
 
-	if(user.z == 2 && !centcom_cancast) //Certain spells are not allowed on the centcom zlevel
+	if(user.z == ZLEVEL_CENTCOM && !centcom_cancast) //Certain spells are not allowed on the centcom zlevel
 		return 0
 
 	if(!skipcharge)
@@ -75,23 +78,26 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 		var/mob/living/carbon/human/H = user
 
-		if(istype(H.wear_mask, /obj/item/clothing/mask/muzzle))
+		if((invocation_type == "whisper" || invocation_type == "shout") && H.is_muzzled())
 			user << "<span class='notice'>You can't get the words out!</span>"
 			return 0
 
 		if(clothes_req) //clothes check
-			if(!istype(H.wear_suit, /obj/item/clothing/suit/wizrobe) && !istype(H.wear_suit, /obj/item/clothing/suit/space/rig/wizard))
+			if(!istype(H.wear_suit, /obj/item/clothing/suit/wizrobe) && !istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit/wizard))
 				H << "<span class='notice'>I don't feel strong enough without my robe.</span>"
 				return 0
 			if(!istype(H.shoes, /obj/item/clothing/shoes/sandal))
 				H << "<span class='notice'>I don't feel strong enough without my sandals.</span>"
 				return 0
-			if(!istype(H.head, /obj/item/clothing/head/wizard) && !istype(H.head, /obj/item/clothing/head/helmet/space/rig/wizard))
+			if(!istype(H.head, /obj/item/clothing/head/wizard) && !istype(H.head, /obj/item/clothing/head/helmet/space/hardsuit/wizard))
 				H << "<span class='notice'>I don't feel strong enough without my hat.</span>"
 				return 0
 	else
 		if(clothes_req || human_req)
 			user << "<span class='notice'>This spell can only be cast by humans!</span>"
+			return 0
+		if(nonabstract_req && (isbrain(user) || ispAI(user)))
+			user << "<span class='notice'>This spell can only be cast by physical beings!</span>"
 			return 0
 
 	if(!skipcharge)
@@ -135,14 +141,14 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	return
 
 /obj/effect/proc_holder/spell/proc/start_recharge()
-	while(charge_counter < charge_max)
+	while(charge_counter < charge_max && isnull(gc_destroyed))
 		sleep(1)
 		charge_counter++
 
 /obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = 1, mob/user = usr) //if recharge is started is important for the trigger spells
 	before_cast(targets)
 	invocation()
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>[user.real_name] ([user.ckey]) cast the spell [name].</font>")
+	user.attack_log += text("\[[time_stamp()]\] <span class='danger'>[user.real_name] ([user.ckey]) cast the spell [name].</span>")
 	spawn(0)
 		if(charge_type == "recharge" && recharge)
 			start_recharge()
@@ -166,7 +172,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			spell.anchored = 1
 			spell.density = 0
 			spawn(overlay_lifespan)
-				del(spell)
+				qdel(spell)
 
 /obj/effect/proc_holder/spell/proc/after_cast(list/targets)
 	for(var/atom/target in targets)
@@ -190,6 +196,11 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				var/datum/effect/effect/system/bad_smoke_spread/smoke = new /datum/effect/effect/system/bad_smoke_spread()
 				smoke.set_up(smoke_amt, 0, location, smoke_amt == 1 ? 15 : 0) // same here
 				smoke.start()
+			else if(smoke_spread == 3)
+				var/datum/effect/effect/system/sleep_smoke_spread/smoke = new /datum/effect/effect/system/sleep_smoke_spread()
+				smoke.set_up(smoke_amt, 0, location, smoke_amt == 1 ? 15 : 0) // same here
+				smoke.start()
+
 
 /obj/effect/proc_holder/spell/proc/cast(list/targets)
 	return

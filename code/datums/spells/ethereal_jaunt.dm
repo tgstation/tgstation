@@ -11,6 +11,7 @@
 	cooldown_min = 100 //50 deciseconds reduction per rank
 	include_user = 1
 	centcom_cancast = 0 //Prevent people from getting to centcom
+	nonabstract_req = 1
 	var/jaunt_duration = 50 //in deciseconds
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets) //magnets, so mostly hardcoded
@@ -28,7 +29,7 @@
 			animation.master = holder
 			target.ExtinguishMob()
 			if(target.buckled)
-				target.buckled.unbuckle()
+				target.buckled.unbuckle_mob()
 			jaunt_disappear(animation, target)
 			target.loc = holder
 			target.notransform=0 //mob is safely inside holder now, no need for protection.
@@ -50,8 +51,8 @@
 							break
 			target.canmove = 1
 			target.client.eye = target
-			del(animation)
-			del(holder)
+			qdel(animation)
+			qdel(holder)
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_disappear(var/atom/movable/overlay/animation, var/mob/living/target)
 	animation.icon_state = "liquify"
@@ -74,7 +75,7 @@
 	density = 0
 	anchored = 1
 
-/obj/effect/dummy/spell_jaunt/Del()
+/obj/effect/dummy/spell_jaunt/Destroy()
 	// Eject contents if deleted somehow
 	for(var/atom/movable/AM in src)
 		AM.loc = get_turf(src)

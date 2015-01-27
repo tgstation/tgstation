@@ -17,7 +17,7 @@
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 75
 	health = 75
-	speed = -1
+	speed = 0
 	harm_intent_damage = 8
 	melee_damage_lower = 10
 	melee_damage_upper = 10
@@ -37,4 +37,4 @@
 	maxbodytemp = 370
 	heat_damage_per_tick = 15	//amount of damage applied if animal's body temperature is higher than maxbodytemp
 	cold_damage_per_tick = 10	//same as heat_damage_per_tick, only if the bodytemperature it's lower than minbodytemp
-	unsuitable_atoms_damage = 10
+	unsuitable_atmos_damage = 10

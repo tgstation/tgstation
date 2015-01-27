@@ -9,7 +9,7 @@
 
 /mob/living/silicon/robot/dust(var/animation = 1)
 	if(mmi)
-		del(mmi)
+		qdel(mmi)
 	..()
 
 /mob/living/silicon/robot/spawn_dust()
@@ -33,8 +33,7 @@
 	sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	updateicon()
-	update_fire()
+	update_icons()
 	tod = worldtime2text() //weasellos time of death patch
 	if(mind)	mind.store_memory("Time of death: [tod]", 0)
 

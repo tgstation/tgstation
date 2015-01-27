@@ -3,7 +3,7 @@
 	config_tag = "traitorchan"
 	traitors_possible = 3 //hard limit on traitors if scaling is turned off
 	restricted_jobs = list("AI", "Cyborg")
-	required_players = 20
+	required_players = 0
 	required_enemies = 1	// how many of each type are required
 	recommended_enemies = 3
 
@@ -26,14 +26,17 @@
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
+	if(config.protect_assistant_from_antagonist)
+		restricted_jobs += "Assistant"
+
 	var/list/datum/mind/possible_changelings = get_players_for_role(BE_CHANGELING)
 
 	var/num_changelings = 1
 
 	if(config.changeling_scaling_coeff)
-		num_changelings = max(1, round((num_players())/(config.changeling_scaling_coeff*2)))
+		num_changelings = max(1, min( round(num_players()/(config.changeling_scaling_coeff*4))+2, round(num_players()/(config.changeling_scaling_coeff*2)) ))
 	else
-		num_changelings = max(1, min(num_players(), changeling_amount))
+		num_changelings = max(1, min(num_players(), changeling_amount/2))
 
 	for(var/datum/mind/player in possible_changelings)
 		for(var/job in restricted_jobs)//Removing robots from the list
@@ -61,10 +64,11 @@
 	return
 
 /datum/game_mode/traitor/changeling/make_antag_chance(var/mob/living/carbon/human/character) //Assigns changeling to latejoiners
-	if(changelings.len >= round(joined_player_list.len / (config.changeling_scaling_coeff*2)) + 1) //Caps number of latejoin antagonists
+	var/changelingcap = min( round(joined_player_list.len/(config.changeling_scaling_coeff*4))+2, round(joined_player_list.len/(config.changeling_scaling_coeff*2)) )
+	if(changelings.len >= changelingcap) //Caps number of latejoin antagonists
 		..()
 		return
-	if (prob(100/(config.changeling_scaling_coeff*2)))
+	if(changelings.len <= (changelingcap - 2) || prob(100 / (config.changeling_scaling_coeff * 4)))
 		if(character.client.prefs.be_special & BE_CHANGELING)
 			if(!jobban_isbanned(character.client, "changeling") && !jobban_isbanned(character.client, "Syndicate"))
 				if(!(character.job in ticker.mode.restricted_jobs))

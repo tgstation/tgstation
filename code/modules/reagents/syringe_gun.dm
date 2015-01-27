@@ -29,7 +29,7 @@
 	chambered.BB.name = S.name
 	syringes.Remove(S)
 
-	del(S)
+	qdel(S)
 	return
 
 /obj/item/weapon/gun/syringe/process_chamber()
@@ -39,10 +39,9 @@
 	newshot()
 	..()
 
-/obj/item/weapon/gun/syringe/examine()
+/obj/item/weapon/gun/syringe/examine(mob/user)
 	..()
-	usr << "Can hold [max_syringes] syringe\s. Has [syringes.len] syringe\s remaining."
-	return
+	user << "Can hold [max_syringes] syringe\s. Has [syringes.len] syringe\s remaining."
 
 /obj/item/weapon/gun/syringe/attack_self(mob/living/user as mob)
 	if(!syringes.len)

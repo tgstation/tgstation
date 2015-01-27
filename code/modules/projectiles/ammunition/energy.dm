@@ -6,14 +6,19 @@
 	var/e_cost = 100 //The amount of energy a cell needs to expend to create this shot.
 	var/select_name = "energy"
 	var/mod_name = null
-	var/fire_sound = 'sound/weapons/Laser.ogg'
+	fire_sound = 'sound/weapons/Laser.ogg'
 
 /obj/item/ammo_casing/energy/laser
 	projectile_type = /obj/item/projectile/beam
 	select_name = "kill"
 
+/obj/item/ammo_casing/energy/lasergun
+	projectile_type = /obj/item/projectile/beam
+	e_cost = 83
+	select_name = "kill"
+
 /obj/item/ammo_casing/energy/laser/practice
-	projectile_type = /obj/item/projectile/practice
+	projectile_type = /obj/item/projectile/beam/practice
 	select_name = "practice"
 
 /obj/item/ammo_casing/energy/laser/scatter
@@ -33,22 +38,31 @@
 	select_name = "DESTROY"
 	fire_sound = 'sound/weapons/pulse.ogg'
 
+/obj/item/ammo_casing/energy/laser/pulse/carbine
+	e_cost = 50
+
+/obj/item/ammo_casing/energy/laser/carbine
+	e_cost = 50
+
+/obj/item/ammo_casing/energy/electrode/carbine
+	e_cost = 50
+
+/obj/item/ammo_casing/energy/laser/pulse/pistol
+	e_cost = 100
+
+/obj/item/ammo_casing/energy/laser/pistol
+	e_cost = 50
+
+/obj/item/ammo_casing/energy/electrode/pistol
+	e_cost = 50
+
 /obj/item/ammo_casing/energy/laser/bluetag
-	projectile_type = /obj/item/projectile/bluetag
+	projectile_type = /obj/item/projectile/lasertag/bluetag
 	select_name = "bluetag"
 
 /obj/item/ammo_casing/energy/laser/redtag
-	projectile_type = /obj/item/projectile/redtag
+	projectile_type = /obj/item/projectile/lasertag/redtag
 	select_name = "redtag"
-
-/obj/item/ammo_casing/energy/bolt
-	projectile_type = /obj/item/projectile/energy/bolt
-	select_name = "bolt"
-	fire_sound = 'sound/weapons/Genhit.ogg'
-
-/obj/item/ammo_casing/energy/bolt/large
-	projectile_type = /obj/item/projectile/energy/bolt/large
-	select_name = "heavy bolt"
 
 /obj/item/ammo_casing/energy/xray
 	projectile_type = /obj/item/projectile/beam/xray
@@ -59,14 +73,16 @@
 	projectile_type = /obj/item/projectile/energy/electrode
 	select_name = "stun"
 	fire_sound = 'sound/weapons/taser.ogg'
+	e_cost = 200
 
 /obj/item/ammo_casing/energy/electrode/gun
 	fire_sound = 'sound/weapons/gunshot.ogg'
+	e_cost = 100
 
 /obj/item/ammo_casing/energy/ion
 	projectile_type = /obj/item/projectile/ion
 	select_name = "ion"
-	fire_sound = 'sound/weapons/Laser.ogg'
+	fire_sound = 'sound/weapons/IonRifle.ogg'
 
 /obj/item/ammo_casing/energy/declone
 	projectile_type = /obj/item/projectile/energy/declone
@@ -109,4 +125,31 @@
 	projectile_type = /obj/item/projectile/kinetic
 	select_name = "kinetic"
 	e_cost = 500
-	fire_sound = 'sound/weapons/Gunshot4.ogg'
+	fire_sound = 'sound/weapons/Kenetic_accel.ogg'
+
+/obj/item/ammo_casing/energy/disabler
+	projectile_type = /obj/item/projectile/beam/disabler
+	select_name  = "disable"
+	e_cost = 50
+	fire_sound = "sound/weapons/taser2.ogg"
+
+/obj/item/ammo_casing/energy/wormhole
+	projectile_type = /obj/item/projectile/beam/wormhole
+	e_cost = 0
+	fire_sound = "sound/weapons/pulse3.ogg"
+	var/obj/item/weapon/gun/energy/wormhole_projector/gun = null
+	select_name = "blue"
+
+/obj/item/ammo_casing/energy/wormhole/orange
+	projectile_type = /obj/item/projectile/beam/wormhole/orange
+	select_name = "orange"
+
+/obj/item/ammo_casing/energy/bolt
+	projectile_type = /obj/item/projectile/energy/bolt
+	select_name = "bolt"
+	e_cost = 500
+	fire_sound = 'sound/weapons/Genhit.ogg'
+
+/obj/item/ammo_casing/energy/bolt/large
+	projectile_type = /obj/item/projectile/energy/bolt/large
+	select_name = "heavy bolt"

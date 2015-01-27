@@ -57,7 +57,7 @@
 
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(diode)
-			user << "<span class='notice'>You remove the [diode.name] from the [src].</span>"
+			user << "<span class='notice'>You remove the [diode.name] from \the [src].</span>"
 			diode.loc = get_turf(src.loc)
 			diode = null
 		return
@@ -78,13 +78,10 @@
 	if (!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
-	if(user.has_mutation(HULK))
-		user << "<span class='warning'>Your meaty finger is too large for the button!</span>"
-		return
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		if(C.is_mutantrace("adamantine"))
-			user << "<span class='warning'>Your metal fingers can't press the button!</span>"
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna && (H.dna.check_mutation(HULK) || NOGUNS in H.dna.species.specflags))
+			user << "<span class='warning'>Your fingers can't press the button!</span>"
 			return
 
 	add_fingerprint(user)
@@ -109,7 +106,7 @@
 				//eye target check
 				outmsg = "<span class='notice'>You blind [C] by shining [src] in their eyes.</span>"
 				var/eye_prot = C.eyecheck()
-				if(C.blinded || eye_prot >= 2)
+				if(C.eye_blind || eye_prot >= 2)
 					eye_prot = 4
 				var/severity = 3 - eye_prot
 				if(prob(33))
@@ -189,7 +186,7 @@
 	if(energy <= max_energy)
 		if(!recharging)
 			recharging = 1
-			processing_objects.Add(src)
+			SSobj.processing.Add(src)
 		if(energy <= 0)
 			user << "<span class='warning'>You've overused the battery of [src], now it needs time to recharge!</span>"
 			recharge_locked = 1

@@ -55,11 +55,12 @@
 	*/
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
-	if(istype(W, /obj/item/weapon/card/emag))
-		req_access = list()
-		req_one_access = list()
-		playsound(src.loc, "sparks", 100, 1)
 	return src.attack_hand(user)
+
+/obj/machinery/door_control/emag_act(user as mob)
+	req_access = list()
+	req_one_access = list()
+	playsound(src.loc, "sparks", 100, 1)
 
 /obj/machinery/door_control/attack_hand(mob/user as mob)
 	src.add_fingerprint(usr)
@@ -67,7 +68,7 @@
 		return
 
 	if(!allowed(user) && (wires & 1))
-		user << "\red Access Denied"
+		user << "<span class='danger'>Access Denied</span>"
 		flick("doorctrl-denied",src)
 		return
 
@@ -87,7 +88,7 @@
 				if(specialfunctions & IDSCAN)
 					D.aiDisabledIdScanner = !D.aiDisabledIdScanner
 				if(specialfunctions & BOLTS)
-					if(!D.isWireCut(4) && D.arePowerSystemsOn())
+					if(!D.isWireCut(4) && D.hasPower())
 						D.locked = !D.locked
 						D.update_icon()
 				if(specialfunctions & SHOCK)

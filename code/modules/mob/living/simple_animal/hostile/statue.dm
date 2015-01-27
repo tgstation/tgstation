@@ -33,7 +33,7 @@
 	max_n2 = 0
 	minbodytemp = 0
 
-	faction = "statue"
+	faction = list("statue")
 	move_to_delay = 0 // Very fast
 
 	animate_movement = NO_STEPS // Do not animate movement, you jump around as you're a scary statue.
@@ -50,11 +50,12 @@
 	status_flags = GODMODE // Cannot push also
 
 	var/cannot_be_seen = 1
+	var/mob/living/creator = null
 
 
 // No movement while seen code.
 
-/mob/living/simple_animal/hostile/statue/New()
+/mob/living/simple_animal/hostile/statue/New(loc, var/mob/living/creator)
 	..()
 	// Give spells
 	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flicker_lights(src)
@@ -63,6 +64,10 @@
 
 	// Give nightvision
 	see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+
+	// Set creator
+	if(creator)
+		src.creator = creator
 
 /mob/living/simple_animal/hostile/statue/Move(var/turf/NewLoc)
 	if(can_be_seen(NewLoc))
@@ -83,7 +88,11 @@
 				GiveTarget(watching)
 
 /mob/living/simple_animal/hostile/statue/AttackingTarget()
-	if(!can_be_seen())
+	if(can_be_seen())
+		if(client)
+			src << "<span class='warning'>You cannot attack, there are eyes on you!</span>"
+			return
+	else
 		..()
 
 /mob/living/simple_animal/hostile/statue/DestroySurroundings()
@@ -93,13 +102,6 @@
 /mob/living/simple_animal/hostile/statue/face_atom()
 	if(!can_be_seen())
 		..()
-
-/mob/living/simple_animal/hostile/statue/UnarmedAttack()
-	if(can_be_seen())
-		if(client)
-			src << "<span class='warning'>You cannot attack, there are eyes on you!</span>"
-		return
-	..()
 
 /mob/living/simple_animal/hostile/statue/proc/can_be_seen(var/turf/destination)
 	if(!cannot_be_seen)
@@ -122,7 +124,7 @@
 	for(var/atom/check in check_list)
 		for(var/mob/living/M in viewers(world.view + 1, check) - src)
 			if(M.client && CanAttack(M) && !issilicon(M))
-				if(!M.blinded && !(sdisabilities & BLIND))
+				if(!M.eye_blind)
 					return M
 	return null
 
@@ -146,6 +148,11 @@
 			return 0
 	return ..()
 
+// Don't attack your creator if there is one
+
+/mob/living/simple_animal/hostile/statue/ListTargets()
+	. = ..()
+	return . - creator
 
 // Statue powers
 

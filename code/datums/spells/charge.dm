@@ -38,14 +38,14 @@
 				var/obj/item/weapon/spellbook/oneuse/I = item
 				if(prob(80))
 					user.visible_message("<span class='warning'>[I] catches fire!</span>")
-					del(I)
+					qdel(I)
 				else
 					I.used = 0
 					charged_item = I
 					break
 			else if(istype(item, /obj/item/weapon/gun/magic))
 				var/obj/item/weapon/gun/magic/I = item
-				if(prob(80))
+				if(prob(80) && !I.can_charge)
 					I.max_charges--
 				if(I.max_charges <= 0)
 					I.max_charges = 0
@@ -56,8 +56,8 @@
 					W.icon_state = initial(W.icon_state)
 				charged_item = I
 				break
-			else if(istype(item, /obj/item/weapon/cell/))
-				var/obj/item/weapon/cell/C = item
+			else if(istype(item, /obj/item/weapon/stock_parts/cell/))
+				var/obj/item/weapon/stock_parts/cell/C = item
 				if(prob(80))
 					C.maxcharge -= 200
 				if(C.maxcharge <= 1) //Div by 0 protection
@@ -69,8 +69,8 @@
 			else if(item.contents)
 				var/obj/I = null
 				for(I in item.contents)
-					if(istype(I, /obj/item/weapon/cell/))
-						var/obj/item/weapon/cell/C = I
+					if(istype(I, /obj/item/weapon/stock_parts/cell/))
+						var/obj/item/weapon/stock_parts/cell/C = I
 						if(prob(80))
 							C.maxcharge -= 200
 						if(C.maxcharge <= 1) //Div by 0 protection

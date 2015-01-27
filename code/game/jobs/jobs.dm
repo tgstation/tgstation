@@ -30,7 +30,7 @@ var/const/CIVILIAN			=(1<<2)
 var/const/HOP				=(1<<0)
 var/const/BARTENDER			=(1<<1)
 var/const/BOTANIST			=(1<<2)
-var/const/CHEF				=(1<<3)
+var/const/COOK				=(1<<3)
 var/const/JANITOR			=(1<<4)
 var/const/LIBRARIAN			=(1<<5)
 var/const/QUARTERMASTER		=(1<<6)
@@ -73,7 +73,7 @@ var/list/engineering_positions = list(
 var/list/medical_positions = list(
 	"Chief Medical Officer",
 	"Medical Doctor",
-	"Geneticist",	//Part of both medical and science
+	"Geneticist",
 	"Virologist",
 	"Chemist"
 )
@@ -82,21 +82,24 @@ var/list/medical_positions = list(
 var/list/science_positions = list(
 	"Research Director",
 	"Scientist",
-	"Geneticist",	//Part of both medical and science
 	"Roboticist"
 )
 
 
-var/list/civilian_positions = list(
+var/list/supply_positions = list(
 	"Head of Personnel",
-	"Bartender",
-	"Botanist",
-	"Chef",
-	"Janitor",
-	"Librarian",
 	"Quartermaster",
 	"Cargo Technician",
 	"Shaft Miner",
+)
+
+
+var/list/civilian_positions = list(
+	"Bartender",
+	"Botanist",
+	"Cook",
+	"Janitor",
+	"Librarian",
 	"Lawyer",
 	"Chaplain",
 	"Clown",

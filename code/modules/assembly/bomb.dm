@@ -11,9 +11,9 @@
 	var/obj/item/device/assembly_holder/bombassembly = null   //The first part of the bomb is an assembly holder, holding an igniter+some device
 	var/obj/item/weapon/tank/bombtank = null //the second part of the bomb is a plasma tank
 
-/obj/item/device/onetankbomb/examine()
+/obj/item/device/onetankbomb/examine(mob/user)
 	..()
-	bombtank.examine()
+	user.examinate(bombtank)
 
 /obj/item/device/onetankbomb/update_icon()
 	if(bombtank)
@@ -39,7 +39,7 @@
 		bombtank.master = null
 		bombtank = null
 
-		del(src)
+		qdel(src)
 		return
 	if((istype(W, /obj/item/weapon/weldingtool) && W:welding))
 		if(!status)
@@ -81,18 +81,12 @@
 	if(bombassembly)
 		bombassembly.on_found(finder)
 
-/obj/item/device/onetankbomb/hear_talk(mob/living/M as mob, msg)
-	if(bombassembly)
-		bombassembly.hear_talk(M, msg)
-
 
 // ---------- Procs below are for tanks that are used exclusively in 1-tank bombs ----------
 
 /obj/item/weapon/tank/proc/bomb_assemble(W,user)	//Bomb assembly proc. This turns assembly+tank into a bomb
 	var/obj/item/device/assembly_holder/S = W
 	var/mob/M = user
-	if(!S.secured)										//Check if the assembly is secured
-		return
 	if(isigniter(S.a_left) == isigniter(S.a_right))		//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
 		return
 
@@ -158,8 +152,8 @@
 
 	air_update_turf()
 	if(master)
-		del(master)
-	del(src)
+		qdel(master)
+	qdel(src)
 
 /obj/item/weapon/tank/proc/release()	//This happens when the bomb is not welded. Tank contents are just spat out.
 	var/datum/gas_mixture/removed = air_contents.remove(air_contents.total_moles())

@@ -3,8 +3,9 @@
 	name = "ninja hood"
 	icon_state = "s-ninja"
 	item_state = "s-ninja_mask"
-	allowed = list(/obj/item/weapon/cell)
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 25)
+	strip_delay = 12
+	unacidable = 1
 
 
 /obj/item/clothing/suit/space/space_ninja
@@ -12,15 +13,17 @@
 	desc = "A unique, vaccum-proof suit of nano-enhanced armor designed specifically for Spider Clan assassins."
 	icon_state = "s-ninja"
 	item_state = "s-ninja_suit"
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/cell)
+	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/stock_parts/cell)
 	slowdown = 0
+	unacidable = 1
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
+	strip_delay = 12
 
 		//Important parts of the suit.
 	var/mob/living/carbon/affecting = null//The wearer.
-	var/obj/item/weapon/cell/cell//Starts out with a high-capacity cell using New().
+	var/obj/item/weapon/stock_parts/cell/cell//Starts out with a high-capacity cell using New().
 	var/datum/effect/effect/system/spark_spread/spark_system//To create sparks.
-	var/reagent_list[] = list("tricordrazine","dexalinp","spaceacillin","anti_toxin","nutriment","radium","hyronalin")//The reagents ids which are added to the suit at New().
+	var/reagent_list[] = list("omnizine","salbutamol","spaceacillin","charcoal","nutriment","radium","potass_iodide")//The reagents ids which are added to the suit at New().
 	var/stored_research[]//For stealing station research.
 	var/obj/item/weapon/disk/tech_disk/t_disk//To copy design onto disk.
 
@@ -52,8 +55,11 @@
 	var/a_boost = 3.0//Number of adrenaline boosters.
 
 		//Onboard AI related variables.
-	var/mob/living/silicon/ai/AI//If there is an AI inside the suit.
+
+	var/obj/item/device/aicard/NAI //Integrated intellicard.
+
 	var/obj/item/device/paicard/pai//A slot for a pAI device
+
 	var/obj/effect/overlay/hologram//Is the AI hologram on or off? Visible only to the wearer of the suit. This works by attaching an image to a blank overlay.
-	var/flush = 0//If an AI purge is in progress.
+
 	var/s_control = 1//If user in control of the suit.

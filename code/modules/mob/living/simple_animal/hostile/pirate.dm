@@ -9,7 +9,7 @@
 	response_help = "pushes"
 	response_disarm = "shoves"
 	response_harm = "hits"
-	speed = -1
+	speed = 0
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 100
 	health = 100
@@ -28,11 +28,11 @@
 	max_co2 = 5
 	min_n2 = 0
 	max_n2 = 0
-	unsuitable_atoms_damage = 15
+	unsuitable_atmos_damage = 15
 	var/corpse = /obj/effect/landmark/mobcorpse/pirate
 	var/weapon1 = /obj/item/weapon/melee/energy/sword/pirate
 
-	faction = "pirate"
+	faction = list("pirate")
 
 /mob/living/simple_animal/hostile/pirate/ranged
 	name = "Pirate Gunner"
@@ -55,5 +55,5 @@
 		new corpse (src.loc)
 	if(weapon1)
 		new weapon1 (src.loc)
-	del src
+	qdel(src)
 	return

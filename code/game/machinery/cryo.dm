@@ -17,7 +17,6 @@
 /obj/machinery/atmospherics/unary/cryo_cell/New()
 	..()
 	initialize_directions = dir
-	initialize()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/cryo_tube(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
@@ -28,6 +27,9 @@
 	component_parts += new /obj/item/stack/cable_coil(null, 1)
 	RefreshParts()
 
+/obj/machinery/atmospherics/unary/cryo_cell/construction()
+	..(dir,dir)
+
 /obj/machinery/atmospherics/unary/cryo_cell/RefreshParts()
 	var/C
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
@@ -35,10 +37,9 @@
 	current_heat_capacity = 50 * C
 	efficiency = C
 
-/obj/machinery/atmospherics/unary/cryo_cell/Del()
+/obj/machinery/atmospherics/unary/cryo_cell/Destroy()
 	var/turf/T = loc
 	T.contents += contents
-	..()
 	var/obj/item/weapon/reagent_containers/glass/B = beaker
 	if(beaker)
 		B.loc = get_step(loc, SOUTH) //Beaker is carefully ejected from the wreckage of the cryotube
@@ -46,7 +47,12 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/process()
 	..()
-	if(!node)
+	if(occupant)
+		if(occupant.health >= 100)
+			on = 0
+			open_machine()
+			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+	if(!node || !is_operational())
 		return
 	if(!on)
 		updateDialog()
@@ -58,11 +64,9 @@
 		expel_gas()
 
 		if(occupant)
-			if(occupant.stat != 2)
-				process_occupant()
-
+			process_occupant()
 	if(abs(temperature_archived-air_contents.temperature) > 1)
-		network.update = 1
+		parent.update = 1
 
 	updateDialog()
 	return 1
@@ -86,21 +90,21 @@
 	open_machine()
 	return
 
-/obj/machinery/atmospherics/unary/cryo_cell/examine()
+/obj/machinery/atmospherics/unary/cryo_cell/examine(mob/user)
 	..()
 
-	if(in_range(usr, src))
-		usr << "You can just about make out some loose objects floating in the murk:"
-		for(var/obj/O in src)
-			if(O != beaker)
-				usr << O.name
-		for(var/mob/M in src)
-			if(M != occupant)
-				usr << M.name
+	var/list/otherstuff = contents - beaker
+	if(otherstuff.len > 0)
+		user << "You can just about make out some loose objects floating in the murk:"
+		for(var/atom/movable/floater in otherstuff)
+			user << "\icon[floater] [floater.name]"
 	else
-		usr << "<span class='notice'>Too far away to view contents.</span>"
+		user << "Seems empty."
 
 /obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user)
+	if(..())
+		return
+
 	ui_interact(user)
 
 
@@ -163,7 +167,7 @@
 			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
 	data["beakerContents"] = beakerContents
 
-	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, ui_key)
+	var/datum/nanoui/ui = SSnano.get_open_ui(user, src, ui_key)
 	if (!ui)
 		// the ui does not exist, so we'll create a new one
 		ui = new(user, src, ui_key, "cryo.tmpl", "Cryo Cell Control System", 520, 410)
@@ -190,12 +194,11 @@
 			on = 1
 
 	if(href_list["open"])
-		on = 0
 		open_machine()
 
 	if(href_list["close"])
 		if(close_machine() == usr)
-			var/datum/nanoui/ui = nanomanager.get_open_ui(usr, src, "main")
+			var/datum/nanoui/ui = SSnano.get_open_ui(usr, src, "main")
 			ui.close()
 			on = 1
 	if(href_list["switchOff"])
@@ -227,18 +230,22 @@
 			return
 
 	if(default_change_direction_wrench(user, I))
-		if(node)
-			disconnect(node)
-		initialize()
-		if(node)
-			node.update_icon()
+		return
+
+	if(exchange_parts(user, I))
+		return
+
+	if(default_pry_open(I))
 		return
 
 	default_deconstruction_crowbar(I)
 
 /obj/machinery/atmospherics/unary/cryo_cell/open_machine()
 	if(!state_open && !panel_open)
+		on = 0
 		layer = 3
+		if(occupant)
+			occupant.bodytemperature = Clamp(occupant.bodytemperature, 261, 360)
 		..()
 		if(beaker)
 			beaker.loc = src
@@ -256,7 +263,7 @@
 	if(state_open)
 		icon_state = "cell-open"
 		return
-	if(on)
+	if(on && is_operational())
 		if(occupant)
 			icon_state = "cell-occupied"
 		else
@@ -264,18 +271,22 @@
 	else
 		icon_state = "cell-off"
 
+/obj/machinery/atmospherics/unary/cryo_cell/power_change()
+	..()
+	update_icon()
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/process_occupant()
 	if(air_contents.total_moles() < 10)
 		return
 	if(occupant)
 		if(occupant.stat == 2 || occupant.health >= 100)  //Why waste energy on dead or healthy people
+			occupant.bodytemperature = T0C
 			return
 		occupant.bodytemperature += 2*(air_contents.temperature - occupant.bodytemperature) * current_heat_capacity / (current_heat_capacity + air_contents.heat_capacity())
 		occupant.bodytemperature = max(occupant.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
 		if(occupant.bodytemperature < T0C)
-			occupant.sleeping = max(5/efficiency, (1 / occupant.bodytemperature)*2000/efficiency)
-			occupant.Paralyse(max(5/efficiency, (1 / occupant.bodytemperature)*3000/efficiency))
+//			occupant.sleeping = max(5/efficiency, (1 / occupant.bodytemperature)*2000/efficiency)
+//			occupant.Paralyse(max(5/efficiency, (1 / occupant.bodytemperature)*3000/efficiency))
 			if(air_contents.oxygen > 2)
 				if(occupant.getOxyLoss()) occupant.adjustOxyLoss(-1)
 			else

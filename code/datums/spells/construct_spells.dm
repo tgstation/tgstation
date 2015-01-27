@@ -40,7 +40,6 @@
 	invocation_type = "none"
 	range = 0
 	centcom_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
-	delay = 50
 
 	summon_type = list(/turf/simulated/wall/r_wall)
 
@@ -110,3 +109,20 @@
 	invocation_type = "none"
 	proj_lifespan = 10
 	max_targets = 6
+
+
+/obj/effect/proc_holder/spell/targeted/smoke/disable
+	name = "Paralysing Smoke"
+	desc = "This spell spawns a cloud of paralysing smoke."
+
+	school = "conjuration"
+	charge_max = 200
+	clothes_req = 0
+	invocation = "none"
+	invocation_type = "none"
+	range = -1
+	include_user = 1
+	cooldown_min = 20 //25 deciseconds reduction per rank
+
+	smoke_spread = 3
+	smoke_amt = 10

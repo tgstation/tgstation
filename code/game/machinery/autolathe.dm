@@ -1,69 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
-var/global/list/autolathe_recipes = list( \
-		/* screwdriver removed*/ \
-		new /obj/item/weapon/reagent_containers/glass/bucket(), \
-		new /obj/item/weapon/crowbar(), \
-		new /obj/item/device/flashlight(), \
-		new /obj/item/weapon/extinguisher(), \
-		new /obj/item/device/multitool(), \
-		new /obj/item/device/analyzer(), \
-		new /obj/item/device/t_scanner(), \
-		new /obj/item/weapon/weldingtool(), \
-		new /obj/item/weapon/screwdriver(), \
-		new /obj/item/weapon/wirecutters(), \
-		new /obj/item/weapon/wrench(), \
-		new /obj/item/clothing/head/welding(), \
-		new /obj/item/weapon/stock_parts/console_screen(), \
-		new /obj/item/weapon/airlock_electronics(), \
-		new /obj/item/weapon/airalarm_electronics(), \
-		new /obj/item/weapon/firealarm_electronics(), \
-		new /obj/item/stack/sheet/metal(), \
-		new /obj/item/stack/sheet/glass(), \
-		new /obj/item/stack/sheet/rglass(), \
-		new /obj/item/stack/rods(), \
-		new /obj/item/weapon/rcd_ammo(), \
-		new /obj/item/weapon/kitchenknife(), \
-		new /obj/item/weapon/scalpel(), \
-		new /obj/item/weapon/circular_saw(), \
-		new /obj/item/weapon/surgicaldrill(),\
-		new /obj/item/weapon/retractor(),\
-		new /obj/item/weapon/cautery(),\
-		new /obj/item/weapon/hemostat(),\
-		new /obj/item/weapon/reagent_containers/glass/beaker(), \
-		new /obj/item/weapon/reagent_containers/glass/beaker/large(), \
-		new /obj/item/ammo_casing/shotgun/beanbag(), \
-		new /obj/item/ammo_box/c38(), \
-		new /obj/item/device/taperecorder/empty(), \
-		new /obj/item/device/tape(), \
-		new /obj/item/device/assembly/igniter(), \
-		new /obj/item/device/assembly/signaler(), \
-		new /obj/item/device/radio/headset(), \
-		new /obj/item/device/radio/off(), \
-		new /obj/item/device/assembly/infra(), \
-		new /obj/item/device/assembly/timer(), \
-		new /obj/item/device/assembly/voice(), \
-		new /obj/item/weapon/light/tube(), \
-		new /obj/item/weapon/light/bulb(), \
-		new /obj/item/weapon/camera_assembly(), \
-		new /obj/item/newscaster_frame(), \
-		new /obj/item/weapon/reagent_containers/syringe(), \
-	)
-
-var/global/list/autolathe_recipes_hidden = list( \
-		new /obj/item/weapon/flamethrower/full(), \
-		new /obj/item/weapon/rcd(), \
-		new /obj/item/device/radio/electropack(), \
-		new /obj/item/weapon/weldingtool/largetank(), \
-		new /obj/item/weapon/handcuffs(), \
-		new /obj/item/ammo_box/a357(), \
-		new /obj/item/ammo_casing/shotgun(), \
-		new /obj/item/ammo_casing/shotgun/buckshot(), \
-		new /obj/item/ammo_casing/shotgun/dart(), \
-		new /obj/item/ammo_casing/shotgun/incendiary(), \
-		/* new /obj/item/weapon/shield/riot(), */ \
-	)
-
 /obj/machinery/autolathe
 	name = "autolathe"
 	desc = "It produces items using metal and glass."
@@ -93,6 +27,21 @@ var/global/list/autolathe_recipes_hidden = list( \
 	var/prod_coeff
 	var/datum/wires/autolathe/wires = null
 
+	var/datum/design/being_built
+	var/datum/research/files
+	var/selected_category
+	var/screen = 1
+
+	var/list/categories = list(
+							"Tools",
+							"Electronics",
+							"Construction",
+							"T-Comm",
+							"Security",
+							"Medical",
+							"Misc"
+							)
+
 /obj/machinery/autolathe/New()
 	..()
 	component_parts = list()
@@ -105,50 +54,68 @@ var/global/list/autolathe_recipes_hidden = list( \
 	RefreshParts()
 
 	wires = new(src)
-	src.L = autolathe_recipes
-	src.LL = autolathe_recipes_hidden
+	files = new /datum/research/autolathe(src)
 
 /obj/machinery/autolathe/interact(mob/user)
-	if(..())
+	if(!is_operational())
 		return
-	if (src.shocked)
-		src.shock(user,50)
-	regular_win(user)
+
+	if(shocked && !(stat & NOPOWER))
+		shock(user,50)
+
+	var/dat
+
+	if(panel_open)
+		dat = wires.GetInteractWindow()
+
+	else
+		if(screen == 1)
+			dat = main_win(user)
+		else
+			dat += category_win(user,selected_category)
+
+	var/datum/browser/popup = new(user, "autolathe", name, 400, 500)
+	popup.set_content(dat)
+	popup.open()
+
 	return
 
 /obj/machinery/autolathe/attackby(obj/item/O, mob/user)
-	if (stat)
-		return 1
 	if (busy)
-		user << "\red The autolathe is busy. Please wait for completion of previous operation."
+		user << "<span class=\"alert\">The autolathe is busy. Please wait for completion of previous operation.</span>"
 		return 1
 
 	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", O))
 		updateUsrDialog()
 		return
 
+	if(exchange_parts(user, O))
+		return
+
 	if (panel_open)
 		if(istype(O, /obj/item/weapon/crowbar))
-			if(m_amount >= 3750)
+			if(m_amount >= MINERAL_MATERIAL_AMOUNT)
 				var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal(src.loc)
-				G.amount = round(m_amount / 3750)
-			if(g_amount >= 3750)
+				G.amount = round(m_amount / MINERAL_MATERIAL_AMOUNT)
+			if(g_amount >= MINERAL_MATERIAL_AMOUNT)
 				var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src.loc)
-				G.amount = round(g_amount / 3750)
+				G.amount = round(g_amount / MINERAL_MATERIAL_AMOUNT)
 			default_deconstruction_crowbar(O)
 			return 1
 		else
 			attack_hand(user)
 			return 1
+	if (stat)
+		return 1
 
 	if (src.m_amount + O.m_amt > max_m_amount)
-		user << "\red The autolathe is full. Please remove metal from the autolathe in order to insert more."
+		user << "<span class=\"alert\">The autolathe is full. Please remove metal from the autolathe in order to insert more.</span>"
 		return 1
 	if (src.g_amount + O.g_amt > max_g_amount)
-		user << "\red The autolathe is full. Please remove glass from the autolathe in order to insert more."
+		user << "<span class=\"alert\">The autolathe is full. Please remove glass from the autolathe in order to insert more.</span>"
 		return 1
 	if (O.m_amt == 0 && O.g_amt == 0)
-		user << "\red This object does not contain significant amounts of metal or glass, or cannot be accepted by the autolathe due to size or hazardous materials."
+		user << "<span class=\"alert\">This object does not contain significant amounts of metal or glass, or cannot be accepted by the autolathe due to size or hazardous materials.</span>"
 		return 1
 
 	var/amount = 1
@@ -176,7 +143,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	src.g_amount += g_amt * amount
 	user << "You insert [amount] sheet[amount>1 ? "s" : ""] to the autolathe."
 	if (O && O.loc == src)
-		del(O)
+		qdel(O)
 	busy = 0
 	src.updateUsrDialog()
 
@@ -184,7 +151,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	return attack_hand(user)
 
 /obj/machinery/autolathe/attack_hand(mob/user)
-	if(..())
+	if(..(user, 0))
 		return
 	interact(user)
 
@@ -192,40 +159,68 @@ var/global/list/autolathe_recipes_hidden = list( \
 	if(..())
 		return
 	if (!busy)
+		if(href_list["menu"])
+			screen = text2num(href_list["menu"])
+
+		if(href_list["category"])
+			selected_category = href_list["category"]
+
 		if(href_list["make"])
-			var/coeff = 2 ** prod_coeff
+
 			var/turf/T = get_step(src.loc, get_dir(src,usr))
-			var/obj/template = locate(href_list["make"])
+
+			/////////////////
+			//href protection
+			being_built = files.FindDesignByID(href_list["make"]) //check if it's a valid design
+			if(!being_built)
+				return
+
+			//multiplier checks : only stacks can have one and its value is 1, 10 ,25 or max_multiplier
 			var/multiplier = text2num(href_list["multiplier"])
-			if (!multiplier) multiplier = 1
-			var/power = max(2000, (template.m_amt+template.g_amt)*multiplier/5)
-			if(src.m_amount >= template.m_amt*multiplier/coeff && src.g_amount >= template.g_amt*multiplier/coeff)
+			var/max_multiplier = min(50, being_built.materials["$metal"] ?round(m_amount/being_built.materials["$metal"]):INFINITY,being_built.materials["$glass"]?round(g_amount/being_built.materials["$glass"]):INFINITY)
+			var/is_stack = ispath(being_built.build_path, /obj/item/stack)
+
+			if(!is_stack && (multiplier > 1))
+				return
+			if (!(multiplier in list(1,10,25,max_multiplier))) //"enough materials ?" is checked further down
+				return
+			/////////////////
+
+			var/coeff = (is_stack ? 1 : 2 ** prod_coeff) //stacks are unaffected by production coefficient
+			var/metal_cost = being_built.materials["$metal"]
+			var/glass_cost = being_built.materials["$glass"]
+
+			var/power = max(2000, (metal_cost+glass_cost)*multiplier/5)
+
+			if((m_amount >= metal_cost*multiplier/coeff) && (g_amount >= glass_cost*multiplier/coeff))
 				busy = 1
 				use_power(power)
 				icon_state = "autolathe"
 				flick("autolathe_n",src)
 				spawn(32/coeff)
 					use_power(power)
-					if(istype(template, /obj/item/stack))
-						src.m_amount -= template.m_amt*multiplier
-						src.g_amount -= template.g_amt*multiplier
-						var/obj/new_item = new template.type(T)
-						var/obj/item/stack/S = new_item
+					if(is_stack)
+						m_amount -= metal_cost*multiplier
+						g_amount -= glass_cost*multiplier
+						var/obj/item/stack/S = new being_built.build_path(T)
 						S.amount = multiplier
 					else
-						src.m_amount -= template.m_amt/coeff
-						src.g_amount -= template.g_amt/coeff
-						var/obj/new_item = new template.type(T)
+						m_amount -= metal_cost/coeff
+						g_amount -= glass_cost/coeff
+						var/obj/item/new_item = new being_built.build_path(T)
 						new_item.m_amt /= coeff
 						new_item.g_amt /= coeff
-					if(src.m_amount < 0)
-						src.m_amount = 0
-					if(src.g_amount < 0)
-						src.g_amount = 0
+					if(m_amount < 0)
+						m_amount = 0
+					if(g_amount < 0)
+						g_amount = 0
 					busy = 0
+					src.updateUsrDialog()
 	else
-		usr << "\red The autolathe is busy. Please wait for completion of previous operation."
+		usr << "<span class=\"alert\">The autolathe is busy. Please wait for completion of previous operation.</span>"
+
 	src.updateUsrDialog()
+
 	return
 
 /obj/machinery/autolathe/RefreshParts()
@@ -239,43 +234,71 @@ var/global/list/autolathe_recipes_hidden = list( \
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		prod_coeff += M.rating - 1
 
-/obj/machinery/autolathe/proc/regular_win(mob/user)
+/obj/machinery/autolathe/proc/main_win(mob/user)
+	var/dat = "<div class='statusDisplay'><h3>Autolathe Menu:</h3><br>"
+	dat += "<b>Metal amount:</b> [src.m_amount] / [max_m_amount] cm<sup>3</sup><br>"
+	dat += "<b>Glass amount:</b> [src.g_amount] / [max_g_amount] cm<sup>3</sup><hr>"
+
+	var/line_length = 1
+	dat += "<table style='width:100%' align='center'><tr>"
+
+	for(var/C in categories)
+		if(line_length > 2)
+			dat += "</tr><tr>"
+			line_length = 1
+
+		dat += "<td><A href='?src=\ref[src];category=[C];menu=2'>[C]</A></td>"
+		line_length++
+
+	dat += "</tr></table></div>"
+	return dat
+
+/obj/machinery/autolathe/proc/category_win(mob/user,var/selected_category)
+	var/dat = "<A href='?src=\ref[src];menu=1'>Return to category screen</A>"
+	dat += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3><br>"
+	dat += "<b>Metal amount:</b> [src.m_amount] / [max_m_amount] cm<sup>3</sup><br>"
+	dat += "<b>Glass amount:</b> [src.g_amount] / [max_g_amount] cm<sup>3</sup><hr>"
+
+	for(var/datum/design/D in files.known_designs)
+		if(!(selected_category in D.category))
+			continue
+
+		if(disabled || !can_build(D))
+			dat += "<span class='linkOff'>[D.name]</span>"
+		else
+			dat += "<a href='?src=\ref[src];make=[D.id];multiplier=1'>[D.name]</a>"
+
+		if(ispath(D.build_path, /obj/item/stack))
+			var/max_multiplier = min(50, D.materials["$metal"] ?round(m_amount/D.materials["$metal"]):INFINITY,D.materials["$glass"]?round(g_amount/D.materials["$glass"]):INFINITY)
+			if (max_multiplier>10 && !disabled)
+				dat += " <a href='?src=\ref[src];make=[D.id];multiplier=10'>x10</a>"
+			if (max_multiplier>25 && !disabled)
+				dat += " <a href='?src=\ref[src];make=[D.id];multiplier=25'>x25</a>"
+			if(max_multiplier > 0 && !disabled)
+				dat += " <a href='?src=\ref[src];make=[D.id];multiplier=[max_multiplier]'>x[max_multiplier]</a>"
+
+		dat += "[get_design_cost(D)]<br>"
+
+	dat += "</div>"
+	return dat
+
+/obj/machinery/autolathe/proc/can_build(var/datum/design/D)
+	var/coeff = (ispath(D.build_path,/obj/item/stack) ? 1 : 2 ** prod_coeff)
+
+	if(D.materials["$metal"] && (m_amount < (D.materials["$metal"] / coeff)))
+		return 0
+	if(D.materials["$glass"] && (g_amount < (D.materials["$glass"] / coeff)))
+		return 0
+	return 1
+
+/obj/machinery/autolathe/proc/get_design_cost(var/datum/design/D)
+	var/coeff = (ispath(D.build_path,/obj/item/stack) ? 1 : 2 ** prod_coeff)
 	var/dat
-	if(!panel_open)
-		var/coeff = 2 ** prod_coeff
-		dat = "<div class='statusDisplay'><B>Metal Amount:</B> [src.m_amount] / [max_m_amount] cm<sup>3</sup><BR>"
-		dat += "<B>Glass Amount:</B> [src.g_amount] / [max_g_amount] cm<sup>3</sup><HR>"
-		var/list/objs = list()
-		objs += src.L
-		if(src.hacked)
-			objs += src.LL
-		for(var/obj/t in objs)
-			if(disabled || m_amount<t.m_amt || g_amount<t.g_amt)
-				dat += "<span class='linkOff'>[t]</span>"
-			else
-				dat += "<A href='?src=\ref[src];make=\ref[t]'>[t]</A>"
-
-			if(istype(t, /obj/item/stack))
-				var/obj/item/stack/S = t
-				var/max_multiplier = min(S.max_amount, S.m_amt?round(m_amount/S.m_amt):INFINITY, S.g_amt?round(g_amount/S.g_amt):INFINITY)
-				if (max_multiplier>10 && !disabled)
-					dat += " <A href='?src=\ref[src];make=\ref[t];multiplier=[10]'>x[10]</A>"
-				if (max_multiplier>25 && !disabled)
-					dat += " <A href='?src=\ref[src];make=\ref[t];multiplier=[25]'>x[25]</A>"
-				if (max_multiplier>1 && !disabled)
-					dat += " <A href='?src=\ref[src];make=\ref[t];multiplier=[max_multiplier]'>x[max_multiplier]</A>"
-				dat += " [t.m_amt] m / [t.g_amt] g"
-			else
-				dat += " [t.m_amt/coeff] m / [t.g_amt/coeff] g"
-			dat += "<br>"
-		dat += "</span>"
-	else
-		dat = wires.GetInteractWindow()
-
-	var/datum/browser/popup = new(user, "autolathe", name, 400, 500)
-	popup.set_content(dat)
-	popup.open()
-	return
+	if(D.materials["$metal"])
+		dat += "[D.materials["$metal"] / coeff] metal "
+	if(D.materials["$glass"])
+		dat += "[D.materials["$glass"] / coeff] glass"
+	return dat
 
 /obj/machinery/autolathe/proc/shock(mob/user, prb)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
@@ -289,3 +312,15 @@ var/global/list/autolathe_recipes_hidden = list( \
 		return 1
 	else
 		return 0
+
+/obj/machinery/autolathe/proc/adjust_hacked(var/hack)
+	hacked = hack
+
+	if(hack)
+		for(var/datum/design/D in files.possible_designs)
+			if((D.build_type & 4) && ("hacked" in D.category))
+				files.known_designs += D
+	else
+		for(var/datum/design/D in files.known_designs)
+			if("hacked" in D.category)
+				files.known_designs -= D

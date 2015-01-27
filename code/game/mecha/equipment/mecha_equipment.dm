@@ -8,8 +8,6 @@
 	icon_state = "mecha_equip"
 	force = 5
 	origin_tech = "materials=2"
-	construction_time = 100
-	construction_cost = list("metal"=10000)
 	var/equip_cooldown = 0
 	var/equip_ready = 1
 	var/energy_drain = 0
@@ -22,7 +20,7 @@
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(target=1)
 	sleep(equip_cooldown)
 	set_ready_state(1)
-	if(target && chassis)
+	if(target && chassis && chassis.occupant)
 		return 1
 	return 0
 
@@ -51,14 +49,13 @@
 		if(chassis.selected == src)
 			chassis.selected = null
 		src.update_chassis_page()
-		chassis.occupant_message("<font color='red'>The [src] is destroyed!</font>")
+		chassis.occupant_message("<span class='danger'>The [src] is destroyed!</span>")
 		chassis.log_append_to_last("[src] is destroyed.",1)
 		if(istype(src, /obj/item/mecha_parts/mecha_equipment/weapon))
 			chassis.occupant << sound('sound/mecha/weapdestr.ogg',volume=50)
 		else
 			chassis.occupant << sound('sound/mecha/critdestr.ogg',volume=50)
-	spawn
-		del src
+	qdel(src)
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/critfail()

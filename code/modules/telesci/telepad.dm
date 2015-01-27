@@ -37,6 +37,9 @@
 			M.buffer = src
 			user << "<span class = 'caution'>You save the data in the [I.name]'s buffer.</span>"
 
+	if(exchange_parts(user, I))
+		return
+
 	default_deconstruction_crowbar(I)
 
 
@@ -57,10 +60,10 @@
 		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 		if(anchored)
 			anchored = 0
-			user << "<span class = 'caution'> The [src] can now be moved.</span>"
+			user << "<span class = 'caution'> \The [src] can now be moved.</span>"
 		else if(!anchored)
 			anchored = 1
-			user << "<span class = 'caution'> The [src] is now secured.</span>"
+			user << "<span class = 'caution'> \The [src] is now secured.</span>"
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(stage == 0)
 			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
@@ -75,7 +78,7 @@
 		user << "<span class = 'caution'> You disassemble the telepad.</span>"
 		new /obj/item/stack/sheet/metal(get_turf(src))
 		new /obj/item/stack/sheet/glass(get_turf(src))
-		del(src)
+		qdel(src)
 
 ///TELEPAD CALLER///
 /obj/item/device/telepad_beacon
@@ -91,7 +94,7 @@
 		user << "<span class = 'caution'> Locked In</span>"
 		new /obj/machinery/telepad_cargo(user.loc)
 		playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
-		del(src)
+		qdel(src)
 	return
 
 ///HANDHELD TELEPAD USER///
@@ -116,13 +119,14 @@
 
 /obj/item/weapon/rcs/New()
 	..()
-	processing_objects.Add(src)
-/obj/item/weapon/rcs/examine()
-	desc = "Use this to send crates and closets to cargo telepads. There are [rcharges] charges left."
-	..()
+	SSobj.processing.Add(src)
 
-/obj/item/weapon/rcs/Del()
-	processing_objects.Remove(src)
+/obj/item/weapon/rcs/examine(mob/user)
+	..()
+	user << "There are [rcharges] charge\s left."
+
+/obj/item/weapon/rcs/Destroy()
+	SSobj.processing.Remove(src)
 	..()
 /obj/item/weapon/rcs/process()
 	if(rcharges > 10)
@@ -144,11 +148,10 @@
 			playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
 			user << "<span class = 'caution'> You calibrate the telepad locator.</span>"
 
-/obj/item/weapon/rcs/attackby(obj/item/W, mob/user)
-	if(istype(W,  /obj/item/weapon/card/emag) && emagged == 0)
+/obj/item/weapon/rcs/emag_act(mob/user as mob)
+	if(!emagged)
 		emagged = 1
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
 		user << "<span class = 'caution'> You emag the RCS. Click on it to toggle between modes.</span>"
-		return

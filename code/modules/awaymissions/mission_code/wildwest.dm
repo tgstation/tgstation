@@ -77,32 +77,23 @@
 			if("Power")
 				user << "<B>Your wish is granted, but at a terrible cost...</B>"
 				user << "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart."
-				if (!(LASER in user.mutations))
-					user.mutations.Add(LASER)
-					user << "\blue You feel pressure building behind your eyes."
-				if (!(COLD_RESISTANCE in user.mutations))
-					user.mutations.Add(COLD_RESISTANCE)
-					user << "\blue Your body feels warm."
-				if (!(XRAY in user.mutations))
-					user.mutations.Add(XRAY)
-					user.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
-					user.see_in_dark = 8
-					user.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-					user << "\blue The walls suddenly disappear."
-				user.dna.mutantrace = "shadow"
-				user.update_body()
+				user.dna.add_mutation(LASEREYES)
+				user.dna.add_mutation(COLDRES)
+				user.dna.add_mutation(XRAY)
+				user.dna.species = new /datum/species/shadow()
+				user.regenerate_icons()
 			if("Wealth")
 				user << "<B>Your wish is granted, but at a terrible cost...</B>"
 				user << "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart."
 				new /obj/structure/closet/syndicate/resources/everything(loc)
-				user.dna.mutantrace = "shadow"
-				user.update_body()
+				user.dna.species = new /datum/species/shadow()
+				user.regenerate_icons()
 			if("Immortality")
 				user << "<B>Your wish is granted, but at a terrible cost...</B>"
 				user << "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart."
 				user.verbs += /mob/living/carbon/proc/immortality
-				user.dna.mutantrace = "shadow"
-				user.update_body()
+				user.dna.species = new /datum/species/shadow()
+				user.regenerate_icons()
 			if("To Kill")
 				user << "<B>Your wish is granted, but at a terrible cost...</B>"
 				user << "The Wish Granter punishes you for your wickedness, claiming your soul and warping your body to match the darkness in your heart."
@@ -116,8 +107,8 @@
 				for(var/datum/objective/OBJ in user.mind.objectives)
 					user << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
 					obj_count++
-				user.dna.mutantrace = "shadow"
-				user.update_body()
+				user.dna.species = new /datum/species/shadow()
+				user.regenerate_icons()
 			if("Peace")
 				user << "<B>Whatever alien sentience that the Wish Granter possesses is satisfied with your wish. There is a distant wailing as the last of the Faithless begin to die, then silence.</B>"
 				user << "You feel as if you just narrowly avoided a terrible fate..."
@@ -163,8 +154,7 @@
 		s.set_up(3, 1, src)
 		s.start()
 		explosion(mob, 1, 0, 0, 0)
-		spawn(0)
-			del(src)
+		qdel(src)
 
 /*/obj/effect/meatgrinder
 	name = "Meat Grinder"

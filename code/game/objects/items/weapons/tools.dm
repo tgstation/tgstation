@@ -49,10 +49,10 @@
 	attack_verb = list("stabbed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
-	suicide_act(mob/user)
-		viewers(user) << pick("<span class='suicide'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
-							"<span class='suicide'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>")
-		return(BRUTELOSS)
+/obj/item/weapon/screwdriver/suicide_act(mob/user)
+	user.visible_message(pick("<span class='suicide'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='suicide'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>"))
+	return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/New()
 	switch(pick("red","blue","purple","brown","green","cyan","yellow"))
@@ -86,7 +86,7 @@
 	if(!istype(M))	return ..()
 	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head")
 		return ..()
-	if((CLUMSY in user.mutations) && prob(50))
+	if(user.disabilities & CLUMSY && prob(50))
 		M = user
 	return eyestab(M,user)
 
@@ -107,6 +107,7 @@
 	m_amt = 80
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("pinched", "nipped")
+	hitsound = 'sound/items/Wirecutter.ogg'
 
 /obj/item/weapon/wirecutters/New()
 	if(prob(50))
@@ -114,10 +115,12 @@
 		item_state = "cutters_yellow"
 
 /obj/item/weapon/wirecutters/attack(mob/living/carbon/C, mob/user)
-	if(istype(C) && C.handcuffed && istype(C.handcuffed, /obj/item/weapon/handcuffs/cable))
+	if(istype(C) && C.handcuffed && istype(C.handcuffed, /obj/item/weapon/restraints/handcuffs/cable))
 		user.visible_message("<span class='notice'>[user] cuts [C]'s restraints with [src]!</span>")
-		C.handcuffed.loc = null	//garbage collector awaaaaay
+		qdel(C.handcuffed)
 		C.handcuffed = null
+		if(C.buckled && C.buckled.buckle_requires_restraints)
+			C.buckled.unbuckle_mob()
 		C.update_inv_handcuffed(0)
 		return
 	else
@@ -130,6 +133,7 @@
 	name = "welding tool"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "welder"
+	item_state = "welder"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 3
@@ -146,14 +150,31 @@
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
 
 /obj/item/weapon/weldingtool/New()
+	..()
 	create_reagents(max_fuel)
 	reagents.add_reagent("fuel", max_fuel)
+	update_icon()
+	return
 
+/obj/item/weapon/weldingtool/proc/update_torch()
+	if(welding)
+		src.overlays = 0
+		overlays += "["-won"]"
+		item_state = "welder1"
+	else
+		item_state = "welder"
 
-/obj/item/weapon/weldingtool/examine()
-	set src in usr
+/obj/item/weapon/weldingtool/update_icon()
+	src.overlays = 0
+	var/ratio = get_fuel() / max_fuel
+	ratio = Ceiling(ratio*4) * 25
+	icon_state = "[initial(icon_state)][ratio]"
+	update_torch()
+	return
+
+/obj/item/weapon/weldingtool/examine(mob/user)
 	..()
-	usr << "It contains [get_fuel()]/[max_fuel] units of fuel!"
+	user << "It contains [get_fuel()] unit\s of fuel out of [max_fuel]."
 
 
 /obj/item/weapon/weldingtool/attackby(obj/item/I, mob/user)
@@ -170,12 +191,11 @@
 
 	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
 
-	if(affecting.status == ORGAN_ROBOTIC)
+	if(affecting.status == ORGAN_ROBOTIC && user.a_intent != "harm")
 		if(src.remove_fuel(0))
-			src.item_heal_robotic(H, user, 30, 0)
+			item_heal_robotic(H, user, 30, 0)
 			return
 		else
-			user << "<span class='warning'>Need more welding fuel!</span>"
 			return
 	else
 		return ..()
@@ -183,21 +203,18 @@
 /obj/item/weapon/weldingtool/process()
 	switch(welding)
 		if(0)
-			if(icon_state != "welder")	//Check that the sprite is correct, if it isnt, it means toggle() was not called
-				force = 3
-				damtype = "brute"
-				icon_state = "welder"
-				welding = 0
-			processing_objects.Remove(src)
+			force = 3
+			damtype = "brute"
+			update_icon()
+			SSobj.processing.Remove(src)
 			return
 	//Welders left on now use up fuel, but lets not have them run out quite that fast
 		if(1)
-			if(icon_state != "welder1")	//Check that the sprite is correct, if it isnt, it means toggle() was not called
-				force = 15
-				damtype = "fire"
-				icon_state = "welder1"
+			force = 15
+			damtype = "fire"
 			if(prob(5))
 				remove_fuel(1)
+			update_icon()
 
 	//This is to start fires. process() is only called if the welder is on.
 	var/turf/location = loc
@@ -216,14 +233,13 @@
 			O.reagents.trans_to(src, max_fuel)
 			user << "<span class='notice'>[src] refueled.</span>"
 			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
+			update_icon()
 			return
 		else
 			message_admins("[key_name_admin(user)] triggered a fueltank explosion.")
 			log_game("[key_name(user)] triggered a fueltank explosion.")
 			user << "<span class='warning'>That was stupid of you.</span>"
-			explosion(O.loc, -1, 0, 2, flame_range = 2)
-			if(O)
-				del(O)
+			O.ex_act()
 			return
 
 	if(welding)
@@ -237,7 +253,7 @@
 
 /obj/item/weapon/weldingtool/attack_self(mob/user)
 	toggle(user)
-
+	update_icon()
 
 //Returns the amount of fuel in the welder
 /obj/item/weapon/weldingtool/proc/get_fuel()
@@ -269,14 +285,12 @@
 /obj/item/weapon/weldingtool/proc/check_fuel(mob/user)
 	if(get_fuel() <= 0 && welding)
 		toggle(user, 1)
-
+		update_icon()
 		//mob icon update
 		if(ismob(loc))
 			var/mob/M = loc
-			if(M.r_hand == src)
-				M.update_inv_r_hand(0)
-			else if(M.l_hand == src)
-				M.update_inv_l_hand(0)
+			M.update_inv_r_hand(0)
+			M.update_inv_l_hand(0)
 
 		return 0
 	return 1
@@ -294,7 +308,7 @@
 			damtype = "fire"
 			hitsound = 'sound/items/welder.ogg'
 			icon_state = "welder1"
-			processing_objects.Add(src)
+			SSobj.processing.Add(src)
 		else
 			user << "<span class='notice'>You need more fuel.</span>"
 			welding = 0
@@ -307,7 +321,7 @@
 		damtype = "brute"
 		hitsound = "swing_hit"
 		icon_state = "welder"
-		welding = 0
+
 
 
 //Decides whether or not to damage a player's eyes based on what they're wearing as protection
@@ -337,14 +351,14 @@
 		user << "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>"
 	if (prob(user.eye_stat - 25 + 1))
 		user << "<span class='warning'>You go blind!</span>"
-		user.sdisabilities |= BLIND
+		user.disabilities |= BLIND
 	else if(prob(user.eye_stat - 15 + 1))
 		user << "<span class='warning'>You go blind!</span>"
 		user.eye_blind = 5
 		user.eye_blurry = 5
-		user.disabilities |= NEARSIGHTED
+		user.disabilities |= NEARSIGHT
 		spawn(100)
-			user.disabilities &= ~NEARSIGHTED
+			user.disabilities &= ~NEARSIGHT
 
 /obj/item/weapon/weldingtool/proc/flamethrower_screwdriver(obj/item/I, mob/user)
 	if(welding)
@@ -360,13 +374,17 @@
 /obj/item/weapon/weldingtool/proc/flamethrower_rods(obj/item/I, mob/user)
 	if(!status)
 		var/obj/item/stack/rods/R = I
-		R.use(1)
-		var/obj/item/weapon/flamethrower/F = new /obj/item/weapon/flamethrower(user.loc)
-		user.unEquip(src)
-		loc = F
-		F.weldtool = src
-		add_fingerprint(user)
-		user.put_in_hands(F)
+		if (R.use(1))
+			var/obj/item/weapon/flamethrower/F = new /obj/item/weapon/flamethrower(user.loc)
+			user.unEquip(src)
+			loc = F
+			F.weldtool = src
+			add_fingerprint(user)
+			user << "<span class='notice'>You add a rod to a welder, starting to build a flamethrower.</span>"
+			user.put_in_hands(F)
+		else
+			user << "<span class='warning'>You need one rod to start building a flamethrower.</span>"
+			return
 
 /obj/item/weapon/weldingtool/largetank
 	name = "industrial welding tool"
@@ -398,7 +416,6 @@
 	m_amt = 70
 	g_amt = 120
 	origin_tech = "engineering=4;plasmatech=3"
-	icon_state = "ewelder"
 	var/last_gen = 0
 
 
@@ -416,16 +433,16 @@
  */
 
 /obj/item/weapon/crowbar
-	name = "crowbar"
-	desc = "Used to hit floors"
+	name = "pocket crowbar"
+	desc = "A small crowbar. This handy tool is useful for lots of things, such as prying floor tiles or opening unpowered doors."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "crowbar"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	force = 5.0
-	throwforce = 7.0
+	force = 5
+	throwforce = 7
 	item_state = "crowbar"
-	w_class = 2.0
+	w_class = 2
 	m_amt = 50
 	origin_tech = "engineering=1"
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
@@ -434,3 +451,13 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "red_crowbar"
 	item_state = "crowbar_red"
+
+/obj/item/weapon/crowbar/large
+	name = "crowbar"
+	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big."
+	force = 12
+	w_class = 3
+	throw_speed = 3
+	throw_range = 3
+	m_amt = 66
+	icon_state = "crowbar_large"

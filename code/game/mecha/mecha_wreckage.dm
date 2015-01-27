@@ -32,7 +32,6 @@
 			else
 				user << "<span class='notice'>You failed to salvage anything valuable from [src].</span>"
 		else
-			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 			return
 
 	if(istype(I, /obj/item/weapon/wirecutters))
@@ -100,7 +99,10 @@
 	name = "\improper Seraph wreckage"
 	icon_state = "seraph-broken"
 
-
+/obj/structure/mecha_wreckage/reticence
+	name = "\improper Reticence wreckage"
+	icon_state = "reticence-broken"
+	color = "#87878715"
 
 /obj/structure/mecha_wreckage/ripley
 	name = "\improper Ripley wreckage"

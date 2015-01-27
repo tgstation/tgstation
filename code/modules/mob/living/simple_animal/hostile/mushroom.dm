@@ -9,6 +9,7 @@
 	maxHealth = 10
 	health = 10
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice
+	meat_amount = 1
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "whacks"
@@ -17,11 +18,13 @@
 	melee_damage_upper = 1
 	attack_same = 2
 	attacktext = "chomps"
-	faction = "mushroom"
+	faction = list("mushroom")
 	environment_smash = 0
 	stat_attack = 2
 	mouse_opacity = 1
 	speed = 1
+	ventcrawler = 2
+	robust_searching = 1
 	var/powerlevel = 0 //Tracks our general strength level gained from eating other shrooms
 	var/bruised = 0 //If someone tries to cheat the system by attacking a shroom to lower its health, punish them so that it wont award levels to shrooms that eat it
 	var/recovery_cooldown = 0 //So you can't repeatedly revive it during a fight
@@ -29,12 +32,12 @@
 	var/image/cap_living = null //Where we store our cap icons so we dont generate them constantly to update our icon
 	var/image/cap_dead = null
 
-/mob/living/simple_animal/hostile/mushroom/examine()
+/mob/living/simple_animal/hostile/mushroom/examine(mob/user)
 	..()
 	if(health >= maxHealth)
-		usr << "<span class='info'>It looks healthy.</span>"
+		user << "<span class='info'>It looks healthy.</span>"
 	else
-		usr << "<span class='info'>It looks like it's been roughed up.</span>"
+		user << "<span class='info'>It looks like it's been roughed up.</span>"
 
 /mob/living/simple_animal/hostile/mushroom/Life()
 	..()
@@ -45,7 +48,7 @@
 	melee_damage_lower += rand(3, 5)
 	melee_damage_upper += rand(10,20)
 	maxHealth += rand(40,60)
-	move_to_delay = rand(2,10)
+	move_to_delay = rand(3,11)
 	var/cap_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	cap_living = image('icons/mob/animal.dmi',icon_state = "mushroom_cap")
 	cap_dead = image('icons/mob/animal.dmi',icon_state = "mushroom_cap_dead")
@@ -76,7 +79,7 @@
 				level_gain = 1
 			M.LevelUp(level_gain)
 		M.health = M.maxHealth
-		del(src)
+		qdel(src)
 	..()
 
 /mob/living/simple_animal/hostile/mushroom/revive()
@@ -125,7 +128,7 @@
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom))
 		if(stat == DEAD && !recovery_cooldown)
 			Recover()
-			del(I)
+			qdel(I)
 		else
 			user << "<span class='notice'>[src] won't eat it!</span>"
 		return
@@ -156,4 +159,4 @@
 		S.reagents.add_reagent("mushroomhallucinogen", powerlevel)
 		S.reagents.add_reagent("doctorsdelight", powerlevel)
 		S.reagents.add_reagent("synaptizine", powerlevel)
-	del(src)
+	qdel(src)

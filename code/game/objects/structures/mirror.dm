@@ -48,14 +48,18 @@
 
 /obj/structure/mirror/bullet_act(var/obj/item/projectile/Proj)
 	if(prob(Proj.damage * 2))
-		if(!shattered)
-			shatter()
-		else
-			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+			if(!shattered)
+				shatter()
+			else
+				playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 	..()
 
 
-/obj/structure/mirror/attackby(obj/item/I as obj, mob/user as mob)
+/obj/structure/mirror/attackby(obj/item/I as obj, mob/living/user as mob)
+	user.do_attack_animation(src)
+	if(I.damtype == STAMINA)
+		return
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		return
@@ -68,7 +72,8 @@
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 70, 1)
 
 
-/obj/structure/mirror/attack_alien(mob/user as mob)
+/obj/structure/mirror/attack_alien(mob/living/user as mob)
+	user.do_attack_animation(src)
 	if(islarva(user)) return
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
@@ -77,10 +82,11 @@
 	shatter()
 
 
-/obj/structure/mirror/attack_animal(mob/user as mob)
+/obj/structure/mirror/attack_animal(mob/living/user as mob)
 	if(!isanimal(user)) return
 	var/mob/living/simple_animal/M = user
 	if(M.melee_damage_upper <= 0) return
+	M.do_attack_animation(src)
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		return
@@ -88,7 +94,8 @@
 	shatter()
 
 
-/obj/structure/mirror/attack_slime(mob/user as mob)
+/obj/structure/mirror/attack_slime(mob/living/user as mob)
+	user.do_attack_animation(src)
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		return

@@ -12,7 +12,12 @@ var/list/admin_verbs_default = list(
 	/client/proc/toggleprayers,			/*toggles prayers on/off*/
 	/client/proc/toggle_hear_radio,		/*toggles whether we hear the radio*/
 	/client/proc/investigate_show,		/*various admintools for investigation. Such as a singulo grief-log*/
-	/client/proc/secrets
+	/client/proc/secrets,
+	/client/proc/reload_admins,
+	/client/proc/reestablish_db_connection,/*reattempt a connection to the database*/
+	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
+	/client/proc/cmd_admin_pm_panel,		/*admin-pm list*/
+	/client/proc/stop_sounds
 	)
 var/list/admin_verbs_admin = list(
 	/client/proc/player_panel,			/*shows an interface for all players, with links to various panels (old style)*/
@@ -32,8 +37,6 @@ var/list/admin_verbs_admin = list(
 	/client/proc/toggle_view_range,		/*changes how far we can see*/
 	/datum/admins/proc/view_txt_log,	/*shows the server log (diary) for today*/
 	/datum/admins/proc/view_atk_log,	/*shows the server combat-log, doesn't do anything presently*/
-	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
-	/client/proc/cmd_admin_pm_panel,	/*admin-pm list*/
 	/client/proc/cmd_admin_subtle_message,	/*send an message to somebody as a 'voice in their head'*/
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
 	/client/proc/cmd_admin_check_contents,	/*displays the contents of an instance*/
@@ -55,7 +58,8 @@ var/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_direct_narrate,	/*send text directly to a player with no padding. Useful for narratives and fluff-text*/
 	/client/proc/cmd_admin_world_narrate,	/*sends text to all players with no padding*/
 	/client/proc/cmd_admin_create_centcom_report,
-	/client/proc/check_words			/*displays cult-words*/
+	/client/proc/check_words,			/*displays cult-words*/
+	/client/proc/reset_all_tcs			/*resets all telecomms scripts*/
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -66,10 +70,8 @@ var/list/admin_verbs_ban = list(
 var/list/admin_verbs_sounds = list(
 	/client/proc/play_local_sound,
 	/client/proc/play_sound,
-	/client/proc/stop_sounds
 	)
 var/list/admin_verbs_fun = list(
-	/client/proc/object_talk,
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
@@ -78,9 +80,10 @@ var/list/admin_verbs_fun = list(
 	/client/proc/send_space_ninja,
 	/client/proc/cmd_admin_add_freeform_ai_law,
 	/client/proc/cmd_admin_add_random_ai_law,
-	/client/proc/make_sound,
+	/client/proc/object_say,
 	/client/proc/toggle_random_events,
-	/client/proc/set_ooc
+	/client/proc/set_ooc,
+	/client/proc/forceEvent
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -103,16 +106,15 @@ var/list/admin_verbs_debug = list(
 	/client/proc/restart_controller,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,
-	/client/proc/kill_air,
 	/client/proc/cmd_debug_make_powernets,
 	/client/proc/debug_controller,
 	/client/proc/cmd_debug_mob_lists,
 	/client/proc/cmd_admin_delete,
 	/client/proc/cmd_debug_del_all,
-	/client/proc/reload_admins,
 	/client/proc/restart_controller,
 	/client/proc/enable_debug_verbs,
-	/client/proc/callproc
+	/client/proc/callproc,
+	/client/proc/SDQL2_query
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -151,7 +153,6 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/check_words,
 	/client/proc/play_local_sound,
 	/client/proc/play_sound,
-	/client/proc/object_talk,
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
@@ -160,7 +161,7 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/cmd_admin_add_freeform_ai_law,
 	/client/proc/cmd_admin_add_random_ai_law,
 	/client/proc/cmd_admin_create_centcom_report,
-	/client/proc/make_sound,
+	/client/proc/object_say,
 	/client/proc/toggle_random_events,
 	/client/proc/cmd_admin_add_random_ai_law,
 	/datum/admins/proc/startnow,
@@ -176,7 +177,6 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/callproc,
 	/client/proc/Debug2,
 	/client/proc/reload_admins,
-	/client/proc/kill_air,
 	/client/proc/cmd_debug_make_powernets,
 	/client/proc/debug_controller,
 	/client/proc/startSinglo,
@@ -184,11 +184,15 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/cmd_debug_del_all,
 	/client/proc/enable_debug_verbs,
 	/proc/possess,
-	/proc/release
+	/proc/release,
+	/client/proc/reload_admins,
+	/client/proc/reset_all_tcs
 	)
 
 /client/proc/add_admin_verbs()
 	if(holder)
+		control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
+
 		var/rights = holder.rank.rights
 		verbs += admin_verbs_default
 		if(rights & R_BUILDMODE)	verbs += /client/proc/togglebuildmodeself
@@ -237,10 +241,10 @@ var/list/admin_verbs_hideable = list(
 		/client/proc/count_objects_all,
 		/client/proc/cmd_assume_direct_control,
 		/client/proc/startSinglo,
-		/client/proc/ticklag,
+		/client/proc/fps,
 		/client/proc/cmd_admin_grantfullaccess,
-		/client/proc/kaboom,
-		/client/proc/cmd_admin_areatest
+		/client/proc/cmd_admin_areatest,
+		/client/proc/readmin
 		)
 	if(holder)
 		verbs.Remove(holder.rank.adds)
@@ -308,10 +312,10 @@ var/list/admin_verbs_hideable = list(
 	if(holder && mob)
 		if(mob.invisibility == INVISIBILITY_OBSERVER)
 			mob.invisibility = initial(mob.invisibility)
-			mob << "\red <b>Invisimin off. Invisibility reset.</b>"
+			mob << "<span class='userdanger'>Invisimin off. Invisibility reset.</span>"
 		else
 			mob.invisibility = INVISIBILITY_OBSERVER
-			mob << "\blue <b>Invisimin on. You are now as invisible as a ghost.</b>"
+			mob << "<span class='adminnotice'><b>Invisimin on. You are now as invisible as a ghost.</b></span>"
 
 
 /client/proc/player_panel()
@@ -390,52 +394,10 @@ var/list/admin_verbs_hideable = list(
 				new_key = copytext(new_key, 1, 26)
 			holder.fakekey = new_key
 		log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
-		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]", 1)
+		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 	feedback_add_details("admin_verb","SM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-#define MAX_WARNS 3
-#define AUTOBANTIME 10
-
-/client/proc/warn(warned_ckey)
-	if(!check_rights(R_ADMIN))	return
-
-	if(!warned_ckey || !istext(warned_ckey))	return
-	if(warned_ckey in admin_datums)
-		usr << "<font color='red'>Error: warn(): You can't warn admins.</font>"
-		return
-
-	var/datum/preferences/D
-	var/client/C = directory[warned_ckey]
-	if(C)	D = C.prefs
-	else	D = preferences_datums[warned_ckey]
-
-	if(!D)
-		src << "<font color='red'>Error: warn(): No such ckey found.</font>"
-		return
-
-	if(++D.warns >= MAX_WARNS)					//uh ohhhh...you'reee iiiiin trouuuubble O:)
-		ban_unban_log_save("[ckey] warned [warned_ckey], resulting in a [AUTOBANTIME] minute autoban.")
-		if(C)
-			message_admins("[key_name_admin(src)] has warned [key_name_admin(C)] resulting in a [AUTOBANTIME] minute ban.")
-			C << "<font color='red'><BIG><B>You have been autobanned due to a warning by [ckey].</B></BIG><br>This is a temporary ban, it will be removed in [AUTOBANTIME] minutes."
-			del(C)
-		else
-			message_admins("[key_name_admin(src)] has warned [warned_ckey] resulting in a [AUTOBANTIME] minute ban.")
-		AddBan(warned_ckey, D.last_id, "Autobanning due to too many formal warnings", ckey, 1, AUTOBANTIME)
-		feedback_inc("ban_warn",1)
-	else
-		if(C)
-			C << "<font color='red'><BIG><B>You have been formally warned by an administrator.</B></BIG><br>Further warnings will result in an autoban.</font>"
-			message_admins("[key_name_admin(src)] has warned [key_name_admin(C)]. They have [MAX_WARNS-D.warns] strikes remaining.")
-		else
-			message_admins("[key_name_admin(src)] has warned [warned_ckey] (DC). They have [MAX_WARNS-D.warns] strikes remaining.")
-
-	feedback_add_details("admin_verb","WARN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-#undef MAX_WARNS
-#undef AUTOBANTIME
-
-/client/proc/drop_bomb() // Some admin dickery that can probably be done better -- TLE
+/client/proc/drop_bomb()
 	set category = "Special Verbs"
 	set name = "Drop Bomb"
 	set desc = "Cause an explosion of varying strength at your location."
@@ -453,15 +415,23 @@ var/list/admin_verbs_hideable = list(
 		if("Big Bomb")
 			explosion(epicenter, 3, 5, 7, 5)
 		if("Custom Bomb")
-			var/devastation_range = input("Devastation range (in tiles):") as num
-			var/heavy_impact_range = input("Heavy impact range (in tiles):") as num
-			var/light_impact_range = input("Light impact range (in tiles):") as num
-			var/flash_range = input("Flash range (in tiles):") as num
+			var/devastation_range = input("Devastation range (in tiles):") as null|num
+			if(devastation_range == null)
+				return
+			var/heavy_impact_range = input("Heavy impact range (in tiles):") as null|num
+			if(heavy_impact_range == null)
+				return
+			var/light_impact_range = input("Light impact range (in tiles):") as null|num
+			if(light_impact_range == null)
+				return
+			var/flash_range = input("Flash range (in tiles):") as null|num
+			if(flash_range == null)
+				return
 			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
-	message_admins("\blue [ckey] creating an admin explosion at [epicenter.loc].")
+	message_admins("<span class='adminnotice'>[ckey] creating an admin explosion at [epicenter.loc].</span>")
 	feedback_add_details("admin_verb","DB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/give_spell(mob/T as mob in mob_list) // -- Urist
+/client/proc/give_spell(mob/T as mob in mob_list)
 	set category = "Fun"
 	set name = "Give Spell"
 	set desc = "Gives a spell to a mob."
@@ -470,41 +440,40 @@ var/list/admin_verbs_hideable = list(
 		return
 	feedback_add_details("admin_verb","GS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the spell [S].")
-	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] the spell [S].", 1)
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] gave [key_name(T)] the spell [S].</span>")
 
 	if(T.mind)
 		T.mind.spell_list += new S
 	else
 		T.mob_spell_list += new S
-		message_admins("\red Spells given to mindless mobs will not be transferred in mindswap or cloning!", 1)
+		message_admins("<span class='danger'>Spells given to mindless mobs will not be transferred in mindswap or cloning!</span>")
 
 
-/client/proc/give_disease(mob/T as mob in mob_list) // -- Giacom
+/client/proc/give_disease(mob/T as mob in mob_list)
 	set category = "Fun"
 	set name = "Give Disease"
 	set desc = "Gives a Disease to a mob."
 	var/datum/disease/D = input("Choose the disease to give to that guy", "ACHOO") as null|anything in diseases
 	if(!D) return
-	T.contract_disease(new D, 1)
+	T.ForceContractDisease(new D)
 	feedback_add_details("admin_verb","GD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the disease [D].")
-	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] the disease [D].", 1)
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] gave [key_name(T)] the disease [D].</span>")
 
-/client/proc/make_sound(var/obj/O in world) // -- TLE
+/client/proc/object_say(var/obj/O in world)
 	set category = "Special Verbs"
-	set name = "Make Sound"
-	set desc = "Display a message to everyone who can hear the target"
-	if(O)
-		var/message = input("What do you want the message to be?", "Make Sound") as text|null
-		if(!message)
-			return
-		for (var/mob/V in hearers(O))
-			V.show_message(message, 2)
-		log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound")
-		message_admins("\blue [key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound", 1)
-		feedback_add_details("admin_verb","MS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-
+	set name = "OSay"
+	set desc = "Makes an object say something."
+	var/message = input(usr, "What do you want the message to be?", "Make Sound") as text | null
+	if(!message)
+		return
+	var/templanguages = O.languages
+	O.languages |= ALL
+	O.say(message)
+	O.languages = templanguages
+	log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z] say \"[message]\"")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. say \"[message]\"</span>")
+	feedback_add_details("admin_verb","OS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 /client/proc/togglebuildmodeself()
 	set name = "Toggle Build Mode Self"
 	set category = "Special Verbs"
@@ -512,41 +481,17 @@ var/list/admin_verbs_hideable = list(
 		togglebuildmode(src.mob)
 	feedback_add_details("admin_verb","TBMS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/object_talk(var/msg as text) // -- TLE
-	set category = "Special Verbs"
-	set name = "oSay"
-	set desc = "Display a message to everyone who can hear the target"
-	if(mob.control_object)
-		if(!msg)
-			return
-		for (var/mob/V in hearers(mob.control_object))
-			V.show_message("<b>[mob.control_object.name]</b> says: \"" + msg + "\"", 2)
-	feedback_add_details("admin_verb","OT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/kill_air() // -- TLE
-	set category = "Debug"
-	set name = "Kill Air"
-	set desc = "Toggle Air Processing"
-	if(kill_air)
-		kill_air = 0
-		usr << "<b>Enabled air processing.</b>"
-	else
-		kill_air = 1
-		usr << "<b>Disabled air processing.</b>"
-	feedback_add_details("admin_verb","KA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	log_admin("[key_name(usr)] used 'kill air'.")
-	message_admins("\blue [key_name_admin(usr)] used 'kill air'.", 1)
-
 /client/proc/deadmin_self()
 	set name = "De-admin self"
 	set category = "Admin"
 
 	if(holder)
-		if(alert("Confirm self-deadmin for the round? You can't re-admin yourself without someont promoting you.",,"Yes","No") == "Yes")
-			log_admin("[src] deadmined themself.")
-			message_admins("[src] deadmined themself.", 1)
-			deadmin()
-			src << "<span class='interface'>You are now a normal player.</span>"
+		log_admin("[src] deadmined themself.")
+		message_admins("[src] deadmined themself.")
+		deadmin()
+		verbs += /client/proc/readmin
+		deadmins += ckey
+		src << "<span class='interface'>You are now a normal player.</span>"
 	feedback_add_details("admin_verb","DAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggle_log_hrefs()
@@ -567,3 +512,53 @@ var/list/admin_verbs_hideable = list(
 	if(holder)
 		src.holder.output_ai_laws()
 
+/client/proc/readmin()
+	set name = "Re-admin self"
+	set category = "Admin"
+	set desc = "Regain your admin powers."
+	var/list/rank_names = list()
+	for(var/datum/admin_rank/R in admin_ranks)
+		rank_names[R.name] = R
+	var/datum/admins/D = admin_datums[ckey]
+	var/rank = null
+	if(config.admin_legacy_system)
+		//load text from file
+		var/list/Lines = file2list("config/admins.txt")
+		for(var/line in Lines)
+			var/list/splitline = text2list(line, " = ")
+			if(splitline[1] == ckey)
+				if(splitline.len >= 2)
+					rank = ckeyEx(splitline[2])
+				break
+			continue
+	else
+		if(!dbcon.IsConnected())
+			message_admins("Warning, mysql database is not connected.")
+			src << "Warning, mysql database is not connected."
+			return
+		var/sql_ckey = sanitizeSQL(ckey)
+		var/DBQuery/query = dbcon.NewQuery("SELECT rank FROM [format_table_name("admin")] WHERE ckey = '[sql_ckey]'")
+		query.Execute()
+		while(query.NextRow())
+			rank = ckeyEx(query.item[1])
+	if(!D)
+		if(rank_names[rank] == null)
+			var/error_extra = ""
+			if(!config.admin_legacy_system)
+				error_extra = " Check mysql DB connection."
+			error("Error while re-adminning [src], admin rank ([rank]) does not exist.[error_extra]")
+			src << "Error while re-adminning, admin rank ([rank]) does not exist.[error_extra]"
+			return
+		D = new(rank_names[rank],ckey)
+		var/client/C = directory[ckey]
+		D.associate(C)
+		message_admins("[src] re-adminned themselves.")
+		log_admin("[src] re-adminned themselves.")
+		deadmins -= ckey
+		feedback_add_details("admin_verb","RAS")
+		return
+	else
+		src << "You are already an admin."
+		verbs -= /client/proc/readmin
+		deadmins -= ckey
+		return

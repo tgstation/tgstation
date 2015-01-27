@@ -56,7 +56,7 @@
 					construct_op --
 					stat &= ~BROKEN // the machine's not borked anymore!
 				else
-					user << "<span class='danger'>You need more cable to do that.</span>"
+					user << "<span class='danger'>You need five lengths of cable for this machine.</span>"
 			if(istype(P, /obj/item/weapon/crowbar))
 				user << "<span class='notice'>You begin prying out the circuit board and components...</span>"
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
@@ -65,7 +65,7 @@
 
 					// Drop all the component stuff
 					if(component_parts)
-						for(var/obj/I in component_parts)
+						for(var/obj/item/I in component_parts)
 							if(I.reliability != 100 && crit_fail)
 								I.crit_fail = 1
 							I.loc = src.loc
@@ -92,7 +92,7 @@
 					// Create a machine frame and delete the current machine
 					var/obj/machinery/constructable_frame/machine_frame/F = new
 					F.loc = src.loc
-					del(src)
+					qdel(src)
 
 
 /obj/machinery/telecomms/attack_ai(var/mob/user as mob)
@@ -308,7 +308,7 @@
 					temp = "<font color = #666633>-% New ID assigned: \"[id]\" %-</font color>"
 
 			if("network")
-				var/newnet = input(usr, "Specify the new network for this machine. This will break all current links.", src, network) as null|text
+				var/newnet = stripped_input(usr, "Specify the new network for this machine. This will break all current links.", src, network)
 				if(newnet && canAccess(usr))
 
 					if(length(newnet) > 15)

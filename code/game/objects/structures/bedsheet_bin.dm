@@ -163,15 +163,14 @@ LINEN BINS
 	var/obj/item/hidden = null
 
 
-/obj/structure/bedsheetbin/examine()
+/obj/structure/bedsheetbin/examine(mob/user)
 	..()
 	if(amount < 1)
-		usr << "There are no bed sheets in the bin."
-		return
-	if(amount == 1)
-		usr << "There is one bed sheet in the bin."
-		return
-	usr << "There are [amount] bed sheets in the bin."
+		user << "There are no bed sheets in the bin."
+	else if(amount == 1)
+		user << "There is one bed sheet in the bin."
+	else
+		user << "There are [amount] bed sheets in the bin."
 
 
 /obj/structure/bedsheetbin/update_icon()
@@ -190,7 +189,9 @@ LINEN BINS
 		user << "<span class='notice'>You put [I] in [src].</span>"
 		update_icon()
 	else if(amount && !hidden && I.w_class < 4)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
-		user.drop_item()
+		if(!user.drop_item())
+			user << "<span class='notice'>\The [I] is stuck to your hand, you cannot hide it among the sheets!</span>"
+			return
 		I.loc = src
 		hidden = I
 		user << "<span class='notice'>You hide [I] among the sheets.</span>"

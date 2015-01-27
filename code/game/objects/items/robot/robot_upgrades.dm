@@ -6,15 +6,13 @@
 	desc = "Protected by FRM."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cyborg_upgrade"
-	var/construction_time = 120
-	var/construction_cost = list("metal"=10000)
 	var/locked = 0
 	var/require_module = 0
 	var/installed = 0
 
 /obj/item/borg/upgrade/proc/action(var/mob/living/silicon/robot/R)
 	if(R.stat == DEAD)
-		usr << "/red The [src] will not function on a deceased cyborg."
+		usr << "<span class='notice'>[src] will not function on a deceased cyborg.</span>"
 		return 1
 	return 0
 
@@ -30,12 +28,14 @@
 	R.uneq_all()
 	R.hands.icon_state = "nomod"
 	R.icon_state = "robot"
-	del(R.module)
+	qdel(R.module)
 	R.module = null
 	R.modtype = "robot"
 	R.updatename("Default")
 	R.status_flags |= CANPUSH
-	R.updateicon()
+	R.designation = "Default"
+	R.notify_ai(2)
+	R.update_icons()
 
 	return 1
 
@@ -43,7 +43,6 @@
 	name = "cyborg reclassification board"
 	desc = "Used to rename a cyborg."
 	icon_state = "cyborg_upgrade1"
-	construction_cost = list("metal"=35000)
 	var/heldname = "default name"
 
 /obj/item/borg/upgrade/rename/attack_self(mob/user as mob)
@@ -51,15 +50,17 @@
 
 /obj/item/borg/upgrade/rename/action(var/mob/living/silicon/robot/R)
 	if(..()) return 0
+	R.notify_ai(3, R.name, heldname)
 	R.name = heldname
 	R.real_name = heldname
+	R.camera.c_tag = heldname
+	R.custom_name = heldname //Required or else if the cyborg's module changes, their name is lost.
 
 	return 1
 
 /obj/item/borg/upgrade/restart
 	name = "cyborg emergency restart module"
 	desc = "Used to force a restart of a disabled-but-repaired cyborg, bringing it back online."
-	construction_cost = list("metal"=60000 , "glass"=5000)
 	icon_state = "cyborg_upgrade1"
 
 
@@ -74,13 +75,16 @@
 				R.key = ghost.key
 
 	R.stat = CONSCIOUS
+	dead_mob_list -= R //please never forget this ever kthx
+	living_mob_list += R
+	R.notify_ai(1)
+
 	return 1
 
 
 /obj/item/borg/upgrade/vtec
 	name = "cyborg VTEC module"
 	desc = "Used to kick in a cyborg's VTEC systems, increasing their speed."
-	construction_cost = list("metal"=80000 , "glass"=6000 , "gold"= 5000)
 	icon_state = "cyborg_upgrade2"
 	require_module = 1
 
@@ -97,7 +101,6 @@
 /obj/item/borg/upgrade/tasercooler
 	name = "cyborg rapid taser cooling module"
 	desc = "Used to cool a mounted taser, increasing the potential current in it and thus its recharge rate."
-	construction_cost = list("metal"=80000 , "glass"=6000 , "gold"= 2000, "diamond" = 500)
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 
@@ -110,7 +113,7 @@
 		usr << "There's no mounting point for the module!"
 		return 0
 
-	var/obj/item/weapon/gun/energy/taser/cyborg/T = locate() in R.module
+	var/obj/item/weapon/gun/energy/gun/advtaser/cyborg/T = locate() in R.module
 	if(!T)
 		T = locate() in R.module.contents
 	if(!T)
@@ -132,7 +135,6 @@
 /obj/item/borg/upgrade/jetpack
 	name = "mining cyborg jetpack"
 	desc = "A carbon dioxide jetpack suitable for low-gravity mining operations."
-	construction_cost = list("metal"=10000,"plasma"=15000,"uranium" = 20000)
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 
@@ -144,17 +146,17 @@
 		usr << "There's no mounting point for the module!"
 		return 0
 	else
-		R.module.modules += new/obj/item/weapon/tank/jetpack/carbondioxide
+		R.module.modules += new/obj/item/weapon/tank/jetpack/carbondioxide(R.module)
 		for(var/obj/item/weapon/tank/jetpack/carbondioxide in R.module.modules)
 			R.internals = src
 		R.icon_state="Miner+j"
+		R.module.rebuild()
 		return 1
 
 
 /obj/item/borg/upgrade/syndicate/
 	name = "illegal equipment module"
 	desc = "Unlocks the hidden, deadlier functions of a cyborg"
-	construction_cost = list("metal"=10000,"glass"=15000,"diamond" = 10000)
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 

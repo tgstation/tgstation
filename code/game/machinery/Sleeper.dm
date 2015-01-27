@@ -11,19 +11,24 @@
 	icon_state = "sleeper-open"
 	density = 0
 	anchored = 1
-	var/efficiency
 	state_open = 1
+	var/efficiency
+	var/initial_bin_rating = 1
 	var/min_health = 25
-	var/list/injection_chems = list() //list of injectable chems except inaprovaline, coz inaprovaline is always avalible
-	var/list/possible_chems = list(list("stoxin", "dexalin", "bicaridine", "kelotane"),
-									list("stoxin", "dexalinp", "imidazoline", "dermaline", "bicaridine"),
-									list("tricordrazine", "anti_toxin", "ryetalyn", "dermaline", "bicaridine", "imidazoline", "alkysine", "arithrazine"))
-
+	var/list/injection_chems = list() //list of injectable chems except ephedrine, coz ephedrine is always avalible
+	var/list/possible_chems = list(list("morphine", "salbutamol", "salglu_solution"),
+								   list("morphine", "salbutamol", "salglu_solution", "oculine"),
+								   list("morphine", "salbutamol", "salglu_solution", "oculine", "charcoal", "mutadone", "mannitol", "pen_acid"))
 /obj/machinery/sleeper/New()
 	..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/sleeper(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+
+	// Customizable bin rating, used by the labor camp to stop people filling themselves with chemicals and escaping.
+	var/obj/item/weapon/stock_parts/matter_bin/B = new(null)
+	B.rating = initial_bin_rating
+	component_parts += B
+
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
@@ -46,7 +51,7 @@
 	return 0
 
 /obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user)|| !iscarbon(target))
+	if(stat || user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user)|| !iscarbon(target))
 		return
 	close_machine(target)
 
@@ -55,12 +60,13 @@
 		for(var/atom/movable/A in src)
 			A.loc = loc
 			A.blob_act()
-		del(src)
+		qdel(src)
 
 /obj/machinery/sleeper/attack_animal(var/mob/living/simple_animal/M)//Stop putting hostile mobs in things guise
 	if(M.environment_smash)
+		M.do_attack_animation(src)
 		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
-		del(src)
+		qdel(src)
 	return
 
 /obj/machinery/sleeper/attackby(obj/item/I, mob/user)
@@ -71,30 +77,17 @@
 	if(default_change_direction_wrench(user, I))
 		return
 
+	if(exchange_parts(user, I))
+		return
+
+	if(default_pry_open(I))
+		return
+
 	default_deconstruction_crowbar(I)
 
-/obj/machinery/sleeper/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			for(var/atom/movable/A in src)
-				A.loc = loc
-				ex_act(severity)
-			del(src)
-			return
-		if(2.0)
-			if(prob(50))
-				for(var/atom/movable/A in src)
-					A.loc = loc
-					ex_act(severity)
-				del(src)
-				return
-		if(3.0)
-			if(prob(25))
-				for(var/atom/movable/A in src)
-					A.loc = loc
-					ex_act(severity)
-				del(src)
-
+/obj/machinery/sleeper/ex_act(severity, target)
+	go_out()
+	..()
 
 /obj/machinery/sleeper/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
@@ -122,16 +115,33 @@
 	..()
 	open_machine()
 
-/obj/machinery/sleeper/Del()
-	var/turf/T = loc
-	T.contents += contents
-	..()
-
 /obj/machinery/sleeper/attack_hand(mob/user)
 	if(..())
 		return
-	var/dat = "<h3>Sleeper Status</h3>"
 
+	sleeperUI(user)
+
+/obj/machinery/sleeper/proc/sleeperUI(mob/user)
+	var/dat
+	dat += "<h3>Injector</h3>"
+	if(occupant)
+		dat += "<A href='?src=\ref[src];inject=epinephrine'>Inject epinephrine</A>"
+	else
+		dat += "<span class='linkOff'>Inject Epinephrine</span>"
+	if(occupant && occupant.health > min_health)
+		for(var/re in injection_chems)
+			var/datum/reagent/C = chemical_reagents_list[re]
+			if(C)
+				dat += "<BR><A href='?src=\ref[src];inject=[C.id]'>Inject [C.name]</A>"
+	else
+		for(var/re in injection_chems)
+			var/datum/reagent/C = chemical_reagents_list[re]
+			if(C)
+				dat += "<BR><span class='linkOff'>Inject [C.name]</span>"
+
+	dat += "<h3>Sleeper Status</h3>"
+	dat += "<A href='?src=\ref[src];refresh=1'>Scan</A>"
+	dat += "<A href='?src=\ref[src];[state_open ? "close=1'>Close</A>" : "open=1'>Open</A>"]"
 	dat += "<div class='statusDisplay'>"
 	if(!occupant)
 		dat += "Sleeper Unoccupied"
@@ -144,41 +154,22 @@
 				dat += "<span class='average'>Unconscious</span>"
 			else
 				dat += "<span class='bad'>DEAD</span>"
-
 		dat += "<br />"
-
-		dat +=  "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [occupant.health]%;' class='progressFill good'></div></div><div class='statusValue'>[occupant.health]%</div></div>"
+		dat +=  "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [occupant.health < 0 ? "0" : "[occupant.health]"]%;' class='progressFill good'></div></div><div class='statusValue'>[occupant.stat > 1 ? "" : "[occupant.health]%"]</div></div>"
 		dat +=  "<div class='line'><div class='statusLabel'>\> Brute Damage:</div><div class='progressBar'><div style='width: [occupant.getBruteLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getBruteLoss()]%</div></div>"
 		dat +=  "<div class='line'><div class='statusLabel'>\> Resp. Damage:</div><div class='progressBar'><div style='width: [occupant.getOxyLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getOxyLoss()]%</div></div>"
 		dat +=  "<div class='line'><div class='statusLabel'>\> Toxin Content:</div><div class='progressBar'><div style='width: [occupant.getToxLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getToxLoss()]%</div></div>"
 		dat +=  "<div class='line'><div class='statusLabel'>\> Burn Severity:</div><div class='progressBar'><div style='width: [occupant.getFireLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getFireLoss()]%</div></div>"
 
 		dat += "<HR><div class='line'><div class='statusLabel'>Paralysis Summary:</div><div class='statusValue'>[round(occupant.paralysis)]% [occupant.paralysis ? "([round(occupant.paralysis / 4)] seconds left)" : ""]</div></div>"
+		if(occupant.getCloneLoss())
+			dat += "<div class='line'><span class='average'>Subject appears to have cellular damage.</span></div>"
+		if(occupant.getBrainLoss())
+			dat += "<div class='line'><span class='average'>Significant brain damage detected.</span></div>"
 		if(occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in occupant.reagents.reagent_list)
 				dat += text("<div class='line'><div class='statusLabel'>[R.name]:</div><div class='statusValue'>[] units</div></div>", round(R.volume, 0.1))
-
 	dat += "</div>"
-
-	dat += "<A href='?src=\ref[src];refresh=1'>Scan</A>"
-
-	dat += "<A href='?src=\ref[src];[state_open ? "close=1'>Close</A>" : "open=1'>Open</A>"]"
-
-	dat += "<h3>Injector</h3>"
-	if(occupant)
-		dat += "<A href='?src=\ref[src];inject=inaprovaline'>Inject Inaprovaline</A>"
-	else
-		dat += "<span class='linkOff'>Inject Inaprovaline</span>"
-	if(occupant && occupant.health > min_health)
-		for(var/re in injection_chems)
-			var/datum/reagent/C = chemical_reagents_list[re]
-			if(C)
-				dat += "<BR><A href='?src=\ref[src];inject=[C.id]'>Inject [C.name]</A>"
-	else
-		for(var/re in injection_chems)
-			var/datum/reagent/C = chemical_reagents_list[re]
-			if(C)
-				dat += "<BR><span class='linkOff'>Inject [C.name]</span>"
 
 	var/datum/browser/popup = new(user, "sleeper", "Sleeper Console", 520, 540)	//Set up the popup browser window
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
@@ -199,7 +190,7 @@
 		close_machine()
 		return
 	if(occupant && occupant.stat != DEAD)
-		if(href_list["inject"] == "inaprovaline" || occupant.health > min_health)
+		if(href_list["inject"] == "epinephrine" || occupant.health > min_health)
 			inject_chem(usr, href_list["inject"])
 		else
 			usr << "<span class='notice'>ERROR: Subject is not in stable condition for auto-injection.</span>"
@@ -223,11 +214,14 @@
 		..(target)
 
 /obj/machinery/sleeper/proc/inject_chem(mob/user, chem)
+	if(!is_operational())
+		return
 	if(occupant && occupant.reagents)
-		if(occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency)
-			occupant.reagents.add_reagent(chem, 10)
-		var/units = round(occupant.reagents.get_reagent_amount(chem))
-		user << "<span class='notice'>Occupant now has [units] unit\s of [chem] in their bloodstream.</span>"
+		if(chem in injection_chems + "epinephrine")
+			if(occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency)
+				occupant.reagents.add_reagent(chem, 10)
+			var/units = round(occupant.reagents.get_reagent_amount(chem))
+			user << "<span class='notice'>Occupant now has [units] unit\s of [chem] in their bloodstream.</span>"
 
 /obj/machinery/sleeper/update_icon()
 	if(state_open)

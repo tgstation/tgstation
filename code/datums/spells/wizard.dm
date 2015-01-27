@@ -25,7 +25,7 @@
 	proj_trail_icon_state = "magicmd"
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile
-	amt_weakened = 5
+	amt_weakened = 3
 	amt_dam_fire = 10
 
 /obj/effect/proc_holder/spell/targeted/genetic/mutate
@@ -37,12 +37,12 @@
 	clothes_req = 1
 	invocation = "BIRUZ BENNAR"
 	invocation_type = "shout"
-	message = "\blue You feel strong! You feel a pressure building behind your eyes!"
+	message = "<span class='notice'>You feel strong! You feel a pressure building behind your eyes!</span>"
 	range = -1
 	include_user = 1
 	centcom_cancast = 0
 
-	mutations = list(LASER, HULK)
+	mutations = list(LASEREYES, HULK)
 	duration = 300
 	cooldown_min = 300 //25 deciseconds reduction per rank
 
@@ -198,7 +198,7 @@
 	clothes_req = 0
 	invocation = "STI KALY"
 	invocation_type = "whisper"
-	message = "\blue Your eyes cry out in pain!"
+	message = "<span class='notice'>Your eyes cry out in pain!</span>"
 	cooldown_min = 50 //12 deciseconds reduction per rank
 
 	starting_spells = list("/obj/effect/proc_holder/spell/targeted/inflict_handler/blind","/obj/effect/proc_holder/spell/targeted/genetic/blind")
@@ -258,3 +258,47 @@
 	ex_heavy = -1
 	ex_light = 2
 	ex_flash = 5
+
+/obj/effect/proc_holder/spell/aoe_turf/repulse
+	name = "Repulse"
+	desc = "This spell throws everything around the user away."
+	charge_max = 400
+	clothes_req = 1
+	invocation = "GITTAH WEIGH"
+	invocation_type = "shout"
+	range = 5
+	cooldown_min = 150
+	selection_type = "view"
+	var/maxthrow = 5
+
+/obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets)
+	var/mob/user = usr
+	var/list/thrownatoms = list()
+	var/atom/throwtarget
+	var/distfromcaster
+	for(var/turf/T in targets) //Done this way so things don't get thrown all around hilariously.
+		for(var/atom/movable/AM in T)
+			thrownatoms += AM
+	
+	for(var/atom/movable/AM in thrownatoms)
+		if(AM == user || AM.anchored) continue
+	
+		var/obj/effect/overlay/targeteffect	= new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density = 0}()
+		AM.overlays += targeteffect
+		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
+		distfromcaster = get_dist(user, AM)
+		spawn(10)
+			AM.overlays -= targeteffect
+			qdel(targeteffect)
+		if(distfromcaster == 0)
+			if(istype(AM, /mob/living))
+				var/mob/living/M = AM
+				M.Weaken(5)
+				M.adjustBruteLoss(5)
+				M << "<span class='userdanger'>You're slammed into the floor by a mystical force!</span>"
+		else
+			if(istype(AM, /mob/living))
+				var/mob/living/M = AM
+				M.Weaken(2)
+				M << "<span class='userdanger'>You're thrown back by a mystical force!</span>"
+			spawn(0) AM.throw_at(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1)//So stuff gets tossed around at the same time.

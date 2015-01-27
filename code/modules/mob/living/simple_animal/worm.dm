@@ -96,7 +96,7 @@
 
 		return
 
-	Del() //if a chunk a destroyed, make a new worm out of the split halves
+	Delete() //if a chunk a destroyed, make a new worm out of the split halves
 		if(previous)
 			previous.Detach()
 		..()
@@ -137,7 +137,7 @@
 		if(istype(target,/turf/simulated/wall))
 			if((!istype(target,/turf/simulated/wall/r_wall) && eatingDuration >= 100) || eatingDuration >= 200) //need 20 ticks to eat an rwall, 10 for a regular one
 				var/turf/simulated/wall/wall = target
-				wall.ChangeTurf(/turf/simulated/floor)
+				wall.ChangeTurf(/turf/simulated/floor/plasteel)
 				new /obj/item/stack/sheet/metal(src, flatPlasmaValue)
 				return 1
 		else if(istype(target,/atom/movable))

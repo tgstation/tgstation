@@ -14,7 +14,7 @@
 	desc = "You wear this on your back and put items into it."
 	icon_state = "backpack"
 	item_state = "backpack"
-	w_class = 4.0
+	w_class = 4
 	slot_flags = SLOT_BACK	//ERROOOOO
 	max_w_class = 3
 	max_combined_w_class = 21
@@ -35,36 +35,41 @@
 	max_w_class = 5
 	max_combined_w_class = 35
 
-	New()
-		..()
+/obj/item/weapon/storage/backpack/holding/can_be_inserted(obj/item/W, stop_messages = 0, mob/user)
+	if(crit_fail)
+		user << "<span class='danger'>The Bluespace generator isn't working.</span>"
 		return
+	return ..()
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if(crit_fail)
-			user << "\red The Bluespace generator isn't working."
-			return
-		if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
-			investigate_log("has become a singularity. Caused by [user.key]","singulo")
-			user << "\red The Bluespace interfaces of the two devices catastrophically malfunction!"
-			del(W)
-			var/obj/machinery/singularity/singulo = new /obj/machinery/singularity (get_turf(src))
-			singulo.energy = 300 //should make it a bit bigger~
-			message_admins("[key_name_admin(user)] detonated a bag of holding")
-			log_game("[key_name(user)] detonated a bag of holding")
-			del(src)
-			return
-		..()
+/obj/item/weapon/storage/backpack/holding/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
+	if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
+		investigate_log("has become a singularity. Caused by [user.key]","singulo")
+		user << "<span class='danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>"
+		qdel(W)
+		var/obj/singularity/singulo = new /obj/singularity (get_turf(src))
+		singulo.energy = 300 //should make it a bit bigger~
+		message_admins("[key_name_admin(user)] detonated a bag of holding")
+		log_game("[key_name(user)] detonated a bag of holding")
+		qdel(src)
+		singulo.process()
+		return
+	..()
 
-	proc/failcheck(mob/user as mob)
-		if (prob(src.reliability)) return 1 //No failure
-		if (prob(src.reliability))
-			user << "\red The Bluespace portal resists your attempt to add another item." //light failure
-		else
-			user << "\red The Bluespace generator malfunctions!"
-			for (var/obj/O in src.contents) //it broke, delete what was in it
-				del(O)
-			crit_fail = 1
-			icon_state = "brokenpack"
+/obj/item/weapon/storage/backpack/holding/proc/failcheck(mob/user as mob)
+	if (prob(src.reliability)) return 1 //No failure
+	if (prob(src.reliability))
+		user << "<span class='danger'>The Bluespace portal resists your attempt to add another item.</span>" //light failure
+	else
+		user << "<span class='danger'>The Bluespace generator malfunctions!</span>"
+		for (var/obj/O in src.contents) //it broke, delete what was in it
+			qdel(O)
+		crit_fail = 1
+		icon_state = "brokenpack"
+
+/obj/item/weapon/storage/backpack/holding/singularity_act(current_size)
+	var/dist = max((current_size - 2),1)
+	explosion(src.loc,(dist),(dist*2),(dist*4))
+	return
 
 
 /obj/item/weapon/storage/backpack/santabag
@@ -73,9 +78,9 @@
 	icon_state = "giftbag0"
 	item_state = "giftbag"
 	w_class = 4.0
-	storage_slots = 20
+	storage_slots = 20 //Can store a lot.
 	max_w_class = 3
-	max_combined_w_class = 400 // can store a ton of shit!
+	max_combined_w_class = 60
 
 /obj/item/weapon/storage/backpack/cultpack
 	name = "trophy rack"
@@ -88,6 +93,12 @@
 	desc = "It's a backpack made by Honk! Co."
 	icon_state = "clownpack"
 	item_state = "clownpack"
+
+/obj/item/weapon/storage/backpack/mime
+	name = "Parcel Parceaux"
+	desc = "A silent backpack made for those silent workers. Silence Co."
+	icon_state = "mimepack"
+	item_state = "mimepack"
 
 /obj/item/weapon/storage/backpack/medic
 	name = "medical backpack"
@@ -122,10 +133,9 @@
 	desc = "It's a very fancy satchel made with fine leather."
 	icon_state = "satchel"
 
-/obj/item/weapon/storage/backpack/satchel/withwallet
-	New()
-		..()
-		new /obj/item/weapon/storage/wallet/random( src )
+/obj/item/weapon/storage/backpack/satchel/withwallet/New()
+	..()
+	new /obj/item/weapon/storage/wallet/random( src )
 
 /obj/item/weapon/storage/backpack/satchel_norm
 	name = "satchel"
@@ -180,3 +190,80 @@
 	desc = "An exclusive satchel for Nanotrasen officers."
 	icon_state = "satchel-cap"
 	item_state = "captainpack"
+
+/obj/item/weapon/storage/backpack/satchel_flat
+	name = "smuggler's satchel"
+	desc = "A very slim satchel that can easily fit into tight spaces."
+	icon_state = "satchel-flat"
+	w_class = 3 //Can fit in backpacks itself.
+	storage_slots = 5
+	max_combined_w_class = 15
+	level = 1
+	cant_hold = list(/obj/item/weapon/storage/backpack/satchel_flat) //muh recursive backpacks
+
+/obj/item/weapon/storage/backpack/satchel_flat/hide(var/intact)
+	if(intact)
+		invisibility = 101
+		anchored = 1 //otherwise you can start pulling, cover it, and drag around an invisible backpack.
+		icon_state = "[initial(icon_state)]2"
+	else
+		invisibility = initial(invisibility)
+		anchored = 0
+		icon_state = initial(icon_state)
+
+/obj/item/weapon/storage/backpack/satchel_flat/New()
+	..()
+	new /obj/item/stack/tile/plasteel(src)
+	new /obj/item/weapon/crowbar(src)
+
+/obj/item/weapon/storage/backpack/dufflebag
+	name = "dufflebag"
+	desc = "A large dufflebag for holding extra things"
+	icon_state = "duffle"
+	item_state = "duffle"
+	storage_slots = 9
+	slowdown = 1
+
+/obj/item/weapon/storage/backpack/dufflebag/syndiemed
+	name = "medical dufflebag"
+	desc = "A large dufflebag for holding extra tactical medical supplies."
+	icon_state = "duffle-syndiemed"
+	item_state = "duffle-syndiemed"
+	slowdown = 0
+
+/obj/item/weapon/storage/backpack/dufflebag/syndieammo
+	name = "ammunition dufflebag"
+	desc = "A large dufflebag for holding extra weapons ammunition and supplies."
+	icon_state = "duffle-syndieammo"
+	item_state = "duffle-syndieammo"
+	slowdown = 0
+
+/obj/item/weapon/storage/backpack/dufflebag/captain
+	name = "captain's dufflebag"
+	desc = "A large dufflebag for holding extra captainly goods."
+	icon_state = "duffle-captain"
+	item_state = "duffle-captain"
+
+/obj/item/weapon/storage/backpack/dufflebag/med
+	name = "medical dufflebag"
+	desc = "A large dufflebag for holding extra medical supplies."
+	icon_state = "duffle-med"
+	item_state = "duffle-med"
+
+/obj/item/weapon/storage/backpack/dufflebag/sec
+	name = "security dufflebag"
+	desc = "A large dufflebag for holding extra security supplies and ammunition."
+	icon_state = "duffle-sec"
+	item_state = "duffle-sec"
+
+/obj/item/weapon/storage/backpack/dufflebag/engineering
+	name = "engineering dufflebag"
+	desc = "A large dufflebag for holding extra tools and supplies."
+	icon_state = "duffle-eng"
+	item_state = "duffle-eng"
+
+/obj/item/weapon/storage/backpack/dufflebag/clown
+	name = "clown's dufflebag"
+	desc = "A large dufflebag for holding lots of funny gags!"
+	icon_state = "duffle-clown"
+	item_state = "duffle-clown"

@@ -32,7 +32,7 @@
 /obj/structure/closet/crate/bin/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/storage/bag/trash))
 		var/obj/item/weapon/storage/bag/trash/T = W
-		user << "\blue You fill the bag."
+		user << "<span class='notice'>You fill the bag.</span>"
 		for(var/obj/item/O in src)
 			if(T.can_be_inserted(O, 1))
 				O.loc = T
@@ -51,15 +51,15 @@
 	. = ..(O, user, 0, 0, 0)
 	if(.)
 		if(O != user)
-			user.visible_message("<span class='danger'>[user] tries to stuff [O] into the [src].</span>", \
-							 	 "<span class='danger'>You try to stuff [O] into the [src].</span>", \
+			user.visible_message("<span class='danger'>[user] tries to stuff [O] into [src].</span>", \
+							 	 "<span class='danger'>You try to stuff [O] into [src].</span>", \
 							 	 "<span class='danger'>You hear clanging.</span>")
 			if (!do_after(user, 40))
 				return
 			if(!..(O, user, 0, 0))
 				return
-			user.visible_message("<span class='notice'>[user] stuffs [O] into the [src].</span>", \
-							 	 "<span class='notice'>You stuff [O] into the [src].</span>", \
+			user.visible_message("<span class='notice'>[user] stuffs [O] into[src].</span>", \
+							 	 "<span class='notice'>You stuff [O] into [src].</span>", \
 							 	 "<span class='notice'>You hear a loud metal bang.</span>")
 		insert(O, 1, !opened)
 		if(opened)

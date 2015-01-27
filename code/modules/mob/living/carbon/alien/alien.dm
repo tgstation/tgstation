@@ -5,17 +5,16 @@
 /mob/living/carbon/alien
 	name = "alien"
 	voice_name = "alien"
-	voice_message = "hisses"
 	say_message = "hisses"
 	icon = 'icons/mob/alien.dmi'
 	gender = NEUTER
 	dna = null
-	faction = "alien"
-
+	faction = list("alien")
+	ventcrawler = 2
+	languages = ALIEN
+	nightvision = 1
 	var/storedPlasma = 250
 	var/max_plasma = 500
-
-	alien_talk_understand = 1
 
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/has_fine_manipulation = 0
@@ -31,7 +30,7 @@
 	var/fire_alert = 0
 
 	var/heat_protection = 0.5
-
+	var/leaping = 0
 
 /mob/living/carbon/alien/New()
 	verbs += /mob/living/proc/mob_sleep
@@ -58,13 +57,8 @@
 /mob/living/carbon/alien/eyecheck()
 	return 2
 
-/mob/living/carbon/alien/updatehealth()
-	if(status_flags & GODMODE)
-		health = maxHealth
-		stat = CONSCIOUS
-		return
-	//oxyloss is only used for suicide
-	health = maxHealth - getOxyLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
+/mob/living/carbon/alien/getToxLoss()
+	return 0
 
 /mob/living/carbon/alien/proc/handle_environment(var/datum/gas_mixture/environment)
 
@@ -119,10 +113,6 @@
 
 /mob/living/carbon/alien/proc/handle_mutations_and_radiation()
 
-	if(getFireLoss())
-		if((COLD_RESISTANCE in mutations) || prob(5))
-			adjustFireLoss(-1)
-
 	// Aliens love radiation nom nom nom
 	if (radiation)
 		if (radiation > 100)
@@ -132,12 +122,12 @@
 			radiation = 0
 
 		switch(radiation)
-			if(1 to 49)
+			if(0 to 50)
 				radiation--
 				if(prob(25))
 					adjustToxLoss(1)
 
-			if(50 to 74)
+			if(50 to 75)
 				radiation -= 2
 				adjustToxLoss(1)
 				if(prob(5))
@@ -156,25 +146,16 @@
 /mob/living/carbon/alien/IsAdvancedToolUser()
 	return has_fine_manipulation
 
-/mob/living/carbon/alien/Process_Spaceslipping()
-	return 0 // Don't slip in space.
+/mob/living/carbon/alien/SpeciesCanConsume()
+	return 1 // Aliens can eat, and they can be fed food/drink
 
 /mob/living/carbon/alien/Stat()
-
-	statpanel("Status")
-	stat(null, "Intent: [a_intent]")
-	stat(null, "Move Mode: [m_intent]")
-
 	..()
 
-	if (client.statpanel == "Status")
+	if(statpanel("Status"))
+		stat(null, "Intent: [a_intent]")
+		stat(null, "Move Mode: [m_intent]")
 		stat(null, "Plasma Stored: [getPlasma()]/[max_plasma]")
-
-	if(emergency_shuttle)
-		if(emergency_shuttle.online && emergency_shuttle.location < 2)
-			var/timeleft = emergency_shuttle.timeleft()
-			if (timeleft)
-				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
 /mob/living/carbon/alien/Stun(amount)
 	if(status_flags & CANSTUN)
@@ -186,6 +167,25 @@
 
 /mob/living/carbon/alien/getTrail()
 	return "xltrails"
+
+/mob/living/carbon/alien/cuff_break(obj/item/I, mob/living/carbon/C)
+	playsound(C, 'sound/voice/hiss5.ogg', 40, 1, 1)  //Alien roars when breaking free.
+	..()
+
+/mob/living/carbon/alien/verb/nightvisiontoggle()
+	set name = "Toggle Night Vision"
+	set category = "Alien"
+
+	if(!nightvision)
+		see_in_dark = 8
+		see_invisible = SEE_INVISIBLE_MINIMUM
+		nightvision = 1
+		hud_used.nightvisionicon.icon_state = "nightvision1"
+	else if(nightvision == 1)
+		see_in_dark = 4
+		see_invisible = 45
+		nightvision = 0
+		hud_used.nightvisionicon.icon_state = "nightvision0"
 
 /*----------------------------------------
 Proc: AddInfectionImages()
@@ -209,8 +209,11 @@ Des: Removes all infected images from the alien.
 	if (client)
 		for(var/image/I in client.images)
 			if(dd_hasprefix_case(I.icon_state, "infected"))
-				del(I)
+				qdel(I)
 	return
+
+/mob/living/carbon/alien/canBeHandcuffed()
+	return 1
 
 #undef HEAT_DAMAGE_LEVEL_1
 #undef HEAT_DAMAGE_LEVEL_2

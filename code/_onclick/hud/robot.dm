@@ -1,3 +1,59 @@
+/obj/screen/robot
+	icon = 'icons/mob/screen_cyborg.dmi'
+
+/obj/screen/robot/module
+	name = "cyborg module"
+	icon_state = "nomod"
+
+/obj/screen/robot/module/Click()
+	var/mob/living/silicon/robot/R = usr
+	if(R.module)
+		R.hud_used.toggle_show_robot_modules()
+		return 1
+	R.pick_module()
+
+/obj/screen/robot/module1
+	name = "module1"
+	icon_state = "inv1"
+
+/obj/screen/robot/module1/Click()
+	var/mob/living/silicon/robot/R = usr
+	R.toggle_module(1)
+
+/obj/screen/robot/module2
+	name = "module2"
+	icon_state = "inv2"
+
+/obj/screen/robot/module2/Click()
+	var/mob/living/silicon/robot/R = usr
+	R.toggle_module(2)
+
+/obj/screen/robot/module3
+	name = "module3"
+	icon_state = "inv3"
+
+/obj/screen/robot/module3/Click()
+	var/mob/living/silicon/robot/R = usr
+	R.toggle_module(3)
+
+
+/obj/screen/robot/radio
+	name = "radio"
+	icon_state = "radio"
+
+/obj/screen/robot/radio/Click()
+	var/mob/living/silicon/robot/R = usr
+	R.radio_menu()
+
+/obj/screen/robot/store
+	name = "store"
+	icon_state = "store"
+
+/obj/screen/robot/store/Click()
+	var/mob/living/silicon/robot/R = usr
+	R.uneq_active()
+
+
 /datum/hud/proc/robot_hud()
 	adding = list()
 	other = list()
@@ -6,61 +62,60 @@
 
 
 //Radio
-	using = new /obj/screen()
-	using.name = "radio"
-	using.icon = 'icons/mob/screen_cyborg.dmi'
-	using.icon_state = "radio"
+	using = new /obj/screen/robot/radio()
 	using.screen_loc = ui_borg_radio
-	using.layer = 20
 	adding += using
 
 //Module select
 
-	using = new /obj/screen()
-	using.name = "module1"
-	using.icon = 'icons/mob/screen_cyborg.dmi'
-	using.icon_state = "inv1"
+	var/mob/living/silicon/robot/mymobR = mymob
+
+	using = new /obj/screen/robot/module1()
 	using.screen_loc = ui_inv1
-	using.layer = 20
 	adding += using
-	mymob:inv1 = using
+	mymobR.inv1 = using
 
-	using = new /obj/screen()
-	using.name = "module2"
-	using.icon = 'icons/mob/screen_cyborg.dmi'
-	using.icon_state = "inv2"
+	using = new /obj/screen/robot/module2()
 	using.screen_loc = ui_inv2
-	using.layer = 20
 	adding += using
-	mymob:inv2 = using
+	mymobR.inv2 = using
 
-	using = new /obj/screen()
-	using.name = "module3"
-	using.icon = 'icons/mob/screen_cyborg.dmi'
-	using.icon_state = "inv3"
+	using = new /obj/screen/robot/module3()
 	using.screen_loc = ui_inv3
-	using.layer = 20
 	adding += using
-	mymob:inv3 = using
+	mymobR.inv3 = using
 
 //End of module select
 
+//Photography stuff
+
+	using = new /obj/screen/ai/image_take()
+	using.screen_loc = ui_borg_camera
+	adding += using
+
+	using = new /obj/screen/ai/image_view()
+	using.screen_loc = ui_borg_album
+	adding += using
+
+//Sec/Med HUDs
+	using = new /obj/screen/ai/sensors()
+	using.screen_loc = ui_borg_sensor
+	adding += using
+
 //Intent
-	using = new /obj/screen()
-	using.name = "act_intent"
+	using = new /obj/screen/act_intent()
 	using.icon = 'icons/mob/screen_cyborg.dmi'
 	using.icon_state = mymob.a_intent
 	using.screen_loc = ui_borg_intents
-	using.layer = 20
 	adding += using
 	action_intent = using
 
 //Cell
-	mymob:cells = new /obj/screen()
-	mymob:cells.icon = 'icons/mob/screen_cyborg.dmi'
-	mymob:cells.icon_state = "charge-empty"
-	mymob:cells.name = "cell"
-	mymob:cells.screen_loc = ui_toxin
+	mymobR.cells = new /obj/screen()
+	mymobR.cells.icon = 'icons/mob/screen_cyborg.dmi'
+	mymobR.cells.icon_state = "charge-empty"
+	mymobR.cells.name = "cell"
+	mymobR.cells.screen_loc = ui_toxin
 
 //Health
 	mymob.healths = new /obj/screen()
@@ -70,17 +125,11 @@
 	mymob.healths.screen_loc = ui_borg_health
 
 //Installed Module
-	mymob.hands = new /obj/screen()
-	mymob.hands.icon = 'icons/mob/screen_cyborg.dmi'
-	mymob.hands.icon_state = "nomod"
-	mymob.hands.name = "module"
+	mymob.hands = new /obj/screen/robot/module()
 	mymob.hands.screen_loc = ui_borg_module
 
 //Store
-	mymob.throw_icon = new /obj/screen()
-	mymob.throw_icon.icon = 'icons/mob/screen_cyborg.dmi'
-	mymob.throw_icon.icon_state = "store"
-	mymob.throw_icon.name = "store"
+	mymob.throw_icon = new /obj/screen/robot/store()
 	mymob.throw_icon.screen_loc = ui_borg_store
 
 //Temp
@@ -102,10 +151,9 @@
 	mymob.fire.name = "fire"
 	mymob.fire.screen_loc = ui_fire
 
-	mymob.pullin = new /obj/screen()
+	mymob.pullin = new /obj/screen/pull()
 	mymob.pullin.icon = 'icons/mob/screen_cyborg.dmi'
 	mymob.pullin.icon_state = "pull0"
-	mymob.pullin.name = "pull"
 	mymob.pullin.screen_loc = ui_borg_pull
 
 	mymob.blind = new /obj/screen()
@@ -128,7 +176,7 @@
 
 	mymob.client.screen = null
 
-	mymob.client.screen += list(mymob.zone_sel, mymob.oxygen, mymob.fire, mymob.hands, mymob.healths, mymob:cells, mymob.pullin, mymob.blind, mymob.flash) //, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list(mymob.zone_sel, mymob.oxygen, mymob.fire, mymob.hands, mymob.healths, mymobR.cells, mymob.pullin, mymob.blind, mymob.flash) //, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += adding + other
 
 	return

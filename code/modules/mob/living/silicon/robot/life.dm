@@ -5,9 +5,6 @@
 	if (src.notransform)
 		return
 
-
-	src.blinded = null
-
 	//Status updates, death etc.
 	clamp_values()
 	handle_regular_status_updates()
@@ -24,9 +21,9 @@
 
 /mob/living/silicon/robot/proc/clamp_values()
 
-//	SetStunned(min(stunned, 30))
+	SetStunned(min(stunned, 30))
 	SetParalysis(min(paralysis, 30))
-//	SetWeakened(min(weakened, 20))
+	SetWeakened(min(weakened, 20))
 	sleeping = 0
 	adjustBruteLoss(0)
 	adjustToxLoss(0)
@@ -50,7 +47,7 @@
 			if(src.module_state_3)
 				src.cell.use(5)
 			src.cell.use(1)
-			src.blinded = 0
+			src.eye_blind = 0
 			src.stat = 0
 	else
 		uneq_all()
@@ -98,34 +95,25 @@
 				AdjustWeakened(-1)
 			if (src.paralysis > 0)
 				AdjustParalysis(-1)
-				src.blinded = 1
+				src.eye_blind = max(eye_blind, 1)
 			else
-				src.blinded = 0
+				src.eye_blind = 0
 
 		else	//Not stunned.
 			src.stat = 0
 
 	else //Dead.
-		src.blinded = 1
-		src.stat = 2
+		src.eye_blind = 1
 
 	if (src.stuttering) src.stuttering--
 
 	if (src.eye_blind)
 		src.eye_blind--
-		src.blinded = 1
-
-	if (src.ear_deaf > 0) src.ear_deaf--
-	if (src.ear_damage < 25)
-		src.ear_damage -= 0.05
-		src.ear_damage = max(src.ear_damage, 0)
 
 	src.density = !( src.lying )
 
-	if ((src.sdisabilities & BLIND))
-		src.blinded = 1
-	if ((src.sdisabilities & DEAF))
-		src.ear_deaf = 1
+	if (src.disabilities & BLIND)
+		src.eye_blind = max(1, eye_blind)
 
 	if (src.eye_blurry > 0)
 		src.eye_blurry--
@@ -139,7 +127,7 @@
 
 /mob/living/silicon/robot/proc/handle_regular_hud_updates()
 
-	if (src.stat == 2 || XRAY in mutations || src.sight_mode & BORGXRAY)
+	if (src.stat == 2 || src.sight_mode & BORGXRAY)
 		src.sight |= SEE_TURFS
 		src.sight |= SEE_MOBS
 		src.sight |= SEE_OBJS
@@ -153,7 +141,8 @@
 			src.see_invisible = SEE_INVISIBLE_MINIMUM
 		else if (src.sight_mode & BORGMESON)
 			src.sight |= SEE_TURFS
-			see_invisible = SEE_INVISIBLE_MINIMUM
+			src.see_invisible = SEE_INVISIBLE_MINIMUM
+			src.see_in_dark = 1
 		else if (src.sight_mode & BORGTHERM)
 			src.sight |= SEE_MOBS
 			src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
@@ -164,13 +153,6 @@
 			src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 		if(see_override)
 			see_invisible = see_override
-
-	for(var/image/hud in client.images)
-		if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
-			client.images.Remove(hud)
-
-	var/obj/item/borg/sight/hud/hud = (locate(/obj/item/borg/sight/hud) in src)
-	if(hud && hud.hud)	hud.hud.process_hud(src)
 
 	if (src.healths)
 		if (src.stat != 2)
@@ -247,11 +229,11 @@
 	client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
 
 	if ((src.blind && src.stat != 2))
-		if(src.blinded)
+		if(src.eye_blind)
 			src.blind.layer = 18
 		else
 			src.blind.layer = 0
-			if (src.disabilities & NEARSIGHTED)
+			if (src.disabilities & NEARSIGHT)
 				src.client.screen += global_hud.vimpaired
 
 			if (src.eye_blurry)
@@ -274,7 +256,7 @@
 	if (src.client)
 		src.client.screen -= src.contents
 		for(var/obj/I in src.contents)
-			if(I && !(istype(I,/obj/item/weapon/cell) || istype(I,/obj/item/device/radio)  || istype(I,/obj/machinery/camera) || istype(I,/obj/item/device/mmi)))
+			if(I && !(istype(I,/obj/item/weapon/stock_parts/cell) || istype(I,/obj/item/device/radio)  || istype(I,/obj/machinery/camera) || istype(I,/obj/item/device/mmi)))
 				src.client.screen += I
 	if(src.module_state_1)
 		src.module_state_1:screen_loc = ui_inv1
@@ -288,21 +270,23 @@
 /mob/living/silicon/robot/handle_fire()
 	if(..())
 		return
-	adjustFireLoss(3)
+	if(fire_stacks > 0)
+		fire_stacks--
+		fire_stacks = max(0, fire_stacks)
+	else
+		ExtinguishMob()
+
+	//adjustFireLoss(3)
 	return
 
 /mob/living/silicon/robot/update_fire()
 	overlays -= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
 	if(on_fire)
 		overlays += image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
-	update_icons()
-	return
 
 /mob/living/silicon/robot/fire_act()
 	if(!on_fire) //Silicons don't gain stacks from hotspots, but hotspots can ignite them
 		IgniteMob()
-
-//Robots on fire
 
 /mob/living/silicon/robot/update_canmove()
 	if(paralysis || stunned || weakened || buckled || lockcharge) canmove = 0

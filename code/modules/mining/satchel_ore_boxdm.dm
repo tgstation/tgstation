@@ -4,7 +4,7 @@
 /obj/structure/ore_box
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "orebox"
-	name = "Ore Box"
+	name = "ore box"
 	desc = "It's heavy"
 	density = 1
 
@@ -17,7 +17,7 @@
 		S.hide_from(usr)
 		for(var/obj/item/weapon/ore/O in S.contents)
 			S.remove_from_storage(O, src) //This will move the item to this item's contents
-		user << "\blue You empty the satchel into the box."
+		user << "<span class='notice'>You empty the satchel into the box.</span>"
 	return
 
 /obj/structure/ore_box/attack_hand(mob/user as mob)
@@ -45,7 +45,7 @@
 			amt_gold++;
 		if (istype(C,/obj/item/weapon/ore/uranium))
 			amt_uranium++;
-		if (istype(C,/obj/item/weapon/ore/clown))
+		if (istype(C,/obj/item/weapon/ore/bananium))
 			amt_clown++;
 
 	var/dat = text("<b>The contents of the ore box reveal...</b><br>")
@@ -79,6 +79,10 @@
 		for (var/obj/item/weapon/ore/O in contents)
 			contents -= O
 			O.loc = src.loc
-		usr << "\blue You empty the box"
+		usr << "<span class='notice'>You empty the box.</span>"
 	src.updateUsrDialog()
 	return
+
+obj/structure/ore_box/ex_act(severity, target)
+	if(prob(100 / severity) && severity < 3)
+		qdel(src) //nothing but ores can get inside unless its a bug and ores just return nothing on ex_act, not point in calling it on them

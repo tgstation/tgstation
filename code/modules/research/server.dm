@@ -24,7 +24,7 @@
 	RefreshParts()
 	src.initialize(); //Agouri
 
-/obj/machinery/r_n_d/server/Del()
+/obj/machinery/r_n_d/server/Destroy()
 	griefProtection()
 	..()
 
@@ -74,17 +74,13 @@
 		produce_heat(heat_gen)
 		delay = initial(delay)
 
-/obj/machinery/r_n_d/server/meteorhit(var/obj/O as obj)
-	griefProtection()
-	..()
-
 
 /obj/machinery/r_n_d/server/emp_act(severity)
 	griefProtection()
 	..()
 
 
-/obj/machinery/r_n_d/server/ex_act(severity)
+/obj/machinery/r_n_d/server/ex_act(severity, target)
 	griefProtection()
 	..()
 
@@ -132,6 +128,8 @@
 		shock(user,50)
 	if (default_deconstruction_screwdriver(user, "server_o", "server", O))
 		return
+	if(exchange_parts(user, O))
+		return
 	if (panel_open)
 		if(istype(O, /obj/item/weapon/crowbar))
 			griefProtection()
@@ -178,6 +176,7 @@
 
 /obj/machinery/computer/rdservercontrol
 	name = "R&D Server Controller"
+	desc = "Used to manage access to research and manufacturing databases."
 	icon_state = "rdcomp"
 	var/screen = 0
 	var/obj/machinery/r_n_d/server/temp_server
@@ -193,7 +192,7 @@
 	add_fingerprint(usr)
 	usr.set_machine(src)
 	if(!src.allowed(usr) && !emagged)
-		usr << "\red You do not have the required access level"
+		usr << "<span class='danger'> You do not have the required access level.</span>"
 		return
 
 	if(href_list["main"])
@@ -236,7 +235,7 @@
 			temp_server.id_with_download += num
 
 	else if(href_list["reset_tech"])
-		var/choice = alert("Technology Data Rest", "Are you sure you want to reset this technology to its default data? Data lost cannot be recovered.", "Continue", "Cancel")
+		var/choice = alert("Technology Data Reset", "Are you sure you want to reset this technology to its default data? Data lost cannot be recovered.", "Continue", "Cancel")
 		if(choice == "Continue")
 			for(var/datum/tech/T in temp_server.files.known_tech)
 				if(T.id == href_list["reset_tech"])
@@ -318,15 +317,15 @@
 	return
 
 /obj/machinery/computer/rdservercontrol/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
-	if(istype(D, /obj/item/weapon/card/emag) && !emagged)
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
-		emagged = 1
-		user << "\blue You you disable the security protocols"
-	else
-		..()
+	..()
 	src.updateUsrDialog()
 	return
 
+/obj/machinery/computer/rdservercontrol/emag_act(mob/user as mob)
+	if(!emagged)
+		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
+		emagged = 1
+		user << "<span class='notice'> You you disable the security protocols.</span>"
 
 /obj/machinery/r_n_d/server/robotics
 	name = "Robotics R&D Server"

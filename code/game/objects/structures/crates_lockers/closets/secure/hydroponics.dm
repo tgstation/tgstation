@@ -1,5 +1,5 @@
 /obj/structure/closet/secure_closet/hydroponics
-	name = "Botanist's locker"
+	name = "botanist's locker"
 	req_access = list(access_hydroponics)
 	icon_state = "hydrosecure1"
 	icon_closed = "hydrosecure"
@@ -11,7 +11,7 @@
 
 	New()
 		..()
-		sleep(2)
+		new /obj/item/clothing/suit/toggle/wintercoat/hydro(src)
 		switch(rand(1,2))
 			if(1)
 				new /obj/item/clothing/suit/apron(src)
@@ -21,7 +21,7 @@
 		new /obj/item/clothing/under/rank/hydroponics(src)
 		new /obj/item/device/analyzer/plant_analyzer(src)
 		new /obj/item/device/radio/headset/headset_srv(src)
-		new /obj/item/clothing/head/greenbandana(src)
+		new /obj/item/clothing/mask/bandana(src)
 		new /obj/item/weapon/minihoe(src)
 		new /obj/item/weapon/hatchet(src)
 		return

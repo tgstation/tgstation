@@ -5,6 +5,7 @@
 	icon_state = "off"
 	density = 1
 	anchored = 1
+	unacidable = 1
 	var/active = 0
 
 
@@ -118,6 +119,7 @@ obj/machinery/gateway/centerstation/process()
 	if(!ready)		return
 	if(!active)		return
 	if(!awaygate)	return
+
 	if(awaygate.calibrated)
 		M.loc = get_step(awaygate.loc, SOUTH)
 		M.dir = SOUTH
@@ -231,6 +233,6 @@ obj/machinery/gateway/centerstation/process()
 			user << "\black The gate is already calibrated, there is no work for you to do here."
 			return
 		else
-			user << "\blue <b>Recalibration successful!</b>: \black This gate's systems have been fine tuned.  Travel to this gate will now be on target."
+			user << "<span class='boldnotice'>Recalibration successful!</span>: \black This gate's systems have been fine tuned.  Travel to this gate will now be on target."
 			calibrated = 1
 			return

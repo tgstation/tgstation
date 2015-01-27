@@ -16,6 +16,7 @@
 	species = /mob/living/simple_animal/cat
 	childtype = /mob/living/simple_animal/cat/kitten
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	meat_amount = 3
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
@@ -36,9 +37,9 @@
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
-				if(!M.stat)
+				if(!M.stat && Adjacent(M))
+					emote("me", 1, "splats \the [M]!")
 					M.splat()
-					emote("splats \the [M]")
 					movement_target = null
 					stop_automated_movement = 0
 					break
@@ -76,3 +77,4 @@
 	icon_living = "kitten"
 	icon_dead = "kitten_dead"
 	gender = NEUTER
+	mob_size = 0

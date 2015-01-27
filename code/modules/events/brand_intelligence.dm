@@ -21,7 +21,7 @@
 
 
 /datum/round_event/brand_intelligence/announce()
-	command_alert("Rampant brand intelligence has been detected aboard [station_name()], please stand-by. The origin is believed to be \a [originMachine.name].", "Machine Learning Alert")
+	priority_announce("Rampant brand intelligence has been detected aboard [station_name()], please stand-by. The origin is believed to be \a [originMachine.name].", "Machine Learning Alert")
 
 
 /datum/round_event/brand_intelligence/start()
@@ -40,7 +40,7 @@
 
 
 /datum/round_event/brand_intelligence/tick()
-	if(!originMachine || originMachine.shut_up || originMachine.wires.IsAllCut())	//if the original vending machine is missing or has it's voice switch flipped
+	if(!originMachine || originMachine.gc_destroyed || originMachine.shut_up || originMachine.wires.IsAllCut())	//if the original vending machine is missing or has it's voice switch flipped
 		for(var/obj/machinery/vending/saved in infectedMachines)
 			saved.shoot_inventory = 0
 		if(originMachine)
@@ -51,14 +51,14 @@
 
 	if(!vendingMachines.len)	//if every machine is infected
 		for(var/obj/machinery/vending/upriser in infectedMachines)
-			if(prob(70))
+			if(prob(70) && !upriser.gc_destroyed)
 				var/mob/living/simple_animal/hostile/mimic/copy/M = new(upriser.loc, upriser, null, 1) // it will delete upriser on creation and override any machine checks
-				M.faction = "profit"
+				M.faction = list("profit")
 				M.speak = rampant_speeches.Copy()
 				M.speak_chance = 15
 			else
 				explosion(upriser.loc, -1, 1, 2, 4, 0)
-				del(upriser)
+				qdel(upriser)
 
 		kill()
 		return

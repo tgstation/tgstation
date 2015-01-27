@@ -19,18 +19,17 @@
 	canmove = 0
 	stunned = 1
 	icon = null
+	overlays.Cut()
 	invisibility = 101
-	var/atom/movable/overlay/animation = new /atom/movable/overlay( loc )
+
+	var/atom/movable/overlay/animation = new( loc )
 	animation.icon_state = "blank"
 	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
 	flick("h2monkey", animation)
 	sleep(22)
-	//animation = null
 	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( loc )
-	del(animation)
-
-
+	qdel(animation)
 
 	// hash the original name?
 	if	(tr_flags & TR_HASHNAME)
@@ -41,10 +40,11 @@
 		O.real_name = newname
 
 	//handle DNA and other attributes
-	O.dna = dna
-	dna = null
-	if (!(tr_flags & TR_KEEPSE))
-		O.dna.struc_enzymes = setblock(O.dna.struc_enzymes, RACEBLOCK, construct_block(BAD_MUTATION_DIFFICULTY,BAD_MUTATION_DIFFICULTY))
+	if(dna)
+		dna.transfer_identity(O)
+		if(tr_flags & TR_KEEPSE)
+			O.dna.struc_enzymes = dna.struc_enzymes
+
 	if(suiciding)
 		O.suiciding = suiciding
 	O.loc = loc
@@ -63,6 +63,7 @@
 		O.adjustBruteLoss(getBruteLoss())
 		O.setOxyLoss(getOxyLoss())
 		O.adjustFireLoss(getFireLoss())
+		O.radiation = radiation
 
 	//re-add implants to new mob
 	for(var/obj/item/weapon/implant/I in implants)
@@ -72,14 +73,19 @@
 	//transfer mind and delete old mob
 	if(mind)
 		mind.transfer_to(O)
+		if(O.mind.changeling)
+			O.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
 	if (tr_flags & TR_DEFAULTMSG)
 		O << "<B>You are now a monkey.</B>"
+
+	for(var/A in loc.vars)
+		if(loc.vars[A] == src)
+			loc.vars[A] = O
+
 	updateappearance(O)
 	. = O
 	if ( !(tr_flags & TR_KEEPSRC) ) //flag should be used if monkeyize() is called inside another proc of src so that one does not crash
-		del(src)
-	return
-
+		qdel(src)
 
 
 //////////////////////////           Humanize               //////////////////////////////
@@ -116,6 +122,7 @@
 	canmove = 0
 	stunned = 1
 	icon = null
+	overlays.Cut()
 	invisibility = 101
 	var/atom/movable/overlay/animation = new( loc )
 	animation.icon_state = "blank"
@@ -126,23 +133,30 @@
 	var/mob/living/carbon/human/O = new( loc )
 	for(var/obj/item/C in O.loc)
 		O.equip_to_appropriate_slot(C)
-	del(animation)
-
+	qdel(animation)
 
 	O.gender = (deconstruct_block(getblock(dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? FEMALE : MALE
-	O.dna = dna
+
+	if(dna)
+		dna.transfer_identity(O)
+		O.update_icons()
+		if(tr_flags & TR_KEEPSE)
+			O.dna.struc_enzymes = dna.struc_enzymes
+			domutcheck(O)
+
+	if(!dna.species)
+		O.dna.species = new /datum/species/human()
+	else
+		O.dna.species = new dna.species.type()
+
 	dna = null
-	if (newname) //if there's a name as an argument, always take that one over the current name
+	if(newname) //if there's a name as an argument, always take that one over the current name
 		O.real_name = newname
 	else
-		if ( !(cmptext 	("monkey",copytext(O.dna.real_name,1,7))  ) )
-			O.real_name = O.dna.real_name
-		else
-			O.real_name = random_name(O.gender)
-	O.name = O.real_name
-
-	if (!(tr_flags & TR_KEEPSE))
-		O.dna.struc_enzymes = setblock(O.dna.struc_enzymes, RACEBLOCK, construct_block(1,BAD_MUTATION_DIFFICULTY))
+		if(cmptext("monkey",copytext(O.dna.real_name,1,7)))
+			O.dna.real_name = random_name(O.gender)
+		O.real_name = O.dna.real_name
+		O.name = O.real_name
 
 	if(suiciding)
 		O.suiciding = suiciding
@@ -155,6 +169,7 @@
 		viruses = list()
 		for(var/datum/disease/D in O.viruses)
 			D.affected_mob = O
+		O.med_hud_set_status()
 
 	//keep damage?
 	if (tr_flags & TR_KEEPDAMAGE)
@@ -162,22 +177,30 @@
 		O.adjustBruteLoss(getBruteLoss())
 		O.setOxyLoss(getOxyLoss())
 		O.adjustFireLoss(getFireLoss())
+		O.radiation = radiation
 
 	//re-add implants to new mob
 	for(var/obj/item/weapon/implant/I in implants)
 		I.loc = O
 		I.implanted = O
+	O.sec_hud_set_implants()
 
 	if(mind)
 		mind.transfer_to(O)
 	O.a_intent = "help"
 	if (tr_flags & TR_DEFAULTMSG)
 		O << "<B>You are now a human.</B>"
+
 	updateappearance(O)
 	. = O
+
+	for(var/A in loc.vars)
+		if(loc.vars[A] == src)
+			loc.vars[A] = O
+
 	if ( !(tr_flags & TR_KEEPSRC) ) //don't delete src yet if it's needed to finish calling proc
-		del(src)
-	return
+		qdel(src)
+
 
 /mob/new_player/AIize()
 	spawning = 1
@@ -187,7 +210,7 @@
 	if (notransform)
 		return
 	for(var/t in organs)
-		del(t)
+		qdel(t)
 
 	return ..()
 
@@ -242,24 +265,21 @@
 	O << "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>"
 	O << "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>"
 	O << "To use something, simply click on it."
-	O << {"Use say ":b to speak to your cyborgs through binary."}
+	O << {"Use say ":b to speak to your cyborgs through binary."} //"
+	O << "For department channels, use the following say commands:"
+	O << ":o - AI Private, :c - Command, :s - Security, :e - Engineering, :u - Supply, :v - Service, :m - Medical, :n - Science."
 	if (!(ticker && ticker.mode && (O.mind in ticker.mode.malf_ai)))
 		O.show_laws()
 		O << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
 
-	O.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
 	O.verbs += /mob/living/silicon/ai/proc/show_laws_verb
-	O.verbs += /mob/living/silicon/ai/proc/ai_camera_track
-	O.verbs += /mob/living/silicon/ai/proc/ai_alerts
-	O.verbs += /mob/living/silicon/ai/proc/ai_camera_list
 	O.verbs += /mob/living/silicon/ai/proc/ai_statuschange
-	O.verbs += /mob/living/silicon/ai/proc/ai_roster
 
 	O.job = "AI"
 
 	O.rename_self("ai",1)
 	. = O
-	del(src)
+	qdel(src)
 	return
 
 
@@ -269,7 +289,7 @@
 		return
 	for(var/obj/item/W in src)
 		if(delete_items)
-			del(W)
+			qdel(W)
 		else
 			unEquip(W)
 	regenerate_icons()
@@ -278,9 +298,12 @@
 	icon = null
 	invisibility = 101
 	for(var/t in organs)
-		del(t)
+		qdel(t)
 
 	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot( loc )
+
+	if (config.rename_cyborg)
+		O.rename_self("cyborg", 1)
 
 	// cyborgs produced by Robotize get an automatic power cell
 	O.cell = new(O)
@@ -301,12 +324,10 @@
 
 	O.loc = loc
 	O.job = "Cyborg"
-
-	O.mmi = new /obj/item/device/mmi(O)
-	O.mmi.transfer_identity(src)//Does not transfer key/client.
+	O.notify_ai(1)
 
 	. = O
-	del(src)
+	qdel(src)
 
 //human -> alien
 /mob/living/carbon/human/proc/Alienize()
@@ -320,7 +341,7 @@
 	icon = null
 	invisibility = 101
 	for(var/t in organs)
-		del(t)
+		qdel(t)
 
 	var/alien_caste = pick("Hunter","Sentinel","Drone")
 	var/mob/living/carbon/alien/humanoid/new_xeno
@@ -337,7 +358,7 @@
 
 	new_xeno << "<B>You are now an alien.</B>"
 	. = new_xeno
-	del(src)
+	qdel(src)
 
 /mob/living/carbon/human/proc/slimeize(reproduce as num)
 	if (notransform)
@@ -350,7 +371,7 @@
 	icon = null
 	invisibility = 101
 	for(var/t in organs)
-		del(t)
+		qdel(t)
 
 	var/mob/living/carbon/slime/new_slime
 	if(reproduce)
@@ -369,7 +390,7 @@
 
 	new_slime << "<B>You are now a slime. Skreee!</B>"
 	. = new_slime
-	del(src)
+	qdel(src)
 
 /mob/living/carbon/human/proc/Blobize()
 	if (notransform)
@@ -397,7 +418,7 @@
 	icon = null
 	invisibility = 101
 	for(var/t in organs)	//this really should not be necessary
-		del(t)
+		qdel(t)
 
 	var/mob/living/simple_animal/corgi/new_corgi = new /mob/living/simple_animal/corgi (loc)
 	new_corgi.a_intent = "harm"
@@ -405,7 +426,7 @@
 
 	new_corgi << "<B>You are now a Corgi. Yap Yap!</B>"
 	. = new_corgi
-	del(src)
+	qdel(src)
 
 /mob/living/carbon/human/Animalize()
 
@@ -413,7 +434,7 @@
 	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in mobtypes
 
 	if(!safe_animal(mobpath))
-		usr << "\red Sorry but this mob type is currently unavailable."
+		usr << "<span class='danger'>Sorry but this mob type is currently unavailable.</span>"
 		return
 
 	if(notransform)
@@ -428,7 +449,7 @@
 	invisibility = 101
 
 	for(var/t in organs)
-		del(t)
+		qdel(t)
 
 	var/mob/new_mob = new mobpath(src.loc)
 
@@ -438,7 +459,7 @@
 
 	new_mob << "You suddenly feel more... animalistic."
 	. = new_mob
-	del(src)
+	qdel(src)
 
 /mob/proc/Animalize()
 
@@ -446,7 +467,7 @@
 	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in mobtypes
 
 	if(!safe_animal(mobpath))
-		usr << "\red Sorry but this mob type is currently unavailable."
+		usr << "<span class='danger'>Sorry but this mob type is currently unavailable.</span>"
 		return
 
 	var/mob/new_mob = new mobpath(src.loc)
@@ -456,7 +477,7 @@
 	new_mob << "You feel more... animalistic"
 
 	. = new_mob
-	del(src)
+	qdel(src)
 
 /* Certain mob types have problems and should not be allowed to be controlled by players.
  *
@@ -469,20 +490,8 @@
 	if(!MP)
 		return 0	//Sanity, this should never happen.
 
-//	if(ispath(MP, /mob/living/simple_animal/space_worm)) //Goodbye Space Worms 2014
-//		return 0 //Unfinished. Very buggy, they seem to just spawn additional space worms everywhere and eating your own tail results in new worms spawning.
-
-	if(ispath(MP, /mob/living/simple_animal/construct/behemoth))
-		return 0 //I think this may have been an unfinished WiP or something. These constructs should really have their own class simple_animal/construct/subtype
-
-	if(ispath(MP, /mob/living/simple_animal/construct/armoured))
-		return 0 //Verbs do not appear for players. These constructs should really have their own class simple_animal/construct/subtype
-
-	if(ispath(MP, /mob/living/simple_animal/construct/wraith))
-		return 0 //Verbs do not appear for players. These constructs should really have their own class simple_animal/construct/subtype
-
-	if(ispath(MP, /mob/living/simple_animal/construct/builder))
-		return 0 //Verbs do not appear for players. These constructs should really have their own class simple_animal/construct/subtype
+	if(ispath(MP, /mob/living/simple_animal/construct))
+		return 0 //Verbs do not appear for players.
 
 //Good mobs!
 	if(ispath(MP, /mob/living/simple_animal/cat))
@@ -497,7 +506,7 @@
 		return 1
 	if(ispath(MP, /mob/living/simple_animal/shade))
 		return 1
-	if(ispath(MP, /mob/living/simple_animal/tomato))
+	if(ispath(MP, /mob/living/simple_animal/hostile/killertomato))
 		return 1
 	if(ispath(MP, /mob/living/simple_animal/mouse))
 		return 1 //It is impossible to pull up the player panel for mice (Fixed! - Nodrak)

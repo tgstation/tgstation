@@ -11,12 +11,7 @@
 	pre_setup_before_jobs = 1
 	antag_flag = BE_OPERATIVE
 
-	uplink_welcome = "Corporate Backed Uplink Console:"
-	uplink_uses = 10
-
 	var/const/agents_possible = 5 //If we ever need more syndicate agents.
-	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!
 	var/nuke_off_station = 0 //Used for tracking if the syndies actually haul the nuke to the station
@@ -45,7 +40,7 @@
 		agent_number--
 
 	for(var/datum/mind/synd_mind in syndicates)
-		synd_mind.assigned_role = "MODE" //So they aren't chosen for other jobs.
+		synd_mind.assigned_role = "MODE"
 		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
 		log_game("[synd_mind.key] (ckey) has been selected as a nuclear operative")
 	return 1
@@ -53,44 +48,15 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
-/datum/game_mode/proc/update_all_synd_icons()
-	spawn(0)
-		for(var/datum/mind/synd_mind in syndicates)
-			if(synd_mind.current)
-				if(synd_mind.current.client)
-					for(var/image/I in synd_mind.current.client.images)
-						if(I.icon_state == "synd")
-							del(I)
-
-		for(var/datum/mind/synd_mind in syndicates)
-			if(synd_mind.current)
-				if(synd_mind.current.client)
-					for(var/datum/mind/synd_mind_1 in syndicates)
-						if(synd_mind_1.current)
-							var/I = image('icons/mob/mob.dmi', loc = synd_mind_1.current, icon_state = "synd")
-							synd_mind.current.client.images += I
-
 /datum/game_mode/proc/update_synd_icons_added(datum/mind/synd_mind)
-	spawn(0)
-		if(synd_mind.current)
-			if(synd_mind.current.client)
-				var/I = image('icons/mob/mob.dmi', loc = synd_mind.current, icon_state = "synd")
-				synd_mind.current.client.images += I
+	var/datum/atom_hud/antag/opshud = huds[ANTAG_HUD_OPS]
+	opshud.join_hud(synd_mind.current)
+	set_antag_hud(synd_mind.current, "synd")
 
 /datum/game_mode/proc/update_synd_icons_removed(datum/mind/synd_mind)
-	spawn(0)
-		for(var/datum/mind/synd in syndicates)
-			if(synd.current)
-				if(synd.current.client)
-					for(var/image/I in synd.current.client.images)
-						if(I.icon_state == "synd" && I.loc == synd_mind.current)
-							del(I)
-
-		if(synd_mind.current)
-			if(synd_mind.current.client)
-				for(var/image/I in synd_mind.current.client.images)
-					if(I.icon_state == "synd")
-						del(I)
+	var/datum/atom_hud/antag/opshud = huds[ANTAG_HUD_OPS]
+	opshud.leave_hud(synd_mind.current)
+	set_antag_hud(synd_mind.current, null)
 
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -102,7 +68,6 @@
 	for(var/obj/effect/landmark/A in landmarks_list)
 		if(A.name == "Syndicate-Spawn")
 			synd_spawn += get_turf(A)
-			del(A)
 			continue
 
 	var/obj/effect/landmark/uplinklocker = locate("landmark*Syndicate-Uplink")	//i will be rewriting this shortly
@@ -115,12 +80,16 @@
 
 	for(var/datum/mind/synd_mind in syndicates)
 		if(spawnpos > synd_spawn.len)
-			spawnpos = 1
+			spawnpos = 2
 		synd_mind.current.loc = synd_spawn[spawnpos]
 
 		forge_syndicate_objectives(synd_mind)
 		greet_syndicate(synd_mind)
 		equip_syndicate(synd_mind.current)
+
+		if (nuke_code)
+			synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
+			synd_mind.current << "The nuclear authorization code is: <B>[nuke_code]</B>"
 
 		if(!leader_selected)
 			prepare_syndicate_leader(synd_mind, nuke_code)
@@ -131,16 +100,11 @@
 		spawnpos++
 		update_synd_icons_added(synd_mind)
 
-	update_all_synd_icons()
-
 	if(uplinklocker)
 		new /obj/structure/closet/syndicate/nuclear(uplinklocker.loc)
 	if(nuke_spawn && synd_spawn.len > 0)
 		var/obj/machinery/nuclearbomb/the_bomb = new /obj/machinery/nuclearbomb(nuke_spawn.loc)
 		the_bomb.r_code = nuke_code
-
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
 
 	return ..()
 
@@ -150,20 +114,25 @@
 	spawn(1)
 		NukeNameAssign(nukelastname(synd_mind.current),syndicates) //allows time for the rest of the syndies to be chosen
 	synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
+	synd_mind.current << "<B>You are the Syndicate [leader_title] for this mission. You are responsible for the distribution of telecrystals and your ID is the only one who can open the launch bay doors.</B>"
+	synd_mind.current << "<B>If you feel you are not up to this task, give your ID to another operative.</B>"
+
+	var/list/foundIDs = synd_mind.current.search_contents_for(/obj/item/weapon/card/id)
+	if(foundIDs.len)
+		for(var/obj/item/weapon/card/id/ID in foundIDs)
+			ID.name = "lead agent card"
+			ID.access += access_syndicate_leader
+	else
+		message_admins("Warning: Nuke Ops spawned without access to leave their spawn area!")
+
 	if (nuke_code)
-		synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
-		synd_mind.current << "The nuclear authorization code is: <B>[nuke_code]</B>"
 		var/obj/item/weapon/paper/P = new
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
 		P.name = "nuclear bomb code"
-		if (ticker.mode.config_tag=="nuclear")
-			P.loc = synd_mind.current.loc
-		else
-			var/mob/living/carbon/human/H = synd_mind.current
-			P.loc = H.loc
-			H.equip_to_slot_or_del(P, slot_r_store, 0)
-			H.update_icons()
-
+		var/mob/living/carbon/human/H = synd_mind.current
+		P.loc = H.loc
+		H.equip_to_slot_or_del(P, slot_r_hand, 0)
+		H.update_icons()
 	else
 		nuke_code = "code will be provided later"
 	return
@@ -177,7 +146,7 @@
 
 /datum/game_mode/proc/greet_syndicate(var/datum/mind/syndicate, var/you_are=1)
 	if (you_are)
-		syndicate.current << "\blue You are a [syndicate_name()] agent!"
+		syndicate.current << "<span class='notice'>You are a [syndicate_name()] agent!</span>"
 	var/obj_count = 1
 	for(var/datum/objective/objective in syndicate.objectives)
 		syndicate.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
@@ -192,31 +161,29 @@
 /datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob)
 	var/radio_freq = SYND_FREQ
 
-	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate(synd_mob)
+	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate/alt(synd_mob)
 	R.set_frequency(radio_freq)
 	synd_mob.equip_to_slot_or_del(R, slot_ears)
 
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate(synd_mob), slot_w_uniform)
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(synd_mob), slot_shoes)
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(synd_mob), slot_wear_suit)
+	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(synd_mob), slot_shoes)
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(synd_mob), slot_gloves)
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/swat(synd_mob), slot_head)
 	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate(synd_mob), slot_wear_id)
 	if(synd_mob.backbag == 2) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(synd_mob), slot_back)
 	if(synd_mob.backbag == 3) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(synd_mob), slot_back)
-	synd_mob.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/m10mm(synd_mob), slot_in_backpack)
-	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/cyanide(synd_mob), slot_in_backpack)
 	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/pistol(synd_mob), slot_belt)
 	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(synd_mob.back), slot_in_backpack)
 
 	var/obj/item/device/radio/uplink/U = new /obj/item/device/radio/uplink(synd_mob)
-	U.hidden_uplink.uses = 10
+	U.hidden_uplink.uplink_owner="[synd_mob.key]"
+	U.hidden_uplink.uses = 20
 	synd_mob.equip_to_slot_or_del(U, slot_in_backpack)
 
-	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(synd_mob)
+	var/obj/item/weapon/implant/weapons_auth/E = new/obj/item/weapon/implant/weapons_auth(synd_mob)
 	E.imp_in = synd_mob
 	E.implanted = 1
-	synd_mob.faction = "syndicate"
+	E.implanted(synd_mob)
+	synd_mob.faction |= "syndicate"
 	synd_mob.update_icons()
 	return 1
 
@@ -227,23 +194,20 @@
 	return ..()
 
 
-/datum/game_mode/proc/is_operatives_are_dead()
+/datum/game_mode/proc/are_operatives_dead()
 	for(var/datum/mind/operative_mind in syndicates)
-		if (!istype(operative_mind.current,/mob/living/carbon/human))
-			if(operative_mind.current)
-				if(operative_mind.current.stat!=2)
-					return 0
+		if (istype(operative_mind.current,/mob/living/carbon/human) && (operative_mind.current.stat!=2))
+			return 0
 	return 1
 
 
 /datum/game_mode/nuclear/declare_completion()
 	var/disk_rescued = 1
 	for(var/obj/item/weapon/disk/nuclear/D in world)
-		var/disk_area = get_area(D)
-		if(!is_type_in_list(disk_area, centcom_areas))
+		if(!D.onCentcom())
 			disk_rescued = 0
 			break
-	var/crew_evacuated = (emergency_shuttle.location==2)
+	var/crew_evacuated = (SSshuttle.emergency.mode >= SHUTTLE_ENDGAME)
 	//var/operatives_are_dead = is_operatives_are_dead()
 
 
@@ -252,47 +216,47 @@
 	//derp //Used for tracking if the syndies actually haul the nuke to the station	//no
 	//herp //Used for tracking if the syndies got the shuttle off of the z-level	//NO, DON'T FUCKING NAME VARS LIKE THIS
 
-	if      (!disk_rescued &&  station_was_nuked &&          !syndies_didnt_escape)
+	if      (!disk_rescued &&  station_was_nuked && !syndies_didnt_escape)
 		feedback_set_details("round_end_result","win - syndicate nuke")
 		world << "<FONT size = 3><B>Syndicate Major Victory!</B></FONT>"
 		world << "<B>[syndicate_name()] operatives have destroyed [station_name()]!</B>"
 
-	else if (!disk_rescued &&  station_was_nuked &&           syndies_didnt_escape)
+	else if (!disk_rescued &&  station_was_nuked && syndies_didnt_escape)
 		feedback_set_details("round_end_result","halfwin - syndicate nuke - did not evacuate in time")
 		world << "<FONT size = 3><B>Total Annihilation</B></FONT>"
 		world << "<B>[syndicate_name()] operatives destroyed [station_name()] but did not leave the area in time and got caught in the explosion.</B> Next time, don't lose the disk!"
 
-	else if (!disk_rescued && !station_was_nuked &&  nuke_off_station && !syndies_didnt_escape)
+	else if (!disk_rescued && !station_was_nuked && nuke_off_station && !syndies_didnt_escape)
 		feedback_set_details("round_end_result","halfwin - blew wrong station")
 		world << "<FONT size = 3><B>Crew Minor Victory</B></FONT>"
 		world << "<B>[syndicate_name()] operatives secured the authentication disk but blew up something that wasn't [station_name()].</B> Next time, don't lose the disk!"
 
-	else if (!disk_rescued && !station_was_nuked &&  nuke_off_station &&  syndies_didnt_escape)
+	else if (!disk_rescued && !station_was_nuked && nuke_off_station && syndies_didnt_escape)
 		feedback_set_details("round_end_result","halfwin - blew wrong station - did not evacuate in time")
 		world << "<FONT size = 3><B>[syndicate_name()] operatives have earned Darwin Award!</B></FONT>"
 		world << "<B>[syndicate_name()] operatives blew up something that wasn't [station_name()] and got caught in the explosion.</B> Next time, don't lose the disk!"
 
-	else if ( disk_rescued                                         && is_operatives_are_dead())
+	else if ( disk_rescued && are_operatives_dead())
 		feedback_set_details("round_end_result","loss - evacuation - disk secured - syndi team dead")
 		world << "<FONT size = 3><B>Crew Major Victory!</B></FONT>"
 		world << "<B>The Research Staff has saved the disc and killed the [syndicate_name()] Operatives</B>"
 
-	else if ( disk_rescued                                        )
+	else if ( disk_rescued )
 		feedback_set_details("round_end_result","loss - evacuation - disk secured")
 		world << "<FONT size = 3><B>Crew Major Victory</B></FONT>"
 		world << "<B>The Research Staff has saved the disc and stopped the [syndicate_name()] Operatives!</B>"
 
-	else if (!disk_rescued                                         && is_operatives_are_dead())
+	else if (!disk_rescued && are_operatives_dead())
 		feedback_set_details("round_end_result","loss - evacuation - disk not secured")
 		world << "<FONT size = 3><B>Syndicate Minor Victory!</B></FONT>"
 		world << "<B>The Research Staff failed to secure the authentication disk but did manage to kill most of the [syndicate_name()] Operatives!</B>"
 
-	else if (!disk_rescued                                         &&  crew_evacuated)
+	else if (!disk_rescued &&  crew_evacuated)
 		feedback_set_details("round_end_result","halfwin - detonation averted")
 		world << "<FONT size = 3><B>Syndicate Minor Victory!</B></FONT>"
 		world << "<B>[syndicate_name()] operatives recovered the abandoned authentication disk but detonation of [station_name()] was averted.</B> Next time, don't lose the disk!"
 
-	else if (!disk_rescued                                         && !crew_evacuated)
+	else if (!disk_rescued && !crew_evacuated)
 		feedback_set_details("round_end_result","halfwin - interrupted")
 		world << "<FONT size = 3><B>Neutral Victory</B></FONT>"
 		world << "<B>Round was mysteriously interrupted!</B>"
@@ -323,13 +287,16 @@
 			text += ")"
 
 			for(var/obj/item/device/uplink/H in world_uplinks)
-				if(H && H.uplink_owner && H.uplink_owner==syndicate.name)
+				if(H && H.uplink_owner && H.uplink_owner==syndicate.key)
 					TC_uses += H.used_TC
 					purchases += H.purchase_log
 
 		text += "<br>"
 
 		text += "(Syndicates used [TC_uses] TC) [purchases]"
+
+		if(TC_uses==0 && station_was_nuked && !are_operatives_dead())
+			text += "<BIG><IMG CLASS=icon SRC=\ref['icons/BadAss.dmi'] ICONSTATE='badass'></BIG>"
 
 		world << text
 	return 1

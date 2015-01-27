@@ -2,5 +2,5 @@
 	name = "decal"
 	icon = 'icons/effects/effects.dmi'
 
-/obj/effect/decal/ex_act(severity)
-		del(src)
+/obj/effect/decal/ex_act(severity, target)
+	qdel(src)

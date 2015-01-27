@@ -7,6 +7,7 @@
 	slot_flags = SLOT_BELT
 	throwforce = 0
 	w_class = 1.0
+	var/fire_sound = null						//What sound should play when this ammo is fired
 	var/caliber = null							//Which kind of guns it can be loaded into
 	var/projectile_type = null					//The bullet type to create when New() is called
 	var/obj/item/projectile/BB = null 			//The loaded bullet
@@ -28,12 +29,10 @@
 	icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
 	desc = "[initial(desc)][BB ? "" : " This one is spent"]"
 
-/obj/item/ammo_casing/proc/newshot() //For energy weapons and shotgun shells.
+/obj/item/ammo_casing/proc/newshot() //For energy weapons, shotgun shells and wands (!).
 	if (!BB)
 		BB = new projectile_type(src)
 	return
-
-
 
 //Boxes of ammo
 /obj/item/ammo_box
@@ -44,7 +43,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	item_state = "syringe_kit"
-	m_amt = 50000
+	m_amt = 30000
 	throwforce = 2
 	w_class = 1.0
 	throw_speed = 3
@@ -72,21 +71,34 @@
 			stored_ammo.Insert(1,b)
 		return b
 
-/obj/item/ammo_box/proc/give_round(var/obj/item/ammo_casing/r)
-	var/obj/item/ammo_casing/rb = r
-	if (rb)
-		if (stored_ammo.len < max_ammo && rb.caliber == caliber)
-			stored_ammo += rb
-			rb.loc = src
-			return 1
+/obj/item/ammo_box/proc/give_round(var/obj/item/ammo_casing/R, var/replace_spent = 0)
+	if(!R || (R.caliber != caliber))
+		return 0
+
+	if (stored_ammo.len < max_ammo)
+		stored_ammo += R
+		R.loc = src
+		return 1
+
+	//for accessibles magazines (e.g internal ones) when full, start replacing spent ammo
+	else if(replace_spent)
+		for(var/obj/item/ammo_casing/AC in stored_ammo)
+			if(!AC.BB)//found a spent ammo
+				stored_ammo -= AC
+				AC.loc = get_turf(src.loc)
+
+				stored_ammo += R
+				R.loc = src
+				return 1
+
 	return 0
 
-/obj/item/ammo_box/attackby(var/obj/item/A as obj, mob/user as mob, var/silent = 0)
+/obj/item/ammo_box/attackby(var/obj/item/A as obj, mob/user as mob, var/silent = 0, var/replace_spent = 0)
 	var/num_loaded = 0
 	if(istype(A, /obj/item/ammo_box))
 		var/obj/item/ammo_box/AM = A
 		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
-			var/did_load = give_round(AC)
+			var/did_load = give_round(AC, replace_spent)
 			if(did_load)
 				AM.stored_ammo -= AC
 				num_loaded++
@@ -94,17 +106,25 @@
 				break
 	if(istype(A, /obj/item/ammo_casing))
 		var/obj/item/ammo_casing/AC = A
-		if(give_round(AC))
+		if(give_round(AC, replace_spent))
 			user.drop_item()
 			AC.loc = src
 			num_loaded++
+
 	if(num_loaded)
-		if (!silent)
+		if(!silent)
 			user << "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>"
 		A.update_icon()
 		update_icon()
-		return num_loaded
-	return 0
+
+	return num_loaded
+
+/obj/item/ammo_box/attack_self(mob/user as mob)
+	var/obj/item/ammo_casing/A = get_round()
+	if(A)
+		user.put_in_hands(A)
+		user << "<span class='notice'>You remove a round from \the [src]!</span>"
+		update_icon()
 
 /obj/item/ammo_box/update_icon()
 	switch(multiple_sprites)

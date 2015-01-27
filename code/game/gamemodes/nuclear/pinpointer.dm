@@ -13,82 +13,91 @@
 	var/active = 0
 
 
-	attack_self()
-		if(!active)
-			active = 1
-			workdisk()
-			usr << "\blue You activate the pinpointer"
-		else
-			active = 0
-			icon_state = "pinoff"
-			usr << "\blue You deactivate the pinpointer"
+/obj/item/weapon/pinpointer/attack_self()
+	if(!active)
+		active = 1
+		workdisk()
+		usr << "<span class='notice'>You activate the pinpointer.</span>"
+	else
+		active = 0
+		icon_state = "pinoff"
+		usr << "<span class='notice'>You deactivate the pinpointer.</span>"
 
-	proc/point_at(atom/target)
-		if(!active)
-			return
-		if(!target)
-			icon_state = "pinonnull"
-			return
+/obj/item/weapon/pinpointer/proc/scandisk()
+	if(!the_disk)
+		the_disk = locate()
 
-		var/turf/T = get_turf(target)
-		var/turf/L = get_turf(src)
+/obj/item/weapon/pinpointer/proc/point_at(atom/target, spawnself = 1)
+	if(!active)
+		return
+	if(!target)
+		icon_state = "pinonnull"
+		return
 
-		if(T.z != L.z)
-			icon_state = "pinonnull"
-		else
-			dir = get_dir(L, T)
-			switch(get_dist(L, T))
-				if(-1)
-					icon_state = "pinondirect"
-				if(1 to 8)
-					icon_state = "pinonclose"
-				if(9 to 16)
-					icon_state = "pinonmedium"
-				if(16 to INFINITY)
-					icon_state = "pinonfar"
+	var/turf/T = get_turf(target)
+	var/turf/L = get_turf(src)
+
+	if(T.z != L.z)
+		icon_state = "pinonnull"
+	else
+		dir = get_dir(L, T)
+		switch(get_dist(L, T))
+			if(-1)
+				icon_state = "pinondirect"
+			if(1 to 8)
+				icon_state = "pinonclose"
+			if(9 to 16)
+				icon_state = "pinonmedium"
+			if(16 to INFINITY)
+				icon_state = "pinonfar"
+	if(spawnself)
 		spawn(5)
 			.()
 
-	proc/workdisk()
-		if(!the_disk)
-			the_disk = locate()
-		point_at(the_disk)
+/obj/item/weapon/pinpointer/proc/workdisk()
+	scandisk()
+	point_at(the_disk, 0)
+	spawn(5)
+		.()
 
-	examine()
-		..()
-		for(var/obj/machinery/nuclearbomb/bomb in world)
-			if(bomb.timing)
-				usr << "Extreme danger.  Arming signal detected.   Time remaining: [bomb.timeleft]"
+/obj/item/weapon/pinpointer/examine(mob/user)
+	..()
+	for(var/obj/machinery/nuclearbomb/bomb in world)
+		if(bomb.timing)
+			user << "Extreme danger.  Arming signal detected.   Time remaining: [bomb.timeleft]"
 
 
 /obj/item/weapon/pinpointer/advpinpointer
-	name = "Advanced Pinpointer"
+	name = "advanced pinpointer"
 	icon = 'icons/obj/device.dmi'
 	desc = "A larger version of the normal pinpointer, this unit features a helpful quantum entanglement detection system to locate various objects that do not broadcast a locator signal."
 	var/mode = 0  // Mode 0 locates disk, mode 1 locates coordinates.
 	var/turf/location = null
 	var/obj/target = null
 
-	attack_self()
-		if(!active)
-			active = 1
-			if(mode == 0)
-				workdisk()
-			if(mode == 1)
-				point_at(location)
-			if(mode == 2)
-				point_at(target)
-			usr << "\blue You activate the pinpointer"
-		else
-			active = 0
-			icon_state = "pinoff"
-			usr << "\blue You deactivate the pinpointer"
+/obj/item/weapon/pinpointer/advpinpointer/attack_self()
+	if(!active)
+		active = 1
+		if(mode == 0)
+			workdisk()
+		if(mode == 1)
+			point_at(location)
+		if(mode == 2)
+			point_at(target)
+		usr << "<span class='notice'>You activate the pinpointer.</span>"
+	else
+		active = 0
+		icon_state = "pinoff"
+		usr << "<span class='notice'>You deactivate the pinpointer.</span>"
 
 
 /obj/item/weapon/pinpointer/advpinpointer/verb/toggle_mode()
 	set category = "Object"
 	set name = "Toggle Pinpointer Mode"
 	set src in view(1)
+
+	if(usr.stat || usr.restrained() || !usr.canmove)
+		return
 
 	active = 0
 	icon_state = "pinoff"
@@ -152,7 +161,7 @@
 
 /obj/item/weapon/pinpointer/nukeop
 	var/mode = 0	//Mode 0 locates disk, mode 1 locates the shuttle
-	var/obj/machinery/computer/syndicate_station/home = null
+	var/obj/docking_port/mobile/home
 
 
 /obj/item/weapon/pinpointer/nukeop/attack_self(mob/user as mob)
@@ -181,14 +190,10 @@
 		playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)	//Plays a beep
 		visible_message("Shuttle Locator active.")			//Lets the mob holding it know that the mode has changed
 		return		//Get outta here
+	scandisk()
 	if(!the_disk)
-		the_disk = locate()
-		if(!the_disk)
-			icon_state = "pinonnull"
-			return
-//	if(loc.z != the_disk.z)	//If you are on a different z-level from the disk
-//		icon_state = "pinonnull"
-//	else
+		icon_state = "pinonnull"
+		return
 	dir = get_dir(src, the_disk)
 	switch(get_dist(src, the_disk))
 		if(0)
@@ -216,7 +221,7 @@
 		visible_message("<span class='notice'>Authentication Disk Locator active.</span>")
 		return
 	if(!home)
-		home = locate()
+		home = SSshuttle.getShuttle("syndicate")
 		if(!home)
 			icon_state = "pinonnull"
 			return
@@ -235,3 +240,38 @@
 				icon_state = "pinonfar"
 
 	spawn(5) .()
+
+/obj/item/weapon/pinpointer/operative
+	name = "operative pinpointer"
+	icon = 'icons/obj/device.dmi'
+	desc = "A pinpointer that leads to the first Syndicate operative detected."
+	var/mob/living/carbon/nearest_op = null
+
+/obj/item/weapon/pinpointer/operative/attack_self()
+	if(!active)
+		active = 1
+		workop()
+		usr << "<span class='notice'>You activate the pinpointer.</span>"
+	else
+		active = 0
+		icon_state = "pinoff"
+		usr << "<span class='notice'>You deactivate the pinpointer.</span>"
+
+/obj/item/weapon/pinpointer/operative/proc/scan_for_ops()
+	if(!nearest_op)
+		for(var/mob/living/carbon/M in mob_list)
+			if(M.mind in ticker.mode.syndicates)
+				nearest_op = M
+
+/obj/item/weapon/pinpointer/operative/proc/workop()
+	scan_for_ops()
+	point_at(nearest_op, 0)
+	spawn(5)
+		.()
+
+/obj/item/weapon/pinpointer/operative/examine(mob/user)
+	..()
+	if(nearest_op != null)
+		user << "Nearest operative: <b>[nearest_op]</b>."
+	if(nearest_op == null && active)
+		user << "No operatives detected within scanning range."

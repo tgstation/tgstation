@@ -8,12 +8,21 @@
 	item_state = "violin"
 	force = 10
 	var/datum/song/handheld/song
+	hitsound = "swing_hit"
 
 /obj/item/device/violin/New()
 	song = new("violin", src)
 	song.instrumentExt = "ogg"
 
+/obj/item/device/violin/Destroy()
+	qdel(song)
+	song = null
+	..()
+
 /obj/item/device/violin/attack_self(mob/user as mob)
+	if(!user.IsAdvancedToolUser())
+		user << "<span class='danger'>You don't have the dexterity to do this!</span>"
+		return 1
 	interact(user)
 
 /obj/item/device/violin/interact(mob/user as mob)

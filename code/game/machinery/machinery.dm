@@ -46,7 +46,7 @@ Class Variables:
 Class Procs:
    New()                     'game/machinery/machine.dm'
 
-   Del()                     'game/machinery/machine.dm'
+   Destroy()                   'game/machinery/machine.dm'
 
    auto_use_power()            'game/machinery/machine.dm'
       This proc determines how power mode power is deducted by the machine.
@@ -84,6 +84,8 @@ Class Procs:
    process()                  'game/machinery/machine.dm'
       Called by the 'master_controller' once per game tick for each machine that is listed in the 'machines' list.
 
+	is_operational()
+		Returns 0 if the machine is unpowered, broken or undergoing maintenance, something else if not
 
 	Compiled by Aygar
 */
@@ -108,13 +110,23 @@ Class Procs:
 	var/state_open = 0
 	var/mob/living/occupant = null
 	var/unsecuring_tool = /obj/item/weapon/wrench
+	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
 
 /obj/machinery/New()
 	..()
 	machines += src
+	SSmachine.processing += src
+	auto_use_power()
 
-/obj/machinery/Del()
+/obj/machinery/Destroy()
+	machines.Remove(src)
+	SSmachine.processing -= src
+	if(occupant)
+		dropContents()
 	..()
+
+/obj/machinery/proc/locate_machinery()
+	return
 
 /obj/machinery/process()//If you dont use process or power why are you here
 	return PROCESS_KILL
@@ -135,18 +147,20 @@ Class Procs:
 	..()
 
 /obj/machinery/proc/open_machine()
-	var/turf/T = get_turf(src)
-	if(T)
-		state_open = 1
-		density = 0
-		T.contents += contents
-		if(occupant)
-			if(occupant.client)
-				occupant.client.eye = occupant
-				occupant.client.perspective = MOB_PERSPECTIVE
-			occupant = null
+	state_open = 1
+	density = 0
+	dropContents()
 	update_icon()
 	updateUsrDialog()
+
+/obj/machinery/proc/dropContents()
+	var/turf/T = get_turf(src)
+	T.contents += contents
+	if(occupant)
+		if(occupant.client)
+			occupant.client.eye = occupant
+			occupant.client.perspective = MOB_PERSPECTIVE
+		occupant = null
 
 /obj/machinery/proc/close_machine(mob/living/target = null)
 	state_open = 0
@@ -167,25 +181,9 @@ Class Procs:
 	updateUsrDialog()
 	update_icon()
 
-/obj/machinery/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			del(src)
-			return
-		if(2.0)
-			if (prob(50))
-				del(src)
-				return
-		if(3.0)
-			if (prob(25))
-				del(src)
-				return
-		else
-	return
-
 /obj/machinery/blob_act()
 	if(prob(50))
-		del(src)
+		qdel(src)
 
 /obj/machinery/proc/auto_use_power()
 	if(!powered(power_channel))
@@ -198,31 +196,69 @@ Class Procs:
 
 /obj/machinery/Topic(href, href_list)
 	..()
-	if(stat & (NOPOWER|BROKEN))
+	if(!can_be_used_by(usr))
 		return 1
-	if(usr.restrained() || usr.lying || usr.stat)
-		return 1
-	if(!(ishuman(usr) || issilicon(usr) || (ismonkey(usr) && ticker && ticker.mode.name == "monkey")))
-		usr << "<span class='notice'>You don't have the dexterity to do this!</span>"
-		return 1
-
-	var/norange = 0
-	if(istype(usr, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = usr
-		if(istype(H.l_hand, /obj/item/tk_grab))
-			norange = 1
-		else if(istype(H.r_hand, /obj/item/tk_grab))
-			norange = 1
-
-	if(!norange)
-		if(!issilicon(usr))
-			if(!in_range(src, usr))
-				return 1
-			if(!isturf(loc))
-				return 1
-
 	add_fingerprint(usr)
 	return 0
+
+/obj/machinery/proc/can_be_used_by(mob/user)
+	if(!interact_offline && stat & (NOPOWER|BROKEN))
+		return 0
+	if(!user.canUseTopic(src))
+		return 0
+	return 1
+
+/obj/machinery/proc/is_operational()
+	return !(stat & (NOPOWER|BROKEN|MAINT))
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+/mob/proc/canUseTopic() //TODO: once finished, place these procs on the respective mob files
+	return
+
+/mob/dead/observer/canUseTopic()
+	if(check_rights(R_ADMIN, 0))
+		return
+
+/mob/living/canUseTopic(atom/movable/M, be_close = 0, no_dextery = 0)
+	if(no_dextery)
+		if(be_close && in_range(M, src))
+			return 1
+	else
+		src << "<span class='notice'>You don't have the dexterity to do this!</span>"
+	return
+
+/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close = 0)
+	if(restrained() || lying || stat || stunned || weakened)
+		return
+	if(!in_range(M, src))
+		if((be_close == 0) && (dna.check_mutation(TK)))
+			if(tkMaxRangeCheck(src, M))
+				return 1
+		return
+	if(!isturf(M.loc) && M.loc != src)
+		return
+	return 1
+
+/mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close = 0)
+	if(stat)
+		return
+	if(be_close && !in_range(M, src))
+		return
+	//stop AIs from leaving windows open and using then after they lose vision
+	//apc_override is needed here because AIs use their own APC when powerless
+	//get_turf_pixel() is because APCs in maint aren't actually in view of the inner camera
+	if(cameranet && !cameranet.checkTurfVis(get_turf_pixel(M)) && !apc_override)
+		return
+	return 1
+
+/mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close = 0)
+	if(stat || lockcharge || stunned || weakened)
+		return
+	if(be_close && !in_range(M, src))
+		return
+	return 1
 
 /obj/machinery/attack_ai(mob/user as mob)
 	if(isrobot(user))
@@ -236,14 +272,17 @@ Class Procs:
 /obj/machinery/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
-/obj/machinery/attack_hand(mob/user as mob)
-	if(stat & (NOPOWER|BROKEN|MAINT))
+//set_machine must be 0 if clicking the machinery doesn't bring up a dialog
+/obj/machinery/attack_hand(mob/user as mob, var/check_power = 1, var/set_machine = 1)
+	if(check_power && stat & NOPOWER)
+		user << "<span class='danger'>\The [src] seems unpowered.</span>"
+		return 1
+	if(!interact_offline && stat & (BROKEN|MAINT))
+		user << "<span class='danger'>\The [src] seems broken.</span>"
 		return 1
 	if(user.lying || user.stat)
 		return 1
-	if ( ! (istype(usr, /mob/living/carbon/human) || \
-			istype(usr, /mob/living/silicon) || \
-			istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
+	if(!user.IsAdvancedToolUser())
 		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
 		return 1
 /*
@@ -254,14 +293,15 @@ Class Procs:
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)
-			visible_message("\red [H] stares cluelessly at [src] and drools.")
+			visible_message("<span class='danger'>[H] stares cluelessly at [src] and drools.</span>")
 			return 1
 		else if(prob(H.getBrainLoss()))
 			user << "<span class='danger'>You momentarily forget how to use [src].</span>"
 			return 1
 
 	src.add_fingerprint(user)
-	user.set_machine(src)
+	if(set_machine)
+		user.set_machine(src)
 	return 0
 
 /obj/machinery/CheckParts()
@@ -275,17 +315,26 @@ Class Procs:
 	uid = gl_uid
 	gl_uid++
 
+/obj/machinery/proc/default_pry_open(var/obj/item/weapon/crowbar/C)
+	. = !(state_open || panel_open || is_operational()) && istype(C)
+	if(.)
+		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+		visible_message("<span class = 'notice'>[usr] pry open \the [src].</span>", "<span class = 'notice'>You pry open \the [src].</span>")
+		open_machine()
+		return 1
+
 /obj/machinery/proc/default_deconstruction_crowbar(var/obj/item/weapon/crowbar/C, var/ignore_panel = 0)
-	if(istype(C) && (panel_open || ignore_panel))
+	. = istype(C) && (panel_open || ignore_panel)
+	if(.)
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 		M.state = 2
 		M.icon_state = "box_1"
-		for(var/obj/I in component_parts)
+		for(var/obj/item/I in component_parts)
 			if(I.reliability != 100 && crit_fail)
 				I.crit_fail = 1
 			I.loc = src.loc
-		del(src)
+		qdel(src)
 
 /obj/machinery/proc/default_deconstruction_screwdriver(var/mob/user, var/icon_state_open, var/icon_state_closed, var/obj/item/weapon/screwdriver/S)
 	if(istype(S))
@@ -304,17 +353,54 @@ Class Procs:
 /obj/machinery/proc/default_change_direction_wrench(var/mob/user, var/obj/item/weapon/wrench/W)
 	if(panel_open && istype(W))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		dir = pick(WEST,EAST,SOUTH,NORTH)
-		user << "<span class='notice'>You clumsily rotate [name].</span>"
+		dir = turn(dir,-90)
+		user << "<span class='notice'>You rotate [src].</span>"
 		return 1
 	return 0
 
 /obj/machinery/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
 	if(istype(W))
-		user << "<span class='notice'>Now [anchored ? "un" : ""]securing [name]</span>"
+		user << "<span class='notice'>Now [anchored ? "un" : ""]securing [name].</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, time))
+			user << "<span class='notice'>You've [anchored ? "un" : ""]secured [name].</span>"
 			anchored = !anchored
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		return 1
 	return 0
+
+/obj/machinery/proc/exchange_parts(mob/user, obj/item/weapon/storage/part_replacer/W)
+	var/shouldplaysound = 0
+	if(istype(W) && component_parts)
+		if(panel_open)
+			var/obj/item/weapon/circuitboard/CB = locate(/obj/item/weapon/circuitboard) in component_parts
+			var/P
+			for(var/obj/item/weapon/stock_parts/A in component_parts)
+				for(var/D in CB.req_components)
+					if(ispath(A.type, D))
+						P = D
+						break
+				for(var/obj/item/weapon/stock_parts/B in W.contents)
+					if(istype(B, P) && istype(A, P))
+						if(B.rating > A.rating)
+							W.remove_from_storage(B, src)
+							W.handle_item_insertion(A, 1)
+							component_parts -= A
+							component_parts += B
+							B.loc = null
+							user << "<span class='notice'>[A.name] replaced with [B.name].</span>"
+							shouldplaysound = 1 //Only play the sound when parts are actually replaced!
+							break
+			RefreshParts()
+		else
+			user << "<span class='notice'>Following parts detected in the machine:</span>"
+			for(var/var/obj/item/C in component_parts)
+				user << "<span class='notice'>    [C.name]</span>"
+		if(shouldplaysound)
+			W.play_rped_sound()
+		return 1
+	return 0
+
+//called on machinery construction (i.e from frame to machinery) but not on initialization
+/obj/machinery/proc/construction()
+	return

@@ -15,7 +15,10 @@
 
 	var/holidayID				//string which should match the events.holiday variable if you wish this event to be holiday-specific
 								//anything with a (non-null) holidayID which does not match holiday, cannot run.
+	var/wizardevent = 0
 
+/datum/round_event_control/wizard
+	wizardevent = 1
 
 /datum/round_event_control/proc/runEvent()
 	if(!ispath(typepath,/datum/round_event))
@@ -26,12 +29,14 @@
 
 	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")
 
+	return E
+
 /datum/round_event	//NOTE: Times are measured in master controller ticks!
 	var/processing = 1
 	var/datum/round_event_control/control
 
 	var/startWhen		= 0	//When in the lifetime to call start().
-	var/announceWhen	= 0	//When in the lifetime to call announce().
+	var/announceWhen	= 0	//When in the lifetime to call announce(). Set an event's announceWhen to >0 if there is an announcement.
 	var/endWhen			= 0	//When in the lifetime the event should end.
 
 	var/activeFor		= 0	//How long the event has existed. You don't need to change this.
@@ -81,7 +86,7 @@
 /datum/round_event/proc/process()
 	if(!processing)
 		return
-	
+
 	if(activeFor == startWhen)
 		start()
 
@@ -105,11 +110,11 @@
 //which should be the only place it's referenced.
 //Called when start(), announce() and end() has all been called.
 /datum/round_event/proc/kill()
-	events.running -= src
+	SSevent.running -= src
 
 
 //Sets up the event then adds the event to the the list of running events
 /datum/round_event/New()
 	setup()
-	events.running += src
+	SSevent.running += src
 	return ..()

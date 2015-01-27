@@ -9,7 +9,7 @@
 	response_help = "passes through"
 	response_disarm = "shoves"
 	response_harm = "hits"
-	speed = -1
+	speed = 0
 	maxHealth = 80
 	health = 80
 
@@ -29,20 +29,20 @@
 	max_n2 = 0
 	minbodytemp = 0
 
-	faction = "faithless"
+	faction = list("faithless")
 
-/mob/living/simple_animal/hostile/faithless/Process_Spacemove(var/check_drift = 0)
+/mob/living/simple_animal/hostile/faithless/Process_Spacemove(var/movement_dir = 0)
 	return 1
 
 /mob/living/simple_animal/hostile/faithless/FindTarget()
 	. = ..()
 	if(.)
-		emote("wails at [.]")
+		emote("me", 1, "wails at [.]!")
 
 /mob/living/simple_animal/hostile/faithless/AttackingTarget()
-	. =..()
-	var/mob/living/L = .
-	if(istype(L))
+	..()
+	if(isliving(target))
+		var/mob/living/L = target
 		if(prob(12))
 			L.Weaken(3)
-			L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
+			L.visible_message("<span class='danger'>\The [src] knocks down \the [L]!</span>")

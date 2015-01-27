@@ -8,8 +8,8 @@
 
 	traitor_name = "double agent"
 
-	traitors_possible = 8 //hard limit on traitors if scaling is turned off
-	scale_modifier = 0.5 // Nearly twice as many double agents
+	traitors_possible = 10 //hard limit on traitors if scaling is turned off
+	num_modifier = 6 // Six additional traitors
 
 	var/list/target_list = list()
 	var/list/late_joining_list = list()
@@ -35,7 +35,7 @@
 		var/datum/objective/assassinate/kill_objective = new
 		kill_objective.owner = traitor
 		kill_objective.target = target_list[traitor]
-		kill_objective.explanation_text = "Assassinate [kill_objective.target.current.real_name], the [kill_objective.target.special_role]."
+		kill_objective.explanation_text = "Assassinate [kill_objective.target.current.real_name], the [kill_objective.target.assigned_role], the double agent."
 		traitor.objectives += kill_objective
 
 		// Escape

@@ -47,17 +47,17 @@ var/religion_name = null
 	if (station_name)
 		return station_name
 
-	if(events)
-		var/short_name = pick("Station", "Fortress", "Frontier", "Suffix", "Death-trap", "Space-hulk", "Lab", "Hazard","Spess Junk", "Fishery", "No-Moon", "Tomb", "Crypt", "Hut", "Monkey", "Bomb", "Trade Post", "Fortress", "Village", "Town", "City", "Edition", "Hive", "Complex", "Base", "Facility", "Depot", "Outpost", "Installation", "Drydock", "Observatory", "Array", "Relay", "Monitor", "Platform", "Construct", "Hangar", "Prison", "Center", "Port", "Waystation", "Factory", "Waypoint", "Stopover", "Hub", "HQ", "Office", "Object", "Fortification", "Colony", "Planet-Cracker", "Roost", "Fat Camp")
-
+	if(config && config.station_name)
+		station_name = config.station_name
+	else
 		station_name = new_station_name()
 
-		if (config && config.server_name)
-			world.name = "[config.server_name]: [short_name]"
-		else
-			world.name = station_name
+	if (config && config.server_name)
+		world.name = "[config.server_name][config.server_name==station_name ? "" : ": [station_name]"]"
+	else
+		world.name = station_name
 
-		return station_name
+	return station_name
 
 /proc/new_station_name()
 	var/random = rand(1,5)
@@ -70,7 +70,7 @@ var/religion_name = null
 		new_station_name = name + " "
 
 	// Prefix
-	switch(events.holiday)
+	switch(SSevent.holiday)
 		//get normal name
 		if(null,"",0)
 			name = pick("", "Stanford", "Dorf", "Alium", "Prefix", "Clowning", "Aegis", "Ishimura", "Scaredy", "Death-World", "Mime", "Honk", "Rogue", "MacRagge", "Ultrameens", "Safety", "Paranoia", "Explosive", "Neckbear", "Donk", "Muppet", "North", "West", "East", "South", "Slant-ways", "Widdershins", "Rimward", "Expensive", "Procreatory", "Imperial", "Unidentified", "Immoral", "Carp", "Ork", "Pete", "Control", "Nettle", "Aspie", "Class", "Crab", "Fist","Corrogated","Skeleton","Race", "Fatguy", "Gentleman", "Capitalist", "Communist", "Bear", "Beard", "Derp", "Space", "Spess", "Star", "Moon", "System", "Mining", "Neckbeard", "Research", "Supply", "Military", "Orbital", "Battle", "Science", "Asteroid", "Home", "Production", "Transport", "Delivery", "Extraplanetary", "Orbital", "Correctional", "Robot", "Hats", "Pizza")
@@ -84,8 +84,8 @@ var/religion_name = null
 			random = 13
 		else
 			//get the first word of the Holiday and use that
-			var/i = findtext(events.holiday," ",1,0)
-			name = copytext(events.holiday,1,i)
+			var/i = findtext(SSevent.holiday," ",1,0)
+			name = copytext(SSevent.holiday,1,i)
 			new_station_name += name + " "
 
 	// Suffix
@@ -107,17 +107,6 @@ var/religion_name = null
 		if(13)
 			new_station_name += pick("13","XIII","Thirteen")
 	return new_station_name
-
-/proc/world_name(var/name)
-
-	station_name = name
-
-	if (config && config.server_name)
-		world.name = "[config.server_name]: [name]"
-	else
-		world.name = name
-
-	return name
 
 var/syndicate_name = null
 /proc/syndicate_name()
@@ -148,6 +137,20 @@ var/syndicate_name = null
 
 	syndicate_name = name
 	return name
+
+var/gang_A_name = null
+var/gang_B_name = null
+/proc/gang_name(var/gang)
+	if(!gang_A_name || !gang_B_name)
+		var/gang_name_pool = list("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Donk", "Gene", "Gib", "Tunnel")
+		gang_A_name = pick(gang_name_pool)
+		gang_name_pool -= gang_A_name
+		gang_B_name = pick(gang_name_pool)
+
+	if(gang == "A")
+		return gang_A_name
+	if(gang == "B")
+		return gang_B_name
 
 
 //Traitors and traitor silicons will get these. Revs will not.

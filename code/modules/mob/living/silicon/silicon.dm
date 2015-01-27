@@ -1,18 +1,28 @@
 /mob/living/silicon
 	gender = NEUTER
-	robot_talk_understand = 1
 	voice_name = "synthesized voice"
+	languages = ROBOT | HUMAN
+	has_unlimited_silicon_privilege = 1
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/list/alarms_to_show = list()
 	var/list/alarms_to_clear = list()
+	var/designation = ""
+	var/radiomod = "" //Radio character used before state laws/arrivals announce to allow department transmissions, default, or none at all.
 
+	var/obj/item/device/radio/borg/radio = null //AIs dont use this but this is at the silicon level to advoid copypasta in say()
 
 	var/list/alarm_types_show = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
 	var/list/alarm_types_clear = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
 
 	var/lawcheck[1]
 	var/ioncheck[1]
+
+	var/med_hud = DATA_HUD_MEDICAL_ADVANCED //Determines the med hud to use
+	var/sec_hud = DATA_HUD_SECURITY_ADVANCED //Determines the sec hud to use
+
+/mob/living/silicon/contents_explosion(severity, target)
+	return
 
 /mob/living/silicon/proc/cancelAlarm()
 	return
@@ -30,7 +40,7 @@
 		alarm_types_clear[type] += 1
 
 	if(!in_cooldown)
-		spawn(10 * 10) // 10 seconds
+		spawn(3 * 10) // 3 seconds
 
 			if(alarms_to_show.len < 5)
 				for(var/msg in alarms_to_show)
@@ -38,6 +48,9 @@
 			else if(alarms_to_show.len)
 
 				var/msg = "--- "
+
+				if(alarm_types_show["Burglar"])
+					msg += "BURGLAR: [alarm_types_show["Burglar"]] alarms detected. - "
 
 				if(alarm_types_show["Motion"])
 					msg += "MOTION: [alarm_types_show["Motion"]] alarms detected. - "
@@ -102,9 +115,22 @@
 			src.take_organ_damage(10)
 			Stun(3)
 	flick("noise", src:flash)
-	src << "\red <B>*BZZZT*</B>"
-	src << "\red Warning: Electromagnetic pulse detected."
+	src << "<span class='userdanger'>*BZZZT*</span>"
+	src << "<span class='danger'>Warning: Electromagnetic pulse detected.</span>"
 	..()
+
+/mob/living/silicon/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0)
+	blocked = (100-blocked)/100
+	if(!damage || (blocked <= 0))	return 0
+	switch(damagetype)
+		if(BRUTE)
+			adjustBruteLoss(damage * blocked)
+		if(BURN)
+			adjustFireLoss(damage * blocked)
+		else
+			return 1
+	updatehealth()
+	return 1
 
 /mob/living/silicon/proc/damage_mob(var/brute = 0, var/fire = 0, var/tox = 0)
 	return
@@ -118,7 +144,8 @@
 	return 1
 
 /mob/living/silicon/bullet_act(var/obj/item/projectile/Proj)
-	if(!Proj.nodamage)	adjustBruteLoss(Proj.damage)
+	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+		adjustBruteLoss(Proj.damage)
 	Proj.on_hit(src,2)
 	return 2
 
@@ -174,9 +201,10 @@
 	return
 
 
-/mob/living/silicon/proc/statelaws() // -- TLE
+/mob/living/silicon/proc/statelaws()
 
-	src.say("Current Active Laws:")
+	//"radiomod" is inserted before a hardcoded message to change if and how it is handled by an internal radio.
+	src.say("[radiomod] Current Active Laws:")
 	//src.laws_sanity_check()
 	//src.laws.show_laws(world)
 	var/number = 1
@@ -185,8 +213,8 @@
 
 
 	if (src.laws.zeroth)
-		if (src.lawcheck[1] == "Yes") //This line and the similar lines below make sure you don't state a law unless you want to. --NeoFite
-			src.say("0. [src.laws.zeroth]")
+		if (src.lawcheck[1] == "Yes")
+			src.say("[radiomod] 0. [src.laws.zeroth]")
 			sleep(10)
 
 	for (var/index = 1, index <= src.laws.ion.len, index++)
@@ -194,7 +222,7 @@
 		var/num = ionnum()
 		if (length(law) > 0)
 			if (src.ioncheck[index] == "Yes")
-				src.say("[num]. [law]")
+				src.say("[radiomod] [num]. [law]")
 				sleep(10)
 
 	for (var/index = 1, index <= src.laws.inherent.len, index++)
@@ -202,7 +230,7 @@
 
 		if (length(law) > 0)
 			if (src.lawcheck[index+1] == "Yes")
-				src.say("[number]. [law]")
+				src.say("[radiomod] [number]. [law]")
 				sleep(10)
 			number++
 
@@ -213,7 +241,7 @@
 		if (length(law) > 0)
 			if(src.lawcheck.len >= number+1)
 				if (src.lawcheck[number+1] == "Yes")
-					src.say("[number]. [law]")
+					src.say("[radiomod] [number]. [law]")
 					sleep(10)
 				number++
 
@@ -260,27 +288,129 @@
 
 	usr << browse(list, "window=laws")
 
-/mob/living/silicon/Bump(atom/movable/AM as mob|obj, yes)  //Allows the AI to bump into mobs if it's itself pushed
-        if ((!( yes ) || now_pushing))
-                return
-        now_pushing = 1
-        if(ismob(AM))
-                var/mob/tmob = AM
-                if(!(tmob.status_flags & CANPUSH))
-                        now_pushing = 0
-                        return
-        now_pushing = 0
-        ..()
-        if (!istype(AM, /atom/movable))
-                return
-        if (!now_pushing)
-                now_pushing = 1
-                if (!AM.anchored)
-                        var/t = get_dir(src, AM)
-                        if (istype(AM, /obj/structure/window))
-                                if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-                                        for(var/obj/structure/window/win in get_step(AM,t))
-                                                now_pushing = 0
-                                                return
-                        step(AM, t)
-                now_pushing = null
+/mob/living/silicon/proc/set_autosay() //For allowing the AI and borgs to set the radio behavior of auto announcements (state laws, arrivals).
+	if(!radio)
+		src << "Radio not detected."
+		return
+
+	//Ask the user to pick a channel from what it has available.
+	var/Autochan = input("Select a channel:") as null|anything in list("Default","None") + radio.channels
+
+	if(!Autochan)
+		return
+	if(Autochan == "Default") //Autospeak on whatever frequency to which the radio is set, usually Common.
+		radiomod = ";"
+		Autochan += " ([radio.frequency])"
+	else if(Autochan == "None") //Prevents use of the radio for automatic annoucements.
+		radiomod = ""
+	else	//For department channels, if any, given by the internal radio.
+		for(var/key in department_radio_keys)
+			if(department_radio_keys[key] == Autochan)
+				radiomod = key
+				break
+
+	src << "<span class='notice'>Automatic announcements [Autochan == "None" ? "will not use the radio." : "set to [Autochan]."]</span>"
+
+/mob/living/silicon/put_in_hand_check() // This check is for borgs being able to receive items, not put them in others' hands.
+	return 0
+
+// The src mob is trying to place an item on someone
+// But the src mob is a silicon!!  Disable.
+/mob/living/silicon/stripPanelEquip(obj/item/what, mob/who, slot)
+	return 0
+
+
+/mob/living/silicon/assess_threat() //Secbots won't hunt silicon units
+	return -10
+
+/mob/living/silicon/proc/remove_med_sec_hud()
+	var/datum/atom_hud/secsensor = huds[sec_hud]
+	var/datum/atom_hud/medsensor = huds[med_hud]
+	secsensor.remove_hud_from(src)
+	medsensor.remove_hud_from(src)
+
+/mob/living/silicon/proc/add_sec_hud()
+	var/datum/atom_hud/secsensor = huds[sec_hud]
+	secsensor.add_hud_to(src)
+
+/mob/living/silicon/proc/add_med_hud()
+	var/datum/atom_hud/medsensor = huds[med_hud]
+	medsensor.add_hud_to(src)
+
+/mob/living/silicon/verb/sensor_mode()
+	set name = "Set Sensor Augmentation"
+	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical","Disable")
+	remove_med_sec_hud()
+	switch(sensor_type)
+		if ("Security")
+			add_sec_hud()
+			src << "<span class='notice'>Security records overlay enabled.</span>"
+		if ("Medical")
+			add_med_hud()
+			src << "<span class='notice'>Life signs monitor overlay enabled.</span>"
+		if ("Disable")
+			src << "Sensor augmentations disabled."
+
+
+/mob/living/silicon/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+	if(..()) //if harm or disarm intent
+		var/damage = rand(10, 20)
+		if (prob(90))
+			add_logs(M, src, "attacked", admin=0)
+			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
+			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
+							"<span class='userdanger'>[M] has slashed at [src]!</span>")
+			if(prob(8))
+				flick("noise", flash)
+			add_logs(M, src, "attacked", admin=0)
+			adjustBruteLoss(damage)
+			updatehealth()
+		else
+			playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
+			visible_message("<span class='danger'>[M] took a swipe at [src]!</span>", \
+							"<span class='userdanger'>[M] took a swipe at [src]!</span>")
+	return
+
+/mob/living/silicon/attack_animal(mob/living/simple_animal/M as mob)
+	if(..())
+		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		adjustBruteLoss(damage)
+		updatehealth()
+
+/mob/living/silicon/attack_paw(mob/living/user)
+	return attack_hand(user)
+
+/mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L)
+	if(L.a_intent == "help")
+		visible_message("<span class='notice'>[L.name] rubs its head against [src].</span>")
+	return
+
+/mob/living/silicon/attack_hulk(mob/living/carbon/human/user)
+	if(user.a_intent == "harm")
+		..(user, 1)
+		adjustBruteLoss(rand(10, 15))
+		playsound(loc, "punch", 25, 1, -1)
+		visible_message("<span class='danger'>[user] has punched [src]!</span>", \
+				"<span class='userdanger'>[user] has punched [src]!</span>")
+		return 1
+	return 0
+
+/mob/living/silicon/attack_hand(mob/living/carbon/human/M)
+	switch(M.a_intent)
+		if ("help")
+			M.visible_message("<span class='notice'>[M] pets [src]!</span>", \
+							"<span class='notice'>You pet [src]!</span>")
+		if("grab")
+			grabbedby(M)
+		else
+			M.do_attack_animation(src)
+			playsound(src.loc, 'sound/effects/bang.ogg', 10, 1)
+			visible_message("<span class='danger'>[M] punches [src], but doesn't leave a dent.</span>", \
+						"<span class='userdanger'>[M] punches [src], but doesn't leave a dent.!</span>")
+	return 0
+
+/mob/living/silicon/adjustEarDamage()
+	return
+
+/mob/living/silicon/setEarDamage()
+	return

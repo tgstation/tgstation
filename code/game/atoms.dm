@@ -1,21 +1,42 @@
 /atom
 	layer = 2
 	var/level = 2
-	var/flags = null
+	var/flags = 0
 	var/list/fingerprints
 	var/list/fingerprintshidden
 	var/fingerprintslast = null
 	var/list/blood_DNA
 	var/last_bumped = 0
-	var/pass_flags = 0
 	var/throwpass = 0
 
 	///Chemistry.
 	var/datum/reagents/reagents = null
 
+	//This atom's HUD (med/sec, etc) images. Associative list.
+	var/list/image/hud_list = list()
+	//HUD images that this atom can provide.
+	var/list/hud_possible
+
 	//var/chem_is_open_container = 0
 	// replaced by OPENCONTAINER flags and atom/proc/is_open_container()
 	///Chemistry.
+
+/atom/proc/onCentcom()
+	var/turf/T = get_turf(src)
+	if(!T)
+		return 0
+
+	if(T.z != ZLEVEL_CENTCOM)//if not, don't bother
+		return 0
+
+	//check for centcomm shuttles
+	for(var/centcom_shuttle in list("emergency", "pod1", "pod2", "pod3", "pod4", "ferry"))
+		var/obj/docking_port/mobile/M = SSshuttle.getShuttle(centcom_shuttle)
+		if(T in M.areaInstance)
+			return 1
+
+	//finally check for centcom itself
+	return istype(T.loc,/area/centcom)
 
 /atom/proc/throw_impact(atom/hit_atom)
 	if(istype(hit_atom,/mob/living))
@@ -37,6 +58,12 @@
 				var/mob/living/M = src
 				M.take_organ_damage(20)
 
+/atom/proc/attack_hulk(mob/living/carbon/human/hulk, do_attack_animation = 0)
+	if(do_attack_animation)
+		hulk.changeNext_move(CLICK_CD_MELEE)
+		add_logs(hulk, src, "punched", "hulk powers", admin=0)
+		hulk.do_attack_animation(src)
+	return
 
 /atom/proc/CheckParts()
 	return
@@ -80,9 +107,6 @@
 		return flags & INSERT_CONTAINER
 */
 
-
-/atom/proc/meteorhit(obj/meteor as obj)
-	return
 
 /atom/proc/allow_drop()
 	return 1
@@ -161,7 +185,7 @@ its easier to just keep the beam vertical.
 
 		for(var/obj/effect/overlay/beam/O in orange(10,src))	//This section erases the previously drawn beam because I found it was easier to
 			if(O.BeamSource==src)				//just draw another instance of the beam instead of trying to manipulate all the
-				del O							//pieces to a new orientation.
+				qdel(O)							//pieces to a new orientation.
 		var/Angle=round(Get_Angle(src,BeamTarget))
 		var/icon/I=new(icon,icon_state)
 		I.Turn(Angle)
@@ -202,29 +226,42 @@ its easier to just keep the beam vertical.
 			X.pixel_y=Pixel_y
 		sleep(3)	//Changing this to a lower value will cause the beam to follow more smoothly with movement, but it will also be more laggy.
 					//I've found that 3 ticks provided a nice balance for my use.
-	for(var/obj/effect/overlay/beam/O in orange(10,src)) if(O.BeamSource==src) del O
+	for(var/obj/effect/overlay/beam/O in orange(10,src)) if(O.BeamSource==src) qdel(O)
 
+/atom/proc/examine(mob/user)
+	//This reformat names to get a/an properly working on item descriptions when they are bloody
+	var/f_name = "\a [src]."
+	if(src.blood_DNA && !istype(src, /obj/effect/decal))
+		if(gender == PLURAL)
+			f_name = "some "
+		else
+			f_name = "a "
+		f_name += "<span class='danger'>blood-stained</span> [name]!"
 
-//All atoms
-/atom/verb/examine()
-	set name = "Examine"
-	set category = "IC"
-	set src in oview(12)	//make it work from farther away
+	user << "\icon[src] That's [f_name]"
 
-	if (!( usr ))
-		return
-	usr << "\icon[src]That's \a [src]." //changed to "That's" from "This is" because "This is some metal sheets" sounds dumb compared to "That's some metal sheets" ~Carn
 	if(desc)
-		usr << desc
+		user << desc
 	// *****RM
-	//usr << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
-	return
+	//user << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
+
+	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
+		user << "It contains:"
+		if(reagents.reagent_list.len)
+			for(var/datum/reagent/R in reagents.reagent_list)
+				user << "[R.volume] units of [R.name]"
+		else
+			user << "Nothing."
 
 /atom/proc/relaymove()
 	return
 
-/atom/proc/ex_act()
-	return
+/atom/proc/contents_explosion(severity, target)
+	for(var/atom/A in contents)
+		A.ex_act(severity, target)
+
+/atom/proc/ex_act(severity, target)
+	contents_explosion(severity, target)
 
 /atom/proc/blob_act()
 	return
@@ -253,6 +290,10 @@ var/list/blood_splatter_icons = list()
 
 //returns 1 if made bloody, returns 0 otherwise
 /atom/proc/add_blood(mob/living/carbon/M)
+	if(ishuman(M) && M.dna)
+		var/mob/living/carbon/human/H = M
+		if(NOBLOOD in H.dna.species.specflags)
+			return 0
 	if(rejects_blood())
 		return 0
 	if(!istype(M))
@@ -273,7 +314,7 @@ var/list/blood_splatter_icons = list()
 		//try to find a pre-processed blood-splatter. otherwise, make a new one
 		var/index = blood_splatter_index()
 		var/icon/blood_splatter_icon = blood_splatter_icons[index]
-		if(!blood_splatter_icon )
+		if(!blood_splatter_icon)
 			blood_splatter_icon = icon(initial(icon), initial(icon_state), , 1)		//we only want to apply blood-splatters to the initial icon_state for each object
 			blood_splatter_icon.Blend("#fff", ICON_ADD) 			//fills the icon_state with white (except where it's transparent)
 			blood_splatter_icon.Blend(icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
@@ -357,9 +398,6 @@ var/list/blood_splatter_icons = list()
 	else
 		return 0
 
-/atom/proc/checkpass(passflag)
-	return pass_flags&passflag
-
 /atom/proc/isinspace()
 	if(istype(get_turf(src), /turf/space))
 		return 1
@@ -370,4 +408,18 @@ var/list/blood_splatter_icons = list()
 	return
 
 /atom/proc/handle_slip()
+	return
+/atom/proc/singularity_act()
+	return
+
+/atom/proc/singularity_pull()
+	return
+
+/atom/proc/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
+	return
+
+/atom/proc/emag_act()
+	return
+
+/atom/proc/narsie_act()
 	return

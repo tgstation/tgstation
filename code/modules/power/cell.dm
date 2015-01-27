@@ -2,14 +2,14 @@
 // charge from 0 to 100%
 // fits in APC to provide backup power
 
-/obj/item/weapon/cell/New()
+/obj/item/weapon/stock_parts/cell/New()
 	..()
 	charge = maxcharge
+	desc = "This cell has a power rating of [maxcharge], and you should not swallow it."
 
-	spawn(5)
-		updateicon()
+	updateicon()
 
-/obj/item/weapon/cell/proc/updateicon()
+/obj/item/weapon/stock_parts/cell/proc/updateicon()
 	overlays.Cut()
 
 	if(charge < 0.01)
@@ -19,11 +19,11 @@
 	else
 		overlays += image('icons/obj/power.dmi', "cell-o1")
 
-/obj/item/weapon/cell/proc/percent()		// return % charge of cell
+/obj/item/weapon/stock_parts/cell/proc/percent()		// return % charge of cell
 	return 100.0*charge/maxcharge
 
 // use power from a cell
-/obj/item/weapon/cell/proc/use(var/amount)
+/obj/item/weapon/stock_parts/cell/proc/use(var/amount)
 	if(rigged && amount > 0)
 		explode()
 		return 0
@@ -33,7 +33,7 @@
 	return 1
 
 // recharge the cell
-/obj/item/weapon/cell/proc/give(var/amount)
+/obj/item/weapon/stock_parts/cell/proc/give(var/amount)
 	if(rigged && amount > 0)
 		explode()
 		return 0
@@ -50,15 +50,14 @@
 	return power_used
 
 
-/obj/item/weapon/cell/examine()
-	set src in view(1)
+/obj/item/weapon/stock_parts/cell/examine(mob/user)
 	..()
-	if(usr /*&& !usr.stat*/)
-		usr << "This cell has a power rating of [maxcharge], and you should not swallow it.\nThe charge meter reads [round(src.percent() )]%."
-	if(crit_fail)
-		usr << "\red This power cell seems to be faulty."
+	if(crit_fail || rigged)
+		user << "<span class='danger'>This power cell seems to be faulty!</span>"
+	else
+		user << "The charge meter reads [round(src.percent() )]%."
 
-/obj/item/weapon/cell/attack_self(mob/user as mob)
+/obj/item/weapon/stock_parts/cell/attack_self(mob/user as mob)
 	src.add_fingerprint(user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -68,7 +67,7 @@
 		SNG.drain("CELL",src,H.wear_suit)
 	return
 
-/obj/item/weapon/cell/attackby(obj/item/W, mob/user)
+/obj/item/weapon/stock_parts/cell/attackby(obj/item/W, mob/user)
 	..()
 	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = W
@@ -82,7 +81,7 @@
 		S.reagents.clear_reagents()
 
 
-/obj/item/weapon/cell/proc/explode()
+/obj/item/weapon/stock_parts/cell/proc/explode()
 	var/turf/T = get_turf(src.loc)
 /*
  * 1000-cell	explosion(T, -1, 0, 1, 1)
@@ -103,16 +102,15 @@
 	//explosion(T, 0, 1, 2, 2)
 	explosion(T, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 
-	spawn(1)
-		del(src)
+	qdel(src)
 
-/obj/item/weapon/cell/proc/corrupt()
+/obj/item/weapon/stock_parts/cell/proc/corrupt()
 	charge /= 2
 	maxcharge /= 2
 	if (prob(10))
 		rigged = 1 //broken batterys are dangerous
 
-/obj/item/weapon/cell/emp_act(severity)
+/obj/item/weapon/stock_parts/cell/emp_act(severity)
 	charge -= 1000 / severity
 	if (charge < 0)
 		charge = 0
@@ -120,30 +118,22 @@
 		reliability -= 10 / severity
 	..()
 
-/obj/item/weapon/cell/ex_act(severity)
+/obj/item/weapon/stock_parts/cell/ex_act(severity, target)
+	..()
+	if(!gc_destroyed)
+		switch(severity)
+			if(2)
+				if(prob(50))
+					corrupt()
+			if(3)
+				if(prob(25))
+					corrupt()
 
-	switch(severity)
-		if(1.0)
-			del(src)
-			return
-		if(2.0)
-			if (prob(50))
-				del(src)
-				return
-			if (prob(50))
-				corrupt()
-		if(3.0)
-			if (prob(25))
-				del(src)
-				return
-			if (prob(25))
-				corrupt()
-	return
 
-/obj/item/weapon/cell/blob_act()
+/obj/item/weapon/stock_parts/cell/blob_act()
 	ex_act(1)
 
-/obj/item/weapon/cell/proc/get_electrocute_damage()
+/obj/item/weapon/stock_parts/cell/proc/get_electrocute_damage()
 	switch (charge)
 /*		if (9000 to INFINITY)
 			return min(rand(90,150),rand(90,150))

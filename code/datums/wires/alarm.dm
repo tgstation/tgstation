@@ -1,4 +1,3 @@
-
 /datum/wires/alarm
 	holder_type = /obj/machinery/alarm
 	wire_count = 5
@@ -12,7 +11,7 @@ var/const/AALARM_WIRE_AALARM = 16
 
 /datum/wires/alarm/CanUse(var/mob/living/L)
 	var/obj/machinery/alarm/A = holder
-	if(A.wiresexposed)
+	if(A.panel_open)
 		return 1
 	return 0
 
@@ -47,7 +46,7 @@ var/const/AALARM_WIRE_AALARM = 16
 				//world << "Syphon Wire Cut"
 
 		if(AALARM_WIRE_AALARM)
-			if (A.alarm_area.atmosalert(2))
+			if (A.alarm_area.atmosalert(2,holder))
 				A.post_alert(2)
 			A.update_icon()
 
@@ -89,6 +88,6 @@ var/const/AALARM_WIRE_AALARM = 16
 
 		if(AALARM_WIRE_AALARM)
 		//	world << "Aalarm wire pulsed"
-			if (A.alarm_area.atmosalert(0))
+			if (A.alarm_area.atmosalert(0,holder))
 				A.post_alert(0)
 			A.update_icon()

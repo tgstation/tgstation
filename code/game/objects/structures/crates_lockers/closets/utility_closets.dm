@@ -46,12 +46,12 @@
 
 		// teehee
 		if ("delete")
-			del(src)
+			qdel(src)
 
 		//If you want to re-add fire, just add "fire" = 15 to the pick list.
 		/*if ("fire")
 			new /obj/structure/closet/firecloset(src.loc)
-			del(src)*/
+			qdel(src)*/
 
 /obj/structure/closet/emcloset/legacy/New()
 	new /obj/item/weapon/tank/oxygen(src)
@@ -78,7 +78,6 @@
 
 /obj/structure/closet/firecloset/full/New()
 	..()
-	sleep(4)
 	contents = list()
 
 	new /obj/item/clothing/suit/fire/firefighter(src)
@@ -133,7 +132,7 @@
 	if(prob(20))
 		new /obj/item/device/multitool(src)
 	if(prob(5))
-		new /obj/item/clothing/gloves/yellow(src)
+		new /obj/item/clothing/gloves/color/yellow(src)
 	if(prob(40))
 		new /obj/item/clothing/head/hardhat(src)
 
@@ -165,10 +164,9 @@
 
 /obj/structure/closet/bombcloset/New()
 	..()
-	sleep(2)
 	new /obj/item/clothing/suit/bomb_suit( src )
 	new /obj/item/clothing/under/color/black( src )
-	new /obj/item/clothing/shoes/black( src )
+	new /obj/item/clothing/shoes/sneakers/black( src )
 	new /obj/item/clothing/head/bomb_hood( src )
 
 
@@ -181,10 +179,9 @@
 
 /obj/structure/closet/bombclosetsecurity/New()
 	..()
-	sleep(2)
 	new /obj/item/clothing/suit/bomb_suit/security( src )
 	new /obj/item/clothing/under/rank/security( src )
-	new /obj/item/clothing/shoes/brown( src )
+	new /obj/item/clothing/shoes/sneakers/brown( src )
 	new /obj/item/clothing/head/bomb_hood/security( src )
 
 /*
@@ -218,3 +215,21 @@
 		icon_state = icon_closed
 	else
 		icon_state = icon_opened
+
+/*
+ * Ammunition
+ */
+/obj/structure/closet/ammunitionlocker
+	name = "ammunition locker"
+
+/obj/structure/closet/ammunitionlocker/New()
+	..()
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+

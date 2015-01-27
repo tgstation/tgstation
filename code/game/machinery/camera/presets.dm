@@ -1,6 +1,8 @@
 // PRESETS
 
 // EMP
+/obj/machinery/camera/emp_proof
+	start_active = 1
 
 /obj/machinery/camera/emp_proof/New()
 	..()
@@ -9,6 +11,7 @@
 // X-RAY
 
 /obj/machinery/camera/xray
+	start_active = 1
 	icon_state = "xraycam" // Thanks to Krutchen for the icons.
 
 /obj/machinery/camera/xray/New()
@@ -16,12 +19,17 @@
 	upgradeXRay()
 
 // MOTION
+/obj/machinery/camera/motion
+	start_active = 1
+	name = "motion-sensitive security camera"
 
 /obj/machinery/camera/motion/New()
 	..()
 	upgradeMotion()
 
 // ALL UPGRADES
+/obj/machinery/camera/all
+	start_active = 1
 
 /obj/machinery/camera/all/New()
 	..()
@@ -57,7 +65,7 @@
 	return O
 
 /obj/machinery/camera/proc/isXRay()
-	var/O = locate(/obj/item/weapon/reagent_containers/food/snacks/grown/carrot) in assembly.upgrades
+	var/O = locate(/obj/item/device/analyzer) in assembly.upgrades
 	return O
 
 /obj/machinery/camera/proc/isMotion()
@@ -70,7 +78,7 @@
 	assembly.upgrades.Add(new /obj/item/stack/sheet/mineral/plasma(assembly))
 
 /obj/machinery/camera/proc/upgradeXRay()
-	assembly.upgrades.Add(new /obj/item/weapon/reagent_containers/food/snacks/grown/carrot(assembly))
+	assembly.upgrades.Add(new /obj/item/device/analyzer(assembly))
 
 // If you are upgrading Motion, and it isn't in the camera's New(), add it to the machines list.
 /obj/machinery/camera/proc/upgradeMotion()

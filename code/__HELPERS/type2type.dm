@@ -7,6 +7,7 @@
  *			angle2dir
  *			angle2text
  *			worldtime2text
+ *			text2dir_extended & dir2text_short
  */
 
 //Returns an integer given a hex input, supports negative values "-ff"
@@ -122,7 +123,7 @@
 		. = "[ls[++i]]" // Make sure the initial element is converted to text.
 
 		if(l-1 & 0x01) // 'i' will always be 1 here.
-			. += S1 // Append 1 element if the remaining elements are not a multiple of 2.
+			. += "[S1]" // Append 1 element if the remaining elements are not a multiple of 2.
 		if(l-i & 0x02)
 			. = text("[][][]", ., S1, S1) // Append 2 elements if the remaining elements are not a multiple of 4.
 		if(l-i & 0x04)
@@ -405,3 +406,141 @@ for(var/t in test_times)
 
 /proc/isLeap(y)
 	return ((y) % 4 == 0 && ((y) % 100 != 0 || (y) % 400 == 0))
+
+// A copy of text2dir, extended to accept one and two letter
+//  directions, and to clearly return 0 otherwise.
+/proc/text2dir_extended(direction)
+	switch(uppertext(direction))
+		if("NORTH", "N")
+			return 1
+		if("SOUTH", "S")
+			return 2
+		if("EAST", "E")
+			return 4
+		if("WEST", "W")
+			return 8
+		if("NORTHEAST", "NE")
+			return 5
+		if("NORTHWEST", "NW")
+			return 9
+		if("SOUTHEAST", "SE")
+			return 6
+		if("SOUTHWEST", "SW")
+			return 10
+		else
+	return 0
+
+
+
+// A copy of dir2text, which returns the short one or two letter
+//  directions used in tube icon states.
+/proc/dir2text_short(direction)
+	switch(direction)
+		if(1)
+			return "N"
+		if(2)
+			return "S"
+		if(4)
+			return "E"
+		if(8)
+			return "W"
+		if(5)
+			return "NE"
+		if(6)
+			return "SE"
+		if(9)
+			return "NW"
+		if(10)
+			return "SW"
+		else
+	return
+
+
+
+
+//Turns a Body_parts_covered bitfield into a list of organ/limb names.
+//(I challenge you to find a use for this)
+/proc/body_parts_covered2organ_names(var/bpc)
+	var/list/covered_parts = list()
+
+	if(!bpc)
+		return 0
+
+	if(bpc & FULL_BODY)
+		covered_parts |= list("l_arm","r_arm","head","chest","l_leg","r_leg")
+
+	else
+		if(bpc & HEAD)
+			covered_parts |= list("head")
+		if(bpc & CHEST)
+			covered_parts |= list("chest")
+		if(bpc & GROIN)
+			covered_parts |= list("chest")
+
+		if(bpc & ARMS)
+			covered_parts |= list("l_arm","r_arm")
+		else
+			if(bpc & ARM_LEFT)
+				covered_parts |= list("l_arm")
+			if(bpc & ARM_RIGHT)
+				covered_parts |= list("r_arm")
+
+		if(bpc & HANDS)
+			covered_parts |= list("l_arm","r_arm")
+		else
+			if(bpc & HAND_LEFT)
+				covered_parts |= list("l_arm")
+			if(bpc & HAND_RIGHT)
+				covered_parts |= list("r_arm")
+
+		if(bpc & LEGS)
+			covered_parts |= list("l_leg","r_leg")
+		else
+			if(bpc & LEG_LEFT)
+				covered_parts |= list("l_leg")
+			if(bpc & LEG_RIGHT)
+				covered_parts |= list("r_leg")
+
+		if(bpc & FEET)
+			covered_parts |= list("l_leg","r_leg")
+		else
+			if(bpc & FOOT_LEFT)
+				covered_parts |= list("l_leg")
+			if(bpc & FOOT_RIGHT)
+				covered_parts |= list("r_leg")
+
+	return covered_parts
+
+
+
+//adapted from http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
+/proc/heat2colour(temp)
+	return rgb(heat2colour_r(temp), heat2colour_g(temp), heat2colour_b(temp))
+
+
+/proc/heat2colour_r(temp)
+	temp /= 100
+	if(temp <= 66)
+		. = 255
+	else
+		. = max(0, min(255, 329.698727446 * (temp - 60) ** -0.1332047592))
+
+
+/proc/heat2colour_g(temp)
+	temp /= 100
+	if(temp <= 66)
+		. = max(0, min(255, 99.4708025861 * log(temp) - 161.1195681661))
+	else
+		. = max(0, min(255, 288.1221685293 * ((temp - 60) ** -0.075148492)))
+
+
+/proc/heat2colour_b(temp)
+	temp /= 100
+	if(temp >= 66)
+		. = 255
+	else
+		if(temp <= 16)
+			. = 0
+		else
+			. = max(0, min(255, 138.5177312231 * log(temp - 10) - 305.0447927307))
+

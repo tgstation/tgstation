@@ -23,6 +23,7 @@ Bonus
 	stage_speed = 0
 	transmittable = -4
 	level = 6
+	severity = 5
 
 /datum/symptom/flesh_eating/Activate(var/datum/disease/advance/A)
 	..()

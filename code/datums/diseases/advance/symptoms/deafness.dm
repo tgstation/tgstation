@@ -23,6 +23,7 @@ Bonus
 	stage_speed = -1
 	transmittable = -3
 	level = 4
+	severity = 3
 
 /datum/symptom/deafness/Activate(var/datum/disease/advance/A)
 	..()
@@ -32,10 +33,10 @@ Bonus
 			if(3, 4)
 				M << "<span class='notice'>[pick("You hear a ringing in your ear.", "Your ears pop.")]</span>"
 			if(5)
-				if(!(M.sdisabilities & DEAF))
+				if(!(M.ear_deaf))
 					M << "<span class='danger'>Your ears pop and begin ringing loudly!</span>"
-					M.sdisabilities |= DEAF
+					M.setEarDamage(-1,INFINITY) //Shall be enough
 					spawn(200)
 						if(M)
-							M.sdisabilities &= ~DEAF
+							M.setEarDamage(-1,0)
 	return

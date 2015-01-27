@@ -9,7 +9,7 @@
 	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
 		act = copytext(act,1,length(act))
 
-	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
+	var/muzzled = is_muzzled()
 	//var/m_type = 1
 
 	for (var/obj/item/weapon/implant/I in src)
@@ -77,13 +77,13 @@
 			if (!input)
 				return
 			if(copytext(input,1,5) == "says")
-				src << "\red Invalid emote."
+				src << "<span class='danger'>Invalid emote.</span>"
 				return
 			else if(copytext(input,1,9) == "exclaims")
-				src << "\red Invalid emote."
+				src << "<span class='danger'>Invalid emote.</span>"
 				return
 			else if(copytext(input,1,5) == "asks")
-				src << "\red Invalid emote."
+				src << "<span class='danger'>Invalid emote.</span>"
 				return
 			else
 				var/input2 = input("Is this a visible or hearable emote?") in list("Visible","Hearable")
@@ -184,25 +184,12 @@
 				else
 					message = "<B>[src]</B> hugs \himself."
 
-		if ("johnny")
-			var/M
-			if (param)
-				M = param
-			if (!M)
-				param = null
-			else
-				if(miming)
-					message = "<B>[src]</B> takes a drag from a cigarette and blows \"[M]\" out in smoke."
-				else
-					message = "<B>[src]</B> says, \"[M], please. He had a family.\" [src.name] takes a drag from a cigarette and blows \his name out in smoke."
-					m_type = 2
-
 		if ("me")
 			if(silent)
 				return
 			if (src.client)
 				if (client.prefs.muted & MUTE_IC)
-					src << "\red You cannot send IC messages (muted)."
+					src << "<span class='danger'>You cannot send IC messages (muted).</span>"
 					return
 				if (src.client.handle_spam_prevention(message,MUTE_IC))
 					return
@@ -211,13 +198,13 @@
 			if(!(message))
 				return
 			if(copytext(message,1,5) == "says")
-				src << "\red Invalid emote."
+				src << "<span class='danger'>Invalid emote.</span>"
 				return
 			else if(copytext(message,1,9) == "exclaims")
-				src << "\red Invalid emote."
+				src << "<span class='danger'>Invalid emote.</span>"
 				return
 			else if(copytext(message,1,5) == "asks")
-				src << "\red Invalid emote."
+				src << "<span class='danger'>Invalid emote.</span>"
 				return
 			else
 				message = "<B>[src]</B> [message]"
@@ -316,7 +303,7 @@
 				m_type = 2
 
 		if ("help") //This can stay at the bottom.
-			src << "Help for human emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, cry, custom, dance, dap, deathgasp, drool, eyebrow, faint, frown, flap, gasp, giggle, glare-(none)/mob, grin, groan, grumble, handshake, hug-(none)/mob, johnny, jump, laugh, look-(none)/mob, me, moan, mumble, nod, pale, point-(atom), raise, salute, scream, shake, shiver, shrug, sigh, signal-#1-10, smile, sneeze, sniff, snore, stare-(none)/mob, tremble, twitch, twitch_s, wave, whimper, wink, yawn"
+			src << "Help for human emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, cry, custom, dance, dap, deathgasp, drool, eyebrow, faint, flap, frown, gasp, giggle, glare-(none)/mob, grin, groan, grumble, handshake, hug-(none)/mob, jump, laugh, look-(none)/mob, me, moan, mumble, nod, pale, point-(atom), raise, salute, scream, shake, shiver, shrug, sigh, signal-#1-10, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, wink, yawn"
 
 		else
 			..(act)
@@ -340,9 +327,7 @@
 
 
 		if (m_type & 1)
-			for (var/mob/O in viewers(src, null))
-				O.show_message(message, m_type)
+			visible_message(message)
 		else if (m_type & 2)
-			for (var/mob/O in hearers(src.loc, null))
-				O.show_message(message, m_type)
+			audible_message(message)
 

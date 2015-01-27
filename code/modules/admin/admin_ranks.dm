@@ -3,14 +3,14 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 /datum/admin_rank
 	var/name = "NoRank"
 	var/rights = 0
-	var/list/adds 
+	var/list/adds
 	var/list/subs
 
 /datum/admin_rank/New(init_name, init_rights, list/init_adds, list/init_subs)
 	name = init_name
 	switch(name)
 		if("Removed",null,"")
-			error("invalid admin-rank name. datum deleted")
+			ERROR("invalid admin-rank name. datum deleted")
 			del(src)
 	if(init_rights)	rights = init_rights
 	if(!init_adds)	init_adds = list()
@@ -18,7 +18,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	adds = init_adds
 	subs = init_subs
 
-/datum/admin_rank/proc/process_keyword(word, previous_rights=0)
+/proc/admin_keyword_to_flag(word, previous_rights=0)
 	var/flag = 0
 	switch(ckey(word))
 		if("buildmode","build")			flag = R_BUILDMODE
@@ -36,22 +36,41 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 		if("sound","sounds")			flag = R_SOUNDS
 		if("spawn","create")			flag = R_SPAWN
 		if("@","prev")					flag = previous_rights
-		else
-			//isn't a keyword so maybe it's a verbpath?
-			var/path = text2path(copytext(word,2,findtext(word," ",2,0)))
-			if(path)
-				switch(text2ascii(word,1))
-					if(43)
-						if(!subs.Remove(path))
-							adds += path	//+
-					if(45)
-						if(!adds.Remove(path))
-							subs += path	//-
-			return
-	switch(text2ascii(word,1))
-		if(43)	rights |= flag	//+
-		if(45)	rights &= ~flag	//-
-	return
+	return flag
+
+/proc/admin_keyword_to_path(word) //use this with verb keywords eg +/client/proc/blah
+	return text2path(copytext(word,2,findtext(word," ",2,0)))
+
+// Adds/removes rights to this admin_rank
+/datum/admin_rank/proc/process_keyword(word, previous_rights=0)
+	var/flag = admin_keyword_to_flag(word, previous_rights)
+	if(flag)
+		switch(text2ascii(word,1))
+			if(43)	rights |= flag	//+
+			if(45)	rights &= ~flag	//-
+	else
+		//isn't a keyword so maybe it's a verbpath?
+		var/path = admin_keyword_to_path(word)
+		if(path)
+			switch(text2ascii(word,1))
+				if(43)
+					if(!subs.Remove(path))
+						adds += path	//+
+				if(45)
+					if(!adds.Remove(path))
+						subs += path	//-
+
+// Checks for (keyword-formatted) rights on this admin
+/datum/admins/proc/check_keyword(word)
+	var/flag = admin_keyword_to_flag(word)
+	if(flag)
+		return ((rank.rights & flag) == flag) //true only if right has everything in flag
+	else
+		var/path = admin_keyword_to_path(word)
+		for(var/i in owner.verbs) //this needs to be a foreach loop for some reason. in operator and verbs.Find() don't work
+			if(i == path)
+				return 1
+		return 0
 
 //load our rank - > rights associations
 /proc/load_admin_ranks()
@@ -74,7 +93,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 				next = findchar(line, "+-", prev+1, 0)
 				R.process_keyword(copytext(line, prev, next), previous_rights)
 				prev = next
-			
+
 			previous_rights = R.rights
 	else
 		establish_db_connection()
@@ -85,7 +104,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			load_admin_ranks()
 			return
 
-		var/DBQuery/query = dbcon.NewQuery("SELECT rank, flags FROM erro_admin_ranks")
+		var/DBQuery/query = dbcon.NewQuery("SELECT rank, flags FROM [format_table_name("admin_ranks")]")
 		query.Execute()
 		while(query.NextRow())
 			var/rank_name = ckeyEx(query.item[1])
@@ -117,7 +136,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	var/list/rank_names = list()
 	for(var/datum/admin_rank/R in admin_ranks)
 		rank_names[R.name] = R
-	
+
 	if(config.admin_legacy_system)
 		//load text from file
 		var/list/Lines = file2list("config/admins.txt")
@@ -153,12 +172,15 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			load_admins()
 			return
 
-		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, rank FROM erro_admin")
+		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, rank FROM [format_table_name("admin")]")
 		query.Execute()
 		while(query.NextRow())
 			var/ckey = ckey(query.item[1])
 			var/rank = ckeyEx(query.item[2])
-			var/datum/admins/D = new(rank, ckey)				//create the admin datum and store it for later use
+			if(rank_names[rank] == null)
+				error("Admin rank ([rank]) does not exist.")
+				continue
+			var/datum/admins/D = new(rank_names[rank], ckey)				//create the admin datum and store it for later use
 			if(!D)	continue									//will occur if an invalid rank is provided
 			D.associate(directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
 
@@ -214,11 +236,15 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 				return
 
 	var/datum/admins/D = admin_datums[adm_ckey]
-	
+
 	switch(task)
 		if("remove")
 			if(alert("Are you sure you want to remove [adm_ckey]?","Message","Yes","Cancel") == "Yes")
 				if(!D)	return
+				if(!check_if_greater_rights_than_holder(D))
+					message_admins("[key_name_admin(usr)] attempted to remove [adm_ckey] from the admins list without sufficient rights.")
+					log_admin("[key_name(usr)] attempted to remove [adm_ckey] from the admins list without sufficient rights.")
+					return
 				admin_datums -= adm_ckey
 				D.disassociate()
 
@@ -228,57 +254,68 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 
 		if("rank")
 			var/datum/admin_rank/R
-			
+
 			var/list/rank_names = list("*New Rank*")
 			for(R in admin_ranks)
 				rank_names[R.name] = R
-			
+
 			var/new_rank = input("Please select a rank", "New rank", null, null) as null|anything in rank_names
-			
+
 			switch(new_rank)
 				if(null)	return
 				if("*New Rank*")
 					new_rank = ckeyEx(input("Please input a new rank", "New custom rank", null, null) as null|text)
 					if(!new_rank)	return
-					
+
+			if(D)
+				if(!check_if_greater_rights_than_holder(D))
+					message_admins("[key_name_admin(usr)] attempted to change the rank of [adm_ckey] to [new_rank] without sufficient rights.")
+					log_admin("[key_name(usr)] attempted to change the rank of [adm_ckey] to [new_rank] without sufficient rights.")
+					return
+
 			R = rank_names[new_rank]
 			if(!R)	//rank with that name doesn't exist yet - make it
 				if(D)	R = new(new_rank, D.rank.rights, D.rank.adds, D.rank.subs)	//duplicate our previous admin_rank but with a new name
 				else	R = new(new_rank)							//blank new admin_rank
 				admin_ranks += R
-			
+
 			if(D)	//they were previously an admin
 				D.disassociate()	//existing admin needs to be disassociated
 				D.rank = R			//set the admin_rank as our rank
 			else
 				D = new(R,adm_ckey)	//new admin
-						
+
 			var/client/C = directory[adm_ckey]	//find the client with the specified ckey (if they are logged in)
 			D.associate(C)						//link up with the client and add verbs
-						
+
 			message_admins("[key_name_admin(usr)] edited the admin rank of [adm_ckey] to [new_rank]")
 			log_admin("[key_name(usr)] edited the admin rank of [adm_ckey] to [new_rank]")
 			log_admin_rank_modification(adm_ckey, new_rank)
 
 		if("permissions")
 			if(!D)	return	//they're not an admin!
-			
+
 			var/keyword = input("Input permission keyword (one at a time):\ne.g. +BAN or -FUN or +/client/proc/someverb", "Permission toggle", null, null) as null|text
 			if(!keyword)	return
-			
+
+			if(!check_keyword(keyword) || !check_if_greater_rights_than_holder(D))
+				message_admins("[key_name_admin(usr)] attempted to give [adm_ckey] the keyword [keyword] without sufficient rights.")
+				log_admin("[key_name(usr)] attempted to give [adm_ckey] the keyword [keyword] without sufficient rights.")
+				return
+
 			D.disassociate()
-			
+
 			if(!findtext(D.rank.name, "([adm_ckey])"))	//not a modified subrank, need to duplicate the admin_rank datum to prevent modifying others too
 				D.rank = new("[D.rank.name]([adm_ckey])", D.rank.rights, D.rank.adds, D.rank.subs)	//duplicate our previous admin_rank but with a new name
 				//we don't add this clone to the admin_ranks list, as it is unique to that ckey
-			
+
 			D.rank.process_keyword(keyword)
-			
+
 			var/client/C = directory[adm_ckey]	//find the client with the specified ckey (if they are logged in)
 			D.associate(C)						//link up with the client and add verbs
-			
+
 			message_admins("[key_name(usr)] added keyword [keyword] to permission of [adm_ckey]")
 			log_admin("[key_name(usr)] added keyword [keyword] to permission of [adm_ckey]")
 			log_admin_permission_modification(adm_ckey, D.rank.rights)
-			
+
 	edit_admin_permissions()

@@ -10,10 +10,11 @@
 /datum/round_event/radiation_storm/setup()
 	startWhen = rand(10, 20)
 	endWhen = startWhen + 5
+	announceWhen	= 1
 
 /datum/round_event/radiation_storm/announce()
-	command_alert("High levels of radiation detected near the station. Maintenance is best shielded from radiation.", "Anomaly Alert")
-	world << sound('sound/AI/radiation.ogg')	//sound not longer matches the text, but an audible warning is probably good
+	priority_announce("High levels of radiation detected near the station. Maintenance is best shielded from radiation.", "Anomaly Alert", 'sound/AI/radiation.ogg')
+	//sound not longer matches the text, but an audible warning is probably good
 
 
 /datum/round_event/radiation_storm/start()
@@ -52,4 +53,4 @@
 
 
 /datum/round_event/radiation_storm/end()
-	command_alert("The radiation threat has passed. Please return to your workplaces.", "Anomaly Alert")
+	priority_announce("The radiation threat has passed. Please return to your workplaces.", "Anomaly Alert")

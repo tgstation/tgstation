@@ -36,12 +36,11 @@ proc/cardinalrange(var/center)
 /obj/machinery/am_shielding/proc/controllerscan(var/priorscan = 0)
 	//Make sure we are the only one here
 	if(!istype(src.loc, /turf))
-		del(src)
+		qdel(src)
 		return
 	for(var/obj/machinery/am_shielding/AMS in loc.contents)
 		if(AMS == src) continue
-		spawn(0)
-			del(src)
+		qdel(src)
 		return
 
 	//Search for shielding first
@@ -60,22 +59,20 @@ proc/cardinalrange(var/center)
 			spawn(20)
 				controllerscan(1)//Last chance
 			return
-		spawn(0)
-			del(src)
+		qdel(src)
 	return
 
 
-/obj/machinery/am_shielding/Del()
+/obj/machinery/am_shielding/Destroy()
 	if(control_unit)	control_unit.remove_shielding(src)
 	if(processing)	shutdown_core()
-	visible_message("\red The [src.name] melts!")
+	visible_message("<span class='danger'>The [src.name] melts!</span>")
 	//Might want to have it leave a mess on the floor but no sprites for now
 	..()
-	return
 
 
-/obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0))	return 1
+/obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target, height=0)
+	if(height==0)	return 1
 	return 0
 
 
@@ -97,21 +94,14 @@ proc/cardinalrange(var/center)
 			new /obj/effect/blob/node(src.loc,150)
 		else
 			new /obj/effect/blob(src.loc,60)
-		spawn(0)
-			del(src)
+		qdel(src)
 		return
 	check_stability()
 	return
 
 
-/obj/machinery/am_shielding/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			stability -= 80
-		if(2.0)
-			stability -= 40
-		if(3.0)
-			stability -= 20
+/obj/machinery/am_shielding/ex_act(severity, target)
+	stability -= (80 - (severity * 20))
 	check_stability()
 	return
 
@@ -165,7 +155,8 @@ proc/cardinalrange(var/center)
 
 /obj/machinery/am_shielding/proc/setup_core()
 	processing = 1
-	machines.Add(src)
+	machines |= src
+	SSmachine.processing |= src
 	if(!control_unit)	return
 	control_unit.linked_cores.Add(src)
 	control_unit.reported_core_efficiency += efficiency
@@ -185,7 +176,7 @@ proc/cardinalrange(var/center)
 	if(injecting_fuel && control_unit)
 		control_unit.exploding = 1
 	if(src)
-		del(src)
+		qdel(src)
 	return
 
 
@@ -215,7 +206,7 @@ proc/cardinalrange(var/center)
 /obj/item/device/am_shielding_container/attackby(var/obj/item/I, var/mob/user)
 	if(istype(I, /obj/item/device/multitool) && istype(src.loc,/turf))
 		new/obj/machinery/am_shielding(src.loc)
-		del(src)
+		qdel(src)
 		return
 	..()
 	return

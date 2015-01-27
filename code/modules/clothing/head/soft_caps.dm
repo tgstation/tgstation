@@ -2,7 +2,6 @@
 	name = "cargo cap"
 	desc = "It's a baseball hat in a tasteless yellow colour."
 	icon_state = "cargosoft"
-	flags = HEADCOVERSEYES
 	item_state = "helmet"
 	item_color = "cargo"
 	var/flipped = 0
@@ -88,6 +87,14 @@
 
 /obj/item/clothing/head/soft/sec
 	name = "security cap"
-	desc = "It's baseball hat in tasteful red colour."
+	desc = "It's a robust baseball hat in tasteful red colour."
 	icon_state = "secsoft"
 	item_color = "sec"
+	armor = list(melee = 30, bullet = 25, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
+	strip_delay = 60
+
+/obj/item/clothing/head/soft/emt
+	name = "EMT cap"
+	desc = "It's a baseball hat with a dark turquoise color and a reflective cross on the top."
+	icon_state = "emtsoft"
+	item_color = "emt"

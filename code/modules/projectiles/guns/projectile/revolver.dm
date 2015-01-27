@@ -1,11 +1,11 @@
 /obj/item/weapon/gun/projectile/revolver
-	desc = "A classic revolver. Uses 357 ammo"
 	name = "revolver"
+	desc = "A suspicious revolver. Uses .357 ammo." //usually used by syndicates
 	icon_state = "revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
 
 /obj/item/weapon/gun/projectile/revolver/chamber_round()
-	if (chambered || !magazine)
+	if ((chambered && chambered.BB)|| !magazine) //if there's a live ammo in the chamber or no magazine
 		return
 	else if (magazine.ammo_count())
 		chambered = magazine.get_round(1)
@@ -29,12 +29,16 @@
 		CB = magazine.get_round(0)
 		chambered = null
 		CB.loc = get_turf(src.loc)
+		CB.SpinAnimation(10, 1)
 		CB.update_icon()
 		num_unloaded++
 	if (num_unloaded)
 		user << "<span class = 'notice'>You unload [num_unloaded] shell\s from [src].</span>"
 	else
 		user << "<span class='notice'>[src] is empty.</span>"
+
+/obj/item/weapon/gun/projectile/revolver/can_shoot()
+	return get_ammo(0,0)
 
 /obj/item/weapon/gun/projectile/revolver/get_ammo(var/countchambered = 0, var/countempties = 1)
 	var/boolets = 0 //mature var names for mature people
@@ -44,28 +48,27 @@
 		boolets += magazine.ammo_count(countempties)
 	return boolets
 
-/obj/item/weapon/gun/projectile/revolver/examine()
+/obj/item/weapon/gun/projectile/revolver/examine(mob/user)
 	..()
-	usr << "[get_ammo(0,0)] of those are live rounds."
+	user << "[get_ammo(0,0)] of those are live rounds."
 
 /obj/item/weapon/gun/projectile/revolver/detective
-	desc = "A cheap Martian knock-off of a Smith & Wesson Model 10. Uses .38-Special rounds."
-	name = "revolver"
+	desc = "A cheap Martian knock-off of a classic law enforcement firearm. Uses .38-special rounds."
 	icon_state = "detective"
 	origin_tech = "combat=2;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
 
+/obj/item/weapon/gun/projectile/revolver/detective/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, var/message = 1, params)
+	if(magazine.caliber != initial(magazine.caliber))
+		if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
+			playsound(user, fire_sound, 50, 1)
+			user << "<span class='danger'>[src] blows up in your face!</span>"
+			user.take_organ_damage(0,20)
+			user.drop_item()
+			qdel(src)
+			return 0
+	..()
 
-/obj/item/weapon/gun/projectile/revolver/detective/special_check(var/mob/living/carbon/human/M)
-	if(magazine.caliber == initial(magazine.caliber))
-		return 1
-	if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
-		M << "<span class='danger'>[src] blows up in your face!</span>"
-		M.take_organ_damage(0,20)
-		M.drop_item()
-		del(src)
-		return 0
-	return 1
 
 /obj/item/weapon/gun/projectile/revolver/detective/verb/rename_gun()
 	set name = "Name Gun"
@@ -75,7 +78,7 @@
 	var/mob/M = usr
 	var/input = stripped_input(M,"What do you want to name the gun?", ,"", MAX_NAME_LEN)
 
-	if(src && input && !M.stat && in_range(M,src))
+	if(src && input && !M.stat && in_range(M,src) && !M.restrained() && M.canmove)
 		name = input
 		M << "You name the gun [input]. Say hello to your new friend."
 		return 1
@@ -94,7 +97,7 @@
 	options["The Peacemaker"] = "detective_peacemaker"
 	var/choice = input(M,"What do you want to skin the gun to?","Reskin Gun") in options
 
-	if(src && choice && !M.stat && in_range(M,src))
+	if(src && choice && !M.stat && in_range(M,src) && !M.restrained() && M.canmove)
 		icon_state = options[choice]
 		M << "Your gun is now skinned as [choice]. Say hello to your new friend."
 		return 1
@@ -130,20 +133,19 @@
 				user << "<span class='warning'>You remove the modifications on [src]! Now it will fire .38 rounds.</span>"
 
 
-
-
 /obj/item/weapon/gun/projectile/revolver/mateba
-	name = "mateba"
-	desc = "When you absolutely, positively need a 10mm hole in the other guy. Uses .357 ammo."	//>10mm hole >.357
+	name = "autorevolver"
+	desc = "A retro high-powered mateba autorevolver typically used by officers of the New Russia military. Uses .357 ammo."
 	icon_state = "mateba"
 	origin_tech = "combat=2;materials=2"
+
 
 // A gun to play Russian Roulette!
 // You can spin the chamber to randomize the position of the bullet.
 
 /obj/item/weapon/gun/projectile/revolver/russian
-	name = "Russian Revolver"
-	desc = "A Russian made revolver. Uses .357 ammo. It has a single slot in its chamber for a bullet."
+	name = "russian revolver"
+	desc = "A Russian-made revolver for drinking games. Uses .357 ammo, and has a mechanism that spins the chamber before each trigger pull."
 	origin_tech = "combat=2;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	var/spun = 0
@@ -173,7 +175,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/revolver/russian/attack_self(mob/user as mob)
-	if(!spun && get_ammo(0,0))
+	if(!spun && can_shoot())
 		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
 		Spin()
 	else
@@ -191,35 +193,35 @@
 			user << "<span class='notice'>[src] is empty.</span>"
 
 /obj/item/weapon/gun/projectile/revolver/russian/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params)
-	if(!spun && get_ammo(0,0))
-		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
-		Spin()
-	..()
-	spun = 0
-
-/obj/item/weapon/gun/projectile/revolver/russian/attack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj)
-	if(!spun && get_ammo(0,0))
-		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
-		Spin()
+	if(user.a_intent == "harm") // Flogging action
+		return
+	if(isliving(user))
+		if(!can_trigger_gun(user))
+			return
+	if(target != user)
+		user << "<span class='warning'>A mechanism prevents you from shooting anyone but yourself.</span>"
 		return
 
-
-	if(target == user)
-		if(!chambered)
-			user.visible_message("\red *click*", "\red *click*")
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(!spun)
+			user << "<span class='warning'>You need to spin the revolver's chamber first.</span>"
 			return
 
-		if(isliving(target) && isliving(user))
-			var/obj/item/organ/limb/affecting = user.zone_sel.selecting
-			if(affecting == "head")
-				var/obj/item/ammo_casing/AC = chambered
-				if(AC.fire(user, user))
-					user.apply_damage(300, BRUTE, affecting)
-					playsound(user, fire_sound, 50, 1)
-					user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='danger'>You fire [src] at your head!</span>", "You hear a [istype(AC.BB, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
-					return
-				else
-					user.visible_message("\red *click*", "\red *click*")
-					return
-	..()
+		spun = 0
 
+		if(chambered)
+			var/obj/item/ammo_casing/AC = chambered
+			if(AC.fire(user, user))
+				playsound(user, fire_sound, 50, 1)
+				var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
+				var/limb_name = affecting.getDisplayName()
+				if(affecting == "head" || affecting == "eyes" || affecting == "mouth")
+					user.apply_damage(300, BRUTE, affecting)
+					user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='userdanger'>You fire [src] at your head!</span>", "You hear a gunshot!")
+				else
+					user.visible_message("<span class='danger'>[user.name] cowardly fires [src] at \his [limb_name]!</span>", "<span class='userdanger'>You cowardly fire [src] at your [limb_name]!</span>", "You hear a gunshot!")
+				return
+
+		user.visible_message("<span class='danger'>*click*</span>")
+		playsound(user, 'sound/weapons/empty.ogg', 100, 1)

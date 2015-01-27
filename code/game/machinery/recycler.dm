@@ -19,12 +19,11 @@ var/const/SAFETY_COOLDOWN = 100
 	..()
 	update_icon()
 
-/obj/machinery/recycler/examine()
-	set src in view()
+/obj/machinery/recycler/examine(mob/user)
 	..()
-	usr << "The power light is [(stat & NOPOWER) ? "off" : "on"]."
-	usr << "The safety-mode light is [safety_mode ? "on" : "off"]."
-	usr << "The safety-sensors status light is [emagged ? "off" : "on"]."
+	user << "The power light is [(stat & NOPOWER) ? "off" : "on"]."
+	user << "The safety-mode light is [safety_mode ? "on" : "off"]."
+	user << "The safety-sensors status light is [emagged ? "off" : "on"]."
 
 /obj/machinery/recycler/power_change()
 	..()
@@ -32,20 +31,24 @@ var/const/SAFETY_COOLDOWN = 100
 
 
 /obj/machinery/recycler/attackby(var/obj/item/I, var/mob/user)
-	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
+	if(istype(I, /obj/item/weapon/screwdriver))
+		if(emagged)
+			emagged = 0
+			update_icon()
+			user << "<span class='notice'>You reset the crusher to its default factory settings.</span>"
+	else
+		..()
+		return
+	add_fingerprint(user)
+
+/obj/machinery/recycler/emag_act(user as mob)
+	if(!emagged)
 		emagged = 1
 		if(safety_mode)
 			safety_mode = 0
 			update_icon()
 		playsound(src.loc, "sparks", 75, 1, -1)
-	else if(istype(I, /obj/item/weapon/screwdriver) && emagged)
-		emagged = 0
-		update_icon()
-		user << "<span class='notice'>You reset the crusher to its default factory settings.</span>"
-	else
-		..()
-		return
-	add_fingerprint(user)
+		user << "<span class='notice'>You use the cryptographic sequencer on the [src.name].</span>"
 
 /obj/machinery/recycler/update_icon()
 	..()
@@ -90,18 +93,17 @@ var/const/SAFETY_COOLDOWN = 100
 
 /obj/machinery/recycler/proc/recycle(var/obj/item/I, var/sound = 1)
 	I.loc = src.loc
-	if(!istype(I, /obj/item/weapon/disk/nuclear))
-		del(I)
-		if(prob(15))
-			new /obj/item/stack/sheet/metal(loc)
-		if(prob(10))
-			new /obj/item/stack/sheet/glass(loc)
-		if(prob(2))
-			new /obj/item/stack/sheet/plasteel(loc)
-		if(prob(1))
-			new /obj/item/stack/sheet/rglass(loc)
-		if(sound)
-			playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+	qdel(I)
+	if(prob(15))
+		new /obj/item/stack/sheet/metal(loc)
+	if(prob(10))
+		new /obj/item/stack/sheet/glass(loc)
+	if(prob(2))
+		new /obj/item/stack/sheet/plasteel(loc)
+	if(prob(1))
+		new /obj/item/stack/sheet/rglass(loc)
+	if(sound)
+		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 
 
 /obj/machinery/recycler/proc/stop(var/mob/living/L)

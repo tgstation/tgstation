@@ -35,16 +35,16 @@
 	linked_cores = list()
 
 
-/obj/machinery/power/am_control_unit/Del()//Perhaps damage and run stability checks rather than just del on the others
+/obj/machinery/power/am_control_unit/Destroy()//Perhaps damage and run stability checks rather than just del on the others
 	for(var/obj/machinery/am_shielding/AMS in linked_shielding)
-		del(AMS)
+		qdel(AMS)
 	..()
 
 
 /obj/machinery/power/am_control_unit/process()
 	if(exploding)
 		explosion(get_turf(src),8,12,18,12)
-		if(src) del(src)
+		if(src) qdel(src)
 
 	if(update_shield_icons && !shield_icon_delay)
 		check_shield_icons()
@@ -106,22 +106,14 @@
 	if(prob(100-stability))//Might infect the rest of the machine
 		for(var/obj/machinery/am_shielding/AMS in linked_shielding)
 			AMS.blob_act()
-		spawn(0)
-			//Likely explode
-			del(src)
+		qdel(src)
 		return
 	check_stability()
 	return
 
 
-/obj/machinery/power/am_control_unit/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			stability -= 60
-		if(2.0)
-			stability -= 40
-		if(3.0)
-			stability -= 20
+/obj/machinery/power/am_control_unit/ex_act(severity, target)
+	stability -= (80 - (severity * 20))
 	check_stability()
 	return
 
@@ -163,12 +155,12 @@
 			src.anchored = 0
 			disconnect_from_network()
 		else
-			user << "\red Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!"
+			user << "<span class='danger'>Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!</span>"
 		return
 
 	if(istype(W, /obj/item/weapon/am_containment))
 		if(fueljar)
-			user << "\red There is already a [fueljar] inside!"
+			user << "<span class='danger'>There is already a [fueljar] inside!</span>"
 			return
 		fueljar = W
 		W.loc = src
@@ -213,7 +205,7 @@
 
 /obj/machinery/power/am_control_unit/proc/check_stability()//TODO: make it break when low also might want to add a way to fix it like a part or such that can be replaced
 	if(stability <= 0)
-		del(src)
+		qdel(src)
 	return
 
 

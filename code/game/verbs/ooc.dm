@@ -3,7 +3,7 @@
 	set category = "OOC"
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "\red Speech is currently admin-disabled."
+		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
 		return
 
 	if(!mob)	return
@@ -15,18 +15,18 @@
 	if(!msg)	return
 
 	if(!(prefs.toggles & CHAT_OOC))
-		src << "\red You have OOC muted."
+		src << "<span class='danger'>You have OOC muted.</span>"
 		return
 
 	if(!holder)
 		if(!ooc_allowed)
-			src << "\red OOC is globally muted"
+			src << "<span class='danger'>OOC is globally muted.</span>"
 			return
 		if(!dooc_allowed && (mob.stat == DEAD))
-			usr << "\red OOC for dead mobs has been turned off."
+			usr << "<span class='danger'>OOC for dead mobs has been turned off.</span>"
 			return
 		if(prefs.muted & MUTE_OOC)
-			src << "\red You cannot use OOC (muted)."
+			src << "<span class='danger'>You cannot use OOC (muted).</span>"
 			return
 		if(handle_spam_prevention(msg,MUTE_OOC))
 			return
@@ -43,6 +43,8 @@
 		if(prefs.toggles & MEMBER_PUBLIC)
 			keyname = "<font color='[prefs.ooccolor]'><img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=blag>[keyname]</font>"
 
+	msg = emoji_parse(msg)
+
 	for(var/client/C in clients)
 		if(C.prefs.toggles & CHAT_OOC)
 			if(holder)
@@ -56,22 +58,33 @@
 			else
 				C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
 
+/proc/toggle_ooc()
+	ooc_allowed = !( ooc_allowed )
+	if (ooc_allowed)
+		world << "<B>The OOC channel has been globally enabled!</B>"
+	else
+		world << "<B>The OOC channel has been globally disabled!</B>"
+
+/proc/auto_toggle_ooc(var/on)
+	if(!config.ooc_during_round && ooc_allowed != on)
+		toggle_ooc()
+
 var/global/normal_ooc_colour = "#002eb8"
 
 /client/proc/set_ooc(newColor as color)
-	set name = "Set Player OOC Colour"
-	set desc = "Set to yellow for eye burning goodness."
+	set name = "Set Player OOC Color"
+	set desc = "Modifies player OOC Color"
 	set category = "Fun"
-	normal_ooc_colour = newColor
+	normal_ooc_colour = sanitize_ooccolor(newColor)
 
 /client/verb/colorooc()
-	set name = "OOC Text Color"
+	set name = "Set Your OOC Color"
 	set category = "Preferences"
 
 	if(!holder || check_rights_for(src, R_ADMIN))
 		if(!is_content_unlocked())	return
 
-	var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour", prefs.ooccolor) as color|null
+	var/new_ooccolor = input(src, "Please select your OOC color.", "OOC color", prefs.ooccolor) as color|null
 	if(new_ooccolor)
 		prefs.ooccolor = sanitize_ooccolor(new_ooccolor)
 		prefs.save_preferences()
@@ -85,9 +98,9 @@ var/global/normal_ooc_colour = "#002eb8"
 	set desc ="Check the admin notice if it has been set"
 
 	if(admin_notice)
-		src << "\blue <b>Admin Notice:</b>\n \t [admin_notice]"
+		src << "<span class='boldnotice'>Admin Notice:</span>\n \t [admin_notice]"
 	else
-		src << "\blue There are no admin notices at the moment."
+		src << "<span class='notice'>There are no admin notices at the moment.</span>"
 
 /client/verb/motd()
 	set name = "MOTD"
@@ -97,4 +110,15 @@ var/global/normal_ooc_colour = "#002eb8"
 	if(join_motd)
 		src << "<div class=\"motd\">[join_motd]</div>"
 	else
-		src << "\blue The Message of the Day has not been set."
+		src << "<span class='notice'>The Message of the Day has not been set.</span>"
+
+/client/proc/self_notes()
+	set name = "View Admin Notes"
+	set category = "OOC"
+	set desc = "View the notes that admins have written about you"
+
+	if(!config.see_own_notes)
+		usr << "<span class='notice'>Sorry, that function is not enabled on this server.</span>"
+		return
+
+	see_own_notes()

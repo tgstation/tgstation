@@ -16,23 +16,24 @@
  */
 /obj/structure/alien/resin
 	name = "resin"
-	desc = "Looks like some kind of slimy growth."
+	desc = "Looks like some kind of thick resin."
 	icon_state = "resin"
 	density = 1
 	opacity = 1
 	anchored = 1
 	var/health = 200
-
+	var/resintype = null
 /obj/structure/alien/resin/New(location)
+	relativewall_neighbours()
 	..()
 	air_update_turf(1)
 	return
 
-/obj/structure/alien/resin/Del()
-	density = 0
-	air_update_turf(1)
+/obj/structure/alien/resin/Destroy()
+	var/turf/T = loc
+	loc = null
+	T.relativewall_neighbours()
 	..()
-	return
 
 /obj/structure/alien/resin/Move()
 	var/turf/T = loc
@@ -44,20 +45,32 @@
 
 /obj/structure/alien/resin/wall
 	name = "resin wall"
-	desc = "Purple slime solidified into a wall."
-	icon_state = "resinwall"	//same as resin, but consistency ho!
+	desc = "Thick resin solidified into a wall."
+	icon_state = "wall0"	//same as resin, but consistency ho!
+	resintype = "wall"
+
+/obj/structure/alien/resin/wall/New()
+	relativewall_neighbours()
+	..()
+
+/obj/structure/alien/resin/wall/BlockSuperconductivity()
+	return 1
 
 /obj/structure/alien/resin/membrane
 	name = "resin membrane"
-	desc = "Purple slime just thin enough to let light pass through."
-	icon_state = "resinmembrane"
+	desc = "Resin just thin enough to let light pass through."
+	icon_state = "membrane0"
 	opacity = 0
 	health = 120
+	resintype = "membrane"
 
+/obj/structure/alien/resin/membrane/New()
+	relativewall_neighbours()
+	..()
 
 /obj/structure/alien/resin/proc/healthcheck()
 	if(health <=0)
-		del(src)
+		qdel(src)
 
 
 /obj/structure/alien/resin/bullet_act(obj/item/projectile/Proj)
@@ -66,7 +79,7 @@
 	healthcheck()
 
 
-/obj/structure/alien/resin/ex_act(severity)
+/obj/structure/alien/resin/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			health -= 150
@@ -95,19 +108,20 @@
 	health -= tforce
 	healthcheck()
 
-
-/obj/structure/alien/resin/attack_hand(mob/user)
-	if(HULK in user.mutations)
-		user.visible_message("<span class='danger'>[user] destroys [src]!</span>")
-		health = 0
-		healthcheck()
-
+/obj/structure/alien/resin/attack_hulk(mob/living/carbon/human/user)
+	..(user, 1)
+	user.do_attack_animation(src)
+	user.visible_message("<span class='danger'>[user] destroys [src]!</span>")
+	health = 0
+	healthcheck()
 
 /obj/structure/alien/resin/attack_paw(mob/user)
 	return attack_hand(user)
 
 
-/obj/structure/alien/resin/attack_alien(mob/user)
+/obj/structure/alien/resin/attack_alien(mob/living/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
 	if(islarva(user))
 		return
 	user.visible_message("<span class='danger'>[user] claws at the resin!</span>")
@@ -118,15 +132,15 @@
 	healthcheck()
 
 
-/obj/structure/alien/resin/attackby(obj/item/I, mob/user)
+/obj/structure/alien/resin/attackby(obj/item/I, mob/living/user)
+	user.changeNext_move(CLICK_CD_MELEE)
 	health -= I.force
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 	healthcheck()
 	..()
 
 
-/obj/structure/alien/resin/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group) return 0
+/obj/structure/alien/resin/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return !opacity
 	return !density
@@ -140,11 +154,12 @@
 
 /obj/structure/alien/weeds
 	gender = PLURAL
-	name = "weeds"
-	desc = "Weird purple weeds."
+	name = "resin floor"
+	desc = "A thick resin surface covers the floor."
 	icon_state = "weeds"
 	anchored = 1
 	density = 0
+	layer = 2
 	var/health = 15
 	var/obj/structure/alien/weeds/node/linked_node = null
 
@@ -153,22 +168,28 @@
 	..()
 	linked_node = node
 	if(istype(loc, /turf/space))
-		del(src)
+		qdel(src)
 		return
 	if(icon_state == "weeds")
 		icon_state = pick("weeds", "weeds1", "weeds2")
-
+	fullUpdateWeedOverlays()
 	spawn(rand(150, 200))
 		if(src)
 			Life()
 
+/obj/structure/alien/weeds/Destroy()
+	var/turf/T = loc
+	loc = null
+	for (var/obj/structure/alien/weeds/W in range(1,T))
+		W.updateWeedOverlays()
+	..()
 
 /obj/structure/alien/weeds/proc/Life()
 	set background = BACKGROUND_ENABLED
 	var/turf/U = get_turf(src)
 
 	if(istype(U, /turf/space))
-		del(src)
+		qdel(src)
 		return
 
 	direction_loop:
@@ -188,15 +209,16 @@
 			new /obj/structure/alien/weeds(T, linked_node)
 
 
-/obj/structure/alien/weeds/ex_act(severity)
-	del(src)
+/obj/structure/alien/weeds/ex_act(severity, target)
+	qdel(src)
 
 
 /obj/structure/alien/weeds/attackby(obj/item/I, mob/user)
+	user.changeNext_move(CLICK_CD_MELEE)
 	if(I.attack_verb.len)
-		visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] with [I] by [user].</span>")
+		visible_message("<span class='danger'>[user] has [pick(I.attack_verb)] [src] with [I]!</span>")
 	else
-		visible_message("<span class='danger'>[src] has been attacked with [I] by [user]!</span>")
+		visible_message("<span class='danger'>[user] has attacked [src] with [I]!</span>")
 
 	var/damage = I.force / 4.0
 	if(istype(I, /obj/item/weapon/weldingtool))
@@ -211,7 +233,7 @@
 
 /obj/structure/alien/weeds/proc/healthcheck()
 	if(health <= 0)
-		del(src)
+		qdel(src)
 
 
 /obj/structure/alien/weeds/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -220,12 +242,37 @@
 		healthcheck()
 
 
+/obj/structure/alien/weeds/proc/updateWeedOverlays()
+
+	overlays.Cut()
+	var/turf/N = get_step(src, NORTH)
+	var/turf/S = get_step(src, SOUTH)
+	var/turf/E = get_step(src, EAST)
+	var/turf/W = get_step(src, WEST)
+	if(!locate(/obj/structure/alien) in N.contents)
+		if(istype(N, /turf/simulated/floor))
+			src.overlays += image('icons/mob/alien.dmi', "weeds_side_s", layer=2.11, pixel_y = 32)
+	if(!locate(/obj/structure/alien) in S.contents)
+		if(istype(S, /turf/simulated/floor))
+			src.overlays += image('icons/mob/alien.dmi', "weeds_side_n", layer=2.11, pixel_y = -32)
+	if(!locate(/obj/structure/alien) in E.contents)
+		if(istype(E, /turf/simulated/floor))
+			src.overlays += image('icons/mob/alien.dmi', "weeds_side_w", layer=2.11, pixel_x = 32)
+	if(!locate(/obj/structure/alien) in W.contents)
+		if(istype(W, /turf/simulated/floor))
+			src.overlays += image('icons/mob/alien.dmi', "weeds_side_e", layer=2.11, pixel_x = -32)
+
+
+/obj/structure/alien/weeds/proc/fullUpdateWeedOverlays()
+	for (var/obj/structure/alien/weeds/W in range(1,src))
+		W.updateWeedOverlays()
+
 //Weed nodes
 /obj/structure/alien/weeds/node
-	name = "purple sac"
-	desc = "Weird purple octopus-like thing."
+	name = "glowing resin"
+	desc = "Blue bioluminescence shines from beneath the surface."
 	icon_state = "weednode"
-	luminosity = NODERANGE
+	luminosity = 1
 	var/node_range = NODERANGE
 
 
@@ -270,7 +317,7 @@
 			if(BURST)
 				user << "<span class='notice'>You clear the hatched egg.</span>"
 				playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
-				del(src)
+				qdel(src)
 				return
 			if(GROWING)
 				user << "<span class='notice'>The child is not developed yet.</span>"
@@ -285,6 +332,7 @@
 
 /obj/structure/alien/egg/attack_hand(mob/user)
 	user << "<span class='notice'>It feels slimy.</span>"
+	user.changeNext_move(CLICK_CD_MELEE)
 
 
 /obj/structure/alien/egg/proc/GetFacehugger()
@@ -323,9 +371,9 @@
 
 /obj/structure/alien/egg/attackby(obj/item/I, mob/user)
 	if(I.attack_verb.len)
-		visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] with [I] by [user].</span>")
+		visible_message("<span class='danger'>[user] has [pick(I.attack_verb)] [src] with [I]!</span>")
 	else
-		visible_message("<span class='danger'>[src] has been attacked with [I] by [user]!</span>")
+		visible_message("<span class='danger'>[user] has attacked [src] with [I]!</span>")
 
 	var/damage = I.force / 4
 	if(istype(I, /obj/item/weapon/weldingtool))
@@ -336,6 +384,7 @@
 			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 
 	health -= damage
+	user.changeNext_move(CLICK_CD_MELEE)
 	healthcheck()
 
 
@@ -344,7 +393,7 @@
 		if(status != BURST && status != BURSTING)
 			Burst()
 		else if(status == BURST && prob(50))
-			del(src)	//Remove the egg after it has been hit after bursting.
+			qdel(src)	//Remove the egg after it has been hit after bursting.
 
 
 /obj/structure/alien/egg/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -399,15 +448,15 @@
 	pixel_y = target.pixel_y
 
 	if(isturf(target))	//Turfs take twice as long to take down.
-		target_strength = 8
+		target_strength = 640
 	else
-		target_strength = 4
+		target_strength = 320
 	tick()
 
 
 /obj/effect/acid/proc/tick()
 	if(!target)
-		del(src)
+		qdel(src)
 
 	ticks++
 
@@ -418,23 +467,25 @@
 			var/turf/simulated/wall/W = target
 			W.dismantle_wall(1)
 		else
-			del(target)
+			qdel(target)
 
-		del(src)
+		qdel(src)
 		return
 
-	loc = target.loc
+	x = target.x
+	y = target.y
+	z = target.z
 
 	switch(target_strength - ticks)
-		if(6)
+		if(480)
 			visible_message("<span class='warning'>[target] is holding up against the acid!</span>")
-		if(4)
+		if(320)
 			visible_message("<span class='warning'>[target] is being melted by the acid!</span>")
-		if(2)
+		if(160)
 			visible_message("<span class='warning'>[target] is struggling to withstand the acid!</span>")
-		if(0 to 1)
+		if(80)
 			visible_message("<span class='warning'>[target] begins to crumble under the acid!</span>")
 
-	spawn(rand(150, 200))
+	spawn(1)
 		if(src)
 			tick()

@@ -13,10 +13,15 @@
 	else		return l_hand
 
 
+//Returns if a certain item can be equipped to a certain slot.
+// Currently invalid for two-handed items - call obj/item/mob_can_equip() instead.
+/mob/proc/can_equip(obj/item/I, slot, disable_warning = 0)
+	return 0
+
 //Puts the item into your l_hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_l_hand(var/obj/item/W)
-	if(lying && !(W.flags&ABSTRACT))			return 0
-	if(!istype(W))		return 0
+	if(!put_in_hand_check(W))
+		return 0
 	if(!l_hand)
 		W.loc = src		//TODO: move to equipped?
 		l_hand = W
@@ -32,8 +37,8 @@
 
 //Puts the item into your r_hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_r_hand(var/obj/item/W)
-	if(lying && !(W.flags&ABSTRACT))			return 0
-	if(!istype(W))		return 0
+	if(!put_in_hand_check(W))
+		return 0
 	if(!r_hand)
 		W.loc = src
 		r_hand = W
@@ -46,6 +51,10 @@
 		return 1
 	return 0
 
+/mob/proc/put_in_hand_check(var/obj/item/W)
+	if(lying && !(W.flags&ABSTRACT))			return 0
+	if(!istype(W))		return 0
+	return 1
 
 //Puts the item into our active hand if possible. returns 1 on success.
 /mob/proc/put_in_active_hand(var/obj/item/W)
@@ -96,6 +105,14 @@
 
 
 //Here lie drop_from_inventory and before_item_take, already forgotten and not missed.
+
+
+/mob/proc/canUnEquip(obj/item/I, force)
+	if(!I)
+		return 1
+	if((I.flags & NODROP) && !force)
+		return 0
+	return 1
 
 /mob/proc/unEquip(obj/item/I, force) //Force overrides NODROP for things like wizarditis and admin undress.
 	if(!I) //If there's nothing to drop, the drop is automatically succesfull. If(unEquip) should generally be used to check for NODROP.

@@ -23,8 +23,8 @@ Borg Hypospray
 	var/recharge_time = 5 //Time it takes for shots to recharge (in seconds)
 
 	var/list/datum/reagents/reagent_list = list()
-	var/list/reagent_ids = list("doctorsdelight", "inaprovaline", "spaceacillin")
-	//var/list/reagent_ids = list("dexalin", "kelotane", "bicaridine", "anti_toxin", "inaprovaline", "spaceacillin")
+	var/list/reagent_ids = list("omnizine", "epinephrine", "spaceacillin")
+	//var/list/reagent_ids = list("salbutamol", "salglu_solution", "salglu_solution", "charcoal", "ephedrine", "spaceacillin")
 	var/list/modes = list() //Basically the inverse of reagent_ids. Instead of having numbers as "keys" and strings as values it has strings as keys and numbers as values.
 								//Used as list for input() in shakers.
 
@@ -38,11 +38,11 @@ Borg Hypospray
 		modes[R] = iteration
 		iteration++
 
-	processing_objects.Add(src)
+	SSobj.processing.Add(src)
 
 
-/obj/item/weapon/reagent_containers/borghypo/Del()
-	processing_objects.Remove(src)
+/obj/item/weapon/reagent_containers/borghypo/Destroy()
+	SSobj.processing.Remove(src)
 	..()
 
 
@@ -108,9 +108,10 @@ Borg Hypospray
 	user << "<span class='notice'>[src] is now dispensing '[R.name]'.</span>"
 	return
 
-/obj/item/weapon/reagent_containers/borghypo/examine()
+/obj/item/weapon/reagent_containers/borghypo/examine(mob/user)
+	usr = user
 	..()
-	DescribeContents()
+	DescribeContents()	//Because using the standardized reagents datum was just too cool for whatever fuckwit wrote this
 
 /obj/item/weapon/reagent_containers/borghypo/proc/DescribeContents()
 	var/empty = 1
@@ -135,7 +136,7 @@ Borg Shaker
 	charge_cost = 20 //Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
 	recharge_time = 3
 
-	reagent_ids = list("orangejuice", "limejuice", "tomatojuice", "cola", "tonic", "sodawater", "ice", "cream", "beer", "whiskey", "vodka", "rum", "gin", "tequilla", "vermouth", "wine", "kahlua", "cognac", "ale")
+	reagent_ids = list("beer", "orangejuice", "limejuice", "tomatojuice", "cola", "tonic", "sodawater", "ice", "cream", "whiskey", "vodka", "rum", "gin", "tequilla", "vermouth", "wine", "kahlua", "cognac", "ale")
 
 /obj/item/weapon/reagent_containers/borghypo/borgshaker/attack(mob/M as mob, mob/user as mob)
 	return //Can't inject stuff with a shaker, can we?
@@ -187,3 +188,15 @@ Borg Shaker
 
 	if(empty)
 		usr << "<span class='notice'>It is currently empty. Please allow some time for the synthesizer to produce more.</span>"
+
+/obj/item/weapon/reagent_containers/borghypo/borgshaker/hacked
+	..()
+	name = "cyborg shaker"
+	desc = "Will mix drinks that knock them dead."
+	icon = 'icons/obj/drinks.dmi'
+	icon_state = "threemileislandglass"
+	possible_transfer_amounts = list(5,10,20)
+	charge_cost = 20 //Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
+	recharge_time = 3
+
+	reagent_ids = list("beer2")

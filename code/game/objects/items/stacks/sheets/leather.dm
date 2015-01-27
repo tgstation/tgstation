@@ -26,6 +26,15 @@
 	icon_state = "sheet-monkey"
 	origin_tech = null
 
+var/global/list/datum/stack_recipe/monkey_recipes = list ( \
+	new/datum/stack_recipe("monkey mask", /obj/item/clothing/mask/gas/monkeymask, 1, on_floor = 1), \
+	new/datum/stack_recipe("monkey suit", /obj/item/clothing/suit/monkeysuit, 2, on_floor = 1), \
+	)
+
+/obj/item/stack/sheet/animalhide/monkey/New(var/loc, var/amount=null)
+	recipes = monkey_recipes
+	return ..()
+
 /obj/item/stack/sheet/animalhide/lizard
 	name = "lizard skin"
 	desc = "Sssssss..."
@@ -39,6 +48,15 @@
 	singular_name = "alien hide piece"
 	icon_state = "sheet-xeno"
 	origin_tech = null
+
+var/global/list/datum/stack_recipe/xeno_recipes = list ( \
+	new/datum/stack_recipe("alien helmet", /obj/item/clothing/head/xenos, 1, on_floor = 1), \
+	new/datum/stack_recipe("alien suit", /obj/item/clothing/suit/xenos, 2, on_floor = 1), \
+	)
+
+/obj/item/stack/sheet/animalhide/xeno/New(var/loc, var/amount=null)
+	recipes = xeno_recipes
+	return ..()
 
 //don't see anywhere else to put these, maybe together they could be used to make the xenos suit?
 /obj/item/stack/sheet/xenochitin
@@ -97,9 +115,9 @@
 		istype(W, /obj/item/weapon/hatchet) )
 
 		//visible message on mobs is defined as visible_message(var/message, var/self_message, var/blind_message)
-		usr.visible_message("\blue \the [usr] starts cutting hair off \the [src]", "\blue You start cutting the hair off \the [src]", "You hear the sound of a knife rubbing against flesh")
+		usr.visible_message("<span class='notice'>\the [usr] starts cutting hair off \the [src]</span>", "<span class='notice'>You start cutting the hair off \the [src]</span>", "You hear the sound of a knife rubbing against flesh")
 		if(do_after(user,50))
-			usr << "\blue You cut the hair from this [src.singular_name]"
+			usr << "<span class='notice'>You cut the hair from this [src.singular_name]</span>"
 			//Try locating an exisitng stack on the tile and add to there if possible
 			for(var/obj/item/stack/sheet/hairlesshide/HS in usr.loc)
 				if(HS.amount < 50)

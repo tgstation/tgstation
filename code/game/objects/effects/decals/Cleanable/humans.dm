@@ -11,7 +11,7 @@
 	var/list/viruses = list()
 	blood_DNA = list()
 
-/obj/effect/decal/cleanable/blood/Del()
+/obj/effect/decal/cleanable/blood/Destroy()
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
 	..()
@@ -24,7 +24,7 @@
 	if(src.loc && isturf(src.loc))
 		for(var/obj/effect/decal/cleanable/blood/B in src.loc)
 			if(B != src)
-				del(B)
+				qdel(B)
 
 /obj/effect/decal/cleanable/blood/splatter
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
@@ -58,7 +58,7 @@
 	icon_state = "gibbl5"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 
-/obj/effect/decal/cleanable/blood/gibs/ex_act(severity)
+/obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return
 
 /obj/effect/decal/cleanable/blood/gibs/remove_ex_blood()

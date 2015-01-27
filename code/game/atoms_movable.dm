@@ -4,23 +4,78 @@
 	var/anchored = 0
 	var/move_speed = 10
 	var/l_move_time = 1
-	var/m_flag = 1
 	var/throwing = 0
 	var/throw_speed = 2
 	var/throw_range = 7
-	var/moved_recently = 0
 	var/mob/pulledby = null
+	var/languages = 0 //For say() and Hear()
+	var/inertia_dir = 0
+	var/pass_flags = 0
 	glide_size = 8
 
-/atom/movable/Move()
-	var/atom/A = src.loc
-	. = ..()
+/atom/movable/Move(atom/newloc, direct = 0)
+	if(!loc || !newloc) return 0
+	var/atom/oldloc = loc
+
+	if(loc != newloc)
+		if (!(direct & (direct - 1))) //Cardinal move
+			. = ..()
+		else //Diagonal move, split it into cardinal moves
+			if (direct & 1)
+				if (direct & 4)
+					if (step(src, NORTH))
+						. = step(src, EAST)
+					else if (step(src, EAST))
+						. = step(src, NORTH)
+				else if (direct & 8)
+					if (step(src, NORTH))
+						. = step(src, WEST)
+					else if (step(src, WEST))
+						. = step(src, NORTH)
+			else if (direct & 2)
+				if (direct & 4)
+					if (step(src, SOUTH))
+						. = step(src, EAST)
+					else if (step(src, EAST))
+						. = step(src, SOUTH)
+				else if (direct & 8)
+					if (step(src, SOUTH))
+						. = step(src, WEST)
+					else if (step(src, WEST))
+						. = step(src, SOUTH)
+
+
+	if(!loc || (loc == oldloc && oldloc != newloc))
+		last_move = 0
+		return
+
+	last_move = direct
 	src.move_speed = world.timeofday - src.l_move_time
 	src.l_move_time = world.timeofday
-	src.m_flag = 1
-	if ((A != src.loc && A && A.z == src.z))
-		src.last_move = get_dir(A, src.loc)
-	return
+
+	spawn(5)	// Causes space drifting. /tg/station has no concept of speed, we just use 5
+		if(loc && direct && last_move == direct)
+			if(loc == newloc) //Remove this check and people can accelerate. Not opening that can of worms just yet.
+				newtonian_move(last_move)
+
+/atom/movable/Del()
+	if(isnull(gc_destroyed) && loc)
+		testing("GC: -- [type] was deleted via del() rather than qdel() --")
+//	else if(isnull(gc_destroyed))
+//		testing("GC: [type] was deleted via GC without qdel()") //Not really a huge issue but from now on, please qdel()
+//	else
+//		testing("GC: [type] was deleted via GC with qdel()")
+	..()
+
+/atom/movable/Destroy()
+	if(reagents)
+		qdel(reagents)
+	for(var/atom/movable/AM in contents)
+		qdel(AM)
+	tag = null
+	loc = null
+	invisibility = 101
+	// Do not call ..()
 
 // Previously known as HasEntered()
 // This is automatically called when something enters your square
@@ -50,6 +105,41 @@
 		return 1
 	return 0
 
+//Called whenever an object moves and by mobs when they attempt to move themselves through space
+//And when an object or action applies a force on src, see newtonian_move() below
+//Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
+//Mobs should return 1 if they should be able to move of their own volition, see client/Move() in mob_movement.dm
+//movement_dir == 0 when stopping or any dir when trying to move
+/atom/movable/proc/Process_Spacemove(var/movement_dir = 0)
+	if(has_gravity(src))
+		return 1
+
+	if(pulledby)
+		return 1
+
+	if(locate(/obj/structure/lattice) in orange(1, get_turf(src))) //Not realistic but makes pushing things in space easier
+		return 1
+
+	return 0
+
+/atom/movable/proc/newtonian_move(direction) //Only moves the object if it's under no gravity
+
+	if(!loc || Process_Spacemove(0))
+		inertia_dir = 0
+		return 0
+
+	inertia_dir = direction
+	if(!direction)
+		return 1
+
+
+	var/old_dir = dir
+	. = step(src, direction)
+	dir = old_dir
+
+/atom/movable/proc/checkpass(passflag)
+	return pass_flags&passflag
+
 /atom/movable/proc/hit_check() // todo: this is partly obsolete due to passflags already, add throwing stuff to mob CanPass and finish it
 	if(src.throwing)
 		for(var/atom/A in get_turf(src))
@@ -76,7 +166,6 @@
 	var/dy = (target.y > src.y) ? NORTH : SOUTH
 	var/dist_travelled = 0
 	var/dist_since_sleep = 0
-	var/area/a = get_area(src.loc)
 
 	var/tdist_x = dist_x;
 	var/tdist_y = dist_y;
@@ -90,7 +179,7 @@
 		tdy = dx;
 
 	var/error = tdist_x/2 - tdist_y
-	while(target && (((((dist_x > dist_y) && ((src.x < target.x && dx == EAST) || (src.x > target.x && dx == WEST))) || ((dist_x <= dist_y) && ((src.y < target.y && dy == NORTH) || (src.y > target.y && dy == SOUTH))) || (src.x > target.x && dx == WEST)) && dist_travelled < range) || (a && a.has_gravity == 0)  || istype(src.loc, /turf/space)))
+	while(target && (((((dist_x > dist_y) && ((src.x < target.x && dx == EAST) || (src.x > target.x && dx == WEST))) || ((dist_x <= dist_y) && ((src.y < target.y && dy == NORTH) || (src.y > target.y && dy == SOUTH))) || (src.x > target.x && dx == WEST)) && dist_travelled < range) || !has_gravity(src)))
 		// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
 		if(!src.throwing) break
 		if(!istype(src.loc, /turf)) break
@@ -98,7 +187,7 @@
 		var/atom/step = get_step(src, (error < 0) ? tdy : tdx)
 		if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 			break
-		src.Move(step)
+		src.Move(step, get_dir(loc, step))
 		hit_check()
 		error += (error < 0) ? tdist_x : -tdist_y;
 		dist_travelled++
@@ -107,11 +196,12 @@
 			dist_since_sleep = 0
 			sleep(1)
 
-		a = get_area(src.loc)
-
 	//done throwing, either because it hit something or it finished moving
 	src.throwing = 0
-	if(isobj(src)) src.throw_impact(get_turf(src))
+	if(isobj(src))
+		src.throw_impact(get_turf(src))
+
+	return 1
 
 
 //Overlays

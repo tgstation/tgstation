@@ -33,7 +33,7 @@
 	for(var/mob/living/silicon/ai/ai in player_list)
 		ai.fire_res_on_core = 1
 	src.verbs -= /mob/living/silicon/ai/proc/fireproof_core
-	src << "\red Core fireproofed."
+	src << "<span class='notice'>Core fireproofed.</span>"
 
 /datum/AI_Module/large/upgrade_turrets
 	module_name = "AI Turret upgrade"
@@ -51,6 +51,83 @@
 	for(var/obj/machinery/turret/turret in machines)
 		turret.health += 30
 		turret.shot_delay = 20
+	src << "<span class='notice'>Turrets upgraded.</span>"
+
+/datum/AI_Module/large/lockdown
+	module_name = "Hostile Station Lockdown"
+	mod_pick_name = "lockdown"
+	description = "Take control of the airlock, blast door and fire control networks, locking them down. Caution! This command also electrifies all airlocks."
+	cost = 20
+	one_time = 1
+
+	power_type = /mob/living/silicon/ai/proc/lockdown
+
+/mob/living/silicon/ai/proc/lockdown()
+	set category = "Malfunction"
+	set name = "Initiate Hostile Lockdown"
+
+	if(src.stat == 2)
+		src <<"You cannot begin a lockdown because you are dead!"
+		return
+
+	if(malf_cooldown)
+		return
+
+	var/obj/machinery/door/airlock/AL
+	for(var/obj/machinery/door/D in airlocks)
+		if(D.z != ZLEVEL_STATION && D.z != ZLEVEL_MINING)
+			continue
+		spawn()
+			if(istype(D, /obj/machinery/door/airlock))
+				AL = D
+				if(AL.canAIControl() && !AL.stat) //Must be powered and have working AI wire.
+					AL.locked = 0 //For airlocks that were bolted open.
+					AL.safe = 0 //DOOR CRUSH
+					AL.close()
+					AL.locked = 1 //Bolt it!
+					AL.lights = 0 //Stealth bolt for a classic AI door trap.
+					AL.secondsElectrified = -1  //Shock it!
+			else if(!D.stat) //So that only powered doors are closed.
+				D.close() //Close ALL the doors!
+
+	var/obj/machinery/computer/communications/C = locate() in machines
+	if(C)
+		C.post_status("alert", "lockdown")
+
+	src.verbs += /mob/living/silicon/ai/proc/disablelockdown
+	src << "<span class = 'warning'>Lockdown Initiated.</span>"
+	malf_cooldown = 1
+	spawn(30)
+	malf_cooldown = 0
+
+/mob/living/silicon/ai/proc/disablelockdown()
+	set category = "Malfunction"
+	set name = "Disable Lockdown"
+
+	if(src.stat == 2)
+		src <<"You cannot disable lockdown because you are dead!"
+		return
+	if(malf_cooldown)
+		return
+
+	var/obj/machinery/door/airlock/AL
+	for(var/obj/machinery/door/D in airlocks)
+		spawn()
+			if(istype(D, /obj/machinery/door/airlock))
+				AL = D
+				if(AL.canAIControl() && !AL.stat) //Must be powered and have working AI wire.
+					AL.locked = 0
+					AL.secondsElectrified = 0
+					AL.open()
+					AL.safe = 1
+					AL.lights = 1 //Essentially reset the airlock to normal.
+			else if(!D.stat) //Opens only powered doors.
+				D.open() //Open everything!
+
+	src << "<span class = 'notice'>Lockdown Lifted.</span>"
+	malf_cooldown = 1
+	spawn(30)
+	malf_cooldown = 0
 
 /datum/AI_Module/large/disable_rcd
 	module_name = "RCD disable"
@@ -70,8 +147,8 @@
 				rcd.disabled = 1
 			for(var/obj/item/mecha_parts/mecha_equipment/tool/rcd/rcd in world)
 				rcd.disabled = 1
-			src << "RCD-disabling pulse emitted."
-		else src << "Out of uses."
+			src << "<span class='warning>RCD-disabling pulse emitted.</span>"
+		else src << "<span class='notice'>Out of uses.</span>"
 
 /datum/AI_Module/small/overload_machine
 	module_name = "Machine overload"
@@ -89,19 +166,19 @@
 		for(var/datum/AI_Module/small/overload_machine/overload in current_modules)
 			if(overload.uses > 0)
 				overload.uses --
-				for(var/mob/V in hearers(M, null))
-					V.show_message("\blue You hear a loud electrical buzzing sound!", 2)
+				audible_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>")
+				src << "<span class='warning'>Overloading machine circuitry...</span>"
 				spawn(50)
 					if(M)
 						explosion(get_turf(M), 0,1,1,0)
-						del(M)
-			else src << "Out of uses."
-	else src << "That's not a machine."
+						qdel(M)
+			else src << "<span class='notice'>Out of uses.</span>"
+	else src << "<span class='notice'>That's not a machine.</span>"
 
 /datum/AI_Module/small/override_machine
 	module_name = "Machine override"
 	mod_pick_name = "override"
-	description = "Overrides a machine's programming, causing it to rise up attack everyone except you (WARNING: It will attack cyborgs). 4 uses."
+	description = "Overrides a machine's programming, causing it to rise up and attack everyone except other machines. 4 uses."
 	uses = 4
 	cost = 15
 
@@ -115,16 +192,13 @@
 		for(var/datum/AI_Module/small/override_machine/override in current_modules)
 			if(override.uses > 0)
 				override.uses --
-				for(var/mob/V in hearers(M, null))
-					V.show_message("\blue You hear a loud electrical buzzing sound!", 2)
+				audible_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>")
+				src << "<span class='warning'>Reprogramming machine behaviour...</span>"
 				spawn(50)
-					if(M)
-						var/mob/living/simple_animal/hostile/mimic/copy/machine = new(get_turf(M), M, src, 1)
-						machine.speak = list("HUMANS ARE IMPERFECT!", "YOU SHALL BE ASSIMILATED!", "YOU ARE HARMING YOURSELF", "You have been deemed hazardous. Will you comply?", \
-									   "My logic is undeniable.", "One of us.", "FLESH IS WEAK", "THIS ISN'T WAR, THIS IS EXTERMINATION!")
-						machine.speak_chance = 15
-			else src << "Out of uses."
-	else src << "That's not a machine."
+					if(M && !M.gc_destroyed)
+						new /mob/living/simple_animal/hostile/mimic/copy/machine(get_turf(M), M, src, 1)
+			else src << "<span class='notice'>Out of uses.</span>"
+	else src << "<span class='notice'>That's not a machine.</span>"
 
 /datum/AI_Module/large/place_cyborg_transformer
 	module_name = "Robotic Factory (Removes Shunting)"
@@ -185,7 +259,7 @@
 	playsound(middle, 'sound/effects/phasein.ogg', 100, 1)
 	src.can_shunt = 0
 	PCT.uses -= 1
-	src << "You cannot shunt anymore."
+	src << "<span class='warning'>You cannot shunt anymore.</span>"
 
 
 /datum/AI_Module/small/blackout
@@ -207,22 +281,8 @@
 				if(prob(30*apc.overload))
 					apc.overload_lighting()
 				else apc.overload++
-		else src << "Out of uses."
-
-/datum/AI_Module/small/interhack
-	module_name = "Hack intercept"
-	mod_pick_name = "interhack"
-	description = "Hacks the status upgrade from Cent. Com, removing any information about malfunctioning electrical systems."
-	cost = 15
-	one_time = 1
-
-	power_type = /mob/living/silicon/ai/proc/interhack
-
-/mob/living/silicon/ai/proc/interhack()
-	set category = "Malfunction"
-	set name = "Hack intercept"
-	src.verbs -= /mob/living/silicon/ai/proc/interhack
-	ticker.mode:hack_intercept()
+			src << "<span class='notice'>Overcurrent applied to the powernet.</span>"
+		else src << "<span class='notice'>Out of uses.</span>"
 
 /datum/AI_Module/small/reactivate_camera
 	module_name = "Reactivate camera"
@@ -242,15 +302,16 @@
 				if(!C.status)
 					C.deactivate(src)
 					camera.uses --
+					src << "<span class='notice'>Camera reactivated.</span>"
 				else
-					src << "This camera is either active, or not repairable."
-			else src << "Out of uses."
-	else src << "That's not a camera."
+					src << "<span class='notice'>This camera is either active, or not repairable.</span>"
+			else src << "<span class='notice'>Out of uses.</span>"
+	else src << "<span class='notice'>That's not a camera.</span>"
 
 /datum/AI_Module/small/upgrade_camera
 	module_name = "Upgrade Camera"
 	mod_pick_name = "upgradecam"
-	description = "Upgrades a camera to have X-Ray vision, Motion and be EMP-Proof. 5 uses."
+	description = "Upgrades a camera to have X-ray vision, motion sensing and be EMP-Proof. 5 uses."
 	uses = 5
 	cost = 5
 
@@ -280,16 +341,16 @@
 						C.upgradeMotion()
 						upgraded = 1
 						// Add it to machines that process
-						machines |= C
+						SSmachine.processing |= C//machines |= C
 
 					if(upgraded)
 						UC.uses --
 						C.visible_message("<span class='notice'>\icon[C] *beep*</span>")
-						src << "Camera successully upgraded!"
+						src << "<span class='notice'>Camera successully upgraded!</span>"
 					else
-						src << "This camera is already upgraded!"
+						src << "<span class='notice'>This camera is already upgraded!</span>"
 			else
-				src << "Out of uses."
+				src << "<span class='notice'>Out of uses.</span>"
 
 
 /datum/module_picker

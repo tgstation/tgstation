@@ -62,6 +62,8 @@
 /var/const/access_gateway = 62
 /var/const/access_sec_doors = 63 // Security front doors
 /var/const/access_mineral_storeroom = 64
+/var/const/access_minisat = 65
+/var/const/access_weapons = 66 //Weapon authorization for secbots
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
@@ -73,11 +75,11 @@
 /var/const/access_cent_living = 105//Living quarters.
 /var/const/access_cent_storage = 106//Generic storage areas.
 /var/const/access_cent_teleporter = 107//Teleporter.
-/var/const/access_cent_creed = 108//Creed's office.
 /var/const/access_cent_captain = 109//Captain's office/ID comp/AI.
 
 	//The Syndicate
 /var/const/access_syndicate = 150//General Syndicate Access
+/var/const/access_syndicate_leader = 151//Nuke Op Leader Access
 
 /obj/var/list/req_access = null
 /obj/var/req_access_txt = "0"
@@ -101,6 +103,10 @@
 		var/mob/living/carbon/george = M
 		//they can only hold things :(
 		if(src.check_access(george.get_active_hand()))
+			return 1
+	else if(isanimal(M))
+		var/mob/living/simple_animal/A = M
+		if(check_access(A.access_card))
 			return 1
 	return 0
 
@@ -182,11 +188,19 @@
 		if("Research Officer")
 			return list(access_cent_general, access_cent_specops, access_cent_medical, access_cent_teleporter, access_cent_storage)
 		if("Special Ops Officer")
-			return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_living, access_cent_storage, access_cent_creed)
+			return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_living, access_cent_storage)
 		if("Admiral")
 			return get_all_centcom_access()
 		if("Centcom Commander")
 			return get_all_centcom_access()
+		if("Emergency Response Team Commander")
+			return list(access_cent_general)
+		if("Security Response Officer")
+			return list(access_cent_general)
+		if("Engineer Response Officer")
+			return list(access_cent_general)
+		if("Medical Response Officer")
+			return list(access_cent_general)
 
 /proc/get_all_accesses()
 	return list(access_security, access_sec_doors, access_brig, access_armory, access_forensics_lockers, access_court,
@@ -197,54 +211,53 @@
 	            access_tech_storage, access_chapel_office, access_atmospherics, access_kitchen,
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_construction,
 	            access_hydroponics, access_library, access_lawyer, access_virology, access_cmo, access_qm, access_surgery,
-	            access_theatre, access_research, access_mining, access_mailsorting,
+	            access_theatre, access_research, access_mining, access_mailsorting, access_weapons,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
-	            access_keycard_auth, access_tcomsat, access_gateway, access_mineral_storeroom)
+	            access_keycard_auth, access_tcomsat, access_gateway, access_mineral_storeroom, access_minisat)
 
 /proc/get_all_centcom_access()
 	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_captain)
 
 /proc/get_all_syndicate_access()
-	return list(access_syndicate)
+	return list(access_syndicate, access_syndicate)
 
 /proc/get_region_accesses(var/code)
 	switch(code)
 		if(0)
 			return get_all_accesses()
-		if(1) //security
-			return list(access_sec_doors, access_security, access_brig, access_armory, access_forensics_lockers, access_court, access_hos)
-		if(2) //medbay
-			return list(access_medical, access_genetics, access_morgue, access_chemistry, access_virology, access_surgery, access_cmo)
-		if(3) //research
-			return list(access_research, access_tox, access_tox_storage, access_robotics, access_xenobiology, access_rd, access_mineral_storeroom)
-		if(4) //engineering and maintenance
-			return list(access_construction, access_maint_tunnels, access_engine, access_engine_equip, access_external_airlocks, access_tech_storage, access_atmospherics, access_tcomsat, access_ce)
-		if(5) //command
-			return list(access_heads, access_RC_announce, access_keycard_auth, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_gateway, access_all_personal_lockers, access_heads_vault, access_hop, access_captain)
-		if(6) //station general
+		if(1) //station general
 			return list(access_kitchen,access_bar, access_hydroponics, access_janitor, access_chapel_office, access_crematorium, access_library, access_theatre, access_lawyer)
-		if(7) //supply
-			return list(access_mailsorting, access_mining, access_mining_station, access_cargo, access_qm)
+		if(2) //security
+			return list(access_sec_doors, access_weapons, access_security, access_brig, access_armory, access_forensics_lockers, access_court, access_hos)
+		if(3) //medbay
+			return list(access_medical, access_genetics, access_morgue, access_chemistry, access_virology, access_surgery, access_cmo)
+		if(4) //research
+			return list(access_research, access_tox, access_tox_storage, access_genetics, access_robotics, access_xenobiology, access_minisat, access_rd)
+		if(5) //engineering and maintenance
+			return list(access_construction, access_maint_tunnels, access_engine, access_engine_equip, access_external_airlocks, access_tech_storage, access_atmospherics, access_tcomsat, access_minisat, access_ce)
+		if(6) //supply
+			return list(access_mailsorting, access_mining, access_mining_station, access_mineral_storeroom, access_cargo, access_qm)
+		if(7) //command
+			return list(access_heads, access_RC_announce, access_keycard_auth, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_gateway, access_all_personal_lockers, access_heads_vault, access_hop, access_captain)
 
 /proc/get_region_accesses_name(var/code)
 	switch(code)
 		if(0)
 			return "All"
-		if(1) //security
+		if(1) //station general
+			return "General"
+		if(2) //security
 			return "Security"
-		if(2) //medbay
+		if(3) //medbay
 			return "Medbay"
-		if(3) //research
+		if(4) //research
 			return "Research"
-		if(4) //engineering and maintenance
+		if(5) //engineering and maintenance
 			return "Engineering"
-		if(5) //command
-			return "Command"
-		if(6) //station general
-			return "Station General"
-		if(7) //supply
+		if(6) //supply
 			return "Supply"
-
+		if(7) //command
+			return "Command"
 
 /proc/get_access_desc(A)
 	switch(A)
@@ -291,7 +304,7 @@
 		if(access_change_ids)
 			return "ID Console"
 		if(access_ai_upload)
-			return "AI Upload"
+			return "AI Chambers"
 		if(access_teleporter)
 			return "Teleporter"
 		if(access_eva)
@@ -371,7 +384,11 @@
 		if(access_sec_doors)
 			return "Brig"
 		if(access_mineral_storeroom)
-			return "Mineral Storeroom"
+			return "Mineral Storage"
+		if(access_minisat)
+			return "AI Satellite"
+		if(access_weapons)
+			return "Weapon Permit"
 
 /proc/get_centcom_access_desc(A)
 	switch(A)
@@ -389,13 +406,11 @@
 			return "Code Blue"
 		if(access_cent_specops)
 			return "Code Black"
-		if(access_cent_creed)
-			return "Code Silver"
 		if(access_cent_captain)
 			return "Code Gold"
 
 /proc/get_all_jobs()
-	return list("Assistant", "Captain", "Head of Personnel", "Bartender", "Chef", "Botanist", "Quartermaster", "Cargo Technician",
+	return list("Assistant", "Captain", "Head of Personnel", "Bartender", "Cook", "Botanist", "Quartermaster", "Cargo Technician",
 				"Shaft Miner", "Clown", "Mime", "Janitor", "Librarian", "Lawyer", "Chaplain", "Chief Engineer", "Station Engineer",
 				"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Chemist", "Geneticist", "Virologist",
 				"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer")
@@ -404,7 +419,7 @@ proc/get_all_job_icons() //For all existing HUD icons
 	return get_all_jobs() + list("Prisoner")
 
 /proc/get_all_centcom_jobs()
-	return list("VIP Guest","Custodian","Thunderdome Overseer","Centcom Official","Medical Officer","Death Commando","Research Officer","Special Ops Officer","Admiral","Centcom Commander")
+	return list("VIP Guest","Custodian","Thunderdome Overseer","Centcom Official","Medical Officer","Death Commando","Research Officer","Special Ops Officer","Admiral","Centcom Commander","Emergency Response Team Commander","Security Response Officer","Engineer Response Officer", "Medical Response Officer")
 
 /obj/item/proc/GetJobName() //Used in secHUD icon generation
 	var/obj/item/weapon/card/id/I = GetID()

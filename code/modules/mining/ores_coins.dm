@@ -1,7 +1,7 @@
 /**********************Mineral ores**************************/
 
 /obj/item/weapon/ore
-	name = "Rock"
+	name = "rock"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "ore"
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
@@ -12,47 +12,51 @@
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.remove_fuel(15))
 			new refined_type(get_turf(src.loc))
-			del(src)
-		else
+			qdel(src)
+		else if(W.isOn())
 			user << "<span class='info'>Not enough fuel to smelt [src].</span>"
 	..()
 
 /obj/item/weapon/ore/uranium
-	name = "Uranium ore"
+	name = "uranium ore"
 	icon_state = "Uranium ore"
 	origin_tech = "materials=5"
-	points = 20
+	points = 18
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 
 /obj/item/weapon/ore/iron
-	name = "Iron ore"
+	name = "iron ore"
 	icon_state = "Iron ore"
 	origin_tech = "materials=1"
 	points = 1
 	refined_type = /obj/item/stack/sheet/metal
 
 /obj/item/weapon/ore/glass
-	name = "Sand"
+	name = "sand pile"
 	icon_state = "Glass ore"
 	origin_tech = "materials=1"
 	points = 1
 	refined_type = /obj/item/stack/sheet/glass
 
-	attack_self(mob/living/user as mob) //It's magic I ain't gonna explain how instant conversion with no tool works. -- Urist
-		var/location = get_turf(user)
-		var/sandAmt = 1 // The sand we're holding
-		for(var/obj/item/weapon/ore/glass/sandToConvert in location) // The sand on the floor
-			sandAmt += 1
-			del(sandToConvert)
-		var/obj/item/stack/sheet/mineral/newSandstone = new /obj/item/stack/sheet/mineral/sandstone(location)
-		newSandstone.amount = sandAmt
-		del(src)
+/obj/item/weapon/ore/glass/attack_self(mob/living/user as mob) //It's magic I ain't gonna explain how instant conversion with no tool works. -- Urist
+	user << "<span class='notice'>You use the sand to make sandstone.</span>"
+	for(var/i = 0,i < 1,i++)
+		var/obj/item/stack/sheet/mineral/sandstone/S = new (user.loc)
+		for (var/obj/item/weapon/ore/glass/G in user.loc)
+			if(S.amount < S.max_amount)
+				S.amount++
+				qdel(G)
+			else
+				i--
+				break
+	qdel(src)
+	return
 
 /obj/item/weapon/ore/plasma
-	name = "Plasma ore"
+	name = "plasma ore"
 	icon_state = "Plasma ore"
 	origin_tech = "materials=2"
-	points = 40
+	points = 36
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 
 /obj/item/weapon/ore/plasma/attackby(obj/item/I as obj, mob/user as mob)
@@ -65,40 +69,40 @@
 
 
 /obj/item/weapon/ore/silver
-	name = "Silver ore"
+	name = "silver ore"
 	icon_state = "Silver ore"
 	origin_tech = "materials=3"
-	points = 20
+	points = 18
 	refined_type = /obj/item/stack/sheet/mineral/silver
 
 /obj/item/weapon/ore/gold
-	name = "Gold ore"
+	name = "gold ore"
 	icon_state = "Gold ore"
 	origin_tech = "materials=4"
-	points = 20
+	points = 18
 	refined_type = /obj/item/stack/sheet/mineral/gold
 
 /obj/item/weapon/ore/diamond
-	name = "Diamond ore"
+	name = "diamond ore"
 	icon_state = "Diamond ore"
 	origin_tech = "materials=6"
-	points = 40
+	points = 36
 	refined_type = /obj/item/stack/sheet/mineral/diamond
 
-/obj/item/weapon/ore/clown
-	name = "Bananium ore"
+/obj/item/weapon/ore/bananium
+	name = "bananium ore"
 	icon_state = "Clown ore"
 	origin_tech = "materials=4"
-	points = 30
-	refined_type = /obj/item/stack/sheet/mineral/clown
+	points = 27
+	refined_type = /obj/item/stack/sheet/mineral/bananium
 
 /obj/item/weapon/ore/slag
-	name = "Slag"
+	name = "slag"
 	desc = "Completely useless"
 	icon_state = "slag"
 
 /obj/item/weapon/twohanded/required/gibtonite
-	name = "Gibtonite ore"
+	name = "gibtonite ore"
 	desc = "Extremely explosive if struck with mining equipment, Gibtonite is often used by miners to speed up their work by using it as a mining charge. This material is illegal to possess by unauthorized personnel under space law."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "Gibtonite ore"
@@ -114,7 +118,7 @@
 	if(istype(I, /obj/item/weapon/pickaxe) || istype(I, /obj/item/weapon/resonator))
 		GibtoniteReaction(user)
 		return
-	if(istype(I, /obj/item/device/mining_scanner) && primed)
+	if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) && primed)
 		primed = 0
 		user.visible_message("<span class='notice'>The chain reaction was stopped! ...The ore's quality went down.</span>")
 		icon_state = "Gibtonite ore"
@@ -128,7 +132,7 @@
 	..()
 
 /obj/item/weapon/twohanded/required/gibtonite/ex_act()
-	GibtoniteReaction(triggered_by_explosive = 1)
+	GibtoniteReaction(null, 1)
 
 /obj/item/weapon/twohanded/required/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by_explosive = 0)
 	if(!primed)
@@ -144,12 +148,12 @@
 			if(triggered_by_explosive)
 				message_admins("An explosion has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
 			else
-				message_admins("[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+				message_admins("[key_name(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
 		if(triggered_by_explosive)
 			log_game("An explosion has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
 		else
-			user.visible_message("<span class='warning'>[user] strikes the [src], causing a chain reaction!</span>")
-			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
+			user.visible_message("<span class='warning'>[user] strikes \the [src], causing a chain reaction!</span>")
+			log_game("[key_name(user)] has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
 		spawn(det_time)
 		if(primed)
 			if(quality == 3)
@@ -158,7 +162,7 @@
 				explosion(src.loc,1,2,5,adminlog = notify_admins)
 			if(quality == 1)
 				explosion(src.loc,-1,1,3,adminlog = notify_admins)
-			del(src)
+			qdel(src)
 
 /obj/item/weapon/ore/New()
 	pixel_x = rand(0,16)-8
@@ -172,15 +176,16 @@
 /obj/item/weapon/coin
 	icon = 'icons/obj/economy.dmi'
 	name = "coin"
-	icon_state = "coin"
+	icon_state = "coin__heads"
 	flags = CONDUCT
 	force = 1
-	throwforce = 0
+	throwforce = 2
 	w_class = 1.0
 	var/string_attached
 	var/list/sideslist = list("heads","tails")
 	var/cmineral = null
 	var/cooldown = 0
+	var/value = 10
 
 /obj/item/weapon/coin/New()
 	pixel_x = rand(0,16)-8
@@ -192,53 +197,72 @@
 
 /obj/item/weapon/coin/gold
 	cmineral = "gold"
+	icon_state = "coin_gold_heads"
+	value = 160
 
 /obj/item/weapon/coin/silver
 	cmineral = "silver"
+	icon_state = "coin_silver_heads"
+	value = 40
 
 /obj/item/weapon/coin/diamond
 	cmineral = "diamond"
+	icon_state = "coin_diamond_heads"
+	value = 120
 
 /obj/item/weapon/coin/iron
 	cmineral = "iron"
+	icon_state = "coin_iron_heads"
+	value = 20
 
 /obj/item/weapon/coin/plasma
 	cmineral = "plasma"
+	icon_state = "coin_plasma_heads"
+	value = 80
 
 /obj/item/weapon/coin/uranium
 	cmineral = "uranium"
+	icon_state = "coin_uranium_heads"
+	value = 160
 
 /obj/item/weapon/coin/clown
 	cmineral = "bananium"
+	icon_state = "coin_bananium_heads"
+	value = 600 //makes the clown cri
 
 /obj/item/weapon/coin/adamantine
 	cmineral = "adamantine"
+	icon_state = "coin_adamantine_heads"
+	value = 400
 
 /obj/item/weapon/coin/mythril
 	cmineral = "mythril"
+	icon_state = "coin_mythril_heads"
+	value = 400
 
 /obj/item/weapon/coin/twoheaded
 	cmineral = "iron"
+	icon_state = "coin_iron_heads"
 	desc = "Hey, this coin's the same on both sides!"
 	sideslist = list("heads")
+	value = 20
 
 
 /obj/item/weapon/coin/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/stack/cable_coil) )
+	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
 		if(string_attached)
-			user << "\blue There already is a string attached to this coin."
+			user << "<span class='notice'>There already is a string attached to this coin.</span>"
 			return
 
-		if(CC.amount <= 0)
-			user << "\blue This cable coil appears to be empty."
-			del(CC)
+		if (CC.use(1))
+			overlays += image('icons/obj/economy.dmi',"coin_string_overlay")
+			string_attached = 1
+			user << "<span class='notice'>You attach a string to the coin.</span>"
+		else
+			user << "<span class='warning'>You need one length of cable to attach a string to the coin.</span>"
 			return
 
-		overlays += image('icons/obj/economy.dmi',"coin_string_overlay")
-		string_attached = 1
-		user << "\blue You attach a string to the coin."
-		CC.use(1)
 	else if(istype(W,/obj/item/weapon/wirecutters))
 		if(!string_attached)
 			..()
@@ -249,7 +273,7 @@
 		CC.update_icon()
 		overlays = list()
 		string_attached = null
-		user << "\blue You detach the string from the coin."
+		user << "<span class='notice'>You detach the string from the coin.</span>"
 	else ..()
 
 /obj/item/weapon/coin/attack_self(mob/user as mob)

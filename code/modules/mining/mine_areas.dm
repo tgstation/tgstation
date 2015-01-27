@@ -2,6 +2,7 @@
 
 /area/mine
 	icon_state = "mining"
+	has_gravity = 1
 
 /area/mine/explored
 	name = "Mine"
@@ -13,6 +14,7 @@
 	power_environ = 0
 	power_equip = 0
 	power_light = 0
+	ambientsounds = list('sound/ambience/ambimine.ogg')
 
 /area/mine/unexplored
 	name = "Mine"
@@ -24,6 +26,7 @@
 	power_environ = 0
 	power_equip = 0
 	power_light = 0
+	ambientsounds = list('sound/ambience/ambimine.ogg')
 
 /area/mine/lobby
 	name = "Mining station"

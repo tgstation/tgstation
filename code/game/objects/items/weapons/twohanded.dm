@@ -27,24 +27,46 @@
 	var/wieldsound = null
 	var/unwieldsound = null
 
-/obj/item/weapon/twohanded/proc/unwield()
+/obj/item/weapon/twohanded/proc/unwield(mob/living/carbon/user)
+	if(!wielded) return
 	wielded = 0
 	force = force_unwielded
 	name = "[initial(name)]"
 	update_icon()
+	user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
+	if(unwieldsound)
+		playsound(loc, unwieldsound, 50, 1)
+	var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
+	if(O && istype(O))
+		O.unwield()
+	return
 
-/obj/item/weapon/twohanded/proc/wield()
+/obj/item/weapon/twohanded/proc/wield(mob/living/carbon/user)
+	if(wielded) return
+	if(istype(user,/mob/living/carbon/monkey) )
+		user << "<span class='warning'>It's too heavy for you to wield fully.</span>"
+		return
+	if(user.get_inactive_hand())
+		user << "<span class='warning'>You need your other hand to be empty</span>"
+		return
 	wielded = 1
 	force = force_wielded
 	name = "[initial(name)] (Wielded)"
 	update_icon()
+	user << "<span class='notice'>You grab the [initial(name)] with both hands.</span>"
+	if (wieldsound)
+		playsound(loc, wieldsound, 50, 1)
+	var/obj/item/weapon/twohanded/offhand/O = new(user) ////Let's reserve his other hand~
+	O.name = "[initial(name)] - offhand"
+	O.desc = "Your second grip on the [initial(name)]"
+	user.put_in_inactive_hand(O)
+	return
 
 /obj/item/weapon/twohanded/mob_can_equip(M as mob, slot)
 	//Cannot equip wielded items.
 	if(wielded)
 		M << "<span class='warning'>Unwield the [initial(name)] first!</span>"
 		return 0
-
 	return ..()
 
 /obj/item/weapon/twohanded/dropped(mob/user as mob)
@@ -52,47 +74,18 @@
 	if(user)
 		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
 		if(istype(O))
-			O.unwield()
-	return	unwield()
+			O.unwield(user)
+	return	unwield(user)
 
 /obj/item/weapon/twohanded/update_icon()
 	return
 
-/obj/item/weapon/twohanded/pickup(mob/user)
-	unwield()
-
 /obj/item/weapon/twohanded/attack_self(mob/user as mob)
-	if( istype(user,/mob/living/carbon/monkey) )
-		user << "<span class='warning'>It's too heavy for you to wield fully.</span>"
-		return
-
 	..()
 	if(wielded) //Trying to unwield it
-		unwield()
-		user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
-		if (src.unwieldsound)
-			playsound(src.loc, unwieldsound, 50, 1)
-
-		var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
-		if(O && istype(O))
-			O.unwield()
-		return
-
+		unwield(user)
 	else //Trying to wield it
-		if(user.get_inactive_hand())
-			user << "<span class='warning'>You need your other hand to be empty</span>"
-			return
-		wield()
-		user << "<span class='notice'>You grab the [initial(name)] with both hands.</span>"
-		if (src.wieldsound)
-			playsound(src.loc, wieldsound, 50, 1)
-
-		var/obj/item/weapon/twohanded/offhand/O = new(user) ////Let's reserve his other hand~
-		O.name = "[initial(name)] - offhand"
-		O.desc = "Your second grip on the [initial(name)]"
-		user.put_in_inactive_hand(O)
-		return
-
+		wield(user)
 
 ///////////OFFHAND///////////////
 /obj/item/weapon/twohanded/offhand
@@ -102,10 +95,10 @@
 	flags = ABSTRACT
 
 /obj/item/weapon/twohanded/offhand/unwield()
-	del(src)
+	qdel(src)
 
 /obj/item/weapon/twohanded/offhand/wield()
-	del(src)
+	qdel(src)
 
 /obj/item/weapon/twohanded/offhand/IsShield()//if the actual twohanded weapon is a shield, we count as a shield too!
 	var/mob/user = loc
@@ -174,7 +167,7 @@ obj/item/weapon/twohanded/
 			if (W.dir == SOUTHWEST)
 				new /obj/item/weapon/shard( W.loc )
 				if(W.reinf) new /obj/item/stack/rods( W.loc)
-		del(A)
+		qdel(A)
 
 
 /*
@@ -193,6 +186,7 @@ obj/item/weapon/twohanded/
 	force_wielded = 34
 	wieldsound = 'sound/weapons/saberon.ogg'
 	unwieldsound = 'sound/weapons/saberoff.ogg'
+	hitsound = "swing_hit"
 	flags = NOSHIELD
 	origin_tech = "magnets=3;syndicate=4"
 	item_color = "green"
@@ -211,11 +205,10 @@ obj/item/weapon/twohanded/
 	clean_blood()//blood overlays get weird otherwise, because the sprite changes.
 	return
 
-/obj/item/weapon/twohanded/dualsaber/attack(target as mob, mob/living/user as mob)
+/obj/item/weapon/twohanded/dualsaber/attack(target as mob, mob/living/carbon/human/user as mob)
 	..()
-	if((CLUMSY in user.mutations) && (wielded) &&prob(40))
-		user << "\red You twirl around a bit before losing your balance and impaling yourself on the [src]."
-		user.take_organ_damage(20,25)
+	if(user.disabilities & CLUMSY && (wielded) && prob(40))
+		impale(user)
 		return
 	if((wielded) && prob(50))
 		spawn(0)
@@ -223,29 +216,39 @@ obj/item/weapon/twohanded/
 				user.dir = i
 				sleep(1)
 
+/obj/item/weapon/twohanded/dualsaber/proc/impale(mob/living/user as mob)
+	user << "<span class='warning'>You twirl around a bit before losing your balance and impaling yourself on \the [src].</span>"
+	if (force_wielded)
+		user.take_organ_damage(20,25)
+	else
+		user.adjustStaminaLoss(25)
+
 /obj/item/weapon/twohanded/dualsaber/IsShield()
 	if(wielded)
 		return 1
 	else
 		return 0
 
-/obj/item/weapon/twohanded/dualsaber/wield() //Specific wield () hulk checks due to reflect_chance var for balance issues
-	wielded = 1
-	var/mob/living/M = loc
-	if(istype(loc, /mob/living))
-		if (HULK in M.mutations)
-			loc << "<span class='warning'>You lack the grace to wield this to its full extent.</span>"
-	force = force_wielded
-	name = "[initial(name)] (Wielded)"
-	update_icon()
+/obj/item/weapon/twohanded/dualsaber/attack_hulk(mob/living/carbon/human/user)  //In case thats just so happens that it is still activated on the groud, prevents hulk from picking it up
+	if(wielded)
+		user << "<span class='warning'>You cant pick up such dangerous item with your meaty hands without losing fingers, better not to.</span>"
+		return 1
+
+/obj/item/weapon/twohanded/dualsaber/wield(mob/living/carbon/M) //Specific wield () hulk checks due to reflect_chance var for balance issues and switches hitsounds.
+	if(istype(M))
+		if(M.dna.check_mutation(HULK))
+			M << "<span class='warning'>You lack the grace to wield this.</span>"
+			return
+	..()
+	hitsound = 'sound/weapons/blade1.ogg'
+
+/obj/item/weapon/twohanded/dualsaber/unwield() //Specific unwield () to switch hitsounds.
+	..()
+	hitsound = "swing_hit"
 
 /obj/item/weapon/twohanded/dualsaber/IsReflect()
 	if(wielded)
-		var/mob/living/M = loc
-		if(istype(loc, /mob/living))
-			if (HULK in M.mutations)
-				return
-			return 1
+		return 1
 
 /obj/item/weapon/twohanded/dualsaber/green
 	New()

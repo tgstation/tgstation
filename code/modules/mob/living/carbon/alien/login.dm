@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/humanoid/Login()
+/mob/living/carbon/alien/Login()
 	..()
 	AddInfectionImages()
 	return

@@ -2,7 +2,7 @@
 //Things like airguitar can be done without arms, and the flap thing makes so little sense it's a keeper.
 //Intended to be called by a higher up emote proc if the requested emote isn't in the custom emotes.
 
-/mob/living/emote(var/act,var/m_type=1,var/message = null)
+/mob/living/emote(var/act, var/m_type=1, var/message = null)
 	var/param = null
 
 	if (findtext(act, "-", 1, null))
@@ -158,19 +158,16 @@
 
 		if ("point")
 			if (!src.restrained())
-				var/mob/M = null
+				var/atom/M = null
 				if (param)
-					for (var/atom/A as mob|obj|turf|area in view(1, src))
+					for (var/atom/A as mob|obj|turf in view())
 						if (param == A.name)
 							M = A
 							break
 				if (!M)
 					message = "<B>[src]</B> points."
 				else
-					M.point()
-				if (M)
-					message = "<B>[src]</B> points to [M]."
-				else
+					pointed(M)
 			m_type = 1
 
 		if ("scream")
@@ -252,10 +249,10 @@
 			m_type = 2
 
 		if ("help")
-			src << "Help for emotes. You can use these emotes with say \"*emote\":\n\naflap, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, giggle, glare-(none)/mob, grin, jump, laugh, look, me, nod, point-atom, scream, shake, sit, sigh, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, yawn"
+			src << "Help for emotes. You can use these emotes with say \"*emote\":\n\naflap, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, giggle, glare-(none)/mob, grin, jump, laugh, look, me, nod, point-atom, scream, shake, sigh, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, yawn"
 
 		else
-			src << "\blue Unusable emote '[act]'. Say *help for a list."
+			src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
 
 
 
@@ -270,13 +267,12 @@
 		for(var/mob/M in dead_mob_list)
 			if(!M.client || istype(M, /mob/new_player))
 				continue //skip monkeys, leavers and new players
-			if(M.stat == DEAD && (M.client.prefs.toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
+			var/T = get_turf(src)
+			if(M.stat == DEAD && (M.client.prefs.toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T,null)))
 				M.show_message(message)
 
 
 		if (m_type & 1)
-			for (var/mob/O in viewers(src, null))
-				O.show_message(message, m_type)
+			visible_message(message)
 		else if (m_type & 2)
-			for (var/mob/O in hearers(src.loc, null))
-				O.show_message(message, m_type)
+			audible_message(message)

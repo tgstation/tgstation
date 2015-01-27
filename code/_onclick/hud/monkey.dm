@@ -5,29 +5,23 @@
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
 
-	using = new /obj/screen()
-	using.name = "act_intent"
+	using = new /obj/screen/act_intent()
+	using.icon = ui_style
 	using.icon_state = mymob.a_intent
 	using.screen_loc = ui_acti
-	using.layer = 20
 	adding += using
 	action_intent = using
 
-	using = new /obj/screen()
-	using.name = "mov_intent"
+	using = new /obj/screen/mov_intent()
 	using.icon = ui_style
 	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
 	using.screen_loc = ui_movi
-	using.layer = 20
 	adding += using
 	move_intent = using
 
-	using = new /obj/screen()
-	using.name = "drop"
+	using = new /obj/screen/drop()
 	using.icon = ui_style
-	using.icon_state = "act_drop"
 	using.screen_loc = ui_drop_throw
-	using.layer = 19
 	adding += using
 
 	inv_box = new /obj/screen/inventory()
@@ -88,10 +82,8 @@
 	inv_box.layer = 19
 	adding += inv_box
 
-	mymob.throw_icon = new /obj/screen()
+	mymob.throw_icon = new /obj/screen/throw_catch()
 	mymob.throw_icon.icon = ui_style
-	mymob.throw_icon.icon_state = "act_throw_off"
-	mymob.throw_icon.name = "throw/catch"
 	mymob.throw_icon.screen_loc = ui_drop_throw
 
 	mymob.oxygen = new /obj/screen()
@@ -109,9 +101,7 @@
 	mymob.toxin.name = "toxin"
 	mymob.toxin.screen_loc = ui_toxin
 
-	mymob.internals = new /obj/screen()
-	mymob.internals.icon_state = "internal0"
-	mymob.internals.name = "internal"
+	mymob.internals = new /obj/screen/internals()
 	mymob.internals.screen_loc = ui_internal
 
 	mymob.fire = new /obj/screen()
@@ -129,24 +119,16 @@
 	mymob.healths.name = "health"
 	mymob.healths.screen_loc = ui_health
 
-	mymob.pullin = new /obj/screen()
+	mymob.pullin = new /obj/screen/pull()
 	mymob.pullin.icon = ui_style
 	mymob.pullin.icon_state = "pull0"
-	mymob.pullin.name = "pull"
 	mymob.pullin.screen_loc = ui_pull_resist
 
-	lingchemdisplay = new /obj/screen()
-	lingchemdisplay.name = "chemical storage"
-	lingchemdisplay.icon_state = "power_display"
+	lingchemdisplay = new /obj/screen/ling/chems()
 	lingchemdisplay.screen_loc = ui_lingchemdisplay
-	lingchemdisplay.layer = 20
-	lingchemdisplay.invisibility = 101
 
-	lingstingdisplay = new /obj/screen()
-	lingstingdisplay.name = "current sting"
+	lingstingdisplay = new /obj/screen/ling/sting()
 	lingstingdisplay.screen_loc = ui_lingstingdisplay
-	lingstingdisplay.layer = 20
-	lingstingdisplay.invisibility = 101
 
 	mymob.blind = new /obj/screen()
 	mymob.blind.icon = 'icons/mob/screen_full.dmi'
@@ -168,12 +150,9 @@
 
 	mymob.client.screen = null
 
-	using = new /obj/screen()
-	using.name = "resist"
+	using = new /obj/screen/resist()
 	using.icon = ui_style
-	using.icon_state = "act_resist"
 	using.screen_loc = ui_pull_resist
-	using.layer = 19
 	adding += using
 
 	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.pullin, mymob.blind, mymob.flash, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )

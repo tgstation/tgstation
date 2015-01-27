@@ -104,14 +104,14 @@ var/intercom_range_display_status = 0
 		intercom_range_display_status = 1
 
 	for(var/obj/effect/debugging/marker/M in world)
-		del(M)
+		qdel(M)
 
 	if(intercom_range_display_status)
 		for(var/obj/item/device/radio/intercom/I in world)
 			for(var/turf/T in orange(7,I))
 				var/obj/effect/debugging/marker/F = new/obj/effect/debugging/marker(T)
 				if (!(F in view(7,I.loc)))
-					del(F)
+					qdel(F)
 	feedback_add_details("admin_verb","mIRD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/enable_debug_verbs()
@@ -132,21 +132,17 @@ var/intercom_range_display_status = 0
 	src.verbs += /client/proc/count_objects_all
 	src.verbs += /client/proc/cmd_assume_direct_control	//-errorage
 	src.verbs += /client/proc/startSinglo
-	src.verbs += /client/proc/ticklag	//allows you to set the ticklag.
+	src.verbs += /client/proc/fps	//allows you to set the ticklag.
 	src.verbs += /client/proc/cmd_admin_grantfullaccess
-	src.verbs += /client/proc/kaboom
 	src.verbs += /client/proc/cmd_admin_areatest
 	src.verbs += /client/proc/cmd_admin_rejuvenate
 	src.verbs += /datum/admins/proc/show_traitor_panel
 	src.verbs += /client/proc/print_jobban_old
 	src.verbs += /client/proc/print_jobban_old_filter
-	src.verbs += /client/proc/forceEvent
-	src.verbs += /client/proc/kill_pipe_processing
-	src.verbs += /client/proc/kill_air_processing
 	src.verbs += /client/proc/disable_communication
-	src.verbs += /client/proc/disable_movement
 	src.verbs += /client/proc/print_pointers
 	src.verbs += /client/proc/count_movable_instances
+	src.verbs += /client/proc/cmd_display_del_log
 	//src.verbs += /client/proc/cmd_admin_rejuvenate
 
 	feedback_add_details("admin_verb","mDV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -236,25 +232,6 @@ var/intercom_range_display_status = 0
 	world << "There are [count] objects of type [type_path] in the game world"
 	feedback_add_details("admin_verb","mOBJ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/kill_pipe_processing()
-	set category = "Mapping"
-	set name = "Kill pipe processing"
-
-	pipe_processing_killed = !pipe_processing_killed
-	if(pipe_processing_killed)
-		message_admins("[src.ckey] used 'kill pipe processing', stopping all pipe processing.")
-	else
-		message_admins("[src.ckey] used 'kill pipe processing', restoring all pipe processing.")
-
-/client/proc/kill_air_processing()
-	set category = "Mapping"
-	set name = "Kill air processing"
-
-	air_processing_killed = !air_processing_killed
-	if(air_processing_killed)
-		message_admins("[src.ckey] used 'kill air processing', stopping all air processing.")
-	else
-		message_admins("[src.ckey] used 'kill air processing', restoring all air processing.")
 
 //This proc is intended to detect lag problems relating to communication procs
 var/global/say_disabled = 0
@@ -267,17 +244,3 @@ var/global/say_disabled = 0
 		message_admins("[src.ckey] used 'Disable all communication verbs', killing all communication methods.")
 	else
 		message_admins("[src.ckey] used 'Disable all communication verbs', restoring all communication methods.")
-
-//This proc is intended to detect lag problems relating to movement
-var/global/movement_disabled = 0
-var/global/movement_disabled_exception //This is the client that calls the proc, so he can continue to run around to gauge any change to lag.
-/client/proc/disable_movement()
-	set category = "Mapping"
-	set name = "Disable all movement"
-
-	movement_disabled = !movement_disabled
-	if(movement_disabled)
-		message_admins("[src.ckey] used 'Disable all movement', killing all movement.")
-		movement_disabled_exception = usr.ckey
-	else
-		message_admins("[src.ckey] used 'Disable all movement', restoring all movement.")

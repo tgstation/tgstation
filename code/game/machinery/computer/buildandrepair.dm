@@ -19,7 +19,6 @@
 	icon_state = "id_mod"
 	item_state = "electronic"
 	origin_tech = "programming=2"
-	var/id = null
 	var/frequency = null
 	var/build_path = null
 	var/board_type = "computer"
@@ -28,10 +27,14 @@
 	var/list/records = null
 	var/frame_desc = null
 
+/obj/item/weapon/circuitboard/large_tank_control
+	name = "circuit board (Large Tank Control)"
+	build_path = /obj/machinery/computer/general_air_control/large_tank_control
+	origin_tech = "programming=2;engineering=3;materials=2"
 /obj/item/weapon/circuitboard/turbine_computer
 	name = "circuit board (Turbine Computer)"
 	build_path = /obj/machinery/computer/turbine_computer
-	origin_tech = "programming=4;engineering=4;power=4"
+	origin_tech = "programming=4;engineering=4;powerstorage=4"
 /obj/item/weapon/circuitboard/telesci_console
 	name = "circuit board (Telescience Console)"
 	build_path = /obj/machinery/computer/telescience
@@ -70,6 +73,10 @@
 	name = "circuit board (Communications)"
 	build_path = /obj/machinery/computer/communications
 	origin_tech = "programming=2;magnets=2"
+	var/lastTimeUsed = 0
+/obj/item/weapon/circuitboard/communications/proc/cooldownLeft(deciseconds=600)
+	return max(deciseconds - (world.time - lastTimeUsed), 0)
+
 /obj/item/weapon/circuitboard/card
 	name = "circuit board (ID Console)"
 	build_path = /obj/machinery/computer/card
@@ -194,13 +201,20 @@
 /obj/item/weapon/circuitboard/shuttle
 	name = "circuit board (Shuttle)"
 	build_path = /obj/machinery/computer/shuttle
-	id = "1"
+	var/shuttleId
+	var/possible_destinations = ""
 /obj/item/weapon/circuitboard/labor_shuttle
 	name = "circuit Board (Labor Shuttle)"
 	build_path = /obj/machinery/computer/shuttle/labor
 /obj/item/weapon/circuitboard/labor_shuttle/one_way
 	name = "circuit Board (Prisoner Shuttle Console)"
 	build_path = /obj/machinery/computer/shuttle/labor/one_way
+/obj/item/weapon/circuitboard/ferry
+	name = "circuit Board (Transport Ferry)"
+	build_path = /obj/machinery/computer/shuttle/ferry
+/obj/item/weapon/circuitboard/ferry/request
+	name = "circuit Board (Transport Ferry Console)"
+	build_path = /obj/machinery/computer/shuttle/ferry/request
 /obj/item/weapon/circuitboard/mining_shuttle
 	name = "circuit Board (Mining Shuttle)"
 	build_path = /obj/machinery/computer/shuttle/mining
@@ -218,6 +232,14 @@
 /*/obj/item/weapon/circuitboard/prison_shuttle
 	name = "circuit board (Prison Shuttle)"
 	build_path = /obj/machinery/computer/prison_shuttle*/
+/obj/item/weapon/circuitboard/slot_machine
+	name = "circuit board (Slot Machine)"
+	build_path = /obj/machinery/computer/slot_machine
+	origin_tech = "programming=1"
+/obj/item/weapon/circuitboard/libraryconsole
+	name = "circuit board (Library Visitor Console)"
+	build_path = /obj/machinery/computer/libraryconsole
+	origin_tech = "programming=1"
 
 
 /obj/item/weapon/circuitboard/supplycomp/attackby(obj/item/I as obj, mob/user as mob)
@@ -244,7 +266,7 @@
 
 /obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I,/obj/item/weapon/screwdriver))
-		if(src.build_path == "/obj/machinery/computer/rdconsole/core")
+		if(build_path == /obj/machinery/computer/rdconsole/core)
 			name = "circuit board (RD Console - Robotics)"
 			build_path = /obj/machinery/computer/rdconsole/robotics
 			user << "<span class='notice'>Access protocols successfully updated.</span>"
@@ -254,11 +276,25 @@
 			user << "<span class='notice'>Defaulting access protocols.</span>"
 	return
 
+/obj/item/weapon/circuitboard/libraryconsole/attackby(obj/item/I as obj, mob/user as mob)
+	if(istype(I,/obj/item/weapon/screwdriver))
+		if(build_path == /obj/machinery/computer/libraryconsole/bookmanagement)
+			name = "circuit board (Library Visitor Console)"
+			build_path = /obj/machinery/computer/libraryconsole
+			user << "<span class='notice'>Defaulting access protocols.</span>"
+		else
+			name = "circuit board (Book Inventory Management Console)"
+			build_path = /obj/machinery/computer/libraryconsole/bookmanagement
+			user << "<span class='notice'>Access protocols successfully updated.</span>"
+	return
+
 /obj/item/weapon/circuitboard/shuttle/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/device/multitool))
-		var/chosen_id = round(input(usr, "Choose an ID number:", "Input an Integer", null) as num|null)
+		var/chosen_id = round(input(usr, "Choose an ID number (-1 for reset):", "Input an Integer", null) as num|null)
 		if(chosen_id >= 0)
-			id = chosen_id
+			shuttleId = chosen_id
+		else
+			shuttleId = initial(shuttleId)
 	return
 
 /obj/structure/computerframe/attackby(obj/item/P as obj, mob/user as mob)
@@ -267,27 +303,31 @@
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				user << "<span class='notice'>You start wrenching the frame into place.</span>"
 				if(do_after(user, 20))
-					user << "<span class='notice'>You wrench the frame into place.</span>"
+					user << "<span class='notice'>You've wrenched the frame into place.</span>"
 					anchored = 1
 					state = 1
 			if(istype(P, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = P
 				if(!WT.remove_fuel(0, user))
-					user << "<span class='warning'>The welding tool must be on to complete this task.</span>"
+					if(!WT.isOn())
+						user << "<span class='warning'>The welding tool must be on to complete this task.</span>"
 					return
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+				user << "<span class='notice'>You start deconstructing the frame.</span>"
 				if(do_after(user, 20))
 					if(!src || !WT.isOn()) return
-					user << "<span class='notice'>You deconstruct the frame.</span>"
+					user << "<span class='notice'>You've deconstructed the frame.</span>"
 					var/obj/item/stack/sheet/metal/M = new (loc, 5)
 					M.add_fingerprint(user)
-					del(src)
+					qdel(src)
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				user << "<span class='notice'>You start to unfasten the frame.</span>"
 				if(do_after(user, 20))
-					user << "<span class='notice'>You unfasten the frame.</span>"
+					user << "<span class='notice'>You've unfastened the frame.</span>"
 					anchored = 0
 					state = 0
 			if(istype(P, /obj/item/weapon/circuitboard) && !circuit)
@@ -299,7 +339,7 @@
 					circuit = P
 					user.drop_item()
 					circuit.add_fingerprint(user)
-					P.loc = src
+					P.loc = null
 				else
 					user << "<span class='warning'>This frame does not accept circuit boards of this type!</span>"
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
@@ -319,61 +359,56 @@
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "<span class='notice'>You unfasten the circuit board.</span>"
-				src.state = 1
-				src.icon_state = "1"
+				state = 1
+				icon_state = "1"
 			if(istype(P, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C = P
-				if(C.amount >= 5)
+				if(C.get_amount() >= 5)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					user << "<span class='notice'>You start adding cables to the frame.</span>"
 					if(do_after(user, 20))
-						if(C && C.amount >= 5)
-							C.amount -= 5
-							if(C.amount <= 0) del(C)
-							user << "<span class='notice'>You add cables to the frame.</span>"
-							src.state = 3
-							src.icon_state = "3"
+						if(C.get_amount() >= 5 && state == 2)
+							C.use(5)
+							user << "<span class='notice'>You've added cables to the frame.</span>"
+							state = 3
+							icon_state = "3"
+				else
+					user << "<span class='warning'>You need five lengths of cable to wire the frame.</span>"
 		if(3)
 			if(istype(P, /obj/item/weapon/wirecutters))
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				user << "<span class='notice'>You remove the cables.</span>"
-				src.state = 2
-				src.icon_state = "2"
+				state = 2
+				icon_state = "2"
 				var/obj/item/stack/cable_coil/A = new (loc)
 				A.amount = 5
 				A.add_fingerprint(user)
 
 			if(istype(P, /obj/item/stack/sheet/glass))
-				if(P:amount >= 2)
+				var/obj/item/stack/sheet/glass/G = P
+				if(G.get_amount() < 2)
+					user << "<span class='warning'>You need two glass sheets to continue construction.</span>"
+					return
+				else
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					user << "<span class='notice'>You start to put in the glass panel.</span>"
 					if(do_after(user, 20))
-						if(P)
-							P:use(2)
-							user << "<span class='notice'>You put in the glass panel.</span>"
-							src.state = 4
+						if(G.get_amount() >= 2 && state == 3)
+							G.use(2)
+							user << "<span class='notice'>You've put in the glass panel.</span>"
+							state = 4
 							src.icon_state = "4"
 		if(4)
 			if(istype(P, /obj/item/weapon/crowbar))
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				user << "<span class='notice'>You remove the glass panel.</span>"
-				src.state = 3
-				src.icon_state = "3"
+				state = 3
+				icon_state = "3"
 				var/obj/item/stack/sheet/glass/G = new (loc, 2)
 				G.add_fingerprint(user)
 			if(istype(P, /obj/item/weapon/screwdriver))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "<span class='notice'>You connect the monitor.</span>"
-				var/obj/B = new src.circuit.build_path (src.loc)
-				if(circuit.powernet) B:powernet = circuit.powernet
-				if(circuit.id) B:id = circuit.id
-				if(circuit.records) B:records = circuit.records
-				if(circuit.frequency) B:frequency = circuit.frequency
-				if(istype(circuit,/obj/item/weapon/circuitboard/supplycomp))
-					var/obj/machinery/computer/supplycomp/SC = B
-					var/obj/item/weapon/circuitboard/supplycomp/C = circuit
-					SC.can_order_contraband = C.contraband_enabled
-				else if(istype(circuit,/obj/item/weapon/circuitboard/shuttle))
-					var/obj/machinery/computer/shuttle/S = B
-					var/obj/item/weapon/circuitboard/shuttle/C = circuit
-					S.id = C.id
+				var/obj/B = new src.circuit.build_path (src.loc, circuit)
 				transfer_fingerprints_to(B)
-				del(src)
+				qdel(src)

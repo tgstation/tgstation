@@ -42,7 +42,7 @@
 			AM.loc = src.loc
 			do_transform(AM)
 
-/obj/machinery/transformer/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/machinery/transformer/CanPass(atom/movable/mover, turf/target, height=0)
 	if(!ishuman(mover)) // Allows items to go through, to stop them from blocking the conveyour belt.
 		var/dir = get_dir(src, mover)
 		if(dir == EAST)
@@ -87,6 +87,7 @@
 		sleep(30)
 		if(R)
 			R.SetLockdown(0)
+			R.notify_ai(1)
 
 /obj/machinery/transformer/conveyor/New()
 	..()

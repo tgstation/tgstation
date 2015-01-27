@@ -11,8 +11,8 @@
 	flags = CONDUCT
 	max_amount = 60
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "smashed")
-	var/on = 1
-	var/state //0 = fine, 1 = flickering, 2 = breaking, 3 = broken
+	turf_type = /turf/simulated/floor/light
+	var/state = 0
 
 /obj/item/stack/tile/light/New(var/loc, var/amount=null)
 	..()
@@ -33,4 +33,4 @@
 		new/obj/item/stack/light_w(user.loc)
 		if(amount <= 0)
 			user.unEquip(src, 1)
-			del(src)
+			qdel(src)

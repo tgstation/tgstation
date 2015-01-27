@@ -6,7 +6,8 @@
 #define EVERYONE_HAS_MAINT_ACCESS 4
 
 /datum/configuration
-	var/server_name = null				// server name (for world name / status)
+	var/server_name = null				// server name (the name of the game window)
+	var/station_name = null				// station name (the name of the station in-game)
 	var/server_suffix = 0				// generate numeric suffix based on server port
 	var/lobby_countdown = 120			// In between round countdown.
 
@@ -22,7 +23,6 @@
 	var/log_emote = 0					// log emotes
 	var/log_attack = 0					// log attack messages
 	var/log_adminchat = 0				// log admin chat messages
-	var/log_adminwarn = 0				// log warnings admins get about bomb construction and such
 	var/log_pda = 0						// log pda messages
 	var/log_hrefs = 0					// logs all links clicked in-game. Could be used for debugging and tracking down exploits
 	var/sql_enabled = 0					// for sql switching
@@ -36,7 +36,7 @@
 	var/del_new_on_log = 1				// del's new players if they log before they spawn in
 	var/allow_Metadata = 0				// Metadata is supported.
 	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
-	var/Ticklag = 0.9
+	var/fps = 10
 	var/Tickcomp = 0
 	var/allow_holidays = 0				//toggles whether holiday-specific content should be used
 
@@ -47,14 +47,17 @@
 	var/kick_inactive = 0				//force disconnect for inactive players
 	var/load_jobs_from_txt = 0
 	var/automute_on = 0					//enables automuting/spam prevention
+	var/minimal_access_threshold = 0	//If the number of players is larger than this threshold, minimal access will be turned on.
 	var/jobs_have_minimal_access = 0	//determines whether jobs use minimal access or expanded access.
-	var/jobs_have_maint_access = 0 		//Who gets maint access?  See defines above
+	var/jobs_have_maint_access = 0 		//Who gets maint access?  See defines above.
 	var/sec_start_brig = 0				//makes sec start in brig or dept sec posts
 
 	var/server
 	var/banappeals
-	var/wikiurl = "http://wiki.ss13.eu" // Default wiki link.
-	var/forumurl
+	var/wikiurl = "http://www.tgstation13.org/wiki" // Default wiki link.
+	var/forumurl = "http://tgstation13.org/phpBB/index.php" //default forums
+	var/rulesurl = "http://www.tgstation13.org/wiki/Rules" // default rules
+	var/githuburl = "https://www.github.com/tgstation/-tg-station" //default github
 
 	var/forbid_singulo_possession = 0
 	var/useircbot = 0
@@ -62,6 +65,7 @@
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
 	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
+	var/see_own_notes = 0 //Can players see their own admin notes (read-only)? Config option in config.txt
 
 	//game_options.txt configs
 	var/force_random_names = 0
@@ -75,14 +79,21 @@
 	var/allow_ai = 0					// allow ai job
 
 	var/traitor_scaling_coeff = 6		//how much does the amount of players get divided by to determine traitors
-	var/changeling_scaling_coeff = 7	//how much does the amount of players get divided by to determine changelings
+	var/changeling_scaling_coeff = 6	//how much does the amount of players get divided by to determine changelings
+	var/security_scaling_coeff = 8		//how much does the amount of players get divided by to determine open security officer positions
 
-	var/protect_roles_from_antagonist = 0// If security and such can be traitor/cult/other
-	var/allow_latejoin_antagonists = 0 // If late-joining players can be traitor/changeling
-	var/continuous_round_rev = 0			// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
+	var/traitor_objectives_amount = 2
+	var/protect_roles_from_antagonist = 0 //If security and such can be traitor/cult/other
+	var/protect_assistant_from_antagonist = 0 //If assistants can be traitor/cult/other
+	var/enforce_human_authority = 0		//If non-human species are barred from joining as a head of staff
+	var/allow_latejoin_antagonists = 0 	// If late-joining players can be traitor/changeling
+	var/continuous_round_rev = 0		// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
 	var/continuous_round_wiz = 0
 	var/continuous_round_malf = 0
+	var/shuttle_refuel_delay = 12000
 	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
+	var/mutant_races = 0				//players can choose their mutant race before joining the game
+	var/mutant_colors = 0
 
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
 	var/alert_desc_blue_upto = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted."
@@ -98,6 +109,10 @@
 	var/revival_cloning = 1
 	var/revival_brain_life = -1
 
+	var/rename_cyborg = 0
+	var/ooc_during_round = 0
+	var/emojis = 0
+
 	//Used for modifying movement speed for mobs.
 	//Unversal modifiers
 	var/run_speed = 0
@@ -111,8 +126,6 @@
 	var/slime_delay = 0
 	var/animal_delay = 0
 
-	var/use_recursive_explosions //Defines whether the server uses recursive or circular explosions.
-
 	var/gateway_delay = 18000 //How long the gateway takes before it activates. Default is half an hour.
 	var/ghost_interaction = 0
 
@@ -122,6 +135,7 @@
 	var/sandbox_autoclose = 0 // close the sandbox panel after spawning an item, potentially reducing griff
 
 	var/default_laws = 0 //Controls what laws the AI spawns with.
+	var/silicon_max_law_amount = 12
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -200,8 +214,6 @@
 					config.log_emote = 1
 				if("log_adminchat")
 					config.log_adminchat = 1
-				if("log_adminwarn")
-					config.log_adminwarn = 1
 				if("log_pda")
 					config.log_pda = 1
 				if("log_hrefs")
@@ -224,6 +236,8 @@
 					config.respawn = 0
 				if("servername")
 					config.server_name = value
+				if("stationname")
+					config.station_name = value
 				if("serversuffix")
 					config.server_suffix = 1
 				if("hostedby")
@@ -236,6 +250,10 @@
 					config.wikiurl = value
 				if("forumurl")
 					config.forumurl = value
+				if("rulesurl")
+					config.rulesurl = value
+				if("githuburl")
+					config.githuburl = value
 				if("guest_jobban")
 					config.guest_jobban = 1
 				if("guest_ban")
@@ -245,7 +263,9 @@
 				if("allow_metadata")
 					config.allow_Metadata = 1
 				if("kick_inactive")
-					config.kick_inactive = 1
+					if(value < 1)
+						value = INACTIVITY_KICK
+					config.kick_inactive = value
 				if("load_jobs_from_txt")
 					load_jobs_from_txt = 1
 				if("forbid_singulo_possession")
@@ -257,11 +277,21 @@
 				if("useircbot")
 					useircbot = 1
 				if("ticklag")
-					Ticklag = text2num(value)
+					var/ticklag = text2num(value)
+					if(ticklag > 0)
+						fps = 10 / ticklag
+				if("fps")
+					fps = text2num(value)
 				if("tickcomp")
 					Tickcomp = 1
 				if("automute_on")
 					automute_on = 1
+				if("comms_key")
+					global.comms_key = value
+					if(value != "default_pwd" && length(value) > 6) //It's the default value or less than 6 characters long, warn badmins
+						global.comms_allowed = 1
+				if("see_own_notes")
+					config.see_own_notes = 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
@@ -277,6 +307,12 @@
 					config.revival_cloning			= text2num(value)
 				if("revival_brain_life")
 					config.revival_brain_life		= text2num(value)
+				if("rename_cyborg")
+					config.rename_cyborg			= 1
+				if("ooc_during_round")
+					config.ooc_during_round			= 1
+				if("emojis")
+					config.emojis					= 1
 				if("run_delay")
 					config.run_speed				= text2num(value)
 				if("walk_delay")
@@ -321,6 +357,8 @@
 					config.continuous_round_wiz		= 1
 				if("continuous_round_malf")
 					config.continuous_round_malf	= 1
+				if("shuttle_refuel_delay")
+					config.shuttle_refuel_delay     = text2num(value)
 				if("show_game_type_odds")
 					config.show_game_type_odds		= 1
 				if("ghost_interaction")
@@ -329,6 +367,10 @@
 					config.traitor_scaling_coeff	= text2num(value)
 				if("changeling_scaling_coeff")
 					config.changeling_scaling_coeff	= text2num(value)
+				if("security_scaling_coeff")
+					config.security_scaling_coeff	= text2num(value)
+				if("traitor_objectives_amount")
+					config.traitor_objectives_amount = text2num(value)
 				if("probability")
 					var/prob_pos = findtext(value, " ")
 					var/prob_name = null
@@ -346,14 +388,18 @@
 
 				if("protect_roles_from_antagonist")
 					config.protect_roles_from_antagonist	= 1
+				if("protect_assistant_from_antagonist")
+					config.protect_assistant_from_antagonist	= 1
+				if("enforce_human_authority")
+					config.enforce_human_authority	= 1
 				if("allow_latejoin_antagonists")
 					config.allow_latejoin_antagonists	= 1
 				if("allow_random_events")
 					config.allow_random_events		= 1
+				if("minimal_access_threshold")
+					config.minimal_access_threshold	= text2num(value)
 				if("jobs_have_minimal_access")
 					config.jobs_have_minimal_access	= 1
-				if("use_recursive_explosions")
-					use_recursive_explosions		= 1
 				if("humans_need_surnames")
 					humans_need_surnames			= 1
 				if("force_random_names")
@@ -368,10 +414,20 @@
 					config.sandbox_autoclose		= 1
 				if("default_laws")
 					config.default_laws				= text2num(value)
+				if("silicon_max_law_amount")
+					config.silicon_max_law_amount	= text2num(value)
+				if("join_with_mutant_race")
+					config.mutant_races				= 1
+				if("mutant_colors")
+					config.mutant_colors			= 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
-/datum/configuration/proc/loadsql(filename)  // -- TLE
+	fps = round(fps)
+	if(fps <= 0)
+		fps = initial(fps)
+
+/datum/configuration/proc/loadsql(filename)
 	var/list/Lines = file2list(filename)
 	for(var/t in Lines)
 		if(!t)	continue
@@ -408,6 +464,8 @@
 				sqlfdbklogin = value
 			if("feedback_password")
 				sqlfdbkpass = value
+			if("feedback_tableprefix")
+				sqlfdbktableprefix = value
 			else
 				diary << "Unknown setting in configuration: '[name]'"
 

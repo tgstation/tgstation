@@ -11,34 +11,42 @@
 	attack_verb = list("mopped", "bashed", "bludgeoned", "whacked")
 	var/mopping = 0
 	var/mopcount = 0
-
+	var/mopcap = 5
+	var/mopspeed = 30
 
 /obj/item/weapon/mop/New()
-	create_reagents(5)
+	create_reagents(mopcap)
 
 
 obj/item/weapon/mop/proc/clean(turf/simulated/A)
 	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1))
 		A.clean_blood()
+		var/turf/simulated/floor/F = A
+		F.dirt = 0
 		for(var/obj/effect/O in A)
 			if(istype(O,/obj/effect/decal/cleanable) || istype(O,/obj/effect/overlay))
-				del(O)
+				qdel(O)
 	reagents.reaction(A, TOUCH, 10)	//10 is the multiplier for the reaction effect. probably needed to wet the floor properly.
 	reagents.remove_any(1)			//reaction() doesn't use up the reagents
 
 
 /obj/item/weapon/mop/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
-	if(istype(A, /obj/effect/rune) ||istype(A, /turf/simulated) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
-		if(reagents.total_volume < 1)
-			user << "<span class='notice'>Your mop is dry!</span>"
-			return
 
-		user.visible_message("<span class='warning'>[user] begins to clean \the [get_turf(A)].</span>")
+	if(reagents.total_volume < 1)
+		user << "<span class='notice'>Your mop is dry!</span>"
+		return
 
-		if(do_after(user, 40))
-			if(A)
-				clean(get_turf(A))
+	var/turf/simulated/turf = A
+	if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
+		turf = A.loc
+	A = null
+
+	if(istype(turf))
+		user.visible_message("<span class='warning'>[user] begins to clean \the [turf] with [src].</span>")
+
+		if(do_after(user, mopspeed))
+			clean(turf)
 			user << "<span class='notice'>You have finished mopping!</span>"
 
 
@@ -57,5 +65,3 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 
 /obj/item/weapon/mop/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	return
-
-

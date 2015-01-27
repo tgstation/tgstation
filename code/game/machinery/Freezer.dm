@@ -18,8 +18,11 @@
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil(null)
+	component_parts += new /obj/item/stack/cable_coil(null, 1)
 	RefreshParts()
+
+/obj/machinery/atmospherics/unary/cold_sink/freezer/construction()
+	..(dir,dir)
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/RefreshParts()
 	var/H
@@ -37,14 +40,12 @@
 		update_icon()
 		return
 
+	if(exchange_parts(user, I))
+		return
+
 	default_deconstruction_crowbar(I)
 
 	if(default_change_direction_wrench(user, I))
-		if(node)
-			disconnect(node)
-		initialize()
-		if(node)
-			node.update_icon()
 		return
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/update_icon()
@@ -97,6 +98,7 @@
 	usr.set_machine(src)
 	if (href_list["start"])
 		src.on = !src.on
+		use_power = 1 + src.on
 		update_icon()
 	if(href_list["temp"])
 		var/amount = text2num(href_list["temp"])
@@ -104,6 +106,7 @@
 			src.current_temperature = min(T20C, src.current_temperature+amount)
 		else
 			src.current_temperature = max(min_temperature, src.current_temperature+amount)
+		active_power_usage = (current_heat_capacity * (T20C - current_temperature) / 100) + idle_power_usage
 	src.updateUsrDialog()
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/process()
@@ -130,15 +133,21 @@
 /obj/machinery/atmospherics/unary/heat_reservoir/heater/New()
 	..()
 	initialize_directions = dir
+	var/obj/item/weapon/circuitboard/thermomachine/H = new /obj/item/weapon/circuitboard/thermomachine(null)
+	H.build_path = /obj/machinery/atmospherics/unary/heat_reservoir/heater
+	H.name = "circuit board (Heater)"
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/thermomachine(null)
+	component_parts += H
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil(null)
+	component_parts += new /obj/item/stack/cable_coil(null, 1)
 	RefreshParts()
+
+/obj/machinery/atmospherics/unary/heat_reservoir/heater/construction()
+	..(dir,dir)
 
 /obj/machinery/atmospherics/unary/heat_reservoir/heater/RefreshParts()
 	var/H
@@ -156,14 +165,12 @@
 		update_icon()
 		return
 
+	if(exchange_parts(user, I))
+		return
+
 	default_deconstruction_crowbar(I)
 
 	if(default_change_direction_wrench(user, I))
-		if(node)
-			disconnect(node)
-		initialize()
-		if(node)
-			node.update_icon()
 		return
 
 /obj/machinery/atmospherics/unary/heat_reservoir/heater/update_icon()
@@ -205,7 +212,8 @@
 
 	//user << browse(dat, "window=freezer;size=400x500")
 	//onclose(user, "freezer")
-	var/datum/browser/popup = new(user, "freezer", "Cryo Gas Cooling System", 400, 240) // Set up the popup browser window
+	var/datum/browser/popup = new(user, "freezer", "Pyro Gas Heating System", 400, 240) // Set up the popup browser window
+
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.set_content(dat)
 	popup.open()
@@ -216,13 +224,15 @@
 	usr.set_machine(src)
 	if (href_list["start"])
 		src.on = !src.on
+		use_power = 1 + src.on
 		update_icon()
 	if(href_list["temp"])
 		var/amount = text2num(href_list["temp"])
 		if(amount > 0)
-			src.current_temperature = min((T20C+max_temperature), src.current_temperature+amount)
+			src.current_temperature = min((max_temperature), src.current_temperature+amount)
 		else
 			src.current_temperature = max(T20C, src.current_temperature+amount)
+		active_power_usage = (current_heat_capacity * (current_temperature - T20C) / 100) + idle_power_usage
 	src.updateUsrDialog()
 	src.add_fingerprint(usr)
 	return

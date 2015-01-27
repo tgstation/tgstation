@@ -6,6 +6,9 @@
 		return 1
 	return 0
 
+/mob/living/carbon/human/canBeHandcuffed()
+	return 1
+
 //gets assignment from ID or ID inside PDA or PDA itself
 //Useful when player do something with computers
 /mob/living/carbon/human/proc/get_assignment(var/if_no_id = "No id", var/if_no_job = "No job")
@@ -44,7 +47,7 @@
 		return id_name
 	return "Unknown"
 
-//Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
+//Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when Fluacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name(if_no_face="Unknown")
 	if( wear_mask && (wear_mask.flags_inv&HIDEFACE) )	//Wearing a mask which hides our face, use id-name if possible
 		return if_no_face
@@ -115,5 +118,15 @@
 /mob/living/carbon/human/IsAdvancedToolUser()
 	return 1//Humans can use guns and such
 
+/mob/living/carbon/human/SpeciesCanConsume()
+	return 1 // Humans can eat, drink, and be forced to do so
+
 /mob/living/carbon/human/InCritical()
 	return (health <= config.health_threshold_crit && stat == UNCONSCIOUS)
+
+/mob/living/carbon/human/reagent_check(datum/reagent/R)
+	if(dna)
+		var/bypass = dna.species.handle_chemicals(R,src)
+		return bypass	// if it returns 0, it will run the usual on_mob_life for that reagent. otherwise, it will stop after running handle_chemicals for the species.
+	else
+		return 0

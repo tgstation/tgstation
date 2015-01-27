@@ -4,7 +4,9 @@
 	icon_state = "taperecorder_empty"
 	item_state = "analyzer"
 	w_class = 2
+	flags = HEAR
 	slot_flags = SLOT_BELT
+	languages = ALL //this is a translator, after all.
 	m_amt = 60
 	g_amt = 30
 	force = 2
@@ -24,10 +26,9 @@
 	update_icon()
 
 
-/obj/item/device/taperecorder/examine()
-	set src in view(1)
+/obj/item/device/taperecorder/examine(mob/user)
 	..()
-	usr << "The wire panel is [open_panel ? "opened" : "closed"]."
+	user << "The wire panel is [open_panel ? "opened" : "closed"]."
 
 
 /obj/item/device/taperecorder/attackby(obj/item/I, mob/user)
@@ -66,11 +67,18 @@
 	..()
 
 
+/obj/item/device/taperecorder/proc/can_use(mob/user)
+	if(user && ismob(user))
+		if(!user.stat && user.canmove && !user.restrained())
+			return 1
+	return 0
+
+
 /obj/item/device/taperecorder/verb/ejectverb()
 	set name = "Eject Tape"
 	set category = "Object"
 
-	if(usr.stat)
+	if(!can_use(usr))
 		return
 	if(!mytape)
 		return
@@ -89,30 +97,16 @@
 		icon_state = "taperecorder_idle"
 
 
-/obj/item/device/taperecorder/hear_talk(mob/living/M as mob, msg)
+/obj/item/device/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
 	if(mytape && recording)
-		var/ending = copytext(msg, length(msg))
 		mytape.timestamp += mytape.used_capacity
-		if(M.stuttering)
-			mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [M.name] stammers, \"[msg]\""
-			return
-		if(M.getBrainLoss() >= 60)
-			mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [M.name] gibbers, \"[msg]\""
-			return
-		if(ending == "?")
-			mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [M.name] asks, \"[msg]\""
-			return
-		else if(ending == "!")
-			mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [M.name] exclaims, \"[msg]\""
-			return
-		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [M.name] says, \"[msg]\""
-
+		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [strip_html_properly(message)]"
 
 /obj/item/device/taperecorder/verb/record()
 	set name = "Start Recording"
 	set category = "Object"
 
-	if(usr.stat)
+	if(!can_use(usr))
 		return
 	if(!mytape || mytape.ruined)
 		return
@@ -142,14 +136,14 @@
 		recording = 0
 		update_icon()
 	else
-		usr << "<span class='notice'The tape is full.</span>"
+		usr << "<span class='notice'>The tape is full.</span>"
 
 
 /obj/item/device/taperecorder/verb/stop()
 	set name = "Stop"
 	set category = "Object"
 
-	if(usr.stat)
+	if(!can_use(usr))
 		return
 
 	if(recording)
@@ -169,7 +163,7 @@
 	set name = "Play Tape"
 	set category = "Object"
 
-	if(usr.stat)
+	if(!can_use(usr))
 		return
 	if(!mytape || mytape.ruined)
 		return
@@ -194,19 +188,16 @@
 			break
 		if(mytape.storedinfo.len < i)
 			break
-		var/turf/T = get_turf(src)
-		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: [mytape.storedinfo[i]]</font>")
+		say(mytape.storedinfo[i])
 		if(mytape.storedinfo.len < i + 1)
 			playsleepseconds = 1
 			sleep(10)
-			T = get_turf(src)
-			T.visible_message("<font color=Maroon><B>Tape Recorder</B>: End of recording.</font>")
+			say("End of recording.")
 		else
 			playsleepseconds = mytape.timestamp[i + 1] - mytape.timestamp[i]
 		if(playsleepseconds > 14)
 			sleep(10)
-			T = get_turf(src)
-			T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Skipping [playsleepseconds] seconds of silence</font>")
+			say("Skipping [playsleepseconds] seconds of silence")
 			playsleepseconds = 1
 		i++
 
@@ -227,7 +218,7 @@
 	set name = "Print Transcript"
 	set category = "Object"
 
-	if(usr.stat)
+	if(!can_use(usr))
 		return
 	if(!mytape)
 		return

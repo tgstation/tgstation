@@ -36,7 +36,7 @@
 /datum/recipe
 	var/list/reagents // example:  = list("berryjuice" = 5) // do not list same reagent twice
 	var/list/items // example: =list(/obj/item/weapon/crowbar, /obj/item/weapon/welder) // place /foo/bar before /foo
-	var/result //example: = /obj/item/weapon/reagent_containers/food/snacks/donut/normal
+	var/result //example: = /obj/item/weapon/reagent_containers/food/snacks/donut
 	var/time = 100 // 1/10 part of second
 
 
@@ -79,7 +79,7 @@
 	var/obj/result_obj = new result(container)
 	for (var/obj/O in (container.contents-result_obj))
 		O.reagents.trans_to(result_obj, O.reagents.total_volume)
-		del(O)
+		qdel(O)
 	container.reagents.clear_reagents()
 	return result_obj
 
@@ -91,7 +91,7 @@
 			O.reagents.del_reagent("nutriment")
 			O.reagents.update_total()
 			O.reagents.trans_to(result_obj, O.reagents.total_volume)
-		del(O)
+		qdel(O)
 	container.reagents.clear_reagents()
 	return result_obj
 

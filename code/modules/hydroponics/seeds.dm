@@ -22,7 +22,7 @@
 	var/rarity = 0					//How rare the plant is. Used for giving points to cargo when shipping off to Centcom.
 	var/list/mutatelist = list()	//The type of plants that this plant can mutate into.
 
-/obj/item/seeds/New()
+/obj/item/seeds/New(loc, parent)
 	..()
 	pixel_x = rand(-8, 8)
 	pixel_y = rand(-8, 8)
@@ -69,18 +69,40 @@
 	lifespan = 50
 	endurance = 8
 	maturation = 10
-	production = 10
+	production = 1
 	yield = 1 //seeds if there isn't a dna inside
 	oneharvest = 1
 	potency = 30
 	plant_type = 0
 	growthstages = 6
-	var/ui = null //for storing the guy
-	var/se = null
 	var/ckey = null
 	var/realName = null
 	var/datum/mind/mind = null
-	gender = MALE
+	var/blood_gender = null
+	var/blood_type = null
+	var/factions = null
+	var/contains_sample = 0
+
+/obj/item/seeds/replicapod/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/weapon/reagent_containers/syringe))
+		if(!contains_sample)
+			for(var/datum/reagent/blood/bloodSample in W.reagents.reagent_list)
+				if(bloodSample.data["mind"] && bloodSample.data["cloneable"] == 1)
+					mind = bloodSample.data["mind"]
+					ckey = bloodSample.data["ckey"]
+					realName = bloodSample.data["real_name"]
+					blood_gender = bloodSample.data["gender"]
+					blood_type = bloodSample.data["blood_type"]
+					factions = bloodSample.data["factions"]
+					W.reagents.clear_reagents()
+					user << "You inject the contents of the syringe into the seeds."
+					contains_sample = 1
+				else
+					user << "The seeds reject the sample!"
+		else
+			user << "The seeds already contain a genetic sample."
+	..()
+
 
 /obj/item/seeds/grapeseed
 	name = "pack of grape seeds"
@@ -105,7 +127,7 @@
 	icon_state = "seed-greengrapes"
 	species = "greengrape"
 	plantname = "Green-Grape Vine"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/greengrapes
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/grapes/green
 	lifespan = 50
 	endurance = 25
 	maturation = 3
@@ -155,7 +177,7 @@
 	icon_state = "seed-glowberry"
 	species = "glowberry"
 	plantname = "Glow-Berry Bush"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/berries/glow
 	lifespan = 30
 	endurance = 25
 	maturation = 5
@@ -205,7 +227,7 @@
 	icon_state = "seed-eggy"
 	species = "eggy"
 	plantname = "Eggplants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/egg
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	lifespan = 75
 	endurance = 15
 	maturation = 6
@@ -221,7 +243,7 @@
 	icon_state = "seed-bloodtomato"
 	species = "bloodtomato"
 	plantname = "Blood-Tomato Plants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blood
 	lifespan = 25
 	endurance = 20
 	maturation = 8
@@ -255,7 +277,7 @@
 	icon_state = "seed-killertomato"
 	species = "killertomato"
 	plantname = "Killer-Tomato Plants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/killertomato
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer
 	lifespan = 25
 	endurance = 15
 	maturation = 8
@@ -273,7 +295,7 @@
 	icon_state = "seed-bluetomato"
 	species = "bluetomato"
 	plantname = "Blue-Tomato Plants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue
 	lifespan = 25
 	endurance = 15
 	maturation = 8
@@ -291,7 +313,7 @@
 	icon_state = "seed-bluespacetomato"
 	species = "bluespacetomato"
 	plantname = "Blue-Space Tomato Plants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue/bluespace
 	lifespan = 25
 	endurance = 15
 	maturation = 8
@@ -328,10 +350,10 @@
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/poppy
 	lifespan = 25
 	endurance = 10
-	potency = 20
 	maturation = 8
 	production = 6
 	yield = 6
+	potency = 20
 	plant_type = 0
 	oneharvest = 1
 	growthstages = 3
@@ -475,7 +497,7 @@
 
 /obj/item/seeds/angelmycelium
 	name = "pack of destroying angel mycelium"
-	desc = "This mycelium grows into something devestating."
+	desc = "This mycelium grows into something devastating."
 	icon_state = "mycelium-angel"
 	species = "angel"
 	plantname = "Destroying Angels"
@@ -602,7 +624,7 @@
 	icon_state = "seed-nettle"
 	species = "nettle"
 	plantname = "Nettles"
-	product = /obj/item/weapon/grown/nettle
+	product = /obj/item/weapon/grown/nettle/basic
 	lifespan = 30
 	endurance = 40 // tuff like a toiger
 	maturation = 6
@@ -620,7 +642,7 @@
 	icon_state = "seed-deathnettle"
 	species = "deathnettle"
 	plantname = "Death Nettles"
-	product = /obj/item/weapon/grown/deathnettle
+	product = /obj/item/weapon/grown/nettle/death
 	lifespan = 30
 	endurance = 25
 	maturation = 8
@@ -758,7 +780,7 @@
 	icon_state = "seed-goldapple"
 	species = "goldapple"
 	plantname = "Golden Apple Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/goldapple
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/apple/gold
 	lifespan = 55
 	endurance = 35
 	maturation = 10
@@ -775,7 +797,7 @@
 	icon_state = "seed-ambrosiavulgaris"
 	species = "ambrosiavulgaris"
 	plantname = "Ambrosia Vulgaris"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris
 	lifespan = 60
 	endurance = 25
 	maturation = 6
@@ -792,7 +814,7 @@
 	icon_state = "seed-ambrosiadeus"
 	species = "ambrosiadeus"
 	plantname = "Ambrosia Deus"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus
 	lifespan = 60
 	endurance = 25
 	maturation = 6
@@ -874,7 +896,7 @@
 	icon_state = "seed-lime"
 	species = "lime"
 	plantname = "Lime Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/lime
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lime
 	lifespan = 55
 	endurance = 50
 	maturation = 6
@@ -890,7 +912,7 @@
 	icon_state = "seed-lemon"
 	species = "lemon"
 	plantname = "Lemon Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/lemon
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon
 	lifespan = 55
 	endurance = 45
 	maturation = 6
@@ -907,7 +929,7 @@
 	icon_state = "seed-cash"
 	species = "cashtree"
 	plantname = "Money Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/money
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/shell/moneyfruit
 	lifespan = 55
 	endurance = 45
 	maturation = 6
@@ -924,7 +946,7 @@
 	icon_state = "seed-orange"
 	species = "orange"
 	plantname = "Orange Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/orange
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange
 	lifespan = 60
 	endurance = 50
 	maturation = 6
@@ -940,7 +962,7 @@
 	icon_state = "seed-poisonberry"
 	species = "poisonberry"
 	plantname = "Poison-Berry Bush"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/berries/poison
 	lifespan = 20
 	endurance = 15
 	maturation = 5
@@ -958,7 +980,7 @@
 	icon_state = "seed-deathberry"
 	species = "deathberry"
 	plantname = "Death Berry Bush"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/deathberries
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/berries/death
 	lifespan = 30
 	endurance = 20
 	maturation = 5
@@ -976,6 +998,23 @@
 	species = "grass"
 	plantname = "Grass"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/grass
+	lifespan = 40
+	endurance = 40
+	maturation = 2
+	production = 5
+	yield = 5
+	potency = 10
+	plant_type = 0
+	growthstages = 2
+	mutatelist = list(/obj/item/seeds/carpetseed)
+
+/obj/item/seeds/carpetseed
+	name = "pack of carpet seeds"
+	desc = "These seeds grow into stylish carpet samples."
+	icon_state = "seed-carpet"
+	species = "carpet"
+	plantname = "Carpet"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/carpet
 	lifespan = 40
 	endurance = 40
 	maturation = 2
@@ -1033,13 +1072,27 @@
 	growthstages = 4
 	plant_type = 1
 	rarity = 30
+	var/list/mutations = list()
+	var/mutating
+
+/obj/item/seeds/kudzuseed/New(loc, obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod/parent)
+	..()
+	if(parent)
+		mutations = parent.mutations
+		mutating = parent.mutating
+
+/obj/item/seeds/kudzuseed/harvest()
+	var/list/prod = ..()
+	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod/K in prod)
+		K.mutations = mutations
+		K.mutating = prob(15)
 
 /obj/item/seeds/kudzuseed/attack_self(mob/user as mob)
 	if(istype(user.loc,/turf/space))
 		return
 	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
-	new /obj/effect/spacevine_controller(user.loc)
-	del(src)
+	new /obj/effect/spacevine_controller(user.loc, mutations)
+	qdel(src)
 
 /obj/item/seeds/chillighost
 	name = "pack of ghost chilli seeds"
@@ -1081,7 +1134,7 @@
 	icon_state = "seed-coffeea"
 	species = "coffeea"
 	plantname = "Coffee Arabica Bush"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/coffee_arabica
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/coffee/arabica
 	lifespan = 30
 	endurance = 20
 	maturation = 5
@@ -1098,7 +1151,7 @@
 	icon_state = "seed-coffeer"
 	species = "coffeer"
 	plantname = "Coffee Robusta Bush"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/coffee_robusta
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/coffee/robusta
 	lifespan = 20
 	endurance = 15
 	maturation = 5
@@ -1133,7 +1186,7 @@
 	icon_state = "seed-stobacco"
 	species = "stobacco"
 	plantname = "Space Tobacco Plant"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco_space
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco/space
 	lifespan = 20
 	endurance = 15
 	maturation = 5
@@ -1151,7 +1204,7 @@
 	icon_state = "seed-teaaspera"
 	species = "teaaspera"
 	plantname = "Tea Aspera Plant"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tea_aspera
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tea/aspera
 	lifespan = 20
 	endurance = 15
 	maturation = 5
@@ -1168,7 +1221,7 @@
 	icon_state = "seed-teaastra"
 	species = "teaastra"
 	plantname = "Tea Astra Plant"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tea_astra
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra
 	lifespan = 20
 	endurance = 15
 	maturation = 5

@@ -2,7 +2,8 @@
 	density = 1
 	layer = 4
 	animate_movement = 2
-	flags = NOREACT
+	flags = HEAR
+	hud_possible = list(ANTAG_HUD)
 	var/datum/mind/mind
 
 	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
@@ -30,6 +31,8 @@
 	Changing this around would probably require a good look-over the pre-existing code.
 	*/
 	var/obj/screen/zone_sel/zone_sel = null
+	var/obj/screen/leap_icon = null
+	var/obj/screen/healthdoll = null
 
 	var/damageoverlaytemp = 0
 	var/computer_id = null
@@ -39,19 +42,17 @@
 	var/obj/machinery/machine = null
 	var/other_mobs = null
 	var/memory = ""
-	var/sdisabilities = 0	//Carbon
 	var/disabilities = 0	//Carbon
 	var/atom/movable/pulling = null
 	var/next_move = null
 	var/notransform = null	//Carbon
 	var/hand = null
-	var/eye_blind = null	//Carbon
-	var/eye_blurry = null	//Carbon
-	var/ear_deaf = null		//Carbon
-	var/ear_damage = null	//Carbon
+	var/eye_blind = 0		//Carbon
+	var/eye_blurry = 0		//Carbon
+	var/ear_deaf = 0		//Carbon
+	var/ear_damage = 0		//Carbon
 	var/stuttering = null	//Carbon
 	var/real_name = null
-	var/blinded = null
 	var/bhunger = 0			//Carbon
 	var/ajourn = 0
 	var/druggy = 0			//Carbon
@@ -75,7 +76,8 @@
 	var/drowsyness = 0//Carbon
 	var/dizziness = 0//Carbon
 	var/jitteriness = 0//Carbon
-	var/nutrition = 400//Carbon
+	var/nutrition = NUTRITION_LEVEL_FED + 50//Carbon
+	var/satiety = 0//Carbon
 
 	var/overeatduration = 0		// How long this guy is overeating //Carbon
 	var/paralysis = 0
@@ -105,15 +107,9 @@
 
 	var/coughedtime = null
 
-	var/inertia_dir = 0
-
 	var/music_lastplayed = "null"
 
 	var/job = null//Living
-
-	var/const/blindness = 1//Carbon
-	var/const/deafness = 2//Carbon
-	var/const/muteness = 4//Carbon
 
 	var/radiation = 0//Carbon
 
@@ -121,10 +117,9 @@
 	//see: setup.dm for list of mutations
 
 	var/voice_name = "unidentifiable voice"
-	var/voice_message = null // When you are not understood by others (replaced with just screeches, hisses, chimpers etc.)
 	var/say_message = null // When you are understood by others. Currently only used by aliens and monkeys in their say_quote procs
 
-	var/faction = "neutral" //Used for checking whether hostile simple animals will attack you, possibly more stuff later
+	var/list/faction = list("neutral") //A list of factions that this mob is currently in, for hostile mob targetting, amongst other things
 	var/move_on_shuttle = 1 // Can move on the shuttle.
 
 //The last mob/living/carbon to push/drag/grab this mob (mostly used by slimes friend recognition)
@@ -154,15 +149,15 @@
 
 	var/digitalcamo = 0 // Can they be tracked by the AI?
 
+	var/has_unlimited_silicon_privilege = 0 // Can they interact with station electronics
+
 	var/list/radar_blips = list() // list of screen objects, radar blips
 	var/radar_open = 0 	// nonzero is radar is open
 
+	var/force_compose = 0 //If this is nonzero, the mob will always compose it's own hear message instead of using the one given in the arguments.
 
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
-
-	//Whether or not mobs can understand other mobtypes. These stay in /mob so that ghosts can hear everything.
-	var/universal_speak = 0 // Set to 1 to enable the mob to speak to everyone -- TLE
-	var/robot_talk_understand = 0
-	var/alien_talk_understand = 0
+	var/atom/movable/remote_control //Calls relaymove() to whatever it is
 
 	var/turf/listed_turf = null	//the current turf being examined in the stat panel
+	var/last_movement = 0 // Last world.time the mob actually moved of its own accord.
