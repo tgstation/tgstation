@@ -99,52 +99,50 @@ var/list/sacrificed = list()
 
 /obj/effect/rune/proc/convert()
 	var/list/mob/living/cultsinrange = list()
+	var/conversion_time = 900 //Default time; thirty more seconds per missing person. With three it's instant. Minimum is sixty seconds.
 	for(var/mob/living/carbon/M in src.loc)
 		if(iscultist(M))
 			continue
 		if(M.stat==2)
 			continue
 		for(var/mob/living/C in orange(1,src))
-			if(iscultist(C) && !C.stat)		//converting requires three cultists
+			if(iscultist(C) && !C.stat)
 				cultsinrange += C
+				if(conversion_time > 0) //So negative values don't botch the system
+					conversion_time -= 300 //Each person reduces conversion time by thirty seconds. Solo convert is a full minute.
 				C.say("Mah[pick("'","`")]weyh pleggh at e'ntrath!")
-		if(cultsinrange.len >= 3)
-			M.visible_message("<span class='danger'>[M] writhes in pain as the markings below him glow a bloody red.</span>", \
-			"<span class='danger'>AAAAAAHHHH!</span>", \
-			"<span class='danger'>You hear an anguished scream.</span>")
-			if(is_convertable_to_cult(M.mind))
-				ticker.mode.add_cultist(M.mind)
-				M.mind.special_role = "Cultist"
-				M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
-				M << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
-/*//convert no longer gives words
-				//picking which word to use
-				if(usr.mind.cult_words.len != ticker.mode.allwords.len) // No point running if they already know everything
-					var/convert_word
-					for(var/i=1, i<=3, i++)
-						convert_word = pick(ticker.mode.grantwords)
-						if(convert_word in usr.mind.cult_words)
-							if(i==3) convert_word = null				//NOTE: If max loops is changed ensure this condition is changed to match /Mal
-						else
-							break
-					if(!convert_word)
-						usr << "\red This Convert was unworthy of knowledge of the other side!"
-					else
-						usr << "\red The Geometer of Blood is pleased to see his followers grow in numbers."
-						ticker.mode.grant_runeword(usr, convert_word)
-					return 1		*/
+		if(cultsinrange.len > 0)
+			if(conversion_time > 0)
+				M.visible_message("<span class='warning'>The markings below [M] begin to pulse rhythmically.</span>", \
+								  "<span class='userdanger'>The circle below you begins to glow, and you feel your head begin to throb...</span>") //Fluff
+				if(!is_convertable_to_cult(M.mind)) //So you don't spend a minute trying to convert a loyalty implanted assistant
+					for(var/mob/living/carbon/human/cultist in cultsinrange)
+						cultist << "<span class='warning'>[M]'s mind is strong enough to resist the influence of the Dark One.</span>"
+					return fizzle()
+			if(do_after(M, conversion_time)) //This looks shady but it seems to work fine.
+				M.visible_message("<span class='danger'>[M] writhes in pain as the markings below them glow a bloody red.</span>", \
+				"<span class='danger'>AAAAAAHHHH!</span>", \
+				"<span class='danger'>You hear an anguished scream.</span>")
+				if(is_convertable_to_cult(M.mind))
+					ticker.mode.add_cultist(M.mind)
+					M.mind.special_role = "Cultist"
+					M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
+					M << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
+					return
+				else //Thought about replacing this with the message above but I figured this should be unique to insta-converts because... it's instant.
+					M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
+					M << "<span class='userdanger'>And not a single fuck was given, exterminate the cult at all costs.</span>"
+					if(ticker.mode.name == "cult")
+						if(M.mind == ticker.mode.sacrifice_target)
+							for(var/mob/living/carbon/human/cultist in cultsinrange)
+								cultist << "<span class='h2.userdanger'>The Chosen One!! <BR>KILL THE CHOSEN ONE!!! </span>"
+					return 0
 			else
-				M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
-				M << "<span class='userdanger'>And not a single fuck was given, exterminate the cult at all costs.</span>"
-				if(ticker.mode.name == "cult")
-					if(M.mind == ticker.mode.sacrifice_target)
-						for(var/mob/living/carbon/human/cultist in cultsinrange)
-							cultist << "<span class='h2.userdanger'>The Chosen One!! <BR>KILL THE CHOSEN ONE!!! </span>"
-				return 0
-		else
-			for(var/mob/living/carbon/human/cultist in cultsinrange)
-				cultist << "<span class='warning'>You need more brothers to overcome their lies and make them see Truth. </span>"
-	return fizzle()
+				for(var/mob/living/carbon/human/cultist in cultsinrange)
+					cultist << "<span class='warning'>[M] has been moved - place them back onto the [src] and start again.</span>"
+				if(conversion_time > 0)
+					M << "<span class='danger'>As you leave the markings, you feel something withdrawing from your mind...</span>"
+		return fizzle()
 
 
 
