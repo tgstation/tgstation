@@ -4736,7 +4736,7 @@
 "bNd" = (/obj/item/device/radio/intercom{dir = 8; name = "Station Intercom (General)"; pixel_x = -28},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor{dir = 1; icon_state = "neutralcorner"},/area/hallway/primary/central)
 "bNe" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area/maintenance/aft{name = "Aft Maintenance"})
 "bNf" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{req_access_txt = 1},/obj/machinery/door/poddoor/preopen{id_tag = "Biohazard"; name = "biohazard containment door"},/obj/machinery/door/airlock/maintenance{name = "Research Break Room Maintenance"; req_access_txt = "7"; req_one_access_txt = "0"},/turf/simulated/floor/plating,/area/maintenance/starboard)
-"bNg" = (/obj/structure/table/reinforced,/obj/item/stack/sheet/rglass{amount = 50; pixel_x = 2; pixel_y = 3},/obj/item/stack/rods{amount = 50},/obj/machinery/light{dir = 4},/obj/item/stack/sheet/glass{amount = 50},/turf/simulated/floor{icon_state = "dark"},/area/ai_monitored/storage/eva{name = "E.V.A. Storage"})
+"bNg" = (/obj/structure/table/reinforced,/obj/item/stack/sheet/glass/rglass{amount = 50; pixel_x = 2; pixel_y = 3},/obj/item/stack/rods{amount = 50},/obj/machinery/light{dir = 4},/obj/item/stack/sheet/glass{amount = 50},/turf/simulated/floor{icon_state = "dark"},/area/ai_monitored/storage/eva{name = "E.V.A. Storage"})
 "bNh" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor/wood,/area/crew_quarters/bar)
 "bNi" = (/turf/space,/obj/machinery/camera{c_tag = "Atmospherics - Exterior"; dir = 4},/turf/simulated/floor/plating/airless/catwalk,/area)
 "bNj" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/grille,/obj/machinery/atmospherics/pipe/simple/cyan/visible,/turf/simulated/floor/plating,/area/engineering/atmos)
@@ -4807,11 +4807,7 @@
 "bOw" = (/obj/structure/table/reinforced,/obj/item/stack/sheet/plasteel{amount = 10},/obj/item/stack/sheet/metal{amount = 50},/obj/item/stack/sheet/metal{amount = 50},/obj/item/stack/sheet/metal{amount = 50},/turf/simulated/floor{icon_state = "dark"},/area/ai_monitored/storage/eva{name = "E.V.A. Storage"})
 "bOx" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 5},/turf/simulated/floor{icon_state = "dark"},/area/ai_monitored/storage/eva{name = "E.V.A. Storage"})
 "bOy" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 10},/turf/simulated/floor{icon_state = "dark"},/area/ai_monitored/storage/eva{name = "E.V.A. Storage"})
-<<<<<<< HEAD
 "bOz" = (/obj/structure/table,/obj/item/stack/sheet/glass{amount = 50},/obj/item/stack/sheet/glass{amount = 50},/obj/item/stack/rods{amount = 50},/obj/item/stack/rods{amount = 50},/obj/item/weapon/wrench,/obj/item/weapon/crowbar,/obj/effect/decal/warning_stripes{icon_state = "bot"},/obj/item/device/radio/intercom{freerange = 0; frequency = 1459; name = "Station Intercom (General)"; pixel_x = -30},/obj/item/weapon/wrench/socket,/obj/item/weapon/wrench/socket,/turf/simulated/floor{icon_state = "dark"},/area/engineering/atmos)
-=======
-"bOz" = (/obj/structure/table/reinforced,/obj/item/stack/sheet/glass/rglass{amount = 50; pixel_x = 2; pixel_y = 3},/obj/item/stack/rods{amount = 50},/obj/structure/extinguisher_cabinet{pixel_x = 27},/obj/machinery/light{dir = 4},/obj/item/stack/sheet/glass{amount = 50},/turf/simulated/floor{icon_state = "dark"},/area/ai_monitored/storage/eva{name = "E.V.A. Storage"})
->>>>>>> 7d88d5b... Finishes glass fixes. Hopefully improves admin spawned xenos, and also makes solar control computer readable by ghosts as well at range by mommis.
 "bOA" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/door/firedoor,/turf/simulated/floor{dir = 1; icon_state = "neutralcorner"},/area/hallway/primary/central)
 "bOB" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{req_access_txt = 1},/obj/machinery/door/firedoor,/turf/simulated/floor{dir = 2; icon_state = "neutralcorner"},/area/hallway/primary/central)
 "bOC" = (/turf/simulated/wall,/area/crew_quarters/kitchen)
@@ -7585,13 +7581,8 @@
 "cPO" = (/turf/simulated/shuttle/wall{icon_state = "swall14"},/area/supply/dock)
 "cPP" = (/obj/structure/sign/securearea{pixel_x = -32; pixel_y = 0},/obj/machinery/shower{tag = "icon-shower (EAST)"; icon_state = "shower"; dir = 4},/obj/effect/decal/warning_stripes{tag = "icon-warning (WEST)"; icon_state = "warning"; dir = 8},/turf/simulated/floor{icon_state = "white"},/area/science/xenobiology)
 "cPQ" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor{icon_state = "white"},/area/science/xenobiology)
-<<<<<<< HEAD
 "cPR" = (/obj/item/weapon/cigbutt,/turf/simulated/floor/plating,/area/maintenance/asmaint3)
-"cPS" = (/turf/space,/obj/structure/cable,/obj/machinery/power/solar/tracker,/turf/simulated/floor/plating/airless/catwalk{icon_state = "catwalk1"},/area/solar/fstarboard)
-=======
-"cPR" = (/obj/machinery/alarm{dir = 8; icon_state = "alarm0"; pixel_x = 24},/obj/machinery/light{dir = 4; icon_state = "tube1"},/obj/machinery/camera{c_tag = "Xenobiology - Access"; dir = 8; network = list("SS13","RD")},/obj/effect/decal/warning_stripes{tag = "icon-warning (EAST)"; icon_state = "warning"; dir = 4},/obj/structure/closet/emcloset,/turf/simulated/floor{icon_state = "white"},/area/science/xenobiology)
 "cPS" = (/turf/space,/obj/structure/cable,/obj/machinery/power/solar/panel/tracker,/turf/simulated/floor/plating/airless/catwalk{icon_state = "catwalk1"},/area/solar/fstarboard)
->>>>>>> c4e1f34... Fix conflicts with OOP solars, fix exploit with shard welding, add TG unlocking borgs with PDA, robotizing fixed to prevent getting stuck within objects, number of DNA blocks increased to 54 to match number of genes, fix numerous problems with solar construction and deconstruction.
 "cPT" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 1; on = 1},/obj/effect/landmark{name = "xeno_spawn"; pixel_x = -1},/turf/simulated/floor/plating,/area/maintenance/aft{name = "Aft Maintenance"})
 "cPU" = (/obj/item/seeds/berryseed,/turf/simulated/floor/plating,/area/maintenance/aft{name = "Aft Maintenance"})
 "cPV" = (/obj/structure/reagent_dispensers/watertank,/obj/item/weapon/reagent_containers/glass/bucket,/turf/simulated/floor/plating,/area/maintenance/aft{name = "Aft Maintenance"})

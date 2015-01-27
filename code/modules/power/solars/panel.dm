@@ -136,7 +136,7 @@
 	if(stat & !BROKEN)
 		broken()
 	else
-		qdel(src)
+		kill()
 
 /obj/machinery/power/solar/panel/ex_act(severity)
 	switch(severity)
@@ -144,12 +144,12 @@
 			solar_assembly.glass_type = null //The glass you're looking for is below pal
 			if(prob(15))
 				getFromPool(/obj/item/weapon/shard, loc)
-			qdel(src)
+			kill()
 		if(2.0)
 			if(prob(25))
 				solar_assembly.glass_type = null //The glass you're looking for is below pal
 				getFromPool(/obj/item/weapon/shard, loc)
-				qdel(src)
+				kill()
 			else
 				broken()
 		if(3.0)
@@ -157,6 +157,13 @@
 				broken()
 			else
 				health-- //Let shrapnel have its effect
+
+/obj/machinery/power/solar/panel/proc/kill() //To make sure you eliminate the assembly as well
+	if(solar_assembly)
+		var/obj/machinery/power/solar_assembly/assembly = solar_assembly
+		solar_assembly = null
+		qdel(assembly)
+	qdel(src)
 
 /obj/machinery/power/solar/panel/disconnect_from_network()
 	. = ..()

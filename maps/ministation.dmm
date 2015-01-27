@@ -1429,7 +1429,7 @@
 "aBy" = (/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 10},/area/engineering/engine)
 "aBz" = (/obj/machinery/atmospherics/pipe/simple{_color = "cyan"; icon_state = "intact-c"},/obj/machinery/meter,/turf/simulated/floor/plating,/area/engineering/engine)
 "aBA" = (/obj/machinery/atmospherics/pipe/simple{_color = "cyan"; icon_state = "intact-c"},/obj/machinery/meter,/turf/simulated/floor/plating{icon_state = "warnplatecorner"; dir = 2},/area/engineering/engine)
-"aBB" = (/obj/item/mecha_parts/mecha_equipment/generator,/obj/item/device/multitool,/turf/simulated/floor/plating{dir = 2; icon_state = "warnplate"},/area/engineering/engine)
+"aBB" = (/obj/item/weapon/paper/generator,/obj/item/device/multitool,/turf/simulated/floor/plating{dir = 2; icon_state = "warnplate"},/area/engineering/engine)
 "aBC" = (/obj/machinery/atmospherics/pipe/simple{_color = "yellow"; icon_state = "intact-y"; level = 2},/obj/machinery/meter,/turf/simulated/floor/plating{icon_state = "warnplatecorner"; dir = 1},/area/engineering/engine)
 "aBD" = (/obj/machinery/atmospherics/pipe/simple{_color = "yellow"; icon_state = "intact-y"; level = 2},/obj/machinery/meter,/turf/simulated/floor/plating,/area/engineering/engine)
 "aBE" = (/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 6},/area/engineering/engine)
