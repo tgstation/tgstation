@@ -417,7 +417,7 @@
 
 					//Select Your Name
 					if("Sender")
-						customsender 	= input(usr, "Please enter the sender's name.") as text|null
+						customsender 	= stripped_input(usr, "Please enter the sender's name.")
 
 					//Select Receiver
 					if("Recepient")
@@ -430,12 +430,11 @@
 
 					//Enter custom job
 					if("RecJob")
-						customjob	 	= input(usr, "Please enter the sender's job.") as text|null
+						customjob	 	= stripped_input(usr, "Please enter the sender's job.")
 
 					//Enter message
 					if("Message")
-						custommessage	= input(usr, "Please enter your message.") as text|null
-						custommessage	= copytext(sanitize(custommessage), 1, MAX_MESSAGE_LEN)
+						custommessage	= stripped_input(usr, "Please enter your message.")
 
 					//Send message
 					if("Send")
@@ -461,7 +460,7 @@
 							customrecepient.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[customrecepient];choice=Message;target=\ref[src]'>[customsender]</a> ([customjob]):</b></i><br>[custommessage]<br>"
 							if (!customrecepient.silent)
 								playsound(customrecepient.loc, 'sound/machines/twobeep.ogg', 50, 1)
-								customrecepient.loc.audible_message("\icon[customrecepient] *[customrecepient.ttone]*", null, 3)
+								customrecepient.audible_message("\icon[customrecepient] *[customrecepient.ttone]*", null, 3)
 								if( customrecepient.loc && ishuman(customrecepient.loc) )
 									var/mob/living/carbon/human/H = customrecepient.loc
 									H << "\icon[customrecepient] <b>Message from [customsender] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)"
@@ -474,7 +473,7 @@
 							customrecepient.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[customrecepient];choice=Message;target=\ref[PDARec]'>[PDARec.owner]</a> ([customjob]):</b></i><br>[custommessage]<br>"
 							if (!customrecepient.silent)
 								playsound(customrecepient.loc, 'sound/machines/twobeep.ogg', 50, 1)
-								customrecepient.loc.audible_message("\icon[customrecepient] *[customrecepient.ttone]*", null, 3)
+								customrecepient.audible_message("\icon[customrecepient] *[customrecepient.ttone]*", null, 3)
 								if( customrecepient.loc && ishuman(customrecepient.loc) )
 									var/mob/living/carbon/human/H = customrecepient.loc
 									H << "\icon[customrecepient] <b>Message from [PDARec.owner] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[customrecepient];choice=Message;skiprefresh=1;target=\ref[PDARec]'>Reply</a>)"

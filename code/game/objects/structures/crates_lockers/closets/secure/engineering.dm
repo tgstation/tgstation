@@ -11,10 +11,13 @@
 
 /obj/structure/closet/secure_closet/engineering_chief/New()
 	..()
+	new /obj/item/clothing/suit/toggle/wintercoat/engineering(src)
+	new /obj/item/clothing/suit/toggle/wintercoat/engineering/atmos(src)
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack/industrial(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel_eng(src)
+	new /obj/item/weapon/storage/backpack/dufflebag/engineering(src)
 	new /obj/item/areaeditor/blueprints(src)
 	new /obj/item/weapon/storage/box/permits(src)
 	new /obj/item/clothing/under/rank/chief_engineer(src)
@@ -30,7 +33,6 @@
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/device/multitool(src)
 	new /obj/item/device/flash/handheld(src)
-	new /obj/item/clothing/suit/toggle/wintercoat/engineering(src)
 	return
 
 /obj/structure/closet/secure_closet/engineering_electrical
@@ -101,6 +103,7 @@
 		new /obj/item/weapon/storage/backpack/industrial(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel_eng(src)
+	new /obj/item/weapon/storage/backpack/dufflebag/engineering(src)
 	new /obj/item/clothing/under/rank/engineer(src)
 	new /obj/item/clothing/shoes/sneakers/orange(src)
 	new /obj/item/weapon/storage/toolbox/mechanical(src)
@@ -109,7 +112,6 @@
 	new /obj/item/clothing/suit/hazardvest(src)
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/clothing/glasses/meson(src)
-	new /obj/item/clothing/suit/toggle/wintercoat/engineering(src)
 	return
 
 /obj/structure/closet/secure_closet/atmospherics
@@ -129,9 +131,9 @@
 	new /obj/item/weapon/pipe_dispenser(src)
 	new /obj/item/weapon/storage/toolbox/mechanical(src)
 	new /obj/item/weapon/storage/backpack/satchel_norm(src)
+	new /obj/item/weapon/storage/backpack/dufflebag/engineering(src)
 	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
 	new /obj/item/weapon/watertank/atmos(src)
 	new /obj/item/clothing/suit/fire/atmos(src)
 	new /obj/item/clothing/head/hardhat/atmos(src)
-	new /obj/item/clothing/suit/toggle/wintercoat/engineering/atmos(src)
 	return

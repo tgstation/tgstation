@@ -2,6 +2,7 @@
 	name = "ragin' mages"
 	config_tag = "raginmages"
 	required_players = 20
+	use_huds = 1
 	var/max_mages = 0
 	var/making_mage = 0
 	var/mages_made = 1
@@ -12,13 +13,9 @@
 	world << "<B>The <span class='warning'>Space Wizard Federation</span> is pissed, help defeat all the space wizards!</B>"
 
 /datum/game_mode/wizard/raginmages/post_setup()
-	var/playercount = 0
 	..()
 	if(!max_mages)
-		for(var/mob/living/player in mob_list)
-			if (player.client && player.stat != 2)
-				playercount += 1
-			max_mages = round(playercount / 2)
+		max_mages = round(num_players() / 5)
 
 /datum/game_mode/wizard/raginmages/greet_wizard(var/datum/mind/wizard, var/you_are=1)
 	if (you_are)
@@ -39,9 +36,9 @@
 			continue
 		if(istype(wizard.current,/mob/living/carbon/brain))
 			continue
-		if(wizard.current.stat==2)
+		if(wizard.current.stat==DEAD)
 			continue
-		if(wizard.current.stat==1)
+		if(wizard.current.stat==UNCONSCIOUS)
 			if(wizard.current.health < 0)
 				wizard.current << "<font size='4'>The Space Wizard Federation is upset with your performance and have terminated your employment.</font>"
 				wizard.current.stat = 2
@@ -50,11 +47,11 @@
 
 	if (wizards_alive)
 		if(!time_checked) time_checked = world.time
-		if(world.time > time_checked + 500 && (mages_made < max_mages))
+		if(world.time > time_checked + 1500 && (mages_made < max_mages))
 			time_checked = world.time
 			make_more_mages()
 	else
-		if(wizards.len >= max_mages)
+		if(mages_made >= max_mages)
 			finished = 1
 			return 1
 		else
@@ -71,7 +68,7 @@
 	mages_made++
 	var/list/mob/dead/observer/candidates = list()
 	var/mob/dead/observer/theghost = null
-	spawn(rand(100, 200))
+	spawn(rand(500, 700))
 		message_admins("SWF is still pissed, sending another wizard - [max_mages - mages_made] left.")
 		for(var/mob/dead/observer/G in player_list)
 			if(G.client && !G.client.holder && !G.client.is_afk() && G.client.prefs.be_special & BE_WIZARD)

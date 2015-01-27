@@ -36,6 +36,7 @@
 			message_admins("[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has primed a [name] for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
 			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name] ([bombturf.x],[bombturf.y],[bombturf.z]).")
 			user << "<span class='warning'>You prime the [name]! [det_time / 10] second\s!</span>"
+			playsound(user.loc, 'sound/weapons/armbomb.ogg', 60, 1)
 			active = 1
 			icon_state = initial(icon_state) + "_active"
 			if(iscarbon(user))
@@ -267,7 +268,7 @@
 
 	B1.reagents.add_reagent("aluminium", 30)
 	B2.reagents.add_reagent("foaming_agent", 10)
-	B2.reagents.add_reagent("pacid", 10)
+	B2.reagents.add_reagent("facid", 10)
 
 	beakers += B1
 	beakers += B2
@@ -352,17 +353,17 @@
 	icon_state = "grenade"
 
 
-/obj/item/weapon/grenade/chem_grenade/pacid
+/obj/item/weapon/grenade/chem_grenade/facid
 	name = "acid grenade"
 	desc = "Used for melting armoured opponents."
 	stage = READY
 
-/obj/item/weapon/grenade/chem_grenade/pacid/New()
+/obj/item/weapon/grenade/chem_grenade/facid/New()
 	..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
-	B1.reagents.add_reagent("pacid", 100)
+	B1.reagents.add_reagent("facid", 100)
 	B1.reagents.add_reagent("potassium", 25)
 	B2.reagents.add_reagent("phosphorus", 25)
 	B2.reagents.add_reagent("sugar", 25)

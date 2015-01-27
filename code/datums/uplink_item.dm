@@ -137,9 +137,10 @@ var/list/uplink_items = list()
 	surplus = 0
 
 /datum/uplink_item/dangerous/crossbow
-	name = "Miniature Auto Crossbow"
-	desc = "A short bow mounted across a tiller in miniature. Small enough to fit into a pocket or slip into a bag unnoticed. It fires bolts tipped with a paralyzing toxin collected from a rare organism."
-	item = /obj/item/weapon/gun/projectile/automatic/crossbow
+	name = "Miniature Energy Crossbow"
+	desc = "A short bow mounted across a tiller in miniature. Small enough to fit into a pocket or slip into a bag unnoticed. It fires bolts tipped with a paralyzing toxin collected from a rare organism. \
+	The bow generates bolts using an internal power source but must be manually charged between shots."
+	item = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
 	cost = 10
 	excludefrom = list(/datum/game_mode/nuclear)
 	surplus = 50
@@ -230,13 +231,6 @@ var/list/uplink_items = list()
 	item = /obj/item/ammo_box/magazine/m10mm
 	cost = 1
 
-/datum/uplink_item/ammo/crossbow
-	name = "Poison-tipped Crossbow Bolts (x4)"
-	desc = "A four pack of paralyzing crossbow bolts, for hunting big game."
-	item = /obj/item/ammo_box/crossbow
-	cost = 2
-	excludefrom = list(/datum/game_mode/nuclear)
-
 /datum/uplink_item/ammo/revolver
 	name = "Speed Loader - .357"
 	desc = "A speed loader that contains seven additional .357 Magnum rounds for the syndicate revolver. For when you really need a lot of things dead."
@@ -313,6 +307,13 @@ var/list/uplink_items = list()
 	cost = 1
 	surplus = 50
 
+/datum/uplink_item/stealthy_weapons/traitor_chem_bottle
+	name = "Poison Kit"
+	desc = "An assortment of nasty chemicals."
+	item = /obj/item/weapon/storage/box/syndie_kit/chemical
+	cost = 6
+	surplus = 50
+
 /datum/uplink_item/stealthy_weapons/detomatix
 	name = "Detomatix PDA Cartridge"
 	desc = "When inserted into a personal digital assistant, this cartridge gives you five opportunities to detonate PDAs of crewmembers who have their message feature enabled. \
@@ -383,6 +384,13 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/storage/backpack/satchel_flat
 	cost = 2
 	surplus = 30
+
+/datum/uplink_item/stealthy_tools/stimpack
+	name = "Stimpack"
+	desc = "Stimpacks, a tool of many great heroes, make you immune to stuns and knockdowns for about 5 minutes after injection."
+	item = /obj/item/weapon/reagent_containers/syringe/stimulants
+	cost = 8
+	surplus = 90
 
 // DEVICE AND TOOLS
 
@@ -550,6 +558,12 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenal
 	cost = 8
 
+/datum/uplink_item/implants/explosive
+	name = "Explosive Implant"
+	desc = "An implant injected into the body, and later activated either manually or automatically upon death. Creates a moderately-sized fiery explosion. For those agents who know there is no going back."
+	item = /obj/item/weapon/storage/box/syndie_kit/imp_explosive
+	cost = 9
+
 // POINTLESS BADASSERY
 
 /datum/uplink_item/badass
@@ -571,6 +585,13 @@ var/list/uplink_items = list()
 	cost = 1
 	excludefrom = list(/datum/game_mode/nuclear)
 	surplus = 40
+
+/datum/uplink_item/badass/syndiecash
+	name = "Syndicate Briefcase Full of Cash"
+	desc = "A secure briefcase containing 5000 space credits. Useful for bribing personnel, or purchasing goods and services at lucrative prices. \
+	The briefcase also feels a little heavier to hold; it has been manufactured to pack a little bit more of a punch if your client needs some convincing."
+	item = /obj/item/weapon/storage/secure/briefcase/syndie
+	cost = 1
 
 /datum/uplink_item/badass/balloon
 	name = "For showing that you are The Boss"

@@ -100,7 +100,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	icon_state = pick(broken_states)
 	broken = 1
 
-/turf/simulated/floor/proc/burn_tile()
+/turf/simulated/floor/burn_tile()
 	if(broken || burnt)
 		return
 	if(burnt_states.len)
@@ -172,7 +172,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 			if(istype(A,/mob/living/carbon))
 				var/mob/living/carbon/M = A
 				if(M.lying)	return
-				if(prob(50))
+				if(prob(80))
 					dirt++
 				var/obj/effect/decal/cleanable/dirt/dirtoverlay = locate(/obj/effect/decal/cleanable/dirt, src)
 				if(dirt >= 100)

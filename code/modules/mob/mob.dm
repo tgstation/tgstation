@@ -694,6 +694,22 @@ var/list/slot_equipment_priority = list( \
 /mob/Stat()
 	..()
 
+	if(statpanel("Status"))
+		var/ETA
+		switch(SSshuttle.emergency.mode)
+			if(SHUTTLE_RECALL)
+				ETA = "RCL"
+			if(SHUTTLE_CALL)
+				ETA = "ETA"
+			if(SHUTTLE_DOCKED)
+				ETA = "ETD"
+			if(SHUTTLE_ESCAPE)
+				ETA = "ESC"
+		if(ETA)
+			var/timeleft = SSshuttle.emergency.timeLeft()
+			stat(null, "[ETA]-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+
+
 	if(client && client.holder)
 		if(statpanel("MC"))
 			stat("Location:","([x], [y], [z])")
@@ -752,11 +768,12 @@ var/list/slot_equipment_priority = list( \
 	if(restrained())					return 0
 	return 1
 
+
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 //Robots and brains have their own version so don't worry about them
 /mob/proc/update_canmove()
 	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
-	var/bed = !(buckled && istype(buckled, /obj/structure/stool/bed/chair))
+	var/buckle_lying = !(buckled && !buckled.buckle_lying)
 	if(ko || resting || stunned)
 		drop_r_hand()
 		drop_l_hand()
@@ -764,7 +781,7 @@ var/list/slot_equipment_priority = list( \
 		lying = 0
 		canmove = 1
 	if(buckled)
-		lying = 90 * bed
+		lying = 90*buckle_lying
 	else
 		if((ko || resting) && !lying)
 			fall(ko)
@@ -776,6 +793,7 @@ var/list/slot_equipment_priority = list( \
 		update_icon = 0
 		regenerate_icons()
 	return canmove
+
 
 /mob/proc/fall(var/forced)
 	drop_l_hand()
@@ -849,8 +867,8 @@ var/list/slot_equipment_priority = list( \
 		update_canmove()
 	return
 
-/mob/proc/Weaken(amount)
-	if(status_flags & CANWEAKEN)
+/mob/proc/Weaken(amount, var/ignore_canweaken = 0)
+	if(status_flags & CANWEAKEN || ignore_canweaken)
 		weakened = max(max(weakened,amount),0)
 		update_canmove()	//updates lying, canmove and icons
 	return
@@ -925,3 +943,9 @@ var/list/slot_equipment_priority = list( \
 				if(G.can_reenter_corpse || even_if_they_cant_reenter)
 					return G
 				break
+
+/mob/proc/adjustEarDamage()
+	return
+
+/mob/proc/setEarDamage()
+	return

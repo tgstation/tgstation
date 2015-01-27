@@ -174,9 +174,9 @@
 	if (reagents.get_reagent_amount("plasma")>=5)
 		mutation_chance = min(mutation_chance + 5,50) //Prevents mutation chance going >50%
 		reagents.remove_reagent("plasma", 5)
-	if (reagents.get_reagent_amount("inaprovaline")>=5)
+	if (reagents.get_reagent_amount("epinephrine")>=5)
 		mutation_chance = max(mutation_chance - 5,0) //Prevents muation chance going <0%
-		reagents.remove_reagent("inaprovaline", 5)
+		reagents.remove_reagent("epinephrine", 5)
 	src.updatehealth()
 
 	return //TODO: DEFERRED
@@ -194,7 +194,7 @@
 
 	else if(src.health < config.health_threshold_crit)
 
-		if(!src.reagents.has_reagent("inaprovaline"))
+		if(!src.reagents.has_reagent("epinephrine"))
 			src.adjustOxyLoss(10)
 
 		if(src.stat != DEAD)
@@ -235,16 +235,12 @@
 		src.eye_blind = 0
 		src.eye_blind = max(eye_blind, 1)
 
-	if (src.ear_deaf > 0) src.ear_deaf = 0
-	if (src.ear_damage < 25)
-		src.ear_damage = 0
+	setEarDamage((ear_damage < 25 ? 0 : ear_damage),(disabilities & DEAF ? 1 :0))
 
 	src.density = !( src.lying )
 
 	if (src.disabilities & BLIND)
 		src.eye_blind = max(eye_blind, 1)
-	if (src.disabilities & DEAF)
-		src.ear_deaf = 1
 
 	if (src.eye_blurry > 0)
 		src.eye_blurry = 0

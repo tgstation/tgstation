@@ -13,7 +13,7 @@
 	name = "emergency firesuit"
 	desc = "A suit that helps protect against fire and heat."
 	icon_state = "fire"
-	item_state = "fire_suit"
+	item_state = "ro_suit"
 	w_class = 4
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50

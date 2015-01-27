@@ -1,4 +1,4 @@
-/client/proc/Jump(var/area/A in return_sorted_areas())
+/client/proc/jumptoarea(area/A in return_sorted_areas())
 	set name = "Jump to Area"
 	set desc = "Area to jump to"
 	set category = "Admin"
@@ -6,7 +6,21 @@
 		src << "Only administrators may use this command."
 		return
 
-	admin_forcemove(usr, pick(get_area_turfs(A)))
+	if(!A)
+		return
+
+	var/list/turfs = list()
+	for(var/area/Ar in A.related)
+		for(var/turf/T in Ar)
+			if(T.density)
+				continue
+			turfs.Add(T)
+
+	var/turf/T = pick_n_take(turfs)
+	if(!T)
+		src << "Nowhere to jump to!"
+		return
+	admin_forcemove(usr, T)
 	log_admin("[key_name(usr)] jumped to [A]")
 	message_admins("[key_name_admin(usr)] jumped to [A]")
 	feedback_add_details("admin_verb","JA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -127,14 +141,14 @@
 	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
-	var/area/A = input(usr, "Pick an area.", "Pick an area") in return_sorted_areas()
+	var/area/A = input(usr, "Pick an area.", "Pick an area") in returnSortedAreas()
 	if(A)
 		admin_forcemove(pick(get_area_turfs(A)))
 		feedback_add_details("admin_verb","SMOB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		log_admin("[key_name(usr)] teleported [key_name(M)] to [A]")
 		message_admins("[key_name_admin(usr)] teleported [key_name_admin(M)] to [A]")
 
-/proc/admin_forcemove(var/mob/mover, var/atom/newloc)
+/proc/admin_forcemove(var/mob/mover, var/atom/newloc) //A pretty hacky proc to move forcibly move mobs. Required because of item mobs (brains, pAIs)
 	var/startdensity = mover.density
 	var/startflags = mover.pass_flags
 	var/startincorporeal = 0

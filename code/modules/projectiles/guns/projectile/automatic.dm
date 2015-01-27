@@ -1,16 +1,19 @@
 /obj/item/weapon/gun/projectile/automatic
+	origin_tech = "combat=4;materials=2"
+	w_class = 3
+	var/alarmed = 0
+	var/select = 1
+	can_suppress = 1
+	burst_size = 3
+	fire_delay = 2
+	action_button_name = "Toggle Firemode"
+
+/obj/item/weapon/gun/projectile/automatic/proto
 	name = "prototype SMG"
 	desc = "A prototype three-round burst 9mm submachine gun, designated 'SABR'. Has a threaded barrel for suppressors."
 	icon_state = "saber"
-	w_class = 3
-	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/smgm9mm
-	var/alarmed = 0
-	can_suppress = 1
-	burst_size = 3
-	fire_delay = 1
-	var/select = 1
-	action_button_name = "Toggle Firemode"
+	pin = null
 
 /obj/item/weapon/gun/projectile/automatic/update_icon()
 	..()
@@ -23,6 +26,9 @@
 	return
 
 /obj/item/weapon/gun/projectile/automatic/attackby(var/obj/item/A as obj, mob/user as mob)
+	. = ..()
+	if(.)
+		return
 	if(istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
 		if(istype(AM, mag_type))
@@ -47,7 +53,7 @@
 /obj/item/weapon/gun/projectile/automatic/proc/burst_select()
 	var/mob/living/carbon/human/user = usr
 	select = !select
-	if(select)
+	if(!select)
 		burst_size = 1
 		fire_delay = 0
 		user << "<span class='notice'>You switch to semi-automatic.</span>"
@@ -80,6 +86,7 @@
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	fire_delay = 2
 	burst_size = 2
+	pin = /obj/item/device/firing_pin/implant/pindicate
 
 /obj/item/weapon/gun/projectile/automatic/c20r/New()
 	..()
@@ -112,6 +119,7 @@
 	can_suppress = 0
 	burst_size = 5
 	fire_delay = 3
+	pin = /obj/item/device/firing_pin/implant/pindicate
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user as mob)
 	cover_open = !cover_open
@@ -165,6 +173,7 @@
 	var/obj/item/weapon/gun/projectile/revolver/grenadelauncher/underbarrel
 	burst_size = 3
 	fire_delay = 2
+	pin = /obj/item/device/firing_pin/implant/pindicate
 
 /obj/item/weapon/gun/projectile/automatic/m90/New()
 	..()
@@ -231,3 +240,4 @@
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	can_suppress = 0
 	burst_size = 4
+	fire_delay = 1

@@ -62,7 +62,7 @@ proc/process_teleport_locs()
 		if(istype(AR, /area/shuttle) || istype(AR, /area/wizard_station)) continue
 		if(teleportlocs.Find(AR.name)) continue
 		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (picked.z == 1)
+		if (picked.z == ZLEVEL_STATION)
 			teleportlocs += AR.name
 			teleportlocs[AR.name] = AR
 
@@ -77,7 +77,7 @@ proc/process_ghost_teleport_locs()
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 		var/turf/picked = safepick(get_area_turfs(AR.type))
-		if (picked && (picked.z == 1 || picked.z == 5 || picked.z == 3))
+		if (picked && (picked.z == ZLEVEL_STATION || picked.z == ZLEVEL_MINING || picked.z == ZLEVEL_ABANDONNEDTSAT))
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 
@@ -976,9 +976,9 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Server Room"
 	icon_state = "server"
 
-/area/toxins/telesci
-	name = "\improper Telescience Lab"
-	icon_state = "toxtest"
+/area/toxins/explab
+	name = "\improper Experimentation Lab"
+	icon_state = "toxmisc"
 
 //Storage
 
@@ -1539,11 +1539,6 @@ proc/process_ghost_teleport_locs()
  Lists of areas to be used with is_type_in_list.
  Used in gamemodes code at the moment. --rastaf0
 */
-
-// CENTCOM
-var/list/centcom_areas = list (
-	/area/centcom
-)
 
 //SPACE STATION 13
 var/list/the_station_areas = list (

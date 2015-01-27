@@ -70,7 +70,7 @@ Head of Personnel
 	default_pda = /obj/item/device/pda/heads/hop
 	default_headset = /obj/item/device/radio/headset/heads/hop
 
-	access = list(access_security, access_sec_doors, access_brig, access_court, access_forensics_lockers, access_weapons,
+	access = list(access_security, access_sec_doors, access_court, access_weapons,
 			            access_medical, access_engine, access_change_ids, access_ai_upload, access_eva, access_heads,
 			            access_all_personal_lockers, access_maint_tunnels, access_bar, access_janitor, access_construction, access_morgue,
 			            access_crematorium, access_kitchen, access_cargo, access_cargo_bot, access_mailsorting, access_qm, access_hydroponics, access_lawyer,

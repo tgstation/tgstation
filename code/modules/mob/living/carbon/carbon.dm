@@ -1,8 +1,3 @@
-/mob/living/carbon/UnarmedAttack(var/atom/A, var/proximity_flag)
-	..()
-	for(var/datum/mutation/human/HM in dna.mutations)
-		. += HM.on_attack_hand(A, src)
-
 /mob/living/carbon/prepare_huds()
 	..()
 	prepare_data_huds()
@@ -87,7 +82,7 @@
 	//src.adjustFireLoss(shock_damage) //burn_skin will do this for us
 	//src.updatehealth()
 	src.visible_message(
-		"<span class='danger'>[src] was shocked by the [source]!</span>", \
+		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
 		"<span class='danger'>You hear a heavy electrical crack.</span>" \
 	)
@@ -319,6 +314,8 @@
 		update_inv_wear_mask(0)
 	else if(I == handcuffed)
 		handcuffed = null
+		if(buckled && buckled.buckle_requires_restraints)
+			buckled.unbuckle_mob()
 		update_inv_handcuffed(0)
 	else if(I == legcuffed)
 		legcuffed = null

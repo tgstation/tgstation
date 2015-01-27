@@ -110,7 +110,7 @@
 			else if(istype(target, /turf/simulated/mineral))
 				for(var/turf/simulated/mineral/M in range(chassis,1))
 					if(get_dir(chassis,M)&chassis.dir)
-						M.gets_drilled()
+						M.gets_drilled(chassis.occupant)
 				log_message("Drilled through [target]")
 				if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
 					var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
@@ -507,7 +507,7 @@
 	range = RANGED
 
 /obj/item/mecha_parts/mecha_equipment/teleporter/action(atom/target)
-	if(!action_checks(target) || src.loc.z == 2) return
+	if(!action_checks(target) || src.loc.z == ZLEVEL_CENTCOM) return
 	var/turf/T = get_turf(target)
 	if(T)
 		set_ready_state(0)
@@ -528,7 +528,7 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/wormhole_generator/action(atom/target)
-	if(!action_checks(target) || src.loc.z == 2) return
+	if(!action_checks(target) || src.loc.z == ZLEVEL_CENTCOM) return
 	var/list/theareas = list()
 	for(var/area/AR in orange(100, chassis))
 		if(AR in theareas) continue

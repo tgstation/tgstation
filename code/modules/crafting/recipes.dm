@@ -123,7 +123,7 @@
 	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
 				/datum/reagent/glycerol = 5,
 				/datum/reagent/toxin/acid = 5,
-				/datum/reagent/toxin/acid/polyacid = 5,)
+				/datum/reagent/toxin/acid/fluacid = 5,)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
 
