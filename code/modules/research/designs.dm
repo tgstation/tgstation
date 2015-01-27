@@ -1915,6 +1915,42 @@ k
 	materials = list ("$iron" = 1000, "$glass" = 1000)
 	build_path = /obj/item/device/healthanalyzer
 
+/datum/design/laserscalpel1
+	name = "Laser Scalpel"
+	desc = "A scalpel augmented with a directed laser, allowing for bloodless incisions."
+	id = "laserscalpel1"
+	req_tech = list("materials" = 3, "engineering" = 2, "biotech" = 2)
+	build_type = PROTOLATHE
+	materials = list ("$iron" = 10000, "$glass" = 5000, "$plasma" = 500)
+	build_path = /obj/item/weapon/scalpel/laser1
+
+/datum/design/laserscalpel2
+	name = "Augmented Laser Scalpel"
+	desc = "A scalpel augmented with a directed laser, allowing for bloodless incisions."
+	id = "laserscalpel2"
+	req_tech = list("materials" = 3, "engineering" = 2, "biotech" = 3)
+	build_type = PROTOLATHE
+	materials = list ("$iron" = 10000, "$glass" = 5000, "$gold" = 500)
+	build_path = /obj/item/weapon/scalpel/laser2
+
+/datum/design/laserscalpel3
+	name = "High Precision Laser Scalpel"
+	desc = "A scalpel augmented with a directed laser, allowing for bloodless incisions."
+	id = "laserscalpel3"
+	req_tech = list("materials" = 4, "engineering" = 3, "biotech" = 4)
+	build_type = PROTOLATHE
+	materials = list ("$iron" = 10000, "$glass" = 5000, "$uranium" = 500)
+	build_path = /obj/item/weapon/scalpel/laser3
+
+/datum/design/managerscalpel
+	name = "Incision Management System"
+	desc = "A true extension of the surgeon's body, this marvel instantly cuts the organ, clamp any bleeding, and retract the skin, allowing for the immediate commencement of therapeutic steps."
+	id = "managerscalpel"
+	req_tech = list("materials" = 5, "engineering" = 4, "biotech" = 5)
+	build_type = PROTOLATHE
+	materials = list ("$iron" = 10000, "$glass" = 5000, "$diamond" = 500)
+	build_path = /obj/item/weapon/scalpel/manager
+
 /////////////////////////////////////////
 /////////////////Weapons/////////////////
 /////////////////////////////////////////

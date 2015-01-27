@@ -32,7 +32,7 @@ var/global/datum/sun/sun
 	angle = ((rotationRate * time / 100) % 360 + 360) % 360
 
 	if(angle != lastAngle)
-		var/obj/machinery/power/solar/tracker/T
+		var/obj/machinery/power/solar/panel/tracker/T
 		for(T in solars_list)
 			if(!T.powernet)
 				solars_list.Remove(T)

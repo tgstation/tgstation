@@ -255,7 +255,7 @@
 			if(do_after(user,40))
 				if(!user || !src) return
 				visible_message("<span class='notice'>[user] dismantles \the [src].</span>")
-				new /obj/item/stack/sheet/glass(get_turf(src))
+				new /obj/item/stack/sheet/glass/glass(get_turf(src))
 				qdel(src)
 		else
 			user << "Need more welding fuel!"

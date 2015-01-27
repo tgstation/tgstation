@@ -40,7 +40,7 @@ var/list/solars_list = list()
 	icon = 'icons/obj/power.dmi'
 	icon_state = "sp_base"
 	anchored = 0
-	density = 1
+	density = 0
 	var/tracker = 0
 	var/glass_type = null
 
@@ -55,6 +55,7 @@ var/list/solars_list = list()
 	if(!anchored && isturf(loc))
 		if(iswrench(W))
 			anchored = 1
+			density = 1
 			user.visible_message("<span class='notice'>[user] wrenches [src] down.</span>", \
 			"<span class='notice'>You wrench [src] down.</span>")
 			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
@@ -62,13 +63,14 @@ var/list/solars_list = list()
 	else
 		if(iswrench(W))
 			anchored = 0
+			density = 0
 			user.visible_message("<span class='notice'>[user] unwrenches [src] from the ground.</span>", \
 			"<span class='notice'>You unwrench [src] from the ground.</span>")
 			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
 			return 1
 
-		if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass)) //Plasma glass types could be added, just needs a fancy sprite
-			var/obj/item/stack/sheet/S = W
+		if(istype(W, /obj/item/stack/sheet/glass))
+			var/obj/item/stack/sheet/glass/S = W
 			if(S.amount >= 2)
 				glass_type = W.type
 				S.use(2)
@@ -76,29 +78,11 @@ var/list/solars_list = list()
 				user.visible_message("<span class='notice'>[user] carefully adds glass to [src].</span>", \
 				"<span class='notice'>You carefully add glass to [src].</span>")
 				if(tracker)
-					new /obj/machinery/power/solar/tracker(get_turf(src), src)
+					new /obj/machinery/power/solar/panel/tracker(get_turf(src), src)
 				else
-					var/obj/machinery/power/solar/panel/solar = new(get_turf(src))
-					solar.solar_assembly = src
-					//The following is terrible, but it's the easiest way I found of doing it
-					if(istype(W, /obj/item/stack/sheet/glass))
-						solar.glass_quality_factor = 0.5 //Oh shit nigger what the flying fucking shit are you doing ?
-						solar.health = 5 //Glass is some weak shit
-						solar.maxhealth = 5
-					else if(istype(W, /obj/item/stack/sheet/rglass))
-						solar.glass_quality_factor = 1 //You're okay
-						solar.health = 15 //Justin case
-						solar.maxhealth = 15
-					else if(istype(W, /obj/item/stack/sheet/glass/plasmaglass))
-						solar.glass_quality_factor = 0.65 //Somehow plasma gives a small plus to production
-						solar.health = 10
-						solar.maxhealth = 10
-					else if(istype(W, /obj/item/stack/sheet/rglass/plasmarglass))
-						solar.glass_quality_factor = 1.25 //Ditto above
-						solar.health = 30 //Reinforced plasma glass is STRONG
-						solar.maxhealth = 30
-					//This is where tinted glass would go if it were a thing, sadly it isn't. Smuck-bait could have been had
-					solar.update_icon() //Sanity check
+					new /obj/machinery/power/solar/panel(get_turf(src), src)
+			else
+				user << "<span class='notice'>You lack enough [W.type] to finish the solar.</span>"
 			return 1
 
 	if(!tracker)

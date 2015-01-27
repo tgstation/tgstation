@@ -79,8 +79,8 @@
 				new /obj/structure/rack(T)
 				new /obj/item/stack/sheet/wood(T, 50) //10 cade kits, or miscellaneous things
 				new /obj/item/stack/sheet/metal(T, 50)
-				new /obj/item/stack/sheet/glass(T, 50)
-				new /obj/item/stack/sheet/rglass/plasmarglass(T, 50) //Bomb-proof, so very useful
+				new /obj/item/stack/sheet/glass/glass(T, 50)
+				new /obj/item/stack/sheet/glass/plasmarglass(T, 50) //Bomb-proof, so very useful
 
 			//Discount EVA that also acts as explosion shielding
 			for(var/turf/T in meteor_bombkit)
@@ -296,9 +296,9 @@
 			survivors++
 
 	if(survivors)
-		world << "\blue <B>The following survived the meteor storm</B>:[text]"
+		world << "<span class='info'><B>The following survived the meteor storm</B>:[text]</span>"
 	else
-		world << "\blue <B>Nobody survived the meteor storm!</B>"
+		world << "<span class='info'><B>Nobody survived the meteor storm!</B></span>"
 
 	feedback_set_details("round_end_result","end - evacuation")
 	feedback_set("round_end_result",survivors)

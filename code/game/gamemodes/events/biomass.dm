@@ -40,6 +40,7 @@
 			qdel(src)
 		if(/obj/item/weapon/melee/energy)
 			qdel(src)
+		if(/obj/item/weapon/pickaxe/plasmacutter) qdel(src)
 
 		// less effective weapons
 		if(/obj/item/weapon/wirecutters)

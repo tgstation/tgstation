@@ -477,6 +477,8 @@ var/global/list/RPD_recipes=list(
 		return 0
 	if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))
 		return 0
+	if(istype(A, /obj/structure/lattice))
+		A = get_turf(A)
 
 	switch(p_class)
 		if(-2) // Paint pipes
