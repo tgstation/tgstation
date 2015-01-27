@@ -183,7 +183,7 @@
 	for(var/t in organs)
 		del(t)
 
-	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot( loc )
+	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(src))
 
 	// cyborgs produced by Robotize get an automatic power cell
 	O.cell = new(O)

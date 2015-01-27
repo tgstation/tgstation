@@ -186,8 +186,7 @@
 			continue
 		oldsrc.attackby(item, usr)
 		usr << "You add new [item.singular_name] to the stack. It now contains [item.amount] [item.singular_name]\s."
-		if(!oldsrc)
-			break
+		break
 
 /obj/item/stack/attack_hand(mob/user as mob)
 	if (user.get_inactive_hand() == src)

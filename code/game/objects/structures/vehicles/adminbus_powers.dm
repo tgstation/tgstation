@@ -497,7 +497,7 @@
 		if(istype(S,/obj/item/weapon/shard/plasma))
 			new/obj/item/stack/sheet/glass/plasmaglass(S.loc)
 		else
-			new/obj/item/stack/sheet/glass(S.loc)
+			new/obj/item/stack/sheet/glass/glass(S.loc)
 		qdel(S)
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/Teleportation(mob/bususer)

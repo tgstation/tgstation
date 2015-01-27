@@ -114,7 +114,7 @@
 	onclose(user, "freezer")
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/Topic(href, href_list)
-	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
+	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (issilicon(usr)))
 		usr.set_machine(src)
 		if (href_list["start"])
 			if(isobserver(usr) && !canGhostWrite(usr,src,"turned [on?"off":"on"]"))

@@ -10,7 +10,7 @@
 /obj/machinery/mirror/beamsplitter/New()
 	..()
 	component_parts = list(
-		new /obj/item/stack/sheet/rglass/plasmarglass(src,5),
+		new /obj/item/stack/sheet/glass/plasmarglass(src,5),
 	)
 
 /obj/machinery/mirror/beamsplitter/get_deflections(var/in_dir)
