@@ -201,6 +201,7 @@
 	if(!proximity) return
 	..()
 	if(A && wielded && (istype(A,/obj/structure/window) || istype(A,/obj/structure/grille))) //destroys windows and grilles in one hit
+		user.delayNextAttack(8)
 		if(istype(A,/obj/structure/window))
 			var/pdiff=performWallPressureCheck(A.loc)
 			if(pdiff>0)
@@ -228,7 +229,7 @@
 	force_wielded = 30
 	wieldsound = 'sound/weapons/saberon.ogg'
 	unwieldsound = 'sound/weapons/saberoff.ogg'
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	flags = FPRINT
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
@@ -244,7 +245,7 @@
 		return
 	if((wielded) && prob(50))
 		spawn(0)
-			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
+			for(var/i in alldirs)
 				user.dir = i
 				sleep(1)
 
@@ -272,7 +273,7 @@
 	w_class = 4.0
 	force_unwielded = 40
 	force_wielded = 120
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	flags = FPRINT
 	origin_tech = "magnets=4;combat=5"
 
 /obj/item/weapon/twohanded/hfrequency/update_icon()
@@ -291,7 +292,7 @@
 	force_unwielded = 10
 	force_wielded = 18 // Was 13, Buffed - RR
 	throwforce = 15
-	flags = NOSHIELD
+	flags = 0
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 

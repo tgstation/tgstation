@@ -484,7 +484,7 @@ legend {
 			if(href_list["out_set_pressure"])
 				var/response=input(usr,"Set new pressure, in kPa. \[0-[50*ONE_ATMOSPHERE]\]") as num
 				pressure_setting = text2num(response)
-				pressure_setting = between(0, pressure_setting, 50*ONE_ATMOSPHERE)
+				pressure_setting = Clamp(pressure_setting, 0, 50*ONE_ATMOSPHERE)
 
 			if(!radio_connection)
 				return 0
@@ -503,7 +503,7 @@ legend {
 				input_info = null
 				var/new_rate=input("Enter the new volume rate of the injector:","Injector Rate") as num
 				new_rate = text2num(new_rate)
-				new_rate = between(0, new_rate, 300)
+				new_rate = Clamp(new_rate, 0, new_rate)
 				signal.data = list ("tag" = input_tag, "set_volume_rate"=new_rate)
 
 			else if(href_list["out_refresh_status"])

@@ -52,7 +52,7 @@
 				say("Nom")
 
 		if(!pulledby)
-			for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
+			for(var/direction in shuffle(alldirs))
 				var/step = get_step(src, direction)
 				if(step)
 					if(locate(/obj/effect/plantsegment) in step)
@@ -158,7 +158,7 @@
 	emote_see = list("pecks at the ground","flaps its tiny wings")
 	speak_chance = 2
 	turns_per_move = 2
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/rawchicken
 	meat_amount = 1
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
@@ -199,7 +199,7 @@ var/global/chicken_count = 0
 	emote_see = list("pecks at the ground","flaps its wings viciously")
 	speak_chance = 2
 	turns_per_move = 3
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/rawchicken
 	meat_amount = 2
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
@@ -213,6 +213,10 @@ var/global/chicken_count = 0
 
 /mob/living/simple_animal/chicken/New()
 	..()
+	if(prob(5))
+		name = "Pomf chicken"
+		body_color = "white"
+
 	if(!body_color)
 		body_color = pick( list("brown","black","white") )
 	icon_state = "chicken_[body_color]"

@@ -1530,7 +1530,7 @@
 "aDv" = (/obj/structure/table/reinforced,/obj/machinery/door/window/westleft{base_state = "right"; icon_state = "right"; name = "Chemistry Counter"; req_access_txt = "33"},/obj/landmark{name = "a-randomchem"},/turf/simulated/floor{icon_state = "white"},/area/medical/chemistry)
 "aDw" = (/obj/structure/stool/bed/chair{dir = 8},/obj/item/device/eftpos{dir = 2; pixel_y = 35},/turf/simulated/floor{icon_state = "white"},/area/medical/chemistry)
 "aDx" = (/obj/machinery/atmospherics/pipe/simple/general/hidden,/obj/structure/disposalpipe/segment{dir = 1},/turf/simulated/floor{icon_state = "white"},/area/medical/chemistry)
-"aDy" = (/obj/machinery/chem_dispenser,/turf/simulated/floor{dir = 10; icon_state = "warning"},/area/medical/chemistry)
+"aDy" = (/obj/machinery/chem_dispenser/mapping,/turf/simulated/floor{dir = 10; icon_state = "warning"},/area/medical/chemistry)
 "aDz" = (/obj/machinery/door/airlock/maintenance,/obj/machinery/atmospherics/pipe/simple/general/hidden{icon_state = "intact-f"; dir = 5},/turf/simulated/floor/plating,/area/storage/auxillary)
 "aDA" = (/obj/machinery/atmospherics/pipe/manifold/general/hidden{icon_state = "manifold-f"; dir = 1},/turf/simulated/wall,/area/storage/auxillary)
 "aDB" = (/obj/machinery/atmospherics/pipe/simple/general/hidden{icon_state = "intact-f"; dir = 4},/turf/simulated/wall,/area/storage/auxillary)

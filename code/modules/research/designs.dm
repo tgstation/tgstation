@@ -41,7 +41,7 @@ The required techs are the following:
 - Electromagnetic Spectrum Research	max=8	"magnets"
 - Data Theory Research				max=5	"programming"
 - Illegal Technologies Research		max=8	"syndicate"
-
+k
 */
 #define	IMPRINTER	1	//For circuits. Uses glass/chemicals.
 #define PROTOLATHE	2	//New stuff. Uses glass/metal/chemicals
@@ -63,6 +63,7 @@ The required techs are the following:
 	var/list/materials = list()			//List of materials. Format: "id" = amount.
 	var/build_path = null				//The file path of the object that gets created
 	var/locked = 0						//If true it will spawn inside a lockbox with currently sec access
+	var/list/req_lock_access			//Sets the access for the lockbox that a locked item spawns in
 	var/category = null //Primarily used for Mech Fabricators, but can be used for anything
 
 /datum/design/New()
@@ -81,7 +82,7 @@ The required techs are the following:
 	for(var/datum/tech/T in temp_techs)
 		if(T.id in req_tech)
 			new_reliability += T.level
-	new_reliability = between(reliability_base, new_reliability, 100)
+	new_reliability = Clamp(new_reliability, reliability_base, 100)
 	reliability = new_reliability
 	return
 
@@ -135,6 +136,8 @@ The required techs are the following:
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/aicore
+	locked = 1
+	req_lock_access = list(access_tox, access_robotics, access_rd)
 
 /datum/design/aiupload
 	name = "Circuit Design (AI Upload)"
@@ -144,6 +147,8 @@ The required techs are the following:
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/aiupload
+	locked = 1
+	req_lock_access = list(access_tox, access_robotics, access_rd)
 
 /datum/design/borgupload
 	name = "Circuit Design (Cyborg Upload)"
@@ -153,6 +158,8 @@ The required techs are the following:
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/borgupload
+	locked = 1
+	req_lock_access = list(access_tox, access_robotics, access_rd)
 
 /datum/design/med_data
 	name = "Circuit Design (Medical Records)"
@@ -663,6 +670,8 @@ The required techs are the following:
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$diamond" = 100)
 	build_path = /obj/item/weapon/aiModule/targetted/oneHuman
+	locked = 1
+	req_lock_access = list(access_captain)
 
 /datum/design/protectstation_module
 	name = "Module Design (ProtectStation)"
@@ -699,6 +708,8 @@ The required techs are the following:
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
 	build_path = /obj/item/weapon/aiModule/standard/oxygen
+	locked = 1
+	req_lock_access = list(access_captain)
 
 /datum/design/freeform_module
 	name = "Module Design (Freeform)"
@@ -718,7 +729,7 @@ The required techs are the following:
 	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
 	build_path = /obj/item/weapon/aiModule/reset
 
-/datum/design/purge_module
+/datum/design/purge_module //tempted to lock this, have a vote on it - Comic
 	name = "Module Design (Purge)"
 	desc = "Allows for the construction of a Purge AI Module."
 	id = "purge_module"
@@ -762,6 +773,8 @@ The required techs are the following:
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$diamond" = 100)
 	build_path = /obj/item/weapon/aiModule/core/tyrant
+	locked = 1
+	req_lock_access = list(access_captain)
 
 ///////////////////////////////////
 /////Subspace Telecomms////////////
@@ -2213,7 +2226,7 @@ The required techs are the following:
 	build_type = PROTOLATHE
 	materials = list("$iron" = 3000, "$glass" = 1000, "$diamond" = 3750) //Yes, a whole diamond is needed.
 	reliability_base = 79
-	build_path = /obj/item/weapon/pickaxe/diamonddrill
+	build_path = /obj/item/weapon/pickaxe/drill/diamond
 
 /datum/design/mesons
 	name = "Optical Meson Scanners"
@@ -2381,6 +2394,14 @@ The required techs are the following:
 	materials = list("$iron" = 700, "$glass" = 2000, "$gold" = 100)
 	build_path = /obj/item/clothing/glasses/night
 
+/datum/design/device_analyser
+	name = "Device Analyser"
+	desc = "A device for scanning other devices. Meta."
+	id = "deviceanalyser"
+	req_tech = list("magnets"=3, "engineering"=4, "materials"=4, "programming"=3)
+	build_type = PROTOLATHE
+	materials = list("$iron" = 500, "$glass" = 1000, "$gold" = 200, "$silver" = 200)
+	build_path = /obj/item/device/device_analyser
 
 /////////////////////////////////////////
 //////////////////Security///////////////
@@ -2395,6 +2416,25 @@ The required techs are the following:
 	materials = list("$iron" = 1500, "$glass" = 2500, "$diamond" = 3750, "$silver" = 1000, "$uranium" = 500)
 	build_path = /obj/item/clothing/suit/armor/laserproof
 	locked = 1
+
+/datum/design/advancedeod
+	name = "Advanced EOD Suit"
+	desc = "An advanced EOD suit that affords great protection at the cost of mobility."
+	id = "advanced eod suit"
+	req_tech = list("combat" = 5, "materials" = 5, "biotech" = 2)
+	build_type = PROTOLATHE
+	materials = list ("$iron" = 10000, "$glass" = 2500, "$gold" = 3750, "$silver" = 1000)
+	build_path = /obj/item/clothing/suit/advancedeod
+
+/datum/design/advancedeod_helmet
+	name = "Advanced EOD Helmet"
+	desc = "An advanced EOD helmet that affords great protection at the cost of mobility."
+	id = "advanced eod helmet"
+	req_tech = list("combat" = 5, "materials" = 5, "biotech" = 2)
+	build_type = PROTOLATHE
+	materials = list ("$iron" = 3750, "$glass" = 2500, "$gold" = 3750, "$silver" = 1000)
+	build_path = /obj/item/clothing/head/advancedeod_helmet
+
 
 /////////////////////////////////////////
 //////////////////Test///////////////////
@@ -2443,6 +2483,16 @@ The required techs are the following:
 	build_path = /obj/item/borg/upgrade/syndicate
 	category = "Cyborg Upgrade Modules"
 	materials = list("$iron"=10000,"$glass"=15000,"$diamond" = 10000)
+
+/datum/design/borg_engineer_upgrade
+	name = "engineering module board"
+	desc = "Used to give an engineering cyborg more materials."
+	id = "borg_engineer_module"
+	build_type = MECHFAB
+	req_tech = list("engineering" = 1)
+	build_path = /obj/item/borg/upgrade/engineering
+	category = "Cyborg Upgrade Modules"
+	materials = list("$iron"=10000,"$glass"=10000,"$plasma"=5000)
 
 /datum/design/medical_module_surgery
 	name = "medical module board"

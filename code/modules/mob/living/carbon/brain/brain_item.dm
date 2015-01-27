@@ -3,7 +3,7 @@
 	health = 400 //They need to live awhile longer than other organs.
 	desc = "A piece of juicy meat found in a person's head."
 	icon_state = "brain2"
-	flags = TABLEPASS
+	flags = 0
 	force = 1.0
 	w_class = 1.0
 	throwforce = 1.0
@@ -35,19 +35,15 @@
 	if(H.mind)
 		H.mind.transfer_to(brainmob)
 
-	brainmob << "\blue You feel slightly disoriented. That's normal when you're just a brain."
+	brainmob << "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>"
 	callHook("debrain", list(brainmob))
 
-/obj/item/organ/brain/examine() // -- TLE
-	set src in oview(12)
-	if (!( usr ))
-		return
-	usr << "This is \icon[src] \an [name]."
-
+/obj/item/organ/brain/examine(mob/user)
+	..()
 	if(brainmob && brainmob.client)//if thar be a brain inside... the brain.
-		usr << "You can feel the small spark of life still left in this one."
+		user << "<span class='notice'>You can feel the small spark of life still left in this one.</span>"
 	else
-		usr << "This one seems particularly lifeless. Perhaps it will regain some of its luster later.."
+		user << "<span class='deadsay'>This one seems particularly lifeless. Perhaps it will regain some of its luster later..</span>"
 
 /obj/item/organ/brain/removed(var/mob/living/target,var/mob/living/user)
 

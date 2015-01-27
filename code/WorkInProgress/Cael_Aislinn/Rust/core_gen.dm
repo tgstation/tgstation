@@ -61,7 +61,6 @@ max volume of plasma storeable by the field = the total volume of a number of ti
 	idle_power_usage = 50
 	active_power_usage = 500	//multiplied by field strength
 	var/cached_power_avail = 0
-	directwired = 1
 	anchored = 0
 
 	var/locked = 1
@@ -88,10 +87,8 @@ max volume of plasma storeable by the field = the total volume of a number of ti
 		switch(state)
 			if(1)
 				connect_to_network()
-				src.directwired = 1
 			if(2)
 				disconnect_from_network()
-				src.directwired = 0
 		return 1
 	return -1
 

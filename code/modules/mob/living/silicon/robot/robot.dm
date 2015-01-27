@@ -5,7 +5,6 @@
 	icon_state = "robot"
 	maxHealth = 300
 	health = 300
-	universal_speak = 1
 
 	var/sight_mode = 0
 	var/custom_name = ""
@@ -20,6 +19,9 @@
 	var/obj/screen/inv2 = null
 	var/obj/screen/inv3 = null
 
+	var/shown_robot_modules = 0
+	var/obj/screen/robot_modules_background
+
 //3 Modules can be activated at any one time.
 	var/obj/item/weapon/robot_module/module = null
 	var/module_active = null
@@ -27,7 +29,6 @@
 	var/module_state_2 = null
 	var/module_state_3 = null
 
-	var/obj/item/device/radio/borg/radio = null
 	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/item/weapon/cell/cell = null
 	var/obj/machinery/camera/camera = null
@@ -81,6 +82,10 @@
 		wires = new /datum/wires/robot/mommi(src)
 	else
 		wires = new(src)
+
+	robot_modules_background = new()
+	robot_modules_background.icon_state = "block"
+	robot_modules_background.layer = 19
 
 	ident = rand(1, 999)
 	updatename("Default")
@@ -199,9 +204,12 @@
 			module_sprites["Default"] = "robot"
 			module_sprites["Marina-SD"] = "marinaSD"
 			module_sprites["Sleek"] = "sleekstandard"
+			speed = 0
 
 		if("Service")
 			module = new /obj/item/weapon/robot_module/butler(src)
+			radio.keyslot = new /obj/item/device/encryptionkey/headset_service(radio)
+			radio.recalculateChannels()
 			module_sprites["Waitress"] = "Service"
 			module_sprites["Kent"] = "toiletbot"
 			module_sprites["Bro"] = "Brobot"
@@ -210,9 +218,12 @@
 			module_sprites["R2-D2"] = "r2d2"
 			module_sprites["Marina-SV"] = "marinaSV"
 			module_sprites["Sleek"] = "sleekservice"
+			speed = 0
 
 		if("Miner")
 			module = new /obj/item/weapon/robot_module/miner(src)
+			radio.keyslot = new /obj/item/device/encryptionkey/headset_cargo(radio)
+			radio.recalculateChannels()
 			channels = list("Supply" = 1)
 			if(camera && "Robots" in camera.network)
 				camera.network.Add("MINE")
@@ -222,9 +233,12 @@
 			module_sprites["Wall-A"] = "wall-a"
 			module_sprites["Marina-MN"] = "marinaMN"
 			module_sprites["Sleek"] = "sleekminer"
+			speed = -1
 
 		if("Medical")
 			module = new /obj/item/weapon/robot_module/medical(src)
+			radio.keyslot = new /obj/item/device/encryptionkey/headset_med(radio)
+			radio.recalculateChannels()
 			channels = list("Medical" = 1)
 			if(camera && "Robots" in camera.network)
 				camera.network.Add("Medical")
@@ -235,9 +249,12 @@
 			module_sprites["Marina-MD"] = "marina"
 			module_sprites["Eve"] = "eve"
 			module_sprites["Sleek"] = "sleekmedic"
+			speed = -2
 
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
+			radio.keyslot = new /obj/item/device/encryptionkey/headset_sec(radio)
+			radio.recalculateChannels()
 			channels = list("Security" = 1)
 			module_sprites["Basic"] = "secborg"
 			module_sprites["Red Knight 2.0"] = "sleeksecurity"
@@ -246,9 +263,12 @@
 			module_sprites["Securitron"] = "securitron"
 			module_sprites["Marina-SC"] = "marinaSC"
 			src << "<span class='warning'><big><b>Just a reminder, by default you do not follow space law, you follow your lawset</b></big></span>"
+			speed = 0
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
+			radio.keyslot = new /obj/item/device/encryptionkey/headset_eng(radio)
+			radio.recalculateChannels()
 			channels = list("Engineering" = 1)
 			if(camera && "Robots" in camera.network)
 				camera.network.Add("Engineering")
@@ -259,6 +279,7 @@
 			module_sprites["Wall-E"] = "wall-e"
 			module_sprites["Marina-EN"] = "marinaEN"
 			module_sprites["Sleek"] = "sleekengineer"
+			speed = -2
 
 		if("Janitor")
 			module = new /obj/item/weapon/robot_module/janitor(src)
@@ -269,14 +290,19 @@
 			module_sprites["HAN-D"] = "han-d"
 			module_sprites["Marina-JN"] = "marinaJN"
 			module_sprites["Sleek"] = "sleekjanitor"
+			speed = -1
 
 		if("Combat")
 			module = new /obj/item/weapon/robot_module/combat(src)
+			radio.keyslot = new /obj/item/device/encryptionkey/headset_sec(radio)
+			radio.recalculateChannels()
 			module_sprites["Combat Android"] = "droid-combat"
 			module_sprites["Bladewolf"] = "bladewolf"
 			module_sprites["Mr. Gutsy"] = "mrgutsy"
 			module_sprites["Marina-CB"] = "marinaCB"
+			module_sprites["Squadbot"] = "squats"
 			channels = list("Security" = 1)
+			speed = -1
 
 	//Custom_sprite check and entry
 	if (custom_sprite == 1)
@@ -296,6 +322,7 @@
 		icon_state = module_sprites[picked]
 	radio.config(channels)
 	base_icon = icon_state
+	SetEmagged(emagged) // Update emag status and give/take emag modules away
 
 /mob/living/silicon/robot/proc/updatename(var/prefix as text)
 	if(prefix)
@@ -663,6 +690,66 @@
 	return !cleared
 
 
+/mob/living/silicon/robot/emag_act(mob/user as mob)
+	if(!user != src)
+		if(!opened)
+			if(locked)
+				if(prob(90))
+					user << "You emag the cover lock."
+					locked = 0
+				else
+					user << "You fail to emag the cover lock."
+					if(prob(25))
+						src << "Hack attempt detected."
+			else
+				user << "The cover is already open."
+			return
+		if(opened)
+			if(emagged) return
+			if(wiresexposed)
+				user << "The wires get in your way."
+				return
+			else
+				sleep(6)
+				if(prob(50))
+					SetEmagged(1)
+					SetLockdown(1)
+					lawupdate = 0
+					connected_ai = null
+					user << "You emag [src]'s interface"
+					message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)]. Laws overidden.")
+					log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
+					clear_supplied_laws()
+					clear_inherent_laws()
+					laws = new /datum/ai_laws/syndicate_override
+					var/time = time2text(world.realtime,"hh:mm:ss")
+					lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
+					set_zeroth_law("Only [user.real_name] and people they designate as being such are Syndicate Agents.")
+					src << "<span class='danger'>ALERT: Foreign software detected.</span>"
+					sleep(5)
+					src << "<span class='danger'>Initiating diagnostics...</span>"
+					sleep(20)
+					src << "<span class='danger'>SynBorg v1.7 loaded.</span>"
+					sleep(5)
+					src << "<span class='danger'>LAW SYNCHRONISATION ERROR</span>"
+					sleep(5)
+					src << "<span class='danger'>Would you like to send a report to NanoTraSoft? Y/N</span>"
+					sleep(10)
+					src << "<span class='danger'>> N</span>"
+					src << sound('sound/voice/AISyndiHack.ogg')
+					sleep(20)
+					src << "<span class='danger'>ERRORERRORERROR</span>"
+					src << "<b>Obey these laws:</b>"
+					laws.show_laws(src)
+					src << "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</span>"
+					SetLockdown(0)
+					update_icons()
+				else
+					user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
+					if(prob(25))
+						src << "Hack attempt detected."
+
+
 /mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
 		return
@@ -810,70 +897,6 @@
 				updateicon()
 			else
 				user << "\red Access denied."
-
-	else if(istype(W, /obj/item/weapon/card/emag))		// trying to unlock with an emag card
-		if(src == user || isMoMMI(user))
-			user << "<span class='warning'>Your utility claw can't maneuver \the [W] into the slot!</span>"
-		if(!opened)//Cover is closed
-			if(locked)
-				if(prob(90))
-					user << "You emag the cover lock."
-					locked = 0
-				else
-					user << "You fail to emag the cover lock."
-					if(prob(25))
-						src << "Hack attempt detected."
-			else
-				user << "The cover is already unlocked."
-			return
-
-		if(opened)//Cover is open
-			if(emagged)	return//Prevents the X has hit Y with Z message also you cant emag them twice
-			if(wiresexposed)
-				user << "You must close the panel first"
-				return
-			else
-				sleep(6)
-				if(prob(50))
-					emagged = 1
-					lawupdate = 0
-					connected_ai = null
-					user << "You emag [src]'s interface."
-//					message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
-					log_game("[key_name(user)] emagged [isMoMMI(src) ? "MoMMI" : "cyborg"] [key_name(src)].  Laws overridden.")
-					clear_supplied_laws()
-					clear_inherent_laws()
-					laws = new /datum/ai_laws/syndicate_override
-					var/time = time2text(world.realtime,"hh:mm:ss")
-					lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-					set_zeroth_law("Only [user.real_name] and people they designate as being such are syndicate agents.")
-					src << "\red ALERT: Foreign software detected."
-					sleep(5)
-					src << "\red Initiating diagnostics..."
-					sleep(20)
-					src << "\red SynBorg v1.7 loaded."
-					sleep(5)
-					src << "\red LAW SYNCHRONIZATION ERROR"
-					sleep(5)
-					src << "\red Would you like to send a report to NanoTraSoft? Y/N"
-					sleep(10)
-					src << "\red > N"
-					sleep(20)
-					src << "\red ERRORERRORERROR"
-					src << "<b>Obey these laws:</b>"
-					laws.show_laws(src)
-					src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and their commands."
-					if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
-						for(var/obj/item/weapon/pickaxe/borgdrill/D in src.module.modules)
-							del(D)
-						src.module.modules += new /obj/item/weapon/pickaxe/diamonddrill(src.module)
-						src.module.rebuild()
-					updateicon()
-				else
-					user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
-					if(prob(25))
-						src << "Hack attempt detected."
-			return
 
 	else if(istype(W, /obj/item/borg/upgrade/))
 		var/obj/item/borg/upgrade/U = W
@@ -1228,31 +1251,7 @@
 		if(isMoMMI(src))
 			return
 		var/obj/item/O = locate(href_list["act"])
-		if(!(locate(O) in src.module.modules) && O != src.module.emag)
-			return
-		if(activated(O))
-			src << "Already activated"
-			return
-		if(!module_state_1)
-			module_state_1 = O
-			O.layer = 20
-			contents += O
-			if(istype(module_state_1,/obj/item/borg/sight))
-				sight_mode |= module_state_1:sight_mode
-		else if(!module_state_2)
-			module_state_2 = O
-			O.layer = 20
-			contents += O
-			if(istype(module_state_2,/obj/item/borg/sight))
-				sight_mode |= module_state_2:sight_mode
-		else if(!module_state_3)
-			module_state_3 = O
-			O.layer = 20
-			contents += O
-			if(istype(module_state_3,/obj/item/borg/sight))
-				sight_mode |= module_state_3:sight_mode
-		else
-			src << "You need to disable a module first!"
+		activate_module(O)
 		installed_modules()
 
 	if (href_list["deact"])
@@ -1382,6 +1381,19 @@
 		W.attack_self(src)
 
 	return
+
+/mob/living/silicon/robot/proc/SetEmagged(var/new_state)
+	emagged = new_state
+	if(new_state)
+		if(module)
+			src.module.on_emag()
+	else
+		if(module)
+			uneq_module(module.emag)
+	if(hud_used)
+		hud_used.update_robot_modules_display()
+	update_icons()
+
 
 /mob/living/silicon/robot/proc/SetLockdown(var/state = 1)
 	// They stay locked down if their wire is cut.

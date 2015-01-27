@@ -191,7 +191,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 		return 1
 	if (O.m_amt == 0 && O.g_amt == 0)
 		user << "<span class='warning'>This object does not contain significant amounts of metal or glass, or cannot be accepted by \the [src] due to size or hazardous materials.</span>"
-		return 1
+		return
 	/*
 		if (istype(O, /obj/item/weapon/grab) && src.hacked)
 			var/obj/item/weapon/grab/G = O

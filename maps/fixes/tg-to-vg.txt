@@ -71,9 +71,9 @@ TYPE: /area/medical/research > /area/science/lab
 TYPE: /area/tcommsat/server             > /area/tcomms/chamber
 TYPE: /area/toxins/telesci              > /area/science/telescience
 TYPE: /area/crew_quarters/hor           > /area/science/rd
-TYPE: /area/shuttle/escape_pod4/station > /area/escape_pod5/station
-TYPE: /area/shuttle/escape_pod4/transit > /area/escape_pod5/transit
-TYPE: /area/shuttle/escape_pod4/centcom > /area/escape_pod5/centcom
+TYPE: /area/shuttle/escape_pod4/station > /area/shuttle/escape_pod5/station
+TYPE: /area/shuttle/escape_pod4/transit > /area/shuttle/escape_pod5/transit
+TYPE: /area/shuttle/escape_pod4/centcom > /area/shuttle/escape_pod5/centcom
 TYPE: /area/centcom/prison              > /area/prison/solitary
 
 # TURRETS

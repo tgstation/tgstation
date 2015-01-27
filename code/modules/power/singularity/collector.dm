@@ -8,13 +8,12 @@ var/global/list/rad_collectors = list()
 	icon_state = "ca"
 	anchored = 0
 	density = 1
-	directwired = 1
 	req_access = list(access_engine_equip)
 	var/obj/item/weapon/tank/plasma/P = null
 	var/last_power = 0
 	var/active = 0
 	var/locked = 0
-	var/drain_ratio = 5 //Quintupled. Maintain them you lazy fucks
+	var/drain_ratio = 3.5 //3.5 times faster than original.
 	ghost_read=0
 	ghost_write=0
 
@@ -32,7 +31,7 @@ var/global/list/rad_collectors = list()
 /obj/machinery/power/rad_collector/process()
 	if (P)
 		if (P.air_contents.toxins <= 0)
-			investigate_log("<font color='red'>out of fuel</font>.", "singulo")
+			investigation_log(I_SINGULO,"<font color='red'>out of fuel</font>.")
 			P.air_contents.toxins = 0
 			eject()
 		else if(!active)
@@ -47,7 +46,7 @@ var/global/list/rad_collectors = list()
 			toggle_power()
 			user.visible_message("<span class='notice'>[user] turns the [src] [active? "on":"off"].</span>", \
 			"<span class='notice'>You turn the [src] [active? "on":"off"].</span>")
-			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [P?"Fuel: [round(P.air_contents.toxins/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
+			investigation_log(I_SINGULO,"turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [P?"Fuel: [round(P.air_contents.toxins/0.29)]%":"<font color='red'>It is empty</font>"].")
 			return
 		else
 			user << "<span class='warning'>The controls are locked!</span>"
@@ -59,7 +58,7 @@ var/global/list/rad_collectors = list()
 		return 1
 	else if(istype(W, /obj/item/device/analyzer) || istype(W, /obj/item/device/multitool))
 		if(active)
-			user << "<span class='notice'>\The [W] registers that [last_power] W is being produced every cycle.</span>"
+			user << "<span class='notice'>\The [W] registers that [format_watts(last_power)] is being produced every cycle.</span>"
 		else
 			user << "<span class='notice'>\The [W] registers that the unit is currently not producing power.</span>"
 		return 1
@@ -128,7 +127,7 @@ var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector/proc/receive_pulse(const/pulse_strength)
 	if (P && active)
-		var/power_produced = P.air_contents.toxins * pulse_strength * 2 // 10 times less now. Fully set Singularity now goes from 3 million watts to 300.000 W
+		var/power_produced = P.air_contents.toxins * pulse_strength * 3.5 // original was 20, nerfed to 2 now 3.5 should get you about 500kw
 		add_avail(power_produced)
 		last_power = power_produced
 

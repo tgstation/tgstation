@@ -3,7 +3,8 @@
 	desc = "Can be used to decipher a Nuclear Bomb's activation code"
 	icon_state = "codebreaker"
 	item_state = "electronic"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	force = 5.0
 	w_class = 2.0
 	throwforce = 5.0

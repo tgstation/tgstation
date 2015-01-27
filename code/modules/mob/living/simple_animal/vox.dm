@@ -17,7 +17,7 @@
 	environment_smash = 2 // WALLS
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	status_flags = 0
-	universal_speak = 1
+	languages = HUMAN
 
 	var/armour = null
 	var/amp = null
@@ -34,6 +34,7 @@
 	return
 
 /mob/living/simple_animal/vox/armalis/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	user.delayNextAttack(8)
 	if(O.force)
 		if(O.force >= 25)
 			var/damage = O.force

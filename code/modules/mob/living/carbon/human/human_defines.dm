@@ -1,4 +1,5 @@
 /mob/living/carbon/human
+	languages = HUMAN
 	//Hair colour and style
 	var/r_hair = 0
 	var/g_hair = 0

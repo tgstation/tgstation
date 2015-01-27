@@ -191,7 +191,7 @@
 
 				if(isobj(target))
 					// /vg/: Logging transfers of bad things
-					if(target.reagents_to_log && target.reagents_to_log.len)
+					if(istype(target.reagents_to_log) && target.reagents_to_log.len)
 						var/list/badshit=list()
 						for(var/bad_reagent in target.reagents_to_log)
 							if(reagents.has_reagent(bad_reagent))
@@ -274,7 +274,7 @@
 			O.show_message(text("\red <B>[user] stabs [target] in \the [hit_area] with [src.name]!</B>"), 1)
 
 		if(affecting.take_damage(3))
-			target:UpdateDamageIcon()
+			target:QueueUpdateDamageIcon()
 
 	else
 		for(var/mob/O in viewers(world.view, user))

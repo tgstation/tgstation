@@ -13,6 +13,12 @@
 	WORLD_X_OFFSET=rand(-50,50)
 	WORLD_Y_OFFSET=rand(-50,50)
 
+	// Initialize world events as early as possible.
+	on_login = new ()
+	on_ban   = new ()
+	on_unban = new ()
+
+
 	/*Runtimes, not sure if i need it still so commenting out for now
 	starticon = rotate_icon('icons/obj/lightning.dmi', "lightningstart")
 	midicon = rotate_icon('icons/obj/lightning.dmi', "lightning")
@@ -22,7 +28,8 @@
 	// logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
 
-	href_logfile = file("data/logs/[date_string] hrefs.htm")
+	investigations["hrefs"] = new /datum/log_controller("hrefs", filename="data/logs/[date_string] hrefs.htm", persist=TRUE)
+
 	diary = file("data/logs/[date_string].log")
 	diaryofmeanpeople = file("data/logs/[date_string] Attack.log")
 	admin_diary = file("data/logs/[date_string] admin only.log")
@@ -37,8 +44,6 @@
 
 	if(byond_version < RECOMMENDED_VERSION)
 		world.log << "Your server's byond version does not meet the recommended requirements for this code. Please update BYOND"
-
-
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
@@ -58,6 +63,8 @@
 	LoadBans()
 	SetupHooks() // /vg/
 
+	load_library_db_to_cache()
+
 	copy_logs() // Just copy the logs.
 	if(config && config.log_runtimes)
 		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM-DD")]-runtime.log")
@@ -65,14 +72,13 @@
 		// dumb and hardcoded but I don't care~
 		config.server_name += " #[(world.port % 1000) / 100]"
 
-	investigate_reset()
 	Get_Holiday()	//~Carn, needs to be here when the station is named so :P
 
 	src.update_status()
 
 	makepowernets()
 
-	sun = new /datum/sun()
+	//sun = new /datum/sun()
 	radio_controller = new /datum/controller/radio()
 	data_core = new /obj/effect/datacore()
 	paiController = new /datum/paiController()
@@ -105,11 +111,21 @@
 
 	send2mainirc("Server starting up on [config.server? "byond://[config.server]" : "byond://[world.address]:[world.port]"]")
 
+	processScheduler = new
 	master_controller = new /datum/controller/game_controller()
+
 	spawn(1)
+		processScheduler.deferSetupFor(/datum/controller/process/ticker)
+		processScheduler.setup()
+
 		master_controller.setup()
 
 		setup_species()
+
+	for(var/plugin_type in typesof(/plugin))
+		var/plugin/P = new plugin_type()
+		plugins[P.name] = P
+		P.on_world_loaded()
 
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
@@ -118,8 +134,8 @@
 	spawn(3000)		//so we aren't adding to the round-start lag
 		if(config.ToRban)
 			ToRban_autoupdate()
-		if(config.kick_inactive)
-			KickInactiveClients()
+		/*if(config.kick_inactive)
+			KickInactiveClients()*/
 
 #undef RECOMMENDED_VERSION
 
@@ -202,6 +218,9 @@
 				fdel(filename)
 				fcopy(vote.chosen_map, filename)
 			sleep(60)
+
+	processScheduler.stop()
+
 	spawn(0)
 		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/slugmissioncomplete.ogg')) // random end sounds!! - LastyBatsy
 
@@ -226,7 +245,7 @@
 						log_access("AFK: [key_name(C)]")
 						C << "<span class='warning'>You have been inactive for more than 10 minutes and have been disconnected.</span>"
 						del(C)
-#undef INACTIVITY_KICK
+//#undef INACTIVITY_KICK
 
 
 /world/proc/load_mode()

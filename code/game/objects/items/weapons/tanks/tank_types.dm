@@ -16,13 +16,6 @@
 	icon_state = "oxygen"
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
 
-	examine()
-		set src in usr
-		..()
-		if(air_contents.oxygen < 10)
-			usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
-			playsound(usr, 'sound/effects/alert.ogg', 50, 1)
-
 /obj/item/weapon/tank/oxygen/New()
 	. = ..()
 	air_contents.adjust((6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
@@ -58,14 +51,6 @@
 	desc = "Mixed anyone?"
 	icon_state = "oxygen"
 
-
-	examine()
-		set src in usr
-		..()
-		if(air_contents.oxygen < 1 && loc==usr)
-			usr << "\red <B>The meter on the [src.name] indicates you are almost out of air!</B>"
-			usr << sound('sound/effects/alert.ogg')
-
 /obj/item/weapon/tank/air/New()
 	. = ..()
 	air_contents.adjust((6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD, , (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD)
@@ -77,7 +62,7 @@
 	name = "plasma tank"
 	desc = "Contains dangerous plasma. Do not inhale. Warning: extremely flammable."
 	icon_state = "plasma"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
 	slot_flags = null	//they have no straps!
 
 /obj/item/weapon/tank/plasma/New()
@@ -100,13 +85,6 @@
 	desc = "The lifeblood of plasmamen.  Warning:  Extremely flammable, do not inhale (unless you're a plasman)."
 	icon_state = "plasma_fr"
 
-/obj/item/weapon/tank/plasma/plasmaman/examine()
-	set src in usr
-	..()
-	if(air_contents.toxins < 0.2 && loc==usr)
-		usr << text("\red <B>The meter on the [src.name] indicates you are almost out of plasma!</B>")
-		usr << sound('sound/effects/alert.ogg')
-
 /*
  * Emergency Oxygen
  */
@@ -114,19 +92,12 @@
 	name = "emergency oxygen tank"
 	desc = "Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it."
 	icon_state = "emergency"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
 	slot_flags = SLOT_BELT
 	w_class = 2.0
 	force = 4.0
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
 	volume = 2 //Tiny. Real life equivalents only have 21 breaths of oxygen in them. They're EMERGENCY tanks anyway -errorage (dangercon 2011)
-
-	examine()
-		set src in usr
-		..()
-		if(air_contents.oxygen < 0.2 && loc==usr)
-			usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
-			usr << sound('sound/effects/alert.ogg')
 
 /obj/item/weapon/tank/emergency_oxygen/New()
 	. = ..()
@@ -166,10 +137,3 @@
 /obj/item/weapon/tank/nitrogen/New()
 	. = ..()
 	air_contents.adjust(, , (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C))
-
-/obj/item/weapon/tank/nitrogen/examine()
-	set src in usr
-	..()
-	if(air_contents.nitrogen < 10)
-		usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
-		playsound(usr, 'sound/effects/alert.ogg', 50, 1)

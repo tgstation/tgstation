@@ -27,6 +27,9 @@
 	return
 
 /obj/effect/plantsegment/Destroy()
+	if(reagents)
+		reagents.my_atom = null
+		reagents = null
 	if(master)
 		master.vines -= src
 		master.growth_queue -= src
@@ -35,25 +38,25 @@
 /obj/effect/plantsegment/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (!W || !user || !W.type) return
 	switch(W.type)
-		if(/obj/item/weapon/circular_saw) del src
-		if(/obj/item/weapon/kitchen/utensil/knife) del src
-		if(/obj/item/weapon/scalpel) del src
-		if(/obj/item/weapon/twohanded/fireaxe) del src
-		if(/obj/item/weapon/hatchet) del src
-		if(/obj/item/weapon/melee/energy) del src
+		if(/obj/item/weapon/circular_saw) qdel(src)
+		if(/obj/item/weapon/kitchen/utensil/knife) qdel(src)
+		if(/obj/item/weapon/scalpel) qdel(src)
+		if(/obj/item/weapon/twohanded/fireaxe) qdel(src)
+		if(/obj/item/weapon/hatchet) qdel(src)
+		if(/obj/item/weapon/melee/energy) qdel(src)
 
 		// Less effective weapons
 		if(/obj/item/weapon/wirecutters)
-			if(prob(25)) del src
+			if(prob(25)) qdel(src)
 		if(/obj/item/weapon/shard)
-			if(prob(25)) del src
+			if(prob(25)) qdel(src)
 
 		// Weapons with subtypes
 		else
-			if(istype(W, /obj/item/weapon/melee/energy/sword)) del src
+			if(istype(W, /obj/item/weapon/melee/energy/sword)) qdel(src)
 			else if(istype(W, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = W
-				if(WT.remove_fuel(0, user)) del src
+				if(WT.remove_fuel(0, user)) qdel(src)
 			else
 				manual_unbuckle(user)
 				return
@@ -166,7 +169,7 @@
 				else
 					H.adjustBruteLoss(damage)
 
-				H.UpdateDamageIcon()
+				H.QueueUpdateDamageIcon()
 				H.updatehealth()
 
 			// Inject some chems.
@@ -215,13 +218,22 @@
 	if(istype(step,/turf/simulated/floor))
 		var/turf/simulated/floor/F = step
 		if(!locate(/obj/effect/plantsegment,F))
-			if(locate(/obj/structure/window,F))
+			if(locate(/obj/structure/window,F))//PREVENTS VINES FROM PASSING INTO WINDOWS
 				for(var/obj/structure/window/twindow in F)
 					if(get_dir(step, loc) == twindow.dir)
 						return
-			if(locate(/obj/structure/window,loc))
+			if(locate(/obj/structure/window,loc))//PREVENTS VINES FROM PASSING OUT OF WINDOWS
 				for(var/obj/structure/window/lwindow in loc)
 					if(get_dir(loc, step) == lwindow.dir)
+						return
+
+			if(locate(/obj/machinery/door/window,F))//PREVENTS VINES FROM PASSING OUT OF CLOSED WINDOORS
+				for(var/obj/machinery/door/window/twindoor in F)
+					if(get_dir(step, loc) == twindoor.dir && twindoor.density == 1)
+						return
+			if(locate(/obj/machinery/door/window,loc))//PREVENTS VINES FROM PASSING OUT OF CLOSED WINDOORS
+				for(var/obj/machinery/door/window/lwindoor in loc)
+					if(get_dir(loc, step) == lwindoor.dir && lwindoor.density == 1)
 						return
 			if(F.Enter(src))
 				if(master)
@@ -245,7 +257,7 @@
 
 // Hotspots kill vines.
 /obj/effect/plantsegment/fire_act(null, temp, volume)
-	del src
+	qdel(src)
 
 /obj/effect/plantsegment/proc/die()
 	if(seed && harvest)

@@ -50,9 +50,7 @@
 	del src
 	return
 
-/mob/living/simple_animal/construct/examine()
-	set src in oview()
-
+/mob/living/simple_animal/construct/examine(mob/user)
 	var/msg = "<span cass='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
 	if (src.health < src.maxHealth)
 		msg += "<span class='warning'>"
@@ -63,8 +61,7 @@
 		msg += "</span>"
 	msg += "*---------*</span>"
 
-	usr << msg
-	return
+	user << msg
 
 /mob/living/simple_animal/construct/Bump(atom/movable/AM as mob|obj, yes)
 	if ((!( yes ) || now_pushing))
@@ -121,6 +118,7 @@
 			adjustBruteLoss(damage)
 
 /mob/living/simple_animal/construct/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	user.delayNextAttack(8)
 	if(O.force)
 		var/damage = O.force
 		if (O.damtype == HALLOSS)
@@ -170,6 +168,7 @@
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)
 
 /mob/living/simple_animal/construct/armoured/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	user.delayNextAttack(8)
 	if(O.force)
 		if(O.force >= 11)
 			var/damage = O.force
@@ -297,6 +296,7 @@
 	var/max_energy = 1000
 
 /mob/living/simple_animal/construct/behemoth/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	user.delayNextAttack(8)
 	if(O.force)
 		if(O.force >= 11)
 			var/damage = O.force

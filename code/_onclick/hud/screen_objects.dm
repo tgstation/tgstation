@@ -48,7 +48,7 @@
 /obj/screen/item_action/Click()
 	if(!usr || !owner)
 		return 1
-	if(usr.next_move >= world.time)
+	if(usr.attack_delayer.blocked())
 		return
 	//usr.next_move = world.time + 6
 
@@ -90,8 +90,8 @@
 	name = "storage"
 
 /obj/screen/storage/Click()
-	if(world.time <= usr.next_move)
-		return 1
+	if(usr.attack_delayer.blocked())
+		return
 	if(usr.stat || usr.paralysis || usr.stunned || usr.weakened)
 		return 1
 	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
@@ -385,10 +385,12 @@
 			usr.drop_item_v()
 
 		if("module")
-			if(issilicon(usr))
-				if(usr:module)
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				if(R.module)
+					R.hud_used.toggle_show_robot_modules()
 					return 1
-				usr:pick_module()
+				R:pick_module()
 
 		if("radio")
 			if(issilicon(usr))
@@ -398,8 +400,9 @@
 				usr:installed_modules()
 
 		if("store")
-			if(issilicon(usr))
-				usr:uneq_active()
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				R.uneq_active()
 
 		if(INV_SLOT_TOOL)
 			if(istype(usr, /mob/living/silicon/robot/mommi))
@@ -808,8 +811,8 @@
 /obj/screen/inventory/Click()
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
-	if(world.time <= usr.next_move)
-		return 1
+	if(usr.attack_delayer.blocked())
+		return
 	if(usr.stat || usr.paralysis || usr.stunned || usr.weakened)
 		return 1
 	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
@@ -833,5 +836,5 @@
 			if(usr.attack_ui(slot_id))
 				usr.update_inv_l_hand(0)
 				usr.update_inv_r_hand(0)
-				usr.next_move = world.time+6
+				usr.delayNextAttack(6)
 	return 1

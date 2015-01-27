@@ -96,7 +96,9 @@
 	internal_removed.temperature = final_temperature
 	internal.merge(internal_removed)
 
-	parent.network.update = 1
+
+	if(parent && parent.network)
+		parent.network.update = 1
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/proc/radiate()
 	var/datum/gas_mixture/internal = return_air()

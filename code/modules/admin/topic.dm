@@ -65,6 +65,9 @@
 		else
 			S << "<b>Your laws are null.</b> Contact a coder immediately."
 		S << "____________________________________"
+		if(isAI(S))
+			var/mob/living/silicon/ai/AI=S
+			AI.notify_slaved(force_sync=1)
 
 	else if("add_law" in href_list)
 		var/mob/living/silicon/S = locate(href_list["mob"])
@@ -89,6 +92,30 @@
 
 		log_admin("[key_name(usr)] has added a law to [key_name(S)]: \"[newlaw]\"")
 		message_admins("[usr.key] has added a law to [key_name(S)]: \"[newlaw]\"")
+		lawchanges.Add("[key_name(usr)] has added a law to [key_name(S)]: \"[newlaw]\"")
+
+	else if("reset_laws" in href_list)
+		var/mob/living/silicon/S = locate(href_list["mob"])
+		var/lawtypes = typesof(/datum/ai_laws) - /datum/ai_laws
+		var/lawtype = input("Select a lawset.","Law Type",1) as null|anything in lawtypes
+		if(lawtype == null)
+			return
+		testing("Lawtype: [lawtype]")
+
+		var/law_zeroth=null
+		var/law_zeroth_borg=null
+		if(S.laws.zeroth || S.laws.zeroth_borg)
+			if(alert(src,"Do you also wish to clear law zero?","Yes","No") == "No")
+				law_zeroth=S.laws.zeroth
+				law_zeroth_borg=S.laws.zeroth
+
+		S.laws = new lawtype
+		S.laws.zeroth=law_zeroth
+		S.laws.zeroth_borg=law_zeroth_borg
+
+		log_admin("[key_name(usr)] has reset [key_name(S)]: [lawtype]")
+		message_admins("[usr.key] has reset [key_name(S)]: [lawtype]")
+		lawchanges.Add("[key_name(usr)] has reset [key_name(S)]: [lawtype]")
 
 	else if("clear_laws" in href_list)
 		var/mob/living/silicon/S = locate(href_list["mob"])
@@ -102,6 +129,7 @@
 
 		log_admin("[key_name(usr)] has purged [key_name(S)]")
 		message_admins("[usr.key] has purged [key_name(S)]")
+		lawchanges.Add("[key_name(usr)] has purged [key_name(S)]")
 
 	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"])
 		var/adminckey = href_list["dbsearchadmin"]
@@ -1841,6 +1869,7 @@
 		usr << "\blue New [subject] will spawn with the [selected_law] lawset."
 		log_admin("[key_name(src.owner)] set the default laws of [subject] to: [selected_law]")
 		message_admins("[key_name_admin(src.owner)] set the default laws of [subject] to: [selected_law]", 1)
+		lawchanges.Add("[key_name_admin(src.owner)] set the default laws of [subject] to: [selected_law]")
 
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))	return
@@ -1914,7 +1943,7 @@
 		var/Z = offset.len > 2 ? text2num(offset[3]) : 0
 		var/tmp_dir = href_list["object_dir"]
 		var/obj_dir = tmp_dir ? text2num(tmp_dir) : 2
-		if(!obj_dir || !(obj_dir in list(1,2,4,8,5,6,9,10)))
+		if(!obj_dir || !(obj_dir in alldirs))
 			obj_dir = 2
 		var/obj_name = sanitize(href_list["object_name"])
 		var/where = href_list["object_where"]
@@ -2158,7 +2187,7 @@
 								W.layer = initial(W.layer)
 						//teleport person to cell
 						H.loc = pick(prisonwarp)
-						H.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange(H), slot_w_uniform)
+						H.equip_to_slot_or_del(new /obj/item/clothing/under/color/prisoner(H), slot_w_uniform)
 						H.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(H), slot_shoes)
 					else
 						//teleport security person
@@ -2568,7 +2597,6 @@
 				var/choice = input("You sure you want to end the round and summon narsie at your location? Misuse of this could result in removal of flags or halarity.") in list("PRAISE SATAN", "Cancel")
 				if(choice == "PRAISE SATAN")
 					new /obj/machinery/singularity/narsie/large(get_turf(usr))
-					SetUniversalState(/datum/universal_state/hell)
 					message_admins("[key_name_admin(usr)] has summoned narsie and brought about a new realm of suffering.")
 			if("supermattercascade")
 				feedback_inc("admin_secrets_fun_used",1)
@@ -2609,13 +2637,76 @@
 					newname = "Admin"
 				D.name = newname
 				D.real_name = newname
+			//False flags and bait below. May cause mild hilarity or extreme pain. Now in one button
+			if("fakealerts")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","FAKEA")
+				var/choice = input("Choose the type of fake alert you wish to trigger","False Flag and Bait Panel") in list("Biohazard", "Lifesigns", "Malfunction", "Ion", "Meteor Wave", "Carp Migration", "Return")
+				//Big fat lists of effects, not very modular but at least there's less buttons
+				if(choice == "Return") //Actually fuck this
+					return //Duh
+				if(choice == "Biohazard") //GUISE WE HAVE A BLOB
+					var/levelchoice = input("Set the level of the biohazard alert, or leave at 0 to have a random level (1 to 7 supported only)", "Space FEMA Readiness Program", 0) as num
+					if(!levelchoice || levelchoice > 7 || levelchoice < 0)
+						usr << "<span class='warning'>Invalid input range (0 to 7 only)</span>"
+						return
+					biohazard_alert(level = levelchoice)
+					message_admins("[key_name_admin(usr)] triggered a FAKE Biohzard Alert.")
+					log_admin("[key_name_admin(usr)] triggered a FAKE Biohzard Alert.")
+					return
+				if(choice == "Lifesigns") //MUH ALIUMS
+					command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
+					world << sound('sound/AI/aliens.ogg')
+					message_admins("[key_name_admin(usr)] triggered a FAKE Lifesign Alert.")
+					log_admin("[key_name_admin(usr)] triggered a FAKE Lifesign Alert.")
+					return
+				if(choice == "Malfunction") //BLOW EVERYTHING
+					var/salertchoice = input("Do you wish to include the Hostile Runtimes warning to have an authentic Malfunction Takeover Alert ?", "Nanotrasen Alert Level Monitor") in list("Yes", "No")
+					if(salertchoice == "Yes")
+						command_alert("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert")
+					world << "<font size=4 color='red'>Attention! Delta security level reached!</font>" //Don't ACTUALLY set station alert to Delta to avoid fucking shit up for real
+					world << "<font color='red'>[config.alert_desc_delta]</font>"
+					world << sound('sound/AI/aimalf.ogg') //AI got valid
+					message_admins("[key_name_admin(usr)] triggered a FAKE Malfunction Takeover Alert (Hostile Runtimes alert [salertchoice == "Yes" ? "included":"excluded"])")
+					log_admin("[key_name_admin(usr)] triggered a FAKE Malfunction Takeover Alert (Hostile Runtimes alert [salertchoice == "Yes" ? "included":"excluded"])")
+					return
+				if(choice == "Ion")
+					command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
+					world << sound('sound/AI/ionstorm.ogg')
+					message_admins("[key_name_admin(usr)] triggered a FAKE Ion Alert.")
+					log_admin("[key_name_admin(usr)] triggered a FAKE Ion Alert.")
+					return
+				if(choice == "Meteor Wave")
+					command_alert("A meteor storm has been detected on collision course with the station. Seek shelter within the core of the station immediately.", "Meteor Alert")
+					world << sound('sound/AI/meteors.ogg')
+					message_admins("[key_name_admin(usr)] triggered a FAKE Meteor Alert.")
+					log_admin("[key_name_admin(usr)] triggered a FAKE Meteor Alert.")
+					return
+				if(choice == "Carp Migration")
+					command_alert("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
+					message_admins("[key_name_admin(usr)] triggered a FAKE Carp Migration Alert.")
+					log_admin("[key_name_admin(usr)] triggered a FAKE Carp Migration Alert.")
+					return
+			if("fakebooms") //Micheal Bay is in the house !
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","FAKEE")
+				var/choice = input("How much high-budget explosions do you want ?", "Micheal Bay SFX Systems", 1) as num
+				if(choice < 1) //No negative or null explosion amounts here math genius
+					usr << "<span class='warning'>Invalid input range (null or negative)</span>"
+					return
+				message_admins("[key_name_admin(usr)] improvised himself as Micheal Bay and triggered [round(choice)] fake explosions.")
+				log_admin("[key_name_admin(usr)] improvised himself as Micheal Bay and triggered [round(choice)] fake explosions.")
+				for(var/i = 1 to choice)
+					world << sound('sound/effects/explosionfar.ogg')
+					sleep(rand(2, 10)) //Sleep 0.2 to 1 second
 		if(usr)
 			log_admin("[key_name(usr)] used secret [href_list["secretsfun"]]")
-			if (ok)
-				world << text("<B>A secret has been activated by []!</B>", usr.key)
+			if(ok)
+				world << text("<B>A secret has been activated by [usr.key]!</B>")
 
 	else if(href_list["secretsadmin"])
-		if(!check_rights(R_ADMIN))	return
+		if(!check_rights(R_ADMIN))
+			return
 
 		var/ok = 0
 		switch(href_list["secretsadmin"])

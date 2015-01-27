@@ -118,7 +118,7 @@
 /obj/structure/vendomatpack/discount
 	name = "Discount Dan's recharge pack"
 	targetvendomat = /obj/machinery/vending/discount
-	icon_state = "discout"
+	icon_state = "discount"
 
 /obj/structure/vendomatpack/groans
 	name = "Groans Soda recharge pack"
@@ -150,7 +150,7 @@
 	icon_state = "generic"
 	item_state = "syringe_kit"
 	w_class = 4.0
-	flags = FPRINT|TABLEPASS
+	flags = FPRINT
 
 	var/foldable = /obj/item/stack/sheet/cardboard
 	var/foldable_amount = 4

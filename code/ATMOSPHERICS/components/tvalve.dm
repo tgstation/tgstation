@@ -21,7 +21,7 @@
 	var/datum/pipe_network/network_node2
 	var/datum/pipe_network/network_node3
 
-	var/list/activity_log = list()
+	var/activity_log = ""
 
 /obj/machinery/atmospherics/tvalve/update_icon(animation)
 	if(animation)
@@ -29,6 +29,8 @@
 	else
 		icon_state = "tvalve[state]"
 
+/obj/machinery/atmospherics/tvalve/investigation_log(var/subject, var/message)
+	activity_log += ..()
 
 /obj/machinery/atmospherics/tvalve/New()
 	initialize_directions()
@@ -183,6 +185,9 @@
 	if(isobserver(user) && !canGhostWrite(user,src,"toggles"))
 		user << "\red Nope."
 		return
+
+	investigation_log(I_ATMOS,"was [state ? "opened (straight)" : "closed (side)"] by [key_name(usr)]")
+
 	src.add_fingerprint(usr)
 	update_icon(1)
 	sleep(10)
@@ -190,7 +195,6 @@
 		src.go_straight()
 	else
 		src.go_to_side()
-	activity_log += text("\[[time_stamp()]\] Real name: [], Key: [] - [] \the [].",user.real_name, user.key,(state ? "opened" : "closed"),src)
 
 /obj/machinery/atmospherics/tvalve/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if (!istype(W, /obj/item/weapon/wrench))
@@ -212,6 +216,9 @@
 			"[user] unfastens \the [src].", \
 			"\blue You have unfastened \the [src].", \
 			"You hear ratchet.")
+
+		investigation_log(I_ATMOS,"was <span class='warning'>REMOVED</span> by [key_name(usr)]")
+
 		new /obj/item/pipe(loc, make_from=src)
 		del(src)
 
@@ -384,21 +391,26 @@
 	if(!signal.data["tag"] || (signal.data["tag"] != id_tag))
 		return 0
 
+	var/state_changed=0
 	switch(signal.data["command"])
 		if("valve_open")
 			if(!state)
 				go_to_side()
+				state_changed=1
 
 		if("valve_close")
 			if(state)
 				go_straight()
+				state_changed=1
 
 		if("valve_toggle")
 			if(state)
 				go_straight()
 			else
 				go_to_side()
-	activity_log += text("\[[time_stamp()]\] Signal received, valve is now [(state ? "opened" : "closed")]")
+			state_changed=1
+	if(state_changed)
+		investigation_log(I_ATMOS,"was [(state ? "opened (side)" : "closed (straight) ")] by a signal")
 
 /obj/machinery/atmospherics/tvalve/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if (!istype(W, /obj/item/weapon/wrench))
@@ -423,6 +435,7 @@
 			"[user] unfastens \the [src].", \
 			"\blue You have unfastened \the [src].", \
 			"You hear ratchet.")
+		investigation_log(I_ATMOS,"was <span class='warning'>REMOVED</span> by [key_name(usr)]")
 		new /obj/item/pipe(loc, make_from=src)
 		del(src)
 
@@ -503,17 +516,23 @@
 	if(!signal.data["tag"] || (signal.data["tag"] != id_tag))
 		return 0
 
+	var/state_changed=0
 	switch(signal.data["command"])
 		if("valve_open")
 			if(!state)
 				go_to_side()
+				state_changed=1
 
 		if("valve_close")
 			if(state)
 				go_straight()
+				state_changed=1
 
 		if("valve_toggle")
 			if(state)
 				go_straight()
 			else
 				go_to_side()
+			state_changed=1
+	if(state_changed)
+		investigation_log(I_ATMOS,"was [(state ? "opened (side)" : "closed (straight) ")] by a signal")

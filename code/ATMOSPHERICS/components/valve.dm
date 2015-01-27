@@ -17,7 +17,7 @@
 	var/datum/pipe_network/network_node1
 	var/datum/pipe_network/network_node2
 
-	var/list/activity_log = list()
+	var/activity_log = ""
 
 /obj/machinery/atmospherics/valve/open
 	open = 1
@@ -150,7 +150,11 @@
 		src.close()
 	else
 		src.open()
-	activity_log += text("\[[time_stamp()]\] Real name: [], Key: [] - [] \the [].",user.real_name, user.key,(open ? "opened" : "closed"),src)
+
+	investigation_log(I_ATMOS,"was [open ? "opened" : "closed"] by [key_name(usr)]")
+
+/obj/machinery/atmospherics/valve/investigation_log(var/subject, var/message)
+	activity_log += ..()
 
 /* Parent proc returns PROCESS_KILL anyway
 process()
@@ -304,29 +308,36 @@ process()
 	if(!signal.data["tag"] || (signal.data["tag"] != id_tag))
 		return 0
 
+	var/state_changed=0
 	switch(signal.data["command"])
 		if("valve_open")
 			if(!open)
 				open()
+				state_changed=1
 
 		if("valve_close")
 			if(open)
 				close()
+				state_changed=1
 
 		if("valve_set")
 			if(signal.data["state"])
 				if(!open)
 					open()
+					state_changed=1
 			else
 				if(open)
 					close()
+					state_changed=1
 
 		if("valve_toggle")
 			if(open)
 				close()
 			else
 				open()
-	activity_log += text("\[[time_stamp()]\] Signal received, valve is now [(open ? "opened" : "closed")]")
+			state_changed=1
+	if(state_changed)
+		investigation_log(I_ATMOS,"was [(state ? "opened (side)" : "closed (straight) ")] by a signal")
 
 
 // Just for digital valves.
@@ -360,5 +371,6 @@ process()
 			"[user] unfastens \the [src].", \
 			"\blue You have unfastened \the [src].", \
 			"You hear ratchet.")
+		investigation_log(I_ATMOS,"was <span class='warning'>REMOVED</span> by [key_name(usr)]")
 		new /obj/item/pipe(loc, make_from=src)
 		del(src)

@@ -61,6 +61,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	// /vg/: No teleporting for you. 2 = SUPER JAMMED, inaccessible even to telecrystals.
 	var/jammed = 0
 
+	// /vg/: Prevents entities using incorporeal move from entering the area (ghosts, jaunting wizards/ninjas...)
+	var/anti_ethereal = 0
+
+	var/general_area = /area/station	// the highest parent bellow /area,
+	var/general_area_name = "Station"
+
+
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
 var/list/teleportlocs = list()
@@ -69,6 +76,11 @@ proc/process_teleport_locs()
 	for(var/area/AR in world)
 		if(istype(AR, /area/shuttle) || istype(AR, /area/syndicate_station) || istype(AR, /area/wizard_station)) continue
 		if(teleportlocs.Find(AR.name)) continue
+		var/list/turfss = get_area_turfs(AR.type)
+		if(!istype(turfss) || !turfss.len)
+			//warning("Area [AR] had no turfs!")
+			continue
+		//testing("Picking a turf from [AR]/([AR.type]) turfs length [turfss.len]")
 		var/turf/picked = pick(get_area_turfs(AR.type))
 		if (picked.z == 1)
 			teleportlocs += AR.name
@@ -93,6 +105,11 @@ proc/process_ghost_teleport_locs()
 		if(istype(AR, /area/turret_protected/aisat) || istype(AR, /area/derelict) || istype(AR, /area/tdome))
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
+		var/list/turfss = get_area_turfs(AR.type)
+		if(!istype(turfss) || !turfss.len)
+			//warning("Area [AR] had no turfs!")
+			continue
+		//testing("Picking a turf from [AR]/([AR.type]) turfs length [turfss.len]")
 		var/turf/picked = pick(get_area_turfs(AR.type))
 		if (picked.z == 1 || picked.z == 5 || picked.z == 3)
 			ghostteleportlocs += AR.name
@@ -131,6 +148,9 @@ proc/process_adminbus_teleport_locs()
 
 /*-----------------------------------------------------------------------------*/
 
+/area/station//TODO: make every area in the MAIN station inherit from this.
+	name = "Station"
+
 /area/engineering/
 
 /area/turret_protected/
@@ -145,6 +165,9 @@ proc/process_adminbus_teleport_locs()
 /area/admin
 	name = "\improper Admin room"
 	icon_state = "start"
+
+/area/no_ethereal
+	anti_ethereal = 1
 
 
 
@@ -997,6 +1020,10 @@ proc/process_adminbus_teleport_locs()
 	name = "\improper Law Office"
 	icon_state = "law"
 
+/area/crew_quarters/casino
+	name = "Casino"
+	icon_state = "casino"
+
 
 
 
@@ -1666,6 +1693,9 @@ proc/process_adminbus_teleport_locs()
 	name = "\improper Derelict Station"
 	icon_state = "storage"
 
+	general_area = /area/derelict
+	general_area_name = "Derelict Station"
+
 /area/derelict/hallway/primary
 	name = "\improper Derelict Primary Hallway"
 	icon_state = "hallP"
@@ -1893,6 +1923,14 @@ proc/process_adminbus_teleport_locs()
 //////////////////////////////
 // VOX TRADING POST
 //////////////////////////////
+
+/area/vox_trading_post
+	name = "\improper Vox Trade Outpost"
+	icon_state = "yellow"
+
+	general_area = /area/vox_trading_post
+	general_area_name = "Vox Trade Outpost"
+
 /area/vox_trading_post/trading_floor
 	name = "\improper Vox Trading Floor"
 	icon_state = "yellow"
@@ -1932,6 +1970,11 @@ proc/process_adminbus_teleport_locs()
 
 
 // Telecommunications Satellite
+/area/tcommsat
+	name = "Telecommunications Satellite"
+
+	general_area = /area/tcommsat
+	general_area_name = "Telecommunications Satellite"
 
 /area/tcommsat/entrance
 	name = "\improper Satellite Teleporter"
@@ -1982,6 +2025,7 @@ proc/process_adminbus_teleport_locs()
 	name = "\improper Goonecode Containment"
 	icon_state = "ai_upload"
 	jammed=2
+	anti_ethereal=1
 
 
 
@@ -2120,9 +2164,9 @@ proc/process_adminbus_teleport_locs()
 		sound_delay = rand(0, 50)
 
 	for(var/mob/living/carbon/human/H in src)
-		if(H.s_tone > -55)
+	/*	if(H.s_tone > -55)
 			H.s_tone--
-			H.update_body()
+			H.update_body()*/
 		if(H.client)
 			mysound.status = SOUND_UPDATE
 			H << mysound
@@ -2208,6 +2252,7 @@ var/list/the_station_areas = list (
 	requires_power = 0
 	var/sound/mysound = null
 
+/* We have a jukebox now, fuck that
 /area/beach/New()
 	..()
 	var/sound/S = new/sound()
@@ -2228,6 +2273,7 @@ var/list/the_station_areas = list (
 			Obj << mysound
 	return
 
+//This only works when using Move() to exit the area
 /area/beach/Exited(atom/movable/Obj)
 	if(ismob(Obj))
 		if(Obj:client)
@@ -2256,3 +2302,4 @@ var/list/the_station_areas = list (
 
 	spawn(60) .()
 
+*/

@@ -1,3 +1,5 @@
+//List of ckeys that have de-adminned themselves during this round
+var/global/list/deadmins = list()
 
 // List of types and how many instances of each type there are.
 var/global/list/type_instances[0]
@@ -8,7 +10,7 @@ var/global/list/type_instances[0]
 //FIXME: These are lists of things that get called every tick.
 // All of these badly need optimizing, half of them don't
 // actually need to be called every tick, many of them busy-wait
-// (come on people we're not writing assembly), and many should 
+// (come on people we're not writing assembly), and many should
 // be using tickers instead (eg narsie, singulo). Major target
 // for cutting down on lag and boosting overall performance.
 var/global/list/machines = list()
@@ -26,7 +28,7 @@ var/global/defer_powernet_rebuild = 0		// true if net rebuild will be called man
 
 // Used only by space turfs. TODO: Remove.
 // The comment below is no longer accurate.
-var/global/list/global_map = null 
+var/global/list/global_map = null
 
 	//list/global_map = list(list(1,5),list(4,3))//an array of map Z levels.
 	//Resulting sector map looks like
@@ -218,14 +220,13 @@ var/list/alldirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAS
 
 var/datum/station_state/start_state = null
 var/datum/configuration/config = null
-var/datum/sun/sun = null
 
 var/list/combatlog = list()
 var/list/IClog = list()
 var/list/OOClog = list()
 var/list/adminlog = list()
 
-
+var/suspend_alert = 0
 var/list/powernets = list()
 
 var/Debug = 0	// global debug switch
@@ -349,3 +350,13 @@ var/list/score=list(
 	"dmgestdamage"  = 0,
 	"dmgestkey"     = null
 )
+
+// Mostly used for ban systems.
+// Initialized on world/New()
+var/global/event/on_login
+var/global/event/on_ban
+var/global/event/on_unban
+
+// List of /plugins
+var/global/list/plugins = list()
+

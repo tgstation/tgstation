@@ -1,3 +1,5 @@
+/obj/item/clothing/shoes/proc/step_action() //this was made to rewrite clown shoes squeaking
+
 /obj/item/clothing/shoes/syndigaloshes
 	desc = "A pair of brown shoes. They seem to have extra grip."
 	name = "brown shoes"
@@ -82,6 +84,19 @@
 	_color = "clown"
 	var/footstep = 1	//used for squeeks whilst walking
 
+/obj/item/clothing/shoes/clown_shoes/step_action()
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+
+		if(H.m_intent == "run")
+			if(footstep > 1)
+				footstep = 0
+				playsound(H, "clownstep", 50, 1) // this will get annoying very fast.
+			else
+				footstep++
+		else
+			playsound(H, "clownstep", 20, 1)
+
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
@@ -152,3 +167,9 @@
 	desc = "A pair of girly knee-high socks"
 	icon_state = "kneesock"
 	item_state = "kneesock"
+
+/obj/item/clothing/shoes/jestershoes
+	name = "Jester Shoes"
+	desc = "As worn by the clowns of old."
+	icon_state = "jestershoes"
+	item_state = "jestershoes"

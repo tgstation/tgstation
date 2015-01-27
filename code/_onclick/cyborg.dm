@@ -7,9 +7,9 @@
 */
 
 /mob/living/silicon/robot/ClickOn(var/atom/A, var/params)
-	if(world.time <= next_click)
+	if(click_delayer.blocked())
 		return
-	next_click = world.time + 1
+	click_delayer.setDelay(1)
 
 	if(client.buildmode) // comes after object.Click to allow buildmode gui objects to be clicked
 		build_click(src, client.buildmode, params, A)
@@ -32,7 +32,7 @@
 		CtrlClickOn(A)
 		return
 
-	if(next_move >= world.time)
+	if(attack_delayer.blocked())
 		return
 
 	face_atom(A) // change direction to face what you clicked on
@@ -67,7 +67,7 @@
 	// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc in contents)
 	if(A == loc || (A in loc) || (A in contents))
 		// No adjacency checks
-		next_move = world.time + 8
+		delayNextAttack(8)
 		/*if(W.flags&USEDELAY)
 			next_move += 5
 		*/
@@ -139,7 +139,10 @@
 	change attack_robot() above to the proper function
 */
 /mob/living/silicon/robot/UnarmedAttack(atom/A)
+	if(ismob(A))
+		delayNextAttack(10)
 	A.attack_robot(src)
+	return
 /mob/living/silicon/robot/RangedAttack(atom/A)
 	A.attack_robot(src)
 

@@ -141,6 +141,7 @@
 			T.Entered(l_hand)
 
 		l_hand.dropped(src)
+		l_hand.layer = initial(l_hand.layer)
 		l_hand = null
 		update_inv_l_hand()
 		return 1
@@ -160,6 +161,7 @@
 			T.Entered(r_hand)
 
 		r_hand.dropped(src)
+		r_hand.layer = initial(r_hand.layer)
 		r_hand = null
 		update_inv_r_hand()
 		return 1

@@ -31,16 +31,15 @@ var/global/narsie_behaviour = "CultStation13"
 	consume_range = 12 // How many tiles out do we eat.
 	var/announce=1
 
-/obj/machinery/singularity/narsie/large/New(var/cultspawn=0)
+/obj/machinery/singularity/narsie/large/New()
 	..()
 	if(announce)
 		world << "<font size='15' color='red'><b>[uppertext(name)] HAS RISEN</b></font>"
-
+		world << sound('sound/effects/wind/wind_5_1.ogg')
 	if (emergency_shuttle)
 		emergency_shuttle.incall(0.3) // Cannot recall.
 
-	if(cultspawn)
-		SetUniversalState(/datum/universal_state/hell)
+	SetUniversalState(/datum/universal_state/hell)
 /*
 	updateicon()
 */

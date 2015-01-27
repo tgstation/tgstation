@@ -24,8 +24,8 @@ var/list
 		sandbox.owner = src.ckey
 		if(src.client.holder)
 			sandbox.admin = 1
-		verbs += new /mob/proc/sandbox_panel
-		verbs += new /mob/proc/sandbox_spawn_atom
+		verbs += /mob/proc/sandbox_panel
+		verbs += /mob/proc/sandbox_spawn_atom
 
 /mob/proc/sandbox_panel()
 	set name = "Sandbox Panel"

@@ -44,6 +44,17 @@
 			index = findtext(t, char)
 	return t
 
+/proc/strip_html_properly(var/input)
+	var/opentag = 1 //These store the position of < and > respectively.
+	var/closetag = 1
+	while(1)
+		opentag = findtext(input, "<")
+		closetag = findtext(input, ">")
+		if(!closetag || !opentag)
+			break
+		input = copytext(input, 1, opentag) + copytext(input, (closetag + 1))
+	return input
+
 //Removes a few problematic characters
 /proc/sanitize_simple(var/t,var/list/repl_chars = list("\n"="#","\t"="#","�"="�"))
 	for(var/char in repl_chars)
@@ -345,3 +356,14 @@ proc/checkhtml(var/t)
 			. += sep
 	if(parts.len==2)
 		. += ".[parts[2]]"
+
+var/global/list/watt_suffixes = list("W", "KW", "MW", "GW", "TW", "PW", "EW", "ZW", "YW")
+/proc/format_watts(var/number)
+	if(number<0) return "-[format_watts(number)]"
+	if(number==0) return "0 W"
+
+	var/i=1
+	while (round(number/1000) >= 1)
+		number/=1000
+		i++
+	return "[format_num(number)] [watt_suffixes[i]]"

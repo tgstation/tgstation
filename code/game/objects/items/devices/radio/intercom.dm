@@ -70,8 +70,8 @@
 	return canhear_range
 
 
-/obj/item/device/radio/intercom/hear_talk(mob/M as mob, msg)
-	if(!src.anyai && !(M in src.ai))
+/obj/item/device/radio/intercom/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+	if(!src.anyai && !(speaker in src.ai))
 		return
 	..()
 
@@ -116,7 +116,7 @@
 				return 1
 			if(do_after(user, 10))
 				user << "\blue You cut the intercom frame from the wall!"
-				new /obj/item/intercom_frame(src.loc)
+				new /obj/item/mounted/frame/intercom(src.loc)
 				return 1
 	else
 		if(istype(W,/obj/item/weapon/crowbar))
@@ -143,7 +143,10 @@
 /obj/item/device/radio/intercom/process()
 	if(((world.timeofday - last_tick) > 30) || ((world.timeofday - last_tick) < 0))
 		last_tick = world.timeofday
-
+		if(!areaMaster)
+			on = 0
+			update_icon()
+			return
 		on = areaMaster.powered(EQUIP) // set "on" to the power status
 		update_icon()
 

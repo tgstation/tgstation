@@ -12,7 +12,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	icon_state = "pda"
 	item_state = "electronic"
 	w_class = 1.0
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	slot_flags = SLOT_ID | SLOT_BELT
 
 	//Main variables
@@ -1186,7 +1186,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					scanmode = 0
 				else if((!isnull(cartridge)) && (cartridge.access_mechanic))
 					if(!dev_analys)
-						dev_analys = new //let's create that device analyser
+						dev_analys = new(src) //let's create that device analyser
+						dev_analys.max_designs = 5
 					scanmode = 6
 
 //MESSENGER/NOTE FUNCTIONS===================================
@@ -1676,8 +1677,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 		if (6)
 			if(dev_analys) //let's use this instead. Much neater
-				dev_analys.afterattack(A, user)
-				A.attackby(src, user)
+				if(A in range(user, 1))
+					dev_analys.afterattack(A, user, 1)
+					A.attackby(src, user)
 
 	if (!scanmode && istype(A, /obj/item/weapon/paper) && owner)
 		note = A:info

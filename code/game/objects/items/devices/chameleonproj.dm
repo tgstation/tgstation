@@ -1,7 +1,8 @@
 /obj/item/device/chameleon
 	name = "chameleon-projector"
 	icon_state = "shield0"
-	flags = FPRINT | TABLEPASS| CONDUCT | USEDELAY
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	item_state = "electronic"
 	throwforce = 5.0
@@ -9,6 +10,7 @@
 	throw_range = 5
 	w_class = 2.0
 	origin_tech = "syndicate=4;magnets=4"
+	var/cham_proj_scan = 1 //Scanning function starts on
 	var/can_use = 1
 	var/obj/effect/dummy/chameleon/active_dummy = null
 	var/saved_item = /obj/item/weapon/cigbutt
@@ -25,41 +27,64 @@
 /obj/item/device/chameleon/attack_self()
 	toggle()
 
+/obj/item/device/chameleon/verb/toggle_scaning()
+	set name = "Toggle Chameleon Projector Scanning"
+	set category = "Object"
+
+	if(usr.stat)
+		return
+
+	cham_proj_scan = !cham_proj_scan
+	usr << "You [cham_proj_scan ? "activate":"deactivate"] [src]'s scanning function"
+
 /obj/item/device/chameleon/afterattack(atom/target, mob/user , proximity)
-	if(!proximity) return
+	if(!proximity)
+		return
+	if(!cham_proj_scan) //Is scanning disabled ?
+		return
 	if(!active_dummy)
-		if(istype(target,/obj/item) && !istype(target, /obj/item/weapon/disk/nuclear))
+		if(istype(target, /obj/item) && !istype(target, /obj/item/weapon/disk/nuclear) || istype(target, /mob))
 			playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1, -6)
-			user << "\blue Scanned [target]."
+			user << "<span class='notice'>Scanned [target].</span>"
 			saved_item = target.type
 			saved_icon = target.icon
 			saved_icon_state = target.icon_state
 			saved_overlays = target.overlays
 
 /obj/item/device/chameleon/proc/toggle()
-	if(!can_use || !saved_item) return
+	if(!can_use || !saved_item)
+		return
 	if(active_dummy)
 		eject_all()
-		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
+		//playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
 		del(active_dummy)
 		active_dummy = null
-		usr << "\blue You deactivate the [src]."
+		usr << "<span class='notice'>You deactivate [src].</span>"
 		var/obj/effect/overlay/T = new/obj/effect/overlay(get_turf(src))
 		T.icon = 'icons/effects/effects.dmi'
 		flick("emppulse",T)
-		spawn(8) qdel(T)
+		spawn(8)
+			qdel(T)
+		can_use = 0
+		spawn(20) //Stop spamming this shit
+			can_use = 1
 	else
-		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
+		//playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
 		var/obj/O = new saved_item(src)
-		if(!O) return
+		if(!O)
+			return
 		var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(usr.loc)
 		C.activate(O, usr, saved_icon, saved_icon_state, saved_overlays, src)
 		del(O)
-		usr << "\blue You activate the [src]."
+		usr << "<span class='notice'>You activate [src].</span>"
 		var/obj/effect/overlay/T = new/obj/effect/overlay(get_turf(src))
 		T.icon = 'icons/effects/effects.dmi'
 		flick("emppulse",T)
-		spawn(8) qdel(T)
+		spawn(8)
+			qdel(T)
+		can_use = 0
+		spawn(20) //Stop spamming this shit
+			can_use = 1
 
 /obj/item/device/chameleon/proc/disrupt(var/delete_dummy = 1)
 	if(active_dummy)
@@ -72,7 +97,8 @@
 			del(active_dummy)
 		active_dummy = null
 		can_use = 0
-		spawn(50) can_use = 1
+		spawn(50)
+			can_use = 1
 
 /obj/item/device/chameleon/proc/eject_all()
 	for(var/atom/movable/A in active_dummy)
@@ -104,22 +130,22 @@
 
 /obj/effect/dummy/chameleon/attackby()
 	for(var/mob/M in src)
-		M << "\red Your chameleon-projector deactivates."
+		M << "<span class='warning'>Your chameleon-projector deactivates.</span>"
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/attack_hand()
 	for(var/mob/M in src)
-		M << "\red Your chameleon-projector deactivates."
+		M << "<span class='warning'>Your chameleon-projector deactivates.</span>"
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/ex_act()
 	for(var/mob/M in src)
-		M << "\red Your chameleon-projector deactivates."
+		M << "<span class='warning'>Your chameleon-projector deactivates.</span>"
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/bullet_act()
 	for(var/mob/M in src)
-		M << "\red Your chameleon-projector deactivates."
+		M << "<span class='warning'>Your chameleon-projector deactivates.</span>"
 	..()
 	master.disrupt()
 
@@ -130,15 +156,20 @@
 		can_move = 0
 		switch(user.bodytemperature)
 			if(300 to INFINITY)
-				spawn(10) can_move = 1
+				spawn(8)
+					can_move = 1
 			if(295 to 300)
-				spawn(13) can_move = 1
+				spawn(11)
+					can_move = 1
 			if(280 to 295)
-				spawn(16) can_move = 1
+				spawn(14)
+					can_move = 1
 			if(260 to 280)
-				spawn(20) can_move = 1
+				spawn(18)
+					can_move = 1
 			else
-				spawn(25) can_move = 1
+				spawn(23)
+					can_move = 1
 		step(src, direction)
 	return
 

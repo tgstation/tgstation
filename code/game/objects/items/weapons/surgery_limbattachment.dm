@@ -64,7 +64,7 @@
 			T.status |= ORGAN_ROBOT
 			H.update_body()
 			M.updatehealth()
-			M.UpdateDamageIcon()
+			M.UpdateDamageIcon(1)
 			del(src)
 
 			return 1

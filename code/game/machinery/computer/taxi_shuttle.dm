@@ -15,6 +15,7 @@
 	var/lastMove = 0
 	var/id_tag = ""
 	var/letter = ""
+	var/list/connected_buttons = list()
 
 	l_color = "#B40000"
 
@@ -31,9 +32,9 @@
 	if(curr_location == dest_location)
 		return
 
+	moving = 1
 	broadcast("Taxi [letter] will move in [wait_time / 10] seconds.")
 	sleep(wait_time)
-	moving = 1
 	lastMove = world.time
 
 	if(curr_location.z != dest_location.z)
@@ -50,9 +51,10 @@
 /obj/machinery/computer/taxi_shuttle/proc/broadcast(var/message = "")
 	if(message)
 		src.visible_message("\icon [src]" + message)
-	for(var/obj/machinery/door_control/taxi/TB in world)
-		if(id_tag == TB.id_tag)
-			TB.visible_message("\icon [TB] " + message)
+	else
+		return
+	for(var/obj/machinery/door_control/taxi/TB in connected_buttons)
+		TB.visible_message("\icon [TB]" + message)
 
 /obj/machinery/computer/taxi_shuttle/attackby(obj/item/I as obj, mob/user as mob)
 	if(..())
@@ -67,18 +69,24 @@
 	return attack_hand(user)
 
 /obj/machinery/computer/taxi_shuttle/attack_hand(mob/user as mob)
-	if(!allowed(user))
-		user << "\red Access Denied"
-		return
 
 	user.set_machine(src)
 
-	var/dat = {"Location: [curr_location]<br>
-	Ready to move[max(lastMove + TAXI_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((lastMove + TAXI_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><br>
-	<a href='?src=\ref[src];med_sili=1'>Medical and Silicon Station</a><br>
-	<a href='?src=\ref[src];engi_cargo=1'>Engineering and Cargo Station</a><br>
-	<a href='?src=\ref[src];sec_sci=1'>Security and Science Station</a><br>
-	[emagged ? "<a href='?src=\ref[src];abandoned=1'>Abandoned Station</a><br>" : ""]"}
+	var/dat = ""
+	if(allowed(user))
+		dat = {"Location: [curr_location]<br>
+		Ready to move[max(lastMove + TAXI_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((lastMove + TAXI_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><br>
+		<a href='?src=\ref[src];med_sili=1'>Medical and Silicon Station</a><br>
+		<a href='?src=\ref[src];engi_cargo=1'>Engineering and Cargo Station</a><br>
+		<a href='?src=\ref[src];sec_sci=1'>Security and Science Station</a><br>
+		[emagged ? "<a href='?src=\ref[src];abandoned=1'>Abandoned Station</a><br>" : ""]"}
+	else
+		dat = {"Location: [curr_location]<br>
+		Ready to move[max(lastMove + TAXI_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((lastMove + TAXI_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><br>
+		<a href='?src=\ref[src];unauthmed_sili=1'>Medical and Silicon Station</a><br>
+		<a href='?src=\ref[src];unauthengi_cargo=1'>Engineering and Cargo Station</a><br>
+		<a href='?src=\ref[src];unauthsec_sci=1'>Security and Science Station</a><br>
+		[emagged ? "<a href='?src=\ref[src];unauthabandoned=1'>Abandoned Station</a><br>" : ""]"}
 
 	user << browse(dat, "window=computer;size=575x450")
 	onclose(user, "computer")
@@ -101,7 +109,10 @@
 
 	for(var/place in href_list)
 		if(href_list[place])
-			callTo(place, 30)
+			if(copytext(place, 1, 7) == "unauth") // if it's unauthorised, we take longer
+				callTo(copytext(place, 7), 100)
+			else
+				callTo(place, 30) //otherwise, double quick time
 
 	add_fingerprint(usr)
 	updateUsrDialog()

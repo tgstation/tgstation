@@ -167,7 +167,7 @@
 	if(!parts.len)	return
 	var/datum/organ/external/picked = pick(parts)
 	if(picked.heal_damage(brute,burn))
-		UpdateDamageIcon()
+		QueueUpdateDamageIcon()
 		hud_updateflag |= 1 << HEALTH_HUD
 	updatehealth()
 
@@ -183,7 +183,7 @@ In most cases it makes more sense to use apply_damage() instead! And make sure t
 	if(!parts.len)	return
 	var/datum/organ/external/picked = pick(parts)
 	if(picked.take_damage(brute,burn,sharp,edge))
-		UpdateDamageIcon()
+		QueueUpdateDamageIcon()
 		hud_updateflag |= 1 << HEALTH_HUD
 	updatehealth()
 	//speech_problem_flag = 1
@@ -209,7 +209,7 @@ In most cases it makes more sense to use apply_damage() instead! And make sure t
 	updatehealth()
 	hud_updateflag |= 1 << HEALTH_HUD
 	//speech_problem_flag = 1
-	if(update)	UpdateDamageIcon()
+	if(update)	QueueUpdateDamageIcon()
 
 // damage MANY external organs, in random order
 /mob/living/carbon/human/take_overall_damage(var/brute, var/burn, var/sharp = 0, var/edge = 0, var/used_weapon = null)
@@ -229,7 +229,7 @@ In most cases it makes more sense to use apply_damage() instead! And make sure t
 		parts -= picked
 	updatehealth()
 	hud_updateflag |= 1 << HEALTH_HUD
-	if(update)	UpdateDamageIcon()
+	if(update)	QueueUpdateDamageIcon()
 
 
 ////////////////////////////////////////////
@@ -254,7 +254,7 @@ This function restores all organs.
 	var/datum/organ/external/E = get_organ(zone)
 	if(istype(E, /datum/organ/external))
 		if (E.heal_damage(brute, burn))
-			UpdateDamageIcon()
+			QueueUpdateDamageIcon()
 			hud_updateflag |= 1 << HEALTH_HUD
 	else
 		return 0
@@ -293,13 +293,13 @@ This function restores all organs.
 			if(species && species.brute_mod)
 				damage = damage*species.brute_mod
 			if(organ.take_damage(damage, 0, sharp, edge, used_weapon))
-				UpdateDamageIcon()
+				QueueUpdateDamageIcon(1)
 		if(BURN)
 			damageoverlaytemp = 20
 			if(species && species.burn_mod)
 				damage = damage*species.burn_mod
 			if(organ.take_damage(0, damage, sharp, edge, used_weapon))
-				UpdateDamageIcon()
+				QueueUpdateDamageIcon(1)
 
 	// Will set our damageoverlay icon to the next level, which will then be set back to the normal level the next mob.Life().
 	updatehealth()

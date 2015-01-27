@@ -20,7 +20,7 @@
 	desc = "A small satchel made for organizing seeds."
 	var/mode = 1;  //0 = pick one at a time, 1 = pick all on tile
 	var/capacity = 500; //the number of seeds it can carry.
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	slot_flags = SLOT_BELT
 	w_class = 1
 	var/list/item_quants = list()
@@ -144,7 +144,7 @@
 	icon_state = "novaflower"
 	damtype = "fire"
 	force = 0
-	flags = TABLEPASS
+	flags = 0
 	slot_flags = SLOT_HEAD
 	throwforce = 1
 	w_class = 1.0
@@ -174,17 +174,9 @@
 			var/organ = ((user.hand ? "l_":"r_") + "arm")
 			var/datum/organ/external/affecting = user.get_organ(organ)
 			if(affecting.take_damage(0,force))
-				user.UpdateDamageIcon()
+				user.QueueUpdateDamageIcon()
 		else
 			user.take_organ_damage(0,force)
-
-/obj/item/weapon/grown/nettle/afterattack(atom/A as mob|obj, mob/user as mob)
-	if(force > 0)
-		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off
-		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
-	else
-		usr << "All the leaves have fallen off the nettle from violent whacking."
-		del(src)
 
 /obj/item/weapon/grown/nettle/changePotency(newValue) //-QualityVan
 	potency = newValue
@@ -200,7 +192,7 @@
 			var/organ = ((user.hand ? "l_":"r_") + "arm")
 			var/datum/organ/external/affecting = user.get_organ(organ)
 			if(affecting.take_damage(0,force))
-				user.UpdateDamageIcon()
+				user.QueueUpdateDamageIcon()
 		else
 			user.take_organ_damage(0,force)
 		if(prob(50))
@@ -228,13 +220,6 @@
 			M.Weaken(force/15)
 		M.drop_item()
 
-/obj/item/weapon/grown/deathnettle/afterattack(atom/A as mob|obj, mob/user as mob)
-	if (force > 0)
-		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off
-
-	else
-		usr << "All the leaves have fallen off the deathnettle from violent whacking."
-		del(src)
 
 /obj/item/weapon/grown/deathnettle/changePotency(newValue) //-QualityVan
 	potency = newValue

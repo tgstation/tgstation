@@ -183,7 +183,7 @@
 				src.mind.transfer_to(new_slime)
 			else
 				new_slime.key = src.key
-			new_slime.universal_speak = universal_speak
+			new_slime.languages = languages
 			new_slime << "<B>You are now an adult slime.</B>"
 			del(src)
 		else
@@ -225,8 +225,7 @@
 
 			var/mob/living/carbon/slime/new_slime = pick(babies)
 			new_slime.a_intent = "hurt"
-			new_slime.universal_speak = universal_speak
-			new_slime.universal_understand = universal_understand
+			new_slime.languages = languages
 			if(src.mind)
 				src.mind.transfer_to(new_slime)
 			else

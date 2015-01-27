@@ -11,63 +11,6 @@
 #define LIGHT_BURNED 3
 
 
-
-/obj/item/light_fixture_frame
-	name = "light fixture frame"
-	desc = "Used for building lights."
-	icon = 'icons/obj/lighting.dmi'
-	icon_state = "tube-construct-item"
-	flags = FPRINT | TABLEPASS| CONDUCT
-	var/fixture_type = "tube"
-	var/obj/machinery/light/newlight = null
-	var/sheets_refunded = 2
-
-/obj/item/light_fixture_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
-		del(src)
-		return
-	..()
-
-/obj/item/light_fixture_frame/proc/try_build(turf/on_wall)
-	if (get_dist(on_wall,usr)>1)
-		return
-	var/ndir = get_dir(usr,on_wall)
-	if (!(ndir in cardinal))
-		return
-	var/turf/loc = get_turf_loc(usr)
-	if (!istype(loc, /turf/simulated/floor))
-		usr << "\red [src.name] cannot be placed on this spot."
-		return
-	usr << "Attaching [src] to the wall."
-	playsound(get_turf(src), 'sound/machines/click.ogg', 75, 1)
-	var/constrdir = usr.dir
-	var/constrloc = usr.loc
-	if (!do_after(usr, 30))
-		return
-	switch(fixture_type)
-		if("bulb")
-			newlight = new /obj/machinery/light_construct/small(constrloc)
-		if("tube")
-			newlight = new /obj/machinery/light_construct(constrloc)
-	newlight.dir = constrdir
-	newlight.fingerprints = src.fingerprints
-	newlight.fingerprintshidden = src.fingerprintshidden
-	newlight.fingerprintslast = src.fingerprintslast
-
-	usr.visible_message("[usr.name] attaches [src] to the wall.", \
-		"You attach [src] to the wall.")
-	del(src)
-
-/obj/item/light_fixture_frame/small
-	name = "small light fixture frame"
-	desc = "Used for building small lights."
-	icon = 'icons/obj/lighting.dmi'
-	icon_state = "bulb-construct-item"
-	flags = FPRINT | TABLEPASS| CONDUCT
-	fixture_type = "bulb"
-	sheets_refunded = 1
-
 /obj/machinery/light_construct
 	name = "light fixture frame"
 	desc = "A light fixture under construction."
@@ -85,20 +28,17 @@
 	if (fixture_type == "bulb")
 		icon_state = "bulb-construct-stage1"
 
-/obj/machinery/light_construct/examine()
-	set src in view()
+/obj/machinery/light_construct/examine(mob/user)
 	..()
-	if (!(usr in view(2))) return
+	var/mode
 	switch(src.stage)
 		if(1)
-			usr << "It's an empty frame."
-			return
+			mode = "It's an empty frame."
 		if(2)
-			usr << "It's wired."
-			return
+			mode = "It's wired."
 		if(3)
-			usr << "The casing is closed."
-			return
+			mode = "The casing is closed."
+	user << "<span class='info'>[mode]</span>"
 
 /obj/machinery/light_construct/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	src.add_fingerprint(user)
@@ -323,25 +263,23 @@
 	update()
 
 // examine verb
-/obj/machinery/light/examine()
-	set src in oview(1)
-	if(usr && !usr.stat)
-		switch(status)
-			if(LIGHT_OK)
-				usr << "[desc] It is turned [on? "on" : "off"]."
-			if(LIGHT_EMPTY)
-				usr << "[desc] The [fitting] has been removed."
-			if(LIGHT_BURNED)
-				usr << "[desc] The [fitting] is burnt out."
-			if(LIGHT_BROKEN)
-				usr << "[desc] The [fitting] has been smashed."
-
+/obj/machinery/light/examine(mob/user)
+	..()
+	switch(status)
+		if(LIGHT_OK)
+			user << "<span class='info'>[desc] It is turned [on? "on" : "off"].</span>"
+		if(LIGHT_EMPTY)
+			user << "<span class='info'>[desc] The [fitting] has been removed.</span>"
+		if(LIGHT_BURNED)
+			user << "<span class='info'>[desc] The [fitting] is burnt out.</span>"
+		if(LIGHT_BROKEN)
+			user << "<span class='info'>[desc] The [fitting] has been smashed.</span>"
 
 
 // attack with item - insert light (if right type), otherwise try to break the light
 
 /obj/machinery/light/attackby(obj/item/W, mob/user)
-	user.changeNext_move(8)
+	user.delayNextAttack(8)
 	//Light replacer code
 	if(istype(W, /obj/item/device/lightreplacer))
 		var/obj/item/device/lightreplacer/LR = W
@@ -393,7 +331,7 @@
 				if(M == user)
 					continue
 				M.show_message("[user.name] smashed the light!", 3, "You hear a tinkle of breaking glass", 2)
-			if(on && (W.flags & CONDUCT))
+			if(on && (W.is_conductor()))
 				//if(!user.mutations & M_RESIST_COLD)
 				if (prob(12))
 					electrocute_mob(user, get_area(src), src, 0.3)
@@ -425,7 +363,7 @@
 			return
 
 		user << "You stick \the [W] into the light socket!"
-		if(has_power() && (W.flags & CONDUCT))
+		if(has_power() && (W.is_conductor()))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
@@ -453,6 +391,7 @@
 			on = (status == LIGHT_OK)
 			update(0)
 		flickering = 0
+		on = has_power()
 
 /obj/machinery/light/attack_ghost(mob/user)
 	if(blessed) return
@@ -483,18 +422,18 @@
 		return
 	else if (status == LIGHT_OK||status == LIGHT_BURNED)
 		for(var/mob/M in viewers(src))
-			M.show_message("\red [user.name] smashed the light!", 3, "You hear a tinkle of breaking glass", 2)
+			M.show_message("<span class='attack'>[user.name] smashed the light!</span>", 3, "You hear a tinkle of breaking glass", 2)
 		broken()
 	return
 
 /obj/machinery/light/attack_animal(mob/living/simple_animal/M)
 	if(M.melee_damage_upper == 0)	return
 	if(status == LIGHT_EMPTY||status == LIGHT_BROKEN)
-		M << "\red That object is useless to you."
+		M << "<span class='warning'>That object is useless to you.</span>"
 		return
 	else if (status == LIGHT_OK||status == LIGHT_BURNED)
 		for(var/mob/O in viewers(src))
-			O.show_message("\red [M.name] smashed the light!", 3, "You hear a tinkle of breaking glass", 2)
+			O.show_message("<span class='attack'>[M.name] smashed the light!</span>", 3, "You hear a tinkle of breaking glass", 2)
 		broken()
 	return
 // attack with hand - remove tube/bulb
@@ -641,7 +580,7 @@
 
 /obj/item/weapon/light
 	icon = 'icons/obj/lighting.dmi'
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	force = 2
 	throwforce = 5
 	w_class = 1
@@ -750,7 +689,7 @@
 
 /obj/item/weapon/light/proc/shatter()
 	if(status == LIGHT_OK || status == LIGHT_BURNED)
-		src.visible_message("\red [name] shatters.","\red You hear a small glass object shatter.")
+		src.visible_message("<span class='warning'>[name] shatters.</span>","<span class='warning'>You hear a small glass object shatter.</span>")
 		status = LIGHT_BROKEN
 		force = 5
 		playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 75, 1)

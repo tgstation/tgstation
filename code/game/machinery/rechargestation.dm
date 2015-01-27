@@ -103,6 +103,9 @@
 		return
 	return
 
+/obj/machinery/recharge_station/attack_ghost(var/mob/user) //why would they
+	return 0
+
 /obj/machinery/recharge_station/attack_ai(var/mob/user)
 	attack_hand(user)
 
@@ -208,6 +211,10 @@
 	src.occupant = null
 	build_icon()
 	src.use_power = 1
+	// Removes dropped items/magically appearing mobs from the charger too
+	for (var/atom/movable/x in src.contents)
+		if(!(x in upgrade_holder))
+			x.setLoc(src.loc)
 	return
 
 /obj/machinery/recharge_station/proc/restock_modules()
@@ -219,11 +226,7 @@
 				// ^ makes sinle list of active (R.contents) and inactive modules (R.module.modules)
 				for(var/obj/O in um)
 					// Engineering
-					if(istype(O,/obj/item/stack/sheet/metal)\
-					|| istype(O,/obj/item/stack/sheet/rglass)\
-					|| istype(O,/obj/item/stack/sheet/glass)\
-					|| istype(O,/obj/item/weapon/cable_coil)\
-					|| istype(O,/obj/item/stack/tile/plasteel))
+					if(istype(O,/obj/item/weapon/cable_coil))
 						if(O:amount < 50)
 							O:amount += 2
 						if(O:amount > 50)

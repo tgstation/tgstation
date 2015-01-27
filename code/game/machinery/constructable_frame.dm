@@ -561,7 +561,7 @@ obj/item/weapon/circuitboard/rdserver
 
 /obj/item/weapon/circuitboard/hydroponics
 	name = "Circuit Board (Hydroponics Tray)"
-	build_path = "/obj/machinery/hydroponics"
+	build_path = "/obj/machinery/portable_atmospherics/hydroponics"
 	board_type = "machine"
 	origin_tech = "programming=3;engineering=2;biotech=3;powerstorage=2"
 	frame_desc = "Requires 2 Matter Bins, 1 Scanning Module, 2 Beakers, 1 Capacitor, and 1 Console Screen.   "

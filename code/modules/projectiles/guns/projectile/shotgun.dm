@@ -7,7 +7,8 @@
 	max_shells = 4
 	w_class = 4.0
 	force = 10
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BACK
 	caliber = list("shotgun" = 1, "flare" = 1) //flare shells are still shells
 	origin_tech = "combat=4;materials=2"
@@ -73,7 +74,8 @@
 	max_shells = 2
 	w_class = 4.0
 	force = 10
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BACK
 	caliber = list("shotgun" = 1, "flare" = 1)
 	origin_tech = "combat=3;materials=1"

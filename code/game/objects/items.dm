@@ -4,11 +4,12 @@
 	var/image/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
 	var/abstract = 0
 	var/item_state = null
+	var/list/inhand_states = list("left_hand" = 'icons/mob/in-hand/left/items_lefthand.dmi', "right_hand" = 'icons/mob/in-hand/right/items_righthand.dmi')
 	var/r_speed = 1.0
 	var/health = null
 	var/hitsound = null
 	var/w_class = 3.0
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
 	pressure_resistance = 5
@@ -30,7 +31,7 @@
 	//var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
 	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
 	var/permeability_coefficient = 1 // for chemicals/diseases
-	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
+	siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit) - 0 is not conductive, 1 is conductive - this is a range, not binary
 	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
 	var/canremove = 1 //Mostly for Ninja code at this point but basically will not allow the item to be removed if set to 0. /N
 	var/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
@@ -106,9 +107,7 @@
 
 	src.loc = T
 
-/obj/item/examine()
-	set src in view()
-
+/obj/item/examine(mob/user)
 	var/size
 	switch(src.w_class)
 		if(1.0)
@@ -123,10 +122,13 @@
 			size = "huge"
 		else
 	//if ((M_CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
-	usr << "This is a [src.blood_DNA ? "bloody " : ""]\icon[src][src.name]. It is a [size] item."
-	if(src.desc)
-		usr << src.desc
-	return
+	var/pronoun
+	if (src.gender == PLURAL)
+		pronoun = "They are"
+	else
+		pronoun = "It is"
+	..(user, " [pronoun] a [size] item.")
+
 
 /obj/item/attack_ai(mob/user as mob)
 	..()
@@ -136,6 +138,11 @@
 			if(src == user:tool_state || src == user:sight_state)
 				return 0
 			attack_hand(user)
+	if(istype(src.loc, /obj/item/weapon/robot_module))
+		if(!isrobot(user)) 	return
+		var/mob/living/silicon/robot/R = user
+		R.activate_module(src)
+		R.hud_used.update_robot_modules_display()
 
 /obj/item/attack_hand(mob/user as mob)
 	if (!user) return
@@ -148,6 +155,7 @@
 			return
 
 	if (istype(src.loc, /obj/item/weapon/storage))
+		//If the item is in a storage item, take it out.
 		var/obj/item/weapon/storage/S = src.loc
 		S.remove_from_storage(src)
 
@@ -283,7 +291,7 @@
 				testing("[M] TOO FAT TO WEAR [src]!")
 				if(!(flags & ONESIZEFITSALL))
 					if(!disable_warning)
-						H << "\red You're too fat to wear the [name]."
+						H << "<span class='warning'>You're too fat to wear the [name].</span>"
 					return 0
 
 		switch(slot)
@@ -358,7 +366,7 @@
 			if(slot_belt)
 				if(!H.w_uniform)
 					if(!disable_warning)
-						H << "\red You need a jumpsuit before you can attach this [name]."
+						H << "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>"
 					return 0
 				if( !(slot_flags & SLOT_BELT) )
 					return 0
@@ -457,7 +465,7 @@
 			if(slot_wear_id)
 				if(!H.w_uniform)
 					if(!disable_warning)
-						H << "\red You need a jumpsuit before you can attach this [name]."
+						H << "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>"
 					return 0
 				if( !(slot_flags & SLOT_ID) )
 					return 0
@@ -473,7 +481,7 @@
 			if(slot_l_store)
 				if(!H.w_uniform)
 					if(!disable_warning)
-						H << "\red You need a jumpsuit before you can attach this [name]."
+						H << "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>"
 					return 0
 				if(slot_flags & SLOT_DENYPOCKET)
 					return
@@ -490,7 +498,7 @@
 			if(slot_r_store)
 				if(!H.w_uniform)
 					if(!disable_warning)
-						H << "\red You need a jumpsuit before you can attach this [name]."
+						H << "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>"
 					return 0
 				if(slot_flags & SLOT_DENYPOCKET)
 					return
@@ -507,7 +515,7 @@
 			if(slot_s_store)
 				if(!H.wear_suit)
 					if(!disable_warning)
-						H << "\red You need a suit before you can attach this [name]."
+						H << "<span class='warning'>You need a suit before you can attach this [name].</span>"
 					return 0
 				if(!H.wear_suit.allowed)
 					if(!disable_warning)
@@ -592,25 +600,25 @@
 	if(istype(usr, /mob/living/carbon/brain))//Is a brain
 		usr << "You can't pick things up!"
 	if( usr.stat || usr.restrained() )//Is not asleep/dead and is not restrained
-		usr << "\red You can't pick things up!"
+		usr << "<span class='warning'>You can't pick things up!</span>"
 		return
 	if(src.anchored) //Object isn't anchored
-		usr << "\red You can't pick that up!"
+		usr << "<span class='warning'>You can't pick that up!</span>"
 		return
 	if(!usr.hand && usr.r_hand) //Right hand is not full
-		usr << "\red Your right hand is full."
+		usr << "<span class='warning'>Your right hand is full.</span>"
 		return
 	if(usr.hand && usr.l_hand && !isMoMMI(usr)) //Left hand is not full
-		usr << "\red Your left hand is full."
+		usr << "<span class='warning'>Your left hand is full.</span>"
 		return
 	if(!istype(src.loc, /turf)) //Object is on a turf
-		usr << "\red You can't pick that up!"
+		usr << "<span class='warning'>You can't pick that up!</span>"
 		return
 	//All checks are done, time to pick it up!
 	if(isMoMMI(usr))
 		// Otherwise, we get MoMMIs changing their own laws.
 		if(istype(src,/obj/item/weapon/aiModule))
-			src << "\red Your firmware prevents you from picking up [src]!"
+			src << "<span class='warning'>Your firmware prevents you from picking up [src]!</span>"
 			return
 		if(usr.get_active_hand() == null)
 			usr.put_in_hands(src)
@@ -637,25 +645,22 @@
 /obj/item/proc/eyestab(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 
 	var/mob/living/carbon/human/H = M
-	if(istype(H) && ( \
-			(H.head && H.head.flags & HEADCOVERSEYES) || \
-			(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
-			(H.glasses && H.glasses.flags & GLASSESCOVERSEYES) \
-		))
-		// you can't stab someone in the eyes wearing a mask!
-		user << "\red You're going to need to remove that mask/helmet/glasses first."
-		return
+	if(istype(H))
+		var/obj/item/eye_protection = H.get_body_part_coverage(EYES)
+		if(eye_protection)
+			user << "<span class='warning'>You're going to need to remove that [eye_protection] first.</span>"
+			return
 
 	var/mob/living/carbon/monkey/Mo = M
 	if(istype(Mo) && ( \
-			(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES) \
+			(Mo.wear_mask && Mo.wear_mask.body_parts_covered & EYES) \
 		))
 		// you can't stab someone in the eyes wearing a mask!
-		user << "\red You're going to need to remove that mask/helmet/glasses first."
+		user << "<span class='warning'>You're going to need to remove that mask first.</span>"
 		return
 
 	if(!M.has_eyes())
-		user << "\red You cannot locate any eyes on [M]!"
+		user << "<span class='warning'>You cannot locate any eyes on [M]!</span>"
 		return
 
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
@@ -683,33 +688,33 @@
 
 		if(M != user)
 			for(var/mob/O in (viewers(M) - user - M))
-				O.show_message("\red [M] has been stabbed in the eye with [src] by [user].", 1)
-			M << "\red [user] stabs you in the eye with [src]!"
-			user << "\red You stab [M] in the eye with [src]!"
+				O.show_message("<span class='attack'>[M] has been stabbed in the eye with [src] by [user].</span>", 1)
+			M << "<span class='attack'>[user] stabs you in the eye with [src]!</span>"
+			user << "<span class='attack'>You stab [M] in the eye with [src]!</span>"
 		else
 			user.visible_message( \
-				"\red [user] has stabbed themself with [src]!", \
-				"\red You stab yourself in the eyes with [src]!" \
+				"<span class='attack'>[user] has stabbed themself with [src]!</span>", \
+				"<span class='attack'>You stab yourself in the eyes with [src]!</span>" \
 			)
 
 		eyes.damage += rand(3,4)
 		if(eyes.damage >= eyes.min_bruised_damage)
 			if(M.stat != 2)
 				if(eyes.robotic <= 1) //robot eyes bleeding might be a bit silly
-					M << "\red Your eyes start to bleed profusely!"
+					M << "<span class='warning'>Your eyes start to bleed profusely!</span>"
 			if(prob(50))
 				if(M.stat != 2)
-					M << "\red You drop what you're holding and clutch at your eyes!"
+					M << "<span class='warning'>You drop what you're holding and clutch at your eyes!</span>"
 					M.drop_item()
 				M.eye_blurry += 10
 				M.Paralyse(1)
 				M.Weaken(4)
 			if (eyes.damage >= eyes.min_broken_damage)
 				if(M.stat != 2)
-					M << "\red You go blind!"
+					M << "<span class='warning'>You go blind!</span>"
 		var/datum/organ/external/affecting = M:get_organ("head")
 		if(affecting.take_damage(7))
-			M:UpdateDamageIcon()
+			M:QueueUpdateDamageIcon(1)
 	else
 		M.take_organ_damage(7)
 	M.eye_blurry += rand(3,4)
@@ -727,8 +732,6 @@
 /obj/item/add_blood(mob/living/carbon/human/M as mob)
 	if (!..())
 		return 0
-	if(!M)
-		return
 	if(istype(src, /obj/item/weapon/melee/energy))
 		return
 
@@ -736,13 +739,15 @@
 	if( !blood_overlay )
 		generate_blood_overlay()
 
-	//apply the blood-splatter overlay if it isn't already in there
-	if(!blood_DNA.len)
-		blood_overlay.color = blood_color
-		overlays += blood_overlay
+	//apply the blood-splatter overlay if it isn't already in there, else it updates it.
+	overlays -= blood_overlay
+	blood_overlay.color = blood_color
+	overlays += blood_overlay
 
 	//if this blood isn't already in the list, add it
 
+	if(!M)
+		return
 	if(blood_DNA[M.dna.unique_enzymes])
 		return 0 //already bloodied with this blood. Cannot add more.
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
@@ -756,10 +761,12 @@
 	I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD) //fills the icon_state with white (except where it's transparent)
 	I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
 
+
 	//not sure if this is worth it. It attaches the blood_overlay to every item of the same type if they don't have one already made.
 	for(var/obj/item/A in world)
 		if(A.type == type && !A.blood_overlay)
 			A.blood_overlay = image(I)
+
 
 /obj/item/proc/showoff(mob/user)
 	for (var/mob/M in view(user))
@@ -785,3 +792,15 @@
 		return 1
 
 	return 0
+
+//handling the pulling of the item for singularity
+/obj/item/singularity_pull(S, current_size)
+	spawn(0) //this is needed or multiple items will be thrown sequentially and not simultaneously
+		if(current_size >= STAGE_FOUR)
+			//throw_at(S, 14, 3)
+			step_towards(src,S)
+			sleep(1)
+			step_towards(src,S)
+		else if(current_size > STAGE_ONE)
+			step_towards(src,S)
+		else ..()

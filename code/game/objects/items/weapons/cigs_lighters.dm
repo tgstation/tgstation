@@ -58,6 +58,26 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else
 		return ..()
 
+/obj/item/weapon/match/strike_anywhere
+	name = "strike-anywhere match"
+	smoketime = 10
+
+/obj/item/weapon/match/strike_anywhere/afterattack(atom/target, mob/user, prox_flags)
+	if(!prox_flags == 1)
+		return
+
+	if(!(get_turf(src) == get_turf(user)))
+		return
+
+	if(lit)
+		return
+
+	if(istype(target, /obj) || istype(target, /turf))
+		lit = 1
+		icon_state = "match_lit"
+		processing_objects.Add(src)
+		user << "You strike \the [src] on \the [target]."
+
 //////////////////
 //FINE SMOKABLES//
 //////////////////
@@ -281,7 +301,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_on = "cigaron"
 	icon_off = "cigaroff"
 	overlay_on = "cigarlit"
-	flags = FPRINT|TABLEPASS
+	flags = FPRINT
 	type_butt = /obj/item/weapon/cigbutt/cigarbutt
 	throw_speed = 0.5
 	item_state = "cigaroff"
@@ -400,7 +420,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/pipe
 	name = "smoking pipe"
 	desc = "A pipe, for smoking. Probably made of meershaum or something."
-	flags = FPRINT|TABLEPASS
+	flags = FPRINT
 	icon_state = "pipeoff"
 	item_state = "pipeoff"
 	icon_on = "pipeon"  //Note - these are in masks.dmi
@@ -479,7 +499,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/icon_off = "lighter-g"
 	w_class = 1
 	throwforce = 4
-	flags = TABLEPASS | CONDUCT
+	flags = 0
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	attack_verb = list("burnt", "singed")
 	var/lit = 0

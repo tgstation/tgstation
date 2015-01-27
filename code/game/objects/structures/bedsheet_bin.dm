@@ -80,6 +80,9 @@ LINEN BINS
 	icon_state = "sheetred"
 	_color = "red"
 
+/obj/item/weapon/bedsheet/red/redcoat
+		_color = "redcoat" //for denied stamp
+
 /obj/item/weapon/bedsheet/yellow
 	icon_state = "sheetyellow"
 	_color = "yellow"
@@ -120,7 +123,8 @@ LINEN BINS
 	icon_state = "sheetbrown"
 	_color = "brown"
 
-
+/obj/item/weapon/bedsheet/brown/cargo
+	_color = "cargo"		//exists for washing machines, is not different from brown bedsheet in any way
 
 
 /obj/structure/bedsheetbin
@@ -134,15 +138,14 @@ LINEN BINS
 	var/obj/item/hidden = null
 
 
-/obj/structure/bedsheetbin/examine()
-	usr << desc
-	if(amount < 1)
-		usr << "There are no bed sheets in the bin."
-		return
-	if(amount == 1)
-		usr << "There is one bed sheet in the bin."
-		return
-	usr << "There are [amount] bed sheets in the bin."
+/obj/structure/bedsheetbin/examine(mob/user)
+	..()
+	if(amount == 0)
+		user << "<span class='info'>There are no bed sheets in the bin.</span>"
+	else if(amount == 1)
+		user << "<span class='info'>There is one bed sheet in the bin.</span>"
+	else
+		user << "<span class='info'>There are [amount] bed sheets in the bin.</span>"
 
 
 /obj/structure/bedsheetbin/update_icon()

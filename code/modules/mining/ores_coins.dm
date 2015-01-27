@@ -291,7 +291,8 @@
 	icon = 'icons/obj/items.dmi'
 	name = "Coin"
 	icon_state = "coin"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	force = 0.0
 	throwforce = 0.0
 	w_class = 1.0
@@ -396,9 +397,9 @@
 			..()
 			return
 
-		var/obj/item/weapon/cable_coil/CC = new/obj/item/weapon/cable_coil(user.loc)
+		var/obj/item/weapon/cable_coil/CC = new(user.loc)
 		CC.amount = 1
-		CC.updateicon()
+		CC.update_icon()
 		overlays = list()
 		string_attached = null
 		user << "\blue You detach the string from the coin."

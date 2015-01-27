@@ -4,7 +4,7 @@
 #define SUPPLY_STATION_AREATYPE "/area/supply/station" //Type of the supply shuttle area for station
 #define SUPPLY_DOCK_AREATYPE "/area/supply/dock"	//Type of the supply shuttle area for dock
 #define SUPPLY_TAX 10 // Credits to charge per order.
-var/datum/controller/supply_shuttle/supply_shuttle = new()
+var/datum/controller/supply_shuttle/supply_shuttle = new
 
 var/list/mechtoys = list(
 	/obj/item/toy/prize/ripley,
@@ -397,7 +397,7 @@ var/list/mechtoys = list(
 	else
 		dat += {"<BR><B>Supply shuttle</B><HR>
 		Location: [supply_shuttle.moving ? "Moving to station ([supply_shuttle.eta] Mins.)":supply_shuttle.at_station ? "Station":"Dock"]<BR>
-		<HR>Supply points: [current_acct.fmtBalance()]<BR>
+		<HR>Supply points: [current_acct ? current_acct.fmtBalance() : "PANIC"]<BR>
 		<BR>\n<A href='?src=\ref[src];order=categories'>Request items</A><BR><BR>
 		<A href='?src=\ref[src];vieworders=1'>View approved orders</A><BR><BR>
 		<A href='?src=\ref[src];viewrequests=1'>View requests</A><BR><BR>
@@ -422,7 +422,7 @@ var/list/mechtoys = list(
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\supplyshuttle.dm:383: temp = "<b>Supply points: [supply_shuttle.points]</b><BR>"
-			temp = {"<b>Supply points: [current_acct.fmtBalance()]</b><BR>
+			temp = {"<b>Supply points: [current_acct ? current_acct.fmtBalance() : "PANIC"]</b><BR>
 				<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><HR><BR><BR>
 				<b>Select a category</b><BR><BR>"}
 			// END AUTOFIX
@@ -433,7 +433,7 @@ var/list/mechtoys = list(
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\supplyshuttle.dm:390: temp = "<b>Supply points: [supply_shuttle.points]</b><BR>"
-			temp = {"<b>Supply points: [current_acct.fmtBalance()]</b><BR>
+			temp = {"<b>Supply points: [current_acct ? current_acct.fmtBalance() : "PANIC"]</b><BR>
 				<A href='?src=\ref[src];order=categories'>Back to all categories</A><HR><BR><BR>
 				<b>Request from: [last_viewed_group]</b><BR><BR>"}
 			// END AUTOFIX
@@ -638,7 +638,7 @@ var/list/mechtoys = list(
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\supplyshuttle.dm:567: temp = "<b>Supply points: [supply_shuttle.points]</b><BR>"
-			temp = {"<b>Available credits: [current_acct.fmtBalance()]</b><BR>
+			temp = {"<b>Available credits: [current_acct ? current_acct.fmtBalance() : "PANIC"]</b><BR>
 				<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><HR><BR><BR>
 				<b>Select a category</b><BR><BR>"}
 			// END AUTOFIX
@@ -649,7 +649,7 @@ var/list/mechtoys = list(
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\supplyshuttle.dm:574: temp = "<b>Supply points: [supply_shuttle.points]</b><BR>"
-			temp = {"<b>Available credits: [current_acct.fmtBalance()]</b><BR>
+			temp = {"<b>Available credits: [current_acct ? current_acct.fmtBalance() : "PANIC"]</b><BR>
 				<A href='?src=\ref[src];order=categories'>Back to all categories</A><HR><BR><BR>
 				<b>Request from: [last_viewed_group]</b><BR><BR>"}
 			// END AUTOFIX

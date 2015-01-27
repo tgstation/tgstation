@@ -1,3 +1,4 @@
+var/list/obj/machinery/prism/prism_list = list()
 /obj/machinery/prism
 	name = "Prism"
 	desc = "A simple device that combines emitter beams."
@@ -30,6 +31,13 @@
 		/obj/item/weapon/stock_parts/micro_laser/high,
 		/obj/item/weapon/stock_parts/micro_laser/high,
 	)
+	prism_list += src
+
+/obj/machinery/prism/Destroy()
+	qdel(beam)
+	beam=null
+	prism_list -= src
+	..()
 
 /obj/machinery/prism/verb/rotate_cw()
 	set name = "Rotate (Clockwise)"
@@ -39,7 +47,7 @@
 	if (src.anchored)
 		usr << "It is fastened to the floor!"
 		return 0
-	src.dir = turn(src.dir, 90)
+	src.dir = turn(src.dir, -90)
 	qdel(beam)
 	beam=null
 	update_beams()
@@ -53,7 +61,7 @@
 	if (src.anchored)
 		usr << "It is fastened to the floor!"
 		return 0
-	src.dir = turn(src.dir, -90)
+	src.dir = turn(src.dir, 90)
 	qdel(beam)
 	beam=null
 	update_beams()
@@ -91,11 +99,14 @@
 			beam.dir=dir
 			newbeam=1
 		beam.power=0
-		var/list/spawners = list()
+		var/list/spawners = list(src)
 		for(var/obj/effect/beam/emitter/B in beams)
 			if(B.HasSource(src))
 				warning("Ignoring beam [B] due to recursion.")
 				continue // Prevent infinite loops.
+			// Don't process beams firing into our emission side.
+			if(get_dir(src, B) == dir)
+				continue
 			spawners += B.sources
 			beam.power += B.power
 			var/beamdir=get_dir(B.loc,src)

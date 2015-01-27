@@ -263,50 +263,6 @@ var/global/list/PDA_Manifest = list()
 
 	var/list/container = list(  )
 
-
-/obj/structure/cable
-	level = 1
-	anchored =1
-	var/datum/powernet/powernet
-	name = "power cable"
-	desc = "A flexible superconducting cable for heavy-duty power transfer"
-	icon = 'icons/obj/power_cond_red.dmi'
-	icon_state = "0-1"
-	var/d1 = 0
-	var/d2 = 1
-	layer = 2.44 //Just below unary stuff, which is at 2.45 and above pipes, which are at 2.4
-	l_color = "red"
-	var/obj/structure/powerswitch/power_switch
-	var/obj/item/device/powersink/attached // holding this here for qdel
-
-/obj/structure/cable/yellow
-	l_color = "yellow"
-	icon = 'icons/obj/power_cond_yellow.dmi'
-
-/obj/structure/cable/green
-	l_color = "green"
-	icon = 'icons/obj/power_cond_green.dmi'
-
-/obj/structure/cable/blue
-	l_color = "blue"
-	icon = 'icons/obj/power_cond_blue.dmi'
-
-/obj/structure/cable/pink
-	l_color = "pink"
-	icon = 'icons/obj/power_cond_pink.dmi'
-
-/obj/structure/cable/orange
-	l_color = "orange"
-	icon = 'icons/obj/power_cond_orange.dmi'
-
-/obj/structure/cable/cyan
-	l_color = "cyan"
-	icon = 'icons/obj/power_cond_cyan.dmi'
-
-/obj/structure/cable/white
-	l_color = "white"
-	icon = 'icons/obj/power_cond_white.dmi'
-
 /obj/effect/projection
 	name = "Projection"
 	desc = "This looks like a projection of something."
@@ -341,10 +297,12 @@ var/global/list/PDA_Manifest = list()
 	throwforce = 0.0
 	throw_speed = 1
 	throw_range = 20
-	flags = FPRINT | USEDELAY | TABLEPASS | CONDUCT
-	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		user.drop_item()
-		src.throw_at(target, throw_range, throw_speed)
+	flags = FPRINT
+	siemens_coefficient = 1
+
+/obj/item/weapon/beach_ball/afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+	user.drop_item()
+	src.throw_at(target, throw_range, throw_speed)
 
 /obj/effect/stop
 	var/victim = null

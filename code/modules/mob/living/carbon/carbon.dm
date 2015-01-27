@@ -1,3 +1,12 @@
+
+// Vent crawling whitelisted items, whoo
+/atom
+	var/list/canEnterVentWith=list(
+		/obj/item/weapon/implant,
+		/obj/item/clothing/mask/facehugger,
+		/obj/item/device/radio/borg,
+		/obj/machinery/camera)
+
 /mob/living/carbon/Login()
 	..()
 	update_hud()
@@ -31,7 +40,7 @@
 					if (istype(organ, /datum/organ/external))
 						var/datum/organ/external/temp = organ
 						if(temp.take_damage(d, 0))
-							H.UpdateDamageIcon()
+							H.QueueUpdateDamageIcon()
 					H.updatehealth()
 				else
 					src.take_organ_damage(d)
@@ -222,11 +231,8 @@
 				"\blue [M] gives [src] a [pick("hug","warm embrace")].", \
 				"\blue You hug [src].", \
 				)
-			if(prob(10))
-				src.emote("fart")
-			/* VG-EDIT Killing people through hugs, one overdose at a time.
 			reagents.add_reagent("paracetamol", 1)
-			*/
+
 			share_contact_diseases(M)
 
 
@@ -290,8 +296,8 @@
 
 					if(loc==startloc)
 						if(contents.len && !isrobot(src))
-							for(var/obj/item/carried_item in contents)//If the monkey got on objects.
-								if( !istype(carried_item, /obj/item/weapon/implant) && !istype(carried_item, /obj/item/clothing/mask/facehugger) )//If it's not an implant or a facehugger
+							for(var/obj/item/carried_item in contents)//If the ventcrawler got on objects.
+								if(!(is_type_in_list(carried_item, canEnterVentWith)))
 									src << "\red You can't be carrying items or have items equipped when vent crawling!"
 									return
 						var/obj/machinery/atmospherics/unary/vent_pump/target_vent = vents[selection]
@@ -300,7 +306,7 @@
 								O.show_message(text("<B>[src] scrambles into the ventilation ducts!</B>"), 1)
 							loc = target_vent
 
-							var/travel_time = round(get_dist(loc, target_vent.loc) / 2)
+							var/travel_time = round(get_dist(loc, target_vent.loc) / 4)
 
 							spawn(travel_time)
 
@@ -663,3 +669,6 @@
 	else
 		src << "You do not have enough chemicals stored to reproduce."
 		return
+
+/mob/living/carbon/is_muzzled()
+	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))

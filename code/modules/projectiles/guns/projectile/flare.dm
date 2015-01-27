@@ -15,7 +15,8 @@
 	force = 4
 	recoil = 1
 	fire_delay = 10
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags = FPRINT
+	siemens_coefficient = 1
 	caliber = list("flare" = 1)
 	origin_tech = "combat=2;materials=2"
 	ammo_type = "/obj/item/ammo_casing/shotgun/flare"

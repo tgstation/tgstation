@@ -1,4 +1,4 @@
-var/global/datum/controller/lighting/lighting_controller = new ()
+var/global/datum/controller/lighting/lighting_controller = new
 
 datum/controller/lighting
 	processing_interval = 5 // Setting this too low will probably kill the server. Don't be silly with it!

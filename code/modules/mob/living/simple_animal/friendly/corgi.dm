@@ -74,7 +74,15 @@
 	return
 
 /mob/living/simple_animal/corgi/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(inventory_head && inventory_back)
+	if(istype(O, /obj/item/weapon/newspaper))
+		if(!stat)
+			user.visible_message("\blue [user] baps [name] on the nose with the rolled up [O]")
+			spawn(0)
+				emote("whines")
+				for(var/i in list(1,2,4,8,4,2,1,2))
+					dir = i
+					sleep(1)
+	else if(inventory_head && inventory_back)
 		//helmet and armor = 100% protection
 		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
 			if( O.force )
@@ -455,18 +463,6 @@
 			step(AM, t)
 		now_pushing = null
 //PC stuff-Sieve
-
-/mob/living/simple_animal/corgi/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
-	if(istype(O, /obj/item/weapon/newspaper))
-		if(!stat)
-			user.visible_message("\blue [user] baps [name] on the nose with the rolled up [O]")
-			spawn(0)
-				if (ckey == null)
-					for(var/i in list(1,2,4,8,4,2,1,2))
-						dir = i
-						sleep(1)
-	else
-		..()
 
 /mob/living/simple_animal/corgi/regenerate_icons()
 	overlays = list()

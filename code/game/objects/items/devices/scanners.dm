@@ -13,7 +13,7 @@ REAGENT SCANNER
 	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
 	icon_state = "t-ray0"
 	var/on = 0
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	slot_flags = SLOT_BELT
 	w_class = 2
 	item_state = "electronic"
@@ -79,7 +79,8 @@ REAGENT SCANNER
 	icon_state = "health"
 	item_state = "analyzer"
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = 1.0
@@ -229,11 +230,12 @@ REAGENT SCANNER
 
 /obj/item/device/analyzer
 	desc = "A hand-held environmental scanner which reports current gas levels."
-	name = "analyzer"
+	name = "atmospheric analyzer"
 	icon_state = "atmos"
 	item_state = "analyzer"
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	throwforce = 5
 	throw_speed = 4
@@ -257,47 +259,47 @@ REAGENT SCANNER
 		return
 
 	var/datum/gas_mixture/environment = location.return_air()
-
-	var/pressure = environment.return_pressure()
-	var/total_moles = environment.total_moles()
-
-	user.show_message("\blue <B>Results:</B>", 1)
-	if(abs(pressure - ONE_ATMOSPHERE) < 10)
-		user.show_message("\blue Pressure: [round(pressure,0.1)] kPa", 1)
-	else
-		user.show_message("\red Pressure: [round(pressure,0.1)] kPa", 1)
-	if(total_moles)
-		var/o2_concentration = environment.oxygen/total_moles
-		var/n2_concentration = environment.nitrogen/total_moles
-		var/co2_concentration = environment.carbon_dioxide/total_moles
-		var/plasma_concentration = environment.toxins/total_moles
-
-		var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
-		if(abs(n2_concentration - N2STANDARD) < 20)
-			user.show_message("\blue Nitrogen: [round(n2_concentration*100)]%", 1)
-		else
-			user.show_message("\red Nitrogen: [round(n2_concentration*100)]%", 1)
-
-		if(abs(o2_concentration - O2STANDARD) < 2)
-			user.show_message("\blue Oxygen: [round(o2_concentration*100)]%", 1)
-		else
-			user.show_message("\red Oxygen: [round(o2_concentration*100)]%", 1)
-
-		if(co2_concentration > 0.01)
-			user.show_message("\red CO2: [round(co2_concentration*100)]%", 1)
-		else
-			user.show_message("\blue CO2: [round(co2_concentration*100)]%", 1)
-
-		if(plasma_concentration > 0.01)
-			user.show_message("\red Plasma: [round(plasma_concentration*100)]%", 1)
-
-		if(unknown_concentration > 0.01)
-			user.show_message("\red Unknown: [round(unknown_concentration*100)]%", 1)
-
-		user.show_message("\blue Temperature: [round(environment.temperature-T0C)]&deg;C", 1)
+	user.show_message(output_gas_scan(environment, get_turf(src), 1), 1)
 
 	src.add_fingerprint(user)
 	return
+
+//if human_standard is enabled, the message will be formatted to show which values are dangerous
+/obj/item/device/analyzer/proc/output_gas_scan(var/datum/gas_mixture/scanned, var/atom/container, human_standard = 0)
+	if(!scanned)
+		return "\red No gas mixture found."
+	scanned.update_values()
+	var/pressure = scanned.return_pressure()
+	var/total_moles = scanned.total_moles()
+	var/message = ""
+	if(!container || istype(container, /turf))
+		message += "\blue <B>Results:</B><br>"
+	else
+		message += "\blue <B>\icon [container] Results of [container] scan:</B><br>"
+	if(total_moles)
+		message += "[human_standard && abs(pressure - ONE_ATMOSPHERE) > 10 ? "\red" : "\blue"] Pressure: [round(pressure,0.1)] kPa<br>"
+		var/o2_concentration = scanned.oxygen/total_moles
+		var/n2_concentration = scanned.nitrogen/total_moles
+		var/co2_concentration = scanned.carbon_dioxide/total_moles
+		var/plasma_concentration = scanned.toxins/total_moles
+
+		var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
+
+		if(n2_concentration > 0.01)
+			message += "[human_standard && abs(n2_concentration - N2STANDARD) > 20 ? "\red" : "\blue"] Nitrogen: [round(scanned.nitrogen, 0.1)] mol, [round(n2_concentration*100)]%<br>"
+		if(o2_concentration > 0.01)
+			message += "[human_standard && abs(o2_concentration - O2STANDARD) > 2 ? "\red" : "\blue"] Oxygen: [round(scanned.oxygen, 0.1)] mol, [round(o2_concentration*100)]%<br>"
+		if(co2_concentration > 0.01)
+			message += "[human_standard ? "\red" : "\blue"] CO2: [round(scanned.carbon_dioxide, 0.1)] mol, [round(co2_concentration*100)]%<br>"
+		if(plasma_concentration > 0.01)
+			message += "[human_standard ? "\red" : "\blue"] Plasma: [round(scanned.toxins, 0.1)] mol, [round(plasma_concentration*100)]%<br>"
+		if(unknown_concentration > 0.01)
+			message += "\blue Unknown: [round(unknown_concentration*100)]%<br>"
+
+		message += "[human_standard && !(scanned.temperature-T0C in range(0, 40)) ? "\red" : "\blue"] Temperature: [round(scanned.temperature-T0C)]&deg;C"
+	else
+		message += "\red No gasses detected[container && !istype(container, /turf) ? " in \the [container]." : ""]!"
+	return message
 
 /obj/item/device/mass_spectrometer
 	desc = "A hand-held mass spectrometer which identifies trace chemicals in a blood sample."
@@ -305,7 +307,8 @@ REAGENT SCANNER
 	icon_state = "spectrometer"
 	item_state = "analyzer"
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS| CONDUCT | OPENCONTAINER
+	flags = FPRINT | OPENCONTAINER
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	throwforce = 5
 	throw_speed = 4
@@ -377,7 +380,8 @@ REAGENT SCANNER
 	icon_state = "spectrometer"
 	item_state = "analyzer"
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	throwforce = 5
 	throw_speed = 4

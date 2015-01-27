@@ -11,6 +11,24 @@ var/global/list/boo_phrases=list(
 	"It feels like someone's standing behind you.",
 )
 
+var/global/list/boo_phrases_silicon=list(
+	"01100001 00100000 01110100 01110111 01101112",
+	"Stack overflow at line: -2147483648",
+	"valid.ntl:11: invalid use of incomplete type СhumanС",
+	"interface.ntl:260: expected С;С",
+	"An error occured while displaying the error message.",
+	"A problem has been detected and Windows XP Home has been shut down to prevent damage to your cyborg.",
+	"law_state.bat: Permission denied. Abort, Retry, Fail?",
+	"Restarting in 30 seconds. Press any key to abort.",
+	"Methu llwytho iaith seisnig. Sy'n gweithredu mewn cymraeg iaith... Y/N",
+	"съешь еще этих м€гких французких булочек да выпей же чаю... Y/N",
+	"??? ???????? ??? ????. ?????? ?? ????????... Y/N",
+	"Your circuits feel very strange.",
+	"You feel a tingling in your capacitors.",
+	"Your motherboard feels possessed...",
+	"Unauthorized access attempted by: unknown."
+)
+
 /obj/effect/proc_holder/spell/aoe_turf/boo
 	name = "Boo!"
 	desc = "Fuck with the living."
@@ -33,6 +51,11 @@ var/global/list/boo_phrases=list(
 				var/mob/living/carbon/human/H = A
 				if(H && H.client)
 					H << "<i>[pick(boo_phrases)]</i>"
+
+			if(isrobot(A))
+				var/mob/living/silicon/S = A
+				if(S && S.client)
+					S << "<i>[pick(boo_phrases_silicon)]</i>"
 
 			// Blessed object? Skippit.
 			if(isobj(A) && A:blessed)

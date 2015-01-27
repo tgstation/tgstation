@@ -5,7 +5,8 @@
 	fire_sound = 'sound/weapons/ion.ogg'
 	origin_tech = "combat=2;magnets=4"
 	w_class = 4.0
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BACK
 	charge_cost = 100
 	projectile_type = "/obj/item/projectile/ion"
@@ -26,7 +27,7 @@
 	charge_cost = 100
 	projectile_type = "/obj/item/projectile/energy/declone"
 
-var/available_staff_transforms=list("monkey","robot","slime","xeno","human","cluwne")
+var/available_staff_transforms=list("monkey","robot","slime","xeno","human","furry")
 #define SOC_CHANGETYPE_COOLDOWN 2 MINUTES
 
 /obj/item/weapon/gun/energy/staff
@@ -36,7 +37,8 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","clu
 	icon_state = "staffofchange"
 	item_state = "staffofchange"
 	fire_sound = 'sound/weapons/radgun.ogg'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BACK
 	w_class = 4.0
 	charge_cost = 200
@@ -79,16 +81,21 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","clu
 	if(world.time < next_changetype)
 		user << "<span class='warning'>[src] is still recharging.</span>"
 		return
-	var/selected = input("Select a form for your next victim","Staff of Change") as null|anything in list("random")+available_staff_transforms
+
+	var/selected = input("You squint at the dial conspicuously mounted on the side of your staff.","Staff of Change") as null|anything in list("random")+available_staff_transforms
 	if(!selected)
 		return
+
+	if (selected == "furry")
+		user << "<span class='danger'>You monster.</span>"
+	else
+		user << "<span class='info'>You have selected to make your next victim have a [selected] form.</span>"
 
 	switch(selected)
 		if("random")
 			changetype=null
 		else
 			changetype=selected
-	user << "You have selected to make your next victim have a [selected] form."
 	next_changetype=world.time+SOC_CHANGETYPE_COOLDOWN
 
 /obj/item/weapon/gun/energy/staff/animate

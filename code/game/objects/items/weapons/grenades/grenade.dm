@@ -7,7 +7,8 @@
 	item_state = "flashbang"
 	throw_speed = 4
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	var/active = 0
 	var/det_time = 50
@@ -42,19 +43,18 @@
 	return*/
 
 
-/obj/item/weapon/grenade/examine()
-	set src in usr
-	usr << desc
+/obj/item/weapon/grenade/examine(mob/user)
+	..()
 	if(det_time > 1)
-		usr << "The timer is set to [det_time/10] seconds."
+		user << "<span class='info'>The timer is set to [det_time/10] seconds.</span>"
 		return
-	usr << "\The [src] is set for instant detonation."
+	user << "<span class='warning'>\The [src] is set for instant detonation.</span>"
 
 
 /obj/item/weapon/grenade/attack_self(mob/user as mob)
 	if(!active)
 		if(clown_check(user))
-			user << "<span class='warning'>You prime \the [name]! [det_time/10] seconds!</span>"
+			user << "<span class='attack'>You prime \the [name]! [det_time/10] seconds!</span>"
 
 			activate(user)
 			add_fingerprint(user)

@@ -109,6 +109,19 @@ var/global/list/whitelisted_species = list("Human")
 		"eyes" =     /datum/organ/internal/eyes
 		)
 
+	//If we will apply mutant race overlays or not.
+	var/has_mutant_race = 1
+
+/datum/species/proc/handle_speech(var/message, var/mob/living/carbon/human/H)
+	if(H.dna)
+		if(length(message) >= 2)
+			for(var/datum/dna/gene/gene in dna_genes)
+				if(!gene.block)
+					continue
+				if(gene.is_active(H))
+					message = gene.OnSay(H,message)
+	return message
+
 /datum/species/proc/create_organs(var/mob/living/carbon/human/H) //Handles creation of mob organs.
 
 	//This is a basic humanoid limb setup.
@@ -466,6 +479,8 @@ var/global/list/whitelisted_species = list("Human")
 	default_mutations=list(M_REMOTE_TALK)
 	default_block_names=list("REMOTETALK")
 
+	has_mutant_race = 0
+
 /datum/species/muton // /vg/
 	name = "Muton"
 	icobase = 'icons/mob/human_races/r_muton.dmi'
@@ -484,6 +499,8 @@ var/global/list/whitelisted_species = list("Human")
 	// Both must be set or it's only a 45% chance of manifesting.
 	default_mutations=list(M_STRONG | M_RUN | M_LOUD)
 	default_block_names=list("STRONGBLOCK","LOUDBLOCK","INCREASERUNBLOCK")
+
+	has_mutant_race = 0
 
 	equip(var/mob/living/carbon/human/H)
 		// Unequip existing suits and hats.
@@ -536,38 +553,92 @@ var/global/list/whitelisted_species = list("Human")
 	wear_mask_icons = 'icons/mob/species/vox/masks.dmi'
 //	back_icons      = 'icons/mob/back.dmi'
 
+	has_mutant_race = 0
+
 	equip(var/mob/living/carbon/human/H)
 		// Unequip existing suits and hats.
-		H.u_equip(H.wear_suit)
-		H.u_equip(H.head)
+		if(H.mind.assigned_role != "MODE")
+			H.u_equip(H.wear_suit)
+			H.u_equip(H.head)
 		if(H.mind.assigned_role!="Clown")
 			H.u_equip(H.wear_mask)
 
 		H.equip_or_collect(new /obj/item/clothing/mask/breath/vox(H), slot_wear_mask)
-		var/suit=/obj/item/clothing/suit/space/vox/casual
-		var/helm=/obj/item/clothing/head/helmet/space/vox/casual
+		var/suit=/obj/item/clothing/suit/space/vox/civ
+		var/helm=/obj/item/clothing/head/helmet/space/vox/civ
 		var/tank_slot = slot_s_store
 		var/tank_slot_name = "suit storage"
 		switch(H.mind.assigned_role)
-			if("Research Director","Scientist","Geneticist","Roboticist")
-				suit=/obj/item/clothing/suit/space/vox/casual/science
-				helm=/obj/item/clothing/head/helmet/space/vox/casual/science
-			if("Chief Engineer","Station Engineer","Atmospheric Technician")
-				suit=/obj/item/clothing/suit/space/vox/casual/engineer
-				helm=/obj/item/clothing/head/helmet/space/vox/casual/engineer
+
+			if("Bartender")
+				suit=/obj/item/clothing/suit/space/vox/civ/bartender
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/bartender
+			if("Chef")
+				suit=/obj/item/clothing/suit/space/vox/civ/chef
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/chef
+			if("Chaplain")
+				suit=/obj/item/clothing/suit/space/vox/civ/chaplain
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/chaplain
+			if("Librarian")
+				suit=/obj/item/clothing/suit/space/vox/civ/librarian
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/librarian
+
+			if("Chief Engineer")
+				suit=/obj/item/clothing/suit/space/vox/civ/engineer/ce
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/engineer/ce
+			if("Station Engineer")
+				suit=/obj/item/clothing/suit/space/vox/civ/engineer
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/engineer
+			if("Atmospheric Technician")
+				suit=/obj/item/clothing/suit/space/vox/civ/engineer/atmos
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/engineer/atmos
+
+			if("Scientist","Roboticist")
+				suit=/obj/item/clothing/suit/space/vox/civ/science
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/science
+			if("Research Director")
+				suit=/obj/item/clothing/suit/space/vox/civ/science/rd
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/science/rd
+
+			if("Medical Doctor")
+				suit=/obj/item/clothing/suit/space/vox/civ/medical
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/medical
+			if("Paramedic")
+				suit=/obj/item/clothing/suit/space/vox/civ/medical/paramedic
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/medical/paramedic
+			if("Geneticist")
+				suit=/obj/item/clothing/suit/space/vox/civ/medical/geneticist
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/medical/geneticist
+			if("Virologist")
+				suit=/obj/item/clothing/suit/space/vox/civ/medical/virologist
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/medical/virologist
+			if("Chemist")
+				suit=/obj/item/clothing/suit/space/vox/civ/medical/chemist
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/medical/chemist
+			if("Chief Medical Officer")
+				suit=/obj/item/clothing/suit/space/vox/civ/medical/cmo
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/medical/cmo
+
 			if("Head of Security","Warden","Detective","Security Officer")
-				suit=/obj/item/clothing/suit/space/vox/casual/security
-				helm=/obj/item/clothing/head/helmet/space/vox/casual/security
-			if("Chief Medical Officer","Medical Doctor","Paramedic","Chemist")
-				suit=/obj/item/clothing/suit/space/vox/casual/medical
-				helm=/obj/item/clothing/head/helmet/space/vox/casual/medical
+				suit=/obj/item/clothing/suit/space/vox/civ/security
+				helm=/obj/item/clothing/head/helmet/space/vox/civ/security
+
 			if("Clown","Mime")
 				tank_slot=slot_r_hand
 				tank_slot_name = "hand"
-		H.equip_or_collect(new suit(H), slot_wear_suit)
-		H.equip_or_collect(new helm(H), slot_head)
+			if("MODE") // Gamemode stuff
+				switch(H.mind.special_role)
+					if("Wizard")
+						suit = null
+						helm = null
+						tank_slot = slot_l_hand
+						tank_slot_name = "hand"
+		if(suit)
+			H.equip_or_collect(new suit(H), slot_wear_suit)
+		if(helm)
+			H.equip_or_collect(new helm(H), slot_head)
 		H.equip_or_collect(new/obj/item/weapon/tank/nitrogen(H), tank_slot)
-		H << "\blue You are now running on nitrogen internals from the [H.s_store] in your [tank_slot_name]. Your species finds oxygen toxic, so you must breathe nitrogen (AKA N<sub>2</sub>) only."
+		H << "<span class='info'>You are now running on nitrogen internals from the [H.s_store] in your [tank_slot_name]. Your species finds oxygen toxic, so <b>you must breathe nitrogen (AKA N<sub>2</sub>) only</b>.</span"
 		H.internal = H.get_item_by_slot(tank_slot)
 		if (H.internals)
 			H.internals.icon_state = "internal1"
@@ -606,4 +677,6 @@ var/global/list/whitelisted_species = list("Human")
 
 	blood_color = "#004400"
 	flesh_color = "#907E4A"
+
+	has_mutant_race = 0
 

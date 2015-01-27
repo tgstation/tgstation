@@ -1,7 +1,7 @@
 #define FLA_FAB_WIDTH 1000
 #define FLA_FAB_HEIGHT 600
 
-#define FLA_FAB_BASETIME 100
+#define FLA_FAB_BASETIME 0.5
 
 /obj/machinery/r_n_d/fabricator/mechanic_fab/flatpacker
 	name = "Flatpack Fabricator"
@@ -10,6 +10,8 @@
 	icon_state = "flatpacker"
 
 	nano_file = "flatpacker.tmpl"
+
+	build_time = FLA_FAB_BASETIME
 
 	design_types = list("machine" = 1, "item" = 0)
 
@@ -47,18 +49,10 @@ obj/machinery/r_n_d/fabricator/mechanic_fab/flatpacker/build_part(var/datum/desi
 	if(!part)
 		return
 
-	for(var/M in part.materials)
-		if(!check_mat(part, M))
-			src.visible_message("<font color='blue'>The [src.name] beeps, \"Not enough materials to complete item.\"</font>")
-			stopped=1
-			return 0
-		if(copytext(M,1,2) == "$")
-			var/matID=copytext(M,2)
-			var/datum/material/material=materials[matID]
-			material.stored = max(0, (material.stored-part.materials[M]))
-			materials[matID]=material
-		else
-			reagents.remove_reagent(M, part.materials[M])
+	if(!remove_materials(part))
+		stopped = 1
+		src.visible_message("<font color='blue'>The [src.name] beeps, \"Not enough materials to complete item.\"</font>")
+		return
 
 	src.being_built = new part.build_path(src)
 

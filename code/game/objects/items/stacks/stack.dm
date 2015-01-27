@@ -13,6 +13,7 @@
 	var/list/datum/stack_recipe/recipes
 	var/singular_name
 	var/amount = 1
+	var/perunit = 3750
 	var/max_amount //also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
 
 /obj/item/stack/New(var/loc, var/amount=null)
@@ -22,20 +23,20 @@
 	return
 
 /obj/item/stack/Destroy()
-	if (src && usr && usr.machine==src)
+	if (usr && usr.machine==src)
 		usr << browse(null, "window=stack")
+	src.loc = null
 	..()
 
-/obj/item/stack/examine()
-	set src in view(1)
+/obj/item/stack/examine(mob/user)
 	..()
-	usr << "There are [src.amount] [src.singular_name]\s in the stack."
-	return
+	user << "<span class='info'>There are [src.amount] [src.singular_name]\s in the stack.</span>"
 
 /obj/item/stack/attack_self(mob/user as mob)
 	list_recipes(user)
 
 /obj/item/stack/proc/list_recipes(mob/user as mob, recipes_sublist)
+	ASSERT(isnum(amount))
 	if (!recipes)
 		return
 	if (!src || amount<=0)
@@ -119,18 +120,18 @@
 		if (!multiplier) multiplier = 1
 		if (src.amount < R.req_amount*multiplier)
 			if (R.req_amount*multiplier>1)
-				usr << "\red You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!"
+				usr << "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>"
 			else
-				usr << "\red You haven't got enough [src] to build \the [R.title]!"
+				usr << "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>"
 			return
 		if (R.one_per_turf && (locate(R.result_type) in usr.loc))
-			usr << "\red There is another [R.title] here!"
+			usr << "<span class='warning'>There is another [R.title] here!</span>"
 			return
 		if (R.on_floor && !istype(usr.loc, /turf/simulated/floor))
-			usr << "\red \The [R.title] must be constructed on the floor!"
+			usr << "<span class='warning'>\The [R.title] must be constructed on the floor!</span>"
 			return
 		if (R.time)
-			usr << "\blue Building [R.title] ..."
+			usr << "<span class='notice'>Building [R.title] ...</span>"
 			if (!do_after(usr, R.time))
 				return
 		if (src.amount < R.req_amount*multiplier)
@@ -162,14 +163,16 @@
 	return
 
 /obj/item/stack/proc/use(var/amount)
-	src.amount-=amount
+	ASSERT(isnum(src.amount))
+	if(src.amount>=amount)
+		src.amount-=amount
+	else
+		return 0
+	. = 1
 	if (src.amount<=0)
-		var/oldsrc = src
-		src = null //dont kill proc after del()
 		if(usr)
-			usr.before_take_item(oldsrc)
-		qdel(oldsrc)
-	return
+			usr.before_take_item(src)
+		spawn qdel(src)
 
 /obj/item/stack/proc/add_to_stacks(mob/usr as mob)
 	var/obj/item/stack/oldsrc = src
@@ -202,7 +205,7 @@
 
 /obj/item/stack/attackby(obj/item/W as obj, mob/user as mob)
 	..()
-	if (istype(W, src.type))
+	if (istype(W, src.type) && src.type==W.type)
 		var/obj/item/stack/S = W
 		if (S.amount >= max_amount)
 			return 1

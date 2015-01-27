@@ -2,14 +2,15 @@
 	name = "briefcase"
 	desc = "It's made of AUTHENTIC faux-leather and has a price-tag still attached. Its owner must be a real professional."
 	icon_state = "briefcase"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	force = 8.0
 	throw_speed = 1
 	throw_range = 4
 	w_class = 4.0
 	max_w_class = 3
 	max_combined_w_class = 16
-	
+
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is smashing \his head inside the [src.name]! It looks like \he's  trying to commit suicide!</b>"
 		return (BRUTELOSS)

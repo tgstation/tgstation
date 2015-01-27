@@ -27,32 +27,36 @@
 */
 /turf/Adjacent(var/atom/neighbor, var/atom/target = null)
 	var/turf/T0 = get_turf(neighbor)
-	if(T0 == src)
+
+	if(T0 == src) //same turf
 		return 1
-	if(get_dist(src,T0) > 1)
+
+	if(get_dist(src,T0) > 1) //too far
 		return 0
 
+	// Non diagonal case
 	if(T0.x == x || T0.y == y)
 		// Check for border blockages
 		return T0.ClickCross(get_dir(T0,src), border_only = 1) && src.ClickCross(get_dir(src,T0), border_only = 1, target_atom = target)
 
-	// Not orthagonal
-	var/in_dir = get_dir(neighbor,src) // eg. northwest (1+8)
-	var/d1 = in_dir&(in_dir-1)		// eg west		(1+8)&(8) = 8
-	var/d2 = in_dir - d1			// eg north		(1+8) - 8 = 1
+	// Diagonal case
+	var/in_dir = get_dir(T0,src) // eg. northwest (1+8) = 9 (00001001)
+	var/d1 = in_dir&3		     // eg. north	  (1+8)&3 (0000 0011) = 1 (0000 0001)
+	var/d2 = in_dir&12			 // eg. west	  (1+8)&12 (0000 1100) = 8 (0000 1000)
 
 	for(var/d in list(d1,d2))
 		if(!T0.ClickCross(d, border_only = 1))
 			continue // could not leave T0 in that direction
 
 		var/turf/T1 = get_step(T0,d)
-		if(!T1 || T1.density || !T1.ClickCross(get_dir(T1,T0) | get_dir(T1,src), border_only = 0))
+		if(!T1 || T1.density || !T1.ClickCross(get_dir(T1,T0) | get_dir(T1,src), border_only = 0)) //let's check both directions at once
 			continue // couldn't enter or couldn't leave T1
 
 		if(!src.ClickCross(get_dir(src,T1), border_only = 1, target_atom = target))
 			continue // could not enter src
 
 		return 1 // we don't care about our own density
+
 	return 0
 
 /*

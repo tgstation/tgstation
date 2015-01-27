@@ -1,7 +1,6 @@
 /mob/living/captive_brain
 	name = "host brain"
 	real_name = "host brain"
-	universal_understand=1
 
 /mob/living/captive_brain/say(var/message)
 
@@ -17,7 +16,7 @@
 		src << "You whisper silently, \"[message]\""
 		B.host << "The captive mind of [src] whispers, \"[message]\""
 
-		log_say("THOUGHTSPEECH: [key_name(src)] -> [key_name(B)]: [message]")
+		log_say("THOUGHTSPEECH: [key_name(src)](@[src.x],[src.y],[src.z]) -> [key_name(B)](@[B.x],[B.y],[B.z]): [message]")
 
 		for(var/mob/M in player_list)
 			if(istype(M, /mob/new_player))
@@ -88,8 +87,8 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 	friendly = "prods"
 	wander = 0
 	pass_flags = PASSTABLE
+	languages = ALL
 
-	universal_understand=1
 
 	var/chemicals = 10                      // Chemicals used for reproduction and spitting neurotoxin.
 	var/mob/living/carbon/human/host        // Human host for the brain worm.
@@ -220,7 +219,7 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 	src << "You drop words into [host]'s mind: \"[message]\""
 	host << "Your own thoughts speak: \"[message]\""
 
-	log_say("THOUGHTSPEECH: [truename] ([key_name(src)]) -> [host] ([key_name(host)]): [message]")
+	log_say("THOUGHTSPEECH: [truename] ([key_name(src)])(@[src.x],[src.y],[src.z]) -> [host] ([key_name(host)])(@[host.x],[host.y],[host.z]): [message]")
 
 	for(var/mob/M in player_list)
 		if(istype(M, /mob/new_player))
@@ -258,13 +257,13 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 		return
 
 	message = copytext(message,2)
-	log_say("CORTICAL: [key_name(src)]: [message]")
+	log_say("CORTICAL: [key_name(src)](@[src.x],[src.y],[src.z]): [message]")
 
 	for(var/mob/M in mob_list)
 		if(istype(M, /mob/new_player))
 			continue
 
-		if( (istype(M,/mob/dead/observer) && M.client && !(M.client.prefs.toggles & CHAT_GHOSTEARS)) \
+		if( (istype(M,/mob/dead/observer) && M.client && M.client.prefs.toggles & CHAT_GHOSTEARS) \
 			|| isborer(M))
 			var/controls = ""
 			if(isobserver(M))
@@ -309,6 +308,7 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 	host << "\red <B>You feel a strange shifting sensation behind your eyes as an alien consciousness displaces yours.</B>"
 
 	host_brain.ckey = host.ckey
+	host_brain.name = host.real_name
 	host.ckey = src.ckey
 	controlling = 1
 
@@ -525,7 +525,7 @@ mob/living/simple_animal/borer/proc/detach()
 
 	if(istype(M,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		if(H.check_head_coverage(HIDEEARS))
+		if(H.check_body_part_coverage(EARS))
 			src << "You cannot get through that host's protective gear."
 			return
 

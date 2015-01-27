@@ -43,6 +43,6 @@
 	for(var/client/C in admins)
 		if((R_ADMIN|R_MOD) & C.holder.rights)
 			if(C.prefs.special_popup)
-				C << output("<span class='[color]'>[key_name(src,1)] (<A HREF='?src=\ref[C.holder];adminplayerobservejump=\ref[mob]'>JMP</A>): <span class='message'>[msg]</span></span>", "window1.msay_output")
+				C << output("\[[time_stamp()]] <span style='color:[color];'><b>[key_name(src,1)]</b> (<A HREF='?src=\ref[C.holder];adminplayerobservejump=\ref[mob]'>JMP</A>): <span class='modooc'>[msg]</span></span>", "window1.msay_output")
 			else
-				C << "<span class='prefix'>MOD: </span><span class='[color]'><EM>[key_name(src,1)]</EM> (<A HREF='?src=\ref[C.holder];adminplayerobservejump=\ref[mob]'>JMP</A>): <span class='message'>[msg]</span></span>"
+				C << "<span class='prefix'>MOD: </span><span class='[color]'><EM>[key_name(src,1)]</EM> (<A HREF='?src=\ref[C.holder];adminplayerobservejump=\ref[mob]'>JMP</A>): <span class='modooc'>[msg]</span></span>"

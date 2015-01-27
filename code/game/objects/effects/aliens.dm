@@ -107,7 +107,7 @@
 	return
 
 /obj/effect/alien/resin/attack_hand()
-	usr.changeNext_move(10)
+	usr.delayNextAttack(10)
 	if (M_HULK in usr.mutations)
 		usr << "\blue You easily destroy the [name]."
 		for(var/mob/O in oviewers(src))
@@ -160,7 +160,7 @@
 			else
 				user << "\red This wall is already occupied."
 		return */
-	user.changeNext_move(10)
+	user.delayNextAttack(10)
 	var/aforce = W.force
 	health = max(0, health - aforce)
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
@@ -286,7 +286,7 @@ Alien plants should do something if theres a lot of poison
 	return
 
 /obj/effect/alien/weeds/attackby(var/obj/item/weapon/W, var/mob/user)
-	user.changeNext_move(10)
+	user.delayNextAttack(10)
 	if(W.attack_verb.len)
 		visible_message("\red <B>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
 	else
@@ -474,8 +474,8 @@ Alien plants should do something if theres a lot of poison
 /obj/effect/alien/egg/attackby(var/obj/item/weapon/W, var/mob/user)
 	if(health <= 0)
 		return
-	user.changeNext_move(10)
-	if(W.attack_verb.len)
+	user.delayNextAttack(10)
+	if(W.attack_verb && W.attack_verb.len)
 		src.visible_message("\red <B>\The [src] has been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
 	else
 		src.visible_message("\red <B>\The [src] has been attacked with \the [W][(user ? " by [user]." : ".")]")

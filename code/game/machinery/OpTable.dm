@@ -173,7 +173,5 @@
 			del(W)
 			return
 	if(isrobot(user)) return
-	user.drop_item()
-	if(W && W.loc)
-		W.loc = src.loc
+	user.drop_item(src)
 	return

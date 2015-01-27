@@ -10,7 +10,6 @@ nanoui is used to open and update nano browser uis
 #define STATUS_INTERACTIVE 2 // GREEN Visability
 #define STATUS_UPDATE 1 // ORANGE Visability
 #define STATUS_DISABLED 0 // RED Visability
-
 /datum/nanoui
 	// the user who opened this ui
 	var/mob/user
@@ -202,7 +201,8 @@ nanoui is used to open and update nano browser uis
 			"autoUpdateContent" = auto_update_content,
 			"showMap" = show_map,
 			"mapZLevel" = map_z_level,
-			"user" = list("name" = user.name)
+			"user" = list("name" = user.name),
+			"map_dir" = map.map_dir // Map datum holds the folder for the nanoui station images.
 		)
 	return config_data
 

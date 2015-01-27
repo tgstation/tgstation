@@ -9,12 +9,12 @@
 	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=1"
 
+	languages = HUMAN
+
 	var/message = "Thank you for using NanoSpeaker!"
 
 /obj/item/device/assembly/speaker/activate()
-	var/tmp/location = get_turf(src)
-	for(var/mob/O in hearers(location, null))
-		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"",2)
+	src.say(message)
 
 /obj/item/device/assembly/speaker/attack_self(mob/user as mob)
 	message = sanitize(input(user,"Enter new message for the [src]","NanoSpeaker Settings",message))
@@ -29,7 +29,11 @@
 		else
 			name = real_name
 
+/obj/item/device/assembly/speaker/can_speak()
+	return 1
+/*
 /obj/item/device/assembly/speaker/proc/say(var/msg=message as text)
 	var/tmp/location = get_turf(src)
 	for(var/mob/O in hearers(location, null)) //to all living
 		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[msg]\"",2)
+*/

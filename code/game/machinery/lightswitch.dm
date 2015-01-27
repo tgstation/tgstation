@@ -21,16 +21,18 @@
 	else
 		icon_state = on ? "light1" : "light0"
 
-/obj/machinery/light_switch/examine()
-	set src in oview(1)
-	if(usr && !usr.stat)
-		usr << "A light switch. It is [on? "on" : "off"]."
+/obj/machinery/light_switch/examine(mob/user)
+	..()
+	user << "<span class='info'>It is [on? "on" : "off"].</span>"
 
 
 /obj/machinery/light_switch/attack_paw(mob/user)
 	src.attack_hand(user)
 
 /obj/machinery/light_switch/attack_ghost(var/mob/dead/observer/G)
+	if(blessed)
+		G << "Your hand goes right through the switch...Is that some holy water dripping from it?"
+		return 0
 	if(!G.can_poltergeist())
 		G << "Your poltergeist abilities are still cooling down."
 		return 0

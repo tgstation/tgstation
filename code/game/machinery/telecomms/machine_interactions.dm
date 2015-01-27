@@ -79,8 +79,8 @@
 								newpath = text2path(I)
 								var/obj/item/s = new newpath
 								s.loc = user.loc
-								if(istype(P, /obj/item/weapon/cable_coil))
-									var/obj/item/weapon/cable_coil/A = P
+								if(istype(s, /obj/item/weapon/cable_coil))
+									var/obj/item/weapon/cable_coil/A = s
 									A.amount = 1
 
 						// Drop a circuit board too

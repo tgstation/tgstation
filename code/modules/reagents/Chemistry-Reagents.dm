@@ -132,7 +132,7 @@ datum
 			name = "Blood"
 			id = "blood"
 			reagent_state = LIQUID
-			color = "#C80000" // rgb: 200, 0, 0
+			color = "#a00000" // rgb: 160, 0, 0
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				var/datum/reagent/blood/self = src
@@ -156,10 +156,15 @@ datum
 					var/mob/living/carbon/C = M
 					C.antibodies |= self.data["antibodies"]
 
-				if(istype(M, /mob/living/carbon/human))
+				if(istype(M, /mob/living/carbon/human) && (method == TOUCH))
 					var/mob/living/carbon/human/H = M
 					H.bloody_body(self.data["donor"])
-					H.bloody_hands(self.data["donor"])
+					if(self.data["donor"])
+						H.bloody_hands(self.data["donor"])
+					spawn()//bloody feet, result of the blood that fell on the floor
+						var/obj/effect/decal/cleanable/blood/B = locate() in get_turf(H)
+						B.Crossed(H)
+					H.update_icons()
 
 			on_merge(var/data)
 				if(data["blood_colour"])
@@ -280,7 +285,7 @@ datum
 									var/datum/organ/external/affecting = H.get_organ("head")
 									if(affecting)
 										if(affecting.take_damage(25, 0))
-											H.UpdateDamageIcon()
+											H.QueueUpdateDamageIcon(1)
 										H.status_flags |= DISFIGURED
 										H.emote("scream",,, 1)
 								else
@@ -554,7 +559,6 @@ datum
 							W.dropped(M)
 						var/mob/living/carbon/slime/new_mob = new /mob/living/carbon/slime(M.loc)
 						new_mob.a_intent = "hurt"
-						new_mob.universal_speak = 1
 						if(M.mind)
 							M.mind.transfer_to(new_mob)
 						else
@@ -713,7 +717,7 @@ datum
 										var/datum/organ/external/affecting = H.get_organ("head")
 										if(affecting)
 											if(affecting.take_damage(25, 0))
-												H.UpdateDamageIcon()
+												H.QueueUpdateDamageIcon(1)
 											H.status_flags |= DISFIGURED
 											H.emote("scream",,, 1)
 									else
@@ -1036,7 +1040,7 @@ datum
 							var/datum/organ/external/affecting = H.get_organ("head")
 							if(affecting)
 								if(affecting.take_damage(25, 0))
-									H.UpdateDamageIcon()
+									H.QueueUpdateDamageIcon(1)
 								H.status_flags |= DISFIGURED
 								H.emote("scream",,, 1)
 						else
@@ -1102,7 +1106,7 @@ datum
 						if(!H.unacidable)
 							var/datum/organ/external/affecting = H.get_organ("head")
 							if(affecting.take_damage(15, 0))
-								H.UpdateDamageIcon()
+								H.QueueUpdateDamageIcon(1)
 							H.emote("scream",,, 1)
 					else if(ismonkey(M))
 						var/mob/living/carbon/monkey/MK = M
@@ -1124,7 +1128,7 @@ datum
 							var/mob/living/carbon/human/H = M
 							var/datum/organ/external/affecting = H.get_organ("head")
 							if(affecting.take_damage(15, 0))
-								H.UpdateDamageIcon()
+								H.QueueUpdateDamageIcon(1)
 							H.emote("scream",,, 1)
 							H.status_flags |= DISFIGURED
 						else
@@ -1259,14 +1263,14 @@ datum
 			reagent_state = LIQUID
 			color = "#C855DC"
 			overdose_dam = 0
-			overdose = 60
+			overdose = 0
 
 			on_mob_life(var/mob/living/M as mob)
 
 				if(!holder) return
-				if (volume > overdose)
-					M.hallucination = max(M.hallucination, 2)
-
+				if(ishuman(M))
+					M:shock_stage--
+					M:traumatic_shock--
 		mutagen
 			name = "Unstable mutagen"
 			id = "mutagen"
@@ -1575,7 +1579,7 @@ datum
 			id = "plasma"
 			description = "Plasma in its liquid form."
 			reagent_state = LIQUID
-			color = "#E71B00" // rgb: 231, 27, 0
+			color = "#500064" // rgb: 80, 0, 100
 
 			on_mob_life(var/mob/living/M as mob)
 
@@ -2493,45 +2497,27 @@ datum
 				if(method == TOUCH)
 					if(istype(M, /mob/living/carbon/human))
 						var/mob/living/carbon/human/victim = M
-						var/mouth_covered = 0
-						var/eyes_covered = 0
-						var/obj/item/safe_thing = null
-						if( victim.wear_mask )
-							if ( victim.wear_mask.flags & MASKCOVERSEYES )
-								eyes_covered = 1
-								safe_thing = victim.wear_mask
-							if ( victim.wear_mask.flags & MASKCOVERSMOUTH )
-								mouth_covered = 1
-								safe_thing = victim.wear_mask
-						if( victim.head )
-							if ( victim.head.flags & MASKCOVERSEYES )
-								eyes_covered = 1
-								safe_thing = victim.head
-							if ( victim.head.flags & MASKCOVERSMOUTH )
-								mouth_covered = 1
-								safe_thing = victim.head
-						if(victim.glasses)
-							eyes_covered = 1
-							if ( !safe_thing )
-								safe_thing = victim.glasses
+						var/obj/item/mouth_covered = victim.get_body_part_coverage(MOUTH)
+						var/obj/item/eyes_covered = victim.get_body_part_coverage(EYES)
+
 						if ( eyes_covered && mouth_covered )
-							victim << "\red Your [safe_thing] protects you from the pepperspray!"
+							victim << "<span class='warning'>Your [mouth_covered == eyes_covered ? "[mouth_covered] protects" : "[mouth_covered] and [eyes_covered] protect"] you from the pepperspray!</span>"
 							return
 						else if ( mouth_covered )	// Reduced effects if partially protected
-							victim << "\red Your [safe_thing] protect you from most of the pepperspray!"
+							victim << "<span class='warning'>Your [mouth_covered] protect you from most of the pepperspray!</span>"
 							victim.eye_blurry = max(M.eye_blurry, 15)
 							victim.eye_blind = max(M.eye_blind, 5)
 							victim.Paralyse(1)
 							victim.drop_item()
 							return
 						else if ( eyes_covered ) // Eye cover is better than mouth cover
-							victim << "\red Your [safe_thing] protects your eyes from the pepperspray!"
+							victim << "<span class='warning'>Your [eyes_covered] protects your eyes from the pepperspray!</span>"
 							victim.emote("scream",,, 1)
 							victim.eye_blurry = max(M.eye_blurry, 5)
 							return
 						else // Oh dear :D
 							victim.emote("scream",,, 1)
-							victim << "\red You're sprayed directly in the eyes with pepperspray!"
+							victim << "<span class='danger'>You're sprayed directly in the eyes with pepperspray!</span>"
 							victim.eye_blurry = max(M.eye_blurry, 25)
 							victim.eye_blind = max(M.eye_blind, 10)
 							victim.Paralyse(1)
@@ -2563,7 +2549,7 @@ datum
 							holder.remove_reagent("capsaicin", 5)
 						if(istype(M, /mob/living/carbon/slime))
 							M.bodytemperature -= rand(5,20)
-						if(M.dna.mutantrace == "slime")
+						if(M.dna && M.dna.mutantrace == "slime")
 							M.bodytemperature -= rand(5,20)
 					if(15 to 25)
 						M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
@@ -3593,7 +3579,7 @@ datum
 			var/slur_start = 65			//amount absorbed after which mob starts slurring
 			var/confused_start = 130	//amount absorbed after which mob starts confusing directions
 			var/blur_start = 260	//amount absorbed after which mob starts getting blurred vision
-			var/pass_out = 325	//amount absorbed after which mob starts passing out
+			var/pass_out = 450	//amount absorbed after which mob starts passing out
 
 			on_mob_life(var/mob/living/M as mob)
 
@@ -3605,13 +3591,19 @@ datum
 				M:nutrition += nutriment_factor
 				if(!holder)
 					holder = M.reagents
+				if(!holder)
+					if(!M.loc || M.timeDestroyed)
+						del(src) //panic
+					M.create_reagents(1000)
+					holder = M.reagents
 				if(holder)
 					holder.remove_reagent(src.id, FOOD_METABOLISM)
 				if(!src.data) data = 1
 				src.data++
 
 				var/d = data
-
+				if(!holder)
+					del(src)
 				// make all the beverages work together
 				for(var/datum/reagent/ethanol/A in holder.reagent_list)
 					if(isnum(A.data)) d += A.data
@@ -3637,7 +3629,7 @@ datum
 						if (!L)
 							H.adjustToxLoss(5)
 						else if(istype(L))
-							L.take_damage(0.1, 1)
+							L.take_damage(0.05, 1)
 						H.adjustToxLoss(0.1)
 				if(!holder)
 					holder = M.reagents
@@ -4440,6 +4432,6 @@ datum
 					return
 
 /datum/reagent/Destroy()
-	if(holder)
+	if(istype(holder))
 		holder.reagent_list -= src
 		holder = null

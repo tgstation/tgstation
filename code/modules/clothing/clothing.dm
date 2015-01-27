@@ -24,7 +24,7 @@
 					wearable = 1
 
 			if(!wearable && (slot != 15 && slot != 16)) //Pockets.
-				M << "\red Your species cannot wear [src]."
+				M << "<span class='warning'>Your species cannot wear [src].</span>"
 				return 0
 
 	return ..()
@@ -71,12 +71,15 @@
 	name = "glasses"
 	icon = 'icons/obj/clothing/glasses.dmi'
 	w_class = 2.0
-	flags = GLASSESCOVERSEYES
+	body_parts_covered = EYES
 	slot_flags = SLOT_EYES
 	var/vision_flags = 0
 	var/darkness_view = 0//Base human is 2
 	var/invisa_view = 0
 	var/cover_hair = 0
+	var/see_invisible = 0
+	var/see_in_dark = 0
+	var/prescription = 0
 	species_restricted = list("exclude","Muton")
 /*
 SEE_SELF  // can see self, no matter what
@@ -105,11 +108,6 @@ BLIND     // can't see anything
 	species_restricted = list("exclude","Unathi","Tajaran","Muton")
 	var/pickpocket = 0 //Master pickpocket?
 
-/obj/item/clothing/gloves/examine()
-	set src in usr
-	..()
-	return
-
 /obj/item/clothing/gloves/emp_act(severity)
 	if(cell)
 		cell.charge -= 1000 / severity
@@ -135,45 +133,48 @@ BLIND     // can't see anything
 /obj/item/clothing/mask
 	name = "mask"
 	icon = 'icons/obj/clothing/masks.dmi'
-	body_parts_covered = HEAD
+	body_parts_covered = HEAD|MOUTH
 	slot_flags = SLOT_MASK
 	species_restricted = list("exclude","Muton")
 	var/can_flip = null
 	var/is_flipped = 1
 	var/ignore_flip = 0
 
-	/obj/item/clothing/mask/verb/togglemask()
-		set name = "Toggle Mask"
-		set category = "Object"
-		set src in usr
-		if(ignore_flip)
+/obj/item/clothing/mask/verb/togglemask()
+	set name = "Toggle Mask"
+	set category = "Object"
+	set src in usr
+	if(ignore_flip)
+		return
+	else
+		if(!usr.canmove || usr.stat || usr.restrained())
 			return
+		if(!can_flip)
+			usr << "You try pushing \the [src] out of the way, but it is very uncomfortable and you look like a fool. You push it back into place."
+			return
+		if(src.is_flipped == 2)
+			src.icon_state = initial(icon_state)
+			gas_transfer_coefficient = initial(gas_transfer_coefficient)
+			permeability_coefficient = initial(permeability_coefficient)
+			flags = initial(flags)
+			flags_inv = initial(flags_inv)
+			usr << "You push \the [src] back into place."
+			src.is_flipped = 1
 		else
-			if(!usr.canmove || usr.stat || usr.restrained())
-				return
-			if(!can_flip)
-				usr << "You try pushing \the [src] out of the way, but it is very uncomfortable and you look like a fool. You push it back into place."
-				return
-			if(src.is_flipped == 2)
-				src.icon_state = initial(icon_state)
-				gas_transfer_coefficient = initial(gas_transfer_coefficient)
-				permeability_coefficient = initial(permeability_coefficient)
-				flags = initial(flags)
-				flags_inv = initial(flags_inv)
-				usr << "You push \the [src] back into place."
-				src.is_flipped = 1
-			else
-				src.icon_state += "_up"
-				usr << "You push \the [src] out of the way."
-				gas_transfer_coefficient = null
-				permeability_coefficient = null
-				flags = null
-				flags_inv = null
-				src.is_flipped = 2
-			usr.update_inv_wear_mask()
+			src.icon_state += "_up"
+			usr << "You push \the [src] out of the way."
+			gas_transfer_coefficient = null
+			permeability_coefficient = null
+			flags = 0
+			flags_inv = null
+			src.is_flipped = 2
+		usr.update_inv_wear_mask()
 
 /obj/item/clothing/mask/attack_self()
 	togglemask()
+
+/obj/item/clothing/mask/proc/treat_mask_message(var/message)
+	return message
 
 //Shoes
 /obj/item/clothing/shoes
@@ -196,7 +197,7 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/suits.dmi'
 	name = "suit"
 	var/fire_resist = T0C+100
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/tank/emergency_nitrogen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	slot_flags = SLOT_OCLOTHING
@@ -211,10 +212,11 @@ BLIND     // can't see anything
 	name = "Space helmet"
 	icon_state = "space"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment."
-	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE
+	flags = FPRINT  | BLOCKHAIR | STOPSPRESSUREDMAGE
 	item_state = "space"
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
+	body_parts_covered = FULL_HEAD
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECITON_TEMPERATURE
@@ -229,7 +231,7 @@ BLIND     // can't see anything
 	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
-	flags = FPRINT | TABLEPASS | STOPSPRESSUREDMAGE
+	flags = FPRINT  | STOPSPRESSUREDMAGE
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/tank/emergency_nitrogen)
 	slowdown = 3
@@ -246,7 +248,7 @@ BLIND     // can't see anything
 	name = "under"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	permeability_coefficient = 0.90
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	slot_flags = SLOT_ICLOTHING
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	species_restricted = list("exclude","Muton")
@@ -287,20 +289,21 @@ BLIND     // can't see anything
 
 	..()
 
-/obj/item/clothing/under/examine()
-	set src in view()
+/obj/item/clothing/under/examine(mob/user)
 	..()
+	var/mode
 	switch(src.sensor_mode)
 		if(0)
-			usr << "Its sensors appear to be disabled."
+			mode = "Its sensors appear to be disabled."
 		if(1)
-			usr << "Its binary life sensors appear to be enabled."
+			mode = "Its binary life sensors appear to be enabled."
 		if(2)
-			usr << "Its vital tracker appears to be enabled."
+			mode = "Its vital tracker appears to be enabled."
 		if(3)
-			usr << "Its vital tracker and tracking beacon appear to be enabled."
+			mode = "Its vital tracker and tracking beacon appear to be enabled."
+	user << "<span class='info'>" + mode + "</span>"
 	if(hastie)
-		usr << "\A [hastie] is clipped to it."
+		user << "<span class='info'>\A [hastie] is clipped to it.</span>"
 
 /obj/item/clothing/under/proc/set_sensors(mob/usr as mob)
 	var/mob/M = usr
@@ -373,32 +376,32 @@ BLIND     // can't see anything
 	if(usr.stat) return
 
 	if (!hastie || !istype(hastie,/obj/item/clothing/tie/holster))
-		usr << "\red You need a holster for that!"
+		usr << "<span class='warning'>You need a holster for that!</span>"
 		return
 	var/obj/item/clothing/tie/holster/H = hastie
 
 	if(!H.holstered)
 		if(!istype(usr.get_active_hand(), /obj/item/weapon/gun))
-			usr << "\blue You need your gun equiped to holster it."
+			usr << "<span class='notice'>You need your gun equiped to holster it.</span>"
 			return
 		var/obj/item/weapon/gun/W = usr.get_active_hand()
 		if (!W.isHandgun())
-			usr << "\red This gun won't fit in \the [H]!"
+			usr << "<span class='warning'>This gun won't fit in \the [H]!</span>"
 			return
 		H.holstered = usr.get_active_hand()
 		usr.drop_item()
 		H.holstered.loc = src
-		usr.visible_message("\blue \The [usr] holsters \the [H.holstered].", "You holster \the [H.holstered].")
+		usr.visible_message("<span class='notice'>\The [usr] holsters \the [H.holstered].", "You holster \the [H.holstered].</span>")
 	else
 		if(istype(usr.get_active_hand(),/obj) && istype(usr.get_inactive_hand(),/obj))
-			usr << "\red You need an empty hand to draw the gun!"
+			usr << "<span class='warning'>You need an empty hand to draw the gun!</span>"
 		else
 			if(usr.a_intent == "hurt")
-				usr.visible_message("\red \The [usr] draws \the [H.holstered], ready to shoot!", \
-				"\red You draw \the [H.holstered], ready to shoot!")
+				usr.visible_message("<span class='warning'>\The [usr] draws \the [H.holstered], ready to shoot!</span>", \
+				"<span class='warning'>You draw \the [H.holstered], ready to shoot!</span>")
 			else
-				usr.visible_message("\blue \The [usr] draws \the [H.holstered], pointing it at the ground.", \
-				"\blue You draw \the [H.holstered], pointing it at the ground.")
+				usr.visible_message("<span class='notice'>\The [usr] draws \the [H.holstered], pointing it at the ground.</span>", \
+				"<span class='notice'>You draw \the [H.holstered], pointing it at the ground.</span>")
 			usr.put_in_hands(H.holstered)
 			H.holstered = null
 
@@ -410,7 +413,7 @@ BLIND     // can't see anything
 	if(usr.stat) return
 
 	if (!hastie || !istype(hastie,/obj/item/clothing/tie/storage))
-		usr << "\red You need something to store items in for that!"
+		usr << "<span class='warning'>You need something to store items in for that!</span>"
 		return
 	var/obj/item/clothing/tie/storage/W = hastie
 

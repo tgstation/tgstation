@@ -7,7 +7,7 @@
 	item_state = ""
 	throw_speed = 4
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | NOBLUDGEON
+	flags = FPRINT  | NOBLUDGEON
 	var/c_tag = ""
 	var/active = 0
 	var/network = ""
@@ -64,4 +64,5 @@
 			explosion(loc, 0, prob(15), 2, 0)
 
 /obj/item/device/camera_bug/Destroy()
-	del(src)
+	camera_bugs -= src
+	..()

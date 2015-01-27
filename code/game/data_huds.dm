@@ -6,7 +6,7 @@ the HUD updates properly! */
 mob/proc/regular_hud_updates() //Used in the life.dm of mobs that can use HUDs.
 	if(client)
 		for(var/image/hud in client.images)
-			if(copytext(hud.icon_state,1,4) == "hud")
+			if(findtext(hud.icon_state, "hud", 1, 4))
 				client.images -= hud
 	if(src in med_hud_users)
 		med_hud_users -= src
@@ -74,6 +74,8 @@ proc/process_sec_hud(var/mob/M, var/advanced_mode,var/mob/eye)
 		T = get_turf(M)
 	for(var/mob/living/carbon/human/perp in range(T))
 		holder = perp.hud_list[ID_HUD]
+		if(!holder)
+			continue
 		holder.icon_state = "hudno_id"
 		if(perp.wear_id)
 			holder.icon_state = "hud[ckey(perp.wear_id.GetJobName())]"
@@ -103,7 +105,7 @@ proc/process_sec_hud(var/mob/M, var/advanced_mode,var/mob/eye)
 				holder = perp.hud_list[WANTED_HUD]
 				switch(R.fields["criminal"])
 					if("*Arrest*")		holder.icon_state = "hudwanted"
-					if("Incarcerated")	holder.icon_state = "hudincarcerated"
+					if("Incarcerated")	holder.icon_state = "hudprisoner"
 					if("Parolled")		holder.icon_state = "hudparolled"
 					if("Released")		holder.icon_state = "hudreleased"
 					else

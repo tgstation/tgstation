@@ -8,7 +8,8 @@
 	throwforce = 5.0
 	throw_speed = 5
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	max_amount = 60
 
 /obj/item/stack/light_w/attackby(var/obj/item/O as obj, var/mob/user as mob)

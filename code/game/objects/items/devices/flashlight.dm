@@ -5,7 +5,8 @@
 	icon_state = "flashlight"
 	item_state = "flashlight"
 	w_class = 2
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	m_amt = 50
 	g_amt = 20
@@ -59,9 +60,11 @@
 			return
 
 		var/mob/living/carbon/human/H = M	//mob has protective eyewear
-		if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
-			user << "<span class='notice'>You're going to need to remove that [(H.head && H.head.flags & HEADCOVERSEYES) ? "helmet" : (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) ? "mask": "glasses"] first.</span>"
-			return
+		if(istype(M, /mob/living/carbon/human))
+			var/obj/item/eye_protection = H.get_body_part_coverage(EYES)
+			if(eye_protection)
+				user << "<span class='notice'>You're going to need to remove their [eye_protection] first.</span>"
+				return
 
 		if(M == user)	//they're using it on themselves
 			if(!M.blinded)
@@ -107,7 +110,8 @@
 	desc = "A pen-sized light, used by medical staff."
 	icon_state = "penlight"
 	item_state = ""
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	brightness_on = 2
 
 
@@ -119,7 +123,8 @@
 	item_state = "lamp"
 	brightness_on = 5
 	w_class = 4
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	m_amt = 0
 	g_amt = 0
 	on = 1
@@ -150,7 +155,7 @@
 	name = "flare"
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
 	w_class = 2.0
-	brightness_on = 7 // Pretty bright.
+	brightness_on = 4 // Pretty bright.
 	icon_state = "flare"
 	item_state = "flare"
 	action_button_name = null //just pull it manually, neckbeard.

@@ -95,7 +95,7 @@ datum
 				return the_id
 
 			trans_to(var/obj/target, var/amount=1, var/multiplier=1, var/preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
-				if (!target )
+				if (!target)
 					return
 				if (!target.reagents || src.total_volume<=0)
 					return
@@ -426,7 +426,8 @@ datum
 					del_reagent(R.id,update_totals=0)
 				// Only call ONCE. -- N3X
 				update_total()
-				my_atom.on_reagent_change()
+				if(my_atom)
+					my_atom.on_reagent_change()
 				return 0
 
 			reaction(var/atom/A, var/method=TOUCH, var/volume_modifier=0)
@@ -463,6 +464,8 @@ datum
 				return
 
 			add_reagent(var/reagent, var/amount, var/list/data=null)
+				if(!my_atom)
+					return 0
 				if(!isnum(amount)) return 1
 				update_total()
 				if(total_volume + amount > maximum_volume)

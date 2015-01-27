@@ -46,6 +46,8 @@
 	// turf animation
 	var/atom/movable/overlay/c_animation = null
 
+	var/soundeffect = 'sound/machines/airlock.ogg'
+
 /obj/machinery/door/Bumped(atom/AM)
 	if (ismob(AM))
 		var/mob/M = AM
@@ -129,7 +131,7 @@
 
 				// TODO: analyze the called proc
 				if(O.take_damage(10, 0))
-					H.UpdateDamageIcon()
+					H.QueueUpdateDamageIcon()
 					O = null
 			else
 				// TODO: fix sentence
@@ -268,16 +270,15 @@
 
 	if (!glass)
 		src.SetOpacity(1)
+		// Copypasta!!!
+		var/obj/effect/beam/B = locate() in loc
+		if(B)
+			qdel(B)
 
 	// TODO: rework how fire works on doors
 	var/obj/fire/F = locate() in loc
 	if(F)
 		qdel(F)
-
-	// copypasta!!!
-	var/obj/effect/beam/B = locate() in loc
-	if(B)
-		qdel(B)
 
 	update_nearby_tiles()
 	operating = 0

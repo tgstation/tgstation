@@ -441,16 +441,6 @@ Pressure: [env.return_pressure()]"}
 		del(adminmob)
 	feedback_add_details("admin_verb","ADC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_switch_radio()
-	set category = "Debug"
-	set name = "Switch Radio Mode"
-	set desc = "Toggle between normal radios and experimental radios. Have a coder present if you do this."
-
-	GLOBAL_RADIO_TYPE = !GLOBAL_RADIO_TYPE // toggle
-	log_admin("[key_name(src)] has turned the experimental radio system [GLOBAL_RADIO_TYPE ? "on" : "off"].")
-	message_admins("[key_name_admin(src)] has turned the experimental radio system [GLOBAL_RADIO_TYPE ? "on" : "off"].", 0)
-	feedback_add_details("admin_verb","SRM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/proc/cmd_admin_areatest()
 	set category = "Mapping"
 	set name = "Test areas"
@@ -897,7 +887,7 @@ Pressure: [env.return_pressure()]"}
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/cigarette/cigar/havana(M), slot_wear_mask)
-			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/deathsquad/beret(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/beret/centcom(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle/M1911(M), slot_belt)
 			M.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo(M), slot_r_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(M), slot_back)
@@ -1140,6 +1130,19 @@ Pressure: [env.return_pressure()]"}
 	usr << "\blue Dumped to machine_profiling.csv."
 #endif
 
+/client/proc/cmd_admin_dump_delprofile()
+	set category = "Debug"
+	set name = "Dump Del Profiling"
+
+	var/F = file("del_profiling.csv")
+	fdel(F)
+	F << "type,deletes"
+	for(var/typepath in del_profiling)
+		var/ns = del_profiling[typepath]
+		F << "[typepath],[ns]"
+
+	usr << "\blue Dumped to del_profiling.csv."
+
 /client/proc/gib_money()
 	set category = "Fun"
 	set name = "Dispense Money"
@@ -1161,6 +1164,25 @@ var/global/blood_virus_spreading_disabled = 0
 		message_admins("[src.ckey] disabled findAirborneVirii.")
 	else
 		message_admins("[src.ckey] enabled findAirborneVirii.")
+
+/client/proc/reload_style_sheet()
+	set category = "Server"
+	set name = "Reload Style Sheet"
+	set desc = "Reload the Style Sheet (be careful)."
+
+	for(var/client/C in clients)
+		winset(C, null, "outputwindow.output.style=[config.world_style_config];")
+	message_admins("The style sheet has been reloaded by [src.ckey]")
+
+/client/proc/reset_style_sheet()
+	set category = "Server"
+	set name = "Reset Style Sheet"
+	set desc = "Reset the Style Sheet (restore to default)."
+
+	for(var/client/C in clients)
+		winset(C, null, "outputwindow.output.style=[world_style];")
+	config.world_style_config = world_style
+	message_admins("The style sheet has been reset by [src.ckey]")
 
 /client/proc/cmd_admin_cluwneize(var/mob/M in mob_list)
 	set category = "Fun"

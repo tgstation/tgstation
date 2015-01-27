@@ -3,13 +3,14 @@
 /obj/item/weapon/storage/box/samplebags
 	name = "sample bag box"
 	desc = "A box claiming to contain sample bags."
-	New()
-		for(var/i=0, i<7, i++)
-			var/obj/item/weapon/evidencebag/S = new(src)
-			S.name = "sample bag"
-			S.desc = "a bag for holding research samples."
-		..()
-		return
+
+/obj/item/weapon/storage/box/samplebags/New()
+	for(var/i=0, i<7, i++)
+		var/obj/item/weapon/evidencebag/S = new(src)
+		S.name = "sample bag"
+		S.desc = "a bag for holding research samples."
+	..()
+	return
 
 //////////////////////////////////////////////////////////////////
 
@@ -20,30 +21,25 @@
 	icon_state = "sampler0"
 	item_state = "screwdriver_brown"
 	w_class = 1.0
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	//slot_flags = SLOT_BELT
 	var/sampled_turf = ""
 	var/num_stored_bags = 10
 	var/obj/item/weapon/evidencebag/filled_bag
 
-/obj/item/device/core_sampler/examine()
-	set src in orange(1)
-	if (!( usr ))
-		return
-	if(get_dist(src, usr) < 2)
-		usr << "That's \a [src]."
-		usr << "\blue Used to extract geological core samples - this one is [sampled_turf ? "full" : "empty"], and has [num_stored_bags] bag[num_stored_bags != 1 ? "s" : ""] remaining."
-	else
-		return ..()
+/obj/item/device/core_sampler/examine(mob/user)
+	..()
+	if(get_dist(src, user) < 2)
+		user << "<span class='info'>This one is [sampled_turf ? "full" : "empty"], and has [num_stored_bags] bag[num_stored_bags != 1 ? "s" : ""] remaining.</span>"
 
 /obj/item/device/core_sampler/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/evidencebag))
 		if(num_stored_bags < 10)
 			del(W)
 			num_stored_bags += 1
-			user << "\blue You insert the [W] into the core sampler."
+			user << "<span class='notice'>You insert the [W] into the core sampler.</span>"
 		else
-			user << "\red The core sampler can not fit any more bags!"
+			user << "<span class='warning'>The core sampler can not fit any more bags!</span>"
 	else
 		return ..()
 
@@ -53,15 +49,15 @@
 		var/turf/unsimulated/mineral/T = item_to_sample
 		T.geologic_data.UpdateNearbyArtifactInfo(T)
 		geo_data = T.geologic_data
-	else if(istype(item_to_sample, /obj/item/weapon/ore))
-		var/obj/item/weapon/ore/O = item_to_sample
+	else if(istype(item_to_sample, /obj/item/weapon/strangerock))
+		var/obj/item/weapon/strangerock/O = item_to_sample
 		geo_data = O.geologic_data
 
 	if(geo_data)
 		if(filled_bag)
-			user << "\red The core sampler is full!"
+			user << "<span class='warning'>The core sampler is full!</span>"
 		else if(num_stored_bags < 1)
-			user << "\red The core sampler is out of sample bags!"
+			user << "<span class='warning'>The core sampler is out of sample bags!</span>"
 		else
 			//create a new sample bag which we'll fill with rock samples
 			filled_bag = new /obj/item/weapon/evidencebag(src)
@@ -82,13 +78,13 @@
 			filled_bag.underlays += I
 			filled_bag.w_class = 1
 
-			user << "\blue You take a core sample of the [item_to_sample]."
+			user << "<span class='notice'>You take a core sample of the [item_to_sample].</span>"
 	else
-		user << "\red You are unable to take a sample of [item_to_sample]."
+		user << "<span class='warning'>You are unable to take a sample of [item_to_sample].</span>"
 
 /obj/item/device/core_sampler/attack_self()
 	if(filled_bag)
-		usr << "\blue You eject the full sample bag."
+		usr << "<span class='notice'>You eject the full sample bag.</span>"
 		var/success = 0
 		if(istype(src.loc, /mob))
 			var/mob/M = src.loc
@@ -98,4 +94,4 @@
 		filled_bag = null
 		icon_state = "sampler0"
 	else
-		usr << "\red The core sampler is empty."
+		usr << "<span class='warning'>The core sampler is empty.</span>"

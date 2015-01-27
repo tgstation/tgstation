@@ -1,5 +1,5 @@
 #define GC_COLLECTIONS_PER_TICK 300 // Was 100.
-#define GC_COLLECTION_TIMEOUT (10 SECONDS)
+#define GC_COLLECTION_TIMEOUT (15 SECONDS)
 #define GC_FORCE_DEL_PER_TICK 20
 //#define GC_DEBUG
 
@@ -12,7 +12,7 @@ var/datum/garbage_collector/garbageCollector
 	set category = "Debug"
 
 	for(var/A in gc_hard_del_types)
-		usr << A
+		usr << "[A] = [gc_hard_del_types[A]]"
 
 /datum/garbage_collector
 	var/list/queue = new
@@ -60,7 +60,10 @@ var/datum/garbage_collector/garbageCollector
 			WARNING("gc process force delete [AM.type]")
 			#endif
 
-			gc_hard_del_types |= "[AM.type]"
+			//gc_hard_del_types |= "[AM.type]"
+			if(!("[AM.type]" in gc_hard_del_types))
+				gc_hard_del_types["[AM.type]"] = 0
+			gc_hard_del_types["[AM.type]"]++
 
 			del(AM)
 

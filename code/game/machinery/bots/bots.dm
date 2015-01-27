@@ -22,6 +22,12 @@
 	#define MED_BOT 5 // Medibots
 	//var/emagged = 0 //Urist: Moving that var to the general /bot tree as it's used by most bots
 
+/obj/machinery/bot/New()
+	for(var/datum/event/ionstorm/I in events)
+		if(istype(I) && I.active)
+			I.bots += src
+	..()
+
 /obj/machinery/bot/proc/turn_on()
 	if(stat)	return 0
 	on = 1
@@ -47,21 +53,19 @@
 	if(!locked && open)
 		emagged = 2
 
-/obj/machinery/bot/examine()
-	set src in view()
+/obj/machinery/bot/examine(mob/user)
 	..()
 	if (src.health < maxhealth)
 		if (src.health > maxhealth/3)
-			usr << "<span class='warning'>[src]'s parts look loose.</span>"
+			user << "<span class='warning'>[src]'s parts look loose.</span>"
 		else
-			usr << "<span class='danger'>[src]'s parts look very loose!</span>"
-	return
+			user << "<span class='danger'>[src]'s parts look very loose!</span>"
 
 /obj/machinery/bot/attack_alien(var/mob/living/carbon/alien/user as mob)
 	if(flags & INVULNERABLE)
 		return
 	src.health -= rand(15,30)*brute_dam_coeff
-	src.visible_message("\red <B>[user] has slashed [src]!</B>")
+	src.visible_message("<span class='danger'>[user] has slashed [src]!</span>")
 	playsound(get_turf(src), 'sound/weapons/slice.ogg', 25, 1, -1)
 	if(prob(10))
 		new /obj/effect/decal/cleanable/blood/oil(src.loc)
@@ -73,7 +77,7 @@
 		return
 	if(M.melee_damage_upper == 0)	return
 	src.health -= M.melee_damage_upper
-	src.visible_message("\red <B>[M] has [M.attacktext] [src]!</B>")
+	src.visible_message("<span class='danger'>[M] has [M.attacktext] [src]!</span>")
 	add_logs(M, src, "attacked", admin=0)
 	if(prob(10))
 		new /obj/effect/decal/cleanable/blood/oil(src.loc)
@@ -104,7 +108,7 @@
 		if(health < maxhealth)
 			if(open)
 				health = min(maxhealth, health+10)
-				user.visible_message("\red [user] repairs [src]!","\blue You repair [src]!")
+				user.visible_message("<span class='danger'>[user] repairs [src]!</span>","<span class='notice'>You repair [src]!</span>")
 			else
 				user << "<span class='notice'>Unable to repair with the maintenance panel closed.</span>"
 		else

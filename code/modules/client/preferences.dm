@@ -14,6 +14,7 @@ var/global/list/special_roles = list(
 	ROLE_NINJA        = 1,
 	ROLE_OPERATIVE    = IS_MODE_COMPILED("nuclear"),
 	ROLE_PAI          = 1, // -- TLE
+	ROLE_POSIBRAIN    = 1,
 	ROLE_REV          = IS_MODE_COMPILED("revolution"),
 	ROLE_TRAITOR      = IS_MODE_COMPILED("traitor"),
 	ROLE_VAMPIRE      = IS_MODE_COMPILED("vampire"),
@@ -141,9 +142,9 @@ var/const/MAX_SAVE_SLOTS = 8
 			if(load_pref)
 				if(load_save_sqlite(C.ckey, src, default_slot))
 					return
-	randomize_appearance_for()
-	real_name = random_name(gender)
-	save_character_sqlite(src, C.ckey, default_slot)
+		randomize_appearance_for()
+		real_name = random_name(gender)
+		save_character_sqlite(src, C.ckey, default_slot)
 
 /datum/preferences
 
@@ -329,6 +330,25 @@ var/const/MAX_SAVE_SLOTS = 8
 		else
 			dat += "[copytext(flavor_text, 1, 37)]...<br>"
 
+
+		if(!isnum(r_hair))
+			WARNING("R_HAIR Expected a number")
+		if(!isnum(g_hair))
+			WARNING("G_HAIR Expected a number")
+		if(!isnum(b_hair))
+			WARNING("B_HAIR Expected a number")
+		if(!isnum(r_facial))
+			WARNING("R_FACIAL Expected a number")
+		if(!isnum(g_facial))
+			WARNING("G_FACIAL Expected a number")
+		if(!isnum(b_facial))
+			WARNING("B_FACIAL Expected a number")
+		if(!isnum(r_eyes))
+			WARNING("R_EYES Expected a number")
+		if(!isnum(g_eyes))
+			WARNING("G_EYES Expected a number")
+		if(!isnum(b_eyes))
+			WARNING("B_EYES Expected a number")
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:335: dat += "<br>"
 		dat += {"<br>

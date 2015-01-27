@@ -39,7 +39,8 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("computer frame", /obj/structure/computerframe, 5, time = 25, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("wall girders", /obj/structure/girder, 2, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("machine frame",/obj/machinery/constructable_frame/machine_frame, 5, time = 25, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("nanomed frame",/obj/item/wallmed_frame,                           3, time = 25, one_per_turf = 0, on_floor = 1), \
+	new/datum/stack_recipe("nanomed frame",/obj/item/mounted/frame/wallmed,                           3, time = 25, one_per_turf = 0, on_floor = 1), \
+	new/datum/stack_recipe("mirror frame",/obj/structure/mirror_frame, 5, time = 25, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("turret frame", /obj/machinery/porta_turret_construct, 5, time = 25, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("iv drip",      /obj/machinery/iv_drip,                            2, time = 25, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("meat spike",   /obj/structure/kitchenspike,                       2, time = 25, one_per_turf = 1, on_floor = 1), \
@@ -63,18 +64,18 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 /*		new/datum/stack_recipe("multi-tile airlock assembly",    /obj/structure/door_assembly/multi_tile,                 4, time = 50, one_per_turf = 1, on_floor = 1), \ */
 		), 4), \
 	null, \
-	new/datum/stack_recipe("embedded controller frame",          /obj/item/airlock_controller_frame,                      1, time = 50, one_per_turf = 0, on_floor = 1), \
-	new/datum/stack_recipe("access button frame",                /obj/item/access_button_frame,                           1, time = 50, one_per_turf = 0, on_floor = 1), \
-	new/datum/stack_recipe("airlock sensor frame",               /obj/item/airlock_sensor_frame,                           1, time = 50, one_per_turf = 0, on_floor = 1), \
+	new/datum/stack_recipe("embedded controller frame",          /obj/item/mounted/frame/airlock_controller,                      1, time = 50, one_per_turf = 0, on_floor = 1), \
+	new/datum/stack_recipe("access button frame",                /obj/item/mounted/frame/access_button,                           1, time = 50, one_per_turf = 0, on_floor = 1), \
+	new/datum/stack_recipe("airlock sensor frame",               /obj/item/mounted/frame/airlock_sensor,                           1, time = 50, one_per_turf = 0, on_floor = 1), \
 	null, \
 	new/datum/stack_recipe("grenade casing", /obj/item/weapon/grenade/chem_grenade), \
 	new/datum/stack_recipe("desk bell shell", /obj/item/device/deskbell_assembly, 2), \
-	new/datum/stack_recipe("light fixture frame", /obj/item/light_fixture_frame, 2), \
-	new/datum/stack_recipe("small light fixture frame", /obj/item/light_fixture_frame/small, 1), \
+	new/datum/stack_recipe("light fixture frame", /obj/item/mounted/frame/light_fixture, 2), \
+	new/datum/stack_recipe("small light fixture frame", /obj/item/mounted/frame/light_fixture/small, 1), \
 	null, \
-	new/datum/stack_recipe("apc frame", /obj/item/apc_frame, 2), \
-	new/datum/stack_recipe("air alarm frame", /obj/item/alarm_frame, 2), \
-	new/datum/stack_recipe("fire alarm frame", /obj/item/firealarm_frame, 2), \
+	new/datum/stack_recipe("apc frame", /obj/item/mounted/frame/apc_frame, 2), \
+	new/datum/stack_recipe("air alarm frame", /obj/item/mounted/frame/alarm_frame, 2), \
+	new/datum/stack_recipe("fire alarm frame", /obj/item/mounted/frame/firealarm, 2), \
 	null, \
 	new/datum/stack_recipe("iron door", /obj/machinery/door/mineral/iron, 20, one_per_turf = 1, on_floor = 1), \
 )
@@ -87,7 +88,8 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	m_amt = 3750
 	w_type = RECYK_METAL
 	throwforce = 14.0
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	origin_tech = "materials=1"
 	melt_temperature = MELTPOINT_STEEL
 
@@ -110,8 +112,8 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	new/datum/stack_recipe("AI core", /obj/structure/AIcore, 4, time = 50, one_per_turf = 1), \
 	new/datum/stack_recipe("Metal crate", /obj/structure/closet/crate, 10, time = 50, one_per_turf = 1), \
-	new/datum/stack_recipe("RUST fuel assembly port frame", /obj/item/rust_fuel_assembly_port_frame, 12, time = 50, one_per_turf = 1), \
-	new/datum/stack_recipe("RUST fuel compressor frame", /obj/item/rust_fuel_compressor_frame, 12, time = 50, one_per_turf = 1), \
+	new/datum/stack_recipe("RUST fuel assembly port frame", /obj/item/mounted/frame/rust_fuel_assembly_port, 12, time = 50, one_per_turf = 1), \
+	new/datum/stack_recipe("RUST fuel compressor frame", /obj/item/mounted/frame/rust_fuel_compressor, 12, time = 50, one_per_turf = 1), \
 	)
 
 /obj/item/stack/sheet/plasteel
@@ -123,7 +125,8 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	m_amt = 3750 // Was 7500, which doesn't make any fucking sense
 	perunit = 2875 //average of plasma and metal
 	throwforce = 15.0
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	origin_tech = "materials=2"
 	w_type = RECYK_METAL
 	melt_temperature = MELTPOINT_STEEL+500
@@ -200,7 +203,7 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	desc = "Large sheets of card, like boxes folded flat."
 	singular_name = "cardboard sheet"
 	icon_state = "sheet-card"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	origin_tech = "materials=1"
 
 /obj/item/stack/sheet/cardboard/New(var/loc, var/amount=null)
@@ -217,7 +220,7 @@ var/global/list/datum/stack_recipe/charcoal_recipes = list ()
 	desc = "Yum."
 	singular_name = "charcoal sheet"
 	icon_state = "sheet-charcoal"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	origin_tech = "materials=1"
 	autoignition_temperature=AUTOIGNITION_WOOD
 

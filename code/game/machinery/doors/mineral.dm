@@ -8,7 +8,7 @@
 	icon = 'icons/obj/doors/mineral.dmi'
 	prefix = "metal" //Corresponds to the mineral type
 
-	var/soundeffect = 'sound/effects/stonedoor_openclose.ogg'
+	soundeffect = 'sound/effects/stonedoor_openclose.ogg'
 	var/hardness = 3
 	var/oreAmount = 7
 

@@ -34,7 +34,8 @@
 	hud_used = new /datum/hud(src)
 	gui_icons = new /datum/ui_icons(src)
 
-	next_move = 1
+	delayNextMove(0)
+
 	sight |= SEE_SELF
 	..()
 
@@ -55,5 +56,7 @@
 		var/mob/living/carbon/human/H = src
 		if(H.species && H.species.abilities)
 			H.verbs |= H.species.abilities
+	if(ckey in deadmins)
+		verbs += /client/proc/readmin
 
 	CallHook("Login", list("client" = src.client, "mob" = src))

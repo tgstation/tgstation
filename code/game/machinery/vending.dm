@@ -67,6 +67,7 @@
 	var/list/overlays_vending[2]//1 is the panel layer, 2 is the dangermode layer
 
 	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY
+	languages = HUMAN
 
 	var/obj/machinery/account_database/linked_db
 	var/datum/money_account/linked_account
@@ -370,9 +371,11 @@
 	if(stat & (BROKEN|NOPOWER))
 		return
 
-	if(seconds_electrified != 0)
+	if(seconds_electrified > 0)
 		if(shock(user, 100))
 			return
+	else if (seconds_electrified)
+		seconds_electrified = 0
 
 	user.set_machine(src)
 
@@ -595,10 +598,10 @@
 
 	if (!message)
 		return
+	say(message)
 
-	for(var/mob/O in hearers(src, null))
-		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"",2)
-	return
+/obj/machinery/vending/say_quote(text)
+	return "beeps, \"[text]\""
 
 /obj/machinery/vending/power_change()
 	if(stat & BROKEN)
@@ -865,33 +868,6 @@
 	pack = /obj/structure/vendomatpack/medical//can be reloaded with NanoMed Plus packs
 
 ////////WALL-MOUNTED NANOMED FRAME//////
-/obj/item/wallmed_frame
-	name = "NanoMed frame"
-	desc = "Wall-mounted Medical Equipment dispenser."
-	icon = 'icons/obj/vending.dmi'
-	icon_state = "wallmed_frame0"
-	flags = FPRINT | TABLEPASS | CONDUCT
-
-/obj/item/wallmed_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
-	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal( get_turf(src.loc), 3 )
-		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-		del(src)
-
-/obj/item/wallmed_frame/proc/try_build(turf/on_wall)
-	if (get_dist(on_wall,usr)>1)
-		return
-	var/ndir = get_dir(usr,on_wall)
-	if (!(ndir in cardinal))
-		return
-	var/turf/loc = get_turf(usr)
-	if (!istype(loc, /turf/simulated/floor))
-		usr << "<span class='warning'>[src] cannot be placed on this spot.</span>"
-		return
-	new /obj/machinery/wallmed_frame(loc, ndir)
-	del(src)
-
 /obj/machinery/vending/wallmed1/New(turf/loc)
 	..()
 	component_parts = 0
@@ -907,7 +883,7 @@
 		user.visible_message(	"[user] detaches the NanoMed from the wall.",
 								"You detach the NanoMed from the wall.")
 		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-		new /obj/item/wallmed_frame(src.loc)
+		new /obj/item/mounted/frame/wallmed(src.loc)
 
 		for(var/obj/I in src)
 			qdel(I)
@@ -925,7 +901,7 @@
 		user.visible_message(	"[user] detaches the NanoMed from the wall.",
 								"You detach the NanoMed from the wall.")
 		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-		new /obj/item/wallmed_frame(src.loc)
+		new /obj/item/mounted/frame/wallmed(src.loc)
 
 		for(var/obj/I in src)
 			qdel(I)
@@ -968,7 +944,7 @@
 				if(do_after(user, 50))
 					usr << "<span class='notice'>You unscrew \the [src] from the wall.</span>"
 					playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-					new /obj/item/wallmed_frame(get_turf(src))
+					new /obj/item/mounted/frame/wallmed(get_turf(src))
 					del(src)
 				return 1
 			if(istype(W, /obj/item/weapon/circuitboard))
@@ -1248,7 +1224,7 @@
 					/obj/item/clothing/suit/wizrobe/marisa/fake = 3,/obj/item/clothing/under/sundress = 3,/obj/item/clothing/head/witchwig = 3,/obj/item/weapon/staff/broom = 3,
 					/obj/item/clothing/suit/wizrobe/fake = 3,/obj/item/clothing/head/wizard/fake = 3,/obj/item/weapon/staff = 3,/obj/item/clothing/mask/gas/sexyclown = 3,
 					/obj/item/clothing/under/sexyclown = 3,/obj/item/clothing/mask/gas/sexymime = 3,/obj/item/clothing/under/sexymime = 3,/obj/item/clothing/suit/apron/overalls = 3,
-					/obj/item/clothing/head/rabbitears =3) //Pretty much everything that had a chance to spawn.
+					/obj/item/clothing/head/rabbitears = 3,/obj/item/clothing/head/lordadmiralhat = 3,/obj/item/clothing/suit/lordadmiral = 3,/obj/item/clothing/suit/doshjacket = 3,/obj/item/clothing/under/jester = 3, /obj/item/clothing/head/jesterhat = 3,/obj/item/clothing/shoes/jestershoes = 3) //Pretty much everything that had a chance to spawn.
 	contraband = list(/obj/item/clothing/suit/cardborg = 3,/obj/item/clothing/head/cardborg = 3,/obj/item/clothing/suit/judgerobe = 3,/obj/item/clothing/head/powdered_wig = 3)
 	premium = list(/obj/item/clothing/suit/hgpirate = 3, /obj/item/clothing/head/hgpiratecap = 3, /obj/item/clothing/head/helmet/roman = 3, /obj/item/clothing/head/helmet/roman/legionaire = 3, /obj/item/clothing/under/roman = 3, /obj/item/clothing/shoes/roman = 3, /obj/item/weapon/shield/riot/roman = 3)
 

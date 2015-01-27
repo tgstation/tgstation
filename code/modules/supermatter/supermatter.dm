@@ -34,6 +34,7 @@
 	var/damage = 0
 	var/damage_archived = 0
 	var/warning_point = 100
+	var/audio_warning_point=500
 	var/emergency_point = 700
 	var/explosion_point = 1000
 
@@ -43,7 +44,9 @@
 
 	var/lastwarning = 0                        // Time in 1/10th of seconds since the last sent warning
 	var/lastaudiowarning = 0
+
 	var/power = 0
+	var/max_power = 2000 // Used for lighting scaling.
 
 	var/oxygen = 0				  // Moving this up here for easier debugging.
 
@@ -61,6 +64,9 @@
 	var/frequency = 0
 	var/id_tag
 
+	//Add types to this list so it doesn't make a message or get desroyed by the Supermatter on touch.
+	var/list/message_exclusions = list(/obj/effect/effect/sparks)
+
 /obj/machinery/power/supermatter/shard //Small subtype, less efficient and more sensitive, but less boom.
 	name = "Supermatter Shard"
 	short_name = "Shard"
@@ -69,12 +75,16 @@
 	base_icon_state = "darkmatter_shard"
 
 	warning_point = 50
+	audio_warning_point=400
 	emergency_point = 500
 	explosion_point = 900
 
 	gasefficency = 0.125
 
 	explosion_power = 8 // WAS 3 - N3X
+
+	max_luminosity = 5
+	max_power=3000
 
 
 /obj/machinery/power/supermatter/New()
@@ -96,6 +106,26 @@
 		explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
 		del src
 		return
+
+/obj/machinery/power/supermatter/shard/singularity_act()
+	var/prints = ""
+	if(src.fingerprintshidden)
+		prints = ", all touchers : " + src.fingerprintshidden
+	log_admin("New super singularity made by eating a SM crystal [prints]. Last touched by [src.fingerprintslast].")
+	message_admins("New super singularity made by eating a SM crystal [prints]. Last touched by [src.fingerprintslast].")
+	qdel(src)
+	return 15000
+
+/obj/machinery/power/supermatter/singularity_act()
+	var/prints = ""
+	if(src.fingerprintshidden)
+		prints = ", all touchers : " + src.fingerprintshidden
+	SetUniversalState(/datum/universal_state/supermatter_cascade)
+	//S.expand(STAGE_SUPER, 1)
+	log_admin("New super singularity made by eating a SM crystal [prints]. Last touched by [src.fingerprintslast].")
+	message_admins("New super singularity made by eating a SM crystal [prints]. Last touched by [src.fingerprintslast].")
+	qdel(src)
+	return 20000
 
 /obj/machinery/power/supermatter/process()
 
@@ -136,10 +166,10 @@
 					offset=0
 					audio_sounds += list('sound/AI/supermatter_delam.ogg')
 					//audio_offset = 100
-				play_alert=1
+				play_alert = (damage > audio_warning_point)
 			else
 				warning = "[short_name] hyperstructure returning to safe operating levels. Instability: [stability]%"
-			radio.autosay(warning, "Supermatter [short_name] Monitor")
+			radio.say(warning, "Supermatter [short_name] Monitor")
 			lastwarning = world.timeofday - offset
 
 		if(play_alert && (world.timeofday - lastaudiowarning) / 10 >= AUDIO_WARNING_DELAY)
@@ -244,6 +274,9 @@
 
 	power -= (power/500)**3
 
+	// Lighting based on power output.
+	SetLuminosity(Clamp(round(Clamp(power/max_power,0,1)*max_luminosity),0,max_luminosity))
+
 	return 1
 
 
@@ -283,7 +316,6 @@
 	attack_ai(user)
 
 /obj/machinery/power/supermatter/attack_ai(mob/user as mob)
-	src.examine()
 	var/stability = num2text(round((damage / explosion_point) * 100))
 	user << "<span class = \"info\">Matrix Instability: [stability]%</span>"
 	user << "<span class = \"info\">Damage: [format_num(damage)]</span>" // idfk what units we're using.
@@ -326,9 +358,11 @@
 		AM.visible_message("<span class=\"warning\">\The [AM] slams into \the [src] inducing a resonance... \his body starts to glow and catch flame before flashing into ash.</span>",\
 		"<span class=\"danger\">You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
 		"<span class=\"warning\">You hear an unearthly noise as a wave of heat washes over you.</span>")
-	else
+	else if(!is_type_in_list(AM, message_exclusions))
 		AM.visible_message("<span class=\"warning\">\The [AM] smacks into \the [src] and rapidly flashes to ash.</span>",\
 		"<span class=\"warning\">You hear a loud crack as you are washed with a wave of heat.</span>")
+	else
+		return ..()
 
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
 

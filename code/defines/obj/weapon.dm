@@ -3,7 +3,8 @@
 	desc = "Should anything ever go wrong..."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "red_phone"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	force = 3.0
 	throwforce = 2.0
 	throw_speed = 1
@@ -26,7 +27,6 @@
 	anchored = 0.0
 	var/matter = 0
 	var/mode = 1
-	flags = TABLEPASS
 	w_class = 3.0
 
 /obj/item/weapon/bananapeel
@@ -108,7 +108,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "cane"
 	item_state = "stick"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	force = 5.0
 	throwforce = 7.0
 	w_class = 2.0
@@ -133,7 +134,7 @@
 	name = "dummy"
 	invisibility = 101.0
 	anchored = 1.0
-	flags = TABLEPASS
+	flags = 0
 
 /obj/item/weapon/dummy/ex_act()
 	return
@@ -155,23 +156,14 @@
 	w_class = 5.0
 */
 
-/obj/item/weapon/gift
-	name = "gift"
-	desc = "A wrapped item."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "gift3"
-	var/size = 3.0
-	var/obj/item/gift = null
-	item_state = "gift"
-	w_class = 4.0
-
 /obj/item/weapon/legcuffs
 	name = "legcuffs"
 	desc = "Use this to keep prisoners in line."
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "handcuff"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	throwforce = 0
 	w_class = 3.0
 	origin_tech = "materials=1"
@@ -183,7 +175,8 @@
 	gender = NEUTER
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "bolas"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	throwforce = 2
 	w_class = 2
@@ -438,7 +431,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	attack_verb = list("warned", "cautioned", "smashed")
 
 	proximity_sign
@@ -501,7 +494,8 @@
 	desc = "Parts of a rack."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "rack_parts"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	m_amt = 3750
 	w_type = RECYK_METAL
 	melt_temperature=MELTPOINT_STEEL
@@ -541,7 +535,7 @@
 	var/traitor_frequency = 0.0
 	var/mob/currentUser = null
 	var/obj/item/device/radio/origradio = null
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT  | CONDUCT | ONBELT
 	w_class = 2.0
 	item_state = "radio"
 	throw_speed = 4
@@ -584,7 +578,8 @@
 	var/selfdestruct = 0.0
 	var/traitor_frequency = 0.0
 	var/obj/item/device/radio/origradio = null
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	item_state = "radio"
 	throwforce = 5
@@ -606,7 +601,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	flags = FPRINT
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
 
 /obj/item/weapon/staff/broom
@@ -626,7 +621,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	flags = FPRINT
 
 /obj/item/weapon/table_parts
 	name = "table parts"
@@ -637,7 +632,8 @@
 	m_amt = 3750
 	w_type = RECYK_METAL
 	melt_temperature=MELTPOINT_STEEL
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	attack_verb = list("slammed", "bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
 /obj/item/weapon/table_parts/cultify()
@@ -652,13 +648,14 @@
 	m_amt = 7500
 	w_type = RECYK_METAL
 	melt_temperature=MELTPOINT_STEEL
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 
 /obj/item/weapon/table_parts/wood
 	name = "wooden table parts"
 	desc = "Keep away from fire."
 	icon_state = "wood_tableparts"
-	flags = null
+	flags = 0
 
 /obj/item/weapon/table_parts/wood/cultify()
 	return
@@ -685,7 +682,8 @@
 	icon_state = "std_module"
 	w_class = 2.0
 	item_state = "electronic"
-	flags = FPRINT|TABLEPASS|CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	var/mtype = 1						// 1=electronic 2=hardware
 
 /obj/item/weapon/module/card_reader
@@ -718,7 +716,8 @@
 	desc = "Meat that appears...strange..."
 	icon = 'icons/obj/food.dmi'
 	icon_state = "meat"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	w_class = 1.0
 	origin_tech = "biotech=2"
 
@@ -727,7 +726,8 @@
 	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "hatchet"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	force = 12.0
 	w_class = 2.0
 	throwforce = 15.0
@@ -761,7 +761,7 @@
 	w_class = 4.0
 	m_amt = 15000
 	w_type = RECYK_METAL
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	flags = FPRINT
 	slot_flags = SLOT_BACK
 	origin_tech = "materials=2;combat=2"
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
@@ -783,7 +783,7 @@
 	w_class = 1
 	throwforce = 2
 	var/cigarcount = 6
-	flags = ONBELT | TABLEPASS */
+	flags = ONBELT  */
 
 /obj/item/weapon/pai_cable
 	desc = "A flexible coated cable with a universal jack on one end."
@@ -1031,7 +1031,7 @@
 	icon = 'icons/obj/lightning.dmi'
 	icon_state = "lightning"
 	desc = "test lightning"
-	flags = USEDELAY
+	flags = 0
 
 	New()
 		icon = midicon

@@ -46,12 +46,12 @@
 	if(being_built)
 		overlays += "[base_state]_ani"
 
-/obj/machinery/r_n_d/fabricator/examine()
+/obj/machinery/r_n_d/fabricator/examine(mob/user)
 	..()
 	if(being_built)
-		usr << "It's building \a [src.being_built]."
+		user << "<span class='info'>It's building \a [src.being_built].</span>"
 	else
-		usr << "Nothing's being built."
+		user << "<span class='info'>Nothing's being built.</span>"
 
 /obj/machinery/r_n_d/fabricator/RefreshParts()
 	var/T = 0
@@ -198,22 +198,27 @@
 			output += "[output ? " | " : null][get_resource_cost_w_coeff(part,"$[matID]")] [material.processed_name]"
 	return output
 
-/obj/machinery/r_n_d/fabricator/proc/build_part(var/datum/design/part)
-	if(!part)
-		return
-
+/obj/machinery/r_n_d/fabricator/proc/remove_materials(var/datum/design/part)
 	for(var/M in part.materials)
 		if(!check_mat(part, M))
-			src.visible_message("<font color='blue'>The [src.name] beeps, \"Not enough materials to complete item.\"</font>")
-			stopped=1
 			return 0
-		if(copytext(M,1,2) == "$")
+		if(copytext(M,1,2) == "$" && !(research_flags & IGNORE_MATS))
 			var/matID=copytext(M,2)
 			var/datum/material/material=materials[matID]
 			material.stored = max(0, (material.stored-part.materials[M]))
 			materials[matID]=material
-		else
+		else if(!(research_flags & IGNORE_CHEMS))
 			reagents.remove_reagent(M, part.materials[M])
+	return 1
+
+/obj/machinery/r_n_d/fabricator/proc/build_part(var/datum/design/part)
+	if(!part)
+		return
+
+	if(!remove_materials(part))
+		stopped = 1
+		src.visible_message("<font color='blue'>The [src.name] beeps, \"Not enough materials to complete item.\"</font>")
+		return
 
 	src.being_built = new part.build_path(src)
 
@@ -230,6 +235,7 @@
 			var/obj/item/weapon/storage/lockbox/L
 			if(research_flags &TRUELOCKS)
 				L = new/obj/item/weapon/storage/lockbox(src) //Make a lockbox
+				L.req_access = part.req_lock_access //we set the access from the design
 			else
 				L = new /obj/item/weapon/storage/lockbox/unlockable(src) //Make an unlockable lockbox
 			being_built.loc = L //Put the thing in the lockbox
@@ -448,9 +454,11 @@
 			//message_admins("Breaking on [copytext(stringinput, i)] and [i]")
 			final_digit = i
 			break
-	var/part_list = part_sets[copytext(stringinput, final_digit)]
+	var/list/part_list = part_sets[copytext(stringinput, final_digit)]
 	var/index = text2num(copytext(stringinput, 1, final_digit))
 	//message_admins("From [stringinput] we have [index] and [copytext(stringinput, final_digit)]")
+	if(!istype(part_list) || part_list.len < index)
+		return 0
 	return part_list[index]
 
 /obj/machinery/r_n_d/fabricator/Topic(href, href_list)
@@ -565,7 +573,7 @@
 		var/index = filter.getNum("index")
 		var/new_index = index + filter.getNum("queue_move")
 		if(isnum(index) && isnum(new_index))
-			if(InRange(new_index,1,queue.len))
+			if(IsInRange(new_index,1,queue.len))
 				queue.Swap(index,new_index)
 		return update_queue_on_page()
 
