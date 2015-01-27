@@ -80,8 +80,8 @@ datum/reagent/synthflesh
 datum/reagent/synthflesh/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 	if(!M) M = holder.my_atom
 	if(method == TOUCH)
-		M.adjustBruteLoss(-(1*volume)*REM)
-		M.adjustFireLoss(-(1*volume)*REM)
+		M.adjustBruteLoss(-0.5*volume)
+		M.adjustFireLoss(-0.5*volume)
 		M << "<span class='notice'>You feel your burns healing and your flesh knitting together!</span>"
 	..()
 	return
