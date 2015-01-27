@@ -14,9 +14,11 @@
 	var/windoor = null
 	var/reinforced = 0
 	var/rglass = 0
+	//For solars created from this glass type
 	var/glass_quality = 0.5 //Quality of a solar made from this
 	var/shealth = 5 //Health of a solar made from this
 	var/sname = "glass"
+	var/shard_type = /obj/item/weapon/shard
 
 /obj/item/stack/sheet/glass/attack_self(mob/user as mob)
 	construct_window(user)
@@ -256,6 +258,7 @@
 	melt_temperature = MELTPOINT_STEEL+500
 	glass_quality = 1.15 //Can you imagine a world in which plasmaglass is worse than rglass
 	shealth = 20
+	shard_type = /obj/item/weapon/shard/plasma
 
 /obj/item/stack/sheet/glass/plasmaglass/recycle(var/datum/materials/rec)
 	rec.addAmount("plasma",1*src.amount)
@@ -281,6 +284,7 @@
 	reinforced = 1
 	glass_quality = 1.3
 	shealth = 30
+	shard_type = /obj/item/weapon/shard/plasma
 
 /obj/item/stack/sheet/glass/plasmarglass/recycle(var/datum/materials/rec)
 	rec.addAmount("plasma",1*src.amount)

@@ -1,19 +1,22 @@
 /*
  * Glass shards
  */
-/obj/item/weapon/shard/resetVariables()
-	..("icon_state", "pixel_y", "pixel_x")
 
-/obj/item/weapon/shard/Bump()
-
-	spawn( 0 )
-		if (prob(20))
-			src.force = 15
-		else
-			src.force = 4
-		..()
-		return
-	return
+/obj/item/weapon/shard
+	name = "shard"
+	icon = 'icons/obj/shards.dmi'
+	icon_state = "large"
+	sharp = 1
+	desc = "Could probably be used as ... a throwing weapon?"
+	w_class = 1.0
+	force = 5.0
+	throwforce = 15.0
+	item_state = "shard-glassnew"
+	g_amt = 3750
+	w_type = RECYK_GLASS
+	melt_temperature = MELTPOINT_GLASS
+	attack_verb = list("stabbed", "slashed", "sliced", "cut")
+	var/glass = /obj/item/stack/sheet/glass/glass
 
 /obj/item/weapon/shard/New()
 
@@ -31,19 +34,63 @@
 		else
 	return
 
+/obj/item/weapon/shard/plasma
+	name = "plasma shard"
+	desc = "A shard of plasma glass. Considerably tougher then normal glass shards. Apparently not tough enough to be a window."
+	force = 8.0
+	throwforce = 15.0
+	icon_state = "plasmalarge"
+	item_state = "shard-plasglass"
+	glass = /obj/item/stack/sheet/glass/plasmaglass
+
+/obj/item/weapon/shard/plasma/New()
+	..()
+	src.icon_state = pick("plasmalarge", "plasmamedium", "plasmasmall")
+	return
+
+/obj/item/weapon/shard/shrapnel
+	name = "shrapnel"
+	icon = 'icons/obj/shards.dmi'
+	icon_state = "shrapnellarge"
+	desc = "A bunch of tiny bits of shattered metal."
+	m_amt=5
+	w_type=RECYK_METAL
+	melt_temperature=MELTPOINT_STEEL
+
+/obj/item/weapon/shard/shrapnel/New()
+	..()
+	src.icon_state = pick("shrapnellarge", "shrapnelmedium", "shrapnelsmall")
+	return
+
+/obj/item/weapon/shard/suicide_act(mob/user)
+		viewers(user) << pick("\red <b>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</b>", \
+							"\red <b>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</b>")
+		return (BRUTELOSS)
+
+/obj/item/weapon/shard/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	return ..()
+
+/obj/item/weapon/shard/resetVariables()
+	..("icon_state", "pixel_y", "pixel_x")
+
+/obj/item/weapon/shard/Bump()
+
+	spawn( 0 )
+		if (prob(20))
+			src.force = 15
+		else
+			src.force = 4
+		..()
+		return
+	return
+
 /obj/item/weapon/shard/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if ( istype(W, /obj/item/weapon/weldingtool))
+	if (iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
-			var/obj/item/stack/sheet/glass/glass/NG = new (user.loc)
-			for (var/obj/item/stack/sheet/glass/glass/G in user.loc)
-				if(G==NG)
-					continue
-				if(G.amount>=G.max_amount)
-					continue
-				G.attackby(NG, user)
-				usr << "You add the newly-formed glass to the stack. It now contains [NG.amount] sheets."
-			//SN src = null
+			var/obj/item/stack/sheet/glass/new_item = new glass(user.loc)
+			new_item.add_to_stacks(usr)
 			returnToPool(src)
 			return
 	return ..()

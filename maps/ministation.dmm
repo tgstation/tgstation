@@ -2394,7 +2394,7 @@
 "cap" = (/obj/item/weapon/storage/toolbox/electrical{pixel_x = 1; pixel_y = -1},/turf/simulated/floor/plating/airless,/area/AIsattele)
 "caq" = (/obj/structure/closet/crate,/obj/item/device/aicard,/obj/item/device/multitool,/turf/simulated/floor/plating/airless,/area/AIsattele)
 "car" = (/obj/structure/grille,/turf/simulated/floor/plating/airless,/area)
-"cas" = (/obj/machinery/power/solar/fake,/turf/simulated/floor/airless{icon_state = "solarpanel"},/area/djstation/solars)
+"cas" = (/obj/machinery/power/solar/panel/fake,/turf/simulated/floor/airless{icon_state = "solarpanel"},/area/djstation/solars)
 "cat" = (/turf/simulated/floor/plating/airless,/area/djstation/solars)
 "cau" = (/turf/simulated/wall,/area/djstation)
 "cav" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area/djstation)

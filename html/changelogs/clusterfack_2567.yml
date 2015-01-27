@@ -2,7 +2,9 @@ author: Clusterfack
 delete-after: true
 changes:
 - bugfix: Modifying a turf to another type no longer adds/deletes gases to it
-- tweak: You can tell if an MMI is locked/unlocked by examining it now
-- rscadd: Added mommi parts should be dropped when mmi/posis finish a borg
-- bugfix: You should be able to view solar controls at a range as ghosts/mommi
-- bugfix: Glass should no longer stack together inappropriately
+- rscadd: Mommi parts should be dropped when an mmi/posis finishes a borg
+- bugfix: Solars should work properly now during construction and deconstruction
+- bugfix: Glass should no longer stack together inappropriately, also fixed a multiplication exploit from welding shards
+- tweak: You can unlock borgs with PDAs with proper access ID inside (TG Port)
+- bugfix: DNA block number increased to 54 so that all genes are properly assigned
+- bugfix: Robotizing (i.e. roboburgers) can no longer leave you trapped in objects
