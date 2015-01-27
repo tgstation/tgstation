@@ -165,7 +165,7 @@
 
 /obj/item/weapon/gun/energy/disabler/cyborg
 	name = "cyborg disabler"
-	desc = "An integrated hybrid taser that draws directly from a cyborg's power cell. The weapon contains a limiter to prevent the cyborg's power cell from overheating."
+	desc = "An integrated disabler that draws from a cyborg's power cell. This weapon contains a limiter to prevent the cyborg's power cell from overheating."
 	var/charge_tick = 0
 	var/recharge_time = 2.5
 
