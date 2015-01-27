@@ -25,8 +25,7 @@ datum/reagent/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob, var/meth
 
 datum/reagent/silver_sulfadiazine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	if(prob(55))
-		M.adjustFireLoss(-2*REM)
+	M.adjustFireLoss(-2*REM)
 	..()
 	return
 
@@ -52,7 +51,7 @@ datum/reagent/styptic_powder/reaction_mob(var/mob/living/M as mob, var/method=TO
 datum/reagent/styptic_powder/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	if(prob(55))
-		M.adjustBruteLoss(-2*REM)
+		M.adjustBruteLoss(-8*REM)
 	..()
 	return
 
