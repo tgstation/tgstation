@@ -4432,6 +4432,6 @@ datum
 					return
 
 /datum/reagent/Destroy()
-	if(holder)
+	if(istype(holder))
 		holder.reagent_list -= src
 		holder = null
