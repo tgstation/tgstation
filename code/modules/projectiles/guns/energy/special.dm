@@ -159,13 +159,13 @@
 /obj/item/weapon/gun/energy/disabler
 	name = "disabler"
 	desc = "A self-defense weapon that exhausts organic targets, weakening them until they collapse."
+	icon_state = "disabler"
 	item_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
 
 /obj/item/weapon/gun/energy/disabler/cyborg
 	name = "cyborg disabler"
 	desc = "An integrated hybrid taser that draws directly from a cyborg's power cell. The weapon contains a limiter to prevent the cyborg's power cell from overheating."
-	icon_state = "disabler"
 	var/charge_tick = 0
 	var/recharge_time = 2.5
 
