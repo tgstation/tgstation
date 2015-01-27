@@ -30,11 +30,13 @@ Bonus
 /datum/symptom/genetic_mutation/Activate(var/datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB * 5)) // 15% chance
-		var/mob/living/M = A.affected_mob
+		var/mob/living/carbon/M = A.affected_mob
+		if(!check_dna_integrity(M))	return
 		switch(A.stage)
 			if(4, 5)
 				M << "<span class='notice'>[pick("Your skin feels itchy.", "You feel light headed.")]</span>"
-				clean_randmut(M, possible_mutations) // Give them a random good/bad mutation.
+				M.dna.remove_mutation_group(possible_mutations)
+				randmut(M, possible_mutations)
 	return
 
 // Archive their DNA before they were infected.
