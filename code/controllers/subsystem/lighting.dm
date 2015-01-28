@@ -39,16 +39,16 @@ var/datum/subsystem/lighting/SSlighting
 /datum/subsystem/lighting/fire()
 	lights_workload = MC_AVERAGE(lights_workload, lights.len)
 	var/i=1
-	for(var/thing in lights)
-		if(thing && !thing:check())	//yes, cry that I'm using the : operator, it's much faster looping like this. And this gets called a lot. Dealwithit.
+	for(var/datum/light_source/l in lights)
+		if(l && !l.check())	//yes, cry that I'm using the : operator, it's much faster looping like this. And this gets called a lot. Dealwithit.
 			++i
 			continue
 		lights.Cut(i, i+1)
 
 	changed_turfs_workload = MC_AVERAGE(changed_turfs_workload, changed_turfs.len)
-	for(var/thing in changed_turfs)
-		if(thing && thing:lighting_changed)
-			thing:shift_to_subarea()
+	for(var/turf/t in changed_turfs)
+		if(t && t.lighting_changed)
+			t.shift_to_subarea()
 	changed_turfs.Cut()
 
 
@@ -58,8 +58,8 @@ var/datum/subsystem/lighting/SSlighting
 //z-levels with the z_level argument
 /datum/subsystem/lighting/Initialize(timeofday, z_level)
 	var/i=1
-	for(var/thing in lights)
-		if(thing && !thing:check())
+	for(var/datum/light_source/l in lights)
+		if(l && !l.check())
 			++i
 			continue
 		lights.Cut(i, i+1)
@@ -81,8 +81,8 @@ var/datum/subsystem/lighting/SSlighting
 	if(z_level)
 		//we need to loop through to clear only shifted turfs from the list. or we will cause errors
 		i=1
-		for(var/thing in changed_turfs)
-			if(thing && thing:z < z_start && z_finish < thing:z)
+		for(var/turf/t in changed_turfs)
+			if(t && t.z < z_start && z_finish <t.z)
 				++i
 				continue
 			changed_turfs.Cut(i, i+1)
