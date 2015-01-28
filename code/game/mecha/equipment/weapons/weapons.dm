@@ -380,7 +380,7 @@
 	name = "\improper SOB-3 grenade launcher"
 	desc = "A weapon for combat exosuits. Launches primed clusterbangs. You monster."
 	projectiles = 3
-	projectile = /obj/item/weapon/grenade/flashbang/clusterbang
+	projectile = /obj/item/weapon/grenade/clusterbuster
 	projectile_energy_cost = 1600 //getting off cheap seeing as this is 3 times the flashbangs held in the grenade launcher.
 	equip_cooldown = 90
 
