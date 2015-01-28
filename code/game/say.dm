@@ -82,7 +82,7 @@ var/list/freqtoname = list(
 	return "says, \"[text]\""
 
 /atom/movable/proc/lang_treat(atom/movable/speaker, message_langs, raw_message)
-	if(languages & message_langs || languages & UNDERSTANDS_ALL || message_langs & UNDERSTANDS_ALL)
+	if(languages & message_langs || message_langs & ALL)
 		var/atom/movable/AM = speaker.GetSource()
 		if(AM)
 			return AM.say_quote(raw_message)

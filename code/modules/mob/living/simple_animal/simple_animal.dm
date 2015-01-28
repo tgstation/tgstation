@@ -68,7 +68,7 @@
 	var/supernatural = 0
 	var/purge = 0
 
-	languages = UNDERSTANDS_ALL
+	languages = ALL
 
 /mob/living/simple_animal/rejuvenate()
 	var/turf/T = get_turf(src)
