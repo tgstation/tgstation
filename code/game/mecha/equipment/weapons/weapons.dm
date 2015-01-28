@@ -16,9 +16,9 @@
 	set_ready_state(0)
 	var/turf/curloc = chassis.loc
 	var/atom/targloc = get_turf(target)
-	if (!targloc || !istype(targloc, /turf) || !curloc)
+	if(!targloc || !istype(targloc, /turf) || !curloc)
 		return
-	if (targloc == curloc)
+	if(targloc == curloc)
 		return
 	playsound(chassis, fire_sound, 50, 1)
 	var/obj/item/projectile/A = new projectile(curloc)
@@ -190,7 +190,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/Topic(href, href_list)
 	..()
-	if (href_list["rearm"])
+	if(href_list["rearm"])
 		src.rearm()
 	return
 
@@ -285,9 +285,9 @@
 		var/dx = round(gaussian(0,deviation),1)
 		var/dy = round(gaussian(0,deviation),1)
 		targloc = locate(target_x+dx, target_y+dy, target_z)
-		if (!targloc || !curloc)
+		if(!targloc || !curloc)
 			continue
-		if (targloc == curloc)
+		if(targloc == curloc)
 			continue
 
 		playsound(chassis, fire_sound, 50, 1)

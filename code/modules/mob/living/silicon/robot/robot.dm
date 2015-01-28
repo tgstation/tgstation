@@ -267,14 +267,14 @@
 	for (var/cat in alarms)
 		dat += text("<B>[cat]</B><BR>\n")
 		var/list/L = alarms[cat]
-		if (L.len)
+		if(L.len)
 			for (var/alarm in L)
 				var/list/alm = L[alarm]
 				var/area/A = alm[1]
 				var/list/sources = alm[3]
 				dat += "<NOBR>"
 				dat += text("-- [A.name]")
-				if (sources.len > 1)
+				if(sources.len > 1)
 					dat += text("- [sources.len] sources")
 				dat += "</NOBR><BR>\n"
 		else
@@ -285,7 +285,7 @@
 	src << browse(dat, "window=robotalerts&can_close=0")
 
 /mob/living/silicon/robot/blob_act()
-	if (stat != 2)
+	if(stat != 2)
 		adjustBruteLoss(60)
 		updatehealth()
 		return 1
@@ -332,11 +332,11 @@
 			gib()
 			return
 		if(2.0)
-			if (stat != 2)
+			if(stat != 2)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
 		if(3.0)
-			if (stat != 2)
+			if(stat != 2)
 				adjustBruteLoss(30)
 	return
 
@@ -351,27 +351,27 @@
 /mob/living/silicon/robot/triggerAlarm(var/class, area/A, var/O, var/obj/alarmsource)
 	if(alarmsource.z != z)
 		return
-	if (stat == 2)
+	if(stat == 2)
 		return 1
 	var/list/L = alarms[class]
 	for (var/I in L)
-		if (I == A.name)
+		if(I == A.name)
 			var/list/alarm = L[I]
 			var/list/sources = alarm[3]
-			if (!(alarmsource in sources))
+			if(!(alarmsource in sources))
 				sources += alarmsource
 			return 1
 	var/obj/machinery/camera/C = null
 	var/list/CL = null
-	if (O && istype(O, /list))
+	if(O && istype(O, /list))
 		CL = O
-		if (CL.len == 1)
+		if(CL.len == 1)
 			C = CL[1]
-	else if (O && istype(O, /obj/machinery/camera))
+	else if(O && istype(O, /obj/machinery/camera))
 		C = O
 	L[A.name] = list(A, (C) ? C : O, list(alarmsource))
 	queueAlarm(text("--- [class] alarm detected in [A.name]!"), class)
-//	if (viewalerts) robot_alerts()
+//	if(viewalerts) robot_alerts()
 	return 1
 
 
@@ -379,34 +379,34 @@
 	var/list/L = alarms[class]
 	var/cleared = 0
 	for (var/I in L)
-		if (I == A.name)
+		if(I == A.name)
 			var/list/alarm = L[I]
 			var/list/srcs  = alarm[3]
-			if (origin in srcs)
+			if(origin in srcs)
 				srcs -= origin
-			if (srcs.len == 0)
+			if(srcs.len == 0)
 				cleared = 1
 				L -= I
-	if (cleared)
+	if(cleared)
 		queueAlarm("--- [class] alarm in [A.name] has been cleared.", class, 0)
-//		if (viewalerts) robot_alerts()
+//		if(viewalerts) robot_alerts()
 	return !cleared
 
 
 /mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/restraints/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
+	if(istype(W, /obj/item/weapon/restraints/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
 		return
 
-	if (istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
+	if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/weapon/weldingtool/WT = W
-		if (src == user)
+		if(src == user)
 			user << "<span class='warning'>You lack the reach to be able to repair yourself.</span>"
 			return 1
-		if (src.health >= src.maxHealth)
+		if(src.health >= src.maxHealth)
 			user << "<span class='warning'>[src] is already in good condition.</span>"
 			return 1
-		if (WT.remove_fuel(0, user))
+		if(WT.remove_fuel(0, user))
 			adjustBruteLoss(-30)
 			updatehealth()
 			add_fingerprint(user)
@@ -418,14 +418,14 @@
 
 	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
 		var/obj/item/stack/cable_coil/coil = W
-		if (coil.use(1))
+		if(coil.use(1))
 			adjustFireLoss(-30)
 			updatehealth()
 			visible_message("<span class='notice'>[user] has fixed some of the burnt wires on [src].</span>")
 		else
 			user << "<span class='warning'>You need one length of cable to repair [src].</span>"
 
-	else if (istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
+	else if(istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
 		if(opened)
 			user << "You close the cover."
 			opened = 0
@@ -438,7 +438,7 @@
 				opened = 1
 				update_icons()
 
-	else if (istype(W, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
+	else if(istype(W, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
 		if(wiresexposed)
 			user << "Close the cover first."
 		else if(cell)
@@ -451,8 +451,8 @@
 //			chargecount = 0
 		update_icons()
 
-	else if (istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool) || istype(W, /obj/item/device/assembly/signaler))
-		if (wiresexposed)
+	else if(istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool) || istype(W, /obj/item/device/assembly/signaler))
+		if(wiresexposed)
 			wires.Interact(user)
 		else
 			user << "You can't reach the wiring."
@@ -503,7 +503,7 @@
 		else
 			user << "Unable to locate a radio."
 
-	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
+	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
 		if(emagged)//still allow them to open the cover
 			user << "The interface seems slightly damaged"
 		if(opened)
@@ -616,10 +616,10 @@
 				usr << "You unlock your cover."
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
-	if (M.a_intent =="disarm")
+	if(M.a_intent =="disarm")
 		if(!(lying))
 			M.do_attack_animation(src)
-			if (prob(85))
+			if(prob(85))
 				Stun(7)
 				step(src,get_dir(M,src))
 				spawn(5)
@@ -770,13 +770,13 @@
 	<table border='0'>"}
 
 	for (var/obj in module.modules)
-		if (!obj)
+		if(!obj)
 			dat += text("<tr><td><B>Resource depleted</B></td></tr>")
 		else if(activated(obj))
 			dat += text("<tr><td>[obj]</td><td><B>Activated</B></td></tr>")
 		else
 			dat += text("<tr><td>[obj]</td><td><A HREF=?src=\ref[src];act=\ref[obj]>Activate</A></td></tr>")
-	if (emagged)
+	if(emagged)
 		if(activated(module.emag))
 			dat += text("<tr><td>[module.emag]</td><td><B>Activated</B></td></tr>")
 		else
@@ -798,27 +798,27 @@
 	if(usr && (src != usr))
 		return
 
-	if (href_list["mach_close"])
+	if(href_list["mach_close"])
 		var/t1 = text("window=[href_list["mach_close"]]")
 		unset_machine()
 		src << browse(null, t1)
 		return
 
-	if (href_list["showalerts"])
+	if(href_list["showalerts"])
 		robot_alerts()
 		return
 
-	if (href_list["mod"])
+	if(href_list["mod"])
 		var/obj/item/O = locate(href_list["mod"])
-		if (O)
+		if(O)
 			O.attack_self(src)
 
-	if (href_list["act"])
+	if(href_list["act"])
 		var/obj/item/O = locate(href_list["act"])
 		activate_module(O)
 		installed_modules()
 
-	if (href_list["deact"])
+	if(href_list["deact"])
 		var/obj/item/O = locate(href_list["deact"])
 		if(activated(O))
 			if(module_state_1 == O)
@@ -849,7 +849,7 @@
 			var/turf/tile = loc
 			if(isturf(tile))
 				tile.clean_blood()
-				if (istype(tile, /turf/simulated/floor))
+				if(istype(tile, /turf/simulated/floor))
 					var/turf/simulated/floor/F = tile
 					F.dirt = 0
 				for(var/A in tile)
@@ -898,7 +898,7 @@
 	return
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
-	if (src.connected_ai)
+	if(src.connected_ai)
 		src.connected_ai = null
 	lawupdate = 0
 	lockcharge = 0
@@ -932,7 +932,7 @@
 	set src = usr
 
 	var/obj/item/W = get_active_hand()
-	if (W)
+	if(W)
 		W.attack_self(src)
 
 	return
@@ -950,7 +950,7 @@
 		if(src.module)
 			src.module.on_emag()
 	else
-		if (module)
+		if(module)
 			uneq_module(module.emag)
 	if(hud_used)
 		hud_used.update_robot_modules_display()	//Shows/hides the emag item if the inventory screen is already open.
@@ -970,7 +970,7 @@
 
 /mob/living/silicon/robot/proc/deconstruct()
 	var/turf/T = get_turf(src)
-	if (robot_suit)
+	if(robot_suit)
 		robot_suit.loc = T
 		robot_suit.l_leg.loc = T
 		robot_suit.l_leg = null
@@ -1006,7 +1006,7 @@
 		for(b=0, b!=2, b++)
 			var/obj/item/device/flash/handheld/F = new /obj/item/device/flash/handheld(T)
 			F.burn_out()
-	if (cell) //Sanity check.
+	if(cell) //Sanity check.
 		cell.loc = T
 		cell = null
 	qdel(src)

@@ -132,7 +132,7 @@
 					new /obj/item/clothing/head/helmet/space/hardsuit/wizard(get_turf(H))
 				if("scrying")
 					new /obj/item/weapon/scrying(get_turf(H))
-					if (!(H.dna.check_mutation(XRAY)))
+					if(!(H.dna.check_mutation(XRAY)))
 						H.dna.add_mutation(XRAY)
 						H << "<span class='notice'>The walls suddenly disappear.</span>"
 

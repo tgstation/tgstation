@@ -2,15 +2,15 @@
 	if(!text)
 		return "says, \"...\"";	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
 	var/ending = copytext(text, length(text))
-	if (src.stuttering)
+	if(src.stuttering)
 		return "stammers, \"[text]\"";
 	if(isliving(src))
 		var/mob/living/L = src
-		if (L.getBrainLoss() >= 60)
+		if(L.getBrainLoss() >= 60)
 			return "gibbers, \"[text]\"";
-	if (ending == "?")
+	if(ending == "?")
 		return "asks, \"[text]\"";
-	if (ending == "!")
+	if(ending == "!")
 		return "exclaims, \"[text]\"";
 
 	if(dna)
@@ -86,17 +86,17 @@
 
 	switch(message_mode)
 		if(MODE_HEADSET)
-			if (ears)
+			if(ears)
 				ears.talk_into(src, message)
 			return ITALICS | REDUCE_RANGE
 
 		if(MODE_SECURE_HEADSET)
-			if (ears)
+			if(ears)
 				ears.talk_into(src, message, 1)
 			return ITALICS | REDUCE_RANGE
 
 		if(MODE_DEPARTMENT)
-			if (ears)
+			if(ears)
 				ears.talk_into(src, message, message_mode)
 			return ITALICS | REDUCE_RANGE
 

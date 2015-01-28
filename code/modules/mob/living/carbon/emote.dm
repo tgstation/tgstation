@@ -5,7 +5,7 @@
 /mob/living/carbon/emote(var/act,var/m_type=1,var/message = null)
 	var/param = null
 
-	if (findtext(act, "-", 1, null))
+	if(findtext(act, "-", 1, null))
 		var/t1 = findtext(act, "-", 1, null)
 		param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
@@ -17,159 +17,159 @@
 	//var/m_type = 1
 
 	switch(act)//Even carbon organisms want it alphabetically ordered..
-		if ("aflap")
-			if (!src.restrained())
+		if("aflap")
+			if(!src.restrained())
 				message = "<B>[src]</B> flaps \his wings ANGRILY!"
 				m_type = 2
 
-		if ("airguitar")
-			if (!src.restrained())
+		if("airguitar")
+			if(!src.restrained())
 				message = "<B>[src]</B> is strumming the air and headbanging like a safari chimp."
 				m_type = 1
 
-		if ("blink")
+		if("blink")
 			message = "<B>[src]</B> blinks."
 			m_type = 1
 
-		if ("blink_r")
+		if("blink_r")
 			message = "<B>[src]</B> blinks rapidly."
 			m_type = 1
 
-		if ("blush")
+		if("blush")
 			message = "<B>[src]</B> blushes."
 			m_type = 1
 
-		if ("bow")
-			if (!src.buckled)
+		if("bow")
+			if(!src.buckled)
 				var/M = null
-				if (param)
+				if(param)
 					for (var/mob/A in view(1, src))
-						if (param == A.name)
+						if(param == A.name)
 							M = A
 							break
-				if (!M)
+				if(!M)
 					param = null
-				if (param)
+				if(param)
 					message = "<B>[src]</B> bows to [param]."
 				else
 					message = "<B>[src]</B> bows."
 			m_type = 1
 
-		if ("burp")
-			if (!muzzled)
+		if("burp")
+			if(!muzzled)
 				..(act)
 
-		if ("choke")
-			if (!muzzled)
+		if("choke")
+			if(!muzzled)
 				..(act)
 			else
 				message = "<B>[src]</B> makes a strong noise."
 				m_type = 2
 
-		if ("chuckle")
-			if (!muzzled)
+		if("chuckle")
+			if(!muzzled)
 				..(act)
 			else
 				message = "<B>[src]</B> makes a noise."
 				m_type = 2
 
-		if ("clap")
-			if (!src.restrained())
+		if("clap")
+			if(!src.restrained())
 				message = "<B>[src]</B> claps."
 				m_type = 2
 
-		if ("cough")
-			if (!muzzled)
+		if("cough")
+			if(!muzzled)
 				..(act)
 			else
 				message = "<B>[src]</B> makes a strong noise."
 				m_type = 2
 
-		if ("deathgasp")
+		if("deathgasp")
 			message = "<B>[src]</B> seizes up and falls limp, \his eyes dead and lifeless..."
 			m_type = 1
 
-		if ("flap")
-			if (!src.restrained())
+		if("flap")
+			if(!src.restrained())
 				message = "<B>[src]</B> flaps \his wings."
 				m_type = 2
 
-		if ("gasp")
-			if (!muzzled)
+		if("gasp")
+			if(!muzzled)
 				..(act)
 			else
 				message = "<B>[src]</B> makes a weak noise."
 				m_type = 2
 
-		if ("giggle")
-			if (!muzzled)
+		if("giggle")
+			if(!muzzled)
 				..(act)
 			else
 				message = "<B>[src]</B> makes a noise."
 				m_type = 2
 
-		if ("laugh")
-			if (!muzzled)
+		if("laugh")
+			if(!muzzled)
 				..(act)
 			else
 				message = "<B>[src]</B> makes a noise."
 
-		if ("nod")
+		if("nod")
 			message = "<B>[src]</B> nods."
 			m_type = 1
 
-		if ("scream")
-			if (!muzzled)
+		if("scream")
+			if(!muzzled)
 				..(act)
 			else
 				message = "<B>[src]</B> makes a very loud noise."
 				m_type = 2
 
-		if ("shake")
+		if("shake")
 			message = "<B>[src]</B> shakes \his head."
 			m_type = 1
 
-		if ("sneeze")
-			if (!muzzled)
+		if("sneeze")
+			if(!muzzled)
 				..(act)
 			else
 				message = "<B>[src]</B> makes a strange noise."
 				m_type = 2
 
-		if ("sigh")
-			if (!muzzled)
+		if("sigh")
+			if(!muzzled)
 				..(act)
 			else
 				message = "<B>[src]</B> sighs."
 				m_type = 2
 
-		if ("sniff")
+		if("sniff")
 			message = "<B>[src]</B> sniffs."
 			m_type = 2
 
-		if ("snore")
-			if (!muzzled)
+		if("snore")
+			if(!muzzled)
 				..(act)
 			else
 				message = "<B>[src]</B> makes a noise."
 				m_type = 2
 
-		if ("whimper")
-			if (!muzzled)
+		if("whimper")
+			if(!muzzled)
 				..(act)
 			else
 				message = "<B>[src]</B> makes a weak noise."
 				m_type = 2
 
-		if ("wink")
+		if("wink")
 			message = "<B>[src]</B> winks."
 			m_type = 1
 
-		if ("yawn")
-			if (!muzzled)
+		if("yawn")
+			if(!muzzled)
 				..(act)
 
-		if ("help")
+		if("help")
 			src << "Help for emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, giggle, glare-(none)/mob, grin, jump, laugh, look, me, nod, point-atom, scream, shake, sigh, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, wink, yawn"
 
 		else
@@ -179,7 +179,7 @@
 
 
 
-	if (message)
+	if(message)
 		log_emote("[name]/[key] : [message]")
 
  //Hearing gasp and such every five seconds is not good emotes were not global for a reason.
@@ -192,7 +192,7 @@
 				M.show_message(message)
 
 
-		if (m_type & 1)
+		if(m_type & 1)
 			visible_message(message)
-		else if (m_type & 2)
+		else if(m_type & 2)
 			audible_message(message)

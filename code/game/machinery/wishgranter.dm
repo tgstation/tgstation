@@ -26,7 +26,7 @@
 	else if(is_special_character(user))
 		user << "Even to a heart as dark as yours, you know nothing good will come of this.  Something instinctual makes you pull away."
 
-	else if (!insisting)
+	else if(!insisting)
 		user << "Your first touch makes the Wish Granter stir, listening to you.  Are you really sure you want to do this?"
 		insisting++
 

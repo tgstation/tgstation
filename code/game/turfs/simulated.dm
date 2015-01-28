@@ -36,7 +36,7 @@
 
 /turf/simulated/Entered(atom/A, atom/OL)
 	..()
-	if (istype(A,/mob/living/carbon))
+	if(istype(A,/mob/living/carbon))
 		var/mob/living/carbon/M = A
 		if(M.lying)	return
 		switch (src.wet)

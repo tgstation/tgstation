@@ -87,9 +87,9 @@ Borg Hypospray
 	if(!R.total_volume)
 		user << "<span class='notice'>The injector is empty.</span>"
 		return
-	if (!( istype(M) ))
+	if(!( istype(M) ))
 		return
-	if (R.total_volume && M.can_inject(user, 1))
+	if(R.total_volume && M.can_inject(user, 1))
 		M << "<span class='warning'>You feel a tiny prick!</span>"
 		user << "<span class='notice'>You inject [M] with the injector.</span>"
 		R.reaction(M, INGEST)

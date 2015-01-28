@@ -183,9 +183,9 @@ var/list/department_radio_keys = list(
 
 /mob/living/proc/say_test(var/text)
 	var/ending = copytext(text, length(text))
-	if (ending == "?")
+	if(ending == "?")
 		return "1"
-	else if (ending == "!")
+	else if(ending == "!")
 		return "2"
 	return "0"
 
@@ -268,12 +268,12 @@ var/list/department_radio_keys = list(
 /mob/living/proc/radio(message, message_mode, steps)
 	switch(message_mode)
 		if(MODE_R_HAND)
-			if (r_hand)
+			if(r_hand)
 				r_hand.talk_into(src, message)
 			return ITALICS | REDUCE_RANGE
 
 		if(MODE_L_HAND)
-			if (l_hand)
+			if(l_hand)
 				l_hand.talk_into(src, message)
 			return ITALICS | REDUCE_RANGE
 
@@ -300,8 +300,8 @@ var/list/department_radio_keys = list(
 	return 0
 
 /mob/living/say_quote()
-	if (stuttering)
+	if(stuttering)
 		return "stammers, \"[text]\""
-	if (getBrainLoss() >= 60)
+	if(getBrainLoss() >= 60)
 		return "gibbers, \"[text]\""
 	return ..()

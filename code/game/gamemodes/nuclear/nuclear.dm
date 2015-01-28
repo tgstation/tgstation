@@ -87,7 +87,7 @@
 		greet_syndicate(synd_mind)
 		equip_syndicate(synd_mind.current)
 
-		if (nuke_code)
+		if(nuke_code)
 			synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
 			synd_mind.current << "The nuclear authorization code is: <B>[nuke_code]</B>"
 
@@ -125,7 +125,7 @@
 	else
 		message_admins("Warning: Nuke Ops spawned without access to leave their spawn area!")
 
-	if (nuke_code)
+	if(nuke_code)
 		var/obj/item/weapon/paper/P = new
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
 		P.name = "nuclear bomb code"
@@ -145,7 +145,7 @@
 
 
 /datum/game_mode/proc/greet_syndicate(var/datum/mind/syndicate, var/you_are=1)
-	if (you_are)
+	if(you_are)
 		syndicate.current << "<span class='notice'>You are a [syndicate_name()] agent!</span>"
 	var/obj_count = 1
 	for(var/datum/objective/objective in syndicate.objectives)
@@ -189,14 +189,14 @@
 
 
 /datum/game_mode/nuclear/check_win()
-	if (nukes_left == 0)
+	if(nukes_left == 0)
 		return 1
 	return ..()
 
 
 /datum/game_mode/proc/are_operatives_dead()
 	for(var/datum/mind/operative_mind in syndicates)
-		if (istype(operative_mind.current,/mob/living/carbon/human) && (operative_mind.current.stat!=2))
+		if(istype(operative_mind.current,/mob/living/carbon/human) && (operative_mind.current.stat!=2))
 			return 0
 	return 1
 
@@ -221,42 +221,42 @@
 		world << "<FONT size = 3><B>Syndicate Major Victory!</B></FONT>"
 		world << "<B>[syndicate_name()] operatives have destroyed [station_name()]!</B>"
 
-	else if (!disk_rescued &&  station_was_nuked && syndies_didnt_escape)
+	else if(!disk_rescued &&  station_was_nuked && syndies_didnt_escape)
 		feedback_set_details("round_end_result","halfwin - syndicate nuke - did not evacuate in time")
 		world << "<FONT size = 3><B>Total Annihilation</B></FONT>"
 		world << "<B>[syndicate_name()] operatives destroyed [station_name()] but did not leave the area in time and got caught in the explosion.</B> Next time, don't lose the disk!"
 
-	else if (!disk_rescued && !station_was_nuked && nuke_off_station && !syndies_didnt_escape)
+	else if(!disk_rescued && !station_was_nuked && nuke_off_station && !syndies_didnt_escape)
 		feedback_set_details("round_end_result","halfwin - blew wrong station")
 		world << "<FONT size = 3><B>Crew Minor Victory</B></FONT>"
 		world << "<B>[syndicate_name()] operatives secured the authentication disk but blew up something that wasn't [station_name()].</B> Next time, don't lose the disk!"
 
-	else if (!disk_rescued && !station_was_nuked && nuke_off_station && syndies_didnt_escape)
+	else if(!disk_rescued && !station_was_nuked && nuke_off_station && syndies_didnt_escape)
 		feedback_set_details("round_end_result","halfwin - blew wrong station - did not evacuate in time")
 		world << "<FONT size = 3><B>[syndicate_name()] operatives have earned Darwin Award!</B></FONT>"
 		world << "<B>[syndicate_name()] operatives blew up something that wasn't [station_name()] and got caught in the explosion.</B> Next time, don't lose the disk!"
 
-	else if ( disk_rescued && are_operatives_dead())
+	else if( disk_rescued && are_operatives_dead())
 		feedback_set_details("round_end_result","loss - evacuation - disk secured - syndi team dead")
 		world << "<FONT size = 3><B>Crew Major Victory!</B></FONT>"
 		world << "<B>The Research Staff has saved the disc and killed the [syndicate_name()] Operatives</B>"
 
-	else if ( disk_rescued )
+	else if( disk_rescued )
 		feedback_set_details("round_end_result","loss - evacuation - disk secured")
 		world << "<FONT size = 3><B>Crew Major Victory</B></FONT>"
 		world << "<B>The Research Staff has saved the disc and stopped the [syndicate_name()] Operatives!</B>"
 
-	else if (!disk_rescued && are_operatives_dead())
+	else if(!disk_rescued && are_operatives_dead())
 		feedback_set_details("round_end_result","loss - evacuation - disk not secured")
 		world << "<FONT size = 3><B>Syndicate Minor Victory!</B></FONT>"
 		world << "<B>The Research Staff failed to secure the authentication disk but did manage to kill most of the [syndicate_name()] Operatives!</B>"
 
-	else if (!disk_rescued &&  crew_evacuated)
+	else if(!disk_rescued &&  crew_evacuated)
 		feedback_set_details("round_end_result","halfwin - detonation averted")
 		world << "<FONT size = 3><B>Syndicate Minor Victory!</B></FONT>"
 		world << "<B>[syndicate_name()] operatives recovered the abandoned authentication disk but detonation of [station_name()] was averted.</B> Next time, don't lose the disk!"
 
-	else if (!disk_rescued && !crew_evacuated)
+	else if(!disk_rescued && !crew_evacuated)
 		feedback_set_details("round_end_result","halfwin - interrupted")
 		world << "<FONT size = 3><B>Neutral Victory</B></FONT>"
 		world << "<B>Round was mysteriously interrupted!</B>"
@@ -306,11 +306,11 @@
 	var/randomname = pick(last_names)
 	var/newname = copytext(sanitize(input(M,"You are the nuke operative [pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")]. Please choose a last name for your family.", "Name change",randomname)),1,MAX_NAME_LEN)
 
-	if (!newname)
+	if(!newname)
 		newname = randomname
 
 	else
-		if (newname == "Unknown" || newname == "floor" || newname == "wall" || newname == "rwall" || newname == "_")
+		if(newname == "Unknown" || newname == "floor" || newname == "wall" || newname == "rwall" || newname == "_")
 			M << "That name is reserved."
 			return nukelastname(M)
 

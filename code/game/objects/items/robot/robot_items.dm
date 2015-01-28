@@ -14,12 +14,12 @@
 	user.cell.charge -= 30
 
 	M.Weaken(5)
-	if (M.stuttering < 5)
+	if(M.stuttering < 5)
 		M.stuttering = 5
 	M.Stun(5)
 
 	for(var/mob/O in viewers(M, null))
-		if (O.client)
+		if(O.client)
 			O.show_message("<span class='danger'>[user] has prodded [M] with an electrically-charged arm!</span>", 1,
 							 "<span class='warning'> You hear someone fall</span>", 2)
 	add_logs(user, M, "stunned", object="[src.name]", addition="(INTENT: [uppertext(user.a_intent)])")

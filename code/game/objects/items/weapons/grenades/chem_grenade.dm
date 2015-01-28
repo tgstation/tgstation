@@ -91,7 +91,7 @@
 
 	else if(stage == EMPTY && istype(I, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = I
-		if (C.use(1))
+		if(C.use(1))
 			det_time = 50 // In case the cable_coil was removed and readded.
 			stage_change(WIRED)
 			user << "<span class='notice'>You rig the [initial(name)] assembly.</span>"
@@ -122,15 +122,15 @@
 
 /obj/item/weapon/grenade/chem_grenade/proc/stage_change(var/N)
 	stage = N
-	if (stage == EMPTY)
+	if(stage == EMPTY)
 		name = "[initial(name)] casing"
 		desc = initial(desc)
 		icon_state = initial(icon_state)
-	else if (stage == WIRED)
+	else if(stage == WIRED)
 		name = "unsecured [initial(name)]"
 		desc = "An unsecured [initial(name)] assembly."
 		icon_state = "[initial(icon_state)]_ass"
-	else if (stage == READY)
+	else if(stage == READY)
 		name = initial(name)
 		desc = "A custom made [initial(name)]."
 		icon_state = "[initial(icon_state)]_locked"

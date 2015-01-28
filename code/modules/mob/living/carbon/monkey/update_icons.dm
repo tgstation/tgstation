@@ -51,7 +51,7 @@
 
 
 /mob/living/carbon/monkey/update_inv_r_hand(var/update_icons=1)
-	if (handcuffed)
+	if(handcuffed)
 		drop_r_hand()
 		return
 	if(r_hand)
@@ -70,7 +70,7 @@
 
 
 /mob/living/carbon/monkey/update_inv_l_hand(var/update_icons=1)
-	if (handcuffed)
+	if(handcuffed)
 		drop_l_hand()
 		return
 	if(l_hand)

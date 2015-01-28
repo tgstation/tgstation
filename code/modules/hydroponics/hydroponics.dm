@@ -201,20 +201,20 @@ obj/machinery/hydroponics/process()
 			else
 				weedinvasion() // Weed invasion into empty tray
 			needs_update = 1
-		if (needs_update)
+		if(needs_update)
 			update_icon()
 	return
 
 obj/machinery/hydroponics/proc/nutrimentMutation()
-	if (mutmod == 0)
+	if(mutmod == 0)
 		return
-	if (mutmod == 1)
+	if(mutmod == 1)
 		if(prob(80))		//80%
 			mutate()
 		else if(prob(75))	//15%
 			hardmutate()
 		return
-	if (mutmod == 2)
+	if(mutmod == 2)
 		if(prob(50))		//50%
 			mutate()
 		else if(prob(75))	//37.5%
@@ -276,11 +276,11 @@ obj/machinery/hydroponics/update_icon()
 
 obj/machinery/hydroponics/proc/UpdateDescription()
 	desc = null
-	if (planted)
+	if(planted)
 		desc = "[src] has <span class='info'>[myseed.plantname]</span> planted."
-		if (dead)
+		if(dead)
 			desc += " It's dead."
-		else if (harvest)
+		else if(harvest)
 			desc += " It's ready to harvest."
 
 obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient, this happens.
@@ -614,7 +614,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		// anchored == 2 means the hoses are screwed in place
 		if(irrigate && reagent_source.amount_per_transfer_from_this > 30 && reagent_source.reagents.total_volume >= 30 && anchored == 2)
 			trays = FindConnected()
-			if (trays.len > 1)
+			if(trays.len > 1)
 				visi_msg += ", setting off the irrigation system"
 
 		if(visi_msg)
@@ -711,7 +711,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			user.visible_message("<span class='notice'>[user] begins to wrench [src] into place.</span>", \
 								"<span class='notice'>You begin to wrench [src] in place.</span>")
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if (do_after(user, 20))
+			if(do_after(user, 20))
 				if(anchored)
 					return
 				anchored = 1
@@ -721,7 +721,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			user.visible_message("<span class='notice'>[user] begins to unwrench [src].</span>", \
 								"<span class='notice'>You begin to unwrench [src].</span>")
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if (do_after(user, 20))
+			if(do_after(user, 20))
 				if(!anchored)
 					return
 				anchored = 0
@@ -774,7 +774,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 /obj/item/seeds/proc/getYield()
 	var/obj/machinery/hydroponics/parent = loc
-	if (parent.yieldmod == 0)
+	if(parent.yieldmod == 0)
 		return min(yield, 1)//1 if above zero, 0 otherwise
 	return (yield * parent.yieldmod)
 

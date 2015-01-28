@@ -88,7 +88,7 @@
 			stat(null, text("Systems nonfunctional"))
 
 /mob/living/silicon/pai/check_eye(var/mob/user as mob)
-	if (!src.current)
+	if(!src.current)
 		return null
 	user.reset_view(src.current)
 	return 1
@@ -134,15 +134,15 @@
 
 	switch(severity)
 		if(1.0)
-			if (src.stat != 2)
+			if(src.stat != 2)
 				adjustBruteLoss(100)
 				adjustFireLoss(100)
 		if(2.0)
-			if (src.stat != 2)
+			if(src.stat != 2)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
 		if(3.0)
-			if (src.stat != 2)
+			if(src.stat != 2)
 				adjustBruteLoss(30)
 
 	return
@@ -154,11 +154,11 @@
 
 /mob/living/silicon/pai/proc/switchCamera(var/obj/machinery/camera/C)
 	usr:cameraFollow = null
-	if (!C)
+	if(!C)
 		src.unset_machine()
 		src.reset_view(null)
 		return 0
-	if (stat == 2 || !C.status || !(src.network in C.network)) return 0
+	if(stat == 2 || !C.status || !(src.network in C.network)) return 0
 
 	// ok, we're alive, camera is good and in our network...
 

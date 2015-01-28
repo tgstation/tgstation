@@ -30,7 +30,7 @@
 				antag_candidates -= player
 
 	for(var/j = 0, j < carriers_to_make, j++)
-		if (!antag_candidates.len)
+		if(!antag_candidates.len)
 			break
 		var/datum/mind/carrier = pick(antag_candidates)
 		carriers += carrier
@@ -71,7 +71,7 @@
 
 /datum/game_mode/monkey/proc/check_monkey_victory()
 	for(var/mob/living/carbon/monkey/M in living_mob_list)
-		if (M.HasDisease(/datum/disease/transformation/jungle_fever))
+		if(M.HasDisease(/datum/disease/transformation/jungle_fever))
 			if(M.onCentcom())
 				escaped_monkeys++
 	if(escaped_monkeys >= monkeys_to_win)

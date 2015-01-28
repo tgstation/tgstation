@@ -177,7 +177,7 @@
 				icon_state = "[initial(icon_state)]_dir2"
 			if(6)
 				icon_state = "[initial(icon_state)]_dir3"
-		if (dir_sum in list(1,2,4,8,5,6,9,10))
+		if(dir_sum in list(1,2,4,8,5,6,9,10))
 			dir = dir_sum
 		else
 			dir = 2
@@ -238,13 +238,13 @@
 		if(user.canmove)
 			climb_table(user)
 			return
-	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
+	if((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
 		return
 	if(isrobot(user))
 		return
 	if(!user.drop_item())
 		return
-	if (O.loc != src.loc)
+	if(O.loc != src.loc)
 		step(O, get_dir(O, src))
 	return
 
@@ -269,11 +269,11 @@
 	qdel(I)
 
 /obj/structure/table/attackby(obj/item/I, mob/user)
-	if (istype(I, /obj/item/weapon/grab))
+	if(istype(I, /obj/item/weapon/grab))
 		tablepush(I, user)
 		return
 
-	if (istype(I, /obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/weapon/screwdriver))
 		if(istype(src, /obj/structure/table/reinforced))
 			var/obj/structure/table/reinforced/RT = src
 			if(RT.status == 1)
@@ -283,7 +283,7 @@
 			table_destroy(2, user)
 			return
 
-	if (istype(I, /obj/item/weapon/wrench))
+	if(istype(I, /obj/item/weapon/wrench))
 		if(istype(src, /obj/structure/table/reinforced))
 			var/obj/structure/table/reinforced/RT = src
 			if(RT.status == 1)
@@ -293,7 +293,7 @@
 			table_destroy(3, user)
 			return
 
-	if (istype(I, /obj/item/weapon/storage/bag/tray))
+	if(istype(I, /obj/item/weapon/storage/bag/tray))
 		var/obj/item/weapon/storage/bag/tray/T = I
 		if(T.contents.len > 0) // If the tray isn't empty
 			var/list/obj/item/oldContents = T.contents.Copy()
@@ -445,20 +445,20 @@
 	buildstack = /obj/item/stack/sheet/plasteel
 
 /obj/structure/table/reinforced/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/weldingtool))
+	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			if(src.status == 2)
 				user << "<span class='notice'>Now weakening the reinforced table</span>"
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-				if (do_after(user, 50))
+				if(do_after(user, 50))
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>Table weakened</span>"
 					src.status = 1
 			else
 				user << "<span class='notice'>Now strengthening the reinforced table</span>"
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-				if (do_after(user, 50))
+				if(do_after(user, 50))
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>Table strengthened</span>"
 					src.status = 2
@@ -524,19 +524,19 @@
 		return 0
 
 /obj/structure/rack/MouseDrop_T(obj/O as obj, mob/user as mob)
-	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
+	if((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
 		return
 	if(isrobot(user))
 		return
 	if(!user.drop_item())
 		user << "<span class='notice'>\The [O] is stuck to your hand, you cannot put it in the rack!</span>"
 		return
-	if (O.loc != src.loc)
+	if(O.loc != src.loc)
 		step(O, get_dir(O, src))
 	return
 
 /obj/structure/rack/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		rack_destroy()
 		return
@@ -603,7 +603,7 @@
 
 /obj/item/weapon/rack_parts/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if (istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/metal( user.loc )
 		qdel(src)
 		return
@@ -611,7 +611,7 @@
 
 /obj/item/weapon/rack_parts/attack_self(mob/user as mob)
 	user << "<span class='notice'>Constructing rack...</span>"
-	if (do_after(user, 50))
+	if(do_after(user, 50))
 		var/obj/structure/rack/R = new /obj/structure/rack( user.loc )
 		R.add_fingerprint(user)
 		user.drop_item()

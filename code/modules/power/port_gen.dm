@@ -161,33 +161,33 @@ display round(lastgen) and plasmatank amount
 	sheet_left -= temp
 	sheets -= round(needed_sheets)
 	needed_sheets -= round(needed_sheets)
-	if (sheet_left <= 0 && sheets > 0)
+	if(sheet_left <= 0 && sheets > 0)
 		sheet_left = 1 - needed_sheets
 		sheets--
 
 	var/lower_limit = 56 + power_output * 10
 	var/upper_limit = 76 + power_output * 10
 	var/bias = 0
-	if (power_output > 4)
+	if(power_output > 4)
 		upper_limit = 400
 		bias = power_output - consumption * (4 - consumption)
-	if (heat < lower_limit)
+	if(heat < lower_limit)
 		heat += 4 - consumption
 	else
 		heat += rand(-7 + bias, 7 + bias)
-		if (heat < lower_limit)
+		if(heat < lower_limit)
 			heat = lower_limit
-		if (heat > upper_limit)
+		if(heat > upper_limit)
 			heat = upper_limit
 
-	if (heat > 300)
+	if(heat > 300)
 		overheat()
 		qdel(src)
 	return
 
 /obj/machinery/power/port_gen/pacman/handleInactive()
 
-	if (heat > 0)
+	if(heat > 0)
 		heat = max(heat - 2, 0)
 		src.updateDialog()
 
@@ -241,7 +241,7 @@ display round(lastgen) and plasmatank amount
 
 /obj/machinery/power/port_gen/pacman/attack_hand(mob/user as mob)
 	..()
-	if (!anchored)
+	if(!anchored)
 		return
 
 	interact(user)
@@ -253,8 +253,8 @@ display round(lastgen) and plasmatank amount
 	interact(user)
 
 /obj/machinery/power/port_gen/pacman/interact(mob/user)
-	if (get_dist(src, user) > 1 )
-		if (!istype(user, /mob/living/silicon/ai))
+	if(get_dist(src, user) > 1 )
+		if(!istype(user, /mob/living/silicon/ai))
 			user.unset_machine()
 			user << browse(null, "window=port_gen")
 			return
@@ -262,7 +262,7 @@ display round(lastgen) and plasmatank amount
 	user.set_machine(src)
 
 	var/dat = text("<b>[name]</b><br>")
-	if (active)
+	if(active)
 		dat += text("Generator: <A href='?src=\ref[src];action=disable'>On</A><br>")
 	else
 		dat += text("Generator: <A href='?src=\ref[src];action=enable'>Off</A><br>")
@@ -288,7 +288,7 @@ display round(lastgen) and plasmatank amount
 				icon_state = "portgen1"
 				src.updateUsrDialog()
 		if(href_list["action"] == "disable")
-			if (active)
+			if(active)
 				active = 0
 				icon_state = "portgen0"
 				src.updateUsrDialog()
@@ -297,14 +297,14 @@ display round(lastgen) and plasmatank amount
 				DropFuel()
 				src.updateUsrDialog()
 		if(href_list["action"] == "lower_power")
-			if (power_output > 1)
+			if(power_output > 1)
 				power_output--
 				src.updateUsrDialog()
-		if (href_list["action"] == "higher_power")
-			if (power_output < 4 || emagged)
+		if(href_list["action"] == "higher_power")
+			if(power_output < 4 || emagged)
 				power_output++
 				src.updateUsrDialog()
-		if (href_list["action"] == "close")
+		if(href_list["action"] == "close")
 			usr << browse(null, "window=port_gen")
 			usr.unset_machine()
 

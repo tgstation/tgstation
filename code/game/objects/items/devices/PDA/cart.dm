@@ -247,7 +247,7 @@
 	var/shock_charges = 4
 
 /obj/item/weapon/cartridge/proc/unlock()
-	if (!istype(loc, /obj/item/device/pda))
+	if(!istype(loc, /obj/item/device/pda))
 		return
 
 	generate_menu()
@@ -255,12 +255,12 @@
 	return
 
 /obj/item/weapon/cartridge/proc/print_to_host(var/text)
-	if (!istype(loc, /obj/item/device/pda))
+	if(!istype(loc, /obj/item/device/pda))
 		return
 	loc:cart = text
 
 	for (var/mob/M in viewers(1, loc.loc))
-		if (M.client && M.machine == loc)
+		if(M.client && M.machine == loc)
 			loc:attack_self(M)
 
 	return
@@ -366,7 +366,7 @@ Code:
 [radio:code]
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=1'>+</a>
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=5'>+</a><br>"}
-		if (41) //crew manifest
+		if(41) //crew manifest
 
 			menu = "<h4><img src=pda_notes.png> Crew Manifest</h4>"
 			menu += "Entries cannot be modified from this terminal.<br><br>"
@@ -376,7 +376,7 @@ Code:
 			menu += "<br>"
 
 
-		if (42) //status displays
+		if(42) //status displays
 			menu = "<h4><img src=pda_status.png> Station Status Display Interlink</h4>"
 
 			menu += "\[ <A HREF='?src=\ref[src];choice=Status;statdisp=blank'>Clear</A> \]<BR>"
@@ -389,7 +389,7 @@ Code:
 			menu += " <A HREF='?src=\ref[src];choice=Status;statdisp=alert;alert=lockdown'>Lockdown</A> |"
 			menu += " <A HREF='?src=\ref[src];choice=Status;statdisp=alert;alert=biohazard'>Biohazard</A> \]<BR>"
 
-		if (43)
+		if(43)
 			menu = "<h4><img src=pda_power.png> Power Monitors - Please select one</h4><BR>"
 			powmonitor = null
 			powermonitors = list()
@@ -415,7 +415,7 @@ Code:
 
 				menu += "</FONT>"
 
-		if (433)
+		if(433)
 			menu = "<h4><img src=pda_power.png> Power Monitor </h4><BR>"
 			if(!powmonitor)
 				menu += "<span class='danger'>No connection<BR></span>"
@@ -442,7 +442,7 @@ Code:
 
 				menu += "</FONT></PRE>"
 
-		if (44) //medical records //This thing only displays a single screen so it's hard to really get the sub-menu stuff working.
+		if(44) //medical records //This thing only displays a single screen so it's hard to really get the sub-menu stuff working.
 			menu = "<h4><img src=pda_medical.png> Medical Record List</h4>"
 			if(data_core.general)
 				for(var/datum/data/record/R in sortRecord(data_core.general))
@@ -485,7 +485,7 @@ Code:
 				menu += "<b>Record Lost!</b><br>"
 
 			menu += "<br>"
-		if (45) //security records
+		if(45) //security records
 			menu = "<h4><img src=pda_cuffs.png> Security Record List</h4>"
 			if(data_core.general)
 				for (var/datum/data/record/R in sortRecord(data_core.general))
@@ -552,12 +552,12 @@ Code:
 				menu += "<b>Record Lost!</b><br>"
 
 			menu += "<br>"
-		if (46) //beepsky control
+		if(46) //beepsky control
 			var/obj/item/radio/integrated/beepsky/SC = radio
 			menu = "<h4><img src=pda_cuffs.png> Securitron Interlink</h4>"
 			bot_control(SC)
 
-		if (47) //quartermaster order records
+		if(47) //quartermaster order records
 			menu = "<h4><img src=pda_crate.png> Supply Record Interlink</h4>"
 
 			menu += "<BR><B>Supply shuttle</B><BR>"
@@ -588,7 +588,7 @@ Code:
 				menu += "<li>#[SO.ordernum] - [SO.object.name] requested by [SO.orderedby]</li>"
 			menu += "</ol><font size=\"-3\">Upgrade NOW to Space Parts & Space Vendors PLUS for full remote order control and inventory management."
 
-		if (48) //mulebot control
+		if(48) //mulebot control
 			var/obj/item/radio/integrated/mule/QC = radio
 			if(!QC)
 				menu = "Interlink Error - Please reinsert cartridge."
@@ -645,11 +645,11 @@ Code:
 					menu += "\[<A href='byond://?src=\ref[QC];op=home'>Return Home</A>\]<BR>"
 					menu += "<HR><A href='byond://?src=\ref[QC];op=botlist'><img src=pda_back.png>Return to bot list</A>"
 
-		if (49) //janitorial locator
+		if(49) //janitorial locator
 			menu = "<h4><img src=pda_bucket.png> Persistent Custodial Object Locator</h4>"
 
 			var/turf/cl = get_turf(src)
-			if (cl)
+			if(cl)
 				menu += "Current Orbital Location: <b>\[[cl.x],[cl.y]\]</b>"
 
 				menu += "<h4>Located Mops:</h4>"
@@ -659,12 +659,12 @@ Code:
 					var/turf/ml = get_turf(M)
 
 					if(ml)
-						if (ml.z != cl.z)
+						if(ml.z != cl.z)
 							continue
 						var/direction = get_dir(src, M)
 						ldat += "Mop - <b>\[[ml.x],[ml.y] ([uppertext(dir2text(direction))])\]</b> - [M.reagents.total_volume ? "Wet" : "Dry"]<br>"
 
-				if (!ldat)
+				if(!ldat)
 					menu += "None"
 				else
 					menu += "[ldat]"
@@ -676,12 +676,12 @@ Code:
 					var/turf/bl = get_turf(B)
 
 					if(bl)
-						if (bl.z != cl.z)
+						if(bl.z != cl.z)
 							continue
 						var/direction = get_dir(src, B)
 						ldat += "Cart - <b>\[[bl.x],[bl.y] ([uppertext(dir2text(direction))])\]</b> - Water level: [B.reagents.total_volume]/100<br>"
 
-				if (!ldat)
+				if(!ldat)
 					menu += "None"
 				else
 					menu += "[ldat]"
@@ -693,12 +693,12 @@ Code:
 					var/turf/bl = get_turf(B)
 
 					if(bl)
-						if (bl.z != cl.z)
+						if(bl.z != cl.z)
 							continue
 						var/direction = get_dir(src, B)
 						ldat += "Cleanbot - <b>\[[bl.x],[bl.y] ([uppertext(dir2text(direction))])\]</b> - [B.on ? "Online" : "Offline"]<br>"
 
-				if (!ldat)
+				if(!ldat)
 					menu += "None"
 				else
 					menu += "[ldat]"
@@ -707,27 +707,27 @@ Code:
 				menu += "ERROR: Unable to determine current location."
 			menu += "<br><br><A href='byond://?src=\ref[src];choice=49'>Refresh GPS Locator</a>"
 
-		if (50) //Cleanbot control
+		if(50) //Cleanbot control
 			menu = "<br><h4><img src=pda_cleanbot.png> Cleanbot Interlink</h4>"
 			var/obj/item/radio/integrated/cleanbot/SC = radio
 			bot_control(SC)
 
-		if (51) //floorbot control
+		if(51) //floorbot control
 			menu = "<h4><img src=pda_floorbot.png> Floorbot Interlink</h4>"
 			var/obj/item/radio/integrated/floorbot/SC = radio
 			bot_control(SC)
 
-		if (52) //Medibot control
+		if(52) //Medibot control
 			menu = "<h4><img src=pda_medbot.png> Medibot Interlink</h4>"
 			var/obj/item/radio/integrated/medbot/SC = radio
 			bot_control(SC)
 
-		if (53) // Newscaster
+		if(53) // Newscaster
 			menu = "<h4><img src=pda_notes.png> Newscaster Access</h4>"
 			menu += "<br> Current Newsfeed: <A href='byond://?src=\ref[src];choice=Newscaster Switch Channel'>[current_channel ? current_channel : "None"]</a> <br>"
 			var/datum/feed_channel/current
 			for(var/datum/feed_channel/chan in news_network.network_channels)
-				if (chan.channel_name == current_channel)
+				if(chan.channel_name == current_channel)
 					current = chan
 			if(!current)
 				menu += "<h5> ERROR : NO CHANNEL FOUND </h5>"
@@ -739,7 +739,7 @@ Code:
 /obj/item/weapon/cartridge/Topic(href, href_list)
 	..()
 
-	if (!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+	if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
 		usr.unset_machine()
 		usr << browse(null, "window=pda")
 		return
@@ -807,7 +807,7 @@ Code:
 			var/message = pda.msg_input()
 			var/datum/feed_channel/current
 			for(var/datum/feed_channel/chan in news_network.network_channels)
-				if (chan.channel_name == current_channel)
+				if(chan.channel_name == current_channel)
 					current = chan
 			if(current.locked && current.author != pda_owner_name)
 				pda.cart += "<h5> ERROR : NOT AUTHORIZED [pda.id ? "" : "- ID SLOT EMPTY"] </h5>"

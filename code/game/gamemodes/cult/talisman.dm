@@ -56,7 +56,7 @@
 
 
 	proc/supply(var/key)
-		if (!src.uses)
+		if(!src.uses)
 			qdel(src)
 			return
 
@@ -77,9 +77,9 @@
 
 	Topic(href, href_list)
 		if(!src)	return
-		if (usr.stat || usr.restrained() || !in_range(src, usr))	return
+		if(usr.stat || usr.restrained() || !in_range(src, usr))	return
 
-		if (href_list["rune"])
+		if(href_list["rune"])
 			switch(href_list["rune"])
 				if("newtome")
 					var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(usr)

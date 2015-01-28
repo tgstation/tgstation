@@ -5,9 +5,9 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
 
 /obj/item/weapon/gun/projectile/revolver/chamber_round()
-	if ((chambered && chambered.BB)|| !magazine) //if there's a live ammo in the chamber or no magazine
+	if((chambered && chambered.BB)|| !magazine) //if there's a live ammo in the chamber or no magazine
 		return
-	else if (magazine.ammo_count())
+	else if(magazine.ammo_count())
 		chambered = magazine.get_round(1)
 	return
 
@@ -32,7 +32,7 @@
 		CB.SpinAnimation(10, 1)
 		CB.update_icon()
 		num_unloaded++
-	if (num_unloaded)
+	if(num_unloaded)
 		user << "<span class = 'notice'>You unload [num_unloaded] shell\s from [src].</span>"
 	else
 		user << "<span class='notice'>[src] is empty.</span>"
@@ -42,9 +42,9 @@
 
 /obj/item/weapon/gun/projectile/revolver/get_ammo(var/countchambered = 0, var/countempties = 1)
 	var/boolets = 0 //mature var names for mature people
-	if (chambered && countchambered)
+	if(chambered && countchambered)
 		boolets++
-	if (magazine)
+	if(magazine)
 		boolets += magazine.ammo_count(countempties)
 	return boolets
 
@@ -187,7 +187,7 @@
 			CB.loc = get_turf(src.loc)
 			CB.update_icon()
 			num_unloaded++
-		if (num_unloaded)
+		if(num_unloaded)
 			user << "<span class = 'notice'>You unload [num_unloaded] shell\s from [src]!</span>"
 		else
 			user << "<span class='notice'>[src] is empty.</span>"

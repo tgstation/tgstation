@@ -69,7 +69,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 					src.hotspot_expose(1000,CELL_VOLUME)
 					if(prob(33)) new /obj/item/stack/sheet/metal(src)
 		if(3.0)
-			if (prob(50))
+			if(prob(50))
 				src.break_tile()
 				src.hotspot_expose(1000,CELL_VOLUME)
 	return

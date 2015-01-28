@@ -261,7 +261,7 @@ obj/mecha/proc/can_use(mob/user)
 				return
 		var/obj/mecha/Mech = M.loc
 		spawn() //this helps prevent clickspam fest.
-			if (Mech)
+			if(Mech)
 				Mech.click_action(object,M)
 //	else
 //		return ..()
@@ -610,13 +610,13 @@ obj/mecha/proc/can_use(mob/user)
 		if(1.0)
 			qdel(src)
 		if(2.0)
-			if (prob(30))
+			if(prob(30))
 				qdel(src)
 			else
 				src.take_damage(initial(src.health)/2)
 				src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
 		if(3.0)
-			if (prob(5))
+			if(prob(5))
 				qdel(src)
 			else
 				src.take_damage(initial(src.health)/5)
@@ -752,8 +752,8 @@ obj/mecha/proc/can_use(mob/user)
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/weapon/weldingtool/WT = W
 		if(src.health<initial(src.health))
-			if (WT.remove_fuel(0,user))
-				if (hasInternalDamage(MECHA_INT_TANK_BREACH))
+			if(WT.remove_fuel(0,user))
+				if(hasInternalDamage(MECHA_INT_TANK_BREACH))
 					clearInternalDamage(MECHA_INT_TANK_BREACH)
 					user << "<span class='notice'>You repair the damaged gas tank.</span>"
 				else
@@ -924,12 +924,12 @@ obj/mecha/proc/can_use(mob/user)
 
 
 /obj/mecha/MouseDrop_T(mob/M as mob, mob/user as mob)
-	if (!user.canUseTopic(src) || (user != M))
+	if(!user.canUseTopic(src) || (user != M))
 		return
 	if(!ishuman(user)) // no silicons or drones in mechas.
 		return
 	src.log_message("[user] tries to move in.")
-	if (src.occupant)
+	if(src.occupant)
 		usr << "<span class='warning'>The [src.name] is already occupied!</span>"
 		src.log_append_to_last("Permission denied.")
 		return
@@ -1435,7 +1435,7 @@ var/year_integer = text2num(year) // = 2013???
 	if(href_list["rfreq"])
 		if(usr != src.occupant)	return
 		var/new_frequency = (radio.frequency + filter.getNum("rfreq"))
-		if (!radio.freerange || (radio.frequency < 1200 || radio.frequency > 1600))
+		if(!radio.freerange || (radio.frequency < 1200 || radio.frequency > 1600))
 			new_frequency = sanitize_frequency(new_frequency)
 		radio.set_frequency(new_frequency)
 		send_byjax(src.occupant,"exosuit.browser","rfreq","[format_frequency(radio.frequency)]")
@@ -1444,16 +1444,16 @@ var/year_integer = text2num(year) // = 2013???
 		if(usr != src.occupant)	return
 		src.disconnect_from_port()
 		return
-	if (href_list["port_connect"])
+	if(href_list["port_connect"])
 		if(usr != src.occupant)	return
 		src.connect_to_port()
 		return
-	if (href_list["view_log"])
+	if(href_list["view_log"])
 		if(usr != src.occupant)	return
 		src.occupant << browse(src.get_log_html(), "window=exosuit_log")
 		onclose(occupant, "exosuit_log")
 		return
-	if (href_list["change_name"])
+	if(href_list["change_name"])
 		if(usr != src.occupant)	return
 		var/newname = stripped_input(occupant,"Choose new exosuit name","Rename exosuit","", MAX_NAME_LEN)
 		if(newname && trim(newname))
@@ -1461,7 +1461,7 @@ var/year_integer = text2num(year) // = 2013???
 		else
 			alert(occupant, "nope.avi")
 		return
-	if (href_list["toggle_id_upload"])
+	if(href_list["toggle_id_upload"])
 		if(usr != src.occupant)	return
 		add_req_access = !add_req_access
 		send_byjax(src.occupant,"exosuit.browser","t_id_upload","[add_req_access?"L":"Unl"]ock ID upload panel")
@@ -1551,7 +1551,7 @@ var/year_integer = text2num(year) // = 2013???
 
 /*
 
-	if (href_list["ai_take_control"])
+	if(href_list["ai_take_control"])
 		var/mob/living/silicon/ai/AI = locate(href_list["ai_take_control"])
 		var/duration = text2num(href_list["duration"])
 		var/mob/living/silicon/ai/O = new /mob/living/silicon/ai(src)
@@ -1589,7 +1589,7 @@ var/year_integer = text2num(year) // = 2013???
 			AI.toxloss = O.toxloss
 			AI.updatehealth()
 			qdel(O)
-			if (!AI.stat)
+			if(!AI.stat)
 				AI.icon_state = "ai"
 			else
 				AI.icon_state = "ai-crash"

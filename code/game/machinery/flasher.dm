@@ -26,7 +26,7 @@
 	bulb = new /obj/item/device/flash/handheld(src)
 
 /obj/machinery/flasher/power_change()
-	if (powered() && anchored && bulb)
+	if(powered() && anchored && bulb)
 		stat &= ~NOPOWER
 		if(bulb.broken)
 			icon_state = "[base_state]1-p"
@@ -38,8 +38,8 @@
 
 //Don't want to render prison breaks impossible
 /obj/machinery/flasher/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wirecutters))
-		if (bulb)
+	if(istype(W, /obj/item/weapon/wirecutters))
+		if(bulb)
 			user.visible_message("<span class='warning'>[user] begins to disconnect [src]'s flashbulb.</span>", "<span class='warning'>You begin to disconnect [src]'s flashbulb.</span>")
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			if(do_after(user, 30) && bulb)
@@ -48,8 +48,8 @@
 				bulb = null
 				power_change()
 
-	else if (istype(W, /obj/item/device/flash/handheld))
-		if (!bulb)
+	else if(istype(W, /obj/item/device/flash/handheld))
+		if(!bulb)
 			user.visible_message("<span class='notice'>[user] installs [W] into [src].</span>", "<span class='notice'>You install [W] into [src].</span>")
 			user.drop_item()
 			W.loc = src
@@ -61,16 +61,16 @@
 
 //Let the AI trigger them directly.
 /obj/machinery/flasher/attack_ai()
-	if (anchored)
+	if(anchored)
 		return flash()
 	else
 		return
 
 /obj/machinery/flasher/proc/flash()
-	if (!powered() || !bulb)
+	if(!powered() || !bulb)
 		return
 
-	if (bulb.broken || (last_flash && world.time < src.last_flash + 150))
+	if(bulb.broken || (last_flash && world.time < src.last_flash + 150))
 		return
 
 	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
@@ -79,19 +79,19 @@
 	use_power(1000)
 
 	for (var/mob/O in viewers(src, null))
-		if (get_dist(src, O) > src.range)
+		if(get_dist(src, O) > src.range)
 			continue
 
-		if (istype(O, /mob/living/carbon/human))
+		if(istype(O, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = O
 			if(!H.eyecheck() <= 0)
 				continue
 
-		if (istype(O, /mob/living/carbon/alien))//So aliens don't get flashed (they have no external eyes)/N
+		if(istype(O, /mob/living/carbon/alien))//So aliens don't get flashed (they have no external eyes)/N
 			continue
 
 		O.Weaken(strength)
-		if ((O.eye_stat > 15 && prob(O.eye_stat + 50)))
+		if((O.eye_stat > 15 && prob(O.eye_stat + 50)))
 			flick("e_flash", O:flash)
 			O.eye_stat += rand(1, 2)
 		else
@@ -112,12 +112,12 @@
 	..(severity)
 
 /obj/machinery/flasher/portable/HasProximity(atom/movable/AM)
-	if (last_flash && world.time < last_flash + 150)
+	if(last_flash && world.time < last_flash + 150)
 		return
 
 	if(istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
-		if (M.m_intent != "walk" && anchored)
+		if(M.m_intent != "walk" && anchored)
 			flash()
 
 /obj/machinery/flasher/portable/flash()
@@ -128,10 +128,10 @@
 		power_change()
 
 /obj/machinery/flasher/portable/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 
-		if (!anchored && !isinspace())
+		if(!anchored && !isinspace())
 			user << "<span class='notice'>[src] is now secured.</span>"
 			overlays += "[base_state]-s"
 			anchored = 1

@@ -56,7 +56,7 @@
 		M.adjustFireLoss(intialFire - M.getFireLoss())
 		M.adjustBruteLoss(intialBrute - M.getBruteLoss())
 		M.setOxyLoss(intialOxy)
-	if (timer <= 0)
+	if(timer <= 0)
 		dump_contents()
 		SSobj.processing.Remove(src)
 		qdel(src)
@@ -150,7 +150,7 @@
 	return
 
 /obj/structure/closet/statue/proc/shatter(mob/user as mob)
-	if (user)
+	if(user)
 		user.dust()
 	dump_contents()
 	visible_message("<span class='danger'>[src] shatters!.</span>")

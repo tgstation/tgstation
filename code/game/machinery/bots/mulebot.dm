@@ -113,8 +113,8 @@ obj/machinery/bot/mulebot/bot_reset()
 			icon_state = "mulebot0"
 
 		updateDialog()
-	else if (istype(I, /obj/item/weapon/wrench))
-		if (health < maxhealth)
+	else if(istype(I, /obj/item/weapon/wrench))
+		if(health < maxhealth)
 			health = min(maxhealth, health+25)
 			user.visible_message(
 				"<span class='notice'>[user] repairs [src]!</span>",
@@ -168,7 +168,7 @@ obj/machinery/bot/mulebot/bot_reset()
 
 /obj/machinery/bot/mulebot/attack_hand(var/mob/user)
 	. = ..()
-	if (.)
+	if(.)
 		return
 	user.set_machine(src)
 	interact(user, 0)
@@ -254,9 +254,9 @@ obj/machinery/bot/mulebot/bot_reset()
 /obj/machinery/bot/mulebot/Topic(href, href_list)
 	if(..())
 		return
-	if (usr.stat)
+	if(usr.stat)
 		return
-	if ((in_range(src, usr) && istype(loc, /turf)) || (istype(usr, /mob/living/silicon)))
+	if((in_range(src, usr) && istype(loc, /turf)) || (istype(usr, /mob/living/silicon)))
 		usr.set_machine(src)
 
 		switch(href_list["op"])
@@ -264,10 +264,10 @@ obj/machinery/bot/mulebot/bot_reset()
 				toggle_lock(usr)
 
 			if("power")
-				if (on)
+				if(on)
 					turn_off()
-				else if (cell && !open)
-					if (!turn_on())
+				else if(cell && !open)
+					if(!turn_on())
 						usr << "<span class='danger'>You can't switch on [src].</span>"
 						return
 				else
@@ -389,7 +389,7 @@ obj/machinery/bot/mulebot/bot_reset()
 	if(user.stat)
 		return
 
-	if (!on || !istype(C)|| C.anchored || get_dist(user, src) > 1 || get_dist(src,C) > 1 )
+	if(!on || !istype(C)|| C.anchored || get_dist(user, src) > 1 || get_dist(src,C) > 1 )
 		return
 
 	if(load)
@@ -490,7 +490,7 @@ obj/machinery/bot/mulebot/bot_reset()
 /obj/machinery/bot/mulebot/call_bot()
 	..()
 	var/area/dest_area
-	if (path && path.len)
+	if(path && path.len)
 		target = ai_waypoint //Target is the end point of the path, the waypoint set by the AI.
 		dest_area = get_area(target)
 		destination = format_text(dest_area.name)
@@ -879,9 +879,9 @@ obj/machinery/bot/mulebot/bot_reset()
 	//	signal.data[key] = keyval[key]
 	signal.data = keyval
 		//world << "sent [key],[keyval[key]] on [freq]"
-	if (signal.data["findbeacon"])
+	if(signal.data["findbeacon"])
 		frequency.post_signal(src, signal, filter = RADIO_NAVBEACONS)
-	else if (signal.data["type"] == MULE_BOT)
+	else if(signal.data["type"] == MULE_BOT)
 		frequency.post_signal(src, signal, filter = RADIO_MULEBOT)
 	else
 		frequency.post_signal(src, signal)
@@ -903,7 +903,7 @@ obj/machinery/bot/mulebot/bot_reset()
 	post_signal_multiple(control_freq, kv)
 
 /obj/machinery/bot/mulebot/emp_act(severity)
-	if (cell)
+	if(cell)
 		cell.emp_act(severity)
 	if(load)
 		load.emp_act(severity)
@@ -918,7 +918,7 @@ obj/machinery/bot/mulebot/bot_reset()
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/cable_coil/cut(Tsec)
-	if (cell)
+	if(cell)
 		cell.loc = Tsec
 		cell.update_icon()
 		cell = null

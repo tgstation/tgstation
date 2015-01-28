@@ -90,7 +90,7 @@ var/list/world_uplinks = list()
 	if(!active)
 		return
 
-	if (href_list["buy_item"])
+	if(href_list["buy_item"])
 
 		var/item = href_list["buy_item"]
 		var/list/split = text2list(item, ":") // throw away variable

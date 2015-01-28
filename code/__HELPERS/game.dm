@@ -6,7 +6,7 @@
 	for(i=1, i<=20, i++)
 		if(isarea(location))
 			return location
-		else if (istype(location))
+		else if(istype(location))
 			location = location.loc
 		else
 			return null

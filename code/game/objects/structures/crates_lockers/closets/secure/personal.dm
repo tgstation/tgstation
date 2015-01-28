@@ -12,7 +12,7 @@
 		new /obj/item/weapon/storage/backpack(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel_norm(src)
-	new /obj/item/device/radio/headset( src )
+	new /obj/item/device/radio/headset(src)
 	return
 
 
@@ -22,8 +22,8 @@
 /obj/structure/closet/secure_closet/personal/patient/New()
 	..()
 	contents.Cut()
-	new /obj/item/clothing/under/color/white( src )
-	new /obj/item/clothing/shoes/sneakers/white( src )
+	new /obj/item/clothing/under/color/white(src)
+	new /obj/item/clothing/shoes/sneakers/white(src)
 	return
 
 
@@ -51,8 +51,8 @@
 /obj/structure/closet/secure_closet/personal/cabinet/New()
 	..()
 	contents = list()
-	new /obj/item/weapon/storage/backpack/satchel/withwallet( src )
-	new /obj/item/device/radio/headset( src )
+	new /obj/item/weapon/storage/backpack/satchel/withwallet(src)
+	new /obj/item/device/radio/headset(src)
 	return
 
 /obj/structure/closet/secure_closet/personal/attackby(obj/item/W as obj, mob/user as mob)

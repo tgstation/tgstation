@@ -18,7 +18,7 @@
 	return 1
 
 /obj/machinery/meter/initialize()
-	if (!target)
+	if(!target)
 		src.target = locate(/obj/machinery/atmospherics/pipe) in loc
 
 /obj/machinery/meter/process()
@@ -70,7 +70,7 @@
 
 /obj/machinery/meter/proc/status()
 	var/t = ""
-	if (src.target)
+	if(src.target)
 		var/datum/gas_mixture/environment = target.return_air()
 		if(environment)
 			t += "The pressure gauge reads [round(environment.return_pressure(), 0.01)] kPa; [round(environment.temperature,0.01)]&deg;K ([round(environment.temperature-T0C,0.01)]&deg;C)"
@@ -86,10 +86,10 @@
 
 
 /obj/machinery/meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-	if (istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
-		if (do_after(user, 40))
+		if(do_after(user, 40))
 			user.visible_message( \
 				"[user] unfastens \the [src].", \
 				"<span class='notice'>You have unfastened \the [src].</span>", \
@@ -122,6 +122,6 @@
 
 
 /obj/machinery/meter/turf/initialize()
-	if (!target)
+	if(!target)
 		src.target = loc
 

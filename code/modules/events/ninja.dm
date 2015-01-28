@@ -824,9 +824,9 @@ This could be a lot better but I'm too tired atm.*/
 
 			var/turf/curloc = U.loc
 			var/atom/targloc = get_turf(target)
-			if (!targloc || !istype(targloc, /turf) || !curloc)
+			if(!targloc || !istype(targloc, /turf) || !curloc)
 				return
-			if (targloc == curloc)
+			if(targloc == curloc)
 				return
 			var/obj/item/projectile/energy/dart/A = new /obj/item/projectile/energy/dart(U.loc)
 			A.current = curloc
@@ -1361,7 +1361,7 @@ ________________________________________________________________________________
 		if(1)
 			dat += "<h4><img src=sos_5.png> Atmospheric Scan:</h4>"//Headers don't need breaks. They are automatically placed.
 			var/turf/T = get_turf(U.loc)
-			if (isnull(T))
+			if(isnull(T))
 				dat += "Unable to obtain a reading."
 			else
 				var/datum/gas_mixture/environment = T.return_air()
@@ -1371,7 +1371,7 @@ ________________________________________________________________________________
 
 				dat += "Air Pressure: [round(pressure,0.1)] kPa"
 
-				if (total_moles)
+				if(total_moles)
 					var/o2_level = environment.oxygen/total_moles
 					var/n2_level = environment.nitrogen/total_moles
 					var/co2_level = environment.carbon_dioxide/total_moles
@@ -1399,7 +1399,7 @@ ________________________________________________________________________________
 				dat += "</li>"
 				count++
 			dat += "</ul>"
-			if (count == 0)
+			if(count == 0)
 				dat += "None detected.<br>"
 		if(32)
 			dat += "<h4><img src=sos_1.png> Hidden Menu:</h4>"
@@ -1553,7 +1553,7 @@ ________________________________________________________________________________
 				display_spideros()
 				return
 			P.tnote += "<i><b>&larr; From [!s_control?(A):"an unknown source"]:</b></i><br>[t]<br>"
-			if (!P.silent)
+			if(!P.silent)
 				playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
 				P.audible_message("\icon[P] *[P.ttone]*", null, 3)
 			P.overlays.Cut()
@@ -1848,7 +1848,7 @@ ________________________________________________________________________________
 		else if(istype(I, /obj/item/weapon/stock_parts/cell))
 			if(I:maxcharge>cell.maxcharge&&n_gloves&&n_gloves.candrain)
 				U << "<span class='notice'>Higher maximum capacity detected.\nUpgrading...</span>"
-				if (n_gloves&&n_gloves.candrain&&do_after(U,s_delay))
+				if(n_gloves&&n_gloves.candrain&&do_after(U,s_delay))
 					U.drop_item()
 					I.loc = src
 					I:charge = min(I:charge+cell.charge, I:maxcharge)
@@ -1981,7 +1981,7 @@ ________________________________________________________________________________
 					if(S.cell.charge+drain>S.cell.maxcharge)
 						drain = S.cell.maxcharge-S.cell.charge
 						maxcapacity = 1//Reached maximum battery capacity.
-					if (do_after(U,10))
+					if(do_after(U,10))
 						spark_system.start()
 						playsound(A.loc, "sparks", 50, 1)
 						A.cell.charge-=drain
@@ -2009,7 +2009,7 @@ ________________________________________________________________________________
 					if(S.cell.charge+drain>S.cell.maxcharge)
 						drain = S.cell.maxcharge-S.cell.charge
 						maxcapacity = 1
-					if (do_after(U,10))
+					if(do_after(U,10))
 						spark_system.start()
 						playsound(A.loc, "sparks", 50, 1)
 						A.charge-=drain
@@ -2023,7 +2023,7 @@ ________________________________________________________________________________
 		if("CELL")
 			var/obj/item/weapon/stock_parts/cell/A = target
 			if(A.charge)
-				if (G.candrain&&do_after(U,30))
+				if(G.candrain&&do_after(U,30))
 					U << "<span class='notice'>Gained <B>[A.charge]</B> energy from the cell.</span>"
 					if(S.cell.charge+A.charge>S.cell.maxcharge)
 						S.cell.charge=S.cell.maxcharge
@@ -2136,7 +2136,7 @@ ________________________________________________________________________________
 					if(S.cell.charge+drain>S.cell.maxcharge)
 						drain = S.cell.maxcharge-S.cell.charge
 						maxcapacity = 1
-					if (do_after(U,10))
+					if(do_after(U,10))
 						A.spark_system.start()
 						playsound(A.loc, "sparks", 50, 1)
 						A.cell.use(drain)
@@ -2159,7 +2159,7 @@ ________________________________________________________________________________
 					if(S.cell.charge+drain>S.cell.maxcharge)
 						drain = S.cell.maxcharge-S.cell.charge
 						maxcapacity = 1
-					if (do_after(U,10))
+					if(do_after(U,10))
 						A.spark_system.start()
 						playsound(A.loc, "sparks", 50, 1)
 						A.cell.charge-=drain
@@ -2408,7 +2408,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 /obj/effect/energy_net/attack_alien(mob/living/user as mob)
 	user.do_attack_animation(src)
-	if (islarva(user))
+	if(islarva(user))
 		return
 	playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
 	health -= rand(10, 20)

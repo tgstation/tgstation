@@ -77,18 +77,18 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if(can_unwrench && istype(W, /obj/item/weapon/wrench))
 		var/turf/T = src.loc
-		if (level==1 && isturf(T) && T.intact)
+		if(level==1 && isturf(T) && T.intact)
 			user << "<span class='danger'>You must remove the plating first.</span>"
 			return 1
 		var/datum/gas_mixture/int_air = return_air()
 		var/datum/gas_mixture/env_air = loc.return_air()
 		add_fingerprint(user)
-		if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
+		if((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
 			user << "<span class='danger'>You cannot unwrench this [src], it is too exerted due to internal pressure.</span>"
 			return 1
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
-		if (do_after(user, 40) && !gc_destroyed)
+		if(do_after(user, 40) && !gc_destroyed)
 			user.visible_message( \
 				"[user] unfastens \the [src].", \
 				"<span class='notice'>You have unfastened \the [src].</span>", \

@@ -376,7 +376,7 @@ var/list/admin_verbs_hideable = list(
 /client/proc/secrets()
 	set name = "Secrets"
 	set category = "Admin"
-	if (holder)
+	if(holder)
 		holder.Secrets()
 	feedback_add_details("admin_verb","S") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return

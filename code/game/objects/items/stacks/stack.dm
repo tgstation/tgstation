@@ -20,21 +20,21 @@
 
 /obj/item/stack/New(var/loc, var/amount=null)
 	..()
-	if (amount)
+	if(amount)
 		src.amount = amount
 	return
 
 /obj/item/stack/Destroy()
-	if (is_cyborg)
+	if(is_cyborg)
 		return // Not supposed to be destroyed
-	if (usr && usr.machine==src)
+	if(usr && usr.machine==src)
 		usr << browse(null, "window=stack")
 	src.loc = null
 	..()
 
 /obj/item/stack/examine(mob/user)
 	..()
-	if (is_cyborg)
+	if(is_cyborg)
 		if(src.singular_name)
 			user << "There is enough energy for [src.get_amount()] [src.singular_name]\s."
 		else
@@ -51,7 +51,7 @@
 		user << "There is [src.get_amount()] in the stack."
 
 /obj/item/stack/proc/get_amount()
-	if (is_cyborg)
+	if(is_cyborg)
 		return round(source.energy / cost)
 	else
 		return (amount)
@@ -60,47 +60,47 @@
 	interact(user)
 
 /obj/item/stack/interact(mob/user as mob)
-	if (!recipes)
+	if(!recipes)
 		return
-	if (!src || get_amount() <= 0)
+	if(!src || get_amount() <= 0)
 		user << browse(null, "window=stack")
 	user.set_machine(src) //for correct work of onclose
 	var/t1 = text("<HTML><HEAD><title>Constructions from []</title></HEAD><body><TT>Amount Left: []<br>", src, src.get_amount())
 	for(var/i=1;i<=recipes.len,i++)
 		var/datum/stack_recipe/R = recipes[i]
-		if (isnull(R))
+		if(isnull(R))
 			t1 += "<hr>"
 			continue
-		if (i>1 && !isnull(recipes[i-1]))
+		if(i>1 && !isnull(recipes[i-1]))
 			t1+="<br>"
 		var/max_multiplier = round(src.get_amount() / R.req_amount)
 		var/title as text
 		var/can_build = 1
 		can_build = can_build && (max_multiplier>0)
 		/*
-		if (R.one_per_turf)
+		if(R.one_per_turf)
 			can_build = can_build && !(locate(R.result_type) in usr.loc)
-		if (R.on_floor)
+		if(R.on_floor)
 			can_build = can_build && istype(usr.loc, /turf/simulated/floor)
 		*/
-		if (R.res_amount>1)
+		if(R.res_amount>1)
 			title+= "[R.res_amount]x [R.title]\s"
 		else
 			title+= "[R.title]"
 		title+= " ([R.req_amount] [src.singular_name]\s)"
-		if (can_build)
+		if(can_build)
 			t1 += text("<A href='?src=\ref[];make=[];multiplier=1'>[]</A>  ", src, i, title)
 		else
 			t1 += text("[]", title)
 			continue
-		if (R.max_res_amount>1 && max_multiplier>1)
+		if(R.max_res_amount>1 && max_multiplier>1)
 			max_multiplier = min(max_multiplier, round(R.max_res_amount/R.res_amount))
 			t1 += " |"
 			var/list/multipliers = list(5,10,25)
 			for (var/n in multipliers)
-				if (max_multiplier>=n)
+				if(max_multiplier>=n)
 					t1 += " <A href='?src=\ref[src];make=[i];multiplier=[n]'>[n*R.res_amount]x</A>"
-			if (!(max_multiplier in multipliers))
+			if(!(max_multiplier in multipliers))
 				t1 += " <A href='?src=\ref[src];make=[i];multiplier=[max_multiplier]'>[max_multiplier*R.res_amount]x</A>"
 
 	t1 += "</TT></body></HTML>"
@@ -110,32 +110,32 @@
 
 /obj/item/stack/Topic(href, href_list)
 	..()
-	if ((usr.restrained() || usr.stat || usr.get_active_hand() != src))
+	if((usr.restrained() || usr.stat || usr.get_active_hand() != src))
 		return
-	if (href_list["make"])
-		if (src.get_amount() < 1) qdel(src) //Never should happen
+	if(href_list["make"])
+		if(src.get_amount() < 1) qdel(src) //Never should happen
 
 		var/datum/stack_recipe/R = recipes[text2num(href_list["make"])]
 		var/multiplier = text2num(href_list["multiplier"])
-		if (!multiplier ||(multiplier <= 0)) //href protection
+		if(!multiplier ||(multiplier <= 0)) //href protection
 			return
-		if (src.get_amount() < R.req_amount*multiplier)
-			if (R.req_amount*multiplier>1)
+		if(src.get_amount() < R.req_amount*multiplier)
+			if(R.req_amount*multiplier>1)
 				usr << "<span class='danger'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>"
 			else
 				usr << "<span class='danger'>You haven't got enough [src] to build \the [R.title]!</span>"
 			return
-		if (R.one_per_turf && (locate(R.result_type) in usr.loc))
+		if(R.one_per_turf && (locate(R.result_type) in usr.loc))
 			usr << "<span class='danger'>There is another [R.title] here!</span>"
 			return
-		if (R.on_floor && !istype(usr.loc, /turf/simulated/floor))
+		if(R.on_floor && !istype(usr.loc, /turf/simulated/floor))
 			usr << "<span class='danger'>\The [R.title] must be constructed on the floor!</span>"
 			return
-		if (R.time)
+		if(R.time)
 			usr << "<span class='notice'>Building [R.title] ...</span>"
-			if (!do_after(usr, R.time))
+			if(!do_after(usr, R.time))
 				return
-			if (src.get_amount() < R.req_amount*multiplier)
+			if(src.get_amount() < R.req_amount*multiplier)
 				return
 
 		var/atom/O = new R.result_type( usr.loc )
@@ -143,7 +143,7 @@
 		use(R.req_amount * multiplier)
 
 		//is it a stack ?
-		if (R.max_res_amount > 1)
+		if(R.max_res_amount > 1)
 			var/obj/item/stack/new_item = O
 			new_item.amount = R.res_amount*multiplier
 			new_item.add_to_stacks(usr) //try to merge with existing stacks on current tile
@@ -151,36 +151,36 @@
 			if(new_item.amount <= 0)//if the stack is empty, i.e it has been merged with an existing stack and has been garbage collected
 				return
 
-		if (istype(O,/obj/item))
+		if(istype(O,/obj/item))
 			usr.put_in_hands(O)
 		O.add_fingerprint(usr)
 
 		//BubbleWrap - so newly formed boxes are empty
-		if ( istype(O, /obj/item/weapon/storage) )
+		if( istype(O, /obj/item/weapon/storage) )
 			for (var/obj/item/I in O)
 				qdel(I)
 		//BubbleWrap END
 
-	if (src && usr.machine==src) //do not reopen closed window
+	if(src && usr.machine==src) //do not reopen closed window
 		spawn( 0 )
 			src.interact(usr)
 			return
 	return
 
 /obj/item/stack/proc/use(var/used) // return 0 = borked; return 1 = had enough
-	if (is_cyborg)
+	if(is_cyborg)
 		return source.use_charge(used * cost)
-	if (amount < used)
+	if(amount < used)
 		return 0
 	amount -= used
-	if (amount <= 0)
+	if(amount <= 0)
 		if(usr)
 			usr.unEquip(src, 1)
 		qdel(src)
 	return 1
 
 /obj/item/stack/proc/add(var/amount)
-	if (is_cyborg)
+	if(is_cyborg)
 		source.add_charge(amount * cost)
 	else
 		src.amount += amount
@@ -189,11 +189,11 @@
 	var/obj/item/stack/oldsrc = src
 	src = null
 	for (var/obj/item/stack/item in usr.loc)
-		if (item==oldsrc)
+		if(item==oldsrc)
 			continue
-		if (!istype(item, oldsrc.type))
+		if(!istype(item, oldsrc.type))
 			continue
-		if (item.amount>=item.max_amount)
+		if(item.amount>=item.max_amount)
 			continue
 		oldsrc.attackby(item, usr)
 		usr << "You add new [item.singular_name] to the stack. It now contains [item.amount] [item.singular_name]\s."
@@ -201,14 +201,14 @@
 			break
 
 /obj/item/stack/attack_hand(mob/user as mob)
-	if (user.get_inactive_hand() == src)
+	if(user.get_inactive_hand() == src)
 		var/obj/item/stack/F = new src.type( user, 1)
 		F.copy_evidences(src)
 		user.put_in_hands(F)
 		src.add_fingerprint(user)
 		F.add_fingerprint(user)
 		use(1)
-		if (src && usr.machine==src)
+		if(src && usr.machine==src)
 			spawn(0) src.interact(usr)
 	else
 		..()
@@ -216,29 +216,29 @@
 
 /obj/item/stack/attackby(obj/item/W as obj, mob/user as mob)
 
-	if (istype(W, src.type))
+	if(istype(W, src.type))
 		var/obj/item/stack/S = W
-		if (S.is_cyborg)
+		if(S.is_cyborg)
 			var/to_transfer = min(src.amount, round((S.source.max_energy - S.source.energy) / S.cost))
 			S.add(to_transfer)
-			if (S && usr.machine==S)
+			if(S && usr.machine==S)
 				spawn(0) S.interact(usr)
 			src.use(to_transfer)
-			if (src && usr.machine==src)
+			if(src && usr.machine==src)
 				spawn(0) src.interact(usr)
 		else
-			if (S.amount >= max_amount)
+			if(S.amount >= max_amount)
 				return
 			var/to_transfer as num
-			if (user.get_inactive_hand()==src)
+			if(user.get_inactive_hand()==src)
 				to_transfer = 1
 			else
 				to_transfer = min(src.amount, S.max_amount-S.amount)
 			S.amount+=to_transfer
-			if (S && usr.machine==S)
+			if(S && usr.machine==S)
 				spawn(0) S.interact(usr)
 			src.use(to_transfer)
-			if (src && usr.machine==src)
+			if(src && usr.machine==src)
 				spawn(0) src.interact(usr)
 
 	else

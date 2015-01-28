@@ -22,16 +22,16 @@
 	set name = "Subtle Message"
 
 	if(!ismob(M))	return
-	if (!holder)
+	if(!holder)
 		src << "Only administrators may use this command."
 		return
 
 	var/msg = input("Message:", text("Subtle PM to [M.key]")) as text
 
-	if (!msg)
+	if(!msg)
 		return
 	if(usr)
-		if (usr.client)
+		if(usr.client)
 			if(usr.client.holder)
 				M << "\bold You hear a voice in your head... \italic [msg]"
 
@@ -43,13 +43,13 @@
 	set category = "Special Verbs"
 	set name = "Global Narrate"
 
-	if (!holder)
+	if(!holder)
 		src << "Only administrators may use this command."
 		return
 
 	var/msg = input("Message:", text("Enter the text you wish to appear to everyone:")) as text
 
-	if (!msg)
+	if(!msg)
 		return
 	world << "[msg]"
 	log_admin("GlobalNarrate: [key_name(usr)] : [msg]")
@@ -436,11 +436,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Admin"
 	set name = "Delete"
 
-	if (!holder)
+	if(!holder)
 		src << "Only administrators may use this command."
 		return
 
-	if (alert(src, "Are you sure you want to delete:\n[O]\nat ([O.x], [O.y], [O.z])?", "Confirmation", "Yes", "No") == "Yes")
+	if(alert(src, "Are you sure you want to delete:\n[O]\nat ([O.x], [O.y], [O.z])?", "Confirmation", "Yes", "No") == "Yes")
 		log_admin("[key_name(usr)] deleted [O] at ([O.x],[O.y],[O.z])")
 		message_admins("[key_name_admin(usr)] deleted [O] at ([O.x],[O.y],[O.z])")
 		feedback_add_details("admin_verb","DEL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -450,7 +450,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Admin"
 	set name = "Manage Job Slots"
 
-	if (!holder)
+	if(!holder)
 		src << "Only administrators may use this command."
 		return
 	holder.manage_free_slots()
@@ -460,7 +460,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Special Verbs"
 	set name = "Explosion"
 
-	if (!holder)
+	if(!holder)
 		src << "Only administrators may use this command."
 		return
 
@@ -475,9 +475,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/flames = input("Range of flames. -1 to none", text("Input"))  as num|null
 	if(flames == null) return
 
-	if ((devastation != -1) || (heavy != -1) || (light != -1) || (flash != -1) || (flames != -1))
-		if ((devastation > 20) || (heavy > 20) || (light > 20) || (flames > 20))
-			if (alert(src, "Are you sure you want to do this? It will laaag.", "Confirmation", "Yes", "No") == "No")
+	if((devastation != -1) || (heavy != -1) || (light != -1) || (flash != -1) || (flames != -1))
+		if((devastation > 20) || (heavy > 20) || (light > 20) || (flames > 20))
+			if(alert(src, "Are you sure you want to do this? It will laaag.", "Confirmation", "Yes", "No") == "No")
 				return
 
 		explosion(O, devastation, heavy, light, flash, null, null,flames)
@@ -492,7 +492,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Special Verbs"
 	set name = "EM Pulse"
 
-	if (!holder)
+	if(!holder)
 		src << "Only administrators may use this command."
 		return
 
@@ -501,7 +501,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/light = input("Range of light pulse.", text("Input"))  as num|null
 	if(light == null) return
 
-	if (heavy || light)
+	if(heavy || light)
 
 		empulse(O, heavy, light)
 		log_admin("[key_name(usr)] created an EM Pulse ([heavy],[light]) at ([O.x],[O.y],[O.z])")
@@ -516,7 +516,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Special Verbs"
 	set name = "Gib"
 
-	if (!holder)
+	if(!holder)
 		src << "Only administrators may use this command."
 		return
 
@@ -541,7 +541,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
 	if(confirm == "Yes")
-		if (istype(mob, /mob/dead/observer)) // so they don't spam gibs everywhere
+		if(istype(mob, /mob/dead/observer)) // so they don't spam gibs everywhere
 			return
 		else
 			mob.gib()
@@ -566,7 +566,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			if(!selection)
 				return
 			M = selection:mob
-			if ((M.client && M.client.holder && (M.client.holder.level >= holder.level)))
+			if((M.client && M.client.holder && (M.client.holder.level >= holder.level)))
 				alert("You cannot perform this action. You must be of a higher administrative rank!")
 				return
 
@@ -674,7 +674,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(SSshuttle.emergency.mode >= SHUTTLE_DOCKED)
 		return
 
-	if (!holder)
+	if(!holder)
 		src << "Only administrators may use this command."
 		return
 

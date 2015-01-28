@@ -41,7 +41,7 @@
 
 /obj/item/toy/balloon/afterattack(atom/A as mob|obj, mob/user as mob, proximity)
 	if(!proximity) return
-	if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
+	if(istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
 		A.reagents.trans_to(src, 10)
 		user << "<span class='notice'>You fill the balloon with the contents of [A].</span>"
 		src.desc = "A translucent balloon with some form of liquid sloshing around in it."
@@ -131,14 +131,14 @@
 
 /obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A as obj, mob/user as mob)
 
-	if (istype(A, /obj/item/toy/ammo/gun))
-		if (src.bullets >= 7)
+	if(istype(A, /obj/item/toy/ammo/gun))
+		if(src.bullets >= 7)
 			user << "<span class='notice'>It's already fully loaded!</span>"
 			return 1
-		if (A.amount_left <= 0)
+		if(A.amount_left <= 0)
 			user << "<span class='danger'>There are no more caps!</span>"
 			return 1
-		if (A.amount_left < (7 - src.bullets))
+		if(A.amount_left < (7 - src.bullets))
 			src.bullets += A.amount_left
 			user << text("<span class='danger'>You reload [] cap\s!</span>", A.amount_left)
 			A.amount_left = 0
@@ -151,13 +151,13 @@
 	return
 
 /obj/item/toy/gun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
-	if (flag)
+	if(flag)
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if(!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
 		return
 	src.add_fingerprint(user)
-	if (src.bullets < 1)
+	if(src.bullets < 1)
 		user.show_message("<span class='warning'>*click*</span>", 2)
 		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 		return
@@ -202,7 +202,7 @@
 
 /obj/item/toy/crossbow/examine(mob/user)
 	..()
-	if (bullets)
+	if(bullets)
 		user << "<span class='notice'>It is loaded with [bullets] foam dart\s.</span>"
 
 /obj/item/toy/crossbow/attackby(obj/item/I as obj, mob/user as mob)
@@ -220,9 +220,9 @@
 	if(!isturf(target.loc) || target == user) return
 	if(flag) return
 
-	if (locate (/obj/structure/table, src.loc))
+	if(locate (/obj/structure/table, src.loc))
 		return
-	else if (bullets)
+	else if(bullets)
 		var/turf/trg = get_turf(target)
 		var/obj/effect/foam_dart_dummy/D = new/obj/effect/foam_dart_dummy(get_turf(src))
 		bullets--
@@ -231,7 +231,7 @@
 		playsound(user.loc, 'sound/items/syringeproj.ogg', 50, 1)
 
 		for(var/i=0, i<6, i++)
-			if (D)
+			if(D)
 				if(D.loc == trg) break
 				step_towards(D,trg)
 
@@ -257,7 +257,7 @@
 				qdel(D)
 
 		return
-	else if (bullets == 0)
+	else if(bullets == 0)
 		user.Weaken(5)
 		user.visible_message("<span class='danger'>[user] realized they were out of ammo and starting scrounging for some!</span>")
 
@@ -267,7 +267,7 @@
 
 // ******* Check
 
-	if (src.bullets > 0 && M.lying)
+	if(src.bullets > 0 && M.lying)
 
 		M.visible_message("<span class='danger'>[user] casually lines up a shot with [M]'s head and pulls the trigger!</span>")
 		M.visible_message("<span class='danger'>[M] was hit in the head by the foam dart!</span>", \
@@ -277,7 +277,7 @@
 		playsound(user.loc, 'sound/items/syringeproj.ogg', 50, 1)
 		new /obj/item/toy/ammo/crossbow(M.loc)
 		src.bullets--
-	else if (M.lying && src.bullets == 0)
+	else if(M.lying && src.bullets == 0)
 		M.visible_message("<span class='danger'>[user] casually lines up a shot with [M]'s head, pulls the trigger, then realizes they are out of ammo and drops to the floor in search of some!</span>")
 		user.Weaken(5)
 	return
@@ -315,7 +315,7 @@
 
 /obj/item/toy/sword/attack_self(mob/user as mob)
 	active = !( active )
-	if (active)
+	if(active)
 		user << "<span class='notice'>You extend the plastic blade with a quick flick of your wrist.</span>"
 		playsound(user, 'sound/weapons/saberon.ogg', 20, 1)
 		if(hacked)
@@ -478,7 +478,7 @@
 			temp = pick(graffiti)
 		else
 			temp = href_list["type"]
-	if ((usr.restrained() || usr.stat || usr.get_active_hand() != src))
+	if((usr.restrained() || usr.stat || usr.get_active_hand() != src))
 		return
 	drawtype = temp
 	update_window(usr)
@@ -564,7 +564,7 @@
 		user << "<span class='notice'>You play with [src].</span>"
 		cooldown = 1
 		spawn(30) cooldown = 0
-		if (!quiet)
+		if(!quiet)
 			playsound(user, 'sound/mecha/mechstep.ogg', 20, 1)
 		return
 	..()
@@ -575,7 +575,7 @@
 			user << "<span class='notice'>You play with [src].</span>"
 			cooldown = 1
 			spawn(30) cooldown = 0
-			if (!quiet)
+			if(!quiet)
 				playsound(user, 'sound/mecha/mechturn.ogg', 20, 1)
 			return
 	..()
@@ -847,7 +847,7 @@ obj/item/toy/cards/cardhand/Topic(href, href_list)
 	var/mob/living/carbon/human/cardUser = usr
 	var/O = src
 	if(href_list["pick"])
-		if (cardUser.get_item_by_slot(slot_l_hand) == src || cardUser.get_item_by_slot(slot_r_hand) == src)
+		if(cardUser.get_item_by_slot(slot_l_hand) == src || cardUser.get_item_by_slot(slot_r_hand) == src)
 			var/choice = href_list["pick"]
 			var/obj/item/toy/cards/singlecard/C = new/obj/item/toy/cards/singlecard(cardUser.loc)
 			src.currenthand -= choice
@@ -935,7 +935,7 @@ obj/item/toy/cards/singlecard/verb/Flip()
 		return
 	if(!flipped)
 		src.flipped = 1
-		if (cardname)
+		if(cardname)
 			src.icon_state = "sc_[cardname]_[deckstyle]"
 			src.name = src.cardname
 		else
@@ -1035,7 +1035,7 @@ obj/item/toy/cards/deck/syndicate
 	var/cooldown = 0
 
 /obj/item/toy/nuke/attack_self(mob/user)
-	if (cooldown < world.time)
+	if(cooldown < world.time)
 		cooldown = world.time + 1800 //3 minutes
 		user.visible_message("<span class='warning'>[user] presses a button on [src]</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='notice'>You hear the click of a button.</span>")
 		spawn(5) //gia said so

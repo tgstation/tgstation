@@ -12,18 +12,18 @@
 
 /obj/structure/displaycase/ex_act(severity, target)
 	switch(severity)
-		if (1)
+		if(1)
 			new /obj/item/weapon/shard( src.loc )
-			if (occupied)
+			if(occupied)
 				new /obj/item/weapon/gun/energy/laser/captain( src.loc )
 				occupied = 0
 			qdel(src)
-		if (2)
-			if (prob(50))
+		if(2)
+			if(prob(50))
 				src.health -= 15
 				src.healthcheck()
-		if (3)
-			if (prob(50))
+		if(3)
+			if(prob(50))
 				src.health -= 5
 				src.healthcheck()
 
@@ -37,17 +37,17 @@
 
 
 /obj/structure/displaycase/blob_act()
-	if (prob(75))
+	if(prob(75))
 		new /obj/item/weapon/shard( src.loc )
-		if (occupied)
+		if(occupied)
 			new /obj/item/weapon/gun/energy/laser/captain( src.loc )
 			occupied = 0
 		qdel(src)
 
 
 /obj/structure/displaycase/proc/healthcheck()
-	if (src.health <= 0)
-		if (!( src.destroyed ))
+	if(src.health <= 0)
+		if(!( src.destroyed ))
 			src.density = 0
 			src.destroyed = 1
 			new /obj/item/weapon/shard( src.loc )
@@ -83,7 +83,7 @@
 
 /obj/structure/displaycase/attack_hand(mob/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if (src.destroyed && src.occupied)
+	if(src.destroyed && src.occupied)
 		new /obj/item/weapon/gun/energy/laser/captain( src.loc )
 		user << "<span class='notice'>You deactivate the hover field built into the case.</span>"
 		src.occupied = 0

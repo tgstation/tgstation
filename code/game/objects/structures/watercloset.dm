@@ -264,9 +264,9 @@
 					washears = !(H.head.flags_inv & HIDEEARS)
 
 				if(H.wear_mask)
-					if (washears)
+					if(washears)
 						washears = !(H.wear_mask.flags_inv & HIDEEARS)
-					if (washglasses)
+					if(washglasses)
 						washglasses = !(H.wear_mask.flags_inv & HIDEEYES)
 
 				if(H.head)

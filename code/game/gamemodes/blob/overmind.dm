@@ -53,17 +53,17 @@
 		hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#82ed00'>[src.blob_points]</font></div>"
 
 /mob/camera/blob/say(var/message)
-	if (!message)
+	if(!message)
 		return
 
-	if (src.client)
+	if(src.client)
 		if(client.prefs.muted & MUTE_IC)
 			src << "You cannot send IC messages (muted)."
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if(src.client.handle_spam_prevention(message,MUTE_IC))
 			return
 
-	if (stat)
+	if(stat)
 		return
 
 	blob_talk(message)
@@ -73,7 +73,7 @@
 
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
-	if (!message)
+	if(!message)
 		return
 
 	var/message_a = say_quote(message)

@@ -77,9 +77,9 @@
 
 /obj/item/device/transfer_valve/Topic(href, href_list)
 	..()
-	if ( usr.stat || usr.restrained() )
+	if( usr.stat || usr.restrained() )
 		return
-	if (src.loc == usr)
+	if(src.loc == usr)
 		if(tank_one && href_list["tankone"])
 			split_gases()
 			valve_open = 0
@@ -144,7 +144,7 @@
 	tank_two.air_contents.merge(temp)
 
 /obj/item/device/transfer_valve/proc/split_gases()
-	if (!valve_open || !tank_one || !tank_two)
+	if(!valve_open || !tank_one || !tank_two)
 		return
 	var/ratio1 = tank_one.air_contents.volume/tank_two.air_contents.volume
 	var/datum/gas_mixture/temp

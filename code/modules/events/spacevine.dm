@@ -247,7 +247,7 @@
 		Destroy()
 
 /obj/effect/spacevine/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (!W || !user || !W.type) return
+	if(!W || !user || !W.type) return
 	user.changeNext_move(CLICK_CD_MELEE)
 
 	var/override = 0
@@ -439,35 +439,35 @@
 
 /*
 /obj/effect/spacevine/proc/Life()
-	if (!src) return
+	if(!src) return
 	var/Vspread
-	if (prob(50)) Vspread = locate(src.x + rand(-1,1),src.y,src.z)
+	if(prob(50)) Vspread = locate(src.x + rand(-1,1),src.y,src.z)
 	else Vspread = locate(src.x,src.y + rand(-1, 1),src.z)
 	var/dogrowth = 1
-	if (!istype(Vspread, /turf/simulated)) dogrowth = 0
+	if(!istype(Vspread, /turf/simulated)) dogrowth = 0
 	for(var/obj/O in Vspread)
-		if (istype(O, /obj/structure/window) || istype(O, /obj/effect/forcefield) || istype(O, /obj/effect/blob) || istype(O, /obj/effect/alien/weeds) || istype(O, /obj/effect/spacevine)) dogrowth = 0
-		if (istype(O, /obj/machinery/door/))
+		if(istype(O, /obj/structure/window) || istype(O, /obj/effect/forcefield) || istype(O, /obj/effect/blob) || istype(O, /obj/effect/alien/weeds) || istype(O, /obj/effect/spacevine)) dogrowth = 0
+		if(istype(O, /obj/machinery/door/))
 			if(O:p_open == 0 && prob(50)) O:open()
 			else dogrowth = 0
-	if (dogrowth == 1)
+	if(dogrowth == 1)
 		var/obj/effect/spacevine/B = new /obj/effect/spacevine(Vspread)
 		B.icon_state = pick("vine-light1", "vine-light2", "vine-light3")
 		spawn(20)
 			if(B)
 				B.Life()
 	src.growth += 1
-	if (src.growth == 10)
+	if(src.growth == 10)
 		src.name = "Thick Space Kudzu"
 		src.icon_state = pick("vine-med1", "vine-med2", "vine-med3")
 		src.opacity = 1
 		src.waittime = 80
-	if (src.growth == 20)
+	if(src.growth == 20)
 		src.name = "Dense Space Kudzu"
 		src.icon_state = pick("vine-hvy1", "vine-hvy2", "vine-hvy3")
 		src.density = 1
 	spawn(src.waittime)
-		if (src.growth < 20) src.Life()
+		if(src.growth < 20) src.Life()
 
 */
 
@@ -477,11 +477,11 @@
 			Destroy()
 			return
 		if(2.0)
-			if (prob(90))
+			if(prob(90))
 				Destroy()
 				return
 		if(3.0)
-			if (prob(50))
+			if(prob(50))
 				Destroy()
 				return
 	return

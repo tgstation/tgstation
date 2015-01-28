@@ -22,7 +22,7 @@ var/list/VVckey_edit = list("key", "ckey")
 	set category = "Debug"
 	set name = "Edit Ticker Variables"
 
-	if (ticker == null)
+	if(ticker == null)
 		src << "Game hasn't started yet."
 	else
 		src.modify_variables(ticker)
@@ -458,7 +458,7 @@ var/list/VVckey_edit = list("key", "ckey")
 
 	var/original_name
 
-	if (!istype(O, /atom))
+	if(!istype(O, /atom))
 		original_name = "\ref[O] ([O])"
 	else
 		original_name = O:name

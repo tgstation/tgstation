@@ -127,8 +127,8 @@
 	if(src.broken)
 		return
 
-	if (ishuman(usr))
-		if (!opened)
+	if(ishuman(usr))
+		if(!opened)
 			togglelock(usr)
 	else
 		usr << "<span class='warning'>This mob type can't use this verb.</span>"

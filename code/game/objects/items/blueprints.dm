@@ -107,7 +107,7 @@
 
 
 /obj/item/areaeditor/proc/get_area_type(var/area/A = get_area())
-	if (istype(A,/area/space))
+	if(istype(A,/area/space))
 		return AREA_SPACE
 	var/list/SPECIALS = list(
 		/area/shuttle,
@@ -120,7 +120,7 @@
 		/area/prison
 	)
 	for (var/type in SPECIALS)
-		if ( istype(A,type) )
+		if( istype(A,type) )
 			return AREA_SPECIAL
 	return AREA_STATION
 
@@ -186,7 +186,7 @@
 
 
 /obj/item/areaeditor/proc/set_area_machinery_title(var/area/A,var/title,var/oldtitle)
-	if (!oldtitle) // or replacetext goes to infinite loop
+	if(!oldtitle) // or replacetext goes to infinite loop
 		return
 	for(var/area/RA in A.related)
 		for(var/obj/machinery/alarm/M in RA)
@@ -203,28 +203,28 @@
 
 
 /obj/item/areaeditor/proc/check_tile_is_border(var/turf/T2,var/dir)
-	if (istype(T2, /turf/space))
+	if(istype(T2, /turf/space))
 		return BORDER_SPACE //omg hull breach we all going to die here
-	if (istype(T2, /turf/simulated/shuttle))
+	if(istype(T2, /turf/simulated/shuttle))
 		return BORDER_SPACE
-	if (get_area_type(T2.loc)!=AREA_SPACE)
+	if(get_area_type(T2.loc)!=AREA_SPACE)
 		return BORDER_BETWEEN
-	if (istype(T2, /turf/simulated/wall))
+	if(istype(T2, /turf/simulated/wall))
 		return BORDER_2NDTILE
-	if (!istype(T2, /turf/simulated))
+	if(!istype(T2, /turf/simulated))
 		return BORDER_BETWEEN
 
 	for (var/obj/structure/window/W in T2)
 		if(turn(dir,180) == W.dir)
 			return BORDER_BETWEEN
-		if (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST))
+		if(W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST))
 			return BORDER_2NDTILE
 	for(var/obj/machinery/door/window/D in T2)
 		if(turn(dir,180) == D.dir)
 			return BORDER_BETWEEN
-	if (locate(/obj/machinery/door) in T2)
+	if(locate(/obj/machinery/door) in T2)
 		return BORDER_2NDTILE
-	if (locate(/obj/structure/falsewall) in T2)
+	if(locate(/obj/structure/falsewall) in T2)
 		return BORDER_2NDTILE
 
 	return BORDER_NONE
@@ -234,7 +234,7 @@
 	var/list/turf/found = new
 	var/list/turf/pending = list(first)
 	while(pending.len)
-		if (found.len+pending.len > 300)
+		if(found.len+pending.len > 300)
 			return ROOM_ERR_TOOLARGE
 		var/turf/T = pending[1] //why byond havent list::pop()?
 		pending -= T
@@ -243,14 +243,14 @@
 			for (var/obj/structure/window/W in T)
 				if(dir == W.dir || (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)))
 					skip = 1; break
-			if (skip) continue
+			if(skip) continue
 			for(var/obj/machinery/door/window/D in T)
 				if(dir == D.dir)
 					skip = 1; break
-			if (skip) continue
+			if(skip) continue
 
 			var/turf/NT = get_step(T,dir)
-			if (!isturf(NT) || (NT in found) || (NT in pending))
+			if(!isturf(NT) || (NT in found) || (NT in pending))
 				continue
 
 			switch(check_tile_is_border(NT,dir))

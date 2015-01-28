@@ -50,7 +50,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 /obj/machinery/computer/communications/Topic(href, href_list)
 	if(..())
 		return
-	if (src.z > ZLEVEL_STATION)
+	if(src.z > ZLEVEL_STATION)
 		usr << "<span class='userdanger'>Unable to establish a connection</span>: \black You're too far away from the station!"
 		return
 	usr.set_machine(src)
@@ -65,10 +65,10 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		if("login")
 			var/mob/M = usr
 			var/obj/item/weapon/card/id/I = M.get_active_hand()
-			if (istype(I, /obj/item/device/pda))
+			if(istype(I, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = I
 				I = pda.id
-			if (I && istype(I))
+			if(I && istype(I))
 				if(src.check_access(I))
 					authenticated = 1
 					auth_id = "[I.registered_name] ([I.assignment])"
@@ -83,10 +83,10 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		if("swipeidseclevel")
 			var/mob/M = usr
 			var/obj/item/weapon/card/id/I = M.get_active_hand()
-			if (istype(I, /obj/item/device/pda))
+			if(istype(I, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = I
 				I = pda.id
-			if (I && istype(I))
+			if(I && istype(I))
 				if(access_captain in I.access)
 					var/old_level = security_level
 					if(!tmp_alertlevel) tmp_alertlevel = SEC_LEVEL_GREEN
@@ -137,7 +137,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			src.state = STATE_MESSAGELIST
 		if("viewmessage")
 			src.state = STATE_VIEWMESSAGE
-			if (!src.currmsg)
+			if(!src.currmsg)
 				if(href_list["message-num"])
 					src.currmsg = text2num(href_list["message-num"])
 				else
@@ -246,7 +246,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			src.aistate = STATE_MESSAGELIST
 		if("ai-viewmessage")
 			src.aistate = STATE_VIEWMESSAGE
-			if (!src.aicurrmsg)
+			if(!src.aicurrmsg)
 				if(href_list["message-num"])
 					src.aicurrmsg = text2num(href_list["message-num"])
 				else
@@ -322,7 +322,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 /obj/machinery/computer/communications/attack_hand(var/mob/user as mob)
 	if(..())
 		return
-	if (src.z > 6)
+	if(src.z > 6)
 		user << "<span class='userdanger'>Unable to establish a connection</span>: \black You're too far away from the station!"
 		return
 
@@ -336,7 +336,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	var/datum/browser/popup = new(user, "communications", "Communications Console", 400, 500)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 
-	if (istype(user, /mob/living/silicon))
+	if(istype(user, /mob/living/silicon))
 		var/dat2 = src.interact_ai(user) // give the AI a different interact proc to limit its access
 		if(dat2)
 			dat +=  dat2
@@ -349,7 +349,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 	switch(src.state)
 		if(STATE_DEFAULT)
-			if (src.authenticated)
+			if(src.authenticated)
 				if(SSshuttle.emergencyLastCallLoc)
 					dat += "<BR>Most recent shuttle call/recall traced to: <b>[format_text(SSshuttle.emergencyLastCallLoc.name)]</b>"
 				else
@@ -366,7 +366,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=cancelshuttle'>Cancel Shuttle Call</A> \]"
 
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=status'>Set Status Display</A> \]"
-				if (src.authenticated==2)
+				if(src.authenticated==2)
 					dat += "<BR><BR><B>Captain Functions</B>"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make a Captain's Announcement</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=changeseclevel'>Change Alert Level</A> \]"
@@ -387,16 +387,16 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			for(var/i = 1; i<=src.messagetitle.len; i++)
 				dat += "<BR><A HREF='?src=\ref[src];operation=viewmessage;message-num=[i]'>[src.messagetitle[i]]</A>"
 		if(STATE_VIEWMESSAGE)
-			if (src.currmsg)
+			if(src.currmsg)
 				dat += "<B>[src.messagetitle[src.currmsg]]</B><BR><BR>[src.messagetext[src.currmsg]]"
-				if (src.authenticated)
+				if(src.authenticated)
 					dat += "<BR><BR>\[ <A HREF='?src=\ref[src];operation=delmessage'>Delete \]"
 			else
 				src.state = STATE_MESSAGELIST
 				src.attack_hand(user)
 				return
 		if(STATE_DELMESSAGE)
-			if (src.currmsg)
+			if(src.currmsg)
 				dat += "Are you sure you want to delete this message? \[ <A HREF='?src=\ref[src];operation=delmessage2'>OK</A> | <A HREF='?src=\ref[src];operation=viewmessage'>Cancel</A> \]"
 			else
 				src.state = STATE_MESSAGELIST
@@ -503,7 +503,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			for(var/i = 1; i<=src.messagetitle.len; i++)
 				dat += "<BR><A HREF='?src=\ref[src];operation=ai-viewmessage;message-num=[i]'>[src.messagetitle[i]]</A>"
 		if(STATE_VIEWMESSAGE)
-			if (src.aicurrmsg)
+			if(src.aicurrmsg)
 				dat += "<B>[src.messagetitle[src.aicurrmsg]]</B><BR><BR>[src.messagetext[src.aicurrmsg]]"
 				dat += "<BR><BR>\[ <A HREF='?src=\ref[src];operation=ai-delmessage'>Delete</A> \]"
 			else

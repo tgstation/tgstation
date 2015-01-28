@@ -183,12 +183,12 @@ proc/isorgan(A)
 
 /proc/stars(n, pr)
 	n = strip_html_properly(n)
-	if (pr == null)
+	if(pr == null)
 		pr = 25
-	if (pr <= 0)
+	if(pr <= 0)
 		return null
 	else
-		if (pr >= 100)
+		if(pr >= 100)
 			return n
 	var/te = n
 	var/t = ""
@@ -196,7 +196,7 @@ proc/isorgan(A)
 	var/p = null
 	p = 1
 	while(p <= n)
-		if ((copytext(te, p, p + 1) == " " || prob(pr)))
+		if((copytext(te, p, p + 1) == " " || prob(pr)))
 			t = text("[][]", t, copytext(te, p, p + 1))
 		else
 			t = text("[]*", t)
@@ -212,14 +212,14 @@ proc/isorgan(A)
 	p = 1//1 is the start of any word
 	while(p <= n)//while P, which starts at 1 is less or equal to N which is the length.
 		var/n_letter = copytext(te, p, p + 1)//copies text from a certain distance. In this case, only one letter at a time.
-		if (prob(80) && (ckey(n_letter) in list("b","c","d","f","g","h","j","k","l","m","n","p","q","r","s","t","v","w","x","y","z")))
-			if (prob(10))
+		if(prob(80) && (ckey(n_letter) in list("b","c","d","f","g","h","j","k","l","m","n","p","q","r","s","t","v","w","x","y","z")))
+			if(prob(10))
 				n_letter = text("[n_letter]-[n_letter]-[n_letter]-[n_letter]")//replaces the current letter with this instead.
 			else
-				if (prob(20))
+				if(prob(20))
 					n_letter = text("[n_letter]-[n_letter]-[n_letter]")
 				else
-					if (prob(5))
+					if(prob(5))
 						n_letter = null
 					else
 						n_letter = text("[n_letter]-[n_letter]")
@@ -280,8 +280,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			n_letter = copytext(te, p, n+1)
 		else
 			n_letter = copytext(te, p, p+n_mod)
-		if (prob(50))
-			if (prob(30))
+		if(prob(50))
+			if(prob(30))
 				n_letter = text("[n_letter]-[n_letter]-[n_letter]")
 			else
 				n_letter = text("[n_letter]-[n_letter]")

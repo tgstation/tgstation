@@ -16,7 +16,7 @@ Sorry Giacom. Please don't be mad :(
 
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A, yes)
-	if (buckled || !yes || now_pushing)
+	if(buckled || !yes || now_pushing)
 		return
 	if(ismob(A))
 		var/mob/M = A
@@ -41,11 +41,11 @@ Sorry Giacom. Please don't be mad :(
 	if(istype(M, /mob/living/carbon/human))
 		for(var/mob/MM in range(M, 1))
 			if( ((MM.pulling == M && ( M.restrained() && !( MM.restrained() ) && MM.stat == CONSCIOUS)) || locate(/obj/item/weapon/grab, M.grabbed_by.len)) )
-				if ( !(world.time % 5) )
+				if( !(world.time % 5) )
 					src << "<span class='warning'>[M] is restrained, you cannot push past.</span>"
 				return 1
 			if( M.pulling == MM && ( MM.restrained() && !( M.restrained() ) && M.stat == CONSCIOUS) )
-				if ( !(world.time % 5) )
+				if( !(world.time % 5) )
 					src << "<span class='warning'>[M] is restraining [MM], you cannot push past.</span>"
 				return 1
 
@@ -93,7 +93,7 @@ Sorry Giacom. Please don't be mad :(
 	if(!AM.anchored)
 		now_pushing = 1
 		var/t = get_dir(src, AM)
-		if (istype(AM, /obj/structure/window))
+		if(istype(AM, /obj/structure/window))
 			var/obj/structure/window/W = AM
 			if(W.fulltile)
 				for(var/obj/structure/window/win in get_step(W,t))
@@ -127,7 +127,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/verb/succumb(var/whispered as null)
 	set hidden = 1
-	if (InCritical())
+	if(InCritical())
 		src.attack_log += "[src] has [whispered ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!"
 		src.adjustOxyLoss(src.health - config.health_threshold_dead)
 		updatehealth()
@@ -336,7 +336,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/get_organ_target()
 	var/mob/shooter = src
 	var/t = shooter:zone_sel.selecting
-	if ((t in list( "eyes", "mouth" )))
+	if((t in list( "eyes", "mouth" )))
 		t = "head"
 	var/obj/item/organ/limb/def_zone = ran_zone(t)
 	return def_zone
@@ -435,26 +435,26 @@ Sorry Giacom. Please don't be mad :(
 	return
 
 /mob/living/Move(atom/newloc, direct)
-	if (buckled && buckled.loc != newloc)
-		if (!buckled.anchored)
+	if(buckled && buckled.loc != newloc)
+		if(!buckled.anchored)
 			return buckled.Move(newloc, direct)
 		else
 			return 0
 
-	if (restrained())
+	if(restrained())
 		stop_pulling()
 
 
 	var/t7 = 1
-	if (restrained())
+	if(restrained())
 		for(var/mob/living/M in range(src, 1))
-			if ((M.pulling == src && M.stat == 0 && !( M.restrained() )))
+			if((M.pulling == src && M.stat == 0 && !( M.restrained() )))
 				t7 = null
-	if (t7 && pulling && (get_dist(src, pulling) <= 1 || pulling.loc == loc))
+	if(t7 && pulling && (get_dist(src, pulling) <= 1 || pulling.loc == loc))
 		var/turf/T = loc
 		. = ..()
 
-		if (pulling && pulling.loc)
+		if(pulling && pulling.loc)
 			if(!isturf(pulling.loc))
 				stop_pulling()
 				return
@@ -468,36 +468,36 @@ Sorry Giacom. Please don't be mad :(
 			stop_pulling()
 			return
 
-		if (!restrained())
+		if(!restrained())
 			var/diag = get_dir(src, pulling)
-			if ((diag - 1) & diag)
+			if((diag - 1) & diag)
 			else
 				diag = null
-			if ((get_dist(src, pulling) > 1 || diag))
-				if (isliving(pulling))
+			if((get_dist(src, pulling) > 1 || diag))
+				if(isliving(pulling))
 					var/mob/living/M = pulling
 					var/ok = 1
-					if (locate(/obj/item/weapon/grab, M.grabbed_by))
-						if (prob(75))
+					if(locate(/obj/item/weapon/grab, M.grabbed_by))
+						if(prob(75))
 							var/obj/item/weapon/grab/G = pick(M.grabbed_by)
-							if (istype(G, /obj/item/weapon/grab))
+							if(istype(G, /obj/item/weapon/grab))
 								visible_message("<span class='danger'>[src] has pulled [G.affecting] from [G.assailant]'s grip.</span>")
 								qdel(G)
 						else
 							ok = 0
-						if (locate(/obj/item/weapon/grab, M.grabbed_by.len))
+						if(locate(/obj/item/weapon/grab, M.grabbed_by.len))
 							ok = 0
-					if (ok)
+					if(ok)
 						var/atom/movable/t = M.pulling
 						M.stop_pulling()
 
 						//this is the gay blood on floor shit -- Added back -- Skie
-						if (M.lying && (prob(M.getBruteLoss() / 2)))
+						if(M.lying && (prob(M.getBruteLoss() / 2)))
 							var/blood_exists = 0
 							var/trail_type = M.getTrail()
 							for(var/obj/effect/decal/cleanable/trail_holder/C in M.loc) //checks for blood splatter already on the floor
 								blood_exists = 1
-							if (istype(M.loc, /turf/simulated) && trail_type != null)
+							if(istype(M.loc, /turf/simulated) && trail_type != null)
 								var/newdir = get_dir(T, M.loc)
 								if(newdir != M.dir)
 									newdir = newdir | M.dir
@@ -520,12 +520,12 @@ Sorry Giacom. Please don't be mad :(
 						if(M)
 							M.start_pulling(t)
 				else
-					if (pulling)
+					if(pulling)
 						pulling.Move(T, get_dir(pulling, T))
 	else
 		stop_pulling()
 		. = ..()
-	if ((s_active && !( s_active in contents ) ))
+	if((s_active && !( s_active in contents ) ))
 		s_active.close(src)
 
 	if(update_slimes)

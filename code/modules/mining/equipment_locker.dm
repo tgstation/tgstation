@@ -311,7 +311,7 @@
 	if(href_list["purchase"])
 		if(istype(inserted_id))
 			var/datum/data/mining_equipment/prize = locate(href_list["purchase"])
-			if (!prize || !(prize in prize_list))
+			if(!prize || !(prize in prize_list))
 				return
 			if(prize.cost > inserted_id.mining_points)
 			else

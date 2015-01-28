@@ -316,23 +316,23 @@
 	else if(istype(power_source,/obj/machinery/power/apc))
 		var/obj/machinery/power/apc/apc = power_source
 		cell = apc.cell
-		if (apc.terminal)
+		if(apc.terminal)
 			PN = apc.terminal.powernet
-	else if (!power_source)
+	else if(!power_source)
 		return 0
 	else
 		log_admin("ERROR: /proc/electrocute_mob([M], [power_source], [source]): wrong power_source")
 		return 0
-	if (!cell && !PN)
+	if(!cell && !PN)
 		return 0
 	var/PN_damage = 0
 	var/cell_damage = 0
-	if (PN)
+	if(PN)
 		PN_damage = PN.get_electrocute_damage()
-	if (cell)
+	if(cell)
 		cell_damage = cell.get_electrocute_damage()
 	var/shock_damage = 0
-	if (PN_damage>=cell_damage)
+	if(PN_damage>=cell_damage)
 		power_source = PN
 		shock_damage = PN_damage
 	else
@@ -341,12 +341,12 @@
 	var/drained_hp = M.electrocute_act(shock_damage, source, siemens_coeff) //zzzzzzap!
 	var/drained_energy = drained_hp*20
 
-	if (source_area)
+	if(source_area)
 		source_area.use_power(drained_energy/CELLRATE)
-	else if (istype(power_source,/datum/powernet))
+	else if(istype(power_source,/datum/powernet))
 		var/drained_power = drained_energy/CELLRATE //convert from "joules" to "watts"
 		PN.load+=drained_power
-	else if (istype(power_source, /obj/item/weapon/stock_parts/cell))
+	else if(istype(power_source, /obj/item/weapon/stock_parts/cell))
 		cell.use(drained_energy)
 	return drained_energy
 
@@ -427,31 +427,31 @@
 
 /datum/powernet/proc/get_electrocute_damage()
 	switch(avail)/*
-		if (1300000 to INFINITY)
+		if(1300000 to INFINITY)
 			return min(rand(70,150),rand(70,150))
-		if (750000 to 1300000)
+		if(750000 to 1300000)
 			return min(rand(50,115),rand(50,115))
-		if (100000 to 750000-1)
+		if(100000 to 750000-1)
 			return min(rand(35,101),rand(35,101))
-		if (75000 to 100000-1)
+		if(75000 to 100000-1)
 			return min(rand(30,95),rand(30,95))
-		if (50000 to 75000-1)
+		if(50000 to 75000-1)
 			return min(rand(25,80),rand(25,80))
-		if (25000 to 50000-1)
+		if(25000 to 50000-1)
 			return min(rand(20,70),rand(20,70))
-		if (10000 to 25000-1)
+		if(10000 to 25000-1)
 			return min(rand(20,65),rand(20,65))
-		if (1000 to 10000-1)
+		if(1000 to 10000-1)
 			return min(rand(10,20),rand(10,20))*/
-		if (1000000 to INFINITY)
+		if(1000000 to INFINITY)
 			return min(rand(50,160),rand(50,160))
-		if (200000 to 1000000)
+		if(200000 to 1000000)
 			return min(rand(25,80),rand(25,80))
-		if (100000 to 200000)//Ave powernet
+		if(100000 to 200000)//Ave powernet
 			return min(rand(20,60),rand(20,60))
-		if (50000 to 100000)
+		if(50000 to 100000)
 			return min(rand(15,40),rand(15,40))
-		if (1000 to 50000)
+		if(1000 to 50000)
 			return min(rand(10,20),rand(10,20))
 		else
 			return 0
@@ -474,5 +474,5 @@
 /area/proc/get_apc()
 	for(var/area/RA in src.related)
 		var/obj/machinery/power/apc/FINDME = locate() in RA
-		if (FINDME)
+		if(FINDME)
 			return FINDME

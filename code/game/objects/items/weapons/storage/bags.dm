@@ -169,7 +169,7 @@
 
 	if(!inserted || !S.amount)
 		usr.unEquip(S)
-		if (usr.client && usr.s_active != src)
+		if(usr.client && usr.s_active != src)
 			usr.client.screen -= S
 		S.dropped(usr)
 		if(!S.amount)
@@ -202,7 +202,7 @@
 
 	var/row_num = 0
 	var/col_count = min(7,storage_slots) -1
-	if (adjusted_contents > 7)
+	if(adjusted_contents > 7)
 		row_num = round((adjusted_contents-1) / 7) // 7 is the maximum allowed width.
 	src.standard_orient_objs(row_num, col_count, numbered_contents)
 	return

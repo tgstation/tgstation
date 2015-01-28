@@ -12,14 +12,14 @@
 /mob/living/carbon/monkey/Life()
 	set invisibility = 0
 	set background = BACKGROUND_ENABLED
-	if (notransform)	return
+	if(notransform)	return
 	..()
 
 	var/datum/gas_mixture/environment // Added to prevent null location errors-- TLE
 	if(loc)
 		environment = loc.return_air()
 
-	if (stat != DEAD) //still breathing
+	if(stat != DEAD) //still breathing
 		//First, resolve location and get a breath
 		if(SSmob.times_fired%4==2)
 			//Only try to take a breath every 4 seconds, unless suffocating
@@ -79,14 +79,14 @@
 
 /mob/living/carbon/monkey/proc/handle_mutations_and_radiation()
 
-	if (radiation)
-		if (radiation > 100)
+	if(radiation)
+		if(radiation > 100)
 			radiation = 100
 			Weaken(10)
 			src << "<span class='danger'>You feel weak.</span>"
 			emote("collapse")
 
-		if (radiation < 0)
+		if(radiation < 0)
 			radiation = 0
 
 		switch(radiation)
@@ -130,7 +130,7 @@
 		losebreath++
 	if(losebreath>0) //Suffocating so do not take a breath
 		losebreath--
-		if (prob(75)) //High chance of gasping for air
+		if(prob(75)) //High chance of gasping for air
 			spawn emote("gasp")
 		if(istype(loc, /obj/))
 			var/obj/location_as_object = loc
@@ -205,13 +205,13 @@
 	if(O2_pp < safe_oxygen_min) 			// Too little oxygen
 		if(prob(20))
 			spawn(0) emote("gasp")
-		if (O2_pp == 0)
+		if(O2_pp == 0)
 			O2_pp = 0.01
 		var/ratio = safe_oxygen_min/O2_pp
 		adjustOxyLoss(min(5*ratio, 7)) // Don't fuck them up too fast (space only does 7 after all!)
 		oxygen_used = breath.oxygen*ratio/6
 		oxygen_alert = max(oxygen_alert, 1)
-	/*else if (O2_pp > safe_oxygen_max) 		// Too much oxygen (commented this out for now, I'll deal with pressure damage elsewhere I suppose)
+	/*else if(O2_pp > safe_oxygen_max) 		// Too much oxygen (commented this out for now, I'll deal with pressure damage elsewhere I suppose)
 		spawn(0) emote("cough")
 		var/ratio = O2_pp/safe_oxygen_max
 		oxyloss += 5*ratio
@@ -324,10 +324,10 @@
 
 	if(reagents) reagents.metabolize(src)
 
-	if (drowsyness)
+	if(drowsyness)
 		drowsyness--
 		eye_blurry = max(2, eye_blurry)
-		if (prob(5))
+		if(prob(5))
 			sleeping += 1
 			Paralyse(5)
 
@@ -389,7 +389,7 @@
 			setEarDamage(-1, max(ear_deaf, 1))
 		else
 			// deafness heals slowly over time, unless ear_damage is over 100
-			if (ear_damage < 100)
+			if(ear_damage < 100)
 				adjustEarDamage(-0.05,-1)
 
 		//Other
@@ -414,13 +414,13 @@
 
 /mob/living/carbon/monkey/proc/handle_regular_hud_updates()
 
-	if (stat == 2)
+	if(stat == 2)
 		sight |= SEE_TURFS
 		sight |= SEE_MOBS
 		sight |= SEE_OBJS
 		see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (stat != 2)
+	else if(stat != 2)
 		sight &= ~SEE_TURFS
 		sight &= ~SEE_MOBS
 		sight &= ~SEE_OBJS
@@ -429,8 +429,8 @@
 		if(see_override)
 			see_invisible = see_override
 
-	if (healths)
-		if (stat != 2)
+	if(healths)
+		if(stat != 2)
 			switch(health)
 				if(100 to INFINITY)
 					healths.icon_state = "health0"
@@ -459,9 +459,9 @@
 		else
 			pullin.icon_state = "pull0"
 
-	if (toxin)	toxin.icon_state = "tox[toxins_alert ? 1 : 0]"
-	if (oxygen) oxygen.icon_state = "oxy[oxygen_alert ? 1 : 0]"
-	if (fire) fire.icon_state = "fire[fire_alert ? 2 : 0]"
+	if(toxin)	toxin.icon_state = "tox[toxins_alert ? 1 : 0]"
+	if(oxygen) oxygen.icon_state = "oxy[oxygen_alert ? 1 : 0]"
+	if(fire) fire.icon_state = "fire[fire_alert ? 2 : 0]"
 	//NOTE: the alerts dont reset when youre out of danger. dont blame me,
 	//blame the person who coded them. Temporary fix added.
 
@@ -503,9 +503,9 @@
 			if(druggy)
 				client.screen += global_hud.druggy
 
-	if (stat != 2)
-		if (machine)
-			if (!( machine.check_eye(src) ))
+	if(stat != 2)
+		if(machine)
+			if(!( machine.check_eye(src) ))
 				reset_view(null)
 		else
 			if(!client.adminobs)
@@ -514,7 +514,7 @@
 	return 1
 
 /mob/living/carbon/monkey/proc/handle_random_events()
-	if (prob(1) && prob(2))
+	if(prob(1) && prob(2))
 		spawn(0)
 			emote("scratch")
 			return

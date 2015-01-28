@@ -9,7 +9,7 @@
 	set invisibility = 0
 	set background = BACKGROUND_ENABLED
 
-	if (src.notransform)
+	if(src.notransform)
 		return
 
 	..()
@@ -22,7 +22,7 @@
 
 		handle_targets()
 
-		if (!ckey)
+		if(!ckey)
 			handle_speech_and_mood()
 
 	var/datum/gas_mixture/environment
@@ -44,9 +44,9 @@
 	if(AIproc || stat == DEAD || client) return
 
 	var/hungry = 0
-	if (nutrition < get_starve_nutrition())
+	if(nutrition < get_starve_nutrition())
 		hungry = 2
-	else if (nutrition < get_grow_nutrition() && prob(25) || nutrition < get_hunger_nutrition())
+	else if(nutrition < get_grow_nutrition() && prob(25) || nutrition < get_hunger_nutrition())
 		hungry = 1
 
 	AIproc = 1
@@ -171,10 +171,10 @@
 
 	if(reagents) reagents.metabolize(src)
 
-	if (reagents.get_reagent_amount("plasma")>=5)
+	if(reagents.get_reagent_amount("plasma")>=5)
 		mutation_chance = min(mutation_chance + 5,50) //Prevents mutation chance going >50%
 		reagents.remove_reagent("plasma", 5)
-	if (reagents.get_reagent_amount("epinephrine")>=5)
+	if(reagents.get_reagent_amount("epinephrine")>=5)
 		mutation_chance = max(mutation_chance - 5,0) //Prevents muation chance going <0%
 		reagents.remove_reagent("epinephrine", 5)
 	src.updatehealth()
@@ -207,19 +207,19 @@
 		adjustCloneLoss(-1)
 		adjustBruteLoss(-1)
 
-	if (src.stat == DEAD)
+	if(src.stat == DEAD)
 		src.lying = 1
 		src.eye_blind = max(eye_blind, 1)
 	else
-		if (src.paralysis || src.stunned || src.weakened || (status_flags && FAKEDEATH)) //Stunned etc.
-			if (src.stunned > 0)
+		if(src.paralysis || src.stunned || src.weakened || (status_flags && FAKEDEATH)) //Stunned etc.
+			if(src.stunned > 0)
 				AdjustStunned(-1)
 				src.stat = 0
-			if (src.weakened > 0)
+			if(src.weakened > 0)
 				AdjustWeakened(-1)
 				src.lying = 0
 				src.stat = 0
-			if (src.paralysis > 0)
+			if(src.paralysis > 0)
 				AdjustParalysis(-1)
 				src.eye_blind = 0
 				src.lying = 0
@@ -229,9 +229,9 @@
 			src.lying = 0
 			src.stat = 0
 
-	if (src.stuttering) src.stuttering = 0
+	if(src.stuttering) src.stuttering = 0
 
-	if (src.eye_blind)
+	if(src.eye_blind)
 		src.eye_blind = 0
 		src.eye_blind = max(eye_blind, 1)
 
@@ -239,13 +239,13 @@
 
 	src.density = !( src.lying )
 
-	if (src.disabilities & BLIND)
+	if(src.disabilities & BLIND)
 		src.eye_blind = max(eye_blind, 1)
 
-	if (src.eye_blurry > 0)
+	if(src.eye_blurry > 0)
 		src.eye_blurry = 0
 
-	if (src.druggy > 0)
+	if(src.druggy > 0)
 		src.druggy = 0
 
 	return 1
@@ -260,7 +260,7 @@
 		if(prob(75))
 			adjustToxLoss(rand(0,5))
 
-	else if (nutrition >= get_grow_nutrition() && amount_grown < 10)
+	else if(nutrition >= get_grow_nutrition() && amount_grown < 10)
 		nutrition -= 20
 		amount_grown++
 
@@ -309,7 +309,7 @@
 
 		if(Target)
 			--target_patience
-			if (target_patience <= 0 || SStun || Discipline || attacked) // Tired of chasing or something draws out attention
+			if(target_patience <= 0 || SStun || Discipline || attacked) // Tired of chasing or something draws out attention
 				target_patience = 0
 				Target = null
 
@@ -317,9 +317,9 @@
 
 		var/hungry = 0 // determines if the slime is hungry
 
-		if (nutrition < get_starve_nutrition())
+		if(nutrition < get_starve_nutrition())
 			hungry = 2
-		else if (nutrition < get_grow_nutrition() && prob(25) || nutrition < get_hunger_nutrition())
+		else if(nutrition < get_grow_nutrition() && prob(25) || nutrition < get_hunger_nutrition())
 			hungry = 1
 
 		if(hungry == 2 && !client) // if a slime is starving, it starts losing its friends
@@ -372,26 +372,26 @@
 								Target = C
 								break
 
-			if (Target)
+			if(Target)
 				target_patience = rand(5,7)
-				if (is_adult)
+				if(is_adult)
 					target_patience += 3
 
 		if(!Target) // If we have no target, we are wandering or following orders
-			if (Leader)
-				if (holding_still)
+			if(Leader)
+				if(holding_still)
 					holding_still = max(holding_still - 1, 0)
 				else if(canmove && isturf(loc))
 					step_to(src, Leader)
 
 			else if(hungry)
-				if (holding_still)
+				if(holding_still)
 					holding_still = max(holding_still - hungry, 0)
 				else if(canmove && isturf(loc) && prob(50))
 					step(src, pick(cardinal))
 
 			else
-				if (holding_still)
+				if(holding_still)
 					holding_still = max(holding_still - 1, 0)
 				else if(canmove && isturf(loc) && prob(33))
 					step(src, pick(cardinal))
@@ -402,85 +402,85 @@
 /mob/living/carbon/slime/proc/handle_speech_and_mood()
 	//Mood starts here
 	var/newmood = ""
-	if (rabid || attacked) newmood = "angry"
-	else if (Target) newmood = "mischevous"
+	if(rabid || attacked) newmood = "angry"
+	else if(Target) newmood = "mischevous"
 
-	if (!newmood)
-		if (Discipline && prob(25))
+	if(!newmood)
+		if(Discipline && prob(25))
 			newmood = "pout"
-		else if (prob(1))
+		else if(prob(1))
 			newmood = pick("sad", ":3", "pout")
 
-	if ((mood == "sad" || mood == ":3" || mood == "pout") && !newmood)
-		if (prob(75)) newmood = mood
+	if((mood == "sad" || mood == ":3" || mood == "pout") && !newmood)
+		if(prob(75)) newmood = mood
 
-	if (newmood != mood) // This is so we don't redraw them every time
+	if(newmood != mood) // This is so we don't redraw them every time
 		mood = newmood
 		regenerate_icons()
 
 	//Speech understanding starts here
 	var/to_say
-	if (speech_buffer.len > 0)
+	if(speech_buffer.len > 0)
 		var/who = speech_buffer[1] // Who said it?
 		var/phrase = speech_buffer[2] // What did they say?
-		if ((findtext(phrase, num2text(number)) || findtext(phrase, "slimes"))) // Talking to us
-			if (findtext(phrase, "hello") || findtext(phrase, "hi"))
+		if((findtext(phrase, num2text(number)) || findtext(phrase, "slimes"))) // Talking to us
+			if(findtext(phrase, "hello") || findtext(phrase, "hi"))
 				to_say = pick("Hello...", "Hi...")
-			else if (findtext(phrase, "follow"))
-				if (Leader)
-					if (Leader == who) // Already following him
+			else if(findtext(phrase, "follow"))
+				if(Leader)
+					if(Leader == who) // Already following him
 						to_say = pick("Yes...", "Lead...", "Following...")
-					else if (Friends[who] > Friends[Leader]) // VIVA
+					else if(Friends[who] > Friends[Leader]) // VIVA
 						Leader = who
 						to_say = "Yes... I follow [who]..."
 					else
 						to_say = "No... I follow [Leader]..."
 				else
-					if (Friends[who] > 2)
+					if(Friends[who] > 2)
 						Leader = who
 						to_say = "I follow..."
 					else // Not friendly enough
 						to_say = pick("No...", "I won't follow...")
-			else if (findtext(phrase, "stop"))
-				if (Victim) // We are asked to stop feeding
-					if (Friends[who] > 4)
+			else if(findtext(phrase, "stop"))
+				if(Victim) // We are asked to stop feeding
+					if(Friends[who] > 4)
 						Victim = null
 						Target = null
-						if (Friends[who] < 7)
+						if(Friends[who] < 7)
 							--Friends[who]
 							to_say = "Grrr..." // I'm angry but I do it
 						else
 							to_say = "Fine..."
-				else if (Target) // We are asked to stop chasing
-					if (Friends[who] > 3)
+				else if(Target) // We are asked to stop chasing
+					if(Friends[who] > 3)
 						Target = null
-						if (Friends[who] < 6)
+						if(Friends[who] < 6)
 							--Friends[who]
 							to_say = "Grrr..." // I'm angry but I do it
 						else
 							to_say = "Fine..."
-				else if (Leader) // We are asked to stop following
-					if (Leader == who)
+				else if(Leader) // We are asked to stop following
+					if(Leader == who)
 						to_say = "Yes... I'll stay..."
 						Leader = null
 					else
-						if (Friends[who] > Friends[Leader])
+						if(Friends[who] > Friends[Leader])
 							Leader = null
 							to_say = "Yes... I'll stop..."
 						else
 							to_say = "No... I'll keep following..."
-			else if (findtext(phrase, "stay"))
-				if (Leader)
-					if (Leader == who)
+			else if(findtext(phrase, "stay"))
+				if(Leader)
+					if(Leader == who)
 						holding_still = Friends[who] * 10
 						to_say = "Yes... Staying..."
-					else if (Friends[who] > Friends[Leader])
+					else if(Friends[who] > Friends[Leader])
 						holding_still = (Friends[who] - Friends[Leader]) * 10
 						to_say = "Yes... Staying..."
 					else
 						to_say = "No... I'll keep following..."
 				else
-					if (Friends[who] > 2)
+					if(Friends[who] > 2)
 						holding_still = Friends[who] * 10
 						to_say = "Yes... Staying..."
 					else
@@ -488,7 +488,7 @@
 		speech_buffer = list()
 
 	//Speech starts here
-	if (to_say)
+	if(to_say)
 		say (to_say)
 	else if(prob(1))
 		emote(pick("bounce","sway","light","vibrate","jiggle"))
@@ -498,82 +498,82 @@
 		var/dead_slimes = 0
 		var/friends_near = list()
 		for (var/mob/living/carbon/M in view(7,src))
-			if (isslime(M))
+			if(isslime(M))
 				++slimes_near
-				if (M.stat == DEAD)
+				if(M.stat == DEAD)
 					++dead_slimes
-			if (M in Friends)
+			if(M in Friends)
 				t += 20
 				friends_near += M
-		if (nutrition < get_hunger_nutrition()) t += 10
-		if (nutrition < get_starve_nutrition()) t += 10
-		if (prob(2) && prob(t))
+		if(nutrition < get_hunger_nutrition()) t += 10
+		if(nutrition < get_starve_nutrition()) t += 10
+		if(prob(2) && prob(t))
 			var/phrases = list()
-			if (Target) phrases += "[Target]... looks tasty..."
-			if (nutrition < get_starve_nutrition())
+			if(Target) phrases += "[Target]... looks tasty..."
+			if(nutrition < get_starve_nutrition())
 				phrases += "So... hungry..."
 				phrases += "Very... hungry..."
 				phrases += "Need... food..."
 				phrases += "Must... eat..."
-			else if (nutrition < get_hunger_nutrition())
+			else if(nutrition < get_hunger_nutrition())
 				phrases += "Hungry..."
 				phrases += "Where is the food?"
 				phrases += "I want to eat..."
 			phrases += "Rawr..."
 			phrases += "Blop..."
 			phrases += "Blorble..."
-			if (rabid || attacked)
+			if(rabid || attacked)
 				phrases += "Hrr..."
 				phrases += "Nhuu..."
 				phrases += "Unn..."
-			if (mood == ":3")
+			if(mood == ":3")
 				phrases += "Purr..."
-			if (attacked)
+			if(attacked)
 				phrases += "Grrr..."
-			if (getToxLoss() > 30)
+			if(getToxLoss() > 30)
 				phrases += "Cold..."
-			if (getToxLoss() > 60)
+			if(getToxLoss() > 60)
 				phrases += "So... cold..."
 				phrases += "Very... cold..."
-			if (getToxLoss() > 90)
+			if(getToxLoss() > 90)
 				phrases += "..."
 				phrases += "C... c..."
-			if (Victim)
+			if(Victim)
 				phrases += "Nom..."
 				phrases += "Tasty..."
-			if (powerlevel > 3) phrases += "Bzzz..."
-			if (powerlevel > 5) phrases += "Zap..."
-			if (powerlevel > 8) phrases += "Zap... Bzz..."
-			if (mood == "sad") phrases += "Bored..."
-			if (slimes_near) phrases += "Brother..."
-			if (slimes_near > 1) phrases += "Brothers..."
-			if (dead_slimes) phrases += "What happened?"
-			if (!slimes_near)
+			if(powerlevel > 3) phrases += "Bzzz..."
+			if(powerlevel > 5) phrases += "Zap..."
+			if(powerlevel > 8) phrases += "Zap... Bzz..."
+			if(mood == "sad") phrases += "Bored..."
+			if(slimes_near) phrases += "Brother..."
+			if(slimes_near > 1) phrases += "Brothers..."
+			if(dead_slimes) phrases += "What happened?"
+			if(!slimes_near)
 				phrases += "Lonely..."
 			for (var/M in friends_near)
 				phrases += "[M]... friend..."
-				if (nutrition < get_hunger_nutrition())
+				if(nutrition < get_hunger_nutrition())
 					phrases += "[M]... feed me..."
 			say (pick(phrases))
 
 /mob/living/carbon/slime/proc/get_max_nutrition() // Can't go above it
-	if (is_adult) return 1200
+	if(is_adult) return 1200
 	else return 1000
 
 /mob/living/carbon/slime/proc/get_grow_nutrition() // Above it we grow, below it we can eat
-	if (is_adult) return 1000
+	if(is_adult) return 1000
 	else return 800
 
 /mob/living/carbon/slime/proc/get_hunger_nutrition() // Below it we will always eat
-	if (is_adult) return 600
+	if(is_adult) return 600
 	else return 500
 
 /mob/living/carbon/slime/proc/get_starve_nutrition() // Below it we will eat before everything else
-	if (is_adult) return 300
+	if(is_adult) return 300
 	else return 200
 
 /mob/living/carbon/slime/proc/will_hunt(var/hunger = -1) // Check for being stopped from feeding and chasing
-	if (hunger == 2 || rabid || attacked) return 1
-	if (Leader) return 0
-	if (holding_still) return 0
+	if(hunger == 2 || rabid || attacked) return 1
+	if(Leader) return 0
+	if(holding_still) return 0
 	return 1

@@ -82,7 +82,7 @@
 		if(ishuman(A))
 
 			var/mob/living/carbon/human/H = A
-			if (istype(H.dna, /datum/dna) && !H.gloves)
+			if(istype(H.dna, /datum/dna) && !H.gloves)
 				fingerprints += md5(H.dna.uni_identity)
 
 		else if(!ismob(A))
@@ -120,7 +120,7 @@
 				found_something = 1
 
 			// Blood
-			if (blood && blood.len)
+			if(blood && blood.len)
 				sleep(30)
 				add_log("<span class='info'><B>Blood:</B></span>")
 				found_something = 1

@@ -14,10 +14,10 @@
 	if(!istype(R))
 		return 0
 	if(istype(user, /mob/living/silicon/ai))
-		if (R.connected_ai != user)
+		if(R.connected_ai != user)
 			return 0
 	if(istype(user, /mob/living/silicon/robot))
-		if (R != user)
+		if(R != user)
 			return 0
 	if(R.scrambledcodes)
 		return 0
@@ -29,7 +29,7 @@
 	interact(user)
 
 /obj/machinery/computer/robotics/interact(var/mob/user as mob)
-	if (src.z > 6)
+	if(src.z > 6)
 		user << "<span class='userdanger'>Unable to establish a connection</span>: \black You're too far away from the station!"
 		return
 	user.set_machine(src)
@@ -42,11 +42,11 @@
 		dat += "[R.name] |"
 		if(R.stat)
 			dat += " Not Responding |"
-		else if (!R.canmove)
+		else if(!R.canmove)
 			dat += " Locked Down |"
 		else
 			dat += " Operating Normally |"
-		if (!R.canmove)
+		if(!R.canmove)
 		else if(R.cell)
 			dat += " Battery Installed ([R.cell.charge]/[R.cell.maxcharge]) |"
 		else
@@ -59,7 +59,7 @@
 			dat += " Slaved to [R.connected_ai.name] |"
 		else
 			dat += " Independent from AI |"
-		if (istype(user, /mob/living/silicon))
+		if(istype(user, /mob/living/silicon))
 			if(issilicon(user) && is_special_character(user) && !R.emagged)
 				dat += "<A href='?src=\ref[src];magbot=\ref[R]'>(<font color=blue><i>Hack</i></font>)</A> "
 		dat += "<A href='?src=\ref[src];stopbot=\ref[R]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A> "
@@ -79,10 +79,10 @@
 	if(..())
 		return
 
-	if (href_list["temp"])
+	if(href_list["temp"])
 		src.temp = null
 
-	else if (href_list["killbot"])
+	else if(href_list["killbot"])
 		if(src.allowed(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["killbot"])
 			if(can_control(usr, R))
@@ -100,7 +100,7 @@
 		else
 			usr << "<span class='danger'>Access Denied.</span>"
 
-	else if (href_list["stopbot"])
+	else if(href_list["stopbot"])
 		if(src.allowed(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["stopbot"])
 			if(can_control(usr, R))
@@ -116,7 +116,7 @@
 		else
 			usr << "<span class='danger'>Access Denied.</span>"
 
-	else if (href_list["magbot"])
+	else if(href_list["magbot"])
 		if(issilicon(usr) && is_special_character(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["magbot"])
 			if(istype(R) && !R.emagged && R.connected_ai == usr && !R.scrambledcodes && can_control(usr, R))

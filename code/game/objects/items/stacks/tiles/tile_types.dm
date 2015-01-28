@@ -18,7 +18,7 @@
 
 /obj/item/stack/tile/attackby(obj/item/W as obj, mob/user as mob)
 
-	if (istype(W, /obj/item/weapon/weldingtool))
+	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 
 		if(get_amount() < 4)
@@ -38,7 +38,7 @@
 				qdel(src)
 				return
 
-			if (mineralType == "metal")
+			if(mineralType == "metal")
 				var/obj/item/stack/sheet/metal/new_item = new(user.loc)
 				new_item.add_to_stacks(user)
 				user.visible_message("<span class='warning'>[user.name] shaped [src] into metal with the weldingtool.</span>", \
@@ -48,7 +48,7 @@
 				src = null
 				var/replace = (user.get_inactive_hand()==R)
 				R.use(4)
-				if (!R && replace)
+				if(!R && replace)
 					user.put_in_hands(new_item)
 
 			else
@@ -62,7 +62,7 @@
 				src = null
 				var/replace = (user.get_inactive_hand()==R)
 				R.use(4)
-				if (!R && replace)
+				if(!R && replace)
 					user.put_in_hands(new_item)
 		return
 	else

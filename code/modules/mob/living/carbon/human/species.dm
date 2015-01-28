@@ -365,7 +365,7 @@
 				return 0
 			return 1
 		if(slot_in_backpack)
-			if (H.back && istype(H.back, /obj/item/weapon/storage/backpack))
+			if(H.back && istype(H.back, /obj/item/weapon/storage/backpack))
 				var/obj/item/weapon/storage/backpack/B = H.back
 				if(B.contents.len < B.storage_slots && I.w_class <= B.max_w_class)
 					return 1
@@ -406,7 +406,7 @@
 			H.update_inv_wear_suit()
 
 	// nutrition decrease and satiety
-	if (H.nutrition > 0 && H.stat != 2)
+	if(H.nutrition > 0 && H.stat != 2)
 		var/hunger_rate = HUNGER_FACTOR
 		if(H.satiety > 0)
 			H.satiety--
@@ -418,7 +418,7 @@
 		H.nutrition = max (0, H.nutrition - hunger_rate)
 
 
-	if (H.nutrition > NUTRITION_LEVEL_FULL)
+	if(H.nutrition > NUTRITION_LEVEL_FULL)
 		if(H.overeatduration < 600) //capped so people don't take forever to unfat
 			H.overeatduration++
 	else
@@ -441,10 +441,10 @@
 			H << "<span class='notice'>You no longer feel vigorous.</span>"
 		H.metabolism_efficiency = 1
 
-	if (H.drowsyness)
+	if(H.drowsyness)
 		H.drowsyness--
 		H.eye_blurry = max(2, H.eye_blurry)
-		if (prob(5))
+		if(prob(5))
 			H.sleeping += 1
 			H.Paralyse(5)
 
@@ -616,14 +616,14 @@
 
 /datum/species/proc/handle_mutations_and_radiation(var/mob/living/carbon/human/H)
 
-	if (H.radiation && !(RADIMMUNE in specflags))
-		if (H.radiation > 100)
+	if(H.radiation && !(RADIMMUNE in specflags))
+		if(H.radiation > 100)
 			H.radiation = 100
 			H.Weaken(10)
 			H << "<span class='danger'>You feel weak.</span>"
 			H.emote("collapse")
 
-		if (H.radiation < 0)
+		if(H.radiation < 0)
 			H.radiation = 0
 
 		else
@@ -886,7 +886,7 @@
 					else if(H.w_uniform)
 						H.w_uniform.add_blood(H)
 						H.update_inv_w_uniform(0)	//updates mob overlays to show the new blood (no refresh)
-					if (H.gloves)
+					if(H.gloves)
 						var/obj/item/clothing/gloves/G = H.gloves
 						G.add_blood(H)
 					else
@@ -1015,7 +1015,7 @@
 
 	if(H.losebreath>0) //Suffocating so do not take a breath
 		H.losebreath--
-		if (prob(10)) //Gasp per 10 ticks? Sounds about right.
+		if(prob(10)) //Gasp per 10 ticks? Sounds about right.
 			spawn H.emote("gasp")
 		if(istype(H.loc, /obj/))
 			var/obj/location_as_object = H.loc
@@ -1121,7 +1121,7 @@
 				H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 				H.failed_last_breath = 1
 			H.oxygen_alert = max(H.oxygen_alert, 1)
-		/*else if (O2_pp > safe_oxygen_max) 		// Too much oxygen (commented this out for now, I'll deal with pressure damage elsewhere I suppose)
+		/*else if(O2_pp > safe_oxygen_max) 		// Too much oxygen (commented this out for now, I'll deal with pressure damage elsewhere I suppose)
 			spawn(0) emote("cough")
 			var/ratio = O2_pp/safe_oxygen_max
 			oxyloss += 5*ratio

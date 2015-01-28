@@ -30,10 +30,10 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/New()
 	..()
 	initial_loc = get_area(loc)
-	if (initial_loc.master)
+	if(initial_loc.master)
 		initial_loc = initial_loc.master
 	area_uid = initial_loc.uid
-	if (!id_tag)
+	if(!id_tag)
 		assign_uid()
 		id_tag = num2text(uid)
 	if(ticker && ticker.current_state == 3)//if the game is running
@@ -97,14 +97,14 @@
 	..()
 	radio_filter_in = frequency==initial(frequency)?(RADIO_FROM_AIRALARM):null
 	radio_filter_out = frequency==initial(frequency)?(RADIO_TO_AIRALARM):null
-	if (frequency)
+	if(frequency)
 		set_frequency(frequency)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/process()
 	..()
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if (!node)
+	if(!node)
 		on = 0
 	//broadcast_status()
 	if(!on)
@@ -119,7 +119,7 @@
 
 			//Take a gas sample
 			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
-			if (isnull(removed)) //in space
+			if(isnull(removed)) //in space
 				return
 
 			//Filter it
@@ -151,7 +151,7 @@
 			parent.update = 1
 
 	else //Just siphoning all air
-		if (air_contents.return_pressure()>=50*ONE_ATMOSPHERE)
+		if(air_contents.return_pressure()>=50*ONE_ATMOSPHERE)
 			return
 
 		var/transfer_moles = environment.total_moles()*(volume_rate/environment.volume)
@@ -238,9 +238,9 @@
 	update_icon_nopipes()
 
 /obj/machinery/atmospherics/unary/vent_scrubber/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-	if (!istype(W, /obj/item/weapon/wrench))
+	if(!istype(W, /obj/item/weapon/wrench))
 		return ..()
-	if (!(stat & NOPOWER) && on)
+	if(!(stat & NOPOWER) && on)
 		user << "<span class='danger'>You cannot unwrench this [src], turn it off first.</span>"
 		return 1
 	return ..()

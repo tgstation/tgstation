@@ -45,8 +45,8 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 			var/obj/item/weapon/W = I
 			dtype = W.damtype
 
-			if (W.throwforce > 0) //If the weapon's throwforce is greater than zero...
-				if (W.throwhitsound) //...and throwhitsound is defined...
+			if(W.throwforce > 0) //If the weapon's throwforce is greater than zero...
+				if(W.throwhitsound) //...and throwhitsound is defined...
 					playsound(loc, W.throwhitsound, volume, 1, -1) //...play the weapon's throwhitsound.
 				else if(W.hitsound) //Otherwise, if the weapon's hitsound is defined...
 					playsound(loc, W.hitsound, volume, 1, -1) //...play the weapon's hitsound.
@@ -163,14 +163,14 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 
 
 /mob/living/attack_slime(mob/living/carbon/slime/M as mob)
-	if (!ticker)
+	if(!ticker)
 		M << "You cannot attack people before the game has started."
 		return
 
 	if(M.Victim)
 		return // can't attack while eating!
 
-	if (stat != DEAD)
+	if(stat != DEAD)
 		M.do_attack_animation(src)
 		visible_message("<span class='danger'>The [M.name] glomps [src]!</span>", \
 				"<span class='userdanger'>The [M.name] glomps [src]!</span>")
@@ -207,20 +207,20 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 
 
 /mob/living/attack_paw(mob/living/carbon/monkey/M as mob)
-	if (!ticker)
+	if(!ticker)
 		M << "You cannot attack people before the game has started."
 		return 0
 
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
+	if(istype(loc, /turf) && istype(loc.loc, /area/start))
 		M << "No attacking people at spawn, you jackass."
 		return 0
 
-	if (M.a_intent == "harm")
+	if(M.a_intent == "harm")
 		if(M.is_muzzled() || (M.wear_mask && M.wear_mask.flags & MASKCOVERSMOUTH))
 			M << "<span class='warning'>You can't bite with your mouth covered!</span>"
 			return 0
 		M.do_attack_animation(src)
-		if (prob(75))
+		if(prob(75))
 			add_logs(M, src, "attacked", admin=0)
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 			visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
@@ -252,20 +252,20 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 	return 0
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
-	if (!ticker)
+	if(!ticker)
 		M << "You cannot attack people before the game has started."
 		return 0
 
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
+	if(istype(loc, /turf) && istype(loc.loc, /area/start))
 		M << "No attacking people at spawn, you jackass."
 		return 0
 
 	switch(M.a_intent)
-		if ("help")
+		if("help")
 			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
 			return 0
 
-		if ("grab")
+		if("grab")
 			grabbedby(M)
 			return 0
 		else

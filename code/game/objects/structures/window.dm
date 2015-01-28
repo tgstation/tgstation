@@ -208,7 +208,7 @@
 				update_nearby_icons()
 				user << (anchored ? "<span class='notice'>You have fastened the window to the floor.</span>" : "<span class='notice'>You have unfastened the window.</span>")
 
-	else if (istype(I, /obj/item/weapon/crowbar) && reinf && (state == 0 || state == 1))
+	else if(istype(I, /obj/item/weapon/crowbar) && reinf && (state == 0 || state == 1))
 		user << (state == 0 ? "<span class='notice'>You begin to lever the window into the frame.</span>" : "<span class='notice'>You begin to lever the window out of the frame.</span>")
 		playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
 		if(do_after(user, 40))

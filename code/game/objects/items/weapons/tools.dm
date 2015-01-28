@@ -56,29 +56,29 @@
 
 /obj/item/weapon/screwdriver/New()
 	switch(pick("red","blue","purple","brown","green","cyan","yellow"))
-		if ("red")
+		if("red")
 			icon_state = "screwdriver2"
 			item_state = "screwdriver"
-		if ("blue")
+		if("blue")
 			icon_state = "screwdriver"
 			item_state = "screwdriver_blue"
-		if ("purple")
+		if("purple")
 			icon_state = "screwdriver3"
 			item_state = "screwdriver_purple"
-		if ("brown")
+		if("brown")
 			icon_state = "screwdriver4"
 			item_state = "screwdriver_brown"
-		if ("green")
+		if("green")
 			icon_state = "screwdriver5"
 			item_state = "screwdriver_green"
-		if ("cyan")
+		if("cyan")
 			icon_state = "screwdriver6"
 			item_state = "screwdriver_cyan"
-		if ("yellow")
+		if("yellow")
 			icon_state = "screwdriver7"
 			item_state = "screwdriver_yellow"
 
-	if (prob(75))
+	if(prob(75))
 		src.pixel_y = rand(0, 16)
 	return
 
@@ -349,7 +349,7 @@
 			user.eye_stat += rand(12, 16)
 	if(user.eye_stat > 10 && safety < 2)
 		user << "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>"
-	if (prob(user.eye_stat - 25 + 1))
+	if(prob(user.eye_stat - 25 + 1))
 		user << "<span class='warning'>You go blind!</span>"
 		user.disabilities |= BLIND
 	else if(prob(user.eye_stat - 15 + 1))
@@ -374,7 +374,7 @@
 /obj/item/weapon/weldingtool/proc/flamethrower_rods(obj/item/I, mob/user)
 	if(!status)
 		var/obj/item/stack/rods/R = I
-		if (R.use(1))
+		if(R.use(1))
 			var/obj/item/weapon/flamethrower/F = new /obj/item/weapon/flamethrower(user.loc)
 			user.unEquip(src)
 			loc = F

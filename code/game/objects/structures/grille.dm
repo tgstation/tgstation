@@ -159,9 +159,9 @@
 
 //window placing begin
 	else if(istype(W, /obj/item/stack/sheet/rglass) || istype(W, /obj/item/stack/sheet/glass))
-		if (!destroyed)
+		if(!destroyed)
 			var/obj/item/stack/ST = W
-			if (ST.get_amount() < 2)
+			if(ST.get_amount() < 2)
 				user << "<span class='warning'>You need at least two sheets of glass for that.</span>"
 				return
 			var/dir_to_set = SOUTHWEST

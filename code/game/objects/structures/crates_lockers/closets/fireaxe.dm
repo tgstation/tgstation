@@ -22,7 +22,7 @@
 	if(fireaxe)
 		hasaxe = 1
 
-	if (isrobot(user) || src.locked)
+	if(isrobot(user) || src.locked)
 		if(istype(O, /obj/item/device/multitool))
 			user << "<span class = 'caution'> Resetting circuitry...</span>"
 			playsound(user, 'sound/machines/lockreset.ogg', 50, 1)
@@ -54,7 +54,7 @@
 					src.localopened = 1
 			update_icon()
 		return
-	if (istype(O, /obj/item/weapon/twohanded/fireaxe) && src.localopened)
+	if(istype(O, /obj/item/weapon/twohanded/fireaxe) && src.localopened)
 		if(!fireaxe)
 			if(O:wielded)
 				user << "<span class = 'warning'> Unwield the axe first.</span>"
@@ -188,7 +188,7 @@
 	set name = "Open/Close"
 	set category = "Object"
 
-	if (isrobot(usr) || src.locked || src.smashed)
+	if(isrobot(usr) || src.locked || src.smashed)
 		if(src.locked)
 			usr << "<span class='danger'>The cabinet won't budge!</span>"
 		else if(src.smashed)
@@ -202,10 +202,10 @@
 	set name = "Remove Fire Axe"
 	set category = "Object"
 
-	if (isrobot(usr))
+	if(isrobot(usr))
 		return
 
-	if (localopened)
+	if(localopened)
 		if(fireaxe)
 			usr.put_in_hands(fireaxe)
 			fireaxe = null

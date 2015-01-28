@@ -183,7 +183,7 @@ Filter types:
 		onclose(user, "atmo_filter")
 		return
 
-	if (src.temp)
+	if(src.temp)
 		dat = text("<TT>[]</TT><BR><BR><A href='?src=\ref[];temp=1'>Clear Screen</A>", src.temp, src)
 	//else
 	//	src.on != src.on
@@ -199,7 +199,7 @@ Filter types:
 	src.add_fingerprint(usr)
 	if(href_list["filterset"])
 		src.filter_type = text2num(href_list["filterset"])
-	if (href_list["temp"])
+	if(href_list["temp"])
 		src.temp = null
 	if(href_list["set_press"])
 		target_pressure = max(0, min(4500, safe_input("Pressure control", "Enter new output pressure (0-4500kPa)", target_pressure)))
@@ -209,7 +209,7 @@ Filter types:
 	src.updateUsrDialog()
 /*
 	for(var/mob/M in viewers(1, src))
-		if ((M.client && M.machine == src))
+		if((M.client && M.machine == src))
 			src.attack_hand(M)
 */
 	return

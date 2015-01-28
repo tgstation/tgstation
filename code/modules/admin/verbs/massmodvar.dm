@@ -126,7 +126,7 @@
 
 	var/original_name
 
-	if (!istype(O, /atom))
+	if(!istype(O, /atom))
 		original_name = "\ref[O] ([O])"
 	else
 		original_name = O:name
@@ -138,33 +138,33 @@
 			if(method)
 				if(istype(O, /mob))
 					for(var/mob/M in mob_list)
-						if ( istype(M , O.type) )
+						if( istype(M , O.type) )
 							M.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /obj))
 					for(var/obj/A in world)
-						if ( istype(A , O.type) )
+						if( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /turf))
 					for(var/turf/A in world)
-						if ( istype(A , O.type) )
+						if( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 
 			else
 				if(istype(O, /mob))
 					for(var/mob/M in mob_list)
-						if (M.type == O.type)
+						if(M.type == O.type)
 							M.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /obj))
 					for(var/obj/A in world)
-						if (A.type == O.type)
+						if(A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /turf))
 					for(var/turf/A in world)
-						if (A.type == O.type)
+						if(A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 
 		if("edit referenced object")
@@ -178,32 +178,32 @@
 			if(method)
 				if(istype(O, /mob))
 					for(var/mob/M in mob_list)
-						if ( istype(M , O.type) )
+						if( istype(M , O.type) )
 							M.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /obj))
 					for(var/obj/A in world)
-						if ( istype(A , O.type) )
+						if( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /turf))
 					for(var/turf/A in world)
-						if ( istype(A , O.type) )
+						if( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 			else
 				if(istype(O, /mob))
 					for(var/mob/M in mob_list)
-						if (M.type == O.type)
+						if(M.type == O.type)
 							M.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /obj))
 					for(var/obj/A in world)
-						if (A.type == O.type)
+						if(A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /turf))
 					for(var/turf/A in world)
-						if (A.type == O.type)
+						if(A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 
 		if("num")
@@ -219,7 +219,7 @@
 			if(method)
 				if(istype(O, /mob))
 					for(var/mob/M in mob_list)
-						if ( istype(M , O.type) )
+						if( istype(M , O.type) )
 							if(variable=="luminosity")
 								M.SetLuminosity(new_value)
 							else
@@ -227,7 +227,7 @@
 
 				else if(istype(O, /obj))
 					for(var/obj/A in world)
-						if ( istype(A , O.type) )
+						if( istype(A , O.type) )
 							if(variable=="luminosity")
 								A.SetLuminosity(new_value)
 							else
@@ -235,7 +235,7 @@
 
 				else if(istype(O, /turf))
 					for(var/turf/A in world)
-						if ( istype(A , O.type) )
+						if( istype(A , O.type) )
 							if(variable=="luminosity")
 								A.SetLuminosity(new_value)
 							else
@@ -244,7 +244,7 @@
 			else
 				if(istype(O, /mob))
 					for(var/mob/M in mob_list)
-						if (M.type == O.type)
+						if(M.type == O.type)
 							if(variable=="luminosity")
 								M.SetLuminosity(new_value)
 							else
@@ -252,7 +252,7 @@
 
 				else if(istype(O, /obj))
 					for(var/obj/A in world)
-						if (A.type == O.type)
+						if(A.type == O.type)
 							if(variable=="luminosity")
 								A.SetLuminosity(new_value)
 							else
@@ -260,7 +260,7 @@
 
 				else if(istype(O, /turf))
 					for(var/turf/A in world)
-						if (A.type == O.type)
+						if(A.type == O.type)
 							if(variable=="luminosity")
 								A.SetLuminosity(new_value)
 							else
@@ -274,32 +274,32 @@
 			if(method)
 				if(istype(O, /mob))
 					for(var/mob/M in mob_list)
-						if ( istype(M , O.type) )
+						if( istype(M , O.type) )
 							M.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /obj))
 					for(var/obj/A in world)
-						if ( istype(A , O.type) )
+						if( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /turf))
 					for(var/turf/A in world)
-						if ( istype(A , O.type) )
+						if( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 			else
 				if(istype(O, /mob))
 					for(var/mob/M in mob_list)
-						if (M.type == O.type)
+						if(M.type == O.type)
 							M.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /obj))
 					for(var/obj/A in world)
-						if (A.type == O.type)
+						if(A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /turf))
 					for(var/turf/A in world)
-						if (A.type == O.type)
+						if(A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 
 		if("file")
@@ -310,32 +310,32 @@
 			if(method)
 				if(istype(O, /mob))
 					for(var/mob/M in mob_list)
-						if ( istype(M , O.type) )
+						if( istype(M , O.type) )
 							M.vars[variable] = O.vars[variable]
 
 				else if(istype(O.type, /obj))
 					for(var/obj/A in world)
-						if ( istype(A , O.type) )
+						if( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 
 				else if(istype(O.type, /turf))
 					for(var/turf/A in world)
-						if ( istype(A , O.type) )
+						if( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 			else
 				if(istype(O, /mob))
 					for(var/mob/M in mob_list)
-						if (M.type == O.type)
+						if(M.type == O.type)
 							M.vars[variable] = O.vars[variable]
 
 				else if(istype(O.type, /obj))
 					for(var/obj/A in world)
-						if (A.type == O.type)
+						if(A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 
 				else if(istype(O.type, /turf))
 					for(var/turf/A in world)
-						if (A.type == O.type)
+						if(A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 
 		if("icon")
@@ -345,33 +345,33 @@
 			if(method)
 				if(istype(O, /mob))
 					for(var/mob/M in mob_list)
-						if ( istype(M , O.type) )
+						if( istype(M , O.type) )
 							M.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /obj))
 					for(var/obj/A in world)
-						if ( istype(A , O.type) )
+						if( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /turf))
 					for(var/turf/A in world)
-						if ( istype(A , O.type) )
+						if( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 
 			else
 				if(istype(O, /mob))
 					for(var/mob/M in mob_list)
-						if (M.type == O.type)
+						if(M.type == O.type)
 							M.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /obj))
 					for(var/obj/A in world)
-						if (A.type == O.type)
+						if(A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /turf))
 					for(var/turf/A in world)
-						if (A.type == O.type)
+						if(A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 
 	world.log << "### MassVarEdit by [src]: [O.type] [variable]=[html_encode("[O.vars[variable]]")]"

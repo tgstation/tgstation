@@ -50,7 +50,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	..()
-	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+	if(istype(O, /obj/item/device/analyzer/plant_analyzer))
 		var/msg
 		msg = "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>\n"
 		switch(plant_type)
@@ -74,7 +74,7 @@
 
 /obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	..()
-	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+	if(istype(O, /obj/item/device/analyzer/plant_analyzer))
 		var/msg
 		msg = "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>\n"
 		switch(plant_type)
@@ -164,7 +164,7 @@
 	..()
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = W
-		if (C.use(5))
+		if(C.use(5))
 			user << "<span class='notice'>You add some cable to the potato and slide it inside the battery encasing.</span>"
 			var/obj/item/weapon/stock_parts/cell/potato/pocell = new /obj/item/weapon/stock_parts/cell/potato(user.loc)
 			pocell.maxcharge = src.potency * 10
@@ -378,7 +378,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/apple/gold/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	. = ..()
-	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+	if(istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "<span class='info'>- Mineral Content: <i>[reagents.get_reagent_amount("gold")]%</i></span>"
 
 
@@ -493,7 +493,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/chili/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	. = ..()
-	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+	if(istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "<span class='info'>- Capsaicin: <i>[reagents.get_reagent_amount("capsaicin")]%</i></span>"
 
 
@@ -512,7 +512,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	. = ..()
-	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+	if(istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "<span class='info'>- Frostoil: <i>[reagents.get_reagent_amount("frostoil")]%</i></span>"
 
 
@@ -532,7 +532,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	. = ..()
-	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+	if(istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "<span class='info'>- Capsaicin: <i>[reagents.get_reagent_amount("capsaicin")]%</i></span>"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli/attack_hand(mob/user as mob)
@@ -713,7 +713,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	reagents.add_reagent("lube", 1 + round((potency / 5), 1))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue/Crossed(AM as mob|obj)
-	if (istype(AM, /mob/living/carbon))
+	if(istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
 		var/stun = Clamp(potency / 10, 1, 10)
 		var/weaken = Clamp(potency / 20, 0.5, 5)
@@ -849,7 +849,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	. = ..()
-	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+	if(istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "<span class='info'>- Anti-Toxin: <i>[reagents.get_reagent_amount("charcoal")]%</i></span>"
 		user << "<span class='info'>- Morphine: <i>[reagents.get_reagent_amount("morphine")]%</i></span>"
 
@@ -868,7 +868,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	. = ..()
-	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+	if(istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "<span class='info'>- Amatoxins: <i>[reagents.get_reagent_amount("amatoxin")]%</i></span>"
 		user << "<span class='info'>- Mushroom Hallucinogen: <i>[reagents.get_reagent_amount("mushroomhallucinogen")]%</i></span>"
 
@@ -887,7 +887,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	. = ..()
-	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+	if(istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "<span class='info'>- Amatoxins: <i>[reagents.get_reagent_amount("amatoxin")]%</i></span>"
 		user << "<span class='info'>- Mushroom Hallucinogen: <i>[reagents.get_reagent_amount("mushroomhallucinogen")]%</i></span>"
 
@@ -905,7 +905,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	. = ..()
-	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+	if(istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "<span class='info'>- Mushroom Hallucinogen: <i>[reagents.get_reagent_amount("mushroomhallucinogen")]%</i></span>"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet

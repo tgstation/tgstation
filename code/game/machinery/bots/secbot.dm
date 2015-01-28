@@ -190,7 +190,7 @@ Auto Patrol: []"},
 		icon_state = "secbot[on]"
 
 /obj/machinery/bot/secbot/bot_process()
-	if (!..())
+	if(!..())
 		return
 
 	switch(mode)
@@ -277,7 +277,7 @@ Auto Patrol: []"},
 				return
 
 		if(BOT_ARREST)
-			if (!target)
+			if(!target)
 				anchored = 0
 				mode = BOT_IDLE
 				last_found = world.time

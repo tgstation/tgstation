@@ -16,11 +16,11 @@
 		return
 	if(SSshuttle.emergency.timeLeft() < 11)
 		return
-	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if (istype(W, /obj/item/device/pda))
+	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+		if(istype(W, /obj/item/device/pda))
 			var/obj/item/device/pda/pda = W
 			W = pda.id
-		if (!W:access) //no access
+		if(!W:access) //no access
 			user << "The access level of [W:registered_name]\'s card is not high enough. "
 			return
 
@@ -87,7 +87,7 @@
 		return prob(60)
 
 	var/obj/structure/stool/bed/B = A
-	if (istype(A, /obj/structure/stool/bed) && B.buckled_mob)//if it's a bed/chair and someone is buckled, it will not pass
+	if(istype(A, /obj/structure/stool/bed) && B.buckled_mob)//if it's a bed/chair and someone is buckled, it will not pass
 		return 0
 
 	else if(istype(A, /mob/living)) // You Shall Not Pass!
@@ -99,13 +99,13 @@
 /obj/structure/plasticflaps/ex_act(severity)
 	..()
 	switch(severity)
-		if (1)
+		if(1)
 			qdel(src)
-		if (2)
-			if (prob(50))
+		if(2)
+			if(prob(50))
 				qdel(src)
-		if (3)
-			if (prob(5))
+		if(3)
+			if(prob(5))
 				qdel(src)
 
 /obj/structure/plasticflaps/mining //A specific type for mining that doesn't allow airflow because of them damn crates

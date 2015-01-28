@@ -84,7 +84,7 @@ var/intercom_range_display_status = 0
 			if(!(locate(/obj/structure/grille,T)))
 				var/window_check = 0
 				for(var/obj/structure/window/W in T)
-					if (W.dir == turn(C1.dir,180) || W.dir in list(5,6,9,10) )
+					if(W.dir == turn(C1.dir,180) || W.dir in list(5,6,9,10) )
 						window_check = 1
 						break
 				if(!window_check)
@@ -110,7 +110,7 @@ var/intercom_range_display_status = 0
 		for(var/obj/item/device/radio/intercom/I in world)
 			for(var/turf/T in orange(7,I))
 				var/obj/effect/debugging/marker/F = new/obj/effect/debugging/marker(T)
-				if (!(F in view(7,I.loc)))
+				if(!(F in view(7,I.loc)))
 					qdel(F)
 	feedback_add_details("admin_verb","mIRD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

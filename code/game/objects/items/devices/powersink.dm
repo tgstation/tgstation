@@ -134,7 +134,7 @@
 							A.charging = 1 // It's no longer full
 
 	if(power_drained > max_power * 0.95)
-		if (!admins_warned)
+		if(!admins_warned)
 			admins_warned = 1
 			message_admins("Power sink at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) is 95% full. Explosion imminent.")
 		playsound(src, 'sound/effects/screech.ogg', 100, 1, 1)

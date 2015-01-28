@@ -50,13 +50,13 @@
 
 /obj/machinery/gibber/update_icon()
 	overlays.Cut()
-	if (dirty)
+	if(dirty)
 		src.overlays += image('icons/obj/kitchen.dmi', "grbloody")
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if (!occupant)
+	if(!occupant)
 		src.overlays += image('icons/obj/kitchen.dmi', "grjam")
-	else if (operating)
+	else if(operating)
 		src.overlays += image('icons/obj/kitchen.dmi', "gruse")
 	else
 		src.overlays += image('icons/obj/kitchen.dmi', "gridle")
@@ -84,7 +84,7 @@
 	if(default_unfasten_wrench(user, G))
 		return
 
-	if (!( istype(G, /obj/item/weapon/grab)) || !(istype(G.affecting, /mob/living/carbon/human)))
+	if(!( istype(G, /obj/item/weapon/grab)) || !(istype(G.affecting, /mob/living/carbon/human)))
 		user << "<span class='danger'>This item is not suitable for the gibber!</span>"
 		return
 	if(G.affecting.abiotic(1))
@@ -165,7 +165,7 @@
 			var/turf/Tx = locate(src.x - i, src.y, src.z)
 			meatslab.loc = src.loc
 			meatslab.throw_at(Tx,i,3)
-			if (!Tx.density)
+			if(!Tx.density)
 				new /obj/effect/decal/cleanable/blood/gibs(Tx,i)
 		src.operating = 0
 		update_icon()

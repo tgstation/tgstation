@@ -136,7 +136,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		return
 	var/turf/T = mob.loc
 
-	if (!( istype(T, /turf) ))
+	if(!( istype(T, /turf) ))
 		return
 
 	var/datum/gas_mixture/env = T.return_air()
@@ -372,13 +372,13 @@ var/list/TYPES_SHORTCUTS = list(
 
 var/global/list/g_fancy_list_of_types = null
 /proc/get_fancy_list_of_types()
-	if (isnull(g_fancy_list_of_types)) //init
+	if(isnull(g_fancy_list_of_types)) //init
 		var/list/temp = sortList(typesof(/atom) - typesof(/area) - /atom - /atom/movable)
 		g_fancy_list_of_types = new(temp.len)
 		for(var/type in temp)
 			var/typename = "[type]"
 			for (var/tn in TYPES_SHORTCUTS)
-				if (copytext(typename,1, length("[tn]/")+1)=="[tn]/" /*findtextEx(typename,"[tn]/",1,2)*/ )
+				if(copytext(typename,1, length("[tn]/")+1)=="[tn]/" /*findtextEx(typename,"[tn]/",1,2)*/ )
 					typename = TYPES_SHORTCUTS[tn]+copytext(typename,length("[tn]/"))
 					break
 			g_fancy_list_of_types[typename] = type
@@ -398,7 +398,7 @@ var/global/list/g_fancy_list_of_types = null
 	set name = "Del-All"
 
 	var/list/matches = get_fancy_list_of_types()
-	if (!isnull(object) && object!="")
+	if(!isnull(object) && object!="")
 		matches = filter_fancy_list(matches, object)
 
 	if(matches.len==0)
@@ -428,10 +428,10 @@ var/global/list/g_fancy_list_of_types = null
 	set category = "Admin"
 	set name = "Grant Full Access"
 
-	if (!ticker)
+	if(!ticker)
 		alert("Wait until the game starts")
 		return
-	if (istype(M, /mob/living/carbon/human))
+	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/worn = H.wear_id
 		var/obj/item/weapon/card/id/id = null
@@ -605,11 +605,11 @@ var/global/list/g_fancy_list_of_types = null
 		"marisa wizard",
 		)
 	var/dresscode = input("Select dress for [M]", "Robust quick dress shop") as null|anything in dresspacks
-	if (isnull(dresscode))
+	if(isnull(dresscode))
 		return
 
 	var/datum/job/jobdatum
-	if (dresscode == "as job...")
+	if(dresscode == "as job...")
 		var/jobname = input("Select job", "Robust quick dress shop") as null|anything in get_all_jobs()
 		if(isnull(jobname))
 			return
@@ -618,20 +618,20 @@ var/global/list/g_fancy_list_of_types = null
 
 	feedback_add_details("admin_verb","SEQ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	for (var/obj/item/I in M)
-		if (istype(I, /obj/item/weapon/implant))
+		if(istype(I, /obj/item/weapon/implant))
 			continue
 		qdel(I)
 	switch(dresscode)
-		if ("naked")
+		if("naked")
 			//do nothing
 
-		if ("as job...")
+		if("as job...")
 			if(jobdatum)
 				dresscode = jobdatum.title
 				M.job = jobdatum.title
 				jobdatum.equip(M)
 
-		if ("standard space gear")
+		if("standard space gear")
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(M), slot_shoes)
 
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(M), slot_w_uniform)
@@ -643,8 +643,8 @@ var/global/list/g_fancy_list_of_types = null
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/breath(M), slot_wear_mask)
 			J.Topic(null, list("stat" = 1))
 
-		if ("tournament standard red","tournament standard green") //we think stunning weapon is too overpowered to use it on tournaments. --rastaf0
-			if (dresscode=="tournament standard red")
+		if("tournament standard red","tournament standard green") //we think stunning weapon is too overpowered to use it on tournaments. --rastaf0
+			if(dresscode=="tournament standard red")
 				M.equip_to_slot_or_del(new /obj/item/clothing/under/color/red(M), slot_w_uniform)
 			else
 				M.equip_to_slot_or_del(new /obj/item/clothing/under/color/green(M), slot_w_uniform)
@@ -658,7 +658,7 @@ var/global/list/g_fancy_list_of_types = null
 			M.equip_to_slot_or_del(new /obj/item/weapon/grenade/smokebomb(M), slot_r_store)
 
 
-		if ("tournament gangster") //gangster are supposed to fight each other. --rastaf0
+		if("tournament gangster") //gangster are supposed to fight each other. --rastaf0
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/det(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(M), slot_shoes)
 
@@ -669,7 +669,7 @@ var/global/list/g_fancy_list_of_types = null
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile(M), slot_r_hand)
 			M.equip_to_slot_or_del(new /obj/item/ammo_box/c10mm(M), slot_l_store)
 
-		if ("tournament chef") //Steven Seagal FTW
+		if("tournament chef") //Steven Seagal FTW
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chef(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/chef(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(M), slot_shoes)
@@ -680,7 +680,7 @@ var/global/list/g_fancy_list_of_types = null
 			M.equip_to_slot_or_del(new /obj/item/weapon/kitchenknife(M), slot_r_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/kitchenknife(M), slot_s_store)
 
-		if ("tournament janitor")
+		if("tournament janitor")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/janitor(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(M), slot_shoes)
 			var/obj/item/weapon/storage/backpack/backpack = new(M)
@@ -703,7 +703,7 @@ var/global/list/g_fancy_list_of_types = null
 			M.equip_to_slot_or_del(new /obj/item/stack/tile/plasteel(M), slot_in_backpack)
 			M.equip_to_slot_or_del(new /obj/item/stack/tile/plasteel(M), slot_in_backpack)
 
-		if ("laser tag red")
+		if("laser tag red")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/red(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/red(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/red(M), slot_gloves)
@@ -714,7 +714,7 @@ var/global/list/g_fancy_list_of_types = null
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box(M), slot_in_backpack)
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/laser/redtag(M), slot_s_store)
 
-		if ("laser tag blue")
+		if("laser tag blue")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/blue(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/blue(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/blue(M), slot_gloves)
@@ -725,14 +725,14 @@ var/global/list/g_fancy_list_of_types = null
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box(M), slot_in_backpack)
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/laser/bluetag(M), slot_s_store)
 
-		if ("pirate")
+		if("pirate")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/pirate(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/brown(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/bandana(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/pirate(M), slot_r_hand)
 
-		if ("space pirate")
+		if("space pirate")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/pirate(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/brown(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/pirate(M), slot_wear_suit)

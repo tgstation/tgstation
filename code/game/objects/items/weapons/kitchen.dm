@@ -28,7 +28,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/weapon/kitchen/utensil/New()
-	if (prob(60))
+	if(prob(60))
 		src.pixel_y = rand(0, 4)
 	return
 
@@ -56,7 +56,7 @@
 	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head")
 		return ..()
 
-	if (src.icon_state == "forkloaded") //This is a poor way of handling it, but a proper rewrite of the fork to allow for a more varied foodening can happen when I'm in the mood. --NEO
+	if(src.icon_state == "forkloaded") //This is a poor way of handling it, but a proper rewrite of the fork to allow for a more varied foodening can happen when I'm in the mood. --NEO
 		if(M == user)
 			M.visible_message("<span class='notice'>[user] eats a delicious forkful of omelette!</span>")
 			M.reagents.add_reagent("nutriment", 1)

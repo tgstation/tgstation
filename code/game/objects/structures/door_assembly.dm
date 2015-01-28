@@ -449,8 +449,8 @@ obj/structure/door_assembly/New()
 					return
 				user << "<span class='notice'> You've disassembled the airlock assembly.</span>"
 				new /obj/item/stack/sheet/metal(get_turf(src), 4)
-				if (mineral)
-					if (mineral == "glass")
+				if(mineral)
+					if(mineral == "glass")
 						new /obj/item/stack/sheet/rglass(get_turf(src))
 					else
 						var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
@@ -466,7 +466,7 @@ obj/structure/door_assembly/New()
 			if(!D.sub_door)
 				door_check = 0
 				break
-		
+
 		if(door_check)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user.visible_message("<span class='warning'>[user] secures the airlock assembly to the floor.</span>", \
@@ -496,7 +496,7 @@ obj/structure/door_assembly/New()
 
 	else if(istype(W, /obj/item/stack/cable_coil) && state == 0 && anchored )
 		var/obj/item/stack/cable_coil/C = W
-		if (C.get_amount() < 1)
+		if(C.get_amount() < 1)
 			user << "<span class='warning'>You need one length of cable to wire the airlock assembly.</span>"
 			return
 		user.visible_message("<span class='warning'>[user] wires the airlock assembly.</span>", \
@@ -553,7 +553,7 @@ obj/structure/door_assembly/New()
 			src.state = 1
 			src.name = "wired airlock assembly"
 			var/obj/item/weapon/airlock_electronics/ae
-			if (!electronics)
+			if(!electronics)
 				ae = new/obj/item/weapon/airlock_electronics( src.loc )
 			else
 				ae = electronics

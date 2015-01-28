@@ -311,7 +311,7 @@
 
 
 /obj/structure/table/holotable/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
+	if(istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(G.state < GRAB_AGGRESSIVE)
 			user << "<span class='danger'> You need a better grip to do that!</span>"
@@ -322,7 +322,7 @@
 		qdel(W)
 		return
 
-	if (istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/weapon/wrench))
 		user << "It's a holotable!  There are no bolts!"
 		return
 
@@ -378,7 +378,7 @@
 
 /obj/item/weapon/holo/esword/attack_self(mob/living/user as mob)
 	active = !active
-	if (active)
+	if(active)
 		force = 30
 		icon_state = "sword[item_color]"
 		w_class = 4
@@ -430,7 +430,7 @@
 	throwpass = 1
 
 /obj/structure/holohoop/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
+	if(istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(G.state < GRAB_AGGRESSIVE)
 			user << "<span class='danger'>You need a better grip to do that!</span>"
@@ -440,13 +440,13 @@
 		visible_message("<span class='danger'>[G.assailant] dunks [G.affecting] into \the [src]!</span>", 3)
 		qdel(W)
 		return
-	else if (istype(W, /obj/item) && get_dist(src,user)<2)
+	else if(istype(W, /obj/item) && get_dist(src,user)<2)
 		user.drop_item(src)
 		visible_message("<span class='warning'> [user] dunks [W] into \the [src]!</span>", 3)
 		return
 
 /obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=0)
-	if (istype(mover,/obj/item) && mover.throwing)
+	if(istype(mover,/obj/item) && mover.throwing)
 		var/obj/item/I = mover
 		if(istype(I, /obj/item/projectile))
 			return
@@ -511,7 +511,7 @@
 	var/numready = 0
 	for(var/obj/machinery/readybutton/button in currentarea)
 		numbuttons++
-		if (button.ready)
+		if(button.ready)
 			numready++
 
 	if(numbuttons == numready)

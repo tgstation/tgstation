@@ -47,7 +47,7 @@
 				if(istype(src, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = src
 					var/organ = H.get_organ("chest")
-					if (istype(organ, /obj/item/organ/limb))
+					if(istype(organ, /obj/item/organ/limb))
 						var/obj/item/organ/limb/temp = organ
 						if(temp.take_damage(d, 0))
 							H.update_damage_overlays(0)
@@ -75,7 +75,7 @@
 
 /mob/living/carbon/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0)
 	shock_damage *= siemens_coeff
-	if (shock_damage<1)
+	if(shock_damage<1)
 		return 0
 	src.take_overall_damage(0,shock_damage)
 	//src.burn_skin(shock_damage)
@@ -111,7 +111,7 @@
 		else
 			hud_used.l_hand_hud_object.icon_state = "hand_l_inactive"
 			hud_used.r_hand_hud_object.icon_state = "hand_r_active"
-	/*if (!( src.hand ))
+	/*if(!( src.hand ))
 		src.hands.dir = NORTH
 	else
 		src.hands.dir = SOUTH*/
@@ -292,7 +292,7 @@
 	return 1
 
 /mob/living/carbon/restrained()
-	if (handcuffed)
+	if(handcuffed)
 		return 1
 	return
 

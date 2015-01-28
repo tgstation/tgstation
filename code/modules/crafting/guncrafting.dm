@@ -71,7 +71,7 @@
 	..()
 	if(istype(I, /obj/item/stack/packageWrap))
 		var/obj/item/stack/packageWrap/C = I
-		if (C.use(5))
+		if(C.use(5))
 			var/obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised/W = new /obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised
 			user.unEquip(src)
 			user.put_in_hands(W)

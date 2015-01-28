@@ -27,11 +27,11 @@ datum/reagent/consumable/ethanol/on_mob_life(var/mob/living/M as mob)
 	data++
 	M.jitteriness = max(M.jitteriness-5,0)
 	if(data >= boozepwr)
-		if (!M.stuttering) M.stuttering = 1
+		if(!M.stuttering) M.stuttering = 1
 		M.stuttering += 4
 		M.Dizzy(5)
 	if(data >= boozepwr*2.5 && prob(33))
-		if (!M.confused) M.confused = 1
+		if(!M.confused) M.confused = 1
 		M.confused += 3
 	if(data >= boozepwr*10 && prob(33))
 		M.adjustToxLoss(2)
@@ -105,7 +105,7 @@ datum/reagent/consumable/ethanol/thirteenloko
 datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(var/mob/living/M as mob)
 	M.drowsyness = max(0,M.drowsyness-7)
 	M.sleeping = max(0,M.sleeping-2)
-	if (M.bodytemperature > 310)
+	if(M.bodytemperature > 310)
 		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
 	..()
@@ -304,7 +304,7 @@ datum/reagent/consumable/ethanol/toxins_special
 	boozepwr = 15
 
 datum/reagent/consumable/ethanol/toxins_special/on_mob_life(var/mob/living/M as mob)
-	if (M.bodytemperature < 330)
+	if(M.bodytemperature < 330)
 		M.bodytemperature = min(330, M.bodytemperature + (15 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 	..()
 	return
@@ -411,7 +411,7 @@ datum/reagent/consumable/ethanol/antifreeze
 	boozepwr = 25
 
 datum/reagent/consumable/ethanol/antifreeze/on_mob_life(var/mob/living/M as mob)
-	if (M.bodytemperature < 330)
+	if(M.bodytemperature < 330)
 		M.bodytemperature = min(330, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 	..()
 	return
@@ -473,7 +473,7 @@ datum/reagent/consumable/ethanol/sbiten
 	boozepwr = 35
 
 datum/reagent/consumable/ethanol/sbiten/on_mob_life(var/mob/living/M as mob)
-	if (M.bodytemperature < 360)
+	if(M.bodytemperature < 360)
 		M.bodytemperature = min(360, M.bodytemperature + (50 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 	..()
 	return

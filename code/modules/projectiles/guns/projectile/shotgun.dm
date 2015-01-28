@@ -59,7 +59,7 @@
 
 /obj/item/weapon/gun/projectile/shotgun/examine(mob/user)
 	..()
-	if (chambered)
+	if(chambered)
 		user << "A [chambered.BB ? "live" : "spent"] one is in the chamber."
 
 // COMBAT SHOTGUN //
@@ -160,7 +160,7 @@
 		CB.loc = get_turf(src.loc)
 		CB.update_icon()
 		num_unloaded++
-	if (num_unloaded)
+	if(num_unloaded)
 		user << "<span class = 'notice'>You break open \the [src] and unload [num_unloaded] shell\s.</span>"
 	else
 		user << "<span class='notice'>[src] is empty.</span>"

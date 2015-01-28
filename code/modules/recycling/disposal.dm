@@ -152,7 +152,7 @@
 		stuff_mob_in(target, user)
 
 /obj/machinery/disposal/proc/stuff_mob_in(mob/target, mob/user)
-	if (!user.canUseTopic(target) || istype(user, /mob/living/silicon/ai))
+	if(!user.canUseTopic(target) || istype(user, /mob/living/silicon/ai))
 		return
 	src.add_fingerprint(user)
 	if(user == target)
@@ -162,7 +162,7 @@
 		target.visible_message("<span class='danger'>[user] starts putting [target] into [src].</span>", \
 								"<span class='userdanger'>[user] starts putting [target] into [src]!</span>")
 	if(do_mob(usr, target, 20))
-		if (target.client)
+		if(target.client)
 			target.client.perspective = EYE_PERSPECTIVE
 			target.client.eye = src
 		target.loc = src
@@ -195,7 +195,7 @@
 // leave the disposal
 /obj/machinery/disposal/proc/go_out(mob/user)
 
-	if (user.client)
+	if(user.client)
 		user.client.eye = user.client.mob
 		user.client.perspective = MOB_PERSPECTIVE
 	user.loc = src.loc
@@ -451,7 +451,7 @@
 		qdel(H)
 
 /obj/machinery/disposal/CanPass(atom/movable/mover, turf/target, height=0)
-	if (istype(mover,/obj/item) && mover.throwing)
+	if(istype(mover,/obj/item) && mover.throwing)
 		var/obj/item/I = mover
 		if(istype(I, /obj/item/projectile))
 			return
@@ -595,9 +595,9 @@
 
 // called when player tries to move while in a pipe
 /obj/structure/disposalholder/relaymove(mob/user as mob)
-	if (user.stat)
+	if(user.stat)
 		return
-	if (src.loc)
+	if(src.loc)
 		for (var/mob/M in get_hearers_in_view(src.loc.loc))
 			M.show_message("<FONT size=[max(0, 5 - get_dist(src, M))]>CLONG, clong!</FONT>", 2)
 	playsound(src.loc, 'sound/effects/clang.ogg', 50, 0, 0)
@@ -1118,7 +1118,7 @@
 	var/obj/machinery/disposal/D = locate() in src.loc
 	if(D)
 		linked = D
-		if (!D.trunk)
+		if(!D.trunk)
 			D.trunk = src
 
 	var/obj/structure/disposaloutlet/O = locate() in src.loc
@@ -1323,7 +1323,7 @@
 
 // check if mob has client, if so restore client view on eject
 /mob/pipe_eject(var/direction)
-	if (src.client)
+	if(src.client)
 		src.client.perspective = MOB_PERSPECTIVE
 		src.client.eye = src
 

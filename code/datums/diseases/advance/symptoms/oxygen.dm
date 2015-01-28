@@ -30,7 +30,7 @@ Bonus
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(4, 5)
-				if (M.reagents.get_reagent_amount("salbutamol") < 20)
+				if(M.reagents.get_reagent_amount("salbutamol") < 20)
 					M.reagents.add_reagent("salbutamol", 20)
 			else
 				if(prob(SYMPTOM_ACTIVATION_PROB * 5))

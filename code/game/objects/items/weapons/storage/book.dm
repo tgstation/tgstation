@@ -52,7 +52,7 @@
 
 	add_logs(user, M, "attacked", object="[src.name]")
 
-	if (!user.IsAdvancedToolUser())
+	if(!user.IsAdvancedToolUser())
 		user << "<span class='danger'>You don't have the dexterity to do this!</span>"
 		return
 	if(!chaplain)
@@ -60,7 +60,7 @@
 		user.take_organ_damage(0,10)
 		return
 
-	if (user.disabilities & CLUMSY && prob(50))
+	if(user.disabilities & CLUMSY && prob(50))
 		user << "<span class='danger'>The [src] slips out of your hand and hits your head.</span>"
 		user.take_organ_damage(10)
 		user.Paralyse(20)
@@ -69,7 +69,7 @@
 //	if(..() == BLOCKED)
 //		return
 
-	if (M.stat !=2)
+	if(M.stat !=2)
 		if(M.mind && (M.mind.assigned_role == "Chaplain"))
 			user << "<span class='danger'>You can't heal yourself!</span>"
 			return
@@ -77,7 +77,7 @@
 			M << "\red The power of [src.deity_name] clears your mind of heresy!"
 			user << "\red You see how [M]'s eyes become clear, the cult no longer holds control over him!"
 			ticker.mode.remove_cultist(M.mind)*/
-		if ((istype(M, /mob/living/carbon/human) && prob(60)))
+		if((istype(M, /mob/living/carbon/human) && prob(60)))
 			bless(M)
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
@@ -112,7 +112,7 @@
 /obj/item/weapon/storage/book/bible/afterattack(atom/A, mob/user as mob, proximity)
 	if(!proximity)
 		return
-	if (istype(A, /turf/simulated/floor))
+	if(istype(A, /turf/simulated/floor))
 		user << "<span class='notice'>You hit the floor with the bible.</span>"
 		if(user.mind && (user.mind.assigned_role == "Chaplain"))
 			call(/obj/effect/rune/proc/revealrunes)(src)

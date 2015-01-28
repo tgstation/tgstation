@@ -138,7 +138,7 @@
 			else						light_amount =  10
 		if(light_amount > 2) //if there's enough light, start dying
 			H.take_overall_damage(1,1)
-		else if (light_amount < 2) //heal in the dark
+		else if(light_amount < 2) //heal in the dark
 			H.heal_overall_damage(1,1)
 
 /*

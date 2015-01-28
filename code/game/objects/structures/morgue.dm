@@ -58,13 +58,13 @@
 	add_fingerprint(user)
 
 /obj/structure/bodycontainer/attackby(P as obj, mob/user as mob)
-	if (istype(P, /obj/item/weapon/pen))
+	if(istype(P, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "What would you like the label to be?", text("[]", name), null)
-		if (user.get_active_hand() != P)
+		if(user.get_active_hand() != P)
 			return
-		if ((!in_range(src, usr) && src.loc != user))
+		if((!in_range(src, usr) && src.loc != user))
 			return
-		if (t)
+		if(t)
 			name = text("[]- '[]'", initial(name), t)
 		else
 			name = initial(name)
@@ -102,7 +102,7 @@
 	..()
 
 /obj/structure/bodycontainer/morgue/update_icon()
-	if (!connected || connected.loc != src) //open or the tray broke off somehow
+	if(!connected || connected.loc != src) //open or the tray broke off somehow
 		src.icon_state = "morgue0"
 	else
 		if(src.contents.len == 1) //empty except for the tray
@@ -174,7 +174,7 @@ var/global/list/crematoriums = new/list()
 		update_icon()
 
 		for(var/mob/living/M in contents)
-			if (M.stat!=2)
+			if(M.stat!=2)
 				M.emote("scream")
 			//Logging for this causes runtimes resulting in the cremator locking up. Commenting it out until that's figured out.
 			//M.attack_log += "\[[time_stamp()]\] Has been cremated by <b>[user]/[user.ckey]</b>" //No point in this when the mob's about to be deleted
@@ -200,7 +200,7 @@ Crematorium Switch
 /obj/machinery/crema_switch/attack_hand(mob/user as mob)
 	if(src.allowed(usr))
 		for (var/obj/structure/bodycontainer/crematorium/C in crematoriums)
-			if (C.id != id)
+			if(C.id != id)
 				continue
 
 			C.cremate(user)
@@ -239,21 +239,21 @@ Crematorium Switch
 	return src.attack_hand(user)
 
 /obj/structure/tray/attack_hand(mob/user as mob)
-	if (src.connected)
+	if(src.connected)
 		connected.close()
 		add_fingerprint(user)
 	else
 		user << "That's not connected to anything."
 
 /obj/structure/tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-	if ((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src) || user.contents.Find(O)))
+	if((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src) || user.contents.Find(O)))
 		return
-	if (!ismob(O) && !istype(O, /obj/structure/closet/body_bag))
+	if(!ismob(O) && !istype(O, /obj/structure/closet/body_bag))
 		return
-	if (!ismob(user) || user.stat || user.lying || user.stunned)
+	if(!ismob(user) || user.stat || user.lying || user.stunned)
 		return
 	O.loc = src.loc
-	if (user != O)
+	if(user != O)
 		for(var/mob/B in viewers(user, 3))
 			B.show_message("<span class='danger'>[user] stuffs [O] into [src]!</span>", 1)
 			//Foreach goto(99)

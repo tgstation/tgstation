@@ -165,7 +165,7 @@
 			msg += "<span class='warning'>[t_He] [t_is] twitching ever so slightly.</span>\n"
 
 	if(gender_ambiguous) //someone fucked up a gender reassignment surgery
-		if (gender == MALE)
+		if(gender == MALE)
 			msg += "[t_He] has a strange feminine quality to [t_him].\n"
 		else
 			msg += "[t_He] has a strange masculine quality to [t_him].\n"
@@ -183,7 +183,7 @@
 					for(var/mob/dead/observer/G in player_list)
 						if(G.mind == mind)
 							foundghost = 1
-							if (G.can_reenter_corpse == 0)
+							if(G.can_reenter_corpse == 0)
 								foundghost = 0
 							break
 				if(!foundghost)

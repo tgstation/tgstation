@@ -9,10 +9,10 @@
 	density = 1
 
 /obj/structure/ore_box/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/ore))
+	if(istype(W, /obj/item/weapon/ore))
 		user.drop_item()
 		W.loc = src
-	if (istype(W, /obj/item/weapon/storage))
+	if(istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		S.hide_from(usr)
 		for(var/obj/item/weapon/ore/O in S.contents)
@@ -31,39 +31,39 @@
 	var/amt_clown = 0
 
 	for (var/obj/item/weapon/ore/C in contents)
-		if (istype(C,/obj/item/weapon/ore/diamond))
+		if(istype(C,/obj/item/weapon/ore/diamond))
 			amt_diamond++;
-		if (istype(C,/obj/item/weapon/ore/glass))
+		if(istype(C,/obj/item/weapon/ore/glass))
 			amt_glass++;
-		if (istype(C,/obj/item/weapon/ore/plasma))
+		if(istype(C,/obj/item/weapon/ore/plasma))
 			amt_plasma++;
-		if (istype(C,/obj/item/weapon/ore/iron))
+		if(istype(C,/obj/item/weapon/ore/iron))
 			amt_iron++;
-		if (istype(C,/obj/item/weapon/ore/silver))
+		if(istype(C,/obj/item/weapon/ore/silver))
 			amt_silver++;
-		if (istype(C,/obj/item/weapon/ore/gold))
+		if(istype(C,/obj/item/weapon/ore/gold))
 			amt_gold++;
-		if (istype(C,/obj/item/weapon/ore/uranium))
+		if(istype(C,/obj/item/weapon/ore/uranium))
 			amt_uranium++;
-		if (istype(C,/obj/item/weapon/ore/bananium))
+		if(istype(C,/obj/item/weapon/ore/bananium))
 			amt_clown++;
 
 	var/dat = text("<b>The contents of the ore box reveal...</b><br>")
-	if (amt_gold)
+	if(amt_gold)
 		dat += text("Gold ore: [amt_gold]<br>")
-	if (amt_silver)
+	if(amt_silver)
 		dat += text("Silver ore: [amt_silver]<br>")
-	if (amt_iron)
+	if(amt_iron)
 		dat += text("Metal ore: [amt_iron]<br>")
-	if (amt_glass)
+	if(amt_glass)
 		dat += text("Sand: [amt_glass]<br>")
-	if (amt_diamond)
+	if(amt_diamond)
 		dat += text("Diamond ore: [amt_diamond]<br>")
-	if (amt_plasma)
+	if(amt_plasma)
 		dat += text("Plasma ore: [amt_plasma]<br>")
-	if (amt_uranium)
+	if(amt_uranium)
 		dat += text("Uranium ore: [amt_uranium]<br>")
-	if (amt_clown)
+	if(amt_clown)
 		dat += text("Bananium ore: [amt_clown]<br>")
 
 	dat += text("<br><br><A href='?src=\ref[src];removeall=1'>Empty box</A>")

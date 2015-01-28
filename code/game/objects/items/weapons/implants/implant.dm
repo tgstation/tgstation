@@ -218,6 +218,6 @@
 	var/uses = 2
 
 /obj/item/weapon/implant/emp/activate()
-	if (src.uses < 1)	return 0
+	if(src.uses < 1)	return 0
 	src.uses--
 	empulse(imp_in, 3, 5)

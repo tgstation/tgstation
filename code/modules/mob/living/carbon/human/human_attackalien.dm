@@ -5,7 +5,7 @@
 
 	if(..())
 		if(M.a_intent == "harm")
-			if (w_uniform)
+			if(w_uniform)
 				w_uniform.add_fingerprint(M)
 			var/damage = rand(15, 30)
 			if(!damage)
@@ -21,7 +21,7 @@
 				"<span class='userdanger'>[M] has slashed at [src]!</span>")
 
 			apply_damage(damage, BRUTE, affecting, armor_block)
-			if (damage >= 25)
+			if(damage >= 25)
 				visible_message("<span class='danger'>[M] has wounded [src]!</span>", \
 					"<span class='userdanger'>[M] has wounded [src]!</span>")
 				apply_effect(4, WEAKEN, armor_block)
@@ -30,14 +30,14 @@
 
 		if(M.a_intent == "disarm")
 			var/randn = rand(1, 100)
-			if (randn <= 80)
+			if(randn <= 80)
 				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 				Weaken(5)
 				add_logs(M, src, "tackled", admin=0)
 				visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
 					"<span class='userdanger'>[M] has tackled down [src]!</span>")
 			else
-				if (randn <= 99)
+				if(randn <= 99)
 					playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 					drop_item()
 					visible_message("<span class='danger'>[M] disarmed [src]!</span>", \

@@ -1,9 +1,9 @@
 /mob/living/silicon/pai/say_quote(var/text)
 	var/ending = copytext(text, length(text))
 
-	if (ending == "?")
+	if(ending == "?")
 		return "[src.speakQuery], \"<span class = 'robot'>[text]</span>\"";
-	else if (ending == "!")
+	else if(ending == "!")
 		return "[src.speakExclamation], \"<span class = 'robot'>[text]</span>\"";
 
 	return "[src.speakStatement], \"<span class = 'robot'>[text]</span>\"";

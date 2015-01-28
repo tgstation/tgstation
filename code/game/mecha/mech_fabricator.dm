@@ -302,7 +302,7 @@
 
 /obj/machinery/mecha_part_fabricator/interact(mob/user as mob)
 	var/dat, left_part
-	if (..())
+	if(..())
 		return
 	user.set_machine(src)
 	var/turf/exit = get_step(src,SOUTH)

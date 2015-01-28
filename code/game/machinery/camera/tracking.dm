@@ -15,7 +15,7 @@
 
 	for (var/obj/machinery/camera/C in L)
 		var/list/tempnetwork = C.network&src.network
-		if (tempnetwork.len)
+		if(tempnetwork.len)
 			T[text("[][]", C.c_tag, (C.can_use() ? null : " (Deactivated)"))] = C
 
 	track.cameras = T
@@ -23,7 +23,7 @@
 
 
 /mob/living/silicon/ai/proc/ai_camera_list(var/camera)
-	if (!camera)
+	if(!camera)
 		return 0
 
 	var/obj/machinery/camera/C = track.cameras[camera]
@@ -81,7 +81,7 @@
 			continue
 
 		var/name = M.name
-		if (name in track.names)
+		if(name in track.names)
 			track.namecounts[name]++
 			name = text("[] ([])", name, track.namecounts[name])
 		else
@@ -113,15 +113,15 @@
 
 	U.cameraFollow = target
 	//U << text("Now tracking [] on camera.", target.name)
-	//if (U.machine == null)
+	//if(U.machine == null)
 	//	U.machine = U
 	U << "Now tracking [target.get_visible_name()] on camera."
 
 	spawn (0)
 		while (U.cameraFollow == target)
-			if (U.cameraFollow == null)
+			if(U.cameraFollow == null)
 				return
-			if (istype(target, /mob/living/carbon/human))
+			if(istype(target, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = target
 				if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
 					U << "Follow camera mode terminated."
@@ -141,7 +141,7 @@
 				U.cameraFollow = null
 				return
 
-			if (!near_camera(target))
+			if(!near_camera(target))
 				U << "Target is not near any active cameras."
 				sleep(100)
 				continue
@@ -154,7 +154,7 @@
 			sleep(10)
 
 /proc/near_camera(var/mob/living/M)
-	if (!isturf(M.loc))
+	if(!isturf(M.loc))
 		return 0
 	if(isrobot(M))
 		var/mob/living/silicon/robot/R = M
@@ -165,9 +165,9 @@
 	return 1
 
 /obj/machinery/camera/attack_ai(var/mob/living/silicon/ai/user as mob)
-	if (!istype(user))
+	if(!istype(user))
 		return
-	if (!src.can_use())
+	if(!src.can_use())
 		return
 	user.eyeobj.setLoc(get_turf(src))
 
@@ -183,10 +183,10 @@
 		for (var/j = 1 to i - 1)
 			a = L[j]
 			b = L[j + 1]
-			if (a.c_tag_order != b.c_tag_order)
-				if (a.c_tag_order > b.c_tag_order)
+			if(a.c_tag_order != b.c_tag_order)
+				if(a.c_tag_order > b.c_tag_order)
 					L.Swap(j, j + 1)
 			else
-				if (sorttext(a.c_tag, b.c_tag) < 0)
+				if(sorttext(a.c_tag, b.c_tag) < 0)
 					L.Swap(j, j + 1)
 	return L

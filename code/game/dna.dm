@@ -494,8 +494,8 @@
 	active_power_usage = 400
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I as obj, mob/user as mob)
-	if (istype(I, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
-		if (!src.diskette)
+	if(istype(I, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
+		if(!src.diskette)
 			user.drop_item()
 			I.loc = src
 			src.diskette = I
@@ -597,7 +597,7 @@
 	var/buttons = "<a href='?src=\ref[src];'>Scan</a> "
 	if(connected)
 		buttons += " <a href='?src=\ref[src];task=toggleopen;'>[connected.state_open ? "Close" : "Open"] Scanner</a> "
-		if (connected.state_open)
+		if(connected.state_open)
 			buttons += "<span class='linkOff'>[connected.locked ? "Unlock" : "Lock"] Scanner</span> "
 		else
 			buttons += "<a href='?src=\ref[src];task=togglelock;'>[connected.locked ? "Unlock" : "Lock"] Scanner</a> "
@@ -690,7 +690,7 @@
 				var/len = length(viable_occupant.dna.uni_identity)
 				for(var/i=1, i<=len, i++)
 					temp_html += "<a class='dnaBlock' href='?src=\ref[src];task=pulseui;num=[i];'>[copytext(viable_occupant.dna.uni_identity,i,i+1)]</a>"
-					if ((i % max_line_len) == 0)
+					if((i % max_line_len) == 0)
 						temp_html += "</div><div class='clearBoth'>"
 					if((i % DNA_BLOCK_SIZE) == 0 && i < len)
 						temp_html += "<div class='dnaBlockNumber'>[(i / DNA_BLOCK_SIZE) + 1]</div>"
@@ -704,7 +704,7 @@
 				var/len = length(viable_occupant.dna.struc_enzymes)
 				for(var/i=1, i<=len, i++)
 					temp_html += "<a class='dnaBlock' href='?src=\ref[src];task=pulsese;num=[i];'>[copytext(viable_occupant.dna.struc_enzymes,i,i+1)]</a>"
-					if ((i % max_line_len) == 0)
+					if((i % max_line_len) == 0)
 						temp_html += "</div><div class='clearBoth'>"
 					if((i % DNA_BLOCK_SIZE) == 0 && i < len)
 						temp_html += "<div class='dnaBlockNumber'>[(i / DNA_BLOCK_SIZE) + 1]</div>"

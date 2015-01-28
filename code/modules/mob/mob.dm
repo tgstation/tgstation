@@ -53,20 +53,20 @@ var/next_mob_id = 0
 
 	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 
-	if (type)
+	if(type)
 		if(type & 1 && (disabilities & BLIND || paralysis) )//Vision related
-			if (!( alt ))
+			if(!( alt ))
 				return
 			else
 				msg = alt
 				type = alt_type
-		if (type & 2 && ear_deaf)//Hearing related
-			if (!( alt ))
+		if(type & 2 && ear_deaf)//Hearing related
+			if(!( alt ))
 				return
 			else
 				msg = alt
 				type = alt_type
-				if ((type & 1 && disabilities & BLIND))
+				if((type & 1 && disabilities & BLIND))
 					return
 	// Added voice muffling for Issue 41.
 	if(stat == UNCONSCIOUS || sleeping > 0)
@@ -193,30 +193,30 @@ var/next_mob_id = 0
 	return null
 
 /mob/proc/ret_grab(obj/effect/list_container/mobl/L as obj, flag)
-	if ((!( istype(l_hand, /obj/item/weapon/grab) ) && !( istype(r_hand, /obj/item/weapon/grab) )))
-		if (!( L ))
+	if((!( istype(l_hand, /obj/item/weapon/grab) ) && !( istype(r_hand, /obj/item/weapon/grab) )))
+		if(!( L ))
 			return null
 		else
 			return L.container
 	else
-		if (!( L ))
+		if(!( L ))
 			L = new /obj/effect/list_container/mobl( null )
 			L.container += src
 			L.master = src
-		if (istype(l_hand, /obj/item/weapon/grab))
+		if(istype(l_hand, /obj/item/weapon/grab))
 			var/obj/item/weapon/grab/G = l_hand
-			if (!( L.container.Find(G.affecting) ))
+			if(!( L.container.Find(G.affecting) ))
 				L.container += G.affecting
-				if (G.affecting)
+				if(G.affecting)
 					G.affecting.ret_grab(L, 1)
-		if (istype(r_hand, /obj/item/weapon/grab))
+		if(istype(r_hand, /obj/item/weapon/grab))
 			var/obj/item/weapon/grab/G = r_hand
-			if (!( L.container.Find(G.affecting) ))
+			if(!( L.container.Find(G.affecting) ))
 				L.container += G.affecting
-				if (G.affecting)
+				if(G.affecting)
 					G.affecting.ret_grab(L, 1)
-		if (!( flag ))
-			if (L.master == src)
+		if(!( flag ))
+			if(L.master == src)
 				var/list/temp = list(  )
 				temp += L.container
 				//L = null
@@ -307,12 +307,12 @@ var/list/slot_equipment_priority = list( \
 	return 0
 
 /mob/proc/reset_view(atom/A)
-	if (client)
-		if (istype(A, /atom/movable))
+	if(client)
+		if(istype(A, /atom/movable))
 			client.perspective = EYE_PERSPECTIVE
 			client.eye = A
 		else
-			if (isturf(loc))
+			if(isturf(loc))
 				client.eye = client.mob
 				client.perspective = MOB_PERSPECTIVE
 			else
@@ -360,7 +360,7 @@ var/list/slot_equipment_priority = list( \
 		return 0
 
 	var/tile = get_turf(A)
-	if (!tile)
+	if(!tile)
 		return 0
 
 	var/obj/P = new /obj/effect/decal/point(tile)
@@ -373,9 +373,9 @@ var/list/slot_equipment_priority = list( \
 
 //this and stop_pulling really ought to be /mob/living procs
 /mob/proc/start_pulling(var/atom/movable/AM)
-	if ( !AM || !src || src==AM || !isturf(src.loc) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
+	if( !AM || !src || src==AM || !isturf(src.loc) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
 		return
-	if (!( AM.anchored ))
+	if(!( AM.anchored ))
 		AM.add_fingerprint(src)
 
 		// If we're pulling something then drop what we're currently pulling and pull this instead.
@@ -412,12 +412,12 @@ var/list/slot_equipment_priority = list( \
 
 	if(hand)
 		var/obj/item/W = l_hand
-		if (W)
+		if(W)
 			W.attack_self(src)
 			update_inv_l_hand(0)
 	else
 		var/obj/item/W = r_hand
-		if (W)
+		if(W)
 			W.attack_self(src)
 			update_inv_r_hand(0)
 	return
@@ -456,15 +456,15 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/store_memory(msg as message, popup, sane = 1)
 	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 
-	if (sane)
+	if(sane)
 		msg = sanitize(msg)
 
-	if (length(memory) == 0)
+	if(length(memory) == 0)
 		memory += msg
 	else
 		memory += "<BR>[msg]"
 
-	if (popup)
+	if(popup)
 		memory()
 
 /*
@@ -478,9 +478,9 @@ var/list/slot_equipment_priority = list( \
 	set name = "Respawn"
 	set category = "OOC"
 
-	if (!( abandon_allowed ))
+	if(!( abandon_allowed ))
 		return
-	if ((stat != 2 || !( ticker )))
+	if((stat != 2 || !( ticker )))
 		usr << "<span class='boldnotice'>You must be dead to use this!</span>"
 		return
 
@@ -559,7 +559,7 @@ var/list/slot_equipment_priority = list( \
 			continue
 		if(istype(O, /obj/item/weapon/disk/nuclear))
 			var/name = "Nuclear Disk"
-			if (names.Find(name))
+			if(names.Find(name))
 				namecounts[name]++
 				name = "[name] ([namecounts[name]])"
 			else
@@ -569,7 +569,7 @@ var/list/slot_equipment_priority = list( \
 
 		if(istype(O, /obj/singularity))
 			var/name = "Singularity"
-			if (names.Find(name))
+			if(names.Find(name))
 				namecounts[name]++
 				name = "[name] ([namecounts[name]])"
 			else
@@ -579,7 +579,7 @@ var/list/slot_equipment_priority = list( \
 
 		if(istype(O, /obj/machinery/bot))
 			var/name = "BOT: [O.name]"
-			if (names.Find(name))
+			if(names.Find(name))
 				namecounts[name]++
 				name = "[name] ([namecounts[name]])"
 			else
@@ -590,7 +590,7 @@ var/list/slot_equipment_priority = list( \
 
 	for(var/mob/M in sortNames(mob_list))
 		var/name = M.name
-		if (names.Find(name))
+		if(names.Find(name))
 			namecounts[name]++
 			name = "[name] ([namecounts[name]])"
 		else
@@ -607,14 +607,14 @@ var/list/slot_equipment_priority = list( \
 	var/ok = "[is_admin ? "Admin Observe" : "Observe"]"
 	eye_name = input("Please, select a player!", ok, null, null) as null|anything in creatures
 
-	if (!eye_name)
+	if(!eye_name)
 		return
 
 	var/mob/mob_eye = creatures[eye_name]
 
 	if(client && mob_eye)
 		client.eye = mob_eye
-		if (is_admin)
+		if(is_admin)
 			client.adminobs = 1
 			if(mob_eye == client.mob || client.eye == client.mob)
 				client.adminobs = 0

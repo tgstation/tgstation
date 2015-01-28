@@ -204,7 +204,7 @@ mob/living/carbon/proc/handle_hallucinations()
 		if(!(locate(clone.l_hand) in non_fakeattack_weapons))
 			clone_weapon = clone.l_hand.name
 			F.weap = clone.l_hand
-	else if (clone.r_hand)
+	else if(clone.r_hand)
 		if(!(locate(clone.r_hand) in non_fakeattack_weapons))
 			clone_weapon = clone.r_hand.name
 			F.weap = clone.r_hand

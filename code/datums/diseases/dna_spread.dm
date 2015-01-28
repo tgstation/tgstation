@@ -33,7 +33,7 @@
 					affected_mob.updatehealth()
 		if(4)
 			if(!src.transformed)
-				if ((!strain_data["name"]) || (!strain_data["UI"]) || (!strain_data["SE"]))
+				if((!strain_data["name"]) || (!strain_data["UI"]) || (!strain_data["SE"]))
 					del(affected_mob.virus)
 					return
 
@@ -55,7 +55,7 @@
 	return
 
 /datum/disease/dnaspread/Del()
-	if ((original_dna["name"]) && (original_dna["UI"]) && (original_dna["SE"]))
+	if((original_dna["name"]) && (original_dna["UI"]) && (original_dna["SE"]))
 		if(affected_mob)
 			affected_mob.dna.uni_identity = original_dna["UI"]
 			updateappearance(affected_mob)

@@ -37,9 +37,9 @@
 	var/A
 	A = input("Area to jump bombard", "Open Fire", A) in teleportlocs
 	var/area/thearea = teleportlocs[A]
-	if (usr.stat || usr.restrained()) return
+	if(usr.stat || usr.restrained()) return
 	if(src.reload < 180) return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
+	if((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
 		priority_announce("Bluespace artillery fire detected. Brace for impact.")
 		message_admins("[key_name_admin(usr)] has launched an artillery strike.")
 		var/list/L = list()

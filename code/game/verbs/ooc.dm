@@ -60,7 +60,7 @@
 
 /proc/toggle_ooc()
 	ooc_allowed = !( ooc_allowed )
-	if (ooc_allowed)
+	if(ooc_allowed)
 		world << "<B>The OOC channel has been globally enabled!</B>"
 	else
 		world << "<B>The OOC channel has been globally disabled!</B>"

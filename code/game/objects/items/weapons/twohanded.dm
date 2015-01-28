@@ -54,7 +54,7 @@
 	name = "[initial(name)] (Wielded)"
 	update_icon()
 	user << "<span class='notice'>You grab the [initial(name)] with both hands.</span>"
-	if (wieldsound)
+	if(wieldsound)
 		playsound(loc, wieldsound, 50, 1)
 	var/obj/item/weapon/twohanded/offhand/O = new(user) ////Let's reserve his other hand~
 	O.name = "[initial(name)] - offhand"
@@ -164,7 +164,7 @@ obj/item/weapon/twohanded/
 			new /obj/item/weapon/shard( W.loc )
 			if(W.reinf) new /obj/item/stack/rods( W.loc)
 
-			if (W.dir == SOUTHWEST)
+			if(W.dir == SOUTHWEST)
 				new /obj/item/weapon/shard( W.loc )
 				if(W.reinf) new /obj/item/stack/rods( W.loc)
 		qdel(A)
@@ -218,7 +218,7 @@ obj/item/weapon/twohanded/
 
 /obj/item/weapon/twohanded/dualsaber/proc/impale(mob/living/user as mob)
 	user << "<span class='warning'>You twirl around a bit before losing your balance and impaling yourself on \the [src].</span>"
-	if (force_wielded)
+	if(force_wielded)
 		user.take_organ_damage(20,25)
 	else
 		user.adjustStaminaLoss(25)

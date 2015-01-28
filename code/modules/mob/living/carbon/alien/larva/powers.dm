@@ -7,7 +7,7 @@
 	if(stat != CONSCIOUS)
 		return
 
-	if (layer != TURF_LAYER+0.2)
+	if(layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
 		visible_message("<span class='name'>[src] scurries to the ground!</span>", \
 						"<span class='noticealien'>You are now hiding.</span>")

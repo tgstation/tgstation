@@ -86,7 +86,7 @@
 							cameranet.addCamera(src)
 						emped = 0 //Resets the consecutive EMP count
 			for(var/mob/O in mob_list)
-				if (O.client && O.client.eye == src)
+				if(O.client && O.client.eye == src)
 					O.unset_machine()
 					O.reset_view(null)
 					O << "The screen bursts into static."
@@ -176,7 +176,7 @@
 			user << "[msg2]"
 
 	// OTHER
-	else if ((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/device/pda)) && isliving(user))
+	else if((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/device/pda)) && isliving(user))
 		var/mob/living/U = user
 		var/obj/item/weapon/paper/X = null
 		var/obj/item/device/pda/P = null
@@ -199,11 +199,11 @@
 				if(U.name == "Unknown") AI << "<b>[U]</b> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ..."
 				else AI << "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U]'>[U]</a></b> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ..."
 				AI.last_paper_seen = "<HTML><HEAD><TITLE>[itemname]</TITLE></HEAD><BODY><TT>[info]</TT></BODY></HTML>"
-			else if (O.client && O.client.eye == src)
+			else if(O.client && O.client.eye == src)
 				O << "[U] holds \a [itemname] up to one of the cameras ..."
 				O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
-	else if (istype(W, /obj/item/device/camera_bug))
-		if (!src.can_use())
+	else if(istype(W, /obj/item/device/camera_bug))
+		if(!src.can_use())
 			user << "<span class='notice'>Camera non-functional.</span>"
 			return
 		if(istype(src.bug))
@@ -233,7 +233,7 @@
 /obj/machinery/camera/proc/deactivate(user as mob, var/choice = 1)
 	if(choice==1)
 		status = !( src.status )
-		if (!(src.status))
+		if(!(src.status))
 			if(user)
 				visible_message("<span class='danger'>[user] deactivates [src]!</span>")
 				add_hiddenprint(user)
@@ -255,7 +255,7 @@
 	//Apparently, this will disconnect anyone even if the camera was re-activated.
 	//I guess that doesn't matter since they can't use it anyway?
 	for(var/mob/O in player_list)
-		if (O.client && O.client.eye == src)
+		if(O.client && O.client.eye == src)
 			O.unset_machine()
 			O.reset_view(null)
 			O << "The screen bursts into static."

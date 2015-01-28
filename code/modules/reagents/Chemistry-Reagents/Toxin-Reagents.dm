@@ -70,7 +70,7 @@ datum/reagent/toxin/plasma/reaction_obj(var/obj/O, var/volume)
 	src = null
 	/*if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/egg/slime))
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/slime/egg = O
-		if (egg.grown)
+		if(egg.grown)
 			egg.Hatch()*/
 	if((!O) || (!volume))	return 0
 	O.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C, volume)
@@ -129,7 +129,7 @@ datum/reagent/toxin/minttoxin
 	toxpwr = 0
 
 datum/reagent/toxin/minttoxin/on_mob_life(var/mob/living/M as mob)
-	if (FAT in M.mutations)
+	if(FAT in M.mutations)
 		M.gib()
 	..()
 	return

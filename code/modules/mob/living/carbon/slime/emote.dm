@@ -1,7 +1,7 @@
 /mob/living/carbon/slime/emote(var/act)
 
 
-	if (findtext(act, "-", 1, null))
+	if(findtext(act, "-", 1, null))
 		var/t1 = findtext(act, "-", 1, null)
 		//param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
@@ -70,21 +70,21 @@
 			mood = "angry"
 			regenerate_icons = 1
 
-		if ("help") //This is an exception
+		if("help") //This is an exception
 			src << "Help for slime emotes. You can use these emotes with say \"*emote\":\n\nbounce, jiggle, light, moan, shiver, sway, twitch, vibrate. \n\nYou may also change your face with: \n\nsmile, :3, pout, frown, scowl, noface"
 
 		else
 			src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
 
-	if ((message && src.stat == 0))
+	if((message && src.stat == 0))
 		if(client)
 			log_emote("[name]/[key] : [message]")
-		if (m_type & 1)
+		if(m_type & 1)
 			visible_message(message)
 		else
 			audible_message(message)
 
-	if (regenerate_icons)
+	if(regenerate_icons)
 		regenerate_icons()
 
 	return

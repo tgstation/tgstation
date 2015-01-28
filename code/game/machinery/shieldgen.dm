@@ -45,7 +45,7 @@
 	playsound(src.loc, 'sound/effects/EMPulse.ogg', 75, 1)
 
 
-	if (src.health <= 0)
+	if(src.health <= 0)
 		visible_message("<span class='notice'>[src] dissipates.</span>")
 		qdel(src)
 		return
@@ -67,13 +67,13 @@
 /obj/machinery/shield/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
-			if (prob(75))
+			if(prob(75))
 				qdel(src)
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				qdel(src)
 		if(3.0)
-			if (prob(25))
+			if(prob(25))
 				qdel(src)
 	return
 
@@ -106,7 +106,7 @@
 	playsound(src.loc, 'sound/effects/EMPulse.ogg', 100, 1)
 
 	//Handle the destruction of the shield
-	if (src.health <= 0)
+	if(src.health <= 0)
 		visible_message("<span class='notice'>[src] dissipates.</span>")
 		qdel(src)
 		return
@@ -152,8 +152,8 @@
 	update_icon()
 
 	for(var/turf/target_tile in range(shield_range, src))
-		if (istype(target_tile,/turf/space) && !(locate(/obj/machinery/shield) in target_tile))
-			if (malfunction && prob(33) || !malfunction)
+		if(istype(target_tile,/turf/space) && !(locate(/obj/machinery/shield) in target_tile))
+			if(malfunction && prob(33) || !malfunction)
 				deployed_shields += new /obj/machinery/shield(target_tile)
 
 /obj/machinery/shieldgen/proc/shields_down()
@@ -188,7 +188,7 @@
 			src.checkhp()
 		if(2.0)
 			src.health -= 30
-			if (prob(15))
+			if(prob(15))
 				src.malfunction = 1
 			src.checkhp()
 		if(3.0)
@@ -216,7 +216,7 @@
 		user << "The panel must be closed before operating this machine."
 		return
 
-	if (src.active)
+	if(src.active)
 		user.visible_message("<span class='notice'>\icon[src] [user] deactivated the shield generator.</span>", \
 			"<span class='notice'>\icon[src] You deactivate the shield generator.</span>", \
 			"You hear heavy droning fade out.")
@@ -243,7 +243,7 @@
 
 	else if(istype(W, /obj/item/stack/cable_coil) && malfunction && is_open)
 		var/obj/item/stack/cable_coil/coil = W
-		if (coil.get_amount() < 1)
+		if(coil.get_amount() < 1)
 			user << "You need one length of cable to repair [src]."
 			return
 		user << "<span class='notice'>You begin to replace the wires.</span>"
@@ -468,7 +468,7 @@
 			return
 
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if (src.allowed(user))
+		if(src.allowed(user))
 			src.locked = !src.locked
 			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
 		else
@@ -600,7 +600,7 @@
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return prob(20)
 	else
-		if (istype(mover, /obj/item/projectile))
+		if(istype(mover, /obj/item/projectile))
 			return prob(10)
 		else
 			return !src.density

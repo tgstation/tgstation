@@ -7,7 +7,7 @@
 	log_say("[key_name(src)] : [message]")
 	message = trim(message)
 
-	if (!message)
+	if(!message)
 		return
 
 	var/message_a = say_quote(message)

@@ -133,7 +133,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(T.intact)
 		return
 	if(istype(W, /obj/item/weapon/wirecutters))
-		if (shock(user, 50))
+		if(shock(user, 50))
 			return
 		visible_message("<span class='warning'>[user] cuts the cable.</span>")
 		stored.add_fingerprint(user)
@@ -143,7 +143,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	else if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = W
-		if (coil.get_amount() < 1)
+		if(coil.get_amount() < 1)
 			user << "Not enough cable"
 			return
 		coil.cable_join(src, user)
@@ -156,7 +156,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		shock(user, 5, 0.2)
 
 	else
-		if (W.flags & CONDUCT)
+		if(W.flags & CONDUCT)
 			shock(user, 50, 0.7)
 
 	src.add_fingerprint(user)
@@ -165,7 +165,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable/proc/shock(mob/user, prb, var/siemens_coeff = 1.0)
 	if(!prob(prb))
 		return 0
-	if (electrocute_mob(user, powernet, src, siemens_coeff))
+	if(electrocute_mob(user, powernet, src, siemens_coeff))
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
@@ -516,7 +516,7 @@ obj/structure/cable/proc/avail()
 
 
 /obj/item/stack/cable_coil/update_icon()
-	if (!item_color)
+	if(!item_color)
 		item_color = pick("red", "yellow", "blue", "green")
 	if(amount == 1)
 		icon_state = "coil_[item_color]1"
@@ -588,7 +588,7 @@ obj/structure/cable/proc/avail()
 /obj/item/stack/cable_coil/use(var/used)
 	if(src.amount < used)
 		return 0
-	else if (src.amount == used)
+	else if(src.amount == used)
 		if(ismob(loc)) //handle mob icon update
 			var/mob/M = loc
 			M.unEquip(src)
@@ -677,8 +677,8 @@ obj/structure/cable/proc/avail()
 
 		use(1)
 
-		if (C.shock(user, 50))
-			if (prob(50)) //fail
+		if(C.shock(user, 50))
+			if(prob(50)) //fail
 				C.Deconstruct()
 
 // called when cable_coil is click on an installed obj/cable
@@ -742,8 +742,8 @@ obj/structure/cable/proc/avail()
 
 			use(1)
 
-			if (NC.shock(user, 50))
-				if (prob(50)) //fail
+			if(NC.shock(user, 50))
+				if(prob(50)) //fail
 					NC.Deconstruct()
 
 			return
@@ -792,8 +792,8 @@ obj/structure/cable/proc/avail()
 
 		use(1)
 
-		if (C.shock(user, 50))
-			if (prob(50)) //fail
+		if(C.shock(user, 50))
+			if(prob(50)) //fail
 				C.Deconstruct()
 				return
 

@@ -127,11 +127,11 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				dat += "Which department do you need assistance from?<BR><BR>"
 				dat += "<table width='100%'>"
 				for(var/dpt in req_console_assistance)
-					if (dpt != department)
+					if(dpt != department)
 						dat += "<tr>"
 						dat += "<td width='55%'>[dpt]</td>"
 						dat += "<td width='45%'><A href='?src=\ref[src];write=[ckey(dpt)]'>Normal</A> <A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High</A>"
-						if (hackState == 1)
+						if(hackState == 1)
 							dat += "<A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>"
 						dat += "</td>"
 						dat += "</tr>"
@@ -142,11 +142,11 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				dat += "Which department do you need supplies from?<BR><BR>"
 				dat += "<table width='100%'>"
 				for(var/dpt in req_console_supplies)
-					if (dpt != department)
+					if(dpt != department)
 						dat += "<tr>"
 						dat += "<td width='55%'>[dpt]</td>"
 						dat += "<td width='45%'><A href='?src=\ref[src];write=[ckey(dpt)]'>Normal</A> <A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High</A>"
-						if (hackState == 1)
+						if(hackState == 1)
 							dat += "<A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>"
 						dat += "</td>"
 						dat += "</tr>"
@@ -157,11 +157,11 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				dat += "Which department would you like to send information to?<BR><BR>"
 				dat += "<table width='100%'>"
 				for(var/dpt in req_console_information)
-					if (dpt != department)
+					if(dpt != department)
 						dat += "<tr>"
 						dat += "<td width='55%'>[dpt]</td>"
 						dat += "<td width='45%'><A href='?src=\ref[src];write=[ckey(dpt)]'>Normal</A> <A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High</A>"
-						if (hackState == 1)
+						if(hackState == 1)
 							dat += "<A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>"
 						dat += "</td>"
 						dat += "</tr>"
@@ -178,7 +178,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 			if(8)	//view messages
 				for (var/obj/machinery/requests_console/Console in allConsoles)
-					if (Console.department == department)
+					if(Console.department == department)
 						Console.newmessagepriority = 0
 						Console.update_icon()
 						Console.luminosity = 1
@@ -207,7 +207,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					dat += "<div class='notice'>Swipe your card to authenticate yourself</div><BR>"
 				dat += "<b>Message: </b>[message ? message : "<i>No Message</i>"]<BR>"
 				dat += "<A href='?src=\ref[src];writeAnnouncement=1'>[message ? "Edit" : "Write"] Message</A><BR><BR>"
-				if (announceAuth && message)
+				if(announceAuth && message)
 					dat += "<A href='?src=\ref[src];sendAnnouncement=1'>Announce Message</A><BR>"
 				else
 					dat += "<span class='linkOff'>Announce Message</span><BR>"
@@ -216,11 +216,11 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			else	//main menu
 				screen = 0
 				announceAuth = 0
-				if (newmessagepriority == 1)
+				if(newmessagepriority == 1)
 					dat += "<div class='notice'>There are new messages</div><BR>"
-				if (newmessagepriority == 2)
+				if(newmessagepriority == 2)
 					dat += "<div class='notice'>There are new <b>PRIORITY</b> messages</div><BR>"
-				if (newmessagepriority == 3)
+				if(newmessagepriority == 3)
 					dat += "<div class='notice'>There are new <b>EXTREME PRIORITY</b> messages</div><BR>"
 				dat += "<A href='?src=\ref[src];setScreen=8'>View Messages</A><BR><BR>"
 
@@ -229,7 +229,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				dat += "<A href='?src=\ref[src];setScreen=3'>Relay Anonymous Information</A><BR><BR>"
 				if(announcementConsole)
 					dat += "<A href='?src=\ref[src];setScreen=10'>Send Station-wide Announcement</A><BR><BR>"
-				if (silent)
+				if(silent)
 					dat += "Speaker <A href='?src=\ref[src];setSilent=0'>OFF</A>"
 				else
 					dat += "Speaker <A href='?src=\ref[src];setSilent=1'>ON</A>"
@@ -254,7 +254,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		if(new_message)
 			message = new_message
 			screen = 9
-			if (text2num(href_list["priority"]) < 2)
+			if(text2num(href_list["priority"]) < 2)
 				priority = -1
 			else
 				priority = text2num(href_list["priority"])
@@ -269,7 +269,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		var/new_message = copytext(reject_bad_text(input(usr, "Write your message:", "Awaiting Input", "")),1,MAX_MESSAGE_LEN)
 		if(new_message)
 			message = new_message
-			if (text2num(href_list["priority"]) < 2)
+			if(text2num(href_list["priority"]) < 2)
 				priority = -1
 			else
 				priority = text2num(href_list["priority"])
@@ -292,14 +292,14 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		var/log_msg = message
 		var/sending = message
 		sending += "<br>"
-		if (msgVerified)
+		if(msgVerified)
 			sending += msgVerified
 			sending += "<br>"
-		if (msgStamped)
+		if(msgStamped)
 			sending += msgStamped
 			sending += "<br>"
 		screen = 7 //if it's successful, this will get overrwritten (7 = unsufccessfull, 6 = successfull)
-		if (sending)
+		if(sending)
 			var/pass = 0
 			for (var/obj/machinery/message_server/MS in world)
 				if(!MS.active) continue
@@ -308,7 +308,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 			if(pass)
 				for (var/obj/machinery/requests_console/Console in allConsoles)
-					if (ckey(Console.department) == ckey(href_list["department"]))
+					if(ckey(Console.department) == ckey(href_list["department"]))
 						switch(priority)
 							if(2)		//High priority
 								Console.createmessage(src, "PRIORITY Alert in [department]", sending, 2, 1)
@@ -371,7 +371,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 /obj/machinery/say_quote(var/text)
 	var/ending = copytext(text, length(text) - 2)
-	if (ending == "!!!")
+	if(ending == "!!!")
 		return "blares, \"[text]\""
 
 	return "beeps, \"[text]\""
@@ -434,7 +434,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	src.luminosity = 2
 
 /obj/machinery/requests_console/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
-	if (istype(O, /obj/item/weapon/crowbar))
+	if(istype(O, /obj/item/weapon/crowbar))
 		if(open)
 			user << "You close the maintenance panel."
 			open = 0
@@ -446,7 +446,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				icon_state="req_comp_open"
 			else if(hackState == 1)
 				icon_state="req_comp_rewired"
-	if (istype(O, /obj/item/weapon/screwdriver))
+	if(istype(O, /obj/item/weapon/screwdriver))
 		if(open)
 			if(hackState == 0)
 				user << "You modify the wiring."
@@ -461,18 +461,18 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	update_icon()
 
 	var/obj/item/weapon/card/id/ID = O.GetID()
-	if (ID)
+	if(ID)
 		if(screen == 9)
 			msgVerified = "<font color='green'><b>Verified by [ID.registered_name] ([ID.assignment])</b></font>"
 			updateUsrDialog()
 		if(screen == 10)
-			if (access_RC_announce in ID.access)
+			if(access_RC_announce in ID.access)
 				announceAuth = 1
 			else
 				announceAuth = 0
 				user << "<span class='danger'>You are not authorized to send announcements.</span>"
 			updateUsrDialog()
-	if (istype(O, /obj/item/weapon/stamp))
+	if(istype(O, /obj/item/weapon/stamp))
 		if(screen == 9)
 			var/obj/item/weapon/stamp/T = O
 			msgStamped = "<span class='boldnotice'>Stamped with the [T.name]</span>"

@@ -337,16 +337,16 @@ datum/objective/steal/proc/set_target(var/datum/objective_item/item)
 datum/objective/steal/proc/select_target() //For admins setting objectives manually.
 	var/list/possible_items_all = possible_items+"custom"
 	var/new_target = input("Select target:", "Objective target", steal_target) as null|anything in possible_items_all
-	if (!new_target) return
+	if(!new_target) return
 
-	if (new_target == "custom") //Can set custom items.
+	if(new_target == "custom") //Can set custom items.
 		var/obj/item/custom_target = input("Select type:","Type") as null|anything in typesof(/obj/item)
-		if (!custom_target) return
+		if(!custom_target) return
 		var/tmp_obj = new custom_target
 		var/custom_name = tmp_obj:name
 		qdel(tmp_obj)
 		custom_name = stripped_input("Enter target name:", "Objective target", custom_name)
-		if (!custom_name) return
+		if(!custom_name) return
 		steal_target = custom_target
 		explanation_text = "Steal [custom_name]."
 
@@ -490,13 +490,13 @@ datum/objective/absorb
 
 datum/objective/absorb/proc/gen_amount_goal(var/lowbound = 4, var/highbound = 6)
 	target_amount = rand (lowbound,highbound)
-	if (ticker)
+	if(ticker)
 		var/n_p = 1 //autowin
-		if (ticker.current_state == GAME_STATE_SETTING_UP)
+		if(ticker.current_state == GAME_STATE_SETTING_UP)
 			for(var/mob/new_player/P in player_list)
 				if(P.client && P.ready && P.mind!=owner)
 					n_p ++
-		else if (ticker.current_state == GAME_STATE_PLAYING)
+		else if(ticker.current_state == GAME_STATE_PLAYING)
 			for(var/mob/living/carbon/human/P in player_list)
 				if(P.client && !(P.mind in ticker.mode.changelings) && P.mind!=owner)
 					n_p ++

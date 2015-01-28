@@ -28,7 +28,7 @@
 
 	switch (src.btype)
 		// radio
-		if (0)
+		if(0)
 			var/obj/item/assembly/r_i_ptank/R = new /obj/item/assembly/r_i_ptank(src.loc)
 			var/obj/item/weapon/tank/plasma/p3 = new /obj/item/weapon/tank/plasma(R)
 			var/obj/item/device/radio/signaler/p1 = new /obj/item/device/radio/signaler(R)
@@ -45,7 +45,7 @@
 			p3.air_contents.temperature = btemp + T0C
 
 		// proximity
-		if (1)
+		if(1)
 			var/obj/item/assembly/m_i_ptank/R = new /obj/item/assembly/m_i_ptank(src.loc)
 			var/obj/item/weapon/tank/plasma/p3 = new /obj/item/weapon/tank/plasma(R)
 			var/obj/item/device/prox_sensor/p1 = new /obj/item/device/prox_sensor(R)
@@ -67,7 +67,7 @@
 				R.c_state(1, src)
 
 		// timer
-		if (2)
+		if(2)
 			var/obj/item/assembly/t_i_ptank/R = new /obj/item/assembly/t_i_ptank(src.loc)
 			var/obj/item/weapon/tank/plasma/p3 = new /obj/item/weapon/tank/plasma(R)
 			var/obj/item/device/timer/p1 = new /obj/item/device/timer(R)
@@ -132,7 +132,7 @@
 
 	switch (src.btype)
 		// radio
-		if (0)
+		if(0)
 
 			var/obj/item/device/transfer_valve/V = new(src.loc)
 			var/obj/item/weapon/tank/plasma/PT = new(V)
@@ -155,7 +155,7 @@
 			V.update_icon()
 
 		// proximity
-		if (1)
+		if(1)
 
 			var/obj/item/device/transfer_valve/V = new(src.loc)
 			var/obj/item/weapon/tank/plasma/PT = new(V)
@@ -180,7 +180,7 @@
 
 
 		// timer
-		if (2)
+		if(2)
 			var/obj/item/device/transfer_valve/V = new(src.loc)
 			var/obj/item/weapon/tank/plasma/PT = new(V)
 			var/obj/item/weapon/tank/oxygen/OT = new(V)

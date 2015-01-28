@@ -140,17 +140,17 @@
 
 	switch(message_mode)
 		if(MODE_HEADSET)
-			if (ears)
+			if(ears)
 				ears.talk_into(src, message)
 			return ITALICS | REDUCE_RANGE
 
 		if(MODE_SECURE_HEADSET)
-			if (ears)
+			if(ears)
 				ears.talk_into(src, message, 1)
 			return ITALICS | REDUCE_RANGE
 
 		if(MODE_DEPARTMENT)
-			if (ears)
+			if(ears)
 				ears.talk_into(src, message, message_mode)
 			return ITALICS | REDUCE_RANGE
 
@@ -311,7 +311,7 @@
 
 			parrot_interest = user
 			parrot_state = PARROT_SWOOP
-			if (user.health < 50)
+			if(user.health < 50)
 				parrot_state |= PARROT_ATTACK //weakened mob? fight back!
 			else
 				parrot_state |= PARROT_FLEE

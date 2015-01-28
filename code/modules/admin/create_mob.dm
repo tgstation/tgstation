@@ -1,6 +1,6 @@
 /var/create_mob_html = null
 /datum/admins/proc/create_mob(var/mob/user)
-	if (!create_mob_html)
+	if(!create_mob_html)
 		var/mobjs = null
 		mobjs = list2text(typesof(/mob), ";")
 		create_mob_html = file2text('html/create_object.html')

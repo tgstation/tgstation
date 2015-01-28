@@ -528,7 +528,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 /mob/living/carbon/human/update_inv_r_hand()
 	remove_overlay(R_HAND_LAYER)
-	if (handcuffed)
+	if(handcuffed)
 		drop_r_hand()
 		return
 	if(r_hand)
@@ -547,7 +547,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 /mob/living/carbon/human/update_inv_l_hand()
 	remove_overlay(L_HAND_LAYER)
-	if (handcuffed)
+	if(handcuffed)
 		drop_l_hand()
 		return
 	if(l_hand)

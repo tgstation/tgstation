@@ -8,7 +8,7 @@
 /world/New()
 	map_ready = 1
 
-#if (PRELOAD_RSC == 0)
+#if(PRELOAD_RSC == 0)
 	external_rsc_urls = file2list("config/external_rsc_urls.txt","\n")
 	var/i=1
 	while(i<=external_rsc_urls.len)
@@ -80,7 +80,7 @@
 /world/Topic(T, addr, master, key)
 	diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
 
-	if (T == "ping")
+	if(T == "ping")
 		var/x = 1
 		for (var/client/C in clients)
 			x++
@@ -93,7 +93,7 @@
 				n++
 		return n
 
-	else if (T == "status")
+	else if(T == "status")
 		var/list/s = list()
 		// Please add new status indexes under the old ones, for the server banner (until that gets reworked)
 		s["version"] = game_version
@@ -122,7 +122,7 @@
 		s["map_name"] = map_name ? map_name : "Unknown"
 
 		return list2params(s)
-	else if (copytext(T,1,9) == "announce")
+	else if(copytext(T,1,9) == "announce")
 		var/input[] = params2list(T)
 		if(global.comms_allowed)
 			if(input["key"] != global.comms_key)
@@ -183,7 +183,7 @@
 /world/proc/update_status()
 	var/s = ""
 
-	if (config && config.server_name)
+	if(config && config.server_name)
 		s += "<b>[config.server_name]</b> &#8212; "
 
 	s += "<b>[station_name()]</b>";
@@ -202,41 +202,41 @@
 	else
 		features += "<b>STARTING</b>"
 
-	if (!enter_allowed)
+	if(!enter_allowed)
 		features += "closed"
 
 	features += abandon_allowed ? "respawn" : "no respawn"
 
-	if (config && config.allow_vote_mode)
+	if(config && config.allow_vote_mode)
 		features += "vote"
 
-	if (config && config.allow_ai)
+	if(config && config.allow_ai)
 		features += "AI allowed"
 
 	var/n = 0
 	for (var/mob/M in player_list)
-		if (M.client)
+		if(M.client)
 			n++
 
-	if (n > 1)
+	if(n > 1)
 		features += "~[n] players"
-	else if (n > 0)
+	else if(n > 0)
 		features += "~[n] player"
 
 	/*
 	is there a reason for this? the byond site shows 'hosted by X' when there is a proper host already.
-	if (host)
+	if(host)
 		features += "hosted by <b>[host]</b>"
 	*/
 
-	if (!host && config && config.hostedby)
+	if(!host && config && config.hostedby)
 		features += "hosted by <b>[config.hostedby]</b>"
 
-	if (features)
+	if(features)
 		s += ": [list2text(features, ", ")]"
 
 	/* does this help? I do not know */
-	if (src.status != s)
+	if(src.status != s)
 		src.status = s
 
 #define FAILED_DB_CONNECTION_CUTOFF 5
@@ -258,7 +258,7 @@ proc/setup_database_connection()
 
 	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
 	. = dbcon.IsConnected()
-	if ( . )
+	if( . )
 		failed_db_connections = 0	//If this connection succeeded, reset the failed connections counter.
 	else
 		failed_db_connections++		//If it failed, increase the failed connections counter.

@@ -8,7 +8,7 @@
 	volume = 50
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/on_reagent_change()
-	if (reagents.reagent_list.len > 0)
+	if(reagents.reagent_list.len > 0)
 		switch(reagents.get_master_reagent_id())
 			if("beer")
 				icon_state = "beerglass"
@@ -102,7 +102,7 @@
 				icon_state = "cognacglass"
 				name = "glass of cognac"
 				desc = "Damn, you feel like some kind of French aristocrat just by holding this."
-			if ("kahlua")
+			if("kahlua")
 				icon_state = "kahluaglass"
 				name = "glass of RR Coffee Liquor"
 				desc = "DAMN, THIS THING LOOKS ROBUST"

@@ -33,7 +33,7 @@
 				affected_mob.adjustToxLoss(1)
 		if(3)
 			if(prob(1))
-				if (affected_mob.nutrition > 100)
+				if(affected_mob.nutrition > 100)
 					affected_mob.Stun(rand(4,6))
 					affected_mob.visible_message("<span class='danger'>[affected_mob] throws up!</span>", \
 												"<span class='userdanger'>[affected_mob] throws up!</span>")

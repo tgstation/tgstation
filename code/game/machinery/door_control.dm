@@ -40,7 +40,7 @@
 
 /obj/machinery/door_control/attackby(obj/item/weapon/W, mob/user as mob)
 	/* For later implementation
-	if (istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/weapon/screwdriver))
 	{
 		if(wiresexposed)
 			icon_state = "doorctrl0"
@@ -145,7 +145,7 @@
 	icon_state = "launcheract"
 
 	for(var/obj/machinery/door/poddoor/M in world)
-		if (M.id == src.id)
+		if(M.id == src.id)
 			spawn( 0 )
 				M.open()
 				return
@@ -159,7 +159,7 @@
 	sleep(50)
 
 	for(var/obj/machinery/door/poddoor/M in world)
-		if (M.id == src.id)
+		if(M.id == src.id)
 			spawn( 0 )
 				M.close()
 				return

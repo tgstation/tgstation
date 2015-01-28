@@ -37,7 +37,7 @@
 ///////////////////Options for using captured souls///////////////////////////////////////
 
 /obj/item/device/soulstone/attack_self(mob/user)
-	if (!in_range(src, user))
+	if(!in_range(src, user))
 		return
 	if(!iscultist(user) && !iswizard(user) && !usability)
 		user.Paralyse(5)
@@ -57,7 +57,7 @@
 
 /obj/item/device/soulstone/Topic(href, href_list)
 	var/mob/U = usr
-	if (!in_range(src, U)||U.machine!=src)
+	if(!in_range(src, U)||U.machine!=src)
 		U << browse(null, "window=aicard")
 		U.unset_machine()
 		return
@@ -66,12 +66,12 @@
 	U.set_machine(src)
 
 	switch(href_list["choice"])//Now we switch based on choice.
-		if ("Close")
+		if("Close")
 			U << browse(null, "window=aicard")
 			U.unset_machine()
 			return
 
-		if ("Summon")
+		if("Summon")
 			for(var/mob/living/simple_animal/shade/A in src)
 				A.status_flags &= ~GODMODE
 				A.canmove = 1
@@ -130,7 +130,7 @@
 			if(C.imprinted != "empty")
 				U << "<span class='userdanger'>Capture failed!</span>: The soul stone has already been imprinted with [C.imprinted]'s mind!"
 			else
-				if (T.stat == 0)
+				if(T.stat == 0)
 					U << "<span class='userdanger'>Capture failed!</span>: Kill or maim the victim first!"
 				else
 					if(T.client == null)
@@ -146,7 +146,7 @@
 		if("SHADE")
 			var/mob/living/simple_animal/shade/T = target
 			var/obj/item/device/soulstone/C = src
-			if (T.stat == DEAD)
+			if(T.stat == DEAD)
 				U << "<span class='userdanger'>Capture failed!</span>: The shade has already been banished!"
 			else
 				if(C.contents.len)

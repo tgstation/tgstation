@@ -29,7 +29,7 @@
 		return .
 
 	if(message_mode == "robot")
-		if (radio)
+		if(radio)
 			radio.talk_into(src, message)
 		return REDUCE_RANGE
 

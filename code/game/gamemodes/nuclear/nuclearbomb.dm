@@ -19,21 +19,21 @@ var/bomb_set
 	var/lastentered = ""
 
 /obj/machinery/nuclearbomb/process()
-	if (src.timing)
+	if(src.timing)
 		bomb_set = 1 //So long as there is one nuke timing, it means one nuke is armed.
 		src.timeleft--
-		if (src.timeleft <= 0)
+		if(src.timeleft <= 0)
 			explode()
 		else
 			var/volume = (timeleft <= 20 ? 30 : 5)
 			playsound(loc, 'sound/items/timer.ogg', volume, 0)
 		for(var/mob/M in viewers(1, src))
-			if ((M.client && M.machine == src))
+			if((M.client && M.machine == src))
 				src.attack_hand(M)
 	return
 
 /obj/machinery/nuclearbomb/attackby(obj/item/weapon/I as obj, mob/user as mob)
-	if (istype(I, /obj/item/weapon/disk/nuclear))
+	if(istype(I, /obj/item/weapon/disk/nuclear))
 		usr.drop_item()
 		I.loc = src
 		src.auth = I
@@ -50,20 +50,20 @@ var/bomb_set
 /obj/machinery/nuclearbomb/attack_hand(mob/user as mob)
 	user.set_machine(src)
 	var/dat = text("<TT>\nAuth. Disk: <A href='?src=\ref[];auth=1'>[]</A><HR>", src, (src.auth ? "++++++++++" : "----------"))
-	if (src.auth)
-		if (src.yes_code)
+	if(src.auth)
+		if(src.yes_code)
 			dat += text("\n<B>Status</B>: []-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] <A href='?src=\ref[];timer=1'>Toggle</A><BR>\nTime: <A href='?src=\ref[];time=-10'>-</A> <A href='?src=\ref[];time=-1'>-</A> [] <A href='?src=\ref[];time=1'>+</A> <A href='?src=\ref[];time=10'>+</A><BR>\n<BR>\nSafety: [] <A href='?src=\ref[];safety=1'>Toggle</A><BR>\nAnchor: [] <A href='?src=\ref[];anchor=1'>Toggle</A><BR>\n", (src.timing ? "Func/Set" : "Functional"), (src.safety ? "Safe" : "Engaged"), src.timeleft, (src.timing ? "On" : "Off"), src, src, src, src.timeleft, src, src, (src.safety ? "On" : "Off"), src, (src.anchored ? "Engaged" : "Off"), src)
 		else
 			dat += text("\n<B>Status</B>: Auth. S2-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: - - [] + +<BR>\n<BR>\n[] Safety: Toggle<BR>\nAnchor: [] Toggle<BR>\n", (src.safety ? "Safe" : "Engaged"), src.timeleft, (src.timing ? "On" : "Off"), src.timeleft, (src.safety ? "On" : "Off"), (src.anchored ? "Engaged" : "Off"))
 	else
-		if (src.timing)
+		if(src.timing)
 			dat += text("\n<B>Status</B>: Set-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: - - [] + +<BR>\n<BR>\nSafety: [] Toggle<BR>\nAnchor: [] Toggle<BR>\n", (src.safety ? "Safe" : "Engaged"), src.timeleft, (src.timing ? "On" : "Off"), src.timeleft, (src.safety ? "On" : "Off"), (src.anchored ? "Engaged" : "Off"))
 		else
 			dat += text("\n<B>Status</B>: Auth. S1-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: - - [] + +<BR>\n<BR>\nSafety: [] Toggle<BR>\nAnchor: [] Toggle<BR>\n", (src.safety ? "Safe" : "Engaged"), src.timeleft, (src.timing ? "On" : "Off"), src.timeleft, (src.safety ? "On" : "Off"), (src.anchored ? "Engaged" : "Off"))
 	var/message = "AUTH"
-	if (src.auth)
+	if(src.auth)
 		message = text("[]", src.code)
-		if (src.yes_code)
+		if(src.yes_code)
 			message = "*****"
 	dat += text("<HR>\n>[]<BR>\n<A href='?src=\ref[];type=1'>1</A><A href='?src=\ref[];type=2'>2</A><A href='?src=\ref[];type=3'>3</A><BR>\n<A href='?src=\ref[];type=4'>4</A><A href='?src=\ref[];type=5'>5</A><A href='?src=\ref[];type=6'>6</A><BR>\n<A href='?src=\ref[];type=7'>7</A><A href='?src=\ref[];type=8'>8</A><A href='?src=\ref[];type=9'>9</A><BR>\n<A href='?src=\ref[];type=R'>R</A><A href='?src=\ref[];type=0'>0</A><A href='?src=\ref[];type=E'>E</A><BR>\n</TT>", message, src, src, src, src, src, src, src, src, src, src, src, src)
 	var/datum/browser/popup = new(user, "nuclearbomb", name, 300, 400)
@@ -75,52 +75,52 @@ var/bomb_set
 	if(..())
 		return
 	usr.set_machine(src)
-	if (href_list["auth"])
-		if (src.auth)
+	if(href_list["auth"])
+		if(src.auth)
 			src.auth.loc = src.loc
 			src.yes_code = 0
 			src.auth = null
 		else
 			var/obj/item/I = usr.get_active_hand()
-			if (istype(I, /obj/item/weapon/disk/nuclear))
+			if(istype(I, /obj/item/weapon/disk/nuclear))
 				usr.drop_item()
 				I.loc = src
 				src.auth = I
-	if (src.auth)
-		if (href_list["type"])
-			if (href_list["type"] == "E")
-				if (src.code == src.r_code)
+	if(src.auth)
+		if(href_list["type"])
+			if(href_list["type"] == "E")
+				if(src.code == src.r_code)
 					src.yes_code = 1
 					src.code = null
 				else
 					src.code = "ERROR"
 			else
-				if (href_list["type"] == "R")
+				if(href_list["type"] == "R")
 					src.yes_code = 0
 					src.code = null
 				else
 					lastentered = text("[]", href_list["type"])
-					if (text2num(lastentered) == null)
+					if(text2num(lastentered) == null)
 						var/turf/LOC = get_turf(usr)
 						message_admins("[key_name_admin(usr)] tried to exploit a nuclear bomb by entering non-numerical codes: <a href='?_src_=vars;Vars=\ref[src]'>[lastentered]</a> ! ([LOC ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[LOC.x];Y=[LOC.y];Z=[LOC.z]'>JMP</a>" : "null"])", 0)
 						log_admin("EXPLOIT : [key_name(usr)] tried to exploit a nuclear bomb by entering non-numerical codes: [lastentered] !")
 					else
 						src.code += lastentered
-						if (length(src.code) > 5)
+						if(length(src.code) > 5)
 							src.code = "ERROR"
-		if (src.yes_code)
-			if (href_list["time"])
+		if(src.yes_code)
+			if(href_list["time"])
 				var/time = text2num(href_list["time"])
 				src.timeleft += time
 				src.timeleft = min(max(round(src.timeleft), 60), 600)
-			if (href_list["timer"])
-				if (src.timing == -1.0)
+			if(href_list["timer"])
+				if(src.timing == -1.0)
 					return
-				if (src.safety)
+				if(src.safety)
 					usr << "<span class='danger'>The safety is still on.</span>"
 					return
 				src.timing = !( src.timing )
-				if (src.timing)
+				if(src.timing)
 					src.icon_state = "nuclearbomb2"
 					if(!src.safety)
 						bomb_set = 1//There can still be issues with this reseting when there are multiple bombs. Not a big deal tho for Nuke/N
@@ -133,27 +133,27 @@ var/bomb_set
 					src.icon_state = "nuclearbomb1"
 					bomb_set = 0
 					set_security_level("[previous_level]")
-			if (href_list["safety"])
+			if(href_list["safety"])
 				src.safety = !( src.safety )
 				src.icon_state = "nuclearbomb1"
 				if(safety)
 					src.timing = 0
 					bomb_set = 0
-			if (href_list["anchor"])
+			if(href_list["anchor"])
 				if(!isinspace())
 					src.anchored = !( src.anchored )
 				else
 					usr << "<span class='warning'>There is nothing to anchor to!</span>"
 	src.add_fingerprint(usr)
 	for(var/mob/M in viewers(1, src))
-		if ((M.client && M.machine == src))
+		if((M.client && M.machine == src))
 			src.attack_hand(M)
 
 /obj/machinery/nuclearbomb/ex_act(severity, target)
 	return
 
 /obj/machinery/nuclearbomb/blob_act()
-	if (src.timing == -1.0)
+	if(src.timing == -1.0)
 		return
 	else
 		return ..()
@@ -162,7 +162,7 @@ var/bomb_set
 
 #define NUKERANGE 80
 /obj/machinery/nuclearbomb/proc/explode()
-	if (src.safety)
+	if(src.safety)
 		src.timing = 0
 		return
 	src.timing = -1.0
@@ -171,7 +171,7 @@ var/bomb_set
 	src.icon_state = "nuclearbomb3"
 	for(var/mob/M in player_list)
 		M << 'sound/machines/Alarm.ogg'
-	if (ticker && ticker.mode)
+	if(ticker && ticker.mode)
 		ticker.mode.explosion_in_progress = 1
 	sleep(100)
 

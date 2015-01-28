@@ -104,7 +104,7 @@
 	if(clumsy_check && can_shoot())
 		if(istype(user, /mob/living))
 			var/mob/living/M = user
-			if (M.disabilities & CLUMSY && prob(40))
+			if(M.disabilities & CLUMSY && prob(40))
 				user << "<span class='danger'>You shoot yourself in the foot with \the [src]!</span>"
 				process_fire(user,user,0,params)
 				M.drop_item()
@@ -119,7 +119,7 @@
 
 
 /obj/item/weapon/gun/proc/can_trigger_gun(mob/living/carbon/user)
-	if (!user.IsAdvancedToolUser())
+	if(!user.IsAdvancedToolUser())
 		user << "<span class='notice'>You don't have the dexterity to do this!</span>"
 		return 0
 

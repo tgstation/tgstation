@@ -32,7 +32,7 @@
 	var/dat
 	if(temp)
 		dat = "[temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
-	else if (!activepage || activepage == "return")
+	else if(!activepage || activepage == "return")
 		dat = "<B>The Book of Magic:</B><BR>"
 		dat += "Uses remaining: [uses]<BR>"
 		dat += "<HR>"
@@ -43,7 +43,7 @@
 		dat += "<HR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=rememorize'>Re-memorize Spells</A><BR>"
 
-	else if (activepage == "spells")
+	else if(activepage == "spells")
 		dat += "<B>Spells:</B><BR>"
 		dat += "Spells that can be reused endlessly. Unless stated otherwise all spells require full wizard garb as a focus.<BR>"
 		dat += "The number after the spell name is the cooldown time. You can reduce this number by spending more points on the spell.<BR>"
@@ -108,7 +108,7 @@
 
 		dat += "<A href='byond://?src=\ref[src];spell_choice=return'><B>Return</B></A><BR>"
 
-	else if (activepage == "challenge")
+	else if(activepage == "challenge")
 
 		dat += "<B>Challenges:</B><BR>"
 		dat += "The Wizard Federation typically has hard limits on the potency and number of spells brought to the station based on risk.<BR>"
@@ -128,7 +128,7 @@
 
 		dat += "<A href='byond://?src=\ref[src];spell_choice=return'><B>Return</B></A><BR>"
 
-	else if (activepage == "artifacts")
+	else if(activepage == "artifacts")
 
 		dat += "<B>Artifacts:</B><BR>"
 		dat += "Powerful items imbued with eldritch magics. Summoning one will count towards your maximum number of uses.<BR>"
@@ -376,7 +376,7 @@
 						if("scrying")
 							feedback_add_details("wizard_spell_learned","SO") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							new /obj/item/weapon/scrying(get_turf(H))
-							if (!(H.dna.check_mutation(XRAY)))
+							if(!(H.dna.check_mutation(XRAY)))
 								H.dna.add_mutation(XRAY)
 							temp = "You have purchased a scrying orb, and gained x-ray vision."
 							max_uses--

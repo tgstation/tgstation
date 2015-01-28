@@ -42,7 +42,7 @@
 
 	src.current = select_active_ai(user)
 
-	if (!src.current)
+	if(!src.current)
 		user << "No active AIs detected."
 	else
 		user << "[src.current.name] selected for law changes."

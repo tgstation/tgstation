@@ -30,28 +30,28 @@
 
 /obj/mecha/working/ripley/go_out()
 	..()
-	if (src.damage_absorption.["brute"] < 0.6 && src.damage_absorption.["brute"] > 0.3)
+	if(src.damage_absorption.["brute"] < 0.6 && src.damage_absorption.["brute"] > 0.3)
 		src.overlays = null
 		src.overlays += image("icon" = "mecha.dmi", "icon_state" = "ripley-g-open")
-	else if (src.damage_absorption.["brute"] == 0.3)
+	else if(src.damage_absorption.["brute"] == 0.3)
 		src.overlays = null
 		src.overlays += image("icon" = "mecha.dmi", "icon_state" = "ripley-g-full-open")
 
 /obj/mecha/working/ripley/moved_inside(var/mob/living/carbon/human/H as mob)
 	..()
-	if (src.damage_absorption.["brute"] < 0.6 && src.damage_absorption.["brute"] > 0.3)
+	if(src.damage_absorption.["brute"] < 0.6 && src.damage_absorption.["brute"] > 0.3)
 		src.overlays = null
 		src.overlays += image("icon" = "mecha.dmi", "icon_state" = "ripley-g")
-	else if (src.damage_absorption.["brute"] == 0.3)
+	else if(src.damage_absorption.["brute"] == 0.3)
 		src.overlays = null
 		src.overlays += image("icon" = "mecha.dmi", "icon_state" = "ripley-g-full")
 
 /obj/mecha/working/ripley/mmi_moved_inside(var/obj/item/device/mmi/mmi_as_oc as obj,mob/user as mob)
 	..()
-	if (src.damage_absorption.["brute"] < 0.6 && src.damage_absorption.["brute"] > 0.3)
+	if(src.damage_absorption.["brute"] < 0.6 && src.damage_absorption.["brute"] > 0.3)
 		src.overlays = null
 		src.overlays += image("icon" = "mecha.dmi", "icon_state" = "ripley-g")
-	else if (src.damage_absorption.["brute"] == 0.3)
+	else if(src.damage_absorption.["brute"] == 0.3)
 		src.overlays = null
 		src.overlays += image("icon" = "mecha.dmi", "icon_state" = "ripley-g-full")
 

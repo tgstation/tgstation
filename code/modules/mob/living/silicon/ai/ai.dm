@@ -3,10 +3,10 @@ var/list/ai_list = list()
 //Not sure why this is necessary...
 /proc/AutoUpdateAI(obj/subject)
 	var/is_in_use = 0
-	if (subject!=null)
+	if(subject!=null)
 		for(var/A in ai_list)
 			var/mob/living/silicon/ai/M = A
-			if ((M.client && M.machine == subject))
+			if((M.client && M.machine == subject))
 				is_in_use = 1
 				subject.attack_ai(M)
 	return is_in_use
@@ -70,7 +70,7 @@ var/list/ai_list = list()
 	while(!pickedName)
 		pickedName = pick(ai_names)
 		for (var/mob/living/silicon/ai/A in mob_list)
-			if (A.real_name == pickedName && possibleNames.len > 1) //fixing the theoretically possible infinite loop
+			if(A.real_name == pickedName && possibleNames.len > 1) //fixing the theoretically possible infinite loop
 				possibleNames -= pickedName
 				pickedName = null
 
@@ -84,7 +84,7 @@ var/list/ai_list = list()
 	holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo1"))
 
 	if(L)
-		if (istype(L, /datum/ai_laws))
+		if(istype(L, /datum/ai_laws))
 			laws = L
 	else
 		make_laws()
@@ -100,19 +100,19 @@ var/list/ai_list = list()
 	radio = new /obj/item/device/radio/headset/ai(src)
 	aicamera = new/obj/item/device/camera/siliconcam/ai_camera(src)
 
-	if (istype(loc, /turf))
+	if(istype(loc, /turf))
 		verbs.Add(/mob/living/silicon/ai/proc/ai_network_change, \
 		/mob/living/silicon/ai/proc/ai_statuschange, /mob/living/silicon/ai/proc/ai_hologram_change, \
 		/mob/living/silicon/ai/proc/toggle_camera_light, /mob/living/silicon/ai/proc/botcall,\
 		/mob/living/silicon/ai/proc/control_integrated_radio, /mob/living/silicon/ai/proc/set_automatic_say_channel)
 
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
-		if (!B)//If there is no player/brain inside.
+		if(!B)//If there is no player/brain inside.
 			new/obj/structure/AIcore/deactivated(loc)//New empty terminal.
 			qdel(src)//Delete AI.
 			return
 		else
-			if (B.brainmob.mind)
+			if(B.brainmob.mind)
 				B.brainmob.mind.transfer_to(src)
 
 			src << "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>"
@@ -122,7 +122,7 @@ var/list/ai_list = list()
 			src << "Use say :b to speak to your cyborgs through binary."
 			src << "For department channels, use the following say commands:"
 			src << ":o - AI Private, :c - Command, :s - Security, :e - Engineering, :u - Supply, :v - Service, :m - Medical, :n - Science."
-			if (!(ticker && ticker.mode && (mind in ticker.mode.malf_ai)))
+			if(!(ticker && ticker.mode && (mind in ticker.mode.malf_ai)))
 				show_laws()
 				src << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
 
@@ -219,7 +219,7 @@ var/list/ai_list = list()
 		if(ticker.mode.name == "AI malfunction")
 			var/datum/game_mode/malfunction/malf = ticker.mode
 			for (var/datum/mind/malfai in malf.malf_ai)
-				if ((mind == malfai) && (malf.apcs > 0))
+				if((mind == malfai) && (malf.apcs > 0))
 					stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/malf.apcs, 0)] seconds")
 
 		if(!stat)
@@ -241,24 +241,24 @@ var/list/ai_list = list()
 	for (var/cat in alarms)
 		dat += text("<B>[]</B><BR>\n", cat)
 		var/list/L = alarms[cat]
-		if (L.len)
+		if(L.len)
 			for (var/alarm in L)
 				var/list/alm = L[alarm]
 				var/area/A = alm[1]
 				var/C = alm[2]
 				var/list/sources = alm[3]
 				dat += "<NOBR>"
-				if (C && istype(C, /list))
+				if(C && istype(C, /list))
 					var/dat2 = ""
 					for (var/obj/machinery/camera/I in C)
 						dat2 += text("[]<A HREF=?src=\ref[];switchcamera=\ref[]>[]</A>", (dat2=="") ? "" : " | ", src, I, I.c_tag)
 					dat += text("-- [] ([])", A.name, (dat2!="") ? dat2 : "No Camera")
-				else if (C && istype(C, /obj/machinery/camera))
+				else if(C && istype(C, /obj/machinery/camera))
 					var/obj/machinery/camera/Ctmp = C
 					dat += text("-- [] (<A HREF=?src=\ref[];switchcamera=\ref[]>[]</A>)", A.name, src, C, Ctmp.c_tag)
 				else
 					dat += text("-- [] (No Camera)", A.name)
-				if (sources.len > 1)
+				if(sources.len > 1)
 					dat += text("- [] sources", sources.len)
 				dat += "</NOBR><BR>\n"
 		else
@@ -331,13 +331,13 @@ var/list/ai_list = list()
 	return
 
 /mob/living/silicon/ai/check_eye(var/mob/user as mob)
-	if (!current)
+	if(!current)
 		return null
 	user.reset_view(current)
 	return 1
 
 /mob/living/silicon/ai/blob_act()
-	if (stat != 2)
+	if(stat != 2)
 		adjustBruteLoss(60)
 		updatehealth()
 		return 1
@@ -347,7 +347,7 @@ var/list/ai_list = list()
 	return 0
 
 /mob/living/silicon/ai/emp_act(severity)
-	if (prob(30))
+	if(prob(30))
 		switch(pick(1,2))
 			if(1)
 				view_core()
@@ -362,11 +362,11 @@ var/list/ai_list = list()
 		if(1.0)
 			gib()
 		if(2.0)
-			if (stat != 2)
+			if(stat != 2)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
 		if(3.0)
-			if (stat != 2)
+			if(stat != 2)
 				adjustBruteLoss(30)
 
 	return
@@ -376,15 +376,15 @@ var/list/ai_list = list()
 	if(usr != src)
 		return
 	..()
-	if (href_list["mach_close"])
-		if (href_list["mach_close"] == "aialerts")
+	if(href_list["mach_close"])
+		if(href_list["mach_close"] == "aialerts")
 			viewalerts = 0
 		var/t1 = text("window=[]", href_list["mach_close"])
 		unset_machine()
 		src << browse(null, t1)
-	if (href_list["switchcamera"])
+	if(href_list["switchcamera"])
 		switchCamera(locate(href_list["switchcamera"])) in cameranet.cameras
-	if (href_list["showalerts"])
+	if(href_list["showalerts"])
 		ai_alerts()
 #ifdef AI_VOX
 	if(href_list["say_word"])
@@ -395,21 +395,21 @@ var/list/ai_list = list()
 		if(last_paper_seen)
 			src << browse(last_paper_seen, "window=show_paper")
 	//Carn: holopad requests
-	if (href_list["jumptoholopad"])
+	if(href_list["jumptoholopad"])
 		var/obj/machinery/hologram/holopad/H = locate(href_list["jumptoholopad"])
 		if(stat == CONSCIOUS)
 			if(H)
 				H.attack_ai(src) //may as well recycle
 			else
 				src << "<span class='notice'>Unable to locate the holopad.</span>"
-	if (href_list["track"])
+	if(href_list["track"])
 		var/mob/target = locate(href_list["track"]) in mob_list
 		var/mob/living/silicon/ai/A = locate(href_list["track2"]) in mob_list
 		if(A && target)
 			A.ai_actual_track(target)
 		return
 
-	if (href_list["callbot"]) //Command a bot to move to a selected location.
+	if(href_list["callbot"]) //Command a bot to move to a selected location.
 		Bot = locate(href_list["callbot"]) in SSbot.processing
 		if(!Bot || Bot.remote_disabled || src.control_disabled)
 			return //True if there is no bot found, the bot is manually emagged, or the AI is carded with wireless off.
@@ -417,24 +417,24 @@ var/list/ai_list = list()
 		src << "<span class='notice'>Set your waypoint by clicking on a valid location free of obstructions.</span>"
 		return
 
-	if (href_list["interface"]) //Remotely connect to a bot!
+	if(href_list["interface"]) //Remotely connect to a bot!
 		Bot = locate(href_list["interface"]) in SSbot.processing
 		if(!Bot || Bot.remote_disabled || src.control_disabled)
 			return
 		Bot.attack_ai(src)
 
-	if (href_list["botrefresh"]) //Refreshes the bot control panel.
+	if(href_list["botrefresh"]) //Refreshes the bot control panel.
 		botcall()
 		return
 
-	else if (href_list["faketrack"])
+	else if(href_list["faketrack"])
 		var/mob/target = locate(href_list["track"]) in mob_list
 		var/mob/living/silicon/ai/A = locate(href_list["track2"]) in mob_list
 		if(A && target)
 
 			A.cameraFollow = target
 			A << "Now tracking [target.name] on camera."
-			if (usr.machine == null)
+			if(usr.machine == null)
 				usr.machine = usr
 
 			while (src.cameraFollow == target)
@@ -452,7 +452,7 @@ var/list/ai_list = list()
 
 
 /mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
-	if (!ticker)
+	if(!ticker)
 		M << "You cannot attack people before the game has started."
 		return
 
@@ -460,7 +460,7 @@ var/list/ai_list = list()
 	return
 
 /mob/living/silicon/ai/reset_view(atom/A)
-	if (camera_light_on)
+	if(camera_light_on)
 		light_cameras()
 	if(istype(A,/obj/machinery/camera))
 		current = A
@@ -471,7 +471,7 @@ var/list/ai_list = list()
 
 	src.cameraFollow = null
 
-	if (!C || stat == 2) //C.can_use())
+	if(!C || stat == 2) //C.can_use())
 		return 0
 
 	if(!src.eyeobj)
@@ -541,29 +541,29 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/triggerAlarm(var/class, area/A, var/O, var/obj/alarmsource)
 	if(alarmsource.z != z)
 		return
-	if (stat == 2)
+	if(stat == 2)
 		return 1
 	var/list/L = alarms[class]
 	for (var/I in L)
-		if (I == A.name)
+		if(I == A.name)
 			var/list/alarm = L[I]
 			var/list/sources = alarm[3]
-			if (!(alarmsource in sources))
+			if(!(alarmsource in sources))
 				sources += alarmsource
 			return 1
 	var/obj/machinery/camera/C = null
 	var/list/CL = null
-	if (O && istype(O, /list))
+	if(O && istype(O, /list))
 		CL = O
-		if (CL.len == 1)
+		if(CL.len == 1)
 			C = CL[1]
-	else if (O && istype(O, /obj/machinery/camera))
+	else if(O && istype(O, /obj/machinery/camera))
 		C = O
 	L[A.name] = list(A, (C) ? C : O, list(alarmsource))
-	if (O)
-		if (C && C.can_use())
+	if(O)
+		if(C && C.can_use())
 			queueAlarm("--- [class] alarm detected in [A.name]! (<A HREF=?src=\ref[src];switchcamera=\ref[C]>[C.c_tag]</A>)", class)
-		else if (CL && CL.len)
+		else if(CL && CL.len)
 			var/foo = 0
 			var/dat2 = ""
 			for (var/obj/machinery/camera/I in CL)
@@ -574,24 +574,24 @@ var/list/ai_list = list()
 			queueAlarm(text("--- [] alarm detected in []! (No Camera)", class, A.name), class)
 	else
 		queueAlarm(text("--- [] alarm detected in []! (No Camera)", class, A.name), class)
-	if (viewalerts) ai_alerts()
+	if(viewalerts) ai_alerts()
 	return 1
 
 /mob/living/silicon/ai/cancelAlarm(var/class, area/A as area, obj/origin)
 	var/list/L = alarms[class]
 	var/cleared = 0
 	for (var/I in L)
-		if (I == A.name)
+		if(I == A.name)
 			var/list/alarm = L[I]
 			var/list/srcs  = alarm[3]
-			if (origin in srcs)
+			if(origin in srcs)
 				srcs -= origin
-			if (srcs.len == 0)
+			if(srcs.len == 0)
 				cleared = 1
 				L -= I
-	if (cleared)
+	if(cleared)
 		queueAlarm("--- [class] alarm in [A.name] has been cleared.", class, 0)
-		if (viewalerts) ai_alerts()
+		if(viewalerts) ai_alerts()
 	return !cleared
 
 //Replaces /mob/living/silicon/ai/verb/change_network() in ai.dm & camera.dm
@@ -728,7 +728,7 @@ var/list/ai_list = list()
 
 	camera_light_on = !camera_light_on
 
-	if (!camera_light_on)
+	if(!camera_light_on)
 		src << "Camera lights deactivated."
 
 		for (var/obj/machinery/camera/C in lit_cameras)
@@ -750,7 +750,7 @@ var/list/ai_list = list()
 	var/list/obj/machinery/camera/visible = list()
 	for (var/datum/camerachunk/CC in eyeobj.visibleCameraChunks)
 		for (var/obj/machinery/camera/C in CC.cameras)
-			if (!C.can_use() || C.light_disabled || get_dist(C, eyeobj) > 7)
+			if(!C.can_use() || C.light_disabled || get_dist(C, eyeobj) > 7)
 				continue
 			visible |= C
 
@@ -770,7 +770,7 @@ var/list/ai_list = list()
 	set category = "AI Commands"
 
 	src << "Accessing Subspace Transceiver control..."
-	if (radio)
+	if(radio)
 		radio.interact(src)
 
 /mob/living/silicon/ai/proc/set_syndie_radio()

@@ -188,7 +188,7 @@
 
 /mob/living/carbon/human/interactive/attack_hand(mob/living/carbon/human/M as mob)
 	..()
-	if (health > 0)
+	if(health > 0)
 		if(M.a_intent == "help")
 			chatter()
 		if(M.a_intent == "harm")

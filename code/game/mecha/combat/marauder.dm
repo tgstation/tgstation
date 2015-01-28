@@ -190,10 +190,10 @@
 
 /obj/mecha/combat/marauder/Topic(href, href_list)
 	..()
-	if (href_list["toggle_thrusters"])
+	if(href_list["toggle_thrusters"])
 		src.toggle_thrusters()
-	if (href_list["smoke"])
+	if(href_list["smoke"])
 		src.smoke()
-	if (href_list["toggle_zoom"])
+	if(href_list["toggle_zoom"])
 		src.zoom()
 	return

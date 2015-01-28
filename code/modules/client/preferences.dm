@@ -128,7 +128,7 @@ datum/preferences
 		dat += "<HR>"
 
 		switch(current_tab)
-			if (0) // Character Settings#
+			if(0) // Character Settings#
 				if(path)
 					var/savefile/S = new /savefile(path)
 					if(S)
@@ -216,7 +216,7 @@ datum/preferences
 				dat += "</td></tr></table>"
 
 
-			if (1) // Game Preferences
+			if(1) // Game Preferences
 				dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 				dat += "<h2>General Settings</h2>"
 				dat += "<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'>[UI_style]</a><br>"
@@ -395,10 +395,10 @@ datum/preferences
 		return
 
 	proc/SetJobPreferenceLevel(var/datum/job/job, var/level)
-		if (!job)
+		if(!job)
 			return 0
 
-		if (level == 1) // to high
+		if(level == 1) // to high
 			// remove any other job(s) set to high
 			job_civilian_med |= job_civilian_high
 			job_engsec_med |= job_engsec_high
@@ -407,45 +407,45 @@ datum/preferences
 			job_engsec_high = 0
 			job_medsci_high = 0
 
-		if (job.department_flag == CIVILIAN)
+		if(job.department_flag == CIVILIAN)
 			job_civilian_low &= ~job.flag
 			job_civilian_med &= ~job.flag
 			job_civilian_high &= ~job.flag
 
 			switch(level)
-				if (1)
+				if(1)
 					job_civilian_high |= job.flag
-				if (2)
+				if(2)
 					job_civilian_med |= job.flag
-				if (3)
+				if(3)
 					job_civilian_low |= job.flag
 
 			return 1
-		else if (job.department_flag == ENGSEC)
+		else if(job.department_flag == ENGSEC)
 			job_engsec_low &= ~job.flag
 			job_engsec_med &= ~job.flag
 			job_engsec_high &= ~job.flag
 
 			switch(level)
-				if (1)
+				if(1)
 					job_engsec_high |= job.flag
-				if (2)
+				if(2)
 					job_engsec_med |= job.flag
-				if (3)
+				if(3)
 					job_engsec_low |= job.flag
 
 			return 1
-		else if (job.department_flag == MEDSCI)
+		else if(job.department_flag == MEDSCI)
 			job_medsci_low &= ~job.flag
 			job_medsci_med &= ~job.flag
 			job_medsci_high &= ~job.flag
 
 			switch(level)
-				if (1)
+				if(1)
 					job_medsci_high |= job.flag
-				if (2)
+				if(2)
 					job_medsci_med |= job.flag
-				if (3)
+				if(3)
 					job_medsci_low |= job.flag
 
 			return 1
@@ -462,7 +462,7 @@ datum/preferences
 			ShowChoices(user)
 			return
 
-		if (!isnum(desiredLvl))
+		if(!isnum(desiredLvl))
 			user << "<span class='danger'>UpdateJobPreference - desired level was not a number. Please notify coders!</span>"
 			ShowChoices(user)
 			return
@@ -618,13 +618,13 @@ datum/preferences
 							hair_style = new_hair_style
 
 					if("next_hair_style")
-						if (gender == MALE)
+						if(gender == MALE)
 							hair_style = next_list_item(hair_style, hair_styles_male_list)
 						else
 							hair_style = next_list_item(hair_style, hair_styles_female_list)
 
 					if("previous_hair_style")
-						if (gender == MALE)
+						if(gender == MALE)
 							hair_style = previous_list_item(hair_style, hair_styles_male_list)
 						else
 							hair_style = previous_list_item(hair_style, hair_styles_female_list)
@@ -644,13 +644,13 @@ datum/preferences
 							facial_hair_style = new_facial_hair_style
 
 					if("next_facehair_style")
-						if (gender == MALE)
+						if(gender == MALE)
 							facial_hair_style = next_list_item(facial_hair_style, facial_hair_styles_male_list)
 						else
 							facial_hair_style = next_list_item(facial_hair_style, facial_hair_styles_female_list)
 
 					if("previous_facehair_style")
-						if (gender == MALE)
+						if(gender == MALE)
 							facial_hair_style = previous_list_item(facial_hair_style, facial_hair_styles_male_list)
 						else
 							facial_hair_style = previous_list_item(facial_hair_style, facial_hair_styles_female_list)
@@ -800,7 +800,7 @@ datum/preferences
 							save_character()
 
 					if("tab")
-						if (href_list["tab"])
+						if(href_list["tab"])
 							current_tab = text2num(href_list["tab"])
 
 		ShowChoices(user)

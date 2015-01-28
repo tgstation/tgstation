@@ -68,10 +68,10 @@ Doesn't work on other aliens/AI.*/
 
 	if(isalien(M))
 		var/amount = input("Amount:", "Transfer Plasma to [M]") as num
-		if (amount)
+		if(amount)
 			amount = abs(round(amount))
 			if(powerc(amount))
-				if (get_dist(src,M) <= 1)
+				if(get_dist(src,M) <= 1)
 					M.adjustToxLoss(amount)
 					adjustToxLoss(-amount)
 					M << "<span class='noticealien'>[src] has transfered [amount] plasma to you.</span>"

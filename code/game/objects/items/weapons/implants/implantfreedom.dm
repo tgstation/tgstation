@@ -9,34 +9,34 @@
 
 
 /obj/item/weapon/implant/freedom/activate()
-	if (src.uses < 1)	return 0
+	if(src.uses < 1)	return 0
 	src.uses--
 	imp_in << "You feel a faint click."
 	if(iscarbon(imp_in))
 		var/mob/living/carbon/C_imp_in = imp_in
-		if (C_imp_in.handcuffed)
+		if(C_imp_in.handcuffed)
 			var/obj/item/weapon/W = C_imp_in.handcuffed
 			C_imp_in.handcuffed = null
 			if(C_imp_in.buckled && C_imp_in.buckled.buckle_requires_restraints)
 				C_imp_in.buckled.unbuckle_mob()
 			C_imp_in.update_inv_handcuffed(0)
-			if (C_imp_in.client)
+			if(C_imp_in.client)
 				C_imp_in.client.screen -= W
-			if (W)
+			if(W)
 				W.loc = C_imp_in.loc
 				W.dropped(C_imp_in)
-				if (W)
+				if(W)
 					W.layer = initial(W.layer)
-		if (C_imp_in.legcuffed)
+		if(C_imp_in.legcuffed)
 			var/obj/item/weapon/W = C_imp_in.legcuffed
 			C_imp_in.legcuffed = null
 			C_imp_in.update_inv_legcuffed(0)
-			if (C_imp_in.client)
+			if(C_imp_in.client)
 				C_imp_in.client.screen -= W
-			if (W)
+			if(W)
 				W.loc = C_imp_in.loc
 				W.dropped(C_imp_in)
-				if (W)
+				if(W)
 					W.layer = initial(W.layer)
 
 

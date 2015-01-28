@@ -61,7 +61,7 @@
 		var/mob/living/silicon/ai/AI = usr
 		if(AI.eyeobj && AI.client.eye == AI.eyeobj)
 			AI.cameraFollow = null
-			if (isturf(src.loc) || isturf(src))
+			if(isturf(src.loc) || isturf(src))
 				AI.eyeobj.setLoc(src)
 
 // This will move the AIEye. It will also cause lights near the eye to light up, if toggled.
@@ -90,7 +90,7 @@
 
 	//user.unset_machine() //Uncomment this if it causes problems.
 	//user.lightNearbyCamera()
-	if (user.camera_light_on)
+	if(user.camera_light_on)
 		user.light_cameras()
 
 

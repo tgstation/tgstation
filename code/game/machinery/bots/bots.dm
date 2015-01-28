@@ -122,7 +122,7 @@
 	qdel(src)
 
 /obj/machinery/bot/proc/healthcheck()
-	if (health <= 0)
+	if(health <= 0)
 		explode()
 
 /obj/machinery/bot/proc/Emag(mob/user as mob) //Master Emag proc. Ensure this is called in your bot before setting unique functions.
@@ -141,8 +141,8 @@
 
 /obj/machinery/bot/examine(mob/user)
 	..()
-	if (health < maxhealth)
-		if (health > maxhealth/3)
+	if(health < maxhealth)
+		if(health > maxhealth/3)
 			user << "<span class='danger'>[src]'s parts look loose.</span>"
 		else
 			user << "<span class='danger'>[src]'s parts look very loose.</span>"
@@ -174,7 +174,7 @@
 
 /obj/machinery/bot/Topic(href, href_list) //Master Topic to handle common functions.
 	. = ..()
-	if (.)
+	if(.)
 		return
 	if(topic_denied(usr))
 		usr << "<span class='warning'>[src]'s interface is not responding!</span>"
@@ -184,7 +184,7 @@
 	usr.set_machine(src)
 	add_fingerprint(usr)
 	if((href_list["power"]) && (allowed(usr) || !locked))
-		if (on)
+		if(on)
 			turn_off()
 		else
 			turn_on()
@@ -305,7 +305,7 @@
 			healthcheck()
 			return
 		if(3.0)
-			if (prob(50))
+			if(prob(50))
 				health -= rand(1,5)*fire_dam_coeff
 				health -= rand(1,5)*brute_dam_coeff
 				healthcheck()
@@ -324,11 +324,11 @@
 
 	spawn(10)
 		pulse2.delete()
-	if (on)
+	if(on)
 		turn_off()
 	spawn(severity*300)
 		stat &= ~EMPED
-		if (was_on)
+		if(was_on)
 			turn_on()
 
 /obj/machinery/bot/proc/hack(mob/user)
@@ -391,7 +391,7 @@ obj/machinery/bot/proc/process_scan(var/scan_target)
 /obj/machinery/bot/proc/add_to_ignore(var/subject)
 	if(ignore_list.len < 50) //This will help keep track of them, so the bot is always trying to reach a blocked spot.
 		ignore_list |= subject
-	else if (ignore_list.len >= subject) //If the list is full, insert newest, delete oldest.
+	else if(ignore_list.len >= subject) //If the list is full, insert newest, delete oldest.
 		ignore_list -= ignore_list[1]
 		ignore_list |= subject
 
@@ -411,7 +411,7 @@ obj/machinery/bot/proc/bot_move(var/dest, var/move_speed)
 	if(step_count >= 1 && tries < 4)
 		for(step_count, step_count >= 1,step_count--)
 			success = bot_step(dest)
-			if (success)
+			if(success)
 				tries = 0
 			else
 				tries++
@@ -468,7 +468,7 @@ obj/machinery/bot/proc/bot_step(var/dest)
 /obj/machinery/bot/proc/call_mode() //Handles preparing a bot for a call, as well as calling the move proc.
 //Handles the bot's movement during a call.
 	var/success = bot_move(ai_waypoint, 3)
-	if (!success)
+	if(!success)
 		if(calling_ai)
 			calling_ai << "\icon[src] [get_turf(src) == ai_waypoint ? "<span class='notice'>[src] successfully arrived to waypoint.</span>" : "<span class='danger'>[src] failed to reach waypoint.</span>"]"
 			calling_ai = null

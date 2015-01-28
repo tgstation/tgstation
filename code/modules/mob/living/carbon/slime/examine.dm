@@ -1,12 +1,12 @@
 /mob/living/carbon/slime/examine(mob/user)
 
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
-	if (src.stat == DEAD)
+	if(src.stat == DEAD)
 		msg += "<span class='deadsay'>It is limp and unresponsive.</span>\n"
 	else
-		if (src.getBruteLoss())
+		if(src.getBruteLoss())
 			msg += "<span class='warning'>"
-			if (src.getBruteLoss() < 40)
+			if(src.getBruteLoss() < 40)
 				msg += "It has some punctures in its flesh!"
 			else
 				msg += "<B>It has severe punctures and tears in its flesh!</B>"

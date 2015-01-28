@@ -22,34 +22,34 @@
 /obj/structure/closet/emcloset/New()
 	..()
 
-	if (prob(40))
+	if(prob(40))
 		new /obj/item/weapon/storage/toolbox/emergency(src)
 
 	switch (pickweight(list("small" = 40, "aid" = 25, "tank" = 20, "both" = 10, "nothing" = 4, "delete" = 1)))
-		if ("small")
+		if("small")
 			new /obj/item/weapon/tank/emergency_oxygen(src)
 			new /obj/item/weapon/tank/emergency_oxygen(src)
 
-		if ("aid")
+		if("aid")
 			new /obj/item/weapon/tank/emergency_oxygen(src)
 			new /obj/item/weapon/storage/firstaid/o2(src)
 
-		if ("tank")
+		if("tank")
 			new /obj/item/weapon/tank/air(src)
 
-		if ("both")
+		if("both")
 			new /obj/item/weapon/tank/emergency_oxygen(src)
 			new /obj/item/clothing/mask/breath(src)
 
-		if ("nothing")
+		if("nothing")
 			// doot
 
 		// teehee
-		if ("delete")
+		if("delete")
 			qdel(src)
 
 		//If you want to re-add fire, just add "fire" = 15 to the pick list.
-		/*if ("fire")
+		/*if("fire")
 			new /obj/structure/closet/firecloset(src.loc)
 			qdel(src)*/
 
@@ -164,10 +164,10 @@
 
 /obj/structure/closet/bombcloset/New()
 	..()
-	new /obj/item/clothing/suit/bomb_suit( src )
-	new /obj/item/clothing/under/color/black( src )
-	new /obj/item/clothing/shoes/sneakers/black( src )
-	new /obj/item/clothing/head/bomb_hood( src )
+	new /obj/item/clothing/suit/bomb_suit(src)
+	new /obj/item/clothing/under/color/black(src)
+	new /obj/item/clothing/shoes/sneakers/black(src)
+	new /obj/item/clothing/head/bomb_hood(src)
 
 
 /obj/structure/closet/bombclosetsecurity
@@ -179,10 +179,10 @@
 
 /obj/structure/closet/bombclosetsecurity/New()
 	..()
-	new /obj/item/clothing/suit/bomb_suit/security( src )
-	new /obj/item/clothing/under/rank/security( src )
-	new /obj/item/clothing/shoes/sneakers/brown( src )
-	new /obj/item/clothing/head/bomb_hood/security( src )
+	new /obj/item/clothing/suit/bomb_suit/security(src)
+	new /obj/item/clothing/under/rank/security(src)
+	new /obj/item/clothing/shoes/sneakers/brown(src)
+	new /obj/item/clothing/head/bomb_hood/security(src)
 
 /*
  * Hydrant

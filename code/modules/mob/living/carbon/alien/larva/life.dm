@@ -8,12 +8,12 @@
 	set invisibility = 0
 	set background = BACKGROUND_ENABLED
 
-	if (notransform)
+	if(notransform)
 		return
 
 	..()
 	var/datum/gas_mixture/enviroment = loc.return_air()
-	if (stat != DEAD) //still breathing
+	if(stat != DEAD) //still breathing
 
 		// GROW!
 		if(amount_grown < max_grown)
@@ -136,13 +136,13 @@
 
 /mob/living/carbon/alien/larva/proc/handle_regular_hud_updates()
 
-	if (stat == 2)
+	if(stat == 2)
 		sight |= SEE_TURFS
 		sight |= SEE_MOBS
 		sight |= SEE_OBJS
 		see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (stat != 2)
+	else if(stat != 2)
 		sight |= SEE_MOBS
 		sight &= ~SEE_TURFS
 		sight &= ~SEE_OBJS
@@ -155,8 +155,8 @@
 		if(see_override)
 			see_invisible = see_override
 
-	if (healths)
-		if (stat != 2)
+	if(healths)
+		if(stat != 2)
 			switch(health)
 				if(25 to INFINITY)
 					healths.icon_state = "health0"
@@ -179,33 +179,33 @@
 		else
 			pullin.icon_state = "pull0"
 
-	if (toxin)	toxin.icon_state = "tox[toxins_alert ? 1 : 0]"
-	if (oxygen) oxygen.icon_state = "oxy[oxygen_alert ? 1 : 0]"
-	if (fire) fire.icon_state = "fire[fire_alert ? 1 : 0]"
+	if(toxin)	toxin.icon_state = "tox[toxins_alert ? 1 : 0]"
+	if(oxygen) oxygen.icon_state = "oxy[oxygen_alert ? 1 : 0]"
+	if(fire) fire.icon_state = "fire[fire_alert ? 1 : 0]"
 	//NOTE: the alerts dont reset when youre out of danger. dont blame me,
 	//blame the person who coded them. Temporary fix added.
 
 
 	client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
 
-	if ((blind && stat != 2))
-		if ((eye_blind))
+	if((blind && stat != 2))
+		if((eye_blind))
 			blind.layer = 18
 		else
 			blind.layer = 0
 
-			if (disabilities & NEARSIGHT)
+			if(disabilities & NEARSIGHT)
 				client.screen += global_hud.vimpaired
 
-			if (eye_blurry)
+			if(eye_blurry)
 				client.screen += global_hud.blurry
 
-			if (druggy)
+			if(druggy)
 				client.screen += global_hud.druggy
 
-	if (stat != 2)
-		if (machine)
-			if (!( machine.check_eye(src) ))
+	if(stat != 2)
+		if(machine)
+			if(!( machine.check_eye(src) ))
 				reset_view(null)
 		else
 			if(!client.adminobs)

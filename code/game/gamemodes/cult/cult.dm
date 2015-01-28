@@ -15,7 +15,7 @@
 	if(istype(mind.current, /mob/living/carbon/human) && (mind.assigned_role in list("Captain", "Chaplain")))	return 0
 	if(isloyal(mind.current))
 		return 0
-	if (ticker.mode.name == "cult")		//redundent?
+	if(ticker.mode.name == "cult")		//redundent?
 		if(mind.current == ticker.mode.sacrifice_target)	return 0
 	return 1
 
@@ -136,8 +136,8 @@
 	if(!istype(mob))
 		return
 
-	if (mob.mind)
-		if (mob.mind.assigned_role == "Clown")
+	if(mob.mind)
+		if(mob.mind.assigned_role == "Clown")
 			mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
 			mob.dna.remove_mutation(CLOWNMUT)
 
@@ -151,7 +151,7 @@
 		"right hand" = slot_r_hand,
 	)
 	var/where = mob.equip_in_one_of_slots(T, slots)
-	if (!where)
+	if(!where)
 		mob << "Unfortunately, you weren't able to get a talisman. This is very bad and you should adminhelp immediately."
 	else
 		mob << "You have a talisman in your [where], one that will help you start the cult on this station. Use it well and remember - there are others."
@@ -160,14 +160,14 @@
 
 
 //datum/game_mode/cult/proc/grant_secondword(mob/living/carbon/human/cult_mob, var/word)
-//	if (!word)
+//	if(!word)
 //		if(secondwords.len > 0)
 //			word=pick(secondwords)
 //			secondwords -= word
 //			grant_runeword(cult_mob,word)
 
 //datum/game_mode/cult/grant_runeword(mob/living/carbon/human/cult_mob, var/word)
-//	if (!word)
+//	if(!word)
 //		if(startwords.len > 0)
 //			word=pick(startwords)
 //			startwords -= word
@@ -176,7 +176,7 @@
 /datum/game_mode/proc/grant_runeword(mob/living/carbon/human/cult_mob, var/word)
 	if(!wordtravel)
 		runerandom()
-	if (!word)
+	if(!word)
 		word=pick(grantwords)
 	var/wordexp
 	switch(word)
@@ -212,7 +212,7 @@
 
 
 /datum/game_mode/proc/add_cultist(datum/mind/cult_mind) //BASE
-	if (!istype(cult_mind))
+	if(!istype(cult_mind))
 		return 0
 	if(!(cult_mind in cult) && is_convertable_to_cult(cult_mind))
 		cult += cult_mind
@@ -223,7 +223,7 @@
 
 
 /datum/game_mode/cult/add_cultist(datum/mind/cult_mind) //INHERIT
-	if (!..(cult_mind))
+	if(!..(cult_mind))
 		return
 	memorize_cult_objectives(cult_mind)
 
@@ -275,7 +275,7 @@
 /datum/game_mode/cult/proc/check_survive()
 	acolytes_survived = 0
 	for(var/datum/mind/cult_mind in cult)
-		if (cult_mind.current && cult_mind.current.stat != DEAD)
+		if(cult_mind.current && cult_mind.current.stat != DEAD)
 			if(cult_mind.current.onCentcom())
 				acolytes_survived++
 	if(acolytes_survived>=acolytes_needed)
