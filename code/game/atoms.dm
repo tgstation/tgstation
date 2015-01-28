@@ -257,11 +257,11 @@ its easier to just keep the beam vertical.
 					for(var/datum/reagent/R in reagents.reagent_list)
 						user << "[R.volume] units of [R.name]"
 				else
-					user << "[reagents.total_volume] units of chemical" // Water is a chemical, right?
+					user << "[reagents.total_volume] units of something" // Would like to add RGBcode of the content some day.
 			else
 				user << "Nothing."
 		else
-			user << "You cannot see what it contain from here."
+			user << "<span class='notice'>It is too far away.</span>"
 
 /atom/proc/relaymove()
 	return
