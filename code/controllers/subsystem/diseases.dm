@@ -12,9 +12,9 @@ var/datum/subsystem/diseases/SSdisease
 
 /datum/subsystem/diseases/fire()
 	var/i=1
-	for(var/thing in processing)
-		if(thing)
-			thing:process()
+	for(var/datum/disease/d in processing)
+		if(d)
+			d.process()
 			++i
 			continue
 		processing.Cut(i,i+1)
