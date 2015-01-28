@@ -224,7 +224,7 @@ var/list/sacrificed = list()
 			for(var/mob/M in active_cultists)
 				M.say("Tok-lyr rqa'nap g[pick("'","`")]lt-ulotf!")
 			ticker.mode.eldergod = 0
-			new /obj/machinery/singularity/narsie/large(src.loc,cultspawn=1)
+			new /obj/machinery/singularity/narsie/large(src.loc)
 			return
 	return fizzle()
 

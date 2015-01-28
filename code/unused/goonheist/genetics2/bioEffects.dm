@@ -172,7 +172,7 @@
 		if (prob(1) && owner:paralysis < 1)
 			owner:visible_message("\red <B>[owner] starts having a seizure!", "\red You have a seizure!")
 			owner:paralysis = max(2, owner:paralysis)
-			owner:make_jittery(100)
+			owner:Jitter(100)
 		return
 
 /datum/bioEffect/tourettes

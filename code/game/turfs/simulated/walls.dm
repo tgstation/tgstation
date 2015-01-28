@@ -163,15 +163,21 @@
 	if( !istype(user.loc, /turf) )	return	//can't do this stuff whilst inside objects and such
 
 	if(rotting)
-		if(istype(W, /obj/item/weapon/weldingtool) )
+		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if( WT.remove_fuel(0,user) )
 				user << "<span class='notice'>You burn away the fungi with \the [WT].</span>"
 				playsound(src, 'sound/items/Welder.ogg', 10, 1)
 				for(var/obj/effect/E in src) if(E.name == "Wallrot")
-					del E
+					qdel(E)
 				rotting = 0
 				return
+		if(istype(W,/obj/item/weapon/soap))
+			user << "<span class='notice'>You forcefully scrub away the fungi with your [W].</span>"
+			for(var/obj/effect/E in src) if(E.name == "Wallrot")
+				qdel(E)
+			rotting = 0
+			return
 		else if(!is_sharp(W) && W.force >= 10 || W.force >= 20)
 			user << "<span class='notice'>\The [src] crumbles away under the force of your [W.name].</span>"
 			src.dismantle_wall(1)

@@ -36,8 +36,8 @@
 
 	OnSay(var/mob/M, var/message)
 		M.whisper(message)
-		
-		
+
+
 /datum/dna/gene/disability/dizzy
 	name = "Dizzy"
 	desc = "Causes the cerebellum to shut down in some places."
@@ -53,7 +53,7 @@
 	OnMobLife(var/mob/living/carbon/human/M)
 		if(!istype(M)) return
 		if(M_DIZZY in M.mutations)
-			M.make_dizzy(300)
+			M.Dizzy(300)
 
 
 /datum/dna/gene/disability/speech/sans
