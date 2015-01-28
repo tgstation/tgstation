@@ -31,14 +31,15 @@
 #define NOSLIP		1024 		//prevents from slipping on wet floors, in space etc (NOTE: flag shared with THICKMATERIAL for external suits and helmet)
 
 #define OPENCONTAINER	4096	// is an open container for chemistry purposes
+#define TRANSPARENT	8192	// is used for OPENCONTAINERs that allow seeing amount of content from afar
 
 // BLOCK_GAS_SMOKE_EFFECT only used in masks at the moment.
-#define BLOCK_GAS_SMOKE_EFFECT 8192	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with THICKMATERIAL)
-#define THICKMATERIAL 8192		//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with BLOCK_GAS_SMOKE_EFFECT)
+#define BLOCK_GAS_SMOKE_EFFECT 16384	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with THICKMATERIAL)
+#define THICKMATERIAL 16384		//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with BLOCK_GAS_SMOKE_EFFECT)
 
-#define	NOREACT		16384 		//Reagents dont' react inside this container.
+#define	NOREACT		32768 		//Reagents dont' react inside this container.
 
-#define BLOCKHAIR	32768		// temporarily removes the user's hair icon
+#define BLOCKHAIR	65536		// temporarily removes the user's hair icon
 
 //turf-only flags
 #define NOJAUNT		1

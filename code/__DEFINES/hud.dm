@@ -25,3 +25,6 @@
 #define ANTAG_HUD_GANG_A	8
 #define ANTAG_HUD_GANG_B	9
 #define ANTAG_HUD_WIZ		10
+
+// Scan_Vision for chemical/reagent scanning.
+#define SCAN_CHEMICAL 1
