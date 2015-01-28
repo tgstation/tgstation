@@ -1,3 +1,6 @@
+#define JITTER_MEDIUM 100
+#define JITTER_HIGH 300
+
 /mob/living/carbon/human/examine(mob/user)
 	var/list/obscured = check_obscured_slots()
 	var/skipgloves = 0
@@ -185,11 +188,11 @@
 		msg += "[t_He] [t_is] wearing \icon[wear_id] \a [wear_id].\n"
 
 	switch(jitteriness)
-		if(300 to INFINITY)
+		if(JITTER_HIGH to INFINITY)
 			msg += "<span class='warning'><B>[t_He] [t_is] convulsing violently!</B></span>\n"
-		if(200 to 300)
+		if(JITTER_MEDIUM to JITTER_HIGH)
 			msg += "<span class='warning'>[t_He] [t_is] extremely jittery.</span>\n"
-		if(1 to 100)
+		if(1 to JITTER_MEDIUM)
 			msg += "<span class='warning'>[t_He] [t_is] twitching ever so slightly.</span>\n"
 
 	//splints
@@ -492,3 +495,6 @@
 				return 0
 	else
 		return 0
+
+#undef Jitter_Medium
+#undef Jitter_High
