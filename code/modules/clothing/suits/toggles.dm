@@ -98,6 +98,8 @@
 
 /obj/item/clothing/suit/space/hardsuit/proc/ToggleHelmet()
 	var/mob/living/carbon/human/H = src.loc
+	if(!H.wear_suit.helmettype)
+		return
 	if(!suittoggled)
 		if(ishuman(src.loc))
 			if(H.wear_suit != src)

@@ -127,7 +127,7 @@
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/update_icon()
 	icon_state = "hardsuit[on]-[item_color]"
 
-/obj/item/clothing/head/helmet/space/hardsuit/syndi/ui_action_click(mob/user)
+/obj/item/clothing/head/helmet/space/hardsuit/syndi/attack_self(mob/user)
 	if(!isturf(user.loc))
 		user << "You cannot toggle your helmet while in this [user.loc]" //To prevent some lighting anomalities.
 		return
@@ -165,6 +165,7 @@
 	action_button_name = "Toggle Hardsuit Mode"
 	armor = list(melee = 60, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword/saber,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
+	helmettype = null
 
 /obj/item/clothing/suit/space/hardsuit/syndi/update_icon()
 	icon_state = "hardsuit[on]-[item_color]"
@@ -192,6 +193,7 @@
 	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	user.update_inv_wear_suit()
 	user.update_inv_w_uniform()
+
 
 	//Wizard hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/wizard
@@ -225,10 +227,12 @@
 	//Medical hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/medical
 	name = "medical hardsuit helmet"
-	desc = "A special helmet designed for work in a hazardous, low pressure environment. Built with lightweight materials for extra comfort."
+	desc = "A special helmet designed for work in a hazardous, low pressure environment. Built with lightweight materials for extra comfort, but does not protect the eyes from intense light."
 	icon_state = "hardsuit0-medical"
 	item_state = "medical_helm"
 	item_color = "medical"
+	flash_protect = 0
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 50)
 
 /obj/item/clothing/suit/space/hardsuit/medical
