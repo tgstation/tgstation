@@ -6,7 +6,7 @@
 	desc = "Creates heat receptors in our eyes and dramatically increases light sensing ability."
 	helptext = "Grants us night vision and thermal vision. It may be toggled on or off."
 	chemical_cost = 0
-	dna_cost = 3 //Would be 1 without thermal vision
+	dna_cost = 2 //Would be 1 without thermal vision
 	var/active = 0 //Whether or not vision is enhanced
 
 /obj/effect/proc_holder/changeling/augmented_eyesight/sting_action(var/mob/user)
