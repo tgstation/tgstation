@@ -286,7 +286,7 @@
 
 /obj/structure/closet/crate/secure/attack_hand(mob/user as mob)
 	if(locked && !broken)
-		if (allowed(user))
+		if(allowed(user))
 			user << "<span class='notice'>You unlock [src].</span>"
 			src.locked = 0
 			overlays.Cut()
@@ -307,7 +307,7 @@
 		overlays += redlight
 		add_fingerprint(user)
 		return
-	else if (istype(W, /obj/item/weapon/melee/energy/blade) && locked && !broken)
+	else if(istype(W, /obj/item/weapon/melee/energy/blade) && locked && !broken)
 		overlays.Cut()
 		overlays += emag
 		overlays += sparks
@@ -352,7 +352,7 @@
 			user << "<span class='notice'>[src] is already rigged!</span>"
 			return
 		var/obj/item/stack/cable_coil/C = W
-		if (C.use(5))
+		if(C.use(5))
 			user << "<span class='notice'>You rig [src].</span>"
 			rigged = 1
 		else

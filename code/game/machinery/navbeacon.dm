@@ -116,9 +116,9 @@
 
 		updateicon()
 
-	else if (istype(I, /obj/item/weapon/card/id)||istype(I, /obj/item/device/pda))
+	else if(istype(I, /obj/item/weapon/card/id)||istype(I, /obj/item/device/pda))
 		if(open)
-			if (src.allowed(user))
+			if(src.allowed(user))
 				src.locked = !src.locked
 				user << "Controls are now [src.locked ? "locked." : "unlocked."]"
 			else
@@ -191,7 +191,7 @@ Transponder Codes:<UL>"}
 	if(open && !locked)
 		usr.set_machine(src)
 
-		if (href_list["freq"])
+		if(href_list["freq"])
 			freq = sanitize_frequency(freq + text2num(href_list["freq"]))
 			updateDialog()
 

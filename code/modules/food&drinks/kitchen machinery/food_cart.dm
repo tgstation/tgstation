@@ -36,14 +36,14 @@
 	for(var/datum/reagent/R in reagents.reagent_list)
 		dat += "[R.name]: [R.volume] "
 		dat += "<a href='?src=\ref[src];disposeI=[R.id]'>Purge</a>"
-		if (glasses > 0)
+		if(glasses > 0)
 			dat += "<a href='?src=\ref[src];pour=[R.id]'>Pour in a glass</a>"
 		dat += "<a href='?src=\ref[src];mix=[R.id]'>Add to the mixer</a><br>"
 	dat += "</div><br><b>MIXER CONTENTS</b><br><div class='statusDisplay'>"
 	for(var/datum/reagent/R in mixer.reagents.reagent_list)
 		dat += "[R.name]: [R.volume] "
 		dat += "<a href='?src=\ref[src];transfer=[R.id]'>Transfer back</a>"
-		if (glasses > 0)
+		if(glasses > 0)
 			dat += "<a href='?src=\ref[src];m_pour=[R.id]'>Pour in a glass</a>"
 		dat += "<br>"
 	dat += "</div><br><b>STORED FOOD</b><br><div class='statusDisplay'>"

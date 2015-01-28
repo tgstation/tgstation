@@ -67,11 +67,11 @@
 
 	if((air1_moles < transfer_moles1) || (air2_moles < transfer_moles2))
 		var/ratio = 0
-		if (( transfer_moles1 > 0 ) && (transfer_moles2 >0 ))
+		if(( transfer_moles1 > 0 ) && (transfer_moles2 >0 ))
 			ratio = min(air1_moles/transfer_moles1, air2_moles/transfer_moles2)
-		if (( transfer_moles2 == 0 ) && ( transfer_moles1 > 0 ))
+		if(( transfer_moles2 == 0 ) && ( transfer_moles1 > 0 ))
 			ratio = air1_moles/transfer_moles1
-		if (( transfer_moles1 == 0 ) && ( transfer_moles2 > 0 ))
+		if(( transfer_moles1 == 0 ) && ( transfer_moles2 > 0 ))
 			ratio = air2_moles/transfer_moles2
 
 		transfer_moles1 *= ratio

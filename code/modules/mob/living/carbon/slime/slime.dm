@@ -70,12 +70,12 @@
 /mob/living/carbon/slime/regenerate_icons()
 	icon_state = "[colour] [is_adult ? "adult" : "baby"] slime"
 	overlays.len = 0
-	if (mood)
+	if(mood)
 		overlays += image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]")
 	..()
 
 /mob/living/carbon/slime/movement_delay()
-	if (bodytemperature >= 330.23) // 135 F
+	if(bodytemperature >= 330.23) // 135 F
 		return -1	// slimes become supercharged at high temperatures
 
 	var/tally = 0
@@ -83,7 +83,7 @@
 	var/health_deficiency = (100 - health)
 	if(health_deficiency >= 45) tally += (health_deficiency / 25)
 
-	if (bodytemperature < 183.222)
+	if(bodytemperature < 183.222)
 		tally += (283.222 - bodytemperature) / 10 * 1.75
 
 	if(reagents)
@@ -111,7 +111,7 @@
 		if(prob(probab))
 			if(istype(O, /obj/structure/window) || istype(O, /obj/structure/grille))
 				if(nutrition <= get_hunger_nutrition() && !Atkcool)
-					if (is_adult || prob(5))
+					if(is_adult || prob(5))
 						O.attack_slime(src)
 						Atkcool = 1
 						spawn(45)
@@ -164,11 +164,11 @@
 	var/b_loss = null
 	var/f_loss = null
 	switch (severity)
-		if (1.0)
+		if(1.0)
 			qdel(src)
 			return
 
-		if (2.0)
+		if(2.0)
 
 			b_loss += 60
 			f_loss += 60
@@ -184,12 +184,12 @@
 
 
 /mob/living/carbon/slime/blob_act()
-	if (stat == 2)
+	if(stat == 2)
 		return
 	var/shielded = 0
 
 	var/damage = null
-	if (stat != 2)
+	if(stat != 2)
 		damage = rand(10,30)
 
 	if(shielded)
@@ -331,13 +331,13 @@
 			M.do_attack_animation(src)
 			var/damage = rand(1, 9)
 			attacked += 10
-			if (prob(90))
+			if(prob(90))
 				playsound(loc, "punch", 25, 1, -1)
 				add_logs(M, src, "attacked", admin=0)
 				visible_message("<span class='danger'>[M] has punched [src]!</span>", \
 						"<span class='userdanger'>[M] has punched [src]!</span>")
 
-				if (stat != DEAD)
+				if(stat != DEAD)
 					adjustBruteLoss(damage)
 					updatehealth()
 			else
@@ -350,12 +350,12 @@
 /mob/living/carbon/slime/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if(..()) //if harm or disarm intent.
 
-		if (M.a_intent == "harm")
-			if (prob(95))
+		if(M.a_intent == "harm")
+			if(prob(95))
 				attacked += 10
 				playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 				var/damage = rand(15, 30)
-				if (damage >= 25)
+				if(damage >= 25)
 					damage = rand(20, 40)
 					visible_message("<span class='danger'>[M] has slashed [name]!</span>", \
 							"<span class='userdanger'>[M] has slashed [name]!</span>")
@@ -364,7 +364,7 @@
 							"<span class='userdanger'>)[M] has wounded [name]!</span>")
 
 				add_logs(M, src, "attacked", admin=0)
-				if (health != DEAD)
+				if(health != DEAD)
 					adjustBruteLoss(damage)
 					updatehealth()
 			else
@@ -372,7 +372,7 @@
 				visible_message("<span class='danger'>[M] has attempted to lunge at [name]!</span>", \
 						"<span class='userdanger'>[M] has attempted to lunge at [name]!</span>")
 
-		if (M.a_intent == "disarm")
+		if(M.a_intent == "disarm")
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			var/damage = 5
 			attacked += 10
@@ -413,7 +413,7 @@
 
 /mob/living/carbon/slime/attackby(obj/item/W, mob/living/user)
 	if(istype(W,/obj/item/stack/sheet/mineral/plasma)) //Let's you feed slimes plasma.
-		if (user in Friends)
+		if(user in Friends)
 			++Friends[user]
 		else
 			Friends[user] = 1
@@ -496,8 +496,8 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 /mob/living/carbon/slime/proc/apply_water()
 	adjustToxLoss(rand(15,20))
-	if (!client)
-		if (Target) // Like cats
+	if(!client)
+		if(Target) // Like cats
 			Target = null
 			++Discipline
 	return
@@ -651,7 +651,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		qdel(M)
 		var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
 
-		if (!newname)
+		if(!newname)
 			newname = "pet slime"
 		pet.name = newname
 		pet.real_name = newname
@@ -682,7 +682,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	qdel(M)
 	var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
 
-	if (!newname)
+	if(!newname)
 		newname = "pet slime"
 	pet.name = newname
 	pet.real_name = newname
@@ -932,7 +932,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/process()
 	var/turf/location = get_turf(src)
 	var/datum/gas_mixture/environment = location.return_air()
-	if (environment.toxins > MOLES_PLASMA_VISIBLE)//plasma exposure causes the egg to hatch
+	if(environment.toxins > MOLES_PLASMA_VISIBLE)//plasma exposure causes the egg to hatch
 		src.Hatch()
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/attackby(obj/item/weapon/W as obj, mob/user as mob)

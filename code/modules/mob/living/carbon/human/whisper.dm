@@ -17,8 +17,8 @@
 	message = "[message]"
 	log_whisper("[src.name]/[src.key] : [message]")
 
-	if (src.client)
-		if (src.client.prefs.muted & MUTE_IC)
+	if(src.client)
+		if(src.client.prefs.muted & MUTE_IC)
 			src << "<span class='danger'>You cannot whisper (muted).</span>"
 			return
 

@@ -4,12 +4,12 @@ var/appearanceban_runonce	//Updates legacy bans with new info
 var/appearance_keylist[0]	//to store the keys
 
 /proc/appearance_fullban(mob/M, reason)
-	if (!M || !M.key) return
+	if(!M || !M.key) return
 	appearance_keylist.Add(text("[M.ckey] ## [reason]"))
 	appearance_savebanfile()
 
 /proc/appearance_client_fullban(ckey)
-	if (!ckey) return
+	if(!ckey) return
 	appearance_keylist.Add(text("[ckey]"))
 	appearance_savebanfile()
 
@@ -47,7 +47,7 @@ DEBUG
 		log_admin("Loading appearance_rank")
 		S["runonce"] >> appearanceban_runonce
 
-		if (!length(appearance_keylist))
+		if(!length(appearance_keylist))
 			appearance_keylist=list()
 			log_admin("appearance_keylist was empty")
 	else

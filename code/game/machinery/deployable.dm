@@ -65,8 +65,8 @@ for reference:
 
 /obj/structure/barricade/wooden/attackby(obj/item/W as obj, mob/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if (istype(W, /obj/item/stack/sheet/mineral/wood))
-		if (src.health < src.maxhealth)
+	if(istype(W, /obj/item/stack/sheet/mineral/wood))
+		if(src.health < src.maxhealth)
 			visible_message("<span class='danger'>[user] begins to repair \the [src]!</span>")
 			if(do_after(user,20))
 				src.health = src.maxhealth
@@ -83,7 +83,7 @@ for reference:
 			if("brute")
 				src.health -= W.force * 0.75
 			else
-		if (src.health <= 0)
+		if(src.health <= 0)
 			visible_message("<span class='danger'>The barricade is smashed apart!</span>")
 			new /obj/item/stack/sheet/mineral/wood(get_turf(src))
 			new /obj/item/stack/sheet/mineral/wood(get_turf(src))
@@ -99,7 +99,7 @@ for reference:
 			return
 		if(2.0)
 			src.health -= 25
-			if (src.health <= 0)
+			if(src.health <= 0)
 				visible_message("<span class='danger'>The barricade is blown apart!</span>")
 				new /obj/item/stack/sheet/mineral/wood(get_turf(src))
 				new /obj/item/stack/sheet/mineral/wood(get_turf(src))
@@ -109,7 +109,7 @@ for reference:
 
 /obj/structure/barricade/wooden/blob_act()
 	src.health -= 25
-	if (src.health <= 0)
+	if(src.health <= 0)
 		visible_message("<span class='danger'>The blob eats through the barricade!</span>")
 		qdel(src)
 	return
@@ -149,16 +149,16 @@ for reference:
 	src.icon_state = "barrier[src.locked]"
 
 /obj/machinery/deployable/barrier/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (W.GetID())
-		if (src.allowed(user))
+	if(W.GetID())
+		if(src.allowed(user))
 			if	(src.emagged < 2.0)
 				src.locked = !src.locked
 				src.anchored = !src.anchored
 				src.icon_state = "barrier[src.locked]"
-				if ((src.locked == 1.0) && (src.emagged < 2.0))
+				if((src.locked == 1.0) && (src.emagged < 2.0))
 					user << "Barrier lock toggled on."
 					return
-				else if ((src.locked == 0.0) && (src.emagged < 2.0))
+				else if((src.locked == 0.0) && (src.emagged < 2.0))
 					user << "Barrier lock toggled off."
 					return
 			else
@@ -168,14 +168,14 @@ for reference:
 				visible_message("<span class='danger'>BZZzZZzZZzZT</span>")
 				return
 		return
-	else if (istype(W, /obj/item/weapon/wrench))
-		if (src.health < src.maxhealth)
+	else if(istype(W, /obj/item/weapon/wrench))
+		if(src.health < src.maxhealth)
 			src.health = src.maxhealth
 			src.emagged = 0
 			src.req_access = list(access_security)
 			visible_message("<span class='danger'>[user] repairs \the [src]!</span>")
 			return
-		else if (src.emagged > 0)
+		else if(src.emagged > 0)
 			src.emagged = 0
 			src.req_access = list(access_security)
 			visible_message("<span class='danger'>[user] repairs \the [src]!</span>")
@@ -188,12 +188,12 @@ for reference:
 			if("brute")
 				src.health -= W.force * 0.5
 			else
-		if (src.health <= 0)
+		if(src.health <= 0)
 			src.explode()
 		..()
 
 /obj/machinery/deployable/emag_act(user as mob)
-	if (src.emagged == 0)
+	if(src.emagged == 0)
 		src.emagged = 1
 		src.req_access = null
 		user << "You break the ID authentication lock on \the [src]."
@@ -202,7 +202,7 @@ for reference:
 		s.start()
 		visible_message("<span class='danger'>BZZzZZzZZzZT</span>")
 		return
-	else if (src.emagged == 1)
+	else if(src.emagged == 1)
 		src.emagged = 2
 		user << "You short out the anchoring mechanism on \the [src]."
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -218,7 +218,7 @@ for reference:
 			return
 		if(2.0)
 			src.health -= 25
-			if (src.health <= 0)
+			if(src.health <= 0)
 				src.explode()
 			return
 
@@ -232,7 +232,7 @@ for reference:
 
 /obj/machinery/deployable/barrier/blob_act()
 	src.health -= 25
-	if (src.health <= 0)
+	if(src.health <= 0)
 		src.explode()
 	return
 

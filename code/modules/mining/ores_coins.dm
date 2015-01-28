@@ -255,7 +255,7 @@
 			user << "<span class='notice'>There already is a string attached to this coin.</span>"
 			return
 
-		if (CC.use(1))
+		if(CC.use(1))
 			overlays += image('icons/obj/economy.dmi',"coin_string_overlay")
 			string_attached = 1
 			user << "<span class='notice'>You attach a string to the coin.</span>"

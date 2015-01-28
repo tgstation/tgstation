@@ -18,8 +18,8 @@
 /mob/living/carbon/alien/humanoid/hunter/handle_regular_hud_updates()
 	..() //-Yvarov
 
-	if (healths)
-		if (stat != 2)
+	if(healths)
+		if(stat != 2)
 			switch(health)
 				if(150 to INFINITY)
 					healths.icon_state = "health0"

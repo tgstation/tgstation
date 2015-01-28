@@ -2,10 +2,10 @@
 	if(reagents)
 		reagents.metabolize(src)
 
-	if (drowsyness)
+	if(drowsyness)
 		drowsyness--
 		eye_blurry = max(2, eye_blurry)
-		if (prob(5))
+		if(prob(5))
 			sleeping += 1
 			Paralyse(5)
 
@@ -35,7 +35,7 @@
 
 	if(losebreath>0) //Suffocating so do not take a breath
 		losebreath--
-		if (prob(75)) //High chance of gasping for air
+		if(prob(75)) //High chance of gasping for air
 			spawn emote("gasp")
 		if(istype(loc, /obj/))
 			var/obj/location_as_object = loc

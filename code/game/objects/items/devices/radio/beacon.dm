@@ -19,9 +19,9 @@
 	set category = "Object"
 	set src in usr
 
-	if ((usr.canmove && !( usr.restrained() )))
+	if((usr.canmove && !( usr.restrained() )))
 		src.code = t
-	if (!( src.code ))
+	if(!( src.code ))
 		src.code = "beacon"
 	src.add_fingerprint(usr)
 	return

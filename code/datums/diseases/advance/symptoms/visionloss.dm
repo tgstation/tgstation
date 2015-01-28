@@ -40,9 +40,9 @@ Bonus
 				M << "<span class='danger'>Your eyes burn horrificly!</span>"
 				M.eye_blurry = 20
 				M.eye_stat += 5
-				if (M.eye_stat >= 10)
+				if(M.eye_stat >= 10)
 					M.disabilities |= NEARSIGHT
-					if (prob(M.eye_stat - 10 + 1) && !(M.eye_blind))
+					if(prob(M.eye_stat - 10 + 1) && !(M.eye_blind))
 						M << "<span class='danger'>You go blind!</span>"
 						M.disabilities |= BLIND
 						M.eye_blind = 1

@@ -20,7 +20,7 @@ var/const/WIRE_ACTIVATE = 16	// Will start a bombs timer if pulsed, will hint if
 	var/obj/machinery/syndicatebomb/P = holder
 	switch(index)
 		if(WIRE_BOOM)
-			if (P.active)
+			if(P.active)
 				P.loc.visible_message("<span class='danger'>\icon[holder] An alarm sounds! It's go-</span>")
 				P.timer = 0
 		if(WIRE_UNBOLT)
@@ -32,11 +32,11 @@ var/const/WIRE_ACTIVATE = 16	// Will start a bombs timer if pulsed, will hint if
 		if(WIRE_PROCEED)
 			playsound(P.loc, 'sound/machines/buzz-sigh.ogg', 30, 1)
 			P.loc.visible_message("<span class='danger'>\icon[holder] The bomb buzzes ominously!</span>")
-			if (P.timer >= 61) //Long fuse bombs can suddenly become more dangerous if you tinker with them
+			if(P.timer >= 61) //Long fuse bombs can suddenly become more dangerous if you tinker with them
 				P.timer = 60
-			if (P.timer >= 21)
+			if(P.timer >= 21)
 				P.timer -= 10
-			else if (P.timer >= 11) //both to prevent negative timers and to have a little mercy
+			else if(P.timer >= 11) //both to prevent negative timers and to have a little mercy
 				P.timer = 10
 		if(WIRE_ACTIVATE)
 			if(!P.active && !P.defused)
@@ -61,7 +61,7 @@ var/const/WIRE_ACTIVATE = 16	// Will start a bombs timer if pulsed, will hint if
 			if(mended)
 				P.defused = 0 //cutting and mending all the wires of an inactive bomb will thus cure any sabotage
 		if(WIRE_UNBOLT)
-			if (!mended && P.anchored)
+			if(!mended && P.anchored)
 				playsound(P.loc, 'sound/effects/stealthoff.ogg', 30, 1)
 				P.loc.visible_message("<span class='notice'>\icon[holder] The bolts lift out of the ground!</span>")
 				P.anchored = 0
@@ -70,7 +70,7 @@ var/const/WIRE_ACTIVATE = 16	// Will start a bombs timer if pulsed, will hint if
 				P.loc.visible_message("<span class='danger'>\icon[holder] An alarm sounds! It's go-</span>")
 				P.timer = 0
 		if(WIRE_ACTIVATE)
-			if (!mended && P.active)
+			if(!mended && P.active)
 				P.loc.visible_message("<span class='notice'>\icon[holder] The timer stops! The bomb has been defused!</span>")
 				P.icon_state = "[initial(P.icon_state)]-inactive[P.open_panel ? "-wires" : ""]"
 				P.active = 0

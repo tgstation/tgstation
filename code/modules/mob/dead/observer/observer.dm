@@ -200,7 +200,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 					loc = T
 				pos = loc
 				sleep(15)
-			if (target == following) following = null
+			if(target == following) following = null
 
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
@@ -217,7 +217,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		dest += getmobs() //Fill list, prompt user with list
 		target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in dest
 
-		if (!target)//Make sure we actually have a target
+		if(!target)//Make sure we actually have a target
 			return
 		else
 			var/mob/M = dest[target] //Destination mob
@@ -256,7 +256,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Toggle Darkness"
 	set category = "Ghost"
 
-	if (see_invisible == SEE_INVISIBLE_OBSERVER_NOLIGHTING)
+	if(see_invisible == SEE_INVISIBLE_OBSERVER_NOLIGHTING)
 		see_invisible = SEE_INVISIBLE_OBSERVER
 	else
 		see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING

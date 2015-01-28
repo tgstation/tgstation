@@ -315,7 +315,7 @@
 		dat += "</div>"
 		if(premium.len > 0)
 			dat += "<b>Coin slot:</b> "
-			if (coin)
+			if(coin)
 				dat += "[coin]&nbsp;&nbsp;<a href='byond://?src=\ref[src];remove_coin=1'>Remove</a>"
 			else
 				dat += "<i>No coin</i>&nbsp;&nbsp;<span class='linkOff'>Remove</span>"
@@ -434,12 +434,12 @@
 			else
 				qdel(coin)
 				coin = null
-		else if (!(R in product_records))
+		else if(!(R in product_records))
 			vend_ready = 1
 			message_admins("Vending machine exploit attempted by [key_name(usr, usr.client)]!")
 			return
 
-		if (R.amount <= 0)
+		if(R.amount <= 0)
 			usr << "<span class='warning'>Sold out.</span>"
 			vend_ready = 1
 			return

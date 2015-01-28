@@ -528,7 +528,7 @@
 	var/dat = "<h3>Atmospheric Sensor</h4>"
 
 	var/turf/T = get_turf(src.loc)
-	if (isnull(T))
+	if(isnull(T))
 		dat += "Unable to obtain a reading.<br>"
 	else
 		var/datum/gas_mixture/environment = T.return_air()
@@ -538,7 +538,7 @@
 
 		dat += "Air Pressure: [round(pressure,0.1)] kPa<br>"
 
-		if (total_moles)
+		if(total_moles)
 			var/o2_level = environment.oxygen/total_moles
 			var/n2_level = environment.nitrogen/total_moles
 			var/co2_level = environment.carbon_dioxide/total_moles
@@ -638,7 +638,7 @@
 	dat += "<ul>"
 	if(!pda.toff)
 		for (var/obj/item/device/pda/P in sortNames(get_viewable_pdas()))
-			if (P == src.pda)	continue
+			if(P == src.pda)	continue
 			dat += "<li><a href='byond://?src=\ref[src];software=pdamessage;target=\ref[P]'>[P]</a>"
 			dat += "</li>"
 	dat += "</ul>"

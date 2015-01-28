@@ -129,10 +129,10 @@ datum/reagent/consumable/condensedcapsaicin/reaction_mob(var/mob/living/M, var/m
 
 		//monkeys and humans can have masks
 		if( victim.wear_mask )
-			if ( victim.wear_mask.flags & MASKCOVERSEYES )
+			if( victim.wear_mask.flags & MASKCOVERSEYES )
 				eyes_covered = 1
 				safe_thing = victim.wear_mask
-			if ( victim.wear_mask.flags & MASKCOVERSMOUTH )
+			if( victim.wear_mask.flags & MASKCOVERSMOUTH )
 				mouth_covered = 1
 				safe_thing = victim.wear_mask
 
@@ -140,21 +140,21 @@ datum/reagent/consumable/condensedcapsaicin/reaction_mob(var/mob/living/M, var/m
 		if(istype(victim, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = victim
 			if( H.head )
-				if ( H.head.flags & MASKCOVERSEYES )
+				if( H.head.flags & MASKCOVERSEYES )
 					eyes_covered = 1
 					safe_thing = H.head
-				if ( H.head.flags & MASKCOVERSMOUTH )
+				if( H.head.flags & MASKCOVERSMOUTH )
 					mouth_covered = 1
 					safe_thing = H.head
 			if(H.glasses)
 				eyes_covered = 1
-				if ( !safe_thing )
+				if( !safe_thing )
 					safe_thing = H.glasses
 
 		//actually handle the pepperspray effects
-		if ( eyes_covered && mouth_covered )
+		if( eyes_covered && mouth_covered )
 			return
-		else if ( mouth_covered )	// Reduced effects if partially protected
+		else if( mouth_covered )	// Reduced effects if partially protected
 			if(prob(5))
 				victim.emote("scream")
 			victim.eye_blurry = max(M.eye_blurry, 3)
@@ -164,7 +164,7 @@ datum/reagent/consumable/condensedcapsaicin/reaction_mob(var/mob/living/M, var/m
 			victim.Weaken(3)
 			victim.drop_item()
 			return
-		else if ( eyes_covered ) // Eye cover is better than mouth cover
+		else if( eyes_covered ) // Eye cover is better than mouth cover
 			victim.eye_blurry = max(M.eye_blurry, 3)
 			victim.damageoverlaytemp = 30
 			return
@@ -250,7 +250,7 @@ datum/reagent/consumable/hot_coco
 	color = "#403010" // rgb: 64, 48, 16
 
 datum/reagent/consumable/hot_coco/on_mob_life(var/mob/living/M as mob)
-	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
+	if(M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
 	return
@@ -268,21 +268,21 @@ datum/reagent/mushroomhallucinogen/on_mob_life(var/mob/living/M as mob)
 		data = 1
 	switch(data)
 		if(1 to 5)
-			if (!M.stuttering)
+			if(!M.stuttering)
 				M.stuttering = 1
 			M.Dizzy(5)
 			if(prob(10))
 				M.emote(pick("twitch","giggle"))
 		if(5 to 10)
-			if (!M.stuttering)
+			if(!M.stuttering)
 				M.stuttering = 1
 			M.Jitter(10)
 			M.Dizzy(10)
 			M.druggy = max(M.druggy, 35)
 			if(prob(20))
 				M.emote(pick("twitch","giggle"))
-		if (10 to INFINITY)
-			if (!M.stuttering)
+		if(10 to INFINITY)
+			if(!M.stuttering)
 				M.stuttering = 1
 			M.Jitter(20)
 			M.Dizzy(20)
@@ -314,7 +314,7 @@ datum/reagent/consumable/cornoil
 	color = "#302000" // rgb: 48, 32, 0
 
 datum/reagent/consumable/cornoil/reaction_turf(var/turf/simulated/T, var/volume)
-	if (!istype(T))
+	if(!istype(T))
 		return
 	src = null
 	if(volume >= 3)
@@ -348,7 +348,7 @@ datum/reagent/consumable/hot_ramen
 	color = "#302000" // rgb: 48, 32, 0
 
 datum/reagent/consumable/hot_ramen/on_mob_life(var/mob/living/M as mob)
-	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
+	if(M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(310, M.bodytemperature + (10 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
 	return

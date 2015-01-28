@@ -28,8 +28,8 @@
 
 
 /*/obj/item/weapon/grenade/afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-	if (istype(target, /obj/item/weapon/storage)) return ..() // Trying to put it in a full container
-	if (istype(target, /obj/item/weapon/gun/grenadelauncher)) return ..()
+	if(istype(target, /obj/item/weapon/storage)) return ..() // Trying to put it in a full container
+	if(istype(target, /obj/item/weapon/gun/grenadelauncher)) return ..()
 	if((user.get_active_hand() == src) && (!active) && (clown_check(user)) && target.loc != src.loc)
 		user << "<span class='warning'>You prime the [name]! [det_time/10] seconds!</span>"
 		active = 1
@@ -84,16 +84,16 @@
 /obj/item/weapon/grenade/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		switch(det_time)
-			if ("1")
+			if("1")
 				det_time = 10
 				user << "<span class='notice'>You set the [name] for 1 second detonation time.</span>"
-			if ("10")
+			if("10")
 				det_time = 30
 				user << "<span class='notice'>You set the [name] for 3 second detonation time.</span>"
-			if ("30")
+			if("30")
 				det_time = 50
 				user << "<span class='notice'>You set the [name] for 5 second detonation time.</span>"
-			if ("50")
+			if("50")
 				det_time = 1
 				user << "<span class='notice'>You set the [name] for instant detonation.</span>"
 		add_fingerprint(user)

@@ -35,7 +35,7 @@
 
 
 /obj/effect/accelerated_particle/Bump(atom/A)
-	if (A)
+	if(A)
 		if(ismob(A))
 			toxmob(A)
 		if((istype(A,/obj/machinery/the_singularitygen))||(istype(A,/obj/singularity/)))

@@ -52,11 +52,11 @@
 
 /obj/structure/lattice/attackby(obj/item/C as obj, mob/user as mob)
 	var/turf/T = get_turf(src)
-	if (istype(C, /obj/item/stack/tile/plasteel))
+	if(istype(C, /obj/item/stack/tile/plasteel))
 		T.attackby(C, user) //BubbleWrap - hand this off to the underlying turf instead (for building plating)
 	if(istype(C, /obj/item/stack/rods))
 		T.attackby(C, user) //see above, for building catwalks
-	if (istype(C, /obj/item/weapon/weldingtool))
+	if(istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = C
 		if(WT.remove_fuel(0, user))
 			user << "<span class='notice'>Slicing [name] joints ...</span>"

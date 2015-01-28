@@ -27,7 +27,7 @@
 /obj/item/weapon/locator/attack_self(mob/user as mob)
 	user.set_machine(src)
 	var/dat
-	if (src.temp)
+	if(src.temp)
 		dat = "[src.temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
 	else
 		dat = {"
@@ -45,33 +45,33 @@ Frequency:
 
 /obj/item/weapon/locator/Topic(href, href_list)
 	..()
-	if (usr.stat || usr.restrained())
+	if(usr.stat || usr.restrained())
 		return
 	var/turf/current_location = get_turf(usr)//What turf is the user on?
 	if(!current_location||current_location.z==2)//If turf was not found or they're on z level 2.
 		usr << "The [src] is malfunctioning."
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
+	if((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
 		usr.set_machine(src)
-		if (href_list["refresh"])
+		if(href_list["refresh"])
 			src.temp = "<B>Persistent Signal Locator</B><HR>"
 			var/turf/sr = get_turf(src)
 
-			if (sr)
+			if(sr)
 				src.temp += "<B>Located Beacons:</B><BR>"
 
 				for(var/obj/item/device/radio/beacon/W in world)
-					if (W.frequency == src.frequency)
+					if(W.frequency == src.frequency)
 						var/turf/tr = get_turf(W)
-						if (tr.z == sr.z && tr)
+						if(tr.z == sr.z && tr)
 							var/direct = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
-							if (direct < 5)
+							if(direct < 5)
 								direct = "very strong"
 							else
-								if (direct < 10)
+								if(direct < 10)
 									direct = "strong"
 								else
-									if (direct < 20)
+									if(direct < 20)
 										direct = "weak"
 									else
 										direct = "very weak"
@@ -79,22 +79,22 @@ Frequency:
 
 				src.temp += "<B>Extranneous Signals:</B><BR>"
 				for (var/obj/item/weapon/implant/tracking/W in world)
-					if (!W.implanted || !ismob(W.loc))
+					if(!W.implanted || !ismob(W.loc))
 						continue
 					else
 						var/mob/M = W.loc
-						if (M.stat == 2)
-							if (M.timeofdeath + 6000 < world.time)
+						if(M.stat == 2)
+							if(M.timeofdeath + 6000 < world.time)
 								continue
 
 					var/turf/tr = get_turf(W)
-					if (tr.z == sr.z && tr)
+					if(tr.z == sr.z && tr)
 						var/direct = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
-						if (direct < 20)
-							if (direct < 5)
+						if(direct < 20)
+							if(direct < 5)
 								direct = "very strong"
 							else
-								if (direct < 10)
+								if(direct < 10)
 									direct = "strong"
 								else
 									direct = "weak"
@@ -104,17 +104,17 @@ Frequency:
 			else
 				src.temp += "<B><FONT color='red'>Processing Error:</FONT></B> Unable to locate orbital position.<BR>"
 		else
-			if (href_list["freq"])
+			if(href_list["freq"])
 				src.frequency += text2num(href_list["freq"])
 				src.frequency = sanitize_frequency(src.frequency)
 			else
-				if (href_list["temp"])
+				if(href_list["temp"])
 					src.temp = null
-		if (istype(src.loc, /mob))
+		if(istype(src.loc, /mob))
 			attack_self(src.loc)
 		else
 			for(var/mob/M in viewers(1, src))
-				if (M.client)
+				if(M.client)
 					src.attack_self(M)
 	return
 
@@ -156,7 +156,7 @@ Frequency:
 	if(turfs.len)
 		L["None (Dangerous)"] = pick(turfs)
 	var/t1 = input(user, "Please select a teleporter to lock in on.", "Hand Teleporter") in L
-	if ((user.get_active_hand() != src || user.stat || user.restrained()))
+	if((user.get_active_hand() != src || user.stat || user.restrained()))
 		return
 	if(active_portals >= 3)
 		user.show_message("<span class='notice'>\The [src] is recharging!</span>")

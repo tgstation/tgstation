@@ -194,7 +194,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/proc/handle_reagents()
 	if(iscarbon(loc))
 		var/mob/living/carbon/C = loc
-		if (src == C.wear_mask) // if it's in the human/monkey mouth, transfer reagents to the mob
+		if(src == C.wear_mask) // if it's in the human/monkey mouth, transfer reagents to the mob
 			if(prob(15)) // so it's not an instarape in case of acid
 				reagents.reaction(C, INGEST)
 			reagents.trans_to(C, REAGENTS_METABOLISM)

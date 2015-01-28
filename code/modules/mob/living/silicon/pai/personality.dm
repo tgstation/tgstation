@@ -32,12 +32,12 @@
 // returns 0 if savefile did not exist
 
 /datum/paiCandidate/proc/savefile_load(mob/user, var/silent = 1)
-	if (IsGuestKey(user.key))
+	if(IsGuestKey(user.key))
 		return 0
 
 	var/path = savefile_path(user)
 
-	if (!fexists(path))
+	if(!fexists(path))
 		return 0
 
 	var/savefile/F = new /savefile(path)
@@ -47,9 +47,9 @@
 	var/version = null
 	F["version"] >> version
 
-	if (isnull(version) || version != 1)
+	if(isnull(version) || version != 1)
 		fdel(path)
-		if (!silent)
+		if(!silent)
 			alert(user, "Your savefile was incompatible with this version and was deleted.")
 		return 0
 

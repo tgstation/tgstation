@@ -16,11 +16,11 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				qdel(src)
 				return
 		if(3.0)
-			if (prob(5))
+			if(prob(5))
 				qdel(src)
 				return
 		else
@@ -35,7 +35,7 @@
 
 /obj/structure/reagent_dispensers/New()
 	create_reagents(1000)
-	if (!possible_transfer_amounts)
+	if(!possible_transfer_amounts)
 		src.verbs -= /obj/structure/reagent_dispensers/verb/set_APTFT
 	..()
 
@@ -46,7 +46,7 @@
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 	var/N = input("Amount per transfer from this:","[src]") as null|anything in possible_transfer_amounts
-	if (N)
+	if(N)
 		amount_per_transfer_from_this = N
 
 //Dispensers
@@ -66,12 +66,12 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				new /obj/effect/effect/water(src.loc)
 				qdel(src)
 				return
 		if(3.0)
-			if (prob(5))
+			if(prob(5))
 				new /obj/effect/effect/water(src.loc)
 				qdel(src)
 				return

@@ -19,10 +19,10 @@
 				B.contents -= O
 				unload_mineral(O)
 				limit++
-				if (limit>=10)
+				if(limit>=10)
 					return
 		for(var/obj/item/I in T)
 			unload_mineral(I)
 			limit++
-			if (limit>=10)
+			if(limit>=10)
 				return

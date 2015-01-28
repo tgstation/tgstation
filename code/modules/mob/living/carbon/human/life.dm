@@ -39,7 +39,7 @@
 	set invisibility = 0
 	set background = BACKGROUND_ENABLED
 
-	if (notransform)	return
+	if(notransform)	return
 	if(!loc)			return	// Fixing a null error that occurs when the mob isn't found in the world -- TLE
 
 	..()
@@ -128,8 +128,8 @@
 
 
 /mob/living/carbon/human/proc/handle_disabilities()
-	if (getBrainLoss() >= 60 && stat != 2)
-		if (prob(3))
+	if(getBrainLoss() >= 60 && stat != 2)
+		if(prob(3))
 			switch(pick(1,2,3))
 				if(1)
 					say(pick("IM A PONY NEEEEEEIIIIIIIIIGH", "without oxigen blob don't evoluate?", "CAPTAINS A COMDOM", "[pick("", "that faggot traitor")] [pick("joerge", "george", "gorge", "gdoruge")] [pick("mellens", "melons", "mwrlins")] is grifing me HAL;P!!!", "can u give me [pick("telikesis","halk","eppilapse")]?", "THe saiyans screwed", "Bi is THE BEST OF BOTH WORLDS>", "I WANNA PET TEH monkeyS", "stop grifing me!!!!", "SOTP IT#"))
@@ -465,7 +465,7 @@
 		//Ears
 		if(disabilities & DEAF)	//disabled-deaf, doesn't get better on its own
 			setEarDamage(-1, max(ear_deaf, 1))
-		else if (ear_damage < 100) // deafness heals slowly over time, unless ear_damage is over 100
+		else if(ear_damage < 100) // deafness heals slowly over time, unless ear_damage is over 100
 			if(istype(ears, /obj/item/clothing/ears/earmuffs)) // earmuffs rest your ears, healing 3x faster, but keeping you deaf.
 				setEarDamage(max(ear_damage-0.15, 0), max(ear_deaf - 1, 1))
 			else
@@ -634,7 +634,7 @@
 /mob/living/carbon/human/proc/handle_random_events()
 	// Puke if toxloss is too high
 	if(!stat)
-		if (getToxLoss() >= 45 && nutrition > 20)
+		if(getToxLoss() >= 45 && nutrition > 20)
 			lastpuke ++
 			if(lastpuke >= 25) // about 25 second delay I guess
 				Stun(5)
@@ -644,7 +644,7 @@
 				playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 
 				var/turf/location = loc
-				if (istype(location, /turf/simulated))
+				if(istype(location, /turf/simulated))
 					location.add_vomit_floor(src, 1)
 
 				nutrition -= 20

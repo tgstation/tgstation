@@ -1,11 +1,11 @@
 /mob/living/carbon/proc/monkeyize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_DEFAULTMSG), newname = null)
-	if (notransform)
+	if(notransform)
 		return
 	//Handle items on mob
 
 	//first implants
 	var/list/implants = list()
-	if (tr_flags & TR_KEEPIMPLANTS)
+	if(tr_flags & TR_KEEPIMPLANTS)
 		for(var/obj/item/weapon/implant/W in src)
 			implants += W
 
@@ -35,7 +35,7 @@
 	if	(tr_flags & TR_HASHNAME)
 		O.name = "monkey ([copytext(md5(real_name), 2, 6)])"
 		O.real_name = "monkey ([copytext(md5(real_name), 2, 6)])"
-	if (newname) //if there's a name as an argument, always take that one over the current name
+	if(newname) //if there's a name as an argument, always take that one over the current name
 		O.name = newname
 		O.real_name = newname
 
@@ -51,14 +51,14 @@
 	O.a_intent = "harm"
 
 	//keep viruses?
-	if (tr_flags & TR_KEEPVIRUS)
+	if(tr_flags & TR_KEEPVIRUS)
 		O.viruses = viruses
 		viruses = list()
 		for(var/datum/disease/D in O.viruses)
 			D.affected_mob = O
 
 	//keep damage?
-	if (tr_flags & TR_KEEPDAMAGE)
+	if(tr_flags & TR_KEEPDAMAGE)
 		O.setToxLoss(getToxLoss())
 		O.adjustBruteLoss(getBruteLoss())
 		O.setOxyLoss(getOxyLoss())
@@ -75,7 +75,7 @@
 		mind.transfer_to(O)
 		if(O.mind.changeling)
 			O.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
-	if (tr_flags & TR_DEFAULTMSG)
+	if(tr_flags & TR_DEFAULTMSG)
 		O << "<B>You are now a monkey.</B>"
 
 	for(var/A in loc.vars)
@@ -84,7 +84,7 @@
 
 	updateappearance(O)
 	. = O
-	if ( !(tr_flags & TR_KEEPSRC) ) //flag should be used if monkeyize() is called inside another proc of src so that one does not crash
+	if( !(tr_flags & TR_KEEPSRC) ) //flag should be used if monkeyize() is called inside another proc of src so that one does not crash
 		qdel(src)
 
 
@@ -92,23 +92,23 @@
 //Could probably be merged with monkeyize but other transformations got their own procs, too
 
 /mob/living/carbon/proc/humanize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_DEFAULTMSG), newname = null)
-	if (notransform)
+	if(notransform)
 		return
 	//Handle items on mob
 
 	//first implants
 	var/list/implants = list()
-	if (tr_flags & TR_KEEPIMPLANTS)
+	if(tr_flags & TR_KEEPIMPLANTS)
 		for(var/obj/item/weapon/implant/W in src)
 			implants += W
 
 	//now the rest
-	if (tr_flags & TR_KEEPITEMS)
+	if(tr_flags & TR_KEEPITEMS)
 		for(var/obj/item/W in (src.contents-implants))
 			unEquip(W)
-			if (client)
+			if(client)
 				client.screen -= W
-			if (W)
+			if(W)
 				W.loc = loc
 				W.dropped(src)
 				W.layer = initial(W.layer)
@@ -164,7 +164,7 @@
 	O.loc = loc
 
 	//keep viruses?
-	if (tr_flags & TR_KEEPVIRUS)
+	if(tr_flags & TR_KEEPVIRUS)
 		O.viruses = viruses
 		viruses = list()
 		for(var/datum/disease/D in O.viruses)
@@ -172,7 +172,7 @@
 		O.med_hud_set_status()
 
 	//keep damage?
-	if (tr_flags & TR_KEEPDAMAGE)
+	if(tr_flags & TR_KEEPDAMAGE)
 		O.setToxLoss(getToxLoss())
 		O.adjustBruteLoss(getBruteLoss())
 		O.setOxyLoss(getOxyLoss())
@@ -188,7 +188,7 @@
 	if(mind)
 		mind.transfer_to(O)
 	O.a_intent = "help"
-	if (tr_flags & TR_DEFAULTMSG)
+	if(tr_flags & TR_DEFAULTMSG)
 		O << "<B>You are now a human.</B>"
 
 	updateappearance(O)
@@ -198,7 +198,7 @@
 		if(loc.vars[A] == src)
 			loc.vars[A] = O
 
-	if ( !(tr_flags & TR_KEEPSRC) ) //don't delete src yet if it's needed to finish calling proc
+	if( !(tr_flags & TR_KEEPSRC) ) //don't delete src yet if it's needed to finish calling proc
 		qdel(src)
 
 
@@ -207,7 +207,7 @@
 	return ..()
 
 /mob/living/carbon/human/AIize()
-	if (notransform)
+	if(notransform)
 		return
 	for(var/t in organs)
 		qdel(t)
@@ -215,7 +215,7 @@
 	return ..()
 
 /mob/living/carbon/AIize()
-	if (notransform)
+	if(notransform)
 		return
 	for(var/obj/item/W in src)
 		unEquip(W)
@@ -240,21 +240,21 @@
 
 	var/obj/loc_landmark
 	for(var/obj/effect/landmark/start/sloc in landmarks_list)
-		if (sloc.name != "AI")
+		if(sloc.name != "AI")
 			continue
-		if (locate(/mob/living) in sloc.loc)
+		if(locate(/mob/living) in sloc.loc)
 			continue
 		loc_landmark = sloc
-	if (!loc_landmark)
+	if(!loc_landmark)
 		for(var/obj/effect/landmark/tripai in landmarks_list)
-			if (tripai.name == "tripai")
+			if(tripai.name == "tripai")
 				if(locate(/mob/living) in tripai.loc)
 					continue
 				loc_landmark = tripai
-	if (!loc_landmark)
+	if(!loc_landmark)
 		O << "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone."
 		for(var/obj/effect/landmark/start/sloc in landmarks_list)
-			if (sloc.name == "AI")
+			if(sloc.name == "AI")
 				loc_landmark = sloc
 
 	O.loc = loc_landmark.loc
@@ -268,7 +268,7 @@
 	O << {"Use say ":b to speak to your cyborgs through binary."} //"
 	O << "For department channels, use the following say commands:"
 	O << ":o - AI Private, :c - Command, :s - Security, :e - Engineering, :u - Supply, :v - Service, :m - Medical, :n - Science."
-	if (!(ticker && ticker.mode && (O.mind in ticker.mode.malf_ai)))
+	if(!(ticker && ticker.mode && (O.mind in ticker.mode.malf_ai)))
 		O.show_laws()
 		O << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
 
@@ -285,7 +285,7 @@
 
 //human -> robot
 /mob/living/carbon/human/proc/Robotize(var/delete_items = 0)
-	if (notransform)
+	if(notransform)
 		return
 	for(var/obj/item/W in src)
 		if(delete_items)
@@ -302,7 +302,7 @@
 
 	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot( loc )
 
-	if (config.rename_cyborg)
+	if(config.rename_cyborg)
 		O.rename_self("cyborg", 1)
 
 	// cyborgs produced by Robotize get an automatic power cell
@@ -331,7 +331,7 @@
 
 //human -> alien
 /mob/living/carbon/human/proc/Alienize()
-	if (notransform)
+	if(notransform)
 		return
 	for(var/obj/item/W in src)
 		unEquip(W)
@@ -361,7 +361,7 @@
 	qdel(src)
 
 /mob/living/carbon/human/proc/slimeize(reproduce as num)
-	if (notransform)
+	if(notransform)
 		return
 	for(var/obj/item/W in src)
 		unEquip(W)
@@ -393,7 +393,7 @@
 	qdel(src)
 
 /mob/living/carbon/human/proc/Blobize()
-	if (notransform)
+	if(notransform)
 		return
 	var/obj/effect/blob/core/new_blob = new /obj/effect/blob/core (loc)
 	if(!client)
@@ -408,7 +408,7 @@
 
 
 /mob/living/carbon/human/proc/corgize()
-	if (notransform)
+	if(notransform)
 		return
 	for(var/obj/item/W in src)
 		unEquip(W)

@@ -114,13 +114,13 @@
 
 /obj/item/weapon/storage/box/syringes/New()
 	..()
-	new /obj/item/weapon/reagent_containers/syringe( src )
-	new /obj/item/weapon/reagent_containers/syringe( src )
-	new /obj/item/weapon/reagent_containers/syringe( src )
-	new /obj/item/weapon/reagent_containers/syringe( src )
-	new /obj/item/weapon/reagent_containers/syringe( src )
-	new /obj/item/weapon/reagent_containers/syringe( src )
-	new /obj/item/weapon/reagent_containers/syringe( src )
+	new /obj/item/weapon/reagent_containers/syringe(src)
+	new /obj/item/weapon/reagent_containers/syringe(src)
+	new /obj/item/weapon/reagent_containers/syringe(src)
+	new /obj/item/weapon/reagent_containers/syringe(src)
+	new /obj/item/weapon/reagent_containers/syringe(src)
+	new /obj/item/weapon/reagent_containers/syringe(src)
+	new /obj/item/weapon/reagent_containers/syringe(src)
 
 /obj/item/weapon/storage/box/medipens
 	name = "box of medipens"
@@ -129,13 +129,13 @@
 
 /obj/item/weapon/storage/box/medipens/New()
 	..()
-	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
-	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
-	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
-	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
-	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
-	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
-	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
+	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 
 /obj/item/weapon/storage/box/medipens/utility
 	name = "medipens kit"
@@ -144,11 +144,11 @@
 
 /obj/item/weapon/storage/box/medipens/utility/New()
 	..()
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/leporazine( src )
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/leporazine( src )
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack( src )
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack( src )
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack( src )
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/leporazine(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/leporazine(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
 
 /obj/item/weapon/storage/box/beakers
 	name = "box of beakers"
@@ -156,13 +156,13 @@
 
 /obj/item/weapon/storage/box/beakers/New()
 	..()
-	new /obj/item/weapon/reagent_containers/glass/beaker( src )
-	new /obj/item/weapon/reagent_containers/glass/beaker( src )
-	new /obj/item/weapon/reagent_containers/glass/beaker( src )
-	new /obj/item/weapon/reagent_containers/glass/beaker( src )
-	new /obj/item/weapon/reagent_containers/glass/beaker( src )
-	new /obj/item/weapon/reagent_containers/glass/beaker( src )
-	new /obj/item/weapon/reagent_containers/glass/beaker( src )
+	new /obj/item/weapon/reagent_containers/glass/beaker(src)
+	new /obj/item/weapon/reagent_containers/glass/beaker(src)
+	new /obj/item/weapon/reagent_containers/glass/beaker(src)
+	new /obj/item/weapon/reagent_containers/glass/beaker(src)
+	new /obj/item/weapon/reagent_containers/glass/beaker(src)
+	new /obj/item/weapon/reagent_containers/glass/beaker(src)
+	new /obj/item/weapon/reagent_containers/glass/beaker(src)
 
 /obj/item/weapon/storage/box/injectors
 	name = "box of DNA injectors"
@@ -325,13 +325,13 @@
 
 /obj/item/weapon/storage/box/cups/New()
 	..()
-	new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
-	new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
-	new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
-	new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
-	new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
-	new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
-	new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
+	new /obj/item/weapon/reagent_containers/food/drinks/sillycup(src)
+	new /obj/item/weapon/reagent_containers/food/drinks/sillycup(src)
+	new /obj/item/weapon/reagent_containers/food/drinks/sillycup(src)
+	new /obj/item/weapon/reagent_containers/food/drinks/sillycup(src)
+	new /obj/item/weapon/reagent_containers/food/drinks/sillycup(src)
+	new /obj/item/weapon/reagent_containers/food/drinks/sillycup(src)
+	new /obj/item/weapon/reagent_containers/food/drinks/sillycup(src)
 
 /obj/item/weapon/storage/box/donkpockets
 	name = "box of donk-pockets"
@@ -495,12 +495,12 @@
 
 /obj/item/weapon/storage/box/mousetraps/New()
 	..()
-	new /obj/item/device/assembly/mousetrap( src )
-	new /obj/item/device/assembly/mousetrap( src )
-	new /obj/item/device/assembly/mousetrap( src )
-	new /obj/item/device/assembly/mousetrap( src )
-	new /obj/item/device/assembly/mousetrap( src )
-	new /obj/item/device/assembly/mousetrap( src )
+	new /obj/item/device/assembly/mousetrap(src)
+	new /obj/item/device/assembly/mousetrap(src)
+	new /obj/item/device/assembly/mousetrap(src)
+	new /obj/item/device/assembly/mousetrap(src)
+	new /obj/item/device/assembly/mousetrap(src)
+	new /obj/item/device/assembly/mousetrap(src)
 
 /obj/item/weapon/storage/box/pillbottles
 	name = "box of pill bottles"
@@ -509,13 +509,13 @@
 
 /obj/item/weapon/storage/box/pillbottles/New()
 	..()
-	new /obj/item/weapon/storage/pill_bottle( src )
-	new /obj/item/weapon/storage/pill_bottle( src )
-	new /obj/item/weapon/storage/pill_bottle( src )
-	new /obj/item/weapon/storage/pill_bottle( src )
-	new /obj/item/weapon/storage/pill_bottle( src )
-	new /obj/item/weapon/storage/pill_bottle( src )
-	new /obj/item/weapon/storage/pill_bottle( src )
+	new /obj/item/weapon/storage/pill_bottle(src)
+	new /obj/item/weapon/storage/pill_bottle(src)
+	new /obj/item/weapon/storage/pill_bottle(src)
+	new /obj/item/weapon/storage/pill_bottle(src)
+	new /obj/item/weapon/storage/pill_bottle(src)
+	new /obj/item/weapon/storage/pill_bottle(src)
+	new /obj/item/weapon/storage/pill_bottle(src)
 
 /obj/item/weapon/storage/box/snappops
 	name = "snap pop box"

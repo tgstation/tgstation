@@ -80,7 +80,7 @@ MASS SPECTROMETER
 /obj/item/device/healthanalyzer/attack(mob/living/M as mob, mob/living/carbon/human/user as mob)
 
 	// Clumsiness/brain damage check
-	if ((user.disabilities & CLUMSY || user.getBrainLoss() >= 60) && prob(50))
+	if((user.disabilities & CLUMSY || user.getBrainLoss() >= 60) && prob(50))
 		user << "<span class='notice'>You stupidly try to analyze the floor's vitals!</span>"
 		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>")
 		user.show_message("<span class='notice'>Analyzing Results for The floor:\n\t Overall Status: Healthy", 1)
@@ -144,20 +144,20 @@ MASS SPECTROMETER
 	if(M.getStaminaLoss())
 		user.show_message("<span class='info'>Subject appears to be suffering from fatigue.</span>", 1)
 
-	if (M.getCloneLoss())
+	if(M.getCloneLoss())
 		user.show_message("<span class='warning'>Subject appears to have [M.getCloneLoss() > 30 ? "severe" : "minor"] cellular damage.</span>", 1)
 
 	for(var/datum/disease/D in M.viruses)
 		if(!(D.visibility_flags & HIDDEN_SCANNER))
 			user.show_message("<span class='warning'><b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]</span>", 1)
 
-	if (M.reagents && M.reagents.get_reagent_amount("epinephrine"))
+	if(M.reagents && M.reagents.get_reagent_amount("epinephrine"))
 		user.show_message("<span class='notice'>Bloodstream Analysis located [M.reagents:get_reagent_amount("epinephrine")] units of rejuvenation chemicals.</span>", 1)
-	if (M.getBrainLoss() >= 100 || !M.getorgan(/obj/item/organ/brain))
+	if(M.getBrainLoss() >= 100 || !M.getorgan(/obj/item/organ/brain))
 		user.show_message("<span class='warning'>Subject brain function is non-existant.</span>", 1)
-	else if (M.getBrainLoss() >= 60)
+	else if(M.getBrainLoss() >= 60)
 		user.show_message("<span class='warning'>Severe brain damage detected. Subject likely to have mental retardation.</span>", 1)
-	else if (M.getBrainLoss() >= 10)
+	else if(M.getBrainLoss() >= 10)
 		user.show_message("<span class='warning'>Significant brain damage detected. Subject may have had a concussion.</span>", 1)
 
 /obj/item/device/healthanalyzer/verb/toggle_mode()
@@ -192,11 +192,11 @@ MASS SPECTROMETER
 
 /obj/item/device/analyzer/attack_self(mob/user as mob)
 
-	if (user.stat)
+	if(user.stat)
 		return
 
 	var/turf/location = user.loc
-	if (!( istype(location, /turf) ))
+	if(!( istype(location, /turf) ))
 		return
 
 	var/datum/gas_mixture/environment = location.return_air()
@@ -270,12 +270,12 @@ MASS SPECTROMETER
 		icon_state = initial(icon_state)
 
 /obj/item/device/mass_spectrometer/attack_self(mob/user as mob)
-	if (user.stat)
+	if(user.stat)
 		return
-	if (crit_fail)
+	if(crit_fail)
 		user << "<span class='warning'> This device has critically failed and is no longer functional!</span>"
 		return
-	if (!user.IsAdvancedToolUser())
+	if(!user.IsAdvancedToolUser())
 		user << "<span class='warning'> You don't have the dexterity to do this!</span>"
 		return
 	if(reagents.total_volume)
@@ -327,24 +327,24 @@ MASS SPECTROMETER
 	g_amt = 20
 
 /obj/item/device/slime_scanner/attack(mob/living/M as mob, mob/living/user as mob)
-	if (!isslime(M))
+	if(!isslime(M))
 		user.show_message("<span class='warning'>This device can only scan slimes!</span>", 1)
 		return
 	var/mob/living/carbon/slime/T = M
 	user.show_message("Slime scan results:", 1)
 	user.show_message(text("[T.colour] [] slime", T.is_adult ? "adult" : "baby"), 1)
 	user.show_message(text("Nutrition: [T.nutrition]/[]", T.get_max_nutrition()), 1)
-	if (T.nutrition < T.get_starve_nutrition())
+	if(T.nutrition < T.get_starve_nutrition())
 		user.show_message("<span class='warning'>Warning: slime is starving!</span>", 1)
-	else if (T.nutrition < T.get_hunger_nutrition())
+	else if(T.nutrition < T.get_hunger_nutrition())
 		user.show_message("<span class='warning'>Warning: slime is hungry</span>", 1)
 	user.show_message("Electric change strength: [T.powerlevel]", 1)
 	user.show_message("Health: [T.health]", 1)
-	if (T.slime_mutation[4] == T.colour)
+	if(T.slime_mutation[4] == T.colour)
 		user.show_message("This slime does not evolve any further.", 1)
 	else
-		if (T.slime_mutation[3] == T.slime_mutation[4])
-			if (T.slime_mutation[2] == T.slime_mutation[1])
+		if(T.slime_mutation[3] == T.slime_mutation[4])
+			if(T.slime_mutation[2] == T.slime_mutation[1])
 				user.show_message("Possible mutation: [T.slime_mutation[3]]", 1)
 				user.show_message("Genetic destability: [T.mutation_chance/2]% chance of mutation on splitting", 1)
 			else
@@ -353,6 +353,6 @@ MASS SPECTROMETER
 		else
 			user.show_message("Possible mutations: [T.slime_mutation[1]], [T.slime_mutation[2]], [T.slime_mutation[3]], [T.slime_mutation[4]]", 1)
 			user.show_message("Genetic destability: [T.mutation_chance]% chance of mutation on splitting", 1)
-	if (T.cores > 1)
+	if(T.cores > 1)
 		user.show_message("Anomalious slime core amount detected", 1)
 	user.show_message("Growth progress: [T.amount_grown]/10", 1)

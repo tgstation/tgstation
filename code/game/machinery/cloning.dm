@@ -59,19 +59,19 @@
 
 //Find a dead mob with a brain and client.
 /proc/find_dead_player(var/find_key)
-	if (isnull(find_key))
+	if(isnull(find_key))
 		return
 
 	var/mob/selected = null
 	for(var/mob/M in player_list)
 		//Dead people only thanks!
-		if ((M.stat != 2) || (!M.client))
+		if((M.stat != 2) || (!M.client))
 			continue
 		//They need a brain!
-		if (ishuman(M) && !M.getorgan(/obj/item/organ/brain))
+		if(ishuman(M) && !M.getorgan(/obj/item/organ/brain))
 			continue
 
-		if (M.ckey == find_key)
+		if(M.ckey == find_key)
 			selected = M
 			break
 	return selected
@@ -97,13 +97,13 @@
 	var/healthstring = ""
 
 /obj/item/weapon/implant/health/proc/sensehealth()
-	if (!src.implanted)
+	if(!src.implanted)
 		return "ERROR"
 	else
 		if(isliving(src.implanted))
 			var/mob/living/L = src.implanted
 			src.healthstring = "<small>Oxygen Deprivation Damage => [round(L.getOxyLoss())]<br />Fire Damage => [round(L.getFireLoss())]<br />Toxin Damage => [round(L.getToxLoss())]<br />Brute Force Damage => [round(L.getBruteLoss())]</small>"
-		if (!src.healthstring)
+		if(!src.healthstring)
 			src.healthstring = "ERROR"
 		return src.healthstring
 
@@ -112,9 +112,9 @@
 /obj/machinery/clonepod/attack_paw(mob/user as mob)
 	return attack_hand(user)
 /obj/machinery/clonepod/attack_hand(mob/user as mob)
-	if (isnull(src.occupant) || !is_operational())
+	if(isnull(src.occupant) || !is_operational())
 		return
-	if ((!isnull(src.occupant)) && (src.occupant.stat != 2))
+	if((!isnull(src.occupant)) && (src.occupant.stat != 2))
 		var/completion = (100 * ((src.occupant.health + 100) / (src.heal_level + 100)))
 		user << "Current clone cycle is [round(completion)]% complete."
 	return
@@ -196,7 +196,7 @@
 /obj/machinery/clonepod/process()
 
 	if(!is_operational()) //Autoeject if power is lost
-		if (src.occupant)
+		if(src.occupant)
 			src.locked = 0
 			src.go_out()
 		return
@@ -218,7 +218,7 @@
 			src.occupant.adjustBrainLoss(-((speed_coeff/2)))
 
 			//So clones don't die of oxyloss in a running pod.
-			if (src.occupant.reagents.get_reagent_amount("salbutamol") < 30)
+			if(src.occupant.reagents.get_reagent_amount("salbutamol") < 30)
 				src.occupant.reagents.add_reagent("salbutamol", 60)
 
 			use_power(7500) //This might need tweaking.
@@ -230,11 +230,11 @@
 			src.go_out()
 			return
 
-	else if ((!src.occupant) || (src.occupant.loc != src))
+	else if((!src.occupant) || (src.occupant.loc != src))
 		src.occupant = null
-		if (src.locked)
+		if(src.locked)
 			src.locked = 0
-		if (!src.mess && !panel_open)
+		if(!src.mess && !panel_open)
 			icon_state = "pod_0"
 		use_power(200)
 		return
@@ -252,13 +252,13 @@
 
 	default_deconstruction_crowbar(W)
 
-	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if (!src.check_access(W))
+	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+		if(!src.check_access(W))
 			user << "<span class='danger'>Access Denied.</span>"
 			return
-		if ((!src.locked) || (isnull(src.occupant)))
+		if((!src.locked) || (isnull(src.occupant)))
 			return
-		if ((src.occupant.health < -20) && (src.occupant.stat != 2))
+		if((src.occupant.health < -20) && (src.occupant.stat != 2))
 			user << "<span class='danger'>Access Refused.</span>"
 			return
 		else
@@ -268,7 +268,7 @@
 		..()
 
 /obj/machinery/clonepod/emag_act(user as mob)
-	if (isnull(src.occupant))
+	if(isnull(src.occupant))
 		return
 	user << "You force an emergency ejection."
 	src.locked = 0
@@ -276,9 +276,9 @@
 
 //Put messages in the connected computer's temp var for display.
 /obj/machinery/clonepod/proc/connected_message(var/message)
-	if ((isnull(src.connected)) || (!istype(src.connected, /obj/machinery/computer/cloning)))
+	if((isnull(src.connected)) || (!istype(src.connected, /obj/machinery/computer/cloning)))
 		return 0
-	if (!message)
+	if(!message)
 		return 0
 
 	src.connected.temp = message
@@ -299,10 +299,10 @@
 	return
 
 /obj/machinery/clonepod/proc/go_out()
-	if (src.locked)
+	if(src.locked)
 		return
 
-	if (src.mess) //Clean that mess and dump those gibs!
+	if(src.mess) //Clean that mess and dump those gibs!
 		src.mess = 0
 		gibs(src.loc)
 		src.icon_state = "pod_0"
@@ -313,14 +313,14 @@
 		*/
 		return
 
-	if (!(src.occupant))
+	if(!(src.occupant))
 		return
 	/*
 	for(var/obj/O in src)
 		O.loc = src.loc
 	*/
 
-	if (src.occupant.client)
+	if(src.occupant.client)
 		src.occupant.client.eye = src.occupant.client.mob
 		src.occupant.client.perspective = MOB_PERSPECTIVE
 	if(occupant.loc == src)
@@ -342,7 +342,7 @@
 	return
 
 /obj/machinery/clonepod/relaymove(mob/user as mob)
-	if (user.stat)
+	if(user.stat)
 		return
 	src.go_out()
 	return

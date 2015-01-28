@@ -70,7 +70,7 @@ var/global/floorIsLava = 0
 	body += "<A href='?_src_=holder;narrateto=\ref[M]'>Narrate to</A> | "
 	body += "<A href='?_src_=holder;subtlemessage=\ref[M]'>Subtle message</A>"
 
-	if (M.client)
+	if(M.client)
 		if(!istype(M, /mob/new_player))
 			body += "<br><br>"
 			body += "<b>Transformation:</b>"
@@ -137,7 +137,7 @@ var/global/floorIsLava = 0
 			body += "<A href='?_src_=holder;simplemake=shade;mob=\ref[M]'>Shade</A>"
 			body += "<br>"
 
-	if (M.client)
+	if(M.client)
 		body += "<br><br>"
 		body += "<b>Other actions:</b>"
 		body += "<br>"
@@ -159,9 +159,9 @@ var/global/floorIsLava = 0
 	set name = "Access Newscaster Network"
 	set desc = "Allows you to view, add and edit news feeds."
 
-	if (!istype(src,/datum/admins))
+	if(!istype(src,/datum/admins))
 		src = usr.client.holder
-	if (!istype(src,/datum/admins))
+	if(!istype(src,/datum/admins))
 		usr << "Error: you are not an admin!"
 		return
 	var/dat
@@ -491,7 +491,7 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set name = "Restart"
 	set desc="Restarts the world"
-	if (!usr.client.holder)
+	if(!usr.client.holder)
 		return
 	var/confirm = alert("Restart the game world?", "Restart", "Yes", "Cancel")
 	if(confirm == "Cancel")
@@ -594,7 +594,7 @@ var/global/floorIsLava = 0
 	set desc="People can't enter"
 	set name="Toggle Entering"
 	enter_allowed = !( enter_allowed )
-	if (!( enter_allowed ))
+	if(!( enter_allowed ))
 		world << "<B>New players may no longer enter the game.</B>"
 	else
 		world << "<B>New players may now enter the game.</B>"
@@ -608,7 +608,7 @@ var/global/floorIsLava = 0
 	set desc="People can't be AI"
 	set name="Toggle AI"
 	config.allow_ai = !( config.allow_ai )
-	if (!( config.allow_ai ))
+	if(!( config.allow_ai ))
 		world << "<B>The AI job is no longer chooseable.</B>"
 	else
 		world << "<B>The AI job is chooseable now.</B>"
@@ -621,7 +621,7 @@ var/global/floorIsLava = 0
 	set desc="Respawn basically"
 	set name="Toggle Respawn"
 	abandon_allowed = !( abandon_allowed )
-	if (abandon_allowed)
+	if(abandon_allowed)
 		world << "<B>You may now respawn.</B>"
 	else
 		world << "<B>You may no longer respawn :(</B>"
@@ -666,7 +666,7 @@ var/global/floorIsLava = 0
 /datum/admins/proc/unprison(var/mob/M in mob_list)
 	set category = "Admin"
 	set name = "Unprison"
-	if (M.z == ZLEVEL_CENTCOM)
+	if(M.z == ZLEVEL_CENTCOM)
 		M.loc = pick(latejoin)
 		message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]")
 		log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
@@ -702,7 +702,7 @@ var/global/floorIsLava = 0
 	if(!check_rights(R_SPAWN))	return
 
 	var/list/matches = get_fancy_list_of_types()
-	if (!isnull(object) && object!="")
+	if(!isnull(object) && object!="")
 		matches = filter_fancy_list(matches, object)
 
 	if(matches.len==0)
@@ -748,7 +748,7 @@ var/global/floorIsLava = 0
 	set desc="Reduces view range when wearing welding helmets"
 	set name="Toggle tinted welding helmes"
 	tinted_weldhelh = !( tinted_weldhelh )
-	if (tinted_weldhelh)
+	if(tinted_weldhelh)
 		world << "<B>The tinted_weldhelh has been enabled!</B>"
 	else
 		world << "<B>The tinted_weldhelh has been disabled!</B>"
@@ -761,7 +761,7 @@ var/global/floorIsLava = 0
 	set desc="Guests can't enter"
 	set name="Toggle guests"
 	guests_allowed = !( guests_allowed )
-	if (!( guests_allowed ))
+	if(!( guests_allowed ))
 		world << "<B>Guests may no longer enter the game.</B>"
 	else
 		world << "<B>Guests may now enter the game.</B>"
@@ -772,7 +772,7 @@ var/global/floorIsLava = 0
 /client/proc/unjobban_panel()
 	set name = "Unjobban Panel"
 	set category = "Admin"
-	if (src.holder)
+	if(src.holder)
 		src.holder.unjobbanpanel()
 	feedback_add_details("admin_verb","UJBP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
@@ -786,12 +786,12 @@ var/global/floorIsLava = 0
 		else if(isrobot(S))
 			var/mob/living/silicon/robot/R = S
 			usr << "<b>CYBORG [key_name(S, usr)] [R.connected_ai?"(Slaved to: [R.connected_ai])":"(Independant)"]: laws:</b>"
-		else if (ispAI(S))
+		else if(ispAI(S))
 			usr << "<b>pAI [key_name(S, usr)]'s laws:</b>"
 		else
 			usr << "<b>SOMETHING SILICON [key_name(S, usr)]'s laws:</b>"
 
-		if (S.laws == null)
+		if(S.laws == null)
 			usr << "[key_name(S, usr)]'s laws are null?? Contact a coder."
 		else
 			S.laws.show_laws(usr)

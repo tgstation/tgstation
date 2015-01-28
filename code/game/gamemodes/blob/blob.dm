@@ -38,7 +38,7 @@ var/list/blob_nodes = list()
 				antag_candidates -= player
 
 	for(var/j = 0, j < cores_to_spawn, j++)
-		if (!antag_candidates.len)
+		if(!antag_candidates.len)
 			break
 		var/datum/mind/blob = pick(antag_candidates)
 		infected_crew += blob
@@ -143,14 +143,14 @@ var/list/blob_nodes = list()
 /datum/game_mode/blob/proc/stage(var/stage)
 
 	switch(stage)
-		if (0)
+		if(0)
 			send_intercept(1)
 			declared = 1
 
-		if (1)
+		if(1)
 			priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/AI/outbreak5.ogg')
 
-		if (2)
+		if(2)
 			send_intercept(2)
 
 	return

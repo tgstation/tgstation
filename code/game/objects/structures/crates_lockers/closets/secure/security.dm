@@ -245,8 +245,8 @@
 	var/id = null
 
 /obj/structure/closet/secure_closet/brig/New()
-	new /obj/item/clothing/under/rank/prisoner( src )
-	new /obj/item/clothing/shoes/sneakers/orange( src )
+	new /obj/item/clothing/under/rank/prisoner(src)
+	new /obj/item/clothing/shoes/sneakers/orange(src)
 	return
 
 

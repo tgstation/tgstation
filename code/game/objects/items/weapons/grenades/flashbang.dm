@@ -43,11 +43,11 @@
 		M.eye_stat += rand(1, 3)
 		M.Stun(max(10/distance, 3))
 		M.Weaken(max(10/distance, 3))
-		if (M.eye_stat >= 20 && takes_eye_damage)
+		if(M.eye_stat >= 20 && takes_eye_damage)
 			M << "<span class='warning'>Your eyes start to burn badly!</span>"
 			M.disabilities |= NEARSIGHT
 			if(!banglet && !(istype(src , /obj/item/weapon/grenade/flashbang/clusterbang)))
-				if (prob(M.eye_stat - 20 + 1))
+				if(prob(M.eye_stat - 20 + 1))
 					M << "<span class='warning'>You can't see anything!</span>"
 					M.disabilities |= BLIND
 
@@ -59,14 +59,14 @@
 		M.Stun(max(10/distance, 3))
 		M.Weaken(max(10/distance, 3))
 		M.setEarDamage(M.ear_damage + rand(0, 5), max(M.ear_deaf,15))
-		if (M.ear_damage >= 15)
+		if(M.ear_damage >= 15)
 			M << "<span class='warning'>Your ears start to ring badly!</span>"
 			if(!banglet && !(istype(src , /obj/item/weapon/grenade/flashbang/clusterbang)))
 				if(prob(M.ear_damage - 10 + 5))
 					M << "<span class='warning'>You can't hear anything!</span>"
 					M.disabilities |= DEAF
 		else
-			if (M.ear_damage >= 5)
+			if(M.ear_damage >= 5)
 				M << "<span class='warning'>Your ears start to ring!</span>"
 
 ////////////////////

@@ -1047,23 +1047,23 @@ Status: []<BR>"},
 
 /obj/machinery/turretid/attackby(obj/item/weapon/W, mob/user)
 	if(stat & BROKEN) return
-	if (istype(user, /mob/living/silicon))
+	if(istype(user, /mob/living/silicon))
 		return src.attack_hand(user)
 
 	else if( get_dist(src, user) == 0 )		// trying to unlock the interface
-		if (src.allowed(usr))
+		if(src.allowed(usr))
 			if(emagged)
 				user << "<span class='notice'>The turret control is unresponsive.</span>"
 				return
 
 			locked = !locked
 			user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the panel.</span>"
-			if (locked)
-				if (user.machine==src)
+			if(locked)
+				if(user.machine==src)
 					user.unset_machine()
 					user << browse(null, "window=turretid")
 			else
-				if (user.machine==src)
+				if(user.machine==src)
 					src.attack_hand(user)
 		else
 			user << "<span class='warning'>Access denied.</span>"
@@ -1083,8 +1083,8 @@ Status: []<BR>"},
 		user << "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>"
 
 /obj/machinery/turretid/attack_hand(mob/user as mob)
-	if ( get_dist(src, user) > 0 )
-		if ( !issilicon(user) )
+	if( get_dist(src, user) > 0 )
+		if( !issilicon(user) )
 			user << "<span class='notice'>You are too far away.</span>"
 			user.unset_machine()
 			user << browse(null, "window=turretid")
@@ -1092,9 +1092,9 @@ Status: []<BR>"},
 
 	user.set_machine(src)
 	var/loc = src.loc
-	if (istype(loc, /turf))
+	if(istype(loc, /turf))
 		loc = loc:loc
-	if (!istype(loc, /area))
+	if(!istype(loc, /area))
 		user << text("Turret badly positioned - loc.loc is [].", loc)
 		return
 	var/area/area = loc
@@ -1103,7 +1103,7 @@ Status: []<BR>"},
 	if(src.locked && (!istype(user, /mob/living/silicon)))
 		t += "<div class='notice icon'>Swipe ID card to unlock interface</div>"
 	else
-		if (!istype(user, /mob/living/silicon))
+		if(!istype(user, /mob/living/silicon))
 			t += "<div class='notice icon'>Swipe ID card to lock interface</div>"
 		t += text("Turrets [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br>\n", src.enabled?"activated":"deactivated", src, src.enabled?"Disable":"Enable")
 		t += text("Currently set for [] - <A href='?src=\ref[];toggleLethal=1'>Change to []?</a><br>\n", src.lethal?"lethal":"stun repeatedly", src,  src.lethal?"Stun repeatedly":"Lethal")
@@ -1118,13 +1118,13 @@ Status: []<BR>"},
 /obj/machinery/turretid/Topic(href, href_list)
 	if(..())
 		return
-	if (src.locked)
-		if (!istype(usr, /mob/living/silicon))
+	if(src.locked)
+		if(!istype(usr, /mob/living/silicon))
 			usr << "Control panel is locked!"
 			return
-	if (href_list["toggleOn"])
+	if(href_list["toggleOn"])
 		toggle_on()
-	else if (href_list["toggleLethal"])
+	else if(href_list["toggleLethal"])
 		toggle_lethal()
 	src.attack_hand(usr)
 
@@ -1150,8 +1150,8 @@ Status: []<BR>"},
 	..()
 	if(stat & NOPOWER)
 		icon_state = "control_off"
-	else if (enabled)
-		if (lethal)
+	else if(enabled)
+		if(lethal)
 			icon_state = "control_kill"
 		else
 			icon_state = "control_stun"

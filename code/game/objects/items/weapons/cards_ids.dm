@@ -36,7 +36,7 @@
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 
-	if (t)
+	if(t)
 		src.name = "data disk- '[t]'"
 	else
 		src.name = "data disk"

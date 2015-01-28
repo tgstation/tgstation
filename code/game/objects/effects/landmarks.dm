@@ -190,7 +190,7 @@
 
 /obj/effect/landmark/costume/imperium_monk/New()
 	new /obj/item/clothing/suit/imperium_monk(src.loc)
-	if (prob(25))
+	if(prob(25))
 		new /obj/item/clothing/mask/gas/cyborg(src.loc)
 	qdel(src)
 

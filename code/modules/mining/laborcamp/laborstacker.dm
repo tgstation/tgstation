@@ -18,7 +18,7 @@
 /obj/machinery/mineral/labor_claim_console/New()
 	..()
 	Radio = new/obj/item/device/radio(src)
-	Radio.listening = 0 
+	Radio.listening = 0
 	spawn(7)
 		src.machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
 		var/t
@@ -26,7 +26,7 @@
 			t = d.id_tag
 			if(t == src.door_tag)
 				src.release_door = d
-		if (machine && release_door)
+		if(machine && release_door)
 			machine.CONSOLE = src
 		else
 			qdel(src)

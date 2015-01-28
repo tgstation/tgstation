@@ -162,7 +162,7 @@
 
 		for(var/obj/item/device/radio/beacon/R in world)
 			var/turf/T = get_turf(R)
-			if (!T)
+			if(!T)
 				continue
 			if(T.z == ZLEVEL_CENTCOM || T.z > ZLEVEL_SPACEMAX)
 				continue
@@ -174,12 +174,12 @@
 			L[tmpname] = R
 
 		for (var/obj/item/weapon/implant/tracking/I in world)
-			if (!I.implanted || !ismob(I.loc))
+			if(!I.implanted || !ismob(I.loc))
 				continue
 			else
 				var/mob/M = I.loc
-				if (M.stat == 2)
-					if (M.timeofdeath + 6000 < world.time)
+				if(M.stat == 2)
+					if(M.timeofdeath + 6000 < world.time)
 						continue
 				var/turf/T = get_turf(M)
 				if(!T)	continue
@@ -203,7 +203,7 @@
 			return
 		for(var/obj/machinery/teleport/station/R in S)
 			var/turf/T = get_turf(R)
-			if (!T || !R.teleporter_hub || !R.teleporter_console)
+			if(!T || !R.teleporter_hub || !R.teleporter_console)
 				continue
 			if(T.z == ZLEVEL_CENTCOM || T.z > ZLEVEL_SPACEMAX)
 				continue
@@ -290,12 +290,12 @@
 
 /obj/machinery/teleport/hub/proc/teleport(atom/movable/M as mob|obj, turf/T)
 	var/obj/machinery/computer/teleporter/com = power_station.teleporter_console
-	if (!com)
+	if(!com)
 		return
-	if (!com.target)
+	if(!com.target)
 		visible_message("<span class='notice'>Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
 		return
-	if (istype(M, /atom/movable))
+	if(istype(M, /atom/movable))
 		if(do_teleport(M, com.target))
 			if(!calibrated && prob(30 - ((accurate) * 10))) //oh dear a problem
 				if(ishuman(M))//don't remove people from the round randomly you jerks
@@ -418,7 +418,7 @@
 /obj/machinery/teleport/station/proc/toggle(mob/user)
 	if(stat & (BROKEN|NOPOWER) || !teleporter_hub || !teleporter_console )
 		return
-	if (teleporter_console.target)
+	if(teleporter_console.target)
 		src.engaged = !src.engaged
 		use_power(5000)
 		visible_message("<span class='notice'>Teleporter [engaged ? "" : "dis"]engaged!</span>")

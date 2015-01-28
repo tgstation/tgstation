@@ -63,8 +63,8 @@
 	return air_contents
 
 /obj/machinery/portable_atmospherics/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-	if ((istype(W, /obj/item/weapon/tank) && !( src.destroyed )))
-		if (src.holding)
+	if((istype(W, /obj/item/weapon/tank) && !( src.destroyed )))
+		if(src.holding)
 			return
 		var/obj/item/weapon/tank/T = W
 		user.drop_item()
@@ -73,7 +73,7 @@
 		update_icon()
 		return
 
-	else if (istype(W, /obj/item/weapon/wrench))
+	else if(istype(W, /obj/item/weapon/wrench))
 		if(connected_port)
 			disconnect()
 			user << "<span class='notice'>You disconnect [name] from the port.</span>"
@@ -93,7 +93,7 @@
 				user << "<span class='notice'>Nothing happens.</span>"
 				return
 
-	else if ((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
+	else if((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
 		atmosanalyzer_scan(air_contents, user)
 
 	return

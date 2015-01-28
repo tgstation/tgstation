@@ -255,7 +255,7 @@
 				var/datum/supply_packs/N = SSshuttle.supply_packs[supply_type]
 				if(N.hidden || N.contraband || N.group != cat) continue												//Have to send the type instead of a reference to
 				temp += "<A href='?src=\ref[src];doorder=[supply_type]'>[N.name]</A> Cost: [N.cost]<BR>"		//the obj because it would get caught by the garbage
-	else if (href_list["doorder"])
+	else if(href_list["doorder"])
 		if(world.time < reqtime)
 			say("[world.time - reqtime] seconds remaining until another requisition form may be printed.")
 			return
@@ -286,17 +286,17 @@
 		temp = "Thanks for your request. The cargo team will process it as soon as possible.<BR>"
 		temp += "<BR><A href='?src=\ref[src];order=[last_viewed_group]'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 
-	else if (href_list["vieworders"])
+	else if(href_list["vieworders"])
 		temp = "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><BR><BR>Current approved orders: <BR><BR>"
 		for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
 			temp += "[SO.object.name] approved by [SO.orderedby] [SO.comment ? "([SO.comment])":""]<BR>"
 
-	else if (href_list["viewrequests"])
+	else if(href_list["viewrequests"])
 		temp = "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><BR><BR>Current requests: <BR><BR>"
 		for(var/datum/supply_order/SO in SSshuttle.requestlist)
 			temp += "#[SO.ordernum] - [SO.object.name] requested by [SO.orderedby]<BR>"
 
-	else if (href_list["mainmenu"])
+	else if(href_list["mainmenu"])
 		temp = null
 
 	add_fingerprint(usr)
@@ -317,7 +317,7 @@
 	user.set_machine(src)
 	post_signal("supply")
 	var/dat
-	if (temp)
+	if(temp)
 		dat = temp
 	else
 		var/atDepot = (SSshuttle.supply.getDockedId() == "supply_away")
@@ -385,7 +385,7 @@
 					temp = "The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minutes.<BR><BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 					post_signal("supply")
 
-	else if (href_list["order"])
+	else if(href_list["order"])
 		if(SSshuttle.supply.mode != SHUTTLE_IDLE) return
 		if(href_list["order"] == "categories")
 			//all_supply_groups
@@ -417,7 +417,7 @@
 			temp += "<A href='?src=\ref[src];doorder=[supply_name]'>[supply_name]</A> Cost: [N.cost]<BR>"    //the obj because it would get caught by the garbage
 		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"*/
 
-	else if (href_list["doorder"])
+	else if(href_list["doorder"])
 		if(world.time < reqtime)
 			say("[world.time - reqtime] seconds remaining until another requisition form may be printed.")
 			return
@@ -471,13 +471,13 @@
 				break
 		temp += "<BR><BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 
-	else if (href_list["vieworders"])
+	else if(href_list["vieworders"])
 		temp = "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><BR><BR>Current approved orders: <BR><BR>"
 		for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
 			temp += "#[SO.ordernum] - [SO.object.name] approved by [SO.orderedby][SO.comment ? " ([SO.comment])":""]<BR>"// <A href='?src=\ref[src];cancelorder=[S]'>(Cancel)</A><BR>"
 		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 /*
-	else if (href_list["cancelorder"])
+	else if(href_list["cancelorder"])
 		var/datum/supply_order/remove_supply = href_list["cancelorder"]
 		supply_shuttle_shoppinglist -= remove_supply
 		supply_shuttle_points += remove_supply.object.cost
@@ -488,14 +488,14 @@
 			temp += "[SO.object.name] approved by [SO.orderedby][SO.comment ? " ([SO.comment])":""] <A href='?src=\ref[src];cancelorder=[S]'>(Cancel)</A><BR>"
 		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 */
-	else if (href_list["viewrequests"])
+	else if(href_list["viewrequests"])
 		temp = "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><BR><BR>Current requests: <BR><BR>"
 		for(var/datum/supply_order/SO in SSshuttle.requestlist)
 			temp += "#[SO.ordernum] - [SO.object.name] requested by [SO.orderedby]  [SSshuttle.supply.getDockedId() == "supply_away" ? "<A href='?src=\ref[src];confirmorder=[SO.ordernum]'>Approve</A> <A href='?src=\ref[src];rreq=[SO.ordernum]'>Remove</A>" : ""]<BR>"
 
 		temp += "<BR><A href='?src=\ref[src];clearreq=1'>Clear list</A>"
 
-	else if (href_list["rreq"])
+	else if(href_list["rreq"])
 		var/ordernum = text2num(href_list["rreq"])
 		temp = "Invalid Request.<BR>"
 		for(var/i=1, i<=SSshuttle.requestlist.len, i++)
@@ -506,12 +506,12 @@
 				break
 		temp += "<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 
-	else if (href_list["clearreq"])
+	else if(href_list["clearreq"])
 		SSshuttle.requestlist.Cut()
 		temp = "List cleared.<BR>"
 		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 
-	else if (href_list["mainmenu"])
+	else if(href_list["mainmenu"])
 		temp = null
 
 	add_fingerprint(usr)

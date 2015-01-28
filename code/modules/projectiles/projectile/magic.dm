@@ -98,7 +98,7 @@
 		if(target.density)
 			new /obj/structure/mineral_door/wood(target)
 			target:ChangeTurf(/turf/simulated/floor/plating)
-	else if (isturf(T))
+	else if(isturf(T))
 		if(T.density)
 			new /obj/structure/mineral_door/wood(T)
 			T:ChangeTurf(/turf/simulated/floor/plating)

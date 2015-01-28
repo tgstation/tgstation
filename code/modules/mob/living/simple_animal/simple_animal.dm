@@ -261,7 +261,7 @@
 	switch(M.a_intent)
 
 		if("help")
-			if (health > 0)
+			if(health > 0)
 				visible_message("<span class='notice'>[M] [response_help] [src].</span>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
@@ -282,8 +282,8 @@
 		if(stat != DEAD)
 			var/damage = rand(1, 3)
 			attack_threshold_check(damage)
-	if (M.a_intent == "help")
-		if (health > 0)
+	if(M.a_intent == "help")
+		if(health > 0)
 			visible_message("<span class='notice'>[M.name] [response_help] [src].</span>")
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
@@ -360,7 +360,7 @@
 	if(O.force)
 		if(O.force >= force_threshold)
 			damage = O.force
-			if (O.damtype == STAMINA)
+			if(O.damtype == STAMINA)
 				damage = 0
 			visible_message("<span class='danger'>[user] has [O.attack_verb.len ? "[pick(O.attack_verb)]": "attacked"] [src] with [O]!</span>",\
 							"<span class='userdanger'>[user] has [O.attack_verb.len ? "[pick(O.attack_verb)]": "attacked"] you with [O]!</span>")
@@ -406,11 +406,11 @@
 /mob/living/simple_animal/ex_act(severity, target)
 	..()
 	switch (severity)
-		if (1.0)
+		if(1.0)
 			gib()
 			return
 
-		if (2.0)
+		if(2.0)
 			adjustBruteLoss(60)
 
 
@@ -425,13 +425,13 @@
 /mob/living/simple_animal/proc/CanAttack(var/atom/the_target)
 	if(see_invisible < the_target.invisibility)
 		return 0
-	if (isliving(the_target))
+	if(isliving(the_target))
 		var/mob/living/L = the_target
 		if(L.stat != CONSCIOUS)
 			return 0
-	if (istype(the_target, /obj/mecha))
+	if(istype(the_target, /obj/mecha))
 		var/obj/mecha/M = the_target
-		if (M.occupant)
+		if(M.occupant)
 			return 0
 	return 1
 

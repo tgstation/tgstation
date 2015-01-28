@@ -173,9 +173,9 @@ Thus, the two variables affect pump operation are set in New():
 	update_icon()
 
 /obj/machinery/atmospherics/binary/pump/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-	if (!istype(W, /obj/item/weapon/wrench))
+	if(!istype(W, /obj/item/weapon/wrench))
 		return ..()
-	if (!(stat & NOPOWER) && on)
+	if(!(stat & NOPOWER) && on)
 		user << "<span class='danger'>You cannot unwrench this [src], turn it off first.</span>"
 		return 1
 	return ..()

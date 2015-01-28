@@ -19,14 +19,14 @@
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 	var/N = input("Amount per transfer from this:","[src]") as null|anything in possible_transfer_amounts
-	if (N)
+	if(N)
 		amount_per_transfer_from_this = N
 
 /obj/item/weapon/reagent_containers/New(location, vol = 0)
 	..()
-	if (!possible_transfer_amounts)
+	if(!possible_transfer_amounts)
 		src.verbs -= /obj/item/weapon/reagent_containers/verb/set_APTFT
-	if (vol > 0)
+	if(vol > 0)
 		volume = vol
 	create_reagents(volume)
 	if(spawned_disease)

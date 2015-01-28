@@ -48,7 +48,7 @@
 	..()
 
 /obj/item/toy/crayon/mime/Topic(href,href_list)
-	if ((usr.restrained() || usr.stat || usr.get_active_hand() != src))
+	if((usr.restrained() || usr.stat || usr.get_active_hand() != src))
 		return
 	if(href_list["color"])
 		if(colour != "#FFFFFF")
@@ -76,7 +76,7 @@
 
 	if(href_list["color"])
 		var/temp = input(usr, "Please select colour.", "Crayon colour") as color
-		if ((usr.restrained() || usr.stat || usr.get_active_hand() != src))
+		if((usr.restrained() || usr.stat || usr.get_active_hand() != src))
 			return
 		colour = temp
 		update_window(usr)

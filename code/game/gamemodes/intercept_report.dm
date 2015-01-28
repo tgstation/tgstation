@@ -98,8 +98,8 @@
 /datum/intercept_text/proc/pick_mob()
 	var/list/dudes = list()
 	for(var/mob/living/carbon/human/man in player_list)
-		if (!man.mind) continue
-		if (man.mind.assigned_role=="MODE") continue
+		if(!man.mind) continue
+		if(man.mind.assigned_role=="MODE") continue
 		dudes += man
 	if(dudes.len==0)
 		return null
@@ -108,7 +108,7 @@
 
 /datum/intercept_text/proc/pick_fingerprints()
 	var/mob/living/carbon/human/dude = src.pick_mob()
-	//if (!dude) return pick_fingerprints() //who coded that is totally crasy or just a traitor. -- rastaf0
+	//if(!dude) return pick_fingerprints() //who coded that is totally crasy or just a traitor. -- rastaf0
 	if(dude)
 		return num2text(md5(dude.dna.uni_identity))
 	else
@@ -157,7 +157,7 @@
 	var/prob_right_dude = rand(prob_correct_person_lower, prob_correct_person_higher)
 	var/prob_right_job = rand(prob_correct_job_lower, prob_correct_job_higher)
 	if(prob(prob_right_job) && is_convertable_to_cult(correct_person))
-		if (correct_person)
+		if(correct_person)
 			if(correct_person:assigned_role=="MODE")
 				traitor_job = pick(get_all_jobs())
 			else
@@ -196,7 +196,7 @@
 	var/prob_right_dude = rand(prob_correct_person_lower, prob_correct_person_higher)
 	var/prob_right_job = rand(prob_correct_job_lower, prob_correct_job_higher)
 	if(prob(prob_right_job) && is_convertable_to_rev(correct_person))
-		if (correct_person)
+		if(correct_person)
 			if(correct_person.assigned_role=="MODE")
 				traitor_job = pick(get_all_jobs())
 			else

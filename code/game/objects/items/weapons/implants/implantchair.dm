@@ -93,7 +93,7 @@
 		return
 	if(M == occupant) // so that the guy inside can't eject himself -Agouri
 		return
-	if (src.occupant.client)
+	if(src.occupant.client)
 		src.occupant.client.eye = src.occupant.client.mob
 		src.occupant.client.perspective = MOB_PERSPECTIVE
 	src.occupant.loc = src.loc
@@ -124,7 +124,7 @@
 
 
 /obj/machinery/implantchair/implant(var/mob/M)
-	if (!istype(M, /mob/living/carbon))
+	if(!istype(M, /mob/living/carbon))
 		return
 	if(!implant_list.len)	return
 	for(var/obj/item/weapon/implant/loyalty/imp in implant_list)

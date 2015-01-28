@@ -2,7 +2,7 @@
 	set invisibility = 0
 	set background = BACKGROUND_ENABLED
 
-	if (src.notransform)
+	if(src.notransform)
 		return
 
 	//Status updates, death etc.
@@ -12,7 +12,7 @@
 	if(client)
 		handle_regular_hud_updates()
 		update_items()
-	if (src.stat != DEAD) //still using power
+	if(src.stat != DEAD) //still using power
 		use_power()
 	update_canmove()
 	handle_fire()
@@ -32,11 +32,11 @@
 
 /mob/living/silicon/robot/proc/use_power()
 
-	if (src.cell)
+	if(src.cell)
 		if(src.cell.charge <= 0)
 			uneq_all()
 			src.stat = 1
-		else if (src.cell.charge <= 100)
+		else if(src.cell.charge <= 100)
 			uneq_all()
 			src.cell.use(1)
 		else
@@ -76,7 +76,7 @@
 	if(health <= config.health_threshold_dead && src.stat != 2) //die only once
 		death()
 
-	if (src.stat != 2) //Alive.
+	if(src.stat != 2) //Alive.
 		if(health < 50) //Gradual break down of modules as more damage is sustained
 			if(uneq_module(module_state_3))
 				src << "<span class='warning'>SYSTEM ERROR: Module 3 OFFLINE.</span>"
@@ -87,13 +87,13 @@
 					if(uneq_module(module_state_1))
 						src << "<span class='warning'>CRITICAL ERROR: All modules OFFLINE.</span>"
 
-		if (src.paralysis || src.stunned || src.weakened) //Stunned etc.
+		if(src.paralysis || src.stunned || src.weakened) //Stunned etc.
 			src.stat = 1
-			if (src.stunned > 0)
+			if(src.stunned > 0)
 				AdjustStunned(-1)
-			if (src.weakened > 0)
+			if(src.weakened > 0)
 				AdjustWeakened(-1)
-			if (src.paralysis > 0)
+			if(src.paralysis > 0)
 				AdjustParalysis(-1)
 				src.eye_blind = max(eye_blind, 1)
 			else
@@ -105,21 +105,21 @@
 	else //Dead.
 		src.eye_blind = 1
 
-	if (src.stuttering) src.stuttering--
+	if(src.stuttering) src.stuttering--
 
-	if (src.eye_blind)
+	if(src.eye_blind)
 		src.eye_blind--
 
 	src.density = !( src.lying )
 
-	if (src.disabilities & BLIND)
+	if(src.disabilities & BLIND)
 		src.eye_blind = max(1, eye_blind)
 
-	if (src.eye_blurry > 0)
+	if(src.eye_blurry > 0)
 		src.eye_blurry--
 		src.eye_blurry = max(0, src.eye_blurry)
 
-	if (src.druggy > 0)
+	if(src.druggy > 0)
 		src.druggy--
 		src.druggy = max(0, src.druggy)
 
@@ -127,7 +127,7 @@
 
 /mob/living/silicon/robot/proc/handle_regular_hud_updates()
 
-	if (src.stat == 2 || src.sight_mode & BORGXRAY)
+	if(src.stat == 2 || src.sight_mode & BORGXRAY)
 		src.sight |= SEE_TURFS
 		src.sight |= SEE_MOBS
 		src.sight |= SEE_OBJS
@@ -135,18 +135,18 @@
 		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	else
 		src.see_in_dark = 8
-		if (src.sight_mode & BORGMESON && src.sight_mode & BORGTHERM)
+		if(src.sight_mode & BORGMESON && src.sight_mode & BORGTHERM)
 			src.sight |= SEE_TURFS
 			src.sight |= SEE_MOBS
 			src.see_invisible = SEE_INVISIBLE_MINIMUM
-		else if (src.sight_mode & BORGMESON)
+		else if(src.sight_mode & BORGMESON)
 			src.sight |= SEE_TURFS
 			src.see_invisible = SEE_INVISIBLE_MINIMUM
 			src.see_in_dark = 1
-		else if (src.sight_mode & BORGTHERM)
+		else if(src.sight_mode & BORGTHERM)
 			src.sight |= SEE_MOBS
 			src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-		else if (src.stat != 2)
+		else if(src.stat != 2)
 			src.sight &= ~SEE_MOBS
 			src.sight &= ~SEE_TURFS
 			src.sight &= ~SEE_OBJS
@@ -154,8 +154,8 @@
 		if(see_override)
 			see_invisible = see_override
 
-	if (src.healths)
-		if (src.stat != 2)
+	if(src.healths)
+		if(src.stat != 2)
 			switch(health)
 				if(100 to INFINITY)
 					src.healths.icon_state = "health0"
@@ -172,7 +172,7 @@
 		else
 			src.healths.icon_state = "health7"
 
-	if (src.syndicate && src.client)
+	if(src.syndicate && src.client)
 		if(ticker.mode.name == "traitor")
 			for(var/datum/mind/tra in ticker.mode.traitors)
 				if(tra.current)
@@ -186,8 +186,8 @@
 				src.mind.special_role = "traitor"
 				ticker.mode.traitors += src.mind
 
-	if (src.cells)
-		if (src.cell)
+	if(src.cells)
+		if(src.cell)
 			var/cellcharge = src.cell.charge/src.cell.maxcharge
 			switch(cellcharge)
 				if(0.75 to INFINITY)
@@ -223,28 +223,28 @@
 				pullin.icon_state = "pull0"
 
 //Oxygen and fire does nothing yet!!
-//	if (src.oxygen) src.oxygen.icon_state = "oxy[src.oxygen_alert ? 1 : 0]"
-//	if (src.fire) src.fire.icon_state = "fire[src.fire_alert ? 1 : 0]"
+//	if(src.oxygen) src.oxygen.icon_state = "oxy[src.oxygen_alert ? 1 : 0]"
+//	if(src.fire) src.fire.icon_state = "fire[src.fire_alert ? 1 : 0]"
 
 	client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
 
-	if ((src.blind && src.stat != 2))
+	if((src.blind && src.stat != 2))
 		if(src.eye_blind)
 			src.blind.layer = 18
 		else
 			src.blind.layer = 0
-			if (src.disabilities & NEARSIGHT)
+			if(src.disabilities & NEARSIGHT)
 				src.client.screen += global_hud.vimpaired
 
-			if (src.eye_blurry)
+			if(src.eye_blurry)
 				src.client.screen += global_hud.blurry
 
-			if (src.druggy)
+			if(src.druggy)
 				src.client.screen += global_hud.druggy
 
-	if (src.stat != 2)
-		if (src.machine)
-			if (!( src.machine.check_eye(src) ))
+	if(src.stat != 2)
+		if(src.machine)
+			if(!( src.machine.check_eye(src) ))
 				src.reset_view(null)
 		else
 			if(!client.adminobs)
@@ -253,7 +253,7 @@
 	return 1
 
 /mob/living/silicon/robot/proc/update_items()
-	if (src.client)
+	if(src.client)
 		src.client.screen -= src.contents
 		for(var/obj/I in src.contents)
 			if(I && !(istype(I,/obj/item/weapon/stock_parts/cell) || istype(I,/obj/item/device/radio)  || istype(I,/obj/machinery/camera) || istype(I,/obj/item/device/mmi)))

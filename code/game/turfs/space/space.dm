@@ -66,7 +66,7 @@
 
 /turf/space/Entered(atom/movable/A)
 	..()
-	if ((!(A) || src != A.loc))
+	if((!(A) || src != A.loc))
 		return
 
 	if(transition)
@@ -107,17 +107,17 @@
 		y_arr = global_map[next_x]
 		target_z = y_arr[cur_y]
 		next_x = world.maxx - 2
-	else if (src.x >= world.maxx)
+	else if(src.x >= world.maxx)
 		next_x = (++cur_x > global_map.len ? 1 : cur_x)
 		y_arr = global_map[next_x]
 		target_z = y_arr[cur_y]
 		next_x = 3
-	else if (src.y <= 1)
+	else if(src.y <= 1)
 		y_arr = global_map[cur_x]
 		next_y = (--cur_y||y_arr.len)
 		target_z = y_arr[next_y]
 		next_y = world.maxy - 2
-	else if (src.y >= world.maxy)
+	else if(src.y >= world.maxy)
 		y_arr = global_map[cur_x]
 		next_y = (++cur_y > y_arr.len ? 1 : cur_y)
 		target_z = y_arr[next_y]
@@ -134,11 +134,11 @@
 	if(transition)
 		if(x <= TRANSITIONEDGE) 							//west
 			destination_x = world.maxx - TRANSITIONEDGE - 2
-		else if (x >= (world.maxx - TRANSITIONEDGE - 1)) 	//east
+		else if(x >= (world.maxx - TRANSITIONEDGE - 1)) 	//east
 			destination_x = TRANSITIONEDGE + 1
-		else if (y <= TRANSITIONEDGE) 						//south
+		else if(y <= TRANSITIONEDGE) 						//south
 			destination_y = world.maxy - TRANSITIONEDGE - 2
-		else if (y >= (world.maxy - TRANSITIONEDGE - 1)) 	//north
+		else if(y >= (world.maxy - TRANSITIONEDGE - 1)) 	//north
 			destination_y = TRANSITIONEDGE + 1
 
 /*
@@ -169,7 +169,7 @@ proc/setup_map_transitions() //listamania
 
 	for(var/turf/space/S in world) //Define the transistions of the z levels
 		total_processed++
-		if (S.x == TRANSITIONEDGE || S.x == (world.maxx - TRANSITIONEDGE - 1) || S.y == TRANSITIONEDGE || S.y == (world.maxy - TRANSITIONEDGE - 1))
+		if(S.x == TRANSITIONEDGE || S.x == (world.maxx - TRANSITIONEDGE - 1) || S.y == TRANSITIONEDGE || S.y == (world.maxy - TRANSITIONEDGE - 1))
 			turfs_needing_transition += S
 
 	//if we've processed lots of turfs, switch to background processing to prevent being mistaken for an infinite loop

@@ -336,7 +336,7 @@
 	var/toxdamage = 4
 	var/radiation = 15
 	var/radiationmin = 3
-	if (src.energy>200)
+	if(src.energy>200)
 		toxdamage = round(((src.energy-150)/50)*4,1)
 		radiation = round(((src.energy-150)/50)*5,1)
 		radiationmin = round((radiation/5),1)//
@@ -353,7 +353,7 @@
 			continue
 
 		if(M.stat == CONSCIOUS)
-			if (istype(M,/mob/living/carbon/human))
+			if(istype(M,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
 				if(istype(H.glasses,/obj/item/clothing/glasses/meson))
 					H << "<span class='notice'>You look directly into the [src.name], good thing you had your protective eyewear on!</span>"

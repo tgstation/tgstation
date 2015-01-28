@@ -73,16 +73,16 @@
 
 /obj/machinery/pipedispenser/attackby(var/obj/item/W as obj, var/mob/user as mob)
 	add_fingerprint(user)
-	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
+	if(istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
 		usr << "<span class='notice'>You put [W] back into [src].</span>"
 		user.drop_item()
 		qdel(W)
 		return
-	else if (istype(W, /obj/item/weapon/wrench))
-		if (!anchored && !isinspace())
+	else if(istype(W, /obj/item/weapon/wrench))
+		if(!anchored && !isinspace())
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "<span class='notice'>You begin to fasten \the [src] to the floor...</span>"
-			if (do_after(user, 40))
+			if(do_after(user, 40))
 				add_fingerprint(user)
 				user.visible_message( \
 					"[user] fastens \the [src].", \
@@ -90,12 +90,12 @@
 					"You hear ratchet.")
 				anchored = 1
 				stat &= MAINT
-				if (usr.machine==src)
+				if(usr.machine==src)
 					usr << browse(null, "window=pipedispenser")
 		else if(anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "<span class='notice'>You begin to unfasten \the [src] from the floor...</span>"
-			if (do_after(user, 20))
+			if(do_after(user, 20))
 				add_fingerprint(user)
 				user.visible_message( \
 					"[user] unfastens \the [src].", \
@@ -129,13 +129,13 @@ Nah
 	if(!usr.canmove || usr.stat || usr.restrained())
 		return
 
-	if (!istype(pipe, /obj/structure/disposalconstruct) && !istype(pipe, /obj/structure/c_transit_tube) && !istype(pipe, /obj/structure/c_transit_tube_pod))
+	if(!istype(pipe, /obj/structure/disposalconstruct) && !istype(pipe, /obj/structure/c_transit_tube) && !istype(pipe, /obj/structure/c_transit_tube_pod))
 		return
 
-	if (get_dist(usr, src) > 1 || get_dist(src,pipe) > 1 )
+	if(get_dist(usr, src) > 1 || get_dist(src,pipe) > 1 )
 		return
 
-	if (pipe.anchored)
+	if(pipe.anchored)
 		return
 
 	qdel(pipe)

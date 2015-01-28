@@ -106,7 +106,7 @@
 			user << "<span class='warning'>[src] is blocked!</span>"
 			return
 		if(istype(W, /obj/item/weapon/screwdriver))
-			if (!istype(T, /turf/simulated/floor))
+			if(!istype(T, /turf/simulated/floor))
 				user << "<span class='warning'>[src] bolts must be tightened on the floor!</span>"
 				return
 			user.visible_message("<span class='notice'>[user] tightens some bolts on the wall.</span>", "<span class='warning'>You tighten the bolts on the wall.</span>")

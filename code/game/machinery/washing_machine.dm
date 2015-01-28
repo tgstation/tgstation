@@ -134,10 +134,10 @@
 					G.desc = new_desc
 			if(new_shoe_icon_state && new_shoe_name)
 				for(var/obj/item/clothing/shoes/sneakers/S in contents)
-					if (S.chained == 1)
+					if(S.chained == 1)
 						S.chained = 0
 						S.slowdown = SHOES_SLOWDOWN
-						new /obj/item/weapon/restraints/handcuffs( src )
+						new /obj/item/weapon/restraints/handcuffs(src)
 					S.icon_state = new_shoe_icon_state
 					S.item_color = wash_color
 					S.name = new_shoe_name
@@ -211,40 +211,40 @@
 		istype(W,/obj/item/weapon/bedsheet))
 
 		//YES, it's hardcoded... saves a var/can_be_washed for every single clothing item.
-		if ( istype(W,/obj/item/clothing/suit/space ) )
+		if( istype(W,/obj/item/clothing/suit/space ) )
 			user << "This item does not fit."
 			return
-		if ( istype(W,/obj/item/clothing/suit/syndicatefake ) )
+		if( istype(W,/obj/item/clothing/suit/syndicatefake ) )
 			user << "This item does not fit."
 			return
-//		if ( istype(W,/obj/item/clothing/suit/powered ) )
+//		if( istype(W,/obj/item/clothing/suit/powered ) )
 //			user << "This item does not fit."
 //			return
-		if ( istype(W,/obj/item/clothing/suit/cyborg_suit ) )
+		if( istype(W,/obj/item/clothing/suit/cyborg_suit ) )
 			user << "This item does not fit."
 			return
-		if ( istype(W,/obj/item/clothing/suit/bomb_suit ) )
+		if( istype(W,/obj/item/clothing/suit/bomb_suit ) )
 			user << "This item does not fit."
 			return
-		if ( istype(W,/obj/item/clothing/suit/armor ) )
+		if( istype(W,/obj/item/clothing/suit/armor ) )
 			user << "This item does not fit."
 			return
-		if ( istype(W,/obj/item/clothing/suit/armor ) )
+		if( istype(W,/obj/item/clothing/suit/armor ) )
 			user << "This item does not fit."
 			return
-		if ( istype(W,/obj/item/clothing/mask/gas ) )
+		if( istype(W,/obj/item/clothing/mask/gas ) )
 			user << "This item does not fit."
 			return
-		if ( istype(W,/obj/item/clothing/mask/cigarette ) )
+		if( istype(W,/obj/item/clothing/mask/cigarette ) )
 			user << "This item does not fit."
 			return
-		if ( istype(W,/obj/item/clothing/head/syndicatefake ) )
+		if( istype(W,/obj/item/clothing/head/syndicatefake ) )
 			user << "This item does not fit."
 			return
-//		if ( istype(W,/obj/item/clothing/head/powered ) )
+//		if( istype(W,/obj/item/clothing/head/powered ) )
 //			user << "This item does not fit."
 //			return
-		if ( istype(W,/obj/item/clothing/head/helmet ) )
+		if( istype(W,/obj/item/clothing/head/helmet ) )
 			user << "This item does not fit."
 			return
 		if(W.flags & NODROP) //if "can't drop" item
@@ -252,7 +252,7 @@
 			return
 
 		if(contents.len < 5)
-			if ( state in list(1, 3) )
+			if( state in list(1, 3) )
 				user.drop_item()
 				W.loc = src
 				state = 3

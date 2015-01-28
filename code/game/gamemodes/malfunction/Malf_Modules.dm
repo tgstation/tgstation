@@ -162,7 +162,7 @@
 /mob/living/silicon/ai/proc/overload_machine(obj/machinery/M as obj in world)
 	set name = "Overload Machine"
 	set category = "Malfunction"
-	if (istype(M, /obj/machinery))
+	if(istype(M, /obj/machinery))
 		for(var/datum/AI_Module/small/overload_machine/overload in current_modules)
 			if(overload.uses > 0)
 				overload.uses --
@@ -188,7 +188,7 @@
 /mob/living/silicon/ai/proc/override_machine(obj/machinery/M as obj in world)
 	set name = "Override Machine"
 	set category = "Malfunction"
-	if (istype(M, /obj/machinery))
+	if(istype(M, /obj/machinery))
 		for(var/datum/AI_Module/small/override_machine/override in current_modules)
 			if(override.uses > 0)
 				override.uses --
@@ -296,7 +296,7 @@
 /mob/living/silicon/ai/proc/reactivate_camera(obj/machinery/camera/C as obj in cameranet.cameras)
 	set name = "Reactivate Camera"
 	set category = "Malfunction"
-	if (istype (C, /obj/machinery/camera))
+	if(istype (C, /obj/machinery/camera))
 		for(var/datum/AI_Module/small/reactivate_camera/camera in current_modules)
 			if(camera.uses > 0)
 				if(!C.status)
@@ -381,7 +381,7 @@
 	for(var/datum/AI_Module/small/module in src.possible_modules)
 		dat += "<A href='byond://?src=\ref[src];[module.mod_pick_name]=1'>[module.module_name]</A><A href='byond://?src=\ref[src];showdesc=[module.mod_pick_name]'>\[?\]</A> ([module.cost])<BR>"
 	dat += "<HR>"
-	if (src.temp)
+	if(src.temp)
 		dat += "[src.temp]"
 	var/datum/browser/popup = new(user, "modpicker", "Malf Module Menu")
 	popup.set_content(dat)
@@ -396,7 +396,7 @@
 	var/mob/living/silicon/ai/A = usr
 
 	for(var/datum/AI_Module/AM in possible_modules)
-		if (href_list[AM.mod_pick_name])
+		if(href_list[AM.mod_pick_name])
 
 			// Cost check
 			if(AM.cost > src.processing_time)

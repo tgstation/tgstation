@@ -69,7 +69,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /obj/machinery/computer/rdconsole/proc/CallMaterialName(var/ID)
 	var/datum/reagent/temp_reagent
 	var/return_name = null
-	if (copytext(ID, 1, 2) == "$")
+	if(copytext(ID, 1, 2) == "$")
 		return_name = copytext(ID, 2)
 		switch(return_name)
 			if("metal")
@@ -152,7 +152,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			return
 
 		if(istype(D, /obj/item/weapon/disk/tech_disk)) t_disk = D
-		else if (istype(D, /obj/item/weapon/disk/design_disk)) d_disk = D
+		else if(istype(D, /obj/item/weapon/disk/design_disk)) d_disk = D
 		else
 			user << "<span class='danger'> Machine cannot accept disks in that format.</span>"
 			return
@@ -361,13 +361,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				if(linked_lathe.busy)
 					g2g = 0
 				var/key = usr.key	//so we don't lose the info during the spawn delay
-				if (!(being_built.build_type & PROTOLATHE))
+				if(!(being_built.build_type & PROTOLATHE))
 					g2g = 0
 					message_admins("Protolathe exploit attempted by [key_name(usr, usr.client)]!")
 
 
 
-				if (g2g) //If input is incorrect, nothing happens
+				if(g2g) //If input is incorrect, nothing happens
 					linked_lathe.busy = 1
 					flick("protolathe_n",linked_lathe)
 					use_power(power)
@@ -430,13 +430,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					power += round(being_built.materials[M] / 5)
 				power = max(2000, power)
 				screen = 0.4
-				if (linked_imprinter.busy)
+				if(linked_imprinter.busy)
 					g2g = 0
-				if (!(being_built.build_type & IMPRINTER))
+				if(!(being_built.build_type & IMPRINTER))
 					g2g = 0
 					message_admins("Circuit imprinter exploit attempted by [key_name(usr, usr.client)]!")
 
-				if (g2g) //Again, if input is wrong, do nothing
+				if(g2g) //Again, if input is wrong, do nothing
 					linked_imprinter.busy = 1
 					flick("circuit_imprinter_ani",linked_imprinter)
 					use_power(power)
@@ -798,13 +798,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				for(var/M in D.materials)
 					t = linked_lathe.check_mat(D, M)
 					temp_material += " | "
-					if (!t)
+					if(!t)
 						temp_material += "<span class='bad'>[D.materials[M]/coeff] [CallMaterialName(M)]</span>"
 					else
 						temp_material += " [D.materials[M]/coeff] [CallMaterialName(M)]"
 					c = min(c,t)
 
-				if (c)
+				if(c)
 					dat += "<A href='?src=\ref[src];build=[D.id];amount=1'>[D.name]</A>"
 					if(c >= 5.0)
 						dat += "<A href='?src=\ref[src];build=[D.id];amount=5'>x5</A>"
@@ -908,12 +908,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				var/check_materials = 1
 				for(var/M in D.materials)
 					temp_materials += " | "
-					if (!linked_imprinter.check_mat(D, M))
+					if(!linked_imprinter.check_mat(D, M))
 						check_materials = 0
 						temp_materials += " <span class='bad'>[D.materials[M]/coeff] [CallMaterialName(M)]</span>"
 					else
 						temp_materials += " [D.materials[M]/coeff] [CallMaterialName(M)]"
-				if (check_materials)
+				if(check_materials)
 					dat += "<A href='?src=\ref[src];imprint=[D.id]'>[D.name]</A>[temp_materials]<BR>"
 				else
 					dat += "<span class='linkOff'>[D.name]</span>[temp_materials]<BR>"

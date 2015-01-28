@@ -219,7 +219,7 @@ datum/radio_frequency/proc/post_signal(obj/source as obj|null, datum/signal/sign
 			device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
 
 datum/radio_frequency/proc/add_listener(obj/device as obj, var/filter as text|null)
-	if (!filter)
+	if(!filter)
 		filter = "_default"
 
 	var/list/devices_line = devices[filter]
@@ -289,7 +289,7 @@ var/list/pointers = list()
 	frequency = model.frequency
 
 /datum/signal/proc/debug_print()
-	if (source)
+	if(source)
 		. = "signal = {source = '[source]' ([source:x],[source:y],[source:z])\n"
 	else
 		. = "signal = {source = '[source]' ()\n"

@@ -30,10 +30,10 @@
 
 /obj/item/weapon/gun/grenadelauncher/afterattack(obj/target, mob/user , flag)
 
-	if (istype(target, /obj/item/weapon/storage/backpack ))
+	if(istype(target, /obj/item/weapon/storage/backpack ))
 		return
 
-	else if (locate (/obj/structure/table, src.loc))
+	else if(locate (/obj/structure/table, src.loc))
 		return
 
 	else if(target == user)

@@ -33,7 +33,7 @@
 	priority_alarms -= zone
 	if(severity=="severe")
 		priority_alarms += zone
-	else if (severity=="minor")
+	else if(severity=="minor")
 		minor_alarms += zone
 	update_icon()
 	return
@@ -64,7 +64,7 @@
 	if(stat & BROKEN)
 		icon_state = "alert:b"
 		return
-	else if (stat & NOPOWER)
+	else if(stat & NOPOWER)
 		icon_state = "alert:O"
 		return
 	else if(priority_alarms.len)

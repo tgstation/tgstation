@@ -205,7 +205,7 @@ var/datum/subsystem/pai/SSpai
 		if(!C)	return		//handle logouts that happen whilst the alert is waiting for a response.
 		if(response == "Yes")
 			recruitWindow(C.mob)
-		else if (response == "Never for this round")
+		else if(response == "Never for this round")
 			asked[C.key] = INFINITY
 
 /datum/paiCandidate

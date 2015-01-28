@@ -170,7 +170,7 @@ emp_act
 							else if(H.w_uniform)
 								H.w_uniform.add_blood(src)
 								H.update_inv_w_uniform(0)	//updates mob overlays to show the new blood (no refresh)
-							if (H.gloves)
+							if(H.gloves)
 								var/obj/item/clothing/gloves/G = H.gloves
 								G.add_blood(H)
 							else

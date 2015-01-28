@@ -60,8 +60,8 @@
 			if(malf.malf_mode_declared && (malf.apcs > 0))
 				stat(null, "Time left: [max(malf.AI_win_timeleft/malf.apcs, 0)]")
 
-		if (internal)
-			if (!internal.air_contents)
+		if(internal)
+			if(!internal.air_contents)
 				qdel(internal)
 			else
 				stat("Internal Atmosphere Info", internal.name)
@@ -71,7 +71,7 @@
 			if(mind.changeling)
 				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
 				stat("Absorbed DNA", mind.changeling.absorbedcount)
-		if (istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)&&wear_suit:s_initialized)
+		if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)&&wear_suit:s_initialized)
 			stat("Energy Charge", round(wear_suit:cell:charge/100))
 
 
@@ -80,9 +80,9 @@
 	var/b_loss = null
 	var/f_loss = null
 	switch (severity)
-		if (1.0)
+		if(1.0)
 			b_loss += 500
-			if (!prob(getarmor(null, "bomb")))
+			if(!prob(getarmor(null, "bomb")))
 				gib()
 				return
 			else
@@ -92,28 +92,28 @@
 //				var/atom/target = get_edge_target_turf(user, get_dir(src, get_step_away(user, src)))
 				//user.throw_at(target, 200, 4)
 
-		if (2.0)
-			if (!shielded)
+		if(2.0)
+			if(!shielded)
 				b_loss += 60
 
 			f_loss += 60
 
-			if (prob(getarmor(null, "bomb")))
+			if(prob(getarmor(null, "bomb")))
 				b_loss = b_loss/1.5
 				f_loss = f_loss/1.5
 
-			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
+			if(!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(30, 120)
-			if (prob(70) && !shielded)
+			if(prob(70) && !shielded)
 				Paralyse(10)
 
 		if(3.0)
 			b_loss += 30
-			if (prob(getarmor(null, "bomb")))
+			if(prob(getarmor(null, "bomb")))
 				b_loss = b_loss/2
-			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
+			if(!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(15,60)
-			if (prob(50) && !shielded)
+			if(prob(50) && !shielded)
 				Paralyse(10)
 
 	var/update = 0
@@ -302,7 +302,7 @@
 				// Checks the user has security clearence before allowing them to change arrest status via hud, comment out to enable all access
 				var/allowed_access = null
 				var/obj/item/clothing/glasses/G = H.glasses
-				if (!G.emagged)
+				if(!G.emagged)
 					if(H.wear_id)
 						var/list/access = H.wear_id.GetAccess()
 						if(access_sec_doors in access)
@@ -356,7 +356,7 @@
 										var/t1 = copytext(sanitize(input("Please input minor crime names:", "Security HUD", "", null)  as text),1,MAX_MESSAGE_LEN)
 										var/t2 = copytext(sanitize(input("Please input minor crime details:", "Security HUD", "", null)  as message),1,MAX_MESSAGE_LEN)
 										if(R)
-											if (!t1 || !t2 || !allowed_access || H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security))
+											if(!t1 || !t2 || !allowed_access || H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security))
 												return
 											var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
 											data_core.addMinorCrime(R.fields["id"], crime)
@@ -367,7 +367,7 @@
 										var/t1 = copytext(sanitize(input("Please input major crime names:", "Security HUD", "", null)  as text),1,MAX_MESSAGE_LEN)
 										var/t2 = copytext(sanitize(input("Please input major crime details:", "Security HUD", "", null)  as message),1,MAX_MESSAGE_LEN)
 										if(R)
-											if (!t1 || !t2 || !allowed_access || H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security))
+											if(!t1 || !t2 || !allowed_access || H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security))
 												return
 											var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
 											data_core.addMajorCrime(R.fields["id"], crime)
@@ -391,7 +391,7 @@
 							if(R)
 								var/t1 = copytext(sanitize(input("Add Comment:", "Secure. records", null, null)  as message),1,MAX_MESSAGE_LEN)
 								if(R)
-									if (!t1 || !allowed_access || H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security))
+									if(!t1 || !allowed_access || H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security))
 										return
 									var/counter = 1
 									while(R.fields[text("com_[]", counter)])

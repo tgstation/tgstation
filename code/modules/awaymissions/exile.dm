@@ -5,7 +5,7 @@
 	name = "implanter-exile"
 
 /obj/item/weapon/implanter/exile/New()
-	imp = new /obj/item/weapon/implant/exile( src )
+	imp = new /obj/item/weapon/implant/exile(src)
 	..()
 	update_icon()
 

@@ -95,9 +95,9 @@ Note: Must be placed west/left of and R&D console to function.
 	return A
 
 /obj/machinery/r_n_d/protolathe/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if (shocked)
+	if(shocked)
 		shock(user,50)
-	if (default_deconstruction_screwdriver(user, "protolathe_t", "protolathe", O))
+	if(default_deconstruction_screwdriver(user, "protolathe_t", "protolathe", O))
 		if(linked_console)
 			linked_console.linked_lathe = null
 			linked_console = null
@@ -106,7 +106,7 @@ Note: Must be placed west/left of and R&D console to function.
 	if(exchange_parts(user, O))
 		return
 
-	if (panel_open)
+	if(panel_open)
 		if(istype(O, /obj/item/weapon/crowbar))
 			for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 				reagents.trans_to(G, G.reagents.maximum_volume)
@@ -142,24 +142,24 @@ Note: Must be placed west/left of and R&D console to function.
 		else
 			user << "<span class='warning'>You can't load the [src.name] while it's opened.</span>"
 			return 1
-	if (disabled)
+	if(disabled)
 		return
-	if (!linked_console)
+	if(!linked_console)
 		user << "<span class='warning'> The [src.name] must be linked to an R&D console first!</span>"
 		return 1
-	if (busy)
+	if(busy)
 		user << "<span class='warning'>The [src.name] is busy. Please wait for completion of previous operation.</span>"
 		return 1
-	if (O.is_open_container())
+	if(O.is_open_container())
 		return
-	if (!istype(O, /obj/item/stack/sheet) || istype(O, /obj/item/stack/sheet/mineral/wood))
+	if(!istype(O, /obj/item/stack/sheet) || istype(O, /obj/item/stack/sheet/mineral/wood))
 		user << "<span class='warning'>You cannot insert this item into the [src.name]!</span>"
 		return 1
-	if (stat)
+	if(stat)
 		return 1
 	if(istype(O,/obj/item/stack/sheet))
 		var/obj/item/stack/sheet/S = O
-		if (TotalMaterials() + S.perunit > max_material_storage)
+		if(TotalMaterials() + S.perunit > max_material_storage)
 			user << "<span class='warning'>The [src.name]'s material bin is full. Please remove material before adding more.</span>"
 			return 1
 

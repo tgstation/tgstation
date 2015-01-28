@@ -97,7 +97,7 @@
 
 /obj/machinery/bot/floorbot/attack_hand(mob/user as mob)
 	. = ..()
-	if (.)
+	if(.)
 		return
 	usr.set_machine(src)
 	interact(user)
@@ -120,7 +120,7 @@
 		dat += "Traction Magnets: <A href='?src=\ref[src];operation=anchor'>[anchored ? "Engaged" : "Disengaged"]</A><BR>"
 		dat += "Patrol Station: <A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A><BR>"
 		var/bmode
-		if (targetdirection)
+		if(targetdirection)
 			bmode = dir2text(targetdirection)
 		else
 			bmode = "disabled"
@@ -140,7 +140,7 @@
 		var/loaded = min(50-amount, T.amount)
 		T.use(loaded)
 		amount += loaded
-		if (loaded > 0)
+		if(loaded > 0)
 			user << "<span class='notice'>You load [loaded] tiles into the floorbot. He now contains [amount] tiles.</span>"
 			nagged = 0
 			updateicon()
@@ -201,7 +201,7 @@
 	updateUsrDialog()
 
 /obj/machinery/bot/floorbot/bot_process()
-	if (!..())
+	if(!..())
 		return
 
 	if(mode == BOT_REPAIRING)
@@ -319,7 +319,7 @@
 
 /obj/machinery/bot/floorbot/proc/is_hull_breach(var/turf/t) //Ignore space tiles not considered part of a structure, also ignores shuttle docking areas.
 	var/area/t_area = get_area(t)
-	if (t_area && (t_area.name == "Space" || findtext(t_area.name, "huttle")))
+	if(t_area && (t_area.name == "Space" || findtext(t_area.name, "huttle")))
 		return 0
 	else
 		return 1
@@ -454,7 +454,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
-	if (prob(50))
+	if(prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
 
 	while (amount)//Dumps the tiles into the appropriate sized stacks
@@ -504,11 +504,11 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 		user.unEquip(src, 1)
 		qdel(src)
 
-	else if (istype(W, /obj/item/weapon/pen))
+	else if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
-		if (!t)
+		if(!t)
 			return
-		if (!in_range(src, usr) && loc != usr)
+		if(!in_range(src, usr) && loc != usr)
 			return
 
 		created_name = t
@@ -523,11 +523,11 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 		user << "<span class='notice'>You add the robot arm to the odd looking toolbox assembly! Boop beep!</span>"
 		user.unEquip(src, 1)
 		qdel(src)
-	else if (istype(W, /obj/item/weapon/pen))
+	else if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
-		if (!t)
+		if(!t)
 			return
-		if (!in_range(src, usr) && loc != usr)
+		if(!in_range(src, usr) && loc != usr)
 			return
 
 		created_name = t

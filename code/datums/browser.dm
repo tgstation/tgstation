@@ -19,13 +19,13 @@
 
 	user = nuser
 	window_id = nwindow_id
-	if (ntitle)
+	if(ntitle)
 		title = format_text(ntitle)
-	if (nwidth)
+	if(nwidth)
 		width = nwidth
-	if (nheight)
+	if(nheight)
 		height = nheight
-	if (nref)
+	if(nref)
 		ref = nref
 	add_stylesheet("common", 'html/browser/common.css') // this CSS sheet is common to all UIs
 
@@ -64,7 +64,7 @@
 		head_content += "<script type='text/javascript' src='[filename]'></script>"
 
 	var/title_attributes = "class='uiTitle'"
-	if (title_image)
+	if(title_image)
 		title_attributes = "class='uiTitle icon' style='background-image: url([title_image]);'"
 
 	return {"<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -95,10 +95,10 @@
 
 /datum/browser/proc/open(var/use_onclose = 1)
 	var/window_size = ""
-	if (width && height)
+	if(width && height)
 		window_size = "size=[width]x[height];"
 	user << browse(get_content(), "window=[window_id];[window_size][window_options]")
-	if (use_onclose)
+	if(use_onclose)
 		onclose(user, window_id, ref)
 
 /datum/browser/proc/close()
@@ -110,7 +110,7 @@
 /mob/proc/browse_rsc_icon(icon, icon_state, dir = -1)
 	/*
 	var/icon/I
-	if (dir >= 0)
+	if(dir >= 0)
 		I = new /icon(icon, icon_state, dir)
 	else
 		I = new /icon(icon, icon_state)

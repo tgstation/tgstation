@@ -37,7 +37,7 @@
 	return charges
 
 /obj/item/weapon/gun/magic/proc/newshot()
-	if (charges && chambered)
+	if(charges && chambered)
 		chambered.newshot()
 	return
 

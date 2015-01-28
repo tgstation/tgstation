@@ -50,7 +50,7 @@
 	if(loc == H || (in_range(src, H) && istype(loc, /turf)))
 		H.set_machine(src)
 		if(href_list["school"])
-			if (used)
+			if(used)
 				H << "You already used this contract!"
 				return
 			var/list/candidates = get_candidates(BE_WIZARD)
@@ -93,7 +93,7 @@
 	var/wizard_name_second = pick(wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
 	var/newname = copytext(sanitize(input(M, "You are the wizard's apprentice. Would you like to change your name to something else?", "Name change", randomname) as null|text),1,MAX_NAME_LEN)
-	if (!newname)
+	if(!newname)
 		newname = randomname
 	M.mind.name = newname
 	M.real_name = newname

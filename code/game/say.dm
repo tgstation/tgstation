@@ -61,9 +61,9 @@ var/list/freqtospan = list(
 	if(!text)
 		return "says, \"...\""	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
 	var/ending = copytext(text, length(text))
-	if (ending == "?")
+	if(ending == "?")
 		return "asks, \"[text]\""
-	if (ending == "!")
+	if(ending == "!")
 		return "exclaims, \"[text]\""
 
 	return "says, \"[text]\""

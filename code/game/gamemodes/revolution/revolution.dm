@@ -55,7 +55,7 @@
 				antag_candidates -= player
 
 	for (var/i=1 to max_headrevs)
-		if (antag_candidates.len==0)
+		if(antag_candidates.len==0)
 			break
 		var/datum/mind/lenin = pick(antag_candidates)
 		antag_candidates -= lenin
@@ -115,7 +115,7 @@
 
 /datum/game_mode/proc/greet_revolutionary(var/datum/mind/rev_mind, var/you_are=1)
 	var/obj_count = 1
-	if (you_are)
+	if(you_are)
 		rev_mind.current << "<span class='userdanger'><FONT size = 3>You are a member of the revolutionaries' leadership!</FONT></span>"
 	for(var/datum/objective/objective in rev_mind.objectives)
 		rev_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
@@ -129,8 +129,8 @@
 	if(!istype(mob))
 		return
 
-	if (mob.mind)
-		if (mob.mind.assigned_role == "Clown")
+	if(mob.mind)
+		if(mob.mind.assigned_role == "Clown")
 			mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
 			mob.dna.remove_mutation(CLOWNMUT)
 
@@ -145,7 +145,7 @@
 		"right hand" = slot_r_hand,
 	)
 	var/where = mob.equip_in_one_of_slots(T, slots)
-	if (!where)
+	if(!where)
 		mob << "The Syndicate were unfortunately unable to get you a flash."
 	else
 		mob << "The flash in your [where] will help you to persuade the crew to join your cause."

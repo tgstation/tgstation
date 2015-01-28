@@ -31,7 +31,7 @@
 									 "<span class='notice'>You loosened the [name]'s bolts!</span>")
 				anchored = 0
 		else
-			if (!istype(src.loc, /turf/simulated/floor))
+			if(!istype(src.loc, /turf/simulated/floor))
 				user.visible_message("<span class='danger'>A floor must be present to secure the [name]!</span>")
 				return
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
@@ -102,7 +102,7 @@
 
 /obj/structure/statue/proc/Dismantle(devastated = 0)
 	if(!devastated)
-		if (mineralType == "metal")
+		if(mineralType == "metal")
 			var/ore = /obj/item/stack/sheet/metal
 			for(var/i = 1, i <= oreAmount, i++)
 				new ore(get_turf(src))
@@ -111,7 +111,7 @@
 			for(var/i = 1, i <= oreAmount, i++)
 				new ore(get_turf(src))
 	else
-		if (mineralType == "metal")
+		if(mineralType == "metal")
 			var/ore = /obj/item/stack/sheet/metal
 			for(var/i = 3, i <= oreAmount, i++)
 				new ore(get_turf(src))

@@ -29,7 +29,7 @@
 	add_fingerprint(user)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
-		if (get_amount() < 1 || CC.get_amount() < 5)
+		if(get_amount() < 1 || CC.get_amount() < 5)
 			user << "<span class='warning>You need five lengths of coil and one sheet of glass to make wired glass.</span>"
 			return
 		CC.use(5)
@@ -39,7 +39,7 @@
 		new_tile.add_fingerprint(user)
 	else if(istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/V = W
-		if (V.get_amount() >= 1 && src.get_amount() >= 1)
+		if(V.get_amount() >= 1 && src.get_amount() >= 1)
 			var/obj/item/stack/sheet/rglass/RG = new (user.loc)
 			RG.add_fingerprint(user)
 			RG.add_to_stacks(user)
@@ -48,7 +48,7 @@
 			var/replace = (user.get_inactive_hand()==G)
 			V.use(1)
 			G.use(1)
-			if (!G && replace)
+			if(!G && replace)
 				user.put_in_hands(RG)
 		else
 			user << "<span class='warning'>You need one rod and one sheet of glass to make reinforced glass.</span>"

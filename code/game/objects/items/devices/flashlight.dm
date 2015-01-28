@@ -303,7 +303,7 @@ obj/item/device/flashlight/lamp/bananalamp
 
 /obj/item/device/flashlight/emp/afterattack(atom/A as mob|obj, mob/user, proximity)
 	if(!proximity) return
-	if (emp_cur_charges > 0)
+	if(emp_cur_charges > 0)
 		emp_cur_charges -= 1
 		A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].", \
 											"<span class='userdanger'>[user] blinks \the [src] at \the [A].")

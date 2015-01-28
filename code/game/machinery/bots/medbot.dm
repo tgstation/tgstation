@@ -124,7 +124,7 @@
 
 /obj/machinery/bot/medbot/attack_hand(mob/user as mob)
 	. = ..()
-	if (.)
+	if(.)
 		return
 	var/dat
 	dat += hack(user)
@@ -132,7 +132,7 @@
 	dat += "Status: <A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A><BR>"
 	dat += "Maintenance panel panel is [open ? "opened" : "closed"]<BR>"
 	dat += "Beaker: "
-	if (reagent_glass)
+	if(reagent_glass)
 		dat += "<A href='?src=\ref[src];eject=1'>Loaded \[[reagent_glass.reagents.total_volume]/[reagent_glass.reagents.maximum_volume]\]</a>"
 	else
 		dat += "None Loaded"
@@ -188,30 +188,30 @@
 	else if(href_list["use_beaker"])
 		use_beaker = !use_beaker
 
-	else if (href_list["eject"] && (!isnull(reagent_glass)))
+	else if(href_list["eject"] && (!isnull(reagent_glass)))
 		reagent_glass.loc = get_turf(src)
 		reagent_glass = null
 
-	else if (href_list["togglevoice"])
+	else if(href_list["togglevoice"])
 		shut_up = !shut_up
 
-	else if (href_list["critalerts"])
+	else if(href_list["critalerts"])
 		declare_crit = !declare_crit
 
-	else if (href_list["stationary"])
+	else if(href_list["stationary"])
 		stationary_mode = !stationary_mode
 		path = list()
 		updateicon()
 
-	else if (href_list["virus"])
+	else if(href_list["virus"])
 		treat_virus = !treat_virus
 
 	updateUsrDialog()
 	return
 
 /obj/machinery/bot/medbot/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if (allowed(user) && !open && !emagged)
+	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+		if(allowed(user) && !open && !emagged)
 			locked = !locked
 			user << "<span class='notice'>Controls are now [locked ? "locked." : "unlocked."]</span>"
 			updateUsrDialog()
@@ -223,7 +223,7 @@
 			else
 				user << "<span class='warning'>Access denied.</span>"
 
-	else if (istype(W, /obj/item/weapon/reagent_containers/glass))
+	else if(istype(W, /obj/item/weapon/reagent_containers/glass))
 		if(locked)
 			user << "<span class='notice'>You cannot insert a beaker because the panel is locked.</span>"
 			return
@@ -241,7 +241,7 @@
 	else
 		var/current_health = health
 		..()
-		if (health < current_health) //if medbot took some damage
+		if(health < current_health) //if medbot took some damage
 			step_to(src, (get_step_away(src,user)))
 
 /obj/machinery/bot/medbot/Emag(mob/user as mob)
@@ -257,10 +257,10 @@
 			oldpatient = user
 
 /obj/machinery/bot/medbot/process_scan(var/mob/living/carbon/human/H)
-	if (H.stat == 2)
+	if(H.stat == 2)
 		return
 
-	if ((H == oldpatient) && (world.time < last_found + 100))
+	if((H == oldpatient) && (world.time < last_found + 100))
 		return
 
 	if(assess_patient(H))
@@ -274,7 +274,7 @@
 		return
 
 /obj/machinery/bot/medbot/bot_process()
-	if (!..())
+	if(!..())
 		return
 
 	if(mode == BOT_HEALING)
@@ -394,7 +394,7 @@
 				return 0
 			if((D.stage > 1) || (D.spread_flags & AIRBORNE)) // medibot can't detect a virus in its initial stage unless it spreads airborne.
 
-				if (!C.reagents.has_reagent(treatment_virus))
+				if(!C.reagents.has_reagent(treatment_virus))
 					return 1 //STOP DISEASE FOREVER
 
 	return 0
@@ -434,23 +434,23 @@
 						if((D.stage > 1) || (D.spread_flags & AIRBORNE))
 							virus = 1
 
-			if (!reagent_id && (virus))
+			if(!reagent_id && (virus))
 				if(!C.reagents.has_reagent(treatment_virus))
 					reagent_id = treatment_virus
 
-		if (!reagent_id && (C.getBruteLoss() >= heal_threshold))
+		if(!reagent_id && (C.getBruteLoss() >= heal_threshold))
 			if(!C.reagents.has_reagent(treatment_brute))
 				reagent_id = treatment_brute
 
-		if (!reagent_id && (C.getOxyLoss() >= (15 + heal_threshold)))
+		if(!reagent_id && (C.getOxyLoss() >= (15 + heal_threshold)))
 			if(!C.reagents.has_reagent(treatment_oxy))
 				reagent_id = treatment_oxy
 
-		if (!reagent_id && (C.getFireLoss() >= heal_threshold))
+		if(!reagent_id && (C.getFireLoss() >= heal_threshold))
 			if(!C.reagents.has_reagent(treatment_fire))
 				reagent_id = treatment_fire
 
-		if (!reagent_id && (C.getToxLoss() >= heal_threshold))
+		if(!reagent_id && (C.getToxLoss() >= heal_threshold))
 			if(!C.reagents.has_reagent(treatment_tox))
 				reagent_id = treatment_tox
 
@@ -475,7 +475,7 @@
 			"<span class='userdanger'>[src] is trying to inject [patient]!</span>")
 
 		spawn(30)
-			if ((get_dist(src, patient) <= 1) && (on))
+			if((get_dist(src, patient) <= 1) && (on))
 				if(reagent_id == "internal_beaker")
 					if(use_beaker && reagent_glass && reagent_glass.reagents.total_volume)
 						reagent_glass.reagents.trans_to(patient,injection_amount) //Inject from beaker instead.
@@ -513,7 +513,7 @@
 		reagent_glass.loc = Tsec
 		reagent_glass = null
 
-	if (prob(50))
+	if(prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -537,7 +537,7 @@
 
 /obj/item/weapon/storage/firstaid/attackby(var/obj/item/robot_parts/S, mob/user as mob)
 
-	if ((!istype(S, /obj/item/robot_parts/l_arm)) && (!istype(S, /obj/item/robot_parts/r_arm)))
+	if((!istype(S, /obj/item/robot_parts/l_arm)) && (!istype(S, /obj/item/robot_parts/r_arm)))
 		..()
 		return
 
@@ -567,9 +567,9 @@
 	..()
 	if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
-		if (!t)
+		if(!t)
 			return
-		if (!in_range(src, usr) && loc != usr)
+		if(!in_range(src, usr) && loc != usr)
 			return
 		created_name = t
 	else

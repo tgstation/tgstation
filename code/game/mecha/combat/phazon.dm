@@ -74,9 +74,9 @@
 
 /obj/mecha/combat/phazon/Topic(href, href_list)
 	..()
-	if (href_list["switch_damtype"])
+	if(href_list["switch_damtype"])
 		src.switch_damtype()
-	if (href_list["phasing"])
+	if(href_list["phasing"])
 		phasing = !phasing
 		send_byjax(src.occupant,"exosuit.browser","phasing_command","[phasing?"Dis":"En"]able phasing")
 		src.occupant_message("<font color=\"[phasing?"#00f\">En":"#f00\">Dis"]abled phasing.</font>")

@@ -120,7 +120,7 @@
 		if(6.0)
 			size = "gigantic"
 		else
-	//if ((CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
+	//if((CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
 
 	var/pronoun
 	if(src.gender == PLURAL)
@@ -131,14 +131,14 @@
 	user << "[pronoun] a [size] item." //e.g. They are a small item. or It is a bulky item.
 
 /obj/item/attack_hand(mob/user as mob)
-	if (!user) return
-	if (istype(src.loc, /obj/item/weapon/storage))
+	if(!user) return
+	if(istype(src.loc, /obj/item/weapon/storage))
 		//If the item is in a storage item, take it out
 		var/obj/item/weapon/storage/S = src.loc
 		S.remove_from_storage(src, user.loc)
 
 	src.throwing = 0
-	if (loc == user)
+	if(loc == user)
 		if(!user.unEquip(src))
 			return
 	else
@@ -152,13 +152,13 @@
 
 /obj/item/attack_paw(mob/user as mob)
 
-	if (istype(src.loc, /obj/item/weapon/storage))
+	if(istype(src.loc, /obj/item/weapon/storage))
 		for(var/mob/M in range(1, src.loc))
-			if (M.s_active == src.loc)
-				if (M.client)
+			if(M.s_active == src.loc)
+				if(M.client)
 					M.client.screen -= src
 	src.throwing = 0
-	if (src.loc == user)
+	if(src.loc == user)
 		if(!user.unEquip(src))
 			return
 	else
@@ -181,7 +181,7 @@
 	attack_paw(A)
 
 /obj/item/attack_ai(mob/user as mob)
-	if (istype(src.loc, /obj/item/weapon/robot_module))
+	if(istype(src.loc, /obj/item/weapon/robot_module))
 		//If the item is part of a cyborg module, equip it
 		if(!isrobot(user)) return
 		var/mob/living/silicon/robot/R = user
@@ -348,7 +348,7 @@
 		M.take_organ_damage(7)
 	M.eye_blurry += rand(3,4)
 	M.eye_stat += rand(2,4)
-	if (M.eye_stat >= 10)
+	if(M.eye_stat >= 10)
 		M.eye_blurry += 15+(0.1*M.eye_blurry)
 		M.disabilities |= NEARSIGHT
 		if(M.stat != 2)
@@ -360,7 +360,7 @@
 			M.eye_blurry += 10
 			M.Paralyse(1)
 			M.Weaken(2)
-		if (prob(M.eye_stat - 10 + 1))
+		if(prob(M.eye_stat - 10 + 1))
 			if(M.stat != 2)
 				M << "<span class='danger'>You go blind!</span>"
 			M.disabilities |= BLIND

@@ -372,10 +372,10 @@
 	if(stat != DEAD)
 		var/list/L = src.alarms[class]
 		for (var/I in L)
-			if (I == A.name)
+			if(I == A.name)
 				var/list/alarm = L[I]
 				var/list/sources = alarm[2]
-				if (!(alarmsource in sources))
+				if(!(alarmsource in sources))
 					sources += alarmsource
 				return
 		L[A.name] = list(A, list(alarmsource))
@@ -386,12 +386,12 @@
 		var/list/L = alarms[class]
 		var/cleared = 0
 		for (var/I in L)
-			if (I == A.name)
+			if(I == A.name)
 				var/list/alarm = L[I]
 				var/list/srcs  = alarm[2]
-				if (origin in srcs)
+				if(origin in srcs)
 					srcs -= origin
-				if (srcs.len == 0)
+				if(srcs.len == 0)
 					cleared = 1
 					L -= I
 		if(cleared)

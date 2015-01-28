@@ -20,7 +20,7 @@
 		title = "[A.name] (\ref[A]) = [A.type]"
 
 		#ifdef VARSICON
-		if (A.icon)
+		if(A.icon)
 			body += debug_variable("icon", new/icon(A.icon, A.icon_state, A.dir), 0)
 		#endif
 
@@ -47,7 +47,7 @@
 						{
 							try{
 								var li = lis\[i\];
-								if ( li.style.backgroundColor == "#ffee88" )
+								if( li.style.backgroundColor == "#ffee88" )
 								{
 									alist = lis\[i\].getElementsByTagName("a")
 									if(alist.length > 0){
@@ -66,7 +66,7 @@
 						{
 							try{
 								var li = lis\[i\];
-								if ( li.style.backgroundColor == "#ffee88" )
+								if( li.style.backgroundColor == "#ffee88" )
 								{
 									if( (i-1) >= 0){
 										var li_new = lis\[i-1\];
@@ -87,7 +87,7 @@
 						{
 							try{
 								var li = lis\[i\];
-								if ( li.style.backgroundColor == "#ffee88" )
+								if( li.style.backgroundColor == "#ffee88" )
 								{
 									if( (i+1) < lis.length){
 										var li_new = lis\[i+1\];
@@ -117,7 +117,7 @@
 						{
 							try{
 								var li = lis\[i\];
-								if ( li.innerText.toLowerCase().indexOf(filter) == -1 )
+								if( li.innerText.toLowerCase().indexOf(filter) == -1 )
 								{
 									vars_ol.removeChild(li);
 									i--;
@@ -129,7 +129,7 @@
 					for ( var j = 0; j < lis_new.length; ++j )
 					{
 						var li1 = lis\[j\];
-						if (j == 0){
+						if(j == 0){
 							li1.style.backgroundColor = "#ffee88";
 						}else{
 							li1.style.backgroundColor = "white";
@@ -291,7 +291,7 @@
 	body += "</ol>"
 
 	var/html = "<html><head>"
-	if (title)
+	if(title)
 		html += "<title>[title]</title>"
 	html += {"<style>
 body
@@ -329,13 +329,13 @@ body
 	else
 		html += "<li>"
 
-	if (isnull(value))
+	if(isnull(value))
 		html += "[name] = <span class='value'>null</span>"
 
-	else if (istext(value))
+	else if(istext(value))
 		html += "[name] = <span class='value'>\"[value]\"</span>"
 
-	else if (isicon(value))
+	else if(isicon(value))
 		#ifdef VARSICON
 		var/icon/I = new/icon(value)
 		var/rnd = rand(1,10000)
@@ -346,7 +346,7 @@ body
 		html += "[name] = /icon (<span class='value'>[value]</span>)"
 		#endif
 
-/*		else if (istype(value, /image))
+/*		else if(istype(value, /image))
 		#ifdef VARSICON
 		var/rnd = rand(1, 10000)
 		var/image/I = value
@@ -357,22 +357,22 @@ body
 		html += "[name] = /image (<span class='value'>[value]</span>)"
 		#endif
 */
-	else if (isfile(value))
+	else if(isfile(value))
 		html += "[name] = <span class='value'>'[value]'</span>"
 
-	else if (istype(value, /datum))
+	else if(istype(value, /datum))
 		var/datum/D = value
 		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [D.type]"
 
-	else if (istype(value, /client))
+	else if(istype(value, /client))
 		var/client/C = value
 		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [C] [C.type]"
 //
-	else if (istype(value, /list))
+	else if(istype(value, /list))
 		var/list/L = value
 		html += "[name] = /list ([L.len])"
 
-		if (L.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || L.len > 500))
+		if(L.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || L.len > 500))
 			// not sure if this is completely right...
 			if(0)   //(L.vars.len > 0)
 				html += "<ol>"

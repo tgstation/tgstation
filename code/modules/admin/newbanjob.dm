@@ -6,17 +6,17 @@ var/savefile/Banlistjob
 	ClearTempbansjob()
 	var/id = clientvar.computer_id
 	var/key = clientvar.ckey
-	if (guest_jobbans(rank))
+	if(guest_jobbans(rank))
 		if(config.guest_jobban && IsGuestKey(key))
 			return 1
 	Banlistjob.cd = "/base"
-	if (Banlistjob.dir.Find("[key][id][rank]"))
+	if(Banlistjob.dir.Find("[key][id][rank]"))
 		return 1
 
 	Banlistjob.cd = "/base"
 	for (var/A in Banlistjob.dir)
 		Banlistjob.cd = "/base/[A]"
-		if ((id == Banlistjob["id"] || key == Banlistjob["key"]) && rank == Banlistjob["rank"])
+		if((id == Banlistjob["id"] || key == Banlistjob["key"]) && rank == Banlistjob["rank"])
 			return 1
 	return 0
 
@@ -30,13 +30,13 @@ var/savefile/Banlistjob
 	Banlistjob = new("data/job_fullnew.bdb")
 	log_admin("Loading Banlistjob")
 
-	if (!length(Banlistjob.dir)) log_admin("Banlistjob is empty.")
+	if(!length(Banlistjob.dir)) log_admin("Banlistjob is empty.")
 
-	if (!Banlistjob.dir.Find("base"))
+	if(!Banlistjob.dir.Find("base"))
 		log_admin("Banlistjob missing base dir.")
 		Banlistjob.dir.Add("base")
 		Banlistjob.cd = "/base"
-	else if (Banlistjob.dir.Find("base"))
+	else if(Banlistjob.dir.Find("base"))
 		Banlistjob.cd = "/base"
 
 	ClearTempbansjob()
@@ -48,14 +48,14 @@ var/savefile/Banlistjob
 	Banlistjob.cd = "/base"
 	for (var/A in Banlistjob.dir)
 		Banlistjob.cd = "/base/[A]"
-		//if (!Banlistjob["key"] || !Banlistjob["id"])
+		//if(!Banlistjob["key"] || !Banlistjob["id"])
 		//	RemoveBanjob(A, "full")
 		//	log_admin("Invalid Ban.")
 		//	message_admins("Invalid Ban.")
 		//	continue
 
-		if (!Banlistjob["temp"]) continue
-		if (CMinutes >= Banlistjob["minutes"]) RemoveBanjob(A)
+		if(!Banlistjob["temp"]) continue
+		if(CMinutes >= Banlistjob["minutes"]) RemoveBanjob(A)
 
 	return 1
 
@@ -63,7 +63,7 @@ var/savefile/Banlistjob
 /proc/AddBanjob(ckey, computerid, reason, bannedby, temp, minutes, rank)
 	UpdateTime()
 	var/bantimestamp
-	if (temp)
+	if(temp)
 		UpdateTime()
 		bantimestamp = CMinutes + minutes
 	if(rank == "Heads")
@@ -142,7 +142,7 @@ var/savefile/Banlistjob
 		return 1
 
 	Banlistjob.cd = "/base"
-	if ( Banlistjob.dir.Find("[ckey][computerid][rank]") )
+	if( Banlistjob.dir.Find("[ckey][computerid][rank]") )
 		usr << text("<span class='danger'>Banjob already exists.</span>")
 		return 0
 	else
@@ -154,7 +154,7 @@ var/savefile/Banlistjob
 		Banlistjob["reason"] << reason
 		Banlistjob["bannedby"] << bannedby
 		Banlistjob["temp"] << temp
-		if (temp)
+		if(temp)
 			Banlistjob["minutes"] << bantimestamp
 
 	return 1
@@ -169,7 +169,7 @@ var/savefile/Banlistjob
 	Banlistjob["rank"] >> rank
 	Banlistjob.cd = "/base"
 
-	if (!Banlistjob.dir.Remove(foldername)) return 0
+	if(!Banlistjob.dir.Remove(foldername)) return 0
 
 	if(!usr)
 		log_admin("Banjob Expired: [key]")
@@ -183,7 +183,7 @@ var/savefile/Banlistjob
 
 	for (var/A in Banlistjob.dir)
 		Banlistjob.cd = "/base/[A]"
-		if ((key == Banlistjob["key"] || id == Banlistjob["id"]) && (rank == Banlistjob["rank"]))
+		if((key == Banlistjob["key"] || id == Banlistjob["id"]) && (rank == Banlistjob["rank"]))
 			Banlistjob.cd = "/base"
 			Banlistjob.dir.Remove(A)
 			continue
@@ -193,13 +193,13 @@ var/savefile/Banlistjob
 /proc/GetExpjob(minutes as num)
 	UpdateTime()
 	var/exp = minutes - CMinutes
-	if (exp <= 0)
+	if(exp <= 0)
 		return 0
 	else
 		var/timeleftstring
-		if (exp >= 1440) //1440 = 1 day in minutes
+		if(exp >= 1440) //1440 = 1 day in minutes
 			timeleftstring = "[round(exp / 1440, 0.1)] Days"
-		else if (exp >= 60) //60 = 1 hour in minutes
+		else if(exp >= 60) //60 = 1 hour in minutes
 			timeleftstring = "[round(exp / 60, 0.1)] Hours"
 		else
 			timeleftstring = "[exp] Minutes"

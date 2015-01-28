@@ -89,11 +89,11 @@
 	..()
 	if(istype(W, /obj/item/stack/sheet/metal) && !l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
 		var/obj/item/stack/sheet/metal/M = W
-		if (M.use(1))
+		if(M.use(1))
 			var/obj/item/weapon/ed209_assembly/B = new /obj/item/weapon/ed209_assembly
 			B.loc = get_turf(src)
 			user << "<span class='notice'>You armed the robot frame.</span>"
-			if (user.get_inactive_hand()==src)
+			if(user.get_inactive_hand()==src)
 				user.unEquip(src)
 				user.put_in_inactive_hand(B)
 			qdel(src)
@@ -150,7 +150,7 @@
 		else
 			user << "<span class='notice'>You need to attach a flash to it first!</span>"
 
-	if (istype(W, /obj/item/device/multitool))
+	if(istype(W, /obj/item/device/multitool))
 		if(check_completion())
 			Interact(user)
 		else
@@ -306,7 +306,7 @@
 			user << "<span class='warning'>You have already inserted wire.</span>"
 			return
 		var/obj/item/stack/cable_coil/coil = W
-		if (coil.use(1))
+		if(coil.use(1))
 			src.wires = 1.0
 			user << "<span class='notice'>You insert the wire.</span>"
 		else

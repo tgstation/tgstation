@@ -29,7 +29,7 @@
 	if(iscarbon(usr) || isdrone(usr)) //all the check for item manipulation are in other places, you can safely open any storages as anything and its not buggy, i checked
 		var/mob/M = usr
 
-		if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+		if(istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 			return
 
 		if(over_object == M && Adjacent(M)) // this must come before the screen objects only block

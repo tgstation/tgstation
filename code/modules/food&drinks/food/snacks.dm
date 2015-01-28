@@ -149,7 +149,7 @@
 	else
 		return 0 // --- this is everything that is NOT a slicing implement, and which is not being slipped into food; allow afterattack ---
 
-	if ( \
+	if( \
 			!isturf(src.loc) || \
 			!(locate(/obj/structure/table) in src.loc) && \
 			!(locate(/obj/structure/optable) in src.loc) && \
@@ -159,7 +159,7 @@
 		return 1
 
 	var/slices_lost = 0
-	if (!inaccurate)
+	if(!inaccurate)
 		user.visible_message( \
 			"<span class='notice'>[user] slices [src].</span>", \
 			"<span class='notice'>You slice [src].</span>" \

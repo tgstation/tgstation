@@ -43,7 +43,7 @@
 	user.Move_Pulled(src)
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
-	if (!mover)
+	if(!mover)
 		return 1
 	// First, make sure it can leave its square
 	if(isturf(mover.loc))
@@ -64,7 +64,7 @@
 			large_dense += border_obstacle
 
 	//Then, check the turf itself
-	if (!src.CanPass(mover, src))
+	if(!src.CanPass(mover, src))
 		mover.Bump(src, 1)
 		return 0
 
@@ -300,7 +300,7 @@
 /turf/handle_slip(mob/slipper, s_amount, w_amount, obj/O, lube)
 	if(has_gravity(src))
 		var/mob/living/carbon/M = slipper
-		if (M.m_intent=="walk" && (lube&NO_SLIP_WHEN_WALKING))
+		if(M.m_intent=="walk" && (lube&NO_SLIP_WHEN_WALKING))
 			return 0
 		if(!M.lying && (M.status_flags & CANWEAKEN)) // we slip those who are standing and can fall.
 			var/olddir = M.dir

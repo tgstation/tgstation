@@ -59,7 +59,7 @@ datum/reagent/consumable/carrotjuice/on_mob_life(var/mob/living/M as mob)
 		if(1 to 20)
 			//nothing
 		if(21 to INFINITY)
-			if (prob(data-10))
+			if(prob(data-10))
 				M.disabilities &= ~NEARSIGHT
 	data++
 	..()
@@ -171,7 +171,7 @@ datum/reagent/consumable/coffee/on_mob_life(var/mob/living/M as mob)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
 	M.sleeping = max(0,M.sleeping - 2)
-	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
+	if(M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(310, M.bodytemperature + (25 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
 	if(holder.has_reagent("frostoil"))
@@ -193,7 +193,7 @@ datum/reagent/consumable/tea/on_mob_life(var/mob/living/M as mob)
 	M.sleeping = max(0,M.sleeping-1)
 	if(M.getToxLoss() && prob(20))
 		M.adjustToxLoss(-1)
-	if (M.bodytemperature < 310)  //310 is the normal bodytemp. 310.055
+	if(M.bodytemperature < 310)  //310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(310, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
 	return
@@ -209,7 +209,7 @@ datum/reagent/consumable/icecoffee/on_mob_life(var/mob/living/M as mob)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
 	M.sleeping = max(0,M.sleeping-2)
-	if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
+	if(M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
 	..()
@@ -228,7 +228,7 @@ datum/reagent/consumable/icetea/on_mob_life(var/mob/living/M as mob)
 	M.sleeping = max(0,M.sleeping-2)
 	if(M.getToxLoss() && prob(20))
 		M.adjustToxLoss(-1)
-	if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
+	if(M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
 	return
@@ -241,7 +241,7 @@ datum/reagent/consumable/space_cola
 
 datum/reagent/consumable/space_cola/on_mob_life(var/mob/living/M as mob)
 	M.drowsyness = max(0,M.drowsyness-5)
-	if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
+	if(M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
 	return
@@ -259,7 +259,7 @@ datum/reagent/consumable/nuka_cola/on_mob_life(var/mob/living/M as mob)
 	M.drowsyness = 0
 	M.sleeping = max(0,M.sleeping-2)
 	M.status_flags |= GOTTAGOFAST
-	if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
+	if(M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
 	return
@@ -273,7 +273,7 @@ datum/reagent/consumable/spacemountainwind
 datum/reagent/consumable/spacemountainwind/on_mob_life(var/mob/living/M as mob)
 	M.drowsyness = max(0,M.drowsyness-7)
 	M.sleeping = max(0,M.sleeping-1)
-	if (M.bodytemperature > 310)
+	if(M.bodytemperature > 310)
 		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
 	..()
@@ -287,7 +287,7 @@ datum/reagent/consumable/dr_gibb
 
 datum/reagent/consumable/dr_gibb/on_mob_life(var/mob/living/M as mob)
 	M.drowsyness = max(0,M.drowsyness-6)
-	if (M.bodytemperature > 310)
+	if(M.bodytemperature > 310)
 		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 	..()
 	return
@@ -299,7 +299,7 @@ datum/reagent/consumable/space_up
 	color = "#00FF00" // rgb: 0, 255, 0
 
 datum/reagent/consumable/space_up/on_mob_life(var/mob/living/M as mob)
-	if (M.bodytemperature > 310)
+	if(M.bodytemperature > 310)
 		M.bodytemperature = max(310, M.bodytemperature - (8 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 	..()
 	return
@@ -311,7 +311,7 @@ datum/reagent/consumable/lemon_lime
 	color = "#8CFF00" // rgb: 135, 255, 0
 
 datum/reagent/consumable/lemon_lime/on_mob_life(var/mob/living/M as mob)
-	if (M.bodytemperature > 310)
+	if(M.bodytemperature > 310)
 		M.bodytemperature = max(310, M.bodytemperature - (8 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 	..()
 	return
@@ -325,7 +325,7 @@ datum/reagent/consumable/sodawater
 datum/reagent/consumable/sodawater/on_mob_life(var/mob/living/M as mob)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
-	if (M.bodytemperature > 310)
+	if(M.bodytemperature > 310)
 		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
 	return
@@ -340,7 +340,7 @@ datum/reagent/consumable/tonic/on_mob_life(var/mob/living/M as mob)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
 	M.sleeping = max(0,M.sleeping-2)
-	if (M.bodytemperature > 310)
+	if(M.bodytemperature > 310)
 		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
 	return
@@ -367,7 +367,7 @@ datum/reagent/consumable/soy_latte/on_mob_life(var/mob/living/M as mob)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
 	M.sleeping = 0
-	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
+	if(M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
 	if(M.getBruteLoss() && prob(20))
@@ -385,7 +385,7 @@ datum/reagent/consumable/cafe_latte/on_mob_life(var/mob/living/M as mob)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
 	M.sleeping = 0
-	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
+	if(M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
 	if(M.getBruteLoss() && prob(20))
@@ -412,7 +412,7 @@ datum/reagent/consumable/atomicbomb/on_mob_life(var/mob/living/M as mob)
 	M.druggy = max(M.druggy, 50)
 	M.confused = max(M.confused+2,0)
 	M.Dizzy(10)
-	if (!M.stuttering)
+	if(!M.stuttering)
 		M.stuttering = 1
 	M.stuttering += 3
 	if(!data)
@@ -439,7 +439,7 @@ datum/reagent/consumable/gargle_blaster/on_mob_life(var/mob/living/M as mob)
 	data++
 	M.dizziness +=6
 	if(data >= 15 && data <45)
-		if (!M.stuttering)
+		if(!M.stuttering)
 			M.stuttering = 1
 		M.stuttering += 3
 	else if(data >= 45 && prob(50) && data <55)
@@ -464,7 +464,7 @@ datum/reagent/consumable/neurotoxin/on_mob_life(var/mob/living/carbon/M as mob)
 	data++
 	M.dizziness +=6
 	if(data >= 15 && data <45)
-		if (!M.stuttering)
+		if(!M.stuttering)
 			M.stuttering = 1
 		M.stuttering += 3
 	else if(data >= 45 && prob(50) && data <55)
@@ -491,23 +491,23 @@ datum/reagent/consumable/hippies_delight/on_mob_life(var/mob/living/M as mob)
 	data++
 	switch(data)
 		if(1 to 5)
-			if (!M.stuttering) M.stuttering = 1
+			if(!M.stuttering) M.stuttering = 1
 			M.Dizzy(10)
 			if(prob(10)) M.emote(pick("twitch","giggle"))
 		if(5 to 10)
-			if (!M.stuttering) M.stuttering = 1
+			if(!M.stuttering) M.stuttering = 1
 			M.Jitter(20)
 			M.Dizzy(20)
 			M.druggy = max(M.druggy, 45)
 			if(prob(20)) M.emote(pick("twitch","giggle"))
-		if (10 to 200)
-			if (!M.stuttering) M.stuttering = 1
+		if(10 to 200)
+			if(!M.stuttering) M.stuttering = 1
 			M.Jitter(40)
 			M.Dizzy(40)
 			M.druggy = max(M.druggy, 60)
 			if(prob(30)) M.emote(pick("twitch","giggle"))
 		if(200 to INFINITY)
-			if (!M.stuttering) M.stuttering = 1
+			if(!M.stuttering) M.stuttering = 1
 			M.Jitter(60)
 			M.Dizzy(60)
 			M.druggy = max(M.druggy, 75)

@@ -43,7 +43,7 @@
 
 	spawn(20)
 		for(var/obj/machinery/door/window/brigdoor/M in world)
-			if (M.id == src.id)
+			if(M.id == src.id)
 				targets += M
 
 		for(var/obj/machinery/flasher/F in world)
@@ -153,7 +153,7 @@
 	var/dat = "<HTML><BODY><TT>"
 	dat += "<HR>Timer System:</hr>"
 	dat += "<b>Door [src.id] controls</b><br/>"
-	if (timing)
+	if(timing)
 		dat += "<a href='?src=\ref[src];timing=0'>Stop Timer and open door</a><br/>"
 	else
 		dat += "<a href='?src=\ref[src];timing=1'>Activate Timer and close door</a><br/>"

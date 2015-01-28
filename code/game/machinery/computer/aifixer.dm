@@ -44,40 +44,40 @@
 
 	var/dat = ""
 
-	if (src.occupier)
+	if(src.occupier)
 		var/laws
 		dat += "<h3>Stored AI: [src.occupier.name]</h3>"
 		dat += "<b>System integrity:</b> [(src.occupier.health+100)/2]%<br>"
 
-		if (src.occupier.laws.zeroth)
+		if(src.occupier.laws.zeroth)
 			laws += "<b>0:</b> [src.occupier.laws.zeroth]<BR>"
 
 		for (var/index = 1, index <= src.occupier.laws.ion.len, index++)
 			var/law = src.occupier.laws.ion[index]
-			if (length(law) > 0)
+			if(length(law) > 0)
 				var/num = ionnum()
 				laws += "<b>[num]:</b> [law]<BR>"
 
 		var/number = 1
 		for (var/index = 1, index <= src.occupier.laws.inherent.len, index++)
 			var/law = src.occupier.laws.inherent[index]
-			if (length(law) > 0)
+			if(length(law) > 0)
 				laws += "<b>[number]:</b> [law]<BR>"
 				number++
 
 		for (var/index = 1, index <= src.occupier.laws.supplied.len, index++)
 			var/law = src.occupier.laws.supplied[index]
-			if (length(law) > 0)
+			if(length(law) > 0)
 				laws += "<b>[number]:</b> [law]<BR>"
 				number++
 
 		dat += "<b>Laws:</b><br>[laws]<br>"
 
-		if (src.occupier.stat == 2)
+		if(src.occupier.stat == 2)
 			dat += "<span class='bad'>AI non-functional</span>"
 		else
 			dat += "<span class='good'>AI functional</span>"
-		if (!src.active)
+		if(!src.active)
 			dat += {"<br><br><A href='byond://?src=\ref[src];fix=1'>Begin Reconstruction</A>"}
 		else
 			dat += "<br><br>Reconstruction in process, please wait.<br>"
@@ -99,7 +99,7 @@
 /obj/machinery/computer/aifixer/Topic(href, href_list)
 	if(..())
 		return
-	if (href_list["fix"])
+	if(href_list["fix"])
 		src.active = 1
 		src.overlays += image('icons/obj/computer.dmi', "ai-fixer-on")
 		while (src.occupier.health < 100)
@@ -108,7 +108,7 @@
 			src.occupier.adjustToxLoss(-1)
 			src.occupier.adjustBruteLoss(-1)
 			src.occupier.updatehealth()
-			if (src.occupier.health >= 0 && src.occupier.stat == 2)
+			if(src.occupier.health >= 0 && src.occupier.stat == 2)
 				src.occupier.stat = 0
 				src.occupier.lying = 0
 				dead_mob_list -= src.occupier
@@ -134,11 +134,11 @@
 
 	// Working / Powered
 	else
-		if (occupier)
+		if(occupier)
 			switch (occupier.stat)
-				if (0)
+				if(0)
 					overlays += image('icons/obj/computer.dmi', "ai-fixer-full")
-				if (2)
+				if(2)
 					overlays += image('icons/obj/computer.dmi', "ai-fixer-404")
 		else
 			overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")

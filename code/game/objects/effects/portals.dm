@@ -40,10 +40,10 @@
 		return
 	if(M.anchored&&istype(M, /obj/mecha))
 		return
-	if (!( target ))
+	if(!( target ))
 		qdel(src)
 		return
-	if (istype(M, /atom/movable))
+	if(istype(M, /atom/movable))
 		do_teleport(M, target, precision) ///You will appear adjacent to the beacon
 
 

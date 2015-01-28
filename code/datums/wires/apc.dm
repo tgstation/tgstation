@@ -33,7 +33,7 @@ var/const/APC_WIRE_AI_CONTROL = 8
 					A.locked = 1
 					A.updateDialog()
 
-		if (APC_WIRE_MAIN_POWER1, APC_WIRE_MAIN_POWER2)
+		if(APC_WIRE_MAIN_POWER1, APC_WIRE_MAIN_POWER2)
 			if(A.shorted == 0)
 				A.shorted = 1
 
@@ -42,8 +42,8 @@ var/const/APC_WIRE_AI_CONTROL = 8
 						A.shorted = 0
 						A.updateDialog()
 
-		if (APC_WIRE_AI_CONTROL)
-			if (A.aidisabled == 0)
+		if(APC_WIRE_AI_CONTROL)
+			if(A.aidisabled == 0)
 				A.aidisabled = 1
 
 				spawn(10)
@@ -70,9 +70,9 @@ var/const/APC_WIRE_AI_CONTROL = 8
 		if(APC_WIRE_AI_CONTROL)
 
 			if(!mended)
-				if (A.aidisabled == 0)
+				if(A.aidisabled == 0)
 					A.aidisabled = 1
 			else
-				if (A.aidisabled == 1)
+				if(A.aidisabled == 1)
 					A.aidisabled = 0
 	A.updateDialog()

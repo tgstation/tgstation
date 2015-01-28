@@ -19,7 +19,7 @@
 				new /obj/item/stack/sheet/metal(get_turf(src))
 				qdel(src)
 		else if(!anchored)
-			if (!istype(src.loc, /turf/simulated/floor))
+			if(!istype(src.loc, /turf/simulated/floor))
 				usr << "<span class='danger'>A floor must be present to secure the girder!</span>"
 				return
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
@@ -73,7 +73,7 @@
 			qdel(src)
 
 	else if(istype(W, /obj/item/stack/sheet))
-		if (!istype(src.loc, /turf/simulated/floor))
+		if(!istype(src.loc, /turf/simulated/floor))
 			usr << "<span class='danger'>The girder is too unstable to build anything!</span>"
 			return
 
@@ -82,7 +82,7 @@
 
 			if(/obj/item/stack/sheet/metal, /obj/item/stack/sheet/metal/cyborg)
 				if(!anchored)
-					if (S.use(2))
+					if(S.use(2))
 						user << "<span class='notice'>You create a false wall! Push on it to open or close the passage.</span>"
 						var/obj/structure/falsewall/F = new (loc)
 						transfer_fingerprints_to(F)
@@ -95,7 +95,7 @@
 						user << "<span class='warning'>You need two sheets of metal to finish a wall.</span>"
 						return
 					user << "<span class='notice'>Now adding plating...</span>"
-					if (do_after(user, 40))
+					if(do_after(user, 40))
 						if(loc == null || S.get_amount() < 2)
 							return
 						S.use(2)
@@ -119,7 +119,7 @@
 					transfer_fingerprints_to(FW)
 					qdel(src)
 				else
-					if (src.icon_state == "reinforced") //I cant believe someone would actually write this line of code...
+					if(src.icon_state == "reinforced") //I cant believe someone would actually write this line of code...
 						if(S.amount < 1) return ..()
 						user << "<span class='notice'>Now finalising reinforced wall...</span>"
 						if(do_after(user, 50))
@@ -135,7 +135,7 @@
 					else
 						if(S.amount < 1) return ..()
 						user << "<span class='notice'>Now reinforcing girders...</span>"
-						if (do_after(user,60))
+						if(do_after(user,60))
 							if(!src || !S || S.amount < 1) return
 							S.use(1)
 							user << "<span class='notice'>Girders reinforced!</span>"
@@ -159,7 +159,7 @@
 			else
 				if(S.amount < 2) return ..()
 				user << "<span class='notice'>Now adding plating...</span>"
-				if (do_after(user,40))
+				if(do_after(user,40))
 					if(!src || !S || S.amount < 2) return
 					S.use(2)
 					user << "<span class='notice'>You added the plating!</span>"
@@ -174,7 +174,7 @@
 
 	else if(istype(W, /obj/item/pipe))
 		var/obj/item/pipe/P = W
-		if (P.pipe_type in list(0, 1, 5))	//simple pipes, simple bends, and simple manifolds.
+		if(P.pipe_type in list(0, 1, 5))	//simple pipes, simple bends, and simple manifolds.
 			user.drop_item()
 			P.loc = src.loc
 			user << "<span class='notice'>You fit the pipe into \the [src]!</span>"
@@ -204,13 +204,13 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(70))
+			if(prob(70))
 				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
 				new remains(loc)
 				qdel(src)
 			return
 		if(3.0)
-			if (prob(15))
+			if(prob(15))
 				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
 				new remains(loc)
 				qdel(src)
@@ -235,13 +235,13 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(30))
+			if(prob(30))
 				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
 				new remains(loc)
 				qdel(src)
 			return
 		if(3.0)
-			if (prob(5))
+			if(prob(5))
 				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
 				new remains(loc)
 				qdel(src)
@@ -291,12 +291,12 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(30))
+			if(prob(30))
 				new /obj/effect/decal/remains/human(loc)
 				qdel(src)
 			return
 		if(3.0)
-			if (prob(5))
+			if(prob(5))
 				new /obj/effect/decal/remains/human(loc)
 				qdel(src)
 			return

@@ -50,14 +50,14 @@
 
 
 /area/proc/poweralert(var/state, var/obj/source as obj)
-	if (state != poweralm)
+	if(state != poweralm)
 		poweralm = state
 		if(istype(source))	//Only report power alarms on the z-level where the source is located.
 			var/list/cameras = list()
 			for (var/obj/machinery/camera/C in src)
 				cameras += C
 			for (var/mob/living/silicon/aiPlayer in player_list)
-				if (state == 1)
+				if(state == 1)
 					aiPlayer.cancelAlarm("Power", src, source)
 				else
 					aiPlayer.triggerAlarm("Power", src, cameras, source)
@@ -77,7 +77,7 @@
 
 /area/proc/atmosalert(var/danger_level, var/obj/source as obj)
 	if(danger_level != atmosalm)
-		if (danger_level==2)
+		if(danger_level==2)
 			var/list/cameras = list()
 			for(var/area/RA in related)
 				for(var/obj/machinery/camera/C in RA)
@@ -90,7 +90,7 @@
 			for(var/mob/living/simple_animal/drone/D in mob_list)
 				D.triggerAlarm("Atmosphere", src, cameras, source)
 
-		else if (src.atmosalm == 2)
+		else if(src.atmosalm == 2)
 			for(var/mob/living/silicon/aiPlayer in player_list)
 				aiPlayer.cancelAlarm("Atmosphere", src, source)
 			for(var/obj/machinery/computer/station_alert/a in machines)
@@ -109,7 +109,7 @@
 	var/list/cameras = list()
 
 	for(var/area/RA in related)
-		if (!( RA.fire ))
+		if(!( RA.fire ))
 			RA.set_fire_alarm_effect()
 			for(var/obj/machinery/door/firedoor/D in RA)
 				if(!D.blocked)
@@ -133,7 +133,7 @@
 
 /area/proc/firereset(var/obj/source as obj)
 	for(var/area/RA in related)
-		if (RA.fire)
+		if(RA.fire)
 			RA.fire = 0
 			RA.mouse_opacity = 0
 			RA.updateicon()
@@ -202,14 +202,14 @@
 /area/proc/partyalert()
 	if(src.name == "Space") //no parties in space!!!
 		return
-	if (!( src.party ))
+	if(!( src.party ))
 		src.party = 1
 		src.updateicon()
 		src.mouse_opacity = 0
 	return
 
 /area/proc/partyreset()
-	if (src.party)
+	if(src.party)
 		src.party = 0
 		src.mouse_opacity = 0
 		src.updateicon()
@@ -223,7 +223,7 @@
 	return
 
 /area/proc/updateicon()
-	if ((fire || eject || party) && (!requires_power||power_environ) && !lighting_space)//If it doesn't require power, can still activate this proc.
+	if((fire || eject || party) && (!requires_power||power_environ) && !lighting_space)//If it doesn't require power, can still activate this proc.
 		if(fire && !eject && !party)
 			icon_state = "blue"
 		/*else if(atmosalm && !fire && !eject && !party)
@@ -269,7 +269,7 @@
 	for(var/area/RA in related)
 		for(var/obj/machinery/M in RA)	// for each machine in the area
 			M.power_change()				// reverify power status (to update icons etc.)
-		if (fire || eject || party)
+		if(fire || eject || party)
 			RA.updateicon()
 
 /area/proc/usage(var/chan)

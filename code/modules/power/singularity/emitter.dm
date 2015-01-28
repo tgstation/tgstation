@@ -29,7 +29,7 @@
 
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
-	if (src.anchored)
+	if(src.anchored)
 		usr << "It is fastened to the floor!"
 		return 0
 	src.dir = turn(src.dir, 90)
@@ -48,7 +48,7 @@
 	..()
 
 /obj/machinery/power/emitter/update_icon()
-	if (active && powernet && avail(active_power_usage))
+	if(active && powernet && avail(active_power_usage))
 		icon_state = "emitter_+a"
 	else
 		icon_state = "emitter"
@@ -182,23 +182,23 @@
 			if(0)
 				user << "<span class='danger'>The [src.name] needs to be wrenched to the floor.</span>"
 			if(1)
-				if (WT.remove_fuel(0,user))
+				if(WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
 						"You start to weld \the [src] to the floor.", \
 						"You hear welding")
-					if (do_after(user,20))
+					if(do_after(user,20))
 						if(!src || !WT.isOn()) return
 						state = 2
 						user << "You weld \the [src] to the floor."
 						connect_to_network()
 			if(2)
-				if (WT.remove_fuel(0,user))
+				if(WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
 						"You start to cut \the [src] free from the floor.", \
 						"You hear welding")
-					if (do_after(user,20))
+					if(do_after(user,20))
 						if(!src || !WT.isOn()) return
 						state = 1
 						user << "You cut \the [src] free from the floor."

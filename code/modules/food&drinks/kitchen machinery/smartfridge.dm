@@ -130,7 +130,7 @@
 
 	var/dat = "<TT><b>Select an item:</b><br>"
 
-	if (contents.len == 0)
+	if(contents.len == 0)
 		dat += "<font color = 'red'>No product loaded!</font>"
 	else
 		for (var/O in item_quants)

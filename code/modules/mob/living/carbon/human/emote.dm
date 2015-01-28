@@ -1,7 +1,7 @@
 /mob/living/carbon/human/emote(var/act,var/m_type=1,var/message = null)
 	var/param = null
 
-	if (findtext(act, "-", 1, null))
+	if(findtext(act, "-", 1, null))
 		var/t1 = findtext(act, "-", 1, null)
 		param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
@@ -13,7 +13,7 @@
 	//var/m_type = 1
 
 	for (var/obj/item/weapon/implant/I in src)
-		if (I.implanted)
+		if(I.implanted)
 			I.trigger(act, src)
 
 	var/miming=0
@@ -23,58 +23,58 @@
 	if(src.stat == 2.0 && (act != "deathgasp"))
 		return
 	switch(act) //Please keep this alphabetically ordered when adding or changing emotes.
-		if ("aflap") //Any emote on human that uses miming must be left in, oh well.
-			if (!src.restrained())
+		if("aflap") //Any emote on human that uses miming must be left in, oh well.
+			if(!src.restrained())
 				message = "<B>[src]</B> flaps \his wings ANGRILY!"
 				m_type = 2
 
-		if ("choke")
-			if (miming)
+		if("choke")
+			if(miming)
 				message = "<B>[src]</B> clutches \his throat desperately!"
 			else
 				..(act)
 
-		if ("chuckle")
+		if("chuckle")
 			if(miming)
 				message = "<B>[src]</B> appears to chuckle."
 			else
 				..(act)
 
-		if ("clap")
-			if (!src.restrained())
+		if("clap")
+			if(!src.restrained())
 				message = "<B>[src]</B> claps."
 				m_type = 2
 
-		if ("collapse")
+		if("collapse")
 			Paralyse(2)
 			message = "<B>[src]</B> collapses!"
 			m_type = 2
 
-		if ("cough")
-			if (miming)
+		if("cough")
+			if(miming)
 				message = "<B>[src]</B> appears to cough!"
 			else
-				if (!muzzled)
+				if(!muzzled)
 					message = "<B>[src]</B> coughs!"
 					m_type = 2
 				else
 					message = "<B>[src]</B> makes a strong noise."
 					m_type = 2
 
-		if ("cry")
-			if (miming)
+		if("cry")
+			if(miming)
 				message = "<B>[src]</B> cries."
 			else
-				if (!muzzled)
+				if(!muzzled)
 					message = "<B>[src]</B> cries."
 					m_type = 2
 				else
 					message = "<B>[src]</B> makes a weak noise. \He frowns."
 					m_type = 2
 
-		if ("custom")
+		if("custom")
 			var/input = copytext(sanitize(input("Choose an emote to display.") as text|null),1,MAX_MESSAGE_LEN)
-			if (!input)
+			if(!input)
 				return
 			if(copytext(input,1,5) == "says")
 				src << "<span class='danger'>Invalid emote.</span>"
@@ -87,9 +87,9 @@
 				return
 			else
 				var/input2 = input("Is this a visible or hearable emote?") in list("Visible","Hearable")
-				if (input2 == "Visible")
+				if(input2 == "Visible")
 					m_type = 1
-				else if (input2 == "Hearable")
+				else if(input2 == "Hearable")
 					if(miming)
 						return
 					m_type = 2
@@ -98,102 +98,102 @@
 					return
 				message = "<B>[src]</B> [input]"
 
-		if ("dap")
+		if("dap")
 			m_type = 1
-			if (!src.restrained())
+			if(!src.restrained())
 				var/M = null
-				if (param)
+				if(param)
 					for (var/mob/A in view(1, src))
-						if (param == A.name)
+						if(param == A.name)
 							M = A
 							break
-				if (M)
+				if(M)
 					message = "<B>[src]</B> gives daps to [M]."
 				else
 					message = "<B>[src]</B> sadly can't find anybody to give daps to, and daps \himself. Shameful."
 
-		if ("eyebrow")
+		if("eyebrow")
 			message = "<B>[src]</B> raises an eyebrow."
 			m_type = 1
 
-		if ("flap")
-			if (!src.restrained())
+		if("flap")
+			if(!src.restrained())
 				message = "<B>[src]</B> flaps \his wings."
 				m_type = 2
 
-		if ("gasp")
-			if (miming)
+		if("gasp")
+			if(miming)
 				message = "<B>[src]</B> appears to be gasping!"
 			else
 				..(act)
 
-		if ("giggle")
-			if (miming)
+		if("giggle")
+			if(miming)
 				message = "<B>[src]</B> giggles silently!"
 			else
 				..(act)
 
-		if ("groan")
-			if (miming)
+		if("groan")
+			if(miming)
 				message = "<B>[src]</B> appears to groan!"
 			else
-				if (!muzzled)
+				if(!muzzled)
 					message = "<B>[src]</B> groans!"
 					m_type = 2
 				else
 					message = "<B>[src]</B> makes a loud noise."
 					m_type = 2
 
-		if ("grumble")
-			if (!muzzled)
+		if("grumble")
+			if(!muzzled)
 				message = "<B>[src]</B> grumbles!"
 			else
 				message = "<B>[src]</B> makes a noise."
 				m_type = 2
 
-		if ("handshake")
+		if("handshake")
 			m_type = 1
-			if (!src.restrained() && !src.r_hand)
+			if(!src.restrained() && !src.r_hand)
 				var/mob/M = null
-				if (param)
+				if(param)
 					for (var/mob/A in view(1, src))
-						if (param == A.name)
+						if(param == A.name)
 							M = A
 							break
-				if (M == src)
+				if(M == src)
 					M = null
-				if (M)
-					if (M.canmove && !M.r_hand && !M.restrained())
+				if(M)
+					if(M.canmove && !M.r_hand && !M.restrained())
 						message = "<B>[src]</B> shakes hands with [M]."
 					else
 						message = "<B>[src]</B> holds out \his hand to [M]."
 
-		if ("hug")
+		if("hug")
 			m_type = 1
-			if (!src.restrained())
+			if(!src.restrained())
 				var/M = null
-				if (param)
+				if(param)
 					for (var/mob/A in view(1, src))
-						if (param == A.name)
+						if(param == A.name)
 							M = A
 							break
-				if (M == src)
+				if(M == src)
 					M = null
-				if (M)
+				if(M)
 					message = "<B>[src]</B> hugs [M]."
 				else
 					message = "<B>[src]</B> hugs \himself."
 
-		if ("me")
+		if("me")
 			if(silent)
 				return
-			if (src.client)
-				if (client.prefs.muted & MUTE_IC)
+			if(src.client)
+				if(client.prefs.muted & MUTE_IC)
 					src << "<span class='danger'>You cannot send IC messages (muted).</span>"
 					return
-				if (src.client.handle_spam_prevention(message,MUTE_IC))
+				if(src.client.handle_spam_prevention(message,MUTE_IC))
 					return
-			if (stat)
+			if(stat)
 				return
 			if(!(message))
 				return
@@ -209,100 +209,100 @@
 			else
 				message = "<B>[src]</B> [message]"
 
-		if ("moan")
+		if("moan")
 			if(miming)
 				message = "<B>[src]</B> appears to moan!"
 			else
 				message = "<B>[src]</B> moans!"
 				m_type = 2
 
-		if ("mumble")
+		if("mumble")
 			message = "<B>[src]</B> mumbles!"
 			m_type = 2
 
-		if ("pale")
+		if("pale")
 			message = "<B>[src]</B> goes pale for a second."
 			m_type = 1
 
-		if ("raise")
-			if (!src.restrained())
+		if("raise")
+			if(!src.restrained())
 				message = "<B>[src]</B> raises a hand."
 			m_type = 1
 
-		if ("salute")
-			if (!src.buckled)
+		if("salute")
+			if(!src.buckled)
 				var/M = null
-				if (param)
+				if(param)
 					for (var/mob/A in view(1, src))
-						if (param == A.name)
+						if(param == A.name)
 							M = A
 							break
-				if (!M)
+				if(!M)
 					param = null
-				if (param)
+				if(param)
 					message = "<B>[src]</B> salutes to [param]."
 				else
 					message = "<B>[src]</b> salutes."
 			m_type = 1
 
-		if ("scream")
-			if (miming)
+		if("scream")
+			if(miming)
 				message = "<B>[src]</B> acts out a scream!"
 			else
 				..(act)
 
-		if ("shiver")
+		if("shiver")
 			message = "<B>[src]</B> shivers."
 			m_type = 1
 
-		if ("shrug")
+		if("shrug")
 			message = "<B>[src]</B> shrugs."
 			m_type = 1
 
-		if ("sigh")
+		if("sigh")
 			if(miming)
 				message = "<B>[src]</B> sighs."
 			else
 				..(act)
 
-		if ("signal")
-			if (!src.restrained())
+		if("signal")
+			if(!src.restrained())
 				var/t1 = round(text2num(param))
-				if (isnum(t1))
-					if (t1 <= 5 && (!src.r_hand || !src.l_hand))
+				if(isnum(t1))
+					if(t1 <= 5 && (!src.r_hand || !src.l_hand))
 						message = "<B>[src]</B> raises [t1] finger\s."
-					else if (t1 <= 10 && (!src.r_hand && !src.l_hand))
+					else if(t1 <= 10 && (!src.r_hand && !src.l_hand))
 						message = "<B>[src]</B> raises [t1] finger\s."
 			m_type = 1
 
-		if ("sneeze")
-			if (miming)
+		if("sneeze")
+			if(miming)
 				message = "<B>[src]</B> sneezes."
 			else
 				..(act)
 
-		if ("sniff")
+		if("sniff")
 			message = "<B>[src]</B> sniffs."
 			m_type = 2
 
-		if ("snore")
-			if (miming)
+		if("snore")
+			if(miming)
 				message = "<B>[src]</B> sleeps soundly."
 			else
 				..(act)
 
-		if ("whimper")
-			if (miming)
+		if("whimper")
+			if(miming)
 				message = "<B>[src]</B> appears hurt."
 			else
 				..(act)
 
-		if ("yawn")
-			if (!muzzled)
+		if("yawn")
+			if(!muzzled)
 				message = "<B>[src]</B> yawns."
 				m_type = 2
 
-		if ("help") //This can stay at the bottom.
+		if("help") //This can stay at the bottom.
 			src << "Help for human emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, cry, custom, dance, dap, deathgasp, drool, eyebrow, faint, flap, frown, gasp, giggle, glare-(none)/mob, grin, groan, grumble, handshake, hug-(none)/mob, jump, laugh, look-(none)/mob, me, moan, mumble, nod, pale, point-(atom), raise, salute, scream, shake, shiver, shrug, sigh, signal-#1-10, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, wink, yawn"
 
 		else
@@ -313,7 +313,7 @@
 
 
 
-	if (message)
+	if(message)
 		log_emote("[name]/[key] : [message]")
 
  //Hearing gasp and such every five seconds is not good emotes were not global for a reason.
@@ -326,8 +326,8 @@
 				M.show_message(message)
 
 
-		if (m_type & 1)
+		if(m_type & 1)
 			visible_message(message)
-		else if (m_type & 2)
+		else if(m_type & 2)
 			audible_message(message)
 

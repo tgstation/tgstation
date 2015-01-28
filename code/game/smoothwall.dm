@@ -35,7 +35,7 @@
 	if(istype(src,/turf/simulated/wall))
 		var/turf/simulated/wall/wall = src
 		wall.icon_state = "[wall.walltype][junction]"
-	else if (istype(src,/obj/structure/falsewall))
+	else if(istype(src,/obj/structure/falsewall))
 		if(istype(src,/obj/structure/falsewall/reinforced))
 			icon_state = "rwall[junction]"
 		else

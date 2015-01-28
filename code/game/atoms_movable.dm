@@ -18,30 +18,30 @@
 	var/atom/oldloc = loc
 
 	if(loc != newloc)
-		if (!(direct & (direct - 1))) //Cardinal move
+		if(!(direct & (direct - 1))) //Cardinal move
 			. = ..()
 		else //Diagonal move, split it into cardinal moves
-			if (direct & 1)
-				if (direct & 4)
-					if (step(src, NORTH))
+			if(direct & 1)
+				if(direct & 4)
+					if(step(src, NORTH))
 						. = step(src, EAST)
-					else if (step(src, EAST))
+					else if(step(src, EAST))
 						. = step(src, NORTH)
-				else if (direct & 8)
-					if (step(src, NORTH))
+				else if(direct & 8)
+					if(step(src, NORTH))
 						. = step(src, WEST)
-					else if (step(src, WEST))
+					else if(step(src, WEST))
 						. = step(src, NORTH)
-			else if (direct & 2)
-				if (direct & 4)
-					if (step(src, SOUTH))
+			else if(direct & 2)
+				if(direct & 4)
+					if(step(src, SOUTH))
 						. = step(src, EAST)
-					else if (step(src, EAST))
+					else if(step(src, EAST))
 						. = step(src, SOUTH)
-				else if (direct & 8)
-					if (step(src, SOUTH))
+				else if(direct & 8)
+					if(step(src, SOUTH))
 						. = step(src, WEST)
-					else if (step(src, WEST))
+					else if(step(src, WEST))
 						. = step(src, SOUTH)
 
 
@@ -87,7 +87,7 @@
 		src.throw_impact(A)
 		src.throwing = 0
 
-	if ((A && yes))
+	if((A && yes))
 		A.last_bumped = world.time
 		A.Bumped(src)
 	return
@@ -214,16 +214,16 @@
 	return
 
 /atom/movable/overlay/attackby(a, b)
-	if (src.master)
+	if(src.master)
 		return src.master.attackby(a, b)
 	return
 
 /atom/movable/overlay/attack_paw(a, b, c)
-	if (src.master)
+	if(src.master)
 		return src.master.attack_paw(a, b, c)
 	return
 
 /atom/movable/overlay/attack_hand(a, b, c)
-	if (src.master)
+	if(src.master)
 		return src.master.attack_hand(a, b, c)
 	return

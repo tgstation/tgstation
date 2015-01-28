@@ -17,9 +17,9 @@
 
 /obj/item/radio/integrated/New()
 	..()
-	if (istype(loc.loc, /obj/item/device/pda))
+	if(istype(loc.loc, /obj/item/device/pda))
 		hostpda = loc.loc
-	if (bot_filter)
+	if(bot_filter)
 		spawn(5)
 			add_to_radio(bot_filter)
 
@@ -50,12 +50,12 @@
 	frequency.post_signal(src, signal, filter = s_filter)
 
 /obj/item/radio/integrated/proc/print_to_host(var/text)
-	if (isnull(src.hostpda))
+	if(isnull(src.hostpda))
 		return
 	src.hostpda.cart = text
 
 	for (var/mob/M in viewers(1, src.hostpda.loc))
-		if (M.client && M.machine == src.hostpda)
+		if(M.client && M.machine == src.hostpda)
 			src.hostpda.cartridge.unlock()
 
 	return
@@ -69,7 +69,7 @@
 		world << "- [d] = [signal.data[d]]"
 		*/
 
-	if (signal.data["type"] == bot_type)
+	if(signal.data["type"] == bot_type)
 		if(!botlist)
 			botlist = new()
 
@@ -251,7 +251,7 @@
 	..()
 
 /obj/item/radio/integrated/signal/initialize()
-	if (src.frequency < 1441 || src.frequency > 1489)
+	if(src.frequency < 1441 || src.frequency > 1489)
 		src.frequency = sanitize_frequency(src.frequency)
 
 	set_frequency(frequency)

@@ -53,7 +53,7 @@
 	if(!usr.client)
 		return
 
-	if (!check_rights(R_PERMISSIONS))
+	if(!check_rights(R_PERMISSIONS))
 		return
 
 	establish_db_connection()

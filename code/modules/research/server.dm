@@ -122,24 +122,24 @@
 				air_update_turf()
 
 /obj/machinery/r_n_d/server/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if (disabled)
+	if(disabled)
 		return
-	if (shocked)
+	if(shocked)
 		shock(user,50)
-	if (default_deconstruction_screwdriver(user, "server_o", "server", O))
+	if(default_deconstruction_screwdriver(user, "server_o", "server", O))
 		return
 	if(exchange_parts(user, O))
 		return
-	if (panel_open)
+	if(panel_open)
 		if(istype(O, /obj/item/weapon/crowbar))
 			griefProtection()
 			default_deconstruction_crowbar(O)
 			return 1
 
 /obj/machinery/r_n_d/server/attack_hand(mob/user as mob) // I guess only exists to stop ninjas or hell does it even work I dunno.  See also ninja gloves.
-	if (disabled)
+	if(disabled)
 		return
-	if (shocked)
+	if(shocked)
 		shock(user,50)
 	return
 

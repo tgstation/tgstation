@@ -5,7 +5,7 @@
 		return 1
 	if(ismob(mover))
 		var/mob/moving_mob = mover
-		if ((other_mobs && moving_mob.other_mobs))
+		if((other_mobs && moving_mob.other_mobs))
 			return 1
 		return (!mover.density || !density || lying)
 	else
@@ -69,9 +69,9 @@
 
 
 /client/Center()
-	if (isobj(mob.loc))
+	if(isobj(mob.loc))
 		var/obj/O = mob.loc
-		if (mob.canmove)
+		if(mob.canmove)
 			return O.relaymove(mob, 16)
 	return
 
@@ -171,15 +171,15 @@
 					L -= mob
 					var/mob/M = L[1]
 					if(M)
-						if ((get_dist(mob, M) <= 1 || M.loc == mob.loc))
+						if((get_dist(mob, M) <= 1 || M.loc == mob.loc))
 							var/turf/T = mob.loc
 							. = ..()
-							if (isturf(M.loc))
+							if(isturf(M.loc))
 								var/diag = get_dir(mob, M)
-								if ((diag - 1) & diag)
+								if((diag - 1) & diag)
 								else
 									diag = null
-								if ((get_dist(mob, M) > 1 || diag))
+								if((get_dist(mob, M) > 1 || diag))
 									step(M, get_dir(M.loc, T))
 				else
 					for(var/mob/M in L)
@@ -350,17 +350,17 @@
 	return 0
 
 /mob/proc/Move_Pulled(var/atom/A)
-	if (!canmove || restrained() || !pulling)
+	if(!canmove || restrained() || !pulling)
 		return
-	if (pulling.anchored)
+	if(pulling.anchored)
 		return
-	if (!pulling.Adjacent(src))
+	if(!pulling.Adjacent(src))
 		return
-	if (A == loc && pulling.density)
+	if(A == loc && pulling.density)
 		return
-	if (!Process_Spacemove(get_dir(pulling.loc, A)))
+	if(!Process_Spacemove(get_dir(pulling.loc, A)))
 		return
-	if (ismob(pulling))
+	if(ismob(pulling))
 		var/mob/M = pulling
 		var/atom/movable/t = M.pulling
 		M.stop_pulling()

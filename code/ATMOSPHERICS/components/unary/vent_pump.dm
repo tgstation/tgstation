@@ -45,10 +45,10 @@
 /obj/machinery/atmospherics/unary/vent_pump/New()
 	..()
 	initial_loc = get_area(loc)
-	if (initial_loc.master)
+	if(initial_loc.master)
 		initial_loc = initial_loc.master
 	area_uid = initial_loc.uid
-	if (!id_tag)
+	if(!id_tag)
 		assign_uid()
 		id_tag = num2text(uid)
 	if(ticker && ticker.current_state == 3)//if the game is running
@@ -90,7 +90,7 @@
 	..()
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if (!node)
+	if(!node)
 		on = 0
 	//broadcast_status() // from now air alarm/control computer should request update purposely --rastaf0
 	if(!on)
@@ -133,7 +133,7 @@
 				var/transfer_moles = pressure_delta*air_contents.volume/(environment.temperature * R_IDEAL_GAS_EQUATION)
 
 				var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
-				if (isnull(removed)) //in space
+				if(isnull(removed)) //in space
 					return
 
 				air_contents.merge(removed)
@@ -266,12 +266,12 @@
 	return
 
 /obj/machinery/atmospherics/unary/vent_pump/attackby(obj/item/W, mob/user)
-	if (istype(W, /obj/item/weapon/wrench)&& !(stat & NOPOWER) && on)
+	if(istype(W, /obj/item/weapon/wrench)&& !(stat & NOPOWER) && on)
 		user << "<span class='danger'>You cannot unwrench this [src], turn it off first.</span>"
 		return 1
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
-		if (WT.remove_fuel(0,user))
+		if(WT.remove_fuel(0,user))
 			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 			user << "<span class='notice'>Now welding the vent.</span>"
 			if(do_after(user, 20))

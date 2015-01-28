@@ -16,7 +16,7 @@
 	return 1
 
 /obj/item/ammo_casing/proc/ready_proj(atom/target as mob|obj|turf, mob/living/user, var/quiet)
-	if (!BB)
+	if(!BB)
 		return
 	BB.original = target
 	BB.firer = user
@@ -30,7 +30,7 @@
 
 /obj/item/ammo_casing/proc/throw_proj(var/turf/targloc, mob/living/user as mob|obj, params)
 	var/turf/curloc = user.loc
-	if (!istype(targloc) || !istype(curloc) || !BB)
+	if(!istype(targloc) || !istype(curloc) || !BB)
 		return 0
 	if(targloc == curloc)			//Fire the projectile
 		user.bullet_act(BB)

@@ -122,7 +122,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 /obj/machinery/message_server/update_icon()
 	if((stat & (BROKEN|NOPOWER)))
 		icon_state = "server-nopower"
-	else if (!active)
+	else if(!active)
 		icon_state = "server-off"
 	else
 		icon_state = "server-on"
@@ -140,31 +140,31 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	value = param_value
 
 /datum/feedback_variable/proc/inc(var/num = 1)
-	if (isnum(value))
+	if(isnum(value))
 		value += num
 	else
 		value = text2num(value)
-		if (isnum(value))
+		if(isnum(value))
 			value += num
 		else
 			value = num
 
 /datum/feedback_variable/proc/dec(var/num = 1)
-	if (isnum(value))
+	if(isnum(value))
 		value -= num
 	else
 		value = text2num(value)
-		if (isnum(value))
+		if(isnum(value))
 			value -= num
 		else
 			value = -num
 
 /datum/feedback_variable/proc/set_value(var/num)
-	if (isnum(num))
+	if(isnum(num))
 		value = num
 
 /datum/feedback_variable/proc/get_value()
-	if (!isnum(value))
+	if(!isnum(value))
 		return 0
 	return value
 
@@ -172,12 +172,12 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	return variable
 
 /datum/feedback_variable/proc/set_details(var/text)
-	if (istext(text))
+	if(istext(text))
 		details = text
 
 /datum/feedback_variable/proc/add_details(var/text)
-	if (istext(text))
-		if (!details)
+	if(istext(text))
+		if(!details)
 			details = text
 		else
 			details += " [text]"
@@ -217,14 +217,14 @@ var/obj/machinery/blackbox_recorder/blackbox
 
 	//Only one can exsist in the world!
 /obj/machinery/blackbox_recorder/New()
-	if (blackbox)
-		if (istype(blackbox,/obj/machinery/blackbox_recorder))
+	if(blackbox)
+		if(istype(blackbox,/obj/machinery/blackbox_recorder))
 			qdel(src)
 	blackbox = src
 
 /obj/machinery/blackbox_recorder/Destroy()
 	var/turf/T = locate(1,1,2)
-	if (T)
+	if(T)
 		blackbox = null
 		var/obj/machinery/blackbox_recorder/BR = new/obj/machinery/blackbox_recorder(T)
 		BR.msg_common = msg_common
@@ -246,7 +246,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 
 /obj/machinery/blackbox_recorder/proc/find_feedback_datum(var/variable)
 	for (var/datum/feedback_variable/FV in feedback)
-		if (FV.get_variable() == variable)
+		if(FV.get_variable() == variable)
 			return FV
 	var/datum/feedback_variable/FV = new(variable)
 	feedback += FV
@@ -262,11 +262,11 @@ var/obj/machinery/blackbox_recorder/blackbox
 	var/rc_msg_amt = 0
 
 	for (var/obj/machinery/message_server/MS in world)
-		if (MS.chat_msgs.len > chat_msg_amt)
+		if(MS.chat_msgs.len > chat_msg_amt)
 			chat_msg_amt = MS.chat_msgs.len
-		if (MS.pda_msgs.len > pda_msg_amt)
+		if(MS.pda_msgs.len > pda_msg_amt)
 			pda_msg_amt = MS.pda_msgs.len
-		if (MS.rc_msgs.len > rc_msg_amt)
+		if(MS.rc_msgs.len > rc_msg_amt)
 			rc_msg_amt = MS.rc_msgs.len
 
 	feedback_set_details("radio_usage","")
@@ -292,11 +292,11 @@ var/obj/machinery/blackbox_recorder/blackbox
 
 //This proc is only to be called at round end.
 /obj/machinery/blackbox_recorder/proc/save_all_data_to_sql()
-	if (!feedback) return
+	if(!feedback) return
 
 	round_end_data_gathering() //round_end time logging and some other data processing
 	establish_db_connection()
-	if (!dbcon.IsConnected()) return
+	if(!dbcon.IsConnected()) return
 	var/round_id
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT MAX(round_id) AS round_id FROM [format_table_name("feedback")]")
@@ -304,7 +304,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 	while (query.NextRow())
 		round_id = query.item[1]
 
-	if (!isnum(round_id))
+	if(!isnum(round_id))
 		round_id = text2num(round_id)
 	round_id++
 
@@ -312,12 +312,12 @@ var/obj/machinery/blackbox_recorder/blackbox
 
 
 	for (var/datum/feedback_variable/FV in feedback)
-		if (sqlrowlist != "")
+		if(sqlrowlist != "")
 			sqlrowlist += ", " //a comma (,) at the start of the first row to insert will trigger a SQL error
 
 		sqlrowlist += "(null, Now(), [round_id], \"[sanitizeSQL(FV.get_variable())]\", [FV.get_value()], \"[sanitizeSQL(FV.get_details())]\")"
 
-	if (sqlrowlist == "")
+	if(sqlrowlist == "")
 		return
 
 	var/DBQuery/query_insert = dbcon.NewQuery("INSERT DELAYED IGNORE INTO [format_table_name("feedback")] VALUES " + sqlrowlist)
@@ -325,34 +325,34 @@ var/obj/machinery/blackbox_recorder/blackbox
 
 
 proc/feedback_set(var/variable,var/value)
-	if (!blackbox) return
+	if(!blackbox) return
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
-	if (!FV) return
+	if(!FV) return
 
 	FV.set_value(value)
 
 proc/feedback_inc(var/variable,var/value)
-	if (!blackbox) return
+	if(!blackbox) return
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
-	if (!FV) return
+	if(!FV) return
 
 	FV.inc(value)
 
 proc/feedback_dec(var/variable,var/value)
-	if (!blackbox) return
+	if(!blackbox) return
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
-	if (!FV) return
+	if(!FV) return
 
 	FV.dec(value)
 
 proc/feedback_set_details(var/variable,var/details)
-	if (!blackbox) return
+	if(!blackbox) return
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
@@ -361,10 +361,10 @@ proc/feedback_set_details(var/variable,var/details)
 	FV.set_details(details)
 
 proc/feedback_add_details(var/variable,var/details)
-	if (!blackbox) return
+	if(!blackbox) return
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
-	if (!FV) return
+	if(!FV) return
 
 	FV.add_details(details)

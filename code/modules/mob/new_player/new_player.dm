@@ -283,11 +283,11 @@
 	qdel(src)
 
 /mob/new_player/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
-	if (ticker.current_state == GAME_STATE_PLAYING)
+	if(ticker.current_state == GAME_STATE_PLAYING)
 		var/ailist[] = list()
 		for (var/mob/living/silicon/ai/A in living_mob_list)
 			ailist += A
-		if (ailist.len)
+		if(ailist.len)
 			var/mob/living/silicon/ai/announcer = pick(ailist)
 			if(character.mind)
 				if((character.mind.assigned_role != "Cyborg") && (character.mind.special_role != "MODE"))
@@ -319,10 +319,10 @@
 	for(var/datum/job/job in SSjob.occupations)
 		if(job && IsJobAvailable(job.title))
 			job_count++;
-			if (job_count > round(available_job_count / 2))
+			if(job_count > round(available_job_count / 2))
 				dat += "</div><div class='jobsColumn'>"
 			var/position_class = "otherPosition"
-			if (job.title in command_positions)
+			if(job.title in command_positions)
 				position_class = "commandPosition"
 			dat += "<a class='[position_class]' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
 	dat += "</div></div>"

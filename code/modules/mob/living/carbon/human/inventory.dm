@@ -145,7 +145,7 @@
 					return 0
 				return 1
 			if(slot_in_backpack)
-				if (back && istype(back, /obj/item/weapon/storage/backpack))
+				if(back && istype(back, /obj/item/weapon/storage/backpack))
 					var/obj/item/weapon/storage/backpack/B = back
 					if(B.contents.len < B.storage_slots && I.w_class <= B.max_w_class)
 						return 1

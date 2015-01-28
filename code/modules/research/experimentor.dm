@@ -122,10 +122,10 @@
 	return TRUE
 
 /obj/machinery/r_n_d/experimentor/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if (shocked)
+	if(shocked)
 		shock(user,50)
 
-	if (default_deconstruction_screwdriver(user, "h_lathe_maint", "h_lathe", O))
+	if(default_deconstruction_screwdriver(user, "h_lathe_maint", "h_lathe", O))
 		if(linked_console)
 			linked_console.linked_destroy = null
 			linked_console = null
@@ -140,20 +140,20 @@
 		user << "<span class='warning'>The [O] is not yet valid for the [src] and must be completed!</span>"
 		return
 
-	if (disabled)
+	if(disabled)
 		return
-	if (!linked_console)
+	if(!linked_console)
 		user << "<span class='warning'>The [src] must be linked to an R&D console first!</span>"
 		return
-	if (busy)
+	if(busy)
 		user << "<span class='warning'>The [src] is busy right now.</span>"
 		return
-	if (istype(O, /obj/item) && !loaded_item)
+	if(istype(O, /obj/item) && !loaded_item)
 		if(!O.origin_tech)
 			user << "<span class='warning'>This doesn't seem to have a tech origin!</span>"
 			return
 		var/list/temp_tech = ConvertReqString2List(O.origin_tech)
-		if (temp_tech.len == 0)
+		if(temp_tech.len == 0)
 			user << "<span class='warning'>You cannot experiment on this item!</span>"
 			return
 		if(O.reliability < 90 && O.crit_fail == 0)

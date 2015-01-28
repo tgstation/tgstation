@@ -78,7 +78,7 @@
 
 /obj/machinery/bot/cleanbot/attack_hand(mob/user as mob)
 	. = ..()
-	if (.)
+	if(.)
 		return
 	usr.set_machine(src)
 	interact(user)
@@ -111,12 +111,12 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 			updateUsrDialog()
 		if("freq")
 			var/freq = text2num(input("Select frequency for  navigation beacons", "Frequency", num2text(beacon_freq / 10))) * 10
-			if (freq > 0)
+			if(freq > 0)
 				beacon_freq = freq
 			updateUsrDialog()
 
 /obj/machinery/bot/cleanbot/attackby(obj/item/weapon/W, mob/user as mob)
-	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(allowed(user) && !open && !emagged)
 			locked = !locked
 			user << "<span class='notice'>You [ locked ? "lock" : "unlock"] \the [src] behaviour controls.</span>"
@@ -142,7 +142,7 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 			return D
 
 /obj/machinery/bot/cleanbot/bot_process()
-	if (!..())
+	if(!..())
 		return
 
 	if(mode == BOT_CLEANING)
@@ -159,7 +159,7 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 				visible_message("<span class='danger'>[src] whirs and bubbles violently, before releasing a plume of froth!</span>")
 				new /obj/effect/effect/foam(loc)
 
-	else if (prob(5))
+	else if(prob(5))
 		visible_message("[src] makes an excited beeping booping sound!")
 
 	if(!target) //Search for cleanables it can see.
@@ -183,13 +183,13 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 		if(!path || path.len == 0) //No path, need a new one
 			//Try to produce a path to the target, and ignore airlocks to which it has access.
 			path = get_path_to(loc, target.loc, /turf/proc/AdjacentTurfsWithAccess, /turf/proc/Distance, 0, 30, id=botcard)
-			if (!bot_move(target))
+			if(!bot_move(target))
 				add_to_ignore(target)
 				target = null
 				path = list()
 				return
 			mode = BOT_MOVING
-		else if (!bot_move(target))
+		else if(!bot_move(target))
 			target = null
 			mode = BOT_IDLE
 			return
@@ -246,7 +246,7 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
-	if (prob(50))
+	if(prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -267,10 +267,10 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 		user.unEquip(src, 1)
 		qdel(src)
 
-	else if (istype(W, /obj/item/weapon/pen))
+	else if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
-		if (!t)
+		if(!t)
 			return
-		if (!in_range(src, usr) && loc != usr)
+		if(!in_range(src, usr) && loc != usr)
 			return
 		created_name = t

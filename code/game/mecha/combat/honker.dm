@@ -139,7 +139,7 @@
 
 obj/mecha/combat/honker/Topic(href, href_list)
 	..()
-	if (href_list["play_sound"])
+	if(href_list["play_sound"])
 		switch(href_list["play_sound"])
 			if("sadtrombone")
 				playsound(src, 'sound/misc/sadtrombone.ogg', 50)

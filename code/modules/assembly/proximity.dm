@@ -41,8 +41,8 @@
 
 
 /obj/item/device/assembly/prox_sensor/HasProximity(atom/movable/AM as mob|obj)
-	if (istype(AM, /obj/effect/beam))	return
-	if (AM.move_speed < 12)	sense()
+	if(istype(AM, /obj/effect/beam))	return
+	if(AM.move_speed < 12)	sense()
 	return
 
 

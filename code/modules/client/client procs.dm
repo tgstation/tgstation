@@ -85,7 +85,7 @@
 	///////////
 	//CONNECT//
 	///////////
-#if (PRELOAD_RSC == 0)
+#if(PRELOAD_RSC == 0)
 var/list/external_rsc_urls
 var/next_external_rsc = 0
 #endif
@@ -98,7 +98,7 @@ var/next_external_rsc = 0
 	if(byond_version < MIN_CLIENT_VERSION)		//Out of date client.
 		return null
 
-#if (PRELOAD_RSC == 0)
+#if(PRELOAD_RSC == 0)
 	if(external_rsc_urls && external_rsc_urls.len)
 		next_external_rsc = Wrap(next_external_rsc+1, 1, external_rsc_urls.len+1)
 		preload_rsc = external_rsc_urls[next_external_rsc]
@@ -136,9 +136,9 @@ var/next_external_rsc = 0
 	add_verbs_from_config()
 	set_client_age_from_db()
 
-	if (!ticker || ticker.current_state == GAME_STATE_PREGAME)
+	if(!ticker || ticker.current_state == GAME_STATE_PREGAME)
 		spawn (rand(10,150))
-			if (src)
+			if(src)
 				sync_client_with_db()
 	else
 		sync_client_with_db()
@@ -162,7 +162,7 @@ var/next_external_rsc = 0
 
 
 /client/proc/set_client_age_from_db()
-	if (IsGuestKey(src.key))
+	if(IsGuestKey(src.key))
 		return
 
 	establish_db_connection()
@@ -180,11 +180,11 @@ var/next_external_rsc = 0
 
 
 /client/proc/sync_client_with_db()
-	if (IsGuestKey(src.key))
+	if(IsGuestKey(src.key))
 		return
 
 	establish_db_connection()
-	if (!dbcon.IsConnected())
+	if(!dbcon.IsConnected())
 		return
 
 	var/sql_ckey = sanitizeSQL(src.ckey)
@@ -203,7 +203,7 @@ var/next_external_rsc = 0
 
 
 	var/admin_rank = "Player"
-	if (src.holder && src.holder.rank)
+	if(src.holder && src.holder.rank)
 		admin_rank = src.holder.rank.name
 
 	var/sql_ip = sanitizeSQL(src.address)

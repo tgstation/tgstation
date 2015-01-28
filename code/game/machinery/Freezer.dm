@@ -96,7 +96,7 @@
 	if(..())
 		return
 	usr.set_machine(src)
-	if (href_list["start"])
+	if(href_list["start"])
 		src.on = !src.on
 		use_power = 1 + src.on
 		update_icon()
@@ -222,7 +222,7 @@
 	if(..())
 		return
 	usr.set_machine(src)
-	if (href_list["start"])
+	if(href_list["start"])
 		src.on = !src.on
 		use_power = 1 + src.on
 		update_icon()

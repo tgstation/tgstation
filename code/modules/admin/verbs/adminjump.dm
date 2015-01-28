@@ -61,7 +61,7 @@
 	set category = "Admin"
 	set name = "Jump to Coordinate"
 
-	if (!holder)
+	if(!holder)
 		src << "Only administrators may use this command."
 		return
 

@@ -67,7 +67,7 @@
 				if(C.get_amount() >= 5)
 					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
-						if (C.get_amount() >= 5 && state == 2)
+						if(C.get_amount() >= 5 && state == 2)
 							C.use(5)
 							user << "<span class='notice'>You add cables to the frame.</span>"
 							state = 3
@@ -77,7 +77,7 @@
 					return
 		if(3)
 			if(istype(P, /obj/item/weapon/wirecutters))
-				if (brain)
+				if(brain)
 					user << "<span class='warning'>Get that brain out of there first.</span>"
 				else
 					playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1)
@@ -92,7 +92,7 @@
 				if(G.get_amount() >= 2)
 					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
-						if (G.get_amount() >= 2 && state == 3)
+						if(G.get_amount() >= 2 && state == 3)
 							G.use(2)
 							user << "<span class='notice'>You put in the glass panel.</span>"
 							state = 4
@@ -163,7 +163,7 @@
 				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 				user << "<span class='notice'>You remove the glass panel.</span>"
 				state = 3
-				if (brain)
+				if(brain)
 					icon_state = "3b"
 				else
 					icon_state = "3"
@@ -229,10 +229,10 @@ That prevents a few funky behaviors.
 					if(C.contents.len)//If there is an AI on card.
 						U << "<span class='userdanger'>Transfer failed</span>: Existing AI found on this terminal. Remove existing AI to install a new one."
 					else
-						if (ticker.mode.name == "AI malfunction")
+						if(ticker.mode.name == "AI malfunction")
 							var/datum/game_mode/malfunction/malf = ticker.mode
 							for (var/datum/mind/malfai in malf.malf_ai)
-								if (T.mind == malfai)
+								if(T.mind == malfai)
 									U << "<span class='userdanger'>ERROR</span>: Remote transfer interface disabled."//Do ho ho ho~
 									return
 						new /obj/structure/AIcore/deactivated(T.loc)//Spawns a deactivated terminal at AI location.
@@ -241,7 +241,7 @@ That prevents a few funky behaviors.
 						T.radio_enabled = 0 	//No talking on the built-in radio for you either!
 						T.loc = C//Throw AI into the card.
 						C.name = "intelliCard - [T.name]"
-						if (T.stat == 2)
+						if(T.stat == 2)
 							C.icon_state = "aicard-404"
 						else
 							C.icon_state = "aicard-full"
@@ -273,7 +273,7 @@ That prevents a few funky behaviors.
 				if("AICARD")
 					var/obj/item/device/aicard/C = src
 					if(!T.contents.len)
-						if (!C.contents.len)
+						if(!C.contents.len)
 							U << "No AI to copy over!"//Well duh
 						else for(var/mob/living/silicon/ai/A in C)
 							C.icon_state = "aicard"
@@ -283,7 +283,7 @@ That prevents a few funky behaviors.
 							T.occupier = A
 							A.control_disabled = 1
 							A.radio_enabled = 0
-							if (A.stat == 2)
+							if(A.stat == 2)
 								T.overlays += image('icons/obj/computer.dmi', "ai-fixer-404")
 							else
 								T.overlays += image('icons/obj/computer.dmi', "ai-fixer-full")
@@ -295,7 +295,7 @@ That prevents a few funky behaviors.
 						if(!C.contents.len && T.occupier && !T.active)
 							C.name = "intelliCard - [T.occupier.name]"
 							T.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
-							if (T.occupier.stat == 2)
+							if(T.occupier.stat == 2)
 								C.icon_state = "aicard-404"
 								T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-404")
 							else
@@ -306,9 +306,9 @@ That prevents a few funky behaviors.
 							T.occupier.loc = C
 							T.occupier.cancel_camera()
 							T.occupier = null
-						else if (C.contents.len)
+						else if(C.contents.len)
 							U << "<span class='userdanger'>ERROR</span>: Artificial intelligence detected on terminal."
-						else if (T.active)
+						else if(T.active)
 							U << "<span class='userdanger'>ERROR</span>: Reconstruction in progress."
-						else if (!T.occupier)
+						else if(!T.occupier)
 							U << "<span class='userdanger'>ERROR</span>: Unable to locate artificial intelligence."

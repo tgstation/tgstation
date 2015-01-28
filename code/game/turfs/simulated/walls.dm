@@ -60,12 +60,12 @@
 			src.ChangeTurf(/turf/space)
 			return
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				dismantle_wall(0,1)
 			else
 				dismantle_wall(1,1)
 		if(3.0)
-			if (prob(hardness))
+			if(prob(hardness))
 				dismantle_wall(0,1)
 			else
 	if(!density)
@@ -123,7 +123,7 @@
 
 /turf/simulated/wall/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if (!user.IsAdvancedToolUser())
+	if(!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
 
@@ -212,7 +212,7 @@
 
 
 /turf/simulated/wall/proc/try_destroy(obj/item/weapon/W as obj, mob/user as mob, turf/T as turf)
-	if (istype(W, /obj/item/weapon/pickaxe/drill/diamonddrill))
+	if(istype(W, /obj/item/weapon/pickaxe/drill/diamonddrill))
 		user << "<span class='notice'>You begin to drill though the wall.</span>"
 		if(do_after(user, slicing_duration*0.6))  // diamond drill is faster than welding tool slicing
 			if( !istype(src, /turf/simulated/wall) || !user || !W || !T )
@@ -242,7 +242,7 @@
 
 /turf/simulated/wall/proc/thermitemelt(mob/user as mob)
 	overlays = list()
-	var/obj/effect/overlay/O = new/obj/effect/overlay( src )
+	var/obj/effect/overlay/O = new/obj/effect/overlay(src)
 	O.name = "thermite"
 	O.desc = "Looks hot."
 	O.icon = 'icons/effects/fire.dmi'

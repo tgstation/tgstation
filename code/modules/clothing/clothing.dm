@@ -271,9 +271,9 @@ atom/proc/generate_female_clothing(index,t_color,icon)
 	set category = "Object"
 	set src in usr
 	var/mob/M = usr
-	if (istype(M, /mob/dead/))
+	if(istype(M, /mob/dead/))
 		return
-	if (!can_use(M))
+	if(!can_use(M))
 		return
 	if(src.has_sensor >= 2)
 		usr << "The controls are locked."
@@ -289,7 +289,7 @@ atom/proc/generate_female_clothing(index,t_color,icon)
 		return
 	sensor_mode = modes.Find(switchMode) - 1
 
-	if (src.loc == usr)
+	if(src.loc == usr)
 		switch(sensor_mode)
 			if(0)
 				usr << "You disable your suit's remote sensing equipment."

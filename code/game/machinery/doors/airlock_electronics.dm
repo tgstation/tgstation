@@ -16,7 +16,7 @@
 	var/locked = 1
 
 /obj/item/weapon/airlock_electronics/attack_self(mob/user as mob)
-	if (!ishuman(user))
+	if(!ishuman(user))
 		return ..(user)
 
 	var/mob/living/carbon/human/H = user
@@ -26,10 +26,10 @@
 	var/t1 = text("")
 
 
-	if (last_configurator)
+	if(last_configurator)
 		t1 += "Operator: [last_configurator]<br>"
 
-	if (locked)
+	if(locked)
 		t1 += "<a href='?src=\ref[src];login=1'>Swipe ID</a><hr>"
 	else
 		t1 += "<a href='?src=\ref[src];logout=1'>Lock Interface</a><hr>"
@@ -70,47 +70,47 @@
 
 /obj/item/weapon/airlock_electronics/Topic(href, href_list)
 	..()
-	if (usr.stat || usr.restrained() || !ishuman(usr))
+	if(usr.stat || usr.restrained() || !ishuman(usr))
 		return
-	if (href_list["close"])
+	if(href_list["close"])
 		usr << browse(null, "window=airlock")
 		return
 
-	if (href_list["login"])
+	if(href_list["login"])
 		var/obj/item/I = usr.get_active_hand()
-		if (istype(I, /obj/item/device/pda))
+		if(istype(I, /obj/item/device/pda))
 			var/obj/item/device/pda/pda = I
 			I = pda.id
-		if (I && src.check_access(I))
+		if(I && src.check_access(I))
 			src.locked = 0
 			src.last_configurator = I:registered_name
 
-	if (locked)
+	if(locked)
 		return
 
-	if (href_list["logout"])
+	if(href_list["logout"])
 		locked = 1
 
-	if (href_list["access"])
+	if(href_list["access"])
 		toggle_access(href_list["access"])
 
 	attack_self(usr)
 
 /obj/item/weapon/airlock_electronics/proc/toggle_access(var/acc)
-	if (acc == "all")
+	if(acc == "all")
 		conf_access = null
 	else if(acc == "one")
 		use_one_access = !use_one_access
 	else
 		var/req = text2num(acc)
 
-		if (conf_access == null)
+		if(conf_access == null)
 			conf_access = list()
 
-		if (!(req in conf_access))
+		if(!(req in conf_access))
 			conf_access += req
 		else
 			conf_access -= req
-			if (!conf_access.len)
+			if(!conf_access.len)
 				conf_access = null
 

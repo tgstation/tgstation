@@ -89,7 +89,7 @@ Chaplain
 		var/religion_name = "Christianity"
 		var/new_religion = copytext(sanitize(input(H, "You are the Chaplain. Would you like to change your religion? Default is Christianity, in SPACE.", "Name change", religion_name)),1,MAX_NAME_LEN)
 
-		if (!new_religion)
+		if(!new_religion)
 			new_religion = religion_name
 
 		switch(lowertext(new_religion))
@@ -124,7 +124,7 @@ Chaplain
 		var/deity_name = "Space Jesus"
 		var/new_deity = copytext(sanitize(input(H, "Would you like to change your deity? Default is Space Jesus.", "Name change", deity_name)),1,MAX_NAME_LEN)
 
-		if ((length(new_deity) == 0) || (new_deity == "Space Jesus") )
+		if((length(new_deity) == 0) || (new_deity == "Space Jesus") )
 			new_deity = deity_name
 		B.deity_name = new_deity
 

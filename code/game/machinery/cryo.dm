@@ -128,7 +128,7 @@
 	data["hasOccupant"] = occupant ? 1 : 0
 
 	var/occupantData[0]
-	if (!occupant)
+	if(!occupant)
 		occupantData["name"] = null
 		occupantData["stat"] = null
 		occupantData["health"] = null
@@ -168,7 +168,7 @@
 	data["beakerContents"] = beakerContents
 
 	var/datum/nanoui/ui = SSnano.get_open_ui(user, src, ui_key)
-	if (!ui)
+	if(!ui)
 		// the ui does not exist, so we'll create a new one
 		ui = new(user, src, ui_key, "cryo.tmpl", "Cryo Cell Control System", 520, 410)
 		// When the UI is first opened this is the data it will use

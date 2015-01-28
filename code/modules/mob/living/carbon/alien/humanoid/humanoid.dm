@@ -36,12 +36,12 @@
 	var/b_loss = null
 	var/f_loss = null
 	switch (severity)
-		if (1.0)
+		if(1.0)
 			gib()
 			return
 
-		if (2.0)
-			if (!shielded)
+		if(2.0)
+			if(!shielded)
 				b_loss += 60
 
 			f_loss += 60
@@ -50,7 +50,7 @@
 
 		if(3.0)
 			b_loss += 30
-			if (prob(50) && !shielded)
+			if(prob(50) && !shielded)
 				Paralyse(1)
 			adjustEarDamage(15 , 60)
 
@@ -60,11 +60,11 @@
 	updatehealth()
 
 /mob/living/carbon/alien/humanoid/blob_act()
-	if (stat == 2)
+	if(stat == 2)
 		return
 	var/shielded = 0
 	var/damage = null
-	if (stat != 2)
+	if(stat != 2)
 		damage = rand(30,40)
 
 	if(shielded)
@@ -98,13 +98,13 @@
 /mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M as mob)
 	if(..())
 		switch(M.a_intent)
-			if ("harm")
+			if("harm")
 				var/damage = rand(1, 9)
-				if (prob(90))
+				if(prob(90))
 					playsound(loc, "punch", 25, 1, -1)
 					visible_message("<span class='danger'>[M] has punched [src]!</span>", \
 							"<span class='userdanger'>[M] has punched [src]!</span>")
-					if ((stat != DEAD) && (damage > 9 || prob(5)))//Regular humans have a very small chance of weakening an alien.
+					if((stat != DEAD) && (damage > 9 || prob(5)))//Regular humans have a very small chance of weakening an alien.
 						Paralyse(2)
 						visible_message("<span class='danger'>[M] has weakened [src]!</span>", \
 								"<span class='userdanger'>[M] has weakened [src]!</span>")
@@ -115,16 +115,16 @@
 					playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 					visible_message("<span class='danger'>[M] has attempted to punch [src]!</span>")
 
-			if ("disarm")
-				if (!lying)
-					if (prob(5))
+			if("disarm")
+				if(!lying)
+					if(prob(5))
 						Paralyse(2)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 						add_logs(M, src, "pushed", admin=0)
 						visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
 							"<span class='userdanger'>[M] has pushed down [src]!</span>")
 					else
-						if (prob(50))
+						if(prob(50))
 							drop_item()
 							playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 							visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
@@ -134,7 +134,7 @@
 							visible_message("<span class='danger'>[M] has attempted to disarm [src]!</span>")
 
 /mob/living/carbon/alien/humanoid/restrained()
-	if (handcuffed)
+	if(handcuffed)
 		return 1
 	return 0
 

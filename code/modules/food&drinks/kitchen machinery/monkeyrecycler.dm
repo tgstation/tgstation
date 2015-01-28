@@ -16,9 +16,9 @@
 	if(default_unfasten_wrench(user, O))
 		return
 
-	if (src.stat != 0) //NOPOWER etc
+	if(src.stat != 0) //NOPOWER etc
 		return
-	if (istype(O, /obj/item/weapon/grab))
+	if(istype(O, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
 		var/grabbed = G.affecting
 		if(istype(grabbed, /mob/living/carbon/monkey))
@@ -39,7 +39,7 @@
 	return
 
 /obj/machinery/monkey_recycler/attack_hand(var/mob/user as mob)
-	if (src.stat != 0) //NOPOWER etc
+	if(src.stat != 0) //NOPOWER etc
 		return
 	if(grinded >= 5)
 		user << "<span class='notice'>The machine hisses loudly as it condenses the grinded monkey meat. After a moment, it dispenses a brand new monkey cube.</span>"

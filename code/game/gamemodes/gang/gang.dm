@@ -101,7 +101,7 @@
 
 /datum/game_mode/proc/greet_gang(var/datum/mind/boss_mind, var/you_are=1)
 	var/obj_count = 1
-	if (you_are)
+	if(you_are)
 		boss_mind.current << "<FONT size=3 color=red><B>You are a [(boss_mind in A_bosses) ? gang_name("A") : gang_name("B")] Gang Boss!</B></FONT>"
 	for(var/datum/objective/objective in boss_mind.objectives)
 		boss_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
@@ -114,8 +114,8 @@
 	if(!istype(mob))
 		return
 
-	if (mob.mind)
-		if (mob.mind.assigned_role == "Clown")
+	if(mob.mind)
+		if(mob.mind.assigned_role == "Clown")
 			mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
 			mob.dna.remove_mutation(CLOWNMUT)
 
@@ -134,14 +134,14 @@
 	. = 0
 
 	var/where2 = mob.equip_in_one_of_slots(recaller, slots)
-	if (!where2)
+	if(!where2)
 		mob << "Your Syndicate benefactors were unfortunately unable to get you a Recaller."
 	else
 		mob << "The <b>Recaller</b> in your [where2] will allow you to prevent the station from prematurely evacuating. Use it to recall the emergency shuttle from anywhere on the station."
 		. += 2
 
 	var/where = mob.equip_in_one_of_slots(T, slots)
-	if (!where)
+	if(!where)
 		mob << "Your Syndicate benefactors were unfortunately unable to get you a flash."
 	else
 		mob << "The <b>flash</b> in your [where] will help you to persuade the crew to work for you."

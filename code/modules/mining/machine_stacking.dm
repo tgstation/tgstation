@@ -13,7 +13,7 @@
 	..()
 	spawn(7)
 		src.machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
-		if (machine)
+		if(machine)
 			machine.CONSOLE = src
 		else
 			qdel(src)

@@ -147,7 +147,7 @@
 
 
 /obj/item/ammo_casing/caseless/fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params, var/distro, var/quiet)
-	if (..())
+	if(..())
 		loc = null
 		return 1
 	else

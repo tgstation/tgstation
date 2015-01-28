@@ -18,7 +18,7 @@
 		max_mages = round(num_players() / 5)
 
 /datum/game_mode/wizard/raginmages/greet_wizard(var/datum/mind/wizard, var/you_are=1)
-	if (you_are)
+	if(you_are)
 		wizard.current << "<B>You are the Space Wizard!</B>"
 	wizard.current << "<B>The Space Wizards Federation has given you the following tasks:</B>"
 
@@ -45,7 +45,7 @@
 			continue
 		wizards_alive++
 
-	if (wizards_alive)
+	if(wizards_alive)
 		if(!time_checked) time_checked = world.time
 		if(world.time > time_checked + 1500 && (mages_made < max_mages))
 			time_checked = world.time

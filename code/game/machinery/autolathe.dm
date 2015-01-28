@@ -81,7 +81,7 @@
 	return
 
 /obj/machinery/autolathe/attackby(obj/item/O, mob/user)
-	if (busy)
+	if(busy)
 		user << "<span class=\"alert\">The autolathe is busy. Please wait for completion of previous operation.</span>"
 		return 1
 
@@ -92,7 +92,7 @@
 	if(exchange_parts(user, O))
 		return
 
-	if (panel_open)
+	if(panel_open)
 		if(istype(O, /obj/item/weapon/crowbar))
 			if(m_amount >= MINERAL_MATERIAL_AMOUNT)
 				var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal(src.loc)
@@ -105,16 +105,16 @@
 		else
 			attack_hand(user)
 			return 1
-	if (stat)
+	if(stat)
 		return 1
 
-	if (src.m_amount + O.m_amt > max_m_amount)
+	if(src.m_amount + O.m_amt > max_m_amount)
 		user << "<span class=\"alert\">The autolathe is full. Please remove metal from the autolathe in order to insert more.</span>"
 		return 1
-	if (src.g_amount + O.g_amt > max_g_amount)
+	if(src.g_amount + O.g_amt > max_g_amount)
 		user << "<span class=\"alert\">The autolathe is full. Please remove glass from the autolathe in order to insert more.</span>"
 		return 1
-	if (O.m_amt == 0 && O.g_amt == 0)
+	if(O.m_amt == 0 && O.g_amt == 0)
 		user << "<span class=\"alert\">This object does not contain significant amounts of metal or glass, or cannot be accepted by the autolathe due to size or hazardous materials.</span>"
 		return 1
 
@@ -122,13 +122,13 @@
 	var/obj/item/stack/stack
 	var/m_amt = O.m_amt
 	var/g_amt = O.g_amt
-	if (istype(O, /obj/item/stack))
+	if(istype(O, /obj/item/stack))
 		stack = O
 		amount = stack.amount
-		if (m_amt)
+		if(m_amt)
 			amount = min(amount, round((max_m_amount-src.m_amount)/m_amt))
 			flick("autolathe_o",src)//plays metal insertion animation
-		if (g_amt)
+		if(g_amt)
 			amount = min(amount, round((max_g_amount-src.g_amount)/g_amt))
 			flick("autolathe_r",src)//plays glass insertion animation
 		stack.use(amount)
@@ -142,7 +142,7 @@
 	src.m_amount += m_amt * amount
 	src.g_amount += g_amt * amount
 	user << "You insert [amount] sheet[amount>1 ? "s" : ""] to the autolathe."
-	if (O && O.loc == src)
+	if(O && O.loc == src)
 		qdel(O)
 	busy = 0
 	src.updateUsrDialog()
@@ -158,7 +158,7 @@
 /obj/machinery/autolathe/Topic(href, href_list)
 	if(..())
 		return
-	if (!busy)
+	if(!busy)
 		if(href_list["menu"])
 			screen = text2num(href_list["menu"])
 
@@ -182,7 +182,7 @@
 
 			if(!is_stack && (multiplier > 1))
 				return
-			if (!(multiplier in list(1,10,25,max_multiplier))) //"enough materials ?" is checked further down
+			if(!(multiplier in list(1,10,25,max_multiplier))) //"enough materials ?" is checked further down
 				return
 			/////////////////
 
@@ -270,9 +270,9 @@
 
 		if(ispath(D.build_path, /obj/item/stack))
 			var/max_multiplier = min(50, D.materials["$metal"] ?round(m_amount/D.materials["$metal"]):INFINITY,D.materials["$glass"]?round(g_amount/D.materials["$glass"]):INFINITY)
-			if (max_multiplier>10 && !disabled)
+			if(max_multiplier>10 && !disabled)
 				dat += " <a href='?src=\ref[src];make=[D.id];multiplier=10'>x10</a>"
-			if (max_multiplier>25 && !disabled)
+			if(max_multiplier>25 && !disabled)
 				dat += " <a href='?src=\ref[src];make=[D.id];multiplier=25'>x25</a>"
 			if(max_multiplier > 0 && !disabled)
 				dat += " <a href='?src=\ref[src];make=[D.id];multiplier=[max_multiplier]'>x[max_multiplier]</a>"
@@ -308,7 +308,7 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
-	if (electrocute_mob(user, get_area(src), src, 0.7))
+	if(electrocute_mob(user, get_area(src), src, 0.7))
 		return 1
 	else
 		return 0

@@ -109,7 +109,7 @@
 			return
 
 		var/turf/T = get_turf(user)
-		if (T.intact) //is the floor plating removed ?
+		if(T.intact) //is the floor plating removed ?
 			user << "<span class='alert'>You must first remove the floor plating!</span>"
 			return
 
@@ -124,7 +124,7 @@
 
 		if(do_after(user, 20) && C.amount >= 10)
 			var/obj/structure/cable/N = T.get_cable_node() //get the connecting node cable, if there's one
-			if (prob(50) && electrocute_mob(usr, N, N)) //animate the electrocution if uncautious and unlucky
+			if(prob(50) && electrocute_mob(usr, N, N)) //animate the electrocution if uncautious and unlucky
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(5, 1, src)
 				s.start()
@@ -316,7 +316,7 @@
 
 	// update the ui if it exists, returns null if no ui is passed/found
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
+	if(!ui)
 		// the ui does not exist, so we'll create a new() one
 		// for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "smes.tmpl", "SMES - [name]", 350, 560)
@@ -402,7 +402,7 @@
 	output_level = rand(0, output_level_max)
 	input_level = rand(0, input_level_max)
 	charge -= 1e6/severity
-	if (charge < 0)
+	if(charge < 0)
 		charge = 0
 	update_icon()
 	log_smes("an emp")

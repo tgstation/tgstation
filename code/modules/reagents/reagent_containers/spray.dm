@@ -89,7 +89,7 @@
 	set src in usr
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
-	if (alert(usr, "Are you sure you want to empty that?", "Empty Bottle:", "Yes", "No") != "Yes")
+	if(alert(usr, "Are you sure you want to empty that?", "Empty Bottle:", "Yes", "No") != "Yes")
 		return
 	if(isturf(usr.loc) && src.loc == usr)
 		usr << "<span class='notice'>You empty \the [src] onto the floor.</span>"

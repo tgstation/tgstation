@@ -41,7 +41,7 @@
 	return power_supply.charge >= shot.e_cost
 
 /obj/item/weapon/gun/energy/proc/newshot()
-	if (!ammo_type || !power_supply)
+	if(!ammo_type || !power_supply)
 		return
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	if(power_supply.charge >= shot.e_cost) //if there's enough power in the power_supply cell...
@@ -58,11 +58,11 @@
 
 /obj/item/weapon/gun/energy/proc/select_fire(mob/living/user as mob)
 	select++
-	if (select > ammo_type.len)
+	if(select > ammo_type.len)
 		select = 1
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	fire_sound = shot.fire_sound
-	if (shot.select_name)
+	if(shot.select_name)
 		user << "<span class='danger'>[src] is now set to [shot.select_name].</span>"
 	update_icon()
 	return
@@ -74,11 +74,11 @@
 	if(power_supply.charge < shot.e_cost)
 		ratio = 0 //so the icon changes to empty if the charge isn't zero but not enough for a shot.
 	switch(modifystate)
-		if (0)
+		if(0)
 			icon_state = "[initial(icon_state)][ratio]"
-		if (1)
+		if(1)
 			icon_state = "[initial(icon_state)][shot.mod_name][ratio]"
-		if (2)
+		if(2)
 			icon_state = "[initial(icon_state)][shot.select_name][ratio]"
 	overlays.Cut()
 	if(F)

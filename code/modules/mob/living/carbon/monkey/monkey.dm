@@ -43,14 +43,14 @@
 	var/health_deficiency = (100 - health)
 	if(health_deficiency >= 45) tally += (health_deficiency / 25)
 
-	if (bodytemperature < 283.222)
+	if(bodytemperature < 283.222)
 		tally += (283.222 - bodytemperature) / 10 * 1.75
 	return tally+config.monkey_delay
 
 /mob/living/carbon/monkey/attack_paw(mob/living/M as mob)
 	if(..()) //successful monkey bite.
 		var/damage = rand(1, 5)
-		if (stat != DEAD)
+		if(stat != DEAD)
 			adjustBruteLoss(damage)
 			updatehealth()
 	return
@@ -74,15 +74,15 @@
 			grabbedby(M)
 		if("harm")
 			M.do_attack_animation(src)
-			if (prob(75))
+			if(prob(75))
 				visible_message("<span class='danger'>[M] has punched [name]!</span>", \
 						"<span class='userdanger'>[M] has punched [name]!</span>")
 
 				playsound(loc, "punch", 25, 1, -1)
 				var/damage = rand(5, 10)
-				if (prob(40))
+				if(prob(40))
 					damage = rand(10, 15)
-					if ( (paralysis < 5)  && (health > 0) )
+					if( (paralysis < 5)  && (health > 0) )
 						Paralyse(rand(10, 15))
 						spawn( 0 )
 							visible_message("<span class='danger'>[M] has knocked out [name]!</span>", \
@@ -97,9 +97,9 @@
 						"<span class='userdanger'>[M] has attempted to punch [name]!</span>")
 
 		if("disarm")
-			if (!( paralysis ))
+			if(!( paralysis ))
 				M.do_attack_animation(src)
-				if (prob(25))
+				if(prob(25))
 					Paralyse(2)
 					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 					add_logs(M, src, "pushed", admin=0)
@@ -114,13 +114,13 @@
 
 /mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if(..()) //if harm or disarm intent.
-		if (M.a_intent == "harm")
-			if ((prob(95) && health > 0))
+		if(M.a_intent == "harm")
+			if((prob(95) && health > 0))
 				playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 				var/damage = rand(15, 30)
-				if (damage >= 25)
+				if(damage >= 25)
 					damage = rand(20, 40)
-					if (paralysis < 15)
+					if(paralysis < 15)
 						Paralyse(rand(10, 15))
 					visible_message("<span class='danger'>[M] has wounded [name]!</span>", \
 							"<span class='userdanger'>[M] has wounded [name]!</span>")
@@ -128,7 +128,7 @@
 					visible_message("<span class='danger'>[M] has slashed [name]!</span>", \
 							"<span class='userdanger'>[M] has slashed [name]!</span>")
 				add_logs(M, src, "attacked", admin=0)
-				if (stat != DEAD)
+				if(stat != DEAD)
 					adjustBruteLoss(damage)
 					updatehealth()
 			else
@@ -136,7 +136,7 @@
 				visible_message("<span class='danger'>[M] has attempted to lunge at [name]!</span>", \
 						"<span class='userdanger'>[M] has attempted to lunge at [name]!</span>")
 
-		if (M.a_intent == "disarm")
+		if(M.a_intent == "disarm")
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			var/damage = 5
 			if(prob(95))
@@ -204,21 +204,21 @@
 			adjustFireLoss(60)
 		if(3.0)
 			adjustBruteLoss(30)
-			if (prob(50))
+			if(prob(50))
 				Paralyse(10)
 	return
 
 /mob/living/carbon/monkey/blob_act()
-	if (stat != 2)
+	if(stat != 2)
 		show_message("<span class='userdanger'>The blob attacks you!</span>")
 		adjustFireLoss(60)
 		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
-	if (prob(50))
+	if(prob(50))
 		Paralyse(10)
-	if (stat == DEAD && client)
+	if(stat == DEAD && client)
 		gib()
 		return
-	if (stat == DEAD && !client)
+	if(stat == DEAD && !client)
 		gibs(loc, viruses)
 		qdel(src)
 		return

@@ -621,7 +621,7 @@ About the new airlock wires panel:
 			sleep(10)
 			//bring up airlock dialog
 			src.aiHacking = 0
-			if (user)
+			if(user)
 				src.attack_ai(user)
 
 
@@ -721,9 +721,9 @@ About the new airlock wires panel:
 
 				if(8)
 					// Safeties!  We don't need no stinking safeties!
-					if (src.isWireCut(AIRLOCK_WIRE_SAFETY))
+					if(src.isWireCut(AIRLOCK_WIRE_SAFETY))
 						usr << text("Control to door sensors is disabled.")
-					else if (src.safe)
+					else if(src.safe)
 						safe = 0
 					else
 						usr << text("Firmware reports safeties already overriden.")
@@ -734,7 +734,7 @@ About the new airlock wires panel:
 					// Door speed control
 					if(src.isWireCut(AIRLOCK_WIRE_SPEED))
 						usr << text("Control to door timing circuitry has been severed.")
-					else if (src.normalspeed)
+					else if(src.normalspeed)
 						normalspeed = 0
 					else
 						usr << text("Door timing circurity already accellerated.")
@@ -754,14 +754,14 @@ About the new airlock wires panel:
 					// Bolt lights
 					if(src.isWireCut(AIRLOCK_WIRE_LIGHT))
 						usr << text("Control to door bolt lights has been severed.</a>")
-					else if (src.lights)
+					else if(src.lights)
 						lights = 0
 					else
 						usr << text("Door bolt lights are already disabled!")
 
 				if(11)
 					// Emergency access
-					if (src.emergency)
+					if(src.emergency)
 						emergency = 0
 					else
 						usr << text("Emergency access is already disabled!")
@@ -823,11 +823,11 @@ About the new airlock wires panel:
 						add_logs(usr, src, "electrified", admin=0, addition="at [x],[y],[z]")
 						src.secondsElectrified = -1
 
-				if (8) // Not in order >.>
+				if(8) // Not in order >.>
 					// Safeties!  Maybe we do need some stinking safeties!
-					if (src.isWireCut(AIRLOCK_WIRE_SAFETY))
+					if(src.isWireCut(AIRLOCK_WIRE_SAFETY))
 						usr << text("Control to door sensors is disabled.")
-					else if (!src.safe)
+					else if(!src.safe)
 						safe = 1
 						src.updateUsrDialog()
 					else
@@ -837,7 +837,7 @@ About the new airlock wires panel:
 					// Door speed control
 					if(src.isWireCut(AIRLOCK_WIRE_SPEED))
 						usr << text("Control to door timing circuitry has been severed.")
-					else if (!src.normalspeed)
+					else if(!src.normalspeed)
 						normalspeed = 1
 						src.updateUsrDialog()
 					else
@@ -858,7 +858,7 @@ About the new airlock wires panel:
 					// Bolt lights
 					if(src.isWireCut(AIRLOCK_WIRE_LIGHT))
 						usr << text("Control to door bolt lights has been severed.</a>")
-					else if (!src.lights)
+					else if(!src.lights)
 						lights = 1
 						src.updateUsrDialog()
 					else
@@ -866,7 +866,7 @@ About the new airlock wires panel:
 
 				if(11)
 					// Emergency access
-					if (!src.emergency)
+					if(!src.emergency)
 						emergency = 1
 					else
 						usr << text("Emergency access is already enabled!")

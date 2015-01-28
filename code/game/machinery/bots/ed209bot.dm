@@ -110,7 +110,7 @@
 
 /obj/machinery/bot/ed209/attack_hand(mob/user as mob)
 	. = ..()
-	if (.)
+	if(.)
 		return
 	var/dat
 	dat += hack(user)
@@ -154,15 +154,15 @@ Auto Patrol[]"},
 	..()
 
 	switch(href_list["operation"])
-		if ("idcheck")
+		if("idcheck")
 			idcheck = !idcheck
 		if("weaponscheck")
 			weaponscheck = !weaponscheck
 			updateUsrDialog()
-		if ("ignorerec")
+		if("ignorerec")
 			check_records = !check_records
 			updateUsrDialog()
-		if ("switchmode")
+		if("switchmode")
 			arrest_type = !arrest_type
 			updateUsrDialog()
 		if("declarearrests")
@@ -170,8 +170,8 @@ Auto Patrol[]"},
 			updateUsrDialog()
 
 /obj/machinery/bot/ed209/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if (allowed(user) && !open && !emagged)
+	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+		if(allowed(user) && !open && !emagged)
 			locked = !locked
 			user << "<span class='notice'>Controls are now [locked ? "locked" : "unlocked"].</span>"
 		else
@@ -185,7 +185,7 @@ Auto Patrol[]"},
 		..()
 		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm") // Any intent but harm will heal, so we shouldn't get angry.
 			return
-		if (!istype(W, /obj/item/weapon/screwdriver) && (!target)) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
+		if(!istype(W, /obj/item/weapon/screwdriver) && (!target)) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
 			if(W.force && W.damtype != STAMINA)//If force is non-zero and damage type isn't stamina.
 				threatlevel = user.assess_threat(src)
 				threatlevel += 6
@@ -207,7 +207,7 @@ Auto Patrol[]"},
 		set_weapon()
 
 /obj/machinery/bot/ed209/bot_process()
-	if (!..())
+	if(!..())
 		return
 
 	if(disabled)
@@ -216,21 +216,21 @@ Auto Patrol[]"},
 	var/list/targets = list()
 	for (var/mob/living/carbon/C in view(7,src)) //Let's find us a target
 		var/threatlevel = 0
-		if ((C.stat) || (C.lying))
+		if((C.stat) || (C.lying))
 			continue
 		threatlevel = C.assess_threat(src, lasercolor)
 		//speak(C.real_name + text(": threat: []", threatlevel))
-		if (threatlevel < 4 )
+		if(threatlevel < 4 )
 			continue
 
 		var/dst = get_dist(src, C)
-		if ( dst <= 1 || dst > 7)
+		if( dst <= 1 || dst > 7)
 			continue
 
 		targets += C
-	if (targets.len>0)
+	if(targets.len>0)
 		var/mob/living/carbon/t = pick(targets)
-		if ((t.stat!=2) && (t.lying != 1) && (!t.handcuffed)) //we don't shoot people who are dead, cuffed or lying down.
+		if((t.stat!=2) && (t.lying != 1) && (!t.handcuffed)) //we don't shoot people who are dead, cuffed or lying down.
 			shootAt(t)
 	switch(mode)
 
@@ -243,7 +243,7 @@ Auto Patrol[]"},
 
 		if(BOT_HUNT)		// hunting for perp
 			// if can't reach perp for long enough, go idle
-			if (frustration >= 8)
+			if(frustration >= 8)
 				walk_to(src,0)
 				back_to_idle()
 
@@ -277,7 +277,7 @@ Auto Patrol[]"},
 				else								// not next to perp
 					var/turf/olddist = get_dist(src, target)
 					walk_to(src, target,1,4)
-					if ((get_dist(src, target)) >= (olddist))
+					if((get_dist(src, target)) >= (olddist))
 						frustration++
 					else
 						frustration = 0
@@ -314,7 +314,7 @@ Auto Patrol[]"},
 				return
 
 		if(BOT_ARREST)
-			if (!target)
+			if(!target)
 				anchored = 0
 				mode = BOT_IDLE
 				last_found = world.time
@@ -367,18 +367,18 @@ Auto Patrol[]"},
 	anchored = 0
 	threatlevel = 0
 	for (var/mob/living/carbon/C in view(7,src)) //Let's find us a criminal
-		if ((C.stat) || (C.handcuffed))
+		if((C.stat) || (C.handcuffed))
 			continue
 
-		if ((C.name == oldtarget_name) && (world.time < last_found + 100))
+		if((C.name == oldtarget_name) && (world.time < last_found + 100))
 			continue
 
 		threatlevel = C.assess_threat(src, lasercolor)
 
-		if (!threatlevel)
+		if(!threatlevel)
 			continue
 
-		else if (threatlevel >= 4)
+		else if(threatlevel >= 4)
 			target = C
 			oldtarget_name = C.name
 			speak("Level [threatlevel] infraction alert!")
@@ -400,7 +400,7 @@ Auto Patrol[]"},
 /* terrible
 /obj/machinery/bot/ed209/Bumped(atom/movable/M as mob|obj)
 	spawn(0)
-		if (M)
+		if(M)
 			var/turf/T = get_turf(src)
 			M:loc = T
 */
@@ -429,12 +429,12 @@ Auto Patrol[]"},
 		G.power_supply.charge = 0
 		G.update_icon()
 
-	if (prob(50))
+	if(prob(50))
 		new /obj/item/robot_parts/l_leg(Tsec)
-		if (prob(25))
+		if(prob(25))
 			new /obj/item/robot_parts/r_leg(Tsec)
-	if (prob(25))//50% chance for a helmet OR vest
-		if (prob(50))
+	if(prob(25))//50% chance for a helmet OR vest
+		if(prob(50))
 			new /obj/item/clothing/head/helmet(Tsec)
 		else
 			if(!lasercolor)
@@ -473,11 +473,11 @@ Auto Patrol[]"},
 	lastfired = world.time
 	var/turf/T = loc
 	var/atom/U = (istype(target, /atom/movable) ? target.loc : target)
-	if ((!( U ) || !( T )))
+	if((!( U ) || !( T )))
 		return
 	while(!( istype(U, /turf) ))
 		U = U.loc
-	if (!( istype(T, /turf) ))
+	if(!( istype(T, /turf) ))
 		return
 
 	//if(lastfired && world.time - lastfired < 100)
@@ -485,7 +485,7 @@ Auto Patrol[]"},
 	if(!projectile)
 		return
 
-	if (!( istype(U, /turf) ))
+	if(!( istype(U, /turf) ))
 		return
 	var/obj/item/projectile/A = new projectile (loc)
 	playsound(loc, shoot_sound, 50, 1)
@@ -496,7 +496,7 @@ Auto Patrol[]"},
 
 /obj/machinery/bot/ed209/attack_alien(var/mob/living/carbon/alien/user as mob)
 	..()
-	if (!isalien(target))
+	if(!isalien(target))
 		target = user
 		mode = BOT_HUNT
 
@@ -516,15 +516,15 @@ Auto Patrol[]"},
 			pulse2.delete()
 		var/list/mob/living/carbon/targets = new
 		for (var/mob/living/carbon/C in view(12,src))
-			if (C.stat==2)
+			if(C.stat==2)
 				continue
 			targets += C
 		if(targets.len)
 			if(prob(50))
 				var/mob/toshoot = pick(targets)
-				if (toshoot)
+				if(toshoot)
 					targets-=toshoot
-					if (prob(50) && emagged < 2)
+					if(prob(50) && emagged < 2)
 						emagged = 2
 						set_weapon()
 						shootAt(toshoot)
@@ -535,7 +535,7 @@ Auto Patrol[]"},
 			else if(prob(50))
 				if(targets.len)
 					var/mob/toarrest = pick(targets)
-					if (toarrest)
+					if(toarrest)
 						target = toarrest
 						mode = BOT_HUNT
 
@@ -622,12 +622,12 @@ Auto Patrol[]"},
 		if(6)
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/coil = W
-				if (coil.get_amount() < 1)
+				if(coil.get_amount() < 1)
 					user << "<span class='warning'>You need one length of cable to wire the ED-209.</span>"
 					return
 				user << "<span class='notice'>You start to wire [src]...</span>"
-				if (do_after(user, 40))
-					if (coil.get_amount() >= 1 && build_step == 6)
+				if(do_after(user, 40))
+					if(coil.get_amount() >= 1 && build_step == 6)
 						coil.use(1)
 						build_step = 7
 						user << "<span class='notice'>You wire the ED-209 assembly.</span>"

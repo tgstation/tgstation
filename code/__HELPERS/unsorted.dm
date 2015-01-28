@@ -7,11 +7,11 @@
 //Inverts the colour of an HTML string
 /proc/invertHTML(HTMLstring)
 
-	if (!( istext(HTMLstring) ))
+	if(!( istext(HTMLstring) ))
 		CRASH("Given non-text argument!")
 		return
 	else
-		if (length(HTMLstring) != 7)
+		if(length(HTMLstring) != 7)
 			CRASH("Given non-HTML argument!")
 			return
 	var/textr = copytext(HTMLstring, 2, 4)
@@ -261,14 +261,14 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Returns whether or not a player is a guest using their ckey as an input
 /proc/IsGuestKey(key)
-	if (findtext(key, "Guest-", 1, 7) != 1) //was findtextEx
+	if(findtext(key, "Guest-", 1, 7) != 1) //was findtextEx
 		return 0
 
 	var/i, ch, len = length(key)
 
 	for (i = 7, i <= len, ++i)
 		ch = text2ascii(key, i)
-		if (ch < 48 || ch > 57)
+		if(ch < 48 || ch > 57)
 			return 0
 	return 1
 
@@ -277,7 +277,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	f = round(f)
 	f = max(1441, f) // 144.1
 	f = min(1489, f) // 148.9
-	if ((f % 2) == 0) //Ensure the last digit is an odd number
+	if((f % 2) == 0) //Ensure the last digit is an odd number
 		f += 1
 	return f
 
@@ -465,15 +465,15 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/namecounts = list()
 	for(var/mob/M in mobs)
 		var/name = M.name
-		if (name in names)
+		if(name in names)
 			namecounts[name]++
 			name = "[name] ([namecounts[name]])"
 		else
 			names.Add(name)
 			namecounts[name] = 1
-		if (M.real_name && M.real_name != M.name)
+		if(M.real_name && M.real_name != M.name)
 			name += " \[[M.real_name]\]"
-		if (M.stat == 2)
+		if(M.stat == 2)
 			if(istype(M, /mob/dead/observer/))
 				name += " \[ghost\]"
 			else
@@ -776,7 +776,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		sleep(timefraction)
 		if(!user || !target)
 			return 0
-		if ( user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.stat || ( user.stunned || user.weakened || user.paralysis || user.lying ) )
+		if( user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.stat || ( user.stunned || user.weakened || user.paralysis || user.lying ) )
 			return 0
 
 	return 1
@@ -1205,13 +1205,13 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 /proc/parse_zone(zone)
 	if(zone == "r_hand") return "right hand"
-	else if (zone == "l_hand") return "left hand"
-	else if (zone == "l_arm") return "left arm"
-	else if (zone == "r_arm") return "right arm"
-	else if (zone == "l_leg") return "left leg"
-	else if (zone == "r_leg") return "right leg"
-	else if (zone == "l_foot") return "left foot"
-	else if (zone == "r_foot") return "right foot"
+	else if(zone == "l_hand") return "left hand"
+	else if(zone == "l_arm") return "left arm"
+	else if(zone == "r_arm") return "right arm"
+	else if(zone == "l_leg") return "left leg"
+	else if(zone == "r_leg") return "right leg"
+	else if(zone == "l_foot") return "left foot"
+	else if(zone == "r_foot") return "right foot"
 	else return zone
 
 

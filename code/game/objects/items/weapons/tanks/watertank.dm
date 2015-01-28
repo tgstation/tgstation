@@ -25,7 +25,7 @@
 /obj/item/weapon/watertank/verb/toggle_mister()
 	set name = "Toggle Mister"
 	set category = "Object"
-	if (usr.get_item_by_slot(slot_back) != src)
+	if(usr.get_item_by_slot(slot_back) != src)
 		usr << "<span class='notice'>The watertank needs to be on your back to use.</span>"
 		return
 	if(usr.stat || !usr.canmove || usr.restrained())
@@ -52,7 +52,7 @@
 	return new /obj/item/weapon/reagent_containers/spray/mister(src)
 
 /obj/item/weapon/watertank/equipped(mob/user, slot)
-	if (slot != slot_back)
+	if(slot != slot_back)
 		remove_noz()
 
 /obj/item/weapon/watertank/proc/remove_noz()
@@ -62,7 +62,7 @@
 	return
 
 /obj/item/weapon/watertank/Destroy()
-	if (on)
+	if(on)
 		remove_noz()
 		qdel(noz)
 		noz = null
@@ -134,7 +134,7 @@
 	return
 
 /proc/check_tank_exists(parent_tank, var/mob/living/carbon/human/M, var/obj/O)
-	if (!parent_tank || !istype(parent_tank, /obj/item/weapon/watertank))	//To avoid weird issues from admin spawns
+	if(!parent_tank || !istype(parent_tank, /obj/item/weapon/watertank))	//To avoid weird issues from admin spawns
 		M.unEquip(O)
 		qdel(0)
 		return 0

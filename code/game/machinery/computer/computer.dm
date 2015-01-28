@@ -40,14 +40,14 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(25))
+			if(prob(25))
 				qdel(src)
 				return
-			if (prob(50))
+			if(prob(50))
 				verbs.Cut()
 				set_broken()
 		if(3.0)
-			if (prob(25))
+			if(prob(25))
 				verbs.Cut()
 				set_broken()
 		else
@@ -61,7 +61,7 @@
 
 
 /obj/machinery/computer/blob_act()
-	if (prob(75))
+	if(prob(75))
 		verbs.Cut()
 		set_broken()
 		density = 0
@@ -102,7 +102,7 @@
 			circuit = null
 			for (var/obj/C in src)
 				C.loc = src.loc
-			if (src.stat & BROKEN)
+			if(src.stat & BROKEN)
 				user << "<span class='notice'> The broken glass falls out.</span>"
 				new /obj/item/weapon/shard( src.loc )
 				A.state = 3

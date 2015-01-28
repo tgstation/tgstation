@@ -94,13 +94,13 @@ datum/reagents/proc/get_master_reagent_id()
 	return the_id
 
 datum/reagents/proc/trans_to(var/obj/target, var/amount=1, var/multiplier=1, var/preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
-	if (!target )
+	if(!target )
 		return
 	var/datum/reagents/R
 	if(istype(target,/datum/reagents/))
 		R = target
 	else
-		if (!target.reagents || src.total_volume<=0)
+		if(!target.reagents || src.total_volume<=0)
 			return
 		R = target.reagents
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
@@ -141,9 +141,9 @@ datum/reagents/proc/copy_to(var/obj/target, var/amount=1, var/multiplier=1, var/
 	return amount
 
 datum/reagents/proc/trans_id_to(var/obj/target, var/reagent, var/amount=1, var/preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
-	if (!target)
+	if(!target)
 		return
-	if (!target.reagents || src.total_volume<=0 || !src.get_reagent_amount(reagent))
+	if(!target.reagents || src.total_volume<=0 || !src.get_reagent_amount(reagent))
 		return
 
 	var/datum/reagents/R = target.reagents
@@ -166,7 +166,7 @@ datum/reagents/proc/trans_id_to(var/obj/target, var/reagent, var/amount=1, var/p
 	return amount
 
 /*
-				if (!target) return
+				if(!target) return
 				var/total_transfered = 0
 				var/current_list_element = 1
 				var/datum/reagents/R = target.reagents
@@ -289,8 +289,8 @@ datum/reagents/proc/handle_reactions()
 				else
 					if(my_atom.type == C.required_container)
 						matching_container = 1
-				if (isliving(my_atom)) //Makes it so certain chemical reactions don't occur in mobs
-					if (C.mob_react)
+				if(isliving(my_atom)) //Makes it so certain chemical reactions don't occur in mobs
+					if(C.mob_react)
 						return
 				if(!C.required_other)
 					matching_other = 1
@@ -344,14 +344,14 @@ datum/reagents/proc/handle_reactions()
 datum/reagents/proc/isolate_reagent(var/reagent)
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
-		if (R.id != reagent)
+		if(R.id != reagent)
 			del_reagent(R.id)
 			update_total()
 
 datum/reagents/proc/del_reagent(var/reagent)
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
-		if (R.id == reagent)
+		if(R.id == reagent)
 			reagent_list -= A
 			del(A)
 			update_total()
@@ -413,7 +413,7 @@ datum/reagents/proc/add_reagent(var/reagent, var/amount, var/list/data=null)
 	for(var/A in reagent_list)
 
 		var/datum/reagent/R = A
-		if (R.id == reagent)
+		if(R.id == reagent)
 			R.volume += amount
 			update_total()
 			my_atom.on_reagent_change()
@@ -459,7 +459,7 @@ datum/reagents/proc/remove_reagent(var/reagent, var/amount, var/safety)//Added a
 
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
-		if (R.id == reagent)
+		if(R.id == reagent)
 			R.volume -= amount
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to
@@ -473,7 +473,7 @@ datum/reagents/proc/has_reagent(var/reagent, var/amount = -1)
 
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
-		if (R.id == reagent)
+		if(R.id == reagent)
 			if(!amount) return R
 			else
 				if(R.volume >= amount) return R
@@ -484,7 +484,7 @@ datum/reagents/proc/has_reagent(var/reagent, var/amount = -1)
 datum/reagents/proc/get_reagent_amount(var/reagent)
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
-		if (R.id == reagent)
+		if(R.id == reagent)
 			return R.volume
 
 	return 0
@@ -492,7 +492,7 @@ datum/reagents/proc/get_reagent_amount(var/reagent)
 datum/reagents/proc/get_reagents()
 	var/res = ""
 	for(var/datum/reagent/A in reagent_list)
-		if (res != "") res += ","
+		if(res != "") res += ","
 		res += A.name
 
 	return res

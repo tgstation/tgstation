@@ -124,24 +124,24 @@ field_generator power level display
 				user << "<span class='danger'>The [src.name] needs to be wrenched to the floor.</span>"
 				return
 			if(1)
-				if (WT.remove_fuel(0,user))
+				if(WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
 						"You start to weld \the [src] to the floor.", \
 						"You hear welding")
-					if (do_after(user,20))
+					if(do_after(user,20))
 						if(!src || !WT.isOn()) return
 						state = 2
 						user << "You weld the field generator to the floor."
 				else
 					return
 			if(2)
-				if (WT.remove_fuel(0,user))
+				if(WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
 						"You start to cut \the [src] free from the floor.", \
 						"You hear welding")
-					if (do_after(user,20))
+					if(do_after(user,20))
 						if(!src || !WT.isOn()) return
 						state = 1
 						user << "You cut \the [src] free from the floor."
@@ -205,7 +205,7 @@ field_generator power level display
 
 	var/power_draw = 2
 	for (var/obj/machinery/field/containment/F in fields)
-		if (isnull(F))
+		if(isnull(F))
 			continue
 		power_draw++
 	if(draw_power(round(power_draw/2,1)))
@@ -303,7 +303,7 @@ field_generator power level display
 				CF.Crossed(L)
 	var/listcheck = 0
 	for(var/obj/machinery/field/generator/FG in connected_gens)
-		if (isnull(FG))
+		if(isnull(FG))
 			continue
 		if(FG == G)
 			listcheck = 1
@@ -312,7 +312,7 @@ field_generator power level display
 		connected_gens.Add(G)
 	listcheck = 0
 	for(var/obj/machinery/field/generator/FG2 in G.connected_gens)
-		if (isnull(FG2))
+		if(isnull(FG2))
 			continue
 		if(FG2 == src)
 			listcheck = 1
@@ -324,12 +324,12 @@ field_generator power level display
 /obj/machinery/field/generator/proc/cleanup()
 	clean_up = 1
 	for (var/obj/machinery/field/containment/F in fields)
-		if (isnull(F))
+		if(isnull(F))
 			continue
 		qdel(F)
 	fields = list()
 	for(var/obj/machinery/field/generator/FG in connected_gens)
-		if (isnull(FG))
+		if(isnull(FG))
 			continue
 		FG.connected_gens.Remove(src)
 		if(!FG.clean_up)//Makes the other gens clean up as well

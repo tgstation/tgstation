@@ -102,7 +102,7 @@
 		if(frequency < 1200 || frequency > 1600)
 			frequency = sanitize_frequency(frequency, maxf)
 	// The max freq is higher than a regular headset to decrease the chance of people listening in, if you use the higher channels.
-	else if (frequency < 1441 || frequency > maxf)
+	else if(frequency < 1441 || frequency > maxf)
 		//world.log << "[src] ([type]) has a frequency of [frequency], sanitizing."
 		frequency = sanitize_frequency(frequency, maxf)
 
@@ -153,7 +153,7 @@
 	return
 
 /obj/item/device/radio/proc/text_wires()
-	if (b_stat)
+	if(b_stat)
 		return wires.GetInteractWindow()
 	return
 
@@ -166,28 +166,28 @@
 
 /obj/item/device/radio/Topic(href, href_list)
 	//..()
-	if (usr.stat || !on)
+	if(usr.stat || !on)
 		return
 
-	if (!(issilicon(usr) || (usr.contents.Find(src) || ( in_range(src, usr) && istype(loc, /turf) ))))
+	if(!(issilicon(usr) || (usr.contents.Find(src) || ( in_range(src, usr) && istype(loc, /turf) ))))
 		usr << browse(null, "window=radio")
 		return
 	usr.set_machine(src)
-	if (href_list["track"])
+	if(href_list["track"])
 		var/mob/target = locate(href_list["track"])
 		var/mob/living/silicon/ai/A = locate(href_list["track2"])
 		if(A && target)
 			A.ai_actual_track(target)
 		return
 
-	else if (href_list["faketrack"])
+	else if(href_list["faketrack"])
 		var/mob/target = locate(href_list["track"])
 		var/mob/living/silicon/ai/A = locate(href_list["track2"])
 		if(A && target)
 
 			A:cameraFollow = target
 			A << text("Now tracking [] on camera.", target.name)
-			if (usr.machine == null)
+			if(usr.machine == null)
 				usr.machine = usr
 
 			while (usr:cameraFollow == target)
@@ -197,9 +197,9 @@
 
 		return
 
-	else if (href_list["freq"])
+	else if(href_list["freq"])
 		var/new_frequency = (frequency + text2num(href_list["freq"]))
-		if (!freerange || (frequency < 1200 || frequency > 1600))
+		if(!freerange || (frequency < 1200 || frequency > 1600))
 			new_frequency = sanitize_frequency(new_frequency, maxf)
 		set_frequency(new_frequency)
 		if(hidden_uplink)
@@ -207,24 +207,24 @@
 				usr << browse(null, "window=radio")
 				return
 
-	else if (href_list["talk"])
+	else if(href_list["talk"])
 		broadcasting = text2num(href_list["talk"])
-	else if (href_list["listen"])
+	else if(href_list["listen"])
 		var/chan_name = href_list["ch_name"]
-		if (!chan_name)
+		if(!chan_name)
 			listening = text2num(href_list["listen"])
 		else
-			if (channels[chan_name] & FREQ_LISTENING)
+			if(channels[chan_name] & FREQ_LISTENING)
 				channels[chan_name] &= ~FREQ_LISTENING
 			else
 				channels[chan_name] |= FREQ_LISTENING
-	if (!( master ))
-		if (istype(loc, /mob))
+	if(!( master ))
+		if(istype(loc, /mob))
 			interact(loc)
 		else
 			updateDialog()
 	else
-		if (istype(master.loc, /mob))
+		if(istype(master.loc, /mob))
 			interact(master.loc)
 		else
 			updateDialog()
@@ -264,10 +264,10 @@
 		//get the frequency you buttface. radios no longer use the radio_controller. confusing for future generations, convenient for me.
 	var/freq
 	if(channel && channels && channels.len > 0)
-		if (channel == "department")
+		if(channel == "department")
 			channel = channels[1]
 		freq = secure_radio_connections[channel]
-		if (!channels[channel]) // if the channel is turned off, don't broadcast
+		if(!channels[channel]) // if the channel is turned off, don't broadcast
 			return
 	else
 		freq = frequency
@@ -293,7 +293,7 @@
 
 
 	// --- Human: use their job as seen on the crew manifest - makes it unneeded to carry an ID for an AI to see their job
-	if (ishuman(M))
+	if(ishuman(M))
 		var/datum/data/record/findjob = find_record("name", voice, data_core.general)
 
 		if(voice != real_name)
@@ -304,20 +304,20 @@
 			jobname = "Unknown"
 
 	// --- Carbon Nonhuman ---
-	else if (iscarbon(M)) // Nonhuman carbon mob
+	else if(iscarbon(M)) // Nonhuman carbon mob
 		jobname = "No id"
 
 	// --- AI ---
-	else if (isAI(M))
+	else if(isAI(M))
 		jobname = "AI"
 
 	// --- Cyborg ---
-	else if (isrobot(M))
+	else if(isrobot(M))
 		var/mob/living/silicon/robot/B = M
 		jobname = "[B.designation] Cyborg"
 
 	// --- Personal AI (pAI) ---
-	else if (istype(M, /mob/living/silicon/pai))
+	else if(istype(M, /mob/living/silicon/pai))
 		jobname = "Personal AI"
 
 	// --- Cold, emotionless machines. ---
@@ -431,7 +431,7 @@
 /*
 /obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R as obj, message)
 
-	if ((R.frequency == frequency && message))
+	if((R.frequency == frequency && message))
 		return 1
 	else if
 
@@ -446,7 +446,7 @@
 	// what the range is in which mobs will hear the radio
 	// returns: -1 if can't receive, range otherwise
 
-	if (isWireCut(WIRE_RECEIVE))
+	if(isWireCut(WIRE_RECEIVE))
 		return -1
 	if(!listening)
 		return -1
@@ -457,20 +457,20 @@
 	if(freq == SYND_FREQ)
 		if(!(src.syndie)) //Checks to see if it's allowed on that frequency, based on the encryption keys
 			return -1
-	if (!on)
+	if(!on)
 		return -1
-	if (!freq) //received on main frequency
-		if (!listening)
+	if(!freq) //received on main frequency
+		if(!listening)
 			return -1
 	else
 		var/accept = (freq==frequency && listening)
-		if (!accept)
+		if(!accept)
 			for(var/ch_name in channels)
 				if(channels[ch_name] & FREQ_LISTENING)
 					if(radiochannels[ch_name] == text2num(freq) || syndie) //the radiochannels list is located in communications.dm
 						accept = 1
 						break
-		if (!accept)
+		if(!accept)
 			return -1
 	return canhear_range
 
@@ -483,7 +483,7 @@
 
 /obj/item/device/radio/examine(mob/user)
 	..()
-	if (b_stat)
+	if(b_stat)
 		user << "<span class='notice'>[name] can be attached and modified.</span>"
 	else
 		user << "<span class='notice'>[name] can not be modified or attached.</span>"
@@ -491,11 +491,11 @@
 /obj/item/device/radio/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	user.set_machine(src)
-	if (!( istype(W, /obj/item/weapon/screwdriver) ))
+	if(!( istype(W, /obj/item/weapon/screwdriver) ))
 		return
 	b_stat = !( b_stat )
 	if(!istype(src, /obj/item/device/radio/beacon))
-		if (b_stat)
+		if(b_stat)
 			user.show_message("<span class='notice'>The radio can now be attached and modified!</span>")
 		else
 			user.show_message("<span class='notice'>The radio can no longer be modified or attached!</span>")
@@ -508,7 +508,7 @@
 /obj/item/device/radio/emp_act(severity)
 	emped++ //There's been an EMP; better count it
 	var/curremp = emped //Remember which EMP this was
-	if (listening && ismob(loc))	// if the radio is turned on and on someone's person they notice
+	if(listening && ismob(loc))	// if the radio is turned on and on someone's person they notice
 		loc << "<span class='warning'>\The [src] overloads.</span>"
 	broadcasting = 0
 	listening = 0
@@ -518,7 +518,7 @@
 	spawn(200)
 		if(emped == curremp) //Don't fix it if it's been EMP'd again
 			emped = 0
-			if (!istype(src, /obj/item/device/radio/intercom)) // intercoms will turn back on on their own
+			if(!istype(src, /obj/item/device/radio/intercom)) // intercoms will turn back on on their own
 				on = 1
 	..()
 
@@ -539,7 +539,7 @@
 /obj/item/device/radio/borg/attackby(obj/item/weapon/W as obj, mob/user as mob)
 //	..()
 	user.set_machine(src)
-	if (!( istype(W, /obj/item/weapon/screwdriver) || (istype(W, /obj/item/device/encryptionkey/ ))))
+	if(!( istype(W, /obj/item/weapon/screwdriver) || (istype(W, /obj/item/device/encryptionkey/ ))))
 		return
 
 	if(istype(W, /obj/item/weapon/screwdriver))
@@ -580,7 +580,7 @@
 /obj/item/device/radio/borg/Topic(href, href_list)
 	if(usr.stat || !on)
 		return
-	if (href_list["mode"])
+	if(href_list["mode"])
 		subspace_transmission = !subspace_transmission
 		if(!subspace_transmission)//Simple as fuck, clears the channel list to prevent talking/listening over them if subspace transmission is disabled
 			channels = list()

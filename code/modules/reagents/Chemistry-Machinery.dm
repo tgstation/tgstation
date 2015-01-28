@@ -89,7 +89,7 @@
 			beakerCurrentVolume += R.volume
 	data["beakerContents"] = beakerContents
 
-	if (beaker)
+	if(beaker)
 		data["beakerCurrentVolume"] = beakerCurrentVolume
 		data["beakerMaxVolume"] = beaker:volume
 	else
@@ -105,7 +105,7 @@
 
 	// update the ui if it exists, returns null if no ui is passed/found
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
+	if(!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "chem_dispenser.tmpl", "Chem Dispenser 5000", 490, 710)
@@ -120,13 +120,13 @@
 
 	if(href_list["amount"])
 		amount = round(text2num(href_list["amount"]), 5) // round to nearest 5
-		if (amount < 0) // Since the user can actually type the commands himself, some sanity checking
+		if(amount < 0) // Since the user can actually type the commands himself, some sanity checking
 			amount = 0
-		if (amount > 100)
+		if(amount > 100)
 			amount = 100
 
 	if(href_list["dispense"])
-		if (dispensable_reagents.Find(href_list["dispense"]) && beaker != null)
+		if(dispensable_reagents.Find(href_list["dispense"]) && beaker != null)
 			var/obj/item/weapon/reagent_containers/glass/B = src.beaker
 			var/datum/reagents/R = B.reagents
 			var/space = R.maximum_volume - R.total_volume
@@ -266,7 +266,7 @@
 		..()
 
 /obj/machinery/chem_master/blob_act()
-	if (prob(50))
+	if(prob(50))
 		qdel(src)
 
 /obj/machinery/chem_master/power_change()
@@ -314,7 +314,7 @@
 	usr.set_machine(src)
 
 
-	if (href_list["ejectp"])
+	if(href_list["ejectp"])
 		if(loaded_pill_bottle)
 			loaded_pill_bottle.loc = src.loc
 			loaded_pill_bottle = null
@@ -325,7 +325,7 @@
 
 	if(beaker)
 		var/datum/reagents/R = beaker:reagents
-		if (href_list["analyze"])
+		if(href_list["analyze"])
 			var/dat = ""
 			if(!condi)
 				dat += "<TITLE>Chemmaster 3000</TITLE>Chemical infos:<BR><BR>Name:<BR>[href_list["name"]]<BR><BR>Description:<BR>[href_list["desc"]]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
@@ -334,53 +334,53 @@
 			usr << browse(dat, "window=chem_master;size=575x400")
 			return
 
-		else if (href_list["add"])
+		else if(href_list["add"])
 
 			if(href_list["amount"])
 				var/id = href_list["add"]
 				var/amount = text2num(href_list["amount"])
-				if (amount < 0) return
+				if(amount < 0) return
 				R.trans_id_to(src, id, amount)
 
-		else if (href_list["addcustom"])
+		else if(href_list["addcustom"])
 
 			var/id = href_list["addcustom"]
 			useramount = input("Select the amount to transfer.", 30, useramount) as num
 			useramount = isgoodnumber(useramount)
 			src.Topic(null, list("amount" = "[useramount]", "add" = "[id]"))
 
-		else if (href_list["remove"])
+		else if(href_list["remove"])
 
 			if(href_list["amount"])
 				var/id = href_list["remove"]
 				var/amount = text2num(href_list["amount"])
-				if (amount < 0) return
+				if(amount < 0) return
 				if(mode)
 					reagents.trans_id_to(beaker, id, amount)
 				else
 					reagents.remove_reagent(id, amount)
 
 
-		else if (href_list["removecustom"])
+		else if(href_list["removecustom"])
 
 			var/id = href_list["removecustom"]
 			useramount = input("Select the amount to transfer.", 30, useramount) as num
 			useramount = isgoodnumber(useramount)
 			src.Topic(null, list("amount" = "[useramount]", "remove" = "[id]"))
 
-		else if (href_list["toggle"])
+		else if(href_list["toggle"])
 			mode = !mode
 
-		else if (href_list["main"])
+		else if(href_list["main"])
 			attack_hand(usr)
 			return
-		else if (href_list["eject"])
+		else if(href_list["eject"])
 			if(beaker)
 				beaker:loc = src.loc
 				beaker = null
 				reagents.clear_reagents()
 				icon_state = "mixer0"
-		else if (href_list["createpill"]) //Also used for condiment packs.
+		else if(href_list["createpill"]) //Also used for condiment packs.
 			if(reagents.total_volume == 0) return
 			if(!condi)
 				var/amount = 1
@@ -411,7 +411,7 @@
 				P.desc = "A small condiment pack. The label says it contains [name]."
 				reagents.trans_to(P,10)
 
-		else if (href_list["createbottle"])
+		else if(href_list["createbottle"])
 			if(!condi)
 				var/name = reject_bad_text(input(usr,"Name:","Name your bottle!",reagents.get_master_reagent_name()))
 				var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
@@ -608,7 +608,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 	usr.set_machine(src)
 	if(!beaker) return
 
-	if (href_list["create_vaccine"])
+	if(href_list["create_vaccine"])
 		if(!src.wait)
 			var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 			if(B)
@@ -638,7 +638,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 			src.temp_html = "The replicator is not ready yet."
 		src.updateUsrDialog()
 		return
-	else if (href_list["create_virus_culture"])
+	else if(href_list["create_virus_culture"])
 		if(!wait)
 			var/type = GetVirusTypeByIndex(text2num(href_list["create_virus_culture"]))//the path is received as string - converting
 			var/datum/disease/D = null
@@ -669,11 +669,11 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 			src.temp_html = "The replicator is not ready yet."
 		src.updateUsrDialog()
 		return
-	else if (href_list["empty_beaker"])
+	else if(href_list["empty_beaker"])
 		beaker.reagents.clear_reagents()
 		src.updateUsrDialog()
 		return
-	else if (href_list["eject"])
+	else if(href_list["eject"])
 		beaker:loc = src.loc
 		beaker = null
 		icon_state = "mixer0"
@@ -930,11 +930,11 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		if(default_unfasten_wrench(user, O))
 				return
 
-		if (istype(O,/obj/item/weapon/reagent_containers/glass) || \
+		if(istype(O,/obj/item/weapon/reagent_containers/glass) || \
 				istype(O,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass) || \
 				istype(O,/obj/item/weapon/reagent_containers/food/drinks/shaker))
 
-				if (beaker)
+				if(beaker)
 						return 1
 				else
 						src.beaker =  O
@@ -972,7 +972,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				src.updateUsrDialog()
 				return 0
 
-		if (!is_type_in_list(O, blend_items) && !is_type_in_list(O, juice_items))
+		if(!is_type_in_list(O, blend_items) && !is_type_in_list(O, juice_items))
 				user << "Cannot refine into a reagent."
 				return 1
 
@@ -1003,10 +1003,10 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				for (var/obj/item/O in holdingitems)
 						processing_chamber += "\A [O.name]<BR>"
 
-				if (!processing_chamber)
+				if(!processing_chamber)
 						is_chamber_empty = 1
 						processing_chamber = "Nothing."
-				if (!beaker)
+				if(!beaker)
 						beaker_contents = "<B>No beaker attached.</B><br>"
 				else
 						is_beaker_ready = 1
@@ -1024,12 +1024,12 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		[processing_chamber]<br>
 		[beaker_contents]<hr>
 		"}
-				if (is_beaker_ready && !is_chamber_empty && !(stat & (NOPOWER|BROKEN)))
+				if(is_beaker_ready && !is_chamber_empty && !(stat & (NOPOWER|BROKEN)))
 						dat += "<A href='?src=\ref[src];action=grind'>Grind the reagents</a><BR>"
 						dat += "<A href='?src=\ref[src];action=juice'>Juice the reagents</a><BR><BR>"
 				if(holdingitems && holdingitems.len > 0)
 						dat += "<A href='?src=\ref[src];action=eject'>Eject the reagents</a><BR>"
-				if (beaker)
+				if(beaker)
 						dat += "<A href='?src=\ref[src];action=detach'>Detach the beaker</a><BR>"
 		else
 				dat += "Please wait..."
@@ -1048,20 +1048,20 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		updateUsrDialog()
 		return
 	switch(href_list["action"])
-		if ("grind")
+		if("grind")
 			grind()
 		if("juice")
 			juice()
 		if("eject")
 			eject()
-		if ("detach")
+		if("detach")
 			detach()
 
 /obj/machinery/reagentgrinder/proc/detach()
 
-		if (usr.stat != 0)
+		if(usr.stat != 0)
 				return
-		if (!beaker)
+		if(!beaker)
 				return
 		beaker.loc = src.loc
 		beaker = null
@@ -1070,9 +1070,9 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 
 /obj/machinery/reagentgrinder/proc/eject()
 
-		if (usr.stat != 0)
+		if(usr.stat != 0)
 				return
-		if (holdingitems && holdingitems.len == 0)
+		if(holdingitems && holdingitems.len == 0)
 				return
 
 		for(var/obj/item/O in holdingitems)
@@ -1089,7 +1089,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 
 /obj/machinery/reagentgrinder/proc/get_allowed_by_id(var/obj/item/O)
 		for (var/i in blend_items)
-				if (istype(O, i))
+				if(istype(O, i))
 						return blend_items[i]
 
 /obj/machinery/reagentgrinder/proc/get_allowed_snack_by_id(var/obj/item/weapon/reagent_containers/food/snacks/O)
@@ -1103,17 +1103,17 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 						return juice_items[i]
 
 /obj/machinery/reagentgrinder/proc/get_grownweapon_amount(var/obj/item/weapon/grown/O)
-		if (!istype(O))
+		if(!istype(O))
 				return 5
-		else if (O.potency == -1)
+		else if(O.potency == -1)
 				return 5
 		else
 				return round(O.potency)
 
 /obj/machinery/reagentgrinder/proc/get_juice_amount(var/obj/item/weapon/reagent_containers/food/snacks/grown/O)
-		if (!istype(O))
+		if(!istype(O))
 				return 5
-		else if (O.potency == -1)
+		else if(O.potency == -1)
 				return 5
 		else
 				return round(5*sqrt(O.potency))
@@ -1126,7 +1126,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		power_change()
 		if(stat & (NOPOWER|BROKEN))
 				return
-		if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
+		if(!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 				return
 		playsound(src.loc, 'sound/machines/juicer.ogg', 20, 1)
 		operating = 1
@@ -1137,7 +1137,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 
 		//Snacks
 		for (var/obj/item/weapon/reagent_containers/food/snacks/O in holdingitems)
-				if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+				if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 						break
 
 				var/allowed = get_allowed_juice_by_id(O)
@@ -1151,7 +1151,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 
 						beaker.reagents.add_reagent(r_id, min(amount, space))
 
-						if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+						if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 								break
 
 				remove_object(O)
@@ -1161,7 +1161,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		power_change()
 		if(stat & (NOPOWER|BROKEN))
 				return
-		if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
+		if(!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 				return
 		playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
 		operating = 1
@@ -1172,7 +1172,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 
 		//Snacks and Plants
 		for (var/obj/item/weapon/reagent_containers/food/snacks/O in holdingitems)
-				if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+				if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 						break
 
 				var/allowed = get_allowed_snack_by_id(O)
@@ -1185,18 +1185,18 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 						var/amount = allowed[r_id]
 						if(amount <= 0)
 								if(amount == 0)
-										if (O.reagents != null && O.reagents.has_reagent("nutriment"))
+										if(O.reagents != null && O.reagents.has_reagent("nutriment"))
 												beaker.reagents.add_reagent(r_id, min(O.reagents.get_reagent_amount("nutriment"), space))
 												O.reagents.remove_reagent("nutriment", min(O.reagents.get_reagent_amount("nutriment"), space))
 								else
-										if (O.reagents != null && O.reagents.has_reagent("nutriment"))
+										if(O.reagents != null && O.reagents.has_reagent("nutriment"))
 												beaker.reagents.add_reagent(r_id, min(round(O.reagents.get_reagent_amount("nutriment")*abs(amount)), space))
 												O.reagents.remove_reagent("nutriment", min(O.reagents.get_reagent_amount("nutriment"), space))
 
 						else
 								O.reagents.trans_id_to(beaker, r_id, min(amount, space))
 
-						if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+						if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 								break
 
 				if(O.reagents.reagent_list.len == 0)
@@ -1205,33 +1205,33 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		//Sheets
 		for (var/obj/item/stack/sheet/O in holdingitems)
 				var/allowed = get_allowed_by_id(O)
-				if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+				if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 						break
 				for(var/i = 1; i <= round(O.amount, 1); i++)
 						for (var/r_id in allowed)
 								var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
 								var/amount = allowed[r_id]
 								beaker.reagents.add_reagent(r_id,min(amount, space))
-								if (space < amount)
+								if(space < amount)
 										break
-						if (i == round(O.amount, 1))
+						if(i == round(O.amount, 1))
 								remove_object(O)
 								break
 		//Plants
 		for (var/obj/item/weapon/grown/O in holdingitems)
-				if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+				if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 						break
 				var/allowed = get_allowed_by_id(O)
 				for (var/r_id in allowed)
 						var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
 						var/amount = allowed[r_id]
-						if (amount == 0)
-								if (O.reagents != null && O.reagents.has_reagent(r_id))
+						if(amount == 0)
+								if(O.reagents != null && O.reagents.has_reagent(r_id))
 										beaker.reagents.add_reagent(r_id,min(O.reagents.get_reagent_amount(r_id), space))
 						else
 								beaker.reagents.add_reagent(r_id,min(amount, space))
 
-						if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+						if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 								break
 				remove_object(O)
 
@@ -1239,20 +1239,20 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		//Crayons
 		//With some input from aranclanos, now 30% less shoddily copypasta
 		for (var/obj/item/toy/crayon/O in holdingitems)
-				if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+				if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 						break
 				var/allowed = get_allowed_by_id(O)
 				for (var/r_id in allowed)
 						var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
 						var/amount = allowed[r_id]
 						beaker.reagents.add_reagent(r_id,min(amount, space))
-						if (space < amount)
+						if(space < amount)
 								break
 						remove_object(O)
 
 		//Everything else - Transfers reagents from it into beaker
 		for (var/obj/item/weapon/reagent_containers/O in holdingitems)
-				if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+				if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 						break
 				var/amount = O.reagents.total_volume
 				O.reagents.trans_to(beaker, amount)
@@ -1393,7 +1393,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 
 	// update the ui if it exists, returns null if no ui is passed/found
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
+	if(!ui)
 		ui = new(user, src, ui_key, "chem_heater.tmpl", "ChemHeater", 350, 270)
 		ui.set_initial_data(data)
 		ui.open()

@@ -61,7 +61,7 @@
 	if(O.force)
 		if(prob(80))
 			var/damage = O.force
-			if (O.damtype == STAMINA)
+			if(O.damtype == STAMINA)
 				damage = 0
 			health -= damage
 			visible_message("<span class='danger'>[user] has attacked [src] with [O]!</span>")

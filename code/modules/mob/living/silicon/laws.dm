@@ -2,7 +2,7 @@
 	return
 
 /mob/living/silicon/proc/laws_sanity_check()
-	if (!laws)
+	if(!laws)
 		make_laws()
 
 /mob/living/silicon/proc/set_zeroth_law(var/law, var/law_borg)

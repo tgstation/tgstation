@@ -256,9 +256,9 @@
 						for (var/j = minvalue; j <= maxvalue; j++)
 							if(j == minvalue && descmin)
 								output += "<option value='[j]'>[j] ([descmin])</option>"
-							else if (j == midvalue && descmid)
+							else if(j == midvalue && descmid)
 								output += "<option value='[j]'>[j] ([descmid])</option>"
-							else if (j == maxvalue && descmax)
+							else if(j == maxvalue && descmax)
 								output += "<option value='[j]'>[j] ([descmax])</option>"
 							else
 								output += "<option value='[j]'>[j]</option>"
