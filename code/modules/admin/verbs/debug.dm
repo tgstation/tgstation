@@ -1218,6 +1218,8 @@ client/proc/make_invulnerable(var/mob/M in mob_list)
 				return
 
 			M.flags &= ~INVULNERABLE
+	log_admin("[ckey(key)]/([mob]) has toggled [M]'s invulnerability [(M.flags & INVULNERABLE) ? "on" : "off"]")
+	message_admins("[ckey(key)]/([mob]) has toggled [M]'s invulnerability [(M.flags & INVULNERABLE) ? "on" : "off"]")
 
 client/proc/delete_all_adminbus()
 	set name = "Delete every Adminbus"
