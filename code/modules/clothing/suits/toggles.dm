@@ -6,6 +6,7 @@
 
 /obj/item/clothing/suit/hooded/New()
 	MakeHood()
+	..()
 
 /obj/item/clothing/suit/hooded/proc/MakeHood()
 	if(!hood)
@@ -18,6 +19,7 @@
 /obj/item/clothing/suit/hooded/equipped(mob/user, slot)
 	if(slot != slot_wear_suit)
 		RemoveHood()
+	..()
 
 /obj/item/clothing/suit/hooded/proc/RemoveHood()
 	src.icon_state = "[initial(icon_state)]"
@@ -70,18 +72,25 @@
 
 /obj/item/clothing/suit/space/hardsuit/New()
 	MakeHelmet()
+	..()
 
 /obj/item/clothing/suit/space/hardsuit/proc/MakeHelmet()
+	if(!helmettype)
+		return
 	if(!helmet)
 		var/obj/item/clothing/head/helmet/space/hardsuit/W = new helmettype(src)
 		helmet = W
 
 /obj/item/clothing/suit/space/hardsuit/ui_action_click()
+	..()
 	ToggleHelmet()
 
 /obj/item/clothing/suit/space/hardsuit/equipped(mob/user, slot)
+	if(!helmettype)
+		return
 	if(slot != slot_wear_suit)
 		RemoveHelmet()
+	..()
 
 /obj/item/clothing/suit/space/hardsuit/proc/RemoveHelmet()
 	suittoggled = 0
@@ -98,7 +107,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/proc/ToggleHelmet()
 	var/mob/living/carbon/human/H = src.loc
-	if(!H.wear_suit.helmettype)
+	if(!helmettype)
 		return
 	if(!suittoggled)
 		if(ishuman(src.loc))
