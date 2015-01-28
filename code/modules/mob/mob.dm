@@ -705,6 +705,8 @@ var/list/slot_equipment_priority = list( \
 				ETA = "ETD"
 			if(SHUTTLE_ESCAPE)
 				ETA = "ESC"
+			if(SHUTTLE_STRANDED)
+				ETA = "ERR"
 		if(ETA)
 			var/timeleft = SSshuttle.emergency.timeLeft()
 			stat(null, "[ETA]-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
