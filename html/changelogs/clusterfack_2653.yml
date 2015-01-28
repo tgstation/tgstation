@@ -1,9 +1,0 @@
-author: Clusterfack
-delete-after: true
-changes:
-- bugfix : Jitter should reset your pixel location, TG Port
-- bugfix : Bumping into simple animals no longer moves them 2 tiles, TG Port
-- tweak : Runes no longer stack on tiles
-- bugfix : Foam extinguisher now works properly again
-- rscadd : Chem dispenser now has actual upgrades, reconstructing no longer gives 100 max energy
-- tweak : Giant spiders no longer open the salvage ship's doors
