@@ -7,8 +7,8 @@ var/list/freqtospan = list(
 	"1351" = "sciradio",
 	"1355" = "medradio",
 	"1357" = "engradio",
-	"1347" = "suppradio",
-	"1349" = "servradio",
+	"1347" = "supradio",
+	"1349" = "serradio",
 	"1359" = "secradio",
 	"1353" = "comradio",
 	"1447" = "aiprivradio",
@@ -82,7 +82,7 @@ var/list/freqtoname = list(
 	return "says, \"[text]\""
 
 /atom/movable/proc/lang_treat(atom/movable/speaker, message_langs, raw_message)
-	if(languages & message_langs || languages & UNDERSTANDS_ALL)
+	if(languages & message_langs || languages & UNDERSTANDS_ALL || message_langs & UNDERSTANDS_ALL)
 		var/atom/movable/AM = speaker.GetSource()
 		if(AM)
 			return AM.say_quote(raw_message)
