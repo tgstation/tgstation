@@ -93,7 +93,7 @@
 	var/gen_record = ""
 	var/blinded = null
 	var/bhunger = 0			//Carbon
-	var/ajourn = 0
+	var/obj/effect/rune/ajourn
 	var/druggy = 0			//Carbon
 	var/confused = 0		//Carbon
 	var/antitoxs = null

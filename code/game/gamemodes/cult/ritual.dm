@@ -77,6 +77,9 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 	rune_list.Add(src)
 
 /obj/effect/rune/Destroy()
+	if(istype(ajourn))
+		ajourn.ajourn = null
+	ajourn = null
 	rune_list.Remove(src)
 	..()
 
@@ -371,10 +374,6 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 	if(!cultwords["travel"])
 		runerandom()
 	if(iscultist(user))
-		for(var/obj/effect/rune/R in rune_list)
-			if(R.loc == user.loc)
-				user << "<span class='warning'>You do not have enough space to write a proper rune.</span>"
-				return
 		if (!istype(user.loc,/turf))
 			user << "<span class='warning'>You do not have enough space to write a proper rune.</span>"
 			return
