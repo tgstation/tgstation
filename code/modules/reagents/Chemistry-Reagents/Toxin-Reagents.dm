@@ -88,23 +88,6 @@ datum/reagent/toxin/plasma/reaction_mob(var/mob/living/M, var/method=TOUCH, var/
 		M.adjust_fire_stacks(volume / 5)
 		return
 
-datum/reagent/toxin/lexorin
-	name = "Lexorin"
-	id = "lexorin"
-	description = "Lexorin temporarily stops respiration. Causes tissue damage."
-	color = "#C8A5DC" // rgb: 200, 165, 220
-	toxpwr = 0
-
-datum/reagent/toxin/lexorin/on_mob_life(var/mob/living/M as mob)
-	if(M.stat != DEAD)
-		if(prob(33))
-			M.take_organ_damage(1*REM, 0)
-		M.adjustOxyLoss(3)
-		if(prob(20))
-			M.emote("gasp")
-	..()
-	return
-
 datum/reagent/toxin/slimejelly
 	name = "Slime Jelly"
 	id = "slimejelly"

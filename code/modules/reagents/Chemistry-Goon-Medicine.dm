@@ -820,6 +820,14 @@ datum/reagent/toxin/lexorin
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	toxpwr = 0
 
+/datum/chemical_reaction/lexorin
+	name = "Lexorin"
+	id = "lexorin"
+	result = "lexorin"
+	required_reagents = list("plasma" = 1, "hydrogen" = 1, "nitrogen" = 1)
+	result_amount = 3
+
+
 datum/reagent/toxin/lexorin/on_mob_life(var/mob/living/M as mob)
 	if(M.stat != DEAD)
 		m.adjustToxLoss(1)
