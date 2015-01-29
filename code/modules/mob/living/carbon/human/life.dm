@@ -327,9 +327,9 @@ var/global/list/organ_damage_overlays = list(
 	var/pressure_difference = abs( pressure - ONE_ATMOSPHERE )
 
 	var/pressure_adjustment_coefficient = 1	//Determins how much the clothing you are wearing protects you in percent.
-	if(wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE))
+	if(wear_suit && (wear_suit.flags & STOPSPRESSUREDMG))
 		pressure_adjustment_coefficient -= PRESSURE_SUIT_REDUCTION_COEFFICIENT
-	if(head && (head.flags & STOPSPRESSUREDMAGE))
+	if(head && (head.flags & STOPSPRESSUREDMG))
 		pressure_adjustment_coefficient -= PRESSURE_HEAD_REDUCTION_COEFFICIENT
 	pressure_adjustment_coefficient = max(pressure_adjustment_coefficient,0) //So it isn't less than 0
 	pressure_difference = pressure_difference * pressure_adjustment_coefficient
