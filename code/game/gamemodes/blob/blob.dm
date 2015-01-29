@@ -11,9 +11,9 @@ var/list/blob_nodes = list()
 	config_tag = "blob"
 	antag_flag = BE_BLOB
 
-	required_players = 30
-	required_enemies = 1
-	recommended_enemies = 1
+	required_players = 0
+	required_enemies = 0
+	recommended_enemies = 0
 
 	restricted_jobs = list("Cyborg", "AI")
 
@@ -92,6 +92,8 @@ var/list/blob_nodes = list()
 				core.overmind.mind.name = blob.name
 				infected_crew -= blob
 				infected_crew += core.overmind.mind
+		else
+			declare_completion() //blob spawned outside of the station areas
 
 
 /datum/game_mode/blob/post_setup()
