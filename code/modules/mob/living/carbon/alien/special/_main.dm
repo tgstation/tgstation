@@ -33,14 +33,12 @@
 			gib()
 
 	Stat()
-		statpanel("Status")
-		if (src.client && src.client.holder)
+		if(statpanel("Status"))
 			stat(null, "([x], [y], [z])")
 
-		stat(null, "Intent: [src.a_intent]")
-		stat(null, "Move Mode: [src.m_intent]")
+			stat(null, "Intent: [src.a_intent]")
+			stat(null, "Move Mode: [src.m_intent]")
 
-		if (src.client.statpanel == "Status")
 			if (src.internal)
 				if (!src.internal.air_contents)
 					del(src.internal)

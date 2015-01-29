@@ -1261,27 +1261,27 @@ var/list/slot_equipment_priority = list( \
 			else
 				stat(null, "processScheduler is not running.")
 
-	if(listed_turf && client)
-		if(get_dist(listed_turf,src) > 1)
-			listed_turf = null
-		else
-			statpanel(listed_turf.name, null, listed_turf)
-			for(var/atom/A in listed_turf)
-				if(A.invisibility > see_invisible)
-					continue
-				statpanel(listed_turf.name, null, A)
+		if(listed_turf && client)
+			if(get_dist(listed_turf,src) > 1)
+				listed_turf = null
+			else if(statpanel(listed_turf.name))
+				statpanel(listed_turf.name, null, listed_turf)
+				for(var/atom/A in listed_turf)
+					if(A.invisibility > see_invisible)
+						continue
+					statpanel(listed_turf.name, null, A)
 
-	if(spell_list && spell_list.len)
-		for(var/obj/effect/proc_holder/spell/S in spell_list)
-			if(istype(S, /obj/effect/proc_holder/spell/noclothes))
-				continue //Not showing the noclothes spell
-			switch(S.charge_type)
-				if("recharge")
-					statpanel(S.panel,"[S.charge_counter/10.0]/[S.charge_max/10]",S)
-				if("charges")
-					statpanel(S.panel,"[S.charge_counter]/[S.charge_max]",S)
-				if("holdervar")
-					statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S)
+		if(spell_list && spell_list.len)
+			for(var/obj/effect/proc_holder/spell/S in spell_list)
+				if(istype(S, /obj/effect/proc_holder/spell/noclothes) || !statpanel(S.panel))
+					continue //Not showing the noclothes spell
+				switch(S.charge_type)
+					if("recharge")
+						statpanel(S.panel,"[S.charge_counter/10.0]/[S.charge_max/10]",S)
+					if("charges")
+						statpanel(S.panel,"[S.charge_counter]/[S.charge_max]",S)
+					if("holdervar")
+						statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S)
 
 
 

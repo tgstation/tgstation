@@ -34,6 +34,8 @@
 	return
 
 /obj/item/weapon/robot_module/New()
+	..()
+	AddToProfiler()
 	src.modules += new /obj/item/device/flashlight(src)
 	src.modules += new /obj/item/device/flash(src)
 	src.emag = new /obj/item/toy/sword(src)
