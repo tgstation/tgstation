@@ -138,6 +138,11 @@
 	var/can_order_contraband = 0
 	var/last_viewed_group = "categories"
 
+/obj/machinery/computer/supplycomp/New()
+	..()
+
+	var/obj/item/weapon/circuitboard/supplycomp/board = circuit
+	can_order_contraband = board.contraband_enabled
 
 /obj/machinery/computer/ordercomp
 	name = "supply ordering console"
