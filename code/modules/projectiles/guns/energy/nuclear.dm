@@ -12,6 +12,13 @@
 	select_fire(user)
 	update_icon()
 
+/obj/item/weapon/gun/energy/gun/hos
+	desc = "This is a antique laser gun used by old Earth military commanders. This gun is has several unique firemodes, but lacks the ability to recharge over time."
+	icon_state = "hoslaser"
+	item_state = null
+	force = 10
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode/hos, /obj/item/ammo_casing/energy/laser/hoslaser, /obj/item/ammo_casing/energy/ion)
+
 /obj/item/weapon/gun/energy/gun/nuclear
 	name = "advanced energy gun"
 	desc = "An energy gun with an experimental miniaturized nuclear reactor that automatically charges the internal power cell."
