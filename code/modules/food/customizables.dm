@@ -103,10 +103,6 @@
 		else if(i == src.ingredients.len) new_name += " and [S.name]"
 		else new_name += ", [S.name]"
 		i++
-		if(length("[new_name] [src.name]") >= 100)
-			src.name = "A hot mess"
-		else
-			src.name = "[new_name] [src.name]"
 		if(src.fullyCustom)
 			I = image(S.icon,,S.icon_state)
 			I.pixel_x = rand(-1,1)
@@ -131,6 +127,10 @@
 		I = new(src.icon,"[initial(src.icon_state)]_filling")
 		I.color = pick("#FF0000","#0000FF","#008000","#FFFF00")
 		src.overlays += I
+	if(length("[new_name] [src.name]") >= 150)
+		src.name = "A hot mess"
+	else
+		src.name = "[new_name] [src.name]"
 	return new_name
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/Destroy()
