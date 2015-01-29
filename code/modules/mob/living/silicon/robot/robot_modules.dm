@@ -15,10 +15,10 @@
 
 /obj/item/weapon/robot_module/proc/recharge_consumable()
 	return
-	
+
 /obj/item/weapon/robot_module/proc/on_emag()
 	return
-	
+
 /obj/item/weapon/robot_module/on_emag()
 	modules += emag
 	rebuild()
@@ -297,15 +297,23 @@
 
 	src.modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
 
-	src.modules += new /obj/item/device/soundsynth(src)
+	src.modules += new /obj/item/weapon/dice/d2(src)
 
-	var/obj/item/weapon/dice/P1 = new /obj/item/weapon/dice(src)
-	P1.name = "probability cube"
-	src.modules += P1
+	src.modules += new /obj/item/weapon/dice/d4(src)
 
-	var/obj/item/weapon/dice/d20/P2 = new /obj/item/weapon/dice/d20(src)
-	P2.name = "probability icosahedron"
-	src.modules += P2
+	src.modules += new /obj/item/weapon/dice(src)
+
+	src.modules += new /obj/item/weapon/dice/d8(src)
+
+	src.modules += new /obj/item/weapon/dice/d10(src)
+
+	src.modules += new /obj/item/weapon/dice/d00(src)
+
+	src.modules += new /obj/item/weapon/dice/d12(src)
+
+	src.modules += new /obj/item/weapon/dice/d20(src)
+
+
 
 	src.emag = new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
 
