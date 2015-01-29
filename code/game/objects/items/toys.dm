@@ -376,7 +376,7 @@
  * Foam armblade
  */
 /obj/item/toy/foamblade
-	name = "Foam armblade"
+	name = "foam armblade"
 	desc = "it says \"Sternside Changs #1 fan\" on it. "
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "foamblade"
