@@ -337,8 +337,6 @@
 			"name" = voice,	// the mob's voice name
 			"job" = jobname,		// the mob's job
 			"key" = mobkey,			// the mob's key
-			"vmessage" = pick(M.speak_emote), // the message to display if the voice wasn't understood
-			"vname" = M.voice_name, // the name to display if the voice wasn't understood
 			"vmask" = voicemask,	// 1 if the mob is using a voice gas mask
 
 			// We store things that would otherwise be kept in the actual mob
@@ -394,8 +392,6 @@
 		"name" = voice,	// the mob's display name
 		"job" = jobname,		// the mob's job
 		"key" = mobkey,			// the mob's key
-		"vmessage" = pick(M.speak_emote), // the message to display if the voice wasn't understood
-		"vname" = M.voice_name, // the name to display if the voice wasn't understood
 		"vmask" = voicemask,	// 1 if the mob is using a voice gas mas
 
 		"compression" = 0, // uncompressed radio signal
