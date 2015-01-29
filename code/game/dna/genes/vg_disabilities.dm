@@ -35,7 +35,7 @@
 		return ..(M,flags)
 
 	OnSay(var/mob/M, var/message)
-		M.whisper(message)
+		//M.whisper(message)
 
 
 /datum/dna/gene/disability/dizzy
