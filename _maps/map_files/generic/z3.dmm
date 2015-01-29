@@ -23,7 +23,7 @@
 "aw" = (/turf/simulated/shuttle/plating,/area/space)
 "ax" = (/obj/machinery/door/airlock/shuttle,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/derelict/ship)
 "ay" = (/turf/simulated/shuttle/wall{tag = "icon-swall_f13"; icon_state = "swall_f13"},/area/space)
-"az" = (/obj/structure/rack,/obj/item/clothing/suit/space/hardsuit/medical,/obj/item/clothing/mask/breath,/obj/item/clothing/head/helmet/space/hardsuit/medical,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"az" = (/obj/structure/rack,/obj/item/clothing/suit/space/hardsuit/medical,/obj/item/clothing/mask/breath,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
 "aA" = (/obj/machinery/mass_driver{dir = 4; icon_state = "mass_driver"; id = "oldship_gun"},/turf/simulated/shuttle/plating,/area/space)
 "aB" = (/obj/machinery/door/airlock/glass,/turf/simulated/shuttle/plating,/area/space)
 "aC" = (/obj/machinery/door/poddoor{id = "oldship_gun"; name = "pod bay door"},/turf/simulated/shuttle/plating,/area/space)
