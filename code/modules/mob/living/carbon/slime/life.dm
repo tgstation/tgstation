@@ -22,6 +22,8 @@
 
 		handle_targets()
 
+		handle_nausea()
+
 		if (!ckey)
 			handle_speech_and_mood()
 
@@ -249,6 +251,25 @@
 		src.druggy = 0
 
 	return 1
+
+/mob/living/carbon/slime/handle_nausea()
+	if(!stat)
+		if(getToxLoss() >= 45)
+			nausea++
+		if(nausea >= 25)
+			visible_message("<span class='danger'>[src] sheds some toxic goop!</span>", \
+					"<span class='userdanger'>you eject some toxic mass!</span>")
+			playsound(loc, 'sound/effects/splat.ogg', 50, 1)
+
+			var/turf/location = loc
+			if(istype(location, /turf/simulated))
+				new /obj/effect/decal/cleanable/greenglow(location)
+
+			if(nutrition >= 150) //slimes normally have >600nut
+				nutrition -= 80
+			adjustToxLoss(-10)
+
+			nausea = 0
 
 /mob/living/carbon/slime/proc/handle_nutrition()
 

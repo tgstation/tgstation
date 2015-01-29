@@ -42,6 +42,8 @@
 		//Disabilities
 		handle_disabilities()
 
+		//Vomiting
+		handle_nausea()
 	//Apparently, the person who wrote this code designed it so that
 	//blinded get reset each cycle and then get activated later in the
 	//code. Very ugly. I dont care. Moving this stuff here so its easy
