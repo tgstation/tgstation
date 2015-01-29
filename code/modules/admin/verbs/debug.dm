@@ -19,7 +19,7 @@
 /* 21st Sept 2010
 Updated by Skie -- Still not perfect but better!
 Stuff you can't do:
-Call proc /mob/proc/make_dizzy() for some player
+Call proc /mob/proc/Dizzy() for some player
 Because if you select a player mob as owner it tries to do the proc for
 /mob/living/carbon/human/ instead. And that gives a run-time error.
 But you can call procs that are of type /mob/living/carbon/human/proc/ for that player.
@@ -1218,6 +1218,8 @@ client/proc/make_invulnerable(var/mob/M in mob_list)
 				return
 
 			M.flags &= ~INVULNERABLE
+	log_admin("[ckey(key)]/([mob]) has toggled [M]'s invulnerability [(M.flags & INVULNERABLE) ? "on" : "off"]")
+	message_admins("[ckey(key)]/([mob]) has toggled [M]'s invulnerability [(M.flags & INVULNERABLE) ? "on" : "off"]")
 
 client/proc/delete_all_adminbus()
 	set name = "Delete every Adminbus"

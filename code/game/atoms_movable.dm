@@ -6,7 +6,7 @@
 
 	layer = 3
 	var/last_move = null
-	var/languages = 0
+	var/languages = ALL
 	var/anchored = 0
 	var/move_speed = 10
 	var/l_move_time = 1

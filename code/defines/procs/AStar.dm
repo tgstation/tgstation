@@ -65,7 +65,7 @@ PriorityQueue
 		Remove(i)
 			if(i > L.len) return 0
 			L.Swap(i,L.len)
-			L.Cut(L.len)
+			L.len--
 			if(i < L.len)
 				_Fix(i)
 		_Fix(i)

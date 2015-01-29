@@ -363,6 +363,7 @@
 	icon_state = "Goliath_tentacle"
 
 /obj/effect/goliath_tentacle/New()
+	..()
 	var/turftype = get_turf(src)
 	if(istype(turftype, /turf/unsimulated/mineral))
 		var/turf/unsimulated/mineral/M = turftype

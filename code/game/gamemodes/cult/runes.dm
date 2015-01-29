@@ -3,6 +3,7 @@ var/list/sacrificed = list()
 /obj/effect/rune
 	var/atom/movable/overlay/c_animation = null
 	var/nullblock = 0
+	var/mob/living/ajourn
 
 /obj/effect/rune/cultify()
 	return
@@ -224,7 +225,7 @@ var/list/sacrificed = list()
 			for(var/mob/M in active_cultists)
 				M.say("Tok-lyr rqa'nap g[pick("'","`")]lt-ulotf!")
 			ticker.mode.eldergod = 0
-			new /obj/machinery/singularity/narsie/large(src.loc,cultspawn=1)
+			new /obj/machinery/singularity/narsie/large(src.loc)
 			return
 	return fizzle()
 
@@ -437,10 +438,12 @@ var/list/sacrificed = list()
 		"<span class='warning'>The shadow that is your spirit separates itself from your body. You are now in the realm beyond. While this is a great sight, being here strains your mind and body. Hurry...</span>", \
 		"<span class='warning'>You hear only complete silence for a moment.</span>")
 		usr.ghostize(1)
-		L.ajourn = 1
+		L.ajourn = src
+		ajourn = L
 		while(L)
 			if(L.key)
-				L.ajourn=0
+				L.ajourn=null
+				ajourn = null
 				return
 			else
 				L.take_organ_damage(10, 0)

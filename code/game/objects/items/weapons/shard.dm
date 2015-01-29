@@ -32,6 +32,7 @@
 			src.pixel_x = rand(-5, 5)
 			src.pixel_y = rand(-5, 5)
 		else
+	..()
 	return
 
 /obj/item/weapon/shard/plasma

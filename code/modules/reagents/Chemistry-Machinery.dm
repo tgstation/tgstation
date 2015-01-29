@@ -11,7 +11,8 @@
 	use_power = 1
 	idle_power_usage = 40
 	var/energy = 0
-	var/max_energy = 100
+	var/max_energy = 50
+	var/rechargerate = 2
 	var/amount = 30
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/recharged = 0
@@ -28,6 +29,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 */
 
 /obj/machinery/chem_dispenser/mapping
+	max_energy = 100
 	energy = 100
 
 /********************************************************************
@@ -50,11 +52,27 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 	RefreshParts()
 
+/obj/machinery/chem_dispenser/RefreshParts()
+	var/T = 0
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		T += M.rating-1
+	max_energy = initial(max_energy)+(T * 50 / 4)
+
+	T = 0
+	for(var/obj/item/weapon/stock_parts/micro_laser/Ma in component_parts)
+		T += Ma.rating-1
+	rechargerate = initial(rechargerate) + (T / 2)
+
+/*
+	for(var/obj/item/weapon/stock_parts/scanning_module/Ml in component_parts)
+		T += Ml.rating
+	//Who even knows what to use the scanning module for
+*/
+
 /obj/machinery/chem_dispenser/proc/recharge()
 	if(stat & (BROKEN|NOPOWER)) return
-	var/addenergy = 2
 	var/oldenergy = energy
-	energy = min(energy + addenergy, max_energy)
+	energy = min(energy + rechargerate, max_energy)
 	if(energy != oldenergy)
 		use_power(3000) // This thing uses up alot of power (this is still low as shit for creating reagents from thin air)
 		nanomanager.update_uis(src) // update all UIs attached to src

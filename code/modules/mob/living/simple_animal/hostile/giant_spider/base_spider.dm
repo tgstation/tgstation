@@ -94,7 +94,7 @@ var/global/list/spider_types = typesof(/mob/living/simple_animal/hostile/giant_s
 	return ..(the_target)
 
 /mob/living/simple_animal/hostile/giant_spider/proc/CanOpenDoor(var/obj/machinery/door/D)
-	if(istype(D,/obj/machinery/door/poddoor))
+	if(istype(D,/obj/machinery/door/poddoor) || istype(D, /obj/machinery/door/airlock/multi_tile/glass))
 		return 0
 
 	// Don't fuck with doors that are doing something

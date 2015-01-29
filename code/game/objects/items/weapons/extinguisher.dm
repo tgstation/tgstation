@@ -278,6 +278,7 @@
 		for(var/a=0, a<5, a++)
 			spawn(0)
 				var/datum/reagents/R = new/datum/reagents(5)
+				R.my_atom = src
 				reagents.trans_to_holder(R,1)
 				var/obj/effect/effect/foam/fire/W = new /obj/effect/effect/foam/fire( get_turf(src) , R)
 				var/turf/my_target = pick(the_targets)

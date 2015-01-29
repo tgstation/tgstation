@@ -70,12 +70,12 @@
 /mob/new_player/Stat()
 	..()
 
-	statpanel("Status")
-	if (client.statpanel == "Status" && ticker)
+	
+	if(statpanel("Status") && ticker)
 		if (ticker.current_state != GAME_STATE_PREGAME)
 			stat(null, "Station Time: [worldtime2text()]")
 	statpanel("Lobby")
-	if(client.statpanel=="Lobby" && ticker)
+	if(statpanel("Lobby") && ticker)
 		if(ticker.hide_mode)
 			stat("Game Mode:", "Secret")
 		else

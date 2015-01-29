@@ -746,6 +746,7 @@ steam.start() -- spawns the effect
 		flick("[icon_state]-disolve", src)
 		sleep(5)
 		qdel(src)
+	AddToProfiler()
 
 /obj/effect/effect/foam/fire/process()
 	if(--amount < 0)
@@ -901,7 +902,7 @@ steam.start() -- spawns the effect
 		return
 
 	attack_hand(var/mob/user)
-		user.delayNextMove(10)
+		user.delayNextAttack(10)
 		if ((M_HULK in user.mutations) || (prob(75 - metal*25)))
 			user << "\blue You smash through the metal foam wall."
 			for(var/mob/O in oviewers(user))

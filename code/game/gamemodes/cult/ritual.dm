@@ -65,6 +65,10 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 // self other technology - Communication rune  //was other hear blood
 // join hide technology - stun rune. Rune color: bright pink.
 /obj/effect/rune/New()
+	for(var/obj/effect/rune/R in rune_list)
+		if(R.loc == src.loc)
+			qdel(src)
+			break
 	..()
 	var/image/blood = image(loc = src)
 	blood.override = 1
@@ -73,6 +77,9 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 	rune_list.Add(src)
 
 /obj/effect/rune/Destroy()
+	if(istype(ajourn))
+		ajourn.ajourn = null
+	ajourn = null
 	rune_list.Remove(src)
 	..()
 
@@ -432,7 +439,6 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 
 		if(usr.get_active_hand() != src)
 			return
-
 		for (var/mob/V in viewers(src))
 			V.show_message("<span class='warning'>[user] slices open a finger and begins to chant and paint symbols on the floor.</span>", 3, "<span class='warning'>You hear chanting.</span>", 2)
 		user << "<span class='warning'>You slice open one of your fingers and begin drawing a rune on the floor whilst chanting the ritual that binds your life essence with the dark arcane energies flowing through the surrounding world.</span>"

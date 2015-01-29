@@ -35,6 +35,7 @@ RCD
 	return (user.death(1))
 
 /obj/item/weapon/rcd/New()
+	..()
 	desc = "A RCD. It currently holds [matter]/30 matter-units."
 	src.spark_system = new /datum/effect/effect/system/spark_spread
 	spark_system.set_up(5, 0, src)
