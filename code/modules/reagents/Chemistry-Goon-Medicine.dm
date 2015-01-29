@@ -79,8 +79,8 @@ datum/reagent/synthflesh
 datum/reagent/synthflesh/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 	if(!M) M = holder.my_atom
 	if(method == TOUCH)
-		M.adjustBruteLoss(-(0.5*volume)*REM)
-		M.adjustFireLoss(-(0.5*volume)*REM)
+		M.adjustBruteLoss(-(1.5*volume)*REM)
+		M.adjustFireLoss(-(1.5*volume)*REM)
 		M << "<span class='notice'>The synthetic flesh integrates itself into your wounds, healing you.</span>"
 		..()
 	return
@@ -812,3 +812,17 @@ datum/reagent/stimulants/overdose_process(var/mob/living/M as mob)
 		M.losebreath++
 	..()
 	return
+
+datum/reagent/toxin/lexorin
+	name = "Lexorin"
+	id = "lexorin"
+	description = "Prevents LOSEBREATH, but deals TOX damage over time."
+	color = "#C8A5DC" // rgb: 200, 165, 220
+	toxpwr = 0
+
+datum/reagent/toxin/lexorin/on_mob_life(var/mob/living/M as mob)
+	if(M.stat != DEAD)
+		m.adjustToxLoss(1)
+		if(M.losebreath > 0)
+			M.losebreath = 0
+	..()
