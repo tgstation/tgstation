@@ -57,6 +57,7 @@
 	item_state = "ce_helm"
 	_color = "white"
 	species_restricted = list("exclude","Vox")
+	flags = FPRINT  | BLOCKHAIR | STOPSPRESSUREDMAGE | PLASMAGUARD
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE
 
 /obj/item/clothing/suit/space/rig/elite
@@ -65,6 +66,7 @@
 	species_restricted = list("exclude","Vox")
 	desc = "An advanced suit that protects against hazardous, low pressure environments. Shines with a high polish."
 	item_state = "ce_hardsuit"
+	flags = FPRINT  | STOPSPRESSUREDMAGE | PLASMAGUARD
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECITON_TEMPERATURE
 
 
@@ -201,6 +203,7 @@
 	item_state = "atmos_helm"
 	_color = "atmos"
 	species_restricted = list("exclude","Vox")
+	flags = FPRINT  | BLOCKHAIR | STOPSPRESSUREDMAGE | PLASMAGUARD
 	armor = list(melee = 40, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 0)
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE
 
@@ -210,6 +213,7 @@
 	name = "atmos hardsuit"
 	item_state = "atmos_hardsuit"
 	species_restricted = list("exclude","Vox")
+	flags = FPRINT  | STOPSPRESSUREDMAGE | PLASMAGUARD
 	armor = list(melee = 40, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 0)
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECITON_TEMPERATURE
 
