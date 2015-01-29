@@ -17,10 +17,6 @@
 	e_cost = 83
 	select_name = "kill"
 
-/obj/item/ammo_casing/energy/laser/hoslaser
-	projectile_type = /obj/item/projectile/beam/hosbeam
-	select_name = "kill"
-
 /obj/item/ammo_casing/energy/laser/practice
 	projectile_type = /obj/item/projectile/beam/practice
 	select_name = "practice"
@@ -80,7 +76,7 @@
 	e_cost = 200
 
 /obj/item/ammo_casing/energy/electrode/hos
-	e_cost = 100
+	e_cost = 200
 
 /obj/item/ammo_casing/energy/electrode/gun
 	fire_sound = 'sound/weapons/gunshot.ogg'
@@ -92,7 +88,7 @@
 	fire_sound = 'sound/weapons/IonRifle.ogg'
 
 /obj/item/ammo_casing/energy/ion/hos
-	e_cost = 200
+	e_cost = 500
 
 /obj/item/ammo_casing/energy/declone
 	projectile_type = /obj/item/projectile/energy/declone

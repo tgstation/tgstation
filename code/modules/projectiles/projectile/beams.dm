@@ -8,9 +8,6 @@
 	flag = "laser"
 	eyeblur = 2
 
-/obj/item/projectile/beam/hosbeam
-	damage = 25
-
 /obj/item/projectile/beam/practice
 	name = "practice laser"
 	damage = 0
