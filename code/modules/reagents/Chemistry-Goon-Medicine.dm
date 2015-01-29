@@ -829,7 +829,7 @@ datum/reagent/toxin/lexorin
 
 
 datum/reagent/toxin/lexorin/on_mob_life(var/mob/living/M as mob)
-		M.adjustToxLoss(1)
-		if(M.losebreath > 0)
-			M.losebreath = 0
+	M.adjustToxLoss(1)
+	if(M.losebreath > 0)
+		M.losebreath = 0
 	..()
