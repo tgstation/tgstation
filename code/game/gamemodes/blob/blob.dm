@@ -11,9 +11,9 @@ var/list/blob_nodes = list()
 	config_tag = "blob"
 	antag_flag = BE_BLOB
 
-	required_players = 0
-	required_enemies = 0
-	recommended_enemies = 0
+	required_players = 30
+	required_enemies = 1
+	recommended_enemies = 1
 
 	restricted_jobs = list("Cyborg", "AI")
 
@@ -93,7 +93,7 @@ var/list/blob_nodes = list()
 				infected_crew -= blob
 				infected_crew += core.overmind.mind
 		else
-			declare_completion() //blob spawned outside of the station areas
+			declare_completion() //blob spawned outside of the station areas or on a space tile (solars)
 
 
 /datum/game_mode/blob/post_setup()
@@ -101,7 +101,7 @@ var/list/blob_nodes = list()
 	for(var/datum/mind/blob in infected_crew)
 		greet_blob(blob)
 
-	SSshuttle.emergencyAlwaysFakeRecall = 1
+	SSshuttle.emergencyNoEscape = 1
 
 	// Disable the blob event for this round.
 	var/datum/round_event_control/blob/B = locate() in SSevent.control
