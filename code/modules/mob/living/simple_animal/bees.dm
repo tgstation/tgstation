@@ -13,6 +13,7 @@
 	var/obj/machinery/apiary/parent
 	pass_flags = PASSTABLE
 	turns_per_move = 6
+	density = 0
 	var/obj/machinery/portable_atmospherics/hydroponics/my_hydrotray
 
 	// Allow final solutions.
@@ -30,6 +31,9 @@
 /mob/living/simple_animal/bee/New(loc, var/obj/machinery/apiary/new_parent)
 	..()
 	parent = new_parent
+
+/mob/living/simple_animal/bee/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+	return 1
 
 /mob/living/simple_animal/bee/Destroy()
 	if(parent)
@@ -135,10 +139,8 @@
 						return
 					src.icon_state = "bees[B.strength]"
 					var/turf/simulated/floor/T = get_turf(get_step(src, pick(1,2,4,8)))
-					density = 1
 					if(T.Enter(src, get_turf(src)))
 						src.loc = T
-					density = 0
 				break
 
 		if(target)
