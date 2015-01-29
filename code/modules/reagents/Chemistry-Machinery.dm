@@ -251,7 +251,7 @@
 	icon_state = "mixer0"
 	use_power = 1
 	idle_power_usage = 20
-	var/beaker = null
+	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/obj/item/weapon/storage/pill_bottle/loaded_pill_bottle = null
 	var/mode = 0
 	var/condi = 0
@@ -294,7 +294,7 @@
 		src.updateUsrDialog()
 		icon_state = "mixer1"
 
-	else if(istype(B, /obj/item/weapon/storage/pill_bottle))
+	else if(!condi && istype(B, /obj/item/weapon/storage/pill_bottle))
 
 		if(src.loaded_pill_bottle)
 			user << "A pill bottle is already loaded into the machine."
@@ -327,11 +327,14 @@
 		var/datum/reagents/R = beaker:reagents
 		if (href_list["analyze"])
 			var/dat = ""
-			if(!condi)
-				dat += "<TITLE>Chemmaster 3000</TITLE>Chemical infos:<BR><BR>Name:<BR>[href_list["name"]]<BR><BR>Description:<BR>[href_list["desc"]]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
-			else
-				dat += "<TITLE>Condimaster 3000</TITLE>Condiment infos:<BR><BR>Name:<BR>[href_list["name"]]<BR><BR>Description:<BR>[href_list["desc"]]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
-			usr << browse(dat, "window=chem_master;size=575x400")
+			dat += "<B>[condi ? "Condiment" : "Chemical"] information:</B><BR><BR>"
+			dat += "<B>Name:</B><BR>[href_list["name"]]<BR><BR>"
+			dat += "<B>Description:</B><BR>[href_list["desc"]]<BR><BR><BR>"
+			dat += "<A href='?src=\ref[src];main=1'>Back</A>"
+			var/datum/browser/popup = new(usr, "chem_master", name)
+			popup.set_content(dat)
+			popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
+			popup.open(1)
 			return
 
 		else if (href_list["add"])
@@ -461,61 +464,75 @@
 /obj/machinery/chem_master/attack_hand(mob/user as mob)
 	if(stat & BROKEN)
 		return
+
 	user.set_machine(src)
 	var/dat = ""
-	if(!beaker)
+	if(beaker)
+		dat += "Beaker \[[beaker.reagents.total_volume]/[beaker.volume]\] <A href='?src=\ref[src];eject=1'>Eject and Clear Buffer</A><BR>"
+	else
 		dat = "Please insert beaker.<BR>"
-		if(src.loaded_pill_bottle)
-			dat += "<A href='?src=\ref[src];ejectp=1'>Eject Pill Bottle \[[loaded_pill_bottle.contents.len]/[loaded_pill_bottle.storage_slots]\]</A><BR><BR>"
-		else
-			dat += "No pill bottle inserted.<BR><BR>"
-		dat += "<A href='?src=\ref[src];close=1'>Close</A>"
-	else
-		var/datum/reagents/R = beaker:reagents
-		dat += "<A href='?src=\ref[src];eject=1'>Eject beaker and Clear Buffer</A><BR>"
-		if(src.loaded_pill_bottle)
-			dat += "<A href='?src=\ref[src];ejectp=1'>Eject Pill Bottle \[[loaded_pill_bottle.contents.len]/[loaded_pill_bottle.storage_slots]\]</A><BR><BR>"
-		else
-			dat += "No pill bottle inserted.<BR><BR>"
-		if(!R.total_volume)
-			dat += "Beaker is empty."
-		else
-			dat += "Add to buffer:<BR>"
-			for(var/datum/reagent/G in R.reagent_list)
-				dat += "[G.name] , [G.volume] Units - "
-				dat += "<A href='?src=\ref[src];analyze=1;desc=[G.description];name=[G.name]'>(Analyze)</A> "
-				dat += "<A href='?src=\ref[src];add=[G.id];amount=1'>(1)</A> "
-				dat += "<A href='?src=\ref[src];add=[G.id];amount=5'>(5)</A> "
-				dat += "<A href='?src=\ref[src];add=[G.id];amount=10'>(10)</A> "
-				dat += "<A href='?src=\ref[src];add=[G.id];amount=[G.volume]'>(All)</A> "
-				dat += "<A href='?src=\ref[src];addcustom=[G.id]'>(Custom)</A><BR>"
 
-		dat += "<HR>Transfer to <A href='?src=\ref[src];toggle=1'>[(!mode ? "disposal" : "beaker")]:</A><BR>"
-		if(reagents.total_volume)
-			for(var/datum/reagent/N in reagents.reagent_list)
-				dat += "[N.name] , [N.volume] Units - "
-				dat += "<A href='?src=\ref[src];analyze=1;desc=[N.description];name=[N.name]'>(Analyze)</A> "
-				dat += "<A href='?src=\ref[src];remove=[N.id];amount=1'>(1)</A> "
-				dat += "<A href='?src=\ref[src];remove=[N.id];amount=5'>(5)</A> "
-				dat += "<A href='?src=\ref[src];remove=[N.id];amount=10'>(10)</A> "
-				dat += "<A href='?src=\ref[src];remove=[N.id];amount=[N.volume]'>(All)</A> "
-				dat += "<A href='?src=\ref[src];removecustom=[N.id]'>(Custom)</A><BR>"
+	dat += "<HR><B>Add to buffer:</B><UL>"
+	if(beaker)
+		if(beaker.reagents.total_volume)
+			for(var/datum/reagent/G in beaker.reagents.reagent_list)
+				dat += "<LI>[G.name], [G.volume] Units - "
+				dat += "<A href='?src=\ref[src];analyze=1;desc=[G.description];name=[G.name]'>Analyze</A> "
+				dat += "<A href='?src=\ref[src];add=[G.id];amount=1'>1</A> "
+				dat += "<A href='?src=\ref[src];add=[G.id];amount=5'>5</A> "
+				dat += "<A href='?src=\ref[src];add=[G.id];amount=10'>10</A> "
+				dat += "<A href='?src=\ref[src];add=[G.id];amount=[G.volume]'>All</A> "
+				dat += "<A href='?src=\ref[src];addcustom=[G.id]'>Custom</A>"
 		else
-			dat += "Empty<BR>"
-		if(!condi)
-			dat += "<HR><BR><A href='?src=\ref[src];createpill=1;many=0'>Create pill (50 units max)</A><BR>"
-			dat += "<A href='?src=\ref[src];createpill=1;many=1'>Create pills (10 pills max)</A><BR><BR>"
-			dat += "<HR><BR><A href='?src=\ref[src];createpatch=1;many=0'>Create patch (50 units max)</A><BR>"
-			dat += "<A href='?src=\ref[src];createpatch=1;many=1'>Create patches (10 patches max)</A><BR><BR>"
-			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (30 units max)</A>"
-		else
-			dat += "<HR><BR><A href='?src=\ref[src];createpill=1'>Create pack (10 units max)</A><BR>"
-			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (50 units max)</A>"
-	if(!condi)
-		user << browse("<TITLE>Chemmaster 3000</TITLE>Chemmaster menu:<BR><BR>[dat]", "window=chem_master;size=575x400")
+			dat += "<LI>Beaker is empty."
 	else
-		user << browse("<TITLE>Condimaster 3000</TITLE>Condimaster menu:<BR><BR>[dat]", "window=chem_master;size=575x400")
-	onclose(user, "chem_master")
+		dat += "<LI>No beaker."
+
+	dat += "</UL><HR><B>Transfer to <A href='?src=\ref[src];toggle=1'>[(!mode ? "disposal" : "beaker")]</A>:</B><UL>"
+	if(reagents.total_volume)
+		for(var/datum/reagent/N in reagents.reagent_list)
+			dat += "<LI>[N.name], [N.volume] Units - "
+			dat += "<A href='?src=\ref[src];analyze=1;desc=[N.description];name=[N.name]'>Analyze</A> "
+			dat += "<A href='?src=\ref[src];remove=[N.id];amount=1'>1</A> "
+			dat += "<A href='?src=\ref[src];remove=[N.id];amount=5'>5</A> "
+			dat += "<A href='?src=\ref[src];remove=[N.id];amount=10'>10</A> "
+			dat += "<A href='?src=\ref[src];remove=[N.id];amount=[N.volume]'>All</A> "
+			dat += "<A href='?src=\ref[src];removecustom=[N.id]'>Custom</A>"
+	else
+		dat += "<LI>Buffer is empty."
+	dat += "</UL><HR>"
+
+	if(src.loaded_pill_bottle)
+		dat += "Pill Bottle \[[loaded_pill_bottle.contents.len]/[loaded_pill_bottle.storage_slots]\] <A href='?src=\ref[src];ejectp=1'>Eject</A>"
+	else
+		dat += "No pill bottle inserted."
+
+	dat += "<UL>"
+	if(!condi)
+		if(beaker && reagents.total_volume)
+			dat += "<LI><A href='?src=\ref[src];createpill=1;many=0'>Create pill</A> (50 units max)"
+			dat += "<LI><A href='?src=\ref[src];createpill=1;many=1'>Create multiple pills</A> (10 pills max)<BR>"
+			dat += "<LI><A href='?src=\ref[src];createpatch=1;many=0'>Create patch</A> (50 units max)"
+			dat += "<LI><A href='?src=\ref[src];createpatch=1;many=1'>Create multiple patches</A> (10 patches max)<BR>"
+		else
+			dat += "<LI><span class='linkOff'>Create pill</span> (50 units max)"
+			dat += "<LI><span class='linkOff'>Create multiple pills</span> (10 pills max)<BR>"
+			dat += "<LI><span class='linkOff'>Create patch</span> (50 units max)"
+			dat += "<LI><span class='linkOff'>Create multiple patches</span> (10 patches max)<BR>"
+
+		dat += "<LI><A href='?src=\ref[src];createbottle=1'>Create bottle</A> (30 units max)"
+	else
+		if(beaker && reagents.total_volume)
+			dat += "<LI><A href='?src=\ref[src];createpill=1'>Create pack (10 units max)</A><BR>"
+		else
+			dat += "<LI><span class='linkOff'>Create pack (10 units max)</A><BR>"
+		dat += "<LI><A href='?src=\ref[src];createbottle=1'>Create bottle (50 units max)</A>"
+	dat += "</UL>"
+	dat += "<BR><A href='?src=\ref[src];close=1'>Close</A>"
+	var/datum/browser/popup = new(user, "chem_master", name)
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open(1)
 	return
 
 /obj/machinery/chem_master/proc/isgoodnumber(var/num)
