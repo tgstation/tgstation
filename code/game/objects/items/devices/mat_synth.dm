@@ -30,7 +30,7 @@
 	materials_scanned = list(	"plasma glass" = /obj/item/stack/sheet/glass/plasmaglass,
 								"reinforced plasma glass" = /obj/item/stack/sheet/glass/plasmarglass,
 								"metal" = /obj/item/stack/sheet/metal,
-								"glass" = /obj/item/stack/sheet/glass,
+								"glass" = /obj/item/stack/sheet/glass/glass,
 								"reinforced glass" = /obj/item/stack/sheet/glass/rglass,
 								"plasteel" = /obj/item/stack/sheet/plasteel)
 
