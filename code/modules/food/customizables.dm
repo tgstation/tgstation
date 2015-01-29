@@ -127,10 +127,10 @@
 		I = new(src.icon,"[initial(src.icon_state)]_filling")
 		I.color = pick("#FF0000","#0000FF","#008000","#FFFF00")
 		src.overlays += I
-	if(length("[new_name] [src.name]") >= 150)
+	if(length("[new_name] [initial(src.name)]") >= 150)
 		src.name = "A hot mess"
 	else
-		src.name = "[new_name] [src.name]"
+		src.name = "[new_name] [initial(src.name)]"
 	return new_name
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/Destroy()
