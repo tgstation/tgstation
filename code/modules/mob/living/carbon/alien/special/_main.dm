@@ -34,7 +34,8 @@
 
 	Stat()
 		if(statpanel("Status"))
-			stat(null, "([x], [y], [z])")
+			if(src.client && src.client.holder)
+				stat(null, "([x], [y], [z])")
 
 			stat(null, "Intent: [src.a_intent]")
 			stat(null, "Move Mode: [src.m_intent]")
