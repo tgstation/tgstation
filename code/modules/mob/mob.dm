@@ -1176,7 +1176,7 @@ var/list/slot_equipment_priority = list( \
 /mob/Stat()
 	..()
 
-	if(client && client.holder)
+	if(client && client.holder && client.inactivity < (1200))
 
 		if (statpanel("Status"))	//not looking at that panel
 			stat(null, "Location:\t([x], [y], [z])")
@@ -1261,7 +1261,8 @@ var/list/slot_equipment_priority = list( \
 			else
 				stat(null, "processScheduler is not running.")
 
-		if(listed_turf && client)
+	if(client && client.inactivity < (1200))
+		if(listed_turf)
 			if(get_dist(listed_turf,src) > 1)
 				listed_turf = null
 			else if(statpanel(listed_turf.name))
