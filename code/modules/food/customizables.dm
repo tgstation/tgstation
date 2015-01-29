@@ -73,6 +73,7 @@
 	var/fullyCustom = 0
 	var/addTop = 0
 
+
 /obj/item/weapon/reagent_containers/food/snacks/customizable/New(loc,ingredient)
 	. = ..()
 	src.reagents.add_reagent("nutriment",8)
@@ -142,7 +143,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich
 	name = "sandwich"
 	desc = "A timeless classic."
-	icon_state = "breadslice"
+	icon_state = "c_sandwich"
 	stackIngredients = 1
 	addTop = 1
 
