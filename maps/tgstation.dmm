@@ -2021,7 +2021,7 @@
 "aMS" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor/plating,/area/maintenance/fpmaint)
 "aMT" = (/obj/machinery/door/airlock/maintenance{name = "Library Maintenance"; req_access_txt = "37"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor/plating,/area/library)
 "aMU" = (/obj/item/device/radio/intercom{pixel_y = 25},/obj/structure/table/woodentable,/obj/item/weapon/dice/d20,/obj/item/weapon/dice,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor/wood,/area/library)
-"aMV" = (/obj/machinery/status_display{pixel_y = 32},/obj/structure/table/woodentable,/obj/item/weapon/paper_bin{pixel_x = 1; pixel_y = 9},/obj/item/weapon/packageWrap,/turf/simulated/floor/wood,/area/library)
+"aMV" = (/obj/machinery/status_display{pixel_y = 32},/obj/structure/table/woodentable,/obj/item/weapon/paper_bin{pixel_x = 1; pixel_y = 9},/obj/item/weapon/packageWrap,/obj/item/weapon/storage/pill_bottle/dice,/turf/simulated/floor/wood,/area/library)
 "aMW" = (/obj/machinery/disposal,/obj/structure/disposalpipe/trunk,/turf/simulated/floor/wood,/area/library)
 "aMX" = (/obj/machinery/door/airlock/maintenance{name = "Crematorium Maintenance"; req_access_txt = "27"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor/plating,/area/chapel/office)
 "aMY" = (/obj/item/device/radio/intercom{pixel_y = 25},/obj/structure/closet/secure_closet/chaplain,/obj/item/clothing/under/vox/vox_robes,/turf/simulated/floor{icon_state = "grimy"},/area/chapel/office)
