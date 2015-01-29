@@ -28,6 +28,7 @@
 /obj/item/weapon/lipstick/random/New()
 	colour = pick("red","purple","jade","black")
 	name = "[colour] lipstick"
+	..()
 
 
 /obj/item/weapon/lipstick/attack_self(mob/user as mob)

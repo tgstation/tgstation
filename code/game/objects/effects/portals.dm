@@ -24,6 +24,7 @@
 	return
 
 /obj/effect/portal/New()
+	..()
 	spawn(300)
 		qdel(src)
 		return

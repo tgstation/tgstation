@@ -53,8 +53,7 @@
 	seed.uid = seed_types.len + 1
 	seed.name = "[seed.uid]"
 	seed_types[seed.name] = seed
-
-	update_seed()
+	..()
 
 /obj/item/seeds/replicapod
 	seed_type = "diona"

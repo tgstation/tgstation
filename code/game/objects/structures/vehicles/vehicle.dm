@@ -37,6 +37,7 @@
 	var/vin=null
 
 /obj/structure/stool/bed/chair/vehicle/New()
+	..()
 	processing_objects |= src
 	handle_rotation()
 

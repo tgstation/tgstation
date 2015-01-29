@@ -53,6 +53,7 @@
 
 
 /obj/item/ammo_storage/New()
+	..()
 	var/ammo_to_load = 0
 	if(starting_ammo > -1 && starting_ammo < max_ammo)
 		ammo_to_load = starting_ammo

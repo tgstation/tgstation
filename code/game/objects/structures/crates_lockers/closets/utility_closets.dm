@@ -71,6 +71,7 @@
 	return ..()
 
 /obj/structure/closet/emcloset/legacy/New()
+	..()
 	new /obj/item/weapon/tank/oxygen(src)
 	new /obj/item/clothing/mask/gas(src)
 
@@ -80,6 +81,7 @@
 	desc = "It's full of life-saving equipment.  Assuming, that is, that you breathe nitrogen."
 
 /obj/structure/closet/emcloset/vox/New()
+	AddToProfiler()
 	new /obj/item/weapon/tank/nitrogen(src)
 	new /obj/item/weapon/tank/nitrogen(src)
 	new /obj/item/clothing/mask/breath/vox(src)
@@ -106,15 +108,7 @@
 
 /obj/structure/closet/firecloset/full/New()
 	..()
-	sleep(4)
-	contents = list()
-
-	new /obj/item/clothing/suit/fire/firefighter(src)
-	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/device/flashlight(src)
-	new /obj/item/weapon/tank/oxygen/red(src)
-	new /obj/item/weapon/extinguisher(src)
-	new /obj/item/clothing/head/hardhat/red(src)
 
 /obj/structure/closet/firecloset/update_icon()
 	if(!opened)
@@ -134,6 +128,7 @@
 	icon_opened = "toolclosetopen"
 
 /obj/structure/closet/toolcloset/New()
+	. = ..()
 	if(prob(40))
 		new /obj/item/clothing/suit/storage/hazardvest(src)
 	if(prob(70))
@@ -193,7 +188,6 @@
 
 /obj/structure/closet/bombcloset/New()
 	..()
-	sleep(2)
 	new /obj/item/clothing/suit/bomb_suit( src )
 	new /obj/item/clothing/under/color/black( src )
 	new /obj/item/clothing/shoes/black( src )
@@ -209,7 +203,6 @@
 
 /obj/structure/closet/bombclosetsecurity/New()
 	..()
-	sleep(2)
 	new /obj/item/clothing/suit/bomb_suit/security( src )
 	new /obj/item/clothing/under/rank/security( src )
 	new /obj/item/clothing/shoes/brown( src )
