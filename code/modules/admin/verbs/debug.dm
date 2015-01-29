@@ -1113,6 +1113,7 @@ var/global/list/g_fancy_list_of_types = null
 	M.equip_to_slot_or_del(R, slot_ears)
 
 	if(officer)
+		M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/ert(M), slot_wear_suit)
 		M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
 		M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
 		M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
