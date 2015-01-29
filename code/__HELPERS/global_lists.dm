@@ -60,4 +60,4 @@ var/global/list/sec_hud_users = list() //list of all entities using a security H
 	world << .
 */
 
-var/global/list/escape_turfs = list()
+var/global/list/escape_list = list()
