@@ -631,9 +631,10 @@ var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/mon
 		mob.reagents.add_reagent("dermaline", 4)
 	mob.emote("me",1,"exhales slowly.")
 
-	var/datum/organ/external/chest/chest = H.get_organ("chest")
-	for(var/datum/organ/internal/I in chest.internal_organs)
-		I.damage = 0
+	if(ishuman(H))
+		var/datum/organ/external/chest/chest = H.get_organ("chest")
+		for(var/datum/organ/internal/I in chest.internal_organs)
+			I.damage = 0
 
 
 ////////////////////////STAGE 2/////////////////////////////////
