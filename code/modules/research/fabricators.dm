@@ -121,9 +121,9 @@
 				parts.Remove(thispart)
 				continue
 			if(ispath(thispart) && !istype(thispart, /datum/design))
-				var/design = FindDesign(thispart)
-				if(design)
-					parts[i] = new design
+				var/datum/design/design = FindDesign(thispart)
+				if(istype(design))
+					parts[i] = design
 				else
 					parts.Remove(thispart)
 			//debug below

@@ -137,6 +137,8 @@
 	return techdifference
 
 /obj/machinery/r_n_d/reverse_engine/proc/researchQueue()
+	if(!research_queue.len)
+		return
 	while(research_queue[1])
 		if(stat&(NOPOWER|BROKEN))
 			return 0

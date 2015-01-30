@@ -7,6 +7,9 @@
 		return
 
 	if(config.allow_admin_jump)
+		var/list/L = get_area_turfs(A)
+		if(!L || !L.len)
+			return
 		usr.loc = pick(get_area_turfs(A))
 
 		log_admin("[key_name(usr)] jumped to [A]")

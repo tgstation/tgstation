@@ -95,7 +95,7 @@ k
 		var/obj/thispart = part
 		part = thispart.type
 	for(var/thisdesign in typesof(/datum/design))
-		var/datum/design/D = thisdesign
+		var/datum/design/D = new thisdesign
 		if(initial(D.build_path) == part)
 			return D
 	return

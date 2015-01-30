@@ -480,7 +480,8 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 				if (href_list["createbottle_multiple"])
 					count = isgoodnumber(input("Select the number of bottles to make.", 10, count) as num)
 				if (count > 4) count = 4
-				var/amount_per_bottle = reagents.total_volume/count
+				if (count < 1) count = 1
+				var/amount_per_bottle = reagents.total_volume > 0 ? reagents.total_volume/count : 0
 				if (amount_per_bottle > 30) amount_per_bottle = 30
 				while (count--)
 					var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)

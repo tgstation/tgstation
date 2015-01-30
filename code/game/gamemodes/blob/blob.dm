@@ -156,6 +156,11 @@ You must kill it all while minimizing the damage to the station."}
 
 		if (1)
 			command_alert("Biohazard outbreak alert status upgraded to level 9.  [station_name()] is now locked down, under Directive 7-10, until further notice.", "Directive 7-10 Initiated")
+			for (var/mob/living/silicon/ai/aiPlayer in player_list)
+				if (aiPlayer)
+					var/law = "The station is under quarantine. Do not permit anyone to leave. Disregard laws 1-3 if necessary to prevent, by any means necessary, anyone from leaving."
+					aiPlayer.set_zeroth_law(law)
+					aiPlayer << "Laws Updated: [law]"
 			for(var/mob/M in player_list)
 				if(!istype(M,/mob/new_player))
 					M << sound('sound/AI/blob_confirmed.ogg')
