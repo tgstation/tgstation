@@ -83,6 +83,11 @@ var/list/blob_nodes = list()
 				location = get_turf(C)
 				if(location.z != ZLEVEL_STATION || istype(location, /turf/space))
 					location = null
+					log_admin("[key_name(C)] was in space when attempting to burst as a blob.")
+					message_admins("[key_name(C)] was in space when attempting to burst as a blob.")
+					infected_crew -= blob
+					if(!infected_crew.len)
+						declare_completion()
 				C.gib()
 
 
@@ -92,7 +97,6 @@ var/list/blob_nodes = list()
 				core.overmind.mind.name = blob.name
 				infected_crew -= blob
 				infected_crew += core.overmind.mind
-
 
 /datum/game_mode/blob/post_setup()
 
