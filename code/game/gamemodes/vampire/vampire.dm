@@ -88,9 +88,7 @@
 	return
 
 /datum/game_mode/proc/auto_declare_completion_vampire()
-	testing("VAMPIRE GAMEMODE END CALL")
 	if(vampires.len)
-		testing("VAMP HAS LENGTH")
 		var/text = "<FONT size = 2><B>The vampires were:</B></FONT>"
 		for(var/datum/mind/vampire in vampires)
 			var/traitorwin = 1
@@ -132,8 +130,6 @@
 				text += "<br><font color='red'><B>The [special_role_text] has failed!</B></font>"
 				feedback_add_details("traitor_success","FAIL")
 		world << text
-	else
-		testing("VAMP HAS NO LENGTH")
 	return 1
 
 /datum/game_mode/proc/auto_declare_completion_enthralled()
