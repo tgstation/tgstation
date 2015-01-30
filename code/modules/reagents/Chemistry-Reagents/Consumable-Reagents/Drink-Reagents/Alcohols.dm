@@ -6,11 +6,11 @@
 /////////////////////////////////////////////////////////////////////////////////////
 
 /*boozepwr chart
-0.2 = non-toxic alchohol
-0.5 = medium-toxic
-1.0 = the hard stuff
-2.0 = potent mixes
- >3 = deadly toxic
+0.2 = beers,		~08%ABV
+0.5 = wines,		~20%ABV
+1.0 = spirits,		~40%ABV
+2.0 = moonshines,	~75%ABV
+ >3 = fuel ethanol,	~95%ABV
 */
 
 datum/reagent/consumable/ethanol
@@ -19,7 +19,7 @@ datum/reagent/consumable/ethanol
 	description = "A well-known alcohol with a variety of applications."
 	color = "#404030" // rgb: 64, 64, 48
 	nutriment_factor = 0
-	var/boozepwr = 4 //lower numbers mean the booze will have an effect faster.
+	var/boozepwr = 4
 
 datum/reagent/consumable/ethanol/on_mob_life(var/mob/living/M as mob)
 	if(boozepwr)
@@ -144,7 +144,7 @@ datum/reagent/consumable/ethanol/gin
 	id = "gin"
 	description = "It's gin. In space. I say, good sir."
 	color = "#664300" // rgb: 102, 67, 0
-	boozepwr = 0.25
+	boozepwr = 0.5
 
 datum/reagent/consumable/ethanol/rum
 	name = "Rum"

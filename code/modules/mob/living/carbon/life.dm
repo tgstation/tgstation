@@ -62,7 +62,7 @@
 
 		if(drunkness >= (120 * boozetolerance)) //dangerously wrecked, define VERYDRUNK ?
 			nausea++
-			if(prob(7))
+			if(prob(7) && !stat && !lying)
 				Weaken(2)
 				visible_message("<span class='danger'>[src] trips over their own feet!</span>")
 
@@ -70,6 +70,6 @@
 			adjustToxLoss(2)
 			sleeping = min(sleeping + 2, 10) //comatose
 
-	if(boozeticks >= (40 * boozetolerance)) //building tolerance
+	if(boozeticks >= (50 * boozetolerance)) //building tolerance
 		boozeticks = 0
 		boozetolerance++
