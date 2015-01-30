@@ -321,11 +321,12 @@
 	onclose(user, "piano")
 
 /obj/structure/device/piano/Topic(href, href_list)
-
-	if(!in_range(src, usr) || issilicon(usr) || !anchored || !usr.canmove || usr.restrained())
-		usr << browse(null, "window=piano;size=700x300")
-		onclose(usr, "piano")
+	if(..())
 		return
+	if(issilicon(usr) || !anchored || !usr.canmove)
+		return
+
+	usr.set_machine(src)
 
 	if(href_list["newsong"])
 		song = new()
@@ -418,10 +419,10 @@
 				song = new()
 				song.lines = lines
 				song.tempo = tempo
-				updateUsrDialog()
+				src.updateUsrDialog()
 
 	add_fingerprint(usr)
-	updateUsrDialog()
+	src.updateUsrDialog()
 	return
 
 /obj/structure/device/piano/attackby(obj/item/O as obj, mob/user as mob)

@@ -173,6 +173,8 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		ui.open()
 
 /obj/machinery/chem_dispenser/Topic(href, href_list)
+	if(..())
+		return
 	if(stat & (NOPOWER|BROKEN))
 		return 0 // don't update UIs attached to this object
 
@@ -367,6 +369,8 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		return 1
 
 /obj/machinery/chem_master/Topic(href, href_list)
+	if(..())
+		return
 	if(stat & (BROKEN|NOPOWER)) 		return
 	if(usr.stat || usr.restrained())	return
 	if(!in_range(src, usr)) 			return
