@@ -155,12 +155,14 @@
 			M.LAssailant = user
 
 /obj/item/weapon/melee/baton/throw_impact(atom/hit_atom)
+	foundmob = directory[ckey(hit_atom.fingerprintslast)]
 	if (prob(50))
 		if(istype(hit_atom, /mob/living))
 			var/mob/living/L = hit_atom
 			if(status)
-				foundmob.lastattacked = L
-				L.lastattacker = foundmob
+				if(foundmob)
+					foundmob.lastattacked = L
+					L.lastattacker = foundmob
 
 				L.Stun(stunforce)
 				L.Weaken(stunforce)
@@ -181,8 +183,8 @@
 					H.forcesay(hit_appends)
 
 				foundmob.attack_log += "\[[time_stamp()]\]<font color='red'> Stunned [L.name] ([L.ckey]) with [name]</font>"
-				L.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by thrown [src] by [foundmob.name] ([foundmob.ckey])</font>"
-				log_attack("<font color='red'>Flying [src.name], thrown by [foundmob.name] ([foundmob.ckey]) stunned [L.name] ([L.ckey])</font>" )
+				L.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by thrown [src] by [istype(foundmob) ? foundmob.name : ""] ([istype(foundmob) ? foundmob.ckey : ""])</font>"
+				log_attack("<font color='red'>Flying [src.name], thrown by [istype(foundmob) ? foundmob.name : ""] ([istype(foundmob) ? foundmob.ckey : ""]) stunned [L.name] ([L.ckey])</font>" )
 				if(!iscarbon(foundmob))
 					L.LAssailant = null
 				else

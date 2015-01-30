@@ -195,7 +195,7 @@
 		SetLuminosity(0)
 
 	// Update flower/product overlay.
-	overlays.Cut()
+	overlays.len = 0
 	if(age >= seed.maturation)
 		if(prob(20) && seed.products && seed.products.len && !harvest && ((age-lastproduce) > seed.production))
 			harvest = 1

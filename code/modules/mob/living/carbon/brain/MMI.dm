@@ -163,7 +163,7 @@
 	brainmob = new(src)
 	brainmob.name = H.real_name
 	brainmob.real_name = H.real_name
-	if(H.dna)
+	if(istype(H) && H.dna)
 		brainmob.dna = H.dna.Clone()
 	brainmob.container = src
 

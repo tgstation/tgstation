@@ -50,7 +50,7 @@
 
 /obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel/New(newLoc, amt = 1, d = 0)
 	dir = d //Setting this direction means you won't get torched by your own flamethrower.
-	. = ..()
+	//. = ..()
 
 /obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel/Spread()
 	//The spread for flamethrower fuel is much more precise, to create a wide fire pattern.
@@ -65,6 +65,8 @@
 			continue
 		if(O.CanPass(null, S, 0, 0) && S.CanPass(null, O, 0, 0))
 			var/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel/FF = new(O,amount*0.25,d)
+			if(!FF)
+				continue //what
 			if(amount + FF.amount > 0.4) //if we make a patch with not enough fuel, we balance it out properly to ensure even burn
 				if(amount < 0.2 || FF.amount < 0.2) //one of these is too small, so let's average
 					var/balanced = (amount + FF.amount) / 2

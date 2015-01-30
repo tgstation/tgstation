@@ -31,7 +31,7 @@ datum/updateQueueWorker/proc/doWork()
 	var/datum/object = objects[objects.len] // Pull out the object
 	objects.len-- // Remove the object from the list
 
-	if (istype(object) && !object.disposed) // We only work with real objects
+	if (istype(object) && !isturf(object) && !object.disposed) // We only work with real objects
 		call(object, procName)(arglist(arguments))
 
 	// If there's nothing left to execute

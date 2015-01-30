@@ -227,7 +227,7 @@
 	set popup_menu = 0
 	if(usr!=src.occupant)
 		return
-	use_internal_tank = !use_internal_tank
+	src.use_internal_tank = !src.use_internal_tank
 	src.occupant << "<span class='notice'>Now taking air from [use_internal_tank?"internal airtank":"environment"].</span>"
 	return
 
@@ -347,7 +347,7 @@
 
 	if(usr != src.occupant)
 		return
-	inertia_dir = 0 // engage reverse thruster and power down pod
+	src.inertia_dir = 0 // engage reverse thruster and power down pod
 	src.occupant.loc = src.loc
 	src.occupant = null
 	usr << "<span class='notice'>You climb out of the pod</span>"

@@ -152,7 +152,7 @@
 	if(isnull(track_special_role))
 		return C.has_sensor
 
-	return H.mind.special_role == track_special_role
+	return (H.mind ? H.mind.special_role == track_special_role : 1)
 
 /obj/machinery/computer/crew/proc/scan()
 	for(var/mob/living/carbon/human/H in mob_list)
