@@ -74,13 +74,14 @@
 		return 0
 
 
-/obj/machinery/optable/MouseDrop_T(obj/O as obj, mob/user as mob)
+/obj/machinery/optable/MouseDrop_T(atom/movable/O, mob/user as mob)
+
+	if(!O || !user || !istype(O) || !istype(user))
+		return
 
 	if ((( istype(O, /obj/item/weapon) ) || user.get_active_hand() == O))
 
-		user.drop_item()
-		if (O.loc != src.loc)
-			step(O, get_dir(O, src))
+		user.drop_item(src)
 		return
 	else
 		if(O.loc == user) //no you can't pull things out of your ass
@@ -118,6 +119,7 @@
 		icon_state = "table2-active"
 		src.victim = L
 		return
+
 /obj/machinery/optable/proc/check_victim()
 	if(locate(/mob/living/carbon/human, src.loc))
 		var/mob/M = locate(/mob/living/carbon/human, src.loc)
