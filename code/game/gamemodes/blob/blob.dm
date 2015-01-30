@@ -18,6 +18,7 @@ var/list/blob_nodes = list()
 	restricted_jobs = list("Cyborg", "AI")
 
 	var/declared = 0
+	var/burst = 0
 
 	var/cores_to_spawn = 1
 	var/players_per_core = 30
@@ -72,31 +73,38 @@ var/list/blob_nodes = list()
 
 /datum/game_mode/blob/proc/burst_blobs()
 	for(var/datum/mind/blob in infected_crew)
+		burst_blob(blob)
 
-		var/client/blob_client = null
-		var/turf/location = null
+/datum/game_mode/blob/proc/burst_blob(var/datum/mind/blob, var/warned=0)
+	var/client/blob_client = null
+	var/turf/location = null
 
-		if(iscarbon(blob.current))
-			var/mob/living/carbon/C = blob.current
-			if(directory[ckey(blob.key)])
-				blob_client = directory[ckey(blob.key)]
-				location = get_turf(C)
-				if(location.z != ZLEVEL_STATION || istype(location, /turf/space))
-					location = null
+	if(iscarbon(blob.current))
+		var/mob/living/carbon/C = blob.current
+		if(directory[ckey(blob.key)])
+			blob_client = directory[ckey(blob.key)]
+			location = get_turf(C)
+			if(location.z != ZLEVEL_STATION || istype(location, /turf/space))
+				if(!warned)
+					C << "<span class='userdanger'>You feel ready to burst, but this isn't an appropriate place!  You must return to the station!.</span>"
+					message_admins("[key_name(C)] was in space when the blobs burst, and will die if he doesn't return to the station.")
+					spawn(300)
+						burst_blob(blob, 1)
+				else
+					burst ++
 					log_admin("[key_name(C)] was in space when attempting to burst as a blob.")
 					message_admins("[key_name(C)] was in space when attempting to burst as a blob.")
-					infected_crew -= blob
-					if(!infected_crew.len)
-						declare_completion()
+					C.gib()
+					check_finished()
+
+			else if(blob_client && location)
+				burst ++
 				C.gib()
-
-
-		if(blob_client && location)
-			var/obj/effect/blob/core/core = new(location, 200, blob_client, blob_point_rate)
-			if(core.overmind && core.overmind.mind)
-				core.overmind.mind.name = blob.name
-				infected_crew -= blob
-				infected_crew += core.overmind.mind
+				var/obj/effect/blob/core/core = new(location, 200, blob_client, blob_point_rate)
+				if(core.overmind && core.overmind.mind)
+					core.overmind.mind.name = blob.name
+					infected_crew -= blob
+					infected_crew += core.overmind.mind
 
 /datum/game_mode/blob/post_setup()
 
