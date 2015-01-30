@@ -222,7 +222,7 @@ proc/populate_seed_list()
 			"inaprovaline",
 			"space_drugs",
 			"paroxetine",
-			"mercurGy",
+			"mercury",
 			"sugar",
 			"radium",
 			"ryetalyn",
@@ -232,7 +232,7 @@ proc/populate_seed_list()
 			"cryptobiolin",
 			"dermaline",
 			"dexalin",
-			"phoron",
+			"plasma",
 			"synaptizine",
 			"impedrezene",
 			"hyronalin",
@@ -1181,7 +1181,6 @@ proc/populate_seed_list()
 	production = 6
 	yield = 6
 	growth_stages = 3
-	plant_icon = ""
 
 /datum/seed/flower/sunflower
 	name = "sunflowers"

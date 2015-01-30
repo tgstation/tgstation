@@ -231,7 +231,11 @@
 		if(istype(T))
 			environment = T.return_air()
 
-	if(!environment) return
+	if(!environment)
+		if(istype(T, /turf/space))
+			enviroment = space_gas
+		else
+			return
 
 	// Handle gas consumption.
 	if(seed.consume_gasses && seed.consume_gasses.len)
@@ -772,8 +776,11 @@
 				if(istype(T))
 					environment = T.return_air()
 
-			if(!environment) //We're in a crate or nullspace, bail out.
-				return
+			if(!environment)
+				if(istype(T, /turf/space))
+					enviroment = space_gas
+				else //Somewhere we shouldn't be, panic
+					return
 
 			var/area/A = get_area(T)
 			var/light_available
