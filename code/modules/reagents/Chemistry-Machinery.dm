@@ -257,17 +257,10 @@
 	var/condi = 0
 	var/useramount = 30 // Last used amount
 
-	var/g_amount = 0.0
-	var/max_g_amount = 8000.0
-	var/BOTTLE_COST = 200 // /obj/item/weapon/reagent_containers/glass/bottle.g_amt
-
 
 /obj/machinery/chem_master/New()
 	create_reagents(100)
 	overlays += "waitlight"
-
-	g_amount = 4000 // ChemMaster can't be constructed, so no need to not do this here.
-					// 4000 is enough for 20 bottles or 8 condiments.
 
 /obj/machinery/chem_master/ex_act(severity, target)
 	if(severity < 3)
@@ -311,18 +304,6 @@
 		user << "You add the pill bottle into the dispenser slot!"
 		src.updateUsrDialog()
 
-	else if(istype(B, /obj/item/stack/sheet/glass))
-		var/obj/item/stack/sheet/glass/S = B
-		if(S)
-			if(g_amount + S.g_amt > max_g_amount)
-				user << "<span class='alert'>The [name]'s glass bin is full.</span>"
-			else if (S.g_amt)
-				var/amount = min(S.amount, round((max_g_amount - g_amount) / S.g_amt))
-				S.use(amount)
-				g_amount += S.g_amt * amount
-				user << "<span class='notice'>You insert [amount] sheet[(amount > 1) ? "s" : ""] to the [name].</span>"
-				src.updateUsrDialog()
-
 	return
 
 /obj/machinery/chem_master/Topic(href, href_list)
@@ -345,22 +326,18 @@
 		mode = !mode
 
 	else if (href_list["createbottle"])
-		if(g_amount >= BOTTLE_COST)
-			if(!condi)
-				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
-				if(!name)
-					return
-				if(g_amount < BOTTLE_COST) // Another check after user input.
-					return
-				var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
-				P.name = trim("[name] bottle")
-				P.pixel_x = rand(-7, 7) //random position
-				P.pixel_y = rand(-7, 7)
-				reagents.trans_to(P, 30)
-			else
-				var/obj/item/weapon/reagent_containers/food/condiment/P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
-				reagents.trans_to(P, 50)
-			g_amount -= BOTTLE_COST
+		if(!condi)
+			var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
+			if(!name)
+				return
+			var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
+			P.name = trim("[name] bottle")
+			P.pixel_x = rand(-7, 7) //random position
+			P.pixel_y = rand(-7, 7)
+			reagents.trans_to(P, 30)
+		else
+			var/obj/item/weapon/reagent_containers/food/condiment/P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
+			reagents.trans_to(P, 50)
 
 	if(beaker)
 		var/datum/reagents/R = beaker.reagents
@@ -548,10 +525,7 @@
 			dat += "<LI><A href='?src=\ref[src];createpill=1'>Create pack (10 units max)</A><BR>"
 		else
 			dat += "<LI><span class='linkOff'>Create pack</span> (10 units max)</A><BR>"
-	if(src.g_amount >= BOTTLE_COST)
-		dat += "<LI><A href='?src=\ref[src];createbottle=1'>Create bottle</A> ([condi ? "50" : "30"] units max) \[[round(g_amount / BOTTLE_COST)]/[round(max_g_amount / BOTTLE_COST)]\]"
-	else
-		dat += "<LI><span class='linkOff'>Create bottle</span> (No more glass) \[[round(g_amount / BOTTLE_COST)]/[round(max_g_amount / BOTTLE_COST)]\]"
+	dat += "<LI><A href='?src=\ref[src];createbottle=1'>Create bottle</A> ([condi ? "50" : "30"] units max)"
 	dat += "</UL>"
 	dat += "<BR><A href='?src=\ref[src];close=1'>Close</A>"
 	var/datum/browser/popup = new(user, "chem_master", name)
@@ -577,8 +551,6 @@
 	name = "CondiMaster 3000"
 	desc = "Used to create condiments and other cooking supplies."
 	condi = 1
-
-	BOTTLE_COST = 500 // /obj/item/weapon/reagent_containers/food/condiment.g_amt
 
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
