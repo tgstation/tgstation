@@ -53,6 +53,39 @@ var/list/blob_nodes = list()
 	return 1
 
 
+/datum/game_mode/blob/proc/get_blob_candidates()
+	var/list/candidates = list()
+	for(var/mob/living/carbon/human/player in player_list)
+		if(!player.stat && player.mind && !player.mind.special_role && !jobban_isbanned(player, "Syndicate") && (player.client.prefs.be_special & BE_BLOB))
+			candidates += player
+	return candidates
+
+
+/datum/game_mode/blob/proc/blobize(var/mob/living/carbon/human/blob)
+	var/datum/mind/blobmind = blob.mind
+	if(!istype(blobmind))
+		return 0
+	infected_crew += blobmind
+	blobmind.special_role = "Blob"
+	log_game("[blob.key] (ckey) has been selected as a Blob")
+	greet_blob(blobmind)
+	blob << "<span class='userdanger'>You feel very tired and bloated!  You don't have long before you burst!</span>"
+	spawn(600)
+		burst_blob(blobmind)
+	return 1
+
+/datum/game_mode/blob/proc/make_blobs(var/count)
+	var/list/candidates = get_blob_candidates()
+	var/mob/living/carbon/human/blob = null
+	count=min(count, candidates.len)
+	for(var/i = 0, i < count, i++)
+		blob = pick(candidates)
+		candidates -= blob
+		blobize(blob)
+	return count
+
+
+
 /datum/game_mode/blob/announce()
 	world << "<B>The current game mode is - <font color='green'>Blob</font>!</B>"
 	world << "<B>A dangerous alien organism is rapidly spreading throughout the station!</B>"
@@ -95,7 +128,8 @@ var/list/blob_nodes = list()
 					log_admin("[key_name(C)] was in space when attempting to burst as a blob.")
 					message_admins("[key_name(C)] was in space when attempting to burst as a blob.")
 					C.gib()
-					check_finished()
+					make_blobs(1)
+					check_finished() //Still needed in case we can't make any blobs
 
 			else if(blob_client && location)
 				burst ++
