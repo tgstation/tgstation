@@ -238,23 +238,11 @@ steam.start() -- spawns the effect
 		return 0
 	return 1
 
-/obj/effect/effect/smoke/proc/update_nearby_tiles()
-	if (isnull(air_master))
-		return 0
-
-	var/T = loc
-
-	if (isturf(T))
-		air_master.mark_for_update(T)
-
-	return 1
-
 /obj/effect/effect/smoke/Destroy()
 	if(reagents)
 		reagents.my_atom = null
 		reagents = null
 	SetOpacity(0)
-	update_nearby_tiles()
 	..()
 
 /////////////////////////////////////////////
