@@ -1598,6 +1598,7 @@ datum
 						egg.Hatch()*/
 				if((!O) || (!volume))	return 0
 				var/turf/the_turf = get_turf(O)
+				if(!the_turf) return 0
 				var/datum/gas_mixture/napalm = new
 				var/datum/gas/volatile_fuel/fuel = new
 				fuel.moles = 5
