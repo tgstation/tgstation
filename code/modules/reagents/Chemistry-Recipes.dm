@@ -93,13 +93,6 @@ silicate
 	required_reagents = list("aluminium" = 1, "iron" = 1, "oxygen" = 1)
 	result_amount = 3
 
-/datum/chemical_reaction/lexorin
-	name = "Lexorin"
-	id = "lexorin"
-	result = "lexorin"
-	required_reagents = list("plasma" = 1, "hydrogen" = 1, "nitrogen" = 1)
-	result_amount = 3
-
 /datum/chemical_reaction/space_drugs
 	name = "Space Drugs"
 	id = "space_drugs"

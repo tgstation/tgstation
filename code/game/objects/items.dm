@@ -46,7 +46,6 @@
 
 	var/suittoggled = 0
 	var/hooded = 0
-
 	var/list/can_be_placed_into = list(
 		/obj/structure/table,
 		/obj/structure/rack,

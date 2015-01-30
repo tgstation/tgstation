@@ -204,7 +204,9 @@
 
 /datum/mutation/human/epilepsy/on_life(mob/living/carbon/human/owner)
 	if ((prob(1) && owner.paralysis < 1))
-		owner.visible_message("<span class='userdanger'>[owner] starts having a seizure!</span>", "<span class='danger'>You have a seizure!</span>")
+		owner << "<span class='danger'>You have a seizure!</span>"
+		for(var/mob/O in viewers(owner, null) - owner)
+			O.show_message(text("<span class='userdanger'>[src] starts having a seizure!</span>"), 1)
 		owner.Paralyse(10)
 		owner.Jitter(1000)
 

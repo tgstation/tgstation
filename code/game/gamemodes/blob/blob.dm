@@ -99,7 +99,7 @@ var/list/blob_nodes = list()
 	for(var/datum/mind/blob in infected_crew)
 		greet_blob(blob)
 
-	SSshuttle.emergencyNoEscape = 1
+	SSshuttle.emergencyAlwaysFakeRecall = 1
 
 	// Disable the blob event for this round.
 	var/datum/round_event_control/blob/B = locate() in SSevent.control

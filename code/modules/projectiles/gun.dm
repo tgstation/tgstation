@@ -123,8 +123,6 @@
 		user << "<span class='notice'>You don't have the dexterity to do this!</span>"
 		return 0
 
-	if(!handle_pins(user))
-		return 0
 
 	if(trigger_guard)
 		if(istype(user) && user.dna)
@@ -151,6 +149,9 @@
 
 /obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, var/message = 1, params)
 	add_fingerprint(user)
+
+	if(!handle_pins(user))
+		return 0
 
 	for(var/i = 1 to burst_size)
 		if(!issilicon(user))

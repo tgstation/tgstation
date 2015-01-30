@@ -475,7 +475,8 @@
 /obj/item/weapon/resonator/proc/CreateResonance(var/target, var/creator)
 	if(cooldown <= 0)
 		playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
-		new /obj/effect/resonance(get_turf(target), creator)
+		var/obj/effect/resonance/R = new /obj/effect/resonance(get_turf(target))
+		R.creator = creator
 		cooldown = 1
 		spawn(20)
 			cooldown = 0
@@ -497,15 +498,16 @@
 	layer = 4.1
 	mouse_opacity = 0
 	var/resonance_damage = 20
+	var/creator = null
 
-/obj/effect/resonance/New(loc, var/creator = null)
+/obj/effect/resonance/New()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf))
 		return
 	if(istype(proj_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = proj_turf
 		playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
-		M.gets_drilled(creator)
+		M.gets_drilled()
 		spawn(5)
 			qdel(src)
 	else

@@ -705,8 +705,6 @@ var/list/slot_equipment_priority = list( \
 				ETA = "ETD"
 			if(SHUTTLE_ESCAPE)
 				ETA = "ESC"
-			if(SHUTTLE_STRANDED)
-				ETA = "ERR"
 		if(ETA)
 			var/timeleft = SSshuttle.emergency.timeLeft()
 			stat(null, "[ETA]-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
@@ -869,8 +867,8 @@ var/list/slot_equipment_priority = list( \
 		update_canmove()
 	return
 
-/mob/proc/Weaken(amount, var/ignore_canweaken = 0)
-	if(status_flags & CANWEAKEN || ignore_canweaken)
+/mob/proc/Weaken(amount)
+	if(status_flags & CANWEAKEN)
 		weakened = max(max(weakened,amount),0)
 		update_canmove()	//updates lying, canmove and icons
 	return

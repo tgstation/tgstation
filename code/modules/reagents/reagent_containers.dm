@@ -9,8 +9,8 @@
 	var/volume = 30
 	var/list/banned_reagents = list() //List of reagent IDs we reject.
 	var/list/list_reagents = null
-	var/spawned_disease = null
 	var/disease_amount = 20
+	var/spawned_disease = null
 
 /obj/item/weapon/reagent_containers/verb/set_APTFT() //set amount_per_transfer_from_this
 	set name = "Set transfer amount"

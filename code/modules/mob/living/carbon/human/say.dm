@@ -21,6 +21,8 @@
 /mob/living/carbon/human/treat_message(message)
 	if(dna)
 		message = dna.species.handle_speech(message,src)
+		message = dna.mutations_say_mods(message)
+
 	if(viruses.len)
 		for(var/datum/disease/pierrot_throat/D in viruses)
 			var/list/temp_message = text2list(message, " ") //List each word in the message
@@ -35,8 +37,7 @@
 					pick_list -= H //Make sure that you dont HONK the same word twice
 				message = list2text(temp_message, " ")
 	message = ..(message)
-	if(dna)
-		message = dna.mutations_say_mods(message)
+
 	return message
 
 /mob/living/carbon/human/GetVoice()
