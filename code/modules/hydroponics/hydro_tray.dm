@@ -233,7 +233,7 @@
 
 	if(!environment)
 		if(istype(T, /turf/space))
-			enviroment = space_gas
+			environment = space_gas
 		else
 			return
 
@@ -778,7 +778,7 @@
 
 			if(!environment)
 				if(istype(T, /turf/space))
-					enviroment = space_gas
+					environment = space_gas
 				else //Somewhere we shouldn't be, panic
 					return
 
