@@ -242,7 +242,6 @@ steam.start() -- spawns the effect
 	if(reagents)
 		reagents.my_atom = null
 		reagents = null
-	SetOpacity(0)
 	..()
 
 /////////////////////////////////////////////
@@ -956,7 +955,6 @@ steam.start() -- spawns the effect
 	update_nearby_tiles()
 
 /obj/structure/foamedmetal/Destroy()
-	SetOpacity(0)
 	update_nearby_tiles()
 	..()
 
