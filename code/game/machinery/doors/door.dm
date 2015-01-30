@@ -324,6 +324,7 @@
 		qdel(src)
 
 /obj/machinery/door/Destroy()
+	SetOpacity(0)
 	update_nearby_tiles()
 	..()
 
