@@ -13,6 +13,7 @@
  *		Toy nuke
  *		Fake meteor
  *		Carp plushie
+ *		Foam armblade
  */
 
 
@@ -370,6 +371,19 @@
 					user.update_inv_l_hand(0)
 		else
 			user << "<span class='warning'>It's already fabulous!</span>"
+
+/*
+ * Foam armblade
+ */
+/obj/item/toy/foamblade
+	name = "foam armblade"
+	desc = "it says \"Sternside Changs #1 fan\" on it. "
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "foamblade"
+	item_state = "arm_blade"
+	attack_verb = list("pricked", "absorbed", "gored")
+	w_class = 2
+
 
 /*
  * Subtype of Double-Bladed Energy Swords

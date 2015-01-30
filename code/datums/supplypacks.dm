@@ -990,8 +990,8 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
 					/obj/item/weapon/storage/book/bible/booze,
 					/obj/item/weapon/storage/book/bible/booze,
-					/obj/item/clothing/suit/toggle/chaplain_hoodie,
-					/obj/item/clothing/suit/toggle/chaplain_hoodie)
+					/obj/item/clothing/suit/hooded/chaplain_hoodie,
+					/obj/item/clothing/suit/hooded/chaplain_hoodie)
 	cost = 40	// it costs so much because the Space Church is ran by Space Jews
 	containername = "religious supplies crate"
 

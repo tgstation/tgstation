@@ -155,10 +155,10 @@ BLIND     // can't see anything
 //      Meaning the the suit is defined directly after the corrisponding helmet. Just like below!
 /obj/item/clothing/head/helmet/space
 	name = "space helmet"
-	icon_state = "space"
-	desc = "A special helmet designed for work in a hazardous, low-pressure environment."
+	icon_state = "spaceold"
+	desc = "A special helmet with solar UV shielding to protect your eyes from harmful rays."
 	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE | THICKMATERIAL
-	item_state = "space"
+	item_state = "spaceold"
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
@@ -173,7 +173,7 @@ BLIND     // can't see anything
 /obj/item/clothing/suit/space
 	name = "space suit"
 	desc = "A suit that protects against low pressure environments. Has a big 13 on the back."
-	icon_state = "space"
+	icon_state = "spaceold"
 	item_state = "s_suit"
 	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.01
