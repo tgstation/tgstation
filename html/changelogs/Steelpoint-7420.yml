@@ -35,3 +35,4 @@ delete-after: True
 changes: 
   - rscadd: SS13's Head of Security has received a new attempted 1:1 recreation of a Old Earth weapon, the Captain's Antique Laser Gun.
   - rscadd: This gun features three firing modes, Tase, Laser and Disable. However this gun lacks the capability to recharge in the field, and is extreamly expensive.
+  - rscadd: INTERCEPTED TRANSMISSION REPORT: The Syndicate have expressed a interest in this new weapon, and have instructed field agents to do whatever they can to steal this weapon.

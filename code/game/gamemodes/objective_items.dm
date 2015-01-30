@@ -17,6 +17,12 @@ datum/objective_item/steal/caplaser
 	difficulty = 5
 	excludefromjob = list("Captain")
 
+datum/objective_item/steal/hoslaser
+	name = "the head of security's recreated antique laser gun"
+	targetitem = /obj/item/weapon/gun/energy/gun/hos
+	difficulty = 10
+	excludefromjob = list("Head Of Security")
+
 datum/objective_item/steal/handtele
 	name = "a hand teleporter"
 	targetitem = /obj/item/weapon/hand_tele
