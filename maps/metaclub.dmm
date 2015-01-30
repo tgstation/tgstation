@@ -2512,7 +2512,7 @@
 "aWp" = (/turf/simulated/floor/bluegrid,/area/turret_protected/ai)
 "aWq" = (/obj/structure/cable/yellow{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/cable/yellow{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor{dir = 9; icon_state = "floor"},/area/supply/storage)
 "aWr" = (/obj/machinery/power/terminal,/obj/structure/cable,/turf/simulated/floor{icon_state = "dark"},/area/turret_protected/ai)
-"aWs" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 9; pixel_y = 0},/obj/effect/decal/warning_stripes{icon_state = "unloading"},/obj/structure/transit_tube/station{dir = 4},/obj/structure/transit_tube_pod{dir = 1},/turf/simulated/floor{icon_state = "dark"},/area/turret_protected/tcomwest{name = "\improper MiniSat West Wing"})
+"aWs" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 9; pixel_y = 0},/obj/effect/decal/warning_stripes{icon_state = "unloading"},/obj/structure/transit_tube/station{dir = 4},/obj/structure/transit_tube_pod{dir = 1; move_speed = 20},/turf/simulated/floor{icon_state = "dark"},/area/turret_protected/tcomwest{name = "\improper MiniSat West Wing"})
 "aWt" = (/obj/machinery/turret{dir = 8},/obj/effect/decal/warning_stripes{icon_state = "bot"},/turf/simulated/floor{icon_state = "dark"},/area/turret_protected/ai)
 "aWu" = (/obj/structure/cable/yellow{d1 = 1; d2 = 8; icon_state = "1-8"},/turf/simulated/floor,/area/supply/storage)
 "aWv" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/obj/structure/sign/securearea{desc = "A warning sign which reads 'EXTERNAL AIRLOCK'"; icon_state = "space"; layer = 4; name = "EXTERNAL AIRLOCK"},/turf/simulated/floor/plating,/area/hallway/secondary/entry)
