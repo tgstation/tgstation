@@ -986,7 +986,7 @@ var/list/slot_equipment_priority = list( \
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
 		return
-	client.screen.Cut()
+	client.screen.len = 0
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
 		return
@@ -1201,7 +1201,6 @@ var/list/slot_equipment_priority = list( \
 				stat(null, "\ttotal delete - [garbageCollector.dels_count]")
 				stat(null, "\tsoft delete - [garbageCollector.dels_count - garbageCollector.hard_dels]")
 				stat(null, "\thard delete - [garbageCollector.hard_dels]")
-				stat(null, "ALL - [master_controller.total_cost]")
 			else
 				stat(null, "Garbage Controller is not running.")
 
