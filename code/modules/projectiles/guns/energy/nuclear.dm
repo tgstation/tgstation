@@ -13,11 +13,11 @@
 	update_icon()
 
 /obj/item/weapon/gun/energy/gun/hos
-	desc = "This is a antique laser gun used by old Earth military commanders. This gun has several unique firemodes, but lacks the ability to recharge over time."
+	desc = "This is a modern recreation of the antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time, its also expensive."
 	icon_state = "hoslaser"
 	item_state = null
 	force = 10
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode/hos, /obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
 
 /obj/item/weapon/gun/energy/gun/nuclear
 	name = "advanced energy gun"
