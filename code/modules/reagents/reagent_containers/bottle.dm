@@ -7,6 +7,7 @@
 	item_state = "atoxinbottle"
 	possible_transfer_amounts = list(5,10,15,25,30)
 	volume = 30
+	g_amt = 200 // Beaker is 500, so this seemed fair.
 
 /obj/item/weapon/reagent_containers/glass/bottle/New()
 	..()
