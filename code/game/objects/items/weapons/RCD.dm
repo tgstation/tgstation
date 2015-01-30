@@ -25,7 +25,7 @@ RCD
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
 	var/matter = 0
-	var/max_matter = 100
+	var/max_matter = 30
 	var/working = 0
 	var/mode = 1
 	var/canRwall = 0
