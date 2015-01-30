@@ -114,3 +114,11 @@ obj/item/clothing/head/helmet/bluetaghelm
 	armor = list(melee = 30, bullet = 10, laser = 20,energy = 10, bomb = 20, bio = 0, rad = 0)
 	// Offer about the same protection as a hardhat.
 	flags_inv = HIDEEARS|HIDEEYES
+
+obj/item/clothing/head/blob
+	name = "blob hat"
+	desc = "A collectible hat handed out at the latest Blob Zombie concert."
+	icon_state = "blobhat"
+	item_state = "blobhat"
+	flags = HEADCOVERSEYES|HEADCOVERSMOUTH
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES

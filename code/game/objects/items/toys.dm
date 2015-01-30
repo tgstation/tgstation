@@ -1092,3 +1092,32 @@ obj/item/toy/cards/deck/syndicate
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "carpplushie"
 	w_class = 2.0
+
+/obj/machinery/toy_supermatter
+	name = "supermatter shard"
+	desc = "A fake variant of the infamous supermatter crystal."
+	icon = 'icons/obj/supermatter.dmi'
+	icon_state = "darkmatter_shard"
+	density = 1
+	anchored = 0
+	luminosity = 4
+	var/safe_alert = "Crystalline hyperstructure returning to safe operating levels."
+	var/warning_alert = "Danger! Crystal hyperstructure instability!"
+	var/emergency_alert = "CRYSTAL DELAMINATION IMMINENT."
+	var/obj/item/device/radio/radio
+	var/stage = 1
+/obj/machinery/toy_supermatter/New()
+	..()
+	radio = new(src)
+	radio.listening = 0
+/obj/machinery/toy_supermatter/attack_hand(mob/living/user as mob)
+	switch(stage)
+		if(1)
+			radio.talk_into(src, safe_alert)
+			stage = 2
+		if(2)
+			radio.talk_into(src, warning_alert)
+			stage = 3
+		if(3)
+			radio.talk_into(src, emergency_alert)
+			stage = 1
