@@ -119,7 +119,7 @@ var/list/blob_nodes = list()
 			location = get_turf(C)
 			if(location.z != ZLEVEL_STATION || istype(location, /turf/space))
 				if(!warned)
-					C << "<span class='userdanger'>You feel ready to burst, but this isn't an appropriate place!  You must return to the station!.</span>"
+					C << "<span class='userdanger'>You feel ready to burst, but this isn't an appropriate place!  You must return to the station!</span>"
 					message_admins("[key_name(C)] was in space when the blobs burst, and will die if he doesn't return to the station.")
 					spawn(300)
 						burst_blob(blob, 1)
