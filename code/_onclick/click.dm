@@ -6,6 +6,9 @@
 // 1 decisecond click delay (above and beyond mob/next_move)
 /mob/var/next_click	= 0
 
+//Place here because the other /mob/var/ var is here as well.
+/mob/var/pointcooldown = 0
+
 /*
 	Before anything else, defer these calls to a per-mobtype handler.  This allows us to
 	remove istype() spaghetti code, but requires the addition of other handler procs to simplify it.
@@ -253,8 +256,21 @@
 	A.CtrlShiftClick(src)
 	return
 
-/atom/proc/CtrlShiftClick(var/mob/user)
+/atom/proc/CtrlShiftClick(var/mob/living/user) 	//PybroPointClick, 1/30/15
+	if(istype(user, /mob/living/carbon/brain || /mob/living/silicon/pai)) //If this isn't in place, then they can still point. They won't actually make an arrow/emote, but they'll still get the tired finger message. Pedantic, but whatever.
+		return
+	if(user.client && user.client.eye == user)	//Makes sure all of our seeing is in order.
+		if(user.pointcooldown == 1)				//This is to prevent spam.
+			user << "<span class='notice'>Give your finger a moment to cool down!</span>" //Cheesy, but whatever.
+			return
+		else									//We point at it, face it, and get a tired finger.
+			user.pointed(src)
+			user.face_atom(src)
+			user.pointcooldown = 1
+			spawn(20)							//20 seconds is how long the arrow lasts. Consistency!
+				user.pointcooldown = 0			//Our finger recuperates.
 	return
+//Every mob (sans AIs) can point this way. AI's can't (They have no fingers). pAI's, Soulstones, and carded AI's cannot. Borgs can point, but not at doors (the shift-click is used for access override in the AI code, which borg on-door clicks defer to)
 
 /*
 	Misc helpers
