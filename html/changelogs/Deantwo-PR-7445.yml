@@ -1,0 +1,6 @@
+author: Deantwo
+
+delete-after: True
+
+changes: 
+  - tweak: "Updated the ChemMaster's UI to the station default along with some functionality improvements."
