@@ -1183,7 +1183,7 @@ var/list/slot_equipment_priority = list( \
 			stat(null, "CPU:\t[world.cpu]")
 			stat(null, "Instances:\t[world.contents.len]")
 
-			if (master_controller)
+			if (garbageCollector)
 				/*stat(null, "MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[master_controller.iteration])")
 				stat(null, "Air-[master_controller.air_cost]")
 				stat(null, "Sun-[master_controller.sun_cost]")
@@ -1203,7 +1203,7 @@ var/list/slot_equipment_priority = list( \
 				stat(null, "\thard delete - [garbageCollector.hard_dels]")
 				stat(null, "ALL - [master_controller.total_cost]")
 			else
-				stat(null, "master controller - ERROR")
+				stat(null, "Garbage Controller is not running.")
 
 			if(processScheduler.getIsRunning())
 				var/datum/controller/process/process
