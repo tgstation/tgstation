@@ -1245,7 +1245,7 @@ k
 	materials = list("$iron"=10000,"$gold"=2000,"$silver"=3000,"$glass"=2000)
 
 /datum/design/mech_ccw_armor
-	name = "Module Design(Reactive Armor Booster Module)"
+	name = "Module Design((Melee)Reactive Armor Booster Module)"
 	desc = "Exosuit-mounted armor booster."
 	id = "mech_ccw_armor"
 	build_type = MECHFAB
@@ -1255,7 +1255,7 @@ k
 	materials = list("$iron"=20000,"$silver"=5000)
 
 /datum/design/mech_proj_armor
-	name = "Module Design(Reflective Armor Booster Module)"
+	name = "Module Design((Ranged)Reflective Armor Booster Module)"
 	desc = "Exosuit-mounted armor booster."
 	id = "mech_proj_armor"
 	build_type = MECHFAB
