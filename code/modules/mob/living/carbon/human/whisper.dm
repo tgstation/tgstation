@@ -1,5 +1,7 @@
 // NOTE THAT HEARD AND UNHEARD USE GENDER_REPLACE SYNTAX SINCE BYOND IS STUPID
 /mob/living/carbon/human/whisper(var/message as text)
+	if(stat == DEAD)
+		return
 	if(!IsVocal())
 		return
 

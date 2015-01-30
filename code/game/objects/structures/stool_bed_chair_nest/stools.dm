@@ -67,7 +67,8 @@
 
 /obj/item/weapon/stool/attack_self(mob/user as mob)
 	..()
-	origin.loc = get_turf(src)
+	if(origin)
+		origin.loc = get_turf(src)
 	user.u_equip(src)
 	user.visible_message("\blue [user] puts [src] down.", "\blue You put [src] down.")
 	del src

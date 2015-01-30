@@ -39,7 +39,7 @@
 		category = "Items"
 		design_type = "item"
 		if(found_design)
-			var/datum/design/D = new found_design
+			var/datum/design/D = found_design
 			//message_admins("Found the [D]")
 			req_tech = D.req_tech //our tech is simply the item requirement
 			materials = D.materials
@@ -106,7 +106,7 @@
 				materials["$glass"] += round(rand(20, 300), 10)
 				continue
 			//message_admins("We found the design!")
-			part_design = new part_design
+			part_design = part_design
 			var/list/fetched_materials = part_design.materials
 			for(var/matID in fetched_materials)
 				if(copytext(matID,1,2) == "$")

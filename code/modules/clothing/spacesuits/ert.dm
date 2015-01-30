@@ -6,8 +6,10 @@
 	armor = list(melee = 50, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 60)
 	siemens_coefficient = 0.6
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE
+	flags = FPRINT  | BLOCKHAIR | STOPSPRESSUREDMAGE | PLASMAGUARD
 	var/obj/machinery/camera/camera
 	species_restricted = list("exclude","Vox")
+
 /obj/item/clothing/head/helmet/space/ert/attack_self(mob/user)
 	if(camera)
 		..(user)
@@ -32,6 +34,7 @@
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_storage,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/tank/emergency_nitrogen)
 	slowdown = 1
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 60)
+	flags = FPRINT  | STOPSPRESSUREDMAGE | PLASMAGUARD
 	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank, /obj/item/device/t_scanner, /obj/item/weapon/rcd, /obj/item/weapon/crowbar, \
 	/obj/item/weapon/screwdriver, /obj/item/weapon/weldingtool, /obj/item/weapon/wirecutters, /obj/item/weapon/wrench, /obj/item/device/multitool, \
 	/obj/item/device/radio, /obj/item/device/analyzer, /obj/item/weapon/gun/energy/laser, /obj/item/weapon/gun/energy/pulse_rifle, \
@@ -39,6 +42,7 @@
 	siemens_coefficient = 0.6
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECITON_TEMPERATURE
 	species_restricted = list("exclude","Vox")
+
 //Commander
 /obj/item/clothing/head/helmet/space/ert/commander
 	name = "emergency response team commander helmet"

@@ -1,6 +1,21 @@
 var/global/list/seed_types = list()       // A list of all seed data.
 var/global/list/gene_tag_masks = list()   // Gene obfuscation for delicious trial and error goodness.
 
+// Debug for testing seed genes.
+/client/proc/show_plant_genes()
+	set category = "Debug"
+	set name = "Show Plant Genes"
+	set desc = "Prints the round's plant gene masks."
+
+	if(!holder)	return
+
+	if(!gene_tag_masks)
+		usr << "Gene masks not set."
+		return
+
+	for(var/mask in gene_tag_masks)
+		usr << "[mask]: [gene_tag_masks[mask]]"
+
 // Predefined/roundstart varieties use a string key to make it
 // easier to grab the new variety when mutating. Post-roundstart
 // and mutant varieties use their uid converted to a string instead.
@@ -173,6 +188,7 @@ proc/populate_seed_list()
 
 	packet_icon = plant_icons[1]
 	plant_icon = plant_icons[2]
+
 	if(prob(20))
 		harvest_repeat = 1
 
@@ -192,49 +208,50 @@ proc/populate_seed_list()
 
 	var/additional_chems = rand(0,5)
 
-	var/list/possible_chems = list(
-		"bicaridine",
-		"hyperzine",
-		"cryoxadone",
-		"blood",
-		"water",
-		"potassium",
-		"plasticide",
-		"slimetoxin",
-		"aslimetoxin",
-		"inaprovaline",
-		"space_drugs",
-		"paroxetine",
-		"mercury",
-		"sugar",
-		"radium",
-		"ryetalyn",
-		"alkysine",
-		"thermite",
-		"tramadol",
-		"cryptobiolin",
-		"dermaline",
-		"dexalin",
-		"plasma",
-		"synaptizine",
-		"impedrezene",
-		"hyronalin",
-		"peridaxon",
-		"toxin",
-		"rezadone",
-		"ethylredoxrazine",
-		"slimejelly",
-		"cyanide",
-		"mindbreaker",
-		"stoxin"
-		)
+	if(additional_chems)
+		var/list/possible_chems = list(
+			"bicaridine",
+			"hyperzine",
+			"cryoxadone",
+			"blood",
+			"water",
+			"potassium",
+			"plasticide",
+			"slimetoxin",
+			"aslimetoxin",
+			"inaprovaline",
+			"space_drugs",
+			"paroxetine",
+			"mercury",
+			"sugar",
+			"radium",
+			"ryetalyn",
+			"alkysine",
+			"thermite",
+			"tramadol",
+			"cryptobiolin",
+			"dermaline",
+			"dexalin",
+			"plasma",
+			"synaptizine",
+			"impedrezene",
+			"hyronalin",
+			"peridaxon",
+			"toxin",
+			"rezadone",
+			"ethylredoxrazine",
+			"slimejelly",
+			"cyanide",
+			"mindbreaker",
+			"stoxin"
+			)
 
-	for(var/x=1;x<=additional_chems;x++)
-		if(!possible_chems.len)
-			break
-		var/new_chem = pick(possible_chems)
-		possible_chems -= new_chem
-		chems[new_chem] = list(rand(1,10),rand(10,20))
+		for(var/x=1;x<=additional_chems;x++)
+			if(!possible_chems.len)
+				break
+			var/new_chem = pick(possible_chems)
+			possible_chems -= new_chem
+			chems[new_chem] = list(rand(1,10),rand(10,20))
 
 	if(prob(90))
 		requires_nutrients = 1
@@ -353,7 +370,7 @@ proc/populate_seed_list()
 						source_turf.visible_message("\blue \The [display_name] begins to glow!")
 						if(prob(degree*2))
 							biolum_colour = "#[pick(list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"))]"
-							source_turf.visible_message("\blue \The [display_name]'s glow <font=[biolum_colour]>changes colour</font>!")
+							source_turf.visible_message("\blue \The [display_name]'s glow <font color='[biolum_colour]'>changes colour</font>!")
 					else
 						source_turf.visible_message("\blue \The [display_name]'s glow dims...")
 			if(11)
@@ -394,24 +411,21 @@ proc/populate_seed_list()
 
 				var/list/gene_chem = gene_value[rid]
 
-				if(chems[rid])
+				if(!chems[rid])
+					chems[rid] = gene_chem.Copy()
+					continue
 
-					var/list/chem_value = chems[rid]
+				for(var/i=1;i<=gene_chem.len;i++)
 
-					chems[rid][1] = max(1,round((gene_chem[1] + chem_value[1])/2))
+					if(isnull(gene_chem[i])) gene_chem[i] = 0
 
-					if(gene_chem.len > 1)
-						if(chem_value > 1)
-							chems[rid][2] = max(1,round((gene_chem[2] + chem_value[2])/2))
-						else
-							chems[rid][2] = gene_chem[2]
-
-				else
-					var/list/new_chem = gene_chem[rid]
-					chems[rid] = new_chem.Copy()
+					if(chems[rid][i])
+						chems[rid][i] = max(1,round((gene_chem[i] + chems[rid][i])/2))
+					else
+						chems[rid][i] = gene_chem[i]
 
 			var/list/new_gasses = gene.values[3]
-			if(istype(new_gasses))
+			if(islist(new_gasses))
 				if(!exude_gasses) exude_gasses = list()
 				exude_gasses |= new_gasses
 				for(var/gas in exude_gasses)
@@ -547,6 +561,7 @@ proc/populate_seed_list()
 
 //Place the plant products at the feet of the user.
 /datum/seed/proc/harvest(var/mob/user,var/yield_mod,var/harvest_sample)
+
 	if(!user)
 		return
 
@@ -587,6 +602,11 @@ proc/populate_seed_list()
 			if(mysterious)
 				product.name += "?"
 				product.desc += " On second thought, something about this one looks strange."
+
+			if(biolum)
+				if(biolum_colour)
+					product.l_color = biolum_colour
+				product.SetLuminosity(biolum)
 
 			//Handle spawning in living, mobile products (like dionaea).
 			if(istype(product,/mob/living))
@@ -933,6 +953,7 @@ proc/populate_seed_list()
 	yield = 6
 	potency = 5
 
+
 /datum/seed/ambrosia/cruciatus
 	name = "ambrosiacruciatus"
 	seed_name = "ambrosia vulgaris"
@@ -946,6 +967,8 @@ proc/populate_seed_list()
 	production = 6
 	yield = 6
 	potency = 5
+
+
 
 /datum/seed/ambrosia/deus
 	name = "ambrosiadeus"
@@ -1158,7 +1181,6 @@ proc/populate_seed_list()
 	production = 6
 	yield = 6
 	growth_stages = 3
-	plant_icon = ""
 
 /datum/seed/flower/sunflower
 	name = "sunflowers"
