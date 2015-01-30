@@ -17,7 +17,7 @@
 	if(!stat)
 		if(getToxLoss() >= 40)
 			nausea++
-		if(nausea > 0) //so prob isn't rolling on every tick
+		if(nausea) //so prob isn't rolling on every tick
 			if(prob(4)) //slowly reduce nausea over time
 				nausea--
 		if(nausea >= 10) //not feeling so good
@@ -41,3 +41,35 @@
 
 			//feelin fine after
 			nausea = 0
+
+/mob/living/carbon/proc/handle_drunkness() //probably could use a switch for ifs
+	if(drunkness)
+		if(prob(25))
+			drunkness--
+			boozeticks++ //metabolize that hooch
+
+		if(drunkness >= (30 * boozetolerance)) //mild inebriation, do define TIPSY instead?
+			jitteriness = max(jitteriness - 5, 0)
+			stuttering = 4
+			//slurring to replace ^
+			Dizzy(5)
+			if(prob(7))
+				emote("burp")
+
+		if(drunkness >= (60 * boozetolerance)) //decently drunk, define DRUNK ?
+			if(prob(33))
+				confused += 2
+
+		if(drunkness >= (120 * boozetolerance)) //dangerously wrecked, define VERYDRUNK ?
+			nausea++
+			if(prob(7))
+				Weaken(2)
+				visible_message("<span class='danger'>[src] trips over their own feet!</span>")
+
+		if(drunkness >= (200 * boozetolerance)) //lethally drunk, define WASTED ?
+			adjustToxLoss(2)
+			sleeping = min(sleeping + 2, 10) //comatose
+
+	if(boozeticks >= (40 * boozetolerance)) //building tolerance
+		boozeticks = 0
+		boozetolerance++

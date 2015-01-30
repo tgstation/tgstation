@@ -87,6 +87,9 @@
 		//Vomiting
 		handle_nausea()
 
+		//Getting Drunk
+		handle_drunkness()
+
 	//Handle temperature/pressure differences between body and environment
 	handle_environment(environment)
 
