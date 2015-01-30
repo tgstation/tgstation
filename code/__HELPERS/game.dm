@@ -376,7 +376,7 @@ var/list/DummyCache = list()
 	while(candidates.len <= 0 && i < 5)
 		roleselect_debug("get_active_candidates(role_id=[role_id], buffer=[buffer], poll=[poll]): Player list is [player_list.len] items long.")
 		for(var/mob/dead/observer/G in player_list)
-			if(!G.mind || (G.mind.current && G.mind.current.stat != DEAD))
+			if(G.mind && G.mind.current && G.mind.current.stat != DEAD)
 				roleselect_debug("get_active_candidates(role_id=[role_id], buffer=[buffer], poll=[poll]): Skipping [G]  - Shitty candidate.")
 				continue
 

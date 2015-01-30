@@ -335,7 +335,7 @@
 		else
 			user << "<span class='notice'> You're a robot. No.</span>"
 			return //Robots can't interact with storage items.
-	
+
 
 	if(!can_be_inserted(W))
 		return
@@ -394,6 +394,9 @@
 				src.close(M)
 	src.add_fingerprint(user)
 	return
+
+/obj/item/weapon/storage/attack_paw(mob/user as mob)
+	return attack_hand(user)
 
 /obj/item/weapon/storage/verb/toggle_gathering_mode()
 	set name = "Switch Gathering Method"
