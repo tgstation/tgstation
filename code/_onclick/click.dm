@@ -6,6 +6,9 @@
 // 1 decisecond click delay (above and beyond mob/next_move)
 /mob/var/next_click	= 0
 
+//Placed here because the other /mob/var/ var is here as well.
+/mob/var/pointcooldown = 0
+
 /*
 	Before anything else, defer these calls to a per-mobtype handler.  This allows us to
 	remove istype() spaghetti code, but requires the addition of other handler procs to simplify it.
@@ -253,7 +256,23 @@
 	A.CtrlShiftClick(src)
 	return
 
-/atom/proc/CtrlShiftClick(var/mob/user)
+/mob/living/carbon/brain/CtrlShiftClick(var/mob/living/user)
+	return
+
+/mob/living/silicon/pai/CtrlShiftClick(var/mob/living/user)
+	return
+
+/atom/proc/CtrlShiftClick(var/mob/living/user)
+	if(user.client && user.client.eye == user)
+		if(user.pointcooldown == 1)
+			user << "<span class='notice'>Give your finger a moment to cool down!</span>"
+			return
+		else
+			user.pointed(src)
+			user.face_atom(src)
+			user.pointcooldown = 1
+			spawn(20)
+				user.pointcooldown = 0
 	return
 
 /*
