@@ -22,6 +22,7 @@ var/bomb_set
 	name = "station self-destruct interface"
 	desc = "For when it all gets too much to bear."
 	icon = 'icons/obj/machines/selfdestruct.dmi'
+	anchored = 1 //Being portable makes no sense here.
 
 /obj/machinery/nuclearbomb/process()
 	if (src.timing)
