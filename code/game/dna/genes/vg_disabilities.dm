@@ -35,6 +35,7 @@
 		return ..(M,flags)
 
 	OnSay(var/mob/M, var/message)
+		return message
 		//M.whisper(message)
 
 

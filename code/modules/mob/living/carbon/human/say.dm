@@ -26,9 +26,6 @@
 		if(!(copytext(message, 1, 2) == "*" || (mind && mind.changeling && department_radio_keys[copytext(message, 1, 3)] != "changeling")))
 			message = wear_mask.treat_mask_message(message)
 
-	if(dna)
-		message = species.handle_speech(message,src)
-
 	if ((M_HULK in mutations) && health >= 25 && length(message))
 		message = "[uppertext(replacetext(message, ".", "!"))]!!" //because I don't know how to code properly in getting vars from other files -Bro
 	if (src.slurring)
@@ -49,7 +46,8 @@
 				message = list2text(temp_message, " ")
 
 	message = ..(message)
-
+	if(dna)
+		message = species.handle_speech(message,src)
 	return message
 
 

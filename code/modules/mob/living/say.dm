@@ -127,7 +127,6 @@ var/list/department_radio_keys = list(
 		return
 	if(!can_speak_vocal(message))
 		return
-	message = treat_message(message)
 
 	var/message_range = 7
 	var/radio_return = radio(message, message_mode)
@@ -138,6 +137,7 @@ var/list/department_radio_keys = list(
 	if(radio_return & REDUCE_RANGE)
 		message_range = 1
 
+	message = treat_message(message)
 	send_speech(message, message_range, src, bubble_type)
 
 	log_say("[name]/[key] : [message]")
