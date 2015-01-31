@@ -200,6 +200,8 @@
 	icon_state = "vox-civ-engineer"
 	item_state = "vox-pressure-engineer"
 	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 0, bio = 100, rad = 50)
+	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECITON_TEMPERATURE
 
 /obj/item/clothing/head/helmet/space/vox/civ/engineer
 	name = "vox engineer pressure helmet"
@@ -207,34 +209,37 @@
 	item_state = "vox-pressure-engineer"
 	desc = "A very alien-looking helmet for vox crewmembers. This one comes with more radiation protection."
 	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 0, bio = 100, rad = 50)
+	heat_protection = HEAD
+	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECITON_TEMPERATURE
 
 /obj/item/clothing/suit/space/vox/civ/engineer/atmos
 	name = "vox atmos pressure suit"
 	desc = "A cheap and oddly-shaped pressure suit made for vox crewmembers. Has some heat protection."
 	icon_state = "vox-civ-atmos"
 	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 0, bio = 100, rad = 10)
-	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECITON_TEMPERATURE*0.75
+	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE
 
 /obj/item/clothing/head/helmet/space/vox/civ/engineer/atmos
 	name = "vox atmos pressure helmet"
 	icon_state = "vox-civ-atmos"
 	desc = "A very alien-looking helmet for vox crewmembers. Has some heat protection."
 	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 0, bio = 100, rad = 10)
-	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE*0.75
+	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE
 
 /obj/item/clothing/suit/space/vox/civ/engineer/ce
 	name = "vox chief engineer pressure suit"
 	desc = "A more advanced pressure suit made for vox crewmembers. Has some radiation and heat protection."
 	icon_state = "vox-civ-ce"
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 50)
-	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECITON_TEMPERATURE*0.75
+	flags = FPRINT  | STOPSPRESSUREDMAGE | PLASMAGUARD
+	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECITON_TEMPERATURE
 
 /obj/item/clothing/head/helmet/space/vox/civ/engineer/ce
 	name = "vox chief engineer pressure helmet"
 	icon_state = "vox-civ-ce"
 	desc = "A very alien-looking helmet for vox crewmembers. Has some radiation and heat protection."
-	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 50)
-	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE*0.75
+	flags = FPRINT  | BLOCKHAIR | STOPSPRESSUREDMAGE | PLASMAGUARD
+	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE
 
 
 //Science
