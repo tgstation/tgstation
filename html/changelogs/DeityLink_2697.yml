@@ -1,0 +1,6 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Fixed lights not updating when a wall is destroyed (by thermite or a juggernaut's punch for example)
+  - bugfix: Fixed lights not updating when a door is destroyed (by C4, or if manually deleted by an admin for example)
+  - bugfix: Fixed lights not updating when removing metal foam/smoke, which caused areas to remain permanently dark after a metal foam grenade went off in it.
