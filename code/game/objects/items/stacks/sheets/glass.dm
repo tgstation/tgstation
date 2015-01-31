@@ -156,8 +156,8 @@
 					if(!found)
 						dir_to_set = direction
 						break
-				var/obj/structure/window/W
-				W = new created_window( user.loc, 0 )
+				var/obj/structure/window/W = new created_window( user.loc, 0 )
+				W.state = 0
 				W.dir = dir_to_set
 				W.ini_dir = W.dir
 				W.anchored = 0
@@ -169,9 +169,12 @@
 					user << "<span class='warning'>You need more glass to do that.</span>"
 					return 1
 				if(locate(/obj/structure/window/full) in user.loc)
-					user << "<span class='warning'>There is a full window in the way.</span>"
+					user << "<span class='warning'>There is a window in the way.</span>"
 					return 1
 				var/obj/structure/window/W = new full_window( user.loc, 0 )
+				W.state = 0
+				W.dir = SOUTHWEST
+				W.ini_dir = SOUTHWEST
 				W.anchored = 0
 				src.use(2)
 	return 0
