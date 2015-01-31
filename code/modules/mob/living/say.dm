@@ -76,8 +76,6 @@ var/list/department_radio_keys = list(
 	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling"
 )
 
-var/global/universal_cult_chat = 0 //if set to 1, even human cultists can use cultchat
-
 /mob/living/proc/binarycheck()
 	return 0
 
@@ -249,8 +247,7 @@ var/global/universal_cult_chat = 0 //if set to 1, even human cultists can use cu
 				if(M.lingcheck() || (M in dead_mob_list && !istype(M, /mob/new_player)))
 					M << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
 			return 1
-	if((message_mode == MODE_HEADSET && construct_chat_check(0) /*sending check for constructs*/) || \
-		(message_mode == MODE_CULTCHAT && construct_chat_check(1) /*sending check for humins*/))
+	if(message_mode == MODE_CULTCHAT && construct_chat_check(1) /*sending check for humins*/)
 		log_say("Cult channel: [src.name]/[src.key] : [message]")
 		for(var/mob/M in mob_list)
 			if(M.construct_chat_check(2) /*receiving check*/ || (M in dead_mob_list && !istype(M, /mob/new_player)))
