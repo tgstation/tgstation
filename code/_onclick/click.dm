@@ -256,9 +256,13 @@
 	A.CtrlShiftClick(src)
 	return
 
+/mob/living/carbon/brain/CtrlShiftClick(var/mob/living/user)
+	return
+
+/mob/living/silicon/pai/CtrlShiftClick(var/mob/living/user)
+	return
+
 /atom/proc/CtrlShiftClick(var/mob/living/user)
-	if(istype(user, /mob/living/carbon/brain || /mob/living/silicon/pai))
-		return
 	if(user.client && user.client.eye == user)
 		if(user.pointcooldown == 1)
 			user << "<span class='notice'>Give your finger a moment to cool down!</span>"
