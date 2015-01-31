@@ -119,7 +119,7 @@ datum/reagent/colorful_reagent
 	result_amount = 5
 
 datum/reagent/colorful_reagent/reaction_mob(var/mob/M, var/volume)
-	if(M)
+	if(M && ishuman(M))
 		M.color = pick(potential_colors)
 	..()
 	return
