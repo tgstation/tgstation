@@ -18,6 +18,11 @@ var/bomb_set
 	var/previous_level = ""
 	var/lastentered = ""
 
+/obj/machinery/nuclearbomb/selfdestruct
+	name = "station self-destruct interface"
+	desc = "For when it all gets too much to bear."
+	icon = 'icons/obj/machines/selfdestruct.dmi'
+
 /obj/machinery/nuclearbomb/process()
 	if (src.timing)
 		bomb_set = 1 //So long as there is one nuke timing, it means one nuke is armed.
