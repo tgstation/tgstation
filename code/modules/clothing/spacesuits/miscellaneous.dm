@@ -19,7 +19,7 @@
 	name = "Santa's hat"
 	desc = "Ho ho ho. Merrry X-mas!"
 	icon_state = "santahat"
-	flags = FPRINT  | BLOCKHAIR | STOPSPRESSUREDMAGE
+	flags = FPRINT  | BLOCKHAIR | STOPSPRESSUREDMG
 
 /obj/item/clothing/suit/space/santa
 	name = "Santa's suit"
@@ -27,7 +27,7 @@
 	icon_state = "santa"
 	item_state = "santa"
 	slowdown = 0
-	flags = FPRINT  | ONESIZEFITSALL | STOPSPRESSUREDMAGE
+	flags = FPRINT  | ONESIZEFITSALL | STOPSPRESSUREDMG
 	allowed = list(/obj/item) //for stuffing exta special presents
 
 
