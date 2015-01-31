@@ -218,6 +218,9 @@ var/list/ninjastart = list()
 var/list/cardinal = list( NORTH, SOUTH, EAST, WEST )
 var/list/alldirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
 
+
+var/global/universal_cult_chat = 0 //if set to 1, even human cultists can use cultchat
+
 var/datum/station_state/start_state = null
 var/datum/configuration/config = null
 
