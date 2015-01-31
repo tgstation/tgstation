@@ -440,3 +440,10 @@
 
 		if(FINDME)
 			return FINDME
+
+/obj/machinery/proc/addStaticPower(value, powerchannel)
+	if(!areaMaster)
+		return
+	areaMaster.addStaticPower(value, powerchannel)
+/obj/machinery/proc/removeStaticPower(value, powerchannel)
+	addStaticPower(-value, powerchannel)
