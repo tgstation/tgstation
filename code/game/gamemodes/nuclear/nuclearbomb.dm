@@ -17,12 +17,14 @@ var/bomb_set
 	use_power = 0
 	var/previous_level = ""
 	var/lastentered = ""
+	var/immobile = 0 //Not all nukes should be moved
 
 /obj/machinery/nuclearbomb/selfdestruct
 	name = "station self-destruct interface"
 	desc = "For when it all gets too much to bear."
 	icon = 'icons/obj/machines/selfdestruct.dmi'
 	anchored = 1 //Being portable makes no sense here.
+	immobile = 1 //Built in.
 
 /obj/machinery/nuclearbomb/process()
 	if (src.timing)
@@ -146,8 +148,10 @@ var/bomb_set
 					src.timing = 0
 					bomb_set = 0
 			if (href_list["anchor"])
-				if(!isinspace())
+				if(!isinspace()&&(!immobile))
 					src.anchored = !( src.anchored )
+				else if(immobile)
+					usr << "<span class='warning'>This device is immovable!</span>"
 				else
 					usr << "<span class='warning'>There is nothing to anchor to!</span>"
 	src.add_fingerprint(usr)
