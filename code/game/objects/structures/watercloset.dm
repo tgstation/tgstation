@@ -9,6 +9,7 @@
 	var/cistern = 0			//if the cistern bit is open
 	var/w_items = 0			//the combined w_class of all the items in the cistern
 	var/mob/living/swirlie = null	//the mob being given a swirlie
+	directional = 1
 
 
 /obj/structure/toilet/New()
@@ -111,6 +112,7 @@
 	icon_state = "urinal"
 	density = 0
 	anchored = 1
+	directional = 1
 
 
 /obj/structure/urinal/attackby(obj/item/I, mob/user)
@@ -143,6 +145,7 @@
 	var/ismist = 0				//needs a var so we can make it linger~
 	var/watertemp = "normal"	//freezing, normal, or boiling
 	var/mobpresent = 0		//true if there is a mob on the shower's loc, this is to ease process()
+	directional = 1
 
 
 /obj/effect/mist
@@ -351,6 +354,7 @@
 	desc = "A sink used for washing one's hands and face."
 	anchored = 1
 	var/busy = 0 	//Something's being washed at the moment
+	directional = 1
 
 
 /obj/structure/sink/attack_hand(mob/user)
@@ -439,6 +443,7 @@
 /obj/structure/sink/puddle	//splishy splashy ^_^
 	name = "puddle"
 	icon_state = "puddle"
+	directional = 0
 
 /obj/structure/sink/puddle/attack_hand(mob/M as mob)
 	icon_state = "puddle-splash"

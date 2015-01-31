@@ -13,6 +13,7 @@
 	var/cooldown_delay = 50
 	var/launch_cooldown = 0
 	var/reverse_launch = 0
+	directional = 1
 
 	var/const/OPEN_DURATION = 6
 	var/const/CLOSE_DURATION = 6

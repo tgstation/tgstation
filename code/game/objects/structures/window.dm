@@ -18,6 +18,7 @@
 	var/fulltile = 0
 	var/obj/item/stack/rods/storedrods
 	var/obj/item/weapon/shard/storedshard
+	directional = 1
 //	var/silicate = 0 // number of units of silicate
 //	var/icon/silicateIcon = null // the silicated icon
 
@@ -441,11 +442,13 @@
 	dir = 5
 	maxhealth = 50
 	fulltile = 1
+	directional = 0
 
 /obj/structure/window/reinforced/fulltile
 	dir = 5
 	maxhealth = 100
 	fulltile = 1
+	directional = 0
 
 /obj/structure/window/reinforced/tinted/fulltile
 	dir = 5

@@ -1,5 +1,6 @@
 /obj/mecha/working
 	internal_damage_threshold = 60
+	directional = 1
 
 /obj/mecha/working/New()
 	..()

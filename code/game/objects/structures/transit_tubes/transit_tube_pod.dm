@@ -6,6 +6,7 @@
 	density = 1
 	var/moving = 0
 	var/datum/gas_mixture/air_contents = new()
+	directional = 1
 
 
 /obj/structure/transit_tube_pod/New(loc)
