@@ -208,7 +208,7 @@
 	if(R.emagged == 1)
 		return 0
 
-	R.emagged = 1
+	R.SetEmagged(2)
 	return 1
 
 /obj/item/borg/upgrade/engineering/
