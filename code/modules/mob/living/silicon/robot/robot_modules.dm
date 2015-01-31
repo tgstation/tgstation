@@ -118,16 +118,16 @@
 	src.modules += new /obj/item/weapon/reagent_containers/syringe(src)
 	src.modules += new /obj/item/weapon/storage/bag/chem(src)
 	src.modules += new /obj/item/weapon/extinguisher/mini(src)
-	src.modules += new /obj/item/weapon/scalpel
-	src.modules += new /obj/item/weapon/hemostat
-	src.modules += new /obj/item/weapon/retractor
-	src.modules += new /obj/item/weapon/circular_saw
-	src.modules += new /obj/item/weapon/cautery
-	src.modules += new /obj/item/weapon/bonegel
-	src.modules += new /obj/item/weapon/bonesetter
-	src.modules += new /obj/item/weapon/FixOVein
-	src.modules += new /obj/item/weapon/surgicaldrill
-	src.modules += new /obj/item/weapon/revivalprod
+	src.modules += new /obj/item/weapon/scalpel(src)
+	src.modules += new /obj/item/weapon/hemostat(src)
+	src.modules += new /obj/item/weapon/retractor(src)
+	src.modules += new /obj/item/weapon/circular_saw(src)
+	src.modules += new /obj/item/weapon/cautery(src)
+	src.modules += new /obj/item/weapon/bonegel(src)
+	src.modules += new /obj/item/weapon/bonesetter(src)
+	src.modules += new /obj/item/weapon/FixOVein(src)
+	src.modules += new /obj/item/weapon/surgicaldrill(src)
+	src.modules += new /obj/item/weapon/revivalprod(src)
 	src.emag = new /obj/item/weapon/reagent_containers/spray(src)
 
 	src.emag.reagents.add_reagent("pacid", 250)
