@@ -100,7 +100,7 @@
 
 /obj/item/device/necromantic_stone
 	name = "necromantic stone"
-	desc = "A shard of a much more powerful artifact, it is capable of resurrecting a limited number of the dead as skeletons bound to your will."
+	desc = "A shard capable of resurrecting humans as skeleton thralls."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "necrostone"
 	item_state = "electronic"
@@ -150,6 +150,8 @@
 	M.mind.objectives += protect_master
 	ticker.mode.traitors += M.mind
 	M.mind.special_role = "skeleton-thrall"
+
+	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ", [spooky_scaries.len]/3 active thralls."]"
 
 /obj/item/device/necromantic_stone/proc/check_spooky()
 	if(unlimited) //no point, the list isn't used.
