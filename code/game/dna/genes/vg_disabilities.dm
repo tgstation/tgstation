@@ -68,4 +68,4 @@
 
 
 	OnSay(var/mob/M, var/message)
-		return "<span class='sans'>message</span>"
+		return "<span class='sans'>[message]</span>"

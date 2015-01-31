@@ -35,7 +35,7 @@
 			return
 
 /obj/item/weapon/clipboard/update_icon()
-	overlays.Cut()
+	overlays.len = 0
 	if(toppaper)
 		overlays += toppaper.icon_state
 		overlays += toppaper.overlays

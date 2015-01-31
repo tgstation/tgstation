@@ -229,6 +229,8 @@ var/global/loopModeNames=list(
 	return t
 
 /obj/machinery/media/jukebox/proc/ScreenSettings(var/mob/user)
+	if(!linked_account)
+		linked_account = station_account
 	var/dat={"<h1>Settings</h1>
 		<form action="?src=\ref[src]" method="get">
 		<input type="hidden" name="src" value="\ref[src]" />

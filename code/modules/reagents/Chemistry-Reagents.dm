@@ -548,7 +548,7 @@ datum
 						M.monkeyizing = 1
 						M.canmove = 0
 						M.icon = null
-						M.overlays.Cut()
+						M.overlays.len = 0
 						M.invisibility = 101
 						for(var/obj/item/W in M)
 							if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
@@ -1244,7 +1244,7 @@ datum
 				if(volume >= 5)
 					if(istype(T, /turf/simulated/wall))
 						T:thermite = 1
-						T.overlays.Cut()
+						T.overlays.len = 0
 						T.overlays = image('icons/effects/effects.dmi',icon_state = "thermite")
 				return
 
@@ -1460,7 +1460,7 @@ datum
 						O.clean_blood()
 			reaction_turf(var/turf/T, var/volume)
 				if(volume >= 1)
-					T.overlays.Cut()
+					T.overlays.len = 0
 					T.clean_blood()
 					for(var/obj/effect/decal/cleanable/C in src)
 						qdel(C)
@@ -1598,6 +1598,7 @@ datum
 						egg.Hatch()*/
 				if((!O) || (!volume))	return 0
 				var/turf/the_turf = get_turf(O)
+				if(!the_turf) return 0
 				var/datum/gas_mixture/napalm = new
 				var/datum/gas/volatile_fuel/fuel = new
 				fuel.moles = 5

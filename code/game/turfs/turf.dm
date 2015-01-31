@@ -208,6 +208,8 @@
 	if (!N)
 		return
 
+	var/initialOpacity = opacity
+
 #ifdef ENABLE_TRI_LEVEL
 // Fuck this, for now - N3X
 ///// Z-Level Stuff ///// This makes sure that turfs are not changed to space when one side is part of a zone
@@ -221,6 +223,10 @@
 					var/list/temp = list()
 					temp += W
 					c.add(temp,3,1) // report the new open space to the zcontroller
+
+					if(opacity != initialOpacity)
+						UpdateAffectingLights()
+
 					return W
 ///// Z-Level Stuff
 #endif
@@ -267,6 +273,10 @@
 			air_master.mark_for_update(src)
 
 		W.levelupdate()
+
+		if(opacity != initialOpacity)
+			UpdateAffectingLights()
+
 		return W
 
 	else
@@ -288,6 +298,10 @@
 			air_master.mark_for_update(src)
 
 		W.levelupdate()
+
+		if(opacity != initialOpacity)
+			UpdateAffectingLights()
+
 		return W
 
 /turf/proc/AddDecal(const/image/decal)

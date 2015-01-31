@@ -428,10 +428,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		switch(href_list["device"])
 			if("protolathe")
 				if(linked_lathe)
-					linked_lathe.queue.Cut()
+					linked_lathe.queue.len = 0
 			if("imprinter")
 				if(linked_imprinter)
-					linked_imprinter.queue.Cut()
+					linked_imprinter.queue.len = 0
 
 	else if(href_list["setProtolatheStopped"] && linked_lathe) //Causes the protolathe to dispose of all it's reagents.
 		linked_lathe.stopped=(href_list["setProtolatheStopped"]=="1")

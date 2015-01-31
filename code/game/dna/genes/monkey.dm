@@ -10,7 +10,7 @@
 
 /datum/dna/gene/monkey/activate(var/mob/living/M, var/connected, var/flags)
 	if(!istype(M,/mob/living/carbon/human))
-		testing("Cannot monkey-ify [M], type is [M.type].")
+		//testing("Cannot monkey-ify [M], type is [M.type].")
 		return
 	var/mob/living/carbon/human/H = M
 	H.monkeyizing = 1

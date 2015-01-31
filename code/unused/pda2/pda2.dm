@@ -254,7 +254,7 @@
 			for (var/mob/O in hearers(3, src.loc))
 				O.show_message(text("\icon[src] *[alert_message]*"))
 
-		src.overlays.Cut()
+		src.overlays.len = 0
 		src.overlays += image('icons/obj/pda.dmi', "pda-r")
 		return
 

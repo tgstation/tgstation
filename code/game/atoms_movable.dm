@@ -255,7 +255,7 @@
 
 /atom/movable/overlay/New()
 	. = ..()
-	verbs.Cut()
+	verbs.len = 0
 
 /atom/movable/overlay/attackby(a, b)
 	if (src.master)

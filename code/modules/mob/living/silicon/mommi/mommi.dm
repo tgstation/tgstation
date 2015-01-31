@@ -267,14 +267,14 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			return
 
 		if(opened)//Cover is open
-			if(emagged)	return//Prevents the X has hit Y with Z message also you cant emag them twice
+			if(emagged == 1)	return//Prevents the X has hit Y with Z message also you cant emag them twice
 			if(wiresexposed)
 				user << "You must close the panel first"
 				return
 			else
 				sleep(6)
 				if(prob(50))
-					emagged = 1
+					SetEmagged(1)
 					lawupdate = 0
 					connected_ai = null
 					user << "You emag [src]'s interface."

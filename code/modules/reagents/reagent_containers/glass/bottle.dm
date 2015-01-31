@@ -21,7 +21,7 @@
 			icon_state = "bottle[rand(1,20)]"
 
 	update_icon()
-		overlays.Cut()
+		overlays.len = 0
 
 		if (!is_open_container())
 			var/image/lid = image(icon, src, "lid_bottle")

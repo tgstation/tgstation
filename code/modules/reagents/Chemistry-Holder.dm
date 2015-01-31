@@ -411,7 +411,7 @@ datum
 
 			update_total()
 				total_volume = 0
-				amount_cache.Cut()
+				amount_cache.len = 0
 				for(var/datum/reagent/R in reagent_list)
 					if(R.volume < 0.1)
 						del_reagent(R.id,update_totals=0)
@@ -421,7 +421,7 @@ datum
 				return 0
 
 			clear_reagents()
-				amount_cache.Cut()
+				amount_cache.len = 0
 				for(var/datum/reagent/R in reagent_list)
 					del_reagent(R.id,update_totals=0)
 				// Only call ONCE. -- N3X

@@ -274,7 +274,7 @@
 
 /mob/living/silicon/hivebot/proc/updateicon()
 
-	src.overlays.Cut()
+	src.overlays.len = 0
 
 	if(src.stat == 0)
 		src.overlays += "eyes"

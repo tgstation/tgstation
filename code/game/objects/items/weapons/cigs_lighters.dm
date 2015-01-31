@@ -208,7 +208,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 		reagents.handle_reactions()
 		// This ain't ready yet.
-		//overlays.Cut()
+		//overlays.len = 0
 		//overlays += image('icons/mob/mask.dmi',overlay_on,LIGHTING_LAYER+1)
 		icon_state = icon_on
 		item_state = icon_on

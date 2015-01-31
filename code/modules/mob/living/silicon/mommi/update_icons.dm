@@ -18,7 +18,7 @@
 // i.e when they change their subtype, open their cover, get emagged, toggle their parking break, or put on a hat
 /mob/living/silicon/robot/mommi/updateicon()
 	// Clear all overlays.
-	overlays.Cut()
+	overlays.len = 0
 	
 	// Set the MoMMI's icon to its subtype
 	icon_state=subtype

@@ -304,7 +304,7 @@ var/list/beam_master = list()
 			for(var/turf/T in turfs)
 				T.overlays.Remove(beam_master[laser_state])
 
-			turfs.Cut()
+			turfs.len = 0
 
 /obj/item/projectile/beam/practice
 	name = "laser"

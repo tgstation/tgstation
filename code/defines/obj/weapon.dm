@@ -314,12 +314,12 @@
 /obj/item/weapon/legcuffs/bolas/cable/update_icon()
 	if (!weight1 && !weight2)
 		icon_state = "cbolas_[cable_color]"
-		overlays.Cut()
+		overlays.len = 0
 		desc = desc_empty
 		trip_prob = 0
 		return
 	else
-		overlays.Cut()
+		overlays.len = 0
 		if (weight1)
 			trip_prob = 10
 			overlays += icon("icons/obj/weapons.dmi", "cbolas_weight1")

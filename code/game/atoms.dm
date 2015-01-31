@@ -91,6 +91,8 @@ var/global/list/del_profiling = list()
 		WARNING("Type [type] does not inherit /atom/New().  Please ensure ..() is called, or that the type calls AddToProfiler().")
 
 /atom/Destroy()
+	SetOpacity(0)
+
 	// Only call when we're actually deleted.
 	DeleteFromProfiler()
 

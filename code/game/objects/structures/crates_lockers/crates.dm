@@ -331,10 +331,10 @@
 /obj/structure/closet/crate/secure/New()
 	..()
 	if(locked)
-		overlays.Cut()
+		overlays.len = 0
 		overlays += redlight
 	else
-		overlays.Cut()
+		overlays.len = 0
 		overlays += greenlight
 
 /obj/structure/closet/crate/rcd/New()
@@ -420,7 +420,7 @@
 		if (allowed(user))
 			user << "<span class='notice'>You unlock [src].</span>"
 			src.locked = 0
-			overlays.Cut()
+			overlays.len = 0
 			overlays += greenlight
 			return
 		else
@@ -433,11 +433,11 @@
 	if(istype(W, /obj/item/weapon/card) && src.allowed(user) && !locked && !opened && !broken)
 		user << "<span class='notice'>You lock \the [src].</span>"
 		src.locked = 1
-		overlays.Cut()
+		overlays.len = 0
 		overlays += redlight
 		return
 	else if ( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && locked &&!broken)
-		overlays.Cut()
+		overlays.len = 0
 		overlays += emag
 		overlays += sparks
 		spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
@@ -491,10 +491,10 @@
 	if(!broken && !opened  && prob(50/severity))
 		if(!locked)
 			src.locked = 1
-			overlays.Cut()
+			overlays.len = 0
 			overlays += redlight
 		else
-			overlays.Cut()
+			overlays.len = 0
 			overlays += emag
 			overlays += sparks
 			spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*

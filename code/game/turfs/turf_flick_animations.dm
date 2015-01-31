@@ -16,9 +16,10 @@
 			c_animation.color = anim_color
 		flick("turf_animation",c_animation)
 		spawn(10)
-			c_animation.master = null
-			c_animation.loc = null
-			c_animation = null	//Letting the Garbage Collector take care of it.
+			if(c_animation)
+				c_animation.master = null
+				c_animation.loc = null
+				c_animation = null	//Letting the Garbage Collector take care of it.
 
 
 /*

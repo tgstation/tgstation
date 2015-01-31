@@ -142,7 +142,7 @@
 		var/datum/species/species = all_species[name]
 		if(species.default_block_names.len>0)
 			testing("Setting up genetics for [species.name] (needs [english_list(species.default_block_names)])")
-			species.default_blocks.Cut()
+			species.default_blocks.len = 0
 			for(var/block=1;block<DNA_SE_LENGTH;block++)
 				if(assigned_blocks[block] in species.default_block_names)
 					testing("  Found [assigned_blocks[block]] ([block])")

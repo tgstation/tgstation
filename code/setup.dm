@@ -424,6 +424,9 @@ var/MAX_EXPLOSION_RANGE = 14
 #define LIGHT	2
 #define ENVIRON	3
 #define TOTAL	4	//for total power used only
+#define STATIC_EQUIP 5
+#define STATIC_LIGHT	6
+#define STATIC_ENVIRON	7
 
 // bitflags for machine stat variable
 #define BROKEN		1

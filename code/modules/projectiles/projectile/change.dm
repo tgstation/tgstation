@@ -25,7 +25,7 @@
 		M.monkeyizing = 1
 		M.canmove = 0
 		M.icon = null
-		M.overlays.Cut()
+		M.overlays.len = 0
 		M.invisibility = 101
 
 		if(istype(M, /mob/living/silicon/robot))

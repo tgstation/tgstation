@@ -67,7 +67,7 @@
 		force_process = 1
 	last_dam = damage_this_tick
 	if(force_process)
-		bad_external_organs.Cut()
+		bad_external_organs.len = 0
 		for(var/datum/organ/external/Ex in organs)
 			bad_external_organs += Ex
 

@@ -198,7 +198,7 @@
 	for(var/R in ore_types_eaten)
 		for(counter=0, counter < ore_eaten, counter++)
 			new R(src.loc)
-	ore_types_eaten.Cut()
+	ore_types_eaten.len = 0
 	ore_eaten = 0
 
 

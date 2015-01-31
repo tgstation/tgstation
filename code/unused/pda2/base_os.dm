@@ -95,7 +95,7 @@
 				if(2)
 					//Messenger.  Uses Radio.  Is a messenger.
 					//TO-DO: ~file sharing~
-					src.master.overlays.Cut() //Remove existing alerts
+					src.master.overlays.len = 0 //Remove existing alerts
 					dat += "<h4>SpaceMessenger V4.0.5</h4>"
 
 					if (!src.message_mode)

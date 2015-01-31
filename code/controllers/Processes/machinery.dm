@@ -20,15 +20,15 @@
 
 			if(M && M.use_power)
 				M.auto_use_power()
+			if(M)
+				#ifdef PROFILE_MACHINES
+				var/time_end = world.timeofday
 
-			#ifdef PROFILE_MACHINES
-			var/time_end = world.timeofday
+				if(!(M.type in machine_profiling))
+					machine_profiling[M.type] = 0
 
-			if(!(M.type in machine_profiling))
-				machine_profiling[M.type] = 0
-
-			machine_profiling[M.type] += (time_end - time_start)
-			#endif
+				machine_profiling[M.type] += (time_end - time_start)
+				#endif
 
 		scheck()
 

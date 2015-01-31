@@ -115,7 +115,7 @@
 			toggle = 1
 
 /obj/item/device/transfer_valve/update_icon()
-	overlays.Cut()
+	overlays.len = 0
 	underlays = null
 
 	if(!tank_one && !tank_two && !attached_device)

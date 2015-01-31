@@ -70,7 +70,8 @@ var/datum/garbage_collector/garbageCollector
 			hard_dels++
 			remainingForceDelPerTick--
 
-		queue.Cut(1, 2)
+		if(!queue.Remove(refID))
+			queue.Cut(1,2)
 		dels_count++
 
 #ifdef GC_DEBUG

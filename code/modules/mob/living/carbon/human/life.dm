@@ -1172,7 +1172,7 @@ var/global/list/organ_damage_overlays = list(
 
 		else
 			for(var/atom/a in hallucinations)
-				del a
+				qdel(a)
 
 			if(halloss > 100)
 				src << "<span class='notice'>You're in too much pain to keep going...</span>"
@@ -1282,8 +1282,9 @@ var/global/list/organ_damage_overlays = list(
 			var/pixel_x_diff = rand(-amplitude, amplitude)
 			var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
 
-			animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = -1)
-			animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 2)
+			spawn()
+				animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = -1)
+				animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 2)
 			jitteriness = max(jitteriness-1, 0)
 
 
@@ -1481,7 +1482,7 @@ var/global/list/organ_damage_overlays = list(
 			see_invisible = SEE_INVISIBLE_LIVING
 
 		if(healths)
-			healths.overlays.Cut()
+			healths.overlays.len = 0
 			if (analgesic)
 				healths.icon_state = "health_health_numb"
 			else

@@ -98,7 +98,7 @@
 	var/i = 1
 	var/image/I
 	var/new_name
-	src.overlays.Cut()
+	src.overlays.len = 0
 	for(var/obj/item/weapon/reagent_containers/food/snacks/S in src.ingredients)
 		if(i == 1) new_name += "[S.name]"
 		else if(i == src.ingredients.len) new_name += " and [S.name]"
@@ -117,7 +117,7 @@
 			if(src.stackIngredients)
 				I.pixel_x = rand(-1,1)
 				I.pixel_y = (i*2)+1
-			else src.overlays.Cut()
+			else src.overlays.len = 0
 			src.overlays += I
 	if(src.addTop)
 		I = image(src.icon,,"src.[icon_state]_top")

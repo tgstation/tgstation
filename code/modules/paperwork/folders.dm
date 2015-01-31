@@ -26,7 +26,7 @@
 	icon_state = "folder_white"
 
 /obj/item/weapon/folder/update_icon()
-	overlays.Cut()
+	overlays.len = 0
 	if(contents.len)
 		overlays += "folder_paper"
 	return
