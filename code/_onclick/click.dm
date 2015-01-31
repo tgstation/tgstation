@@ -6,7 +6,7 @@
 // 1 decisecond click delay (above and beyond mob/next_move)
 /mob/var/next_click	= 0
 
-//Place here because the other /mob/var/ var is here as well.
+//Placed here because the other /mob/var/ var is here as well.
 /mob/var/pointcooldown = 0
 
 /*
@@ -254,6 +254,12 @@
 */
 /mob/proc/CtrlShiftClickOn(var/atom/A)
 	A.CtrlShiftClick(src)
+	return
+
+/mob/living/carbon/brain/CtrlShiftClick(var/mob/living/user)
+	return
+
+/mob/living/silicon/pai/CtrlShiftClick(var/mob/living/user)
 	return
 
 /atom/proc/CtrlShiftClick(var/mob/living/user)
