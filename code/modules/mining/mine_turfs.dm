@@ -846,7 +846,7 @@
 	if(istype(I, /obj/item/device/mining_scanner) && stage == 1)
 		user.visible_message("<span class='notice'>You use [I] to locate where to cut off the chain reaction and attempt to stop it...</span>")
 		defuse()
-	if(istype(I, //obj/item/device/depth_scanner) && stage == 1)
+	if(istype(I, /obj/item/device/depth_scanner) && stage == 1)
 		user.visible_message("<span class='notice'>You use [I] to locate where to cut off the chain reaction and attempt to stop it...</span>")
 		defuse()
 	if(istype(I, /obj/item/weapon/pickaxe))
