@@ -143,7 +143,7 @@
 		message = replacetext(message,"i don't know","wot mate")
 		message = replacetext(message,"no","naw")
 		message = replacetext(message,"robust","chin")
-		message = replacetext(message,"hi","how what how")
+		message = replacetext(message," hi ","how what how")
 		message = replacetext(message,"hello","sup bruv")
 		message = replacetext(message,"kill","bang")
 		message = replacetext(message,"murder","bang")
