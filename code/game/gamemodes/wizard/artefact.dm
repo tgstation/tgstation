@@ -16,18 +16,20 @@
 	var/charged = 1
 	var/spawn_type = /obj/singularity/narsie/wizard
 	var/spawn_amt = 1
+	var/activate_descriptor = "reality"
+	var/rend_desc = "You should run now."
 
 /obj/item/weapon/veilrender/attack_self(mob/user as mob)
 	if(charged)
-		new /obj/effect/rend(get_turf(usr), spawn_type, spawn_amt)
+		new /obj/effect/rend(get_turf(usr), spawn_type, spawn_amt, rend_desc)
 		charged = 0
-		user.visible_message("<span class='userdanger'>[src] hums with power as [usr] deals a blow to reality itself!</span>")
+		user.visible_message("<span class='userdanger'>[src] hums with power as [usr] deals a blow to [activate_descriptor] itself!</span>")
 	else
 		user << "<span class='danger'>The unearthly energies that powered the blade are now dormant.</span>"
 
 /obj/effect/rend
 	name = "tear in the fabric of reality"
-	desc = "You should run now"
+	desc = "You should run now."
 	icon = 'icons/obj/biomass.dmi'
 	icon_state = "rift"
 	density = 1
@@ -36,9 +38,10 @@
 	var/spawn_path = /mob/living/simple_animal/cow //defaulty cows to prevent unintentional narsies
 	var/spawn_amt_left = 20
 
-/obj/effect/rend/New(loc, var/spawn_type, var/spawn_amt)
+/obj/effect/rend/New(loc, var/spawn_type, var/spawn_amt, var/desc)
 	src.spawn_path = spawn_type
 	src.spawn_amt_left = spawn_amt
+	src.desc = desc
 	SSobj.processing.Add(src)
 	return
 
@@ -62,12 +65,16 @@
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast farm."
 	spawn_type = /mob/living/simple_animal/cow
 	spawn_amt = 20
+	activate_descriptor = "hunger"
+	rend_desc = "Reverberates with the sound of ten thousand moos."
 
 /obj/item/weapon/veilrender/honkrender
 	name = "honk render"
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast circus."
 	spawn_type = /mob/living/simple_animal/hostile/retaliate/clown
 	spawn_amt = 10
+	activate_descriptor = "depression"
+	rend_desc = "Gently wafting with the sounds of endless laughter."
 
 /////////////////////////////////////////Scrying///////////////////
 
