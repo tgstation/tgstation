@@ -29,6 +29,12 @@
 
 	var/list/construct_spells = list()
 
+/mob/living/simple_animal/construct/construct_chat_check(setting)
+	if(!mind) return
+
+	if(mind in ticker.mode.cult)
+		return 1
+
 /mob/living/simple_animal/construct/cultify()
 	return
 

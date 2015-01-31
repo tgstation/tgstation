@@ -16,6 +16,7 @@
 #define MODE_ALIEN "alientalk"
 #define MODE_HOLOPAD "holopad"
 #define MODE_CHANGELING "changeling"
+#define MODE_CULTCHAT "cultchat"
 
 #define SAY_MINIMUM_PRESSURE 10
 var/list/department_radio_keys = list(
@@ -35,6 +36,7 @@ var/list/department_radio_keys = list(
 	  ":u" = "Supply",		"#u" = "Supply",		".u" = "Supply",
 	  ":d" = "Service",     "#d" = "Service",       ".d" = "Service",
 	  ":g" = "changeling",	"#g" = "changeling",	".g" = "changeling",
+	  ":x" = "cultchat",	"#x" = "cultchat",		".x" = "cultchat",
 
 	  ":R" = "right ear",	"#R" = "right ear",		".R" = "right ear", "!R" = "fake right ear",
 	  ":L" = "left ear",	"#L" = "left ear",		".L" = "left ear",  "!L" = "fake left ear",
@@ -52,6 +54,7 @@ var/list/department_radio_keys = list(
 	  ":U" = "Supply",		"#U" = "Supply",		".U" = "Supply",
 	  ":D" = "Service",     "#D" = "Service",       ".D" = "Service",
 	  ":G" = "changeling",	"#G" = "changeling",	".G" = "changeling",
+	  ":X" = "cultchat",	"#X" = "cultchat",		".X" = "cultchat",
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
@@ -72,6 +75,8 @@ var/list/department_radio_keys = list(
 	  ":â" = "Service",     "#â" = "Service",       ".â" = "Service",
 	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling"
 )
+
+var/global/universal_cult_chat = 0 //if set to 1, even human cultists can use cultchat
 
 /mob/living/proc/binarycheck()
 	return 0
@@ -235,6 +240,7 @@ var/list/department_radio_keys = list(
 		return MODE_HEADSET
 	else if(length(message) > 2)
 		return department_radio_keys[copytext(message, 1, 3)]
+
 /mob/living/proc/handle_inherent_channels(message, message_mode)
 	if(message_mode == MODE_CHANGELING)
 		if(lingcheck())
@@ -243,6 +249,13 @@ var/list/department_radio_keys = list(
 				if(M.lingcheck() || (M in dead_mob_list && !istype(M, /mob/new_player)))
 					M << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
 			return 1
+	if((message_mode == MODE_HEADSET && construct_chat_check(0) /*sending check for constructs*/) || \
+		(message_mode == MODE_CULTCHAT && construct_chat_check(1) /*sending check for humins*/))
+		log_say("Cult channel: [src.name]/[src.key] : [message]")
+		for(var/mob/M in mob_list)
+			if(M.construct_chat_check(2) /*receiving check*/ || (M in dead_mob_list && !istype(M, /mob/new_player)))
+				M << "<span class='sinister'><b>[src.name]:</b> [message]</span>"
+		return 1
 	return 0
 
 /mob/living/proc/treat_message(message)
@@ -276,9 +289,22 @@ var/list/department_radio_keys = list(
 			whisper(message)
 			return NOPASS
 	return 0
+
 /mob/living/lingcheck()
 	if(mind && mind.changeling && !issilicon(src))
 		return 1
+
+/mob/living/construct_chat_check(var/setting = 0) //setting: 0 is to speak over general into cultchat, 1 is to speak over channel into cultchat, 2 is to hear cultchat
+	if(!mind) return
+
+	if(setting == 0) //overridden for constructs
+		return
+	if(setting == 1)
+		if(mind in ticker.mode.cult && universal_cult_chat == 1)
+			return 1
+	if(setting == 2)
+		if(mind in ticker.mode.cult)
+			return 1
 
 /mob/living/say_quote()
 	if (stuttering)
