@@ -44,6 +44,16 @@
 	..()
 	charge = 0
 
+/obj/item/weapon/stock_parts/cell/emproof/pulse //40 pulse shots
+	name = "pulse rifle power cell"
+	maxcharge = 8000
+	rating = 3
+
+/obj/item/weapon/stock_parts/cell/emproof/pulse/carbine //25 pulse shots
+	name = "pulse rifle power cell"
+	maxcharge = 5000
+	rating = 3
+
 /obj/item/weapon/stock_parts/cell/high
 	name = "high-capacity power cell"
 	origin_tech = "powerstorage=2"

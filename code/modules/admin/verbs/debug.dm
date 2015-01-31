@@ -653,7 +653,7 @@ var/global/list/g_fancy_list_of_types = null
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/thunderdome(M), slot_head)
 
-			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle/destroyer(M), slot_r_hand)
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse/destroyer(M), slot_r_hand)
 			M.equip_to_slot_or_del(new /obj/item/weapon/kitchenknife(M), slot_l_hand)
 			M.equip_to_slot_or_del(new /obj/item/weapon/grenade/smokebomb(M), slot_r_store)
 
@@ -883,7 +883,7 @@ var/global/list/g_fancy_list_of_types = null
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/cigarette/cigar/havana(M), slot_wear_mask)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/deathsquad/beret(M), slot_head)
-			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle/M1911(M), slot_belt)
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse/pistol(M), slot_belt)
 			M.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo(M), slot_r_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(M), slot_back)
 
@@ -1090,7 +1090,7 @@ var/global/list/g_fancy_list_of_types = null
 	M.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen(M), slot_s_store)
 	M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/revolver/mateba(M), slot_belt)
 
-	M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle(M), slot_r_hand)
+	M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse(M), slot_r_hand)
 
 
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(M)//Here you go Deuryn

@@ -38,24 +38,6 @@
 	select_name = "DESTROY"
 	fire_sound = 'sound/weapons/pulse.ogg'
 
-/obj/item/ammo_casing/energy/laser/pulse/carbine
-	e_cost = 50
-
-/obj/item/ammo_casing/energy/laser/carbine
-	e_cost = 50
-
-/obj/item/ammo_casing/energy/electrode/carbine
-	e_cost = 50
-
-/obj/item/ammo_casing/energy/laser/pulse/pistol
-	e_cost = 100
-
-/obj/item/ammo_casing/energy/laser/pistol
-	e_cost = 50
-
-/obj/item/ammo_casing/energy/electrode/pistol
-	e_cost = 50
-
 /obj/item/ammo_casing/energy/laser/bluetag
 	projectile_type = /obj/item/projectile/lasertag/bluetag
 	select_name = "bluetag"
@@ -74,10 +56,6 @@
 	select_name = "stun"
 	fire_sound = 'sound/weapons/taser.ogg'
 	e_cost = 200
-
-/obj/item/ammo_casing/energy/electrode/gun
-	fire_sound = 'sound/weapons/gunshot.ogg'
-	e_cost = 100
 
 /obj/item/ammo_casing/energy/ion
 	projectile_type = /obj/item/projectile/ion
