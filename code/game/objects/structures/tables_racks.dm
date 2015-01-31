@@ -27,6 +27,7 @@
 	var/busy = 0
 	var/buildstackamount = 1
 	var/framestackamount = 2
+	directional = 1
 
 /obj/structure/table/New()
 	..()

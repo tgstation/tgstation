@@ -9,6 +9,7 @@
 
 	var/damtype = "brute"
 	var/force = 0
+	directional = 0
 
 /obj/proc/process()
 	SSobj.processing.Remove(src)
