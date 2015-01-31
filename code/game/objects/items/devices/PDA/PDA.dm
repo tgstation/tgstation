@@ -666,13 +666,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 				if (cartridge)
 					if (cartridge.access_engine)
-						// AUTOFIXED BY fix_string_idiocy.py
-						// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:355: dat += "<h4>Engineering Functions</h4>"
 						dat += {"<h4>Engineering Functions</h4>
 							<ul>
 							<li><a href='byond://?src=\ref[src];choice=43'><img src=pda_power.png> Power Monitor</a></li>
+							<li><a href='byond://?src=\ref[src];choice=53'><img src=pda_alert.png> Alert Monitor</a></li>
 							</ul>"}
-						// END AUTOFIX
 
 					if (cartridge.access_mechanic)
 						dat += {"<h4>Mechanic Functions</h4>
@@ -1044,10 +1042,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if((mode<=9) || (locate(mode) in pda_app_menus))
 					mode = 0
 				else
-					mode = round(mode/10)
-					if(mode==4)//Fix for cartridges. Redirects to hub.
+					mode = round(mode/10)//TODO: fix this shit up
+					if((mode==4) || (mode==5))//Fix for cartridges. Redirects to hub.
 						mode = 0
-					else if(mode >= 40 && mode <= 49)//Fix for cartridges. Redirects to refresh the menu.
+					else if(mode >= 40 && mode <= 53)//Fix for cartridges. Redirects to refresh the menu.
 						cartridge.mode = mode
 						cartridge.unlock()
 			if ("Authenticate")//Checks for ID

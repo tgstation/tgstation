@@ -303,6 +303,7 @@
 		'icons/pda_icons/pda_mule.png',
 		'icons/pda_icons/pda_notes.png',
 		'icons/pda_icons/pda_power.png',
+		'icons/pda_icons/pda_alert.png',
 		'icons/pda_icons/pda_rdoor.png',
 		'icons/pda_icons/pda_reagent.png',
 		'icons/pda_icons/pda_refresh.png',
