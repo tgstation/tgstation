@@ -223,6 +223,7 @@
 	item_state = "duffle"
 	storage_slots = 9
 	slowdown = 1
+	max_combined_w_class = 27
 
 /obj/item/weapon/storage/backpack/dufflebag/syndiemed
 	name = "medical dufflebag"
