@@ -704,7 +704,7 @@
 				user << "The cover is already open."
 			return
 		if(opened)
-			if(emagged) return
+			if(emagged == 1) return
 			if(wiresexposed)
 				user << "The wires get in your way."
 				return
@@ -885,7 +885,7 @@
 			user << "Unable to locate a radio."
 
 	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
-		if(emagged)//still allow them to open the cover
+		if(emagged == 1)//still allow them to open the cover
 			user << "The interface seems slightly damaged"
 		if(opened)
 			user << "You must close the cover to swipe an ID card."
