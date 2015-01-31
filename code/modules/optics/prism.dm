@@ -90,7 +90,7 @@ var/list/obj/machinery/prism/prism_list = list()
 	update_beams()
 
 /obj/machinery/prism/proc/update_beams()
-	overlays.Cut()
+	overlays.len = 0
 	//testing("Beam count: [beams.len]")
 	if(beams.len>0)
 		var/newbeam=0

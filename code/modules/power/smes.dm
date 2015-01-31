@@ -138,7 +138,7 @@
 	return
 
 /obj/machinery/power/smes/proc/updateicon()
-	overlays.Cut()
+	overlays.len = 0
 	if(stat & BROKEN)	return
 
 	overlays += image('icons/obj/power.dmi', "smes-op[online]")

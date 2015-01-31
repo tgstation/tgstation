@@ -34,8 +34,8 @@ var/datum/sortInstance/sortInstance = new()
 
 
 	proc/timSort(start, end)
-		runBases.Cut()
-		runLens.Cut()
+		runBases.len = 0
+		runLens.len = 0
 
 		var/remaining = end - start
 

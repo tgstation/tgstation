@@ -1172,7 +1172,7 @@ var/global/list/organ_damage_overlays = list(
 
 		else
 			for(var/atom/a in hallucinations)
-				del a
+				qdel(a)
 
 			if(halloss > 100)
 				src << "<span class='notice'>You're in too much pain to keep going...</span>"
@@ -1481,7 +1481,7 @@ var/global/list/organ_damage_overlays = list(
 			see_invisible = SEE_INVISIBLE_LIVING
 
 		if(healths)
-			healths.overlays.Cut()
+			healths.overlays.len = 0
 			if (analgesic)
 				healths.icon_state = "health_health_numb"
 			else

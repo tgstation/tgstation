@@ -191,7 +191,7 @@
 	for(var/datum/powernet/PN in powernets)
 		del(PN)
 
-	powernets.Cut()
+	powernets.len = 0
 
 	for(var/obj/structure/cable/PC in cable_list)
 		if(!PC.powernet)

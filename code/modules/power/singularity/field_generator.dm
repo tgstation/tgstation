@@ -36,7 +36,7 @@ var/global/list/obj/machinery/field_generator/field_gen_list = list()
 	machine_flags = WRENCHMOVE | FIXED2WORK | WELD_FIXED
 
 /obj/machinery/field_generator/update_icon()
-	overlays.Cut()
+	overlays.len = 0
 	if(!active)
 		if(warming_up)
 			overlays += "+a[warming_up]"

@@ -210,10 +210,10 @@
 /obj/item/weapon/reagent_containers/syringe/update_icon()
 	if(mode == SYRINGE_BROKEN)
 		icon_state = "broken"
-		overlays.Cut()
+		overlays.len = 0
 		return
 	var/rounded_vol = round(reagents.total_volume,5)
-	overlays.Cut()
+	overlays.len = 0
 	if(ismob(loc))
 		var/injoverlay
 		switch(mode)

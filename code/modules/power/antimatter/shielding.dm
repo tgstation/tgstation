@@ -126,7 +126,7 @@ proc/cardinalrange(var/center)
 
 
 /obj/machinery/am_shielding/update_icon()
-	overlays.Cut()
+	overlays.len = 0
 	coredirs = 0
 	dirs = 0
 	for(var/direction in alldirs)

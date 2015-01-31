@@ -28,7 +28,7 @@
 
 /obj/item/device/mmi/posibrain/proc/search_for_candidates()
 	icon_state = "posibrain-searching"
-	ghost_volunteers.Cut()
+	ghost_volunteers.len = 0
 	src.searching = 1
 	src.request_player()
 	spawn(600)

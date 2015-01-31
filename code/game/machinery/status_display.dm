@@ -175,7 +175,7 @@
 
 /obj/machinery/status_display/proc/remove_display()
 	if(overlays.len)
-		overlays.Cut()
+		overlays.len = 0
 	if(maptext)
 		maptext = ""
 
@@ -220,11 +220,11 @@
 
 /obj/machinery/ai_status_display/process()
 	if(stat & NOPOWER)
-		overlays.Cut()
+		overlays.len = 0
 		return
 	if(spookymode)
 		spookymode = 0
-		overlays.Cut()
+		overlays.len = 0
 		return
 
 	update()
@@ -238,7 +238,7 @@
 
 /obj/machinery/ai_status_display/proc/update()
 	if(mode==0) //Blank
-		overlays.Cut()
+		overlays.len = 0
 		return
 
 	if(mode==1)	// AI emoticon
@@ -280,7 +280,7 @@
 /obj/machinery/ai_status_display/proc/set_picture(var/state)
 	picture_state = state
 	if(overlays.len)
-		overlays.Cut()
+		overlays.len = 0
 	overlays += image('icons/obj/status_display.dmi', icon_state=picture_state)
 
 #undef CHARS_PER_LINE

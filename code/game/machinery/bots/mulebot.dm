@@ -460,7 +460,7 @@ var/global/mulebot_count = 0
 		return
 
 	mode = 1
-	overlays.Cut()
+	overlays.len = 0
 
 	load.loc = src.loc
 	load.pixel_y -= 9

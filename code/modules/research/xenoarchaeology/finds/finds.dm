@@ -370,7 +370,7 @@
 			if(prob(33))
 				var/num_bullets = rand(1,new_gun.max_shells)
 				if(num_bullets < new_gun.loaded.len)
-					new_gun.loaded.Cut()
+					new_gun.loaded.len = 0
 					for(var/i = 1, i <= num_bullets, i++)
 						var/A = text2path(new_gun.ammo_type)
 						new_gun.loaded += new A(new_gun)

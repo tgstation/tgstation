@@ -130,6 +130,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(stat & (BROKEN|NOPOWER)) return
 	if((user.stat && !isobserver(user)) || user.restrained()) return
+	if(!chemical_reagents_list || !chemical_reagents_list.len) return
 
 	// this is the data which will be sent to the ui
 	var/data[0]
@@ -644,7 +645,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	var/image/overlay = image('icons/obj/chemical.dmi', src, "[icon_state]_overlay")
 	if(reagents.total_volume)
 		overlay.icon += mix_color_from_reagents(reagents.reagent_list)
-	overlays.Cut()
+	overlays.len = 0
 	overlays += overlay
 
 /obj/machinery/chem_master/on_reagent_change()

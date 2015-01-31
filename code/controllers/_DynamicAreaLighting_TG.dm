@@ -85,7 +85,7 @@ datum/light_source
 		// before we apply the effect we remove the light's current effect.
 		for(var/turf/T in effect)	// negate the effect of this light source
 			T.update_lumcount(-effect[T], col_r, col_g, col_b, 1)
-		effect.Cut()					// clear the effect list
+		effect.len = 0					// clear the effect list
 
 	proc/add_effect()
 		// only do this if the light is turned on and is on the map

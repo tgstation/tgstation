@@ -23,4 +23,4 @@
 		scheck()
 
 	if(lighting_controller.changed_turfs && lighting_controller.changed_turfs.len)
-		lighting_controller.changed_turfs.Cut() // reset the changed list
+		lighting_controller.changed_turfs.len = 0 // reset the changed list

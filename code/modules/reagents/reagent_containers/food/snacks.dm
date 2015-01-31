@@ -2941,7 +2941,7 @@
                 update_icon()
 
         update_icon()
-                overlays.Cut()
+                overlays.len = 0
                 var/image/filling = image('icons/obj/kitchen.dmi', src, "icecream_color")
                 filling.icon += mix_color_from_reagents(reagents.reagent_list)
                 overlays += filling
