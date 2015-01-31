@@ -28,7 +28,16 @@
 							/obj/item/toy/nuke								= 2,
 							/obj/item/toy/minimeteor						= 2,
 							/obj/item/toy/carpplushie						= 2,
-							/obj/item/toy/foamblade							= 2
+							/obj/item/toy/foamblade							= 2,
+							/obj/item/clothing/head/blob					= 2,
+							/obj/item/weapon/c4/toy							= 2,
+							/obj/item/id_decal/gold							= 2,
+							/obj/item/id_decal/silver						= 2,
+							/obj/item/id_decal/prisoner						= 2,
+							/obj/item/id_decal/centcom						= 2,
+							/obj/item/id_decal/emag							= 2,
+							/obj/item/weapon/spellbook/oneuse/fake_gib		= 2,
+							/obj/machinery/toy_supermatter					= 1
 							)
 
 /obj/machinery/computer/arcade/New()

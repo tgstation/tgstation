@@ -221,6 +221,7 @@
 #include "code\datums\spells\emplosion.dm"
 #include "code\datums\spells\ethereal_jaunt.dm"
 #include "code\datums\spells\explosion.dm"
+#include "code\datums\spells\fake_gib.dm"
 #include "code\datums\spells\genetic.dm"
 #include "code\datums\spells\horsemask.dm"
 #include "code\datums\spells\inflict_handler.dm"

@@ -15,6 +15,7 @@
 	var/atom/target = null
 	var/open_panel = 0
 	var/image_overlay = null
+	var/dud = 0
 
 /obj/item/weapon/c4/New()
 	wires = new(src)
@@ -23,6 +24,8 @@
 
 /obj/item/weapon/c4/suicide_act(var/mob/user)
 	. = BRUTELOSS
+	if(dud) // no
+		return
 	user.visible_message("<span class='suicide'>[user] activates the [src.name] and holds it above his head! It looks like \he's going out with a bang!</span>")
 	var/message_say = "FOR NO RAISIN!"
 	if(user.mind)
@@ -67,24 +70,29 @@
 		user.drop_item()
 		src.target = target
 		loc = null
+		if(!dud)
+			if (ismob(target))
+				add_logs(user, target, "planted [name] on")
+				user.visible_message("<span class='danger'>[user.name] finished planting an explosive on [target.name]!</span>")
+				message_admins("[key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) planted [src.name] on [key_name(target)](<A HREF='?_src_=holder;adminmoreinfo=\ref[target]'>?</A>) with [timer] second fuse",0,1)
+				log_game("[key_name(user)] planted [src.name] on [key_name(target)] with [timer] second fuse")
 
-		if (ismob(target))
-			add_logs(user, target, "planted [name] on")
-			user.visible_message("<span class='danger'>[user.name] finished planting an explosive on [target.name]!</span>")
-			message_admins("[key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) planted [src.name] on [key_name(target)](<A HREF='?_src_=holder;adminmoreinfo=\ref[target]'>?</A>) with [timer] second fuse",0,1)
-			log_game("[key_name(user)] planted [src.name] on [key_name(target)] with [timer] second fuse")
-
-		else
-			message_admins("[key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) planted [src.name] on [target.name] at ([target.x],[target.y],[target.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[target.x];Y=[target.y];Z=[target.z]'>JMP</a>) with [timer] second fuse",0,1)
-			log_game("[key_name(user)] planted [src.name] on [target.name] at ([target.x],[target.y],[target.z]) with [timer] second fuse")
+			else
+				message_admins("[key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) planted [src.name] on [target.name] at ([target.x],[target.y],[target.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[target.x];Y=[target.y];Z=[target.z]'>JMP</a>) with [timer] second fuse",0,1)
+				log_game("[key_name(user)] planted [src.name] on [target.name] at ([target.x],[target.y],[target.z]) with [timer] second fuse")
 
 		target.overlays += image_overlay
 		user << "Bomb has been planted. Timer counting down from [timer]."
 		spawn(timer*10)
-			if(target && !target.gc_destroyed)
+			if(dud && target && !target.gc_destroyed)
+				loc = target.loc
+				target.overlays.Cut()
+				return
+			else if(target && !target.gc_destroyed && !dud)
 				explode(get_turf(target))
 			else
 				qdel(src)
+
 
 /obj/item/weapon/c4/proc/explode(var/turf/location)
 	location.ex_act(2, target)
@@ -95,3 +103,8 @@
 
 /obj/item/weapon/c4/attack(mob/M as mob, mob/user as mob, def_zone)
 	return
+
+/obj/item/weapon/c4/toy
+	name = "toy C-4"
+	desc = "The hot new item for christmas, the Dynamo C-4 Toy was the most purchased Spacemas item last year."
+	dud = 1
