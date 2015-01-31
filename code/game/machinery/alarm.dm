@@ -921,7 +921,7 @@ FIRE ALARM
 */
 /obj/machinery/firealarm
 	name = "Fire Alarm"
-	desc = "<i>\"Pull this in case of emergency\"<i>. Thus, keep pulling it forever."
+	desc = "<i>\"Pull this in case of emergency\"</i>. Thus, keep pulling it forever."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
 	var/detecting = 1.0
@@ -1181,6 +1181,7 @@ FIRE ALARM
 		else
 			src.overlays += image('icons/obj/monitors.dmi', "overlay_green")
 
+	machines.Remove(src)
 	update_icon()
 
 /obj/machinery/partyalarm
