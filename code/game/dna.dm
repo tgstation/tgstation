@@ -52,8 +52,12 @@
 	return mutations.Find(HM)
 
 /datum/dna/proc/remove_all_mutations()
-	for(var/datum/mutation/human/HM in mutations)
-		HM.on_losing(holder)
+	remove_mutation_group(mutations)
+
+/datum/dna/proc/remove_mutation_group(list/group)
+	if(!group)	return
+	for(var/datum/mutation/human/HM in group)
+		HM.force_lose(holder)
 
 /datum/dna/proc/generate_uni_identity(mob/living/carbon/character)
 	. = ""
@@ -235,7 +239,6 @@
 	if(!check_dna_integrity(M))
 		return
 	M.dna.remove_all_mutations()
-	M.dna.struc_enzymes = M.dna.generate_struc_enzymes(M) // Give clean DNA.
 
 /proc/clean_randmut(mob/living/carbon/M, list/candidates, difficulty = 2)
 	clean_dna(M)
@@ -285,9 +288,8 @@
 	var/mob/living/carbon/C = M
 	var/mob/living/carbon/temp
 
-	for(var/A in mutations_list)
-		var/datum/mutation/human/HM = mutations_list[A]
-		temp = HM.check_block(C)
+	for(var/datum/mutation/human/A in good_mutations | bad_mutations | not_good_mutations)
+		temp = A.check_block(C)
 		if(ismob(temp))
 			C = temp
 

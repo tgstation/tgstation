@@ -75,10 +75,11 @@
 /obj/item/stack/medical/bruise_pack
 	name = "bruise pack"
 	singular_name = "bruise pack"
-	desc = "A pack designed to treat blunt-force trauma."
+	desc = "A gel pack and bandages designed to treat blunt-force trauma."
 	icon_state = "brutepack"
 	heal_brute = 40
 	origin_tech = "biotech=1"
+	stop_bleeding = 20
 
 /obj/item/stack/medical/gauze
 	name = "medical gauze"
@@ -86,17 +87,18 @@
 	gender = PLURAL
 	singular_name = "medical gauze"
 	icon_state = "gauze"
-	stop_bleeding = 1800 //180 seconds
+	stop_bleeding = 1800
+	self_delay = 80
 
 /obj/item/stack/medical/gauze/improvised
 	name = "improvised gauze"
 	singular_name = "improvised gauze"
 	desc = "A roll of cloth roughly cut from something that can stop bleeding, but does not heal wounds."
-	stop_bleeding = 900 //90 seconds
+	stop_bleeding = 900
 
 /obj/item/stack/medical/ointment
 	name = "ointment"
-	desc = "Used to treat those nasty burns."
+	desc = "Used to treat those nasty burn wounds."
 	gender = PLURAL
 	singular_name = "ointment"
 	icon_state = "ointment"

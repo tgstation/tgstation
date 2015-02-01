@@ -20,7 +20,7 @@
 	var/image/icon_beaker = null //cached overlay
 	var/list/dispensable_reagents = list("hydrogen","lithium","carbon","nitrogen","oxygen","fluorine",
 	"sodium","aluminium","silicon","phosphorus","sulfur","chlorine","potassium","iron",
-	"copper","mercury","radium","water","ethanol","sugar","sacid","fuel","silver","iodine","bromine","fluorine","stable_plasma")
+	"copper","mercury","radium","water","ethanol","sugar","sacid","fuel","silver","iodine","bromine","stable_plasma")
 
 /obj/machinery/chem_dispenser/proc/recharge()
 	if(stat & (BROKEN|NOPOWER)) return
@@ -189,9 +189,9 @@
 	amount = 5
 	recharge_delay = 30
 	dispensable_reagents = list()
-	var/list/special_reagents = list(list("hydrogen", "oxygen", "silicon", "phosphorus", "sulfur", "carbon", "nitrogen"),
-						 		list("lithium", "sugar", "sacid", "water", "copper", "mercury", "sodium"),
-								list("ethanol", "chlorine", "potassium", "aluminium", "radium", "fluorine", "iron"))
+	var/list/special_reagents = list(list("hydrogen", "oxygen", "silicon", "phosphorus", "sulfur", "carbon", "nitrogen", "water"),
+						 		list("lithium", "sugar", "sacid", "copper", "mercury", "sodium","iodine","bromine"),
+								list("ethanol", "chlorine", "potassium", "aluminium", "radium", "fluorine", "iron", "fuel","silver","stable_plasma"))
 
 /obj/machinery/chem_dispenser/constructable/New()
 	..()
@@ -386,9 +386,13 @@
 				var/amount = 1
 				var/vol_each = min(reagents.total_volume, 50)
 				if(text2num(href_list["many"]))
-					amount = min(max(round(input(usr, "Amount:", "How many pills?") as num), 1), 10)
+					amount = min(max(round(input(usr, "Amount:", "How many pills?", amount) as num|null), 0), 10)
+					if(!amount)
+						return
 					vol_each = min(reagents.total_volume/amount, 50)
-				var/name = reject_bad_text(input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)"))
+				var/name = stripped_input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
+				if(!name)
+					return
 				var/obj/item/weapon/reagent_containers/pill/P
 
 				for(var/i = 0; i < amount; i++)
@@ -396,27 +400,28 @@
 						P = new/obj/item/weapon/reagent_containers/pill(loaded_pill_bottle)
 					else
 						P = new/obj/item/weapon/reagent_containers/pill(src.loc)
-					if(!name) name = reagents.get_master_reagent_name()
-					P.name = "[name] pill"
+					P.name = trim("[name] pill")
 					P.pixel_x = rand(-7, 7) //random position
 					P.pixel_y = rand(-7, 7)
 					reagents.trans_to(P,vol_each)
 			else
-				var/name = reject_bad_text(input(usr,"Name:","Name your bag!",reagents.get_master_reagent_name()))
+				var/name = stripped_input(usr, "Name:", "Name your pack!", reagents.get_master_reagent_name(), MAX_NAME_LEN)
+				if(!name)
+					return
 				var/obj/item/weapon/reagent_containers/food/condiment/pack/P = new/obj/item/weapon/reagent_containers/food/condiment/pack(src.loc)
 
-				if(!name) name = reagents.get_master_reagent_name()
 				P.originalname = name
-				P.name = "[name] pack"
+				P.name = trim("[name] pack")
 				P.desc = "A small condiment pack. The label says it contains [name]."
 				reagents.trans_to(P,10)
 
 		else if (href_list["createbottle"])
 			if(!condi)
-				var/name = reject_bad_text(input(usr,"Name:","Name your bottle!",reagents.get_master_reagent_name()))
+				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
+				if(!name)
+					return
 				var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
-				if(!name) name = reagents.get_master_reagent_name()
-				P.name = "[name] bottle"
+				P.name = trim("[name] bottle")
 				P.pixel_x = rand(-7, 7) //random position
 				P.pixel_y = rand(-7, 7)
 				reagents.trans_to(P,30)
@@ -428,15 +433,18 @@
 			var/amount = 1
 			var/vol_each = min(reagents.total_volume, 50)
 			if(text2num(href_list["many"]))
-				amount = min(max(round(input(usr, "Amount:", "How many patches?") as num), 1), 10)
+				amount = min(max(round(input(usr, "Amount:", "How many patches?", amount) as num|null), 0), 10)
+				if(!amount)
+					return
 				vol_each = min(reagents.total_volume/amount, 50)
-			var/name = reject_bad_text(input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)"))
+			var/name = stripped_input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
+			if(!name)
+				return
 			var/obj/item/weapon/reagent_containers/pill/P
 
 			for(var/i = 0; i < amount; i++)
 				P = new/obj/item/weapon/reagent_containers/pill/patch(src.loc)
-				if(!name) name = reagents.get_master_reagent_name()
-				P.name = "[name] patch"
+				P.name = trim("[name] patch")
 				P.pixel_x = rand(-7, 7) //random position
 				P.pixel_y = rand(-7, 7)
 				reagents.trans_to(P,vol_each)

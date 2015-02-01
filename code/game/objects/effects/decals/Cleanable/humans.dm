@@ -103,5 +103,11 @@
 	density = 0
 	anchored = 1
 	layer = 2
-	var/list/viruses = list()
 	blood_DNA = list()
+	var/list/viruses = list()
+	var/list/drips = list()
+
+/obj/effect/decal/cleanable/blooddrip/New()
+	..()
+	spawn(1)
+		drips |= icon_state

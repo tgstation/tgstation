@@ -39,8 +39,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		bleedsuppress = 1
 		spawn(amount)
 			bleedsuppress = 0
-			if(stat != DEAD)
-				src << "<span class='warning'>Your bandage wears off.</span>"
+			if(stat != DEAD && blood_max)
+				src << "<span class='warning'>The blood soaks through your bandage.</span>"
 
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/proc/handle_blood()
@@ -273,28 +273,23 @@ proc/blood_splatter(var/target,var/datum/reagent/blood/source,var/large)
 			source.data["blood_type"] = donor.dna.blood_type
 
 	// Are we dripping or splattering?
-	if(!large)
-
-		// Only a certain number of drips can be on a given turf.
-		var/list/drips = list()
-		var/list/drip_icons = list("1","2","3","4","5")
-
-		for(var/obj/effect/decal/cleanable/blooddrip/drop in T)
-			drips += drop
-			drip_icons.Remove(drop.icon_state)
-
-		// If we have too many drips, remove them and spawn a proper blood splatter.
-		if(drips.len >= 5)
-			//TODO: copy all virus data from drips to new splatter?
-			for(var/obj/effect/decal/cleanable/blooddrip/drop in drips)
-				del drop
-		else
-			decal_type = /obj/effect/decal/cleanable/blooddrip
+	var/list/drips = list()
+	// Only a certain number of drips (or one large splatter) can be on a given turf.
+	for(var/obj/effect/decal/cleanable/blooddrip/drop in T)
+		drips |= drop.drips
+		del(drop)
+	if(!large && drips.len < 3)
+		decal_type = /obj/effect/decal/cleanable/blooddrip
 
 	// Find a blood decal or create a new one.
 	B = locate(decal_type) in T
 	if(!B)
 		B = new decal_type(T)
+
+	var/obj/effect/decal/cleanable/blooddrip/drop = B
+	if(istype(drop) && drips && drips.len && !large)
+		drop.overlays |= drips
+		drop.drips |= drips
 
 	// If there's no data to copy, call it quits here.
 	if(!source)

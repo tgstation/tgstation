@@ -1,0 +1,5 @@
+author: Xhuis
+delete-after: True
+
+changes:
+  - tweak: Handheld crew monitors can now be stored in medical belts.

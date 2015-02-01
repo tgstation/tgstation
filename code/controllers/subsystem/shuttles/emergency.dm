@@ -47,13 +47,6 @@
 
 	priority_announce("The emergency shuttle has been called. [redAlert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [timeLeft(600)] minutes.[reason][SSshuttle.emergencyLastCallLoc ? "\n\nCall signal traced. Results can be viewed on any communcations console." : "" ]", null, 'sound/AI/shuttlecalled.ogg', "Priority")
 
-	if(SSshuttle.emergencyAlwaysFakeRecall)
-		if((seclevel2num(get_security_level()) == SEC_LEVEL_RED))
-			SSshuttle.emergencyFakeRecall = rand(2, 5) * 0.1
-		else
-			SSshuttle.emergencyFakeRecall = rand(5, 8) * 0.1
-
-
 /obj/docking_port/mobile/emergency/cancel(area/signalOrigin)
 	if(mode != SHUTTLE_CALL)
 		return
@@ -84,10 +77,7 @@
 				mode = SHUTTLE_IDLE
 				timer = 0
 		if(SHUTTLE_CALL)
-			if(time_left < SSshuttle.emergencyFakeRecall * SSshuttle.emergencyCallTime)	//recall due to fake recalls
-				cancel()
-				SSshuttle.emergencyFakeRecall = 0
-			else if(time_left <= 0)
+			if(time_left <= 0)
 				//move emergency shuttle to station
 				if(dock(SSshuttle.getDock("emergency_home")))
 					setTimer(20)
@@ -97,7 +87,10 @@
 				send2irc("Server", "The Emergency Shuttle has docked with the station.")
 				priority_announce("The Emergency Shuttle has docked with the station. You have [timeLeft(600)] minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
 		if(SHUTTLE_DOCKED)
-			if(time_left <= 0)
+			if(time_left <= 0 && SSshuttle.emergencyNoEscape)
+				priority_announce("Hostile enviroment detected. Departure has been postponed indefinitely pending conflict resolution.", null, 'sound/misc/notice1.ogg', "Priority")
+				mode = SHUTTLE_STRANDED
+			if(time_left <= 0 && !SSshuttle.emergencyNoEscape)
 				//move each escape pod to its corresponding transit dock
 				for(var/obj/docking_port/mobile/pod/M in SSshuttle.mobile)
 					M.enterTransit()
