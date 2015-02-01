@@ -789,7 +789,7 @@ datum/reagent/diethylamine
 	name = "Diethylamine"
 	id = "diethylamine"
 	description = "A secondary amine, mildly corrosive."
-	color = "#604030" // rgb: 96, 64, 48
+	color = "#3C3200"
 
 
 
