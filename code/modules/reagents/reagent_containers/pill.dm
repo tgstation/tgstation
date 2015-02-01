@@ -111,7 +111,7 @@
 	name = "epinephrine pill"
 	desc = "Used to stabilize patients."
 	icon_state = "pill5"
-	list_reagents = list("epinephrine" = 50)
+	list_reagents = list("epinephrine" = 15)
 
 /obj/item/weapon/reagent_containers/pill/mannitol
 	name = "mannitol pill"
@@ -129,4 +129,4 @@
 	name = "salicyclic acid pill"
 	desc = "Used to dull pain."
 	icon_state = "pill5"
-	list_reagents = list("sal_acid" = 50)
+	list_reagents = list("sal_acid" = 24)
