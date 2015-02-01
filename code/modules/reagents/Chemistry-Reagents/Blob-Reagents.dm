@@ -75,7 +75,7 @@ datum/reagent/blob/acid
 
 datum/reagent/blob/acid/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
-		M.acid_act(20,1,10)
+		M.acid_act(10,1,5)
 		M.apply_damage(10, BRUTE)
 		M << "<span class = 'userdanger'>The blob's tendrils melt though your equipment!</span>"
 
