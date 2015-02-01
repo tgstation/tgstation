@@ -1118,7 +1118,7 @@ Pressure: [env.return_pressure()]"}
 #ifdef PROFILE_MACHINES
 /client/proc/cmd_admin_dump_macprofile()
 	set category = "Debug"
-	set name = "Dump Machine Profiling"
+	set name = "Dump Machine and Object Profiling"
 
 	var/F = file("machine_profiling.csv")
 	fdel(F)
@@ -1128,6 +1128,14 @@ Pressure: [env.return_pressure()]"}
 		F << "[typepath],[ns]"
 
 	usr << "\blue Dumped to machine_profiling.csv."
+	F = file("object_profiling.csv")
+	fdel(F)
+	F << "type,nanoseconds"
+	for(var/typepath in object_profiling)
+		var/ns = object_profiling[typepath]
+		F << "[typepath],[ns]"
+
+	usr << "\blue Dumped to object_profiling.csv."
 #endif
 
 /client/proc/cmd_admin_dump_delprofile()
