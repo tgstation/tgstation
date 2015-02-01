@@ -945,7 +945,7 @@ proc/populate_seed_list()
 	packet_icon = "seed-ambrosiavulgaris"
 	plant_icon = "ambrosiavulgaris"
 	harvest_repeat = 1
-	chems = list("nutriment" = list(1), "space_drugs" = list(1,8), "kelotane" = list(1,8,1), "bicaridine" = list(1,10,1), "toxin" = list(1,10))
+	chems = list("nutriment" = list(1), "space_drugs" = list(1,8), "kelotane" = list(1,8,1), "bicaridine" = list(1,10,1), "toxin" = list(1,5))
 
 	lifespan = 60
 	maturation = 6
@@ -978,7 +978,7 @@ proc/populate_seed_list()
 	mutants = null
 	packet_icon = "seed-ambrosiadeus"
 	plant_icon = "ambrosiadeus"
-	chems = list("nutriment" = list(1), "bicaridine" = list(1,8), "synaptizine" = list(1,8,1), "hyperzine" = list(1,10,1), "space_drugs" = list(1,10))
+	chems = list("nutriment" = list(1), "bicaridine" = list(1,8), "synaptizine" = list(1), "hyperzine" = list(1,10,1), "space_drugs" = list(1,10))
 
 //Mushrooms/varieties.
 /datum/seed/mushroom
