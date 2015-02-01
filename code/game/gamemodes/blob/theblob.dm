@@ -91,7 +91,8 @@
 		if(!B)
 			expand(T,1,a_color)//No blob here so try and expand
 			return
-		B.color = a_color
+		if(!istype(B, /obj/effect/blob/core) || !istype(B, /obj/effect/blob/node))
+			B.color = a_color
 		B.Pulse((pulse+1),get_dir(src.loc,T), a_color)
 		return
 	return
