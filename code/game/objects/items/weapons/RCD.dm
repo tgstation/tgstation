@@ -32,7 +32,7 @@ RCD
 	var/disabled = 0
 	var/airlock_type = /obj/machinery/door/airlock
 	var/floor_cost = 1
-	var/wall_cost = 2
+	var/wall_cost = 3
 	var/airlock_cost = 3
 	var/decon_cost = 5
 
