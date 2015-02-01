@@ -258,6 +258,7 @@ proc/blood_incompatible(donor,receiver,donor_species,receiver_species)
 	return 0
 
 proc/blood_splatter(var/target,var/datum/reagent/blood/source,var/large)
+
 	var/obj/effect/decal/cleanable/blood/B
 	var/decal_type = /obj/effect/decal/cleanable/blood/splatter
 	var/turf/T = get_turf(target)
