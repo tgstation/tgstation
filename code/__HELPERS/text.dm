@@ -153,6 +153,9 @@
 	if(!input)
 		return
 
+	if(max_length)
+		input = copytext(input,1,max_length)
+
 	var/sanitized_output
 	var/next_html_tag = findtext(input, "<")
 	var/next_http = findtext(input, "http", 1, next_html_tag)
@@ -190,9 +193,6 @@
 			sanitized_output += copytext(input, closing + 1, opening)
 
 	sanitized_output += copytext(input, opening) //don't forget the remaining text
-
-	if(max_length)
-		sanitized_output = copytext(sanitized_output,1,max_length)
 
 	return sanitized_output
 
