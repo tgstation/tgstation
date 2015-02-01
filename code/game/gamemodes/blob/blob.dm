@@ -92,8 +92,6 @@ var/list/blob_nodes = list()
 				core.overmind.mind.name = blob.name
 				infected_crew -= blob
 				infected_crew += core.overmind.mind
-		else
-			declare_completion() //blob spawned outside of the station areas or on a space tile (solars)
 
 
 /datum/game_mode/blob/post_setup()
