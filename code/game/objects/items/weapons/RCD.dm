@@ -159,7 +159,7 @@ RCD
 	switch(mode)
 		if(1)
 			if(istype(A, /turf/space))
-				if(useResource(var/floor_cost, user))
+				if(useResource(floor_cost, user))
 					user << "Building Floor..."
 					activate()
 					A:ChangeTurf(/turf/simulated/floor/plating/airless)
@@ -167,22 +167,22 @@ RCD
 				return 0
 
 			if(istype(A, /turf/simulated/floor))
-				if(checkResource(var/wall_cost, user))
+				if(checkResource(wall_cost, user))
 					user << "Building Wall ..."
 					playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, 20))
-						if(!useResource(var/wall_cost, user)) return 0
+						if(!useResource(wall_cost, user)) return 0
 						activate()
 						A:ChangeTurf(/turf/simulated/wall)
 						return 1
 				return 0
 
 		if(2)
-			if(checkResource(var/airlock_cost, user))
+			if(checkResource(airlock_cost, user))
 				user << "Building Airlock..."
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 				if(do_after(user, 50))
-					if(!useResource(var/airlock_cost, user)) return 0
+					if(!useResource(airlock_cost, user)) return 0
 					if(locate(/obj/machinery/door/airlock) in A) return 0
 					activate()
 					var/obj/machinery/door/airlock/T = new airlock_type( A )
@@ -195,33 +195,33 @@ RCD
 			if(istype(A, /turf/simulated/wall))
 				if(istype(A, /turf/simulated/wall/r_wall) && !canRwall)
 					return 0
-				if(checkResource(var/decon_cost, user))
+				if(checkResource(decon_cost, user))
 					user << "Deconstructing Wall..."
 					playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, 40))
-						if(!useResource(var/decon_cost, user)) return 0
+						if(!useResource(decon_cost, user)) return 0
 						activate()
 						A:ChangeTurf(/turf/simulated/floor/plating)
 						return 1
 				return 0
 
 			if(istype(A, /turf/simulated/floor))
-				if(checkResource(var/decon_cost, user))
+				if(checkResource(decon_cost, user))
 					user << "Deconstructing Floor..."
 					playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, 50))
-						if(!useResource(var/decon_cost, user)) return 0
+						if(!useResource(decon_cost, user)) return 0
 						activate()
 						A:ChangeTurf(/turf/space)
 						return 1
 				return 0
 
 			if(istype(A, /obj/machinery/door/airlock))
-				if(checkResource((var/decon_cost * 2), user))
+				if(checkResource((decon_cost * 2), user))
 					user << "Deconstructing Airlock..."
 					playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, 50))
-						if(!useResource((var/decon_cost * 2), user)) return 0
+						if(!useResource((decon_cost * 2), user)) return 0
 						activate()
 						del(A)
 						return 1
