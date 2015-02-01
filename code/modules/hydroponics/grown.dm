@@ -478,6 +478,13 @@
 		reagents.add_reagent("vitamin", 1 + round((potency / 20), 1))
 		bitesize = 5
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/banana/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is aiming the [src.name] at themself! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='notice'>[user] begins dying of laughter!</span>")
+	user.visible_message("<B>[user]</B> laughs uncontrollably!")
+	playsound(loc, 'sound/items/bikehorn.ogg', 50, 1, -1)
+	return (OXYLOSS)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/chili
 	seed = /obj/item/seeds/chiliseed
 	name = "chili"
