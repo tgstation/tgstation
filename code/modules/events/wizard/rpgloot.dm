@@ -22,6 +22,6 @@
 			I.name = "[I.name] of [pick(suffixes)]"
 
 		I.force 		+= quality
-		I.force			= max(0,quality)
+		I.force			= max(0,I.force)
 		I.throwforce 	+= quality
-		I.throwforce	= max(0,quality)
+		I.throwforce	= max(0,I.throwforce)
