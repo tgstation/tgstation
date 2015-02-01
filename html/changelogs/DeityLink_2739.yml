@@ -1,0 +1,5 @@
+author: Deity Link
+delete-after: true
+changes:
+  - rscadd: You can now build empty paper bins with a piece of cardboard.
+  - bugfix: Fixed paper bins forever showing as empty once emptied (even after you had put some paper back in).
