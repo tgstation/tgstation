@@ -29,7 +29,7 @@
 /obj/machinery/door/unpowered/shuttle
 	icon = 'icons/obj/doors/shuttle.dmi'
 	icon_state = "door_closed"
-	animation_delay = 16
+	animation_delay = 5
 
 /obj/machinery/door/unpowered/shuttle/cultify()
 	new /obj/machinery/door/mineral/wood(loc)
