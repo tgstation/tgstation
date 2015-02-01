@@ -56,48 +56,48 @@
 	// Update on_moved listeners.
 	INVOKE_EVENT(on_moved,list("loc"=loc))
 
-/atom/movable/Move(atom/newloc, direct = 0)
-	if(!loc || !newloc) return 0
+/atom/movable/Move(newLoc,Dir=0,step_x=0,step_y=0)
+	if(!loc || !newLoc)
+		return 0
 	var/atom/oldloc = loc
-
-	if(loc != newloc)
-		if (!(direct & (direct - 1))) //Cardinal move
+	if((bound_height != 32 || bound_width != 32) && (loc == newLoc))
+		. = ..()
+	if(loc != newLoc)
+		if (!(Dir & (Dir - 1))) //Cardinal move
 			. = ..()
 		else //Diagonal move, split it into cardinal moves
-			if (direct & 1)
-				if (direct & 4)
+			if (Dir & 1)
+				if (Dir & 4)
 					if (step(src, NORTH))
 						. = step(src, EAST)
 					else if (step(src, EAST))
 						. = step(src, NORTH)
-				else if (direct & 8)
+				else if (Dir & 8)
 					if (step(src, NORTH))
 						. = step(src, WEST)
 					else if (step(src, WEST))
 						. = step(src, NORTH)
-			else if (direct & 2)
-				if (direct & 4)
+			else if (Dir & 2)
+				if (Dir & 4)
 					if (step(src, SOUTH))
 						. = step(src, EAST)
 					else if (step(src, EAST))
 						. = step(src, SOUTH)
-				else if (direct & 8)
+				else if (Dir & 8)
 					if (step(src, SOUTH))
 						. = step(src, WEST)
 					else if (step(src, WEST))
 						. = step(src, SOUTH)
 
-
-	if(!loc || (loc == oldloc && oldloc != newloc))
+	if(!loc || (loc == oldloc && oldloc != newLoc))
 		last_move = 0
 		return
 
-	last_move = direct
+	last_move = Dir
 	src.move_speed = world.timeofday - src.l_move_time
 	src.l_move_time = world.timeofday
 	// Update on_moved listeners.
-	INVOKE_EVENT(on_moved,list("loc"=newloc))
-
+	INVOKE_EVENT(on_moved,list("loc"=newLoc))
 	return .
 
 /atom/movable/proc/recycle(var/datum/materials/rec)

@@ -156,7 +156,7 @@
 		spawn(5)
 			if((SP && (SP.loc == src)))
 				if(SP.inertia_dir)
-					step(SP, SP.inertia_dir)
+					Move(get_step(SP, SP.direction))
 					return
 	if(istype(A, /obj/structure/stool/bed/chair/vehicle/) && src.x > 2 && src.x < (world.maxx - 1) && src.y > 2 && src.y < (world.maxy-1))
 		var/obj/structure/stool/bed/chair/vehicle/JC = A //A bomb!

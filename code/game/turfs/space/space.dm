@@ -61,7 +61,6 @@
 		return
 	..()
 	if ((!(A) || src != A.loc))	return
-
 	inertial_drift(A)
 
 	if(ticker && ticker.mode)
