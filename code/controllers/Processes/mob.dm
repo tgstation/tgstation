@@ -7,5 +7,16 @@
 	updateQueueInstance = new
 
 /datum/controller/process/mob/doWork()
-	updateQueueInstance.init(mob_list, "Life")
-	updateQueueInstance.Run()
+	for(var/i = 1 to mob_list.len)
+		if(i > mob_list.len)
+			break
+		var/mob/living/L = mob_list[i]
+		if(L)
+			if(L.Life() == PROCESS_KILL)
+				mob_list.Remove(L)
+		else
+			mob_list.Cut(i,i+1)
+
+		scheck()
+	//updateQueueInstance.init(mob_list, "Life")
+	//updateQueueInstance.Run()
