@@ -23,7 +23,7 @@
 
 /obj/item/weapon/reagent_containers/pill/patch/styptic
 	name = "brute patch"
-	desc = "Helps with brute injuries."
+	desc = "Helps with brute injuries. Contains styptic powder."
 
 /obj/item/weapon/reagent_containers/pill/patch/styptic/New()
 	..()
@@ -32,7 +32,7 @@
 
 /obj/item/weapon/reagent_containers/pill/patch/silver_sulf
 	name = "burn patch"
-	desc = "Helps with burn injuries."
+	desc = "Helps with burn injuries. Contains silver sulfadiazine."
 
 /obj/item/weapon/reagent_containers/pill/patch/silver_sulf/New()
 	..()
