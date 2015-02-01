@@ -553,7 +553,7 @@ datum/reagent/atropine/overdose_process(var/mob/living/M as mob)
 datum/reagent/epinephrine
 	name = "Epinephrine"
 	id = "epinephrine"
-	description = "Reduces most of the knockout/stun effects, minor stamina regeneration buff. Attempts to cap OXY damage at 35 and LOSEBREATH at 3. If health is between -10 to -65, heals 1 TOX, 1 BRUTE, 1 BURN."
+	description = "Reduces most of the knockout/stun effects, minor stamina regeneration buff. Attempts to cap OXY damage at 35 and LOSEBREATH at 10. If health is between -10 to -65, heals 1 TOX, 1 BRUTE, 1 BURN."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	metabolization_rate = 0.2
@@ -567,8 +567,8 @@ datum/reagent/epinephrine/on_mob_life(var/mob/living/M as mob)
 		M.adjustFireLoss(-1*REM)
 	if(M.oxyloss > 35)
 		M.setOxyLoss(35)
-	if(M.losebreath > 3)
-		M.losebreath = 3
+	if(M.losebreath >= 10)
+		M.losebreath = max(10, M.losebreath-5)
 	M.adjustStaminaLoss(-1*REM)
 	if(prob(30))
 		M.AdjustParalysis(-1)
