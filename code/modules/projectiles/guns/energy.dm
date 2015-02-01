@@ -90,3 +90,8 @@
 
 /obj/item/weapon/gun/energy/ui_action_click()
 	toggle_gunlight()
+
+/obj/item/weapon/gun/energy/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is aiming the [src.name] at themself! It looks like \he's trying to commit suicide.</span>")
+	playsound(loc, fire_sound, 50, 1, -1)
+	return (FIRELOSS)

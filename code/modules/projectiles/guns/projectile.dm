@@ -132,6 +132,11 @@
 		boolets += magazine.ammo_count()
 	return boolets
 
+/obj/item/weapon/gun/projectile/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is aiming the [src.name] at themself! It looks like \he's trying to commit suicide.</span>")
+	playsound(loc, fire_sound, 50, 1, -1)
+	return (BRUTELOSS)
+
 /obj/item/weapon/suppressor
 	name = "suppressor"
 	desc = "A universal syndicate small-arms suppressor for maximum espionage."
