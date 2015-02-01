@@ -15,7 +15,7 @@
 	var/on = 0
 	var/scrubbing = 1 //0 = siphoning, 1 = scrubbing
 	var/scrub_CO2 = 1
-	var/scrub_Toxins = 0
+	var/scrub_Toxins = 1
 	var/scrub_N2O = 0
 	var/scrub_O2 = 0
 	var/scrub_N2 = 0
@@ -27,7 +27,7 @@
 	var/radio_filter_out
 	var/radio_filter_in
 	New()
-		..()
+		..()s
 		area_uid = areaMaster.uid
 		if (!id_tag)
 			assign_uid()
