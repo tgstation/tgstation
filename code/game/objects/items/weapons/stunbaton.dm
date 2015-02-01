@@ -44,7 +44,25 @@
 		else
 			return 0
 
+/obj/item/weapon/melee/baton/proc/update_process()
+	if(status)
+		SSobj.processing.Add(src)
+	else if(!bcell)
+		SSobj.processing.Remove(src)
+	else
+		SSobj.processing.Remove(src)
+
+/obj/item/weapon/melee/baton/process()
+	if(bcell)
+		if(bcell.charge < hitcost)
+			status = 0
+			update_icon()
+		if(status)
+			bcell.use(5)
+			update_icon()
+
 /obj/item/weapon/melee/baton/update_icon()
+	update_process()
 	if(status)
 		icon_state = "[initial(name)]_active"
 	else if(!bcell)
