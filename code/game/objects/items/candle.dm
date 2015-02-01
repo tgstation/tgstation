@@ -85,6 +85,7 @@
 	if(lit)
 		SetLuminosity(0)
 		user.AddLuminosity(CANDLE_LUMINOSITY)
+	..()
 
 
 /obj/item/candle/dropped(mob/user)
