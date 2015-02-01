@@ -329,7 +329,7 @@ Code:
 
 
 
-			for(var/obj/machinery/power/monitor/pMon in world)
+			for(var/obj/machinery/power/monitor/pMon in machines)
 				if(!(pMon.stat & (NOPOWER|BROKEN)))
 					var/turf/T = get_turf(src)
 					if(T.z == pMon.z)//the application may only detect power monitoring computers on its Z-level.
@@ -378,31 +378,27 @@ Code:
 						menu += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_lspace(A.lastused_total, 6)]  [A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "  N/C"]<BR>"
 
 				menu += "</FONT></PRE>"
+
 		if (53)
-			menu = "<h4><img src=pda_alert.png> Please select an Alert Computer</h4><BR>"
+			menu = "<h4><img src=pda_alert.png> Please select an Alert Computer</h4><BR>No Alert Computer detected in the vicinity.<BR>"
 			alertmonitor = null
 			alertmonitors = list()
+
 			var/alertcount = 0
+			var/found = 0
 
-
-			for(var/obj/machinery/computer/station_alert/aMon in world)
+			for(var/obj/machinery/computer/station_alert/aMon in machines)
 				if(!(aMon.stat & (NOPOWER|BROKEN)))
 					var/turf/T = get_turf(src)
 					if(T.z == aMon.z)//the application may only detect power monitoring computers on its Z-level.
+						if(!found)
+							menu = "<h4><img src=pda_alert.png> Please select an Alert Computer</h4><BR>"
+							found = 1
+							menu += "<FONT SIZE=-1>"
 						alertcount++
+						menu += "<a href='byond://?src=\ref[src];choice=Alert Select;target=[alertcount]'> [aMon] </a><BR>"
 						alertmonitors += aMon
-
-
-			if(!alertcount)
-				menu += "No Alert Computer detected in the vicinity.<BR>"
-			else
-
-				menu += "<FONT SIZE=-1>"
-				var/count = 0
-				for(var/obj/machinery/computer/station_alert/aMon in alertmonitors)
-					count++
-					menu += "<a href='byond://?src=\ref[src];choice=Alert Select;target=[count]'> [aMon] </a><BR>"
-
+			if(found)
 				menu += "</FONT>"
 
 		if (533)
