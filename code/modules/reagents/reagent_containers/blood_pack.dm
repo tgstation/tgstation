@@ -24,6 +24,9 @@
 		if(10 to 50) 		icon_state = "half"
 		if(51 to INFINITY)	icon_state = "full"
 
+/obj/item/weapon/reagent_containers/blood/random/New()
+	blood_type = pick("A+", "A-", "B+", "B-", "O+", "O-")
+
 /obj/item/weapon/reagent_containers/blood/APlus
 	blood_type = "A+"
 
