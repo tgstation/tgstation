@@ -94,20 +94,15 @@
 			if (step_to(src, get_step(src, direction), 0))
 				break
 
-/obj/effect/decal/cleanable/blooddrip
+/obj/effect/decal/cleanable/blood/drip
 	name = "drip of blood"
 	desc = "It's red."
 	icon = 'icons/effects/drip.dmi'
 	icon_state = "1"
 	random_icon_states = list("1","2","3","4","5")
-	density = 0
-	anchored = 1
-	layer = 2
-	blood_DNA = list()
-	var/list/viruses = list()
 	var/list/drips = list()
 
-/obj/effect/decal/cleanable/blooddrip/New()
+/obj/effect/decal/cleanable/blood/drip/New()
 	..()
 	spawn(1)
 		drips |= icon_state

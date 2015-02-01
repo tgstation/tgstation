@@ -275,18 +275,18 @@ proc/blood_splatter(var/target,var/datum/reagent/blood/source,var/large)
 	// Are we dripping or splattering?
 	var/list/drips = list()
 	// Only a certain number of drips (or one large splatter) can be on a given turf.
-	for(var/obj/effect/decal/cleanable/blooddrip/drop in T)
+	for(var/obj/effect/decal/cleanable/blood/drip/drop in T)
 		drips |= drop.drips
 		del(drop)
 	if(!large && drips.len < 3)
-		decal_type = /obj/effect/decal/cleanable/blooddrip
+		decal_type = /obj/effect/decal/cleanable/blood/drip
 
 	// Find a blood decal or create a new one.
 	B = locate(decal_type) in T
 	if(!B)
 		B = new decal_type(T)
 
-	var/obj/effect/decal/cleanable/blooddrip/drop = B
+	var/obj/effect/decal/cleanable/blood/drip/drop = B
 	if(istype(drop) && drips && drips.len && !large)
 		drop.overlays |= drips
 		drop.drips |= drips
