@@ -16,6 +16,7 @@
 	active_power_usage = 300	//when active, this turret takes up constant 300 Equipment power
 	req_access = list(access_security)
 	power_channel = EQUIP	//drains power from the EQUIPMENT channel
+	directional = 1
 
 	var/lasercolor = ""		//Something to do with lasertag turrets, blame Sieve for not adding a comment.
 	var/raised = 0			//if the turret cover is "open" and the turret is raised

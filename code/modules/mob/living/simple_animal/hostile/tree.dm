@@ -15,6 +15,7 @@
 	maxHealth = 250
 	health = 250
 	mob_size = 2
+	directional = 0
 
 	pixel_x = -16
 

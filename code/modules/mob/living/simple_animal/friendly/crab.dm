@@ -20,6 +20,7 @@
 	ventcrawler = 2
 	var/obj/item/inventory_head
 	var/obj/item/inventory_mask
+	directional = 0
 
 /mob/living/simple_animal/crab/Life()
 	..()

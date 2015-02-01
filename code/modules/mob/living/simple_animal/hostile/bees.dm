@@ -21,6 +21,7 @@
 	environment_smash = 0
 	mouse_opacity = 2
 	pass_flags = PASSTABLE
+	directional = 0
 
 	//Spaceborn beings don't get hurt by space
 	min_oxy = 0
