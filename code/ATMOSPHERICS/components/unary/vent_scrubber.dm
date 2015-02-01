@@ -27,7 +27,7 @@
 	var/radio_filter_out
 	var/radio_filter_in
 	New()
-		..()s
+		..()
 		area_uid = areaMaster.uid
 		if (!id_tag)
 			assign_uid()
