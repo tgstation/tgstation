@@ -1168,6 +1168,7 @@ var/global/list/g_fancy_list_of_types = null
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(M), slot_in_backpack)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/hardsuit/ert/med(M), slot_in_backpack)
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/sechailer/swat(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/hypospray/combat/nanites(M), slot_in_backpack)
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse/pistol/loyalpin(M), slot_in_backpack)
 
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/medical(M), slot_belt)
