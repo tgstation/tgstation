@@ -373,7 +373,7 @@
 		add_logs(M, src, "attacked", admin=0)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-		if(isconstruct(M))
+		if(M.zone_sel && M.zone_sel.selecting)
 			dam_zone = M.zone_sel.selecting
 		var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
 		var/armor = run_armor_check(affecting, "melee")
