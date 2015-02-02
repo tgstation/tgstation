@@ -17,8 +17,8 @@
 		user << "<span class='notice'>You pick up the [suit] from the [src]</span>"
 		playsound(get_turf(src), "rustle", 50, 1, -5)
 		suit.loc = get_turf(src)
-		if(!usr.get_active_hand())
-			usr.put_in_hands(suit)
+		if(!user.get_active_hand())
+			user.put_in_hands(suit)
 		suit = null
 		update_icon()
 		return
@@ -27,8 +27,8 @@
 		user << "<span class='notice'>You pick up the [hat] from the [src]</span>"
 		playsound(get_turf(src), "rustle", 50, 1, -5)
 		hat.loc = get_turf(src)
-		if(!usr.get_active_hand())
-			usr.put_in_hands(hat)
+		if(!user.get_active_hand())
+			user.put_in_hands(hat)
 		hat = null
 		update_icon()
 		return
