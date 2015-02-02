@@ -243,10 +243,11 @@ var/libcomp_menu
 				<A href='?src=\ref[src];switchscreen=3'>3. Check out a Book</A><BR>
 				<A href='?src=\ref[src];switchscreen=4'>4. Connect to External Archive</A><BR>
 				<A href='?src=\ref[src];switchscreen=5'>5. Upload New Title to Archive</A><BR>
-				<A href='?src=\ref[src];switchscreen=6'>6. Print a Bible</A><BR>"}
+				<A href='?src=\ref[src];switchscreen=6'>6. Print a Bible</A><BR>
+				<A href='?src=\ref[src];switchscreen=7'>7. Print a Manual</A><BR>"}
 			// END AUTOFIX
 			if(src.emagged)
-				dat += "<A href='?src=\ref[src];switchscreen=7'>7. Access the Forbidden Lore Vault</A><BR>"
+				dat += "<A href='?src=\ref[src];switchscreen=8'>8. Access the Forbidden Lore Vault</A><BR>"
 			if(src.arcanecheckout)
 				new /obj/item/weapon/tome(src.loc)
 				user << "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a dusty old tome sitting on the desk. You don't really remember printing it.</span>"
@@ -340,6 +341,28 @@ var/libcomp_menu
 				// END AUTOFIX
 			dat += "<A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
 		if(7)
+			dat += "<H3>Print a Manual</H3>"
+			dat += "<table>"
+
+			var/list/forbidden = list(
+				/obj/item/weapon/book/manual
+				)
+
+			if(!emagged)
+				forbidden |= /obj/item/weapon/book/manual/nuclear
+
+			var/manualcount = 0
+			var/obj/item/weapon/book/manual/M = null
+
+			for(var/manual_type in (typesof(/obj/item/weapon/book/manual) - forbidden))
+				M = new manual_type()
+				dat += "<tr><td><A href='?src=\ref[src];manual=[manualcount]'>[M.title]</A></td></tr>"
+				manualcount++
+				del(M)
+			dat += "</table>"
+			dat += "<BR><A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
+
+		if(8)
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\library\lib_machines.dm:231: dat += "<h3>Accessing Forbidden Lore Vault v 1.3</h3>"
@@ -404,11 +427,12 @@ var/libcomp_menu
 						bibledelay = 0
 
 				else
-					for (var/mob/V in hearers(src))
-						V.show_message("<b>[src]</b>'s monitor flashes, \"Bible printer currently unavailable, please wait a moment.\"")
+					visible_message("<b>[src]</b>'s monitor flashes, \"Bible printer currently unavailable, please wait a moment.\"")
 
 			if("7")
 				screenstate = 7
+			if("8")
+				screenstate = 8
 	if(href_list["arccheckout"])
 		if(src.emagged)
 			src.arcanecheckout = 1
@@ -516,6 +540,33 @@ var/libcomp_menu
 			if(isnum(orderid))
 				var/nhref = "src=\ref[src];targetid=[orderid]"
 				spawn() src.Topic(nhref, params2list(nhref), src)
+
+	if(href_list["manual"])
+		if(!bibledelay)
+			var/list/forbidden = list(
+				/obj/item/weapon/book/manual
+				)
+
+			if(!emagged)
+				forbidden |= /obj/item/weapon/book/manual/nuclear
+
+			var/targetmanual = text2num(href_list["manual"])
+			var/currentmanual = 0
+			for(var/manual_type in (typesof(/obj/item/weapon/book/manual) - forbidden))
+				if(currentmanual == targetmanual)
+					new manual_type(src.loc)
+					break
+				else
+					currentmanual++
+
+			bibledelay = 1
+			spawn(60)
+				bibledelay = 0
+
+		else
+			visible_message("<b>[src]</b>'s monitor flashes, \"Manual printer currently unavailable, please wait a moment.\"")
+
+
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
