@@ -1128,12 +1128,12 @@ Pressure: [env.return_pressure()]"}
 		F << "[typepath],[ns]"
 
 	usr << "\blue Dumped to machine_profiling.csv."
-	F = file("object_profiling.csv")
-	fdel(F)
-	F << "type,nanoseconds"
+	var/FF = file("object_profiling.csv")
+	fdel(FF)
+	FF << "type,nanoseconds"
 	for(var/typepath in object_profiling)
 		var/ns = object_profiling[typepath]
-		F << "[typepath],[ns]"
+		FF << "[typepath],[ns]"
 
 	usr << "\blue Dumped to object_profiling.csv."
 #endif
