@@ -1120,7 +1120,7 @@ Pressure: [env.return_pressure()]"}
 	set name = "Dump Machine and Object Profiling"
 
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
-	var/F =f ile("data/logs/profiling/machine_profiling_[date_string].csv")
+	var/F =file("data/logs/profiling/machine_profiling_[date_string].csv")
 	F << "type,nanoseconds"
 	for(var/typepath in machine_profiling)
 		var/ns = machine_profiling[typepath]
@@ -1142,7 +1142,7 @@ Pressure: [env.return_pressure()]"}
 	set name = "Dump Del Profiling"
 
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
-	var/F =f ile("data/logs/profiling/del_profiling_[date_string].csv")
+	var/F =file("data/logs/profiling/del_profiling_[date_string].csv")
 
 	F << "type,deletes"
 	for(var/typepath in del_profiling)
