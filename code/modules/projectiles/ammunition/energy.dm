@@ -17,6 +17,9 @@
 	e_cost = 83
 	select_name = "kill"
 
+/obj/item/ammo_casing/energy/laser/hos
+	e_cost = 50
+
 /obj/item/ammo_casing/energy/laser/practice
 	projectile_type = /obj/item/projectile/beam/practice
 	select_name = "practice"
@@ -37,6 +40,14 @@
 	e_cost = 200
 	select_name = "DESTROY"
 	fire_sound = 'sound/weapons/pulse.ogg'
+
+/obj/item/ammo_casing/energy/laser/pulse/breach
+	projectile_type = /obj/item/projectile/beam/pulse/breach
+	e_cost = 200
+	select_name = "breach"
+	fire_sound = 'sound/weapons/pulse.ogg'
+
+/obj/item/projectile/beam/pulse/breach
 
 /obj/item/ammo_casing/energy/laser/pulse/carbine
 	e_cost = 50
@@ -77,6 +88,9 @@
 
 /obj/item/ammo_casing/energy/electrode/gun
 	fire_sound = 'sound/weapons/gunshot.ogg'
+	e_cost = 100
+
+/obj/item/ammo_casing/energy/electrode/hos
 	e_cost = 100
 
 /obj/item/ammo_casing/energy/ion
