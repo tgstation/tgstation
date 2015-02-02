@@ -17,7 +17,7 @@
 	user.visible_message("<span class='notice'>[user] begins to insert the electronics into [target]'s scalp.</span>")
 
 /datum/surgery_step/insert_hack/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("<span class='notice'>[user] successfully augments [target]'s head!</span>")
+	user.visible_message("<span class='notice'>[user] successfully augments [target]'s head with a hacking aug!</span>")
 	user.drop_item()
 	tool.loc = target
 	target.hackimplant = tool
@@ -41,10 +41,10 @@
 	time = 60
 
 /datum/surgery_step/insert_welding/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("<span class='notice'>[user] begins to insert the goggles into [target]'s eyesockets.</span>")
+	user.visible_message("<span class='notice'>[user] begins to augment [target] with a welding aug...</span>")
 
 /datum/surgery_step/insert_welding/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("<span class='notice'>[user] successfully implants the welding goggles in [target]'s eyes!</span>")
+	user.visible_message("<span class='notice'>[user] successfully augments [target] with a welding shield aug!</span>")
 	user.drop_item()
 	qdel(tool)
 	var/obj/item/weapon/implant/toggle/weldingshield/I = new/obj/item/weapon/implant/toggle/weldingshield(target)
@@ -75,10 +75,10 @@
 	time = 60
 
 /datum/surgery_step/insert_flashlight/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("<span class='notice'>[user] begins to insert the goggles into [target]'s eyesockets.</span>")
+	user.visible_message("<span class='notice'>[user] begins to insert the flashlight aug into [target]...</span>")
 
 /datum/surgery_step/insert_flashlight/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("<span class='notice'>[user] successfully implants the welding goggles in [target]'s eyes!</span>")
+	user.visible_message("<span class='notice'>[user] successfully augments [target] with a flashlight aug.</span>")
 	user.drop_item()
 	qdel(tool)
 	var/obj/item/weapon/implant/toggle/flashlight/I = new/obj/item/weapon/implant/toggle/flashlight(target)
