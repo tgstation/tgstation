@@ -153,12 +153,6 @@
 				M.show_message("\red [user] gently taps [src] with [O]. ")
 
 
-/mob/living/simple_animal/construct/airflow_stun()
-	return
-
-/mob/living/simple_animal/construct/airflow_hit(atom/A)
-	return
-
 /////////////////Juggernaut///////////////
 
 

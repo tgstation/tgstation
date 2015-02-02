@@ -89,6 +89,12 @@
 /mob/living/simple_animal/updatehealth()
 	return
 
+/mob/living/simple_animal/airflow_stun()
+	return
+
+/mob/living/simple_animal/airflow_hit(atom/A)
+	return
+
 /mob/living/simple_animal/Life()
 
 	//Health
