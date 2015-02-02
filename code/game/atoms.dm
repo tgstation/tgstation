@@ -38,14 +38,6 @@ var/global/list/del_profiling = list()
 	// When this object moves. (args: loc)
 	var/event/on_moved = new()
 
-/atom/movable/Del()
-	if(!ticker || ticker.current_state != 3) return ..()
-	if(!("[type]" in del_profiling))
-		del_profiling["[type]"] = 0
-
-	del_profiling["[type]"] += 1
-	..()
-
 /atom/proc/beam_connect(var/obj/effect/beam/B)
 	if(!(B in beams))
 		beams.Add(B)
