@@ -2,7 +2,7 @@
 	name = "excavation drill"
 	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "excavationdrill0"
-	item_state = "syringe_0"
+	item_state = "jackhammer"
 	excavation_amount = 0.5
 	digspeed = 30
 	desc = "Advanced archaeological drill combining ultrasonic excitation and bluespace manipulation to provide extreme precision. The diamond tip is adjustable from 1 to 30 cm."
