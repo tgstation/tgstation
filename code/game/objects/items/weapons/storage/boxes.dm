@@ -602,3 +602,18 @@
 	new /obj/item/clothing/tie/armband/deputy(src)
 	new /obj/item/clothing/tie/armband/deputy(src)
 	new /obj/item/clothing/tie/armband/deputy(src)
+
+/obj/item/weapon/storage/box/metalfoam
+	name = "box of metal foam grenades"
+	desc = "To be used to rapidly seal hull breaches"
+	icon_state = "flashbang"
+
+/obj/item/weapon/storage/box/metalfoam/New()
+	..()
+	new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)
+	new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)
+	new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)
+	new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)
+	new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)
+	new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)
+	new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)
