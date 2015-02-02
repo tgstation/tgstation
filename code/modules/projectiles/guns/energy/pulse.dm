@@ -2,7 +2,7 @@
 	name = "pulse rifle"
 	desc = "A heavy-duty, multifaceted energy rifle with three modes. Preferred by front-line combat personnel."
 	icon_state = "pulse"
-	item_state = "pulse"
+	item_state = null
 	w_class = 4
 	force = 10
 	flags =  CONDUCT
@@ -12,6 +12,9 @@
 
 /obj/item/weapon/gun/energy/pulse/attack_self(mob/living/user as mob)
 	select_fire(user)
+
+/obj/item/weapon/gun/energy/pulse/emp_act(severity)
+	return
 
 /obj/item/weapon/gun/energy/pulse/loyalpin
 	pin = /obj/item/device/firing_pin/implant/loyalty
