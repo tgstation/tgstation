@@ -43,14 +43,16 @@
 	user.Move_Pulled(src)
 
 /turf/attackby(obj/item/C, mob/user)
-	if(cancable)
-		if(istype(C, /obj/item/stack/cable_coil))
-			var/obj/item/stack/cable_coil/coil = C
-			for(var/obj/structure/cable/LC in src)
-				if((LC.d1==0)||(LC.d2==0))
-					LC.attackby(C,user)
-					return
-			coil.place_turf(src, user)
+	if(cancable && istype(C, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/coil = C
+		for(var/obj/structure/cable/LC in src)
+			if((LC.d1==0)||(LC.d2==0))
+				LC.attackby(C,user)
+				return
+		coil.place_turf(src, user)
+		return 1
+
+	return 0
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if (!mover)
