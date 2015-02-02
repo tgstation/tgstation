@@ -597,7 +597,7 @@ var/global/list/g_fancy_list_of_types = null
 		"assassin",
 		"mobster",
 		"death commando",
-		"emergency response commander",
+		"emergency response officer",
 		"centcom official",
 		"centcom commander",
 		"special ops officer",
