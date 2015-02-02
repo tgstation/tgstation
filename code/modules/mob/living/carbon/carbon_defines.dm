@@ -15,3 +15,6 @@
 	var/obj/item/weapon/tank/internal = null
 
 	var/datum/dna/dna = null//Carbon
+
+//implants
+	var/hackimplant = null

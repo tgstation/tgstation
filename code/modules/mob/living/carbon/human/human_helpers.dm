@@ -88,6 +88,8 @@
 	if(istype(src.wear_mask, /obj/item/clothing/mask))		//mask
 		var/obj/item/clothing/mask/MFP = src.wear_mask
 		number += MFP.flash_protect
+	for(var/obj/item/weapon/implant/IFP in src)
+		number += IFP.flash_protect
 	return number
 
 ///tintcheck()
@@ -104,6 +106,8 @@
 	if(istype(src.wear_mask, /obj/item/clothing/mask))
 		var/obj/item/clothing/mask/MT = src.wear_mask
 		tinted += MT.tint
+	for(var/obj/item/weapon/implant/IT in src)
+		tinted += IT.tint
 	return tinted
 
 /mob/living/carbon/human/abiotic(var/full_body = 0)

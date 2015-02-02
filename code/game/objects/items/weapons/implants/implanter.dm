@@ -75,3 +75,11 @@
 	imp = new /obj/item/weapon/implant/emp(src)
 	..()
 	update_icon()
+
+/obj/item/weapon/implanter/welding
+	name = "implanter-welding"
+
+/obj/item/weapon/implanter/welding/New()
+	imp = new /obj/item/weapon/implant/toggle/weldingshield(src)
+	..()
+	update_icon()

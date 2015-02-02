@@ -72,7 +72,8 @@
 	src.add_fingerprint(usr)
 	if(href_list["pulse"])
 		var/temp_wire = href_list["wire"]
-		if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
+		var/mob/living/carbon/C = usr
+		if ((!istype(usr.get_active_hand(), /obj/item/device/multitool)) || (!C.hackimplant))
 			usr << "You need a multitool!"
 		else
 			if(src.wires[temp_wire])

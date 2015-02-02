@@ -5,9 +5,11 @@
 	action_button_is_hands_free = 1
 	var/activated = 1 //1 for implant types that can be activated, 0 for ones that are "always on" like loyalty implants
 	var/implanted = null
-	var/mob/living/imp_in = null
+	var/mob/living/carbon/imp_in = null
 	item_color = "b"
 	var/allow_reagents = 0
+	var/tint = 0
+	var/flash_protect = 0
 
 
 /obj/item/weapon/implant/proc/trigger(emote, mob/source)
