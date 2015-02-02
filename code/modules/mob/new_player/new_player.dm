@@ -346,9 +346,12 @@
 
 	create_dna(new_character)
 
-	if(config.force_random_names || appearance_isbanned(src))
-		client.prefs.random_character()
+	if(config.force_random_names)
 		client.prefs.real_name = random_name(gender)
+
+	if(appearance_isbanned(src))
+		client.prefs.random_character()
+
 	client.prefs.copy_to(new_character)
 
 	src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS cant last forever yo
