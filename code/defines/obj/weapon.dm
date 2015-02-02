@@ -493,7 +493,7 @@
 				if(ishuman(C))
 					dead_legs(C)
 				if(src)
-					del(src)
+					qdel(src)
 
 /obj/item/weapon/caution/proximity_sign/proc/dead_legs(mob/living/carbon/human/H as mob)
 	var/datum/organ/external/l = H.organs_by_name["l_leg"]

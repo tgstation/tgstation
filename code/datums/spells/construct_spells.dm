@@ -21,7 +21,7 @@
 	animation.icon_state = "cultfloor"
 	flick("cultfloor",animation)
 	spawn(10)
-		del(animation)
+		qdel(animation)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall
 	name = "Lesser Construction"
@@ -40,7 +40,7 @@
 	animation.icon_state = "cultwall"
 	flick("cultwall",animation)
 	spawn(10)
-		del(animation)
+		qdel(animation)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall/reinforced
 	name = "Greater Construction"
@@ -214,7 +214,7 @@
 			c_animation.icon_state = "rune_teleport"
 			flick("harvesting",c_animation)
 			spawn(10)
-				del(c_animation)
+				qdel(c_animation)
 			src.loc = destination
 			src << "<span class='warning'>You warp back to Nar-Sie[prey ? " along with your prey":""].</span>"
 		else

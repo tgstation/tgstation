@@ -225,7 +225,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	src.g_amount += g_amt * amount
 	user << "You insert [amount] sheet[amount>1 ? "s" : ""] to \the [src]."
 	if (O && O.loc == src)
-		del(O)
+		qdel(O)
 	busy = 0
 	src.updateUsrDialog()
 

@@ -38,6 +38,8 @@
 		for(var/obj/effect/beam/B in beams)
 			if(B && B.target == src)
 				B.target = null
+			if(B.master && B.master.target == src)
+				B.master.target = null
 		beams.len = 0
 	..()
 

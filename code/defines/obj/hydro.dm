@@ -1219,7 +1219,7 @@
 		return
 	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
 	new /obj/effect/plantsegment_controller(user.loc)
-	del(src)
+	qdel(src)
 
 
 
@@ -1320,7 +1320,7 @@
 						continue
 					G.attackby(NG, user)
 					usr << "You add the newly-formed wood to the stack. It now contains [NG.amount] planks."
-			del(src)
+			qdel(src)
 			return
 
 /obj/item/weapon/grown/sunflower // FLOWER POWER!

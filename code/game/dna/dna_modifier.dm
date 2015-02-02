@@ -200,7 +200,7 @@
 				if(I.reliability != 100 && crit_fail)
 					I.crit_fail = 1
 				I.loc = src.loc
-			del(src)
+			qdel(src)
 			return 1
 	else if(istype(item, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
@@ -224,7 +224,7 @@
 			return
 		put_in(G.affecting)
 		src.add_fingerprint(user)
-		del(G)
+		qdel(G)
 		return 1
 	return
 
@@ -361,7 +361,7 @@
 /obj/machinery/computer/scan_consolenew/blob_act()
 
 	if(prob(75))
-		del(src)
+		qdel(src)
 
 /obj/machinery/computer/scan_consolenew/power_change()
 	if(stat & BROKEN)
