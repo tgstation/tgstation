@@ -53,7 +53,7 @@
 		if(!("[type]" in del_profiling))
 			del_profiling["[type]"] = 0
 
-			del_profiling["[type]"] += 1
+		del_profiling["[type]"] += 1
 	..()
 
 
