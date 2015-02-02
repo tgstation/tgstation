@@ -59,9 +59,6 @@
 			deactivate()
 
 /obj/machinery/suspension_gen/interact(mob/user as mob)
-	if(isobserver(user))
-		user << "<span class='rose'>Stop! Can't touch this.</span>"
-		return
 	var/dat = "<b>Multi-phase mobile suspension field generator MK II \"Steadfast\"</b><br>"
 	if(cell)
 		var/colour = "red"
