@@ -19,7 +19,7 @@
 	..()
 	if (istype(W, /obj/item/weapon/wrench))
 		if(occupied)
-			user << "\red You can't disassemble [src] with meat and gore all over it."
+			user << "<span class='warning'>You can't disassemble [src] with meat and gore all over it.</span>"
 			return
 		new /obj/item/stack/sheet/metal( user.loc, 2 )
 		del(src)
@@ -31,19 +31,25 @@
 /obj/structure/kitchenspike/proc/handleGrab(obj/item/weapon/grab/G as obj, mob/user as mob)
 	if(!istype(G, /obj/item/weapon/grab))
 		return
-	if(istype(G.affecting, /mob/living/carbon/monkey))
-		if(src.occupied == 0)
-			src.icon_state = "spikebloody"
-			src.occupied = 1
-			src.meat = 5
-			src.meattype = 1
-			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\red [user] has forced [G.affecting] onto the spike, killing them instantly!"))
-			del(G.affecting)
-			del(G)
 
+	if(istype(G.affecting, /mob/living/carbon/monkey))
+		var/mob/living/carbon/monkey/M = G.affecting
+		if(M.wear_mask || M.l_hand || M.r_hand || M.back || M.uniform || M.hat)
+			user << "<span class='warning'>Subject may not have abiotic items on.</span>"
 		else
-			user << "\red The spike already has something on it, finish collecting its meat first!"
+			if(src.occupied == 0)
+				src.icon_state = "spikebloody"
+				src.occupied = 1
+				src.meat = 5
+				src.meattype = 1
+				for(var/mob/O in viewers(src, null))
+					O.show_message(text("<span class='warning'>[user] has forced [G.affecting] onto the spike, killing them instantly!</span>"))
+				del(G.affecting)
+				del(G)
+
+			else
+				user << "<span class='warning'>The spike already has something on it, finish collecting its meat first!</span>"
+
 	else if(istype(G.affecting, /mob/living/carbon/alien))
 		if(src.occupied == 0)
 			src.icon_state = "spikebloodygreen"
@@ -51,13 +57,15 @@
 			src.meat = 5
 			src.meattype = 2
 			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\red [user] has forced [G.affecting] onto the spike, killing them instantly!"))
+				O.show_message(text("<span class='warning'>[user] has forced [G.affecting] onto the spike, killing them instantly!</span>"))
 			del(G.affecting)
 			del(G)
+
 		else
-			user << "\red The spike already has something on it, finish collecting its meat first!"
+			user << "<span class='warning'>The spike already has something on it, finish collecting its meat first!</span>"
+
 	else
-		user << "\red They are too big for the spike, try something smaller!"
+		user << "<span class='warning'>They are too big for the spike, try something smaller!</span>"
 		return
 
 //	MouseDrop_T(var/atom/movable/C, mob/user)
