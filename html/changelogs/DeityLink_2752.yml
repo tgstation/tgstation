@@ -1,0 +1,4 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Fixed Monkeys being able to wear absolutely any item.
