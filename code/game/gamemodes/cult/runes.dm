@@ -1,10 +1,5 @@
 var/list/sacrificed = list()
 
-/obj/effect/rune
-	var/atom/movable/overlay/c_animation = null
-	var/nullblock = 0
-	var/mob/living/ajourn
-
 /obj/effect/rune/cultify()
 	return
 

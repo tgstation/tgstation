@@ -365,10 +365,12 @@ Made a proc so this is not repeated 14 (or more) times.*/
 				if(wizard.current.client)
 					for(var/image/I in wizard.current.client.images)
 						if(I.icon_state == "wizard" && I.loc == wizard_mind.current)
-							del(I)
+							//del(I)
+							wizard.current.client.images -= I
 
 		if(wizard_mind.current)
 			if(wizard_mind.current.client)
 				for(var/image/I in wizard_mind.current.client.images)
 					if(I.icon_state == "wizard")
-						del(I)
+						//del(I)
+						wizard_mind.current.client.images -= I

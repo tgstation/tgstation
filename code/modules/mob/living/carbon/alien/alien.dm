@@ -226,7 +226,8 @@ Des: Removes all infected images from the alien.
 	if (client)
 		for(var/image/I in client.images)
 			if(dd_hasprefix_case(I.icon_state, "infected"))
-				del(I)
+				//del(I)
+				client.images -= I
 	return
 
 /mob/living/carbon/alien/has_eyes()

@@ -616,7 +616,7 @@ datum/mind
 					var/obj/item/device/flash/flash = locate() in L
 					if (!flash)
 						usr << "\red Deleting flash failed!"
-					del(flash)
+					qdel(flash)
 
 				if("repairflash")
 					var/list/L = current.get_contents()
