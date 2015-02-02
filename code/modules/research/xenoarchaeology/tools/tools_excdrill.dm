@@ -2,10 +2,11 @@
 	name = "excavation drill"
 	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "excavationdrill0"
-	item_state = "jackhammer"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/xenoarch.dmi', "right_hand" = 'icons/mob/in-hand/right/xenoarch.dmi')
+	item_state = "excavationdrill"
 	excavation_amount = 0.5
 	digspeed = 30
-	desc = "Advanced archaeological drill combining ultrasonic excitation and bluespace manipulation to provide extreme precision. The diamond tip is adjustable from 1 to 30 cm."
+	desc = "Advanced archaeological drill combining ultrasonic excitation and bluespace manipulation to provide extreme precision. The diamond tip is adjustable from 1 to 30 cms."
 	drill_sound = 'sound/weapons/thudswoosh.ogg'
 	drill_verb = "drilling"
 	force = 15.0
@@ -14,7 +15,7 @@
 	attack_verb = list("drilled")
 	
 /obj/item/weapon/pickaxe/excavationdrill/attack_self(mob/user as mob)
-	var/depth = input("Put the desired depth (1-30 centimeters).", "Set Depth", 30) as num
+	var/depth = input("Put the desired depth (1-30 centimeters).", "Set Depth", excavation_amount*2) as num
 	if(depth>30 || depth<1)
 		user << "<span class='notice'>Invalid depth.</span>"
 		return
@@ -40,4 +41,4 @@
 /obj/item/weapon/pickaxe/excavationdrill/examine(mob/user)
 	..()
 	var/depth = excavation_amount*2
-	user << "<span class='info'>It is currently set at [depth]cms.</span>"
+	user << "<span class='info'>It is currently set at [depth]cm.</span>"
