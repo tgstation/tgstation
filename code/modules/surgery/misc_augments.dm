@@ -62,11 +62,11 @@
 /* FLASHLIGHT AUGMENT */
 // Allows the user to toggle an internal flashlight on and off at any time.
 
-/datum/surgery/welding_augment
-	name = "welding augment"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/insert_welding, /datum/surgery_step/close)
+/datum/surgery/flashlight_augment
+	name = "flashlight augment"
+	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/insert_flashlight, /datum/surgery_step/close)
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
-	location = "eyes"
+	location = "head"
 
 
 //inserting welding goggles.
