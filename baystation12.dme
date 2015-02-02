@@ -1522,6 +1522,7 @@
 #include "code\modules\research\xenoarchaeology\tools\tools_anoscanner.dm"
 #include "code\modules\research\xenoarchaeology\tools\tools_coresampler.dm"
 #include "code\modules\research\xenoarchaeology\tools\tools_depthscanner.dm"
+#include "code\modules\research\xenoarchaeology\tools\tools_excdrill.dm"
 #include "code\modules\research\xenoarchaeology\tools\tools_locater.dm"
 #include "code\modules\research\xenoarchaeology\tools\tools_pickaxe.dm"
 #include "code\modules\scripting\Errors.dm"
