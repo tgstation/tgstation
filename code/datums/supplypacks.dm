@@ -530,16 +530,8 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/medical/supplies
 	name = "Medical Supplies Crate"
-	contains = list(/obj/item/weapon/reagent_containers/glass/bottle/charcoal,
-					/obj/item/weapon/reagent_containers/glass/bottle/charcoal,
-					/obj/item/weapon/reagent_containers/glass/bottle/epinephrine,
-					/obj/item/weapon/reagent_containers/glass/bottle/epinephrine,
-					/obj/item/weapon/reagent_containers/glass/bottle/morphine,
-					/obj/item/weapon/reagent_containers/glass/bottle/morphine,
-					/obj/item/weapon/reagent_containers/glass/bottle/morphine,
-					/obj/item/weapon/reagent_containers/glass/bottle/morphine,
-					/obj/item/weapon/reagent_containers/glass/bottle/morphine,
-					/obj/item/weapon/reagent_containers/glass/bottle/morphine,
+	contains = list(/obj/item/weapon/reagent_containers/glass/bottle/antitoxin,
+					/obj/item/weapon/reagent_containers/glass/bottle/antitoxin,
 					/obj/item/weapon/reagent_containers/glass/bottle/toxin,
 					/obj/item/weapon/reagent_containers/glass/bottle/toxin,
 					/obj/item/weapon/reagent_containers/glass/beaker/large,
@@ -596,8 +588,6 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/reagent_containers/glass/bottle/pierrot_throat,
 					/obj/item/weapon/reagent_containers/glass/bottle/brainrot,
 					/obj/item/weapon/reagent_containers/glass/bottle/hullucigen_virion,
-					/obj/item/weapon/reagent_containers/glass/bottle/anxiety,
-					/obj/item/weapon/reagent_containers/glass/bottle/beesease,
 					/obj/item/weapon/storage/box/syringes,
 					/obj/item/weapon/storage/box/beakers,
 					/obj/item/weapon/reagent_containers/glass/bottle/mutagen)
@@ -1200,7 +1190,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/shoes/laceup,
 					/obj/item/clothing/shoes/laceup,
 					/obj/item/clothing/shoes/laceup,
-					/obj/item/clothing/under/suit_jacket/charcoal,
+					/obj/item/clothing/under/suit_jacket/anti_toxin,
 					/obj/item/clothing/under/suit_jacket/navy,
 					/obj/item/clothing/under/suit_jacket/burgundy,
 					/obj/item/clothing/under/suit_jacket/checkered,

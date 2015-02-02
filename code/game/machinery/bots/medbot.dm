@@ -32,10 +32,10 @@
 	var/stationary_mode = 0 //If enabled, the Medibot will not move automatically.
 	radio_frequency = MED_FREQ //Medical frequency
 	//Setting which reagents to use to treat what by default. By id.
-	var/treatment_brute = "salglu_solution"
-	var/treatment_oxy = "salbutamol"
-	var/treatment_fire = "salglu_solution"
-	var/treatment_tox = "charcoal"
+	var/treatment_brute = "bicaridine"
+	var/treatment_oxy = "dexalinp"
+	var/treatment_fire = "bicaridine"
+	var/treatment_tox = "anti_toxin"
 	var/treatment_virus = "spaceacillin"
 	var/treat_virus = 1 //If on, the bot will attempt to treat viral infections, curing them if possible.
 	var/shut_up = 0 //self explanatory :)
@@ -553,8 +553,6 @@
 		A.skin = "tox"
 	else if(istype(src,/obj/item/weapon/storage/firstaid/o2))
 		A.skin = "o2"
-	else if(istype(src,/obj/item/weapon/storage/firstaid/brute))
-		A.skin = "brute"
 
 	qdel(S)
 	user.put_in_hands(A)

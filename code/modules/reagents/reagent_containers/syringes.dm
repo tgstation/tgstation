@@ -223,38 +223,67 @@
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		overlays += filling
 
-/obj/item/weapon/reagent_containers/syringe/epinephrine
-	name = "syringe (epinephrine)"
-	desc = "Contains epinephrine - used to stabilize patients."
-	list_reagents = list("epinephrine" = 15)
+/obj/item/weapon/reagent_containers/syringe/inaprovaline
+	name = "syringe (inaprovaline)"
+	desc = "Contains inaprovaline - used to stabilize patients."
+	New()
+		..()
+		reagents.add_reagent("inaprovaline", 15)
+		mode = SYRINGE_INJECT
+		update_icon()
 
-/obj/item/weapon/reagent_containers/syringe/charcoal
-	name = "syringe (charcoal)"
-	desc = "Contains charcoal."
-	list_reagents = list("charcoal" = 15)
+/obj/item/weapon/reagent_containers/syringe/antitoxin
+	name = "syringe (anti-toxin)"
+	desc = "Contains anti-toxins."
+	New()
+		..()
+		reagents.add_reagent("anti_toxin", 15)
+		mode = SYRINGE_INJECT
+		update_icon()
 
 /obj/item/weapon/reagent_containers/syringe/antiviral
 	name = "syringe (spaceacillin)"
 	desc = "Contains antiviral agents."
-	list_reagents = list("spaceacillin" = 15)
-
-/obj/item/weapon/reagent_containers/syringe/stimulants
-	name = "Stimpack"
-	desc = "Contains stimulants."
-	amount_per_transfer_from_this = 50
-	volume = 50
-	list_reagents = list("stimulants" = 50)
-
-/obj/item/weapon/reagent_containers/syringe/calomel
-	name = "syringe (calomel)"
-	desc = "Contains calomel."
-	list_reagents = list("calomel" = 15)
-
-/obj/item/weapon/reagent_containers/syringe/lethal
-	name = "lethal injection syringe"
-	desc = "A syringe used for lethal injections. It can hold up to 50 units."
-	amount_per_transfer_from_this = 50
-	volume = 50
+	New()
+		..()
+		reagents.add_reagent("spaceacillin", 15)
+		mode = SYRINGE_INJECT
+		update_icon()
 
 /obj/item/weapon/reagent_containers/syringe/lethal/choral
-	list_reagents = list("chloralhydrate" = 50)
+	New()
+		..()
+		reagents.add_reagent("chloralhydrate", 50)
+		mode = SYRINGE_INJECT
+		update_icon()
+
+
+//Robot syringes
+//Not special in any way, code wise. They don't have added variables or procs.
+/obj/item/weapon/reagent_containers/syringe/robot/antitoxin
+	name = "syringe (anti-toxin)"
+	desc = "Contains anti-toxins."
+	New()
+		..()
+		reagents.add_reagent("anti_toxin", 15)
+		mode = SYRINGE_INJECT
+		update_icon()
+
+/obj/item/weapon/reagent_containers/syringe/robot/inoprovaline
+	name = "syringe (inoprovaline)"
+	desc = "Contains inaprovaline - used to stabilize patients."
+	New()
+		..()
+		reagents.add_reagent("inaprovaline", 15)
+		mode = SYRINGE_INJECT
+		update_icon()
+
+/obj/item/weapon/reagent_containers/syringe/robot/mixed
+	name = "syringe (mixed)"
+	desc = "Contains inaprovaline & anti-toxins."
+	New()
+		..()
+		reagents.add_reagent("inaprovaline", 7)
+		reagents.add_reagent("anti_toxin", 8)
+		mode = SYRINGE_INJECT
+		update_icon()
