@@ -19,9 +19,12 @@ var/global/list/object_profiling = list()
 			O.process()
 			#ifdef PROFILE_MACHINES
 			var/time_end = world.timeofday
-			if(!(O.type in machine_profiling))
-				machine_profiling[O.type] = 0
-			machine_profiling[O.type] += (time_end - time_start)
+			if(O)
+				if(!(O.type in machine_profiling))
+					machine_profiling[O.type] = 0
+				machine_profiling[O.type] += (time_end - time_start)
+			else
+				processing_objects.Cut(i,i+1)
 			#endif
 		else
 			processing_objects.Cut(i,i+1)
