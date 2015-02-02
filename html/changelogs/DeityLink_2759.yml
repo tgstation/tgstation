@@ -1,4 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - bugfix: Fixed an issue that caused humans and mobs in general to not play any of the "gibbed" sounds.
