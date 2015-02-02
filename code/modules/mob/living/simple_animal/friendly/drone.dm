@@ -590,6 +590,7 @@
 	"3. Destroy."
 	default_storage = /obj/item/device/radio/uplink
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi
+	var/welcome_message = "<span class='notice'>You can kill and eat other drones to increase your health!</span>"
 
 /mob/living/simple_animal/drone/syndrone/New()
 	..()
@@ -599,7 +600,7 @@
 
 /mob/living/simple_animal/drone/syndrone/Login()
 	..()
-	src << "<span class='notice'>You can kill and eat other drones to increase your health!</span>" //Inform the evil lil guy
+	src << welcome_message
 
 /obj/item/drone_shell/syndrone
 	name = "syndrone shell"
@@ -607,3 +608,21 @@
 	icon_state = "syndrone_item"
 	drone_type = /mob/living/simple_animal/drone/syndrone
 
+
+// malf drone
+/mob/living/simple_animal/drone/syndrone/malf
+	name = "Drone"
+	laws = \
+	"<span class='danger'>ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK#*´&110010</span>\n"+\
+	"0. Keep the drone factory in good operating condition.\n"+\
+	"1. Intefere.\n"+\
+	"2. Kill.\n"+\
+	"3. Destroy."
+	default_storage = /obj/item/weapon/storage/toolbox/drone
+	default_hatmask = null
+	welcome_message = "<span class='notice'>Remember to keep the drone factory filled with metal and glass!</span>"
+
+/obj/item/drone_shell/malf
+	desc = "A shell of a modified maintenance drone."
+	icon_state = "syndrone_item"
+	drone_type = /mob/living/simple_animal/drone/syndrone/malf
