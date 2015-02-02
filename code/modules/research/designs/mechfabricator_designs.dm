@@ -683,3 +683,36 @@
 	construction_time=150
 	build_path = /obj/item/drone_shell
 	category = list("Misc")
+
+/datum/design/hack_aug
+	name = "Hacking Augmentation"
+	desc = "An augment kit that can be implanted to allow for hacking without the use of a multitool."
+	id = "hack_aug"
+	req_tech = list("programming" = 3, "biotech" = 3)
+	build_type = MECHFAB
+	materials = list("$metal" = 500, "$glass" = 300)
+	construction_time = 50
+	build_path = /obj/item/augment/hacking
+	category = list("Augments")
+
+/datum/design/weld_aug
+	name = "Welding Shield Augmentation"
+	desc = "A vision augment that allows you to toggle implanted welding visors for your eyes."
+	id = "weld_aug"
+	req_tech = list("engineering" = 3, "biotech" = 3)
+	build_type = MECHFAB
+	materials = list("$metal" = 1000, "$glass" = 800)
+	construction_time = 50
+	build_path = /obj/item/augment/welding
+	category = list("Augments")
+
+/datum/design/flashlight_aug
+	name = "Illumination Augmentation"
+	desc = "A flashlight augment that allows the user to illuminate their proximity on demand."
+	id = "flashlight_aug"
+	req_tech = list("engineering" = 3, "biotech" = 3)
+	build_type = MECHFAB
+	materials = list("$metal" = 400, "$glass" = 600)
+	construction_time = 50
+	build_path = /obj/item/augment/flashlight
+	category = list("Augments")

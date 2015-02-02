@@ -44,6 +44,7 @@
 								"Phazon",
 								"Exosuit Equipment",
 								"Cyborg Upgrade Modules",
+								"Augments",
 								"Misc"
 								)
 

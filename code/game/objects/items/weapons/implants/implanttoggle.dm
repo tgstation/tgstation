@@ -9,7 +9,7 @@
 
 
 /obj/item/weapon/implant/toggle/weldingshield
-	name = "welding lense implant"
+	name = "welding lense augment"
 	desc = "Allows for convenient eye protection when welding."
 	icon_state = "weldingshield"
 	flash_protect = 2
@@ -24,3 +24,16 @@
 	else
 		flash_protect = 0
 		tint = 0
+
+/obj/item/weapon/implant/toggle/flashlight
+	name = "flashlight augment"
+	desc = "Allows for convenient illumination."
+	icon_state = "flashlight"
+	var/brightness_on = 4
+
+/obj/item/weapon/implant/toggle/flashlight/activate()
+	..()
+	if(on)
+		usr.AddLuminosity(brightness_on)
+	else
+		usr.AddLuminosity(-brightness_on)
