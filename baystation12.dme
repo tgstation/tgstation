@@ -1053,6 +1053,8 @@
 #include "code\modules\media\broadcast\transmitter.dm"
 #include "code\modules\media\broadcast\receivers\radio.dm"
 #include "code\modules\media\broadcast\transmitters\broadcast.dm"
+#include "code\modules\migrations\migration.dm"
+#include "code\modules\migrations\migration_controller.dm"
 #include "code\modules\mining\abandonedcrates.dm"
 #include "code\modules\mining\debug_shit.dm"
 #include "code\modules\mining\equipment_locker.dm"
