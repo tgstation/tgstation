@@ -59,6 +59,9 @@
 			deactivate()
 
 /obj/machinery/suspension_gen/interact(mob/user as mob)
+	if(isobserver(user))
+		user << "<span class='rose'>Stop! Can't touch this.</span>"
+		return
 	var/dat = "<b>Multi-phase mobile suspension field generator MK II \"Steadfast\"</b><br>"
 	if(cell)
 		var/colour = "red"
@@ -329,7 +332,7 @@
 /obj/machinery/suspension_gen/verb/toggle()
 	set src in view(1)
 	set name = "Rotate suspension gen (clockwise)"
-	set category = "IC"
+	set category = "Object"
 
 	if(anchored)
 		usr << "\red You cannot rotate [src], it has been firmly fixed to the floor."
