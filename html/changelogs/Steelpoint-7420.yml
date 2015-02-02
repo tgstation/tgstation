@@ -34,5 +34,6 @@ delete-after: True
 # Please surround your changes in single (') or double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
 changes: 
   - rscadd: SS13's Head of Security has received a new attempted 1:1 recreation of a Old Earth weapon, the Captain's Antique Laser Gun.
-  - rscadd: This gun features three firing modes, Tase, Laser and Disable. However this gun lacks the capability to recharge in the field, and is extreamly expensive.
+  - rscadd: This gun features three firing modes, Tase, Laser and Breach. However this gun lacks the capability to recharge in the field, and is extreamly expensive.
+  - rscadd: The gun's Breach setting fires a low powered Pulse round, it consumes a large amount of power, has a limited range of two tiles and deals the same damage as a laser does. However it is effective in destroying walls, hence the Breach title.
   - rscadd: INTERCEPTED TRANSMISSION REPORT: The Syndicate have expressed a interest in this new weapon, and have instructed field agents to do whatever they can to steal this weapon.
