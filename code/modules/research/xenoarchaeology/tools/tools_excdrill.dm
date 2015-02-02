@@ -1,9 +1,9 @@
 /obj/item/weapon/pickaxe/excavationdrill
 	name = "excavation drill"
 	icon = 'icons/obj/xenoarchaeology.dmi'
-	icon_state = "excavationdrill"
+	icon_state = "excavationdrill0"
 	item_state = "syringe_0"
-	excavation_amount = 15
+	excavation_amount = 0.5
 	digspeed = 30
 	desc = "Advanced archaeological drill combining ultrasonic excitation and bluespace manipulation to provide extreme precision. The diamond tip is adjustable from 1 to 30 cm."
 	drill_sound = 'sound/weapons/thudswoosh.ogg'
@@ -20,6 +20,22 @@
 		return
 	excavation_amount = depth/2
 	user << "<span class='notice'>You set the depth to [depth]cm.</span>"
+	if (depth<4)
+		icon_state = "excavationdrill0"
+	else if (depth >=4 && depth <8)
+		icon_state = "excavationdrill1"
+	else if (depth >=8 && depth <12)
+		icon_state = "excavationdrill2"
+	else if (depth >=12 && depth <16)
+		icon_state = "excavationdrill3"
+	else if (depth >=16 && depth <20)
+		icon_state = "excavationdrill4"
+	else if (depth >=20 && depth <24)
+		icon_state = "excavationdrill5"
+	else if (depth >=24 && depth <28)
+		icon_state = "excavationdrill6"
+	else
+		icon_state = "excavationdrill7"
 
 /obj/item/weapon/pickaxe/excavationdrill/examine(mob/user)
 	..()
