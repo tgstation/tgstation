@@ -36,6 +36,7 @@
 	)
 
 	override_icon = 'icons/mob/horror.dmi'
+	has_mutant_race = 0
 
 /client/proc/changeling_force_airlock()
 	set category = "Changeling"

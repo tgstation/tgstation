@@ -49,9 +49,6 @@ Attach to transfer valve and open. BOOM.
 	if(fire_dmi && fire_sprite)
 		fire_overlay = image(fire_dmi,fire_sprite)
 		overlays += fire_overlay
-	var/turf/T = get_turf(src)
-	if(! (locate(/obj/fire) in T))
-		new /obj/fire(T)
 
 /atom/proc/melt()
 	return //lolidk
@@ -63,17 +60,6 @@ Attach to transfer valve and open. BOOM.
 	if(autoignition_temperature && !on_fire && exposed_temperature > autoignition_temperature)
 		ignite(exposed_temperature)
 		return 1
-
-	if(melt_temperature)
-		if(melt_temperature <= exposed_temperature && !molten && prob(5))
-			molten=1
-			melt()
-			return 1
-		if(melt_temperature > exposed_temperature && molten && prob(5))
-			molten=0
-			solidify()
-			return 1
-
 	return 0
 
 /turf
@@ -206,8 +192,9 @@ Attach to transfer valve and open. BOOM.
 	for(var/mob/living/carbon/human/M in loc)
 		M.FireBurn(firelevel, air_contents.temperature, air_contents.return_pressure() ) //Burn the humans!
 
-	for(var/atom/A in loc)
+	/*for(var/atom/A in loc)
 		A.fire_act(air_contents, air_contents.temperature, air_contents.return_volume())
+	*/
 
 	// Burn the turf, too.
 	S.fire_act(air_contents, air_contents.temperature, air_contents.return_volume())

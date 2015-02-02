@@ -265,6 +265,9 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		var/x
 		M.shakecamera = 1
 		for(x=0; x<duration, x++)
+			if(!M || !M.client)
+				M.shakecamera = 0
+				return //somebody disconnected while being shaken
 			M.client.eye = locate(dd_range(1,M.loc.x+rand(-strength,strength),world.maxx),dd_range(1,M.loc.y+rand(-strength,strength),world.maxy),M.loc.z)
 			sleep(1)
 		M.shakecamera = 0

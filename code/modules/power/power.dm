@@ -191,7 +191,7 @@
 	for(var/datum/powernet/PN in powernets)
 		del(PN)
 
-	powernets.Cut()
+	powernets.len = 0
 
 	for(var/obj/structure/cable/PC in cable_list)
 		if(!PC.powernet)
@@ -249,9 +249,10 @@
 	for(var/obj/structure/cable/Cable in net2.cables) // merge cables
 		net1.add_cable(Cable)
 
-	for(var/obj/machinery/power/Node in net2.nodes) // merge power machines
-		if(!Node.connect_to_network())
-			Node.disconnect_from_network() // if somehow we can't connect the machine to the new powernet, disconnect it from the old nonetheless
+	if(net2) // not nulled, there are still nodes need to be merged
+		for(var/obj/machinery/power/Node in net2.nodes) // merge power machines
+			if(!Node.connect_to_network())
+				Node.disconnect_from_network() // if somehow we can't connect the machine to the new powernet, disconnect it from the old nonetheless
 
 	return net1
 
@@ -439,3 +440,10 @@
 
 		if(FINDME)
 			return FINDME
+
+/obj/machinery/proc/addStaticPower(value, powerchannel)
+	if(!areaMaster)
+		return
+	areaMaster.addStaticPower(value, powerchannel)
+/obj/machinery/proc/removeStaticPower(value, powerchannel)
+	addStaticPower(-value, powerchannel)

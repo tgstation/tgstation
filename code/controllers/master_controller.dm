@@ -4,7 +4,6 @@
 
 var/global/datum/controller/game_controller/master_controller //Set in world.New()
 
-var/global/last_tick_timeofday = world.timeofday
 var/global/last_tick_duration = 0
 
 var/global/air_processing_killed = 0
@@ -144,10 +143,6 @@ datum/controller/game_controller/proc/setup_objects()
 			if (isnull(failsafe))
 				new /datum/controller/failsafe()
 
-			var/currenttime = world.timeofday
-			last_tick_duration = (currenttime - last_tick_timeofday) / 10
-			last_tick_timeofday = currenttime
-
 			if (processing)
 				iteration++
 				var/timer
@@ -262,7 +257,7 @@ datum/controller/game_controller/proc/setup_objects()
 
 datum/controller/game_controller/proc/processMobs()
 	var/i = 1
-	expensive_mobs.Cut()
+	expensive_mobs.len = 0
 	while(i<=mob_list.len)
 		var/mob/M = mob_list[i]
 		if(M)
@@ -273,7 +268,8 @@ datum/controller/game_controller/proc/processMobs()
 				expensive_mobs += M
 			i++
 			continue
-		mob_list.Cut(i,i+1)
+		if(!mob_list.Remove(null))
+			mob_list.Cut(i,i+1)
 
 /datum/controller/game_controller/proc/processDiseases()
 	for (var/datum/disease/Disease in active_diseases)
@@ -286,7 +282,7 @@ datum/controller/game_controller/proc/processMobs()
 
 /datum/controller/game_controller/proc/processMachines()
 	#ifdef PROFILE_MACHINES
-	machine_profiling.Cut()
+	machine_profiling.len = 0
 	#endif
 
 	for (var/obj/machinery/Machinery in machines)

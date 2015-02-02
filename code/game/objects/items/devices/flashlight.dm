@@ -60,9 +60,11 @@
 			return
 
 		var/mob/living/carbon/human/H = M	//mob has protective eyewear
-		if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
-			user << "<span class='notice'>You're going to need to remove that [(H.head && H.head.flags & HEADCOVERSEYES) ? "helmet" : (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) ? "mask": "glasses"] first.</span>"
-			return
+		if(istype(M, /mob/living/carbon/human))
+			var/obj/item/eye_protection = H.get_body_part_coverage(EYES)
+			if(eye_protection)
+				user << "<span class='notice'>You're going to need to remove their [eye_protection] first.</span>"
+				return
 
 		if(M == user)	//they're using it on themselves
 			if(!M.blinded)

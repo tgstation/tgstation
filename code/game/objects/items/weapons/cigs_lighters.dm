@@ -58,6 +58,26 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else
 		return ..()
 
+/obj/item/weapon/match/strike_anywhere
+	name = "strike-anywhere match"
+	smoketime = 10
+
+/obj/item/weapon/match/strike_anywhere/afterattack(atom/target, mob/user, prox_flags)
+	if(!prox_flags == 1)
+		return
+
+	if(!(get_turf(src) == get_turf(user)))
+		return
+
+	if(lit)
+		return
+
+	if(istype(target, /obj) || istype(target, /turf))
+		lit = 1
+		icon_state = "match_lit"
+		processing_objects.Add(src)
+		user << "You strike \the [src] on \the [target]."
+
 //////////////////
 //FINE SMOKABLES//
 //////////////////
@@ -188,7 +208,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 		reagents.handle_reactions()
 		// This ain't ready yet.
-		//overlays.Cut()
+		//overlays.len = 0
 		//overlays += image('icons/mob/mask.dmi',overlay_on,LIGHTING_LAYER+1)
 		icon_state = icon_on
 		item_state = icon_on

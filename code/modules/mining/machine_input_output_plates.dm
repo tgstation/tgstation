@@ -7,6 +7,7 @@
 	density = 0
 	anchored = 1.0
 	New()
+		..()
 		icon_state = "blank"
 
 /obj/machinery/mineral/output
@@ -16,6 +17,7 @@
 	density = 0
 	anchored = 1.0
 	New()
+		..()
 		icon_state = "blank"
 
 /obj/machinery/mineral/selected_output
@@ -26,4 +28,5 @@
 	density = 0
 	anchored = 1.0
 	New()
+		..()
 		icon_state = "blank"

@@ -162,7 +162,7 @@ var/global/list/image/splatter_cache=list()
 	blood.Blend(basecolor,ICON_MULTIPLY)
 
 	icon = blood
-	overlays.Cut()
+	overlays.len = 0
 	overlays += giblets
 
 /obj/effect/decal/cleanable/blood/gibs/up
@@ -180,7 +180,9 @@ var/global/list/image/splatter_cache=list()
 /obj/effect/decal/cleanable/blood/gibs/core
 	random_icon_states = list("gibmid1", "gibmid2", "gibmid3")
 
-
+/obj/effect/decal/cleanable/blood/gibs/core/New()
+	..()
+	playsound(src, get_sfx("gib"),50,1)
 
 
 

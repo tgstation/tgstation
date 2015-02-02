@@ -194,13 +194,17 @@
 
 
 /obj/item/weapon/storage/pill_bottle/dice
-	name = "pack of dice"
-	desc = "It's a small container with dice inside."
-	m_amt = 20
-	g_amt = 70
+	name = "bag of dice"
+	desc = "Contains all the luck you'll ever need."
+	icon = 'icons/obj/dice.dmi'
+	icon_state = "dicebag"
 
-	New()
-		..()
-		new /obj/item/weapon/dice( src )
-		new /obj/item/weapon/dice/d20( src )
-
+/obj/item/weapon/storage/pill_bottle/dice/New()
+	..()
+	new /obj/item/weapon/dice/d4( src )
+	new /obj/item/weapon/dice( src )
+	new /obj/item/weapon/dice/d8( src )
+	new /obj/item/weapon/dice/d10( src )
+	new /obj/item/weapon/dice/d00( src )
+	new /obj/item/weapon/dice/d12( src )
+	new /obj/item/weapon/dice/d20( src )

@@ -75,7 +75,7 @@
 			overlays += "defib_emag"
 		else
 			user << "<span class='notice'>You reset [src]'s safety protocols.</span>"
-			overlays.Cut()
+			overlays.len = 0
 	else
 		. = ..()
 	return

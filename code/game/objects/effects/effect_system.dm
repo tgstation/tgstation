@@ -72,6 +72,9 @@ would spawn and follow the beaker, even if it is carried or thrown.
 
 	proc/start()
 
+/obj/effect/canSingulothPull(var/obj/machinery/singularity/singulo)
+	return 0
+
 /////////////////////////////////////////////
 // GENERIC STEAM SPREAD SYSTEM
 
@@ -381,6 +384,11 @@ steam.start() -- spawns the effect
 /obj/effect/effect/smoke/chem
 	icon = 'icons/effects/chemsmoke.dmi'
 
+/obj/effect/effect/smoke/Destroy()
+	if(reagents)
+		qdel(reagents)
+		reagents = null
+	..()
 /obj/effect/effect/smoke/chem/New()
 	. = ..()
 	create_reagents(500)
@@ -738,6 +746,7 @@ steam.start() -- spawns the effect
 		flick("[icon_state]-disolve", src)
 		sleep(5)
 		qdel(src)
+	AddToProfiler()
 
 /obj/effect/effect/foam/fire/process()
 	if(--amount < 0)
@@ -893,7 +902,7 @@ steam.start() -- spawns the effect
 		return
 
 	attack_hand(var/mob/user)
-		user.delayNextMove(10)
+		user.delayNextAttack(10)
 		if ((M_HULK in user.mutations) || (prob(75 - metal*25)))
 			user << "\blue You smash through the metal foam wall."
 			for(var/mob/O in oviewers(user))

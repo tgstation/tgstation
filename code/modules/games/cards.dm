@@ -203,7 +203,7 @@
 		name = "a playing card"
 		desc = "A playing card."
 
-	overlays.Cut()
+	overlays.len = 0
 
 	if (cards.len == 1)
 		var/datum/playingcard/P = cards[1]

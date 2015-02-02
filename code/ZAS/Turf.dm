@@ -265,3 +265,7 @@
 	if(!air) air = new/datum/gas_mixture
 	air.copy_from(zone.air)
 	air.group_multiplier = 1
+
+
+/turf/attack_hand(mob/user as mob)
+	user.Move_Pulled(src)

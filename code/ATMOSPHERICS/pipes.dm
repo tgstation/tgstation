@@ -149,7 +149,7 @@
 
 /obj/machinery/atmospherics/pipe/simple/process()
 	if(!parent) //This should cut back on the overhead calling build_network thousands of times per cycle
-		..()
+		build_network()
 	else
 		. = PROCESS_KILL
 

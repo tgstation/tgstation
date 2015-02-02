@@ -227,7 +227,7 @@
 	set popup_menu = 0
 	if(usr!=src.occupant)
 		return
-	use_internal_tank = !use_internal_tank
+	src.use_internal_tank = !src.use_internal_tank
 	src.occupant << "<span class='notice'>Now taking air from [use_internal_tank?"internal airtank":"environment"].</span>"
 	return
 
@@ -347,7 +347,7 @@
 
 	if(usr != src.occupant)
 		return
-	inertia_dir = 0 // engage reverse thruster and power down pod
+	src.inertia_dir = 0 // engage reverse thruster and power down pod
 	src.occupant.loc = src.loc
 	src.occupant = null
 	usr << "<span class='notice'>You climb out of the pod</span>"
@@ -408,9 +408,10 @@
 		return
 
 /obj/spacepod/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	..()
-	if(dir == 1 || dir == 4)
-		src.loc.Entered(src)
+	var/oldloc = src.loc
+	..(NewLoc, Dir)
+	if(dir)
+		src.loc.Entered(src, oldloc)
 /obj/spacepod/proc/Process_Spacemove(var/check_drift = 0, mob/user)
 	var/dense_object = 0
 	if(!user)
@@ -447,7 +448,8 @@
 					inertia_dir = 0
 					moveship = 0
 		if(moveship)
-			step(src, direction)
+			if(!step(src, direction))
+				Move(get_step(src,direction), direction)
 			if(istype(src.loc, /turf/space))
 				inertia_dir = direction
 	else

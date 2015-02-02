@@ -68,6 +68,8 @@
 	var/supernatural = 0
 	var/purge = 0
 
+	languages = ALL
+
 /mob/living/simple_animal/rejuvenate()
 	var/turf/T = get_turf(src)
 	T.turf_animation('icons/effects/64x64.dmi',"rejuvinate",-16,0,MOB_LAYER+1,'sound/effects/rejuvinate.ogg')
@@ -229,7 +231,7 @@
 		adjustBruteLoss(unsuitable_atoms_damage)
 	return 1
 
-/mob/living/simple_animal/Bumped(AM as mob|obj)
+/mob/living/simple_animal/Bump(AM as mob|obj)
 	if(!AM) return
 
 	if(resting || buckled)
@@ -463,8 +465,8 @@
 /mob/living/simple_animal/Stat()
 	..()
 
-	statpanel("Status")
-	stat(null, "Health: [round((health / maxHealth) * 100)]%")
+	if(statpanel("Status"))
+		stat(null, "Health: [round((health / maxHealth) * 100)]%")
 
 /mob/living/simple_animal/proc/Die()
 	health = 0 // so /mob/living/simple_animal/Life() doesn't magically revive them

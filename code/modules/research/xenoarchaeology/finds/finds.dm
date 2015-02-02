@@ -86,6 +86,7 @@
 	var/find_type = 0
 
 /obj/item/weapon/archaeological_find/New(loc, var/new_item_type)
+	AddToProfiler()
 	if(new_item_type)
 		find_type = new_item_type
 	else
@@ -223,8 +224,8 @@
 			var/list/possible_spawns = list()
 			possible_spawns += /obj/item/stack/sheet/metal
 			possible_spawns += /obj/item/stack/sheet/plasteel
-			possible_spawns += /obj/item/stack/sheet/glass
-			possible_spawns += /obj/item/stack/sheet/rglass
+			possible_spawns += /obj/item/stack/sheet/glass/glass
+			possible_spawns += /obj/item/stack/sheet/glass/rglass
 			possible_spawns += /obj/item/stack/sheet/mineral/plasma
 			possible_spawns += /obj/item/stack/sheet/mineral/mythril
 			possible_spawns += /obj/item/stack/sheet/mineral/gold
@@ -369,7 +370,7 @@
 			if(prob(33))
 				var/num_bullets = rand(1,new_gun.max_shells)
 				if(num_bullets < new_gun.loaded.len)
-					new_gun.loaded.Cut()
+					new_gun.loaded.len = 0
 					for(var/i = 1, i <= num_bullets, i++)
 						var/A = text2path(new_gun.ammo_type)
 						new_gun.loaded += new A(new_gun)

@@ -7,8 +7,8 @@ var/list/freqtospan = list(
 	"1351" = "sciradio",
 	"1355" = "medradio",
 	"1357" = "engradio",
-	"1347" = "suppradio",
-	"1349" = "servradio",
+	"1347" = "supradio",
+	"1349" = "serradio",
 	"1359" = "secradio",
 	"1353" = "comradio",
 	"1447" = "aiprivradio",
@@ -91,8 +91,12 @@ var/list/freqtoname = list(
 	else if(message_langs & HUMAN)
 		var/atom/movable/AM = speaker.GetSource()
 		if(AM)
+			if(languages & SIMPLE_ANIMAL)
+				return AM.say_quote(raw_message)
 			return AM.say_quote(stars(raw_message))
 		else
+			if(languages & SIMPLE_ANIMAL)
+				return speaker.say_quote(raw_message)
 			return speaker.say_quote(stars(raw_message))
 	else if(message_langs & MONKEY)
 		return "chimpers."
@@ -100,6 +104,14 @@ var/list/freqtoname = list(
 		return "hisses."
 	else if(message_langs & ROBOT)
 		return "beeps rapidly."
+	else if(message_langs & SIMPLE_ANIMAL)
+		var/mob/living/simple_animal/SA = speaker.GetSource()
+		if(!SA || !istype(SA))
+			SA = speaker
+		if(istype(SA))
+			return "[pick(SA.speak_emote)]."
+		else
+			return "makes a strange sound."
 	else
 		return "makes a strange sound."
 
@@ -153,3 +165,11 @@ var/list/freqtoname = list(
 
 /atom/movable/virtualspeaker/GetRadio()
 	return radio
+
+/atom/movable/virtualspeaker/resetVariables()
+	job = null
+	faketrack = null
+	source = null
+	radio = null
+
+	..("job", "faketrack", "source", "radio")

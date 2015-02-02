@@ -26,8 +26,8 @@
 		icon_state = "meterX"
 		// Pop the meter off when the pipe we're attached to croaks.
 		new /obj/item/pipe_meter(src.loc)
-		spawn(0) del(src)
-		return 0
+		spawn(0) qdel(src)
+		return PROCESS_KILL
 
 	if(stat & (BROKEN|NOPOWER))
 		icon_state = "meter0"
@@ -40,8 +40,8 @@
 		icon_state = "meterX"
 		// Pop the meter off when the environment we're attached to croaks.
 		new /obj/item/pipe_meter(src.loc)
-		spawn(0) del(src)
-		return 0
+		spawn(0) qdel(src)
+		return PROCESS_KILL
 
 	var/env_pressure = environment.return_pressure()
 	if(env_pressure <= 0.15*ONE_ATMOSPHERE)
@@ -149,7 +149,7 @@
 			"<span class='notice'>You have unfastened \the [src].</span>", \
 			"You hear ratchet.")
 		new /obj/item/pipe_meter(src.loc)
-		del(src)
+		qdel(src)
 
 // TURF METER - REPORTS A TILE'S AIR CONTENTS
 

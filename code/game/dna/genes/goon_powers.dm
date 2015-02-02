@@ -247,7 +247,7 @@
 			if(!istype(affecting, /datum/organ/external))
 				continue
 			affecting.heal_damage(4, 0)
-		H.UpdateDamageIcon()
+		H.QueueUpdateDamageIcon()
 		H.updatehealth()
 
 /obj/effect/proc_holder/spell/targeted/eat/cast(list/targets)
@@ -305,7 +305,7 @@
 	else
 		usr.visible_message("\red [usr] eats \the [the_item].")
 		playsound(usr.loc, 'sound/items/eatfood.ogg', 50, 0)
-		del(the_item)
+		qdel(the_item)
 		doHeal(usr)
 
 	return

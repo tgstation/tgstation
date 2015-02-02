@@ -85,7 +85,7 @@ datum/light_source
 		// before we apply the effect we remove the light's current effect.
 		for(var/turf/T in effect)	// negate the effect of this light source
 			T.update_lumcount(-effect[T], col_r, col_g, col_b, 1)
-		effect.Cut()					// clear the effect list
+		effect.len = 0					// clear the effect list
 
 	proc/add_effect()
 		// only do this if the light is turned on and is on the map
@@ -254,9 +254,9 @@ turf/proc/update_lumcount(amount, col_r, col_g, col_b, removing = 0)
 			lumcount_b += col_b
 
 		if(light_col_sources)
-			var/r_avg = max(0, min(255, round(lumcount_r / light_col_sources, 16) + 15))
-			var/g_avg = max(0, min(255, round(lumcount_g / light_col_sources, 16) + 15))
-			var/b_avg = max(0, min(255, round(lumcount_b / light_col_sources, 16) + 15))
+			var/r_avg = Clamp(round(lumcount_r / light_col_sources, 16) + 15, 0, 255)
+			var/g_avg = Clamp(round(lumcount_g / light_col_sources, 16) + 15, 0, 255)
+			var/b_avg = Clamp(round(lumcount_b / light_col_sources, 16) + 15, 0, 255)
 			l_color = rgb(r_avg, g_avg, b_avg)
 		else
 			l_color = null

@@ -2505,7 +2505,7 @@
 						if(F.z == 1)
 							F.name = initial(F.name)
 							F.desc = initial(F.desc)
-							F.overlays.Cut()
+							F.overlays.len = 0
 							F.lava = 0
 							F.update_icon()
 					floorIsLava = 0
@@ -2652,11 +2652,13 @@
 						return
 					biohazard_alert(level = levelchoice)
 					message_admins("[key_name_admin(usr)] triggered a FAKE Biohzard Alert.")
+					log_admin("[key_name_admin(usr)] triggered a FAKE Biohzard Alert.")
 					return
 				if(choice == "Lifesigns") //MUH ALIUMS
 					command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
 					world << sound('sound/AI/aliens.ogg')
 					message_admins("[key_name_admin(usr)] triggered a FAKE Lifesign Alert.")
+					log_admin("[key_name_admin(usr)] triggered a FAKE Lifesign Alert.")
 					return
 				if(choice == "Malfunction") //BLOW EVERYTHING
 					var/salertchoice = input("Do you wish to include the Hostile Runtimes warning to have an authentic Malfunction Takeover Alert ?", "Nanotrasen Alert Level Monitor") in list("Yes", "No")
@@ -2666,20 +2668,24 @@
 					world << "<font color='red'>[config.alert_desc_delta]</font>"
 					world << sound('sound/AI/aimalf.ogg') //AI got valid
 					message_admins("[key_name_admin(usr)] triggered a FAKE Malfunction Takeover Alert (Hostile Runtimes alert [salertchoice == "Yes" ? "included":"excluded"])")
+					log_admin("[key_name_admin(usr)] triggered a FAKE Malfunction Takeover Alert (Hostile Runtimes alert [salertchoice == "Yes" ? "included":"excluded"])")
 					return
 				if(choice == "Ion")
 					command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
 					world << sound('sound/AI/ionstorm.ogg')
 					message_admins("[key_name_admin(usr)] triggered a FAKE Ion Alert.")
+					log_admin("[key_name_admin(usr)] triggered a FAKE Ion Alert.")
 					return
 				if(choice == "Meteor Wave")
 					command_alert("A meteor storm has been detected on collision course with the station. Seek shelter within the core of the station immediately.", "Meteor Alert")
 					world << sound('sound/AI/meteors.ogg')
 					message_admins("[key_name_admin(usr)] triggered a FAKE Meteor Alert.")
+					log_admin("[key_name_admin(usr)] triggered a FAKE Meteor Alert.")
 					return
 				if(choice == "Carp Migration")
 					command_alert("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
 					message_admins("[key_name_admin(usr)] triggered a FAKE Carp Migration Alert.")
+					log_admin("[key_name_admin(usr)] triggered a FAKE Carp Migration Alert.")
 					return
 			if("fakebooms") //Micheal Bay is in the house !
 				feedback_inc("admin_secrets_fun_used",1)
@@ -2689,6 +2695,7 @@
 					usr << "<span class='warning'>Invalid input range (null or negative)</span>"
 					return
 				message_admins("[key_name_admin(usr)] improvised himself as Micheal Bay and triggered [round(choice)] fake explosions.")
+				log_admin("[key_name_admin(usr)] improvised himself as Micheal Bay and triggered [round(choice)] fake explosions.")
 				for(var/i = 1 to choice)
 					world << sound('sound/effects/explosionfar.ogg')
 					sleep(rand(2, 10)) //Sleep 0.2 to 1 second

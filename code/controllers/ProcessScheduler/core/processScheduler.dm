@@ -92,11 +92,15 @@ var/global/datum/controller/processScheduler/processScheduler
 		// Check status changes
 		if(status != previousStatus)
 			//Status changed.
+
 			switch(status)
+				if(PROCESS_STATUS_MAYBE_HUNG)
+					message_admins("Process '[p.name]' is [p.getStatusText(status)].")
 				if(PROCESS_STATUS_PROBABLY_HUNG)
-					message_admins("Process '[p.name]' may be hung.")
+					message_admins("Process '[p.name]' is [p.getStatusText(status)].")
 				if(PROCESS_STATUS_HUNG)
-					message_admins("Process '[p.name]' is hung and will be restarted.")
+					message_admins("Process '[p.name]' is [p.getStatusText(status)].")
+					p.handleHung()
 
 /datum/controller/processScheduler/proc/queueProcesses()
 	for(var/datum/controller/process/p in processes)
@@ -193,6 +197,8 @@ var/global/datum/controller/processScheduler/processScheduler
 	if (!(process in idle))
 		idle += process
 
+	process.idle()
+
 /datum/controller/processScheduler/proc/setQueuedProcessState(var/datum/controller/process/process)
 	if (process in running)
 		running -= process
@@ -211,6 +217,8 @@ var/global/datum/controller/processScheduler/processScheduler
 		idle -= process
 	if (!(process in running))
 		running += process
+
+	process.running()
 
 /datum/controller/processScheduler/proc/recordStart(var/datum/controller/process/process, var/time = null)
 	if (isnull(time))

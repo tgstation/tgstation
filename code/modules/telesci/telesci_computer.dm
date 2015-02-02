@@ -204,7 +204,7 @@
 				M.Stun(10)
 				M.Paralyse(4)
 			else
-				M.make_jittery(500)
+				M.Jitter(500)
 			sparks()
 		return
 	if(prob(1))

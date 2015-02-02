@@ -47,7 +47,7 @@
 	return
 
 /obj/structure/lattice/attackby(obj/item/C as obj, mob/user as mob)
-	if(istype(C, /obj/item/weapon/weldingtool))
+	if(iswelder(C))
 		var/obj/item/weapon/weldingtool/WeldingTool = C
 		if(WeldingTool.remove_fuel(0, user))
 			user << "<span class='notice'>Slicing lattice joints...</span>"
@@ -55,7 +55,8 @@
 		qdel(src)
 	else
 		var/turf/T = get_turf(src)
-		return T.attackby(C, user) //Attacking to the lattice will attack to the space turf
+		T.attackby(C, user) //Attacking to the lattice will attack to the space turf
+		return
 
 /obj/structure/lattice/proc/updateOverlays()
 	set waitfor = 0

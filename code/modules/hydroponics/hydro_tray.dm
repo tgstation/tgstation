@@ -231,7 +231,11 @@
 		if(istype(T))
 			environment = T.return_air()
 
-	if(!environment) return
+	if(!environment)
+		if(istype(T, /turf/space))
+			environment = space_gas
+		else
+			return
 
 	// Handle gas consumption.
 	if(seed.consume_gasses && seed.consume_gasses.len)
@@ -362,7 +366,7 @@
 			if(weedkiller_reagents[R.id])
 				weedlevel -= weedkiller_reagents[R.id] * reagent_total
 			if(pestkiller_reagents[R.id])
-				pestlevel += pestkiller_reagents[R.id] * reagent_total
+				pestlevel -= pestkiller_reagents[R.id] * reagent_total
 
 			// Beneficial reagents have a few impacts along with health buffs.
 			if(beneficial_reagents[R.id])
@@ -445,7 +449,7 @@
 //Refreshes the icon and sets the luminosity
 /obj/machinery/portable_atmospherics/hydroponics/update_icon()
 
-	overlays.Cut()
+	overlays.len = 0
 
 	// Updates the plant overlay.
 	if(!isnull(seed))
@@ -772,8 +776,11 @@
 				if(istype(T))
 					environment = T.return_air()
 
-			if(!environment) //We're in a crate or nullspace, bail out.
-				return
+			if(!environment)
+				if(istype(T, /turf/space))
+					environment = space_gas
+				else //Somewhere we shouldn't be, panic
+					return
 
 			var/area/A = get_area(T)
 			var/light_available

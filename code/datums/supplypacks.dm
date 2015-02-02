@@ -410,7 +410,7 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 
 /datum/supply_packs/glass50
 	name = "50 Glass Sheets"
-	contains = list(/obj/item/stack/sheet/glass)
+	contains = list(/obj/item/stack/sheet/glass/glass)
 	amount = 50
 	cost = 10
 	containertype = /obj/structure/closet/crate/engi

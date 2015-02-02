@@ -1,8 +1,12 @@
+
+//////PREPARE GENITALS///////
 /datum/surgery_step/prepare_genitals
-	allowed_tools = list(/obj/item/weapon/retractor = 100, \
-	/obj/item/weapon/crowbar = 75, \
-	/obj/item/weapon/kitchen/utensil/fork = 50, \
-	)
+	allowed_tools = list(
+		/obj/item/weapon/retractor = 100,
+		/obj/item/weapon/crowbar = 75,
+		/obj/item/weapon/kitchen/utensil/fork = 50,
+		)
+
 	priority = 1
 	min_duration = 40
 	max_duration = 60
@@ -25,12 +29,16 @@
 	target.apply_damage(10, BRUTE, "groin", 1)
 	return 1
 
-//reshape_genitals
+
+
+//////RESHAPE GENITALS//////
 /datum/surgery_step/reshape_genitals
-	allowed_tools = list(/obj/item/weapon/scalpel = 100, \
-	/obj/item/weapon/hatchet = 50, \
-	/obj/item/weapon/wirecutters = 35, \
-	)
+	allowed_tools = list(
+		/obj/item/weapon/scalpel = 100,
+		/obj/item/weapon/hatchet = 50,
+		/obj/item/weapon/wirecutters = 35,
+		)
+
 	priority = 10 //Fuck sakes
 	min_duration = 80
 	max_duration = 100

@@ -6,9 +6,9 @@
 	species_fit = list("Vox")
 
 	cold_protection = FEET
-	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECITON_TEMPERATURE
+	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECTION_TEMPERATURE
 	heat_protection = FEET
-	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECITON_TEMPERATURE
+	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/shoes/brown
 	name = "brown shoes"
@@ -19,19 +19,19 @@
 
 /obj/item/clothing/shoes/brown/captain
 	_color = "captain"	//Exists for washing machines. Is not different from brown shoes in any way.
-	
+
 /obj/item/clothing/shoes/brown/hop
 	_color = "hop"		//Exists for washing machines. Is not different from brown shoes in any way.
-	
+
 /obj/item/clothing/shoes/brown/ce
 	_color = "chief"	//Exists for washing machines. Is not different from brown shoes in any way.
-	
+
 /obj/item/clothing/shoes/brown/rd
 	_color = "director"	//Exists for washing machines. Is not different from brown shoes in any way.
-	
+
 /obj/item/clothing/shoes/brown/cmo
 	_color = "medical"	//Exists for washing machines. Is not different from brown shoes in any way.
-	
+
 /obj/item/clothing/shoes/brown/cargo
 	_color = "cargo"	//Exists for washing machines. Is not different from brown shoes in any way.
 

@@ -77,7 +77,7 @@
 	name = "glasses"
 	icon = 'icons/obj/clothing/glasses.dmi'
 	w_class = 2.0
-	flags = GLASSESCOVERSEYES
+	body_parts_covered = EYES
 	slot_flags = SLOT_EYES
 	var/vision_flags = 0
 	var/darkness_view = 0//Base human is 2
@@ -85,6 +85,7 @@
 	var/cover_hair = 0
 	var/see_invisible = 0
 	var/see_in_dark = 0
+	var/prescription = 0
 	species_restricted = list("exclude","Muton")
 /*
 SEE_SELF  // can see self, no matter what
@@ -138,45 +139,48 @@ BLIND     // can't see anything
 /obj/item/clothing/mask
 	name = "mask"
 	icon = 'icons/obj/clothing/masks.dmi'
-	body_parts_covered = HEAD
+	body_parts_covered = HEAD|MOUTH
 	slot_flags = SLOT_MASK
 	species_restricted = list("exclude","Muton")
 	var/can_flip = null
 	var/is_flipped = 1
 	var/ignore_flip = 0
 
-	/obj/item/clothing/mask/verb/togglemask()
-		set name = "Toggle Mask"
-		set category = "Object"
-		set src in usr
-		if(ignore_flip)
+/obj/item/clothing/mask/verb/togglemask()
+	set name = "Toggle Mask"
+	set category = "Object"
+	set src in usr
+	if(ignore_flip)
+		return
+	else
+		if(!usr.canmove || usr.stat || usr.restrained())
 			return
+		if(!can_flip)
+			usr << "You try pushing \the [src] out of the way, but it is very uncomfortable and you look like a fool. You push it back into place."
+			return
+		if(src.is_flipped == 2)
+			src.icon_state = initial(icon_state)
+			gas_transfer_coefficient = initial(gas_transfer_coefficient)
+			permeability_coefficient = initial(permeability_coefficient)
+			flags = initial(flags)
+			flags_inv = initial(flags_inv)
+			usr << "You push \the [src] back into place."
+			src.is_flipped = 1
 		else
-			if(!usr.canmove || usr.stat || usr.restrained())
-				return
-			if(!can_flip)
-				usr << "You try pushing \the [src] out of the way, but it is very uncomfortable and you look like a fool. You push it back into place."
-				return
-			if(src.is_flipped == 2)
-				src.icon_state = initial(icon_state)
-				gas_transfer_coefficient = initial(gas_transfer_coefficient)
-				permeability_coefficient = initial(permeability_coefficient)
-				flags = initial(flags)
-				flags_inv = initial(flags_inv)
-				usr << "You push \the [src] back into place."
-				src.is_flipped = 1
-			else
-				src.icon_state += "_up"
-				usr << "You push \the [src] out of the way."
-				gas_transfer_coefficient = null
-				permeability_coefficient = null
-				flags = 0
-				flags_inv = null
-				src.is_flipped = 2
-			usr.update_inv_wear_mask()
+			src.icon_state += "_up"
+			usr << "You push \the [src] out of the way."
+			gas_transfer_coefficient = null
+			permeability_coefficient = null
+			flags = 0
+			flags_inv = null
+			src.is_flipped = 2
+		usr.update_inv_wear_mask()
 
 /obj/item/clothing/mask/attack_self()
 	togglemask()
+
+/obj/item/clothing/mask/proc/treat_mask_message(var/message)
+	return message
 
 //Shoes
 /obj/item/clothing/shoes
@@ -214,13 +218,14 @@ BLIND     // can't see anything
 	name = "Space helmet"
 	icon_state = "space"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment."
-	flags = FPRINT  | HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE
+	flags = FPRINT  | BLOCKHAIR | STOPSPRESSUREDMG
 	item_state = "space"
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
+	body_parts_covered = FULL_HEAD
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	cold_protection = HEAD
-	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECITON_TEMPERATURE
+	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.9
 	species_restricted = list("exclude","Diona","Muton")
 
@@ -234,14 +239,14 @@ BLIND     // can't see anything
 	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
-	flags = FPRINT  | STOPSPRESSUREDMAGE
+	flags = FPRINT  | STOPSPRESSUREDMG
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/tank/emergency_nitrogen)
 	slowdown = 3
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
-	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE
+	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.9
 	species_restricted = list("exclude","Diona","Muton")
 

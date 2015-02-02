@@ -37,6 +37,7 @@
 	var/vin=null
 
 /obj/structure/stool/bed/chair/vehicle/New()
+	..()
 	processing_objects |= src
 	handle_rotation()
 
@@ -279,13 +280,14 @@
 			return
 		if(istype(Proj, /obj/item/projectile/energy/electrode))
 			if(prob(25))
-				unbuckle()
 				visible_message("<span class='warning'>\The [src.name] absorbs the [Proj]")
 				if(!istype(buckled_mob, /mob/living/carbon/human))
-					return buckled_mob.bullet_act(Proj)
+					buckled_mob.bullet_act(Proj)
 				else
 					var/mob/living/carbon/human/H = buckled_mob
-					return H.electrocute_act(0, src, 1, 0)
+					H.electrocute_act(0, src, 1, 0)
+				unbuckle()
+				return
 	if(!hitrider)
 		visible_message("<span class='warning'>[Proj] hits \the [nick]!</span>")
 		if(!Proj.nodamage && Proj.damage_type == BRUTE || Proj.damage_type == BURN)

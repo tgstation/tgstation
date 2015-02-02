@@ -15,7 +15,7 @@
 /mob/living/carbon/alien/humanoid/update_icons()
 	lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
 	update_hud()		//TODO: remove the need for this to be here
-	overlays.Cut()
+	overlays.len = 0
 	if(stat == DEAD)
 		//If we mostly took damage from fire
 		if(fireloss > 125)

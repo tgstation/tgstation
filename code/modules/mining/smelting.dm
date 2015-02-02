@@ -41,7 +41,7 @@
 	ingredients=list(
 		"glass"=1
 	)
-	yieldtype=/obj/item/stack/sheet/glass
+	yieldtype=/obj/item/stack/sheet/glass/glass
 
 /datum/smelting_recipe/rglass
 	name="Reinforced Glass"
@@ -49,7 +49,7 @@
 		"glass"=1,
 		"iron"=1
 	)
-	yieldtype=/obj/item/stack/sheet/rglass
+	yieldtype=/obj/item/stack/sheet/glass/rglass
 
 /datum/smelting_recipe/gold
 	name="Gold"
@@ -123,7 +123,7 @@
 		"glass"=1,
 		"iron"=1
 	)
-	yieldtype=/obj/item/stack/sheet/rglass/plasmarglass
+	yieldtype=/obj/item/stack/sheet/glass/plasmarglass
 
 /datum/smelting_recipe/phazon
 	name="phazon"

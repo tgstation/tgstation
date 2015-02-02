@@ -77,9 +77,11 @@
 		return !density
 	return 1
 
-/obj/structure/window/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+/obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
+	if(dir == SOUTHWEST || dir == SOUTHEAST || dir == NORTHWEST || dir == NORTHEAST)
+		return 0	//full tile window, you can't move into it!
 	if(get_dir(loc, target) == dir)
 		return !density
 	else
@@ -253,7 +255,7 @@
 			if(do_after(user,40))
 				if(!user || !src) return
 				visible_message("<span class='notice'>[user] dismantles \the [src].</span>")
-				new /obj/item/stack/sheet/glass(get_turf(src))
+				new /obj/item/stack/sheet/glass/glass(get_turf(src))
 				qdel(src)
 		else
 			user << "Need more welding fuel!"

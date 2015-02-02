@@ -1,5 +1,5 @@
 #define GC_COLLECTIONS_PER_TICK 300 // Was 100.
-#define GC_COLLECTION_TIMEOUT (10 SECONDS)
+#define GC_COLLECTION_TIMEOUT (15 SECONDS)
 #define GC_FORCE_DEL_PER_TICK 20
 //#define GC_DEBUG
 
@@ -70,7 +70,8 @@ var/datum/garbage_collector/garbageCollector
 			hard_dels++
 			remainingForceDelPerTick--
 
-		queue.Cut(1, 2)
+		if(!queue.Remove(refID))
+			queue.Cut(1,2)
 		dels_count++
 
 #ifdef GC_DEBUG

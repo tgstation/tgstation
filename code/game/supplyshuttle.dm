@@ -365,7 +365,7 @@ var/list/mechtoys = list(
 			// END AUTOFIX
 			if (SP.contraband) slip.loc = null	//we are out of blanks for Form #44-D Ordering Illicit Drugs.
 
-		supply_shuttle.shoppinglist.Cut()
+		supply_shuttle.shoppinglist.len = 0
 		return
 
 /obj/item/weapon/paper/manifest
@@ -814,7 +814,7 @@ var/list/mechtoys = list(
 		temp += "<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 
 	else if (href_list["clearreq"])
-		supply_shuttle.requestlist.Cut()
+		supply_shuttle.requestlist.len = 0
 
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\supplyshuttle.dm:705: temp = "List cleared.<BR>"

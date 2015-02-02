@@ -55,6 +55,10 @@
 
 /obj/item/weapon/grab/process()
 	confirm()
+	if(!assailant)
+		affecting = null
+		qdel(src)
+		return
 
 	if(assailant.client)
 		assailant.client.screen -= hud

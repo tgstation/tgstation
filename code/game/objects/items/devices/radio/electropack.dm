@@ -27,6 +27,9 @@
 		else if(S.part2 == src)
 			S.part2 = null
 		master = null
+	if(radio_controller)
+		radio_controller.remove_object(src, frequency)
+	..()
 
 /obj/item/device/radio/electropack/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()

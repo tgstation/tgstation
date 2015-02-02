@@ -183,7 +183,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			spell.anchored = 1
 			spell.density = 0
 			spawn(overlay_lifespan)
-				del(spell)
+				qdel(spell)
 	return valid_targets
 
 /obj/effect/proc_holder/spell/proc/after_cast(list/targets)

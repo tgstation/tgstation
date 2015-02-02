@@ -1,3 +1,4 @@
+var/global/list/del_profiling = list()
 /atom
 	layer = 2
 
@@ -83,6 +84,8 @@
 		WARNING("Type [type] does not inherit /atom/New().  Please ensure ..() is called, or that the type calls AddToProfiler().")
 
 /atom/Destroy()
+	SetOpacity(0)
+
 	// Only call when we're actually deleted.
 	DeleteFromProfiler()
 
@@ -264,7 +267,7 @@ its easier to just keep the beam vertical.
 			X.pixel_y=Pixel_y
 			var/turf/TT = get_turf(X.loc)
 			if(TT.density)
-				del(X)
+				qdel(X)
 				break
 			for(var/obj/O in TT)
 				if(!O.CanPass(light))
@@ -274,11 +277,11 @@ its easier to just keep the beam vertical.
 					broken = 1
 					break
 			if(broken)
-				del(X)
+				qdel(X)
 				break
 		sleep(3)	//Changing this to a lower value will cause the beam to follow more smoothly with movement, but it will also be more laggy.
 					//I've found that 3 ticks provided a nice balance for my use.
-	for(var/obj/effect/overlay/beam/O in orange(10,src)) if(O.BeamSource==src) del O
+	for(var/obj/effect/overlay/beam/O in orange(10,src)) if(O.BeamSource==src) qdel(O)
 
 //Woo hoo. Overtime
 //All atoms
@@ -395,6 +398,9 @@ its easier to just keep the beam vertical.
 	return
 
 /atom/proc/singularity_pull()
+	return
+
+/atom/proc/emag_act()
 	return
 
 /atom/proc/hitby(atom/movable/AM as mob|obj)

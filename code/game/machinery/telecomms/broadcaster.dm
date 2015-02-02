@@ -215,7 +215,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 	var/list/radios = list()
 
-	var/atom/movable/virtualspeaker/virt = new(null)
+	var/atom/movable/virtualspeaker/virt = getFromPool(/atom/movable/virtualspeaker, null)
 	virt.name = name
 	virt.job = job
 	virt.languages = AM.languages
@@ -301,7 +301,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 				else
 					blackbox.messages += blackbox_msg
 	spawn(50)
-		qdel(virt)
+		returnToPool(virt)
 
 /proc/Broadcast_SimpleMessage(var/source, var/frequency, var/text, var/data, var/mob/M, var/compression, var/level)
 
@@ -455,9 +455,9 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		else if (display_freq==SEC_FREQ)
 			part_a = "<span class='secradio'><span class='name'>"
 		else if (display_freq==SERV_FREQ)
-			part_a = "<span class='servradio'><span class='name'>"
+			part_a = "<span class='serradio'><span class='name'>"
 		else if (display_freq==SUPP_FREQ)
-			part_a = "<span class='suppradio'><span class='name'>"
+			part_a = "<span class='supradio'><span class='name'>"
 		else if (display_freq==DSQUAD_FREQ)
 			part_a = "<span class='dsquadradio'><span class='name'>"
 		else if (display_freq==AIPRIV_FREQ)

@@ -14,7 +14,7 @@
 	if(speaker == src)
 		return
 	if(listening && !radio_freq)
-		recorded = message
+		recorded = raw_message
 		listening = 0
 		say("Activation message is '[recorded]'.")
 	else

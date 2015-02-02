@@ -86,7 +86,7 @@
 	set desc = "Fire ze tasers!"
 	set src = usr.loc
 
-	fire_weapons()
+	src.fire_weapons()
 
 /obj/item/device/spacepod_equipment/weaponry/taser/burst
 	name = "\improper burst taser system"
@@ -110,4 +110,4 @@
 	set desc = "Fire ze lasers!"
 	set src = usr.loc
 
-	fire_weapons()
+	src.fire_weapons()

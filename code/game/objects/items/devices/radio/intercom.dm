@@ -120,7 +120,7 @@
 				return 1
 	else
 		if(istype(W,/obj/item/weapon/crowbar))
-			if(!b_stat || wires > 0)
+			if(!b_stat)
 				return ..()
 			user << "You begin removing the electronics..."
 			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)

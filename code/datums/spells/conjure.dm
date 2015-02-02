@@ -66,7 +66,7 @@
 	return
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/proc/conjure_animation(var/atom/movable/overlay/animation, var/turf/target)
-	del(animation)
+	qdel(animation)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/summonEdSwarm //test purposes
 	name = "Dispense Wizard Justice"

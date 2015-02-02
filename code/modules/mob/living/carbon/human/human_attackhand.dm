@@ -77,11 +77,11 @@
 				return 1
 //			if(M.health < -75)	return 0
 
-			if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
-				M << "\blue <B>Remove your mask!</B>"
+			if(M.check_body_part_coverage(MOUTH))
+				M << "<span class='notice'><B>Remove your mask!</B></span>"
 				return 0
-			if((head && (head.flags & HEADCOVERSMOUTH)) || (wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)))
-				M << "\blue <B>Remove his mask!</B>"
+			if(src.check_body_part_coverage(MOUTH))
+				M << "<span class='notice'><B>Remove his mask!</B></span>"
 				return 0
 
 			var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human()
@@ -119,14 +119,14 @@
 			//Vampire code
 			if(M.zone_sel && M.zone_sel.selecting == "head" && src != M)
 				if(M.mind && M.mind.vampire && (M.mind in ticker.mode.vampires) && !M.mind.vampire.draining)
-					if((head && (head.flags & HEADCOVERSMOUTH)) || (wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)))
-						M << "\red Remove their mask!"
+					if(src.check_body_part_coverage(MOUTH))
+						M << "<span class='warning'>Remove their mask!</span>"
 						return 0
-					if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
-						M << "\red Remove your mask!"
+					if(M.check_body_part_coverage(MOUTH))
+						M << "<span class='warning'>Remove your mask!</span>"
 						return 0
 					if(mind && mind.vampire && (mind in ticker.mode.vampires))
-						M << "\red Your fangs fail to pierce [src.name]'s cold flesh"
+						M << "<span class='warning'>Your fangs fail to pierce [src.name]'s cold flesh.</span>"
 						return 0
 					//we're good to suck the blood, blaah
 					M.handle_bloodsucking(src)

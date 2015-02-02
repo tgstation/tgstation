@@ -19,62 +19,62 @@
 	var/blood_level = 0
 
 	//returns how well tool is suited for this step
-	proc/tool_quality(obj/item/tool)
-		for (var/T in allowed_tools)
-			if (istype(tool,T))
-				return allowed_tools[T]
-		return 0
+/datum/surgery_step/proc/tool_quality(obj/item/tool)
+	for (var/T in allowed_tools)
+		if (istype(tool,T))
+			return allowed_tools[T]
+	return 0
 
-	proc/check_anesthesia(var/mob/living/carbon/human/target)
-		if( (target.sleeping>0 || target.stat))
-			return 1
-		if(prob(25)) // Pain is tolerable?  Pomf wanted this. - N3X
-			return 1
-		return 0
+/datum/surgery_step/proc/check_anesthesia(var/mob/living/carbon/human/target)
+	if( (target.sleeping>0 || target.stat))
+		return 1
+	if(prob(25)) // Pain is tolerable?  Pomf wanted this. - N3X
+		return 1
+	return 0
 
 	// Checks if this step applies to the mutantrace of the user.
-	proc/is_valid_mutantrace(mob/living/carbon/human/target)
-		if(!hasorgans(target))
-			return 0
-
-		if(allowed_species)
-			for(var/species in allowed_species)
-				if(target.dna.mutantrace == species)
-					return 1
-
-		if(disallowed_species)
-			for(var/species in disallowed_species)
-				if (target.dna.mutantrace == species)
-					return 0
-
-		return 1
-
-	// checks whether this step can be applied with the given user and target
-	proc/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/proc/is_valid_mutantrace(mob/living/carbon/human/target)
+	if(!hasorgans(target))
 		return 0
 
+	if(allowed_species)
+		for(var/species in allowed_species)
+			if(target.dna.mutantrace == species)
+				return 1
+
+	if(disallowed_species)
+		for(var/species in disallowed_species)
+			if (target.dna.mutantrace == species)
+				return 0
+
+	return 1
+
+	// checks whether this step can be applied with the given user and target
+/datum/surgery_step/proc/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	return 0
+
 	// does stuff to begin the step, usually just printing messages. Moved germs transfering and bloodying here too
-	proc/begin_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		if(!affected)
-			return 0
-		if (can_infect && affected)
-			spread_germs_to_organ(affected, user)
-		if (ishuman(user) && prob(60))
-			var/mob/living/carbon/human/H = user
-			if (blood_level)
-				H.bloody_hands(target,0)
-			if (blood_level > 1)
-				H.bloody_body(target,0)
-		return
+/datum/surgery_step/proc/begin_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/datum/organ/external/affected = target.get_organ(target_zone)
+	if(!affected)
+		return 0
+	if (can_infect && affected)
+		spread_germs_to_organ(affected, user)
+	if (ishuman(user) && prob(60))
+		var/mob/living/carbon/human/H = user
+		if (blood_level)
+			H.bloody_hands(target,0)
+		if (blood_level > 1)
+			H.bloody_body(target,0)
+	return
 
 	// does stuff to end the step, which is normally print a message + do whatever this step changes
-	proc/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		return
+/datum/surgery_step/proc/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	return
 
 	// stuff that happens when the step fails
-	proc/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		return null
+/datum/surgery_step/proc/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	return null
 
 proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 	if(!istype(user) || !istype(E)) return
@@ -101,7 +101,7 @@ proc/do_surgery(mob/living/M, mob/living/user, obj/item/tool)
 				S.fail_step(user, M, user.zone_sel.selecting, tool)		//malpractice~
 			return	1	  												//don't want to do weapony things after surgery
 	if (user.a_intent == "help")
-		user << "\red You can't see any useful way to use [tool] on [M]."
+		user << "<span class='warning'>You can't see any useful way to use [tool] on [M].</span>"
 		return 1
 	return 0
 

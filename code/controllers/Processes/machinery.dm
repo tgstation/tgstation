@@ -6,8 +6,10 @@
 	//#ifdef PROFILE_MACHINES
 	//machine_profiling.len = 0
 	//#endif
-
-	for(var/obj/machinery/M in machines)
+	for(var/i = 1 to machines.len)
+		if(i > machines.len)
+			break
+		var/obj/machinery/M = machines[i]
 		if(M && !M.gcDestroyed)
 			#ifdef PROFILE_MACHINES
 			var/time_start = world.timeofday
@@ -20,15 +22,18 @@
 
 			if(M && M.use_power)
 				M.auto_use_power()
+			if(M)
+				#ifdef PROFILE_MACHINES
+				var/time_end = world.timeofday
 
-			#ifdef PROFILE_MACHINES
-			var/time_end = world.timeofday
+				if(!(M.type in machine_profiling))
+					machine_profiling[M.type] = 0
 
-			if(!(M.type in machine_profiling))
-				machine_profiling[M.type] = 0
-
-			machine_profiling[M.type] += (time_end - time_start)
-			#endif
+				machine_profiling[M.type] += (time_end - time_start)
+				#endif
+		else
+			if(M)
+				M.inMachineList = 0
+			machines.Cut(i,i+1)
 
 		scheck()
-

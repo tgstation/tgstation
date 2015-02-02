@@ -60,7 +60,7 @@ There are several things that need to be remembered:
 >	There are also these special cases:
 		update_mutations()	//handles updating your appearance for certain mutations.  e.g TK head-glows
 		update_mutantrace()	//handles updating your appearance after setting the mutantrace var
-		UpdateDamageIcon()	//handles damage overlays for brute/burn damage //(will rename this when I geta round to it)
+		QueueUpdateDamageIcon()	//handles damage overlays for brute/burn damage //(will rename this when I geta round to it)
 		update_body()	//Handles updating your mob's icon to reflect their gender/race/complexion etc
 		update_hair()	//Handles updating your hair overlay (used to be update_face, but mouth and
 																			...eyes were merged into update_body)
@@ -104,6 +104,13 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/update_overlays = 0
 
 
+/mob/living/carbon/human/proc/QueueUpdateDamageIcon(var/forced = 0)
+	if(forced)
+		UpdateDamageIcon(1)
+		update_overlays = 0
+		return
+	update_overlays = 1
+
 //UPDATES OVERLAYS FROM OVERLAYS_LYING/OVERLAYS_STANDING
 //this proc is messy as I was forced to include some old laggy cloaking code to it so that I don't break cloakers
 //I'll work on removing that stuff by rewriting some of the cloaking stuff at a later date.
@@ -122,15 +129,12 @@ Please contact me on #coderbus IRC. ~Carn x
 	//overlays.len = 0
 	icon = species.override_icon
 	icon_state = "[lowertext(species.name)]_[gender][(mutations & M_FAT)?"_fat":""]"
+	//temporary fix for having mutations on top of overriden icons for like muton, horror, etc
+	overlays -= obj_overlays[MUTANTRACE_LAYER]
+
 
 /mob/living/carbon/human/proc/generate_overlays_icon()
 	icon = stand_icon
-	/*if(update_overlays)
-		update_overlays = 0
-		overlays.len = 0
-		for(var/overlay in overlays_standing)
-			if(overlay)
-				overlays += overlay*/
 
 var/global/list/damage_icon_parts = list()
 
@@ -186,7 +190,7 @@ var/global/list/damage_icon_parts = list()
 	obj_overlays[DAMAGE_LAYER] = O
 	//overlays_standing[DAMAGE_LAYER]	= standing_image
 
-	update_overlays = 1
+
 
 	if(update_icons)   update_icons()
 
@@ -298,7 +302,7 @@ var/global/list/damage_icon_parts = list()
 //HAIR OVERLAY
 /mob/living/carbon/human/proc/update_hair(var/update_icons=1)
 	//Reset our hair
-	update_overlays = 1
+
 	overlays -= obj_overlays[HAIR_LAYER]
 
 	var/datum/organ/external/head/head_organ = get_organ("head")
@@ -348,7 +352,7 @@ var/global/list/damage_icon_parts = list()
 	if(update_icons)   update_icons()
 
 /mob/living/carbon/human/update_mutations(var/update_icons=1)
-	update_overlays = 1
+
 	var/fat
 	if(M_FAT in mutations)
 		fat = "fat"
@@ -415,7 +419,7 @@ var/global/list/damage_icon_parts = list()
 
 
 /mob/living/carbon/human/proc/update_mutantrace(var/update_icons=1)
-	update_overlays = 1
+
 	var/fat
 	if( M_FAT in mutations )
 		fat = "fat"
@@ -433,11 +437,12 @@ var/global/list/damage_icon_parts = list()
 	if(dna)
 		switch(dna.mutantrace)
 			if("golem","slime","shadow","adamantine")
-				var/obj/Overlays/O = obj_overlays[MUTANTRACE_LAYER]
-				O.icon = 'icons/effects/genetics.dmi'
-				O.icon_state = "[dna.mutantrace][fat]_[gender]_s"
-				overlays += O
-				obj_overlays[MUTANTRACE_LAYER] = O
+				if(species && (!species.override_icon && species.has_mutant_race))
+					var/obj/Overlays/O = obj_overlays[MUTANTRACE_LAYER]
+					O.icon = 'icons/effects/genetics.dmi'
+					O.icon_state = "[dna.mutantrace][fat]_[gender]_s"
+					overlays += O
+					obj_overlays[MUTANTRACE_LAYER] = O
 				//overlays_standing[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[dna.mutantrace][fat]_[gender]_s")
 			//else
 				//overlays_standing[MUTANTRACE_LAYER]	= null
@@ -454,7 +459,7 @@ var/global/list/damage_icon_parts = list()
 	if (targeted_by && target_locked)
 		var/obj/Overlays/O = obj_overlays[TARGETED_LAYER]
 		O.icon = target_locked
-		O.icon_state = "locking"
+		O.icon_state = "locking" //Does not update to "locked" sprite, need to find a way to get icon_state from an image, or rewrite Targeted() proc
 		overlays += O
 		obj_overlays[TARGETED_LAYER] = O
 		//overlays_standing[TARGETED_LAYER]	= target_locked
@@ -503,7 +508,7 @@ var/global/list/damage_icon_parts = list()
 	update_inv_handcuffed(0)
 	update_inv_legcuffed(0)
 	update_inv_pockets(0)
-	UpdateDamageIcon()
+	QueueUpdateDamageIcon(1)
 	update_icons()
 	//Hud Stuff
 	update_hud()
@@ -512,7 +517,7 @@ var/global/list/damage_icon_parts = list()
 //vvvvvv UPDATE_INV PROCS vvvvvv
 
 /mob/living/carbon/human/update_inv_w_uniform(var/update_icons=1)
-	update_overlays = 1
+
 	overlays -= obj_overlays[UNIFORM_LAYER]
 	if(w_uniform && istype(w_uniform, /obj/item/clothing/under) )
 		w_uniform.screen_loc = ui_iclothing
@@ -826,7 +831,7 @@ var/global/list/damage_icon_parts = list()
 	if(update_icons)   update_icons()
 
 /mob/living/carbon/human/update_inv_pockets(var/update_icons=1)
-	update_overlays = 1
+
 	if(l_store)			l_store.screen_loc = ui_storage1	//TODO
 	if(r_store)			r_store.screen_loc = ui_storage2	//TODO
 	if(update_icons)	update_icons()

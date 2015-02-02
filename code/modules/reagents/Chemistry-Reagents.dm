@@ -285,7 +285,7 @@ datum
 									var/datum/organ/external/affecting = H.get_organ("head")
 									if(affecting)
 										if(affecting.take_damage(25, 0))
-											H.UpdateDamageIcon()
+											H.QueueUpdateDamageIcon(1)
 										H.status_flags |= DISFIGURED
 										H.emote("scream",,, 1)
 								else
@@ -548,7 +548,7 @@ datum
 						M.monkeyizing = 1
 						M.canmove = 0
 						M.icon = null
-						M.overlays.Cut()
+						M.overlays.len = 0
 						M.invisibility = 101
 						for(var/obj/item/W in M)
 							if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
@@ -717,7 +717,7 @@ datum
 										var/datum/organ/external/affecting = H.get_organ("head")
 										if(affecting)
 											if(affecting.take_damage(25, 0))
-												H.UpdateDamageIcon()
+												H.QueueUpdateDamageIcon(1)
 											H.status_flags |= DISFIGURED
 											H.emote("scream",,, 1)
 									else
@@ -1040,7 +1040,7 @@ datum
 							var/datum/organ/external/affecting = H.get_organ("head")
 							if(affecting)
 								if(affecting.take_damage(25, 0))
-									H.UpdateDamageIcon()
+									H.QueueUpdateDamageIcon(1)
 								H.status_flags |= DISFIGURED
 								H.emote("scream",,, 1)
 						else
@@ -1106,7 +1106,7 @@ datum
 						if(!H.unacidable)
 							var/datum/organ/external/affecting = H.get_organ("head")
 							if(affecting.take_damage(15, 0))
-								H.UpdateDamageIcon()
+								H.QueueUpdateDamageIcon(1)
 							H.emote("scream",,, 1)
 					else if(ismonkey(M))
 						var/mob/living/carbon/monkey/MK = M
@@ -1128,7 +1128,7 @@ datum
 							var/mob/living/carbon/human/H = M
 							var/datum/organ/external/affecting = H.get_organ("head")
 							if(affecting.take_damage(15, 0))
-								H.UpdateDamageIcon()
+								H.QueueUpdateDamageIcon(1)
 							H.emote("scream",,, 1)
 							H.status_flags |= DISFIGURED
 						else
@@ -1244,7 +1244,7 @@ datum
 				if(volume >= 5)
 					if(istype(T, /turf/simulated/wall))
 						T:thermite = 1
-						T.overlays.Cut()
+						T.overlays.len = 0
 						T.overlays = image('icons/effects/effects.dmi',icon_state = "thermite")
 				return
 
@@ -1460,7 +1460,7 @@ datum
 						O.clean_blood()
 			reaction_turf(var/turf/T, var/volume)
 				if(volume >= 1)
-					T.overlays.Cut()
+					T.overlays.len = 0
 					T.clean_blood()
 					for(var/obj/effect/decal/cleanable/C in src)
 						qdel(C)
@@ -1598,6 +1598,7 @@ datum
 						egg.Hatch()*/
 				if((!O) || (!volume))	return 0
 				var/turf/the_turf = get_turf(O)
+				if(!the_turf) return 0
 				var/datum/gas_mixture/napalm = new
 				var/datum/gas/volatile_fuel/fuel = new
 				fuel.moles = 5
@@ -1641,7 +1642,7 @@ datum
 
 				if(!holder) return
 				if(!M) M = holder.my_atom
-				M.make_dizzy(1)
+				M.Dizzy(1)
 				if(!M.confused) M.confused = 1
 				M.confused = max(M.confused, 20)
 				holder.remove_reagent(src.id, 0.5 * REAGENTS_METABOLISM)
@@ -2084,8 +2085,8 @@ datum
 						M.status_flags &= ~DISFIGURED
 					if(35 to INFINITY)
 						M.adjustToxLoss(1)
-						M.make_dizzy(5)
-						M.make_jittery(5)
+						M.Dizzy(5)
+						M.Jitter(5)
 
 				..()
 				return
@@ -2261,7 +2262,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(5)
+				M.Dizzy(5)
 				M.jitteriness = max(M.jitteriness-5,0)
 				if(data >= 25)
 					if (!M.stuttering) M.stuttering = 1
@@ -2497,45 +2498,27 @@ datum
 				if(method == TOUCH)
 					if(istype(M, /mob/living/carbon/human))
 						var/mob/living/carbon/human/victim = M
-						var/mouth_covered = 0
-						var/eyes_covered = 0
-						var/obj/item/safe_thing = null
-						if( victim.wear_mask )
-							if ( victim.wear_mask.flags & MASKCOVERSEYES )
-								eyes_covered = 1
-								safe_thing = victim.wear_mask
-							if ( victim.wear_mask.flags & MASKCOVERSMOUTH )
-								mouth_covered = 1
-								safe_thing = victim.wear_mask
-						if( victim.head )
-							if ( victim.head.flags & MASKCOVERSEYES )
-								eyes_covered = 1
-								safe_thing = victim.head
-							if ( victim.head.flags & MASKCOVERSMOUTH )
-								mouth_covered = 1
-								safe_thing = victim.head
-						if(victim.glasses)
-							eyes_covered = 1
-							if ( !safe_thing )
-								safe_thing = victim.glasses
+						var/obj/item/mouth_covered = victim.get_body_part_coverage(MOUTH)
+						var/obj/item/eyes_covered = victim.get_body_part_coverage(EYES)
+
 						if ( eyes_covered && mouth_covered )
-							victim << "\red Your [safe_thing] protects you from the pepperspray!"
+							victim << "<span class='warning'>Your [mouth_covered == eyes_covered ? "[mouth_covered] protects" : "[mouth_covered] and [eyes_covered] protect"] you from the pepperspray!</span>"
 							return
 						else if ( mouth_covered )	// Reduced effects if partially protected
-							victim << "\red Your [safe_thing] protect you from most of the pepperspray!"
+							victim << "<span class='warning'>Your [mouth_covered] protect you from most of the pepperspray!</span>"
 							victim.eye_blurry = max(M.eye_blurry, 15)
 							victim.eye_blind = max(M.eye_blind, 5)
 							victim.Paralyse(1)
 							victim.drop_item()
 							return
 						else if ( eyes_covered ) // Eye cover is better than mouth cover
-							victim << "\red Your [safe_thing] protects your eyes from the pepperspray!"
+							victim << "<span class='warning'>Your [eyes_covered] protects your eyes from the pepperspray!</span>"
 							victim.emote("scream",,, 1)
 							victim.eye_blurry = max(M.eye_blurry, 5)
 							return
 						else // Oh dear :D
 							victim.emote("scream",,, 1)
-							victim << "\red You're sprayed directly in the eyes with pepperspray!"
+							victim << "<span class='danger'>You're sprayed directly in the eyes with pepperspray!</span>"
 							victim.eye_blurry = max(M.eye_blurry, 25)
 							victim.eye_blind = max(M.eye_blind, 10)
 							victim.Paralyse(1)
@@ -2621,8 +2604,8 @@ datum
 				switch(volume)
 					if(1 to 25)
 						M.adjustToxLoss(1)
-						M.make_dizzy(5)
-						M.make_jittery(5)
+						M.Dizzy(5)
+						M.Jitter(5)
 						if(prob(5))
 							M << "<span class='warning'>Oh god, the pain!</span>"
 					if(25 to INFINITY)
@@ -2796,18 +2779,18 @@ datum
 				switch(data)
 					if(1 to 5)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_dizzy(5)
+						M.Dizzy(5)
 						if(prob(10)) M.emote(pick("twitch","giggle"))
 					if(5 to 10)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_jittery(10)
-						M.make_dizzy(10)
+						M.Jitter(10)
+						M.Dizzy(10)
 						M.druggy = max(M.druggy, 35)
 						if(prob(20)) M.emote(pick("twitch","giggle"))
 					if (10 to INFINITY)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_jittery(20)
-						M.make_dizzy(20)
+						M.Jitter(20)
+						M.Dizzy(20)
 						M.druggy = max(M.druggy, 40)
 						if(prob(30)) M.emote(pick("twitch","giggle"))
 				holder.remove_reagent(src.id, 0.2)
@@ -3312,7 +3295,7 @@ datum
 					if(!holder)
 						holder = M.reagents
 					if(holder)
-						M.make_jittery(5)
+						M.Jitter(5)
 						if(adj_temp > 0 && holder.has_reagent("frostoil"))
 							holder.remove_reagent("frostoil", 10*REAGENTS_METABOLISM)
 
@@ -3392,7 +3375,7 @@ datum
 
 					if(!holder) return
 					..()
-					M.make_jittery(5)
+					M.Jitter(5)
 					return
 
 			cold
@@ -3441,7 +3424,7 @@ datum
 					on_mob_life(var/mob/living/M as mob)
 
 						if(!holder) return
-						M.make_jittery(20)
+						M.Jitter(20)
 						M.druggy = max(M.druggy, 30)
 						M.dizziness +=5
 						M.drowsyness = 0
@@ -3545,7 +3528,7 @@ datum
 
 						if(!holder) return
 						..()
-						M.make_jittery(5)
+						M.Jitter(5)
 						return
 
 		hippies_delight
@@ -3564,18 +3547,18 @@ datum
 				switch(data)
 					if(1 to 5)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_dizzy(10)
+						M.Dizzy(10)
 						if(prob(10)) M.emote(pick("twitch","giggle"))
 					if(5 to 10)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_jittery(20)
-						M.make_dizzy(20)
+						M.Jitter(20)
+						M.Dizzy(20)
 						M.druggy = max(M.druggy, 45)
 						if(prob(20)) M.emote(pick("twitch","giggle"))
 					if (10 to INFINITY)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_jittery(40)
-						M.make_dizzy(40)
+						M.Jitter(40)
+						M.Dizzy(40)
 						M.druggy = max(M.druggy, 60)
 						if(prob(30)) M.emote(pick("twitch","giggle"))
 				holder.remove_reagent(src.id, 0.2)
@@ -3810,29 +3793,29 @@ datum
 				switch(data)
 					if(1 to 25)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_dizzy(1)
+						M.Dizzy(1)
 						M.hallucination = max(M.hallucination, 3)
 						if(prob(1)) M.emote(pick("twitch","giggle"))
 					if(25 to 75)
 						if (!M.stuttering) M.stuttering = 1
 						M.hallucination = max(M.hallucination, 10)
-						M.make_jittery(2)
-						M.make_dizzy(2)
+						M.Jitter(2)
+						M.Dizzy(2)
 						M.druggy = max(M.druggy, 45)
 						if(prob(5)) M.emote(pick("twitch","giggle"))
 					if (75 to 150)
 						if (!M.stuttering) M.stuttering = 1
 						M.hallucination = max(M.hallucination, 60)
-						M.make_jittery(4)
-						M.make_dizzy(4)
+						M.Jitter(4)
+						M.Dizzy(4)
 						M.druggy = max(M.druggy, 60)
 						if(prob(10)) M.emote(pick("twitch","giggle"))
 						if(prob(30)) M.adjustToxLoss(2)
 					if (150 to 300)
 						if (!M.stuttering) M.stuttering = 1
 						M.hallucination = max(M.hallucination, 60)
-						M.make_jittery(4)
-						M.make_dizzy(4)
+						M.Jitter(4)
+						M.Dizzy(4)
 						M.druggy = max(M.druggy, 60)
 						if(prob(10)) M.emote(pick("twitch","giggle"))
 						if(prob(30)) M.adjustToxLoss(2)
@@ -3931,8 +3914,8 @@ datum
 
 				on_mob_life(var/mob/living/M as mob)
 
-					if(!holder) return
 					..()
+					if(!holder) return
 					M:nutrition += nutriment_factor
 					holder.remove_reagent(src.id, FOOD_METABOLISM)
 					M:drowsyness = max(0,M:drowsyness-7)
@@ -3940,7 +3923,7 @@ datum
 					//	M:sleeping = max(0,M.sleeping-2)
 					if (M.bodytemperature > 310)
 						M.bodytemperature = max(310, M.bodytemperature-5)
-					M.make_jittery(1)
+					M.Jitter(1)
 					return
 
 
@@ -4450,6 +4433,6 @@ datum
 					return
 
 /datum/reagent/Destroy()
-	if(holder)
+	if(istype(holder))
 		holder.reagent_list -= src
 		holder = null

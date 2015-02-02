@@ -65,6 +65,12 @@
 
 /obj/structure/stool/bed/chair/vehicle/janicart/attack_hand(mob/user)
 	if(mybag)
+		if(buckled_mob==user)
+			switch(alert("Choose an action","Janicart","Get off the ride","Remove the bag","Cancel"))
+				if("Get off the ride")
+					return ..()
+				if("Cancel")
+					return
 		mybag.loc = get_turf(user)
 		user.put_in_hands(mybag)
 		mybag = null

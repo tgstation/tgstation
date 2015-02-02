@@ -64,6 +64,9 @@
 	var/frequency = 0
 	var/id_tag
 
+	//Add types to this list so it doesn't make a message or get desroyed by the Supermatter on touch.
+	var/list/message_exclusions = list(/obj/effect/effect/sparks)
+
 /obj/machinery/power/supermatter/shard //Small subtype, less efficient and more sensitive, but less boom.
 	name = "Supermatter Shard"
 	short_name = "Shard"
@@ -166,7 +169,9 @@
 				play_alert = (damage > audio_warning_point)
 			else
 				warning = "[short_name] hyperstructure returning to safe operating levels. Instability: [stability]%"
-			radio.say(warning, "Supermatter [short_name] Monitor")
+			//radio.say(warning, "Supermatter [short_name] Monitor")
+			Broadcast_Message(radio, null, radio, warning, "Supermatter [short_name] Monitor", "Automated Announcement", "Supermatter [short_name] Monitor", 0, 0, list(0,1), 1459)
+
 			lastwarning = world.timeofday - offset
 
 		if(play_alert && (world.timeofday - lastaudiowarning) / 10 >= AUDIO_WARNING_DELAY)
@@ -355,9 +360,11 @@
 		AM.visible_message("<span class=\"warning\">\The [AM] slams into \the [src] inducing a resonance... \his body starts to glow and catch flame before flashing into ash.</span>",\
 		"<span class=\"danger\">You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
 		"<span class=\"warning\">You hear an unearthly noise as a wave of heat washes over you.</span>")
-	else
+	else if(!is_type_in_list(AM, message_exclusions))
 		AM.visible_message("<span class=\"warning\">\The [AM] smacks into \the [src] and rapidly flashes to ash.</span>",\
 		"<span class=\"warning\">You hear a loud crack as you are washed with a wave of heat.</span>")
+	else
+		return ..()
 
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
 

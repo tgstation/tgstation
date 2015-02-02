@@ -68,45 +68,38 @@
 	..()
 	return 0
 
-/turf/Enter(atom/movable/O, atom/oldloc)
-	if(movement_disabled && usr.ckey != movement_disabled_exception)
-		usr << "<span class='warning'>Movement is admin-disabled.</span>" //This is to identify lag problems
+/turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
+	if (!mover)
+		return 1
+	// First, make sure it can leave its square
+	if(isturf(mover.loc))
+		// Nothing but border objects stop you from leaving a tile, only one loop is needed
+		for(var/obj/obstacle in mover.loc)
+			if(!obstacle.CheckExit(mover, src) && obstacle != mover && obstacle != forget)
+				mover.Bump(obstacle, 1)
+				return 0
+
+	var/list/large_dense = list()
+	//Next, check objects to block entry that are on the border
+	for(var/atom/movable/border_obstacle in src)
+		if(border_obstacle.flags&ON_BORDER)
+			if(!border_obstacle.CanPass(mover, mover.loc) && (forget != border_obstacle))
+				mover.Bump(border_obstacle, 1)
+				return 0
+		else
+			large_dense += border_obstacle
+
+	//Then, check the turf itself
+	if (!src.CanPass(mover, src))
+		mover.Bump(src, 1)
 		return 0
 
-	// first, check objects to block exit that are not on the border
-	for(var/atom/movable/obstacle in oldloc)
-		if((obstacle.flags & ~ON_BORDER) && (obstacle != O))
-			if(!obstacle.CheckExit(O, src))
-				O.Bump(obstacle, 1)
-				return 0
-
-	// now, check objects to block exit that are on the border
-	for(var/atom/movable/border_obstacle in oldloc)
-		if((border_obstacle.flags & ON_BORDER) && (border_obstacle != O))
-			if(!border_obstacle.CheckExit(O, src))
-				O.Bump(border_obstacle, 1)
-				return 0
-
-	// next, check objects to block entry that are on the border
-	for(var/atom/movable/border_obstacle in contents)
-		if(border_obstacle.flags & ON_BORDER)
-			if(!border_obstacle.CanPass(O, oldloc))
-				O.Bump(border_obstacle, 1)
-				return 0
-
-	// then, check the turf itself
-	if (!CanPass(O, src))
-		O.Bump(src, 1)
-		return 0
-
-	// finally, check objects/mobs to block entry that are not on the border
-	for(var/atom/movable/obstacle in contents)
-		if(obstacle.flags & ~ON_BORDER)
-			if(!obstacle.CanPass(O, oldloc))
-				O.Bump(obstacle, 1)
-				return 0
-
-	return 1 // nothing found to block so return success!
+	//Finally, check objects/mobs to block entry that are not on the border
+	for(var/atom/movable/obstacle in large_dense)
+		if(!obstacle.CanPass(mover, mover.loc) && (forget != obstacle))
+			mover.Bump(obstacle, 1)
+			return 0
+	return 1 //Nothing found to block so return success!
 
 /turf/Entered(atom/movable/Obj,atom/OldLoc)
 	var/loopsanity = 100
@@ -163,7 +156,7 @@
 		spawn(5)
 			if((SP && (SP.loc == src)))
 				if(SP.inertia_dir)
-					step(SP, SP.inertia_dir)
+					SP.Move(get_step(SP, SP.inertia_dir))
 					return
 	if(istype(A, /obj/structure/stool/bed/chair/vehicle/) && src.x > 2 && src.x < (world.maxx - 1) && src.y > 2 && src.y < (world.maxy-1))
 		var/obj/structure/stool/bed/chair/vehicle/JC = A //A bomb!
@@ -215,6 +208,8 @@
 	if (!N)
 		return
 
+	var/initialOpacity = opacity
+
 #ifdef ENABLE_TRI_LEVEL
 // Fuck this, for now - N3X
 ///// Z-Level Stuff ///// This makes sure that turfs are not changed to space when one side is part of a zone
@@ -228,6 +223,10 @@
 					var/list/temp = list()
 					temp += W
 					c.add(temp,3,1) // report the new open space to the zcontroller
+
+					if(opacity != initialOpacity)
+						UpdateAffectingLights()
+
 					return W
 ///// Z-Level Stuff
 #endif
@@ -274,6 +273,10 @@
 			air_master.mark_for_update(src)
 
 		W.levelupdate()
+
+		if(opacity != initialOpacity)
+			UpdateAffectingLights()
+
 		return W
 
 	else
@@ -295,6 +298,10 @@
 			air_master.mark_for_update(src)
 
 		W.levelupdate()
+
+		if(opacity != initialOpacity)
+			UpdateAffectingLights()
+
 		return W
 
 /turf/proc/AddDecal(const/image/decal)

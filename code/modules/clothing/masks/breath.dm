@@ -3,11 +3,12 @@
 	name = "breath mask"
 	icon_state = "breath"
 	item_state = "breath"
-	flags = FPRINT  | MASKCOVERSMOUTH | MASKINTERNALS
+	flags = FPRINT | MASKINTERNALS
 	w_class = 2
 	gas_transfer_coefficient = 0.10
 	permeability_coefficient = 0.50
 	species_fit = list("Vox")
+	body_parts_covered = HEAD|MOUTH
 	var/hanging = 0
 
 	verb/toggle()
@@ -19,14 +20,16 @@
 			if(!src.hanging)
 				src.hanging = !src.hanging
 				gas_transfer_coefficient = 1 //gas is now escaping to the turf and vice versa
-				flags &= ~(MASKCOVERSMOUTH | MASKINTERNALS)
+				flags &= ~MASKINTERNALS
+				body_parts_covered &= ~MOUTH
 				icon_state = "[initial(icon_state)]down"
 				usr << "Your mask is now hanging on your neck."
 
 			else
 				src.hanging = !src.hanging
 				gas_transfer_coefficient = 0.10
-				flags |= MASKCOVERSMOUTH | MASKINTERNALS
+				flags |= MASKINTERNALS
+				body_parts_covered |= MOUTH
 				icon_state = "[initial(icon_state)]"
 				usr << "You pull the mask up to cover your face."
 			usr.update_inv_wear_mask()

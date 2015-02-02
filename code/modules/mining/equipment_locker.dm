@@ -483,6 +483,7 @@
 	var/creator = null
 
 /obj/effect/resonance/New()
+	..()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf))
 		return

@@ -512,10 +512,12 @@
 
 /obj/item/weapon/holo/esword/green
 	New()
+		..()
 		_color = "green"
 
 /obj/item/weapon/holo/esword/red
 	New()
+		..()
 		_color = "red"
 
 /obj/item/weapon/holo/esword/IsShield()
@@ -527,6 +529,7 @@
 	..()
 
 /obj/item/weapon/holo/esword/New()
+	AddToProfiler()
 	_color = pick("red","blue","green","purple")
 
 /obj/item/weapon/holo/esword/attack_self(mob/living/user as mob)

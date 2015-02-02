@@ -229,6 +229,8 @@ var/global/loopModeNames=list(
 	return t
 
 /obj/machinery/media/jukebox/proc/ScreenSettings(var/mob/user)
+	if(!linked_account)
+		linked_account = station_account
 	var/dat={"<h1>Settings</h1>
 		<form action="?src=\ref[src]" method="get">
 		<input type="hidden" name="src" value="\ref[src]" />
@@ -566,7 +568,7 @@ var/global/loopModeNames=list(
 		"emagged" = "Syndie Mix",
 		"shuttle" = "Shuttle",
 		//"keygen" = "Keygen", // ONLY UNCOMMENT AFTER POMF REDUCES PLAYLIST SIZE OR YOU WILL CRASH THE ENTIRE GODDAMN SERVER.
-		
+
 		"endgame" = "Apocalypse",
 		"clockwork" = "Clockwork", // Unfinished new cult stuff
 		"thunderdome" = "Thunderdome", // For thunderdome I guess

@@ -78,7 +78,7 @@
 		if (density)
 			if (mecha.occupant && !operating && (allowed(mecha.occupant) || check_access_list(mecha.operation_req_access)))
 				open()
-			else
+			else if(!operating)
 				door_animate("deny")
 
 		return
@@ -95,9 +95,9 @@
 	if(!requiresID())
 		user = null
 
-	if(allowed(user) && !operating)
+	if(allowed(user))
 		open()
-	else
+	else if(!operating)
 		door_animate("deny")
 
 	return
@@ -131,7 +131,7 @@
 
 				// TODO: analyze the called proc
 				if(O.take_damage(10, 0))
-					H.UpdateDamageIcon()
+					H.QueueUpdateDamageIcon()
 					O = null
 			else
 				// TODO: fix sentence

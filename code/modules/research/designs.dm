@@ -63,6 +63,7 @@ k
 	var/list/materials = list()			//List of materials. Format: "id" = amount.
 	var/build_path = null				//The file path of the object that gets created
 	var/locked = 0						//If true it will spawn inside a lockbox with currently sec access
+	var/list/req_lock_access			//Sets the access for the lockbox that a locked item spawns in
 	var/category = null //Primarily used for Mech Fabricators, but can be used for anything
 
 /datum/design/New()
@@ -94,7 +95,7 @@ k
 		var/obj/thispart = part
 		part = thispart.type
 	for(var/thisdesign in typesof(/datum/design))
-		var/datum/design/D = thisdesign
+		var/datum/design/D = new thisdesign
 		if(initial(D.build_path) == part)
 			return D
 	return
@@ -135,6 +136,8 @@ k
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/aicore
+	locked = 1
+	req_lock_access = list(access_tox, access_robotics, access_rd)
 
 /datum/design/aiupload
 	name = "Circuit Design (AI Upload)"
@@ -144,6 +147,8 @@ k
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/aiupload
+	locked = 1
+	req_lock_access = list(access_tox, access_robotics, access_rd)
 
 /datum/design/borgupload
 	name = "Circuit Design (Cyborg Upload)"
@@ -153,6 +158,8 @@ k
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/borgupload
+	locked = 1
+	req_lock_access = list(access_tox, access_robotics, access_rd)
 
 /datum/design/med_data
 	name = "Circuit Design (Medical Records)"
@@ -663,6 +670,8 @@ k
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$diamond" = 100)
 	build_path = /obj/item/weapon/aiModule/targetted/oneHuman
+	locked = 1
+	req_lock_access = list(access_captain)
 
 /datum/design/protectstation_module
 	name = "Module Design (ProtectStation)"
@@ -699,6 +708,8 @@ k
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
 	build_path = /obj/item/weapon/aiModule/standard/oxygen
+	locked = 1
+	req_lock_access = list(access_captain)
 
 /datum/design/freeform_module
 	name = "Module Design (Freeform)"
@@ -718,7 +729,7 @@ k
 	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
 	build_path = /obj/item/weapon/aiModule/reset
 
-/datum/design/purge_module
+/datum/design/purge_module //tempted to lock this, have a vote on it - Comic
 	name = "Module Design (Purge)"
 	desc = "Allows for the construction of a Purge AI Module."
 	id = "purge_module"
@@ -762,6 +773,8 @@ k
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$diamond" = 100)
 	build_path = /obj/item/weapon/aiModule/core/tyrant
+	locked = 1
+	req_lock_access = list(access_captain)
 
 ///////////////////////////////////
 /////Subspace Telecomms////////////
@@ -1232,7 +1245,7 @@ k
 	materials = list("$iron"=10000,"$gold"=2000,"$silver"=3000,"$glass"=2000)
 
 /datum/design/mech_ccw_armor
-	name = "Module Design(Reactive Armor Booster Module)"
+	name = "Module Design(Melee Armor Booster Module)"
 	desc = "Exosuit-mounted armor booster."
 	id = "mech_ccw_armor"
 	build_type = MECHFAB
@@ -1242,7 +1255,7 @@ k
 	materials = list("$iron"=20000,"$silver"=5000)
 
 /datum/design/mech_proj_armor
-	name = "Module Design(Reflective Armor Booster Module)"
+	name = "Module Design(Projectile Armor Booster Module)"
 	desc = "Exosuit-mounted armor booster."
 	id = "mech_proj_armor"
 	build_type = MECHFAB
@@ -1902,6 +1915,42 @@ k
 	materials = list ("$iron" = 1000, "$glass" = 1000)
 	build_path = /obj/item/device/healthanalyzer
 
+/datum/design/laserscalpel1
+	name = "Laser Scalpel"
+	desc = "A scalpel augmented with a directed laser, allowing for bloodless incisions."
+	id = "laserscalpel1"
+	req_tech = list("materials" = 3, "engineering" = 2, "biotech" = 2)
+	build_type = PROTOLATHE
+	materials = list ("$iron" = 10000, "$glass" = 5000, "$plasma" = 500)
+	build_path = /obj/item/weapon/scalpel/laser1
+
+/datum/design/laserscalpel2
+	name = "Augmented Laser Scalpel"
+	desc = "A scalpel augmented with a directed laser, allowing for bloodless incisions."
+	id = "laserscalpel2"
+	req_tech = list("materials" = 3, "engineering" = 2, "biotech" = 3)
+	build_type = PROTOLATHE
+	materials = list ("$iron" = 10000, "$glass" = 5000, "$gold" = 500)
+	build_path = /obj/item/weapon/scalpel/laser2
+
+/datum/design/laserscalpel3
+	name = "High Precision Laser Scalpel"
+	desc = "A scalpel augmented with a directed laser, allowing for bloodless incisions."
+	id = "laserscalpel3"
+	req_tech = list("materials" = 4, "engineering" = 3, "biotech" = 4)
+	build_type = PROTOLATHE
+	materials = list ("$iron" = 10000, "$glass" = 5000, "$uranium" = 500)
+	build_path = /obj/item/weapon/scalpel/laser3
+
+/datum/design/managerscalpel
+	name = "Incision Management System"
+	desc = "A true extension of the surgeon's body, this marvel instantly cuts the organ, clamp any bleeding, and retract the skin, allowing for the immediate commencement of therapeutic steps."
+	id = "managerscalpel"
+	req_tech = list("materials" = 5, "engineering" = 4, "biotech" = 5)
+	build_type = PROTOLATHE
+	materials = list ("$iron" = 10000, "$glass" = 5000, "$diamond" = 500)
+	build_path = /obj/item/weapon/scalpel/manager
+
 /////////////////////////////////////////
 /////////////////Weapons/////////////////
 /////////////////////////////////////////
@@ -2367,6 +2416,25 @@ k
 	materials = list("$iron" = 1500, "$glass" = 2500, "$diamond" = 3750, "$silver" = 1000, "$uranium" = 500)
 	build_path = /obj/item/clothing/suit/armor/laserproof
 	locked = 1
+
+/datum/design/advancedeod
+	name = "Advanced EOD Suit"
+	desc = "An advanced EOD suit that affords great protection at the cost of mobility."
+	id = "advanced eod suit"
+	req_tech = list("combat" = 5, "materials" = 5, "biotech" = 2)
+	build_type = PROTOLATHE
+	materials = list ("$iron" = 10000, "$glass" = 2500, "$gold" = 3750, "$silver" = 1000)
+	build_path = /obj/item/clothing/suit/advancedeod
+
+/datum/design/advancedeod_helmet
+	name = "Advanced EOD Helmet"
+	desc = "An advanced EOD helmet that affords great protection at the cost of mobility."
+	id = "advanced eod helmet"
+	req_tech = list("combat" = 5, "materials" = 5, "biotech" = 2)
+	build_type = PROTOLATHE
+	materials = list ("$iron" = 3750, "$glass" = 2500, "$gold" = 3750, "$silver" = 1000)
+	build_path = /obj/item/clothing/head/advancedeod_helmet
+
 
 /////////////////////////////////////////
 //////////////////Test///////////////////

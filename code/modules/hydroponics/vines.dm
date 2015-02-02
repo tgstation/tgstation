@@ -38,25 +38,26 @@
 /obj/effect/plantsegment/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (!W || !user || !W.type) return
 	switch(W.type)
-		if(/obj/item/weapon/circular_saw) del src
-		if(/obj/item/weapon/kitchen/utensil/knife) del src
-		if(/obj/item/weapon/scalpel) del src
-		if(/obj/item/weapon/twohanded/fireaxe) del src
-		if(/obj/item/weapon/hatchet) del src
-		if(/obj/item/weapon/melee/energy) del src
+		if(/obj/item/weapon/circular_saw) qdel(src)
+		if(/obj/item/weapon/kitchen/utensil/knife) qdel(src)
+		if(/obj/item/weapon/scalpel) qdel(src)
+		if(/obj/item/weapon/twohanded/fireaxe) qdel(src)
+		if(/obj/item/weapon/hatchet) qdel(src)
+		if(/obj/item/weapon/melee/energy) qdel(src)
+		if(/obj/item/weapon/pickaxe/plasmacutter) qdel(src)
 
 		// Less effective weapons
 		if(/obj/item/weapon/wirecutters)
-			if(prob(25)) del src
+			if(prob(25)) qdel(src)
 		if(/obj/item/weapon/shard)
-			if(prob(25)) del src
+			if(prob(25)) qdel(src)
 
 		// Weapons with subtypes
 		else
-			if(istype(W, /obj/item/weapon/melee/energy/sword)) del src
+			if(istype(W, /obj/item/weapon/melee/energy/sword)) qdel(src)
 			else if(istype(W, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = W
-				if(WT.remove_fuel(0, user)) del src
+				if(WT.remove_fuel(0, user)) qdel(src)
 			else
 				manual_unbuckle(user)
 				return
@@ -169,7 +170,7 @@
 				else
 					H.adjustBruteLoss(damage)
 
-				H.UpdateDamageIcon()
+				H.QueueUpdateDamageIcon()
 				H.updatehealth()
 
 			// Inject some chems.
@@ -194,7 +195,7 @@
 		SetLuminosity(0)
 
 	// Update flower/product overlay.
-	overlays.Cut()
+	overlays.len = 0
 	if(age >= seed.maturation)
 		if(prob(20) && seed.products && seed.products.len && !harvest && ((age-lastproduce) > seed.production))
 			harvest = 1
@@ -257,7 +258,7 @@
 
 // Hotspots kill vines.
 /obj/effect/plantsegment/fire_act(null, temp, volume)
-	del src
+	qdel(src)
 
 /obj/effect/plantsegment/proc/die()
 	if(seed && harvest)
@@ -384,6 +385,8 @@
 		growth_queue -= SV
 
 		SV.life()
+
+		if(!SV) continue
 
 		if(SV.energy < 2) //If tile isn't fully grown
 			var/chance

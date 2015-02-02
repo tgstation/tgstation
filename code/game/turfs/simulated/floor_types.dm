@@ -333,7 +333,7 @@
 		update_icon(1)
 
 	update_icon(var/propogate=1)
-		underlays.Cut()
+		underlays.len = 0
 		underlays += new /icon('icons/turf/space.dmi',"[((x + y) ^ ~(x * y) + z) % 25]")
 
 		var/dirs = 0
@@ -355,6 +355,11 @@
 			if(do_after(user, 30))
 				new /obj/item/stack/rods(src, 2)
 				ReplaceWithLattice()
+				// Update adjacent catwalk icons
+				for (var/direction in cardinal)
+					var/turf/T = get_step(src, direction)
+					if (T.is_catwalk())
+						T:update_icon(0)
 			return
 
 		if(istype(C, /obj/item/weapon/cable_coil))

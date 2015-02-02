@@ -90,7 +90,7 @@
 	UpdateMushroomCap()
 
 /mob/living/simple_animal/hostile/mushroom/proc/UpdateMushroomCap()
-	overlays.Cut()
+	overlays.len = 0
 	if(health == 0)
 		overlays += cap_dead
 	else

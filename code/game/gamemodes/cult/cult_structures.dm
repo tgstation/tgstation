@@ -149,7 +149,7 @@
 		M.monkeyizing = 1
 		M.canmove = 0
 		M.icon = null
-		M.overlays.Cut()
+		M.overlays.len = 0
 		M.invisibility = 101
 
 		if(istype(M, /mob/living/silicon/robot))
@@ -159,7 +159,7 @@
 		else
 			for(var/obj/item/W in M)
 				if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
-					del(W)
+					qdel(W)
 					continue
 				W.layer = initial(W.layer)
 				W.loc = M.loc

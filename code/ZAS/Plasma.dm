@@ -64,19 +64,9 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 
 		//Burn eyes if exposed.
 		if(zas_settings.Get(/datum/ZAS_Setting/EYE_BURNS))
-			if(!head)
-				if(!wear_mask)
-					burn_eyes()
-				else
-					if(!(wear_mask.flags & MASKCOVERSEYES))
-						burn_eyes()
-			else
-				if(!(head.flags & HEADCOVERSEYES))
-					if(!wear_mask)
-						burn_eyes()
-					else
-						if(!(wear_mask.flags & MASKCOVERSEYES))
-							burn_eyes()
+			var/eye_protection = get_body_part_coverage(EYES)
+			if(!eye_protection)
+				burn_eyes()
 
 		//Genetic Corruption
 		if(zas_settings.Get(/datum/ZAS_Setting/GENETIC_CORRUPTION))
@@ -105,7 +95,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 		if(zas_settings.Get(/datum/ZAS_Setting/PLASMAGUARD_ONLY))
 			if(head.flags & PLASMAGUARD)
 				return 1
-		else if(head.flags & HEADCOVERSEYES)
+		else if(check_body_part_coverage(EYES))
 			return 1
 	return 0
 

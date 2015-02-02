@@ -62,7 +62,7 @@ var/GLASSESBLOCK = 0
 var/EPILEPSYBLOCK = 0
 var/TWITCHBLOCK = 0
 var/NERVOUSBLOCK = 0
-var/MONKEYBLOCK = 50 // Monkey block will always be the DNA_SE_LENGTH
+var/MONKEYBLOCK = 54 // Monkey block will always be the DNA_SE_LENGTH
 
 var/BLOCKADD = 0
 var/DIFFMUT = 0
@@ -218,6 +218,9 @@ var/list/ninjastart = list()
 var/list/cardinal = list( NORTH, SOUTH, EAST, WEST )
 var/list/alldirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
 
+
+var/global/universal_cult_chat = 0 //if set to 1, even human cultists can use cultchat
+
 var/datum/station_state/start_state = null
 var/datum/configuration/config = null
 
@@ -360,3 +363,8 @@ var/global/event/on_unban
 // List of /plugins
 var/global/list/plugins = list()
 
+// Space get this to return for things i guess?
+var/global/datum/gas_mixture/space_gas = new
+
+//Announcement intercom
+var/obj/item/device/radio/intercom/announcement_intercom = new(null)

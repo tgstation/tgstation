@@ -13,7 +13,8 @@
 		var/faketrack = "byond://?src=\ref[radio];track2=\ref[src];track=\ref[M]"
 		if(speaker.GetTrack())
 			faketrack = "byond://?src=\ref[radio];track2=\ref[src];faketrack=\ref[M]"
-		return "<a href='[faketrack]'>"
+
+		return "<a href='byond://?src=\ref[radio];open2=\ref[src];open=\ref[M]'>\[OPEN\] </a> <a href='[faketrack]'>"
 	return ""
 
 /mob/living/silicon/ai/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)

@@ -21,7 +21,7 @@
 	return
 
 /obj/machinery/space_heater/air_conditioner/update_icon()
-	overlays.Cut()
+	overlays.len = 0
 	icon_state = "aircond[on]"
 	if(open)
 		overlays  += "sheater-open"

@@ -55,8 +55,12 @@
 	if(radio_controller)
 		initialize()
 
-obj/item/device/radio/Destroy()
-	remove_radio_all(src)
+/obj/item/device/radio/Destroy()
+	qdel(wires)
+	wires = null
+	remove_radio_all(src) //Just to be sure
+	..()
+
 
 /obj/item/device/radio/initialize()
 
@@ -218,7 +222,7 @@ obj/item/device/radio/Destroy()
 	return
 
 */
-/obj/item/device/radio/talk_into(mob/living/M as mob, message, channel)
+/obj/item/device/radio/talk_into(atom/movable/M, message, channel)
 	if(!on) return // the device has to be on
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
 	if(!M || !message) return
@@ -262,12 +266,15 @@ obj/item/device/radio/Destroy()
 	//#### Tagging the signal with all appropriate identity values ####//
 
 	// ||-- The mob's name identity --||
-	var/real_name = M.real_name // mob's real name
+	var/real_name = M.name // mob's real name
 	var/mobkey = "none" // player key associated with mob
 	var/voicemask = 0 // the speaker is wearing a voice mask
 	var/voice = M.GetVoice() // Why reinvent the wheel when there is a proc that does nice things already
-	if(M.client)
-		mobkey = M.key // assign the mob's key
+	if(ismob(M))
+		var/mob/speaker = M
+		real_name = speaker.real_name
+		if(speaker.client)
+			mobkey = speaker.key // assign the mob's key
 
 
 	var/jobname // the mob's "job"
@@ -293,6 +300,10 @@ obj/item/device/radio/Destroy()
 	// --- Personal AI (pAI) ---
 	else if (istype(M, /mob/living/silicon/pai))
 		jobname = "Personal AI"
+
+	// --- Cold, emotionless machines. ---
+	else if(isobj(M))
+		jobname = "Machine"
 
 	// --- Unidentifiable mob ---
 	else
@@ -326,8 +337,6 @@ obj/item/device/radio/Destroy()
 			"name" = voice,	// the mob's voice name
 			"job" = jobname,		// the mob's job
 			"key" = mobkey,			// the mob's key
-			"vmessage" = pick(M.speak_emote), // the message to display if the voice wasn't understood
-			"vname" = M.voice_name, // the name to display if the voice wasn't understood
 			"vmask" = voicemask,	// 1 if the mob is using a voice gas mask
 
 			// We store things that would otherwise be kept in the actual mob
@@ -383,8 +392,6 @@ obj/item/device/radio/Destroy()
 		"name" = voice,	// the mob's display name
 		"job" = jobname,		// the mob's job
 		"key" = mobkey,			// the mob's key
-		"vmessage" = pick(M.speak_emote), // the message to display if the voice wasn't understood
-		"vname" = M.voice_name, // the name to display if the voice wasn't understood
 		"vmask" = voicemask,	// 1 if the mob is using a voice gas mas
 
 		"compression" = 0, // uncompressed radio signal
@@ -512,6 +519,7 @@ obj/item/device/radio/Destroy()
 
 /obj/item/device/radio/borg
 	var/obj/item/device/encryptionkey/keyslot = null//Borg radios can handle a single encryption key
+	subspace_transmission = 1
 
 /obj/item/device/radio/borg/attackby(obj/item/weapon/W as obj, mob/user as mob)
 //	..()

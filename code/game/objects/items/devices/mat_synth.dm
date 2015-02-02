@@ -21,23 +21,23 @@
 
 	var/obj/item/stack/sheet/active_material = /obj/item/stack/sheet/metal
 	var/list/materials_scanned = list(	"metal" = /obj/item/stack/sheet/metal,
-										"glass" = /obj/item/stack/sheet/glass,
-										"reinforced glass" = /obj/item/stack/sheet/rglass,
+										"glass" = /obj/item/stack/sheet/glass/glass,
+										"reinforced glass" = /obj/item/stack/sheet/glass/rglass,
 										"plasteel" = /obj/item/stack/sheet/plasteel)
 	var/matter = 0
 
 /obj/item/device/material_synth/robot //MoMMI version, has more materials
 	materials_scanned = list(	"plasma glass" = /obj/item/stack/sheet/glass/plasmaglass,
-								"reinforced plasma glass" = /obj/item/stack/sheet/rglass/plasmarglass,
+								"reinforced plasma glass" = /obj/item/stack/sheet/glass/plasmarglass,
 								"metal" = /obj/item/stack/sheet/metal,
-								"glass" = /obj/item/stack/sheet/glass,
-								"reinforced glass" = /obj/item/stack/sheet/rglass,
+								"glass" = /obj/item/stack/sheet/glass/glass,
+								"reinforced glass" = /obj/item/stack/sheet/glass/rglass,
 								"plasteel" = /obj/item/stack/sheet/plasteel)
 
 /obj/item/device/material_synth/robot/cyborg //Cyborg version, has less materials and the ability to make tiles & rods (as borgs can't do it themselves)
 	materials_scanned = list(	"metal" = /obj/item/stack/sheet/metal,
-								"glass" = /obj/item/stack/sheet/glass,
-								"reinforced glass" = /obj/item/stack/sheet/rglass,
+								"glass" = /obj/item/stack/sheet/glass/glass,
+								"reinforced glass" = /obj/item/stack/sheet/glass/rglass,
 								"floor tiles" = /obj/item/stack/tile/plasteel,
 								"metal rods" = /obj/item/stack/rods)
 
@@ -63,19 +63,20 @@
 					var/obj/item/stack/sheet/inside_sheet = (locate(material_type) in R.module.modules)
 					if(!inside_sheet)
 						var/obj/item/stack/sheet/created_sheet = new material_type(R.module)
-						R.module.modules +=  created_sheet//cyborgs can get a free sheet, honk!
+						R.module.modules += created_sheet
 						if((created_sheet.amount + amount) <= created_sheet.max_amount)
-							created_sheet.amount += amount
+							created_sheet.amount += (amount-1)
 							R << "Added [amount] of [material_type] to the stack."
 						else
 							if(created_sheet.amount <= created_sheet.max_amount)
 								var/transfer_amount = min(created_sheet.max_amount - created_sheet.amount, amount)
-								created_sheet.amount += transfer_amount
+								created_sheet.amount += (transfer_amount-1)
 								amount -= transfer_amount
 							if(amount >= 1 && (created_sheet.amount >= created_sheet.max_amount))
 								R << "Dropping [amount], you cannot hold anymore of [material_type]."
 								var/obj/item/stack/sheet/dropped_sheet = new material_type(get_turf(src))
-								dropped_sheet.amount = amount
+								dropped_sheet.amount = (amount - 1)
+
 					else
 						if((inside_sheet.amount + amount) <= inside_sheet.max_amount)
 							inside_sheet.amount += amount

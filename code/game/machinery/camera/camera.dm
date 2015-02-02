@@ -61,10 +61,12 @@ var/list/camera_names=list()
 	..()
 
 /obj/machinery/camera/Destroy()
-	if(wires)
-		wires.Destroy()
-		wires = null
-
+	deactivate(null, 0) //kick anyone viewing out
+	if(assembly)
+		qdel(assembly)
+		assembly = null
+	qdel(wires)
+	cameranet.removeCamera(src) //Will handle removal from the camera network and the chunks, so we don't need to worry about that
 	..()
 
 /obj/machinery/camera/emp_act(severity)
@@ -102,7 +104,7 @@ var/list/camera_names=list()
 	return
 
 /obj/machinery/camera/blob_act()
-	del(src)
+	qdel(src)
 	return
 
 /obj/machinery/camera/proc/setViewRange(var/num = 7)

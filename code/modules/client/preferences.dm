@@ -1477,7 +1477,7 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 		B.open()
 
 	Topic(href, href_list)
-		if(!usr)
+		if(!usr || !client)
 			return
 		if(client.mob!=usr)
 			usr << "YOU AREN'T ME GO AWAY"

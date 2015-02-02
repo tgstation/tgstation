@@ -36,13 +36,13 @@ var/libcomp_menu
 	for(var/obj/machinery/librarycomp/L in library_computers)
 		L.booklist += "<tr><td>[author]</td><td>[title]</td><td>[category]</td><td><A href='?src=\ref[L];cacheid=[id]'>\[Order\]</A></td></tr>"
 
-/proc/load_library_db_to_cache(force=0)
-
+/proc/load_library_db_to_cache(force = FALSE)
 	if(cachedbooks && !force)
 		return
-	establish_db_connection()
-	if(!dbcon.IsConnected())
 
+	establish_db_connection()
+
+	if(!dbcon.IsConnected())
 		return
 
 	cachedbooks = list()
@@ -57,15 +57,10 @@ var/libcomp_menu
 		newbook.category = query.item[4]
 
 		cachedbooks += newbook
-	//build_library_menu()
 
-/proc/build_library_menu(var/obj/machinery/librarycomp/L)
-	if(!L || !cachedbooks)
-		return
-	var/menu
-	for(var/datum/cachedbook/C in cachedbooks)
-		menu += "<tr><td>[C.author]</td><td>[C.title]</td><td>[C.category]</td><td><A href='?src=\ref[L];cacheid=[cachedbooks.Find(C)]'>\[Order\]</A></td></tr>"
-	L.booklist = menu
+	if(force)
+		for(var/obj/machinery/librarycomp/L in library_computers)
+			L.build_library_menu()
 
 /*
  * Library Public Computer
@@ -175,9 +170,11 @@ var/libcomp_menu
 
 /*
  * Library Computer
+ *
+ * TODO: Make this an actual /obj/machinery/computer that can be crafted from circuit boards and such
+ * It is August 22nd, 2012... This TODO has already been here for months.. I wonder how long it'll last before someone does something about it.
+ * It's 25th of January in the year of (our) Lord 2015... And it's still not a computer.
  */
-// TODO: Make this an actual /obj/machinery/computer that can be crafted from circuit boards and such
-// It is August 22nd, 2012... This TODO has already been here for months.. I wonder how long it'll last before someone does something about it.
 /obj/machinery/librarycomp
 	name = "Check-In/Out Computer"
 	icon = 'icons/obj/library.dmi'
@@ -197,9 +194,18 @@ var/libcomp_menu
 	var/bibledelay = 0 // LOL NO SPAM (1 minute delay) -- Doohl
 	var/booklist
 
-/obj/machinery/librarycomp/New()
-	library_computers += src
+	machine_flags = EMAGGABLE
+
+/obj/machinery/librarycomp/New(loc)
+	..(loc)
+	library_computers.Add(src)
+
+	if(ticker)
+		initialize()
+
+/obj/machinery/librarycomp/initialize()
 	..()
+	build_library_menu()
 
 /obj/machinery/librarycomp/Destroy()
 	library_computers -= src
@@ -209,14 +215,23 @@ var/libcomp_menu
 	new /obj/structure/cult/tome(loc)
 	..()
 
+/obj/machinery/librarycomp/proc/build_library_menu()
+	var/menu
+
+	for(var/datum/cachedbook/C in cachedbooks)
+		menu += "<tr><td>[C.author]</td><td>[C.title]</td><td>[C.category]</td><td><A href='?src=\ref[src];cacheid=[cachedbooks.Find(C)]'>\[Order\]</A></td></tr>"
+
+	booklist = menu
+
 /obj/machinery/librarycomp/attack_hand(var/mob/user as mob)
 	if(istype(user,/mob/dead))
 		user << "<span class='danger'>Nope.</span>"
 		return
-	if(!booklist)
-		build_library_menu(src)
-	usr.set_machine(src)
+
+	user.set_machine(src)
+
 	var/dat = "<HEAD><TITLE>Book Inventory Management</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
+
 	switch(screenstate)
 		if(0)
 			// Main Menu
@@ -459,7 +474,21 @@ var/libcomp_menu
 							cachedbooks += newbook
 							add_book_to_cache(sqlauthor,sqltitle,sqlcategory,newbook.id)
 
-	//if(href_list["targetid"])
+	if(href_list["targetid"])
+		var/id = text2num(href_list["targetid"])
+		if(!id || !isnum(id) || id < 1)
+			usr << "<span class='warning'>Invalid SS<sup>13</sup>BN</span>"
+			return
+		var/datum/cachedbook/found
+		for(var/datum/cachedbook/newbook in cachedbooks)
+			if(newbook.id == id)
+				found = newbook
+				break
+		if(!found)
+			usr << "<span class='warning'>Unable to locate a book with an SS<sup>13</sup>BN of [id]</span>"
+			return
+		make_external_book(found)
+
 	if(href_list["cacheid"])
 		//var/sqlid = sanitizeSQL(href_list["targetid"])
 		/*
@@ -479,34 +508,7 @@ var/libcomp_menu
 			var/datum/cachedbook/newbook = cachedbooks[text2num(href_list["cacheid"])]
 			if(!newbook)
 				return
-			var/list/_http = world.Export("http://vg13.undo.it/index.php/book?id=[newbook.id]")
-			if(!_http || !_http["CONTENT"])
-				return
-			var/http = file2text(_http["CONTENT"])
-			if(!http)
-				return
-			/*
-			while(query.NextRow())
-				var/author = query.item[2]
-				var/title = query.item[3]
-				var/content = query.item[4]
-				var/obj/item/weapon/book/B = new(src.loc)
-				B.name = "Book: [title]"
-				B.title = title
-				B.author = author
-				B.dat = content
-				B.icon_state = "book[rand(1,7)]"
-				src.visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
-				break
-			*/
-			var/obj/item/weapon/book/B = new(src.loc)
-
-			B.name = "Book: [newbook.title]"
-			B.title = newbook.title
-			B.author = newbook.author
-			B.dat = http
-			B.icon_state = "book[rand(1,7)]"
-			src.visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
+			make_external_book(newbook)
 
 	if(href_list["orderbyid"])
 		var/orderid = input("Enter your order:") as num|null
@@ -521,6 +523,25 @@ var/libcomp_menu
 /*
  * Library Scanner
  */
+
+/obj/machinery/librarycomp/proc/make_external_book(var/datum/cachedbook/newbook)
+	if(!newbook || !newbook.id)
+		return
+	var/list/_http = world.Export("http://vg13.undo.it/index.php/book?id=[newbook.id]")
+	if(!_http || !_http["CONTENT"])
+		return
+	var/http = file2text(_http["CONTENT"])
+	if(!http)
+		return
+	var/obj/item/weapon/book/B = new(src.loc)
+
+	B.name = "Book: [newbook.title]"
+	B.title = newbook.title
+	B.author = newbook.author
+	B.dat = http
+	B.icon_state = "book[rand(1,7)]"
+	src.visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
+
 /obj/machinery/libraryscanner
 	name = "scanner"
 	icon = 'icons/obj/library.dmi'

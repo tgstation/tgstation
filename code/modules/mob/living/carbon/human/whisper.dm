@@ -1,5 +1,7 @@
 // NOTE THAT HEARD AND UNHEARD USE GENDER_REPLACE SYNTAX SINCE BYOND IS STUPID
 /mob/living/carbon/human/whisper(var/message as text)
+	if(stat == DEAD)
+		return
 	if(!IsVocal())
 		return
 
@@ -27,17 +29,18 @@
 	var/critical = InCritical()
 
 	// We are unconscious but not in critical, so don't allow them to whisper.
-	if(stat == UNCONSCIOUS && !critical)
+	if(stat == UNCONSCIOUS && (!critical || said_last_words))
 		return
 
 	// If whispering your last words, limit the whisper based on how close you are to death.
-	if(critical)
+	if(critical && !said_last_words)
 		var/health_diff = round(-config.health_threshold_dead + health)
 		// If we cut our message short, abruptly end it with a-..
 		var/message_len = length(message)
 		message = copytext(message, 1, health_diff) + "[message_len > health_diff ? "-.." : "..."]"
 		message = Ellipsis(message, 10, 1)
 		whispers = "whispers in their final breath"
+		said_last_words = src.stat
 
 	message = treat_message(message)
 
@@ -46,8 +49,9 @@
 		if(M.stat == DEAD && (M.client.prefs.toggles & CHAT_GHOSTEARS) && client)
 			listening_dead |= M
 
-	var/list/listening = get_hear(1, src) | listening_dead
-	var/list/eavesdropping = hearers(2, src)
+	var/list/listening = get_hearers_in_view(1, src)
+	listening |= listening_dead
+	var/list/eavesdropping = get_hearers_in_view(2, src)
 	eavesdropping -= listening
 	var/list/watching  = hearers(5, src)
 	watching  -= listening
@@ -69,5 +73,5 @@
 	for(var/mob/M in eavesdropping)
 		M.Hear(rendered, src, languages, message)
 
-	if(critical) //Dying words.
+	if(said_last_words) //Dying words.
 		succumb(1)

@@ -80,7 +80,7 @@
 	name = "rad"
 	icon_state = "rad"
 	damage = 30
-	damage_type = BURN
+	damage_type = TOX
 	nodamage = 0
 	weaken = 10
 	stutter = 10

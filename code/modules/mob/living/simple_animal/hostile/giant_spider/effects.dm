@@ -81,6 +81,7 @@
 	icon_state = "eggs"
 	var/amount_grown = 0
 	New()
+		..()
 		pixel_x = rand(3,-3)
 		pixel_y = rand(3,-3)
 		processing_objects.Add(src)
@@ -105,6 +106,7 @@
 	var/obj/machinery/atmospherics/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
 	New()
+		..()
 		pixel_x = rand(6,-6)
 		pixel_y = rand(6,-6)
 		processing_objects.Add(src)
@@ -140,6 +142,7 @@
 	health = 60
 
 	New()
+		..()
 		icon_state = pick("cocoon1","cocoon2","cocoon3")
 
 /obj/effect/spider/cocoon/Destroy()

@@ -95,10 +95,8 @@
 	return
 
 /mob/camera/blob/Stat()
-
-	statpanel("Status")
 	..()
-	if (client.statpanel == "Status")
+	if (statpanel("Blob Status"))
 		if(blob_core)
 			stat(null, "Core Health: [blob_core.health]")
 		stat(null, "Power Stored: [blob_points]/[max_blob_points]")

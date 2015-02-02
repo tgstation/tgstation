@@ -204,7 +204,7 @@
 		return list2json(json)
 
 	proc/ReadCode(var/jsonStr)
-		automations.Cut()
+		automations.len = 0
 		var/list/json=json2list(jsonStr)
 		if(json.len>0)
 			for(var/list/cData in json)

@@ -27,10 +27,10 @@
 
 /obj/item/borg/upgrade/proc/action(var/mob/living/silicon/robot/R)
 	if(R.stat == DEAD)
-		usr << "\red The [src] will not function on a deceased robot."
+		usr << "<span class='warning'>The [src] will not function on a deceased robot.</span>"
 		return 1
 	if(isMoMMI(R))
-		usr << "\red The [src] only functions on Nanotrasen Cyborgs."
+		usr << "<span class='warning'>The [src] only functions on Nanotrasen Cyborgs.</span>"
 	return 0
 
 
@@ -59,7 +59,7 @@
 		R.module.modules += new/obj/item/weapon/cautery
 		R.module.modules += new/obj/item/weapon/hemostat
 		R.module.modules += new/obj/item/weapon/retractor*/
-		R.module.modules += new/obj/item/weapon/melee/defibrillator
+		R.module.modules += new /obj/item/weapon/melee/defibrillator(src)
 		R.module.modules += new /obj/item/weapon/reagent_containers/borghypo/upgraded(src)
 
 		return 1
@@ -185,7 +185,7 @@
 	if(..()) return 0
 
 	if(istype(R.module, /obj/item/weapon/robot_module/miner) || istype(R.module, /obj/item/weapon/robot_module/engineering) || isMoMMI(R))
-		R.module.modules += new/obj/item/weapon/tank/jetpack/carbondioxide
+		R.module.modules += new/obj/item/weapon/tank/jetpack/carbondioxide(src)
 		for(var/obj/item/weapon/tank/jetpack/carbondioxide in R.module.modules)
 			R.internals = src
 		//R.icon_state="Miner+j"
@@ -208,7 +208,7 @@
 	if(R.emagged == 1)
 		return 0
 
-	R.emagged = 1
+	R.SetEmagged(2)
 	return 1
 
 /obj/item/borg/upgrade/engineering/
@@ -227,7 +227,7 @@
 	if(!S) return 0
 
 	S.materials_scanned |= list("plasma glass" = /obj/item/stack/sheet/glass/plasmaglass,
-								"reinforced plasma glass" = /obj/item/stack/sheet/rglass/plasmarglass,
+								"reinforced plasma glass" = /obj/item/stack/sheet/glass/plasmarglass,
 								"carpet tiles" = /obj/item/stack/tile/carpet)
 
 	var/obj/item/weapon/wrench/socket/W = locate(/obj/item/weapon/wrench/socket) in R.module.modules

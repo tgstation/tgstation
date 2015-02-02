@@ -162,6 +162,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/configFood,
 	/client/proc/debug_reagents,
 	/client/proc/make_invulnerable,
+	/client/proc/cmd_admin_dump_delprofile,
 #ifdef PROFILE_MACHINES
 	/client/proc/cmd_admin_dump_macprofile,
 #endif
@@ -874,7 +875,7 @@ var/list/admin_verbs_mod = list(
 			D = new /datum/admins(rank, rights, ckey)
 
 			//find the client for a ckey if they are connected and associate them with the new admin datum
-			D.associate(directory[ckey])
+			D.associate(src)
 			message_admins("[src] re-adminned themselves.")
 			log_admin("[src] re-adminned themselves.")
 			feedback_add_details("admin_verb","RAS")

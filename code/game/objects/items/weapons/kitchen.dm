@@ -307,7 +307,7 @@
 /obj/item/weapon/tray/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 
 	// Drop all the things. All of them.
-	overlays.Cut()
+	overlays.len = 0
 	for(var/obj/item/I in carrying)
 		I.loc = M.loc
 		carrying.Remove(I)
@@ -368,8 +368,8 @@
 
 
 
-	if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
-		M << "\red You get slammed in the face with the tray, against your mask!"
+	if(istype(M, /mob/living/carbon/human) && H.check_body_part_coverage(EYES))
+		H << "\red You get slammed in the face with the tray, against your mask!"
 		if(prob(33))
 			src.add_blood(H)
 			if (H.wear_mask)
@@ -489,7 +489,7 @@
 		foundtable = 1
 		break
 
-	overlays.Cut()
+	overlays.len = 0
 
 	for(var/obj/item/I in carrying)
 		I.loc = loc
