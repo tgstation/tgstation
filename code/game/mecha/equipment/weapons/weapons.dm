@@ -27,7 +27,7 @@
 	A.current = curloc
 	A.yo = targloc.y - curloc.y
 	A.xo = targloc.x - curloc.x
-	A.process()
+	A.fire()
 	chassis.log_message("Fired from [src.name], targeting [target].")
 	do_after_cooldown()
 	return 1
@@ -67,7 +67,6 @@
 	energy_drain = 120
 	projectile = /obj/item/projectile/ion
 	fire_sound = 'sound/weapons/Laser.ogg'
-	construction_cost = list("metal"=20000,"silver"=6000,"uranium"=2000)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse
 	equip_cooldown = 30
@@ -112,8 +111,6 @@
 	energy_drain = 200
 	equip_cooldown = 150
 	range = MELEE|RANGED
-	construction_time = 500
-	construction_cost = list("metal"=20000,"bananium"=10000)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker/can_attach(obj/mecha/combat/honker/M as obj)
 	if(..())
@@ -134,7 +131,7 @@
 		M << "<font color='red' size='7'>HONK</font>"
 		M.sleeping = 0
 		M.stuttering += 20
-		M.ear_deaf += 30
+		M.adjustEarDamage(0, 30)
 		M.Weaken(3)
 		if(prob(30))
 			M.Stun(10)
@@ -269,7 +266,7 @@
 	desc = "A weapon for combat exosuits. Shoots a rapid, three shot burst."
 	icon_state = "mecha_uac2"
 	equip_cooldown = 10
-	projectile = /obj/item/projectile/bullet/weakbullet
+	projectile = /obj/item/projectile/bullet/weakbullet3
 	projectiles = 300
 	projectile_energy_cost = 20
 	var/projectiles_per_shot = 3
@@ -319,7 +316,6 @@
 	equip_cooldown = 60
 	var/missile_speed = 2
 	var/missile_range = 30
-	construction_cost = list("metal"=22000,"gold"=6000,"silver"=8000)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/action(target)
 	if(!action_checks(target)) return
@@ -384,10 +380,9 @@
 	name = "\improper SOB-3 grenade launcher"
 	desc = "A weapon for combat exosuits. Launches primed clusterbangs. You monster."
 	projectiles = 3
-	projectile = /obj/item/weapon/grenade/flashbang/clusterbang
+	projectile = /obj/item/weapon/grenade/clusterbuster
 	projectile_energy_cost = 1600 //getting off cheap seeing as this is 3 times the flashbangs held in the grenade launcher.
 	equip_cooldown = 90
-	construction_cost = list("metal"=20000,"gold"=10000,"uranium"=10000) //now as expensive as a Honkblast.
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar
 	name = "banana mortar"
@@ -399,8 +394,6 @@
 	missile_speed = 1.5
 	projectile_energy_cost = 100
 	equip_cooldown = 20
-	construction_time = 300
-	construction_cost = list("metal"=20000,"bananium"=5000)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar/can_attach(obj/mecha/combat/honker/M as obj)
 	if(..())
@@ -424,14 +417,12 @@
 	name = "mousetrap mortar"
 	desc = "Equipment for clown exosuits. Launches armed mousetraps."
 	icon_state = "mecha_mousetrapmrtr"
-	projectile = /obj/item/device/assembly/mousetrap
+	projectile = /obj/item/device/assembly/mousetrap/armed
 	fire_sound = 'sound/items/bikehorn.ogg'
 	projectiles = 15
 	missile_speed = 1.5
 	projectile_energy_cost = 100
 	equip_cooldown = 10
-	construction_time = 300
-	construction_cost = list("metal"=20000,"bananium"=5000)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar/can_attach(obj/mecha/combat/honker/M as obj)
 	if(..())
@@ -442,7 +433,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar/action(target)
 	if(!action_checks(target)) return
 	set_ready_state(0)
-	var/obj/item/device/assembly/mousetrap/M = new projectile(chassis.loc)
+	var/obj/item/device/assembly/mousetrap/armed/M = new projectile(chassis.loc)
 	M.secured = 1
 	playsound(chassis, fire_sound, 60, 1)
 	M.throw_at(target, missile_range, missile_speed)

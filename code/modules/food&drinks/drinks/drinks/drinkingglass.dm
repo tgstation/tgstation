@@ -153,7 +153,7 @@
 			if("gargleblaster")
 				icon_state = "gargleblasterglass"
 				name = "Pan-Galactic Gargle Blaster"
-				desc = "Does... does this mean that Arthur and Ford are on the station? Oh joy."
+				desc = "Like having your brain smashed out by a slice of lemon wrapped around a large gold brick."
 			if("bravebull")
 				icon_state = "bravebullglass"
 				name = "Brave Bull"
@@ -453,14 +453,12 @@
 		return
 
 // for /obj/machinery/vending/sovietsoda
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/soda
-	New()
-		..()
-		reagents.add_reagent("sodawater", 50)
-		on_reagent_change()
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/New()
+	..()
+	on_reagent_change()
 
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/cola
-	New()
-		..()
-		reagents.add_reagent("cola", 50)
-		on_reagent_change()
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/soda
+	list_reagents = list("sodawater" = 50)
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/cola
+	list_reagents = list("cola" = 50)

@@ -49,7 +49,7 @@
 /obj/item/weapon/storage/fancy/donut_box/New()
 	..()
 	for(var/i=1; i <= storage_slots; i++)
-		new /obj/item/weapon/reagent_containers/food/snacks/donut/normal(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/donut(src)
 	return
 
 /*
@@ -160,7 +160,6 @@
 
 /obj/item/weapon/storage/fancy/cigarettes/update_icon()
 	icon_state = "[initial(icon_state)][contents.len]"
-	desc = "There are [contents.len] cig\s left!"
 	return
 
 /obj/item/weapon/storage/fancy/cigarettes/remove_from_storage(obj/item/W, atom/new_location)

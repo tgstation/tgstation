@@ -7,7 +7,6 @@
 #define TINT_BLIND 3			//Threshold of tint level to obscure vision fully
 
 #define HUMAN_MAX_OXYLOSS 3 //Defines how much oxyloss humans can get per tick. A tile with no air at all (such as space) applies this value, otherwise it's a percentage of it.
-#define HUMAN_CRIT_MAX_OXYLOSS ( (last_tick_duration) /3) //The amount of damage you'll get when in critical condition. We want this to be a 5 minute deal = 300s. There are 100HP to get through, so (1/3)*last_tick_duration per second. Breaths however only happen every 4 ticks.
 
 #define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
 #define HEAT_DAMAGE_LEVEL_2 3 //Amount of damage applied when your body temperature passes the 400K point
@@ -49,18 +48,25 @@
 	//blinded get reset each cycle and then get activated later in the
 	//code. Very ugly. I dont care. Moving this stuff here so its easy
 	//to find it.
-	blinded = null
 	fire_alert = 0 //Reset this here, because both breathe() and handle_environment() have a chance to set it.
 	tinttotal = tintcheck() //here as both hud updates and status updates call it
 
 	//TODO: seperate this out
 	var/datum/gas_mixture/environment = loc.return_air()
 
+	handle_regular_hud_updates()
+
+	//Status updates, death etc.
+		//TODO: optimise ~Carn
+	handle_regular_status_updates()
+
 	//No need to update all of these procs if the guy is dead.
 	if(stat != DEAD)
-		if(air_master.current_cycle%4==2 || failed_last_breath) 	//First, resolve location and get a breath
-			breathe() 				//Only try to take a breath every 4 ticks, unless suffocating
+		for(var/datum/mutation/human/HM in dna.mutations)
+			HM.on_life(src)
 
+		if(SSmob.times_fired%4==2 || failed_last_breath) 	//First, resolve location and get a breath
+			breathe() 				//Only try to take a breath every 4 ticks, unless suffocating
 		else //Still give containing object the chance to interact
 			if(istype(loc, /obj/))
 				var/obj/location_as_object = loc
@@ -90,14 +96,11 @@
 	//stuff in the stomach
 	handle_stomach()
 
-	//Status updates, death etc.
-	handle_regular_status_updates()		//TODO: optimise ~Carn
+
 	update_canmove()
 
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
-
-	handle_regular_hud_updates()
 
 	if(dna)
 		dna.species.spec_life(src) // for mutantraces
@@ -125,34 +128,6 @@
 
 
 /mob/living/carbon/human/proc/handle_disabilities()
-	if (disabilities & EPILEPSY)
-		if ((prob(1) && paralysis < 1))
-			src << "<span class='danger'>You have a seizure!</span>"
-			for(var/mob/O in viewers(src, null))
-				if(O == src)
-					continue
-				O.show_message(text("<span class='userdanger'>[src] starts having a seizure!</span>"), 1)
-			Paralyse(10)
-			Jitter(1000)
-	if (disabilities & COUGHING)
-		if ((prob(5) && paralysis <= 1))
-			drop_item()
-			emote("cough")
-	if (disabilities & TOURETTES)
-		if ((prob(10) && paralysis <= 1))
-			Stun(10)
-			switch(rand(1, 3))
-				if(1)
-					emote("twitch")
-				if(2 to 3)
-					say("[prob(50) ? ";" : ""][pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")]")
-			var/x_offset = pixel_x + rand(-2,2) //Should probably be moved into the twitch emote at some point.
-			var/y_offset = pixel_y + rand(-1,1)
-			animate(src, pixel_x = pixel_x + x_offset, pixel_y = pixel_y + y_offset, time = 1)
-			animate(pixel_x = initial(pixel_x) , pixel_y = initial(pixel_y), time = 1)
-	if (disabilities & NERVOUS)
-		if (prob(10))
-			stuttering = max(10, stuttering)
 	if (getBrainLoss() >= 60 && stat != 2)
 		if (prob(3))
 			switch(pick(1,2,3))
@@ -242,10 +217,10 @@
 			if(nutrition >= 2) //If we are very, very cold we'll use up quite a bit of nutriment to heat us up.
 				nutrition -= 2
 			var/body_temperature_difference = 310.15 - bodytemperature
-			bodytemperature += max((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
+			bodytemperature += max((body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
 		if(260.15 to 360.15)
 			var/body_temperature_difference = 310.15 - bodytemperature
-			bodytemperature += body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR
+			bodytemperature += body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR
 		if(360.15 to INFINITY) //360.15 is 310.15 + 50, the temperature where you start to feel effects.
 			//We totally need a sweat system cause it totally makes sense...~
 			var/body_temperature_difference = 310.15 - bodytemperature
@@ -335,7 +310,7 @@
 
 /mob/living/carbon/human/proc/get_cold_protection(temperature)
 
-	if(COLD_RESISTANCE in mutations)
+	if(dna.check_mutation(COLDRES))
 		return 1 //Fully protected from the cold.
 
 	if(dna && COLDRES in dna.species.specflags)
@@ -437,13 +412,11 @@
 
 /mob/living/carbon/human/proc/handle_regular_status_updates()
 	if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
-		blinded = 1
 		silent = 0
 	else				//ALIVE. LIGHTS ARE ON
 		updatehealth()	//TODO
 		if(health <= config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
 			death()
-			blinded = 1
 			silent = 0
 			return 1
 
@@ -452,19 +425,8 @@
 		if( (getOxyLoss() > 50) || (config.health_threshold_crit >= health) )
 			Paralyse(3)
 
-			/* Done by handle_breath()
-			if( health <= 20 && prob(1) )
-				spawn(0)
-					emote("gasp")
-			if(!reagents.has_reagent("inaprovaline"))
-				adjustOxyLoss(1)*/
-
 		if(hallucination)
-			if(hallucination >= 20)
-				if(prob(3))
-					fake_attack(src)
-				if(!handling_hal)
-					spawn handle_hallucinations() //The not boring kind!
+			spawn handle_hallucinations()
 
 			if(hallucination<=2)
 				hallucination = 0
@@ -477,13 +439,11 @@
 
 		if(paralysis)
 			AdjustParalysis(-1)
-			blinded = 1
 			stat = UNCONSCIOUS
 		else if(sleeping)
 			handle_dreams()
 			adjustStaminaLoss(-10)
 			sleeping = max(sleeping-1, 0)
-			blinded = 1
 			stat = UNCONSCIOUS
 			if( prob(10) && health && !hal_crit )
 				spawn(0)
@@ -493,27 +453,23 @@
 			stat = CONSCIOUS
 
 		//Eyes
-		if(sdisabilities & BLIND)	//disabled-blind, doesn't get better on its own
-			blinded = 1
+		if(disabilities & BLIND || stat)	//disabled-blind, doesn't get better on its own
+			eye_blind = max(eye_blind, 1)
 		else if(eye_blind)			//blindness, heals slowly over time
 			eye_blind = max(eye_blind-1,0)
-			blinded = 1
 		else if(tinttotal >= TINT_BLIND)		//covering your eyes heals blurry eyes faster
 			eye_blurry = max(eye_blurry-3, 0)
-		//	blinded = 1				//now handled under /handle_regular_hud_updates()
 		else if(eye_blurry)	//blurry eyes heal slowly
 			eye_blurry = max(eye_blurry-1, 0)
 
 		//Ears
-		if(sdisabilities & DEAF)	//disabled-deaf, doesn't get better on its own
-			ear_deaf = max(ear_deaf, 1)
-		else if(istype(ears, /obj/item/clothing/ears/earmuffs))	//resting your ears with earmuffs heals ear damage faster, and slowly heals deafness
-			ear_damage = max(ear_damage-0.15, 0)
-			ear_deaf = max(ear_deaf-1, 1)
-		else if(ear_deaf) //deafness, heals slowly over time
-			ear_deaf = max(ear_deaf-1, 0)
-		else if(ear_damage < 25)	//ear damage heals slowly under this threshold. otherwise you'll need earmuffs
-			ear_damage = max(ear_damage-0.05, 0)
+		if(disabilities & DEAF)	//disabled-deaf, doesn't get better on its own
+			setEarDamage(-1, max(ear_deaf, 1))
+		else if (ear_damage < 100) // deafness heals slowly over time, unless ear_damage is over 100
+			if(istype(ears, /obj/item/clothing/ears/earmuffs)) // earmuffs rest your ears, healing 3x faster, but keeping you deaf.
+				setEarDamage(max(ear_damage-0.15, 0), max(ear_deaf - 1, 1))
+			else
+				adjustEarDamage(-0.05, -1)
 
 		//Dizziness
 		if(dizziness)
@@ -578,12 +534,13 @@
 
 		CheckStamina()
 
+	if(dna)
+		dna.species.handle_vision(src)
+
 	return 1
 
 /mob/living/carbon/human/proc/handle_regular_hud_updates()
 	if(!client)	return 0
-
-	regular_hud_updates() //For MED/SEC HUD icon deletion
 
 	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
 
@@ -670,7 +627,6 @@
 			if(!client.adminobs)			reset_view(null)
 
 	if(dna)
-		dna.species.handle_vision(src)
 		dna.species.handle_hud_icons(src)
 
 	return 1
@@ -709,7 +665,7 @@
 					stomach_contents.Remove(M)
 					qdel(M)
 					continue
-				if(air_master.current_cycle%3==1)
+				if(SSmob.times_fired%3==1)
 					if(!(M.status_flags & GODMODE))
 						M.adjustBruteLoss(5)
 					nutrition += 10
@@ -719,4 +675,3 @@
 		mind.changeling.regenerate()
 
 #undef HUMAN_MAX_OXYLOSS
-#undef HUMAN_CRIT_MAX_OXYLOSS

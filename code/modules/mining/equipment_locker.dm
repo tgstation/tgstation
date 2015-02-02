@@ -75,14 +75,14 @@
 			inserted_id = I
 			interact(user)
 		return
+	if(default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", W))
+		updateUsrDialog()
+		return
 	if(panel_open)
 		if(istype(W, /obj/item/weapon/crowbar))
 			empty_content()
 			default_deconstruction_crowbar(W)
 		return 1
-	if(default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", W))
-		updateUsrDialog()
-		return
 	..()
 
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(var/obj/item/weapon/ore/O)
@@ -192,7 +192,7 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/mineral/ore_redemption/ex_act(severity)
+/obj/machinery/mineral/ore_redemption/ex_act(severity, target)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
@@ -204,7 +204,6 @@
 		if(prob(25))
 			empty_content()
 			qdel(src)
-	return
 
 //empty the redemption machine by stacks of at most max_amount (50 at this time) size
 /obj/machinery/mineral/ore_redemption/proc/empty_content()
@@ -358,16 +357,12 @@
 			new /obj/item/device/t_scanner/adv_mining_scanner(src.loc)
 	qdel(voucher)
 
-/obj/machinery/mineral/equipment_vendor/ex_act(severity)
+/obj/machinery/mineral/equipment_vendor/ex_act(severity, target)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
-	if(severity == 1)
-		if(prob(50))
-			qdel(src)
-	else if(severity == 2)
-		if(prob(25))
-			qdel(src)
+	if(prob(50 / severity) && severity < 3)
+		qdel(src)
 
 /**********************Mining Equipment Vendor Items**************************/
 
@@ -427,7 +422,7 @@
 		var/list/L = list()
 		for(var/obj/item/device/radio/beacon/B in world)
 			var/turf/T = get_turf(B)
-			if(T.z == 1)
+			if(T.z == ZLEVEL_STATION)
 				L += B
 		if(!L.len)
 			user << "<span class='notice'>The [src.name] failed to create a wormhole.</span>"
@@ -479,9 +474,8 @@
 
 /obj/item/weapon/resonator/proc/CreateResonance(var/target, var/creator)
 	if(cooldown <= 0)
-		playsound(src,'sound/effects/stealthoff.ogg',50,1)
-		var/obj/effect/resonance/R = new /obj/effect/resonance(get_turf(target))
-		R.creator = creator
+		playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
+		new /obj/effect/resonance(get_turf(target), creator)
 		cooldown = 1
 		spawn(20)
 			cooldown = 0
@@ -491,9 +485,8 @@
 	..()
 
 /obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity_flag)
-	if(target in user.contents)
-		return
 	if(proximity_flag)
+		if(!check_allowed_items(target, 1)) return
 		CreateResonance(target, user)
 
 /obj/effect/resonance
@@ -504,16 +497,15 @@
 	layer = 4.1
 	mouse_opacity = 0
 	var/resonance_damage = 20
-	var/creator = null
 
-/obj/effect/resonance/New()
+/obj/effect/resonance/New(loc, var/creator = null)
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf))
 		return
 	if(istype(proj_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = proj_turf
-		playsound(src,'sound/effects/sparks4.ogg',50,1)
-		M.gets_drilled()
+		playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
+		M.gets_drilled(creator)
 		spawn(5)
 			qdel(src)
 	else
@@ -523,7 +515,7 @@
 			name = "strong resonance field"
 			resonance_damage = 45
 		spawn(50)
-			playsound(src,'sound/effects/sparks4.ogg',50,1)
+			playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
 			if(creator)
 				for(var/mob/living/L in src.loc)
 					add_logs(creator, L, "used a resonator field on", object="resonator")
@@ -707,7 +699,8 @@
 				if(istype(target, /mob/living/simple_animal/hostile))
 					var/mob/living/simple_animal/hostile/H = M
 					if(malfunctioning)
-						M.faction = list("lazarus")
+						H.faction |= list("lazarus", "\ref[user]")
+						H.robust_searching = 1
 						H.friends += user
 						H.attack_same = 1
 						log_game("[user] has revived hostile mob [target] with a malfunctioning lazarus injector")

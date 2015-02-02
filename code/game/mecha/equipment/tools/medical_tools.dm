@@ -6,7 +6,6 @@
 	origin_tech = "programming=2;biotech=3"
 	energy_drain = 20
 	range = MELEE
-	construction_cost = list("metal"=5000,"glass"=10000)
 	reliability = 1000
 	equip_cooldown = 20
 	var/mob/living/carbon/occupant = null
@@ -53,7 +52,7 @@
 			occupant_message("[target] will not fit into the sleeper because they have a slime latched onto their head.")
 			return
 	occupant_message("You start putting [target] into [src].")
-	chassis.visible_message("[chassis] starts putting [target] into the [src].")
+	chassis.visible_message("[chassis] starts putting [target] into \the [src].")
 	var/C = chassis.loc
 	var/T = target.loc
 	if(do_after_cooldown(target))
@@ -233,8 +232,8 @@
 	M.AdjustStunned(-4)
 	M.AdjustWeakened(-4)
 	M.AdjustStunned(-4)
-	if(M.reagents.get_reagent_amount("inaprovaline") < 5)
-		M.reagents.add_reagent("inaprovaline", 5)
+	if(M.reagents.get_reagent_amount("epinephrine") < 5)
+		M.reagents.add_reagent("epinephrine", 5)
 	S.chassis.use_power(S.energy_drain)
 	S.update_equip_info()
 	return
@@ -242,7 +241,7 @@
 /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun
 	name = "exosuit syringe gun"
 	desc = "Equipment for medical exosuits. A chem synthesizer with syringe gun. Reagents inside are held in stasis, so no reactions will occur."
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "syringegun"
 	var/list/syringes
 	var/list/known_reagents
@@ -256,14 +255,12 @@
 	range = MELEE|RANGED
 	equip_cooldown = 10
 	origin_tech = "materials=3;biotech=4;magnets=4;programming=3"
-	construction_time = 200
-	construction_cost = list("metal"=3000,"glass"=2000)
 
 /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/New()
 	..()
 	flags |= NOREACT
 	syringes = new
-	known_reagents = list("inaprovaline"="Inaprovaline","anti_toxin"="Anti-Toxin (Dylovene)")
+	known_reagents = list("epinephrine"="Epinephrine","charcoal"="Charcoal")
 	processed_reagents = new
 	create_reagents(max_volume)
 	synth = new (list(src),0)

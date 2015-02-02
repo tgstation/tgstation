@@ -4,7 +4,6 @@
 	icon_state = "cell-off"
 	density = 1
 	anchored = 1.0
-	interact_offline = 1
 	layer = 4
 
 	var/on = 0
@@ -18,7 +17,6 @@
 /obj/machinery/atmospherics/unary/cryo_cell/New()
 	..()
 	initialize_directions = dir
-	initialize()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/cryo_tube(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
@@ -28,6 +26,9 @@
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/stack/cable_coil(null, 1)
 	RefreshParts()
+
+/obj/machinery/atmospherics/unary/cryo_cell/construction()
+	..(dir,dir)
 
 /obj/machinery/atmospherics/unary/cryo_cell/RefreshParts()
 	var/C
@@ -46,6 +47,11 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/process()
 	..()
+	if(occupant)
+		if(occupant.health >= 100)
+			on = 0
+			open_machine()
+			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 	if(!node || !is_operational())
 		return
 	if(!on)
@@ -58,9 +64,7 @@
 		expel_gas()
 
 		if(occupant)
-			if(occupant.stat != 2)
-				process_occupant()
-
+			process_occupant()
 	if(abs(temperature_archived-air_contents.temperature) > 1)
 		parent.update = 1
 
@@ -101,16 +105,7 @@
 	if(..())
 		return
 
-	//powerless interaction
-	if(!is_operational())
-		user.unset_machine()//essential to prevent infinite loops of opening/closing the machine
-		if(state_open)
-			close_machine()
-		else
-			open_machine()
-
-	else
-		ui_interact(user)
+	ui_interact(user)
 
 
  /**
@@ -172,7 +167,7 @@
 			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
 	data["beakerContents"] = beakerContents
 
-	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, ui_key)
+	var/datum/nanoui/ui = SSnano.get_open_ui(user, src, ui_key)
 	if (!ui)
 		// the ui does not exist, so we'll create a new one
 		ui = new(user, src, ui_key, "cryo.tmpl", "Cryo Cell Control System", 520, 410)
@@ -203,7 +198,7 @@
 
 	if(href_list["close"])
 		if(close_machine() == usr)
-			var/datum/nanoui/ui = nanomanager.get_open_ui(usr, src, "main")
+			var/datum/nanoui/ui = SSnano.get_open_ui(usr, src, "main")
 			ui.close()
 			on = 1
 	if(href_list["switchOff"])
@@ -238,6 +233,9 @@
 		return
 
 	if(exchange_parts(user, I))
+		return
+
+	if(default_pry_open(I))
 		return
 
 	default_deconstruction_crowbar(I)
@@ -287,8 +285,8 @@
 		occupant.bodytemperature += 2*(air_contents.temperature - occupant.bodytemperature) * current_heat_capacity / (current_heat_capacity + air_contents.heat_capacity())
 		occupant.bodytemperature = max(occupant.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
 		if(occupant.bodytemperature < T0C)
-			occupant.sleeping = max(5/efficiency, (1 / occupant.bodytemperature)*2000/efficiency)
-			occupant.Paralyse(max(5/efficiency, (1 / occupant.bodytemperature)*3000/efficiency))
+//			occupant.sleeping = max(5/efficiency, (1 / occupant.bodytemperature)*2000/efficiency)
+//			occupant.Paralyse(max(5/efficiency, (1 / occupant.bodytemperature)*3000/efficiency))
 			if(air_contents.oxygen > 2)
 				if(occupant.getOxyLoss()) occupant.adjustOxyLoss(-1)
 			else

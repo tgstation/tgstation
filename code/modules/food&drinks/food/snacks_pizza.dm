@@ -10,18 +10,12 @@
 	icon_state = "pizzamargherita"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/margheritaslice
 	slices_num = 6
-
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/margherita/New()
-	..()
-	reagents.add_reagent("nutriment", 40)
-	reagents.add_reagent("tomatojuice", 6)
-	bitesize = 2
+	list_reagents = list("nutriment" = 30, "tomatojuice" = 6, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/margheritaslice
 	name = "margherita slice"
 	desc = "A slice of the most cheezy pizza in galaxy."
 	icon_state = "pizzamargheritaslice"
-	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meatpizza
 	name = "meatpizza"
@@ -29,18 +23,12 @@
 	icon_state = "meatpizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/meatpizzaslice
 	slices_num = 6
-
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meatpizza/New()
-	..()
-	reagents.add_reagent("nutriment", 50)
-	reagents.add_reagent("tomatojuice", 6)
-	bitesize = 2
+	list_reagents = list("nutriment" = 40, "tomatojuice" = 6, "vitamin" = 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/meatpizzaslice
 	name = "meatpizza slice"
 	desc = "A nutritious slice of meatpizza."
 	icon_state = "meatpizzaslice"
-	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/mushroompizza
 	name = "mushroom pizza"
@@ -48,17 +36,12 @@
 	icon_state = "mushroompizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/mushroompizzaslice
 	slices_num = 6
-
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/mushroompizza/New()
-	..()
-	reagents.add_reagent("nutriment", 35)
-	bitesize = 2
+	list_reagents = list("nutriment" = 30, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/mushroompizzaslice
 	name = "mushroom pizza slice"
 	desc = "Maybe it is the last slice of pizza in your life."
 	icon_state = "mushroompizzaslice"
-	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/vegetablepizza
 	name = "vegetable pizza"
@@ -66,19 +49,12 @@
 	icon_state = "vegetablepizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/vegetablepizzaslice
 	slices_num = 6
-
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/vegetablepizza/New()
-	..()
-	reagents.add_reagent("nutriment", 30)
-	reagents.add_reagent("tomatojuice", 6)
-	reagents.add_reagent("imidazoline", 12)
-	bitesize = 2
+	list_reagents = list("nutriment" = 25, "tomatojuice" = 6, "oculine" = 12, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/vegetablepizzaslice
 	name = "vegetable pizza slice"
 	desc = "A slice of the most green pizza of all pizzas not containing green ingredients."
 	icon_state = "vegetablepizzaslice"
-	bitesize = 2
 
 /obj/item/pizzabox
 	name = "pizza box"
@@ -224,14 +200,34 @@
 		if(open )
 			return
 
-		var/t = input("Enter what you want to add to the tag:", "Write", null, null) as text
+		var/t = stripped_input(user, "Enter what you want to add to the tag:", "Write", "", 30)
 
 		var/obj/item/pizzabox/boxtotagto = src
 		if(boxes.len > 0)
 			boxtotagto = boxes[boxes.len]
 
-		boxtotagto.boxtag = copytext("[boxtotagto.boxtag][t]", 1, 30)
+		boxtotagto.boxtag = "[boxtotagto.boxtag][t]"
 
 		update_icon()
 		return
 	..()
+
+/obj/item/pizzabox/margherita/New()
+	pizza = new /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/margherita(src)
+	boxtag = "Margherita Deluxe"
+	update_icon()
+
+/obj/item/pizzabox/vegetable/New()
+	pizza = new /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/vegetablepizza(src)
+	boxtag = "Gourmet Vegatable"
+	update_icon()
+
+/obj/item/pizzabox/mushroom/New()
+	pizza = new /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/mushroompizza(src)
+	boxtag = "Mushroom Special"
+	update_icon()
+
+/obj/item/pizzabox/meat/New()
+	pizza = new /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meatpizza(src)
+	boxtag = "Meatlover's Supreme"
+	update_icon()

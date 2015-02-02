@@ -370,6 +370,8 @@
 	else if(status != LIGHT_BROKEN && status != LIGHT_EMPTY)
 
 		user.do_attack_animation(src)
+		if(W.damtype == STAMINA)
+			return
 		if(prob(1+W.force * 5))
 
 			user.visible_message("<span class='danger'>[user.name] smashed the light!</span>", \
@@ -467,7 +469,7 @@
 // attack with hand - remove tube/bulb
 // if hands aren't protected and the light is on, burn the player
 
-/obj/machinery/light/attack_hand(mob/user)
+/obj/machinery/light/attack_hand(mob/living/carbon/human/user)
 
 	add_fingerprint(user)
 
@@ -489,9 +491,9 @@
 		else
 			prot = 1
 
-		if(prot > 0 || (COLD_RESISTANCE in user.mutations))
+		if(prot > 0)
 			user << "You remove the light [fitting]"
-		else if(TK in user.mutations)
+		else if(istype(user) && user.dna.check_mutation(TK))
 			user << "You telekinetically remove the light [fitting]."
 		else
 			user << "You try to remove the light [fitting], but you burn your hand on it!"
@@ -572,18 +574,16 @@
 // explosion effect
 // destroy the whole light fixture or just shatter it
 
-/obj/machinery/light/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(75))
-				broken()
-		if(3.0)
-			if (prob(50))
-				broken()
-	return
+/obj/machinery/light/ex_act(severity, target)
+	..()
+	if(!gc_destroyed)
+		switch(severity)
+			if(2)
+				if(prob(50))
+					broken()
+			if(3)
+				if(prob(25))
+					broken()
 
 //blob effect
 
@@ -681,7 +681,7 @@
 	if(istype(I, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = I
 
-		user << "You inject the solution into the [src]."
+		user << "You inject the solution into \the [src]."
 
 		if(S.reagents.has_reagent("plasma", 5))
 

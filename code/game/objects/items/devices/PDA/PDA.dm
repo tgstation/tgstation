@@ -34,6 +34,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/mimeamt = 0 //How many silence left when infected with mime.exe
 	var/note = "Congratulations, your station has chosen the Thinktronic 5230 Personal Data Assistant!" //Current note in the notepad function
 	var/notehtml = ""
+	var/notescanned = 0 // True if what is in the notekeeper was from a paper.
 	var/cart = "" //A place to stick cartridge menu information
 	var/detonate = 1 // Can the PDA be blown up?
 	var/hidden = 0 // Is the PDA hidden from the PDA list?
@@ -47,6 +48,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/chat_channel = "#ss13" //name of our current NTRC channel
 	var/nick = "" //our NTRC nick
 	var/list/ntrclog = list() //NTRC message log
+	var/new_ntrc_msg = 0
 
 	var/noreturn = 0 //whether the PDA can use the Return button, used for the aiPDA chatroom
 
@@ -161,6 +163,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/librarian
 	icon_state = "pda-library"
+	default_cartridge = /obj/item/weapon/cartridge/librarian
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This is model is a WGW-11 series e-reader."
 	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant!"
 	silent = 1 //Quiet in the library!
@@ -170,8 +173,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This is model is a special edition with a transparent case."
 	note = "Congratulations, you have chosen the Thinktronic 5230 Personal Data Assistant Deluxe Special Max Turbo Limited Edition!"
 
-/obj/item/device/pda/chef
-	icon_state = "pda-chef"
+/obj/item/device/pda/cook
+	icon_state = "pda-cook"
 
 /obj/item/device/pda/bar
 	icon_state = "pda-bartender"
@@ -259,6 +262,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(active_uplink_check(user))
 		return
 
+	setup_chatrooms()
+
 	var/dat = "<html><head><title>Personal Data Assistant</title></head><body bgcolor=\"#808000\"><style>a, a:link, a:visited, a:active, a:hover { color: #000000; }img {border-style:none;}</style>"
 
 	dat += "<a href='byond://?src=\ref[src];choice=Close'><img src=pda_exit.png> Close</a>"
@@ -291,7 +296,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += "<ul>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=1'><img src=pda_notes.png> Notekeeper</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=2'><img src=pda_mail.png> Messenger</a></li>"
-				dat += "<li><a href='byond://?src=\ref[src];choice=5'><img src=pda_chatroom.png> Nanotrasen Relay Chat</a></li>"
+				dat += "<li><a href='byond://?src=\ref[src];choice=5'><img src=pda_chatroom.png> Nanotrasen Relay Chat</a> ([new_ntrc_msg] unread)</li>"
 
 				if (cartridge)
 					if (cartridge.access_clown)
@@ -343,6 +348,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 							dat += "<li><a href='byond://?src=\ref[src];choice=50'><img src=pda_cleanbot.png> Cleanbot Access</a></li>"
 					if (istype(cartridge.radio, /obj/item/radio/integrated/signal))
 						dat += "<li><a href='byond://?src=\ref[src];choice=40'><img src=pda_signaler.png> Signaler System</a></li>"
+					if (cartridge.access_newscaster)
+						dat += "<li><a href='byond://?src=\ref[src];choice=53'><img src=pda_notes.png> Newscaster Access </a></li>"
 					if (cartridge.access_reagent_scanner)
 						dat += "<li><a href='byond://?src=\ref[src];choice=Reagent Scan'><img src=pda_reagent.png> [scanmode == 3 ? "Disable" : "Enable"] Reagent Scanner</a></li>"
 					if (cartridge.access_engine)
@@ -362,12 +369,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += "</ul>"
 
 			if (1)
-				dat += "<h4><img src=pda_notes.png> Notekeeper V2.1</h4>"
-				dat += "<a href='byond://?src=\ref[src];choice=Edit'> Edit</a><br>"
-				dat += note
+				dat += "<h4><img src=pda_notes.png> Notekeeper V2.2</h4>"
+				dat += "<a href='byond://?src=\ref[src];choice=Edit'>Edit</a><br>"
+				if(notescanned)
+					dat += "(This is a scanned image, editing it may cause some text formatting to change.)<br>"
+				dat += "<HR><font face=\"[PEN_FONT]\">[(!notehtml ? note : notehtml)]</font>"
 
 			if (2)
-				dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.4</h4>"
+				dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.6</h4>"
 				dat += "<a href='byond://?src=\ref[src];choice=Toggle Ringer'><img src=pda_bell.png> Ringer: [silent == 1 ? "Off" : "On"]</a> | "
 				dat += "<a href='byond://?src=\ref[src];choice=Toggle Messenger'><img src=pda_mail.png> Send / Receive: [toff == 1 ? "Off" : "On"]</a> | "
 				dat += "<a href='byond://?src=\ref[src];choice=Ringtone'><img src=pda_bell.png> Set Ringtone</a> | "
@@ -403,7 +412,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					dat += "None detected.<br>"
 
 			if(21)
-				dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.4</h4>"
+				dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.6</h4>"
 				dat += "<a href='byond://?src=\ref[src];choice=Clear'><img src=pda_blank.png> Clear Messages</a>"
 
 				dat += "<h4><img src=pda_mail.png> Messages</h4>"
@@ -441,16 +450,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += "<br>"
 
 			if (5)
-				if(!nick) //first time join
-					nick = copytext(sanitize(owner), 1, 9)
-					var/datum/chatroom/C = chatchannels[chat_channel]
-					C.parse_msg(src, nick, "/join [chat_channel]")
-				dat += "<h4><img src=pda_chatroom.png> SS13 Nanotrasen Relay Chat Network</h4>"
+				new_ntrc_msg = 0
+				dat += "<h4><img src=pda_chatroom.png> Nanotrasen Relay Chat Network V1.2</h4>"
 
 				dat += "<a href='byond://?src=\ref[src];choice=Set Nick'>[nick]</a> | "
 				dat += "<a href='byond://?src=\ref[src];choice=Set Channel'>[chat_channel]</a> | "
 				dat += "<a href='byond://?src=\ref[src];choice=NTRC Message'>Write message</a> | "
-				dat += "<a href='byond://?src=\ref[src];choice=NTRC Help'>Help</a><br>"
+				dat += "<a href='byond://?src=\ref[src];choice=NTRC Help'>Help</a><br><HR>"
 				if(chat_channel)
 					dat += ntrclog[chat_channel]
 
@@ -560,18 +566,21 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				else if((!isnull(cartridge)) && (cartridge.access_atmos))
 					scanmode = 5
 
-//MESSENGER/NOTE FUNCTIONS===================================
+//NOTEKEEPER FUNCTIONS===================================
 
 			if ("Edit")
-				var/n = input(U, "Please enter message", name, notehtml) as message
+				var/n = stripped_multiline_input(U, "Please enter message", name, note)
 				if (in_range(src, U) && loc == U)
-					n = copytext(adminscrub(n), 1, MAX_MESSAGE_LEN)
-					if (mode == 1)
-						note = replacetext(n, "\n", "<BR>")
-						notehtml = n
+					if (mode == 1 && n)
+						note = n
+						notehtml = parsepencode(n, U, SIGNFONT)
+						notescanned = 0
 				else
 					U << browse(null, "window=pda")
 					return
+
+//MESSENGER FUNCTIONS===================================
+
 			if("Toggle Messenger")
 				toff = !toff
 			if("Toggle Ringer")//If viewing texts then erase them, if not then toggle silent status
@@ -628,12 +637,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 //CHATROOM FUNCTIONS====================================
 
 			if("Set Nick")
-				var/t = stripped_input(U, "Please enter nickname", name, null) as text
-				nick = copytext(sanitize(t), 1, 9)
+				var/n = trim(stripped_input(U, "Please enter nickname", name, nick, 9))
+				if(n)
+					nick = n
 
 			if("Set Channel")
-				var/t = stripped_input(U, "Please enter channel", name, (chat_channel)) as text
-
+				var/t = replacetext(trim(stripped_input(U, "Please enter channel", name, chat_channel, 15)), " ", "_")
 				if(t)
 					var/datum/chatroom/C = chatchannels[chat_channel]
 					var/ret = C.parse_msg(src, nick, "/join [t]")
@@ -642,18 +651,19 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						chat_channel = ret
 
 			if("NTRC Message")
-				var/t = msg_input(U) as text
-				var/datum/chatroom/C = chatchannels[chat_channel]
-				if(C)
-					var/ret = C.parse_msg(src,nick,t)
-					if(findtextEx(ret,"BAD_",1,5))
-						ntrclog[chat_channel] = "[ret]<br>" + ntrclog[chat_channel]
-					else if(ret in chatchannels)
-						chat_channel = ret
+				var/t = msg_input(U)
+				if(t)
+					var/datum/chatroom/C = chatchannels[chat_channel]
+					if(C)
+						var/ret = C.parse_msg(src, nick, t)
+						if(findtextEx(ret, "BAD_", 1, 5))
+							ntrclog[chat_channel] = "[ret]<br>" + ntrclog[chat_channel]
+						else if(ret in chatchannels)
+							chat_channel = ret
 
 			if("NTRC Help")
 				var/helptext = "<b>NTRC Commands:</b><br><br>"
-				helptext += "/join #channel<br>/register<br>/log amountoflines<br><br>"
+				helptext += "/join \[#\](channel name)<br>/register<br>/log (amount of lines)<br><br>"
 				usr << browse(helptext, "window=ntrchelp;size=200x200;border=1;can_resize=1;can_close=1;can_minimize=1")
 
 
@@ -753,8 +763,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		id = null
 
 /obj/item/device/pda/proc/msg_input(var/mob/living/U = usr)
-	var/t = input(U, "Please enter message", name, null) as text
-	t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
+	var/t = stripped_input(U, "Please enter message", name, null, MAX_MESSAGE_LEN)
 	if (!t || toff)
 		return
 	if (!in_range(src, U) && loc != U)
@@ -768,6 +777,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/proc/create_message(var/mob/living/U = usr, var/obj/item/device/pda/P)
 
 	var/t = msg_input(U)
+
+	if (!t)
+		return
 
 	if (last_text && world.time < last_text + 5)
 		return
@@ -807,7 +819,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 		if (!P.silent)
 			playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
-		P.loc.audible_message("\icon[P] *[P.ttone]*", null, 3)
+			P.audible_message("\icon[P] *[P.ttone]*", null, 3)
 		//Search for holder of the PDA.
 		var/mob/living/L = null
 		if(P.loc && isliving(P.loc))
@@ -986,8 +998,17 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if(T.ptank) atmosanalyzer_scan(T.ptank.air_contents, user, T)
 
 	if (!scanmode && istype(A, /obj/item/weapon/paper) && owner)
-		note = A:info
-		user << "<span class='notice'>Paper scanned.</span>" //concept of scanning paper copyright brainoblivion 2009
+		if (!A:info)
+			user << "<span class='notice'>Unable to scan. Paper is blank.</span>"
+			return
+		notehtml = A:info
+		note = replacetext(notehtml, "<BR>", "\[br\]")
+		note = replacetext(note, "<li>", "\[*\]")
+		note = replacetext(note, "<ul>", "\[list\]")
+		note = replacetext(note, "</ul>", "\[/list\]")
+		note = strip_html_properly(note)
+		notescanned = 1
+		user << "<span class='notice'>Paper scanned. Saved to PDA's notekeeper.</span>" //concept of scanning paper copyright brainoblivion 2009
 
 
 /obj/item/device/pda/proc/explode() //This needs tuning.
@@ -1148,7 +1169,15 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	else
 		ntrclog[channel] = msg + ntrclog[channel]
 	if (findtext(message, nick) && !silent)
-		loc.audible_message("\icon[src] *[ttone]*", null, 3)
+		audible_message("\icon[src] *[ttone]*", null, 3)
+	new_ntrc_msg++
+
+/obj/item/device/pda/proc/setup_chatrooms() //this can't be done on New() because the messaging server needs to be instanced first
+	if(!nick) //first time using the PDA
+		//join the default chat channel
+		nick = copytext(sanitize(owner), 1, 9)
+		var/datum/chatroom/C = chatchannels[chat_channel]
+		C.parse_msg(src, nick, "/join [chat_channel]")
 
 /proc/get_viewable_pdas()
 	. = list()

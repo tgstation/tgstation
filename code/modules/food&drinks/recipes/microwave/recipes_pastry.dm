@@ -6,7 +6,7 @@
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/egg
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/donut/normal
+	result = /obj/item/weapon/reagent_containers/food/snacks/donut
 
 /datum/recipe/donut/jelly
 	reagents = list("berryjuice" = 5, "flour" = 5)
@@ -17,11 +17,11 @@
 
 /datum/recipe/donut/jelly/slime
 	reagents = list("slimejelly" = 5, "flour" = 5)
-	result = /obj/item/weapon/reagent_containers/food/snacks/donut/slimejelly
+	result = /obj/item/weapon/reagent_containers/food/snacks/donut/jelly/slimejelly
 
 /datum/recipe/donut/jelly/cherry
 	reagents = list("cherryjelly" = 5, "flour" = 5)
-	result = /obj/item/weapon/reagent_containers/food/snacks/donut/cherryjelly
+	result = /obj/item/weapon/reagent_containers/food/snacks/donut/jelly/cherryjelly
 
 /datum/recipe/chaosdonut
 	reagents = list("frostoil" = 5, "capsaicin" = 5, "flour" = 5)
@@ -71,31 +71,17 @@
 /datum/recipe/donkpocket
 	reagents = list("flour" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/faggot,
+		/obj/item/weapon/reagent_containers/food/snacks/faggot
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket //SPECIAL
-	proc/warm_up(var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked)
-		being_cooked.warm = 1
-		being_cooked.reagents.add_reagent("tricordrazine", 5)
-		being_cooked.bitesize = 6
-		being_cooked.name = "Warm " + being_cooked.name
-		being_cooked.cooltime()
-	make_food(var/obj/container as obj)
-		var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked = ..(container)
-		warm_up(being_cooked)
-		return being_cooked
+	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket
 
-/datum/recipe/donkpocket/warm
-	reagents = list() //This is necessary since this is a child object of the above recipe and we don't want donk pockets to need flour
+/datum/recipe/donkpocketwarm
+	reagents = list()
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/donkpocket
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket //SPECIAL
-	make_food(var/obj/container as obj)
-		var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked = locate() in container
-		if(being_cooked && !being_cooked.warm)
-			warm_up(being_cooked)
-		return being_cooked
+	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocketwarm/
+
 
 ////////////////////////////////////////////////MUFFINS////////////////////////////////////////////////
 
@@ -198,3 +184,10 @@
 /datum/recipe/cracker
 	reagents = list("flour" = 5, "sodiumchloride" = 1)
 	result = /obj/item/weapon/reagent_containers/food/snacks/cracker
+
+/datum/recipe/chococornet
+	reagents = list("flour" = 10, "sodiumchloride" = 1)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/chococornet

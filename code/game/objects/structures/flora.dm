@@ -89,7 +89,8 @@
 	anchored = 1
 
 /obj/structure/flora/ausbushes/New()
-	icon_state = "firstbush_[rand(1, 4)]"
+	if(icon_state == "firstbush_1")
+		icon_state = "firstbush_[rand(1, 4)]"
 	..()
 
 /obj/structure/flora/ausbushes/reedbush
@@ -180,7 +181,7 @@
 	icon_state = "ppflowers_1"
 
 /obj/structure/flora/ausbushes/ppflowers/New()
-	icon_state = "ppflowers_[rand(1, 4)]"
+	icon_state = "ppflowers_[rand(1, 3)]"
 	..()
 
 /obj/structure/flora/ausbushes/sparsegrass

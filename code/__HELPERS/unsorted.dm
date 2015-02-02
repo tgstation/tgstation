@@ -816,15 +816,19 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(A.vars.Find(lowertext(varname))) return 1
 	else return 0
 
-//Returns: all the areas in the world
-/proc/return_areas()
-	. = list()
+//Returns sortedAreas list if populated
+//else populates the list first before returning it
+/proc/SortAreas()
 	for(var/area/A in world)
-		. += A
+		if(A.lighting_subarea)
+			continue
+		sortedAreas.Add(A)
 
-//Returns: all the areas in the world, sorted.
-/proc/return_sorted_areas()
-	return sortNames(return_areas())
+	sortTim(sortedAreas, /proc/cmp_name_asc)
+
+/area/proc/addSorted()
+	sortedAreas.Add(src)
+	sortTim(sortedAreas, /proc/cmp_name_asc)
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all areas of that type in the world.
@@ -1010,15 +1014,15 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	if(toupdate.len)
 		for(var/turf/simulated/T1 in toupdate)
-			air_master.remove_from_active(T1)
+			SSair.remove_from_active(T1)
 			T1.CalculateAdjacentTurfs()
-			air_master.add_to_active(T1,1)
+			SSair.add_to_active(T1,1)
 
 	if(fromupdate.len)
 		for(var/turf/simulated/T2 in fromupdate)
-			air_master.remove_from_active(T2)
+			SSair.remove_from_active(T2)
 			T2.CalculateAdjacentTurfs()
-			air_master.add_to_active(T2,1)
+			SSair.add_to_active(T2,1)
 
 
 
@@ -1163,7 +1167,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(toupdate.len)
 		for(var/turf/simulated/T1 in toupdate)
 			T1.CalculateAdjacentTurfs()
-			air_master.add_to_active(T1,1)
+			SSair.add_to_active(T1,1)
 
 
 	return copiedobjs
@@ -1207,11 +1211,63 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	else return zone
 
 
+//Gets the turf this atom inhabits
 /proc/get_turf(atom/movable/AM)
 	if(istype(AM))
 		return locate(/turf) in AM.locs
 	else if(isturf(AM))
 		return AM
+
+//Gets the turf this atom's *ICON* appears to inhabit
+//Uses half the width/height respectively to work out
+//A minimum pixel amt this icon needs to be pixel'd by
+//to be considered to be in another turf
+
+//division = world.icon_size - icon-width/2; DX = pixel_x/division
+//division = world.icon_size - icon-height/2; DY = pixel_y/division
+
+//Eg: Humans
+//32 - 16; 16/16 = 1, DX = 1
+//32 - 16; 15/16 = 0.9375 = 0 when round()'d, DX = 0
+
+//NOTE: if your atom has non-standard bounds then this proc
+//will handle it, but it'll be a bit slower.
+
+/proc/get_turf_pixel(atom/movable/AM)
+	if(istype(AM))
+		var/rough_x = 0
+		var/rough_y = 0
+		var/final_x = 0
+		var/final_y = 0
+
+		//Assume standards
+		var/i_width = world.icon_size
+		var/i_height = world.icon_size
+
+		//Handle snowflake objects only if necessary
+		if(AM.bound_height != world.icon_size || AM.bound_width != world.icon_size)
+			var/icon/AMicon = icon(AM.icon, AM.icon_state)
+			i_width = AMicon.Width()
+			i_height = AMicon.Height()
+			qdel(AMicon)
+
+		//Find a value to divide pixel_ by
+		var/n_width = (world.icon_size - (i_width/2))
+		var/n_height = (world.icon_size - (i_height/2))
+
+		//DY and DX
+		rough_x = round(AM.pixel_x/n_width)
+		rough_y = round(AM.pixel_y/n_height)
+
+		//Find coordinates
+		final_x = AM.x + rough_x
+		final_y = AM.y + rough_y
+
+		if(final_x || final_y)
+			var/turf/T = locate(final_x, final_y, AM.z)
+			if(T)
+				return T
+
 
 /proc/get(atom/loc, type)
 	while(loc)
@@ -1260,6 +1316,18 @@ var/global/list/common_tools = list(
 			return 1000
 		else
 			return 0
+	if(istype(W, /obj/item/candle))
+		var/obj/item/candle/O = W
+		if(O.lit)
+			return 1000
+		else
+			return 0
+	if(istype(W, /obj/item/device/flashlight/flare))
+		var/obj/item/device/flashlight/flare/O = W
+		if(O.on)
+			return 1000
+		else
+			return 0
 	if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 		return 3800
 	if(istype(W, /obj/item/weapon/melee/energy))
@@ -1288,7 +1356,6 @@ var/global/list/common_tools = list(
 		istype(W, /obj/item/weapon/melee/energy/blade)            || \
 		istype(W, /obj/item/weapon/shovel)                        || \
 		istype(W, /obj/item/weapon/kitchenknife)                  || \
-		istype(W, /obj/item/weapon/butch)						  || \
 		istype(W, /obj/item/weapon/scalpel)                       || \
 		istype(W, /obj/item/weapon/kitchen/utensil/knife)         || \
 		istype(W, /obj/item/weapon/shard)                         || \
@@ -1302,44 +1369,32 @@ var/global/list/common_tools = list(
 Checks if that loc and dir has a item on the wall
 */
 var/list/WALLITEMS = list(
-	"/obj/machinery/power/apc", "/obj/machinery/alarm", "/obj/item/device/radio/intercom",
-	"/obj/structure/extinguisher_cabinet", "/obj/structure/reagent_dispensers/peppertank",
-	"/obj/machinery/status_display", "/obj/machinery/requests_console", "/obj/machinery/light_switch", "/obj/effect/sign",
-	"/obj/machinery/newscaster", "/obj/machinery/firealarm", "/obj/structure/noticeboard", "/obj/machinery/door_control",
-	"/obj/machinery/computer/security/telescreen", "/obj/machinery/embedded_controller/radio/simple_vent_controller",
-	"/obj/item/weapon/storage/secure/safe", "/obj/machinery/door_timer", "/obj/machinery/flasher", "/obj/machinery/keycard_auth",
-	"/obj/structure/mirror", "/obj/structure/closet/fireaxecabinet", "/obj/machinery/computer/security/telescreen/entertainment"
+	/obj/machinery/power/apc, /obj/machinery/alarm, /obj/item/device/radio/intercom,
+	/obj/structure/extinguisher_cabinet, /obj/structure/reagent_dispensers/peppertank,
+	/obj/machinery/status_display, /obj/machinery/requests_console, /obj/machinery/light_switch, /obj/structure/sign,
+	/obj/machinery/newscaster, /obj/machinery/firealarm, /obj/structure/noticeboard, /obj/machinery/door_control,
+	/obj/machinery/computer/security/telescreen, /obj/machinery/embedded_controller/radio/simple_vent_controller,
+	/obj/item/weapon/storage/secure/safe, /obj/machinery/door_timer, /obj/machinery/flasher, /obj/machinery/keycard_auth,
+	/obj/structure/mirror, /obj/structure/closet/fireaxecabinet, /obj/machinery/computer/security/telescreen/entertainment
 	)
 /proc/gotwallitem(loc, dir)
+	var/locdir = get_step(loc, dir)
 	for(var/obj/O in loc)
-		for(var/item in WALLITEMS)
-			if(istype(O, text2path(item)))
-				//Direction works sometimes
-				if(O.dir == dir)
-					return 1
+		if(is_type_in_list(O, WALLITEMS))
+			//Direction works sometimes
+			if(O.dir == dir)
+				return 1
 
-				//Some stuff doesn't use dir properly, so we need to check pixel instead
-				switch(dir)
-					if(SOUTH)
-						if(O.pixel_y > 10)
-							return 1
-					if(NORTH)
-						if(O.pixel_y < -10)
-							return 1
-					if(WEST)
-						if(O.pixel_x > 10)
-							return 1
-					if(EAST)
-						if(O.pixel_x < -10)
-							return 1
-
+			//Some stuff doesn't use dir properly, so we need to check pixel instead
+			//That's exactly what get_turf_pixel() does
+			if(get_turf_pixel(O) == locdir)
+				return 1
 
 	//Some stuff is placed directly on the wallturf (signs)
-	for(var/obj/O in get_step(loc, dir))
-		for(var/item in WALLITEMS)
-			if(istype(O, text2path(item)))
-				if(O.pixel_x == 0 && O.pixel_y == 0)
-					return 1
+	for(var/obj/O in locdir)
+		if(is_type_in_list(O, WALLITEMS))
+			if(O.pixel_x == 0 && O.pixel_y == 0)
+				return 1
 	return 0
 
 /proc/format_text(text)
@@ -1393,3 +1448,4 @@ var/list/WALLITEMS = list(
 			step(AM, pick(alldirs))
 		chance = max(chance - (initial_chance / steps), 0)
 		steps--
+

@@ -445,8 +445,8 @@ obj/machinery/hydroponics/proc/applyChemicals(var/datum/reagents/S)
 		adjustNutri(round(S.get_reagent_amount("robustharvestnutriment") *1 ))
 
 	// Antitoxin binds shit pretty well. So the tox goes significantly down
-	if(S.has_reagent("anti_toxin", 1))
-		adjustToxic(-round(S.get_reagent_amount("anti_toxin") * 2))
+	if(S.has_reagent("charcoal", 1))
+		adjustToxic(-round(S.get_reagent_amount("charcoal") * 2))
 
 	// NIGGA, YOU JUST WENT ON FULL RETARD.
 	if(S.has_reagent("toxin", 1))
@@ -512,9 +512,9 @@ obj/machinery/hydroponics/proc/applyChemicals(var/datum/reagents/S)
 		adjustWeeds(-rand(1,2))
 
 	// SERIOUSLY
-	if(S.has_reagent("pacid", 1))
-		adjustHealth(-round(S.get_reagent_amount("pacid") * 2))
-		adjustToxic(round(S.get_reagent_amount("pacid") * 3))
+	if(S.has_reagent("facid", 1))
+		adjustHealth(-round(S.get_reagent_amount("facid") * 2))
+		adjustToxic(round(S.get_reagent_amount("facid") * 3))
 		adjustWeeds(-rand(1,4))
 
 	// Plant-B-Gone is just as bad
@@ -708,25 +708,37 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			return
 
 		if(!anchored && !isinspace())
+			user.visible_message("<span class='notice'>[user] begins to wrench [src] into place.</span>", \
+								"<span class='notice'>You begin to wrench [src] in place.</span>")
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			anchored = 1
-			user << "You wrench [src] in place."
+			if (do_after(user, 20))
+				if(anchored)
+					return
+				anchored = 1
+				user.visible_message("<span class='notice'>[user] wrenches [src] into place.</span>", \
+									"<span class='notice'>You wrench [src] in place.</span>")
 		else if(anchored)
+			user.visible_message("<span class='notice'>[user] begins to unwrench [src].</span>", \
+								"<span class='notice'>You begin to unwrench [src].</span>")
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			anchored = 0
-			user << "You unwrench [src]."
+			if (do_after(user, 20))
+				if(!anchored)
+					return
+				anchored = 0
+				user.visible_message("<span class='notice'>[user] unwrenches [src].</span>", \
+									"<span class='notice'>You unwrench [src].</span>")
 
 	else if(istype(O, /obj/item/weapon/screwdriver) && unwrenchable) //THIS NEED TO BE DONE DIFFERENTLY, SOMEONE REFACTOR THE TRAY CODE ALREADY
 		if(anchored)
 			if(anchored == 2)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				anchored = 1
-				user << "You unscrew the [src]'s hoses."
+				user << "You unscrew \the [src]'s hoses."
 
 			else if(anchored == 1)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				anchored = 2
-				user << "You screw in the [src]'s hoses."
+				user << "You screw in \the [src]'s hoses."
 
 			for(var/obj/machinery/hydroponics/h in range(1,src))
 				spawn()
@@ -738,8 +750,6 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(user, /mob/living/silicon))		//How does AI know what plant is?
 		return
 	if(harvest)
-		if(!user in range(1,src))
-			return
 		myseed.harvest()
 	else if(dead)
 		planted = 0
@@ -772,7 +782,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
 	var/t_amount = 0
 	var/list/result = list()
-	var/output_loc = Adjacent(user) ? user.loc : parent.loc //needed for TK
+	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
 
 	while(t_amount < getYield())
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, potency)
@@ -795,17 +805,29 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 /obj/item/seeds/replicapod/harvest(mob/user = usr) //now that one is fun -- Urist
 	var/obj/machinery/hydroponics/parent = loc
 	var/make_podman = 0
-	var/mob/ghost
-	if(ckey && config.revival_pod_plants)
-		ghost = find_dead_player("[ckey]")
-		if(ismob(ghost))
-			if(istype(ghost,/mob/dead/observer))
-				var/mob/dead/observer/O = ghost
-				if(istype(mind,/datum/mind))
-					if(O.can_reenter_corpse)
+	var/ckey_holder = null
+	if(config.revival_pod_plants)
+		if(ckey)
+			for(var/mob/M in player_list)
+				if(istype(M, /mob/dead/observer))
+					var/mob/dead/observer/O = M
+					if(O.ckey == ckey && O.can_reenter_corpse)
 						make_podman = 1
-			else
-				make_podman = 1
+						break
+				else
+					if(M.ckey == ckey && M.stat == 2 && !M.suiciding)
+						make_podman = 1
+						break
+		else //If the player has ghosted from his corpse before blood was drawn, his ckey is no longer attached to the mob, so we need to match up the cloned player through the mind key
+			for(var/mob/M in player_list)
+				if(ckey(M.mind.key) == ckey(mind.key) && M.ckey && M.client && M.stat == 2 && !M.suiciding)
+					if(istype(M, /mob/dead/observer))
+						var/mob/dead/observer/O = M
+						if(!O.can_reenter_corpse)
+							break
+					make_podman = 1
+					ckey_holder = M.ckey
+					break
 
 	if(make_podman)	//all conditions met!
 		var/mob/living/carbon/human/podman = new /mob/living/carbon/human(parent.loc)
@@ -813,32 +835,14 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			podman.real_name = realName
 		else
 			podman.real_name = "Pod Person [rand(0,999)]"
-		var/oldactive = mind.active
-		mind.active = 1
 		mind.transfer_to(podman)
-		mind.active = oldactive
-			// -- Mode/mind specific stuff goes here. TODO! Broken :( Should be merged into mob/living/Login
-		if((podman.mind in ticker.mode.A_bosses) || (podman.mind in ticker.mode.A_gangsters) || (podman.mind in ticker.mode.B_bosses) || (podman.mind in ticker.mode.B_gangsters))
-			ticker.mode.update_all_gang_icons()
-		if(podman.mind in ticker.mode:revolutionaries)
-			ticker.mode.add_revolutionary(podman.mind)
-			ticker.mode.update_all_rev_icons() //So the icon actually appears
-		if(podman.mind in ticker.mode:head_revolutionaries)
-			ticker.mode.add_revolutionary(podman.mind)
-			ticker.mode.update_all_rev_icons()
-		if(podman.mind in ticker.mode:syndicates)
-			ticker.mode:update_all_synd_icons()
-		if(podman.mind in ticker.mode:cult)
-			ticker.mode:add_cultist(podman.mind)
-			ticker.mode:update_all_cult_icons() //So the icon actually appears
-
-			// -- End mode specific stuff
-
-		podman.gender = ghost.gender
-
-		//dna stuff
-		hardset_dna(podman, ui, se, null, null, null, !prob(potency) ? /datum/species/plant/pod : null, "#59CE00")	//makes sure podman has dna and sets the dna's ui/se/mutantrace/real_name etc variables
-
+		if(ckey)
+			podman.ckey = ckey
+		else
+			podman.ckey = ckey_holder
+		podman.gender = blood_gender
+		podman.faction |= factions
+		hardset_dna(podman,null,null,podman.real_name,blood_type,/datum/species/plant/pod,"#59CE00")//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 		podman.set_cloned_appearance()
 
 	else //else, one packet of seeds. maybe two

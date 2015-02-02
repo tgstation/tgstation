@@ -96,13 +96,14 @@
 		return Move_object(direct)
 	if(world.time < move_delay)
 		return 0
-	if(isAI(mob))
-		return AIMove(n,direct,mob)
 	if(!isliving(mob))
 		return mob.Move(n,direct)
-	if(moving)
-		return 0
 	if(mob.stat == DEAD)
+		mob.ghostize()
+		return 0
+	if(isAI(mob))
+		return AIMove(n,direct,mob)
+	if(moving)
 		return 0
 	if(isliving(mob))
 		var/mob/living/L = mob
@@ -114,6 +115,9 @@
 
 	if(mob.buckled)							//if we're buckled to something, tell it we moved.
 		return mob.buckled.relaymove(mob, direct)
+
+	if(mob.remote_control)					//we're controlling something, our movement is relayed to it
+		return mob.remote_control.relaymove(mob, direct)
 
 	if(!mob.canmove)
 		return 0
@@ -195,6 +199,7 @@
 			step(mob, pick(cardinal))
 		else
 			. = ..()
+		mob.last_movement=world.time
 
 		moving = 0
 		if(mob && .)

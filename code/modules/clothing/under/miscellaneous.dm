@@ -23,7 +23,7 @@
 
 /obj/item/clothing/under/roman
 	name = "roman armor"
-	desc = "An ancient Roman armor. Made of metallic strips and leather straps."
+	desc = "Ancient Roman armor. Made of metallic and leather straps."
 	icon_state = "roman"
 	item_color = "roman"
 	item_state = "armor"
@@ -115,7 +115,7 @@
 	icon_state = "syndicate"
 	item_state = "bl_suit"
 	item_color = "syndicate"
-	desc = "it's a cybernetically enhanced jumpsuit used for administrative duties."
+	desc = "A cybernetically enhanced jumpsuit used for administrative duties."
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -132,13 +132,6 @@
 	icon_state = "owl"
 	item_color = "owl"
 	fitted = 0
-	can_adjust = 0
-
-/obj/item/clothing/under/johnny
-	name = "johnny~~ jumpsuit"
-	desc = "Johnny~~"
-	icon_state = "johnny"
-	item_color = "johnny"
 	can_adjust = 0
 
 /obj/item/clothing/under/rainbow
@@ -186,7 +179,6 @@
 	icon_state = "really_black_suit"
 	item_state = "bl_suit"
 	item_color = "black_suit"
-	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket/female
 	name = "executive suit"
@@ -201,7 +193,6 @@
 	icon_state = "red_suit"
 	item_state = "r_suit"
 	item_color = "red_suit"
-	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket/charcoal
 	name = "charcoal suit"
@@ -209,7 +200,6 @@
 	icon_state = "charcoal_suit"
 	item_state = "charcoal_suit"
 	item_color = "charcoal_suit"
-	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket/navy
 	name = "navy suit"
@@ -217,7 +207,6 @@
 	icon_state = "navy_suit"
 	item_state = "navy_suit"
 	item_color = "navy_suit"
-	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket/burgundy
 	name = "burgundy suit"
@@ -225,7 +214,6 @@
 	icon_state = "burgundy_suit"
 	item_state = "burgundy_suit"
 	item_color = "burgundy_suit"
-	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket/checkered
 	name = "checkered suit"
@@ -233,7 +221,6 @@
 	icon_state = "checkered_suit"
 	item_state = "checkered_suit"
 	item_color = "checkered_suit"
-	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket/tan
 	name = "tan suit"
@@ -241,7 +228,13 @@
 	icon_state = "tan_suit"
 	item_state = "tan_suit"
 	item_color = "tan_suit"
-	can_adjust = 0
+
+/obj/item/clothing/under/suit_jacket/white
+	name = "white suit"
+	desc = "A white suit and jacket with a black shirt. You wanna play rough? OKAY!."
+	icon_state = "white_suit"
+	item_state = "white_suit"
+	item_color = "white_suit"
 
 /obj/item/clothing/under/blackskirt
 	name = "black skirt"
@@ -296,7 +289,7 @@
 
 /obj/item/clothing/under/kilt
 	name = "kilt"
-	desc = "Includes shoes and plaid"
+	desc = "Includes shoes and plaid."
 	icon_state = "kilt"
 	item_state = "kilt"
 	item_color = "kilt"
@@ -334,28 +327,28 @@
 	fitted = 0
 	can_adjust = 0
 
-/obj/item/clothing/under/captainformal
-	name = "captain's formal uniform"
-	desc = "A captain's formal-wear, for special occasions."
-	icon_state = "captain_formal"
+/obj/item/clothing/under/captainparade
+	name = "captain's parade uniform"
+	desc = "A captain's luxury-wear, for special occasions."
+	icon_state = "captain_parade"
 	item_state = "by_suit"
-	item_color = "captain_formal"
+	item_color = "captain_parade"
 	can_adjust = 0
 
-/obj/item/clothing/under/hosformalmale
-	name = "head of security's formal uniform"
-	desc = "A male head of security's formal-wear, for special occasions."
-	icon_state = "hos_formal_male"
+/obj/item/clothing/under/hosparademale
+	name = "head of security's parade uniform"
+	desc = "A male head of security's luxury-wear, for special occasions."
+	icon_state = "hos_parade_male"
 	item_state = "r_suit"
-	item_color = "hos_formal_male"
+	item_color = "hos_parade_male"
 	can_adjust = 0
 
-/obj/item/clothing/under/hosformalfem
-	name = "head of security's formal uniform"
-	desc = "A female head of security's formal-wear, for special occasions."
-	icon_state = "hos_formal_fem"
+/obj/item/clothing/under/hosparadefem
+	name = "head of security's parade uniform"
+	desc = "A female head of security's luxury-wear, for special occasions."
+	icon_state = "hos_parade_fem"
 	item_state = "r_suit"
-	item_color = "hos_formal_fem"
+	item_color = "hos_parade_fem"
 	fitted = 0
 	can_adjust = 0
 
@@ -369,9 +362,56 @@
 
 /obj/item/clothing/under/blacktango
 	name = "black tango dress"
-	desc = "Filled with latin fire."
+	desc = "Filled with Latin fire."
 	icon_state = "black_tango"
 	item_state = "wcoat"
 	item_color = "black_tango"
+	fitted = 0
+	can_adjust = 0
+
+/obj/item/clothing/under/stripeddress
+	name = "striped dress"
+	desc = "Fashion in space."
+	icon_state = "striped_dress"
+	item_state = "stripeddress"
+	item_color = "striped_dress"
+	fitted = 0
+	can_adjust = 0
+
+/obj/item/clothing/under/sailordress
+	name = "sailor dress"
+	desc = "Formal wear for a leading lady."
+	icon_state = "sailor_dress"
+	item_state = "sailordress"
+	item_color = "sailor_dress"
+	fitted = 0
+	can_adjust = 0
+
+/obj/item/clothing/under/redeveninggown
+	name = "red evening gown"
+	desc = "Fancy dress for space bar singers."
+	icon_state = "red_evening_gown"
+	item_state = "redeveninggown"
+	item_color = "red_evening_gown"
+	fitted = 0
+	can_adjust = 0
+
+/obj/item/clothing/under/maid
+	name = "maid costume"
+	desc = "Maid in China."
+	icon_state = "maid"
+	item_state = "maid"
+	item_color = "maid"
+	body_parts_covered = CHEST|GROIN
+	fitted = 0
+	can_adjust = 0
+
+/obj/item/clothing/under/janimaid
+	name = "maid uniform"
+	desc = "A simple maid uniform for housekeeping."
+	icon_state = "janimaid"
+	item_state = "janimaid"
+	item_color = "janimaid"
+	body_parts_covered = CHEST|GROIN
 	fitted = 0
 	can_adjust = 0

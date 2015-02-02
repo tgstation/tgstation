@@ -164,7 +164,7 @@
 			var/turf/T = get_turf(R)
 			if (!T)
 				continue
-			if(T.z == 2 || T.z > 7)
+			if(T.z == ZLEVEL_CENTCOM || T.z > ZLEVEL_SPACEMAX)
 				continue
 			var/tmpname = T.loc.name
 			if(areaindex[tmpname])
@@ -183,7 +183,7 @@
 						continue
 				var/turf/T = get_turf(M)
 				if(!T)	continue
-				if(T.z == 2)	continue
+				if(T.z == ZLEVEL_CENTCOM)	continue
 				var/tmpname = M.real_name
 				if(areaindex[tmpname])
 					tmpname = "[tmpname] ([++areaindex[tmpname]])"
@@ -205,7 +205,7 @@
 			var/turf/T = get_turf(R)
 			if (!T || !R.teleporter_hub || !R.teleporter_console)
 				continue
-			if(T.z == 2 || T.z > 7)
+			if(T.z == ZLEVEL_CENTCOM || T.z > ZLEVEL_SPACEMAX)
 				continue
 			var/tmpname = T.loc.name
 			if(areaindex[tmpname])
@@ -386,6 +386,7 @@
 			else
 				user << "<span class = 'alert'>This station cant hold more information, try to use better parts.</span>"
 	if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
+		update_icon()
 		return
 
 	if(exchange_parts(user, W))
@@ -430,10 +431,9 @@
 
 /obj/machinery/teleport/station/power_change()
 	..()
-	if(stat & NOPOWER)
-		update_icon()
-		if(teleporter_hub)
-			teleporter_hub.update_icon()
+	update_icon()
+	if(teleporter_hub)
+		teleporter_hub.update_icon()
 
 /obj/machinery/teleport/station/update_icon()
 	if(panel_open)

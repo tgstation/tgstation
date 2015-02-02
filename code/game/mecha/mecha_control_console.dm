@@ -55,10 +55,18 @@
 		screen = 1
 	if(href_list["return"])
 		screen = 0
-	src.updateUsrDialog()
+	updateUsrDialog()
 	return
 
 
+/obj/machinery/computer/mecha/update_icon()
+	if(stat & NOPOWER)
+		icon_state = "mecha0"
+		return
+	if(stat & BROKEN)
+		icon_state = "mechab"
+		return
+	icon_state = "mecha"
 
 /obj/item/mecha_parts/mecha_tracking
 	name = "exosuit tracking beacon"
@@ -66,8 +74,6 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "motion2"
 	origin_tech = "programming=2;magnets=2"
-	construction_time = 50
-	construction_cost = list("metal"=500)
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_info()
 	if(!in_mecha())

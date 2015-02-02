@@ -6,7 +6,6 @@ obj/machinery/door/airlock
 	var/frequency
 	var/shockedby = list()
 	var/datum/radio_frequency/radio_connection
-	explosion_resistance = 15
 
 
 obj/machinery/door/airlock/receive_signal(datum/signal/signal)

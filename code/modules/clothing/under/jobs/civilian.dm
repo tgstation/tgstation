@@ -3,16 +3,16 @@
 /obj/item/clothing/under/rank/bartender
 	desc = "It looks like it could use some more flair."
 	name = "bartender's uniform"
-	icon_state = "ba_suit"
-	item_state = "ba_suit"
-	item_color = "ba_suit"
+	icon_state = "bar_suit"
+	item_state = "bar_suit"
+	item_color = "bar_suit"
 
 
 /obj/item/clothing/under/rank/captain //Alright, technically not a 'civilian' but its better then giving a .dm file for a single define.
 	desc = "It's a blue jumpsuit with some gold markings denoting the rank of \"Captain\"."
 	name = "captain's jumpsuit"
 	icon_state = "captain"
-	item_state = "caparmor"
+	item_state = "b_suit"
 	item_color = "captain"
 
 
@@ -42,8 +42,8 @@
 
 
 /obj/item/clothing/under/rank/chef
-	desc = "It's an apron which is given only to the most <b>hardcore</b> chefs in space."
-	name = "chef's uniform"
+	name = "cook's suit"
+	desc = "A suit which is given only to the most <b>hardcore</b> cooks in space."
 	icon_state = "chef"
 	item_color = "chef"
 
@@ -116,7 +116,7 @@
 
 /obj/item/clothing/under/lawyer/bluesuit
 	name = "blue suit"
-	desc = "A classy suit and tie"
+	desc = "A classy suit and tie."
 	icon_state = "bluesuit"
 	item_state = "bluesuit"
 	item_color = "bluesuit"
@@ -136,7 +136,7 @@
 	name = "black suit"
 	desc = "A professional black suit. Nanotrasen Investigation Bureau approved!"
 	icon_state = "blacksuit"
-	item_state = "ba_suit"
+	item_state = "bar_suit"
 	item_color = "blacksuit"
 	can_adjust = 1
 

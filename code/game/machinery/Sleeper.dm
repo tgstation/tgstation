@@ -11,16 +11,14 @@
 	icon_state = "sleeper-open"
 	density = 0
 	anchored = 1
-	interact_offline = 1
 	state_open = 1
 	var/efficiency
 	var/initial_bin_rating = 1
 	var/min_health = 25
-	var/list/injection_chems = list() //list of injectable chems except inaprovaline, coz inaprovaline is always avalible
-	var/list/possible_chems = list(list("stoxin", "dexalin", "bicaridine", "kelotane"),
-								   list("stoxin", "dexalinp", "bicaridine", "dermaline", "imidazoline"),
-								   list("stoxin", "dexalinp", "bicaridine", "dermaline", "imidazoline", "anti_toxin", "ryetalyn", "alkysine", "arithrazine"))
-
+	var/list/injection_chems = list() //list of injectable chems except ephedrine, coz ephedrine is always avalible
+	var/list/possible_chems = list(list("morphine", "salbutamol", "salglu_solution"),
+								   list("morphine", "salbutamol", "salglu_solution", "oculine"),
+								   list("morphine", "salbutamol", "salglu_solution", "oculine", "charcoal", "mutadone", "mannitol", "pen_acid"))
 /obj/machinery/sleeper/New()
 	..()
 	component_parts = list()
@@ -82,30 +80,14 @@
 	if(exchange_parts(user, I))
 		return
 
+	if(default_pry_open(I))
+		return
+
 	default_deconstruction_crowbar(I)
 
-/obj/machinery/sleeper/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			for(var/atom/movable/A in src)
-				A.loc = loc
-				A.ex_act(severity)
-			qdel(src)
-			return
-		if(2.0)
-			if(prob(50))
-				for(var/atom/movable/A in src)
-					A.loc = loc
-					A.ex_act(severity)
-				qdel(src)
-				return
-		if(3.0)
-			if(prob(25))
-				for(var/atom/movable/A in src)
-					A.loc = loc
-					A.ex_act(severity)
-				qdel(src)
-
+/obj/machinery/sleeper/ex_act(severity, target)
+	go_out()
+	..()
 
 /obj/machinery/sleeper/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
@@ -137,24 +119,15 @@
 	if(..())
 		return
 
-	//powerless interaction
-	if(!is_operational())
-		user.unset_machine()//essential to prevent infinite loops of opening/closing the machine
-		if(state_open)
-			close_machine()
-		else
-			open_machine()
-
-	else
-		sleeperUI(user)
+	sleeperUI(user)
 
 /obj/machinery/sleeper/proc/sleeperUI(mob/user)
 	var/dat
 	dat += "<h3>Injector</h3>"
 	if(occupant)
-		dat += "<A href='?src=\ref[src];inject=inaprovaline'>Inject Inaprovaline</A>"
+		dat += "<A href='?src=\ref[src];inject=epinephrine'>Inject epinephrine</A>"
 	else
-		dat += "<span class='linkOff'>Inject Inaprovaline</span>"
+		dat += "<span class='linkOff'>Inject Epinephrine</span>"
 	if(occupant && occupant.health > min_health)
 		for(var/re in injection_chems)
 			var/datum/reagent/C = chemical_reagents_list[re]
@@ -217,7 +190,7 @@
 		close_machine()
 		return
 	if(occupant && occupant.stat != DEAD)
-		if(href_list["inject"] == "inaprovaline" || occupant.health > min_health)
+		if(href_list["inject"] == "epinephrine" || occupant.health > min_health)
 			inject_chem(usr, href_list["inject"])
 		else
 			usr << "<span class='notice'>ERROR: Subject is not in stable condition for auto-injection.</span>"
@@ -244,7 +217,7 @@
 	if(!is_operational())
 		return
 	if(occupant && occupant.reagents)
-		if(chem in injection_chems + "inaprovaline")
+		if(chem in injection_chems + "epinephrine")
 			if(occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency)
 				occupant.reagents.add_reagent(chem, 10)
 			var/units = round(occupant.reagents.get_reagent_amount(chem))

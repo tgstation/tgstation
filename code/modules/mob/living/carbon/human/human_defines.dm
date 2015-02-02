@@ -1,5 +1,6 @@
 /mob/living/carbon/human
 	languages = HUMAN
+	hud_possible = list(HEALTH_HUD,STATUS_HUD,ID_HUD,WANTED_HUD,IMPLOYAL_HUD,IMPCHEM_HUD,IMPTRACK_HUD,ANTAG_HUD)
 	//Hair colour and style
 	var/hair_color = "000"
 	var/hair_style = "Bald"
@@ -20,6 +21,7 @@
 
 	var/underwear = "Nude"	//Which underwear the player wants
 	var/undershirt = "Nude" //Which undershirt the player wants
+	var/socks = "Nude" //Which socks the player wants
 	var/backbag = 2		//Which backpack type the player has chosen. Nothing, Satchel or Backpack.
 
 	//Equipment slots

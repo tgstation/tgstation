@@ -133,6 +133,7 @@ var/next_external_rsc = 0
 		if((global.comms_key == "default_pwd" || length(global.comms_key) <= 6) && global.comms_allowed) //It's the default value or less than 6 characters long, but it somehow didn't disable comms.
 			src << "<span class='danger'>The server's API key is either too short or is the default value! Consider changing it immediately!</span>"
 
+	add_verbs_from_config()
 	set_client_age_from_db()
 
 	if (!ticker || ticker.current_state == GAME_STATE_PREGAME)
@@ -210,13 +211,17 @@ var/next_external_rsc = 0
 	var/sql_admin_rank = sanitizeSQL(admin_rank)
 
 
-	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("player")] (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]') ON DUPLICATE KEY UPDATE lastseen = VALUES(lastseen), ip = VALUES(ip), computerid = VALUES(computerid)")
+	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("player")] (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]') ON DUPLICATE KEY UPDATE lastseen = VALUES(lastseen), ip = VALUES(ip), computerid = VALUES(computerid), lastadminrank = VALUES(lastadminrank)")
 	query_insert.Execute()
 
 	//Logging player access
 	var/serverip = "[world.internet_address]:[world.port]"
 	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
 	query_accesslog.Execute()
+
+/client/proc/add_verbs_from_config()
+	if(config.see_own_notes)
+		verbs += /client/proc/self_notes
 
 
 #undef TOPIC_SPAM_DELAY
@@ -239,6 +244,7 @@ var/next_external_rsc = 0
 		'nano/css/shared.css',
 		'nano/css/icons.css',
 		'nano/templates/chem_dispenser.tmpl',
+		'nano/templates/chem_heater.tmpl',
 		'nano/templates/smes.tmpl',
 		'nano/templates/apc.tmpl',
 		'nano/templates/cryo.tmpl',

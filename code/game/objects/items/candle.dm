@@ -54,7 +54,7 @@
 		for(var/mob/O in viewers(usr, null))
 			O.show_message(flavor_text, 1)
 		SetLuminosity(CANDLE_LUMINOSITY)
-		processing_objects.Add(src)
+		SSobj.processing.Add(src)
 
 
 /obj/item/candle/process()

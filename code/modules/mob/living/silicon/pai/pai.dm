@@ -4,7 +4,6 @@
 	mouse_opacity = 0
 	density = 0
 	mob_size = 0
-	invisibility = 101
 
 	var/network = "SS13"
 	var/obj/machinery/camera/current = null
@@ -51,7 +50,7 @@
 /mob/living/silicon/pai/New(var/obj/item/device/paicard)
 	make_laws()
 	canmove = 0
-	src.loc = get_turf(paicard)
+	src.loc = paicard
 	card = paicard
 	sradio = new(src)
 	if(card)
@@ -65,9 +64,7 @@
 		pda.ownjob = "Personal Assistant"
 		pda.owner = text("[]", src)
 		pda.name = pda.owner + " (" + pda.ownjob + ")"
-		pda.toff = 1
 
-		follow_pai()
 	..()
 
 /mob/living/silicon/pai/make_laws()
@@ -81,12 +78,7 @@
 
 /mob/living/silicon/pai/Stat()
 	..()
-	statpanel("Status")
-	if (src.client.statpanel == "Status")
-		if(emergency_shuttle.online && emergency_shuttle.location < 2)
-			var/timeleft = emergency_shuttle.timeleft()
-			if (timeleft)
-				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+	if(statpanel("Status"))
 		if(src.silence_time)
 			var/timeleft = round((silence_time - world.timeofday)/10 ,1)
 			stat(null, "Communications system reboot in -[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
@@ -137,7 +129,7 @@
 		if(3)
 			src << "<span class='notice'>You feel an electric surge run through your circuitry and become acutely aware at how lucky you are that you can still feel at all.</span>"
 
-/mob/living/silicon/pai/ex_act(severity)
+/mob/living/silicon/pai/ex_act(severity, target)
 	..()
 
 	switch(severity)
@@ -185,6 +177,14 @@
 
 /mob/living/silicon/pai/UnarmedAttack(var/atom/A)//Stops runtimes due to attack_animal being the default
 	return
+
+/mob/living/silicon/pai/Move(var/atom/newloc)
+	if(card)
+		card.Move(newloc)
+	else //something went very wrong.
+		CRASH("pAI without card")
+	. = ..()
+	loc = card
 
 //Addition by Mord_Sith to define AI's network change ability
 /*

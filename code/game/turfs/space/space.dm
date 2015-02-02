@@ -20,18 +20,29 @@
 	return src.attack_hand(user)
 
 /turf/space/attackby(obj/item/C, mob/user)
+	..()
 	if(istype(C, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
+		var/obj/structure/lattice/catwalk/W = locate(/obj/structure/lattice/catwalk, src)
+		if(W)
+			user << "<span class='warning'>There is already a catwalk here.</span>"
+			return
 		if(L)
-			user << "<span class='warning'>There is already a lattice.</span>"
+			if(R.use(1))
+				user << "<span class='notice'>Constructing catwalk...</span>"
+				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+				qdel(L)
+				ReplaceWithCatwalk()
+			else
+				user << "<span class='warning'>You need two rods to build a catwalk.</span>"
 			return
 		if(R.use(1))
 			user << "<span class='notice'>Constructing support lattice...</span>"
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 			ReplaceWithLattice()
 		else
-			user << "<span class='warning'>You need one rod to build lattice.</span>"
+			user << "<span class='warning'>You need one rod to build a lattice.</span>"
 		return
 	if(istype(C, /obj/item/stack/tile/plasteel))
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
@@ -160,7 +171,7 @@ proc/setup_map_transitions() //listamania
 		set background = 1
 
 	while(free_zones.len != 0) //Assign the sides of the cube
-		if(!unplaced_z_levels) //if we're somehow unable to fill the cube, pad with deep space
+		if(!unplaced_z_levels || !unplaced_z_levels.len) //if we're somehow unable to fill the cube, pad with deep space
 			z_level =  6
 		else
 			z_level = pick(unplaced_z_levels)

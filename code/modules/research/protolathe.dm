@@ -25,6 +25,19 @@ Note: Must be placed west/left of and R&D console to function.
 	var/adamantine_amount = 0.0
 	var/efficiency_coeff
 
+	var/list/categories = list(
+								"Power Designs",
+								"Medical Designs",
+								"Bluespace Designs",
+								"Stock Parts",
+								"Equipement",
+								"Mining Designs",
+								"Electronics",
+								"Weapons",
+								"Ammo",
+								"Firing Pins"
+								)
+
 	reagents = new()
 
 
@@ -74,7 +87,7 @@ Note: Must be placed west/left of and R&D console to function.
 			A = uranium_amount
 		if("$diamond")
 			A = diamond_amount
-		if("$clown")
+		if("$bananium")
 			A = clown_amount
 		else
 			A = reagents.get_reagent_amount(M)

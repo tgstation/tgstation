@@ -7,17 +7,18 @@
 	flag = "bullet"
 
 
-/obj/item/projectile/bullet/weakbullet
+/obj/item/projectile/bullet/weakbullet //beanbag, heavy stamina damage
 	damage = 5
-	stun = 5
-	weaken = 5
+	stamina = 80
 
 
-/obj/item/projectile/bullet/weakbullet2
+/obj/item/projectile/bullet/weakbullet2 //detective revolver instastuns, but multiple shots are better for keeping punks down
 	damage = 15
-	stun = 5
-	weaken = 5
+	weaken = 3
+	stamina = 50
 
+/obj/item/projectile/bullet/weakbullet3
+	damage = 20
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
@@ -28,43 +29,29 @@
 
 /obj/item/projectile/bullet/midbullet
 	damage = 20
-	stun = 5
-	weaken = 5
+	stamina = 65 //two round bursts from the c20r knocks people down
 
 
 /obj/item/projectile/bullet/midbullet2
 	damage = 25
 
-
-/obj/item/projectile/bullet/midbullet3 //Only used with the Stechkin Pistol - RobRichards
+/obj/item/projectile/bullet/midbullet3
 	damage = 30
 
-
-/obj/item/projectile/bullet/suffocationbullet//How does this even work?
-	name = "co bullet"
-	damage = 20
-	damage_type = OXY
+/obj/item/projectile/bullet/heavybullet
+	damage = 35
 
 
-/obj/item/projectile/bullet/cyanideround
-	name = "poison bullet"
-	damage = 40
-	damage_type = TOX
-
-
-/obj/item/projectile/bullet/stunshot
+/obj/item/projectile/bullet/stunshot //taser slugs for shotguns, nothing special
 	name = "stunshot"
 	damage = 5
 	stun = 5
 	weaken = 5
 	stutter = 5
-
-
-/obj/item/projectile/bullet/a762
-	damage = 25
-
-
-/obj/item/projectile/bullet/incendiary
+	jitter = 20
+	range = 7
+	icon_state = "spark"
+	color = "#FFFF00"
 
 /obj/item/projectile/bullet/incendiary/on_hit(var/atom/target, var/blocked = 0)
 	..()
@@ -147,7 +134,7 @@
 		..()
 		reagents.add_reagent("aluminium", 15)
 		reagents.add_reagent("foaming_agent", 5)
-		reagents.add_reagent("pacid", 5)
+		reagents.add_reagent("facid", 5)
 
 //This one is for future syringe guns update
 /obj/item/projectile/bullet/dart/syringe

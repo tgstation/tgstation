@@ -57,13 +57,8 @@
 /mob/living/carbon/alien/eyecheck()
 	return 2
 
-/mob/living/carbon/alien/updatehealth()
-	if(status_flags & GODMODE)
-		health = maxHealth
-		stat = CONSCIOUS
-		return
-	//oxyloss is only used for suicide
-	health = maxHealth - getOxyLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
+/mob/living/carbon/alien/getToxLoss()
+	return 0
 
 /mob/living/carbon/alien/proc/handle_environment(var/datum/gas_mixture/environment)
 
@@ -118,10 +113,6 @@
 
 /mob/living/carbon/alien/proc/handle_mutations_and_radiation()
 
-	if(getFireLoss())
-		if((COLD_RESISTANCE in mutations) || prob(5))
-			adjustFireLoss(-1)
-
 	// Aliens love radiation nom nom nom
 	if (radiation)
 		if (radiation > 100)
@@ -131,12 +122,12 @@
 			radiation = 0
 
 		switch(radiation)
-			if(1 to 49)
+			if(0 to 50)
 				radiation--
 				if(prob(25))
 					adjustToxLoss(1)
 
-			if(50 to 74)
+			if(50 to 75)
 				radiation -= 2
 				adjustToxLoss(1)
 				if(prob(5))
@@ -159,21 +150,12 @@
 	return 1 // Aliens can eat, and they can be fed food/drink
 
 /mob/living/carbon/alien/Stat()
-
-	statpanel("Status")
-	stat(null, "Intent: [a_intent]")
-	stat(null, "Move Mode: [m_intent]")
-
 	..()
 
-	if (client.statpanel == "Status")
+	if(statpanel("Status"))
+		stat(null, "Intent: [a_intent]")
+		stat(null, "Move Mode: [m_intent]")
 		stat(null, "Plasma Stored: [getPlasma()]/[max_plasma]")
-
-	if(emergency_shuttle)
-		if(emergency_shuttle.online && emergency_shuttle.location < 2)
-			var/timeleft = emergency_shuttle.timeleft()
-			if (timeleft)
-				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
 /mob/living/carbon/alien/Stun(amount)
 	if(status_flags & CANSTUN)

@@ -82,7 +82,7 @@ datum/objective/mutiny/check_completion()
 		if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.ckey || !target.current.client)
 			return 1
 		var/turf/T = get_turf(target.current)
-		if(T && (T.z != 1))			//If they leave the station they count as dead for this
+		if(T && (T.z != ZLEVEL_STATION))			//If they leave the station they count as dead for this
 			return 2
 		return 0
 	return 1
@@ -109,19 +109,8 @@ datum/objective/maroon/check_completion()
 	if(target && target.current)
 		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
 			return 1
-		var/area/A = get_area(target.current)
-		if(istype(A, /area/shuttle/escape/centcom))
+		if(target.current.onCentcom())
 			return 0
-		if(istype(A, /area/shuttle/escape_pod1/centcom))
-			return 0
-		if(istype(A, /area/shuttle/escape_pod2/centcom))
-			return 0
-		if(istype(A, /area/shuttle/escape_pod3/centcom))
-			return 0
-		if(istype(A, /area/shuttle/escape_pod4/centcom))
-			return 0
-		else
-			return 1
 	return 1
 
 datum/objective/maroon/update_explanation_text()
@@ -198,21 +187,22 @@ datum/objective/hijack
 datum/objective/hijack/check_completion()
 	if(!owner.current || owner.current.stat)
 		return 0
-	if(emergency_shuttle.location<2)
+	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
 		return 0
 	if(issilicon(owner.current))
 		return 0
-	var/area/shuttle = locate(/area/shuttle/escape/centcom)
 
-	if(!(get_turf(owner.current) in shuttle))
+	var/area/A = get_area(owner.current)
+	if(SSshuttle.emergency.areaInstance != A)
 		return 0
 
-	var/list/protected_mobs = list(/mob/living/silicon/ai, /mob/living/silicon/pai)
 	for(var/mob/living/player in player_list)
-		if(player.type in protected_mobs)	continue
-		if (player.mind && (player.mind != owner))
-			if(player.stat != DEAD)			//they're not dead!
-				if(get_turf(player) in shuttle)
+		if(player.mind && player.mind != owner)
+			if(player.stat != DEAD)
+				switch(player.type)
+					if(/mob/living/silicon/ai, /mob/living/silicon/pai)
+						continue
+				if(get_area(player) == A)
 					return 0
 	return 1
 
@@ -224,20 +214,20 @@ datum/objective/block
 datum/objective/block/check_completion()
 	if(!istype(owner.current, /mob/living/silicon))
 		return 0
-	if(emergency_shuttle.location<2)
-		return 0
-	if(!owner.current)
-		return 0
-	var/area/shuttle = locate(/area/shuttle/escape/centcom)
-	var/protected_mobs[] = list(/mob/living/silicon/ai, /mob/living/silicon/pai, /mob/living/silicon/robot)
-	for(var/mob/living/player in player_list)
-		if(player.type in protected_mobs)	continue
-		if (player.mind)
-			if (player.stat != 2)
-				if (get_turf(player) in shuttle)
-					return 0
-	return 1
+	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
+		return 1
 
+	var/area/A = SSshuttle.emergency.areaInstance
+
+	for(var/mob/living/player in player_list)
+		if(istype(player, /mob/living/silicon))
+			continue
+		if(player.mind)
+			if(player.stat != DEAD)
+				if(get_area(player) == A)
+					return 0
+
+	return 1
 
 
 datum/objective/escape
@@ -249,30 +239,21 @@ datum/objective/escape/check_completion()
 		return 0
 	if(isbrain(owner.current))
 		return 0
-	if(emergency_shuttle.location<2)
+	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
 		return 0
-	if(!owner.current || owner.current.stat ==2)
+	if(!owner.current || owner.current.stat == DEAD)
 		return 0
-	var/turf/location = get_turf(owner.current.loc)
+	var/turf/location = get_turf(owner.current)
 	if(!location)
 		return 0
 
 	if(istype(location, /turf/simulated/shuttle/floor4)) // Fails traitors if they are in the shuttle brig -- Polymorph
 		return 0
 
-	var/area/check_area = location.loc
-	if(istype(check_area, /area/shuttle/escape/centcom))
+	if(location.onCentcom())
 		return 1
-	if(istype(check_area, /area/shuttle/escape_pod1/centcom))
-		return 1
-	if(istype(check_area, /area/shuttle/escape_pod2/centcom))
-		return 1
-	if(istype(check_area, /area/shuttle/escape_pod3/centcom))
-		return 1
-	if(istype(check_area, /area/shuttle/escape_pod4/centcom))
-		return 1
-	else
-		return 0
+
+	return 0
 
 datum/objective/escape/escape_with_identity
 	dangerrating = 10
@@ -285,7 +266,7 @@ datum/objective/escape/escape_with_identity/find_target()
 datum/objective/escape/escape_with_identity/update_explanation_text()
 	if(target && target.current)
 		target_real_name = target.current.real_name
-		explanation_text = "Escape on the shuttle or an escape pod with the identity of [target_real_name], the [target.assigned_role]."
+		explanation_text = "Escape on the shuttle or an escape pod with the identity of [target_real_name], the [target.assigned_role] while wearing their identification card."
 	else
 		explanation_text = "Free Objective."
 
@@ -364,7 +345,7 @@ datum/objective/steal/proc/select_target() //For admins setting objectives manua
 		var/tmp_obj = new custom_target
 		var/custom_name = tmp_obj:name
 		qdel(tmp_obj)
-		custom_name = copytext(sanitize(input("Enter target name:", "Objective target", custom_name) as text|null),1,MAX_MESSAGE_LEN)
+		custom_name = stripped_input("Enter target name:", "Objective target", custom_name)
 		if (!custom_name) return
 		steal_target = custom_target
 		explanation_text = "Steal [custom_name]."

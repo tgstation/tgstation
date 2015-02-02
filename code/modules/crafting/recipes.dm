@@ -38,7 +38,7 @@
 				/obj/item/robot_parts/r_leg = 1,
 				/obj/item/stack/sheet/metal = 5,
 				/obj/item/stack/cable_coil = 5,
-				/obj/item/weapon/gun/energy/taser = 1,
+				/obj/item/weapon/gun/energy/gun/advtaser = 1,
 				/obj/item/weapon/stock_parts/cell = 1,
 				/obj/item/device/assembly/prox_sensor = 1,
 				/obj/item/robot_parts/r_arm = 1)
@@ -114,6 +114,16 @@
 	result = /obj/item/ammo_casing/shotgun/incendiary/dragonsbreath
 	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
 				/datum/reagent/phosphorus = 5,)
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 5
+
+/datum/table_recipe/frag12
+	name = "FRAG-12 Shell"
+	result = /obj/item/ammo_casing/shotgun/frag12
+	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
+				/datum/reagent/glycerol = 5,
+				/datum/reagent/toxin/acid = 5,
+				/datum/reagent/toxin/acid/fluacid = 5,)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
 

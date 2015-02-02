@@ -5,6 +5,48 @@
 	icon_closed = "syndicate"
 	icon_opened = "syndicateopen"
 
+/obj/structure/closet/syndicate/ertCom/New()
+	name = "commanders closet"
+	desc = "Emergency Response Team equipment locker"
+	icon_state = "capsecureoff"
+	icon_closed = "capsecureoff"
+	icon_opened = "capsecureopen"
+//	new /obj/item/weapon/card/id/ert(src)
+	new /obj/item/weapon/storage/backpack/captain(src)
+	return
+
+/obj/structure/closet/syndicate/ertSec/New()
+	name = "security closet"
+	desc = "Emergency Response Team equipment locker"
+	icon_state = "secoff"
+	icon_closed = "secoff"
+	icon_opened = "secopen"
+	new /obj/item/weapon/gun/energy/pulse_rifle/pulse_pistol/loyalpin(src)
+	new /obj/item/weapon/card/id/ert/Security(src)
+	new /obj/item/weapon/storage/backpack/security(src)
+	return
+
+/obj/structure/closet/syndicate/ertMed/New()
+	name = "medical closet"
+	desc = "Emergency Response Team equipment locker"
+	icon_state = "securemedoff"
+	icon_closed = "securemedoff"
+	icon_opened = "securemedopen"
+	new /obj/item/weapon/gun/energy/pulse_rifle/pulse_pistol/loyalpin(src)
+	new /obj/item/weapon/card/id/ert/Medical(src)
+	new /obj/item/weapon/storage/backpack/medic(src)
+	return
+
+/obj/structure/closet/syndicate/ertEngi/New()
+	name = "engineer closet"
+	desc = "Emergency Response Team equipment locker"
+	icon_state = "secureengoff"
+	icon_closed = "secureengoff"
+	icon_opened = "secureengopen"
+	new /obj/item/weapon/gun/energy/pulse_rifle/pulse_pistol/loyalpin(src)
+	new /obj/item/weapon/card/id/ert/Engineer(src)
+	new /obj/item/weapon/storage/backpack/industrial(src)
+	return
 
 /obj/structure/closet/syndicate/personal
 	desc = "It's a personal storage unit for operative gear."
@@ -12,8 +54,8 @@
 /obj/structure/closet/syndicate/personal/New()
 	..()
 	new /obj/item/clothing/under/syndicate(src)
-	new /obj/item/clothing/suit/armor/vest(src)
-	new /obj/item/clothing/head/helmet/swat/syndicate(src)
+	new /obj/item/clothing/shoes/sneakers/black(src)
+	new /obj/item/device/radio/headset/syndicate(src)
 	new /obj/item/ammo_box/magazine/m10mm(src)
 	new /obj/item/weapon/storage/belt/military(src)
 	new /obj/item/weapon/crowbar/red(src)
@@ -32,11 +74,13 @@
 	new /obj/item/ammo_box/magazine/m10mm(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/storage/box/teargas(src)
-	new /obj/item/weapon/gun/projectile/automatic/bulldog(src)
-	new /obj/item/weapon/gun/projectile/automatic/bulldog(src)
-	new /obj/item/weapon/gun/projectile/automatic/bulldog(src)
-	new /obj/item/weapon/gun/projectile/automatic/bulldog(src)
-	new /obj/item/weapon/gun/projectile/automatic/bulldog(src)
+	new /obj/item/weapon/storage/backpack/dufflebag/syndiemed(src)
+	new /obj/item/weapon/storage/backpack/dufflebag/syndieammo(src)
+	new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(src)
+	new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(src)
+	new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(src)
+	new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(src)
+	new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(src)
 	new /obj/item/weapon/pinpointer/nukeop(src)
 	new /obj/item/weapon/pinpointer/nukeop(src)
 	new /obj/item/weapon/pinpointer/nukeop(src)

@@ -7,13 +7,11 @@
 	g_amt = 120
 	origin_tech = "magnets=1"
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
-
-	secured = 1
+	attachable = 1
 
 	var/code = 30
 	var/frequency = 1457
 	var/delay = 0
-	var/datum/wires/connected = null
 	var/datum/radio_frequency/radio_connection
 
 /obj/item/device/assembly/signaler/New()
@@ -42,12 +40,13 @@
 	return
 
 /obj/item/device/assembly/signaler/interact(mob/user as mob, flag1)
-	var/t1 = "-------"
-//	if ((src.b_stat && !( flag1 )))
-//		t1 = text("-------<BR>\nGreen Wire: []<BR>\nRed Wire:   []<BR>\nBlue Wire:  []<BR>\n", (src.wires & 4 ? text("<A href='?src=\ref[];wires=4'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=4'>Mend Wire</A>", src)), (src.wires & 2 ? text("<A href='?src=\ref[];wires=2'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=2'>Mend Wire</A>", src)), (src.wires & 1 ? text("<A href='?src=\ref[];wires=1'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=1'>Mend Wire</A>", src)))
-//	else
-//		t1 = "-------"	Speaker: [src.listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>
-	var/dat = {"
+	if(is_secured(user))
+		var/t1 = "-------"
+	//	if ((src.b_stat && !( flag1 )))
+	//		t1 = text("-------<BR>\nGreen Wire: []<BR>\nRed Wire:   []<BR>\nBlue Wire:  []<BR>\n", (src.wires & 4 ? text("<A href='?src=\ref[];wires=4'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=4'>Mend Wire</A>", src)), (src.wires & 2 ? text("<A href='?src=\ref[];wires=2'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=2'>Mend Wire</A>", src)), (src.wires & 1 ? text("<A href='?src=\ref[];wires=1'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=1'>Mend Wire</A>", src)))
+	//	else
+	//		t1 = "-------"	Speaker: [src.listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>
+		var/dat = {"
 <TT>
 
 <A href='byond://?src=\ref[src];send=1'>Send Signal</A><BR>
@@ -67,9 +66,9 @@ Code:
 <A href='byond://?src=\ref[src];code=5'>+</A><BR>
 [t1]
 </TT>"}
-	user << browse(dat, "window=radio")
-	onclose(user, "radio")
-	return
+		user << browse(dat, "window=radio")
+		onclose(user, "radio")
+		return
 
 
 /obj/item/device/assembly/signaler/Topic(href, href_list)
@@ -127,21 +126,12 @@ Code:
 					if(S)	S.pulse(0)
 		return 0*/
 
-
-/obj/item/device/assembly/signaler/pulse(var/radio = 0)
-	if(src.connected && src.wires)
-		connected.Pulse(src)
-	else
-		return ..(radio)
-
-
 /obj/item/device/assembly/signaler/receive_signal(datum/signal/signal)
 	if(!signal)	return 0
 	if(signal.encryption != code)	return 0
 	if(!(src.wires & WIRE_RADIO_RECEIVE))	return 0
 	pulse(1)
-	if(src.loc)
-		src.loc.audible_message("\icon[src] *beep* *beep*", null, 1)
+	audible_message("\icon[src] *beep* *beep*", null, 1)
 	return
 
 

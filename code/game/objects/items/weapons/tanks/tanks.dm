@@ -24,7 +24,7 @@
 	src.air_contents.volume = volume //liters
 	src.air_contents.temperature = T20C
 
-	processing_objects.Add(src)
+	SSobj.processing.Add(src)
 
 	return
 
@@ -32,7 +32,7 @@
 	if(air_contents)
 		del(air_contents)
 
-	processing_objects.Remove(src)
+	SSobj.processing.Remove(src)
 
 	..()
 
@@ -83,10 +83,6 @@
 
 	if ((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
 		atmosanalyzer_scan(air_contents, user)
-	else if (istype(W,/obj/item/latexballon))
-		var/obj/item/latexballon/LB = W
-		LB.blow(src)
-		src.add_fingerprint(user)
 
 	if(istype(W, /obj/item/device/assembly_holder))
 		bomb_assemble(W,user)

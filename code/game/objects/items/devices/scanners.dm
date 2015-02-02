@@ -25,12 +25,12 @@ MASS SPECTROMETER
 	icon_state = copytext(icon_state, 1, length(icon_state))+"[on]"
 
 	if(on)
-		processing_objects.Add(src)
+		SSobj.processing.Add(src)
 
 
 /obj/item/device/t_scanner/process()
 	if(!on)
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 		return null
 	scan()
 
@@ -77,10 +77,10 @@ MASS SPECTROMETER
 	origin_tech = "magnets=1;biotech=1"
 	var/mode = 1;
 
-/obj/item/device/healthanalyzer/attack(mob/living/M as mob, mob/living/user as mob)
+/obj/item/device/healthanalyzer/attack(mob/living/M as mob, mob/living/carbon/human/user as mob)
 
 	// Clumsiness/brain damage check
-	if ((CLUMSY in user.mutations || user.getBrainLoss() >= 60) && prob(50))
+	if ((user.disabilities & CLUMSY || user.getBrainLoss() >= 60) && prob(50))
 		user << "<span class='notice'>You stupidly try to analyze the floor's vitals!</span>"
 		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>")
 		user.show_message("<span class='notice'>Analyzing Results for The floor:\n\t Overall Status: Healthy", 1)
@@ -151,8 +151,8 @@ MASS SPECTROMETER
 		if(!(D.visibility_flags & HIDDEN_SCANNER))
 			user.show_message("<span class='warning'><b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]</span>", 1)
 
-	if (M.reagents && M.reagents.get_reagent_amount("inaprovaline"))
-		user.show_message("<span class='notice'>Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals.</span>", 1)
+	if (M.reagents && M.reagents.get_reagent_amount("epinephrine"))
+		user.show_message("<span class='notice'>Bloodstream Analysis located [M.reagents:get_reagent_amount("epinephrine")] units of rejuvenation chemicals.</span>", 1)
 	if (M.getBrainLoss() >= 100 || !M.getorgan(/obj/item/organ/brain))
 		user.show_message("<span class='warning'>Subject brain function is non-existant.</span>", 1)
 	else if (M.getBrainLoss() >= 60)

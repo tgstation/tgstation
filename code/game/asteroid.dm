@@ -88,7 +88,7 @@ proc/make_mining_asteroid_secret()
 			theme = "cavein"
 			walltypes = list(/turf/simulated/mineral/random/high_chance=1)
 			floortypes = list(/turf/simulated/floor/plating/asteroid/airless, /turf/simulated/floor/beach/sand)
-			treasureitems = list(/obj/mecha/working/ripley/mining=1, /obj/item/weapon/pickaxe/diamonddrill=2,/obj/item/weapon/gun/energy/kinetic_accelerator=1,
+			treasureitems = list(/obj/mecha/working/ripley/mining=1, /obj/item/weapon/pickaxe/drill/diamonddrill=2,/obj/item/weapon/gun/energy/kinetic_accelerator=1,
 							/obj/item/weapon/resonator=1, /obj/item/weapon/pickaxe/jackhammer=5)
 			fluffitems = list(/obj/effect/decal/cleanable/blood=3,/obj/effect/decal/remains/human=1,/obj/item/clothing/under/overalls=1,
 							  /obj/item/weapon/reagent_containers/food/snacks/grown/chili=1,/obj/item/weapon/tank/oxygen/red=2)
@@ -124,7 +124,7 @@ proc/make_mining_asteroid_secret()
 			treasureitems = list(/obj/item/weapon/gun/energy/floragun=1,/obj/item/seeds/novaflowerseed=2,/obj/item/seeds/bluespacetomatoseed=2,/obj/item/seeds/bluetomatoseed=2,
 			/obj/item/seeds/coffee_robusta_seed=2, /obj/item/seeds/cashseed=2)
 			fluffitems = list(/obj/structure/flora/kirbyplants=1,/obj/structure/table/reinforced=2,/obj/machinery/hydroponics=1,
-							  /obj/effect/glowshroom/single=2,/obj/item/weapon/reagent_containers/syringe/antitoxin=2,
+							  /obj/effect/glowshroom/single=2,/obj/item/weapon/reagent_containers/syringe/charcoal=2,
 							  /obj/item/weapon/reagent_containers/glass/bottle/diethylamine=3,/obj/item/weapon/reagent_containers/glass/bottle/ammonia=3)
 
 		/*if("poly")

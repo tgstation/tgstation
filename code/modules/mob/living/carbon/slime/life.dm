@@ -33,9 +33,6 @@
 	//blinded get reset each cycle and then get activated later in the
 	//code. Very ugly. I dont care. Moving this stuff here so its easy
 	//to find it.
-	src.blinded = null
-
-	regular_hud_updates() // Basically just deletes any screen objects :<
 
 	if(environment)
 		handle_environment(environment) // Handle temperature/pressure differences between body and environment
@@ -174,6 +171,12 @@
 
 	if(reagents) reagents.metabolize(src)
 
+	if (reagents.get_reagent_amount("plasma")>=5)
+		mutation_chance = min(mutation_chance + 5,50) //Prevents mutation chance going >50%
+		reagents.remove_reagent("plasma", 5)
+	if (reagents.get_reagent_amount("epinephrine")>=5)
+		mutation_chance = max(mutation_chance - 5,0) //Prevents muation chance going <0%
+		reagents.remove_reagent("epinephrine", 5)
 	src.updatehealth()
 
 	return //TODO: DEFERRED
@@ -191,7 +194,7 @@
 
 	else if(src.health < config.health_threshold_crit)
 
-		if(!src.reagents.has_reagent("inaprovaline"))
+		if(!src.reagents.has_reagent("epinephrine"))
 			src.adjustOxyLoss(10)
 
 		if(src.stat != DEAD)
@@ -206,7 +209,7 @@
 
 	if (src.stat == DEAD)
 		src.lying = 1
-		src.blinded = 1
+		src.eye_blind = max(eye_blind, 1)
 	else
 		if (src.paralysis || src.stunned || src.weakened || (status_flags && FAKEDEATH)) //Stunned etc.
 			if (src.stunned > 0)
@@ -218,7 +221,7 @@
 				src.stat = 0
 			if (src.paralysis > 0)
 				AdjustParalysis(-1)
-				src.blinded = 0
+				src.eye_blind = 0
 				src.lying = 0
 				src.stat = 0
 
@@ -230,18 +233,14 @@
 
 	if (src.eye_blind)
 		src.eye_blind = 0
-		src.blinded = 1
+		src.eye_blind = max(eye_blind, 1)
 
-	if (src.ear_deaf > 0) src.ear_deaf = 0
-	if (src.ear_damage < 25)
-		src.ear_damage = 0
+	setEarDamage((ear_damage < 25 ? 0 : ear_damage),(disabilities & DEAF ? 1 :0))
 
 	src.density = !( src.lying )
 
-	if (src.sdisabilities & BLIND)
-		src.blinded = 1
-	if (src.sdisabilities & DEAF)
-		src.ear_deaf = 1
+	if (src.disabilities & BLIND)
+		src.eye_blind = max(eye_blind, 1)
 
 	if (src.eye_blurry > 0)
 		src.eye_blurry = 0
@@ -343,10 +342,10 @@
 					if(issilicon(L) && (rabid || attacked)) // They can't eat silicons, but they can glomp them in defence
 						targets += L // Possible target found!
 
-					if(istype(L, /mob/living/carbon/human) && dna) //Ignore slime(wo)men
+					if(istype(L, /mob/living/carbon/human)) //Ignore slime(wo)men
 						var/mob/living/carbon/human/H = L
 						if(H.dna)
-							if(/mob/living/carbon/slime in H.dna.species.ignored_by)
+							if(src.type in H.dna.species.ignored_by)
 								continue
 
 					if(!L.canmove) // Only one slime can latch on at a time.

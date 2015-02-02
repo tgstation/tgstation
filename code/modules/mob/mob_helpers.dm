@@ -163,14 +163,14 @@ proc/isorgan(A)
 	if(prob(probability))
 		return zone
 
-	var/t = rand(1, 17) // randomly pick a different zone, or maybe the same one
+	var/t = rand(1, 18) // randomly pick a different zone, or maybe the same one
 	switch(t)
 		if(1)		 return "head"
 		if(2)		 return "chest"
 		if(3 to 6)	 return "l_arm"
 		if(7 to 10)	 return "r_arm"
-		if(10 to 13) return "l_leg"
-		if(14 to 17) return "r_leg"
+		if(11 to 14) return "l_leg"
+		if(15 to 18) return "r_leg"
 
 	return zone
 
@@ -371,10 +371,9 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 				hud_used.action_intent.icon_state = "help"
 
 proc/is_blind(A)
-	if(istype(A, /mob/living/carbon))
-		var/mob/living/carbon/C = A
-		if(C.blinded != null)
-			return 1
+	if(ismob(A))
+		var/mob/B = A
+		return	B.eye_blind
 	return 0
 
 proc/is_special_character(mob/M) // returns 1 for special characters and 2 for heroes of gamemode //moved out of admins.dm because things other than admin procs were calling this.
@@ -463,11 +462,3 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 	else
 		return
 
-/proc/broadcast_hud_message(var/message, var/broadcast_source)
-	var/turf/sourceturf = get_turf(broadcast_source)
-	var/user_list = sec_hud_users //A local var is used for easy addition of other HUD types.
-	var/hud_icon = /obj/item/weapon/restraints/handcuffs //Icon displayed when the HUD triggered. Handcuffs for Sec HUDs.
-	for(var/mob/hud_user in user_list)
-		var/turf/userturf = get_turf(hud_user)
-		if(userturf.z == sourceturf.z) //Must have same z-level.
-			hud_user.show_message("<span class='info'>\icon[hud_icon] [message]</span>", 1)

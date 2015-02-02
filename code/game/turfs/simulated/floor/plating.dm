@@ -12,6 +12,7 @@
 	name = "plating"
 	icon_state = "plating"
 	intact = 0
+	cancable = 1
 	broken_states = list("platingdmg1", "platingdmg2", "platingdmg3")
 	burnt_states = list("panelscorched")
 
@@ -26,9 +27,12 @@
 		icon_state = icon_plating //Because asteroids are 'platings' too.
 
 /turf/simulated/floor/plating/attackby(obj/item/C as obj, mob/user as mob)
-	if(!C || !user)
+	if(..())
 		return
 	if(istype(C, /obj/item/stack/rods))
+		if(broken || burnt)
+			user << "<span class='warning'>Repair the plating first.</span>"
+			return
 		var/obj/item/stack/rods/R = C
 		if (R.get_amount() < 2)
 			user << "<span class='warning'>You need two rods to make a reinforced floor.</span>"
@@ -54,13 +58,6 @@
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 		else
 			user << "<span class='notice'>This section is too damaged to support a tile. Use a welder to fix the damage.</span>"
-	else if(istype(C, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/coil = C
-		for(var/obj/structure/cable/LC in src)
-			if((LC.d1==0)||(LC.d2==0))
-				LC.attackby(C,user)
-				return
-		coil.turf_place(src, user)
 	else if(istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/welder = C
 		if( welder.isOn() && (broken || burnt) )
@@ -82,6 +79,7 @@
 	icon_state = "engine"
 	thermal_conductivity = 0.025
 	heat_capacity = 325000
+	floor_tile = /obj/item/stack/rods
 
 /turf/simulated/floor/engine/break_tile()
 	return //unbreakable
@@ -89,7 +87,9 @@
 /turf/simulated/floor/engine/burn_tile()
 	return //unburnable
 
-/turf/simulated/floor/engine/make_plating()
+/turf/simulated/floor/engine/make_plating(var/force = 0)
+	if(force)
+		..()
 	return //unplateable
 
 /turf/simulated/floor/engine/attackby(obj/item/weapon/C as obj, mob/user as mob)
@@ -106,6 +106,9 @@
 /turf/simulated/floor/engine/cult
 	name = "engraved floor"
 	icon_state = "cult"
+
+/turf/simulated/floor/engine/cult/narsie_act()
+	return
 
 /turf/simulated/floor/engine/n20/New()
 	..()
@@ -134,8 +137,7 @@
 	nitrogen = 0
 	temperature = TCMB
 
-/turf/simulated/floor/airless
-	icon_state = "floor"
+/turf/simulated/floor/plasteel/airless
 	oxygen = 0
 	nitrogen = 0
 	temperature = TCMB

@@ -10,7 +10,7 @@
 	var/amount_per_transfer_from_this = 10
 	var/possible_transfer_amounts = list(10,25,50,100)
 
-/obj/structure/reagent_dispensers/ex_act(severity)
+/obj/structure/reagent_dispensers/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			qdel(src)
@@ -60,7 +60,7 @@
 		..()
 		reagents.add_reagent("water",1000)
 
-/obj/structure/reagent_dispensers/watertank/ex_act(severity)
+/obj/structure/reagent_dispensers/watertank/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			qdel(src)
@@ -97,9 +97,10 @@
 /obj/structure/reagent_dispensers/fueltank/bullet_act(var/obj/item/projectile/Proj)
 	..()
 	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
-		message_admins("[key_name_admin(Proj.firer)] triggered a fueltank explosion.")
-		log_game("[key_name(Proj.firer)] triggered a fueltank explosion.")
-		explosion(src.loc,-1,0,2, flame_range = 2)
+		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
+			message_admins("[key_name_admin(Proj.firer)] triggered a fueltank explosion.")
+			log_game("[key_name(Proj.firer)] triggered a fueltank explosion.")
+			explosion(src.loc,-1,0,2, flame_range = 2)
 
 
 /obj/structure/reagent_dispensers/fueltank/blob_act()

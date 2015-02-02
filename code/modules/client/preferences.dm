@@ -49,6 +49,7 @@ datum/preferences
 	var/blood_type = "A+"				//blood type (not-chooseable)
 	var/underwear = "Nude"				//underwear type
 	var/undershirt = "Nude"				//undershirt type
+	var/socks = "Nude"					//socks type
 	var/backbag = 2						//backpack type
 	var/hair_style = "Bald"				//Hair type
 	var/hair_color = "000"				//Hair color
@@ -178,6 +179,7 @@ datum/preferences
 				dat += "<b>Skin Tone:</b><BR><a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
 				dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
 				dat += "<b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><BR>"
+				dat += "<b>Socks:</b><BR><a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a><BR>"
 				dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><BR>"
 
 
@@ -272,12 +274,12 @@ datum/preferences
 		dat += "</center>"
 
 		//user << browse(dat, "window=preferences;size=560x560")
-		var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 580, 620)
+		var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 640, 680)
 		popup.set_content(dat)
 		popup.open(0)
 
 	proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), widthPerColumn = 295, height = 620)
-		if(!job_master)	return
+		if(!SSjob)	return
 
 		//limit - The amount of jobs allowed per column. Defaults to 17 to make it look nice.
 		//splitJobs - Allows you split the table by job. You can make different tables for each department by including their heads. Defaults to CE to make it look nice.
@@ -298,7 +300,7 @@ datum/preferences
 		//The job before the current job. I only use this to get the previous jobs color when I'm filling in blank rows.
 		var/datum/job/lastJob
 
-		for(var/datum/job/job in job_master.occupations)
+		for(var/datum/job/job in SSjob.occupations)
 
 			index += 1
 			if((index >= limit) || (job.title in splitJobs))
@@ -321,7 +323,7 @@ datum/preferences
 				var/available_in_days = job.available_in_days(user.client)
 				HTML += "<font color=red>[rank]</font></td><td><font color=red> \[IN [(available_in_days)] DAYS\]</font></td></tr>"
 				continue
-			if((job_civilian_low & ASSISTANT) && (rank != "Assistant"))
+			if((job_civilian_low & ASSISTANT) && (rank != "Assistant") && !jobban_isbanned(user, "Assistant"))
 				HTML += "<font color=orange>[rank]</font></td><td></td></tr>"
 				continue
 			if(config.enforce_human_authority && (rank in command_positions) && user.client.prefs.pref_species.id != "human")
@@ -451,9 +453,9 @@ datum/preferences
 		return 0
 
 	proc/UpdateJobPreference(mob/user, role, desiredLvl)
-		if(!job_master)
+		if(!SSjob)
 			return
-		var/datum/job/job = job_master.GetJob(role)
+		var/datum/job/job = SSjob.GetJob(role)
 
 		if(!job)
 			user << browse(null, "window=mob_occupation")
@@ -565,6 +567,8 @@ datum/preferences
 						underwear = random_underwear(gender)
 					if("undershirt")
 						undershirt = random_undershirt(gender)
+					if("socks")
+						socks = random_socks(gender)
 					if("eyes")
 						eye_color = random_eye_color()
 					if("s_tone")
@@ -669,6 +673,15 @@ datum/preferences
 						if(new_undershirt)
 							undershirt = new_undershirt
 
+					if("socks")
+						var/new_socks
+						if(gender == MALE)
+							new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in socks_m
+						else
+							new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in socks_f
+						if(new_socks)
+							socks = new_socks
+
 					if("eyes")
 						var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference") as color|null
 						if(new_eyes)
@@ -724,6 +737,7 @@ datum/preferences
 							gender = MALE
 						underwear = random_underwear(gender)
 						undershirt = random_undershirt(gender)
+						socks = random_socks(gender)
 						facial_hair_style = random_facial_hair_style(gender)
 						hair_style = random_hair_style(gender)
 
@@ -832,6 +846,7 @@ datum/preferences
 		character.facial_hair_style = facial_hair_style
 		character.underwear = underwear
 		character.undershirt = undershirt
+		character.socks = socks
 
 		if(backbag > 3 || backbag < 1)
 			backbag = 1 //Same as above

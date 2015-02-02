@@ -14,6 +14,30 @@
 /obj/item/weapon/gun/energy/pulse_rifle/attack_self(mob/living/user as mob)
 	select_fire(user)
 
+/obj/item/weapon/gun/energy/pulse_rifle/pulse_carbine
+	name = "pulse carbine"
+	desc = "A ligther weight varient of the pulse rifle, a multifaceted energy carbine with three modes."
+	w_class = 3.0
+	icon_state = "pulse_carbine"
+	item_state = "pulse"
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse/carbine, /obj/item/ammo_casing/energy/electrode/carbine, /obj/item/ammo_casing/energy/laser/carbine)
+	cell_type = "/obj/item/weapon/stock_parts/cell"
+
+/obj/item/weapon/gun/energy/pulse_rifle/pulse_carbine/loyalpin
+	pin = /obj/item/device/firing_pin/implant/loyalty
+
+/obj/item/weapon/gun/energy/pulse_rifle/pulse_pistol
+	name = "pulse pistol"
+	desc = "A ligther weight varient of the pulse rifle, a multifaceted energy pistol with three modes."
+	w_class = 2.0
+	icon_state = "pulse_pistol"
+	item_state = "pulse"
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse/pistol, /obj/item/ammo_casing/energy/electrode/pistol, /obj/item/ammo_casing/energy/laser/pistol)
+	cell_type = "/obj/item/weapon/stock_parts/cell"
+
+/obj/item/weapon/gun/energy/pulse_rifle/pulse_pistol/loyalpin
+	pin = /obj/item/device/firing_pin/implant/loyalty
+
 /obj/item/weapon/gun/energy/pulse_rifle/destroyer
 	name = "pulse destroyer"
 	desc = "A heavy-duty energy rifle built for pure destruction."

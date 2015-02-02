@@ -47,15 +47,15 @@
 			papers.Remove(P)
 		else
 			P = new /obj/item/weapon/paper
-			if(events.holiday == "April Fool's Day")
+			if(SSevent.holiday == "April Fool's Day")
 				if(prob(30))
-					P.info = "<font face=\"[P.crayonfont]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
+					P.info = "<font face=\"[CRAYON_FONT]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
 					P.rigged = 1
 					P.updateinfolinks()
 
 		P.loc = user.loc
 		user.put_in_hands(P)
-		user << "<span class='notice'>You take [P] out of the [src].</span>"
+		user << "<span class='notice'>You take [P] out of \the [src].</span>"
 	else
 		user << "<span class='notice'>[src] is empty!</span>"
 

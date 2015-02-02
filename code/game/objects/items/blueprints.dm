@@ -57,7 +57,7 @@
 	. = ..()
 	var/area/A = get_area()
 	if(get_area_type() == AREA_STATION)
-		. += "<p>According to the [src], you are now in <b>\"[A.name]\"</b>.</p>"
+		. += "<p>According to \the [src], you are now in <b>\"[strip_html_properly(A.name)]\"</b>.</p>"
 	var/datum/browser/popup = new(user, "blueprints", "[src]", 700, 500)
 	popup.set_content(.)
 	popup.open()
@@ -82,7 +82,7 @@
 	. = ..()
 	var/area/A = get_area()
 	if(get_area_type() == AREA_STATION)
-		. += "<p>According to the [src], you are now in <b>\"[A.name]\"</b>.</p>"
+		. += "<p>According to \the [src], you are now in <b>\"[strip_html_properly(A.name)]\"</b>.</p>"
 		. += "<p>You may <a href='?src=\ref[src];edit_area=1'> move an amendment</a> to the drawing.</p>"
 	var/datum/browser/popup = new(user, "blueprints", "[src]", 700, 500)
 	popup.set_content(.)
@@ -116,7 +116,6 @@
 		/area/centcom,
 		/area/asteroid,
 		/area/tdome,
-		/area/syndicate_station,
 		/area/wizard_station,
 		/area/prison
 	)
@@ -159,6 +158,8 @@
 	move_turfs_to_area(turfs, A)
 	A.SetDynamicLighting()
 
+	A.addSorted()
+
 	interact()
 	return
 
@@ -170,7 +171,7 @@
 /obj/item/areaeditor/proc/edit_area()
 	var/area/A = get_area()
 	var/prevname = "[A.name]"
-	var/str = trim(stripped_input(usr,"New area name:", "Blueprint Editing", prevname, MAX_NAME_LEN))
+	var/str = trim(stripped_input(usr,"New area name:", "Blueprint Editing", "", MAX_NAME_LEN))
 	if(!str || !length(str) || str==prevname) //cancel
 		return
 	if(length(str) > 50)

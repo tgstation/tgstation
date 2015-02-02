@@ -49,6 +49,12 @@ Changes to the uplinks were made to discourage murderboning, the rest is the sam
 #if !defined(MAP_FILE)
 
         #include "map_files\MiniStation\MiniStation.dmm"
+        #include "map_files\MiniStation\z2.dmm"
+        #include "map_files\MiniStation\z3.dmm"
+        #include "map_files\MiniStation\z4.dmm"
+        #include "map_files\MiniStation\z5.dmm"
+        #include "map_files\generic\z6.dmm"
+        #include "map_files\generic\z7.dmm"
 
         #define MAP_FILE "MiniStation.dmm"
         #define MAP_NAME "MiniStation"

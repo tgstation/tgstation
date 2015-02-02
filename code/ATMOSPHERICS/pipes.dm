@@ -8,6 +8,11 @@
 	var/alert_pressure = 80*ONE_ATMOSPHERE
 		//minimum pressure before check_pressure(...) should be called
 
+	//Buckling
+	can_buckle = 1
+	buckle_requires_restraints = 1
+	buckle_lying = -1
+
 /obj/machinery/atmospherics/proc/pipeline_expansion()
 	return null
 
@@ -34,10 +39,23 @@
 	if(istype(W, /obj/item/device/analyzer))
 		atmosanalyzer_scan(parent.air, user)
 
-	if(istype(W,/obj/item/device/pipe_painter))
+	if(istype(W,/obj/item/device/pipe_painter) || istype(W,/obj/item/weapon/pipe_dispenser))
 		return
 
 	return ..()
 
 /obj/machinery/atmospherics/pipe/setPipenet(datum/pipeline/P)
 	parent = P
+
+/obj/machinery/atmospherics/pipe/Destroy()
+	var/turf/T = loc
+	for(var/obj/machinery/meter/meter in T)
+		if(meter.target == src)
+			var/obj/item/pipe_meter/PM = new (T)
+			meter.transfer_fingerprints_to(PM)
+			qdel(meter)
+	..()
+
+/obj/machinery/atmospherics/pipe/proc/update_node_icon()
+	//Used for pipe painting. Overriden in the children.
+	return

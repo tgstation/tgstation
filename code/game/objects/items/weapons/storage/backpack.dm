@@ -35,19 +35,23 @@
 	max_w_class = 5
 	max_combined_w_class = 35
 
-/obj/item/weapon/storage/backpack/holding/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/storage/backpack/holding/can_be_inserted(obj/item/W, stop_messages = 0, mob/user)
 	if(crit_fail)
 		user << "<span class='danger'>The Bluespace generator isn't working.</span>"
 		return
+	return ..()
+
+/obj/item/weapon/storage/backpack/holding/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
 	if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
 		investigate_log("has become a singularity. Caused by [user.key]","singulo")
 		user << "<span class='danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>"
 		qdel(W)
-		var/obj/machinery/singularity/singulo = new /obj/machinery/singularity (get_turf(src))
+		var/obj/singularity/singulo = new /obj/singularity (get_turf(src))
 		singulo.energy = 300 //should make it a bit bigger~
 		message_admins("[key_name_admin(user)] detonated a bag of holding")
 		log_game("[key_name(user)] detonated a bag of holding")
 		qdel(src)
+		singulo.process()
 		return
 	..()
 
@@ -211,3 +215,56 @@
 	..()
 	new /obj/item/stack/tile/plasteel(src)
 	new /obj/item/weapon/crowbar(src)
+
+/obj/item/weapon/storage/backpack/dufflebag
+	name = "dufflebag"
+	desc = "A large dufflebag for holding extra things"
+	icon_state = "duffle"
+	item_state = "duffle"
+	storage_slots = 9
+	slowdown = 1
+	max_combined_w_class = 27
+
+/obj/item/weapon/storage/backpack/dufflebag/syndiemed
+	name = "medical dufflebag"
+	desc = "A large dufflebag for holding extra tactical medical supplies."
+	icon_state = "duffle-syndiemed"
+	item_state = "duffle-syndiemed"
+	slowdown = 0
+
+/obj/item/weapon/storage/backpack/dufflebag/syndieammo
+	name = "ammunition dufflebag"
+	desc = "A large dufflebag for holding extra weapons ammunition and supplies."
+	icon_state = "duffle-syndieammo"
+	item_state = "duffle-syndieammo"
+	slowdown = 0
+
+/obj/item/weapon/storage/backpack/dufflebag/captain
+	name = "captain's dufflebag"
+	desc = "A large dufflebag for holding extra captainly goods."
+	icon_state = "duffle-captain"
+	item_state = "duffle-captain"
+
+/obj/item/weapon/storage/backpack/dufflebag/med
+	name = "medical dufflebag"
+	desc = "A large dufflebag for holding extra medical supplies."
+	icon_state = "duffle-med"
+	item_state = "duffle-med"
+
+/obj/item/weapon/storage/backpack/dufflebag/sec
+	name = "security dufflebag"
+	desc = "A large dufflebag for holding extra security supplies and ammunition."
+	icon_state = "duffle-sec"
+	item_state = "duffle-sec"
+
+/obj/item/weapon/storage/backpack/dufflebag/engineering
+	name = "engineering dufflebag"
+	desc = "A large dufflebag for holding extra tools and supplies."
+	icon_state = "duffle-eng"
+	item_state = "duffle-eng"
+
+/obj/item/weapon/storage/backpack/dufflebag/clown
+	name = "clown's dufflebag"
+	desc = "A large dufflebag for holding lots of funny gags!"
+	icon_state = "duffle-clown"
+	item_state = "duffle-clown"

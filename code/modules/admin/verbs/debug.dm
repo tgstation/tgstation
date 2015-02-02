@@ -226,9 +226,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	pai.real_name = pai.name
 	pai.key = choice.key
 	card.setPersonality(pai)
-	for(var/datum/paiCandidate/candidate in paiController.pai_candidates)
+	for(var/datum/paiCandidate/candidate in SSpai.candidates)
 		if(candidate.key == choice.key)
-			paiController.pai_candidates.Remove(candidate)
+			SSpai.candidates.Remove(candidate)
 	feedback_add_details("admin_verb","MPAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_alienize(var/mob/M in mob_list)
@@ -419,7 +419,7 @@ var/global/list/g_fancy_list_of_types = null
 /client/proc/cmd_debug_make_powernets()
 	set category = "Debug"
 	set name = "Make Powernets"
-	makepowernets()
+	SSpower.makepowernets()
 	log_admin("[key_name(src)] has remade the powernet. makepowernets() called.")
 	message_admins("[key_name_admin(src)] has remade the powernets. makepowernets() called.", 0)
 	feedback_add_details("admin_verb","MPWN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -611,9 +611,10 @@ var/global/list/g_fancy_list_of_types = null
 	var/datum/job/jobdatum
 	if (dresscode == "as job...")
 		var/jobname = input("Select job", "Robust quick dress shop") as null|anything in get_all_jobs()
-		jobdatum = job_master.GetJob(jobname)
 		if(isnull(jobname))
 			return
+		jobdatum = SSjob.GetJob(jobname)
+
 
 	feedback_add_details("admin_verb","SEQ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	for (var/obj/item/I in M)
@@ -670,7 +671,7 @@ var/global/list/g_fancy_list_of_types = null
 
 		if ("tournament chef") //Steven Seagal FTW
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chef(M), slot_w_uniform)
-			M.equip_to_slot_or_del(new /obj/item/clothing/suit/chef(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/chef(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/chefhat(M), slot_head)
 
@@ -705,7 +706,7 @@ var/global/list/g_fancy_list_of_types = null
 		if ("laser tag red")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/red(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/red(M), slot_shoes)
-			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/red(M), slot_gloves)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/red(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/redtaghelm(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/redtag(M), slot_wear_suit)
@@ -716,7 +717,7 @@ var/global/list/g_fancy_list_of_types = null
 		if ("laser tag blue")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/blue(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/blue(M), slot_shoes)
-			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/blue(M), slot_gloves)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/blue(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/bluetaghelm(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/bluetag(M), slot_wear_suit)
@@ -743,12 +744,11 @@ var/global/list/g_fancy_list_of_types = null
 		if("tunnel clown")//Tunnel clowns rule!
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/clown(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/clown_shoes(M), slot_shoes)
-			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), slot_gloves)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/black(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(M), slot_wear_mask)
-			M.equip_to_slot_or_del(new /obj/item/clothing/head/chaplain_hood(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/monocle(M), slot_glasses)
-			M.equip_to_slot_or_del(new /obj/item/clothing/suit/chaplain_hoodie(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/hooded/chaplain_hoodie(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(M), slot_l_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(M), slot_r_store)
 
@@ -765,7 +765,7 @@ var/global/list/g_fancy_list_of_types = null
 		if("masked killer")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/overalls(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/white(M), slot_shoes)
-			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/latex(M), slot_gloves)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/latex(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/surgical(M), slot_wear_mask)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/welding(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
@@ -786,7 +786,7 @@ var/global/list/g_fancy_list_of_types = null
 			M.equip_to_slot_or_del(U, slot_w_uniform)
 			U.attachTie(new /obj/item/clothing/tie/waistcoat(M))
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(M), slot_shoes)
-			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), slot_gloves)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/black(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/saber(M), slot_l_store)
@@ -796,7 +796,7 @@ var/global/list/g_fancy_list_of_types = null
 				qdel(briefcase_item)
 			for(var/i=3, i>0, i--)
 				sec_briefcase.contents += new /obj/item/weapon/spacecash/c1000
-			sec_briefcase.contents += new /obj/item/weapon/gun/energy/crossbow
+			sec_briefcase.contents += new /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
 			sec_briefcase.contents += new /obj/item/weapon/gun/projectile/revolver/mateba
 			sec_briefcase.contents += new /obj/item/ammo_box/a357
 			sec_briefcase.contents += new /obj/item/weapon/c4
@@ -819,10 +819,13 @@ var/global/list/g_fancy_list_of_types = null
 		if("death commando")
 			equip_deathsquad(M)
 
+		if("emergency response officer")
+			equip_emergencyresponsesquad(M)
+
 		if("centcom official")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(M), slot_shoes)
-			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), slot_gloves)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/black(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_com(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun(M), slot_belt)
@@ -848,7 +851,7 @@ var/global/list/g_fancy_list_of_types = null
 
 		if("centcom commander")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_commander(M), slot_w_uniform)
-			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/bulletproof(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cent(M), slot_ears)
@@ -952,7 +955,7 @@ var/global/list/g_fancy_list_of_types = null
 		if("mobster")
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/fedora(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(M), slot_shoes)
-			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), slot_gloves)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/black(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/tommygun(M), slot_r_hand)
@@ -990,7 +993,7 @@ var/global/list/g_fancy_list_of_types = null
 	spawn(30)
 		for(var/obj/machinery/the_singularitygen/G in world)
 			if(G.anchored)
-				var/obj/machinery/singularity/S = new /obj/machinery/singularity(get_turf(G), 50)
+				var/obj/singularity/S = new /obj/singularity(get_turf(G), 50)
 //				qdel(G)
 				S.energy = 1750
 				S.current_size = 7
@@ -1049,11 +1052,12 @@ var/global/list/g_fancy_list_of_types = null
 
 	var/dat = "<B>List of things that failed to GC this round</B><BR><BR>"
 
-	for(var/path in garbage.logging)
-		dat += "[path] - [garbage.logging[path]] times<BR>"
+	for(var/path in SSgarbage.logging)
+		dat += "[path] - [SSgarbage.logging[path]] times<BR>"
 
 	usr << browse(dat, "window=dellog")
 
+//Deathsquad
 /proc/equip_deathsquad(var/mob/living/carbon/human/M, var/officer)
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(M)
 	R.set_frequency(1441)
@@ -1101,3 +1105,26 @@ var/global/list/g_fancy_list_of_types = null
 	W.registered_name = M.real_name
 	W.update_label(M.real_name)
 	M.equip_to_slot_or_del(W, slot_wear_id)
+
+//Emergency Response Team
+/proc/equip_emergencyresponsesquad(var/mob/living/carbon/human/M, var/officer)
+	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(M)
+	R.set_frequency(1441)
+	M.equip_to_slot_or_del(R, slot_ears)
+
+	if(officer)
+		M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/ert(M), slot_wear_suit)
+		M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
+		M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
+		M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
+//		M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/captain(M), slot_back)
+		M.equip_to_slot_or_del(new /obj/item/weapon/card/id/ert(M), slot_wear_id)
+	else
+		M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
+		M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
+		M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
+
+	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(M)
+	L.imp_in = M
+	L.implanted = 1
+	M.sec_hud_set_implants()

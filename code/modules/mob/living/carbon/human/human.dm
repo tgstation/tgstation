@@ -4,7 +4,6 @@
 	voice_name = "Unknown"
 	icon = 'icons/mob/human.dmi'
 	icon_state = "caucasian1_m_s"
-	var/list/hud_list = list()
 
 
 
@@ -27,110 +26,40 @@
 	internal_organs += new /obj/item/organ/heart
 	internal_organs += new /obj/item/organ/brain
 
-	for(var/i=0;i<7;i++) // 2 for medHUDs and 5 for secHUDs
-		hud_list += image('icons/mob/hud.dmi', src, "hudunknown")
-
 	// for spawned humans; overwritten by other code
-	create_dna(src)
 	ready_dna(src)
 	randomize_human(src)
 
 	..()
+	var/mob/M = src
+	faction |= "\ref[M]"
+
+/mob/living/carbon/human/prepare_data_huds()
+	//Update med hud images...
+	..()
+	//...sec hud images...
+	sec_hud_set_ID()
+	sec_hud_set_implants()
+	sec_hud_set_security_status()
+	//...and display them.
+	add_to_all_data_huds()
 
 /mob/living/carbon/human/Destroy()
 	for(var/atom/movable/organelle in organs)
 		qdel(organelle)
 	return ..()
 
-/mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)
-	if ((!( yes ) || now_pushing || buckled))
-		return
-	now_pushing = 1
-	if (ismob(AM))
-		var/mob/tmob = AM
-
-//BubbleWrap - Should stop you pushing a restrained person out of the way
-
-		if(istype(tmob, /mob/living/carbon/human))
-
-			for(var/mob/M in range(tmob, 1))
-				if( ((M.pulling == tmob && ( tmob.restrained() && !( M.restrained() ) && M.stat == 0)) || locate(/obj/item/weapon/grab, tmob.grabbed_by.len)) )
-					if ( !(world.time % 5) )
-						src << "<span class='warning'>[tmob] is restrained, you cannot push past.</span>"
-					now_pushing = 0
-					return
-				if( tmob.pulling == M && ( M.restrained() && !( tmob.restrained() ) && tmob.stat == 0) )
-					if ( !(world.time % 5) )
-						src << "<span class='warning'>[tmob] is restraining [M], you cannot push past.</span>"
-					now_pushing = 0
-					return
-
-		//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
-		if((tmob.a_intent == "help" || tmob.restrained()) && (a_intent == "help" || src.restrained()) && tmob.canmove && canmove) // mutual brohugs all around!
-			var/turf/oldloc = loc
-			var/turf/other_loc = tmob.loc
-
-			loc = tmob.loc
-			tmob.loc = oldloc
-			now_pushing = 0
-
-			for(var/mob/living/carbon/slime/slime in view(1,tmob))
-				if(slime.Victim == tmob)
-					slime.UpdateFeed()
-
-			//cross any movable atoms on either turf
-			for(var/atom/movable/M in other_loc)
-				M.Crossed(src)
-			for(var/atom/movable/M in oldloc)
-				M.Crossed(tmob)
-
-			return
-
-		if(tmob.r_hand && istype(tmob.r_hand, /obj/item/weapon/shield/riot))
-			if(prob(99))
-				now_pushing = 0
-				return
-		if(tmob.l_hand && istype(tmob.l_hand, /obj/item/weapon/shield/riot))
-			if(prob(99))
-				now_pushing = 0
-				return
-		if(!(tmob.status_flags & CANPUSH))
-			now_pushing = 0
-			return
-
-		tmob.LAssailant = src
-
-	now_pushing = 0
-	..()
-	if (!istype(AM, /atom/movable))
-		return
-	if (!now_pushing)
-		now_pushing = 1
-
-		if (!AM.anchored)
-			if(pulling == AM)
-				stop_pulling()
-			var/t = get_dir(src, AM)
-			AM.Move(get_step(AM, t), t)
-		now_pushing = 0
-
 /mob/living/carbon/human/Stat()
 	..()
-	statpanel("Status")
 
-	stat(null, "Intent: [a_intent]")
-	stat(null, "Move Mode: [m_intent]")
-	if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")
-		var/datum/game_mode/malfunction/malf = ticker.mode
-		if(malf.malf_mode_declared && (malf.apcs > 0))
-			stat(null, "Time left: [max(malf.AI_win_timeleft/malf.apcs, 0)]")
-	if(emergency_shuttle)
-		if(emergency_shuttle.online && emergency_shuttle.location < 2)
-			var/timeleft = emergency_shuttle.timeleft()
-			if (timeleft)
-				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+	if(statpanel("Status"))
+		stat(null, "Intent: [a_intent]")
+		stat(null, "Move Mode: [m_intent]")
+		if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")
+			var/datum/game_mode/malfunction/malf = ticker.mode
+			if(malf.malf_mode_declared && (malf.apcs > 0))
+				stat(null, "Time left: [max(malf.AI_win_timeleft/malf.apcs, 0)]")
 
-	if (client.statpanel == "Status")
 		if (internal)
 			if (!internal.air_contents)
 				qdel(internal)
@@ -146,9 +75,7 @@
 			stat("Energy Charge", round(wear_suit:cell:charge/100))
 
 
-/mob/living/carbon/human/ex_act(severity)
-	..()
-
+/mob/living/carbon/human/ex_act(severity, ex_target)
 	var/shielded = 0
 	var/b_loss = null
 	var/f_loss = null
@@ -176,8 +103,7 @@
 				f_loss = f_loss/1.5
 
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
-				ear_damage += 30
-				ear_deaf += 120
+				adjustEarDamage(30, 120)
 			if (prob(70) && !shielded)
 				Paralyse(10)
 
@@ -186,8 +112,7 @@
 			if (prob(getarmor(null, "bomb")))
 				b_loss = b_loss/2
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
-				ear_damage += 15
-				ear_deaf += 60
+				adjustEarDamage(15,60)
 			if (prob(50) && !shielded)
 				Paralyse(10)
 
@@ -208,13 +133,14 @@
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
 	if(update)	update_damage_overlays(0)
 
+	..()
 
 /mob/living/carbon/human/blob_act()
 	if(stat == 2)	return
 	show_message("<span class='userdanger'> The blob attacks you!</span>")
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 	var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
-	apply_damage(rand(20,30), BRUTE, affecting, run_armor_check(affecting, "melee"))
+	apply_damage(5, BRUTE, affecting, run_armor_check(affecting, "melee"))
 	return
 
 /mob/living/carbon/human/var/co2overloadtime = null
@@ -370,7 +296,7 @@
 	if(href_list["criminal"])
 		if(istype(usr, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = usr
-			if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
+			if(istype(H.glasses, /obj/item/clothing/glasses/hud/security))
 				if(usr.stat || usr == src) //|| !usr.canmove || usr.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
 					return													  //Non-fluff: This allows sec to set people to arrest as they get disarmed or beaten
 				// Checks the user has security clearence before allowing them to change arrest status via hud, comment out to enable all access
@@ -396,18 +322,16 @@
 						if(href_list["status"])
 							var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Parolled", "Discharged", "Cancel")
 							if(R)
-								if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
+								if(istype(H.glasses, /obj/item/clothing/glasses/hud/security))
 									if(setcriminal != "Cancel")
 										investigate_log("[src.key] has been set from [R.fields["criminal"]] to [setcriminal] by [usr.name] ([usr.key]).", "records")
 										R.fields["criminal"] = setcriminal
-
-										spawn()
-										H.handle_regular_hud_updates()
+										sec_hud_set_security_status()
 								return
 
 						if(href_list["view"])
 							if(R)
-								if(usr.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security) || !istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
+								if(usr.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security))
 									return
 								usr << "<b>Name:</b> [R.fields["name"]]	<b>Criminal Status:</b> [R.fields["criminal"]]"
 								usr << "<b>Minor Crimes:</b>"
@@ -432,7 +356,7 @@
 										var/t1 = copytext(sanitize(input("Please input minor crime names:", "Security HUD", "", null)  as text),1,MAX_MESSAGE_LEN)
 										var/t2 = copytext(sanitize(input("Please input minor crime details:", "Security HUD", "", null)  as message),1,MAX_MESSAGE_LEN)
 										if(R)
-											if (!t1 || !t2 || !allowed_access || H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security) || !istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
+											if (!t1 || !t2 || !allowed_access || H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security))
 												return
 											var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
 											data_core.addMinorCrime(R.fields["id"], crime)
@@ -443,7 +367,7 @@
 										var/t1 = copytext(sanitize(input("Please input major crime names:", "Security HUD", "", null)  as text),1,MAX_MESSAGE_LEN)
 										var/t2 = copytext(sanitize(input("Please input major crime details:", "Security HUD", "", null)  as message),1,MAX_MESSAGE_LEN)
 										if(R)
-											if (!t1 || !t2 || !allowed_access || H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security) || !istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
+											if (!t1 || !t2 || !allowed_access || H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security))
 												return
 											var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
 											data_core.addMajorCrime(R.fields["id"], crime)
@@ -453,7 +377,7 @@
 
 						if(href_list["view_comment"])
 							if(R)
-								if(H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security) || !istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
+								if(H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security))
 									return
 								usr << "<b>Comments/Log:</b>"
 								var/counter = 1
@@ -467,7 +391,7 @@
 							if(R)
 								var/t1 = copytext(sanitize(input("Add Comment:", "Secure. records", null, null)  as message),1,MAX_MESSAGE_LEN)
 								if(R)
-									if (!t1 || !allowed_access || H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security) || !istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
+									if (!t1 || !allowed_access || H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security))
 										return
 									var/counter = 1
 									while(R.fields[text("com_[]", counter)])

@@ -62,6 +62,15 @@
 	icon_state = "emag"
 	item_state = "card-id"
 	origin_tech = "magnets=2;syndicate=2"
+	flags = NOBLUDGEON
+
+/obj/item/weapon/card/emag/attack()
+	return
+
+/obj/item/weapon/card/emag/afterattack(atom/target, mob/user, proximity)
+	var/atom/A = target
+	if(!proximity) return
+	A.emag_act(user)
 
 /obj/item/weapon/card/id
 	name = "identification card"
@@ -181,6 +190,29 @@ update_label("John Doe", "Clowny")
 	New()
 		access = get_all_centcom_access()
 		..()
+/obj/item/weapon/card/id/ert
+	name = "\improper Centcom ID"
+	desc = "A ERT ID card"
+	icon_state = "centcom"
+	registered_name = "Emergency Response Team Commander"
+	assignment = "Emergency Response Team Commander"
+	New() access = get_all_accesses()
+	New() access = list(access_cent_captain, access_cent_specops, access_cent_storage, access_cent_medical)
+
+/obj/item/weapon/card/id/ert/Security
+	registered_name = "Security Response Officer"
+	assignment = "Security Response Officer"
+	New() access = list(access_cent_specops)
+
+/obj/item/weapon/card/id/ert/Engineer
+	registered_name = "Engineer Response Officer"
+	assignment = "Engineer Response Officer"
+	New() access = list(access_cent_storage)
+
+/obj/item/weapon/card/id/ert/Medical
+	registered_name = "Medical Response Officer"
+	assignment = "Medical Response Officer"
+	New() access = list(access_cent_medical)
 
 /obj/item/weapon/card/id/prisoner
 	name = "prisoner ID card"

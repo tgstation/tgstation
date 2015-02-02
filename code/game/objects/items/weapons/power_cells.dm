@@ -16,8 +16,6 @@
 	g_amt = 50
 	var/rigged = 0		// true if rigged to explode
 	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
-	var/construction_cost = list("metal"=750,"glass"=75)
-	var/construction_time=100
 
 /obj/item/weapon/stock_parts/cell/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is licking the electrodes of the [src.name]! It looks like \he's trying to commit suicide.</span>")
@@ -64,7 +62,6 @@
 	icon_state = "scell"
 	maxcharge = 20000
 	g_amt = 70
-	construction_cost = list("metal"=750,"glass"=100)
 	rating = 4
 
 /obj/item/weapon/stock_parts/cell/super/empty/New()
@@ -77,7 +74,6 @@
 	icon_state = "hpcell"
 	maxcharge = 30000
 	g_amt = 80
-	construction_cost = list("metal"=500,"glass"=150,"gold"=200,"silver"=200)
 	rating = 5
 
 /obj/item/weapon/stock_parts/cell/hyper/empty/New()
@@ -117,3 +113,19 @@
 	m_amt = 0
 	g_amt = 0
 	rating = 3
+
+/obj/item/weapon/stock_parts/cell/emproof
+	name = "\improper EMP-proof cell"
+	desc = "An EMP-proof cell."
+	maxcharge = 500
+	rating = 2
+
+/obj/item/weapon/stock_parts/cell/emproof/empty/New()
+	..()
+	charge = 0
+
+/obj/item/weapon/stock_parts/cell/emproof/emp_act(severity)
+	return
+
+/obj/item/weapon/stock_parts/cell/emproof/corrupt()
+	return

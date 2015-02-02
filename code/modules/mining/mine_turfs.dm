@@ -18,16 +18,17 @@
 	var/scan_state = null //Holder for the image we display when we're pinged by a mining scanner
 	var/hidden = 1
 
-/turf/simulated/mineral/ex_act(severity)
+/turf/simulated/mineral/ex_act(severity, target)
+	..()
 	switch(severity)
 		if(3.0)
 			if (prob(75))
-				src.gets_drilled()
+				src.gets_drilled(null, 1)
 		if(2.0)
 			if (prob(90))
-				src.gets_drilled()
+				src.gets_drilled(null, 1)
 		if(1.0)
-			src.gets_drilled()
+			src.gets_drilled(null, 1)
 	return
 
 /turf/simulated/mineral/New()
@@ -207,12 +208,9 @@
 	if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) && stage == 1)
 		user.visible_message("<span class='notice'>You use [I] to locate where to cut off the chain reaction and attempt to stop it...</span>")
 		defuse()
-	if(istype(I, /obj/item/weapon/pickaxe))
-		src.activated_ckey = "[user.ckey]"
-		src.activated_name = "[user.name]"
 	..()
 
-/turf/simulated/mineral/gibtonite/proc/explosive_reaction()
+/turf/simulated/mineral/gibtonite/proc/explosive_reaction(var/mob/user = null, triggered_by_explosion = 0)
 	if(stage == 0)
 		icon_state = "rock_Gibtonite_active"
 		name = "gibtonite deposit"
@@ -221,13 +219,26 @@
 		visible_message("<span class='warning'>There was gibtonite inside! It's going to explode!</span>")
 		var/turf/bombturf = get_turf(src)
 		var/area/A = get_area(bombturf)
-		var/log_str = "[src.activated_ckey]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> [src.activated_name] has triggered a gibtonite deposit reaction <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>."
-		if(z != 5)
-			message_admins(log_str)
-		log_game("[src.activated_ckey] ([src.activated_name]) has triggered a gibtonite deposit reaction at [A.name] ([A.x], [A.y], [A.z]).")
-		countdown()
 
-/turf/simulated/mineral/gibtonite/proc/countdown()
+		if(user)
+			activated_ckey = "[user.ckey]"
+			activated_name = "[user.name]"
+		var/notify_admins = 0
+		if(z != 5)
+			notify_admins = 1
+			if(!triggered_by_explosion)
+				message_admins("[src.activated_ckey]/([src.activated_name])<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has triggered a gibtonite deposit reaction at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+			else
+				message_admins("An explosion has triggered a gibtonite deposit reaction at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+
+		if(!triggered_by_explosion)
+			log_game("[src.activated_ckey] ([src.activated_name]) has triggered a gibtonite deposit reaction at [A.name] ([A.x], [A.y], [A.z]).")
+		else
+			log_game("An explosion has triggered a gibtonite deposit reaction at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
+
+		countdown(notify_admins)
+
+/turf/simulated/mineral/gibtonite/proc/countdown(notify_admins = 0)
 	spawn(0)
 		while(stage == 1 && det_time > 0 && mineralAmt >= 1)
 			det_time--
@@ -235,7 +246,7 @@
 		if(stage == 1 && det_time <= 0 && mineralAmt >= 1)
 			var/turf/bombturf = get_turf(src)
 			mineralAmt = 0
-			explosion(bombturf,1,3,5, adminlog = 0)
+			explosion(bombturf,1,3,5, adminlog = notify_admins)
 		if(stage == 0 || stage == 2)
 			return
 
@@ -248,10 +259,10 @@
 			det_time = 0
 		visible_message("<span class='notice'>The chain reaction was stopped! The gibtonite had [src.det_time] reactions left till the explosion!</span>")
 
-/turf/simulated/mineral/gibtonite/gets_drilled()
+/turf/simulated/mineral/gibtonite/gets_drilled(var/mob/user, triggered_by_explosion = 0)
 	if(stage == 0 && mineralAmt >= 1) //Gibtonite deposit is activated
 		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,1)
-		explosive_reaction()
+		explosive_reaction(user, triggered_by_explosion)
 		return
 	if(stage == 1 && mineralAmt >= 1) //Gibtonite deposit goes kaboom
 		var/turf/bombturf = get_turf(src)
@@ -370,13 +381,13 @@
 				new /mob/living/simple_animal/hostile/asteroid/hivelord(T)
 	return
 
-/turf/simulated/mineral/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/turf/simulated/mineral/attackby(var/obj/item/weapon/pickaxe/P as obj, mob/user as mob)
 
 	if (!user.IsAdvancedToolUser())
 		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
 		return
 
-	if (istype(W, /obj/item/weapon/pickaxe))
+	if (istype(P, /obj/item/weapon/pickaxe))
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
@@ -387,15 +398,16 @@
 			return
 */
 //Watch your tabbing, microwave. --NEO
-		if(last_act+W:digspeed > world.time)//prevents message spam
+		if(last_act+P.digspeed > world.time)//prevents message spam
 			return
 		last_act = world.time
 		user << "<span class='danger'>You start picking.</span>"
-		playsound(user, 'sound/weapons/Genhit.ogg', 20, 1)
+		//playsound(user, 'sound/weapons/Genhit.ogg', 20, 1)
+		P.playDigSound()
 
-		if(do_after(user,W:digspeed))
+		if(do_after(user,P.digspeed))
 			user << "<span class='notice'>You finish cutting into the rock.</span>"
-			gets_drilled()
+			gets_drilled(user)
 	else
 		return attack_hand(user)
 	return
@@ -419,6 +431,7 @@
 			if (src.mineralName == "Bananium")
 				new /obj/item/weapon/ore/bananium(src)
 	var/turf/simulated/floor/plating/asteroid/airless/N = ChangeTurf(/turf/simulated/floor/plating/asteroid/airless)
+	playsound(src, 'sound/effects/break_stone.ogg', 50, 1) //beautiful destruction
 	N.fullUpdateMineralOverlays()
 	return
 
@@ -472,6 +485,7 @@
 	icon_state = "asteroid"
 	icon_plating = "asteroid"
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
+	ignoredirt = 1
 
 /turf/simulated/floor/plating/asteroid/airless
 	oxygen = 0.01
@@ -493,7 +507,8 @@
 /turf/simulated/floor/plating/asteroid/burn_tile()
 	return
 
-/turf/simulated/floor/plating/asteroid/ex_act(severity)
+/turf/simulated/floor/plating/asteroid/ex_act(severity, target)
+	contents_explosion(severity, target)
 	switch(severity)
 		if(3.0)
 			return
@@ -505,7 +520,7 @@
 	return
 
 /turf/simulated/floor/plating/asteroid/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
+	//note that this proc does not call ..()
 	if(!W || !user)
 		return 0
 
@@ -519,7 +534,7 @@
 			return
 
 		user << "<span class='danger'>You start digging.</span>"
-		playsound(src, 'sound/effects/rustle1.ogg', 50, 1) //russle sounds sounded better
+		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
 
 		sleep(40)
 		if ((user.loc == T && user.get_active_hand() == W))
@@ -537,14 +552,14 @@
 			return
 
 		user << "<span class='danger'>You start digging.</span>"
-		playsound(src, 'sound/effects/rustle1.ogg', 50, 1) //russle sounds sounded better
+		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
 
 		sleep(30)
 		if ((user.loc == T && user.get_active_hand() == W))
 			user << "<span class='notice'>You dug a hole.</span>"
 			gets_dug()
 
-	if ((istype(W,/obj/item/weapon/pickaxe/diamonddrill)) || (istype(W,/obj/item/weapon/pickaxe/borgdrill)))
+	if ((istype(W,/obj/item/weapon/pickaxe/drill/diamonddrill)) || (istype(W,/obj/item/weapon/pickaxe/jackhammer/borgdrill)))
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
@@ -554,7 +569,7 @@
 			return
 
 		user << "<span class='danger'>You start digging.</span>"
-		playsound(src, 'sound/effects/rustle1.ogg', 50, 1) //russle sounds sounded better
+		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
 
 		sleep(0)
 		if ((user.loc == T && user.get_active_hand() == W))
@@ -567,10 +582,6 @@
 			for(var/obj/item/weapon/ore/O in src.contents)
 				O.attackby(W,user)
 				return
-
-	else
-		..(W,user)
-	return
 
 /turf/simulated/floor/plating/asteroid/proc/gets_dug()
 	if(dug)

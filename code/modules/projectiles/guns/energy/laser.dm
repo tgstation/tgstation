@@ -23,6 +23,7 @@ obj/item/weapon/gun/energy/laser/retro
 
 /obj/item/weapon/gun/energy/laser/captain
 	icon_state = "caplaser"
+	item_state = "caplaser"
 	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
 	force = 10
 	origin_tech = null
@@ -30,11 +31,11 @@ obj/item/weapon/gun/energy/laser/retro
 
 /obj/item/weapon/gun/energy/laser/captain/New()
 	..()
-	processing_objects.Add(src)
+	SSobj.processing.Add(src)
 
 
 /obj/item/weapon/gun/energy/laser/captain/Destroy()
-	processing_objects.Remove(src)
+	SSobj.processing.Remove(src)
 	..()
 
 
@@ -84,7 +85,7 @@ obj/item/weapon/gun/energy/laser/retro
 	slot_flags = SLOT_BACK
 	origin_tech = "combat=4;materials=3;powerstorage=3"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/heavy)
-
+	pin = null
 
 /obj/item/weapon/gun/energy/xray
 	name = "xray laser gun"
@@ -93,7 +94,7 @@ obj/item/weapon/gun/energy/laser/retro
 	item_state = "laser"
 	origin_tech = "combat=5;materials=3;magnets=2;syndicate=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/xray)
-
+	pin = null
 
 ////////Laser Tag////////////////////
 
@@ -105,33 +106,26 @@ obj/item/weapon/gun/energy/laser/retro
 	origin_tech = "combat=1;magnets=2"
 	clumsy_check = 0
 	var/charge_tick = 0
-
-/obj/item/weapon/gun/energy/laser/bluetag/special_check(var/mob/living/carbon/human/M)
-	if(ishuman(M))
-		if(istype(M.wear_suit, /obj/item/clothing/suit/bluetag))
-			return 1
-		M << "<span class='danger'>You need to be wearing your laser tag vest!</span>"
-	return 0
+	pin = /obj/item/device/firing_pin/tag/blue
 
 /obj/item/weapon/gun/energy/laser/bluetag/New()
 	..()
-	processing_objects.Add(src)
-
+	SSobj.processing.Add(src)
 
 /obj/item/weapon/gun/energy/laser/bluetag/Destroy()
-	processing_objects.Remove(src)
+	SSobj.processing.Remove(src)
 	..()
-
 
 /obj/item/weapon/gun/energy/laser/bluetag/process()
 	charge_tick++
-	if(charge_tick < 4) return 0
+	if(charge_tick < 4)
+		return 0
 	charge_tick = 0
-	if(!power_supply) return 0
+	if(!power_supply)
+		return 0
 	power_supply.give(100)
 	update_icon()
 	return 1
-
 
 
 /obj/item/weapon/gun/energy/laser/redtag
@@ -142,29 +136,23 @@ obj/item/weapon/gun/energy/laser/retro
 	origin_tech = "combat=1;magnets=2"
 	clumsy_check = 0
 	var/charge_tick = 0
-
-/obj/item/weapon/gun/energy/laser/redtag/special_check(var/mob/living/carbon/human/M)
-	if(ishuman(M))
-		if(istype(M.wear_suit, /obj/item/clothing/suit/redtag))
-			return 1
-		M << "<span class='danger'>You need to be wearing your laser tag vest!</span>"
-	return 0
+	pin = /obj/item/device/firing_pin/tag/red
 
 /obj/item/weapon/gun/energy/laser/redtag/New()
 	..()
-	processing_objects.Add(src)
-
+	SSobj.processing.Add(src)
 
 /obj/item/weapon/gun/energy/laser/redtag/Destroy()
-	processing_objects.Remove(src)
+	SSobj.processing.Remove(src)
 	..()
-
 
 /obj/item/weapon/gun/energy/laser/redtag/process()
 	charge_tick++
-	if(charge_tick < 4) return 0
+	if(charge_tick < 4)
+		return 0
 	charge_tick = 0
-	if(!power_supply) return 0
+	if(!power_supply)
+		return 0
 	power_supply.give(100)
 	update_icon()
 	return 1

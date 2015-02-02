@@ -11,6 +11,7 @@
 	var/max_uses = 5
 	var/op = 1
 	var/activepage
+	var/list/active_challenges = list()
 
 /obj/item/weapon/spellbook/attackby(obj/item/O as obj, mob/user as mob)
 	if(istype(O, /obj/item/weapon/antag_spawner/contract))
@@ -37,8 +38,8 @@
 		dat += "<HR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=spells'>Learn and Improve Magical Abilities</A><BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=artifacts'>Summon Magical Tools and Weapons</A><BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=oneuse'>Cast Powerful One Time Spells</A><BR>"
-
+		if(ticker.mode != "ragin' mages") // we totally need summon guns x100
+			dat += "<A href='byond://?src=\ref[src];spell_choice=challenge'>Raise The Stakes For More Power</A><BR>"
 		dat += "<HR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=rememorize'>Re-memorize Spells</A><BR>"
 
@@ -60,6 +61,9 @@
 
 		dat += "<A href='byond://?src=\ref[src];spell_choice=disabletech'>Disable Technology</A> (60)<BR>"
 		dat += "<I>This spell disables all weapons, cameras and most other technology in range.</I><BR>"
+
+		dat += "<A href='byond://?src=\ref[src];spell_choice=repulse'>Repulse</A> (40)<BR>"
+		dat += "<I>This spell throws nearby objects away from you and knocks creatures down.</I><BR>"
 
 		dat += "<A href='byond://?src=\ref[src];spell_choice=smoke'>Smoke</A> (10)<BR>"
 		dat += "<I>This spell spawns a cloud of choking smoke at your location and does not require wizard garb.</I><BR>"
@@ -94,26 +98,31 @@
 		dat += "<A href='byond://?src=\ref[src];spell_choice=fleshtostone'>Flesh to Stone</A> (60)<BR>"
 		dat += "<I>This spell will curse a person to immediately turn into an unmoving statue. The effect will eventually wear off if the statue is not destroyed.</I><BR>"
 
+		dat += "<A href='byond://?src=\ref[src];spell_choice=summonitem'>Instant Summons</A> (10)<BR>"
+		dat += "<I>This spell can be used to bind a valuable item to you, bringing it to your hand at will. Using this spell while holding the bound item will allow you to unbind it. It does not require wizard garb.</I><BR>"
+		if(ticker.mode != "ragin' mages") // we totally need summon guns x100
+			dat += "<A href='byond://?src=\ref[src];spell_choice=summonevents'>Summon Events</A> (One time use, persistent global spell)<BR>"
+			dat += "<I>Give Murphy's law a little push and replace all events with special wizard ones that will confound and confuse everyone. Multiple castings increase the rate of these events.</I><BR>"
+
 		dat += "<HR>"
 
 		dat += "<A href='byond://?src=\ref[src];spell_choice=return'><B>Return</B></A><BR>"
 
-	else if (activepage == "oneuse")
+	else if (activepage == "challenge")
 
-		dat += "<B>One Time Spells:</B><BR>"
-		dat += "These potent spells can only be used once and will be used automatically upon purchase.<BR>"
-		dat += "The effects are global and irreversable, these spells cannot be unlearned, but they can be bought multiple times.<BR>"
+		dat += "<B>Challenges:</B><BR>"
+		dat += "The Wizard Federation typically has hard limits on the potency and number of spells brought to the station based on risk.<BR>"
+		dat += "Arming the station against you will increases the risk, but will grant you one more charge for your spellbook.<BR>"
 
 		dat += "<HR>"
 
-		dat += "<A href='byond://?src=\ref[src];spell_choice=summonguns'>Summon Guns</A> (One time use, global spell)<BR>"
-		dat += "<I>Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill eachother. Just be careful not to get hit in the crossfire!</I><BR>"
+		if(!("summon guns" in active_challenges))
+			dat += "<A href='byond://?src=\ref[src];spell_choice=summonguns'>Summon Guns</A> (Single use only, global spell)<BR>"
+			dat += "<I>Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill you. Just be careful not to stand still too long!</I><BR>"
 
-		dat += "<A href='byond://?src=\ref[src];spell_choice=summonmagic'>Summon Magic</A> (One time use, global spell)<BR>"
-		dat += "<I>Share the wonders of magic with the crew and show them why they aren't to be trusted with it at the same time.</I><BR>"
-
-		dat += "<A href='byond://?src=\ref[src];spell_choice=summonevents'>Summon Events</A> (One time use, persistent global spell)<BR>"
-		dat += "<I>Give Murphy's law a little push and replace all events with special wizard ones that will confound and confuse everyone. Multiple castings increase the rate of these events.</I><BR>"
+		if(!("summon magic" in active_challenges))
+			dat += "<A href='byond://?src=\ref[src];spell_choice=summonmagic'>Summon Magic</A> (Single use only, global spell)<BR>"
+			dat += "<I>Share the wonders of magic with the crew and show them why they aren't to be trusted with it at the same time.</I><BR>"
 
 		dat += "<HR>"
 
@@ -193,13 +202,13 @@
 					feedback_add_details("wizard_spell_learned","UM") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 				else
 					temp = "You may only re-memorize spells whilst located inside the wizard sanctuary."
-			else if(href_list["spell_choice"] == "spells" || href_list["spell_choice"] == "artifacts" || href_list["spell_choice"] == "oneuse" || href_list["spell_choice"] == "return")
+			else if(href_list["spell_choice"] == "spells" || href_list["spell_choice"] == "artifacts" || href_list["spell_choice"] == "challenge" || href_list["spell_choice"] == "return")
 				activepage = href_list["spell_choice"]
 			else if(uses >= 1 && max_uses >=1)
 				uses--
 			/*
 			*/
-				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disintegrate = "Disintegrate", disabletech = "Disable Tech", smoke = "Smoke", blind = "Blind", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", fleshtostone = "Flesh to Stone", summonguns = "Summon Guns", summonmagic = "Summon Magic", summonevents = "Summon Events", staffchange = "Staff of Change", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation", staffchaos = "Staff of Chaos", staffdoor = "Staff of Door Creation", wands = "Wand Assortment")
+				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disintegrate = "Disintegrate", disabletech = "Disable Tech", repulse = "Repulse", smoke = "Smoke", blind = "Blind", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", fleshtostone = "Flesh to Stone", summonitem = "Instant Summons", summonguns = "Summon Guns", summonmagic = "Summon Magic", summonevents = "Summon Events", staffchange = "Staff of Change", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation", staffchaos = "Staff of Chaos", staffdoor = "Staff of Door Creation", wands = "Wand Assortment")
 				var/already_knows = 0
 				for(var/obj/effect/proc_holder/spell/aspell in H.mind.spell_list)
 					if(available_spells[href_list["spell_choice"]] == initial(aspell.name))
@@ -249,6 +258,10 @@
 							feedback_add_details("wizard_spell_learned","DT") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech(null)
 							temp = "You have learned disable technology."
+						if("repulse")
+							feedback_add_details("wizard_spell_learned","RP") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+							H.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/repulse(null)
+							temp = "You have learned repulse."
 						if("smoke")
 							feedback_add_details("wizard_spell_learned","SM") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/smoke(null)
@@ -293,16 +306,24 @@
 							feedback_add_details("wizard_spell_learned","FS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/inflict_handler/flesh_to_stone(null)
 							temp = "You have learned flesh to stone."
+						if("summonitem")
+							feedback_add_details("wizard_spell_learned","IS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/summonitem(null)
+							temp = "You have learned instant summons."
 						if("summonguns")
 							feedback_add_details("wizard_spell_learned","SG") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							rightandwrong(0, H)
-							max_uses--
-							temp = "You have cast summon guns."
+							rightandwrong(0, H, 0)
+							max_uses++
+							uses = uses + 2 //refund plus a free point
+							active_challenges += "summon guns"
+							temp = "You have cast summon guns and gained an extra charge for your spellbook."
 						if("summonmagic")
 							feedback_add_details("wizard_spell_learned","SU") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							rightandwrong(1, H)
-							max_uses--
-							temp = "You have cast summon magic."
+							rightandwrong(1, H, 0)
+							max_uses++
+							uses = uses + 2 //refund plus a free point
+							active_challenges += "summon magic"
+							temp = "You have cast summon magic and gained an extra charge for your spellbook."
 						if("summonevents")
 							feedback_add_details("wizard_spell_learned","SE") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							summonevents()
@@ -322,9 +343,8 @@
 						if("armor")
 							feedback_add_details("wizard_spell_learned","HS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							new /obj/item/clothing/shoes/sandal(get_turf(H)) //In case they've lost them.
-							new /obj/item/clothing/gloves/purple(get_turf(H))//To complete the outfit
+							new /obj/item/clothing/gloves/color/purple(get_turf(H))//To complete the outfit
 							new /obj/item/clothing/suit/space/hardsuit/wizard(get_turf(H))
-							new /obj/item/clothing/head/helmet/space/hardsuit/wizard(get_turf(H))
 							temp = "You have purchased a suit of wizard armor."
 							max_uses--
 						if("staffanimation")
@@ -355,12 +375,8 @@
 						if("scrying")
 							feedback_add_details("wizard_spell_learned","SO") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							new /obj/item/weapon/scrying(get_turf(H))
-							if (!(XRAY in H.mutations))
-								H.mutations.Add(XRAY)
-								H.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
-								H.see_in_dark = 8
-								H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-								H << "<span class='notice'>The walls suddenly disappear.</span>"
+							if (!(H.dna.check_mutation(XRAY)))
+								H.dna.add_mutation(XRAY)
 							temp = "You have purchased a scrying orb, and gained x-ray vision."
 							max_uses--
 		else
@@ -557,3 +573,14 @@
 	..()
 	user <<"<span class='warning'>[src] suddenly feels very warm!</span>"
 	empulse(src, 1, 1)
+
+/obj/item/weapon/spellbook/oneuse/summonitem
+	spell = /obj/effect/proc_holder/spell/targeted/summonitem
+	spellname = "instant summons"
+	icon_state ="booksummons"
+	desc = "This book is bright and garish, very hard to miss."
+
+/obj/item/weapon/spellbook/oneuse/summonitem/recoil(mob/user as mob)
+	..()
+	user <<"<span class='warning'>[src] suddenly vanishes!</span>"
+	qdel(src)

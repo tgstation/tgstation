@@ -27,6 +27,10 @@ REVIVAL_BRAIN_LIFE -1
 #Comment this out if you want OOC to be automatically disabled during the round, it will be enabled during the lobby and after the round end results.
 OOC_DURING_ROUND
 
+### EMOJI ###
+#Comment this out if you want to disable emojis
+EMOJIS
+
 ### MOB MOVEMENT ###
 
 ## We suggest editing these variables ingame to find a good speed for your server.
@@ -66,15 +70,6 @@ ALERT_RED_DOWNTO The self-destruct mechanism has been deactivated, there is stil
 ALERT_DELTA The station's self-destruct mechanism has been engaged. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill.
 
 
-### EXPLOSIONS ###
-
-## Unhash this to use recursive explosions, keep it hashed to use normal style explosions.
-## Recursive explosions react to walls, airlocks and blast doors, making them look a lot cooler
-## than the boring old circular explosions. They require more CPU and are (as of March 2013) experimental.
-## The default map is generally designed for the old style explosions in terms of security.
-
-#USE_RECURSIVE_EXPLOSIONS
-
 
 ### GAME MODES ###
 
@@ -93,6 +88,7 @@ PROBABILITY CHANGELING 2
 PROBABILITY WIZARD 4
 PROBABILITY MALFUNCTION 1
 PROBABILITY BLOB 2
+PROBABILITY RAGINMAGES 2
 PROBABILITY MONKEY 1
 PROBABILITY METEOR 0
 PROBABILITY EXTENDED 0
@@ -162,10 +158,16 @@ GATEWAY_DELAY 18000
 
 
 ### ACCESS ###
+
+## If the number of players ready at round starts exceeds this threshold, JOBS_HAVE_MINIMAL_ACCESS will automatically be enabled. Otherwise, it will be disabled.
+## This is useful for accomodating both low and high population rounds on the same server.
+## Comment out or set to 0 to disable this automatic toggle.
+MINIMAL_ACCESS_THRESHOLD 20
+
 ## Comment this out if you wish to use the setup where jobs have more access.
 ## This is intended for servers with low populations - where there are not enough
 ## players to fill all roles, so players need to do more than just one job.
-## Also for servers where they don't want people to hide in their own departments.
+## This option is ignored if MINIMAL_ACCESS_THRESHOLD is used.
 #JOBS_HAVE_MINIMAL_ACCESS
 
 ## Uncomment to give assistants maint access.

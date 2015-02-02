@@ -12,7 +12,7 @@ var/list/archive_diseases = list()
 // The order goes from easy to cure to hard to cure.
 var/list/advance_cures = 	list(
 									"nutriment", "sugar", "orangejuice",
-									"spaceacillin", "kelotane", "ethanol",
+									"spaceacillin", "salglu_solution", "ethanol",
 									"leporazine", "synaptizine", "lipozine",
 									"silver", "gold"
 								)
@@ -106,7 +106,7 @@ var/list/advance_cures = 	list(
 		var/id = "[GetDiseaseID()]"
 		if(resistance && !(id in affected_mob.resistances))
 			affected_mob.resistances[id] = id
-		affected_mob.viruses -= src		//remove the datum from the list
+		remove_virus()
 	del(src)	//delete the datum to stop it processing
 
 // Returns the advance disease with a different reference memory.
@@ -205,7 +205,7 @@ var/list/advance_cures = 	list(
 				visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC
 
 		// The more symptoms we have, the less transmittable it is but some symptoms can make up for it.
-		SetSpread(Clamp(properties["transmittable"] - symptoms.len, BLOOD, AIRBORNE))
+		SetSpread(Clamp(2 ** (properties["transmittable"] - symptoms.len), BLOOD, AIRBORNE))
 		permeability_mod = max(Ceiling(0.4 * properties["transmittable"]), 1)
 		cure_chance = 15 - Clamp(properties["resistance"], -5, 5) // can be between 10 and 20
 		stage_prob = max(properties["stage_rate"], 2)
@@ -402,7 +402,7 @@ var/list/advance_cures = 	list(
 		D.AssignName(new_name)
 		D.Refresh()
 
-		for(var/datum/disease/advance/AD in active_diseases)
+		for(var/datum/disease/advance/AD in SSdisease.processing)
 			AD.Refresh()
 
 		for(var/mob/living/carbon/human/H in shuffle(living_mob_list))
@@ -420,7 +420,7 @@ var/list/advance_cures = 	list(
 /*
 /mob/verb/test()
 
-	for(var/datum/disease/D in active_diseases)
+	for(var/datum/disease/D in SSdisease.processing)
 		src << "<a href='?_src_=vars;Vars=\ref[D]'>[D.name] - [D.holder]</a>"
 */
 

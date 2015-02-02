@@ -3,6 +3,7 @@
 	level = 1.0
 
 	var/intact = 1
+	var/cancable = 0
 
 	//Properties for open tiles (/floor)
 	var/oxygen = 0
@@ -31,18 +32,26 @@
 
 // Adds the adjacent turfs to the current atmos processing
 /turf/Del()
-	if(air_master)
-		for(var/direction in cardinal)
-			if(atmos_adjacent_turfs & direction)
-				var/turf/simulated/T = get_step(src, direction)
-				if(istype(T))
-					air_master.add_to_active(T)
+	for(var/direction in cardinal)
+		if(atmos_adjacent_turfs & direction)
+			var/turf/simulated/T = get_step(src, direction)
+			if(istype(T))
+				SSair.add_to_active(T)
 	..()
 
 /turf/attack_hand(mob/user as mob)
 	user.Move_Pulled(src)
 
-/turf/ex_act(severity)
+/turf/attackby(obj/item/C, mob/user)
+	if(cancable && istype(C, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/coil = C
+		for(var/obj/structure/cable/LC in src)
+			if((LC.d1==0)||(LC.d2==0))
+				LC.attackby(C,user)
+				return
+		coil.place_turf(src, user)
+		return 1
+
 	return 0
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
@@ -120,8 +129,7 @@
 	if(path == type)	return src
 	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
 	var/old_opacity = opacity
-	if(air_master)
-		air_master.remove_from_active(src)
+	SSair.remove_from_active(src)
 
 	var/turf/W = new path(src)
 
@@ -132,7 +140,7 @@
 	W.lighting_lumcount += old_lumcount
 	if(old_lumcount != W.lighting_lumcount)	//light levels of the turf have changed. We need to shift it to another lighting-subarea
 		W.lighting_changed = 1
-		lighting_controller.changed_turfs += W
+		SSlighting.changed_turfs += W
 
 	if(old_opacity != W.opacity)			//opacity has changed. Need to update surrounding lights
 		if(W.lighting_lumcount)				//unless we're being illuminated, don't bother (may be buggy, hard to test)
@@ -171,12 +179,16 @@
 		air.carbon_dioxide = (aco/max(turf_count,1))
 		air.toxins = (atox/max(turf_count,1))
 		air.temperature = (atemp/max(turf_count,1))//Trace gases can get bant
-		if(air_master)
-			air_master.add_to_active(src)
+		SSair.add_to_active(src)
 
 /turf/proc/ReplaceWithLattice()
 	src.ChangeTurf(/turf/space)
-	new /obj/structure/lattice( locate(src.x, src.y, src.z) )
+	new /obj/structure/lattice(locate(src.x, src.y, src.z) )
+
+/turf/proc/ReplaceWithCatwalk()
+	src.ChangeTurf(/turf/space)
+	src.cancable = 1//so cables can be laid
+	new /obj/structure/lattice/catwalk(locate(src.x, src.y, src.z) )
 
 /turf/proc/phase_damage_creatures(damage,mob/U = null)//>Ninja Code. Hurts and knocks out creatures on this turf
 	for(var/mob/living/M in src)

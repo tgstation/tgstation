@@ -13,6 +13,7 @@
  *		Toy nuke
  *		Fake meteor
  *		Carp plushie
+ *		Foam armblade
  */
 
 
@@ -54,7 +55,7 @@
 			if(O.reagents.total_volume < 1)
 				user << "The [O] is empty."
 			else if(O.reagents.total_volume >= 1)
-				if(O.reagents.has_reagent("pacid", 1))
+				if(O.reagents.has_reagent("facid", 1))
 					user << "The acid chews through the balloon!"
 					O.reagents.reaction(user)
 					qdel(src)
@@ -67,7 +68,7 @@
 
 /obj/item/toy/balloon/throw_impact(atom/hit_atom)
 	if(src.reagents.total_volume >= 1)
-		src.visible_message("<span class='danger'>The [src] bursts!</span>","You hear a pop and a splash.")
+		src.visible_message("<span class='danger'>\The [src] bursts!</span>","You hear a pop and a splash.")
 		src.reagents.reaction(get_turf(hit_atom))
 		for(var/atom/A in get_turf(hit_atom))
 			src.reagents.reaction(A)
@@ -112,9 +113,11 @@
 /obj/item/toy/gun
 	name = "cap gun"
 	desc = "Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps."
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "revolver"
 	item_state = "gun"
+	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 	flags =  CONDUCT
 	slot_flags = SLOT_BELT
 	w_class = 3.0
@@ -166,17 +169,17 @@
 						 "<span class='danger'> You hear a gunshot.</span>")
 
 /obj/item/toy/ammo/gun
-	name = "ammo-caps"
+	name = "capgun ammo"
 	desc = "Make sure to recyle the box in an autolathe when it gets empty."
 	icon = 'icons/obj/ammo.dmi'
-	icon_state = "357-7"
+	icon_state = "357OLD-7"
 	w_class = 1.0
 	g_amt = 10
 	m_amt = 10
 	var/amount_left = 7.0
 
 /obj/item/toy/ammo/gun/update_icon()
-	src.icon_state = text("357-[]", src.amount_left)
+	src.icon_state = text("357OLD-[]", src.amount_left)
 
 /obj/item/toy/ammo/gun/examine(mob/user)
 	..()
@@ -189,9 +192,11 @@
 /obj/item/toy/crossbow
 	name = "foam dart crossbow"
 	desc = "A weapon favored by many overactive children. Ages 8 and up."
-	icon = 'icons/obj/gun.dmi'
-	icon_state = "crossbow"
+	icon = 'icons/obj/guns/energy.dmi'
+	icon_state = "crossbow100"
 	item_state = "crossbow"
+	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 	w_class = 2.0
 	attack_verb = list("attacked", "struck", "hit")
 	var/bullets = 5
@@ -368,6 +373,19 @@
 			user << "<span class='warning'>It's already fabulous!</span>"
 
 /*
+ * Foam armblade
+ */
+/obj/item/toy/foamblade
+	name = "foam armblade"
+	desc = "it says \"Sternside Changs #1 fan\" on it. "
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "foamblade"
+	item_state = "arm_blade"
+	attack_verb = list("pricked", "absorbed", "gored")
+	w_class = 2
+
+
+/*
  * Subtype of Double-Bladed Energy Swords
  */
 /obj/item/weapon/twohanded/dualsaber/toy
@@ -415,7 +433,7 @@
 	attack_verb = list("attacked", "coloured")
 	var/colour = "#FF0000" //RGB
 	var/drawtype = "rune"
-	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa")
+	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body")
 	var/list/letters = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
 	var/uses = 30 //0 for unlimited uses
 	var/instant = 0
@@ -735,7 +753,7 @@ obj/item/toy/cards/deck/attack_hand(mob/user as mob)
 	src.cards -= choice
 	H.pickup(user)
 	user.put_in_active_hand(H)
-	src.visible_message("<span class='notice'>[user] draws a card from the deck.</span>", "<span class='notice'>You draw a card from the deck.</span>")
+	user.visible_message("<span class='notice'>[user] draws a card from the deck.</span>", "<span class='notice'>You draw a card from the deck.</span>")
 	if(cards.len > 26)
 		src.icon_state = "deck_[deckstyle]_full"
 	else if(cards.len > 10)

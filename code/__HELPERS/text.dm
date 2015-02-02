@@ -75,7 +75,12 @@
 
 // Used to get a properly sanitized input, of max_length
 /proc/stripped_input(var/mob/user, var/message = "", var/title = "", var/default = "", var/max_length=MAX_MESSAGE_LEN)
-	var/name = input(user, message, title, default)
+	var/name = input(user, message, title, default) as text|null
+	return strip_html_properly(name, max_length)
+
+// Used to get a properly sanitized multiline input, of max_length
+/proc/stripped_multiline_input(var/mob/user, var/message = "", var/title = "", var/default = "", var/max_length=MAX_MESSAGE_LEN)
+	var/name = input(user, message, title, default) as message|null
 	return strip_html_properly(name, max_length)
 
 //Filters out undesirable characters from names
@@ -146,14 +151,25 @@
 //this means that it doesn't just remove < and > and call it a day. seriously, who the fuck thought that would be useful.
 //also limit the size of the input, if specified to
 /proc/strip_html_properly(var/input,var/max_length=MAX_MESSAGE_LEN)
+	if(!input)
+		return
 	var/opentag = 1 //These store the position of < and > respectively.
 	var/closetag = 1
 	while(1)
 		opentag = findtext(input, "<")
 		closetag = findtext(input, ">")
-		if(!closetag || !opentag)
+		if(closetag && opentag)
+			if(closetag < opentag)
+				input = copytext(input, (closetag + 1))
+			else
+				input = copytext(input, 1, opentag) + copytext(input, (closetag + 1))
+		else if(closetag || opentag)
+			if(opentag)
+				input = copytext(input, 1, opentag)
+			else
+				input = copytext(input, (closetag + 1))
+		else
 			break
-		input = copytext(input, 1, opentag) + copytext(input, (closetag + 1))
 	if(max_length)
 		input = copytext(input,1,max_length)
 	return input
@@ -381,3 +397,34 @@ var/list/binary = list("0","1")
 		temp = findtextEx(haystack, ascii2text(text2ascii(needles,i)), start, end)	//Note: ascii2text(text2ascii) is faster than copytext()
 		if(temp)	end = temp
 	return end
+
+
+/proc/parsepencode(t, mob/user=null, signfont=SIGNFONT)
+	if(length(t) < 1)		//No input means nothing needs to be parsed
+		return
+
+	t = replacetext(t, "\[center\]", "<center>")
+	t = replacetext(t, "\[/center\]", "</center>")
+	t = replacetext(t, "\[br\]", "<BR>")
+	t = replacetext(t, "\[b\]", "<B>")
+	t = replacetext(t, "\[/b\]", "</B>")
+	t = replacetext(t, "\[i\]", "<I>")
+	t = replacetext(t, "\[/i\]", "</I>")
+	t = replacetext(t, "\[u\]", "<U>")
+	t = replacetext(t, "\[/u\]", "</U>")
+	t = replacetext(t, "\[large\]", "<font size=\"4\">")
+	t = replacetext(t, "\[/large\]", "</font>")
+	if(user)
+		t = replacetext(t, "\[sign\]", "<font face=\"[signfont]\"><i>[user.real_name]</i></font>")
+	else
+		t = replacetext(t, "\[sign\]", "")
+	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
+
+	t = replacetext(t, "\[*\]", "<li>")
+	t = replacetext(t, "\[hr\]", "<HR>")
+	t = replacetext(t, "\[small\]", "<font size = \"1\">")
+	t = replacetext(t, "\[/small\]", "</font>")
+	t = replacetext(t, "\[list\]", "<ul>")
+	t = replacetext(t, "\[/list\]", "</ul>")
+
+	return t
