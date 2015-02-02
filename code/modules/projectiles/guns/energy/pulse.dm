@@ -13,11 +13,14 @@
 /obj/item/weapon/gun/energy/pulse/attack_self(mob/living/user as mob)
 	select_fire(user)
 
+/obj/item/weapon/gun/energy/pulse/loyalpin
+	pin = /obj/item/device/firing_pin/implant/loyalty
+
 /obj/item/weapon/gun/energy/pulse/carbine
 	name = "pulse carbine"
 	desc = "A compact variant of the pulse rifle with less firepower but easier storage."
 	w_class = 3
-	slot_flags = null
+	slot_flags = SLOT_BELT
 	icon_state = "pulse_carbine"
 	item_state = "pulse"
 	cell_type = "/obj/item/weapon/stock_parts/cell/emproof/pulse/carbine"
@@ -29,6 +32,7 @@
 	name = "pulse pistol"
 	desc = "A compact pulse core in a classic handgun frame for Nanotrasen officers. It's not the size of the gun, it's the size of the hole it puts through people."
 	w_class = 2
+	slot_flags = SLOT_BELT
 	icon_state = "m1911-p"
 	item_state = "gun"
 	cell_type = "/obj/item/weapon/stock_parts/cell/emproof/pulse/carbine"

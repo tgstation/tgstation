@@ -597,6 +597,7 @@ var/global/list/g_fancy_list_of_types = null
 		"assassin",
 		"mobster",
 		"death commando",
+		"emergency response commander",
 		"centcom official",
 		"centcom commander",
 		"special ops officer",
@@ -819,8 +820,8 @@ var/global/list/g_fancy_list_of_types = null
 		if("death commando")
 			equip_deathsquad(M)
 
-		if("emergency response officer")
-			equip_emergencyresponsesquad(M)
+		if("emergency response commander")
+			equip_emergencyresponsesquad(M, "commander")
 
 		if("centcom official")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
@@ -1107,22 +1108,74 @@ var/global/list/g_fancy_list_of_types = null
 	M.equip_to_slot_or_del(W, slot_wear_id)
 
 //Emergency Response Team
-/proc/equip_emergencyresponsesquad(var/mob/living/carbon/human/M, var/officer)
+/proc/equip_emergencyresponsesquad(var/mob/living/carbon/human/M, var/ertrole)
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(M)
 	R.set_frequency(1441)
 	M.equip_to_slot_or_del(R, slot_ears)
 
-	if(officer)
-		M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/ert(M), slot_wear_suit)
-		M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
-		M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
-		M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
-//		M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/captain(M), slot_back)
-		M.equip_to_slot_or_del(new /obj/item/weapon/card/id/ert(M), slot_wear_id)
-	else
-		M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
-		M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
-		M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
+	switch(ertrole)
+		if("commander")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/ert(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/weapon/card/id/ert(M), slot_wear_id)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/captain(M), slot_back)
+
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/hardsuit/ert(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/sechailer/swat(M), slot_in_backpack)
+
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse/pistol/loyalpin(M), slot_belt)
+			M.equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/saber(M), slot_l_store)
+
+		if("sec")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/ert/sec(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/weapon/card/id/ert/Security(M), slot_wear_id)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(M), slot_back)
+
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/hardsuit/ert/sec(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/sechailer/swat(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/flashbangs(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/grenadelauncher(M), slot_in_backpack)
+
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse/carbine/loyalpin(M), slot_belt)
+			M.equip_to_slot_or_del(new /obj/item/weapon/restraints/handcuffs(M), slot_l_store)
+
+		if("med")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/ert/med(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/weapon/card/id/ert/Medical(M), slot_wear_id)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/medic(M), slot_back)
+
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/hardsuit/ert/med(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/sechailer/swat(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/tactical(M), slot_in_backpack)
+
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse/carbine/loyalpin(M), slot_belt)
+
+		if("eng")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/ert/engi(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/weapon/card/id/ert/Engineer(M), slot_wear_id)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(M), slot_back)
+
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/hardsuit/ert/engi(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/sechailer/swat(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/metalfoam(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse/carbine/loyalpin(M), slot_in_backpack)
+
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(M), slot_belt)
 
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(M)
 	L.imp_in = M
