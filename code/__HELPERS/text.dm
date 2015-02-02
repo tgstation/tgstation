@@ -158,9 +158,18 @@
 	while(1)
 		opentag = findtext(input, "<")
 		closetag = findtext(input, ">")
-		if(!closetag || !opentag)
+		if(closetag && opentag)
+			if(closetag < opentag)
+				input = copytext(input, (closetag + 1))
+			else
+				input = copytext(input, 1, opentag) + copytext(input, (closetag + 1))
+		else if(closetag || opentag)
+			if(opentag)
+				input = copytext(input, 1, opentag)
+			else
+				input = copytext(input, (closetag + 1))
+		else
 			break
-		input = copytext(input, 1, opentag) + copytext(input, (closetag + 1))
 	if(max_length)
 		input = copytext(input,1,max_length)
 	return input

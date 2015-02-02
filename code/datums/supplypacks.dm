@@ -786,6 +786,13 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containertype = /obj/structure/closet/critter/fox
 	containername = "fox crate"
 
+/datum/supply_packs/organic/butterfly
+	name = "Butterflies Crate"
+	cost = 50
+	containertype = /obj/structure/closet/critter/butterfly
+	containername = "butterflies crate"
+	contraband = 1
+
 ////// hippy gear
 
 /datum/supply_packs/organic/hydroponics // -- Skie

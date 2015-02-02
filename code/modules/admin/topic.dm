@@ -1050,6 +1050,31 @@
 
 		log_admin("[key_name(usr)] has sent [key_name(M)] to Prison!")
 		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] Prison!")
+
+	else if(href_list["sendbacktolobby"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/M = locate(href_list["sendbacktolobby"])
+
+		if(!isobserver(M))
+			usr << "<span class='notice'>You can only send ghost players back to the Lobby.</span>"
+			return
+
+		if(!M.client)
+			usr << "<span class='warning'>[M] doesn't seem to have an active client.</span>"
+			return
+
+		if(alert(usr, "Send [key_name(M)] back to Lobby?", "Message", "Yes", "No") != "Yes")
+			return
+
+		log_admin("[key_name(usr)] has sent [key_name(M)] back to the Lobby.")
+		message_admins("[key_name(usr)] has sent [key_name(M)] back to the Lobby.")
+
+		var/mob/new_player/NP = new()
+		NP.ckey = M.ckey
+		qdel(M)
+
 	else if(href_list["tdome1"])
 		if(!check_rights(R_FUN))	return
 
