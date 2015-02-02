@@ -206,6 +206,8 @@
 					ghost.mind = null
 				if(gun)
 					gun.pass_mind(captured.mind)
+				if(ticker)
+					ticker.minds -= captured.mind
 			qdel(captured)
 			qdel(src)
 		else

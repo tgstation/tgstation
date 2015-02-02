@@ -25,12 +25,15 @@ datum/objective/proc/get_target()
 datum/objective/proc/find_target()
 	var/list/possible_targets = list()
 	for(var/datum/mind/possible_target in ticker.minds)
-		if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != 2) && is_unique_objective(possible_target))
+		if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != 2) && is_unique_objective(possible_target) && target_check(possible_target))
 			possible_targets += possible_target
 	if(possible_targets.len > 0)
 		target = pick(possible_targets)
 	update_explanation_text()
 	return target
+
+datum/objective/proc/target_check(var/datum/mind/target)
+	return 1
 
 datum/objective/proc/find_target_by_role(role, role_type=0)//Option sets either to check assigned role or special role. Default to assigned.
 	for(var/datum/mind/possible_target in ticker.minds)
