@@ -8,7 +8,6 @@
 	can_be_placed_into = list(
 		/obj/machinery/chem_master/,
 		/obj/machinery/chem_dispenser/,
-		/obj/machinery/chem_heater/,
 		/obj/machinery/reagentgrinder,
 		/obj/machinery/biogenerator,
 		/obj/structure/table,
@@ -182,9 +181,9 @@
 	name = "silver sulfadiazine reserve tank"
 	list_reagents = list("silver_sulfadiazine" = 50)
 
-/obj/item/weapon/reagent_containers/glass/beaker/large/charcoal
+/obj/item/weapon/reagent_containers/glass/beaker/large/anti_toxin
 	name = "antitoxin reserve tank"
-	list_reagents = list("charcoal" = 50)
+	list_reagents = list("anti_toxin" = 50)
 
 /obj/item/weapon/reagent_containers/glass/beaker/large/epinephrine
 	name = "epinephrine reserve tank"

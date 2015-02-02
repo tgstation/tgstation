@@ -194,12 +194,12 @@
 	item_state = "r_suit"
 	item_color = "red_suit"
 
-/obj/item/clothing/under/suit_jacket/charcoal
-	name = "charcoal suit"
-	desc = "A charcoal suit and red tie. Very professional."
-	icon_state = "charcoal_suit"
-	item_state = "charcoal_suit"
-	item_color = "charcoal_suit"
+/obj/item/clothing/under/suit_jacket/anti_toxin
+	name = "anti_toxin suit"
+	desc = "A anti_toxin suit and red tie. Very professional."
+	icon_state = "anti_toxin_suit"
+	item_state = "anti_toxin_suit"
+	item_color = "anti_toxin_suit"
 
 /obj/item/clothing/under/suit_jacket/navy
 	name = "navy suit"

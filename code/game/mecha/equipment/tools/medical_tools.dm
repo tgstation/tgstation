@@ -260,7 +260,7 @@
 	..()
 	flags |= NOREACT
 	syringes = new
-	known_reagents = list("epinephrine"="Epinephrine","charcoal"="Charcoal")
+	known_reagents = list("epinephrine"="Epinephrine","anti_toxin"="anti_toxin")
 	processed_reagents = new
 	create_reagents(max_volume)
 	synth = new (list(src),0)

@@ -10,7 +10,7 @@ Stimulant
 	Moderate Level.
 
 Bonus
-	The body generates Ephedrine.
+	The body generates inaprovaline.
 
 //////////////////////////////////////
 */
@@ -30,8 +30,8 @@ Bonus
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(5)
-				if (M.reagents.get_reagent_amount("ephedrine") < 30)
-					M.reagents.add_reagent("ephedrine", 10)
+				if (M.reagents.get_reagent_amount("inaprovaline") < 30)
+					M.reagents.add_reagent("inaprovaline", 10)
 			else
 				if(prob(SYMPTOM_ACTIVATION_PROB * 5))
 					M << "<span class='notice'>[pick("You feel restless.", "You feel like running laps around the station.")]</span>"
