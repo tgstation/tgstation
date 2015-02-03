@@ -28,6 +28,10 @@
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
+/obj/item/weapon/wrench/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is beating \himself to death with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
+	return (BRUTELOSS)
 
 /*
  * Screwdriver
@@ -125,6 +129,11 @@
 		return
 	else
 		..()
+
+/obj/item/weapon/wirecutters/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is cutting at \his arteries with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1, -1)
+	return (BRUTELOSS)
 
 /*
  * Welding Tool
@@ -446,6 +455,11 @@
 	m_amt = 50
 	origin_tech = "engineering=1"
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
+
+/obj/item/weapon/crowbar/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is beating \himself to death with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
+	return (BRUTELOSS)
 
 /obj/item/weapon/crowbar/red
 	icon = 'icons/obj/items.dmi'
