@@ -215,7 +215,15 @@
 			return
 
 		// if paper is not in usr, then it must be in a clipboard or folder, which must be in or near usr
-		if(src.loc != usr && !((istype(src.loc, /obj/item/weapon/clipboard) || istype(src.loc, /obj/item/weapon/folder)) && (src.loc.loc == usr || src.loc.Adjacent(usr)) ) )
+		var/writable = 0
+		var/atom/location = src
+		while(location && location != get_turf(src))
+			if(location.Adjacent(usr))
+				writable = 1
+				break
+			location = location.loc
+
+		if(!writable)
 			return
 
 		log += "<br />\[[time_stamp()]] [key_name(usr)] added: [t]"
