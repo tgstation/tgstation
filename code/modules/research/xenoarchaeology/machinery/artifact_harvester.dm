@@ -35,9 +35,6 @@
 		return..()
 
 /obj/machinery/artifact_harvester/attack_hand(var/mob/user as mob)
-	if(isobserver(user))
-		user << "<span class='rose'>ARE YOU NUTS!? YOU'RE A GHOST!</span>"
-		return
 	src.add_fingerprint(user)
 	interact(user)
 
@@ -120,6 +117,7 @@
 
 /obj/machinery/artifact_harvester/Topic(href, href_list)
 
+	if(..()) return
 	if (href_list["harvest"])
 		//locate artifact on analysis pad
 		cur_artifact = null
