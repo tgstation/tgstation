@@ -279,7 +279,7 @@
 			return
 
 /obj/item/weapon/legcuffs/bolas/proc/throw_failed() //called when the throw doesn't entangle
-	log_admin("Logged as [thrown_from]")
+	//log_admin("Logged as [thrown_from]")
 	if(!thrown_from || !istype(thrown_from, /mob/living)) //in essence, if we don't know whether a person threw it
 		qdel(src) //destroy it, to stop infinite bolases
 
