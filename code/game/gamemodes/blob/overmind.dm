@@ -32,13 +32,14 @@
 	mind.active = 1		//indicates that the mind is currently synced with a client
 
 	src << "<span class='blob'>You are the overmind!</span>"
-	src << "You are the overmind and can control the blob! You can expand, which will attack people, and place new blob pieces such as..."
-	src << "<b>Normal Blob</b> will expand your reach and allow you to upgrade into special blobs that perform certain functions."
-	src << "<b>Shield Blob</b> is a strong and expensive blob which can take more damage. It is fireproof and can block air, use this to protect yourself from station fires."
+	src << "You are the overmind and can control the blob! You can expand, which will attack people, and place special blob types."
+	src << "The location of your thoughts (eye), nodes, and core can power your buildings and expand the blob much further, use them well!"
+	src << "<b>Normal Blobs</b> will expand your reach and can be upgraded into other special blobs that perform certain functions."
+	src << "<b>Shield Blob</b> is a strong and expensive blob which can take more damage. It is fireproof and can block air, use this to protect yourself from station fires. It can also begin to repair itself when powered."
 	src << "<b>Resource Blob</b> is a blob which will collect more resources for you, try to build these earlier to get a strong income. It will benefit from being near your core or multiple nodes, by having an increased resource rate; put it alone and it won't create resources at all."
-	src << "<b>Node Blob</b> is a blob which will grow, like the core. Unlike the core it won't give you a small income but it can power resource and factory blobs to increase their rate."
-	src << "<b>Factory Blob</b> is a blob which will spawn blob spores which will attack nearby food. Putting this nearby nodes and your core will increase the spawn rate; put it alone and it will not spawn any spores."
-	src << "<b>Shortcuts:</b> CTRL Click = Expand Blob / Middle Mouse Click = Rally Spores / Alt Click = Create Shield"
+	src << "<b>Node Blob</b> is a blob which will grow, like the core. It will not provide income, but will power all the other special nodes and expand your blob by itself."
+	src << "<b>Factory Blob</b> is a blob which will spawn blob spores which will attack nearby food. You must make sure it is powered to operate properly!"
+	src << "<b>Shortcuts:</b> CTRL Click = Expand Blob, Middle Mouse Click = Rally Spores, Alt Click = Create Shield, Double Click: Teleport to Blob"
 	update_health()
 
 /mob/camera/blob/proc/update_health()
@@ -100,6 +101,9 @@
 		if(blob_core)
 			stat(null, "Core Health: [blob_core.health]")
 		stat(null, "Power Stored: [blob_points]/[max_blob_points]")
+		stat(null, "Blob Total Size: [blobs.len]")
+		stat(null, "Total Nodes: [blob_nodes.len]")
+		stat(null, "Total Overminds: [blob_cores.len]")
 	return
 
 /mob/camera/blob/Move(var/NewLoc, var/Dir = 0)

@@ -7,7 +7,7 @@
 	density = 0
 	opacity = 0
 	anchored = 1
-	var/health = 30
+	var/health = 20
 	var/health_timestamp = 0
 	var/brute_resist = 4
 	var/fire_resist = 1
@@ -19,6 +19,10 @@
 
 /obj/effect/blob/New(loc)
 	blobs += src
+	var/datum/game_mode/blob/B
+	if(B)
+		if((blobs.len >= B.blobnukeposs) && prob(1))
+			B.stage(2)
 	src.dir = pick(1, 2, 4, 8)
 	src.update_icon()
 	..(loc)
