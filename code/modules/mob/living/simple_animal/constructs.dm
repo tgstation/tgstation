@@ -23,6 +23,7 @@
 	min_n2 = 0
 	max_n2 = 0
 	minbodytemp = 0
+	show_stat_health = 0
 	faction = "cult"
 	supernatural = 1
 	var/nullblock = 0
