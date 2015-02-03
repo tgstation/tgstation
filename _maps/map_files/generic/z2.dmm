@@ -499,7 +499,7 @@
 "jE" = (/mob/living/simple_animal/hostile/retaliate/bat{desc = "A Syndicate experiment in weaponized space carp technology. Its fangs seem to have been intentionally dulled down to prevent accidents."; faction = list("syndicate"); harm_intent_damage = 5; health = 50; icon_dead = "carp_dead"; icon_gib = "carp_gib"; icon_living = "carp"; icon_state = "carp"; name = "Cayenne"; real_name = "Cayenne"; response_disarm = "lightly brushes aside"; response_help = "pets"},/turf/unsimulated/floor{icon_state = "bar"; dir = 2},/area/syndicate_mothership)
 "jF" = (/obj/machinery/door/airlock/centcom{name = "Study"; opacity = 1; req_access_txt = "150"},/turf/unsimulated/floor{icon_state = "bar"; dir = 2},/area/syndicate_mothership)
 "jG" = (/turf/unsimulated/floor{icon_state = "grimy"},/area/syndicate_mothership)
-"jH" = (/obj/structure/table/reinforced,/obj/item/weapon/tank/emergency_oxygen/double,/obj/item/clothing/mask/breath,/obj/item/clothing/head/helmet/space/hardsuit/ert,/turf/unsimulated/floor{icon_state = "floor"},/area/centcom/ferry)
+"jH" = (/obj/structure/table/reinforced,/obj/item/weapon/tank/internals/emergency_oxygen/double,/obj/item/clothing/mask/breath,/obj/item/clothing/head/helmet/space/hardsuit/ert,/turf/unsimulated/floor{icon_state = "floor"},/area/centcom/ferry)
 "jI" = (/obj/structure/closet/syndicate/ertCom,/turf/unsimulated/floor{icon_state = "floor"},/area/centcom/ferry)
 "jJ" = (/turf/unsimulated/floor{tag = "icon-redcorner"; icon_state = "redcorner"; dir = 2},/area/centcom/ferry)
 "jK" = (/turf/unsimulated/floor{icon_state = "red"; dir = 2},/area/centcom/ferry)
