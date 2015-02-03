@@ -164,3 +164,4 @@
 	icon_state = "miner"
 	item_state = "miner"
 	item_color = "miner"
+	sensor_mode = 3
