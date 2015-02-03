@@ -24,10 +24,16 @@ var/global/list/object_profiling = list()
 					object_profiling["[O.type]"] = 0
 				object_profiling["[O.type]"] += (time_end - time_start)
 			else
-				processing_objects.Cut(i,i+1)
+				if(i+1 >processing_objects.len)
+					processing_objects.len--
+				else
+					processing_objects.Cut(i,i+1)
 			#endif
 		else
-			processing_objects.Cut(i,i+1)
+			if(i+1 >processing_objects.len)
+				processing_objects.len--
+			else
+				processing_objects.Cut(i,i+1)
 
 		scheck()
 	//updateQueueInstance.init(processing_objects, "process")

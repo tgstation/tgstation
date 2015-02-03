@@ -31,9 +31,17 @@
 
 				machine_profiling[M.type] += (time_end - time_start)
 				#endif
+			else
+				if(i+1 > machines.len)
+					machines.len--
+				else
+					machines.Cut(i,i+1)
 		else
 			if(M)
 				M.inMachineList = 0
-			machines.Cut(i,i+1)
+			if(i+1 > machines.len)
+				machines.len--
+			else
+				machines.Cut(i,i+1)
 
 		scheck()

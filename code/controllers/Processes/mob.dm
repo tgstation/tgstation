@@ -15,7 +15,10 @@
 			if(L.Life() == PROCESS_KILL)
 				mob_list.Remove(L)
 		else
-			mob_list.Cut(i,i+1)
+			if(i+1 > mob_list.len)
+				mob_list.len--
+			else
+				mob_list.Cut(i,i+1)
 
 		scheck()
 	//updateQueueInstance.init(mob_list, "Life")
