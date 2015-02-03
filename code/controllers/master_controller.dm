@@ -83,9 +83,10 @@ Note: you can set the datum's defined processing_interval to some integer to set
 				start_time = world.timeofday
 
 				for(var/datum/subsystem/SS in subsystems)
-					if(SS.next_fire <= world.time)
-						SS.next_fire += SS.wait
-						if(SS.can_fire > 0)
+					if(SS.can_fire > 0)
+						if(SS.next_fire <= world.time)
+							SS.next_fire += SS.wait
+
 							timer = world.timeofday
 							cpu = world.cpu
 							last_thing_processed = SS.type

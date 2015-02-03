@@ -33,6 +33,5 @@ delete-after: True
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 # Please surround your changes in single (') or double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
 changes: 
-  - rscadd: "The Emergency Response Team project has been activated by Nanotrasen. The ERT are a seven man squad that can be deployed by the Central Command (admins) to attempt to rescue the station from a overwhelming threat, or to render assistance in dealing with a significant problem."
-  - rscadd: "The ERT consists of a single Commander, two Security Officers, two Engineering Officers and two Medical Officers. The Commander is preselected when the squad is being spawned in, however the remaining six officers are free to select their role in the squad."
-  - rscadd: "Two new Pulse gun variants have been added to the game. They are the Pulse Carbine and the Pulse Pistol, both have significantly smaller ammunition capacities than the Pulse Rifle, however they both can fit in a backpack and the pistol can fit in a pocket. All ERT Officers have a Pulse Pistol for a sidearm, however the Security Officers get a Pulse Carbine as their primary longarm."
+  - rscadd: "Deep space sensors recently detected the derelict remains of the NTSS Omen, a outdated Medical Frigate thought lost, within close proximity to Space Station 13."
+  - rscadd: "If any SS13 EVA Personal are able to locate this ship, they will be able to pilot it back to the station for recovery. The ship may also have cordinates for other locations."  

@@ -311,7 +311,7 @@ var/list/uplink_items = list()
 	name = "Poison Kit"
 	desc = "An assortment of nasty chemicals."
 	item = /obj/item/weapon/storage/box/syndie_kit/chemical
-	cost = 2
+	cost = 6
 	surplus = 50
 
 /datum/uplink_item/stealthy_weapons/detomatix
@@ -384,6 +384,13 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/storage/backpack/satchel_flat
 	cost = 2
 	surplus = 30
+
+/datum/uplink_item/stealthy_tools/stimpack
+	name = "Stimpack"
+	desc = "Stimpacks, a tool of many great heroes, make you immune to stuns and knockdowns for about 5 minutes after injection."
+	item = /obj/item/weapon/reagent_containers/syringe/stimulants
+	cost = 8
+	surplus = 90
 
 // DEVICE AND TOOLS
 
@@ -578,6 +585,13 @@ var/list/uplink_items = list()
 	cost = 1
 	excludefrom = list(/datum/game_mode/nuclear)
 	surplus = 40
+
+/datum/uplink_item/badass/syndiecash
+	name = "Syndicate Briefcase Full of Cash"
+	desc = "A secure briefcase containing 5000 space credits. Useful for bribing personnel, or purchasing goods and services at lucrative prices. \
+	The briefcase also feels a little heavier to hold; it has been manufactured to pack a little bit more of a punch if your client needs some convincing."
+	item = /obj/item/weapon/storage/secure/briefcase/syndie
+	cost = 1
 
 /datum/uplink_item/badass/balloon
 	name = "For showing that you are The Boss"

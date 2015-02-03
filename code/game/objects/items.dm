@@ -2,6 +2,8 @@
 	name = "item"
 	icon = 'icons/obj/items.dmi'
 	var/item_state = null
+	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	var/hitsound = null
 	var/throwhitsound = null
 	var/w_class = 3.0
@@ -44,6 +46,7 @@
 
 	var/suittoggled = 0
 	var/hooded = 0
+
 	var/list/can_be_placed_into = list(
 		/obj/structure/table,
 		/obj/structure/rack,

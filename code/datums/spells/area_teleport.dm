@@ -1,6 +1,7 @@
 /obj/effect/proc_holder/spell/targeted/area_teleport
 	name = "Area teleport"
 	desc = "This spell teleports you to a type of area of your selection."
+	nonabstract_req = 1
 
 	var/randomise_selection = 0 //if it lets the usr choose the teleport loc or picks it from the list
 	var/invocation_area = 1 //if the invocation appends the selected area
@@ -47,7 +48,7 @@
 			return
 
 		if(target && target.buckled)
-			target.buckled.unbuckle()
+			target.buckled.unbuckle_mob()
 
 		var/list/tempL = L
 		var/attempt = null

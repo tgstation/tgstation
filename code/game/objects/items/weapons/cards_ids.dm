@@ -190,37 +190,29 @@ update_label("John Doe", "Clowny")
 	New()
 		access = get_all_centcom_access()
 		..()
-/obj/item/weapon/card/id/ertsCommand
+/obj/item/weapon/card/id/ert
 	name = "\improper Centcom ID"
 	desc = "A ERT ID card"
 	icon_state = "centcom"
 	registered_name = "Emergency Response Team Commander"
 	assignment = "Emergency Response Team Commander"
-	access = list(access_sec_doors, access_engine, access_medical)
+	New() access = get_all_accesses()
+	New() access = list(access_cent_captain, access_cent_specops, access_cent_storage, access_cent_medical)
 
-/obj/item/weapon/card/id/ertsSecurity
-	name = "\improper Centcom ID"
-	desc = "A ERT ID card"
-	icon_state = "centcom"
+/obj/item/weapon/card/id/ert/Security
 	registered_name = "Security Response Officer"
 	assignment = "Security Response Officer"
-	access = list(access_sec_doors)
+	New() access = list(access_cent_specops)
 
-/obj/item/weapon/card/id/ertsEngineer
-	name = "\improper Centcom ID"
-	desc = "A ERT ID card"
-	icon_state = "centcom"
+/obj/item/weapon/card/id/ert/Engineer
 	registered_name = "Engineer Response Officer"
 	assignment = "Engineer Response Officer"
-	access = list(access_engine)
+	New() access = list(access_cent_storage)
 
-/obj/item/weapon/card/id/ertsMedical
-	name = "\improper Centcom ID"
-	desc = "A ERT ID card"
-	icon_state = "centcom"
+/obj/item/weapon/card/id/ert/Medical
 	registered_name = "Medical Response Officer"
 	assignment = "Medical Response Officer"
-	access = list(access_medical)
+	New() access = list(access_cent_medical)
 
 /obj/item/weapon/card/id/prisoner
 	name = "prisoner ID card"

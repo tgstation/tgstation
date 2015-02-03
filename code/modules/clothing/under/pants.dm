@@ -52,12 +52,6 @@
 	icon_state = "tanpants"
 	item_color = "tanpants"
 
-/obj/item/clothing/under/pants/blue
-	name = "blue pants"
-	desc = "Stylish blue pants. These go well with a lot of clothes."
-	icon_state = "bluepants"
-	item_color = "bluepants"
-
 /obj/item/clothing/under/pants/track
 	name = "track pants"
 	desc = "A pair of track pants, for the athletic."

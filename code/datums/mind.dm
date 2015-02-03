@@ -273,6 +273,12 @@
 			text += "head|loyal|<a href='?src=\ref[src];revolution=clear'>employee</a>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<b>REV</b>"
 		else
 			text += "head|loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
+
+		if(current && current.client && current.client.prefs.be_special & BE_REV)
+			text += "|Enabled in Prefs"
+		else
+			text += "|Disabled in Prefs"
+
 		sections["revolution"] = text
 
 		/** GANG ***/
@@ -323,6 +329,14 @@
 			text += "<B>LOYAL</B>|none|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|(B) <a href='?src=\ref[src];gang=bgang'>gangster</a> <a href='?src=\ref[src];gang=bboss'>boss</a>"
 		else
 			text += "loyal|<B>NONE</B>|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|(B) <a href='?src=\ref[src];gang=bgang'>gangster</a> <a href='?src=\ref[src];gang=bboss'>boss</a>"
+
+
+		if(current && current.client && current.client.prefs.be_special & BE_GANG)
+			text += "|Enabled in Prefs"
+		else
+			text += "|Disabled in Prefs"
+
+
 		sections["gang"] = text
 
 		/** CULT ***/
@@ -341,6 +355,12 @@
 			text += "<b>LOYAL</b>|employee|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
 		else
 			text += "loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
+
+		if(current && current.client && current.client.prefs.be_special & BE_CULTIST)
+			text += "|Enabled in Prefs"
+		else
+			text += "|Disabled in Prefs"
+
 		sections["cult"] = text
 
 		/** WIZARD ***/
@@ -355,6 +375,12 @@
 				text += "<br>Objectives are empty! <a href='?src=\ref[src];wizard=autoobjectives'>Randomize!</a>"
 		else
 			text += "<a href='?src=\ref[src];wizard=wizard'>yes</a>|<b>NO</b>"
+
+		if(current && current.client && current.client.prefs.be_special & BE_WIZARD)
+			text += "|Enabled in Prefs"
+		else
+			text += "|Disabled in Prefs"
+
 		sections["wizard"] = text
 
 		/** CHANGELING ***/
@@ -373,6 +399,12 @@
 //			var/datum/game_mode/changeling/changeling = ticker.mode
 //			if (istype(changeling) && changeling.changelingdeath)
 //				text += "<br>All the changelings are dead! Restart in [round((changeling.TIME_TO_GET_REVIVED-(world.time-changeling.changelingdeathtime))/10)] seconds."
+
+		if(current && current.client && current.client.prefs.be_special & BE_CHANGELING)
+			text += "|Enabled in Prefs"
+		else
+			text += "|Disabled in Prefs"
+
 		sections["changeling"] = text
 
 		/** NUCLEAR ***/
@@ -392,6 +424,12 @@
 				text += " Code is [code]. <a href='?src=\ref[src];nuclear=tellcode'>tell the code.</a>"
 		else
 			text += "<a href='?src=\ref[src];nuclear=nuclear'>operative</a>|<b>NANOTRASEN</b>"
+
+		if(current && current.client && current.client.prefs.be_special & BE_OPERATIVE)
+			text += "|Enabled in Prefs"
+		else
+			text += "|Disabled in Prefs"
+
 		sections["nuclear"] = text
 
 	/** TRAITOR ***/
@@ -405,6 +443,12 @@
 			text += "<br>Objectives are empty! <a href='?src=\ref[src];traitor=autoobjectives'>Randomize</a>!"
 	else
 		text += "<a href='?src=\ref[src];traitor=traitor'>traitor</a>|<b>LOYAL</b>"
+
+	if(current && current.client && current.client.prefs.be_special & BE_TRAITOR)
+		text += "|Enabled in Prefs"
+	else
+		text += "|Disabled in Prefs"
+
 	sections["traitor"] = text
 
 	/** MONKEY ***/
@@ -427,6 +471,12 @@
 
 		else
 			text += "healthy|infected|human|<b>OTHER</b>"
+
+		if(current && current.client && current.client.prefs.be_special & BE_MONKEY)
+			text += "|Enabled in Prefs"
+		else
+			text += "|Disabled in Prefs"
+
 		sections["monkey"] = text
 
 
@@ -452,6 +502,12 @@
 				if (R.emagged)
 					n_e_robots++
 			text += "<br>[n_e_robots] of [ai.connected_robots.len] slaved cyborgs are emagged. <a href='?src=\ref[src];silicon=unemagcyborgs'>Unemag</a>"
+
+		if(current && current.client && current.client.prefs.be_special & BE_MALF)
+			text += "|Enabled in Prefs"
+		else
+			text += "|Disabled in Prefs"
+
 		sections["malfunction"] = text
 
 	if (ticker.mode.config_tag == "traitorchan")

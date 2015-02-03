@@ -37,6 +37,9 @@
 		return 1
 	return 0
 
+/obj/item/device/firing_pin/magic
+	name = "magic crystal shard"
+	desc = "A small enchanted shard which allows magical weapons to fire."
 
 /obj/item/device/firing_pin/implant
 	name = "implant-keyed firing pin"
