@@ -48,12 +48,15 @@
 	// Pass to Destroy().
 	if(!gcDestroyed)
 		Destroy()
-
-	else
 		if(!("[type]" in del_profiling))
 			del_profiling["[type]"] = 0
 
 		del_profiling["[type]"] += 1
+	else
+		if(!("[type]" in gdel_profiling))
+			gdel_profiling["[type]"] = 0
+
+		gdel_profiling["[type]"] += 1
 	..()
 
 
