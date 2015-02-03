@@ -224,6 +224,7 @@
 	stage = 4
 /datum/disease2/effect/scc/activate(var/mob/living/carbon/mob,var/multiplier)
 	//
+	if(!ishuman(mob)) return 0
 	var/mob/living/carbon/human/H = mob
 	mob.reagents.add_reagent("pacid", 10)
 	mob << "<span class = 'warning'> Your body burns as your cells break down.</span>"
@@ -631,9 +632,10 @@ var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/mon
 		mob.reagents.add_reagent("dermaline", 4)
 	mob.emote("me",1,"exhales slowly.")
 
-	var/datum/organ/external/chest/chest = H.get_organ("chest")
-	for(var/datum/organ/internal/I in chest.internal_organs)
-		I.damage = 0
+	if(ishuman(H))
+		var/datum/organ/external/chest/chest = H.get_organ("chest")
+		for(var/datum/organ/internal/I in chest.internal_organs)
+			I.damage = 0
 
 
 ////////////////////////STAGE 2/////////////////////////////////

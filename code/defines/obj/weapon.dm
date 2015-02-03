@@ -17,6 +17,25 @@
 		viewers(user) << "\red <b>[user] wraps the cord of the [src.name] around \his neck! It looks like \he's trying to commit suicide.</b>"
 		return(OXYLOSS)
 
+/*/obj/item/weapon/syndicate_uplink
+	name = "station bounced radio"
+	desc = "Remain silent about this..."
+	icon = 'icons/obj/radio.dmi'
+	icon_state = "radio"
+	var/temp = null
+	var/uses = 10.0
+	var/selfdestruct = 0.0
+	var/traitor_frequency = 0.0
+	var/mob/currentUser = null
+	var/obj/item/device/radio/origradio = null
+	flags = FPRINT  | CONDUCT | ONBELT
+	w_class = 2.0
+	item_state = "radio"
+	throw_speed = 4
+	throw_range = 20
+	m_amt = 100
+	origin_tech = "magnets=2;syndicate=3"*/
+
 /obj/item/weapon/rsp
 	name = "\improper Rapid-Seed-Producer (RSP)"
 	desc = "A device used to rapidly deploy seeds."
@@ -260,7 +279,7 @@
 			return
 
 /obj/item/weapon/legcuffs/bolas/proc/throw_failed() //called when the throw doesn't entangle
-	log_admin("Logged as [thrown_from]")
+	//log_admin("Logged as [thrown_from]")
 	if(!thrown_from || !istype(thrown_from, /mob/living)) //in essence, if we don't know whether a person threw it
 		qdel(src) //destroy it, to stop infinite bolases
 
@@ -295,12 +314,12 @@
 /obj/item/weapon/legcuffs/bolas/cable/update_icon()
 	if (!weight1 && !weight2)
 		icon_state = "cbolas_[cable_color]"
-		overlays.Cut()
+		overlays.len = 0
 		desc = desc_empty
 		trip_prob = 0
 		return
 	else
-		overlays.Cut()
+		overlays.len = 0
 		if (weight1)
 			trip_prob = 10
 			overlays += icon("icons/obj/weapons.dmi", "cbolas_weight1")
@@ -434,55 +453,55 @@
 	flags = FPRINT
 	attack_verb = list("warned", "cautioned", "smashed")
 
-	proximity_sign
-		var/timing = 0
-		var/armed = 0
-		var/timepassed = 0
+/obj/item/weapon/caution/proximity_sign
+	var/timing = 0
+	var/armed = 0
+	var/timepassed = 0
 
-		attack_self(mob/user as mob)
-			if(ishuman(user))
-				var/mob/living/carbon/human/H = user
-				if(H.mind.assigned_role != "Janitor")
-					return
-				if(armed)
-					armed = 0
-					user << "\blue You disarm \the [src]."
-					return
-				timing = !timing
-				if(timing)
-					processing_objects.Add(src)
-				else
-					armed = 0
-					timepassed = 0
-				H << "\blue You [timing ? "activate \the [src]'s timer, you have 15 seconds." : "de-activate \the [src]'s timer."]"
+/obj/item/weapon/caution/proximity_sign/attack_self(mob/user as mob)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.mind.assigned_role != "Janitor")
+			return
+		if(armed)
+			armed = 0
+			user << "<span class='notice'>You disarm \the [src].</span>"
+			return
+		timing = !timing
+		if(timing)
+			processing_objects.Add(src)
+		else
+			armed = 0
+			timepassed = 0
+		H << "<span class='notice'>You [timing ? "activate \the [src]'s timer, you have 15 seconds." : "de-activate \the [src]'s timer."]</span>"
 
-		process()
-			if(!timing)
-				processing_objects.Remove(src)
-			timepassed++
-			if(timepassed >= 15 && !armed)
-				armed = 1
-				timing = 0
+/obj/item/weapon/caution/proximity_sign/process()
+	if(!timing)
+		processing_objects.Remove(src)
+	timepassed++
+	if(timepassed >= 15 && !armed)
+		armed = 1
+		timing = 0
 
-		HasProximity(atom/movable/AM as mob|obj)
-			if(armed)
-				if(istype(AM, /mob/living/carbon) && !istype(AM, /mob/living/carbon/brain))
-					var/mob/living/carbon/C = AM
-					if(C.m_intent != "walk")
-						src.visible_message("The [src.name] beeps, \"Running on wet floors is hazardous to your health.\"")
-						explosion(src.loc,-1,2,0)
-						if(ishuman(C))
-							dead_legs(C)
-						if(src)
-							del(src)
+/obj/item/weapon/caution/proximity_sign/HasProximity(atom/movable/AM as mob|obj)
+	if(armed)
+		if(istype(AM, /mob/living/carbon) && !istype(AM, /mob/living/carbon/brain))
+			var/mob/living/carbon/C = AM
+			if(C.m_intent != "walk")
+				src.visible_message("The [src.name] beeps, \"Running on wet floors is hazardous to your health.\"")
+				explosion(src.loc,-1,2,0)
+				if(ishuman(C))
+					dead_legs(C)
+				if(src)
+					qdel(src)
 
-		proc/dead_legs(mob/living/carbon/human/H as mob)
-			var/datum/organ/external/l = H.get_organ("l_leg")
-			var/datum/organ/external/r = H.get_organ("r_leg")
-			if(l && !(l.status & ORGAN_DESTROYED))
-				l.status |= ORGAN_DESTROYED
-			if(r && !(r.status & ORGAN_DESTROYED))
-				r.status |= ORGAN_DESTROYED
+/obj/item/weapon/caution/proximity_sign/proc/dead_legs(mob/living/carbon/human/H as mob)
+	var/datum/organ/external/l = H.organs_by_name["l_leg"]
+	var/datum/organ/external/r = H.organs_by_name["r_leg"]
+	if(l && !(l.status & ORGAN_DESTROYED))
+		l.status |= ORGAN_DESTROYED
+	if(r && !(r.status & ORGAN_DESTROYED))
+		r.status |= ORGAN_DESTROYED
 
 /obj/item/weapon/caution/cone
 	desc = "This cone is trying to warn you of something!"
@@ -499,74 +518,6 @@
 	m_amt = 3750
 	w_type = RECYK_METAL
 	melt_temperature=MELTPOINT_STEEL
-
-/obj/item/weapon/shard
-	name = "shard"
-	icon = 'icons/obj/shards.dmi'
-	icon_state = "large"
-	sharp = 1
-	desc = "Could probably be used as ... a throwing weapon?"
-	w_class = 1.0
-	force = 5.0
-	throwforce = 15.0
-	item_state = "shard-glassnew"
-	g_amt = 3750
-	w_type = RECYK_GLASS
-	melt_temperature = MELTPOINT_GLASS
-	attack_verb = list("stabbed", "slashed", "sliced", "cut")
-
-	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</b>")
-		return (BRUTELOSS)
-
-/obj/item/weapon/shard/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
-	return ..()
-
-/*/obj/item/weapon/syndicate_uplink
-	name = "station bounced radio"
-	desc = "Remain silent about this..."
-	icon = 'icons/obj/radio.dmi'
-	icon_state = "radio"
-	var/temp = null
-	var/uses = 10.0
-	var/selfdestruct = 0.0
-	var/traitor_frequency = 0.0
-	var/mob/currentUser = null
-	var/obj/item/device/radio/origradio = null
-	flags = FPRINT  | CONDUCT | ONBELT
-	w_class = 2.0
-	item_state = "radio"
-	throw_speed = 4
-	throw_range = 20
-	m_amt = 100
-	origin_tech = "magnets=2;syndicate=3"*/
-
-/obj/item/weapon/shard/shrapnel
-	name = "shrapnel"
-	icon = 'icons/obj/shards.dmi'
-	icon_state = "shrapnellarge"
-	desc = "A bunch of tiny bits of shattered metal."
-	m_amt=5
-	w_type=RECYK_METAL
-	melt_temperature=MELTPOINT_STEEL
-
-/obj/item/weapon/shard/shrapnel/New()
-
-	src.icon_state = pick("shrapnellarge", "shrapnelmedium", "shrapnelsmall")
-	switch(src.icon_state)
-		if("shrapnelsmall")
-			src.pixel_x = rand(-12, 12)
-			src.pixel_y = rand(-12, 12)
-		if("shrapnelmedium")
-			src.pixel_x = rand(-8, 8)
-			src.pixel_y = rand(-8, 8)
-		if("shrapnellarge")
-			src.pixel_x = rand(-5, 5)
-			src.pixel_y = rand(-5, 5)
-		else
-	return
 
 /obj/item/weapon/SWF_uplink
 	name = "station-bounced radio"

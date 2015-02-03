@@ -867,7 +867,7 @@
 				user << "You wire \the [src]!"
 				coil.amount -= 5
 				if(!coil.amount)
-					del(coil)
+					qdel(coil)
 
 				buildstage = 2
 				update_icon()
@@ -887,7 +887,7 @@
 		if(0)
 			if(istype(W, /obj/item/weapon/circuitboard/air_alarm))
 				user << "You insert the circuit!"
-				del(W)
+				qdel(W)
 				buildstage = 1
 				update_icon()
 				return
@@ -921,7 +921,7 @@ FIRE ALARM
 */
 /obj/machinery/firealarm
 	name = "Fire Alarm"
-	desc = "<i>\"Pull this in case of emergency\"<i>. Thus, keep pulling it forever."
+	desc = "<i>\"Pull this in case of emergency\"</i>. Thus, keep pulling it forever."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
 	var/detecting = 1.0
@@ -1013,7 +1013,7 @@ FIRE ALARM
 
 					coil.amount -= 5
 					if(!coil.amount)
-						del(coil)
+						qdel(coil)
 
 					buildstage = 2
 					user << "You wire \the [src]!"
@@ -1030,7 +1030,7 @@ FIRE ALARM
 			if(0)
 				if(istype(W, /obj/item/weapon/circuitboard/fire_alarm))
 					user << "You insert the circuit!"
-					del(W)
+					qdel(W)
 					buildstage = 1
 					update_icon()
 
@@ -1038,7 +1038,7 @@ FIRE ALARM
 					user << "You remove the fire alarm assembly from the wall!"
 					new /obj/item/mounted/frame/firealarm(get_turf(user))
 					playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-					del(src)
+					qdel(src)
 		return
 
 	src.alarm()
@@ -1181,6 +1181,7 @@ FIRE ALARM
 		else
 			src.overlays += image('icons/obj/monitors.dmi', "overlay_green")
 
+	machines.Remove(src)
 	update_icon()
 
 /obj/machinery/partyalarm

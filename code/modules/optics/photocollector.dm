@@ -63,7 +63,7 @@ var/list/obj/machinery/power/photocollector/photocollector_list = list()
 		return 1
 
 /obj/machinery/power/photocollector/proc/update_icons()
-	overlays.Cut()
+	overlays.len = 0
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(anchored && beams.len>0)

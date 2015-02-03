@@ -212,7 +212,7 @@
 			C.ear_deaf = 20
 			C.stuttering = 20
 			C.Stun(8)
-			C.make_jittery(150)
+			C.Jitter(150)
 		for(var/obj/structure/window/W in view(4))
 			W.destroy()
 		playsound(M.current.loc, 'sound/effects/creepyshriek.ogg', 100, 1)
@@ -394,8 +394,9 @@
 							break
 			M.current.canmove = 1
 			M.current.client.eye = M.current
-			del(animation)
-			del(holder)
+			animation.master = null
+			qdel(animation)
+			qdel(holder)
 		M.current.verbs -= /client/proc/vampire_jaunt
 		spawn(600) M.current.verbs += /client/proc/vampire_jaunt
 
@@ -451,7 +452,8 @@
 			//animation.master = src
 			usr.loc = picked
 			spawn(10)
-				del(animation)
+				animation.master = null
+				qdel(animation)
 		M.current.verbs -= /client/proc/vampire_shadowstep
 		spawn(20)
 			M.current.verbs += /client/proc/vampire_shadowstep

@@ -151,7 +151,7 @@
 	info = null
 	stamps = null
 	stamped = list()
-	overlays.Cut()
+	overlays.len = 0
 	updateinfolinks()
 	update_icon()
 

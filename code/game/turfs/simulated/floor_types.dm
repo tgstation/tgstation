@@ -333,7 +333,7 @@
 		update_icon(1)
 
 	update_icon(var/propogate=1)
-		underlays.Cut()
+		underlays.len = 0
 		underlays += new /icon('icons/turf/space.dmi',"[((x + y) ^ ~(x * y) + z) % 25]")
 
 		var/dirs = 0

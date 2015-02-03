@@ -100,7 +100,7 @@
 					user.adjustBrainLoss(rand(5,25))
 					user.radiation += 25
 					user.nutrition -= min(50, user.nutrition)
-					user.make_dizzy(6)
+					user.Dizzy(6)
 					user.weakened += 6
 					return 1
 				else user << "Nothing happens."
@@ -278,7 +278,7 @@
 					M.adjustToxLoss(5)
 					M.adjustOxyLoss(5)
 					M.adjustBrainLoss(5)
-					M.make_dizzy(6)
+					M.Dizzy(6)
 					M.weakened += 3
 					M.updatehealth()
 				return 1

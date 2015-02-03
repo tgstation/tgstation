@@ -1,6 +1,6 @@
 /mob/living/silicon/ai/proc/get_camera_list()
 
-	track.cameras.Cut()
+	track.cameras.len = 0
 
 	if(src.stat == 2)
 		return
@@ -46,10 +46,10 @@
 
 /mob/living/silicon/ai/proc/trackable_mobs()
 
-	track.names.Cut()
-	track.namecounts.Cut()
-	track.humans.Cut()
-	track.others.Cut()
+	track.names.len = 0
+	track.namecounts.len = 0
+	track.humans.len = 0
+	track.others.len = 0
 
 	if(usr.stat == 2)
 		return list()

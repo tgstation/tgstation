@@ -82,7 +82,7 @@ proc/is_banned_type(typepath)
 		if(!chosen)
 			return
 	if(is_banned_type(chosen))
-		src << "\red Denied."
+		src << "<span class='warning'>Denied.</span>"
 		return
 	new chosen(usr.loc)
 
@@ -160,7 +160,7 @@ datum/hSB
 					hsb.amount = 50
 					hsb.loc = usr.loc
 				if("hsbglass")
-					var/obj/item/stack/sheet/hsb = new/obj/item/stack/sheet/glass
+					var/obj/item/stack/sheet/hsb = new/obj/item/stack/sheet/glass/glass
 					hsb.amount = 50
 					hsb.loc = usr.loc
 				if("hsbplasma")
@@ -184,7 +184,7 @@ datum/hSB
 				if("hsbtoolbox")
 					var/obj/item/weapon/storage/hsb = new/obj/item/weapon/storage/toolbox/mechanical
 					for(var/obj/item/device/radio/T in hsb)
-						del(T)
+						qdel(T)
 					new/obj/item/weapon/crowbar (hsb)
 					hsb.loc = usr.loc
 				if("hsbmedkit")

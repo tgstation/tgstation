@@ -79,3 +79,6 @@
 
 /mob/proc/lingcheck()
 	return 0
+
+/mob/proc/construct_chat_check(var/setting)
+	return 0

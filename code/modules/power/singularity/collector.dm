@@ -132,7 +132,7 @@ var/global/list/rad_collectors = list()
 		last_power = power_produced
 
 /obj/machinery/power/rad_collector/proc/update_icons()
-	overlays.Cut()
+	overlays.len = 0
 	if(P)
 		overlays += image('icons/obj/singularity.dmi', "ptank")
 	if(stat & (NOPOWER|BROKEN))

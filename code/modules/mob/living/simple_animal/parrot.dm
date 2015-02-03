@@ -121,8 +121,9 @@
 
 /mob/living/simple_animal/parrot/Stat()
 	..()
-	stat("Held Item", held_item)
-	stat("Mode",a_intent)
+	if(statpanel("Status"))
+		stat("Held Item", held_item)
+		stat("Mode",a_intent)
 
 
 /mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)

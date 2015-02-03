@@ -548,7 +548,7 @@ datum
 						M.monkeyizing = 1
 						M.canmove = 0
 						M.icon = null
-						M.overlays.Cut()
+						M.overlays.len = 0
 						M.invisibility = 101
 						for(var/obj/item/W in M)
 							if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
@@ -1244,7 +1244,7 @@ datum
 				if(volume >= 5)
 					if(istype(T, /turf/simulated/wall))
 						T:thermite = 1
-						T.overlays.Cut()
+						T.overlays.len = 0
 						T.overlays = image('icons/effects/effects.dmi',icon_state = "thermite")
 				return
 
@@ -1460,7 +1460,7 @@ datum
 						O.clean_blood()
 			reaction_turf(var/turf/T, var/volume)
 				if(volume >= 1)
-					T.overlays.Cut()
+					T.overlays.len = 0
 					T.clean_blood()
 					for(var/obj/effect/decal/cleanable/C in src)
 						qdel(C)
@@ -1598,6 +1598,7 @@ datum
 						egg.Hatch()*/
 				if((!O) || (!volume))	return 0
 				var/turf/the_turf = get_turf(O)
+				if(!the_turf) return 0
 				var/datum/gas_mixture/napalm = new
 				var/datum/gas/volatile_fuel/fuel = new
 				fuel.moles = 5
@@ -1641,7 +1642,7 @@ datum
 
 				if(!holder) return
 				if(!M) M = holder.my_atom
-				M.make_dizzy(1)
+				M.Dizzy(1)
 				if(!M.confused) M.confused = 1
 				M.confused = max(M.confused, 20)
 				holder.remove_reagent(src.id, 0.5 * REAGENTS_METABOLISM)
@@ -2084,8 +2085,8 @@ datum
 						M.status_flags &= ~DISFIGURED
 					if(35 to INFINITY)
 						M.adjustToxLoss(1)
-						M.make_dizzy(5)
-						M.make_jittery(5)
+						M.Dizzy(5)
+						M.Jitter(5)
 
 				..()
 				return
@@ -2261,7 +2262,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(5)
+				M.Dizzy(5)
 				M.jitteriness = max(M.jitteriness-5,0)
 				if(data >= 25)
 					if (!M.stuttering) M.stuttering = 1
@@ -2603,8 +2604,8 @@ datum
 				switch(volume)
 					if(1 to 25)
 						M.adjustToxLoss(1)
-						M.make_dizzy(5)
-						M.make_jittery(5)
+						M.Dizzy(5)
+						M.Jitter(5)
 						if(prob(5))
 							M << "<span class='warning'>Oh god, the pain!</span>"
 					if(25 to INFINITY)
@@ -2778,18 +2779,18 @@ datum
 				switch(data)
 					if(1 to 5)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_dizzy(5)
+						M.Dizzy(5)
 						if(prob(10)) M.emote(pick("twitch","giggle"))
 					if(5 to 10)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_jittery(10)
-						M.make_dizzy(10)
+						M.Jitter(10)
+						M.Dizzy(10)
 						M.druggy = max(M.druggy, 35)
 						if(prob(20)) M.emote(pick("twitch","giggle"))
 					if (10 to INFINITY)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_jittery(20)
-						M.make_dizzy(20)
+						M.Jitter(20)
+						M.Dizzy(20)
 						M.druggy = max(M.druggy, 40)
 						if(prob(30)) M.emote(pick("twitch","giggle"))
 				holder.remove_reagent(src.id, 0.2)
@@ -3294,7 +3295,7 @@ datum
 					if(!holder)
 						holder = M.reagents
 					if(holder)
-						M.make_jittery(5)
+						M.Jitter(5)
 						if(adj_temp > 0 && holder.has_reagent("frostoil"))
 							holder.remove_reagent("frostoil", 10*REAGENTS_METABOLISM)
 
@@ -3374,7 +3375,7 @@ datum
 
 					if(!holder) return
 					..()
-					M.make_jittery(5)
+					M.Jitter(5)
 					return
 
 			cold
@@ -3423,7 +3424,7 @@ datum
 					on_mob_life(var/mob/living/M as mob)
 
 						if(!holder) return
-						M.make_jittery(20)
+						M.Jitter(20)
 						M.druggy = max(M.druggy, 30)
 						M.dizziness +=5
 						M.drowsyness = 0
@@ -3527,7 +3528,7 @@ datum
 
 						if(!holder) return
 						..()
-						M.make_jittery(5)
+						M.Jitter(5)
 						return
 
 		hippies_delight
@@ -3546,18 +3547,18 @@ datum
 				switch(data)
 					if(1 to 5)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_dizzy(10)
+						M.Dizzy(10)
 						if(prob(10)) M.emote(pick("twitch","giggle"))
 					if(5 to 10)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_jittery(20)
-						M.make_dizzy(20)
+						M.Jitter(20)
+						M.Dizzy(20)
 						M.druggy = max(M.druggy, 45)
 						if(prob(20)) M.emote(pick("twitch","giggle"))
 					if (10 to INFINITY)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_jittery(40)
-						M.make_dizzy(40)
+						M.Jitter(40)
+						M.Dizzy(40)
 						M.druggy = max(M.druggy, 60)
 						if(prob(30)) M.emote(pick("twitch","giggle"))
 				holder.remove_reagent(src.id, 0.2)
@@ -3792,29 +3793,29 @@ datum
 				switch(data)
 					if(1 to 25)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_dizzy(1)
+						M.Dizzy(1)
 						M.hallucination = max(M.hallucination, 3)
 						if(prob(1)) M.emote(pick("twitch","giggle"))
 					if(25 to 75)
 						if (!M.stuttering) M.stuttering = 1
 						M.hallucination = max(M.hallucination, 10)
-						M.make_jittery(2)
-						M.make_dizzy(2)
+						M.Jitter(2)
+						M.Dizzy(2)
 						M.druggy = max(M.druggy, 45)
 						if(prob(5)) M.emote(pick("twitch","giggle"))
 					if (75 to 150)
 						if (!M.stuttering) M.stuttering = 1
 						M.hallucination = max(M.hallucination, 60)
-						M.make_jittery(4)
-						M.make_dizzy(4)
+						M.Jitter(4)
+						M.Dizzy(4)
 						M.druggy = max(M.druggy, 60)
 						if(prob(10)) M.emote(pick("twitch","giggle"))
 						if(prob(30)) M.adjustToxLoss(2)
 					if (150 to 300)
 						if (!M.stuttering) M.stuttering = 1
 						M.hallucination = max(M.hallucination, 60)
-						M.make_jittery(4)
-						M.make_dizzy(4)
+						M.Jitter(4)
+						M.Dizzy(4)
 						M.druggy = max(M.druggy, 60)
 						if(prob(10)) M.emote(pick("twitch","giggle"))
 						if(prob(30)) M.adjustToxLoss(2)
@@ -3913,8 +3914,8 @@ datum
 
 				on_mob_life(var/mob/living/M as mob)
 
-					if(!holder) return
 					..()
+					if(!holder) return
 					M:nutrition += nutriment_factor
 					holder.remove_reagent(src.id, FOOD_METABOLISM)
 					M:drowsyness = max(0,M:drowsyness-7)
@@ -3922,7 +3923,7 @@ datum
 					//	M:sleeping = max(0,M.sleeping-2)
 					if (M.bodytemperature > 310)
 						M.bodytemperature = max(310, M.bodytemperature-5)
-					M.make_jittery(1)
+					M.Jitter(1)
 					return
 
 

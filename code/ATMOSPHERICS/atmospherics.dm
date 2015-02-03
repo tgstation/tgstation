@@ -78,6 +78,7 @@ Pipelines + Other Objects -> Pipe network
 // Re-enabled for debugging.
 /obj/machinery/atmospherics/process()
 	build_network()
+	//testing("[src] called parent process to build_network()")
 
 /obj/machinery/atmospherics/proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	// Check to see if should be added to network. Add self if so and adjust variables appropriately.

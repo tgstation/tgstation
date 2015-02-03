@@ -141,7 +141,9 @@ json_reader
 			return tokens[i]
 
 		next_token()
-			return tokens[++i]
+			if(++i <= tokens.len)
+				return tokens[i]
+			return
 
 		read_token(val, type)
 			var/json_token/T = get_token()

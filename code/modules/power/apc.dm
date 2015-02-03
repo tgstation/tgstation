@@ -1023,8 +1023,11 @@
 	area.calc_lighting() */
 
 	lastused_light = areaMaster.usage(LIGHT)
+	lastused_light += areaMaster.usage(STATIC_LIGHT)
 	lastused_equip = areaMaster.usage(EQUIP)
+	lastused_light += areaMaster.usage(STATIC_EQUIP)
 	lastused_environ = areaMaster.usage(ENVIRON)
+	lastused_light += areaMaster.usage(STATIC_ENVIRON)
 	areaMaster.clear_usage()
 
 	lastused_total = lastused_light + lastused_equip + lastused_environ

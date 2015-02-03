@@ -95,13 +95,15 @@
 				if(synd.current.client)
 					for(var/image/I in synd.current.client.images)
 						if(I.icon_state == "synd" && I.loc == synd_mind.current)
-							del(I)
+							//del(I)
+							synd.current.client.images -= I
 
 		if(synd_mind.current)
 			if(synd_mind.current.client)
 				for(var/image/I in synd_mind.current.client.images)
 					if(I.icon_state == "synd")
-						del(I)
+						//del(I)
+						synd_mind.current.client.images -= I
 
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////

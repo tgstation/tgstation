@@ -163,7 +163,7 @@
 	brainmob = new(src)
 	brainmob.name = H.real_name
 	brainmob.real_name = H.real_name
-	if(H.dna)
+	if(istype(H) && H.dna)
 		brainmob.dna = H.dna.Clone()
 	brainmob.container = src
 
@@ -243,4 +243,4 @@
 		else if(!src.brainmob.key)
 			user << "<span class='warning'>It seems to be in a deep dream-state</span>" //ghosted
 	user << "<span class='info'>*---------*</span>"
-	user << "<span class='info'>It's interface is [locked ? "unlocked" : "locked"] </span>"
+	user << "<span class='info'>It's interface is [locked ? "locked" : "unlocked"] </span>"

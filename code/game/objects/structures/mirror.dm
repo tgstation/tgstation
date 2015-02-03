@@ -14,7 +14,10 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-
+		if((H.mind in ticker.mode.vampires) || H.mind.vampire) //if vampire
+			if(!(VAMP_FULL in H.mind.vampire.powers))
+				H << "<span class='notice'>You don't see anything.</span>"
+				return
 		var/userloc = H.loc
 
 		//see code/modules/mob/new_player/preferences.dm at approx line 545 for comments!
@@ -72,8 +75,8 @@
 
 
 /obj/structure/mirror/attackby(obj/item/I as obj, mob/user as mob)
-	if ((shattered) && (istype(I, /obj/item/stack/sheet/glass)))
-		var/obj/item/stack/sheet/glass/stack = I
+	if ((shattered) && (istype(I, /obj/item/stack/sheet/glass/glass)))
+		var/obj/item/stack/sheet/glass/glass/stack = I
 		if ((stack.amount - 2) < 0)
 			user << "\red You need more glass to do that."
 		else

@@ -783,7 +783,7 @@ regex
 			i=FirstPossible(txt,i+1,first,stop,anyline)
 		while(stack.len)
 			i=stack[stack.len]
-			stack.Cut(stack.len)
+			stack.len--
 			if(FindHere(txt,i,first)) break
 			i=0
 		if(i && isfirst)

@@ -134,7 +134,7 @@
 						var/n="[tmp_object]"
 						item_names+=n
 						item_paths[n]=typepath
-						del(tmp_object)
+						qdel(tmp_object)
 					var/targetitem = input("Select item to search for.", "Item Mode Select","") as null|anything in potential_theft_objectives
 					if(!targetitem)
 						return

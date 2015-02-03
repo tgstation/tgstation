@@ -11,7 +11,8 @@
 	use_power = 1
 	idle_power_usage = 40
 	var/energy = 0
-	var/max_energy = 100
+	var/max_energy = 50
+	var/rechargerate = 2
 	var/amount = 30
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/recharged = 0
@@ -28,6 +29,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 */
 
 /obj/machinery/chem_dispenser/mapping
+	max_energy = 100
 	energy = 100
 
 /********************************************************************
@@ -50,11 +52,27 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 	RefreshParts()
 
+/obj/machinery/chem_dispenser/RefreshParts()
+	var/T = 0
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		T += M.rating-1
+	max_energy = initial(max_energy)+(T * 50 / 4)
+
+	T = 0
+	for(var/obj/item/weapon/stock_parts/micro_laser/Ma in component_parts)
+		T += Ma.rating-1
+	rechargerate = initial(rechargerate) + (T / 2)
+
+/*
+	for(var/obj/item/weapon/stock_parts/scanning_module/Ml in component_parts)
+		T += Ml.rating
+	//Who even knows what to use the scanning module for
+*/
+
 /obj/machinery/chem_dispenser/proc/recharge()
 	if(stat & (BROKEN|NOPOWER)) return
-	var/addenergy = 2
 	var/oldenergy = energy
-	energy = min(energy + addenergy, max_energy)
+	energy = min(energy + rechargerate, max_energy)
 	if(energy != oldenergy)
 		use_power(3000) // This thing uses up alot of power (this is still low as shit for creating reagents from thin air)
 		nanomanager.update_uis(src) // update all UIs attached to src
@@ -112,6 +130,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(stat & (BROKEN|NOPOWER)) return
 	if((user.stat && !isobserver(user)) || user.restrained()) return
+	if(!chemical_reagents_list || !chemical_reagents_list.len) return
 
 	// this is the data which will be sent to the ui
 	var/data[0]
@@ -155,6 +174,8 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		ui.open()
 
 /obj/machinery/chem_dispenser/Topic(href, href_list)
+	if(..())
+		return
 	if(stat & (NOPOWER|BROKEN))
 		return 0 // don't update UIs attached to this object
 
@@ -349,6 +370,8 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		return 1
 
 /obj/machinery/chem_master/Topic(href, href_list)
+	if(..())
+		return
 	if(stat & (BROKEN|NOPOWER)) 		return
 	if(usr.stat || usr.restrained())	return
 	if(!in_range(src, usr)) 			return
@@ -462,7 +485,8 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 				if (href_list["createbottle_multiple"])
 					count = isgoodnumber(input("Select the number of bottles to make.", 10, count) as num)
 				if (count > 4) count = 4
-				var/amount_per_bottle = reagents.total_volume/count
+				if (count < 1) count = 1
+				var/amount_per_bottle = reagents.total_volume > 0 ? reagents.total_volume/count : 0
 				if (amount_per_bottle > 30) amount_per_bottle = 30
 				while (count--)
 					var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
@@ -621,7 +645,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	var/image/overlay = image('icons/obj/chemical.dmi', src, "[icon_state]_overlay")
 	if(reagents.total_volume)
 		overlay.icon += mix_color_from_reagents(reagents.reagent_list)
-	overlays.Cut()
+	overlays.len = 0
 	overlays += overlay
 
 /obj/machinery/chem_master/on_reagent_change()

@@ -56,7 +56,9 @@
 		var/obj/item/weapon/coin/COIN=locate(typepath, src.contents)
 		if(!COIN)
 			return
-		COIN.loc = src.loc
+		COIN.loc = get_turf(src)
+		if(!usr.get_active_hand())
+			usr.put_in_hands(COIN)
 	return
 
 /obj/item/weapon/moneybag/MouseDrop(obj/over_object as obj)

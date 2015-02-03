@@ -44,6 +44,7 @@
 		if(/obj/item/weapon/twohanded/fireaxe) qdel(src)
 		if(/obj/item/weapon/hatchet) qdel(src)
 		if(/obj/item/weapon/melee/energy) qdel(src)
+		if(/obj/item/weapon/pickaxe/plasmacutter) qdel(src)
 
 		// Less effective weapons
 		if(/obj/item/weapon/wirecutters)
@@ -194,7 +195,7 @@
 		SetLuminosity(0)
 
 	// Update flower/product overlay.
-	overlays.Cut()
+	overlays.len = 0
 	if(age >= seed.maturation)
 		if(prob(20) && seed.products && seed.products.len && !harvest && ((age-lastproduce) > seed.production))
 			harvest = 1
@@ -384,6 +385,8 @@
 		growth_queue -= SV
 
 		SV.life()
+
+		if(!SV) continue
 
 		if(SV.energy < 2) //If tile isn't fully grown
 			var/chance

@@ -61,7 +61,6 @@
 		return
 	..()
 	if ((!(A) || src != A.loc))	return
-
 	inertial_drift(A)
 
 	if(ticker && ticker.mode)
@@ -280,3 +279,6 @@
 
 /turf/space/singularity_act()
 	return
+
+/turf/space/ChangeTurf(var/turf/N, var/tell_universe=1, var/force_lighting_update = 0)
+	return ..(N, tell_universe, 1)

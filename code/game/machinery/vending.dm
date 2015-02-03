@@ -464,7 +464,7 @@
 			usr << "There is no coin in this machine."
 			return
 
-		coin.loc = src.loc
+		coin.loc = get_turf(src)
 		if(!usr.get_active_hand())
 			usr.put_in_hands(coin)
 		usr << "\blue You remove the [coin] from the [src]"

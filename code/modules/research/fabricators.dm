@@ -113,16 +113,19 @@
 //basically, we call this whenever we add something that isn't a design to part_sets
 /obj/machinery/r_n_d/fabricator/proc/convert_part_set(set_name as text)
 	var/list/parts = part_sets[set_name]
+	var/i = 0
 	if(istype(parts, /list))
-		for(var/i=1;i<=parts.len;i++)
-			var/thispart = parts[i]
-			if(thispart && ispath(thispart) && !istype(thispart, /datum/design))
-				var/design = FindDesign(thispart)
-				if(design)
-					parts[i] = new design
+		for(var/thispart in parts)
+			i++
+			if(!thispart)
+				parts.Remove(thispart)
+				continue
+			if(ispath(thispart) && !istype(thispart, /datum/design))
+				var/datum/design/design = FindDesign(thispart)
+				if(istype(design))
+					parts[i] = design
 				else
-					parts.Cut(i, i++)
-					i--
+					parts.Remove(thispart)
 			//debug below
 			/*
 			if(!istype(parts[i], /datum/design))
@@ -450,7 +453,7 @@
 /obj/machinery/r_n_d/fabricator/proc/getTopicDesign(var/stringinput = "")
 	var/final_digit = 0
 	for(var/i = 1, i <= length(stringinput), i++)
-		if(!text2num(copytext(stringinput, i)))
+		if(!isnum(text2num(copytext(stringinput, i))))
 			//message_admins("Breaking on [copytext(stringinput, i)] and [i]")
 			final_digit = i
 			break

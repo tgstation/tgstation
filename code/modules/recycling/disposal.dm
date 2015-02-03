@@ -308,7 +308,7 @@
 
 	// update the icon & overlays to reflect mode & status
 	proc/update()
-		overlays.Cut()
+		overlays.len = 0
 		if(stat & BROKEN)
 			icon_state = "disposal-broken"
 			mode = 0

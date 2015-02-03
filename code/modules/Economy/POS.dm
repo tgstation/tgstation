@@ -163,7 +163,7 @@ var/const/POS_HEADER = {"<html>
 	line_items.Cut(order_id,order_id+1)
 
 /obj/machinery/pos/proc/NewOrder()
-	line_items.Cut()
+	line_items.len = 0
 
 /obj/machinery/pos/proc/PrintReceipt(var/order_id)
 	var/receipt = {"[RECEIPT_HEADER]<div>POINT OF SALE #[id]<br />

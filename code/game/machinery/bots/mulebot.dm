@@ -460,7 +460,7 @@ var/global/mulebot_count = 0
 		return
 
 	mode = 1
-	overlays.Cut()
+	overlays.len = 0
 
 	load.loc = src.loc
 	load.pixel_y -= 9
@@ -921,4 +921,4 @@ var/global/mulebot_count = 0
 
 	new /obj/effect/decal/cleanable/blood/oil(src.loc)
 	unload(0)
-	del(src)
+	qdel(src)

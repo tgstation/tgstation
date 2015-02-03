@@ -57,7 +57,7 @@
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		user << "You cut the tag off the bodybag"
 		src.name = "body bag"
-		src.overlays.Cut()
+		src.overlays.len = 0
 		return
 
 

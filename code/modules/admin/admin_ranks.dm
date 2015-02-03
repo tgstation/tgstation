@@ -2,7 +2,7 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 
 //load our rank - > rights associations
 /proc/load_admin_ranks()
-	admin_ranks.Cut()
+	admin_ranks.len = 0
 
 	var/previous_rights = 0
 
@@ -56,11 +56,11 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 
 /proc/load_admins()
 	//clear the datums references
-	admin_datums.Cut()
+	admin_datums.len = 0
 	for(var/client/C in admins)
 		C.remove_admin_verbs()
 		C.holder = null
-	admins.Cut()
+	admins.len = 0
 
 	if(config.admin_legacy_system)
 		load_admin_ranks()

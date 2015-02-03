@@ -191,7 +191,7 @@
 	for(var/datum/powernet/PN in powernets)
 		del(PN)
 
-	powernets.Cut()
+	powernets.len = 0
 
 	for(var/obj/structure/cable/PC in cable_list)
 		if(!PC.powernet)
@@ -440,3 +440,10 @@
 
 		if(FINDME)
 			return FINDME
+
+/obj/machinery/proc/addStaticPower(value, powerchannel)
+	if(!areaMaster)
+		return
+	areaMaster.addStaticPower(value, powerchannel)
+/obj/machinery/proc/removeStaticPower(value, powerchannel)
+	addStaticPower(-value, powerchannel)

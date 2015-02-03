@@ -72,7 +72,7 @@
 			if(chosenlist)
 				chosenlist.Remove(e)
 
-// Clone of list.Cut()
+// Clone of list.len = 0
 /proc/n_listcut(var/list/L, var/start, var/end)
 	if(!istype(L, /list)) return
 	return L.Cut(start, end)

@@ -184,6 +184,8 @@ proc/listclearnulls(list/list)
 
 //any value in a list
 /proc/sortList(var/list/L, cmp=/proc/cmp_text_asc)
+	if(!istype(L))
+		return
 	return sortTim(L.Copy(), cmp)
 
 //uses sortList() but uses the var's name specifically. This should probably be using mergeAtom() instead
@@ -201,6 +203,8 @@ proc/listclearnulls(list/list)
 /proc/mergeAtoms(var/list/atom/L, var/list/atom/R, var/order = 1)
 	var/Li=1
 	var/Ri=1
+	ASSERT(L)
+	ASSERT(R)
 	var/list/result = new()
 	while(Li <= L.len && Ri <= R.len)
 		var/atom/rL = L[Li]

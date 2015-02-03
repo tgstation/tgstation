@@ -19,7 +19,7 @@
 /* 21st Sept 2010
 Updated by Skie -- Still not perfect but better!
 Stuff you can't do:
-Call proc /mob/proc/make_dizzy() for some player
+Call proc /mob/proc/Dizzy() for some player
 Because if you select a player mob as owner it tries to do the proc for
 /mob/living/carbon/human/ instead. And that gives a run-time error.
 But you can call procs that are of type /mob/living/carbon/human/proc/ for that player.
@@ -1106,8 +1106,8 @@ Pressure: [env.return_pressure()]"}
 	set category = "Debug"
 	set name = "Dump Instance Counts"
 	set desc = "MEMORY PROFILING IS TOO HIGH TECH"
-
-	var/F=file("instances.csv")
+	var/date_string = time2text(world.realtime, "YYYY-MM-Month-DD-Day-SS")
+	var/F=file("data/logs/profiling/instances_[date_string].csv")
 	fdel(F)
 	F << "Types,Number of Instances"
 	for(var/key in type_instances)
@@ -1118,9 +1118,10 @@ Pressure: [env.return_pressure()]"}
 #ifdef PROFILE_MACHINES
 /client/proc/cmd_admin_dump_macprofile()
 	set category = "Debug"
-	set name = "Dump Machine Profiling"
+	set name = "Dump Machine and Object Profiling"
 
-	var/F = file("machine_profiling.csv")
+	var/date_string = time2text(world.realtime, "YYYY-MM-Month-DD-Day-SS")
+	var/F =file("data/logs/profiling/machine_profiling_[date_string].csv")
 	fdel(F)
 	F << "type,nanoseconds"
 	for(var/typepath in machine_profiling)
@@ -1128,13 +1129,22 @@ Pressure: [env.return_pressure()]"}
 		F << "[typepath],[ns]"
 
 	usr << "\blue Dumped to machine_profiling.csv."
+	var/FF = file("data/logs/profiling/object_profiling_[date_string].csv")
+	fdel(FF)
+	FF << "type,nanoseconds"
+	for(var/typepath in object_profiling)
+		var/ns = object_profiling[typepath]
+		FF << "[typepath],[ns]"
+
+	usr << "\blue Dumped to object_profiling.csv."
 #endif
 
 /client/proc/cmd_admin_dump_delprofile()
 	set category = "Debug"
 	set name = "Dump Del Profiling"
 
-	var/F = file("del_profiling.csv")
+	var/date_string = time2text(world.realtime, "YYYY-MM-Month-DD-Day-SS")
+	var/F =file("data/logs/profiling/del_profiling_[date_string].csv")
 	fdel(F)
 	F << "type,deletes"
 	for(var/typepath in del_profiling)
@@ -1142,6 +1152,14 @@ Pressure: [env.return_pressure()]"}
 		F << "[typepath],[ns]"
 
 	usr << "\blue Dumped to del_profiling.csv."
+	F =file("data/logs/profiling/gdel_profiling_[date_string].csv")
+	fdel(F)
+	F << "type,soft deletes"
+	for(var/typepath in gdel_profiling)
+		var/ns = gdel_profiling[typepath]
+		F << "[typepath],[ns]"
+
+	usr << "\blue Dumped to gdel_profiling.csv."
 
 /client/proc/gib_money()
 	set category = "Fun"
@@ -1218,6 +1236,8 @@ client/proc/make_invulnerable(var/mob/M in mob_list)
 				return
 
 			M.flags &= ~INVULNERABLE
+	log_admin("[ckey(key)]/([mob]) has toggled [M]'s invulnerability [(M.flags & INVULNERABLE) ? "on" : "off"]")
+	message_admins("[ckey(key)]/([mob]) has toggled [M]'s invulnerability [(M.flags & INVULNERABLE) ? "on" : "off"]")
 
 client/proc/delete_all_adminbus()
 	set name = "Delete every Adminbus"

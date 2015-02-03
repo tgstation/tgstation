@@ -40,6 +40,7 @@
 	var/datum/artifact_find/artifact_find
 
 /obj/structure/boulder/New()
+	..()
 	icon_state = "boulder[rand(1,4)]"
 	excavation_level = rand(5,50)
 

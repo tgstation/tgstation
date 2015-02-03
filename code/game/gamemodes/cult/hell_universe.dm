@@ -46,6 +46,8 @@ In short:
 	emergency_shuttle.force_shutdown()
 	*/
 
+	escape_list = get_area_turfs(locate(/area/hallway/secondary/exit))
+
 	suspend_alert = 1
 
 	for(var/area/ca in world)

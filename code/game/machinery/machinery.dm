@@ -129,6 +129,8 @@ Class Procs:
 
 	var/inMachineList = 1 // For debugging.
 
+	languages = ALL
+
 /obj/machinery/cultify()
 	var/list/random_structure = list(
 		/obj/structure/cult/talisman,

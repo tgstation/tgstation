@@ -24,23 +24,19 @@
 		SetLuminosity(0)
 
 /obj/machinery/bodyscanner/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-	if(!istype(O) || isturf(O)) // Its not a movable atom.
+	if(!ismob(O)) //humans only
 		return
-	if(O.loc == user) //no you can't pull things out of your ass
+	if(O.loc == user || !isturf(O.loc) || !isturf(user.loc)) //no you can't pull things out of your ass
 		return
 	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.resting) //are you cuffed, dying, lying, stunned or other
 		return
-	if(O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src)) // is the mob anchored, too far away from you, or are you too far away from the source
-		return
-	if(!ismob(O)) //humans only
+	if(O.anchored || !Adjacent(user) || !user.Adjacent(src) || user.contents.Find(src)) // is the mob anchored, too far away from you, or are you too far away from the source
 		return
 	if(istype(O, /mob/living/simple_animal) || istype(O, /mob/living/silicon)) //animals and robutts dont fit
 		return
 	if(!ishuman(user) && !isrobot(user)) //No ghosts or mice putting people into the sleeper
 		return
 	if(user.loc==null) // just in case someone manages to get a closet into the blue light dimension, as unlikely as that seems
-		return
-	if(!istype(user.loc, /turf) || !istype(O.loc, /turf)) // are you in a container/closet/pod/etc?
 		return
 	if(occupant)
 		user << "<span class='notice'>\The [src] is already occupied!</span>"
@@ -113,7 +109,7 @@
 	src.occupant = usr
 	src.icon_state = "body_scanner_1"
 	for(var/obj/O in src)
-		del(O)
+		qdel(O)
 	src.add_fingerprint(usr)
 	return
 
@@ -151,7 +147,7 @@
 	for(var/obj/O in src)
 		O.loc = src.loc
 	src.add_fingerprint(user)
-	del(G)
+	qdel(G)
 	return
 
 /obj/machinery/bodyscanner/ex_act(severity)
@@ -183,7 +179,7 @@
 	if(prob(50))
 		for(var/atom/movable/A as mob|obj in src)
 			A.loc = src.loc
-		del(src)
+		qdel(src)
 
 /obj/machinery/body_scanconsole/ex_act(severity)
 	switch(severity)
@@ -199,7 +195,7 @@
 
 /obj/machinery/body_scanconsole/blob_act()
 	if(prob(50))
-		del(src)
+		qdel(src)
 
 /obj/machinery/body_scanconsole/power_change()
 	if(stat & BROKEN)

@@ -191,4 +191,5 @@ Des: Removes the alien infection image from all aliens in the world located in p
 				for(var/image/I in alien.client.images)
 					if(I.loc == C)
 						if(dd_hasprefix_case(I.icon_state, "infected"))
-							del(I)
+							//del(I)
+							alien.client.images -= I

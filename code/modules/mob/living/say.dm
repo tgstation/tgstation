@@ -16,6 +16,7 @@
 #define MODE_ALIEN "alientalk"
 #define MODE_HOLOPAD "holopad"
 #define MODE_CHANGELING "changeling"
+#define MODE_CULTCHAT "cultchat"
 
 #define SAY_MINIMUM_PRESSURE 10
 var/list/department_radio_keys = list(
@@ -35,6 +36,7 @@ var/list/department_radio_keys = list(
 	  ":u" = "Supply",		"#u" = "Supply",		".u" = "Supply",
 	  ":d" = "Service",     "#d" = "Service",       ".d" = "Service",
 	  ":g" = "changeling",	"#g" = "changeling",	".g" = "changeling",
+	  ":x" = "cultchat",	"#x" = "cultchat",		".x" = "cultchat",
 
 	  ":R" = "right ear",	"#R" = "right ear",		".R" = "right ear", "!R" = "fake right ear",
 	  ":L" = "left ear",	"#L" = "left ear",		".L" = "left ear",  "!L" = "fake left ear",
@@ -52,6 +54,7 @@ var/list/department_radio_keys = list(
 	  ":U" = "Supply",		"#U" = "Supply",		".U" = "Supply",
 	  ":D" = "Service",     "#D" = "Service",       ".D" = "Service",
 	  ":G" = "changeling",	"#G" = "changeling",	".G" = "changeling",
+	  ":X" = "cultchat",	"#X" = "cultchat",		".X" = "cultchat",
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
@@ -99,17 +102,19 @@ var/list/department_radio_keys = list(
 		src << "\red You can't speak while silenced."
 		return
 
+	var/message_mode = get_message_mode(message)
 	if (stat == DEAD) // Dead.
 		say_dead(message)
 		return
 	if (stat) // Unconcious.
+		if(message_mode == MODE_WHISPER) //Lets us say our last words.
+			whisper(copytext(message, 3))
 		return
 	if(check_emote(message))
 		return
 	if(!can_speak_basic(message))
 		return
 
-	var/message_mode = get_message_mode(message)
 	if(message_mode == MODE_HEADSET || message_mode == MODE_ROBOT)
 		message = copytext(message, 2)
 	else if(message_mode)
@@ -124,10 +129,11 @@ var/list/department_radio_keys = list(
 		return
 	if(!can_speak_vocal(message))
 		return
-	message = treat_message(message)
 
 	var/message_range = 7
-	var/radio_return = radio(message, message_mode)
+	var/raw_message = message
+	message = treat_message(message)
+	var/radio_return = radio(message, message_mode, raw_message)
 	if(radio_return & NOPASS) //There's a whisper() message_mode, no need to continue the proc if that is called
 		return
 	if(radio_return & ITALICS)
@@ -135,6 +141,7 @@ var/list/department_radio_keys = list(
 	if(radio_return & REDUCE_RANGE)
 		message_range = 1
 
+	
 	send_speech(message, message_range, src, bubble_type)
 
 	log_say("[name]/[key] : [message]")
@@ -175,13 +182,7 @@ var/list/department_radio_keys = list(
 	for(var/mob/M in listening_dead)
 		M.Hear(rendered, src, languages, message)
 
-	//speech bubble
-	var/list/speech_bubble_recipients = list()
-	for(var/mob/M in (listening + listening_dead))
-		if(M.client)
-			speech_bubble_recipients.Add(M.client)
-	spawn(0)
-		flick_overlay(image('icons/mob/talk.dmi', src, "h[bubble_type][say_test(message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
+	send_speech_bubble(message, bubble_type, (listening + listening_dead))
 
 /mob/living/proc/say_test(var/text)
 	var/ending = copytext(text, length(text))
@@ -235,6 +236,7 @@ var/list/department_radio_keys = list(
 		return MODE_HEADSET
 	else if(length(message) > 2)
 		return department_radio_keys[copytext(message, 1, 3)]
+
 /mob/living/proc/handle_inherent_channels(message, message_mode)
 	if(message_mode == MODE_CHANGELING)
 		if(lingcheck())
@@ -243,9 +245,15 @@ var/list/department_radio_keys = list(
 				if(M.lingcheck() || (M in dead_mob_list && !istype(M, /mob/new_player)))
 					M << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
 			return 1
+	if(message_mode == MODE_CULTCHAT && construct_chat_check(1) /*sending check for humins*/)
+		log_say("Cult channel: [src.name]/[src.key] : [message]")
+		for(var/mob/M in mob_list)
+			if(M.construct_chat_check(2) /*receiving check*/ || (M in dead_mob_list && !istype(M, /mob/new_player)))
+				M << "<span class='sinister'><b>[src.name]:</b> [message]</span>"
+		return 1
 	return 0
 
-/mob/living/proc/treat_message(message)
+/mob/living/proc/treat_message(message, genesay = 0)
 	if(getBrainLoss() >= 60)
 		message = derpspeech(message, stuttering)
 
@@ -254,7 +262,7 @@ var/list/department_radio_keys = list(
 
 	return message
 
-/mob/living/proc/radio(message, message_mode, steps)
+/mob/living/proc/radio(message, message_mode, raw_message)
 	switch(message_mode)
 		if(MODE_R_HAND)
 			if (r_hand)
@@ -273,12 +281,25 @@ var/list/department_radio_keys = list(
 				robot_talk(message)
 			return ITALICS | REDUCE_RANGE //Does not return 0 since this is only reached by humans, not borgs or AIs.
 		if(MODE_WHISPER)
-			whisper(message)
+			whisper(raw_message)
 			return NOPASS
 	return 0
+
 /mob/living/lingcheck()
 	if(mind && mind.changeling && !issilicon(src))
 		return 1
+
+/mob/living/construct_chat_check(var/setting = 0) //setting: 0 is to speak over general into cultchat, 1 is to speak over channel into cultchat, 2 is to hear cultchat
+	if(!mind) return
+
+	if(setting == 0) //overridden for constructs
+		return
+	if(setting == 1)
+		if(mind in ticker.mode.cult && universal_cult_chat == 1)
+			return 1
+	if(setting == 2)
+		if(mind in ticker.mode.cult)
+			return 1
 
 /mob/living/say_quote()
 	if (stuttering)
@@ -286,6 +307,15 @@ var/list/department_radio_keys = list(
 	if (getBrainLoss() >= 60)
 		return "gibbers, \"[text]\""
 	return ..()
+
+/mob/living/proc/send_speech_bubble(var/message,var/bubble_type, var/list/hearers)
+	//speech bubble
+	var/list/speech_bubble_recipients = list()
+	for(var/mob/M in hearers)
+		if(M.client)
+			speech_bubble_recipients.Add(M.client)
+	spawn(0)
+		flick_overlay(image('icons/mob/talk.dmi', src, "h[bubble_type][say_test(message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
 
 /mob/proc/addSpeechBubble(image/speech_bubble)
 	if(client)
@@ -295,3 +325,4 @@ var/list/department_radio_keys = list(
 
 /obj/effect/speech_bubble
 	var/mob/parent
+

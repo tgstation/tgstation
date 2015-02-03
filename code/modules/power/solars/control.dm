@@ -89,8 +89,8 @@
 				A.anchored = 1
 				qdel(src)
 			else
-				visible_message("<span class='notice'>[user] disconnects [src]'s monitor.</span>", \
-				"<span class='notice'>You disconnect [src]'s monitor.</span>")
+				visible_message("[user] begins to unscrew \the [src]'s monitor.",
+				"You begin to unscrew the monitor...")
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe(src.loc)
 				var/obj/item/weapon/circuitboard/solar_control/M = new /obj/item/weapon/circuitboard/solar_control(A)
 				for (var/obj/C in src)
@@ -118,7 +118,7 @@
 		return
 
 	if ((get_dist(src, user) > 1))
-		if (!istype(user, /mob/living/silicon/ai))
+		if (!issilicon(user)&&!isobserver(user))
 			user.unset_machine()
 			user << browse(null, "window=solcon")
 			return
@@ -195,7 +195,7 @@ Manual Tracking Direction:"}
 		track = text2num(href_list["track"])
 
 		if(track == 2)
-			for(var/obj/machinery/power/solar/tracker/T in getPowernetNodes())
+			for(var/obj/machinery/power/solar/panel/tracker/T in getPowernetNodes())
 				cdir = T.sun_angle
 				break
 

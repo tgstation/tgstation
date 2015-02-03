@@ -231,7 +231,7 @@
 	var/image/overlay = image('icons/obj/chemical.dmi', src, "[icon_state]_overlay")
 	if(reagents.total_volume)
 		overlay.icon += mix_color_from_reagents(reagents.reagent_list)
-	overlays.Cut()
+	overlays.len = 0
 	overlays += overlay
 
 /obj/machinery/snackbar_machine/on_reagent_change()

@@ -388,7 +388,11 @@ var/global/datum/controller/gameticker/ticker
 				world << "<span class='notice'><B>Server will shut down for an automatic update [config.map_voting ? "[(restart_timeout/10)] seconds." : "in a few seconds."]</B></span>"
 				if(config.map_voting)
 					sleep(restart_timeout) //waiting for a mapvote to end
-				watchdog.signal_ready()
+				if(!delay_end)
+					watchdog.signal_ready()
+				else
+					world << "<span class='notice'><B>An admin has delayed the round end</B></span>"
+					delay_end = 2
 			else if(!delay_end)
 				sleep(restart_timeout)
 				if(!delay_end)
@@ -396,8 +400,10 @@ var/global/datum/controller/gameticker/ticker
 					world.Reboot()
 				else
 					world << "<span class='notice'><B>An admin has delayed the round end</B></span>"
+					delay_end = 2
 			else
 				world << "<span class='notice'><B>An admin has delayed the round end</B></span>"
+				delay_end = 2
 
 	return 1
 

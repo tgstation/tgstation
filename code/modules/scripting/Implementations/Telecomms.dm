@@ -303,7 +303,7 @@ datum/signal
 
 		//SAY REWRITE RELATED CODE.
 		//This code is a little hacky, but it *should* work. Even though it'll result in a virtual speaker referencing another virtual speaker. vOv
-		var/atom/movable/virtualspeaker/virt = new(null)
+		var/atom/movable/virtualspeaker/virt = getFromPool(/atom/movable/virtualspeaker, null)
 		virt.name = source
 		virt.job = job
 		virt.faketrack = 1

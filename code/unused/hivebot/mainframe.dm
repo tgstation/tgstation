@@ -21,16 +21,12 @@
 
 /mob/living/silicon/hive_mainframe/Stat()
 	..()
-	statpanel("Status")
-	if (src.client.statpanel == "Status")
+
+	if(statpanel("Status"))
 		if(emergency_shuttle.online && emergency_shuttle.location < 2)
 			var/timeleft = emergency_shuttle.timeleft()
 			if (timeleft)
 				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
-/*
-		if(ticker.mode.name == "AI malfunction")
-			stat(null, "Points left until the AI takes over: [AI_points]/[AI_points_win]")
-*/
 
 /mob/living/silicon/hive_mainframe/updatehealth()
 	if (src.nodamage == 0)

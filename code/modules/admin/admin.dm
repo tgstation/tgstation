@@ -942,9 +942,17 @@ var/global/floorIsLava = 0
 
 	if(!check_rights(R_ADMIN))	return
 	if (!ticker || ticker.current_state != GAME_STATE_PREGAME)
+		if(ticker.delay_end == 2)
+			world << "<font size=4><span class='danger'>World Reboot triggered by [key_name(usr)]!</font></span>"
+			log_admin("<font size=4><span class='danger'>World Reboot triggered by [key_name(usr)]!</font></span>")
+			if(watchdog.waiting)
+				watchdog.signal_ready()
+			else
+				world.Reboot()
 		ticker.delay_end = !ticker.delay_end
 		log_admin("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
 		message_admins("\blue [key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].", 1)
+		
 		return //alert("Round end delayed", null, null, null, null, null)
 	if (!( going ))
 		going = LOBBY_TICKING_RESTARTED

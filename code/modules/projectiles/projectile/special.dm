@@ -251,5 +251,6 @@ obj/item/projectile/kinetic/New()
 	layer = 4.1
 
 /obj/item/effect/kinetic_blast/New()
+	..()
 	spawn(4)
 		del(src)

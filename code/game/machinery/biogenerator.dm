@@ -339,7 +339,7 @@
 		if(I.reagents.get_reagent_amount("nutriment") < 0.1)
 			points += 1
 		else points += I.reagents.get_reagent_amount("nutriment")*10
-		del(I)
+		qdel(I)
 	if(S)
 		processing = 1
 		update_icon()

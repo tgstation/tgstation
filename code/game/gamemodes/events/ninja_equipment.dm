@@ -550,7 +550,7 @@ ________________________________________________________________________________
 				playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
 				for (var/mob/O in hearers(3, P.loc))
 					O.show_message(text("\icon[P] *[P.ttone]*"))
-			P.overlays.Cut()
+			P.overlays.len = 0
 			P.overlays += image('icons/obj/pda.dmi', "pda-r")
 
 		if("Inject")

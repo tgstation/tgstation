@@ -9,6 +9,8 @@ var/global/media_transmitters=list()
 	var/media_crypto    = null // No crypto keys.
 
 /obj/machinery/media/transmitter/New()
+	del(src)
+	if(1) return
 	..()
 	connect_frequency()
 
