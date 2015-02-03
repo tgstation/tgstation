@@ -146,13 +146,6 @@
 
 /obj/item/attack_hand(mob/user as mob)
 	if (!user) return
-	if (hasorgans(user))
-		var/datum/organ/external/temp = user:organs_by_name["r_hand"]
-		if (user.hand)
-			temp = user:organs_by_name["l_hand"]
-		if(temp && !temp.is_usable())
-			user << "<span class='notice'>You try to move your [temp.display_name], but cannot!"
-			return
 
 	if (istype(src.loc, /obj/item/weapon/storage))
 		//If the item is in a storage item, take it out.
@@ -175,6 +168,8 @@
 	user.put_in_active_hand(src)
 	return
 
+/obj/item/requires_dexterity(mob/user)
+	return 1
 
 /obj/item/attack_paw(mob/user as mob)
 

@@ -15,11 +15,25 @@
 	if(proximity && istype(G) && G.Touch(A, src, 1))
 		return
 
-	A.attack_hand(src)
+	if(src.can_use_active_hand())
+		A.attack_hand(src)
+	else
+		A.attack_stump(src)
 	return
 
 /atom/proc/attack_hand(mob/user as mob)
 	return
+
+//called when we try to click but have no hand
+//good for general purposes
+/atom/proc/attack_stump(mob/user as mob)
+	if(!requires_dexterity(user))
+		attack_hand(user) //if the object doesn't need dexterity, we can use our stump
+	else
+		user << "Your [user.hand ? "left hand" : "right hand"] is not fine enough for this action."
+
+/atom/proc/requires_dexterity(mob/user)
+	return 0
 
 /mob/living/carbon/human/RestrainedClickOn(var/atom/A)
 	return
