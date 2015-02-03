@@ -83,8 +83,9 @@
 		..()
 
 /obj/structure/bookcase/attack_hand(var/mob/user as mob)
+	//contents["Cancel"] = "Cancel"
 	if(contents.len)
-		var/obj/item/weapon/book/choice = input("Which book would you like to remove from the shelf?") in contents as obj|null
+		var/obj/item/weapon/book/choice = input("Which book would you like to remove from the shelf?") as null|obj in contents
 		if(choice)
 			if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
 				return
@@ -94,6 +95,8 @@
 			else
 				choice.loc = get_turf(src)
 			update_icon()
+		if(choice == "Cancel")
+			return 0
 
 /obj/structure/bookcase/ex_act(severity)
 	switch(severity)
