@@ -197,18 +197,22 @@ update_label("John Doe", "Clowny")
 	registered_name = "Emergency Response Team Commander"
 	assignment = "Emergency Response Team Commander"
 	New() access = get_all_accesses()
+	New() access = list(access_cent_captain, access_cent_specops, access_cent_storage, access_cent_medical)
 
 /obj/item/weapon/card/id/ert/Security
 	registered_name = "Security Response Officer"
 	assignment = "Security Response Officer"
+	New() access = list(access_cent_specops)
 
 /obj/item/weapon/card/id/ert/Engineer
 	registered_name = "Engineer Response Officer"
 	assignment = "Engineer Response Officer"
+	New() access = list(access_cent_storage)
 
 /obj/item/weapon/card/id/ert/Medical
 	registered_name = "Medical Response Officer"
 	assignment = "Medical Response Officer"
+	New() access = list(access_cent_medical)
 
 /obj/item/weapon/card/id/prisoner
 	name = "prisoner ID card"
