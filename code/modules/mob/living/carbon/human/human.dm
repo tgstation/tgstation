@@ -30,6 +30,8 @@
 	ready_dna(src)
 	randomize_human(src)
 
+	make_blood()
+
 	..()
 	var/mob/M = src
 	faction |= "\ref[M]"
