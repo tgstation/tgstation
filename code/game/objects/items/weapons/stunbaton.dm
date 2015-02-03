@@ -13,6 +13,7 @@
 	var/status = 0
 	var/obj/item/weapon/stock_parts/cell/high/bcell = null
 	var/hitcost = 1000
+	var/losspertick = 5
 
 /obj/item/weapon/melee/baton/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is putting the live [name] in \his mouth! It looks like \he's trying to commit suicide.</span>")
@@ -58,7 +59,7 @@
 			status = 0
 			update_icon()
 		if(status)
-			bcell.use(5)
+			bcell.use(losspertick)
 			update_icon()
 
 /obj/item/weapon/melee/baton/update_icon()
