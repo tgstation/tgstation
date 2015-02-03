@@ -102,17 +102,19 @@ var/list/department_radio_keys = list(
 		src << "\red You can't speak while silenced."
 		return
 
+	var/message_mode = get_message_mode(message)
 	if (stat == DEAD) // Dead.
 		say_dead(message)
 		return
 	if (stat) // Unconcious.
+		if(message_mode == MODE_WHISPER) //Lets us say our last words.
+			whisper(copytext(message, 3))
 		return
 	if(check_emote(message))
 		return
 	if(!can_speak_basic(message))
 		return
 
-	var/message_mode = get_message_mode(message)
 	if(message_mode == MODE_HEADSET || message_mode == MODE_ROBOT)
 		message = copytext(message, 2)
 	else if(message_mode)
@@ -129,7 +131,9 @@ var/list/department_radio_keys = list(
 		return
 
 	var/message_range = 7
-	var/radio_return = radio(message, message_mode)
+	var/raw_message = message
+	message = treat_message(message)
+	var/radio_return = radio(message, message_mode, raw_message)
 	if(radio_return & NOPASS) //There's a whisper() message_mode, no need to continue the proc if that is called
 		return
 	if(radio_return & ITALICS)
@@ -137,7 +141,7 @@ var/list/department_radio_keys = list(
 	if(radio_return & REDUCE_RANGE)
 		message_range = 1
 
-	message = treat_message(message)
+	
 	send_speech(message, message_range, src, bubble_type)
 
 	log_say("[name]/[key] : [message]")
@@ -255,7 +259,7 @@ var/list/department_radio_keys = list(
 		return 1
 	return 0
 
-/mob/living/proc/treat_message(message)
+/mob/living/proc/treat_message(message, genesay = 0)
 	if(getBrainLoss() >= 60)
 		message = derpspeech(message, stuttering)
 
@@ -264,7 +268,7 @@ var/list/department_radio_keys = list(
 
 	return message
 
-/mob/living/proc/radio(message, message_mode, steps)
+/mob/living/proc/radio(message, message_mode, raw_message)
 	switch(message_mode)
 		if(MODE_R_HAND)
 			if (r_hand)
@@ -283,7 +287,7 @@ var/list/department_radio_keys = list(
 				robot_talk(message)
 			return ITALICS | REDUCE_RANGE //Does not return 0 since this is only reached by humans, not borgs or AIs.
 		if(MODE_WHISPER)
-			whisper(message)
+			whisper(raw_message)
 			return NOPASS
 	return 0
 

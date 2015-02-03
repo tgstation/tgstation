@@ -1,4 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - bugfix: Fixed the PDAs' "beep" coming out of the desk bell instead of the PDA, when rung.
