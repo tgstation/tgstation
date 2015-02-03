@@ -118,7 +118,6 @@
 	usr.set_machine(src)
 
 	if(href_list["toggle_field"])
-		if(..()) return
 		if(!suspension_field)
 			if(cell.charge > 0)
 				if(anchored)
@@ -128,7 +127,6 @@
 		else
 			deactivate()
 	if(href_list["select_field"])
-		if(..()) return
 		field_type = href_list["select_field"]
 	else if(href_list["insertcard"])
 		var/obj/item/I = usr.get_active_hand()
