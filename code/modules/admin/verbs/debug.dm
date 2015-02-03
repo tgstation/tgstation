@@ -1152,7 +1152,6 @@ Pressure: [env.return_pressure()]"}
 		F << "[typepath],[ns]"
 
 	usr << "\blue Dumped to del_profiling.csv."
-	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
 	F =file("data/logs/profiling/gdel_profiling_[date_string].csv")
 	fdel(F)
 	F << "type,deletes"
