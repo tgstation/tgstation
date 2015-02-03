@@ -182,13 +182,7 @@ var/list/department_radio_keys = list(
 	for(var/mob/M in listening_dead)
 		M.Hear(rendered, src, languages, message)
 
-	//speech bubble
-	var/list/speech_bubble_recipients = list()
-	for(var/mob/M in (listening + listening_dead))
-		if(M.client)
-			speech_bubble_recipients.Add(M.client)
-	spawn(0)
-		flick_overlay(image('icons/mob/talk.dmi', src, "h[bubble_type][say_test(message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
+	send_speech_bubble(message, bubble_type, (listening + listening_dead))
 
 /mob/living/proc/say_test(var/text)
 	var/ending = copytext(text, length(text))
@@ -314,6 +308,15 @@ var/list/department_radio_keys = list(
 		return "gibbers, \"[text]\""
 	return ..()
 
+/mob/living/proc/send_speech_bubble(var/message,var/bubble_type, var/list/hearers)
+	//speech bubble
+	var/list/speech_bubble_recipients = list()
+	for(var/mob/M in hearers)
+		if(M.client)
+			speech_bubble_recipients.Add(M.client)
+	spawn(0)
+		flick_overlay(image('icons/mob/talk.dmi', src, "h[bubble_type][say_test(message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
+
 /mob/proc/addSpeechBubble(image/speech_bubble)
 	if(client)
 		client.images += speech_bubble
@@ -322,3 +325,4 @@ var/list/department_radio_keys = list(
 
 /obj/effect/speech_bubble
 	var/mob/parent
+
