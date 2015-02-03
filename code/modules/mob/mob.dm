@@ -910,6 +910,13 @@ var/list/slot_equipment_priority = list( \
 	A.examine(src)
 
 
+/mob/living/verb/verb_pickup(obj/I in view())
+	set name = "Pick up"
+	set category = "Object"
+
+	face_atom(I)
+	I.verb_pickup(src)
+
 /mob/proc/update_flavor_text()
 	set src in usr
 	if(usr != src)

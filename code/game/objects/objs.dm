@@ -275,3 +275,9 @@ a {
 
 /obj/proc/container_resist()
 	return
+
+/obj/proc/can_pickup(mob/living/user)
+	return 0
+
+/obj/proc/verb_pickup(mob/living/user)
+	return 0

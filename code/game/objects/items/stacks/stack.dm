@@ -261,3 +261,10 @@
 		src.title = title
 		src.recipes = recipes
 		src.req_amount = req_amount
+
+/obj/item/stack/verb_pickup(mob/living/user)
+	var/obj/item/I = user.get_active_hand()
+	if(I && I.type == src.type)
+		src.attackby(I, user)
+		return
+	return ..()
