@@ -223,10 +223,19 @@
 
 /obj/item/weapon/defibrillator/combatdefibrillator
 	name = "combat defibrillator"
-	desc = "A expensive combat oriented defibrillator. It is more compact that civilian models."
-	icon_state = "combatdefibunit"
-	item_state = "combatdefibunit"
+	desc = "A belt-equipped defibrillator that can be rapidly deployed."
+	icon_state = "defibcompact"
+	item_state = "defibunit"
 	w_class = 3
+	slot_flags = SLOT_BELT
+	origin_tech = "biotech=4"
+
+/obj/item/weapon/defibrillator/combatdefibrillator/ui_action_click()
+	if(usr.get_item_by_slot(slot_belt) == src)
+		toggle_paddles()
+	else
+		usr << "<span class='warning'>Strap the defibrillator's belt on first!</span>"
+	return
 
 /obj/item/weapon/defibrillator/combatdefibrillator/loaded/New()
 	..()
@@ -345,7 +354,7 @@
 				var/total_brute	= 0
 				if(do_after(user, 20)) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
 					for(var/obj/item/carried_item in H.contents)
-						if((istype(carried_item, /obj/item/clothing/suit/armor)) || (istype(carried_item, /obj/item/clothing/suit/space)))
+						if(istype(carried_item, /obj/item/clothing/suit/space))
 							user.visible_message("<span class='notice'>[defib] buzzes: Patient's chest is obscured. Operation aborted.</span>")
 							playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
 							busy = 0
