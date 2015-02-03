@@ -246,7 +246,8 @@
 					T.ChangeTurf(holder.buildmode.objholder)
 				else
 					var/obj/A = new holder.buildmode.objholder (get_turf(object))
-					A.dir = holder.builddir.dir
+					if(istype(A))
+						A.dir = holder.builddir.dir
 				log_admin("[key_name(usr)] made a [holder.buildmode.objholder] at [formatJumpTo(RT)]")
 			else if(pa.Find("right"))
 				log_admin("[key_name(usr)] deleted a [object] at [formatJumpTo(RT)]")

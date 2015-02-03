@@ -348,6 +348,8 @@
 		mode = 0
 		frustration = 0
 		src.path = new()
+	if(!src.path)
+		src.path = new()
 	if(src.target && (src.path.len) && (get_dist(src.target,src.path[src.path.len]) > 2))
 		src.path = new()
 	if(src.target && src.path.len == 0 && (get_dist(src,src.target) > 1))
