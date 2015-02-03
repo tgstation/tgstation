@@ -132,7 +132,7 @@
 	if(!suppressed)
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 	else
-		playsound(user, 'sound/weapons/kenetic_reload.ogg', 60, 1)
+		user << "<span class='warning'>You silently charge [src].<span>"
 	recent_reload = 1
 	update_icon()
 	return
