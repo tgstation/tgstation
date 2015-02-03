@@ -1,0 +1,7 @@
+author: Delimusca
+
+delete-after: True
+
+changes: 
+  - tweak: "Slimes can drag themselves to mobs to start feeding."
+  - tweak: "Attacking another slime will pull them off their victim if they're feeding or steal some of their mass."
