@@ -204,12 +204,11 @@
 		del L
 
 //Creates a new turf
-/turf/proc/ChangeTurf(var/turf/N, var/tell_universe=1)
+/turf/proc/ChangeTurf(var/turf/N, var/tell_universe=1, var/force_lighting_update = 0)
 	if (!N)
 		return
 
 	var/initialOpacity = opacity
-
 #ifdef ENABLE_TRI_LEVEL
 // Fuck this, for now - N3X
 ///// Z-Level Stuff ///// This makes sure that turfs are not changed to space when one side is part of a zone
@@ -259,7 +258,7 @@
 			W.air = env //Copy the old environment data over if both turfs were simulated
 
 		W.lighting_lumcount += old_lumcount
-		if(old_lumcount != W.lighting_lumcount)
+		if((old_lumcount != W.lighting_lumcount) || (loc.name != "Space" && force_lighting_update))
 			W.lighting_changed = 1
 			lighting_controller.changed_turfs += W
 
@@ -274,7 +273,7 @@
 
 		W.levelupdate()
 
-		if(opacity != initialOpacity)
+		if((opacity != initialOpacity) && W.lighting_lumcount)
 			UpdateAffectingLights()
 
 		return W
@@ -287,7 +286,7 @@
 
 		var/turf/W = new N( locate(src.x, src.y, src.z) )
 		W.lighting_lumcount += old_lumcount
-		if(old_lumcount != W.lighting_lumcount)
+		if((old_lumcount != W.lighting_lumcount) || (loc.name != "Space" && force_lighting_update))
 			W.lighting_changed = 1
 			lighting_controller.changed_turfs += W
 
@@ -299,7 +298,7 @@
 
 		W.levelupdate()
 
-		if(opacity != initialOpacity)
+		if((opacity != initialOpacity) && W.lighting_lumcount)
 			UpdateAffectingLights()
 
 		return W
