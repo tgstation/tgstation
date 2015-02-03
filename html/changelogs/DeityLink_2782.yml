@@ -1,0 +1,4 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Fixed sprites showing eguns in the wrong hand when facing east/west
