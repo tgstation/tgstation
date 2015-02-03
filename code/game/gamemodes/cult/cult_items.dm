@@ -27,6 +27,7 @@
 	if(!iscultist(user))
 		user << "<span class='danger'>An overwhelming feeling of dread comes over you as you pick up the cultist's sword. It would be wise to be rid of this blade quickly.</span>"
 		user.Dizzy(120)
+	..()
 
 
 /obj/item/clothing/head/culthood

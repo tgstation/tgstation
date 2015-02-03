@@ -154,6 +154,7 @@
 	if(!user.gloves)
 		user << "<span class='danger'>The [name] burns your bare hand!</span>"
 		user.adjustFireLoss(rand(1, 5))
+	..()
 
 
 /obj/item/weapon/grown/nettle //abstract type

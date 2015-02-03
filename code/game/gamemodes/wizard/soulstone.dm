@@ -17,6 +17,7 @@
 	if(!iscultist(user) && !iswizard(user) && !usability)
 		user << "<span class='danger'>An overwhelming feeling of dread comes over you as you pick up the soulstone. It would be wise to be rid of this quickly.</span>"
 		user.Dizzy(120)
+	..()
 
 //////////////////////////////Capturing////////////////////////////////////////////////////////
 

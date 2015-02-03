@@ -215,6 +215,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(fon)
 		SetLuminosity(0)
 		user.AddLuminosity(f_lum)
+	..()
 
 /obj/item/device/pda/dropped(mob/user)
 	if(fon)

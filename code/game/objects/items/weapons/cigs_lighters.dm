@@ -520,6 +520,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(lit)
 		SetLuminosity(0)
 		user.AddLuminosity(1)
+	..()
 	return
 
 
