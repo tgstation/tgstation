@@ -35,7 +35,7 @@
 		A.power_equip = 0
 		A.power_environ = 0
 
-	for(var/obj/machinery/power/apc/C in world)
+	for(var/obj/machinery/power/apc/C in machines)
 		if(C.cell && C.z == 1)
 			var/area/A = get_area(C)
 
@@ -54,10 +54,10 @@
 		command_alert("Power has been restored to [station_name()]. We apologize for the inconvenience.", "Power Systems Nominal")
 		for(var/mob/M in player_list)
 			M << sound('sound/AI/poweron.ogg')
-	for(var/obj/machinery/power/apc/C in world)
+	for(var/obj/machinery/power/apc/C in machines)
 		if(C.cell && C.z == 1)
 			C.cell.charge = C.cell.maxcharge
-	for(var/obj/machinery/power/smes/S in world)
+	for(var/obj/machinery/power/smes/S in machines)
 		if(S.z != 1)
 			continue
 		S.charge = S.capacity

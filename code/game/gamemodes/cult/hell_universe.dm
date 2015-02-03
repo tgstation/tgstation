@@ -89,18 +89,18 @@ In short:
 		if(!T.holy && prob(1))
 			new /obj/effect/gateway/active/cult(T)
 
-	for (var/obj/machinery/firealarm/alm in world)
+	for (var/obj/machinery/firealarm/alm in machines)
 		if (!(alm.stat & BROKEN))
 			alm.ex_act(2)
 
-	for (var/obj/machinery/power/apc/APC in world)
+	for (var/obj/machinery/power/apc/APC in machines)
 		if (!(APC.stat & BROKEN) && !istype(APC.areaMaster,/area/turret_protected/ai))
 			if(APC.cell)
 				APC.cell.charge = 0
 			APC.emagged = 1
 			APC.queue_icon_update()
 
-	for(var/mob/living/simple_animal/M in world)
+	for(var/mob/living/simple_animal/M in mob_list)
 		if(M && !M.client)
 			M.stat = DEAD
 
