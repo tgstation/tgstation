@@ -152,7 +152,7 @@
 	item_state = "ert_command"
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
 	armor = list(melee = 65, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 100, rad = 100)
-	slowdown = 1
+	slowdown = 0
 	strip_delay = 130
 
 /obj/item/clothing/suit/space/ert/sec
