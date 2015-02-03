@@ -84,7 +84,7 @@
 		var/obj/item/clothing/suit/space/chronos/chronosuit = new(TEA)
 		TEA.equip_to_slot_or_del(chronosuit, slot_wear_suit)
 		TEA.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/chronos(TEA), slot_head)
-		TEA.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen(TEA), slot_s_store)
+		TEA.equip_to_slot_or_del(new /obj/item/weapon/tank/internals/emergency_oxygen(TEA), slot_s_store)
 		TEA.equip_to_slot_or_del(new /obj/item/weapon/chrono_eraser(TEA), slot_back)
 
 		TEAmind.transfer_to(TEA)
