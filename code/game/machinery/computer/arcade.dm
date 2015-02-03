@@ -28,7 +28,8 @@
 							/obj/item/toy/nuke								= 2,
 							/obj/item/toy/minimeteor						= 2,
 							/obj/item/toy/carpplushie						= 2,
-							/obj/item/toy/foamblade							= 2
+							/obj/item/toy/foamblade							= 2,
+							/obj/item/toy/redbutton							= 2
 							)
 
 /obj/machinery/computer/arcade/New()
