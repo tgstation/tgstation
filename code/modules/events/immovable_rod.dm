@@ -34,6 +34,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	anchored = 1
 	var/z_original = 0
 	var/destination
+	directional = 1
 
 /obj/effect/immovablerod/New(atom/start, atom/end)
 	loc = start

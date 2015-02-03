@@ -12,6 +12,7 @@
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	level = 2
 	var/ptype = 0
+	directional = 1
 
 	var/dpdir = 0	// directions as disposalpipe
 	var/base_state = "pipe-s"

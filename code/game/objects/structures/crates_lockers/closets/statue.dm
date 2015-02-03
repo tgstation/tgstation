@@ -11,6 +11,7 @@
 	var/intialBrute = 0
 	var/intialOxy = 0
 	var/timer = 240 //eventually the person will be freed
+	directional = 1
 
 /obj/structure/closet/statue/New(loc, var/mob/living/L)
 

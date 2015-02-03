@@ -70,6 +70,7 @@
 	var/atom/movable/cur_target
 	var/targeting_active = 0
 	var/area/turret_protected/protected_area
+	directional = 1
 
 
 /obj/machinery/turret/New()
@@ -359,6 +360,7 @@
 	var/fire_sound = 'sound/weapons/Gunshot.ogg'
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "syndieturret0"
+	directional = 1
 
 /obj/machinery/gun_turret/New()
 	..()

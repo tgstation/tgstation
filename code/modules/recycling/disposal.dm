@@ -625,6 +625,7 @@
 	layer = 2.3			// slightly lower than wires and other pipes
 	var/base_icon_state	// initial icon state on map
 	var/obj/structure/disposalconstruct/stored
+	directional = 1
 
 	// new pipe, set the icon_state as on map
 /obj/structure/disposalpipe/New(loc,var/obj/structure/disposalconstruct/make_from)
@@ -1234,6 +1235,7 @@
 	var/mode = 0
 	var/start_eject = 0
 	var/eject_range = 2
+	directional = 1
 
 /obj/structure/disposaloutlet/New(loc, var/obj/structure/disposalconstruct/make_from)
 	..()

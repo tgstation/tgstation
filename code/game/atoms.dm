@@ -8,6 +8,7 @@
 	var/list/blood_DNA
 	var/last_bumped = 0
 	var/throwpass = 0
+	var/directional = 1 //This var is used to help proc/getFlatIcon deal with common situations whereas an object will have a dir other than 2, but not have a sprite for that dir.
 
 	///Chemistry.
 	var/datum/reagents/reagents = null

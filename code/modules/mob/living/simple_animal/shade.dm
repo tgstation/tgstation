@@ -26,6 +26,7 @@
 	status_flags = 0
 	faction = list("cult")
 	status_flags = CANPUSH
+	directional = 0
 
 
 /mob/living/simple_animal/shade/Life()

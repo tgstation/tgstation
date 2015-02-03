@@ -17,6 +17,7 @@ obj/structure/windoor_assembly
 	anchored = 0
 	density = 0
 	dir = NORTH
+	directional = 1
 
 	var/ini_dir
 	var/obj/item/weapon/airlock_electronics/electronics = null

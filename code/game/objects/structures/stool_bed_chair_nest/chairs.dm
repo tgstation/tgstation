@@ -3,6 +3,7 @@
 	desc = "You sit in this. Either by will or force."
 	icon_state = "chair"
 	buckle_lying = 0 //you sit in a chair, not lay
+	directional = 1
 
 /obj/structure/stool/bed/chair/New()
 	..()

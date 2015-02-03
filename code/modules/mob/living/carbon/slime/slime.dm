@@ -8,6 +8,7 @@
 	var/is_adult = 0
 	languages = SLIME | HUMAN
 	faction = list("slime")
+	directional = 0
 
 	layer = 5
 
