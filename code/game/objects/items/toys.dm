@@ -14,6 +14,7 @@
  *		Fake meteor
  *		Carp plushie
  *		Foam armblade
+ *		Toy big red button
  */
 
 
@@ -1108,7 +1109,6 @@ obj/item/toy/cards/deck/syndicate
 	if (cooldown < world.time)
 		cooldown = (world.time + 300) // Sets cooldown at 30 seconds
 		user.visible_message("<span class='warning'>[user] presses the big red button.</span>", "<span class='notice'>You press the button, it plays a loud noise!</span>", "<span class='notice'>The button clicks loudly.</span>")
-		//spawn(5) //gia said so
 		playsound(src, 'sound/effects/explosionfar.ogg', 50, 0, surround = 0)
 		for(var/mob/M in range(10, src)) // Checks range
 			if(!M.stat && !istype(M, /mob/living/silicon/ai)) // Checks to make sure whoever's getting shaken is alive/not the AI
