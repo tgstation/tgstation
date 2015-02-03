@@ -118,8 +118,8 @@ datum/reagent/colorful_reagent
 	required_reagents = list("stable_plasma" = 1, "radium" = 1, "space_drugs" = 1, "cryoxadone" = 1, "triple_citrus" = 1)
 	result_amount = 5
 
-datum/reagent/colorful_reagent/reaction_mob(var/mob/M, var/volume)
-	if(M)
+datum/reagent/colorful_reagent/reaction_mob(var/mob/living/M, var/volume)
+	if(M && isliving(M))
 		M.color = pick(potential_colors)
 	..()
 	return

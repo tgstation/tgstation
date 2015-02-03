@@ -467,12 +467,19 @@ client/proc/one_click_antag()
 			var/mob/living/carbon/human/ERTOperative = new(spawnloc)
 			chosen_candidate.client.prefs.copy_to(ERTOperative)
 			ready_dna(ERTOperative)
-			if(numagents == 1) //If Squad Leader
-				ERTOperative.real_name = "Commander [pick(ERTOperative.real_name)]"
-				equip_emergencyresponsesquad(ERTOperative, 1)
-			else
-				ERTOperative.real_name = "Officer [pick(ERTOperative.real_name)]"
-				equip_emergencyresponsesquad(ERTOperative)
+			switch(numagents)
+				if(1)
+					ERTOperative.real_name = "Commander [pick(ERTOperative.real_name)]"
+					equip_emergencyresponsesquad(ERTOperative, "commander")
+				if(2 || 5)
+					ERTOperative.real_name = "Officer [pick(ERTOperative.real_name)]"
+					equip_emergencyresponsesquad(ERTOperative, "sec")
+				if(3 || 6)
+					ERTOperative.real_name = "Officer [pick(ERTOperative.real_name)]"
+					equip_emergencyresponsesquad(ERTOperative, "med")
+				if(4 || 7)
+					ERTOperative.real_name = "Officer [pick(ERTOperative.real_name)]"
+					equip_emergencyresponsesquad(ERTOperative, "eng")
 			ERTOperative.key = chosen_candidate.key
 			ERTOperative.mind.assigned_role = "ERT"
 

@@ -589,7 +589,7 @@
 	desc = "A vendor with a wide variety of masks and gas tanks."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "dispenser"
-	product_paths = "/obj/item/weapon/tank/oxygen;/obj/item/weapon/tank/plasma;/obj/item/weapon/tank/emergency_oxygen;/obj/item/weapon/tank/emergency_oxygen/engi;/obj/item/clothing/mask/breath"
+	product_paths = "/obj/item/weapon/tank/internals/oxygen;/obj/item/weapon/tank/internals/plasma;/obj/item/weapon/tank/internals/emergency_oxygen;/obj/item/weapon/tank/internals/emergency_oxygen/engi;/obj/item/clothing/mask/breath"
 	product_amounts = "10;10;10;5;25"
 	vend_delay = 0
 */
@@ -764,7 +764,7 @@
 	icon_deny = "med-deny"
 	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?;Ping!"
 	req_access_txt = "5"
-	products = list(/obj/item/weapon/reagent_containers/syringe = 12,/obj/item/weapon/reagent_containers/pill/patch/styptic = 10,
+	products = list(/obj/item/weapon/reagent_containers/syringe = 12,/obj/item/stack/medical/gauze = 8,/obj/item/weapon/reagent_containers/pill/patch/styptic = 10,
 				/obj/item/weapon/reagent_containers/pill/patch/silver_sulf = 10,/obj/item/weapon/reagent_containers/glass/bottle/charcoal = 4,
 				/obj/item/weapon/reagent_containers/glass/bottle/epinephrine = 4,/obj/item/weapon/reagent_containers/glass/bottle/morphine = 4,
 				/obj/item/weapon/reagent_containers/glass/bottle/diphenhydramine = 4,/obj/item/weapon/reagent_containers/glass/bottle/potass_iodide = 3, /obj/item/weapon/reagent_containers/glass/bottle/salglu_solution = 5,/obj/item/weapon/reagent_containers/glass/bottle/atropine = 3,/obj/item/weapon/reagent_containers/syringe/antiviral = 6,/obj/item/weapon/reagent_containers/syringe/calomel = 10,/obj/item/weapon/reagent_containers/pill/salbutamol = 10,/obj/item/weapon/reagent_containers/pill/mannitol = 10,/obj/item/weapon/reagent_containers/pill/mutadone = 5,/obj/item/device/healthanalyzer = 4, /obj/item/device/sensor_device = 2)
@@ -944,7 +944,7 @@
 	req_access_txt = "29"
 	products = list(/obj/item/clothing/suit/toggle/labcoat = 4,/obj/item/clothing/under/rank/roboticist = 4,/obj/item/stack/cable_coil = 4,/obj/item/device/flash/handheld = 4,
 					/obj/item/weapon/stock_parts/cell/high = 12, /obj/item/device/assembly/prox_sensor = 3,/obj/item/device/assembly/signaler = 3,/obj/item/device/healthanalyzer = 3,
-					/obj/item/weapon/scalpel = 2,/obj/item/weapon/circular_saw = 2,/obj/item/weapon/tank/anesthetic = 2,/obj/item/clothing/mask/breath/medical = 5,
+					/obj/item/weapon/scalpel = 2,/obj/item/weapon/circular_saw = 2,/obj/item/weapon/tank/internals/anesthetic = 2,/obj/item/clothing/mask/breath/medical = 5,
 					/obj/item/weapon/screwdriver = 5,/obj/item/weapon/crowbar = 5)
 
 //This one's from NTstation

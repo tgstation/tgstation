@@ -77,11 +77,11 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/machinery/bot/floorbot,
 					/obj/machinery/bot/medbot,
 					/obj/machinery/bot/medbot,
-					/obj/item/weapon/tank/air,
-					/obj/item/weapon/tank/air,
-					/obj/item/weapon/tank/air,
-					/obj/item/weapon/tank/air,
-					/obj/item/weapon/tank/air,
+					/obj/item/weapon/tank/internals/air,
+					/obj/item/weapon/tank/internals/air,
+					/obj/item/weapon/tank/internals/air,
+					/obj/item/weapon/tank/internals/air,
+					/obj/item/weapon/tank/internals/air,
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/mask/gas,
@@ -97,9 +97,9 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/clothing/mask/gas,
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/mask/gas,
-					/obj/item/weapon/tank/air,
-					/obj/item/weapon/tank/air,
-					/obj/item/weapon/tank/air)
+					/obj/item/weapon/tank/internals/air,
+					/obj/item/weapon/tank/internals/air,
+					/obj/item/weapon/tank/internals/air)
 	cost = 10
 	containername = "internals crate"
 
@@ -111,8 +111,8 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/mask/gas,
 					/obj/item/device/flashlight,
 					/obj/item/device/flashlight,
-					/obj/item/weapon/tank/oxygen/red,
-					/obj/item/weapon/tank/oxygen/red,
+					/obj/item/weapon/tank/internals/oxygen/red,
+					/obj/item/weapon/tank/internals/oxygen/red,
 					/obj/item/weapon/extinguisher,
 					/obj/item/weapon/extinguisher,
 					/obj/item/clothing/head/hardhat/red,
@@ -306,9 +306,9 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 /datum/supply_packs/security/armory/eweapons
 	name = "Incendiary Weapons Crate"
 	contains = list(/obj/item/weapon/flamethrower/full,
-					/obj/item/weapon/tank/plasma,
-					/obj/item/weapon/tank/plasma,
-					/obj/item/weapon/tank/plasma,
+					/obj/item/weapon/tank/internals/plasma,
+					/obj/item/weapon/tank/internals/plasma,
+					/obj/item/weapon/tank/internals/plasma,
 					/obj/item/weapon/grenade/chem_grenade/incendiary,
 					/obj/item/weapon/grenade/chem_grenade/incendiary,
 					/obj/item/weapon/grenade/chem_grenade/incendiary)
@@ -544,6 +544,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/reagent_containers/glass/bottle/toxin,
 					/obj/item/weapon/reagent_containers/glass/beaker/large,
 					/obj/item/weapon/reagent_containers/glass/beaker/large,
+					/obj/item/stack/medical/gauze,
 					/obj/item/weapon/storage/box/beakers,
 					/obj/item/weapon/storage/box/syringes,
 				    /obj/item/weapon/storage/box/bodybags)
@@ -607,6 +608,28 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	access = access_cmo
 
 
+/datum/supply_packs/medical/bloodpacks
+	name = "Blood Pack Variety Crate"
+	contains = list(/obj/item/weapon/reagent_containers/blood/empty,
+					/obj/item/weapon/reagent_containers/blood/empty,
+					/obj/item/weapon/reagent_containers/blood/APlus,
+					/obj/item/weapon/reagent_containers/blood/AMinus,
+					/obj/item/weapon/reagent_containers/blood/BPlus,
+					/obj/item/weapon/reagent_containers/blood/BMinus,
+					/obj/item/weapon/reagent_containers/blood/OPlus,
+					/obj/item/weapon/reagent_containers/blood/OMinus)
+	cost = 35
+	containertype = /obj/structure/closet/crate/freezer
+	containername = "blood pack crate"
+
+/datum/supply_packs/medical/iv_drip
+	name = "IV Drip Crate"
+	contains = list(/obj/machinery/iv_drip)
+	cost = 30
+	containertype = /obj/structure/closet/crate/secure
+	containername = "iv drip crate"
+	access = access_cmo
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Science /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -649,9 +672,9 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/science/plasma
 	name = "Plasma Assembly Crate"
-	contains = list(/obj/item/weapon/tank/plasma,
-					/obj/item/weapon/tank/plasma,
-					/obj/item/weapon/tank/plasma,
+	contains = list(/obj/item/weapon/tank/internals/plasma,
+					/obj/item/weapon/tank/internals/plasma,
+					/obj/item/weapon/tank/internals/plasma,
 					/obj/item/device/assembly/igniter,
 					/obj/item/device/assembly/igniter,
 					/obj/item/device/assembly/igniter,
