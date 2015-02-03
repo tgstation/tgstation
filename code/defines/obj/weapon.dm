@@ -330,8 +330,7 @@
 
 /obj/item/weapon/legcuffs/bolas/cable/throw_failed()
 	if(prob(20))
-		for (var/mob/V in viewers(src, null))
-			V << "\red \The [src] falls to pieces on impact!"
+		src.visible_message("<span class='rose'>\The [src] falls to pieces on impact!</span>")
 		if(weight1)
 			weight1.loc = src.loc
 			weight1 = null
@@ -340,15 +339,17 @@
 			weight2 = null
 		update_icon(src)
 
-/obj/item/weapon/legcuffs/bolas/cable/attackby(var/obj/O)
+/obj/item/weapon/legcuffs/bolas/cable/attackby(var/obj/O, mob/user)
 	if(istype(O, /obj/item))
 		var/obj/item/I = O
+		if(istype(O, /obj/item/weapon/legcuffs/bolas)) //don't stack into infinity
+			return
 		if(istype(I, /obj/item/weapon/wirecutters)) //allows you to convert the wire back to a cable coil
 			if(!weight1 && !weight2) //if there's nothing attached
-				usr << "\blue You cut the knot in the [src]."
+				user.show_message("<span class='notice'>You cut the knot in the [src].</span>")
 				playsound(usr, 'sound/items/Wirecutter.ogg', 50, 1)
-				var /obj/item/weapon/cable_coil/C = new /obj/item/weapon/cable_coil(usr.loc) //we get back the wire lengths we put in
-				var /obj/item/weapon/cable_coil/S = new /obj/item/weapon/screwdriver(src.loc)
+				var /obj/item/weapon/cable_coil/C = new /obj/item/weapon/cable_coil(user.loc) //we get back the wire lengths we put in
+				var /obj/item/weapon/cable_coil/S = new /obj/item/weapon/screwdriver(user.loc)
 				C.amount = 10
 				C._color = cable_color
 				C.icon_state = "coil_[C._color]"
@@ -356,46 +357,47 @@
 				S.item_state = screw_state
 				S.icon_state = screw_istate
 				S.update_icon()
+				user.put_in_hands(S)
 				qdel(src)
 				return
 			else
-				usr << "\blue You cut off [weight1] [weight2 ? "and [weight2]" : ""]." //you remove the items currently attached
+				user.show_message("<span class='notice'>You cut off [weight1] [weight2 ? "and [weight2]" : ""].</span>") //you remove the items currently attached
 				if(weight1)
 					weight1.loc = get_turf(usr)
 					weight1 = null
 				if(weight2)
 					weight2.loc = get_turf(usr)
 					weight2 = null
-				playsound(usr, 'sound/items/Wirecutter.ogg', 50, 1)
+				playsound(user, 'sound/items/Wirecutter.ogg', 50, 1)
 				update_icon()
 				return
 		if(I.w_class) //if it has a defined weight
 			if(I.w_class == 2.0 || I.w_class == 3.0) //just one is too specific, so don't change this
 				if(weight1 == null)
-					usr.drop_item(I)
+					user.drop_item()
 					weight1 = I
 					I.forceMove(src)
-					usr << "\blue You tie [weight1] to the [src]."
+					user.show_message("<span class='notice'>You tie [weight1] to the [src].</span>")
 					update_icon()
 					//del(I)
 					return
 				if(weight2 == null) //just in case
-					usr.drop_item(I)
+					user.drop_item()
 					weight2 = I
 					I.forceMove(src)
-					usr << "\blue You tie [weight2] to the [src]."
+					user.show_message("<span class='notice'>You tie [weight2] to the [src].</span>")
 					update_icon()
 					//del(I)
 					return
 				else
-					usr << "\red There are already two weights on this [src]!"
+					user.show_message("<span class='rose'>There are already two weights on this [src]!</span>")
 					return
 			else if (I.w_class < 2.0)
-				usr << "\red \The [I] is too small to be used as a weight."
+				user.show_message("<span class='rose'>\The [I] is too small to be used as a weight.</span>")
 			else if (I.w_class > 3.0)
-				usr << "\red \The [I] is [I.w_class > 4.0 ? "far " : ""] too big to be used a weight."
+				user.show_message("<span class='rose'>\The [I] is [I.w_class > 4.0 ? "far " : ""] too big to be used a weight.</span>")
 			else
-				usr << "\red There are already two weights on this [src]!"
+				user.show_message("<span class='rose'>There are already two weights on this [src]!</span>")
 
 /obj/item/weapon/legcuffs/beartrap
 	name = "bear trap"
