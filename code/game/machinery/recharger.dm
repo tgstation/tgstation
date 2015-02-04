@@ -71,7 +71,7 @@
 		if(istype(charging, /obj/item/weapon/gun/energy))
 			var/obj/item/weapon/gun/energy/E = charging
 			if(E.power_supply.charge < E.power_supply.maxcharge)
-				E.power_supply.give(100)
+				E.power_supply.give(E.power_supply.chargerate)
 				icon_state = "recharger1"
 				use_power(250)
 			else
@@ -80,7 +80,7 @@
 		if(istype(charging, /obj/item/weapon/melee/baton))
 			var/obj/item/weapon/melee/baton/B = charging
 			if(B.bcell)
-				if(B.bcell.give(1500)) //Because otherwise it takes two minutes to fully charge due to 15k cells. - Neerti
+				if(B.bcell.give(B.bcell.chargerate))
 					icon_state = "recharger1"
 					use_power(200)
 				else

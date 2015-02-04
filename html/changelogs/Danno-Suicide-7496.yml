@@ -1,0 +1,5 @@
+author: Dannno
+
+delete-after: True
+  - rscadd: "Added specific suicide messages to guns of all types."
+  - rscadd: "Added special suicide messages to various different items."

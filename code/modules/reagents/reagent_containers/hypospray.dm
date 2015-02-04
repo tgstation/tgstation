@@ -50,7 +50,7 @@
 	ignore_flags = 1 // So they can heal their comrades.
 	list_reagents = list("epinephrine" = 15, "salglu_solution" = 15)
 
-obj/item/weapon/reagent_containers/hypospray/combat/nanites
+/obj/item/weapon/reagent_containers/hypospray/combat/nanites
 	desc = "A modified air-needle autoinjector for use in combat situations. Prefilled with expensive medical nanites for rapid healing."
 	volume = 100
 	list_reagents = list("nanites" = 80, "synaptizine" = 20)

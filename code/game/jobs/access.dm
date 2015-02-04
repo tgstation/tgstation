@@ -218,6 +218,17 @@
 /proc/get_all_centcom_access()
 	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_captain)
 
+/proc/get_ert_access(var/class)
+	switch(class)
+		if("commander")
+			return get_all_centcom_access()
+		if("sec")
+			return list(access_cent_general, access_cent_specops)
+		if("eng")
+			return list(access_cent_general, access_cent_storage)
+		if("med")
+			return list(access_cent_general, access_cent_medical)
+
 /proc/get_all_syndicate_access()
 	return list(access_syndicate, access_syndicate)
 
