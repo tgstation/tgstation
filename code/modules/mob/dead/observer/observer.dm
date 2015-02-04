@@ -30,6 +30,7 @@
 	var/medHUD = 0
 	var/antagHUD = 0
 	var/atom/movable/following = null
+	var/mob/canclone = null
 	incorporeal_move = 1
 
 /mob/dead/observer/New(var/mob/body=null, var/flags=1)
