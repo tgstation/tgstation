@@ -13,8 +13,8 @@ nanoui is used to open and update nano browser uis
 /datum/nanoui
 	// the user who opened this ui
 	var/mob/user
-	// the object this ui "belongs" to
-	var/atom/movable/src_object
+	// the datum this ui "belongs" to
+	var/datum/src_object
 	// the title of this ui
 	var/title
 	// the key of this ui, this is to allow multiple (different) uis for each src_object
@@ -192,18 +192,41 @@ nanoui is used to open and update nano browser uis
   * @return /list config data
   */
 /datum/nanoui/proc/get_config_data()
-	var/list/config_data = list(
-			"title" = title,
-			"srcObject" = list("name" = src_object.name),
-			"stateKey" = state_key,
-			"status" = status,
-			"autoUpdateLayout" = auto_update_layout,
-			"autoUpdateContent" = auto_update_content,
-			"showMap" = show_map,
-			"mapZLevel" = map_z_level,
-			"user" = list("name" = user.name),
-			"map_dir" = map.map_dir // Map datum holds the folder for the nanoui station images.
+	var/list/config_data = list()
+	if(istype(src_object, /client))
+		var/client/C = src_object
+		var/mobName = null
+		if(!C.mob)
+			mobName = C.mob.name
+		else
+			mobName = C.ckey
+		config_data = list(
+				"title" = title,
+				"srcObject" = list("name" = C.ckey),
+				"stateKey" = state_key,
+				"status" = status,
+				"autoUpdateLayout" = auto_update_layout,
+				"autoUpdateContent" = auto_update_content,
+				"showMap" = show_map,
+				"mapZLevel" = map_z_level,
+				"user" = list("name" = mobName),
+				"map_dir" = map.map_dir // Map datum holds the folder for the nanoui station images.
 		)
+	else
+		if(istype(src_object, /atom/movable))
+			var/atom/movable/atomInfo = src_object
+			config_data = list(
+					"title" = title,
+					"srcObject" = list("name" = atomInfo.name),
+					"stateKey" = state_key,
+					"status" = status,
+					"autoUpdateLayout" = auto_update_layout,
+					"autoUpdateContent" = auto_update_content,
+					"showMap" = show_map,
+					"mapZLevel" = map_z_level,
+					"user" = list("name" = user.name),
+					"map_dir" = map.map_dir // Map datum holds the folder for the nanoui station images.
+			)
 	return config_data
 
  /**
@@ -436,7 +459,7 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/on_close_winset()
-	if(!user.client)
+	if(!user)
 		return
 	var/params = "\ref[src]"
 

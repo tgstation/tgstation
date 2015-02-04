@@ -1,5 +1,9 @@
 var/global/datum/controller/vote/vote = new()
 
+
+#define VOTE_SCREEN_WIDTH 400
+#define VOTE_SCREEN_HEIGHT 600
+
 /datum/controller/vote
 	var/initiator = null
 	var/started_time = null
@@ -22,6 +26,10 @@ var/global/datum/controller/vote/vote = new()
 
 		vote = src
 
+		
+//datum/controller/vote/proc/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
+//	return
+		
 /datum/controller/vote/proc/process()	//called by master_controller
 	if(mode)
 		// No more change mode votes after the game has started.
@@ -41,13 +49,7 @@ var/global/datum/controller/vote/vote = new()
 				if(C)
 					C << browse(null,"window=vote;can_close=0")
 			reset()
-		else
-			for(var/client/C in voting)
-				if(C)
-					C << browse(vote.interface(C),"window=vote;can_close=0")
-
-			//voting.len = 0
-
+			
 /datum/controller/vote/proc/reset()
 	initiator = null
 	time_remaining = 0
@@ -226,7 +228,7 @@ var/global/datum/controller/vote/vote = new()
 		else
 			for(var/mob/M in player_list)
 			 if(M.client)
-				 M << browse(vote.interface(M.client),"window=vote;can_close=0")
+				 M << vote.ui_interact(M.client)
 				 winset(M, "mapwindow.map", "focus=true") // return keyboard focus to map
 		switch(vote_type)
 			if("crew_transfer")
@@ -245,8 +247,9 @@ var/global/datum/controller/vote/vote = new()
 		return 1
 	return 0
 
-/datum/controller/vote/proc/interface(var/client/C)
-	if(!C)	return
+	
+/datum/controller/vote/ui_interact(var/client/C, ui_key = "main", var/datum/nanoui/ui = null)
+	if(!C) return
 	var/admin = 0
 	var/trialmin = 0
 	if(C.holder)
@@ -254,55 +257,42 @@ var/global/datum/controller/vote/vote = new()
 		if(C.holder.rights & R_ADMIN)
 			trialmin = 1
 	voting |= C
+	var/data[0]
+	
+	data["admin"] = admin
+	data["trialmin"] = trialmin
 
-	. = "<html><head><title>Voting Panel</title></head><body>"
 	if(mode)
-		if(question)	. += "<h2>Vote: '[question]'</h2>"
-		else			. += "<h2>Vote: [capitalize(mode)]</h2>"
-		. += "Time Left: [time_remaining] s<hr><ul>"
-		for(var/i = 1, i <= choices.len, i++)
-			var/votes = choices[choices[i]]
-			if(!votes)	votes = 0
-			if(current_votes[C.ckey] == i)
-				. += "<li><b><a href='?src=\ref[src];vote=[i]'>[choices[i]]</a> ([votes] votes)</b></li>"
-			else
-				. += "<li><a href='?src=\ref[src];vote=[i]'>[choices[i]]</a> ([votes] votes)</li>"
-
-		. += "</ul><hr>"
+		var/choices_list[0]
+		data["time_left"] = time_remaining
+		
+		for(var/i = 1; i <= choices.len; i++)
+			choices_list.Add(list(list("ID" = i, "choice" = choices[i])))
+		if(question)
+			data["question"] = question
+		data["choices"] = choices_list
 		if(admin)
-			. += "(<a href='?src=\ref[src];vote=cancel'>Cancel Vote</a>) "
+			data["admin_commands"] = "(<a href='?src=\ref[src];vote=cancel;'>Cancel Vote</a>)"
 	else
-		. += "<h2>Start a vote:</h2><hr><ul><li>"
-		//restart
 		if(trialmin || config.allow_vote_restart)
-			. += "<a href='?src=\ref[src];vote=restart'>Restart</a>"
+			data["restart_command"] = "<a href='src=\ref[src];vote=restart>Restart</a>"
+			data["crew_transfer"] = "<a href='src=\ref[src];vote=crew_transfer>Crew Transfer</a>"
 		else
-			. += "<font color='grey'>Restart (Disallowed)</font>"
-		. += "</li><li>"
-		if(trialmin || config.allow_vote_restart)
-			. += "<a href='?src=\ref[src];vote=crew_transfer'>Crew Transfer</a>"
-		else
-			. += "<font color='grey'>Crew Transfer (Disallowed)</font>"
-		if(trialmin)
-			. += "\t(<a href='?src=\ref[src];vote=toggle_restart'>[config.allow_vote_restart?"Allowed":"Disallowed"]</a>)"
-		. += "</li><li>"
-		//gamemode
+			data["restart_command"] = "<font color='grey'>Restart (Disallowed)</font>"
+			data["crew_transfer"] = "<font color ='grey'>Crew Transfer (Disallowed)</font>"
 		if(trialmin || config.allow_vote_mode)
-			. += "<a href='?src=\ref[src];vote=gamemode'>GameMode</a>"
-		else
-			. += "<font color='grey'>GameMode (Disallowed)</font>"
+			data["mode_vote"] = "<a href='?src=\ref[src];vote=gamemode']GameMode</a>"
 		if(trialmin)
-			. += "\t(<a href='?src=\ref[src];vote=toggle_gamemode'>[config.allow_vote_mode?"Allowed":"Disallowed"]</a>)"
-
-		. += "</li>"
-		//custom
-		if(trialmin)
-			. += "<li><a href='?src=\ref[src];vote=custom'>Custom</a></li>"
-		. += "</ul><hr>"
-	. += "<a href='?src=\ref[src];vote=close' style='position:absolute;right:50px'>Close</a></body></html>"
-	return .
-
-
+			data["allow_vote_restart"] = "(<a href='?src=\ref[src];vote=toggle_restart'>)[config.allow_vote_restart?"Allowed":"Disallowed"]</a>)"
+			data["allow_mode_vote"] = "(<a href='?src=\ref[src];vote=toggle_gamemode'>[config.allow_vote_mode?"Allowed":"Disallowed"]</a>)"
+			data["custom_vote"] = "<a href='?src=\ref[src];vote=custom'>Custom</a>"
+	ui = nanomanager.try_update_ui(C, src, ui_key, ui, data)
+	if(!ui)
+		ui = new(C, src, ui_key, "vote.tmpl", "Voting Panel", VOTE_SCREEN_WIDTH, VOTE_SCREEN_HEIGHT)
+		ui.set_initial_data(data)
+		ui.set_auto_update(1)
+		ui.open()
+		
 /datum/controller/vote/Topic(href,href_list[],hsrc)
 	if(!usr || !usr.client)	return	//not necessary but meh...just in-case somebody does something stupid
 	switch(href_list["vote"])
@@ -334,11 +324,10 @@ var/global/datum/controller/vote/vote = new()
 		else
 			submit_vote(usr.ckey, round(text2num(href_list["vote"])))
 	usr.vote()
-
-
+	
+	
 /mob/verb/vote()
 	set category = "OOC"
 	set name = "Vote"
-
 	if(vote)
-		src << browse(vote.interface(client),"window=vote;can_close=0")
+		vote.ui_interact(usr.client)
