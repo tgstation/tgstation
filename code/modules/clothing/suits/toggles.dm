@@ -93,6 +93,8 @@
 	..()
 
 /obj/item/clothing/suit/space/hardsuit/proc/RemoveHelmet()
+	if(!helmettype)
+		return
 	suittoggled = 0
 	if(ishuman(helmet.loc))
 		var/mob/living/carbon/H = helmet.loc
