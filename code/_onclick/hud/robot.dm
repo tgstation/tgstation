@@ -184,7 +184,6 @@
 
 	if(r.shown_robot_modules)
 		//Modules display is shown
-		r.client.screen += r.throw_icon	//"store" icon
 
 		if(!r.module)
 			usr << "<span class='danger'>No module selected</span>"
@@ -221,8 +220,6 @@
 
 	else
 		//Modules display is hidden
-		r.client.screen -= r.throw_icon	//"store" icon
-
 		for(var/atom/A in r.module.modules)
 			if( (A != r.module_state_1) && (A != r.module_state_2) && (A != r.module_state_3) )
 				//Module is not currently active
