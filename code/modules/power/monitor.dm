@@ -97,8 +97,11 @@
 	return
 
 /obj/machinery/power/monitor/process()
+	if(stat & (BROKEN|NOPOWER))
+		return
 	// src.last_time_processed == 0 is in place to make it update the first time around, then wait until someone watches
-	if ((src.last_time_processed == 0 || src.interface.isUsed()) && world.time - src.last_time_processed > 10)
+	if ((src.last_time_processed == 0 || src.interface.isUsed()) && world.time - src.last_time_processed > 30)
+		src.last_time_processed = world.time
 		var/t
 	//	t += "<BR><HR><A href='?src=\ref[src.interface];update=1'>Refresh</A>"
 	//	t += "<BR><HR><A href='?src=\ref[src.interface];close=1'>Close</A>"
@@ -141,7 +144,5 @@
 			t = t + "<colgroup><col /><col style=\"width: 60px;\"/><col style=\"width: 60px;\"/><col style=\"width: 60px;\"/><col style=\"width: 80px;\"/><col style=\"width: 80px;\"/><col style=\"width: 20px;\"/></colgroup>"
 			t = t + "<thead><tr><th>Area</th><th>Eqp.</th><th>Lgt.</th><th>Env.</th><th align=\"right\">Load</th><th align=\"right\">Cell</th><th></th></tr></thead>"
 			t = t + "<tbody>[tbl]</tbody></table>"
-
-		src.last_time_processed = world.time
 
 		src.interface.updateContent("content", t)

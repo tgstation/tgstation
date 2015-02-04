@@ -200,7 +200,7 @@
 				if(I.reliability != 100 && crit_fail)
 					I.crit_fail = 1
 				I.loc = src.loc
-			del(src)
+			qdel(src)
 			return 1
 	else if(istype(item, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
@@ -224,7 +224,7 @@
 			return
 		put_in(G.affecting)
 		src.add_fingerprint(user)
-		del(G)
+		qdel(G)
 		return 1
 	return
 
@@ -242,8 +242,11 @@
 			if(!M.client && M.mind)
 				for(var/mob/dead/observer/ghost in player_list)
 					if(ghost.mind == M.mind)
-						ghost << 'sound/effects/adminhelp.ogg'
-						ghost << "<b><font color = #330033><font size = 3>Your corpse has been placed into a cloning scanner. Return to your body if you want to be resurrected/cloned!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>"
+						if(ghost.client)
+							ghost << 'sound/effects/adminhelp.ogg'
+							ghost << "<b><font color = #330033><font size = 3>Your corpse has been placed into a cloning scanner. Return to your body if you want to be resurrected/cloned!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>"
+						else
+							ghost.canclone = M
 						break
 			break
 	return
@@ -361,7 +364,7 @@
 /obj/machinery/computer/scan_consolenew/blob_act()
 
 	if(prob(75))
-		del(src)
+		qdel(src)
 
 /obj/machinery/computer/scan_consolenew/power_change()
 	if(stat & BROKEN)
@@ -844,7 +847,7 @@
 
 		if (bufferOption == "changeLabel")
 			var/datum/dna2/record/buf = src.buffers[bufferId]
-			var/text = sanitize(input(usr, "New Label:", "Edit Label", buf.name) as text|null)
+			var/text = copytext(sanitize(input(usr, "New Label:", "Edit Label", buf.name) as text|null),1,MAX_NAME_LEN)
 			buf.name = text
 			src.buffers[bufferId] = buf
 			return 1

@@ -10,71 +10,75 @@
 	origin_tech = "bluespace=4;materials=4"
 	var/imprinted = "empty"
 
+/obj/item/device/soulstone/Destroy()
+	for(var/mob/living/L in src)
+		L.loc = get_turf(loc)
+	..()
 //////////////////////////////Capturing////////////////////////////////////////////////////////
 
-	attack(mob/living/carbon/human/M as mob, mob/user as mob)
-		if(!istype(M, /mob/living/carbon/human))//If target is not a human.
-			return ..()
-		if(istype(M, /mob/living/carbon/human/manifested))
-			user << "The soul stone shard seems unable to pull the soul out of that poor manifested ghost back onto our plane."
-			return
-		add_logs(user, M, "captured [M.name]'s soul", object=src)
-
-		transfer_soul("VICTIM", M, user)
+/obj/item/device/soulstone/attack(mob/living/carbon/human/M as mob, mob/user as mob)
+	if(!istype(M, /mob/living/carbon/human))//If target is not a human.
+		return ..()
+	if(istype(M, /mob/living/carbon/human/manifested))
+		user << "The soul stone shard seems unable to pull the soul out of that poor manifested ghost back onto our plane."
 		return
+	add_logs(user, M, "captured [M.name]'s soul", object=src)
 
-	/*attack(mob/living/simple_animal/shade/M as mob, mob/user as mob)//APPARENTLY THEY NEED THEIR OWN SPECIAL SNOWFLAKE CODE IN THE LIVING ANIMAL DEFINES
-		if(!istype(M, /mob/living/simple_animal/shade))//If target is not a shade
-			return ..()
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to capture the soul of [M.name] ([M.ckey])</font>")
+	transfer_soul("VICTIM", M, user)
+	return
 
-		transfer_soul("SHADE", M, user)
-		return*/
+/*attack(mob/living/simple_animal/shade/M as mob, mob/user as mob)//APPARENTLY THEY NEED THEIR OWN SPECIAL SNOWFLAKE CODE IN THE LIVING ANIMAL DEFINES
+	if(!istype(M, /mob/living/simple_animal/shade))//If target is not a shade
+		return ..()
+	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to capture the soul of [M.name] ([M.ckey])</font>")
+
+	transfer_soul("SHADE", M, user)
+	return*/
 ///////////////////Options for using captured souls///////////////////////////////////////
 
-	attack_self(mob/user)
-		if (!in_range(src, user))
-			return
-		user.set_machine(src)
-		var/dat = "<TT><B>Soul Stone</B><BR>"
-		for(var/mob/living/simple_animal/shade/A in src)
-			dat += "Captured Soul: [A.name]<br>"
-			dat += {"<A href='byond://?src=\ref[src];choice=Summon'>Summon Shade</A>"}
-			dat += "<br>"
-			dat += {"<a href='byond://?src=\ref[src];choice=Close'> Close</a>"}
-		user << browse(dat, "window=aicard")
-		onclose(user, "aicard")
+/obj/item/device/soulstone/attack_self(mob/user)
+	if (!in_range(src, user))
+		return
+	user.set_machine(src)
+	var/dat = "<TT><B>Soul Stone</B><BR>"
+	for(var/mob/living/simple_animal/shade/A in src)
+		dat += "Captured Soul: [A.name]<br>"
+		dat += {"<A href='byond://?src=\ref[src];choice=Summon'>Summon Shade</A>"}
+		dat += "<br>"
+		dat += {"<a href='byond://?src=\ref[src];choice=Close'> Close</a>"}
+	user << browse(dat, "window=aicard")
+	onclose(user, "aicard")
+	return
+
+
+
+
+/obj/item/device/soulstone/Topic(href, href_list)
+	var/mob/U = usr
+	if (!in_range(src, U)||U.machine!=src)
+		U << browse(null, "window=aicard")
+		U.unset_machine()
 		return
 
+	add_fingerprint(U)
+	U.set_machine(src)
 
-
-
-	Topic(href, href_list)
-		var/mob/U = usr
-		if (!in_range(src, U)||U.machine!=src)
+	switch(href_list["choice"])//Now we switch based on choice.
+		if ("Close")
 			U << browse(null, "window=aicard")
 			U.unset_machine()
 			return
 
-		add_fingerprint(U)
-		U.set_machine(src)
+		if ("Summon")
+			for(var/mob/living/simple_animal/shade/A in src)
+				A.status_flags &= ~GODMODE
+				A.canmove = 1
+				A << "<b>You have been released from your prison, but you are still bound to [U.name]'s will. Help them suceed in their goals at all costs.</b>"
+				A.loc = U.loc
+				A.cancel_camera()
+				src.icon_state = "soulstone"
 
-		switch(href_list["choice"])//Now we switch based on choice.
-			if ("Close")
-				U << browse(null, "window=aicard")
-				U.unset_machine()
-				return
-
-			if ("Summon")
-				for(var/mob/living/simple_animal/shade/A in src)
-					A.status_flags &= ~GODMODE
-					A.canmove = 1
-					A << "<b>You have been released from your prison, but you are still bound to [U.name]'s will. Help them suceed in their goals at all costs.</b>"
-					A.loc = U.loc
-					A.cancel_camera()
-					src.icon_state = "soulstone"
-
-		attack_self(U)
+	attack_self(U)
 
 /obj/item/device/soulstone/cultify()
 	return
@@ -129,7 +133,8 @@
 							animation.icon = 'icons/mob/mob.dmi'
 							animation.master = T
 							flick("dust-h", animation)
-							del(animation)
+							animation.master = null
+							qdel(animation)
 							var/mob/living/simple_animal/shade/S = new /mob/living/simple_animal/shade( T.loc )
 							S.loc = C //put shade in stone
 							S.status_flags |= GODMODE //So they won't die inside the stone somehow
@@ -193,7 +198,7 @@
 							else
 								ticker.mode.cult+=Z.mind
 							ticker.mode.update_cult_icons_added(Z.mind)
-						del(T)
+						qdel(T)
 						Z << "<B>You are a Juggernaut. Though slow, your shell can withstand extreme punishment, create shield walls and even deflect energy weapons, and rip apart enemies and walls alike.</B>"
 						Z << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
 						Z.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall(Z)
@@ -209,7 +214,7 @@
 							else
 								ticker.mode.cult+=Z.mind
 							ticker.mode.update_cult_icons_added(Z.mind)
-						del(T)
+						qdel(T)
 						Z << "<B>You are a Wraith. Though relatively fragile, you are fast, deadly, and even able to phase through walls.</B>"
 						Z << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
 						Z.spell_list += new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift(Z)
@@ -225,7 +230,7 @@
 							else
 								ticker.mode.cult+=Z.mind
 							ticker.mode.update_cult_icons_added(Z.mind)
-						del(T)
+						qdel(T)
 						Z << "<B>You are an Artificer. You are incredibly weak and fragile, but you are able to construct fortifications, use magic missile, repair allied constructs (by clicking on them), </B><I>and most important of all create new constructs</I><B> (Use your Artificer spell to summon a new construct shell and Summon Soulstone to create a new soulstone).</B>"
 						Z << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
 						Z.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser(Z)
@@ -246,8 +251,8 @@
 					ticker.mode.update_necro_icons_added(Z.mind)
 					ticker.mode.risen.Add(Z.mind)
 			else
-				U << "\red <b>Creation failed!</b>: \black The soul stone is empty! Go kill someone!"
+				U << "<span class='warning'><b>Creation failed!</b>: \black The soul stone is empty! Go kill someone!</span>"
 	ticker.mode.update_all_necro_icons()
 	if(deleteafter)
-		del(src)
+		qdel(src)
 	return

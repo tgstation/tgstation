@@ -236,7 +236,7 @@ turf
 	var/light_col_sources = 0
 
 turf/space
-	lighting_lumcount = 4		//starlight
+	lighting_lumcount = 4
 
 turf/proc/update_lumcount(amount, col_r, col_g, col_b, removing = 0)
 	lighting_lumcount += amount
@@ -298,12 +298,9 @@ turf/proc/build_lighting_area(const/tag, const/level, const/color_light)
 turf/proc/shift_to_subarea()
 	lighting_changed = 0
 	var/area/Area = loc
-
 	if(!istype(Area) || !Area.lighting_use_dynamic) return
-
 	var/level = Clamp(round(lighting_lumcount, 1), 0, lighting_controller.lighting_states)
 	var/new_tag = lighting_tag(level)
-
 	// pomf - If we have a lighting color that is not null, apply the new tag to seperate the areas.
 	if (l_color)
 		// pomf - We append the (rounded!) color lighting lumcount so we can have colored lights.

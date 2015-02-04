@@ -569,3 +569,15 @@ Class Procs:
 // Hook for html_interface module to unset the active machine when the window is closed by the player.
 /obj/machinery/proc/hiOnHide(datum/html_interface_client/hclient)
 	if (hclient.client.mob && hclient.client.mob.machine == src) hclient.client.mob.unset_machine()
+
+/obj/machinery/proc/alert_noise(var/notice_state = "ping")
+	switch(notice_state)
+		if("ping")
+			src.visible_message("<span class='notice'>\icon[src] \The [src] pings.</span>")
+			playsound(get_turf(src), 'sound/machines/notify.ogg', 50, 0)
+		if("beep")
+			src.visible_message("<span class='notice'>\icon[src] \The [src] beeps.</span>")
+			playsound(get_turf(src), 'sound/machines/twobeep.ogg', 50, 0)
+		if("buzz")
+			src.visible_message("<span class='notice'>\icon[src] \The [src] buzzes.</span>")
+			playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, 0)

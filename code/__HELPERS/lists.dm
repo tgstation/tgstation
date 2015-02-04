@@ -203,6 +203,8 @@ proc/listclearnulls(list/list)
 /proc/mergeAtoms(var/list/atom/L, var/list/atom/R, var/order = 1)
 	var/Li=1
 	var/Ri=1
+	ASSERT(L)
+	ASSERT(R)
 	var/list/result = new()
 	while(Li <= L.len && Ri <= R.len)
 		var/atom/rL = L[Li]

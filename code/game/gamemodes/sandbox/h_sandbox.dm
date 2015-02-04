@@ -184,7 +184,7 @@ datum/hSB
 				if("hsbtoolbox")
 					var/obj/item/weapon/storage/hsb = new/obj/item/weapon/storage/toolbox/mechanical
 					for(var/obj/item/device/radio/T in hsb)
-						del(T)
+						qdel(T)
 					new/obj/item/weapon/crowbar (hsb)
 					hsb.loc = usr.loc
 				if("hsbmedkit")

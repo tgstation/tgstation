@@ -146,13 +146,6 @@
 
 /obj/item/attack_hand(mob/user as mob)
 	if (!user) return
-	if (hasorgans(user))
-		var/datum/organ/external/temp = user:organs_by_name["r_hand"]
-		if (user.hand)
-			temp = user:organs_by_name["l_hand"]
-		if(temp && !temp.is_usable())
-			user << "<span class='notice'>You try to move your [temp.display_name], but cannot!"
-			return
 
 	if (istype(src.loc, /obj/item/weapon/storage))
 		//If the item is in a storage item, take it out.
@@ -175,6 +168,8 @@
 	user.put_in_active_hand(src)
 	return
 
+/obj/item/requires_dexterity(mob/user)
+	return 1
 
 /obj/item/attack_paw(mob/user as mob)
 
@@ -586,50 +581,52 @@
 
 		//END MONKEY
 
-/obj/item/verb/verb_pickup()
-	set src in oview(1)
-	set category = "Object"
-	set name = "Pick up"
-
-	if(!(usr)) //BS12 EDIT
-		return
-	if(!usr.canmove || usr.stat || usr.restrained() || !Adjacent(usr))
-		return
-	if(!istype(usr, /mob/living/carbon) && !isMoMMI(usr))//Is not a carbon being or MoMMI
-		usr << "You can't pick things up!"
-	if(istype(usr, /mob/living/carbon/brain))//Is a brain
-		usr << "You can't pick things up!"
-	if( usr.stat || usr.restrained() )//Is not asleep/dead and is not restrained
-		usr << "<span class='warning'>You can't pick things up!</span>"
-		return
+/obj/item/can_pickup(mob/living/user)
+	if(!(user) || !isliving(user)) //BS12 EDIT
+		return 0
+	if(!user.canmove || user.stat || user.restrained() || !Adjacent(user))
+		return 0
+	if((!istype(user, /mob/living/carbon) && !isMoMMI(user)) || istype(user, /mob/living/carbon/brain)) //Is not a carbon being, MoMMI, or is a brain
+		user << "You can't pick things up!"
+	if( user.stat || user.restrained() )//Is not asleep/dead and is not restrained
+		user << "<span class='warning'>You can't pick things up!</span>"
+		return 0
 	if(src.anchored) //Object isn't anchored
-		usr << "<span class='warning'>You can't pick that up!</span>"
-		return
-	if(!usr.hand && usr.r_hand) //Right hand is not full
-		usr << "<span class='warning'>Your right hand is full.</span>"
-		return
-	if(usr.hand && usr.l_hand && !isMoMMI(usr)) //Left hand is not full
-		usr << "<span class='warning'>Your left hand is full.</span>"
-		return
+		user << "<span class='warning'>You can't pick that up!</span>"
+		return 0
 	if(!istype(src.loc, /turf)) //Object is on a turf
-		usr << "<span class='warning'>You can't pick that up!</span>"
+		user << "<span class='warning'>You can't pick that up!</span>"
+		return 0
+	return 1
+
+/obj/item/verb_pickup(mob/living/user)
+	//set src in oview(1)
+	//set category = "Object"
+	//set name = "Pick up"
+
+	if(!can_pickup(user))
+		return 0
+	if(!user.hand && user.r_hand) //Right hand is not full
+		user << "<span class='warning'>Your right hand is full.</span>"
+		return
+	if(user.hand && user.l_hand && !isMoMMI(user)) //Left hand is not full
+		user << "<span class='warning'>Your left hand is full.</span>"
 		return
 	//All checks are done, time to pick it up!
-	if(isMoMMI(usr))
+	if(isMoMMI(user))
 		// Otherwise, we get MoMMIs changing their own laws.
 		if(istype(src,/obj/item/weapon/aiModule))
 			src << "<span class='warning'>Your firmware prevents you from picking up [src]!</span>"
 			return
-		if(usr.get_active_hand() == null)
-			usr.put_in_hands(src)
-	if(istype(usr, /mob/living/carbon/human))
-		src.attack_hand(usr)
-	if(istype(usr, /mob/living/carbon/alien))
-		src.attack_alien(usr)
-	if(istype(usr, /mob/living/carbon/monkey))
-		src.attack_paw(usr)
+		if(user.get_active_hand() == null)
+			user.put_in_hands(src)
+	if(istype(user, /mob/living/carbon/human))
+		src.attack_hand(user)
+	if(istype(user, /mob/living/carbon/alien))
+		src.attack_alien(user)
+	if(istype(user, /mob/living/carbon/monkey))
+		src.attack_paw(user)
 	return
-
 
 //This proc is executed when someone clicks the on-screen UI button. To make the UI button show, set the 'action_button_name'.
 //The default action is attack_self().

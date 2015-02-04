@@ -255,7 +255,7 @@ obj/machinery/airlock_sensor/attackby(var/obj/item/W, var/mob/user)
 		if(do_after(user, 50))
 			user << "You successfully pry \the [src] off the wall."
 			new /obj/item/mounted/frame/airlock_sensor(get_turf(src))
-			del(src)
+			qdel(src)
 
 obj/machinery/access_button
 	icon = 'icons/obj/airlock_machines.dmi'
@@ -325,7 +325,7 @@ obj/machinery/access_button/attackby(var/obj/item/W, var/mob/user)
 		if(do_after(user, 50))
 			user << "You successfully pry \the [src] off the wall."
 			new /obj/item/mounted/frame/access_button(get_turf(src))
-			del(src)
+			qdel(src)
 
 obj/machinery/access_button/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)

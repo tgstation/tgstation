@@ -103,10 +103,10 @@
 			var/delay = 20
 			var/datum/reagent/blood/B = locate(/datum/reagent/blood) in sample.reagents.reagent_list
 			if (!B)
-				state("\The [src.name] buzzes, \"No antibody carrier detected.\"", "blue")
+				say("No antibody carrier detected.")
 
 			else if(sample.reagents.has_reagent("toxins"))
-				state("\The [src.name] beeps, \"Pathogen purging speed above nominal.\"", "blue")
+				say("Pathogen purging speed above nominal.")
 				delay = delay/2
 
 			else
@@ -124,7 +124,7 @@
 					isolating = 40
 					update_icon()
 				else
-					state("\The [src.name] buzzes, \"No such pathogen detected.\"", "blue")
+					say("No such pathogen detected.")
 
 		if("sample")
 			if(sample)
@@ -147,10 +147,10 @@
 	sample.reagents.remove_reagent("blood",amt)
 	sample.reagents.add_reagent("antibodies",amt,data)
 
-	state("\The [src.name] pings", "blue")
+	alert_noise("ping")
 
 /obj/machinery/computer/centrifuge/proc/isolate()
 	var/obj/item/weapon/virusdish/dish = new/obj/item/weapon/virusdish(src.loc)
 	dish.virus2 = virus2
 
-	state("\The [src.name] pings", "blue")
+	alert_noise("ping")

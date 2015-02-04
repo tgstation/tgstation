@@ -141,8 +141,9 @@
 			T.Entered(l_hand)
 
 		l_hand.dropped(src)
-		l_hand.layer = initial(l_hand.layer)
-		l_hand = null
+		if(l_hand)
+			l_hand.layer = initial(l_hand.layer)
+			l_hand = null
 		update_inv_l_hand()
 		return 1
 	return 0

@@ -211,6 +211,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/attack_animal(mob/M)
 	if(isanimal(M))
 		if(iscorgi(M))
+			M.delayNextAttack(10)
 			if(bitecount >= 4)
 				M.visible_message("[M] [pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where \the [src] was")].","<span class=\"notice\">You swallow up the last part of \the [src].")
 				playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
@@ -225,6 +226,7 @@
 				playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 				bitecount++
 		else if(ismouse(M))
+			M.delayNextAttack(10)
 			var/mob/living/simple_animal/mouse/N = M
 			N << text("<span class='notice'>You nibble away at [src].</span>")
 			if(prob(50))

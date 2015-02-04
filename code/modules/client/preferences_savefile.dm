@@ -237,6 +237,9 @@ SELECT
     limbs.r_hand,
     limbs.heart,
     limbs.eyes,
+    limbs.lungs,
+    limbs.liver,
+    limbs.kidneys,
     players.player_ckey,
     players.player_slot,
     players.ooc_notes,
@@ -374,6 +377,9 @@ AND players.player_slot = ? ;"}, ckey, slot)
 	organ_data["r_hand"]= preference_list["r_hand"]
 	organ_data["heart"] = preference_list["heart"]
 	organ_data["eyes"] 	= preference_list["eyes"]
+	organ_data["lungs"] = preference_list["lungs"]
+	organ_data["kidneys"]=preference_list["kidneys"]
+	organ_data["liver"] = preference_list["liver"]
 
 	alternate_option	= text2num(preference_list["alternate_option"])
 	job_civilian_high	= text2num(preference_list["job_civilian_high"])

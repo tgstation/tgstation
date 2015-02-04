@@ -498,6 +498,8 @@ var/global/loopModeNames=list(
 			update_music()
 
 /obj/machinery/media/jukebox/update_music()
+	if(current_song > playlist.len)
+		current_song = 0
 	if(current_song && playing)
 		var/datum/song_info/song = playlist[current_song]
 		media_url = song.url

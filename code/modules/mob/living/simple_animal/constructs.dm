@@ -23,6 +23,7 @@
 	min_n2 = 0
 	max_n2 = 0
 	minbodytemp = 0
+	show_stat_health = 0
 	faction = "cult"
 	supernatural = 1
 	var/nullblock = 0
@@ -152,12 +153,6 @@
 			if ((M.client && !( M.blinded )))
 				M.show_message("\red [user] gently taps [src] with [O]. ")
 
-
-/mob/living/simple_animal/construct/airflow_stun()
-	return
-
-/mob/living/simple_animal/construct/airflow_hit(atom/A)
-	return
 
 /////////////////Juggernaut///////////////
 

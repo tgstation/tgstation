@@ -224,6 +224,7 @@
 	stage = 4
 /datum/disease2/effect/scc/activate(var/mob/living/carbon/mob,var/multiplier)
 	//
+	if(!ishuman(mob)) return 0
 	var/mob/living/carbon/human/H = mob
 	mob.reagents.add_reagent("pacid", 10)
 	mob << "<span class = 'warning'> Your body burns as your cells break down.</span>"

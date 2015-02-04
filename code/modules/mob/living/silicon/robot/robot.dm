@@ -1452,12 +1452,17 @@
 		src << "Your icon has been set. You now require a module reset to change it."
 
 /mob/living/silicon/robot/rejuvenate()
-	..()
-	for(var/datum/robot_component/component in components)
+	for(var/C in components)
+		var/datum/robot_component/component = components[C]
 		component.electronics_damage = 0
 		component.brute_damage = 0
 		component.installed = 1
-
+	if(!cell)
+		cell = new(src)
+	cell.maxcharge = max(15000, cell.maxcharge)
+	cell.charge = cell.maxcharge
+	..()
+	updatehealth()
 
 /mob/living/silicon/robot/Process_Spaceslipping(var/prob_slip=5)
 	//Engineering borgs have the magic of magnets.

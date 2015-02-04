@@ -370,7 +370,7 @@ emp_act
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
 			if("l_arm")
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
-	if(update)	QueueUpdateDamageIcon(1)
+	if(update)	QueueUpdateDamageIcon()
 
 
 /mob/living/carbon/human/blob_act()

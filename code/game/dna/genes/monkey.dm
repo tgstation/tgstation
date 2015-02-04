@@ -34,7 +34,8 @@
 		animation.master = src
 		flick("h2monkey", animation)
 		sleep(48)
-		del(animation)
+		animation.master = null
+		qdel(animation)
 
 
 	var/mob/living/carbon/monkey/O = null
@@ -61,7 +62,7 @@
 
 
 	for(var/obj/T in (M.contents-implants))
-		del(T)
+		qdel(T)
 
 	O.loc = M.loc
 
@@ -109,7 +110,8 @@
 		animation.master = src
 		flick("monkey2h", animation)
 		sleep(48)
-		del(animation)
+		animation.master = null
+		qdel(animation)
 
 	var/mob/living/carbon/human/O = new( src )
 	if(Mo.greaterform)

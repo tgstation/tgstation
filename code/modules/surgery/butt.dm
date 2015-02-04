@@ -4,7 +4,7 @@
 ///////////////////////////////////////////////////////////
 
 /datum/surgery_step/butt
-	priority = 0
+	priority = 1 //this is more important than anything else!
 	can_infect = 0
 	blood_level = 1
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

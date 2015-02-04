@@ -155,7 +155,7 @@
 			M.LAssailant = user
 
 /obj/item/weapon/melee/baton/throw_impact(atom/hit_atom)
-	foundmob = directory[ckey(hit_atom.fingerprintslast)]
+	foundmob = directory[ckey(fingerprintslast)]
 	if (prob(50))
 		if(istype(hit_atom, /mob/living))
 			var/mob/living/L = hit_atom
@@ -168,7 +168,7 @@
 				L.Weaken(stunforce)
 				L.apply_effect(STUTTER, stunforce)
 
-				L.visible_message("<span class='danger'>[L] has been stunned with [src] by [foundmob]!</span>")
+				L.visible_message("<span class='danger'>[L] has been stunned with [src] by [foundmob ? foundmob : "Unknown"]!</span>")
 				playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 
 				if(isrobot(loc))

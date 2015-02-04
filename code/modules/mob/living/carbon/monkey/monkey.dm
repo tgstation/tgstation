@@ -208,16 +208,17 @@
 
 /mob/living/carbon/monkey/proc/wearhat(var/obj/item/clothing/head/H as obj)
 	if(H)
-		var/obj/item/clothing/head/oldhat = null
-		if(hat)
-			oldhat = hat
-			hat = null
-		hat = H
-		usr.drop_item()
-		hat.loc = src
-		regenerate_icons()
-		if (hat)
-			usr.put_in_hands(oldhat)
+		if(istype(H))
+			var/obj/item/clothing/head/oldhat = null
+			if(hat)
+				oldhat = hat
+				hat = null
+			hat = H
+			usr.drop_item()
+			hat.loc = src
+			regenerate_icons()
+			if (hat)
+				usr.put_in_hands(oldhat)
 	else
 		if(hat)
 			usr.put_in_hands(hat)
@@ -226,16 +227,17 @@
 
 /mob/living/carbon/monkey/proc/wearclothes(var/obj/item/clothing/monkeyclothes/C as obj)
 	if(C)
-		var/obj/item/clothing/monkeyclothes/olduniform = null
-		if(uniform)
-			olduniform = uniform
-			uniform = null
-		uniform = C
-		usr.drop_item()
-		uniform.loc = src
-		regenerate_icons()
-		if (olduniform)
-			usr.put_in_hands(olduniform)
+		if(istype(C))
+			var/obj/item/clothing/monkeyclothes/olduniform = null
+			if(uniform)
+				olduniform = uniform
+				uniform = null
+			uniform = C
+			usr.drop_item()
+			uniform.loc = src
+			regenerate_icons()
+			if (olduniform)
+				usr.put_in_hands(olduniform)
 	else
 		if(uniform)
 			usr.put_in_hands(uniform)
