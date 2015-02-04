@@ -375,7 +375,7 @@ ________________________________________________________________________________
 	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_belt)
 	equip_to_slot_or_del(new /obj/item/weapon/c4(src), slot_r_store)
 	equip_to_slot_or_del(new /obj/item/weapon/c4(src), slot_l_store)
-	equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen(src), slot_s_store)
+	equip_to_slot_or_del(new /obj/item/weapon/tank/internals/emergency_oxygen(src), slot_s_store)
 	equip_to_slot_or_del(new /obj/item/weapon/tank/jetpack/carbondioxide(src), slot_back)
 
 	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(src)

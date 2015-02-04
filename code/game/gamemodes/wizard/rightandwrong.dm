@@ -45,7 +45,7 @@
 				if("gyrojet")
 					new /obj/item/weapon/gun/projectile/automatic/gyropistol(get_turf(H))
 				if("pulse")
-					new /obj/item/weapon/gun/energy/pulse_rifle(get_turf(H))
+					new /obj/item/weapon/gun/energy/pulse(get_turf(H))
 				if("suppressed")
 					new /obj/item/weapon/gun/projectile/automatic/pistol(get_turf(H))
 					new /obj/item/weapon/suppressor(get_turf(H))

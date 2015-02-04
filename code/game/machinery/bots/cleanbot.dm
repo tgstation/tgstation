@@ -222,6 +222,7 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 		target_types += /obj/effect/decal/cleanable/xenoblood/xgibs
 		target_types += /obj/effect/decal/cleanable/blood/
 		target_types += /obj/effect/decal/cleanable/blood/gibs/
+		target_types += /obj/effect/decal/cleanable/blood/drip/
 		target_types += /obj/effect/decal/cleanable/trail_holder
 
 /obj/machinery/bot/cleanbot/proc/clean(var/obj/effect/decal/cleanable/target)
