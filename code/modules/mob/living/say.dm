@@ -122,9 +122,6 @@ var/list/department_radio_keys = list(
 
 	if(handle_inherent_channels(message, message_mode))
 		return
-	if(isMoMMI(src))
-		src:mommi_talk(message)
-		return
 	if(!can_speak_vocal(message))
 		return
 	message = treat_message(message)
@@ -245,13 +242,13 @@ var/list/department_radio_keys = list(
 			log_say("[mind.changeling.changelingID]/[src.key] : [message]")
 			for(var/mob/M in mob_list)
 				if(M.lingcheck() || (M in dead_mob_list && !istype(M, /mob/new_player)))
-					M << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
+					M.show_message("<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>")
 			return 1
 	if(message_mode == MODE_CULTCHAT && construct_chat_check(1) /*sending check for humins*/)
 		log_say("Cult channel: [src.name]/[src.key] : [message]")
 		for(var/mob/M in mob_list)
 			if(M.construct_chat_check(2) /*receiving check*/ || (M in dead_mob_list && !istype(M, /mob/new_player)))
-				M << "<span class='sinister'><b>[src.name]:</b> [message]</span>"
+				M.show_message("<span class='sinister'><b>[src.name]:</b> [message]</span>")
 		return 1
 	return 0
 
