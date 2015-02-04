@@ -15,7 +15,7 @@ em						{font-style: normal;	font-weight: bold;}
 .adminsay				{color: #9611D4;	font-weight: bold;}
 .name					{					font-weight: bold;}
 .say					{}
-.siliconsay				{font-family: "Courier New", Courier, monospace;}
+.siliconsay				{font-family: 'Courier New', Courier, monospace;}
 .deadsay				{color: #5c00e6;}
 .radio					{color: #008000;}
 .deptradio				{color: #993399;}
