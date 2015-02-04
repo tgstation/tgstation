@@ -125,7 +125,16 @@ var/list/valid_secondary_effect_types = list(\
 		secondary_effect.process()
 
 	if(pulledby)
-		Bumped(pulledby)
+		if(!Adjacent(pulledby)) //Not actually next to them
+			if(pulledby.pulling == src)
+				pulledby.stop_pulling()
+			pulledby = null
+		else if(pulledby.stat || pulledby.sleeping || pulledby.lying || pulledby.weakened || pulledby.stunned) //To prevent getting stuck stunned forever due to not being able to break the pull.
+			if(pulledby.pulling == src)
+				pulledby.stop_pulling()
+			pulledby = null
+		else
+			Bumped(pulledby)
 
 	//if either of our effects rely on environmental factors, work that out
 	var/trigger_cold = 0
