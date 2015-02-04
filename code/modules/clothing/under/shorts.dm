@@ -25,3 +25,7 @@
 /obj/item/clothing/under/shorts/grey
 	icon_state = "greyshorts"
 	item_color = "greyshorts"
+
+/obj/item/clothing/under/shorts/purple
+	icon_state = "purpleshorts"
+	item_color = "purpleshorts"
