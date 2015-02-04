@@ -97,6 +97,8 @@
 	return
 
 /obj/machinery/power/monitor/process()
+	if(stat & (BROKEN|NOPOWER))
+		return
 	// src.last_time_processed == 0 is in place to make it update the first time around, then wait until someone watches
 	if ((src.last_time_processed == 0 || src.interface.isUsed()) && world.time - src.last_time_processed > 30)
 		src.last_time_processed = world.time
