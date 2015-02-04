@@ -14,8 +14,6 @@
 	update_icon()
 
 /obj/machinery/iv_drip/update_icon()
-	overlays.Cut()
-
 	if(src.attached)
 		if(mode)
 			icon_state = "injecting"
@@ -26,6 +24,8 @@
 			icon_state = "injectidle"
 		else
 			icon_state = "donateidle"
+
+	overlays = null
 
 	if(beaker)
 		if(attached)
