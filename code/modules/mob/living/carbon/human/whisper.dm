@@ -1,7 +1,4 @@
-// NOTE THAT HEARD AND UNHEARD USE GENDER_REPLACE SYNTAX SINCE BYOND IS STUPID
-/mob/living/carbon/human/whisper(var/message as text)
-	if(stat == DEAD)
-		return
+/mob/living/carbon/human/whisper(message as text)
 	if(!IsVocal())
 		return
 
@@ -9,11 +6,15 @@
 		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
 		return
 
-	message = trim(copytext(strip_html_simple(message), 1, MAX_MESSAGE_LEN))
+	if(stat == DEAD)
+		return
+
+
+	message = trim(strip_html_properly(message))
 	if(!can_speak(message))
 		return
 
-	message = "<i>[message]</i>"
+	message = "[message]"
 	log_whisper("[src.name]/[src.key] : [message]")
 
 	if (src.client)
@@ -41,12 +42,11 @@
 		message = Ellipsis(message, 10, 1)
 		whispers = "whispers in their final breath"
 		said_last_words = src.stat
-
 	message = treat_message(message)
 
 	var/list/listening_dead = list()
 	for(var/mob/M in player_list)
-		if(M.stat == DEAD && (M.client.prefs.toggles & CHAT_GHOSTEARS) && client)
+		if(M.stat == DEAD && ((M.client.prefs.toggles & CHAT_GHOSTEARS) || (get_dist(M, src) <= 7)))
 			listening_dead |= M
 
 	var/list/listening = get_hearers_in_view(1, src)
@@ -63,13 +63,13 @@
 	for(var/mob/M in watching)
 		M.show_message(rendered, 2)
 
-	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"[message]\"</span></span>"
+	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"<i>[message]</i>\"</span></span>"
 
 	for(var/mob/M in listening)
 		M.Hear(rendered, src, languages, message)
 
 	message = stars(message)
-	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"[message]\"</span></span>"
+	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"<i>[message]</i>\"</span></span>"
 	for(var/mob/M in eavesdropping)
 		M.Hear(rendered, src, languages, message)
 

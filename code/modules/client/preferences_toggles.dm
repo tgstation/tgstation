@@ -166,18 +166,17 @@
 	var/list/icons = usr.hud_used.adding + usr.hud_used.other +usr.hud_used.hotkeybuttons
 	icons.Add(usr.zone_sel)
 
-	for(var/obj/screen/I in icons)
-		if(I.color && I.alpha)
-			I.icon = ui_style2icon(UI_style_new)
-			I.color = UI_style_color_new
-			I.alpha = UI_style_alpha_new
-
 	if(alert("Like it? Save changes?",,"Yes", "No") == "Yes")
 		prefs.UI_style = UI_style_new
 		prefs.UI_style_alpha = UI_style_alpha_new
 		prefs.UI_style_color = UI_style_color_new
 		prefs.save_preferences_sqlite(src, ckey)
 		usr << "UI was saved"
+		for(var/obj/screen/I in icons)
+			if(I.color && I.alpha)
+				I.icon = ui_style2icon(UI_style_new)
+				I.color = UI_style_color_new
+				I.alpha = UI_style_alpha_new
 
 /client/verb/toggle_media()
 	set name = "Hear/Silence Streaming"

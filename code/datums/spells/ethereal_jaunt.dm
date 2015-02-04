@@ -51,8 +51,9 @@
 							break
 			target.canmove = 1
 			target.client.eye = target
-			del(animation)
-			del(holder)
+			animation.master = null
+			qdel(animation)
+			qdel(holder)
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_disappear(var/atom/movable/overlay/animation, var/mob/living/target)
 	animation.icon_state = "liquify"

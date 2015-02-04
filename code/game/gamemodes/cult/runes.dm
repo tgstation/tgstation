@@ -1,10 +1,5 @@
 var/list/sacrificed = list()
 
-/obj/effect/rune
-	var/atom/movable/overlay/c_animation = null
-	var/nullblock = 0
-	var/mob/living/ajourn
-
 /obj/effect/rune/cultify()
 	return
 
@@ -30,7 +25,9 @@ var/list/sacrificed = list()
 	c_animation.icon_state = "[animation_icon]"
 	flick("cultification",c_animation)
 	spawn(10)
-		del(c_animation)
+		c_animation.master = null
+		qdel(c_animation)
+		c_animation = null
 
 /////////////////////////////////////////FIRST RUNE
 /obj/effect/rune/proc/teleport(var/key)
@@ -508,7 +505,8 @@ var/list/sacrificed = list()
 		ticker.mode.cult+=D.mind
 	ticker.mode.update_cult_icons_added(D.mind)
 	D.canmove = 1
-	del(animation)
+	animation.master = null
+	qdel(animation)
 
 	D.mind.special_role = "Cultist"
 	D << "<span class='sinister'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</span>"
@@ -1057,7 +1055,7 @@ var/list/sacrificed = list()
 					M << "<span class='warning'>The blood suddenly ignites, burning you!</span>"
 					var/turf/T = get_turf(B)
 					T.hotspot_expose(700,125,surfaces=1)
-					del(B)
+					qdel(B)
 		qdel(src)
 
 //////////             Rune 24 (counting burningblood, which kinda doesnt work yet.)
@@ -1189,7 +1187,7 @@ var/list/sacrificed = list()
 								del(M)
 								C << "<B>You are now an Artificer. You are incredibly weak and fragile, but you are able to construct new floors and walls, to break some walls apart, to repair allied constructs (by clicking on them), </B><I>and most important of all create new constructs</I><B> (Use your Artificer spell to summon a new construct shell and Summon Soulstone to create a new soulstone).</B>"
 								ticker.mode.update_cult_icons_added(C.mind)
-				del(src)
+				qdel(src)
 				return
 			else
 				usr << "<span class='warning'>Only the followers of Nar-Sie may be given their armor.</span>"

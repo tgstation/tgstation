@@ -243,7 +243,7 @@
 		ui.user = newMob
 		newMob.open_uis.Add(ui)
 
-	oldMob.open_uis.Cut()
+	oldMob.open_uis.len = 0
 
 	return 1 // success
 

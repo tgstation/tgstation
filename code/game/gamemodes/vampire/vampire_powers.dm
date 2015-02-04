@@ -394,8 +394,9 @@
 							break
 			M.current.canmove = 1
 			M.current.client.eye = M.current
-			del(animation)
-			del(holder)
+			animation.master = null
+			qdel(animation)
+			qdel(holder)
 		M.current.verbs -= /client/proc/vampire_jaunt
 		spawn(600) M.current.verbs += /client/proc/vampire_jaunt
 
@@ -451,7 +452,8 @@
 			//animation.master = src
 			usr.loc = picked
 			spawn(10)
-				del(animation)
+				animation.master = null
+				qdel(animation)
 		M.current.verbs -= /client/proc/vampire_shadowstep
 		spawn(20)
 			M.current.verbs += /client/proc/vampire_shadowstep

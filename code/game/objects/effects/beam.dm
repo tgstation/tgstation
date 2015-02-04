@@ -144,7 +144,7 @@
 			//BEAM_DEL(child)
 			children -= child
 			qdel(child)
-	children.Cut()
+	children.len = 0
 
 /obj/effect/beam/proc/disconnect(var/re_emit=1)
 	var/obj/effect/beam/_master=get_master()

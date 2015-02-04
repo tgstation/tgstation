@@ -165,3 +165,11 @@ var/list/freqtoname = list(
 
 /atom/movable/virtualspeaker/GetRadio()
 	return radio
+
+/atom/movable/virtualspeaker/resetVariables()
+	job = null
+	faketrack = null
+	source = null
+	radio = null
+
+	..("job", "faketrack", "source", "radio")

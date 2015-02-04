@@ -45,7 +45,7 @@
 
 #define MAINTAINING_OBJECT_POOL_COUNT 20
 
-var/list/masterPool = new
+var/global/list/masterPool = new
 
 // Read-only or compile-time vars and special exceptions.
 var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "verbs", "type", "x", "y", "z")
@@ -100,8 +100,8 @@ var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "
 	if(isnull(masterPool["[AM.type]"]))
 		masterPool["[AM.type]"] = new
 
-	masterPool["[AM.type]"] += AM
 	AM.resetVariables()
+	masterPool["[AM.type]"] += AM
 
 	#ifdef DEBUG_OBJECT_POOL
 	world << text("DEBUG_OBJECT_POOL: returnToPool([]) [] left.", AM.type, length(masterPool["[AM.type]"]))

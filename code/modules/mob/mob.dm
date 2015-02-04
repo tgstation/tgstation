@@ -805,9 +805,9 @@ var/list/slot_equipment_priority = list( \
 		// If we're pulling something then drop what we're currently pulling and pull this instead.
 		if(pulling)
 			// Are we trying to pull something we are already pulling? Then just stop here, no need to continue.
-
+			var/p = pulling
 			stop_pulling()
-			if(AM == pulling)
+			if(AM == p)
 				return
 
 		src.pulling = AM
@@ -910,6 +910,13 @@ var/list/slot_equipment_priority = list( \
 	A.examine(src)
 
 
+/mob/living/verb/verb_pickup(obj/I in view())
+	set name = "Pick up"
+	set category = "Object"
+
+	face_atom(I)
+	I.verb_pickup(src)
+
 /mob/proc/update_flavor_text()
 	set src in usr
 	if(usr != src)
@@ -986,7 +993,7 @@ var/list/slot_equipment_priority = list( \
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
 		return
-	client.screen.Cut()
+	client.screen.len = 0
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
 		return
@@ -1201,7 +1208,6 @@ var/list/slot_equipment_priority = list( \
 				stat(null, "\ttotal delete - [garbageCollector.dels_count]")
 				stat(null, "\tsoft delete - [garbageCollector.dels_count - garbageCollector.hard_dels]")
 				stat(null, "\thard delete - [garbageCollector.hard_dels]")
-				stat(null, "ALL - [master_controller.total_cost]")
 			else
 				stat(null, "Garbage Controller is not running.")
 

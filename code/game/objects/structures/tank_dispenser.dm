@@ -24,7 +24,7 @@
 
 
 /obj/structure/dispenser/update_icon()
-	overlays.Cut()
+	overlays.len = 0
 	switch(oxygentanks)
 		if(1 to 3)	overlays += "oxygen-[oxygentanks]"
 		if(4 to INFINITY) overlays += "oxygen-4"

@@ -72,3 +72,8 @@
 			robot_talk(message)
 			return 1
 	return 0
+
+/mob/living/silicon/treat_message(message, genesay = 0)
+	message = ..()
+	message = "<span class='siliconsay'>[message]</span>"
+	return message

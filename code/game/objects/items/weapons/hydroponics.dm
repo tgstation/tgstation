@@ -116,7 +116,7 @@
 				break
 
 	else if ( href_list["unload"] )
-		item_quants.Cut()
+		item_quants.len = 0
 		for(var/obj/O in contents )
 			O.loc = get_turf(src)
 

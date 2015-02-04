@@ -310,7 +310,7 @@ mob/verb/test()
 
 				if ("onload")
 					hclient.layout = null
-					hclient.content_elements.Cut()
+					hclient.content_elements.len = 0
 					hclient.is_loaded = TRUE
 
 					src._renderTitle(hclient, TRUE)

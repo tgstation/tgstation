@@ -84,5 +84,5 @@
 		H.Weaken(3)
 
 /obj/item/weapon/dice/update_icon()
-	overlays.Cut()
+	overlays.len = 0
 	overlays += "[src.icon_state][src.result]"

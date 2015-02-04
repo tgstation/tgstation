@@ -408,9 +408,10 @@
 		return
 
 /obj/spacepod/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	..()
-	if(dir == 1 || dir == 4)
-		src.loc.Entered(src)
+	var/oldloc = src.loc
+	..(NewLoc, Dir)
+	if(dir)
+		src.loc.Entered(src, oldloc)
 /obj/spacepod/proc/Process_Spacemove(var/check_drift = 0, mob/user)
 	var/dense_object = 0
 	if(!user)
@@ -447,7 +448,8 @@
 					inertia_dir = 0
 					moveship = 0
 		if(moveship)
-			step(src, direction)
+			if(!step(src, direction))
+				Move(get_step(src,direction), direction)
 			if(istype(src.loc, /turf/space))
 				inertia_dir = direction
 	else

@@ -378,8 +378,22 @@
 			return master.used_environ
 		if (TOTAL)
 			return master.used_light + master.used_equip + master.used_environ
-
+		if(STATIC_EQUIP)
+			return master.static_equip
+		if(STATIC_LIGHT)
+			return master.static_light
+		if(STATIC_ENVIRON)
+			return master.static_environ
 	return 0
+
+/area/proc/addStaticPower(value, powerchannel)
+	switch(powerchannel)
+		if(STATIC_EQUIP)
+			static_equip += value
+		if(STATIC_LIGHT)
+			static_light += value
+		if(STATIC_ENVIRON)
+			static_environ += value
 
 /area/proc/clear_usage()
 	master.used_equip = 0

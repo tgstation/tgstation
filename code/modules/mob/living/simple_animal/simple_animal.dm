@@ -37,6 +37,8 @@
 	var/oxygen_alert = 0
 	var/toxins_alert = 0
 
+	var/show_stat_health = 1	//does the percentage health show in the stat panel for the mob
+
 	//Atmos effect - Yes, you can make creatures that require plasma or co2 to survive. N2O is a trace gas and handled separately, hence why it isn't here. It'd be hard to add it. Hard and me don't mix (Yes, yes make all the dick jokes you want with that.) - Errorage
 	var/min_oxy = 5
 	var/max_oxy = 0					//Leaving something at 0 means it's off - has no maximum
@@ -87,6 +89,12 @@
 	..()
 
 /mob/living/simple_animal/updatehealth()
+	return
+
+/mob/living/simple_animal/airflow_stun()
+	return
+
+/mob/living/simple_animal/airflow_hit(atom/A)
 	return
 
 /mob/living/simple_animal/Life()
@@ -465,7 +473,7 @@
 /mob/living/simple_animal/Stat()
 	..()
 
-	if(statpanel("Status"))
+	if(statpanel("Status") && show_stat_health)
 		stat(null, "Health: [round((health / maxHealth) * 100)]%")
 
 /mob/living/simple_animal/proc/Die()

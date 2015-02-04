@@ -7,7 +7,10 @@
 	lighting_controller.lights_workload_max = \
 		max(lighting_controller.lights_workload_max, lighting_controller.lights.len)
 
-	for(var/datum/light_source/L in lighting_controller.lights)
+	for(var/i = 1 to lighting_controller.lights.len)
+		if(i > lighting_controller.lights.len)
+			break
+		var/datum/light_source/L = lighting_controller.lights[i]
 		if(L && L.check())
 			lighting_controller.lights.Remove(L)
 
@@ -16,11 +19,14 @@
 	lighting_controller.changed_turfs_workload_max = \
 		max(lighting_controller.changed_turfs_workload_max, lighting_controller.changed_turfs.len)
 
-	for(var/turf/T in lighting_controller.changed_turfs)
+	for(var/i = 1 to lighting_controller.changed_turfs.len)
+		if(i > lighting_controller.changed_turfs.len)
+			break
+		var/turf/T = lighting_controller.changed_turfs[i]
 		if(T && T.lighting_changed)
 			T.shift_to_subarea()
 
 		scheck()
 
 	if(lighting_controller.changed_turfs && lighting_controller.changed_turfs.len)
-		lighting_controller.changed_turfs.Cut() // reset the changed list
+		lighting_controller.changed_turfs.len = 0 // reset the changed list

@@ -64,7 +64,7 @@
 /obj/item/weapon/planning_frame/attack_self(var/mob/user)
 	for(var/obj/item/weapon/aiModule/mod in modules)
 		qdel(mod)
-	modules.Cut()
+	modules.len = 0
 	user << "<span class='notice'>You clear \the [src]'s memory buffers!</span>"
 	laws = new base_law_type
 	return

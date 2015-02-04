@@ -64,7 +64,7 @@
 				break
 
 /obj/machinery/r_n_d/update_icon()
-	overlays.Cut()
+	overlays.len = 0
 	if(linked_console)
 		overlays += "[base_state]_link"
 

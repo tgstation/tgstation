@@ -183,7 +183,7 @@ var/const/tk_maxrange = 15
 
 
 	update_icon()
-		overlays.Cut()
+		overlays.len = 0
 		if(focus && focus.icon && focus.icon_state)
 			overlays += icon(focus.icon,focus.icon_state)
 		return

@@ -66,7 +66,7 @@
 					break
 
 				if(!target || (!proj_lingering && projectile.loc == current_loc)) //if it didn't move since last time
-					del(projectile)
+					qdel(projectile)
 					break
 
 				if(proj_trail && projectile)
@@ -91,4 +91,4 @@
 				sleep(proj_step_delay)
 
 			if(projectile)
-				del(projectile)
+				qdel(projectile)

@@ -23,11 +23,28 @@
 	min_n2 = 0
 	max_n2 = 0
 	minbodytemp = 0
+	show_stat_health = 0
 	faction = "cult"
 	supernatural = 1
 	var/nullblock = 0
 
 	var/list/construct_spells = list()
+
+/mob/living/simple_animal/construct/construct_chat_check(setting)
+	if(!mind) return
+
+	if(mind in ticker.mode.cult)
+		return 1
+
+/mob/living/simple_animal/construct/handle_inherent_channels(message, message_mode)
+	if(..())
+		return 1
+	if(message_mode == MODE_HEADSET && construct_chat_check(0))
+		log_say("Cult channel: [src.name]/[src.key] : [message]")
+		for(var/mob/M in mob_list)
+			if(M.construct_chat_check(2) /*receiving check*/ || (M in dead_mob_list && !istype(M, /mob/new_player)))
+				M << "<span class='sinister'><b>[src.name]:</b> [message]</span>"
+		return 1
 
 /mob/living/simple_animal/construct/cultify()
 	return
@@ -136,12 +153,6 @@
 			if ((M.client && !( M.blinded )))
 				M.show_message("\red [user] gently taps [src] with [O]. ")
 
-
-/mob/living/simple_animal/construct/airflow_stun()
-	return
-
-/mob/living/simple_animal/construct/airflow_hit(atom/A)
-	return
 
 /////////////////Juggernaut///////////////
 

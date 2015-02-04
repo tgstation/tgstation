@@ -139,7 +139,7 @@
 
 	mymob.zone_sel = new /obj/screen/zone_sel()
 	mymob.zone_sel.icon = 'icons/mob/screen1_robot.dmi'
-	mymob.zone_sel.overlays.Cut()
+	mymob.zone_sel.overlays.len = 0
 	mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
 
 	//Handle the gun settings buttons
@@ -178,7 +178,7 @@
 	update_robot_modules_display()
 
 /datum/hud/proc/update_robot_modules_display()
-	if(!isrobot(mymob)) return
+	if(!isrobot(mymob) || !mymob.client) return
 
 	var/mob/living/silicon/robot/r = mymob
 

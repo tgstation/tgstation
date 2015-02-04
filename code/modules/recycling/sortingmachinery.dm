@@ -283,8 +283,6 @@
 		M.loc = src
 	//src.flush() This spams audio like fucking crazy.
 	// Instead, we queue up for the next process.
-	if(!(src in processing_objects))
-		processing_objects.Add(src)
 	doFlushIn=5 // Ticks, adjust if delay is too long or too short
 	num_contents++
 

@@ -145,7 +145,12 @@
 		use_power = 0
 	else if(!stat && construction_state <= 3)
 		use_power = 1
-	update_state()
+	if(!src.active)
+		src.update_icon()
+		for(var/obj/structure/particle_accelerator/part in connected_parts)
+			part.strength = null
+			part.powered = 0
+			part.update_icon()
 	return
 
 

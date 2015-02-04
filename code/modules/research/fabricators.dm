@@ -453,7 +453,7 @@
 /obj/machinery/r_n_d/fabricator/proc/getTopicDesign(var/stringinput = "")
 	var/final_digit = 0
 	for(var/i = 1, i <= length(stringinput), i++)
-		if(!text2num(copytext(stringinput, i)))
+		if(!isnum(text2num(copytext(stringinput, i))))
 			//message_admins("Breaking on [copytext(stringinput, i)] and [i]")
 			final_digit = i
 			break

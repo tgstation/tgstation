@@ -111,7 +111,7 @@ var/global/list/obj/machinery/mirror/mirror_list = list()
 		beam=null
 
 /obj/machinery/mirror/proc/update_beams()
-	overlays.Cut()
+	overlays.len = 0
 
 	var/list/beam_dirs[4] // dir = list(
 		                  //  type = power
