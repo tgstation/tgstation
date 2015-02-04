@@ -17,33 +17,33 @@
 	if(!stat)
 		if(getToxLoss() >= 40)
 			nausea++
-		if(nausea) //so prob isn't rolling on every tick
-			if(prob(4)) //slowly reduce nausea over time
+		if(nausea > 0) //so prob isn't rolling on every tick
+			if(prob(6)) //slowly reduce nausea over time
 				nausea--
-		if(nausea >= 10) //not feeling so good
-			if(prob(9))
-				visible_message("<font color='green'>[src] retches!</font>", \
-						"<font color='green'><b>you retch!</b></font>")
-		if(nausea >= 25) //vomiting
-			Stun(5)
+			if(nausea >= 12) //not feeling so good
+				if(prob(8))
+					visible_message("<font color='green'>[src] retches!</font>", \
+							"<font color='green'><b>you retch!</b></font>")
+			if(nausea >= 25) //vomiting
+				Stun(5)
 
-			visible_message("<span class='danger'>[src] throws up!</span>", \
-					"<span class='userdanger'>you throw up!</span>")
-			playsound(loc, 'sound/effects/splat.ogg', 50, 1)
+				visible_message("<span class='danger'>[src] throws up!</span>", \
+						"<span class='userdanger'>you throw up!</span>")
+				playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 
-			var/turf/location = loc
-			if(istype(location, /turf/simulated))
-				location.add_vomit_floor(src, 1)
+				var/turf/location = loc
+				if(istype(location, /turf/simulated))
+					location.add_vomit_floor(src, 1)
 
-			if(nutrition >= 40)
-				nutrition -= 20
-			adjustToxLoss(-3)
+				if(nutrition >= 40)
+					nutrition -= 20
+				adjustToxLoss(-3)
 
-			//feelin fine after
-			nausea = 0
+				//feelin fine after
+				nausea = 0
 
 /mob/living/carbon/proc/handle_drunkness() //probably could use a switch for ifs
-	if(drunkness)
+	if(drunkness > 0)
 		if(prob(25))
 			drunkness--
 			boozeticks++ //metabolize that hooch
@@ -67,7 +67,7 @@
 				visible_message("<span class='danger'>[src] trips over their own feet!</span>")
 
 		if(drunkness >= (200 * boozetolerance)) //lethally drunk, define WASTED ?
-			adjustToxLoss(2)
+			adjustToxLoss(1)
 			sleeping = min(sleeping + 2, 10) //comatose
 
 	if(boozeticks >= (50 * boozetolerance)) //building tolerance
