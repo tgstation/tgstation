@@ -79,7 +79,7 @@
 		return output //Send it back to the gun!
 
 	resetVariables()
-		if!permutated)
+		if(!permutated)
 			permutated = list()
 		else
 			permutated.len = 0
