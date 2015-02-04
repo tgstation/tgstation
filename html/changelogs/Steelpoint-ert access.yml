@@ -1,8 +1,0 @@
-author: Steelpoint
-
-delete-after: True
-
-changes: 
-  - rscadd: "ERT base equipment rooms are now access restriction to each role."
-  - tweak: "ERT commander spawns wearing hardsuit for identification."
-  - rscadd: "Two boxes of metal foam grenades added for ERT engineers."
