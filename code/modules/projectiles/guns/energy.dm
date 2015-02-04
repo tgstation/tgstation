@@ -90,3 +90,13 @@
 
 /obj/item/weapon/gun/energy/ui_action_click()
 	toggle_gunlight()
+
+/obj/item/weapon/gun/energy/suicide_act(mob/user)
+	if (src.can_shoot())
+		user.visible_message("<span class='suicide'>[user] is trying to blow \his brains out with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+		playsound(loc, fire_sound, 50, 1, -1)
+		return(FIRELOSS)
+	else
+		user.visible_message("<span class='suicide'>[user] is pretending to blow \his brains out with the [src.name]! It looks like \he's trying to commit suicide!</b></span>")
+		playsound(loc, 'sound/weapons/empty.ogg', 50, 1, -1)
+		return (OXYLOSS)

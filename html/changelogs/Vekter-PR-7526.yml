@@ -1,0 +1,6 @@
+author: Vekter
+
+delete-after: True
+
+changes: 
+  - rscadd: "Added a toy red button to the Arcade cabinets."

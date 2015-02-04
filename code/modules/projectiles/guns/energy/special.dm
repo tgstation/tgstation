@@ -122,6 +122,8 @@
 		overheat = 0
 		recent_reload = 0
 	..()
+/obj/item/weapon/gun/energy/kinetic_accelerator/emp_act(severity)
+	return
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/attack_self(mob/living/user)
 	if(overheat || recent_reload)

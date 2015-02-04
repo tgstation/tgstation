@@ -138,7 +138,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell
 	seed = /obj/item/seeds/harebell
 	name = "harebell"
-	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweeten’d not thy breath.\""
+	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweetenâ€™d not thy breath.\""
 	icon_state = "harebell"
 	slot_flags = SLOT_HEAD
 
@@ -477,6 +477,13 @@
 		reagents.add_reagent("banana", 1 + round((potency / 10), 1))
 		reagents.add_reagent("vitamin", 1 + round((potency / 20), 1))
 		bitesize = 5
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/banana/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is aiming the [src.name] at themself! It looks like \he's trying to commit suicide.</span>")
+	playsound(loc, 'sound/items/bikehorn.ogg', 50, 1, -1)
+	sleep(15)
+	user.visible_message("<B>[user]</B> laughs so hard they begin to suffocate!")
+	return (OXYLOSS)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/chili
 	seed = /obj/item/seeds/chiliseed
