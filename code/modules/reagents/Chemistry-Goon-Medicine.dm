@@ -615,10 +615,10 @@ datum/reagent/strange_reagent/reaction_mob(var/mob/living/carbon/human/M as mob,
 		M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")
 		if(M.health <= config.health_threshold_dead && !M.suiciding && !ghost && !(NOCLONE in M.mutations))
 			M.stat = 1
-			M.adjustBruteLoss(-10)
-			M.adjustFireLoss(-10)
-			M.adjustOxyLoss(-10)
-			M.adjustToxLoss(-10)
+			M.adjustBruteLoss(-20) // this should keep them from dying immediately
+			M.adjustFireLoss(-20)
+			M.adjustOxyLoss(-20)
+			M.adjustToxLoss(-20)
 			dead_mob_list -= M
 			living_mob_list |= list(M)
 			M.emote("gasp")
