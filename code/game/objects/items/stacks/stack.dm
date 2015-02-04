@@ -177,6 +177,7 @@
 		if(usr)
 			usr.unEquip(src, 1)
 		qdel(src)
+	update_icon()
 	return 1
 
 /obj/item/stack/proc/add(var/amount)
@@ -184,6 +185,7 @@
 		source.add_charge(amount * cost)
 	else
 		src.amount += amount
+	update_icon()
 
 /obj/item/stack/proc/add_to_stacks(mob/usr as mob)
 	var/obj/item/stack/oldsrc = src
@@ -199,6 +201,7 @@
 		usr << "You add new [item.singular_name] to the stack. It now contains [item.amount] [item.singular_name]\s."
 		if(oldsrc.amount <= 0)
 			break
+	update_icon()
 
 /obj/item/stack/attack_hand(mob/user as mob)
 	if (user.get_inactive_hand() == src)
@@ -240,6 +243,7 @@
 			src.use(to_transfer)
 			if (src && usr.machine==src)
 				spawn(0) src.interact(usr)
+			S.update_icon()
 
 	else
 		..()
