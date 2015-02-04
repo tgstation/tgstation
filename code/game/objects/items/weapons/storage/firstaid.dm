@@ -103,7 +103,6 @@
 	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
 	new /obj/item/stack/medical/gauze(src)
 	new /obj/item/stack/medical/gauze(src)
-	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	new /obj/item/device/healthanalyzer(src)
 	return
 

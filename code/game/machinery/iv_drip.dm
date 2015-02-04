@@ -1,23 +1,37 @@
 /obj/machinery/iv_drip
 	name = "\improper IV drip"
 	icon = 'icons/obj/iv_drip.dmi'
+	icon_state = "iv_drip"
 	anchored = 0
 	density = 1
+	var/mob/living/carbon/human/attached = null
+	var/mode = 1 // 1 is injecting, 0 is taking blood.
+	var/obj/item/weapon/reagent_containers/beaker = null
 
 
-/obj/machinery/iv_drip/var/mob/living/carbon/human/attached = null
-/obj/machinery/iv_drip/var/mode = 1 // 1 is injecting, 0 is taking blood.
-/obj/machinery/iv_drip/var/obj/item/weapon/reagent_containers/beaker = null
+/obj/machinery/iv_drip/New()
+	..()
+	update_icon()
 
 /obj/machinery/iv_drip/update_icon()
-	if(src.attached)
-		icon_state = "hooked"
-	else
-		icon_state = ""
+	overlays.Cut()
 
-	overlays = null
+	if(src.attached)
+		if(mode)
+			icon_state = "injecting"
+		else
+			icon_state = "donating"
+	else
+		if(mode)
+			icon_state = "injectidle"
+		else
+			icon_state = "donateidle"
 
 	if(beaker)
+		if(attached)
+			overlays += "beakeractive"
+		else
+			overlays += "beakeridle"
 		var/datum/reagents/reagents = beaker.reagents
 		if(reagents.total_volume)
 			var/image/filling = image('icons/obj/iv_drip.dmi', src, "reagent")
@@ -45,9 +59,12 @@
 		return
 
 	if(in_range(src, usr) && ishuman(over_object) && get_dist(over_object, src) <= 1)
-		visible_message("[usr] attaches \the [src] to \the [over_object].")
-		src.attached = over_object
-		src.update_icon()
+		if(src.beaker)
+			visible_message("[usr] attaches \the [src] to \the [over_object].")
+			src.attached = over_object
+			src.update_icon()
+		else
+			usr << "There's nothing attached to the IV drip!"
 
 
 /obj/machinery/iv_drip/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -72,7 +89,7 @@
 	if(src.attached)
 
 		if(!(get_dist(src, src.attached) <= 1 && isturf(src.attached.loc)))
-			attached << ("<span class='warning'>The IV drip needle is ripped out of you, doesn't that hurt?</span")
+			attached << "<span class='warning'>The IV drip needle is ripped out of you, doesn't that hurt?</span>"
 			src.attached:apply_damage(3, BRUTE, pick("r_arm", "l_arm"))
 			src.attached = null
 			src.update_icon()
@@ -122,14 +139,33 @@
 				beaker.reagents.handle_reactions()
 				update_icon()
 
-/obj/machinery/iv_drip/attack_hand(mob/user as mob)
+/obj/machinery/iv_drip/attack_hand(mob/user)
+	if(src.attached)
+		visible_message("[src.attached] is detached from \the [src]")
+		src.attached = null
+		src.update_icon()
+		return
+	else if(src.beaker)
+		eject_beaker(user)
+	else
+		toggle_mode()
+
+/obj/machinery/iv_drip/verb/eject_beaker(mob/user)
+	set category = "Object"
+	set name = "Remove IV Container"
+	set src in view(1)
+
+	if(!istype(usr, /mob/living))
+		usr << "<span class='notice'>You can't do that.</span>"
+		return
+
+	if(usr.stat)
+		return
+
 	if(src.beaker)
 		src.beaker.loc = get_turf(src)
 		src.beaker = null
 		update_icon()
-	else
-		toggle_mode()
-
 
 /obj/machinery/iv_drip/verb/toggle_mode()
 	set category = "Object"
@@ -145,6 +181,7 @@
 
 	mode = !mode
 	usr << "The IV drip is now [mode ? "injecting" : "taking blood"]."
+	update_icon()
 
 /obj/machinery/iv_drip/examine()
 	set src in view()
@@ -155,10 +192,10 @@
 
 	if(beaker)
 		if(beaker.reagents && beaker.reagents.reagent_list.len)
-			usr << "<span class='notice'>Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span"
+			usr << "<span class='notice'>Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>"
 		else
-			usr << "<span class='notice'>Attached is an empty [beaker].</span"
+			usr << "<span class='notice'>Attached is an empty [beaker].</span>"
 	else
-		usr << "<span class='notice'>No chemicals are attached.</span"
+		usr << "<span class='notice'>No chemicals are attached.</span>"
 
-	usr << "<span class='notice'>[attached ? attached : "No one"] is attached.</span"
+	usr << "<span class='notice'>[attached ? attached : "No one"] is attached.</span>"
