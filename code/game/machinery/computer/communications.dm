@@ -230,6 +230,18 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			src.emagged = 0
 			src.updateDialog()
 
+		if("nukerequest") //When there's no other way
+			if(src.authenticated==2)
+				if(CM.cooldownLeft())
+					usr << "Arrays recycling. Please stand by."
+					return
+				var/input = stripped_input(usr, "Please enter the reason for requesting the nuclear self-destruct codes. Misuse of the nuclear request system will not be tolerated under any circumstances.  Transmission does not guarantee a response.", "To abort, send an empty request.","")
+				if(!input || !(usr in view(1,src)))
+					return
+				Nuke_request(input, usr)
+				usr << "Request sent."
+				log_say("[key_name(usr)] has requested the nuclear codes from Centcomm")
+
 
 
 		// AI interface
@@ -371,6 +383,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make a Captain's Announcement</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=changeseclevel'>Change Alert Level</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=emergencyaccess'>Emergency Maintenance Access</A> \]"
+					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=nukerequest'>Request Nuclear Authentication</A> \]"
 					if(src.emagged == 0)
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=MessageCentcomm'>Send Message to Centcom</A> \]"
 					else

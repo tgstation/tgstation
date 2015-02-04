@@ -20,11 +20,12 @@ var/bomb_set
 	var/immobile = 0 //Not all nukes should be moved
 
 /obj/machinery/nuclearbomb/selfdestruct
-	name = "station self-destruct interface"
-	desc = "For when it all gets too much to bear."
-	icon = 'icons/obj/machines/selfdestruct.dmi'
-	anchored = 1 //Being portable makes no sense here.
-	immobile = 1 //Built in.
+	name = "station self-destruct"
+	desc = "For when it all gets too much to bear. Do not taunt."
+	icon = 'icons/obj/machines/bignuke.dmi'
+	anchored = 1 //stops it being moved
+	immobile = 1 //prevents it from ever being moved
+	layer = 4
 
 /obj/machinery/nuclearbomb/process()
 	if (src.timing)

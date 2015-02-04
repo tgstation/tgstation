@@ -70,6 +70,7 @@
 		dat += "Select an event to trigger:<ul>"
 		dat += "<li><A href='?src=\ref[src];triggerevent=Red alert'>Red alert</A></li>"
 		dat += "<li><A href='?src=\ref[src];triggerevent=Emergency Maintenance Access'>Emergency Maintenance Access</A></li>"
+		dat += "<li><A href='?src=\ref[src];triggerevent=Nuclear Code Request'>Request Nuclear Codes.</A></li>"
 		dat += "</ul>"
 		user << browse(dat, "window=keycard_auth;size=500x250")
 	if(screen == 2)
@@ -143,6 +144,10 @@
 		if("Emergency Maintenance Access")
 			make_maint_all_access()
 			feedback_inc("alert_keycard_auth_maint",1)
+		if("Nuclear Code Request")
+			request_nuke_codes()
+
+
 
 /var/emergency_access = 0
 /proc/make_maint_all_access()
@@ -160,3 +165,12 @@
 			D.update_icon(0)
 	minor_announce("Access restrictions in maintenance areas have been restored.", "Attention! Station-wide emergency rescinded:")
 	emergency_access = 0
+
+/proc/request_nuke_codes()
+	var/input = stripped_input(usr, "Please enter the reason for requesting the nuclear self-destruct codes. Misuse of the nuclear request system will not be tolerated under any circumstances.  Transmission does not guarantee a response.", "To abort, send an empty request.","")
+	if(!input || !(usr in view(1,src)))
+		return
+	Nuke_request(input, usr)
+	usr << "Request sent."
+	log_say("[key_name(usr)] has requested the nuclear codes from Centcomm")
+	priority_announce("The codes for the on-station nuclear self-destruct have been requested by [usr]. Confirmation or denial will be sent shortly", "Nuclear Codes Requested",'sound/AI/commandreport.ogg')
