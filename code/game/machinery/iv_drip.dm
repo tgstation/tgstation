@@ -51,6 +51,9 @@
 /obj/machinery/iv_drip/MouseDrop(over_object, src_location, over_location)
 	..()
 
+	if(!ishuman(over_object))
+		usr << "<span class='warning'>The drip beeps: Warning, human patients only!</span>"
+
 	if(attached)
 		visible_message("[src.attached] is detached from \the [src]")
 		src.attached = null
