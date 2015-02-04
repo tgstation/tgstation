@@ -1,6 +1,5 @@
 
-/obj/effect/datacore
-	name = "datacore"
+/datum/datacore
 	var/medical[] = list()
 	var/medicalPrintCount = 0
 	var/general[] = list()
@@ -25,7 +24,7 @@
 	var/time = ""
 	var/dataId = 0
 
-/obj/effect/datacore/proc/createCrimeEntry(cname = "", cdetails = "", author = "", time = "")
+/datum/datacore/proc/createCrimeEntry(cname = "", cdetails = "", author = "", time = "")
 	var/datum/data/crime/c = new /datum/data/crime
 	c.crimeName = cname
 	c.crimeDetails = cdetails
@@ -34,14 +33,14 @@
 	c.dataId = ++securityCrimeCounter
 	return c
 
-/obj/effect/datacore/proc/addMinorCrime(id = "", var/datum/data/crime/crime)
+/datum/datacore/proc/addMinorCrime(id = "", var/datum/data/crime/crime)
 	for(var/datum/data/record/R in security)
 		if(R.fields["id"] == id)
 			var/list/crimes = R.fields["mi_crim"]
 			crimes |= crime
 			return
 
-/obj/effect/datacore/proc/removeMinorCrime(id, cDataId)
+/datum/datacore/proc/removeMinorCrime(id, cDataId)
 	for(var/datum/data/record/R in security)
 		if(R.fields["id"] == id)
 			var/list/crimes = R.fields["mi_crim"]
@@ -50,7 +49,7 @@
 					crimes -= crime
 					return
 
-/obj/effect/datacore/proc/removeMajorCrime(id, cDataId)
+/datum/datacore/proc/removeMajorCrime(id, cDataId)
 	for(var/datum/data/record/R in security)
 		if(R.fields["id"] == id)
 			var/list/crimes = R.fields["ma_crim"]
@@ -59,14 +58,14 @@
 					crimes -= crime
 					return
 
-/obj/effect/datacore/proc/addMajorCrime(id = "", var/datum/data/crime/crime)
+/datum/datacore/proc/addMajorCrime(id = "", var/datum/data/crime/crime)
 	for(var/datum/data/record/R in security)
 		if(R.fields["id"] == id)
 			var/list/crimes = R.fields["ma_crim"]
 			crimes |= crime
 			return
 
-/obj/effect/datacore/proc/manifest(var/nosleep = 0)
+/datum/datacore/proc/manifest(var/nosleep = 0)
 	spawn()
 		if(!nosleep)
 			sleep(40)
@@ -74,12 +73,12 @@
 			manifest_inject(H)
 		return
 
-/obj/effect/datacore/proc/manifest_modify(var/name, var/assignment)
+/datum/datacore/proc/manifest_modify(var/name, var/assignment)
 	var/datum/data/record/foundrecord = find_record("name", name, data_core.general)
 	if(foundrecord)
 		foundrecord.fields["rank"] = assignment
 
-/obj/effect/datacore/proc/get_manifest(monochrome, OOC)
+/datum/datacore/proc/get_manifest(monochrome, OOC)
 	var/list/heads = list()
 	var/list/sec = list()
 	var/list/eng = list()
@@ -135,49 +134,49 @@
 			misc[name] = rank
 	if(heads.len > 0)
 		dat += "<tr><th colspan=3>Heads</th></tr>"
-		for(name in heads)
+		for(var/name in heads)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[heads[name]]</td></tr>"
 			even = !even
 	if(sec.len > 0)
 		dat += "<tr><th colspan=3>Security</th></tr>"
-		for(name in sec)
+		for(var/name in sec)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[sec[name]]</td></tr>"
 			even = !even
 	if(eng.len > 0)
 		dat += "<tr><th colspan=3>Engineering</th></tr>"
-		for(name in eng)
+		for(var/name in eng)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[eng[name]]</td></tr>"
 			even = !even
 	if(med.len > 0)
 		dat += "<tr><th colspan=3>Medical</th></tr>"
-		for(name in med)
+		for(var/name in med)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[med[name]]</td></tr>"
 			even = !even
 	if(sci.len > 0)
 		dat += "<tr><th colspan=3>Science</th></tr>"
-		for(name in sci)
+		for(var/name in sci)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[sci[name]]</td></tr>"
 			even = !even
 	if(sup.len > 0)
 		dat += "<tr><th colspan=3>Supply</th></tr>"
-		for(name in sup)
+		for(var/name in sup)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[sup[name]]</td></tr>"
 			even = !even
 	if(civ.len > 0)
 		dat += "<tr><th colspan=3>Civilian</th></tr>"
-		for(name in civ)
+		for(var/name in civ)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[civ[name]]</td></tr>"
 			even = !even
 	// in case somebody is insane and added them to the manifest, why not
 	if(bot.len > 0)
 		dat += "<tr><th colspan=3>Silicon</th></tr>"
-		for(name in bot)
+		for(var/name in bot)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[bot[name]]</td></tr>"
 			even = !even
 	// misc guys
 	if(misc.len > 0)
 		dat += "<tr><th colspan=3>Miscellaneous</th></tr>"
-		for(name in misc)
+		for(var/name in misc)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[misc[name]]</td></tr>"
 			even = !even
 
@@ -188,7 +187,7 @@
 
 
 var/record_id_num = 1001
-/obj/effect/datacore/proc/manifest_inject(var/mob/living/carbon/human/H)
+/datum/datacore/proc/manifest_inject(var/mob/living/carbon/human/H)
 	if(H.mind && (H.mind.assigned_role != "MODE"))
 		var/assignment
 		if(H.mind.assigned_role)
@@ -200,6 +199,10 @@ var/record_id_num = 1001
 
 		var/id = num2hex(record_id_num++,6)
 		var/image = get_id_photo(H)
+		var/obj/item/weapon/photo/photo_front = new()
+		var/obj/item/weapon/photo/photo_side = new()
+		photo_front.photocreate(null, icon(image, dir = SOUTH))
+		photo_side.photocreate(null, icon(image, dir = WEST))
 
 		//These records should ~really~ be merged or something
 		//General Record
@@ -214,8 +217,8 @@ var/record_id_num = 1001
 		G.fields["p_stat"]		= "Active"
 		G.fields["m_stat"]		= "Stable"
 		G.fields["sex"]			= H.gender
-		G.fields["photo_front"]	= icon(image, dir = SOUTH)
-		G.fields["photo_side"]	= icon(image, dir = WEST)
+		G.fields["photo_front"]	= photo_front
+		G.fields["photo_side"]	= photo_side
 		general += G
 
 		//Medical Record
@@ -260,7 +263,7 @@ var/record_id_num = 1001
 		locked += L
 	return
 
-/obj/effect/datacore/proc/get_id_photo(var/mob/living/carbon/human/H)
+/datum/datacore/proc/get_id_photo(var/mob/living/carbon/human/H)
 	var/icon/photo = null
 	var/g = (H.gender == FEMALE) ? "f" : "m"
 	if(!config.mutant_races || H.dna.species.use_skintones)

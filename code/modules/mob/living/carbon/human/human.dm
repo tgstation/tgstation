@@ -247,7 +247,6 @@
 			siemens_coeff = G.siemens_coefficient
 	return ..(shock_damage,source,siemens_coeff)
 
-
 /mob/living/carbon/human/Topic(href, href_list)
 	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		if(href_list["item"])
@@ -292,44 +291,44 @@
 
 		..()
 
+
 ///////HUDs///////
 	if(href_list["hud"])
 		if(istype(usr, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = usr
 			var/perpname = get_face_name(get_id_name(""))
 			if(istype(H.glasses, /obj/item/clothing/glasses/hud))
-				var/datum/data/record/R
+				var/datum/data/record/R = find_record("name", perpname, data_core.general)
 				if(href_list["photo_front"] || href_list["photo_side"])
-					R = find_record("name", perpname, data_core.general)
 					if(R)
-						if(!usr.canUseTopic(src))
-						else if(!istype(H.glasses, /obj/item/clothing/glasses/hud))
-							return
-						var/icon/img = null
+						if(!H.canUseHUD()) return
+						else if(!istype(H.glasses, /obj/item/clothing/glasses/hud)) return
+						var/obj/item/weapon/photo/P = null
 						if(href_list["photo_front"])
-							img = R.fields["photo_front"]
+							P = R.fields["photo_front"]
 						else if(href_list["photo_side"])
-							img = R.fields["photo_side"]
-						if(img)
-							usr << browse_rsc(img, "photo")
-							usr << browse("<img src='photo' height=80 width=80 border=4>", "window=photo;size=120x120")
+							P = R.fields["photo_side"]
+						if(P)
+							P.show(H)
 
 				if(href_list["hud"] == "m")
 					if(istype(H.glasses, /obj/item/clothing/glasses/hud/health))
 						if(href_list["p_stat"])
 							var/health = input(usr, "Specify a new physical status for this person.", "Medical HUD", R.fields["p_stat"]) in list("Active", "Physically Unfit", "*Unconscious*", "*Deceased*", "Cancel")
-							if(!usr.canUseTopic(src))
-							else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/health))
-								return
-							if(health != "Cancel")
-								R.fields["p_stat"] = health
+							if(R)
+								if(!H.canUseHUD()) return
+								else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/health)) return
+								if(health && health != "Cancel")
+									R.fields["p_stat"] = health
+							return
 						if(href_list["m_stat"])
 							var/health = input(usr, "Specify a new mental status for this person.", "Medical HUD", R.fields["m_stat"]) in list("Stable", "*Watch*", "*Unstable*", "*Insane*", "Cancel")
-							if(!usr.canUseTopic(src))
-							else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/health))
-								return
-							if(health != "Cancel")
-								R.fields["m_stat"] = health
+							if(R)
+								if(!H.canUseHUD()) return
+								else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/health)) return
+								if(health && health != "Cancel")
+									R.fields["m_stat"] = health
+							return
 						if(href_list["evaluation"])
 							if(!getBruteLoss() && !getFireLoss() && !getOxyLoss() && getToxLoss() < 20)
 								usr << "<span class='notice'>No external injuries detected.</span><br>"
@@ -369,7 +368,7 @@
 							if(getOxyLoss())
 								usr << "<span class='danger'>Patient has signs of suffocation, emergency treatment may be required!</span>"
 							if(getToxLoss() > 20)
-								usr << "<span class='danger'>Gathered data is inconsistent with the analysis, possible cause: intoxication.</span>"
+								usr << "<span class='danger'>Gathered data is inconsistent with the analysis, possible cause: poisoning.</span>"
 
 				if(href_list["hud"] == "s")
 					if(istype(H.glasses, /obj/item/clothing/glasses/hud/security))
@@ -396,10 +395,10 @@
 							if(R)
 								if(href_list["status"])
 									var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Parolled", "Discharged", "Cancel")
-									if(R)
-										if(usr.canUseTopic(src))
-											if(istype(H.glasses, /obj/item/clothing/glasses/hud/security))
-												if(setcriminal != "Cancel")
+									if(setcriminal != "Cancel")
+										if(R)
+											if(H.canUseHUD())
+												if(istype(H.glasses, /obj/item/clothing/glasses/hud/security))
 													investigate_log("[src.key] has been set from [R.fields["criminal"]] to [setcriminal] by [usr.name] ([usr.key]).", "records")
 													R.fields["criminal"] = setcriminal
 													sec_hud_set_security_status()
@@ -407,9 +406,8 @@
 
 								if(href_list["view"])
 									if(R)
-										if(!usr.canUseTopic(src))
-										else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security))
-											return
+										if(!H.canUseHUD()) return
+										else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security)) return
 										usr << "<b>Name:</b> [R.fields["name"]]	<b>Criminal Status:</b> [R.fields["criminal"]]"
 										usr << "<b>Minor Crimes:</b>"
 										for(var/datum/data/crime/c in R.fields["mi_crim"])
@@ -433,10 +431,9 @@
 												var/t1 = stripped_input("Please input minor crime names:", "Security HUD", "", null)
 												var/t2 = stripped_multiline_input("Please input minor crime details:", "Security HUD", "", null)
 												if(R)
-													if (!t1 || !t2 || !allowed_access)
-													else if(!usr.canUseTopic(src))
-													else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security))
-														return
+													if (!t1 || !t2 || !allowed_access) return
+													else if(!H.canUseHUD()) return
+													else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security)) return
 													var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
 													data_core.addMinorCrime(R.fields["id"], crime)
 													usr << "<span class='notice'>Successfully added a minor crime.</span>"
@@ -446,10 +443,9 @@
 												var/t1 = stripped_input("Please input major crime names:", "Security HUD", "", null)
 												var/t2 = stripped_multiline_input("Please input major crime details:", "Security HUD", "", null)
 												if(R)
-													if (!t1 || !t2 || !allowed_access)
-													else if (!usr.canUseTopic(src))
-													else if (!istype(H.glasses, /obj/item/clothing/glasses/hud/security))
-														return
+													if (!t1 || !t2 || !allowed_access) return
+													else if (!H.canUseHUD()) return
+													else if (!istype(H.glasses, /obj/item/clothing/glasses/hud/security)) return
 													var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
 													data_core.addMajorCrime(R.fields["id"], crime)
 													usr << "<span class='notice'>Successfully added a major crime.</span>"
@@ -457,9 +453,8 @@
 
 								if(href_list["view_comment"])
 									if(R)
-										if(!usr.canUseTopic(src))
-										else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security))
-											return
+										if(!H.canUseHUD()) return
+										else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security)) return
 										usr << "<b>Comments/Log:</b>"
 										var/counter = 1
 										while(R.fields[text("com_[]", counter)])
@@ -472,10 +467,9 @@
 									if(R)
 										var/t1 = stripped_multiline_input("Add Comment:", "Secure. records", null, null)
 										if(R)
-											if (!t1 || !allowed_access)
-											else if(!usr.canUseTopic(src))
-											else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security))
-												return
+											if (!t1 || !allowed_access) return
+											else if(!H.canUseHUD()) return
+											else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security)) return
 											var/counter = 1
 											while(R.fields[text("com_[]", counter)])
 												counter++
@@ -483,6 +477,9 @@
 											usr << "<span class='notice'>Successfully added comment.</span>"
 											return
 							usr << "<span class='warning'>Unable to locate a data core entry for this person.</span>"
+
+/mob/living/carbon/human/proc/canUseHUD()
+	return !(src.stat || src.weakened || src.stunned || src.restrained())
 
 /mob/living/carbon/human/proc/play_xylophone()
 	if(!src.xylophone)
