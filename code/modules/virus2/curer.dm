@@ -29,7 +29,7 @@
 		virusing = 1
 		spawn(1200) virusing = 0
 
-		buzz_noise()
+		alert_noise("buzz")
 		return
 	src.attack_hand(user)
 	return
@@ -110,4 +110,4 @@
 	data["antibodies"] = B.data["antibodies"]
 	product.reagents.add_reagent("antibodies",30,data)
 
-	buzz_noise()
+	alert_noise("buzz")

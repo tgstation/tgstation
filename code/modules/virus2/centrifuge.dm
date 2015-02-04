@@ -147,10 +147,10 @@
 	sample.reagents.remove_reagent("blood",amt)
 	sample.reagents.add_reagent("antibodies",amt,data)
 
-	ping_noise()
+	alert_noise("ping")
 
 /obj/machinery/computer/centrifuge/proc/isolate()
 	var/obj/item/weapon/virusdish/dish = new/obj/item/weapon/virusdish(src.loc)
 	dish.virus2 = virus2
 
-	ping_noise()
+	alert_noise("ping")

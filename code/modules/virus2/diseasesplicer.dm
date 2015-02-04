@@ -98,11 +98,11 @@
 	if(scanning)
 		scanning -= 1
 		if(!scanning)
-			beep_noise()
+			alert_noise("beep")
 	if(splicing)
 		splicing -= 1
 		if(!splicing)
-			ping_noise()
+			alert_noise("ping")
 	if(burning)
 		burning -= 1
 		if(!burning)
@@ -112,7 +112,7 @@
 			else
 				d.name = "Unknown GNA disk (Stage: [5-memorybank.effect.stage])"
 			d.effect = memorybank
-			ping_noise()
+			alert_noise("ping")
 
 	src.updateUsrDialog()
 	return

@@ -170,7 +170,7 @@
 					icon_state = "incubator_fed"
 				if(last_notice + FED_PING_DELAY < world.time)
 					last_notice = world.time
-					ping_noise()
+					alert_noise("ping")
 		if(radiation)
 			if(radiation > 50 & prob(5))
 				dish.virus2.log += "<br />[timestamp()] MAJORMUTATE (incubator rads)"
@@ -178,7 +178,7 @@
 				if(dish.info)
 					dish.info = "OUTDATED : [dish.info]"
 					dish.analysed = 0
-				beep_noise()
+				alert_noise("beep")
 				flick("incubator_mut", src)
 
 			else if(prob(5))

@@ -74,6 +74,6 @@
 			spawn(25)
 				dish.loc = src.loc
 				dish = null
-				buzz_noise()
+				alert_noise("buzz")
 				pause = 0
 	return
