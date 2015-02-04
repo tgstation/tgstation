@@ -73,7 +73,7 @@
 		return 0
 	var/atom/oldloc = loc
 	if((bound_height != 32 || bound_width != 32) && (loc == newLoc))
-		. = ..()
+		return ..()
 	if(loc != newLoc)
 		if (!(Dir & (Dir - 1))) //Cardinal move
 			. = ..()
