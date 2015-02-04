@@ -241,7 +241,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				Nuke_request(input, usr)
 				usr << "Request sent."
 				log_say("[key_name(usr)] has requested the nuclear codes from Centcomm")
-				priority_announce("The codes for the on-station nuclear self-destruct have been requested by [usr]. Confirmation or denial of this request will be sent shortly", "Nuclear Codes Requested",'sound/AI/commandreport.ogg')
+				priority_announce("The codes for the on-station nuclear self-destruct have been requested by [usr]. Confirmation or denial of this request will be sent shortly", "Nuclear Self Destruct Codes Requested",'sound/AI/commandreport.ogg')
 
 
 
