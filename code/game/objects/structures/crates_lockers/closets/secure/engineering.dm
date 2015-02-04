@@ -11,8 +11,8 @@
 
 /obj/structure/closet/secure_closet/engineering_chief/New()
 	..()
-	new /obj/item/clothing/suit/toggle/wintercoat/engineering(src)
-	new /obj/item/clothing/suit/toggle/wintercoat/engineering/atmos(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/engineering(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/engineering/atmos(src)
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack/industrial(src)
 	else
@@ -132,7 +132,7 @@
 	new /obj/item/weapon/storage/toolbox/mechanical(src)
 	new /obj/item/weapon/storage/backpack/satchel_norm(src)
 	new /obj/item/weapon/storage/backpack/dufflebag/engineering(src)
-	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
+	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
 	new /obj/item/weapon/watertank/atmos(src)
 	new /obj/item/clothing/suit/fire/atmos(src)
 	new /obj/item/clothing/head/hardhat/atmos(src)

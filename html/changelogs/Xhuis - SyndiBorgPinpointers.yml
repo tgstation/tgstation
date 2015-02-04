@@ -1,0 +1,7 @@
+author: Xhuis
+
+delete-after: true
+
+changes: 
+  - tweak: "After many failed raids, the Syndicate have finally done something about poor communications between cyborgs and operatives."
+  - rscadd: "Syndicate Cyborgs now come equipped with operative pinpointers, which will automatically point to the nearest nuclear operative."

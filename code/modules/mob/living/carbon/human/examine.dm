@@ -230,6 +230,14 @@
 		else
 			msg += "[t_He] [t_is] quite chubby.\n"
 
+	if(pale)
+		msg += "[t_He] [t_has] pale skin.\n"
+
+	if(bleedsuppress)
+		msg += "[t_He] [t_is] bandaged with something.\n"
+	else if(blood_max)
+		msg += "<B>[t_He] [t_is] bleeding!</B>\n"
+
 	msg += "</span>"
 
 	if(!appears_dead)

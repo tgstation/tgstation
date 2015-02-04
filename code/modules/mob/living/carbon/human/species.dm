@@ -697,8 +697,8 @@
 
 	if((H.disabilities & FAT) && grav)
 		mspeed += 1.5
-	if(H.bodytemperature < 283.222 && grav)
-		mspeed += (283.222 - H.bodytemperature) / 10 * 1.75
+	if(H.bodytemperature < 283.222)
+		mspeed += (283.222 - H.bodytemperature) / 10 * (grav+0.5)
 
 	mspeed += speedmod
 
@@ -731,7 +731,7 @@
 				return 0
 
 			if(H.cpr_time < world.time + 30)
-				add_logs(H, M, "CPRed")
+				add_logs(M, H, "CPRed")
 				M.visible_message("<span class='notice'>[M] is trying to perform CPR on [H]!</span>", \
 								"<span class='notice'>You try to perform CPR on [H]. Hold still!</span>")
 				if(!do_mob(M, H))

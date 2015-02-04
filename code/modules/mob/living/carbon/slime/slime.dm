@@ -204,6 +204,12 @@
 	updatehealth()
 	return
 
+/mob/living/carbon/slime/MouseDrop(var/atom/movable/A as mob|obj)
+	if(isliving(A) && A != usr)
+		var/mob/living/Food = A
+		if(Food.Adjacent(usr) && !stat && Food.stat != DEAD) //messy
+			Feedon(Food)
+	..()
 
 /mob/living/carbon/slime/unEquip(obj/item/W as obj)
 	return
@@ -216,14 +222,19 @@
 
 /mob/living/carbon/slime/attack_slime(mob/living/carbon/slime/M as mob)
 	..()
-	var/damage = rand(1, 3)
+	if(src.Victim)
+		src.Victim = null
+		visible_message("<span class='danger'>[M] pulls [src] off!</span>")
+		return
 	attacked += 5
-	if(M.is_adult)
-		damage = rand(1, 6)
-	else
-		damage = rand(1, 3)
-	adjustBruteLoss(damage)
-	updatehealth()
+	if(src.nutrition >= 100) //steal some nutrition. negval handled in life()
+		src.nutrition -= (50 + (5 * M.amount_grown))
+		M.add_nutrition(50 + (5 * M.amount_grown))
+	if(src.health > 0)
+		src.adjustBruteLoss(4 + (2 * M.amount_grown)) //amt_grown isn't very linear but it works
+		src.updatehealth()
+		M.adjustBruteLoss(-4 + (-2 * M.amount_grown))
+		M.updatehealth()
 	return
 
 /mob/living/carbon/slime/attack_animal(mob/living/simple_animal/M as mob)

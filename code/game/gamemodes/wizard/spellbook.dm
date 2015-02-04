@@ -345,7 +345,6 @@
 							new /obj/item/clothing/shoes/sandal(get_turf(H)) //In case they've lost them.
 							new /obj/item/clothing/gloves/color/purple(get_turf(H))//To complete the outfit
 							new /obj/item/clothing/suit/space/hardsuit/wizard(get_turf(H))
-							new /obj/item/clothing/head/helmet/space/hardsuit/wizard(get_turf(H))
 							temp = "You have purchased a suit of wizard armor."
 							max_uses--
 						if("staffanimation")

@@ -20,6 +20,7 @@
 	return src.attack_hand(user)
 
 /turf/space/attackby(obj/item/C, mob/user)
+	..()
 	if(istype(C, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
@@ -28,7 +29,7 @@
 			user << "<span class='warning'>There is already a catwalk here.</span>"
 			return
 		if(L)
-			if(R.use(2))
+			if(R.use(1))
 				user << "<span class='notice'>Constructing catwalk...</span>"
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 				qdel(L)
@@ -56,13 +57,6 @@
 				user << "<span class='warning'>You need one floor tile to build a floor.</span>"
 		else
 			user << "<span class='danger'>The plating is going to need some support. Place metal rods first.</span>"
-	if(istype(C, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/coil = C
-		for(var/obj/structure/cable/LC in src)
-			if((LC.d1==0)||(LC.d2==0))
-				LC.attackby(C,user)
-				return
-		coil.place_turf(src, user)
 
 /turf/space/Entered(atom/movable/A)
 	..()
