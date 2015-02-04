@@ -79,7 +79,7 @@ LOOK FOR SURGERY.DM*/
 					if(istype(M, /mob/living/carbon/human))
 						var/datum/organ/external/affecting = M:get_organ("head")
 						if(affecting.take_damage(15))
-							M:QueueUpdateDamageIcon(1)
+							M:QueueUpdateDamageIcon()
 						M.updatehealth()
 					else
 						M.take_organ_damage(15)
@@ -111,7 +111,7 @@ LOOK FOR SURGERY.DM*/
 						if(istype(M, /mob/living/carbon/human))
 							var/datum/organ/external/affecting = M:get_organ("chest")
 							if(affecting.take_damage(30))
-								M:QueueUpdateDamageIcon(1)
+								M:QueueUpdateDamageIcon()
 						else
 							M.take_organ_damage(30)
 
@@ -226,7 +226,7 @@ LOOK FOR SURGERY.DM*/
 					if(istype(M, /mob/living/carbon/human))
 						var/datum/organ/external/affecting = M:get_organ("head")
 						if(affecting.take_damage(15))
-							M:QueueUpdateDamageIcon(1)
+							M:QueueUpdateDamageIcon()
 						M.updatehealth()
 					else
 						M.take_organ_damage(15)
@@ -250,7 +250,7 @@ LOOK FOR SURGERY.DM*/
 					if(istype(M, /mob/living/carbon/human))
 						var/datum/organ/external/affecting = M:get_organ("chest")
 						if(affecting.take_damage(30))
-							M:QueueUpdateDamageIcon(1)
+							M:QueueUpdateDamageIcon()
 					else
 						M.take_organ_damage(30)
 
@@ -357,7 +357,7 @@ LOOK FOR SURGERY.DM*/
 					if(istype(M, /mob/living/carbon/human))
 						var/datum/organ/external/affecting = M:get_organ("head")
 						if(affecting.take_damage(15))
-							M:QueueUpdateDamageIcon(1)
+							M:QueueUpdateDamageIcon()
 						M.updatehealth()
 					else
 						M.take_organ_damage(15)
@@ -505,7 +505,7 @@ LOOK FOR SURGERY.DM*/
 					if(istype(M, /mob/living/carbon/human))
 						var/datum/organ/external/affecting = M:get_organ("head")
 						if(affecting.take_damage(15))
-							M:QueueUpdateDamageIcon(1)
+							M:QueueUpdateDamageIcon()
 					else
 						M.take_organ_damage(15)
 
@@ -551,7 +551,7 @@ LOOK FOR SURGERY.DM*/
 					if(istype(M, /mob/living/carbon/human))
 						var/datum/organ/external/affecting = M:get_organ("head")
 						if(affecting.take_damage(75))
-							M:QueueUpdateDamageIcon(1)
+							M:QueueUpdateDamageIcon()
 					else
 						M.take_organ_damage(75)
 
@@ -607,7 +607,7 @@ LOOK FOR SURGERY.DM*/
 					if(istype(M, /mob/living/carbon/human))
 						var/datum/organ/external/affecting = M:get_organ("head")
 						if(affecting.take_damage(15))
-							M:QueueUpdateDamageIcon(1)
+							M:QueueUpdateDamageIcon()
 					else
 						M.take_organ_damage(15)
 
@@ -635,7 +635,7 @@ LOOK FOR SURGERY.DM*/
 						if(istype(M, /mob/living/carbon/human))
 							var/datum/organ/external/affecting = M:get_organ("chest")
 							if(affecting.take_damage(15))
-								M:QueueUpdateDamageIcon(1)
+								M:QueueUpdateDamageIcon()
 						else
 							M.take_organ_damage(15)
 
@@ -779,7 +779,7 @@ LOOK FOR SURGERY.DM*/
 					if(istype(M, /mob/living/carbon/human))
 						var/datum/organ/external/affecting = M:get_organ("head")
 						if(affecting.take_damage(40))
-							M:QueueUpdateDamageIcon(1)
+							M:QueueUpdateDamageIcon()
 						M.updatehealth()
 					else
 						M.take_organ_damage(40)
@@ -863,7 +863,7 @@ LOOK FOR SURGERY.DM*/
 						if(istype(M, /mob/living/carbon/human))
 							var/datum/organ/external/affecting = M:get_organ("chest")
 							if(affecting.take_damage(15))
-								M:QueueUpdateDamageIcon(1)
+								M:QueueUpdateDamageIcon()
 						else
 							M.take_organ_damage(15)
 
