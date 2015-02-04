@@ -601,22 +601,21 @@ datum/reagent/strange_reagent
 	metabolization_rate = 0.2
 
 datum/reagent/strange_reagent/reaction_mob(var/mob/living/carbon/human/M as mob, var/method=TOUCH, var/volume)
-	if(M.bruteloss > 80 || M.fireloss > 80)
-		if(ishuman(M) || ismonkey(M))
-			var/mob/living/carbon/C_target = M
-			var/obj/item/organ/brain/B = C_target.getorgan(/obj/item/organ/brain)
-			if(B)
-				B.loc = get_turf(C_target)
-				B.transfer_identity(C_target)
-				C_target.internal_organs -= B
-			M.gib()
-	else if(M.stat == DEAD)
+	if(M.stat == DEAD)
+		if(M.getBruteLoss() >= 80 || M.getFireLoss() >= 80)
+			if(ishuman(M) || ismonkey(M))
+				var/mob/living/carbon/C_target = M
+				var/obj/item/organ/brain/B = C_target.getorgan(/obj/item/organ/brain)
+				if(B)
+					B.loc = get_turf(C_target)
+					B.transfer_identity(C_target)
+					C_target.internal_organs -= B
+				M.gib(M)
+				return
 		var/mob/dead/observer/ghost = M.get_ghost()
 		M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")
-		if(M.health <= config.health_threshold_dead && !M.suiciding && !ghost && !(NOCLONE in M.mutations))
+		if(!M.suiciding && !ghost && !(NOCLONE in M.mutations))
 			M.stat = 1
-			M.adjustBruteLoss(-20) // this should keep them from dying immediately
-			M.adjustFireLoss(-20)
 			M.adjustOxyLoss(-20)
 			M.adjustToxLoss(-20)
 			dead_mob_list -= M
