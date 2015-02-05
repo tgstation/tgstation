@@ -431,12 +431,12 @@
 		else if(href_list["createpatch"])
 			if(reagents.total_volume == 0) return
 			var/amount = 1
-			var/vol_each = min(reagents.total_volume, 50)
+			var/vol_each = min(reagents.total_volume, 40)
 			if(text2num(href_list["many"]))
 				amount = min(max(round(input(usr, "Amount:", "How many patches?", amount) as num|null), 0), 10)
 				if(!amount)
 					return
-				vol_each = min(reagents.total_volume/amount, 50)
+				vol_each = min(reagents.total_volume/amount, 40)
 			var/name = stripped_input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
 			if(!name)
 				return
@@ -505,7 +505,7 @@
 		if(!condi)
 			dat += "<HR><BR><A href='?src=\ref[src];createpill=1;many=0'>Create pill (50 units max)</A><BR>"
 			dat += "<A href='?src=\ref[src];createpill=1;many=1'>Create pills (10 pills max)</A><BR><BR>"
-			dat += "<HR><BR><A href='?src=\ref[src];createpatch=1;many=0'>Create patch (50 units max)</A><BR>"
+			dat += "<HR><BR><A href='?src=\ref[src];createpatch=1;many=0'>Create patch (40 units max)</A><BR>"
 			dat += "<A href='?src=\ref[src];createpatch=1;many=1'>Create patches (10 patches max)</A><BR><BR>"
 			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (30 units max)</A>"
 		else

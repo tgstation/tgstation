@@ -50,8 +50,7 @@ var/global/floorIsLava = 0
 	body += "<A href='?_src_=holder;notes=show;ckey=[M.ckey]'>Notes</A> "
 
 	if(M.client)
-		body += "| <A href='?_src_=holder;sendtoprison=\ref[M]'>Prison</A> | "
-		body += "\ <A href='?_src_=holder;sendbacktolobby=\ref[M]'>Send back to Lobby</A> | "
+		body += "| <A HREF='?_src_=holder;sendtoprison=\ref[M]'>Prison</A> | "
 		var/muted = M.client.prefs.muted
 		body += "<br><b>Mute: </b> "
 		body += "\[<A href='?_src_=holder;mute=[M.ckey];mute_type=[MUTE_IC]'><font color='[(muted & MUTE_IC)?"red":"blue"]'>IC</font></a> | "

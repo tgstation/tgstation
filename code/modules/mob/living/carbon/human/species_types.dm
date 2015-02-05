@@ -127,7 +127,6 @@
 	sexes = 0
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/shadow
-	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE)
 
 /datum/species/shadow/spec_life(mob/living/carbon/human/H)
 	var/light_amount = 0
@@ -153,7 +152,7 @@
 	default_color = "00FFFF"
 	darksight = 3
 	invis_sight = SEE_INVISIBLE_LEVEL_ONE
-	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
+	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR)
 	hair_color = "mutcolor"
 	hair_alpha = 150
 	ignored_by = list(/mob/living/carbon/slime)
@@ -170,7 +169,7 @@
 	default_color = "00FF90"
 	say_mod = "chirps"
 	eyes = "jelleyes"
-	specflags = list(MUTCOLORS,EYECOLOR,NOBLOOD)
+	specflags = list(MUTCOLORS,EYECOLOR)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/slime
 
 /*
@@ -229,7 +228,6 @@
 	id = "skeleton"
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/skeleton
-	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE)
 /*
  ZOMBIES
 */
@@ -241,7 +239,6 @@
 	say_mod = "moans"
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/zombie
-	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE)
 
 /datum/species/zombie/handle_speech(message)
 	var/list/message_list = text2list(message, " ")

@@ -84,9 +84,6 @@
 		//Disabilities
 		handle_disabilities()
 
-		//Blud
-		handle_blood()
-
 		//Random events (vomiting etc)
 		handle_random_events()
 

@@ -1,60 +1,58 @@
-/obj/item/weapon/gun/energy/pulse
+/obj/item/weapon/gun/energy/pulse_rifle
 	name = "pulse rifle"
 	desc = "A heavy-duty, multifaceted energy rifle with three modes. Preferred by front-line combat personnel."
 	icon_state = "pulse"
-	item_state = null
-	w_class = 4
+	item_state = "pulse"
+	w_class = 4.0
 	force = 10
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse, /obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
-	cell_type = "/obj/item/weapon/stock_parts/cell/pulse"
+	cell_type = "/obj/item/weapon/stock_parts/cell/super"
 
-/obj/item/weapon/gun/energy/pulse/attack_self(mob/living/user as mob)
+
+/obj/item/weapon/gun/energy/pulse_rifle/attack_self(mob/living/user as mob)
 	select_fire(user)
 
-/obj/item/weapon/gun/energy/pulse/emp_act(severity)
-	return
-
-/obj/item/weapon/gun/energy/pulse/loyalpin
-	pin = /obj/item/device/firing_pin/implant/loyalty
-
-/obj/item/weapon/gun/energy/pulse/carbine
+/obj/item/weapon/gun/energy/pulse_rifle/pulse_carbine
 	name = "pulse carbine"
-	desc = "A compact variant of the pulse rifle with less firepower but easier storage."
-	w_class = 3
-	slot_flags = SLOT_BELT
+	desc = "A ligther weight varient of the pulse rifle, a multifaceted energy carbine with three modes."
+	w_class = 3.0
 	icon_state = "pulse_carbine"
 	item_state = "pulse"
-	cell_type = "/obj/item/weapon/stock_parts/cell/pulse/carbine"
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse/carbine, /obj/item/ammo_casing/energy/electrode/carbine, /obj/item/ammo_casing/energy/laser/carbine)
+	cell_type = "/obj/item/weapon/stock_parts/cell"
 
-/obj/item/weapon/gun/energy/pulse/carbine/loyalpin
+/obj/item/weapon/gun/energy/pulse_rifle/pulse_carbine/loyalpin
 	pin = /obj/item/device/firing_pin/implant/loyalty
 
-/obj/item/weapon/gun/energy/pulse/pistol
+/obj/item/weapon/gun/energy/pulse_rifle/pulse_pistol
 	name = "pulse pistol"
-	desc = "A pulse rifle in an easily concealed handgun package with low capacity."
-	w_class = 2
-	slot_flags = SLOT_BELT
+	desc = "A ligther weight varient of the pulse rifle, a multifaceted energy pistol with three modes."
+	w_class = 2.0
 	icon_state = "pulse_pistol"
-	item_state = "gun"
-	cell_type = "/obj/item/weapon/stock_parts/cell/pulse/pistol"
+	item_state = "pulse"
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse/pistol, /obj/item/ammo_casing/energy/electrode/pistol, /obj/item/ammo_casing/energy/laser/pistol)
+	cell_type = "/obj/item/weapon/stock_parts/cell"
 
-/obj/item/weapon/gun/energy/pulse/pistol/loyalpin
+/obj/item/weapon/gun/energy/pulse_rifle/pulse_pistol/loyalpin
 	pin = /obj/item/device/firing_pin/implant/loyalty
 
-/obj/item/weapon/gun/energy/pulse/destroyer
+/obj/item/weapon/gun/energy/pulse_rifle/destroyer
 	name = "pulse destroyer"
 	desc = "A heavy-duty energy rifle built for pure destruction."
 	cell_type = "/obj/item/weapon/stock_parts/cell/infinite"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse)
 
-/obj/item/weapon/gun/energy/pulse/destroyer/attack_self(mob/living/user as mob)
+/obj/item/weapon/gun/energy/pulse_rifle/destroyer/attack_self(mob/living/user as mob)
 	user << "<span class='danger'>[src.name] has three settings, and they are all DESTROY.</span>"
 
-/obj/item/weapon/gun/energy/pulse/pistol/m1911
-	name = "\improper M1911-P"
+
+
+/obj/item/weapon/gun/energy/pulse_rifle/M1911
+	name = "m1911-P"
 	desc = "A compact pulse core in a classic handgun frame for Nanotrasen officers. It's not the size of the gun, it's the size of the hole it puts through people."
 	icon_state = "m1911-p"
-	item_state = "gun"
 	cell_type = "/obj/item/weapon/stock_parts/cell/infinite"
+
+

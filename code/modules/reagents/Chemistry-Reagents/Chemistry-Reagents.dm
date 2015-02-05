@@ -166,6 +166,7 @@ datum/reagent/blood/on_merge(var/list/data)
 				src.data["viruses"] = preserve
 	return 1
 
+
 datum/reagent/blood/reaction_turf(var/turf/simulated/T, var/volume)//splash the blood all over the place
 	if(!istype(T)) return
 	var/datum/reagent/blood/self = src
@@ -788,7 +789,7 @@ datum/reagent/diethylamine
 	name = "Diethylamine"
 	id = "diethylamine"
 	description = "A secondary amine, mildly corrosive."
-	color = "#604030" // rgb: 96, 64, 48
+	color = "#3C3200"
 
 
 
