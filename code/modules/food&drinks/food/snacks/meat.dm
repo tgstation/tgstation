@@ -5,6 +5,7 @@
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/sosjerky
 	bitesize = 3
 	list_reagents = list("nutriment" = 3)
+	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/meatsteak
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/synthmeat
 	name = "synthmeat"

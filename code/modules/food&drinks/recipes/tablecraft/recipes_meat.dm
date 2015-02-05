@@ -106,7 +106,7 @@
 	name = "Enchiladas"
 	reqs = list(
 		/datum/reagent/consumable/capsaicin = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/meat = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/cutlet = 2,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/chili = 2,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/corn = 1
 	)
@@ -125,6 +125,6 @@
 	name = "Sausage"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/faggot = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/meat = 1
+		/obj/item/weapon/reagent_containers/food/snacks/cutlet = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sausage

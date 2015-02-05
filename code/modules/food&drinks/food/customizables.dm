@@ -277,6 +277,7 @@
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/store/bread/plain
 	bitesize = 2
 	list_reagents = list("nutriment" = 3)
+	w_class = 3
 
 
 // Dough + rolling pin = flat dough
@@ -302,6 +303,7 @@
 	slices_num = 3
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/pizzabread
 	list_reagents = list("nutriment" = 3)
+	w_class = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/pizzabread
 	name = "pizza bread"
@@ -311,6 +313,7 @@
 	bitesize = 2
 	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/pizza
 	list_reagents = list("nutriment" = 2)
+	w_class = 3
 
 
 /obj/item/weapon/reagent_containers/food/snacks/doughslice
@@ -321,6 +324,7 @@
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/bun
 	bitesize = 2
 	list_reagents = list("nutriment" = 1)
+	filling_color = "#CD853F"
 
 
 /obj/item/weapon/reagent_containers/food/snacks/bun
@@ -331,6 +335,7 @@
 	bitesize = 2
 	list_reagents = list("nutriment" = 4)
 	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/burger
+	filling_color = "#CD853F"
 
 
 /obj/item/weapon/reagent_containers/food/snacks/rawcutlet
@@ -340,8 +345,8 @@
 	icon_state = "rawcutlet"
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/cutlet
 	bitesize = 2
-	list_reagents = list("nutriment" = 4)
-
+	list_reagents = list("nutriment" = 2)
+	filling_color = "#B22222"
 
 /obj/item/weapon/reagent_containers/food/snacks/cutlet
 	name = "cutlet"
@@ -349,7 +354,8 @@
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "cutlet"
 	bitesize = 2
-	list_reagents = list("nutriment" = 4)
+	list_reagents = list("nutriment" = 4, "vitamin" = 1)
+	filling_color = "#B22222"
 
 /obj/item/weapon/reagent_containers/food/snacks/cakebatter
 	name = "cake batter"
@@ -359,8 +365,9 @@
 	bitesize = 2
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/store/cake/plain
 	list_reagents = list("nutriment" = 4)
+	w_class = 3
 
-// Cake batter + rolling pin = flat dough
+// Cake batter + rolling pin = pie dough
 /obj/item/weapon/reagent_containers/food/snacks/cakebatter/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/kitchen/rollingpin))
 		if(isturf(loc))
@@ -381,6 +388,7 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/doughslice
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/pie/plain
 	list_reagents = list("nutriment" = 4)
+	w_class = 3
 
 #undef INGREDIENTS_FILL
 #undef INGREDIENTS_SCATTER

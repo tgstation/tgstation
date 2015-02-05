@@ -56,7 +56,7 @@
 	origin_tech = "materials=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 	var/list/accepted = list(/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco,
-	/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco_space,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco/space,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/tea/aspera,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
