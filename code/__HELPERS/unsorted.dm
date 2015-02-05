@@ -1330,7 +1330,7 @@ proc/is_hot(obj/item/W as obj)
 		istype(W, /obj/item/weapon/broken_bottle)				  || \
 		istype(W, /obj/item/weapon/reagent_containers/syringe)    || \
 		istype(W, /obj/item/weapon/kitchen/utensil/fork) && W.icon_state != "forkloaded" || \
-		istype(W, /obj/item/weapon/twohanded/fireaxe) \
+		istype(W, /obj/item/weapon/fireaxe) \
 	)
 
 /proc/is_surgery_tool(obj/item/W as obj)

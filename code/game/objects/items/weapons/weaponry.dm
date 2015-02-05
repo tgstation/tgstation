@@ -171,7 +171,7 @@ obj/item/weapon/wirerod
 obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 	..()
 	if(istype(I, /obj/item/weapon/shard))
-		var/obj/item/weapon/twohanded/spear/S = new /obj/item/weapon/twohanded/spear
+		var/obj/item/weapon/spear/S = new /obj/item/weapon/spear
 
 		user.before_take_item(I)
 		user.before_take_item(src)

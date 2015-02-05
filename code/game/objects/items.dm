@@ -11,6 +11,7 @@
 	var/w_class = 3.0
 	flags = FPRINT
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
+	var/obj/item/offhand/wielded = null
 	pass_flags = PASSTABLE
 	pressure_resistance = 5
 //	causeerrorheresoifixthis
@@ -154,6 +155,9 @@
 
 	src.throwing = 0
 	if (src.loc == user)
+		if(src == user.get_inactive_hand())
+			if(src.flags & TWOHANDABLE)
+				return src.wield(user)
 		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
 		if(!src.canremove)
 			return
@@ -243,8 +247,9 @@
 	return
 
 /obj/item/proc/dropped(mob/user as mob)
-	..()
 	layer = initial(layer) //nothing bad can come from this right?
+	if(wielded)
+		unwield(user)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -273,9 +278,16 @@
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
 //Set disable_warning to 1 if you wish it to not give you outputs.
-/obj/item/proc/mob_can_equip(M as mob, slot, disable_warning = 0, automatic = 0)
+/obj/item/proc/mob_can_equip(mob/M, slot, disable_warning = 0, automatic = 0)
 	if(!slot) return 0
 	if(!M) return 0
+
+	if(wielded)
+		if(flags & MUSTTWOHAND)
+			M.show_message("\The [src] is too cumbersome to carry in anything other than your hands.")
+		else
+			M.show_message("You have to unwield \the [wielded.wielding] first.")
+		return 0
 
 	if(ishuman(M))
 		//START HUMAN
@@ -621,7 +633,11 @@
 		if(user.get_active_hand() == null)
 			user.put_in_hands(src)
 	if(istype(user, /mob/living/carbon/human))
-		src.attack_hand(user)
+		var/mob/living/carbon/human/h_user = user
+		if(h_user.can_use_active_hand())
+			src.attack_hand(h_user)
+		else
+			src.attack_stump(h_user)
 	if(istype(user, /mob/living/carbon/alien))
 		src.attack_alien(user)
 	if(istype(user, /mob/living/carbon/monkey))
@@ -635,6 +651,31 @@
 	if(src in usr)
 		attack_self(usr)
 
+//Used in twohanding
+/obj/item/proc/wield(mob/user)
+	if(!ishuman(user))
+		user.show_message("You can't wield \the [src] as it's too heavy.")
+		return
+	if(!wielded)
+		wielded = getFromPool(/obj/item/offhand)
+		if(user.put_in_inactive_hand(wielded) || user.put_in_active_hand(wielded))
+			wielded.attach_to(src)
+			update_wield(user)
+			return 1
+		else
+			unwield(user)
+			return
+
+/obj/item/proc/unwield(mob/user)
+	if(istype(wielded))
+		wielded.wielding = null
+		returnToPool(wielded)
+		wielded = null
+	if(flags & MUSTTWOHAND)
+		user.drop_from_inventory(src)
+	update_wield(user)
+
+/obj/item/proc/update_wield(mob/user)
 
 /obj/item/proc/IsShield()
 	return 0
@@ -802,3 +843,4 @@
 		else if(current_size > STAGE_ONE)
 			step_towards(src,S)
 		else ..()
+
