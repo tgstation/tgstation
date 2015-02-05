@@ -34,7 +34,7 @@
 		owner = user
 		return
 	if(user != owner)
-		user << "You can't open the spellbook somehow."
+		user << "The [name] does not recognize you as it's owner and refuses to open."
 		return
 	user.set_machine(src)
 	var/dat
