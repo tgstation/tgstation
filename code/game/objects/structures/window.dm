@@ -187,7 +187,7 @@
 /obj/structure/window/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(!istype(W)) return//I really wish I did not need this
 
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
+	if (istype(W, /obj/item/weapon/grab) && Adjacent(user))
 		var/obj/item/weapon/grab/G = W
 		if (istype(G.affecting, /mob/living))
 			var/mob/living/M = G.affecting
@@ -195,23 +195,23 @@
 			qdel(W)	//gotta delete it here because if window breaks, it won't get deleted
 			var/damage
 			switch (state)
-				if(1)
+				if(GRAB_PASSIVE)
+					M.apply_damage(4)
+					damage = 4
+					hit(5)
+					visible_message("<span class='warning'>[user] slams [M] against \the [src]!</span>")
+				if(GRAB_AGGRESSIVE)
+					if (prob(50))
+						M.Weaken(1)
 					M.apply_damage(7)
 					damage = 7
 					hit(10)
-					visible_message("<span class='warning'>[user] slams [M] against \the [src]!</span>")
-				if(2)
-					if (prob(50))
-						M.Weaken(1)
-					M.apply_damage(10)
-					damage = 10
-					hit(25)
 					visible_message("<span class='danger'>[user] bashes [M] against \the [src]!</span>")
-				if(3 || 4)
-					M.Weaken(5)
-					M.apply_damage(20)
-					damage = 20
-					hit(50)
+				if(GRAB_NECK to GRAB_KILL)
+					M.Weaken(3)
+					M.apply_damage(15)
+					damage = 15
+					hit(25)
 					visible_message("<big><span class='danger'>[user] crushes [M] against \the [src]!</span></big>")
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been window slammed by [user.name] ([user.ckey]) for [damage] damage.</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Window slammed [M.name] for [damage] damage.</font>")
