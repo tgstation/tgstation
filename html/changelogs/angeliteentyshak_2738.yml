@@ -1,0 +1,8 @@
+author: Angelite Entyshak
+ 
+ delete-after: True
+ 
+ changes:
+  - bugfix: Space-side conveyor belts now work as intended on the asteroid.
+  - bugfix: 50 metal and 50 glass is now in the emergency storage in the research outpost.
+  - tweak: removed the two O2 lockers in the reseach outpost external airlock system.
