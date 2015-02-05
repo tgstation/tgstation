@@ -12,8 +12,10 @@
 			break
 		var/mob/L = mob_list[i]
 		if(ismob(L))
-			if(L.Life() == PROCESS_KILL)
-				mob_list.Remove(L)
+			L.Life()
+			if(!ismob(L))
+				if(!mob_list.Remove(L))
+					mob_list.Cut(i,i+1)
 		else
 			if(!mob_list.Remove(L))
 				mob_list.Cut(i,i+1)

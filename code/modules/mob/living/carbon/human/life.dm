@@ -252,7 +252,7 @@ var/global/list/organ_damage_overlays = list(
 			src << "We have been dead for too long, we stop here."
 			last_processed = "DEAD"
 		cycle = "DEAD"
-		return PROCESS_KILL											//We go ahead and process them 5 times for HUD images and other stuff though.
+		return											//We go ahead and process them 5 times for HUD images and other stuff though.
 
 	//Handle temperature/pressure differences between body and environment
 	handle_environment(environment)
