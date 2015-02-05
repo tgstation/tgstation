@@ -1,5 +1,5 @@
 /datum/game_mode/blob/check_finished()
-	if(!declared)//No blobs have been spawned yet
+	if(infected_crew.len > burst)//Some blobs have yet to burst
 		return 0
 	if(blobwincount <= blobs.len)//Blob took over
 		return 1
