@@ -4,18 +4,12 @@
 	bitesize = 3
 	w_class = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/pie/New()
-	..()
-	reagents.add_reagent("nutriment", 4)
-	reagents.add_reagent("vitamin", 2)
-
-
 /obj/item/weapon/reagent_containers/food/snacks/pie/plain
 	name = "plain pie"
 	desc = "A simple pie, still delicious."
 	icon_state = "pie"
 	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/pie
-
+	list_reagents = list("nutriment" = 4, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/cream
 	name = "banana cream pie"
