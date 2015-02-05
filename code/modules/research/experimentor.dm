@@ -521,6 +521,7 @@
 		if(D)
 			linked_console = D
 	else if(scantype == "eject")
+		busy = 0
 		ejectItem()
 	else if(scantype == "refresh")
 		src.updateUsrDialog()
