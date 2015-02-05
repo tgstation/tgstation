@@ -116,7 +116,8 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 					L << "<span class='error'>You need wirecutters!</span>"
 
 			else if(href_list["pulse"])
-				if(istype(I, /obj/item/device/multitool))
+				var/mob/living/carbon/C = L
+				if((istype(I, /obj/item/device/multitool)) || (C.hackimplant))
 					var/colour = href_list["pulse"]
 					PulseColour(colour)
 				else
