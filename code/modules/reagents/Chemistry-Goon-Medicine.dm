@@ -496,7 +496,7 @@ datum/reagent/oculine/on_mob_life(var/mob/living/M as mob)
 	name = "Oculine"
 	id = "oculine"
 	result = "oculine"
-	required_reagents = list("atropine" = 1, "spaceacillin" = 1, "salglu_solution" = 1)
+	required_reagents = list("charcoal" = 1, "carbon" = 1, "hydrogen" = 1)
 	result_amount = 3
 	mix_message = "The mixture sputters loudly and becomes a pale pink color."
 
