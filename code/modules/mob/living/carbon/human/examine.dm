@@ -260,21 +260,37 @@
 
 	if(istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
-		if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
-			if(!user.stat && user != src) //|| !user.canmove || user.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
-				var/criminal = "None"
-
-				var/perpname = get_face_name(get_id_name(""))
-				if(perpname)
-					var/datum/data/record/R = find_record("name", perpname, data_core.security)
+		if(istype(H.glasses, /obj/item/clothing/glasses/hud))
+			var/perpname = get_face_name(get_id_name(""))
+			if(perpname)
+				var/datum/data/record/R = find_record("name", perpname, data_core.general)
+				if(R)
+					msg += "<span class = 'deptradio'>Rank:</span> [R.fields["rank"]]<br>"
+					msg += "<a href='?src=\ref[src];hud=1;photo_front=1'>\[Front photo\]</a> "
+					msg += "<a href='?src=\ref[src];hud=1;photo_side=1'>\[Side photo\]</a><br>"
+				if(istype(H.glasses, /obj/item/clothing/glasses/hud/health))
 					if(R)
-						criminal = R.fields["criminal"]
+						var/health = R.fields["p_stat"]
+						msg += "<a href='?src=\ref[src];hud=m;p_stat=1'>\[[health]\]</a>"
+						health = R.fields["m_stat"]
+						msg += "<a href='?src=\ref[src];hud=m;m_stat=1'>\[[health]\]</a><br>"
+					R = find_record("name", perpname, data_core.medical)
+					if(R)
+						msg += "<a href='?src=\ref[src];hud=m;evaluation=1'>\[Medical evaluation\]</a><br>"
 
-					msg += "<span class = 'deptradio'>Criminal status:</span> <a href='?src=\ref[src];criminal=1;status=1'>\[[criminal]\]</a>\n"
-					msg += "<span class = 'deptradio'>Security record:</span> <a href='?src=\ref[src];criminal=1;view=1'>\[View\]</a> "
-					msg += "<a href='?src=\ref[src];criminal=1;add_crime=1'>\[Add crime\]</a> "
-					msg += "<a href='?src=\ref[src];criminal=1;view_comment=1'>\[View comment log\]</a> "
-					msg += "<a href='?src=\ref[src];criminal=1;add_comment=1'>\[Add comment\]</a>\n"
+				if(istype(H.glasses, /obj/item/clothing/glasses/hud/security))
+					if(!user.stat && user != src) //|| !user.canmove || user.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
+						var/criminal = "None"
+
+						R = find_record("name", perpname, data_core.security)
+						if(R)
+							criminal = R.fields["criminal"]
+
+						msg += "<span class = 'deptradio'>Criminal status:</span> <a href='?src=\ref[src];hud=s;status=1'>\[[criminal]\]</a>\n"
+						msg += "<span class = 'deptradio'>Security record:</span> <a href='?src=\ref[src];hud=s;view=1'>\[View\]</a> "
+						msg += "<a href='?src=\ref[src];hud=s;add_crime=1'>\[Add crime\]</a> "
+						msg += "<a href='?src=\ref[src];hud=s;view_comment=1'>\[View comment log\]</a> "
+						msg += "<a href='?src=\ref[src];hud=s;add_comment=1'>\[Add comment\]</a>\n"
 
 	msg += "*---------*</span>"
 

@@ -1,4 +1,4 @@
-var/global/obj/effect/datacore/data_core = null
+var/global/datum/datacore/data_core = null
 //var/global/defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
 //Noble idea, but doing this made GC fail. The gains from waiting on deffering are lost by using del()
 
