@@ -1,4 +1,4 @@
-/client/proc/Jump(var/area/A in return_sorted_areas())
+/client/proc/Jump(var/area/A in sortedAreas)
 	set name = "Jump to Area"
 	set desc = "Area to jump to"
 	set category = "Admin"
@@ -7,10 +7,21 @@
 		return
 
 	if(config.allow_admin_jump)
-		var/list/L = get_area_turfs(A)
-		if(!L || !L.len)
+		if(!A)
 			return
-		usr.loc = pick(get_area_turfs(A))
+
+		var/list/turfs = list()
+		for(var/area/Ar in A.related)
+			for(var/turf/T in Ar)
+				if(T.density)
+					continue
+				turfs.Add(T)
+
+		var/turf/T = pick_n_take(turfs)
+		if(!T)
+			src << "Nowhere to jump to!"
+			return
+		usr.loc = T
 
 		log_admin("[key_name(usr)] jumped to [A]")
 		message_admins("[key_name_admin(usr)] jumped to [A]", 1)
@@ -148,7 +159,7 @@
 	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
-	var/area/A = input(usr, "Pick an area.", "Pick an area") in return_sorted_areas()
+	var/area/A = input(usr, "Pick an area.", "Pick an area") in sortedAreas
 	if(A)
 		if(config.allow_admin_jump)
 			M.loc = pick(get_area_turfs(A))

@@ -72,7 +72,7 @@
 	"}
 	var/even = 0
 	// sort mobs
-	for(var/datum/data/record/t in data_core.general)
+	for(var/datum/data/record/t in sortRecord(data_core.general))
 		var/name = t.fields["name"]
 		var/rank = t.fields["rank"]
 		var/real_rank = t.fields["real_rank"]
