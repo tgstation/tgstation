@@ -11,7 +11,7 @@
 		if(i > mob_list.len)
 			break
 		var/mob/L = mob_list[i]
-		if(!ismob(L))
+		if(ismob(L))
 			if(L.Life() == PROCESS_KILL)
 				mob_list.Remove(L)
 		else
