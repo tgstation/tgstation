@@ -9,63 +9,63 @@ datum/reagent/oil
 	id = "oil"
 	description = "A slippery solution."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#FFFFFF"
 
 datum/reagent/stable_plasma
 	name = "Stable Plasma"
 	id = "stable_plasma"
 	description = "Non-flammable plasma locked into a liquid form that cannot ignite or become gaseous/solid."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#DB2D08"
 
 datum/reagent/iodine
 	name = "Iodine"
 	id = "iodine"
 	description = "A slippery solution."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#FFFFFF"
 
 datum/reagent/fluorine
 	name = "Fluorine"
 	id = "fluorine"
 	description = "A slippery solution."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#FFFFFF"
 
 datum/reagent/carpet
 	name = "Carpet"
 	id = "carpet"
 	description = "A slippery solution."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#FFFFFF"
 
 datum/reagent/bromine
 	name = "Bromine"
 	id = "bromine"
 	description = "A slippery solution."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#FFFFFF"
 
 datum/reagent/phenol
 	name = "Phenol"
 	id = "phenol"
 	description = "A slippery solution."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#FFFFFF"
 
 datum/reagent/ash
 	name = "Ash"
 	id = "ash"
 	description = "A burnt solution."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#FFFFFF"
 
 datum/reagent/acetone
 	name = "Acetone"
 	id = "acetone"
 	description = "A solution."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#FFFFFF"
 
 /datum/chemical_reaction/acetone
 	name = "acetone"
@@ -108,7 +108,7 @@ datum/reagent/colorful_reagent
 	id = "colorful_reagent"
 	description = "A solution."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#FFFFFF"
 	var/list/potential_colors = list("#FF0000","#0000FF","#008000","#FFFF00")
 
 /datum/chemical_reaction/colorful_reagent
@@ -118,8 +118,8 @@ datum/reagent/colorful_reagent
 	required_reagents = list("stable_plasma" = 1, "radium" = 1, "space_drugs" = 1, "cryoxadone" = 1, "triple_citrus" = 1)
 	result_amount = 5
 
-datum/reagent/colorful_reagent/reaction_mob(var/mob/living/M, var/volume)
-	if(M && isliving(M))
+datum/reagent/colorful_reagent/reaction_mob(var/mob/M, var/volume)
+	if(M)
 		M.color = pick(potential_colors)
 	..()
 	return
@@ -140,7 +140,7 @@ datum/reagent/triple_citrus
 	id = "triple_citrus"
 	description = "A solution."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#FFFFFF"
 
 /datum/chemical_reaction/triple_citrus
 	name = "triple_citrus"
