@@ -1120,7 +1120,7 @@ Pressure: [env.return_pressure()]"}
 	set category = "Debug"
 	set name = "Dump Machine and Object Profiling"
 
-	var/date_string = time2text(world.realtime, "YYYY-MM-Month-DD-Day-SS")
+	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
 	var/F =file("data/logs/profiling/machine_profiling_[date_string].csv")
 	fdel(F)
 	F << "type,nanoseconds"
@@ -1160,6 +1160,15 @@ Pressure: [env.return_pressure()]"}
 		F << "[typepath],[ns]"
 
 	usr << "\blue Dumped to gdel_profiling.csv."
+
+	F =file("data/logs/profiling/ghdel_profiling_[date_string].csv")
+	fdel(F)
+	F << "type,hard deletes"
+	for(var/typepath in ghdel_profiling)
+		var/ns = ghdel_profiling[typepath]
+		F << "[typepath],[ns]"
+
+	usr << "\blue Dumped to ghdel_profiling.csv."
 
 /client/proc/gib_money()
 	set category = "Fun"

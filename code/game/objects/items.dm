@@ -711,7 +711,7 @@
 					M << "<span class='warning'>You go blind!</span>"
 		var/datum/organ/external/affecting = M:get_organ("head")
 		if(affecting.take_damage(7))
-			M:QueueUpdateDamageIcon(1)
+			M:UpdateDamageIcon(1)
 	else
 		M.take_organ_damage(7)
 	M.eye_blurry += rand(3,4)
@@ -760,6 +760,7 @@
 
 
 	//not sure if this is worth it. It attaches the blood_overlay to every item of the same type if they don't have one already made.
+	blood_overlay = image(I)
 	for(var/obj/item/A in world)
 		if(A.type == type && !A.blood_overlay)
 			A.blood_overlay = image(I)

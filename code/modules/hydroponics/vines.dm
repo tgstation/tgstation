@@ -170,7 +170,7 @@
 				else
 					H.adjustBruteLoss(damage)
 
-				H.QueueUpdateDamageIcon()
+				H.UpdateDamageIcon()
 				H.updatehealth()
 
 			// Inject some chems.

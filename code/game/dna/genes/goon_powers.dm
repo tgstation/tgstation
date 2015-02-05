@@ -247,7 +247,7 @@
 			if(!istype(affecting, /datum/organ/external))
 				continue
 			affecting.heal_damage(4, 0)
-		H.QueueUpdateDamageIcon()
+		H.UpdateDamageIcon()
 		H.updatehealth()
 
 /obj/effect/proc_holder/spell/targeted/eat/cast(list/targets)

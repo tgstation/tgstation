@@ -110,6 +110,6 @@
 
 				H.Weaken(3)
 				if(affecting.take_damage(5, 0))
-					H.QueueUpdateDamageIcon()
+					H.UpdateDamageIcon()
 				H.updatehealth()
 	..()

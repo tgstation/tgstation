@@ -274,7 +274,7 @@
 			O.show_message(text("\red <B>[user] stabs [target] in \the [hit_area] with [src.name]!</B>"), 1)
 
 		if(affecting.take_damage(3))
-			target:QueueUpdateDamageIcon()
+			target:UpdateDamageIcon()
 
 	else
 		for(var/mob/O in viewers(world.view, user))

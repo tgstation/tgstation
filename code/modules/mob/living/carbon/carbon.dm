@@ -40,7 +40,7 @@
 					if (istype(organ, /datum/organ/external))
 						var/datum/organ/external/temp = organ
 						if(temp.take_damage(d, 0))
-							H.QueueUpdateDamageIcon()
+							H.UpdateDamageIcon()
 					H.updatehealth()
 				else
 					src.take_organ_damage(d)
