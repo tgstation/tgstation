@@ -1,0 +1,4 @@
+author: Paprika
+delete-after: True
+changes:
+  - tweak: "Moved the belt icon layer under the suit layer. Belts are now concealed by exosuits properly, as they're attached to jumpsuits."
