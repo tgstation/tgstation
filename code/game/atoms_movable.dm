@@ -24,6 +24,7 @@
 	var/timeDestroyed
 
 	var/sound_override = 0 //Do we make a sound when bumping into something?
+	var/hard_deleted = 0
 	//glide_size = 8
 
 /atom/movable/New()
@@ -43,20 +44,32 @@
 		beams.len = 0
 	..()
 
+/proc/delete_profile(var/type, soft = 0)
+	switch(soft)
+		if(0)
+			if(!("[type]" in del_profiling))
+				del_profiling["[type]"] = 0
+			del_profiling["[type]"] += 1
+		if(1)
+			if(!("[type]" in gdel_profiling))
+				gdel_profiling["[type]"] = 0
+			gdel_profiling["[type]"] += 1
+		if(2)
+			if(!("[type]" in ghdel_profiling))
+				ghdel_profiling["[type]"] = 0
+			ghdel_profiling["[type]"] += 1
 /atom/movable/Del()
-	if(!ticker || ticker.current_state != 3) return ..()
+	if(!ticker || ticker.current_state != 3)
+		return ..()
 	// Pass to Destroy().
 	if(!gcDestroyed)
+		delete_profile("[type]",0)
 		Destroy()
-		if(!("[type]" in del_profiling))
-			del_profiling["[type]"] = 0
-
-		del_profiling["[type]"] += 1
 	else
-		if(!("[type]" in gdel_profiling))
-			gdel_profiling["[type]"] = 0
-
-		gdel_profiling["[type]"] += 1
+		if(hard_deleted)
+			delete_profile("[type]",2)
+		else
+			delete_profile("[type]",1)
 	..()
 
 

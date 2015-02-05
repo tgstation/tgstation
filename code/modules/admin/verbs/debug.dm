@@ -1106,7 +1106,7 @@ Pressure: [env.return_pressure()]"}
 	set category = "Debug"
 	set name = "Dump Instance Counts"
 	set desc = "MEMORY PROFILING IS TOO HIGH TECH"
-	var/date_string = time2text(world.realtime, "YYYY-MM-Month-DD-Day-SS")
+	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
 	var/F=file("data/logs/profiling/instances_[date_string].csv")
 	fdel(F)
 	F << "Types,Number of Instances"
@@ -1143,7 +1143,7 @@ Pressure: [env.return_pressure()]"}
 	set category = "Debug"
 	set name = "Dump Del Profiling"
 
-	var/date_string = time2text(world.realtime, "YYYY-MM-Month-DD-Day-SS")
+	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
 	var/F =file("data/logs/profiling/del_profiling_[date_string].csv")
 	fdel(F)
 	F << "type,deletes"
