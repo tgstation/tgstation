@@ -652,27 +652,27 @@
 		attack_self(usr)
 
 //Used in twohanding
-/obj/item/proc/wield(mob/user)
+/obj/item/proc/wield(mob/user, var/inactive = 0)
 	if(!ishuman(user))
 		user.show_message("You can't wield \the [src] as it's too heavy.")
 		return
 	if(!wielded)
 		wielded = getFromPool(/obj/item/offhand)
-		if(user.put_in_inactive_hand(wielded) || user.put_in_active_hand(wielded))
+		if(user.put_in_inactive_hand(wielded) || (!inactive && user.put_in_active_hand(wielded)))
 			wielded.attach_to(src)
 			update_wield(user)
 			return 1
-		else
-			unwield(user)
-			return
+		unwield(user)
+		return
 
 /obj/item/proc/unwield(mob/user)
+	if(flags & MUSTTWOHAND && src in user)
+		user.drop_from_inventory(src)
 	if(istype(wielded))
+		user.u_equip(wielded)
 		wielded.wielding = null
 		returnToPool(wielded)
 		wielded = null
-	if(flags & MUSTTWOHAND)
-		user.drop_from_inventory(src)
 	update_wield(user)
 
 /obj/item/proc/update_wield(mob/user)

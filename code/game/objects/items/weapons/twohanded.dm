@@ -15,9 +15,12 @@
 	icon_state = "offhand"
 	name = "offhand"
 	var/obj/item/wielding = null
-	wielded = 1
 
 /obj/item/offhand/dropped(user)
+	return wielding.unwield(user)
+
+
+/obj/item/offhand/unwield(user)
 	return wielding.unwield(user)
 
 /obj/item/offhand/proc/attach_to(var/obj/item/I)
