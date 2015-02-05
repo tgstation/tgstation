@@ -167,6 +167,9 @@
 
 	return
 
+/obj/machinery/r_n_d/experimentor/default_deconstruction_crowbar(var/obj/item/O)
+	ejectItem()
+	..(O)
 
 /obj/machinery/r_n_d/experimentor/attack_hand(mob/user as mob)
 	user.set_machine(src)
