@@ -540,7 +540,7 @@
 			new_item.listening_to_players = 1
 			if(prob(25))
 				new_item.speaking_to_players = 1
-				processing_objects.Add(src)
+				processing_objects.Add(new_item)
 		var/turf/T = get_turf(src)
 		if(istype(T, /turf/unsimulated/mineral))
 			T:last_find = new_item
