@@ -84,11 +84,25 @@
 	open_machine()
 
 /obj/machinery/atmospherics/unary/cryo_cell/container_resist()
-	if(stat & DEAD)
-		return
-	sleep(usr.stat * 1200)
 	open_machine()
 	return
+
+/obj/machinery/atmospherics/unary/cryo_cell/verb/move_eject()
+	set name = "Eject Cryo Cell"
+	set desc = "Begin the release sequence inside the cryo tube."
+	set category = "Object"
+	set src in oview(1)
+	if(usr == occupant || contents.Find(usr))	//If the user is inside the tube...
+		if(usr.stat == DEAD)	//and he's not dead....
+			return
+		usr << "<span class='notice'>Release sequence activated. This will take about a minute.</span>"
+		sleep(600)
+		if(!src || !usr || (!occupant && !contents.Find(usr)))	//Check if someone's released/replaced/bombed him already
+			return
+		open_machine()
+		add_fingerprint(usr)
+	else
+		open_machine()
 
 /obj/machinery/atmospherics/unary/cryo_cell/examine(mob/user)
 	..()
