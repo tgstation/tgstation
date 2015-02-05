@@ -5,14 +5,16 @@
 	icon_state = "spaghetti"
 	list_reagents = list("nutriment" = 1, "vitamin" = 1)
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti
+	filling_color = "#F0E68C"
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti
 	name = "boiled spaghetti"
-	desc = "A plain dish of noodles, this sucks."
+	desc = "A plain dish of noodles, this needs more ingredients."
 	icon_state = "spaghettiboiled"
 	trash = /obj/item/trash/plate
 	list_reagents = list("nutriment" = 2, "vitamin" = 1)
 	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/pasta
+	filling_color = "#F0E68C"
 
 /obj/item/weapon/reagent_containers/food/snacks/pastatomato
 	name = "spaghetti"
@@ -21,6 +23,7 @@
 	trash = /obj/item/trash/plate
 	bitesize = 4
 	list_reagents = list("nutriment" = 6, "tomatojuice" = 10, "vitamin" = 4)
+	filling_color = "#DC143C"
 
 /obj/item/weapon/reagent_containers/food/snacks/copypasta
 	name = "copypasta"
@@ -29,6 +32,7 @@
 	trash = /obj/item/trash/plate
 	bitesize = 4
 	list_reagents = list("nutriment" = 12, "tomatojuice" = 20, "vitamin" = 8)
+	filling_color = "#DC143C"
 
 /obj/item/weapon/reagent_containers/food/snacks/meatballspaghetti
 	name = "spaghetti and meatballs"
@@ -36,16 +40,12 @@
 	icon_state = "meatballspaghetti"
 	trash = /obj/item/trash/plate
 	list_reagents = list("nutriment" = 8, "vitamin" = 4)
+	filling_color = "#F0E68C"
 
 /obj/item/weapon/reagent_containers/food/snacks/spesslaw
 	name = "spesslaw"
 	desc = "A lawyers favourite."
 	icon_state = "spesslaw"
-	list_reagents = list("nutriment" = 8, "vitamin" = 6)
-
-/obj/item/weapon/reagent_containers/food/snacks/eggplantparm
-	name = "eggplant parmigiana"
-	desc = "The only good recipe for eggplant."
-	icon_state = "eggplantparm"
 	trash = /obj/item/trash/plate
-	list_reagents = list("nutriment" = 6, "vitamin" = 3)
+	list_reagents = list("nutriment" = 8, "vitamin" = 6)
+	filling_color = "#F0E68C"

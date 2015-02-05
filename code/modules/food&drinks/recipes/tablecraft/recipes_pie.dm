@@ -97,5 +97,5 @@
 		/obj/item/weapon/reagent_containers/food/snacks/pie/plain = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/apple/gold = 1
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/appletart
+	result = /obj/item/weapon/reagent_containers/food/snacks/pie/appletart
 

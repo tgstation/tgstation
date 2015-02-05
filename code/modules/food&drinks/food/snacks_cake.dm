@@ -27,7 +27,7 @@
 	icon_state = "carrotcake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/carrot
 	slices_num = 5
-	list_reagents = list("nutriment" = 10, "oculine" = 10, "vitamin" = 10)
+	list_reagents = list("nutriment" = 20, "oculine" = 10, "vitamin" = 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/carrot
 	name = "carrot cake slice"
@@ -57,7 +57,7 @@
 	icon_state = "cheesecake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/cheese
 	slices_num = 5
-	list_reagents = list("nutriment" = 10, "vitamin" = 10)
+	list_reagents = list("nutriment" = 20, "vitamin" = 10)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/cheese
@@ -73,7 +73,7 @@
 	icon_state = "orangecake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/orange
 	slices_num = 5
-	list_reagents = list("nutriment" = 10, "vitamin" = 10)
+	list_reagents = list("nutriment" = 20, "vitamin" = 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/orange
 	name = "orange cake slice"
@@ -87,7 +87,7 @@
 	icon_state = "limecake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/lime
 	slices_num = 5
-	list_reagents = list("nutriment" = 10, "vitamin" = 10)
+	list_reagents = list("nutriment" = 20, "vitamin" = 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/lime
 	name = "lime cake slice"
@@ -102,7 +102,7 @@
 	icon_state = "lemoncake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/lemon
 	slices_num = 5
-	list_reagents = list("nutriment" = 10, "vitamin" = 10)
+	list_reagents = list("nutriment" = 20, "vitamin" = 10)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/lemon
@@ -118,7 +118,7 @@
 	icon_state = "chocolatecake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/chocolate
 	slices_num = 5
-	list_reagents = list("nutriment" = 10, "vitamin" = 10)
+	list_reagents = list("nutriment" = 20, "vitamin" = 10)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/chocolate
@@ -149,7 +149,7 @@
 	icon_state = "applecake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/apple
 	slices_num = 5
-	list_reagents = list("nutriment" = 10, "vitamin" = 10)
+	list_reagents = list("nutriment" = 20, "vitamin" = 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/apple
 	name = "apple cake slice"
@@ -161,11 +161,4 @@
 	name = "Custom cakeslice"
 	desc = "Who knows what it contains?"
 	icon_state = "lemoncake_slice"
-	filling_color = "#FF4500"
-
-/obj/item/weapon/reagent_containers/food/snacks/cakeslice/custom/New()
-	..()
-	overlays.Cut()
-	var/image/I = new(src.icon, "cakeslicecustom_filling")
-	I.color = filling_color
-	overlays += I
+	filling_color = "#FFFFFF"

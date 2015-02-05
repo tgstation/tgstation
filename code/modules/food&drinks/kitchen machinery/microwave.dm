@@ -9,12 +9,12 @@
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 100
-	flags = OPENCONTAINER | NOREACT
 	var/operating = 0 // Is it on?
 	var/dirty = 0 // = {0..100} Does it need cleaning?
 	var/broken = 0 // ={0,1,2} How broken is it???
 	var/global/max_n_of_items = 10
 	var/efficiency = 0
+	var/microwavepower = 1
 
 
 // see code/modules/food/recipes_microwave.dm for recipes
@@ -130,7 +130,7 @@
 		var/loaded = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/S in T.contents)
 			if (contents.len>=max_n_of_items)
-				user << "<span class='danger'>[src] is full, you cannot put more.</span>"
+				user << "<span class='warning'>[src] is full, you cannot put more.</span>"
 				return 1
 			T.remove_from_storage(S, src)
 			loaded++
@@ -139,16 +139,10 @@
 			user << "<span class='notice'>You insert [loaded] items into [src].</span>"
 
 
-	else if(istype(O,/obj/item/weapon/reagent_containers/food))
+	else if(istype(O,/obj/item/weapon/reagent_containers/food/snacks))
 		if (contents.len>=max_n_of_items)
-			user << "<span class='danger'>[src] is full, you cannot put more.</span>"
+			user << "<span class='warning'>[src] is full, you cannot put more.</span>"
 			return 1
-		if (istype(O,/obj/item/stack) && O:amount>1)
-			new O.type (src)
-			O:use(1)
-			user.visible_message( \
-				"<span class='notice'>[user] has added one of [O] to \the [src].</span>", \
-				"<span class='notice'>You add one of [O] to \the [src].</span>")
 		else
 		//	user.unEquip(O)	//This just causes problems so far as I can tell. -Pete
 			if(!user.drop_item())
@@ -203,7 +197,13 @@
 		else
 			dat = "<h3>Ingredients:</h3>[dat]</div>"
 		dat += "<A href='?src=\ref[src];action=cook'>Turn on</A>"
-		dat += "<A href='?src=\ref[src];action=dispose'>Eject ingredients</A>"
+		dat += "<A href='?src=\ref[src];action=dispose'>Eject ingredients</A><BR>"
+		dat += "Microwave Power: [microwavepower*200]W<BR>"
+		dat += "<A href='?src=\ref[src];action=power;amount=1'>200W</A>"
+		dat += "<A href='?src=\ref[src];action=power;amount=2'>400W</A>"
+		dat += "<A href='?src=\ref[src];action=power;amount=3'>600W</A>"
+		dat += "<A href='?src=\ref[src];action=power;amount=4'>800W</A>"
+		dat += "<A href='?src=\ref[src];action=power;amount=5'>1000W</A><BR>"
 
 	var/datum/browser/popup = new(user, "microwave", name, 300, 300)
 	popup.set_content(dat)
@@ -219,7 +219,7 @@
 		return
 	start()
 
-	if (prob(max(10,dirty*5)))
+	if (prob(max(microwavepower*5,dirty*5)))
 		muck_start()
 		if (!microwaving(4))
 			muck_finish()
@@ -244,13 +244,14 @@
 
 		for (var/obj/item/weapon/reagent_containers/food/snacks/F in contents)
 			if (F.cooked_type)
-				var/obj/item/weapon/reagent_containers/food/snacks/S = new F.cooked_type (src.loc)
+				var/obj/item/weapon/reagent_containers/food/snacks/S = new F.cooked_type (loc)
 				if(F.reagents)
 					F.reagents.trans_to(S, F.reagents.total_volume)
-				qdel(F)
 			else
+				new /obj/item/weapon/reagent_containers/food/snacks/badrecipe(loc)
 				if(dirty < 100)
 					dirty++
+			qdel(F)
 		return
 
 /obj/machinery/microwave/proc/microwaving(var/seconds as num)
@@ -258,7 +259,7 @@
 		if (stat & (NOPOWER|BROKEN))
 			return 0
 		use_power(500)
-		sleep(10)
+		sleep(12-2*microwavepower) // standard power means sleep(10). The higher the power, the faster the cooking
 	return 1
 
 /obj/machinery/microwave/proc/has_extra_item()
@@ -313,22 +314,7 @@
 	src.flags = null //So you can't add condiments
 	src.operating = 0 // Turn it off again aferwards
 	src.updateUsrDialog()
-/*
-/obj/machinery/microwave/proc/fail()
-	var/obj/item/weapon/reagent_containers/food/snacks/badrecipe/ffuu = new(src)
-	var/amount = 0
-	for (var/obj/O in contents-ffuu)
-		amount++
-		if (O.reagents)
-			var/id = O.reagents.get_master_reagent_id()
-			if (id)
-				amount+=O.reagents.get_reagent_amount(id)
-		qdel(O)
-	src.reagents.clear_reagents()
-	ffuu.reagents.add_reagent("carbon", amount)
-	ffuu.reagents.add_reagent("toxin", amount/10)
-	return ffuu
-*/
+
 /obj/machinery/microwave/Topic(href, href_list)
 	if(..() || panel_open)
 		return
@@ -344,5 +330,10 @@
 
 		if ("dispose")
 			dispose()
+		if ("power")
+			var/amount = text2num(href_list["amount"])
+			if(amount<1 || amount>5)
+				return
+			microwavepower = amount
 	updateUsrDialog()
 	return

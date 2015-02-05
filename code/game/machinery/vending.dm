@@ -158,7 +158,7 @@
 				food_load(W)
 				user << "<span class='notice'>You insert [W] into [src]'s chef compartment.</span>"
 		else
-			user << "<span class='notice'>[src]'s chef compartment does not accept junkfood.</span>"
+			user << "<span class='notice'>[src]'s chef compartment does not accept junk food.</span>"
 		return
 
 	if(istype(W, /obj/item/weapon/storage/bag/tray))

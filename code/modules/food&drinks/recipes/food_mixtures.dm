@@ -123,6 +123,7 @@
 /datum/chemical_reaction/cakebatter/on_reaction(var/datum/reagents/holder)
 	var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/cakebatter
 	S.loc = get_turf(holder.my_atom)
+	S.reagents.add_reagent("vitamin", 2)
 	if(holder && holder.my_atom)
 		qdel(holder.my_atom)
 
@@ -138,25 +139,41 @@
 /datum/chemical_reaction/piedough/on_reaction(var/datum/reagents/holder)
 	var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/piedough
 	S.loc = get_turf(holder.my_atom)
+	S.reagents.add_reagent("vitamin", 2)
 	if(holder && holder.my_atom)
 		qdel(holder.my_atom)
 
-/datum/chemical_reaction/imitationcarpmeat
-	name = "Imitation Carpmeat"
-	id = "imitationcarpmeat"
+/datum/chemical_reaction/cakebatter2
+	name = "Cake Batter2"
+	id = "cakebatter2"
 	result = null
-	required_reagents = list("carpotoxin" = 5)
+	required_reagents = list("soymilk" = 5)
 	result_amount = 1
-	required_container = /obj/item/weapon/reagent_containers/food/snacks/tofu
-	mix_message = "The mixture becomes similar to carp meat."
+	required_container = /obj/item/weapon/reagent_containers/food/snacks/dough
+	mix_message = "The dough forms a cake batter."
 
-/datum/chemical_reaction/imitationcarpmeat/on_reaction(var/datum/reagents/holder)
-	var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/carpmeat/imitation
+/datum/chemical_reaction/cakebatter/on_reaction(var/datum/reagents/holder)
+	var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/cakebatter
 	S.loc = get_turf(holder.my_atom)
 	if(holder && holder.my_atom)
 		qdel(holder.my_atom)
 
-/datum/chemical_reaction/waterbowl
+/datum/chemical_reaction/piedough2
+	name = "Pie Dough2"
+	id = "piedough2"
+	result = null
+	required_reagents = list("soymilk" = 5)
+	result_amount = 1
+	required_container = /obj/item/weapon/reagent_containers/food/snacks/flatdough
+	mix_message = "The dough forms a pie dough."
+
+/datum/chemical_reaction/piedough/on_reaction(var/datum/reagents/holder)
+	var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/piedough
+	S.loc = get_turf(holder.my_atom)
+	if(holder && holder.my_atom)
+		qdel(holder.my_atom)
+
+/datum/chemical_reaction/imitationcarpmeat
 	name = "Imitation Carpmeat"
 	id = "imitationcarpmeat"
 	result = null

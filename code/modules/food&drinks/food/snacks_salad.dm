@@ -3,6 +3,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/salad
 	trash = /obj/item/weapon/reagent_containers/glass/bowl
 	bitesize = 3
+	w_class = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/salad/New()
 	..()

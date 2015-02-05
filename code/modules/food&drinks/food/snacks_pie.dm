@@ -2,6 +2,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/pie
 	trash = /obj/item/trash/plate
 	bitesize = 3
+	w_class = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/New()
 	..()
@@ -112,3 +113,8 @@
 	icon_state = "pumpkinpieslice"
 	trash = /obj/item/trash/plate
 
+/obj/item/weapon/reagent_containers/food/snacks/pie/appletart
+	name = "golden apple streusel tart"
+	desc = "A tasty dessert that won't make it through a metal detector."
+	icon_state = "gappletart"
+	list_reagents = list("nutriment" = 8, "gold" = 5, "vitamin" = 4)

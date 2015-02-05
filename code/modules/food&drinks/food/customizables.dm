@@ -2,7 +2,7 @@
 #define INGREDIENTS_FILL 1
 #define INGREDIENTS_SCATTER 2
 #define INGREDIENTS_STACK 3
-#define INGREDIENTS_LINE 1
+#define INGREDIENTS_LINE 4
 
 //**************************************************************
 //
@@ -17,23 +17,22 @@
 // Bowl ////////////////////////////////////////////////
 
 /obj/item/weapon/reagent_containers/glass/bowl
-	name = "snack bowl"
+	name = "bowl"
 	icon_state	= "snack_bowl"
 	name = "bowl"
-	desc = "An empty bowl. Put some food in it to start making a soup."
+	desc = "A simple bowl, used for soups and salads."
 	icon = 'icons/obj/food.dmi'
 	icon_state = "bowl"
 	flags = OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/glass/bowl/attackby(obj/item/I,mob/user)
-	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks/grown))
+	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
+		var/obj/item/weapon/reagent_containers/food/snacks/S = I
 		if(I.w_class > 2)
 			user << "<span class='warning'>The ingredient is too big for [src].</span>"
 		else if(contents.len >= 20)
 			user << "<span class='warning'>You can't add more ingredients to [src].</span>"
 		else
-			var/obj/item/weapon/reagent_containers/food/snacks/S = I
-
 			if(reagents.has_reagent("water", 10)) //are we starting a soup or a salad?
 				var/obj/item/weapon/reagent_containers/food/snacks/customizable/A = new/obj/item/weapon/reagent_containers/food/snacks/customizable/soup(get_turf(src))
 				A.initialize_custom_food(src, S, user)
@@ -43,9 +42,12 @@
 	else . = ..()
 	return
 
+/obj/item/weapon/reagent_containers/glass/bowl/on_reagent_change()
+	..()
+	update_icon()
+
 /obj/item/weapon/reagent_containers/glass/bowl/update_icon()
 	overlays.Cut()
-
 	if(reagents.total_volume)
 		var/image/filling = image('icons/obj/food.dmi', src, "soupcustom_filling")
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
@@ -71,15 +73,16 @@
 	user << "It contains [ingredients_listed]making a [ingredients.len>5?"big":"standard"]-sized [initial(name)]."
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/attackby(obj/item/I,mob/user)
-	if((contents.len >= ingMax) || (reagents.total_volume >= volume))
-		user << "<span class='warning'>You can't add more ingredients to [src].</span>"
-	else if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
+	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = I
 		if(I.w_class > 2)
 			user << "<span class='warning'>The ingredient is too big for [src].</span>"
+		else if((contents.len >= ingMax) || (reagents.total_volume >= volume))
+			user << "<span class='warning'>You can't add more ingredients to [src].</span>"
 		else
 			user.drop_item()
 			if(S.trash)
+				new S.trash(get_turf(user))
 				S.trash = null  //we remove the plate before adding the ingredient
 			ingredients += S
 			S.loc = src
@@ -93,8 +96,7 @@
 					name = "[H.subjectjob] [initial(name)]"
 			w_class = n_ceil(Clamp((ingredients.len/2),1,3))
 			user << "<span class='notice'>You add the [I.name] to the [src.name].</span>"
-//			if(!S.reagents)
-//				check_matched_recipe()
+
 	else . = ..()
 	return
 
@@ -118,10 +120,10 @@
 
 	var/image/I = new(src.icon, "[initial(icon_state)]_filling")
 
-	if(!S.filling_color == "#FFFFFF")
-		I.color = S.filling_color
-	else
+	if(S.filling_color == "#FFFFFF")
 		I.color = pick("#FF0000","#0000FF","#008000","#FFFF00")
+	else
+		I.color = S.filling_color
 
 	switch(Ingredientsplacement)
 
@@ -139,6 +141,8 @@
 			overlays += I
 			overlays += TOP
 			return
+		if(INGREDIENTS_FILL)
+			overlays.Cut()
 		if(INGREDIENTS_LINE)
 			I.pixel_y = pick(list(-3,0,3))
 			I.pixel_x = 2*I.pixel_y
@@ -163,7 +167,12 @@
 	return ..()
 
 
-// Customizable Food Types //////////////////////////////////////////////////
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+//////////////      Customizable Food Types     /////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/burger
 	name = "burger"
@@ -251,7 +260,6 @@
 			if(reagents)
 				if(reagents.get_reagent_amount("flour", 15))
 					var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/dough(get_turf(src))
-					reagents.trans_id_to(S, "flour", 15)
 					user << "<span class='notice'>You mix egg and flour to make some dough.</span>"
 					if(E.reagents)
 						E.reagents.trans_to(S,E.reagents.total_volume)
@@ -267,7 +275,6 @@
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "dough"
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/store/bread/plain
-//	rolled_type = /obj/item/weapon/reagent_containers/food/snacks/flatdough
 	bitesize = 2
 	list_reagents = list("nutriment" = 3)
 
@@ -294,7 +301,6 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/doughslice
 	slices_num = 3
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/pizzabread
-//	rolled_type = /obj/item/weapon/reagent_containers/food/snacks/dough
 	list_reagents = list("nutriment" = 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/pizzabread
@@ -324,6 +330,7 @@
 	icon_state = "bun"
 	bitesize = 2
 	list_reagents = list("nutriment" = 4)
+	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/burger
 
 
 /obj/item/weapon/reagent_containers/food/snacks/rawcutlet
@@ -351,7 +358,6 @@
 	icon_state = "cakebatter"
 	bitesize = 2
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/store/cake/plain
-//	rolled_type = /obj/item/weapon/reagent_containers/food/snacks/piedough
 	list_reagents = list("nutriment" = 4)
 
 // Cake batter + rolling pin = flat dough
@@ -374,7 +380,6 @@
 	bitesize = 2
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/doughslice
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/pie/plain
-//	rolled_type = /obj/item/weapon/reagent_containers/food/snacks/cakebatter
 	list_reagents = list("nutriment" = 4)
 
 #undef INGREDIENTS_FILL

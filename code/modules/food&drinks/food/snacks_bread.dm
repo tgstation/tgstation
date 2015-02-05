@@ -13,7 +13,7 @@
 	name = "bread"
 	desc = "Some plain old Earthen bread."
 	icon_state = "bread"
-	list_reagents = list("nutriment" = 5)
+	list_reagents = list("nutriment" = 10)
 	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/bread
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/plain
 
@@ -29,7 +29,7 @@
 	desc = "The culinary base of every self-respecting eloquen/tg/entleman."
 	icon_state = "meatbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/meat
-	list_reagents = list("nutriment" = 10, "vitamin" = 10)
+	list_reagents = list("nutriment" = 30, "vitamin" = 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/meat
 	name = "meatbread slice"
@@ -41,7 +41,7 @@
 	desc = "The culinary base of every self-respecting eloquen/tg/entleman. Extra Heretical."
 	icon_state = "xenomeatbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/xenomeat
-	list_reagents = list("nutriment" = 10, "vitamin" = 10)
+	list_reagents = list("nutriment" = 30, "vitamin" = 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/xenomeat
 	name = "xenomeatbread slice"
@@ -54,7 +54,7 @@
 	desc = "Reassuringly green meatloaf made from spider meat."
 	icon_state = "spidermeatbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/spidermeat
-	list_reagents = list("nutriment" = 10, "vitamin" = 10)
+	list_reagents = list("nutriment" = 30, "vitamin" = 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/spidermeat
 	name = "spider meat bread slice"
@@ -67,7 +67,7 @@
 	desc = "A heavenly and filling treat."
 	icon_state = "bananabread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/banana
-	list_reagents = list("nutriment" = 10, "banana" = 10, "vitamin" = 10)
+	list_reagents = list("nutriment" = 20, "banana" = 20)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/banana
@@ -81,7 +81,7 @@
 	desc = "Like meatbread but for vegetarians. Not guaranteed to give superpowers."
 	icon_state = "tofubread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/tofu
-	list_reagents = list("nutriment" = 10, "vitamin" = 10)
+	list_reagents = list("nutriment" = 30, "vitamin" = 10)
 
 
 
@@ -110,16 +110,7 @@
 	name = "Custom breadslice"
 	desc = "Who knows what it contains?"
 	icon_state = "tofubreadslice"
-	filling_color = "#FF8C00"
-
-/obj/item/weapon/reagent_containers/food/snacks/breadslice/custom/New()
-	..()
-	overlays.Cut()
-	var/image/I = new(src.icon, "breadslicecustom_filling")
-	I.color = filling_color
-	overlays += I
-
-
+	filling_color = "#FFFFFF"
 
 /obj/item/weapon/reagent_containers/food/snacks/baguette
 	name = "baguette"

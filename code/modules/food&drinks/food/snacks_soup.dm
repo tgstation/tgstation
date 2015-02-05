@@ -121,7 +121,6 @@
 	name = "spacy liberty duff"
 	desc = "Jello gelatin, from Alfred Hubbard's cookbook."
 	icon_state = "spacylibertyduff"
-	trash = /obj/item/weapon/reagent_containers/glass/bowl
 	bitesize = 3
 	list_reagents = list("nutriment" = 6, "mushroomhallucinogen" = 6)
 
@@ -129,13 +128,12 @@
 	name = "amanita jelly"
 	desc = "Looks curiously toxic."
 	icon_state = "amanitajelly"
-	trash = /obj/item/weapon/reagent_containers/glass/bowl
 	bitesize = 3
-	list_reagents = list("nutriment" = 6, "amatoxin" = 2, "mushroomhallucinogen" = 6)
+	list_reagents = list("nutriment" = 6, "amatoxin" = 6, "mushroomhallucinogen" = 6)
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/stew
 	name = "stew"
 	desc = "A nice and warm stew. Healthy and strong."
 	icon_state = "stew"
-	list_reagents = list("nutriment" = 10, "tomatojuice" = 5, "oculine" = 5)
+	list_reagents = list("nutriment" = 10, "tomatojuice" = 5, "oculine" = 5, "water" = 5)
 	bitesize = 7

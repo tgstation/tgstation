@@ -120,35 +120,31 @@
 	trash = /obj/item/weapon/reagent_containers/glass/bowl
 	list_reagents = list("nutriment" = 6, "vitamin" = 2)
 
-/obj/item/weapon/reagent_containers/food/snacks/human/kebab
-	name = "-kebab"
+/obj/item/weapon/reagent_containers/food/snacks/kebab
+	trash = /obj/item/stack/rods
 	icon_state = "kebab"
+	w_class = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/kebab/human
+	name = "human-kebab"
 	desc = "A human meat, on a stick."
-	trash = /obj/item/stack/rods
-	list_reagents = list("nutriment" = 8)
-	w_class = 3
+	list_reagents = list("nutriment" = 10, "vitamin" = 6)
 
-/obj/item/weapon/reagent_containers/food/snacks/monkeykebab
+/obj/item/weapon/reagent_containers/food/snacks/kebab/monkey
 	name = "meat-kebab"
-	icon_state = "kebab"
 	desc = "Delicious meat, on a stick."
-	trash = /obj/item/stack/rods
-	list_reagents = list("nutriment" = 8)
-	w_class = 3
+	list_reagents = list("nutriment" = 8, "vitamin" = 2)
 
-/obj/item/weapon/reagent_containers/food/snacks/tofukebab
+/obj/item/weapon/reagent_containers/food/snacks/kebab/tofu
 	name = "tofu-kebab"
-	icon_state = "kebab"
 	desc = "Vegan meat, on a stick."
-	trash = /obj/item/stack/rods
 	list_reagents = list("nutriment" = 8)
-	w_class = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/meatsteak
 	name = "meat steak"
 	desc = "A piece of hot spicy meat."
 	icon_state = "meatsteak"
-	list_reagents = list("nutriment" = 6, "sodiumchloride" = 1, "blackpepper" = 1, "vitamin" = 1)
+	list_reagents = list("nutriment" = 8, "sodiumchloride" = 1, "blackpepper" = 1, "vitamin" = 1)
 	filling_color = "#B22222"
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube

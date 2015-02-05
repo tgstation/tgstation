@@ -8,7 +8,7 @@
 		/obj/item/stack/rods = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/meat/human = 2
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/human/kebab
+	result = /obj/item/weapon/reagent_containers/food/snacks/kebab/human
 
 /datum/table_recipe/kebab/monkey
 	name = "Monkey kebab"
@@ -16,7 +16,7 @@
 		/obj/item/stack/rods = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 2
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/monkeykebab
+	result = /obj/item/weapon/reagent_containers/food/snacks/kebab/monkey
 
 /datum/table_recipe/kebab/tofu
 	name = "Tofu kebab"
@@ -24,7 +24,7 @@
 		/obj/item/stack/rods = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/tofu = 2
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/tofukebab
+	result = /obj/item/weapon/reagent_containers/food/snacks/kebab/tofu
 
 ////////////////////////////////////////////////FISH////////////////////////////////////////////////
 
