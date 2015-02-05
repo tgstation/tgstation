@@ -11,13 +11,11 @@
 		if(i > mob_list.len)
 			break
 		var/mob/living/L = mob_list[i]
-		if(L)
+		if(istype(L))
 			if(L.Life() == PROCESS_KILL)
 				mob_list.Remove(L)
 		else
-			if(i+1 > mob_list.len)
-				mob_list.len--
-			else
+			if(!mob_list.Remove(L))
 				mob_list.Cut(i,i+1)
 
 		scheck()
