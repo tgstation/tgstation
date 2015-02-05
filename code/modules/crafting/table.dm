@@ -7,7 +7,7 @@
 	interact(usr)
 
 /obj/structure/table/proc/check_contents(datum/table_recipe/R)
-	check_table()
+	check_table(R)
 	main_loop:
 		for(var/A in R.reqs)
 			for(var/B in table_contents)
@@ -20,18 +20,18 @@
 			return 0
 	return 1
 
-/obj/structure/table/proc/check_table()
+/obj/structure/table/proc/check_table(datum/table_recipe/R)
 	table_contents = list()
 	for(var/obj/item/I in loc)
 		if(istype(I, /obj/item/stack))
 			var/obj/item/stack/S = I
 			table_contents[I.type] += S.amount
 		else
-			if(istype(I, /obj/item/weapon/reagent_containers))
-				for(var/datum/reagent/R in I.reagents.reagent_list)
-					table_contents[R.type] += R.volume
-
 			table_contents[I.type] += 1
+	for(var/obj/item/weapon/reagent_containers/RC in loc)
+		if((RC.flags & OPENCONTAINER) || (R && (RC.type in R.reqs)))
+			for(var/datum/reagent/A in RC.reagents.reagent_list)
+				table_contents[A.type] += A.volume
 
 /obj/structure/table/proc/check_tools(mob/user, datum/table_recipe/R)
 	if(!R.tools.len)
@@ -56,7 +56,7 @@
 	return !i
 
 /obj/structure/table/proc/construct_item(mob/user, datum/table_recipe/R)
-	check_table()
+	check_table(R)
 	if(check_contents(R) && check_tools(user, R))
 		if(do_after(user, R.time))
 			if(!check_contents(R) || !check_tools(user, R))
@@ -121,11 +121,13 @@
 							amt -= RC.reagents.get_reagent_amount(RG.id)
 							RC.reagents.del_reagent(RG.id)
 
-	for(var/A in R.parts)
+	deletion_loop:
 		for(var/B in Deletion)
-			if(!istype(B, A))
-				Deletion.Remove(B)
-				qdel(B)
+			for(var/A in R.parts)
+				if(istype(B, A))
+					continue deletion_loop
+			Deletion.Remove(B)
+			qdel(B)
 
 	return Deletion
 
@@ -136,10 +138,10 @@
 	if(!table_contents.len)
 		return
 	user.face_atom(src)
-	var/dat = "<h3>Construction menu</h3>"
+	var/dat = "<h3>Crafting menu</h3>"
 	dat += "<div class='statusDisplay'>"
 	if(busy)
-		dat += "Construction in progress...</div>"
+		dat += "Crafting in progress...</div>"
 	else
 		for(var/datum/table_recipe/R in table_recipes)
 			if(check_contents(R))

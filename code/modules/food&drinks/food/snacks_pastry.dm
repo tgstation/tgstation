@@ -81,7 +81,7 @@
 	name = "chawanmushi"
 	desc = "A legendary egg custard that makes friends out of enemies. Probably too hot for a cat to eat."
 	icon_state = "chawanmushi"
-	trash = /obj/item/trash/snack_bowl
+	trash = /obj/item/weapon/reagent_containers/glass/bowl
 	list_reagents = list("nutriment" = 6)
 
 ////////////////////////////////////////////WAFFLES////////////////////////////////////////////
@@ -129,6 +129,7 @@
 	desc = "The food of choice for the seasoned traitor."
 	icon_state = "donkpocket"
 	list_reagents = list("nutriment" = 4)
+	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/donkpocketwarm
 
 /obj/item/weapon/reagent_containers/food/snacks/donkpocketwarm
 	name = "\improper Warm Donk-pocket"
@@ -153,6 +154,7 @@
 	desc = "This is a finely-prepared plump helmet biscuit. The ingredients are exceptionally minced plump helmet, and well-minced dwarven wheat flour."
 	icon_state = "phelmbiscuit"
 	list_reagents = list("nutriment" = 5, "vitamin" = 1)
+
 /obj/item/weapon/reagent_containers/food/snacks/plumphelmetbiscuit/New()
 	..()
 	if(prob(10))

@@ -5,6 +5,7 @@
 	icon_state = "sandwich"
 	trash = /obj/item/trash/plate
 	list_reagents = list("nutriment" = 6, "vitamin" = 1)
+	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/toastedsandwich
 
 /obj/item/weapon/reagent_containers/food/snacks/toastedsandwich
 	name = "toasted sandwich"

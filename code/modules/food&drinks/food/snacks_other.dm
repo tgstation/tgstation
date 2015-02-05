@@ -1,6 +1,24 @@
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
+/obj/item/weapon/reagent_containers/food/snacks/cheesewheel
+	name = "cheese wheel"
+	desc = "A big wheel of delcious Cheddar."
+	icon_state = "cheesewheel"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cheesewedge
+	slices_num = 5
+	list_reagents = list("nutriment" = 10, "vitamin" = 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/cheesewedge
+	name = "cheese wedge"
+	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far."
+	icon_state = "cheesewedge"
+
+/obj/item/weapon/reagent_containers/food/snacks/watermelonslice
+	name = "watermelon slice"
+	desc = "A slice of watery goodness."
+	icon_state = "watermelonslice"
+
 /obj/item/weapon/reagent_containers/food/snacks/candy_corn
 	name = "candy corn"
 	desc = "It's a handful of candy corn. Can be stored in a detective's hat."
@@ -82,22 +100,6 @@
 	desc = "Someone should be demoted from cook for this."
 	icon_state = "badrecipe"
 	list_reagents = list("????" = 30)
-
-/obj/item/weapon/reagent_containers/food/snacks/spacylibertyduff
-	name = "spacy liberty duff"
-	desc = "Jello gelatin, from Alfred Hubbard's cookbook."
-	icon_state = "spacylibertyduff"
-	trash = /obj/item/trash/snack_bowl
-	bitesize = 3
-	list_reagents = list("nutriment" = 6, "mushroomhallucinogen" = 6)
-
-/obj/item/weapon/reagent_containers/food/snacks/amanitajelly
-	name = "amanita jelly"
-	desc = "Looks curiously toxic."
-	icon_state = "amanitajelly"
-	trash = /obj/item/trash/snack_bowl
-	bitesize = 3
-	list_reagents = list("nutriment" = 6, "amatoxin" = 6, "mushroomhallucinogen" = 6)
 
 /obj/item/weapon/reagent_containers/food/snacks/carrotfries
 	name = "carrot fries"

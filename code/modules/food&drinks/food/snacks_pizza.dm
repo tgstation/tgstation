@@ -1,10 +1,11 @@
 
 /////////////////////////////////////////////////PIZZA////////////////////////////////////////
 
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza
+/obj/item/weapon/reagent_containers/food/snacks/pizza
+	w_class = 3
 	slices_num = 6
 
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/margherita
+/obj/item/weapon/reagent_containers/food/snacks/pizza/margherita
 	name = "margherita"
 	desc = "The most cheezy pizza in galaxy."
 	icon_state = "pizzamargherita"
@@ -17,7 +18,7 @@
 	desc = "A slice of the most cheezy pizza in galaxy."
 	icon_state = "pizzamargheritaslice"
 
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meatpizza
+/obj/item/weapon/reagent_containers/food/snacks/pizza/meatpizza
 	name = "meatpizza"
 	desc = "Greasy pizza with delicious meat."
 	icon_state = "meatpizza"
@@ -30,7 +31,7 @@
 	desc = "A nutritious slice of meatpizza."
 	icon_state = "meatpizzaslice"
 
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/mushroompizza
+/obj/item/weapon/reagent_containers/food/snacks/pizza/mushroompizza
 	name = "mushroom pizza"
 	desc = "Very special pizza."
 	icon_state = "mushroompizza"
@@ -43,7 +44,7 @@
 	desc = "Maybe it is the last slice of pizza in your life."
 	icon_state = "mushroompizzaslice"
 
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/vegetablepizza
+/obj/item/weapon/reagent_containers/food/snacks/pizza/vegetablepizza
 	name = "vegetable pizza"
 	desc = "No one of Tomatos Sapiens were harmed during making this pizza."
 	icon_state = "vegetablepizza"
@@ -63,7 +64,7 @@
 	icon_state = "pizzabox1"
 	var/open = 0 // Is the box open?
 	var/ismessy = 0 // Fancy mess on the lid
-	var/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/pizza // Content pizza
+	var/obj/item/weapon/reagent_containers/food/snacks/pizza/pizza // Content pizza
 	var/list/boxes = list() // If the boxes are stacked, they come here
 	var/boxtag = ""
 
@@ -183,7 +184,7 @@
 
 		return
 
-	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/)) // Long ass fucking object name
+	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/pizza/)) // Long ass fucking object name
 		if(open)
 			user.drop_item()
 			I.loc = src
@@ -213,21 +214,21 @@
 	..()
 
 /obj/item/pizzabox/margherita/New()
-	pizza = new /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/margherita(src)
+	pizza = new /obj/item/weapon/reagent_containers/food/snacks/pizza/margherita(src)
 	boxtag = "Margherita Deluxe"
 	update_icon()
 
 /obj/item/pizzabox/vegetable/New()
-	pizza = new /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/vegetablepizza(src)
+	pizza = new /obj/item/weapon/reagent_containers/food/snacks/pizza/vegetablepizza(src)
 	boxtag = "Gourmet Vegatable"
 	update_icon()
 
 /obj/item/pizzabox/mushroom/New()
-	pizza = new /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/mushroompizza(src)
+	pizza = new /obj/item/weapon/reagent_containers/food/snacks/pizza/mushroompizza(src)
 	boxtag = "Mushroom Special"
 	update_icon()
 
 /obj/item/pizzabox/meat/New()
-	pizza = new /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meatpizza(src)
+	pizza = new /obj/item/weapon/reagent_containers/food/snacks/pizza/meatpizza(src)
 	boxtag = "Meatlover's Supreme"
 	update_icon()

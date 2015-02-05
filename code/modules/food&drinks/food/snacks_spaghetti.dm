@@ -4,6 +4,7 @@
 	desc = "Now that's a nic'e pasta!"
 	icon_state = "spaghetti"
 	list_reagents = list("nutriment" = 1, "vitamin" = 1)
+	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti
 	name = "boiled spaghetti"
@@ -11,6 +12,7 @@
 	icon_state = "spaghettiboiled"
 	trash = /obj/item/trash/plate
 	list_reagents = list("nutriment" = 2, "vitamin" = 1)
+	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/pasta
 
 /obj/item/weapon/reagent_containers/food/snacks/pastatomato
 	name = "spaghetti"

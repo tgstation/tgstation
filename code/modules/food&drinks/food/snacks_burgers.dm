@@ -1,4 +1,8 @@
+
 /obj/item/weapon/reagent_containers/food/snacks/burger
+	filling_color = "#CD853F"
+
+/obj/item/weapon/reagent_containers/food/snacks/burger/plain
 	name = "burger"
 	desc = "The cornerstone of every nutritious breakfast."
 	icon_state = "hburger"
