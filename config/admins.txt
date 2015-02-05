@@ -77,4 +77,3 @@ thurgatar = Game Master
 xerux = Game Master
 dannno = Game Master
 allura = Game Master
-lo6a4evskiy = Game Master

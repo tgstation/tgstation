@@ -157,17 +157,16 @@
 
 				reagents.reaction(target, INGEST)
 			spawn(5)
-				var/datum/reagent/blood/B
-				for(var/datum/reagent/blood/d in src.reagents.reagent_list)
-					B = d
-					break
+				target.add_fingerprint(user)
+				var/datum/reagent/blood/B = locate() in src.reagents.reagent_list
+				var/trans
 				if(B && istype(target,/mob/living/carbon))
 					var/mob/living/carbon/C = target
 					C.inject_blood(src,5)
 				else
-					src.reagents.trans_to(target, amount_per_transfer_from_this)
-				user << "<span class='notice'>You inject 5 units of the solution. The syringe now contains [src.reagents.total_volume] units.</span>"
-				if (reagents.total_volume <= 0 && mode==SYRINGE_INJECT)
+					trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+				user << "<span class='notice'>You inject [trans] unit\s of the solution. [src] now contains [reagents.total_volume] unit\s.</span>"
+				if(reagents.total_volume <= 0 && mode == SYRINGE_INJECT)
 					mode = SYRINGE_DRAW
 					update_icon()
 

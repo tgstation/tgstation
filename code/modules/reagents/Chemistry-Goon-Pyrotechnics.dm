@@ -140,5 +140,4 @@ proc/goonchem_vortex(var/turf/simulated/T, var/setting_type, var/range, var/pull
 					for(var/i = 0, i < pull_times, i++)
 						step_away(X,T)
 				else
-					for(var/i = 0, i < pull_times, i++)
-						step_towards(X,T)
+					X.throw_at(T)

@@ -1,9 +1,0 @@
-author: TZK13
-
-delete-after: True
-
-changes: 
-  - rscadd: "Advancements in the field of virology by Nanotrasen's finest have uncovered three new disease symptoms for further research:"
-  - rscadd: "Ocular Restoration heals any eye trauma experienced by the infected patient."
-  - rscadd: "Revitiligo increases the pigmentation levels of the infected patient's skin."
-  - rscadd: "Spontaneous Combustion ignites the infected patient without warning."
