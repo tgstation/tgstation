@@ -47,7 +47,7 @@ var/global/datum/controller/vote/vote = new()
 			result()
 			for(var/client/C in voting)
 				if(C)
-					C << browse(null,"window=vote;can_close=0")
+					nanomanager.close_user_uis(C.mob, src)
 			reset()
 			
 /datum/controller/vote/proc/reset()
@@ -228,7 +228,7 @@ var/global/datum/controller/vote/vote = new()
 		else
 			for(var/mob/M in player_list)
 			 if(M.client)
-				 M << vote.ui_interact(M.client)
+				 ui_interact(M)
 				 winset(M, "mapwindow.map", "focus=true") // return keyboard focus to map
 		switch(vote_type)
 			if("crew_transfer")
@@ -248,15 +248,15 @@ var/global/datum/controller/vote/vote = new()
 	return 0
 
 	
-/datum/controller/vote/ui_interact(var/client/C, ui_key = "main", var/datum/nanoui/ui = null)
-	if(!C) return
+/datum/controller/vote/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+	if(!user.client) return
 	var/admin = 0
 	var/trialmin = 0
-	if(C.holder)
+	if(user.client.holder)
 		admin = 1
-		if(C.holder.rights & R_ADMIN)
+		if(user.client.holder.rights & R_ADMIN)
 			trialmin = 1
-	voting |= C
+	voting |= user
 	var/data[0]
 	
 	data["admin"] = admin
@@ -286,9 +286,9 @@ var/global/datum/controller/vote/vote = new()
 			data["allow_vote_restart"] = "(<a href='?src=\ref[src];vote=toggle_restart'>)[config.allow_vote_restart?"Allowed":"Disallowed"]</a>)"
 			data["allow_mode_vote"] = "(<a href='?src=\ref[src];vote=toggle_gamemode'>[config.allow_vote_mode?"Allowed":"Disallowed"]</a>)"
 			data["custom_vote"] = "<a href='?src=\ref[src];vote=custom'>Custom</a>"
-	ui = nanomanager.try_update_ui(C, src, ui_key, ui, data)
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if(!ui)
-		ui = new(C, src, ui_key, "vote.tmpl", "Voting Panel", VOTE_SCREEN_WIDTH, VOTE_SCREEN_HEIGHT)
+		ui = new(user, src, ui_key, "vote.tmpl", "Voting Panel", VOTE_SCREEN_WIDTH, VOTE_SCREEN_HEIGHT)
 		ui.set_initial_data(data)
 		ui.set_auto_update(1)
 		ui.open()
@@ -330,4 +330,4 @@ var/global/datum/controller/vote/vote = new()
 	set category = "OOC"
 	set name = "Vote"
 	if(vote)
-		vote.ui_interact(usr.client)
+		vote.ui_interact(usr)

@@ -135,30 +135,7 @@
 			update_count++
 
 	return update_count
-
-/datum/nanomanager/proc/update_client_uis(var/client/C, src_object = null, ui_key = null)
-	if(isnull(C.open_uis) || !istype(C.open_uis, /list) || open_uis.len == 0)
-		return 0 // client has no open UIs
-	var/update_count = 0
-	for(var/datum/nanoui/ui in C.open_uis)
-		if ((isnull(src_object) || !isnull(src_object) && ui.src_object == src_object) && (isnull(ui_key) || !isnull(ui_key) && ui.ui_key == ui_key))
-			ui.process(1)
-			update_count++
-
-	return update_count
-
-/datum/nanomanager/proc/close_client_uis(var/client/C, src_object = null, ui_key = null)
-	if (isnull(C.open_uis) || !istype(C.open_uis, /list) || open_uis.len == 0)
-		return 0 //has no open UIs
-	var/close_count = 0
-	for(var/datum/nanoui/ui in C.open_uis)
-		if ((isnull(src_object) || !isnull(src_object) && ui.src_object == src_object) && (isnull(ui_key) || !isnull(ui_key) && ui.ui_key == ui_key))
-			ui.close()
-			close_count++
-
-	//testing("nanomanager/close_user_uis mob [user.name] closed [open_uis.len] of [close_count] uis")
-
-	return close_count
+	
  /**
   * Close /nanoui uis belonging to user
   *
