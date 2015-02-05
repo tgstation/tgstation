@@ -10,8 +10,8 @@
 	for(var/i = 1 to mob_list.len)
 		if(i > mob_list.len)
 			break
-		var/mob/living/L = mob_list[i]
-		if(istype(L))
+		var/mob/L = mob_list[i]
+		if(!ismob(L))
 			if(L.Life() == PROCESS_KILL)
 				mob_list.Remove(L)
 		else
