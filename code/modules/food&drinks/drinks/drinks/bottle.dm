@@ -145,7 +145,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka
 	name = "Badminka Vodka"
-	desc = "The label's all in Cyrillic. All you can make out is the name and a word that looks like 'Vodka'."
+	desc = "The label's written in Cyrillic. All you can make out is the name and a word that looks vaguely like 'Vodka'."
 	icon_state = "badminka"
 	list_reagents = list("vodka" = 100)
 
