@@ -203,8 +203,11 @@
 		qdel(src)	   //correctly before deleting the grenade.
 
 /obj/item/weapon/grenade/chem_grenade/proc/mix_reagents()
+	var/total_temp
 	for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
 		G.reagents.trans_to(src, G.reagents.total_volume)
+		total_temp += G.reagents.chem_temp
+	reagents.chem_temp = total_temp
 
 /obj/item/weapon/grenade/chem_grenade/proc/can_flood_from(myloc, maxrange)
 	var/list/reachable = list(myloc)

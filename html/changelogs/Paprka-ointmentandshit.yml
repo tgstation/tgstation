@@ -1,0 +1,4 @@
+author: Paprika
+delete-after: True
+changes:
+  - rscadd: "Added blood and bleeding. If you take enough brute damage on a certain limb, you will start bleeding, and will need to patch your bleeding with gauze from medbay. You can replace lost blood by eating nutritious food and waiting for your heart to reproduce it, or by getting a blood transfusion from an IV drip."

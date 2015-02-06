@@ -33,6 +33,7 @@
 	new /obj/item/weapon/weldingtool(src)
 	new /obj/item/weapon/crowbar(src)
 	new /obj/item/weapon/wirecutters(src)
+	new /obj/item/device/multitool(src)
 	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
 
 
@@ -68,7 +69,8 @@
 		/obj/item/device/flashlight/pen,
 		/obj/item/weapon/extinguisher/mini,
 		/obj/item/weapon/reagent_containers/hypospray,
-		/obj/item/device/rad_laser
+		/obj/item/device/rad_laser,
+		/obj/item/device/sensor_device
 		)
 
 
@@ -189,8 +191,9 @@
 	name = "shoulder holster"
 	desc = "A holster to conceal a carried handgun. WARNING: Badasses only."
 	icon_state = "holster"
-	item_state = "bandolier"
+	item_state = "holster"
 	storage_slots = 1
+	max_w_class = 4
 	can_hold = list(
 		/obj/item/weapon/gun/projectile/automatic/pistol,
 		/obj/item/weapon/gun/projectile/revolver/detective

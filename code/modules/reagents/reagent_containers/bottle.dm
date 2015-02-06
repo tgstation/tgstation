@@ -115,7 +115,7 @@
 /obj/item/weapon/reagent_containers/glass/bottle/traitor/New()
 	..()
 	extra_reagent = pick("polonium", "histamine", "formaldehyde", "venom", "neurotoxin2", "cyanide")
-	reagents.add_reagent("[extra_reagent]" = 3)
+	reagents.add_reagent("[extra_reagent]", 3)
 
 /obj/item/weapon/reagent_containers/glass/bottle/polonium
 	name = "polonium bottle"
@@ -139,7 +139,7 @@
 	name = "formaldehyde bottle"
 	desc = "A small bottle. Contains Formaldehyde."
 	icon_state = "bottle16"
-	list_reagents = list("formaldehye" = 30)
+	list_reagents = list("formaldehyde" = 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/histamine
 	name = "histamine bottle"

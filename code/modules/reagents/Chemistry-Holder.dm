@@ -107,9 +107,13 @@ datum/reagents/proc/trans_to(var/obj/target, var/amount=1, var/multiplier=1, var
 	var/part = amount / src.total_volume
 	var/trans_data = null
 	for (var/datum/reagent/current_reagent in src.reagent_list)
+		if (current_reagent.id == "blood" && ishuman(target))
+			var/mob/living/carbon/human/H = target
+			H.inject_blood(my_atom, amount)
+			continue
 		var/current_reagent_transfer = current_reagent.volume * part
 		if(preserve_data)
-			trans_data = current_reagent.data
+			trans_data = copy_data(current_reagent)
 		R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data)
 		src.remove_reagent(current_reagent.id, current_reagent_transfer)
 
@@ -523,6 +527,38 @@ datum/reagents/proc/delete()
 		R.holder = null
 	if(my_atom)
 		my_atom.reagents = null
+
+			//two helper functions to preserve data across reactions (needed for xenoarch)
+datum/reagents/proc/get_data(var/reagent_id)
+	for(var/datum/reagent/D in reagent_list)
+		if(D.id == reagent_id)
+			//world << "proffering a data-carrying reagent ([reagent_id])"
+			return D.data
+
+datum/reagents/proc/set_data(var/reagent_id, var/new_data)
+	for(var/datum/reagent/D in reagent_list)
+		if(D.id == reagent_id)
+			//world << "reagent data set ([reagent_id])"
+			D.data = new_data
+
+datum/reagents/proc/copy_data(var/datum/reagent/current_reagent)
+	if (!current_reagent || !current_reagent.data) return null
+	if (!istype(current_reagent.data, /list)) return current_reagent.data
+
+	var/list/trans_data = current_reagent.data.Copy()
+
+	// We do this so that introducing a virus to a blood sample
+	// doesn't automagically infect all other blood samples from
+	// the same donor.
+	//
+	// Technically we should probably copy all data lists, but
+	// that could possibly eat up a lot of memory needlessly
+	// if most data lists are read-only.
+	if (trans_data["viruses"])
+		var/list/v = trans_data["viruses"]
+		trans_data["viruses"] = v.Copy()
+
+	return trans_data
 
 
 ///////////////////////////////////////////////////////////////////////////////////

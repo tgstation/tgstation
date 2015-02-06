@@ -46,7 +46,7 @@
 
 	var/list/listening_dead = list()
 	for(var/mob/M in player_list)
-		if(M.stat == DEAD && ((M.client.prefs.toggles & CHAT_GHOSTWHISPER) || (get_dist(M, src) <= 7)))
+		if(M.stat == DEAD && M.client && ((M.client.prefs.toggles & CHAT_GHOSTWHISPER) || (get_dist(M, src) <= 7)))
 			listening_dead |= M
 
 	var/list/listening = get_hearers_in_view(1, src)

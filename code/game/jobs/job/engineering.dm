@@ -63,14 +63,14 @@ Station Engineer
 	default_satchel = /obj/item/weapon/storage/backpack/satchel_eng
 	default_storagebox = /obj/item/weapon/storage/box/engineer
 
-	access = list(access_eva, access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
+	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 									access_external_airlocks, access_construction, access_atmospherics, access_tcomsat)
 	minimal_access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 									access_external_airlocks, access_construction, access_tcomsat)
 
 /datum/job/engineer/equip_items(var/mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/engineer(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/orange(H), slot_shoes)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/workboots(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(H), slot_belt)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/hardhat(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/device/t_scanner(H), slot_r_store)
@@ -94,7 +94,7 @@ Atmospheric Technician
 	default_headset = /obj/item/device/radio/headset/headset_eng
 	default_storagebox = /obj/item/weapon/storage/box/engineer
 
-	access = list(access_eva, access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
+	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 									access_external_airlocks, access_construction, access_atmospherics)
 	minimal_access = list(access_atmospherics, access_maint_tunnels, access_emergency_storage, access_construction)
 

@@ -122,6 +122,8 @@
 		overheat = 0
 		recent_reload = 0
 	..()
+/obj/item/weapon/gun/energy/kinetic_accelerator/emp_act(severity)
+	return
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/attack_self(mob/living/user)
 	if(overheat || recent_reload)
@@ -245,6 +247,7 @@
 	name = "cyborg lmg"
 	desc = "A machinegun that fires 3d-printed flachettes slowly regenerated using a cyborg's internal power source."
 	icon_state = "l6closed0"
+	icon = 'icons/obj/guns/projectile.dmi'
 	cell_type = "/obj/item/weapon/stock_parts/cell/secborg"
 	ammo_type = list(/obj/item/ammo_casing/energy/c3dbullet)
 	var/charge_tick = 0

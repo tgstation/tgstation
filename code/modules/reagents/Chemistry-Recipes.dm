@@ -1066,7 +1066,7 @@ datum/chemical_reaction/pestkiller
 	required_other = 1
 /datum/chemical_reaction/slimecell/on_reaction(var/datum/reagents/holder, var/created_volume)
 	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-	var/obj/item/weapon/stock_parts/cell/slime/P = new /obj/item/weapon/stock_parts/cell/slime
+	var/obj/item/weapon/stock_parts/cell/high/slime/P = new /obj/item/weapon/stock_parts/cell/high/slime
 	P.loc = get_turf(holder.my_atom)
 
 /datum/chemical_reaction/slimeglow

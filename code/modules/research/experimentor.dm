@@ -14,7 +14,7 @@
 #define EFFECT_PROB_HIGH 75
 #define EFFECT_PROB_VERYHIGH 95
 
-#define FAIL 7
+#define FAIL 8
 /obj/machinery/r_n_d/experimentor
 	name = "E.X.P.E.R.I-MENTOR"
 	icon = 'icons/obj/machines/heavy_lathe.dmi'
@@ -313,7 +313,7 @@
 			var/list/chems = list("carbon","radium","toxin","condensedcapsaicin","mushroomhallucinogen","space_drugs","ethanol","beepskysmash")
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = src
-			R.add_reagent(pick(chems), 50)
+			R.add_reagent(pick(chems) , 50)
 			var/datum/effect/effect/system/chem_smoke_spread/smoke = new
 			smoke.set_up(R, 1, 0, src, 0, silent = 1)
 			playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
@@ -322,10 +322,10 @@
 			ejectItem(TRUE)
 		if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='notice'>[src]'s chemical chamber has sprung a leak!.</span>")
-			var/list/chems = list("mutationtoxin","amutationtoxin","nanites","xenomicrobes")
+			var/list/chems = list("mutationtoxin","nanomachines","xenomicrobes")
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = src
-			R.add_reagent(pick(chems), 50)
+			R.add_reagent(pick(chems) , 50)
 			var/datum/effect/effect/system/chem_smoke_spread/smoke = new
 			smoke.set_up(R, 1, 0, src, 0, silent = 1)
 			playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
@@ -347,7 +347,7 @@
 			var/obj/item/weapon/reagent_containers/food/drinks/coffee/C = new /obj/item/weapon/reagent_containers/food/drinks/coffee(get_turf(pick(oview(1,src))))
 			var/list/chems = list("plasma","capsaicin","ethanol")
 			C.reagents.remove_any(25)
-			C.reagents.add_reagent(pick(chems),25)
+			C.reagents.add_reagent(pick(chems) , 50)
 			C.name = "Cup of Suspicious Liquid"
 			C.desc = "It has a large hazard symbol printed on the side in fading ink."
 		if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
@@ -382,16 +382,16 @@
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message("<span class='notice'>[src]'s emergency coolant system gives off a small ping!</span>")
 			var/obj/machinery/vending/coffee/C = new /obj/machinery/vending/coffee(get_turf(pick(oview(1,src))))
-			var/list/chems = list("uranium","frostoil","hyperzine")
+			var/list/chems = list("uranium","frostoil","ephedrine")
 			C.reagents.remove_any(25)
-			C.reagents.add_reagent(pick(chems),25)
+			C.reagents.add_reagent(pick(chems) , 50)
 			C.name = "Cup of Suspicious Liquid"
 			C.desc = "It has a large hazard symbol printed on the side in fading ink."
 		if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='notice'>[src] malfunctions, shattering [exp_on] and releasing a dangerous cloud of coolant!</span>")
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = src
-			R.add_reagent("frostoil", 50)
+			R.add_reagent("frostoil" , 50)
 			var/datum/effect/effect/system/chem_smoke_spread/smoke = new
 			smoke.set_up(R, 1, 0, src, 0, silent = 1)
 			playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
@@ -547,6 +547,7 @@
 #undef SCANTYPE_HEAT
 #undef SCANTYPE_COLD
 #undef SCANTYPE_OBLITERATE
+#undef SCANTYPE_DISCOVER
 
 #undef EFFECT_PROB_VERYLOW
 #undef EFFECT_PROB_LOW

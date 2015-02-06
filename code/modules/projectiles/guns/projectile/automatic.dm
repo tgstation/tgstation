@@ -26,6 +26,9 @@
 	return
 
 /obj/item/weapon/gun/projectile/automatic/attackby(var/obj/item/A as obj, mob/user as mob)
+	. = ..()
+	if(.)
+		return
 	if(istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
 		if(istype(AM, mag_type))

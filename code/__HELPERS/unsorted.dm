@@ -818,17 +818,13 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Returns sortedAreas list if populated
 //else populates the list first before returning it
-/proc/returnSortedAreas()
-	if(!sortedAreas.len)
-		for(var/area/A in world)
-			if(!A.contents.len)
-				continue
-			if(A.lighting_subarea)
-				continue
-			sortedAreas.Add(A)
+/proc/SortAreas()
+	for(var/area/A in world)
+		if(A.lighting_subarea)
+			continue
+		sortedAreas.Add(A)
 
-		sortTim(sortedAreas, /proc/cmp_name_asc)
-	return sortedAreas
+	sortTim(sortedAreas, /proc/cmp_name_asc)
 
 /area/proc/addSorted()
 	sortedAreas.Add(src)

@@ -27,7 +27,7 @@
 		icon_state = icon_plating //Because asteroids are 'platings' too.
 
 /turf/simulated/floor/plating/attackby(obj/item/C as obj, mob/user as mob)
-	if(!C || !user)
+	if(..())
 		return
 	if(istype(C, /obj/item/stack/rods))
 		if(broken || burnt)
@@ -58,13 +58,6 @@
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 		else
 			user << "<span class='notice'>This section is too damaged to support a tile. Use a welder to fix the damage.</span>"
-	else if(istype(C, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/coil = C
-		for(var/obj/structure/cable/LC in src)
-			if((LC.d1==0)||(LC.d2==0))
-				LC.attackby(C,user)
-				return
-		coil.place_turf(src, user)
 	else if(istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/welder = C
 		if( welder.isOn() && (broken || burnt) )

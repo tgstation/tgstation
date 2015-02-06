@@ -215,8 +215,6 @@ var/datum/subsystem/job/SSjob
 	if(config.minimal_access_threshold)
 		if(config.minimal_access_threshold > unassigned.len)
 			config.jobs_have_minimal_access = 0
-			config.jobs_have_maint_access |= ASSISTANTS_HAVE_MAINT_ACCESS
-			config.jobs_have_maint_access |= SECURITY_HAS_MAINT_ACCESS
 		else
 			config.jobs_have_minimal_access = 1
 
@@ -345,7 +343,7 @@ var/datum/subsystem/job/SSjob
 	if(job.req_admin_notify)
 		H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
 	if(config.minimal_access_threshold)
-		H << "<FONT color='blue'><B>As this station was initially staffed with a [config.jobs_have_minimal_access ? "full crew, only your job's necessities" : "skeleton crew, additional access"] have been added to your ID card.</B></font>"
+		H << "<FONT color='blue'><B>As this station was initially staffed with a [config.jobs_have_minimal_access ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>"
 
 	H.update_hud() 	// Tmp fix for Github issue 1006. TODO: make all procs in update_icons.dm do client.screen |= equipment no matter what.
 	return 1

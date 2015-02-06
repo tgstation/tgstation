@@ -1,7 +1,0 @@
-author: Dannno
-
-delete-after: True
-
-changes:
-  - rscadd: Added fannypacks of multiple colors, 3 of which are accessible from the clothing vendor.
-  - rscadd: Added dufflebags to multiple lockers throughout the station and to the syndicate shuttle, more storage slots at the cost of move speed.
