@@ -20,7 +20,7 @@ var/bomb_set
 	var/immobile = 0 //Not all nukes should be moved
 
 /obj/machinery/nuclearbomb/selfdestruct
-	name = "station self-destruct"
+	name = "station self-destruct terminal"
 	desc = "For when it all gets too much to bear. Do not taunt."
 	icon = 'icons/obj/machines/bignuke.dmi'
 	anchored = 1 //stops it being moved
