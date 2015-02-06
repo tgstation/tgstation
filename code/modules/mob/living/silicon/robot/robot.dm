@@ -596,6 +596,7 @@
 					src << "<b>Obey these laws:</b>"
 					laws.show_laws(src)
 					src << "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</span>"
+					module.modules.Remove(locate(/obj/item/weapon/gun/energy/gun/advtaser/cyborg))
 					SetLockdown(0)
 					update_icons()
 				else
