@@ -260,7 +260,7 @@
 		var/turf/simulated/S = src
 		env = S.air //Get the air before the change
 		if(S.zone) S.zone.rebuild()
-	if(istype(src,/turf/simulated/floor)
+	if(istype(src,/turf/simulated/floor))
 		if(floor_tile)
 			qdel(floor_tile)
 			floor_tile = null
