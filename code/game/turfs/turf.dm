@@ -260,7 +260,10 @@
 		var/turf/simulated/S = src
 		env = S.air //Get the air before the change
 		if(S.zone) S.zone.rebuild()
-
+	if(istype(src,/turf/simulated/floor)
+		if(floor_tile)
+			qdel(floor_tile)
+			floor_tile = null
 	if(ispath(N, /turf/simulated/floor))
 		//if the old turf had a zone, connect the new turf to it as well - Cael
 		//Adjusted by SkyMarshal 5/10/13 - The air master will handle the addition of the new turf.
