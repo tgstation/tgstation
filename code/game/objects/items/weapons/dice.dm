@@ -53,6 +53,9 @@
 	icon_state = "d20"
 	sides = 20
 
+/obj/item/weapon/dice/d20/e20
+	var/triggered = 0
+
 /obj/item/weapon/dice/attack_self(mob/user as mob)
 	diceroll(user)
 
@@ -86,3 +89,27 @@
 /obj/item/weapon/dice/update_icon()
 	overlays.len = 0
 	overlays += "[src.icon_state][src.result]"
+
+/obj/item/weapon/dice/d20/e20/diceroll(mob/user as mob)
+	if(triggered) return
+	..()
+	if(result == 1)
+		user.gib()
+		user << "Rocks fall, you die."
+	else
+		triggered = 1
+		visible_message("<span class='notice'>You hear a quiet click.</span>")
+		spawn(40)
+			var/cap = 0
+			var/uncapped = result
+			if(result > MAX_EXPLOSION_RANGE && result != 20)
+				cap = 1
+				result = min(result, MAX_EXPLOSION_RANGE) //Apply the bombcap
+			else if(result == 20) //Roll a nat 20, screw the bombcap
+				result = 24
+			var/turf/epicenter = get_turf(src)
+			explosion(epicenter, round(result*0.25), round(result*0.5), round(result), round(result*1.5), 1, cap)
+			if(cap)
+				for(var/obj/machinery/computer/bhangmeter/bhangmeter in doppler_arrays)
+					if(bhangmeter)
+						bhangmeter.sense_explosion(epicenter.x,epicenter.y,epicenter.z,round(uncapped*0.25), round(uncapped*0.5), round(uncapped),"???", cap)
