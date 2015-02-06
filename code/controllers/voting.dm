@@ -28,7 +28,7 @@ var/global/datum/controller/vote/vote = new()
 		vote = src
 //datum/controller/vote/proc/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
 //	return
-		
+
 /datum/controller/vote/proc/process()	//called by master_controller
 	if(mode)
 		// No more change mode votes after the game has started.
@@ -41,12 +41,12 @@ var/global/datum/controller/vote/vote = new()
 		// Calculate how much time is remaining by comparing current time, to time of vote start,
 		// plus vote duration
 		time_remaining = (ismapvote && ismapvote.len) ? (round((started_time + 600 - world.time)/10)) : (round((started_time + config.vote_period - world.time)/10))
-		if(!time_remaining)
+		if(time_remaining <= 0)
 			result()
 			for(var/client/C in voting)
 				if(C)
 					nanomanager.close_user_uis(C.mob, src)
-			src.reset()					
+			src.reset()
 /datum/controller/vote/proc/reset()
 	initiator = null
 	time_remaining = 0
@@ -181,7 +181,7 @@ var/global/datum/controller/vote/vote = new()
 			var/next_allowed_time = (started_time + config.vote_delay)
 			if(next_allowed_time > world.time)
 				return 0
-				
+
 		reset()
 		switch(vote_type)
 			if("restart")
@@ -211,7 +211,7 @@ var/global/datum/controller/vote/vote = new()
 					world << "<span class='danger'>Failed to initiate map vote, no maps found.</span>"
 					return 0
 				ismapvote = maps
-			else			
+			else
 				return 0
 		mode = vote_type
 		initiator = initiator_key
@@ -221,6 +221,10 @@ var/global/datum/controller/vote/vote = new()
 			text += "<br>[question]"
 
 		log_vote(text)
+		if(popup)
+			for(var/mob/M in player_list)
+				if(M.client)
+					ui_interact(M)
 		world << "<font color='purple'><b>[text]</b><br>Type vote to place your votes.<br>You have [ismapvote && ismapvote.len ? "60" : config.vote_period/10] seconds to vote.</font>"
 		switch(vote_type)
 			if("crew_transfer")
@@ -239,7 +243,7 @@ var/global/datum/controller/vote/vote = new()
 		return 1
 	return 0
 
-	
+
 /datum/controller/vote/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
 	if(!user.client) return
 	var/admin = 0
@@ -250,7 +254,7 @@ var/global/datum/controller/vote/vote = new()
 			trialmin = 1
 	voting |= user
 	var/data[0]
-	
+
 	data["admin"] = admin
 	data["trialmin"] = trialmin
 	data["mode"] = mode
@@ -260,7 +264,7 @@ var/global/datum/controller/vote/vote = new()
 		if(current_votes[user.ckey])
 			data["selected_vote"] = current_votes[user.ckey]
 		data["time_left"] = time_remaining
-		
+
 		for(var/i = 1; i <= choices.len; i++)
 			choices_list.Add(list(list("ID" = i, "choice" = choices[i])))
 		if(question)
@@ -287,7 +291,7 @@ var/global/datum/controller/vote/vote = new()
 		ui.set_initial_data(data)
 		ui.set_auto_update(1)
 		ui.open()
-		
+
 /datum/controller/vote/Topic(href,href_list[],hsrc)
 	if(!usr || !usr.client)	return	//not necessary but meh...just in-case somebody does something stupid
 	switch(href_list["vote"])
@@ -319,8 +323,8 @@ var/global/datum/controller/vote/vote = new()
 		else
 			submit_vote(usr.ckey, round(text2num(href_list["vote"])))
 	usr.vote()
-	
-	
+
+
 /mob/verb/vote()
 	set category = "OOC"
 	set name = "Vote"

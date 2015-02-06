@@ -14,8 +14,8 @@ nanoui is used to open and update nano browser uis
 	// the user who opened this ui
 	var/mob/user
 	// the datum this ui "belongs" to
-	var/atom/movable/src_object
-	//var/datum/src_object
+	//var/atom/movable/src_object
+	var/datum/src_object
 	// the title of this ui
 	var/title
 	// the key of this ui, this is to allow multiple (different) uis for each src_object
@@ -145,12 +145,14 @@ nanoui is used to open and update nano browser uis
 			set_status(STATUS_INTERACTIVE, push_update) // interactive (green visibility)
 		else
 			set_status(STATUS_DISABLED, push_update) // no updates, completely disabled (red visibility)
-	else if(src_object.name == "datum")
+	else if(istype(src_object, /datum))
 		set_status(STATUS_INTERACTIVE, push_update)
 	else
-		var/dist = get_dist(src_object, user)
+		var/dist = 0
+		if(istype(src_object, /atom))
+			dist = get_dist(src_object, user)
 
-		if (dist > 4 && src_object.name != "datum")
+		if (dist > 4)
 			close()
 			return
 
