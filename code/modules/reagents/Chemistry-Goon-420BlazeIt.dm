@@ -153,7 +153,7 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 20
 	addiction_threshold = 10
-
+	metabolization_rate = 0.6
 
 /datum/reagent/methamphetamine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -166,6 +166,8 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 	M.adjustStaminaLoss(-3)
 	M.status_flags |= GOTTAGOFAST
 	M.Jitter(3)
+	M.adjustBrainLoss(0.5)
+	M.emote(pick("twitch", "shiver"))
 	..()
 	return
 
@@ -176,12 +178,16 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 		step(M, pick(cardinal))
 		step(M, pick(cardinal))
 	if(prob(20))
-		M.emote(pick("twitch","drool","moan"))
+		M.emote("laugh")
 	if(prob(33))
+		M.visible_message("<span class = 'danger'>[M]'s hands flip out and flail everywhere!</span>")
 		var/obj/item/I = M.get_active_hand()
 		if(I)
 			M.drop_item()
 	..()
+	if(prob(20))
+		M.adjustToxLoss(5)
+	M.adjustBrainLoss(pick(0.5, 0.6, 0.7, 0.8, 0.9, 1))
 	return
 
 /datum/reagent/methamphetamine/addiction_act_stage1(var/mob/living/M as mob)
@@ -305,7 +311,7 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 /datum/reagent/bath_salts
 	name = "Bath Salts"
 	id = "bath_salts"
-	description = "Makes you nearly impervious to stuns and grants a stamina regeneration buff, but you'll be a nearly uncontrollable tramp-bearded raving lunatic."
+	description = "Makes you nearly impervious to stuns and grants a stamina regeneration buff, but you will be a nearly uncontrollable tramp-bearded raving lunatic."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 20
@@ -469,3 +475,24 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 		M.adjustOxyLoss(20)
 	..()
 	return
+
+/obj/item/weapon/reagent_containers/food/drinks/muriatic_acid
+	name = "jug of muriatic acid"
+	desc = "Fuck me, we needed those cooks."
+	icon_state = "chem_jug"
+	item_state = "carton"
+	list_reagents = list("muriatic_acid" = 50)
+
+/obj/item/weapon/reagent_containers/food/drinks/caustic_soda
+	name = "jug of caustic soda"
+	desc = "Fuck me, we needed those cooks."
+	icon_state = "chem_jug"
+	item_state = "carton"
+	list_reagents = list("caustic_soda" = 50)
+
+/obj/item/weapon/reagent_containers/food/drinks/hydrogen_chloride
+	name = "jug of hydrogen chloride"
+	desc = "Fuck me, we needed those cooks."
+	icon_state = "chem_jug"
+	item_state = "carton"
+	list_reagents = list("hydrogen_chloride" = 50)
