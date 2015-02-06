@@ -28,5 +28,3 @@ info.json
 /bot/config.yml
 /bot/data
 /analysis
-*.sqlite
-*.backup
