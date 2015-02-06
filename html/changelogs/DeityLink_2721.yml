@@ -1,5 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - rscadd: Engineer PDA cartridges now grant access to an app that connects to the Station Alert Computers on the Z-level (the same way that the Power Monitor app connects to Power Monitoring Computers).
-  - tweak: The Power Monitor app can now only connect to Power Monitoring Computers on its Z-level.

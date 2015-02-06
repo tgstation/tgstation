@@ -3,7 +3,7 @@
 	anchored = 0
 	density = 1
 	icon = 'icons/obj/atmos.dmi'
-	icon_state = "aircond0"
+	icon_state = "aircond"
 	name = "air conditioner"
 	desc = "If you can't take the heat, use one of these."
 	set_temperature = 20		// in celcius, add T0C for kelvin
@@ -20,64 +20,8 @@
 	update_icon()
 	return
 
-/obj/machinery/space_heater/air_conditioner/update_icon()
-	overlays.len = 0
-	icon_state = "aircond[on]"
-	if(open)
-		overlays  += "sheater-open"
-	return
-
-/obj/machinery/space_heater/air_conditioner/examine(mob/user)
-	..()
-	user << "The air conditioner is [on ? "on" : "off"] and the hatch is [open ? "open" : "closed"]."
-	if(open)
-		user << "The power cell is [cell ? "installed" : "missing"]."
-	else
-		user << "The charge meter reads [cell ? round(cell.percent(),1) : 0]%"
-
-/obj/machinery/space_heater/air_conditioner/emp_act(severity)
-	if(stat & (BROKEN|NOPOWER))
-		..(severity)
-		return
-	if(cell)
-		cell.emp_act(severity)
-	..(severity)
-
-/obj/machinery/space_heater/air_conditioner/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/cell))
-		if(open)
-			if(cell)
-				user << "There is already a power cell inside."
-				return
-			else
-				// insert cell
-				var/obj/item/weapon/cell/C = usr.get_active_hand()
-				if(istype(C))
-					user.drop_item()
-					cell = C
-					C.loc = src
-					C.add_fingerprint(usr)
-
-					user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
-		else
-			user << "The hatch must be open to insert a power cell."
-			return
-	else if(istype(I, /obj/item/weapon/screwdriver))
-		open = !open
-		user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the hatch on the [src].</span>")
-		update_icon()
-		if(!open && user.machine == src)
-			user << browse(null, "window=aircond")
-			user.unset_machine()
-	else
-		..()
-	return
-/obj/machinery/space_heater/air_conditioner/attack_hand(mob/user as mob)
-	src.add_fingerprint(user)
-	interact(user)
-
 /obj/machinery/space_heater/air_conditioner/interact(mob/user as mob)
-	if(open)
+	if(panel_open)
 		var/temp = set_temperature
 		var/dat
 		dat = "Power cell: "
@@ -118,11 +62,11 @@
 			if("temp")
 				var/value = text2num(href_list["val"])
 
-				// limit to 15c and 20c(room temp)
-				set_temperature = dd_range(15, 25, set_temperature + value)
+				// limit to 0c and 25c(room temp)
+				set_temperature = dd_range(0, 25, set_temperature + value)
 
 			if("cellremove")
-				if(open && cell && !usr.get_active_hand())
+				if(panel_open && cell && !usr.get_active_hand())
 					cell.updateicon()
 					usr.put_in_hands(cell)
 					cell.add_fingerprint(usr)
@@ -131,7 +75,7 @@
 
 
 			if("cellinstall")
-				if(open && !cell)
+				if(panel_open && !cell)
 					var/obj/item/weapon/cell/C = usr.get_active_hand()
 					if(istype(C))
 						usr.drop_item()

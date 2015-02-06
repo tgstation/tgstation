@@ -1,7 +1,2 @@
 author: Duny
-changes: 
-  - wip: Made a lot of changes to areas to separate maintenance and the unused parts of the station. Hopefully this will help retards who can't even follow a line on the floor find their way and help with ventcrawling as there should be less AFT STARBOARD MAINT VENT NUMBER 56 situations. All the unused areas are not powered by default (empty apc) and aren't shielded from radiations. The special rooms (abandoned diner, bar, library) have been made into their own areas too to facilitate autism. Also cleaned up maintenance (only took two centuries), and added a lot of random loot.
-  - rscdel: Removed most of the loot I added/chose not to remove earlier in those parts since I have no way of preventing players from rushing to it every round.
-  - tweak: Didn't add more newscasters to the station because the faggot who wants more of them refused to make an issue on github just so he could say I ignore them.
-  - rscadd: Added a newscaster to the librarian's dungeon anyway.
-  - rscadd: Added a supermatter shard to the derelict, in the engine room.
+changes: []
