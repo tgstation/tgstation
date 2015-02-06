@@ -57,13 +57,13 @@
 	var/triggered = 0
 
 /obj/item/weapon/dice/attack_self(mob/user as mob)
-	diceroll(user)
+	diceroll(user, 0)
 
-/obj/item/weapon/dice/throw_impact(atom/hit_atom, thrower)
+/obj/item/weapon/dice/throw_impact(atom/hit_atom, speed, user)
 	..()
-	diceroll(src.fingerprintslast)
+	diceroll(user, 1)
 
-/obj/item/weapon/dice/proc/diceroll(mob/user as mob)
+/obj/item/weapon/dice/proc/diceroll(mob/user as mob, thrown)
 	result = rand(1, sides)
 	var/comment = ""
 	if(sides == 20 && result == 20)
@@ -73,7 +73,7 @@
 	update_icon()
 	if(initial(icon_state) == "d00")
 		result = (result - 1)*10
-	if(user != null) //Dice was rolled in someone's hand
+	if(!thrown) //Dice was rolled in someone's hand
 		user.visible_message("<span class='notice'>[user] has thrown [src]. It lands on [result]. [comment]</span>", \
 							 "<span class='notice'>You throw [src]. It lands on [result]. [comment]</span>", \
 							 "<span class='notice'>You hear [src] landing on [result]. [comment]</span>")
@@ -90,12 +90,12 @@
 	overlays.len = 0
 	overlays += "[src.icon_state][src.result]"
 
-/obj/item/weapon/dice/d20/e20/diceroll(mob/user as mob)
+/obj/item/weapon/dice/d20/e20/diceroll(mob/user as mob, thrown)
 	if(triggered) return
 	..()
 	if(result == 1)
-		user.gib()
 		user << "Rocks fall, you die."
+		user.gib()
 	else
 		triggered = 1
 		visible_message("<span class='notice'>You hear a quiet click.</span>")
