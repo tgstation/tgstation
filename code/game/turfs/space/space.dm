@@ -78,6 +78,10 @@
 				return
 
 			var/list/disk_search = A.search_contents_for(/obj/item/weapon/disk/nuclear)
+			if(istype(A, /obj/structure/stool/bed/chair/vehicle))
+				var/obj/structure/stool/bed/chair/vehicle/B = A
+				if(B.buckled_mob)
+					disk_search = B.buckled_mob.search_contents_for(/obj/item/weapon/disk/nuclear)
 			if(!isemptylist(disk_search))
 				if(istype(A, /mob/living))
 					var/mob/living/MM = A

@@ -136,12 +136,17 @@ proc/move_mining_shuttle()
 			if(ticker.mode:declared)
 				usr << "Under directive 7-10, [station_name()] is quarantined until further notice."
 				return
-
+		var/area/A = locate(/area/shuttle/mining/station)
+		if(!mining_shuttle_location)
+			var/list/search = A.search_contents_for(/obj/item/weapon/disk/nuclear)
+			if(!isemptylist(search))
+				usr << "<span class='notice'>The nuclear disk is too precious for Nanotrasen to send it to an Asteroid.</span>"
+				return
 		if (!mining_shuttle_moving)
-			usr << "\blue Shuttle recieved message and will be sent shortly."
+			usr << "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>"
 			move_mining_shuttle()
 		else
-			usr << "\blue Shuttle is already moving."
+			usr << "<span class='notice'>Shuttle is already moving.</span>"
 
 /obj/machinery/computer/mining_shuttle/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
@@ -161,12 +166,12 @@ proc/move_mining_shuttle()
 			A.anchored = 1
 
 			if (src.stat & BROKEN)
-				user << "\blue The broken glass falls out."
+				user << "<span class='notice'>The broken glass falls out.</span>"
 				getFromPool(/obj/item/weapon/shard, loc)
 				A.state = 3
 				A.icon_state = "3"
 			else
-				user << "\blue You disconnect the monitor."
+				user << "<span class='notice'>You disconnect the monitor.</span>"
 				A.state = 4
 				A.icon_state = "4"
 
