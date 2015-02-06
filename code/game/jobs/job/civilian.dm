@@ -344,7 +344,7 @@
 	selection_color = "#dddddd"
 	access = list(access_library, access_maint_tunnels)
 	minimal_access = list(access_library)
-	alt_titles = list("Journalist")
+	alt_titles = list("Journalist", "Game Master")
 
 	pdaslot=slot_belt
 	pdatype=/obj/item/device/pda/librarian
