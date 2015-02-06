@@ -22,6 +22,10 @@
 /obj/screen/movable/MouseDrop(over_object, src_location, over_location, src_control, over_control, params)
 	var/list/PM = params2list(params)
 
+	//No screen-loc information? abort.
+	if(!PM || !PM["screen-loc"])
+		return
+
 	//Split screen-loc up into X+Pixel_X and Y+Pixel_Y
 	var/list/screen_loc_params = text2list(PM["screen-loc"], ",")
 
