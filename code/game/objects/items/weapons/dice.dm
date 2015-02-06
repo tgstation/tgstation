@@ -59,9 +59,9 @@
 /obj/item/weapon/dice/attack_self(mob/user as mob)
 	diceroll(user)
 
-/obj/item/weapon/dice/throw_impact(atom/hit_atom)
+/obj/item/weapon/dice/throw_impact(atom/hit_atom, thrower)
 	..()
-	diceroll()
+	diceroll(src.fingerprintslast)
 
 /obj/item/weapon/dice/proc/diceroll(mob/user as mob)
 	result = rand(1, sides)
