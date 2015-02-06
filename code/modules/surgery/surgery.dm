@@ -13,6 +13,8 @@
 	var/min_duration = 0
 	var/max_duration = 0
 
+	var/list/mob/doing_surgery = list() //who's doing this RIGHT NOW
+
 	// evil infection stuff that will make everyone hate me
 	var/can_infect = 0
 	//How much blood this step can get on surgeon. 1 - hands, 2 - full body.
@@ -92,13 +94,18 @@ proc/do_surgery(mob/living/M, mob/living/user, obj/item/tool)
 		return 0
 	for(var/datum/surgery_step/S in surgery_steps)
 		//check if tool is right or close enough and if this step is possible
-		if( S.tool_quality(tool) && S.can_use(user, M, user.zone_sel.selecting, tool) && S.is_valid_mutantrace(M))
+		if( S.tool_quality(tool) && S.can_use(user, M, user.zone_sel.selecting, tool) && S.is_valid_mutantrace(M) && !(M in S.doing_surgery))
+			S.doing_surgery += M
 			S.begin_step(user, M, user.zone_sel.selecting, tool)		//start on it
 			//We had proper tools! (or RNG smiled.) and user did not move or change hands.
 			if( prob(S.tool_quality(tool)) &&  do_mob(user, M, rand(S.min_duration, S.max_duration)))
 				S.end_step(user, M, user.zone_sel.selecting, tool)		//finish successfully
 			else if (tool in user.contents && user.Adjacent(M))											//or
 				S.fail_step(user, M, user.zone_sel.selecting, tool)		//malpractice~
+			if(M) //good, we still exist
+				S.doing_surgery -= M
+			else
+				S.doing_surgery.Remove(null) //get rid of that now null reference
 			return	1	  												//don't want to do weapony things after surgery
 	if (user.a_intent == "help")
 		user << "<span class='warning'>You can't see any useful way to use [tool] on [M].</span>"
