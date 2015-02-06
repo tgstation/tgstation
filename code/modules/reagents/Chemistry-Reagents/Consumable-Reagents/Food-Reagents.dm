@@ -236,7 +236,7 @@ datum/reagent/consumable/blackpepper
 
 datum/reagent/consumable/coco
 	name = "Coco Powder"
-	id = "coco"
+	id = "cocoa"
 	description = "A fatty, bitter paste made from coco beans."
 	reagent_state = SOLID
 	nutriment_factor = 5 * REAGENTS_METABOLISM

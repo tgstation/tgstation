@@ -20,7 +20,7 @@
 	name = "Chocolate Bar"
 	id = "chocolate_bar"
 	result = null
-	required_reagents = list("soymilk" = 2, "coco" = 2, "sugar" = 2)
+	required_reagents = list("soymilk" = 2, "cocoa" = 2, "sugar" = 2)
 	result_amount = 1
 
 /datum/chemical_reaction/chocolate_bar/on_reaction(var/datum/reagents/holder, var/created_volume)
@@ -34,7 +34,7 @@
 	name = "Chocolate Bar"
 	id = "chocolate_bar"
 	result = null
-	required_reagents = list("milk" = 2, "coco" = 2, "sugar" = 2)
+	required_reagents = list("milk" = 2, "cocoa" = 2, "sugar" = 2)
 	result_amount = 1
 	mob_react = 1
 /datum/chemical_reaction/chocolate_bar2/on_reaction(var/datum/reagents/holder, var/created_volume)
@@ -47,7 +47,7 @@
 	name = "Hot Coco"
 	id = "hot_coco"
 	result = "hot_coco"
-	required_reagents = list("water" = 5, "coco" = 1)
+	required_reagents = list("water" = 5, "cocoa" = 1)
 	result_amount = 5
 
 /datum/chemical_reaction/coffee
