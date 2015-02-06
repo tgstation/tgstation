@@ -264,9 +264,8 @@ var/global/datum/controller/vote/vote = new()
 		if(current_votes[user.ckey])
 			data["selected_vote"] = current_votes[user.ckey]
 		data["time_left"] = time_remaining
-
 		for(var/i = 1; i <= choices.len; i++)
-			choices_list.Add(list(list("ID" = i, "choice" = choices[i])))
+			choices_list.Add(list(list("ID" = i, "choice" = choices[i], "votes" = (!isnull(choices[choices[i]]) ? choices[choices[i]] : 0))))
 		if(question)
 			data["question"] = question
 		data["choices"] = choices_list

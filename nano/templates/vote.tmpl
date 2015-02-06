@@ -29,7 +29,7 @@ Used in File(s): \code\controllers\voting.dm
 	{{for data.choices}}
 		<div class="item">
 			<div class="itemContent">
-				{{:helper.link(value.choice,'circle-arrow-s',{ 'vote' : value.ID }, (data.selected_vote == value.ID) ? 'linkOn':'', 'fixedLeftWidest')}}
+				{{:helper.link(value.choice + ' (' + value.votes +' votes)','circle-arrow-s',{ 'vote' : value.ID }, (data.selected_vote == value.ID) ? 'linkOn':'', 'fixedLeftWidest')}}
 			</div>
 		</div>
 	{{/for}}
