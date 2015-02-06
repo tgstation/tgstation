@@ -1,0 +1,12 @@
+author: Angelite Entyshak
+ 
+ delete-after: True
+ 
+ changes:
+  - bugfix: Ghosts can no longer interact with the suspension field generator.
+  - bugfix: Ghosts can no longer interact with the artifact harvester.
+  - bugfix: Ejecting the battery from the artifact harvester will cause the artifact to unanchor. This is a failsafe mechanism to ensure that perma anchored artifacts NEVER HAPPEN AGAIN!
+  - tweak: Moved rotate suspension field verb to objects tab.
+  - tweak: Moved toggle bunsen burner to objects tab.
+  - tweak: You can no longer accidentally touch trigger large artifacts by using the anomaly harvester
+
