@@ -257,6 +257,11 @@
 	throw_speed = 3
 	throw_range = 7
 
+/obj/item/weapon/grown/bananapeel/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is deliberately slipping on the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	playsound(loc, 'sound/misc/slip.ogg', 50, 1, -1)
+	return (BRUTELOSS)
+
 /obj/item/weapon/grown/bananapeel/Crossed(AM as mob|obj)
 	if (istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
