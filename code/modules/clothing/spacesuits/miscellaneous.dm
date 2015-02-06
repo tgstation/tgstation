@@ -19,7 +19,7 @@
 	name = "Santa's hat"
 	desc = "Ho ho ho. Merrry X-mas!"
 	icon_state = "santahat"
-	flags = FPRINT  | BLOCKHAIR | STOPSPRESSUREDMG
+	flags = FPRINT | STOPSPRESSUREDMG
 
 /obj/item/clothing/suit/space/santa
 	name = "Santa's suit"

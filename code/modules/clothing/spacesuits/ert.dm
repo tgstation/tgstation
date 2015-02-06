@@ -6,7 +6,7 @@
 	armor = list(melee = 50, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 60)
 	siemens_coefficient = 0.6
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
-	flags = FPRINT  | BLOCKHAIR | STOPSPRESSUREDMG | PLASMAGUARD
+	flags = FPRINT  | STOPSPRESSUREDMG | PLASMAGUARD
 	var/obj/machinery/camera/camera
 	species_restricted = list("exclude","Vox")
 

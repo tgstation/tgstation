@@ -158,7 +158,7 @@
 	icon_state = "vox-civ-assistant"
 	item_state = "vox-pressure-normal"
 	desc = "A very alien-looking helmet for vox crewmembers."
-	flags = FPRINT  | BLOCKHAIR | STOPSPRESSUREDMG //Flags need updating from inheritance above
+	flags = FPRINT  | STOPSPRESSUREDMG //Flags need updating from inheritance above
 	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 0, bio = 100, rad = 25)
 
 /obj/item/clothing/suit/space/vox/civ/bartender
@@ -238,7 +238,7 @@
 	name = "vox chief engineer pressure helmet"
 	icon_state = "vox-civ-ce"
 	desc = "A very alien-looking helmet for vox crewmembers. Has some radiation and heat protection."
-	flags = FPRINT  | BLOCKHAIR | STOPSPRESSUREDMG | PLASMAGUARD
+	flags = FPRINT  | STOPSPRESSUREDMG | PLASMAGUARD
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 
 //Science

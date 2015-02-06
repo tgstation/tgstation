@@ -180,7 +180,7 @@
 		update_inv_glasses()
 	else if (W == head)
 		head = null
-		if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
+		if(W.flags_inv & HIDEHAIR)
 			update_hair(0)	//rebuild hair
 		success = 1
 		update_inv_head()
@@ -199,7 +199,7 @@
 	else if (W == wear_mask)
 		wear_mask = null
 		success = 1
-		if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
+		if(W.flags_inv & HIDEHAIR)
 			update_hair(0)	//rebuild hair
 		if(internal)
 			if(internals)
@@ -277,7 +277,7 @@
 			update_inv_back(redraw_mob)
 		if(slot_wear_mask)
 			src.wear_mask = W
-			if((wear_mask.flags & BLOCKHAIR) || (wear_mask.flags & BLOCKHEADHAIR))
+			if(wear_mask.flags_inv & HIDEHAIR)
 				update_hair(redraw_mob)	//rebuild hair
 			update_inv_wear_mask(redraw_mob)
 		if(slot_handcuffed)
