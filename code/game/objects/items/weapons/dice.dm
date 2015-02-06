@@ -94,7 +94,7 @@
 	if(triggered) return
 	..()
 	if(result == 1)
-		user << "Rocks fall, you die."
+		user << "<span class='danger'>Rocks fall, you die.</span>"
 		user.gib()
 	else
 		triggered = 1
