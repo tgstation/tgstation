@@ -6,6 +6,8 @@
 	bitesize = 3
 	list_reagents = list("nutriment" = 3)
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/meatsteak
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/rawcutlet
+	slices_num = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/synthmeat
 	name = "synthmeat"

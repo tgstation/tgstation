@@ -158,7 +158,7 @@
 	filling_color = "#FF4500"
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/custom
-	name = "Custom cakeslice"
+	name = "cake slice"
 	desc = "Who knows what it contains?"
 	icon_state = "lemoncake_slice"
 	filling_color = "#FFFFFF"

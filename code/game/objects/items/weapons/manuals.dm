@@ -680,15 +680,24 @@
 
 				<h2>Basic ingredients preparation:</h2>
 
-				<b>Dough:</b> Add an egg to 15 flour. Dough can be transformed by using your knife and rolling pin or by adding milk. All doughs can be microwaved.
-				<b>Bowl:</b> Add water to it for soup preparation.
-				<b>Meat:</b> Microwave it, process it, slice it into microwavable cutlets with your knife, or use it raw.
+				<b>Dough:</b> Add an egg to 15 flour. Dough can be transformed by using your knife and rolling pin or by adding milk. All doughs can be microwaved.<br>
+				<b>Bowl:</b> Add water to it for soup preparation.<br>
+				<b>Meat:</b> Microwave it, process it, slice it into microwavable cutlets with your knife, or use it raw.<br>
 				<b>Cheese:</b> Add 5u universal enzyme (catalyst) to milk and soy milk to prepare cheese (sliceable) and tofu.
 
 				<h2>Custom food:</h2>
-				Add ingredients to a base item to prepare a custom meal.
-				The bases are bun (burger), breadslices(sandwich), plain bread, plain pie, vanilla cake,
-				empty bowl (salad), bowl with 10u water (soup), boiled spaghetti, pizza bread, metal rod (kebab).
+				Add ingredients to a base item to prepare a custom meal.<br>
+				The bases are:<br>
+				- bun (burger)<br>
+				- breadslices(sandwich)<br>
+				- plain bread<br>
+				- plain pie<br>
+				- vanilla cake<br>
+				- empty bowl (salad)<br>
+				- bowl with 10u water (soup)<br>
+				- boiled spaghetti<br>
+				- pizza bread<br>
+				- metal rod (kebab)
 
 				<h2>Table Craft:</h2>
 				Put ingredients on table, then click and drag the table onto yourself to prepare recipes.

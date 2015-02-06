@@ -4,7 +4,6 @@
 
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice
-	trash = /obj/item/trash/plate
 	bitesize = 2
 	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich
 	filling_color = "#FFA500"
@@ -21,8 +20,6 @@
 	name = "bread slice"
 	desc = "A slice of home."
 	icon_state = "breadslice"
-
-
 
 /obj/item/weapon/reagent_containers/food/snacks/store/bread/meat
 	name = "meatbread loaf"
@@ -83,15 +80,11 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/tofu
 	list_reagents = list("nutriment" = 30, "vitamin" = 10)
 
-
-
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/tofu
 	name = "tofubread slice"
 	desc = "A slice of delicious tofubread."
 	icon_state = "tofubreadslice"
 	filling_color = "#FF8C00"
-
-
 
 /obj/item/weapon/reagent_containers/food/snacks/store/bread/creamcheese
 	name = "cream cheese bread"
@@ -107,7 +100,7 @@
 	filling_color = "#FF8C00"
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/custom
-	name = "Custom breadslice"
+	name = "bread slice"
 	desc = "Who knows what it contains?"
 	icon_state = "tofubreadslice"
 	filling_color = "#FFFFFF"

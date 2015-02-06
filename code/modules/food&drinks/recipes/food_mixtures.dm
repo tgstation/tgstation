@@ -152,7 +152,7 @@
 	required_container = /obj/item/weapon/reagent_containers/food/snacks/dough
 	mix_message = "The dough forms a cake batter."
 
-/datum/chemical_reaction/cakebatter/on_reaction(var/datum/reagents/holder)
+/datum/chemical_reaction/cakebatter2/on_reaction(var/datum/reagents/holder)
 	var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/cakebatter
 	S.loc = get_turf(holder.my_atom)
 	if(holder && holder.my_atom)
@@ -167,7 +167,7 @@
 	required_container = /obj/item/weapon/reagent_containers/food/snacks/flatdough
 	mix_message = "The dough forms a pie dough."
 
-/datum/chemical_reaction/piedough/on_reaction(var/datum/reagents/holder)
+/datum/chemical_reaction/piedough2/on_reaction(var/datum/reagents/holder)
 	var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/piedough
 	S.loc = get_turf(holder.my_atom)
 	if(holder && holder.my_atom)

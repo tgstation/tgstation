@@ -52,7 +52,6 @@
 		var/image/filling = image('icons/obj/food.dmi', src, "soupcustom_filling")
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		overlays += filling
-		//if bad result, simply give it wishsoup icon
 
 // Customizable Foods //////////////////////////////////////////
 
@@ -89,7 +88,7 @@
 			S.reagents.trans_to(src,S.reagents.total_volume)
 			update_overlays(S)
 			if(istype(S, /obj/item/weapon/reagent_containers/food/snacks/meat/human))
-				var/obj/item/weapon/reagent_containers/food/snacks/meat/human/H
+				var/obj/item/weapon/reagent_containers/food/snacks/meat/human/H = S
 				if(H.subjectname)
 					name = "[H.subjectname] [initial(name)]"
 				else if(H.subjectjob)
@@ -118,7 +117,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/update_overlays(obj/item/weapon/reagent_containers/food/snacks/S)
 
-	var/image/I = new(src.icon, "[initial(icon_state)]_filling")
+	var/image/I = new(icon, "[initial(icon_state)]_filling")
 
 	if(S.filling_color == "#FFFFFF")
 		I.color = pick("#FF0000","#0000FF","#008000","#FFFF00")
@@ -157,7 +156,10 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/slice = new slice_path (loc)
 		if(ingredients.len)
 			var/obj/item/weapon/reagent_containers/food/snacks/S = pick(ingredients)
-			slice.update_overlays(S)
+			if(S)
+				slice.name = "[S.name] [initial(slice.name)]"
+				slice.filling_color = S.filling_color
+				slice.update_overlays(S)
 		reagents.trans_to(slice,reagents_per_slice)
 	qdel(src)
 
@@ -258,14 +260,16 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = W
 		if(flags & OPENCONTAINER)
 			if(reagents)
-				if(reagents.get_reagent_amount("flour", 15))
-					var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/dough(get_turf(src))
-					user << "<span class='notice'>You mix egg and flour to make some dough.</span>"
-					if(E.reagents)
-						E.reagents.trans_to(S,E.reagents.total_volume)
-					qdel(E)
-				else
-					user << "<span class='notice'>Not enough flour to make dough.</span>"
+				if(reagents.has_reagent("flour"))
+					if(reagents.get_reagent_amount("flour", 15))
+						var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/dough(get_turf(src))
+						user << "<span class='notice'>You mix egg and flour to make some dough.</span>"
+						reagents.remove_reagent("flour", 15)
+						if(E.reagents)
+							E.reagents.trans_to(S,E.reagents.total_volume)
+						qdel(E)
+					else
+						user << "<span class='notice'>Not enough flour to make dough.</span>"
 			return
 	..()
 

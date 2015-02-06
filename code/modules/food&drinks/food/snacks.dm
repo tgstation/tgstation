@@ -194,10 +194,11 @@
 /obj/item/weapon/reagent_containers/food/snacks/proc/update_overlays(obj/item/weapon/reagent_containers/food/snacks/S)
 	overlays.Cut()
 	var/image/I = new(src.icon, "[initial(icon_state)]_filling")
-	if(!S.filling_color == "#FFFFFF")
-		I.color = S.filling_color
-	else
+	if(S.filling_color == "#FFFFFF")
 		I.color = pick("#FF0000","#0000FF","#008000","#FFFF00")
+	else
+		I.color = S.filling_color
+
 	overlays += I
 
 
