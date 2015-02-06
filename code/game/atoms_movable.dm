@@ -20,8 +20,8 @@
 	var/area/areaMaster
 
 	// Garbage collection (controller).
-	var/gcDestroyed
-	var/timeDestroyed
+	//var/gcDestroyed
+	//var/timeDestroyed
 
 	var/sound_override = 0 //Do we make a sound when bumping into something?
 	var/hard_deleted = 0

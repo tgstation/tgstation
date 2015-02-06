@@ -6,6 +6,7 @@
 	//#ifdef PROFILE_MACHINES
 	//machine_profiling.len = 0
 	//#endif
+	if(!machines || !machines.len) return
 	for(var/i = 1 to machines.len)
 		if(i > machines.len)
 			break
