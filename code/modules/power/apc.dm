@@ -95,11 +95,6 @@
 
 	var/is_critical = 0 // Endgame scenarios will not destroy this APC.
 
-/obj/machinery/power/apc/updateDialog()
-	if (stat & (BROKEN|MAINT))
-		return
-	..()
-
 /obj/machinery/power/apc/New(loc, var/ndir, var/building=0)
 	..(loc)
 	wires = new(src)
@@ -621,7 +616,6 @@
 				call(/obj/item/clothing/gloves/space_ninja/proc/drain)("APC",src,user:wear_suit)
 				return
 	// do APC interaction
-	user.set_machine(src)
 	src.interact(user)
 
 /obj/machinery/power/apc/attack_alien(mob/living/carbon/alien/humanoid/user)
@@ -648,14 +642,16 @@
 
 
 /obj/machinery/power/apc/interact(mob/user)
-	if(!user)
+	if (!user)
 		return
 
-	if(wiresexposed)
+	if (wiresexposed)
 		wires.Interact(user)
 
-	return ui_interact(user)
+	if (stat & (BROKEN | MAINT | EMPED))
+		return
 
+	ui_interact(user)
 
 /obj/machinery/power/apc/proc/get_malf_status(mob/user)
 	if (ticker && ticker.mode && (user.mind in ticker.mode.malf_ai) && istype(user, /mob/living/silicon/ai))
