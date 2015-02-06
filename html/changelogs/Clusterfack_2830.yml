@@ -1,0 +1,6 @@
+author: Clusterfack
+delete-after: true
+changes:
+- bugfix: Bag of holdings now explode upon collision with a singularity again
+- tweak: Broken bottles have had their size changed and now fit in trash bags
+- rscadd: Microwaves can be moved onto tables now
