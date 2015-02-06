@@ -1,0 +1,6 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Fixed a bug that caused Request Console to always send normal priority messages (never high priority).
+  - tweak: Request Consoles receiving normal priority messages now use their old High Priority sprite. Consoles receiving high priority messages now use their unused Extreme Priority sprite (yes, there was a scrapped Extreme priority).
+  - soundadd: Added new sounds for when messages are received on the Request Consoles.

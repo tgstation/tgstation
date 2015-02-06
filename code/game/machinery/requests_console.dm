@@ -160,7 +160,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					if (Console.department == department)
 						Console.newmessagepriority = 0
 						Console.icon_state = "req_comp0"
-						Console.luminosity = 1
+						Console.SetLuminosity(1)
 				newmessagepriority = 0
 				icon_state = "req_comp0"
 				for(var/msg in messages)
@@ -277,12 +277,12 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					if (ckey(Console.department) == ckey(href_list["department"]))
 
 						switch(priority)
-							if("2")		//High priority
+							if(2)		//High priority
 								if(Console.newmessagepriority < 2)
 									Console.newmessagepriority = 2
-									Console.icon_state = "req_comp2"
+									Console.icon_state = "req_comp3"
 								if(!Console.silent)
-									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
+									playsound(Console.loc, 'sound/machines/request_urgent.ogg', 50, 1)
 									say(text("\icon[Console] *The Requests Console beeps: 'PRIORITY Alert in [department]'"))
 								Console.messages += "<B><FONT color='red'>High Priority message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></FONT></B><BR>[sending]"
 
@@ -299,14 +299,14 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 							else		// Normal priority
 								if(Console.newmessagepriority < 1)
 									Console.newmessagepriority = 1
-									Console.icon_state = "req_comp1"
+									Console.icon_state = "req_comp2"
 								if(!Console.silent)
-									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
+									playsound(Console.loc, 'sound/machines/request.ogg', 50, 1)
 									say(text("\icon[Console] *The Requests Console beeps: 'Message from [department]'"))
 								Console.messages += "<B>Message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></FONT></B><BR>[message]"
 
 						screen = 6
-						Console.luminosity = 2
+						Console.SetLuminosity(2)
 				messages += "<B>Message sent to [dpt]</B><BR>[message]"
 			else
 				say(text("\icon[src] *The Requests Console beeps: 'NOTICE: No server detected!'"))
