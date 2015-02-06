@@ -1270,7 +1270,7 @@ client/proc/mob_list()
 		if(!ismob(V))
 			if(isnull(V))
 				foundnull++
-			msg = "Non mob found in mob list [isnull(V) ? "null entry found at mob_list.Find(V)" : "[V]'s type is [V.type]"]"
+			msg = "<span class='danger'><font size=3>Non mob found in mob list [isnull(V) ? "null entry found at mob_list.Find(V)" : "[V]'s type is [V.type]"]</span></font>"
 		usr << msg
 	if(foundnull)
 		usr << "Found [foundnull] null entries in the mob list, running null clearer."
