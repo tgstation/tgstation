@@ -3,7 +3,7 @@
 // FOR THIS SHIT I'M GOING TO MAKE ALL MY COMMENTS IN CAPS
 
 /atom
-	var/list/canSmoothWith=list() // TYPE PATHS I CAN SMOOTH WITH~~~~~
+	var/list/canSmoothWith // TYPE PATHS I CAN SMOOTH WITH~~~~~
 
 // MOVED INTO UTILITY FUNCTION FOR LESS DUPLICATED CODE.
 /atom/proc/findSmoothingNeighbors()
