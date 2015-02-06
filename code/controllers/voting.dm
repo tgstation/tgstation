@@ -2,7 +2,7 @@ var/global/datum/controller/vote/vote = new()
 
 
 #define VOTE_SCREEN_WIDTH 400
-#define VOTE_SCREEN_HEIGHT 600
+#define VOTE_SCREEN_HEIGHT 400
 
 /datum/controller/vote
 	var/initiator = null
@@ -16,6 +16,7 @@ var/global/datum/controller/vote/vote = new()
 	var/list/current_votes = list()
 	var/list/ismapvote
 	var/chosen_map
+	var/name = "datum"
 
 /datum/controller/vote/New()
 	. = ..()
@@ -25,8 +26,6 @@ var/global/datum/controller/vote/vote = new()
 			qdel(vote)
 
 		vote = src
-
-		
 //datum/controller/vote/proc/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
 //	return
 		
@@ -42,14 +41,12 @@ var/global/datum/controller/vote/vote = new()
 		// Calculate how much time is remaining by comparing current time, to time of vote start,
 		// plus vote duration
 		time_remaining = (ismapvote && ismapvote.len) ? (round((started_time + 600 - world.time)/10)) : (round((started_time + config.vote_period - world.time)/10))
-
-		if(time_remaining < 0)
+		if(!time_remaining)
 			result()
 			for(var/client/C in voting)
 				if(C)
 					nanomanager.close_user_uis(C.mob, src)
-			reset()
-			
+			src.reset()					
 /datum/controller/vote/proc/reset()
 	initiator = null
 	time_remaining = 0
@@ -184,7 +181,7 @@ var/global/datum/controller/vote/vote = new()
 			var/next_allowed_time = (started_time + config.vote_delay)
 			if(next_allowed_time > world.time)
 				return 0
-
+				
 		reset()
 		switch(vote_type)
 			if("restart")
@@ -214,7 +211,8 @@ var/global/datum/controller/vote/vote = new()
 					world << "<span class='danger'>Failed to initiate map vote, no maps found.</span>"
 					return 0
 				ismapvote = maps
-			else			return 0
+			else			
+				return 0
 		mode = vote_type
 		initiator = initiator_key
 		started_time = world.time
@@ -223,13 +221,7 @@ var/global/datum/controller/vote/vote = new()
 			text += "<br>[question]"
 
 		log_vote(text)
-		if(!popup)
-			world << "<font color='purple'><b>[text]</b><br>Type vote to place your votes.<br>You have [ismapvote && ismapvote.len ? "60" : config.vote_period/10] seconds to vote.</font>"
-		else
-			for(var/mob/M in player_list)
-			 if(M.client)
-				 ui_interact(M)
-				 winset(M, "mapwindow.map", "focus=true") // return keyboard focus to map
+		world << "<font color='purple'><b>[text]</b><br>Type vote to place your votes.<br>You have [ismapvote && ismapvote.len ? "60" : config.vote_period/10] seconds to vote.</font>"
 		switch(vote_type)
 			if("crew_transfer")
 				world << sound('sound/voice/Serithi/Shuttlehere.ogg')
@@ -248,7 +240,7 @@ var/global/datum/controller/vote/vote = new()
 	return 0
 
 	
-/datum/controller/vote/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/datum/controller/vote/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
 	if(!user.client) return
 	var/admin = 0
 	var/trialmin = 0
@@ -261,9 +253,12 @@ var/global/datum/controller/vote/vote = new()
 	
 	data["admin"] = admin
 	data["trialmin"] = trialmin
+	data["mode"] = mode
 
 	if(mode)
 		var/choices_list[0]
+		if(current_votes[user.ckey])
+			data["selected_vote"] = current_votes[user.ckey]
 		data["time_left"] = time_remaining
 		
 		for(var/i = 1; i <= choices.len; i++)
@@ -275,13 +270,13 @@ var/global/datum/controller/vote/vote = new()
 			data["admin_commands"] = "(<a href='?src=\ref[src];vote=cancel;'>Cancel Vote</a>)"
 	else
 		if(trialmin || config.allow_vote_restart)
-			data["restart_command"] = "<a href='src=\ref[src];vote=restart>Restart</a>"
-			data["crew_transfer"] = "<a href='src=\ref[src];vote=crew_transfer>Crew Transfer</a>"
+			data["restart_command"] = "<a href='?src=\ref[src];vote=restart'>Restart</a>"
+			data["crew_transfer"] = "<a href='?src=\ref[src];vote=crew_transfer'>Crew Transfer</a>"
 		else
 			data["restart_command"] = "<font color='grey'>Restart (Disallowed)</font>"
 			data["crew_transfer"] = "<font color ='grey'>Crew Transfer (Disallowed)</font>"
 		if(trialmin || config.allow_vote_mode)
-			data["mode_vote"] = "<a href='?src=\ref[src];vote=gamemode']GameMode</a>"
+			data["mode_vote"] = "<a href='?src=\ref[src];vote=gamemode'>GameMode</a>"
 		if(trialmin)
 			data["allow_vote_restart"] = "(<a href='?src=\ref[src];vote=toggle_restart'>)[config.allow_vote_restart?"Allowed":"Disallowed"]</a>)"
 			data["allow_mode_vote"] = "(<a href='?src=\ref[src];vote=toggle_gamemode'>[config.allow_vote_mode?"Allowed":"Disallowed"]</a>)"
