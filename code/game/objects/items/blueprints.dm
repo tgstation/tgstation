@@ -132,6 +132,7 @@ move an amendment</a> to the drawing.</p>
 	A.power_environ = 0
 	A.always_unpowered = 0
 	A.SetDynamicLighting()
+	A.addSorted()
 	spawn() move_turfs_to_area(turfs, A)
 
 	A.always_unpowered = 0

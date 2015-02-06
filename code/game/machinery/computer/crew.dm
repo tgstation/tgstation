@@ -117,7 +117,7 @@
 				//crewmembers += "temporary item"
 				//crewmembers[crewmembers.len] = crewmemberData
 
-	crewmembers = sortByKey(crewmembers, "name")
+	crewmembers = sortList(crewmembers)
 
 	data["crewmembers"] = crewmembers
 

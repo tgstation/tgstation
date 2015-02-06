@@ -368,3 +368,6 @@ var/global/datum/gas_mixture/space_gas = new
 
 //Announcement intercom
 var/obj/item/device/radio/intercom/announcement_intercom = new(null)
+
+//used by jump-to-area etc. Updated by area/updateName()
+var/list/sortedAreas = list()

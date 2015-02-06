@@ -121,8 +121,7 @@
 /turf/Entered(atom/movable/Obj,atom/OldLoc)
 	var/loopsanity = 100
 	if(ismob(Obj))
-		if(!Obj:lastarea)
-			Obj:lastarea = get_area(Obj.loc)
+		Obj:lastarea = get_area(Obj.loc)
 		if(Obj:lastarea.has_gravity == 0)
 			inertial_drift(Obj)
 
@@ -261,7 +260,12 @@
 		var/turf/simulated/S = src
 		env = S.air //Get the air before the change
 		if(S.zone) S.zone.rebuild()
-
+	if(istype(src,/turf/simulated/floor))
+		var/turf/simulated/floor/F = src
+		if(F.floor_tile)
+			qdel(F.floor_tile)
+			F.floor_tile = null
+		F = null
 	if(ispath(N, /turf/simulated/floor))
 		//if the old turf had a zone, connect the new turf to it as well - Cael
 		//Adjusted by SkyMarshal 5/10/13 - The air master will handle the addition of the new turf.

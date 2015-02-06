@@ -128,9 +128,10 @@
 		plugins[P.name] = P
 		P.on_world_loaded()
 
-	process_teleport_locs()			//Sets up the wizard teleport locations
-	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
+	process_teleport_locs()				//Sets up the wizard teleport locations
+	process_ghost_teleport_locs()		//Sets up ghost teleport locations.
 	process_adminbus_teleport_locs()	//Sets up adminbus teleport locations.
+	SortAreas()							//Build the list of all existing areas and sort it alphabetically
 
 	spawn(3000)		//so we aren't adding to the round-start lag
 		if(config.ToRban)

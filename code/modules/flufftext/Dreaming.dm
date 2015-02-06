@@ -15,13 +15,14 @@ mob/living/carbon/proc/dream()
 		"chickens","the oven","euphoria","space god","farting","bones burning","flesh evaporating","distant worlds","skeletons",
 		"voices everywhere","death","a traitor","dark allyways","darkness","a catastrophe","a gun","freezing","a ruined station","plasma fires",
 		"an abandoned laboratory","The Syndicate","blood","falling","flames","ice","the cold","an operating table","a war","red men","malfunctioning robots",
-		"a ship full of spiders","valids","hardcore","your mom","lewd","explosions","broken bones","clowns everywhere","features","a crash","a skrell","a unathi","a tajaran"
+		"a ship full of spiders","valids","hardcore","your mom","lewd","explosions","broken bones","clowns everywhere","features","a crash","a skrell","a unathi","a tajaran",
+		"a vox","a plasmaman","a skellington","a diona","the derelict","the end of the world","the thunderdome","a ship full of dead clowns","a chicken with godlike powers",
 		)
 	spawn(0)
 		for(var/i = rand(1,4),i > 0, i--)
 			var/dream_image = pick(dreams)
 			dreams -= dream_image
-			src << "\blue <i>... [dream_image] ...</i>"
+			src << "<span class='notice'><i>... [dream_image] ...</i></span>"
 			sleep(rand(40,70))
 			if(paralysis <= 0)
 				dreaming = 0

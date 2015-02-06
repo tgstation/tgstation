@@ -258,7 +258,7 @@
 		if(ismob(G.affecting) && G.affecting != ass)
 			var/mob/GM = G.affecting
 			visible_message("<span class='warning'>[usr] drags [GM.name] onto the photocopier!</span>")
-			GM.loc = get_turf(src)
+			GM.forceMove(get_turf(src))
 			ass = GM
 			if(photocopy)
 				photocopy.loc = src.loc
@@ -325,7 +325,7 @@
 
 /obj/machinery/photocopier/MouseDrop_T(mob/target, mob/user)
 	check_ass() //Just to make sure that you can re-drag somebody onto it after they moved off.
-	if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || istype(user, /mob/living/silicon/ai) || target == ass)
+	if (!istype(target) || target.buckled || !Adjacent(user) || !user.Adjacent(target) || user.stat || istype(user, /mob/living/silicon/ai) || target == ass)
 		return
 	src.add_fingerprint(user)
 	if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
@@ -334,7 +334,7 @@
 		if(target.anchored) return
 		if(!ishuman(user) && !ismonkey(user)) return
 		visible_message("<span class='warning'>[usr] drags [target.name] onto the photocopier!</span>")
-	target.loc = get_turf(src)
+	target.forceMove(get_turf(src))
 	ass = target
 	if(photocopy)
 		photocopy.loc = src.loc

@@ -21,7 +21,7 @@ var/global/list/camera_bugs = list()
 
 	for (var/obj/item/device/camera_bug/C in cameras)
 		friendly_cameras.Add(C.c_tag)
-	var/target = input("Select the camera to observe", null) as null|anything in friendly_cameras
+	var/target = input("Select the camera to observe", null) as null|anything in sortList(friendly_cameras)
 	if (!target)
 		user.unset_machine()
 		user.reset_view(user)

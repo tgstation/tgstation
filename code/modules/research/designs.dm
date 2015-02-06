@@ -128,6 +128,7 @@ k
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/security
 
+
 /datum/design/aicore
 	name = "Circuit Design (AI Core)"
 	desc = "Allows for the construction of circuit boards used to build new AI cores."
@@ -2236,6 +2237,15 @@ k
 	build_type = PROTOLATHE
 	materials = list("$iron" = 50, "$glass" = 50)
 	build_path = /obj/item/clothing/glasses/meson
+	
+/datum/design/excavationdrill
+	name = "Excavation Drill"
+	desc = "Advanced archaeological drill combining ultrasonic excitation and bluespace manipulation to provide extreme precision. The diamond tip is adjustable from 1 to 30 cms."
+	id = "excavationdrill"
+	req_tech = list("materials" = 6, "powerstorage" = 3, "engineering" = 3, "bluespace" = 4)
+	build_type = PROTOLATHE
+	materials = list("$iron" = 4000, "$glass" = 1000, "$silver" = 1000, "$diamond" = 500)
+	build_path = /obj/item/weapon/pickaxe/excavationdrill
 
 /////////////////////////////////////////
 //////////////Blue Space/////////////////
@@ -2762,7 +2772,7 @@ k
 	build_path = /obj/item/weapon/circuitboard/ecb/airlock_controller
 
 /datum/design/advanced_airlock_control
-	name = "Circuit Design (Advanced)"
+	name = "Circuit Design (Advanced Airlock Control)"
 	desc = "Allows for the construction of ECB used to build an advanced control panel."
 	id = "advanced_airlock_control"
 	req_tech = list("programming" = 3)
@@ -2931,7 +2941,7 @@ k
 /datum/design/splicer
 	name = "Circuit Design (Disease Splicer)"
 	desc = "Allows for the construction of circuit boards used to build a disease splicer."
-	id = "incubator"
+	id = "splicer"
 	req_tech = list("programming" = 3, "biotech" = 4)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
@@ -2940,16 +2950,16 @@ k
 /datum/design/centrifuge
 	name = "Circuit Design (Isolation Centrifuge)"
 	desc = "Allows for the construction of circuit boards used to build an isolation centrifuge."
-	id = "diseaseanalyser"
+	id = "centrifuge"
 	req_tech = list("programming" = 3, "biotech" = 3)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/centrifuge
 
 /datum/design/prism
-	name = "Circuit Design (Atmospherics Automation Console)"
-	desc = "Allows for the construction of circuit boards used to build an Atmospherics Automation Console"
-	id = "atmos_automation"
+	name = "Circuit Design (Optical Prism)"
+	desc = "Allows for the construction of circuit boards used to build an optical Prism"
+	id = "prism"
 	req_tech = list("programming" = 3, "engineering" = 3)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)

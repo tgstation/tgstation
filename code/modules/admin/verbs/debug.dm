@@ -1258,3 +1258,20 @@ client/proc/delete_all_adminbus()
 
 	for(var/obj/structure/stool/bed/chair/vehicle/adminbus/AB in world)
 		AB.Adminbus_Deletion()
+
+client/proc/mob_list()
+	set name = "show mob list"
+	set category = "Debug"
+	if(!holder) return
+	usr << "mob list length is [mob_list.len]"
+	var/foundnull = 0
+	for(var/mob/V in mob_list)
+		var/msg = "mob ([V]) is in slot [mob_list.Find(V)]"
+		if(!ismob(V))
+			if(isnull(V))
+				foundnull++
+			msg = "<span class='danger'><font size=3>Non mob found in mob list [isnull(V) ? "null entry found at mob_list.Find(V)" : "[V]'s type is [V.type]"]</span></font>"
+		usr << msg
+	if(foundnull)
+		usr << "Found [foundnull] null entries in the mob list, running null clearer."
+		listclearnulls(mob_list)

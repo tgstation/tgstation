@@ -85,6 +85,18 @@ var/global/list/ghdel_profiling = list()
 		type_instances[type] = 0
 		WARNING("Type [type] does not inherit /atom/New().  Please ensure ..() is called, or that the type calls AddToProfiler().")
 
+/atom/Del()
+	if(ismob(src))
+		if(mob_list.Find(src))
+			diary << "WARNING: found [src]|[src.type] in the mob list"
+			mob_list.Remove(src)
+		if(living_mob_list.Find(src))
+			diary << "WARNING: found [src]|[src.type] in the living mob list"
+			living_mob_list.Remove(src)
+		if(dead_mob_list.Find(src))
+			diary << "WARNING: found [src]|[src.type] in the dead mob list"
+			dead_mob_list.Remove(src)
+	..()
 /atom/Destroy()
 	SetOpacity(0)
 

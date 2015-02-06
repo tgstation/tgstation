@@ -124,9 +124,6 @@ var/list/department_radio_keys = list(
 
 	if(handle_inherent_channels(message, message_mode))
 		return
-	if(isMoMMI(src))
-		src:mommi_talk(message)
-		return
 	if(!can_speak_vocal(message))
 		return
 
@@ -141,7 +138,7 @@ var/list/department_radio_keys = list(
 	if(radio_return & REDUCE_RANGE)
 		message_range = 1
 
-	
+
 	send_speech(message, message_range, src, bubble_type)
 
 	log_say("[name]/[key] : [message]")

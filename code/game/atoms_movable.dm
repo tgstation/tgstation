@@ -20,8 +20,8 @@
 	var/area/areaMaster
 
 	// Garbage collection (controller).
-	var/gcDestroyed
-	var/timeDestroyed
+	//var/gcDestroyed
+	//var/timeDestroyed
 
 	var/sound_override = 0 //Do we make a sound when bumping into something?
 	var/hard_deleted = 0
@@ -152,6 +152,9 @@
 
 		loc = destination
 		loc.Entered(src)
+		if(isturf(destination))
+			var/area/A = get_area_master(destination)
+			A.Entered(src)
 
 		for(var/atom/movable/AM in loc)
 			AM.Crossed(src)

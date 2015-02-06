@@ -6,6 +6,15 @@
 	schedule_interval = 20 // every 2 seconds
 	updateQueueInstance = new
 
+/datum/controller/process/mob/started()
+	..()
+	if(!updateQueueInstance)
+		if(!mob_list)
+			mob_list = list()
+		else if(mob_list.len)
+			updateQueueInstance = new
+
 /datum/controller/process/mob/doWork()
-	updateQueueInstance.init(mob_list, "Life")
-	updateQueueInstance.Run()
+	if(updateQueueInstance)
+		updateQueueInstance.init(mob_list, "Life")
+		updateQueueInstance.Run()

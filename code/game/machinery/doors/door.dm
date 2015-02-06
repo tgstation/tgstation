@@ -81,6 +81,15 @@
 			else if(!operating)
 				door_animate("deny")
 
+	if (istype(AM, /obj/structure/stool/bed/chair/vehicle))
+		var/obj/structure/stool/bed/chair/vehicle/vehicle = AM
+
+		if (density)
+			if (vehicle.buckled_mob && !operating && allowed(vehicle.buckled_mob))
+				open()
+			else if(!operating)
+				door_animate("deny")
+
 		return
 
 	return

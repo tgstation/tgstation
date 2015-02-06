@@ -140,3 +140,13 @@ var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "
 			continue
 
 		vars[key] = initial(vars[key])
+
+/proc/isInTypes(atom/Object, types)
+	var/prototype = Object.type
+	Object = null
+
+	for (var/type in params2list(types))
+		if (istype(prototype, type))
+			return 1
+
+	return 0
