@@ -23,6 +23,14 @@
 /obj/item/offhand/unwield(user)
 	return wielding.unwield(user)
 
+/obj/item/offhand/preattack(atom/target, mob/user, proximity_flag, click_parameters)
+	if(istype(target, /obj/item/weapon/storage)) //we place automatically
+		return
+	if(wielding)
+		if(!target.attackby(wielding, user))
+			wielding.afterattack(target, user, proximity_flag, click_parameters)
+		return 1
+
 /obj/item/offhand/proc/attach_to(var/obj/item/I)
 	I.wielded = src
 	wielding = I
@@ -136,7 +144,6 @@
 
 /obj/item/weapon/katana/hfrequency/update_wield(mob/user)
 	..()
-	icon_state = "hfrequency[wielded ? 1 : 0]"
 	item_state = "hfrequency[wielded ? 1 : 0]"
 	force = wielded ? 120 : 40
 	if(user)
