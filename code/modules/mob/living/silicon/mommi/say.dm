@@ -9,6 +9,9 @@
 	return "states, \"[text]\"";
 
 /mob/living/silicon/robot/mommi/handle_inherent_channels(var/message, var/message_mode)
+	. = ..()
+	if(.)
+		return .
 	if(src.keeper)
 		message = trim(message)
 		if (!message)
