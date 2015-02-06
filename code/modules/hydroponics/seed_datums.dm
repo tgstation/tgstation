@@ -1142,7 +1142,7 @@ proc/populate_seed_list()
 	mutants = null
 	packet_icon = "mycelium-plast"
 	plant_icon = "plastellium"
-	chems = list("plasticide" = list(1,10))
+	chems = list("plasticide" = list(5,15))
 
 	lifespan = 15
 	maturation = 5

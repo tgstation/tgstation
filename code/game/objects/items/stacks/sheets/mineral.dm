@@ -137,7 +137,7 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 	return 1
 
 /obj/item/stack/sheet/mineral/plastic
-	name = "Plastic"
+	name = "plastic"
 	icon_state = "sheet-plastic"
 	force = 5.0
 	throwforce = 5
