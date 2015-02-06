@@ -28,6 +28,8 @@
 
 	if(ishuman(src) || isrobot(src))
 		usr.emote("me",usr.emote_type,message)
+	else if(usr.stat == DEAD)
+		usr.emote_dead(message)
 	else
 		usr.emote(message)
 
