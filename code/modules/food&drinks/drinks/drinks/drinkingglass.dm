@@ -465,7 +465,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass
 	name = "shot glass"
-	desc = "A shot glass - the international symbol for bad decisions."
+	desc = "A shot glass - the universal symbol for bad decisions."
 	icon_state = "shotglass"
 	amount_per_transfer_from_this = 10
 	volume = 10
