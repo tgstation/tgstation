@@ -123,10 +123,6 @@ var/list/ai_list = list()
 	..()
 	return
 
-/mob/living/silicon/ai/Destroy()
-	ai_list -= src
-	..()
-
 /mob/living/silicon/ai/verb/pick_icon()
 	set category = "AI Commands"
 	set name = "Set AI Core Display"
