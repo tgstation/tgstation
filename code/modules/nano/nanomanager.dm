@@ -16,8 +16,34 @@
   */
 
   //Uncomment to enable nano file debugging
-  //#define NANO_DEBUG 1
+  // #define NANO_DEBUG 1
 
+  
+/datum/nanomanager/proc/rebuild_asset_dirs()
+	asset_files.len = 0
+	var/list/nano_asset_dirs = list(\
+		"nano/css/",\
+		"nano/images/",\
+		"nano/images/[map.map_dir]/",\
+		"nano/js/",\
+		"nano/templates/"\
+	)
+	var/list/filenames = null
+	for (var/path in nano_asset_dirs)
+		#ifdef NANO_DEBUG
+		world.log << "loading [path]"
+		#endif
+		filenames = flist(path)
+		for(var/filename in filenames)
+			if(copytext(filename, length(filename)) != "/") // filenames which end in "/" are actually directories, which we want to ignore
+				if(fexists(path + filename))
+					#ifdef NANO_DEBUG
+					world.log << "Found [path+filename]!"
+					#endif
+					asset_files.Add(fcopy_rsc(path + filename)) // add this file to asset_files for sending to clients when they connect
+	return
+		
+  
 /datum/nanomanager/New()
 	var/list/nano_asset_dirs = list(\
 		"nano/css/",\
@@ -135,7 +161,7 @@
 			update_count++
 
 	return update_count
-
+	
  /**
   * Close /nanoui uis belonging to user
   *
