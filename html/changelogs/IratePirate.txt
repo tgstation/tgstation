@@ -1,0 +1,7 @@
+author: IratePirate
+delete-after: true
+changes:
+- tweak: changes to science, corridor extended to lead to a new research dock
+- tweak: changes to brig layout
+- tweak a bit more maintenance added, now you can circumnavigate the station in maint
+- bugfix: many small fixes and changes, lathe added to R&D, scalpel, cable coils removed from solars, solars easier to wire to the grid
