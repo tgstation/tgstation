@@ -1,0 +1,4 @@
+author: Deity Link
+delete-after: true
+changes:
+  - rscadd: vehicles (like Janicart or Firebird) can now open doors simply by bumping into them. Like players would.
