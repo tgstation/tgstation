@@ -19,6 +19,10 @@ proc/move_research_shuttle()
 		else
 			fromArea = locate(/area/shuttle/research/station)
 			toArea = locate(/area/shuttle/research/outpost)
+			var/list/search = fromArea.search_contents_for(/obj/item/weapon/disk/nuclear)
+			if(!isemptylist(search))
+				research_shuttle_moving = 0
+				return
 
 		var/list/dstturfs = list()
 		var/throwy = world.maxy
@@ -75,9 +79,8 @@ proc/move_research_shuttle()
 	icon_state = "shuttle"
 	req_access = list(access_research)
 	circuit = "/obj/item/weapon/circuitboard/research_shuttle"
-	var/hacked = 0
 	var/location = 0 //0 = station, 1 = research base
-
+	machine_flags = EMAGGABLE | SCREWTOGGLE
 	l_color = "#7BF9FF"
 
 /obj/machinery/computer/research_shuttle/attack_hand(user as mob)
@@ -92,6 +95,9 @@ proc/move_research_shuttle()
 		return
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
+	if(!src.allowed(usr))
+		usr << "<span class='warning'>Unauthorized Access.</span>"
+		return
 	if(href_list["move"])
 		if(ticker.mode.name == "blob")
 			if(ticker.mode:declared)
@@ -109,31 +115,7 @@ proc/move_research_shuttle()
 		else
 			usr << "<span class='notice'>Shuttle is already moving.</span>"
 
-/obj/machinery/computer/research_shuttle/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
-	if (istype(W, /obj/item/weapon/card/emag))
-		src.req_access = list()
-		hacked = 1
-		usr << "You disable the console's access requirement."
-
-	else if(istype(W, /obj/item/weapon/screwdriver))
-		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
-			var/obj/structure/computerframe/A = new /obj/structure/computerframe(src.loc)
-			var/obj/item/weapon/circuitboard/research_shuttle/M = new /obj/item/weapon/circuitboard/research_shuttle(A)
-			for (var/obj/C in src)
-				C.loc = src.loc
-			A.circuit = M
-			A.anchored = 1
-
-			if (src.stat & BROKEN)
-				user << "<span class='notice'>The broken glass falls out.</span>"
-				getFromPool(/obj/item/weapon/shard, loc)
-				A.state = 3
-				A.icon_state = "3"
-			else
-				user << "<span class='notice'>You disconnect the monitor.</span>"
-				A.state = 4
-				A.icon_state = "4"
-
-			del(src)
+/obj/machinery/computer/research_shuttle/emag(mob/user as mob)
+	..()
+	src.req_access = list()
+	usr << "You disable the console's access requirement."
