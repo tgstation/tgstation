@@ -30,6 +30,8 @@
 	var/datum/data/record/active3 = null //Security
 	var/obj/machinery/power/monitor/powmonitor = null // Power Monitor
 	var/list/powermonitors = list()
+	var/obj/machinery/computer/station_alert/alertmonitor = null // Alert Monitor
+	var/list/alertmonitors = list()
 	var/message1	// used for status_displays
 	var/message2
 	var/list/stored_data = list()
@@ -320,36 +322,30 @@ Code:
 				<A HREF='?src=\ref[src];choice=Status;statdisp=alert;alert=biohazard'>Biohazard</A> \]<BR>"}
 			// END AUTOFIX
 		if (43) //Muskets' and Rockdtben's power monitor :D
-			menu = "<h4><img src=pda_power.png> Power Monitors - Please select one</h4><BR>"
-			powmonitor = null
-			powermonitors = list()
+			menu = "<h4><img src=pda_power.png> Please select a Power Monitoring Computer</h4><BR>No Power Monitoring Computer detected in the vicinity.<BR>"
 			var/powercount = 0
+			var/found = 0
 
-
-
-			for(var/obj/machinery/power/monitor/pMon in world)
-				if(!(pMon.stat & (NOPOWER|BROKEN)) )
-					powercount++
-					powermonitors += pMon
-
-
-			if(!powercount)
-				menu += "\red No connection<BR>"
-			else
-
-				menu += "<FONT SIZE=-1>"
-				var/count = 0
-				for(var/obj/machinery/power/monitor/pMon in powermonitors)
-					count++
-					menu += "<a href='byond://?src=\ref[src];choice=Power Select;target=[count]'> [pMon] </a><BR>"
-
+			for(var/obj/machinery/power/monitor/pMon in machines)
+				if(!(pMon.stat & (NOPOWER|BROKEN)))
+					var/turf/T = get_turf(src)
+					if(T.z == pMon.z)//the application may only detect power monitoring computers on its Z-level.
+						if(!found)
+							menu = "<h4><img src=pda_power.png> Please select a Power Monitoring Computer</h4><BR>"
+							found = 1
+							menu += "<FONT SIZE=-1>"
+						powercount++
+						menu += "<a href='byond://?src=\ref[src];choice=Power Select;target=[powercount]'> [pMon] </a><BR>"
+						powermonitors += "\ref[pMon]"
+			if(found)
 				menu += "</FONT>"
 
 		if (433) //Muskets' and Rockdtben's power monitor :D
-			menu = "<h4><img src=pda_power.png> Power Monitor </h4><BR>"
 			if(!powmonitor)
-				menu += "\red No connection<BR>"
+				menu = "<h4><img src=pda_power.png> Power Monitor </h4><BR>"
+				menu += "No connection<BR>"
 			else
+				menu = "<h4><img src=pda_power.png> [powmonitor] </h4><BR>"
 				var/list/L = list()
 				for(var/obj/machinery/power/terminal/term in powmonitor.powernet.nodes)
 					if(istype(term.master, /obj/machinery/power/apc))
@@ -371,6 +367,56 @@ Code:
 					for(var/obj/machinery/power/apc/A in L)
 						menu += copytext(add_tspace(A.areaMaster.name, 30), 1, 30)
 						menu += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_lspace(A.lastused_total, 6)]  [A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "  N/C"]<BR>"
+
+				menu += "</FONT></PRE>"
+
+		if (53)
+			menu = "<h4><img src=pda_alert.png> Please select an Alert Computer</h4><BR>No Alert Computer detected in the vicinity.<BR>"
+			alertmonitor = null
+			alertmonitors = list()
+
+			var/alertcount = 0
+			var/found = 0
+
+			for(var/obj/machinery/computer/station_alert/aMon in machines)
+				if(!(aMon.stat & (NOPOWER|BROKEN)))
+					var/turf/T = get_turf(src)
+					if(T.z == aMon.z)//the application may only detect station alert computers on its Z-level.
+						if(!found)
+							menu = "<h4><img src=pda_alert.png> Please select an Alert Computer</h4><BR>"
+							found = 1
+							menu += "<FONT SIZE=-1>"
+						alertcount++
+						menu += "<a href='byond://?src=\ref[src];choice=Alert Select;target=[alertcount]'> [aMon] </a><BR>"
+						alertmonitors += "\ref[aMon]"
+			if(found)
+				menu += "</FONT>"
+
+		if (533)
+			if(!alertmonitor)
+				menu = "<h4><img src=pda_alert.png> Alert Monitor </h4><BR>"
+				menu += "No connection<BR>"
+			else
+				menu = "<h4><img src=pda_alert.png> [alertmonitor] </h4><BR>"
+				for (var/cat in alertmonitor.alarms)
+					menu += text("<B>[]</B><BR>\n", cat)
+					var/list/L = alertmonitor.alarms[cat]
+					if (L.len)
+						for (var/alarm in L)
+							var/list/alm = L[alarm]
+							var/area/A = alm[1]
+							var/list/sources = alm[3]
+
+							menu += {"<NOBR>
+								&bull;
+								[A.name]"}
+
+							if (sources.len > 1)
+								menu += text(" - [] sources", sources.len)
+							menu += "</NOBR><BR>\n"
+					else
+						menu += "-- All Systems Nominal<BR>\n"
+					menu += "<BR>\n"
 
 				menu += "</FONT></PRE>"
 
@@ -742,9 +788,17 @@ Code:
 					post_status(href_list["statdisp"])
 		if("Power Select")
 			var/pnum = text2num(href_list["target"])
-			powmonitor = powermonitors[pnum]
-			loc:mode = 433
-			mode = 433
+			powmonitor = locate(powermonitors[pnum])
+			if(istype(powmonitor))
+				loc:mode = 433
+				mode = 433
+
+		if("Alert Select")
+			var/pnum = text2num(href_list["target"])
+			alertmonitor = locate(alertmonitors[pnum])
+			if(istype(alertmonitor))
+				loc:mode = 533
+				mode = 533
 
 	generate_menu()
 	print_to_host(menu)

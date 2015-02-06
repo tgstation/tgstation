@@ -1,7 +1,7 @@
 // the power monitoring computer
 // for the moment, just report the status of all APCs in the same powernet
 /obj/machinery/power/monitor
-	name = "power monitoring computer"
+	name = "Power Monitoring Computer"
 	desc = "It monitors power levels across the station."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "power"

@@ -1,0 +1,6 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Fixed a bug that sometimes caused the "denied" animation to flicker if a player bumps into a door while it is already opening.
+  - bugfix: Fixed a bug that caused doors to always show their "denied" animation while opening when Mechs bump into them.
+  - bugfix: Fixed Shuttle/Pod doors opening/closing animations that used to loop instead of playing only once. Also shortened their delay so they now behave more like regular airlocks.
