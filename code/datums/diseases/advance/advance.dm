@@ -396,7 +396,7 @@ var/list/advance_cures = 	list(
 
 	if(D.symptoms.len > 0)
 
-		var/new_name = input(user, "Name your new disease.", "New Name")
+		var/new_name = stripped_input(user, "Name your new disease.", "New Name")
 		if(!new_name)
 			return
 		D.AssignName(new_name)

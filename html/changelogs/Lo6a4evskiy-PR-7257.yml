@@ -22,7 +22,7 @@
 #################################
 
 # Your name.  
-author: Steelpoint
+author: Lo6a4evskiy
 
 # Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
 delete-after: True
@@ -33,5 +33,7 @@ delete-after: True
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 # Please surround your changes in single (') or double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
 changes: 
-  - rscadd: "Deep space sensors recently detected the derelict remains of the NTSS Omen, a outdated Medical Frigate thought lost, within close proximity to Space Station 13."
-  - rscadd: "If any SS13 EVA Personal are able to locate this ship, they will be able to pilot it back to the station for recovery. The ship may also have cordinates for other locations."  
+  - rscadd: "General record now contains a species field and a photo of the crewmember. Security record consoles allow you to update it with a photo taken in-game (with detective's camera, for example, or AI's)."
+  - rscadd: "Expanded functionality of security HUDs to display rank and photos."
+  - rscadd: "Medical HUDs allow user to change others' mental and physical status. Currently has no gameplay effect other than changing records."
+  - rscadd: "Medical HUDs can perform an examination at the distance, similrarly to how attacking yourself with help intent works. Has limited ability to detect suffocation and toxin damage."

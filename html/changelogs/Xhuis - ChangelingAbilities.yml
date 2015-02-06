@@ -1,7 +1,0 @@
-author: Xhuis
-delete-after: True
-
-
-changes:
-  - rscadd: "Changelings now have the ability Strained Muscles, which lets them move at inhuman speeds at the cost of rapid stamina damage. It costs one evolution points=."
-  - rscadd: "Changelings now have the ability Augmented Eyesight, which lets them see creatures through walls and see in the dark. It costs two evolution points."

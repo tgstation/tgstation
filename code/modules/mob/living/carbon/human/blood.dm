@@ -186,18 +186,17 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	. = ..()
 	vessel.remove_reagent("blood",amount) // Removes blood if human
 
-//Transfers blood from container ot vessels
+//Transfers blood from container to vessels
 /mob/living/carbon/proc/inject_blood(obj/item/weapon/reagent_containers/container, var/amount)
 
 	var/datum/reagent/blood/injected = get_blood(container.reagents)
 
-	if(NOBLOOD in dna.species.specflags)
-		reagents.add_reagent("blood", amount, injected.data)
-		reagents.update_total()
-		return
-
 	if(!injected)
 		return
+
+	for(var/datum/disease/D in injected.data["viruses"])
+		var/datum/disease/new_virus = D.Copy(1)
+		injected.data["viruses"] += new_virus
 
 	var/list/chems = list()
 	chems = params2list(injected.data["trace_chem"])
@@ -207,10 +206,15 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 	container.reagents.remove_reagent("blood", amount)
 
-//Transfers blood from container ot vessels, respecting blood types compatability.
+//Transfers blood from container to vessels, respecting blood types compatability.
 /mob/living/carbon/human/inject_blood(obj/item/weapon/reagent_containers/container, var/amount)
 
 	var/datum/reagent/blood/injected = get_blood(container.reagents)
+
+	if(NOBLOOD in dna.species.specflags)
+		reagents.add_reagent("blood", amount, injected.data)
+		reagents.update_total()
+		return
 
 	var/datum/reagent/blood/our = get_blood(vessel)
 
@@ -304,10 +308,11 @@ proc/blood_splatter(var/target,var/datum/reagent/blood/source,var/large)
 		else
 			B.blood_DNA[source.data["blood_DNA"]] = "O+"
 
-	// Update virus information.
+/*	// Update virus information.
 	for(var/datum/disease/D in source.data["viruses"])
 		var/datum/disease/new_virus = D.Copy(1)
 		source.data["viruses"] += new_virus
 		new_virus.holder = B
+*/
 
 	return B
