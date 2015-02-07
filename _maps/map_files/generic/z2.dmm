@@ -482,7 +482,7 @@
 "jn" = (/obj/item/device/paicard,/turf/unsimulated/floor{icon_state = "grimy"},/area/syndicate_mothership)
 "jo" = (/obj/structure/stool/bed/chair/comfy/teal,/turf/unsimulated/floor{icon_state = "grimy"},/area/syndicate_mothership)
 "jp" = (/obj/structure/bookcase,/obj/item/weapon/book/manual/wiki/engineering_hacking,/obj/item/weapon/book/manual/robotics_cyborgs,/obj/item/weapon/book/manual/engineering_singularity_safety,/obj/item/weapon/book/manual/detective,/turf/unsimulated/floor{icon_state = "grimy"},/area/syndicate_mothership)
-"jq" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/drinks/bottle/rum,/obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla,/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka{pixel_x = -5},/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey{pixel_x = 5},/turf/unsimulated/floor{icon_state = "dark"},/area/centcom/ferry)
+"jq" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/drinks/bottle/rum,/obj/item/weapon/reagent_containers/food/drinks/bottle/tequila,/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka{pixel_x = -5},/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey{pixel_x = 5},/turf/unsimulated/floor{icon_state = "dark"},/area/centcom/ferry)
 "jr" = (/turf/unsimulated/wall/fakeglass{icon_state = "fakewindows2"; dir = 6},/area/tdome/tdomeobserve)
 "js" = (/obj/structure/lattice,/turf/space/transit,/area/wizard_station)
 "jt" = (/obj/item/weapon/shard{color = "#008000"},/turf/unsimulated/floor{tag = "icon-cultdamage5"; icon_state = "cultdamage5"},/area/wizard_station)
