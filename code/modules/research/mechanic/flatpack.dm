@@ -108,11 +108,12 @@
 	var/valid_step = is_right_key(user,used_atom)
 	if(valid_step)
 		if(custom_action(valid_step, used_atom, user))
+			var/list/step = steps[steps.len]
+			user.show_message("You begin to [step["action"]]...")
 			assemble_busy = 1
 			if(do_after(user, 30))
 				assemble_busy = 0
-				var/list/step = steps[steps.len]
-				user << "You successfully [step["action"]] in the assembly."
+				user.show_message("You successfully [step["action"]] in the assembly.")
 				next_step(user)
 			assemble_busy = 0
 			return 1
