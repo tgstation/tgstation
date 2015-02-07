@@ -1,9 +1,9 @@
 /obj/effect/proc_holder/changeling/revive
-	name = "Regenerate"
+	name = "Revive"
 	desc = "We regenerate, healing all damage from our form."
 	req_stat = DEAD
 
-//Revive from feign death
+//Revive from revival stasis
 /obj/effect/proc_holder/changeling/revive/sting_action(var/mob/living/carbon/user)
 
 	if(user.stat == DEAD)
