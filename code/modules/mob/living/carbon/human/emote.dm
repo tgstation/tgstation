@@ -728,7 +728,7 @@
 	set desc = "Sets an extended description of your character's features."
 	set category = "IC"
 
-	if(appearance_isbanned(user))
+	if(appearance_isbanned(usr))
 		src << "<span class = 'notice'>You are appearance banned!</span>"
 		flavor_text = null
 		return
