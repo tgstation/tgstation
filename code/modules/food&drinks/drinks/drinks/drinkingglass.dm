@@ -462,3 +462,10 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/cola
 	list_reagents = list("cola" = 50)
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass
+	name = "shot glass"
+	desc = "A shot glass - the universal symbol for bad decisions."
+	icon_state = "shotglass"
+	amount_per_transfer_from_this = 10
+	volume = 10
