@@ -104,15 +104,16 @@
 			force = round((5+potency/5), 1)
 
 /obj/item/weapon/grown/nettle/pickup(mob/living/carbon/human/user as mob)
-	if(!user.gloves)
-		user << "\red The nettle burns your bare hand!"
-		if(istype(user, /mob/living/carbon/human))
+	if(istype(user))
+		if(!user.gloves)
+			user << "<span class='warning'>The nettle burns your bare hand!</span>"
 			var/organ = ((user.hand ? "l_":"r_") + "arm")
 			var/datum/organ/external/affecting = user.get_organ(organ)
 			if(affecting.take_damage(0,force))
 				user.UpdateDamageIcon()
-		else
-			user.take_organ_damage(0,force)
+	else
+		user.take_organ_damage(0,force)
+		user << "<span class='warning'>The nettle burns your bare hand!</span>"
 
 /obj/item/weapon/grown/nettle/afterattack(atom/A as mob|obj, mob/user as mob, proximity)
 	if(!proximity) return
