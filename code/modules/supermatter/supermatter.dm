@@ -110,7 +110,7 @@
 /obj/machinery/power/supermatter/shard/singularity_act()
 	var/prints = ""
 	if(src.fingerprintshidden)
-		prints = ", all touchers : " + src.fingerprintshidden
+		prints = ", all touchers : [list2params(src.fingerprintshidden)]"
 	log_admin("New super singularity made by eating a SM crystal [prints]. Last touched by [src.fingerprintslast].")
 	message_admins("New super singularity made by eating a SM crystal [prints]. Last touched by [src.fingerprintslast].")
 	qdel(src)
