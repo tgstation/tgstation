@@ -163,7 +163,9 @@ datum
 						H.bloody_hands(self.data["donor"])
 					spawn()//bloody feet, result of the blood that fell on the floor
 						var/obj/effect/decal/cleanable/blood/B = locate() in get_turf(H)
-						B.Crossed(H)
+
+						if (B)
+							B.Crossed(H)
 					H.update_icons()
 
 			on_merge(var/data)
