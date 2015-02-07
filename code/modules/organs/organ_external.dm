@@ -269,7 +269,7 @@ This function completely restores a damaged organ to perfect condition.
 //Determines if we even need to process this organ.
 
 /datum/organ/external/proc/need_process()
-	if(status && ((status & ORGAN_ROBOT|ORGAN_PEG)) // If it's robotic OR PEG, that's fine it will have a status.
+	if(status && ((status & ORGAN_ROBOT|ORGAN_PEG))) // If it's robotic OR PEG, that's fine it will have a status.
 		return 1
 	if(brute_dam || burn_dam)
 		return 1
