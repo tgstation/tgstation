@@ -406,7 +406,7 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 		new_character.gender = pick(MALE, FEMALE)
 		client.prefs.real_name = random_name(new_character.gender)
 		client.prefs.randomize_appearance_for(new_character)
-		client.prefs.flavor_text = ()
+		client.prefs.flavor_text = ""
 	else
 		client.prefs.copy_to(new_character)
 
