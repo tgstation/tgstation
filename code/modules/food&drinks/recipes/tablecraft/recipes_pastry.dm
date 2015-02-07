@@ -171,7 +171,7 @@
 		/obj/item/weapon/paper = 1
 	)
 	parts =	list(
-		/obj/item/weapon/paper
+		/obj/item/weapon/paper = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/fortunecookie
 

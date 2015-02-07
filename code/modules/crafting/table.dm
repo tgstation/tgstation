@@ -122,12 +122,15 @@
 							amt -= RC.reagents.get_reagent_amount(RG.id)
 							RC.reagents.del_reagent(RG.id)
 
+	var/list/partlist = list(R.parts.len)
+	for(var/M in R.parts)
+		partlist[M] = R.parts[M]
 	deletion_loop:
 		for(var/B in Deletion)
 			for(var/A in R.parts)
 				if(istype(B, A))
-					if(R.parts[A] > 0)
-						R.parts[A]--
+					if(partlist[A] > 0) //do we still need a part like that?
+						partlist[A] -= 1
 						continue deletion_loop
 			Deletion.Remove(B)
 			qdel(B)
@@ -160,6 +163,9 @@
 	if(usr.stat || !Adjacent(usr) || usr.lying)
 		return
 	if(href_list["make"])
+		if(!check_table_space())
+			usr << "<span class ='warning'>The table is too crowded.</span>"
+			return
 		var/datum/table_recipe/TR = locate(href_list["make"])
 		busy = 1
 		interact(usr)
@@ -169,3 +175,11 @@
 			usr << "<span class ='warning'>Construction failed.</span>"
 		busy = 0
 		interact(usr)
+
+/obj/structure/table/proc/check_table_space()
+	var/Item_amount = 0
+	for(var/obj/item/I in loc)
+		Item_amount++
+	if(Item_amount <= 20) //is the table crowded?
+		return 1
+

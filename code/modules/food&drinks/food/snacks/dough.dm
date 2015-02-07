@@ -9,7 +9,7 @@
 		if(flags & OPENCONTAINER)
 			if(reagents)
 				if(reagents.has_reagent("flour"))
-					if(reagents.get_reagent_amount("flour", 15))
+					if(reagents.get_reagent_amount("flour") >= 15)
 						var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/dough(get_turf(src))
 						user << "<span class='notice'>You mix egg and flour to make some dough.</span>"
 						reagents.remove_reagent("flour", 15)
