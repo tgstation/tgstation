@@ -100,6 +100,8 @@ k
 			return D
 	return
 
+/datum/proc/FindDesignByID(var/id)
+	//
 //sum of the required tech of a design
 /datum/design/proc/TechTotal()
 	var/total = 0

@@ -35,11 +35,11 @@
 
 /obj/machinery/r_n_d/fabricator/New()
 	. = ..()
-
-	for(var/part_set in part_sets)
-		convert_part_set(part_set)
+	//for(var/part_set in part_sets)
+		//convert_part_set(part_set)
 
 	files = new /datum/research(src) //Setup the research data holder.
+	setup_part_sets()
 
 /obj/machinery/r_n_d/fabricator/update_icon()
 	..()
@@ -134,16 +134,34 @@
 	return
 
 //creates a set with the name and the list of things you give it
-/obj/machinery/r_n_d/fabricator/proc/add_part_set(set_name as text, var/list/parts=null)
-	if(set_name in part_sets)//attempt to create duplicate set
-		return 0
-	if(isnull(parts))
-		part_sets[set_name] = list()
-	else
-		part_sets[set_name] = parts
-	convert_part_set(set_name)
-	return 1
-
+/obj/machinery/r_n_d/fabricator/proc/setup_part_sets()
+	var/i = 0
+	part_sets.len = 0
+	var/list/cat_set
+	for(var/datum/design/D in files.known_designs)
+		if(D.category)
+			if(!part_sets[D.category])
+				cat_set = part_sets[D.category]
+				cat_set = list()
+			else
+				cat_set = part_sets[D.category]
+			cat_set.Add(D)
+			part_sets[D.category] = cat_set
+			i++
+		if(!D.category)
+			if(!part_sets["Misc"])
+				cat_set = part_sets[D.category]
+				cat_set = list()
+			else
+				cat_set = part_sets["Misc"]
+			cat_set.Add(D)
+			part_sets[D.category] = cat_set
+			i++
+		if(!istype(D))
+			warning("[D] was passed into add_part_set and not found to be datum/design")
+	cat_set.len = 0
+	return i
+			
 /obj/machinery/r_n_d/fabricator/process()
 	if(busy || stopped)
 		return
@@ -167,7 +185,7 @@
 	if(!part || !istype(part))
 		return 0
 
-	src.add_part_set(set_name)//if no "set_name" set exists, create
+	//src.add_part_set(set_name)//if no "set_name" set exists, create
 
 	var/list/part_set = part_sets[set_name]
 
@@ -182,7 +200,7 @@
 /obj/machinery/r_n_d/fabricator/proc/remove_part_set(set_name as text)
 	for(var/i=1,i<=part_sets.len,i++)
 		if(part_sets[i]==set_name)
-			part_sets.Cut(i,++i)
+			part_sets.Remove(part_sets[i])
 			return 1
 	return
 
@@ -263,16 +281,25 @@
 	src.visible_message("\icon[src] <b>[src]</b> beeps: \"[set_name] parts were added to the queue\".")
 	return
 
+	
+/obj/machinery/r_n_d/fabricator/FindDesignByID()
+	for(var/datum/design/D in files.known_designs)
+		if(D.id == id)
+			return D
+		if(!istype(D))
+			warning("[D] was found in known_designs in FindDesignByID, the ID passed into it it was: [id]")
+	
 /obj/machinery/r_n_d/fabricator/proc/add_to_queue(var/datum/design/part)
 	if(!istype(queue))
 		queue = list()
 	if(!istype(part))
-		part = FindDesign(part)
+		part = FindDesignByID(part.id)
 	if(!part)
 		return
 	if(part)
 		//src.visible_message("\icon[src] <b>[src]</b> beeps: [part.name] was added to the queue\".")
-		queue[++queue.len] = part
+		//queue[++queue.len] = part
+		queue.Add(part)
 	return queue.len
 
 /obj/machinery/r_n_d/fabricator/proc/remove_from_queue(index)
@@ -372,7 +399,7 @@
 			if(D)
 				files.AddDesign2Known(D)
 		files.RefreshResearch()
-		var/i = src.convert_designs()
+		var/i = src.setup_part_sets()
 		var/tech_output = update_tech()
 		if(!silent)
 			temp = "Processed [i] equipment designs.<br>"
@@ -502,10 +529,7 @@
 		if(queue.len > FAB_MAX_QUEUE)
 			src.visible_message("\icon[src] <b>[src]</b> beeps, \"Queue is full, please clear or finish.\".")
 			return
-		if(set_name == "Robot")
-			add_part_set_to_queue(set_name, 7)
-		else
-			add_part_set_to_queue(set_name)
+		add_part_set_to_queue(set_name)
 		return 1
 
 	if(href_list["clear_queue"])

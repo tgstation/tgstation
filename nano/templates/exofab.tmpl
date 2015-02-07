@@ -19,6 +19,7 @@ Used In File(s): \code\game\mecha\mech_fabricator.dm
 #define	MECH_SCREEN_UPGRADE		11
 #define	MECH_SCREEN_SPACE_POD	12
 #define	MECH_SCREEN_MISC		13
+#define MECH_SCREEN_ROBOT_PARTS	16
 -->
 <style type='text/css'>
 	#cost
@@ -69,6 +70,7 @@ Used In File(s): \code\game\mecha\mech_fabricator.dm
 			</div>
 			<div class="line">
 				{{:helper.link('Exosuit',	'gear',{'screen':10},(data.screen==10)?'linkOn':'', 'fixedLeft')}}
+				{{:helper.link('Robot Parts','gear',{'screen':16},(data.screen==15)?'linkOn':'', 'fixedLeft')}}
 			</div>
 			<div class="line">
 				{{:helper.link('Upgrade',	'gear',{'screen':11},(data.screen==11)?'linkOn':'', 'fixedLeft')}}
@@ -478,5 +480,30 @@ Used In File(s): \code\game\mecha\mech_fabricator.dm
 		</div>
 	{{/if}}
 	
+	{{if data.screen == 16}}
+		<div class="item">
+			<div class="itemLabel">
+				<h3>Robot Parts</h3>
+			</div>
+			<div class="itemContentWide" style="width:100%;">
+			<div class="statusDisplay">
+			<div class="line">
+						{{for data.parts.Robot_Part}}
+							<div class="line">
+								<div class="statusValue">
+									{{:helper.link(value.name, 'gear', null, null, null, 'misc')}}
+									{{:helper.link(value.cost, null, null, null, null, 'cost')}}
+									{{:helper.link('Build', 'gear', value.command2, null, 'fixedLeft')}}
+									{{:helper.link('Queue', 'gear', value.command1, null, 'fixedLeft')}}
+								</div>
+							</div>
+						{{empty}}
+							<i>No parts in memory</i>
+						{{/for}}
+				</div>
+			</div>
+			</div>
+		</div>
+	{{/if}}
 	
 	

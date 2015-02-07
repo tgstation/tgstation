@@ -17,6 +17,7 @@
 #define	MECH_SCREEN_UPGRADE		11
 #define	MECH_SCREEN_SPACE_POD	12
 #define	MECH_SCREEN_MISC		13
+#define MECH_SCREEN_ROBOT		16
 
 #define MECH_BUILD_TIME 1
 
@@ -35,7 +36,7 @@
 	build_number = 16
 
 	screen = MECH_SCREEN_MAIN
-	part_sets = list( //set names must be unique
+	/*part_sets = list( //set names must be unique
 	"Robot"=list(
 						/obj/item/robot_parts/robot_suit,
 						/obj/item/robot_parts/chest,
@@ -43,13 +44,7 @@
 						/obj/item/robot_parts/l_arm,
 						/obj/item/robot_parts/r_arm,
 						/obj/item/robot_parts/l_leg,
-						/obj/item/robot_parts/r_leg,
-						/obj/item/robot_parts/robot_component/binary_communication_device,
-						/obj/item/robot_parts/robot_component/radio,
-						/obj/item/robot_parts/robot_component/actuator,
-						/obj/item/robot_parts/robot_component/diagnosis_unit,
-						/obj/item/robot_parts/robot_component/camera,
-						/obj/item/robot_parts/robot_component/armour
+						/obj/item/robot_parts/r_leg
 					),
 	"Ripley"=list(
 						/obj/item/mecha_parts/chassis/ripley,
@@ -142,7 +137,7 @@
 						/obj/item/mecha_parts/mecha_tracking,
 						/obj/item/mecha_parts/janicart_upgrade
 						)
-	)
+	)*/
 
 
 
