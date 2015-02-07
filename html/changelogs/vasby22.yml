@@ -1,0 +1,5 @@
+author: Vasby
+delete-after: true
+changes:
+  - bugfix: Fix the PDA Alert Monitor icon.
+  - rscadd: Add the new monitoring functions to Atmos' cartridge.
