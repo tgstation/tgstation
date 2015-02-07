@@ -1298,23 +1298,29 @@ proc/move_alien_ship()
 		alien_ship_location = 1
 	return
 
-proc/formatJumpTo(var/location,var/where="")
+proc/formatJumpTo(location, where = "")
 	var/turf/loc
-	if(istype(location,/turf/))
+
+	if (isturf(location))
 		loc = location
 	else
 		loc = get_turf(location)
-	if(where=="")
-		where=formatLocation(loc)
+
+	if (where == "")
+		where = formatLocation(loc)
+
 	return "<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[loc.x];Y=[loc.y];Z=[loc.z]'>[where]</a>"
 
-proc/formatLocation(var/location)
+proc/formatLocation(location)
 	var/turf/loc
-	if(istype(location,/turf/))
+
+	if (isturf(location))
 		loc = location
 	else
 		loc = get_turf(location)
+
 	var/area/A = get_area(location)
+
 	return "[A.name] - [loc.x],[loc.y],[loc.z]"
 
 proc/formatPlayerPanel(var/mob/U,var/text="PP")
