@@ -966,7 +966,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/fourchanterelle
 	seed = /obj/item/seeds/fourchantermycelium
 	name = "4chanterelle cluster"
-	desc = "<I>4Cantharellus Toxarius</I>: These green toxic little shrooms sure look vile!"
+	desc = "<I>4Chantharellus Toxarius</I>: These green toxic little shrooms sure look vile!"
 	icon_state = "4chanterelle"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/fourchanterelle/add_juice()
@@ -977,7 +977,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/eightchanterelle
 	seed = /obj/item/seeds/eightchantermycelium
 	name = "8chanterelle cluster"
-	desc = "<I>8Cantharellus Viltoxarius</I>: These purple vile toxic little shrooms sure look like they'll rend your brain apart!"
+	desc = "<I>8Chantharellus Viltoxarius</I>: These purple vile toxic little shrooms sure look like they'll rend your brain apart!"
 	icon_state = "8chanterelle"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/eightchanterelle/add_juice()
