@@ -438,6 +438,7 @@
 		var/turf/target
 		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 		if(H) // Somehow, someone managed to flush a window which broke mid-transit and caused the disposal to go in an infinite loop trying to expel null, hopefully this fixes it
+			H.active = 0 // Stop disposalholder's move() processing so we don't call the trunk's expel() too
 			for(var/atom/movable/AM in H)
 				target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 
