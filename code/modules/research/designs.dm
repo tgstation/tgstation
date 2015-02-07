@@ -2239,7 +2239,7 @@ k
 	build_type = PROTOLATHE
 	materials = list("$iron" = 50, "$glass" = 50)
 	build_path = /obj/item/clothing/glasses/meson
-	
+
 /datum/design/excavationdrill
 	name = "Excavation Drill"
 	desc = "Advanced archaeological drill combining ultrasonic excitation and bluespace manipulation to provide extreme precision. The diamond tip is adjustable from 1 to 30 cms."
@@ -2493,7 +2493,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("combat" = 4, "syndicate" = 3)
 	build_path = /obj/item/borg/upgrade/syndicate
-	category = "Cyborg Upgrade Modules"
+	category = "Robotic_Upgrade_Modules"
 	materials = list("$iron"=10000,"$glass"=15000,"$diamond" = 10000)
 
 /datum/design/borg_engineer_upgrade
@@ -2503,7 +2503,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("engineering" = 1)
 	build_path = /obj/item/borg/upgrade/engineering
-	category = "Cyborg Upgrade Modules"
+	category = "Robotic_Upgrade_Modules"
 	materials = list("$iron"=10000,"$glass"=10000,"$plasma"=5000)
 
 /datum/design/medical_module_surgery

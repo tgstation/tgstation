@@ -36,7 +36,7 @@
 	build_number = 16
 
 	screen = MECH_SCREEN_MAIN
-	
+
 /obj/machinery/r_n_d/fabricator/mech/New()
 	. = ..()
 
