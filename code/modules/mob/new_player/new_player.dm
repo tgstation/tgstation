@@ -70,7 +70,7 @@
 /mob/new_player/Stat()
 	..()
 
-	
+
 	if(statpanel("Status") && ticker)
 		if (ticker.current_state != GAME_STATE_PREGAME)
 			stat(null, "Station Time: [worldtime2text()]")
@@ -406,6 +406,7 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 		new_character.gender = pick(MALE, FEMALE)
 		client.prefs.real_name = random_name(new_character.gender)
 		client.prefs.randomize_appearance_for(new_character)
+		client.prefs.flavor_text = ()
 	else
 		client.prefs.copy_to(new_character)
 

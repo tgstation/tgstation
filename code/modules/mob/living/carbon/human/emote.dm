@@ -728,4 +728,9 @@
 	set desc = "Sets an extended description of your character's features."
 	set category = "IC"
 
-	flavor_text =  copytext(sanitize(input(usr, "Please enter your new flavour text.", "Flavour text", null)  as text), 1)
+	if(appearance_isbanned(user))
+		src << "<span class = 'notice'>You are appearance banned!</span>"
+		flavor_text = null
+		return
+	else
+		flavor_text =  copytext(sanitize(input(usr, "Please enter your new flavour text.", "Flavour text", null)  as text), 1)
