@@ -294,7 +294,7 @@
 						if(contents.len && !isrobot(src))
 							for(var/obj/item/carried_item in contents)//If the ventcrawler got on objects.
 								if(!(isInTypes(carried_item, canEnterVentWith)))
-									src << "\red You can't be carrying items or have items equipped when vent crawling!"
+									src << "<SPAN CLASS='warning'>You can't be carrying items or have items equipped when vent crawling!</SPAN>"
 									return
 						var/obj/machinery/atmospherics/unary/vent_pump/target_vent = vents[selection]
 						if(target_vent)
