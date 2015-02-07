@@ -2015,8 +2015,8 @@ k
 	locked = 1
 
 /datum/design/xcomplasmarifle
-	name = "Plasma Rifle"
-	desc = "A plasma rifle."
+	name = "Plasma Cannon"
+	desc = "A plasma cannon."
 	id = "xcomplasmarifle"
 	req_tech = list("combat" = 5, "materials" = 3, "powerstorage" = 3, "plasmatech" = 3)
 	build_type = PROTOLATHE
@@ -2025,7 +2025,7 @@ k
 	locked = 1
 
 /datum/design/xcomlightplasmarifle
-	name = "Light Plasma Rifle"
+	name = "Plasma Rifle"
 	desc = "A plasma rifle."
 	id = "xcomlightplasmarifle"
 	req_tech = list("combat" = 5, "materials" = 3, "powerstorage" = 3, "plasmatech" = 3)
