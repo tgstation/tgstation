@@ -24,7 +24,8 @@
 	name = "dart gun"
 	desc = "A small gas-powered dartgun, capable of delivering chemical cocktails swiftly across short distances."
 	icon_state = "dartgun-empty"
-
+	item_state = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	var/list/beakers = list() //All containers inside the gun.
 	var/list/mixing = list() //Containers being used for mixing.
 	var/obj/item/weapon/dart_cartridge/cartridge = null //Container of darts.

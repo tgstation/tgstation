@@ -2008,9 +2008,9 @@ k
 	name = "Plasma Pistol"
 	desc = "A plasma pistol."
 	id = "xcomplasmapistol"
-	req_tech = list("combat" = 4, "materials" = 3, "powerstorage" = 3)
+	req_tech = list("combat" = 5, "materials" = 3, "powerstorage" = 3, "plasmatech" = 3)
 	build_type = PROTOLATHE
-	materials = list("$iron" = 10000, "$glass" = 1000, "$diamond" = 1000)
+	materials = list("$iron" = 10000, "$glass" = 1000, "$plasma" = 12000, "$uranium" = 4000)
 	build_path = /obj/item/weapon/gun/energy/plasma/pistol
 	locked = 1
 
@@ -2018,9 +2018,9 @@ k
 	name = "Plasma Rifle"
 	desc = "A plasma rifle."
 	id = "xcomplasmarifle"
-	req_tech = list("combat" = 4, "materials" = 3, "powerstorage" = 3)
+	req_tech = list("combat" = 5, "materials" = 3, "powerstorage" = 3, "plasmatech" = 3)
 	build_type = PROTOLATHE
-	materials = list("$iron" = 10000, "$glass" = 1000, "$diamond" = 3000)
+	materials = list("$iron" = 10000, "$glass" = 1000, "$diamond" = 3000, "$plasma" = 28000, "$uranium" = 12000)
 	build_path = /obj/item/weapon/gun/energy/plasma/rifle
 	locked = 1
 
@@ -2028,9 +2028,9 @@ k
 	name = "Light Plasma Rifle"
 	desc = "A plasma rifle."
 	id = "xcomlightplasmarifle"
-	req_tech = list("combat" = 4, "materials" = 3, "powerstorage" = 3)
+	req_tech = list("combat" = 5, "materials" = 3, "powerstorage" = 3, "plasmatech" = 3)
 	build_type = PROTOLATHE
-	materials = list("$iron" = 10000, "$glass" = 1000, "$diamond" = 2000)
+	materials = list("$iron" = 10000, "$glass" = 1000, "$plasma" = 20000, "$uranium" = 8000)
 	build_path = /obj/item/weapon/gun/energy/plasma/light
 	locked = 1
 

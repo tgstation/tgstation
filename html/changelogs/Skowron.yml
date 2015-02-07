@@ -1,2 +1,8 @@
 author: Skowron
-changes: []
+changes: 
+  - rscadd: New inhand sprites for nearly all usable guns.
+  - rscadd: Plasma weaponry is now deadlier.
+  - bugfix: Plasma weaponry now use plasma research levels and plasma material. Because that makes a lot of sense right?
+  - bugfix: Combat borg laser cannons use the correct laser cannon beam.
+  - bugfix: Laser cannon sprite inconsistency corrected.
+  - bugfix: Laser AK470s and Plasma MP40ks now visually display their ammo level.
