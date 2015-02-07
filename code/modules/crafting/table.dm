@@ -7,7 +7,7 @@
 	interact(usr)
 
 /obj/structure/table/proc/check_contents(datum/table_recipe/R)
-	check_table(R)
+	check_table()
 	main_loop:
 		for(var/A in R.reqs)
 			for(var/B in table_contents)
@@ -20,18 +20,19 @@
 			return 0
 	return 1
 
-/obj/structure/table/proc/check_table(datum/table_recipe/R)
+/obj/structure/table/proc/check_table()
 	table_contents = list()
 	for(var/obj/item/I in loc)
 		if(istype(I, /obj/item/stack))
 			var/obj/item/stack/S = I
 			table_contents[I.type] += S.amount
 		else
+			if(istype(I, /obj/item/weapon/reagent_containers))
+				var/obj/item/weapon/reagent_containers/RC = I
+				if(RC.flags & OPENCONTAINER)
+					for(var/datum/reagent/A in RC.reagents.reagent_list)
+						table_contents[A.type] += A.volume
 			table_contents[I.type] += 1
-	for(var/obj/item/weapon/reagent_containers/RC in loc)
-		if((RC.flags & OPENCONTAINER) || (R && (RC.type in R.reqs)))
-			for(var/datum/reagent/A in RC.reagents.reagent_list)
-				table_contents[A.type] += A.volume
 
 /obj/structure/table/proc/check_tools(mob/user, datum/table_recipe/R)
 	if(!R.tools.len)
@@ -56,7 +57,7 @@
 	return !i
 
 /obj/structure/table/proc/construct_item(mob/user, datum/table_recipe/R)
-	check_table(R)
+	check_table()
 	if(check_contents(R) && check_tools(user, R))
 		if(do_after(user, R.time))
 			if(!check_contents(R) || !check_tools(user, R))
@@ -125,7 +126,9 @@
 		for(var/B in Deletion)
 			for(var/A in R.parts)
 				if(istype(B, A))
-					continue deletion_loop
+					if(R.parts[A] > 0)
+						R.parts[A]--
+						continue deletion_loop
 			Deletion.Remove(B)
 			qdel(B)
 

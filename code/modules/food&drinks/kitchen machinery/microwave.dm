@@ -1,6 +1,6 @@
 /obj/machinery/microwave
-	name = "microwave"
-	desc = "Keeps hot things hot and cold things hot."
+	name = "microwave oven"
+	desc = "Cooks and boils stuff."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "mw"
 	layer = 2.9
@@ -219,7 +219,7 @@
 		return
 	start()
 
-	if (prob(max(microwavepower*5,dirty*5)))
+	if (prob(max(microwavepower*5/efficiency-5,dirty*5))) //a clean unupgraded microwave on lowest power has no risk of failure
 		muck_start()
 		if (!microwaving(4))
 			muck_finish()
@@ -259,7 +259,7 @@
 		if (stat & (NOPOWER|BROKEN))
 			return 0
 		use_power(500)
-		sleep(12-2*microwavepower) // standard power means sleep(10). The higher the power, the faster the cooking
+		sleep(max(14-2*microwavepower-2*efficiency,2)) // standard power means sleep(10). The higher the power and the better the efficiency, the faster the cooking
 	return 1
 
 /obj/machinery/microwave/proc/has_extra_item()

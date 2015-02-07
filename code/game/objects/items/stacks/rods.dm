@@ -8,6 +8,7 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 	desc = "Some rods. Can be used for building, or something."
 	singular_name = "metal rod"
 	icon_state = "rods"
+	item_state = "rods"
 	flags = CONDUCT
 	w_class = 3.0
 	force = 9.0
