@@ -10,6 +10,7 @@
 	active_power_usage = 5
 	var/mob/living/carbon/human/victim = null
 	var/strapped = 0.0
+	throwpass = 1 //so Adjacent passes.
 
 	var/obj/machinery/computer/operating/computer = null
 

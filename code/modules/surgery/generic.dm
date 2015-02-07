@@ -26,7 +26,7 @@
 			return 0
 		// N3X:  Patient must be sleeping, dead, or unconscious.
 		if(!check_anesthesia(target) && painful)
-			return 0
+			return -1
 		return 1
 
 
@@ -149,9 +149,11 @@
 	max_duration = 110
 
 /datum/surgery_step/generic/cut_open/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(..())
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		return affected.open == 0 && target_zone != "mouth"
+	. = ..()
+	var/datum/organ/external/affected = target.get_organ(target_zone)
+	if(. && !affected.open && target_zone != "mouth")
+		return .
+	return 0
 
 /datum/surgery_step/generic/cut_open/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/datum/organ/external/affected = target.get_organ(target_zone)

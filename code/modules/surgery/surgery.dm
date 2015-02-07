@@ -88,20 +88,32 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		E.germ_level = max(germ_level,E.germ_level) //as funny as scrubbing microbes out with clean gloves is - no.
 
 proc/do_surgery(mob/living/M, mob/living/user, obj/item/tool)
-	if(!istype(M,/mob/living/carbon))
+	if(!istype(M,/mob/living/carbon/human))
 		return 0
 	if (user.a_intent == "hurt")	//check for Hippocratic Oath
 		return 0
+	var/sleep_fail = 0
+	var/clumsy = 0
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		clumsy = ((M_CLUMSY in H.mutations) && prob(50))
 	for(var/datum/surgery_step/S in surgery_steps)
 		//check if tool is right or close enough and if this step is possible
+		sleep_fail = 0
+		if(S.can_use(user, M, user.zone_sel.selecting, tool) == -1)
+			sleep_fail = 1
 		if( S.tool_quality(tool) && S.can_use(user, M, user.zone_sel.selecting, tool) && S.is_valid_mutantrace(M) && !(M in S.doing_surgery))
 			S.doing_surgery += M
 			S.begin_step(user, M, user.zone_sel.selecting, tool)		//start on it
 			//We had proper tools! (or RNG smiled.) and user did not move or change hands.
-			if( prob(S.tool_quality(tool)) &&  do_mob(user, M, rand(S.min_duration, S.max_duration)))
+			if(do_mob(user, M, rand(S.min_duration, S.max_duration)) && prob(S.tool_quality(tool) / (sleep_fail + clumsy + 1)))
 				S.end_step(user, M, user.zone_sel.selecting, tool)		//finish successfully
-			else if (tool in user.contents && user.Adjacent(M))											//or
-				S.fail_step(user, M, user.zone_sel.selecting, tool)		//malpractice~
+			else
+				if ((tool in user.contents) && (user.Adjacent(M)))											//or
+					if(sleep_fail)
+						user << "<span class='warning'>The patient is squirming around in pain!</span>"
+						M.emote("scream",,, 1)
+					S.fail_step(user, M, user.zone_sel.selecting, tool)		//malpractice~
 			if(M) //good, we still exist
 				S.doing_surgery -= M
 			else
