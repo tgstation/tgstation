@@ -1,7 +1,0 @@
-author: Angelite Entyshak
-
-delete-after: True
-
-changes:
-  -tweak: RCD matter carts are now small in size, able to fit in your box.
-  -tweak: Gave the RCD variables to control the costs of its actions.
