@@ -42,7 +42,7 @@
 	if(message_mode == MODE_HEADSET && construct_chat_check(0))
 		log_say("Cult channel: [src.name]/[src.key] : [message]")
 		for(var/mob/M in mob_list)
-			if(M.construct_chat_check(2) /*receiving check*/ || (M in dead_mob_list && !istype(M, /mob/new_player)))
+			if(M.construct_chat_check(2) /*receiving check*/ || ((M in dead_mob_list) && !istype(M, /mob/new_player)))
 				M << "<span class='sinister'><b>[src.name]:</b> [message]</span>"
 		return 1
 
