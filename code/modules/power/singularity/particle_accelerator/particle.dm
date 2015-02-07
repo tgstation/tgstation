@@ -73,7 +73,7 @@
 	return
 
 /obj/effect/accelerated_particle/ex_act(severity)
-	qdel(src)
+	returnToPool(src)
 	return
 
 /obj/effect/accelerated_particle/proc/toxmob(var/mob/living/M)
@@ -105,7 +105,7 @@
 			src.loc = get_step(src,dir)
 	movement_range--
 	if(movement_range <= 0)
-		qdel(src)
+		returnToPool(src)
 	else
 		sleep(lag)
 		move(lag)
