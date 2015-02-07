@@ -1009,7 +1009,7 @@ About the new airlock wires panel:
 			var/obj/item/weapon/pai_cable/PC = I
 			PC.plugin(src, user)
 			PC = null
-	else if(istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/twohanded/fireaxe) )
+	else if(istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/fireaxe) )
 		if(src.busy) return
 		src.busy = 1
 		var/beingcrowbarred = null
@@ -1069,8 +1069,8 @@ About the new airlock wires panel:
 		else if( !welded && !operating )
 			if(density)
 				if(beingcrowbarred == 0) //being fireaxe'd
-					var/obj/item/weapon/twohanded/fireaxe/F = I
-					if(F:wielded)
+					var/obj/item/weapon/fireaxe/F = I
+					if(F.wielded)
 						spawn(0)	open(1)
 					else
 						user << "\red You need to be wielding the Fire axe to do that."
@@ -1078,8 +1078,8 @@ About the new airlock wires panel:
 					spawn(0)	open(1)
 			else
 				if(beingcrowbarred == 0)
-					var/obj/item/weapon/twohanded/fireaxe/F = I
-					if(F:wielded)
+					var/obj/item/weapon/fireaxe/F = I
+					if(F.wielded)
 						spawn(0)	close(1)
 					else
 						user << "\red You need to be wielding the Fire axe to do that."

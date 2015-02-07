@@ -198,6 +198,13 @@
 			usr << "<span class='notice'>[src] is full, make some space.</span>"
 		return 0 //Storage item is full
 
+	if(W.wielded)
+		var/obj/item/ref_name = W
+		if(istype(W, /obj/item/offhand))
+			ref_name = W:wielding
+		usr << "<span class='notice'>Unwield \the [ref_name] first.</span>"
+		return
+
 	if(can_hold.len)
 		var/ok = 0
 		for(var/A in can_hold)
@@ -300,13 +307,16 @@
 				M.client.screen -= W
 
 	if(new_location)
+		var/mob/M
 		if(ismob(loc))
-			W.dropped(usr)
+			M = loc
+			W.dropped(M)
 		if(ismob(new_location))
-			W.layer = 20
+			M = new_location
+			W.pickup(M)
+			M.put_in_active_hand(W)
 		else
-			W.layer = initial(W.layer)
-		W.loc = new_location
+			W.loc = new_location
 	else
 		W.loc = get_turf(src)
 
