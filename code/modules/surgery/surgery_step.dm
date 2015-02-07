@@ -5,7 +5,7 @@
 	var/accept_any_item = 0			//does the surgery step accept any item? If true, ignores implements. Compatible with require_hand.
 	var/time = 10					//how long does the step take?
 	var/new_organ = null 			//Used for multilocation operations
-	var/list/allowed_organs = list()//Allowed organs, see Handle_Multi_Loc below - RR
+	var/list/allowed_organs = list()//Allowed organs, see Handle_Multi_Loc()
 
 
 /datum/surgery_step/proc/try_op(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -88,12 +88,11 @@
 /datum/surgery_step/proc/tool_check(mob/user, obj/item/tool)
 	return 1
 
-/datum/surgery_step/proc/Handle_Multi_Loc(mob/user, mob/living/carbon/target) //this is here so MultiLoc Surgeries don't need to rewrite it each time - RR
-
+/datum/surgery_step/proc/Handle_Multi_Loc(mob/user, mob/living/carbon/target)
 
 	if(user.zone_sel.selecting in allowed_organs)
 
-		switch(user.zone_sel.selecting) //Switch, for Aran - RR
+		switch(user.zone_sel.selecting)
 			if("r_arm")
 				new_organ = target.getlimb(/obj/item/organ/limb/r_arm)
 			if("l_arm")
@@ -113,7 +112,7 @@
 			if("mouth")
 				new_organ = target.getlimb(/obj/item/organ/limb/head)
 			else
-				user << "<span class='warning'>You cannot perform this operation on this body part!</span>" //Explain to the surgeon what went wrong - RR
+				user << "<span class='warning'>You cannot perform this operation on this body part!</span>"
 				return 0
 
 		return new_organ
