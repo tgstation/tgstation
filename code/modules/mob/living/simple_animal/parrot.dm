@@ -708,7 +708,7 @@
 				visible_message("[src] grabs [held_item] out of [C]'s hand!", "<span class='notice'>You snag [held_item] out of [C]'s hand!</span>", "You hear the sounds of wings flapping furiously.")
 				return held_item
 			else
-				visible_message("[src] fails to grab [held_item] out of [C]'s hand!", "<span class='notice'>You fail to snag [held_item] out of [C]'s hand!</span>", "You hear the sounds of wings flapping furiously.")
+				visible_message("[src] fails to grab [stolen_item] out of [C]'s hand!", "<span class='notice'>You fail to snag [stolen_item] out of [C]'s hand!</span>", "You hear the sounds of wings flapping furiously.")
 				return 0
 
 	src << "<span class='danger'>There is nothing of interest to take.</spawn>"
