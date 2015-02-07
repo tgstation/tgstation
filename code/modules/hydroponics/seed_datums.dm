@@ -411,13 +411,15 @@ proc/populate_seed_list()
 
 				var/list/gene_chem = gene_value[rid]
 
-				if(!chems[rid])
+				if(!(rid in chems) || !chems[rid])
 					chems[rid] = gene_chem.Copy()
 					continue
 
 				for(var/i=1;i<=gene_chem.len;i++)
 
-					if(isnull(gene_chem[i])) gene_chem[i] = 0
+					if(isnull(gene_chem[i]))
+						chems[rid][i] = 0
+						gene_chem[i] = 0
 
 					if(chems[rid][i])
 						chems[rid][i] = max(1,round((gene_chem[i] + chems[rid][i])/2))
