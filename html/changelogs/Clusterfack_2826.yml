@@ -1,0 +1,5 @@
+author: Clusterfack
+delete-after: true
+changes:
+- bugfix: The nuke disk can no longer be taken off the station using vehicles or mining/research shuttles
+- bugfix: The shuttles now require access as originally intended
