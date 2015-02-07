@@ -118,7 +118,9 @@ var/const/VOX_DELAY = 600
 
 
 /mob/living/silicon/ai/verb/announcement()
-
+	set name = "Announcement"
+	set desc = "Send an announcement to the crew"
+	set category = "AI Commands"
 	// If we're in an APC, and APC is ded, ABORT
 	if(parent && istype(parent) && parent.stat)
 		return

@@ -85,6 +85,7 @@ var/list/ai_list = list()
 	else src.laws = getLawset(src)
 
 	verbs += /mob/living/silicon/ai/proc/show_laws_verb
+	verbs -= /mob/living/silicon/verb/sensor_mode
 
 	aiPDA = new/obj/item/device/pda/ai(src)
 	aiPDA.owner = name
@@ -97,8 +98,7 @@ var/list/ai_list = list()
 	if (istype(loc, /turf))
 		verbs.Add(/mob/living/silicon/ai/proc/ai_network_change, \
 		/mob/living/silicon/ai/proc/ai_statuschange, \
-		/mob/living/silicon/ai/proc/ai_hologram_change, \
-		/mob/living/silicon/ai/proc/toggle_camera_light)
+		/mob/living/silicon/ai/proc/ai_hologram_change)
 
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
 		if (!B)//If there is no player/brain inside.
@@ -715,7 +715,10 @@ var/list/ai_list = list()
 	apc.malfvacate()
 
 //Toggles the luminosity and applies it by re-entereing the camera.
-/mob/living/silicon/ai/proc/toggle_camera_light()
+/mob/living/silicon/ai/verb/toggle_camera_light()
+	set name = "Toggle Camera Light"
+	set desc = "Toggle internal infrared camera light"
+	set category = "AI Commands"
 	if(stat != CONSCIOUS)
 		return
 
