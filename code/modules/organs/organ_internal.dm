@@ -89,6 +89,7 @@
 							owner.reagents.add_reagent("toxin", rand(3,5))
 
 /datum/organ/internal/proc/take_damage(amount, var/silent=0)
+	if(!owner) return
 	if(src.robotic == 2)
 		src.damage += (amount * 0.8)
 	else
