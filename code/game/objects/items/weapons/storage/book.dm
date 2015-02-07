@@ -35,6 +35,7 @@
 	return
 
 /obj/item/weapon/storage/book/bible/proc/bless(mob/living/carbon/M as mob)
+	.= 0
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/heal_amt = 10
@@ -42,8 +43,7 @@
 			if(affecting.status == ORGAN_ORGANIC) //No Bible can heal a robotic arm!
 				if(affecting.heal_damage(heal_amt, heal_amt, 0))
 					H.update_damage_overlays(0)
-		return 1
-	return 0
+					.= 1
 
 /obj/item/weapon/storage/book/bible/attack(mob/living/M as mob, mob/living/carbon/human/user as mob)
 
