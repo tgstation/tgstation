@@ -47,8 +47,8 @@
 	var/obj/item/weapon/implant/req_implant = null
 
 /obj/item/device/firing_pin/implant/pin_auth(mob/living/user)
-	for(req_implant in user)
-		if(req_implant && req_implant.imp_in == user)
+	for(var/obj/item/weapon/implant/I in user)
+		if(req_implant &&  I.imp_in == user && I.type == req_implant)
 			return 1
 	return 0
 
