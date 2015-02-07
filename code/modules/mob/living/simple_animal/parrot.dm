@@ -701,11 +701,15 @@
 			stolen_item = C.r_hand
 
 		if(stolen_item)
-			C.unEquip(stolen_item)
-			held_item = stolen_item
-			stolen_item.loc = src
-			visible_message("[src] grabs [held_item] out of [C]'s hand!", "<span class='notice'>You snag [held_item] out of [C]'s hand!</span>", "You hear the sounds of wings flapping furiously.")
-			return held_item
+			if(prob(50))
+				C.unEquip(stolen_item)
+				held_item = stolen_item
+				stolen_item.loc = src
+				visible_message("[src] grabs [held_item] out of [C]'s hand!", "<span class='notice'>You snag [held_item] out of [C]'s hand!</span>", "You hear the sounds of wings flapping furiously.")
+				return held_item
+			else
+				visible_message("[src] fails to grab [held_item] out of [C]'s hand!", "<span class='notice'>You fail to snag [held_item] out of [C]'s hand!</span>", "You hear the sounds of wings flapping furiously.")
+				return 0
 
 	src << "<span class='danger'>There is nothing of interest to take.</spawn>"
 	return 0
