@@ -20,13 +20,17 @@
 	name = "laser pistol"
 	desc = "A laser pistol issued to high ranking members of a certain shadow corporation."
 	icon_state = "xcomlaserpistol"
+	item_state = null
 	projectile_type = /obj/item/projectile/beam
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	charge_cost = 100 // holds less "ammo" then the rifle variant.
 
 /obj/item/weapon/gun/energy/laser/rifle
 	name = "laser rifle"
 	desc = "A laser rifle issued to high ranking members of a certain shadow corporation."
 	icon_state = "xcomlasergun"
+	item_state = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	projectile_type = /obj/item/projectile/beam
 	charge_cost = 50
 
@@ -43,11 +47,15 @@
 obj/item/weapon/gun/energy/laser/retro
 	name ="retro laser"
 	icon_state = "retro"
+	item_state = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
 
 
 /obj/item/weapon/gun/energy/laser/captain
 	icon_state = "caplaser"
+	item_state = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
 	force = 10
 	origin_tech = null
@@ -119,6 +127,8 @@ obj/item/weapon/gun/energy/laser/retro
 	name = "laser cannon"
 	desc = "With the L.A.S.E.R. cannon, the lasing medium is enclosed in a tube lined with uranium-235 and subjected to high neutron flux in a nuclear reactor core. This incredible technology may help YOU achieve high excitation rates with small laser volumes!"
 	icon_state = "lasercannon"
+	item_state = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 	origin_tech = "combat=4;materials=3;powerstorage=3"
 	projectile_type = "/obj/item/projectile/beam/heavylaser"
@@ -135,7 +145,7 @@ obj/item/weapon/gun/energy/laser/retro
 		var/mob/living/silicon/robot/R = src.loc
 		if(R && R.cell)
 			R.cell.use(250)
-			in_chamber = new/obj/item/projectile/beam(src)
+			in_chamber = new/obj/item/projectile/beam/heavylaser(src)
 			return 1
 	return 0
 
@@ -143,6 +153,8 @@ obj/item/weapon/gun/energy/laser/retro
 	name = "xray laser gun"
 	desc = "A high-power laser gun capable of expelling concentrated xray blasts."
 	icon_state = "xray"
+	item_state = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	fire_sound = 'sound/weapons/laser3.ogg'
 	origin_tech = "combat=5;materials=3;magnets=2;syndicate=2"
 	projectile_type = "/obj/item/projectile/beam/xray"
@@ -153,6 +165,8 @@ obj/item/weapon/gun/energy/laser/retro
 	name = "plasma gun"
 	desc = "A high-power plasma gun. You shouldn't ever see this."
 	icon_state = "xray"
+	item_state = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	fire_sound = 'sound/weapons/elecfire.ogg'
 	origin_tech = "combat=5;materials=3;magnets=2"
 	projectile_type = /obj/item/projectile/energy/plasma
@@ -160,22 +174,28 @@ obj/item/weapon/gun/energy/laser/retro
 
 /obj/item/weapon/gun/energy/plasma/pistol
 	name = "plasma pistol"
-	desc = "Plasma pistol that is given to members of an unknown shadow organization."
+	desc = "A state of the art pistol utilizing plasma in a uranium-235 lined core to output searing bolts of energy."
 	icon_state = "alienpistol"
+	item_state = null
+	w_class = 2.0
 	projectile_type = /obj/item/projectile/energy/plasma/pistol
 	charge_cost = 50
 
 /obj/item/weapon/gun/energy/plasma/light
-	name = "light plasma rifle"
-	desc = "Light plasma rifle that is given to members of an unknown shadow organization."
+	name = "plasma rifle"
+	desc = "A state of the art rifle utilizing plasma in a uranium-235 lined core to output radiating bolts of energy."
 	icon_state = "lightalienrifle"
+	item_state = null
 	projectile_type = /obj/item/projectile/energy/plasma/light
 	charge_cost = 100
 
 /obj/item/weapon/gun/energy/plasma/rifle
-	name = "plasma rifle"
-	desc = "Plasma rifle that is given to members of an unknown shadow organization."
+	name = "plasma cannon"
+	desc = "A state of the art cannon utilizing plasma in a uranium-235 lined core to output hi-power, radiating bolts of energy."
 	icon_state = "alienrifle"
+	item_state = null
+	w_class = 4.0
+	slot_flags = null
 	projectile_type = /obj/item/projectile/energy/plasma/rifle
 	charge_cost = 150
 
@@ -183,6 +203,7 @@ obj/item/weapon/gun/energy/laser/retro
 	name = "Plasma MP40k"
 	desc = "A plasma MP40k. Ich liebe den geruch von plasma am morgen."
 	icon_state = "PlasMP"
+	item_state = null
 	projectile_type = /obj/item/projectile/energy/plasma/MP40k
 	charge_cost = 75
 
@@ -190,6 +211,8 @@ obj/item/weapon/gun/energy/laser/retro
 	name = "Laser AK470"
 	desc = "A laser AK. Death solves all problems -- No man, no problem."
 	icon_state = "LaserAK"
+	item_state = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	projectile_type = /obj/item/projectile/beam
 	charge_cost = 75
 
@@ -198,6 +221,8 @@ obj/item/weapon/gun/energy/laser/retro
 /obj/item/weapon/gun/energy/laser/bluetag
 	name = "laser tag gun"
 	icon_state = "bluetag"
+	item_state = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	desc = "Standard issue weapon of the Imperial Guard"
 	projectile_type = "/obj/item/projectile/beam/lastertag/blue"
 	origin_tech = "combat=1;magnets=2"
@@ -235,6 +260,8 @@ obj/item/weapon/gun/energy/laser/retro
 /obj/item/weapon/gun/energy/laser/redtag
 	name = "laser tag gun"
 	icon_state = "redtag"
+	item_state = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	desc = "Standard issue weapon of the Imperial Guard"
 	projectile_type = "/obj/item/projectile/beam/lastertag/red"
 	origin_tech = "combat=1;magnets=2"
