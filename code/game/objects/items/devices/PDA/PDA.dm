@@ -665,7 +665,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					dat += {"</ul>"}
 
 				if (cartridge)
-					if (cartridge.access_engine)
+					if (cartridge.access_engine || cartridge.access_atmos)
 						dat += {"<h4>Engineering Functions</h4>
 							<ul>
 							<li><a href='byond://?src=\ref[src];choice=43'><img src=pda_power.png> Power Monitor</a></li>
