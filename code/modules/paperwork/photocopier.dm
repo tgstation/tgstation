@@ -325,7 +325,7 @@
 
 /obj/machinery/photocopier/MouseDrop_T(mob/target, mob/user)
 	check_ass() //Just to make sure that you can re-drag somebody onto it after they moved off.
-	if (!istype(target) || target.buckled || !Adjacent(user) || !user.Adjacent(target) || user.stat || istype(user, /mob/living/silicon/ai) || target == ass)
+	if (!istype(target) || target.buckled || !Adjacent(user) || !user.Adjacent(target) || user.stat || istype(user, /mob/living/silicon/ai) || target == ass || copier_blocked(user))
 		return
 	src.add_fingerprint(user)
 	if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
@@ -375,3 +375,19 @@
 	icon_state = "tonercartridge"
 	var/charges = 5
 	var/max_charges = 5
+
+/obj/machinery/photocopier/proc/copier_blocked(var/mob/user)
+	if(gcDestroyed)
+		return
+	if(loc.density)
+		return 1
+	for(var/atom/movable/AM in loc)
+		if(AM == src)
+			continue
+		if(AM.density)
+			if(AM.flags&ON_BORDER)
+				if(!AM.CanPass(user, src.loc))
+					return 1
+			else
+				return 1
+	return 0

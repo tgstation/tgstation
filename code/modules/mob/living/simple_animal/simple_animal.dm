@@ -242,11 +242,23 @@
 /mob/living/simple_animal/Bump(AM as mob|obj)
 	if(!AM) return
 
-	if(resting || buckled)
+	if(resting || buckled || !Adjacent(AM))
 		return
+	var/dense = 0
+	if(loc.density)
+		dense = 1
+	for(var/atom/movable/A in loc)
+		if(A == src)
+			continue
+		if(A.density)
+			if(A.flags&ON_BORDER)
+				dense = !A.CanPass(src, src.loc)
+			else
+				dense = 1
+		if(dense) break
 
 	if(isturf(src.loc))
-		if(ismob(AM))
+		if(ismob(AM) && !dense)
 			var/newamloc = src.loc
 			src.loc = AM:loc
 			AM:loc = newamloc

@@ -139,7 +139,19 @@
 					return
 
 		//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
-		if((tmob.a_intent == "help" || tmob.restrained()) && (a_intent == "help" || src.restrained()) && tmob.canmove && canmove && tmob.Adjacent(src)) // mutual brohugs all around!
+		var/dense = 0
+		if(loc.density)
+			dense = 1
+		for(var/atom/movable/A in loc)
+			if(A == src)
+				continue
+			if(A.density)
+				if(A.flags&ON_BORDER)
+					dense = !A.CanPass(src, src.loc)
+				else
+					dense = 1
+			if(dense) break
+		if((tmob.a_intent == "help" || tmob.restrained()) && (a_intent == "help" || src.restrained()) && tmob.canmove && canmove && !dense) // mutual brohugs all around!
 			var/turf/oldloc = loc
 			loc = tmob.loc
 			tmob.loc = oldloc

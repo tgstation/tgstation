@@ -1020,3 +1020,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define TARGETED_LAYER			24		//BS12: Layer for the target overlay from weapon targeting system
 #define TOTAL_LAYERS			25
 //////////////////////////////////
+
+
+//COMMENT IF YOUR DREAMDAEMON VERSION IS BELOW 507.1248
+#define BORDER_USE_TURF_EXIT 1
