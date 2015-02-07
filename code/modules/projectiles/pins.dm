@@ -64,6 +64,15 @@
 	req_implant = /obj/item/weapon/implant/weapons_auth
 
 
+/obj/item/device/firing_pin/clown
+	name = "hilarious firing pin"
+	desc = "Advanced clowntech that can convert any firearm into a far more useful object."
+	color = "yellow"
+
+/obj/item/device/firing_pin/clown/pin_auth(mob/living/user)
+	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+	return 0
+
 //muh laser tag
 /obj/item/device/firing_pin/tag
 	name = "laser tag firing pin"
