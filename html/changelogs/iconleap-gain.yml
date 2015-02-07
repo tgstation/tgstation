@@ -1,0 +1,6 @@
+author: iconleap
+
+delete-after: True
+
+changes: 
+  - bugfix: Fixed runtime stopping singularity to gain energy for eating supermatter.
