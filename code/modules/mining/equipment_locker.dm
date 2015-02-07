@@ -802,6 +802,7 @@
 		if(istype(AM))
 			var/mob/living/simple_animal/M = AM
 			var/mob/living/simple_animal/hostile/H = M
+			if(!istype(H)) continue
 			for(var/things in H.friends)
 				if(capsuleowner in H.friends)
 					if(insert(AM, user) == -1) // limit reached

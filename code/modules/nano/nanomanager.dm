@@ -18,7 +18,7 @@
   //Uncomment to enable nano file debugging
   // #define NANO_DEBUG 1
 
-  
+
 /datum/nanomanager/proc/rebuild_asset_dirs()
 	asset_files.len = 0
 	var/list/nano_asset_dirs = list(\
@@ -42,8 +42,8 @@
 					#endif
 					asset_files.Add(fcopy_rsc(path + filename)) // add this file to asset_files for sending to clients when they connect
 	return
-		
-  
+
+
 /datum/nanomanager/New()
 	var/list/nano_asset_dirs = list(\
 		"nano/css/",\
@@ -161,7 +161,7 @@
 			update_count++
 
 	return update_count
-	
+
  /**
   * Close /nanoui uis belonging to user
   *
@@ -223,7 +223,8 @@
 		return 0 // wasn't open
 
 	processing_uis.Remove(ui)
-	ui.user.open_uis.Remove(ui)
+	if(ui.user)
+		ui.user.open_uis.Remove(ui)
 	var/list/uis = open_uis[src_object_key][ui.ui_key]
 	uis.Remove(ui)
 

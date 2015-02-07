@@ -220,9 +220,10 @@
 
 	else
 		//Modules display is hidden
-		for(var/atom/A in r.module.modules)
-			if( (A != r.module_state_1) && (A != r.module_state_2) && (A != r.module_state_3) )
-				//Module is not currently active
-				r.client.screen -= A
-		r.shown_robot_modules = 0
-		r.client.screen -= r.robot_modules_background
+		if(r.module)
+			for(var/atom/A in r.module.modules)
+				if( (A != r.module_state_1) && (A != r.module_state_2) && (A != r.module_state_3) )
+					//Module is not currently active
+					r.client.screen -= A
+			r.shown_robot_modules = 0
+			r.client.screen -= r.robot_modules_background

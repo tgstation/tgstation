@@ -538,6 +538,7 @@
 
 		if(talkative && istype(new_item,/obj/item/weapon))
 			new_item.listening_to_players = 1
+			new_item.heard_words = list()
 			if(prob(25))
 				new_item.speaking_to_players = 1
 				processing_objects.Add(new_item)
@@ -549,5 +550,6 @@
 	else if(talkative)
 		listening_to_players = 1
 		if(prob(25))
+			if(!heard_words) heard_words = list()
 			speaking_to_players = 1
 			processing_objects.Add(src)
