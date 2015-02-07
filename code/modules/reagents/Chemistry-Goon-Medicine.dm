@@ -821,7 +821,7 @@ datum/reagent/stimulants/overdose_process(var/mob/living/M as mob)
 datum/reagent/insulin
 	name = "Insulin"
 	id = "insulin"
-	description = "Causes a little bit of drowsiness, reduces jitteriness. Raises histamine depletion rates by 3"
+	description = "Increases sugar depletion rates."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 datum/reagent/insulin/on_mob_life(var/mob/living/M as mob)
