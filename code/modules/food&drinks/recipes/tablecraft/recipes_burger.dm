@@ -1,36 +1,18 @@
 
+// see code/module/crafting/table.dm
 
 ////////////////////////////////////////////////BURGERS////////////////////////////////////////////////
 
 
-/datum/table_recipe/burger/human
+/datum/table_recipe/humanburger
+	name = "Human burger"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/meat/human = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/human
 
-/*
-/datum/recipe/burger/human/make_food(var/obj/container as obj)
-		var/human_name
-		var/human_job
-		for (var/obj/item/weapon/reagent_containers/food/snacks/meat/human/HM in container)
-			if (!HM.subjectname)
-				continue
-			human_name = HM.subjectname
-			human_job = HM.subjectjob
-			break
-		var/lastname_index = findtext(human_name, " ")
-		if (lastname_index)
-			human_name = copytext(human_name,lastname_index+1)
-
-		var/obj/item/weapon/reagent_containers/food/snacks/burger/human/HB = ..(container)
-		HB.name = human_name+HB.name
-		HB.job = human_job
-		return HB
-*/
-
-/datum/table_recipe/burger/plain
+/datum/table_recipe/burger
 	name = "Burger"
 	reqs = list(
 			/obj/item/weapon/reagent_containers/food/snacks/meat = 1,
@@ -39,7 +21,7 @@
 
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/plain
 
-/datum/table_recipe/burger/appendix
+/datum/table_recipe/appendixburger
 	name = "Appendix burger"
 	reqs = list(
 		/obj/item/organ/appendix = 1,
@@ -47,7 +29,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/appendix
 
-/datum/table_recipe/burger/brain
+/datum/table_recipe/brainburger
 	name = "Brain burger"
 	reqs = list(
 		/obj/item/organ/brain = 1,
@@ -55,7 +37,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/brain
 
-/datum/table_recipe/burger/xeno
+/datum/table_recipe/xenoburger
 	name = "Xeno burger"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/xenomeat = 1,
@@ -63,7 +45,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/xeno
 
-/datum/table_recipe/burger/fish
+/datum/table_recipe/fishburger
 	name = "Fish burger"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/carpmeat = 1,
@@ -71,7 +53,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/fish
 
-/datum/table_recipe/burger/tofu
+/datum/table_recipe/tofuburger
 	name = "Tofu burger"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/tofu = 1,
@@ -79,7 +61,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/tofu
 
-/datum/table_recipe/burger/ghost
+/datum/table_recipe/ghostburger
 	name = "Ghost burger"
 	reqs = list(
 		/obj/item/weapon/ectoplasm = 1,
@@ -87,7 +69,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/ghost
 
-/datum/table_recipe/burger/clown
+/datum/table_recipe/clownburger
 	name = "Clown burger"
 	reqs = list(
 		/obj/item/clothing/mask/gas/clown_hat = 1,
@@ -95,7 +77,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/clown
 
-/datum/table_recipe/burger/mime
+/datum/table_recipe/mimeburger
 	name = "Mime burger"
 	reqs = list(
 		/obj/item/clothing/mask/gas/mime = 1,
@@ -103,7 +85,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/mime
 
-/datum/table_recipe/burger/red
+/datum/table_recipe/redburger
 	name = "Red burger"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meat = 1,
@@ -112,7 +94,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/red
 
-/datum/table_recipe/burger/orange
+/datum/table_recipe/orangeburger
 	name = "Orange burger"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meat = 1,
@@ -121,7 +103,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/orange
 
-/datum/table_recipe/burger/yellow
+/datum/table_recipe/yellowburger
 	name = "Yellow burger"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meat = 1,
@@ -130,7 +112,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/yellow
 
-/datum/table_recipe/burger/green
+/datum/table_recipe/greenburger
 	name = "Green burger"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meat = 1,
@@ -139,7 +121,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/green
 
-/datum/table_recipe/burger/blue
+/datum/table_recipe/blueburger
 	name = "Blue burger"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meat = 1,
@@ -148,7 +130,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/blue
 
-/datum/table_recipe/burger/purple
+/datum/table_recipe/purpleburger
 	name = "Purple burger"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meat = 1,
@@ -157,14 +139,14 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/purple
 
-/datum/table_recipe/burger/spell
+/datum/table_recipe/spellburger
 	name = "Spell burger"
 	reqs = list(
 		/obj/item/clothing/head/wizard/fake,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/spell
 
-/datum/table_recipe/burger/spell2
+/datum/table_recipe/spellburger2
 	name = "Spell burger"
 	reqs = list(
 		/obj/item/clothing/head/wizard = 1,
@@ -172,7 +154,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/spell
 
-/datum/table_recipe/burger/bigbite
+/datum/table_recipe/bigbiteburger
 	name = "Big bite burger"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meat = 3,
@@ -180,7 +162,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/bigbite
 
-/datum/table_recipe/burger/superbite
+/datum/table_recipe/superbiteburger
 	name = "Super bite burger"
 	reqs = list(
 		/datum/reagent/consumable/sodiumchloride = 5,
@@ -194,20 +176,18 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/superbite
 
-/datum/table_recipe/burger/slime
+/datum/table_recipe/slimeburger
 	name = "Jelly burger"
 	reqs = list(
 		/datum/reagent/toxin/slimejelly = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/tofu = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/jelly/slime
 
-/datum/table_recipe/burger/jelly
+/datum/table_recipe/jellyburger
 	name = "Jelly burger"
 	reqs = list(
 			/datum/reagent/consumable/cherryjelly = 5,
-			/obj/item/weapon/reagent_containers/food/snacks/tofu = 1,
 			/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/jelly/cherry

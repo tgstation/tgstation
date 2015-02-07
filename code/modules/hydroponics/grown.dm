@@ -409,6 +409,7 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/watermelonslice
 	slices_num = 5
 	dried_type = null
+	w_class = 3
 	filling_color = "#008000"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/watermelon/add_juice()

@@ -9,53 +9,64 @@
 	name = "margherita"
 	desc = "The most cheezy pizza in galaxy."
 	icon_state = "pizzamargherita"
-	slice_path = /obj/item/weapon/reagent_containers/food/snacks/margheritaslice
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/margherita
 	slices_num = 6
 	list_reagents = list("nutriment" = 30, "tomatojuice" = 6, "vitamin" = 5)
 
-/obj/item/weapon/reagent_containers/food/snacks/margheritaslice
+
+
+/obj/item/weapon/reagent_containers/food/snacks/pizzaslice/margherita
 	name = "margherita slice"
 	desc = "A slice of the most cheezy pizza in galaxy."
 	icon_state = "pizzamargheritaslice"
+	filling_color = "#FFA500"
 
 /obj/item/weapon/reagent_containers/food/snacks/pizza/meatpizza
 	name = "meatpizza"
 	desc = "Greasy pizza with delicious meat."
 	icon_state = "meatpizza"
-	slice_path = /obj/item/weapon/reagent_containers/food/snacks/meatpizzaslice
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/meatpizza
 	slices_num = 6
 	list_reagents = list("nutriment" = 40, "tomatojuice" = 6, "vitamin" = 8)
 
-/obj/item/weapon/reagent_containers/food/snacks/meatpizzaslice
+/obj/item/weapon/reagent_containers/food/snacks/pizzaslice/meatpizza
 	name = "meatpizza slice"
 	desc = "A nutritious slice of meatpizza."
 	icon_state = "meatpizzaslice"
+	filling_color = "#A52A2A"
 
 /obj/item/weapon/reagent_containers/food/snacks/pizza/mushroompizza
 	name = "mushroom pizza"
 	desc = "Very special pizza."
 	icon_state = "mushroompizza"
-	slice_path = /obj/item/weapon/reagent_containers/food/snacks/mushroompizzaslice
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/mushroompizza
 	slices_num = 6
 	list_reagents = list("nutriment" = 30, "vitamin" = 5)
 
-/obj/item/weapon/reagent_containers/food/snacks/mushroompizzaslice
+/obj/item/weapon/reagent_containers/food/snacks/pizzaslice/mushroompizza
 	name = "mushroom pizza slice"
 	desc = "Maybe it is the last slice of pizza in your life."
 	icon_state = "mushroompizzaslice"
+	filling_color = "#FFE4C4"
 
 /obj/item/weapon/reagent_containers/food/snacks/pizza/vegetablepizza
 	name = "vegetable pizza"
 	desc = "No one of Tomatos Sapiens were harmed during making this pizza."
 	icon_state = "vegetablepizza"
-	slice_path = /obj/item/weapon/reagent_containers/food/snacks/vegetablepizzaslice
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/vegetablepizza
 	slices_num = 6
 	list_reagents = list("nutriment" = 25, "tomatojuice" = 6, "oculine" = 12, "vitamin" = 5)
 
-/obj/item/weapon/reagent_containers/food/snacks/vegetablepizzaslice
+/obj/item/weapon/reagent_containers/food/snacks/pizzaslice/vegetablepizza
 	name = "vegetable pizza slice"
 	desc = "A slice of the most green pizza of all pizzas not containing green ingredients."
 	icon_state = "vegetablepizzaslice"
+	filling_color = "#FFA500"
+
+/obj/item/weapon/reagent_containers/food/snacks/pizzaslice/custom
+	name = "pizza slice"
+	icon_state = "pizzamargheritaslice"
+	filling_color = "#FFFFFF"
 
 /obj/item/pizzabox
 	name = "pizza box"

@@ -712,20 +712,20 @@
 				<h2>Gibber:</h2>
 				Stuff an animal in it to grind it into meat.
 
-				<h2>Meat pike:</h2>
+				<h2>Meat spike:</h2>
 				Stick an animal on it then begin collecting its meat.
 
 
 				<h2>Example recipes:</h2>
-				<b>Vanilla Cake</b>: Microwave cake batter.
-				<b>Burger:</b> 1 bun + 1 meat
-				<b>Bread:</b> Microwave dough.
-				<b>Waffles:</b> 2 doughslices
-				<b>Popcorn:</b> Microwave corn.
-				<b>Meat Steak:</b> Microwave meat.
-				<b>Meat Pie:</b> 1 plain pie + 1u black pepper + 1u salt + 1 meat
-				<b>Boiled Spagetti:</b> Microwave spaghetti.
-				<b>Donuts:</b> 1u sugar + 1 doughslice
+				<b>Vanilla Cake</b>: Microwave cake batter.<br>
+				<b>Burger:</b> 1 bun + 1 meat<br>
+				<b>Bread:</b> Microwave dough.<br>
+				<b>Waffles:</b> 2 doughslices<br>
+				<b>Popcorn:</b> Microwave corn.<br>
+				<b>Meat Steak:</b> Microwave meat.<br>
+				<b>Meat Pie:</b> 1 plain pie + 1u black pepper + 1u salt + 1 meat<br>
+				<b>Boiled Spagetti:</b> Microwave spaghetti.<br>
+				<b>Donuts:</b> 1u sugar + 1 doughslice<br>
 				<b>Fries:</b> Process potato.
 
 				</body>

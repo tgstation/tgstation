@@ -1,4 +1,5 @@
 
+// see code/module/crafting/table.dm
 
 // MISC
 
@@ -36,6 +37,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/loadedbakedpotato
 
 /datum/table_recipe/cheesyfries
+	name = "Cheesy fries"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/fries = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge = 1
@@ -77,7 +79,7 @@
 
 ////////////////////////////////////////////////TOAST////////////////////////////////////////////////
 
-/datum/table_recipe/toast/slime
+/datum/table_recipe/slimetoast
 	name = "Slime toast"
 	reqs = list(
 		/datum/reagent/toxin/slimejelly = 5,
@@ -85,7 +87,8 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast/slime
 
-/datum/table_recipe/toast/jellied
+/datum/table_recipe/jelliedyoast
+	name = "Jellied toast"
 	reqs = list(
 		/datum/reagent/consumable/cherryjelly = 5,
 		/obj/item/weapon/reagent_containers/food/snacks/breadslice/plain = 1
@@ -99,33 +102,4 @@
 		/obj/item/weapon/reagent_containers/food/snacks/breadslice/plain = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/twobread
-
-/////////////////////////////////////////:SPECIAL CAKES///////////////////////////////////////////
-
-/datum/table_recipe/birthdaycake
-	name = "Birthday cake"
-	reqs = list(
-		/obj/item/clothing/head/cakehat = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1
-	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/birthday
-
-/datum/table_recipe/braincake
-	name = "Brain cake"
-	reqs = list(
-		/obj/item/organ/brain = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1
-	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/brain
-
-//////////////////////////////////////////SPECIAL SANDWICH///////////////////////////////////////////
-
-/datum/table_recipe/notasandwich
-	name = "Not a sandwich"
-	reqs = list(
-		/obj/item/weapon/reagent_containers/food/snacks/breadslice/plain = 2,
-		/obj/item/clothing/mask/fakemoustache
-	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/notasandwich
-
 

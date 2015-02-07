@@ -1,9 +1,9 @@
 
-// see code/datums/recipe.dm
+// see code/module/crafting/table.dm
 
 ////////////////////////////////////////////////PIES////////////////////////////////////////////////
 
-/datum/table_recipe/pie/cream
+/datum/table_recipe/bananacreampie
 	name = "Banana cream pie"
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
@@ -12,7 +12,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/cream
 
-/datum/table_recipe/pie/meat
+/datum/table_recipe/meatpie
 	name = "Meat pie"
 	reqs = list(
 		/datum/reagent/consumable/blackpepper = 1,
@@ -22,7 +22,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/meatpie
 
-/datum/table_recipe/pie/tofu
+/datum/table_recipe/tofupie
 	name = "Tofu pie"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pie/plain = 1,
@@ -30,7 +30,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/tofupie
 
-/datum/table_recipe/pie/xemeat
+/datum/table_recipe/xenopie
 	name = "Xeno pie"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pie/plain = 1,
@@ -38,16 +38,15 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/xemeatpie
 
-/datum/table_recipe/pie/cherry
+/datum/table_recipe/cherrypie
 	name = "Cherry pie"
 	reqs = list(
-		/obj/item/weapon/reagent_containers/food/snacks/pie/plain = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/pie/plain = 1,
 		 /obj/item/weapon/reagent_containers/food/snacks/grown/cherries = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/cherrypie
 
-/datum/table_recipe/pie/berryclafoutis
+/datum/table_recipe/berryclafoutis
 	name = "Berry clafoutis"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pie/plain = 1,
@@ -55,7 +54,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/berryclafoutis
 
-/datum/table_recipe/pie/amanita
+/datum/table_recipe/amanitapie
 	name = "Amanita pie"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pie/plain = 1,
@@ -63,7 +62,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/amanita_pie
 
-/datum/table_recipe/pie/plump
+/datum/table_recipe/plumppie
 	name = "Plump pie"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pie/plain = 1,
@@ -71,7 +70,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/plump_pie
 
-/datum/table_recipe/pie/apple
+/datum/table_recipe/applepie
 	name = "Apple pie"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pie/plain = 1,
@@ -79,7 +78,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/applepie
 
-/datum/table_recipe/pie/pumpkin
+/datum/table_recipe/pumpkinpie
 	name = "Pumpkin pie"
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
@@ -89,7 +88,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pumpkinpie
 
-/datum/table_recipe/pie/appletart
+/datum/table_recipe/goldenappletart
 	name = "Golden apple tart"
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,

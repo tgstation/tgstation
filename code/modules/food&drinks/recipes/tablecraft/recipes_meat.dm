@@ -2,7 +2,7 @@
 
 ////////////////////////////////////////////////KEBABS////////////////////////////////////////////////
 
-/datum/table_recipe/kebab/human
+/datum/table_recipe/humankebab
 	name = "Human kebab"
 	reqs = list(
 		/obj/item/stack/rods = 1,
@@ -10,7 +10,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/kebab/human
 
-/datum/table_recipe/kebab/monkey
+/datum/table_recipe/monkeykebab
 	name = "Monkey kebab"
 	reqs = list(
 		/obj/item/stack/rods = 1,
@@ -18,13 +18,15 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/kebab/monkey
 
-/datum/table_recipe/kebab/tofu
+/datum/table_recipe/tofukebab
 	name = "Tofu kebab"
 	reqs = list(
 		/obj/item/stack/rods = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/tofu = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/kebab/tofu
+
+// see code/module/crafting/table.dm
 
 ////////////////////////////////////////////////FISH////////////////////////////////////////////////
 
@@ -92,15 +94,6 @@
 		/obj/item/weapon/reagent_containers/food/snacks/xenomeat = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/wingfangchu
-
-/datum/table_recipe/meatsteak
-	name = "Meat steak"
-	reqs = list(
-		/datum/reagent/consumable/sodiumchloride = 1,
-		/datum/reagent/consumable/blackpepper = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/meat = 1
-	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/meatsteak
 
 /datum/table_recipe/enchiladas
 	name = "Enchiladas"

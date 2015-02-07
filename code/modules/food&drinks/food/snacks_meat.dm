@@ -228,3 +228,22 @@
 	icon_state = "sashimi"
 	list_reagents = list("nutriment" = 6, "capsaicin" = 4)
 	filling_color = "#FA8072"
+
+/obj/item/weapon/reagent_containers/food/snacks/rawcutlet
+	name = "raw cutlet"
+	desc = "A raw meat cutlet."
+	icon = 'icons/obj/food_ingredients.dmi'
+	icon_state = "rawcutlet"
+	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/cutlet
+	bitesize = 2
+	list_reagents = list("nutriment" = 2)
+	filling_color = "#B22222"
+
+/obj/item/weapon/reagent_containers/food/snacks/cutlet
+	name = "cutlet"
+	desc = "A cooked meat cutlet."
+	icon = 'icons/obj/food_ingredients.dmi'
+	icon_state = "cutlet"
+	bitesize = 2
+	list_reagents = list("nutriment" = 4, "vitamin" = 1)
+	filling_color = "#B22222"

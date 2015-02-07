@@ -1,9 +1,9 @@
 
-// see code/datums/recipe.dm
+// see code/module/crafting/table.dm
 
 ////////////////////////////////////////////////SOUP////////////////////////////////////////////////
 
-/datum/table_recipe/soup/meatball
+/datum/table_recipe/meatballsoup
 	name = "Meatball soup"
 	reqs = list(
 		/datum/reagent/water = 10,
@@ -14,7 +14,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/meatball
 
-/datum/table_recipe/soup/vegetable
+/datum/table_recipe/vegetablesoup
 	name = "Vegetable soup"
 	reqs = list(
 		/datum/reagent/water = 10,
@@ -26,7 +26,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/vegetable
 
-/datum/table_recipe/soup/nettle
+/datum/table_recipe/nettlesoup
 	name = "Nettle soup"
 	reqs = list(
 		/datum/reagent/water = 10,
@@ -37,7 +37,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/nettle
 
-/datum/table_recipe/soup/wish
+/datum/table_recipe/wishsoup
 	name = "Wish soup"
 	reqs = list(
 		/datum/reagent/water = 20,
@@ -45,7 +45,7 @@
 	)
 	result= /obj/item/weapon/reagent_containers/food/snacks/soup/wish
 
-/datum/table_recipe/soup/hotchili
+/datum/table_recipe/hotchili
 	name = "Hot chili"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
@@ -55,7 +55,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/hotchili
 
-/datum/table_recipe/soup/coldchili
+/datum/table_recipe/coldchili
 	name = "Cold chili"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
@@ -65,7 +65,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/coldchili
 
-/datum/table_recipe/soup/tomato
+/datum/table_recipe/tomatosoup
 	name = "Tomato soup"
 	reqs = list(
 		/datum/reagent/water = 10,
@@ -74,7 +74,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/tomato
 
-/datum/table_recipe/soup/milo
+/datum/table_recipe/milosoup
 	name = "Milo soup"
 	reqs = list(
 		/datum/reagent/water = 10,
@@ -84,7 +84,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/milo
 
-/datum/table_recipe/soup/blood
+/datum/table_recipe/bloodsoup
 	name = "Blood soup"
 	reqs = list(
 		/datum/reagent/blood = 10,
@@ -93,7 +93,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/blood
 
-/datum/table_recipe/soup/slime
+/datum/table_recipe/slimesoup
 	name = "Slime soup"
 	reqs = list(
 			/datum/reagent/water = 10,
@@ -102,7 +102,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/slime
 
-/datum/table_recipe/soup/clownstears
+/datum/table_recipe/clownstears
 	name = "Clowns tears"
 	reqs = list(
 		/datum/reagent/water = 10,
@@ -112,7 +112,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/clownstears
 
-/datum/table_recipe/soup/mystery
+/datum/table_recipe/mysterysoup
 	name = "Mystery soup"
 	reqs = list(
 		/datum/reagent/water = 10,
@@ -124,7 +124,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/mystery
 
-/datum/table_recipe/soup/mushroom
+/datum/table_recipe/mushroomsoup
 	name = "Mushroom soup"
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
@@ -134,7 +134,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/mushroom
 
-/datum/table_recipe/soup/beet
+/datum/table_recipe/beetsoup
 	name = "Beet soup"
 	reqs = list(
 		/datum/reagent/water = 10,
@@ -144,7 +144,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/beet
 
-/datum/table_recipe/soup/stew
+/datum/table_recipe/stew
 	name = "Stew"
 	reqs = list(
 		/datum/reagent/water = 10,
@@ -158,8 +158,8 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/stew
 
-/datum/table_recipe/soup/spacylibertyduff
-	name = "Space liberty duff"
+/datum/table_recipe/spacylibertyduff
+	name = "Spacy liberty duff"
 	reqs = list(
 		/datum/reagent/consumable/ethanol/vodka = 5,
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
@@ -167,7 +167,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/spacylibertyduff
 
-/datum/table_recipe/soup/amanitajelly
+/datum/table_recipe/amanitajelly
 	name = "Amanita jelly"
 	reqs = list(
 		/datum/reagent/consumable/ethanol/vodka = 5,

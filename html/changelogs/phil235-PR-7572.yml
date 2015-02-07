@@ -1,0 +1,6 @@
+author: phil235
+
+delete-after: True
+
+changes: 
+  - rscadd: "Cooking overhaul: microwave recipes are converted to tablecraft recipes. Added customizable food (burger,sandwich,spaghettis,soup,salad,cake,bread,kebab,pie) with specific color depending on ingredients used. Added new food ingredients (dough, flat dough, cake batter, pie dough, raw cutlet, cutlet, pizzabread). Meat is now sliceable into rawcutlets. Changed food recipes a bit (replacing stuff with new food ingredients). Repurposed the microwave to actually cook certain food items(no reagents required), and added a power setting to it. Bowl is no longer trash but a beaker-like container that is used in salad&soup recipes. Changed the hunger system a bit, sugar becomes a normal reagent again. Faster nutrition drain is now handled by a variable in junk food. Milk and soymilk cartons as well as flour packs are now condiment bottles. Added a slight buff to vitamin."

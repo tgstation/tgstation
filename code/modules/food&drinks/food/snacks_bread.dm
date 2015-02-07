@@ -101,7 +101,6 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/custom
 	name = "bread slice"
-	desc = "Who knows what it contains?"
 	icon_state = "tofubreadslice"
 	filling_color = "#FFFFFF"
 

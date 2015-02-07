@@ -21,7 +21,14 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 
 /obj/item/stack/rods/New(var/loc, var/amount=null)
 	recipes = rod_recipes
+	update_icon()
 	return ..()
+
+/obj/item/stack/rods/update_icon()
+	if(get_amount() <= 5)
+		icon_state = "rods-[get_amount()]"
+	else
+		icon_state = "rods"
 
 /obj/item/stack/rods/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/weldingtool))

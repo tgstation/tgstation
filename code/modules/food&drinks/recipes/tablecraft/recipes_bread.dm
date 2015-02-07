@@ -1,9 +1,9 @@
 
-// see code/datums/recipe.dm
+// see code/module/crafting/table.dm
 
 ////////////////////////////////////////////////BREAD////////////////////////////////////////////////
 
-/datum/table_recipe/bread/meat
+/datum/table_recipe/meatbread
 	name = "Meat bread"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/bread/plain = 1,
@@ -12,7 +12,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/bread/meat
 
-/datum/table_recipe/bread/xenomeat
+/datum/table_recipe/xenomeatbread
 	name = "Xenomeat bread"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/bread/plain = 1,
@@ -21,7 +21,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/bread/xenomeat
 
-/datum/table_recipe/bread/spidermeat
+/datum/table_recipe/spidermeatbread
 	name = "Spidermeat bread"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/bread/plain = 1,
@@ -30,7 +30,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/bread/spidermeat
 
-/datum/table_recipe/bread/banana
+/datum/table_recipe/banananutbread
 	name = "Banana nut bread"
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
@@ -40,7 +40,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/bread/banana
 
-/datum/table_recipe/bread/tofu
+/datum/table_recipe/tofubread
 	name = "Tofu bread"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/bread/plain = 1,
@@ -49,7 +49,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/bread/tofu
 
-/datum/table_recipe/bread/creamcheese
+/datum/table_recipe/creamcheesebread
 	name = "Cream cheese bread"
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,

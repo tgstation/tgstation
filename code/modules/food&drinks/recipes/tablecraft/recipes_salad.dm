@@ -1,6 +1,9 @@
+
+// see code/module/crafting/table.dm
+
 ////////////////////////////////////////////////SALADS////////////////////////////////////////////////
 
-/datum/table_recipe/salad/herb
+/datum/table_recipe/herbsalad
 	name = "Herb salad"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
@@ -9,7 +12,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/salad/herbsalad
 
-/datum/table_recipe/salad/aesir
+/datum/table_recipe/aesirsalad
 	name = "Aesir salad"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
@@ -18,7 +21,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/salad/aesirsalad
 
-/datum/table_recipe/salad/valid
+/datum/table_recipe/validsalad
 	name = "Valid salad"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
@@ -28,7 +31,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/salad/validsalad
 
-/datum/table_recipe/salad/monkeysdelight
+/datum/table_recipe/monkeysdelight
 	name = "Monkeys delight"
 	reqs = list(
 		/datum/reagent/consumable/flour = 5,

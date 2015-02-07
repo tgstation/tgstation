@@ -1,9 +1,9 @@
 
-// see code/datums/recipe.dm
+// see code/module/crafting/table.dm
 
 ////////////////////////////////////////////////CAKE////////////////////////////////////////////////
 
-/datum/table_recipe/cake/carrot
+/datum/table_recipe/carrotcake
 	name = "Carrot cake"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1,
@@ -11,7 +11,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/carrot
 
-/datum/table_recipe/cake/cheese
+/datum/table_recipe/cheesecake
 	name = "Cheese cake"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1,
@@ -19,7 +19,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/cheese
 
-/datum/table_recipe/cake/apple
+/datum/table_recipe/applecake
 	name = "Apple cake"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1,
@@ -27,7 +27,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/apple
 
-/datum/table_recipe/cake/orange
+/datum/table_recipe/orangecake
 	name = "Orange cake"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1,
@@ -35,7 +35,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/orange
 
-/datum/table_recipe/cake/lime
+/datum/table_recipe/limecake
 	name = "Lime cake"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1,
@@ -43,7 +43,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/lime
 
-/datum/table_recipe/cake/lemon
+/datum/table_recipe/lemoncake
 	name = "Lemon cake"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1,
@@ -51,10 +51,26 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/lemon
 
-/datum/table_recipe/cake/chocolate
+/datum/table_recipe/chocolatecake
 	name = "Chocolate cake"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/chocolate
+
+/datum/table_recipe/birthdaycake
+	name = "Birthday cake"
+	reqs = list(
+		/obj/item/clothing/head/cakehat = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/birthday
+
+/datum/table_recipe/braincake
+	name = "Brain cake"
+	reqs = list(
+		/obj/item/organ/brain = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/brain
