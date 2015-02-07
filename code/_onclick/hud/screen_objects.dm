@@ -14,6 +14,9 @@
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
 	var/gun_click_time = -100 //I'm lazy.
 
+/obj/screen/Destroy()
+	master = null
+	..()
 
 /obj/screen/text
 	icon = null
@@ -83,7 +86,6 @@
 /obj/screen/grab/Destroy()
 	if(master)
 		master = null
-
 	..()
 
 /obj/screen/storage
