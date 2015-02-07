@@ -66,3 +66,5 @@
 #define isovermind(A) istype(A, /mob/camera/blob)
 
 #define isorgan(A) istype(A, /datum/organ/external)
+
+#define isitem(A) istype(A, /obj/item)

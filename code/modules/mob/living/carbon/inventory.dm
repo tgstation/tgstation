@@ -13,3 +13,11 @@
 		if(slot_r_hand)
 			return r_hand
 	return null
+
+/mob/living/carbon/get_all_slots()
+	return list(l_hand,
+				r_hand,
+				handcuffed,
+				legcuffed,
+				back,
+				wear_mask)

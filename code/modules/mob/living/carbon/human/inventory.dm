@@ -16,7 +16,7 @@
 		else
 			H << "\red You are unable to equip that."
 
-/mob/living/carbon/human/proc/get_all_slots()
+/mob/living/carbon/human/get_all_slots()
 	return list(
 		back,
 		wear_mask,

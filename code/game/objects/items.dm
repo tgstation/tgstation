@@ -826,12 +826,6 @@
 /obj/item/proc/OnMobDeath(var/mob/holder)
 	return
 
-/proc/isitem(const/object)
-	if(istype(object, /obj/item))
-		return 1
-
-	return 0
-
 //handling the pulling of the item for singularity
 /obj/item/singularity_pull(S, current_size)
 	spawn(0) //this is needed or multiple items will be thrown sequentially and not simultaneously
