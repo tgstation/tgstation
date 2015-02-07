@@ -146,7 +146,7 @@ var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "
 	Object = null
 
 	for (var/type in params2list(types))
-		if (istype(prototype, type))
+		if (ispath(prototype, text2path(type)))
 			return 1
 
 	return 0
