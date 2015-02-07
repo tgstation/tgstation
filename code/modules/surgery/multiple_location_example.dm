@@ -51,4 +51,4 @@ Just after you have swapped limbs around, see limb augmentation for an example o
 // It is also not set to compile, due to being Empty (according to the compiler)
 
 //Enjoy making Multi-location operations! (if you understood my Rambling)
-//If you didn't understand this, Ask for RobRichards in Coderbus
+//If you didn't understand this, Ask for RemieRichards in IRC Server: irc.rizon.net | channel: #coderbus
