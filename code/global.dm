@@ -367,7 +367,7 @@ var/global/list/plugins = list()
 var/global/datum/gas_mixture/space_gas = new
 
 //Announcement intercom
-var/obj/item/device/radio/intercom/announcement_intercom = new(null)
+var/global/obj/item/device/radio/intercom/universe/announcement_intercom = new
 
 //used by jump-to-area etc. Updated by area/updateName()
 var/list/sortedAreas = list()
