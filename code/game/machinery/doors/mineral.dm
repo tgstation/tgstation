@@ -91,14 +91,16 @@
 	return
 
 /obj/machinery/door/mineral/proc/Dismantle(devastated = 0)
-    var/obj/item/stack/ore
-    if(src.prefix == "metal") ore = /obj/item/stack/sheet/metal
-    else ore = text2path("/obj/item/stack/sheet/mineral/[prefix]")
-    ore.amount = oreAmount
-    if(devastated) ore.amount -= 2
-    new ore(get_turf(src))
-    qdel(src)
-    return
+	var/obj/item/stack/ore
+	if(src.prefix == "metal")
+		ore = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+	else
+		var/P = text2path("/obj/item/stack/sheet/mineral/[prefix]")
+		ore = new P(get_turf(src))
+	ore.amount = oreAmount
+	if(devastated) ore.amount -= 2
+	qdel(src)
+	return
 
 /obj/machinery/door/mineral/ex_act(severity = 1)
 	switch(severity)

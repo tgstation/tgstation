@@ -21,8 +21,9 @@
 		if(occupied)
 			user << "<span class='warning'>You can't disassemble [src] with meat and gore all over it.</span>"
 			return
-		new /obj/item/stack/sheet/metal( user.loc, 2 )
-		del(src)
+		var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+		M.amount = 2
+		qdel(src)
 		return
 
 	if(istype(W,/obj/item/weapon/grab))

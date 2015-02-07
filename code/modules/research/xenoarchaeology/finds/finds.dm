@@ -235,7 +235,9 @@
 			possible_spawns += /obj/item/stack/sheet/mineral/silver
 
 			var/new_type = pick(possible_spawns)
-			new_item = new new_type(get_turf(src))
+			if(new_type == /obj/item/stack/sheet/metal)
+				new_item = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+			else new_item = new new_type(get_turf(src))
 			new_item:amount = rand(5,45)
 		if(15)
 			if(prob(75))

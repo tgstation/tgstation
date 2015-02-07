@@ -156,7 +156,7 @@ datum/hSB
 					P.back.layer = 20
 					P.internal = P.back
 				if("hsbmetal")
-					var/obj/item/stack/sheet/hsb = new/obj/item/stack/sheet/metal
+					var/obj/item/stack/sheet/hsb = getFromPool(/obj/item/stack/sheet/metal,get_turf(usr))
 					hsb.amount = 50
 					hsb.loc = usr.loc
 				if("hsbglass")

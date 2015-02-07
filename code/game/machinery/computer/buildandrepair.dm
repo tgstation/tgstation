@@ -293,8 +293,10 @@
 				if(do_after(user, 20))
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>You deconstruct the frame.</span>"
-					new /obj/item/stack/sheet/metal( src.loc, 5 )
-					del(src)
+					//new /obj/item/stack/sheet/metal( src.loc, 5 )
+					var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, src.loc)
+					M.amount = 5
+					qdel(src)
 				return 1
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))

@@ -66,7 +66,9 @@ var/image/list/w_overlays = list("wet" = image('icons/effects/water.dmi',icon_st
 			switch(pick(1,2;75,3))
 				if (1)
 					src.ReplaceWithLattice()
-					if(prob(33)) new /obj/item/stack/sheet/metal(src)
+					if(prob(33))
+						var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+						M.amount = 1
 				if(2)
 					src.ChangeTurf(/turf/space)
 				if(3)
@@ -75,7 +77,9 @@ var/image/list/w_overlays = list("wet" = image('icons/effects/water.dmi',icon_st
 					else
 						src.break_tile()
 					src.hotspot_expose(1000,CELL_VOLUME,surfaces=1)
-					if(prob(33)) new /obj/item/stack/sheet/metal(src)
+					if(prob(33))
+						var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+						M.amount = 1
 		if(3.0)
 			if (prob(50))
 				src.break_tile()

@@ -32,8 +32,8 @@
 			new /obj/structure/girder/reinforced(src)
 			new /obj/item/stack/sheet/plasteel( src )
 		else
-			new /obj/item/stack/sheet/metal( src )
-			new /obj/item/stack/sheet/metal( src )
+			var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+			M.amount = 2
 			new /obj/item/stack/sheet/plasteel( src )
 	else if(istype(src,/turf/simulated/wall/cult))
 		if(!devastated)
@@ -49,22 +49,22 @@
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			new /obj/structure/girder(src)
 			if (mineral == "metal")
-				new /obj/item/stack/sheet/metal( src )
-				new /obj/item/stack/sheet/metal( src )
+				var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+				M.amount = 2
 			else
 				var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
 				new M( src )
 				new M( src )
 		else
 			if (mineral == "metal")
-				new /obj/item/stack/sheet/metal( src )
-				new /obj/item/stack/sheet/metal( src )
-				new /obj/item/stack/sheet/metal( src )
+				var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+				M.amount = 3
 			else
 				var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
 				new M( src )
 				new M( src )
-				new /obj/item/stack/sheet/metal( src )
+				var/obj/item/stack/sheet/metal/MM = getFromPool(/obj/item/stack/sheet/metal, src)
+				MM.amount = 1
 
 	for(var/obj/O in src.contents) //Eject contents!
 		if(istype(O,/obj/structure/sign/poster))

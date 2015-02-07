@@ -161,7 +161,7 @@
 			warning("[D] was passed into add_part_set and not found to be datum/design")
 	cat_set.len = 0
 	return i
-			
+
 /obj/machinery/r_n_d/fabricator/process()
 	if(busy || stopped)
 		return
@@ -281,14 +281,14 @@
 	src.visible_message("\icon[src] <b>[src]</b> beeps: \"[set_name] parts were added to the queue\".")
 	return
 
-	
+
 /obj/machinery/r_n_d/fabricator/FindDesignByID()
 	for(var/datum/design/D in files.known_designs)
 		if(D.id == id)
 			return D
 		if(!istype(D))
 			warning("[D] was found in known_designs in FindDesignByID, the ID passed into it it was: [id]")
-	
+
 /obj/machinery/r_n_d/fabricator/proc/add_to_queue(var/datum/design/part)
 	if(!istype(queue))
 		queue = list()
@@ -639,7 +639,10 @@
 		var/to_spawn = total_amount
 
 		while(to_spawn > 0)
-			var/obj/item/stack/sheet/mats = new material.sheettype(src)
+			var/obj/item/stack/sheet/mats
+			if(material.sheettype == /obj/item/stack/sheet/metal)
+				mats = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+			else mats = new material.sheettype(src)
 			if(to_spawn > mats.max_amount)
 				mats.amount = mats.max_amount
 				to_spawn -= mats.max_amount

@@ -59,8 +59,9 @@
 			return
 
 		if(WT.remove_fuel(0,user))
-			var/obj/item/stack/sheet/metal/new_item = new(usr.loc)
-			new_item.add_to_stacks(usr)
+			var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(usr))
+			M.amount = 1
+			M.add_to_stacks(usr)
 			user.visible_message("<span class='warning'>[src] is shaped into metal by [user.name] with the weldingtool.</span>", \
 			"<span class='warning'>You shape the [src] into metal with the weldingtool.</span>", \
 			"<span class='warning'>You hear welding.</span>")
@@ -69,6 +70,6 @@
 			var/replace = (user.get_inactive_hand()==R)
 			R.use(4)
 			if (!R && replace)
-				user.put_in_hands(new_item)
+				user.put_in_hands(M)
 		return
 	..()

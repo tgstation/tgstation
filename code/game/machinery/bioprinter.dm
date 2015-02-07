@@ -101,7 +101,7 @@
 		visible_message("<span class='notice'>\The [src] processes \the [W].</span>")
 		stored_matter += M.amount * 10
 		user.drop_item()
-		qdel(W)
+		returnToPool(M)
 		return
 	else if(istype(W, /obj/item/weapon/wrench))
 		user.visible_message("<span class='notice'>[user] begins to [anchored? "unfasten" : "fasten"] \the [src].</span>", "<span class='notice'>You begin to [anchored? "unfasten" : "fasten"] \the [src].</span>", "<span class='notice'>You hear a ratchet.</span>")
