@@ -235,8 +235,8 @@
 /obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if (src.destroyed || gcDestroyed || !get_turf(src))
 		if(!ui)
-			ui = get_open_ui(user, src, ui_key)
-		ui.close()
+			ui = nanomanager.get_open_ui(user, src, ui_key)
+		if(ui) ui.close()
 		return
 
 	// this is the data which will be sent to the ui
