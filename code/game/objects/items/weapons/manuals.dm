@@ -237,6 +237,20 @@
 				</html>
 				"}
 
+/obj/item/weapon/book/manual/chemistry_manual
+	name = "Chemistry 101"
+	icon_state ="bookChemistry"
+	author = "SpaceChem Inc."
+	title = "Chemistry 101"
+	dat = {"
+		<html>
+			<body>
+				<iframe width="100%" height="100%" src="http://ss13.nexisonline.net/w/index.php?title=Chemistry_101&printable=yes"></iframe>
+			</body>
+
+		</html>
+		"}
+
 
 /obj/item/weapon/book/manual/ripley_build_and_repair
 	name = "APLU \"Ripley\" Construction and Operation Manual"
@@ -600,6 +614,16 @@
 	icon_state = "cooked_book"
 	author = "Lord Frenrir Cageth"
 	title = "Chef Recipes"
+	dat = {"
+		<html>
+			<body>
+				<iframe width="100%" height="100%" src="http://ss13.nexisonline.net/w/index.php?title=Chef_recipes&printable=yes"></iframe>
+			</body>
+
+		</html>
+		"}
+
+	/*
 	dat = {"<html>
 				<head>
 				<style>
@@ -646,13 +670,23 @@
 				</body>
 				</html>
 			"}
+	*/
 
 /obj/item/weapon/book/manual/barman_recipes
 	name = "Barman Recipes"
 	icon_state = "barbook"
 	author = "Sir John Rose"
 	title = "Barman Recipes"
-	/*dat = {"<html>
+	dat = {"
+		<html>
+			<body>
+				<iframe width="100%" height="100%" src="http://ss13.nexisonline.net/w/index.php?title=Barman_recipes&printable=yes"></iframe>
+			</body>
+
+		</html>
+		"}
+
+	/*dat = {"
 				<head>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
