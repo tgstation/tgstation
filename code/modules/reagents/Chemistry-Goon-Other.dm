@@ -39,6 +39,14 @@ datum/reagent/carpet
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
+/datum/reagent/carpet/reaction_turf(var/turf/simulated/T, var/volume)
+	if(istype(T, /turf/simulated/floor/))
+		var/turf/simulated/floor/F = T
+		F.visible_message("[T] gets a layer of carpeting applied!")
+		F.ChangeTurf(/turf/simulated/floor/fancy/carpet)
+	..()
+	return
+
 datum/reagent/bromine
 	name = "Bromine"
 	id = "bromine"
@@ -80,6 +88,7 @@ datum/reagent/acetone
 	result = "carpet"
 	required_reagents = list("space_drugs" = 1, "blood" = 1)
 	result_amount = 2
+
 
 /datum/chemical_reaction/oil
 	name = "Oil"
@@ -148,3 +157,53 @@ datum/reagent/triple_citrus
 	result = "triple_citrus"
 	required_reagents = list("lemonjuice" = 1, "limejuice" = 1, "orangejuice" = 1)
 	result_amount = 5
+
+datum/reagent/corn_starch
+	name = "Corn Starch"
+	id = "corn_starch"
+	description = "A slippery solution."
+	reagent_state = LIQUID
+	color = "#C8A5DC" // rgb: 200, 165, 220
+
+/datum/chemical_reaction/corn_syrup
+	name = "corn_syrup"
+	id = "corn_syrup"
+	result = "corn_syrup"
+	required_reagents = list("corn_starch" = 1, "sacid" = 1)
+	result_amount = 5
+	required_temp = 374
+
+datum/reagent/corn_syrup
+	name = "Corn Syrup"
+	id = "corn_syrup"
+	description = "Decays into sugar."
+	reagent_state = LIQUID
+	color = "#C8A5DC" // rgb: 200, 165, 220
+
+datum/reagent/corn_syrup/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	M.reagents.add_reagent("sugar", 3)
+	M.reagents.remove_reagent("corn_syrup", 1)
+	..()
+	return
+
+/datum/chemical_reaction/corgium
+	name = "corgium"
+	id = "corgium"
+	result = "corgium"
+	required_reagents = list("nutriment" = 1, "colorful_reagent" = 1, "strange_reagent" = 1, "blood" = 1)
+	result_amount = 3
+	required_temp = 374
+
+datum/reagent/corgium
+	name = "Corgium"
+	id = "corgium"
+	description = "Creates a corgi at the reaction location."
+	reagent_state = LIQUID
+	color = "#C8A5DC" // rgb: 200, 165, 220
+
+/datum/chemical_reaction/corgium/on_reaction(var/datum/reagents/holder, var/created_volume)
+	var/location = get_turf(holder.my_atom)
+	new /mob/living/simple_animal/corgi(location)
+	..()
+	return

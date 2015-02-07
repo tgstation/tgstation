@@ -96,6 +96,9 @@ datum/reagent/proc/on_update(var/atom/A)
 datum/reagent/proc/overdose_process(var/mob/living/M as mob)
 	return
 
+datum/reagent/proc/overdose_start(var/mob/living/M as mob)
+	return
+
 datum/reagent/proc/addiction_act_stage1(var/mob/living/M as mob)
 	if(prob(30))
 		M << "<span class = 'notice'>You feel like some [name] right about now.</span>"

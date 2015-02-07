@@ -130,3 +130,9 @@
 	desc = "Used to dull pain."
 	icon_state = "pill5"
 	list_reagents = list("sal_acid" = 50)
+
+/obj/item/weapon/reagent_containers/pill/insulin
+	name = "insulin pill"
+	desc = "Handles hyperglycaemic coma."
+	icon_state = "pill5"
+	list_reagents = list("insulin" = 50)

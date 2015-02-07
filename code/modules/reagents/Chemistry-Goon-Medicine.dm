@@ -595,10 +595,12 @@ datum/reagent/epinephrine/overdose_process(var/mob/living/M as mob)
 datum/reagent/strange_reagent
 	name = "Strange Reagent"
 	id = "strange_reagent"
-	description = "A miracle medical chem, this little beauty can bring the dead back to life! ...Well, if you're careful that is. If the cadaver is rotten or has too much BRUTE/BURN damage, SR will gib them on use."
+	description = "A chemical used in creation of other chemicals."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
-	metabolization_rate = 0.2
+/*
+
+--Commented out for now due to balance issues, defibs were kind of worthless.
 
 datum/reagent/strange_reagent/reaction_mob(var/mob/living/carbon/human/M as mob, var/method=TOUCH, var/volume)
 	if(M.bruteloss > 80 || M.fireloss > 80)
@@ -626,7 +628,7 @@ datum/reagent/strange_reagent/reaction_mob(var/mob/living/carbon/human/M as mob,
 			hardset_dna(M, null, null, null, null, /datum/species/zombie)
 	..()
 	return
-
+*/
 datum/reagent/strange_reagent/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	if(prob(rand(1,100)))
@@ -813,5 +815,19 @@ datum/reagent/stimulants/overdose_process(var/mob/living/M as mob)
 		M.adjustStaminaLoss(5*REM)
 		M.adjustToxLoss(2*REM)
 		M.losebreath++
+	..()
+	return
+
+datum/reagent/insulin
+	name = "Insulin"
+	id = "insulin"
+	description = "Causes a little bit of drowsiness, reduces jitteriness. Raises histamine depletion rates by 3"
+	reagent_state = LIQUID
+	color = "#C8A5DC" // rgb: 200, 165, 220
+datum/reagent/insulin/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	if(M.sleeping)
+		M.sleeping--
+	M.reagents.remove_reagent("sugar", 5)
 	..()
 	return
