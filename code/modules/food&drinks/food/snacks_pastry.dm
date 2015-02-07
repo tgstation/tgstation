@@ -24,7 +24,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/chaos/New()
 	..()
-	extra_reagent = pick("nutriment", "capsaicin", "frostoil", "krokodil", "plasma", "coco", "slimejelly", "banana", "berryjuice", "omnizine")
+	extra_reagent = pick("nutriment", "capsaicin", "frostoil", "krokodil", "plasma", "cocoa", "slimejelly", "banana", "berryjuice", "omnizine")
 	reagents.add_reagent("[extra_reagent]", 3)
 	if(prob(30))
 		icon_state = "donut2"

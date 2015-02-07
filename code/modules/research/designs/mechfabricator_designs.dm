@@ -630,15 +630,17 @@
 	id = "borg_upgrade_vtec"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/vtec
-	materials = list("$metal"=80000 , "$glass"=6000 , "$gold"= 5000)
+	req_tech = list("engineering" = 4, "materials" = 5)
+	materials = list("$metal"=80000 , "$glass"=6000 , "$uranium"= 5000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
-/datum/design/borg_upgrade_tasercooler
-	name = "Cyborg Upgrade Module (Rapid Taser Cooling Module)"
-	id = "borg_upgrade_tasercooler"
+/datum/design/borg_upgrade_disablercooler
+	name = "Cyborg Upgrade Module (Rapid Disabler Cooling Module)"
+	id = "borg_upgrade_disablercooler"
 	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/tasercooler
+	build_path = /obj/item/borg/upgrade/disablercooler
+	req_tech = list("combat" = 5, "power" = 4)
 	materials = list("$metal"=80000 , "$glass"=6000 , "$gold"= 2000, "$diamond" = 500)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
@@ -648,7 +650,8 @@
 	id = "borg_upgrade_jetpack"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/jetpack
-	materials = list("$metal"=10000,"$plasma"=15000,"$uranium" = 20000)
+	req_tech = list("engineering" = 4, "power" = 4)
+	materials = list("$metal"=10000,"$plasma"=12000,"$uranium" = 10000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 

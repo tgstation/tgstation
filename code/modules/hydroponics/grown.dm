@@ -285,7 +285,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod/add_juice()
 	if(..())
 		reagents.add_reagent("nutriment", 1 + round((potency / 10), 1))
-		reagents.add_reagent("coco", 4 + round((potency / 5), 1))
+		reagents.add_reagent("cocoa", 4 + round((potency / 5), 1))
 		bitesize = 1 + round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/sugarcane
@@ -523,32 +523,32 @@
 		user << "<span class='info'>- Frostoil: <i>[reagents.get_reagent_amount("frostoil")]%</i></span>"
 
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli
-	seed = /obj/item/seeds/chillighost
+/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili
+	seed = /obj/item/seeds/chilighost
 	name = "ghost chili"
 	desc = "It seems to be vibrating gently."
 	icon_state = "ghostchilipepper"
 	var/mob/held_mob
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli/add_juice()
+/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/add_juice()
 	..()
 	reagents.add_reagent("nutriment", 1 + round((potency / 25), 1))
 	reagents.add_reagent("capsaicin", 8+round(potency / 2, 1))
 	reagents.add_reagent("condensedcapsaicin", 4+round(potency / 4, 1))
 	bitesize = 1 + round(reagents.total_volume / 4, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	. = ..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "<span class='info'>- Capsaicin: <i>[reagents.get_reagent_amount("capsaicin")]%</i></span>"
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli/attack_hand(mob/user as mob)
+/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/attack_hand(mob/user as mob)
 	..()
 	if( istype(src.loc, /mob) )
 		held_mob = src.loc
 		SSobj.processing.Add(src)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli/process()
+/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/process()
 	if(held_mob && src.loc == held_mob)
 		if( (held_mob.l_hand == src) || (held_mob.r_hand == src))
 			if(hasvar(held_mob,"gloves") && held_mob:gloves)
