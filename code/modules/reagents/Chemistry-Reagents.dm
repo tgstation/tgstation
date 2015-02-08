@@ -14,19 +14,19 @@
 
 
 /datum/reagent
-		var/name = "Reagent"
-		var/id = "reagent"
-		var/description = ""
-		var/datum/reagents/holder = null
-		var/reagent_state = SOLID
-		var/list/data = null
-		var/volume = 0
-		var/nutriment_factor = 0
-		var/custom_metabolism = REAGENTS_METABOLISM
-		var/overdose = 0
-		var/overdose_dam = 1
-		//var/list/viruses = list()
-		var/color = "#000000" // rgb: 0, 0, 0 (does not support alpha channels - yet!)
+	var/name = "Reagent"
+	var/id = "reagent"
+	var/description = ""
+	var/datum/reagents/holder = null
+	var/reagent_state = SOLID
+	var/list/data = null
+	var/volume = 0
+	var/nutriment_factor = 0
+	var/custom_metabolism = REAGENTS_METABOLISM
+	var/overdose = 0
+	var/overdose_dam = 1
+	//var/list/viruses = list()
+	var/color = "#000000" // rgb: 0, 0, 0 (does not support alpha channels - yet!)
 
 /datum/reagent/proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
  //By default we have a chance to transfer some
