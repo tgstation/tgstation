@@ -33,16 +33,16 @@
 	energy = 50
 	icon_state="particle3"
 
-/obj/effect/accelerated_particle/New(loc, dir = 2)
+/obj/effect/accelerated_particle/New(loc, dir = 2, move = 0)
 	. = ..()
 	src.loc = loc
 	src.dir = dir
 
 	if(movement_range > 20)
 		movement_range = 20
-
-	spawn(0)
-		move(1)
+	if(move)
+		spawn(0)
+			move(1)
 
 /obj/effect/accelerated_particle/Bump(atom/A)
 	if (A)

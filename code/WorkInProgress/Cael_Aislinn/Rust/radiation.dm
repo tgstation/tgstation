@@ -25,7 +25,7 @@
 	proc/RadiateParticle(var/energy, var/ionizing, var/dir = 0)
 		if(!dir)
 			RadiateParticleRand(energy, ionizing)
-		var/obj/effect/accelerated_particle/particle = new
+		var/obj/effect/accelerated_particle/particle = getFromPool(/obj/effect/accelerated_particle,get_turf(src))
 		particle.dir = dir
 		particle.ionizing = ionizing
 		if(energy)
