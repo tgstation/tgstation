@@ -254,6 +254,7 @@
 /mob/living/simple_animal/sculpture/Bump(atom/movable/AM as mob, yes)
 	if(!G && !observed)
 		GrabMob(AM)
+	..()
 
 /mob/living/simple_animal/sculpture/Bumped(atom/movable/AM as mob, yes)
 	if(!G && !observed)

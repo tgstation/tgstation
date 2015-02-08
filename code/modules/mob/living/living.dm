@@ -317,8 +317,7 @@
 	..()
 
 /mob/living/proc/get_organ_target()
-	var/mob/shooter = src
-	var/t = shooter:zone_sel.selecting
+	var/t = src.zone_sel.selecting
 	if ((t in list( "eyes", "mouth" )))
 		t = "head"
 	var/datum/organ/external/def_zone = ran_zone(t)
@@ -857,3 +856,85 @@
 		return 0
 	usr.visible_message("<b>[src]</b> points to [A]")
 	return 1
+
+
+/mob/living/Bump(atom/movable/AM as mob|obj, yes)
+	spawn(0)
+		if ((!( yes ) || now_pushing))
+			return
+		now_pushing = 1
+		if (ismob(AM))
+			var/mob/tmob = AM
+
+			for(var/mob/living/M in range(tmob, 1))
+				if(tmob.pinned.len ||  ((M.pulling == tmob && ( tmob.restrained() && !( M.restrained() ) && M.stat == 0)) || locate(/obj/item/weapon/grab, tmob.grabbed_by.len)) )
+					if ( !(world.time % 5) )
+						src << "<span class='warning'>[tmob] is restrained, you cannot push past</span>"
+					now_pushing = 0
+					return
+				if( tmob.pulling == M && ( M.restrained() && !( tmob.restrained() ) && tmob.stat == 0) )
+					if ( !(world.time % 5) )
+						src << "<span class='warning'>[tmob] is restraining [M], you cannot push past</span>"
+					now_pushing = 0
+					return
+
+			//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
+			var/dense = 0
+			if(loc.density)
+				dense = 1
+			for(var/atom/movable/A in loc)
+				if(A == src)
+					continue
+				if(A.density)
+					if(A.flags&ON_BORDER)
+						dense = !A.CanPass(src, src.loc)
+					else
+						dense = 1
+				if(dense) break
+			if((tmob.a_intent == "help" || tmob.restrained()) && (a_intent == "help" || src.restrained()) && tmob.canmove && canmove && !dense) // mutual brohugs all around!
+				var/turf/oldloc = loc
+				loc = tmob.loc
+				tmob.loc = oldloc
+				now_pushing = 0
+				for(var/mob/living/carbon/slime/slime in view(1,tmob))
+					if(slime.Victim == tmob)
+						slime.UpdateFeed()
+				return
+
+			if(istype(tmob, /mob/living/carbon/human) && (M_FAT in tmob.mutations))
+				if(prob(40) && !(M_FAT in src.mutations))
+					src << "<span class='danger'>You fail to push [tmob]'s fat ass out of the way.</span>"
+					now_pushing = 0
+					return
+			if(tmob.r_hand && istype(tmob.r_hand, /obj/item/weapon/shield/riot))
+				if(prob(99))
+					now_pushing = 0
+					return
+			if(tmob.l_hand && istype(tmob.l_hand, /obj/item/weapon/shield/riot))
+				if(prob(99))
+					now_pushing = 0
+					return
+			if(!(tmob.status_flags & CANPUSH))
+				now_pushing = 0
+				return
+
+			tmob.LAssailant = src
+
+		now_pushing = 0
+		spawn(0)
+			..()
+			if (!istype(AM, /atom/movable))
+				return
+			if (!now_pushing)
+				now_pushing = 1
+
+				if (!AM.anchored)
+					var/t = get_dir(src, AM)
+					if (istype(AM, /obj/structure/window/full))
+						for(var/obj/structure/window/win in get_step(AM,t))
+							now_pushing = 0
+							return
+					step(AM, t)
+				now_pushing = 0
+			return
+	return
