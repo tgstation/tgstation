@@ -110,6 +110,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "pen"
 	item_state = "pen"
+	sharpness = 0.5
 	flags = FPRINT
 	slot_flags = SLOT_BELT | slot_ears
 	throwforce = 0

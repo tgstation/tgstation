@@ -1,10 +1,21 @@
 /obj/item/weapon/melee/energy
 	var/active = 0
+	sharpness = 1.5 //very very sharp
 
-	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>", \
-							"\red <b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b>")
-		return (BRUTELOSS|FIRELOSS)
+/obj/item/weapon/melee/energy/suicide_act(mob/user)
+	viewers(user) << pick("\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>", \
+						"\red <b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b>")
+	return (BRUTELOSS|FIRELOSS)
+
+/obj/item/weapon/melee/energy/is_hot()
+	if(active)
+		return 3500
+	return 0
+
+/obj/item/weapon/melee/energy/is_sharp()
+	if(active)
+		return sharpness
+	return 0
 
 /obj/item/weapon/melee/energy/axe
 	name = "energy axe"

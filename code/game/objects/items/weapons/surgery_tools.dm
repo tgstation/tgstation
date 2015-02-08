@@ -407,6 +407,7 @@ LOOK FOR SURGERY.DM*/
 	hitsound = "sound/weapons/bladeslice.ogg"
 	flags = FPRINT
 	siemens_coefficient = 1
+	sharpness = 1.5
 	force = 10.0
 	w_class = 1.0
 	throwforce = 5.0
@@ -712,6 +713,7 @@ LOOK FOR SURGERY.DM*/
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	flags = FPRINT
 	siemens_coefficient = 1
+	sharpness = 1
 	force = 15.0
 	w_class = 1.0
 	throwforce = 9.0

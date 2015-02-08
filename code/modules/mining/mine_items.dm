@@ -237,6 +237,9 @@ proc/move_mining_shuttle()
 	drill_verb = "cutting"
 	drill_sound = 'sound/items/Welder.ogg'
 
+/obj/item/weapon/pickaxe/plasmacutter/is_hot()
+	return 3800
+
 /obj/item/weapon/pickaxe/diamond
 	name = "diamond pickaxe"
 	icon_state = "dpickaxe"
@@ -283,6 +286,7 @@ proc/move_mining_shuttle()
 	throwforce = 4.0
 	item_state = "shovel"
 	w_class = 3.0
+	sharpness = 0.5
 	w_type = RECYK_MISC
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
@@ -296,6 +300,7 @@ proc/move_mining_shuttle()
 	icon_state = "spade"
 	item_state = "spade"
 	force = 5.0
+	sharpness = 0.8
 	throwforce = 7.0
 	w_class = 2.0
 

@@ -185,7 +185,7 @@
 						"/obj/item/weapon/wrench:wrench" = null,
 						"/obj/item/weapon/wirecutters:wirecutters" = null,
 						"/obj/item/weapon/crowbar:crowbar" = null,
-						"/obj/item/weapon/kitchenknife:knife" = null,
+						"/obj/item/weapon/kitchen/utensil/knife/large:knife" = null,
 						"/obj/item/weapon/kitchen/utensil/fork:fork" = null,
 						"/obj/item/weapon/hatchet:hatchet" = null,
 						"/obj/item/weapon/lighter/zippo:zippo lighter" = null,

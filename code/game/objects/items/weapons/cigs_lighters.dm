@@ -48,6 +48,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		desc = "A match. This one has seen better days."
 	return ..()
 
+/obj/item/weapon/match/is_hot()
+	if(lit)
+		return 1000
+	return 0
+
 /obj/item/weapon/match/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && user.zone_sel.selecting == "mouth" && lit)
 		var/obj/item/clothing/mask/cigarette/cig = M.wear_mask
@@ -118,6 +123,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			user.SetLuminosity(user.luminosity - lit_brightness)
 		else if(isturf(loc))
 			SetLuminosity(0)
+
+/obj/item/clothing/mask/cigarette/is_hot()
+	if(lit)
+		return 1000
+	return 0
 
 /obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
@@ -552,6 +562,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else
 		return ..()
 	return
+
+/obj/item/weapon/lighter/is_hot()
+	if(lit)
+		return 1500
+	return 0
 
 
 /obj/item/weapon/lighter/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
