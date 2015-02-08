@@ -196,6 +196,12 @@
 	var/obj/item/weapon/organ/head/B = tool
 	if (B.brainmob.mind)
 		B.brainmob.mind.transfer_to(target)
+	var/datum/organ/internal/I = B.organ_data
+	var/datum/organ/internal/brain/copied = I.Copy()
+	copied.owner = target
+	target.internal_organs_by_name["brain"] = copied
+	target.internal_organs += copied
+	affected.internal_organs += copied
 	del(B)
 
 

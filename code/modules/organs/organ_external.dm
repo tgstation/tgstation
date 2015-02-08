@@ -54,6 +54,7 @@
 		parent.children.Add(src)
 	return ..()
 
+
 /****************************************************
 			   DAMAGE PROCS
 ****************************************************/
@@ -580,6 +581,15 @@ Note that amputating the affected organ does in fact remove the infection from t
 					organ= new /obj/item/weapon/organ/head/posi(owner.loc, owner)
 				else
 					organ= new /obj/item/weapon/organ/head(owner.loc, owner)
+				var/datum/organ/internal/brain/B = owner.internal_organs_by_name["brain"]
+				var/obj/item/weapon/organ/head/H = organ
+				H.organ_data = B
+				B.organ_holder = organ
+				owner.internal_organs_by_name["brain"] -= B
+				owner.internal_organs_by_name["brain"] = null
+				owner.internal_organs_by_name -= "brain"
+				owner.internal_organs -= B
+				internal_organs -= B
 				owner.u_equip(owner.glasses)
 				owner.u_equip(owner.head)
 				owner.u_equip(owner.l_ear)
@@ -1028,6 +1038,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 obj/item/weapon/organ
 	icon = 'icons/mob/human_races/r_human.dmi'
+	var/datum/organ/internal/organ_data
 
 obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 	..(loc)
