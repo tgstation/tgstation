@@ -266,8 +266,8 @@ datum/reagent/barbers_aid/reaction_mob(var/mob/living/M, var/volume)
 		var/mob/living/carbon/human/H = M
 		var/datum/sprite_accessory/hair/picked_hair = pick(hair_styles_list)
 		var/datum/sprite_accessory/facial_hair/picked_beard = pick(facial_hair_styles_list)
-		H.hair_style = picked_hair.name
-		H.facial_hair_style = picked_beard.name
+		H.hair_style = picked_hair
+		H.facial_hair_style = picked_beard
 		H.update_hair()
 	..()
 	return
