@@ -242,16 +242,16 @@
 			return
 		stop()
 
-		for (var/obj/item/weapon/reagent_containers/food/snacks/F in contents)
-			if (F.cooked_type)
-				var/obj/item/weapon/reagent_containers/food/snacks/S = new F.cooked_type (loc)
-				if(F.reagents)
-					F.reagents.trans_to(S, F.reagents.total_volume)
+		for(var/obj/item/weapon/reagent_containers/food/snacks/F in contents)
+			if(F.cooked_type)
+				var/obj/item/weapon/reagent_containers/food/snacks/S = new F.cooked_type (get_turf(src))
+				F.initialize_cooked_food(S)
 			else
-				new /obj/item/weapon/reagent_containers/food/snacks/badrecipe(loc)
+				new /obj/item/weapon/reagent_containers/food/snacks/badrecipe(src)
 				if(dirty < 100)
 					dirty++
 			qdel(F)
+
 		return
 
 /obj/machinery/microwave/proc/microwaving(var/seconds as num)
@@ -272,15 +272,15 @@
 	return 0
 
 /obj/machinery/microwave/proc/start()
-	src.visible_message("<span class='notice'>The microwave turns on.</span>", "<span class='notice'>You hear a microwave.</span>")
-	src.operating = 1
-	src.icon_state = "mw1"
-	src.updateUsrDialog()
+	visible_message("<span class='notice'>The microwave turns on.</span>", "<span class='notice'>You hear a microwave.</span>")
+	operating = 1
+	icon_state = "mw1"
+	updateUsrDialog()
 
 /obj/machinery/microwave/proc/abort()
-	src.operating = 0 // Turn it off again aferwards
-	src.icon_state = "mw"
-	src.updateUsrDialog()
+	operating = 0 // Turn it off again aferwards
+	icon_state = "mw"
+	updateUsrDialog()
 
 /obj/machinery/microwave/proc/stop()
 	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
@@ -290,37 +290,41 @@
 	for (var/obj/O in contents)
 		O.loc = src.loc
 	usr << "<span class='notice'>You dispose of the microwave contents.</span>"
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/microwave/proc/muck_start()
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) // Play a splat sound
-	src.icon_state = "mwbloody1" // Make it look dirty!!
+	icon_state = "mwbloody1" // Make it look dirty!!
 
 /obj/machinery/microwave/proc/muck_finish()
 	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-	src.visible_message("<span class='danger'>The microwave gets covered in muck!</span>")
-	src.dirty = 100 // Make it dirty so it can't be used util cleaned
-	src.icon_state = "mwbloody" // Make it look dirty too
-	src.operating = 0 // Turn it off again aferwards
-	src.updateUsrDialog()
+	visible_message("<span class='danger'>The microwave gets covered in muck!</span>")
+	dirty = 100 // Make it dirty so it can't be used util cleaned
+	icon_state = "mwbloody" // Make it look dirty too
+	operating = 0 // Turn it off again aferwards
+	updateUsrDialog()
+	for(var/obj/item/weapon/reagent_containers/food/snacks/S in src)
+		if(prob(50))
+			new /obj/item/weapon/reagent_containers/food/snacks/badrecipe(src)
+			qdel(S)
 
 /obj/machinery/microwave/proc/broke()
 	var/datum/effect/effect/system/spark_spread/s = new
 	s.set_up(2, 1, src)
 	s.start()
-	src.icon_state = "mwb" // Make it look all busted up and shit
-	src.visible_message("<span class='danger'>The microwave breaks!</span>") //Let them know they're stupid
-	src.broken = 2 // Make it broken so it can't be used util fixed
-	src.flags = null //So you can't add condiments
-	src.operating = 0 // Turn it off again aferwards
-	src.updateUsrDialog()
+	icon_state = "mwb" // Make it look all busted up and shit
+	visible_message("<span class='danger'>The microwave breaks!</span>") //Let them know they're stupid
+	broken = 2 // Make it broken so it can't be used util fixed
+	flags = null //So you can't add condiments
+	operating = 0 // Turn it off again aferwards
+	updateUsrDialog()
 
 /obj/machinery/microwave/Topic(href, href_list)
 	if(..() || panel_open)
 		return
 
 	usr.set_machine(src)
-	if(src.operating)
+	if(operating)
 		updateUsrDialog()
 		return
 

@@ -73,7 +73,7 @@
 	time = 40
 	reqs = list(/datum/reagent/consumable/sodiumchloride = 1,
 				/datum/reagent/consumable/blackpepper = 1,
-				/obj/item/weapon/reagent_containers/food/snacks/doughslice = 2
+				/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/baguette
 

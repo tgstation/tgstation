@@ -8,7 +8,7 @@
 	reqs = list(
 		/datum/reagent/consumable/frostoil = 5,
 		/datum/reagent/consumable/capsaicin = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/doughslice = 1
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/chaos
 
@@ -17,7 +17,7 @@
 	name = "Donut"
 	reqs = list(
 		/datum/reagent/consumable/sugar = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/doughslice = 1
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut
 
@@ -25,7 +25,7 @@
 	name = "Jelly donut"
 	reqs = list(
 		/datum/reagent/consumable/berryjuice = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/doughslice = 1
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/jelly
 
@@ -33,7 +33,7 @@
 	name = "Cherry jelly donut"
 	reqs = list(
 		/datum/reagent/consumable/cherryjelly = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/doughslice = 1
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/jelly/cherryjelly
 
@@ -41,7 +41,7 @@
 	name = "Slime jelly donut"
 	reqs = list(
 		/datum/reagent/toxin/slimejelly = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/doughslice = 1
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/jelly/slimejelly
 
@@ -51,7 +51,7 @@
 	time = 15
 	name = "Waffles"
 	reqs = list(
-		/obj/item/weapon/reagent_containers/food/snacks/doughslice = 2
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/waffles
 
@@ -59,7 +59,7 @@
 /datum/table_recipe/soylenviridians
 	name = "Soylent viridians"
 	reqs = list(
-		/obj/item/weapon/reagent_containers/food/snacks/doughslice = 2,
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 2,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soylenviridians
@@ -67,7 +67,7 @@
 /datum/table_recipe/soylentgreen
 	name = "Soylent green"
 	reqs = list(
-		/obj/item/weapon/reagent_containers/food/snacks/doughslice = 2,
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 2,
 		/obj/item/weapon/reagent_containers/food/snacks/meat/human = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soylentgreen
@@ -77,7 +77,7 @@
 	name = "Roffle waffles"
 	reqs = list(
 		/datum/reagent/mushroomhallucinogen = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/doughslice = 2
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/rofflewaffles
 
@@ -87,7 +87,7 @@
 	time = 15
 	name = "Donkpocket"
 	reqs = list(
-		/obj/item/weapon/reagent_containers/food/snacks/doughslice = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/faggot = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket
@@ -100,7 +100,7 @@
 	name = "Muffin"
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/doughslice = 1
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/muffin
 
@@ -108,7 +108,7 @@
 	name = "Berry muffin"
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/doughslice = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/berries = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/muffin/berry
@@ -117,7 +117,7 @@
 	name = "Booberry muffin"
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/doughslice = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/berries = 1,
 		/obj/item/weapon/ectoplasm = 1
 	)
@@ -159,7 +159,7 @@
 	name = "Sugar cookie"
 	reqs = list(
 		/datum/reagent/consumable/sugar = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/doughslice = 1
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sugarcookie
 
@@ -167,7 +167,7 @@
 	time = 15
 	name = "Fortune cookie"
 	reqs = list(
-		/obj/item/weapon/reagent_containers/food/snacks/doughslice = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1,
 		/obj/item/weapon/paper = 1
 	)
 	parts =	list(
@@ -180,7 +180,7 @@
 	name = "Poppy pretzel"
 	reqs = list(
 		/obj/item/seeds/poppyseed = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/doughslice = 1
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/poppypretzel
 
@@ -188,7 +188,7 @@
 	time = 15
 	name = "Plumphelmet biscuit"
 	reqs = list(
-		/obj/item/weapon/reagent_containers/food/snacks/doughslice = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/plumphelmetbiscuit
@@ -198,7 +198,7 @@
 	name = "Cracker"
 	reqs = list(
 		/datum/reagent/consumable/sodiumchloride = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/doughslice = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/cracker
 
@@ -206,7 +206,7 @@
 	name = "Choco cornet"
 	reqs = list(
 		/datum/reagent/consumable/sodiumchloride = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/doughslice = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/chococornet

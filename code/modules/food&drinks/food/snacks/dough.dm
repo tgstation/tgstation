@@ -27,7 +27,6 @@
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "dough"
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/store/bread/plain
-	bitesize = 2
 	list_reagents = list("nutriment" = 3)
 	w_class = 3
 
@@ -62,20 +61,17 @@
 	desc = "Add ingredients to make a pizza"
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "pizzabread"
-	bitesize = 2
 	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/pizza
-	list_reagents = list("nutriment" = 2)
+	list_reagents = list("nutriment" = 1)
 	w_class = 3
 
 
 /obj/item/weapon/reagent_containers/food/snacks/doughslice
 	name = "dough slice"
-	desc = "A building block of an impressive dish."
+	desc = "A slice of dough. Can be cooked into a bun."
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "doughslice"
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/bun
-	bitesize = 2
-	list_reagents = list("nutriment" = 1)
 	filling_color = "#CD853F"
 
 
@@ -84,8 +80,7 @@
 	desc = "A base for any self-respecting burger."
 	icon = 'icons/obj/food.dmi'
 	icon_state = "bun"
-	bitesize = 2
-	list_reagents = list("nutriment" = 4)
+	list_reagents = list("nutriment" = 1)
 	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/burger
 	filling_color = "#CD853F"
 
@@ -94,9 +89,8 @@
 	desc = "Cook it to get a cake."
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "cakebatter"
-	bitesize = 2
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/store/cake/plain
-	list_reagents = list("nutriment" = 4)
+	list_reagents = list("nutriment" = 1)
 	w_class = 3
 
 // Cake batter + rolling pin = pie dough
@@ -116,8 +110,25 @@
 	desc = "Cook it to get a pie."
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "piedough"
-	bitesize = 2
-	slice_path = /obj/item/weapon/reagent_containers/food/snacks/doughslice
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/rawpastrybase
+	slices_num = 3
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/pie/plain
-	list_reagents = list("nutriment" = 4)
+	list_reagents = list("nutriment" = 1)
 	w_class = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/rawpastrybase
+	name = "raw pastry base"
+	desc = "Must be cooked before use."
+	icon = 'icons/obj/food_ingredients.dmi'
+	icon_state = "rawpastrybase"
+	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/pastrybase
+	filling_color = "#CD853F"
+
+/obj/item/weapon/reagent_containers/food/snacks/pastrybase
+	name = "pastry base"
+	desc = "A base for any self-respecting pastry"
+	icon = 'icons/obj/food_ingredients.dmi'
+	icon_state = "pastrybase"
+	list_reagents = list("nutriment" = 1)
+	filling_color = "#CD853F"
+

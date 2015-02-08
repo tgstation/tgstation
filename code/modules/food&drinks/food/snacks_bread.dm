@@ -26,7 +26,7 @@
 	desc = "The culinary base of every self-respecting eloquen/tg/entleman."
 	icon_state = "meatbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/meat
-	list_reagents = list("nutriment" = 30, "vitamin" = 10)
+	list_reagents = list("nutriment" = 5, "vitamin" = 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/meat
 	name = "meatbread slice"
@@ -38,7 +38,7 @@
 	desc = "The culinary base of every self-respecting eloquen/tg/entleman. Extra Heretical."
 	icon_state = "xenomeatbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/xenomeat
-	list_reagents = list("nutriment" = 30, "vitamin" = 10)
+	list_reagents = list("nutriment" = 5, "vitamin" = 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/xenomeat
 	name = "xenomeatbread slice"
@@ -51,7 +51,7 @@
 	desc = "Reassuringly green meatloaf made from spider meat."
 	icon_state = "spidermeatbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/spidermeat
-	list_reagents = list("nutriment" = 30, "vitamin" = 10)
+	list_reagents = list("nutriment" = 5, "vitamin" = 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/spidermeat
 	name = "spider meat bread slice"
@@ -64,7 +64,7 @@
 	desc = "A heavenly and filling treat."
 	icon_state = "bananabread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/banana
-	list_reagents = list("nutriment" = 20, "banana" = 20)
+	list_reagents = list("nutriment" = 5, "banana" = 20)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/banana
@@ -78,7 +78,7 @@
 	desc = "Like meatbread but for vegetarians. Not guaranteed to give superpowers."
 	icon_state = "tofubread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/tofu
-	list_reagents = list("nutriment" = 30, "vitamin" = 10)
+	list_reagents = list("nutriment" = 5, "vitamin" = 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/tofu
 	name = "tofubread slice"
@@ -91,7 +91,7 @@
 	desc = "Yum yum yum!"
 	icon_state = "creamcheesebread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/creamcheese
-	list_reagents = list("nutriment" = 20, "vitamin" = 5)
+	list_reagents = list("nutriment" = 5, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/creamcheese
 	name = "cream cheese bread slice"
@@ -108,6 +108,6 @@
 	name = "baguette"
 	desc = "Bon appetit!"
 	icon_state = "baguette"
-	list_reagents = list("nutriment" = 6, "blackpepper" = 1, "sodiumchloride" = 1, "vitamin" = 1)
+	list_reagents = list("nutriment" = 2, "vitamin" = 2)
 	bitesize = 3
 	w_class = 3

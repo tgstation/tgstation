@@ -8,7 +8,7 @@
 	desc = "A grifftastic sandwich that burns your tongue and then leaves it numb!"
 	icon_state = "cubancarp"
 	trash = /obj/item/trash/plate
-	list_reagents = list("nutriment" = 6, "vitamin" = 3)
+	list_reagents = list("nutriment" = 1, "vitamin" = 4)
 	bitesize = 3
 	filling_color = "#CD853F"
 
@@ -32,7 +32,7 @@
 	name = "fish fingers"
 	desc = "A finger of fish."
 	icon_state = "fishfingers"
-	list_reagents = list("nutriment" = 4)
+	list_reagents = list("nutriment" = 1, "vitamin" = 2)
 	bitesize = 1
 	filling_color = "#CD853F"
 
@@ -40,7 +40,7 @@
 	name = "fish and chips"
 	desc = "I do say so myself chap."
 	icon_state = "fishandchips"
-	list_reagents = list("nutriment" = 6)
+	list_reagents = list("nutriment" = 1, "vitamin" = 2)
 	filling_color = "#FA8072"
 
 ////////////////////////////////////////////MEATS AND ALIKE////////////////////////////////////////////
@@ -51,34 +51,6 @@
 	icon_state = "tofu"
 	list_reagents = list("nutriment" = 2)
 	filling_color = "#F0E68C"
-
-/obj/item/weapon/reagent_containers/food/snacks/tomatomeat
-	name = "tomato slice"
-	desc = "A slice from a huge tomato."
-	icon_state = "tomatomeat"
-	list_reagents = list("nutriment" = 2)
-	filling_color = "#FF0000"
-
-/obj/item/weapon/reagent_containers/food/snacks/bearmeat
-	name = "bear meat"
-	desc = "A very manly slab of meat."
-	icon_state = "bearmeat"
-	list_reagents = list("nutriment" = 12, "morphine" = 5, "vitamin" = 2)
-
-/obj/item/weapon/reagent_containers/food/snacks/xenomeat
-	name = "meat"
-	desc = "A slab of meat"
-	icon_state = "xenomeat"
-	list_reagents = list("nutriment" = 3, "vitamin" = 1)
-	bitesize = 4
-	filling_color = "#32CD32"
-
-/obj/item/weapon/reagent_containers/food/snacks/spidermeat
-	name = "spider meat"
-	desc = "A slab of spider meat."
-	icon_state = "spidermeat"
-	list_reagents = list("nutriment" = 3, "toxin" = 3, "vitamin" = 1)
-	filling_color = "#7CFC00"
 
 /obj/item/weapon/reagent_containers/food/snacks/spiderleg
 	name = "spider leg"
@@ -93,20 +65,19 @@
 	desc = "Now you can feel like a real tourist vacationing in Ireland."
 	icon_state = "cornedbeef"
 	trash = /obj/item/trash/plate
-	list_reagents = list("nutriment" = 6)
+	list_reagents = list("nutriment" = 1, "vitamin" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/faggot
 	name = "faggot"
 	desc = "A great meal all round. Not a cord of wood."
 	icon_state = "faggot"
-	list_reagents = list("nutriment" = 1, "vitamin" = 1)
+	list_reagents = list("nutriment" = 3, "vitamin" = 1)
 	filling_color = "#800000"
 
 /obj/item/weapon/reagent_containers/food/snacks/sausage
 	name = "sausage"
 	desc = "A piece of mixed, long meat."
 	icon_state = "sausage"
-	list_reagents = list("nutriment" = 5, "vitamin" = 1)
 	filling_color = "#CD5C5C"
 
 /obj/item/weapon/reagent_containers/food/snacks/sausage/New()
@@ -118,7 +89,7 @@
 	desc = "A savory dish of alien wing wang in soy."
 	icon_state = "wingfangchu"
 	trash = /obj/item/weapon/reagent_containers/glass/bowl
-	list_reagents = list("nutriment" = 6, "vitamin" = 2)
+	list_reagents = list("nutriment" = 1, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/kebab
 	trash = /obj/item/stack/rods
@@ -128,24 +99,17 @@
 /obj/item/weapon/reagent_containers/food/snacks/kebab/human
 	name = "human-kebab"
 	desc = "A human meat, on a stick."
-	list_reagents = list("nutriment" = 10, "vitamin" = 6)
+	list_reagents = list("nutriment" = 1, "vitamin" = 6)
 
 /obj/item/weapon/reagent_containers/food/snacks/kebab/monkey
 	name = "meat-kebab"
 	desc = "Delicious meat, on a stick."
-	list_reagents = list("nutriment" = 8, "vitamin" = 2)
+	list_reagents = list("nutriment" = 1, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/kebab/tofu
 	name = "tofu-kebab"
 	desc = "Vegan meat, on a stick."
-	list_reagents = list("nutriment" = 8)
-
-/obj/item/weapon/reagent_containers/food/snacks/meatsteak
-	name = "meat steak"
-	desc = "A piece of hot spicy meat."
-	icon_state = "meatsteak"
-	list_reagents = list("nutriment" = 8, "sodiumchloride" = 1, "blackpepper" = 1, "vitamin" = 1)
-	filling_color = "#B22222"
+	list_reagents = list("nutriment" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube
 	name = "monkey cube"
@@ -153,7 +117,7 @@
 	icon_state = "monkeycube"
 	bitesize = 12
 	wrapped = 0
-	list_reagents = list("nutriment" = 5)
+	list_reagents = list("nutriment" = 2)
 	filling_color = "#CD853F"
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/afterattack(obj/O, mob/user,proximity)
@@ -189,7 +153,7 @@
 	name = "enchiladas"
 	desc = "Viva La Mexico!"
 	icon_state = "enchiladas"
-	list_reagents = list("nutriment" = 8, "capsaicin" = 6)
+	list_reagents = list("nutriment" = 1, "vitamin" = 2)
 	bitesize = 4
 	filling_color = "#FFA07A"
 
@@ -198,7 +162,7 @@
 	desc = "Even non-vegetarians will LOVE this!"
 	icon_state = "stewedsoymeat"
 	trash = /obj/item/trash/plate
-	list_reagents = list("nutriment" = 8)
+	list_reagents = list("nutriment" = 1)
 	filling_color = "#D2691E"
 
 /obj/item/weapon/reagent_containers/food/snacks/stewedsoymeat/New()
@@ -210,7 +174,7 @@
 	desc = "A giant spider's leg that's still twitching after being cooked. Gross!"
 	icon_state = "spiderlegcooked"
 	trash = /obj/item/trash/plate
-	list_reagents = list("nutriment" = 2, "capsaicin" = 2)
+	list_reagents = list("nutriment" = 1, "capsaicin" = 2, "vitamin" = 2)
 	filling_color = "#000000"
 
 /obj/item/weapon/reagent_containers/food/snacks/spidereggsham
@@ -218,7 +182,7 @@
 	desc = "Would you eat them on a train? Would you eat them on a plane? Would you eat them on a state of the art corporate deathtrap floating through space?"
 	icon_state = "spidereggsham"
 	trash = /obj/item/trash/plate
-	list_reagents = list("nutriment" = 6, "sodiumchloride" = 1, "toxin" = 3)
+	list_reagents = list("nutriment" = 1, "vitamin" = 3)
 	bitesize = 4
 	filling_color = "#7FFF00"
 
@@ -226,24 +190,5 @@
 	name = "carp sashimi"
 	desc = "Celebrate surviving attack from hostile alien lifeforms by hospitalising yourself."
 	icon_state = "sashimi"
-	list_reagents = list("nutriment" = 6, "capsaicin" = 4)
+	list_reagents = list("nutriment" = 1, "capsaicin" = 4, "vitamin" = 4)
 	filling_color = "#FA8072"
-
-/obj/item/weapon/reagent_containers/food/snacks/rawcutlet
-	name = "raw cutlet"
-	desc = "A raw meat cutlet."
-	icon = 'icons/obj/food_ingredients.dmi'
-	icon_state = "rawcutlet"
-	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/cutlet
-	bitesize = 2
-	list_reagents = list("nutriment" = 2)
-	filling_color = "#B22222"
-
-/obj/item/weapon/reagent_containers/food/snacks/cutlet
-	name = "cutlet"
-	desc = "A cooked meat cutlet."
-	icon = 'icons/obj/food_ingredients.dmi'
-	icon_state = "cutlet"
-	bitesize = 2
-	list_reagents = list("nutriment" = 4, "vitamin" = 1)
-	filling_color = "#B22222"

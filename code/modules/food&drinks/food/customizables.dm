@@ -112,17 +112,12 @@
 
 	overlays += I
 
-/obj/item/weapon/reagent_containers/food/snacks/customizable/create_slices(slices_lost)
-	if(!slice_path || !slices_num)
-		return
-	var/reagents_per_slice = reagents.total_volume/slices_num
-	for(var/i=1 to (slices_num-slices_lost))
-		var/obj/item/weapon/reagent_containers/food/snacks/slice = new slice_path (loc)
-		slice.name = "[customname] [initial(slice.name)]"
-		slice.filling_color = filling_color
-		slice.update_overlays(src)
-		reagents.trans_to(slice,reagents_per_slice)
-	qdel(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/customizable/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/slice)
+	slice.name = "[customname] [initial(slice.name)]"
+	slice.filling_color = filling_color
+	slice.update_overlays(src)
+
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/Destroy()
 	for(. in ingredients)

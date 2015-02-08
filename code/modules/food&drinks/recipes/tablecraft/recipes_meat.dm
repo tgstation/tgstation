@@ -6,15 +6,15 @@
 	name = "Human kebab"
 	reqs = list(
 		/obj/item/stack/rods = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/meat/human = 2
+		/obj/item/weapon/reagent_containers/food/snacks/meatsteak/plain/human = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/kebab/human
 
-/datum/table_recipe/monkeykebab
-	name = "Monkey kebab"
+/datum/table_recipe/kebab
+	name = "Kebab"
 	reqs = list(
 		/obj/item/stack/rods = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 2
+		/obj/item/weapon/reagent_containers/food/snacks/meatsteak = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/kebab/monkey
 
@@ -51,7 +51,7 @@
 	name = "Fish fingers"
 	reqs = list(
 		/datum/reagent/consumable/flour = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/doughslice = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/bun = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/carpmeat = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/fishfingers
@@ -72,7 +72,7 @@
 	reqs = list(
 		/datum/reagent/consumable/sodiumchloride = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/spidereggs = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/spidermeat = 1
+		/obj/item/weapon/reagent_containers/food/snacks/cutlet/spider = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/spidereggsham
 
@@ -82,7 +82,7 @@
 	name = "Corned beef"
 	reqs = list(
 		/datum/reagent/consumable/sodiumchloride = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/meat = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/meatsteak = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/cornedbeef
@@ -91,7 +91,7 @@
 	name = "Wingfangchu"
 	reqs = list(
 		/datum/reagent/consumable/soysauce = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/xenomeat = 1
+		/obj/item/weapon/reagent_containers/food/snacks/cutlet/xeno = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/wingfangchu
 

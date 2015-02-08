@@ -180,16 +180,18 @@
 			"<span class='notice'>You inaccurately slice [src] with your [W]!</span>" \
 		)
 		slices_lost = rand(1,min(1,round(slices_num/2)))
-	create_slices(slices_lost)
 
-/obj/item/weapon/reagent_containers/food/snacks/proc/create_slices(slices_lost)
 	if(!slice_path && !slices_num)
 		return
 	var/reagents_per_slice = reagents.total_volume/slices_num
 	for(var/i=1 to (slices_num-slices_lost))
-		var/obj/slice = new slice_path (src.loc)
+		var/obj/item/weapon/reagent_containers/food/snacks/slice = new slice_path (loc)
+		initialize_slice(slice)
 		reagents.trans_to(slice,reagents_per_slice)
 	qdel(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/proc/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/slice)
+	return
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/update_overlays(obj/item/weapon/reagent_containers/food/snacks/S)
 	overlays.Cut()
@@ -201,13 +203,16 @@
 
 	overlays += I
 
+// cook() is called when microwaving the food
+/obj/item/weapon/reagent_containers/food/snacks/proc/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/S)
+	if(reagents)
+		reagents.trans_to(S, reagents.total_volume)
 
 /obj/item/weapon/reagent_containers/food/snacks/Destroy()
 	if(contents)
 		for(var/atom/movable/something in contents)
 			something.loc = get_turf(src)
 	..()
-
 
 /obj/item/weapon/reagent_containers/food/snacks/attack_animal(mob/M)
 	if(isanimal(M))

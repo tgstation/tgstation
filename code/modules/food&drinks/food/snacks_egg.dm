@@ -5,14 +5,14 @@
 	name = "chocolate egg"
 	desc = "Such, sweet, fattening food."
 	icon_state = "chocolateegg"
-	list_reagents = list("nutriment" = 4, "sugar" = 2, "vitamin" = 2)
+	list_reagents = list("nutriment" = 1, "vitamin" = 1)
 	filling_color = "#A0522D"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg
 	name = "egg"
 	desc = "An egg!"
 	icon_state = "egg"
-	list_reagents = list("nutriment" = 1, "vitamin" = 1)
+	list_reagents = list("nutriment" = 1)
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/boiledegg
 	filling_color = "#F0E68C"
 
@@ -73,7 +73,7 @@
 	name = "fried egg"
 	desc = "A fried egg, with a touch of salt and pepper."
 	icon_state = "friedegg"
-	list_reagents = list("nutriment" = 2, "sodiumchloride" = 1, "blackpepper" = 1, "vitamin" = 1)
+	list_reagents = list("nutriment" = 1, "vitamin" = 1)
 	bitesize = 1
 	filling_color = "#FFFFF0"
 
@@ -81,7 +81,7 @@
 	name = "boiled egg"
 	desc = "A hard boiled egg."
 	icon_state = "egg"
-	list_reagents = list("nutriment" = 2, "vitamin" = 2)
+	list_reagents = list("nutriment" = 1, "vitamin" = 1)
 	filling_color = "#FFFFF0"
 
 /obj/item/weapon/reagent_containers/food/snacks/omelette	//FUCK THIS
@@ -89,7 +89,7 @@
 	desc = "That's all you can say!"
 	icon_state = "omelette"
 	trash = /obj/item/trash/plate
-	list_reagents = list("nutriment" = 7, "vitamin" = 2)
+	list_reagents = list("nutriment" = 1, "vitamin" = 2)
 	bitesize = 1
 	w_class = 3
 
@@ -113,6 +113,6 @@
 	name = "eggs benedict"
 	desc = "There is only one egg on this, how rude."
 	icon_state = "benedict"
-	list_reagents = list("nutriment" = 6, "vitamin" = 4)
+	list_reagents = list("vitamin" = 4)
 	trash = /obj/item/trash/plate
 	w_class = 3

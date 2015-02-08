@@ -123,7 +123,6 @@
 /datum/chemical_reaction/cakebatter/on_reaction(var/datum/reagents/holder)
 	var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/cakebatter
 	S.loc = get_turf(holder.my_atom)
-	S.reagents.add_reagent("vitamin", 2)
 	if(holder && holder.my_atom)
 		qdel(holder.my_atom)
 
@@ -139,39 +138,16 @@
 /datum/chemical_reaction/piedough/on_reaction(var/datum/reagents/holder)
 	var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/piedough
 	S.loc = get_turf(holder.my_atom)
-	S.reagents.add_reagent("vitamin", 2)
 	if(holder && holder.my_atom)
 		qdel(holder.my_atom)
 
-/datum/chemical_reaction/cakebatter2
-	name = "Cake Batter2"
-	id = "cakebatter2"
-	result = null
+/datum/chemical_reaction/cakebatter/alt
+	id = "cakebatteralt"
 	required_reagents = list("soymilk" = 5)
-	result_amount = 1
-	required_container = /obj/item/weapon/reagent_containers/food/snacks/dough
-	mix_message = "The dough forms a cake batter."
 
-/datum/chemical_reaction/cakebatter2/on_reaction(var/datum/reagents/holder)
-	var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/cakebatter
-	S.loc = get_turf(holder.my_atom)
-	if(holder && holder.my_atom)
-		qdel(holder.my_atom)
-
-/datum/chemical_reaction/piedough2
-	name = "Pie Dough2"
-	id = "piedough2"
-	result = null
+/datum/chemical_reaction/piedough/alt
+	id = "piedoughalt"
 	required_reagents = list("soymilk" = 5)
-	result_amount = 1
-	required_container = /obj/item/weapon/reagent_containers/food/snacks/flatdough
-	mix_message = "The dough forms a pie dough."
-
-/datum/chemical_reaction/piedough2/on_reaction(var/datum/reagents/holder)
-	var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/piedough
-	S.loc = get_turf(holder.my_atom)
-	if(holder && holder.my_atom)
-		qdel(holder.my_atom)
 
 /datum/chemical_reaction/imitationcarpmeat
 	name = "Imitation Carpmeat"
@@ -187,3 +163,23 @@
 	S.loc = get_turf(holder.my_atom)
 	if(holder && holder.my_atom)
 		qdel(holder.my_atom)
+
+/datum/chemical_reaction/rawpastrybase
+	name = "Raw Pastry Base"
+	id = "rawpastrybase"
+	result = null
+	required_reagents = list("milk" = 5)
+	result_amount = 1
+	required_container = /obj/item/weapon/reagent_containers/food/snacks/doughslice
+	mix_message = "The doughslice forms a raw pastry base"
+
+/datum/chemical_reaction/rawpastrybase/on_reaction(var/datum/reagents/holder)
+	var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/rawpastrybase
+	S.loc = get_turf(holder.my_atom)
+	if(holder && holder.my_atom)
+		qdel(holder.my_atom)
+
+/datum/chemical_reaction/rawpastrybase/alt
+	id = "rawpastrybasealt"
+	required_reagents = list("soymilk" = 5)
+
