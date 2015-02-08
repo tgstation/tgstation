@@ -11,7 +11,6 @@
 	var/health_timestamp = 0
 	var/brute_resist = 4
 	var/fire_resist = 1
-	var/can_change_color = 1
 
 
 /obj/effect/blob/New(loc)
@@ -92,8 +91,8 @@
 		if(!B)
 			expand(T,1,a_color)//No blob here so try and expand
 			return
-		if(B.can_change_color)
-			B.color = a_color
+		B.adjustcolors(a_color)
+
 		B.Pulse((pulse+1),get_dir(src.loc,T), a_color)
 		return
 	return
@@ -197,6 +196,8 @@
 	qdel(src)
 
 /obj/effect/blob/proc/adjustcolors(var/a_color)
+	if(a_color)
+		color = a_color
 	return
 
 /obj/effect/blob/normal

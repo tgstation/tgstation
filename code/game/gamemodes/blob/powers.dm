@@ -190,7 +190,7 @@
 	if(!can_buy(20))
 		return
 
-	var/mob/living/simple_animal/hostile/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blobbernaut (get_turf(B))
+	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut (get_turf(B))
 	if(blobber)
 		B.Destroy()
 	blobber.color = blob_reagent_datum.color
@@ -300,7 +300,7 @@
 	if(!surrounding_turfs.len)
 		return
 
-	for(var/mob/living/simple_animal/hostile/blobspore/BS in living_mob_list)
+	for(var/mob/living/simple_animal/hostile/blob/blobspore/BS in living_mob_list)
 		if(isturf(BS.loc) && get_dist(BS, T) <= 35)
 			BS.LoseTarget()
 			BS.Goto(pick(surrounding_turfs), BS.move_to_delay)
@@ -397,3 +397,24 @@
 		R.update_max_blob_points(50)
 
 	return
+
+
+/mob/camera/blob/verb/chemical_reroll()
+	set category = "Blob"
+	set name = "Reactive Chemical Adaptation (50)"
+	set desc = "Replaces your chemical with a different one"
+
+	if(!can_buy(50))
+		return
+
+	var/list/excluded = list(/datum/reagent/blob, blob_reagent_datum.type) //guaranteed new chemical
+	var/datum/reagent/blob/B = pick((typesof(/datum/reagent/blob) - excluded))
+	blob_reagent_datum = new B
+
+	for(var/obj/effect/blob/BL in blobs)
+		BL.adjustcolors(blob_reagent_datum.color)
+
+	for(var/mob/living/simple_animal/hostile/blob/BLO)
+		BLO.adjustcolors(blob_reagent_datum.color)
+
+	src << "Your reagent is now: <b>[blob_reagent_datum.name]</b>!"

@@ -27,6 +27,8 @@
 	for(var/type in (typesof(/datum/reagent/blob) - /datum/reagent/blob))
 		possible_reagents.Add(new type)
 	blob_reagent_datum = pick(possible_reagents)
+	if(blob_core)
+		blob_core.adjustcolors(blob_reagent_datum.color)
 	..()
 
 /mob/camera/blob/Login()
