@@ -445,3 +445,63 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 	icon_state = "chem_jug"
 	item_state = "carton"
 	list_reagents = list("hydrogen_chloride" = 50)
+
+datum/reagent/cocaine
+	name = "Cocaine"
+	id = "cocaine"
+	description = "It isn't just wrong. It's dead wrong."
+	reagent_state = LIQUID
+	color = "#60A584" // rgb: 96, 165, 132
+	overdose_threshold = 15
+	addiction_threshold = 10
+
+datum/reagent/cocaine/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	var/high_message = pick("You feel alert.", "You feel like you can see everything more clearly.", "You feel like you need to relax and examine your surroundings.")
+	if(prob(5))
+		M << "<span class='notice'>[high_message]</span>"
+	M.druggy = max(M.druggy, 15)
+	M.hallucination += 10
+	M.adjustBrainLoss(0.2)
+	M.adjustBruteLoss(-0.2)
+	M.adjustFireLoss(-0.2)
+	..()
+	return
+datum/reagent/cocaine/overdose_process(var/mob/living/M as mob)
+	M.adjustBrainLoss(rand(1,20)*REM)
+	M.adjustToxLoss(rand(1,20)*REM)
+	M.adjustBruteLoss(rand(1,20)*REM)
+	M.druggy = max(M.druggy, 30)
+	M.hallucination += 30
+	if(prob(5))
+		M << pick("<span class = 'userdanger'>Your head feels like it's ripping apart!</span>","<span class = 'userdanger'>You wonder why the fuck did you decide to take cocaine.</span>","<span class = 'userdanger'>It hurts so bad!</span>","<span class = 'userdanger'>Please, end it now!</span>","<span class = 'userdanger'>Dear [ticker.Bible_deity_name] please no it hurts!</span>")
+	..()
+	return
+
+datum/reagent/cocaine/addiction_act_stage1(var/mob/living/M as mob)
+	M.adjustBrainLoss(rand(1,10))
+	M.hallucination += 30
+	M.druggy = max(M.druggy, 30)
+	..()
+	return
+datum/reagent/cocaine/addiction_act_stage2(var/mob/living/M as mob)
+	M.adjustBrainLoss(rand(1,20))
+	M.hallucination += 30
+	M.druggy = max(M.druggy, 30)
+	..()
+	return
+datum/reagent/cocaine/addiction_act_stage3(var/mob/living/M as mob)
+	M.adjustBrainLoss(rand(1,30))
+	M.hallucination += 30
+	M.druggy = max(M.druggy, 30)
+	..()
+	return
+datum/reagent/cocaine/addiction_act_stage4(var/mob/living/M as mob)
+	M.adjustBrainLoss(rand(1,30))
+	M.hallucination += 30
+	M.druggy = max(M.druggy, 30)
+	if(prob(1))
+		M.visible_message("<span class = 'userdanger'>[M] clutches at their chest! It looks like they're having a heart attack!</span>")
+		M.adjustBruteLoss(80) // don't do drugs kids
+	..()
+	return
