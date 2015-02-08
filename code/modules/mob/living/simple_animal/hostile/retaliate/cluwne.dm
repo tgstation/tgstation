@@ -263,29 +263,14 @@
 	*/
 
 /mob/living/simple_animal/hostile/retaliate/cluwne/Bump(atom/movable/AM as mob|obj, yes)
-	spawn( 0 )
-		if ((!( yes ) || now_pushing))
-			return
-		if(ismob(AM))
-			src << "<span class='warning'><B>You are too depressed to push [AM] out of \the way.</B></span>"
-			AM:LAssailant = src
-			return
-		..()
-		if (!( istype(AM, /atom/movable) ))
-			return
-		if (!( now_pushing ))
-			now_pushing = 1
-			if (!( AM.anchored ))
-				var/t = get_dir(src, AM)
-				if (istype(AM, /obj/structure/window))
-					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-						for(var/obj/structure/window/win in get_step(AM,t))
-							now_pushing = 0
-							return
-				step(AM, t)
-			now_pushing = null
+	if ((!( yes ) || now_pushing))
 		return
-	return
+	if(ismob(AM))
+		var/mob/M = AM
+		src << "<span class='danger'>You are too depressed to push [M] out of \the way.</span>"
+		M.LAssailant = src
+		return
+	..()
 
 /mob/living/simple_animal/hostile/retaliate/cluwne/say(var/message)
 	message = filter.FilterSpeech(lowertext(message))
