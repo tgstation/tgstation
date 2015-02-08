@@ -1,7 +1,0 @@
-author: Clusterfack
-delete-after: true
-changes:
-- bugfix: Silicon emag items are now debugged
-- rscadd: Adds pill collector to medical crate
-- tweak: Now both microwaves AND grinders have the ability to be moved onto tables
-- rscadd: Antagonists now get their genetic defects scrubbed at roundstart
