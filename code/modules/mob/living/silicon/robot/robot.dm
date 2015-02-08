@@ -709,8 +709,8 @@
 				user << "The wires get in your way."
 				return
 			else
-				sleep(6)
 				if(prob(50))
+					sleep(6)
 					SetEmagged(1)
 					SetLockdown(1)
 					lawupdate = 0
@@ -744,7 +744,7 @@
 					SetLockdown(0)
 					update_icons()
 				else
-					user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
+					user << "You fail to unlock [src]'s interface."
 					if(prob(25))
 						src << "Hack attempt detected."
 

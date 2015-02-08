@@ -329,7 +329,7 @@
 
 /datum/game_mode/proc/Clean_Antags() //Cleans out the genetic defects of all antagonists
 	for(var/mob/living/A in player_list)
-		if((istype(A)) && A.mind && (A.mind.special_role || A.mind.assigned_role == "MODE"))
+		if((istype(A)) && A.mind && A.mind.special_role)
 			if(A.dna)
 				A.dna.ResetSE()
 

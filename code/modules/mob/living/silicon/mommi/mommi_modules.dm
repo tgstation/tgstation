@@ -3,7 +3,7 @@
 
 
 /obj/item/weapon/robot_module/mommi/New()
-	AddToProfiler()
+	..()
 	//src.modules += new /obj/item/borg/sight/meson(src)
 	src.emag = new /obj/item/borg/stun(src)
 	//src.modules += new /obj/item/weapon/rcd/borg(src)     // Too OP
