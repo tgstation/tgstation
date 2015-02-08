@@ -157,6 +157,7 @@
 	origin_tech = "combat=2;magnets=2;syndicate=3" //can be further researched for more syndie tech
 	suppressed = 0
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
+	pin = null
 
 /obj/item/weapon/gun/energy/disabler
 	name = "disabler"
