@@ -161,6 +161,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		user << "<span class='warning'>Nanotrasen Patented Anti-Emancipation Override initiated.</span>"
 		return
 	..()
+	updateicon()
 
 /mob/living/silicon/robot/mommi/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/weldingtool))
