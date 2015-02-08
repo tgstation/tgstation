@@ -258,10 +258,12 @@
 		if(dense) break
 
 	if(isturf(src.loc))
-		if(ismob(AM) && !dense)
-			var/newamloc = src.loc
-			src.loc = AM:loc
-			AM:loc = newamloc
+		if(ismob(AM))
+			var/mob/living/L = AM
+			if(L.canmove && !dense)
+				var/newamloc = src.loc
+				src.loc = AM:loc
+				AM:loc = newamloc
 		else
 			..()
 
